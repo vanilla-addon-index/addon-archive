@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/ERitzman/AutoDB",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ERitzman",
+    "repo": "AutoDB",
+    "name": "AutoDB",
+    "url": "https://github.com/ERitzman/AutoDB",
+    "api": "https://api.github.com/repos/ERitzman/AutoDB"
+  },
+  "commit": "b7784ff2b162242114c6876f4ce808f490a89008",
+  "sourceFiles": {
+    "AutoDB.lua": {
+      "sha256": "55cbaca7f22bd3892a2664e76928a393e83087aee2439d37a2aaac380ad58527",
+      "bytes": 378
+    },
+    "AutoDB.toc": {
+      "sha256": "5590c37961718d8c425ac4e295c28b9d784c669683d26ea5793e10faf353f550",
+      "bytes": 134
+    },
+    "README.md": {
+      "sha256": "3a4937ca14e1c5933b5a65bcd24adba23952cdb99a901654fe9b820af58b8424",
+      "bytes": 478
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

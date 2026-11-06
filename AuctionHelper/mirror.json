@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/EinBaum/AuctionHelper",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "AuctionHelper",
+    "name": "AuctionHelper",
+    "url": "https://github.com/EinBaum/AuctionHelper",
+    "api": "https://api.github.com/repos/EinBaum/AuctionHelper"
+  },
+  "commit": "09998b7d22ec2916826cf8e0eaf2fcce2e2863f8",
+  "sourceFiles": {
+    "AuctionHelper.lua": {
+      "sha256": "a82090f459c9a74c08e85664c68fd2a531dc84b476e5dc6f0c11bc2ebd906388",
+      "bytes": 3557
+    },
+    "AuctionHelper.toc": {
+      "sha256": "4fd0285d5646719b57fddbe90ec9c44bbfcc4c99d62f6d920d814179f88f4e71",
+      "bytes": 277
+    },
+    "AuctionHelper.xml": {
+      "sha256": "19f5743dc34fd3f63f62dd6a74cca28080befc1167a008bf65199279a97d353c",
+      "bytes": 2256
+    },
+    "LICENSE": {
+      "sha256": "41ceed624c161305cbf91b1e756dddece2843e0b2027badc1580214c7ca5119c",
+      "bytes": 1080
+    },
+    "preview.jpg": {
+      "sha256": "f4bf37fc66a2c26f28b98ac45833ed3b8d6a6b8c0e2a9de5df994ab724e9b6ba",
+      "bytes": 21892
+    },
+    "README.md": {
+      "sha256": "3b4ef69e9a6b24185be43c0ebf172f233f9822aaac796f304a2f848e5d2375fe",
+      "bytes": 861
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

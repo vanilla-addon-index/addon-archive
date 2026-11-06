@@ -1,0 +1,634 @@
+{
+  "upstream": "https://github.com/Torchlite-bit/Aegis_RallyPower",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Torchlite-bit",
+    "repo": "Aegis_RallyPower",
+    "name": "Aegis_RallyPower",
+    "url": "https://github.com/Torchlite-bit/Aegis_RallyPower",
+    "api": "https://api.github.com/repos/Torchlite-bit/Aegis_RallyPower"
+  },
+  "commit": "d7a6e2465a803d5fc5a43f6d5378389efe2c2e6e",
+  "sourceFiles": {
+    ".github/discord_changelog.py": {
+      "sha256": "6988838f1f6b5c03d55dca5cb1711973a89f22b420bad2dad4dd90b95be43192",
+      "bytes": 4860
+    },
+    ".github/discord-logo.png": {
+      "sha256": "dbb3927a85aaf36645b0a25b31f13bd773aa0eaa465ab7616fdff3088922537b",
+      "bytes": 118360
+    },
+    ".github/workflows/release.yml": {
+      "sha256": "c195f3b683043ecbcecbf7202f9dc2e993cbf48c31e0a52b8db638eab7c3ad63",
+      "bytes": 5319
+    },
+    ".gitignore.upstream": {
+      "sha256": "66e092c23378c0c20546a48da7edb6bbb8639ae0be754b8e000f0c5927364abf",
+      "bytes": 540
+    },
+    ".pkgmeta": {
+      "sha256": "b8f450a12145d01ed4bd3f3917c33eb4c00447d23b5789e3fc847b51f3571c3d",
+      "bytes": 698
+    },
+    "Aegis_RallyPower.toc": {
+      "sha256": "5ac0da765b427ed6a09df2cc16a967ab8db63147f313d0f04f855b83d0750cd3",
+      "bytes": 1460
+    },
+    "Bindings.xml": {
+      "sha256": "1ade51ce079b2d8275bb8fbf4b91838bf02372e5e5ceb10cdc70bb774457300d",
+      "bytes": 458
+    },
+    "CHANGELOG.md": {
+      "sha256": "0f34cf2d5b009a1ee004f41224f24b738218dae35f16e16f2176218b3fa8698e",
+      "bytes": 139011
+    },
+    "Classes/Class_Druid.lua": {
+      "sha256": "5e3cdb62940609978a0738946204b5bd1d6ca76691da81a44a6508f9054f63cd",
+      "bytes": 3512
+    },
+    "Classes/Class_Hunter.lua": {
+      "sha256": "ee4133a583cae5bda9ccfcbd99bb60b18c9c9a7027eafb7f2d8c0e541fb1fe83",
+      "bytes": 8469
+    },
+    "Classes/Class_Mage.lua": {
+      "sha256": "9629e57a39fa25226fd0ebcf53a1baffdbe0552d7a7a8f72fd55b4adec24f75a",
+      "bytes": 2152
+    },
+    "Classes/Class_Priest.lua": {
+      "sha256": "9e129079921c04a2b50f3fc381d19bd495c4b8b097d46b0e2952870b5315a20d",
+      "bytes": 3241
+    },
+    "Classes/Class_Rogue.lua": {
+      "sha256": "0b788d44cc9983bf7b4216484cb1f4c7f23cacfa0a23c1bbb61304d1ff363bae",
+      "bytes": 9445
+    },
+    "Classes/Class_Shaman.lua": {
+      "sha256": "488260b85bb75ea08cc28749937200045ede9202ddbcaf58842d3661ce5a47c2",
+      "bytes": 15246
+    },
+    "Classes/Class_Warlock.lua": {
+      "sha256": "3b26461353ab6cf58fd56a7efa68c96313c20c0f53b660c854848053a018ba05",
+      "bytes": 18805
+    },
+    "Classes/Class_Warrior.lua": {
+      "sha256": "9c5f571fe80a608aa60cd8158db7a0ca4b661550d712eaa5c0bb4648b41ee971",
+      "bytes": 7987
+    },
+    "CLAUDE.md": {
+      "sha256": "652eda899d4329814ce255ca27f5f32be64814555ab1fbf452228ccf6defb72c",
+      "bytes": 60229
+    },
+    "Core/Aegis_Assign.lua": {
+      "sha256": "acc0d32cbf5af8c2ad1e529286d5580252317df0a3690a19c7a617b79f99af81",
+      "bytes": 44967
+    },
+    "Core/Aegis_AssignPanel.lua": {
+      "sha256": "481199587079d67538cee51a17b442d8affeab69ff0e976c456b22195bc3ac2d",
+      "bytes": 160586
+    },
+    "Core/Aegis_CastWatch.lua": {
+      "sha256": "ec3e902fb5f86efdc8c7c4b9c9e02f9f4ce0c866f1bbae1cc09a8e37634e7e3c",
+      "bytes": 4487
+    },
+    "Core/Aegis_Core.lua": {
+      "sha256": "489ce596039f479caab39f28973d04a57a2f95ef676d2d6fdc16ec1bf02e1b7c",
+      "bytes": 109734
+    },
+    "Core/Aegis_Options.lua": {
+      "sha256": "4f847483457b356103ecc51205c6ca2f2621e60c6ca37d307c904102338d5a40",
+      "bytes": 43465
+    },
+    "Core/Aegis_Popout.lua": {
+      "sha256": "c5c5a9fb2a6eb8c64e2c52266ffc9ad28ca14a02fbf3b36560abdc94a57b12cf",
+      "bytes": 34042
+    },
+    "Core/Aegis_Strip.lua": {
+      "sha256": "a970b5a82031cd0d732338392177a42c7f791730850240e00248ce2c8dffc023",
+      "bytes": 40307
+    },
+    "Core/Aegis_Sync.lua": {
+      "sha256": "20dbf37cd6d5c7dcb8336c866a528ddeb46fa48e768e6197f23e6f301e4a80a4",
+      "bytes": 26823
+    },
+    "docs/COMPATIBILITY.md": {
+      "sha256": "e3637bad425382408b97279a0ca2b15574ae7468784299284e9eb1396747407c",
+      "bytes": 9156
+    },
+    "docs/DESIGN_ALLCLASSES.md": {
+      "sha256": "5ccc477203ff91a574f235a706861fda6a7e9f56a01dc0476414319dd8a8b2df",
+      "bytes": 9157
+    },
+    "docs/DESIGN_ASSIGNMENTS.md": {
+      "sha256": "85e4f6d89f37d45a3a5765481418db8f17c61cce69502ae335fb295fcaa4625b",
+      "bytes": 15239
+    },
+    "docs/DESIGN_SYNC.md": {
+      "sha256": "5dc5c7c73381b7283d1a1a74c2685c3b9c24298355f93b0c0008cf056b346114",
+      "bytes": 6706
+    },
+    "docs/OPTIONS_UI_SPEC.md": {
+      "sha256": "c55e3b9896d9ec6bb1f1ae03a1417759fb90b7f7a289d20c3c093af3e47c1eb5",
+      "bytes": 6477
+    },
+    "docs/RallyPowerCP_assignment_concept.html": {
+      "sha256": "5f4b47b7032b1fdd93bff26b073039dc9b05acdd709b38144383cc16baf33d91",
+      "bytes": 22419
+    },
+    "docs/RallyPowerCP_concept.html": {
+      "sha256": "fcce3dd7bda9bde32f1ad45af4022f5d7bbc038a00ee4522ebe8675b2b103f5e",
+      "bytes": 26904
+    },
+    "docs/ROADMAP.md": {
+      "sha256": "197aa802866aafb0b3961b24b43dc2636d879043e77bcfc58d45286132f6a5af",
+      "bytes": 14307
+    },
+    "HDIcons/Ability_ThunderBolt.tga": {
+      "sha256": "aadc1fc356ec0b21f4c8b717b78c3b31043ed553b1bc62a8ddb90051fd97ee8a",
+      "bytes": 65580
+    },
+    "HDIcons/Ability_Warrior_InnerRage.tga": {
+      "sha256": "969462f695636a39398cc72390015962ff73ac276698088b540ca1830c915325",
+      "bytes": 65580
+    },
+    "HDIcons/Druid.tga": {
+      "sha256": "7e379e2e6b7188cc26cc49e559e0f871d296ffe063d88e583b10f6799658ed34",
+      "bytes": 65580
+    },
+    "HDIcons/Hunter.tga": {
+      "sha256": "670e0c0db1a94e5bb1ead6db3c1152bc9ef44f562e0fc3566e9cf3c0f8aa84ef",
+      "bytes": 65580
+    },
+    "HDIcons/Mage.tga": {
+      "sha256": "4eb3e12cbb16561678b031a388261f9fd21a4d785407e329ac9ffb37901535c3",
+      "bytes": 65580
+    },
+    "HDIcons/Paladin.tga": {
+      "sha256": "762e8738a350d122474c72ae21dcbea6e0c1d9bf636e3f52375bf903aaa76902",
+      "bytes": 65580
+    },
+    "HDIcons/Pet.tga": {
+      "sha256": "59bb11314b7e2c545b762452756c7880f3cd35fd2f0349aadfd86b838c8ce4be",
+      "bytes": 65580
+    },
+    "HDIcons/Priest.tga": {
+      "sha256": "ae78129843a0e7add35d16cc58da67de51c3818a664a7fdd85b8c17808ea593b",
+      "bytes": 65580
+    },
+    "HDIcons/Rogue.tga": {
+      "sha256": "bd010164f3c1c796a72a5e16d57d6de0a4feb033a0f041b8765632c89bff6d3e",
+      "bytes": 65580
+    },
+    "HDIcons/Shaman.tga": {
+      "sha256": "6c1c297f9d6f3f78a056a3a398ad67b17826ba3921ba7a5ff985c0055b2a3ea9",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Fire_SealOfFire.tga": {
+      "sha256": "290dc0f2753ba772649f261ff3ec082764b74ecb3b4077a56aa329c6f19a16d4",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Frost_WizardMark.tga": {
+      "sha256": "a71ea5712e353e10da89604a7d4c7c8fdc83fb34797ceff672155aacd03ba1b6",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_AuraMastery.tga": {
+      "sha256": "644a556d5cc119e509c73c160c79bd64f1e76c7e0750441d1b14a8b6599ccd1b",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_AuraOfLight.tga": {
+      "sha256": "8e2d073d08b29bd3d983e762745e15829149642c2f35a0eba99f33dbc33e7dd7",
+      "bytes": 65580
+    },
+    "HDIcons/SPELL_HOLY_DEVOTIONAURA.tga": {
+      "sha256": "1800fa4201e44c91f7e0e412c923294a441de505d8fb98a8abe86f1dd0229c5b",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_FistOfJustice.tga": {
+      "sha256": "d7c274183ba7ad1b140c3a2d12c94503b3cd8d37c181c423fdb1f8b0de3edd6f",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_GreaterBlessingofKings.tga": {
+      "sha256": "e092ab48710c76074e04a430b0aea5324bb2cd626cc34fafde59c29a17d2c085",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_GreaterBlessingofLight.tga": {
+      "sha256": "1ca4cd7e8cbcdc2e300612166e0f1e496bb61e2652e514ae85d0ef1c4475f55f",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_GreaterBlessingofSalvation.tga": {
+      "sha256": "b8d8116306954ed5b21676e1b6b54bd69bf49c1d14a8914fa1ea13813ef0ce3c",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_GreaterBlessingofSanctuary.tga": {
+      "sha256": "9aa375b2d81225b9bebf2651ed72f9c70913eb62075f9f20d63da8af5553c88d",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_GreaterBlessingofWisdom.tga": {
+      "sha256": "97806e8cd5f85740dfa2b603d7a468ee6f799e2e57e81904d7218f6680febaa4",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_HealingAura.tga": {
+      "sha256": "03bfc6abf03a75595cc04596fcb45dee0e244d17580abf0c48da5b420139cfe8",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_HolySmite.tga": {
+      "sha256": "f31b7c1019b5849705b030df29ca215b690b1cde1ddf297021c07cbaa55a97d0",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_MindSooth.tga": {
+      "sha256": "ba06158fc7ba63da28e4ea903d085e14761e2d3ef7e3e8dfcde104de01afac18",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_MindVision.tga": {
+      "sha256": "a7de610dd67c12d9a03fc25b06ec17fbef422042f23a7e5dd272dc8fc97e551b",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_PrayerOfHealing02.tga": {
+      "sha256": "137f1a3572c7e0f31a6e69261129b2d85fc4c6eee7f748701d0aa337becd1456",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_RighteousnessAura.tga": {
+      "sha256": "0efc93a6539a6a6e968641bab41efdab0d4f6a3fe31e84283881d4e7da3548ab",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_SealOfFury.tga": {
+      "sha256": "b532f4fabe509a718929de54ffb553aa60950d5c24ed6b876916e3f9ac977b3e",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_SealOfSalvation.tga": {
+      "sha256": "8de80c0f027fcb60ac68bbaa9d6fa932b56b20a9170d7c77640c04d2925dcf79",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_SealOfWisdom.tga": {
+      "sha256": "6a5ae49601a58c1ce12d9ff23e88b772dcbdb4bfd75a4b748eb26976402bc15f",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_SealOfWrath.tga": {
+      "sha256": "96118f752645c303e3e3db3fbee30ccdee06b9c13eadcff723029d101c31e6aa",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Magic_GreaterBlessingofKings.tga": {
+      "sha256": "e7fbd96475bae648075f9bff19d22070fe5379606c0a700b942b016a5b751132",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Magic_MageArmor.tga": {
+      "sha256": "7246940f9575b01074867b4bed9b7f617f70f5410d51bf439cb0c0c3c35e6cd4",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Nature_LightningShield.tga": {
+      "sha256": "4913d4a0beb03403918a040a561442e23c0c3f8829652508515e44742d8b1e11",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Shadow_SealOfKings.tga": {
+      "sha256": "1735ed9b7bb6aed4637c2d304a26b3947e0331a5cbbd9620de32cf4a1d8d6424",
+      "bytes": 65580
+    },
+    "HDIcons/Warlock.tga": {
+      "sha256": "c842951e76a3610563e01a07e8b21563b20f77f42f3b8b85e4b055101714e54d",
+      "bytes": 65580
+    },
+    "HDIcons/Warrior.tga": {
+      "sha256": "ec37241f95b9646a36887b32d9f60be1eae94b3c1b706c32057516bde81f04ba",
+      "bytes": 65580
+    },
+    "Icons/Ability_ThunderBolt.blp": {
+      "sha256": "f66f767fcdc666bc8ca3fd601fbefe3ebf7d4c19eff76a5086359a1308a6f01c",
+      "bytes": 6660
+    },
+    "Icons/Ability_Warrior_InnerRage.blp": {
+      "sha256": "afcafb11c6a202704085e4d679cc518c2aca1eb546724562722a6651097c6f81",
+      "bytes": 6660
+    },
+    "Icons/Druid.tga": {
+      "sha256": "48ffcaaaa51204c1ef8f70052ce914745e50bb27d80b365fe046e00af0b8c36b",
+      "bytes": 12306
+    },
+    "Icons/Hunter.tga": {
+      "sha256": "c3e499450936bb4cacc20d01f0830c7be4782eaa8d5ed7eaf9e809b4fc56efc8",
+      "bytes": 12306
+    },
+    "Icons/Mage.tga": {
+      "sha256": "0cf8860ee8d26dfae3ebf79e333304c66aa0a6a615dce51f5e6a7b190d4dbfb6",
+      "bytes": 12306
+    },
+    "Icons/Minimap_aegis.tga": {
+      "sha256": "9dd76927d7dfbcf8b64aac27c69f7679795e04674c7f07f978f8614de0c6f12f",
+      "bytes": 16428
+    },
+    "Icons/Minimap_Down.tga": {
+      "sha256": "b537bef3a71a903f3728552da193023d602f693175da82944d22f08dea9dadda",
+      "bytes": 4140
+    },
+    "Icons/Minimap_gold_Down.tga": {
+      "sha256": "65035c42e8aed9455fd2581e1bbbc0709bb9a91fddf505096ce878c30d9ea3d2",
+      "bytes": 4140
+    },
+    "Icons/Minimap_gold.tga": {
+      "sha256": "97efa22239c94b1394bffa7cf967efe8c1135b245bca01fdc00bebd2c0d9f47d",
+      "bytes": 4140
+    },
+    "Icons/Minimap_ivory_Down.tga": {
+      "sha256": "b1e53c45bf696a897dfb4ec5c505aff493cf5a0dd1b1b145900da7aa6496ea73",
+      "bytes": 4140
+    },
+    "Icons/Minimap_ivory.tga": {
+      "sha256": "ac907afdf2603d10e4e584d8a4502ef5433480df123ad007e8a203be72044bbe",
+      "bytes": 4140
+    },
+    "Icons/Minimap_pearl_Down.tga": {
+      "sha256": "fb7aa26d7f50ba8633510177e0c92e875af6b5bca96d57107a73fdf522caa010",
+      "bytes": 4140
+    },
+    "Icons/Minimap_pearl.tga": {
+      "sha256": "57941257d81379253e244166f961e1eafe88bee29bef4821312399c74f6b7c61",
+      "bytes": 4140
+    },
+    "Icons/Minimap_white_Down.tga": {
+      "sha256": "1d8984b35162fa1cdcbcfcb6ca4b80ae1c5db5c4bab81606c8ed8c982fa0237c",
+      "bytes": 4140
+    },
+    "Icons/Minimap_white.tga": {
+      "sha256": "050b7045ced4cc444c60a7498b99c6ec88d98f9c2878d45d3e89b4cda655bca5",
+      "bytes": 4140
+    },
+    "Icons/Minimap.tga": {
+      "sha256": "d04301e211f91ad5e2bcf8e313cbb9589cabf01b63287857e1034abdeacfda99",
+      "bytes": 4140
+    },
+    "Icons/MinimapRing.tga": {
+      "sha256": "101aac10fd19241c180d2c4159cba1a334af87eb35a0f64cb4627a65a4d4621c",
+      "bytes": 4140
+    },
+    "Icons/Paladin.tga": {
+      "sha256": "3842e3b33ab275da8d8815fb593d12c8d580c155e15b33ee62decd999ffababf",
+      "bytes": 12306
+    },
+    "Icons/Pet.tga": {
+      "sha256": "e28cb152b2b972fa3845514edae0a08c34dd8c5de3e11a5bd8bf0832cf724419",
+      "bytes": 11671
+    },
+    "Icons/Priest.tga": {
+      "sha256": "3f004b3291da51252ba3e470a9775588399af0836239aabb1475832c704ebb72",
+      "bytes": 12306
+    },
+    "Icons/Rogue.tga": {
+      "sha256": "f8ae48b8b0e6bccc67077921482db047a2d9a02301f47623846b0a92a908bcb8",
+      "bytes": 12306
+    },
+    "Icons/Shaman.tga": {
+      "sha256": "cfe546678428e1e5e45927688b4312545c606341f331ab5a7a5bba2dcfaf0644",
+      "bytes": 12332
+    },
+    "Icons/Spell_Fire_SealOfFire.blp": {
+      "sha256": "64da55801d4aa3c2e26dba160e2f9160b66af5407bc91292600d2cab1c568abc",
+      "bytes": 6660
+    },
+    "Icons/Spell_Frost_WizardMark.blp": {
+      "sha256": "35cebfb70ed804255f07e4067e2377296812e140bf9b079cf80a3db8b1227ac4",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_AuraMastery.blp": {
+      "sha256": "07f422b4e2beadd15dd42d6a88aa3855f00162f068ef6f113d3361505b3cf99b",
+      "bytes": 3220
+    },
+    "Icons/Spell_Holy_AuraOfLight.blp": {
+      "sha256": "5d9b9b161c6528275fbb2063120114748da4425b5bc16e7afb1a3ce562abf97d",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_DevotionAura.blp": {
+      "sha256": "335f47b77781cf74036738dc7143a2e9f06d989034ed8b364ee293bc254ac134",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_FistOfJustice.blp": {
+      "sha256": "83d93ba1390122e2af44f6eea5c37bb53498b8a4521d97f9b9951490004dd5b1",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_GreaterBlessingofKings.blp": {
+      "sha256": "88943f1f5357a09e46fa615f67c3f859a4e007a5f168850183de88fb1c0d6c45",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_GreaterBlessingofLight.blp": {
+      "sha256": "a9b6cdf89ef4bba6c4f541a792a7492d58fc348849bc318f4ad0de00bdabfadd",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_GreaterBlessingofSalvation.blp": {
+      "sha256": "bcd6e2bfe35eca5cc80dbe62e05905285bb826c80009ef687bac382b13cda146",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_GreaterBlessingofSanctuary.blp": {
+      "sha256": "b04a36e99a17204731780fca7b31c0e3cd832edf4a31c6eb2b4d4bcb02ea575a",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_GreaterBlessingofWisdom.blp": {
+      "sha256": "15299d5ee45ba97c73c1ac89635649a5cdec6d8d0e45adf8221258391ae8700c",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_HealingAura.blp": {
+      "sha256": "e38bc6c32a4035573c5b9f72df0028372009f5089b2395e8412526d11799db3f",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_HolySmite.blp": {
+      "sha256": "4a4a2071a05104dd6506ea6e9c60d121216678675cca1e90c2f559f59cd21d92",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_MindSooth.blp": {
+      "sha256": "9ef936e08281f681b76e7695c93de36d33a949bfb590a61748ac03f22ff56a11",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_MindVision.blp": {
+      "sha256": "a514213bb8ba87b9813d24857381dac543b17815e675adaeb663f69e7c8f15ad",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_PrayerOfHealing02.blp": {
+      "sha256": "00ac8829b7d7a7747cde39b550aca4ed080beb482473f887a21a159f7a127f33",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_RighteousnessAura.blp": {
+      "sha256": "f528911fd40d01561bbe1c3605fc7bede097a5f10aafbd2a612adfee9a1eb8b0",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_SealOfFury.blp": {
+      "sha256": "80eb2c2d6226268af435e5d7a3624cf24d9d8b2ea8682374cc454467ae82894c",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_SealOfSalvation.blp": {
+      "sha256": "c83709c9a7c15a4b48fc2e9324fac08fd08343bd2451997e14805c6bf25d31ad",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_SealOfWisdom.blp": {
+      "sha256": "3b7613dcfacc60e881af8573ea2411cf93527ced203f2577045e087d8d260af4",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_SealOfWrath.blp": {
+      "sha256": "f6a93a4f077b119397a5d0dfd74afd18a29e27434143c71dbcc5ecf0ceaefbe1",
+      "bytes": 6660
+    },
+    "Icons/Spell_Magic_GreaterBlessingofKings.blp": {
+      "sha256": "527b15219a2a34c07c7833a201bcac0010407906ef29091cad31945c41d5a496",
+      "bytes": 6660
+    },
+    "Icons/Spell_Magic_MageArmor.blp": {
+      "sha256": "9f23ae9cefffaa333b640375b7d8f6263657acbe63c8bf49778a0ad0bb4af782",
+      "bytes": 3916
+    },
+    "Icons/Spell_Nature_LightningShield.blp": {
+      "sha256": "f8165eddd4813c56c8bb36cbc7ab0b1f9109414342b2f6251ad5616efed49e3b",
+      "bytes": 6660
+    },
+    "Icons/Spell_Shadow_SealOfKings.blp": {
+      "sha256": "b9bc54452063a2f9f675a3838c3aa25e5cf1cfd1c568b98709fca0cb04bed35a",
+      "bytes": 6660
+    },
+    "Icons/Warlock.tga": {
+      "sha256": "8f2ff9dac07c441ea0529e3dbdf7ddee3074647b9f028c986625a107f8dbafef",
+      "bytes": 12306
+    },
+    "Icons/Warrior.tga": {
+      "sha256": "41bcdc45d7c54af3734208e72c6ca09a73f6e784ddaf28715320353f6a0c9064",
+      "bytes": 12306
+    },
+    "LICENSE": {
+      "sha256": "76fbcf2e5f0d64574b16aea330c69a97e48e90a117d9e78248808f00b51d595c",
+      "bytes": 1066
+    },
+    "Locale/localization-deDE.lua": {
+      "sha256": "6c093a0b4d026f252f67c0737cbb634d18184ef98ce480de1d6be61524466a01",
+      "bytes": 7413
+    },
+    "Locale/localization-enUS.lua": {
+      "sha256": "e305d77ba14adb48ed40c29bd277a526160a2d3e536686caddeca5c0b57f1274",
+      "bytes": 6540
+    },
+    "Locale/localization-esES.lua": {
+      "sha256": "996301b40ab28e185985716386a2c8c06946d914dde152ac5b46966e187add1c",
+      "bytes": 7315
+    },
+    "PallyPower/MinimapButton.lua": {
+      "sha256": "325340ed2d839e7ce65e5006605bdf9580a084b26e0ac13de160d0f1e7864787",
+      "bytes": 7927
+    },
+    "PallyPower/MinimapButton.xml": {
+      "sha256": "5ca078bbedb81480536e031c769b872643096d899822b96cafc2fb0aa1270dab",
+      "bytes": 10460
+    },
+    "PallyPower/PallyPower.lua": {
+      "sha256": "5e4e86a8d575fe792d428b0381894f2f801d2b43f3ea03e897a1ac279362cb87",
+      "bytes": 145131
+    },
+    "PallyPower/PallyPower.xml": {
+      "sha256": "9bd84eff6791fc54c3606eccf5073e2195e4e7cf6ffab6ebfc95dc9bcada85ff",
+      "bytes": 83648
+    },
+    "PallyPower/PallyPowerManaCost.lua": {
+      "sha256": "b834bb165661d5b465b4c47caca55ee398b10c73722bb15424f94734aa1bece7",
+      "bytes": 1617
+    },
+    "PallyPower-ResizeGrip.tga": {
+      "sha256": "f17e6620869ab39c230f860d13e5e9cda42b03938b27b922c99a6e4109bcf5cf",
+      "bytes": 2085
+    },
+    "README.md": {
+      "sha256": "0180ad4a3bba00990019bf8b612e5d6924bbb5c4ed29a547d5a6b80c926b579b",
+      "bytes": 14318
+    },
+    "scripts/check.sh": {
+      "sha256": "9da1b72c2ec1d5138a6bea1ec4ae234008ac8b4a2c610982296e287a344e3be6",
+      "bytes": 2497
+    },
+    "scripts/lint/definitions.py": {
+      "sha256": "3dc2731f6bdc25fd3621483989d350185ac3d168aac26bbbb0529abf7d320ef4",
+      "bytes": 9593
+    },
+    "scripts/lint/scoping.py": {
+      "sha256": "9e1fa55b0c9143449058923edd06f689c1fe16bc3f96becd7713cf92df63a4af",
+      "bytes": 4159
+    },
+    "scripts/lint/upvalues.py": {
+      "sha256": "f01de63e98bd66fb2437a7a24aefd83dc4bb0549e9337e7eb61a58d2d4a898cc",
+      "bytes": 2994
+    },
+    "scripts/lint/version.py": {
+      "sha256": "ee3083936f7d808ed11a79f29c3a5b8bf9adab4612845a84309d6a275df5e83a",
+      "bytes": 3183
+    },
+    "scripts/sabotage.py": {
+      "sha256": "f930298f1e2044b2a417b624a202dde0cb08b438bef77d0710f4fa3a9e620d0e",
+      "bytes": 27914
+    },
+    "scripts/test_cc.lua": {
+      "sha256": "3cfeb6858db4dd69dec6c030926253bc5db47063e8092a6fa941ab83b5bd01be",
+      "bytes": 13920
+    },
+    "scripts/test_duties.lua": {
+      "sha256": "04753552d080f5f0265d666c0ffe92d48d66a9a5ace8b65dd64d424941dc0e67",
+      "bytes": 9642
+    },
+    "scripts/test_groupbuff.lua": {
+      "sha256": "845d6b6b711b56e5f0ab2791ee21d895b27580bd90ae639bfa8f267486dfc4fc",
+      "bytes": 14547
+    },
+    "scripts/test_minimap.lua": {
+      "sha256": "b3970dd4a5bbb8110ea95480add420271a53e2bd05562008f7a1d9e523c0810e",
+      "bytes": 16900
+    },
+    "scripts/test_pets.lua": {
+      "sha256": "11e681aeb19917b96b83a943c099e4b1c4cfae3acafb5caf4aee92229e82a909",
+      "bytes": 5816
+    },
+    "scripts/test_rotation.lua": {
+      "sha256": "29934068ebf01ae2765f33f25a5491e28081956886e7a019ba8852adb409c0b4",
+      "bytes": 9740
+    },
+    "scripts/test_soulstone.lua": {
+      "sha256": "ec6ed892f4e7637f68450b60849aa3b3712be1c0e3963249a3e0b78bb2816b97",
+      "bytes": 6827
+    },
+    "scripts/test_strip.lua": {
+      "sha256": "8f902f2fe814f842e7bae6ab253b1831658b16a8840ff713b915ece38eef12b8",
+      "bytes": 35704
+    },
+    "scripts/verify.py": {
+      "sha256": "8fd245b7c66a8bcd25f70c50f634fbb3f82a917e7a531fefd95420bdf87ae5f4",
+      "bytes": 5269
+    },
+    "Skins/Smooth.tga": {
+      "sha256": "b17cd504bb136f11037a3c3b7fad0973a52e637f65499c81a37490ee68bcd618",
+      "bytes": 24594
+    },
+    "Sounds/ding.mp3": {
+      "sha256": "6180177a351fc2c018e1c014056b812089aece86c0a12cb34c59d72d0829fe35",
+      "bytes": 89442
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "411713383": {
+      "tag": "v1.15.4",
+      "folder": "v1.15.4--411713383",
+      "assets": {
+        "637142909": {
+          "sha256": "d59d48a3e7f203e9c076ecedb62b431e8adb42725b2aa75d8a934bcfdc476353",
+          "bytes": 1897333,
+          "id": "637142909",
+          "name": "Aegis_RallyPower-v1.15.4-classic.zip",
+          "url": "https://github.com/Torchlite-bit/Aegis_RallyPower/releases/download/v1.15.4/Aegis_RallyPower-v1.15.4-classic.zip",
+          "path": "releases/v1.15.4--411713383/assets/Aegis_RallyPower-v1.15.4-classic.zip"
+        },
+        "637142951": {
+          "sha256": "ffe78775fc90700aa583461e0bd9057df59280c0e64622f1db27900e51983e47",
+          "bytes": 180,
+          "id": "637142951",
+          "name": "release.json",
+          "url": "https://github.com/Torchlite-bit/Aegis_RallyPower/releases/download/v1.15.4/release.json",
+          "path": "releases/v1.15.4--411713383/assets/release.json"
+        }
+      },
+      "source": {
+        "sha256": "ac12520ff452cc74ad2f596970e645e4d45c1c96ef94a7fcc64540dc7010064e",
+        "bytes": 1990577,
+        "path": "releases/v1.15.4--411713383/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Torchlite-bit/Aegis_RallyPower/tarball/v1.15.4"
+      }
+    }
+  }
+}

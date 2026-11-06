@@ -1,0 +1,9 @@
+{
+  "id": "302214102",
+  "tag": "2.1.16",
+  "name": "Version 2.1.16",
+  "body": "**Data flow fixes:**\r\n\r\n1. Fix of issue #45: Transfering Runecloth from guild bank to bag for Heavy Runecloth Bandage caused an error in the function `ATSW_TooltipSetSkill`\r\n2. Fix of issue #47: Showing a recipe for non-existent skill caused an error in the function `SelectCraftItem`",
+  "published": "2026-03-27T06:03:36Z",
+  "prerelease": false,
+  "url": "https://github.com/Shellyoung/AdvancedTradeSkillWindow2/releases/tag/2.1.16"
+}

@@ -1,0 +1,198 @@
+# Changelog
+
+## 1.3.2-rc1
+
+### Features
+
+- New "Button Style" dropdown on the General tab replaces the "Use Modern Button Style" checkbox, with five styles: Vanilla Buttons, Modern Buttons, Darker Vanilla Buttons, Darker Modern Buttons and No Border. Your current style carries over (unchecked → Vanilla Buttons, checked → Modern Buttons). Force Vanilla Layout Mode offers the two vanilla styles.
+- Vanilla Buttons now look exactly like Blizzard's own action buttons: lighter grey slots, no dark backdrop. The previous darker look is kept as "Darker Vanilla Buttons". This started as a bug report: thanks to Discord user @Coriach for spotting that the Main Bar looked darker with ACAB than without, which became this feature instead of a plain color fix.
+- New "No Border" button style: icons only, no border or backdrop. With Spacing 0, icons touch seamlessly inside a bar and across bars snapped together in Edit Layout. On the Main Bar with Blizzard art shown, icons shrink slightly to fit the art's slots.
+
+### Bugfixes
+
+- Fix the Main Bar's Blizzard art looking darker with ACAB: Main Bar buttons over the art no longer draw a dark backdrop, and vanilla styles draw Blizzard's own slot border there.
+- Fix button borders looking slightly lighter on some bars than others (seen on the Action Bars vs. Extra Bars in the Modern style): every bar now sits on whole screen pixels.
+- Fix a button's tooltip showing the old spell after replacing it while hovering (e.g. Smite Rank 1 → Rank 2); the tooltip now updates right away.
+- Fix a repeating Lua error ("Unable to determine spell id from spell name") on macros naming a spell nampower can't look up by name, e.g. `/cast Attack`. Such macro buttons now skip the range/usable tint instead.
+
+## 1.3.1-rc1
+
+### Bugfixes
+
+- Fix Action Bar 1/2 and Right Action Bar 1/2 turning off on zone change when they were off in Blizzard's Interface Options but on in ACAB. ACAB now saves their state into Blizzard's own settings, so both always agree.
+
+## 1.3.0-rc2
+
+### Features
+
+- Stance Bar, Pet Bar and Cast Bar sitting at their default spot now move above Extra Bar 1 / Extra Bar 2 whenever those get enabled, disabled or reset to their vanilla position - in every profile, not only with Force Vanilla Layout, and for both the Vanilla and the ACAB-styled Pet/Stance Bar. Moved them yourself? They stay where you put them. A styled Pet/Stance Bar follows once you've used its "Reset to Vanilla Layout".
+- New General setting "Join update-check channel": turn it off to keep ACAB out of its hidden realm-wide chat channel (frees a custom channel slot). Version checks with party, raid, guild and battleground still run.
+
+### Bugfixes
+
+- Fix Main Bar page switching (page arrows, Shift+1-6) landing on the page of an action bar that's already shown, when Blizzard's own "Show Right ActionBar 2" option was off.
+- Fix action bars, Experience Bar, Page Indicator, Micro Menu, Latency Bar, Key Ring and Bag Bar ending up in the wrong spots after changing the UI scale. Default Vanilla and Default Modern now rebuild themselves for the new scale (one automatic reload); custom profiles keep every element at its screen position.
+- Fix the Stance Bar starting at an old position after turning "Use Vanilla Stance Bar" off - it now keeps its spot (and keeps following the vanilla stack if it was on its default spot).
+- Fix Experience Bar's "Reset to Modern Layout Default" not placing it at the bottom center.
+- Fix Extra Bars' "Reset to Vanilla Layout" copying the shape of the bar they sit next to: Extra Bar 1/2 now reset to 12x1, Extra Bar 3/4 to 1x12.
+- Fix macros that also start Auto Shot never glowing: macros now flash briefly whenever their own ability fires (instant ones too), never for Auto Shot.
+- Fix `/acab recapture` leaving a moved Stance Bar in place and not putting the Pet Bar back above Extra Bar 2: both now return to their default spot on the vanilla stack.
+- Remove the Stance Bar "native gap ... implausible value" warning at login; the value it measured was never used.
+- Fix fallback-placed Extra Bars overlapping in the Modern button style (only when their reference bar had no saved position).
+- Fix empty dark squares sometimes showing at the vanilla Stance Bar spot when using the ACAB-styled Stance Bar after playing a character with the vanilla one.
+- Fix a fresh install saving action bar positions before the UI scale applied (the first login no longer prints "Recapturing positions").
+- Fix Extra Bar hotkeys disappearing (and their key going dead) after an action bar swapped back from showing that Extra Bar on a page or stance change; while swapped, the Main Bar now keeps showing its own hotkeys.
+- Fix casting, leaving combat or looting in the first seconds after the loading screen sometimes saving the Cast Bar or other elements at a wrong position, or changing another profile's Pet Bar setting.
+- `/acab` commands used right after the loading screen now say "Still loading" until setup finishes, instead of opening settings or changing profiles before your profile loaded (`/acab version` and `/acab help` still work).
+- Chat messages, `/acab help` and the minimap menu now say "Edit Layout" like the settings window (was "Configure Layout").
+- Profile names are now trimmed; empty names, names containing `|` and names longer than 32 characters are refused (create dialog, setup wizard, `/acab profile add`). Existing profiles are unchanged.
+- The update check ignores malformed version strings from other players and drops a malformed saved one, so a bogus announcement can't cause a permanent update nag.
+- A remembered "newer version available" message now stops after 5 logins in a row without any other player announcing that version again.
+- Importing a profile no longer takes over the exporter's update-nag state, Edit Layout mode or Hoverbind mode.
+- Fix "Only show on hover" staying on (and locked) for action bars and elements after turning on Force Vanilla Layout Mode; it now turns off for all of them.
+- Fix macros with next-swing abilities (Heroic Strike, Cleave) glowing only briefly: they now stay lit until the swing lands, like the plain ability. Macros of instant abilities no longer flash longer than the plain ability (outside Auto Shot / Shoot).
+- Fix a custom ACAB-styled Stance Bar grid (e.g. 1x3) resetting to a single row after entering or leaving a dungeon.
+
+### Performance
+
+- Less work and fewer temporary allocations in action button updates, hoverbind mode and while dragging elements; smaller addon files.
+- Page and stance swaps do about half the work: the edit-mode refresh runs once per swap instead of five times.
+- Item macros (potions, bandages, ammo) share one bag scan per bag update instead of one per button.
+- Cooldown spirals are only rewritten when the cooldown actually changes.
+- Range/usability updates skip bars that are turned off or hidden.
+- Macro cast flashes no longer re-check every action button on each cast (Auto Shot included).
+- Dragging elements in Edit Layout mode does no work while the mouse and Shift/Alt/Ctrl stay still, and reuses the snap targets for the whole drag.
+- Less per-frame work and garbage while dragging the Main Bar.
+- The hover-only poll stops entirely while no bar or element uses "Only show on hover".
+- Closing a loot window no longer re-applies every element's position.
+
+### Maintenance
+
+- Developer docs refreshed: stale plan files removed, newly confirmed client behavior recorded.
+- Duplicated code merged into shared helpers (login settle poll, settings height-fit, flat backdrop).
+- Old settings that are no longer used are removed from saved profiles after being carried over, and all modern-style settings buttons are built by one shared function.
+- The largest files are split up (new ForceVanillaLayout.lua, ProfileDialogs.lua, Dialog.lua, LayoutGrid.lua and ExtraBars.lua). When updating, replace the whole addon folder and restart the game - a /reload doesn't load new files.
+
+## 1.3.0-rc1
+
+### Features
+
+- **Smarter macros:** macros now show the tooltip, icon, cooldown, range/usable tint and item count of the ability or item they actually use (Auto Shot / Attack / Shoot and `?`-prefixed lines never take over).
+- Macros always show the ability's or item's own icon, even with a custom macro icon (items greyed once you run out), and equipped-item macros get the quality ring.
+- Macros glow while their own ability runs (Auto Shot, Attack, cast-time spells).
+- **SuperCleveRoidMacros support:** macros with `[conditions]` show the option whose conditions match right now (e.g. `[mod:shift]`), and a login note mentions it.
+- `CastSpellByName("...")` and ShaguTweaks' `--showtooltip` macros are understood too.
+
+### Stability
+
+- Missing client mods now get one clear chat message instead of a flood of errors: without ClassicAPI the addon stays disabled, and a missing SuperWoW, nampower or UnitXP_SP3 shows a warning at login.
+- An error while setting up one element at login no longer stops every element after it from loading; chat names the part that failed.
+- Imported or damaged profiles are now checked for every saved setting (colors, font sizes, spacing, grid size, per-bar options), so a bad value resets to its default instead of causing errors.
+
+### Performance
+
+- Lower CPU use in combat: action buttons share one event handler.
+- Lower CPU use in raids: Stance Bar buttons only update when your form actually changes, not on every buff.
+- Settings pages no longer pile up hidden frames each time you open them (Stance Bar grid choices, stance/page assignment dropdowns).
+
+### Bugfixes
+
+- Fix keys bound in Blizzard's Key Bindings menu not showing on ACAB buttons until a reload.
+- Fix Better Experience Bar colors turning blue after a while or on zone change - your earned/rested colors now stick.
+- Fix Better Experience Bar rested XP running too far: the rested fill, tick and "Rested" text now show your real remaining bonus XP, carrying into the next level correctly. The rested rate is measured on each character's first rested kill, so it fits any realm.
+- Fix rested XP tick drawing behind the experience bar fill.
+- Fix equipped items like rings and trinkets showing a wrong item count on action bars - only consumables (potions, bandages, ...) show a count now.
+- Fix turning Better Experience Bar off leaving the bar blue while unrested - the native purple/blue now follows your rest state.
+- Fix Stance Bar not showing up after learning your first stance/form (e.g. Stealth) until a reload.
+- Fix Setup Wizard's Vanilla layout placing all action bars too far left on a fresh install. **Already set up a Vanilla-layout profile and your bars sit too far left?** Switch to that profile and run `/acab recapture` once.
+- Fix the cooldown/GCD spiral drawing behind the icons on the Vanilla Stance Bar and Vanilla Pet Bar.
+- Fix Setup Wizard's layout step sometimes misplacing Micro Menu / Latency Bar on slow logins - it now waits for the UI to settle.
+- First-login dialog only offers "use existing profile" once you have a custom profile.
+- Fix Auto Shot / Auto Attack buttons glowing on after the target is cleared or dead, and macros glowing just because they also start Auto Shot or Auto Attack.
+- Fix stance/page assignment dropdowns becoming clickable on a locked profile (Default Vanilla / Default Modern) after learning a form or toggling the General pagination / stance-swap options.
+
+## 1.2.1-beta
+
+### Features
+
+- **New Setup Wizard:** now runs inside the Settings window and shows your real settings pages - every change applies live to your bars while you set up, no more preview-then-apply. Covers General, Main Bar, Extra Bars, Stance/Pet Bar, Bag Bar, Key Ring, Experience Bar and Tooltip, with a "Drag Elements with Mouse" button to jump into Edit Layout mode and back. Reloads mid-setup pick up right where you left off.
+- **New built-in profile "Default Modern"** (locked, like the renamed "Default Vanilla") - the baseline for the wizard's Modern layout.
+- Better Experience Bar gets a new default earned-XP color and text size, and starts enabled on wizard-built profiles.
+- Update checker now also listens on a hidden realm-wide channel and remembers the newest version it heard, so the update notice repeats every login until you update; `/acab version` shows your installed version.
+- **GryphON or GryphOFF:** With the new Gryphon / Background Settings Dropdown on Mainbar's Settings-Page you can decide if you want the Gryphons, just the background, or everything disabled for a more modern & clean look.
+- Blizzard's Main Bar art now moves and scales with Main Bar, in both Vanilla and Modern button style.
+- While the art is shown, Bag Bar, Key Ring, Micro Menu, Latency Bar and Page Indicator stay in their vanilla spots on Main Bar; unlock any of them via its lock icon (settings page or Edit Layout mode) to move it freely.
+- Settings that would break the art's alignment are locked while it's shown - hover to see why, click to jump to the responsible setting. Your own grid choices return once the art is off.
+- Page Indicator now sits right of Main Bar, vertically centered, and follows it through any grid, size or move - until you drag it somewhere else.
+- Bag Bar gets a Grid Layout option (5x1 or 1x5).
+- Key Ring gets its own settings page (position, scale, hover-only, reset).
+- Position X/Y are now measured from screen center to each element's visible center: 0/0 is dead center for every element, whatever its border style, grid or scale.
+- Button spacing now scales with button size on every bar, so identically configured bars are always exactly the same size.
+- Styled Pet Bar and Stance Bar get "Reset to Modern Layout Default"; all Vanilla/Modern resets now also restore default button size, spacing and scale.
+
+### Bugfixes
+
+- Fix update checker never alerting older clients: newer clients now answer older peers' version announcements.
+- Fix Setup Wizard's "Keep Vanilla Layout" turning Page/Stance Swap back on after you disabled them.
+- Fix styled Stance Bar's Reset to Vanilla Layout sizing it for 10 stances instead of your actual forms.
+- Fix `/acab profile copy/import/export` overwriting the locked Default profile - now refused in chat.
+- Fix a profile deleted on one character being recreated with defaults on another - now falls back to Default.
+- Fix disabled Experience Bar reappearing on quest turn-in, level-up or other XP updates.
+- Fix early XP/rest events on login touching settings before the profile loaded (errors on fresh installs).
+- Fix hoverbind saving other buttons' temporary stance-swap keybinds, leaving native keys unbound after relog.
+- Fix Extra Bars' action slots overlapping after shrinking a bar.
+- Fix color picker Cancel not restoring the previous color; color options now grey out with Better Experience Bar off.
+- Fix Setup Wizard slider readouts staying blank, and early finishes (Lock down / Keep Vanilla Layout) now reset global spacing/size to defaults.
+- Fix spacing max: 20 in both button styles, no more shrink or overshoot when switching style.
+- Fix Force Vanilla Layout not switching a styled Pet/Stance Bar to native - prompts a reload, settings page matches.
+- Fix bar 5's Modern reset doing nothing with bar 4 disabled; Modern resets now restore bars 4/5 to 1x12.
+- Fix Tooltip scale sticking to button and settings tooltips.
+- Fix a click without moving dropping Page Indicator's follow-Main-Bar mode with snapping on.
+- Fix the Main Bar art-dropdown highlight flickering on repeated clicks.
+- Fix open bags hiding behind action bars, buttons, Bag Bar, Micro Menu, Key Ring and Page Indicator - bags now draw on top.
+
+## 1.1.1-beta
+
+- Add lightweight update checker (peer-announce over addon chat, nags once per session on a newer version)
+- Fix bar-swap assignments not working for all Druid forms (Travel/Aquatic included)
+- Fix stance-swapped default-bar buttons keeping their old keybind
+
+## 1.1.0-beta
+
+- Add Setup Wizard guiding initial addon setup, offering "Classic" and "Modern" base profiles
+- Add Modern Layout option to the Setup Wizard: native/styled Pet-Stance mode, first-run profile fixes
+- Extend Profiles page with a Setup Wizard button
+- Make the Default-Layout warning banner clickable, jumping to the relevant settings
+- Extend page/stance bar-swap to all default bars (Main Bar, Action Bar 1 & 2, Right Action Bar 1 & 2)
+- Add README, release packaging script, and release workflow
+
+## 1.0.0-beta
+
+- Rename TrustyBars to Alternative Classic Action Bars (ACAB) and finish the 1.0 refactor
+- Add customizable Cast Bar (position, scale, grid snap)
+- Add customizable Pet Bar
+- Add customizable Stance Bar styled mode with hoverbind support
+- Add Edit Mode settings tab with layout grid and grid snapping
+- Add "Only show on hover" toggle for every bar and element
+- Add macro text display to action buttons
+- Add movable/scalable Tooltip element to Edit Layout mode
+- Add position fine-tuning: per-pixel X/Y sliders and accurate screen-edge clamping
+- Add profiles, native action bar sync, and border-style unification
+- Add profile export/import; fix copy-profile clobber bug
+- Rework `/acab` into a full command set (edit, bind, help, menu, settings, profile)
+- Stack Pet/Stance/Cast Bar dynamically in Default Layout mode
+- Warn before enabling Default Blizzard Layout; fix its reset cascade
+- Settings UI polish: tabs, scrollbars, list panel, and fade strips
+- Convert plain-text setting descriptions to hover tooltips
+- Micro Menu grid layout, spacing fix, and re-anchor guard
+- Fix default-bar alignment on fresh install; add Pet Bar reflow
+- Fix Pet/Stance Bar Spacing/ButtonSize sliders and per-bar global-override lock
+- Fix Pet Bar Condense-empty-button-space not working in custom mode
+- Fix Stance Bar backdrop leak, border style, and native border overlap
+- Fix Latency Bar reset position, edit-mode hitbox, and native-anchor timing
+- Fix Main Bar always showing empty-slot borders
+- Fix Edit Layout snap priority/Shift-invert; add Alt-invert and ESC exit
+- Fix edit-mode overlay/snapping accuracy; add global border-style, spacing and button-size controls
+- Fix hoverbind mouse-button binds and Escape-clears-keybind
+- Fix LatencyBar/BagBar/Keyring resetting or reappearing when toggled off
+- Strip comment bloat, enforce WHAT-syntax going forward

@@ -1,0 +1,24 @@
+## Interface: 11200
+## Title: aDF |cff7fff7fby |cffF5F54AAutignem
+## Author: Autignem (rewrite and current maintenance), Original Atreyyo
+## Version: 4.3
+## Notes: Armor/resistance and Debuff frame
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## SavedVariablesPerCharacter: aDF_Options
+
+core\init.lua
+config\config_variables.lua
+core\state.lua
+core\data.lua
+config\config_defaults_ini.lua
+ui\debuff_icons.lua
+ui\frames.lua
+logic\aura.lua
+logic\sort.lua
+logic\update.lua
+ui\options_widgets.lua
+ui\options_registry.lua
+ui\options_shell.lua
+core\events.lua
+core\slash.lua

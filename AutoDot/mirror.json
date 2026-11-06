@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Atreyyo/AutoDot",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Atreyyo",
+    "repo": "AutoDot",
+    "name": "AutoDot",
+    "url": "https://github.com/Atreyyo/AutoDot",
+    "api": "https://api.github.com/repos/Atreyyo/AutoDot"
+  },
+  "commit": "707dae14bcba632c6ee41b046d54e1a26d313f19",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "AutoDot.lua": {
+      "sha256": "965e5901875fc2d466df1594dff48c538bff8da23fc683ff273c9eeda099aa9f",
+      "bytes": 9423
+    },
+    "AutoDot.toc": {
+      "sha256": "3cc0e98a7819ab0bdb12677dfea28f2e372b79da9368596e931ccc2390fced4d",
+      "bytes": 204
+    },
+    "README.md": {
+      "sha256": "eb15ea06c5ca39e5e9d8a284f9a4aa1dc1402fad25475386be5a864a8610b8a3",
+      "bytes": 76
+    },
+    "ReadMe.txt": {
+      "sha256": "6b39db4489a61c297516a9b8f1415556e9071255c3abef6c87da86dc17293509",
+      "bytes": 47
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

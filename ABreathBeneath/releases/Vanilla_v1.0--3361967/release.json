@@ -1,0 +1,9 @@
+{
+  "id": "3361967",
+  "tag": "Vanilla_v1.0",
+  "name": "[Vanilla] ABreathBeneath",
+  "body": "Backported to Vanilla (1.12).\nRemoved changes across expansions.\n\nCommits:\nhttps://github.com/Lanrutcon/ABreathBeneath/commit/d13d3093be77ff4fd25cf3567c9d0fdd865428fa\n",
+  "published": "2016-06-02T19:49:47Z",
+  "prerelease": false,
+  "url": "https://github.com/Lanrutcon/ABreathBeneath/releases/tag/Vanilla_v1.0"
+}

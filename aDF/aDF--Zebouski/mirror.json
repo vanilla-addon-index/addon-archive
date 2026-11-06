@@ -1,0 +1,39 @@
+{
+  "upstream": "https://github.com/Zebouski/aDF/tree/masterturtle",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Zebouski",
+    "repo": "aDF",
+    "name": "aDF",
+    "ref": "masterturtle",
+    "subpath": "",
+    "url": "https://github.com/Zebouski/aDF",
+    "api": "https://api.github.com/repos/Zebouski/aDF"
+  },
+  "commit": "755a13f92f67e6fb68364010d53bb31622f6df6d",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "aDF.lua": {
+      "sha256": "a8913d9cfa09639316f4f278d3636153d68a2ccdf2af8e1854ca89b3927b2fd9",
+      "bytes": 21502
+    },
+    "aDF.toc": {
+      "sha256": "af4dac62443252cc4e6d5c4afc9002fa328b59c0df784c0be32a84571cd9699b",
+      "bytes": 268
+    },
+    "README.md": {
+      "sha256": "a608fa6488c6f4bd9601574b937d50d1c3e892e1649f905421273d6ae4743df4",
+      "bytes": 1291
+    },
+    "readme.txt": {
+      "sha256": "aa606541b4111202584e10106c2d5b98e33627cbb53c9b6e9bdc7f50923c8d07",
+      "bytes": 1435
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

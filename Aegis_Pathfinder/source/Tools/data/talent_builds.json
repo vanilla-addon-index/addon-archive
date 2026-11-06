@@ -1,0 +1,6059 @@
+{
+ "note": "Checked against Turtle WoW's trees, saved by /apg talents.",
+ "trees_saved": {
+  "DRUID": "2026-10-01 (Aegis: Pathfinder 0.22.9)",
+  "HUNTER": "2026-10-01 (Aegis: Pathfinder 0.22.9)",
+  "MAGE": "2026-10-01 (Aegis: Pathfinder 0.22.9)",
+  "PALADIN": "2026-10-01 (Aegis: Pathfinder 0.22.9)",
+  "PRIEST": "2026-10-01 (Aegis: Pathfinder 0.22.9)",
+  "ROGUE": "2026-10-01 (Aegis: Pathfinder 0.22.9)",
+  "SHAMAN": "2026-10-01 (Aegis: Pathfinder 0.22.9)",
+  "WARLOCK": "2026-10-01 (Aegis: Pathfinder 0.22.9)",
+  "WARRIOR": "2026-10-01 (Aegis: Pathfinder 0.22.9)"
+ },
+ "classes": {
+  "DRUID": {
+   "trees": [
+    "Balance",
+    "Feral Combat",
+    "Restoration"
+   ],
+   "levelling": {
+    "spec": "Feral Combat",
+    "why": "Feral. Cat form for damage, bear when it goes wrong: Ferocity, Sharpened Claws and Predatory Strikes, Feral Swiftness to get around, Heart of the Wild and Leader of the Pack by 40. Omen of Clarity at 51, then Furor.",
+    "split": "11/35/5",
+    "order": [
+     [
+      "Ferocity",
+      5,
+      14
+     ],
+     [
+      "Thick Hide",
+      3,
+      17
+     ],
+     [
+      "Open Wounds",
+      2,
+      19
+     ],
+     [
+      "Sharpened Claws",
+      3,
+      22
+     ],
+     [
+      "Feral Swiftness",
+      2,
+      24
+     ],
+     [
+      "Predatory Strikes",
+      3,
+      27
+     ],
+     [
+      "Primal Fury",
+      2,
+      29
+     ],
+     [
+      "Improved Shred",
+      2,
+      31
+     ],
+     [
+      "Berserk",
+      1,
+      32
+     ],
+     [
+      "Blood Frenzy",
+      2,
+      34
+     ],
+     [
+      "Heart of the Wild",
+      5,
+      39
+     ],
+     [
+      "Leader of the Pack",
+      1,
+      40
+     ],
+     [
+      "Nature's Grasp",
+      1,
+      41
+     ],
+     [
+      "Improved Nature's Grasp",
+      4,
+      45
+     ],
+     [
+      "Natural Weapons",
+      3,
+      48
+     ],
+     [
+      "Natural Shapeshifter",
+      2,
+      50
+     ],
+     [
+      "Omen of Clarity",
+      1,
+      51
+     ],
+     [
+      "Open Wounds",
+      3,
+      52
+     ],
+     [
+      "Carnage",
+      2,
+      54
+     ],
+     [
+      "Feral Charge",
+      1,
+      55
+     ],
+     [
+      "Furor",
+      5,
+      60
+     ]
+    ],
+    "points": [
+     [
+      10,
+      2,
+      "Ferocity",
+      1
+     ],
+     [
+      11,
+      2,
+      "Ferocity",
+      2
+     ],
+     [
+      12,
+      2,
+      "Ferocity",
+      3
+     ],
+     [
+      13,
+      2,
+      "Ferocity",
+      4
+     ],
+     [
+      14,
+      2,
+      "Ferocity",
+      5
+     ],
+     [
+      15,
+      2,
+      "Thick Hide",
+      1
+     ],
+     [
+      16,
+      2,
+      "Thick Hide",
+      2
+     ],
+     [
+      17,
+      2,
+      "Thick Hide",
+      3
+     ],
+     [
+      18,
+      2,
+      "Open Wounds",
+      1
+     ],
+     [
+      19,
+      2,
+      "Open Wounds",
+      2
+     ],
+     [
+      20,
+      2,
+      "Sharpened Claws",
+      1
+     ],
+     [
+      21,
+      2,
+      "Sharpened Claws",
+      2
+     ],
+     [
+      22,
+      2,
+      "Sharpened Claws",
+      3
+     ],
+     [
+      23,
+      2,
+      "Feral Swiftness",
+      1
+     ],
+     [
+      24,
+      2,
+      "Feral Swiftness",
+      2
+     ],
+     [
+      25,
+      2,
+      "Predatory Strikes",
+      1
+     ],
+     [
+      26,
+      2,
+      "Predatory Strikes",
+      2
+     ],
+     [
+      27,
+      2,
+      "Predatory Strikes",
+      3
+     ],
+     [
+      28,
+      2,
+      "Primal Fury",
+      1
+     ],
+     [
+      29,
+      2,
+      "Primal Fury",
+      2
+     ],
+     [
+      30,
+      2,
+      "Improved Shred",
+      1
+     ],
+     [
+      31,
+      2,
+      "Improved Shred",
+      2
+     ],
+     [
+      32,
+      2,
+      "Berserk",
+      1
+     ],
+     [
+      33,
+      2,
+      "Blood Frenzy",
+      1
+     ],
+     [
+      34,
+      2,
+      "Blood Frenzy",
+      2
+     ],
+     [
+      35,
+      2,
+      "Heart of the Wild",
+      1
+     ],
+     [
+      36,
+      2,
+      "Heart of the Wild",
+      2
+     ],
+     [
+      37,
+      2,
+      "Heart of the Wild",
+      3
+     ],
+     [
+      38,
+      2,
+      "Heart of the Wild",
+      4
+     ],
+     [
+      39,
+      2,
+      "Heart of the Wild",
+      5
+     ],
+     [
+      40,
+      2,
+      "Leader of the Pack",
+      1
+     ],
+     [
+      41,
+      1,
+      "Nature's Grasp",
+      1
+     ],
+     [
+      42,
+      1,
+      "Improved Nature's Grasp",
+      1
+     ],
+     [
+      43,
+      1,
+      "Improved Nature's Grasp",
+      2
+     ],
+     [
+      44,
+      1,
+      "Improved Nature's Grasp",
+      3
+     ],
+     [
+      45,
+      1,
+      "Improved Nature's Grasp",
+      4
+     ],
+     [
+      46,
+      1,
+      "Natural Weapons",
+      1
+     ],
+     [
+      47,
+      1,
+      "Natural Weapons",
+      2
+     ],
+     [
+      48,
+      1,
+      "Natural Weapons",
+      3
+     ],
+     [
+      49,
+      1,
+      "Natural Shapeshifter",
+      1
+     ],
+     [
+      50,
+      1,
+      "Natural Shapeshifter",
+      2
+     ],
+     [
+      51,
+      1,
+      "Omen of Clarity",
+      1
+     ],
+     [
+      52,
+      2,
+      "Open Wounds",
+      3
+     ],
+     [
+      53,
+      2,
+      "Carnage",
+      1
+     ],
+     [
+      54,
+      2,
+      "Carnage",
+      2
+     ],
+     [
+      55,
+      2,
+      "Feral Charge",
+      1
+     ],
+     [
+      56,
+      3,
+      "Furor",
+      1
+     ],
+     [
+      57,
+      3,
+      "Furor",
+      2
+     ],
+     [
+      58,
+      3,
+      "Furor",
+      3
+     ],
+     [
+      59,
+      3,
+      "Furor",
+      4
+     ],
+     [
+      60,
+      3,
+      "Furor",
+      5
+     ]
+    ]
+   },
+   "specs": [
+    {
+     "spec": "Balance",
+     "why": "Moonkin Form, Vengeance, Nature's Grace and Eclipse, with Restoration's Genesis for your damage over time: the caster.",
+     "split": "35/0/16",
+     "trees": [
+      [
+       "Balance",
+       {
+        "Improved Wrath": 5,
+        "Guidance of the Dream": 2,
+        "Improved Moonfire": 2,
+        "Natural Weapons": 3,
+        "Moonfury": 3,
+        "Omen of Clarity": 1,
+        "Nature's Reach": 2,
+        "Vengeance": 5,
+        "Moonglow": 3,
+        "Moonkin Form": 1,
+        "Nature's Grace": 1,
+        "Improved Starfire": 3,
+        "Balance of All Things": 3,
+        "Eclipse": 1
+       }
+      ],
+      [
+       "Feral Combat",
+       {}
+      ],
+      [
+       "Restoration",
+       {
+        "Improved Mark of the Wild": 5,
+        "Subtlety": 5,
+        "Genesis": 3,
+        "Reflection": 3
+       }
+      ]
+     ]
+    },
+    {
+     "spec": "Feral Combat",
+     "why": "Cat and bear: Heart of the Wild, Berserk and Leader of the Pack, Omen of Clarity from Balance and Furor to shift for energy.",
+     "split": "11/35/5",
+     "trees": [
+      [
+       "Balance",
+       {
+        "Nature's Grasp": 1,
+        "Improved Nature's Grasp": 4,
+        "Natural Weapons": 3,
+        "Natural Shapeshifter": 2,
+        "Omen of Clarity": 1
+       }
+      ],
+      [
+       "Feral Combat",
+       {
+        "Ferocity": 5,
+        "Feral Instinct": 3,
+        "Thick Hide": 3,
+        "Open Wounds": 2,
+        "Feral Swiftness": 2,
+        "Feral Charge": 1,
+        "Sharpened Claws": 3,
+        "Primal Fury": 2,
+        "Predatory Strikes": 3,
+        "Blood Frenzy": 2,
+        "Improved Shred": 2,
+        "Berserk": 1,
+        "Heart of the Wild": 5,
+        "Leader of the Pack": 1
+       }
+      ],
+      [
+       "Restoration",
+       {
+        "Furor": 5
+       }
+      ]
+     ]
+    },
+    {
+     "spec": "Restoration",
+     "why": "Swiftmend, Nature's Swiftness, Improved Regrowth and Tree of Life Form, with Balance's Omen of Clarity: the raid healer.",
+     "split": "11/0/40",
+     "trees": [
+      [
+       "Balance",
+       {
+        "Nature's Grasp": 1,
+        "Improved Nature's Grasp": 4,
+        "Natural Weapons": 3,
+        "Natural Shapeshifter": 2,
+        "Omen of Clarity": 1
+       }
+      ],
+      [
+       "Feral Combat",
+       {}
+      ],
+      [
+       "Restoration",
+       {
+        "Improved Mark of the Wild": 5,
+        "Improved Healing Touch": 5,
+        "Nature's Focus": 1,
+        "Swiftmend": 1,
+        "Genesis": 3,
+        "Reflection": 3,
+        "Gift of Nature": 5,
+        "Tranquil Spirit": 5,
+        "Aessina's Bloom": 2,
+        "Nature's Swiftness": 1,
+        "Preservation": 3,
+        "Improved Regrowth": 5,
+        "Tree of Life Form": 1
+       }
+      ]
+     ]
+    }
+   ],
+   "rxp_gone": [
+    "Feline Swiftness",
+    "Faerie Fire (Feral)",
+    "Savage Fury",
+    "Improved Enrage"
+   ],
+   "alts": [
+    {
+     "name": "Bear",
+     "spec": "Feral Combat",
+     "why": "Bear form from 10. Ferocity, Thick Hide and Feral Instinct to tank, Sharpened Claws and Primal Fury for rage, Feral Charge at 28, Heart of the Wild by 39 and Leader of the Pack at 40; Balance's Omen of Clarity at 60.",
+     "split": "11/40/0",
+     "order": [
+      [
+       "Ferocity",
+       5,
+       14
+      ],
+      [
+       "Thick Hide",
+       3,
+       17
+      ],
+      [
+       "Feral Instinct",
+       2,
+       19
+      ],
+      [
+       "Sharpened Claws",
+       3,
+       22
+      ],
+      [
+       "Primal Fury",
+       2,
+       24
+      ],
+      [
+       "Predatory Strikes",
+       3,
+       27
+      ],
+      [
+       "Feral Charge",
+       1,
+       28
+      ],
+      [
+       "Feral Swiftness",
+       2,
+       30
+      ],
+      [
+       "Feral Instinct",
+       3,
+       31
+      ],
+      [
+       "Ancient Brutality",
+       2,
+       33
+      ],
+      [
+       "Berserk",
+       1,
+       34
+      ],
+      [
+       "Heart of the Wild",
+       5,
+       39
+      ],
+      [
+       "Leader of the Pack",
+       1,
+       40
+      ],
+      [
+       "Carnage",
+       2,
+       42
+      ],
+      [
+       "Blood Frenzy",
+       2,
+       44
+      ],
+      [
+       "Feral Aggression",
+       5,
+       49
+      ],
+      [
+       "Nature's Grasp",
+       1,
+       50
+      ],
+      [
+       "Improved Nature's Grasp",
+       4,
+       54
+      ],
+      [
+       "Natural Weapons",
+       3,
+       57
+      ],
+      [
+       "Natural Shapeshifter",
+       2,
+       59
+      ],
+      [
+       "Omen of Clarity",
+       1,
+       60
+      ]
+     ],
+     "points": [
+      [
+       10,
+       2,
+       "Ferocity",
+       1
+      ],
+      [
+       11,
+       2,
+       "Ferocity",
+       2
+      ],
+      [
+       12,
+       2,
+       "Ferocity",
+       3
+      ],
+      [
+       13,
+       2,
+       "Ferocity",
+       4
+      ],
+      [
+       14,
+       2,
+       "Ferocity",
+       5
+      ],
+      [
+       15,
+       2,
+       "Thick Hide",
+       1
+      ],
+      [
+       16,
+       2,
+       "Thick Hide",
+       2
+      ],
+      [
+       17,
+       2,
+       "Thick Hide",
+       3
+      ],
+      [
+       18,
+       2,
+       "Feral Instinct",
+       1
+      ],
+      [
+       19,
+       2,
+       "Feral Instinct",
+       2
+      ],
+      [
+       20,
+       2,
+       "Sharpened Claws",
+       1
+      ],
+      [
+       21,
+       2,
+       "Sharpened Claws",
+       2
+      ],
+      [
+       22,
+       2,
+       "Sharpened Claws",
+       3
+      ],
+      [
+       23,
+       2,
+       "Primal Fury",
+       1
+      ],
+      [
+       24,
+       2,
+       "Primal Fury",
+       2
+      ],
+      [
+       25,
+       2,
+       "Predatory Strikes",
+       1
+      ],
+      [
+       26,
+       2,
+       "Predatory Strikes",
+       2
+      ],
+      [
+       27,
+       2,
+       "Predatory Strikes",
+       3
+      ],
+      [
+       28,
+       2,
+       "Feral Charge",
+       1
+      ],
+      [
+       29,
+       2,
+       "Feral Swiftness",
+       1
+      ],
+      [
+       30,
+       2,
+       "Feral Swiftness",
+       2
+      ],
+      [
+       31,
+       2,
+       "Feral Instinct",
+       3
+      ],
+      [
+       32,
+       2,
+       "Ancient Brutality",
+       1
+      ],
+      [
+       33,
+       2,
+       "Ancient Brutality",
+       2
+      ],
+      [
+       34,
+       2,
+       "Berserk",
+       1
+      ],
+      [
+       35,
+       2,
+       "Heart of the Wild",
+       1
+      ],
+      [
+       36,
+       2,
+       "Heart of the Wild",
+       2
+      ],
+      [
+       37,
+       2,
+       "Heart of the Wild",
+       3
+      ],
+      [
+       38,
+       2,
+       "Heart of the Wild",
+       4
+      ],
+      [
+       39,
+       2,
+       "Heart of the Wild",
+       5
+      ],
+      [
+       40,
+       2,
+       "Leader of the Pack",
+       1
+      ],
+      [
+       41,
+       2,
+       "Carnage",
+       1
+      ],
+      [
+       42,
+       2,
+       "Carnage",
+       2
+      ],
+      [
+       43,
+       2,
+       "Blood Frenzy",
+       1
+      ],
+      [
+       44,
+       2,
+       "Blood Frenzy",
+       2
+      ],
+      [
+       45,
+       2,
+       "Feral Aggression",
+       1
+      ],
+      [
+       46,
+       2,
+       "Feral Aggression",
+       2
+      ],
+      [
+       47,
+       2,
+       "Feral Aggression",
+       3
+      ],
+      [
+       48,
+       2,
+       "Feral Aggression",
+       4
+      ],
+      [
+       49,
+       2,
+       "Feral Aggression",
+       5
+      ],
+      [
+       50,
+       1,
+       "Nature's Grasp",
+       1
+      ],
+      [
+       51,
+       1,
+       "Improved Nature's Grasp",
+       1
+      ],
+      [
+       52,
+       1,
+       "Improved Nature's Grasp",
+       2
+      ],
+      [
+       53,
+       1,
+       "Improved Nature's Grasp",
+       3
+      ],
+      [
+       54,
+       1,
+       "Improved Nature's Grasp",
+       4
+      ],
+      [
+       55,
+       1,
+       "Natural Weapons",
+       1
+      ],
+      [
+       56,
+       1,
+       "Natural Weapons",
+       2
+      ],
+      [
+       57,
+       1,
+       "Natural Weapons",
+       3
+      ],
+      [
+       58,
+       1,
+       "Natural Shapeshifter",
+       1
+      ],
+      [
+       59,
+       1,
+       "Natural Shapeshifter",
+       2
+      ],
+      [
+       60,
+       1,
+       "Omen of Clarity",
+       1
+      ]
+     ]
+    }
+   ]
+  },
+  "HUNTER": {
+   "trees": [
+    "Beast Mastery",
+    "Marksmanship",
+    "Survival"
+   ],
+   "levelling": {
+    "spec": "Beast Mastery",
+    "why": "Beast Mastery. Your pet does the tanking and much of the damage: Unleashed Fury, Ferocity and Frenzy for its damage, Bestial Wrath and Spirit Bond, and Kill Command at 40. Marksmanship's crits after.",
+    "split": "38/13/0",
+    "order": [
+     [
+      "Swift Aspects",
+      5,
+      14
+     ],
+     [
+      "Thick Hide",
+      3,
+      17
+     ],
+     [
+      "Endurance Training",
+      2,
+      19
+     ],
+     [
+      "Unleashed Fury",
+      5,
+      24
+     ],
+     [
+      "Ferocity",
+      5,
+      29
+     ],
+     [
+      "Scent of Blood",
+      3,
+      32
+     ],
+     [
+      "Bestial Wrath",
+      1,
+      33
+     ],
+     [
+      "Intimidation",
+      1,
+      34
+     ],
+     [
+      "Spirit Bond",
+      2,
+      36
+     ],
+     [
+      "Frenzy",
+      3,
+      39
+     ],
+     [
+      "Kill Command",
+      1,
+      40
+     ],
+     [
+      "Frenzy",
+      5,
+      42
+     ],
+     [
+      "Endurance Training",
+      5,
+      45
+     ],
+     [
+      "Bestial Discipline",
+      2,
+      47
+     ],
+     [
+      "Efficiency",
+      5,
+      52
+     ],
+     [
+      "Lethal Shots",
+      5,
+      57
+     ],
+     [
+      "Aimed Shot",
+      1,
+      58
+     ],
+     [
+      "Hawk Eye",
+      2,
+      60
+     ]
+    ],
+    "points": [
+     [
+      10,
+      1,
+      "Swift Aspects",
+      1
+     ],
+     [
+      11,
+      1,
+      "Swift Aspects",
+      2
+     ],
+     [
+      12,
+      1,
+      "Swift Aspects",
+      3
+     ],
+     [
+      13,
+      1,
+      "Swift Aspects",
+      4
+     ],
+     [
+      14,
+      1,
+      "Swift Aspects",
+      5
+     ],
+     [
+      15,
+      1,
+      "Thick Hide",
+      1
+     ],
+     [
+      16,
+      1,
+      "Thick Hide",
+      2
+     ],
+     [
+      17,
+      1,
+      "Thick Hide",
+      3
+     ],
+     [
+      18,
+      1,
+      "Endurance Training",
+      1
+     ],
+     [
+      19,
+      1,
+      "Endurance Training",
+      2
+     ],
+     [
+      20,
+      1,
+      "Unleashed Fury",
+      1
+     ],
+     [
+      21,
+      1,
+      "Unleashed Fury",
+      2
+     ],
+     [
+      22,
+      1,
+      "Unleashed Fury",
+      3
+     ],
+     [
+      23,
+      1,
+      "Unleashed Fury",
+      4
+     ],
+     [
+      24,
+      1,
+      "Unleashed Fury",
+      5
+     ],
+     [
+      25,
+      1,
+      "Ferocity",
+      1
+     ],
+     [
+      26,
+      1,
+      "Ferocity",
+      2
+     ],
+     [
+      27,
+      1,
+      "Ferocity",
+      3
+     ],
+     [
+      28,
+      1,
+      "Ferocity",
+      4
+     ],
+     [
+      29,
+      1,
+      "Ferocity",
+      5
+     ],
+     [
+      30,
+      1,
+      "Scent of Blood",
+      1
+     ],
+     [
+      31,
+      1,
+      "Scent of Blood",
+      2
+     ],
+     [
+      32,
+      1,
+      "Scent of Blood",
+      3
+     ],
+     [
+      33,
+      1,
+      "Bestial Wrath",
+      1
+     ],
+     [
+      34,
+      1,
+      "Intimidation",
+      1
+     ],
+     [
+      35,
+      1,
+      "Spirit Bond",
+      1
+     ],
+     [
+      36,
+      1,
+      "Spirit Bond",
+      2
+     ],
+     [
+      37,
+      1,
+      "Frenzy",
+      1
+     ],
+     [
+      38,
+      1,
+      "Frenzy",
+      2
+     ],
+     [
+      39,
+      1,
+      "Frenzy",
+      3
+     ],
+     [
+      40,
+      1,
+      "Kill Command",
+      1
+     ],
+     [
+      41,
+      1,
+      "Frenzy",
+      4
+     ],
+     [
+      42,
+      1,
+      "Frenzy",
+      5
+     ],
+     [
+      43,
+      1,
+      "Endurance Training",
+      3
+     ],
+     [
+      44,
+      1,
+      "Endurance Training",
+      4
+     ],
+     [
+      45,
+      1,
+      "Endurance Training",
+      5
+     ],
+     [
+      46,
+      1,
+      "Bestial Discipline",
+      1
+     ],
+     [
+      47,
+      1,
+      "Bestial Discipline",
+      2
+     ],
+     [
+      48,
+      2,
+      "Efficiency",
+      1
+     ],
+     [
+      49,
+      2,
+      "Efficiency",
+      2
+     ],
+     [
+      50,
+      2,
+      "Efficiency",
+      3
+     ],
+     [
+      51,
+      2,
+      "Efficiency",
+      4
+     ],
+     [
+      52,
+      2,
+      "Efficiency",
+      5
+     ],
+     [
+      53,
+      2,
+      "Lethal Shots",
+      1
+     ],
+     [
+      54,
+      2,
+      "Lethal Shots",
+      2
+     ],
+     [
+      55,
+      2,
+      "Lethal Shots",
+      3
+     ],
+     [
+      56,
+      2,
+      "Lethal Shots",
+      4
+     ],
+     [
+      57,
+      2,
+      "Lethal Shots",
+      5
+     ],
+     [
+      58,
+      2,
+      "Aimed Shot",
+      1
+     ],
+     [
+      59,
+      2,
+      "Hawk Eye",
+      1
+     ],
+     [
+      60,
+      2,
+      "Hawk Eye",
+      2
+     ]
+    ]
+   },
+   "specs": [
+    {
+     "spec": "Beast Mastery",
+     "why": "Bestial Wrath, Frenzy and Kill Command, with Marksmanship's crits: your pet does much of the damage, solo or in a group.",
+     "split": "35/16/0",
+     "trees": [
+      [
+       "Beast Mastery",
+       {
+        "Swift Aspects": 5,
+        "Endurance Training": 5,
+        "Unleashed Fury": 5,
+        "Ferocity": 5,
+        "Scent of Blood": 3,
+        "Bestial Wrath": 1,
+        "Intimidation": 1,
+        "Bestial Precision": 2,
+        "Spirit Bond": 2,
+        "Frenzy": 5,
+        "Kill Command": 1
+       }
+      ],
+      [
+       "Marksmanship",
+       {
+        "Efficiency": 5,
+        "Lethal Shots": 5,
+        "Hawk Eye": 2,
+        "Aimed Shot": 1,
+        "Swiftshot": 3
+       }
+      ],
+      [
+       "Survival",
+       {}
+      ]
+     ]
+    },
+    {
+     "spec": "Marksmanship",
+     "why": "Mortal Shots, Experimental Ammunition and Lock and Load, with Beast Mastery's Swift Aspects and Unleashed Fury: the raid damage build.",
+     "split": "15/36/0",
+     "trees": [
+      [
+       "Beast Mastery",
+       {
+        "Swift Aspects": 5,
+        "Endurance Training": 2,
+        "Thick Hide": 3,
+        "Unleashed Fury": 5
+       }
+      ],
+      [
+       "Marksmanship",
+       {
+        "Efficiency": 5,
+        "Lethal Shots": 5,
+        "Hawk Eye": 1,
+        "Aimed Shot": 1,
+        "Swiftshot": 3,
+        "Endless Quiver": 2,
+        "Mortal Shots": 5,
+        "Experimental Ammunition": 1,
+        "Piercing Shots": 2,
+        "Barrage": 3,
+        "Improved Marksmanship": 2,
+        "Ranged Weapon Specialization": 5,
+        "Lock and Load": 1
+       }
+      ],
+      [
+       "Survival",
+       {}
+      ]
+     ]
+    },
+    {
+     "spec": "Survival",
+     "why": "Melee with Carve, Lacerate and Lightning Reflexes, traps with Untamed Trapper, and Beast Mastery's Swift Aspects and Coordinated Assault.",
+     "split": "16/0/35",
+     "trees": [
+      [
+       "Beast Mastery",
+       {
+        "Swift Aspects": 5,
+        "Endurance Training": 2,
+        "Improved Primal Aspects": 3,
+        "Coordinated Assault": 1,
+        "Unleashed Fury": 5
+       }
+      ],
+      [
+       "Marksmanship",
+       {}
+      ],
+      [
+       "Survival",
+       {
+        "Improved Slaying": 3,
+        "Swift Reflexes": 2,
+        "Savage Strikes": 2,
+        "Improved Wing Clip": 3,
+        "Survivalist": 5,
+        "Carve": 1,
+        "Deterrence": 1,
+        "Surefooted": 3,
+        "Killer Instinct": 3,
+        "Trap Mastery": 3,
+        "Lacerate": 1,
+        "Vicious Strikes": 2,
+        "Lightning Reflexes": 5,
+        "Untamed Trapper": 1
+       }
+      ]
+     ]
+    }
+   ],
+   "rxp_gone": [
+    "Improved Aspect of the Hawk",
+    "Bestial Swiftness",
+    "Improved Hunter's Mark"
+   ]
+  },
+  "MAGE": {
+   "trees": [
+    "Arcane",
+    "Fire",
+    "Frost"
+   ],
+   "levelling": {
+    "spec": "Frost",
+    "why": "Frost. Improved Frostbolt, Frost Nova and Shatter let you freeze a mob and crit it down, Ice Block and Ice Barrier keep you alive, and Arcane Concentration's free casts save mana from 46.",
+    "split": "10/0/41",
+    "order": [
+     [
+      "Improved Frostbolt",
+      5,
+      14
+     ],
+     [
+      "Piercing Ice",
+      3,
+      17
+     ],
+     [
+      "Permafrost",
+      2,
+      19
+     ],
+     [
+      "Ice Shards",
+      5,
+      24
+     ],
+     [
+      "Frost Channeling",
+      3,
+      27
+     ],
+     [
+      "Improved Frost Nova",
+      2,
+      29
+     ],
+     [
+      "Ice Block",
+      1,
+      30
+     ],
+     [
+      "Shatter",
+      5,
+      35
+     ],
+     [
+      "Cold Snap",
+      1,
+      36
+     ],
+     [
+      "Elemental Precision",
+      3,
+      39
+     ],
+     [
+      "Ice Barrier",
+      1,
+      40
+     ],
+     [
+      "Arcane Subtlety",
+      2,
+      42
+     ],
+     [
+      "Magic Absorption",
+      3,
+      45
+     ],
+     [
+      "Arcane Concentration",
+      5,
+      50
+     ],
+     [
+      "Permafrost",
+      3,
+      51
+     ],
+     [
+      "Improved Blizzard",
+      3,
+      54
+     ],
+     [
+      "Winter's Chill",
+      5,
+      59
+     ],
+     [
+      "Frostbite",
+      1,
+      60
+     ]
+    ],
+    "points": [
+     [
+      10,
+      3,
+      "Improved Frostbolt",
+      1
+     ],
+     [
+      11,
+      3,
+      "Improved Frostbolt",
+      2
+     ],
+     [
+      12,
+      3,
+      "Improved Frostbolt",
+      3
+     ],
+     [
+      13,
+      3,
+      "Improved Frostbolt",
+      4
+     ],
+     [
+      14,
+      3,
+      "Improved Frostbolt",
+      5
+     ],
+     [
+      15,
+      3,
+      "Piercing Ice",
+      1
+     ],
+     [
+      16,
+      3,
+      "Piercing Ice",
+      2
+     ],
+     [
+      17,
+      3,
+      "Piercing Ice",
+      3
+     ],
+     [
+      18,
+      3,
+      "Permafrost",
+      1
+     ],
+     [
+      19,
+      3,
+      "Permafrost",
+      2
+     ],
+     [
+      20,
+      3,
+      "Ice Shards",
+      1
+     ],
+     [
+      21,
+      3,
+      "Ice Shards",
+      2
+     ],
+     [
+      22,
+      3,
+      "Ice Shards",
+      3
+     ],
+     [
+      23,
+      3,
+      "Ice Shards",
+      4
+     ],
+     [
+      24,
+      3,
+      "Ice Shards",
+      5
+     ],
+     [
+      25,
+      3,
+      "Frost Channeling",
+      1
+     ],
+     [
+      26,
+      3,
+      "Frost Channeling",
+      2
+     ],
+     [
+      27,
+      3,
+      "Frost Channeling",
+      3
+     ],
+     [
+      28,
+      3,
+      "Improved Frost Nova",
+      1
+     ],
+     [
+      29,
+      3,
+      "Improved Frost Nova",
+      2
+     ],
+     [
+      30,
+      3,
+      "Ice Block",
+      1
+     ],
+     [
+      31,
+      3,
+      "Shatter",
+      1
+     ],
+     [
+      32,
+      3,
+      "Shatter",
+      2
+     ],
+     [
+      33,
+      3,
+      "Shatter",
+      3
+     ],
+     [
+      34,
+      3,
+      "Shatter",
+      4
+     ],
+     [
+      35,
+      3,
+      "Shatter",
+      5
+     ],
+     [
+      36,
+      3,
+      "Cold Snap",
+      1
+     ],
+     [
+      37,
+      3,
+      "Elemental Precision",
+      1
+     ],
+     [
+      38,
+      3,
+      "Elemental Precision",
+      2
+     ],
+     [
+      39,
+      3,
+      "Elemental Precision",
+      3
+     ],
+     [
+      40,
+      3,
+      "Ice Barrier",
+      1
+     ],
+     [
+      41,
+      1,
+      "Arcane Subtlety",
+      1
+     ],
+     [
+      42,
+      1,
+      "Arcane Subtlety",
+      2
+     ],
+     [
+      43,
+      1,
+      "Magic Absorption",
+      1
+     ],
+     [
+      44,
+      1,
+      "Magic Absorption",
+      2
+     ],
+     [
+      45,
+      1,
+      "Magic Absorption",
+      3
+     ],
+     [
+      46,
+      1,
+      "Arcane Concentration",
+      1
+     ],
+     [
+      47,
+      1,
+      "Arcane Concentration",
+      2
+     ],
+     [
+      48,
+      1,
+      "Arcane Concentration",
+      3
+     ],
+     [
+      49,
+      1,
+      "Arcane Concentration",
+      4
+     ],
+     [
+      50,
+      1,
+      "Arcane Concentration",
+      5
+     ],
+     [
+      51,
+      3,
+      "Permafrost",
+      3
+     ],
+     [
+      52,
+      3,
+      "Improved Blizzard",
+      1
+     ],
+     [
+      53,
+      3,
+      "Improved Blizzard",
+      2
+     ],
+     [
+      54,
+      3,
+      "Improved Blizzard",
+      3
+     ],
+     [
+      55,
+      3,
+      "Winter's Chill",
+      1
+     ],
+     [
+      56,
+      3,
+      "Winter's Chill",
+      2
+     ],
+     [
+      57,
+      3,
+      "Winter's Chill",
+      3
+     ],
+     [
+      58,
+      3,
+      "Winter's Chill",
+      4
+     ],
+     [
+      59,
+      3,
+      "Winter's Chill",
+      5
+     ],
+     [
+      60,
+      3,
+      "Frostbite",
+      1
+     ]
+    ]
+   },
+   "specs": [
+    {
+     "spec": "Arcane",
+     "why": "Arcane Missiles and Arcane Rupture, Presence of Mind and Arcane Power, with Frost Nova and slows to kite: burst for PvP.",
+     "split": "41/0/10",
+     "trees": [
+      [
+       "Arcane",
+       {
+        "Arcane Subtlety": 2,
+        "Magic Absorption": 1,
+        "Improved Arcane Missiles": 5,
+        "Arcane Focus": 5,
+        "Arcane Concentration": 5,
+        "Arcane Impact": 3,
+        "Arcane Rupture": 1,
+        "Temporal Convergence": 3,
+        "Arcane Meditation": 3,
+        "Arcane Instability": 3,
+        "Presence of Mind": 1,
+        "Accelerated Arcana": 1,
+        "Arcane Potency": 2,
+        "Resonance Cascade": 5,
+        "Arcane Power": 1
+       }
+      ],
+      [
+       "Fire",
+       {}
+      ],
+      [
+       "Frost",
+       {
+        "Improved Frostbolt": 5,
+        "Improved Frost Nova": 2,
+        "Permafrost": 3
+       }
+      ]
+     ]
+    },
+    {
+     "spec": "Fire",
+     "why": "Ignite, Hot Streak and Combustion, with Arcane's Clearcasting: raid damage where fire resistance allows.",
+     "split": "10/41/0",
+     "trees": [
+      [
+       "Arcane",
+       {
+        "Arcane Subtlety": 2,
+        "Magic Absorption": 3,
+        "Arcane Concentration": 5
+       }
+      ],
+      [
+       "Fire",
+       {
+        "Improved Fireball": 5,
+        "Ignite": 5,
+        "Flame Throwing": 2,
+        "Improved Fire Blast": 3,
+        "Incinerate": 2,
+        "Improved Flamestrike": 3,
+        "Pyroblast": 1,
+        "Burning Soul": 2,
+        "Fire Vulnerability": 3,
+        "Master of Elements": 3,
+        "Blast Wave": 1,
+        "Critical Mass": 3,
+        "Hot Streak": 2,
+        "Fire Power": 5,
+        "Combustion": 1
+       }
+      ],
+      [
+       "Frost",
+       {}
+      ]
+     ]
+    },
+    {
+     "spec": "Frost",
+     "why": "Winter's Chill, Icicles and Flash Freeze, with Arcane's Clearcasting: steady raid damage.",
+     "split": "10/0/41",
+     "trees": [
+      [
+       "Arcane",
+       {
+        "Arcane Subtlety": 2,
+        "Magic Absorption": 3,
+        "Arcane Concentration": 5
+       }
+      ],
+      [
+       "Fire",
+       {}
+      ],
+      [
+       "Frost",
+       {
+        "Improved Frostbolt": 5,
+        "Elemental Precision": 3,
+        "Piercing Ice": 3,
+        "Frostbite": 3,
+        "Ice Shards": 5,
+        "Cold Snap": 1,
+        "Improved Blizzard": 3,
+        "Arctic Reach": 2,
+        "Frost Channeling": 3,
+        "Ice Block": 1,
+        "Icicles": 1,
+        "Improved Cone of Cold": 3,
+        "Winter's Chill": 5,
+        "Flash Freeze": 2,
+        "Ice Barrier": 1
+       }
+      ]
+     ]
+    }
+   ],
+   "rxp_gone": [
+    "Arcane Resilience",
+    "Improved Arcane Explosion"
+   ]
+  },
+  "PALADIN": {
+   "trees": [
+    "Holy",
+    "Protection",
+    "Retribution"
+   ],
+   "levelling": {
+    "spec": "Retribution",
+    "why": "Retribution with a two-hander. Benediction for mana, Conviction and Vengeance for crits, Seal of Command at 30 and Vengeful Strikes by 40; Divine Strength, then Protection's Precision to hit more often.",
+    "split": "5/11/35",
+    "order": [
+     [
+      "Benediction",
+      5,
+      14
+     ],
+     [
+      "Improved Judgement",
+      2,
+      16
+     ],
+     [
+      "Improved Seal of the Crusader",
+      3,
+      19
+     ],
+     [
+      "Conviction",
+      5,
+      24
+     ],
+     [
+      "Two-Handed Weapon Specialization",
+      3,
+      27
+     ],
+     [
+      "Pursuit of Justice",
+      2,
+      29
+     ],
+     [
+      "Seal of Command",
+      1,
+      30
+     ],
+     [
+      "Vengeance",
+      5,
+      35
+     ],
+     [
+      "Vengeful Strikes",
+      5,
+      40
+     ],
+     [
+      "Divine Strength",
+      5,
+      45
+     ],
+     [
+      "Vindication",
+      3,
+      48
+     ],
+     [
+      "Repentance",
+      1,
+      49
+     ],
+     [
+      "Improved Devotion Aura",
+      5,
+      54
+     ],
+     [
+      "Precision",
+      3,
+      57
+     ],
+     [
+      "Toughness",
+      3,
+      60
+     ]
+    ],
+    "points": [
+     [
+      10,
+      3,
+      "Benediction",
+      1
+     ],
+     [
+      11,
+      3,
+      "Benediction",
+      2
+     ],
+     [
+      12,
+      3,
+      "Benediction",
+      3
+     ],
+     [
+      13,
+      3,
+      "Benediction",
+      4
+     ],
+     [
+      14,
+      3,
+      "Benediction",
+      5
+     ],
+     [
+      15,
+      3,
+      "Improved Judgement",
+      1
+     ],
+     [
+      16,
+      3,
+      "Improved Judgement",
+      2
+     ],
+     [
+      17,
+      3,
+      "Improved Seal of the Crusader",
+      1
+     ],
+     [
+      18,
+      3,
+      "Improved Seal of the Crusader",
+      2
+     ],
+     [
+      19,
+      3,
+      "Improved Seal of the Crusader",
+      3
+     ],
+     [
+      20,
+      3,
+      "Conviction",
+      1
+     ],
+     [
+      21,
+      3,
+      "Conviction",
+      2
+     ],
+     [
+      22,
+      3,
+      "Conviction",
+      3
+     ],
+     [
+      23,
+      3,
+      "Conviction",
+      4
+     ],
+     [
+      24,
+      3,
+      "Conviction",
+      5
+     ],
+     [
+      25,
+      3,
+      "Two-Handed Weapon Specialization",
+      1
+     ],
+     [
+      26,
+      3,
+      "Two-Handed Weapon Specialization",
+      2
+     ],
+     [
+      27,
+      3,
+      "Two-Handed Weapon Specialization",
+      3
+     ],
+     [
+      28,
+      3,
+      "Pursuit of Justice",
+      1
+     ],
+     [
+      29,
+      3,
+      "Pursuit of Justice",
+      2
+     ],
+     [
+      30,
+      3,
+      "Seal of Command",
+      1
+     ],
+     [
+      31,
+      3,
+      "Vengeance",
+      1
+     ],
+     [
+      32,
+      3,
+      "Vengeance",
+      2
+     ],
+     [
+      33,
+      3,
+      "Vengeance",
+      3
+     ],
+     [
+      34,
+      3,
+      "Vengeance",
+      4
+     ],
+     [
+      35,
+      3,
+      "Vengeance",
+      5
+     ],
+     [
+      36,
+      3,
+      "Vengeful Strikes",
+      1
+     ],
+     [
+      37,
+      3,
+      "Vengeful Strikes",
+      2
+     ],
+     [
+      38,
+      3,
+      "Vengeful Strikes",
+      3
+     ],
+     [
+      39,
+      3,
+      "Vengeful Strikes",
+      4
+     ],
+     [
+      40,
+      3,
+      "Vengeful Strikes",
+      5
+     ],
+     [
+      41,
+      1,
+      "Divine Strength",
+      1
+     ],
+     [
+      42,
+      1,
+      "Divine Strength",
+      2
+     ],
+     [
+      43,
+      1,
+      "Divine Strength",
+      3
+     ],
+     [
+      44,
+      1,
+      "Divine Strength",
+      4
+     ],
+     [
+      45,
+      1,
+      "Divine Strength",
+      5
+     ],
+     [
+      46,
+      3,
+      "Vindication",
+      1
+     ],
+     [
+      47,
+      3,
+      "Vindication",
+      2
+     ],
+     [
+      48,
+      3,
+      "Vindication",
+      3
+     ],
+     [
+      49,
+      3,
+      "Repentance",
+      1
+     ],
+     [
+      50,
+      2,
+      "Improved Devotion Aura",
+      1
+     ],
+     [
+      51,
+      2,
+      "Improved Devotion Aura",
+      2
+     ],
+     [
+      52,
+      2,
+      "Improved Devotion Aura",
+      3
+     ],
+     [
+      53,
+      2,
+      "Improved Devotion Aura",
+      4
+     ],
+     [
+      54,
+      2,
+      "Improved Devotion Aura",
+      5
+     ],
+     [
+      55,
+      2,
+      "Precision",
+      1
+     ],
+     [
+      56,
+      2,
+      "Precision",
+      2
+     ],
+     [
+      57,
+      2,
+      "Precision",
+      3
+     ],
+     [
+      58,
+      2,
+      "Toughness",
+      1
+     ],
+     [
+      59,
+      2,
+      "Toughness",
+      2
+     ],
+     [
+      60,
+      2,
+      "Toughness",
+      3
+     ]
+    ]
+   },
+   "specs": [
+    {
+     "spec": "Holy",
+     "why": "Holy Shock, Illumination, Divine Favor and Daybreak, with Retribution's Blessing of Kings and Improved Blessings: the raid healer.",
+     "split": "35/5/11",
+     "trees": [
+      [
+       "Holy",
+       {
+        "Divine Intellect": 5,
+        "Holy Judgement": 3,
+        "Spiritual Focus": 2,
+        "Healing Light": 3,
+        "Improved Lay on Hands": 2,
+        "Improved Concentration Aura": 3,
+        "Illumination": 5,
+        "Ironclad": 2,
+        "Divine Favor": 5,
+        "Holy Shock": 1,
+        "Holy Power": 3,
+        "Daybreak": 1
+       }
+      ],
+      [
+       "Protection",
+       {
+        "Improved Devotion Aura": 5
+       }
+      ],
+      [
+       "Retribution",
+       {
+        "Improved Blessings": 5,
+        "Benediction": 5,
+        "Blessing of Kings": 1
+       }
+      ]
+     ]
+    },
+    {
+     "spec": "Protection",
+     "why": "Holy Shield, Righteous Defense, Righteous Strikes and Bulwark of the Righteous, with Retribution's Deflection and Blessing of Kings: the tank.",
+     "split": "0/36/15",
+     "trees": [
+      [
+       "Holy",
+       {}
+      ],
+      [
+       "Protection",
+       {
+        "Improved Devotion Aura": 1,
+        "Redoubt": 5,
+        "Precision": 3,
+        "Toughness": 5,
+        "Improved Righteous Fury": 3,
+        "Blessing of Sanctuary": 1,
+        "Shield Specialization": 3,
+        "Anticipation": 3,
+        "Improved Hand of Reckoning": 2,
+        "Righteous Defense": 3,
+        "Holy Shield": 1,
+        "Righteous Strikes": 5,
+        "Bulwark of the Righteous": 1
+       }
+      ],
+      [
+       "Retribution",
+       {
+        "Benediction": 5,
+        "Improved Judgement": 2,
+        "Deflection": 5,
+        "Improved Retribution Aura": 2,
+        "Blessing of Kings": 1
+       }
+      ]
+     ]
+    },
+    {
+     "spec": "Retribution",
+     "why": "Seal of Command, Vengeance and Vengeful Strikes with a two-hander, Blessing of Kings for the raid, and Holy's Divine Strength.",
+     "split": "9/8/34",
+     "trees": [
+      [
+       "Holy",
+       {
+        "Divine Strength": 5,
+        "Divine Intellect": 4
+       }
+      ],
+      [
+       "Protection",
+       {
+        "Improved Devotion Aura": 5,
+        "Precision": 3
+       }
+      ],
+      [
+       "Retribution",
+       {
+        "Benediction": 5,
+        "Improved Judgement": 2,
+        "Improved Seal of the Crusader": 3,
+        "Conviction": 5,
+        "Blessing of Kings": 1,
+        "Two-Handed Weapon Specialization": 3,
+        "Vindication": 3,
+        "Vengeance": 5,
+        "Seal of Command": 1,
+        "Vengeful Strikes": 5,
+        "Repentance": 1
+       }
+      ]
+     ]
+    }
+   ],
+   "rxp_gone": [
+    "Consecration"
+   ],
+   "alts": [
+    {
+     "name": "Protection",
+     "spec": "Protection",
+     "why": "Protection with a shield from 10. Redoubt and Shield Specialization block and give mana back, Holy Shield at 30 with Reckoning's extra attacks, Righteous Strikes and Bulwark of the Righteous at 41; then Holy's Divine Strength and Divine Intellect.",
+     "split": "10/41/0",
+     "order": [
+      [
+       "Redoubt",
+       5,
+       14
+      ],
+      [
+       "Precision",
+       3,
+       17
+      ],
+      [
+       "Toughness",
+       2,
+       19
+      ],
+      [
+       "Blessing of Sanctuary",
+       1,
+       20
+      ],
+      [
+       "Shield Specialization",
+       3,
+       23
+      ],
+      [
+       "Toughness",
+       5,
+       26
+      ],
+      [
+       "Improved Hammer of Justice",
+       3,
+       29
+      ],
+      [
+       "Holy Shield",
+       1,
+       30
+      ],
+      [
+       "Reckoning",
+       5,
+       35
+      ],
+      [
+       "Righteous Strikes",
+       5,
+       40
+      ],
+      [
+       "Bulwark of the Righteous",
+       1,
+       41
+      ],
+      [
+       "Improved Righteous Fury",
+       3,
+       44
+      ],
+      [
+       "Righteous Defense",
+       3,
+       47
+      ],
+      [
+       "Anticipation",
+       3,
+       50
+      ],
+      [
+       "Divine Strength",
+       5,
+       55
+      ],
+      [
+       "Divine Intellect",
+       5,
+       60
+      ]
+     ],
+     "points": [
+      [
+       10,
+       2,
+       "Redoubt",
+       1
+      ],
+      [
+       11,
+       2,
+       "Redoubt",
+       2
+      ],
+      [
+       12,
+       2,
+       "Redoubt",
+       3
+      ],
+      [
+       13,
+       2,
+       "Redoubt",
+       4
+      ],
+      [
+       14,
+       2,
+       "Redoubt",
+       5
+      ],
+      [
+       15,
+       2,
+       "Precision",
+       1
+      ],
+      [
+       16,
+       2,
+       "Precision",
+       2
+      ],
+      [
+       17,
+       2,
+       "Precision",
+       3
+      ],
+      [
+       18,
+       2,
+       "Toughness",
+       1
+      ],
+      [
+       19,
+       2,
+       "Toughness",
+       2
+      ],
+      [
+       20,
+       2,
+       "Blessing of Sanctuary",
+       1
+      ],
+      [
+       21,
+       2,
+       "Shield Specialization",
+       1
+      ],
+      [
+       22,
+       2,
+       "Shield Specialization",
+       2
+      ],
+      [
+       23,
+       2,
+       "Shield Specialization",
+       3
+      ],
+      [
+       24,
+       2,
+       "Toughness",
+       3
+      ],
+      [
+       25,
+       2,
+       "Toughness",
+       4
+      ],
+      [
+       26,
+       2,
+       "Toughness",
+       5
+      ],
+      [
+       27,
+       2,
+       "Improved Hammer of Justice",
+       1
+      ],
+      [
+       28,
+       2,
+       "Improved Hammer of Justice",
+       2
+      ],
+      [
+       29,
+       2,
+       "Improved Hammer of Justice",
+       3
+      ],
+      [
+       30,
+       2,
+       "Holy Shield",
+       1
+      ],
+      [
+       31,
+       2,
+       "Reckoning",
+       1
+      ],
+      [
+       32,
+       2,
+       "Reckoning",
+       2
+      ],
+      [
+       33,
+       2,
+       "Reckoning",
+       3
+      ],
+      [
+       34,
+       2,
+       "Reckoning",
+       4
+      ],
+      [
+       35,
+       2,
+       "Reckoning",
+       5
+      ],
+      [
+       36,
+       2,
+       "Righteous Strikes",
+       1
+      ],
+      [
+       37,
+       2,
+       "Righteous Strikes",
+       2
+      ],
+      [
+       38,
+       2,
+       "Righteous Strikes",
+       3
+      ],
+      [
+       39,
+       2,
+       "Righteous Strikes",
+       4
+      ],
+      [
+       40,
+       2,
+       "Righteous Strikes",
+       5
+      ],
+      [
+       41,
+       2,
+       "Bulwark of the Righteous",
+       1
+      ],
+      [
+       42,
+       2,
+       "Improved Righteous Fury",
+       1
+      ],
+      [
+       43,
+       2,
+       "Improved Righteous Fury",
+       2
+      ],
+      [
+       44,
+       2,
+       "Improved Righteous Fury",
+       3
+      ],
+      [
+       45,
+       2,
+       "Righteous Defense",
+       1
+      ],
+      [
+       46,
+       2,
+       "Righteous Defense",
+       2
+      ],
+      [
+       47,
+       2,
+       "Righteous Defense",
+       3
+      ],
+      [
+       48,
+       2,
+       "Anticipation",
+       1
+      ],
+      [
+       49,
+       2,
+       "Anticipation",
+       2
+      ],
+      [
+       50,
+       2,
+       "Anticipation",
+       3
+      ],
+      [
+       51,
+       1,
+       "Divine Strength",
+       1
+      ],
+      [
+       52,
+       1,
+       "Divine Strength",
+       2
+      ],
+      [
+       53,
+       1,
+       "Divine Strength",
+       3
+      ],
+      [
+       54,
+       1,
+       "Divine Strength",
+       4
+      ],
+      [
+       55,
+       1,
+       "Divine Strength",
+       5
+      ],
+      [
+       56,
+       1,
+       "Divine Intellect",
+       1
+      ],
+      [
+       57,
+       1,
+       "Divine Intellect",
+       2
+      ],
+      [
+       58,
+       1,
+       "Divine Intellect",
+       3
+      ],
+      [
+       59,
+       1,
+       "Divine Intellect",
+       4
+      ],
+      [
+       60,
+       1,
+       "Divine Intellect",
+       5
+      ]
+     ]
+    }
+   ]
+  },
+  "PRIEST": {
+   "trees": [
+    "Discipline",
+    "Holy",
+    "Shadow"
+   ],
+   "levelling": {
+    "spec": "Shadow",
+    "why": "Shadow, with a wand. Wand Specialization and Spirit Tap keep your mana up between kills, Mind Flay and Shadow Weaving do the damage, Vampiric Embrace heals you, and Shadowform comes at 42.",
+    "split": "12/0/39",
+    "order": [
+     [
+      "Wand Specialization",
+      2,
+      11
+     ],
+     [
+      "Spirit Tap",
+      5,
+      16
+     ],
+     [
+      "Improved Shadow Word: Pain",
+      2,
+      18
+     ],
+     [
+      "Improved Mind Blast",
+      5,
+      23
+     ],
+     [
+      "Mind Flay",
+      1,
+      24
+     ],
+     [
+      "Shadow Focus",
+      2,
+      26
+     ],
+     [
+      "Shadow Weaving",
+      5,
+      31
+     ],
+     [
+      "Vampiric Embrace",
+      1,
+      32
+     ],
+     [
+      "Shadow Reach",
+      2,
+      34
+     ],
+     [
+      "Shadow Focus",
+      4,
+      36
+     ],
+     [
+      "Darkness",
+      5,
+      41
+     ],
+     [
+      "Shadowform",
+      1,
+      42
+     ],
+     [
+      "Vampiric Touch",
+      2,
+      44
+     ],
+     [
+      "Blackout",
+      5,
+      49
+     ],
+     [
+      "Shadow Focus",
+      5,
+      50
+     ],
+     [
+      "Mental Agility",
+      5,
+      55
+     ],
+     [
+      "Unbreakable Will",
+      3,
+      58
+     ],
+     [
+      "Meditation",
+      2,
+      60
+     ]
+    ],
+    "points": [
+     [
+      10,
+      1,
+      "Wand Specialization",
+      1
+     ],
+     [
+      11,
+      1,
+      "Wand Specialization",
+      2
+     ],
+     [
+      12,
+      3,
+      "Spirit Tap",
+      1
+     ],
+     [
+      13,
+      3,
+      "Spirit Tap",
+      2
+     ],
+     [
+      14,
+      3,
+      "Spirit Tap",
+      3
+     ],
+     [
+      15,
+      3,
+      "Spirit Tap",
+      4
+     ],
+     [
+      16,
+      3,
+      "Spirit Tap",
+      5
+     ],
+     [
+      17,
+      3,
+      "Improved Shadow Word: Pain",
+      1
+     ],
+     [
+      18,
+      3,
+      "Improved Shadow Word: Pain",
+      2
+     ],
+     [
+      19,
+      3,
+      "Improved Mind Blast",
+      1
+     ],
+     [
+      20,
+      3,
+      "Improved Mind Blast",
+      2
+     ],
+     [
+      21,
+      3,
+      "Improved Mind Blast",
+      3
+     ],
+     [
+      22,
+      3,
+      "Improved Mind Blast",
+      4
+     ],
+     [
+      23,
+      3,
+      "Improved Mind Blast",
+      5
+     ],
+     [
+      24,
+      3,
+      "Mind Flay",
+      1
+     ],
+     [
+      25,
+      3,
+      "Shadow Focus",
+      1
+     ],
+     [
+      26,
+      3,
+      "Shadow Focus",
+      2
+     ],
+     [
+      27,
+      3,
+      "Shadow Weaving",
+      1
+     ],
+     [
+      28,
+      3,
+      "Shadow Weaving",
+      2
+     ],
+     [
+      29,
+      3,
+      "Shadow Weaving",
+      3
+     ],
+     [
+      30,
+      3,
+      "Shadow Weaving",
+      4
+     ],
+     [
+      31,
+      3,
+      "Shadow Weaving",
+      5
+     ],
+     [
+      32,
+      3,
+      "Vampiric Embrace",
+      1
+     ],
+     [
+      33,
+      3,
+      "Shadow Reach",
+      1
+     ],
+     [
+      34,
+      3,
+      "Shadow Reach",
+      2
+     ],
+     [
+      35,
+      3,
+      "Shadow Focus",
+      3
+     ],
+     [
+      36,
+      3,
+      "Shadow Focus",
+      4
+     ],
+     [
+      37,
+      3,
+      "Darkness",
+      1
+     ],
+     [
+      38,
+      3,
+      "Darkness",
+      2
+     ],
+     [
+      39,
+      3,
+      "Darkness",
+      3
+     ],
+     [
+      40,
+      3,
+      "Darkness",
+      4
+     ],
+     [
+      41,
+      3,
+      "Darkness",
+      5
+     ],
+     [
+      42,
+      3,
+      "Shadowform",
+      1
+     ],
+     [
+      43,
+      3,
+      "Vampiric Touch",
+      1
+     ],
+     [
+      44,
+      3,
+      "Vampiric Touch",
+      2
+     ],
+     [
+      45,
+      3,
+      "Blackout",
+      1
+     ],
+     [
+      46,
+      3,
+      "Blackout",
+      2
+     ],
+     [
+      47,
+      3,
+      "Blackout",
+      3
+     ],
+     [
+      48,
+      3,
+      "Blackout",
+      4
+     ],
+     [
+      49,
+      3,
+      "Blackout",
+      5
+     ],
+     [
+      50,
+      3,
+      "Shadow Focus",
+      5
+     ],
+     [
+      51,
+      1,
+      "Mental Agility",
+      1
+     ],
+     [
+      52,
+      1,
+      "Mental Agility",
+      2
+     ],
+     [
+      53,
+      1,
+      "Mental Agility",
+      3
+     ],
+     [
+      54,
+      1,
+      "Mental Agility",
+      4
+     ],
+     [
+      55,
+      1,
+      "Mental Agility",
+      5
+     ],
+     [
+      56,
+      1,
+      "Unbreakable Will",
+      1
+     ],
+     [
+      57,
+      1,
+      "Unbreakable Will",
+      2
+     ],
+     [
+      58,
+      1,
+      "Unbreakable Will",
+      3
+     ],
+     [
+      59,
+      1,
+      "Meditation",
+      1
+     ],
+     [
+      60,
+      1,
+      "Meditation",
+      2
+     ]
+    ]
+   },
+   "specs": [
+    {
+     "spec": "Discipline",
+     "why": "Smite and Holy Fire: Searing Light, Purifying Flames, Force of Will and Chastise, with Holy's Divine Fury and Spiritual Guidance.",
+     "split": "33/18/0",
+     "trees": [
+      [
+       "Discipline",
+       {
+        "Piercing Light": 3,
+        "Mental Agility": 5,
+        "Improved Power Word: Fortitude": 2,
+        "Inner Focus": 1,
+        "Improved Power Word: Shield": 3,
+        "Meditation": 3,
+        "Searing Light": 3,
+        "Purifying Flames": 2,
+        "Mental Strength": 3,
+        "Enlighten": 1,
+        "Resurgent Shield": 1,
+        "Force of Will": 5,
+        "Chastise": 1
+       }
+      ],
+      [
+       "Holy",
+       {
+        "Divinity": 5,
+        "Divine Fury": 5,
+        "Spell Warding": 3,
+        "Holy Reach": 2,
+        "Spiritual Guidance": 3
+       }
+      ],
+      [
+       "Shadow",
+       {}
+      ]
+     ]
+    },
+    {
+     "spec": "Holy",
+     "why": "Spiritual Healing, Spiritual Guidance and Ascendance, with Discipline's mana: the raid healer.",
+     "split": "16/35/0",
+     "trees": [
+      [
+       "Discipline",
+       {
+        "Mental Agility": 5,
+        "Silent Resolve": 3,
+        "Improved Power Word: Fortitude": 2,
+        "Inner Focus": 1,
+        "Improved Power Word: Shield": 2,
+        "Meditation": 3
+       }
+      ],
+      [
+       "Holy",
+       {
+        "Improved Renew": 3,
+        "Divinity": 5,
+        "Divine Fury": 5,
+        "Inspiration": 3,
+        "Empowered Recovery": 2,
+        "Improved Healing": 3,
+        "Spiritual Guidance": 5,
+        "Book of Prayer": 2,
+        "Spirit of Redemption": 1,
+        "Spiritual Healing": 5,
+        "Ascendance": 1
+       }
+      ],
+      [
+       "Shadow",
+       {}
+      ]
+     ]
+    },
+    {
+     "spec": "Shadow",
+     "why": "Shadowform with Shadow Weaving and Vampiric Embrace: damage, and a little healing for the group.",
+     "split": "14/0/37",
+     "trees": [
+      [
+       "Discipline",
+       {
+        "Mental Agility": 5,
+        "Silent Resolve": 3,
+        "Improved Power Word: Fortitude": 2,
+        "Inner Focus": 1,
+        "Meditation": 3
+       }
+      ],
+      [
+       "Holy",
+       {}
+      ],
+      [
+       "Shadow",
+       {
+        "Spirit Tap": 5,
+        "Improved Mind Blast": 5,
+        "Shadow Affinity": 3,
+        "Improved Shadow Word: Pain": 2,
+        "Shadow Focus": 5,
+        "Mind Flay": 1,
+        "Shadow Reach": 2,
+        "Shadow Weaving": 5,
+        "Vampiric Embrace": 1,
+        "Vampiric Touch": 2,
+        "Darkness": 5,
+        "Shadowform": 1
+       }
+      ]
+     ]
+    }
+   ],
+   "rxp_gone": []
+  },
+  "ROGUE": {
+   "trees": [
+    "Assassination",
+    "Combat",
+    "Subtlety"
+   ],
+   "levelling": {
+    "spec": "Combat",
+    "why": "Combat. Lightning Reflexes and Deflection keep you standing, Precision and Dual Wield Specialization make both weapons hit, and Surprise Attack, Blade Rush and Adrenaline Rush follow by 40. Assassination's crits and Slice and Dice after.",
+    "split": "20/31/0",
+    "order": [
+     [
+      "Lightning Reflexes",
+      5,
+      14
+     ],
+     [
+      "Precision",
+      5,
+      19
+     ],
+     [
+      "Deflection",
+      5,
+      24
+     ],
+     [
+      "Dual Wield Specialization",
+      5,
+      29
+     ],
+     [
+      "Surprise Attack",
+      1,
+      30
+     ],
+     [
+      "Weapon Expertise",
+      2,
+      32
+     ],
+     [
+      "Hack and Slash",
+      2,
+      34
+     ],
+     [
+      "Blade Rush",
+      2,
+      36
+     ],
+     [
+      "Aggression",
+      3,
+      39
+     ],
+     [
+      "Adrenaline Rush",
+      1,
+      40
+     ],
+     [
+      "Malice",
+      5,
+      45
+     ],
+     [
+      "Ruthlessness",
+      3,
+      48
+     ],
+     [
+      "Murder",
+      2,
+      50
+     ],
+     [
+      "Relentless Strikes",
+      1,
+      51
+     ],
+     [
+      "Lethality",
+      5,
+      56
+     ],
+     [
+      "Improved Blade Tactics",
+      3,
+      59
+     ],
+     [
+      "Improved Eviscerate",
+      1,
+      60
+     ]
+    ],
+    "points": [
+     [
+      10,
+      2,
+      "Lightning Reflexes",
+      1
+     ],
+     [
+      11,
+      2,
+      "Lightning Reflexes",
+      2
+     ],
+     [
+      12,
+      2,
+      "Lightning Reflexes",
+      3
+     ],
+     [
+      13,
+      2,
+      "Lightning Reflexes",
+      4
+     ],
+     [
+      14,
+      2,
+      "Lightning Reflexes",
+      5
+     ],
+     [
+      15,
+      2,
+      "Precision",
+      1
+     ],
+     [
+      16,
+      2,
+      "Precision",
+      2
+     ],
+     [
+      17,
+      2,
+      "Precision",
+      3
+     ],
+     [
+      18,
+      2,
+      "Precision",
+      4
+     ],
+     [
+      19,
+      2,
+      "Precision",
+      5
+     ],
+     [
+      20,
+      2,
+      "Deflection",
+      1
+     ],
+     [
+      21,
+      2,
+      "Deflection",
+      2
+     ],
+     [
+      22,
+      2,
+      "Deflection",
+      3
+     ],
+     [
+      23,
+      2,
+      "Deflection",
+      4
+     ],
+     [
+      24,
+      2,
+      "Deflection",
+      5
+     ],
+     [
+      25,
+      2,
+      "Dual Wield Specialization",
+      1
+     ],
+     [
+      26,
+      2,
+      "Dual Wield Specialization",
+      2
+     ],
+     [
+      27,
+      2,
+      "Dual Wield Specialization",
+      3
+     ],
+     [
+      28,
+      2,
+      "Dual Wield Specialization",
+      4
+     ],
+     [
+      29,
+      2,
+      "Dual Wield Specialization",
+      5
+     ],
+     [
+      30,
+      2,
+      "Surprise Attack",
+      1
+     ],
+     [
+      31,
+      2,
+      "Weapon Expertise",
+      1
+     ],
+     [
+      32,
+      2,
+      "Weapon Expertise",
+      2
+     ],
+     [
+      33,
+      2,
+      "Hack and Slash",
+      1
+     ],
+     [
+      34,
+      2,
+      "Hack and Slash",
+      2
+     ],
+     [
+      35,
+      2,
+      "Blade Rush",
+      1
+     ],
+     [
+      36,
+      2,
+      "Blade Rush",
+      2
+     ],
+     [
+      37,
+      2,
+      "Aggression",
+      1
+     ],
+     [
+      38,
+      2,
+      "Aggression",
+      2
+     ],
+     [
+      39,
+      2,
+      "Aggression",
+      3
+     ],
+     [
+      40,
+      2,
+      "Adrenaline Rush",
+      1
+     ],
+     [
+      41,
+      1,
+      "Malice",
+      1
+     ],
+     [
+      42,
+      1,
+      "Malice",
+      2
+     ],
+     [
+      43,
+      1,
+      "Malice",
+      3
+     ],
+     [
+      44,
+      1,
+      "Malice",
+      4
+     ],
+     [
+      45,
+      1,
+      "Malice",
+      5
+     ],
+     [
+      46,
+      1,
+      "Ruthlessness",
+      1
+     ],
+     [
+      47,
+      1,
+      "Ruthlessness",
+      2
+     ],
+     [
+      48,
+      1,
+      "Ruthlessness",
+      3
+     ],
+     [
+      49,
+      1,
+      "Murder",
+      1
+     ],
+     [
+      50,
+      1,
+      "Murder",
+      2
+     ],
+     [
+      51,
+      1,
+      "Relentless Strikes",
+      1
+     ],
+     [
+      52,
+      1,
+      "Lethality",
+      1
+     ],
+     [
+      53,
+      1,
+      "Lethality",
+      2
+     ],
+     [
+      54,
+      1,
+      "Lethality",
+      3
+     ],
+     [
+      55,
+      1,
+      "Lethality",
+      4
+     ],
+     [
+      56,
+      1,
+      "Lethality",
+      5
+     ],
+     [
+      57,
+      1,
+      "Improved Blade Tactics",
+      1
+     ],
+     [
+      58,
+      1,
+      "Improved Blade Tactics",
+      2
+     ],
+     [
+      59,
+      1,
+      "Improved Blade Tactics",
+      3
+     ],
+     [
+      60,
+      1,
+      "Improved Eviscerate",
+      1
+     ]
+    ]
+   },
+   "specs": [
+    {
+     "spec": "Assassination",
+     "why": "Seal Fate, Envenom and Noxious Assault: poisons from both weapons and combo points from crits.",
+     "split": "33/18/0",
+     "trees": [
+      [
+       "Assassination",
+       {
+        "Malice": 5,
+        "Ruthlessness": 3,
+        "Murder": 2,
+        "Improved Blade Tactics": 3,
+        "Relentless Strikes": 1,
+        "Lethality": 5,
+        "Vile Poisons": 3,
+        "Improved Poisons": 3,
+        "Envenom": 1,
+        "Cold Blood": 1,
+        "Seal Fate": 5,
+        "Noxious Assault": 1
+       }
+      ],
+      [
+       "Combat",
+       {
+        "Opportunity": 5,
+        "Deflection": 2,
+        "Improved Backstab": 3,
+        "Precision": 5,
+        "Dual Wield Specialization": 3
+       }
+      ],
+      [
+       "Subtlety",
+       {}
+      ]
+     ]
+    },
+    {
+     "spec": "Combat",
+     "why": "Precision, Weapon Expertise, Blade Rush and Adrenaline Rush, Hack and Slash with swords or axes: the raid damage build.",
+     "split": "19/32/0",
+     "trees": [
+      [
+       "Assassination",
+       {
+        "Malice": 5,
+        "Ruthlessness": 3,
+        "Murder": 2,
+        "Improved Blade Tactics": 3,
+        "Relentless Strikes": 1,
+        "Lethality": 5
+       }
+      ],
+      [
+       "Combat",
+       {
+        "Lightning Reflexes": 5,
+        "Deflection": 5,
+        "Precision": 5,
+        "Riposte": 1,
+        "Dual Wield Specialization": 5,
+        "Surprise Attack": 1,
+        "Hack and Slash": 2,
+        "Weapon Expertise": 2,
+        "Blade Rush": 2,
+        "Aggression": 3,
+        "Adrenaline Rush": 1
+       }
+      ],
+      [
+       "Subtlety",
+       {}
+      ]
+     ]
+    },
+    {
+     "spec": "Subtlety",
+     "why": "Hemorrhage, Preparation and Mark for Death, with Honor Among Thieves and Tricks of the Trade for the group: control and burst for PvP.",
+     "split": "16/0/35",
+     "trees": [
+      [
+       "Assassination",
+       {
+        "Improved Eviscerate": 2,
+        "Malice": 5,
+        "Ruthlessness": 3,
+        "Murder": 2,
+        "Improved Blade Tactics": 3,
+        "Relentless Strikes": 1
+       }
+      ],
+      [
+       "Combat",
+       {}
+      ],
+      [
+       "Subtlety",
+       {
+        "Camouflage": 5,
+        "Improved Ambush": 3,
+        "Elusiveness": 2,
+        "Serrated Blades": 3,
+        "Initiative": 3,
+        "Hemorrhage": 1,
+        "Cloaked in Shadows": 2,
+        "Blackjack": 2,
+        "Dirty Deeds": 2,
+        "Preparation": 1,
+        "Shadow of Death": 1,
+        "Bloody Mess": 2,
+        "Honor Among Thieves": 2,
+        "Tricks of the Trade": 5,
+        "Mark for Death": 1
+       }
+      ]
+     ]
+    }
+   ],
+   "rxp_gone": [
+    "Improved Sinister Strike",
+    "Blade Flurry",
+    "Sword Specialization",
+    "Improved Slice & Dice"
+   ]
+  },
+  "SHAMAN": {
+   "trees": [
+    "Elemental",
+    "Enhancement",
+    "Restoration"
+   ],
+   "levelling": {
+    "spec": "Enhancement",
+    "why": "Enhancement. Ancestral Knowledge, Thundering Strikes and Flurry, Stormstrike at 30, and Bloodlust at 41; Elemental's cheaper, harder shocks and Clearcasting from your melee crits follow.",
+    "split": "19/32/0",
+    "order": [
+     [
+      "Ancestral Knowledge",
+      5,
+      14
+     ],
+     [
+      "Thundering Strikes",
+      5,
+      19
+     ],
+     [
+      "Ancestral Guardian",
+      3,
+      22
+     ],
+     [
+      "Improved Ghost Wolf",
+      2,
+      24
+     ],
+     [
+      "Flurry",
+      5,
+      29
+     ],
+     [
+      "Stormstrike",
+      1,
+      30
+     ],
+     [
+      "Elemental Weapons",
+      3,
+      33
+     ],
+     [
+      "Enhancing Totems",
+      2,
+      35
+     ],
+     [
+      "Element's Grace",
+      5,
+      40
+     ],
+     [
+      "Bloodlust",
+      1,
+      41
+     ],
+     [
+      "Convection",
+      5,
+      46
+     ],
+     [
+      "Concussion",
+      5,
+      51
+     ],
+     [
+      "Elemental Devastation",
+      3,
+      54
+     ],
+     [
+      "Elemental Focus",
+      1,
+      55
+     ],
+     [
+      "Reverberation",
+      3,
+      58
+     ],
+     [
+      "Call of Flame",
+      2,
+      60
+     ]
+    ],
+    "points": [
+     [
+      10,
+      2,
+      "Ancestral Knowledge",
+      1
+     ],
+     [
+      11,
+      2,
+      "Ancestral Knowledge",
+      2
+     ],
+     [
+      12,
+      2,
+      "Ancestral Knowledge",
+      3
+     ],
+     [
+      13,
+      2,
+      "Ancestral Knowledge",
+      4
+     ],
+     [
+      14,
+      2,
+      "Ancestral Knowledge",
+      5
+     ],
+     [
+      15,
+      2,
+      "Thundering Strikes",
+      1
+     ],
+     [
+      16,
+      2,
+      "Thundering Strikes",
+      2
+     ],
+     [
+      17,
+      2,
+      "Thundering Strikes",
+      3
+     ],
+     [
+      18,
+      2,
+      "Thundering Strikes",
+      4
+     ],
+     [
+      19,
+      2,
+      "Thundering Strikes",
+      5
+     ],
+     [
+      20,
+      2,
+      "Ancestral Guardian",
+      1
+     ],
+     [
+      21,
+      2,
+      "Ancestral Guardian",
+      2
+     ],
+     [
+      22,
+      2,
+      "Ancestral Guardian",
+      3
+     ],
+     [
+      23,
+      2,
+      "Improved Ghost Wolf",
+      1
+     ],
+     [
+      24,
+      2,
+      "Improved Ghost Wolf",
+      2
+     ],
+     [
+      25,
+      2,
+      "Flurry",
+      1
+     ],
+     [
+      26,
+      2,
+      "Flurry",
+      2
+     ],
+     [
+      27,
+      2,
+      "Flurry",
+      3
+     ],
+     [
+      28,
+      2,
+      "Flurry",
+      4
+     ],
+     [
+      29,
+      2,
+      "Flurry",
+      5
+     ],
+     [
+      30,
+      2,
+      "Stormstrike",
+      1
+     ],
+     [
+      31,
+      2,
+      "Elemental Weapons",
+      1
+     ],
+     [
+      32,
+      2,
+      "Elemental Weapons",
+      2
+     ],
+     [
+      33,
+      2,
+      "Elemental Weapons",
+      3
+     ],
+     [
+      34,
+      2,
+      "Enhancing Totems",
+      1
+     ],
+     [
+      35,
+      2,
+      "Enhancing Totems",
+      2
+     ],
+     [
+      36,
+      2,
+      "Element's Grace",
+      1
+     ],
+     [
+      37,
+      2,
+      "Element's Grace",
+      2
+     ],
+     [
+      38,
+      2,
+      "Element's Grace",
+      3
+     ],
+     [
+      39,
+      2,
+      "Element's Grace",
+      4
+     ],
+     [
+      40,
+      2,
+      "Element's Grace",
+      5
+     ],
+     [
+      41,
+      2,
+      "Bloodlust",
+      1
+     ],
+     [
+      42,
+      1,
+      "Convection",
+      1
+     ],
+     [
+      43,
+      1,
+      "Convection",
+      2
+     ],
+     [
+      44,
+      1,
+      "Convection",
+      3
+     ],
+     [
+      45,
+      1,
+      "Convection",
+      4
+     ],
+     [
+      46,
+      1,
+      "Convection",
+      5
+     ],
+     [
+      47,
+      1,
+      "Concussion",
+      1
+     ],
+     [
+      48,
+      1,
+      "Concussion",
+      2
+     ],
+     [
+      49,
+      1,
+      "Concussion",
+      3
+     ],
+     [
+      50,
+      1,
+      "Concussion",
+      4
+     ],
+     [
+      51,
+      1,
+      "Concussion",
+      5
+     ],
+     [
+      52,
+      1,
+      "Elemental Devastation",
+      1
+     ],
+     [
+      53,
+      1,
+      "Elemental Devastation",
+      2
+     ],
+     [
+      54,
+      1,
+      "Elemental Devastation",
+      3
+     ],
+     [
+      55,
+      1,
+      "Elemental Focus",
+      1
+     ],
+     [
+      56,
+      1,
+      "Reverberation",
+      1
+     ],
+     [
+      57,
+      1,
+      "Reverberation",
+      2
+     ],
+     [
+      58,
+      1,
+      "Reverberation",
+      3
+     ],
+     [
+      59,
+      1,
+      "Call of Flame",
+      1
+     ],
+     [
+      60,
+      1,
+      "Call of Flame",
+      2
+     ]
+    ]
+   },
+   "specs": [
+    {
+     "spec": "Elemental",
+     "why": "Call of Thunder, Lightning Mastery, Elemental Fury and Earthquake, with Restoration's Tidal Mastery and Water Shield: the caster.",
+     "split": "34/0/17",
+     "trees": [
+      [
+       "Elemental",
+       {
+        "Convection": 5,
+        "Concussion": 5,
+        "Elemental Devastation": 3,
+        "Elemental Focus": 1,
+        "Reverberation": 3,
+        "Call of Thunder": 5,
+        "Call of Flame": 3,
+        "Elemental Mastery": 1,
+        "Elemental Fury": 2,
+        "Lightning Mastery": 5,
+        "Earthquake": 1
+       }
+      ],
+      [
+       "Enhancement",
+       {}
+      ],
+      [
+       "Restoration",
+       {
+        "Tidal Focus": 5,
+        "Tidal Mastery": 5,
+        "Healing Focus": 1,
+        "Totemic Mastery": 1,
+        "Nature's Grace": 3,
+        "Improved Water Shield": 2
+       }
+      ]
+     ]
+    },
+    {
+     "spec": "Enhancement",
+     "why": "Stormstrike, Elemental Weapons, Element's Grace and Bloodlust, with Elemental's Clearcasting from melee crits: melee for raids and PvP.",
+     "split": "17/34/0",
+     "trees": [
+      [
+       "Elemental",
+       {
+        "Convection": 5,
+        "Concussion": 5,
+        "Elemental Devastation": 3,
+        "Elemental Focus": 1,
+        "Reverberation": 3
+       }
+      ],
+      [
+       "Enhancement",
+       {
+        "Ancestral Knowledge": 5,
+        "Thundering Strikes": 5,
+        "Stable Shields": 3,
+        "Calming Winds": 3,
+        "Lightning Strike": 1,
+        "Flurry": 5,
+        "Enhancing Totems": 2,
+        "Elemental Weapons": 3,
+        "Stormstrike": 1,
+        "Element's Grace": 5,
+        "Bloodlust": 1
+       }
+      ],
+      [
+       "Restoration",
+       {}
+      ]
+     ]
+    },
+    {
+     "spec": "Restoration",
+     "why": "Chain Heal, Water Shield, Ancestral Swiftness and Spirit Link, with Enhancement's Stable Shields for more Water Shield charges: the raid healer.",
+     "split": "0/10/41",
+     "trees": [
+      [
+       "Elemental",
+       {}
+      ],
+      [
+       "Enhancement",
+       {
+        "Ancestral Knowledge": 5,
+        "Stable Shields": 3,
+        "Improved Ghost Wolf": 2
+       }
+      ],
+      [
+       "Restoration",
+       {
+        "Improved Healing Wave": 5,
+        "Tidal Focus": 5,
+        "Ancestral Healing": 3,
+        "Tidal Mastery": 5,
+        "Healing Way": 3,
+        "Totemic Mastery": 1,
+        "Restorative Totems": 5,
+        "Improved Water Shield": 3,
+        "Tidal Surge": 2,
+        "Ancestral Swiftness": 1,
+        "Undertow": 2,
+        "Improved Chain Heal": 5,
+        "Spirit Link": 1
+       }
+      ]
+     ]
+    }
+   ],
+   "rxp_gone": [
+    "Two-Handed Axes and Maces",
+    "Anticipation",
+    "Parry",
+    "Improved Weapon Totems",
+    "Weapon Mastery",
+    "Totemic Focus",
+    "Nature's Guidance"
+   ]
+  },
+  "WARLOCK": {
+   "trees": [
+    "Affliction",
+    "Demonology",
+    "Destruction"
+   ],
+   "levelling": {
+    "spec": "Affliction",
+    "why": "Affliction, then Demonology. Instant Corruption, Siphon Life and Dark Harvest kill with damage over time while you drain your health back; from 41 your demon gets stronger and cheaper to summon.",
+    "split": "31/20/0",
+    "order": [
+     [
+      "Improved Corruption",
+      5,
+      14
+     ],
+     [
+      "Improved Life Tap",
+      2,
+      16
+     ],
+     [
+      "Improved Drains",
+      2,
+      18
+     ],
+     [
+      "Suppression",
+      1,
+      19
+     ],
+     [
+      "Improved Curse of Agony",
+      3,
+      22
+     ],
+     [
+      "Fel Concentration",
+      2,
+      24
+     ],
+     [
+      "Nightfall",
+      2,
+      26
+     ],
+     [
+      "Grim Reach",
+      2,
+      28
+     ],
+     [
+      "Suppression",
+      2,
+      29
+     ],
+     [
+      "Siphon Life",
+      1,
+      30
+     ],
+     [
+      "Rapid Deterioration",
+      2,
+      32
+     ],
+     [
+      "Suppression",
+      4,
+      34
+     ],
+     [
+      "Shadow Mastery",
+      5,
+      39
+     ],
+     [
+      "Dark Harvest",
+      1,
+      40
+     ],
+     [
+      "Demonic Embrace",
+      5,
+      45
+     ],
+     [
+      "Demonic Aegis",
+      3,
+      48
+     ],
+     [
+      "Fel Intellect",
+      2,
+      50
+     ],
+     [
+      "Fel Domination",
+      1,
+      51
+     ],
+     [
+      "Fel Stamina",
+      4,
+      55
+     ],
+     [
+      "Master Summoner",
+      2,
+      57
+     ],
+     [
+      "Unholy Power",
+      3,
+      60
+     ]
+    ],
+    "points": [
+     [
+      10,
+      1,
+      "Improved Corruption",
+      1
+     ],
+     [
+      11,
+      1,
+      "Improved Corruption",
+      2
+     ],
+     [
+      12,
+      1,
+      "Improved Corruption",
+      3
+     ],
+     [
+      13,
+      1,
+      "Improved Corruption",
+      4
+     ],
+     [
+      14,
+      1,
+      "Improved Corruption",
+      5
+     ],
+     [
+      15,
+      1,
+      "Improved Life Tap",
+      1
+     ],
+     [
+      16,
+      1,
+      "Improved Life Tap",
+      2
+     ],
+     [
+      17,
+      1,
+      "Improved Drains",
+      1
+     ],
+     [
+      18,
+      1,
+      "Improved Drains",
+      2
+     ],
+     [
+      19,
+      1,
+      "Suppression",
+      1
+     ],
+     [
+      20,
+      1,
+      "Improved Curse of Agony",
+      1
+     ],
+     [
+      21,
+      1,
+      "Improved Curse of Agony",
+      2
+     ],
+     [
+      22,
+      1,
+      "Improved Curse of Agony",
+      3
+     ],
+     [
+      23,
+      1,
+      "Fel Concentration",
+      1
+     ],
+     [
+      24,
+      1,
+      "Fel Concentration",
+      2
+     ],
+     [
+      25,
+      1,
+      "Nightfall",
+      1
+     ],
+     [
+      26,
+      1,
+      "Nightfall",
+      2
+     ],
+     [
+      27,
+      1,
+      "Grim Reach",
+      1
+     ],
+     [
+      28,
+      1,
+      "Grim Reach",
+      2
+     ],
+     [
+      29,
+      1,
+      "Suppression",
+      2
+     ],
+     [
+      30,
+      1,
+      "Siphon Life",
+      1
+     ],
+     [
+      31,
+      1,
+      "Rapid Deterioration",
+      1
+     ],
+     [
+      32,
+      1,
+      "Rapid Deterioration",
+      2
+     ],
+     [
+      33,
+      1,
+      "Suppression",
+      3
+     ],
+     [
+      34,
+      1,
+      "Suppression",
+      4
+     ],
+     [
+      35,
+      1,
+      "Shadow Mastery",
+      1
+     ],
+     [
+      36,
+      1,
+      "Shadow Mastery",
+      2
+     ],
+     [
+      37,
+      1,
+      "Shadow Mastery",
+      3
+     ],
+     [
+      38,
+      1,
+      "Shadow Mastery",
+      4
+     ],
+     [
+      39,
+      1,
+      "Shadow Mastery",
+      5
+     ],
+     [
+      40,
+      1,
+      "Dark Harvest",
+      1
+     ],
+     [
+      41,
+      2,
+      "Demonic Embrace",
+      1
+     ],
+     [
+      42,
+      2,
+      "Demonic Embrace",
+      2
+     ],
+     [
+      43,
+      2,
+      "Demonic Embrace",
+      3
+     ],
+     [
+      44,
+      2,
+      "Demonic Embrace",
+      4
+     ],
+     [
+      45,
+      2,
+      "Demonic Embrace",
+      5
+     ],
+     [
+      46,
+      2,
+      "Demonic Aegis",
+      1
+     ],
+     [
+      47,
+      2,
+      "Demonic Aegis",
+      2
+     ],
+     [
+      48,
+      2,
+      "Demonic Aegis",
+      3
+     ],
+     [
+      49,
+      2,
+      "Fel Intellect",
+      1
+     ],
+     [
+      50,
+      2,
+      "Fel Intellect",
+      2
+     ],
+     [
+      51,
+      2,
+      "Fel Domination",
+      1
+     ],
+     [
+      52,
+      2,
+      "Fel Stamina",
+      1
+     ],
+     [
+      53,
+      2,
+      "Fel Stamina",
+      2
+     ],
+     [
+      54,
+      2,
+      "Fel Stamina",
+      3
+     ],
+     [
+      55,
+      2,
+      "Fel Stamina",
+      4
+     ],
+     [
+      56,
+      2,
+      "Master Summoner",
+      1
+     ],
+     [
+      57,
+      2,
+      "Master Summoner",
+      2
+     ],
+     [
+      58,
+      2,
+      "Unholy Power",
+      1
+     ],
+     [
+      59,
+      2,
+      "Unholy Power",
+      2
+     ],
+     [
+      60,
+      2,
+      "Unholy Power",
+      3
+     ]
+    ]
+   },
+   "specs": [
+    {
+     "spec": "Affliction",
+     "why": "Malediction, Siphon Life and Dark Harvest, with Destruction's Bane and Devastation: damage over time for raids.",
+     "split": "32/0/19",
+     "trees": [
+      [
+       "Affliction",
+       {
+        "Suppression": 5,
+        "Improved Corruption": 5,
+        "Improved Life Tap": 2,
+        "Improved Drains": 2,
+        "Improved Curse of Agony": 3,
+        "Nightfall": 2,
+        "Soul Siphon": 3,
+        "Rapid Deterioration": 2,
+        "Siphon Life": 1,
+        "Malediction": 1,
+        "Shadow Mastery": 5,
+        "Dark Harvest": 1
+       }
+      ],
+      [
+       "Demonology",
+       {}
+      ],
+      [
+       "Destruction",
+       {
+        "Cataclysm": 5,
+        "Bane": 5,
+        "Intensity": 2,
+        "Devastation": 5,
+        "Destructive Reach": 2
+       }
+      ]
+     ]
+    },
+    {
+     "spec": "Demonology",
+     "why": "Soul Link and Master Demonologist: a strong demon and a hard warlock to kill.",
+     "split": "0/35/16",
+     "trees": [
+      [
+       "Affliction",
+       {}
+      ],
+      [
+       "Demonology",
+       {
+        "Demonic Embrace": 5,
+        "Demonic Aegis": 3,
+        "Fel Intellect": 3,
+        "Fel Domination": 1,
+        "Fel Stamina": 5,
+        "Master Summoner": 2,
+        "Unholy Power": 3,
+        "Power Overwhelming": 1,
+        "Demonic Precision": 3,
+        "Master Demonologist": 5,
+        "Unleashed Potential": 3,
+        "Soul Link": 1
+       }
+      ],
+      [
+       "Destruction",
+       {
+        "Shadow Vulnerability": 1,
+        "Cataclysm": 5,
+        "Bane": 5,
+        "Devastation": 5
+       }
+      ]
+     ]
+    },
+    {
+     "spec": "Destruction",
+     "why": "Ruin, Emberstorm and Conflagrate, with Demonic Sacrifice: fire and shadow burst for raids and PvP.",
+     "split": "0/12/39",
+     "trees": [
+      [
+       "Affliction",
+       {}
+      ],
+      [
+       "Demonology",
+       {
+        "Demonic Embrace": 5,
+        "Soul Entrapment": 3,
+        "Demonic Aegis": 2,
+        "Fel Domination": 1,
+        "Demonic Sacrifice": 1
+       }
+      ],
+      [
+       "Destruction",
+       {
+        "Shadow Vulnerability": 5,
+        "Cataclysm": 5,
+        "Bane": 5,
+        "Intensity": 2,
+        "Shadowburn": 1,
+        "Devastation": 5,
+        "Pyroclasm": 2,
+        "Destructive Reach": 2,
+        "Improved Immolate": 5,
+        "Ruin": 1,
+        "Emberstorm": 5,
+        "Conflagrate": 1
+       }
+      ]
+     ]
+    }
+   ],
+   "rxp_gone": [
+    "Improved Drain Life",
+    "Dark Pact",
+    "Improved Healthstone",
+    "Improved Voidwalker"
+   ]
+  },
+  "WARRIOR": {
+   "trees": [
+    "Arms",
+    "Fury",
+    "Protection"
+   ],
+   "levelling": {
+    "spec": "Arms",
+    "why": "Arms, then Fury. Improved Rend and Deep Wounds bleed what you hit, Sweeping Strikes and Master of Arms speed up every kill, and Mortal Strike lands at 40. Fury's crit and rage talents follow.",
+    "split": "31/20/0",
+    "order": [
+     [
+      "Improved Heroic Strike",
+      3,
+      12
+     ],
+     [
+      "Improved Rend",
+      2,
+      14
+     ],
+     [
+      "Improved Charge",
+      2,
+      16
+     ],
+     [
+      "Tactical Mastery",
+      3,
+      19
+     ],
+     [
+      "Deep Wounds",
+      3,
+      22
+     ],
+     [
+      "Improved Overpower",
+      2,
+      24
+     ],
+     [
+      "Two-Handed Weapon Specialization",
+      3,
+      27
+     ],
+     [
+      "Impale",
+      2,
+      29
+     ],
+     [
+      "Sweeping Strikes",
+      1,
+      30
+     ],
+     [
+      "Master Strike",
+      1,
+      31
+     ],
+     [
+      "Master of Arms",
+      5,
+      36
+     ],
+     [
+      "Tactical Mastery",
+      5,
+      38
+     ],
+     [
+      "Deflection",
+      1,
+      39
+     ],
+     [
+      "Mortal Strike",
+      1,
+      40
+     ],
+     [
+      "Cruelty",
+      5,
+      45
+     ],
+     [
+      "Unbridled Wrath",
+      5,
+      50
+     ],
+     [
+      "Improved Shouts",
+      5,
+      55
+     ],
+     [
+      "Enrage",
+      5,
+      60
+     ]
+    ],
+    "points": [
+     [
+      10,
+      1,
+      "Improved Heroic Strike",
+      1
+     ],
+     [
+      11,
+      1,
+      "Improved Heroic Strike",
+      2
+     ],
+     [
+      12,
+      1,
+      "Improved Heroic Strike",
+      3
+     ],
+     [
+      13,
+      1,
+      "Improved Rend",
+      1
+     ],
+     [
+      14,
+      1,
+      "Improved Rend",
+      2
+     ],
+     [
+      15,
+      1,
+      "Improved Charge",
+      1
+     ],
+     [
+      16,
+      1,
+      "Improved Charge",
+      2
+     ],
+     [
+      17,
+      1,
+      "Tactical Mastery",
+      1
+     ],
+     [
+      18,
+      1,
+      "Tactical Mastery",
+      2
+     ],
+     [
+      19,
+      1,
+      "Tactical Mastery",
+      3
+     ],
+     [
+      20,
+      1,
+      "Deep Wounds",
+      1
+     ],
+     [
+      21,
+      1,
+      "Deep Wounds",
+      2
+     ],
+     [
+      22,
+      1,
+      "Deep Wounds",
+      3
+     ],
+     [
+      23,
+      1,
+      "Improved Overpower",
+      1
+     ],
+     [
+      24,
+      1,
+      "Improved Overpower",
+      2
+     ],
+     [
+      25,
+      1,
+      "Two-Handed Weapon Specialization",
+      1
+     ],
+     [
+      26,
+      1,
+      "Two-Handed Weapon Specialization",
+      2
+     ],
+     [
+      27,
+      1,
+      "Two-Handed Weapon Specialization",
+      3
+     ],
+     [
+      28,
+      1,
+      "Impale",
+      1
+     ],
+     [
+      29,
+      1,
+      "Impale",
+      2
+     ],
+     [
+      30,
+      1,
+      "Sweeping Strikes",
+      1
+     ],
+     [
+      31,
+      1,
+      "Master Strike",
+      1
+     ],
+     [
+      32,
+      1,
+      "Master of Arms",
+      1
+     ],
+     [
+      33,
+      1,
+      "Master of Arms",
+      2
+     ],
+     [
+      34,
+      1,
+      "Master of Arms",
+      3
+     ],
+     [
+      35,
+      1,
+      "Master of Arms",
+      4
+     ],
+     [
+      36,
+      1,
+      "Master of Arms",
+      5
+     ],
+     [
+      37,
+      1,
+      "Tactical Mastery",
+      4
+     ],
+     [
+      38,
+      1,
+      "Tactical Mastery",
+      5
+     ],
+     [
+      39,
+      1,
+      "Deflection",
+      1
+     ],
+     [
+      40,
+      1,
+      "Mortal Strike",
+      1
+     ],
+     [
+      41,
+      2,
+      "Cruelty",
+      1
+     ],
+     [
+      42,
+      2,
+      "Cruelty",
+      2
+     ],
+     [
+      43,
+      2,
+      "Cruelty",
+      3
+     ],
+     [
+      44,
+      2,
+      "Cruelty",
+      4
+     ],
+     [
+      45,
+      2,
+      "Cruelty",
+      5
+     ],
+     [
+      46,
+      2,
+      "Unbridled Wrath",
+      1
+     ],
+     [
+      47,
+      2,
+      "Unbridled Wrath",
+      2
+     ],
+     [
+      48,
+      2,
+      "Unbridled Wrath",
+      3
+     ],
+     [
+      49,
+      2,
+      "Unbridled Wrath",
+      4
+     ],
+     [
+      50,
+      2,
+      "Unbridled Wrath",
+      5
+     ],
+     [
+      51,
+      2,
+      "Improved Shouts",
+      1
+     ],
+     [
+      52,
+      2,
+      "Improved Shouts",
+      2
+     ],
+     [
+      53,
+      2,
+      "Improved Shouts",
+      3
+     ],
+     [
+      54,
+      2,
+      "Improved Shouts",
+      4
+     ],
+     [
+      55,
+      2,
+      "Improved Shouts",
+      5
+     ],
+     [
+      56,
+      2,
+      "Enrage",
+      1
+     ],
+     [
+      57,
+      2,
+      "Enrage",
+      2
+     ],
+     [
+      58,
+      2,
+      "Enrage",
+      3
+     ],
+     [
+      59,
+      2,
+      "Enrage",
+      4
+     ],
+     [
+      60,
+      2,
+      "Enrage",
+      5
+     ]
+    ]
+   },
+   "specs": [
+    {
+     "spec": "Arms",
+     "why": "Mortal Strike with a two-hander and Master of Arms for your weapon: questing at 60, PvP, and dungeons before Fury gear.",
+     "split": "31/20/0",
+     "trees": [
+      [
+       "Arms",
+       {
+        "Improved Heroic Strike": 3,
+        "Tactical Mastery": 5,
+        "Improved Rend": 2,
+        "Improved Charge": 2,
+        "Deflection": 1,
+        "Master Strike": 1,
+        "Improved Overpower": 2,
+        "Deep Wounds": 3,
+        "Two-Handed Weapon Specialization": 3,
+        "Impale": 2,
+        "Master of Arms": 5,
+        "Sweeping Strikes": 1,
+        "Mortal Strike": 1
+       }
+      ],
+      [
+       "Fury",
+       {
+        "Cruelty": 5,
+        "Unbridled Wrath": 5,
+        "Improved Shouts": 5,
+        "Enrage": 5
+       }
+      ],
+      [
+       "Protection",
+       {}
+      ]
+     ]
+    },
+    {
+     "spec": "Fury",
+     "why": "Dual wield with Flurry and Bloodthirst: the raid damage build.",
+     "split": "17/34/0",
+     "trees": [
+      [
+       "Arms",
+       {
+        "Improved Heroic Strike": 3,
+        "Tactical Mastery": 5,
+        "Improved Rend": 2,
+        "Improved Overpower": 2,
+        "Deep Wounds": 3,
+        "Impale": 2
+       }
+      ],
+      [
+       "Fury",
+       {
+        "Cruelty": 5,
+        "Dual Wield Specialization": 5,
+        "Unbridled Wrath": 5,
+        "Improved Shouts": 5,
+        "Enrage": 5,
+        "Death Wish": 1,
+        "Improved Execute": 2,
+        "Flurry": 5,
+        "Bloodthirst": 1
+       }
+      ],
+      [
+       "Protection",
+       {}
+      ]
+     ]
+    },
+    {
+     "spec": "Protection",
+     "why": "Shield Slam tank with Defiance and Concussion Blow: holds threat and lasts in dungeons and raids.",
+     "split": "15/0/36",
+     "trees": [
+      [
+       "Arms",
+       {
+        "Improved Heroic Strike": 3,
+        "Tactical Mastery": 5,
+        "Improved Rend": 2,
+        "Deflection": 5
+       }
+      ],
+      [
+       "Fury",
+       {}
+      ],
+      [
+       "Protection",
+       {
+        "Improved Bloodrage": 2,
+        "Shield Specialization": 5,
+        "Anticipation": 3,
+        "Toughness": 5,
+        "Last Stand": 1,
+        "Improved Taunt": 1,
+        "Improved Revenge": 3,
+        "Defiance": 5,
+        "One-Handed Weapon Specialization": 5,
+        "Shield Slam": 1,
+        "Improved Shield Slam": 2,
+        "Reprisal": 2,
+        "Concussion Blow": 1
+       }
+      ]
+     ]
+    }
+   ],
+   "rxp_gone": [
+    "Anger Management",
+    "Axe Specialization",
+    "Mace Specialization",
+    "Sword Specialization",
+    "Improved Battle Shout"
+   ],
+   "alts": [
+    {
+     "name": "Protection",
+     "spec": "Protection",
+     "why": "Protection with a shield from 10. Shield Specialization gives rage on every block, Improved Revenge stuns, Last Stand at 25, Shield Slam at 30 and Concussion Blow at 40; then Arms' Tactical Mastery and Deep Wounds.",
+     "split": "16/0/35",
+     "order": [
+      [
+       "Shield Specialization",
+       5,
+       14
+      ],
+      [
+       "Toughness",
+       5,
+       19
+      ],
+      [
+       "Improved Revenge",
+       3,
+       22
+      ],
+      [
+       "Improved Bloodrage",
+       2,
+       24
+      ],
+      [
+       "Last Stand",
+       1,
+       25
+      ],
+      [
+       "Defiance",
+       4,
+       29
+      ],
+      [
+       "Shield Slam",
+       1,
+       30
+      ],
+      [
+       "One-Handed Weapon Specialization",
+       5,
+       35
+      ],
+      [
+       "Improved Shield Slam",
+       2,
+       37
+      ],
+      [
+       "Reprisal",
+       2,
+       39
+      ],
+      [
+       "Concussion Blow",
+       1,
+       40
+      ],
+      [
+       "Defiance",
+       5,
+       41
+      ],
+      [
+       "Defensive Tactics",
+       3,
+       44
+      ],
+      [
+       "Improved Heroic Strike",
+       3,
+       47
+      ],
+      [
+       "Tactical Mastery",
+       5,
+       52
+      ],
+      [
+       "Improved Rend",
+       2,
+       54
+      ],
+      [
+       "Deep Wounds",
+       3,
+       57
+      ],
+      [
+       "Improved Charge",
+       2,
+       59
+      ],
+      [
+       "Deflection",
+       1,
+       60
+      ]
+     ],
+     "points": [
+      [
+       10,
+       3,
+       "Shield Specialization",
+       1
+      ],
+      [
+       11,
+       3,
+       "Shield Specialization",
+       2
+      ],
+      [
+       12,
+       3,
+       "Shield Specialization",
+       3
+      ],
+      [
+       13,
+       3,
+       "Shield Specialization",
+       4
+      ],
+      [
+       14,
+       3,
+       "Shield Specialization",
+       5
+      ],
+      [
+       15,
+       3,
+       "Toughness",
+       1
+      ],
+      [
+       16,
+       3,
+       "Toughness",
+       2
+      ],
+      [
+       17,
+       3,
+       "Toughness",
+       3
+      ],
+      [
+       18,
+       3,
+       "Toughness",
+       4
+      ],
+      [
+       19,
+       3,
+       "Toughness",
+       5
+      ],
+      [
+       20,
+       3,
+       "Improved Revenge",
+       1
+      ],
+      [
+       21,
+       3,
+       "Improved Revenge",
+       2
+      ],
+      [
+       22,
+       3,
+       "Improved Revenge",
+       3
+      ],
+      [
+       23,
+       3,
+       "Improved Bloodrage",
+       1
+      ],
+      [
+       24,
+       3,
+       "Improved Bloodrage",
+       2
+      ],
+      [
+       25,
+       3,
+       "Last Stand",
+       1
+      ],
+      [
+       26,
+       3,
+       "Defiance",
+       1
+      ],
+      [
+       27,
+       3,
+       "Defiance",
+       2
+      ],
+      [
+       28,
+       3,
+       "Defiance",
+       3
+      ],
+      [
+       29,
+       3,
+       "Defiance",
+       4
+      ],
+      [
+       30,
+       3,
+       "Shield Slam",
+       1
+      ],
+      [
+       31,
+       3,
+       "One-Handed Weapon Specialization",
+       1
+      ],
+      [
+       32,
+       3,
+       "One-Handed Weapon Specialization",
+       2
+      ],
+      [
+       33,
+       3,
+       "One-Handed Weapon Specialization",
+       3
+      ],
+      [
+       34,
+       3,
+       "One-Handed Weapon Specialization",
+       4
+      ],
+      [
+       35,
+       3,
+       "One-Handed Weapon Specialization",
+       5
+      ],
+      [
+       36,
+       3,
+       "Improved Shield Slam",
+       1
+      ],
+      [
+       37,
+       3,
+       "Improved Shield Slam",
+       2
+      ],
+      [
+       38,
+       3,
+       "Reprisal",
+       1
+      ],
+      [
+       39,
+       3,
+       "Reprisal",
+       2
+      ],
+      [
+       40,
+       3,
+       "Concussion Blow",
+       1
+      ],
+      [
+       41,
+       3,
+       "Defiance",
+       5
+      ],
+      [
+       42,
+       3,
+       "Defensive Tactics",
+       1
+      ],
+      [
+       43,
+       3,
+       "Defensive Tactics",
+       2
+      ],
+      [
+       44,
+       3,
+       "Defensive Tactics",
+       3
+      ],
+      [
+       45,
+       1,
+       "Improved Heroic Strike",
+       1
+      ],
+      [
+       46,
+       1,
+       "Improved Heroic Strike",
+       2
+      ],
+      [
+       47,
+       1,
+       "Improved Heroic Strike",
+       3
+      ],
+      [
+       48,
+       1,
+       "Tactical Mastery",
+       1
+      ],
+      [
+       49,
+       1,
+       "Tactical Mastery",
+       2
+      ],
+      [
+       50,
+       1,
+       "Tactical Mastery",
+       3
+      ],
+      [
+       51,
+       1,
+       "Tactical Mastery",
+       4
+      ],
+      [
+       52,
+       1,
+       "Tactical Mastery",
+       5
+      ],
+      [
+       53,
+       1,
+       "Improved Rend",
+       1
+      ],
+      [
+       54,
+       1,
+       "Improved Rend",
+       2
+      ],
+      [
+       55,
+       1,
+       "Deep Wounds",
+       1
+      ],
+      [
+       56,
+       1,
+       "Deep Wounds",
+       2
+      ],
+      [
+       57,
+       1,
+       "Deep Wounds",
+       3
+      ],
+      [
+       58,
+       1,
+       "Improved Charge",
+       1
+      ],
+      [
+       59,
+       1,
+       "Improved Charge",
+       2
+      ],
+      [
+       60,
+       1,
+       "Deflection",
+       1
+      ]
+     ]
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,286 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+
+	<Frame name="BagnonPopupFrame" clampedToScreen="true" enableMouse="true" toplevel="true" parent="UIParent" frameStrata="DIALOG" hidden="true" virtual="true">
+		<Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border">
+			<BackgroundInsets>
+				<AbsInset left="4" right="4" top="4" bottom="4"/>
+			</BackgroundInsets>
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<BorderColor r="0.6" g="0.6" b="0.6"/>
+		</Backdrop>
+
+		<Layers>
+			<Layer level ="BACKGROUND">
+				<Texture file="Interface\ChatFrame\ChatFrameBackground">
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset x="4" y="-4"/>
+						</Anchor>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset x="-4" y="4"/>
+						</Anchor>
+					</Anchors>
+					<Gradient orientation="VERTICAL">
+						<MinColor r="0" g="0" b="0" a="0.9"/>
+						<MaxColor r="0.2" g="0.2" b="0.2" a="0.9"/>
+					</Gradient>
+				</Texture>
+			</Layer>
+		</Layers>
+	</Frame>
+
+	<!-- An inventory frame template -->
+	<Button name="BagnonFrameTemplate" frameStrata="HIGH" movable="true" enableMouse="true" parent="UIParent" hidden="true" virtual="true">
+
+		<Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground" edgeFile="Interface\Tooltips\UI-Tooltip-Border">
+			<BackgroundInsets>
+				<AbsInset left="4" right="4" top="4" bottom="4"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+		</Backdrop>
+
+		<Frames>
+			<Button name="$parentCloseButton" inherits="UIPanelCloseButton">
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-2" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						HideUIPanel(this:GetParent());
+					</OnClick>
+				</Scripts>
+			</Button>
+
+			<Button name="$parentSortButton">
+				<Size x="18" y="18"/>
+				<Anchors>
+					<Anchor point="CENTER" relativeTo="$parentCloseButton" relativePoint="CENTER">
+						<Offset>
+							<AbsDimension x="-23" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\Bagnon\assets\sort.blp" setAllPoints="true"/>
+				<PushedTexture file="Interface\AddOns\Bagnon\assets\sort-pushed.blp" setAllPoints="true"/>
+				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD" setAllPoints="true"/>
+				<Scripts>
+					<OnLoad>
+						this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+					</OnLoad>
+					<OnClick>
+						BagnonFrameSort_OnClick(this:GetParent(), arg1);
+					</OnClick>
+					<OnEnter>
+						BagnonFrameSort_OnEnter(this);
+					</OnEnter>
+					<OnLeave>
+						BagnonFrameSort_OnLeave();
+					</OnLeave>
+				</Scripts>
+			</Button>
+
+			<Button name="$parentFreeSlots">
+				<Size x="80" y="18"/>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="$parentSortButton" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="-12" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<ButtonText name="$parentText" setAllPoints="true"/>
+				<NormalFont font="GameFontHighlightSmall" justifyH="RIGHT"/>
+				<HighlightFont font="GameFontNormalSmall" justifyH="RIGHT"/>
+				<Scripts>
+					<OnDragStart>
+						BagnonFrame_StartMoving(this:GetParent());
+					</OnDragStart>
+					<OnMouseDown>
+						BagnonFrame_StartMoving(this:GetParent());
+					</OnMouseDown>
+					<OnMouseUp>
+						BagnonFrame_StopMoving(this:GetParent());
+					</OnMouseUp>
+					<OnEnter>
+						BagnonFrameFreeSlots_OnEnter(this);
+					</OnEnter>
+					<OnLeave>
+						BagnonFrameFreeSlots_OnLeave();
+					</OnLeave>
+				</Scripts>
+			</Button>
+
+			<Button name="$parentTitle">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="32" y="-2"/>
+						</Offset>
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parentFreeSlots" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="-6" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+
+				<ButtonText setAllPoints="true"/>
+				<NormalFont font="GameFontNormal" justifyH="LEFT"/>
+				<HighlightFont font="GameFontHighlight" justifyH="LEFT"/>
+
+				<Scripts>
+					<OnLoad>
+						this:RegisterForClicks("LeftButtonDown", "LeftButtonUp", "RightButtonUp");
+					</OnLoad>
+					<OnDragStart>
+						BagnonFrame_StartMoving(this:GetParent());
+					</OnDragStart>
+					<OnMouseDown>
+						BagnonFrame_StartMoving(this:GetParent());
+					</OnMouseDown>
+					<OnMouseUp>
+						BagnonFrame_OnClick(this:GetParent(), arg1);
+						BagnonFrame_StopMoving(this:GetParent());
+					</OnMouseUp>
+					<OnEnter>
+						BagnonFrame_OnEnter(this);
+					</OnEnter>
+					<OnLeave>
+						BagnonFrame_OnLeave();
+					</OnLeave>
+				</Scripts>
+			</Button>
+
+			<Frame name="$parentMoneyFrame" inherits="SmallMoneyFrameTemplate" hidden="false">
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="0" y="10"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+
+				<!-- this frame is used for giving the money frame tooltips properly -->
+				<Frames>
+					<Button name="$parentHoverFrame" setAllPoints="true">
+						<Scripts>
+							<OnLoad>
+								this:SetFrameLevel(this:GetFrameLevel() + 1);
+							</OnLoad>
+							<OnClick>
+								BagnonFrameMoney_OnClick(this);
+							</OnClick>
+							<OnEnter>
+								BagnonFrameMoney_OnEnter(this);
+							</OnEnter>
+							<OnLeave>
+								BagnonFrameMoney_OnLeave();
+							</OnLeave>
+						</Scripts>
+					</Button>
+				</Frames>
+
+				<Scripts>
+					<OnShow>
+						if(not this:GetParent().player or this:GetParent().player == UnitName("player") ) then
+							MoneyFrame_UpdateMoney();
+						end
+					</OnShow>
+				</Scripts>
+			</Frame>
+
+			<!-- The search box sits in the bottom row between the bag button and the money -->
+			<EditBox name="$parentSearch" autoFocus="false" letters="40">
+				<Size x="100" y="18"/>
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="106" y="17"/>
+						</Offset>
+					</Anchor>
+					<Anchor point="RIGHT" relativeTo="$parentMoneyFrame" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="-8" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="3" right="3" top="3" bottom="3"/>
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="16"/>
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="12"/>
+					</EdgeSize>
+				</Backdrop>
+				<TextInsets>
+					<AbsInset left="6" right="6" top="0" bottom="0"/>
+				</TextInsets>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parentHint" inherits="GameFontDisableSmall" text="BAGNON_SEARCH_HINT">
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="7" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<FontString inherits="GameFontHighlightSmall"/>
+				<Scripts>
+					<OnTextChanged>
+						BagnonSearch_OnTextChanged(this);
+					</OnTextChanged>
+					<OnEditFocusGained>
+						BagnonSearch_OnFocus(this, true);
+					</OnEditFocusGained>
+					<OnEditFocusLost>
+						BagnonSearch_OnFocus(this, false);
+					</OnEditFocusLost>
+					<OnEscapePressed>
+						BagnonSearch_Close(this:GetParent());
+					</OnEscapePressed>
+					<OnEnterPressed>
+						this:ClearFocus();
+					</OnEnterPressed>
+					<OnEnter>
+						BagnonSearch_OnEnter(this);
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</EditBox>
+		</Frames>
+
+		<Scripts>
+			<OnMouseDown>
+				BagnonFrame_StartMoving(this);
+			</OnMouseDown>
+			<OnMouseUp>
+				BagnonFrame_StopMoving(this);
+			</OnMouseUp>
+			<OnHide>
+				BagnonFrame_OnHide(this);
+			</OnHide>
+		</Scripts>
+	</Button>
+</Ui>

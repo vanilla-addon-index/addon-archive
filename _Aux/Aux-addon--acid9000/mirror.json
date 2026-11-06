@@ -1,0 +1,225 @@
+{
+  "upstream": "https://github.com/acid9000/Aux-addon",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "acid9000",
+    "repo": "Aux-addon",
+    "name": "Aux-addon",
+    "url": "https://github.com/acid9000/Aux-addon",
+    "api": "https://api.github.com/repos/acid9000/Aux-addon"
+  },
+  "commit": "09728c5a5a4c9b30c05a25d4fc23a9247683fadc",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "9419dd99d48e26a23157921247192a8c705398b2c0694a3297cb5b0e4d09fbd8",
+      "bytes": 48
+    },
+    "aux-addon.lua": {
+      "sha256": "86c516f3789a336f6ad73dec2333a0b1e10d961a4a6657692144e72fb21da5bf",
+      "bytes": 6614
+    },
+    "aux-addon.toc": {
+      "sha256": "8cf4ea888aaa966e8670016cedad957e6c4dba0e77fdf68c215dacd35f6f4e7e",
+      "bytes": 865
+    },
+    "Bindings.xml": {
+      "sha256": "a606493bac6a796077a180c58b98e9b949967b76812c191fb60c320c9539b1ee",
+      "bytes": 102
+    },
+    "color.lua": {
+      "sha256": "e25fc61143dff469e62bbefc51f8c8cb4c934d377efaaa21d76ced0b995d7910",
+      "bytes": 1705
+    },
+    "control.lua": {
+      "sha256": "a81dba568d9e0b8ba23a57b47432e9c1ffd2beb45f63b503e4171fc657c13717",
+      "bytes": 2323
+    },
+    "core/cache.lua": {
+      "sha256": "05015f5e5ed3d4ca7ea1dd0c700af734ed29bcd07ff0c26da18379a00c3edb3c",
+      "bytes": 5979
+    },
+    "core/crafting.lua": {
+      "sha256": "c390b2ef1240ba814829dd0a468123c9ba079019fe587c3d2e817ffb5b9cb669",
+      "bytes": 4017
+    },
+    "core/disenchant.lua": {
+      "sha256": "cfa302d3350be4e46f6caa923bfe15cf27e94a588cdb999ce0620a0ae3be9b57",
+      "bytes": 8620
+    },
+    "core/history.lua": {
+      "sha256": "d22dcad90d9ac12dfab42630460b333111490bdf578424e110da21e6d1c7fc81",
+      "bytes": 11007
+    },
+    "core/post.lua": {
+      "sha256": "1d2e9266b2ed96ba712bcfbaa1ff7a7099115b70b32450f3c187da5c69b6ade7",
+      "bytes": 6151
+    },
+    "core/scan.lua": {
+      "sha256": "3a3e8b796fae292956e192354fee382e3ea51f24ecbb48bb7c132e8022db858f",
+      "bytes": 6948
+    },
+    "core/shortcut.lua": {
+      "sha256": "273187d36ad1875eef9ba78d43f57a916368808a87d1502b2d0070449c461f95",
+      "bytes": 929
+    },
+    "core/slash.lua": {
+      "sha256": "947a280c7ef493a7e18835f7f6d47c44d1dc0d1656bd022240c1809f5cfdbe5a",
+      "bytes": 5301
+    },
+    "core/stack.lua": {
+      "sha256": "d172a6ba9bcf32dc11510cf0a05d69968edf7ef3c5a6b9491924932ce818a476",
+      "bytes": 3280
+    },
+    "core/tooltip.lua": {
+      "sha256": "83546e0f1df12a88a0a32b123e39c7a6cc1072899613d84fc72286cbebf41ec9",
+      "bytes": 9946
+    },
+    "frame.lua": {
+      "sha256": "d10bef9c72187b034e2c7a164fe9f5c35ef34d4deab10531398c9d19f30a205d",
+      "bytes": 1454
+    },
+    "gui/auction_listing.lua": {
+      "sha256": "a44e20f20b0ddd019ce963972d96b9b68105db9c09ec52e2d00bf85523790caa",
+      "bytes": 37685
+    },
+    "gui/core.lua": {
+      "sha256": "08a555ae735a08ce471b3a34c3fd42d2814dae8e8dcf5cb11194060c9aed2b25",
+      "bytes": 18753
+    },
+    "gui/item_listing.lua": {
+      "sha256": "b7344491a8c1872bf6a1fa0e52929f4bf8e385e9fa5107e309397b18b1ba4146",
+      "bytes": 4018
+    },
+    "gui/listing.lua": {
+      "sha256": "16b6ce807a26594120c7568b7834a22b3e77b7b03e7aa54b6925d80bce3b2947",
+      "bytes": 8915
+    },
+    "libs/ChatThrottleLib.lua": {
+      "sha256": "4c6437f5a2c7a9c29d98d8be776b801bf51f99e40cb67b4087f5117158ad8637",
+      "bytes": 14914
+    },
+    "libs/package.lua": {
+      "sha256": "1f676985204f83138429aa5ee77a243e9f2e25c5558dbef15c5e6b3b40ff6b1d",
+      "bytes": 908
+    },
+    "libs/T.lua": {
+      "sha256": "6e918f974cdaf53aeca3d7cb3966c22068ed8e51159f5f8403e4c50144c8fea7",
+      "bytes": 2764
+    },
+    "localization.lua": {
+      "sha256": "d13cd1fa1e09c6c76ffd53e1fdd1ca7c45d90f9e0844a510065e50bf1ba472b3",
+      "bytes": 133
+    },
+    "README_Geojak.md": {
+      "sha256": "cccde59ff041f3a0d608da411d963ceb643c907cfabb54763fda421c3963fad9",
+      "bytes": 1515
+    },
+    "README.md": {
+      "sha256": "fb62517de3d0e934040a391114c068afaf843c561916b175c9739c8d321d4e0e",
+      "bytes": 13100
+    },
+    "tabs/auctions/core.lua": {
+      "sha256": "dbba96e8c790d8f8bff61b12bfe3627703b81424ff2b93cdc4eb4ff952f6db80",
+      "bytes": 2876
+    },
+    "tabs/auctions/frame.lua": {
+      "sha256": "a212e278c2bbc39bd2e2ce5442f28aa8ab34459015cf4dc95479b9c5b9724521",
+      "bytes": 1883
+    },
+    "tabs/bids/core.lua": {
+      "sha256": "327181fae2cf97d2dabc9b679ed07869bbad719c19a45e11f1f8c8ee3d6c9c69",
+      "bytes": 3895
+    },
+    "tabs/bids/frame.lua": {
+      "sha256": "4169f3a507ca2f639f9ff990b3ec7119a0cdbeb0da69dfb61201cc3871d4abd9",
+      "bytes": 2054
+    },
+    "tabs/post/core.lua": {
+      "sha256": "5633ef48bab6f409e70d62056d59d488c615fac0dfb7a37c128b76a28a178242",
+      "bytes": 24673
+    },
+    "tabs/post/frame.lua": {
+      "sha256": "38e614da4eb694f9437f2b16de6ec90ef8bd5b305e5e5f6bda2edd7edb58cb40",
+      "bytes": 11997
+    },
+    "tabs/search/core.lua": {
+      "sha256": "5c1e59d4c6b956763b1681ef19d7e8e55f197d5d1248258f8bee04ef49c593e6",
+      "bytes": 2003
+    },
+    "tabs/search/filter.lua": {
+      "sha256": "6155bfe89182adc69a9cf959ce60aee41728455ba7ebc945b2a551b753986bf6",
+      "bytes": 12842
+    },
+    "tabs/search/frame.lua": {
+      "sha256": "7a596cb1ba0ad44f01522fdc5d7fae5b9dc20196c9985a313866361c295bc458",
+      "bytes": 18404
+    },
+    "tabs/search/results.lua": {
+      "sha256": "2513ed1a1149765fa77bdebfd3c6d722301e3dbfbfc0c0240310fe2fe9546a5d",
+      "bytes": 12481
+    },
+    "tabs/search/saved.lua": {
+      "sha256": "82f081fc5d9daf3344f64f0529cd0b8cf4d5f951a2e044087bfb1fcf8b0f2cca",
+      "bytes": 5617
+    },
+    "Tooltip-Example-ItemStack.png": {
+      "sha256": "3f26d458830c9128ccf6c7ef31eb3276c0c99a584738fa7ac045a720fa97ea0f",
+      "bytes": 100630
+    },
+    "Tooltip-Example.png": {
+      "sha256": "016df62452b59138ce8009aefaf953aecf4dcd905764530c2ca6a1568b19a4a4",
+      "bytes": 73718
+    },
+    "util/completion.lua": {
+      "sha256": "f9bea79c110750cac48819b6d3eb00d2be191cc946cdba35b1b345bfb845c2bd",
+      "bytes": 1264
+    },
+    "util/filter.lua": {
+      "sha256": "921ebc2d4a07b82b9e24d10e2eb3ef62e27e9263050ccf371e9b49cd2ed664cd",
+      "bytes": 21024
+    },
+    "util/info.lua": {
+      "sha256": "c2b2a6ff3abd1e710fcc0f11472cee325bd6d729a414c4e4873052e2a74dc78f",
+      "bytes": 15622
+    },
+    "util/money.lua": {
+      "sha256": "4c65f5f9f518bbca268aff14bdf208405d2d2d8509b57fec8b5ae63bdb209fc5",
+      "bytes": 3974
+    },
+    "util/persistence.lua": {
+      "sha256": "68aedfe0c903a03d8db6f26b7d69f7454d926ec5f084d2a2fde8cd643e5eed94",
+      "bytes": 2156
+    },
+    "util/scan.lua": {
+      "sha256": "7303fe989f22bcb7fb43af9c9df067d26763d32244748fed9f11ac106644189c",
+      "bytes": 2904
+    },
+    "util/sort.lua": {
+      "sha256": "f096881317c729a76983d486afcc83bfc12242db3a2156f7433dbc77f9b18afd",
+      "bytes": 582
+    },
+    "util.lua": {
+      "sha256": "fc3fd6352529a846b30e486cf992163a4b64e1cb6713c081fa42a7990feadc54",
+      "bytes": 3153
+    },
+    "WORLDSTATEFINALSCORE-HIGHLIGHT.BLP": {
+      "sha256": "6d032b04167ca3a9c930e153480ccb38a4105551b069d40b2c58f242f48a550c",
+      "bytes": 3908
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "277750284": {
+      "tag": "1.0.3",
+      "folder": "1.0.3--277750284",
+      "assets": {},
+      "source": {
+        "sha256": "bacf09226b869ccc4e3840ac760adb57959e725f633ca86de523d1d934b4d8f2",
+        "bytes": 248411,
+        "path": "releases/1.0.3--277750284/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/acid9000/Aux-addon/tarball/1.0.3"
+      }
+    }
+  }
+}

@@ -1,0 +1,3454 @@
+{
+  "upstream": "https://github.com/Torchlite-bit/Aegis_Pathfinder",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Torchlite-bit",
+    "repo": "Aegis_Pathfinder",
+    "name": "Aegis_Pathfinder",
+    "url": "https://github.com/Torchlite-bit/Aegis_Pathfinder",
+    "api": "https://api.github.com/repos/Torchlite-bit/Aegis_Pathfinder"
+  },
+  "commit": "49bf09444409f1661ee283c8c8e4239820235550",
+  "sourceFiles": {
+    ".github/discord_changelog.py": {
+      "sha256": "6988838f1f6b5c03d55dca5cb1711973a89f22b420bad2dad4dd90b95be43192",
+      "bytes": 4860
+    },
+    ".github/discord-logo.png": {
+      "sha256": "1d15f1c763d6075c33d67b542d37c80d4ea4007b228278fdcaa7c3c2798c4791",
+      "bytes": 113880
+    },
+    ".github/workflows/release.yml": {
+      "sha256": "089a548d4164be11986990e37b9a44806bff6dc90e3411e63bb6fdaebb64b285",
+      "bytes": 4163
+    },
+    ".gitignore.upstream": {
+      "sha256": "0793b4d9c85ec3bf576e9e3e43c11351269ddf2ed681975137669dd34751a77a",
+      "bytes": 199
+    },
+    ".luarc.json": {
+      "sha256": "f135b862e8cb7c89e9d9c1bb963acfdff64efde12347c82638885d60ddc3e5be",
+      "bytes": 293
+    },
+    ".pkgmeta": {
+      "sha256": "8a697f3d6974389a446a3ac695887bd9930b92df2ee80b021361b5261e7b9d1e",
+      "bytes": 363
+    },
+    "ActiveFrames.lua": {
+      "sha256": "615b177eb4dbed897a473cbdd70efe37d788eb2a356cdb8584bf98893573b90e",
+      "bytes": 45307
+    },
+    "Aegis_Pathfinder.toc": {
+      "sha256": "47508bee5e1605c48e688808c06595fda6b22d6ea5ec37a8e14e9b6f3a6204b3",
+      "bytes": 3640
+    },
+    "Automation.lua": {
+      "sha256": "114f8c4aeba18cecbd2d67b41e3fe84b21dc0d7bbd0ef28e7bebc11a224e03bc",
+      "bytes": 14741
+    },
+    "Bindings.xml": {
+      "sha256": "1fb9e078cae1029c4d730b8744b297ae414f5cf289f552415d795b2ad5559b99",
+      "bytes": 378
+    },
+    "CHANGELOG.md": {
+      "sha256": "5f9a5990c6f3d6c1e80b59f7dd3ab7d18a3a40c0edaab6626507d72006e92539",
+      "bytes": 98561
+    },
+    "CONTRIBUTING.md": {
+      "sha256": "af7e6706b2866847a9794a4cc145aac6f35959df494e70bff33b6be1b8a46a3f",
+      "bytes": 24543
+    },
+    "CONTRIBUTORS.md": {
+      "sha256": "9b5fd1312e3bdb66e96eabc41962a1c5f92291fefa4481b03b5572ad232b6680",
+      "bytes": 10824
+    },
+    "Core.lua": {
+      "sha256": "7f61d51783885da0cd6fbf5e2bab70e8835cc0452cb81f5929e5ed9cd3dc3d7e",
+      "bytes": 116652
+    },
+    "Crafting/Alchemy.lua": {
+      "sha256": "73f855f3db85483536ab80c29437ae7d1826662ce07c63d57e48cc0a140d021b",
+      "bytes": 12809
+    },
+    "Crafting/Blacksmithing.lua": {
+      "sha256": "855fafa85088b0b86c6b054321e43ddf669d62a3a929494f20a168c4ab4f1048",
+      "bytes": 21929
+    },
+    "Crafting/Cooking.lua": {
+      "sha256": "0fd1d16aec47967ac8b6fc55aecfedca3dea61ca614fa3a42d70a1ff57fb6602",
+      "bytes": 9756
+    },
+    "Crafting/Crafting.xml": {
+      "sha256": "a80140c4aa0b35740c95376a61b1cfdbdcecb1dab19e856a0acf301ceb369f94",
+      "bytes": 432
+    },
+    "Crafting/Enchanting.lua": {
+      "sha256": "33a339156810803c64f0858e9cf3a706fd20bf200498562def756317a689c56b",
+      "bytes": 7118
+    },
+    "Crafting/Engineering.lua": {
+      "sha256": "738541ba82a23226418aed83cfe9cdf0b2cee27604f4752433182a54a2c6fb53",
+      "bytes": 16074
+    },
+    "Crafting/Jewelcrafting.lua": {
+      "sha256": "0265b82e32ad7ea1969e57956171fd0f5ed62ade11aca3c772b4ef67cce6e310",
+      "bytes": 26382
+    },
+    "Crafting/Leatherworking.lua": {
+      "sha256": "c933a8744d5d25c9e5a43230aee276710ce0021edd6dde632539ae36e3d578ef",
+      "bytes": 14570
+    },
+    "Crafting/Prices.lua": {
+      "sha256": "6b397a664168be9227bec75040d33c411027d4fbca31608f0c8402f66113e931",
+      "bytes": 48208
+    },
+    "Crafting/Survival.lua": {
+      "sha256": "e9fe003ce0c1f6a256cd778647d0cb846bf65b72bb670d589b37d0c97867e176",
+      "bytes": 11684
+    },
+    "Crafting/Tailoring.lua": {
+      "sha256": "7617aca5aea69549afc3b8364c4411968c6de99e2b3c42e1e325b3e06991ef90",
+      "bytes": 19608
+    },
+    "CraftPlanner.lua": {
+      "sha256": "fe551ffd93c5d9772c1139dacd2647798f304d1593b3a926d56f794181693783",
+      "bytes": 25793
+    },
+    "CraftRouteFrame.lua": {
+      "sha256": "ffd3adbfe021f2055e2575feb34f4840c2f868e2b21604d72b14d03a7d8124a4",
+      "bytes": 27226
+    },
+    "CraftScan.lua": {
+      "sha256": "f8f0e89546a38d243671aa4a90e4910429ae444a183cf50e39ab7191247ad466",
+      "bytes": 6748
+    },
+    "Credits.lua": {
+      "sha256": "7c7600aa7e2b127c6f6f134fb2285571944009a17428ac34ed6fb36c231c7ae5",
+      "bytes": 6775
+    },
+    "docs/design/aegis-pathfinder-concept.html": {
+      "sha256": "eac5aaae52ce2cf64c7df477c4ca19c274a8fe5b8378a5be07a43b5208fcf89b",
+      "bytes": 57940
+    },
+    "docs/FEATURES.md": {
+      "sha256": "3f19070766801cf6393aafecbdbfb202809f09b95647f7e0e2631a7914e6600f",
+      "bytes": 62246
+    },
+    "docs/GUIDE_AUTHORING.md": {
+      "sha256": "10f1d7a56015e9d1f47e1903f9cd8360b8e6108ffd96bae763b7792f18133b5e",
+      "bytes": 29802
+    },
+    "docs/images/aegis-pathfinder-logo.png": {
+      "sha256": "d8ab2cf4a096c1812bc5332b2e028fe675d070a8681ed73c89f44a5a6fc4f3d9",
+      "bytes": 253617
+    },
+    "docs/images/gear-finder.png": {
+      "sha256": "63a102bf614be5f6e308ba969d5f431e653814f83afb6b7235c4785a827f296e",
+      "bytes": 309104
+    },
+    "docs/images/guide-browser-attunements.png": {
+      "sha256": "9abf4026acf1b3f2f446fceb947c3a128924a10bf72e75ef75d12c3f7774d3b8",
+      "bytes": 210308
+    },
+    "docs/images/guide-browser-folder.png": {
+      "sha256": "827d4ebe5ea0a44d14aaa0c042a154950bb6422935ea7ba41724d71d840d7db6",
+      "bytes": 431187
+    },
+    "docs/images/guide-browser-home.png": {
+      "sha256": "c5697bde047320318c6541a9ef9679b5ec6dcfe0795f459749c197cefd9e5081",
+      "bytes": 181213
+    },
+    "docs/images/helper-windows.png": {
+      "sha256": "1784bc5ee2c4fea3669fa1b6b13c12287ad69d3a0a9a9d1cbdf52043215de2aa",
+      "bytes": 55246
+    },
+    "docs/images/in-game.jpg": {
+      "sha256": "fe92ce92ebccfbc9dae986eb63320b2eb0abfacac5fa1b276760d544a429f931",
+      "bytes": 253594
+    },
+    "docs/images/options-action-buttons.png": {
+      "sha256": "047e02cd0c1f4495de32a2c9348570d9bd2dcf7387cf2b77a53060ce1862d06c",
+      "bytes": 100870
+    },
+    "docs/images/options-automation.png": {
+      "sha256": "90d3e5fcbcfe87f63c8834cb98c6f79d1e6e18250ad02f97d2ea72cc8cf73403",
+      "bytes": 82926
+    },
+    "docs/images/options-dungeons.png": {
+      "sha256": "1a2b7d5001de13978f2226120931ce2085fbc9cf491e6768a170ecfadd75b13b",
+      "bytes": 421308
+    },
+    "docs/images/options-extras.png": {
+      "sha256": "9564368b975ce8d3808d2be153b90365f8032a3efacb71f88523594747d92a5e",
+      "bytes": 441374
+    },
+    "docs/images/options-gear.png": {
+      "sha256": "018f8beed25d24652d32e9bbd98921ed25b55ed03985d83d47fba31c402836b7",
+      "bytes": 126189
+    },
+    "docs/images/options-itemscore.png": {
+      "sha256": "6a7558830087109185fe5edf8d24ea66d5af8b95c5a7e361041281038774b6dd",
+      "bytes": 76921
+    },
+    "docs/images/options-maps.png": {
+      "sha256": "c4bdec6511e67eac912b04bc22ae0c163abb3f707ec0d412d0477b31427824df",
+      "bytes": 88092
+    },
+    "docs/images/options-route.png": {
+      "sha256": "8e45d8a9122b7da4324cbf220ea4c4b56f49f46572730f8057284b86366314cb",
+      "bytes": 68251
+    },
+    "docs/images/party-progress.png": {
+      "sha256": "e74bbd36ca948e304addea32ba1ab58d8bc82413beafd5455ae88f0ff111d07e",
+      "bytes": 57678
+    },
+    "docs/images/party-share.png": {
+      "sha256": "7df0f948fd82d569601cf124f88a735b29406d95bfb2fee36fd4f450479e46f5",
+      "bytes": 57381
+    },
+    "docs/images/party-targets.jpg": {
+      "sha256": "affc7144c819669778c04227628d766f76f0c585e401da65fffbec6b5d47e50b",
+      "bytes": 123476
+    },
+    "docs/images/party-world.jpg": {
+      "sha256": "5b8b735d3fdb901f202d1a63b74e1852eaed4a83b779dcd05c578a40ec57962d",
+      "bytes": 162781
+    },
+    "docs/images/setup-dungeons.png": {
+      "sha256": "f40894b5a20fdb03cdb3c452609e8fde4a73bae8eebc44f95cb778349dde78bf",
+      "bytes": 147746
+    },
+    "docs/images/setup-features.png": {
+      "sha256": "c570c1562991d0d2ebf9807d1b3759d9d70b458cac57d44db5bbe98e5ee03459",
+      "bytes": 78866
+    },
+    "docs/images/setup-in-game.jpg": {
+      "sha256": "fea76afba9cb53cd05432236cec96c1aa85df8c0e250183c95fd37391608685a",
+      "bytes": 160717
+    },
+    "docs/images/talent-modern-spellbook.jpg": {
+      "sha256": "166b17828fcc8260c7a8b044d390ff93dc713a2d96008e002a30514d88208458",
+      "bytes": 200444
+    },
+    "docs/images/talent-window-pfui.jpg": {
+      "sha256": "57fae95f9f81ecbbc16414837ae55205d3125b1787a5b25d248c170016697cce",
+      "bytes": 109920
+    },
+    "docs/images/talent-window.jpg": {
+      "sha256": "0fb0ba257422ffe29a314d261a6cab9b64e13653dc8dbeb5860d90f676d8fa2d",
+      "bytes": 110136
+    },
+    "docs/QUESTSHELL_PLUS.md": {
+      "sha256": "57dd4bd772ea9b997fad82c1889acdf9e004d8f4286ba82fb389ccf6558fcf6b",
+      "bytes": 5121
+    },
+    "docs/TESTING.md": {
+      "sha256": "7f2eb75e5cf8c2a34787c6ee464697382b570768706f2e55a792cdc601ffb8e3",
+      "bytes": 37557
+    },
+    "docs/UI_SPEC.md": {
+      "sha256": "5f4c348bda735eda560529545f7efbf765d1c8d80213add28a1537fd012bb6aa",
+      "bytes": 79100
+    },
+    "DungeonQuests.lua": {
+      "sha256": "4e4066540ca42db98e49a9580c2094b4f1fc415fdb7848cd78aa8127fab95ed9",
+      "bytes": 16824
+    },
+    "Extras.lua": {
+      "sha256": "7e11e8796c1e3b3024a560e3b45a3c73c9c5c2e78fdeb1ab1fdd5ddf1f483fda",
+      "bytes": 10760
+    },
+    "GearAdvisor.lua": {
+      "sha256": "fbe4a3b4a08340a646a3e46260ca5b4563b6c9e4e25b6bd9b8019c7e3a11729f",
+      "bytes": 15917
+    },
+    "GearData.lua": {
+      "sha256": "4a564f3e42c44cd94c15f548d2f553abfd1770b5ee0f312aca9c795b4379ca78",
+      "bytes": 365628
+    },
+    "GearFinder.lua": {
+      "sha256": "45ce3277596fb2b5a5f585d1925307ef304a7890dc7cd958b05a256716564505",
+      "bytes": 23586
+    },
+    "GearFinderTab.lua": {
+      "sha256": "02058ecf7edef78720a1c516ab0ba42d5d4848664cee0594b200c061e286e72f",
+      "bytes": 27977
+    },
+    "GearFrame.lua": {
+      "sha256": "dc6c0509540b77833ddf5a540025234e1f001a6fbe11e55d9823fa00ff322456",
+      "bytes": 13284
+    },
+    "GuideBrowser.lua": {
+      "sha256": "bf8629d0e069d66b39fbe4bacfb6bc129e6b82ff9e1782be6c39a0dd59c1cb3d",
+      "bytes": 28268
+    },
+    "GuideEngine.lua": {
+      "sha256": "60fee858c8daf71ffc442c5d591479e9e3936b86bee9290020afff0ad629c25a",
+      "bytes": 21132
+    },
+    "GuideListFrame.lua": {
+      "sha256": "bc8ea0ad3501616e0f9b93cec850794af01bc7b847fb114c719a2e3d5ea930b0",
+      "bytes": 42705
+    },
+    "GuidePictures.lua": {
+      "sha256": "653c824fa5527e72cd34128fa14ba7a17330ca605c56c19ab8c009a895fc5948",
+      "bytes": 17178
+    },
+    "Guides/Alliance/01_10_Thalassian_Highlands.lua": {
+      "sha256": "d66e0cf658f955afa39bb494c0412719838306acbdd640db1f21eee3c98d6c63",
+      "bytes": 10446
+    },
+    "Guides/Alliance/01_12_Dun_Morogh.lua": {
+      "sha256": "1b30596fc322613dfe6856461a7d3327dca9892fee18894c4a7f33a31f1cfee4",
+      "bytes": 23075
+    },
+    "Guides/Alliance/01_12_Elwynn_Forest.lua": {
+      "sha256": "37d693748bb5f51fb5c7ed784d1c8833d7a08e0114a5a8e9f88c8f1252599bb5",
+      "bytes": 30787
+    },
+    "Guides/Alliance/01_12_Teldrassil.lua": {
+      "sha256": "39741e4ff9b316de6da2c33354f570feb5092219289b601baab3bb8c43c85cad",
+      "bytes": 24539
+    },
+    "Guides/Alliance/12_17_Darkshore.lua": {
+      "sha256": "28d6ed6648dafebf47f67f2f22d6d34db78668eae2b3b503a329c281382b7607",
+      "bytes": 26859
+    },
+    "Guides/Alliance/12_17_Westfall.lua": {
+      "sha256": "aa9de35e5ee68211667a54c66083c1242945ace6f3d97c7222d0320e8e01b6f7",
+      "bytes": 26448
+    },
+    "Guides/Alliance/17_18_Loch_Modan.lua": {
+      "sha256": "6f06db1c74035efaa447db7b1879d07bbd596d478b8d786a5b9345b9754412e6",
+      "bytes": 6679
+    },
+    "Guides/Alliance/18_20_Redridge_Mountains.lua": {
+      "sha256": "9cd23a8170c5367ec51655fd1793d9cb99f36fa63164e6e9cb5d6d1f679963d9",
+      "bytes": 12441
+    },
+    "Guides/Alliance/20_21_Darkshore.lua": {
+      "sha256": "00416a9b4907d3e401a7f9499467853b0558cadcfff87201d5172bc5548ffba8",
+      "bytes": 9764
+    },
+    "Guides/Alliance/21_22_Ashenvale.lua": {
+      "sha256": "503d4c32fd70987e9f24f79a75fb037e91ab963a86111d8986d3f75c4f39da72",
+      "bytes": 6271
+    },
+    "Guides/Alliance/22_23_Stonetalon_Mountains.lua": {
+      "sha256": "6aa45fe5c840c6e16667095492436d0a6a32fb7d1e0fc3e5c488b8dbb0b59264",
+      "bytes": 3155
+    },
+    "Guides/Alliance/23_24_Darkshore.lua": {
+      "sha256": "4c512127afb294b3e77962855bae04540782b08bc6ff6f68220f4ed0a9257b72",
+      "bytes": 5123
+    },
+    "Guides/Alliance/24_24_Ashenvale.lua": {
+      "sha256": "d1b700d3c916827b51310a21648ca3db502f743e5c07d4efe037fe342dc3d7a1",
+      "bytes": 2661
+    },
+    "Guides/Alliance/24_27_Wetlands.lua": {
+      "sha256": "4c2c8d57b252cd58bed97d7ec761cb4693e81ee7dab665f35549f2b13f26f2ed",
+      "bytes": 11547
+    },
+    "Guides/Alliance/27_28_Redridge_Mountains.lua": {
+      "sha256": "cfe15ff8908fd6b9b41b83c52c7f11b3ece7e8eccd2e657f9455fcd5ea519998",
+      "bytes": 4285
+    },
+    "Guides/Alliance/28_29_Duskwood.lua": {
+      "sha256": "1eefe28d3a38a41c409a1f4f481f22969bd0c927f8f7cffbdaed78b4dd3786bc",
+      "bytes": 16265
+    },
+    "Guides/Alliance/28_34_Northwind.lua": {
+      "sha256": "2cf8187cc20e834744786df3b13f30adc1f39a13390aa4c2946408b6e582c57e",
+      "bytes": 15278
+    },
+    "Guides/Alliance/29_30_Ashenvale.lua": {
+      "sha256": "1e17a1ab833156ca41d48deeb4f52c7ac859541907bb1731de6ead9a240f3556",
+      "bytes": 11392
+    },
+    "Guides/Alliance/29_34_Balor.lua": {
+      "sha256": "3ccf39d3fe805ecb03a9fde2119bf135bd0c0b11b3b3f614fde67ae951355375",
+      "bytes": 9345
+    },
+    "Guides/Alliance/30_31_Wetlands.lua": {
+      "sha256": "03b082a5b61e42408fcd3ff06790d78eb9d0eaae8551ac3f7f5a0306c761cba3",
+      "bytes": 5593
+    },
+    "Guides/Alliance/31_32_Hillsbrad_Foothills.lua": {
+      "sha256": "e9d83d1206cb319f1a4c4dc842c4fa93a40c0b116683665cc34764b36900a25d",
+      "bytes": 7407
+    },
+    "Guides/Alliance/32_33_Stranglethorn.lua": {
+      "sha256": "22181ea8b6bc064186835c3e7e2158149d29254038b95a8646c304c87203f389",
+      "bytes": 9970
+    },
+    "Guides/Alliance/33_34_Thousand_Needles.lua": {
+      "sha256": "242a9e250e6e21f8a2ecca5cc9a320a3a8b56af909fe85b6dbf44b6167ec9f08",
+      "bytes": 5995
+    },
+    "Guides/Alliance/33_38_Grim_Reaches.lua": {
+      "sha256": "91225d0e88d0f171ae2366cb4ec18ffbc7c387db228f28af17cb45a6e50c95aa",
+      "bytes": 13394
+    },
+    "Guides/Alliance/34_35_Desolace.lua": {
+      "sha256": "cda2b9fda05f771ba1c9e300bbb9360e2551126e06b0037d3d1dcbe8e25eaaa7",
+      "bytes": 10471
+    },
+    "Guides/Alliance/36_37_Stranglethorn.lua": {
+      "sha256": "171f38c1e76020fb9710af0ee093a749ee466dd061cccc11e24ab4dc98ad838b",
+      "bytes": 15621
+    },
+    "Guides/Alliance/37_37_Alterac_Mountains.lua": {
+      "sha256": "aa1169fed60982ba489a2f66bac1f128c384b449c324510a9db4a6f379def020",
+      "bytes": 2729
+    },
+    "Guides/Alliance/37_38_Arathi_Highlands.lua": {
+      "sha256": "71948ce957d69a821c798c4bd9cc19c35fc54b2f6ef8fdb335a6906684843825",
+      "bytes": 9802
+    },
+    "Guides/Alliance/38_39_Dustwallow_Marsh.lua": {
+      "sha256": "35d4acf27b46719f187b39cd38b1a35527b03afe0120f1e85245c9cac3b83aeb",
+      "bytes": 7994
+    },
+    "Guides/Alliance/39_40_Stranglethorn.lua": {
+      "sha256": "e0bb32e33abf8ad10eb9adbdefd83d866e02c21b53b1f9e7bff42c75fddcbf21",
+      "bytes": 16059
+    },
+    "Guides/Alliance/39_46_Gilneas.lua": {
+      "sha256": "3896d165f698c81e8b7fe14a64510d80eebe14fbe7be48ce4e9a02c09a50644b",
+      "bytes": 12618
+    },
+    "Guides/Alliance/40_41_Badlands.lua": {
+      "sha256": "d808ab3b432ed88082d23428749c812350850c80f60724e16dc402a4f4af8ab9",
+      "bytes": 10195
+    },
+    "Guides/Alliance/41_42_Swamp_of_Sorrows.lua": {
+      "sha256": "715ad7dae738407bc98c3b57f19c39cc9a1497c3023442459e5c21bcdd997182",
+      "bytes": 7046
+    },
+    "Guides/Alliance/42_43_Stranglethorn.lua": {
+      "sha256": "03a4e9bc40f60efcc4902bf4ac1881bdb15cb7f2b4816b9b0a371fa80cfd7aef",
+      "bytes": 7178
+    },
+    "Guides/Alliance/43_43_Desolace.lua": {
+      "sha256": "42125d10f75988bdc4cd34f2cac7191f19f95547adfbe3d195a0bc8153e5441c",
+      "bytes": 3471
+    },
+    "Guides/Alliance/43_44_Tanaris.lua": {
+      "sha256": "85f88fdd1d10f6c48a85140433ba3e0749cc9e581e934013d06693bb5a93cd0a",
+      "bytes": 9529
+    },
+    "Guides/Alliance/44_46_Feralas.lua": {
+      "sha256": "7530da4f1baced95cf44bb2f9ad2968e6b343693784d50cd2ee95f5f733a3f04",
+      "bytes": 10216
+    },
+    "Guides/Alliance/44_47_Icepoint_Rock.lua": {
+      "sha256": "c177fb75196e03aa05046478d36c0b52471dac77aca20cdbc3f6a33ea261a7f3",
+      "bytes": 2810
+    },
+    "Guides/Alliance/46_46_Azshara.lua": {
+      "sha256": "e07406b95474d6f2ee3d5dfe3a4378b4a81be4bf860752dad88e8deac6f21fd4",
+      "bytes": 2060
+    },
+    "Guides/Alliance/46_46_Hinterlands.lua": {
+      "sha256": "d27b8a42cb29f6cf5a83ce5c63677ba64b702a7d4a8d9c4e19d9b77dd165002d",
+      "bytes": 9559
+    },
+    "Guides/Alliance/46_47_Stranglethorn.lua": {
+      "sha256": "de641eada8e2e0320e025924131203afed9a4f1380f160c28e83ab613b47ed7e",
+      "bytes": 16290
+    },
+    "Guides/Alliance/47_48_Searing_Gorge.lua": {
+      "sha256": "29e39fdfae8725d4f5833c46346b1651943c8554b6864e30b6d6a3fd5ca05ef6",
+      "bytes": 14359
+    },
+    "Guides/Alliance/48_49_Feralas.lua": {
+      "sha256": "6b06a1ceae730d1f2a56ba29b908bd4953739726ac911dda71984c57f2cad817",
+      "bytes": 8907
+    },
+    "Guides/Alliance/48_53_Lapidis_Isle.lua": {
+      "sha256": "b4b9672a7d0a7682f05ab3f926a3489baf8fd33384bd435a959d27b16b1a0263",
+      "bytes": 12827
+    },
+    "Guides/Alliance/49_50_Tanaris.lua": {
+      "sha256": "e8ab044aedac3db701c3ebc5bcecd0c2f0a5e6a71477a6cfe786eefd456bf482",
+      "bytes": 9935
+    },
+    "Guides/Alliance/50_50_Hinterlands.lua": {
+      "sha256": "8ec3ec334112e9d3b25b7beb6a052f5bd2cc4704ea6fdfac3e1327a08f5de9f0",
+      "bytes": 5770
+    },
+    "Guides/Alliance/50_51_Blasted_Lands.lua": {
+      "sha256": "0060bf5fb82a188d6243ef36b60b206d33b8f1eb34174c7425f395f6f5524d3d",
+      "bytes": 3453
+    },
+    "Guides/Alliance/51_52_UnGoro_Crater.lua": {
+      "sha256": "00a3ffac2fedda322a00b1208298831f493376297658ca0d658ea87a29d0f003",
+      "bytes": 14506
+    },
+    "Guides/Alliance/52_53_Azshara.lua": {
+      "sha256": "a5ccd219fbce575a82d9b9b41fb59a890444ef6a066acaf86b3d7106f406ee7a",
+      "bytes": 7118
+    },
+    "Guides/Alliance/52_60_Moonwhisper_Coast.lua": {
+      "sha256": "7cad4cf12dbf79d48706aad4c69eaf13635af1fd18fad1589db02e94fdd55ef2",
+      "bytes": 19113
+    },
+    "Guides/Alliance/53_54_Felwood.lua": {
+      "sha256": "d5f885fc9f2607eb930bef173409934dec1433e54d19f769cdf7435220b45a4f",
+      "bytes": 5951
+    },
+    "Guides/Alliance/54_55_Winterspring.lua": {
+      "sha256": "27716e7f46c1420263388413b95238372bf336fc40ffe708c92daeb1d3328b40",
+      "bytes": 11403
+    },
+    "Guides/Alliance/54_60_TelAbim.lua": {
+      "sha256": "a6c3d01eeb72d39fd520ceca4c85a86d8f20ee3e73d0d4b1d35706d5e8ca85c6",
+      "bytes": 13006
+    },
+    "Guides/Alliance/55_56_Burning_Steppes.lua": {
+      "sha256": "251eed83250fd33ef8170b81ad0396f09d183ef21998d321761aacc1738bf01d",
+      "bytes": 11514
+    },
+    "Guides/Alliance/55_56_Felwood.lua": {
+      "sha256": "0e41566e32ac5c5d1f536e44a4b615e88801238a91a7d42a93e4e46764dad97e",
+      "bytes": 8648
+    },
+    "Guides/Alliance/56_57_Western_Plaguelands.lua": {
+      "sha256": "b74cfab27d0456f46e121b11fd0962d08915e5a061179a48fefa050dbe431f7e",
+      "bytes": 13990
+    },
+    "Guides/Alliance/57_58_Eastern_Plaguelands.lua": {
+      "sha256": "e08074448c0b52e7e5fda18d3aea4ad3c54b9c38d4ac10c89aa02ab7adbed1e9",
+      "bytes": 12782
+    },
+    "Guides/Alliance/57_58_Western_Plaguelands.lua": {
+      "sha256": "43f119403899a08b266a9e7127825690a5202c4c1a0e72f882c99fb10a607da5",
+      "bytes": 8244
+    },
+    "Guides/Alliance/58_59_Silithus.lua": {
+      "sha256": "f3e0248cd88e5d8af185b56e4377664ef014a8dfee242e19a50906c8f370ca4d",
+      "bytes": 10150
+    },
+    "Guides/Alliance/59_60_Winterspring.lua": {
+      "sha256": "4c66d58afa8e5045230291619bf340b93f1176e8376f6b179330944f7c83bb9b",
+      "bytes": 6196
+    },
+    "Guides/Alliance/Guides.xml": {
+      "sha256": "cbfb48ca36c07fe7678a9db21b65b999be76fa3a7408b11040d8bcf820308b7f",
+      "bytes": 2614
+    },
+    "Guides/Attunements/Alliance/Attunements.lua": {
+      "sha256": "05122161f550597407bcccb5e0d4dbfee562a70babc5f3dc1a77020fa237971e",
+      "bytes": 28389
+    },
+    "Guides/Attunements/Alliance/Guides.xml": {
+      "sha256": "c10a4ca9a94281d5877ca1a5c7ee8e46dc75a229477d1093ba8aeeb472a9fbb2",
+      "bytes": 299
+    },
+    "Guides/Attunements/Horde/Attunements.lua": {
+      "sha256": "4fa5c4de645173ca0b55b29073a0618cbfa6a86ab1ccdf1fba1089a54cf0dac7",
+      "bytes": 29070
+    },
+    "Guides/Attunements/Horde/Guides.xml": {
+      "sha256": "88a680d9ba55ac5a8fd9fbb7673496169aa8eaef9f0f619fb4c0c177dc347221",
+      "bytes": 296
+    },
+    "Guides/Both/55_60_Scarlet_Enclave.lua": {
+      "sha256": "f4db66a7c1ccb2a06acbcb574411a9850dd114cbf86b600b8348baebdd39e2ac",
+      "bytes": 4246
+    },
+    "Guides/Both/58_60_Hyjal.lua": {
+      "sha256": "099d2e640b52148c31c351e98c5ed9c30356097279682cb2892a14bf1c3b99f0",
+      "bytes": 13362
+    },
+    "Guides/Both/Guides.xml": {
+      "sha256": "81487dc6b540b9b0f42ab068767a8ccb06ec14aad26e8805b3b395b134d489b9",
+      "bytes": 255
+    },
+    "Guides/Class/Alliance/Druid.lua": {
+      "sha256": "d0e8fb6f521614003e59284db633c4e6e445bb1b2c7e72ab097a353a630a52a0",
+      "bytes": 19141
+    },
+    "Guides/Class/Alliance/Guides.xml": {
+      "sha256": "9f6398e903cda3d65180dba4aaf61c46acfc0545da3ec7fe57590103314c07c6",
+      "bytes": 492
+    },
+    "Guides/Class/Alliance/Hunter.lua": {
+      "sha256": "6bee215c87dbffaabe75f8ceb07e4b45e518bfe129198d6c2d4053138843d10f",
+      "bytes": 13022
+    },
+    "Guides/Class/Alliance/Mage.lua": {
+      "sha256": "28d3225b766366a98def214742c859d02b27972373d7f9df1b99a9bc785b48c7",
+      "bytes": 21923
+    },
+    "Guides/Class/Alliance/Paladin.lua": {
+      "sha256": "9d8eb7837dd3ceff2bb39d7a76d57687e5a3288f02ee4dedd64bebfc9cae601b",
+      "bytes": 21112
+    },
+    "Guides/Class/Alliance/Priest.lua": {
+      "sha256": "765f7741f87ccdf24d1f981bbfce7c17b66adbceadbf01edf92b479ee3a2d3e0",
+      "bytes": 10843
+    },
+    "Guides/Class/Alliance/Rogue.lua": {
+      "sha256": "8ce4be6cb246d53bb6c9175e30202d2c398f13e06710d86f93894fc81d282c13",
+      "bytes": 13861
+    },
+    "Guides/Class/Alliance/Warlock.lua": {
+      "sha256": "d2ffccbd096c5df28ef7df996be8a71c9d5880aed385a62004405819670a1e82",
+      "bytes": 29485
+    },
+    "Guides/Class/Alliance/Warrior.lua": {
+      "sha256": "aed6ad169960df5223e158cfe53c838eb0db34fa243326d0dd2cfab7848a9289",
+      "bytes": 19475
+    },
+    "Guides/Class/Horde/Druid.lua": {
+      "sha256": "83450fe4d173b6a2e3f6522ad680273d378850cf0d9b86154fb945ceafa2e132",
+      "bytes": 19054
+    },
+    "Guides/Class/Horde/Guides.xml": {
+      "sha256": "6b13962782b27fd34d22855eff3af9dfb635f68f122868a99833815d22030c4c",
+      "bytes": 488
+    },
+    "Guides/Class/Horde/Hunter.lua": {
+      "sha256": "16b29ade069b3087880f5e8ce2095645986bdf34c79e9d20b0ca5151a5d1e7c7",
+      "bytes": 12597
+    },
+    "Guides/Class/Horde/Mage.lua": {
+      "sha256": "17b65eba6496888082587a4bcd1dea767e940eae36c4a4466156faa4108f4ef6",
+      "bytes": 21073
+    },
+    "Guides/Class/Horde/Priest.lua": {
+      "sha256": "3ab024bd7e06c3268ca1d41e62a30ab565c6401bc6ee2c7a1b6d3b5539c157f4",
+      "bytes": 7180
+    },
+    "Guides/Class/Horde/Rogue.lua": {
+      "sha256": "3a1a45637ba155d20c124cf50d642a5a215b2449cbddfdd0cc621bc958e443f9",
+      "bytes": 12510
+    },
+    "Guides/Class/Horde/Shaman.lua": {
+      "sha256": "f72ea009d2ec067cb4c7a98715739ffa2081215ddde947b878359056f5696870",
+      "bytes": 22463
+    },
+    "Guides/Class/Horde/Warlock.lua": {
+      "sha256": "ea7d7e78479f114a0d1a76a9244abc1d3787f31bc0bd83a518d95a4f418dfa2f",
+      "bytes": 32756
+    },
+    "Guides/Class/Horde/Warrior.lua": {
+      "sha256": "c82117dc0f11d2b53101ef9f17441c444d1a2c3ab2cde5d1a4a1e0146860aafb",
+      "bytes": 16064
+    },
+    "Guides/Dungeons/Alliance/BFD.lua": {
+      "sha256": "0b247aae98447351caad21e409466a2d423fbf61c0c2bb6014b40d214dfaf03e",
+      "bytes": 4046
+    },
+    "Guides/Dungeons/Alliance/BRD.lua": {
+      "sha256": "a1d4912013a0af083a6831d993bac3dc86d884a5f642c1f111385a661d4507e9",
+      "bytes": 17148
+    },
+    "Guides/Dungeons/Alliance/CG.lua": {
+      "sha256": "dcb44ca6f522b3a03d5f10b738907d2b019f8731c62f4458bee853e825dbf029",
+      "bytes": 2397
+    },
+    "Guides/Dungeons/Alliance/DM.lua": {
+      "sha256": "adb0be0d70e06a6dcfabb8b6d2ac08f2d577ba895d73b55b0e2bacd38d1dbf22",
+      "bytes": 11336
+    },
+    "Guides/Dungeons/Alliance/DMR.lua": {
+      "sha256": "39d47f8f7bc5655af0545a73d17eff2eda46f8f1e97f7ad88a3f116853185f52",
+      "bytes": 4202
+    },
+    "Guides/Dungeons/Alliance/FH.lua": {
+      "sha256": "132613ff9a583ed90ab5ec2ee6074c119600919cfc750d9dea4c1cb57f6e0a91",
+      "bytes": 3415
+    },
+    "Guides/Dungeons/Alliance/GC.lua": {
+      "sha256": "6745d40a11810a381f09c88493b6fe647a3788b0deae806b0453ba93e0b65f8e",
+      "bytes": 5334
+    },
+    "Guides/Dungeons/Alliance/GNOMER.lua": {
+      "sha256": "f91c0507dcdfca21cff3137687f14fb4e47a92b023e3ad872475f4a03f2b3946",
+      "bytes": 5566
+    },
+    "Guides/Dungeons/Alliance/Guides.xml": {
+      "sha256": "292df2feb689a4c7b0f37abff336d2a3b7eebcef820c395c6d0c02aff4a192d8",
+      "bytes": 807
+    },
+    "Guides/Dungeons/Alliance/HQ.lua": {
+      "sha256": "172830226591b177d0f4c7f892ac90d82f596cef1c8a40db05c59d1522dd3137",
+      "bytes": 3368
+    },
+    "Guides/Dungeons/Alliance/MARA.lua": {
+      "sha256": "d2d25ae134c1ef5c6e83b0772f63fc89615df5003c4f647555144826d282c708",
+      "bytes": 5037
+    },
+    "Guides/Dungeons/Alliance/RFD.lua": {
+      "sha256": "99472ab9eaaa0a00e17a6f5bbd28add576dd6e633edb831e96ce6f17678a5132",
+      "bytes": 3218
+    },
+    "Guides/Dungeons/Alliance/RFK.lua": {
+      "sha256": "dbbe4b1a9edcb533eb69d3d489768d85bc6fbeb1919c074155d679f9ed00c2e8",
+      "bytes": 5334
+    },
+    "Guides/Dungeons/Alliance/SFK.lua": {
+      "sha256": "7386f351ffd197ce3d834b95526744af3d024b451833b5fc9e3ca73798289efe",
+      "bytes": 3924
+    },
+    "Guides/Dungeons/Alliance/SM.lua": {
+      "sha256": "0df495f0c00b465b54f33be35bb6438d8686f3d406509397ce5235e37fdd5c9e",
+      "bytes": 5812
+    },
+    "Guides/Dungeons/Alliance/ST.lua": {
+      "sha256": "e5061dbd8d318b38cf2b0e1072565108866b53251ce39eecffa7ca898201a2bb",
+      "bytes": 11081
+    },
+    "Guides/Dungeons/Alliance/STOCKADES.lua": {
+      "sha256": "159c77e2cfefe25cf638f1bd3fdd75d1354151419963b0cf6950a264d4383b04",
+      "bytes": 7311
+    },
+    "Guides/Dungeons/Alliance/SWR.lua": {
+      "sha256": "aeddc317d4c074cf20de15502f20981b6ccf4fc8573e7ffdd03557f8f315fcdc",
+      "bytes": 6072
+    },
+    "Guides/Dungeons/Alliance/ULDA.lua": {
+      "sha256": "ff10b73872471fa909148ecc5f38d1960810c1f62655b57216ef48af64bbed7f",
+      "bytes": 10565
+    },
+    "Guides/Dungeons/Alliance/WC.lua": {
+      "sha256": "fd0abb6d75a0b26e97a2a80681a132ad309647cca0217b3c49014c41b9852d0e",
+      "bytes": 5704
+    },
+    "Guides/Dungeons/Alliance/WHC.lua": {
+      "sha256": "6cd03a40ec2dfbd9ae764fb6d3c59ef3e0c1af8efd4db064c2b8717c7a00276e",
+      "bytes": 1842
+    },
+    "Guides/Dungeons/Alliance/ZF.lua": {
+      "sha256": "3d29e6f19eff3328bc2eec7bb9f135891af5752a595fac1ef965cbcad5980f1c",
+      "bytes": 5299
+    },
+    "Guides/Dungeons/Horde/BFD.lua": {
+      "sha256": "d7104569b09b5ec653bbf916eb6616eefbe2456c0374ace64d1e2fbdfd1cbe1a",
+      "bytes": 4533
+    },
+    "Guides/Dungeons/Horde/BRD.lua": {
+      "sha256": "00caaa2c58783d14939fb199d657161d67f9874b9a76424443316543678cc4a2",
+      "bytes": 17903
+    },
+    "Guides/Dungeons/Horde/CG.lua": {
+      "sha256": "cd8121ef64e1c8f1aaa15de8f05e111e069754de7e8a50f871634ece8d26b214",
+      "bytes": 2340
+    },
+    "Guides/Dungeons/Horde/DM.lua": {
+      "sha256": "e01e4d4cf894425e48b47afbc0c14db8d16b09babe3aab14df8994651050c317",
+      "bytes": 3377
+    },
+    "Guides/Dungeons/Horde/DMR.lua": {
+      "sha256": "ff8508d4cf64714e21d0fc88d7cc5d9b4e5a93eee538d9aedd06455f54a0814e",
+      "bytes": 3655
+    },
+    "Guides/Dungeons/Horde/FH.lua": {
+      "sha256": "1660f41efbe4fbcd9a22cb1762a886e946d110eedf1db110db418b38f0d578c8",
+      "bytes": 1768
+    },
+    "Guides/Dungeons/Horde/GC.lua": {
+      "sha256": "07eefe304400220637ae8e81351d0aec2c54801fa83e8907d842835c8f4ca06e",
+      "bytes": 7600
+    },
+    "Guides/Dungeons/Horde/GNOMER.lua": {
+      "sha256": "52ea7dafdd50efa104d138daafc8c95612fdd71f777552f82e293d7fd20fdd00",
+      "bytes": 3011
+    },
+    "Guides/Dungeons/Horde/Guides.xml": {
+      "sha256": "818546bb272b06883f613c397e69c178667207831a74182ff471e0496f551e04",
+      "bytes": 798
+    },
+    "Guides/Dungeons/Horde/HQ.lua": {
+      "sha256": "acc44c9c672a825b34492e7374cd360af72e764aed1ed35088a07d4bb55bd6b6",
+      "bytes": 3811
+    },
+    "Guides/Dungeons/Horde/MARA.lua": {
+      "sha256": "1415bc6bfcbae1542e7f30afc9a8565b90a99027e69413fc0f71ec600ba1a152",
+      "bytes": 4779
+    },
+    "Guides/Dungeons/Horde/RFC.lua": {
+      "sha256": "7e8b2867000524b9919b182130fef6e18ac946c54091054e63e44a20a582cb50",
+      "bytes": 3932
+    },
+    "Guides/Dungeons/Horde/RFD.lua": {
+      "sha256": "497c2dc52c0f4fec4c091faa88dab203ac0c6840569067b7578516e3515d8354",
+      "bytes": 3530
+    },
+    "Guides/Dungeons/Horde/RFK.lua": {
+      "sha256": "e85663f3068461e9b3d206bc20a309f29eada52222d9edbbfc1614c0bc507c37",
+      "bytes": 5682
+    },
+    "Guides/Dungeons/Horde/SFK.lua": {
+      "sha256": "bef55964a649f110bbce5160fbc06de2b7c53c66932cb295e10412da8566ee04",
+      "bytes": 4109
+    },
+    "Guides/Dungeons/Horde/SM.lua": {
+      "sha256": "daef76620eba5310e7f13bb411085cd0f729c567dfe6729dc46c1141af88d686",
+      "bytes": 6742
+    },
+    "Guides/Dungeons/Horde/ST.lua": {
+      "sha256": "3faa47d4b3b4320417d8a7504240b3934520c3b4ccc91237464bca2175182a5a",
+      "bytes": 9303
+    },
+    "Guides/Dungeons/Horde/SWR.lua": {
+      "sha256": "25bba9559efeae5d6188c72cff479b347d9828d2cd36766348fa5d10be9734fa",
+      "bytes": 5470
+    },
+    "Guides/Dungeons/Horde/ULDA.lua": {
+      "sha256": "bc246e931dbafc9dfc0cb245c8cf436bd5dff15d3799e3b713a8679c5e177f2a",
+      "bytes": 7495
+    },
+    "Guides/Dungeons/Horde/WC.lua": {
+      "sha256": "4900ec40c330032dc1a0a8437f385b523fc5e874d0e73ecd06fd1904fa4886ef",
+      "bytes": 7877
+    },
+    "Guides/Dungeons/Horde/WHC.lua": {
+      "sha256": "810581bf9b5cbba5fe0d03151914ac01b52b4b039f496b5f284151c13d0bcfac",
+      "bytes": 5036
+    },
+    "Guides/Dungeons/Horde/ZF.lua": {
+      "sha256": "5412ff286cab895c38415b82dac755733537e92601b30394ecba26d9c7feb5b6",
+      "bytes": 5728
+    },
+    "Guides/Horde/01_10_Blackstone_Island.lua": {
+      "sha256": "68807ceae40f706cddc9b087873cdcdb1fd2f77418e03266d52451c481480642",
+      "bytes": 14951
+    },
+    "Guides/Horde/01_12_Durotar.lua": {
+      "sha256": "a682bb268b5f7daecfbe9ee43bd38f3585ce16ab871bfd581de55c0786480243",
+      "bytes": 20875
+    },
+    "Guides/Horde/01_12_Mulgore.lua": {
+      "sha256": "851e0a019a7ce14afc58a0699d799214a3435057a289acaa058de2c5c5e9973e",
+      "bytes": 18460
+    },
+    "Guides/Horde/01_12_TirisfalGlades.lua": {
+      "sha256": "b1d3cfd654568aa17e07443a798a2f8dcb332fe3b1b4c3fedb9916063e15d6c6",
+      "bytes": 20966
+    },
+    "Guides/Horde/12_20_Barrens.lua": {
+      "sha256": "816970191b4052a5e9f6460b8b3149a858ab1ab4ab17d543b359108140af88cb",
+      "bytes": 35195
+    },
+    "Guides/Horde/12_20_Silverpine_Forest.lua": {
+      "sha256": "35eb9b71db3c36343f2a8bf6fc942bf41292b592a78ed8bae4739149bc605185",
+      "bytes": 37804
+    },
+    "Guides/Horde/20_22_Stonetalon_Mountains.lua": {
+      "sha256": "99d7e9e9dc95ff32078056391c27abd44741341fe563d2ceec468114cce78af7",
+      "bytes": 13221
+    },
+    "Guides/Horde/22_23_Southern_Barrens.lua": {
+      "sha256": "e139cc8324a9896157776c8b1b588455166d6bddb2dff04cb2a0d444fc6fe7ba",
+      "bytes": 13126
+    },
+    "Guides/Horde/23_25_Stonetalon_Mountains.lua": {
+      "sha256": "1b8247c0b1ddd502f9687cbfb33fb30757421eec4a8c28be6703898e2da5241a",
+      "bytes": 3954
+    },
+    "Guides/Horde/25_25_Southern_Barrens.lua": {
+      "sha256": "0d675ba5d9196701dec3c2b43584fc539a3eb8de38a36146ffae02b3f3835f26",
+      "bytes": 8123
+    },
+    "Guides/Horde/25_26_Thousand_Needles.lua": {
+      "sha256": "29afc402cf3423d7d3a8f91324a6a20aa58b3e88900189ec390e6d02d1c65faa",
+      "bytes": 3563
+    },
+    "Guides/Horde/26_27_Ashenvale.lua": {
+      "sha256": "ffbff21a23fe931d2d6ff1590876ce3ec7b94ff4406c0e5d679ca64374a256fe",
+      "bytes": 5918
+    },
+    "Guides/Horde/27_27_StonetalonMountains.lua": {
+      "sha256": "3c14586a94bfcea5afcca081a6d8cdd937e28fe95a2369e0c8a67a63e57bc9af",
+      "bytes": 4907
+    },
+    "Guides/Horde/27_29_ThousandNeedles.lua": {
+      "sha256": "a88152005034dd8ee68feae700160f9a69ce995deb28e3982672347b2de394a4",
+      "bytes": 9661
+    },
+    "Guides/Horde/29_30_HillsbradFoothills.lua": {
+      "sha256": "3d9ec45361c3ccd061a51a9a461007ba10ff47cb5f1608bc0a27cb9b6b01577e",
+      "bytes": 6986
+    },
+    "Guides/Horde/29_34_Balor.lua": {
+      "sha256": "a97beb4b4032f06e11085007bae236c11074c8286c6dcb8dd6089bdd5b918d4f",
+      "bytes": 10858
+    },
+    "Guides/Horde/30_30_ArathiHighlands.lua": {
+      "sha256": "f2cda390ca636cd1681e4fc8ed0f58e8881969cb26f4acb476aebbec9554150b",
+      "bytes": 4614
+    },
+    "Guides/Horde/30_31_StranglethornVale.lua": {
+      "sha256": "601bd66dcd8239937b4af65ecf38e571387bd0882dea0a92b6e507095a2a58f1",
+      "bytes": 3103
+    },
+    "Guides/Horde/31_32_ThousandNeedles.lua": {
+      "sha256": "9be37da4135b1811c48e9d1dc5a7dc6c9e52575bfd103a7e1a2a158707996f1c",
+      "bytes": 3838
+    },
+    "Guides/Horde/32_34_Desolace.lua": {
+      "sha256": "573640acb32c6ed94f1fbb482b423b547142bc8921eb3557c49e15b5d76e0c7e",
+      "bytes": 13583
+    },
+    "Guides/Horde/33_38_Grim_Reaches.lua": {
+      "sha256": "a1cb4337e6ddc1eecf430610e775aa90ac33c8ebfd955864ac2cb3b4c9e62b39",
+      "bytes": 11215
+    },
+    "Guides/Horde/34_36_StranglethornVale.lua": {
+      "sha256": "4428eb160a700017f3f4127ea994647a7d650f41d60c15b407f7597e530da59b",
+      "bytes": 9235
+    },
+    "Guides/Horde/36_37_Alterac_Mountains.lua": {
+      "sha256": "255ceeb25f60cdba0670e2e3086ceb38a0016dd4f7b401e3e60ef393879301f1",
+      "bytes": 2737
+    },
+    "Guides/Horde/37_38_Arathi_Highlands.lua": {
+      "sha256": "68c2bedbe33bda4ac953c47349d380527d5561caf532b326e7cbd3c3d12de1e3",
+      "bytes": 10602
+    },
+    "Guides/Horde/37_38_Thousand_Needles.lua": {
+      "sha256": "5de27552dc9c38324ac28b7edc3295b724565cdd1345306061192df69a7f0569",
+      "bytes": 5802
+    },
+    "Guides/Horde/38_38_Dustwallow_Marsh.lua": {
+      "sha256": "017c8efa1d1a44cab0429afb82b5e56685fa04a024260e3699dae89d31f71d86",
+      "bytes": 5698
+    },
+    "Guides/Horde/38_40_Stranglethorn_Vale.lua": {
+      "sha256": "6511715e24c5bdd9ce2adfebc5aa06787ba000e2fb2671754b26b9e981323d89",
+      "bytes": 23722
+    },
+    "Guides/Horde/40_41_Badlands.lua": {
+      "sha256": "436df8601588cf8cf5b15e057e7f71b0673d351b271efb65c9220a35791861b7",
+      "bytes": 7208
+    },
+    "Guides/Horde/41_42_Swamp_of_Sorrows.lua": {
+      "sha256": "fb26759a05c7da000f90fe0ce42ab8d28696600b607085bcd677767779337034",
+      "bytes": 4929
+    },
+    "Guides/Horde/42_43_Gilneas_Horde.lua": {
+      "sha256": "7de5250245ba4fdef4d3565f4412e6e86cde6e120b793e771bc580dd1cb82e5d",
+      "bytes": 8493
+    },
+    "Guides/Horde/42_43_Stranglethorn_Vale.lua": {
+      "sha256": "d0629fa0cd1606e53c6639771e675ae0f5a49b57e5c5a3f1931786933c5c50ed",
+      "bytes": 16670
+    },
+    "Guides/Horde/43_44_Dustwallow_Marsh.lua": {
+      "sha256": "53443eed831a02a509ec196c9ca390fc3b65db6c7da4694a9d4521d30ba7d3af",
+      "bytes": 5784
+    },
+    "Guides/Horde/44_44_Desolace.lua": {
+      "sha256": "76695fe4fc393469d3eccc08a382441242bf427108687168d4ca741139ed9c15",
+      "bytes": 3650
+    },
+    "Guides/Horde/44_45_Tanaris.lua": {
+      "sha256": "d13d03eee32dd74b5ed24d106ee87f55a8675461e11682805c9c755b0442d5b1",
+      "bytes": 9406
+    },
+    "Guides/Horde/44_47_Icepoint_Rock.lua": {
+      "sha256": "a3f4c8e5ccc85d919e04e17ced91bd5ec0d0a644e0594baf5f8fab4ddd74ae60",
+      "bytes": 2807
+    },
+    "Guides/Horde/45_46_Feralas.lua": {
+      "sha256": "e7a7efcd98b6bdca4bd05424e3ce671953d51d1ad685bba336a28e067a0a6175",
+      "bytes": 10870
+    },
+    "Guides/Horde/46_47_Azshara.lua": {
+      "sha256": "1a9fb1ddb79b3f37a52064b8587d7a3b920eedafee13b22f2d821af088469c2e",
+      "bytes": 3255
+    },
+    "Guides/Horde/47_47_Hinterlands.lua": {
+      "sha256": "916adf200740e19585971bd5e24864e8fa85f61f56bc13235e1a4ec6f6c75881",
+      "bytes": 10316
+    },
+    "Guides/Horde/47_47_StranglethornVale.lua": {
+      "sha256": "e618e64637dc535843385a3fbfc176fb9f571e8d4fc18964e5dffb8ebf2e51f3",
+      "bytes": 15049
+    },
+    "Guides/Horde/47_48_Searing_Gorge.lua": {
+      "sha256": "5cd35db0548a22325fe244d120e050e1b25dd067376a11600792638e7cfa058c",
+      "bytes": 10517
+    },
+    "Guides/Horde/48_49_Swamp_of_Sorrows.lua": {
+      "sha256": "9883cb17895d8a1d524196d3f82168733e403e5525491a9da3a217f22a525439",
+      "bytes": 4288
+    },
+    "Guides/Horde/48_53_Gillijims_Isle.lua": {
+      "sha256": "bda6dd1f6fdfec835c0c63777dc54be3dbe9192a8c40df76cb5f4a10f54927a0",
+      "bytes": 9244
+    },
+    "Guides/Horde/49_49_Dustwallow_Marsh.lua": {
+      "sha256": "2ef2b6e5d96d0aafd301c9792dde7b99b04976a95ddd74f66c255b5ea17e5cc6",
+      "bytes": 2037
+    },
+    "Guides/Horde/49_50_Feralas.lua": {
+      "sha256": "2ec50ebe697bd02fd9d39411022d97cf3f7001a8726e8857f1169b6005fb01b4",
+      "bytes": 6139
+    },
+    "Guides/Horde/49_50_Tanaris.lua": {
+      "sha256": "925892de68a0ba0ea53fff8d4ba6baaec48e50e96a13bcf220bdd6293b74beea",
+      "bytes": 9353
+    },
+    "Guides/Horde/50_50_Azshara.lua": {
+      "sha256": "2551eb4aa83cb95d174a72d7735c6cd9be9f5399863163d0daf1032a8c6be8a0",
+      "bytes": 5677
+    },
+    "Guides/Horde/50_51_Hinterlands.lua": {
+      "sha256": "9b6213dc0fdce6b05f9c6f643ebd506d90f4b03762393abbb5e2cffad906d9f6",
+      "bytes": 5047
+    },
+    "Guides/Horde/51_51_Blasted_Lands.lua": {
+      "sha256": "518d9fde87e26c9f5ea85cce4110995ceeae2bf188f8745cebc9f160c9904de8",
+      "bytes": 2967
+    },
+    "Guides/Horde/51_53_UnGoro_Crater.lua": {
+      "sha256": "2b290fa00b6be4055dfaa0d2de55b668daaa73b957da33202101df3873715388",
+      "bytes": 16672
+    },
+    "Guides/Horde/52_60_Moonwhisper_Coast.lua": {
+      "sha256": "3911610feb4aa41ed1fba763b54f777ebdf612c17558dbb17c60b81fba4c25d6",
+      "bytes": 28453
+    },
+    "Guides/Horde/53_54_Burning_Steppes.lua": {
+      "sha256": "5a1827e2cbc6249562dd27b6d8fa6d3badef11eb77c43cee5a0f6631d3b006ad",
+      "bytes": 9946
+    },
+    "Guides/Horde/54_54_Felwood.lua": {
+      "sha256": "ae2c7df7fd43dcd33efe1f0c66bbc6395bb9d6e067afa8e391297a80264681e0",
+      "bytes": 4059
+    },
+    "Guides/Horde/54_55_Winterspring.lua": {
+      "sha256": "b245b84081b5070f2c92eea1071788aa2621cc732817b670ce35845489fb0e77",
+      "bytes": 7681
+    },
+    "Guides/Horde/54_60_TelAbim.lua": {
+      "sha256": "a6c3d01eeb72d39fd520ceca4c85a86d8f20ee3e73d0d4b1d35706d5e8ca85c6",
+      "bytes": 13006
+    },
+    "Guides/Horde/55_56_Felwood.lua": {
+      "sha256": "f86ecd33a04bf1b0dced27ead51139c530bbe7343daf1ea96ad609d1dccd3f21",
+      "bytes": 8879
+    },
+    "Guides/Horde/56_56_Western_Plaguelands.lua": {
+      "sha256": "cd9bea7c7a008fda3a21ad21dccd9a0a3be27114ac909f566e007540e7ea53e5",
+      "bytes": 9407
+    },
+    "Guides/Horde/56_57_Eastern_Plaguelands.lua": {
+      "sha256": "3c1ef4216e0e93536aa81d02a6517c76ba21f064c2f8d51973fffe73030e77fb",
+      "bytes": 14574
+    },
+    "Guides/Horde/57_58_Western_Plaguelands.lua": {
+      "sha256": "402f24e397d736ffaf59ded131f22bd71bbc2bfa0c672788cb14d7f19f7ecd27",
+      "bytes": 11726
+    },
+    "Guides/Horde/58_59_Silithus.lua": {
+      "sha256": "a1e6e9e9930eab72fb17f9cefbde813030bdde1c1fd382611776c175f3bede5a",
+      "bytes": 7319
+    },
+    "Guides/Horde/59_60_Winterspring.lua": {
+      "sha256": "6b7fb71b7045e7a68a86b2c6874fbe70cb609f586970f848d4f69a701541e703",
+      "bytes": 8668
+    },
+    "Guides/Horde/Guides.xml": {
+      "sha256": "62733d1885c82d0e85a66152cedada6159d91784f395adb70def275137e2b253",
+      "bytes": 2707
+    },
+    "Guides/Optimized/Alliance/01_10_Elwynn_Forest.lua": {
+      "sha256": "34bd4ff786d250c63f38e7e50772d8b398402777a8142ce99adf56540421b03f",
+      "bytes": 11626
+    },
+    "Guides/Optimized/Alliance/01_12_Dun_Morogh.lua": {
+      "sha256": "630270fb7410ee8064dc5ba3769a4c33c9dbebecf30fc118495bf30cbf9aa347",
+      "bytes": 21314
+    },
+    "Guides/Optimized/Alliance/01_12_Teldrassil.lua": {
+      "sha256": "b7af2794d380a6d3e77eb6ed48e62051fca89ce38394c30bb7b5889036144911",
+      "bytes": 21081
+    },
+    "Guides/Optimized/Alliance/10_12_Westfall.lua": {
+      "sha256": "4f3245243b36c57ee1ae38f001cb23243b686497f3e3af0019a4f7fb7c40c3e6",
+      "bytes": 5411
+    },
+    "Guides/Optimized/Alliance/12_14_Darkshore.lua": {
+      "sha256": "6959157b00f0be33b028deb100a3bce2da2edd2dbebf5ab777e7756a271c2f98",
+      "bytes": 7544
+    },
+    "Guides/Optimized/Alliance/14_17_Darkshore.lua": {
+      "sha256": "47352951454efafbc015fbdd894cb78e85297f700015432a5a3dce114ad37d05",
+      "bytes": 9121
+    },
+    "Guides/Optimized/Alliance/17_18_Loch_Modan.lua": {
+      "sha256": "c54d6f610570ff0e4147844baa02aa1b94a033783e7a213e59b6d088e0802851",
+      "bytes": 5691
+    },
+    "Guides/Optimized/Alliance/18_20_Redridge.lua": {
+      "sha256": "37ca1fd48192eda11bb81154b755136874b0c18eb3f61449ad7cd3d3b656be92",
+      "bytes": 4052
+    },
+    "Guides/Optimized/Alliance/20_21_Darkshore.lua": {
+      "sha256": "462b517b9ab60b130859d1cbba1b6cd6fa365152c09199cd33b8346fe6b6948e",
+      "bytes": 1574
+    },
+    "Guides/Optimized/Alliance/21_22_Ashenvale.lua": {
+      "sha256": "dc1ebd656f68470a00f8561bf3a13e8f15e9e7c1aa1d6276f9988132faec4add",
+      "bytes": 5848
+    },
+    "Guides/Optimized/Alliance/22_23_Stonetalon.lua": {
+      "sha256": "d35ff3092118b6a4733e390c4dac25d42fd857c6fde6e22cf4858a45fd9726e7",
+      "bytes": 2479
+    },
+    "Guides/Optimized/Alliance/23_24_Darkshore.lua": {
+      "sha256": "2e2e92469970df2d92daba4a136132d34ca624800ed210d31aeaf7133d822f08",
+      "bytes": 4232
+    },
+    "Guides/Optimized/Alliance/24_25_Ashenvale.lua": {
+      "sha256": "ac944537fc1a6325de29f42520753a02a6a553426a892baa901299512233ed37",
+      "bytes": 2923
+    },
+    "Guides/Optimized/Alliance/25_27_Wetlands.lua": {
+      "sha256": "64c450a4e68918377fc4ef0ba8e1e57cd0f69034eab452deb2e055122a52d8e5",
+      "bytes": 9028
+    },
+    "Guides/Optimized/Alliance/27_28_Redridge.lua": {
+      "sha256": "c7b8e63ee690506464b7603cffd1b2beb6275094ffea15674010a24e18ed16a8",
+      "bytes": 3422
+    },
+    "Guides/Optimized/Alliance/28_29_Duskwood.lua": {
+      "sha256": "879f1c116ef969015beef7ff511e07ebbee8a91857e763aa46297e1a4e3b3299",
+      "bytes": 11960
+    },
+    "Guides/Optimized/Alliance/29_30_Ashenvale.lua": {
+      "sha256": "0b1539a98a02cee16f4a54c4afd291c16ced46a55d8eb6dc34ec989aa52baf03",
+      "bytes": 6931
+    },
+    "Guides/Optimized/Alliance/30_30_Wetlands.lua": {
+      "sha256": "1b172bfa93391b4f30120591a6de6c99dfd9337a0c716f40763fc788732f8837",
+      "bytes": 2215
+    },
+    "Guides/Optimized/Alliance/30_31_Hillsbrad.lua": {
+      "sha256": "3e79095679b48626d5c145112d6469b8addf3a46c56602e79053a8cec7308931",
+      "bytes": 4928
+    },
+    "Guides/Optimized/Alliance/31_31_Alterac.lua": {
+      "sha256": "c7634b11b9001fc3c8cfc6ef704dbe405c877daaceceddb52ba9cf3dcf38f9eb",
+      "bytes": 2292
+    },
+    "Guides/Optimized/Alliance/31_32_Arathi.lua": {
+      "sha256": "cc9e295705cef403de523660deffc26868b65b459b2ef107a0ff796b58b58534",
+      "bytes": 2205
+    },
+    "Guides/Optimized/Alliance/32_32_Stranglethorn.lua": {
+      "sha256": "1041b04b3408869ba472d9d9525ea138333b1d7cb603d49fd6fa82ad1e47a30c",
+      "bytes": 5730
+    },
+    "Guides/Optimized/Alliance/32_33_Thousand_Needles.lua": {
+      "sha256": "3691bec1e5978c460e594f7a6d7730b824ca2252cd2cc61df304813c19bb0c5c",
+      "bytes": 4260
+    },
+    "Guides/Optimized/Alliance/33_33_Stonetalon.lua": {
+      "sha256": "fe0b5f565085c01d0625914fa28da6f78213c499f3c871749f902b8a9cecfb9b",
+      "bytes": 737
+    },
+    "Guides/Optimized/Alliance/33_35_Desolace.lua": {
+      "sha256": "a75b23139d7dc91c3549d0909189ca3d7dcfb7366be600491f392867b29b9790",
+      "bytes": 9032
+    },
+    "Guides/Optimized/Alliance/35_36_Stranglethorn.lua": {
+      "sha256": "05db38c0d8aa321e36aa5f11615783812f026f006a939acd009a0efc650fec5f",
+      "bytes": 8611
+    },
+    "Guides/Optimized/Alliance/36_37_Alterac.lua": {
+      "sha256": "e0dfee68aa9a65bfd77c3ac68397cf9024b841513082c6b94726fe1f7ff6e829",
+      "bytes": 2765
+    },
+    "Guides/Optimized/Alliance/37_38_Arathi.lua": {
+      "sha256": "89506299198794f113cfc8cf2e3251d1687b33345461bcd15c3298868d250ae0",
+      "bytes": 8194
+    },
+    "Guides/Optimized/Alliance/38_38_Dustwallow.lua": {
+      "sha256": "412bb013e568da8c9055fd38768c642e192f212ec84afc7e662d7e50f77c4a2e",
+      "bytes": 7774
+    },
+    "Guides/Optimized/Alliance/38_40_Stranglethorn.lua": {
+      "sha256": "e9dac080e2826a34a78b195772802654910da45ed08018c36a08746d7e4f7612",
+      "bytes": 7635
+    },
+    "Guides/Optimized/Alliance/40_41_Badlands.lua": {
+      "sha256": "63877b7626e24566980bd5f4ec033551a3f621dc9888c95e38c62a3daa696d63",
+      "bytes": 7372
+    },
+    "Guides/Optimized/Alliance/41_41_Swamp_of_Sorrows.lua": {
+      "sha256": "5a8819cfe31bc86cd7a4f8d56f8120e01890a98925f6d6d93abb9c962a06dc9b",
+      "bytes": 5343
+    },
+    "Guides/Optimized/Alliance/41_42_Desolace.lua": {
+      "sha256": "584b358927e33f60680ef10d6e89c3c6bc190c7afe714d60ea0b2ac918b42e94",
+      "bytes": 2978
+    },
+    "Guides/Optimized/Alliance/42_43_Stranglethorn.lua": {
+      "sha256": "44c2e898699e60c033f1ef4123086bb6068b828f0ccb3b8d91a21d15ad8060ba",
+      "bytes": 5674
+    },
+    "Guides/Optimized/Alliance/43_43_Tanaris.lua": {
+      "sha256": "d67dd2a6ee8421686820ca28054722604d48503374d67b28f1d8f129d255c774",
+      "bytes": 6147
+    },
+    "Guides/Optimized/Alliance/43_45_Feralas.lua": {
+      "sha256": "091e4c74684f5337416258afe68953a6035a4f14b113138a3b37592a23abe17a",
+      "bytes": 8865
+    },
+    "Guides/Optimized/Alliance/45_46_Uldaman.lua": {
+      "sha256": "a2ba156bd85f3072ba83b728d8f34989484bc2c4410ee478742b98e4008c9a95",
+      "bytes": 6835
+    },
+    "Guides/Optimized/Alliance/46_47_Hinterlands.lua": {
+      "sha256": "01978c71863aa218029266af0f1fd74b6f6f0217ce39322fd38cddda4c5f509d",
+      "bytes": 6030
+    },
+    "Guides/Optimized/Alliance/47_47_Feralas.lua": {
+      "sha256": "d11aa2a8dc8b9b2ccc97a95780bbd33d60bcf87fe79d8e5073722bf6790cffb7",
+      "bytes": 4765
+    },
+    "Guides/Optimized/Alliance/47_48_Tanaris.lua": {
+      "sha256": "749749fd953768da4394d2e84d717fb5fa2cd600ab44f4f88732aeb63847fea4",
+      "bytes": 7040
+    },
+    "Guides/Optimized/Alliance/48_48_Hinterlands.lua": {
+      "sha256": "8bebe1b5468c3937d84d360190474c45026fbe55a1c4ce49982c639a88cfb8ec",
+      "bytes": 2118
+    },
+    "Guides/Optimized/Alliance/48_49_Stranglethorn.lua": {
+      "sha256": "881128daf102756a1aed9a139c6f4b7e359ee3226586fcfc43d22f9b60c262b5",
+      "bytes": 5603
+    },
+    "Guides/Optimized/Alliance/49_50_Blasted_Lands.lua": {
+      "sha256": "e74f796ef806bfd391f446fa313857472db14ee1719341f25b3f9a542866656e",
+      "bytes": 5983
+    },
+    "Guides/Optimized/Alliance/50_51_Searing_Gorge.lua": {
+      "sha256": "8dca1ce18643eff7e0641256daed5774ba4a311047e766c4e7721ab310622132",
+      "bytes": 11845
+    },
+    "Guides/Optimized/Alliance/51_52_UnGoro.lua": {
+      "sha256": "49da30882f22db0a2ac2a415af87adf619c1d1538f30c69046b571932b943e63",
+      "bytes": 12299
+    },
+    "Guides/Optimized/Alliance/52_53_Azshara.lua": {
+      "sha256": "a30f0a810660d15e06a09265ab0992c86a9db0da7ba6532ae42376d2ae15da10",
+      "bytes": 5984
+    },
+    "Guides/Optimized/Alliance/53_54_Felwood.lua": {
+      "sha256": "5ebb59c89ab83b6fd4b50a3d881dda96f771274fd1831e73ec8c03475736be74",
+      "bytes": 5650
+    },
+    "Guides/Optimized/Alliance/54_55_Winterspring.lua": {
+      "sha256": "58c47530de071dacf57719d695c85e18e8e3d36ab6ea28f7fe278ac423e977db",
+      "bytes": 10529
+    },
+    "Guides/Optimized/Alliance/55_56_Burning_Steppes.lua": {
+      "sha256": "a42501dc011947efa4ca35004d1d95d5712232303935bdd9222eba4956249368",
+      "bytes": 11018
+    },
+    "Guides/Optimized/Alliance/56_56_Sunken_Temple.lua": {
+      "sha256": "e0ab6016b29b589812bb56ae1cdd9634fad4d9f6abe50cca9e97ca89895ab6bb",
+      "bytes": 2988
+    },
+    "Guides/Optimized/Alliance/56_57_Silithus.lua": {
+      "sha256": "77cd6a1ea80e28c517da6e4c4a0b29699c28dbaa4e88bcbaa80e96ed1ac0b736",
+      "bytes": 8410
+    },
+    "Guides/Optimized/Alliance/57_58_Western_Plaguelands.lua": {
+      "sha256": "93314bae59304ff21026b32426ca33df768785854bc71d494a73964cbe48bb63",
+      "bytes": 12063
+    },
+    "Guides/Optimized/Alliance/58_59_Eastern_Plaguelands.lua": {
+      "sha256": "93611882815f7c638708906cbb34222e904307ef1d6c6940e1205597a7fbaf99",
+      "bytes": 14409
+    },
+    "Guides/Optimized/Alliance/59_60_Winterspring.lua": {
+      "sha256": "1e0776dc9597bebca7b62038381e53857b28081f891fe15d2500903089ced092",
+      "bytes": 5788
+    },
+    "Guides/Optimized/Alliance/Guides.xml": {
+      "sha256": "083a3e6e6cd3a8db7df298556ab22c71e5f8e5e4ff795c5bf83fc586d9148d40",
+      "bytes": 2635
+    },
+    "Guides/Optimized/Horde/01_12_Durotar.lua": {
+      "sha256": "943cec0d75069487f14cfc06998e847de17399f36915f41a7c13694100ff66c1",
+      "bytes": 18123
+    },
+    "Guides/Optimized/Horde/01_12_Mulgore.lua": {
+      "sha256": "df85d65c8ea89298663bb089e9623d66d7ea4f9c42ddb27347a640f75f64f83a",
+      "bytes": 15929
+    },
+    "Guides/Optimized/Horde/01_12_Tirisfal_Glades.lua": {
+      "sha256": "808068e2748bd336c4025975862979f149d36349f7bc0c7abf9638d86aafe056",
+      "bytes": 21012
+    },
+    "Guides/Optimized/Horde/12_15_Barrens.lua": {
+      "sha256": "b8dc3bd7557d4019c10f778c0cd8a6d3b47c94f50a68b02d52b4476b291bda1a",
+      "bytes": 6405
+    },
+    "Guides/Optimized/Horde/15_16_Stonetalon.lua": {
+      "sha256": "f8bd8195ff88de7e0c0bcabbfe5ab7820d576df916fd51b5ff76d669226fc0ae",
+      "bytes": 2004
+    },
+    "Guides/Optimized/Horde/16_18_Barrens.lua": {
+      "sha256": "216984c7f2cd922976a0e33249b782ef6cb86e8c02736f7b619def6495b8b853",
+      "bytes": 6633
+    },
+    "Guides/Optimized/Horde/18_20_Barrens.lua": {
+      "sha256": "ff20ddfc182ca5ab0bbb6f9cb74e0864d01703b08599f3ebaddf07be80bb70f8",
+      "bytes": 6874
+    },
+    "Guides/Optimized/Horde/20_21_Stonetalon_Mountains.lua": {
+      "sha256": "a6c479fc2e7725053a5f5efee5b54069c6374eb15384e845b64461e62c9f64eb",
+      "bytes": 4182
+    },
+    "Guides/Optimized/Horde/21_21_Ashenvale.lua": {
+      "sha256": "99bbc3338aa482d678fa88766dd9df96261acee3abe927d7b20aa7d77b92a3fd",
+      "bytes": 1834
+    },
+    "Guides/Optimized/Horde/22_23_Southern_Barrens.lua": {
+      "sha256": "1dfe16181b0bd9d999102b77f19dcd67452eadf77cc131aa26c9b3b2483175df",
+      "bytes": 4103
+    },
+    "Guides/Optimized/Horde/23_25_Stonetalon_Mountains.lua": {
+      "sha256": "9cc0d066940fc3f2343be8966a096a4ea6819abd4dfe281405ea636da1b2e422",
+      "bytes": 4773
+    },
+    "Guides/Optimized/Horde/25_25_Southern_Barrens.lua": {
+      "sha256": "25d47058925f159bb04b0cdbed8c1e0aef03f5dbd722eea9cbb4d29938c04d43",
+      "bytes": 3344
+    },
+    "Guides/Optimized/Horde/25_26_Thousand_Needles.lua": {
+      "sha256": "5b6a9f281797cacd797812de5fa920b04f9476b4c1dd8c7600dab348f1177706",
+      "bytes": 3895
+    },
+    "Guides/Optimized/Horde/26_27_Ashenvale.lua": {
+      "sha256": "4fc7d8b88991b21a820955de1fac2a858dd3b2130a6e0dcee26179ce21181947",
+      "bytes": 6150
+    },
+    "Guides/Optimized/Horde/27_27_Stonetalon_Mountains.lua": {
+      "sha256": "e6b31cd3ec334cf1b0e49ece7532b137782c5b0fcaaeba37dd65e870595be3bf",
+      "bytes": 1755
+    },
+    "Guides/Optimized/Horde/27_29_Thousand_Needles.lua": {
+      "sha256": "0dd0e7331163dad43501d98064689077576a257e122432f9864b2d73388042d5",
+      "bytes": 5988
+    },
+    "Guides/Optimized/Horde/29_30_Hillsbrad_Foothills.lua": {
+      "sha256": "09ccdad08da77ea7f1e6c525bfb47d48a4f1b171601a0d2e25366700491a6312",
+      "bytes": 4993
+    },
+    "Guides/Optimized/Horde/30_30_Alterac_Mountains.lua": {
+      "sha256": "5a3dd84ca8020502d3f15a99db82839e1e34aaac3378145301466722609f2045",
+      "bytes": 1583
+    },
+    "Guides/Optimized/Horde/30_30_Arathi_Highlands.lua": {
+      "sha256": "3a9f6cb92be12b55ada748d16b1312307529cffa06f095793964b816425f404e",
+      "bytes": 1925
+    },
+    "Guides/Optimized/Horde/30_31_Stranglethorn_Vale.lua": {
+      "sha256": "8807644e34960417e21eae3099f4fc75ec84c2b6a0a8e6d3fb8f5e6dd9ab4dda",
+      "bytes": 3120
+    },
+    "Guides/Optimized/Horde/31_32_Thousand_Needles.lua": {
+      "sha256": "64c4f1cffab851e020dd68d7056738084e344851ad93ec6c90872edf0f43f004",
+      "bytes": 3833
+    },
+    "Guides/Optimized/Horde/32_34_Desolace.lua": {
+      "sha256": "a50197bcd593a4df0f1fe843516990fb9e5756ddab6210997198a68cb540138a",
+      "bytes": 12816
+    },
+    "Guides/Optimized/Horde/34_36_Stranglethorn_Vale.lua": {
+      "sha256": "fd908bdcdeb8e61db5470c93970fb6ccf065452bb3177d43082de35374ac070f",
+      "bytes": 9742
+    },
+    "Guides/Optimized/Horde/36_37_Arathi_Highlands.lua": {
+      "sha256": "71689fdcaebbdcb56edd9184897d9df032d65cda86f8eec1540117f1e0684196",
+      "bytes": 8194
+    },
+    "Guides/Optimized/Horde/37_37_Alterac_Mountains.lua": {
+      "sha256": "440ced16fc63d220753b792b25a2d342e10c4b249e81741adde0e2d7868bf042",
+      "bytes": 3137
+    },
+    "Guides/Optimized/Horde/37_38_Thousand_Needles.lua": {
+      "sha256": "305100aa23b8953aac5e77897cc71e74a08b7abbdc500fe385e1b547a08bec92",
+      "bytes": 5931
+    },
+    "Guides/Optimized/Horde/38_38_Dustwallow_Marsh.lua": {
+      "sha256": "13382aba708501aca93758faf82be616981477007d6d50c9a63bf129561ee128",
+      "bytes": 6150
+    },
+    "Guides/Optimized/Horde/38_40_Stranglethorn_Vale.lua": {
+      "sha256": "de1019587c3edecf85c2c3117da1d07a3405b85455f7679b12803fab58a8e66d",
+      "bytes": 8499
+    },
+    "Guides/Optimized/Horde/40_41_Badlands.lua": {
+      "sha256": "ffcc4dfaf87451aca1a50235fc1b9b4b744eb890616d01945630efe183741401",
+      "bytes": 6935
+    },
+    "Guides/Optimized/Horde/41_42_Swamp_of_Sorrows.lua": {
+      "sha256": "8e7985c2bb5364f23eb0244b987a479d6bc1ca475ff7a04bb196a22533e2804d",
+      "bytes": 5065
+    },
+    "Guides/Optimized/Horde/42_43_Stranglethorn_Vale.lua": {
+      "sha256": "c665a339ce3b1d32a52ef905b97e02308f74ab36f0af66af2ea780f5ba00a5a4",
+      "bytes": 10239
+    },
+    "Guides/Optimized/Horde/43_43_Desolace.lua": {
+      "sha256": "830683168c264d03ff01e3fb04ae374cc6739f8ef781206c48daf736c069b656",
+      "bytes": 3848
+    },
+    "Guides/Optimized/Horde/43_44_Dustwallow_Marsh.lua": {
+      "sha256": "8e3341527e843f8b73c8db33503f6276bb99e4260da08384d1841f6e1f92cf69",
+      "bytes": 5994
+    },
+    "Guides/Optimized/Horde/44_45_Tanaris.lua": {
+      "sha256": "262b19f5983438802902e1332f3d0c70809762cd5be8f72cb17589ab7a5bc684",
+      "bytes": 9608
+    },
+    "Guides/Optimized/Horde/45_46_Feralas.lua": {
+      "sha256": "455c536ad3d8b9116fe46e8d15bcf632fe8d892a556a4d5beb960587da17eafb",
+      "bytes": 10984
+    },
+    "Guides/Optimized/Horde/46_46_Azshara.lua": {
+      "sha256": "5b8531719405dadcaabc517913ac87b490c4779b022bdc35bd9e3eeb6ecf371c",
+      "bytes": 3341
+    },
+    "Guides/Optimized/Horde/46_46_Uldaman.lua": {
+      "sha256": "554dedfc40aafea298c7280ba0504805cf02d3306e7c01bcf26256d0cc3b7f22",
+      "bytes": 4278
+    },
+    "Guides/Optimized/Horde/46_47_Hinterlands.lua": {
+      "sha256": "ba72061f1cadc3f35e0578bef5c79d4dbc47017c9b97112056d827018bbc460c",
+      "bytes": 10413
+    },
+    "Guides/Optimized/Horde/47_47_Stranglethorn_Vale.lua": {
+      "sha256": "15e315b2c978833c5922a4d23273fda1335b02641de1c5168134758560a71673",
+      "bytes": 7569
+    },
+    "Guides/Optimized/Horde/47_48_Searing_Gorge.lua": {
+      "sha256": "a5453f53ad9040d97a353f3c7fbcae8d69f9238104b74cb10851d54ec155137c",
+      "bytes": 10625
+    },
+    "Guides/Optimized/Horde/48_48_Swamp_of_Sorrows.lua": {
+      "sha256": "574b222ae7ed2c32a381baaed169df51a0cf37eb44cad898bc2dfc6018360f05",
+      "bytes": 4494
+    },
+    "Guides/Optimized/Horde/48_49_Feralas.lua": {
+      "sha256": "e799879e5ec4aa63796ea6650f756c58da50326ea44701a72211cc0a0bf3aa81",
+      "bytes": 6352
+    },
+    "Guides/Optimized/Horde/49_50_Tanaris.lua": {
+      "sha256": "ba5404b73e09f5bdf69f5c16f8ecfbd386ec5982db86d03e60e7a8806095eea5",
+      "bytes": 10301
+    },
+    "Guides/Optimized/Horde/50_50_Azshara.lua": {
+      "sha256": "c40b862d470e16c60bc312b3566bfc6ff210d8ec1b72ded8896d763f2cac23a5",
+      "bytes": 5694
+    },
+    "Guides/Optimized/Horde/50_51_Hinterlands.lua": {
+      "sha256": "c4d9c9847420e695434f30af32b8c90c994b6e9d095fd4f117f3f9cd4544bcd9",
+      "bytes": 5051
+    },
+    "Guides/Optimized/Horde/51_51_Blasted_Lands.lua": {
+      "sha256": "a1c0e85e6f3059c7d4640a932053d138b595a1e0acfe39189f541ea121a41519",
+      "bytes": 3087
+    },
+    "Guides/Optimized/Horde/51_52_UnGoro_Crater.lua": {
+      "sha256": "5209cc460502b79fa1222cf754619e0a725f5f0bff371410ede51b5e5a2636df",
+      "bytes": 14050
+    },
+    "Guides/Optimized/Horde/52_53_Burning_Steppes.lua": {
+      "sha256": "18baee82ef0854d8d3ad37aa5385c6a1d31f2627da973801b097cc1bf3868d5b",
+      "bytes": 7245
+    },
+    "Guides/Optimized/Horde/53_53_Sunken_Temple.lua": {
+      "sha256": "ea859a059b6a2435e853ccd09fa54df1418390c807d02ed6c71e6185b66bc6d3",
+      "bytes": 3204
+    },
+    "Guides/Optimized/Horde/53_54_Azshara.lua": {
+      "sha256": "643b7b4a83fccd8a47f10799b3f8ebb6bac1075d47628b6c4a8427be4859790e",
+      "bytes": 3255
+    },
+    "Guides/Optimized/Horde/54_54_Felwood.lua": {
+      "sha256": "ad475a5790a02a56a75256960da13facdfed334ad7b05cf215346bdeaf49515d",
+      "bytes": 3841
+    },
+    "Guides/Optimized/Horde/54_55_Winterspring.lua": {
+      "sha256": "2f0ccee27e598bc9d8daba790e653d6be90d249dcd1c61064f38bfa10299d467",
+      "bytes": 6156
+    },
+    "Guides/Optimized/Horde/55_55_Felwood.lua": {
+      "sha256": "800f60f568c39044ee86b1e0a1b5579ebe2064ce2928467dab6b41c5c02525fc",
+      "bytes": 3957
+    },
+    "Guides/Optimized/Horde/55_55_Silithus.lua": {
+      "sha256": "a6e0c11f9f4bb8cda23f9361f459379664dacd171f47b317b7cf1283ea1e2ae4",
+      "bytes": 3687
+    },
+    "Guides/Optimized/Horde/55_56_Western_Plaguelands.lua": {
+      "sha256": "a792c9f713fe877e23876168e8ba28aae07b4473a8aa3efa396b86c0d13e93e5",
+      "bytes": 8312
+    },
+    "Guides/Optimized/Horde/56_57_Eastern_Plaguelands.lua": {
+      "sha256": "52783500e91a48be8b8c127048c8237d7e2b74b45877ebff4b216730bc1e72b4",
+      "bytes": 12080
+    },
+    "Guides/Optimized/Horde/57_58_Western_Plaguelands.lua": {
+      "sha256": "e6d246dc4a2c741d84a412607fa41cd86427f963f5574a0c61059e67d2b48cda",
+      "bytes": 10219
+    },
+    "Guides/Optimized/Horde/58_60_Winterspring.lua": {
+      "sha256": "8b0c68a20e5d45d0ecb1b34aa54a94db5cdbdde0b7f76de36b423b1712630539",
+      "bytes": 11658
+    },
+    "Guides/Optimized/Horde/Guides.xml": {
+      "sha256": "9bc1c2d1d86026f735be3374bb59743cd1f1f5c05f114cd9230e2011a36dde2a",
+      "bytes": 2895
+    },
+    "Guides/Professions/Alchemy.lua": {
+      "sha256": "5782ae6c2c999726f7f1a00a99da902ac9c0d8d0dbec64357ee4160fbbe8d5eb",
+      "bytes": 10711
+    },
+    "Guides/Professions/Blacksmithing.lua": {
+      "sha256": "36d9437f1943fc8270978139c850b58ea0c97f1bdfe807ebe90f76e020249927",
+      "bytes": 13742
+    },
+    "Guides/Professions/Cooking.lua": {
+      "sha256": "5a5e14f869d9f152b29640eee7378f4baf86888f976c8f5d2ff8791976b60d80",
+      "bytes": 7810
+    },
+    "Guides/Professions/Enchanting.lua": {
+      "sha256": "d3fd080dfb323c1c5acc8634b80d4b677f5a9c7d2e74ecc824b52bc9f95b51f1",
+      "bytes": 13602
+    },
+    "Guides/Professions/Engineering.lua": {
+      "sha256": "0d17aed235cb5ca04b8f6458e169acd6534b381db352fe36fed9ad33c0b3ceaf",
+      "bytes": 17238
+    },
+    "Guides/Professions/First_Aid.lua": {
+      "sha256": "ff1584a9995f91381d8ce802283a5d98af1016f687c67035d338455351d3344f",
+      "bytes": 8977
+    },
+    "Guides/Professions/Fishing.lua": {
+      "sha256": "9970854f600e399d28c527b581715b746dbae5d7fbb2ab71d7e351e370cbd96b",
+      "bytes": 9318
+    },
+    "Guides/Professions/Guides.xml": {
+      "sha256": "1650269204d201e6dcc40534be9fd2b7b6f5fb5d57d9dab14550251859ec7961",
+      "bytes": 504
+    },
+    "Guides/Professions/Herbalism.lua": {
+      "sha256": "56f94cb42355648e223222bc410952a7380f683fe464ab5fc3ced584a43fec2a",
+      "bytes": 19208
+    },
+    "Guides/Professions/Jewelcrafting.lua": {
+      "sha256": "ed48d9e6bfb6cf4f00d04aa077b53bd7be9001d8f049e86982dfaac1d94a1221",
+      "bytes": 14420
+    },
+    "Guides/Professions/Leatherworking.lua": {
+      "sha256": "eff371516b3b961a8ca796a7a5d055ebc2107cf008e74e48c96d1de0bb827212",
+      "bytes": 13976
+    },
+    "Guides/Professions/Mining.lua": {
+      "sha256": "14ade03ffb77fb90f8f36c423b5390579b893475fb53160f6d04aec895b48233",
+      "bytes": 15911
+    },
+    "Guides/Professions/Skinning.lua": {
+      "sha256": "53aec16d9a479bc596f5d345c467c740f54f599779cb2850b8044b6feea03f1f",
+      "bytes": 12605
+    },
+    "Guides/Professions/Survival.lua": {
+      "sha256": "cbe230239dabfc26950c300768e0cc99c14bf579eaad92176a6bef90f19dd419",
+      "bytes": 13899
+    },
+    "Guides/Professions/Tailoring.lua": {
+      "sha256": "ea539b203446211f85f1123f15504063eed4435dd607f70f34688b492c72046f",
+      "bytes": 14724
+    },
+    "Guides/RXP/.processed_guides.txt": {
+      "sha256": "73ab769c09a6904f913662a70d341d6a6343a74cd4475b84cdf25087ac273e47",
+      "bytes": 1874
+    },
+    "Guides/RXP/Alliance/01_06_Coldridge_Valley.lua": {
+      "sha256": "c7d8b6dfeae4119b2cc5f6c01f66a31f17133d0292bf4d3d9526022acd7c304a",
+      "bytes": 12166
+    },
+    "Guides/RXP/Alliance/01_06_Northshire.lua": {
+      "sha256": "11f48dfa7b82f52ecc592cfc7478d9ff8dfa7dadea343f25965bb2ec53be6238",
+      "bytes": 9484
+    },
+    "Guides/RXP/Alliance/01_06_Shadowglen.lua": {
+      "sha256": "6810156e145d0eafa0226ad2b6b1371ff3801c69567fc6fdcbcc618768657af9",
+      "bytes": 7425
+    },
+    "Guides/RXP/Alliance/06_11_Dun_Morogh_Hunter.lua": {
+      "sha256": "52c6a13727cd868894a68c07e01d81bf647cb9d00aefd27bc2b5f82011ca8516",
+      "bytes": 10919
+    },
+    "Guides/RXP/Alliance/06_11_Elwynn_Forest.lua": {
+      "sha256": "fb284bb213f8187a1bd3444b3b4337afeca7d1888c3a11fb812c1f0dca536971",
+      "bytes": 55498
+    },
+    "Guides/RXP/Alliance/06_11_Teldrassil.lua": {
+      "sha256": "5e63854686146da8f5a84f082af22c1754431706313087071e94f67727c54750",
+      "bytes": 26916
+    },
+    "Guides/RXP/Alliance/11_12_Elwynn_Dwarf_Gnome.lua": {
+      "sha256": "56df772cd72eb5b85be4f6cfc329831060c04f03cc98fc8eaf5dd2502e43e372",
+      "bytes": 13477
+    },
+    "Guides/RXP/Alliance/11_13_Loch_Modan_Hunter.lua": {
+      "sha256": "734058cab536da7b8a856f0b0b566661a42b33685b33efc7ca2a3271537b7687",
+      "bytes": 10824
+    },
+    "Guides/RXP/Alliance/11_13_Loch_Modan.lua": {
+      "sha256": "28af7ee298419c3720fb43ac4ed2e68fec31904867d359bf71aed77013fdb75d",
+      "bytes": 12342
+    },
+    "Guides/RXP/Alliance/12_14_Loch_Modan_Dwarf_Gnome.lua": {
+      "sha256": "11db98ef70234edaaceb38607715614ccafdd422e93056b6dcf6af66726dd8ca",
+      "bytes": 15008
+    },
+    "Guides/RXP/Alliance/13_15_Westfall.lua": {
+      "sha256": "5d5599d2a286964f396c2e88809420bc5740e205b0f4fd75da4bd8060fc21b80",
+      "bytes": 13057
+    },
+    "Guides/RXP/Alliance/14_16_Darkshore.lua": {
+      "sha256": "3082bffc5bedb3ccbb159c68060ef1628aade4def59eea8ac1060d32ba3d4100",
+      "bytes": 40757
+    },
+    "Guides/RXP/Alliance/16_19_Darkshore.lua": {
+      "sha256": "841b9bdf25bbd5571973905b6c3c4132f6857eae0085447497be1adbe6fae6a6",
+      "bytes": 24234
+    },
+    "Guides/RXP/Alliance/19_20_Redridge.lua": {
+      "sha256": "e8a851f0dea1a6499ef60ec0dfc017f0d0413253066469d0583bcf0385f41792",
+      "bytes": 34880
+    },
+    "Guides/RXP/Alliance/19_21_Darkshore_Ashenvale.lua": {
+      "sha256": "e990da900217cbb721f43cb1a7fee02cefca6cc8bd8e6a18ac8ee15d5a4dced7",
+      "bytes": 13753
+    },
+    "Guides/RXP/Alliance/20_21_Darkshore_Ashenvale.lua": {
+      "sha256": "7cd59f8999d424c86799963f5b1c5c0101cc04077fce20a7cff1a6e4c527af89",
+      "bytes": 9607
+    },
+    "Guides/RXP/Alliance/21_23_Ashenvale_Stonetalon.lua": {
+      "sha256": "37c342861dba95095d2d837fefb7671ef02ba95fef047d1075c5bfd7a5345aa1",
+      "bytes": 15275
+    },
+    "Guides/RXP/Alliance/21_23_Stonetalon_Ashenvale.lua": {
+      "sha256": "e8a7f609a78d0d668a7fbb219f2603772836fd57d812d977c1b221d3099ee482",
+      "bytes": 23348
+    },
+    "Guides/RXP/Alliance/23_24_Wetlands.lua": {
+      "sha256": "95e1c5543d86a35772f1de4f5ae46e55e34553663e5e4f6c9d08c39e47207050",
+      "bytes": 9028
+    },
+    "Guides/RXP/Alliance/24_27_Duskwood_Redridge.lua": {
+      "sha256": "262153e58d3e794eb43e74818457d10826a3ec3268d15dfeca40dfcf366914eb",
+      "bytes": 42703
+    },
+    "Guides/RXP/Alliance/27_29_Wetlands_Hillsbrad.lua": {
+      "sha256": "a04e4de76c6a28e260a6479e066c88f48559a9c2ef1d429abcf5acc78a991792",
+      "bytes": 20651
+    },
+    "Guides/RXP/Alliance/29_30_Ashenvale.lua": {
+      "sha256": "a3e6e1be2113aac60dcff67497d284426ccdd6433caad3bbbfc104c3d2d295e7",
+      "bytes": 11607
+    },
+    "Guides/RXP/Alliance/29_32_Duskwood.lua": {
+      "sha256": "0ef1d5db70a3ca04085fed9238c60283ec27d2db9c1416d86063735bcef8f8e7",
+      "bytes": 33772
+    },
+    "Guides/RXP/Alliance/32_33_Hillsbrad_Arathi.lua": {
+      "sha256": "f8772adf6030b5721e287c30c5c0863d5e965dd685744c6737eb449c202189ac",
+      "bytes": 13238
+    },
+    "Guides/RXP/Alliance/33_34_Thousand_Needles.lua": {
+      "sha256": "f2d7df8413a5debaf84b2090d9afc6f19b22190a62aabd0a55c4c56f37358552",
+      "bytes": 14892
+    },
+    "Guides/RXP/Alliance/34_35_Stranglethorn_Vale_I.lua": {
+      "sha256": "10002e7e08048b123630a9fe27b8c4f6064c699473a617694a91935884f73f17",
+      "bytes": 16115
+    },
+    "Guides/RXP/Alliance/35_36_Desolace.lua": {
+      "sha256": "a97addb5ee6861d72287116a93dfe61105f8289f2be872ac8c7a78888ac98590",
+      "bytes": 12269
+    },
+    "Guides/RXP/Alliance/35_37_Desolace.lua": {
+      "sha256": "1839a1fc186f0534ec31b87610ef05b5aa34ef5beb7cf616cc30797ff03ebd43",
+      "bytes": 13426
+    },
+    "Guides/RXP/Alliance/36_38_Stranglethorn_Vale_II.lua": {
+      "sha256": "011f8914ab6bfd418caccda39c37a6583246ba451a410471ab4680f5403927fd",
+      "bytes": 12570
+    },
+    "Guides/RXP/Alliance/38_39_Swamp_of_Sorrows.lua": {
+      "sha256": "635df8f448b4490165dddf48dfba00d7bd372c57ed4e112f8bbb1766ad878869",
+      "bytes": 10653
+    },
+    "Guides/RXP/Alliance/39_40_Alterac_Arathi.lua": {
+      "sha256": "c3e88b8b780f22bd18b49af6027b1fe46057fa28301f4297a7c7bc86657b37c1",
+      "bytes": 31400
+    },
+    "Guides/RXP/Alliance/40_40_Dustwallow_Marsh2.lua": {
+      "sha256": "4237c2ce46b667178ad8428a900f4e1fc710e5952cf776ef99b8940de6af9a81",
+      "bytes": 7324
+    },
+    "Guides/RXP/Alliance/40_41_Desolace.lua": {
+      "sha256": "1b8a641ee6ecf579297ba83a05c67b1eb72fdb222d2380fd7fbef12caf3a0962",
+      "bytes": 5101
+    },
+    "Guides/RXP/Alliance/41_41_Badlands.lua": {
+      "sha256": "3d83fe54f0f5433adf0195ee07cf61fb9e0a104dc9773f15196290f8bd1b303c",
+      "bytes": 12700
+    },
+    "Guides/RXP/Alliance/41_43_STV_Swamp_of_Sorrows.lua": {
+      "sha256": "d8a1a989ace07807c1faf6e62e2804c47a79c51b67ed399f5351f9058a9b0bc1",
+      "bytes": 18363
+    },
+    "Guides/RXP/Alliance/43_44_Tanaris_Dustwallow.lua": {
+      "sha256": "f59b254e4a37e9566b5df1758cfe773b1684092075a38e2ec30525d6f25c453c",
+      "bytes": 10678
+    },
+    "Guides/RXP/Alliance/43_44_Tanaris.lua": {
+      "sha256": "05107d71e641aa1bcd3cba81bb5232f6373c559611f1425e59ba99089ef04572",
+      "bytes": 11267
+    },
+    "Guides/RXP/Alliance/44_48_Feralas.lua": {
+      "sha256": "a65e7852e753a7242e5570cc5666ebd923202c6eabf2544239afc0ed10f5d651",
+      "bytes": 20456
+    },
+    "Guides/RXP/Alliance/48_49_Tanaris_Hinterlands.lua": {
+      "sha256": "5ec13764dcc1b96b4738fad53a851058dabd0ce3459e581641a3ab80e71438a3",
+      "bytes": 6843
+    },
+    "Guides/RXP/Alliance/49_50_Tanaris_Un_Goro.lua": {
+      "sha256": "7478fce020d25e40c6ae7ab55ac7583a0baad26d97c0366b9481faf50765fa5d",
+      "bytes": 18875
+    },
+    "Guides/RXP/Alliance/50_50_Stranglethorn_Vale.lua": {
+      "sha256": "0f553f9bc7f9396a44b186f7ecc5b6cf15ae1cd6da1d88b98b2788bf3364851c",
+      "bytes": 7932
+    },
+    "Guides/RXP/Alliance/50_51_Searing_Gorge.lua": {
+      "sha256": "e08c0c9e63b0b17d6a3491b3ebd4aac5aeb446b03d4eafcdaaa1d05ad78e6147",
+      "bytes": 15940
+    },
+    "Guides/RXP/Alliance/51_51_Blasted_Lands.lua": {
+      "sha256": "85febac36141fe97b430de7a84d661ffb0a3c3daba5aa358d804c38e75fb95f2",
+      "bytes": 7158
+    },
+    "Guides/RXP/Alliance/51_52_WPL.lua": {
+      "sha256": "18d93dcb30692a9786537f8204ec6038b314e01213c5f2c99a93df8d98c41bd7",
+      "bytes": 8834
+    },
+    "Guides/RXP/Alliance/52_52_Felwood.lua": {
+      "sha256": "2b836206359d1bc37debcc600c26eb53f9390ac251307e8777b1b7524c118dba",
+      "bytes": 12704
+    },
+    "Guides/RXP/Alliance/52_53_Feralas.lua": {
+      "sha256": "05075b87c65647be87810f13a2c976a8920dab22273f8edbb330f0ec1349c3bd",
+      "bytes": 11397
+    },
+    "Guides/RXP/Alliance/53_53_Azshara.lua": {
+      "sha256": "d97a54b8edfa72d97d4d8686f639dc1aa1995dc52ad304601aa9fc41bafcb514",
+      "bytes": 10971
+    },
+    "Guides/RXP/Alliance/53_54_UnGoro_Crater.lua": {
+      "sha256": "298b1e32bac456073adc3fc1d8a7dc783f4d73be5322ba379a45315edf3d716a",
+      "bytes": 19208
+    },
+    "Guides/RXP/Alliance/54_55_Felwood_Winterspring.lua": {
+      "sha256": "4715479c24f1b140a60e747362f1aada214387b5f5d726269e0f16369d261459",
+      "bytes": 11522
+    },
+    "Guides/RXP/Alliance/55_56_Winterspring.lua": {
+      "sha256": "32f63c531881147adf413e42c02feb20ab38ff7a6b61463cc09650e250cdd242",
+      "bytes": 6428
+    },
+    "Guides/RXP/Alliance/56_57_Burning_Steppes.lua": {
+      "sha256": "876baca36d3ab4683109e951e257fb7d3227d67e3f25d791e355acc0f321d40f",
+      "bytes": 23831
+    },
+    "Guides/RXP/Alliance/57_59_Western_Eastern_Plaguelands.lua": {
+      "sha256": "90c8c77a5659be9caa3da67024fd50069e7873a1de42c049a55e32fb5d7848c4",
+      "bytes": 31157
+    },
+    "Guides/RXP/Alliance/59_59_Winterspring_Silithus_part_1.lua": {
+      "sha256": "9390704498fb743cd253806e9d6f7b4b6a5f83e528a75132d4d73e15af3ffa45",
+      "bytes": 23632
+    },
+    "Guides/RXP/Alliance/59_60_Winterspring_Silithus_part_2.lua": {
+      "sha256": "588a65ea43b41b1d4883303ffa1e49b477d3987e3249af7c863d236fa8a3674e",
+      "bytes": 19416
+    },
+    "Guides/RXP/Alliance/Guides.xml": {
+      "sha256": "d28f82d7cdf7fc71b1efd77a8f831a23b64553d255e88e1149ee0e938e1cb670",
+      "bytes": 2507
+    },
+    "Guides/RXP/Alliance/Onyxia_Attunement_A.lua": {
+      "sha256": "a92cdf53316a23f2120dc3fca3d713f588cbc597cd0a53aebb2ffd9d5b2aaa7d",
+      "bytes": 8116
+    },
+    "Guides/RXP/Alliance/Scholomance_Key_A.lua": {
+      "sha256": "8ff8dbce002ca4edb16d12cc0c105b4e428610bca37f6078755a8d9aa3ec7bc4",
+      "bytes": 4995
+    },
+    "Guides/RXP/Horde/01_06_Durotar.lua": {
+      "sha256": "405ef3addd1d9fdb19df8034a48f6692fe6079d30a8a6829fc302ad10bc864dd",
+      "bytes": 13474
+    },
+    "Guides/RXP/Horde/01_06_Mulgore.lua": {
+      "sha256": "247bd07501d23f7316a0933d5fd51495972f4a98a7991ddf7a5e970c43b3416d",
+      "bytes": 6411
+    },
+    "Guides/RXP/Horde/01_06_Tirisfal_Glades.lua": {
+      "sha256": "58ecf228f92c658253f307e119c963b3b1d08908136f215bb18dcf4ad5fd40c9",
+      "bytes": 9630
+    },
+    "Guides/RXP/Horde/06_10_Durotar.lua": {
+      "sha256": "6445e80000a857ca1715d2e23d6e51e61f6c0c4119c6b6f756ea296128fed745",
+      "bytes": 26657
+    },
+    "Guides/RXP/Horde/06_11_Tirisfal_Glades.lua": {
+      "sha256": "ba88f4b3e3db8a7fa959ebc74cff5fb86afefda89bbfa9054220e6acf5dac6ab",
+      "bytes": 38716
+    },
+    "Guides/RXP/Horde/06_12_Mulgore.lua": {
+      "sha256": "cacb0a4100a817e7dc87f0a38b6fbd621df0f059750d3cd87b49d77ca3a08daf",
+      "bytes": 29129
+    },
+    "Guides/RXP/Horde/10_12_Durotar.lua": {
+      "sha256": "317f8ca2bc716ecb9e5238091e8803a5e2323e9e6691ac4ce6148b5f5b27f887",
+      "bytes": 19468
+    },
+    "Guides/RXP/Horde/10_12_Tirisfal.lua": {
+      "sha256": "a56bcf3f929b0ed2a7c0d6130d9e07b734a4fc9ab4aa778e835e98cad309033f",
+      "bytes": 26929
+    },
+    "Guides/RXP/Horde/12_14_Silverpine_Forest.lua": {
+      "sha256": "871db96d5e949cf5b0121a2ce07572e054e59ffdb9f65bc54b11fb5a802701de",
+      "bytes": 19353
+    },
+    "Guides/RXP/Horde/12_17_The_Barrens.lua": {
+      "sha256": "bef09aecfa8de2c0f27a274f93b67b1ff949b8757f1a6252ab877155e45f9675",
+      "bytes": 49261
+    },
+    "Guides/RXP/Horde/17_22_Stonetalon_Barrens_Ashenvale.lua": {
+      "sha256": "f350c20b55e79190fc0aa464598c3d486ea0f0239daae30f23e4d90637cb431e",
+      "bytes": 53510
+    },
+    "Guides/RXP/Horde/22_24_Hillsbrad.lua": {
+      "sha256": "a84ae23b78ed4e98778ac4e0a7e33131de4cf05029a354528710190f65d82f22",
+      "bytes": 23941
+    },
+    "Guides/RXP/Horde/24_26_Southern_Barrens_Stonetalon.lua": {
+      "sha256": "8bfd23b4ee3d209b36ee4ed644b93c5413a847b3f18927727929f1a877352de0",
+      "bytes": 25632
+    },
+    "Guides/RXP/Horde/26_28_Ashenvale.lua": {
+      "sha256": "e83bd6c3181d74c42dbd3a5a5e2bddff1ddeea563f1754b67ed97afe47f989c0",
+      "bytes": 20002
+    },
+    "Guides/RXP/Horde/28_30_Thousand_Needles.lua": {
+      "sha256": "317c8eaa6dc4dfa4eaf95e61036ffdd600b92148481552d6ad668e4c5b230de6",
+      "bytes": 30352
+    },
+    "Guides/RXP/Horde/30_33_Hillsbrad_Arathi.lua": {
+      "sha256": "05e72dd004db7d9ed634336baf0dd5bfb9169c2ae89ac3a471ea85c293818585",
+      "bytes": 25355
+    },
+    "Guides/RXP/Horde/33_34_Shimmering_Flats.lua": {
+      "sha256": "9f088466de2a49460ff641a6be641a38a5c640794e17423169687ed98ea469ba",
+      "bytes": 9231
+    },
+    "Guides/RXP/Horde/34_35_Desolace.lua": {
+      "sha256": "b56dd88b7b435b9f3fdad9ba59d29bd07f3371973fa1e05528753c245f9c6658",
+      "bytes": 12220
+    },
+    "Guides/RXP/Horde/35_37_Northern_Stranglethorn.lua": {
+      "sha256": "512cd01cb09967fbb284b97228174980c1b3fb0b8c8b2cf1c0d3b1df8532dc46",
+      "bytes": 19484
+    },
+    "Guides/RXP/Horde/37_38_Dustwallow_Marsh.lua": {
+      "sha256": "e391f0bf4b3f65123510114611e60e6c183a634eb96a43217df6264cc6fbe487",
+      "bytes": 15003
+    },
+    "Guides/RXP/Horde/38_39_Alterac_Arathi.lua": {
+      "sha256": "5a4e860339ba69c6db78022ffdd7bb8eb21d6c2838c569088aca9f6902d1260c",
+      "bytes": 21075
+    },
+    "Guides/RXP/Horde/39_40_Badlands.lua": {
+      "sha256": "514774b5d0d2b931e2be93eb546424df9f28bf4e9764efb8a38357da6507c56e",
+      "bytes": 7645
+    },
+    "Guides/RXP/Horde/40_41_Stranglethorn_Vale.lua": {
+      "sha256": "6600bb2f0d12cfd0d2a03905194ac3c518eb02a85fd3ce7bba1d5ad9d8388653",
+      "bytes": 6514
+    },
+    "Guides/RXP/Horde/41_400_41_41_Swamp_of_Sorrows.lua": {
+      "sha256": "fd4e6265cd86bd8465b6c0a492bac3a90af63480776c4282e137e8d2b93a6cf9",
+      "bytes": 8837
+    },
+    "Guides/RXP/Horde/41_41_Desolace_II.lua": {
+      "sha256": "4bf91d0b260f3d9106ff82d4ce0746a3f2e4b12a2026c4e81dbb31773fdf1618",
+      "bytes": 4831
+    },
+    "Guides/RXP/Horde/41_43_Tanaris_Dustwallow.lua": {
+      "sha256": "e219a69d8f8338374493fc63bc92db043791b0c49c30dee2fcebd7b9cd367893",
+      "bytes": 16999
+    },
+    "Guides/RXP/Horde/43_44_Feralas.lua": {
+      "sha256": "434d3db5e9fe5e3e7c383721c7ff01d6fed356eba8fe4f9a915c8c03442550b9",
+      "bytes": 15030
+    },
+    "Guides/RXP/Horde/44_45_Southern_Stranglethorn.lua": {
+      "sha256": "742e79d292439b17765f1b9a1791168d2c2a6a72c2cd4b955abdbb821e188002",
+      "bytes": 13324
+    },
+    "Guides/RXP/Horde/45_46_Swamp_of_Sorrows.lua": {
+      "sha256": "a1946fac1bf69f01b41c26e3d8ce1a6b3ca8e797e5dce381de6e2504c7e7971c",
+      "bytes": 5412
+    },
+    "Guides/RXP/Horde/46_48_Tanaris.lua": {
+      "sha256": "497bba7b4e3115831d96446d0f0af4a5e8ee1b4d97bfb1ad821b76719ba7cf0d",
+      "bytes": 22543
+    },
+    "Guides/RXP/Horde/48_49_The_Hinterlands.lua": {
+      "sha256": "d6fefb48329a4be94df632221e4d94c902247ef5ebd940e608def79406049516",
+      "bytes": 30080
+    },
+    "Guides/RXP/Horde/49_50_Feralas.lua": {
+      "sha256": "ee50503116f29540f7cb32df9a8fd17bc479ce223b3bae4bfe586d9aa3d01482",
+      "bytes": 12010
+    },
+    "Guides/RXP/Horde/50_51_Stranglethorn_Blasted_Lands.lua": {
+      "sha256": "9343c27ae83004cbdca79dda983a35d8a455756e89eaf0a7f1e10876084ec422",
+      "bytes": 11269
+    },
+    "Guides/RXP/Horde/51_52_Searing_Gorge_Burning_Steppes.lua": {
+      "sha256": "fc9b4d131148201be50c5a3050997a508ff45aa1a9218bec2777a4a5695141f1",
+      "bytes": 11600
+    },
+    "Guides/RXP/Horde/52_53_Azshara.lua": {
+      "sha256": "7b2c548a6fe3a28cb94f388bd287841a8f03490dca8a21fcda623f041ee93f55",
+      "bytes": 12646
+    },
+    "Guides/RXP/Horde/53_54_Felwood.lua": {
+      "sha256": "f759052c2cac971697d52fdf9be904e7f2dbdae006fc25249e0e7bf2f8b27b22",
+      "bytes": 9322
+    },
+    "Guides/RXP/Horde/54_55_Un_Goro_Crater.lua": {
+      "sha256": "2c30e7db9924dcc2e7d69212d8a18ee82d124af7c184c7703fb52f32abd854b3",
+      "bytes": 18527
+    },
+    "Guides/RXP/Horde/55_56_Felwood_Winterspring.lua": {
+      "sha256": "5c88fb76af547a8a09feeba6eb1960d005c0a210cd83981deb30d2bbf927d744",
+      "bytes": 25546
+    },
+    "Guides/RXP/Horde/56_58_Western_PL_Eastern_PL.lua": {
+      "sha256": "8cc04b2dee083b8432fb3ba916e5c915d4db5ebf2189168bac88937932407604",
+      "bytes": 43709
+    },
+    "Guides/RXP/Horde/58_59_Winterspring_Silithus_I.lua": {
+      "sha256": "e0934e17b9eebcf88eb5bda4c904034e812840f73afab1cbc005eae55b42d600",
+      "bytes": 21838
+    },
+    "Guides/RXP/Horde/59_60_Winterspring_Silithus_II.lua": {
+      "sha256": "ec9a5b62414823b1c0a3c8376e0febd18f6774e167270cb5465ec8a787608cd6",
+      "bytes": 4045
+    },
+    "Guides/RXP/Horde/Guides.xml": {
+      "sha256": "6de90e28c9a35b5ef856f90367390342083826c9a2b48cecf92d51f391bb4b7c",
+      "bytes": 1969
+    },
+    "Guides/RXP/Horde/Onyxia_Attunement_H.lua": {
+      "sha256": "c52f857a26d1eab8c3e32cca99103dd9eafcb077126d399db4b23921cd3088ba",
+      "bytes": 8870
+    },
+    "Guides/RXP/Horde/Scholomance_Key_H.lua": {
+      "sha256": "6686baccd6c4a0edc7283e3426c199529d202bc656db727a67f2c071b88607f9",
+      "bytes": 5297
+    },
+    "Guides/RXP_Hardcore/.processed_guides.txt": {
+      "sha256": "351aa0887de2a29f2c5bf326ef44d32cfe138f24b6c038f0827d5d2c061ae992",
+      "bytes": 1791
+    },
+    "Guides/RXP_Hardcore/Alliance/01_06_Coldridge_Valley.lua": {
+      "sha256": "5d6905e646dc44c8638eaa977b1ab3c55f97409d95a4fa62dd83fa36f776cedc",
+      "bytes": 11123
+    },
+    "Guides/RXP_Hardcore/Alliance/01_06_Northshire.lua": {
+      "sha256": "7a6d19bcca1e504f2a3876d6713bc4bf8b3943515c1b3f533aacf0a032226529",
+      "bytes": 9612
+    },
+    "Guides/RXP_Hardcore/Alliance/01_06_Shadowglen.lua": {
+      "sha256": "425951944700346cb37ebd372ffba503d47f819650c450e58d9152de8a113b89",
+      "bytes": 6773
+    },
+    "Guides/RXP_Hardcore/Alliance/06_10_Dun_Morogh.lua": {
+      "sha256": "4b2ca3a4cf0a0923073f8548663bffa9b7d759fa260232c10f6f68ccec392e4d",
+      "bytes": 27980
+    },
+    "Guides/RXP_Hardcore/Alliance/06_11_Elwynn_Forest.lua": {
+      "sha256": "1cc0920c2269092bf82e609a47142db9ef1002858b38f3cb7e9033fb953eef94",
+      "bytes": 38632
+    },
+    "Guides/RXP_Hardcore/Alliance/06_11_Teldrassil.lua": {
+      "sha256": "e92cf16524ccb991c5520e2b4ed1bbc3baa74e1b7f00e8f847b7a3e4d1004f8d",
+      "bytes": 21837
+    },
+    "Guides/RXP_Hardcore/Alliance/10_11_Elwynn_Dwarf_Gnome.lua": {
+      "sha256": "9459e4a44d415e5396d120cbc30604c876bbd7a8244f5d9cead6e3e7407cabbd",
+      "bytes": 15605
+    },
+    "Guides/RXP_Hardcore/Alliance/11_13_Darkshore_Night_Elf.lua": {
+      "sha256": "329d7118a0eea850a3142cc0faf05a228c960ff4eaf09226469c34fa9c2b136b",
+      "bytes": 11147
+    },
+    "Guides/RXP_Hardcore/Alliance/11_13_Loch_Modan_Dwarf_Gnome.lua": {
+      "sha256": "7a1bbf7bf9e7e6b331e891cfc16a4b3ad46c2bec982b446ad5eb672eb7b7aace",
+      "bytes": 11176
+    },
+    "Guides/RXP_Hardcore/Alliance/11_13_Loch_Modan.lua": {
+      "sha256": "e7d4b45778cb102c3b88a58181717f7bb30ae85dc506d518c8854b85700dce5b",
+      "bytes": 10858
+    },
+    "Guides/RXP_Hardcore/Alliance/13_13_Loch_Modan_Night_Elf.lua": {
+      "sha256": "fc88ef98dd75bbddb8d631ea9830ebf8dd1c8cdc0ad6db12bdf7329d2fae94e9",
+      "bytes": 13332
+    },
+    "Guides/RXP_Hardcore/Alliance/13_15_Westfall.lua": {
+      "sha256": "b4a8b20f69429bbc13c564d805d6984d1927439a2c4cd81e73f6689da0f039d4",
+      "bytes": 10690
+    },
+    "Guides/RXP_Hardcore/Alliance/15_18_Darkshore.lua": {
+      "sha256": "d591de1abf283a46d3112659493ea6c47862cfa5ab0cc30be41b6fc653fda09c",
+      "bytes": 26030
+    },
+    "Guides/RXP_Hardcore/Alliance/18_19_Loch_Modan.lua": {
+      "sha256": "da0d8143c29b8e440fcf07bd1c6edca8a85286238da7b278256e0090a03a10ed",
+      "bytes": 6927
+    },
+    "Guides/RXP_Hardcore/Alliance/19_20_Redridge.lua": {
+      "sha256": "9452f861426d184272023b501c4058d9d7cdf349a5fa45c286f7895db7bda169",
+      "bytes": 25170
+    },
+    "Guides/RXP_Hardcore/Alliance/20_21_Darkshore_Ashenvale.lua": {
+      "sha256": "75dcc88d2d03568792ad5145d6d0f9ec8b740ecd923ba9e1338b03a7a3c3d66a",
+      "bytes": 15276
+    },
+    "Guides/RXP_Hardcore/Alliance/21_23_Stonetalon_Ashenvale.lua": {
+      "sha256": "4daa5aa3cb021d334b8ed881517f547b6264d41c75d1f61603c364ad233d0f23",
+      "bytes": 9163
+    },
+    "Guides/RXP_Hardcore/Alliance/23_24_Wetlands.lua": {
+      "sha256": "dff92ab0b56df28909b6de79a7d93c2048d3b082d1e0d259e1f19acf21f97b64",
+      "bytes": 3721
+    },
+    "Guides/RXP_Hardcore/Alliance/24_27_Duskwood_Redridge.lua": {
+      "sha256": "92c5b3d1e16f149ba4834fbc8627ad8753f904c02bbc672271a801ec2c8cc3b4",
+      "bytes": 34017
+    },
+    "Guides/RXP_Hardcore/Alliance/27_27_Wetlands.lua": {
+      "sha256": "2dee37cea5e3353c535d7334f9a8ee368c7f6ba94c91d6e79b131a222b2f9f34",
+      "bytes": 8522
+    },
+    "Guides/RXP_Hardcore/Alliance/27_30_Ashenvale.lua": {
+      "sha256": "77badddab63751c9819e6cd3183ef4f15e72002c2f0751572fc3ffc2c0fdd0b1",
+      "bytes": 22668
+    },
+    "Guides/RXP_Hardcore/Alliance/30_30_Wetlands_Hillsbrad.lua": {
+      "sha256": "096e0fb98d73cca6a0d79ab210dbc98599e91aec0b8173200a42c77b28536c5f",
+      "bytes": 10976
+    },
+    "Guides/RXP_Hardcore/Alliance/30_32_Duskwood.lua": {
+      "sha256": "8aad41c06c5bde27ca283f022be7855bd9019d01c4ddf355166e2cb42207d1da",
+      "bytes": 33052
+    },
+    "Guides/RXP_Hardcore/Alliance/32_33_Hillsbrad_Arathi_I.lua": {
+      "sha256": "bfaa3745161a0980e506a5f500feb75a7320f53667f6b9c2a870acef6051217f",
+      "bytes": 7201
+    },
+    "Guides/RXP_Hardcore/Alliance/33_34_Thousand_Needles.lua": {
+      "sha256": "01f804d2f99ca7a3b8bb209a9e2d7ebde5675a1888be29368c481ac512684f37",
+      "bytes": 13522
+    },
+    "Guides/RXP_Hardcore/Alliance/34_35_Stranglethorn_Vale_I.lua": {
+      "sha256": "c57fabd5fd337f3cbd95129d2d5b97cd332986431054caed1dd45089674a2d19",
+      "bytes": 14033
+    },
+    "Guides/RXP_Hardcore/Alliance/35_36_Hillsbrad_Arathi_II.lua": {
+      "sha256": "63ab2454f0a3058c092e5b430a9b49641ca055728e9ac4edd489894defe04819",
+      "bytes": 6275
+    },
+    "Guides/RXP_Hardcore/Alliance/36_37_Desolace.lua": {
+      "sha256": "d50a8fdd2733f664ea1e5b95d8cd8fdd24cdf7da0d4f2ca13c9b1fa6ee000091",
+      "bytes": 15633
+    },
+    "Guides/RXP_Hardcore/Alliance/37_38_Stranglethorn_Vale_II.lua": {
+      "sha256": "01d7d41eee19e84aa5b73e7264fa2f3f196433ed36a41b575bdfd23edddc946a",
+      "bytes": 9906
+    },
+    "Guides/RXP_Hardcore/Alliance/38_39_Swamp_of_Sorrows.lua": {
+      "sha256": "5103798193f848f0c57cbf09372d59b17f702f549a0a9485f15870cf39d3cf5c",
+      "bytes": 8957
+    },
+    "Guides/RXP_Hardcore/Alliance/39_39_Dustwallow_Marsh.lua": {
+      "sha256": "85c6b00adc721a4de942f87af984d12b8a40f9d5a83698b6b5a30a9c060f067e",
+      "bytes": 5125
+    },
+    "Guides/RXP_Hardcore/Alliance/39_40_Desolace.lua": {
+      "sha256": "cb2b5e35b87028f925ef66fcf7dfb8d65b8daa4fc6d3e28e4eeb10e0ee23b657",
+      "bytes": 14471
+    },
+    "Guides/RXP_Hardcore/Alliance/40_41_Alterac_Arathi.lua": {
+      "sha256": "c9ca1dbd0a0d42fcf234464bbae7fd6e9cfc874d255c5f715fdbefa4791840da",
+      "bytes": 23898
+    },
+    "Guides/RXP_Hardcore/Alliance/41_42_Badlands.lua": {
+      "sha256": "cf0d0a2be8826ab18044ccef29a45a260eeefdecd646d06c75f841e8a5a990c1",
+      "bytes": 8180
+    },
+    "Guides/RXP_Hardcore/Alliance/42_43_Stranglethorn_Vale_III.lua": {
+      "sha256": "b3dff1cbfc9ca6b33956209b42a64ec1b1285e2d318a090cbe6e0c0c25af773b",
+      "bytes": 17554
+    },
+    "Guides/RXP_Hardcore/Alliance/43_44_Swamp_of_Sorrows_II.lua": {
+      "sha256": "4dd06b6097a195975cfafed872bcd4965997b6fdad159f6d32d51032ce4d25cf",
+      "bytes": 4707
+    },
+    "Guides/RXP_Hardcore/Alliance/44_45_Tanaris.lua": {
+      "sha256": "6abb84465f015ba2eee79eb779bbe283387aa8674632f5a3b2461f00baa2ab39",
+      "bytes": 5261
+    },
+    "Guides/RXP_Hardcore/Alliance/45_46_Feralas.lua": {
+      "sha256": "828b37bbd3d8a9dcfe1381b10f7fb5e67ae01714778ccab19896b2b48f16277f",
+      "bytes": 13053
+    },
+    "Guides/RXP_Hardcore/Alliance/46_47_Hinterlands_Badlands.lua": {
+      "sha256": "3bc7501412c9dc683c5bb8b27a6e043784460e671ef242b40a8633cbd3451d57",
+      "bytes": 24551
+    },
+    "Guides/RXP_Hardcore/Alliance/47_48_Tanaris.lua": {
+      "sha256": "e461af36de40a6425182ad35d0b5582df90de161dd9b0bc67d1b8f58d37db7a9",
+      "bytes": 10744
+    },
+    "Guides/RXP_Hardcore/Alliance/48_49_STV_Hinterlands_II.lua": {
+      "sha256": "8e5576709e18917a2daafeb31a56b046115eda0d05faa5c6b174a8d068f66e3c",
+      "bytes": 16720
+    },
+    "Guides/RXP_Hardcore/Alliance/49_50_Searing_Gorge.lua": {
+      "sha256": "e6dcb2bca19afdbb93ea9f1ac7ec07531d53d41f509daf4d9768489d81c9015b",
+      "bytes": 12176
+    },
+    "Guides/RXP_Hardcore/Alliance/50_51_Tanaris_Un_goro.lua": {
+      "sha256": "52480fe0068dc5279f327bfd26e412851de3564bf8ba456f58fa60f4ce48ed9c",
+      "bytes": 21862
+    },
+    "Guides/RXP_Hardcore/Alliance/51_52_Blasted_Lands.lua": {
+      "sha256": "53801807fdf4f10a2b6aa94dcfc582f7cc10707f065d65043a0e6e7b9f6703ff",
+      "bytes": 7881
+    },
+    "Guides/RXP_Hardcore/Alliance/52_52_Searing_Gorge_WPL.lua": {
+      "sha256": "d350ba7a0fc8f0472d99ed13b2d4502526f50024380c0ed90abd6c10e883d039",
+      "bytes": 13623
+    },
+    "Guides/RXP_Hardcore/Alliance/52_53_Felwood.lua": {
+      "sha256": "c4d90321b80770455c43b3a3795188c190d9538f8dc60deeb37719b82d6415a2",
+      "bytes": 8672
+    },
+    "Guides/RXP_Hardcore/Alliance/53_54_Feralas_Azshara.lua": {
+      "sha256": "a002e4ccd69e23b7f37f1954f1ce639482def33ba1c9ee9c37aa877cb5428346",
+      "bytes": 13670
+    },
+    "Guides/RXP_Hardcore/Alliance/54_55_Un_Goro.lua": {
+      "sha256": "e7a66cf08035f6e96522883930295332f4e76b7be2dcd4d9f38620765725c6ed",
+      "bytes": 18472
+    },
+    "Guides/RXP_Hardcore/Alliance/55_56_Felwood_II.lua": {
+      "sha256": "0ff9406de8a10d4cd07e403ec55621046b5e6558fb1071b80df4daab514f0182",
+      "bytes": 13173
+    },
+    "Guides/RXP_Hardcore/Alliance/56_57_Burning_Steppes.lua": {
+      "sha256": "e71fb565e3a1f2436a63cbf7fcb29e7f643fa15198bc0331a4b129d522ded308",
+      "bytes": 11533
+    },
+    "Guides/RXP_Hardcore/Alliance/57_58_Western_Eastern_Plaguelands.lua": {
+      "sha256": "0d266f826525cbce252e7ab09c7b5910b43d2da06338d55b9a292ae3af2d3fce",
+      "bytes": 38670
+    },
+    "Guides/RXP_Hardcore/Alliance/58_59_Felwood_Winterspring.lua": {
+      "sha256": "409dde97772650d7ec0f2422967f6a2d8e839ab29c78df2efb639b27c53162b9",
+      "bytes": 14975
+    },
+    "Guides/RXP_Hardcore/Alliance/59_60_Winterspring_Silithus_part_1.lua": {
+      "sha256": "76f7276c561aaab09eeef88355653f680d25ed74104ab85d6a7eda4db8cdc7a5",
+      "bytes": 14586
+    },
+    "Guides/RXP_Hardcore/Alliance/59_60_Winterspring_Silithus_part_2.lua": {
+      "sha256": "47e084579988611eef837d6b57b1af272e2a60f97b15061212f4f13bf56d4655",
+      "bytes": 19188
+    },
+    "Guides/RXP_Hardcore/Alliance/Guides.xml": {
+      "sha256": "dc99987313014701030ff846d51870bbc561fcc798a55dc8d35e79cfb06dd339",
+      "bytes": 2440
+    },
+    "Guides/RXP_Hardcore/Horde/01_06_Orc_Troll.lua": {
+      "sha256": "62e20b6fc93fdb5d413046e985d24512023e58ac3715f504b8dd74f34a306be9",
+      "bytes": 13590
+    },
+    "Guides/RXP_Hardcore/Horde/01_06_Tauren.lua": {
+      "sha256": "5109ab542f8a976916ac81df1838866f048a537935cbfa9ff98de9bbbd6eaa67",
+      "bytes": 6431
+    },
+    "Guides/RXP_Hardcore/Horde/01_06_Undead.lua": {
+      "sha256": "5b556fa8b069470427438cc964cc91532f586b008a980acde1d05ad7698715f9",
+      "bytes": 9389
+    },
+    "Guides/RXP_Hardcore/Horde/06_13_Orc_Troll.lua": {
+      "sha256": "619c95fe863c798a3598f20797cc077ce517f591621d7cea63a4c88758b31af5",
+      "bytes": 79229
+    },
+    "Guides/RXP_Hardcore/Horde/06_13_Tauren.lua": {
+      "sha256": "e273552edbb354ab76386c4c0222ec8bf8489a88bb20b4b5ddcfdfb76fe3de70",
+      "bytes": 47442
+    },
+    "Guides/RXP_Hardcore/Horde/06_13_Undead.lua": {
+      "sha256": "e814ba561d6ec5f67be0d4e585c540fd2d4d93f7fd33a0b3b0d5ed6c8412c6fb",
+      "bytes": 60860
+    },
+    "Guides/RXP_Hardcore/Horde/13_15_Silverpine_Forest.lua": {
+      "sha256": "609b9019817fc7d3651f93bba6e342cbfd667067561f71a945c4a63433dc3ff9",
+      "bytes": 17573
+    },
+    "Guides/RXP_Hardcore/Horde/15_19_The_Barrens.lua": {
+      "sha256": "b2cc202c89da44270256fc763227b95c6885ad8f698acf45f0527f2b29ec1e90",
+      "bytes": 40700
+    },
+    "Guides/RXP_Hardcore/Horde/19_23_Stonetalon_Barrens_Ashenvale.lua": {
+      "sha256": "1bf372ded837303cfa9c5c2f7c419e58195b5f1ed500477fc62155aa1125acbf",
+      "bytes": 48810
+    },
+    "Guides/RXP_Hardcore/Horde/23_25_Hillsbrad.lua": {
+      "sha256": "e40fd1165b386d9eff6cdbe0cdb32a63622e54f44252f8b8247b053ee5ec3fe0",
+      "bytes": 21319
+    },
+    "Guides/RXP_Hardcore/Horde/25_27_Southern_Barrens_Stonetalon.lua": {
+      "sha256": "1835348fc0bd42e04e1bb3a0f9890fa0bb41f7bccfb0663dc26622d67cb3e060",
+      "bytes": 24995
+    },
+    "Guides/RXP_Hardcore/Horde/27_29_Ashenvale.lua": {
+      "sha256": "81b34cd3fb9e2c83a847bd28e005fc646a4ee297bd5f12408f260b86fa95cee2",
+      "bytes": 15244
+    },
+    "Guides/RXP_Hardcore/Horde/29_31_Thousand_Needles.lua": {
+      "sha256": "2e4945383573b065f123b6e6e8c316c5cdeeb9ea9449745c5a2caae29c44755a",
+      "bytes": 34798
+    },
+    "Guides/RXP_Hardcore/Horde/31_34_Hillsbrad_Arathi.lua": {
+      "sha256": "b1aa7345728b0c03e341b29e383cda9f7b655eb6d0ec98fb67a1ebb1fc942ca7",
+      "bytes": 24326
+    },
+    "Guides/RXP_Hardcore/Horde/34_35_Shimmering_Flats.lua": {
+      "sha256": "b2ccb573b767ea6a71477de2bdd05c247500cb5ae1452534b48dc94274e14766",
+      "bytes": 10400
+    },
+    "Guides/RXP_Hardcore/Horde/35_37_Desolace_Horde.lua": {
+      "sha256": "f82bba0321ac92763317c067eae390112e7cfffbb08a3b0418e92b6c6c85961c",
+      "bytes": 13948
+    },
+    "Guides/RXP_Hardcore/Horde/37_38_Northern_Stranglethorn.lua": {
+      "sha256": "6bb4eb6cdfc8398268f00b6f6d8371229d5bc45ba52fe679ba3d203fe68fe20f",
+      "bytes": 18148
+    },
+    "Guides/RXP_Hardcore/Horde/38_39_Dustwallow_Marsh.lua": {
+      "sha256": "6a297452d73f69fbf233dcaa98095044cbcb715e1cc85cb2a8303a27deeec09e",
+      "bytes": 16239
+    },
+    "Guides/RXP_Hardcore/Horde/39_41_Alterac_Arathi.lua": {
+      "sha256": "7da8d2802a123f3eeb7e50026377101fd26d11968e319c417a8bd852156b425b",
+      "bytes": 24647
+    },
+    "Guides/RXP_Hardcore/Horde/42_43_Stranglethorn_Vale.lua": {
+      "sha256": "0a9fc1237d5d9ae9e57d40b1f18a181edbbb02acd81b670ea5e88f0b449917be",
+      "bytes": 20157
+    },
+    "Guides/RXP_Hardcore/Horde/43_43_Desolace_II.lua": {
+      "sha256": "cc877f94293aa3a55020d0d50adfe44139da65d877e5b77b346fad735088b21d",
+      "bytes": 6088
+    },
+    "Guides/RXP_Hardcore/Horde/43_45_Tanaris_Dustwallow.lua": {
+      "sha256": "26db347c883bed3d899c0accf02a4746f078e28fa3df6ffc1f3895abc7e288db",
+      "bytes": 12889
+    },
+    "Guides/RXP_Hardcore/Horde/46_47_Southern_Stranglethorn.lua": {
+      "sha256": "8303c7743afaef5333ed519ea8d624a9faffc446159b52fa725b0dc43352a08a",
+      "bytes": 15999
+    },
+    "Guides/RXP_Hardcore/Horde/47_48_Swamp_of_Sorrows.lua": {
+      "sha256": "1ff2b447287740075288bd65691158d48ed629ad9fff3eb9bd5cf8b08726c619",
+      "bytes": 6064
+    },
+    "Guides/RXP_Hardcore/Horde/47_49_Tanaris.lua": {
+      "sha256": "8d88bdbad6003a8f49c82f4d840e4ae7a701c9db7683c6d52e2b53f04cb33e1d",
+      "bytes": 23217
+    },
+    "Guides/RXP_Hardcore/Horde/49_50_The_Hinterlands.lua": {
+      "sha256": "99c39c2353be21a883d1be90cc5216d2089e2db5bfe786184e6551c891d21ff1",
+      "bytes": 30923
+    },
+    "Guides/RXP_Hardcore/Horde/50_51_Feralas.lua": {
+      "sha256": "46261e58a46d8a21130b405dc856dc08207a5b0660e9821ce0384860e9b12672",
+      "bytes": 11918
+    },
+    "Guides/RXP_Hardcore/Horde/51_52_Stranglethorn_Blasted_Lands.lua": {
+      "sha256": "a9b4ea782aa40a09697c9a31693b8fd2c5bcc9850658fb771206d72bb357d632",
+      "bytes": 11100
+    },
+    "Guides/RXP_Hardcore/Horde/52_53_Searing_Gorge_Burning_Steppes.lua": {
+      "sha256": "c7142472ee720717abd1562967d84c5dca4bd6dccf1abbbfdda9a85faf5ee2cc",
+      "bytes": 16720
+    },
+    "Guides/RXP_Hardcore/Horde/53_54_Azshara.lua": {
+      "sha256": "b3dd37414654929fc42aad4540bface35da5189761663d0d3edb1fbfcb5e514d",
+      "bytes": 13579
+    },
+    "Guides/RXP_Hardcore/Horde/54_54_Felwood.lua": {
+      "sha256": "ec748efc1e1069d917bbb28a60f82b8b92d27660c772b9983f67dfe7295acf1e",
+      "bytes": 9605
+    },
+    "Guides/RXP_Hardcore/Horde/54_56_Un_Goro_Crater.lua": {
+      "sha256": "250f1048289b8fe694752a7ccc34450c13b0b531b89a5ef5466d0c2712806e2f",
+      "bytes": 15702
+    },
+    "Guides/RXP_Hardcore/Horde/56_57_Felwood_Winterspring.lua": {
+      "sha256": "67ac075d53df3badea49bc3889d1bfacdcea163f69ae49f1316a0f62fd11d08d",
+      "bytes": 27346
+    },
+    "Guides/RXP_Hardcore/Horde/57_59_Western_PL_Eastern_PL.lua": {
+      "sha256": "8cebc8ecdb6e0d717915ae0fe19f927da10d36e9fe8a6738001eb664d0cd82a3",
+      "bytes": 46820
+    },
+    "Guides/RXP_Hardcore/Horde/59_59_Winterspring_Silithus_I.lua": {
+      "sha256": "854a0db641dee47ac788079924df62e2bbd1a6f754e018f848e304e2dacda049",
+      "bytes": 20725
+    },
+    "Guides/RXP_Hardcore/Horde/59_60_Winterspring_Silithus_II.lua": {
+      "sha256": "da1bb15124664af0a5882bed23151f8584c809fd8eab9b2058472fc27c850fc4",
+      "bytes": 6060
+    },
+    "Guides/RXP_Hardcore/Horde/Guides.xml": {
+      "sha256": "af0d52dfc19fc9bf7ccc982af30a1af50941dee8bbbe01edc8c9c9823bf2fe8b",
+      "bytes": 1679
+    },
+    "ItemScore.lua": {
+      "sha256": "a5b725faf344028e3b59d7114a4ebc76c134059a3e5bfe57de60709a2682a07e",
+      "bytes": 30804
+    },
+    "ItemScoreData.lua": {
+      "sha256": "a785d806a737155fce55001202f549fcbe3d857b63551bc2cbe315e1cd5d06fd",
+      "bytes": 61470
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "b6832629eb5d943e14230ba5929396f44da1475708e5f3793f5703f54d89d899",
+      "bytes": 34783
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "2be91c4731ea4c3faea63683d745c7e9a34707dcad0e61acdf4a8babca2503cb",
+      "bytes": 67656
+    },
+    "libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "d73933714a5152ef2388ac89684306df26daa5c3d411257b144eaf24d708d969",
+      "bytes": 45614
+    },
+    "libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "b0a21917345e27f957de39f0c11d9716e5537c2f6946187711357de0995a2de4",
+      "bytes": 8049
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "8c75f829e0f980aac69d53cce8f8c806ea671795f445ab736c8cf76b9fc1f586",
+      "bytes": 22725
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "Locale.lua": {
+      "sha256": "e7af993419fa00cc4f08a4bf1c9b38b3e818582045649efe19be9fd398cb2447",
+      "bytes": 2693
+    },
+    "MapOverlays.lua": {
+      "sha256": "70a3c6e0356eefaa202fbf2b3cdadf96214a9f38e1301f9b1e34b656f997707a",
+      "bytes": 21105
+    },
+    "Maps.lua": {
+      "sha256": "a3ba848b6f6036e0ea1fb2f51216ba26e112aba62be8b6dbf3e1f7480cc147e4",
+      "bytes": 15450
+    },
+    "MaterialsFrame.lua": {
+      "sha256": "6166cb554318ebc887f724631b19b493c818abcdb96e22d20263fee351965ece",
+      "bytes": 18898
+    },
+    "media/cap-bottom.tga": {
+      "sha256": "d68401c14779c1ba4c6625540c30f6000556dd9b9a6ff4197d7b3a178df5a122",
+      "bytes": 570
+    },
+    "media/cap-top.tga": {
+      "sha256": "606b007cfb8f0bd569c7eb3f0224a6c229ff7e4a4b861df6f215c72aad72a974",
+      "bytes": 570
+    },
+    "media/circle-border.tga": {
+      "sha256": "85de51f4f3ab7bea77dbcce8cbd8d6fc71cce8ef2443ec9347c658f1cfc0d538",
+      "bytes": 2278
+    },
+    "media/circle-fill.tga": {
+      "sha256": "618e8ffc2d7a5c6dd9ee4109966213a43d36cf259f8385d9e9bc36b687265902",
+      "bytes": 1782
+    },
+    "media/fonts/Inter-Regular.ttf": {
+      "sha256": "960dbe4f695116d13aed0566a8a3755c339943ba457cb56098d1b72b7922a9a0",
+      "bytes": 67952
+    },
+    "media/fonts/Inter-SemiBold.ttf": {
+      "sha256": "6a1a63358d9d92b150c44302f68b8fe241c7709447a2fafa83508336a0fc81fb",
+      "bytes": 68060
+    },
+    "media/fonts/Rajdhani-Bold.ttf": {
+      "sha256": "127bf4095c533ff711b4e98003ae2e7307e7c561aac3dcde8a4a5e77f0608825",
+      "bytes": 24692
+    },
+    "media/fonts/Rajdhani-SemiBold.ttf": {
+      "sha256": "a21ece0def80c756f0392c23180bac769fcd19f556c824e2dd5f15deb187a3a9",
+      "bytes": 23864
+    },
+    "media/grip.tga": {
+      "sha256": "abcb1163aae1d0c9f76fc36a3aaf31ce267b473abdeb63cdd2bcfa943a78b780",
+      "bytes": 474
+    },
+    "media/icons/accept.tga": {
+      "sha256": "f05d87e7267fbaa3468432baf94f14b834be05fe0fc207541abf2649a86d9faf",
+      "bytes": 1689
+    },
+    "media/icons/arrow-left.tga": {
+      "sha256": "80c0ae9446f496805328bfacdce283618293dacaa44259554bf7d6ff0c7c1988",
+      "bytes": 1323
+    },
+    "media/icons/arrow-right.tga": {
+      "sha256": "ebd798e8269c7f983ea00cae6aa7b0da621095bd2e7d7bc6419469b971d7fae4",
+      "bytes": 1323
+    },
+    "media/icons/auto.tga": {
+      "sha256": "16b2395d83664edc9c8014910947301e79ac7cf04e1707c820a3c59c5138ce0a",
+      "bytes": 1877
+    },
+    "media/icons/bang.tga": {
+      "sha256": "4833b45ca5eaa565f80e2676428905286b901e87c20d3fce42830a09f00039b4",
+      "bytes": 1312
+    },
+    "media/icons/boat.tga": {
+      "sha256": "d05379883ebc498d7e21726b63f87202ebc47d637794ce9219ba2057952c3c8d",
+      "bytes": 1380
+    },
+    "media/icons/buy.tga": {
+      "sha256": "b9d5cc51a4fc569e655ebfc70a56c28bea41bd7997da5a13bfcb1ba85e75f8a6",
+      "bytes": 1506
+    },
+    "media/icons/calendar.tga": {
+      "sha256": "040a53a210f9f174591556fef0b064bbbe0a9b00f3525e64ffcd41e0e775ff2f",
+      "bytes": 2176
+    },
+    "media/icons/caret-down.tga": {
+      "sha256": "644421c6fe5761e862b1ed2a9bdb530a4655cb83abad4706fe8689e6d8c1e46b",
+      "bytes": 853
+    },
+    "media/icons/caret-up.tga": {
+      "sha256": "49e889c74101c2a875f721321aa1bc5b264edcd909a84147fe190d2d78e4b683",
+      "bytes": 853
+    },
+    "media/icons/chevron-left.tga": {
+      "sha256": "32cf8a17138953334cc808e7ed0ec5ed015b58f2b5c2cab255cd06d15d09801c",
+      "bytes": 1178
+    },
+    "media/icons/chevron-right.tga": {
+      "sha256": "29e9d14d97263c766a72bbfb7aa6a9d9927b9338c9c8d8022423b19de4e286b7",
+      "bytes": 1193
+    },
+    "media/icons/close.tga": {
+      "sha256": "444bf6852027ab092d7690339d96fbfae942ea1b708ec9535e4664f6c32cc450",
+      "bytes": 1774
+    },
+    "media/icons/complete.tga": {
+      "sha256": "8136d2618fbdc73355dd900c73e6c842af22a41e545c7fcd87a3b4ab9c033aa6",
+      "bytes": 2156
+    },
+    "media/icons/dashed.tga": {
+      "sha256": "c5e129bad66f9050d9da63ae3c357b0fd257b882039877f10e622dbe3f3c4482",
+      "bytes": 2074
+    },
+    "media/icons/die.tga": {
+      "sha256": "a5d00b40192f919a511f1c7ea336467d5e3760baa496c5f1d1aab074d4e8200e",
+      "bytes": 2838
+    },
+    "media/icons/dots.tga": {
+      "sha256": "192b1554753ee58652c455e51c2e5c42e9adb24280beebd4cfdd831852e9d106",
+      "bytes": 1354
+    },
+    "media/icons/expand.tga": {
+      "sha256": "81a0a6665a273374d519efb9ba02a4ba1d800e30657922cde009802429fa6614",
+      "bytes": 1318
+    },
+    "media/icons/fly.tga": {
+      "sha256": "2bd928dfe9d5c73dcd077c8fce07615049de4ccdf63a9acfdcc4dcba600cbcba",
+      "bytes": 1402
+    },
+    "media/icons/folder.tga": {
+      "sha256": "026c2e9c04f0f6cf733ab79da00e44a7a28a6bcd6e7596f19241a667683ee7e4",
+      "bytes": 1231
+    },
+    "media/icons/gear.tga": {
+      "sha256": "238b0bcc469861362798776c01b12d462d50b6fa6e7ad86e7ca2910144657ea2",
+      "bytes": 2566
+    },
+    "media/icons/getflightpoint.tga": {
+      "sha256": "33e25bbfb742b6559d611e5d79092fe098a90a7ba2df6756b1096f5a027bd456",
+      "bytes": 1404
+    },
+    "media/icons/grind.tga": {
+      "sha256": "3d87b3f51499909fa073635c8eb1578f64ac7ae128a1248889b535ae17d234a3",
+      "bytes": 1954
+    },
+    "media/icons/heart.tga": {
+      "sha256": "3cb5da6ae98860611598d4158d742f06d645055a0250eff33e7ba4bd83ca65c6",
+      "bytes": 1711
+    },
+    "media/icons/hearth.tga": {
+      "sha256": "d8479c2adf03ba6eb8094b7607df19aa9ae5d98459a30567d42c7d4a5f56589f",
+      "bytes": 1474
+    },
+    "media/icons/kill.tga": {
+      "sha256": "3d87b3f51499909fa073635c8eb1578f64ac7ae128a1248889b535ae17d234a3",
+      "bytes": 1954
+    },
+    "media/icons/lock.tga": {
+      "sha256": "f05b5affdf46e2d60d77d7fa7854e99f58efec0803a26b679bdbc82fdbc1a465",
+      "bytes": 1783
+    },
+    "media/icons/medal.tga": {
+      "sha256": "a18632ad86e4b744d48d8ec0abe82839632c5845ce6967bf33487e11cf29a648",
+      "bytes": 2082
+    },
+    "media/icons/menu.tga": {
+      "sha256": "bb044e049154878bd9da3e1ef123faf23e8fc479188e75fcd4c9dfbec1a16ba7",
+      "bytes": 796
+    },
+    "media/icons/note.tga": {
+      "sha256": "487bc02556075421ade42bdf94d252c6e5f4d09fb11b49449e33653aa804b1df",
+      "bytes": 1684
+    },
+    "media/icons/party.tga": {
+      "sha256": "7cd964dd8f9b2bdf4d5f575143e283fb51e0efd9572335cb04ed10ee2b74a4b4",
+      "bytes": 2056
+    },
+    "media/icons/pet.tga": {
+      "sha256": "b0002aedc5d8a724a4db12bc086a83a7f49e121e18faebd60524791e44a1d7f9",
+      "bytes": 1940
+    },
+    "media/icons/pin.tga": {
+      "sha256": "8ce4729272714ce3f3a9adae3d6b047da053bb8c1c151ba4641bc53af268da65",
+      "bytes": 2010
+    },
+    "media/icons/plus.tga": {
+      "sha256": "9c52f41176a42d7106d49d8da52c6c48ca11191189487abb2d087df15a314e92",
+      "bytes": 1350
+    },
+    "media/icons/run.tga": {
+      "sha256": "a527ba08a9479f21bdece1a4a29f75e3e9a02e36dc96a2f8ff2c9985d1715d8f",
+      "bytes": 1993
+    },
+    "media/icons/search.tga": {
+      "sha256": "5f88d1c9fc0c9c9cd3ea771ba8171fb78513cf428bb4ea0cef03b46d1fed9b61",
+      "bytes": 2031
+    },
+    "media/icons/sethearth.tga": {
+      "sha256": "e77d5434108fa58b444813f39990b134ff23b3a45ef98fb70404699b93aed017",
+      "bytes": 1758
+    },
+    "media/icons/star.tga": {
+      "sha256": "4fccdde223937cdaedcbcd3d341808357913a49af0c93de54952a869df94521a",
+      "bytes": 1745
+    },
+    "media/icons/tick.tga": {
+      "sha256": "051a19c3efeeada9f5a40388651d7acfe72363faf09fd28ab0a5ba9db2f61e21",
+      "bytes": 1336
+    },
+    "media/icons/train.tga": {
+      "sha256": "c1a58016f64d615eae8072bc9456ba0cb5ecc1da442502b7cad2546bf09e4c27",
+      "bytes": 1694
+    },
+    "media/icons/turnin.tga": {
+      "sha256": "f05d87e7267fbaa3468432baf94f14b834be05fe0fc207541abf2649a86d9faf",
+      "bytes": 1689
+    },
+    "media/icons/use.tga": {
+      "sha256": "720e439be65efbcb97ac08cdbf478b231491c7281bd9997d8c3dff25e1491a0c",
+      "bytes": 2210
+    },
+    "media/icons/wand.tga": {
+      "sha256": "0da0645595754c94423f0f54f55d70742d758592591e0181dbcf492b672eb77d",
+      "bytes": 1454
+    },
+    "media/loadscreens/blackfathom-deeps.tga": {
+      "sha256": "2aea9132bcd345e2ea6d3ec3e4209bcf504cb1c2b42eed2891201d41fb709d5d",
+      "bytes": 130626
+    },
+    "media/loadscreens/blackrock-depths.tga": {
+      "sha256": "040365f6b90fce1eb3a53ee6711ce138be5071cb003a1c8d0a64b237c878d6fc",
+      "bytes": 128625
+    },
+    "media/loadscreens/crescent-grove.tga": {
+      "sha256": "3689b95b39bbc92e7571e48284d2d18d5e69f50e2f39c418771d3e83010ed6fa",
+      "bytes": 129892
+    },
+    "media/loadscreens/deadmines.tga": {
+      "sha256": "aec8a2cdd615a0703d2411fe49175c308696ef6222e3dfe131b07fec82511d72",
+      "bytes": 130934
+    },
+    "media/loadscreens/dragonmaw-retreat.tga": {
+      "sha256": "300846719294876fd6d5262b091a59d8429642b75f2c3164a9fcc0d9cd83d78e",
+      "bytes": 117784
+    },
+    "media/loadscreens/frostmane-hollow.tga": {
+      "sha256": "9f5d3359578df3e7fc3988749be6cd6739edc857d8192810b2e5160677a77bf3",
+      "bytes": 130733
+    },
+    "media/loadscreens/gilneas-city.tga": {
+      "sha256": "4e3179236c6a6d1762466d71025a0cb1be41229d976b34c47e7d017f2e6c0d9a",
+      "bytes": 126765
+    },
+    "media/loadscreens/gnomeregan.tga": {
+      "sha256": "0e0bc88c4eda95b9e3a25b4a0ef13fe802cd9cc8e94844c1954f24da1cd40d32",
+      "bytes": 127658
+    },
+    "media/loadscreens/hateforge-quarry.tga": {
+      "sha256": "323a4d403b0f0ba0bd3c938be891af60a85dc824611fda40255681eafb491763",
+      "bytes": 131122
+    },
+    "media/loadscreens/maraudon.tga": {
+      "sha256": "b84df97df70b3a829062d4e8541257c7e671232b1c7c92a9b882552ed84e57ea",
+      "bytes": 128056
+    },
+    "media/loadscreens/ragefire-chasm.tga": {
+      "sha256": "d64f408ed2c591ab7c04ffe630bd8d86d0cc0350a960802f70c37fd9f319ad30",
+      "bytes": 129723
+    },
+    "media/loadscreens/razorfen-downs.tga": {
+      "sha256": "b46462d9b884b71de5569dfe03f90c64ba501d1b8bb911067263940542b21fbc",
+      "bytes": 129761
+    },
+    "media/loadscreens/razorfen-kraul.tga": {
+      "sha256": "ba7888c6a79d39512e64a59abb35fdc7021334559f6b661f66a3fa1ddf415aab",
+      "bytes": 130104
+    },
+    "media/loadscreens/scarlet-monastery.tga": {
+      "sha256": "fc27a1bc671d5203d2784663d7d279e6cf62f04a0c02c45bb89ef9d734806146",
+      "bytes": 129459
+    },
+    "media/loadscreens/shadowfang-keep.tga": {
+      "sha256": "10c093951b093b0182d13538291ec5979e492ef9310d05032344007fd79e81f6",
+      "bytes": 129321
+    },
+    "media/loadscreens/stockade.tga": {
+      "sha256": "85088b85d06ab6e8f560a78c4a0de2d2942ac0054b9218e5b6da5247bb4cabd1",
+      "bytes": 118671
+    },
+    "media/loadscreens/stormwrought-ruins.tga": {
+      "sha256": "e5e3cbf93adf8c007c62738066a22e78928232237d1ece2dd526ac4d14d5d072",
+      "bytes": 128850
+    },
+    "media/loadscreens/sunken-temple.tga": {
+      "sha256": "877bf6d268304f8a6d1491ebae7569e1502899bcfee2aa4030e451f22d261f2d",
+      "bytes": 127582
+    },
+    "media/loadscreens/uldaman.tga": {
+      "sha256": "77490d166b310245a2c2835caf0168de7d04bfe9eb21f5c25c8385d98209c81a",
+      "bytes": 129120
+    },
+    "media/loadscreens/wailing-caverns.tga": {
+      "sha256": "590ee54af830c4d51a673d8e046de8d55e96737674ce89a88437b3d7a638160f",
+      "bytes": 128070
+    },
+    "media/loadscreens/windhorn-canyon.tga": {
+      "sha256": "767ff96ac0b863e589afba9bd54c295fed300af27e60b1086aa079ba23241c5b",
+      "bytes": 129124
+    },
+    "media/loadscreens/zulfarrak.tga": {
+      "sha256": "5760a7359ce5c301e642a8cbb7fcfd5294c0e9d7c3538baf4677673588e5cf1f",
+      "bytes": 129843
+    },
+    "media/logo.tga": {
+      "sha256": "761c3fc94711434d5c6f9579da39c5f975a5f69f71f9c2add7087667d1b91063",
+      "bytes": 52933
+    },
+    "media/maps/balor.tga": {
+      "sha256": "fa93dc06acb05b9fc2473738e358adadbf0129baaba15aa4221a2e5ae1b4b265",
+      "bytes": 131195
+    },
+    "media/maps/blackstone-island.tga": {
+      "sha256": "30177e00add940a488a172f51cea3977ba0450d07dd72d2b0f99e441508790ed",
+      "bytes": 131135
+    },
+    "media/maps/gillijims-isle.tga": {
+      "sha256": "8a071b00a9594b5de1a0a1c5dc1c94297dc9531d61dbe59313e0140ad51ec8cf",
+      "bytes": 131263
+    },
+    "media/maps/gilneas.tga": {
+      "sha256": "1f899859eaa3f9726ded68d6306f03fdabe82e6d01a4b2ec04b56bbba01b9ce8",
+      "bytes": 131135
+    },
+    "media/maps/grim-reaches.tga": {
+      "sha256": "aead00b2f37af242984460565332c0a92bc353845a94cb6f40f92ee2a3b6e122",
+      "bytes": 131229
+    },
+    "media/maps/hyjal.tga": {
+      "sha256": "93a277a0589c88e1dee9c6851f595e9321a693bfc6b5de7045ad97b5c865ee03",
+      "bytes": 131082
+    },
+    "media/maps/icepoint-rock.tga": {
+      "sha256": "ec3d13f6923305a4bf21f32f163710419508dbbafc4d895a1223faf961a7cd58",
+      "bytes": 131152
+    },
+    "media/maps/lapidis-isle.tga": {
+      "sha256": "345524d1026986578f366f188fe8dbf08ce0610e49aa3090d9377c117904b5d1",
+      "bytes": 131231
+    },
+    "media/maps/moonwhisper-coast.tga": {
+      "sha256": "6cd5d87d4fc55b163c28e5a0362f349e7f39ef32197d2fff6a798351925595a0",
+      "bytes": 131002
+    },
+    "media/maps/northwind.tga": {
+      "sha256": "a233882a45e4a98a0927f11ef96a0524708e24499b778fb781e45bd7d0bd9f97",
+      "bytes": 131247
+    },
+    "media/maps/scarlet-enclave.tga": {
+      "sha256": "6ecba1a0c9801e50627c3c92c220ad87523c597a24c72ae5b5c3f49ae3439ba8",
+      "bytes": 131142
+    },
+    "media/maps/tel-abim.tga": {
+      "sha256": "f61aba27afa6830b1c52933449c300eaea5ba9cca121be9ea7dbe4e55dcf0b2d",
+      "bytes": 131250
+    },
+    "media/maps/thalassian-highlands.tga": {
+      "sha256": "a14bd691b12af3bfc1cb41bd733cada798a26346da6edaccbab94cb7cf26be98",
+      "bytes": 131226
+    },
+    "media/minimap-logo.tga": {
+      "sha256": "6d411702dea0002ef102eb06cd0efd03e7640382ab9722850c7a702d491832c0",
+      "bytes": 14416
+    },
+    "media/nav-arrow-mask.tga": {
+      "sha256": "40920d1dcef2946f11e494a974b48a19f1f25d97aab866fb92128a3b275e47f8",
+      "bytes": 3842
+    },
+    "media/nav-arrow.tga": {
+      "sha256": "46fed3637b4d33447b3210b45a99d47b867efd7fa98f0bf087a93508238d71dd",
+      "bytes": 3842
+    },
+    "media/panel-border.tga": {
+      "sha256": "172a6fb526c87572a2aa3883813e8e82b2ba98d9aa5c86b35c76f912d559e411",
+      "bytes": 1630
+    },
+    "media/panel-fill.tga": {
+      "sha256": "87c9d8ec63e9d94690c6c1d6a360e24e2902a272f7313256744ce0f8f46234fd",
+      "bytes": 962
+    },
+    "media/pill-border.tga": {
+      "sha256": "acad758955b10c43e92dde7077f43ebe73dc1b6be663f641046abc532abb39d4",
+      "bytes": 2010
+    },
+    "media/pill-fill.tga": {
+      "sha256": "b0de76446fa7e3e7d169296b80296345b8f453489a8b0e43460de2395de6ae4a",
+      "bytes": 1558
+    },
+    "media/progress-fill.tga": {
+      "sha256": "ddb6480a8bc1c7e85208f681627535b183df907d8fda929dd2f6c52b4e1f568f",
+      "bytes": 2074
+    },
+    "media/progress-mask.tga": {
+      "sha256": "bac8aa1e80bccb30e4a57478dcea674ce2fbe9f7197bc7fd7ebfceee70c8f92f",
+      "bytes": 2074
+    },
+    "media/README.md": {
+      "sha256": "662fbe4b9d113136d8a094c3e3279b4ff58395ce2ce6d3179eb60894a2f22b1f",
+      "bytes": 4707
+    },
+    "media/scroll-thumb.tga": {
+      "sha256": "b0de76446fa7e3e7d169296b80296345b8f453489a8b0e43460de2395de6ae4a",
+      "bytes": 1558
+    },
+    "media/shadow.tga": {
+      "sha256": "90d428c7feeb7bf67790b71e25f6319beca905c0b2185661edc2b3065fd78056",
+      "bytes": 4986
+    },
+    "media/solid.tga": {
+      "sha256": "fbe392864d6e3dedd31da9304502fa55d0c6994b3247b7047fb7f264c389d212",
+      "bytes": 58
+    },
+    "media/switch-track.tga": {
+      "sha256": "9cc928cf81a87881038b8b26e773160cd00fa64739273e9971371ef1dede5e54",
+      "bytes": 1558
+    },
+    "media/tab-border.tga": {
+      "sha256": "dbd157a3fdf0d2bd56babf35e55918ccda5028e470119c17cfc56132e016183b",
+      "bytes": 1398
+    },
+    "media/tab-fill.tga": {
+      "sha256": "2fd733b9114fc5b2173e8f4d84705f6961c091f637e6db93aa8305b6434ede31",
+      "bytes": 530
+    },
+    "media/wordmark.tga": {
+      "sha256": "23436bfc8feedd20a1939d49b91953469e47d58ea10f9391f9d6a8142ce70d1e",
+      "bytes": 11049
+    },
+    "MinimapButton.lua": {
+      "sha256": "e4692e982259db7c5fe185fc7fd85937f19b511f7ac58c283b73d89184630f7e",
+      "bytes": 4059
+    },
+    "NavCallout.lua": {
+      "sha256": "48ffa2ad5a96862fe6512bec14d7bf18eccb442a612391802aaada43494b7b13",
+      "bytes": 7882
+    },
+    "Navigation.lua": {
+      "sha256": "7b8c37d3f44ce630129f154cdfb711e4ee29007bbfaec6608f689b4957abf487",
+      "bytes": 34442
+    },
+    "NextGuideFrame.lua": {
+      "sha256": "a79e51a1d936fee862a057d0ddd7c59cbbafe5a956c9cb343daa855e7cb35eaf",
+      "bytes": 27518
+    },
+    "ObjectivesFrame.lua": {
+      "sha256": "8774bb441f77153ffd353f3d711f561cfec2949b0f002d305e84435877416c41",
+      "bytes": 69158
+    },
+    "OptionsFrame.lua": {
+      "sha256": "a4fd684fa11ed64d4ee1c4bfd7912dec57aaf5eeea9eb599c3462d26b3aeba8b",
+      "bytes": 67188
+    },
+    "Parser.lua": {
+      "sha256": "d4807e7523f16ba2aed75d123e13fc033a04dc4a54702fe9b61cf1ec2e825111",
+      "bytes": 36748
+    },
+    "PartySync.lua": {
+      "sha256": "a9bcc41cb49396ffbdec0af74ba8dc22f9bc84be760737a06b5fb80de2ffc2e4",
+      "bytes": 21703
+    },
+    "Professions.lua": {
+      "sha256": "a3bf465675ca647c615e53c9512f15b2b377cab4f2b5e5fbbfe3e06b537e01cb",
+      "bytes": 11223
+    },
+    "QuestShellPlusParser.lua": {
+      "sha256": "4529ac0a9c375132ea21234defee83a82d69c194fb6dd7696f127a3e3033a5dd",
+      "bytes": 10524
+    },
+    "QuestTracker.lua": {
+      "sha256": "b3570d48bd13c07d11be6a59ba2b06f9c58aa92f70bc140d84bb25c03be4ed50",
+      "bytes": 27102
+    },
+    "Rares.lua": {
+      "sha256": "cce68834bc6afab71872da9bdac1c282ce36a3117f0a8da429e3c48582a2be9d",
+      "bytes": 31941
+    },
+    "README.md": {
+      "sha256": "e1555584ddfd26499d8f2952cea9de3e677d03d76e23b6a1daa265d5fc6ab594",
+      "bytes": 20162
+    },
+    "Routes/Routes.lua": {
+      "sha256": "d7c7945d53fb294ac3fc471688bfdecfb53962b6cc0529cba462c96f13483c5b",
+      "bytes": 44080
+    },
+    "SellPrices.lua": {
+      "sha256": "0f7c64cfb0dfedccbbf3c6441bb6f0e8ca535a75c3f593127b1d3b8b2a614bd3",
+      "bytes": 206455
+    },
+    "SetupFrame.lua": {
+      "sha256": "e732baabde0f48e7d9e339a6178d8e9c179040c3a35faa86429cc84eeedd5e97",
+      "bytes": 22760
+    },
+    "TalentAdvisor.lua": {
+      "sha256": "8689d63cb9c90b011cd844b33bf6a4fd87e00ec1f82d8aa58d30085301cf42cd",
+      "bytes": 27185
+    },
+    "TalentBuilds.lua": {
+      "sha256": "2be73f45eb40ead762e88be08577340c4d41bf4855b4a9d7902e7ef62eb8d056",
+      "bytes": 18459
+    },
+    "TalentModern.lua": {
+      "sha256": "c428013d720b3586372371ea42e04061f42ad4bfa698b874b25942beeac4b3b1",
+      "bytes": 17533
+    },
+    "TalentWindow.lua": {
+      "sha256": "ab7abe51e1b581f0bc52b476bb299dd97754c2b139c8324660b0600e2884ace2",
+      "bytes": 19207
+    },
+    "Theme.lua": {
+      "sha256": "0e7134940de69a170ab972285d25467498f2baa47ebf9257c5acdcae3cb3e78d",
+      "bytes": 69429
+    },
+    "Tools/build/apply_filter_tags.py": {
+      "sha256": "e2afe2e25a91b529ec576e0ac9b76d9bfa09415197fcde11c35004caa93d0a3b",
+      "bytes": 10696
+    },
+    "Tools/build/build_attunement_guides.py": {
+      "sha256": "2d2f4ba3ff69cfb6b1f9dcf49a08230e5e6c033749a7d36676953faaa06a2e95",
+      "bytes": 19572
+    },
+    "Tools/build/build_class_guides.py": {
+      "sha256": "613c8391187f7c022e907723c501b2eb3f668e70c969da0898af43791829b0c0",
+      "bytes": 52173
+    },
+    "Tools/build/build_dungeon_bosses.py": {
+      "sha256": "897c2495ee3961d5fb40d5e8b0c84a501acac3d835fbcb82747c107cff2d8a6f",
+      "bytes": 13590
+    },
+    "Tools/build/build_dungeon_guides.py": {
+      "sha256": "7598f65d97c9b5912690e8d974cab7cac91d9a2aa5d23c1272fefe32fbfaa699",
+      "bytes": 58655
+    },
+    "Tools/build/build_dungeon_quests.py": {
+      "sha256": "87bac8be479cf1e0f0a450b1293663de7465ef2286316ba5026630db45845ab5",
+      "bytes": 22830
+    },
+    "Tools/build/build_gathering.py": {
+      "sha256": "d5ff6c3895dc47a547be3e73e0c15a29a34857653dfe2eb4a66052b54a29af15",
+      "bytes": 17023
+    },
+    "Tools/build/build_gear_data.py": {
+      "sha256": "60a293513b38cbc0ff607767578963553d68375cc925d3e3cfe27fa135b9b3eb",
+      "bytes": 34876
+    },
+    "Tools/build/build_map_overlays.py": {
+      "sha256": "305d0e23f524b95de2a958cf23e51b41f3190e6c11684aa6870d7c67cadb130d",
+      "bytes": 4465
+    },
+    "Tools/build/build_rares.py": {
+      "sha256": "6f22300b45bcb25d35f18e6685fd4a76c84ed5de9fe9ae0a2413462dc45137b0",
+      "bytes": 4265
+    },
+    "Tools/build/build_sell_prices.py": {
+      "sha256": "87606fe5177698e39445ae4f3b7c40c189d3c8fa1524527833ed92afbe98fb21",
+      "bytes": 2363
+    },
+    "Tools/build/build_weights.py": {
+      "sha256": "68ee96b5c20e949ed9604f96c46b771181a4d483def2cf8cbc492d2bf6ecbad3",
+      "bytes": 29003
+    },
+    "Tools/build/build_zone_guide.py": {
+      "sha256": "252d73c273146e37ee999cf8dd9456e6e23167dd3c3d79f088ef68df085854e5",
+      "bytes": 43647
+    },
+    "Tools/build/convert_professions.py": {
+      "sha256": "ef0fdf006d03ae56d53c3129ded2a28b841860122a05c65e09b0151e435781f9",
+      "bytes": 43749
+    },
+    "Tools/build/convert_rxp.py": {
+      "sha256": "93cb299618d60bf40538c56be3c01b9eaaebb26ba2cb6469622a4e24ff433bba",
+      "bytes": 15142
+    },
+    "Tools/build/craftroute_harness.lua": {
+      "sha256": "ac4a8ea5ed9e4d2f6d01c2bc5105d9727d7a9e2518474a782709f90a5f5a2a5c",
+      "bytes": 4467
+    },
+    "Tools/build/dungeon_tactics.py": {
+      "sha256": "a1e3536890e7a1fddc32e2d9c12424058c4e87c7b54628bd905793cccc50d4a8",
+      "bytes": 34880
+    },
+    "Tools/build/find_filter_candidates.py": {
+      "sha256": "b54c550079a38a34bfc12ffa637c4dce3fc198f0790d1d6a76ebba7c4e0877b6",
+      "bytes": 12502
+    },
+    "Tools/build/gathering_guides.py": {
+      "sha256": "bddd08165a9b5c82d7aaec8012e9291c2aac12b560386d558ef8ce3c6c6a6176",
+      "bytes": 22268
+    },
+    "Tools/build/import_octopawn.py": {
+      "sha256": "25e32fe7659ef094eab0069f990e8394a81e443458ecac1c3c514c3da939d932",
+      "bytes": 5629
+    },
+    "Tools/build/import_recipes.py": {
+      "sha256": "e91a098e381151896cbc834cf4ea8b9d6d00327c7c15b26ddd1a46fc06818d8c",
+      "bytes": 16799
+    },
+    "Tools/build/import_routes.py": {
+      "sha256": "3f61337a11b991b2554860137f7aad4765d551b28e3a2a1298d9c9949b677fdf",
+      "bytes": 8099
+    },
+    "Tools/build/import_rxp_talents.py": {
+      "sha256": "ca0ced20fa13de13b758fa26cac56c25b6f2a7863b8bf57691e4c615e1959b24",
+      "bytes": 9220
+    },
+    "Tools/build/make_assets.py": {
+      "sha256": "2c64bdd082bdc7cc5780afea08a481fef4d58b26088f96c250dd908873481d55",
+      "bytes": 35596
+    },
+    "Tools/build/read_talent_trees.py": {
+      "sha256": "55f4fbed0a7358a0aaca5aa62b6dbaf5fc624a926ed2088eafbf5b966d1d7ba9",
+      "bytes": 3314
+    },
+    "Tools/build/talent_builds.py": {
+      "sha256": "0bac7444e5e3c4a636d09d907f82602aa013ad955fa404db8ffdeb7671c676c6",
+      "bytes": 40135
+    },
+    "Tools/data/aegis-pathfinder-logo.webp": {
+      "sha256": "51d13ba1fcbe492facf5a6f5d23198e1785dc7fb8c3aac944c08d313ddd47068",
+      "bytes": 146660
+    },
+    "Tools/data/attunements.json": {
+      "sha256": "da9b21d438156d7741a61af44d399eb18be78a59dbe7f5fa0843ebae91725391",
+      "bytes": 101157
+    },
+    "Tools/data/class_quests.json": {
+      "sha256": "dcc79472b69aa0f4bdde6219bf4daae6e96ab3ecd0aa7198c7676b5a70c47b43",
+      "bytes": 1006078
+    },
+    "Tools/data/craftroute_routes.json": {
+      "sha256": "ed142819edade7ec96a48e11d4591e9077362b1ca883695726410be9c28ac968",
+      "bytes": 19709
+    },
+    "Tools/data/dungeon_bosses.json": {
+      "sha256": "8d627a566ccfc39d6149a63bfc0ab4783a33ac16e23eca5de53cc4cf32c2b0e6",
+      "bytes": 144118
+    },
+    "Tools/data/dungeon_guides.json": {
+      "sha256": "78cb061655f14791c4f7e1ff4f922885f5472351a55d5efe845856ebe4474121",
+      "bytes": 439360
+    },
+    "Tools/data/filter_candidates.json": {
+      "sha256": "cdd92cbd50732792472910adefe61106a5fd9f9dc7e068316905bd70a5f15287",
+      "bytes": 206484
+    },
+    "Tools/data/filter_decisions.json": {
+      "sha256": "835d473b274fcd97a57582079b0c573f09bbf325212473ed9a0d7ba9966997dd",
+      "bytes": 8977
+    },
+    "Tools/data/gathering.json": {
+      "sha256": "6c42facf05f82b6578ab262b5c20035543e5f273c5f5a99f62ba266a8643a0b6",
+      "bytes": 49541
+    },
+    "Tools/data/loadscreens/blackfathom-deeps.jpg": {
+      "sha256": "302d19661fac03cc2e2b466b7f419d935818f65436cc97e5653f9900b68b8bd4",
+      "bytes": 202648
+    },
+    "Tools/data/loadscreens/blackrock-depths.webp": {
+      "sha256": "b57204c6bb1f6dc1dc03a1148f5389ff655e50d05af86419cabc0426f501d79a",
+      "bytes": 80390
+    },
+    "Tools/data/loadscreens/crescent-grove.webp": {
+      "sha256": "ba094686b82c3edd31bdaaed3b41d643a69d6598fde6083e7c4999cb56f30b1d",
+      "bytes": 142542
+    },
+    "Tools/data/loadscreens/deadmines.webp": {
+      "sha256": "dcaec6e6c9b2117e1330e057562fd511f2a62f32a9fa8e25d98f962345e64818",
+      "bytes": 136042
+    },
+    "Tools/data/loadscreens/dragonmaw-retreat.webp": {
+      "sha256": "f8bb8ae371c2aa8f680ff01490816e7d5d180ac65a4d3dd73fc44471c50b328b",
+      "bytes": 355654
+    },
+    "Tools/data/loadscreens/frostmane-hollow.webp": {
+      "sha256": "ef8bd796e826900af005d67138776de80406471f558c290e67d1a1cf66c39916",
+      "bytes": 156362
+    },
+    "Tools/data/loadscreens/gilneas-city.webp": {
+      "sha256": "be9e491a4a0c281f60cb58e0bfe51b72dca0797e3c1e4c431a5071f8b6219aa8",
+      "bytes": 131164
+    },
+    "Tools/data/loadscreens/gnomeregan.webp": {
+      "sha256": "8e13a7f667cf690152434769c407debd8a0345a4d65ee8faf8103aa1b216511f",
+      "bytes": 17348
+    },
+    "Tools/data/loadscreens/hateforge-quarry.webp": {
+      "sha256": "6e4f0ecb1a16ae536ce94817b447cbaa10d6adca293680478f067198c1ec1106",
+      "bytes": 181958
+    },
+    "Tools/data/loadscreens/maraudon.webp": {
+      "sha256": "24e014934908438118a9b1f652a5fe2569d5b672bc7b1dd2dee7f9e84d726f10",
+      "bytes": 82950
+    },
+    "Tools/data/loadscreens/ragefire-chasm.webp": {
+      "sha256": "ff0604d94f897ed19ffc1711400533b2a58e75567148c9809a6f242458c56da3",
+      "bytes": 104794
+    },
+    "Tools/data/loadscreens/razorfen-downs.webp": {
+      "sha256": "a7bdcb3a4ae9332eea738a54204f139b6617368fc2d2ad3eaefbb3f38b63cec2",
+      "bytes": 90910
+    },
+    "Tools/data/loadscreens/razorfen-kraul.webp": {
+      "sha256": "36b4f364ce0998ecc551f822b1511fa8e0701cf49f719d4dc25ee1d175a0c0c4",
+      "bytes": 93754
+    },
+    "Tools/data/loadscreens/scarlet-monastery.webp": {
+      "sha256": "83196a5d66f34b474f53f609bd0346578eb313b79332be03ed51a2b91de30666",
+      "bytes": 100698
+    },
+    "Tools/data/loadscreens/shadowfang-keep.webp": {
+      "sha256": "39a53047d3fe4afdb975f6998b116818bd5ea43851b63545df0f89b313269f5c",
+      "bytes": 80772
+    },
+    "Tools/data/loadscreens/stockade.webp": {
+      "sha256": "09d4e27528c60cb9ff3f7854ed2f92c96c0377d077b6d0ddce87c5ab0c02700e",
+      "bytes": 61412
+    },
+    "Tools/data/loadscreens/stormwrought-ruins.webp": {
+      "sha256": "9887eef6c992c9fadc9b72ed544e486a51cff979b4b2ed905f6c1ee530046287",
+      "bytes": 154704
+    },
+    "Tools/data/loadscreens/sunken-temple.webp": {
+      "sha256": "5f99912014b7dbf6290bbdec3354cf0e2b51f73884379da3c7b0dc05af0c0f19",
+      "bytes": 70040
+    },
+    "Tools/data/loadscreens/uldaman.webp": {
+      "sha256": "80caac4da4be155aef32dca14c0373facb57e93f0328f5dcdbc60af370587889",
+      "bytes": 67000
+    },
+    "Tools/data/loadscreens/wailing-caverns.webp": {
+      "sha256": "ea1955be2739ba17889a77df0ecc667ad57ddbe08603df5b9f3b2d00a9aa312a",
+      "bytes": 106322
+    },
+    "Tools/data/loadscreens/windhorn-canyon.webp": {
+      "sha256": "e320b2f07acd980302e71bb5289f81d35e339b2ee90b3831b5f6d1e6c674ec73",
+      "bytes": 120494
+    },
+    "Tools/data/loadscreens/zulfarrak.webp": {
+      "sha256": "7bbeb648da7c84aaf84a094b60c414d4faa2261121c8ae8ab260646e873a0862",
+      "bytes": 107386
+    },
+    "Tools/data/maps/balor.webp": {
+      "sha256": "9566da05bef05200fad6a0a04fecf28fb94b01123799f430ec65330bdd75279c",
+      "bytes": 254774
+    },
+    "Tools/data/maps/blackstone-island.webp": {
+      "sha256": "ea804d696ed3bbb25993af3feacdc37dddcc1b2bb6626fd4c467172c35c07132",
+      "bytes": 227070
+    },
+    "Tools/data/maps/gillijims-isle.webp": {
+      "sha256": "f8ae7485ab25ba3bf7604be4a01cf6976b71904f9d4b7df35db4a749e3901dc6",
+      "bytes": 275326
+    },
+    "Tools/data/maps/gilneas.webp": {
+      "sha256": "25bdc6645e3fa8e0fe170437226fa4bf11fbbcba8c9eeaee4dad859daa3c0b7d",
+      "bytes": 255652
+    },
+    "Tools/data/maps/grim-reaches.webp": {
+      "sha256": "4683565770edab915fec82ccb66c024daf14485141686ec3d922e2e841241dd5",
+      "bytes": 254352
+    },
+    "Tools/data/maps/hyjal.webp": {
+      "sha256": "6d757ffaf6fcc71d5c42e71f02ef8e9878732afe4498b136ddd1baca0c23c8ec",
+      "bytes": 199524
+    },
+    "Tools/data/maps/icepoint-rock.webp": {
+      "sha256": "5b7c91c543ae40f278c79bf3142b69a0a7fc5aaccd7833bfc99d549b8a73f699",
+      "bytes": 242248
+    },
+    "Tools/data/maps/lapidis-isle.webp": {
+      "sha256": "fa3cdc0b6ae3635621d610b62afcf16640488fb58621d2bb54b0f4b9f138a342",
+      "bytes": 262976
+    },
+    "Tools/data/maps/moonwhisper-coast.webp": {
+      "sha256": "ff8b6eb749235db218de5bbc787122c119ecce122724c7eabedc02788154bfc7",
+      "bytes": 175288
+    },
+    "Tools/data/maps/northwind.webp": {
+      "sha256": "a07a9adcff3c60fcd6ed60eefcb1d97a3e8ca13b9cf4b183b94716601d00192b",
+      "bytes": 248450
+    },
+    "Tools/data/maps/scarlet-enclave.webp": {
+      "sha256": "1ba35f07ec8eb2eb0d754dfad44732f872ce5eac7140cde0bf344ff91c926f16",
+      "bytes": 211748
+    },
+    "Tools/data/maps/tel-abim.webp": {
+      "sha256": "dfb601bd7091c353c5fea2f534308935a48ec27eaaee7980c7e0daa33f587284",
+      "bytes": 263680
+    },
+    "Tools/data/maps/thalassian-highlands.webp": {
+      "sha256": "f3d362ac8913c59be63f496073d5d0abb449b0e45ed86b28437a65172f52c335",
+      "bytes": 246222
+    },
+    "Tools/data/octopawn.json": {
+      "sha256": "96338541084791256aeafdffbf8c26af40d98320320eb20674ebf5a7c7a30f1b",
+      "bytes": 34419
+    },
+    "Tools/data/Profession_FAQ.md": {
+      "sha256": "633af88f8db4fe0490ef0bb42b7de74b4a16ce700e2195bb3da14a759ac86f21",
+      "bytes": 9176
+    },
+    "Tools/data/profession_training.json": {
+      "sha256": "3da25f2d4ad2b930d0cd225f30865d1d3753431a0296d6808164b7691a23f645",
+      "bytes": 8584
+    },
+    "Tools/data/Professions_Reference.docx": {
+      "sha256": "3290ded3cea3460f6514585a537ed4f3c5478ce45f963fc6422712419477c6b7",
+      "bytes": 67541
+    },
+    "Tools/data/quest_rules.json": {
+      "sha256": "fb4d4a75a51762847bfdabd367f18221740ad963cd901150fb0d7fe01487fc86",
+      "bytes": 288907
+    },
+    "Tools/data/recipe_item_names.json": {
+      "sha256": "e09fbaf65030f99969ea69b297d4b0da0fad04830571e3bc859619f9f980fec3",
+      "bytes": 4394
+    },
+    "Tools/data/rxp_classic_talents.json": {
+      "sha256": "0cd971af22fdc0a2e7130233131f0dd789f376fc80763cc732f52a58dcc73950",
+      "bytes": 195022
+    },
+    "Tools/data/stat_weights.json": {
+      "sha256": "6a22eaa1265e4903953ef72f8026f01255be82888b10a8b2e0daea20bf3ccca7",
+      "bytes": 51931
+    },
+    "Tools/data/talent_builds.json": {
+      "sha256": "271c491688f7e854f9121b64e968b18a7c00f03112b56dcb8f8f938d73f020c6",
+      "bytes": 84280
+    },
+    "Tools/data/turtle_talent_trees.json": {
+      "sha256": "64ca7800f6f20eebfafcb008f86801ccdb73fd202d672b3854e768f3854bd248",
+      "bytes": 170303
+    },
+    "Tools/run_tests.sh": {
+      "sha256": "2a37d4211f74f46a77032bae58db9c12991f6ca6f8f8032a908f5c39aea5cc93",
+      "bytes": 2313
+    },
+    "Tools/tests/talent_trees.lua": {
+      "sha256": "7f488f47cd1da63a60ac93768262f1f7777bf08675853037b9825676838e95cc",
+      "bytes": 20745
+    },
+    "Tools/tests/test_activeframes.lua": {
+      "sha256": "18d6e25980712667d7154220cf693acc237c8d8d0d2bf3af01f6884ba09f7420",
+      "bytes": 60582
+    },
+    "Tools/tests/test_attunements.lua": {
+      "sha256": "c9450460c644fdd342258cc003d2377da3550fa57335934e9d5ad1eae6060d6c",
+      "bytes": 9298
+    },
+    "Tools/tests/test_automation.lua": {
+      "sha256": "dbdec31d7e0531f07e39ada760cb0a77ebd91544132d9f7ffa3144058fe04823",
+      "bytes": 25292
+    },
+    "Tools/tests/test_classguides.lua": {
+      "sha256": "ead17e2f4cc629468e201cb205b127106a87604efd2fd47768866582e5957153",
+      "bytes": 12622
+    },
+    "Tools/tests/test_craftplanner.lua": {
+      "sha256": "529e937ded792768236edc7feb0cd7327801b3f0324997b7e2ed09303bb56754",
+      "bytes": 31237
+    },
+    "Tools/tests/test_craftroute.lua": {
+      "sha256": "614a514f51697146eef86075334d53d99f22a19cd0e9571eff0e0720aa97a98d",
+      "bytes": 21324
+    },
+    "Tools/tests/test_dungeonguides.lua": {
+      "sha256": "8737abb230d4cac15614662ae48163acd35d32d1ca0444f4adbc76db1afa572e",
+      "bytes": 13801
+    },
+    "Tools/tests/test_dungeons.lua": {
+      "sha256": "94bca8505e2c8f3d7ab83cbbe17b1a6e201422d09617b6990ac9a7f77661b15b",
+      "bytes": 6021
+    },
+    "Tools/tests/test_extras.lua": {
+      "sha256": "6bc372d26cfeb0208aad22c8f65c85f6ba568999fe889bdcc5eb10e32142b783",
+      "bytes": 11808
+    },
+    "Tools/tests/test_filtertags.lua": {
+      "sha256": "848ecc181b7cb41951f94c1968d3a82ef97a6b72c54acdd12e7be8022f2296d4",
+      "bytes": 10285
+    },
+    "Tools/tests/test_gearadvisor.lua": {
+      "sha256": "b16118e569c95e27a20bd34a64696a35d4815b0d714bdc8b4f0d372dda8958f8",
+      "bytes": 13905
+    },
+    "Tools/tests/test_gearfinder.lua": {
+      "sha256": "392b64ccfec4232812cb49b7244a343f317d83aca28b56561a3bfa0205f0887d",
+      "bytes": 37983
+    },
+    "Tools/tests/test_gearframe.lua": {
+      "sha256": "5a532dd7fee0ac452447090ba34875e4cc25aaf10a12d5c90bf1f5f3a21f85cd",
+      "bytes": 11082
+    },
+    "Tools/tests/test_guidebrowser.lua": {
+      "sha256": "540c7a5978cef1f98c947e9123305906b4e592710073d626580a1c20ffb66e88",
+      "bytes": 35547
+    },
+    "Tools/tests/test_guideengine.lua": {
+      "sha256": "ba3ce0d01c03e718ba0ef4931b1ecf80d9022b20ca93fd9f629fddd1af6ca455",
+      "bytes": 34018
+    },
+    "Tools/tests/test_guidelist.lua": {
+      "sha256": "54658f8ca10d8cf329a27fcc010f0bfa85629f897fe76daa129fec066c1b4290",
+      "bytes": 11415
+    },
+    "Tools/tests/test_itemscore.lua": {
+      "sha256": "bab2c5f3e9b7ecc316fde9dedfda2004b5ee86386ca185c91cb5fd7e4f0d8120",
+      "bytes": 24716
+    },
+    "Tools/tests/test_load.lua": {
+      "sha256": "794cdb0a3562a678ed9dca9ccfe5880bd9fc830a92c296ac9ef78bab10b9a94b",
+      "bytes": 16433
+    },
+    "Tools/tests/test_maps.lua": {
+      "sha256": "05866a580a9bb3c15604d2ff6a83f5bc9596736278ced34bdf31eafdfe94006a",
+      "bytes": 14715
+    },
+    "Tools/tests/test_materials.lua": {
+      "sha256": "eea4d0e7084a70bb2fdab550ad70bf3691ae7a4f02adc2b72e7f96f388a78429",
+      "bytes": 30091
+    },
+    "Tools/tests/test_minimap.lua": {
+      "sha256": "10ccbeb102eedfa5baf00f51ca31cfcabe37286489ce323de727f380969772f9",
+      "bytes": 5993
+    },
+    "Tools/tests/test_navcallout.lua": {
+      "sha256": "6953a8a6f1a0e058422117d9447a3c67efa4ae1adafd5f6965b58623345d5f6b",
+      "bytes": 9605
+    },
+    "Tools/tests/test_navigation.lua": {
+      "sha256": "ee8d21ba1b40f579ea020370dffca48413172fa74ad1f5272f673f2af253a002",
+      "bytes": 21466
+    },
+    "Tools/tests/test_nextguide.lua": {
+      "sha256": "bcd794e75ae46adfbe8700690f764962f02fd67510c61c270b65b2060f71de0a",
+      "bytes": 32320
+    },
+    "Tools/tests/test_objectivepanel.lua": {
+      "sha256": "1dd3e110addd4468bcfee05f86421e2e4bb6519a2cf2e9f5a43373fd701c35d5",
+      "bytes": 46236
+    },
+    "Tools/tests/test_objectivetabs.lua": {
+      "sha256": "524ab6555b67e4e0264058333f43e6f5e911988f845569634edac599702b8f96",
+      "bytes": 26433
+    },
+    "Tools/tests/test_options.lua": {
+      "sha256": "d0669e2a912148491a7727499a528e4762d6511691fd4ea4ce2f2ba8e8ce8f8f",
+      "bytes": 63334
+    },
+    "Tools/tests/test_partysync.lua": {
+      "sha256": "a797d8c0cf719d01e994b626381af90cd2addcb749075253a99cc37d5a715e1c",
+      "bytes": 19965
+    },
+    "Tools/tests/test_professions.lua": {
+      "sha256": "352a3a9b9820f5965d9bcd873dd10df11d8037d65bc7c6da1fcf6ae0fd570190",
+      "bytes": 16891
+    },
+    "Tools/tests/test_professionsteps.lua": {
+      "sha256": "b996545100b467030265b77e480efe2124579e24ea5a45e69667d46c5e9bce96",
+      "bytes": 14300
+    },
+    "Tools/tests/test_routes.lua": {
+      "sha256": "547381e0a69fdcefb2fb0f0624e1cceb07c47ed567d59a85060731c81e189105",
+      "bytes": 7402
+    },
+    "Tools/tests/test_scrolling.lua": {
+      "sha256": "7295c041ca27a609fcf430faa50e34eb20fb129e6a4e6c4b21ae5375deeef77e",
+      "bytes": 7233
+    },
+    "Tools/tests/test_setup.lua": {
+      "sha256": "1291a6e0835cea7c5a2f4c75a04dacdd36c9ad2dc8758431dd9e0f4160f5b3d8",
+      "bytes": 15765
+    },
+    "Tools/tests/test_smartskip.lua": {
+      "sha256": "5a17d65017d753cc58a659290490fe40e8b0b1b1696244a735bd6b7c3edc03da",
+      "bytes": 11606
+    },
+    "Tools/tests/test_stacking.lua": {
+      "sha256": "b113695b7389285f5b80e2170aa16097ccdd2efff2246ac4f5858dfaee0cad31",
+      "bytes": 10935
+    },
+    "Tools/tests/test_talentadvisor.lua": {
+      "sha256": "24762541334daee6624fad831a9d7960884e24cd7d618835f8c360deaedc6dad",
+      "bytes": 20074
+    },
+    "Tools/tests/test_talentmodern.lua": {
+      "sha256": "f0ef1560d5b3b500724ce76fed7df794aefa5445599c99abfa3714409e502ec5",
+      "bytes": 13607
+    },
+    "Tools/tests/test_talentwindow.lua": {
+      "sha256": "1f227fd073d9d87ff89d454cab8f9cb0d25ceff85944610ade83dd948f655863",
+      "bytes": 19278
+    },
+    "Tools/tests/test_theme.lua": {
+      "sha256": "5beec5cc317f722d139ccbc8e514153433e10f44bb543280d3a0f626986f31ad",
+      "bytes": 24957
+    },
+    "Tools/tests/test_yourplace.lua": {
+      "sha256": "b3bb088abc72dd9fe36ca045396abe1486fbc1d7b3f6b3d17707660eae80ad5a",
+      "bytes": 8427
+    },
+    "Tools/tests/test_zoneguide.lua": {
+      "sha256": "fd1ff1c812a98d57ccd7ae17967e2d02f7852b4adaea0341a968fbd7819c94c6",
+      "bytes": 11845
+    },
+    "Tools/tests/wow_stub.lua": {
+      "sha256": "4c36ec4eb78c7ec04e45014dd19c4f975f04aaf44b3ce8f051a5a7a1b13a8f42",
+      "bytes": 19162
+    },
+    "Tools/verify.py": {
+      "sha256": "be2932df627dc17a2ed1de6198eca258a7a3620aab6db2129f08e8edda79ca26",
+      "bytes": 32601
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "435200761": {
+      "tag": "v0.26.0",
+      "folder": "v0.26.0--435200761",
+      "assets": {
+        "713411298": {
+          "sha256": "56b61165944e1a90adf83d2ebc96cada2d087e20f3d35965c1882608a1648f2b",
+          "bytes": 5562947,
+          "id": "713411298",
+          "name": "Aegis_Pathfinder-v0.26.0-classic.zip",
+          "url": "https://github.com/Torchlite-bit/Aegis_Pathfinder/releases/download/v0.26.0/Aegis_Pathfinder-v0.26.0-classic.zip",
+          "path": "releases/v0.26.0--435200761/assets/Aegis_Pathfinder-v0.26.0-classic.zip"
+        },
+        "713411362": {
+          "sha256": "615ea7fe14e86ff12d397fb872cfddbfd37432041e374a6feffc372e32ff644b",
+          "bytes": 180,
+          "id": "713411362",
+          "name": "release.json",
+          "url": "https://github.com/Torchlite-bit/Aegis_Pathfinder/releases/download/v0.26.0/release.json",
+          "path": "releases/v0.26.0--435200761/assets/release.json"
+        }
+      },
+      "source": {
+        "sha256": "8cb706415719a8268815de21dc75955987c1f287c436aa20aea77b3ea90a7d1f",
+        "bytes": 16329234,
+        "path": "releases/v0.26.0--435200761/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Torchlite-bit/Aegis_Pathfinder/tarball/v0.26.0"
+      }
+    }
+  }
+}

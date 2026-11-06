@@ -1,0 +1,9 @@
+{
+  "id": "185880010",
+  "tag": "v0.5.8",
+  "name": "AdvancedTradeSkillWindow-vanilla",
+  "body": "+fix for 'skillOffset' bug in TWOW 1.17.2",
+  "published": "2024-11-18T07:41:07Z",
+  "prerelease": false,
+  "url": "https://github.com/laytya/AdvancedTradeSkillWindow-vanilla/releases/tag/v0.5.8"
+}

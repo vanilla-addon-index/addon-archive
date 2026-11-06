@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AEGIS: Pathfinder — Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#12160f;
+    --bg2:#0a0d09;
+    --panel:#202020;
+    --panel-2:#111111;
+    --panel-3:#1a1a1a;
+    --tabbg:#3b3b3b;
+    --accent:#52c722;
+    --accent-deep:#2e850e;
+    --accent-glow:#8fe066;
+    --gold:#ffed71;
+    --gold-deep:#e8b93a;
+    --danger:#e8636b;
+    --band-green:#2e850e;
+    --band-red:#7c1820;
+    --blue:#5b9fd6;
+    --text:#ffffff;
+    --text-dim:#c7c7bd;
+    --border:#050505;
+    --font-display:'Rajdhani',sans-serif;
+    --font-body:'Inter',sans-serif;
+    --font-mono:ui-monospace,'SFMono-Regular',Consolas,monospace;
+    --radius:10px;
+    --shadow:0 16px 38px rgba(0,0,0,.62);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    font-family:var(--font-body);
+    color:var(--text);
+    background:
+      radial-gradient(ellipse at 26% 16%, rgba(82,199,34,.08), transparent 46%),
+      radial-gradient(ellipse at 80% 84%, rgba(91,159,214,.09), transparent 55%),
+      linear-gradient(160deg, var(--bg1), var(--bg2) 72%);
+    overflow-x:hidden;
+  }
+  button{font-family:inherit;cursor:pointer;}
+  select,input{font-family:inherit;}
+  ::selection{background:var(--accent);color:#080a07;}
+  :focus-visible{outline:2px solid var(--accent-glow);outline-offset:2px;}
+
+  #world{position:relative;width:100%;min-height:100vh;padding:40px;}
+
+  #watermark{
+    position:fixed;left:18px;bottom:14px;z-index:1;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.02em;
+    color:rgba(238,244,234,.32);pointer-events:none;line-height:1.5;
+  }
+
+  /* ---------- shared chrome-frame: a plain bordered/shadowed container; each section paints its own flat bg ---------- */
+  .chrome-frame{
+    position:relative;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    color:var(--text);
+    overflow:hidden;
+  }
+
+  .panel-header{
+    display:flex;align-items:center;gap:10px;
+    padding:12px 12px;background:var(--panel-2);
+    border-bottom:1px solid var(--border);
+    cursor:grab;user-select:none;
+  }
+  .panel-header:active{cursor:grabbing;}
+  .panel-wordmark{flex:1 1 auto;text-align:center;font-family:var(--font-display);font-weight:700;font-size:16px;letter-spacing:.18em;color:var(--text);}
+  .chip-btn{
+    width:24px;height:24px;flex:0 0 auto;border-radius:6px;border:1px solid var(--border);
+    background:rgba(255,255,255,.04);color:var(--text-dim);font-size:12px;display:flex;align-items:center;justify-content:center;
+  }
+  .chip-btn:hover{background:rgba(255,255,255,.1);color:var(--text);}
+  .chip-btn.active{background:var(--accent);color:#0d1a06;border-color:var(--accent);}
+
+  .subhead{
+    background:var(--tabbg);color:var(--text-dim);font-size:10.5px;padding:7px 14px;
+    font-family:var(--font-mono);letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);
+  }
+
+  .fine-print{font-size:11.5px;color:var(--text-dim);line-height:1.55;margin:6px 2px 0;}
+  .hint{font-size:11px;color:var(--text-dim);font-weight:400;}
+  code{font-family:var(--font-mono);background:rgba(255,255,255,.07);padding:0 3px;border-radius:3px;}
+
+  /* ---------- signature navigation callout (arrow + distance) ---------- */
+  #statusbar-wrap{position:fixed;top:30px;right:40px;z-index:40;display:flex;align-items:center;gap:14px;}
+
+  @keyframes arrow-bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
+  .nav-callout{
+    display:flex;flex-direction:column;align-items:center;gap:8px;flex:0 0 auto;
+    min-width:180px;padding:18px 22px 17px;
+    cursor:grab;
+  }
+  .nav-callout:active{cursor:grabbing;}
+  .glyph-wrap{width:36px;height:36px;display:flex;align-items:center;justify-content:center;margin-bottom:1px;transition:transform .45s cubic-bezier(.34,1.56,.64,1);animation:arrow-bob 3s ease-in-out infinite;}
+  .glyph-svg{width:100%;height:100%;filter:drop-shadow(0 3px 4px rgba(0,0,0,.65));}
+  .nav-instruction{font-family:var(--font-body);font-weight:600;font-size:14px;color:#f6f2e8;text-align:center;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,.9), 0 1px 8px rgba(0,0,0,.7);}
+  .nav-meta{display:flex;gap:10px;align-items:baseline;}
+  .nav-dist{font-family:var(--font-body);font-size:13px;font-weight:600;color:#e79a52;text-shadow:0 1px 3px rgba(0,0,0,.9), 0 1px 8px rgba(0,0,0,.7);}
+  .nav-time{font-family:var(--font-body);font-size:13px;font-weight:600;color:#ece6d8;text-shadow:0 1px 3px rgba(0,0,0,.9), 0 1px 8px rgba(0,0,0,.7);}
+
+  /* ---------- objective meter (kill/collect progress) — shown under the single active step ---------- */
+  .zobjective{margin:0 14px 10px;padding:9px 11px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid var(--border);cursor:pointer;}
+  .zobjective:hover{background:rgba(255,255,255,.08);}
+  .zobj-row{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:5px;}
+  .zobj-row span:first-child{color:var(--text-dim);}
+  .zobj-row span:last-child{font-family:var(--font-mono);font-weight:700;color:var(--accent);}
+  .zobj-track{height:6px;background:rgba(0,0,0,.4);border-radius:3px;overflow:hidden;border:1px solid var(--border);}
+  .zobj-fill{height:100%;background:linear-gradient(90deg,var(--accent-deep),var(--accent-glow));transition:width .25s ease;}
+
+  /* ---------- floating panels ---------- */
+  .panel{position:fixed;z-index:35;width:396px;display:flex;flex-direction:column;}
+  #objectives{top:180px;right:40px;max-height:min(70vh,600px);}
+  #options{top:180px;right:456px;max-height:min(80vh,660px);}
+
+  /* ---------- Zygor-style tab bar (guide switcher) ---------- */
+  .tabbar{display:flex;align-items:flex-end;gap:2px;padding:0 8px;background:var(--tabbg);border-bottom:1px solid var(--border);}
+  .tab{
+    display:flex;align-items:center;gap:6px;padding:8px 11px;margin-top:6px;
+    font-size:11.5px;color:var(--text-dim);border-radius:6px 6px 0 0;max-width:190px;background:transparent;
+  }
+  .tab.active{background:var(--panel);color:var(--text);}
+  .tab-badge{
+    font-family:var(--font-display);font-weight:800;font-size:9.5px;color:#151310;
+    background:linear-gradient(180deg,var(--gold),var(--gold-deep));padding:1px 5px;border-radius:4px;letter-spacing:.02em;flex:0 0 auto;
+  }
+  .tab-badge.tpl{background:#5c5c5c;color:#eee;}
+  .tab-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .tab-close{flex:0 0 auto;background:none;border:none;color:#999;font-size:10.5px;padding:0;margin-left:2px;}
+  .tab-close:hover{color:#fff;}
+  .tab-add{
+    align-self:center;width:24px;height:24px;margin:6px 0 6px 2px;border-radius:6px;
+    background:transparent;border:1px solid #555;color:var(--text-dim);font-size:15px;line-height:1;
+  }
+  .tab-add:hover{background:rgba(255,255,255,.08);color:var(--text);}
+
+  /* ---------- nav row: ← N → ---------- */
+  .navrow{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--tabbg);border-bottom:1px solid var(--border);}
+  .navrow-arrow{width:22px;height:22px;border:none;background:transparent;color:var(--text-dim);font-size:16px;padding:0;}
+  .navrow-arrow:hover{color:var(--text);}
+  .navrow-num{font-family:var(--font-display);font-weight:700;font-size:15px;color:var(--text);min-width:16px;text-align:center;}
+  .navrow-right{margin-left:auto;}
+  .navrow-count{font-family:var(--font-mono);font-size:10px;color:var(--text-dim);}
+
+  .zprogress-track{height:4px;background:#050505;}
+  .zprogress-fill{height:100%;background:linear-gradient(90deg,var(--band-green),var(--accent));width:0%;transition:width .3s ease;}
+
+  /* ---------- step list: plain rows + colored status bands ---------- */
+  .steps-list{overflow-y:auto;flex:0 0 auto;background:var(--panel);}
+  #objectives.overview-mode .steps-list{flex:1 1 auto;}
+  .zrow{display:flex;align-items:flex-start;gap:9px;padding:9px 14px;border-left:2px solid transparent;}
+  .zrow.active{background:rgba(255,255,255,.035);border-left-color:var(--accent);}
+  .zrow .zdot{
+    margin-top:2px;width:14px;height:14px;flex:0 0 auto;border-radius:50%;border:2px solid #545454;
+    background:transparent;padding:0;
+  }
+  .zrow .zdot.done{background:var(--accent);border-color:var(--accent);}
+  .zrow .zicon{flex:0 0 auto;font-size:13.5px;width:16px;text-align:center;margin-top:1px;opacity:.9;}
+  .zrow .zbody{flex:1 1 auto;min-width:0;}
+  .zrow .ztitle{font-size:13px;color:var(--text);line-height:1.4;}
+  .zrow.done .ztitle{opacity:.45;text-decoration:line-through;text-decoration-color:rgba(255,255,255,.4);}
+  .zrow .zsub{font-size:11.5px;color:#8f8f86;margin-top:2px;line-height:1.4;}
+
+  .zband{display:flex;align-items:center;gap:9px;padding:10px 14px;}
+  .zband.green{background:var(--band-green);}
+  .zband.red{background:var(--band-red);}
+  .zband .zband-icon{flex:0 0 auto;color:#fff;font-size:13px;width:14px;text-align:center;}
+  .zband .zband-text{flex:1 1 auto;font-size:13px;color:#fff;}
+  .zband .ztag{flex:0 0 auto;font-family:var(--font-mono);font-size:9px;background:rgba(0,0,0,.28);color:#fff;padding:2px 7px;border-radius:8px;}
+
+  .panel-footer-hint{
+    display:flex;align-items:center;gap:10px;
+    padding:8px 14px;background:var(--panel-2);border-top:1px solid var(--border);
+    font-family:var(--font-mono);font-size:10px;color:var(--text-dim);
+  }
+  .panel-footer-hint .footer-qid{color:var(--accent);}
+  .panel-footer-hint .footer-count{margin-left:auto;}
+
+  /* ---------- options body ---------- */
+  .options-body{overflow-y:auto;padding:12px 14px 16px;flex:1 1 auto;background:var(--panel);}
+  .options-body section{margin-bottom:16px;}
+  .options-body h3{
+    font-family:var(--font-display);font-size:12px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;
+    color:var(--accent);margin:0 0 7px;border-bottom:1px solid var(--border);padding-bottom:4px;
+  }
+  select{
+    width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--border);
+    background:var(--panel-2);color:var(--text);font-size:13px;
+  }
+  .pill-group{display:flex;gap:6px;flex-wrap:wrap;}
+  .pill{
+    padding:6px 12px;border-radius:16px;border:1px solid var(--border);background:rgba(255,255,255,.03);
+    font-size:11.5px;font-weight:700;color:var(--text-dim);font-family:var(--font-display);letter-spacing:.02em;text-transform:uppercase;
+  }
+  .pill.active{background:var(--accent);color:#0d1a06;border-color:var(--accent);}
+  .route-preview{margin-top:9px;border:1px solid var(--border);border-radius:8px;background:rgba(0,0,0,.25);max-height:150px;overflow-y:auto;}
+  .route-preview .rp-row{display:flex;gap:8px;padding:4px 10px;font-size:11.5px;border-bottom:1px solid rgba(255,255,255,.04);}
+  .route-preview .rp-row:last-child{border-bottom:none;}
+  .route-preview .rp-lvl{font-family:var(--font-mono);color:var(--accent);flex:0 0 52px;}
+  .route-preview .rp-zone{flex:1 1 auto;color:var(--text-dim);}
+
+  .dungeon-grid{display:flex;flex-wrap:wrap;gap:6px;}
+  .dchip{
+    padding:5px 10px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.03);
+    font-size:11px;color:var(--text-dim);display:flex;flex-direction:column;line-height:1.25;min-width:64px;
+  }
+  .dchip b{font-family:var(--font-mono);font-size:11px;color:var(--text);}
+  .dchip.active{background:var(--accent);border-color:var(--accent);color:#0d1a06;}
+  .dchip.active b{color:#0d1a06;}
+  .dchip.wired{position:relative;}
+  .dchip.wired::after{content:"●";position:absolute;top:3px;right:5px;font-size:7px;color:var(--blue);}
+  .dchip.active.wired::after{color:#0d1a06;}
+
+  .toggle-row{display:flex;align-items:center;gap:9px;font-size:13px;margin-bottom:8px;cursor:pointer;}
+  .switch{position:relative;width:36px;height:20px;border-radius:11px;background:rgba(255,255,255,.1);flex:0 0 auto;transition:background .15s;}
+  .switch::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--text);transition:left .15s;}
+  input[type=checkbox]{display:none;}
+  input[type=checkbox]:checked + .switch{background:var(--accent-deep);}
+  input[type=checkbox]:checked + .switch::after{left:18px;background:#0a0d09;}
+
+  /* ---------- branch modal ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;z-index:50;background:rgba(3,5,3,.76);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .branch-panel{width:560px;max-height:80vh;}
+  .branch-tabs{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:2px;padding:8px 10px 0;background:var(--tabbg);border-bottom:1px solid var(--border);}
+
+  /* ---------- resize grip (statusbar + panels) ---------- */
+  .resize-grip{
+    position:absolute;right:4px;bottom:4px;z-index:2;width:14px;height:14px;
+    cursor:nwse-resize;color:var(--text-dim);opacity:.55;
+  }
+  .resize-grip:hover{opacity:1;color:var(--accent);}
+  .resize-grip svg{display:block;}
+  .btab{
+    padding:8px 12px;font-family:var(--font-display);font-size:11px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+    border-radius:8px 8px 0 0;background:transparent;color:var(--text-dim);border:1px solid transparent;
+  }
+  .btab.active{background:var(--panel);border-color:var(--border);border-bottom-color:var(--panel);color:var(--accent);}
+  .branch-list{position:relative;z-index:1;overflow-y:auto;padding:6px 8px 12px;flex:1 1 auto;background:var(--panel);}
+  .branch-item{
+    display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-radius:8px;margin:2px 0;
+  }
+  .branch-item:hover{background:rgba(255,255,255,.04);}
+  .branch-item .bi-name{font-weight:700;font-size:13px;font-family:var(--font-display);letter-spacing:.01em;}
+  .branch-item .bi-lvl{font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-left:8px;}
+  .branch-item .bi-go{
+    font-size:10.5px;font-family:var(--font-display);font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+    padding:5px 12px;border-radius:14px;border:1px solid var(--accent-deep);background:rgba(82,199,34,.14);color:var(--accent);
+  }
+  .branch-item .bi-go:hover{background:var(--accent);color:#0d1a06;}
+  .branch-empty{padding:16px;font-size:12px;color:var(--text-dim);font-style:italic;}
+
+  /* ---------- toast ---------- */
+  #toast{
+    position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(12px);z-index:60;
+    background:var(--panel-2);color:var(--accent-glow);
+    border:1px solid var(--accent-deep);border-radius:24px;padding:11px 20px;font-size:12.5px;font-family:var(--font-body);font-weight:600;
+    box-shadow:var(--shadow), 0 0 20px rgba(82,199,34,.18);opacity:0;pointer-events:none;transition:opacity .25s ease, transform .25s ease;max-width:420px;text-align:center;
+  }
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  [hidden]{display:none !important;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important;transition-duration:.001ms !important;}
+  }
+</style>
+</head>
+<body>
+<div id="world">
+  <div id="watermark">AEGIS: Pathfinder — interactive concept, styled after Zygor Guides' interface conventions · fan-made, unaffiliated with Blizzard Entertainment or Zygor Guides LLC · design prototype, not live-client code</div>
+
+  <!-- STATUS BAR + SIGNATURE ARROW -->
+  <div id="statusbar-wrap">
+    <div class="nav-callout" title="Navigation callout (illustrative) — drag to reposition">
+      <div class="glyph-wrap" id="sb-arrow-wrap">
+        <svg class="glyph-svg" viewBox="0 0 100 80" aria-hidden="true">
+          <defs>
+            <linearGradient id="arrowGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%" stop-color="#a8ff8f"/>
+              <stop offset="55%" stop-color="#6fd94f"/>
+              <stop offset="100%" stop-color="#4a9c30"/>
+            </linearGradient>
+          </defs>
+          <path d="M50,10 L90,66 L50,52 L10,66 Z" fill="url(#arrowGrad)" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="nav-instruction" id="nav-instruction">Follow the path up</div>
+      <div class="nav-meta">
+        <span class="nav-dist" id="nav-dist">—</span>
+        <span class="nav-time" id="nav-time">—</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBJECTIVES PANEL (the guide window) -->
+  <div id="objectives" class="chrome-frame panel">
+    <div class="panel-header" id="obj-header">
+      <button class="chip-btn" id="obj-options-btn" title="Options">☰</button>
+      <span class="panel-wordmark">PATHFINDER</span>
+      <button class="chip-btn" id="obj-expand-btn" title="Show all steps">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="7" y1="17" x2="17" y2="7"/>
+          <polyline points="11,7 17,7 17,13"/>
+          <polyline points="13,17 7,17 7,11"/>
+        </svg>
+      </button>
+      <button class="chip-btn" id="obj-close-btn" title="Close">✕</button>
+    </div>
+    <div class="tabbar">
+      <div class="tab active" id="obj-main-tab" title="Main guide">
+        <span class="tab-badge" id="obj-main-badge">XP</span>
+        <span class="tab-label" id="obj-tab-label">—</span>
+      </div>
+      <div class="tab branch-tab" id="obj-branch-tab" hidden title="Branched guide">
+        <span class="tab-label" id="obj-branch-tab-label">—</span>
+        <button class="tab-close" id="obj-branch-tab-close" title="Return to main">✕</button>
+      </div>
+      <button class="tab-add" id="obj-branch-btn" title="Branch to another guide">+</button>
+    </div>
+    <div class="navrow">
+      <button class="navrow-arrow" id="obj-prev-btn" title="Previous step">←</button>
+      <span class="navrow-num" id="obj-step-num">1</span>
+      <button class="navrow-arrow" id="obj-next-btn" title="Next step">→</button>
+      <div class="navrow-right"><span class="navrow-count" id="obj-step-count"></span></div>
+    </div>
+    <div class="zprogress-track"><div class="zprogress-fill" id="obj-progress"></div></div>
+    <div class="steps-list" id="obj-steps"></div>
+    <div class="panel-footer-hint">
+      <span class="footer-qid" id="obj-footer-qid"></span>
+      <span class="footer-count" id="obj-footer-count"></span>
+    </div>
+    <span class="resize-grip" id="obj-resize" title="Resize"><svg viewBox="0 0 12 12" width="12" height="12"><circle cx="10" cy="2" r="1" fill="currentColor"/><circle cx="10" cy="6" r="1" fill="currentColor"/><circle cx="6" cy="6" r="1" fill="currentColor"/><circle cx="10" cy="10" r="1" fill="currentColor"/><circle cx="6" cy="10" r="1" fill="currentColor"/><circle cx="2" cy="10" r="1" fill="currentColor"/></svg></span>
+  </div>
+
+  <!-- OPTIONS PANEL -->
+  <div id="options" class="chrome-frame panel" hidden>
+    <div class="panel-header" id="opt-header">
+      <button class="chip-btn" title="Back">☰</button>
+      <span class="panel-wordmark">PATHFINDER</span>
+      <button class="chip-btn" id="opt-close-btn" title="Close">✕</button>
+    </div>
+    <div class="subhead">Config</div>
+    <div class="options-body">
+      <section>
+        <h3>Race</h3>
+        <select id="opt-race"></select>
+      </section>
+      <section>
+        <h3>Route pack</h3>
+        <div class="pill-group" id="opt-routes"></div>
+        <div class="route-preview" id="opt-route-preview"></div>
+      </section>
+      <section>
+        <h3>Dungeons <span class="hint">— RestedXP guides</span></h3>
+        <div class="dungeon-grid" id="opt-dungeons"></div>
+        <p class="fine-print">Toggling a dungeon on forces its setup/prereq steps to mandatory and reveals them in guides that reference it; toggling off hides them. <span style="color:var(--blue)">●</span> marks the one wired to a visible step in this concept (Deadmines, in the RestedXP Elwynn Forest guide) — the live addon would apply this to every <code>|D|</code>-tagged step across every RXP guide.</p>
+      </section>
+      <section>
+        <h3>Filters</h3>
+        <label class="toggle-row"><input type="checkbox" id="opt-group"><span class="switch"></span> Group mode</label>
+        <label class="toggle-row"><input type="checkbox" id="opt-ah"><span class="switch"></span> Auction House steps</label>
+        <p class="fine-print" id="opt-filter-note"></p>
+      </section>
+      <section>
+        <h3>Server</h3>
+        <select id="opt-server">
+          <option>OctoWoW</option>
+          <option>Capybara Paradise</option>
+          <option>RavenCraft</option>
+        </select>
+        <p class="fine-print" id="opt-server-note"></p>
+      </section>
+    </div>
+    <span class="resize-grip" id="opt-resize" title="Resize"><svg viewBox="0 0 12 12" width="12" height="12"><circle cx="10" cy="2" r="1" fill="currentColor"/><circle cx="10" cy="6" r="1" fill="currentColor"/><circle cx="6" cy="6" r="1" fill="currentColor"/><circle cx="10" cy="10" r="1" fill="currentColor"/><circle cx="6" cy="10" r="1" fill="currentColor"/><circle cx="2" cy="10" r="1" fill="currentColor"/></svg></span>
+  </div>
+
+  <!-- BRANCH MODAL -->
+  <div id="branch-modal" class="modal-overlay" hidden>
+    <div class="chrome-frame branch-panel">
+      <div class="panel-header">
+        <span class="panel-wordmark">PATHFINDER</span>
+        <button class="chip-btn" id="branch-close-btn" title="Close">✕</button>
+      </div>
+      <div class="subhead">Branch to guide — you'll return to where you left off</div>
+      <div class="branch-tabs" id="branch-tabs"></div>
+      <div class="branch-list" id="branch-list"></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============ reference data ============ */
+
+  var ACTION_META = {
+    ACCEPT:    {icon:'📜', label:'Accept',        auto:true},
+    COMPLETE:  {icon:'⚔️', label:'Complete',      auto:true},
+    TURNIN:    {icon:'📜', label:'Turn in',       auto:true},
+    NOTE:      {icon:'📝', label:'Note',          auto:false},
+    RUN:       {icon:'🏃', label:'Travel',        auto:false},
+    HEARTH:    {icon:'🏠', label:'Hearth',        auto:false},
+    SETHEARTH: {icon:'🏠', label:'Set hearth',    auto:true},
+    FLY:       {icon:'🦅', label:'Flight',        auto:false},
+    GETFP:     {icon:'🦅', label:'Flight point',  auto:false},
+    BUY:       {icon:'🛒', label:'Buy',           auto:false},
+    BOAT:      {icon:'⛵', label:'Boat',          auto:false},
+    KILL:      {icon:'💀', label:'Kill',          auto:false},
+    GRIND:     {icon:'💀', label:'Grind',         auto:false},
+    USE:       {icon:'📦', label:'Use',           auto:false},
+    TRAIN:     {icon:'📖', label:'Train',         auto:false},
+    DIE:       {icon:'☠️', label:'Die',           auto:false},
+    PET:       {icon:'🐾', label:'Pet',           auto:false}
+  };
+
+  function pseudoDistance(idx){ return 15 + ((idx*41+97) % 140); }
+  function pseudoAngle(idx){ return ((idx*29+35) % 70) - 35; }
+  var NAV_PHRASES = {
+    ACCEPT:'Head to the quest giver', TURNIN:'Head to the quest giver',
+    COMPLETE:'Continue to the objective', KILL:'Continue to the objective', GRIND:'Continue to the objective',
+    NOTE:'Follow the path up', RUN:'Follow the path ahead',
+    HEARTH:'Return to the inn', SETHEARTH:'Return to the inn',
+    FLY:'Head to the flight master', GETFP:'Head to the flight master',
+    BOAT:'Head to the dock', BUY:'Head to the vendor', USE:'Head to the vendor', TRAIN:'Head to the vendor',
+    DIE:'Follow the path up', PET:'Follow the path up'
+  };
+  function navInstruction(type){ return NAV_PHRASES[type] || 'Follow the path up'; }
+  function formatEta(sec){ var m=Math.floor(sec/60), s=sec%60; return m+':'+(s<10?'0':'')+s; }
+
+  var DUNGEONS = [
+    ['RFC','Ragefire Chasm'], ['WC','Wailing Caverns'], ['DM','Deadmines'],
+    ['SFK','Shadowfang Keep'], ['BFD','Blackfathom Deeps'], ['STOCKADES','The Stockade'],
+    ['GNOMER','Gnomeregan'], ['RFK','Razorfen Kraul'], ['SM','Scarlet Monastery'],
+    ['RFD','Razorfen Downs'], ['ULDA','Uldaman'], ['ZF',"Zul'Farrak"],
+    ['MARA','Maraudon'], ['ST','Sunken Temple'], ['BRD','Blackrock Depths']
+  ];
+
+  var RACES = [
+    {key:'highelf',  label:'High Elf (Alliance)',  faction:'Alliance', zone:'Thalassian Highlands', levels:'1–10'},
+    {key:'human',    label:'Human (Alliance)',     faction:'Alliance', zone:'Elwynn Forest',        levels:'1–10'},
+    {key:'dwarf',    label:'Dwarf (Alliance)',     faction:'Alliance', zone:'Dun Morogh',            levels:'1–12'},
+    {key:'gnome',    label:'Gnome (Alliance)',     faction:'Alliance', zone:'Dun Morogh',            levels:'1–12'},
+    {key:'nightelf', label:'Night Elf (Alliance)', faction:'Alliance', zone:'Teldrassil',            levels:'1–12'},
+    {key:'goblin',   label:'Goblin (Horde)',       faction:'Horde',    zone:'Blackstone Island',     levels:'1–10'},
+    {key:'orc',      label:'Orc (Horde)',          faction:'Horde',    zone:'Durotar',               levels:'1–12'},
+    {key:'troll',    label:'Troll (Horde)',        faction:'Horde',    zone:'Durotar',               levels:'1–12'},
+    {key:'tauren',   label:'Tauren (Horde)',       faction:'Horde',    zone:'Mulgore',               levels:'1–12'},
+    {key:'undead',   label:'Undead (Horde)',       faction:'Horde',    zone:'Tirisfal Glades',       levels:'1–12'}
+  ];
+
+  var OPTIMIZED_ALLIANCE = [
+    ['12–14','Darkshore'],['14–17','Darkshore'],['17–18','Loch Modan'],['18–20','Redridge Mountains'],
+    ['20–21','Darkshore'],['21–22','Ashenvale'],['22–23','Stonetalon Mountains'],['23–24','Darkshore'],
+    ['24–25','Ashenvale'],['25–27','Wetlands'],['27–28','Redridge Mountains'],['28–29','Duskwood'],
+    ['29–30','Ashenvale'],['30–30','Wetlands'],['30–31','Hillsbrad Foothills'],['31–31','Alterac Mountains'],
+    ['31–32','Arathi Highlands'],['32–32','Stranglethorn Vale'],['32–33','Thousand Needles'],['33–33','Stonetalon Mountains'],
+    ['33–35','Desolace'],['35–36','Stranglethorn Vale'],['36–37','Alterac Mountains'],['37–38','Arathi Highlands'],
+    ['38–38','Dustwallow Marsh'],['38–40','Stranglethorn Vale'],['40–41','Badlands'],['41–41','Swamp of Sorrows'],
+    ['41–42','Desolace'],['42–43','Stranglethorn Vale'],['43–43','Tanaris'],['43–45','Feralas'],
+    ['45–46','Uldaman'],['46–47','The Hinterlands'],['47–47','Feralas'],['47–48','Tanaris'],
+    ['48–48','The Hinterlands'],['48–49','Stranglethorn Vale'],['49–50','Blasted Lands'],['50–51','Searing Gorge'],
+    ["51–52","Un'Goro Crater"],['52–53','Azshara'],['53–54','Felwood'],['54–55','Winterspring'],
+    ['55–56','Burning Steppes'],['56–57','Silithus'],['57–58','Western Plaguelands'],['58–59','Eastern Plaguelands'],
+    ['59–60','Winterspring']
+  ];
+
+  var OPTIMIZED_HORDE = [
+    ['12–15','The Barrens'],['15–16','Stonetalon Mountains'],['16–18','The Barrens'],['18–20','The Barrens'],
+    ['20–21','Stonetalon Mountains'],['21–21','Ashenvale'],['22–23','Southern Barrens'],['23–25','Stonetalon Mountains'],
+    ['25–25','Southern Barrens'],['25–26','Thousand Needles'],['26–27','Ashenvale'],['27–27','Stonetalon Mountains'],
+    ['27–29','Thousand Needles'],['29–30','Hillsbrad Foothills'],['30–30','Alterac Mountains'],['30–30','Arathi Highlands'],
+    ['30–31','Stranglethorn Vale'],['31–32','Thousand Needles'],['32–34','Desolace'],['34–36','Stranglethorn Vale'],
+    ['36–37','Arathi Highlands'],['37–37','Alterac Mountains'],['37–38','Thousand Needles'],['38–38','Dustwallow Marsh'],
+    ['38–40','Stranglethorn Vale'],['40–41','Badlands'],['41–42','Swamp of Sorrows'],['42–43','Stranglethorn Vale'],
+    ['43–43','Desolace'],['43–44','Dustwallow Marsh'],['44–45','Tanaris'],['45–46','Feralas'],
+    ['46–46','Azshara'],['46–47','The Hinterlands'],['47–47','Stranglethorn Vale'],['47–48','Searing Gorge'],
+    ['48–48','Swamp of Sorrows'],['48–49','Feralas'],['49–50','Tanaris'],['50–50','Azshara'],
+    ['50–51','The Hinterlands'],['51–51','Blasted Lands'],["51–52","Un'Goro Crater"],['52–53','Burning Steppes'],
+    ['53–54','Azshara'],['54–54','Felwood'],['54–55','Winterspring'],['55–55','Felwood'],
+    ['55–55','Silithus'],['55–56','Western Plaguelands'],['56–57','Eastern Plaguelands'],['57–58','Western Plaguelands'],
+    ['58–60','Winterspring']
+  ];
+
+  var RXP_ALLIANCE = [
+    ['1–6','Northshire / Coldridge / Shadowglen'],['6–11','Elwynn Forest'],['11–13','Loch Modan'],
+    ['13–15','Westfall'],['14–16','Darkshore'],['16–19','Darkshore'],['19–21','Darkshore / Ashenvale'],
+    ['21–23','Ashenvale / Stonetalon'],['23–24','Wetlands'],['24–27','Duskwood / Redridge'],
+    ['27–29','Wetlands / Hillsbrad'],['29–32','Duskwood'],['32–33','Hillsbrad / Arathi'],['33–34','Thousand Needles'],
+    ['34–35','Stranglethorn Vale I']
+  ];
+
+  var RXP_HORDE = [
+    ['1–6','Durotar / Mulgore / Tirisfal'],['6–11','Tirisfal Glades'],['12–14','Silverpine Forest'],
+    ['12–17','The Barrens'],['17–22','Stonetalon / Barrens / Ashenvale'],['22–24','Hillsbrad Foothills'],
+    ['24–26','Southern Barrens / Stonetalon'],['26–28','Ashenvale'],['28–30','Thousand Needles'],
+    ['30–33','Hillsbrad / Arathi'],['33–34','Shimmering Flats'],['34–35','Desolace']
+  ];
+
+  var CUSTOM_ZONES = [
+    {name:'Thalassian Highlands', levels:'1–10',  faction:'Alliance'},
+    {name:'Blackstone Island',    levels:'1–10',  faction:'Horde'},
+    {name:'Balor',                levels:'29–34', faction:'Both'},
+    {name:'Grim Reaches',         levels:'33–38', faction:'Both'},
+    {name:'Gilneas',              levels:'39–46', faction:'Both'},
+    {name:'Icepoint Rock',        levels:'40–50', faction:'Both'},
+    {name:'Lapidis Isle',         levels:'48–53', faction:'Alliance'},
+    {name:"Gillijim's Isle",      levels:'48–53', faction:'Horde'},
+    {name:"Tel'Abim",             levels:'54–60', faction:'Both'}
+  ];
+
+  var PROFESSIONS = [
+    'Alchemy','Blacksmithing','Enchanting','Engineering','Herbalism',
+    'Leatherworking','Mining','Skinning','Tailoring','Cooking','First Aid','Fishing'
+  ];
+
+  var ZONE_GUIDES_ALLIANCE = [
+    ['1–10','Thalassian Highlands'],['1–12','Dun Morogh'],['1–12','Elwynn Forest'],['1–12','Teldrassil'],
+    ['12–17','Darkshore'],['12–17','Westfall'],['17–18','Loch Modan'],['18–20','Redridge Mountains'],
+    ['28–29','Duskwood'],['28–34','Northwind']
+  ];
+  var ZONE_GUIDES_HORDE = [
+    ['1–10','Blackstone Island'],['1–12','Durotar'],['1–12','Mulgore'],['1–12','Tirisfal Glades'],
+    ['12–20','The Barrens'],['12–20','Silverpine Forest'],['20–22','Stonetalon Mountains'],['22–23','Southern Barrens'],
+    ['29–34','Balor'],['33–38','Grim Reaches']
+  ];
+
+  /* ============ authored / template guide data ============ */
+
+  var THALASSIAN = {
+    id:'thalassian', title:'Thalassian Highlands', levels:'1–10', faction:'Alliance', real:true,
+    steps:[
+      {type:'NOTE',     title:'Welcome to Thalassian Highlands', note:'This is the High Elf starting zone.'},
+      {type:'ACCEPT',   title:'Refugees no More', qid:41187, note:'Aerthand Skyshield in Brinthilien', coords:'48.3, 84.3'},
+      {type:'TURNIN',   title:'Refugees no More', qid:41187, note:'Commander Anarileth in Brinthilien', coords:'48.6, 83.6'},
+      {type:'ACCEPT',   title:'Provisions for Refugees', qid:41188, note:'Commander Anarileth in Brinthilien', coords:'48.6, 83.6', chain:'Refugees no More'},
+      {type:'ACCEPT',   title:'Plain Letter', qid:41230, note:'Brinthilien trainer area', cls:'Warrior'},
+      {type:'ACCEPT',   title:'Feathered Letter', qid:41231, note:'Brinthilien trainer area', cls:'Hunter'},
+      {type:'COMPLETE', title:'Provisions for Refugees', qid:41188, note:'Kill Young Thalassian Boars', coords:'46, 82 · 50, 78', objTarget:8, objLabel:'boars slain'},
+      {type:'TURNIN',   title:'Provisions for Refugees', qid:41188, note:'Commander Anarileth', coords:'48.6, 83.6'},
+      {type:'SETHEARTH',title:"Alah'Thalas", note:"Set your hearthstone at Tiriel's Inn"},
+      {type:'RUN',      title:"Alah'Thalas Docks", note:'Travel to the docks', coords:'62, 17.9'},
+      {type:'BOAT',     title:'Boat to Auberdine', note:'Take the boat to Darkshore'},
+      {type:'NOTE',     title:'Guide Complete', note:'Continue to Darkshore (12–17).'}
+    ]
+  };
+
+  var RXP_ELWYNN = {
+    id:'rxp_elwynn', title:'Elwynn Forest', levels:'6–11', faction:'Alliance', real:false, category:'RestedXP Speedrun',
+    steps:[
+      {type:'NOTE',    title:'RestedXP Speedrun — Elwynn Forest', note:'Efficiency-first route; stacks nearby quests and trims travel.'},
+      {type:'ACCEPT',  title:'Quest Name', note:'NPC Name at location — template, not yet authored', placeholder:true},
+      {type:'RUN',     title:'Deadmines Entrance', note:'Optional dungeon detour via Westfall', dungeon:'DM', placeholder:true},
+      {type:'BUY',     title:'Auction House — cheap green check', note:'Optional gearing detour', ah:true, placeholder:true},
+      {type:'COMPLETE',title:'Quest Name', note:'Objectives — template, not yet authored', placeholder:true},
+      {type:'TURNIN',  title:'Quest Name', note:'NPC Name — template, not yet authored', placeholder:true},
+      {type:'NOTE',    title:'Guide Complete', note:'Continues to Loch Modan (11–13) on the RestedXP route.'}
+    ]
+  };
+
+  var guideCache = {};
+  guideCache.thalassian = THALASSIAN;
+  guideCache.rxp_elwynn = RXP_ELWYNN;
+
+  function slug(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
+
+  function makeTemplateGuide(name, levels, faction, category){
+    var id = 'tpl_' + slug(name) + '_' + slug(levels);
+    if(guideCache[id]) return guideCache[id];
+    var g = {
+      id:id, title:name, levels:levels, faction:faction, real:false, category:category||'Zone Guides',
+      steps:[
+        {type:'NOTE',     title:'Welcome to ' + name, note:'Zone introduction and overview.'},
+        {type:'GETFP',    title:name + ' Hub', note:'Get the flight point', placeholder:true},
+        {type:'SETHEARTH',title:name + ' Hub', note:'Set hearthstone', placeholder:true},
+        {type:'ACCEPT',   title:'Quest Name', note:'NPC Name at location — template, not yet authored', placeholder:true},
+        {type:'COMPLETE', title:'Quest Name', note:'Objectives — template, not yet authored', placeholder:true},
+        {type:'TURNIN',   title:'Quest Name', note:'NPC Name — template, not yet authored', placeholder:true},
+        {type:'NOTE',     title:'Guide Complete', note:'Continue per the ' + (category||'route') + '.'}
+      ]
+    };
+    guideCache[id] = g;
+    return g;
+  }
+
+  function makeProfessionGuide(name){
+    var id = 'prof_' + slug(name);
+    if(guideCache[id]) return guideCache[id];
+    var g = {
+      id:id, title:name, levels:'1–300', faction:'Both', real:false, category:'Profession',
+      steps:[
+        {type:'TRAIN', title:'Learn ' + name, note:'Train with a ' + name + ' trainer', placeholder:true},
+        {type:'BUY',   title:'Buy starting materials', note:'From a reagent vendor — template, not yet authored', placeholder:true},
+        {type:'USE',   title:'Craft to skill 50', note:'Cheapest available recipe — template, not yet authored', placeholder:true},
+        {type:'TRAIN', title:'Train Journeyman', note:'Return to your trainer at skill 50', placeholder:true},
+        {type:'USE',   title:'Craft to skill 125', note:'Template — not yet authored', placeholder:true},
+        {type:'TRAIN', title:'Train Expert', note:'Return to your trainer at skill 125', placeholder:true},
+        {type:'USE',   title:'Craft to skill 200', note:'Template — not yet authored', placeholder:true},
+        {type:'TRAIN', title:'Train Artisan', note:'Return to your trainer at skill 200', placeholder:true},
+        {type:'USE',   title:'Craft to skill 300', note:'Template — not yet authored', placeholder:true},
+        {type:'NOTE',  title:'Guide Complete', note:name + ' maxed at 300 (vanilla cap).'}
+      ]
+    };
+    guideCache[id] = g;
+    return g;
+  }
+
+  function ensureStepState(g){
+    if(!g.stepState || g.stepState.length !== g.steps.length){
+      g.stepState = g.steps.map(function(){ return {done:false, auto:false, objCount:0}; });
+    }
+  }
+
+  function getGuideForRace(raceKey){
+    var r = RACES.filter(function(x){ return x.key===raceKey; })[0];
+    if(!r) r = RACES[0];
+    if(r.key==='highelf') return THALASSIAN;
+    return makeTemplateGuide(r.zone, r.levels, r.faction, 'Optimized Path');
+  }
+
+  /* ============ state ============ */
+
+  var state = {
+    currentGuideId:'thalassian',
+    stepIndex:0,
+    race:'highelf',
+    faction:'Alliance',
+    routePack:'optimized',
+    dungeons:{},
+    filters:{group:false, ah:false},
+    server:'OctoWoW',
+    branchStack:[],
+    overviewMode:false
+  };
+  ensureStepState(THALASSIAN);
+
+  var autoDemoShown = false;
+  var autoDemoTimer = null;
+
+  function currentGuide(){ return guideCache[state.currentGuideId] || THALASSIAN; }
+
+  /* ============ helpers ============ */
+
+  function el(id){ return document.getElementById(id); }
+
+  var toastEl = null, toastTimer = null;
+  function toast(msg, ms){
+    if(!toastEl) toastEl = el('toast');
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, ms || 2400);
+  }
+
+  function visibleIdxs(g){
+    var out = [];
+    for(var i=0;i<g.steps.length;i++){
+      var s = g.steps[i];
+      if(s.dungeon && !state.dungeons[s.dungeon]) continue;
+      if(s.ah && !state.filters.ah) continue;
+      out.push(i);
+    }
+    return out;
+  }
+
+  function nextVisible(g, from){
+    var vis = visibleIdxs(g);
+    for(var i=0;i<vis.length;i++){ if(vis[i] > from) return vis[i]; }
+    return null;
+  }
+  function prevVisible(g, from){
+    var vis = visibleIdxs(g);
+    for(var i=vis.length-1;i>=0;i--){ if(vis[i] < from) return vis[i]; }
+    return null;
+  }
+
+  function makeDraggable(handle, panel){
+    var sx=0, sy=0, ox=0, oy=0, dragging=false;
+    handle.addEventListener('mousedown', function(e){
+      if(e.target.closest('.chip-btn')) return;
+      dragging = true;
+      sx = e.clientX; sy = e.clientY;
+      var r = panel.getBoundingClientRect();
+      ox = r.left; oy = r.top;
+      panel.style.right = 'auto';
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', function(e){
+      if(!dragging) return;
+      var dx = e.clientX - sx, dy = e.clientY - sy;
+      panel.style.left = Math.max(4, ox+dx) + 'px';
+      panel.style.top = Math.max(4, oy+dy) + 'px';
+    });
+    window.addEventListener('mouseup', function(){ dragging=false; });
+  }
+
+  function makeResizable(handle, panel, opts){
+    opts = opts || {};
+    var minW = opts.minWidth || 280, minH = opts.minHeight || 180;
+    var sx=0, sy=0, sw=0, sh=0, resizing=false;
+    handle.addEventListener('mousedown', function(e){
+      resizing = true;
+      sx = e.clientX; sy = e.clientY;
+      var r = panel.getBoundingClientRect();
+      sw = r.width; sh = r.height;
+      e.preventDefault(); e.stopPropagation();
+    });
+    window.addEventListener('mousemove', function(e){
+      if(!resizing) return;
+      var dw = e.clientX - sx;
+      panel.style.width = Math.max(minW, sw+dw) + 'px';
+      if(opts.resizeHeight){
+        var dh = e.clientY - sy;
+        panel.style.maxHeight = Math.max(minH, sh+dh) + 'px';
+      }
+    });
+    window.addEventListener('mouseup', function(){ resizing=false; });
+  }
+
+  /* ============ auto-detect one-time demo ============ */
+
+  function cancelAutoDemo(){
+    if(autoDemoTimer){ clearTimeout(autoDemoTimer); autoDemoTimer=null; }
+  }
+
+  function maybeStartAutoDemo(){
+    if(autoDemoShown) return;
+    var g = currentGuide(); ensureStepState(g);
+    var idx = state.stepIndex, step = g.steps[idx], st = g.stepState[idx];
+    if(!step || st.done) return;
+    var meta = ACTION_META[step.type];
+    if(!meta || !meta.auto) return;
+    autoDemoTimer = setTimeout(function(){
+      if(g.stepState[idx].done){ return; }
+      autoDemoShown = true;
+      var qidTxt = step.qid ? ' (QID ' + step.qid + ')' : '';
+      toast('⚡ ClassicAPI detected: ' + meta.label.toLowerCase() + ' — ' + step.title + qidTxt, 2800);
+      toggleStepDone(g, idx);
+    }, 1500);
+  }
+
+  /* ============ state mutation ============ */
+
+  function toggleStepDone(g, idx){
+    ensureStepState(g);
+    cancelAutoDemo();
+    var st = g.stepState[idx];
+    st.done = !st.done;
+    if(st.done){
+      st.auto = !!(ACTION_META[g.steps[idx].type] && ACTION_META[g.steps[idx].type].auto);
+      if(idx === state.stepIndex){
+        var nxt = nextVisible(g, idx);
+        if(nxt !== null) state.stepIndex = nxt;
+      }
+    }
+    renderAll();
+  }
+
+  function incrementObjective(g, idx){
+    var step = g.steps[idx];
+    if(!step.objTarget) return;
+    ensureStepState(g);
+    var st = g.stepState[idx];
+    if(st.objCount === undefined) st.objCount = 0;
+    if(st.objCount >= step.objTarget || st.done) return;
+    cancelAutoDemo();
+    st.objCount++;
+    if(st.objCount >= step.objTarget){
+      st.done = true; st.auto = true;
+      toast('⚡ ClassicAPI detected: objective complete — ' + step.title, 2600);
+      if(idx === state.stepIndex){
+        var nxt = nextVisible(g, idx);
+        if(nxt !== null) state.stepIndex = nxt;
+      }
+    }
+    renderAll();
+  }
+
+  function goPrev(){
+    cancelAutoDemo();
+    var g = currentGuide();
+    var p = prevVisible(g, state.stepIndex);
+    if(p !== null) state.stepIndex = p;
+    renderAll();
+  }
+  function goNext(){
+    cancelAutoDemo();
+    var g = currentGuide();
+    var n = nextVisible(g, state.stepIndex);
+    if(n !== null) state.stepIndex = n;
+    renderAll();
+  }
+  function selectRow(idx){
+    cancelAutoDemo();
+    state.stepIndex = idx;
+    renderAll();
+  }
+
+  function loadGuide(g, resetIndex){
+    cancelAutoDemo();
+    ensureStepState(g);
+    state.currentGuideId = g.id;
+    if(resetIndex !== false) state.stepIndex = visibleIdxs(g)[0] || 0;
+    renderAll();
+  }
+
+  function branchTo(g){
+    cancelAutoDemo();
+    state.branchStack.push({guideId: state.currentGuideId, stepIndex: state.stepIndex});
+    ensureStepState(g);
+    state.currentGuideId = g.id;
+    state.stepIndex = visibleIdxs(g)[0] || 0;
+    closeBranch();
+    renderAll();
+    toast('Branched to ' + g.title + ' (' + g.levels + ')');
+  }
+
+  function returnToMain(){
+    if(!state.branchStack.length) return;
+    cancelAutoDemo();
+    var prev = state.branchStack.pop();
+    state.currentGuideId = prev.guideId;
+    state.stepIndex = prev.stepIndex;
+    renderAll();
+    var g = currentGuide();
+    toast('Returned to ' + g.title + ' — resuming at step ' + (visibleIdxs(g).indexOf(state.stepIndex)+1));
+  }
+
+  function setRace(key){
+    state.race = key;
+    var r = RACES.filter(function(x){return x.key===key;})[0];
+    state.faction = r.faction;
+    state.branchStack = [];
+    var g = getGuideForRace(key);
+    loadGuide(g, true);
+    renderOptions();
+  }
+
+  function setRoutePack(pack){
+    state.routePack = pack;
+    if(pack === 'restedxp' || pack === 'rxphardcore'){
+      state.filters.group = (pack === 'restedxp');
+      state.filters.ah = (pack === 'restedxp');
+      loadGuide(RXP_ELWYNN, true);
+    } else {
+      loadGuide(getGuideForRace(state.race), true);
+    }
+    renderOptions();
+  }
+
+  function toggleDungeon(code){
+    cancelAutoDemo();
+    state.dungeons[code] = !state.dungeons[code];
+    renderAll();
+  }
+  function setFilter(key, val){
+    cancelAutoDemo();
+    state.filters[key] = val;
+    renderAll();
+  }
+  function setServer(v){
+    state.server = v;
+    renderOptions();
+  }
+
+  /* ============ rendering ============ */
+
+  function stepRowMeta(step){
+    return ACTION_META[step.type] || {icon:'•', label:step.type, auto:false};
+  }
+
+  function renderNavCallout(){
+    var g = currentGuide(); ensureStepState(g);
+    var idx = state.stepIndex;
+    var step = g.steps[idx];
+    var dist = pseudoDistance(idx);
+    el('nav-dist').textContent = dist + ' yd';
+    el('nav-time').textContent = formatEta(Math.max(1, Math.round(dist/7)));
+    el('nav-instruction').textContent = navInstruction(step.type);
+    el('sb-arrow-wrap').style.transform = 'rotate(' + pseudoAngle(idx) + 'deg)';
+  }
+
+  var BANDABLE = {ACCEPT:1, TURNIN:1};
+
+  function renderStepRow(g, idx){
+    var step = g.steps[idx], st = g.stepState[idx], meta = stepRowMeta(step);
+    var bandable = !!BANDABLE[step.type];
+
+    if(bandable && (st.done || idx === state.stepIndex)){
+      var verb = st.done ? (step.type==='ACCEPT'?'Accepted':'Turned in') : (step.type==='ACCEPT'?'Accept':'Turn in');
+      var row = document.createElement('div');
+      row.className = 'zband ' + (st.done ? 'green' : 'red');
+      var tip = (step.qid ? ('QID ' + step.qid) : '') + (step.qid && step.coords ? ' · ' : '') + (step.coords || '');
+      if(tip) row.title = tip;
+      var iconEl = document.createElement('span'); iconEl.className='zband-icon'; iconEl.textContent = st.done ? '✓' : '!';
+      var textEl = document.createElement('span'); textEl.className='zband-text'; textEl.textContent = verb + " '" + step.title + "'";
+      row.appendChild(iconEl); row.appendChild(textEl);
+      if(step.cls){ var tag=document.createElement('span'); tag.className='ztag'; tag.textContent=step.cls; row.appendChild(tag); }
+      row.addEventListener('click', function(){ toggleStepDone(g, idx); });
+      return row;
+    }
+
+    var row = document.createElement('div');
+    row.className = 'zrow' + (idx===state.stepIndex?' active':'') + (st.done?' done':'');
+
+    var dot = document.createElement('button');
+    dot.className = 'zdot' + (st.done?' done':'');
+    dot.title = 'Mark complete/incomplete';
+    dot.addEventListener('click', function(e){ e.stopPropagation(); toggleStepDone(g, idx); });
+    row.appendChild(dot);
+
+    var icon = document.createElement('span');
+    icon.className = 'zicon'; icon.textContent = meta.icon; icon.title = meta.label;
+    row.appendChild(icon);
+
+    var body = document.createElement('div');
+    body.className = 'zbody';
+
+    var title = document.createElement('div');
+    title.className = 'ztitle';
+    title.textContent = bandable ? ((step.type==='ACCEPT'?'Accept ':'Turn in ') + "'" + step.title + "'") : step.title;
+    body.appendChild(title);
+
+    var noteParts = [];
+    if(step.note) noteParts.push(step.note);
+    if(step.objTarget && state.overviewMode) noteParts.push((st.objCount||0) + '/' + step.objTarget + ' ' + step.objLabel);
+    if(step.coords) noteParts.push('(' + step.coords + ')');
+    if(noteParts.length){
+      var note = document.createElement('div');
+      note.className = 'zsub'; note.textContent = noteParts.join(' — ');
+      body.appendChild(note);
+    }
+
+    row.appendChild(body);
+    row.addEventListener('click', function(){ selectRow(idx); });
+    return row;
+  }
+
+  function renderObjectives(){
+    var g = currentGuide(); ensureStepState(g);
+    var branched = state.branchStack.length > 0;
+    var mainGuide = branched ? (guideCache[state.branchStack[0].guideId] || g) : g;
+
+    el('obj-tab-label').textContent = mainGuide.title + ' (' + mainGuide.levels + ')';
+    var mb = el('obj-main-badge');
+    mb.textContent = mainGuide.real ? 'XP' : 'TPL';
+    mb.classList.toggle('tpl', !mainGuide.real);
+    el('obj-main-tab').classList.toggle('active', !branched);
+
+    var bTab = el('obj-branch-tab');
+    if(branched){
+      bTab.hidden = false;
+      bTab.classList.add('active');
+      el('obj-branch-tab-label').textContent = g.title + ' (' + g.levels + ')';
+    } else {
+      bTab.hidden = true;
+    }
+
+    var vis = visibleIdxs(g);
+    var pos = vis.indexOf(state.stepIndex) + 1;
+    var doneCount = vis.filter(function(i){ return g.stepState[i].done; }).length;
+    el('obj-step-num').textContent = pos;
+    el('obj-step-count').textContent = pos + ' of ' + vis.length + ' · ' + doneCount + ' done';
+    el('obj-progress').style.width = (vis.length ? (doneCount/vis.length*100) : 0) + '%';
+
+    var curStep = g.steps[state.stepIndex];
+    var footQid = el('obj-footer-qid');
+    if(curStep && curStep.qid){ footQid.hidden = false; footQid.textContent = 'QID ' + curStep.qid; } else { footQid.hidden = true; }
+    el('obj-footer-count').textContent = doneCount + ' of ' + vis.length + ' steps completed';
+
+    var list = el('obj-steps');
+    list.innerHTML = '';
+    if(state.overviewMode){
+      for(var i=0;i<g.steps.length;i++){
+        if(vis.indexOf(i) === -1) continue;
+        list.appendChild(renderStepRow(g, i));
+      }
+    } else if(vis.indexOf(state.stepIndex) !== -1){
+      list.appendChild(renderStepRow(g, state.stepIndex));
+      var om = renderObjectiveMeter(g, state.stepIndex);
+      if(om) list.appendChild(om);
+    }
+  }
+
+  function renderObjectiveMeter(g, idx){
+    var step = g.steps[idx];
+    if(!step.objTarget) return null;
+    var st = g.stepState[idx];
+    var oc = st.objCount || 0;
+    var wrap = document.createElement('div');
+    wrap.className = 'zobjective';
+    wrap.title = 'Click to log a kill (demo of quest-log tracking)';
+    wrap.innerHTML =
+      '<div class="zobj-row"><span>'+step.objLabel+'</span><span>'+oc+' / '+step.objTarget+'</span></div>' +
+      '<div class="zobj-track"><div class="zobj-fill" style="width:'+(oc/step.objTarget*100)+'%"></div></div>';
+    wrap.addEventListener('click', function(){ incrementObjective(g, idx); });
+    return wrap;
+  }
+
+  function toggleOverview(){
+    state.overviewMode = !state.overviewMode;
+    el('objectives').classList.toggle('overview-mode', state.overviewMode);
+    el('obj-expand-btn').classList.toggle('active', state.overviewMode);
+    el('obj-expand-btn').title = state.overviewMode ? 'Show one step at a time' : 'Show all steps';
+    renderObjectives();
+  }
+
+  function renderRoutePreview(){
+    var wrap = el('opt-route-preview');
+    var data;
+    if(state.routePack === 'restedxp' || state.routePack === 'rxphardcore'){
+      data = state.faction === 'Horde' ? RXP_HORDE : RXP_ALLIANCE;
+    } else {
+      data = state.faction === 'Horde' ? OPTIMIZED_HORDE : OPTIMIZED_ALLIANCE;
+    }
+    wrap.innerHTML = data.map(function(row){
+      return '<div class="rp-row"><span class="rp-lvl">' + row[0] + '</span><span class="rp-zone">' + row[1] + '</span></div>';
+    }).join('');
+  }
+
+  function renderOptions(){
+    var raceSel = el('opt-race');
+    if(!raceSel.options.length){
+      raceSel.innerHTML = RACES.map(function(r){ return '<option value="'+r.key+'">'+r.label+'</option>'; }).join('');
+    }
+    raceSel.value = state.race;
+
+    var routeWrap = el('opt-routes');
+    var packs = [['zonecompletion','Zone Completion'],['optimized','Optimized'],['restedxp','RestedXP'],['rxphardcore','RXP Hardcore']];
+    routeWrap.innerHTML = packs.map(function(p){
+      return '<button class="pill' + (state.routePack===p[0]?' active':'') + '" data-pack="'+p[0]+'">' + p[1] + '</button>';
+    }).join('');
+    Array.prototype.forEach.call(routeWrap.querySelectorAll('.pill'), function(btn){
+      btn.addEventListener('click', function(){ setRoutePack(btn.getAttribute('data-pack')); });
+    });
+    renderRoutePreview();
+
+    var dWrap = el('opt-dungeons');
+    dWrap.innerHTML = DUNGEONS.map(function(d){
+      var active = !!state.dungeons[d[0]];
+      var wired = d[0] === 'DM';
+      return '<button class="dchip' + (active?' active':'') + (wired?' wired':'') + '" data-code="'+d[0]+'" title="'+d[1]+'"><b>'+d[0]+'</b>'+d[1]+'</button>';
+    }).join('');
+    Array.prototype.forEach.call(dWrap.querySelectorAll('.dchip'), function(btn){
+      btn.addEventListener('click', function(){ toggleDungeon(btn.getAttribute('data-code')); });
+    });
+
+    el('opt-group').checked = !!state.filters.group;
+    el('opt-ah').checked = !!state.filters.ah;
+    el('opt-filter-note').textContent = (state.filters.group ? 'Group mode' : 'Solo mode') + ' · Auction House steps ' + (state.filters.ah ? 'shown (see the RestedXP Elwynn Forest guide)' : 'hidden');
+
+    el('opt-server').value = state.server;
+    el('opt-server-note').textContent = 'Guide data in this concept is authored against ' + (state.server === 'OctoWoW' ? 'OctoWoW' : state.server) + '. Per-server datasets for the other two are a follow-up item — see the brief\u2019s \u00a72/\u00a77.';
+  }
+
+  function renderBranchTab(cat){
+    var faction = state.faction;
+    var list = el('branch-list');
+    var items = [];
+
+    if(cat === 'optimized'){
+      var opt = faction === 'Horde' ? OPTIMIZED_HORDE : OPTIMIZED_ALLIANCE;
+      items = opt.map(function(r){ return {name:r[1], levels:r[0], faction:faction, cat:'Optimized Path'}; });
+    } else if(cat === 'rxp'){
+      var rx = faction === 'Horde' ? RXP_HORDE : RXP_ALLIANCE;
+      items = rx.map(function(r){ return {name:r[1], levels:r[0], faction:faction, cat:'RestedXP Speedrun'}; });
+    } else if(cat === 'custom'){
+      items = CUSTOM_ZONES.filter(function(z){ return z.faction==='Both' || z.faction===faction; })
+        .map(function(z){ return {name:z.name, levels:z.levels, faction:z.faction, cat:'Turtle-lineage Custom Zone'}; });
+    } else if(cat === 'zone'){
+      var zg = faction === 'Horde' ? ZONE_GUIDES_HORDE : ZONE_GUIDES_ALLIANCE;
+      items = zg.map(function(r){ return {name:r[1], levels:r[0], faction:faction, cat:'Zone Guide'}; });
+    } else if(cat === 'prof'){
+      items = PROFESSIONS.map(function(p){ return {name:p, levels:'1–300', faction:'Both', cat:'Profession'}; });
+    }
+
+    if(!items.length){ list.innerHTML = '<div class="branch-empty">Nothing in this category for the current faction.</div>'; return; }
+
+    list.innerHTML = '';
+    items.forEach(function(it){
+      var row = document.createElement('div');
+      row.className = 'branch-item';
+      row.innerHTML = '<span><span class="bi-name">'+it.name+'</span><span class="bi-lvl">'+it.levels+'</span></span>';
+      var go = document.createElement('button');
+      go.className = 'bi-go'; go.textContent = 'Branch';
+      go.addEventListener('click', function(){
+        if(it.name === RXP_ELWYNN.title && (cat==='rxp')){ branchTo(RXP_ELWYNN); return; }
+        var g = cat === 'prof' ? makeProfessionGuide(it.name) : makeTemplateGuide(it.name, it.levels, it.faction, it.cat);
+        branchTo(g);
+      });
+      row.appendChild(go);
+      list.appendChild(row);
+    });
+  }
+
+  var branchTabDefs = [['custom','Custom Zones'],['optimized','Optimized Path'],['rxp','RestedXP Speedrun'],['zone','Zone Guides'],['prof','Professions']];
+  var activeBranchTab = 'custom';
+
+  function renderBranchTabs(){
+    var tabs = el('branch-tabs');
+    tabs.innerHTML = branchTabDefs.map(function(t){
+      return '<button class="btab' + (activeBranchTab===t[0]?' active':'') + '" data-tab="'+t[0]+'">' + t[1] + '</button>';
+    }).join('');
+    Array.prototype.forEach.call(tabs.querySelectorAll('.btab'), function(btn){
+      btn.addEventListener('click', function(){ activeBranchTab = btn.getAttribute('data-tab'); renderBranchTabs(); renderBranchTab(activeBranchTab); });
+    });
+  }
+
+  function renderAll(){
+    renderNavCallout();
+    renderObjectives();
+    if(!el('options').hidden) renderOptions();
+    if(!autoDemoShown){ maybeStartAutoDemo(); }
+  }
+
+  /* ============ panel open/close ============ */
+
+  function openOptions(){ el('options').hidden = false; renderOptions(); }
+  function closeOptions(){ el('options').hidden = true; }
+  function openBranch(){ el('branch-modal').hidden = false; renderBranchTabs(); renderBranchTab(activeBranchTab); }
+  function closeBranch(){ el('branch-modal').hidden = true; }
+
+  /* ============ wire up events ============ */
+
+  document.addEventListener('DOMContentLoaded', function(){
+    makeDraggable(el('statusbar-wrap'), el('statusbar-wrap'));
+    makeDraggable(el('obj-header'), el('objectives'));
+    makeDraggable(el('opt-header'), el('options'));
+    makeResizable(el('obj-resize'), el('objectives'), {minWidth:320, minHeight:260, resizeHeight:true});
+    makeResizable(el('opt-resize'), el('options'), {minWidth:320, minHeight:260, resizeHeight:true});
+
+    el('obj-expand-btn').addEventListener('click', toggleOverview);
+    el('obj-options-btn').addEventListener('click', function(){ el('options').hidden ? openOptions() : closeOptions(); });
+    el('obj-branch-btn').addEventListener('click', openBranch);
+    el('obj-prev-btn').addEventListener('click', goPrev);
+    el('obj-next-btn').addEventListener('click', goNext);
+    el('obj-main-tab').addEventListener('click', function(){ if(state.branchStack.length) returnToMain(); });
+    el('obj-branch-tab-close').addEventListener('click', function(e){ e.stopPropagation(); returnToMain(); });
+
+    el('opt-close-btn').addEventListener('click', closeOptions);
+    el('opt-race').addEventListener('change', function(e){ setRace(e.target.value); });
+    el('opt-group').addEventListener('change', function(e){ setFilter('group', e.target.checked); });
+    el('opt-ah').addEventListener('change', function(e){ setFilter('ah', e.target.checked); });
+    el('opt-server').addEventListener('change', function(e){ setServer(e.target.value); });
+
+    el('branch-close-btn').addEventListener('click', closeBranch);
+    el('branch-modal').addEventListener('click', function(e){ if(e.target === el('branch-modal')) closeBranch(); });
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){ closeBranch(); }
+    });
+
+    /* initial state */
+    renderNavCallout();
+    renderObjectives();
+    renderOptions();
+    toast('Scanning quest log… resuming at step 1', 1800);
+    maybeStartAutoDemo();
+  });
+})();
+</script>
+</body>
+</html>

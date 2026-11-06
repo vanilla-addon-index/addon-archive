@@ -1,0 +1,217 @@
+{
+  "upstream": "https://github.com/laytya/AutoBar-for-Turtle-WoW",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "AutoBar-for-Turtle-WoW",
+    "name": "AutoBar-for-Turtle-WoW",
+    "url": "https://github.com/laytya/AutoBar-for-Turtle-WoW",
+    "api": "https://api.github.com/repos/laytya/AutoBar-for-Turtle-WoW"
+  },
+  "commit": "5ea82b9cf57571e48836eff76944ac84ccc0a709",
+  "sourceFiles": {
+    "Art/draghandle-checked.tga": {
+      "sha256": "1b8f788bebd2da5b7b92eb2efcb4fbb54d06a96fadf8ccf7ac3577ffb89d25d7",
+      "bytes": 4140
+    },
+    "Art/draghandle.tga": {
+      "sha256": "a703dad63cf45ec00560e99a6a24d68d884129191b5ebd3e6b0375b916f602c3",
+      "bytes": 4140
+    },
+    "AutoBar.toc": {
+      "sha256": "fd58810f950a21abdfe0d7dc1f00b52265d4cb14821fdfce15edccca0582a638",
+      "bytes": 2262
+    },
+    "AutoBar.xml": {
+      "sha256": "447a6576ab236f32de1b759dbfe42a3b6ef906affe77457d7124b3cd29fcf70d",
+      "bytes": 6706
+    },
+    "AutoBarChooseCategory.lua": {
+      "sha256": "033f6833f2abe0c73f14c6a375e34417da5b3705fa4e2f5c06ed6e1a329df20f",
+      "bytes": 4952
+    },
+    "AutoBarChooseCategory.xml": {
+      "sha256": "67a4a80d1ba92111de1b94a02286ca69642b22b3b8ab8a134275e435b30cfb77",
+      "bytes": 6842
+    },
+    "AutoBarConfig.lua": {
+      "sha256": "ae93bd5a9ead709f4bff89d84b10cd23d4fce282d192cf64f7beb5eb72b81b36",
+      "bytes": 34123
+    },
+    "AutoBarConfig.xml": {
+      "sha256": "d2705b1f89e557c756a58de097160b45ae21d14e0c4563ecf361ce126308286b",
+      "bytes": 60344
+    },
+    "AutoBarConfigSlot.lua": {
+      "sha256": "a4367b1f64e780e9188fd945fe54893a15b9e203adf246c0d19e9325c873ea9b",
+      "bytes": 9684
+    },
+    "AutoBarConfigSlot.xml": {
+      "sha256": "89646c04803845c9b7cd009c9b37f0b296303d15429639700f2ff2a1aa9a3d24",
+      "bytes": 13900
+    },
+    "AutoBarItemList.lua": {
+      "sha256": "065d3326ad67334f7f40f8883dd34b45ae3654e5c321f0c480f693bb0f132a64",
+      "bytes": 59271
+    },
+    "AutoBarProfile.lua": {
+      "sha256": "487fe813b358349b83989bc3c34360969835b2adf8bfdff0ca2b7f32feae6592",
+      "bytes": 29194
+    },
+    "Bindings.xml": {
+      "sha256": "3939f55214bb32c5f9edfb85e166bf39fcd032a631b514bbb543b24dcd20d62b",
+      "bytes": 1707
+    },
+    "Core.lua": {
+      "sha256": "b6f77d2585e06101a7a163c1a8ee3334ce86a678589b5e62609b2ebf191a3906",
+      "bytes": 56787
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "bd2c58e226cbd3ec0ce23933ae5232b37f6ad693cac1e0238c2548a43e4f9b7b",
+      "bytes": 33310
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "64e94c958c92cba85b4a2a3214ef8d0fd6d86594abfc7a3bb3fd2d262875d055",
+      "bytes": 66933
+    },
+    "libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "a31166b787873d5551180e0600a7f9d2a529fb7f3ee9606e71b91dcf4123a025",
+      "bytes": 44509
+    },
+    "libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "384d5dd3a2d9c1fd896fc7b2cac78e03fc4ba27c5e69dcdfda266003b721ed3d",
+      "bytes": 7943
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "libs/AceHook-2.0/AceHook-2.0.lua": {
+      "sha256": "dce2044f8e83a9ae7696c0489491157d722f86f165e5203dcfdddd891ddd05f9",
+      "bytes": 18089
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "d05fb28fb6d7dbd9a8be4faea455388fd629342491699aa8fe7c3f8b8d6416c4",
+      "bytes": 23442
+    },
+    "libs/AceLocale-2.1/AceLocale-2.1.lua": {
+      "sha256": "0ce0334f83818b139298e2a288960de1113cc0d30a66e173365512f3d799bb90",
+      "bytes": 9478
+    },
+    "libs/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "a3de67878b122a9f6c937462b9641f7a029b55605107f2db03953fe7a1d412ff",
+      "bytes": 13981
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "libs/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "3a834f9e3b64af7e746b8897f523150d56ba4851bb481aa65ac5d8723675a5ec",
+      "bytes": 11031
+    },
+    "libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "0e1c2e893ae0342170ffc3d8f816b765eaf8dbed689da5cf5353f6e9271b9c06",
+      "bytes": 85808
+    },
+    "libs/PT/AceLibrary/AceLibrary.lua": {
+      "sha256": "d05fb28fb6d7dbd9a8be4faea455388fd629342491699aa8fe7c3f8b8d6416c4",
+      "bytes": 23442
+    },
+    "libs/PT/Compatability.lua": {
+      "sha256": "179ff5473883e47ba06f95f4337d5be2b72e3354e39a39ea7db77ca43b86e309",
+      "bytes": 111
+    },
+    "libs/PT/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "3a834f9e3b64af7e746b8897f523150d56ba4851bb481aa65ac5d8723675a5ec",
+      "bytes": 11031
+    },
+    "libs/PT/Core/PTEmbed.lua": {
+      "sha256": "b0c1193a2c1fc49b9dd99391ec96e445a85d78ae95699054b0f6dca5e59614dc",
+      "bytes": 13328
+    },
+    "libs/PT/Elements/AQ/PTEmbedElemAhnQiraj.lua": {
+      "sha256": "500c4e6e9ad4e008900b52334f1dda5df3ce59679ce0c4b8fcdde4c09f9cbe44",
+      "bytes": 9901
+    },
+    "libs/PT/Elements/EquipSets/PTEmbedElemEquipSets.lua": {
+      "sha256": "15c8243abcf858bec3de3112f00d184aaf49b62086c4b106d2350d73e43c3483",
+      "bytes": 10325
+    },
+    "libs/PT/Elements/Food/PTEmbedElemFood.lua": {
+      "sha256": "ff43acf54975bb854407897b56b0d25e32c51b54da51c546a2865f91cc0e998a",
+      "bytes": 7174
+    },
+    "libs/PT/Elements/Instance/PTEmbedElemInstance.lua": {
+      "sha256": "7148f2c22cd8c0dd4a8087635421f198c8759bc8630559b947c555909af96029",
+      "bytes": 20974
+    },
+    "libs/PT/Elements/Misc/PTEmbedElemMisc.lua": {
+      "sha256": "237fd6f519ea130b8c8d00d98b44b62c6856847d93db2ca7edb5aa2890ec950a",
+      "bytes": 14173
+    },
+    "libs/PT/Elements/Raid/PTEmbedElemRaid.lua": {
+      "sha256": "1f68b5b3cc27bae43be9eeddaca48ef0ade37b86faec15c9b26b3e2525610c65",
+      "bytes": 24341
+    },
+    "libs/PT/Elements/Tradeskills/PTEmbedElemTradeskill.lua": {
+      "sha256": "88a991b7604eba0493c0482582dd87b39bb58fc32af7bbfe851446cbc18456ec",
+      "bytes": 33062
+    },
+    "libs/PT/Elements/ZG/PTEmbedElemZulGurub.lua": {
+      "sha256": "d1b594fb83cdacd07b10627b7d1e94f5144246cca0bea68d36b00ddb6f6b266f",
+      "bytes": 2212
+    },
+    "libs/PT/FeedomaticPlugin.lua": {
+      "sha256": "e16d70275b38f0a110487055e2c87e0386fcfa6d04cbbc723071ece391a6767f",
+      "bytes": 1369
+    },
+    "libs/PT/PeriodicTable.toc": {
+      "sha256": "2ebc9dc324be8cc58c46ee096a23b92660e186b9d2f8742093571595c0f7bfbc",
+      "bytes": 827
+    },
+    "libs/PT/Tradeskills/PTTradeskillsEmbed.lua": {
+      "sha256": "bee85b4400815f6b6c13bf4dcf5f284cb3c81d45503b2f53aaae020479eda513",
+      "bytes": 7223
+    },
+    "libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "7a82abe69de618a90ac666cf22a531da8bedc1a16cd68b269004158fe75554b0",
+      "bytes": 85746
+    },
+    "Locale-deDE.lua": {
+      "sha256": "3e0643669240b326738ecd0390307f1f32b4286806406c4113a556c4ba85d54e",
+      "bytes": 9360
+    },
+    "Locale-enUS.lua": {
+      "sha256": "b69907bfe9d597d0d39b5fd897275a378397b153590784cf7cd315e0857aedf4",
+      "bytes": 13789
+    },
+    "Locale-frFR.lua": {
+      "sha256": "f1f9af7dfdb658dd749374f3b24e1930133344ab93b4f5eeba9d0b4d15a5e6ce",
+      "bytes": 2600
+    },
+    "Locale-koKR.lua": {
+      "sha256": "67ed5595fe3aa41f5b1a90b8a392b82100c08a585ab9c4eabc42e741f3df77f7",
+      "bytes": 14902
+    },
+    "Locale-zhCN.lua": {
+      "sha256": "c7afcfb881dd109d329281a78b9ee947ac1992331f17c0ae39abf089ba5025e2",
+      "bytes": 13278
+    },
+    "Locale-zhTW.lua": {
+      "sha256": "5862b156575b5be2533a104567fae093ad1db7d24bc0c257a5649886ccc37c57",
+      "bytes": 13275
+    },
+    "README.md": {
+      "sha256": "4055dba17a47ed6b0a0e59e5c0cafb47b507227d21c82c2168f47105a5c30e90",
+      "bytes": 1451
+    },
+    "Readme.txt": {
+      "sha256": "87f6aaa1305a9d81f85d6d8f9e22e7de773ba0d9d8a69652c9e8726774f0e822",
+      "bytes": 436
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

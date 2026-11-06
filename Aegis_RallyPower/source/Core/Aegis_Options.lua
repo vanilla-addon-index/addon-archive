@@ -1,0 +1,999 @@
+--=============================================================================
+-- Aegis_Options.lua  -  tabbed options frame (Settings / Buttons / Raid)
+--
+-- Milestone A of docs\OPTIONS_UI_SPEC.md. Hand-built from 1.12 building
+-- blocks (no Ace3): OptionsCheckButtonTemplate / OptionsSliderTemplate /
+-- UIDropDownMenuTemplate / GameMenuButtonTemplate, ESC-close via
+-- UISpecialFrames, handlers on the implicit `this`/`arg1`.
+--
+-- One generic renderer serves every tab. It renders "descriptor" lists whose
+-- entries follow the M.optionsInfo module contract:
+--
+--   { type = "header", label = "Section" }
+--   { type = "check",  key = "btn_earth", label = "...", default = true,
+--     tip = "...", onChange = fn(value) }
+--   { type = "select", key = "shamanSel.Earth", label = "...",
+--     values = fn() -> { "name" | { value = v, text = label }, ... },
+--     get = fn() -> effective value  (optional; defaults to the saved key) }
+--   { type = "slider", key = "uiScale", label = "...", min=, max=, step=,
+--     default = 1 }
+--   { type = "button", label = "...", func = fn, tip = "..." }
+--   { type = "note",   label = "wrapped text", height = 28 }
+--
+-- Binding: `key` is a path into AegisRP_Settings with one optional dotted
+-- level ("roguePoison.mh"). Reads fall back to `default` when the key is
+-- absent (nothing is written until the user touches a control); checks write
+-- an explicit false so default-on settings can be turned off. Optional
+-- `get`/`set` override the read/write entirely (test mode, effective values).
+--
+-- The Settings tab is this file's own descriptor; the Buttons tab is
+-- generated from the active class module (M.buffs / M.utility auto-checks +
+-- M.optionsInfo); the Raid tab is the Milestone-B stub.
+--=============================================================================
+
+AegisRP_Settings = AegisRP_Settings or {}
+
+local FRAME_W, FRAME_H = 360, 480
+-- How far above centre the frame sits when it is not docked. ShowTab
+-- reduces it for a tab too tall to fit at this lift.
+local OPT_Y = 40
+local PAD_X = 16                       -- left inset for controls
+local NOTE_W = FRAME_W - 44            -- wrap width for note text
+
+local optFrame                         -- the frame (created lazily)
+local panels = {}                      -- [tabIndex] = content Frame
+local tabBtns = {}                     -- [tabIndex] = tab Button
+local controls = {}                    -- every bound control, for Refresh
+local ctlCounter = 0                   -- unique global names for templates
+local currentTab = nil
+
+local TAB_INFO = {
+    { label = "Settings" },
+    { label = "Buttons"  },
+    { label = "Raid"     },
+}
+
+-- Same skin family as the strips (Smooth + tooltip border, official look).
+local TAB_SKIN = {
+    bgFile   = "Interface\\AddOns\\Aegis_RallyPower\\Skins\\Smooth",
+    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+    tile = false, tileSize = 8, edgeSize = 8,
+    insets = { left = 0, right = 0, top = 0, bottom = 0 },
+}
+
+--------------------------------------------------------------------------
+-- settings binding (one optional dotted level: "roguePoison.mh")
+--------------------------------------------------------------------------
+
+local function GetPath(key)
+    local dot = string.find(key, "%.")
+    if dot then
+        local a = string.sub(key, 1, dot - 1)
+        local b = string.sub(key, dot + 1)
+        local t = AegisRP_Settings[a]
+        if type(t) == "table" then return t[b] end
+        return nil
+    end
+    return AegisRP_Settings[key]
+end
+
+local function SetPath(key, v)
+    local dot = string.find(key, "%.")
+    if dot then
+        local a = string.sub(key, 1, dot - 1)
+        local b = string.sub(key, dot + 1)
+        if type(AegisRP_Settings[a]) ~= "table" then
+            AegisRP_Settings[a] = {}
+        end
+        AegisRP_Settings[a][b] = v
+    else
+        AegisRP_Settings[key] = v
+    end
+end
+
+local RefreshControls   -- forward declaration (EntrySet calls it)
+
+local function EntryGet(entry)
+    if entry.get then return entry.get() end
+    if not entry.key then return nil end
+    local v = GetPath(entry.key)
+    if v == nil then return entry.default end
+    return v
+end
+
+local function EntrySet(entry, v)
+    if entry.set then
+        entry.set(v)
+    elseif entry.key then
+        SetPath(entry.key, v)
+    end
+    if entry.onChange then entry.onChange(v) end
+    RefreshControls()
+end
+
+--------------------------------------------------------------------------
+-- widget helpers
+--------------------------------------------------------------------------
+
+local function NextName()
+    ctlCounter = ctlCounter + 1
+    return "AegisRP_OptCtl" .. ctlCounter
+end
+
+-- 1.12's UIDropDownMenu_SetWidth reads the implicit `this`; set it explicitly
+-- so the call also works from plain code (harmless on the 2-arg signature).
+local function DropDownSetWidth(dd, w)
+    local saved = this
+    this = dd
+    UIDropDownMenu_SetWidth(w, dd)
+    this = saved
+end
+
+-- Normalise a values() result: items may be plain strings or {value=,text=}.
+local function NormItems(entry)
+    local raw = (entry.values and entry.values()) or {}
+    local out = {}
+    for i = 1, table.getn(raw) do
+        local it = raw[i]
+        if type(it) == "table" then
+            table.insert(out, { value = it.value, text = it.text or it.value })
+        else
+            table.insert(out, { value = it, text = it })
+        end
+    end
+    return out
+end
+
+local function CurrentItemText(entry)
+    local cur = EntryGet(entry)
+    local items = NormItems(entry)
+    for i = 1, table.getn(items) do
+        if items[i].value == cur then return items[i].text end
+    end
+    if cur == nil then return "" end
+    return tostring(cur)
+end
+
+--------------------------------------------------------------------------
+-- the renderer: one creator per entry type, each returns the next y cursor
+--------------------------------------------------------------------------
+
+local function AddHeader(parent, y, entry)
+    local fs = parent:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    fs:SetPoint("TOPLEFT", parent, "TOPLEFT", PAD_X - 4, y - 4)
+    fs:SetText(entry.label)
+    local line = parent:CreateTexture(nil, "ARTWORK")
+    line:SetTexture(0.8, 0.65, 0.2)
+    line:SetHeight(1)
+    line:SetPoint("TOPLEFT", parent, "TOPLEFT", PAD_X - 4, y - 20)
+    line:SetPoint("TOPRIGHT", parent, "TOPRIGHT", -(PAD_X - 4), y - 20)
+    line:SetAlpha(0.35)
+    return y - 26
+end
+
+local function AddCheck(parent, y, entry)
+    local name = NextName()
+    local cb = CreateFrame("CheckButton", name, parent, "OptionsCheckButtonTemplate")
+    cb:SetWidth(24); cb:SetHeight(24)
+    cb:SetPoint("TOPLEFT", parent, "TOPLEFT", PAD_X - 2, y)
+    getglobal(name .. "Text"):SetText(entry.label)
+    cb.tooltipText = entry.tip
+    cb.entry = entry
+    cb:SetScript("OnClick", function()
+        EntrySet(this.entry, this:GetChecked() and true or false)
+    end)
+    cb.Refresh = function()
+        cb:SetChecked(EntryGet(entry) and 1 or nil)
+    end
+    cb.Refresh()
+    table.insert(controls, cb)
+    return y - 24
+end
+
+local function AddSlider(parent, y, entry)
+    local name = NextName()
+    local sl = CreateFrame("Slider", name, parent, "OptionsSliderTemplate")
+    sl:SetWidth(200); sl:SetHeight(16)
+    sl:SetPoint("TOPLEFT", parent, "TOPLEFT", PAD_X + 2, y - 16)
+    sl:SetMinMaxValues(entry.min, entry.max)
+    sl:SetValueStep(entry.step or 0.05)
+    getglobal(name .. "Low"):SetText(entry.min)
+    getglobal(name .. "High"):SetText(entry.max)
+    sl.entry = entry
+    sl.updating = false
+    local function LabelText(v)
+        getglobal(name .. "Text"):SetText(entry.label .. ": "
+            .. string.format((entry.step or 0.05) >= 1 and "%d" or "%.2f", v))
+    end
+    sl:SetScript("OnValueChanged", function()
+        local step = this.entry.step or 0.05
+        local v = this:GetValue()
+        v = this.entry.min + math.floor((v - this.entry.min) / step + 0.5) * step
+        v = math.floor(v * 100 + 0.5) / 100
+        LabelText(v)
+        if this.updating then return end
+        local cur = EntryGet(this.entry)
+        if type(cur) == "number" and math.abs(cur - v) < 0.001 then return end
+        EntrySet(this.entry, v)
+    end)
+    sl.Refresh = function()
+        local v = EntryGet(entry)
+        if type(v) ~= "number" then v = entry.default or entry.min end
+        sl.updating = true
+        sl:SetValue(v)
+        sl.updating = false
+        LabelText(v)
+    end
+    -- Sliders carry a `tip` like checks and buttons do, and until now nothing
+    -- read it - the transparency slider's explanation of its 0.3 floor was
+    -- written and never shown. OptionsSliderTemplate has no tooltip handler of
+    -- its own, so it is wired explicitly here.
+    if entry.tip then
+        sl:SetScript("OnEnter", function()
+            GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+            GameTooltip:SetText(this.entry.tip, 1, 1, 1, 1, 1)
+            GameTooltip:Show()
+        end)
+        sl:SetScript("OnLeave", function() GameTooltip:Hide() end)
+    end
+    sl.Refresh()
+    table.insert(controls, sl)
+    return y - 44
+end
+
+local function AddSelect(parent, y, entry)
+    local name = NextName()
+    local caption = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    caption:SetPoint("TOPLEFT", parent, "TOPLEFT", PAD_X - 2, y - 10)
+    caption:SetText(entry.label)
+    local dd = CreateFrame("Frame", name, parent, "UIDropDownMenuTemplate")
+    -- the template carries ~16px of built-in horizontal padding
+    dd:SetPoint("TOPLEFT", parent, "TOPLEFT", 118, y + 2)
+    dd.entry = entry
+    UIDropDownMenu_Initialize(dd, function()
+        local cur = EntryGet(dd.entry)
+        local items = NormItems(dd.entry)
+        for i = 1, table.getn(items) do
+            local it = items[i]
+            local info = {}
+            info.text = it.text
+            info.value = it.value
+            if it.value == cur then info.checked = 1 end
+            info.func = function()
+                EntrySet(dd.entry, it.value)
+                getglobal(name .. "Text"):SetText(it.text)
+            end
+            UIDropDownMenu_AddButton(info)
+        end
+    end)
+    DropDownSetWidth(dd, 130)
+    dd.Refresh = function()
+        getglobal(name .. "Text"):SetText(CurrentItemText(entry))
+    end
+    dd.Refresh()
+    table.insert(controls, dd)
+    return y - 34
+end
+
+local function AddButtonCtl(parent, y, entry)
+    local name = NextName()
+    local btn = CreateFrame("Button", name, parent, "GameMenuButtonTemplate")
+    btn:SetWidth(130); btn:SetHeight(21)
+    btn:SetPoint("TOPLEFT", parent, "TOPLEFT", PAD_X - 2, y - 4)
+    btn:SetText(entry.label)
+    btn.entry = entry
+    btn:SetScript("OnClick", function()
+        if this.entry.func then this.entry.func() end
+        RefreshControls()
+    end)
+    if entry.tip then
+        btn:SetScript("OnEnter", function()
+            GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+            GameTooltip:SetText(this.entry.tip, 1, 1, 1, 1, 1)
+            GameTooltip:Show()
+        end)
+        btn:SetScript("OnLeave", function() GameTooltip:Hide() end)
+    end
+    return y - 30
+end
+
+local function AddNote(parent, y, entry)
+    local h = entry.height or 28
+    local fs = parent:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    fs:SetPoint("TOPLEFT", parent, "TOPLEFT", PAD_X - 4, y - 4)
+    fs:SetWidth(NOTE_W)
+    fs:SetHeight(h)
+    fs:SetJustifyH("LEFT")
+    fs:SetJustifyV("TOP")
+    fs:SetText(entry.label)
+    return y - h - 8
+end
+
+local CREATORS = {
+    header = AddHeader,
+    check  = AddCheck,
+    slider = AddSlider,
+    select = AddSelect,
+    button = AddButtonCtl,
+    note   = AddNote,
+}
+
+local function BuildControls(parent, entries)
+    local y = -6
+    for i = 1, table.getn(entries) do
+        local entry = entries[i]
+        local make = CREATORS[entry.type]
+        if make then y = make(parent, y, entry) end
+    end
+    parent.contentH = -y   -- ShowTab grows the frame for tall tabs
+end
+
+-- Re-read every bound value (cheap: settings only, no game API). Called after
+-- any change and on a slow tick while the frame is open, so the dropdowns
+-- round-trip with the mouse-wheel selections made on the strips.
+RefreshControls = function()
+    for _, c in ipairs(controls) do
+        if c.Refresh then c.Refresh() end
+    end
+end
+
+--------------------------------------------------------------------------
+-- tab descriptors
+--------------------------------------------------------------------------
+
+-- Put the frames back to stock: position, per-strip grip scale AND
+-- transparency. Transparency belongs here because it is per character and
+-- silently makes a strip look broken rather than look transparent - "why does
+-- this alt look wrong" needs a one-click answer that doesn't require knowing
+-- which slider did it.
+local function ResetFramePositions()
+    local kill = {}
+    for k in pairs(AegisRP_Settings) do
+        if string.find(k, "^stripPos_") or string.find(k, "^stripScale_") then
+            table.insert(kill, k)
+        end
+    end
+    for _, k in ipairs(kill) do AegisRP_Settings[k] = nil end
+    AegisRP_Settings.stripAlpha = nil            -- back to the colours' own 0.5
+    if AegisRP.strips then
+        for key, S in pairs(AegisRP.strips) do
+            S.frame:ClearAllPoints()
+            S.frame:SetPoint("CENTER", UIParent, "CENTER", 260, 0)
+            S.frame:SetScale(AegisRP.StripScale(key))
+            if S.Refresh then S:Refresh() end     -- repaint at the restored alpha
+        end
+    end
+    AegisRP_ResetBarPosition()
+    DEFAULT_CHAT_FRAME:AddMessage("|cffffff00Aegis:|r Frame positions, scale and "
+        .. "transparency reset.")
+end
+
+--------------------------------------------------------------------------
+-- Legacy PallyPower bindings (classic options merged into this panel).
+-- NEVER fork state: checks drive the SAME XML checkbox + handler function
+-- the classic frame uses (the engine's uiDirty flag is file-local in
+-- PallyPower.lua, so its own handlers are the only sanctioned refresh
+-- path, and the classic frame's widgets stay in sync for /rpc legacy);
+-- sliders write PP_PerUser and call the engine's own redraw.
+--------------------------------------------------------------------------
+
+local function LegacyCheck(label, ppKey, chkName, handlerName, dflt, tip)
+    return { type = "check", label = label, tip = tip,
+        get = function()
+            if PP_PerUser and PP_PerUser[ppKey] ~= nil then return PP_PerUser[ppKey] end
+            return dflt
+        end,
+        set = function(v)
+            local chk = getglobal(chkName)
+            local handler = getglobal(handlerName)
+            if not chk or not handler then return end
+            chk:SetChecked(v and 1 or nil)
+            handler()
+        end }
+end
+
+local function LegacySlider(label, ppKey, lo, hi, step, dflt, apply, tip)
+    return { type = "slider", label = label, min = lo, max = hi, step = step, tip = tip,
+        get = function()
+            if PP_PerUser and PP_PerUser[ppKey] ~= nil then return PP_PerUser[ppKey] end
+            return dflt
+        end,
+        set = function(v)
+            if not PP_PerUser then return end
+            PP_PerUser[ppKey] = v
+            if apply then apply() end
+        end }
+end
+
+local function MinimapSkinEntry()
+    return { type = "select", key = "minimapSkin", label = "Minimap icon", default = "aegis",
+      values = function()
+          local out = {}
+          for i = 1, table.getn(AegisRP_MinimapSkins) do
+              local v = AegisRP_MinimapSkins[i]
+              local lbl = (AegisRP_MinimapSkinLabels and AegisRP_MinimapSkinLabels[v]) or v
+              table.insert(out, { value = v, text = lbl })
+          end
+          return out
+      end,
+      set = function(v) AegisRP_ApplyMinimapSkin(v) end }
+end
+
+-- A slider rather than a fixed size: what "the same as my other buttons" means
+-- depends on which other addons are installed, and this addon cannot see them.
+-- 26 matches a stock Blizzard ring button; the old 32 is still reachable.
+local function MinimapSizeEntry()
+    return { type = "slider", key = "minimapSize", label = "Minimap icon size",
+      min = 16, max = 32, step = 1, default = 26,
+      tip = "Width of the minimap button in pixels. 26 matches a stock minimap "
+         .. "button.\nIf a minimap-button bar (pfUI, or a dedicated addon) has "
+         .. "collected it, the bar decides its size instead.\nDrag the button to "
+         .. "move it round the minimap.",
+      set = function(v) AegisRP_ApplyMinimapSize(v) end }
+end
+
+local function TestModeEntry()
+    return { type = "check", key = "testMode", label = "Test mode", default = false,
+      tip = "Same as /rpc test: every option is shown (unlearned ones marked *) and clicks simulate casts.",
+      set = function(v) AegisRP_SetTestMode(v) end }
+end
+
+local function ShowMinimapButtonEntry()
+    return LegacyCheck("Show minimap button", "minimapbuttonshow",
+        "MinimapButtonOptionChk", "PallyPower_MinimapButtonOption", true)
+end
+
+-- One "Show <strip>" check per strip this character actually has, driven by
+-- AegisRP.stripOrder rather than a hardcoded list: a warrior sees Shout, Kick
+-- and Taunt, a priest sees only their buff strip, and a third rotation or a new
+-- class strip appears here on its own without touching this file.
+--
+-- The label is the strip's own title, so it matches the header drawn above the
+-- buttons - that is what tells you which frame on screen a row refers to.
+-- Bound through AegisRP.SetStripShown so these agree with /rpc kick, /rpc taunt
+-- and a strip's own Toggle instead of being a second, rival writer.
+local SLASH_FOR_STRIP = { kick = "/rpc kick", taunt = "/rpc taunt",
+                          marks = "/rpc marks", classbuffs = "/rpc" }
+
+-- `noHeader` is for a caller that has already opened a "Strips" section of its
+-- own (the Paladin tab, which puts the strip settings above these toggles).
+local function AppendStripToggles(entries, noHeader)
+    if not (AegisRP.stripOrder and AegisRP.SetStripShown) then return end
+    local added = (noHeader and true) or false
+    for i = 1, table.getn(AegisRP.stripOrder) do
+        local k = AegisRP.stripOrder[i]
+        local S = AegisRP.strips[k]
+        if S and S.frame then
+            if not added then
+                table.insert(entries, { type = "header", label = "Strips" })
+                added = true
+            end
+            local key = k
+            local slash = SLASH_FOR_STRIP[key]
+            table.insert(entries, {
+                type = "check",
+                label = "Show " .. (S.title or key),
+                tip = "Show or hide this strip."
+                    .. (slash and ("\nSame as " .. slash .. ".") or "")
+                    .. "\nThe when-to-show rules above still apply.",
+                get = function() return AegisRP.IsStripShown(key) end,
+                set = function(v) AegisRP.SetStripShown(key, v and true or false) end,
+            })
+        end
+    end
+end
+
+-- The strip-level settings, as factories rather than literals, because BOTH
+-- class branches below need them and a second copy of the transparency tip is
+-- a second thing to forget to update. Scale is deliberately not among them:
+-- it is the one strip setting that differs by class (see AegisRP.StripScale).
+local function StripAlphaEntry()
+    return { type = "slider", key = "stripAlpha", label = "Transparency",
+      min = 0.3, max = 1, step = 0.05, default = 0.5,
+      tip = "Backdrop opacity of the strip buttons.\nThe floor is 0.3: the "
+         .. "backdrop is what shows covered/needed/expiring, so it never goes "
+         .. "so faint the colours stop reading.\nThis is a PER-CHARACTER "
+         .. "setting - if one alt looks washed out next to another, this is "
+         .. "why. Reset Frames puts it back to 0.5." }
+end
+
+local function StripHorizontalEntry()
+    return { type = "check", key = "stripHorizontal", label = "Horizontal layout", default = false,
+      tip = "Lay the strip buttons left-to-right instead of stacked.",
+      onChange = function() if AegisRP.ReflowStrips then AegisRP.ReflowStrips() end end }
+end
+
+local function StripSnapEntry()
+    return { type = "check", key = "stripSnap", label = "Snap frames to edges", default = true,
+      tip = "Dropping a strip within a few pixels of a screen edge - or of another "
+         .. "strip, or of the PallyPower buff bar - lines it up flush instead of "
+         .. "nearly flush." }
+end
+
+local function LockFramesEntry()
+    return { type = "check", key = "locked", label = "Lock frame positions", default = false,
+      tip = "Stop the Aegis strips being dragged.\nThe PallyPower buff bar and "
+         .. "grid have their own lock in the engine section." }
+end
+
+local function ResetFramesEntry()
+    return { type = "button", label = "Reset Frames", func = ResetFramePositions,
+      tip = "Put every Aegis: RallyPower frame back to stock: position, scale "
+         .. "and transparency." }
+end
+
+-- The Settings tab is class-aware. A Paladin runs the legacy engine in place
+-- of our class-buff strip, so they get the merged frame-level engine settings
+-- and OUR "when to show" / UI scale rules do not apply to them.
+--
+-- They DO get the strip settings, though. That was not true when this split
+-- was written and a Paladin ran nothing of ours; since 1.10.0 they have Kick
+-- and Taunt strips like everyone else, and until now there was no way to hide,
+-- lock, fade or reset them from the options at all.
+local function SettingsTabEntries()
+    local entries = {}
+    local _, cls = UnitClass("player")
+    if cls == "PALADIN" then
+        entries = {
+            { type = "header", label = "General" },
+            TestModeEntry(),
+            ShowMinimapButtonEntry(),
+            { type = "header", label = "Looks" },
+            MinimapSkinEntry(),
+            MinimapSizeEntry(),
+            { type = "header", label = "PallyPower engine" },
+            LegacyCheck("Lock frames", "frameslocked",
+                "FramesLockedOptionChk", "PallyPower_FramesLockedOption", false),
+            LegacyCheck("Horizontal buff bar", "horizontal",
+                "HorizontalLayoutOptionChk", "PallyPower_HorizontalLayoutOption", false),
+            LegacyCheck("Hide Blizzard aura bar", "hideblizzaura",
+                "HideBlizzardFrameOptionChk", "PallyPower_HideBlizzardAuraFrameOption", false),
+            LegacySlider("Buff bar scale", "scalebar", 0.5, 1.5, 0.05, 1,
+                function()
+                    if PallyPower_UpdateUI then PallyPower_UpdateUI() end
+                    -- the buff bar IS a Paladin's class strip, so the slider
+                    -- that scales it has to scale the Kick and Taunt strips
+                    -- too: three bars docked together that resize separately
+                    -- cannot be lined up at all.
+                    if AegisRP_ApplyStripScale and PP_PerUser then
+                        AegisRP_ApplyStripScale(PP_PerUser.scalebar or 1)
+                    end
+                end,
+                "Scales the PallyPower buff bar - and, on this class, the Kick "
+                .. "and Taunt strips with it, so all three stay one size.\nMoving "
+                .. "this clears any per-strip size set with a strip's corner grip."),
+            LegacySlider("Grid scale", "scalemain", 0.5, 1.5, 0.05, 1,
+                function() if PallyPowerGrid_Update then PallyPowerGrid_Update(1) end end),
+            LegacySlider("Buff bar transparency", "transparency", 0, 1, 0.05, 0.5,
+                function() if PallyPower_UpdateUI then PallyPower_UpdateUI() end end,
+                "The legacy buff bar and grid only. The Aegis strips have their "
+                .. "own transparency under Strips below."),
+            { type = "header", label = "Strips" },
+            StripAlphaEntry(),
+            StripSnapEntry(),
+            LockFramesEntry(),
+            ResetFramesEntry(),
+        }
+        AppendStripToggles(entries, true)   -- header already opened above
+        return entries
+    end
+    entries = {
+        { type = "header", label = "When to show" },
+        { type = "check", key = "showSolo",  label = "Show when solo",  default = true,
+          onChange = function() AegisRP_ApplyVisibility() end },
+        { type = "check", key = "showParty", label = "Show in a party", default = true,
+          onChange = function() AegisRP_ApplyVisibility() end },
+        { type = "check", key = "showRaid",  label = "Show in a raid",  default = true,
+          onChange = function() AegisRP_ApplyVisibility() end },
+        { type = "check", key = "tooltips",  label = "Show tooltips",   default = true },
+        TestModeEntry(),
+        { type = "slider", key = "uiScale", label = "UI scale",
+          min = 0.5, max = 1.5, step = 0.05, default = 1.0,
+          onChange = function() AegisRP_ApplyUIScale() end },
+        StripAlphaEntry(),
+        StripHorizontalEntry(),
+        StripSnapEntry(),
+        MinimapSkinEntry(),
+        MinimapSizeEntry(),
+        ShowMinimapButtonEntry(),
+        LockFramesEntry(),
+        ResetFramesEntry(),
+    }
+    AppendStripToggles(entries)
+    return entries
+end
+
+-- The Buttons tab: generated from the active class module. Grid classes get
+-- auto-checks from M.buffs/M.utility; strip classes declare M.optionsInfo;
+-- Paladins are pointed at the legacy /pp options (locked decision).
+local function ButtonsTabEntries()
+    local entries = {}
+    local _, cls = UnitClass("player")
+    if cls == "PALADIN" then
+        entries = {
+            { type = "header", label = "Bar buttons" },
+            LegacyCheck("Aura button", "showaurabutton",
+                "AuraOptionChk", "PallyPower_AuraOption", true),
+            LegacyCheck("Seal button", "showsealbutton",
+                "SealOptionChk", "PallyPower_SealOption", true),
+            LegacyCheck("Righteous Fury button", "showrfbutton",
+                "RighteousFuryOptionChk", "PallyPower_RighteousFuryOption", true),
+            { type = "header", label = "Buffing & extras" },
+            { type = "check", label = "Smart buffs",
+              tip = "Skip players who already carry a suitable blessing.",
+              get = function() return PP_PerUser and PP_PerUser.smartbuffs end,
+              set = function(v) if PP_PerUser then PP_PerUser.smartbuffs = v and 1 or false end end },
+            { type = "check", label = "Use normal (non-Greater) blessings",
+              get = function() return PP_PerUser and PP_PerUser.regularblessings end,
+              set = function(v) if PP_PerUser then PP_PerUser.regularblessings = (v and true or false) end end },
+            LegacyCheck("Sound when a buff runs out", "playsoundwhen0",
+                "PlaySoundOptionChk", "PallyPower_PlaySoundOption", true),
+            LegacyCheck("HD icons", "usehdicons",
+                "UseHDIconsOptionChk", "PallyPower_UseHDIconsOption", false),
+            LegacyCheck("Color buff bar", "colorbuffbar",
+                "ColorBuffBarOptionChk", "PallyPower_ColorBuffBarOption", false),
+            LegacyCheck("UnitXP SP3 line-of-sight", "useunitxp_sp3",
+                "UseUnitXPSP3OptionChk", "PallyPower_UseUnitXPSP3Option", false),
+            LegacySlider("Scan frequency (s)", "scanfreq", 0.1, 2, 0.1, 1, nil),
+            { type = "note", height = 26, label =
+                "Blessing grid: /pp. Classic options frame: /rpc legacy." },
+        }
+        return entries
+    end
+    -- Shared behaviour (applies to every non-paladin class), mirroring the
+    -- Paladin Buttons tab where these live. HD Icons / Color Buff Bar are
+    -- Paladin-art-specific and intentionally omitted.
+    table.insert(entries, { type = "header", label = "Behaviour" })
+    table.insert(entries, { type = "check", key = "smartBuffs", label = "Smart buffs", default = true,
+        tip = "Skip players who already have the buff (off = allow re-casting)." })
+    table.insert(entries, { type = "check", key = "expirySound", label = "Sound when a buff runs out", default = true })
+    table.insert(entries, { type = "check", key = "observeCasts", label = "Time other players' buffs", default = true,
+        tip = (AegisRP.CastWatch and AegisRP.CastWatch.Available())
+              and "Watch other casters and time the buffs THEY apply, not just yours.\nNeeds SuperWoW (detected)."
+              or "Needs SuperWoW, which isn't loaded - timers stay limited to your own casts." })
+    if AegisRP.HasInterrupt and AegisRP.HasInterrupt() then
+        table.insert(entries, { type = "check", key = "kickSound", label = "Sound when it's your turn to kick", default = true,
+            tip = "Plays when you reach the top of the kick rotation - you're watching the boss, not the strip.\nHide the strip itself with /rpc kick." })
+    end
+    if AegisRP.HasTaunt and AegisRP.HasTaunt() then
+        table.insert(entries, { type = "check", key = "tauntSound", label = "Sound when it's your turn to taunt", default = true,
+            tip = "Plays when you reach the top of the taunt rotation.\nHide the strip itself with /rpc taunt." })
+    end
+    if (AegisRP.HasInterrupt and AegisRP.HasInterrupt())
+       or (AegisRP.HasTaunt and AegisRP.HasTaunt()) then
+        table.insert(entries, { type = "check", key = "rotQueue", label = "Show the next three in the rotation", default = false,
+            tip = "Adds three rows under the rotation strip: who holds slots 1-3, and "
+               .. "whether each is up, ready, or on cooldown.\nOff by default - the one "
+               .. "button already answers \"is it me\", and the tooltip lists the whole order.",
+            onChange = function() if AegisRP.ReflowStrips then AegisRP.ReflowStrips() end end })
+    end
+    table.insert(entries, { type = "check", label = "UnitXP SP3 line-of-sight", default = false,
+        tip = "Use UnitXP.dll (if loaded) to skip out-of-line-of-sight targets.",
+        get = function() return PP_PerUser and PP_PerUser.useunitxp_sp3 end,
+        set = function(v) if PP_PerUser then PP_PerUser.useunitxp_sp3 = (v and true or false) end end })
+    table.insert(entries, { type = "slider", key = "scanFreq", label = "Scan frequency (s)",
+        min = 0.25, max = 3, step = 0.25, default = 1,
+        tip = "How often coverage is rescanned. Lower = snappier, more CPU." })
+
+    local M = AegisRP.active
+    if not M then
+        return entries
+    end
+    if M.buffs and table.getn(M.buffs) > 0 then
+        table.insert(entries, { type = "header", label = "Tracked buffs" })
+        for i = 1, table.getn(M.buffs) do
+            local b = M.buffs[i]
+            local nm = b.name or b.group
+            table.insert(entries, { type = "check", key = "gridbuff_" .. nm,
+                label = nm, default = true,
+                onChange = function() AegisRP_GridRefresh() end })
+        end
+    end
+    if M.utility and table.getn(M.utility) > 0 then
+        table.insert(entries, { type = "check", key = "utilRow",
+            label = "Utility buttons (top row)", default = true,
+            onChange = function() AegisRP_GridRefresh() end })
+    end
+    if M.debuffs and table.getn(M.debuffs) > 0 then
+        table.insert(entries, { type = "check", key = "debuffRow",
+            label = "Debuff buttons", default = true,
+            onChange = function() AegisRP_GridRefresh() end })
+    end
+    if M.optionsInfo then
+        for i = 1, table.getn(M.optionsInfo) do
+            table.insert(entries, M.optionsInfo[i])
+        end
+    end
+    if table.getn(entries) == 0 then
+        table.insert(entries, { type = "note", label =
+            "This class has no configurable buttons yet." })
+    end
+    return entries
+end
+
+local RAID_INFO = {
+    { type = "header", label = "Raid coordination" },
+    { type = "note", height = 40, label =
+        "Roles (tanks / healers), blessings, totems, buffs, debuffs and utility "
+        .. "assignments all live in the assignment panel - open it below, or "
+        .. "right-click a strip's title / the paladin buff bar." },
+    { type = "button", label = "Open Assignment Panel",
+      tip = "The five-tab \"Who Covers What\" panel (/rpc assign)",
+      func = function()
+          if AegisRP_AssignPanelToggle then AegisRP_AssignPanelToggle() end
+      end },
+
+    { type = "header", label = "Free Assignment" },
+    { type = "check", label = "Free Assignment (any member may edit any row)",
+      tip = "Leader-controlled and synced to the raid.",
+      get = function()
+          return AegisRP.Assign and AegisRP.Assign.GetFreeAssign()
+      end,
+      set = function(v)
+          if AegisRP.Assign and not AegisRP.Assign.SetFreeAssign(v) then
+              DEFAULT_CHAT_FRAME:AddMessage("|cffffff00Aegis:|r Only the raid "
+                  .. "leader / assist can change Free Assignment.")
+          end
+      end },
+
+    { type = "header", label = "Broadcast" },
+    { type = "button", label = "Report assignments to chat",
+      tip = "Reports each paladin's blessings to raid/party chat (needs lead/assist)",
+      func = function() if PallyPower_Report then PallyPower_Report() end end },
+    { type = "button", label = "Re-request sync",
+      tip = "Force a full assignment re-request + re-broadcast (/rpc sync)",
+      func = function() if AegisRP_SyncNow then AegisRP_SyncNow() end end },
+    { type = "note", height = 28, label =
+        "Roles and blessings sync over PallyPower's PLPWR channel (compatible "
+        .. "with stock PallyPower); totems/duties/buffs ride the RPCX channel." },
+}
+
+--------------------------------------------------------------------------
+-- "My raid assignments": a personal, per-character view of MY targeted
+-- duties (Soulstone / Innervate / Fear Ward), each a dropdown
+-- to pick who I put it on - a specific player, a marked Tank/Healer, anyone,
+-- or nobody. Writes my own row in the shared model (always self-editable and
+-- synced); a leader's Utility-tab plan can still override it.
+--------------------------------------------------------------------------
+
+local function RaidMemberNames()
+    local out = { UnitName("player") }
+    local n = GetNumRaidMembers()
+    if n > 0 then
+        for i = 1, n do
+            local nm = UnitName("raid" .. i)
+            if nm and nm ~= UnitName("player") then table.insert(out, nm) end
+        end
+    else
+        for i = 1, GetNumPartyMembers() do
+            local nm = UnitName("party" .. i)
+            if nm then table.insert(out, nm) end
+        end
+    end
+    return out
+end
+
+-- MY class's targeted utility duties (Soulstone, Innervate, Fear Ward, ...).
+local function MyTargetedDuties()
+    local out = {}
+    local A = AegisRP.Assign
+    local _, myclass = UnitClass("player")
+    if not (A and myclass) then return out end
+    for i = 1, table.getn(A.dutyOrder) do
+        local def = A.duties[A.dutyOrder[i]]
+        if def and def.class == myclass and def.target ~= "none" and not def.hidden then
+            table.insert(out, def)
+        end
+    end
+    return out
+end
+
+local function MyAssignmentEntries()
+    local A = AegisRP.Assign
+    if not A then return {} end
+    local me = UnitName("player")
+    local _, myclass = UnitClass("player")
+    local duties = MyTargetedDuties()
+    local entries = {}
+    if table.getn(duties) > 0 then
+        table.insert(entries, { type = "header", label = "My raid assignments" })
+        for i = 1, table.getn(duties) do
+            local key = duties[i].key
+            table.insert(entries, {
+                type = "select", label = duties[i].spell,
+                values = function()
+                    local out = {
+                        { value = "__off", text = "Not me" },
+                        { value = "__any", text = "Anyone (I choose)" },
+                        { value = "@TANK",   text = "Tank (marked)" },
+                        { value = "@HEALER", text = "Healer (marked)" },
+                    }
+                    local names = RaidMemberNames()
+                    for j = 1, table.getn(names) do
+                        table.insert(out, { value = names[j], text = names[j] })
+                    end
+                    return out
+                end,
+                get = function()
+                    local v = A.GetDuty(me, key)
+                    if v == nil then return "__off" end
+                    if v == true then return "__any" end
+                    return v
+                end,
+                set = function(v)
+                    if v == "__off" then A.ClearDuty(me, key)
+                    elseif v == "__any" then A.SetDuty(me, key, true)
+                    else A.SetDuty(me, key, v) end
+                end,
+            })
+        end
+        table.insert(entries, { type = "note", height = 26, label =
+            "Your targets sync to the raid (Fear Ward etc. can go to your assigned Tank or Healer)." })
+    end
+    -- Paladins set alternate tank blessings on the panel's Roles tab.
+    if myclass == "PALADIN" then
+        table.insert(entries, { type = "header", label = "Tank blessings" })
+        table.insert(entries, { type = "note", height = 40, label =
+            "Give a tank a blessing that differs from its class default on the "
+            .. "Assignment panel -> Roles tab: mark the tank, then right-click / "
+            .. "wheel it to pick the blessing." })
+    end
+    return entries
+end
+
+-- Raid tab = my personal assignments, then the shared coordination controls.
+local function RaidTabEntries()
+    local out = {}
+    for _, e in ipairs(MyAssignmentEntries()) do table.insert(out, e) end
+    for _, e in ipairs(RAID_INFO) do table.insert(out, e) end
+    return out
+end
+
+--------------------------------------------------------------------------
+-- tabs + frame
+--------------------------------------------------------------------------
+
+local function StyleTabs()
+    for i = 1, table.getn(tabBtns) do
+        local b = tabBtns[i]
+        if i == currentTab then
+            b:SetBackdropColor(0, 0.7, 0, 0.5)
+            b.label:SetTextColor(1, 0.82, 0)
+        else
+            b:SetBackdropColor(0.25, 0.25, 0.25, 0.5)
+            b.label:SetTextColor(0.7, 0.7, 0.7)
+        end
+    end
+end
+
+local function ShowTab(i)
+    if not panels[i] then i = 1 end
+    currentTab = i
+    AegisRP_Settings.optLastTab = i
+    for n = 1, table.getn(panels) do
+        if n == i then panels[n]:Show() else panels[n]:Hide() end
+    end
+    -- build lazily on first show (the Buttons tab needs the active module,
+    -- which exists once the player is in the world)
+    local p = panels[i]
+    if not p.built then
+        p.built = true
+        if i == 1 then BuildControls(p, SettingsTabEntries())
+        elseif i == 2 then BuildControls(p, ButtonsTabEntries())
+        else BuildControls(p, RaidTabEntries()) end
+    end
+    -- grow the frame when a tab's content is taller than the default body
+    -- (56px top chrome + content + 18px bottom breathing room), so the last
+    -- control never sits on the border
+    local want = 56 + (p.contentH or 0) + 18
+    if want < FRAME_H then want = FRAME_H end
+    optFrame:SetHeight(want)
+    -- ...then keep it on screen. The +40 lift is a nicety; fitting is not, and
+    -- there is no scrollbar to rescue a tab that runs off the top. The Paladin
+    -- Settings tab is the tallest in the addon and sat 3px inside the edge at
+    -- 682, so the next row added to it - any row - put it over. Measuring and
+    -- yielding the offset is what makes adding one safe.
+    -- Skipped while the frame is docked beside the assignment panel: docking
+    -- anchors it TOPLEFT/TOPRIGHT to that panel and owns its position.
+    local anchor = optFrame:GetPoint()
+    if anchor == "CENTER" then
+        local sh = UIParent:GetHeight() or 768
+        local off = OPT_Y
+        local room = (sh / 2) - (want / 2)
+        if room < 0 then off = 0                     -- taller than the screen: split the overflow
+        elseif off > room then off = room
+        elseif off < -room then off = -room end
+        optFrame:ClearAllPoints()
+        optFrame:SetPoint("CENTER", UIParent, "CENTER", 0, off)
+    end
+    StyleTabs()
+    RefreshControls()
+end
+
+local function CreateOptionsFrame()
+    local f = CreateFrame("Frame", "AegisRP_OptionsFrame", UIParent)
+    optFrame = f
+    f:SetWidth(FRAME_W); f:SetHeight(FRAME_H)
+    f:SetPoint("CENTER", UIParent, "CENTER", 0, OPT_Y)
+    f:SetBackdrop({
+        bgFile   = "Interface\\Tooltips\\UI-Tooltip-Background",
+        edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+        tile = true, tileSize = 16, edgeSize = 16,
+        insets = { left = 5, right = 5, top = 5, bottom = 5 },
+    })
+    -- matched to the assignment panel's 0.96: at 0.85 the panel showed
+    -- straight through this one wherever the two overlapped, which reads as
+    -- a broken frame rather than a translucent one
+    f:SetBackdropColor(0, 0, 0, 0.96)
+    f:SetBackdropBorderColor(0.6, 0.6, 0.6, 1)
+    f:SetFrameStrata("DIALOG")
+    f:SetMovable(true)
+    f:EnableMouse(true)
+    f:RegisterForDrag("LeftButton")
+    f:SetScript("OnDragStart", function() f:StartMoving() end)
+    f:SetScript("OnDragStop", function() f:StopMovingOrSizing() end)
+    f:Hide()
+    tinsert(UISpecialFrames, "AegisRP_OptionsFrame")   -- ESC closes
+    if AegisRP.MakeToplevel then AegisRP.MakeToplevel(f) end   -- click = to front
+
+    local title = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    title:SetPoint("TOP", f, "TOP", 0, -10)
+    title:SetText("|cffffd100Aegis: RallyPower|r Options")
+
+    CreateFrame("Button", nil, f, "UIPanelCloseButton"):SetPoint("TOPRIGHT", f, "TOPRIGHT", -2, -2)
+
+    -- tab row
+    local tx = 10
+    for i = 1, table.getn(TAB_INFO) do
+        local idx = i
+        local b = CreateFrame("Button", nil, f)
+        b:SetWidth(76); b:SetHeight(22)
+        b:SetPoint("TOPLEFT", f, "TOPLEFT", tx, -30)
+        b:SetBackdrop(TAB_SKIN)
+        local fs = b:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+        fs:SetPoint("CENTER", b, "CENTER", 0, 0)
+        fs:SetText(TAB_INFO[i].label)
+        b.label = fs
+        b:SetScript("OnClick", function() ShowTab(idx) end)
+        tabBtns[i] = b
+        tx = tx + 80
+    end
+
+    -- content panels
+    for i = 1, table.getn(TAB_INFO) do
+        local p = CreateFrame("Frame", nil, f)
+        p:SetPoint("TOPLEFT", f, "TOPLEFT", 8, -56)
+        p:SetPoint("BOTTOMRIGHT", f, "BOTTOMRIGHT", -8, 8)
+        p:Hide()
+        panels[i] = p
+    end
+
+    f:SetScript("OnShow", function()
+        -- Dock beside the assignment panel when that is open; go back to the
+        -- middle when it is not, so this frame is never left stuck beside a
+        -- window that is no longer on screen.
+        local panel = getglobal("AegisRP_AssignFrame")
+        if panel and panel:IsShown() then
+            if AegisRP.DockPanels then AegisRP.DockPanels() end
+        else
+            f:ClearAllPoints()
+            f:SetPoint("CENTER", UIParent, "CENTER", 0, OPT_Y)
+        end
+        ShowTab(AegisRP_Settings.optLastTab or 1)
+    end)
+
+    -- slow settings-only refresh while open, so strip-wheel changes show up
+    local accum = 0
+    f:SetScript("OnUpdate", function()
+        accum = accum + (arg1 or 0)
+        if accum < 0.5 then return end
+        accum = 0
+        RefreshControls()
+    end)
+end
+
+-- Entry point: /rpc options and the minimap right-click (non-Paladins).
+function AegisRP_OptionsToggle()
+    if not optFrame then CreateOptionsFrame() end
+    if optFrame:IsShown() then optFrame:Hide() else optFrame:Show() end
+end

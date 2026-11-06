@@ -1,0 +1,984 @@
+# CLAUDE.md — Aegis: RallyPower (folder: Aegis_RallyPower)
+
+Project brief for Claude Code. Read this fully before editing anything.
+
+## What this is
+
+**Aegis: RallyPower** (part of the Aegis addon series, like Aegis_SBR).
+Naming rules: the install folder and TOC are **`Aegis_RallyPower`**; our code
+namespace, globals, frame names, and saved variables use the **`AegisRP`**
+prefix (`AegisRP_Settings`, `AegisRP.Assign`, …); Core files are
+`Core/Aegis_*.lua`. The embedded PallyPower engine keeps its own
+`PallyPower_*`/`PP_*` names and the `PLPWR` addon-message prefix (locked
+byte-compat with stock PallyPower); our sync channel prefix stays `RPCX`.
+It extends
+the PallyPower paladin buff addon to **all nine
+classes** — a unified raid buff/utility coordinator for **Turtle WoW 1.18.1**,
+which is a **1.12.1 client (Lua 5.0)** with the **SuperWoW** and **VanillaFixes**
+client mods. It is a fork of PallyPowerTW; the **visual and functional gold
+standard is PallyPower 3.3.5 (WotLK)** — reference source:
+`github.com/AznamirWoW/PallyPower` (clone it; `PallyPower_Wrath.xml` +
+`PallyPowerValues.lua` are the spec for frames, colors, dimensions).
+
+Current version: **1.15.4**. See `CHANGELOG.md` for the full history,
+`docs/ROADMAP.md` for what is done / shipped-but-unverified / planned, and
+`docs/` for the design documents and interactive HTML concepts.
+
+**Where things are written down**, so the two don't drift into duplicating each
+other: `docs/ROADMAP.md` holds **status** — what phase an item is in, whether
+it has been seen working in-game, and what is still open. This file holds
+**rules and invariants** — how a thing must be built and why. A shipped
+feature's constraint ("wids are the wire identity of a duty") belongs here; its
+progress belongs there.
+
+## HARD RULES — never violate these
+
+Not style preferences. Each one produces a runtime error, a silent failure, or
+a file the client refuses to load. Shared with **Aegis: Exchange**; the two
+addons keep these rules identical so a habit learned in one is safe in the
+other.
+
+### Language (Lua 5.0)
+
+1. **Lua 5.0 only.** No `string.match`, no `string.gmatch`, no `:match()`.
+   Use **`string.find`** (with captures) and **`string.gfind`** — the 5.0 name
+   for what later Lua calls `gmatch`.
+2. **No `#` length operator** → `table.getn(t)`. **No `table.setn`.**
+3. **No `%` modulo operator** → `math.mod(a, b)`. No integer division either —
+   combine `math.floor` with `math.mod`.
+4. **Varargs use the `arg` table and `arg.n`.** `select()` does not exist.
+5. Fine to use: `string.gsub`, `find`, `gfind`, `format`, `sub`, `lower`,
+   `upper`. Only the `match`/`gmatch` family is banned.
+
+### Events
+
+6. **Handlers read the GLOBALS `event`, `arg1`, `arg2`…** — never
+   `function(self, event, ...)`. On this client OnEvent receives no arguments;
+   the client sets `this`, `event` and `arg1..argN` as globals.
+
+7. **A handler for an event that can STORM must be O(1), state-gated, or
+   coalesced behind a once-per-frame flush.** Never an unbounded rescan, never
+   a per-item client query, inline in the handler.
+
+   This is a freeze rule, not a tidiness rule — and **this addon is the
+   cautionary case**. On 1.12 the client populates its item cache lazily, so
+   the *first* time a session opens mail with unseen attachments it re-fires
+   `BAG_UPDATE` (the stock `MAIL_SHOW` handler calls `OpenBackpack()`) dozens
+   of times in a few frames. RallyPower has no mailbox feature and still
+   stalled ~18s, purely because the vendored engine answered every fire with a
+   full bag walk (`PallyPower.lua:576` → `PallyPower_ScanInventory`).
+
+   A coalescing fix for that was written and then **reverted** (PR #40) once the
+   mail hang was traced elsewhere, so the unbounded scan is still live. Treat it
+   as a known cost, not a solved problem: if it is revisited, the shape is a
+   dirty flag flushed once per frame, and the vendored engine must be wrapped
+   rather than edited.
+
+   **Never inline in a stormable handler:** `GetItemInfo` per item, any
+   `GameTooltip:Set*` per item, a full bag or inventory walk, or a list
+   repaint.
+
+   **The three shapes that are safe** (from Aegis: Exchange, which declares
+   this rule suite-wide and is the reference case for it). Pick whichever
+   fits — all three are already in this repo:
+
+   - **O(1) / bounded, no item queries.** One pass reading only cheap fields,
+     repainting nothing unless the thing is on screen. It cannot participate
+     in a cache storm no matter how often it fires.
+   - **State-gated.** `Aegis_Sync.lua`'s `CHAT_MSG_ADDON` path does real work
+     only for a prefix it owns; the rotation pollers return immediately unless
+     `MyClassHas(r)`. Repeat fires cost a comparison.
+   - **Dirty flag + once-per-frame flush.** Set a boolean in the handler, do
+     the work in an existing `OnUpdate`. Use this whenever the work is a full
+     rescan that cannot be made cheap — `auraDirty` in `Aegis_Core.lua` and
+     `MarkDirty`/`Flush` in `Aegis_Sync.lua` are the worked examples.
+
+   Stormable events we touch: `BAG_UPDATE`, `UNIT_AURA`,
+   `PLAYER_AURAS_CHANGED`, `CHAT_MSG_ADDON`, `UNIT_CASTEVENT`.
+
+### Hooking
+
+8. **No `hooksecurefunc`, no secure hooks** — they don't exist in 1.12. Hook by
+   **saving the original and replacing it**, then calling the saved original.
+   Canonical examples: `Core/Aegis_Popout.lua` (`orig_PallyPower_UpdateUI`,
+   and the `PallyPower_AutoBuffAll` replacement).
+
+### The two load-time ceilings
+
+9. **A function may read at most 32 file-scope locals. Lua 5.0 refuses to LOAD
+   a file that breaks this** — `too many upvalues (limit=32)` — so the whole
+   addon dies, not just that feature.
+
+   **And a chunk may DECLARE at most 200 file-scope locals** — `main function
+   has more than 200 local variables`. Same failure, different limit, and
+   `Aegis_AssignPanel.lua` has hit it for real: the crowd-control tab arrived
+   as nineteen new file-scope locals and the file stopped compiling. The fix is
+   the same one, applied to functions as well as constants — the whole tab now
+   hangs off a single `CC` table (`CC.Build`, `CC.Refresh`, `CC.MARKS`, …), so
+   it costs **one** local instead of nineteen. `TAB_BUILD` did the same for the
+   seven tab builders `CreatePanel` used to reach individually, which is what
+   dropped it from 29 upvalues to 23 and made room for the seventh tab at all.
+   `scripts/lint/upvalues.py` catches both, because `luac` refuses the file
+   either way.
+
+   Every file-scope `local` a function references costs one upvalue. A big
+   builder function plus a few new layout constants is all it takes.
+   **We are already at 29**: `CreatePanel` in `Core/Aegis_AssignPanel.lua`.
+   Three more file-scope locals in that file, referenced from that function,
+   and the addon stops loading.
+
+   The group-buff grid is the worked example: its nine layout constants went
+   into one `GBUF` table, so `CreatePanel` grew by exactly **one** upvalue (the
+   builder it calls) instead of ten. As nine separate locals it would have hit
+   38 and the addon would not have loaded.
+
+   **Nothing local catches this.** `verify.py` won't, and a Lua 5.1 harness
+   won't — 5.1's limit is 60. The only signal is:
+
+   ```
+   luac5.1 -l -p Core/Aegis_AssignPanel.lua | grep upvalues
+   ```
+
+   **The fix is a table.** Thirteen constants as thirteen locals cost thirteen
+   upvalues; the same thirteen as fields of one table cost one. Group new
+   panel/layout constants into a table rather than adding another file-scope
+   local next to an already-large function.
+
+### SavedVariables
+
+10. **SavedVariables are `nil` until `ADDON_LOADED` fires.** Never *read* a
+    stored value at file scope. The `X = X or {}` init form at the top of a
+    file is safe and is what we use (`AegisRP_Settings`, `AegisRP_Roles`,
+    `AegisRP_Assign`); reading `AegisRP_Settings.someOption` at file scope is
+    not — it sees the default, never the player's saved choice.
+
+### Frames & widget API
+
+11. Frame handlers receive **implicit globals**: `this`, `event`, `arg1`…
+12. **Definition order matters**: a `local function` must be defined before any
+    reference, or forward-declared (`local Foo` … later `Foo = function() end`).
+    This is the single most common way to brick this addon.
+13. Use **`getglobal()` / `setglobal()`** for dynamic frame names — never `_G`.
+14. Build frames with **`CreateFrame`** using **vanilla templates only**
+    (`UIPanelButtonTemplate`, `UIDropDownMenuTemplate`, `GameTooltipTemplate`).
+15. No `C_Timer`, no secure templates, **no combat lockdown** — casting from
+    code is legal in combat, a genuine advantage over retail.
+16. Timers/tickers = `OnUpdate` with an accumulator on `arg1`.
+17. **`UIDropDownMenu` has a button ceiling.** A menu built from the full raid
+    overflows it and silently clips names (`Too many buttons in
+    UIDropDownMenu`). Filter the list to plausible candidates — see
+    `TANK_CLASSES` in `Core/Aegis_AssignPanel.lua`.
+
+### Adding a file
+
+18. **Adding a `.lua` means editing the `.toc`, and that needs a FULL client
+    restart, not `/reload`** — 1.12 reads the file list at startup. Mark such a
+    release **restart** in `CHANGELOG.md`.
+
+---
+
+## Environment specifics
+
+**SuperWoW** (detected via `SUPERWOW_VERSION`) — always guard and always keep a
+bare-1.12 fallback:
+- `UnitBuff(unit, i)` additionally returns the aura **spell id** (3rd return);
+  `UnitDebuff` returns it 4th.
+- `CastSpellByName(spell, unit)` casts directly at the unit (no target dance).
+- Buff/debuff **ids are learned at runtime** from the icon seed — never
+  hard-code aura ids (Turtle's may differ from Vanilla).
+
+**Turtle deltas:** blessing durations are forced (10 min normal / 30 min
+greater). Totem/sting/curse durations use Vanilla defaults at the top of each
+class module — verify on-realm and edit there if Turtle differs. Spell-name
+matching is exact; if a Turtle rename breaks a lookup, fix the name string.
+
+## Verification workflow (mandatory)
+
+After **every** edit:
+
+```
+./scripts/check.sh
+```
+
+One command for everything mechanical in the self-check below: `verify.py`
+(structural balance + Lua 5.1-isms across `Core/` + `Classes/` + `PallyPower/`,
+the vendored engine scanned as a tripwire), the four lints ported from **Aegis:
+Exchange**, every off-client test, and the `PallyPower/` byte-identity check.
+
+```
+python3 scripts/verify.py            # balance + language rules
+python3 scripts/lint/upvalues.py     # the 32-upvalue ceiling
+python3 scripts/lint/scoping.py      # a file-scope local read as a nil global
+python3 scripts/lint/definitions.py  # a definition lost to a scripted edit
+python3 scripts/lint/version.py      # the three bump sites agree
+```
+
+The last four each catch a failure that **compiles cleanly and fails only at
+runtime, or not visibly at all** — which is why they exist as tools rather than
+checkboxes. `scoping.py` is the automated form of hard rule 12; it works off
+`luac -l` bytecode rather than the source text, because the source reads
+identically either way.
+
+### Sabotage mode — does the suite actually notice?
+
+```
+./scripts/check.sh --sabotage      # or: python3 scripts/sabotage.py [name]
+```
+
+A green suite proves nothing on its own. It might be green because the code is
+right, or because the assertions **cannot tell right from wrong** — and the
+second kind is indistinguishable from the first until something ships broken.
+`test_duties.lua` was green while Faerie Fire and Demoralizing Roar rendered as
+blank squares, because it did not yet check for an icon at all.
+
+So `scripts/sabotage.py` plants real bugs — the exact mistakes the code is
+written to avoid — in a throwaway copy and requires the named suite to **fail**.
+A sabotage that slips through is reported loudly: that suite is not testing what
+its name claims.
+
+**It has already paid for itself.** `groupbuffs-insertion-order` replaced the
+catalog-ordered walk in `GetGroupBuffs` with `pairs()`, and the suite passed:
+the ordering check used two buffs, and Lua's hash order for those two names
+happens to match catalog order. The check now uses all three, where it doesn't.
+The assertion was real and under-powered, which is precisely the failure no
+amount of green can reveal.
+
+Run it after adding or changing a test, and before trusting a green suite you
+have not exercised. When a sabotage goes **stale** (the `find` string no longer
+matches), the code moved — update the entry rather than deleting it.
+
+Nothing under `scripts/` is in the `.toc`, so adding to it is never a
+**restart** release and never a version bump.
+
+Behavioural logic that can be isolated from the WoW API gets an off-client test
+under `scripts/test_*.lua`, run with any Lua (the addon files are
+5.0-compatible so they load unmodified):
+
+```
+lua scripts/test_groupbuff.lua   # group-buff model + RPCX round-trip
+lua scripts/test_rotation.lua    # kick/taunt rotations + KO/TO/KICK/TNT wire
+lua scripts/test_strip.lua       # strip engine: edge snapping + alpha floor
+lua scripts/test_duties.lua      # duty catalog: unique wids, tab fits its cards
+lua scripts/test_cc.lua          # crowd control: mark-major view + RPCX round-trip
+lua scripts/test_pets.lua        # pet token shapes + the owner-class gate
+lua scripts/test_soulstone.lua   # warlock soulstone tiers rank by name
+lua scripts/test_minimap.lua     # minimap button: shape, ring, drag, collectors, skins
+```
+
+Anything that crosses the wire should have one — a silent serialise/deserialise
+bug corrupts raid assignments with no error, which is the worst failure mode
+the sync layer has.
+
+Beyond that there
+is no standalone Lua here; the real test is in-game — errors print to chat
+(the Core wraps risky paths in `pcall` and prints `AegisRP error: …`).
+Use `/rpc test` (test mode) to exercise everything on an under-levelled
+character: all options appear (unlearned marked `*`), clicks simulate casts
+and start real timers.
+
+## Architecture map
+
+Load order (`Aegis_RallyPower.toc`):
+```
+Locale\*                       localization
+PallyPower\*                   the ORIGINAL PallyPower engine (see below)
+Core\Aegis_Core.lua     class-independent coverage engine + class-buff strip
+Core\Aegis_Strip.lua    shared strip engine + helpers
+Classes\Class_*.lua            one module per class
+Core\Aegis_Options.lua  the tabbed options frame
+Core\Aegis_Popout.lua   loads LAST (legacy hover handler + paladin test graft)
+```
+
+**Every non-paladin class is now a strip.** There is one visual family: the
+100×34 paladin-template button, stacked in a movable titled strip (drag dot,
+scale grip, saved position). Priest/Mage/Druid render the **class-buff strip**
+(`AegisRP.BuildClassBuffs`, one button per raid class, with the player
+pop-out on hover); Warrior/Shaman/Hunter/Warlock/Rogue render their own
+self-contained strips. No bespoke grid bar exists anymore.
+
+**Paladin = the legacy engine, wrapped not rewritten (locked decision).**
+`PallyPower\PallyPower.lua/.xml` run unmodified; `PallyPower.xml` loads its lua
+via a relative `<Script>` (they must stay in the same folder). The player
+pop-out (`Core\Aegis_Popout.lua`) grafts onto its buff bar by replacing
+`PallyPowerBuffButton_OnEnter`, reading the engine's own per-button data
+(`btn.have/need/range/dead`, `LastCastPlayer`) and casting through its
+spellbook tables (`AllPallys`, `GetNormalBlessings`). The pop-out rows are an
+exact replica of the WotLK `PallyPowerPopupTemplate` (100×34, Smooth skin +
+Blizzard Tooltip border, official colors: Good `0,0.7,0` / NeedAll `1,0,0` /
+Special `0,0,1`, all 0.5 alpha).
+
+**Class-buff classes** (Priest, Mage, Druid): declare
+`M = AegisRP:NewClass("TOKEN"); M.buffs = { {name, group, icons, ids?,
+pet, dur, gdur, selfcast}, ... }` (+ optional `M.utility`), plus
+`M:OnActivate()` = `AegisRP.BuildClassBuffs()` and `M:Toggle()` =
+`AegisRP.BuildClassBuffs():Toggle()`. The Core scans the roster, detects
+by SuperWoW spell-id (learned from the icon seed) with icon fallback, casts via
+`CastBuffOn`, and renders one strip button per raid class (wheel = which buff
+for that class, L = group cast, R = smart single, hover = player pop-out).
+
+**Strip classes** (Warrior, Shaman, Hunter, Warlock, Rogue): declare
+`M:OnActivate()` (build UI) and `M:Toggle()`. Build UI with the strip engine:
+```
+strip = AegisRP.NewStrip(key, title)
+strip:AddButton{ refresh=fn(b), onClick=fn(b,btn), onWheel=fn(b,delta), tooltip=fn(b,tt) }
+strip:Finish()
+```
+Button helpers inside `refresh`: `b:SetIcon/SetLabel/SetSub/SetTimer` and
+`b:SetState("good"|"need"|"off")`. Engine helpers (all cached where hot):
+`AegisRP.FindSpell(name)` (spellbook, invalidated on SPELLS_CHANGED),
+`FindBagItem(pattern)` (bags, invalidated on BAG_UPDATE),
+`UnitHasDebuffEntry(unit, entry)` (icon-seed id-learning),
+`CastAtTarget(name)`, `FmtTime(sec)`, `TexBase(path)`,
+`AegisRP.IsTestMode()`.
+**Buttons are 100×34, 26px icon, 2px gap — the paladin template. Locked.**
+
+**Saved variables:** `AegisRP_Settings` (per character: `testMode`,
+strip positions `stripPos_*`, selections `shamanSel`/`hunterSting`/
+`lockCurse`/`roguePoison`, hidden flags) + the legacy `PallyPower_*` tables.
+
+## Locked design decisions
+
+1. **PallyPower 3.3.5 parity** — extract exact specs from the reference repo
+   before styling anything; never approximate from screenshots.
+2. **PLPWR sync interop** — paladin blessing sync stays byte-compatible with
+   stock PallyPower/PallyPowerTW; new-class data rides an extended channel.
+3. **Paladin engine: wrap, don't rewrite.**
+4. **v1 modules are personal-accurate**; cross-player coordination belongs to
+   the sync milestone.
+5. Non-Paladin classes are **deliberately simplified subsets** of the Paladin
+   template (see `docs/DESIGN_ALLCLASSES.md`).
+
+## Milestone: Assignment & Sync — **COMPLETE** (validated in-game)
+
+All three steps shipped and were confirmed on a two-client Turtle test:
+
+1. **Shared assignment data model** — `Core/Aegis_Assign.lua`. Blessings keep
+   PallyPower's format; totems, duties and the raid-buff grid live in
+   `AegisRP_Assign`, multi-caster from the start.
+2. **Sync protocol** — `Core/Aegis_Sync.lua` on `RPCX` (blessings still ride
+   `PLPWR` untouched). Leader / Free Assignment permissions, message chunking,
+   and tank-slot (`TS`) sharing. **Verified**: a leader's MT/OT plan appears on
+   a second client, which shows `lead=no` and the leader's slots.
+3. **Assignment panel** — `Core/Aegis_AssignPanel.lua`, seven tabs: Blessings,
+   Totems, Raid Buffs, Debuffs, Rotations, Roles, Crowd Ctrl.
+
+**Cast observation is validated.** `UNIT_CASTEVENT` fires on Turtle 1.18.1,
+`UnitName()` resolves GUIDs, `SpellInfo()` resolves ids, and `evt` is `CAST` on
+a completed cast. `Core/Aegis_CastWatch.lua` owns the addon's single handler;
+consumers use `AegisRP.CastWatch.Subscribe(fn(caster, target, spell, id, evt))`.
+**Known characteristic:** a caster must be seen *once* before their casts
+register — the event only reaches units the client can see. After that the
+timer runs locally at any distance.
+
+Stragglers from this milestone are resolved: Mage Scorch and Warrior Sunder
+debuff buttons shipped; Paladin aura/seal/RF toggles were already provided by
+the legacy self-bar. **Priest Tank Shield is cancelled** — PW: Shield was
+deliberately dropped in 0.14.0 (reactive spam, not a maintained/assigned duty);
+wire id 19 is retired and must never be reused.
+
+The **Options UI** (`docs/OPTIONS_UI_SPEC.md`) is built: Settings, Buttons and
+Raid tabs, the last carrying per-character targeted duties. Follow the spec's
+module `optionsInfo` contract so one Buttons tab keeps serving every class.
+
+## Next up
+
+- **Raid-wide interrupt timers — DONE, validated in-game.** Members broadcast
+  their own interrupt cooldown over `RPCX` (`KICK`, `Aegis_Sync.lua`), which
+  reaches any distance and needs no SuperWoW on the sender; the Rotations tab
+  distinguishes a synced report from a locally observed one (`r.src`).
+- **Rotations are one engine, two records — untested in-game.** Kick and taunt
+  are the same problem, so `ROT` in `Aegis_AssignPanel.lua` holds both (catalog,
+  cooldown state, strip, sim) and every function takes a record. `A.*Rotation*`
+  in `Aegis_Assign.lua` is keyed the same way; the `A.*Kick*` names survive as
+  wrappers because the panel, strip and sync layer all call them. Adding a third
+  rotation is a `ROT` entry plus a `ROT_KIND` entry plus a wire tag — do it that
+  way, never by copying the engine. **The `TAUNTS` catalog now covers all four
+  tanking classes** — Warrior Taunt, Druid Growl, and Turtle's own Paladin
+  *Hand of Reckoning* and Shaman *Earthshaker Slam*, all instant on a 10s
+  cooldown, confirmed on-realm. Their **icons** are guesses and were not
+  confirmed; the art only appears on other members' rows, since your own takes
+  the real spellbook texture. This was the worked example of the catalog being
+  the whole fix: two entries, no engine change.
+- **Pet auto-buffing is Hunter-only, on BOTH sides — the paladin half was
+  missed for eight releases.** **A warlock's demon does not take these buffs at
+  all** (confirmed on realm), so the cast cannot land: a bar that counts one as
+  needing a blessing asks forever, which is what "still trying to buff warlock
+  pets" looks like from the outside. `pet=true` buffs therefore only
+  auto-target a Hunter's pet.
+  The reason matters, because the first version of this note said the blessing
+  was merely *wasted* on something that gets resummoned — and that reading
+  produced a pointless "Bless warlock pets" opt-out in 1.13.3, removed in
+  1.13.4. **There is nothing to opt into**; do not add the switch back. Ownership is read off the raid index a pet
+  token shares with its owner (`PetOwnerUnit`, `Aegis_Core.lua`); a manually
+  targeted pet (the `"target"` shortcut) is unaffected, since that's an
+  explicit click, not the automatic scan.
+  **`IsHunterPet` only ever covered `FindUnitToBuff`, which paladins never
+  run** — they run the vendored engine, and PallyPower puts EVERY pet in one
+  `classID 9` column with no owner check (`PallyPower.lua:2995`), so a paladin
+  blessed felhunters exactly like hunter cats until 1.13.3. When a rule is
+  written as "the addon does X", check whether it reaches the paladin path at
+  all; that class shares almost none of this code.
+  **Two functions with two answers, and the difference matters.**
+  `IsHunterPet` collapses "no" and "cannot tell" into `false`;
+  `AegisRP.PetSkippedForBuffs` returns true ONLY for a pet whose owner we can
+  positively see is not a hunter, so an unresolvable owner is permission rather
+  than refusal (a hunter pet silently unbuffable during roster churn is the
+  worse failure). Gates use the second one.
+- **Stock PallyPowerTW has a family of UNGUARDED reads, and they surface only
+  under conditions a solo tester never hits.** Two have been fixed from our
+  side so far, both by save-and-replace with `PallyPower/` left byte-identical:
+  `PallyPower_AutoBuffAll` compared `tonumber("3 (1)") > 0` the moment anyone
+  in the raid was dead (1.1.1), and `PallyPower_ParseMessage`'s **COOLDOWNS**
+  branch indexed `AllPallys[sender]` with no nil check when a paladin
+  broadcast before their announce arrived (1.14.2) — while its SYMCOUNT and
+  both FREEASSIGN siblings guard it and answer with a `REQ`.
+  **Neither is a version mismatch, and the reported line numbers match our copy
+  exactly** — that diagnosis has now come in twice and been wrong twice.
+  When the next one lands, look for the guarded SIBLING first: the engine
+  usually has the correct shape a few lines away, and copying it is both the
+  fix and the proof of what the fix should be.
+- **Half the vendored engine's "globals" are forward-declared FILE-LOCALS.**
+  `RebuildRoster`, `ScanOneUnit` and `IsRosterUnit` are declared
+  `local` at `PallyPower.lua:104-106` and only assigned later, so they read as
+  globals at the assignment site and are not. Save-and-replacing one sets a
+  global nothing calls — a **silent no-op**, which is worse than an error
+  because the suite stays green and the feature simply never happens. Check for
+  a `local <name>` near the top of the file before hooking anything in there.
+  The engine's roster tables (`RosterUnits`, `UnitClassID`, `RosterSet`,
+  `UnitAlias`) are file-locals too and cannot be reached at all. What IS
+  reachable: `CurrentBuffs` (line 91, a real global) and the global functions
+  that read it — which is why the warlock-pet gate sweeps that table from
+  `PallyPower_UpdateUI` and `PallyPowerBuffButton_OnClick` instead of stopping
+  the scan, and nothing gates that sweep (see the pet note above). It declines
+  to CAST; the `classID 9` assignment is still stored and broadcast
+  byte-identically, so `PLPWR` is untouched.
+- **The rotation strips read GREEN = usable, RED = on cooldown — the opposite
+  of the class-buff strips, on purpose (1.13.5).** A buff strip shows COVERAGE,
+  where red is a gap to go fill; a rotation strip shows a COOLDOWN, where
+  green-means-usable is what every cooldown display does. On both the strip and
+  the Rotations tab the **backdrop is readiness and nothing else**, and WHOSE
+  TURN it is rides in the label — a red "UP"/"KICK NOW" tag, an amber "On deck"
+  — so a ready member is green whether or not they are the one up.
+  The tab had always drawn it that way and the strip had not, so the two
+  disagreed about the same numbers for eight releases. **If you touch one,
+  check the other**: `ROT_STATE` + `RotRowRefresh` (strip) and `RefreshRotTab`
+  (tab) are the two places, and nothing off-client can catch them drifting
+  apart — the panel needs a real client to load.
+- **Strip snapping and the rotation "next three" — untested in-game.**
+  `SnapStrip` in `Aegis_Strip.lua` runs on every strip's `OnDragStop` and lines
+  a strip up flush with a screen edge or another strip within 12px. All of its
+  arithmetic happens in the DRAGGED frame's own coordinate space — each strip
+  carries its own grip scale, so another strip's `GetLeft()` has to be
+  converted by the scale ratio or the snap lands visibly wrong at any scale but
+  1.0. **`FOREIGN_SNAP` adds the vendored engine's own movable frames**
+  (`PallyPowerBuffBar`, `PallyPowerFrame`) as targets — a paladin has no
+  class-buff strip, so the legacy buff bar is the only thing their Taunt strip
+  can line up with, and the snapper could not see it. Looked up by name at drag
+  time, since they belong to the engine and may not exist. **A `FOREIGN_SNAP`
+  entry carries a `pad`**, because a frame edge is not what a player sees: the
+  buff bar is 110 wide with its buttons inset 5px while our strips are 100 with
+  none, so aligning frame boxes leaves the two visible columns 5px out of step.
+  Snap to the content box; the bar's column is exactly our width, so one snap
+  squares up both sides. Anything else added to `FOREIGN_SNAP` needs its own
+  inset measured, not assumed to be zero.
+  Covered by `scripts/test_strip.lua`. The rotation strips can also show
+  three rows for slots 1-3 of the order (`rotQueue`, off by default); the rows
+  follow the ORDER rather than the availability queue so names don't reshuffle
+  as cooldowns tick.
+- **A strip's scale has ONE resolver: `AegisRP.StripScale(key)`
+  (`Aegis_Strip.lua`).** Per-strip grip scale first, then the class-dependent
+  global — and that second half is the part worth remembering. A paladin has no
+  class-buff strip of ours, so the legacy buff bar IS their class strip, and
+  their Kick/Taunt strips follow the ENGINE's `PP_PerUser.scalebar` rather than
+  our `uiScale`, which has no slider on that class and would sit at 1.0
+  forever. Both writers push through `AegisRP_ApplyStripScale` (Core): our
+  Options slider, and a save-and-replace of the engine's `PallyPower_ScaleFrame`
+  in `Aegis_Popout.lua` so the bar's own scaling grip moves the strips too.
+  Never read `uiScale` or `stripScale_*` directly to size a strip.
+- **The Settings tab's paladin branch is no longer engine-only.** It returns
+  early with the legacy entries, and every strip-level setting it skipped was a
+  setting paladins genuinely could not reach once they gained Kick and Taunt
+  strips in 1.10.0. The shared entries are factories (`StripAlphaEntry`,
+  `StripSnapEntry`, …) so a new one lands on both branches or neither. The tab
+  is the tallest in the frame and the frame grows to fit without a scrollbar —
+  measure before adding a row (header 26, check 24, slider 44, select 34,
+  button 30, note h+8; the frame is centred at +40 on a 768-unit `UIParent`).
+- **The two big frames dock rather than stack (`AegisRP.DockPanels`,
+  `Aegis_Strip.lua`) — untested in-game.** The Options frame and the
+  Assignment panel both open at screen centre, so opening both put one on top
+  of the other. Docked they sit side by side, tops aligned. **Only the Options
+  frame moves**: the panel has a dragged position we persist, Options has none,
+  so it is the one with no intent to overwrite. The fit test is in SCREEN
+  pixels — the panel carries a grip and Options does not, so comparing raw
+  `GetLeft()` across them is the mistake `SnapStrip` already exists to avoid.
+  Re-docked on the panel's `OnShow`, `OnDragStop` and scale grip.
+  **A 4:3 or 5:4 client cannot fit the pair** (`UIParent` is 768 × aspect
+  wide, so 1024 or 960, against 760 + 360 + a gap); there Options goes to the
+  roomier screen edge with its top still aligned, so the overlap is the deficit
+  rather than the whole frame. Do not "fix" that by moving the panel — the
+  player put it there.
+- **NEVER raise one of our windows with `SetFrameLevel`. Use
+  `AegisRP.MakeToplevel(f)` (`SetToplevel(true)`) and nothing else.**
+  `SetFrameLevel` does not carry a frame's children — they keep the absolute
+  level they were created at — so raising a window lifts it above its OWN
+  buttons. The window is mouse-enabled (that is how it is dragged), so it then
+  swallows every click meant for them: the frame draws perfectly normally and
+  nothing inside it works, which is about as misleading as a symptom gets. That
+  shipped in 1.13.1 and killed the options frame the moment it docked.
+  `SetToplevel` hands the whole subtree to the client to re-level on click,
+  which is the only correct raise here. Any new top-level frame of ours in
+  `DIALOG` wants it, and wants nothing else.
+  (What prompted the raise — two frames in one strata interleaving levels, so
+  the lower one's buttons draw over the upper one's backdrop — is real, and
+  reads as a frame having gone half-transparent rather than as a z-order
+  problem. Docking them apart and matching their backdrop opacity is what
+  actually fixed it.)
+- **Transparency has a floor (`AegisRP.StripAlpha`, `Aegis_Strip.lua`).** The
+  backdrop is the only carrier of button state, so an alpha near 0 makes every
+  state paint identically while the border keeps drawing — outlined boxes with
+  empty middles, which players read as a broken addon. The floor is **0.3**,
+  applied on read as well as in the slider's range, so an existing low value
+  heals itself. 0.15 was tried first and was still too faint for a saturated
+  green to read as anything but grey — it satisfied the rule on paper and not
+  on screen. Anything new that paints a strip backdrop must go through
+  `AegisRP.StripAlpha` rather than reading `stripAlpha` directly. The setting
+  is per character, and `/rpc alpha` prints the stored value, the effective
+  one, and every visible button's live RGBA — use it before theorising about a
+  colour that looks wrong.
+- **Per-player buff overrides — DONE, untested in-game.** `pbuff` in
+  `Aegis_Assign.lua` (caster x player name -> one buff name, replacing what
+  their class row would give), riding an additive `p` section on `RPCX`.
+  `PlayerOverrideIndex` in `Aegis_Core.lua` resolves it, and the scan gives an
+  overridden player to their own buff index ONLY, while un-overridden players
+  still count toward every index so the row's wheel stays instant. An override
+  naming an uncastable buff resolves to nil, so the player falls back to the
+  row rather than dropping out of coverage.
+- **A strip's SAVED POSITION is not trusted, and the Options tick is not
+  evidence.** The "Show <strip>" checkbox reads the `stripHidden_*` flag, never
+  the frame, so a strip that is hidden or anchored off screen keeps reporting
+  itself as shown — which is what "my whole UI is gone" looks like from the
+  player's side, with a ticked box next to nothing. Three routes led there and
+  all three are now closed in `POS` (`Aegis_Strip.lua`, exposed as
+  `AegisRP.StripPos`): a stored anchor missing its offsets (the scale grip
+  persisted `x = f:GetLeft()`, and `GetLeft()` is nil on an unanchored frame —
+  restoring `{p, rel}` with no offsets puts the strip's TOP-LEFT on the
+  screen's BOTTOM-LEFT, entirely below the bottom edge); a rescale, since
+  `SetScale` does not re-anchor and `AegisRP_ApplyStripScale` moves every strip
+  proportionally away from its corner; and an error in a button's FIRST
+  `refresh`, which used to abort `Finish` before `f:Show()`. **Restore
+  validates and falls back, `POS.Save` is the only writer and refuses a partial
+  table, and `Finish` shows the frame BEFORE the first refresh.** Use
+  **`/rpc strips`** before theorising about a strip that is not there — it
+  prints flag vs frame vs on-screen vs enabled-button count, the way
+  `/rpc alpha` does for a colour. 24px reachable is the test, so a strip
+  parked half off an edge on purpose is left alone.
+  **`POS.OnScreen` answers true, false or NIL, and only false moves a strip.**
+  1.14.3 shipped it two-valued, reading an unreadable rect as "off screen" —
+  and `Restore` runs inside `Finish`, before the strip is first shown, when the
+  client has not laid it out and `GetLeft()` is nil. So every saved position
+  was judged unreachable, DELETED and replaced by the default on every login,
+  for four releases ("my strips reset to the middle every reload"). It is the
+  suite's first relearned rule — a detection that cannot answer must never
+  close a gate — arriving through a geometry check. `POS.Settle` makes the
+  real check once from the strip's ticker, the first time it can be measured.
+  **The off-client test hid it**: its stub frame resolved its rect the moment
+  it was anchored, which the client does not, and a sabotage even planted the
+  CORRECT behaviour and called it the bug. A test frame for anything that runs
+  at login must model "anchored, not laid out yet" (`Pending()` in
+  `test_strip.lua`).
+  **A drag saves the strip's TOP-LEFT corner, never the client's anchor
+  (1.15.4).** `POS.Save` measures `GetLeft`/`GetTop` and pins the live frame
+  to `TOPLEFT`/`BOTTOMLEFT`. Before, it stored whatever point the client
+  re-anchored to when the drag ended, and the class strip's height follows the
+  roster (one button per class present, built before the roster loads) — so a
+  title saved by any other point came back elsewhere whenever the group
+  differed, while one-row rotation strips never moved. Any strip whose height
+  can change must be saved and anchored by its top.
+  **Nothing deletes a stored position on a measurement**, in any path —
+  `Settle` and `EnsureOnScreen` move the frame for the session and leave the
+  value; only a drag or Reset Frames writes one. Two releases deleted on a
+  wrong login-time measurement and lost every player's layout.
+  **The relog test is the one that counts**: `test_strip.lua` builds a REAL
+  strip, drags it tall, rebuilds it short, and checks the title. Both position
+  regressions passed a suite that only drove the `POS` helpers.
+- **The minimap button is OUR OWN, built the way Aegis: Pathfinder builds
+  its (`MinimapButton.lua` in that repo), and the engine's is parked.** One
+  Button, `AegisRP_MinimapButton`, a DIRECT child of the Minimap, anchored by
+  its CENTER, the art an ARTWORK texture anchored by both corners, a gold
+  OVERLAY ring on hover, the art sinking 1px when pressed. `MMB` in
+  `Aegis_Core.lua` (one file-scope local, exposed as `AegisRP.MinimapButton`).
+  **Why not dress the engine's:** its SHAPE. `PallyPower/MinimapButton.xml`
+  builds a 32px container frame with a 32px button pinned to the container's
+  TOPLEFT. A minimap-button collector (pfUI's, or a dedicated addon) fits the
+  container — the Minimap's child — into its grid, and the button inside keeps
+  its own size and corner pin, so it spills down and right of its slot.
+  1.15.0 resized it, 1.15.1 scaled it (which also renders at one size while
+  reporting another), 1.15.2 inset its art: each fixed the SIZE and left the
+  SHAPE, and three reports came back "bigger and offset". When a frame we do
+  not own keeps looking wrong after a size fix, check its anchoring and its
+  parentage before trying another size.
+  **The engine's button is parked, not hidden**: re-parented into a frame that
+  is never shown and its `Show` shadowed with a no-op, because the engine calls
+  `Show()` from Init and from its own options checkbox, and a collector that
+  scans the Minimap's children would otherwise find a second, misshapen button.
+  **What stays the engine's**, so no SavedVariables change: clicks go to
+  `PallyPower_MinimapButton_OnClick` (shift-click = skin), the tooltip is
+  `PallyPower_ShowCredits` plus our hint lines, show/hide is
+  `PP_PerUser.minimapbuttonshow`, the angle is `PP_PerUser.minimapbuttonpos` in
+  the ENGINE's convention (0 = LEFT, 90 = above) — Pathfinder's runs from the
+  right, and switching would move every existing button. `UpdatePosition`,
+  `MinimapButton_Init` and `MinimapButtonOption` are save-and-replaced; all
+  three are real globals, and Options' `LegacyCheck` calls by `getglobal`.
+  **Built at file scope, hidden** (as Pathfinder does) so it exists when a
+  collector scans at login; it reads no setting there (rule 10).
+  `MMB.Adopted()` (our button's parent is not the Minimap) means a collector
+  owns it: then do not size it, place it or let it drag.
+  **Licence:** Pathfinder is GPLv3, this repo is MIT — reuse its DESIGN, never
+  copy its files. The hover ring (`Icons/MinimapRing.tga`) is generated here.
+- **A new minimap skin is a `SKIN_FILE` entry, a `SKIN_LABEL` and one TGA in
+  `Icons/`** (BGRA, bottom-up, descriptor `0x08`; the legacy five are 32x32,
+  the Aegis badge 64x64 for a sharp 26px). No pushed or highlight art: the
+  press sinks the icon and the hover ring is shared. Changing the DEFAULT needs
+  a migration as well: `ApplyMinimapSkin` writes back whatever it resolves,
+  including the fallback, so every existing character already has the old
+  default stored and a changed default reaches nobody.
+  `AegisRP_MigrateMinimapSkin` does it once behind a flag, so a player who
+  picks a legacy skin afterwards keeps it.
+- **The Options frame yields its +40 lift rather than running off screen.**
+  `ShowTab` grows the frame to its tallest tab and then clamps the centre
+  offset; there is no scrollbar, so a tab that does not fit is simply cut off.
+  The Paladin Settings tab is the tallest in the addon and sat **3px** inside
+  the top edge at 682, so any new row at all put it over. Still measure before
+  adding one (header 26, check 24, slider 44, select 34, button 30, note h+8) —
+  the clamp buys room, it does not make the tab infinite, and past a
+  screen-height tab it can only split the overflow. The clamp is skipped while
+  the frame is docked, because `AegisRP.DockPanels` anchors it `TOPLEFT`/
+  `TOPRIGHT` to the panel and owns its position; `GetPoint() == "CENTER"` is
+  the discriminator.
+- **Strip show/hide has one writer: `AegisRP.SetStripShown`.** The Options
+  checkboxes, `/rpc kick`, `/rpc taunt` and `S:Toggle` all route through it, so
+  the frame and its saved flag cannot disagree. Options builds its list from
+  `AegisRP.stripOrder` (creation order - `pairs()` over `AegisRP.strips` is
+  unordered and would shuffle the rows between logins), so a new strip appears
+  there on its own. Never write `stripHidden_*` directly.
+- **Debuff duties cover armor / AP / attack speed — untested in-game.** Druid
+  Faerie Fire (wids 26/27 with Demoralizing Roar) shipped, and Warrior Thunder
+  Clap + Demoralizing Shout were un-hidden. **Wids are the wire identity of a
+  duty** — names never cross, so a Turtle rename can't desync — which makes a
+  duplicate wid a silent merge of two duties on every remote client. `19` is
+  retired (cancelled Priest Tank Shield) and must never be reused.
+  `scripts/test_duties.lua` asserts both, plus that the visible debuff duties
+  still fit `DUTY_POOL`; overflow is silent, so a surplus duty just never
+  draws. `DUTY_POOL` is 18 (2x9) and 9 rows is the ceiling — a tenth renders
+  under the tab's hint text.
+- **A duty carries its own `icon=`.** The card falls back to it whenever the
+  viewer can't resolve the spell from their own spellbook — which is everyone
+  looking at another class's duty, so a duty without one renders blank for
+  almost the whole raid. It used to live in a `DUTY_ICONS` table in the panel;
+  as a second place to remember it was promptly forgotten, and Faerie Fire and
+  Demoralizing Roar shipped iconless in 1.8.0. `test_duties.lua` now fails on
+  a duty with no icon.
+- **The engine reads `PP_PerUser` BEFORE it initialises it.** Its
+  `ADDON_LOADED` handler runs `PallyPower_MinimapButton_Init()` (which reads
+  `minimapbuttonpos` through `cos`/`sin`) *before* `PallyPower_InitConfig()`,
+  the function that fills the key in. A character's SavedVariables replace the
+  engine's file-scope defaults table wholesale, so a table saved by a version
+  predating a key comes back missing it and the read throws
+  `bad argument #1 to 'rad'` on this client's degree shims. `Aegis_Popout.lua`
+  snapshots the engine's defaults at file scope — the one moment they exist,
+  before SavedVariables land — and save-and-replaces `MinimapButton_Init` to
+  make `PP_PerUser` whole first. **Do not "fix" this by editing
+  `MinimapButton.lua`**: it is vendored, and `or 0` there would also park the
+  button at the wrong angle (the engine's default is 30).
+- **Per-player assignment has TWO mechanisms, and that is deliberate.** For
+  Priest/Mage/Druid it is our `pbuff` model on `RPCX`. For paladin blessings it
+  is the engine's own `PallyPower_NormalAssignments` — driven through
+  `PallyPower_PerformPlayerCycle`, which cycles, stores AND broadcasts
+  `NASSIGN`. Blessings stay byte-compatible on `PLPWR` (locked decision 2), so
+  a second source for the same question would desync us from stock PallyPower.
+  Do not "unify" these. **`PerformPlayerCycle` reads its caster from
+  `PP_SelectedPally`** — whatever the classic grid has selected — so any call
+  from our UI must pin it to `UnitName("player")` and restore it, or it edits a
+  different paladin's plan.
+- **Crowd control is MARK-major on top of a CASTER-major store — untested
+  in-game.** The tab (`CC` in `Aegis_AssignPanel.lua`) is one row per raid
+  mark, because that is the instruction a raid gives; the STORE is `c.cc[mark]
+  = ccKey` inside the caster block like every other domain, because that is
+  what `RPCX` ships and what `PruneToRoster` cleans — a mage who leaves takes
+  their mark with them and there is nothing extra to tidy. `A.GetCCForMark`
+  derives the mark view on demand and is never stored.
+  **CC spells live in the SAME duty catalog** (`tab="cc"`, wids 28-36), so
+  there is one append-only wid space and a CC entry can never collide with a
+  debuff. They are *assigned* through the `cc` domain, not `A.SetDuty`, so
+  `target` stays `"none"` and `multi` stays `false` on every CC entry —
+  `test_duties.lua` fails if one drifts. A CC entry also carries `note=` (what
+  it works on: Undead / Demon / Humanoid), which is the thing a leader needs
+  before handing a mark out.
+  **A mark has one owner, and `A.AssignMark` is the write that enforces it**
+  — `A.SetCC` is the primitive and stays open, because a member with no lead
+  must still be able to claim for themselves, and two clients can race. A
+  double claim is therefore representable on purpose: the panel SAYS so rather
+  than silently picking a winner.
+  Two axes on one row (wheel = spell, click = who) because one combined list of
+  every (player, spell) pair is 30+ entries in a 40-man — which is hard rule
+  17's dropdown overflow, arrived at from the other direction.
+- **The `cc` domain has to be in the sync layer's dirty list.** It was not, and
+  every CC edit stayed local with nothing to say so; `test_cc.lua` caught it
+  before it shipped and `cc-never-broadcast` keeps it caught. Any NEW domain
+  needs the same line in `A.Subscribe` in `Aegis_Sync.lua` — serialising it is
+  only half the job.
+- **A TIERED family is ranked by NAME, never by list position.** Vanilla's
+  soulstones are Minor / Lesser / unprefixed / Greater / Major — five separate
+  spells and five separate items — and nothing orders either list by tier: the
+  spellbook is not guaranteed to be in learn order, and bag order is wherever
+  the player keeps things. `StoneTier` in `Class_Warlock.lua` scores the name;
+  `M.StoneTier` exposes it so `scripts/test_soulstone.lua` can check the
+  ordering off-client.
+  **Both halves shipped wrong until 1.14.1**, and for the same reason: the
+  create path and the bag lookup each took the LAST match, and alphabetically
+  `(Minor)` sorts last of the five — so the button reliably made and used the
+  weakest stone. A stone still appeared, which is why nothing complained.
+  **`AegisRP.FindBagItem` is last-match-wins by design** (right for a single
+  name, which is what the Rogue poisons want) and cannot express "best of a
+  family". A caller that needs that walks `AegisRP.BagItems()` — the cached bag
+  list, read-only — and scores the names itself. Healthstones, Spellstones and
+  Firestones are the same shape if they are ever added.
+- **The Marks strip (`MARKSTRIP`, `Aegis_AssignPanel.lua`) — untested
+  in-game.** Eight buttons, one per raid icon, acting on your TARGET: left sets,
+  right clears (index 0 removes a mark). It reuses `CC.MARKS` / `CC.ORDER`
+  rather than a second copy of the icons, and it is ONE file-scope local for
+  the same reason `CC` is — this file has hit the 200-local ceiling once.
+  **No permission pre-check.** Whether you may mark depends on lead/assist and
+  a guess that says no is exactly the gate-closed-on-an-unknown failure; the
+  server ignores a call you may not make, and the button reads its highlight
+  back off the unit, so a mark that did not take simply never lights up. That
+  is the feedback, and it needs no guess.
+  It is **opt-in on first run** (`stripHidden_marks` seeded true at build time,
+  not at file scope) because eight buttons is a tall frame to drop on someone
+  during an update; after that the player's choice persists like any strip.
+  Built at `PLAYER_LOGIN` for every class, so Options lists "Show Marks"
+  without the player having to find `/rpc marks` first.
+- **Phase 3 remaining:** the rest of raid markers + roles.
+  **Raid marks are CONFIRMED to work BOTH WAYS on Turtle 1.18.1.**
+  `SetRaidTarget` and `GetRaidTargetIndex` both exist, and a mark set on a unit
+  reads straight back from it (`SetRaidTarget("target", 8)` then
+  `GetRaidTargetIndex("target")` returns 8, checked in a party). So markers are
+  not write-only: the panel can show which mob currently carries which mark, not
+  only assign one.
+  **Do not probe a 1.12 API with `print`.** SuperWoW's `print` cannot print a
+  nil — it produces no output at all rather than "nil" — so an absent function
+  and a working one that returns nothing look identical, which is the ambiguous
+  answer a capability check exists to avoid. Use
+  `/run DEFAULT_CHAT_FRAME:AddMessage("X = "..tostring(X))`: concatenating a
+  definite string with `tostring` always prints something. Reading a mark back
+  needs a GROUP as well, since marking at all needs party lead or assist.
+- **ClassicAPI** (`github.com/brues-code/ClassicAPI`, VanillaFixes DLL,
+  detected via `CLASSIC_API_VERSION`) — **evaluated, deliberately not adopted
+  for now.** Its `C_UnitAuras` would give true `expirationTime` and
+  server-authoritative, caster-modified durations for other players' buffs,
+  retiring the "durations come from the catalog" limitation. If revisited, add
+  it as a *third optional tier* behind SuperWoW, never a dependency. Note `#`
+  and `%` stay forbidden regardless — they're syntax, not library functions.
+
+## Two rules that keep being relearned (suite-wide)
+
+Both come from **Aegis: SBR**, and both bite here for the same reasons.
+
+- **A detection that cannot answer must never close a gate.** Range,
+  visibility, another player's cooldown, a pet's owner and a member's class
+  all have a third value — "cannot tell" — and every caller must treat it as
+  permission, not refusal. This addon is full of them: `UNIT_CASTEVENT` only
+  reaches units the client has seen, `MemberClass` returns nil off-roster,
+  and `GetSpellCooldown` says nothing about anyone else. The symptom when it
+  is broken is always the same: something silently stops and nothing says
+  why. `PlayerOverrideIndex` returning nil for an uncastable buff — so the
+  player falls back to their class row rather than dropping out of coverage —
+  is this rule applied correctly; copy that shape.
+- **A capability is established, not assumed.** Where a source may simply
+  never answer on a given client, latch the first real answer and run a safe
+  fallback until then. `r.src` (`"sync"` / `"seen"` / nil) and the tri-state
+  `r.myHas` (nil = not resolved yet, not "no") are the pattern. SBR's
+  cautionary tale is a throttle stamped only on a confirmation that never
+  arrived on the reporter's client, so the protection did not exist at all.
+  Design intent that quietly evaporates on someone else's setup is worse than
+  no design, because it looks correct in the source.
+
+## House style (suite-wide)
+
+- **Write short, neutral and factual.** Changelog entries, PR bodies, commit
+  messages and code comments state what changed, why, and what it affects. No
+  jokes, no irony, no dramatic framing, no rhetorical questions, no long prose
+  where two sentences do. Keep measured numbers and technical detail; cut the
+  framing around them. Prefer a short list to paragraphs.
+- **Never quote a play report verbatim.** Reports arrive as relayed chat
+  messages, and none of it belongs in `CHANGELOG.md`, `README.md`, a code
+  comment or a PR body — the person was talking, not writing for publication.
+  Paraphrase what the observation ESTABLISHED and drop the wording, the name
+  and any characterisation of the remark. Numbers, symptoms and measurements
+  are the useful part and carry none of the risk. **Named credit is the
+  exception, and only when the user asks for it.**
+- **Comments explain WHY, not what.** Don't introduce new dependencies. Don't
+  refactor unrelated code inside a feature change. **When you fix a class of
+  bug, add a one-line note to this file so it isn't relearned.**
+
+## README / CHANGELOG upkeep
+
+- **The badge block at the top of `README.md` is maintained by the project
+  owner.** Grouped deliberately: Discord (`5865F2`), then the 1.18.1 servers —
+  Octo WoW purple (`8A2BE2`), Capy WoW brown (`8B5A2B`); then the optional DLLs
+  on their own row, orange (`ff8c00`, "Recommended"). Keep the shields.io style
+  (`flat-square`, `labelColor=555`); do not reorder, re-row or restyle unasked.
+- **Nothing is Required.** The addon runs on a stock 1.12 client; every
+  SuperWoW call site has a fallback. Do not add a "Required" badge back.
+- **A badge must be earned in code.** Nampower and ClassicAPI badges were
+  removed because a grep of `Core/` and `Classes/` finds no calls to either.
+  UnitXP_SP3 keeps one because it is genuinely read
+  (`Aegis_Options.lua`, line-of-sight toggle). Same test for anything new: a
+  code change that actually depends on it, or no badge.
+- **The H1 carries the version** — `# Aegis: RallyPower (v1.1.0)` — so it is a
+  bump site.
+- One Discord invite, `https://discord.gg/hsgPTNkSX`. If it ever appears in
+  more than one place, change every occurrence together or none.
+- Every version bump gets a `CHANGELOG.md` entry. Mark a release **restart**
+  when it adds a new `.lua` to the `.toc`.
+- Be explicit about limitations and Turtle-unverified values.
+
+### A version bump touches THREE places
+
+Miss one and the in-game version stops matching the release:
+
+1. `Aegis_RallyPower.toc` — `## Version:`
+2. `README.md` — the **H1**: `# Aegis: RallyPower (vX.Y.Z)`
+3. `CHANGELOG.md` — a new entry
+
+(There is no `A.version` global in our Lua; `PallyPower_Version` belongs to the
+vendored engine and is not ours to bump.)
+
+**Those three sites are now load-bearing for the RELEASE, not just for tidiness.**
+`.github/workflows/release.yml` publishes a GitHub release for every new version
+that reaches `main`: the push run reads `## Version:` from the `.toc`, tags
+`vX.Y.Z` if that tag is new, and starts itself again on the tag, where the
+version's `CHANGELOG.md` entry becomes the release notes and
+`BigWigsMods/packager` builds and publishes the zip. So:
+
+- **Never push a `v*` tag or cut a release by hand.** The merge does it. A merge
+  that does not change the version (docs, `scripts/`, `CLAUDE.md`) releases
+  nothing, because the tag already exists.
+- The push run gates on `scripts/lint/version.py`. If the three sites disagree
+  the release fails rather than publishing with empty notes, so a bump that
+  misses README's H1 now breaks the release as well as the docs.
+- A changelog heading must stay `## [X.Y.Z] — YYYY-MM-DD`; the notes are
+  extracted by exact prefix match on `## [X.Y.Z]`.
+- `.pkgmeta` carries `package-as: Aegis_RallyPower`, which pins the folder name
+  the zip installs as. A 1.12 client loads an addon from the folder named after
+  its `.toc`, and the packager otherwise names that folder after the
+  REPOSITORY — which was `RallyPowerCP` when this was written and is
+  `Aegis_RallyPower` now. The key is what makes a rename harmless; dropping it
+  because the two names currently agree would ship a zip that installs and
+  never loads the next time they do not.
+
+### WHICH number to bump
+
+`MAJOR.MINOR.PATCH`. **RallyPower has had a public release, so MAJOR is 1.**
+
+- **MAJOR (`1`.x.y) — stability.** Moves only for a change that breaks a
+  player's existing setup without a migration — a SavedVariables format they
+  cannot upgrade into, a removed feature people depend on, or an `RPCX`
+  protocol change that silently desyncs mixed-version raids. Not for "a lot has
+  changed": size is not breakage.
+- **MINOR (1.`x`.0) — a new capability.** The addon can do something it could
+  not do before: a new tab, a new tracked buff, a new strip. The test: *could a
+  player notice a new thing, not merely a better thing?* Resets PATCH to 0.
+- **PATCH (1.x.`y`) — a fix or small correction.** Bug fixes, typos, wording,
+  colour, layout, and a rewritten routine that computes the same thing more
+  correctly. **No new capability.**
+
+**Changing HOW something is built is not a capability.** A layout change is a
+PATCH. So is a colour, a rename, a refactor, and a corrected calculation — even
+when the diff is large. Ask what the player can now DO, never how much moved.
+
+**Where this went wrong elsewhere in the suite** (Aegis: Exchange, worth
+knowing because the same mistake is easy to make here):
+
+- Ten releases in its 1.x line were numbered MINOR for work that only fixed or
+  polished. That is how its number ran to **1.49.1 while `main` sat at
+  1.21.1** — the version stopped describing anything.
+- **v1.51.0 was numbered MINOR for rebuilding three buttons on a different
+  widget template and moving two of them a few pixels** — a large diff, a
+  rewritten styling path and a new test suite. The player got the same three
+  buttons doing the same three things in a better-looking box. It shipped
+  again as **1.50.2**.
+
+**Why every shipped change bumps, rather than once per merge.** The number is a
+running account of what happened, which is what makes "quote the version" worth
+asking a reporter for: someone on 1.8.1 and someone on 1.8.4 are not running the
+same code, and a scheme that only bumps at merge time cannot tell them apart.
+
+**When a release does both**, it is a MINOR — the larger claim wins.
+
+**Every shipped change bumps**, not once per merge. A branch that adds a
+capability then fixes three things in it merges as `1.2.3`, not `1.2.0`. The
+number is a running account of what happened.
+
+**Not a release, therefore not a bump:** anything under `scripts/` or `docs/`,
+and edits to `CLAUDE.md` itself. None of it ships.
+
+---
+
+## Quick self-check before committing Lua
+
+**Most of this list is now automated — run `./scripts/check.sh`.** What it
+deliberately does **not** cover is anything visual: layout, colour, clipping,
+whether a strip reads right under pressure. That still needs a real client and
+a person looking at it. A green run is permission to commit, not evidence the
+thing works.
+
+- [ ] No `string.match` / `string.gmatch` / `:match()` — used `string.find` /
+      `string.gfind`.
+- [ ] No `#` — used `table.getn`. No `table.setn`.
+- [ ] No `%` operator — used `math.mod`.
+- [ ] No `select()`; varargs use `arg` / `arg.n`.
+- [ ] Event handlers read `event` / `arg1…` globals (not `self, event, ...`).
+- [ ] **No handler for a stormable event** (`BAG_UPDATE`, `UNIT_AURA`,
+      `PLAYER_AURAS_CHANGED`, `CHAT_MSG_ADDON`, `UNIT_CASTEVENT`) does an
+      unbounded rescan, a per-item query, or a repaint inline — it is O(1),
+      state-gated, or behind a dirty flag flushed once per frame.
+- [ ] No `hooksecurefunc` / secure hooks — saved original + replaced.
+- [ ] **No function exceeds 32 upvalues** (`scripts/lint/upvalues.py`).
+      `verify.py` and any 5.1 harness will NOT catch this — 5.1's limit is 60
+      and the file compiles fine; the 1.12 client simply refuses to load it.
+      `CreatePanel` in `Aegis_AssignPanel.lua` is at **29** and warns on every
+      run, which is correct: it is one refactor from not loading.
+- [ ] Every `local function` is defined before its first reference, or
+      forward-declared (`scripts/lint/scoping.py`). A function above the
+      declaration reads a nil **global** of the same name — legal Lua, compiles
+      cleanly, fails only at runtime.
+- [ ] No top-level definition was lost to a scripted edit
+      (`scripts/lint/definitions.py`). Run after ANY multi-line or scripted
+      edit: the file still compiles when a function goes missing, so nothing
+      else notices until a player clicks the thing.
+- [ ] The three version sites agree (`scripts/lint/version.py`).
+- [ ] No stored setting is **read** at file scope (`X = X or {}` init is fine).
+- [ ] `PallyPower/` is byte-identical to stock — `git diff --stat PallyPower/`
+      is empty. Extend it by save-and-replace from our side, never by editing.
+- [ ] Any off-client tests under `scripts/test_*.lua` still pass.
+- [ ] If a test was added or changed: `./scripts/check.sh --sabotage` still
+      catches everything, and the new assertion has been shown to FAIL when the
+      thing it guards is broken. An assertion never seen to fail is decoration.
+- [ ] Tested in-game, or explicitly flagged as untested.
+
+---
+
+## Working style
+
+- **Read the actual file before editing it** — never edit from memory of a
+  prior version; the code has moved. Re-read after any scripted edit.
+- **Incremental verified batches.** Make a small coherent change, run
+  `./scripts/check.sh`, then proceed. Roll multi-file conversions in batches,
+  not all at once.
+- **Preserve `.toc` load order.** Reordering files breaks the single-pass
+  loader; `PallyPower.xml` and its `.lua` must stay in one folder.
+- When behavior must match PallyPower, **read its source and reuse its data**
+  rather than re-implementing (see how the pop-out consumes engine tables).
+- Commit small; test in-game between steps; `/reload` is the loop (except when
+  the `.toc` changed — that needs a full restart).

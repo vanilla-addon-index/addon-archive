@@ -1,0 +1,9 @@
+# LootBlare2.0
+
+[Original listing](https://vanilla-addon-index.github.io/addon/lootblare2-0) · Loot Distribution · Listed
+
+| Component | Upstream | Status |
+|---|---|---|
+| LootBlare2.0 | https://github.com/FSuhas/LootBlare-For-RoolFor | new |
+
+Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

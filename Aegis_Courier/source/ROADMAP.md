@@ -1,0 +1,137 @@
+# Roadmap
+
+Staged, dependency ordered. Each stage ships something usable on its own.
+Scope for the TurtleMail-replacement items is pinned to
+[`docs/turtlemail-audit.md`](docs/turtlemail-audit.md) — that table is the
+source of truth for what "similar to TurtleMail" means, not memory.
+
+---
+
+## Stage A — shell and takeover ✅
+
+Landed in 0.1.0.
+
+- Standalone window under `UIParent`, saved position, Escape-closable.
+- Mailbox takeover on `MAIL_SHOW`, replace-don't-overlay, with both 1.12
+  silent-failure traps handled (see `CLAUDE.md` rules 11–12).
+- Two-way hand-off: **Blizzard UI** button on ours, **Courier** button on
+  theirs, plus a takeover off switch.
+- Read-only inbox list — full inbox in one scroll, auction/returned/COD tags.
+- Ledger and settings tabs; DB, dedupe primitives and the Aegis seam in place.
+- Off-client test harness (`tests/harness.lua`).
+
+---
+
+## Stage B — mail actions and the ledger ✅
+
+Landed in 0.2.0. Engine lives in `core/inbox.lua` as `A.take` (no new `.toc`
+line, so no forced client restart).
+
+- **B.1 Take engine** — event-driven state machine clocked by
+  `MAIL_INBOX_UPDATE`, one action per step. Open All / Take All / Delete Read,
+  plus right-click for a single mail. COD and GM mail always skipped.
+  `ERR_INV_FULL` stops a run, `ERR_ITEM_MAX_COUNT` skips the mail. A
+  change-based progress guard stops a mail the server will not hand over from
+  wedging the run. Collected-gold readout and a chat summary.
+- **B.2 Mail identity** — **resolved by removing the problem.** No fingerprint.
+  Recording on collection means an emptied mail has nothing left to book, so a
+  re-scan is inert and two identical sales stay two entries. The
+  arrival-bucket key was rejected: no bucket width is both stable across a
+  relog and fine enough to separate a bulk seller's identical sales, and a
+  collision silently *under*-counts. `db.WasSeen` / `db.MarkSeen` remain in the
+  DB as unused primitives. See `docs/turtlemail-audit.md`.
+- **B.3 Auction matching and the money split** — localized
+  `AUCTION_*_MAIL_SUBJECT` classification; `sold` books gross / 5% cut / net.
+  Only `sold` books income: `outbid` money is the player's own returned bid,
+  and `won` / `expired` / `cancelled` carry no price.
+- **B.4 Finalize on collection** — `take.Confirm` fails closed, crediting only
+  money it can see has left the mail.
+- **B.5 Push to Aegis** — live as of v1.0.2, and **it did not "go live by
+  itself"**. It was verified against a stub written from *this* repo's
+  assumption about Aegis rather than from Aegis's source, the assumption was
+  wrong (positional arguments; Aegis takes one table), and because Aegis
+  refuses a bad payload by returning `false` instead of raising, the `pcall`
+  around it reported success and every entry was dropped in silence. The stub
+  agreed with the caller, so the suite passed over a dead seam for the addon's
+  whole life. Fixed, along with `bridge.Push` now reading what Aegis actually
+  returned.
+
+  The lesson worth keeping: **a mock written from the caller's assumption
+  cannot fail.** Port test doubles for another addon's API from that addon's
+  source, and make the double able to disagree with you.
+
+Deliberately not done in B: nothing writes the mail **log** (Stage C), and a
+mail collected through the *stock* Blizzard window is not seen by the ledger,
+since Courier only books what its own engine takes.
+
+---
+
+## Stage C — send mail and the log
+
+### C.1 Send tab ✅
+Landed in 0.3.0 (**restart** — adds `core/send.lua`).
+
+- Multi-item send: 12-slot attachment grid, one mail per item, `[i/n]`
+  subjects, blank-subject auto-naming, true multi-mail postage preview.
+- Recipient autocomplete harvested from inbox senders and successful sends,
+  scoped per realm+faction, aged out after 30 days.
+- C.O.D. on the first mail or every mail; attached gold on the first only.
+- Attach by bag right-click (scoped to the Send tab at a mailbox) or drag.
+- Aborts before sending if an item will not attach, preserving the list.
+
+### C.2 Mail log ✅
+Landed in 0.4.0.
+
+- Sent + received, with participant/subject/item/category all reachable from a
+  single search box (audit §4). No calendar date-picker, as decided.
+- **Account-wide, with the character on each entry** — the open question is
+  settled. TurtleMail stores per-character, which structurally cannot answer
+  "did I send that on my bank alt?"; storing account-wide makes the
+  per-character view a filter and answers it. Capped at 250 per direction.
+- Written on collection / send confirmation, matching the ledger.
+
+### C.3 pfUI skin ✅
+Landed in 1.0.0 (**restart** — adds `ui/skin.lua`).
+
+- Restyles window, wells, buttons, checkboxes, edit boxes and scrollbars
+  through `pfUI:GetEnvironment()`, the same entry point pfUI-addonskinner uses.
+- **On by default**, exposed in the Courier tab and greyed out when pfUI is
+  absent. Turning it on applies live; turning it off needs a `/reload`, which
+  the addon says rather than appearing to do nothing.
+- Every pfUI call is `pcall`-guarded, so a pfUI API change can only cost the
+  default look. Covered by tests that make every helper throw.
+- Inbox rows and attachment slots opt out — they are click targets and icon
+  wells, not buttons.
+- `pfui/Aegis_Courier.lua` is a drop-in for pfUI-addonskinner users. It is
+  **not** in the `.toc` and costs nothing to ship.
+
+---
+
+## Status: the roadmap is complete
+
+Stages A through C are done. Courier replaces TurtleMail feature-for-feature
+per `docs/turtlemail-audit.md`, and adds the auction ledger TurtleMail never
+had. There is no Stage D planned; further work is whatever real use turns up.
+
+Aegis: Exchange shipped `RecordExternalTxn` in its v1.1.7, and Courier's push
+works against it as of **v1.0.2** — see B.5 for why that took a fix rather than
+happening on its own. There are no outstanding external dependencies.
+
+---
+
+## Deferred / decided against
+
+- **Reading anything from Aegis: Exchange.** One-directional by design; see
+  `CLAUDE.md`, integration rules.
+- **Disabling Aegis's own mail scanner from our side.** Aegis stands itself
+  down when it detects Courier (its Phase 0.2). We do not reach into it.
+  - Two things make it detect us, and only one is a contract. The contract is
+    our `ClaimMailScanning("Aegis: Courier")` call. The other is a fallback
+    sniff for the global **`AegisCourier`**, which Aegis pins by exact name as
+    of its v1.7.0. So **renaming this addon's global would silently break that
+    fallback** — harmless while we still claim, but do not rename it casually,
+    and tell the Aegis side if you ever do.
+- **Calendar date-picker** for log filtering — a whole bundled widget for one
+  filter. Revisit if asked.
+- **Declaring Aegis in the `.toc`** as an optional dependency. `bridge.Ready()`
+  re-checks at call time instead, so load order cannot matter.

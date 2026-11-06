@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/acid9000/AntiAfk",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "acid9000",
+    "repo": "AntiAfk",
+    "name": "AntiAfk",
+    "url": "https://github.com/acid9000/AntiAfk",
+    "api": "https://api.github.com/repos/acid9000/AntiAfk"
+  },
+  "commit": "8ba518f52fb6bd6c4e12a924af9dfcf89af0add6",
+  "sourceFiles": {
+    "antiafk.lua": {
+      "sha256": "43db1d14379570f39ec4cfdbec19b71abb4de3b7739d5c7580f20ead952ae68b",
+      "bytes": 1032
+    },
+    "antiafk.toc": {
+      "sha256": "a1d7ad9a25ca750e07a37c6dccd7e281512aad85ade5b72703073285cca7ef5d",
+      "bytes": 114
+    },
+    "antiafk.xml": {
+      "sha256": "00acb6903ee4cb4300c440e35e14169604b77e1d311595fbecaccca241d16076",
+      "bytes": 402
+    },
+    "README.md": {
+      "sha256": "18a7f5f4676499d2eb8120913354813c1532babec875d57484c8958c96ddb062",
+      "bytes": 1435
+    },
+    "ReadMe.txt": {
+      "sha256": "361317182475cec5130338bd76f99b6ed02fef44a36a90870d9e04458d0fdae2",
+      "bytes": 1400
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

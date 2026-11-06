@@ -1,0 +1,9 @@
+# WhoKicksNow
+
+[Original listing](https://vanilla-addon-index.github.io/addon/whokicksnow) · Class · Listed
+
+| Component | Upstream | Status |
+|---|---|---|
+| WhoKicksNow | https://github.com/yutsuku/WhoKicksNow | new |
+
+Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: BattleMusic
+## Author: Fiur
+## Version: 1.0
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## Notes: Configurable music list for battles
+## SavedVariablesPerCharacter: battleMusic
+## Dependencies:
+BattleMusic.lua
+BattleMusic.xml

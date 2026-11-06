@@ -1,0 +1,41 @@
+## Interface: 11200
+## Title: Aegis: RallyPower
+## Author: Subtilizer (Torchlite)
+## Version: 1.15.4
+## Notes: Aegis: RallyPower - all-class buff management for Turtle WoW 1.18.1 (1.12 client). Paladin grid as PallyPower; auto-tailored buff tracker for every other class.
+## Notes-deDE: Ein Paladin-Segen-Helfer
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## SavedVariablesPerCharacter: PallyPower_Assignments, PallyPower_AuraAssignments, PallyPower_SealAssignments, PallyPower_NormalAssignments, PP_PerUser, PP_Presets, AegisRP_Settings, AegisRP_Roles, AegisRP_Assign
+
+Locale\localization-enUS.lua
+Locale\localization-deDE.lua
+Locale\localization-esES.lua
+
+# PallyPower.xml and MinimapButton.xml each <Script>-include their own .lua as
+# their first line, so listing those .lua files here too would execute them
+# twice. The XML is the loader (that's why the pair must stay in one folder) -
+# load order is unchanged: ManaCost, then PallyPower.lua+frames, then
+# MinimapButton.lua+frames.
+PallyPower\PallyPowerManaCost.lua
+PallyPower\PallyPower.xml
+PallyPower\MinimapButton.xml
+
+Core\Aegis_Core.lua
+Core\Aegis_CastWatch.lua
+Core\Aegis_Strip.lua
+Core\Aegis_Assign.lua
+Classes\Class_Priest.lua
+Classes\Class_Mage.lua
+Classes\Class_Druid.lua
+Classes\Class_Warrior.lua
+Classes\Class_Shaman.lua
+Classes\Class_Hunter.lua
+Classes\Class_Warlock.lua
+Classes\Class_Rogue.lua
+
+Core\Aegis_Options.lua
+Core\Aegis_AssignPanel.lua
+Core\Aegis_Sync.lua
+
+Core\Aegis_Popout.lua

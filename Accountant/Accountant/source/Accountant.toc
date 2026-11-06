@@ -1,0 +1,14 @@
+## Interface: 11200
+## Title: Accountant v3.1
+## Description: Logs your WoW incomings / outgoings
+## DefaultState: enabled
+## SavedVariables: Accountant_SaveData
+
+nampower.lua
+l10n\enUS.lua
+l10n\deDE.lua
+l10n\esES.lua
+l10n\frFR.lua
+Accountant.lua
+AccountantButton.lua
+AccountantOptions.lua

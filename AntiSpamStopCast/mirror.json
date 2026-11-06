@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/thepparker/AntiSpamStopCast",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "thepparker",
+    "repo": "AntiSpamStopCast",
+    "name": "AntiSpamStopCast",
+    "url": "https://github.com/thepparker/AntiSpamStopCast",
+    "api": "https://api.github.com/repos/thepparker/AntiSpamStopCast"
+  },
+  "commit": "fe861706d738d7fc3ec1389e29e70e2842c23d86",
+  "sourceFiles": {
+    "AntiSpamStopCast.lua": {
+      "sha256": "cc138db5c8d54a25633a6eddbbb06351ebb6ac8131460960a0e3ee3391a798ff",
+      "bytes": 1495
+    },
+    "AntiSpamStopCast.toc": {
+      "sha256": "1e8e37d8dc6e61a4284e57110cc780967254104b559443c7ae5810eea1836854",
+      "bytes": 288
+    },
+    "README.md": {
+      "sha256": "8e6f8de206d82960af46e11cb8883170333ca95bc22a616c37c1e1f57a266862",
+      "bytes": 1859
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

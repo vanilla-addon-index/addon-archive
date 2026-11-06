@@ -1,0 +1,193 @@
+{
+  "upstream": "https://github.com/McPewPew/ArcHUD2",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "McPewPew",
+    "repo": "ArcHUD2",
+    "name": "ArcHUD2",
+    "url": "https://github.com/McPewPew/ArcHUD2",
+    "api": "https://api.github.com/repos/McPewPew/ArcHUD2"
+  },
+  "commit": "06abb11870bce892fd34816e5e54dd1f0e64409c",
+  "sourceFiles": {
+    "ArcHUD2.toc": {
+      "sha256": "15d6a4713ba6a24e260dd9c3041f514b826179a5245d74f9a0410f9ac423dca8",
+      "bytes": 1358
+    },
+    "changelog-r12186.txt": {
+      "sha256": "276fde6eb310ed9885df5ef724fed4ae4777888f754d0ebf831651870c4cb8fe",
+      "bytes": 8395
+    },
+    "Core.lua": {
+      "sha256": "328b971ef1b0f3e5671116c18e3e295bd7b66580d19d8ae2b0d42d50a4684a15",
+      "bytes": 49198
+    },
+    "Core.xml": {
+      "sha256": "87228d25b1d0362e9bf07770f1aa2bad21a28b0536e8aad7e85e90b8a2948c1c",
+      "bytes": 24122
+    },
+    "FuBarPlugin.lua": {
+      "sha256": "e7a129e1f3a25691b1641f2079d5f88f8137d054248877dda40226540d76c7f3",
+      "bytes": 631
+    },
+    "Icons/Ring.tga": {
+      "sha256": "6fd6bd4f055d04a98ecf003cd41d9c046010340463e353cab6b4655652508096",
+      "bytes": 262188
+    },
+    "Icons/RingBG.tga": {
+      "sha256": "b95cc9f0b0fb1b14d291860a494579fd286709cef9edb5787a5b48e01a983bf0",
+      "bytes": 262188
+    },
+    "Icons/Slice.tga": {
+      "sha256": "874e05ae4a982bf8a4148acf2ba5e607a94a48b9e623926dfc713db75fac1d49",
+      "bytes": 262175
+    },
+    "Icons/transparent.blp": {
+      "sha256": "ea392014c15868c0175ed5baa1055dbd21e7bb5516fe6928550ae5b1b9e85043",
+      "bytes": 6660
+    },
+    "Libs/AceAddon/AceAddon-2.0.lua": {
+      "sha256": "5247193efde7aeaf839e183bda1c060b037b4d13475abf9b247c08fbff259f51",
+      "bytes": 22093
+    },
+    "Libs/AceConsole/AceConsole-2.0.lua": {
+      "sha256": "1a82aa964b4b50670b4f00df53f12f8a4706a1585e5c84a06678f3160b41cb52",
+      "bytes": 59315
+    },
+    "Libs/AceDB/AceDB-2.0.lua": {
+      "sha256": "237525f90f304fa5d4288b3301a29da2fa4c844e8e0f68c216c712efa890c499",
+      "bytes": 37098
+    },
+    "Libs/AceDebug/AceDebug-2.0.lua": {
+      "sha256": "a697b8797712ef232c99642e2c6d21515e68cd84847ba7046fac4dcc8f26ffc6",
+      "bytes": 7027
+    },
+    "Libs/AceEvent/AceEvent-2.0.lua": {
+      "sha256": "264d1e32c99f246315a6decc9c71f54d2bd2b1c5d9b586d9ddc139df312e484b",
+      "bytes": 28370
+    },
+    "Libs/AceHook/AceHook-2.0.lua": {
+      "sha256": "8413f0f92437bd49793de8d6380af774a4322716c2ac517bd97efbc11fb7a429",
+      "bytes": 17963
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "27840fe63587a95ab35acfcb8219df2cc95f984b9765d0ec46bc6856a10991cf",
+      "bytes": 21877
+    },
+    "Libs/AceLocale/AceLocale-2.0.lua": {
+      "sha256": "22efcffa930af8ffa9486cc6e1f9d2ef8243c4ce2d563b4e7132ae67e869c068",
+      "bytes": 15401
+    },
+    "Libs/AceModuleCore/AceModuleCore-2.0.lua": {
+      "sha256": "3279c50e816fa15ae3e9f6a10b45abaf8464c0daa9e84df971783005efaba26e",
+      "bytes": 11847
+    },
+    "Libs/AceOO/AceOO-2.0.lua": {
+      "sha256": "1385526e460948771ca6db1ceec81e8b0daf33bfc391f55e6f1bbc449a341a82",
+      "bytes": 30305
+    },
+    "Libs/Compost/Compost-2.0.lua": {
+      "sha256": "4133b9069be339d5faca66c489e1db028ee400f114b1f437567c5f19a76f21e5",
+      "bytes": 9209
+    },
+    "Libs/Dewdrop/Dewdrop-2.0.lua": {
+      "sha256": "d38bfdae402a17ce85e43aa68598b0ad700b5d105f666f0321d4227de793efa4",
+      "bytes": 76634
+    },
+    "Libs/FuBarPlugin/FuBarPlugin-2.0.lua": {
+      "sha256": "c96e8a39799d60c81a03d34d3a211fe173cc16cfcc82ce956a5489e0b658b1c6",
+      "bytes": 39094
+    },
+    "Libs/Metrognome/Metrognome-2.0.lua": {
+      "sha256": "30c789f5ce7e1ee449f33a83e33b22fc2ce8d851d94cdac54eb29261e50ad67f",
+      "bytes": 8693
+    },
+    "Libs/Tablet/Tablet-2.0.lua": {
+      "sha256": "38a7bf7a123958d1fe6b5d200733646f64a2ee5f1f16c4298dbdd7d124e5609c",
+      "bytes": 80572
+    },
+    "Locale_deDE.lua": {
+      "sha256": "6982fd9f6d048db3c263648e0dc80dd44d5b8305f6e577172b12baab872c9ccb",
+      "bytes": 6803
+    },
+    "Locale_enUS.lua": {
+      "sha256": "e481f80ac89a7a93f440145bd1ee1c48ce86d11316f9268090ce9ff8a3498aff",
+      "bytes": 5632
+    },
+    "Locale_zhCN.lua": {
+      "sha256": "c9d6deb335a19150a281c56e0ddeb6bc7884bf72804d03dd1ff512f5490fcf14",
+      "bytes": 12551
+    },
+    "ModuleCore.lua": {
+      "sha256": "6959edcdf2950ed2bf751db90cf12bd2d6b7a92679c221af1bbe565831eab4b1",
+      "bytes": 9885
+    },
+    "readme.txt": {
+      "sha256": "0b8f7e7ee225bc5018e96e963ffb1904efbae4cb77939acc442220b4fa354b20",
+      "bytes": 2037
+    },
+    "ring-prototypes.txt": {
+      "sha256": "04b360816b594fb73cdd7bdd58b104debc50dc8df62c55a68290be74fc48138e",
+      "bytes": 7902
+    },
+    "Rings/Anchors.lua": {
+      "sha256": "dedecdfd3522e063d10571740e485f12f44434427f0304817f679d1cd63e59a1",
+      "bytes": 284
+    },
+    "Rings/Casting.lua": {
+      "sha256": "39c65c6faa7689d362fca6aa2feb38a00e5976f4aa9295a40a83b7aa272ccb1a",
+      "bytes": 8736
+    },
+    "Rings/ComboPoints.lua": {
+      "sha256": "99b491a81f81b4adde9afe3da6ffb27c6636c25aab080379ee49505345ae712f",
+      "bytes": 2600
+    },
+    "Rings/DruidMana.lua": {
+      "sha256": "efefa7ba18a31cf87ca7d3d408ba5988f984acd031cec25cde8152c764347b7d",
+      "bytes": 3893
+    },
+    "Rings/Health.lua": {
+      "sha256": "22d8389f4a0df68840f43f283b227da5465f5d1c07abc16f7ba24cb44c9a4c76",
+      "bytes": 4375
+    },
+    "Rings/Mana.lua": {
+      "sha256": "65fee7de3d1489e2179fdb73a02b797afe5f92abe4a200504056a7c0c294fd54",
+      "bytes": 3949
+    },
+    "Rings/MirrorTimer.lua": {
+      "sha256": "082f1561e457761d0d38022c5a60751db3d44cab1ac0cfa5c70ab5f678d4ddb7",
+      "bytes": 6362
+    },
+    "Rings/PetHealth.lua": {
+      "sha256": "ed6a0d3d6a70baf0557919a907d33f478a28003b4aa750a952fa0ad79ac07584",
+      "bytes": 3087
+    },
+    "Rings/PetMana.lua": {
+      "sha256": "b3acfa2ce2fca49939ab681521b8323732453de6c43ae225e7b8b16d669978bf",
+      "bytes": 3255
+    },
+    "Rings/TargetHealth.lua": {
+      "sha256": "dae14bdb44ec97105124c61051856ee7dea9423b61405d6ab1a1d89a61bf0c34",
+      "bytes": 4591
+    },
+    "Rings/TargetMana.lua": {
+      "sha256": "a35e0d1a1249f3467e8e33f3fc4a659f397898367990ee7c15261ca63935a07a",
+      "bytes": 4285
+    },
+    "RingTemplate.lua": {
+      "sha256": "b0f1de3a75037bf5fcd5755ff5264b43fc888a11fb1579165ff77be8a24baaaf",
+      "bytes": 22152
+    },
+    "statrings.txt": {
+      "sha256": "a578eb5363138b134012b46fddc64a816e1a2f9b3b57327595ccb8e69e9e78fd",
+      "bytes": 4071
+    },
+    "Utils.lua": {
+      "sha256": "5d14192f4a03e4fb3a12f9546f89c153f5d6db4de5674b171a47af88b93d6ea9",
+      "bytes": 391
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

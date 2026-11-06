@@ -1,0 +1,9 @@
+{
+  "id": "432949980",
+  "tag": "v1.2.57",
+  "name": "v1.2.57",
+  "body": "## v1.2.57 — priority list on the healer tab\r\n\r\n### 🔧 Paladin, Druid, Shaman\r\n\r\n- **Priority list hidden:** these classes keep their settings per tab. The switches wrote to the\r\n  healer tab, but the list read the base settings to decide whether to show, so it stayed hidden\r\n  even with *Use priority list* on. *Add target*, *Clear* and the remove buttons also wrote to the\r\n  base settings, while the rotation reads the tab's own list once it has one. All of it now uses\r\n  the active tab. The priest has no tabs and was not affected.\r\n\r\n",
+  "published": "2026-11-03T16:31:12Z",
+  "prerelease": false,
+  "url": "https://github.com/Torchlite-bit/Aegis_SBR/releases/tag/v1.2.57"
+}

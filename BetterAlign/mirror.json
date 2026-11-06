@@ -1,0 +1,60 @@
+{
+  "upstream": "https://github.com/DennisWG/BetterAlign/tree/8840ee2dad218d73e5ae8b23979f552f3c2c56cd",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "DennisWG",
+    "repo": "BetterAlign",
+    "name": "BetterAlign",
+    "ref": "8840ee2dad218d73e5ae8b23979f552f3c2c56cd",
+    "subpath": "",
+    "url": "https://github.com/DennisWG/BetterAlign",
+    "api": "https://api.github.com/repos/DennisWG/BetterAlign"
+  },
+  "commit": "8840ee2dad218d73e5ae8b23979f552f3c2c56cd",
+  "sourceFiles": {
+    "BetterAlign.lua": {
+      "sha256": "4c4c2ab83f44c02b7abd205c8d922aeabe02e648de469a694ab05cb7d7bffce1",
+      "bytes": 8444
+    },
+    "BetterAlign.toc": {
+      "sha256": "73de0bbf13afd17b93610a6daffa54e2b3a7fd07e0a3c29db4bca80238296a36",
+      "bytes": 125
+    },
+    "BetterAlign.xml": {
+      "sha256": "8a2396f55acab63938d015c10bd4e67aabcbe7bd58bf02522c87d35b35fc3d39",
+      "bytes": 7141
+    },
+    "LICENSE": {
+      "sha256": "843ecc8a537eb97be0178cdabd4e4d15f91dd10a8ac9b5cbf01d6020fd3dbe36",
+      "bytes": 1065
+    },
+    "README.md": {
+      "sha256": "b5490a3bde0f63f0894e5fa53b27d016ce2d5daa1b2091984584e632321f23df",
+      "bytes": 727
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "18164672": {
+      "tag": "1.0.0",
+      "folder": "1.0.0--18164672",
+      "assets": {
+        "13356322": {
+          "sha256": "4ef9699e0e27bea318a112212e2c0941b9ea30963be246303187117ea6f05679",
+          "bytes": 74634,
+          "id": "13356322",
+          "name": "BetterAlign.zip",
+          "url": "https://github.com/DennisWG/BetterAlign/releases/download/1.0.0/BetterAlign.zip",
+          "path": "releases/1.0.0--18164672/assets/BetterAlign.zip"
+        }
+      },
+      "source": {
+        "sha256": "996f3471843fd05650ad3d1d9b6a7ac544732f03d9ff94738eb04b13725a5181",
+        "bytes": 4758,
+        "path": "releases/1.0.0--18164672/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/DennisWG/BetterAlign/tarball/1.0.0"
+      }
+    }
+  }
+}

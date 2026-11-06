@@ -1,0 +1,175 @@
+-- ============================================================
+-- Class_Mage_UI  -  mage window body for Aegis_SBR
+-- Builds and binds only the mage specific controls. The shared
+-- window shell and profile management live in Aegis_SBR_UI.lua.
+-- ============================================================
+-- This module opts into the scroll layout (M.useScrollLayout): the shell hosts
+-- the body in a compact scroll frame and hands BuildBody the scroll child, and
+-- the cursor-based layout API places everything (no hand-coded y offsets). All
+-- three specs' controls are shown; the KnowsSpell red-out marks anything not
+-- trained for your current spec/level. Detail that used to sit in the labels now
+-- lives in the tooltips, keeping labels short for the narrower window.
+-- ============================================================
+
+local M = Aegis_SBR.classes.MAGE
+M.useScrollLayout = true
+M.specTabs = {
+    field = "mode", default = "frost",
+    tabs = {
+        { key = "frost",  label = "Frost",  tip1 = "Kiting / Icicles. The strongest leveler." },
+        { key = "fire",   label = "Fire",   tip1 = "Scorch debuff + Fireball burst." },
+        { key = "arcane", label = "Arcane", tip1 = "Rupture upkeep + Arcane Missiles." },
+    },
+}
+
+function M:BuildBody(ui, parent)
+    local L = ui:NewLayout(parent)
+    -- Every write lands in the ACTIVE TAB's layer (Aegis_SBR:TabView).
+    local function set(key) return function(v) if ui.buf then M:TabView(ui.buf, M)[key] = v; ui:Refresh() end end end
+    L:MacroNote()
+
+    L:Header("General")
+    self.aoeRow = L:Row{ key = "aoeMode", label = "AoE rotation", onToggle = set("aoeMode") }
+    self.groundRow = L:Row{ key = "useGroundAoe", label = "Blizzard / Flamestrike at the mouse", onToggle = set("useGroundAoe") }
+    self.useWandRow = L:Row{ key = "useWand", label = "Use wand", onToggle = set("useWand"),
+        slider = { key = "wandHp", min = 0, max = 100, step = 5, suffix = "%", onChange = set("wandHp") } }
+    self.wandManaRow = L:Row{ label = "Wand below mana",
+        slider = { key = "wandManaFloor", min = 0, max = 100, step = 5, suffix = "%", onChange = set("wandManaFloor") } }
+    self.manaShieldRow = L:Row{ key = "useManaShield", label = "Mana Shield", spell = "Mana Shield", onToggle = set("useManaShield") }
+    self.frostNovaRow = L:Row{ key = "useFrostNova", label = "Frost Nova", spell = "Frost Nova", onToggle = set("useFrostNova") }
+    self.evocationRow = L:Row{ key = "useEvocation", label = "Evocation", spell = "Evocation", onToggle = set("useEvocation"),
+        slider = { key = "evocAt", min = 0, max = 100, step = 5, suffix = "%", onChange = set("evocAt") } }
+
+    self.frostSection = L:Header("Frost", "frost")
+    self.iceBarrierRow = L:Row{ key = "useIceBarrier", label = "Ice Barrier", spell = "Ice Barrier", onToggle = set("useIceBarrier") }
+    self.iciclesRow = L:Row{ key = "useIcicles", label = "Icicles", spell = "Icicles", onToggle = set("useIcicles") }
+    self.coneRow = L:Row{ key = "useConeOfCold", label = "Cone of Cold", spell = "Cone of Cold", onToggle = set("useConeOfCold") }
+
+    self.fireSection = L:Header("Fire", "fire")
+    self.pyroRow = L:Row{ key = "usePyroblast", label = "Pyroblast", spell = "Pyroblast", onToggle = set("usePyroblast") }
+    self.scorchRow = L:Row{ key = "useScorch", label = "Scorch", spell = "Scorch", onToggle = set("useScorch") }
+    self.fireBlastRow = L:Row{ key = "useFireBlast", label = "Fire Blast", spell = "Fire Blast", onToggle = set("useFireBlast") }
+    self.combustionRow = L:Row{ key = "useCombustion", label = "Combustion", spell = "Combustion", onToggle = set("useCombustion") }
+
+    self.arcaneSection = L:Header("Arcane", "arcane")
+    self.ruptureRow = L:Row{ key = "useArcaneRupture", label = "Arcane Rupture", spell = "Arcane Rupture", onToggle = set("useArcaneRupture") }
+    self.surgeRow = L:Row{ key = "useArcaneSurge", label = "Arcane Surge", spell = "Arcane Surge", onToggle = set("useArcaneSurge") }
+    self.arcanePowerRow = L:Row{ key = "useArcanePower", label = "Arcane Power", spell = "Arcane Power", onToggle = set("useArcanePower") }
+
+
+    L:Header("Decurse")
+    self.cureRow = L:Row{ key = "useCure", label = "Remove curses from the group", spell = "Remove Lesser Curse", onToggle = set("useCure") }
+    self.prioTargetRow = L:Row{ key = "healPrioTarget", label = "Your target first", onToggle = set("healPrioTarget") }
+
+    L:Header("Decurse priority", function()
+        return ui.buf and ui.buf.useCure and true or false
+    end)
+    self.prioAddBtn = L:Button{ label = "Add target", onClick = function()
+        if ui.buf then Aegis_SBR:PrioAdd(ui.buf, UnitName("target")); ui:Refresh() end
+    end }
+    self.prioClearBtn = L:Button{ label = "Clear", onClick = function()
+        if ui.buf then ui.buf.healPrioList = {}; ui:Refresh() end
+    end }
+    self.prioBtns = {}
+    for i = 1, 5 do
+        local idx = i
+        self.prioBtns[idx] = L:Button{ label = idx .. ".", onClick = function()
+            if ui.buf then Aegis_SBR:PrioRemove(ui.buf, idx); ui:Refresh() end
+        end }
+    end
+
+    -- Last section on every tab: which Goblin Brainwashing Device slot this
+    -- tab answers to. Untagged, so it shows on all of them and always reports
+    -- the tab you are looking at.
+    ui:BuildGobboRow(L)
+
+    L:Finish()
+
+    ui:Tip(self.cureRow.cb, "Remove curses from the group", "Casts Remove Lesser Curse on a cursed party or raid member, without changing your target.", "Off by default: it costs a global cooldown. Runs above the damage rotation, because a curse left on the group usually costs more than one missed cast.")
+    ui:Tip(self.prioTargetRow.cb, "Your target first", "While you have a friendly target selected it is decursed first, ahead of the list.")
+    ui:Tip(self.prioAddBtn, "Add target", "Adds your current target to the end of the decurse list.", "Names, not raid slots, so the list survives a regroup.")
+    ui:Tip(self.prioClearBtn, "Clear", "Empties the list.")
+
+    -- Tooltips carry the detail that used to be in the labels.
+    ui:Tip(self.aoeRow.cb, "AoE mode", "Frost Nova to freeze, Cone of Cold to snare, Icicles, then Arcane Explosion. Blizzard / Flamestrike only with the switch below.", "Also /sbr aoe, or per press with /sbr run aoe.")
+    ui:Tip(self.groundRow.cb, "Blizzard / Flamestrike at the mouse", "Lands under the mouse. Hold the mouse on the feet of the pack when pressing; with the mouse off any enemy the press skips it.")
+    ui:Tip(self.useWandRow.cb, "Use wand", "On: finish low mobs and regen mana with the wand (the 'nuke then wand' rule). Off: never wand. With no wand equipped it just keeps casting.")
+    ui:Tip(self.manaShieldRow.cb, "Mana Shield", "Optional. Keeps Mana Shield up (drains mana for damage), never stacked under Ice Barrier.")
+    ui:Tip(self.frostNovaRow.cb, "Frost Nova", "Root the mob when it reaches melee so you can step back and wand - the leveling kite.")
+    ui:Tip(self.evocationRow.cb, "Evocation", "Channel Evocation to restore mana when low, in combat, and the target is not about to die.")
+    ui:Tip(self.useWandRow.slider, "Wand below target HP", "Target health percent under which you stop casting and wand the mob down. 0 = off (cast to death, for raiding).")
+    ui:Tip(self.wandManaRow.slider, "Wand below mana", "Your mana percent under which the rotation drops to the wand to let mana regenerate.")
+    ui:Tip(self.evocationRow.slider, "Evocate below mana", "Your mana percent under which Evocation is used (when enabled and in combat).")
+    ui:Tip(self.iceBarrierRow.cb, "Ice Barrier", "Keep Ice Barrier up: a shield that also boosts Frost damage. Cast before the pull and when it drops.")
+    ui:Tip(self.iciclesRow.cb, "Icicles", "Turtle Frost nuke, cast whenever its cooldown is up. Freeze effects (Frostbite / Flash Freeze) keep resetting it, so it fires in the empowered window automatically.")
+    ui:Tip(self.coneRow.cb, "Cone of Cold", "Single target: a close-range emergency slow + damage. In AoE mode: snare the pack in front of you.")
+    ui:Tip(self.pyroRow.cb, "Pyroblast", "Opener only - cast on a near-full-health target, so it is the pull and not a 6s cast mid-fight.")
+    ui:Tip(self.scorchRow.cb, "Scorch", "Build and maintain the Fire Vulnerability debuff up to the stack count, then Fireball fills.")
+    ui:Tip(self.fireBlastRow.cb, "Fire Blast", "Instant, used on cooldown - extra damage and the movement / finishing tool.")
+    ui:Tip(self.combustionRow.cb, "Combustion", "Fire on cooldown to guarantee crits on your next fire spells.")
+    ui:Tip(self.ruptureRow.cb, "Arcane Rupture", "Keep it on the target to boost Arcane Missiles. Re-applied whenever it falls off.")
+    ui:Tip(self.surgeRow.cb, "Arcane Surge", "Used in the rotation while NOT hasted; skipped under Arcane Power / MQG (its GCD does not scale).")
+    ui:Tip(self.arcanePowerRow.cb, "Arcane Power", "The Arcane damage steroid, used on cooldown.")
+end
+
+function M:RefreshBody(ui, buf)
+    -- Read through the active tab's layer, so the page shows the tab's values.
+    buf = M:TabView(buf, M)
+    -- General
+    ui:BindCheck(self.aoeRow, buf.aoeMode)
+    ui:BindCheck(self.groundRow, buf.useGroundAoe)
+    ui:BindCheck(self.useWandRow, buf.useWand)
+    if not self:HasWand() then
+        self.useWandRow.label:SetText("Use wand (none)")
+        ui:Color(self.useWandRow.label, ui.COL.grey)
+    end
+    ui:BindCheck(self.manaShieldRow, buf.useManaShield, "Mana Shield")
+    ui:BindCheck(self.frostNovaRow, buf.useFrostNova, "Frost Nova")
+    ui:BindCheck(self.evocationRow, buf.useEvocation, "Evocation")
+    self.useWandRow.slider:SetValue(buf.wandHp or 0);      self.useWandRow.slider.valText:SetText((buf.wandHp or 0) .. "%")
+    self.wandManaRow.slider:SetValue(buf.wandManaFloor or 0); self.wandManaRow.slider.valText:SetText((buf.wandManaFloor or 0) .. "%")
+    self.evocationRow.slider:SetValue(buf.evocAt or 0);    self.evocationRow.slider.valText:SetText((buf.evocAt or 0) .. "%")
+    ui:SliderEnable(self.useWandRow.slider, buf.useWand)
+    ui:SliderEnable(self.wandManaRow.slider, buf.useWand)
+    ui:SliderEnable(self.evocationRow.slider, buf.useEvocation)
+
+    -- Frost
+    ui:BindCheck(self.iceBarrierRow, buf.useIceBarrier, "Ice Barrier")
+    ui:BindCheck(self.iciclesRow, buf.useIcicles, "Icicles")
+    ui:BindCheck(self.coneRow, buf.useConeOfCold, "Cone of Cold")
+
+    -- Fire
+    ui:BindCheck(self.pyroRow, buf.usePyroblast, "Pyroblast")
+    ui:BindCheck(self.scorchRow, buf.useScorch, "Scorch")
+    ui:BindCheck(self.fireBlastRow, buf.useFireBlast, "Fire Blast")
+    ui:BindCheck(self.combustionRow, buf.useCombustion, "Combustion")
+
+    -- Arcane
+    ui:BindCheck(self.ruptureRow, buf.useArcaneRupture, "Arcane Rupture")
+    ui:BindCheck(self.surgeRow, buf.useArcaneSurge, "Arcane Surge")
+    ui:BindCheck(self.arcanePowerRow, buf.useArcanePower, "Arcane Power")
+
+    -- Active-spec focus: fade + lock the two specs you are not in. The General
+    -- block (shared cooldowns, wand, evocation) is never dimmed.
+    local m = buf.mode or "frost"
+    self.frostSection:SetDimmed(m ~= "frost")
+    self.fireSection:SetDimmed(m ~= "fire")
+    self.arcaneSection:SetDimmed(m ~= "arcane")
+    ui:BindCheck(self.cureRow, buf.useCure, "Remove Lesser Curse")
+
+    ui:BindCheck(self.prioTargetRow, buf.healPrioTarget)
+    local plist = buf.healPrioList or {}
+    for i = 1, table.getn(self.prioBtns) do
+        self.prioBtns[i].value:SetText(plist[i] or "|cff666666(empty)|r")
+    end
+
+end
+
+-- Open the shared window for this class.
+M.OpenConfig = function(mod)
+    if not Aegis_SBR_UI then
+        Aegis_SBR:Throttle("UI not ready yet, try again in a moment.")
+        return
+    end
+    Aegis_SBR_UI:Toggle()
+end

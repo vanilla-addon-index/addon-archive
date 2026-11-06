@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/melbaa/apd",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "melbaa",
+    "repo": "apd",
+    "name": "apd",
+    "url": "https://github.com/melbaa/apd",
+    "api": "https://api.github.com/repos/melbaa/apd"
+  },
+  "commit": "0ea3c1b2a1e55b8e1bee9bd21593bcdd5becad84",
+  "sourceFiles": {
+    "apd.lua": {
+      "sha256": "e2e65abd3686135592a1a975ed3cd14dae556995d1a42071d901c212cf1a81ef",
+      "bytes": 3630
+    },
+    "apd.toc": {
+      "sha256": "eb7ea8238e54d8eaead46570bb8e3eb180dfe3b5253bfde2e45c96ca9515e39e",
+      "bytes": 269
+    },
+    "CHANGELOG.md": {
+      "sha256": "69ce0108893f26c8d1f34db8ea46472d8874da4a53621705b93685a0b9125a4d",
+      "bytes": 121
+    },
+    "README.md": {
+      "sha256": "08b8a52947da113ec3c92eac11803009f6c84919870202c27e375d8b0c8b6c68",
+      "bytes": 204
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

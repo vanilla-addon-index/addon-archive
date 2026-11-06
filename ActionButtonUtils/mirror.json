@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/Numielle/ActionButtonUtils",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Numielle",
+    "repo": "ActionButtonUtils",
+    "name": "ActionButtonUtils",
+    "url": "https://github.com/Numielle/ActionButtonUtils",
+    "api": "https://api.github.com/repos/Numielle/ActionButtonUtils"
+  },
+  "commit": "42b7b97ba37e7d5453650a482b2b3d1ec51e95ee",
+  "sourceFiles": {
+    "ActionButtonData.lua": {
+      "sha256": "21acdd4cfab4dc248c00f979d398b336ee4f77264f429c3c8fe6037939958c34",
+      "bytes": 3197
+    },
+    "ActionButtonGlow.lua": {
+      "sha256": "10d092db1084a088ded2ef6fed0d5766a1919e254cb2efc641bcc0ad3b220c53",
+      "bytes": 4251
+    },
+    "ActionButtonIndex.lua": {
+      "sha256": "7bf70a5e0b1d47345f1eaa20e935f2129a6dcbb8851b31fe85b3c10136a60f5e",
+      "bytes": 7436
+    },
+    "ActionButtonUtils.toc": {
+      "sha256": "b8f6a446a430bbbc8af058c5ce9acc1cb112622a0d284b1f8cd466801c96ae08",
+      "bytes": 362
+    },
+    "README.md": {
+      "sha256": "d93a2cb3092430e3d975fdee69e0b55155800a9abd44b303e87633aebee8a0c6",
+      "bytes": 3551
+    },
+    "Textures/IconAlert.tga": {
+      "sha256": "7405c34a77a983fbb79d7d835f5abe970e5e127002078d447d195c46330b0435",
+      "bytes": 24247
+    },
+    "Textures/IconAlertAnts.tga": {
+      "sha256": "dd5c9c0a4b31e99701cf300ab031e3fa1bb72142e200d22c703678a513063918",
+      "bytes": 58207
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

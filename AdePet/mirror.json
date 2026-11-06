@@ -1,0 +1,33 @@
+{
+  "upstream": "https://octowow.st/git/Ade/AdePet",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Ade",
+    "repo": "AdePet",
+    "name": "AdePet",
+    "url": "https://octowow.st/git/Ade/AdePet",
+    "api": "https://octowow.st/git/api/v1/repos/Ade/AdePet"
+  },
+  "commit": "ca10ce3558f0a9347904f70a4e81f8264f981baf",
+  "sourceFiles": {
+    "AdePet.lua": {
+      "sha256": "3f266abca9c8fd779df6eadbf86a073753051ccc395ce1ef4858043cf8a1aa9d",
+      "bytes": 10768
+    },
+    "AdePet.toc": {
+      "sha256": "400ac3a42503f749b995fba0b4a7fe4afc82a902de9e07914263ec91b261dffe",
+      "bytes": 163
+    },
+    "CHANGELOG.md": {
+      "sha256": "5e604a73efee876694014d67e469d69f5ced5ed3f0069467ebadf3725e3cb4fb",
+      "bytes": 2035
+    },
+    "README.md": {
+      "sha256": "018de5542714e54d54dc9e762455386b63602c6573380018f254b414a4f2356c",
+      "bytes": 2058
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

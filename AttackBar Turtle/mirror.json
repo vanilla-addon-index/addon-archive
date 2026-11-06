@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Siventt/AttackBar-TWoW",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Siventt",
+    "repo": "AttackBar-TWoW",
+    "name": "AttackBar-TWoW",
+    "url": "https://github.com/Siventt/AttackBar-TWoW",
+    "api": "https://api.github.com/repos/Siventt/AttackBar-TWoW"
+  },
+  "commit": "9227d13c58c0b723678e69f79603aaff31e90a7f",
+  "sourceFiles": {
+    "Attackbar.lua": {
+      "sha256": "30dea6b6b15a9a9d797c3d3b1fdefdda1d8e270c09e8637c1d6e786ad4a2e2d1",
+      "bytes": 14555
+    },
+    "AttackBar.toc": {
+      "sha256": "06069863f15ca95eb72aa8ebf3337d7844be08a4542a6d7c6b42e112e0a94be9",
+      "bytes": 254
+    },
+    "Attackbar.xml": {
+      "sha256": "bf22adb2844264a687c885c01585f3fe8e0cefe214d8c41a1e8e256d0445d439",
+      "bytes": 6531
+    },
+    "README.md": {
+      "sha256": "075d0aff7846d4e1951b6d7c069be6a218999d3788c2a20d671978d5d0a9706a",
+      "bytes": 534
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

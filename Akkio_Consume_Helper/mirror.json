@@ -1,0 +1,57 @@
+{
+  "upstream": "https://github.com/prodigystudios/Akkio_Consume_Helper",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "prodigystudios",
+    "repo": "Akkio_Consume_Helper",
+    "name": "Akkio_Consume_Helper",
+    "url": "https://github.com/prodigystudios/Akkio_Consume_Helper",
+    "api": "https://api.github.com/repos/prodigystudios/Akkio_Consume_Helper"
+  },
+  "commit": "9af15e3c236d14d6d704d4db78cb210620849b24",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "e33e3ec1f529df8bbf43fcfaaef0b8cf9938b7125013d56b12a7d6a4682fcd3a",
+      "bytes": 246
+    },
+    "Akkio_Consume_Helper_Data.lua": {
+      "sha256": "62ee84155841b6502a382b4657b61fcb8e167e055f80819b12da9bff12d78138",
+      "bytes": 24773
+    },
+    "Akkio_Consume_Helper_ShoppingList.lua": {
+      "sha256": "08c08b87272cf4441baaf7f61df557f535d3c002d8822147e4b1216f7dcfbe2d",
+      "bytes": 46408
+    },
+    "Akkio_Consume_Helper_Templates.xml": {
+      "sha256": "303a6010c4b9acb6ed7ca249b33d66cfa7551f27ad52963f538223c13913d462",
+      "bytes": 1515
+    },
+    "Akkio_Consume_Helper.toc": {
+      "sha256": "40b7a994d407cce6661ef87f40064a6c46bce8028b998407cb5f60ff0c21f1ae",
+      "bytes": 487
+    },
+    "Akkio_Consume_HelperTable.lua": {
+      "sha256": "c4fcfc1d0dee6114d317cebb6225f838f569e8d59c0b106b7d97d978fa10ed64",
+      "bytes": 110804
+    },
+    "CHANGELOG.md": {
+      "sha256": "1b53c1aee126bab4eafda21e1676fcce05420e9721daaaecca1c8bb304509154",
+      "bytes": 30021
+    },
+    "LICENSE": {
+      "sha256": "df9e6f3b5ccb8f9f30e8207e6c48bf8e9c0d578dd506fcad34f6949f954a8f0a",
+      "bytes": 1283
+    },
+    "README.md": {
+      "sha256": "3bd08bdac42cb5d1cf9676212a9389806594d7fc8cd126a0c3d39b408e2f77b8",
+      "bytes": 25603
+    },
+    "SHOPPING_LIST_FEATURE.md": {
+      "sha256": "acd41b7c3cd6a99afb634119a558b56a71850d46810bdaa31702908bdd8e8b96",
+      "bytes": 1987
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

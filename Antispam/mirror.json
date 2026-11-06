@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/shagu/antispam",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "antispam",
+    "name": "antispam",
+    "url": "https://github.com/shagu/antispam",
+    "api": "https://api.github.com/repos/shagu/antispam"
+  },
+  "commit": "c1efb663f2fd722c23eef8c6087ec081bd151125",
+  "sourceFiles": {
+    "antispam.lua": {
+      "sha256": "bd3d0e222e975d7d8cfbcc39152ae7ad43a4c5bdfbcd79440dad99ea9d13f8e7",
+      "bytes": 1219
+    },
+    "antispam.toc": {
+      "sha256": "fe0d77997388357319e26b692c6adf6ebe87cf3dbafdfc300d1a2a75188b94ca",
+      "bytes": 121
+    },
+    "README.md": {
+      "sha256": "26c63e4152030198e3e7590e35a68af80351a7cc1120166b40c9c5078268e549",
+      "bytes": 349
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

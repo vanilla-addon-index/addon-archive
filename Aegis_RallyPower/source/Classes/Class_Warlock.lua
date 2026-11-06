@@ -1,0 +1,430 @@
+--=============================================================================
+-- Class_Warlock.lua  -  Warlock module for AegisRP
+--
+-- Three buttons on the shared strip:
+--
+--   ARMOR     - your personal armor buff (Demon Armor / Demon Skin, highest
+--               known). Green with a timer while it's on you, red when missing.
+--               Click to (re)cast.
+--   SOULSTONE - the spec's glow-state button. Green when a Soulstone is in your
+--               bags and off cooldown; red while it's on cooldown (shows the
+--               cooldown); grey when you have none (click then CREATES one).
+--               Left-click uses it on your friendly target, or yourself.
+--   CURSE     - cycle which curse you're assigned to keep on the target
+--               (Elements / Shadow / Agony / Weakness / Tongues / Recklessness /
+--               Doom - whichever you know). Green while it's on the target.
+--
+-- Detection matches debuff/buff icons against your own spellbook textures, with
+-- SuperWoW id-learning on top. Timers are cast-derived.
+--=============================================================================
+
+local M = AegisRP:NewClass("WARLOCK")
+
+local ARMORS = {
+    { name = "Demon Armor", dur = 30 * 60 },
+    { name = "Demon Skin",  dur = 30 * 60 },
+}
+-- duty = the curse's key in the shared assignment model (each curse is its
+-- own duty key; the wheel holds exactly one at a time).
+local CURSES = {
+    { name = "Curse of the Elements",  dur = 5 * 60, duty = "CURSE_ELEMENTS" },
+    { name = "Curse of Shadow",        dur = 5 * 60, duty = "CURSE_SHADOW" },
+    { name = "Curse of Weakness",      dur = 2 * 60, duty = "CURSE_WEAKNESS" },
+    { name = "Curse of Recklessness",  dur = 2 * 60, duty = "CURSE_RECKLESSNESS" },
+    { name = "Curse of Tongues",       dur = 30,     duty = "CURSE_TONGUES" },
+    { name = "Curse of Agony",         dur = 24,     duty = "CURSE_AGONY" },
+    { name = "Curse of Doom",          dur = 60,     duty = "CURSE_DOOM" },
+}
+
+local strip
+local armorDeadline = 0
+local curseApplied = {}   -- [curseName] = { target, deadline }
+
+-- highest known armor (test mode: first defined, marked simulated)
+local function BestArmor()
+    for _, a in ipairs(ARMORS) do
+        local sp = AegisRP.FindSpell(a.name)
+        if sp then
+            a._tex = AegisRP.TexBase(sp.texture); a._icon = sp.texture; a._sim = nil
+            return a
+        end
+    end
+    if AegisRP.IsTestMode() then
+        local a = ARMORS[1]
+        a._icon = nil; a._sim = true
+        return a
+    end
+    return nil
+end
+
+-- is my armor buff on ME? (player buffs: icon match vs spellbook texture; the
+-- shared debuff helper works on buffs too via UnitBuff scan here)
+local function ArmorUp(a)
+    if not a then return false end
+    local j = 1
+    while j <= 32 do
+        local tex = UnitBuff("player", j)
+        if not tex then break end
+        if AegisRP.TexBase(tex) == a._tex then return true end
+        j = j + 1
+    end
+    return false
+end
+
+local function KnownCurses()
+    local out = {}
+    local test = AegisRP.IsTestMode()
+    for _, c in ipairs(CURSES) do
+        local sp = AegisRP.FindSpell(c.name)
+        if sp then
+            c._tex = AegisRP.TexBase(sp.texture); c._icon = sp.texture; c._sim = nil
+            table.insert(out, c)
+        elseif test then
+            c._icon = nil; c._sim = true
+            table.insert(out, c)
+        end
+    end
+    return out
+end
+
+-- Effective selection (DESIGN_ASSIGNMENTS.md 9): the curse duty I hold in the
+-- shared model first, my local preference second, first known curse last.
+local function SelectedCurse()
+    local list = KnownCurses()
+    if table.getn(list) == 0 then return nil, list end
+    local want
+    for _, c in ipairs(CURSES) do
+        if not want and AegisRP.Assign.GetDuty(UnitName("player"), c.duty) then
+            want = c.name
+        end
+    end
+    if not want then want = AegisRP_Settings.lockCurse end
+    for _, c in ipairs(list) do if c.name == want then return c, list end end
+    return list[1], list
+end
+
+-- Pick a curse: writes the local preference AND self-assigns in the shared
+-- model, clearing any other curse duty I held (one curse at a time). The
+-- wheel and the options dropdown both come through here.
+local function SelectCurse(name)
+    AegisRP_Settings.lockCurse = name
+    local me = UnitName("player")
+    for _, c in ipairs(CURSES) do
+        if c.name == name then
+            AegisRP.Assign.SetDuty(me, c.duty, true)
+        elseif AegisRP.Assign.GetDuty(me, c.duty) then
+            AegisRP.Assign.ClearDuty(me, c.duty)
+        end
+    end
+end
+
+--------------------------------------------------------------------------
+-- SOULSTONE TIERS
+--
+-- Vanilla has five, as five separate SPELLS and five separate ITEMS:
+-- Minor / Lesser / (unprefixed) / Greater / Major. Neither list is ordered by
+-- tier anywhere we can rely on - the spellbook is not guaranteed to be in learn
+-- order, and bag order is wherever the player keeps things - so tier is read
+-- from the NAME and never from position.
+--
+-- Position is exactly what the old code used: both `CreateSpell` and
+-- `FindBagItem` took the LAST match, and alphabetically "(Minor)" sorts last of
+-- the five, so the button reliably created the weakest stone the character
+-- knew. That is the bug this replaces.
+--------------------------------------------------------------------------
+
+-- Ordered, not a hash: pairs() order is not defined and this project has been
+-- bitten by depending on it before.
+local SS_TIERS = {
+    { "minor", 1 }, { "lesser", 2 }, { "greater", 4 }, { "major", 5 },
+}
+
+-- Tier of a soulstone spell or item by name, or nil if it is not one at all.
+-- The unprefixed stone is 3. A name we do not recognise also scores 3: a Turtle
+-- rename must not make the button dead, and mid is the honest guess - it still
+-- loses to a Greater or Major we CAN identify.
+local function StoneTier(name)
+    if not name then return nil end
+    local lower = string.lower(name)
+    if not string.find(lower, "soulstone", 1, true) then return nil end
+    for i = 1, table.getn(SS_TIERS) do
+        if string.find(lower, SS_TIERS[i][1], 1, true) then return SS_TIERS[i][2] end
+    end
+    return 3
+end
+-- Exposed on the module (like M.buffs / M.optionsInfo) so the ranking can be
+-- tested off-client. It is the whole fix, and it is the kind of ordering bug
+-- that is invisible until a player says "it only ever makes the worst one".
+M.StoneTier = StoneTier
+
+-- The best "Create Soulstone" in the spellbook, by tier. If the client happens
+-- to collapse them into one ranked slot instead, there is a single match and
+-- CastSpell casts its highest rank - correct either way.
+local function CreateSpell()
+    local best, bestTier = nil, -1
+    local i = 1
+    while true do
+        local sn = GetSpellName(i, "spell")
+        if not sn then break end
+        if string.find(sn, "Create Soulstone", 1, true) then
+            local t = StoneTier(sn) or 0
+            if t > bestTier then best, bestTier = i, t end
+        end
+        i = i + 1
+    end
+    return best
+end
+
+-- The best soulstone in the bags, by tier, so a leftover Minor never beats the
+-- Major you just made. Walks the engine's cached bag list rather than asking
+-- FindBagItem, whose last-match-wins cannot express "best of a family".
+--
+-- Known simplification: tier wins even when that stone is on cooldown and a
+-- weaker one is ready. Whether the cooldown is per-item or shared across the
+-- family is not something this was verified against, and the button shows the
+-- timer for whichever stone it picked, so the player can see it.
+local function BestStone()
+    local items = AegisRP.BagItems and AegisRP.BagItems()
+    if not items then return AegisRP.FindBagItem("Soulstone") end
+    local fb, fs, fn, bestTier = nil, nil, nil, -1
+    for _, it in ipairs(items) do
+        local t = StoneTier(it.name)
+        if t and t > bestTier then
+            fb, fs, fn, bestTier = it.bag, it.slot, it.name, t
+        end
+    end
+    return fb, fs, fn
+end
+
+local function BuildUI()
+    if strip then return end
+    strip = AegisRP.NewStrip("warlock", "Warlock")
+
+    -- ARMOR
+    strip:AddButton{
+        key = "armor",
+        refresh = function(b)
+            local a = BestArmor()
+            if not a then
+                b:SetIcon(nil); b:SetLabel("|cffffd100Armor|r")
+                b:SetSub("|cff888888none known|r"); b:SetTimer(""); b:SetState("off"); return
+            end
+            b:SetIcon(a._icon); b:SetLabel("|cffffd100Armor|r")
+            b:SetSub(a.name .. (a._sim and " |cffff8800*|r" or ""))
+            if AegisRP.IsTestMode() then
+                if armorDeadline > GetTime() then
+                    b:SetState("good"); b:SetTimer(AegisRP.FmtTime(armorDeadline - GetTime()))
+                else
+                    b:SetState("need"); b:SetTimer("")
+                end
+                return
+            end
+            if ArmorUp(a) then
+                b:SetState("good")
+                if armorDeadline > GetTime() then
+                    b:SetTimer(AegisRP.FmtTime(armorDeadline - GetTime()))
+                else b:SetTimer("") end
+            else
+                b:SetState("need"); b:SetTimer("")
+            end
+        end,
+        onClick = function(b)
+            local a = BestArmor()
+            if not a then return end
+            if AegisRP.IsTestMode() then
+                DEFAULT_CHAT_FRAME:AddMessage("|cffff8800[test]|r would cast " .. a.name)
+                armorDeadline = GetTime() + a.dur
+                return
+            end
+            CastSpellByName(a.name)
+            armorDeadline = GetTime() + a.dur
+        end,
+        tooltip = function(b, tt)
+            tt:AddLine("Armor")
+            local a = BestArmor()
+            if a then tt:AddLine(a.name, 1, 1, 1); tt:AddLine("Click to refresh.", 0.6, 0.6, 0.6) end
+        end,
+    }
+
+    -- SOULSTONE
+    strip:AddButton{
+        key = "soulstone",
+        refresh = function(b)
+            b:SetLabel("|cffffd100Soulstone|r")
+            local bag, slot, name = BestStone()
+            if bag then
+                b:SetIcon(GetContainerItemInfo(bag, slot))
+                b:SetSub(name)
+                local start, dur = GetContainerItemCooldown(bag, slot)
+                if start and dur and dur > 1.5 and (start + dur) > GetTime() then
+                    b:SetState("need")
+                    b:SetTimer(AegisRP.FmtTime(start + dur - GetTime()))
+                else
+                    b:SetState("good"); b:SetTimer("")
+                end
+            else
+                local ci = CreateSpell()
+                b:SetIcon(ci and GetSpellTexture(ci, "spell") or nil)
+                b:SetSub("|cff888888create one|r"); b:SetTimer(""); b:SetState("off")
+            end
+        end,
+        onClick = function(b)
+            local bag, slot = BestStone()
+            if not bag then
+                local ci = CreateSpell()
+                if ci then CastSpell(ci, "spell") end
+                return
+            end
+            local start, dur = GetContainerItemCooldown(bag, slot)
+            if start and dur and dur > 1.5 and (start + dur) > GetTime() then return end
+            -- use on friendly target, else self
+            UseContainerItem(bag, slot)
+            if SpellIsTargeting() then
+                local unit = "player"
+                if UnitExists("target") and UnitIsFriend("player", "target") then unit = "target" end
+                if SpellCanTargetUnit(unit) then SpellTargetUnit(unit)
+                else SpellStopTargeting() end
+            end
+        end,
+        tooltip = function(b, tt)
+            tt:AddLine("Soulstone")
+            local bag, slot, name = BestStone()
+            if bag then
+                tt:AddLine(name, 1, 1, 1)
+                tt:AddLine("Click: use on friendly target (or yourself).", 0.6, 0.6, 0.6)
+            else
+                tt:AddLine("None in bags - click to create one.", 1, 0.7, 0.4)
+            end
+        end,
+    }
+
+    -- CURSE
+    strip:AddButton{
+        key = "curse",
+        refresh = function(b)
+            local c = SelectedCurse()
+            if not c then
+                b:SetIcon(nil); b:SetLabel("|cffffd100Curse|r")
+                b:SetSub("|cff888888none known|r"); b:SetTimer(""); b:SetState("off"); return
+            end
+            b:SetIcon(c._icon); b:SetLabel("|cffffd100Curse|r")
+            b:SetSub(string.gsub(c.name, "^Curse of ", "") .. (c._sim and " |cffff8800*|r" or ""))
+            if AegisRP.IsTestMode() then
+                local a = curseApplied[c.name]
+                if a and a.deadline > GetTime() then
+                    b:SetState("good"); b:SetTimer(AegisRP.FmtTime(a.deadline - GetTime()))
+                else
+                    b:SetState("need"); b:SetTimer("")
+                end
+                return
+            end
+            if not UnitExists("target") or UnitIsFriend("player", "target") then
+                b:SetTimer(""); b:SetState("off"); return
+            end
+            if AegisRP.UnitHasDebuffEntry("target", c) then
+                b:SetState("good")
+                local a = curseApplied[c.name]
+                if a and a.target == UnitName("target") and a.deadline > GetTime() then
+                    b:SetTimer(AegisRP.FmtTime(a.deadline - GetTime()))
+                else b:SetTimer("") end
+            else
+                b:SetState("need"); b:SetTimer("")
+            end
+        end,
+        onClick = function(b)
+            local c = SelectedCurse()
+            if not c then return end
+            if AegisRP.IsTestMode() then
+                DEFAULT_CHAT_FRAME:AddMessage("|cffff8800[test]|r would apply " .. c.name)
+                curseApplied[c.name] = { target = "(test)", deadline = GetTime() + c.dur }
+                return
+            end
+            if not UnitExists("target") or UnitIsFriend("player", "target") then return end
+            if AegisRP.CastAtTarget(c.name) then
+                curseApplied[c.name] = { target = UnitName("target"), deadline = GetTime() + c.dur }
+            end
+        end,
+        onWheel = function(b, delta)
+            local sel, list = SelectedCurse()
+            local n = table.getn(list)
+            if n == 0 then return end
+            local idx = 1
+            for i, c in ipairs(list) do if c.name == sel.name then idx = i end end
+            idx = idx + (delta > 0 and -1 or 1)
+            if idx < 1 then idx = n elseif idx > n then idx = 1 end
+            SelectCurse(list[idx].name)
+        end,
+        tooltip = function(b, tt)
+            tt:AddLine("Curse duty")
+            local c = SelectedCurse()
+            if c then
+                tt:AddLine(c.name, 1, 1, 1)
+                tt:AddLine("Scroll to change, click to apply to your target.", 0.6, 0.6, 0.6)
+            end
+        end,
+    }
+
+    strip:Finish()
+end
+
+function M:OnActivate()
+    BuildUI()
+    strip:Refresh()
+end
+
+function M:Toggle()
+    if not strip then BuildUI() end
+    strip:Toggle()
+end
+
+-- Options descriptor (Buttons tab). The curse select binds to the lockCurse
+-- key the mouse-wheel writes; `get` shows the effective (fallback) selection.
+M.optionsInfo = {
+    { type = "header", label = "Strip buttons" },
+    { type = "check", key = "btn_armor", label = "Armor button", default = true,
+      onChange = function() AegisRP.ReflowStrips() end },
+    { type = "check", key = "btn_soulstone", label = "Soulstone button", default = true,
+      onChange = function() AegisRP.ReflowStrips() end },
+    { type = "check", key = "btn_curse", label = "Curse button", default = true,
+      onChange = function() AegisRP.ReflowStrips() end },
+    { type = "header", label = "Curse duty" },
+    { type = "select", key = "lockCurse", label = "Curse",
+      values = function()
+          local out = {}
+          for _, c in ipairs(KnownCurses()) do
+              local nm = string.gsub(c.name, "^Curse of ", "")
+              if c._sim then nm = nm .. " *" end
+              table.insert(out, { value = c.name, text = nm })
+          end
+          return out
+      end,
+      get = function()
+          local c = SelectedCurse()
+          if c then return c.name end
+          return nil
+      end,
+      set = function(v) SelectCurse(v) end },   -- preference + self-assign
+}
+
+-- Assignment model: Warlock duties (curses + soulstone). Wids are stable and
+-- append-only (21-25 were added after the first catalog batch - never renumber).
+if AegisRP.Assign then
+    local D = AegisRP.Assign.RegisterDuty
+    D{ key="CURSE_ELEMENTS",     wid=11, class="WARLOCK", tab="debuff",  spell="Curse of the Elements",  target="none",   multi=false, dur=5*60, icon="Interface\\Icons\\Spell_Shadow_ChillTouch" }
+    D{ key="CURSE_SHADOW",       wid=12, class="WARLOCK", tab="debuff",  spell="Curse of Shadow",        target="none",   multi=false, dur=5*60, icon="Interface\\Icons\\Spell_Shadow_CurseOfAchimonde" }
+    D{ key="SOULSTONE",          wid=17, class="WARLOCK", tab="utility", spell="Soulstone Resurrection", target="player", multi=true,  dur=0, icon="Interface\\Icons\\Spell_Shadow_SoulGem" }
+    D{ key="CURSE_WEAKNESS",     wid=21, class="WARLOCK", tab="debuff",  spell="Curse of Weakness",      target="none",   multi=false, dur=2*60, icon="Interface\\Icons\\Spell_Shadow_CurseOfMannoroth" }
+    D{ key="CURSE_RECKLESSNESS", wid=22, class="WARLOCK", tab="debuff",  spell="Curse of Recklessness",  target="none",   multi=false, dur=2*60, icon="Interface\\Icons\\Spell_Shadow_UnholyStrength" }
+    D{ key="CURSE_TONGUES",      wid=23, class="WARLOCK", tab="debuff",  spell="Curse of Tongues",       target="none",   multi=false, dur=30, icon="Interface\\Icons\\Spell_Shadow_CurseOfTounges" }
+    -- Agony / Doom are personal DPS DoTs, not a raid-maintained utility
+    -- debuff; hidden from the Debuffs tab (wids reserved, model/sync keep them)
+    D{ key="CURSE_AGONY",        wid=24, class="WARLOCK", tab="debuff",  spell="Curse of Agony",         target="none",   multi=false, dur=24, hidden=true, icon="Interface\\Icons\\Spell_Shadow_CurseOfSargeras" }
+    D{ key="CURSE_DOOM",         wid=25, class="WARLOCK", tab="debuff",  spell="Curse of Doom",          target="none",   multi=false, dur=60, hidden=true, icon="Interface\\Icons\\Spell_Shadow_AuraOfDarkness" }
+
+    -- Crowd control (tab="cc"): assigned per raid MARK through the cc domain,
+    -- see Class_Mage.lua for why it shares this catalog.
+    D{ key="BANISH", wid=31, class="WARLOCK", tab="cc", spell="Banish", target="none", multi=false, dur=30,
+       note="Demon, Elemental", icon="Interface\\Icons\\Spell_Shadow_Cripple" }
+    D{ key="FEAR",   wid=32, class="WARLOCK", tab="cc", spell="Fear",   target="none", multi=false, dur=20,
+       note="Any - it RUNS, so mind the pull", icon="Interface\\Icons\\Spell_Shadow_Possession" }
+end

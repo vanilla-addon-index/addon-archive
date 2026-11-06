@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: Auto Turn-in
+## Notes: Auto-accept and turn-in for quests with checkboxes.
+## Author: Valiusha
+## Version: 1.0
+## SavedVariables: AutoShardTurninDB
+
+AutoTurnIn.lua

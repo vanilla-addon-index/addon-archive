@@ -1,0 +1,174 @@
+{
+  "upstream": "https://github.com/brues-code/Auctionator",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "brues-code",
+    "repo": "Auctionator",
+    "name": "Auctionator",
+    "url": "https://github.com/brues-code/Auctionator",
+    "api": "https://api.github.com/repos/brues-code/Auctionator"
+  },
+  "commit": "655dbe8a752aca50eeacb184790da6dc7740afd9",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    ".github/workflows/release.yml": {
+      "sha256": "3d4412f2a2f2302ea51e1b0a67c1504a01b6bb2dec533ee3f03105085a5a0acb",
+      "bytes": 405
+    },
+    "Auctionator.lua": {
+      "sha256": "f77d110236b8d85e7fb7eb550136ee6c2c8bb71d78a301ef720f524cda08f085",
+      "bytes": 120348
+    },
+    "Auctionator.toc": {
+      "sha256": "44abb6070d741ffea16c4d82846b8ede3ed6ba2c6f1f92582342c362f066ea38",
+      "bytes": 1334
+    },
+    "Auctionator.xml": {
+      "sha256": "c3ba808d6f0d3e91608bc70c082819a96ea982da22b9a8a85defa14fc07579a7",
+      "bytes": 59374
+    },
+    "AuctionatorAPI.lua": {
+      "sha256": "6fa4f765aa8af0dbf3e10320b78a2e1ebe5d933103fd67ea508093044b444b76",
+      "bytes": 1698
+    },
+    "AuctionatorBuy.lua": {
+      "sha256": "d3a283bfdb50122cb32fdb281ae241768f775f374fcf84539c52188b6da617fe",
+      "bytes": 8783
+    },
+    "AuctionatorCompat.lua": {
+      "sha256": "84fc55dc95a7cd3df17ea7dc9a3f6c6f771ba0f6e6f1606bf8f077d478af5560",
+      "bytes": 10863
+    },
+    "AuctionatorConfig.lua": {
+      "sha256": "0631469724e68bc3688b9e8c15c0eedfea2f3d591bf5a2ac3f33bf33272e4b85",
+      "bytes": 23568
+    },
+    "AuctionatorConfig.xml": {
+      "sha256": "b2de265521e0cf3614d257c34eebb49b097353bd05d514deead5d87d7d7dfa2a",
+      "bytes": 24488
+    },
+    "AuctionatorConflicts.lua": {
+      "sha256": "a079c6a1ce625edb1a359cf18a4c9e088e0b2996e2f905b5aead1daecfc1bf92",
+      "bytes": 2159
+    },
+    "AuctionatorHints.lua": {
+      "sha256": "04570c878e1ccb3ad6750b57df6d3dec03dab1f6b309271c5d27a1910763827b",
+      "bytes": 27003
+    },
+    "AuctionatorLocalize.lua": {
+      "sha256": "aebe580bb4c706089938f8f6b4da2eadb3cad2fa22608f9fba16fee5d4869e04",
+      "bytes": 6947
+    },
+    "AuctionatorPane.lua": {
+      "sha256": "1897bc852feaa86ebaf1cb9d3924efcd71de274a1c7aabf726b8b5a0ceff349e",
+      "bytes": 3322
+    },
+    "AuctionatorQuery.lua": {
+      "sha256": "bfb63ee42566c439880c9c6c07a86035e797b9d375a32be6ebfb15a021febd35",
+      "bytes": 3062
+    },
+    "AuctionatorScan.lua": {
+      "sha256": "a4c8dd716b9e72656be944c4beb16fc7830eea732d5a80118237278eeedfb1bb",
+      "bytes": 38827
+    },
+    "AuctionatorShop.lua": {
+      "sha256": "98ff81fa532edc34e53f1bffce2addbadfe4ccd97eecdefcde395edd214bdabb",
+      "bytes": 18621
+    },
+    "AuctionatorVendor.lua": {
+      "sha256": "ff4a4ca5501c4b2bbda627d47c70ff9fced6afcb9c3bb1db6b2accb0447c8b40",
+      "bytes": 101182
+    },
+    "Images/atr_bot.blp": {
+      "sha256": "55b41290458cad5ec2a9b96d532483a9f6b37555506f516247e5c67b2e93a7a3",
+      "bytes": 88580
+    },
+    "Images/atr_botleft.blp": {
+      "sha256": "610bcff276fd2076647b1a03591527c50508f899cb49b753c1bd4c8a2e4f788f",
+      "bytes": 88580
+    },
+    "Images/atr_botright.blp": {
+      "sha256": "16af39f530dfef00a06a5a9b6a89c12aced09b31048b0fc4c438de70e754837e",
+      "bytes": 88580
+    },
+    "Images/atr_top.blp": {
+      "sha256": "08f0201e270220f15df8192b18bd3a6a2625b5e44b7163fd0f411835adbca688",
+      "bytes": 88580
+    },
+    "Images/atr_topleft.blp": {
+      "sha256": "5366fe38b3f0dd925d91910de555d1a79aeebae87b61cd0e23a976b100f3992c",
+      "bytes": 88580
+    },
+    "Images/atr_topright.blp": {
+      "sha256": "220f0a3ab0db7de0bf6b5d8937118ecfaf91e38f80c9af2198f0b7c2f3af4055",
+      "bytes": 88580
+    },
+    "Images/CrossAndCheck.blp": {
+      "sha256": "891f1b6a8a330ee70a930013a2f077ce68d6bca7ebc1a7b65aa1772e050d6d1b",
+      "bytes": 6660
+    },
+    "Locales/deDE.lua": {
+      "sha256": "d006ca4de0aee8a2a93054eccafe6e5f5c282de98da843437bf33b144326b52d",
+      "bytes": 14909
+    },
+    "Locales/enUS.lua": {
+      "sha256": "c0e4b043b31ebade0ede5d5f6ec0a69c2dbd6c08b4b713d10aadc9dcc3330bbd",
+      "bytes": 7875
+    },
+    "Locales/esES.lua": {
+      "sha256": "ba6976a3f439085a4f19174053fee6eb812554815f2cb5c9ab9dca8c769af3f3",
+      "bytes": 14595
+    },
+    "Locales/frFR.lua": {
+      "sha256": "8fba3540828cb917262d7d4c3b9b8d3eb072df59868109fbf5f2150b123a4588",
+      "bytes": 15933
+    },
+    "Locales/ruRU.lua": {
+      "sha256": "6cff2dcd1e61a52fb6d6ea1ce3968f602ef72c8b09fcf2f373e87198dd54bde2",
+      "bytes": 18845
+    },
+    "Locales/svSE.lua": {
+      "sha256": "ba2cf7ff6ad623ac0e1bbc36e6be0e431feedf88e5a3dbad09e982cac2df0cb5",
+      "bytes": 13436
+    },
+    "zcUtils.lua": {
+      "sha256": "261371e5bb024b2ac3120411c21b90499dafd9d1a652471ee6a9a26944612446",
+      "bytes": 18909
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "430884469": {
+      "tag": "v1.0.6",
+      "folder": "v1.0.6--430884469",
+      "assets": {
+        "699639691": {
+          "sha256": "114cbc5739c52d625aff0f6e91236c4658a70044a3e67f5b2eae325edc7a7e7e",
+          "bytes": 238316,
+          "id": "699639691",
+          "name": "Auctionator-v1.0.6-classic.zip",
+          "url": "https://github.com/brues-code/Auctionator/releases/download/v1.0.6/Auctionator-v1.0.6-classic.zip",
+          "path": "releases/v1.0.6--430884469/assets/Auctionator-v1.0.6-classic.zip"
+        },
+        "699639727": {
+          "sha256": "8f495957e8566546eba8abe71db3863014a5236788fd83e65b2afcdcc3183adf",
+          "bytes": 167,
+          "id": "699639727",
+          "name": "release.json",
+          "url": "https://github.com/brues-code/Auctionator/releases/download/v1.0.6/release.json",
+          "path": "releases/v1.0.6--430884469/assets/release.json"
+        }
+      },
+      "source": {
+        "sha256": "630d37a0451e493a620b8652b31d67fee96c1e7674cd60dba8f3019fe4e6fbf4",
+        "bytes": 227700,
+        "path": "releases/v1.0.6--430884469/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/brues-code/Auctionator/tarball/v1.0.6"
+      }
+    }
+  }
+}

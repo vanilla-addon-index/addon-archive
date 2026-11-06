@@ -1,0 +1,22 @@
+# Define the absolute path to Altoholic.all.lua in the current directory
+$targetFile = Join-Path -Path (Get-Location) -ChildPath "Altoholic.all.lua"
+$targetFileAbsolute = (Resolve-Path $targetFile).Path
+
+# Search recursively for Altoholic.lua
+Get-ChildItem -Path "." -Filter "Altoholic.lua" -Recurse -File | ForEach-Object {
+    $originalFile = $_.FullName
+    $backupFile = "$originalFile.bak"
+
+    Write-Host "Processing: $originalFile"
+
+    # Backup the file
+    Copy-Item -Path $originalFile -Destination $backupFile -Force
+
+    # Remove the original
+    Remove-Item -Path $originalFile -Force
+
+    # Create symbolic link (requires Administrator or Developer Mode on Windows)
+    New-Item -ItemType SymbolicLink -Path $originalFile -Target $targetFileAbsolute
+
+    Write-Host "Symlink created: $originalFile -> $targetFileAbsolute"
+}

@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: AtlasLoot-|cffff8000GearFilter|r
+## Notes: Class-based gear filter for AtlasLoot TW Edition. Dims items your class cannot equip or benefit from.
+## Version: 1.1.2
+## Dependencies: AtlasLoot
+## SavedVariablesPerCharacter: AtlasLoot_GearFilterDB
+
+GearFilter.lua

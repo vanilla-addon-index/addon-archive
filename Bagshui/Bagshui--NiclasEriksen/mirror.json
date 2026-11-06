@@ -1,0 +1,741 @@
+{
+  "upstream": "https://github.com/NiclasEriksen/Bagshui",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "NiclasEriksen",
+    "repo": "Bagshui",
+    "name": "Bagshui",
+    "url": "https://github.com/NiclasEriksen/Bagshui",
+    "api": "https://api.github.com/repos/NiclasEriksen/Bagshui"
+  },
+  "commit": "6104959ea36dcfb7b672d2f25c768faf54de963f",
+  "sourceFiles": {
+    ".github/DISCUSSION_TEMPLATE/ideas.yaml": {
+      "sha256": "adbef9d32f33c1ae16dbc52958844afbb20fcb22481a3b4108d09c4db7d1aac7",
+      "bytes": 1003
+    },
+    ".github/Funding.yml": {
+      "sha256": "e215966c1e84d715889e5594c2c23b6c14fc32910240ebe730ce1d89bcf7092b",
+      "bytes": 23
+    },
+    ".github/ISSUE_TEMPLATE/bug_report.yaml": {
+      "sha256": "20676b85490985970fbd7707da632af0f835977c6dda1b83c434923dfbb25901",
+      "bytes": 1270
+    },
+    ".github/ISSUE_TEMPLATE/config.yml": {
+      "sha256": "7ae60b21a0d6f15dd77a7a99ae865a7c561cf6d9780fe7b9110c1be9b0ecb0ea",
+      "bytes": 441
+    },
+    ".github/ISSUE_TEMPLATE/miscategorized_item.yaml": {
+      "sha256": "db8e3ca2580c798378cf1495c573958239f62d4b82be27b1c3ec38733dcb732b",
+      "bytes": 1575
+    },
+    ".github/Pull_Request_Template.md": {
+      "sha256": "eb715e98eff6f86a471128faa217c548b8231e97dd7cbcb732c1ebc631450cd3",
+      "bytes": 1169
+    },
+    ".github/workflows/AnnounceLocalizationChanges.yml": {
+      "sha256": "adf072546891033212b9cd8609a9c8de4835a9395899cefc8ca4f261e490d82a",
+      "bytes": 2361
+    },
+    ".github/workflows/AutoReleaseOnVersionTag.yml": {
+      "sha256": "e7f2a7e382dc1bfb2160682bd989ccfe7c5f7db05d79de420f95bdfa838e8b00",
+      "bytes": 827
+    },
+    ".github/workflows/CreateAddonReleaseFromChangelog.yml": {
+      "sha256": "22c0a8aa9ba133b2fa7ecd637baa8cdbd9421b30597c58a7ec1c8dd1eefd17a1",
+      "bytes": 6577
+    },
+    ".github/workflows/LockClosedThreads.yml": {
+      "sha256": "502f5db9af512fffee76266cbb9cd7d6b30573820ffa505723363cd58c51f5a9",
+      "bytes": 462
+    },
+    ".github/workflows/UpdateIssueOnClose.yml": {
+      "sha256": "a6e533f912c62c0b9975c384f2ba3518ead830c935fce30980d804a09f7cb30c",
+      "bytes": 447
+    },
+    ".github/workflows/UpdateIssueOnOpen.yml": {
+      "sha256": "b4e31dd3f940619f8b3c9089a01012c7d9b4a86c2d34296f707bdfee3315a854",
+      "bytes": 533
+    },
+    "Bagshui.lua": {
+      "sha256": "952e78de92607530620c7da8c6a8567dfe5aee9c736491b2865804f4a2700a5e",
+      "bytes": 39229
+    },
+    "Bagshui.toc": {
+      "sha256": "ec4962419f57d90f13fae8b71350d68d9092e61954eca9559fa959ec7b9c1487",
+      "bytes": 422
+    },
+    "Bagshui.xml": {
+      "sha256": "b020af0dc71da6a0d92a2184a9591163d403b45724d6e5c24160694faf636923",
+      "bytes": 5905
+    },
+    "Bindings.xml": {
+      "sha256": "8962d3ba9d8b0a6b380d4d5dd05a79151f2679208651cd9eb06cf8c1fb20bd58",
+      "bytes": 1036
+    },
+    "Changelog.md": {
+      "sha256": "97aa05f4fffb086daded78972b100a41a77c1f9557cf9751c5296db604abe67d",
+      "bytes": 23163
+    },
+    "Components/About.lua": {
+      "sha256": "942e49edf02c63a99bce8baecf07f37b2f8227d0750f58a9828fd83762a3dc92",
+      "bytes": 2629
+    },
+    "Components/ActiveQuestItems.lua": {
+      "sha256": "803d01a867143f87eb4c5953c654b629d4797ee053d9baa285e8ff1a046b324d",
+      "bytes": 6240
+    },
+    "Components/API.lua": {
+      "sha256": "784606ae830587e4e35ded6ee74da4de15d00d2d45d5c53716e9eb9b4749861d",
+      "bytes": 4337
+    },
+    "Components/Bags.lua": {
+      "sha256": "e386e24e29678b7e441774ffedfc2a3ef9791cfeb4070e9b756ea660ad839aa4",
+      "bytes": 6243
+    },
+    "Components/Bagshui.BlizzFixes.lua": {
+      "sha256": "0672d845f68d0601d799124fc05e99ecff7ec1422cad645f157f3a8359e9c1f6",
+      "bytes": 2356
+    },
+    "Components/Bagshui.Cursor.lua": {
+      "sha256": "4f48ed70064e73b2ab5d572d57d76e1a2c8afb275ac2e9c96f9f57ff1a8b5008",
+      "bytes": 12715
+    },
+    "Components/Bagshui.Events.lua": {
+      "sha256": "ce0ebeada018cfe2d21f25c116fe126e0e895ddf898ce84b8a0cb25e2b9597b5",
+      "bytes": 8614
+    },
+    "Components/Bagshui.Menus.lua": {
+      "sha256": "f03790437306b3ecd1a4f9400c30621963d70a18f48360efc7515d57864df21d",
+      "bytes": 18178
+    },
+    "Components/Bagshui.Output.lua": {
+      "sha256": "f54ddfde86f93531316520e0af45d931062b2828ca8a1e13d74e6c282987eaf5",
+      "bytes": 7763
+    },
+    "Components/Bagshui.Tooltips.lua": {
+      "sha256": "a9996f26316783caf04e814c5cefea7434f82db68ebe8885a1e2aa64e8620964",
+      "bytes": 29881
+    },
+    "Components/Bagshui.Windows.lua": {
+      "sha256": "925db3797b16c7d614f8dd2177f0477b7537ecbbbbc976dc52ecb8ba948a3b19",
+      "bytes": 3895
+    },
+    "Components/Bank.lua": {
+      "sha256": "2902de66e9f78edf8e2cc6533d2782bed4e575665afda4388476e84c27ccac9d",
+      "bytes": 9504
+    },
+    "Components/Catalog.lua": {
+      "sha256": "8a9090fe3d71b56413e644b34be5f0c2f9105975111c78b77db0c360a4859d11",
+      "bytes": 29151
+    },
+    "Components/Categories.lua": {
+      "sha256": "ce492d5518d05b21d596533604861d163974325d7ca22a7088df6bf87d1033b7",
+      "bytes": 29503
+    },
+    "Components/Categories.Ui.lua": {
+      "sha256": "8ef2b746ec6ae29d0c88758b3ea9dad6fc184f3139d2ccb4c89bd55a6401cdcb",
+      "bytes": 31402
+    },
+    "Components/Character.lua": {
+      "sha256": "8194b3ce73d2ca5d1c7f552bae19a78a6971fa34b9d0c10159ee58a66795a4c8",
+      "bytes": 24544
+    },
+    "Components/CharacterData.lua": {
+      "sha256": "bab199d7b15d061bee24878102b5a3bc123bd052871e0eb7c50358377bdc9c5c",
+      "bytes": 6475
+    },
+    "Components/Compat.lua": {
+      "sha256": "fc43c3f14b496e60696adfcfa146600acd2625322999850c596950c3b9ae691d",
+      "bytes": 7728
+    },
+    "Components/GameInfo.lua": {
+      "sha256": "4f7a2357e45d6a2ab8d0d1eb225bd1d8fe682eb2192b248f26ebddf5d2c578db",
+      "bytes": 14952
+    },
+    "Components/GameReport.lua": {
+      "sha256": "26ebaa5fad8c8a60bc60f9989afa347f61bf67900a735c8bf09a2f8746d50f77",
+      "bytes": 2268
+    },
+    "Components/Hooks.lua": {
+      "sha256": "63532452214abe124a8883ef3b3687a9d9783140c369a448044f0b9e222631ec",
+      "bytes": 7223
+    },
+    "Components/Inventory.Actions.lua": {
+      "sha256": "3e97f764eca11eeead01ee04e4d1036d8b82297ca81446e0aa08ee0a6af11553",
+      "bytes": 29574
+    },
+    "Components/Inventory.Cache.lua": {
+      "sha256": "528ae74dac550bc62c32299eb1ca777ff3e25ea6b765e3d262a5e102aa48f339",
+      "bytes": 24761
+    },
+    "Components/Inventory.EditMode.lua": {
+      "sha256": "eaaba2707ddf1c735c829aa27e5c2b4f6af31d5f0f5f362a5439abbc5b35a61a",
+      "bytes": 23994
+    },
+    "Components/Inventory.Layout.lua": {
+      "sha256": "a25743a5f29c9e55fcebe7f835d55e6f6e07dedff5097a340d496f44a7ac5313",
+      "bytes": 87998
+    },
+    "Components/Inventory.lua": {
+      "sha256": "78846df1fd96585413aed19127a1db4dcd6694aea6339b5b313f7d0f4008e8b4",
+      "bytes": 38129
+    },
+    "Components/Inventory.Menus.lua": {
+      "sha256": "e012094c3d22c813522ef1341f3d0947e707665eab395ee90cca3b9e59204ae0",
+      "bytes": 41682
+    },
+    "Components/Inventory.Menus.Settings.lua": {
+      "sha256": "7d6b499697154982d32ab40c8c8b481f0b26ce01f5f4f808aaf3e1f74ed5b2c9",
+      "bytes": 27809
+    },
+    "Components/Inventory.Ui.BagButton.lua": {
+      "sha256": "426f5d3810c0f5a99b384c4d815dc36448f4f7afc97072c79d684f1b737dca95",
+      "bytes": 23279
+    },
+    "Components/Inventory.Ui.Group.lua": {
+      "sha256": "ba97556e2922056af0e8e27d99d3be895381e040805475151ab92cfa37145790",
+      "bytes": 17076
+    },
+    "Components/Inventory.Ui.ItemButton.lua": {
+      "sha256": "92788c88e758874ce875de6f1798df0492691bfdf05fb539a027978d8c35b899",
+      "bytes": 49386
+    },
+    "Components/Inventory.Ui.lua": {
+      "sha256": "d10dfa0ad56f8911b247d5aa609a420ffceb2268cf9452ee579a9c658eb5f4a7",
+      "bytes": 56558
+    },
+    "Components/ItemInfo.lua": {
+      "sha256": "2e044128b4aee599128ba4c2c48229d515371ba49c750b6e7d84861454c9ccaa",
+      "bytes": 38795
+    },
+    "Components/Keyring.lua": {
+      "sha256": "02e226e0148530a762e6ab66827af90a891131d3521c5d829426ea3e4bd2bf8d",
+      "bytes": 598
+    },
+    "Components/Localization.lua": {
+      "sha256": "a05c296bc2a0e08dd5d6063fef668106a2282f9149beb9f97e3f9f94163a915e",
+      "bytes": 9330
+    },
+    "Components/LogWindow.lua": {
+      "sha256": "f7fd3a8265cd255236ecc6abd0f579577eb697b00466713dc17abd0deca39e90",
+      "bytes": 2098
+    },
+    "Components/Menus.lua": {
+      "sha256": "238d5ee03a80146e76e9f6770a6464dd14ee7e47b044a2f8ac1c1b8c320524cc",
+      "bytes": 51276
+    },
+    "Components/ObjectList.lua": {
+      "sha256": "bf538a131be676236ba13663052b1547080c16cdcb2f600fd41d8dc225978b3d",
+      "bytes": 45177
+    },
+    "Components/ObjectManager.lua": {
+      "sha256": "68863b1f6ee5d001aa711fc89edff0ec5eeeae411ea5917da1a9e36d70d0798c",
+      "bytes": 61453
+    },
+    "Components/Profiles.lua": {
+      "sha256": "7adef19444a0b28b559d80bf0da515af518df1e9402c063a4e50118621d7e26c",
+      "bytes": 29225
+    },
+    "Components/Profiles.Ui.lua": {
+      "sha256": "86c3de3bc2665ee03cf28347cf101ff12bfbcfec78274a6348b704a0beb2530f",
+      "bytes": 6698
+    },
+    "Components/Rules.lua": {
+      "sha256": "acf1b3aca65d3c92f0c01ef7e511ed2340fef8e250c96683f6dd52c76f9ec1be",
+      "bytes": 48453
+    },
+    "Components/Settings.lua": {
+      "sha256": "394ba23d99563bd6134babe8e70b724be00b5f580f102b08719a96182a8958cf",
+      "bytes": 29081
+    },
+    "Components/Share.lua": {
+      "sha256": "7d23697278dbb775df8bea171a1b0e4f6d4abca9be84f285d47917d8cbc0cfce",
+      "bytes": 20139
+    },
+    "Components/Skins.lua": {
+      "sha256": "800591eff75b1b8e81bdee690c93048abb860c249d9118588ac4a4145df8263a",
+      "bytes": 929
+    },
+    "Components/Slash.lua": {
+      "sha256": "c5646f8b9d24338e88bb13a6061230d25101326b9387d83658d5e641226e5174",
+      "bytes": 5528
+    },
+    "Components/SortOrders.lua": {
+      "sha256": "393a2ebaca572a0050a4032e2209b7438ccb07b118502bc92bc2b273cf8e6eea",
+      "bytes": 15784
+    },
+    "Components/SortOrders.Ui.lua": {
+      "sha256": "d76b0385071a3edc8bcf8b881e4ea2ea6748c77fc24843e8597bf87d57af124a",
+      "bytes": 12142
+    },
+    "Components/Ui.Button.lua": {
+      "sha256": "d8c721a072de0be40030cd92d2eaa050e0ff56f7ee71ead6a011f30ba1a7824b",
+      "bytes": 24521
+    },
+    "Components/Ui.Dialog.lua": {
+      "sha256": "26a8f45de5d8d73a5fc24cde3bd86d7c58925d0cdbfb2927db3c647fcc3f018d",
+      "bytes": 14690
+    },
+    "Components/Ui.EditBox.lua": {
+      "sha256": "7f61ea5843bbb647780f48b06793dfe9219e4b43923f95e6a4735b7ccbe0b025",
+      "bytes": 8299
+    },
+    "Components/Ui.ItemButton.lua": {
+      "sha256": "1417da79ed81ea2b5be5054aa31d6ce51b56d9e1b90974179c07a356e64b1b53",
+      "bytes": 40831
+    },
+    "Components/Ui.lua": {
+      "sha256": "3e9994d9aa1eb608b4fdcfd51a83e7f7888d200606caa4b24b28b370d066c471",
+      "bytes": 3024
+    },
+    "Components/Ui.ScrollableList.lua": {
+      "sha256": "373b462f9b3b717ee4d91ceea5bab4066ccb10dfcab1ade397d6c0e76e9ddea9",
+      "bytes": 80593
+    },
+    "Components/Ui.ScrollableTextWindow.lua": {
+      "sha256": "ae94a4341bcb36bff25e5b5d2a4d8fdfc6500363a2dee0a464b471190088ba7a",
+      "bytes": 3653
+    },
+    "Components/Ui.ScrollFrame.lua": {
+      "sha256": "227444810a8137b1722c6604c31b6d121e94988420cfc0ce500cb785e914e3f7",
+      "bytes": 8796
+    },
+    "Components/Ui.SearchBox.lua": {
+      "sha256": "4c2857eb9b5c4cafcaada2ce31576bcbb8e69c98ed428df2463294230b8db846",
+      "bytes": 5681
+    },
+    "Components/Ui.TextAndTextures.lua": {
+      "sha256": "4080f14ad2fae60332d6477038e153202399c78d2976313de1e6a6a0aac2a288",
+      "bytes": 7730
+    },
+    "Components/Ui.Util.lua": {
+      "sha256": "994a93015482bd5d69a4c2742be03efff05aebc463b18ba09da3c07d8af44bf7",
+      "bytes": 12292
+    },
+    "Components/Ui.Window.lua": {
+      "sha256": "3bb374a1c0655d2d86a0c8059218d2fa1c97a66906077671e485b1f89b3d29b3",
+      "bytes": 11610
+    },
+    "Components/Util.lua": {
+      "sha256": "ec03a72039b12303cdb21f4a7f2fa41ad4c0da8ba8088df28097eef9d0ccf6a2",
+      "bytes": 38169
+    },
+    "Config/Categories.lua": {
+      "sha256": "0c9d2cc0c96f1990043add7e40cd27210f3a83be2067e59474d609c5a475e00e",
+      "bytes": 18997
+    },
+    "Config/Inventory.lua": {
+      "sha256": "3a2797d397f294b2f1f1d6bef09405d707303022e00589bf0b98e8cd069a3047",
+      "bytes": 6928
+    },
+    "Config/ItemFixes.lua": {
+      "sha256": "c8a51cde9e0027309269cd5b4f0dc2407d2f70c908eb0fe1038002d1dc14a38a",
+      "bytes": 7423
+    },
+    "Config/PeriodicTable.lua": {
+      "sha256": "d3ca10f9ec8d348ea037ac7c1f571ccd6d275e870574e37c6b61c2dfaabce2ed",
+      "bytes": 57182
+    },
+    "Config/Profiles.lua": {
+      "sha256": "822a109eb3a0c8b92f1625bcfab4412d2cfc981b366b1fe43a848d6ee945f86e",
+      "bytes": 20811
+    },
+    "Config/RuleFunctions.lua": {
+      "sha256": "34c64c88e84814463185d2c859a1ea1f64db408188c30e41103f1ee70f2b05e7",
+      "bytes": 31871
+    },
+    "Config/RuleFunctionTemplates.lua": {
+      "sha256": "b33970e2c0003c0c558a20c53593f9fa2be11b6959851f19909ed306b5ff715d",
+      "bytes": 4724
+    },
+    "Config/Settings.lua": {
+      "sha256": "a64076cf4934d9034062e2eb9abc91aaf1429fe15d39bf4b6fa894b673e2b50b",
+      "bytes": 44128
+    },
+    "Config/Skins.lua": {
+      "sha256": "b54823cdfc96a096951e82cc81e5a6080668e055da2874e4e2fe5be445894e8a",
+      "bytes": 21070
+    },
+    "Config/SortOrders.lua": {
+      "sha256": "d7c1894f27828903bcfd0885d92a8a009c6ae8bfae25413a90b48ad7e891f3d1",
+      "bytes": 5692
+    },
+    "Contributing.md": {
+      "sha256": "470724ab36f51379f5881164debfaca5dd622f9928a4861bb3a6173fce707083",
+      "bytes": 1606
+    },
+    "Credits.md": {
+      "sha256": "7efaf7b7fdb4b41d2089a1a882155691590d07ba6db3228cd9acac117e573860",
+      "bytes": 6388
+    },
+    "Debug/!BagshuiDebug/!BagshuiDebug_toc": {
+      "sha256": "0bfb2ea0fa1e4501e5b3182bd30c8cca5e7a80ea89f10ef747b110abddea1397",
+      "bytes": 113
+    },
+    "Debug/!BagshuiDebug/BagshuiDebug.lua": {
+      "sha256": "d9e566a0a23280251750be4b64bc66c0a4e870e92b0418a01226a0619426e24a",
+      "bytes": 23
+    },
+    "Debug/!BagshuiDebug/Readme.md": {
+      "sha256": "a0f4f5b7ee310692d1ddc047eb12867cd05f59efd78536e15d56304b5ddb17fb",
+      "bytes": 474
+    },
+    "Fonts/Inconsolata_Condensed-Regular.ttf": {
+      "sha256": "1ea4673ebda6c03b4d72b8af0be6586dbe411673cac8a427f29ae95b3d3c46cc",
+      "bytes": 101808
+    },
+    "Images/Icons/Add.blp": {
+      "sha256": "86785205ab82a843f505b5b9869b88a249ae9c393bda6004d549dafdd160a118",
+      "bytes": 6676
+    },
+    "Images/Icons/Asterisk.blp": {
+      "sha256": "3ab002e4baecba2caa4e8bd9ec59bb701340c53b9989ade0eef5244f0e6e4aae",
+      "bytes": 6676
+    },
+    "Images/Icons/Bags.blp": {
+      "sha256": "667c6ed86dcd4bd98dde2a45e48e1ffe76b6eb2484027d9247a30056fe57acc3",
+      "bytes": 6676
+    },
+    "Images/Icons/Bank.blp": {
+      "sha256": "b77ea6fac10eb9661df0b54d8fabbff00f19dab455ca05b49b00626812468351",
+      "bytes": 6676
+    },
+    "Images/Icons/Catalog.blp": {
+      "sha256": "3a189ee0ad3bec8ddc09529704ab4ec4c6d2f2c56e9d0b1ac6ee4f046c8d8e30",
+      "bytes": 6676
+    },
+    "Images/Icons/Category.blp": {
+      "sha256": "d04e41543e2a5bc3e7f000dd972f08fdd452ec214e7d4d6f58911821726cf9d2",
+      "bytes": 6676
+    },
+    "Images/Icons/Character.blp": {
+      "sha256": "220d050a0cf4194b4494cb97bcb70568f31be33e25b4cec60b4acce11bff2ef8",
+      "bytes": 6676
+    },
+    "Images/Icons/CharacterRobed.blp": {
+      "sha256": "84a0c42f43ad0c577954175a1538fc1d5aa565499c85c06e07175ed2156ec277",
+      "bytes": 6676
+    },
+    "Images/Icons/Characters.blp": {
+      "sha256": "b30227035241aed391aa885811f7b69218627d63274c40ff655f3644feafe1ad",
+      "bytes": 6676
+    },
+    "Images/Icons/Check.blp": {
+      "sha256": "f093bac3060721b912c88a8c27d5cb90424afc2e877d31bd586ebde3463f1a5c",
+      "bytes": 6676
+    },
+    "Images/Icons/Clam.blp": {
+      "sha256": "82eccd3a938bf01d3cf5a2289730cd763551a7367640c1eb2c1eae74916be2ae",
+      "bytes": 6676
+    },
+    "Images/Icons/Compile.blp": {
+      "sha256": "4518501ae12ab52d6189639babc03513446aeeb00bcd0e7a9ed134098e00599d",
+      "bytes": 6676
+    },
+    "Images/Icons/Delete.blp": {
+      "sha256": "a1ba0633569dcf9b88775b50c30aa5dc21056a9d35e756a33cddfe5de66656e5",
+      "bytes": 6676
+    },
+    "Images/Icons/Disenchant.blp": {
+      "sha256": "8a50b745e233dcf5674775a35a346c88ba427813c0dce6da0ced6210f668d9a8",
+      "bytes": 6676
+    },
+    "Images/Icons/Down.blp": {
+      "sha256": "ecec7a56d73a9abb915e6ea11f86032c8b3079307e3e98b1e47191e84d4e747f",
+      "bytes": 6676
+    },
+    "Images/Icons/Duplicate.blp": {
+      "sha256": "fc017b50b4913dca7d0423b43045b906b93630ecc81e44e37b3bc3fac4c5a8a8",
+      "bytes": 6676
+    },
+    "Images/Icons/Edit.blp": {
+      "sha256": "5451c2a36a368b685d886647b62e0c2c1ef143d70c113fce7283b0e8aea500d4",
+      "bytes": 6676
+    },
+    "Images/Icons/Ellipsis.blp": {
+      "sha256": "cc5e711600aa37b5071c4eed2dfabd9552f8884a860773a85e13e6dbdb253cfb",
+      "bytes": 6676
+    },
+    "Images/Icons/Exclamation.blp": {
+      "sha256": "84cb9081262a9221f208fa0626c0813a6faa8e4a7ce708767683387c10beab0a",
+      "bytes": 6676
+    },
+    "Images/Icons/Group.blp": {
+      "sha256": "0b223b53981e33839cfedfaf3da29dd0ae8bc6dd25ef12b72f70587847b8af5e",
+      "bytes": 6676
+    },
+    "Images/Icons/Hearthstone.blp": {
+      "sha256": "e6b66181567539a9f5f844eaeb41c44d21fc10c1c308dab3a4a4c3446d196fc6",
+      "bytes": 6676
+    },
+    "Images/Icons/HighlightChanges.blp": {
+      "sha256": "25255e832e72dfa9016c89855b32a40186566623c96b8884dea43768af7a24cd",
+      "bytes": 6676
+    },
+    "Images/Icons/Import.blp": {
+      "sha256": "3d009327a511a60e4afff4c7a7b16b79b795c92909549bfbdcad5fefa6c849f2",
+      "bytes": 6676
+    },
+    "Images/Icons/Info.blp": {
+      "sha256": "3e5e9cbe062a9301a62f68668c1c73b42142426639985be344b5e569251158e5",
+      "bytes": 6676
+    },
+    "Images/Icons/Keyring.blp": {
+      "sha256": "bfe4c8d0135350a2a6e7e110e7e121d627403f69843a2de5064128dad80bd172",
+      "bytes": 6676
+    },
+    "Images/Icons/Mask.blp": {
+      "sha256": "8e25a43d3c5688ba14bc66824d572d61417e44ff47f0967c2bf46face405d919",
+      "bytes": 6676
+    },
+    "Images/Icons/Offline.blp": {
+      "sha256": "11989b68871768545787b123f8a865b0fd2d67fd1bdb93f70b7db2a040b4ec9f",
+      "bytes": 6676
+    },
+    "Images/Icons/PickLock.blp": {
+      "sha256": "22b3fd87606060284c88a4cdc945f70e9db39e4e5646e8ed7525c99654cdd70b",
+      "bytes": 6676
+    },
+    "Images/Icons/Question.blp": {
+      "sha256": "a53fc9396be08a0a99f99233a8373654bc976d536be9cda6ab32dfbb118f910c",
+      "bytes": 6676
+    },
+    "Images/Icons/Remove.blp": {
+      "sha256": "b3d068ab1d2b9b907d41e05ff2046f54e333dd38547619afc51631f0dec69b88",
+      "bytes": 6676
+    },
+    "Images/Icons/Replace.blp": {
+      "sha256": "43562db52fb445f35fa647d83b587ec31f49dba7bab3870bec32cb92738256ce",
+      "bytes": 6676
+    },
+    "Images/Icons/Resort.blp": {
+      "sha256": "d99ec6e946778770f8d75c3e38544af9fe5a9a95165a5e8cb145cdfdb3553bb7",
+      "bytes": 6676
+    },
+    "Images/Icons/Restack.blp": {
+      "sha256": "87363f35cc57960aff0b623b9f37489a4852603fa2015eadbc829ba65f54a2a4",
+      "bytes": 6676
+    },
+    "Images/Icons/RuleFunction.blp": {
+      "sha256": "cbe5b6e4ec2718cc676b9f4c0e73be2f8108162126e56564580154ad49492489",
+      "bytes": 6676
+    },
+    "Images/Icons/Save.blp": {
+      "sha256": "efe1fa935cc668ce38ae9346e2a157ee4b20c4f2c40eed6b521c9aa7bd6af1c6",
+      "bytes": 6676
+    },
+    "Images/Icons/Search.blp": {
+      "sha256": "45e36de056fdcb6558f6776081b39a03e0dcf2098bef933147012d410608745b",
+      "bytes": 6676
+    },
+    "Images/Icons/Settings.blp": {
+      "sha256": "9083ec14c3960ef40bc91ad808bab5df4dabc7faf6a7898dabf5298963a0e889",
+      "bytes": 6676
+    },
+    "Images/Icons/Share.blp": {
+      "sha256": "bb08dc25d5a24eaf9140517b0fb158e8860b5963622dd43e88f3b2e983e14034",
+      "bytes": 6676
+    },
+    "Images/Icons/Show.blp": {
+      "sha256": "ca880224bbd020e133900384ee14a831eb3f8b0673931552d85d0ac3f68e72c1",
+      "bytes": 6676
+    },
+    "Images/Icons/SortOrder.blp": {
+      "sha256": "40abdbca225a5e1058c658fc5d5a43e64a4729b2968f3d3365efa1987f851fcf",
+      "bytes": 6676
+    },
+    "Images/Icons/Up.blp": {
+      "sha256": "d56245262b73c33b78f3c0692b7c8ac6e174480d69ba372a11d37a5c90dd5a39",
+      "bytes": 6676
+    },
+    "Images/ItemSlot/Check.blp": {
+      "sha256": "e56bf986224f85739231991b3d7491cdd1308299226d4f44449f27a3867a32b4",
+      "bytes": 2580
+    },
+    "Images/ItemSlot/EmptySlot-AmmoPouch.blp": {
+      "sha256": "00c73f579baa38bd43c3d98790aaa6380519aa480ca62955ff280899d22a137c",
+      "bytes": 6676
+    },
+    "Images/ItemSlot/EmptySlot-EnchantingBag.blp": {
+      "sha256": "5c1eedd54d46b65b85a745edcfee0d550280d995e729b50ee2a24392f919a35d",
+      "bytes": 6676
+    },
+    "Images/ItemSlot/EmptySlot-HerbBag.blp": {
+      "sha256": "611449c73bced363125dd14913e007eebb0b9cf455b10156a49905d3839ecfc6",
+      "bytes": 6676
+    },
+    "Images/ItemSlot/EmptySlot-Quiver.blp": {
+      "sha256": "2cdb76f793bd7155cf96b279de3940eac5810b227bc993c52581d30166912084",
+      "bytes": 6676
+    },
+    "Images/ItemSlot/EmptySlot-SoulBag.blp": {
+      "sha256": "9ff55744d71cda28ae1767a246566b94b8ead3d13944cdf64f36649aefb10310",
+      "bytes": 6676
+    },
+    "Images/ItemSlot/EmptySlot.blp": {
+      "sha256": "eb9976180f88e859a34519f1f81c07f4d27552ebb9ec7e8cce20453d07f9aad7",
+      "bytes": 6676
+    },
+    "Images/ItemSlot/Flat-Checked.blp": {
+      "sha256": "b30184bc4f8147f936e811a361906e47cf0e36370b0df91a5d6c5c77b2b33c57",
+      "bytes": 6676
+    },
+    "Images/ItemSlot/Flat-Highlight.blp": {
+      "sha256": "6777b887271674bb92af14ffc4e20a2b5e99c237a646285b31b92106e4704bbc",
+      "bytes": 6676
+    },
+    "Images/ItemSlot/Flat-InnerGlow.blp": {
+      "sha256": "4443bf5d2d5a732a07a410ee8c238595e5ca48f12bcdec1c009c1206a9a6733c",
+      "bytes": 6676
+    },
+    "Images/ItemSlot/Flat-Pushed.blp": {
+      "sha256": "c072367ef0e2657bc373e06c4cf41ee6917be3ae6d8bbd777a0faf61a74d3fc8",
+      "bytes": 6676
+    },
+    "Images/ItemSlot/Quest.blp": {
+      "sha256": "f13bce16f99e3c02af4630e4569ab789fb719e2953c8ba2b484dca050db22cab",
+      "bytes": 6676
+    },
+    "Images/ItemSlot/Stock-Down.blp": {
+      "sha256": "9f799926de715204b75875bc8ff454c6557f8c46715c9917188f141f54e7b5fe",
+      "bytes": 2580
+    },
+    "Images/ItemSlot/Stock-New.blp": {
+      "sha256": "f87287db20393216a6b16e3f9c857b814a813ad5de8b1d08442b4485c240a147",
+      "bytes": 2580
+    },
+    "Images/ItemSlot/Stock-Up.blp": {
+      "sha256": "ffcbe4885460cfac8dd5dae7949e4b998dedbc3496a1b7ba5ad795be233b174c",
+      "bytes": 2580
+    },
+    "Images/Logo.svg": {
+      "sha256": "1c195cadaf42cfc0ce1729c9daffbc0a5c0f0a538d051b8da91986b565aa9ac7",
+      "bytes": 4699
+    },
+    "Images/UI/Clear.blp": {
+      "sha256": "b1ab4649a749b3c3504847e9493ef3b96309c4b47c8183080cfd59d37b08ad9b",
+      "bytes": 2580
+    },
+    "Images/UI/Logo_Ba.blp": {
+      "sha256": "1c6e155aa66f29f39448ecbc725d8610387bb13fa04a3bfedaaf1a93a9b0e841",
+      "bytes": 23060
+    },
+    "Images/UI/Logo_gs.blp": {
+      "sha256": "76f7e8052de97904e571ec6219487462b2d5a57497e4841c6573efa6e8a0c556",
+      "bytes": 23060
+    },
+    "Images/UI/Logo_hu.blp": {
+      "sha256": "3a6308c7273cb2461812095fb45790096fe460824bbd0c902f0e8747d3ebd4b8",
+      "bytes": 23060
+    },
+    "Images/UI/Logo_i.blp": {
+      "sha256": "2aaa0825340283fa89ca45baa4e72f5e37fe9f9cb8df1920accb95e5b9bd4512",
+      "bytes": 23060
+    },
+    "Images/UI/ReverseWordsOff.blp": {
+      "sha256": "c93c3206c4b56556c00f3534e797e255816e6f5b0b067af2e0cefa984a703674",
+      "bytes": 2580
+    },
+    "Images/UI/ReverseWordsOn.blp": {
+      "sha256": "d4cf86ae20852943712847004f873c0a5564d91588e7c53179a9c1aa70a42b97",
+      "bytes": 2580
+    },
+    "Images/UI/SortColumnAsc.blp": {
+      "sha256": "af5537133cbae8b0272fe3eaa98e1de1c98de03c3932fdc1fd561e788bc464c8",
+      "bytes": 2580
+    },
+    "Images/UI/SortColumnDesc.blp": {
+      "sha256": "5be2b623cf3bab35f016a9ed74c1c7d2a49d30bd78fb71cd52a643052e0c01bd",
+      "bytes": 2580
+    },
+    "Images/UI/SortDirectionAsc.blp": {
+      "sha256": "a65ce30bc8bfd007054e3a117bd4a9c6426fd2305c44849a23b730c08458b5c1",
+      "bytes": 2580
+    },
+    "Images/UI/SortDirectionDesc.blp": {
+      "sha256": "a7a317a078625ead774998d8519825b7fe37268f1d4e984621a60e83fc85d2e8",
+      "bytes": 2580
+    },
+    "Images/UI/WhiteSemiOpaque8x8.tga": {
+      "sha256": "fe0972c36725ca8c0012b4747c16b2ad584599f43f5e7cdc8493fac45e1868e7",
+      "bytes": 300
+    },
+    "Libs/PeriodicTable/Core/PTEmbed.lua": {
+      "sha256": "b0c1193a2c1fc49b9dd99391ec96e445a85d78ae95699054b0f6dca5e59614dc",
+      "bytes": 13328
+    },
+    "Libs/PeriodicTable/Elements/AQ/PTEmbedElemAhnQiraj.lua": {
+      "sha256": "500c4e6e9ad4e008900b52334f1dda5df3ce59679ce0c4b8fcdde4c09f9cbe44",
+      "bytes": 9901
+    },
+    "Libs/PeriodicTable/Elements/EquipSets/PTEmbedElemEquipSets.lua": {
+      "sha256": "15c8243abcf858bec3de3112f00d184aaf49b62086c4b106d2350d73e43c3483",
+      "bytes": 10325
+    },
+    "Libs/PeriodicTable/Elements/Food/PTEmbedElemFood.lua": {
+      "sha256": "ff43acf54975bb854407897b56b0d25e32c51b54da51c546a2865f91cc0e998a",
+      "bytes": 7174
+    },
+    "Libs/PeriodicTable/Elements/Instance/PTEmbedElemInstance.lua": {
+      "sha256": "7148f2c22cd8c0dd4a8087635421f198c8759bc8630559b947c555909af96029",
+      "bytes": 20974
+    },
+    "Libs/PeriodicTable/Elements/Misc/PTEmbedElemMisc.lua": {
+      "sha256": "237fd6f519ea130b8c8d00d98b44b62c6856847d93db2ca7edb5aa2890ec950a",
+      "bytes": 14173
+    },
+    "Libs/PeriodicTable/Elements/Raid/PTEmbedElemRaid.lua": {
+      "sha256": "1f68b5b3cc27bae43be9eeddaca48ef0ade37b86faec15c9b26b3e2525610c65",
+      "bytes": 24341
+    },
+    "Libs/PeriodicTable/Elements/Tradeskills/PTEmbedElemTradeskill.lua": {
+      "sha256": "88a991b7604eba0493c0482582dd87b39bb58fc32af7bbfe851446cbc18456ec",
+      "bytes": 33062
+    },
+    "Libs/PeriodicTable/Elements/ZG/PTEmbedElemZulGurub.lua": {
+      "sha256": "d1b594fb83cdacd07b10627b7d1e94f5144246cca0bea68d36b00ddb6f6b266f",
+      "bytes": 2212
+    },
+    "Libs/PeriodicTable/Tradeskills/PTTradeskillsEmbed.lua": {
+      "sha256": "bee85b4400815f6b6c13bf4dcf5f284cb3c81d45503b2f53aaae020479eda513",
+      "bytes": 7223
+    },
+    "Libs/PeriodicTable.xml": {
+      "sha256": "d8f437b8e1cc7e0a2383a72e3a2483771d7cc50bc406ece9629700abdd4417b7",
+      "bytes": 787
+    },
+    "LICENSE": {
+      "sha256": "5a008bba7c6362197aea825cc15966fd3ab5ae23eb2ed8fb20b41fb382087530",
+      "bytes": 1550
+    },
+    "Locale/enUS.lua": {
+      "sha256": "1a525ad1f9009fca7ed9a4b4f8f7b1eaf96ef149df6a6418d06155e695aabfa9",
+      "bytes": 73401
+    },
+    "Locale/Locales.xml": {
+      "sha256": "8f40199d7d928168ab46a50f6c3d329c809fb773e7b8ada30f00e2a5f19c31c9",
+      "bytes": 217
+    },
+    "Locale/Readme.md": {
+      "sha256": "6ba1cf185209bd79234bb8185011033b30403af532648fa8dd6921dc6ba9e47f",
+      "bytes": 3210
+    },
+    "Locale/zhCN.lua": {
+      "sha256": "085dfcb1a6e92ec963c32b5276d957406a62aefb37f4b60e069dfeddeca36a24",
+      "bytes": 74587
+    },
+    "MemoryLeak.md": {
+      "sha256": "b28cfd880bf878bbd62a4283960e95333e7e6f2205f35bbc29f5426e352754e6",
+      "bytes": 8207
+    },
+    "README.md": {
+      "sha256": "e528ea3603670e58dd779105ea50359ae48b299073b272d5f4bf5625ae4e1123",
+      "bytes": 6150
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

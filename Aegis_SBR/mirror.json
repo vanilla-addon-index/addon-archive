@@ -1,0 +1,302 @@
+{
+  "upstream": "https://github.com/Torchlite-bit/Aegis_SBR",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Torchlite-bit",
+    "repo": "Aegis_SBR",
+    "name": "Aegis_SBR",
+    "url": "https://github.com/Torchlite-bit/Aegis_SBR",
+    "api": "https://api.github.com/repos/Torchlite-bit/Aegis_SBR"
+  },
+  "commit": "ff6a4c478c274b3e63f863d6cb41646dae963773",
+  "sourceFiles": {
+    ".github/discord_changelog.py": {
+      "sha256": "6988838f1f6b5c03d55dca5cb1711973a89f22b420bad2dad4dd90b95be43192",
+      "bytes": 4860
+    },
+    ".github/discord-logo.png": {
+      "sha256": "476ad139712ffcbf10ea6552be85f5cc9237413f5f4fcb64eaa9a64d72ce3d6a",
+      "bytes": 112659
+    },
+    ".github/workflows/release.yml": {
+      "sha256": "6cd695f97cf468871d750ca1d7255ad364e99a85fbe01c58c85717d803403d8c",
+      "bytes": 4040
+    },
+    ".gitignore.upstream": {
+      "sha256": "43a15e3d4fdb0d861499211016bcdc9157f42d916edd49dd78826d08ab497254",
+      "bytes": 481
+    },
+    ".pkgmeta": {
+      "sha256": "bd6c03aa54233d0a1d3cd2301da566d943b36c080e5ac66930ce81f543a5ba20",
+      "bytes": 617
+    },
+    "Aegis_SBR_BuffUp.lua": {
+      "sha256": "461b07ba7ab2c5d1e0bece1de80a23d6f8ecb3a2bddcbbc98db8dcd350700e9e",
+      "bytes": 52718
+    },
+    "Aegis_SBR_Capabilities.lua": {
+      "sha256": "9e4952c58d8d8ef7c27ea48524ad31fc664c8eb206573bedf40d9ebcd6f64b6c",
+      "bytes": 34807
+    },
+    "Aegis_SBR_Minimap.lua": {
+      "sha256": "b6b58fd5d9f70cda81ab5d1d7eee003d049ba2065bff5a3e7d9b6a8dc4de631b",
+      "bytes": 21324
+    },
+    "Aegis_SBR_Pet.lua": {
+      "sha256": "e3302094cbe8f2fd7d90072f0ff62b5e92ec2ac17d323fa9a276b41f4426c896",
+      "bytes": 10875
+    },
+    "Aegis_SBR_Preview.lua": {
+      "sha256": "f82deeb9c3207c4d4198236921559f21a6389f34c713c24fdf819671b8960243",
+      "bytes": 14908
+    },
+    "Aegis_SBR_Range.lua": {
+      "sha256": "0412832eff5e0d2d06acc4b9a2823082de21f79a71501c3b6a0e1a8fc30c0235",
+      "bytes": 23739
+    },
+    "Aegis_SBR_UI.lua": {
+      "sha256": "fa5d3c8a33557931f5be6f548eddeaec5ea245f16f52fbb735b3babe70fd5456",
+      "bytes": 88776
+    },
+    "Aegis_SBR.lua": {
+      "sha256": "312ae94497f0ce0a30be9c1a1fabb6ec8c6c2d68012b97ccee47d362f703635c",
+      "bytes": 197430
+    },
+    "Aegis_SBR.toc": {
+      "sha256": "1b9566bce7db1b6acb383821c5724953f9201194ed6d700a230dc756d906af0e",
+      "bytes": 986
+    },
+    "CHANGELOG.md": {
+      "sha256": "ae623a1ff5172f72169bff6270646ec024906df0892d652e54d527a40a55c141",
+      "bytes": 355999
+    },
+    "classes/Class_Druid_UI.lua": {
+      "sha256": "81185950ecee95844191728faa00a5540a2332809da22fe7bd5ee921631e47b6",
+      "bytes": 26573
+    },
+    "classes/Class_Druid.lua": {
+      "sha256": "1a6eb175ad9b4adbe8ab0c44dfc389c2a479fc45514813fd2886c8dbb0fb6bf3",
+      "bytes": 67818
+    },
+    "classes/Class_Hunter_UI.lua": {
+      "sha256": "9198bccb3dfe5216f319e572d90c47f45b0a66a779499c4268146d4cb4223baa",
+      "bytes": 29716
+    },
+    "classes/Class_Hunter.lua": {
+      "sha256": "384d9f3f82900c88d865312344699f52e1384493665c95a7dac19b2559e103e2",
+      "bytes": 98622
+    },
+    "classes/Class_Mage_UI.lua": {
+      "sha256": "6760ce4a94ded96ef0822ad27dd8d43eb8b7316e49da139cf5bcdfaafc79888c",
+      "bytes": 11708
+    },
+    "classes/Class_Mage.lua": {
+      "sha256": "f74b6e293d00891452418acd5e9701101ca8fab18023a2ab2632783263787f3f",
+      "bytes": 35427
+    },
+    "classes/Class_Paladin_UI.lua": {
+      "sha256": "373d4876978ba60f439b8d758599bd150cdbe4e6fda459aed6e6bdd32974a5af",
+      "bytes": 53500
+    },
+    "classes/Class_Paladin.lua": {
+      "sha256": "b0eb015390473e53d3edad075aa95d4791ff10c8522b3bc50fc70c408b63b7b7",
+      "bytes": 191178
+    },
+    "classes/Class_Priest_UI.lua": {
+      "sha256": "28c76fc53d46583984170cbfe40caddaac82e166b976ef50df741b8d27ddf38b",
+      "bytes": 22265
+    },
+    "classes/Class_Priest.lua": {
+      "sha256": "f20111b3f4690d07bcb5301f604ce27f14b622d6b3d01d1ac4dc3381da028bbd",
+      "bytes": 56894
+    },
+    "classes/Class_Rogue_UI.lua": {
+      "sha256": "b5917e3015efd01215b703ad52b2ecbedcd0b18767d77acf74d645fcac1c0dd9",
+      "bytes": 31822
+    },
+    "classes/Class_Rogue.lua": {
+      "sha256": "8bb9bdd84164f7b3f11a0047f370852ad64eafc128a6703f58405ed5a52b7017",
+      "bytes": 85075
+    },
+    "classes/Class_Shaman_UI.lua": {
+      "sha256": "d3594c78987228d2ce2f76bf57e065d84dc8adbf4475b2d9420a0f6ebb3c5b26",
+      "bytes": 27861
+    },
+    "classes/Class_Shaman.lua": {
+      "sha256": "44e9a8662aab1f153da7ef82ad45e9bde16e0c0635fd5af5fcb4790949951f92",
+      "bytes": 82037
+    },
+    "classes/Class_Warlock_UI.lua": {
+      "sha256": "0327db6e9c7fb4d19b47a7a290ff72c6e561ead7c863d27bb636ad1c6ba2a1d4",
+      "bytes": 24472
+    },
+    "classes/Class_Warlock.lua": {
+      "sha256": "71c7bf7d10f7daeaab893026c4ed7e38c215af952f492b93ce036014c17091d8",
+      "bytes": 149043
+    },
+    "classes/Class_Warrior_UI.lua": {
+      "sha256": "9981296645aeea0853b59ea22ed9a49a00d098cbf04ab9811261544c542a6f4a",
+      "bytes": 27068
+    },
+    "classes/Class_Warrior.lua": {
+      "sha256": "3dc477055f690ae78a37b1f6dc778410d436341380eae5ea1a5a00cebe3f309f",
+      "bytes": 120786
+    },
+    "CLAUDE.md": {
+      "sha256": "fc034ac006f65c2d65580b274fd9d3b67b428864acdad43f0f1da9522c77209f",
+      "bytes": 32899
+    },
+    "docs/architecture.md": {
+      "sha256": "8f9274543a051d780bf4667932887e2d2adc3927bd55c0ce68759adf71817303",
+      "bytes": 17117
+    },
+    "docs/audit-phase1-rotations.md": {
+      "sha256": "c71c450dfa204cf8c8bc70eb5228723b27efc8c92869e8252dc2abf190d799b6",
+      "bytes": 54999
+    },
+    "docs/claude-code-kickoff-prompt.md": {
+      "sha256": "21e6227c64267400b51c3c88b1b6f8dfbf2d49061c8439dd338e2bd477ca5d00",
+      "bytes": 5051
+    },
+    "docs/dependencies.md": {
+      "sha256": "ed8d8125c2517ebc25e99322cd2f074a45958dfcc3001a5caca14c6ebbb10118",
+      "bytes": 21949
+    },
+    "docs/dev-workflow.md": {
+      "sha256": "030ecd70a3e9c6aed716993631b220f284a5cf563e9a2bcedd46be7c2dcb4d13",
+      "bytes": 8732
+    },
+    "docs/research-classicapi.md": {
+      "sha256": "cade7e0a291e32c869ee5ead710d4983663ec0e52a39cc7ae9a4e7bb9c32d8b8",
+      "bytes": 23950
+    },
+    "docs/research-weapon-enchant-upkeep.md": {
+      "sha256": "697f95186ed4bb761fa6e4d7c2c29af8e4cbf121d4690378e6725aded71d096e",
+      "bytes": 10968
+    },
+    "docs/roadmap-dio.md": {
+      "sha256": "9dc97dc002c98af4e39c3179d21a77613aa7fe1a6174a04c195783fd811dd618",
+      "bytes": 3779
+    },
+    "docs/roadmap.md": {
+      "sha256": "20a95d7f407a62d0bda16a5c2003dc355529a5636ec7c20142773680c385c04b",
+      "bytes": 17949
+    },
+    "docs/rotations.md": {
+      "sha256": "ea994f3f5d1365d717dfadafc1705e1ecdb6c4cd9f099c0b8c773564fbafde53",
+      "bytes": 30364
+    },
+    "docs/sources.md": {
+      "sha256": "2499902cf86e26b4361b937d965b67bc537e3fe9f579539f78ed57a92fb14a2c",
+      "bytes": 5751
+    },
+    "docs/TALENTS_1_18_1.md": {
+      "sha256": "483864d519c044ba9348e9bc79c9aa0c871bf46482258224050d5042f9301809",
+      "bytes": 12642
+    },
+    "docs/turtle-mechanics.md": {
+      "sha256": "55ddbafbac2a20e030de043206b3452aaa87c8a0f59e4e796da8ace10d278d8c",
+      "bytes": 11014
+    },
+    "Fonts/OFL.txt": {
+      "sha256": "2758cf7a872827f39661cf8cc24188113c030447aefb5ca7145993650076ca8c",
+      "bytes": 4425
+    },
+    "Fonts/PTSansNarrow-Bold.ttf": {
+      "sha256": "e69d83bcf5bd647892b4e2b22f5098dabd55c989413513197722fc156fb9f00e",
+      "bytes": 487720
+    },
+    "Fonts/PTSansNarrow.ttf": {
+      "sha256": "4102edda03059163771869d258df54ac8563c408fa6e9ef75b2ddc85eabea6f4",
+      "bytes": 396212
+    },
+    "Icons/Btn.tga": {
+      "sha256": "2705991718a8bef97ce9b4e5112a12a4eb0132737a9040aef798e620254d2e16",
+      "bytes": 8236
+    },
+    "Icons/Card.tga": {
+      "sha256": "cb3d70c5e688020717b67e4fc61c3bb3504614b09b56dba83e74bf92ddc9ecd4",
+      "bytes": 16428
+    },
+    "Icons/Eyeglass.tga": {
+      "sha256": "d459c6989332619b822eafa94b4db247f51c3c9a8863e81804bb6fff9d9c89bf",
+      "bytes": 4114
+    },
+    "Icons/Grip.tga": {
+      "sha256": "cace38d4dd08b9723f54f6b288b35b279f79a861dbd904c0f6b8f5de38b8f5a2",
+      "bytes": 4140
+    },
+    "Icons/Help.tga": {
+      "sha256": "131cd2362de6c8f91e2012d76d9febbdb5293206a5092b4bfb60656898979ee1",
+      "bytes": 4140
+    },
+    "Icons/Pill.tga": {
+      "sha256": "b2db541b3e9abee320d36acbde2061d0e737f63e80fe470579a0b99282a1b26f",
+      "bytes": 32812
+    },
+    "Icons/RoundSq.tga": {
+      "sha256": "abf478879b38519287ff0771b1e442890ef69c547db0bf0e6d7df2cb90928027",
+      "bytes": 4140
+    },
+    "Icons/SliderThumb.tga": {
+      "sha256": "63cbdb96e955ee807d95c4b21296f279473dcbb1f1dc1f7fdbcc4436da26252c",
+      "bytes": 1068
+    },
+    "Icons/ToggleOff.tga": {
+      "sha256": "ad323430380e4918f6e9dc0e76e896dffa4c9ab10fff962b49e1a7155895cdf3",
+      "bytes": 2092
+    },
+    "Icons/ToggleOn.tga": {
+      "sha256": "c143cd6c94a10b01b669794da1c70ea5104a885c67b071b51964891cffb5f6d3",
+      "bytes": 2092
+    },
+    "LICENSE": {
+      "sha256": "248431046de50a2bcf79ac549750bb749aa594f917e458a7cf4410173939ba61",
+      "bytes": 1090
+    },
+    "README.md": {
+      "sha256": "5bacdefa86bb48e368a3580aafaf4e3ae78f77a7c851336d47cd38f485084b72",
+      "bytes": 105965
+    },
+    "scripts/read_probe.py": {
+      "sha256": "cc7d24e394da502a3f7f1ba2f8c941f2337db7072e4396fb7d9fd31f854bfb64",
+      "bytes": 6195
+    },
+    "scripts/verify.py": {
+      "sha256": "1ed570bddbbc54d3238ceee920b6a07648f1fb2143108f489d72b55d775992fd",
+      "bytes": 9964
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "432949980": {
+      "tag": "v1.2.57",
+      "folder": "v1.2.57--432949980",
+      "assets": {
+        "706291832": {
+          "sha256": "5e525bbcf2ba40df5ceefff109f07f7199dc1f4182520cd58f94a52684b82b4a",
+          "bytes": 1124124,
+          "id": "706291832",
+          "name": "Aegis_SBR-v1.2.57-classic.zip",
+          "url": "https://github.com/Torchlite-bit/Aegis_SBR/releases/download/v1.2.57/Aegis_SBR-v1.2.57-classic.zip",
+          "path": "releases/v1.2.57--432949980/assets/Aegis_SBR-v1.2.57-classic.zip"
+        },
+        "706291919": {
+          "sha256": "a60cd32a81e0815e118f2229f3e0bfac1fcb10deb5c4bfe520c12b3edf770e20",
+          "bytes": 185,
+          "id": "706291919",
+          "name": "release.json",
+          "url": "https://github.com/Torchlite-bit/Aegis_SBR/releases/download/v1.2.57/release.json",
+          "path": "releases/v1.2.57--432949980/assets/release.json"
+        }
+      },
+      "source": {
+        "sha256": "3f5ef85f9a645a134c0b09926fc6486f602e6317f0efc85d20466d4025ee4c62",
+        "bytes": 1327347,
+        "path": "releases/v1.2.57--432949980/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Torchlite-bit/Aegis_SBR/tarball/v1.2.57"
+      }
+    }
+  }
+}

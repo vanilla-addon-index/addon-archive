@@ -1,0 +1,1024 @@
+# CLAUDE.md — Aegis: Courier
+
+A World of Warcraft addon (folder + `.toc` name: **`Aegis_Courier`**) — a
+standalone mailbox companion for **Turtle WoW 1.18.1**, which runs the
+**ORIGINAL WoW 1.12 (vanilla) client on Lua 5.0**. It replaces TurtleMail and
+optionally feeds matched auction mail into **Aegis: Exchange**.
+
+> This is **NOT** WoW Classic and **NOT** retail. Do **not** use any API newer
+> than patch **1.12**. When in doubt, assume the API does not exist.
+
+**Courier is fully standalone.** Aegis: Exchange is an *optional* integration,
+never a dependency. Everything Courier does must work with Aegis absent.
+
+Planned work lives in [`ROADMAP.md`](ROADMAP.md). The TurtleMail feature audit
+that defines "TurtleMail replacement" concretely lives in
+[`docs/turtlemail-audit.md`](docs/turtlemail-audit.md) — read it before
+building any mailbox feature so scope isn't re-derived from memory.
+
+---
+
+## HARD RULES — never violate these
+
+These are not style preferences. Breaking any of them produces a runtime error
+or silent breakage on the 1.12 / Lua 5.0 client.
+
+Sections "Language", "Events", "Hooking", "SavedVariables" and "Frames &
+globals" are carried over **verbatim** from Aegis: Exchange's `CLAUDE.md` — the
+client-level constraints are identical and must not drift between the two
+repos. The Auction House section there is replaced here by the **Mailbox API**
+section, which is Courier's equivalent hazard surface.
+
+### Language (Lua 5.0)
+
+1. **Lua 5.0 only.** **NO** `string.match`, **NO** `string.gmatch`, **NO**
+   `:match()`. Use **`string.find`** (with captures) and **`string.gfind`**.
+   - `string.gfind` is the 5.0 name for what later Lua calls `string.gmatch`.
+2. **NO `#` length operator.** Use **`table.getn(t)`**. **NO `table.setn`.**
+3. **NO `%` modulo operator.** Use **`math.mod(a, b)`**.
+   - Lua 5.0 also has no integer division — combine `math.floor` with
+     `math.mod`.
+4. **Varargs use the `arg` table and `arg.n`** — not `...` expansion helpers
+   from later versions. (`select()` does not exist.)
+5. String library note: `string.gsub`, `string.find`, `string.gfind`,
+   `string.format`, `string.sub`, `string.lower`/`upper` are fine. The banned
+   ones are strictly the `match`/`gmatch` family.
+
+### Events
+
+6. **Event handlers read the GLOBALS `event`, `arg1`, `arg2`, …** — **NOT**
+   `function(self, event, ...)`. On this client the OnEvent script receives no
+   arguments; the client sets `this`, `event`, and `arg1..argN` as globals.
+   - Central dispatch lives in `core/init.lua`. Register with
+     `AegisCourier.RegisterEvent(evt, fn)`; the dispatcher reads the globals
+     and forwards them.
+
+### Hooking
+
+7. **NO `hooksecurefunc` and NO secure hooks.** Hook by **saving the original
+   function and replacing it**, then call the saved original from your
+   replacement. (Secure-hook infrastructure does not exist in 1.12.)
+   See `ui.HookMailFrame` in `ui/frame.lua` for the canonical pattern.
+
+### Mailbox API (1.12)
+
+8. **`GetInboxHeaderInfo(index)` returns these values, in order:**
+   ```
+   packageIcon, stationeryIcon, sender, subject, money, CODAmount,
+   daysLeft, hasItem, wasRead, wasReturned, textCreated, canReply, isGM
+   ```
+   Verified against the 1.12.1 `FrameXML/MailFrame.lua` (`InboxFrame_Update`,
+   `OpenMail_Update`) and against TurtleMail's usage. Notes:
+   - **`daysLeft` is a FLOAT in DAYS**, not seconds and not an integer.
+     FrameXML branches on `daysLeft >= 1` and renders
+     `SecondsToTime(floor(daysLeft * 24 * 60 * 60))` below that.
+   - **`sender` may be `nil`** (FrameXML substitutes `UNKNOWN`). Handle nil.
+   - `hasItem` is an item *count* in some server builds and a boolean-ish
+     value in others — test truthiness only, never `== true`.
+9. **Inbox indices are ABSOLUTE, `1..GetInboxNumItems()`.** The 7-per-page
+   layout is a FrameXML *display* convention (`InboxFrame.pageNum`), not a
+   limit on what the client can read. Never re-derive an index by page maths
+   when iterating the whole inbox — walk `1..GetInboxNumItems()` directly.
+10. **There is NO `GetInboxItemLink` on 1.12.** `GetInboxItem(index)` returns
+    `name, itemTexture, count, quality, canUse` — a **name and texture, no
+    link and no itemID**. Any item identity must be resolved from the NAME.
+    Do not write code that assumes a link is obtainable from the inbox.
+    - **A TOOLTIP still does not need one.** `GameTooltip:SetInboxItem(index)`
+      takes the absolute index and no link — it is what Blizzard's own
+      `InboxFrameItem_OnEnter` calls. `GameTooltip:SetBagItem(bag, slot)` is
+      the equivalent for the player's bags. Reaching for `SetHyperlink` is what
+      leads to the false conclusion that mail tooltips are impossible here.
+    - A **sent** item gets neither — and still shows a real tooltip, because
+      the link is captured EARLIER. At send time the item is still a stack in a
+      bag, and a bag slot HAS a link (`send.SlotInfo`), so the item string is
+      stored on the record and the reader hands it to
+      `GameTooltip:SetHyperlink`. "There is no link" is true of the inbox and
+      true of a sent mail; it is not true of the moment in between, and that
+      moment is the only chance to take one. Settling for a name because the
+      two ends have no link is how the Sent tab shipped worse than every other
+      view.
+    - **Store the whole item STRING, never just the itemID.** The suffix field
+      is what makes a *Training Sword of Agility* that item rather than the
+      plain base weapon; an id alone renders it with none of the stats the
+      player actually has, and still looks like a valid link.
+    - **Records written before a field existed must still render.** Nothing in
+      the sent box is ever backfilled — the mail cannot be re-read — so every
+      reader of it needs a fallback, and the fallback needs its own test.
+      - "It works on new mail only" is a poor answer when most of a player's
+        history is old. `GetItemInfo` takes a NAME on 1.12 and returns a link
+        for anything in the item cache, which recovers the real tooltip for an
+        ordinary item with nothing stored but its name.
+      - That recovery **cannot** work for a random-suffix item: the cache is
+        keyed on the BASE item, so "Training Sword of Agility" is not a lookup
+        key and "Training Sword" is. Never let a cache MISS become a link, and
+        never substitute the base item — it would show a weapon with none of
+        the stats actually sent.
+      - **The player's own BAGS answer what the cache cannot.** A bag slot's
+        link carries the suffix because it links the real item, so scanning
+        bags by name (`send.FindItemLink`) recovers a suffixed item exactly.
+        Try it BEFORE the cache and AFTER the stored link. Mailing one of
+        something you still hold is common, so this covers a lot of history.
+      - Resolution order for a sent item: stored link, then bags, then item
+        cache, then text. Each step is exact or it does not answer.
+    - **Do not reuse a version number across two different builds.** Two
+      separate 1.9.2 releases shipped with different Sent-tab behaviour, and a
+      user reporting "it still does X" could not be told which one they had.
+      A version is the only thing a bug report carries about the build.
+    - **Bump the PATCH number. A MINOR bump is the maintainer's call, not an
+      automatic consequence of shipping a feature.** A release that adds a
+      button or a setting still goes out as 1.9.x unless asked otherwise —
+      1.10.0 was written for one and corrected back to 1.9.5. When in doubt,
+      patch.
+    - **A row that stashes data for its hover must let go of it when the row is
+      recycled.** Rows are reused and a hidden frame keeps whatever was last
+      written to it, so a list that shrinks leaves rows still answering for
+      mail that is no longer shown.
+11. **Hiding `MailFrame` ENDS the mail session.** `MailFrame`'s XML `<OnHide>`
+    runs **`CloseMail()`**, so **any** `MailFrame:Hide()` /
+    `HideUIPanel(MailFrame)` closes the server session, after which
+    `TakeInboxItem` / `TakeInboxMoney` / `DeleteInboxItem` silently do nothing.
+    Our standalone window replaces the Blizzard mailbox, so it must hide
+    `MailFrame` **without** letting that `<OnHide>` body run: save-and-replace
+    its `OnHide`, and while *we* are the one hiding it, skip the default body
+    so the session survives. See `ui.HideBlizzardMail` / `ui.HookMailFrame`.
+    - The full 1.12 `<OnHide>` body is `CloseMail()`,
+      `HideUIPanel(OpenMailFrame)`, `StationeryPopupFrame:Hide()`, three
+      `SetText("")` calls on the send-mail edit boxes, and a sound. Suppressing
+      it means **we** own resetting the send form.
+12. **A SECOND close path lives in `MailFrame_OnEvent`'s `MAIL_SHOW` branch**
+    (verbatim from the 1.12.1 FrameXML):
+    ```
+    ShowUIPanel(MailFrame);
+    if ( not MailFrame:IsVisible() ) then
+        CloseMail();
+        return;
+    end
+    ```
+    So hiding the Blizzard mailbox **synchronously from its own `OnShow`** also
+    kills the session. The takeover hide must be **deferred one OnUpdate
+    tick** (see `AegisCourierHider` in `ui/frame.lua`). Hiding from our own
+    `MAIL_SHOW` handler is safe — it runs after this guard.
+    - This is the exact same trap as `AuctionFrame_Show()` in Aegis: Exchange.
+      If it is ever "fixed" by making the hide synchronous, the mailbox will
+      appear to work and every take/delete will silently no-op.
+13. **`CheckInbox()` is throttled server-side.** The client's own `MAIL_SHOW`
+    path calls it once. Do not poll it on a tight timer; TurtleMail waits ~200
+    OnUpdate ticks between refreshes and that is the pacing to match.
+    - **`MAIL_INBOX_UPDATE` is NOT one-per-visit — it STORMS.** On the first
+      open of a session the client re-fires it as each attached item resolves,
+      so a full mailbox delivers hundreds of events across a handful of
+      frames. **Never walk the inbox or repaint from that event directly.**
+      Raise `inbox.dirty` and let the OnUpdate driver call `inbox.Flush()`
+      **at most once per frame**. Measured at 70 mails, a per-event refresh
+      cost 352 header reads and ~1,300 pattern parses *per event*; the
+      coalesced path costs ONE WALK for the whole storm.
+    - **One flush is one walk, and that is asserted.** It was five —
+      `UnreadCount`, `HasWork` x3, and the paint's own `All` plus `Summary` —
+      so 70 mails cost 351 header reads every dirty frame, which during a take
+      run is every frame. The flush walks once and **passes** the headers to
+      the read-only consumers (`inbox.Summary`, `inbox.UnreadCount`,
+      `take.HasWork`, `ui.RefreshInbox`, `ui.OnTakeStateChanged`).
+      - **Passing, never memoising.** A stale header is exactly what this
+        addon's correctness depends on never trusting — the take engine
+        re-reads after every action because "I took it, therefore it is empty"
+        is false. A parameter cannot leak the way a cache can: no mutating path
+        takes one, so none can be handed yesterday's mailbox by accident. Do
+        not "simplify" this into `inbox.All` memoising itself.
+    - The one thing that stays **per-event** is arming the take engine
+      (`take.armed`). That event is the server's acknowledgement clock and the
+      run must remain one `Step` per confirmation — coalescing it drops steps.
+    - Anything that merely *derives* from the inbox (the send-autocomplete
+      contact harvest) belongs on mailbox-open and run-finish, not on the
+      update event. Each such consumer is another full walk multiplied by the
+      storm.
+
+### Mail mutation — the take engine
+
+14. **Never delete a mail that still holds money or an item.** `DeleteInboxItem`
+    destroys attachments with no confirmation and no undo. `TakeInboxItem` can
+    silently fail (full bag, unique-item cap), so "I called take, therefore it
+    is empty" is false. Re-read the header and delete only when `money == 0`
+    **and** `hasItem` is false. TurtleMail takes-then-deletes in one step and
+    relies on `UI_ERROR_MESSAGE` to catch the failure; that is a race we do not
+    reproduce, and it is why Courier costs 2 server round trips per mail where
+    TurtleMail costs 1. That is a deliberate, known price — see below.
+    - **A SERVER CALL IS THE UNIT OF COST, not Lua time.** Each one is a full
+      latency wait; the Lua around it is free by comparison (a whole 12-mail
+      send is under a millisecond). When something feels slow, count ROUND
+      TRIPS before optimising anything else — a call counter is not the same
+      measurement, since several calls issued in one step share one wait.
+    - **Take money and the item TOGETHER, in one step.** Neither can destroy
+      anything, so nothing is risked by issuing both, and it removes a whole
+      round trip from every mail that holds both.
+    - **Then confirm them SEPARATELY.** The server can honour one and refuse
+      the other — a full bag rejects the item while the gold arrives regardless
+      — so booking both on the strength of the money credits an item still
+      sitting in the mail, and the next step counts it twice.
+15. **Deleting SHIFTS every later mail down one index.** After a successful
+    delete, do **not** advance — the next mail slides into the index you are
+    already on. Taking money or an item shifts nothing, so a mode that keeps
+    the mail must advance itself. Getting this backwards silently skips every
+    other mail.
+    - **`ReturnInboxItem` shifts indices the same way**, so it must never run
+      while the take engine is walking the inbox. The Return button hides for
+      the duration of a run, and `ui.ReturnMail` refuses anyway.
+    - Return is gated on **`canReply`** (header field 12) — the same flag
+      FrameXML uses to enable its own Reply button. Auction-house and system
+      mail have it unset and genuinely cannot be returned.
+16. **EVERY `take.Step` must either issue exactly ONE server call or re-arm
+    itself.** There is no third option. `take.armed` is set by nothing but
+    `MAIL_INBOX_UPDATE`, and the server only sends that after an operation it
+    actually performed — so a step that *skips* a mail produces no
+    acknowledgement and nothing ever wakes the engine again. The run hangs
+    mid-inbox with `take.running` still true and only the Stop button gets the
+    user out.
+    - Every skip funnels through `take.Advance`, which is therefore the one
+      place that re-arms. Skips are: COD/GM mail, the wedge guard giving up,
+      a delete-read pass over mail that is not empty-and-read, and the terminal
+      step of a "take" that keeps the mail.
+    - This shipped broken: **Open All stopped dead at the first COD mail** and
+      left everything behind it uncollected.
+    - **A test pump that fires `MAIL_INBOX_UPDATE` unconditionally cannot see
+      this.** The harness pump must fire it only after a real mutation call
+      (`serverCalls`), or it hand-feeds the engine a clock the client would
+      never provide. 388 checks passed over this stall.
+17. **A progress guard must measure CHANGE, not attempts.** Because the delete
+    path deliberately does not advance, a raw per-index action counter climbs
+    straight through healthy mail and eventually skips a live one. Compare a
+    signature of what is at the index (`index|subject|money|hasItem`) and reset
+    the counter whenever it moves. See `take.Step`.
+18. **`GetInboxText(index)` is the ONLY way to mark a mail read.** There is no
+    separate call; reading the body is what clears the server's unread state.
+    Skip it and mail stays unread forever, which leaves the minimap's unread
+    icon lit and makes "Delete Read" permanently find nothing.
+    - **Side effect:** reading a mail that still holds attachments drops its
+      expiry to three days. So call it only on mail being actively emptied,
+      never on mail merely displayed. See `inbox.MarkRead`.
+    - **That clock starts on the FIRST read and never restarts.** So an
+      already-read mail costs nothing to read again, and `inbox.ReadIsFree`
+      must say so — gating a re-read behind the warning button guards a cost
+      already paid and is pure friction. Check `wasRead` before anything else.
+    - Auto-fetching is a SETTING (`autoReadBody`), off by default. The default
+      is what matters: players use the mailbox as storage, so turning it on for
+      everyone would silently cost 27 days on any loaded mail merely glanced
+      at. A player who opts in has been told the price — the checkbox label
+      states it, rather than hiding it in a tooltip.
+    - **The reader obeys the same rule**, which is why it does not simply fetch
+      a body when a row is clicked. `inbox.ReadIsFree` splits the two cases:
+      mail holding nothing has no expiry left to lose, so it opens and reads at
+      once; mail still holding money, an item or a COD shows its header detail
+      (all free, from `GetInboxHeaderInfo`) and puts the body behind an
+      explicit button that states the three-day cost. Never "improve" this by
+      auto-fetching — it silently burns the player's expiry window.
+    - `inbox.Body` returning a **nil `text` is normal**, not an empty message:
+      the client asks the server for it and fires `MAIL_INBOX_UPDATE` when it
+      lands. Render a loading state and let the next refresh fill it in.
+    - The icon itself tracks `HasNewMail()`, which the client does **not**
+      re-evaluate just because the inbox was emptied. Take it down explicitly
+      when the mailbox closes with nothing unread (`ui.SettleMailIcon`), the
+      same workaround Postal uses.
+19. **Ledger entries are finalized on COLLECTION, never on arrival**, and the
+    check fails **closed**: credit money only when it has verifiably left the
+    mail. This also *is* the dedupe — an emptied mail has nothing left to book,
+    so Courier needs no mail fingerprint. Do not add one; see
+    `docs/turtlemail-audit.md`, "Note on mail identity".
+20. **Only `sold` mail books income.** `Outbid on %s` mail carries money too —
+    the player's own returned bid — and booking it as a sale inflates every
+    total the addon reports. `won` / `expired` / `cancelled` carry no price at
+    all.
+21. **COD and GM mail are never taken automatically**, in any mode, and this is
+    not a user setting. Paying a COD by accident is unrecoverable.
+    - **"Automatically" is the whole of the rule.** Open All, Delete Read and
+      right-click step over every COD; the player may still pay one
+      DELIBERATELY, and must be able to — Courier's takeover keeps the Blizzard
+      mailbox hidden, so a Courier with no COD path leaves users disabling the
+      addon to collect their mail. That shipped. The reader's Pay button
+      (`take.PayCOD`) is the only route, and it is two clicks: the first arms,
+      the second commits.
+    - The permission is `take.codIndex`, ONE absolute index, compared against
+      the index the engine is standing on. It is not a mode and not a flag —
+      a run must never be able to drift onto a second COD and pay it. Clear it
+      wherever a run starts or ends.
+    - **GM mail has the SAME exception, for the same reason.** Barring it from
+      every automatic path is right; barring the player from ever collecting it
+      is not. A GM mail carrying restored gold was uncollectable AND
+      undeletable, so the player's own property was stuck in it permanently.
+      `take.gmIndex` is the permission, one absolute index, set only by the
+      reader's Take button — a list right-click does not set it, because that
+      is muscle memory and GM mail is the one kind where a mis-click could
+      destroy something irreplaceable.
+    - **Taking a GM mail uses MODE_TAKE: empty it, KEEP it.** A ticket response
+      can be the only record of what a GM did and there is no undo, so removing
+      it is a separate deliberate act (`take.DeleteSingle`), never a side
+      effect of collecting.
+    - `take.DeleteSingle` is the manual counterpart to Delete Read and the only
+      way a GM mail ever leaves the mailbox. It enforces rule 14 ITSELF —
+      refusing money, COD or an item — rather than trusting the UI to only
+      offer it at the right moment, and refuses mid-run because a delete shifts
+      every later index.
+
+### Sending mail (1.12)
+
+22. **Vanilla mail carries exactly ONE attachment.** There is a single slot and
+    a single `GetSendMailItem()`. "Mail 12 items at once" is therefore **12
+    separate mails**, sent back to back and clocked by `MAIL_SEND_SUCCESS` —
+    not a bigger slot. Postage is charged **per mail**, so any cost preview
+    must multiply; the stock UI never shows this because it cannot send a
+    batch.
+    - **`MAIL_FAILED` must not abandon the batch.** It means that one mail did
+      not go out, so its attachment can be put back at the head of the queue
+      and retried — a retry cannot duplicate anything. Abandoning the run on
+      the first refusal loses every remaining item and makes the user rebuild
+      the list. Budget the retries **per mail** and reset on each success, or a
+      long batch is capped by unrelated earlier hiccups.
+    - **Issue the next mail on the very NEXT OnUpdate frame after the
+      acknowledgement, and the FIRST one synchronously from the click.** That
+      is TurtleMail's pacing and there is nothing to gain by being slower.
+      `send.SETTLE` is 0 and must stay 0; a delay every mail pays for one
+      mail's failure is what made batches feel slow.
+    - **Keep the send driver SHOWN for the whole batch** (`send.Wake`). A
+      hidden frame runs no `OnUpdate`, and one shown during this frame's work
+      does not run until the next — so a driver sleeping between mails loses a
+      frame to every acknowledgement, and with real latency that is every mail.
+    - A test harness that ticks hidden frames, or treats `Show()` as immediate,
+      cannot see any of this and will happily pass a driver that sleeps.
+    - **"SENDING BUT NOT ARMED" IS ONE STATE, and it is a HANG WAITING TO
+      HAPPEN.** Between `SendMail` and the server's reply, nothing is armed —
+      `MAIL_SEND_SUCCESS` / `MAIL_FAILED` are the only things that arm the next
+      step. If neither arrives, `send.sending` stays true for the rest of the
+      session, the Send button reads *already sending*, and only a `/reload`
+      clears it. **No bug in this file is needed** for that; the server going
+      quiet once is enough, and it shipped as "it gets stuck when sending
+      mail". `send.ACK_TIMEOUT` (10s) is the only place that can notice, since
+      it is the only code that runs in that state.
+      - **STOP, do not retry.** A retry is safe after `MAIL_FAILED` because
+        that event means the mail definitively did not go out. Silence means we
+        do not KNOW — and gold rides the first mail of a batch (rule 26), so
+        re-sending could send the gold twice. Leave the attachments on the list
+        and let the player, who can see what arrived, press Send again.
+      - **`MAIL_CLOSED` must ABORT a running batch.** Closing Courier's own
+        window calls `CloseMail()`, so starting a twelve-item send and shutting
+        the window is enough to guarantee no acknowledgement can ever arrive.
+      - **The silence clock is reset in `send.Arm` and NOWHERE ELSE** (plus the
+        driver's own put-itself-away branch). It was reset in four places —
+        both handlers, the step branch and Arm — and that redundancy meant no
+        single one was load-bearing, so every one of them could be deleted with
+        the suite still green. Arming is the one thing that ends a wait.
+      - **A test that ticks once and acknowledges in the same breath cannot see
+        any of this.** The clock needs a SECOND reading per mail, in the
+        un-armed state, or it is never asked to accumulate.
+23. **There is NO `GetCursorInfo()` on 1.12.** `CursorHasItem()` tells you only
+    *that* something is held, never *what*. The only way to identify a dragged
+    item is to remember where it came from: save-and-replace
+    `PickupContainerItem` / `SplitContainerItem` and record the bag+slot. See
+    `send.InstallHooks`.
+24. **Verify the attach landed before calling `SendMail`, and verify it is the
+    RIGHT item.** `GetSendMailItem()` must be non-nil after
+    `ClickSendMailItemButton()`, **and its name must match the queued
+    attachment**. "Is something attached?" is not the same question as "is the
+    thing I queued attached?" — a stack that moved out and was replaced passes
+    the first and mails the wrong item to the recipient, silently. That is
+    worse than any visible failure.
+    - **A queued attachment is a bag COORDINATE, and coordinates go stale.**
+      1.12 gives no handle on a stack, so `{bag, slot}` is the only address
+      there is, and on a 12-item batch it can be a minute and eleven mails old
+      by the time it is used. Re-resolve at the moment of use
+      (`send.ResolveSlot`), relocating by name via `send.FindItemSlot`.
+    - **`GetContainerItemInfo` returns `texture, itemCount, locked, quality,
+      readable` — READ THE THIRD VALUE.** `PickupContainerItem` on a locked
+      slot is a **silent no-op**: no error, no event, nothing on the cursor. A
+      run that ignores `locked` attaches nothing, fails its own verification,
+      and blames the item. Locks are routine — the previous mail's `BAG_UPDATE`
+      simply has not landed. **Wait** for it (`send.LOCK_WAIT`, bounded by
+      `send.MAX_LOCK_WAITS`); never treat it as failure.
+    - **`locked` is the CLIENT'S CACHED view, and it LIES.** It is routinely
+      still set on a stack the server has already released, in exactly the
+      frames after the previous mail's `BAG_UPDATE` — i.e. constantly, mid
+      batch. **Do not consult it before picking an item up.** Courier did, and
+      waited `LOCK_WAIT` per item on locks that were not there: measured at 45
+      frames vs 3 over three items. The pickup itself is the honest test.
+    - **Charge ahead, then recover — this is TurtleMail's shape and the reason
+      it sends faster.** The hot path is exactly its `sendmail_send`:
+      `ClearCursor / Click / ClearCursor / Pickup / Click`, then verify. Only
+      when the verify FAILS do you pay for `ResolveSlot`, relocation and lock
+      waiting. Reinstating a pre-emptive check is the single easiest way to
+      make sending slow again, and the harness asserts a clean batch inspects
+      **zero** bag slots.
+    - **"Can this item be mailed?" is asked at ATTACH time, not send time.**
+      There is no API flag for it, so the only way to know is to try it against
+      the real attachment slot and take it straight back off — TurtleMail's
+      `sendmail_pickup_mailable`, five calls and no server round trip. Deciding
+      this inside the send loop instead shipped "this item cannot be mailed" on
+      a perfectly mailable Formula, because an attach can also fail for
+      transient reasons and the loop cannot tell which. The probe needs a LIVE
+      mail session; without one `GetSendMailItem` answers nil for everything
+      and would condemn every item in the game.
+    - **THE PROBE MUST FAIL OPEN, and this is not a style preference.** A wrong
+      "no" REFUSES THE ATTACH — the player cannot mail the item at all. A wrong
+      "yes" costs one skipped mail at send time, which the batch already
+      handles and reports. Answer no ONLY on positive evidence: the pickup
+      landed on the cursor (`CursorHasItem`) **and** the mail then refused it,
+      leaving it still held. Every other outcome is a yes.
+      - Moving the question earlier did NOT make it immune to the transient
+        failures it was written to escape. Taking "nothing attached" as proof
+        shipped again as "Training Sword of the Tiger cannot be mailed" — a
+        busy slot, condemned. Same bug, one step upstream.
+    - **Never probe with something on the cursor.** That is drag-to-attach: the
+      item is held and its source slot is locked until the server says
+      otherwise, so clearing the cursor to make room for a probe drops what the
+      player is dragging. Skip and assume mailable.
+    - These guards are deliberately redundant — each alone prevents the false
+      positive — so no single sabotage can prove any one of them. Prove them by
+      restoring the whole broken probe, and pin the drag guard separately by
+      counting that it touches the attachment slot ZERO times mid-drag.
+    - **Empty the mail's attachment slot BEFORE resolving anything.** A mail the
+      server refused leaves its item in that slot rather than in the bags, so
+      resolving first concludes the stack vanished and skips every
+      `MAIL_FAILED` retry.
+    - **One bad item must never cost the batch.** Skip it, count it, report it
+      at the end (`send.skipped`), and carry on — the same rule as
+      `MAIL_FAILED`. And a run that sent **nothing** must leave the attachment
+      list alone; every item is still in the player's bags.
+    - `ITEM_LOCK_CHANGED` may be used to *accelerate* a waiting step, never as
+      the thing that wakes it — it is not a promise on every server build.
+25. **The send API is C, not FrameXML**, so it works with `MailFrame` hidden —
+    which is the state the takeover keeps it in. `SendMail`,
+    `ClickSendMailItemButton`, `GetSendMailItem`, `SetSendMailMoney`,
+    `SetSendMailCOD` and `GetSendMailPrice` are engine-level; only wrappers
+    like `SendMailFrame_SendMail` live in Lua. Do **not** call the wrappers —
+    they read the Blizzard edit boxes, which are not ours.
+    - But note the hidden `MailFrame` **still receives events**, so
+      `MAIL_SEND_SUCCESS` still runs Blizzard's `SendMailFrame_Reset()`, which
+      calls `SetFocus()` on *its* recipient box. Take the keyboard back
+      afterwards or the user's next keystroke vanishes into an invisible frame.
+26. **Money rides the FIRST mail of a batch only.** Attaching gold to every
+    mail of a 10-item send would send the gold ten times. COD is a charge to
+    the recipient rather than a transfer, so it may legitimately repeat — but
+    only when the user asked for that.
+
+27. **The friends and guild rosters are ASYNCHRONOUS and throttled.**
+    `GetNumGuildMembers()` and `GetNumFriends()` answer **0** until the client
+    has asked the server and the reply has landed:
+
+    | request         | reply event            |
+    | --------------- | ---------------------- |
+    | `GuildRoster()` | `GUILD_ROSTER_UPDATE`  |
+    | `ShowFriends()` | `FRIENDLIST_UPDATE`    |
+
+    Reading the count once therefore concludes "no guild" for a player who has
+    one. Request on **mailbox open** — same throttle reasoning as rule 13 for
+    `CheckInbox()`, so never on a timer and never per keystroke — and let the
+    reply event repaint anything already on screen (`ui.RefreshAutoComplete`).
+    - **A list that is already open must fill in**, not wait for the next
+      keystroke, and it must repaint in the mode it was OPENED in — an async
+      reply silently turning a browse list into a filtered one is a worse bug
+      than the empty list it replaced.
+    - **Never persist a roster.** It is a free live read; a stored copy keeps
+      offering names that have left the guild. Only `contacts` is saved,
+      because it is the one list the client cannot tell us.
+    - Read only the values you need and no further: the 1st and 9th of
+      `GetGuildRosterInfo` (`name`, `online`), the 1st and 5th of
+      `GetFriendInfo` (`name`, `connected`). What follows them differs between
+      builds.
+    - **"Show offline members" filters the ROSTER, not the pane.** With it off,
+      `GetNumGuildMembers` / `GetGuildRosterInfo` answer only for members
+      currently logged in — the wrong list for a mailbox, where an offline
+      guildmate is exactly who you write to. Turn it on before the request and
+      **hand it back on `MAIL_CLOSED`**, and only when it was actually
+      borrowed: silently rewriting a preference the player set in another
+      window is not a fix.
+    - The guild roster **includes the player**, and so does `contacts`. The
+      character being played is excluded from **every** section — the server
+      refuses mail addressed to yourself, so such a row can only fail. Seed the
+      exclusion into the dedupe set once rather than per section, or the next
+      section added will forget it.
+    - **Alts are a Courier list, not a client one.** 1.12 exposes nothing
+      account-level, so the only way to know a character exists is to have
+      played it: record `UnitName("player")` at load (`db.AddAlt`). That list
+      is **never pruned**, where `contacts` ages out at 30 days — a bank alt
+      untouched since March is still the name you least want to type.
+    - **A mock that returns the roster immediately cannot test any of this.**
+      Gate it on a delivered flag, in exactly ONE place — it was gated on both
+      the count and the accessor, and that redundancy meant no single sabotage
+      could prove any of them.
+
+28. **Tab means two things in the recipient box, and the suggestion wins.**
+    With a suggestion list open, Tab accepts the top name and keeps focus;
+    otherwise it walks to the next field, exactly as `ui.SetTabChain` wired it.
+    There is no third outcome — a Tab that silently does nothing reads as a
+    broken key.
+    - The override must be installed **after** `ui.SetTabChain`, which writes
+      `OnTabPressed` on every box it is handed, the To box included.
+    - **What Tab fills is read off the rendered ROW**, never recomputed from
+      the ranking. Two sources of truth drift, and the day they do, Tab fills a
+      name that is not the one at the top of the list.
+    - **Fill, then hide — in that order.** `SetText` re-enters
+      `OnTextChanged`, which repaints the list, so a hide issued first is
+      simply undone whenever the completed name still has neighbours.
+    - The harness's `SetText` therefore **fires `OnTextChanged`**, as the
+      client's does. A mock that swallows it passes a Tab-accept that reopens
+      the list it just closed.
+
+29. **The window is reachable with NO MAIL SESSION, so anything needing one
+    must say so.** `/courier` always opened it anywhere, and the minimap button
+    makes that the normal way in — so "window open, nowhere near a mailbox" is
+    a state every panel is looked at in, not an edge case.
+    - The take buttons were already gated on `ui.mailOpen`. **Sending was
+      not:** `send.Validate` now refuses with `"not at a mailbox"`, which is
+      the one place that answers both `send.Start` and the Send button's
+      enabled state — with no session `SendMail` posts into nothing and fails
+      silently, the worst way for it to fail.
+    - Inbox reads empty away from a mailbox because the client has nothing to
+      read, which is correct and needs no guard of its own.
+    - **Attaching is different from sending.** `send.IsMailable` needs a live
+      session and skips its probe without one, so queuing items away from a
+      mailbox is fine and deliberate — a test that turns the session off to
+      skip the probe must turn it back on before `send.Start`.
+30. **The minimap button is placed by an ANGLE, and dragged against the
+    minimap's centre.** A corner anchor cannot survive the player moving it.
+    `GetCursorPosition()` answers in SCREEN coordinates — divide by
+    `UIParent:GetEffectiveScale()` before comparing with `Minimap:GetCenter()`,
+    or the button tracks the mouse at the wrong rate on any scale but 1 (and at
+    1 the bug is invisible, so the harness models a second scale).
+    - `RegisterForClicks("LeftButtonUp", "RightButtonUp")` or right-click never
+      arrives; `RegisterForDrag("LeftButton")` alongside it is fine, because
+      the client only raises `OnDragStart` once the mouse actually moves.
+    - **1.12 passes the mouse button in the global `arg1`**, not as an
+      argument — same rule as every other event on this client.
+    - `courierNoSkin = true`, always. pfUI's button skin replaces textures with
+      a flat backdrop, which on an ICON button **erases the icon** — the fault
+      that shipped the recipient dropdown as an empty box in v1.1.0.
+    - Angle normalisation uses **`math.mod`**, never `%`.
+    - A click that asks for a named tab **opens**, it does not toggle: it asked
+      for that tab to be in front of you, and closing the window because it was
+      already open is the wrong answer to that question.
+    - **THE FRAME IS 32px BUT THE ART IS INSET.** A stock button is a 32px
+      frame whose visible part is Blizzard's border ring at ~26-28px around a
+      20px icon. Art that fills the frame edge to edge therefore reads as
+      BIGGER than every neighbour — measured on a player's minimap at ~42px
+      against ~35. Keep the frame at 32, which is what a minimap-button
+      collector expects to find and resize, and inset the art by POINTS
+      (`MINIMAP_ICON_INSET`) so a collector that resizes the frame takes the
+      art with it. Assert the proportion at BOTH ends: too small is the
+      squeeze that reads as pixelated, too large outsizes the ring.
+    - A texture pinned TOPLEFT **and** BOTTOMRIGHT is fully constrained, so the
+      pressed nudge has to move BOTH corners. Adding a CENTER point on top is
+      a third, conflicting rule, not a shift — assert the icon carries exactly
+      its two opposite anchors.
+    - **DO NOT RELY ON `RegisterForDrag` ALONE.** It is the tidy mechanism and
+      Pathfinder uses it, and on a real player's client the button would not
+      move at all. The press drives the drag instead: `OnMouseDown` arms a
+      per-frame tracker, which does nothing until the cursor has travelled
+      past `MINIMAP_DRAG_SLOP`. **The slop is what keeps clicking usable** —
+      without it every click is a one-pixel drag and the icon creeps around the
+      ring. `OnDragStart` stays as a second way in, forcing the drag on.
+      Release and `OnHide` both stop the tracker.
+    - **A minimap-button COLLECTOR will beat any drag.** The kind that arranges
+      every button into an even ring re-anchors what it manages, and no amount
+      of correctness on our side survives that — so `/courier icon <0-359>`
+      sets the angle outright. Offer the deterministic route rather than
+      insisting the drag should have worked.
+    - **BUILT THE WAY AEGIS: PATHFINDER'S IS**, and that is not a style
+      preference: the two addons put buttons on the same minimap, so size,
+      orbit radius, texture format, the hover ring and the pressed nudge are
+      ported from its `MinimapButton.lua` and `Tools/make_assets.py` rather
+      than invented here. The one thing deliberately NOT shared is the default
+      angle — a 32px button on an 80px ring spans ~23°, so a shared default
+      stacks the two buttons for anyone running both.
+    - Art is a **32-bit TGA with power-of-two dimensions** (RLE type 10, as
+      Pathfinder writes; the older uncompressed type 2 also loads),
+      referenced with **no file extension** — the format and the path
+      convention already proven by `media/ResizeGrip.tga`. A texture is not a
+      `.toc` line, so adding one costs no client restart.
+    - **A minimap icon is ~20–30 pixels, and that is the whole problem.** No
+      source resolution survives it: 20px is 400 pixels, 0.04% of a 1024²
+      logo. The levers are (a) give the art more pixels and (b) put less in
+      them — not a bigger source file.
+      - **Skip `MiniMap-TrackingBorder` when the art already has a ring.**
+        That border exists to frame a 20px icon inside a 31px button; art that
+        is already round can take the whole button instead, which is 30px —
+        two and a quarter times the pixels. Assert the fill as a
+        **proportion** of the button, so a later resize cannot shrink the art
+        back into the middle.
+      - **REDUCE BY HALVING, not in one jump.** A single 1024 → 64 LANCZOS
+        pass aliases: fine detail lands between output pixels and turns to
+        grain, which is exactly what reads as "pixelated". Halve repeatedly
+        first, so each level averages into the next — what a mipmap chain
+        does, and a `.tga` carries no mipmaps. This, not the texture size, was
+        the actual fault; 64px art is what Pathfinder ships and it reads
+        cleanly.
+      - **Keep the generator in the repo.** An icon nobody can rebuild is an
+        icon nobody can adjust; see `media/make-minimap-icon.py`.
+
+31. **COURIER OPENS NO BAGS — the client does.** 1.12's `MailFrame_OnEvent`
+    MAIL_SHOW branch is, verbatim after the `IsVisible` guard:
+    ```
+    if ( IsInGuild() and GetNumGuildMembers() == 0 ) then GuildRoster(); end
+    OpenBackpack();
+    SendMailFrame_Update();
+    MailFrameTab_OnClick(1);
+    CheckInbox();
+    ```
+    So "Courier opens two bag windows" arrives as a bug report with a false
+    premise: there is not one bag API call anywhere in this addon. Two bag
+    replacements both hooking `OpenBackpack` is two windows, and that is
+    between **them** — Courier cannot choose one and must not try, the same
+    rule as never reaching into Aegis: Exchange.
+    - What Courier legitimately owns is **declining**: it replaced the window
+      that backpack was opened for. `closeBagsAtMailbox`, **off by default**
+      because it changes behaviour the client has always had, fires ONE
+      `CloseAllBags()` **a tick after** MAIL_SHOW — inline would run before
+      `OpenBackpack()` and be undone by it.
+    - Queue it **before** the takeover early-return: a player with the
+      takeover off has the same two-bag problem.
+    - Note that branch also calls `GuildRoster()` itself, which is a second
+      reason rule 27's request is cheap — the client was going to ask anyway.
+32. **`GameFontNormalSmall` is small, and the window's SCALE is not the answer
+    to that.** Scale makes the same window bigger; text size makes the text
+    bigger in the window you already have. They are separate controls
+    (`db.GetFontScale`, per character) for separate questions.
+    - **Scale against the font each string was BORN with, never against what
+      it currently has.** Register every string with its font object
+      (`ui.RegisterFont`, which `Label`, `ui.MakeButton` and `MakeEditBox` all
+      funnel through) and re-derive on every change: compounding makes the
+      steps drift apart and 100% never comes back exactly.
+    - `fs:SetFont(path, size, flags)` needs the path and flags from the font
+      OBJECT's `GetFont()`; a nil path means the client has not resolved it,
+      which is not an error — leave the string alone rather than blanking it.
+    - Re-`ui.Refresh()` afterwards: every truncation is measured with
+      `GetStringWidth`, so all of them have to be recomputed.
+    - A mock whose `SetFont`/`SetFontObject` fall through to a no-op cannot
+      tell a working setting from one that changes nothing.
+
+### SavedVariables
+
+33. **SavedVariables are `nil` until `ADDON_LOADED` fires for
+    `"Aegis_Courier"`.** Do all DB setup from the ADDON_LOADED path (queue via
+    `AegisCourier.OnLoad(fn)`), never at file scope.
+    - `CourierDB` — account-wide (declared `## SavedVariables`).
+    - `CourierCharDB` — per-character (`## SavedVariablesPerCharacter`).
+
+### Frames & globals
+
+34. Use **`getglobal()` / `setglobal()`** for dynamic frame names (e.g.
+    building `"MailItem" .. n .. "Button"`).
+35. Build frames with **`CreateFrame`** using **vanilla templates only**, e.g.
+    `UIPanelButtonTemplate`, `FauxScrollFrameTemplate`, `GameTooltipTemplate`.
+    - **`FauxScrollFrame_OnVerticalScroll(itemHeight, updateFn)` — 2 args on
+      1.12.** The frame and scroll offset are the implicit globals `this` /
+      `arg1`. The offset-first form belongs to later clients; using it here
+      passes a number as the update function and FrameXML crashes with
+      "attempt to call local 'updateFunction' (a number value)".
+    - **Every FauxScrollFrame update function MUST carry a reentrancy guard.**
+      `FauxScrollFrame_Update` → `SetMinMaxValues`/`SetValue` → slider
+      `OnValueChanged` → `SetVerticalScroll` → `OnVerticalScroll` →
+      `updateFn` is **mutual recursion with no exit** whenever the scrollbar
+      is live — i.e. the moment the list exceeds its visible rows. Unguarded,
+      the client hangs and dies on stack overflow at rows+1 items (the "11+
+      mails" crash). Guard with a boolean bounce (`if refreshing then return`);
+      the outer pass reads the clamped offset right after `Update`, so the
+      paint stays correct. See `ui.RefreshInbox`.
+
+36. **Checkboxes come from `ui.MakeCheckBox`, never from
+    `UICheckButtonTemplate`** — a **VERBATIM PORT** of Aegis: Exchange's, for
+    the same reason `BTN_KIND` is one: the two addons sit in the same UI and a
+    hand-adjusted copy drifts. Re-port if Exchange retunes it; never tune one
+    side alone.
+    - The template's blue-grey art cannot be recoloured, exactly like
+      `UIPanelButtonTemplate`. The border is **four 1px textures**, because a
+      `SetBackdrop` whose `edgeSize` approaches the frame size renders as a
+      garbled CROSS — two corner pieces of `edgeSize` square cannot both fit
+      across a 14px frame.
+    - **`courierNoSkin`, always.** pfUI reskins anything reporting
+      `CheckButton`, which renders a small flat box as a CIRCLE — correct
+      unskinned, wrong under the skin. `ui/skin.lua` therefore has no checkbox
+      path at all; a `CheckButton` falls through it untouched, and that is the
+      intended outcome rather than an omission.
+    - **DO NOT SHADOW `SetChecked` / `GetChecked`.** A `CheckButton` toggles
+      itself **before** `OnClick` runs, and every handler here reads
+      `GetChecked()` inside `OnClick` expecting the new value. A private flag
+      leaves the widget's state and ours disagreeing the moment the WIDGET is
+      what moved, and each handler silently reads the wrong one. Replace only
+      the ART: the tick is the widget's own CHECKED texture, so the client
+      shows and hides it for us and it cannot drift.
+      - `SetCheckedTexture` takes a **PATH** on 1.12, not a texture object, so
+        the region has to be created from a file that exists and then
+        re-pointed and repainted. A nil region is not an error — the stock
+        check mark stays: wrong art, still legible.
+      - **A harness whose `Click` fires `OnClick` directly cannot see this.**
+        The pre-toggle must write the widget's state RAW, because the engine
+        flips the widget and does not call a Lua method — going through
+        `SetChecked` makes a shadowed pair look self-consistent.
+    - The caption is a **method** (`SetLabel`), not the template's global
+      `"<name>Text"`, so a settings row no longer needs a frame name just to
+      reach its own label. It registers with `ui.RegisterFont` like every other
+      creation path (rule 32).
+    - **Dimmed, not hidden** (`SetDimmed`): box, tick, borders AND caption fade
+      together, and `Disable()` is what actually refuses the click — on 1.12
+      `Disable()` dims the box art only and a FontString keeps its colour, so a
+      disabled option otherwise still reads as available.
+37. **A SCROLLFRAME IS THE ONLY 1.12 WIDGET THAT CLIPS.** There is no
+    `SetClipsChildren`; a panel whose content overruns simply draws over
+    whatever is beneath it, which is the footer and then the window edge. The
+    settings block is a fixed ~420px of controls and hint lines against a panel
+    that is 330px at the window's minimum height, and it shipped drawing over
+    the footer — reported as "at its smallest size it clips at the bottom".
+    - **Raising `MIN_H` is the wrong trade.** It works, and it forces every
+      player's inbox 135px taller to make room for a tab they are not on. The
+      inbox is the view kept small; a tall panel scrolls instead.
+    - **A real `ScrollFrame`, not a `FauxScrollFrame`.** Faux virtualises
+      fixed-height rows; settings are heterogeneous widgets that cannot be
+      recycled. **No reentrancy guard is needed** here and that is worth
+      stating, because every `FauxScrollFrame` in the file has one (rule 35):
+      the loop those guard against closes because Faux routes the scroll back
+      into the painter. A real `ScrollFrame`'s `SetVerticalScroll` just moves
+      its child and calls nothing.
+    - The bar is **hand-built from a base `Slider`** — a primitive widget type
+      that always exists, so there is no "Couldn't find inherited node" risk
+      from guessing a 1.12 template name — and marked `courierNoSkin` because
+      pfUI's `SkinScrollbar` reaches for up/down buttons a template would have
+      supplied and ours has none.
+    - **THE CLIP LINE FALLS ON THE SCROLL CHILD'S LEFT EDGE.** Text at x=0 gets
+      away with sitting on it because a glyph carries its own side bearing; a
+      checkbox's solid 1px edge texture does not, and comes back shaved. Inset
+      the content by `SET_INSET` and pull the scroll frame LEFT by the same
+      amount, so the inset is pure clip margin and the layout does not move.
+    - **Shadow `panel` with the scroll child** in the builder. A widget pinned
+      to the panel sits outside the scroll and keeps the exact overflow this
+      exists to fix — and one pinned to the child's BOTTOM sits at the bottom
+      of the child, hundreds of pixels down and off screen. The last thing in
+      the block is simply the last thing in the block.
+    - **MEASURE the content, never sum it.** `ui.ContentExtent` sweeps children
+      **and** regions for the lowest `GetBottom()`. A second copy of the
+      layout's offsets written out as a total is a copy that drifts, and the
+      first thing it gets wrong is a wrapped hint line — whose height depends
+      on the font scale and so is not a constant at all. Re-fit **after**
+      writing the text, or it measures the previous visit's.
+    - **A mock that answers nil for `GetTop` / `GetBottom`, 0 for a font
+      string's height, or a fresh stand-in from `GetRegions`, agrees with a
+      panel that spills a hundred pixels past the window.** And an unplaced
+      stand-in must report **no position**, not 0: these coordinates are
+      positive, so a 0 sits BELOW every real widget and inflates the
+      measurement past anything in the frame.
+
+---
+
+## Aegis: Exchange integration — the whole contract
+
+Courier's integration with Aegis: Exchange is **one function call in one
+direction**. These rules are as hard as the client rules above, because
+violating them couples two repos that are meant to ship independently.
+
+1. **Detection is a guard, never a dependency.**
+   ```lua
+   if AegisExchange and AegisExchange.RecordExternalTxn then ... end
+   ```
+   Courier must load, run and be fully useful with `AegisExchange == nil`.
+   There is **no** `## Dependencies` / `## OptionalDeps` line for it in the
+   `.toc`, deliberately — see `core/bridge.lua`.
+2. **NEVER read or write `AegisExchangeDB` / `AegisExchangeCharDB`.** Not for
+   dedupe, not for a "quick check", not read-only. The SavedVariables shape on
+   that side is free to change; the function signature is the only promise.
+3. **Data flows Courier → Aegis only.** Courier never reads Aegis's ledger,
+   price data, or settings back. Anything Courier needs, Courier stores.
+4. **Courier's own ledger is always maintained**, whether or not Aegis is
+   installed. The push is a mirror, never a substitute — a user who uninstalls
+   Aegis must keep their full Courier history.
+5. **The push is deduped on Courier's side before it is sent.** Aegis dedupes
+   its own scanner's entries with its own keys, which Courier cannot see (rule
+   2), so a double-push would double-count.
+6. **As of this writing Aegis has NOT yet shipped `RecordExternalTxn`** — it is
+   Phase 0.2 on Aegis's own roadmap. The guard is therefore false in practice
+   today, and the bridge is dormant. That is expected and must stay harmless:
+   never warn, error, or degrade a standalone user because the seam is absent.
+7. **Aegis stands down when Courier is present** (Aegis Phase 0.2): its
+   built-in `ScanMailSales` skips installing its mail hook once it detects
+   Courier, making Courier the sole owner of mail scanning. Courier does not
+   need to do anything to cause this, and must **not** try to disable Aegis's
+   scanner itself — no reaching into the other addon.
+
+---
+
+## Turtle WoW specifics
+
+Turtle exposes a global **`TURTLE_WOW_VERSION`** — use it to detect Turtle
+(see `AegisCourier.isTurtle`).
+
+- **5% faction consignment cut** on auction sales. A sale mail's attached money
+  is the **net** already; the gross is `net / 0.95`. Log gross, cut and net.
+- **Cross-faction AH** — a single shared economy, so auction mail senders are
+  not faction-partitioned. Match the sender against the known auction-house
+  name set rather than assuming a faction.
+- **Auction durations are ×3 vanilla** — max **72h**. Mail from an auction
+  house expires on the normal 30-day mail timer regardless.
+
+---
+
+## Project layout
+
+```
+Aegis_Courier/
+  Aegis_Courier.toc      -- Interface 11200; declares SavedVariables + load order
+  core/init.lua          -- namespace (AegisCourier) + event dispatcher + OnLoad queue
+  core/util.lua          -- Lua 5.0 safe helpers (money fmt, strings, time, tables)
+  core/db.lua            -- SavedVariables: settings, ledger, dedupe keys, mail log
+  core/bridge.lua        -- the Aegis: Exchange seam; dormant when Aegis is absent
+  core/inbox.lua         -- inbox reads (A.inbox) + the take engine (A.take)
+  core/send.lua          -- outgoing mail: attachments + the batch send engine
+  ui/frame.lua           -- standalone Courier window + mailbox takeover
+  ui/skin.lua            -- OPTIONAL pfUI restyle; every call pcall-guarded so
+                         -- a pfUI API change can only cost us the default look
+  pfui/Aegis_Courier.lua -- drop-in for pfUI-addonskinner users. NOT in the .toc
+                         -- and NOT loaded by us; it just calls A.skin.Apply()
+  tests/harness.lua      -- off-client test harness; stubs the 1.12 API
+  docs/turtlemail-audit.md -- feature audit that defines the replacement scope
+  .pkgmeta               -- BigWigsMods packager: package-as, manual changelog,
+                         -- and what does NOT go in a player's AddOns folder
+  .github/workflows/release.yml -- tags and publishes every version that
+                         -- reaches main; read its header before editing it
+  CLAUDE.md              -- this file
+  ROADMAP.md             -- staged plan; check before starting a large feature
+```
+
+**Releases are automatic. Do not push a `v*` tag by hand.** A merge to `main`
+that changes `## Version` in the `.toc` gets tagged and published on its own;
+a merge that leaves the version alone releases nothing, so tooling and docs
+cost nothing. Launchers compare an installed addon against the latest GitHub
+release, so a repo with no releases either nags about an update forever or
+never offers one.
+
+The workflow's header comment documents three traps, every one of which fails
+**silently** — a green run that published nothing. Re-read it before
+simplifying anything in that file:
+
+1. A tag pushed with `GITHUB_TOKEN` starts no workflow run, which is why the
+   branch run ends with an explicit `gh workflow run --ref "$tag"`.
+2. The packager refuses a branch build whose commit is tagged (`Found future
+   tag "vX.Y.Z", not packaging.`), so its step is gated on a **tag** ref and
+   must never run in the `main` push.
+3. With no manual changelog the packager uses the commit log since the last
+   tag as the release body; before the first release that is the whole
+   history and GitHub rejects it as `body is too long`. The tag run extracts
+   the version's entry from `CHANGELOG.md` into `RELEASE_NOTES.md`, which
+   `.pkgmeta` names as the manual changelog.
+
+The extraction matches the heading by **prefix** (`## [X.Y.Z]`), because older
+entries carry a date and a `**restart**` note after it, and stops at the next
+version heading **or** at the link-reference block that ends the file.
+
+Load order is fixed by the `.toc`: `init` → `util` → `db` → `bridge` →
+`inbox` → `send` → `frame` → `skin`. `skin` is only reached at runtime, so its
+position is not load-critical. `init.lua` must load first (it creates the namespace and
+dispatcher); `util` second (every other module takes a file-scope
+`local util = A.util`).
+
+**Adding a `.lua` file means editing the `.toc` — and that needs a FULL client
+restart, not `/reload`.** 1.12 reads the file list at startup. The module set
+above is deliberately laid down complete at Stage A, including files that are
+still thin, so later stages don't force users through a restart. Mark any
+release that does add a file **restart** in `CHANGELOG.md`.
+
+The repository root **is** the addon folder: clone/copy it into
+`Interface/AddOns/Aegis_Courier` so the folder name matches the `.toc`.
+
+---
+
+## Reference addons
+
+Read their patterns for how vanilla mailbox automation is done in practice —
+**imitate the approach, do not copy code blindly**:
+
+- **TurtleMail** — https://github.com/sica42/TurtleMail (the addon Courier
+  replaces; audited in `docs/turtlemail-audit.md`)
+- **Postal (vanilla forks)** — the other common open-all implementation
+- **Aegis: Exchange** — https://github.com/Torchlite-bit/Aegis_Exchange (sibling
+  repo; the AH takeover in its `ui/frame.lua` is the model for our mail
+  takeover, and its `core/db.lua` ledger is the shape our push must match)
+
+---
+
+## Quick self-check before committing Lua
+
+- [ ] No `string.match` / `string.gmatch` / `:match()` — used `string.find` /
+      `string.gfind`.
+- [ ] No `#` — used `table.getn`. No `table.setn`.
+- [ ] No `%` operator — used `math.mod`.
+- [ ] Event handlers read `event` / `arg1…` globals (not `self, event, ...`).
+- [ ] No `hooksecurefunc` / secure hooks — saved original + replaced.
+- [ ] Mail reads match the 13-value `GetInboxHeaderInfo` signature; `daysLeft`
+      treated as fractional DAYS; no `GetInboxItemLink` assumed.
+- [ ] Nothing hides `MailFrame` without the `keepSessionOpen` suppression, and
+      no takeover hide is synchronous with `MailFrame`'s `OnShow`.
+- [ ] No `DeleteInboxItem` on a mail that still has money or an item; no
+      advance after a delete; only `sold` mail books income; COD/GM skipped.
+- [ ] Mail being emptied is marked read via `GetInboxText`; mail merely
+      displayed is not.
+- [ ] Nothing walks the inbox or repaints from `MAIL_INBOX_UPDATE` directly —
+      it storms; work is coalesced behind `inbox.dirty` / `inbox.Flush`, and
+      that flush is ONE walk passed down, not five taken separately. A new
+      read-only consumer accepts the walk; a mutating one never does.
+- [ ] Every `take.Step` path issues exactly one server call **or** re-arms via
+      `take.Advance`; the harness pump still clocks off `serverCalls`.
+- [ ] No body is fetched for mail that still holds something without the
+      player asking (`inbox.ReadIsFree`).
+- [ ] List rows still fit their well — `ui.Geometry()` / `ui.SentGeometry()`
+      are asserted by the harness; 1.12 does not clip children, it just draws
+      over the border. A panel must also CLEAR the chrome above it, not merely
+      balance the arithmetic.
+- [ ] The window RESIZES: row counts come from `ui.InboxRowCount` and friends
+      at paint time, never from a constant, and row frames are built to
+      `MAX_ROWS` and shown/hidden rather than created on the fly.
+- [ ] Nothing repaints a list per-frame during a resize drag — a row count that
+      moves every frame re-enters `FauxScrollFrame_Update` and reproduces the
+      v1.0.4 crash. Re-fit once, on mouse-up.
+- [ ] Geometry invariants are asserted across the SIZE RANGE (min / default /
+      max), not at one height.
+- [ ] Checkboxes are built with `ui.MakeCheckBox`, never
+      `UICheckButtonTemplate`; they set `courierNoSkin`, do NOT shadow
+      `SetChecked`/`GetChecked`, label via `SetLabel`, and the harness's
+      `Click` pre-toggles a `CheckButton` RAW the way the engine does.
+- [ ] A panel whose content can outgrow it lives in a real `ScrollFrame` — the
+      only 1.12 widget that clips — with its content inset off the clip line,
+      `panel` shadowed by the scroll child, nothing pinned to a bottom, and the
+      height MEASURED (children and regions) rather than summed.
+- [ ] Buttons are built with `ui.MakeButton(parent, kind, name)`, never
+      `UIPanelButtonTemplate` — that template cannot be recoloured. Kinds are
+      `primary` (one per area), `accent` (Back), `quiet` (default), and the
+      colours are a VERBATIM port of Aegis: Exchange's `BTN_KIND`. Re-port if
+      Exchange retunes them; never hand-adjust one side.
+- [ ] `RepaintButton` resolves its paint target LIVE (`b.backdrop` when pfUI
+      made one), never cached at creation — pfUI's child does not exist until
+      `skin.Apply` runs, long after the button is built.
+- [ ] Layout numbers are DERIVED, never literal. A hardcoded row count or inset
+      in a test stops testing anything the moment the window changes shape —
+      read `ui.Geometry()` instead.
+- [ ] A tab's KEY was not changed to relabel it. `SUBTABS` entries name the
+      panel frame global, the `ui.panels` / `ui.subTabs` keys, the
+      `SendAttachActive` comparison and the remembered tab in
+      `db.char.ui.tab` — relabel via `SUBTAB_LABELS` instead.
+- [ ] Anything the Sent reader will want was captured AT SEND TIME. A sent mail
+      is gone from the client; there is no API to read one back, so nothing can
+      be backfilled and old records must still render.
+- [ ] Batch sends verify `GetSendMailItem()` before `SendMail` **and compare
+      its name to the queued item**; bag coordinates are re-resolved at use;
+      `locked` (3rd return of `GetContainerItemInfo`) is read and waited on;
+      postage multiplied per mail; gold only on the first mail.
+- [ ] Bulk mail work is counted in SERVER ROUND TRIPS, not calls or Lua time.
+      Money and item leave in one step; only the delete gets its own, and only
+      because it must be verified first.
+- [ ] No delay is imposed on a whole batch because one mail failed. The retry
+      is per mail; there is no standing settle.
+- [ ] A batch that is sending but not armed is being watched: `send.ACK_TIMEOUT`
+      stops it, without retrying, and `MAIL_CLOSED` aborts it. The silence clock
+      is reset in `send.Arm` and nowhere else, and the test ticks TWICE per mail
+      so it is actually asked to accumulate.
+- [ ] The send hot path inspects NOTHING before the pickup — no `ResolveSlot`,
+      no `locked` poll. Relocation and lock waiting happen only after a failed
+      verify. A clean batch inspects zero bag slots and the harness says so.
+- [ ] Unmailable items are rejected by the attach-time probe
+      (`send.IsMailable`), never diagnosed from inside the send loop, and the
+      probe is skipped when there is no live mail session.
+- [ ] A filtered take run (`take.only`) still routes every skip through
+      `take.Advance`, and `take.HasWork` is asked with the SAME filter the run
+      uses, or the button lights up for work the run steps over.
+- [ ] COD is reachable ONLY through the reader's two-click Pay button; every
+      automatic path still skips it, and `take.codIndex` names one index and is
+      compared against `take.index`.
+- [ ] A hover target that is a plain `Frame` called `EnableMouse(true)`. Only
+      Buttons are interactive by default, so a Frame that skips it is dead --
+      and a test that calls `OnEnter` directly cannot tell the difference.
+      Hover through the harness's `hover()` helper, which checks.
+- [ ] A mock that cannot express a failure cannot test it. Before trusting a
+      new test, SABOTAGE the code it covers — a test that still passes is
+      testing nothing. Both the pickup-no-op and the refused-attach fixes had
+      vacuous tests until the mock modelled the client behaviour they live in.
+- [ ] A rule the UI *gates a button on* is asserted against the **button**, not
+      only against the function. `send.Validate` is called twice — once by
+      `send.Start` and once by `ui.RefreshSend` to enable the Send button — and
+      fixing only the first left the button greyed and the bug alive.
+- [ ] The friends/guild rosters were REQUESTED on mailbox open and read only
+      after their reply event; an open picker repaints from that event, in the
+      mode it was opened in; nothing about a roster is persisted; the
+      show-offline filter is borrowed and handed back; the character being
+      played is offered by no section.
+- [ ] Anything needing a live mail session refuses without one, and the rule
+      lives where the BUTTON reads it: the window opens anywhere, from
+      `/courier` and from the minimap button.
+- [ ] A minimap or icon button set `courierNoSkin`, reads its mouse button from
+      `arg1`, and divides `GetCursorPosition()` by the effective UI scale. Its
+      art is INSET from a 32px frame, not filling it, and its drag is driven by
+      the press with a slop threshold rather than by `RegisterForDrag` alone.
+- [ ] Nothing in the addon opens a bag. The backpack at a mailbox is the
+      CLIENT's `OpenBackpack()`; Courier may decline it behind
+      `closeBagsAtMailbox` (deferred a tick, queued before the takeover
+      early-return) and may never pick between two bag addons.
+- [ ] Text size scales against the font each string was BORN with, via
+      `ui.RegisterFont`; every new creation path registers, or it silently
+      stays small.
+- [ ] Tab in the recipient box accepts the suggestion when there is one and
+      still walks to Subject when there is not, the override is installed after
+      `ui.SetTabChain`, and what it fills is read off the rendered row.
+- [ ] `lua5.1 tests/harness.lua` passes.
+- [ ] DB touched only after `ADDON_LOADED` for `"Aegis_Courier"`.
+- [ ] No read or write of `AegisExchangeDB`; integration goes through
+      `core/bridge.lua` only.

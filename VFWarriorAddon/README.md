@@ -1,0 +1,9 @@
+# VFWarriorAddon
+
+[Original listing](https://vanilla-addon-index.github.io/addon/vfwarrioraddon) · Class · Listed
+
+| Component | Upstream | Status |
+|---|---|---|
+| VFWarriorAddon | https://github.com/Otari98/VF_WarriorAddon | new |
+
+Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

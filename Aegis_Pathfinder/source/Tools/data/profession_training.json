@@ -1,0 +1,157 @@
+{
+  "_source": "Tools/data/Profession_FAQ.md, supplied by the repository owner. Values are taken from it as written, with these spelling corrections: 'Iron Forge' -> Ironforge, 'Shadowspray/Shadowsprey Village' -> Shadowprey Village, 'Dushwallow' -> Dustwallow, 'Inkeeper' -> Innkeeper. Entries the FAQ marks as unsure ('Una? in Thunder Bluff?') are not used.",
+
+  "ranks": {
+    "Apprentice": { "cap": 75,  "skill": 0,   "level": 5,  "cost": "5 copper" },
+    "Journeyman": { "cap": 150, "skill": 50,  "level": 10, "cost": "5 silver" },
+    "Expert":     { "cap": 225, "skill": 125, "level": 20, "cost": "50 silver" },
+    "Artisan":    { "cap": 300, "skill": 200, "level": 35, "cost": "5 gold" }
+  },
+
+  "_noLevelRequirement": "The FAQ: gathering professions, Cooking and First Aid have no level requirements. Survival and Jewelcrafting are Turtle-lineage additions the FAQ predates; Jewelcrafting trains like the other primary crafts, and Survival is treated as having no requirement until a source says otherwise.",
+  "noLevelRequirement": ["Mining", "Herbalism", "Skinning", "Cooking", "First Aid", "Fishing", "Survival"],
+
+  "_supplementTrainers": "Ranks the reference document lists no trainer for, filled from the FAQ. Engineering is not in the reference document at all: its trainers are every NPC whose trainer list in the CMaNGOS classic database (classic-db, npc_trainer) teaches the rank's spell -- Apprentice 4039, Journeyman 4040, Expert 4041, Artisan 12657 -- in the zone pfQuest-turtle's unit database puts them in. Every name is in both; none is from memory. Trainers the Turtle-lineage servers added in their own zones are in neither, so are not listed.",
+  "supplementTrainers": {
+    "Blacksmithing": {
+      "Expert": { "Alliance": [ { "name": "Bengus Deepforge", "zone": "Ironforge" } ] }
+    },
+    "Engineering": {
+      "Apprentice": {
+        "Alliance": [
+          { "name": "Jemma Quikswitch", "zone": "Ironforge" },
+          { "name": "Trixie Quikswitch", "zone": "Dun Morogh" },
+          { "name": "Springspindle Fizzlegear", "zone": "Dun Morogh" },
+          { "name": "Bronk Guzzlegear", "zone": "Dun Morogh" },
+          { "name": "Lilliam Sparkspindle", "zone": "Stormwind City" },
+          { "name": "Sprite Jumpsprocket", "zone": "Stormwind City" },
+          { "name": "Deek Fizzlebizz", "zone": "Loch Modan" },
+          { "name": "Jenna Lemkenilli", "zone": "Darkshore" },
+          { "name": "Tinkerwiz", "zone": "The Barrens" },
+          { "name": "Twizwick Sprocketgrind", "zone": "The Barrens" }
+        ],
+        "Horde": [
+          { "name": "Roxxik", "zone": "Orgrimmar" },
+          { "name": "Nogg", "zone": "Orgrimmar" },
+          { "name": "Thund", "zone": "Orgrimmar" },
+          { "name": "Mukdrak", "zone": "Durotar" },
+          { "name": "Franklin Lloyd", "zone": "Undercity" },
+          { "name": "Graham Van Talen", "zone": "Undercity" },
+          { "name": "Tinkerwiz", "zone": "The Barrens" },
+          { "name": "Twizwick Sprocketgrind", "zone": "The Barrens" }
+        ]
+      },
+      "Journeyman": {
+        "Alliance": [
+          { "name": "Trixie Quikswitch", "zone": "Dun Morogh" },
+          { "name": "Springspindle Fizzlegear", "zone": "Dun Morogh" },
+          { "name": "Lilliam Sparkspindle", "zone": "Stormwind City" },
+          { "name": "Buzzek Bracketswing", "zone": "Tanaris" }
+        ],
+        "Horde": [
+          { "name": "Roxxik", "zone": "Orgrimmar" },
+          { "name": "Nogg", "zone": "Orgrimmar" },
+          { "name": "Franklin Lloyd", "zone": "Undercity" },
+          { "name": "Buzzek Bracketswing", "zone": "Tanaris" }
+        ]
+      },
+      "Expert": {
+        "Alliance": [
+          { "name": "Springspindle Fizzlegear", "zone": "Dun Morogh" },
+          { "name": "Buzzek Bracketswing", "zone": "Tanaris" }
+        ],
+        "Horde": [
+          { "name": "Roxxik", "zone": "Orgrimmar" },
+          { "name": "Buzzek Bracketswing", "zone": "Tanaris" }
+        ]
+      },
+      "Artisan": {
+        "Alliance": [ { "name": "Buzzek Bracketswing", "zone": "Tanaris" } ],
+        "Horde": [ { "name": "Buzzek Bracketswing", "zone": "Tanaris" } ]
+      }
+    }
+  },
+
+  "_secondary": "Secondary professions do not train Expert or Artisan: Expert is a tome bought for 1 gold, Artisan a quest needing level 40 and skill 225.",
+  "secondary": {
+    "Cooking": {
+      "expert": {
+        "book": "Expert Cookbook",
+        "cost": "1 gold",
+        "vendors": {
+          "Alliance": [ { "name": "Shandrina", "zone": "Ashenvale", "place": "Silverwind Refuge" } ],
+          "Horde":    [ { "name": "Wulan", "zone": "Desolace", "place": "Shadowprey Village" } ]
+        }
+      },
+      "artisan": {
+        "level": 40,
+        "skill": 225,
+        "starters": {
+          "Alliance": { "name": "Daryl Riknussun", "zone": "Ironforge", "place": "near the gryphon platform at the forge" },
+          "Horde":    { "name": "Zamja", "zone": "Orgrimmar", "place": "the third house on the right near the Valley of Strength, in the Drag" }
+        },
+        "starterOptional": true,
+        "finish": { "name": "Dirge Quikcleave", "zone": "Tanaris", "place": "Gadgetzan" },
+        "bring": [
+          { "item": "Giant Egg", "qty": 12 },
+          { "item": "Zesty Clam Meat", "qty": 10 },
+          { "item": "Alterac Swiss", "qty": 20 }
+        ],
+        "gatherNote": "Giant Eggs drop from level 40+ rocs in Tanaris (plenty near Gadgetzan) or owlbeasts in The Hinterlands. Zesty Clam Meat comes out of Big-mouth Clams, dropped by Muckshells and Threshers in Dustwallow Marsh, Naga Explorers in Stranglethorn Vale and Hatecrests in Feralas. Alterac Swiss is 40 silver per stack of 5 from Ben Trias in Stormwind City (Alliance) or Innkeeper Sikewa in Desolace, Shadowprey Village (Horde).",
+        "finishNote": "The big bonfire around the corner behind the inn does for cooking."
+      }
+    },
+    "First Aid": {
+      "expert": {
+        "book": "Expert First Aid - Under Wraps",
+        "cost": "1 gold",
+        "vendors": {
+          "Alliance": [ { "name": "Deneb Walker", "zone": "Arathi Highlands", "place": "Stromgarde Keep" } ],
+          "Horde":    [ { "name": "Balai Lok'Wein", "zone": "Dustwallow Marsh", "place": "Brackenwall Village" } ]
+        }
+      },
+      "artisan": {
+        "level": 40,
+        "skill": 225,
+        "starters": {
+          "Alliance": { "name": "Nissa Firestone", "zone": "Ironforge", "place": "near the Military Ward, at the forge" },
+          "Horde":    { "name": "Arnok", "zone": "Orgrimmar", "place": "the Valley of Spirits" }
+        },
+        "starterOptional": false,
+        "finishes": {
+          "Alliance": { "name": "Doctor Gustaf VanHowzen", "zone": "Dustwallow Marsh", "place": "Theramore" },
+          "Horde":    { "name": "Doctor Gregory Victor", "zone": "Arathi Highlands", "place": "Hammerfall" }
+        },
+        "finishNote": "Triage: 15 patients in the right order before 6 die. Stand where you can see all six cots, put the special triage bandages on your action bar, and treat Critically injured first, then Badly injured, then Injured."
+      }
+    }
+  },
+
+  "_firstAid": "First Aid's route, and each bandage's skill colours -- learned (orange), yellow, green, grey -- as vanilla 1.12 has them and every First Aid guide gives them. The reference document's route asked for fewer bandages than skill points for Linen and Heavy Linen, so the owner had it rebuilt on these. Tools/build/convert_professions.py works the craft counts out from the colours; reagents and recipe sources still come from the document.",
+  "firstAid": {
+    "colours": {
+      "Linen Bandage":           [1, 30, 45, 60],
+      "Heavy Linen Bandage":     [40, 50, 75, 100],
+      "Wool Bandage":            [80, 80, 115, 150],
+      "Heavy Wool Bandage":      [115, 115, 150, 185],
+      "Silk Bandage":            [150, 150, 180, 210],
+      "Heavy Silk Bandage":      [180, 180, 210, 240],
+      "Mageweave Bandage":       [210, 210, 240, 270],
+      "Heavy Mageweave Bandage": [240, 240, 270, 300],
+      "Runecloth Bandage":       [260, 260, 290, 320],
+      "Heavy Runecloth Bandage": [290, 290, 320, 350]
+    },
+    "route": [
+      ["Linen Bandage", 1, 40],
+      ["Heavy Linen Bandage", 40, 80],
+      ["Wool Bandage", 80, 115],
+      ["Heavy Wool Bandage", 115, 150],
+      ["Silk Bandage", 150, 180],
+      ["Heavy Silk Bandage", 180, 210],
+      ["Mageweave Bandage", 210, 240],
+      ["Heavy Mageweave Bandage", 240, 260],
+      ["Runecloth Bandage", 260, 290],
+      ["Heavy Runecloth Bandage", 290, 300]
+    ]
+  }
+}

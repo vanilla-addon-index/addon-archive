@@ -1,0 +1,745 @@
+-- Aegis: Exchange
+-- core/util.lua
+--
+-- Lua 5.0 / vanilla 1.12 safe helpers.
+--   * money formatting + gold/silver/copper parsing
+--   * string split via string.gfind  (NOT string.gmatch)
+--   * small table helpers
+--
+-- Reminder of the constraints exercised here:
+--   * no "%" operator          -> math.mod(a, b)
+--   * no "#" length operator   -> table.getn(t)
+--   * no string.match/gmatch   -> string.find (with captures) / string.gfind
+
+local A = AegisExchange
+A.util = {}
+local util = A.util
+
+local COPPER_PER_SILVER = 100
+local COPPER_PER_GOLD   = 10000   -- 100 * 100
+
+-- ---------------------------------------------------------------------------
+-- Money
+-- ---------------------------------------------------------------------------
+
+-- Split a copper amount into (gold, silver, copper). Uses math.mod and
+-- math.floor because Lua 5.0 has neither the "%" operator nor integer div.
+function util.MoneyParts(copper)
+    copper = copper or 0
+    if copper < 0 then copper = -copper end
+    copper = math.floor(copper)
+    local gold   = math.floor(copper / COPPER_PER_GOLD)
+    local silver = math.floor(math.mod(copper, COPPER_PER_GOLD) / COPPER_PER_SILVER)
+    local cop    = math.mod(copper, COPPER_PER_SILVER)
+    return gold, silver, cop
+end
+
+-- A copper amount as SHORT as it can be said: "0", "84s", "12g", "4.2kg".
+--
+-- FOR AN AXIS, where the whole figure has to fit a narrow gutter and the exact
+-- copper is noise -- the point of a label beside a chart is which order of
+-- magnitude the line is at, and util.FormatMoney's "1,240g 17s 3c" defeats
+-- that by being longer than the plot is tall.
+--
+-- ONE significant fraction digit above a thousand gold, none below it: "4.2kg"
+-- is a different number from "4.3kg" at a glance and "4.23kg" is not.
+--
+-- Negative amounts keep their sign, because the chart's axis runs below zero
+-- whenever what it plots can.
+function util.ShortMoney(copper)
+    copper = copper or 0
+    local sign = ""
+    if copper < 0 then sign = "-"; copper = -copper end
+    if copper < COPPER_PER_SILVER then
+        return sign .. math.floor(copper) .. "c"
+    end
+    if copper < COPPER_PER_GOLD then
+        return sign .. math.floor(copper / COPPER_PER_SILVER) .. "s"
+    end
+    local gold = copper / COPPER_PER_GOLD
+    if gold < 1000 then
+        return sign .. math.floor(gold) .. "g"
+    end
+    -- string.format is C's printf, so an exact half rounds to the EVEN digit
+    -- (4250g is 4.2kg, not 4.3kg). That is fine for an axis label and it is
+    -- asserted as it behaves rather than as anyone would guess.
+    return sign .. string.format("%.1f", gold / 1000) .. "kg"
+end
+
+-- util.ShortMoney with the denomination COLOURED the way the game colours it:
+-- gold yellow, silver grey, copper bronze.
+--
+-- A SEPARATE FUNCTION rather than a flag on ShortMoney, because ShortMoney's
+-- other caller is the chart's y axis -- five labels in a narrow gutter, where
+-- a colour escape per label is bytes spent on something nobody reads as money.
+--
+-- THE THOUSANDS FORM IS GOLD. "4.2kg" is a gold figure said short, so it takes
+-- the gold colour and not the colour of whatever letter happens to be last.
+function util.ShortMoneyColored(copper)
+    local txt = util.ShortMoney(copper)
+    local last = string.sub(txt, -1)
+    local colour = "|cffffd700"                      -- gold
+    if last == "s" and string.sub(txt, -2) ~= "ks" then
+        colour = "|cffc7c7cf"                        -- silver
+    elseif last == "c" then
+        colour = "|cffeda55f"                        -- copper
+    end
+    return colour .. txt .. "|r"
+end
+
+-- Format a copper amount as a compact string like "12g 34s 56c". Leading zero
+-- denominations are dropped, but copper is always shown when the total is
+-- under one silver. Pass `colored` = true for WoW color escape codes.
+function util.FormatMoney(copper, colored)
+    local g, s, c = util.MoneyParts(copper)
+    local parts = {}
+    if colored then
+        if g > 0 then table.insert(parts, "|cffffd700" .. g .. "g|r") end
+        if s > 0 then table.insert(parts, "|cffc7c7cf" .. s .. "s|r") end
+        if c > 0 or table.getn(parts) == 0 then
+            table.insert(parts, "|cffeda55f" .. c .. "c|r")
+        end
+    else
+        if g > 0 then table.insert(parts, g .. "g") end
+        if s > 0 then table.insert(parts, s .. "s") end
+        if c > 0 or table.getn(parts) == 0 then
+            table.insert(parts, c .. "c")
+        end
+    end
+    return table.concat(parts, " ")
+end
+
+-- Money with the NUMBER in gold and the unit letter dimmed, e.g. "4g 20s"
+-- where 4 and 20 read bright and the g/s read quiet.
+--
+-- The mockup draws the unit letter SMALLER than the number. That is not
+-- reachable on 1.12: a FontString has one font, and the |c escape sets colour
+-- only -- there is no size or face markup. Dimming the suffix is the closest
+-- available approximation, and it carries the same reading order (value
+-- first, unit second) that the smaller glyph was doing in the mockup.
+--
+-- FormatMoney's per-denomination colouring (gold gold, silver grey, copper
+-- orange) stays as it is and is still what the rest of the addon uses; this
+-- is only for the Buy results table, where the mockup wants one colour for
+-- every figure so the column scans as a column.
+function util.FormatMoneyGold(copper)
+    local g, s, c = util.MoneyParts(copper)
+    local parts = {}
+    local NUM, UNIT = "|cffffd700", "|cff9d8b5a"
+    if g > 0 then table.insert(parts, NUM .. g .. "|r" .. UNIT .. "g|r") end
+    if s > 0 then table.insert(parts, NUM .. s .. "|r" .. UNIT .. "s|r") end
+    if c > 0 or table.getn(parts) == 0 then
+        table.insert(parts, NUM .. c .. "|r" .. UNIT .. "c|r")
+    end
+    return table.concat(parts, " ")
+end
+
+-- Parse a money string like "12g 34s 56c" (units case-insensitive, spaces
+-- optional) into total copper. Returns nil when nothing parseable is found.
+-- Uses string.gfind (Lua 5.0) with a captured pattern; NOT string.gmatch.
+function util.ParseMoney(str)
+    if type(str) ~= "string" then return nil end
+    local total = 0
+    local found = false
+    -- Each iteration yields a "<digits>" amount and a single unit letter.
+    for amount, unit in string.gfind(str, "(%d+)%s*([gscGSC])") do
+        local n = tonumber(amount)
+        if n then
+            unit = string.lower(unit)
+            if unit == "g" then
+                total = total + n * COPPER_PER_GOLD
+            elseif unit == "s" then
+                total = total + n * COPPER_PER_SILVER
+            else
+                total = total + n
+            end
+            found = true
+        end
+    end
+    if not found then return nil end
+    return total
+end
+
+-- ---------------------------------------------------------------------------
+-- Strings
+-- ---------------------------------------------------------------------------
+
+-- Split `str` on a single separator character `sep` (default: whitespace) into
+-- an array of non-empty tokens. Returns the array and its length. Uses
+-- string.gfind so it stays Lua 5.0 safe. `sep` is expected to be a plain
+-- (non-magic) character; the default handles spaces/tabs.
+function util.Split(str, sep)
+    local out = {}
+    if type(str) ~= "string" then return out, 0 end
+    local pattern
+    if sep == nil or sep == " " then
+        pattern = "[^%s]+"
+    else
+        pattern = "[^" .. sep .. "]+"
+    end
+    for token in string.gfind(str, pattern) do
+        table.insert(out, token)
+    end
+    return out, table.getn(out)
+end
+
+-- Trim leading/trailing whitespace. Uses string.gsub (fine in 5.0) with an
+-- anchored capture; NOT string.match.
+function util.Trim(str)
+    if type(str) ~= "string" then return str end
+    local result = string.gsub(str, "^%s*(.-)%s*$", "%1")
+    return result   -- discard gsub's 2nd return (substitution count)
+end
+
+-- Pull the numeric itemID out of an item link or item string
+-- ("|Hitem:2589:0:0:0|h..." or "item:2589:0:0:0"). Returns nil when the
+-- argument is not a link. string.find with a capture; NOT string.match.
+function util.ItemIdFromLink(link)
+    if type(link) ~= "string" then return nil end
+    local _, _, id = string.find(link, "item:(%d+)")
+    return tonumber(id)
+end
+
+-- The DISPLAY NAME out of an item link -- "Silk Cloth" from
+-- "|cff...|Hitem:2589:0:0:0|h[Silk Cloth]|h|r".
+--
+-- READ OFF THE LINK, never asked of GetItemInfo. The link the client hands a
+-- shift-click already carries the name, and GetItemInfo on 1.12 answers only
+-- for cached items and costs a server round trip for anything else -- see the
+-- note above util.ItemInfo. A parse cannot fail for an item the player is
+-- holding; a lookup can.
+--
+-- Returns nil for a bare itemstring ("item:2589:0:0:0"), which carries no
+-- name -- the caller decides what to do about that.
+function util.ItemNameFromLink(link)
+    if type(link) ~= "string" then return nil end
+    local _, _, name = string.find(link, "|h%[(.-)%]|h")
+    if name and name ~= "" then return name end
+    return nil
+end
+
+-- ---------------------------------------------------------------------------
+-- Items with charges
+-- ---------------------------------------------------------------------------
+--
+-- A Wizard Oil is ONE item with five charges, and 1.12 reports the CHARGES
+-- where a stack count would go -- as a NEGATIVE number in the bags (-5 for one
+-- oil), and possibly positive elsewhere. Read as a count, one oil is five items: a unit
+-- price a fifth of the real one, a stack-size control offering 1 to 5, and a
+-- post of "one" that tries to split an item nothing can split. That is how it
+-- was reported: "it considers one charge one item".
+--
+-- The table is the server's own list -- every item whose use spell has more
+-- than one charge, from tools/gen_charges.py -- and every item on it is
+-- non-stacking. That is what makes the rule safe: an item that can never
+-- stack has no real count above one, so a count above one IS its charges.
+
+-- BEGIN GENERATED by tools/gen_charges.py -- do not edit by hand
+util.CHARGE_ITEMS = {
+    [17] = 100,   -- Martin Fury
+    [836] = 10,   -- Deprecated Heavy Net
+    [1186] = 10,   -- Deprecated Gnoll Taskmaster Whip
+    [1262] = 5,   -- Keg of Thunderbrew Lager
+    [1402] = 5,   -- Brimstone
+    [1403] = 10,   -- Deprecated Capstone
+    [1472] = 10,   -- Deprecated Polished Lakestone Charm
+    [1533] = 3,   -- Deprecated Bloodscalp Idol
+    [1612] = 5,   -- Deprecated Skullsplitter Idol
+    [1622] = 3,   -- Deprecated Foreman's Whip
+    [1700] = 3,   -- Deprecated Blood Totem
+    [1851] = 5,   -- Cleansing Water
+    [1912] = 10,   -- Deprecated Reed Pipe
+    [1918] = 5,   -- Deprecated Lockpick
+    [1995] = 3,   -- Deprecated Cat's Paw
+    [3251] = 10,   -- Bethor's Potion
+    [3441] = 10,   -- Deprecated Crippling Agent
+    [3456] = 3,   -- Dog Whistle
+    [3507] = 5,   -- Deprecated Test Fishliver Oil
+    [4376] = 5,   -- Flame Deflector
+    [4381] = 10,   -- Minor Recombobulator
+    [4386] = 5,   -- Ice Deflector
+    [4388] = 5,   -- Discombobulator Ray
+    [4403] = 8,   -- Portable Bronze Mortar
+    [4444] = 5,   -- Black Husk Shield
+    [5251] = 5,   -- Phial of Scrying
+    [5613] = 3,   -- Staff of the Purifier
+    [5880] = 5,   -- Crate With Holes
+    [7247] = 10,   -- Chest of Containment Coffers
+    [7667] = 5,   -- Talvash's Phial of Scrying
+    [8051] = 10,   -- Flare Gun
+    [9449] = 3,   -- Manual Crowd Pummeler
+    [10444] = 2,   -- Standard Issue Flare Gun
+    [10577] = 6,   -- Goblin Mortar
+    [10831] = 5,   -- Fel Orb
+    [11582] = 5,   -- Fel Salve
+    [12300] = 5,   -- Orb of Draconic Energy
+    [12323] = 5,   -- Unforged Seal of Ascension
+    [12815] = 5,   -- Beacon Torch
+    [12906] = 4,   -- Purified Moonwell Water
+    [12928] = 10,   -- Umi's Mechanical Yeti
+    [15736] = 10,   -- Smokey's Special Compound
+    [15778] = 3,   -- Mechanical Yeti
+    [15826] = 10,   -- Curative Animal Salve
+    [15875] = 5,   -- Rotten Apple
+    [15908] = 3,   -- Taming Rod
+    [15911] = 3,   -- Taming Rod
+    [15913] = 3,   -- Taming Rod
+    [15914] = 3,   -- Taming Rod
+    [15915] = 3,   -- Taming Rod
+    [15916] = 3,   -- Taming Rod
+    [15917] = 3,   -- Taming Rod
+    [15919] = 3,   -- Taming Rod
+    [15920] = 3,   -- Taming Rod
+    [15921] = 3,   -- Taming Rod
+    [15922] = 3,   -- Taming Rod
+    [15923] = 3,   -- Taming Rod
+    [16991] = 20,   -- Triage Bandage
+    [18149] = 20,   -- Rune of Recall
+    [18150] = 20,   -- Rune of Recall
+    [18637] = 10,   -- Major Recombobulator
+    [20387] = 3,   -- Forsaken Stink Bomb Cluster
+    [20398] = 5,   -- Hallowed Wand - Ninja
+    [20399] = 5,   -- Hallowed Wand - Leper Gnome
+    [20409] = 5,   -- Hallowed Wand - Ghost
+    [20410] = 5,   -- Hallowed Wand - Bat
+    [20411] = 5,   -- Hallowed Wand - Skeleton
+    [20414] = 5,   -- Hallowed Wand - Wisp
+    [20744] = 5,   -- Minor Wizard Oil
+    [20745] = 5,   -- Minor Mana Oil
+    [20746] = 5,   -- Lesser Wizard Oil
+    [20747] = 5,   -- Lesser Mana Oil
+    [20748] = 5,   -- Brilliant Mana Oil
+    [20749] = 5,   -- Brilliant Wizard Oil
+    [20750] = 5,   -- Wizard Oil
+    [21267] = 3,   -- Toasting Goblet
+    [21325] = 3,   -- Mechanical Greench
+    [21813] = 10,   -- Bag of Candies
+    [21829] = 10,   -- Perfume Bottle
+    [21833] = 10,   -- Cologne Bottle
+    [22728] = 50,   -- Steam Tonk Controller
+    [23163] = 5,   -- Performer's Wand
+    [23379] = 3,   -- Cinder Bracers
+}
+-- END GENERATED
+
+-- How many ITEMS a count from the client stands for.
+--
+-- THE CLIENT'S OWN WORD COMES FIRST. A max stack the client has stated (see
+-- buy.LearnMaxStack) settles it either way: 1 means the count cannot be a
+-- stack, and more than 1 means it is one -- so a server that made one of these
+-- items stack is obeyed rather than overruled by a table. The table answers
+-- only for an item the client has not described yet, which on an auction house
+-- is most of them.
+--
+-- USE IT FOR ARITHMETIC AND DISPLAY. Anything MATCHING an auction or a bag slot
+-- against the client -- buy.Verify, buy.FindByFingerprint -- compares what the
+-- client said, so it keeps the raw figure alongside (`charges` on a row).
+function util.ItemUnits(itemId, count)
+    count = count or 1
+    -- A NEGATIVE COUNT IS CHARGES, AND ONLY CHARGES. It is what the bags
+    -- actually hand back for a Wizard Oil: -5 per oil, so five oils read as
+    -- "-25 total", "1 of -25", and a Post and a Max button with nothing to
+    -- work with. No table and no max stack is needed to know that a count
+    -- below zero is not a number of items -- the item in that slot is one.
+    if count < 0 then return 1 end
+    if count <= 1 or not itemId then return count end
+    local db = A.db
+    local maxStack = db and db.GetMaxStack and db.GetMaxStack(itemId)
+    if maxStack then
+        if maxStack == 1 then return 1 end
+        return count
+    end
+    if util.CHARGE_ITEMS[itemId] then return 1 end
+    return count
+end
+
+-- What a bag slot holds, in items. The same read every bag walk makes, in the
+-- one place that knows about charges. nil when the client gave no count, so
+-- each caller keeps the default it always had.
+function util.SlotUnits(bag, slot, itemId)
+    local _, count = GetContainerItemInfo(bag, slot)
+    if not count then return nil end
+    return util.ItemUnits(itemId, count)
+end
+
+-- ---------------------------------------------------------------------------
+-- Time
+-- ---------------------------------------------------------------------------
+
+-- Format a duration in seconds compactly: "42s", "38m", "2h 14m".
+function util.FormatDuration(sec)
+    sec = math.floor(sec or 0)
+    if sec < 0 then sec = 0 end
+    if sec < 60 then
+        return sec .. "s"
+    elseif sec < 3600 then
+        return math.ceil(sec / 60) .. "m"
+    end
+    local h = math.floor(sec / 3600)
+    local m = math.floor(math.mod(sec, 3600) / 60)
+    return h .. "h " .. m .. "m"
+end
+
+-- Format "how long ago": "just now", "5m ago", "2h 14m ago", "3d ago".
+-- How long ago, AS SHORT AS IT GOES: "now", "45m", "18h", "3d".
+--
+-- FOR AN AXIS, where util.FormatAgo's "18h 0m ago" is three times the width
+-- for no more information -- five of those across a narrow plot is a row of
+-- labels running into each other, and the "ago" is already implied by an axis
+-- that ends at "now".
+--
+-- One unit, never two. "18h 0m" says nothing "18h" does not.
+function util.FormatAgoShort(sec)
+    sec = math.floor(sec or 0)
+    if sec < 0 then sec = 0 end
+    if sec < 60 then return "now" end
+    if sec < 3600 then return math.floor(sec / 60) .. "m" end
+    if sec < 86400 then return math.floor(sec / 3600) .. "h" end
+    return math.floor(sec / 86400) .. "d"
+end
+
+function util.FormatAgo(sec)
+    sec = math.floor(sec or 0)
+    if sec < 60 then
+        return "just now"
+    elseif sec < 3600 then
+        return math.floor(sec / 60) .. "m ago"
+    elseif sec < 86400 then
+        local h = math.floor(sec / 3600)
+        local m = math.floor(math.mod(sec, 3600) / 60)
+        return h .. "h " .. m .. "m ago"
+    end
+    return math.floor(sec / 86400) .. "d ago"
+end
+
+-- ---------------------------------------------------------------------------
+-- Tables
+-- ---------------------------------------------------------------------------
+
+-- Shallow copy of an array or hash table.
+function util.CopyTable(t)
+    local out = {}
+    for k, v in pairs(t) do
+        out[k] = v
+    end
+    return out
+end
+
+-- Copy an ARRAY of small record tables one level deeper than CopyTable: the
+-- array is new AND each element is a new table, so the copy can be edited
+-- without writing through to the original's records.
+--
+-- Used for post-filter clause lists, which are handed between the builder's
+-- live state and parsed terms; sharing them let an edit in one show up in the
+-- other. nil in, empty out -- callers treat "no clauses" and "{}" alike.
+function util.CopyList(t)
+    local out = {}
+    if not t then return out end
+    local i = 1
+    while i <= table.getn(t) do
+        local e = t[i]
+        if type(e) == "table" then
+            out[i] = util.CopyTable(e)
+        else
+            out[i] = e
+        end
+        i = i + 1
+    end
+    return out
+end
+
+-- Look for `value` in array `t`. Returns (true, index) or (false, nil).
+function util.ArrayContains(t, value)
+    local n = table.getn(t)
+    local i = 1
+    while i <= n do
+        if t[i] == value then return true, i end
+        i = i + 1
+    end
+    return false, nil
+end
+
+-- Count entries in a hash table via pairs, since table.getn only measures the
+-- contiguous array part.
+function util.CountKeys(t)
+    local n = 0
+    for _ in pairs(t) do
+        n = n + 1
+    end
+    return n
+end
+
+-- ---------------------------------------------------------------------------
+-- GetItemInfo, normalised
+-- ---------------------------------------------------------------------------
+
+-- GetItemInfo's return LIST is not the same on every client:
+--
+--   vanilla 1.12   name link quality minLevel type subType
+--                  stackCount equipLoc texture                    (9 values)
+--   later clients  name link quality iLevel minLevel type subType
+--                  stackCount equipLoc texture                   (10 values)
+--
+-- itemLevel is inserted at position 4, so EVERY field after position 3 sits
+-- one slot further along on a later client. Indexing a fixed position is
+-- therefore wrong on one client or the other, silently: it reads the subtype
+-- where the type was meant, or the equip slot where the stack size was meant.
+-- Both of those shipped, and the second cost four rounds of "why does /stack
+-- do nothing".
+--
+-- Rather than detect the client (which we cannot do reliably, and which would
+-- be one more thing to get wrong), anchor on a field we can FIND: stackCount
+-- is the last NUMBER in the list, because everything after it is a string.
+-- Once its index is known, type / subType / minLevel are fixed offsets back
+-- from it, and equipLoc / texture fixed offsets forward. name / link / quality
+-- never move, so they are read absolutely.
+--
+-- Returns a named table, or nil when the client has no data for the item yet
+-- (which it often does not -- GetItemInfo only answers for cached items).
+-- An item's NAME by id, for the handful of places that want only that.
+--
+-- Exists so no caller has to remember that GetItemInfo will not take a bare
+-- number (see util.ItemInfo). Three call sites passed one and silently got no
+-- name; two of them then printed "item:10940" at a player.
+function util.ItemName(itemId)
+    local info = util.ItemInfo(itemId)
+    return info and info.name or nil
+end
+
+-- Stand-ins for a missing equip slot.
+--
+-- REPORTED FROM A REAL CLIENT: Turtle 1.12 with ClassicAPI returns ten values
+-- with NOTHING where equipLoc belongs. Not a shifted field -- absent. So there
+-- is no INVTYPE_ string anywhere in the tuple to find, and every consumer that
+-- asks "armour or weapon?" got nil and concluded "neither", which reads as
+-- "this cannot be disenchanted".
+--
+-- `type` is still there and still says "Weapon" or "Armor", and armour-or-
+-- weapon is the ONLY thing the disenchant rule asks a slot for. So when the
+-- slot is missing and the type answers, we stand in a sentinel.
+--
+-- DELIBERATELY NOT A REAL INVTYPE. Substituting INVTYPE_CHEST for "some
+-- armour" would classify correctly today and be a lie in the code, and the
+-- next person to read a slot for anything else would inherit it. These names
+-- announce themselves: core/disenchant.lua maps them, nothing else should.
+local TYPE_SLOT = {
+    Weapon = "AEGIS_ANY_WEAPON",
+    Armor  = "AEGIS_ANY_ARMOR",
+}
+
+-- Fill in an equip slot the client did not give us.
+--
+-- Two fallbacks, best first. C_Item (ClassicAPI) carries the REAL slot, so a
+-- client that has it gets the real answer and everything downstream that ever
+-- wants a specific slot still works. The type stand-in is the last resort and
+-- answers only armour-or-weapon.
+local function Finish(out, itemId)
+    if not out or out.equipLoc then return out end
+    if itemId and C_Item and C_Item.GetItemInfo then
+        -- Position 9 of the wide tuple. A cache record read, not a query.
+        local ok, slot = pcall(function()
+            local a, b, c, d, e, f, g, h, i = C_Item.GetItemInfo(itemId)
+            return i
+        end)
+        if ok and type(slot) == "string" and slot ~= "" then
+            out.equipLoc = slot
+            return out
+        end
+    end
+    if out.type then
+        out.equipLoc = TYPE_SLOT[out.type]
+    end
+    return out
+end
+
+-- Index of the TEXTURE, which is the one field every shape ends its run with.
+--
+-- WHY NOT THE LAST NUMBER, which is what this used to anchor on. A real client
+-- (Turtle 1.12 with ClassicAPI, reported via /aex diag) returns vanilla's nine
+-- values plus a TRAILING NUMBER at position ten. The last-number anchor landed
+-- on that trailing value and every field shifted by three: minLevel read the
+-- stack size, type read the equip slot, subType read the texture path, and
+-- equipLoc read off the end. Nothing errored, and bag categories quietly became
+-- "INVTYPE_2HWEAPON".
+--
+-- The texture is a path -- it starts with "Interface\" on every 1.12 client --
+-- and minLevel..texture is a contiguous run in ALL the shapes this addon has
+-- met. So finding the texture locates the whole run, and a field appended after
+-- it cannot move anything. Checked against all five the mock offers:
+--
+--   vanilla 9      texture at 9   -> minLevel 4, type 5, sub 6, stack 7, loc 8
+--   vanilla+extra  texture at 9   -> the same, and [10] is ignored
+--   later 10       texture at 10  -> minLevel 5, type 6, sub 7, stack 8, loc 9
+--   holey 10       texture at 10  -> the same, but loc is nil at 9. The run is
+--                                    located correctly and the field is simply
+--                                    absent, which is Finish's job, not this
+--                                    one -- no anchor can find what is missing
+--   wide 18        texture at 10  -> read by fixed position instead
+local function TextureIndex(r, n)
+    local i = n
+    while i >= 6 do
+        if type(r[i]) == "string" and string.find(r[i], "^Interface\\") then
+            return i
+        end
+        i = i - 1
+    end
+    return nil
+end
+
+function util.ItemInfo(link)
+    if not link then return nil end
+
+    -- A BARE NUMBER IS NOT A LOOKUP KEY. 1.12's GetItemInfo takes an item
+    -- NAME, an item LINK, or an item STRING -- never an id as a number.
+    --
+    -- This cost the disenchant tooltip line its entire existence. de.Resolve
+    -- passed the numeric id, carrying a comment claiming "both are valid on
+    -- 1.12", so util.ItemInfo returned nil for every item reached by id and the
+    -- line simply never appeared on a real client -- while the price lines
+    -- beside it, which are DB reads keyed by id, worked perfectly. Nothing
+    -- errored, so it read as "the disenchant feature is not finished yet".
+    --
+    -- Every GetItemInfo call in aux builds an itemstring. That is why.
+    local itemId
+    if type(link) == "number" then
+        itemId = link
+        link = "item:" .. link .. ":0:0:0"
+    else
+        itemId = util.ItemIdFromLink(link)
+    end
+
+    local r = { GetItemInfo(link) }
+    local n = table.getn(r)
+    if n < 1 or not r[1] then return nil end
+
+    -- A THIRD shape. A client mod can replace this global with modern WoW's
+    -- WIDE tuple (17-18 values), and the last-number anchor below is exactly
+    -- wrong for it: sellPrice, classID, subclassID, bindType, expansionID and
+    -- setID are all numbers sitting AFTER stackCount, so the anchor would
+    -- land on setID and read classID where minLevel belongs -- silently, with
+    -- plausible-looking small integers.
+    --
+    -- A wide tuple has fixed, known positions, so it is read directly instead
+    -- of anchored. Detected by COUNT because that is the only thing that
+    -- distinguishes it: vanilla returns 9, later clients 10, modern 17-18.
+    if n >= 12 then
+        return Finish({
+            name       = r[1],
+            link       = r[2],
+            quality    = r[3],
+            itemLevel  = r[4],
+            minLevel   = r[5],
+            type       = r[6],
+            subType    = r[7],
+            stackCount = r[8],
+            equipLoc   = r[9],
+            texture    = r[10],
+            sellPrice  = r[11],
+        }, itemId)
+    end
+
+    -- Index of the last number = stackCount.
+    local s = n
+    while s >= 1 and type(r[s]) ~= "number" do
+        s = s - 1
+    end
+    -- Nothing numeric at all means this is not a shape we understand; return
+    -- what is safe to read rather than guessing at the rest.
+    if s < 4 then
+        return Finish({ name = r[1], link = r[2], quality = r[3] }, itemId)
+    end
+
+    -- Prefer the texture anchor; fall back to the stack-count one for a client
+    -- that returns a texture we cannot recognise.
+    local t = TextureIndex(r, n)
+    if t then
+        return Finish({
+            name       = r[1],
+            link       = r[2],
+            quality    = r[3],
+            minLevel   = r[t - 5],
+            type       = r[t - 4],
+            subType    = r[t - 3],
+            stackCount = r[t - 2],
+            equipLoc   = r[t - 1],
+            texture    = r[t],
+        }, itemId)
+    end
+
+    return Finish({
+        name       = r[1],
+        link       = r[2],
+        quality    = r[3],
+        minLevel   = r[s - 3],
+        type       = r[s - 2],
+        subType    = r[s - 1],
+        stackCount = r[s],
+        equipLoc   = r[s + 1],
+        texture    = r[s + 2],
+    }, itemId)
+end
+
+-- ---------------------------------------------------------------------------
+-- Data the CLIENT has but 1.12 never shows
+-- ---------------------------------------------------------------------------
+--
+-- 1.12 fills in an item's vendor sell price and its item level on every item
+-- and surfaces NEITHER: the sell-price field is populated and the engine's
+-- tooltip code simply never reads it. A client mod (ClassicAPI) exposes both.
+--
+-- Asked as a CAPABILITY, never as an addon name, a version, or an
+-- IsAddOnLoaded -- the same rule the scanner applies to AuctionQueryThrottle,
+-- where the query gate itself is the detector rather than anything naming the
+-- DLL. And asked per FUNCTION, so a build that provides one and not the other
+-- costs us one feature instead of both.
+--
+-- Both return nil when the client cannot answer, which is also what happens
+-- with no mod installed at all. Everything above them already has a path for
+-- "we do not know", so nothing degrades in its absence.
+
+-- NEITHER OF THESE MAY CALL GetItemInfo. Read this before editing them.
+--
+-- Both are consulted from paths that run in LOOPS and on every tooltip:
+-- db.GetVendor is called per bag item by sell.VendorList and
+-- sell.MarkedInBags, per auction row by the vendor-profit filter, and once
+-- per tooltip by ui/tooltip.lua. On 1.12, GetItemInfo for an item the client
+-- has NOT cached fires a query at the server -- so a version of these that
+-- reaches for GetItemInfo turns an O(1) table read into a burst of server
+-- queries whenever a list of uncached items is painted. That is HARD RULE 16,
+-- and it shipped in v1.40.0: the tabs whose items are least likely to be
+-- cached -- Auctions, History, Crafting -- crashed the client outright.
+--
+-- So: C_Item only, which is a direct read of the cache record and cheap. The
+-- optional `info` is for a caller that has ALREADY paid for a util.ItemInfo
+-- and can hand the result over -- never something to fetch here.
+local function FromInfo(info, key)
+    if info and type(info[key]) == "number" and info[key] > 0 then
+        return info[key]
+    end
+    return nil
+end
+
+-- Vendor sell price in copper, per unit, or nil.
+function util.ClientSellPrice(itemId, info)
+    if not itemId then return nil end
+    if C_Item and C_Item.GetItemSellPriceByID then
+        local p = C_Item.GetItemSellPriceByID(itemId)
+        if type(p) == "number" and p > 0 then return p end
+    end
+    return FromInfo(info, "sellPrice")
+end
+
+-- The item's own level, or nil. THE input the disenchant rule needs and the
+-- one vanilla's GetItemInfo has never returned.
+function util.ClientItemLevel(itemId, info)
+    if not itemId then return nil end
+    if C_Item and C_Item.GetDetailedItemLevelInfo then
+        local lvl = C_Item.GetDetailedItemLevelInfo(itemId)
+        if type(lvl) == "number" and lvl > 0 then return lvl end
+    end
+    if C_Item and C_Item.GetItemInfo then
+        local _, _, _, lvl = C_Item.GetItemInfo(itemId)
+        if type(lvl) == "number" and lvl > 0 then return lvl end
+    end
+    return FromInfo(info, "itemLevel")
+end

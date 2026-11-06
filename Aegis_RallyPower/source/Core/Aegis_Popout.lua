@@ -1,0 +1,767 @@
+--=============================================================================
+-- Aegis_Popout.lua
+--
+-- The hover player pop-out for the PallyPower buff bar, rebuilt as an exact
+-- replica of **PallyPower 3.3.5's `PallyPowerPopupTemplate`** (from the official
+-- PallyPower Classic source, PallyPower_Wrath.xml) — the modern per-player
+-- flyout the project is standardising on:
+--
+--   * 100x34 buttons, stacked flush, floating bare (no container panel)
+--   * Skinned backdrop: the "Smooth" statusbar texture + Blizzard Tooltip
+--     border (edge 8), coloured by buff state with the official defaults:
+--       cBuffGood        0, 0.7, 0, 0.5   (green  - has the buff)
+--       cBuffNeedAll     1, 0,   0, 0.5   (red    - missing it)
+--       cBuffNeedSpecial 0, 0,   1, 0.5   (blue   - special / unknown state)
+--   * Buff icon 16x16 top-left: alpha 1.0 when buffed, 0.4 when not
+--   * White timer right of the icon (your personal cast countdown)
+--   * Player name bottom-right
+--   * "R" range letter top-right: green = in range, red = not visible
+--     (official also uses yellow = visible-but-far; needs range data we
+--     don't track yet)
+--   * "D" dead marker left of the R, red when dead
+--   * Main-tank icon left of the D for PallyPower-marked tanks
+--   * Each row shows that player's INDIVIDUAL timer (your cast countdown), and
+--     is CLICKABLE for a refresh, official-style:
+--       Left-click  = Greater blessing on that player's class (out of combat)
+--       Right-click = Normal single-target blessing — honours their individual
+--                     assignment, and works in combat (the one action the spec
+--                     permits while fighting)
+--
+-- Data mapping from the 1.12 engine's per-button lists (have/need/range/dead):
+-- have -> green, need -> red, dead -> red + D, "not here" -> blue + red R
+-- (the engine can't read a hidden player's buffs, so blue doubles as the
+-- official "special" colour for unknown state).
+--
+-- Reads PallyPower's own per-button data and casts through its own spellbook
+-- tables (AllPallys / GetNormalBlessings / duration constants); does not modify
+-- the engine — it replaces only the buff-button hover handler (which showed a
+-- text tooltip of the same data).
+--=============================================================================
+
+--------------------------------------------------------------------------
+-- STALE PP_PerUser REPAIR (fixes "bad argument #1 to `rad'")
+--
+-- The engine's ADDON_LOADED handler runs, in this order:
+--     PallyPower_AdjustIcons()
+--     PallyPower_MinimapButton_Init()   <- reads PP_PerUser.minimapbuttonpos
+--     PallyPower_InitConfig()           <- the thing that FILLS IN that key
+--
+-- MinimapButton_Init positions the button with cos/sin of that value, and on
+-- this client cos/sin are compat shims that call rad(), so a nil produces
+-- "bad argument #1 to `rad' (number expected, got nil)" before the config has
+-- been initialised at all.
+--
+-- It bites on UPGRADE, not on a fresh install. PallyPower.lua assigns
+-- PP_PerUser a full table of defaults at file scope, but a character's
+-- SavedVariables then REPLACE that table wholesale - so a saved table written
+-- by a version that predates a key comes back missing it, and InitConfig is
+-- one call too late to help.
+--
+-- The obvious patch is `or 0` at the cos/sin call. We can't: PallyPower/ is
+-- vendored and stays byte-identical (extend it by save-and-replace from our
+-- side, never by editing). It would also be the wrong value - the engine's own
+-- default is 30, so `or 0` moves the button - and it would fix one key while
+-- leaving every other absent key to surface as the next bug.
+--
+-- So: snapshot the engine's defaults while they are still readable, and make
+-- PP_PerUser whole before the engine's own first read of it. File scope is the
+-- one moment those defaults exist - our files load after the engine's and
+-- before SavedVariables replace the table - which is also why the snapshot
+-- can't be deferred, even though rule 10 says never to READ a stored setting
+-- at file scope. Nothing here reads a player's saved value; it copies the
+-- engine's hardcoded defaults before any saved value has arrived.
+--------------------------------------------------------------------------
+
+local PP_DEFAULTS = {}
+if type(PP_PerUser) == "table" then
+    for k, v in pairs(PP_PerUser) do PP_DEFAULTS[k] = v end
+end
+
+local orig_PallyPower_MinimapButton_Init = PallyPower_MinimapButton_Init
+if orig_PallyPower_MinimapButton_Init then
+    PallyPower_MinimapButton_Init = function()
+        PP_PerUser = PP_PerUser or {}
+        for k, v in pairs(PP_DEFAULTS) do
+            if PP_PerUser[k] == nil then PP_PerUser[k] = v end
+        end
+        return orig_PallyPower_MinimapButton_Init()
+    end
+end
+
+local ROW_W = 100            -- official popup button size
+local ROW_H = 34
+
+-- ApplySkin() equivalent: default skin "Smooth" + "Blizzard Tooltip" border.
+local SKIN_BACKDROP = {
+    bgFile   = "Interface\\AddOns\\Aegis_RallyPower\\Skins\\Smooth",
+    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+    tile = false, tileSize = 8, edgeSize = 8,
+    insets = { left = 0, right = 0, top = 0, bottom = 0 },
+}
+
+-- Official default colour presets (PallyPowerValues.lua).
+local C_GOOD    = { r = 0, g = 0.7, b = 0, t = 0.5 }
+local C_NEEDALL = { r = 1, g = 0,   b = 0, t = 0.5 }
+local C_SPECIAL = { r = 0, g = 0,   b = 1, t = 0.5 }
+
+local popout                 -- invisible container (created lazily)
+local rows = {}              -- pooled player buttons
+local curBtn                 -- the buff-bar button the pop-out is anchored to
+local notOver = 0
+local accum   = 0
+local RefreshPopout          -- forward declaration (defined below)
+
+-- Scale-aware cursor hit-test (works on the 1.12 client).
+local function IsMouseOver(frame)
+    if not frame or not frame:IsVisible() then return false end
+    local l = frame:GetLeft()
+    if not l then return false end
+    local b, w, h = frame:GetBottom(), frame:GetWidth(), frame:GetHeight()
+    local s = frame:GetEffectiveScale()
+    local x, y = GetCursorPosition()
+    x = x / s; y = y / s
+    return x >= l and x <= l + w and y >= b and y <= b + h
+end
+
+local function HidePopout()
+    if popout then popout:Hide() end
+    curBtn = nil
+end
+
+-- Combat tracking (PLAYER_REGEN events; UnitAffectingCombat is unreliable here).
+local inCombat = false
+local combatWatch = CreateFrame("Frame", "AegisRP_PopCombatWatch")
+combatWatch:RegisterEvent("PLAYER_REGEN_DISABLED")
+combatWatch:RegisterEvent("PLAYER_REGEN_ENABLED")
+combatWatch:SetScript("OnEvent", function()
+    inCombat = (event == "PLAYER_REGEN_DISABLED")
+end)
+
+local lastClick = 0          -- double-click reagent guard
+
+-- SuperWoW: cast straight at a unit with no target juggling.
+local HAS_SUPERWOW = (SUPERWOW_VERSION ~= nil)
+
+-- Resolve a player (or pet) name to a castable unit id.
+local function FindUnitByName(name)
+    if not name then return nil end
+    if UnitName("player") == name then return "player" end
+    if UnitExists("pet") and UnitName("pet") == name then return "pet" end
+    for i = 1, 4 do
+        if UnitExists("party" .. i) and UnitName("party" .. i) == name then return "party" .. i end
+        if UnitExists("partypet" .. i) and UnitName("partypet" .. i) == name then return "partypet" .. i end
+    end
+    for i = 1, 40 do
+        if UnitExists("raid" .. i) and UnitName("raid" .. i) == name then return "raid" .. i end
+        if UnitExists("raidpet" .. i) and UnitName("raidpet" .. i) == name then return "raidpet" .. i end
+    end
+    return nil
+end
+
+-- Cast a blessing on a specific unit, safely. Under SuperWoW we cast by name
+-- directly at the unit (no target juggling); the spell name is resolved from the
+-- spellbook index. Fallback (bare 1.12): the engine's proven pattern - disable
+-- auto-self-cast, clear the target, enter targeting, target the unit, restore.
+local function CastBlessingOn(unit, spellIdx)
+    if HAS_SUPERWOW then
+        local nm = GetSpellName(spellIdx, BOOKTYPE_SPELL)
+        if nm then
+            local rank = GetSpellRank and GetSpellRank(spellIdx, BOOKTYPE_SPELL)
+            if rank and rank ~= "" then nm = nm .. "(" .. rank .. ")" end
+            CastSpellByName(nm, unit)
+            return true
+        end
+        -- if the name lookup somehow fails, fall through to the classic path
+    end
+
+    local restoreCVar = (GetCVar("autoSelfCast") == "1")
+    if restoreCVar then SetCVar("autoSelfCast", "0") end
+    local hadTarget = UnitExists("target")
+    if hadTarget then ClearTarget() end
+
+    CastSpell(spellIdx, BOOKTYPE_SPELL)
+    local ok = false
+    if SpellIsTargeting() then
+        if SpellCanTargetUnit(unit) then
+            SpellTargetUnit(unit)
+            ok = true
+        else
+            SpellStopTargeting()
+        end
+    end
+
+    if hadTarget then TargetLastTarget() end
+    if restoreCVar then SetCVar("autoSelfCast", "1") end
+    return ok
+end
+
+-- Click a popup row: left = Greater on that player (out of combat only),
+-- right = Normal single-target (honours individual assignments; combat-legal).
+-- Wheel a row to give THAT player a different blessing from the rest of their
+-- class row - the paladin equivalent of the class-buff pop-out's per-player
+-- override, which paladins never had because they run the legacy engine and
+-- have no class-buff strip at all.
+--
+-- Driven through the ENGINE's own mechanism, not our `pbuff` model. Blessings
+-- are the one domain that still rides PLPWR byte-compatibly (locked decision
+-- 2), and PallyPower already stores individual assignments, cycles them, and
+-- broadcasts NASSIGN - PallyPower_PerformPlayerCycle is what its classic grid's
+-- own wheel calls. A second source for the same question would desync the two.
+--
+-- The one adjustment: PerformPlayerCycle takes its caster from
+-- PP_SelectedPally, which is whoever the CLASSIC GRID has selected. This
+-- pop-out is always about my own bar - the cast path reads
+-- GetNormalBlessings(UnitName("player"), ...) - so the selection is pinned to
+-- me for the call and restored, or wheeling here would quietly edit a
+-- different paladin's assignments.
+local function PopRowOnWheel()
+    local pname = this.pname
+    if not (pname and curBtn and curBtn.classID and PallyPower_PerformPlayerCycle) then
+        return
+    end
+    local me = UnitName("player")
+    local saved = PP_SelectedPally
+    PP_SelectedPally = me
+    PallyPower_PerformPlayerCycle(arg1, pname, curBtn.classID)
+    PP_SelectedPally = saved
+
+    -- Say what just happened, and name the consequence.
+    --
+    -- The engine's Greater Blessing path deliberately SKIPS anyone carrying an
+    -- individual assignment (PallyPower.lua, the Hotkey2 branch) - a greater
+    -- blessing is cast per class, so someone singled out should not be swept
+    -- up in it. That is correct, but its only symptom is the class button
+    -- reporting "Couldn't find a target", which says nothing about why. Solo,
+    -- or with one member of that class, singling out the only candidate makes
+    -- the class button look broken.
+    --
+    -- The wheel is what makes that state easy to reach, so the wheel is what
+    -- explains it.
+    if PallyPower_ShowFeedback and GetNormalBlessings then
+        local now = GetNormalBlessings(me, curBtn.classID, pname)
+        if now and now ~= -1 then
+            local bname = PallyPower_BlessingID and PallyPower_BlessingID[now] or "?"
+            PallyPower_ShowFeedback(pname .. ": " .. bname
+                .. " (individual - Greater Blessing skips them now)", 0, 1, 0)
+        else
+            PallyPower_ShowFeedback(pname .. ": back to the class blessing",
+                0.8, 0.8, 0.8)
+        end
+    end
+    if RefreshPopout then RefreshPopout() end
+end
+
+local function PopRowOnClick()
+    local pname = this.pname
+    if not pname or not curBtn or not curBtn.buffID or not curBtn.classID then return end
+    if GetTime() - lastClick < 0.7 then return end
+
+    local me = UnitName("player")
+    if not (AllPallys and AllPallys[me] and AllPallys[me][curBtn.buffID]) then return end
+
+    local unit = FindUnitByName(pname)
+    if not unit or not UnitIsVisible(unit) then
+        PallyPower_ShowFeedback(pname .. " is not in range.", 0.5, 0.5, 1)
+        return
+    end
+    if UnitIsDeadOrGhost(unit) then
+        PallyPower_ShowFeedback(pname .. " is dead.", 1, 0, 0)
+        return
+    end
+
+    local spellIdx, timerKind
+    if arg1 == "RightButton" then
+        -- Normal blessing; individual assignment overrides the class one.
+        local useID = curBtn.buffID
+        local ind = GetNormalBlessings(me, curBtn.classID, pname)
+        if ind and ind ~= -1 and AllPallys[me][ind] then useID = ind end
+        spellIdx = AllPallys[me][useID] and AllPallys[me][useID]["idsmall"]
+        timerKind = "normal"
+    else
+        if inCombat then
+            PallyPower_ShowFeedback("Greater blessings are disabled in combat - right-click for a single blessing.", 1, 1, 0)
+            return
+        end
+        local entry = AllPallys[me][curBtn.buffID]
+        spellIdx = entry and entry["id"]
+        -- If no distinct Greater rank is known, this is really a normal cast.
+        if entry and entry["id"] == entry["idsmall"] then timerKind = "normal" else timerKind = "greater" end
+    end
+    if not spellIdx then return end
+
+    local cdStart = GetSpellCooldown(spellIdx, BOOKTYPE_SPELL)
+    if cdStart and cdStart >= 1 then return end
+
+    if CastBlessingOn(unit, spellIdx) then
+        lastClick = GetTime()
+        if timerKind == "greater" then
+            LastCast[curBtn.buffID .. curBtn.classID] = PALLYPOWER_GREATERBLESSINGDURATION
+        else
+            LastCastPlayer[pname] = PALLYPOWER_NORMALBLESSINGDURATION
+        end
+        RefreshPopout()
+    end
+end
+
+-- Ordered display list from PallyPower's own per-button name lists.
+-- state: "have" | "need" | "dead" | "nothere"
+local function Collect(btn)
+    local list = {}
+    local function add(names, state)
+        if not names then return end
+        for i = 1, table.getn(names) do
+            local nm = names[i]
+            local t = ""
+            if state == "have" and LastCastPlayer and LastCastPlayer[nm] then
+                t = PallyPower_FormatTime(LastCastPlayer[nm])
+            end
+            table.insert(list, { name = nm, state = state, timer = t })
+        end
+    end
+    add(btn.need,  "need")
+    add(btn.dead,  "dead")
+    add(btn.range, "nothere")
+    add(btn.have,  "have")
+    return list
+end
+
+-- Build one popup button, laid out exactly like PallyPowerPopupTemplate.
+local function GetRow(i)
+    if rows[i] then return rows[i] end
+    local r = CreateFrame("Button", "AegisRP_Pop" .. i, popout)
+    r:SetWidth(ROW_W); r:SetHeight(ROW_H)
+    r:SetFrameStrata("DIALOG")
+    r:SetBackdrop(SKIN_BACKDROP)
+    r:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+    r:SetScript("OnClick", PopRowOnClick)
+    r:EnableMouseWheel(true)
+    r:SetScript("OnMouseWheel", PopRowOnWheel)
+
+    local icon = r:CreateTexture(nil, "OVERLAY")           -- $parentBuffIcon
+    icon:SetWidth(16); icon:SetHeight(16)
+    icon:SetPoint("TOPLEFT", r, "TOPLEFT", 4, -4)
+    r.buffIcon = icon
+
+    local time = r:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    time:SetWidth(40); time:SetHeight(16)                   -- $parentTime
+    time:SetPoint("TOPLEFT", icon, "TOPRIGHT", 1, 0)
+    time:SetJustifyH("LEFT")
+    r.time = time
+
+    local name = r:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    name:SetWidth(92); name:SetHeight(16)                   -- $parentName
+    name:SetPoint("BOTTOMRIGHT", r, "BOTTOMRIGHT", -5, 3)
+    name:SetJustifyH("RIGHT")
+    r.name = name
+
+    local rng = r:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    rng:SetWidth(10); rng:SetHeight(10)                     -- $parentRng
+    rng:SetPoint("TOPRIGHT", r, "TOPRIGHT", -6, -6)
+    rng:SetJustifyH("RIGHT")
+    rng:SetText("R")
+    r.rng = rng
+
+    local dead = r:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    dead:SetWidth(10); dead:SetHeight(10)                   -- $parentDead
+    dead:SetPoint("RIGHT", rng, "LEFT", -3, 0)
+    dead:SetJustifyH("RIGHT")
+    dead:SetText("D")
+    r.dead = dead
+
+    local tank = r:CreateTexture(nil, "OVERLAY")            -- $parentTankIcon
+    tank:SetWidth(11); tank:SetHeight(11)
+    tank:SetTexture("Interface\\GroupFrame\\UI-Group-MainTankIcon")
+    tank:SetPoint("RIGHT", dead, "LEFT", -3, 0)
+    r.tank = tank
+
+    rows[i] = r
+    return r
+end
+
+local function ApplyBackdropColor(r, preset)
+    r:SetBackdropColor(preset.r, preset.g, preset.b, preset.t)
+end
+
+-- The blessing this row's player actually gets: PallyPower's individual
+-- assignment when there is one and we know that blessing, otherwise the class
+-- one on the hovered button.
+--
+-- This MUST resolve the same way the cast path does (see the right-click
+-- branch in the click handler). It used to be read once outside the row loop
+-- from curBtn.buffID and stamped on every row, so a paladin who had assigned
+-- Wisdom to one player saw Might on every row while a click correctly cast
+-- Wisdom - the pop-out told you the opposite of what it would do.
+local function RowBlessingIcon(pname, classIcon)
+    if not (GetNormalBlessings and BlessingIcon and curBtn) then return classIcon end
+    local me = UnitName("player")
+    local ind = GetNormalBlessings(me, curBtn.classID, pname)
+    if ind and ind ~= -1 and AllPallys and AllPallys[me] and AllPallys[me][ind]
+       and BlessingIcon[ind] then
+        return BlessingIcon[ind]
+    end
+    return classIcon
+end
+
+RefreshPopout = function()
+    if not popout or not curBtn then return end
+    local classIcon = curBtn.buffID and BlessingIcon and BlessingIcon[curBtn.buffID]
+    local list = Collect(curBtn)
+    local n = table.getn(list)
+    local y = 0
+    for i = 1, n do
+        local d = list[i]
+        local r = GetRow(i)
+        r.pname = d.name
+        r:ClearAllPoints()
+        r:SetPoint("TOPLEFT", popout, "TOPLEFT", 0, y)
+
+        local icon = RowBlessingIcon(d.name, classIcon)
+        if icon then r.buffIcon:SetTexture(icon) end
+        r.name:SetText(d.name)
+        r.time:SetText(d.timer)
+
+        if d.state == "have" then
+            ApplyBackdropColor(r, C_GOOD)
+            r.buffIcon:SetAlpha(1)
+            r.rng:SetTextColor(0, 1, 0); r.rng:SetAlpha(1)
+            r.dead:SetAlpha(0)
+        elseif d.state == "need" then
+            ApplyBackdropColor(r, C_NEEDALL)
+            r.buffIcon:SetAlpha(0.4)
+            r.rng:SetTextColor(0, 1, 0); r.rng:SetAlpha(1)
+            r.dead:SetAlpha(0)
+        elseif d.state == "dead" then
+            ApplyBackdropColor(r, C_NEEDALL)
+            r.buffIcon:SetAlpha(0.4)
+            r.rng:SetTextColor(0, 1, 0); r.rng:SetAlpha(1)
+            r.dead:SetTextColor(1, 0, 0); r.dead:SetAlpha(1)
+        else -- "nothere": buff state unknowable on 1.12
+            ApplyBackdropColor(r, C_SPECIAL)
+            r.buffIcon:SetAlpha(0.4)
+            r.rng:SetTextColor(1, 0, 0); r.rng:SetAlpha(1)
+            r.dead:SetAlpha(0)
+        end
+
+        if PallyPower_Tanks and PallyPower_Tanks[d.name] == true then
+            r.tank:SetAlpha(1)
+        else
+            r.tank:SetAlpha(0)
+        end
+
+        r:Show()
+        y = y - ROW_H
+    end
+    for i = n + 1, table.getn(rows) do rows[i]:Hide() end
+    popout:SetHeight(n * ROW_H)
+end
+
+local function PopoutOnUpdate()
+    if not popout:IsShown() then return end
+    if IsMouseOver(curBtn) or IsMouseOver(popout) then
+        notOver = 0
+    else
+        notOver = notOver + (arg1 or 0)
+        if notOver > 0.2 then HidePopout(); return end
+    end
+    accum = accum + (arg1 or 0)
+    if accum >= 0.25 then accum = 0; RefreshPopout() end
+end
+
+local function CreatePopout()
+    -- Invisible container: the official popup buttons float bare, so the
+    -- container exists only for layout and the keep-open hit-test.
+    local p = CreateFrame("Frame", "AegisRP_BlessingPopout", UIParent)
+    p:SetWidth(ROW_W); p:SetHeight(ROW_H)
+    p:SetFrameStrata("DIALOG")
+    p:EnableMouse(false)
+    p:Hide()
+    p:SetScript("OnUpdate", PopoutOnUpdate)
+    popout = p
+end
+
+function AegisRP_BlessingPopout_Show(btn)
+    if not btn or not btn.classID then return end
+    if table.getn(Collect(btn)) == 0 then HidePopout(); return end
+    if not popout then CreatePopout() end
+    curBtn = btn
+    notOver = 0
+    popout:ClearAllPoints()
+    popout:SetPoint("TOPRIGHT", btn, "TOPLEFT", -4, 0)   -- expand to the LEFT
+    RefreshPopout()
+    popout:Show()
+end
+
+-- Replace PallyPower's buff-button hover handler: the pop-out is the visual
+-- version of the text tooltip it used to show. (Only the buff-bar XML calls
+-- this handler, so nothing else is affected.)
+function PallyPowerBuffButton_OnEnter(btn)
+    AegisRP_BlessingPopout_Show(btn)
+end
+
+--=============================================================================
+-- Keep the engine's PET column off warlock demons.
+--
+-- PallyPower treats pets as its own class (classID 9) and puts EVERY pet in
+-- it - `addUnit(up, 9)` for every raidpetN/partypetN, with no owner check
+-- (PallyPower.lua:2995). So a paladin's pet column counts a felhunter exactly
+-- like a hunter's cat.
+--
+-- And the cast can never land: a warlock's demon does not take these buffs at
+-- all (confirmed on realm). That is the whole reason this matters, and it is
+-- stronger than the one first written here - the column does not merely waste
+-- a blessing on something that will be resummoned, it asks forever for a cast
+-- that cannot succeed, so the bar never stops showing the need.
+--
+-- The same rule already scoped OUR Core's pet buffing to hunters, but
+-- `IsHunterPet` lives in Aegis_Core.lua, which paladins never run, so it never
+-- reached this class until 1.13.3.
+--
+-- WHERE this had to hook, because the obvious places are all unreachable:
+-- `RebuildRoster` and `ScanOneUnit` look like globals but are forward-declared
+-- file-locals (PallyPower.lua:104-105), so replacing either from here sets a
+-- global nothing calls - a silent no-op, which is worse than an error. What IS
+-- reachable is `CurrentBuffs` (PallyPower.lua:91, a real global) and the two
+-- global functions that read it. So instead of stopping the scan, we take the
+-- demons back out of the pet bucket at the two moments it matters:
+--
+--   * before every repaint, so the bar's "needs" count never includes one;
+--   * before every buff-button click, so a cast can never reach one even if a
+--     scan slipped in since the last repaint.
+--
+-- Save-and-replace, per wrap-don't-rewrite: PallyPower/ stays byte-identical,
+-- and nothing about the PLPWR wire changes - classID 9 assignments are still
+-- stored and broadcast exactly as stock does. We only decline to CAST.
+--
+-- Bounded by the number of pets in the group, and neither caller is a stormable
+-- event handler, so this is nowhere near hard rule 7's territory.
+--=============================================================================
+-- No option gates this, deliberately. 1.13.3 shipped a "Bless warlock pets"
+-- checkbox and it was pointless: a demon cannot take these buffs at all, so
+-- the switch offered something the game will not do either way. A stored
+-- `blessWarlockPets` from that release is inert and harmless.
+local function PruneWarlockPets()
+    if not AegisRP.PetSkippedForBuffs then return end
+    local bucket = CurrentBuffs and CurrentBuffs[9]
+    if not bucket then return end
+    -- assigning nil to the key pairs() is currently on is explicitly legal
+    for unit in pairs(bucket) do
+        if AegisRP.PetSkippedForBuffs(unit) then bucket[unit] = nil end
+    end
+end
+
+local orig_BuffButton_OnClick = PallyPowerBuffButton_OnClick
+if orig_BuffButton_OnClick then
+    function PallyPowerBuffButton_OnClick(btn, mousebtn)
+        PruneWarlockPets()
+        return orig_BuffButton_OnClick(btn, mousebtn)
+    end
+end
+
+--=============================================================================
+-- TEST MODE: force ALL blessing class buttons visible on the legacy bar.
+--
+-- The engine only shows a class button for a class that has an assignment AND
+-- present members, so solo/out of a raid the bar is empty. In test mode we
+-- wrap PallyPower_UpdateUI (global, late-bound - the engine is not touched)
+-- and repaint the ten class buttons it left hidden, showing each class's REAL
+-- assignment from PallyPower_Assignments (green when assigned, red when not).
+-- Each button gets its numeric classID back (the engine's cleanup leaves an
+-- empty table there, which broke the template's mouse-wheel cycling), so
+-- wheeling cycles the real assignment; buffID stays empty so clicks never
+-- cast (test mode simulates only).
+--=============================================================================
+local BLESS_DEMO = 1     -- Might icon as the placeholder art for empty cells
+
+local orig_PallyPower_UpdateUI = PallyPower_UpdateUI
+function PallyPower_UpdateUI()
+    -- before the engine draws, so a demon is never counted in the pet
+    -- button's "needs" number (see PruneWarlockPets)
+    PruneWarlockPets()
+    if orig_PallyPower_UpdateUI then orig_PallyPower_UpdateUI() end
+    if not (AegisRP and AegisRP.IsTestMode and AegisRP.IsTestMode()) then return end
+    local _, eclass = UnitClass("player")
+    if eclass ~= "PALADIN" then return end
+    if not PallyPowerBuffBar then return end
+    -- Horizontal re-anchoring is the engine's job; only handle the common
+    -- vertical bar (the default).
+    if PP_PerUser and PP_PerUser.horizontal then return end
+
+    local alpha = (PP_PerUser and PP_PerUser.transparency) or 0.5
+    local me = UnitName("player")
+    local mine = PallyPower_Assignments and PallyPower_Assignments[me]
+    local shown = 0
+    for class = 0, 9 do
+        local n = class + 1
+        local btn = getglobal("PallyPowerBuffBarBuff" .. n)
+        if btn then
+            btn.classID = class            -- restore wheel cycling
+            local ci = getglobal("PallyPowerBuffBarBuff" .. n .. "ClassIcon")
+            local bi = getglobal("PallyPowerBuffBarBuff" .. n .. "BuffIcon")
+            if ci and PallyPower_ClassTexture and PallyPower_ClassTexture[class] then
+                ci:SetTexture(PallyPower_ClassTexture[class])
+            end
+            local bid = mine and mine[class]
+            if bid == nil then bid = -1 end
+            if bi then
+                if bid >= 0 and BlessingIcon and BlessingIcon[bid] then
+                    bi:SetTexture(BlessingIcon[bid])
+                    bi:SetAlpha(1)
+                elseif BlessingIcon and BlessingIcon[BLESS_DEMO] then
+                    bi:SetTexture(BlessingIcon[BLESS_DEMO])
+                    bi:SetAlpha(0.25)
+                end
+            end
+            local txt = getglobal("PallyPowerBuffBarBuff" .. n .. "Text")
+            local t1  = getglobal("PallyPowerBuffBarBuff" .. n .. "Time")
+            local t2  = getglobal("PallyPowerBuffBarBuff" .. n .. "Time2")
+            if txt then txt:SetText("") end
+            if t1 then t1:SetText("") end
+            if t2 then t2:SetText("") end
+            if bid >= 0 then
+                btn:SetBackdropColor(0, 1, 0, alpha)     -- assigned
+            else
+                btn:SetBackdropColor(1, 0, 0, alpha)     -- unassigned
+            end
+            btn:Show()
+            shown = shown + 1
+        end
+    end
+
+    local specials = 0
+    if PP_PerUser then
+        if PP_PerUser.showrfbutton   then specials = specials + 1 end
+        if PP_PerUser.showaurabutton then specials = specials + 1 end
+        if PP_PerUser.showsealbutton then specials = specials + 1 end
+    end
+    PallyPowerBuffBar:SetHeight(32 + 36 * shown + 36 * specials)
+    PallyPowerBuffBar:SetWidth(110)
+    PallyPowerBuffBar:Show()
+end
+
+-- Test-mode wheel cycling on the bar: the stock handler cycles with
+-- skipempty=true, which only lands on blessings somebody NEEDS - solo in
+-- test mode that's nothing, so the wheel appeared dead. Route test-mode
+-- wheeling through the skipempty=false path (the same one the assignment
+-- panel's grid uses); live mode is untouched.
+local orig_BarWheel = PallyPowerBuffBarButton_OnMouseWheel
+function PallyPowerBuffBarButton_OnMouseWheel(btn, delta)
+    if AegisRP and AegisRP.IsTestMode and AegisRP.IsTestMode()
+       and btn and type(btn.classID) == "number" then
+        local me = UnitName("player")
+        if not (PallyPower_CanControl and PallyPower_CanControl(me)) then return end
+        if delta == -1 then
+            PallyPower_PerformCycle(me, btn.classID, false)
+        else
+            PallyPower_PerformCycleBackwards(me, btn.classID, false)
+        end
+        if PallyPower_UpdateUI then PallyPower_UpdateUI() end
+        return
+    end
+    if orig_BarWheel then orig_BarWheel(btn, delta) end
+end
+
+--=============================================================================
+-- The buff bar's own scaling grip drags PP_PerUser.scalebar directly, so it
+-- never passes through our options slider. A Paladin has no class-buff strip
+-- of ours - the legacy bar IS it - and our Kick and Taunt strips now size
+-- themselves from scalebar (AegisRP.StripScale), so the grip has to move them
+-- too or the three bars come apart for anyone who uses the handle instead of
+-- the slider.
+--
+-- Save-and-replace, per the wrap-don't-rewrite rule: the engine's own function
+-- still does all the work, we only follow it.
+--=============================================================================
+local orig_PallyPower_ScaleFrame = PallyPower_ScaleFrame
+if orig_PallyPower_ScaleFrame then
+    PallyPower_ScaleFrame = function(scale)
+        -- read the target BEFORE the original runs; it is the engine's own
+        -- transient and nothing promises it survives the call
+        local frame = PallyPower and PallyPower.FrameToScale
+        orig_PallyPower_ScaleFrame(scale)
+        if frame and frame.GetName and frame:GetName() == "PallyPowerBuffBar"
+           and AegisRP_ApplyStripScale then
+            AegisRP_ApplyStripScale(scale)
+        end
+    end
+end
+
+--=============================================================================
+-- FIX: a COOLDOWNS message from a paladin we have not met yet threw
+-- "PallyPower.lua:2212: attempt to index field '?' (a nil value)".
+--
+-- PallyPower_ParseMessage guards every OTHER branch that touches
+-- AllPallys[sender] - SYMCOUNT at :2198, both FREEASSIGN branches at :2216 and
+-- :2223 all do `if AllPallys[sender] then ... else PallyPower_SendMessage("REQ")`.
+-- The COOLDOWNS branch (:2212-2213) is the one that does not, so it indexes nil
+-- the moment a paladin broadcasts their Divine Intervention / Lay on Hands
+-- state before we have their announce. The '?' in the message is `sender`:
+-- Lua cannot name a computed key.
+--
+-- Another latent bug in stock PallyPowerTW, like the /pp buff one above, and
+-- again NOT a version mismatch - PallyPower/ is byte-identical and :2212 is
+-- exactly that line in our copy.
+--
+-- Fixed by save-and-replace of the parser, which is a real global (:2031) with
+-- one call site that resolves it by name (:498). We do not reimplement it: an
+-- unguarded COOLDOWNS from an unknown sender is answered the way its guarded
+-- siblings answer, with a REQ so the sender re-announces and the NEXT one
+-- lands, and everything else falls through to the engine untouched. The branch
+-- tests are anchored `^COOLDOWNS`, and no other branch can match a message that
+-- starts with it, so skipping the call drops nothing else.
+--=============================================================================
+local orig_PallyPower_ParseMessage = PallyPower_ParseMessage
+if orig_PallyPower_ParseMessage then
+    PallyPower_ParseMessage = function(sender, msg)
+        if sender and msg and string.find(msg, "^COOLDOWNS")
+           and not (AllPallys and AllPallys[sender]) then
+            if PallyPower_SendMessage then PallyPower_SendMessage("REQ") end
+            return
+        end
+        return orig_PallyPower_ParseMessage(sender, msg)
+    end
+end
+
+--=============================================================================
+-- FIX: /pp buff (PallyPower_AutoBuffAll) errored whenever anyone was dead.
+--
+-- The engine writes a buff-bar count as "3 (1)" as soon as ndead > 0
+-- (PallyPower.lua:1507), but its own reader does `tonumber(text) > 0`
+-- (PallyPower.lua:3738). tonumber("3 (1)") is nil, so that compares nil with a
+-- number and throws. Nothing to do with our fork - stock PallyPowerTW carries
+-- the same bug; it just needs a corpse in the raid to show up.
+--
+-- Replaced rather than patched in place, per the wrap-don't-rewrite rule that
+-- keeps PallyPower/ byte-identical to stock: parse the LEADING number so
+-- "3 (1)" reads as 3, and skip a button whose text isn't a count at all rather
+-- than erroring on it. Lua 5.0: string.find with a capture, not string.match.
+--=============================================================================
+local function AegisRP_LeadingCount(s)
+    if not s or s == "" then return nil end
+    local _, _, n = string.find(s, "^(%d+)")
+    return tonumber(n)
+end
+
+if PallyPower_AutoBuffAll then
+    PallyPower_AutoBuffAll = function()
+        if not PP_IsPally then
+            DEFAULT_CHAT_FRAME:AddMessage(PALLYPOWER_MSG_NOTPALLY)
+            return
+        end
+        local me = UnitName("player")
+        if not (PallyPower_Assignments and PallyPower_Assignments[me]) then
+            DEFAULT_CHAT_FRAME:AddMessage(PALLYPOWER_MSG_NOASSIGNMENTS)
+            return
+        end
+        for i = 1, 10 do
+            local btn = getglobal("PallyPowerBuffBarBuff" .. i)
+            if btn and btn:IsVisible() then
+                local fs = getglobal("PallyPowerBuffBarBuff" .. i .. "Text")
+                local need = fs and AegisRP_LeadingCount(fs:GetText())
+                if need and need > 0 then
+                    PallyPowerBuffButton_OnClick(btn, "LeftButton")
+                    PallyPowerBuffButton_OnClick(btn, "RightButton")
+                end
+            end
+        end
+    end
+end

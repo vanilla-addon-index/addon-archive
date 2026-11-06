@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: 4HMHelper
+## Notes: A frame with visual aids for Four Horsemen
+## Author: Hjelp+Dyreparken+Junie
+## Version: 0.01
+
+4HMHelper.lua

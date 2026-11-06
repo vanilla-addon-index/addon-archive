@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/AllinGaming/ArcaneSurgeWarning",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "AllinGaming",
+    "repo": "ArcaneSurgeWarning",
+    "name": "ArcaneSurgeWarning",
+    "url": "https://github.com/AllinGaming/ArcaneSurgeWarning",
+    "api": "https://api.github.com/repos/AllinGaming/ArcaneSurgeWarning"
+  },
+  "commit": "63fc40421336346cbaa67b521711101711d4212b",
+  "sourceFiles": {
+    "ArcaneSurgeWarning.lua": {
+      "sha256": "159ef85441bdf14cc8cb042e1d48dbe75cf908aa6f2d802ee251c926d0953162",
+      "bytes": 6783
+    },
+    "ArcaneSurgeWarning.toc": {
+      "sha256": "dcdd73b69753cf4a52e4cae3d84130f5f33045681caa4ea512edaee5abd10f27",
+      "bytes": 190
+    },
+    "README.md": {
+      "sha256": "8eb052acb72589e8784555f57661d6ee960bfe6ea4689b4b690991894cbf10f1",
+      "bytes": 2814
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

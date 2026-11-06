@@ -1,0 +1,9 @@
+{
+  "id": "171169173",
+  "tag": "Publish",
+  "name": "BattleMusic",
+  "body": "I've rewritten most of the functionality of this addon to make it more relaible and fix some bugs. I've focused on making this addon as easy to setup as possible with the new Batch file included.\r\n\r\nSong lingering has been disabled for the moment because I could not get it working. I've left my attempt in the main lua file for review. If someone wants to submit a PR to fix it, be my guest.",
+  "published": "2024-08-20T23:24:20Z",
+  "prerelease": false,
+  "url": "https://github.com/zmarotrix/BattleMusic/releases/tag/Publish"
+}

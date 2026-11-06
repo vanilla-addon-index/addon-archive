@@ -1,0 +1,9 @@
+{
+  "id": "430884469",
+  "tag": "v1.0.6",
+  "name": "v1.0.6",
+  "body": "# Auctionator\r\n\r\n## [v1.0.6](https://github.com/brues-code/Auctionator/tree/v1.0.6) (2026-11-01)\r\n[Full Changelog](https://github.com/brues-code/Auctionator/compare/v1.0.5...v1.0.6) [Previous Releases](https://github.com/brues-code/Auctionator/releases)\r\n\r\n- Use ClassicAPI's InterfaceOptions instead of a custom options window  \r\n- Parse bare item strings in ItemIDfromLink  \r\n- safety  \r\n- rename all InterfaceOptions functions  \r\n",
+  "published": "2026-11-01T21:57:27Z",
+  "prerelease": false,
+  "url": "https://github.com/brues-code/Auctionator/releases/tag/v1.0.6"
+}

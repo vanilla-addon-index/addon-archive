@@ -1,0 +1,133 @@
+{
+  "upstream": "https://github.com/DavidBecht/AutoLock",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "DavidBecht",
+    "repo": "AutoLock",
+    "name": "AutoLock",
+    "url": "https://github.com/DavidBecht/AutoLock",
+    "api": "https://api.github.com/repos/DavidBecht/AutoLock"
+  },
+  "commit": "4b1f63a28c3e1e335fcc046efc3682fa8adf3cff",
+  "sourceFiles": {
+    ".claude/settings.local.json": {
+      "sha256": "3c3ce84496543bc5e440caa0234ce62211b027c0d560a50f6a617feeadb15f7e",
+      "bytes": 3939
+    },
+    "assets/add_new_config.png": {
+      "sha256": "eac16624eca6bdc4f1c8d477771b7adf1bca994279b4658e4b5a59099c837c55",
+      "bytes": 1678311
+    },
+    "assets/add_new_spell.png": {
+      "sha256": "bf2cb164844695740308bb41a842376a579e0e2c442453f8ac771453bab072a3",
+      "bytes": 847809
+    },
+    "assets/dark.svg": {
+      "sha256": "e02bd662fc6f72bfd77e4701739958807c6e8e3d68abfa3d04a96c346dab0071",
+      "bytes": 8820
+    },
+    "assets/dh_config_window.png": {
+      "sha256": "733b8a495ddb5cd13db69743956e0ad56d3d7c15fbace77a4ee4e5ee2fa64890",
+      "bytes": 92238
+    },
+    "assets/DH_configs.JPG": {
+      "sha256": "f1dc3925230ae2fc9e2ab6a97c2ea0fa6de8942e8ba3b070f1c30e877a29c93e",
+      "bytes": 14390
+    },
+    "assets/ds_config_window.png": {
+      "sha256": "f877994400c6a02fbe216bcdac59afe1be091616e549cbdb7174adc09aa5ff24",
+      "bytes": 41256
+    },
+    "assets/DS_configs.JPG": {
+      "sha256": "bcd5ba8061d8a4e45850ee88c653bb0eec60758cf6faca699518e128681713e8",
+      "bytes": 10482
+    },
+    "assets/main_window.png": {
+      "sha256": "32b55601f4e99e5699e40931ed052af488833dee788a9a2c58b112b86bb055bd",
+      "bytes": 1841152
+    },
+    "assets/map_button.png": {
+      "sha256": "eb967ba3df1a4bebe3d3f02721b8971b7336a0d4574c99c6d63c63a50abdc9a6",
+      "bytes": 116221
+    },
+    "assets/overall_settings.JPG": {
+      "sha256": "4cad798a5491c140bc91b17662620e94d24dbb21050459f082b64ebe16b443b5",
+      "bytes": 26094
+    },
+    "assets/spellbook.png": {
+      "sha256": "c040907238613015d84686c1217524ed324af426b2c5ba61186ccbc5640490cb",
+      "bytes": 466805
+    },
+    "AutoLock.lua": {
+      "sha256": "73a377940e41b99dd4b968b70c135cd3bf2d381c741d7e32b39bf223dcb2e5e9",
+      "bytes": 5574
+    },
+    "AutoLock.toc": {
+      "sha256": "df35019b65f815097067fb6f4b12585c3aeb91394e63141b5053ccbb00b9b6f4",
+      "bytes": 951
+    },
+    "AutoLock.xml": {
+      "sha256": "44c967716ccadaa38851acbaff6377b4759144704d422aefb0a8f973d92820bf",
+      "bytes": 19760
+    },
+    "AutoLockEngine.lua": {
+      "sha256": "4ffcba8697150e2f6c5d117f7a91427d808ab566597ed838e63f5fe6cd2e4de5",
+      "bytes": 21538
+    },
+    "AutoLockHelper.lua": {
+      "sha256": "635d10e8d4a1fa9735454f88076a2757ea54380b4f69983e92c8383d33b51f2a",
+      "bytes": 10911
+    },
+    "AutoLockLog.lua": {
+      "sha256": "e19b45ee466bc5edac02f6947e005004829c82c7cb80e91ebcc9134fee57b04d",
+      "bytes": 836
+    },
+    "AutoLockSoulShards.lua": {
+      "sha256": "28e6b65c66de7d91e5aef72ed984af28c61dbb5acc2f7790c88e5e7a22d008e7",
+      "bytes": 3836
+    },
+    "AutoLockSpellbook.lua": {
+      "sha256": "acb5251a1c3d741cd1de34fe0fdf3893cd542f1bb6da71d87e3f0cfa16d1edea",
+      "bytes": 8608
+    },
+    "AutoLockSpells.lua": {
+      "sha256": "8322fa5f9598e5acaf93790d11c18c972b29678dc2d5ef40d1f6d6e38291457d",
+      "bytes": 9011
+    },
+    "AutoLockTest.lua": {
+      "sha256": "6aa809cfea1cf522d31e54c91b2fc26ab4ef8ea9bccdaf2a3c9261e6080848a4",
+      "bytes": 39816
+    },
+    "AutoLockUI.lua": {
+      "sha256": "85ef0d5193d8f2c1decc374615cb6a4a089e19456dd973d644941b74f2ff5ece",
+      "bytes": 89005
+    },
+    "CLAUDE.md": {
+      "sha256": "c54b817437b34e2a71440a8becad9b84adc3a059e7647c4a8598faaf8c0df165",
+      "bytes": 6401
+    },
+    "global.lua": {
+      "sha256": "dabd417dfe8774315d1d8011934c0d1945c6815885a8344e40cebedc5d25affd",
+      "bytes": 1673
+    },
+    "Movement.lua": {
+      "sha256": "5b5a27474c5bd33497f9bc8394a600e3e3656e8eb0fbbac31c30b759925185ea",
+      "bytes": 2423
+    },
+    "nampower_stub.lua": {
+      "sha256": "b027d31a6dbc61bd2d00e561dd88c54607ed63a75cfb6277e34e0183a64200af",
+      "bytes": 6027
+    },
+    "README.md": {
+      "sha256": "d46eed30bee7b65355d4b415e10678a0756cb284297a2a70723b2e02b537b5ec",
+      "bytes": 18576
+    },
+    "run_tests.lua": {
+      "sha256": "53e795967a382d6e8f3c6d527c1f2d4121a61a2bd6fa2fddd9598f71051e9f27",
+      "bytes": 110390
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/EinBaum/Autohump",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "Autohump",
+    "name": "Autohump",
+    "url": "https://github.com/EinBaum/Autohump",
+    "api": "https://api.github.com/repos/EinBaum/Autohump"
+  },
+  "commit": "f0df86e776daffa250f3e67b073e209d9eab8209",
+  "sourceFiles": {
+    "Autohump.lua": {
+      "sha256": "cad7d6bdb321b68453c5ba1804c63dcd221f1b0474607d32795d9e13f23abb05",
+      "bytes": 2104
+    },
+    "Autohump.toc": {
+      "sha256": "6db5809e7c12b027d68db839cdb955f058e358202dd2b4b4973ff16896a0788f",
+      "bytes": 190
+    },
+    "README.md": {
+      "sha256": "afff49074808261f18ed3103db6e13e6362d91b423cf4d960dd1e5c71e3d417a",
+      "bytes": 204
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

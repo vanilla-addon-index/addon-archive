@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/Foulwerp/AutoAreaLoot",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Foulwerp",
+    "repo": "AutoAreaLoot",
+    "name": "AutoAreaLoot",
+    "url": "https://github.com/Foulwerp/AutoAreaLoot",
+    "api": "https://api.github.com/repos/Foulwerp/AutoAreaLoot"
+  },
+  "commit": "f0b42a8ad245561280606d85ccbb0d545099daf4",
+  "sourceFiles": {
+    "AutoAreaLoot.lua": {
+      "sha256": "1fb74b1cf26cea220a098a8e872ffbf5a5a50d05c62793461fa174fb2245d903",
+      "bytes": 94938
+    },
+    "AutoAreaLoot.toc": {
+      "sha256": "a3467461d30ade0827085349c7c9f8be3ef78ba4e0ca2230edb14b987d3cb72b",
+      "bytes": 209
+    },
+    "Fonts/PTSansNarrow.ttf": {
+      "sha256": "7438db1d283a2a29d4ba81c7497fc3131899d488201e0db263e09896e57a4569",
+      "bytes": 8024976
+    },
+    "Icons/Circle.tga": {
+      "sha256": "7a99a491dfa9851ad1be9ac380eb0c95e0f784b64d10c2175060c17a45b2306b",
+      "bytes": 16428
+    },
+    "Icons/SizeGrabber-Down.tga": {
+      "sha256": "099102522b5f45ba28df0abf2f54ec5574a29b258c25330360780fdc2553159b",
+      "bytes": 824
+    },
+    "Icons/SizeGrabber-Highlight.tga": {
+      "sha256": "5829b57218b92b8c979e9e54d1daab948a096f987e0f536f175f7b102f6c24ac",
+      "bytes": 862
+    },
+    "Icons/SizeGrabber-Up.tga": {
+      "sha256": "9b35b6497bc801b7bcaf4e4313ed58e06022e7908f1805c9d14a1ed140aa42c3",
+      "bytes": 795
+    },
+    "README.md": {
+      "sha256": "fb59379a96db10fdfad7fe2e84e3057e8779da094925faef661f7e09fa8fb56f",
+      "bytes": 3409
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

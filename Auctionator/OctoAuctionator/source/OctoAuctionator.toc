@@ -1,0 +1,34 @@
+## Interface: 11200
+## Title: OctoAuctionator
+## Version: 1.0.0
+## Author: John The Baptist (port of Auctionator 2.6.2 by Zirco)
+## Notes: Auctionator 2.6.2 ported to the 1.12 client: Buy, Sell and More tabs, shopping lists, Full Scan, tooltip prices
+## OptionalDeps: SellValue
+## SavedVariablesPerCharacter: AUCTIONATOR_SHOW_ST_PRICE, AUCTIONATOR_ENABLE_ALT, AUCTIONATOR_OPEN_FIRST, AUCTIONATOR_OPEN_BUY, AUCTIONATOR_OPEN_ALL_BAGS, AUCTIONATOR_DEF_DURATION, AUCTIONATOR_SHOW_TIPS, AUCTIONATOR_V_TIPS, AUCTIONATOR_A_TIPS, AUCTIONATOR_D_TIPS, AUCTIONATOR_SHIFT_TIPS, AUCTIONATOR_DE_DETAILS_TIPS, AUCTIONATOR_DEFTAB
+## SavedVariables: AUCTIONATOR_SAVEDVARS, AUCTIONATOR_PRICING_HISTORY, AUCTIONATOR_SHOPPING_LISTS, AUCTIONATOR_PRICE_DATABASE, AUCTIONATOR_LAST_SCAN_TIME, AUCTIONATOR_TOONS, AUCTIONATOR_STACKING_PREFS, AUCTIONATOR_SCAN_MINLEVEL
+
+Compat.lua
+
+Locales\enUS.lua
+
+zcUtils.lua
+
+Auctionator.lua
+AuctionatorShop.lua
+
+Auctionator.xml
+
+AuctionatorLocalize.lua
+AuctionatorPane.lua
+AuctionatorScan.lua
+AuctionatorQuery.lua
+AuctionatorHints.lua
+AuctionatorVendor.lua
+AuctionatorConflicts.lua
+AuctionatorAPI.lua
+AuctionatorConfig.lua
+AuctionatorBuy.lua
+
+AuctionatorConfig.xml
+
+AuctionatorOptions.lua

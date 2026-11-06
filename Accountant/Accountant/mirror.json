@@ -1,0 +1,118 @@
+{
+  "upstream": "https://github.com/The-Kludge-Bureau/Accountant",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "The-Kludge-Bureau",
+    "repo": "Accountant",
+    "name": "Accountant",
+    "url": "https://github.com/The-Kludge-Bureau/Accountant",
+    "api": "https://api.github.com/repos/The-Kludge-Bureau/Accountant"
+  },
+  "commit": "9078a7cd0f30b328aa939cb63c636c818c4af204",
+  "sourceFiles": {
+    ".git-blame-ignore-revs": {
+      "sha256": "dd8d9c260479baeb38b83402afc0acd50a3f9942c016f19e4cd46af21f8ff098",
+      "bytes": 87
+    },
+    ".gitignore.upstream": {
+      "sha256": "51a6b7e2d7492f770d05f6087edb31a242acd513b0d3cccfd6f09b276822e741",
+      "bytes": 9
+    },
+    "Accountant.lua": {
+      "sha256": "ff1a091c4f418645cf17ca6174be4cb8b531b668c75e922feb9914657c251d0e",
+      "bytes": 28871
+    },
+    "Accountant.toc": {
+      "sha256": "10e80fcdbf2096d655e35a91faf7f91e15d58235421cec27c11105a8bcd0df23",
+      "bytes": 290
+    },
+    "AccountantButton.lua": {
+      "sha256": "0a83169237ea5b575c1f5a21928db1909bd46054a2aa021fda0e395b2dd18b8c",
+      "bytes": 1906
+    },
+    "AccountantOptions.lua": {
+      "sha256": "bf54e533e6ec48dd299c23e5b1e8f4b2ff9d1547b89376dec3604505b566d599",
+      "bytes": 5289
+    },
+    "Bindings.xml": {
+      "sha256": "ecbfe698782aba0e13fcd3ceb65ab4eb774d0f647967331252b448b084c68d17",
+      "bytes": 121
+    },
+    "img/AccountantButton-Down.tga": {
+      "sha256": "bf8e5dcabe68c65632200bd89edae371a203d8a4f578e680e1aadd372a752819",
+      "bytes": 4140
+    },
+    "img/AccountantButton-Up.tga": {
+      "sha256": "5fc970a7182f4a5802d6f19181089e766c38494c3742b4517aa01e7d655050e0",
+      "bytes": 4140
+    },
+    "img/AccountantFrame-BotLeft.tga": {
+      "sha256": "089ae8ef003c7fc4b585c109edf2a8ae00ad07b69a0f93e7184446e1f2d54988",
+      "bytes": 262188
+    },
+    "img/AccountantFrame-BotRight.tga": {
+      "sha256": "c59b86965799417cdd2c8a926ae77bcca9c4fd4af685dec5b6e0c59fae057f49",
+      "bytes": 131116
+    },
+    "img/AccountantFrame-TopLeft.tga": {
+      "sha256": "d21779205d0a3188db0117d7ef81ac43ce2be1d0329fa774cc287c2cf113e5f7",
+      "bytes": 262188
+    },
+    "img/AccountantFrame-TopRight.tga": {
+      "sha256": "152af7b504c63b6abdb9400141d9053eec56406f788f0903fc56d4958f2305f9",
+      "bytes": 131116
+    },
+    "l10n/deDE.lua": {
+      "sha256": "bafb159fb17cab06f541fb9fa620e2eb3ee8c12c860010e2559ce770810920ac",
+      "bytes": 2091
+    },
+    "l10n/enUS.lua": {
+      "sha256": "b00ed09acfda052d2b8aa658dc6f4aa7f2d80b891375223b3f203c6f7cd4644a",
+      "bytes": 1891
+    },
+    "l10n/esES.lua": {
+      "sha256": "a2dc20033bebae70438b9d00972b172e42613a2e9045c051ce3d19b7be56ead4",
+      "bytes": 2126
+    },
+    "l10n/frFR.lua": {
+      "sha256": "13f01ad92f68e2307174e11fb9ba1995ebafbf4147fd7b2f0403ebd8bd7eba5e",
+      "bytes": 2126
+    },
+    "nampower.lua": {
+      "sha256": "754f413435bec75796c0d2765f804c8a2cf1037b38431c08e5ddcf5674022d66",
+      "bytes": 14944
+    },
+    "README.md": {
+      "sha256": "ed68ef83708823340987d19ab2b2b2eb9c9884cbfc0e76fe3de5343aa69df10e",
+      "bytes": 4594
+    },
+    "UNLICENSE": {
+      "sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+      "bytes": 1211
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "298559185": {
+      "tag": "3.1",
+      "folder": "3.1--298559185",
+      "assets": {
+        "376560594": {
+          "sha256": "e001a8f7267f135a38596ba8ff2b7e415167dc44d73e69ec7e2000a8b41aa069",
+          "bytes": 83071,
+          "id": "376560594",
+          "name": "Accountant.zip",
+          "url": "https://github.com/The-Kludge-Bureau/Accountant/releases/download/3.1/Accountant.zip",
+          "path": "releases/3.1--298559185/assets/Accountant.zip"
+        }
+      },
+      "source": {
+        "sha256": "3a8391c1e810e7a6d5a78a97d4f44af907c7fb12bb0683a182ee0786e7339070",
+        "bytes": 81284,
+        "path": "releases/3.1--298559185/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/The-Kludge-Bureau/Accountant/tarball/3.1"
+      }
+    }
+  }
+}

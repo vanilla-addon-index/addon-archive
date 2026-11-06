@@ -1,0 +1,111 @@
+--[[
+	Survival recipes, for the crafting route planner (CraftPlanner.lua).
+
+	GENERATED FILE -- do not edit by hand.
+	Source:    CraftRoute by Kitymeowmeow (GPLv3), data_survival.lua
+	Generator: Tools/build/import_recipes.py
+
+	One recipe a line, ordered by the skill it turns orange at:
+
+	  "<recipe> = <reagents> @ <orange>-<yellow>-<green>-<grey> | <learned> [| skip] [| nomake]"
+
+	Reagents are joined by " + ", each with its count in front when that is
+	more than one; "#<id>" is an item no database could name, which the game
+	names once it has seen it. <learned> is how the recipe is learned:
+	"trainer <copper>", "book <item> <copper>" or "book <item> ?", "quest",
+	"drop" or "special"; a ~ marks an estimated cost. "skip" keeps a recipe
+	out of routes (cooldowns, rare drops); "nomake" stops the planner making
+	it to supply another recipe. Tools/build/import_recipes.py documents each.
+]]
+
+AegisPathfinder:RegisterRecipeBook("Survival", {
+	"Dim Torch = Unlit Poor Torch @ 1-10-12-15 | trainer ~200",
+	"Bundle of Simple Sticks = 2 Simple Wood @ 5-10-12-15 | trainer ~200",
+	"Survivalist's Skinning Knife = 2 Rough Stone + Coarse Thread + Light Leather @ 10-30-45-60 | trainer ~200",
+	"Driftwood Fishing Pole = 2 Coarse Thread + Rugged String + 2 Simple Wood @ 10-40-55-70 | trainer ~200",
+	"Crude Hatchet = Simple Wood + 3 Copper Bar @ 15-25-35-45 | trainer ~200",
+	"Crude Hunting Bow = 3 Simple Wood + 2 Springy Rope @ 15-25-35-45 | trainer ~200",
+	"Crude Machete = Simple Wood + 3 Copper Bar @ 15-25-35-45 | trainer ~200",
+	"Crude Walking Stick = 4 Simple Wood @ 15-25-35-45 | trainer ~200",
+	"Copper Lantern = Dim Torch + 3 Copper Bar @ 20-40-50-60 | trainer ~200",
+	"Simple Slingshot = 4 Striped Melon Seeds + 2 Bundle of Simple Sticks + Springy Rope @ 30-50-60-70 | trainer ~200",
+	"Makeshift Rations Bag = 4 Light Leather + 6 Coarse Thread + Cured Light Hide + 4 Salt @ 40-60-70-80 | trainer ~200",
+	"Simple Herbalist's Backpack = 6 Light Leather + 4 Coarse Thread + 2 Cured Light Hide + 12 Peacebloom @ 40-60-70-80 | trainer ~200 | skip | nomake",
+	"Weak Healing Salve = Refreshing Spring Water + 2 Remedy Herbs + Simple Leaves @ 50-70-80-90 | trainer ~200",
+	"Makeshift Knife = Simple Wood + 3 Copper Bar + 2 Light Leather @ 60-80-90-100 | trainer ~200",
+	"Gardening Gloves = 4 Light Leather + 2 Coarse Thread + 6 Peacebloom @ 65-85-95-105 | trainer ~200",
+	"Crude Fishing Rod = 8 Simple Wood + Fine Thread @ 70-90-100-110 | trainer ~200",
+	"Traveler's Tent = 5 Simple Wood + 10 Linen Cloth + Sturdy Rope @ 80-100-110-120 | trainer ~200 | skip | nomake",
+	"Hunting Spear = 8 Bronze Bar + 4 Light Leather + 2 Fine Thread + 12 Simple Wood @ 90-110-120-130 | trainer ~200",
+	"Gardening Broom = 6 Simple Wood + 8 Bundle of Simple Sticks + Fine Thread + Medium Leather @ 95-115-125-135 | trainer ~200",
+	"Healing Salve = 4 Simple Leaves + 2 Remedy Herbs + Spider Ichor @ 100-120-130-140 | trainer ~500",
+	"Oakwood Bow = 12 Simple Wood + 2 Bleach + 2 Springy Rope + Medium Leather @ 100-120-130-140 | trainer ~500",
+	"Simple Fishing Lure = Clam Meat + Remedy Herbs @ 100-120-130-140 | trainer ~500",
+	"Fishing Bag = 8 Medium Leather + 4 Fine Thread + 4 Cured Light Hide + 6 Salt @ 105-125-135-145 | trainer ~500 | skip | nomake",
+	"Skinner's Pack = 6 Medium Leather + 2 Fine Thread + 4 Cured Light Hide + Skinning Knife @ 110-130-140-150 | trainer ~500 | skip | nomake",
+	"Fishing Boat = 20 Simple Wood + 10 Handful of Copper Bolts + 2 Fish Oil @ 115-135-145-155 | trainer ~200",
+	"Gardening Pitchfork = 10 Bronze Bar + 10 Simple Wood + 4 Medium Leather @ 120-140-150-160 | trainer ~500",
+	"Bundle of Bright Wood Sticks = 3 Bright Wood @ 125-135-140-145 | trainer ~500",
+	"Blackmouth Fishing Trap = 2 Bundle of Bright Wood Sticks + Simple Fishing Lure + Sturdy Net @ 125-145-155-165 | trainer ~500",
+	"Murloc Scale Coat = 6 Medium Leather + 2 Fine Thread + 10 Slimy Murloc Scale + 2 Swim Speed Potion @ 125-145-155-165 | trainer ~500",
+	"Murloc's Flippers = 16 Thick Murloc Scale + 8 Heavy Leather + 2 Heavy Silken Thread + 3 Blackmouth Oil + Swim Speed Potion @ 125-145-155-165 | trainer ~500",
+	"Sturdy Net = 4 Sturdy Rope @ 130-130-135-140 | trainer ~500",
+	"Sturdy Blade = 2 Bright Wood + Medium Leather + 8 Bronze Bar + Moss Agate + 2 Coarse Grinding Stone @ 130-150-160-170 | trainer ~500",
+	"Sturdy Cane = 12 Bright Wood + 2 Medium Leather + Fine Thread @ 130-150-160-170 | trainer ~500",
+	"Sturdy Knife = 2 Bright Wood + 2 Medium Leather + 6 Bronze Bar + Moss Agate + 2 Coarse Gritted Paper @ 130-150-160-170 | trainer ~500",
+	"Reliable Fishing Rod = 6 Bright Wood + Fine Thread + 2 Bronze Bar @ 135-155-165-175 | trainer ~500",
+	"Hat of the Junior Chef = 6 Bolt of Silk Cloth + 8 Bleach + 4 Silken Thread + 5 Hot Spices + 5 Soothing Spices + 5 Spider's Silk @ 140-160-170-180 | trainer ~500",
+	"Rugged Mining Sack = 8 Heavy Leather + 3 Cured Medium Hide + 2 Yellow Dye + 4 Silken Thread + 14 Silk Cloth @ 140-160-170-180 | trainer ~500",
+	"Throwable Net = Sturdy Net + 4 Coarse Stone @ 140-160-170-180 | trainer ~500",
+	"Bright Wood Arrows = Bundle of Bright Wood Sticks + Long Tail Feather + Iron Bar @ 145-165-175-185 | trainer ~500",
+	"Treasure Compass = 4 Silver Contact + 6 Bronze Framework + 20 Handful of Copper Bolts + 2 Jade + 6 Whirring Bronze Gizmo @ 145-165-175-185 | trainer ~500",
+	"Potent Healing Salve = 4 Remedy Herbs + 3 Bright Leaves + Refreshing Spring Water @ 150-170-180-190 | trainer ~500",
+	"Spicy Fishing Lure = Tangy Clam Meat + Hot Spices @ 150-170-180-190 | trainer ~500",
+	"Studded Rations Bag = 8 Heavy Leather + 3 Cured Medium Hide + 2 Yellow Dye + 4 Silken Thread + 6 Blackmouth Oil + 8 Salt @ 150-170-180-190 | trainer ~500",
+	"Slowing Bolas = 3 Heavy Stone + 2 Sturdy Rope @ 155-175-185-195 | trainer ~500",
+	"Iron Lantern = 2 Iron Bar + 4 Flask of Oil + 5 Wool Cloth @ 160-180-190-200 | trainer ~200",
+	"Snap Trap = 4 Iron Strut + 8 Handful of Copper Bolts @ 160-180-190-200 | trainer ~500",
+	"Edged Machete = 8 Iron Bar + 2 Heavy Leather + Sturdy Rope + Bright Wood @ 165-185-195-205 | trainer ~500",
+	"Iron Spear = 8 Iron Bar + 2 Heavy Grinding Stone + Sturdy Rope + 2 Heavy Leather @ 165-185-195-205 | trainer ~500",
+	"Reinforced Fishing Rod = 2 Iron Bar + 8 Shade Wood + Springy Rope + 10 Handful of Copper Bolts @ 170-190-200-210 | trainer ~500",
+	"Bundle of Shade Wood Sticks = 4 Shade Wood @ 175-185-190-195 | trainer ~500",
+	"Firefin Fishing Trap = 2 Bundle of Shade Wood Sticks + Spicy Fishing Lure + Sturdy Net @ 175-195-205-215 | trainer ~500",
+	"Water Trudgers = 12 Heavy Leather + 20 Shiny Fish Scales + 2 Gray Dye + 4 Iridescent Pearl @ 175-195-205-215 | trainer ~500",
+	"Cleaning Cloth = 2 Silk Cloth + Volatile Rum @ 180-200-210-220 | trainer ~500",
+	"Sharpened Herb Sickle = 2 Iron Bar + Gold Bar + Shade Wood + 2 Heavy Leather + 4 Handful of Copper Bolts @ 180-200-210-220 | trainer ~500",
+	"Lined Wintercloak = 2 Cured Heavy Hide + 8 Heavy Leather + 2 Gray Dye + 6 Silk Cloth + 4 Silken Thread @ 185-205-215-225 | trainer ~500 | skip | nomake",
+	"Sleek Pinewood Bow = 8 Shade Wood + Springy Rope + 2 Gold Bar + 6 Long Tail Feather @ 190-210-220-230 | trainer ~500 | skip | nomake",
+	"Jungle Remedy = 4 Remedy Herbs + 2 Shade Leaves + Junglevine Wine @ 195-215-225-235 | book Outline: Jungle Remedy ?",
+	"Savory Fishing Lure = Zesty Clam Meat + 2 Soothing Spices @ 200-220-230-240 | trainer ~2700",
+	"Superior Healing Salve = 6 Remedy Herbs + Liferoot + 4 Shade Leaves @ 200-220-230-240 | trainer ~2700",
+	"Nutritious Rations = 2 Juicy Watermelon + 2 Sour Mountain Berry + 2 Plump Country Pumpkin @ 205-225-235-245 | trainer ~2700",
+	"Shade Wood Arrows = Bundle of Shade Wood Sticks + Delicate Feather + Mithril Bar @ 205-225-235-245 | trainer ~2700",
+	"Hiking Staff = 10 Shade Wood + 4 Sturdy Rope + 2 Solid Grinding Stone @ 215-235-245-255 | trainer ~2700",
+	"Tree Hatchet = 10 Mithril Bar + 4 Solid Grinding Stone + 2 Solid Gritted Paper + Bundle of Shade Wood Sticks @ 215-235-245-255 | trainer ~2700",
+	"Vine Cutter = 10 Mithril Bar + 2 Solid Grinding Stone + 4 Thick Leather + Bundle of Shade Wood Sticks @ 215-235-245-255 | trainer ~2700",
+	"Bundle of Tropical Sticks = 5 Tropical Wood @ 225-235-240-245 | trainer ~2700",
+	"Repaired Electro-Lantern = 5 Broken Electro-lantern + Mithril Casing + Handful of Copper Bolts + Whirring Bronze Gizmo + 2 Silver Contact + 2 Gold Power Core @ 230-250-260-270 | trainer ~500 | skip | nomake",
+	"Sunshade Hat = 12 Thick Leather + 2 Fire Protection Potion + 4 Elemental Fire + 6 Deeprock Salt + 5 Small Flame Sac @ 235-255-265-275 | trainer ~2700",
+	"Thick Rations Bag = 12 Thick Leather + 2 Cured Thick Hide + 4 Heavy Silken Thread + 10 Mageweave Cloth + 5 Deeprock Salt @ 235-255-265-275 | trainer ~2700",
+	"Aromatic Berries = Sweet Mountain Berry + Remedy Herbs + 2 Soothing Spices @ 240-260-270-280 | trainer ~2700",
+	"Spiced Berries = Sour Mountain Berry + Remedy Herbs + 2 Hot Spices @ 240-260-270-280 | trainer ~2700",
+	"Warped Recurve Bow = 10 Tropical Wood + 4 Thick Leather + 2 Springy Rope + 6 Vibrant Plume + 4 Breath of Wind @ 240-260-270-280 | trainer ~2700",
+	"Advanced Camouflage = 2 Un'Goro Soil + 2 Bundle of Tropical Sticks + 10 Tropical Leaves @ 245-265-275-285 | trainer ~2700",
+	"Emergency Parachute = 4 Sturdy Rope + 5 Runecloth + Sturdy Net @ 250-270-280-290 | trainer ~2700",
+	"Premium Fishing Lure = 2 Zesty Clam Meat + Molasses Firewater @ 250-270-280-290 | trainer ~2700",
+	"Stabilizing Healing Salve = 8 Remedy Herbs + Purple Lotus + 4 Tropical Leaves @ 250-270-280-290 | trainer ~2700",
+	"Smooth Ironfeather Arrows = Bundle of Tropical Sticks + Ironfeather + Thorium Bar @ 255-275-285-295 | trainer ~2700",
+	"Heavy Duty Machete = 6 Thorium Bar + 4 Rugged Leather + 2 Dense Grinding Stone @ 260-280-285-290 | trainer ~2700",
+	"Thorium Edged Machete = 10 Thorium Bar + 4 Rugged Leather + 2 Dense Grinding Stone + 2 Dense Gritted Paper + Star Ruby @ 260-280-285-290 | trainer ~2700",
+	"Thorium Spear = 4 Thorium Bar + 4 Rugged Leather + 6 Tropical Wood + 2 Dense Gritted Paper @ 265-285-295-305 | trainer ~2700",
+	"Bundle of Star Wood Sticks = 5 Star Wood @ 270-275-280-285 | trainer ~2700",
+	"Razor-sharp Skinning Knife = Skinning Knife + 4 Dense Sharpening Stone + 8 Enchanted Thorium Bar + 6 Star Ruby + 8 Elemental Fire + 4 Essence of Fire @ 270-290-300-310 | trainer ~2700",
+	"Mastercraft Fishing Rod = 8 Thorium Bar + 4 Rugged Leather + 10 Tropical Wood + 2 Springy Rope + 4 Thorium Tube + 4 Essence of Water @ 275-295-305-315 | trainer ~2700",
+	"Stonescale Fishing Trap = 2 Bundle of Star Wood Sticks + Premium Fishing Lure + 2 Sturdy Net @ 275-295-305-315 | trainer ~2700",
+	"Miner's Rucksack = 24 Rugged Leather + 3 Cured Thick Hide + 10 Bundle of Star Wood Sticks + Mining Pick + 4 Iron Buckle + 6 Rune Thread @ 280-300-310-320 | trainer ~2700",
+	"Fisherman's Backpack = 20 Rugged Leather + 6 Cured Thick Hide + 10 Bundle of Star Wood Sticks + Mastercraft Fishing Rod + 4 Iron Buckle + 6 Rune Thread @ 285-305-315-325 | quest",
+	"Herbalist's Knapsack = 22 Rugged Leather + 4 Cured Thick Hide + 10 Bundle of Star Wood Sticks + Gardening Gloves + 4 Iron Buckle + 4 Rune Thread @ 285-305-315-325 | trainer ~2700",
+	"Skinner's Carryall = 28 Rugged Leather + 6 Enchanted Leather + 2 Cured Rugged Hide + Skinner’s Pack + 4 Iron Buckle + 6 Rune Thread @ 285-305-315-325 | trainer ~2700",
+	"Cooling Rations Bag = 18 Rugged Leather + 8 Enchanted Leather + 2 Cured Rugged Hide + 4 Essence of Water + 4 Iron Buckle + 6 Rune Thread @ 290-310-320-330 | trainer ~2700",
+	"Oil-Powered Cooker = 8 Mithril Casing + 6 Thorium Widget + 6 Gold Power Core + 10 Flask of Oil + 2 Essence of Fire + 4 Enchanted Thorium Bar @ 295-315-325-335 | quest",
+})

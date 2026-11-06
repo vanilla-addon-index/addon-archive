@@ -1,0 +1,330 @@
+#!/usr/bin/env python3
+"""Every top-level definition that existed at a git ref still exists now.
+
+This guards against a failure that has eaten a function THREE times in this
+repo: a scripted edit whose boundary search ran past the end of what it meant
+to replace, deleting a neighbouring function along with the target.
+
+It is nasty precisely because nothing else notices. The file still compiles --
+Lua does not care that a function is missing until something calls it -- and
+the calling code is usually in a branch the tests do not reach, so the suite
+stays green and the loss surfaces in-game as "that button does nothing".
+
+Once (v1.14.0) a DOTALL regex ate two buttons' parent arguments and every test
+still passed. Once it removed MakeMoneyGSC while replacing the function above
+it. Run this after ANY scripted or multi-line edit.
+
+Usage:  python3 tests/lint/definitions.py [ref] [files...]
+        ref defaults to HEAD; files default to core/ + ui/
+"""
+import glob
+import re
+import subprocess
+import sys
+
+# `function foo.bar()` / `local function baz()` / `Qux = function(`
+DEF_PATTERNS = (
+    re.compile(r"^(?:local function|function)\s+([\w.:]+)", re.M),
+    re.compile(r"^(\w+)\s*=\s*function\(", re.M),
+)
+
+
+def defs(text):
+    out = set()
+    for pat in DEF_PATTERNS:
+        out |= set(pat.findall(text))
+    return out
+
+
+# Definitions removed ON PURPOSE, and why. Checked BOTH ways: an entry here
+# silences the removal, and an entry naming something that is still defined is
+# reported as stale -- so this list cannot quietly become a blanket exemption.
+#
+# Entries can be deleted once the removal is in the baseline ref, because from
+# then on the name is not in `was` either.
+REMOVED_ON_PURPOSE = {
+    # v1.54.29. The Post / Skip walk's status line learned a second reason an
+    # item was left out -- fewer than one stack of a fixed size -- so the
+    # blacklist-only note became one note for both.
+    "ui.BlacklistSkippedNote": "v1.54.29 -- became ui.WalkLeftOutNote(blacklisted, "
+                               "tooFew, size), which covers both reasons",
+    # v1.54.25. A batch buyout re-read ONE page -- the one the client held --
+    # before calling a ticked auction gone. A gathered browse spans pages, so
+    # the batch now reads the pages its ticked rows came from (and the page
+    # before each) through buy.FetchPage, tracked per page in b.read.
+    "buy.RereadPage": "v1.54.25 -- generalised to buy.FetchPage(p) and "
+                      "buy.CandidatePages, per page rather than once",
+    # v1.54.11. Demo mode used to invent the History tab's FIGURES directly
+    # while everything that reads the LEDGER read the real store, which in
+    # demo mode is empty -- so the Ledger window opened blank and the numbers
+    # above it answered a question no visible data had asked. A generated
+    # LEDGER replaced both: db.LedgerSource substitutes it and every reader
+    # computes through the same arithmetic it runs on real data, so there is
+    # no parallel statistics function left to keep in step. db.DemoPick chose
+    # between the two-item epic and rare pools that went with it; the pool it
+    # picked from is now db.DEMO_LEDGER_ITEMS, and which item tops a column is
+    # decided by what was traded rather than by a seed.
+    "db.DemoStats": "v1.54.11 -- db.LedgerStats computes the demo's figures "
+                    "from db.DemoLedger through the real path",
+    "db.DemoPick":  "v1.54.11 -- with no epic/rare pools to choose between, "
+                    "nothing picks; db.DEMO_LEDGER_ITEMS states every item",
+    # v1.54.0. The History tab was split -- a table on the left, a chart on
+    # the right -- and this divided the panel between them. Neither half had
+    # room, so they became two screens: the tab is the dashboard and the chart
+    # has the whole panel, and the table lives in ui.BuildLedgerWindow. With
+    # nothing to divide, there is nothing for this to compute.
+    # v1.54.0. Its two callers were the History tab's stat rows, which are a
+    # six-cell strip and three blocks now -- every figure its own FontString in
+    # its own column, so there is no run-together line to build.
+    # v1.54.1. The ledger became an overlay over the window's content, the way
+    # the category picker is, so there is no floating frame to drag, no point
+    # to remember, and no height to compute -- it is anchored by two corners.
+    "ui.SaveLedgerPoint":    "v1.54.1 -- the ledger is an in-window overlay; "
+                             "nothing to drag, so nothing to save",
+    "ui.RestoreLedgerPoint": "v1.54.1 -- ditto; it is anchored to ui.content",
+    "ui.LedgerWindowHeight": "v1.54.1 -- two-corner anchored, so its height is "
+                             "the content area's and not a sum of rows",
+    "ui.StatLine": "v1.54.0 -- the figure rows became ui.PaintHistFigures' "
+                   "strip and blocks; nothing formats a line of pairs any more",
+    "ui.HistWidthsAt": "v1.54.0 -- the History tab is no longer split; the "
+                       "chart takes the whole panel and ui.HistPlotSizeAt "
+                       "measures it directly",
+    # v1.53.7. The chart gained views whose series can go NEGATIVE -- a
+    # cumulative balance below zero, a character down on the week -- so an
+    # axis described by its maximum alone stopped being enough. ui.SeriesRange
+    # returns lo AND hi and always keeps zero inside them, which is the only
+    # honest way to draw a line that crosses it.
+    "ui.SeriesMax": "v1.53.7 -- replaced by ui.SeriesRange, which returns a "
+                    "signed range rather than a maximum",
+    # v1.53.8. The chart shows ONE thing now -- gold held over time -- because
+    # income and spending are what the TABLE beside it answers, line by line,
+    # with the item names attached. These four served the views that framing
+    # replaced.
+    "ui.HistViewSeries":   "v1.53.8 -- one view left; ui.HistGoldSeries",
+    "ui.CumulativeSeries": "v1.53.8 -- the ledger-balance view is gone; the "
+                           "table beside the chart answers that exactly",
+    "ui.CharSeries":       "v1.53.8 -- the dropdown picks a character and the "
+                           "chart draws their GOLD, not their ledger",
+    "ui.PaintLegend":      "v1.53.8 -- one line needs one name, not a key",
+    # v1.53.9. The x axis carries DATES now -- "30d ago" stops being placeable
+    # once the window is months long, which is why the reference chart labels
+    # months. ui.WhenLabel does all three labels.
+    "ui.HistMidLabel":     "v1.53.9 -- the x axis is dated by ui.WhenLabel",
+    # v1.53.12. The gradient under the chart's fill is gone, and with it the
+    # per-column alpha slicing it needed. SetGradientAlpha SUCCEEDED on 1.12
+    # and did nothing -- a texture made by SetTexture(r, g, b) is a solid
+    # colour with no image behind it for a gradient to modulate -- so the
+    # pcall guarding it reported the wrong answer and the fill came out solid.
+    "ui.FillAlphaAt": "v1.53.12 -- the fill is a flat wash; SetGradientAlpha "
+                      "cannot modulate a solid-colour texture on 1.12",
+    # ...and the bucketing that fed them. What survived is the window it
+    # computed, which every version of this chart needed.
+    "ui.HistBuckets":      "v1.53.8 -- split; ui.HistWindow is the half that "
+                           "is still used",
+    "ui.RowsFor": "v1.23.0 -- measured a two-edge-anchored scroll frame, "
+                  "which is the trap four separate bugs walked into; "
+                  "replaced by ui.ListRowsAt",
+    # The required-level audit. It existed to decide whether minLevel could
+    # stand in for item level; the client can be asked for the real one now,
+    # so the question it answered no longer gets asked.
+    "de.AuditStart":   "v1.41.0 -- see de.ItemLevel; the fallback it measured "
+                       "was dropped once the client could be asked directly",
+    "de.AuditStep":    "v1.41.0 -- with de.AuditStart",
+    "de.AuditSummary": "v1.41.0 -- with de.AuditStart",
+    "de.CompareBands": "v1.41.0 -- with de.AuditStart",
+    "DisenchantAudit": "v1.41.0 -- the /aex de audit command, with the audit "
+                       "it drove",
+    # v1.50.1 housekeeping. Each of these was unreachable AND had a survivor
+    # already doing the job -- which is the only shape of dead code this pass
+    # removed rather than flagged.
+    "de.MissingPriceOf": "v1.50.1 -- de.ValueOf returns the diagnosis "
+                         "alongside the failure, so the separate lookup it "
+                         "existed to avoid was already avoided",
+    "scan.FastThrottleSeen": "v1.50.1 -- a second reader of scan.state."
+                             "fastGate; the UI reads it off GetProgress()",
+    "MakeMoneyBox": "v1.50.1 -- every money field is a MakeMoneyGSC triplet; "
+                    "this plain-text box had no callers left",
+    "ui.CountChecked": "v1.50.1 -- UpdateSelCount counts ui.CollectQueries, "
+                       "which is the number the button actually shows",
+    # v1.52.6. The shopping-list ENGINE, unreachable since the Advanced
+    # redesign removed the sidebar that was its only caller. It was kept on
+    # the reasoning that re-homing the feature would cost a UI rather than a
+    # rewrite -- and then the Crafting tab's tracked recipes turned out to BE
+    # that feature's shape and were built on `crafting` instead. The saved
+    # data (account.shopping.lists) is deliberately NOT deleted.
+    "buy.Lists":  "v1.52.6 -- the shopping-list engine; tracked recipes are "
+                  "the same idea built on `crafting`",
+    "buy.AddList":            "v1.52.6 -- with buy.Lists",
+    "buy.RenameList":         "v1.52.6 -- with buy.Lists",
+    "buy.DeleteList":         "v1.52.6 -- with buy.Lists",
+    "buy.AddItemToList":      "v1.52.6 -- with buy.Lists",
+    "buy.RemoveItemFromList": "v1.52.6 -- with buy.Lists",
+    # v1.52.19. The left panel stopped being a recipe TREE and became the
+    # shopping list, so its click handler is ui.OnShoppingClick -- a reagent
+    # line searches that reagent. There is no tree left to click.
+    "ui.OnCraftTreeClick": "v1.52.19 -- renamed ui.OnShoppingClick when the "
+                           "left panel became the shopping list",
+    # v1.52.20. "Price recipe" and "Price all" are the same walk over different
+    # lists, so there is ONE runner (ui.RunCraftQueue) and both call it with a
+    # verb -- rather than a second copy that drifts.
+    "ui.CraftRunPriceQueue": "v1.52.20 -- folded into ui.RunCraftQueue, the "
+                             "one sequential-search runner",
+
+    # It never bought anything -- it SEARCHES, so the prices fill in and the
+    # list's estimate resolves. "Shop all" read as "spend my gold", which is an
+    # alarming thing to press to find out what something costs.
+    "ui.ShopAll": "v1.52.25 -- renamed ui.CraftPriceAll with the button, "
+        "because it prices the list rather than buying it",
+
+    # It was never Crafting-only in principle and is not in practice any
+    # more: ui.MakeHeaderCell applies it to every column caption in the window.
+    "ui.CraftLabelFont": "v1.52.31 -- renamed ui.LabelFont; every table's "
+        "headings go through it now, not just the Crafting tab's",
+
+    # ONE SCOPE ON THE SHOPPING PANEL, and it is the list's. The per-recipe
+    # Cost/Sells/Net moved to the recipe row's own tooltip, where it is
+    # attached to the recipe it describes rather than to whichever row was
+    # clicked last -- and the panel's five money figures are painted by one
+    # function, because they are five views of two numbers.
+    "ui.UpdateCraftSummary": "v1.52.29 -- the SELECTED recipe's economics; "
+        "the panel is list-scope now and ui.UpdateCraftMoney paints all of it",
+    "ui.UpdateCraftSpend": "v1.52.29 -- folded into ui.UpdateCraftMoney; Cost "
+        "and Spent have to add up, so they may not be computed in two places",
+
+    # THE THIRD PANEL. The Crafting tab held tracked recipes and a made-this-
+    # session count in a panel of its own; both are on the recipe ROWS now
+    # (`1/5` IS the made count and the wanted count), and deleting the panel
+    # took the shopping panel from 174px to 358 at the smallest window.
+    "ui.UpdateCraftMade": "v1.52.21 -- the made-this-session panel; the counts "
+        "are on the recipe rows in the shopping tree, painted by "
+        "ui.PaintCraftRow",
+    "ui.CraftMadeRowW": "v1.52.21 -- with ui.UpdateCraftMade; there is no "
+        "right-hand panel to measure a row in",
+    "ui.CraftHalfW": "v1.52.21 -- generalised to ui.CraftBtnW(w, n): the "
+        "shopping panel now divides its width by two, three and four, and "
+        "three constants for one division is three places to get the gutter "
+        "count wrong",
+}
+
+
+def main(argv):
+    args = argv[1:]
+    if args and args[0] == "--selftest":
+        return selftest()
+    ref = "HEAD"
+    if args and not args[0].endswith(".lua"):
+        ref = args.pop(0)
+    paths = args or sorted(glob.glob("core/*.lua") + glob.glob("ui/*.lua"))
+
+    failed = False
+    compared = 0
+    for path in paths:
+        shown = subprocess.run(["git", "show", "%s:%s" % (ref, path)],
+                               capture_output=True, text=True)
+        if shown.returncode != 0:
+            print("skip %s (not in %s -- new file?)" % (path, ref))
+            continue
+        try:
+            current = open(path).read()
+        except FileNotFoundError:
+            print("FAIL %s: file is gone" % path)
+            failed = True
+            continue
+
+        # COMPARE DEFINITION SETS, never "does the name appear in the text".
+        #
+        # The substring test this used to do could be satisfied by a COMMENT
+        # -- and was: deleting ui.RowsFor passed because a comment explaining
+        # the deletion mentioned it by name. It also passed a rename, because
+        # "ui.TableRowsAt" is a substring of "ui.TableRowsAtXX".
+        #
+        # This repo has met that failure before. `sharedlayout.py` once
+        # reported ok on a build where the thing it checks had been reverted,
+        # because it counted the comment naming the function as a call. A
+        # checker fooled by its own documentation is worse than none, and this
+        # one had been fooled for its whole life.
+        compared = compared + 1
+        was = defs(shown.stdout)
+        now = defs(current)
+        gone = was - now
+        intended = sorted(d for d in gone if d in REMOVED_ON_PURPOSE)
+        missing = sorted(d for d in gone if d not in REMOVED_ON_PURPOSE)
+        for d in intended:
+            print("note %s: %s removed on purpose (%s)"
+                  % (path, d, REMOVED_ON_PURPOSE[d]))
+        # A name listed as removed but still defined means the list has gone
+        # stale, and a stale exemption is how a guard quietly stops guarding.
+        stale = sorted(d for d in REMOVED_ON_PURPOSE if d in now)
+        if stale:
+            failed = True
+            print("FAIL %s: listed in REMOVED_ON_PURPOSE but still defined:"
+                  % path)
+            for d in stale:
+                print("       - %s" % d)
+        if missing:
+            failed = True
+            print("FAIL %s: %d of %d definitions MISSING since %s:"
+                  % (path, len(missing), len(was), ref))
+            for m in missing:
+                print("       - %s" % m)
+        else:
+            print("ok   %s: all %d definitions present" % (path, len(was)))
+
+    # A lint that compared NOTHING must not report ok. Without a git repo
+    # every file is skipped as "new", and the run exits 0 having checked
+    # nothing at all -- which is indistinguishable from a clean pass. That is
+    # how this lint sat in tests/sabotage.py's suite list looking green while
+    # being completely inert.
+    if compared == 0:
+        print("\ndefinitions: FAILED -- compared nothing (no git repo, or "
+              "the ref has none of these files). A lint that checks nothing "
+              "must not report ok.")
+        return 1
+
+    if failed:
+        print("\ndefinitions: FAILED -- an edit removed something it should "
+              "not have")
+        return 1
+    print("definitions: ok (%d files compared)" % compared)
+    return 0
+
+
+# A lint that never fires is worse than none -- the rule this repo already
+# applies to lua50.py through selftest.py. This one had been inert in a
+# different way: it asked whether a name appeared ANYWHERE in the file text,
+# so a rename passed as a substring and a deletion passed when a comment
+# mentioned the name. Both cases are pinned here.
+def selftest():
+    cases = [
+        ("a plain definition is seen",
+         defs("function ui.Foo()\nend\n") == {"ui.Foo"}),
+        ("a local one too",
+         defs("local function Bar()\nend\n") == {"Bar"}),
+        ("and the assigned form",
+         defs("Baz = function(x)\nend\n") == {"Baz"}),
+        # THE TWO IT USED TO MISS.
+        ("a RENAME leaves the old name undefined",
+         "ui.Foo" in (defs("function ui.Foo()\nend\n")
+                      - defs("function ui.FooNew()\nend\n"))),
+        ("a COMMENT mentioning the name does not define it",
+         defs("-- ui.Foo used to live here.\n") == set()),
+        ("...so a deletion explained in a comment is still a deletion",
+         "ui.Foo" in (defs("function ui.Foo()\nend\n")
+                      - defs("-- ui.Foo was removed.\n"))),
+        ("an untouched file reports nothing missing",
+         (defs("function ui.Foo()\nend\n")
+          - defs("function ui.Foo()\nend\n")) == set()),
+    ]
+    bad = [label for label, ok in cases if not ok]
+    for label, ok in cases:
+        if not ok:
+            print("FAIL selftest: " + label)
+    if bad:
+        print("definitions selftest: FAILED -- the lint does not fire")
+        return 1
+    print("definitions selftest: ok (%d checks)" % len(cases))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

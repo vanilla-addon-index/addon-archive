@@ -1,0 +1,46 @@
+--=============================================================================
+-- Class_Mage.lua  -  Mage module for AegisRP
+--
+-- A class-buff strip (like Priest/Druid): one button per raid class showing the
+-- Intellect buff assigned to that class. Left-click casts the group version
+-- (Arcane Brilliance), right-click tops off the next member, hover opens the
+-- player pop-out. The engine (Core) drives coverage, casting and the strip.
+--=============================================================================
+
+local M = AegisRP:NewClass("MAGE")
+
+M.buffs = {
+    { name = "Arcane Intellect", group = "Arcane Brilliance",
+      icons = { "Spell_Holy_MagicalSentry", "Spell_Holy_ArcaneIntellect" },
+      dur = 30*60, gdur = 60*60 },
+}
+
+M.debuffs = {
+    { name = "Scorch", dur = 30,
+      icon = "Spell_Fire_SoulBurn" },
+}
+
+function M:OnActivate()
+    AegisRP.BuildClassBuffs()
+end
+
+function M:Toggle()
+    AegisRP.BuildClassBuffs():Toggle()
+end
+
+-- Assignment model: Mage duties. Wids are stable.
+if AegisRP.Assign then
+    local D = AegisRP.Assign.RegisterDuty
+    D{ key="INTELLECT", wid=4,  class="MAGE", tab="raidbuff", spell="Arcane Intellect", target="none", multi=false, dur=30*60, icon="Interface\\Icons\\Spell_Holy_MagicalSentry" }
+    D{ key="SCORCH",    wid=13, class="MAGE", tab="debuff",   spell="Scorch",           target="none", multi=true,  dur=30, icon="Interface\\Icons\\Spell_Fire_SoulBurn" }
+    -- Crowd control rides the SAME catalog with tab="cc", so CC shares the one
+    -- append-only wid space and can never collide with a debuff on the wire.
+    -- It is assigned differently, though: the target is a raid MARK, held in
+    -- the separate cc domain (A.SetCC), not in the duty value - so target
+    -- stays "none" and multi stays false on every CC entry.
+    --
+    -- `note` is the restriction a leader has to know before handing the mark
+    -- out; it is display-only and appears on the card and in the tooltip.
+    D{ key="POLYMORPH", wid=28, class="MAGE", tab="cc", spell="Polymorph", target="none", multi=false, dur=50,
+       note="Humanoid, Beast", icon="Interface\\Icons\\Spell_Nature_Polymorph" }
+end

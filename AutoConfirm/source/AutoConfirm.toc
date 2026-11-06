@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: Auto Confirm
+## Notes: Auto-confirm QOL Addon.
+## Author: Luke E
+## Version: 1.0.3
+## SavedVariables: AutoConfirmationSettings
+
+Core.lua
+Options.lua

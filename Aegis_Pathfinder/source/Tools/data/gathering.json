@@ -1,0 +1,2782 @@
+{
+ "_about": "Facts behind the Herbalism, Skinning and Fishing guides and Mining's ore, extracted by Tools/build/build_gathering.py from pfQuest (with pfQuest-turtle) and CMaNGOS classic-db. Read by Tools/build/convert_professions.py.",
+ "herbs": [
+  {
+   "name": "Peacebloom",
+   "skill": 1,
+   "zones": {
+    "Alah'Thalas": 1,
+    "Blackstone Island": 13,
+    "Darkshore": 18,
+    "Desolace": 6,
+    "Dun Morogh": 41,
+    "Durotar": 56,
+    "Eastern Plaguelands": 1,
+    "Elwynn Forest": 42,
+    "Gilneas": 7,
+    "Grim Reaches": 17,
+    "Hillsbrad Foothills": 3,
+    "Loch Modan": 17,
+    "Mulgore": 61,
+    "Northwind": 1,
+    "Redridge Mountains": 8,
+    "Silverpine Forest": 32,
+    "Stonetalon Mountains": 3,
+    "Teldrassil": 43,
+    "Thalassian Highlands": 10,
+    "The Barrens": 87,
+    "The Deadmines": 1,
+    "Tirisfal Glades": 64,
+    "Undercity": 1,
+    "Western Plaguelands": 6,
+    "Westfall": 15
+   }
+  },
+  {
+   "name": "Silverleaf",
+   "skill": 1,
+   "zones": {
+    "Alah'Thalas": 1,
+    "Badlands": 3,
+    "Blackstone Island": 10,
+    "Darkshore": 63,
+    "Desolace": 5,
+    "Dun Morogh": 54,
+    "Durotar": 131,
+    "Eastern Plaguelands": 1,
+    "Elwynn Forest": 70,
+    "Gilneas": 1,
+    "Grim Reaches": 79,
+    "Hillsbrad Foothills": 1,
+    "Loch Modan": 78,
+    "Mulgore": 82,
+    "Silverpine Forest": 50,
+    "Stonetalon Mountains": 2,
+    "Teldrassil": 46,
+    "Thalassian Highlands": 8,
+    "The Barrens": 175,
+    "Tirisfal Glades": 79,
+    "Uldaman": 3,
+    "Undercity": 1,
+    "Wailing Caverns": 4,
+    "Western Plaguelands": 6,
+    "Westfall": 24
+   }
+  },
+  {
+   "name": "Earthroot",
+   "skill": 15,
+   "zones": {
+    "Alah'Thalas": 2,
+    "Blackstone Island": 8,
+    "Burning Steppes": 1,
+    "Darkshore": 20,
+    "Darnassus": 1,
+    "Desolace": 2,
+    "Dun Morogh": 31,
+    "Durotar": 34,
+    "Eastern Plaguelands": 1,
+    "Elwynn Forest": 22,
+    "Felwood": 1,
+    "Gilneas": 2,
+    "Grim Reaches": 8,
+    "Hillsbrad Foothills": 1,
+    "Loch Modan": 8,
+    "Mulgore": 27,
+    "Redridge Mountains": 23,
+    "Scarlet Monastery": 1,
+    "Silverpine Forest": 16,
+    "Stonetalon Mountains": 3,
+    "Teldrassil": 26,
+    "Thalassian Highlands": 9,
+    "The Barrens": 151,
+    "Tirisfal Glades": 37,
+    "Wailing Caverns": 6,
+    "Western Plaguelands": 4,
+    "Westfall": 24
+   }
+  },
+  {
+   "name": "Mageroyal",
+   "skill": 50,
+   "zones": {
+    "Alterac Mountains": 3,
+    "Ashenvale": 62,
+    "Darkshore": 60,
+    "Durotar": 18,
+    "Duskwood": 12,
+    "Dustwallow Marsh": 4,
+    "Elwynn Forest": 1,
+    "Gilneas": 9,
+    "Grim Reaches": 40,
+    "Hillsbrad Foothills": 10,
+    "Loch Modan": 25,
+    "Mulgore": 3,
+    "Redridge Mountains": 22,
+    "Silverpine Forest": 40,
+    "Stonetalon Mountains": 17,
+    "Teldrassil": 12,
+    "The Barrens": 376,
+    "Thousand Needles": 2,
+    "Tirisfal Glades": 4,
+    "Wailing Caverns": 11,
+    "Westfall": 47,
+    "Wetlands": 24
+   }
+  },
+  {
+   "name": "Briarthorn",
+   "skill": 70,
+   "zones": {
+    "Alterac Mountains": 7,
+    "Arathi Highlands": 2,
+    "Ashenvale": 58,
+    "Crescent Grove": 3,
+    "Darkshore": 51,
+    "Duskwood": 88,
+    "Elwynn Forest": 2,
+    "Felwood": 1,
+    "Gilneas": 23,
+    "Grim Reaches": 38,
+    "Hillsbrad Foothills": 31,
+    "Loch Modan": 17,
+    "Mulgore": 2,
+    "Razorfen Kraul": 6,
+    "Redridge Mountains": 28,
+    "Silverpine Forest": 29,
+    "Stonetalon Mountains": 32,
+    "The Barrens": 90,
+    "The Deadmines": 2,
+    "Tirisfal Glades": 4,
+    "Wailing Caverns": 1,
+    "Westfall": 41,
+    "Wetlands": 31
+   }
+  },
+  {
+   "name": "Stranglekelp",
+   "skill": 85,
+   "zones": {
+    "Alterac Mountains": 2,
+    "Arathi Highlands": 8,
+    "Ashenvale": 110,
+    "Azshara": 12,
+    "Balor": 8,
+    "Blackfathom Deeps": 5,
+    "Blackstone Island": 10,
+    "Darkshore": 109,
+    "Desolace": 24,
+    "Durotar": 19,
+    "Dustwallow Marsh": 5,
+    "Feralas": 27,
+    "Gillijim's Isle": 17,
+    "Gilneas": 50,
+    "Hillsbrad Foothills": 40,
+    "Lapidis Isle": 12,
+    "Maraudon": 3,
+    "Northwind": 1,
+    "Silverpine Forest": 17,
+    "Stonetalon Mountains": 12,
+    "Stranglethorn Vale": 64,
+    "Swamp of Sorrows": 6,
+    "Tel'Abim": 32,
+    "Thalassian Highlands": 5,
+    "The Barrens": 77,
+    "The Hinterlands": 8,
+    "Undercity": 1,
+    "Westfall": 20,
+    "Wetlands": 42
+   }
+  },
+  {
+   "name": "Bruiseweed",
+   "skill": 100,
+   "zones": {
+    "Alterac Mountains": 44,
+    "Arathi Highlands": 6,
+    "Ashenvale": 102,
+    "Blackfathom Deeps": 2,
+    "Burning Steppes": 5,
+    "Darkshore": 42,
+    "Desolace": 46,
+    "Duskwood": 80,
+    "Dustwallow Marsh": 7,
+    "Elwynn Forest": 4,
+    "Feralas": 4,
+    "Gilneas": 51,
+    "Grim Reaches": 91,
+    "Hillsbrad Foothills": 111,
+    "Loch Modan": 55,
+    "Maraudon": 11,
+    "Mulgore": 4,
+    "Redridge Mountains": 96,
+    "Silverpine Forest": 50,
+    "Stonetalon Mountains": 146,
+    "The Barrens": 203,
+    "The Deadmines": 2,
+    "Thousand Needles": 57,
+    "Wailing Caverns": 12,
+    "Western Plaguelands": 2,
+    "Westfall": 74,
+    "Wetlands": 95
+   }
+  },
+  {
+   "name": "Wild Steelbloom",
+   "skill": 115,
+   "zones": {
+    "Alterac Mountains": 16,
+    "Arathi Highlands": 123,
+    "Ashenvale": 20,
+    "Badlands": 3,
+    "Balor": 1,
+    "Desolace": 12,
+    "Duskwood": 10,
+    "Felwood": 3,
+    "Feralas": 3,
+    "Grim Reaches": 25,
+    "Hillsbrad Foothills": 2,
+    "Mulgore": 1,
+    "Northwind": 6,
+    "Stonetalon Mountains": 95,
+    "Stranglethorn Vale": 37,
+    "The Barrens": 39,
+    "The Hinterlands": 6,
+    "Thousand Needles": 36,
+    "Wetlands": 46
+   }
+  },
+  {
+   "name": "Grave Moss",
+   "skill": 120,
+   "zones": {
+    "Alterac Mountains": 7,
+    "Arathi Highlands": 7,
+    "Balor": 3,
+    "Desolace": 16,
+    "Dun Morogh": 3,
+    "Duskwood": 33,
+    "Eastern Plaguelands": 1,
+    "Grim Reaches": 4,
+    "Northwind": 4,
+    "Razorfen Downs": 4,
+    "Scarlet Monastery Graveyard": 1,
+    "The Barrens": 4,
+    "Wetlands": 13
+   }
+  },
+  {
+   "name": "Kingsblood",
+   "skill": 125,
+   "zones": {
+    "Alterac Mountains": 19,
+    "Arathi Highlands": 21,
+    "Ashenvale": 23,
+    "Badlands": 20,
+    "Desolace": 14,
+    "Duskwood": 16,
+    "Dustwallow Marsh": 8,
+    "Felwood": 1,
+    "Feralas": 1,
+    "Gilneas": 10,
+    "Grim Reaches": 30,
+    "Hillsbrad Foothills": 37,
+    "Northwind": 9,
+    "Scarlet Monastery Graveyard": 7,
+    "Stonetalon Mountains": 23,
+    "Stranglethorn Vale": 50,
+    "Swamp of Sorrows": 10,
+    "The Barrens": 37,
+    "Thousand Needles": 15,
+    "Wailing Caverns": 10,
+    "Wetlands": 30
+   }
+  },
+  {
+   "name": "Liferoot",
+   "skill": 150,
+   "zones": {
+    "Alterac Mountains": 43,
+    "Arathi Highlands": 47,
+    "Ashenvale": 10,
+    "Balor": 5,
+    "Crescent Grove": 7,
+    "Desolace": 12,
+    "Dire Maul": 2,
+    "Dustwallow Marsh": 24,
+    "Feralas": 20,
+    "Grim Reaches": 42,
+    "Hillsbrad Foothills": 7,
+    "Northwind": 4,
+    "Scarlet Monastery Cathedral": 2,
+    "Scarlet Monastery Library": 1,
+    "Silverpine Forest": 16,
+    "Stranglethorn Vale": 49,
+    "Swamp of Sorrows": 3,
+    "The Barrens": 5,
+    "The Hinterlands": 10,
+    "Wailing Caverns": 3,
+    "Western Plaguelands": 2,
+    "Wetlands": 54
+   }
+  },
+  {
+   "name": "Fadeleaf",
+   "skill": 160,
+   "zones": {
+    "Alterac Mountains": 32,
+    "Arathi Highlands": 48,
+    "Badlands": 22,
+    "Balor": 11,
+    "Dun Morogh": 1,
+    "Dustwallow Marsh": 15,
+    "Grim Reaches": 14,
+    "Hillsbrad Foothills": 4,
+    "Northwind": 7,
+    "Razorfen Kraul": 2,
+    "Scarlet Monastery Armory": 2,
+    "Scarlet Monastery Library": 3,
+    "Stranglethorn Vale": 33,
+    "Swamp of Sorrows": 45,
+    "The Barrens": 3,
+    "The Hinterlands": 22,
+    "Western Plaguelands": 7
+   }
+  },
+  {
+   "name": "Goldthorn",
+   "skill": 170,
+   "zones": {
+    "Alterac Mountains": 64,
+    "Arathi Highlands": 100,
+    "Badlands": 37,
+    "Balor": 3,
+    "Dire Maul": 3,
+    "Dun Morogh": 2,
+    "Dustwallow Marsh": 23,
+    "Feralas": 30,
+    "Gilneas": 17,
+    "Grim Reaches": 20,
+    "Hillsbrad Foothills": 5,
+    "Northwind": 12,
+    "Razorfen Downs": 2,
+    "Scarlet Monastery Cathedral": 10,
+    "Searing Gorge": 2,
+    "Stranglethorn Vale": 167,
+    "Swamp of Sorrows": 83,
+    "The Barrens": 5,
+    "The Hinterlands": 49,
+    "Uldaman": 1,
+    "Western Plaguelands": 1
+   }
+  },
+  {
+   "name": "Khadgar's Whisker",
+   "skill": 185,
+   "zones": {
+    "Alterac Mountains": 27,
+    "Arathi Highlands": 72,
+    "Azshara": 5,
+    "Badlands": 26,
+    "Balor": 10,
+    "Dire Maul": 1,
+    "Dustwallow Marsh": 26,
+    "Feralas": 18,
+    "Gilneas": 11,
+    "Grim Reaches": 19,
+    "Hillsbrad Foothills": 9,
+    "Northwind": 10,
+    "Searing Gorge": 1,
+    "Silverpine Forest": 1,
+    "Stormwind City": 2,
+    "Stranglethorn Vale": 168,
+    "Swamp of Sorrows": 50,
+    "The Barrens": 6,
+    "The Hinterlands": 27,
+    "Western Plaguelands": 2
+   }
+  },
+  {
+   "name": "Wintersbite",
+   "skill": 195,
+   "zones": {
+    "Alterac Mountains": 31,
+    "Alterac Valley": 39,
+    "Hillsbrad Foothills": 17,
+    "Icepoint Rock": 3
+   }
+  },
+  {
+   "name": "Firebloom",
+   "skill": 205,
+   "zones": {
+    "Badlands": 20,
+    "Blasted Lands": 42,
+    "Caverns of Time": 5,
+    "Grim Reaches": 1,
+    "Northwind": 16,
+    "Searing Gorge": 44,
+    "Stonetalon Mountains": 1,
+    "Stranglethorn Vale": 2,
+    "Tanaris": 56
+   }
+  },
+  {
+   "name": "Purple Lotus",
+   "skill": 210,
+   "zones": {
+    "Arathi Highlands": 1,
+    "Ashenvale": 17,
+    "Azshara": 113,
+    "Badlands": 10,
+    "Caverns of Time": 8,
+    "Darkshore": 1,
+    "Dire Maul": 1,
+    "Feralas": 20,
+    "Gillijim's Isle": 6,
+    "Gilneas": 24,
+    "Grim Reaches": 7,
+    "Lapidis Isle": 3,
+    "Loch Modan": 2,
+    "Silverpine Forest": 2,
+    "Stranglethorn Vale": 14,
+    "Tanaris": 30,
+    "The Hinterlands": 36,
+    "Uldaman": 2,
+    "Zul'Gurub": 3
+   }
+  },
+  {
+   "name": "Arthas' Tears",
+   "skill": 220,
+   "zones": {
+    "Ashenvale": 1,
+    "Darkshore": 2,
+    "Eastern Plaguelands": 25,
+    "Felwood": 27,
+    "Hyjal": 1,
+    "Razorfen Downs": 3,
+    "Scarlet Enclave": 4,
+    "Thalassian Highlands": 1,
+    "Tirisfal Glades": 5,
+    "Western Plaguelands": 48
+   }
+  },
+  {
+   "name": "Sungrass",
+   "skill": 230,
+   "zones": {
+    "Ashenvale": 1,
+    "Azshara": 86,
+    "Blasted Lands": 36,
+    "Burning Steppes": 18,
+    "Dire Maul": 1,
+    "Eastern Plaguelands": 38,
+    "Felwood": 15,
+    "Feralas": 20,
+    "GM Island": 4,
+    "Gillijim's Isle": 6,
+    "Hyjal": 1,
+    "Lapidis Isle": 12,
+    "Scarlet Enclave": 18,
+    "Silithus": 2,
+    "Tel'Abim": 6,
+    "Thalassian Highlands": 5,
+    "The Hinterlands": 73,
+    "Tirisfal Glades": 1,
+    "Un'Goro Crater": 19,
+    "Western Plaguelands": 9,
+    "Zul'Gurub": 2
+   }
+  },
+  {
+   "name": "Blindweed",
+   "skill": 235,
+   "zones": {
+    "Grim Reaches": 12,
+    "Maraudon": 3,
+    "Swamp of Sorrows": 123,
+    "Un'Goro Crater": 15
+   }
+  },
+  {
+   "name": "Ghost Mushroom",
+   "skill": 245,
+   "zones": {
+    "Arathi Highlands": 4,
+    "Desolace": 12,
+    "Gillijim's Isle": 4,
+    "Maraudon": 20,
+    "The Hinterlands": 33
+   }
+  },
+  {
+   "name": "Gromsblood",
+   "skill": 250,
+   "zones": {
+    "Ashenvale": 9,
+    "Blasted Lands": 25,
+    "Darkshore": 2,
+    "Desolace": 12,
+    "Felwood": 86,
+    "Hyjal": 15,
+    "Winterspring": 3
+   }
+  },
+  {
+   "name": "Golden Sansam",
+   "skill": 260,
+   "zones": {
+    "Alterac Valley": 16,
+    "Azshara": 77,
+    "Burning Steppes": 27,
+    "Dire Maul": 1,
+    "Eastern Plaguelands": 39,
+    "Felwood": 26,
+    "Feralas": 15,
+    "Gates of Ahn'Qiraj": 3,
+    "Gillijim's Isle": 5,
+    "Hyjal": 15,
+    "Lapidis Isle": 7,
+    "Northwind": 4,
+    "Scarlet Enclave": 24,
+    "Silithus": 24,
+    "Thalassian Highlands": 4,
+    "The Hinterlands": 24,
+    "Un'Goro Crater": 75,
+    "Winterspring": 1,
+    "Zul'Gurub": 5
+   }
+  },
+  {
+   "name": "Dreamfoil",
+   "skill": 270,
+   "zones": {
+    "Alterac Valley": 91,
+    "Azshara": 104,
+    "Burning Steppes": 42,
+    "Eastern Plaguelands": 62,
+    "Felwood": 44,
+    "Gillijim's Isle": 8,
+    "Hyjal": 17,
+    "Lapidis Isle": 6,
+    "Northwind": 7,
+    "Scarlet Enclave": 31,
+    "Silithus": 22,
+    "Tanaris": 1,
+    "Tel'Abim": 9,
+    "Thalassian Highlands": 4,
+    "Un'Goro Crater": 77,
+    "Western Plaguelands": 32,
+    "Winterspring": 5,
+    "Zul'Gurub": 5
+   }
+  },
+  {
+   "name": "Mountain Silversage",
+   "skill": 280,
+   "zones": {
+    "Alterac Valley": 117,
+    "Azshara": 51,
+    "Blackrock Mountain": 2,
+    "Burning Steppes": 26,
+    "Eastern Plaguelands": 11,
+    "Felwood": 1,
+    "Gates of Ahn'Qiraj": 1,
+    "Hyjal": 16,
+    "Northwind": 3,
+    "Scarlet Enclave": 8,
+    "Searing Gorge": 2,
+    "Silithus": 17,
+    "Tel'Abim": 8,
+    "Thalassian Highlands": 1,
+    "Un'Goro Crater": 70,
+    "Winterspring": 84,
+    "Zul'Gurub": 4
+   }
+  },
+  {
+   "name": "Plaguebloom",
+   "skill": 285,
+   "zones": {
+    "Ashenvale": 4,
+    "Darkshore": 4,
+    "Eastern Plaguelands": 136,
+    "Felwood": 100,
+    "Hyjal": 5,
+    "Scarlet Enclave": 68,
+    "Stratholme": 8,
+    "Thalassian Highlands": 12,
+    "Western Plaguelands": 76
+   }
+  },
+  {
+   "name": "Icecap",
+   "skill": 290,
+   "zones": {
+    "Alterac Valley": 77,
+    "Felwood": 2,
+    "Winterspring": 150
+   }
+  },
+  {
+   "name": "Black Lotus",
+   "skill": 300,
+   "zones": {
+    "Alterac Valley": 6,
+    "Blackrock Mountain": 2,
+    "Burning Steppes": 51,
+    "Eastern Plaguelands": 50,
+    "Felwood": 2,
+    "Feralas": 1,
+    "Gates of Ahn'Qiraj": 4,
+    "Hyjal": 44,
+    "Northwind": 8,
+    "Scarlet Enclave": 25,
+    "Searing Gorge": 1,
+    "Silithus": 65,
+    "Tel'Abim": 17,
+    "Thalassian Highlands": 7,
+    "Un'Goro Crater": 2,
+    "Western Plaguelands": 2,
+    "Winterspring": 54
+   }
+  }
+ ],
+ "mines": [
+  {
+   "name": "Copper Vein",
+   "ore": "Copper Ore",
+   "skill": 1,
+   "zones": {
+    "Alah'Thalas": 5,
+    "Alterac Mountains": 2,
+    "Arathi Highlands": 2,
+    "Ashenvale": 48,
+    "Blackstone Island": 31,
+    "Burning Steppes": 4,
+    "Darkshore": 85,
+    "Desolace": 7,
+    "Dun Morogh": 75,
+    "Durotar": 126,
+    "Duskwood": 26,
+    "Eastern Plaguelands": 2,
+    "Elwynn Forest": 89,
+    "Felwood": 3,
+    "Feralas": 3,
+    "Gilneas": 16,
+    "Gnomeregan": 1,
+    "Grim Reaches": 98,
+    "Hillsbrad Foothills": 17,
+    "Lapidis Isle": 1,
+    "Loch Modan": 78,
+    "Mulgore": 67,
+    "Redridge Mountains": 51,
+    "Silverpine Forest": 78,
+    "Stonetalon Mountains": 63,
+    "Thalassian Highlands": 38,
+    "The Barrens": 187,
+    "The Deadmines": 22,
+    "Thousand Needles": 42,
+    "Tirisfal Glades": 62,
+    "Uldaman": 7,
+    "Undercity": 1,
+    "Wailing Caverns": 11,
+    "Western Plaguelands": 6,
+    "Westfall": 78,
+    "Wetlands": 35
+   }
+  },
+  {
+   "name": "Incendicite Mineral Vein",
+   "ore": "Incendicite Ore",
+   "skill": 65,
+   "zones": {
+    "Grim Reaches": 21,
+    "Wetlands": 21
+   }
+  },
+  {
+   "name": "Tin Vein",
+   "ore": "Tin Ore",
+   "skill": 65,
+   "zones": {
+    "Alterac Mountains": 16,
+    "Arathi Highlands": 14,
+    "Ashenvale": 29,
+    "Blackfathom Deeps": 1,
+    "Burning Steppes": 4,
+    "Darkshore": 23,
+    "Desolace": 2,
+    "Durotar": 2,
+    "Duskwood": 22,
+    "Dustwallow Marsh": 5,
+    "Felwood": 5,
+    "Gilneas": 10,
+    "Grim Reaches": 61,
+    "Hillsbrad Foothills": 35,
+    "Loch Modan": 20,
+    "Mulgore": 1,
+    "Redridge Mountains": 36,
+    "Silverpine Forest": 18,
+    "Stonetalon Mountains": 41,
+    "Stranglethorn Vale": 9,
+    "The Barrens": 46,
+    "The Deadmines": 12,
+    "Thousand Needles": 14,
+    "Tirisfal Glades": 12,
+    "Uldaman": 3,
+    "Wailing Caverns": 3,
+    "Westfall": 40,
+    "Wetlands": 49
+   }
+  },
+  {
+   "name": "Silver Vein",
+   "ore": "Silver Ore",
+   "skill": 75,
+   "zones": {
+    "Alterac Mountains": 4,
+    "Arathi Highlands": 3,
+    "Ashenvale": 48,
+    "Balor": 2,
+    "Blackfathom Deeps": 1,
+    "Darkshore": 2,
+    "Dragonmaw Retreat": 1,
+    "Dun Morogh": 1,
+    "Duskwood": 1,
+    "Dustwallow Marsh": 1,
+    "Felwood": 2,
+    "Feralas": 2,
+    "Gillijim's Isle": 1,
+    "Gilneas": 2,
+    "Grim Reaches": 13,
+    "Hillsbrad Foothills": 20,
+    "Loch Modan": 1,
+    "Northwind": 6,
+    "Redridge Mountains": 1,
+    "Silverpine Forest": 1,
+    "Stonetalon Mountains": 6,
+    "Stranglethorn Vale": 4,
+    "The Barrens": 18,
+    "The Deadmines": 2,
+    "Thousand Needles": 4,
+    "Tirisfal Glades": 1,
+    "Westfall": 6,
+    "Wetlands": 7
+   }
+  },
+  {
+   "name": "Iron Deposit",
+   "ore": "Iron Ore",
+   "skill": 125,
+   "zones": {
+    "Alterac Mountains": 94,
+    "Arathi Highlands": 183,
+    "Ashenvale": 52,
+    "Badlands": 86,
+    "Balor": 35,
+    "Blasted Lands": 4,
+    "Burning Steppes": 5,
+    "Caverns of Time": 5,
+    "Desolace": 89,
+    "Dragonmaw Retreat": 8,
+    "Dun Morogh": 4,
+    "Duskwood": 15,
+    "Dustwallow Marsh": 18,
+    "Felwood": 1,
+    "Feralas": 32,
+    "Gilneas": 42,
+    "Grim Reaches": 117,
+    "Hillsbrad Foothills": 43,
+    "Loch Modan": 6,
+    "Maraudon": 16,
+    "Northwind": 80,
+    "Razorfen Kraul": 3,
+    "Searing Gorge": 25,
+    "Silverpine Forest": 3,
+    "Stonetalon Mountains": 22,
+    "Stranglethorn Vale": 42,
+    "Swamp of Sorrows": 46,
+    "Tanaris": 45,
+    "The Barrens": 24,
+    "The Hinterlands": 23,
+    "Thousand Needles": 98,
+    "Uldaman": 9,
+    "Western Plaguelands": 7,
+    "Wetlands": 23
+   }
+  },
+  {
+   "name": "Indurium Mineral Vein",
+   "ore": "Indurium Ore",
+   "skill": 150,
+   "zones": {
+    "Uldaman": 3
+   }
+  },
+  {
+   "name": "Gold Vein",
+   "ore": "Gold Ore",
+   "skill": 155,
+   "zones": {
+    "Alterac Mountains": 2,
+    "Alterac Valley": 11,
+    "Arathi Highlands": 2,
+    "Ashenvale": 2,
+    "Badlands": 6,
+    "Balor": 5,
+    "Blasted Lands": 6,
+    "Caverns of Time": 4,
+    "Desolace": 3,
+    "Dragonmaw Retreat": 2,
+    "Durotar": 1,
+    "Duskwood": 4,
+    "Dustwallow Marsh": 2,
+    "Feralas": 14,
+    "Gilneas": 2,
+    "Grim Reaches": 16,
+    "Hillsbrad Foothills": 3,
+    "Maraudon": 2,
+    "Northwind": 8,
+    "Razorfen Kraul": 1,
+    "Searing Gorge": 1,
+    "Stonetalon Mountains": 13,
+    "Stranglethorn Vale": 48,
+    "Swamp of Sorrows": 25,
+    "Tanaris": 60,
+    "The Barrens": 9,
+    "The Hinterlands": 3,
+    "Thousand Needles": 43,
+    "Uldaman": 1,
+    "Un'Goro Crater": 3,
+    "Westfall": 1,
+    "Wetlands": 3,
+    "Winterspring": 5
+   }
+  },
+  {
+   "name": "Mithril Deposit",
+   "ore": "Mithril Ore",
+   "skill": 175,
+   "zones": {
+    "Alterac Mountains": 34,
+    "Alterac Valley": 58,
+    "Arathi Highlands": 47,
+    "Azshara": 38,
+    "Badlands": 34,
+    "Blasted Lands": 38,
+    "Burning Steppes": 13,
+    "Caverns of Time": 1,
+    "Darkshore": 1,
+    "Desolace": 37,
+    "Dire Maul": 2,
+    "Durotar": 2,
+    "Dustwallow Marsh": 5,
+    "Eastern Plaguelands": 3,
+    "Felwood": 8,
+    "Feralas": 31,
+    "Gates of Ahn'Qiraj": 1,
+    "Gilneas": 48,
+    "Grim Reaches": 3,
+    "Hillsbrad Foothills": 12,
+    "Icepoint Rock": 6,
+    "Loch Modan": 2,
+    "Maraudon": 23,
+    "Northwind": 8,
+    "Searing Gorge": 28,
+    "Silithus": 4,
+    "Stonetalon Mountains": 6,
+    "Stranglethorn Vale": 20,
+    "Swamp of Sorrows": 16,
+    "Tanaris": 33,
+    "The Barrens": 4,
+    "The Hinterlands": 28,
+    "Thousand Needles": 11,
+    "Tirisfal Glades": 1,
+    "Uldaman": 4,
+    "Un'Goro Crater": 8,
+    "Western Plaguelands": 16,
+    "Wetlands": 1,
+    "Winterspring": 3
+   }
+  },
+  {
+   "name": "Dark Iron Deposit",
+   "ore": "Dark Iron Ore",
+   "skill": 230,
+   "zones": {
+    "Badlands": 1,
+    "Blackrock Depths": 26,
+    "Blackrock Mountain": 1,
+    "Burning Steppes": 62,
+    "Hateforge Quarry": 2,
+    "Molten Core": 39,
+    "Northwind": 13,
+    "Searing Gorge": 49
+   }
+  },
+  {
+   "name": "Truesilver Deposit",
+   "ore": "Truesilver Ore",
+   "skill": 230,
+   "zones": {
+    "Alterac Mountains": 14,
+    "Alterac Valley": 32,
+    "Arathi Highlands": 19,
+    "Azshara": 13,
+    "Badlands": 34,
+    "Blasted Lands": 24,
+    "Burning Steppes": 124,
+    "Caverns of Time": 1,
+    "Darkshore": 5,
+    "Desolace": 8,
+    "Dire Maul": 1,
+    "Dustwallow Marsh": 1,
+    "Eastern Plaguelands": 21,
+    "Felwood": 84,
+    "Feralas": 11,
+    "Gillijim's Isle": 3,
+    "Gilneas": 5,
+    "Grim Reaches": 4,
+    "Hillsbrad Foothills": 6,
+    "Hyjal": 3,
+    "Lapidis Isle": 5,
+    "Maraudon": 3,
+    "Northwind": 23,
+    "Scarlet Enclave": 16,
+    "Searing Gorge": 37,
+    "Silithus": 5,
+    "Stonetalon Mountains": 3,
+    "Stranglethorn Vale": 14,
+    "Swamp of Sorrows": 7,
+    "Tanaris": 23,
+    "The Barrens": 1,
+    "The Hinterlands": 32,
+    "Tirisfal Glades": 1,
+    "Un'Goro Crater": 17,
+    "Western Plaguelands": 13,
+    "Wetlands": 1,
+    "Winterspring": 12
+   }
+  },
+  {
+   "name": "Small Thorium Vein",
+   "ore": "Thorium Ore",
+   "skill": 245,
+   "zones": {
+    "Alterac Valley": 64,
+    "Arathi Highlands": 1,
+    "Azshara": 25,
+    "Blackrock Mountain": 5,
+    "Blasted Lands": 30,
+    "Burning Steppes": 84,
+    "Caverns of Time": 9,
+    "Darkshore": 3,
+    "Dire Maul": 2,
+    "Eastern Plaguelands": 56,
+    "Felwood": 42,
+    "Feralas": 9,
+    "Gates of Ahn'Qiraj": 7,
+    "Gillijim's Isle": 9,
+    "Hateforge Quarry": 6,
+    "Hyjal": 70,
+    "Lapidis Isle": 8,
+    "Northwind": 21,
+    "Scarlet Enclave": 32,
+    "Searing Gorge": 16,
+    "Silithus": 71,
+    "Swamp of Sorrows": 7,
+    "Tanaris": 67,
+    "Tel'Abim": 28,
+    "Thalassian Highlands": 5,
+    "The Hinterlands": 10,
+    "Tirisfal Glades": 1,
+    "Un'Goro Crater": 76,
+    "Western Plaguelands": 34,
+    "Winterspring": 78
+   }
+  },
+  {
+   "name": "Rich Thorium Vein",
+   "ore": "Thorium Ore",
+   "skill": 275,
+   "zones": {
+    "Alterac Valley": 20,
+    "Arathi Highlands": 1,
+    "Azshara": 25,
+    "Blackrock Mountain": 5,
+    "Blasted Lands": 29,
+    "Burning Steppes": 84,
+    "Caverns of Time": 9,
+    "Darkshore": 3,
+    "Dire Maul": 9,
+    "Eastern Plaguelands": 56,
+    "Felwood": 34,
+    "Feralas": 9,
+    "GM Island": 1,
+    "Gates of Ahn'Qiraj": 7,
+    "Gillijim's Isle": 9,
+    "Hyjal": 70,
+    "Lapidis Isle": 8,
+    "Northwind": 21,
+    "Scarlet Enclave": 32,
+    "Searing Gorge": 16,
+    "Silithus": 71,
+    "Swamp of Sorrows": 5,
+    "Tanaris": 62,
+    "Tel'Abim": 28,
+    "Thalassian Highlands": 5,
+    "The Hinterlands": 10,
+    "Tirisfal Glades": 1,
+    "Un'Goro Crater": 76,
+    "Western Plaguelands": 34,
+    "Winterspring": 78,
+    "Zul'Gurub": 3
+   }
+  }
+ ],
+ "skinning": {
+  "Ahn'Qiraj": {
+   "60": 100
+  },
+  "Alah'Thalas": {
+   "1": 1,
+   "5": 8
+  },
+  "Alterac Mountains": {
+   "1": 7,
+   "3": 1,
+   "5": 14,
+   "15": 11,
+   "21": 27,
+   "22": 8,
+   "23": 13,
+   "24": 1,
+   "25": 26,
+   "30": 90,
+   "31": 17,
+   "32": 47,
+   "33": 61
+  },
+  "Arathi Highlands": {
+   "1": 23,
+   "5": 6,
+   "25": 14,
+   "27": 1,
+   "29": 2,
+   "30": 118,
+   "33": 64,
+   "35": 42,
+   "36": 19,
+   "40": 1
+  },
+  "Ashenvale": {
+   "1": 8,
+   "5": 26,
+   "17": 1,
+   "18": 86,
+   "19": 78,
+   "20": 1,
+   "21": 88,
+   "22": 86,
+   "23": 35,
+   "25": 61,
+   "26": 81,
+   "27": 25,
+   "28": 14,
+   "29": 8,
+   "31": 1,
+   "46": 1,
+   "47": 6
+  },
+  "Azshara": {
+   "46": 29,
+   "47": 19,
+   "49": 61,
+   "51": 81,
+   "52": 150,
+   "53": 145
+  },
+  "Badlands": {
+   "35": 28,
+   "36": 25,
+   "37": 39,
+   "38": 42,
+   "39": 46,
+   "40": 40,
+   "42": 32
+  },
+  "Blackrock Depths": {
+   "49": 96,
+   "54": 6
+  },
+  "Blackrock Spire": {
+   "52": 12,
+   "53": 11,
+   "56": 16
+  },
+  "Blackwing Lair": {
+   "60": 134
+  },
+  "Blasted Lands": {
+   "45": 8,
+   "47": 29,
+   "48": 34,
+   "49": 15,
+   "50": 32,
+   "51": 16,
+   "52": 23,
+   "54": 6
+  },
+  "Burning Steppes": {
+   "40": 1,
+   "51": 44,
+   "52": 11,
+   "53": 21,
+   "54": 17,
+   "55": 12,
+   "56": 9
+  },
+  "Caverns of Time": {
+   "43": 16,
+   "44": 46,
+   "45": 39,
+   "46": 12,
+   "47": 1,
+   "49": 29
+  },
+  "Crescent Grove": {
+   "5": 14
+  },
+  "Darkshore": {
+   "5": 66,
+   "9": 4,
+   "10": 62,
+   "11": 80,
+   "12": 97,
+   "13": 153,
+   "14": 49,
+   "15": 94,
+   "16": 19,
+   "17": 49,
+   "18": 72,
+   "19": 20,
+   "49": 1,
+   "50": 3,
+   "52": 1
+  },
+  "Darnassus": {
+   "1": 3,
+   "5": 16,
+   "30": 1,
+   "50": 2
+  },
+  "Deadwind Pass": {
+   "55": 13
+  },
+  "Desolace": {
+   "1": 2,
+   "6": 3,
+   "7": 13,
+   "8": 2,
+   "9": 3,
+   "30": 69,
+   "31": 80,
+   "33": 77,
+   "34": 41,
+   "35": 75,
+   "36": 4,
+   "37": 48,
+   "38": 23,
+   "39": 5,
+   "40": 2
+  },
+  "Dire Maul": {
+   "46": 8,
+   "47": 16,
+   "48": 14,
+   "49": 6,
+   "53": 7,
+   "57": 60,
+   "58": 68
+  },
+  "Dun Morogh": {
+   "1": 148,
+   "3": 56,
+   "5": 123,
+   "6": 96,
+   "7": 227,
+   "8": 2,
+   "9": 32,
+   "11": 1,
+   "39": 1
+  },
+  "Durotar": {
+   "1": 109,
+   "3": 58,
+   "4": 1,
+   "5": 71,
+   "6": 136,
+   "7": 137,
+   "8": 127,
+   "9": 93,
+   "10": 69,
+   "11": 2,
+   "12": 2,
+   "15": 2,
+   "30": 1
+  },
+  "Duskwood": {
+   "19": 38,
+   "20": 33,
+   "23": 40,
+   "24": 10,
+   "25": 6,
+   "26": 27,
+   "27": 27,
+   "28": 57,
+   "29": 21,
+   "30": 14,
+   "31": 1,
+   "32": 1
+  },
+  "Dustwallow Marsh": {
+   "20": 1,
+   "21": 1,
+   "22": 6,
+   "35": 137,
+   "36": 28,
+   "37": 204,
+   "38": 96,
+   "39": 25,
+   "40": 131,
+   "41": 98,
+   "42": 104,
+   "43": 100,
+   "44": 11,
+   "45": 1
+  },
+  "Eastern Plaguelands": {
+   "5": 8,
+   "50": 1,
+   "53": 51,
+   "54": 86,
+   "55": 94,
+   "57": 130,
+   "60": 17
+  },
+  "Elwynn Forest": {
+   "1": 117,
+   "3": 16,
+   "5": 237,
+   "7": 145,
+   "8": 49,
+   "9": 84,
+   "10": 13,
+   "12": 2,
+   "19": 5,
+   "20": 2
+  },
+  "Emerald Sanctum": {
+   "5": 43
+  },
+  "Felwood": {
+   "1": 2,
+   "9": 4,
+   "11": 1,
+   "12": 1,
+   "16": 1,
+   "18": 3,
+   "26": 19,
+   "27": 1,
+   "28": 3,
+   "47": 93,
+   "49": 89,
+   "50": 9,
+   "51": 50,
+   "52": 8,
+   "56": 1
+  },
+  "Feralas": {
+   "5": 3,
+   "10": 2,
+   "11": 1,
+   "27": 4,
+   "28": 8,
+   "40": 97,
+   "41": 67,
+   "42": 36,
+   "43": 67,
+   "44": 84,
+   "45": 56,
+   "46": 16,
+   "47": 41,
+   "48": 38,
+   "49": 34,
+   "53": 13
+  },
+  "GM Island": {
+   "1": 4
+  },
+  "Gates of Ahn'Qiraj": {
+   "57": 7,
+   "62": 1
+  },
+  "Gilneas": {
+   "1": 6,
+   "3": 1,
+   "5": 6,
+   "14": 4,
+   "15": 27,
+   "16": 22,
+   "21": 14,
+   "22": 14,
+   "23": 10,
+   "25": 37,
+   "55": 1,
+   "57": 1,
+   "59": 1
+  },
+  "Grim Reaches": {
+   "1": 14,
+   "3": 5,
+   "5": 16,
+   "7": 10,
+   "9": 21,
+   "10": 26,
+   "11": 24,
+   "12": 26,
+   "13": 31,
+   "14": 68,
+   "16": 41,
+   "19": 21,
+   "21": 45,
+   "23": 34,
+   "24": 32,
+   "25": 45,
+   "26": 21,
+   "27": 31,
+   "29": 14,
+   "35": 9,
+   "36": 8,
+   "42": 18
+  },
+  "Hillsbrad Foothills": {
+   "1": 15,
+   "3": 3,
+   "5": 12,
+   "21": 46,
+   "22": 45,
+   "23": 42,
+   "24": 1,
+   "25": 103,
+   "27": 18,
+   "30": 40,
+   "31": 17,
+   "32": 39,
+   "33": 28,
+   "40": 4,
+   "41": 1
+  },
+  "Hyjal": {
+   "1": 92,
+   "47": 16,
+   "49": 14,
+   "51": 9,
+   "54": 8,
+   "55": 6
+  },
+  "Loch Modan": {
+   "1": 4,
+   "3": 5,
+   "5": 7,
+   "9": 1,
+   "10": 26,
+   "11": 24,
+   "12": 26,
+   "13": 31,
+   "14": 68,
+   "16": 41,
+   "19": 21
+  },
+  "Maraudon": {
+   "46": 26,
+   "47": 98
+  },
+  "Moonglade": {
+   "5": 73
+  },
+  "Mulgore": {
+   "1": 128,
+   "3": 119,
+   "4": 14,
+   "5": 122,
+   "6": 93,
+   "7": 242,
+   "8": 103,
+   "9": 208,
+   "10": 3,
+   "11": 11,
+   "18": 2,
+   "20": 3,
+   "21": 2,
+   "35": 1,
+   "39": 1
+  },
+  "Northwind": {
+   "1": 125,
+   "3": 8,
+   "5": 2,
+   "55": 6,
+   "62": 1
+  },
+  "Orgrimmar": {
+   "1": 3,
+   "8": 1,
+   "10": 3
+  },
+  "Razorfen Downs": {
+   "1": 1,
+   "34": 8,
+   "37": 2
+  },
+  "Redridge Mountains": {
+   "1": 60,
+   "3": 4,
+   "5": 1,
+   "9": 1,
+   "16": 30,
+   "17": 34,
+   "24": 12
+  },
+  "Scarlet Enclave": {
+   "53": 10,
+   "54": 20,
+   "55": 88,
+   "57": 77
+  },
+  "Scholomance": {
+   "58": 22
+  },
+  "Searing Gorge": {
+   "48": 13,
+   "53": 1
+  },
+  "Shadowfang Keep": {
+   "20": 1
+  },
+  "Silithus": {
+   "53": 11,
+   "54": 79,
+   "55": 68,
+   "56": 111,
+   "57": 151,
+   "62": 1
+  },
+  "Silverpine Forest": {
+   "1": 13,
+   "5": 4,
+   "7": 1,
+   "10": 78,
+   "11": 93,
+   "12": 94,
+   "13": 25,
+   "14": 16,
+   "15": 59,
+   "16": 22,
+   "21": 2,
+   "30": 30
+  },
+  "Stonetalon Mountains": {
+   "1": 7,
+   "5": 7,
+   "8": 5,
+   "9": 4,
+   "16": 27,
+   "17": 11,
+   "18": 42,
+   "19": 24,
+   "21": 23,
+   "22": 66,
+   "23": 45,
+   "24": 9,
+   "25": 6,
+   "26": 10,
+   "27": 11,
+   "28": 1,
+   "30": 18,
+   "31": 17,
+   "34": 1,
+   "35": 1,
+   "37": 1
+  },
+  "Stormwind City": {
+   "1": 6,
+   "5": 2
+  },
+  "Stranglethorn Vale": {
+   "1": 2,
+   "30": 64,
+   "31": 23,
+   "32": 53,
+   "33": 15,
+   "34": 33,
+   "35": 69,
+   "36": 4,
+   "37": 120,
+   "39": 19,
+   "40": 71,
+   "41": 21,
+   "42": 18,
+   "43": 21,
+   "50": 29
+  },
+  "Swamp of Sorrows": {
+   "34": 7,
+   "35": 26,
+   "36": 46,
+   "38": 25,
+   "39": 20,
+   "41": 34,
+   "42": 16,
+   "43": 13,
+   "45": 7
+  },
+  "Tanaris": {
+   "40": 56,
+   "41": 60,
+   "42": 118,
+   "43": 85,
+   "44": 128,
+   "45": 122,
+   "46": 100,
+   "47": 99,
+   "48": 54,
+   "49": 149
+  },
+  "Tel'Abim": {
+   "42": 3,
+   "49": 3
+  },
+  "Teldrassil": {
+   "1": 27,
+   "2": 43,
+   "5": 85,
+   "7": 32,
+   "8": 15,
+   "10": 7,
+   "30": 1,
+   "50": 4
+  },
+  "Thalassian Highlands": {
+   "1": 1,
+   "5": 58,
+   "57": 13,
+   "60": 16
+  },
+  "The Barrens": {
+   "1": 37,
+   "3": 103,
+   "4": 1,
+   "6": 1,
+   "7": 35,
+   "8": 44,
+   "9": 87,
+   "10": 51,
+   "11": 146,
+   "12": 160,
+   "13": 160,
+   "14": 304,
+   "15": 227,
+   "16": 104,
+   "17": 156,
+   "18": 139,
+   "19": 20,
+   "20": 133,
+   "21": 34,
+   "22": 80,
+   "23": 16,
+   "24": 2,
+   "25": 10,
+   "26": 12,
+   "27": 7,
+   "28": 3,
+   "30": 4,
+   "35": 27,
+   "37": 59,
+   "38": 22,
+   "39": 25,
+   "40": 34,
+   "41": 5,
+   "42": 8,
+   "43": 9
+  },
+  "The Deadmines": {
+   "1": 1,
+   "14": 2
+  },
+  "The Hinterlands": {
+   "5": 1,
+   "41": 31,
+   "43": 32,
+   "44": 1,
+   "45": 20,
+   "46": 14,
+   "47": 62,
+   "49": 60
+  },
+  "The Temple of Atal'Hakkar": {
+   "49": 38
+  },
+  "Thousand Needles": {
+   "11": 1,
+   "24": 1,
+   "25": 26,
+   "26": 46,
+   "27": 53,
+   "28": 81,
+   "29": 3,
+   "30": 41,
+   "31": 32,
+   "32": 43,
+   "33": 15,
+   "34": 40,
+   "40": 5,
+   "41": 1
+  },
+  "Thunder Bluff": {
+   "9": 2
+  },
+  "Tirisfal Glades": {
+   "1": 59,
+   "3": 21,
+   "5": 80,
+   "6": 120,
+   "7": 156,
+   "8": 133,
+   "9": 30,
+   "10": 4,
+   "51": 13,
+   "53": 1
+  },
+  "Uldaman": {
+   "35": 30,
+   "42": 10
+  },
+  "Un'Goro Crater": {
+   "41": 2,
+   "42": 2,
+   "43": 2,
+   "45": 1,
+   "46": 1,
+   "47": 1,
+   "48": 59,
+   "49": 127,
+   "50": 67,
+   "51": 102,
+   "52": 20,
+   "53": 59,
+   "54": 65,
+   "55": 10,
+   "56": 1,
+   "57": 1
+  },
+  "Undercity": {
+   "1": 1,
+   "7": 5,
+   "10": 1,
+   "15": 2
+  },
+  "Wailing Caverns": {
+   "3": 5,
+   "11": 1,
+   "12": 21,
+   "13": 7,
+   "14": 1,
+   "18": 28
+  },
+  "Western Plaguelands": {
+   "5": 16,
+   "7": 24,
+   "8": 32,
+   "9": 7,
+   "30": 5,
+   "32": 2,
+   "33": 3,
+   "50": 1,
+   "51": 27,
+   "53": 49,
+   "54": 19,
+   "55": 43,
+   "63": 1
+  },
+  "Westfall": {
+   "1": 9,
+   "5": 4,
+   "10": 46,
+   "11": 20,
+   "12": 46,
+   "14": 54,
+   "16": 17,
+   "31": 1
+  },
+  "Wetlands": {
+   "1": 38,
+   "5": 18,
+   "21": 76,
+   "22": 27,
+   "23": 87,
+   "24": 64,
+   "25": 89,
+   "26": 30,
+   "27": 37,
+   "29": 23
+  },
+  "Winter Veil Vale": {
+   "1": 11
+  },
+  "Winterspring": {
+   "1": 7,
+   "10": 1,
+   "11": 1,
+   "50": 1,
+   "51": 5,
+   "52": 2,
+   "53": 34,
+   "54": 63,
+   "55": 148,
+   "56": 78,
+   "57": 71,
+   "58": 64,
+   "59": 68
+  },
+  "Zul'Farrak": {
+   "45": 68
+  },
+  "Zul'Gurub": {
+   "60": 54
+  }
+ },
+ "fishing": {
+  "Alterac Mountains": 130,
+  "Arathi Highlands": 130,
+  "Ashenvale": 55,
+  "Azshara": 205,
+  "Bay of Storms": 330,
+  "Blackfathom Deeps": -20,
+  "Burning Steppes": 330,
+  "Darkshore": -20,
+  "Darnassus": -20,
+  "Deadwind Pass": 330,
+  "Desolace": 130,
+  "Dun Morogh": -70,
+  "Durotar": -70,
+  "Duskwood": 55,
+  "Dustwallow Marsh": 130,
+  "Eastern Plaguelands": 330,
+  "Elwynn Forest": -70,
+  "Felwood": 205,
+  "Feralas": 205,
+  "Hetaera's Clutch": 330,
+  "Hillsbrad Foothills": 55,
+  "Ironforge": -20,
+  "Jademir Lake": 330,
+  "Jaguero Isle": 205,
+  "Loch Modan": -20,
+  "Maraudon": 205,
+  "Moonglade": 205,
+  "Mulgore": -70,
+  "Orgrimmar": -20,
+  "Redridge Mountains": 55,
+  "Scalebeard's Cave": 330,
+  "Scarlet Monastery": 130,
+  "Scholomance": 330,
+  "Silithus": 330,
+  "Silverpine Forest": -20,
+  "Stonetalon Mountains": 55,
+  "Stormwind City": -20,
+  "Stranglethorn Vale": 130,
+  "Stratholme": 330,
+  "Sunken Temple": 205,
+  "Swamp of Sorrows": 130,
+  "Tanaris": 205,
+  "Teldrassil": -70,
+  "The Barrens": -20,
+  "The Deadmines": -20,
+  "The Hinterlands": 205,
+  "Thousand Needles": 130,
+  "Thunder Bluff": -20,
+  "Tirisfal Glades": -70,
+  "Un'Goro Crater": 205,
+  "Undercity": -20,
+  "Wailing Caverns": -20,
+  "Western Plaguelands": 205,
+  "Westfall": -20,
+  "Wetlands": 55,
+  "Winterspring": 330,
+  "Zul'Gurub": 330
+ },
+ "trainers": {
+  "Herbalism": {
+   "Apprentice": {
+    "spell": 2372,
+    "level": 0,
+    "cost": 10,
+    "skill": 0,
+    "Alliance": [
+     {
+      "name": "Alma Jainrose",
+      "zone": "Redridge Mountains"
+     },
+     {
+      "name": "Brant Jasperbloom",
+      "zone": "Dustwallow Marsh"
+     },
+     {
+      "name": "Cylania Rootstalker",
+      "zone": "Ashenvale"
+     },
+     {
+      "name": "Firodren Mooncaller",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Flora Silverwind",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Herbalist Pomeroy",
+      "zone": "Elwynn Forest"
+     },
+     {
+      "name": "Kali Healtouch",
+      "zone": "Loch Modan"
+     },
+     {
+      "name": "Malorne Bladeleaf",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Malvor",
+      "zone": "Moonglade"
+     },
+     {
+      "name": "Reyna Stonebranch",
+      "zone": "Ironforge"
+     },
+     {
+      "name": "Shylamiir",
+      "zone": "Stormwind City"
+     },
+     {
+      "name": "Tannysa",
+      "zone": "Stormwind City"
+     },
+     {
+      "name": "Telurinon Moonshadow",
+      "zone": "Wetlands"
+     }
+    ],
+    "Horde": [
+     {
+      "name": "Angrun",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Aranae Venomblood",
+      "zone": "Alterac Mountains"
+     },
+     {
+      "name": "Faruza",
+      "zone": "Tirisfal Glades"
+     },
+     {
+      "name": "Flora Silverwind",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Jandi",
+      "zone": "Orgrimmar"
+     },
+     {
+      "name": "Komin Winterhoof",
+      "zone": "Mulgore"
+     },
+     {
+      "name": "Malvor",
+      "zone": "Moonglade"
+     },
+     {
+      "name": "Martha Alliestar",
+      "zone": "Undercity"
+     },
+     {
+      "name": "Mishiki",
+      "zone": "Durotar"
+     },
+     {
+      "name": "Ruw",
+      "zone": "Feralas"
+     }
+    ]
+   },
+   "Journeyman": {
+    "spell": 2373,
+    "level": 0,
+    "cost": 500,
+    "skill": 50,
+    "Alliance": [
+     {
+      "name": "Alma Jainrose",
+      "zone": "Redridge Mountains"
+     },
+     {
+      "name": "Brant Jasperbloom",
+      "zone": "Dustwallow Marsh"
+     },
+     {
+      "name": "Cylania Rootstalker",
+      "zone": "Ashenvale"
+     },
+     {
+      "name": "Firodren Mooncaller",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Flora Silverwind",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Herbalist Pomeroy",
+      "zone": "Elwynn Forest"
+     },
+     {
+      "name": "Kali Healtouch",
+      "zone": "Loch Modan"
+     },
+     {
+      "name": "Malorne Bladeleaf",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Malvor",
+      "zone": "Moonglade"
+     },
+     {
+      "name": "Reyna Stonebranch",
+      "zone": "Ironforge"
+     },
+     {
+      "name": "Shylamiir",
+      "zone": "Stormwind City"
+     },
+     {
+      "name": "Tannysa",
+      "zone": "Stormwind City"
+     },
+     {
+      "name": "Telurinon Moonshadow",
+      "zone": "Wetlands"
+     }
+    ],
+    "Horde": [
+     {
+      "name": "Angrun",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Aranae Venomblood",
+      "zone": "Alterac Mountains"
+     },
+     {
+      "name": "Faruza",
+      "zone": "Tirisfal Glades"
+     },
+     {
+      "name": "Flora Silverwind",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Jandi",
+      "zone": "Orgrimmar"
+     },
+     {
+      "name": "Komin Winterhoof",
+      "zone": "Mulgore"
+     },
+     {
+      "name": "Malvor",
+      "zone": "Moonglade"
+     },
+     {
+      "name": "Martha Alliestar",
+      "zone": "Undercity"
+     },
+     {
+      "name": "Mishiki",
+      "zone": "Durotar"
+     },
+     {
+      "name": "Ruw",
+      "zone": "Feralas"
+     }
+    ]
+   },
+   "Expert": {
+    "spell": 3571,
+    "level": 0,
+    "cost": 5000,
+    "skill": 125,
+    "Alliance": [
+     {
+      "name": "Alma Jainrose",
+      "zone": "Redridge Mountains"
+     },
+     {
+      "name": "Brant Jasperbloom",
+      "zone": "Dustwallow Marsh"
+     },
+     {
+      "name": "Cylania Rootstalker",
+      "zone": "Ashenvale"
+     },
+     {
+      "name": "Firodren Mooncaller",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Flora Silverwind",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Herbalist Pomeroy",
+      "zone": "Elwynn Forest"
+     },
+     {
+      "name": "Kali Healtouch",
+      "zone": "Loch Modan"
+     },
+     {
+      "name": "Malorne Bladeleaf",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Malvor",
+      "zone": "Moonglade"
+     },
+     {
+      "name": "Reyna Stonebranch",
+      "zone": "Ironforge"
+     },
+     {
+      "name": "Shylamiir",
+      "zone": "Stormwind City"
+     },
+     {
+      "name": "Tannysa",
+      "zone": "Stormwind City"
+     },
+     {
+      "name": "Telurinon Moonshadow",
+      "zone": "Wetlands"
+     }
+    ],
+    "Horde": [
+     {
+      "name": "Angrun",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Aranae Venomblood",
+      "zone": "Alterac Mountains"
+     },
+     {
+      "name": "Faruza",
+      "zone": "Tirisfal Glades"
+     },
+     {
+      "name": "Flora Silverwind",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Jandi",
+      "zone": "Orgrimmar"
+     },
+     {
+      "name": "Komin Winterhoof",
+      "zone": "Mulgore"
+     },
+     {
+      "name": "Malvor",
+      "zone": "Moonglade"
+     },
+     {
+      "name": "Martha Alliestar",
+      "zone": "Undercity"
+     },
+     {
+      "name": "Mishiki",
+      "zone": "Durotar"
+     },
+     {
+      "name": "Ruw",
+      "zone": "Feralas"
+     }
+    ]
+   },
+   "Artisan": {
+    "spell": 11994,
+    "level": 0,
+    "cost": 50000,
+    "skill": 200,
+    "Alliance": [
+     {
+      "name": "Alma Jainrose",
+      "zone": "Redridge Mountains"
+     },
+     {
+      "name": "Brant Jasperbloom",
+      "zone": "Dustwallow Marsh"
+     },
+     {
+      "name": "Cylania Rootstalker",
+      "zone": "Ashenvale"
+     },
+     {
+      "name": "Firodren Mooncaller",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Flora Silverwind",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Herbalist Pomeroy",
+      "zone": "Elwynn Forest"
+     },
+     {
+      "name": "Kali Healtouch",
+      "zone": "Loch Modan"
+     },
+     {
+      "name": "Malorne Bladeleaf",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Malvor",
+      "zone": "Moonglade"
+     },
+     {
+      "name": "Reyna Stonebranch",
+      "zone": "Ironforge"
+     },
+     {
+      "name": "Shylamiir",
+      "zone": "Stormwind City"
+     },
+     {
+      "name": "Tannysa",
+      "zone": "Stormwind City"
+     },
+     {
+      "name": "Telurinon Moonshadow",
+      "zone": "Wetlands"
+     }
+    ],
+    "Horde": [
+     {
+      "name": "Angrun",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Aranae Venomblood",
+      "zone": "Alterac Mountains"
+     },
+     {
+      "name": "Faruza",
+      "zone": "Tirisfal Glades"
+     },
+     {
+      "name": "Flora Silverwind",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Jandi",
+      "zone": "Orgrimmar"
+     },
+     {
+      "name": "Komin Winterhoof",
+      "zone": "Mulgore"
+     },
+     {
+      "name": "Malvor",
+      "zone": "Moonglade"
+     },
+     {
+      "name": "Martha Alliestar",
+      "zone": "Undercity"
+     },
+     {
+      "name": "Mishiki",
+      "zone": "Durotar"
+     },
+     {
+      "name": "Ruw",
+      "zone": "Feralas"
+     }
+    ]
+   }
+  },
+  "Skinning": {
+   "Apprentice": {
+    "spell": 8615,
+    "level": 0,
+    "cost": 10,
+    "skill": 0,
+    "Alliance": [
+     {
+      "name": "Balthus Stoneflayer",
+      "zone": "Ironforge"
+     },
+     {
+      "name": "Eladriel",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Helene Peltskinner",
+      "zone": "Elwynn Forest"
+     },
+     {
+      "name": "Jayla",
+      "zone": "Ashenvale"
+     },
+     {
+      "name": "Maris Granger",
+      "zone": "Stormwind City"
+     },
+     {
+      "name": "Radnaal Maneweaver",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Wilma Ranthal",
+      "zone": "Redridge Mountains"
+     }
+    ],
+    "Horde": [
+     {
+      "name": "Dranh",
+      "zone": "The Barrens"
+     },
+     {
+      "name": "Killian Hagey",
+      "zone": "Undercity"
+     },
+     {
+      "name": "Kulleg Stonehorn",
+      "zone": "Feralas"
+     },
+     {
+      "name": "Malux",
+      "zone": "Desolace"
+     },
+     {
+      "name": "Mooranta",
+      "zone": "Mulgore"
+     },
+     {
+      "name": "Rand Rhobart",
+      "zone": "Tirisfal Glades"
+     },
+     {
+      "name": "Thuwd",
+      "zone": "Orgrimmar"
+     },
+     {
+      "name": "Yonn Deepcut",
+      "zone": "Mulgore"
+     }
+    ]
+   },
+   "Journeyman": {
+    "spell": 8619,
+    "level": 0,
+    "cost": 500,
+    "skill": 50,
+    "Alliance": [
+     {
+      "name": "Balthus Stoneflayer",
+      "zone": "Ironforge"
+     },
+     {
+      "name": "Eladriel",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Helene Peltskinner",
+      "zone": "Elwynn Forest"
+     },
+     {
+      "name": "Jayla",
+      "zone": "Ashenvale"
+     },
+     {
+      "name": "Maris Granger",
+      "zone": "Stormwind City"
+     },
+     {
+      "name": "Radnaal Maneweaver",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Wilma Ranthal",
+      "zone": "Redridge Mountains"
+     }
+    ],
+    "Horde": [
+     {
+      "name": "Dranh",
+      "zone": "The Barrens"
+     },
+     {
+      "name": "Killian Hagey",
+      "zone": "Undercity"
+     },
+     {
+      "name": "Kulleg Stonehorn",
+      "zone": "Feralas"
+     },
+     {
+      "name": "Malux",
+      "zone": "Desolace"
+     },
+     {
+      "name": "Mooranta",
+      "zone": "Mulgore"
+     },
+     {
+      "name": "Rand Rhobart",
+      "zone": "Tirisfal Glades"
+     },
+     {
+      "name": "Thuwd",
+      "zone": "Orgrimmar"
+     },
+     {
+      "name": "Yonn Deepcut",
+      "zone": "Mulgore"
+     }
+    ]
+   },
+   "Expert": {
+    "spell": 8620,
+    "level": 0,
+    "cost": 5000,
+    "skill": 125,
+    "Alliance": [
+     {
+      "name": "Balthus Stoneflayer",
+      "zone": "Ironforge"
+     },
+     {
+      "name": "Eladriel",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Helene Peltskinner",
+      "zone": "Elwynn Forest"
+     },
+     {
+      "name": "Jayla",
+      "zone": "Ashenvale"
+     },
+     {
+      "name": "Maris Granger",
+      "zone": "Stormwind City"
+     },
+     {
+      "name": "Radnaal Maneweaver",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Wilma Ranthal",
+      "zone": "Redridge Mountains"
+     }
+    ],
+    "Horde": [
+     {
+      "name": "Dranh",
+      "zone": "The Barrens"
+     },
+     {
+      "name": "Killian Hagey",
+      "zone": "Undercity"
+     },
+     {
+      "name": "Kulleg Stonehorn",
+      "zone": "Feralas"
+     },
+     {
+      "name": "Malux",
+      "zone": "Desolace"
+     },
+     {
+      "name": "Mooranta",
+      "zone": "Mulgore"
+     },
+     {
+      "name": "Rand Rhobart",
+      "zone": "Tirisfal Glades"
+     },
+     {
+      "name": "Thuwd",
+      "zone": "Orgrimmar"
+     },
+     {
+      "name": "Yonn Deepcut",
+      "zone": "Mulgore"
+     }
+    ]
+   },
+   "Artisan": {
+    "spell": 10769,
+    "level": 35,
+    "cost": 50000,
+    "skill": 200,
+    "Alliance": [
+     {
+      "name": "Balthus Stoneflayer",
+      "zone": "Ironforge"
+     },
+     {
+      "name": "Eladriel",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Helene Peltskinner",
+      "zone": "Elwynn Forest"
+     },
+     {
+      "name": "Jayla",
+      "zone": "Ashenvale"
+     },
+     {
+      "name": "Maris Granger",
+      "zone": "Stormwind City"
+     },
+     {
+      "name": "Radnaal Maneweaver",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Wilma Ranthal",
+      "zone": "Redridge Mountains"
+     }
+    ],
+    "Horde": [
+     {
+      "name": "Dranh",
+      "zone": "The Barrens"
+     },
+     {
+      "name": "Killian Hagey",
+      "zone": "Undercity"
+     },
+     {
+      "name": "Kulleg Stonehorn",
+      "zone": "Feralas"
+     },
+     {
+      "name": "Malux",
+      "zone": "Desolace"
+     },
+     {
+      "name": "Mooranta",
+      "zone": "Mulgore"
+     },
+     {
+      "name": "Rand Rhobart",
+      "zone": "Tirisfal Glades"
+     },
+     {
+      "name": "Thuwd",
+      "zone": "Orgrimmar"
+     },
+     {
+      "name": "Yonn Deepcut",
+      "zone": "Mulgore"
+     }
+    ]
+   }
+  },
+  "Fishing": {
+   "Apprentice": {
+    "spell": 7733,
+    "level": 5,
+    "cost": 100,
+    "skill": 0,
+    "Alliance": [
+     {
+      "name": "Androl Oakhand",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Arnold Leland",
+      "zone": "Stormwind City"
+     },
+     {
+      "name": "Astaia",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Brannock",
+      "zone": "Feralas"
+     },
+     {
+      "name": "Donald Rabonne",
+      "zone": "Hillsbrad Foothills"
+     },
+     {
+      "name": "Grimnur Stonebrand",
+      "zone": "Ironforge"
+     },
+     {
+      "name": "Harold Riggs",
+      "zone": "Wetlands"
+     },
+     {
+      "name": "Lee Brown",
+      "zone": "Elwynn Forest"
+     },
+     {
+      "name": "Matthew Hooper",
+      "zone": "Redridge Mountains"
+     },
+     {
+      "name": "Myizz Luckycatch",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Paxton Ganter",
+      "zone": "Dun Morogh"
+     },
+     {
+      "name": "Warg Deepwater",
+      "zone": "Loch Modan"
+     }
+    ],
+    "Horde": [
+     {
+      "name": "Armand Cromwell",
+      "zone": "Undercity"
+     },
+     {
+      "name": "Clyde Kellen",
+      "zone": "Tirisfal Glades"
+     },
+     {
+      "name": "Kah Mistrunner",
+      "zone": "Mulgore"
+     },
+     {
+      "name": "Katoom the Angler",
+      "zone": "The Hinterlands"
+     },
+     {
+      "name": "Kil'Hiwana",
+      "zone": "Ashenvale"
+     },
+     {
+      "name": "Lau'Tiki",
+      "zone": "Durotar"
+     },
+     {
+      "name": "Lui'Mala",
+      "zone": "Desolace"
+     },
+     {
+      "name": "Lumak",
+      "zone": "Orgrimmar"
+     },
+     {
+      "name": "Myizz Luckycatch",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Uthan Stillwater",
+      "zone": "Mulgore"
+     }
+    ]
+   },
+   "Journeyman": {
+    "spell": 7734,
+    "level": 0,
+    "cost": 500,
+    "skill": 50,
+    "Alliance": [
+     {
+      "name": "Androl Oakhand",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Arnold Leland",
+      "zone": "Stormwind City"
+     },
+     {
+      "name": "Astaia",
+      "zone": "Teldrassil"
+     },
+     {
+      "name": "Brannock",
+      "zone": "Feralas"
+     },
+     {
+      "name": "Donald Rabonne",
+      "zone": "Hillsbrad Foothills"
+     },
+     {
+      "name": "Grimnur Stonebrand",
+      "zone": "Ironforge"
+     },
+     {
+      "name": "Harold Riggs",
+      "zone": "Wetlands"
+     },
+     {
+      "name": "Lee Brown",
+      "zone": "Elwynn Forest"
+     },
+     {
+      "name": "Matthew Hooper",
+      "zone": "Redridge Mountains"
+     },
+     {
+      "name": "Myizz Luckycatch",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Paxton Ganter",
+      "zone": "Dun Morogh"
+     },
+     {
+      "name": "Warg Deepwater",
+      "zone": "Loch Modan"
+     }
+    ],
+    "Horde": [
+     {
+      "name": "Armand Cromwell",
+      "zone": "Undercity"
+     },
+     {
+      "name": "Clyde Kellen",
+      "zone": "Tirisfal Glades"
+     },
+     {
+      "name": "Kah Mistrunner",
+      "zone": "Mulgore"
+     },
+     {
+      "name": "Katoom the Angler",
+      "zone": "The Hinterlands"
+     },
+     {
+      "name": "Kil'Hiwana",
+      "zone": "Ashenvale"
+     },
+     {
+      "name": "Lau'Tiki",
+      "zone": "Durotar"
+     },
+     {
+      "name": "Lui'Mala",
+      "zone": "Desolace"
+     },
+     {
+      "name": "Lumak",
+      "zone": "Orgrimmar"
+     },
+     {
+      "name": "Myizz Luckycatch",
+      "zone": "Stranglethorn Vale"
+     },
+     {
+      "name": "Uthan Stillwater",
+      "zone": "Mulgore"
+     }
+    ]
+   },
+   "Artisan": {
+    "spell": 18249,
+    "level": 35,
+    "cost": 10000,
+    "skill": 200,
+    "Alliance": [],
+    "Horde": [
+     {
+      "name": "Katoom the Angler",
+      "zone": "The Hinterlands"
+     }
+    ]
+   }
+  }
+ },
+ "fishingBook": {
+  "name": "Expert Fishing - The Bass and You",
+  "cost": 10000,
+  "skill": 125,
+  "Alliance": [
+   {
+    "name": "Old Man Heming",
+    "zone": "Stranglethorn Vale"
+   }
+  ],
+  "Horde": [
+   {
+    "name": "Old Man Heming",
+    "zone": "Stranglethorn Vale"
+   }
+  ]
+ },
+ "fishingQuest": {
+  "title": "Nat Pagle, Angler Extreme",
+  "level": 35,
+  "skill": 225,
+  "giver": {
+   "name": "Nat Pagle",
+   "zone": "Dustwallow Marsh"
+  },
+  "fish": [
+   {
+    "name": "Feralas Ahi",
+    "zone": "Feralas",
+    "where": [
+     "Verdantis River"
+    ]
+   },
+   {
+    "name": "Misty Reed Mahi Mahi",
+    "zone": "Swamp of Sorrows",
+    "where": [
+     "Misty Reed Strand"
+    ]
+   },
+   {
+    "name": "Sar'theris Striker",
+    "zone": "Desolace",
+    "where": [
+     "Sar'theris Strand"
+    ]
+   },
+   {
+    "name": "Savage Coast Blue Sailfin",
+    "zone": "Stranglethorn Vale",
+    "where": [
+     "Southern Savage Coast",
+     "The Savage Coast"
+    ]
+   }
+  ]
+ }
+}

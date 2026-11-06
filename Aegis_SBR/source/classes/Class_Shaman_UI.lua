@@ -1,0 +1,372 @@
+-- ============================================================
+-- Class_Shaman_UI  -  shaman window body for Aegis_SBR
+-- Builds and binds only the shaman specific controls. The shared
+-- window shell and profile management live in Aegis_SBR_UI.lua.
+-- Uses the shell's scroll layout (M.useScrollLayout).
+-- ============================================================
+
+local M = Aegis_SBR.classes.SHAMAN
+M.useScrollLayout = true
+M.specTabs = {
+    field = "mode", default = "enhancement",
+    tabs = {
+        { key = "elemental",   label = "Elemental",      tip1 = "Caster rotation." },
+        { key = "enhancement", label = "Enhance (DPS)",  tip1 = "Melee rotation." },
+        { key = "tank",        label = "Enhance (Tank)", tip1 = "Threat-focused melee rotation.", tip2 = "Same config as DPS; the rotation prioritises threat." },
+        { key = "restoration", label = "Restoration",    tip1 = "One-button group healing. Runs without an enemy target." },
+    },
+}
+
+-- ============================================================
+-- build body (shaman controls)
+-- ============================================================
+function M:BuildBody(ui, parent)
+    local L = ui:NewLayout(parent)
+    -- Every write lands in the ACTIVE TAB's layer (Aegis_SBR:TabView).
+    local function set(key) return function(v) if ui.buf then M:TabView(ui.buf, M)[key] = v; ui:Refresh() end end end
+
+    L:Header("Shield & shock")
+    self.shieldDD = L:Dropdown("shield", "Shield", 150, set("shield"))
+    self.shockDD  = L:Dropdown("shock", "Shock", 150, set("shock"))
+
+    self.meleeSection = L:Header("Melee strikes", { enhancement = true, tank = true })
+    self.ssRow = L:Row{ key = "useStormstrike", label = "Stormstrike", spell = "Stormstrike", onToggle = set("useStormstrike") }
+    self.lsRow = L:Row{ key = "useLightningStrike", label = "Lightning Strike", spell = "Lightning Strike", onToggle = set("useLightningStrike") }
+
+    L:Header("Casting & totems")
+    self.lbRow = L:Row{ key = "lbFiller", label = "Lightning Bolt", spell = "Lightning Bolt", onToggle = set("lbFiller") }
+
+    -- Totems apply to EVERY spec (Windfury for Enhance, Searing for Ele, etc.),
+    -- so this section is shared, not gated to Restoration. The rotation drops
+    -- the picked totem in each element slot during a lull.
+    L:Header("Totems")
+    self.totemsRow = L:Row{ key = "useTotems", label = "Maintain totems", onToggle = set("useTotems") }
+    self.waterDD = L:Dropdown("totemWater", "Water totem", 160, set("totemWater"))
+    self.earthDD = L:Dropdown("totemEarth", "Earth totem", 160, set("totemEarth"))
+    self.fireDD  = L:Dropdown("totemFire", "Fire totem", 160, set("totemFire"))
+    self.aoeFireRow = L:Row{ key = "aoeFireTotems", label = "AoE fire pair (Nova + Magma)", onToggle = set("aoeFireTotems") }
+    -- Both need SuperWoW: a placed totem is only addressable as a unit there,
+    -- and without that there is no distance to measure.
+    self.totemRangeRow = L:Row{ key = "totemRange", label = "Re-place when out of range", onToggle = set("totemRange") }
+    self.totemRecallRow = L:Row{ key = "totemRecall", label = "Totemic Recall when left behind", onToggle = set("totemRecall") }
+    self.airDD   = L:Dropdown("totemAir", "Air totem", 160, set("totemAir"))
+
+    L:Header("Cooldowns & utility")
+    self.emRow = L:Row{ key = "useElementalMastery", label = "Elemental Mastery", spell = "Elemental Mastery", onToggle = set("useElementalMastery") }
+    self.blRow = L:Row{ key = "useBloodlust", label = "Bloodlust", spell = "Bloodlust", onToggle = set("useBloodlust") }
+    self.tauntRow = L:Row{ key = "useTaunt", label = "Earthshaker taunt", spell = "Earthshaker Slam", onToggle = set("useTaunt") }
+
+    -- Weapon imbue upkeep (melee specs). Main-hand only; auto-applies out of
+    -- combat, reminds in combat unless "Apply in combat" is on.
+    -- Deliberately NOT spec-gated, unlike "Melee strikes" above. A weapon imbue
+    -- is useful to any shaman who swings at all: an Elemental or Restoration
+    -- shaman between casts, and while levelling, still melees - Rockbiter on a
+    -- healer holding aggro is exactly the case that gets forgotten. Hiding the
+    -- section for those specs also hid the rebuff prompt's switch from them,
+    -- which is how a lapsed imbue went unnoticed in the first place.
+    self.imbueSection = L:Header("Weapon imbue")
+    self.imbueRow = L:Row{ key = "maintainImbue", label = "Maintain imbue (automatic)", onToggle = set("maintainImbue") }
+    self.imbueDD = L:Dropdown("imbueMain", "Imbue", 160, set("imbueMain"))
+    self.imbueCombatRow = L:Row{ key = "imbueInCombat", label = "Apply in combat", onToggle = set("imbueInCombat") }
+    -- Lives in Aegis_SBR_BuffUp (global per character, not per profile), like
+    -- the rogue's poison rebuff buttons, so it writes there directly.
+    self.imbueBtnRow = L:Row{ key = "abuWatchImbue", label = "Rebuff button (manual)",
+        onToggle = function(v) if Aegis_SBR_BuffUp then Aegis_SBR_BuffUp:SetWatchImbueMH(v) end end }
+
+    self.restoSection = L:Header("Restoration (Heal)", "restoration")
+    self.htRow = L:Row{ label = "Heal below",
+        slider = { key = "healThreshold", min = 50, max = 100, step = 5, suffix = "%", onChange = set("healThreshold") } }
+    self.hpowRow = L:Row{ label = "Heal power", sub = "+healing for downranks",
+        slider = { key = "healPower", min = 0, max = 2000, step = 50, suffix = "", onChange = set("healPower") } }
+    self.manaTideRow = L:Row{ key = "useManaTide", label = "Mana Tide", spell = "Mana Tide Totem", onToggle = set("useManaTide"),
+        slider = { key = "manaTideAt", min = 0, max = 60, step = 5, suffix = "%", onChange = set("manaTideAt") } }
+    self.nsRow = L:Row{ key = "useNSCombo", label = "Nature's Swiftness", onToggle = set("useNSCombo"),
+        slider = { key = "nsHpPct", min = 10, max = 70, step = 5, suffix = "%", onChange = set("nsHpPct") } }
+    self.lhwRow = L:Row{ key = "useLesserHW", label = "Lesser Heal Wave", spell = "Lesser Healing Wave", onToggle = set("useLesserHW"),
+        slider = { key = "lhwPct", min = 20, max = 90, step = 5, suffix = "%", onChange = set("lhwPct") } }
+    self.chainRow = L:Row{ key = "useChainHeal", label = "Chain Heal", spell = "Chain Heal", onToggle = set("useChainHeal"),
+        slider = { key = "chainHealCount", min = 2, max = 8, step = 1, suffix = "", onChange = set("chainHealCount") } }
+    self.weaveRow = L:Row{ key = "weaveDamage", label = "Weave damage", onToggle = set("weaveDamage"),
+        slider = { key = "weaveManaFloor", min = 0, max = 90, step = 5, suffix = "%", onChange = set("weaveManaFloor") } }
+
+
+    -- Only on the healing tab: the cure step lives in the healing rotation, so
+    -- offering the switch anywhere else would be a control that does nothing.
+    L:Header("Dispel", "restoration")
+    self.cureRow = L:Row{ key = "useCure", label = "Cure afflictions", spell = "Cure Poison", onToggle = set("useCure") }
+    self.curePctRow = L:Row{ label = "Cure first above",
+        slider = { key = "curePct", min = 0, max = 100, step = 5, suffix = "%", onChange = set("curePct") } }
+
+
+    L:Header("Heal priority", "restoration")
+    self.prioRow = L:Row{ key = "healPrio", label = "Use priority list", onToggle = set("healPrio") }
+    self.prioTargetRow = L:Row{ key = "healPrioTarget", label = "Your target first", onToggle = set("healPrioTarget") }
+    self.listOnlyRow = L:Row{ key = "healListOnly", label = "Heal only the list", onToggle = set("healListOnly") }
+    self.petPrioRow = L:Row{ label = "Pet priority",
+        slider = { key = "petPriority", min = 0, max = 2, step = 1, suffix = "", onChange = set("petPriority") } }
+
+    L:Header("Priority list", "restoration", function()
+        local b = ui.buf and M:TabView(ui.buf, M)
+        return b and (b.healPrio or b.healPrioTarget or b.healListOnly) and true or false
+    end)
+    self.prioAddBtn = L:Button{ label = "Add target", onClick = function()
+        if ui.buf then Aegis_SBR:PrioAdd(M:TabView(ui.buf, M), UnitName("target")); ui:Refresh() end
+    end }
+    self.prioClearBtn = L:Button{ label = "Clear", onClick = function()
+        if ui.buf then M:TabView(ui.buf, M).healPrioList = {}; ui:Refresh() end
+    end }
+    self.prioBtns = {}
+    for i = 1, 5 do
+        local idx = i
+        self.prioBtns[idx] = L:Button{ label = idx .. ".", onClick = function()
+            if ui.buf then Aegis_SBR:PrioRemove(M:TabView(ui.buf, M), idx); ui:Refresh() end
+        end }
+    end
+
+    -- Last section on every tab: which Goblin Brainwashing Device slot this
+    -- tab answers to. Untagged, so it shows on all of them and always reports
+    -- the tab you are looking at.
+    ui:BuildGobboRow(L)
+
+    L:Finish()
+
+    ui:Tip(self.prioRow.cb, "Use priority list", "On a near tie, heal the listed players first: position 1 before position 2, both before anyone unlisted.", "A handicap, not a strict order - position 2 counts as 20%% healthier than it is, unlisted players as 35%%. Somebody in real trouble always outranks a scratched tank, because eligibility reads real health and only the ORDER is adjusted.")
+    ui:Tip(self.listOnlyRow.cb, "Heal only the list", "Heal only the players on the priority list below, and yourself - for a raid healer assigned to the main tank.", "Group heals stand down while it is on, since they would heal the others too. With the list empty it heals as usual. Dispelling is not affected.")
+    ui:Tip(self.prioTargetRow.cb, "Your target first", "While you have a friendly target selected it is considered first, ahead of the list.")
+    ui:Tip(self.petPrioRow.slider, "Pet priority", "0 never heal pets, 1 only when no player needs healing, 2 treat pets like players.", "A pet you have targeted is always considered. At 2 a pet on the priority list is healed first like a tank - target it and use Add target.")
+    ui:Tip(self.prioAddBtn, "Add target", "Adds your current target to the end of the list.", "Names, not raid slots, so the list survives a regroup. The same list decides who is dispelled first.")
+    ui:Tip(self.prioClearBtn, "Clear", "Empties the priority list.")
+
+    ui:Tip(self.cureRow.cb, "Cure afflictions", "Remove curses, poisons, diseases and magic from the group with whatever your class has for it - here: Poison and Disease.", "Off by default. A dispel costs a global cooldown that would otherwise be a heal, and only what you can actually remove is ever considered.")
+    ui:Tip(self.curePctRow.slider, "Cure first above", "The crossover between curing and healing, read off the WORST-HURT member. Above it the affliction comes first; below it the heal does.", "At 90 the group is cleansed first and topped up from 90 to 100 afterwards - the right order when the affliction is doing more damage than the missing tenth of a bar. 0 makes curing always yield, 100 makes it always come first.")
+
+    ui:Tip(self.shieldDD, "Shield", "Kept up automatically. Lightning Shield for damage/threat, Water Shield for mana.")
+    ui:Tip(self.shockDD, "Shock", "One shock on the shared cooldown. Flame Shock is kept up as a DoT; Earth/Frost are cast on cooldown.")
+    ui:Tip(self.ssRow.cb, "Stormstrike", "Talented melee strike. Grants a buff boosting your next 2 Nature hits by 20% - the rotation follows it with a shock. Auto-detected when learned.")
+    ui:Tip(self.lsRow.cb, "Lightning Strike", "Talented melee instant that also fires an empowered version of your active shield. Auto-detected when learned.")
+    ui:Tip(self.lbRow.cb, "Lightning Bolt filler", "Weave Lightning Bolt when nothing else is queued. This is also the main damage at low levels.")
+    ui:Tip(self.emRow.cb, "Elemental Mastery", "Pop before a nuke for a guaranteed crit (feeds Clearcasting and Electrify). Off the global cooldown.")
+    ui:Tip(self.blRow.cb, "Bloodlust", "Self melee/cast haste burst (Turtle: self-only). Used in combat when off cooldown.")
+    ui:Tip(self.tauntRow.cb, "Earthshaker Slam", "Tank taunt, cast only when the target is not already attacking you. Requires a shield.")
+    ui:Tip(self.htRow.slider, "Heal threshold", "An ally below this health counts as hurt and pulls a heal. Everything in this section keys off it.")
+    ui:Tip(self.hpowRow.slider, "Heal power", "Your bonus healing (+heal) from gear. Used to size downranks so each heal just covers the deficit.", "Leave at 0 to heal by rank only.")
+    ui:Tip(self.manaTideRow.cb, "Mana Tide Totem", "Dropped when your own mana runs low, to refill the party.")
+    ui:Tip(self.nsRow.cb, "Nature's Swiftness", "Pop NS (or Ancestral Swiftness) for an instant max Healing Wave when someone is in real trouble.")
+    ui:Tip(self.manaTideRow.slider, "Mana Tide mana", "Drop Mana Tide once your mana falls under this percent.")
+    ui:Tip(self.nsRow.slider, "Nat. Swiftness HP", "Trigger the instant NS heal when a target drops under this health.")
+    ui:Tip(self.lhwRow.cb, "Lesser Healing Wave", "Fast single-target emergency heal. Takes priority over Chain Heal.")
+    ui:Tip(self.chainRow.cb, "Chain Heal", "AoE heal that bounces between hurt allies.")
+    ui:Tip(self.lhwRow.slider, "Lesser HW HP", "Use Lesser Healing Wave when a target drops under this health.")
+    ui:Tip(self.chainRow.slider, "Chain Heal count", "How many hurt allies are needed before Chain Heal fires.")
+    ui:Tip(self.totemsRow.cb, "Maintain totems", "Keeps the totems below dropped in every spec, re-cast during a lull. Cast timing is tracked from your actual casts (SuperWoW), not a blind clock.")
+    ui:Tip(self.aoeFireRow.cb, "AoE fire pair (Nova + Magma)", "Takes over the fire slot: Fire Nova Totem every time its cooldown is up, Magma Totem in between to keep the ground ticking.", "They alternate rather than replace: Nova detonates then waits on its cooldown, Magma carries the sustained damage. Both use the fire slot, so Magma waits while a Nova stands. The fire picker above is ignored.")
+    ui:Tip(self.totemRangeRow.cb, "Re-place when out of range", "Measures the real distance to your own totems and treats one you have walked away from as missing, so it is re-placed where you actually are.", "The only check that covers the totems granting no aura at all - Searing, Magma, Nova, Grounding - where the blind timer counts down on something left two rooms behind. Needs SuperWoW.")
+    ui:Tip(self.totemRecallRow.cb, "Totemic Recall when left behind", "Pulls all totems back for a quarter of their mana once every one of them is out of reach and nobody in the group is standing in them either.", "All-or-nothing: it recalls every totem at once, so three still working would be thrown away for a sliver of mana. The real gain is the slots freeing up at once instead of waiting out the timer.")
+    ui:Tip(self.weaveRow.cb, "Weave damage", "When nobody needs healing and you have an enemy targeted, cast Lightning Bolt in the downtime.", "Mana-gated so it never starves heals. Off by default - same as /sbr weave on|off.")
+    ui:Tip(self.weaveRow.slider, "Weave mana floor", "Only weave damage while your mana is above this percent.")
+    ui:Tip(self.waterDD, "Water totem", "Which water totem to keep down. Mana Spring restores party mana.")
+    ui:Tip(self.earthDD, "Earth totem", "Which earth totem to keep down (or none).")
+    ui:Tip(self.fireDD, "Fire totem", "Which fire totem to keep down (or none).")
+    ui:Tip(self.airDD, "Air totem", "Which air totem to keep down (or none).")
+    ui:Tip(self.imbueRow.cb, "Maintain imbue (automatic)", "Let the rotation apply the imbue for you, unasked: only when the weapon is bare and you are out of combat (or on approach). In combat it holds off unless 'Apply in combat' is on.", "This and the manual button below are alternatives, not a pair - use whichever suits you, or both. Off-hand imbue isn't handled yet.")
+    ui:Tip(self.imbueDD, "Imbue", "Which main-hand imbue to keep up (Rockbiter / Flametongue / Frostbrand / Windfury).")
+    ui:Tip(self.imbueBtnRow.cb, "Rebuff button (manual)", "Puts a click-to-cast button on screen when your main-hand imbue is gone - the same prompt rogues get for a lapsed poison. You decide when to spend the global cooldown; nothing is cast without your click.", "Works with 'Maintain imbue' off, and covers what automation cannot: upkeep stands down in combat unless 'Apply in combat' is on. The chat warning is suppressed while this is on.")
+    ui:Tip(self.imbueCombatRow.cb, "Apply in combat", "Allow re-imbuing during combat (costs a global cooldown). Off by default - imbues are best refreshed between pulls.")
+end
+
+-- ============================================================
+-- refresh body (shaman binding)
+-- ============================================================
+function M:RefreshBody(ui, buf)
+    -- Read through the active tab's layer, so the page shows the tab's values.
+    buf = M:TabView(buf, M)
+
+    -- shield dropdown (colour red if the chosen shield is not learned)
+    local shieldOpts = {
+        { label = "Lightning Shield", value = "lightning" },
+        { label = "Water Shield",     value = "water" },
+        { label = "Earth Shield",     value = "earth" },
+        { label = "(none)",           value = "none" },
+    }
+    local shieldLabel = { lightning = "Lightning Shield", water = "Water Shield", earth = "Earth Shield", none = "(none)" }
+    local shcur = buf.shield or "lightning"
+    local shName = self.SHIELDS[shcur] or ""
+    local shShown, shCol = shieldLabel[shcur] or shcur, ui.COL.white
+    if shcur ~= "none" and not self:KnowsSpell(shName) then shShown, shCol = (shieldLabel[shcur] or shcur) .. " (not learned)", ui.COL.red end
+    ui:SetDropdown(self.shieldDD, shieldOpts, shcur, shShown, shCol)
+
+    -- shock dropdown (colour red if the chosen shock is not learned)
+    local shockOpts = {
+        { label = "Earth Shock", value = "earth" },
+        { label = "Frost Shock", value = "frost" },
+        { label = "Flame Shock", value = "flame" },
+        { label = "(none)",      value = "none" },
+    }
+    local shockLabel = { earth = "Earth Shock", frost = "Frost Shock", flame = "Flame Shock", none = "(none)" }
+    local skcur = buf.shock or "earth"
+    local skName = self.SHOCKS[skcur] or ""
+    local skShown, skCol = shockLabel[skcur] or skcur, ui.COL.white
+    if skcur ~= "none" and not self:KnowsSpell(skName) then skShown, skCol = (shockLabel[skcur] or skcur) .. " (not learned)", ui.COL.red end
+    ui:SetDropdown(self.shockDD, shockOpts, skcur, skShown, skCol)
+
+    ui:BindCheck(self.ssRow, buf.useStormstrike)
+    ui:BindCheck(self.lsRow, buf.useLightningStrike)
+    ui:BindCheck(self.lbRow, buf.lbFiller)
+    ui:BindCheck(self.emRow, buf.useElementalMastery)
+    ui:BindCheck(self.blRow, buf.useBloodlust)
+    ui:BindCheck(self.tauntRow, buf.useTaunt)
+
+    -- Weapon imbue: master toggle, then the picker / threshold / in-combat opt-in
+    -- follow it (inert while the master is off).
+    ui:BindCheck(self.imbueRow, buf.maintainImbue)
+    ui:BindCheck(self.imbueCombatRow, buf.imbueInCombat)
+    -- Reads the global BuffUp state, not the profile buffer. Greyed out with no
+    -- imbue selected, since the button would have nothing to cast.
+    if Aegis_SBR_BuffUp then
+        self.imbueBtnRow.cb:SetChecked(Aegis_SBR_BuffUp:WatchImbueMH())
+        if (buf.imbueMain or "none") == "none" then
+            self.imbueBtnRow.cb:Disable()
+            ui:Color(self.imbueBtnRow.label, ui.COL.grey)
+        end
+    end
+    local imbueOpts = {
+        { label = "Rockbiter Weapon",   value = "rockbiter" },
+        { label = "Flametongue Weapon", value = "flametongue" },
+        { label = "Frostbrand Weapon",  value = "frostbrand" },
+        { label = "Windfury Weapon",    value = "windfury" },
+        { label = "(none)",             value = "none" },
+    }
+    local imcur = buf.imbueMain or "windfury"
+    local imLabel = "(none)"
+    for i = 1, table.getn(imbueOpts) do if imbueOpts[i].value == imcur then imLabel = imbueOpts[i].label end end
+    local imShown, imCol = imLabel, ui.COL.white
+    local imSpell = self.IMBUES[imcur]
+    if imcur ~= "none" and imSpell and imSpell ~= "" and not self:KnowsSpell(imSpell) then
+        imShown, imCol = imLabel .. " (not learned)", ui.COL.red
+    end
+    ui:SetDropdown(self.imbueDD, imbueOpts, imcur, imShown, imCol)
+
+    -- The picker feeds BOTH mechanisms, so it stays live while EITHER is on -
+    -- tying it to the automation alone would leave someone who only wants the
+    -- manual button unable to choose which imbue that button casts.
+    -- "Apply in combat" genuinely only qualifies the automation, so that one
+    -- does follow it.
+    local autoOn = buf.maintainImbue and true or false
+    local btnOn = Aegis_SBR_BuffUp and Aegis_SBR_BuffUp:WatchImbueMH() or false
+    if autoOn or btnOn then self.imbueDD:Enable() else self.imbueDD:Disable() end
+    if autoOn then self.imbueCombatRow.cb:Enable() else self.imbueCombatRow.cb:Disable() end
+    -- Restoration (Heal) block: toggles mirror the rotation's defaults; sliders and
+    -- totem pickers are live only on-spec (and, where it applies, with the spell known).
+    local isResto = buf.mode == "restoration"
+    ui:BindCheck(self.manaTideRow, buf.useManaTide ~= false, "Mana Tide Totem")
+    ui:BindCheck(self.nsRow, buf.useNSCombo ~= false)
+    ui:BindCheck(self.lhwRow, buf.useLesserHW ~= false, "Lesser Healing Wave")
+    ui:BindCheck(self.chainRow, buf.useChainHeal ~= false, "Chain Heal")
+    ui:BindCheck(self.totemsRow, buf.useTotems ~= false)
+    ui:BindCheck(self.aoeFireRow, buf.aoeFireTotems)
+    ui:BindCheck(self.totemRangeRow, buf.totemRange)
+    ui:BindCheck(self.totemRecallRow, buf.totemRecall)
+    -- The picker and the pair own the same slot, so whichever is inactive is
+    -- greyed rather than left looking as if both apply.
+    if buf.aoeFireTotems then
+        self.fireDD:Disable()
+    end
+    ui:BindCheck(self.weaveRow, buf.weaveDamage)
+    -- NS is dual-named (Nature's / Ancestral Swiftness); grey the label if neither is known.
+    if not self:NSSpell() then
+        self.nsRow.label:SetText("Nature's Swiftness (not learned)"); ui:Color(self.nsRow.label, ui.COL.grey)
+        -- dual-named spell, so BindCheck can't hide the slider; do it here so the
+        -- full "(not learned)" label gets the whole row.
+        self.nsRow.slider:Hide(); if self.nsRow.value then self.nsRow.value:Hide() end
+        if self.nsRow.labelFullW then self.nsRow.label:SetWidth(self.nsRow.labelFullW) end
+    end
+
+    -- totem pickers: ordered options with a red "(not learned)" when the pick is unknown.
+    local function totemDD(dd, opts, cur, tbl, fallback)
+        cur = cur or fallback
+        local label = "(none)"
+        for i = 1, table.getn(opts) do if opts[i].value == cur then label = opts[i].label end end
+        local shown, c = label, ui.COL.white
+        local spell = tbl[cur]
+        if cur ~= "none" and spell and spell ~= "" and not self:KnowsSpell(spell) then
+            shown, c = label .. " (not learned)", ui.COL.red
+        end
+        ui:SetDropdown(dd, opts, cur, shown, c)
+    end
+    local waterOpts = { { label = "Mana Spring Totem", value = "manaspring" }, { label = "Healing Stream Totem", value = "healingstream" }, { label = "(none)", value = "none" } }
+    -- Stoneclaw sits last before "(none)" and carries the warning in its label:
+    -- it TAUNTS, so on upkeep it pulls mobs off the tank every re-drop. Offered
+    -- because that is the player's decision, but it must not be pickable by
+    -- accident from the middle of the list.
+    local earthOpts = { { label = "Strength of Earth Totem", value = "strength" }, { label = "Stoneskin Totem", value = "stoneskin" }, { label = "Tremor Totem", value = "tremor" }, { label = "Stoneclaw Totem (taunts)", value = "stoneclaw" }, { label = "(none)", value = "none" } }
+    local fireOpts  = { { label = "Searing Totem", value = "searing" }, { label = "Magma Totem", value = "magma" }, { label = "Fire Nova Totem", value = "firenova" }, { label = "Flametongue Totem", value = "flametongue" }, { label = "(none)", value = "none" } }
+    local airOpts   = { { label = "Windfury Totem", value = "windfury" }, { label = "Grace of Air Totem", value = "graceofair" }, { label = "Nature Resistance Totem", value = "natureresist" }, { label = "Grounding Totem", value = "grounding" }, { label = "Windwall Totem", value = "windwall" }, { label = "(none)", value = "none" } }
+    totemDD(self.waterDD, waterOpts, buf.totemWater, self.WATER_TOTEMS, "manaspring")
+    totemDD(self.earthDD, earthOpts, buf.totemEarth, self.EARTH_TOTEMS, "none")
+    totemDD(self.fireDD,  fireOpts,  buf.totemFire,  self.FIRE_TOTEMS,  "none")
+    totemDD(self.airDD,   airOpts,   buf.totemAir,   self.AIR_TOTEMS,   "none")
+
+    self.restoSection:SetDimmed(not isResto)
+    -- BindCheck re-enables every box; keep the resto toggles inert off-spec.
+    local restoCBs = { self.manaTideRow, self.nsRow, self.lhwRow, self.chainRow, self.weaveRow }
+    for i = 1, table.getn(restoCBs) do
+        if isResto then restoCBs[i].cb:Enable() else restoCBs[i].cb:Disable() end
+    end
+    local function rs(slider, on, val, suffix)
+        slider:SetValue(val)
+        if slider.valText then slider.valText:SetText(val .. (suffix or "")) end
+        ui:SliderEnable(slider, on and true or false)
+    end
+    rs(self.htRow.slider, isResto, buf.healThreshold or 90, "%")
+    rs(self.hpowRow.slider, isResto, buf.healPower or 0, "")
+    rs(self.manaTideRow.slider, isResto and buf.useManaTide ~= false and self:KnowsSpell("Mana Tide Totem"), buf.manaTideAt or 25, "%")
+    rs(self.nsRow.slider, isResto and buf.useNSCombo ~= false and self:NSSpell(), buf.nsHpPct or 40, "%")
+    rs(self.lhwRow.slider, isResto and buf.useLesserHW ~= false and self:KnowsSpell("Lesser Healing Wave"), buf.lhwPct or 50, "%")
+    rs(self.chainRow.slider, isResto and buf.useChainHeal ~= false and self:KnowsSpell("Chain Heal"), buf.chainHealCount or 3, "")
+    rs(self.weaveRow.slider, isResto and buf.weaveDamage, buf.weaveManaFloor or 40, "%")
+    -- totem pickers follow the master toggle, on-spec
+    -- Totems are shared across specs now: the picker enable follows the
+    -- "Maintain totems" toggle only, and that toggle is always interactive.
+    self.totemsRow.cb:Enable()
+    local totemsOn = buf.useTotems ~= false
+    local totemDDs = { self.waterDD, self.earthDD, self.fireDD, self.airDD }
+    for i = 1, table.getn(totemDDs) do
+        if totemsOn then totemDDs[i]:Enable() else totemDDs[i]:Disable() end
+    end
+
+    -- Active-spec focus: melee strikes are dead weight while casting or healing, so
+    -- fade + lock them in Elemental and Restoration. Enhancement and Tank stay lit.
+    self.meleeSection:SetDimmed(buf.mode == "elemental" or buf.mode == "restoration")
+
+    ui:BindCheck(self.cureRow, buf.useCure, "Cure Poison")
+    local cpv = buf.curePct or 90
+    self.curePctRow.slider:SetValue(cpv)
+    if self.curePctRow.slider.valText then self.curePctRow.slider.valText:SetText(">" .. cpv .. "%") end
+    ui:SliderEnable(self.curePctRow.slider, buf.useCure and true or false)
+
+    ui:BindCheck(self.prioRow, buf.healPrio)
+
+    ui:BindCheck(self.prioTargetRow, buf.healPrioTarget)
+    ui:BindCheck(self.listOnlyRow, buf.healListOnly)
+    local pp = buf.petPriority or 1
+    self.petPrioRow.slider:SetValue(pp)
+    if self.petPrioRow.slider.valText then
+        local lbl = "never"
+        if pp == 1 then lbl = "spare only" elseif pp >= 2 then lbl = "like players" end
+        self.petPrioRow.slider.valText:SetText(lbl)
+    end
+    local plist = buf.healPrioList or {}
+    for i = 1, table.getn(self.prioBtns) do
+        self.prioBtns[i].value:SetText(plist[i] or "|cff666666(empty)|r")
+    end
+
+end
+
+-- Open the shared window for this class.
+M.OpenConfig = function(mod)
+    if not Aegis_SBR_UI then
+        Aegis_SBR:Throttle("UI not ready yet, try again in a moment.")
+        return
+    end
+    Aegis_SBR_UI:Toggle()
+end

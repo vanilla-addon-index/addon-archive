@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/aDF/",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "aDF",
+    "name": "aDF",
+    "url": "https://github.com/MarcelineVQ/aDF",
+    "api": "https://api.github.com/repos/MarcelineVQ/aDF"
+  },
+  "commit": "b3cacbaa52c12a8e2d5d671cd1e348d45eae3489",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "aDF.lua": {
+      "sha256": "8846fa2e3dc8aa92688d983878d6236858142b02b5f3b2218c0a025b9e92d647",
+      "bytes": 25543
+    },
+    "aDF.toc": {
+      "sha256": "88f62603e40b47ffc2ced46ad89571def19adb5d17e422c010b8e49fc5f085af",
+      "bytes": 291
+    },
+    "README.md": {
+      "sha256": "7fb6d3bbc329068b2eb6d33ca297881dd3787cba79b3de08c92c39a4b3ef3134",
+      "bytes": 1289
+    },
+    "readme.txt": {
+      "sha256": "aa606541b4111202584e10106c2d5b98e33627cbb53c9b6e9bdc7f50923c8d07",
+      "bytes": 1435
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

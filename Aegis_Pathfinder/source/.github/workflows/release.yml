@@ -1,0 +1,99 @@
+name: Release
+
+# A GitHub release for every version that reaches main. The .toc's
+# "## Version" is tagged v<version> and packaged, once: a merge that leaves the
+# version alone (Tools/ or docs/ only, which take no bump) finds its tag there
+# already and does nothing. Launchers that compare an installed addon with the
+# latest release see the version that is on main.
+#
+# Two runs make a release. The push to main tags the version, then starts this
+# workflow again on the tag, and that run packages it. The packager will not
+# package a branch push whose commit is tagged -- "Found future tag, not
+# packaging" -- because it expects the tag's own push to start a run; but a
+# tag pushed with the workflow's token starts none. A dispatch does. A v* tag
+# pushed by hand is packaged by its own push, as before.
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Tag the version, if it is new
+        if: github.ref_type == 'branch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(sed -n 's/^## Version:[[:space:]]*\([^[:space:]]*\).*/\1/p' Aegis_Pathfinder.toc | tr -d '\r')
+          if ! printf '%s' "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::No MAJOR.MINOR.PATCH version in Aegis_Pathfinder.toc (got '$version')"
+            exit 1
+          fi
+          tag="v$version"
+          if git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
+            echo "$tag is released already; nothing to do."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$tag" -m "Aegis: Pathfinder $version"
+          git push origin "$tag"
+          gh workflow run release.yml --repo "$GITHUB_REPOSITORY" --ref "$tag"
+          echo "Tagged $tag; it is packaged in the run started on the tag."
+
+      # The release's text is this version's CHANGELOG.md entry (.pkgmeta's
+      # manual-changelog). Left to itself the packager writes the commit log
+      # since the last tag -- for the first release, the whole history, past
+      # GitHub's 125,000-character limit, and the release is refused.
+      - name: Release notes from CHANGELOG.md
+        if: github.ref_type == 'tag'
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          awk -v head="## [$version]" '
+            index($0, head) == 1 { on = 1; print; next }
+            on && (/^## \[/ || /^\[[^]]*\]: /) { exit }
+            on { print }
+          ' CHANGELOG.md > RELEASE_NOTES.md
+          if [ ! -s RELEASE_NOTES.md ]; then
+            echo "Aegis: Pathfinder $version" > RELEASE_NOTES.md
+          fi
+          cat RELEASE_NOTES.md
+
+      - name: Package and release to GitHub
+        if: github.ref_type == 'tag'
+        uses: BigWigsMods/packager@v2
+        env:
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+
+      # Each new version's changelog goes to this addon's post in the Aegis Discord's changelogs
+      # forum (.github/discord_changelog.py), from the notes written above. Needs the
+      # DISCORD_WEBHOOK_URL secret and the DISCORD_THREAD_ID variable; without the secret it
+      # posts nothing. Nobody is pinged unless the DISCORD_PING_ROLE_ID variable names a role.
+      - name: Post the changelog to Discord
+        if: github.ref_type == 'tag'
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_THREAD_ID: ${{ vars.DISCORD_THREAD_ID }}
+          DISCORD_PING_ROLE_ID: ${{ vars.DISCORD_PING_ROLE_ID }}
+          ADDON_TITLE: "Aegis: Pathfinder (TWoW)"
+          ADDON_COLOUR: "9E1B1B"
+          ADDON_LOGO_URL: "https://raw.githubusercontent.com/Torchlite-bit/Aegis_Pathfinder/main/.github/discord-logo.png"
+        run: python3 .github/discord_changelog.py RELEASE_NOTES.md

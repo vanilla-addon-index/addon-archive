@@ -1,0 +1,13 @@
+# Claude Code session data
+/.claude
+
+# Build output
+/.release
+*.zip
+*.tar.gz
+
+# Python bytecode (Tools/)
+__pycache__/
+
+# Release notes the release workflow writes from CHANGELOG.md
+/RELEASE_NOTES.md

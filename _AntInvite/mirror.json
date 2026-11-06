@@ -1,0 +1,62 @@
+{
+  "upstream": "https://github.com/Kiiruaa/_AntInvite",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Kiiruaa",
+    "repo": "_AntInvite",
+    "name": "_AntInvite",
+    "url": "https://github.com/Kiiruaa/_AntInvite",
+    "api": "https://api.github.com/repos/Kiiruaa/_AntInvite"
+  },
+  "commit": "35257bba9cf9645c1c9a927525a6c3880d2381a5",
+  "sourceFiles": {
+    "_AntInvite.toc": {
+      "sha256": "33dbe526b437f1432218c427278d27cefd7369999a41faa3fb0e3eec1b52d111",
+      "bytes": 196
+    },
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    ".gitignore.upstream": {
+      "sha256": "1aed21fcf46e0e76fa17ee7c4e6b2288fb2fbb844ae1f67dcb322bf64b7a90b7",
+      "bytes": 365
+    },
+    "AntInvite.lua": {
+      "sha256": "740a1796a2d8be3ce05dbeba35004be00ad00b08128e245231b0198004076f6c",
+      "bytes": 2763
+    },
+    "AntInvite.xml": {
+      "sha256": "2336c1a7e8510731e866b275dc10bd12a41e421239d5a64346c9471c44e13334",
+      "bytes": 473
+    },
+    "Readme.txt": {
+      "sha256": "0f06e5a95d06212b9c1b1284ec21a456a821cfb719eb2c06a9ae09bdf533f5a4",
+      "bytes": 156
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "12669965": {
+      "tag": "v0.3",
+      "folder": "v0.3--12669965",
+      "assets": {
+        "8466090": {
+          "sha256": "784ebfcf149fd1def3f686a260e862ebd3b6a650f0da8644f6cf5fbfff1e359c",
+          "bytes": 2331,
+          "id": "8466090",
+          "name": "_AntInvite.zip",
+          "url": "https://github.com/Kiiruaa/_AntInvite/releases/download/v0.3/_AntInvite.zip",
+          "path": "releases/v0.3--12669965/assets/_AntInvite.zip"
+        }
+      },
+      "source": {
+        "sha256": "3cb4c9918cae2f6ed17e1afd2856000628e18aad954c9ab706e5ab4c07432d93",
+        "bytes": 2068,
+        "path": "releases/v0.3--12669965/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Kiiruaa/_AntInvite/tarball/v0.3"
+      }
+    }
+  }
+}

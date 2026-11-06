@@ -1,0 +1,7931 @@
+{
+ "BFD": [
+  {
+   "creature": "Ghamoo-ra",
+   "id": "4887",
+   "journal": [],
+   "level": [
+    25,
+    25
+   ],
+   "name": "Ghamoo-ra",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "weapon damage (near)"
+     ],
+     "id": 5568,
+     "name": "Trample",
+     "school": "Physical",
+     "when": [
+      "Ghamoo-ra - Cast Trample"
+     ]
+    }
+   ],
+   "wing": "Blackfathom Deeps"
+  },
+  {
+   "creature": "Lady Sarevess",
+   "id": "4831",
+   "journal": [],
+   "level": [
+    25,
+    25
+   ],
+   "name": "Lady Sarevess",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "haste (target)",
+      "slow (target)"
+     ],
+     "id": 246,
+     "mechanic": "snare",
+     "name": "Slow",
+     "school": "Nature",
+     "when": [
+      "Lady Sarevess - Cast Slow"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (near)",
+      "root (near)"
+     ],
+     "id": 865,
+     "mechanic": "root",
+     "name": "Frost Nova",
+     "school": "Frost",
+     "when": [
+      "Lady Sarevess - Cast Frost Nova"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 6660,
+     "name": "Shoot",
+     "school": "Physical",
+     "when": [
+      "Lady Sarevess - Cast Shoot"
+     ]
+    },
+    {
+     "does": [
+      "damage (in front)"
+     ],
+     "id": 8435,
+     "interruptible": true,
+     "name": "Forked Lightning",
+     "school": "Nature",
+     "when": [
+      "Lady Sarevess - Cast Forked Lightning"
+     ]
+    }
+   ],
+   "wing": "Blackfathom Deeps"
+  },
+  {
+   "creature": "Gelihast",
+   "id": "6243",
+   "journal": [],
+   "level": [
+    26,
+    26
+   ],
+   "name": "Gelihast",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "root (target)"
+     ],
+     "id": 6533,
+     "mechanic": "root",
+     "name": "Net",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [],
+       "id": 11920,
+       "name": "Net Guard",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Gelihast - Cast Net"
+     ]
+    }
+   ],
+   "wing": "Blackfathom Deeps"
+  },
+  {
+   "creature": "Lorgus Jett",
+   "id": "12902",
+   "journal": [],
+   "level": [
+    26,
+    26
+   ],
+   "name": "Lorgus Jett",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 12167,
+     "interruptible": true,
+     "name": "Lightning Bolt",
+     "school": "Nature",
+     "when": [
+      "Lorgus Jett - Cast Lightning Bolt"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [],
+     "id": 12550,
+     "name": "Lightning Shield",
+     "school": "Nature",
+     "when": [
+      "Lorgus Jett - Cast Lightning Shield on Missing Buff"
+     ]
+    }
+   ],
+   "wing": "Blackfathom Deeps"
+  },
+  {
+   "id": "62530",
+   "journal": [],
+   "name": "Velthelaxx the Defiler",
+   "rare": false,
+   "wing": "Blackfathom Deeps"
+  },
+  {
+   "creature": "Old Serra'kis",
+   "id": "4830",
+   "journal": [],
+   "level": [
+    26,
+    26
+   ],
+   "name": "Old Serra'kis",
+   "rare": false,
+   "spells": [],
+   "wing": "Blackfathom Deeps"
+  },
+  {
+   "creature": "Twilight Lord Kelris",
+   "id": "4832",
+   "journal": [],
+   "level": [
+    27,
+    27
+   ],
+   "name": "Twilight Lord Kelris",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "stun (near)"
+     ],
+     "id": 8399,
+     "interruptible": true,
+     "mechanic": "sleep",
+     "name": "Sleep",
+     "school": "Shadow",
+     "when": [
+      "Twilight Lord Kelris - Cast Sleep and Play Sound"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 15587,
+     "interruptible": true,
+     "name": "Mind Blast",
+     "school": "Shadow",
+     "when": [
+      "Twilight Lord Kelris - Cast Mind Blast"
+     ]
+    }
+   ],
+   "wing": "Blackfathom Deeps"
+  },
+  {
+   "creature": "Aku'mai",
+   "id": "4829",
+   "journal": [],
+   "level": [
+    28,
+    28
+   ],
+   "name": "Aku'mai",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage done (self)",
+      "haste (self)"
+     ],
+     "id": 3490,
+     "name": "Frenzied Rage",
+     "school": "Physical",
+     "when": [
+      "Aku'mai - Cast Frenzied Rage at 30% HP"
+     ]
+    },
+    {
+     "dispel": "Poison",
+     "does": [
+      "dot (near)"
+     ],
+     "id": 3815,
+     "interruptible": true,
+     "name": "Poison Cloud",
+     "school": "Nature",
+     "when": [
+      "Aku'mai - Cast Poison Cloud"
+     ]
+    }
+   ],
+   "wing": "Blackfathom Deeps"
+  }
+ ],
+ "BRD": [
+  {
+   "creature": "High Interrogator Gerstahn",
+   "id": "9018",
+   "journal": [],
+   "level": [
+    52,
+    52
+   ],
+   "name": "High Interrogator Gerstahn",
+   "rare": false,
+   "script": "boss_high_interrogator_gerstahn.cpp",
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "absorb (self)",
+      "thorns (self)"
+     ],
+     "id": 12040,
+     "name": "Shadow Shield",
+     "school": "Shadow",
+     "when": [
+      "SPELL_SHADOWSHIELD"
+     ]
+    },
+    {
+     "does": [
+      "fear (near)"
+     ],
+     "id": 13704,
+     "mechanic": "fear",
+     "name": "Psychic Scream",
+     "school": "Shadow",
+     "when": [
+      "SPELL_PSYCHICSCREAM"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "dot (target)"
+     ],
+     "id": 14032,
+     "name": "Shadow Word: Pain",
+     "school": "Shadow",
+     "when": [
+      "SPELL_SHADOWWORDPAIN"
+     ]
+    },
+    {
+     "does": [
+      "power burn (target)"
+     ],
+     "id": 14033,
+     "interruptible": true,
+     "name": "Mana Burn",
+     "school": "Shadow",
+     "when": [
+      "SPELL_MANABURN"
+     ]
+    }
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Lord Roccor",
+   "id": "9025",
+   "journal": [],
+   "level": [
+    51,
+    51
+   ],
+   "name": "Lord Roccor",
+   "rare": true,
+   "spells": [
+    {
+     "does": [
+      "stun (near)"
+     ],
+     "id": 6524,
+     "mechanic": "stun",
+     "name": "Ground Tremor",
+     "school": "Physical",
+     "when": [
+      "Lord Roccor - Cast Ground Tremor"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)",
+      "interrupt (target)"
+     ],
+     "id": 13728,
+     "name": "Earth Shock",
+     "school": "Nature",
+     "when": [
+      "Lord Roccor - Cast Earth Shock"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (target)",
+      "dot (target)"
+     ],
+     "id": 13729,
+     "name": "Flame Shock",
+     "school": "Fire",
+     "when": [
+      "Lord Roccor - Cast Flame Shock"
+     ]
+    }
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Houndmaster Grebmar",
+   "id": "9319",
+   "journal": [],
+   "level": [
+    52,
+    52
+   ],
+   "name": "Houndmaster Grebmar",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "attack power (near)"
+     ],
+     "id": 13730,
+     "name": "Demoralizing Shout",
+     "school": "Physical",
+     "when": []
+    },
+    {
+     "does": [
+      "damage (target)",
+      "interrupt (target)"
+     ],
+     "id": 15615,
+     "name": "Pummel",
+     "school": "Physical",
+     "when": []
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "haste (allies)"
+     ],
+     "id": 21049,
+     "name": "Bloodlust",
+     "school": "Nature",
+     "when": []
+    }
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Anub'shiah",
+   "id": "9031",
+   "journal": [],
+   "level": [
+    54,
+    54
+   ],
+   "name": "Ring of Law",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "immune (target)",
+      "stun (target)"
+     ],
+     "id": 8994,
+     "interruptible": true,
+     "mechanic": "banish",
+     "name": "Banish",
+     "school": "Shadow",
+     "when": [
+      "Anub'shiah - Cast Banish"
+     ]
+    },
+    {
+     "dispel": "Curse",
+     "does": [
+      "damage done (target)"
+     ],
+     "id": 12493,
+     "name": "Curse of Weakness",
+     "school": "Shadow",
+     "when": [
+      "Anub'shiah - Cast Curse of Weakness"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "regen (self)",
+      "resistance (self)"
+     ],
+     "id": 13787,
+     "name": "Demon Armor",
+     "school": "Shadow",
+     "when": [
+      "Anub'shiah - Cast Demon Armor on Aggro"
+     ]
+    },
+    {
+     "dispel": "Curse",
+     "does": [
+      "cast speed (near)"
+     ],
+     "id": 15470,
+     "name": "Curse of Tongues",
+     "school": "Shadow",
+     "when": [
+      "Anub'shiah - Cast Curse of Tongues"
+     ]
+    },
+    {
+     "does": [
+      "haste (target)",
+      "root (target)",
+      "silence (target)"
+     ],
+     "id": 15471,
+     "mechanic": "root",
+     "name": "Enveloping Web",
+     "school": "Physical",
+     "when": [
+      "Anub'shiah - Cast Enveloping Web"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 15472,
+     "interruptible": true,
+     "name": "Shadow Bolt",
+     "school": "Shadow",
+     "when": [
+      "Anub'shiah - Cast Shadow Bolt"
+     ]
+    }
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Pyromancer Loregrain",
+   "id": "9024",
+   "journal": [],
+   "level": [
+    52,
+    52
+   ],
+   "name": "Pyromancer Loregrain",
+   "rare": true,
+   "spells": [
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 15038,
+     "name": "Scorching Totem",
+     "school": "Fire",
+     "when": [
+      "Pyromancer Loregrain - Cast Scorching Totem"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "absorb (self)"
+     ],
+     "id": 15041,
+     "name": "Fire Ward",
+     "school": "Fire",
+     "when": [
+      "Pyromancer Loregrain - Cast Fire Ward"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 15095,
+     "interruptible": true,
+     "name": "Molten Blast",
+     "school": "Fire",
+     "when": [
+      "Pyromancer Loregrain - Cast Molten Blast"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (target)",
+      "dot (target)"
+     ],
+     "id": 15616,
+     "name": "Flame Shock",
+     "school": "Fire",
+     "when": [
+      "Pyromancer Loregrain - Cast Flame Shock"
+     ]
+    }
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Warder Stilgiss",
+   "id": "9041",
+   "journal": [],
+   "level": [
+    56,
+    56
+   ],
+   "name": "Warder Stilgiss",
+   "rare": true,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "resistance (self)"
+     ],
+     "id": 12544,
+     "name": "Frost Armor",
+     "school": "Frost",
+     "then": [
+      {
+       "dispel": "Magic",
+       "does": [
+        "haste (target)",
+        "slow (target)"
+       ],
+       "id": 6136,
+       "mechanic": "snare",
+       "name": "Chilled",
+       "school": "Frost"
+      }
+     ],
+     "when": [
+      "Warder Stilgiss - Cast Frost Armor on Missing Buff"
+     ]
+    },
+    {
+     "does": [
+      "resistance (self)"
+     ],
+     "id": 12556,
+     "name": "Frost Armor",
+     "school": "Frost",
+     "then": [
+      {
+       "dispel": "Magic",
+       "does": [
+        "haste (target)",
+        "slow (target)"
+       ],
+       "id": 6136,
+       "mechanic": "snare",
+       "name": "Chilled",
+       "school": "Frost"
+      }
+     ],
+     "when": []
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (near)",
+      "root (near)"
+     ],
+     "id": 12674,
+     "mechanic": "root",
+     "name": "Frost Nova",
+     "school": "Frost",
+     "when": [
+      "Warder Stilgiss - Cast Frost Nova"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (target)",
+      "slow (target)"
+     ],
+     "id": 12675,
+     "interruptible": true,
+     "mechanic": "snare",
+     "name": "Frostbolt",
+     "school": "Frost",
+     "when": [
+      "Warder Stilgiss - Cast Frostbolt"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "absorb (self)"
+     ],
+     "id": 15044,
+     "name": "Frost Ward",
+     "school": "Frost",
+     "when": [
+      "Warder Stilgiss - Cast Frost Ward"
+     ]
+    }
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Watchman Doomgrip",
+   "id": "9476",
+   "journal": [],
+   "level": [
+    55,
+    55
+   ],
+   "name": "Watchman Doomgrip",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "resistance (target)"
+     ],
+     "id": 11971,
+     "name": "Sunder Armor",
+     "school": "Physical",
+     "when": [
+      "Watchman Doomgrip - Cast Sunder Armor (Phase 1)"
+     ]
+    },
+    {
+     "does": [
+      "heal (self)"
+     ],
+     "id": 15504,
+     "name": "Drink Healing Potion",
+     "school": "Holy",
+     "when": [
+      "Watchman Doomgrip - Cast Drink Healing Potion"
+     ]
+    }
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Fineous Darkvire",
+   "id": "9056",
+   "journal": [],
+   "level": [
+    54,
+    54
+   ],
+   "name": "Fineous Darkvire",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "resistance (self)"
+     ],
+     "id": 8258,
+     "name": "Devotion Aura",
+     "school": "Holy",
+     "when": [
+      "Fineous Darkvire - Cast Devotion Aura"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)",
+      "interrupt (target)"
+     ],
+     "id": 11978,
+     "name": "Kick",
+     "school": "Physical",
+     "when": [
+      "Fineous Darkvire - Cast Kick on Target Casting"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 13953,
+     "name": "Holy Strike",
+     "school": "Holy",
+     "when": [
+      "Fineous Darkvire - Cast Holy Strike"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [],
+     "id": 15346,
+     "name": "Seal of Reckoning",
+     "school": "Holy",
+     "then": [
+      {
+       "does": [
+        "heal (self)"
+       ],
+       "id": 15347,
+       "name": "Seal of Reckoning Effect",
+       "school": "Holy"
+      }
+     ],
+     "when": [
+      "Fineous Darkvire - Cast Seal of Reckoning at 20% HP"
+     ]
+    },
+    {
+     "does": [
+      "heal (allies)"
+     ],
+     "id": 15493,
+     "interruptible": true,
+     "name": "Holy Light",
+     "school": "Holy",
+     "when": [
+      "Fineous Darkvire - Cast Holy Light at 40% HP",
+      "Fineous Darkvire - Cast Holy Light at 60% HP"
+     ]
+    }
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Lord Incendius",
+   "id": "9017",
+   "journal": [],
+   "level": [
+    55,
+    55
+   ],
+   "name": "Lord Incendius",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (near)"
+     ],
+     "id": 13899,
+     "interruptible": true,
+     "name": "Fire Storm",
+     "school": "Fire",
+     "when": [
+      "Lord Incendius - Cast Fire Storm"
+     ]
+    },
+    {
+     "does": [
+      "damage (near)"
+     ],
+     "id": 13900,
+     "interruptible": true,
+     "name": "Fiery Burst",
+     "school": "Fire",
+     "when": [
+      "Lord Incendius - Cast Fiery Burst"
+     ]
+    },
+    {
+     "does": [
+      "knockback (target)",
+      "weapon damage (target)"
+     ],
+     "id": 14099,
+     "name": "Mighty Blow",
+     "school": "Physical",
+     "when": [
+      "Lord Incendius - Cast Mighty Blow"
+     ]
+    },
+    {
+     "dispel": "Curse",
+     "does": [
+      "resistance (near)"
+     ],
+     "id": 26977,
+     "name": "Curse of the Elemental Lord",
+     "school": "Fire",
+     "when": [
+      "Lord Incendius - Cast Curse of the Elemental Lord"
+     ]
+    }
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Bael'Gar",
+   "id": "9016",
+   "journal": [],
+   "level": [
+    54,
+    54
+   ],
+   "name": "Bael'Gar",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (near)",
+      "summon (near)"
+     ],
+     "id": 13895,
+     "interruptible": true,
+     "name": "Summon Spawn of Bael'Gar",
+     "school": "Fire",
+     "when": [
+      "Bael'Gar - Cast Summon Spawn of Bael'Gar, Emote at 20% HP",
+      "Bael'Gar - Cast Summon Spawn of Bael'Gar, Emote at 40% HP",
+      "Bael'Gar - Cast Summon Spawn of Bael'Gar, Emote at 60% HP",
+      "Bael'Gar - Cast Summon Spawn of Bael'Gar, Emote at 80% HP"
+     ]
+    },
+    {
+     "does": [],
+     "id": 23378,
+     "name": "Magma Splash",
+     "school": "Fire",
+     "then": [
+      {
+       "does": [
+        "damage (target)",
+        "dot (target)"
+       ],
+       "id": 23379,
+       "name": "Magma Splash",
+       "school": "Fire"
+      }
+     ],
+     "when": [
+      "Bael'Gar - Cast Magma Splash on Spawn"
+     ]
+    }
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "General Angerforge",
+   "id": "9033",
+   "journal": [],
+   "level": [
+    57,
+    57
+   ],
+   "name": "General Angerforge",
+   "rare": false,
+   "script": "boss_general_angerforge.cpp",
+   "spells": [
+    {
+     "does": [],
+     "id": 15088,
+     "name": "Flurry",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [
+        "haste (self)"
+       ],
+       "id": 17687,
+       "name": "Flurry",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "SPELL_FLURRY"
+     ]
+    },
+    {
+     "does": [],
+     "id": 15097,
+     "name": "Enrage",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [
+        "damage done (self)",
+        "haste (self)"
+       ],
+       "id": 15061,
+       "name": "Enrage",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "SPELL_ENRAGE"
+     ]
+    },
+    {
+     "does": [
+      "resistance (target)"
+     ],
+     "id": 15572,
+     "name": "Sunder Armor",
+     "school": "Physical",
+     "when": [
+      "SPELL_SUNDER_ARMOR"
+     ]
+    }
+   ],
+   "summons": [
+    "NPC_ANVILRAGE_MEDIC: Anvilrage Medic",
+    "NPC_ANVILRAGE_RESERVIST: Anvilrage Reservist",
+    "NPC_ELITE_AMOUNT: Spawn Point (Only GM can see it)"
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Golem Lord Argelmach",
+   "id": "8983",
+   "journal": [],
+   "level": [
+    57,
+    57
+   ],
+   "name": "Golem Lord Argelmach",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 15305,
+     "interruptible": true,
+     "name": "Chain Lightning",
+     "school": "Nature",
+     "when": [
+      "Golem Lord Argelmach - Cast Chain Lightning"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [],
+     "id": 15507,
+     "name": "Lightning Shield",
+     "school": "Nature",
+     "when": [
+      "Golem Lord Argelmach - Cast Lightning Shield on Missing Buff",
+      "Golem Lord Argelmach - Cast Lightning Shield on Spawn"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 15605,
+     "name": "Shock",
+     "school": "Nature",
+     "when": [
+      "Golem Lord Argelmach - Cast Shock"
+     ]
+    }
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Hurley Blackbreath",
+   "id": "9537",
+   "journal": [],
+   "level": [
+    55,
+    55
+   ],
+   "name": "Hurley Blackbreath",
+   "rare": false,
+   "script": "blackrock_depths.cpp",
+   "spells": [
+    {
+     "does": [
+      "damage (in front)"
+     ],
+     "id": 9573,
+     "interruptible": true,
+     "name": "Flame Breath",
+     "school": "Fire",
+     "when": [
+      "SPELL_FLAME_BREATH"
+     ]
+    },
+    {
+     "does": [
+      "damage done (self)",
+      "haste (self)"
+     ],
+     "id": 14872,
+     "name": "Drunken Rage",
+     "school": "Physical",
+     "when": [
+      "SPELL_DRUNKEN_RAGE"
+     ]
+    }
+   ],
+   "summons": [
+    "NPC_BLACKBREATH_CRONY: Blackbreath Crony",
+    "NPC_RIBBLY_CRONY: Ribbly's Crony",
+    "NPC_RIBBLY_SCREWSPIGOT: Ribbly Screwspigot"
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Ribbly Screwspigot",
+   "id": "9543",
+   "journal": [],
+   "level": [
+    53,
+    53
+   ],
+   "name": "Ribbly Screwspigot",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "slow (target)",
+      "weapon damage (target)"
+     ],
+     "id": 9080,
+     "mechanic": "snare",
+     "name": "Hamstring",
+     "school": "Physical",
+     "when": [
+      "Ribbly Screwspigot - Cast Hamstring"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)",
+      "stun (target)"
+     ],
+     "id": 12540,
+     "mechanic": "knockout",
+     "name": "Gouge",
+     "school": "Physical",
+     "when": [
+      "Ribbly Screwspigot - Cast Gouge on Facing Target"
+     ]
+    }
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Phalanx",
+   "id": "9502",
+   "journal": [],
+   "level": [
+    55,
+    55
+   ],
+   "name": "Phalanx",
+   "rare": false,
+   "script": "blackrock_depths.cpp",
+   "spells": [
+    {
+     "does": [
+      "knockback (target)",
+      "weapon damage (target)"
+     ],
+     "id": 14099,
+     "name": "Mighty Blow",
+     "school": "Physical",
+     "when": [
+      "SPELL_MIGHTY_BLOW"
+     ]
+    },
+    {
+     "does": [
+      "damage (near)"
+     ],
+     "id": 15285,
+     "name": "Fireball Volley",
+     "school": "Fire",
+     "when": [
+      "SPELL_FIREBALL_VOLLEY"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (near)",
+      "haste (near)",
+      "slow (near)"
+     ],
+     "id": 15588,
+     "mechanic": "snare",
+     "name": "Thunderclap",
+     "school": "Nature",
+     "when": [
+      "SPELL_THUNDERCLAP"
+     ]
+    }
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Plugger Spazzring",
+   "id": "9499",
+   "journal": [],
+   "level": [
+    55,
+    55
+   ],
+   "name": "Plugger Spazzring",
+   "rare": false,
+   "script": "blackrock_depths.cpp",
+   "spells": [
+    {
+     "does": [],
+     "id": 921,
+     "name": "Pick Pocket",
+     "school": "Physical",
+     "when": [
+      "SPELL_PICKPOCKET"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "immune (target)",
+      "stun (target)"
+     ],
+     "id": 8994,
+     "interruptible": true,
+     "mechanic": "banish",
+     "name": "Banish",
+     "school": "Shadow",
+     "when": [
+      "SPELL_BANISH"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 12739,
+     "interruptible": true,
+     "name": "Shadow Bolt",
+     "school": "Shadow",
+     "when": [
+      "SPELL_SHADOW_BOLT"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (target)",
+      "dot (target)"
+     ],
+     "id": 12742,
+     "interruptible": true,
+     "name": "Immolate",
+     "school": "Fire",
+     "when": [
+      "SPELL_IMMOLATE"
+     ]
+    },
+    {
+     "dispel": "Curse",
+     "does": [
+      "cast speed (target)"
+     ],
+     "id": 13338,
+     "name": "Curse of Tongues",
+     "school": "Shadow",
+     "when": [
+      "SPELL_CURSE_OF_TONGUES"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "regen (self)",
+      "resistance (self)"
+     ],
+     "id": 13787,
+     "name": "Demon Armor",
+     "school": "Shadow",
+     "when": [
+      "SPELL_DEMON_ARMOR"
+     ]
+    }
+   ],
+   "summons": [
+    "NPC_PHALANX: Phalanx"
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Ambassador Flamelash",
+   "id": "9156",
+   "journal": [],
+   "level": [
+    57,
+    57
+   ],
+   "name": "Ambassador Flamelash",
+   "rare": false,
+   "script": "boss_ambassador_flamelash.cpp",
+   "spells": [
+    {
+     "does": [],
+     "id": 13489,
+     "name": "Burning Spirit",
+     "school": "Physical",
+     "when": [
+      "SPELL_BURNING_SPIRIT"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [],
+     "id": 15573,
+     "name": "Fire Blast",
+     "school": "Fire",
+     "then": [
+      {
+       "does": [
+        "damage (target)"
+       ],
+       "id": 15574,
+       "name": "Fire Blast",
+       "school": "Fire"
+      }
+     ],
+     "when": [
+      "SPELL_FIREBLAST"
+     ]
+    }
+   ],
+   "summons": [
+    "NPC_BURNING_SPIRIT: Burning Spirit"
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Panzor the Invincible",
+   "id": "8923",
+   "journal": [],
+   "level": [
+    57,
+    57
+   ],
+   "name": "Panzor the Invincible",
+   "rare": true,
+   "spells": [],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Dope'rel",
+   "id": "9040",
+   "journal": [],
+   "level": [
+    56,
+    56
+   ],
+   "name": "The Seven",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (target)",
+      "stun (target)"
+     ],
+     "id": 12540,
+     "mechanic": "knockout",
+     "name": "Gouge",
+     "school": "Physical",
+     "when": [
+      "Dope'rel - Cast Gouge on Facing Target"
+     ]
+    },
+    {
+     "does": [
+      "dodge (self)"
+     ],
+     "id": 15087,
+     "name": "Evasion",
+     "school": "Physical",
+     "when": [
+      "Dope'rel - Cast Evasion"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 15581,
+     "name": "Sinister Strike",
+     "school": "Physical",
+     "when": [
+      "Dope'rel - Cast Sinister Strike"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 15582,
+     "name": "Backstab",
+     "school": "Physical",
+     "when": [
+      "Dope'rel - Cast Backstab on Facing Target Back"
+     ]
+    },
+    {
+     "does": [
+      "dot (target)"
+     ],
+     "id": 15583,
+     "mechanic": "bleed",
+     "name": "Rupture",
+     "school": "Physical",
+     "when": [
+      "Dope'rel - Cast Rupture"
+     ]
+    },
+    {
+     "does": [
+      "slow (self)"
+     ],
+     "id": 22766,
+     "name": "Sneak",
+     "school": "Physical",
+     "when": [
+      "Dope'rel - Cast Stealth OOC"
+     ]
+    }
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Magmus",
+   "id": "9938",
+   "journal": [],
+   "level": [
+    57,
+    57
+   ],
+   "name": "Magmus",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "stun (near)",
+      "weapon damage (near)"
+     ],
+     "id": 15593,
+     "mechanic": "stun",
+     "name": "War Stomp",
+     "school": "Physical",
+     "when": [
+      "Magmus - War Stomp"
+     ]
+    },
+    {
+     "does": [
+      "damage (near)"
+     ],
+     "id": 15668,
+     "interruptible": true,
+     "name": "Fiery Burst",
+     "school": "Fire",
+     "when": [
+      "Magmus - Fiery Burst"
+     ]
+    }
+   ],
+   "wing": "Blackrock Depths"
+  },
+  {
+   "creature": "Emperor Dagran Thaurissan",
+   "id": "9019",
+   "journal": [],
+   "level": [
+    59,
+    59
+   ],
+   "name": "Emperor Dagran Thaurissan",
+   "rare": false,
+   "script": "boss_emperor_dagran_thaurissan.cpp",
+   "spells": [
+    {
+     "does": [
+      "immune (self)"
+     ],
+     "id": 15636,
+     "name": "Avatar of Flame",
+     "school": "Fire",
+     "then": [
+      {
+       "does": [
+        "damage (target)"
+       ],
+       "id": 15643,
+       "name": "Flames",
+       "school": "Fire"
+      }
+     ],
+     "when": [
+      "SPELL_AVATAROFFLAME"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)",
+      "stun (target)"
+     ],
+     "id": 17492,
+     "mechanic": "stun",
+     "name": "Hand of Thaurissan",
+     "school": "Fire",
+     "when": [
+      "SPELL_HANDOFTHAURISSAN"
+     ]
+    }
+   ],
+   "wing": "Blackrock Depths"
+  }
+ ],
+ "CG": [
+  {
+   "id": "92107",
+   "journal": [],
+   "name": "Grovetender Engryss",
+   "rare": false,
+   "wing": "Crescent Grove"
+  },
+  {
+   "id": "92109",
+   "journal": [],
+   "name": "Keeper Ranathos",
+   "rare": false,
+   "wing": "Crescent Grove"
+  },
+  {
+   "id": "92108",
+   "journal": [],
+   "name": "High Priestess A'lathea",
+   "rare": false,
+   "wing": "Crescent Grove"
+  },
+  {
+   "id": "92111",
+   "journal": [],
+   "name": "Fenektis the Deceiver",
+   "rare": false,
+   "wing": "Crescent Grove"
+  },
+  {
+   "id": "92110",
+   "journal": [],
+   "name": "Master Raxxieth",
+   "rare": false,
+   "wing": "Crescent Grove"
+  }
+ ],
+ "DM": [
+  {
+   "id": "61961",
+   "journal": [],
+   "name": "Jared Voss",
+   "rare": false,
+   "wing": "The Deadmines"
+  },
+  {
+   "creature": "Rhahk'Zor",
+   "id": "644",
+   "journal": [
+    {
+     "effect": "Rhahk'Zor slams an enemy, dealing 64 to 86 physical damage and stunning them for 3 seconds.",
+     "flags": [],
+     "name": "Rhahk'Zor Slam"
+    }
+   ],
+   "level": [
+    19,
+    19
+   ],
+   "name": "Rhahk'Zor",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (target)",
+      "stun (target)"
+     ],
+     "id": 6304,
+     "mechanic": "stun",
+     "name": "Rhahk'Zor Slam",
+     "school": "Physical",
+     "when": [
+      "Rhahk'Zor - Cast Rhahk'Zor Slam"
+     ]
+    }
+   ],
+   "wing": "The Deadmines"
+  },
+  {
+   "creature": "Miner Johnson",
+   "id": "3586",
+   "journal": [
+    {
+     "effect": "Miner Johnson lunges his pickaxe into his enemy, piercing their armor and reducing its armor value by 10% for 10 seconds.",
+     "flags": [],
+     "name": "Pierce Armor"
+    }
+   ],
+   "level": [
+    19,
+    19
+   ],
+   "name": "Miner Johnson",
+   "rare": true,
+   "spells": [
+    {
+     "does": [
+      "resistance (target)"
+     ],
+     "id": 12097,
+     "name": "Pierce Armor",
+     "school": "Physical",
+     "when": [
+      "Miner Johnson - Cast Pierce Armor"
+     ]
+    }
+   ],
+   "wing": "The Deadmines"
+  },
+  {
+   "creature": "Sneed",
+   "id": "643",
+   "journal": [
+    {
+     "effect": "Sneed disarms his enemy, forcing them to stop wielding their weapon for 5 seconds.",
+     "flags": [
+      "Tank"
+     ],
+     "name": "Disarm"
+    }
+   ],
+   "level": [
+    20,
+    20
+   ],
+   "name": "Sneed",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "disarm (target)"
+     ],
+     "id": 6713,
+     "mechanic": "disarm",
+     "name": "Disarm",
+     "school": "Physical",
+     "when": [
+      "Sneed - Cast Disarm"
+     ]
+    }
+   ],
+   "wing": "The Deadmines"
+  },
+  {
+   "creature": "Gilnid",
+   "id": "1763",
+   "journal": [
+    {
+     "effect": "Glinid throws molten metal to an enemy, inflicting fire damage every 3 seconds, increasing the time between their attacks by 54%, and reducing their movement by 50% for 15 seconds.",
+     "flags": [],
+     "name": "Molten Metal"
+    }
+   ],
+   "level": [
+    20,
+    20
+   ],
+   "name": "Gilnid",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "dot (target)",
+      "haste (target)",
+      "slow (target)"
+     ],
+     "id": 5213,
+     "interruptible": true,
+     "name": "Molten Metal",
+     "school": "Fire",
+     "when": [
+      "Gilnid - Cast Molten Metal"
+     ]
+    }
+   ],
+   "wing": "The Deadmines"
+  },
+  {
+   "id": "61963",
+   "journal": [],
+   "name": "Masterpiece Harvester",
+   "rare": false,
+   "wing": "The Deadmines"
+  },
+  {
+   "creature": "Mr. Smite",
+   "id": "646",
+   "journal": [
+    {
+     "effect": "Mr. Smite's nimble reflexes allows him to increase his chance to parry by 75% for 8 seconds.",
+     "flags": [],
+     "name": "Nimble Reflexes"
+    },
+    {
+     "effect": "Mr. Smite slam his enemy, inflicting 50 physical damage and stunning them for 3 seconds.",
+     "flags": [],
+     "name": "Smite Slam"
+    },
+    {
+     "effect": "Mr. Smite stomps the ground, stunning all enemies for 10 seconds.",
+     "flags": [
+      "Important",
+      "Deadly"
+     ],
+     "name": "Smite Stomp"
+    },
+    {
+     "effect": "Mr. Smite gains a chance to do two additional attacks.",
+     "flags": [],
+     "name": "Thrash"
+    }
+   ],
+   "level": [
+    20,
+    20
+   ],
+   "name": "Mr. Smite",
+   "rare": false,
+   "script": "boss_mr_smite.cpp",
+   "spells": [
+    {
+     "does": [
+      "parry (self)"
+     ],
+     "id": 6264,
+     "name": "Nimble Reflexes",
+     "school": "Physical",
+     "when": []
+    },
+    {
+     "does": [
+      "stun (near)"
+     ],
+     "id": 6432,
+     "name": "Smite Stomp",
+     "school": "Physical",
+     "when": [
+      "SPELL_SMITE_STOMP"
+     ]
+    },
+    {
+     "does": [],
+     "id": 6433,
+     "name": "Nimble Reflexes III",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [
+        "parry (self)"
+       ],
+       "id": 6264,
+       "name": "Nimble Reflexes",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "SPELL_NIBLE_REFLEXES (removed after phase 1)"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)",
+      "stun (target)"
+     ],
+     "id": 6435,
+     "mechanic": "stun",
+     "name": "Smite Slam",
+     "school": "Physical",
+     "when": [
+      "SPELL_SMITE_SLAM (only casted in phase 3)"
+     ]
+    },
+    {
+     "does": [
+      "damage done (self)",
+      "haste (self)"
+     ],
+     "id": 6436,
+     "name": "Smite's Hammer",
+     "school": "Physical",
+     "when": [
+      "SPELL_SMITE_HAMMER (unclear, not casted in sniff)"
+     ]
+    },
+    {
+     "does": [],
+     "id": 12787,
+     "name": "Thrash",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [],
+       "id": 3391,
+       "name": "Thrash",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "SPELL_THRASH (only casted in phase 2; unclear, 3391 directly casted in sniff)"
+     ]
+    }
+   ],
+   "wing": "The Deadmines"
+  },
+  {
+   "creature": "Captain Greenskin",
+   "id": "647",
+   "journal": [
+    {
+     "effect": "Captain Greenskin stabs his enemy with his poisoned harpoon, inflicting physical damage plus 30, then an additional 45 nature damage every 10 seconds for 1 minute.",
+     "flags": [
+      "Poison"
+     ],
+     "name": "Poisoned Harpoon"
+    },
+    {
+     "effect": "Captain Greenskin cleaves all enemies in front of him.",
+     "flags": [],
+     "name": "Cleave"
+    }
+   ],
+   "level": [
+    20,
+    20
+   ],
+   "name": "Captain Greenskin",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Poison",
+     "does": [
+      "dot (target)",
+      "weapon damage (target)"
+     ],
+     "id": 5208,
+     "interruptible": true,
+     "name": "Poisoned Harpoon",
+     "school": "Nature",
+     "when": [
+      "Captain Greenskin - Cast Poisoned Harpoon"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 5532,
+     "name": "Cleave",
+     "school": "Physical",
+     "when": [
+      "Captain Greenskin - Cast Cleave"
+     ]
+    }
+   ],
+   "wing": "The Deadmines"
+  },
+  {
+   "creature": "Edwin VanCleef",
+   "id": "639",
+   "journal": [
+    {
+     "effect": "Edwin VanCleef gains a chance to do two additional attacks.",
+     "flags": [],
+     "name": "Trash"
+    },
+    {
+     "effect": "Edwin VanCleef call upon his allies, summoning a pair of Defias Blackguards to assist him during the battle.",
+     "flags": [
+      "Important",
+      "Tank"
+     ],
+     "name": "VanCleef's Allies"
+    }
+   ],
+   "level": [
+    21,
+    21
+   ],
+   "name": "Edwin VanCleef",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 674,
+     "name": "Dual Wield",
+     "school": "Physical",
+     "when": [
+      "Edwin VanCleef - Yell and Cast Dual Wield on Aggro"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 5200,
+     "name": "VanCleef's Allies",
+     "school": "Physical",
+     "when": [
+      "Edwin VanCleef - Cast VanCleef's Allies, Emote at 50% HP"
+     ]
+    },
+    {
+     "does": [],
+     "id": 12787,
+     "name": "Thrash",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [],
+       "id": 3391,
+       "name": "Thrash",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Edwin VanCleef - Cast Thrash on Spawn"
+     ]
+    }
+   ],
+   "wing": "The Deadmines"
+  },
+  {
+   "creature": "Cookie",
+   "id": "645",
+   "journal": [
+    {
+     "effect": "Cookie throws some acidic goop onto his enemies, cause everyone nearby to receive nature damage every 5 seconds for 30 seconds.",
+     "flags": [
+      "Poison"
+     ],
+     "name": "Acid Splash"
+    },
+    {
+     "effect": "Cookie eats some of his food, healing him for 111 to 129 health.",
+     "flags": [
+      "Interruptible"
+     ],
+     "name": "Cookie's Cooking"
+    }
+   ],
+   "level": [
+    20,
+    20
+   ],
+   "name": "Cookie",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "heal (self)"
+     ],
+     "id": 5174,
+     "interruptible": true,
+     "name": "Cookie's Cooking",
+     "school": "Holy",
+     "when": [
+      "Cookie - Cast Cookie's Cooking at 50% HP"
+     ]
+    },
+    {
+     "does": [
+      "dot (near)"
+     ],
+     "id": 6306,
+     "interruptible": true,
+     "name": "Acid Splash",
+     "school": "Nature",
+     "when": [
+      "Cookie - Cast Acid Splash"
+     ]
+    }
+   ],
+   "wing": "The Deadmines"
+  }
+ ],
+ "DMR": [
+  {
+   "id": "62057",
+   "journal": [],
+   "name": "Gowlfang",
+   "rare": false,
+   "wing": "Dragonmaw Retreat"
+  },
+  {
+   "id": "62066",
+   "journal": [],
+   "name": "Cavernweb Broodmother",
+   "rare": false,
+   "wing": "Dragonmaw Retreat"
+  },
+  {
+   "id": "62067",
+   "journal": [],
+   "name": "Web Master Torkon",
+   "rare": false,
+   "wing": "Dragonmaw Retreat"
+  },
+  {
+   "id": "62071",
+   "journal": [],
+   "name": "Garlok Flamekeeper",
+   "rare": false,
+   "wing": "Dragonmaw Retreat"
+  },
+  {
+   "id": "62069",
+   "journal": [],
+   "name": "Halgan Redbrand",
+   "rare": false,
+   "wing": "Dragonmaw Retreat"
+  },
+  {
+   "id": "62068",
+   "journal": [],
+   "name": "Slagfist Destroyer",
+   "rare": false,
+   "wing": "Dragonmaw Retreat"
+  },
+  {
+   "id": "62070",
+   "journal": [],
+   "name": "Overlord Blackheart",
+   "rare": false,
+   "wing": "Dragonmaw Retreat"
+  },
+  {
+   "id": "62038",
+   "journal": [],
+   "name": "Elder Hollowblood",
+   "rare": false,
+   "wing": "Dragonmaw Retreat"
+  },
+  {
+   "id": "62072",
+   "journal": [],
+   "name": "Searistrasz",
+   "rare": false,
+   "wing": "Dragonmaw Retreat"
+  },
+  {
+   "id": "62037",
+   "journal": [],
+   "name": "Zuluhed the Whacked",
+   "rare": false,
+   "wing": "Dragonmaw Retreat"
+  }
+ ],
+ "FH": [
+  {
+   "id": "tansha",
+   "journal": [
+    {
+     "effect": "",
+     "flags": [],
+     "name": "Tan'sha the Sleek"
+    },
+    {
+     "effect": "",
+     "flags": [],
+     "name": "Handler Oboka"
+    }
+   ],
+   "name": "Tan'sha the Sleek",
+   "rare": false,
+   "wing": "Frostmane Hollow"
+  },
+  {
+   "id": "ubukaz",
+   "journal": [
+    {
+     "effect": "At 20% remaining health, Ubukaz becomes enraged, increasing the damage he deals to his enemies significantly.",
+     "flags": [
+      "Enrage"
+     ],
+     "name": "Enrage"
+    }
+   ],
+   "name": "Battlemaster Ubukaz",
+   "rare": false,
+   "wing": "Frostmane Hollow"
+  },
+  {
+   "id": "kanza",
+   "journal": [
+    {
+     "effect": "Kan'za starts the fight with two Frostmane Snowcaller that will assist him.\n\nThese adds should be prioritized by the damage dealers over the boss",
+     "flags": [
+      "DPS"
+     ],
+     "name": "Kan'za's Adds"
+    },
+    {
+     "effect": "Kan'za casts a chilling blizzard, dealing frost damage in an area of effect.",
+     "flags": [
+      "Interruptible"
+     ],
+     "name": "Blizzard"
+    },
+    {
+     "effect": "Kan'za casts a frostbolt at his target, dealing frost damage and slowing them.",
+     "flags": [
+      "Interruptible"
+     ],
+     "name": "Frostbolt"
+    }
+   ],
+   "name": "Kan'za the Seer",
+   "rare": false,
+   "wing": "Frostmane Hollow"
+  },
+  {
+   "id": "hailar",
+   "journal": [
+    {
+     "effect": "Hailar starts the fight with five Frostmane Ritualists that will keep on healing him as long as they are alive.\n\nThe group needs to kill these adds before being able to kill Hailar.",
+     "flags": [
+      "DPS",
+      "Important"
+     ],
+     "name": "Frostmane Ritualists"
+    },
+    {
+     "effect": "Hailar casts a flash freeze, blasting all enemies within 10 yards for 56 frost damage and freezing them in place for up to 5 seconds.",
+     "flags": [
+      "Deadly"
+     ],
+     "name": "Flash Freeze"
+    },
+    {
+     "effect": "Hailar casts a frostbolt at his target, dealing frost damage and slowing them.",
+     "flags": [
+      "Interruptible"
+     ],
+     "name": "Frostbolt"
+    }
+   ],
+   "name": "Hailar the Frigid",
+   "rare": false,
+   "wing": "Frostmane Hollow"
+  }
+ ],
+ "GC": [
+  {
+   "id": "61419",
+   "journal": [],
+   "name": "Matthias Holtz",
+   "rare": false,
+   "wing": "Gilneas City"
+  },
+  {
+   "id": "61420",
+   "journal": [],
+   "name": "Packmaster Ragetooth",
+   "rare": false,
+   "wing": "Gilneas City"
+  },
+  {
+   "id": "61421",
+   "journal": [],
+   "name": "Judge Sutherland",
+   "rare": false,
+   "wing": "Gilneas City"
+  },
+  {
+   "id": "61422",
+   "journal": [],
+   "name": "Dustivan Blackcowl",
+   "rare": false,
+   "wing": "Gilneas City"
+  },
+  {
+   "id": "61423",
+   "journal": [],
+   "name": "Marshal Magnus Greystone",
+   "rare": false,
+   "wing": "Gilneas City"
+  },
+  {
+   "id": "61605",
+   "journal": [],
+   "name": "Horsemaster Levvin",
+   "rare": false,
+   "wing": "Gilneas City"
+  },
+  {
+   "id": "61263",
+   "journal": [],
+   "name": "Harlow Family",
+   "rare": false,
+   "wing": "Gilneas City"
+  },
+  {
+   "id": "61418",
+   "journal": [],
+   "name": "Genn Greymane",
+   "rare": false,
+   "wing": "Gilneas City"
+  }
+ ],
+ "GNOMER": [
+  {
+   "creature": "Grubbis",
+   "id": "7361",
+   "journal": [],
+   "level": [
+    32,
+    32
+   ],
+   "name": "Grubbis",
+   "rare": false,
+   "spells": [],
+   "wing": "Gnomeregan"
+  },
+  {
+   "creature": "Viscous Fallout",
+   "id": "7079",
+   "journal": [],
+   "level": [
+    30,
+    30
+   ],
+   "name": "Viscous Fallout",
+   "rare": false,
+   "spells": [],
+   "wing": "Gnomeregan"
+  },
+  {
+   "creature": "Electrocutioner 6000",
+   "id": "6235",
+   "journal": [],
+   "level": [
+    32,
+    32
+   ],
+   "name": "Electrocutioner 6000",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (in front)"
+     ],
+     "id": 11082,
+     "interruptible": true,
+     "name": "Megavolt",
+     "school": "Nature",
+     "when": [
+      "Electrocutioner 6000 - Cast Megavolt"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 11084,
+     "name": "Shock",
+     "school": "Nature",
+     "when": []
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 11085,
+     "interruptible": true,
+     "name": "Chain Bolt",
+     "school": "Nature",
+     "when": [
+      "Electrocutioner 6000 - Cast Chain Bolt"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 15605,
+     "name": "Shock",
+     "school": "Nature",
+     "when": [
+      "Electrocutioner 6000 - Cast Shock"
+     ]
+    }
+   ],
+   "wing": "Gnomeregan"
+  },
+  {
+   "creature": "Crowd Pummeler 9-60",
+   "id": "6229",
+   "journal": [],
+   "level": [
+    32,
+    32
+   ],
+   "name": "Crowd Pummeler 9-60",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "weapon damage (near)"
+     ],
+     "id": 5568,
+     "name": "Trample",
+     "school": "Physical",
+     "when": [
+      "Crowd Pummeler 9-60 - Cast Trample"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (in front)"
+     ],
+     "id": 8374,
+     "name": "Arcing Smash",
+     "school": "Physical",
+     "when": [
+      "Crowd Pummeler 9-60 - Cast Arcing Smash"
+     ]
+    },
+    {
+     "does": [
+      "interrupt (near)",
+      "knockback (near)",
+      "weapon damage (near)"
+     ],
+     "id": 10887,
+     "name": "Crowd Pummel",
+     "school": "Physical",
+     "when": [
+      "Crowd Pummeler 9-60 - Cast Crowd Pummel"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (in front)"
+     ],
+     "id": 16169,
+     "name": "Arcing Smash",
+     "school": "Physical",
+     "when": []
+    }
+   ],
+   "wing": "Gnomeregan"
+  },
+  {
+   "creature": "Dark Iron Ambassador",
+   "id": "6228",
+   "journal": [],
+   "level": [
+    33,
+    33
+   ],
+   "name": "Dark Iron Ambassador",
+   "rare": true,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [],
+     "id": 184,
+     "interruptible": true,
+     "name": "Fire Shield II",
+     "school": "Fire",
+     "then": [
+      {
+       "does": [
+        "damage (near)"
+       ],
+       "id": 3053,
+       "name": "Fire Shield Effect II",
+       "school": "Fire"
+      }
+     ],
+     "when": [
+      "Dark Iron Ambasadror - Cast Fire Shield II"
+     ]
+    },
+    {
+     "does": [
+      "damage (near)"
+     ],
+     "id": 3053,
+     "name": "Fire Shield Effect II",
+     "school": "Fire",
+     "when": []
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 9053,
+     "interruptible": true,
+     "name": "Fireball",
+     "school": "Fire",
+     "when": [
+      "Dark Iron Ambassador - Cast Fireball"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 10870,
+     "name": "Summon Burning Servant",
+     "school": "Fire",
+     "when": [
+      "Dark Iron Ambassador - Cast Summon Burning Servant (x2)"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "resistance (self)"
+     ],
+     "id": 12544,
+     "name": "Frost Armor",
+     "school": "Frost",
+     "then": [
+      {
+       "dispel": "Magic",
+       "does": [
+        "haste (target)",
+        "slow (target)"
+       ],
+       "id": 6136,
+       "mechanic": "snare",
+       "name": "Chilled",
+       "school": "Frost"
+      }
+     ],
+     "when": [
+      "Dark Iron Ambassador - Cast Frost Armor on Missing Buff"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)",
+      "dot (target)"
+     ],
+     "id": 16412,
+     "name": "Fireball",
+     "school": "Fire",
+     "when": []
+    }
+   ],
+   "wing": "Gnomeregan"
+  },
+  {
+   "creature": "Mekgineer Thermaplugg",
+   "id": "7800",
+   "journal": [],
+   "level": [
+    34,
+    34
+   ],
+   "name": "Mekgineer Thermaplugg",
+   "rare": false,
+   "script": "boss_thermaplugg.cpp",
+   "spells": [
+    {
+     "does": [
+      "knockback (target)",
+      "weapon damage (target)"
+     ],
+     "id": 10101,
+     "name": "Knock Away",
+     "school": "Physical",
+     "when": [
+      "SPELL_KNOCK_AWAY"
+     ]
+    },
+    {
+     "does": [
+      "knockback (near)",
+      "weapon damage (near)"
+     ],
+     "id": 11130,
+     "name": "Knock Away",
+     "school": "Physical",
+     "when": [
+      "SPELL_KNOCK_AWAY_AOE"
+     ]
+    },
+    {
+     "does": [],
+     "id": 11511,
+     "name": "Activate Bomb A",
+     "school": "Physical",
+     "when": [
+      "SPELL_ACTIVATE_BOMB_A (Target Dest = -530.754 670.571 -313.784)"
+     ]
+    },
+    {
+     "does": [],
+     "id": 11795,
+     "name": "Activate Bomb B",
+     "school": "Physical",
+     "when": [
+      "SPELL_ACTIVATE_BOMB_B (Target Dest = -530.754 670.571 -313.784)"
+     ]
+    }
+   ],
+   "summons": [
+    "NPC_WALKING_BOMB: Walking Bomb"
+   ],
+   "wing": "Gnomeregan"
+  }
+ ],
+ "HQ": [
+  {
+   "id": "60735",
+   "journal": [],
+   "name": "High Foreman Bargul Blackhammer",
+   "rare": false,
+   "wing": "Hateforge Quarry"
+  },
+  {
+   "id": "60736",
+   "journal": [],
+   "name": "Engineer Figgles",
+   "rare": false,
+   "wing": "Hateforge Quarry"
+  },
+  {
+   "id": "60829",
+   "journal": [],
+   "name": "Corrosis",
+   "rare": false,
+   "wing": "Hateforge Quarry"
+  },
+  {
+   "id": "60734",
+   "journal": [],
+   "name": "Hatereaver Annihilator",
+   "rare": false,
+   "wing": "Hateforge Quarry"
+  },
+  {
+   "id": "60737",
+   "journal": [],
+   "name": "Har'gesh Doomcaller",
+   "rare": false,
+   "wing": "Hateforge Quarry"
+  }
+ ],
+ "MARA": [
+  {
+   "creature": "Noxxion",
+   "id": "13282",
+   "journal": [],
+   "level": [
+    48,
+    48
+   ],
+   "name": "Noxxion",
+   "rare": false,
+   "script": "boss_noxxion.cpp",
+   "spells": [
+    {
+     "does": [
+      "dot (near)"
+     ],
+     "id": 21547,
+     "name": "Spore Cloud",
+     "school": "Nature",
+     "when": []
+    },
+    {
+     "dispel": "Poison",
+     "does": [
+      "damage (near)",
+      "dot (near)"
+     ],
+     "id": 21687,
+     "name": "Toxic Volley",
+     "school": "Nature",
+     "when": [
+      "SPELL_TOXICVOLLEY"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 21707,
+     "name": "Summon Noxxion's Spawns",
+     "school": "Physical",
+     "when": []
+    },
+    {
+     "does": [],
+     "id": 21708,
+     "name": "Summon Noxxion's Spawns",
+     "school": "Physical",
+     "when": [
+      "SPELL_NOXXION_SPAWNS_AURA"
+     ]
+    },
+    {
+     "does": [
+      "knockback (target)",
+      "weapon damage (target)"
+     ],
+     "id": 22916,
+     "name": "Uppercut",
+     "school": "Physical",
+     "when": [
+      "SPELL_UPPERCUT"
+     ]
+    }
+   ],
+   "wing": "Maraudon"
+  },
+  {
+   "creature": "Razorlash",
+   "id": "12258",
+   "journal": [],
+   "level": [
+    48,
+    48
+   ],
+   "name": "Razorlash",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 8876,
+     "name": "Thrash",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [],
+       "id": 3391,
+       "name": "Thrash",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Razorlash - Cast Thrash, Puncture on Spawn"
+     ]
+    },
+    {
+     "does": [],
+     "id": 12787,
+     "name": "Thrash",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [],
+       "id": 3391,
+       "name": "Thrash",
+       "school": "Physical"
+      }
+     ],
+     "when": []
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 15584,
+     "name": "Cleave",
+     "school": "Physical",
+     "when": [
+      "Razorlash - Cast Cleave"
+     ]
+    },
+    {
+     "does": [
+      "dot (target)"
+     ],
+     "id": 15976,
+     "mechanic": "bleed",
+     "name": "Puncture",
+     "school": "Physical",
+     "when": []
+    },
+    {
+     "does": [],
+     "id": 15978,
+     "name": "Puncture",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [
+        "dot (target)"
+       ],
+       "id": 15976,
+       "mechanic": "bleed",
+       "name": "Puncture",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Razorlash - Cast Thrash, Puncture on Spawn"
+     ]
+    }
+   ],
+   "wing": "Maraudon"
+  },
+  {
+   "creature": "Meshlok the Harvester",
+   "id": "12237",
+   "journal": [],
+   "level": [
+    48,
+    48
+   ],
+   "name": "Meshlok the Harvester",
+   "rare": true,
+   "spells": [
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 13446,
+     "name": "Strike",
+     "school": "Physical",
+     "when": [
+      "Meshlok the Harvester - Cast Strike"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 15580,
+     "name": "Strike",
+     "school": "Physical",
+     "when": []
+    },
+    {
+     "does": [
+      "stun (near)",
+      "weapon damage (near)"
+     ],
+     "id": 15593,
+     "mechanic": "stun",
+     "name": "War Stomp",
+     "school": "Physical",
+     "when": [
+      "Meshlok the Harvester - Cast War Stomp"
+     ]
+    },
+    {
+     "does": [
+      "stun (near)",
+      "weapon damage (near)"
+     ],
+     "id": 24375,
+     "mechanic": "stun",
+     "name": "War Stomp",
+     "school": "Physical",
+     "when": []
+    }
+   ],
+   "wing": "Maraudon"
+  },
+  {
+   "creature": "Lord Vyletongue",
+   "id": "12236",
+   "journal": [],
+   "level": [
+    47,
+    47
+   ],
+   "name": "Lord Vyletongue",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 674,
+     "name": "Dual Wield",
+     "school": "Physical",
+     "when": [
+      "Lord Vyletongue - Enable Range Mode and Cast Dual Wield on Aggro"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "stun (near)"
+     ],
+     "id": 7964,
+     "mechanic": "stun",
+     "name": "Smoke Bomb",
+     "school": "Physical",
+     "when": [
+      "Lord Vyletongue - Cast Smoke Bomb"
+     ]
+    },
+    {
+     "does": [
+      "fear (self)",
+      "stun (near)"
+     ],
+     "id": 8817,
+     "name": "Smoke Bomb",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [],
+       "id": 8822,
+       "name": "Stealth",
+       "school": "Physical"
+      }
+     ],
+     "when": []
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 16100,
+     "name": "Shoot",
+     "school": "Physical",
+     "when": [
+      "Lord Vyletongue - Cast Shoot"
+     ]
+    },
+    {
+     "does": [],
+     "id": 21080,
+     "name": "Putrid Breath",
+     "school": "Physical",
+     "then": [
+      {
+       "dispel": "Disease",
+       "does": [],
+       "id": 21062,
+       "name": "Putrid Breath",
+       "school": "Nature"
+      }
+     ],
+     "when": []
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 21390,
+     "name": "Multi-Shot",
+     "school": "Arcane",
+     "when": [
+      "Lord Vyletongue - Cast Multi-Shot"
+     ]
+    },
+    {
+     "does": [
+      "leap (target)"
+     ],
+     "id": 21655,
+     "name": "Blink",
+     "school": "Nature",
+     "when": [
+      "Lord Vyletongue - Cast Blink"
+     ]
+    }
+   ],
+   "wing": "Maraudon"
+  },
+  {
+   "creature": "Celebras the Cursed",
+   "id": "12225",
+   "journal": [],
+   "level": [
+    49,
+    49
+   ],
+   "name": "Celebras the Cursed",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "dot (target)",
+      "root (target)"
+     ],
+     "id": 12747,
+     "interruptible": true,
+     "mechanic": "root",
+     "name": "Entangling Roots",
+     "school": "Nature",
+     "when": [
+      "Celebras the Cursed - Cast Entangling Roots"
+     ]
+    },
+    {
+     "does": [
+      "dot (near)",
+      "haste (near)",
+      "slow (near)"
+     ],
+     "id": 21793,
+     "interruptible": true,
+     "name": "Twisted Tranquility",
+     "school": "Nature",
+     "when": [
+      "Celebras the Cursed - Cast Twisted Tranquility"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 21807,
+     "interruptible": true,
+     "name": "Wrath",
+     "school": "Nature",
+     "when": [
+      "Celebras the Cursed - Cast Wrath"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 21968,
+     "name": "Corrupt Forces of Nature",
+     "school": "Nature",
+     "when": [
+      "Celebras the Cursed - Cast Corrupt Forces of Nature"
+     ]
+    }
+   ],
+   "wing": "Maraudon"
+  },
+  {
+   "creature": "Tinkerer Gizlock",
+   "id": "13601",
+   "journal": [],
+   "level": [
+    50,
+    50
+   ],
+   "name": "Tinkerer Gizlock",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "weapon damage (near)"
+     ],
+     "id": 9143,
+     "interruptible": true,
+     "name": "Bomb",
+     "school": "Fire",
+     "when": [
+      "Tinkerer Gizlock - Cast Bomb"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 16100,
+     "name": "Shoot",
+     "school": "Physical",
+     "when": [
+      "Tinkerer Gizlock - Cast Shoot"
+     ]
+    },
+    {
+     "does": [],
+     "id": 21833,
+     "name": "Goblin Dragon Gun",
+     "school": "Fire",
+     "then": [
+      {
+       "does": [
+        "damage (in front)"
+       ],
+       "id": 21910,
+       "name": "Goblin Dragon Gun",
+       "school": "Fire"
+      }
+     ],
+     "when": [
+      "Tinkerer Gizlock - Cast Goblin Dragon Gun"
+     ]
+    },
+    {
+     "does": [
+      "fear (near)"
+     ],
+     "id": 29419,
+     "mechanic": "fear",
+     "name": "Flash Bomb",
+     "school": "Physical",
+     "when": [
+      "Tinkerer Gizlock - Cast Flash Bomb"
+     ]
+    }
+   ],
+   "wing": "Maraudon"
+  },
+  {
+   "creature": "Landslide",
+   "id": "12203",
+   "journal": [],
+   "level": [
+    50,
+    50
+   ],
+   "name": "Landslide",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "weapon damage (near)"
+     ],
+     "id": 5568,
+     "name": "Trample",
+     "school": "Physical",
+     "when": [
+      "Landslide - Cast Trample"
+     ]
+    },
+    {
+     "does": [
+      "knockback (target)",
+      "weapon damage (target)"
+     ],
+     "id": 18670,
+     "name": "Knock Away",
+     "school": "Physical",
+     "when": [
+      "Landslide - Cast Knock Away"
+     ]
+    },
+    {
+     "does": [
+      "stun (near)"
+     ],
+     "id": 21808,
+     "name": "Summon Shardlings",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [
+        "summon (target)"
+       ],
+       "id": 21809,
+       "name": "Summon Theradrim Shardling",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Landslide - Cast Landslide"
+     ]
+    }
+   ],
+   "wing": "Maraudon"
+  },
+  {
+   "creature": "Rotgrip",
+   "id": "13596",
+   "journal": [],
+   "level": [
+    50,
+    50
+   ],
+   "name": "Rotgrip",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 15978,
+     "name": "Puncture",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [
+        "dot (target)"
+       ],
+       "id": 15976,
+       "mechanic": "bleed",
+       "name": "Puncture",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Rotgrip - Cast Puncture on Spawn"
+     ]
+    },
+    {
+     "does": [
+      "leech (target)"
+     ],
+     "id": 16495,
+     "name": "Fatal Bite",
+     "school": "Physical",
+     "when": [
+      "Rotgrip - Cast Fatal Bite"
+     ]
+    }
+   ],
+   "wing": "Maraudon"
+  },
+  {
+   "creature": "Princess Theradras",
+   "id": "12201",
+   "journal": [],
+   "level": [
+    51,
+    51
+   ],
+   "name": "Princess Theradras",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 8876,
+     "name": "Thrash",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [],
+       "id": 3391,
+       "name": "Thrash",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Princess Theradras - Cast Thrash OOC"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)",
+      "interrupt (target)"
+     ],
+     "id": 21832,
+     "interruptible": true,
+     "name": "Boulder",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [
+        "stun (target)"
+       ],
+       "id": 22592,
+       "mechanic": "stun",
+       "name": "Knockdown",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Princess Theradras - Cast Boulder"
+     ]
+    },
+    {
+     "does": [
+      "fear (near)"
+     ],
+     "id": 21869,
+     "mechanic": "fear",
+     "name": "Repulsive Gaze",
+     "school": "Physical",
+     "when": [
+      "Princess Theradras - Cast Repulsive Gaze"
+     ]
+    },
+    {
+     "does": [
+      "root (self)"
+     ],
+     "id": 21909,
+     "name": "Dust Field",
+     "school": "Nature",
+     "then": [
+      {
+       "does": [
+        "damage (near)",
+        "knockback (near)"
+       ],
+       "id": 21868,
+       "name": "Dust Field",
+       "school": "Nature"
+      }
+     ],
+     "when": [
+      "Princess Theradras - Cast Dust Field"
+     ]
+    }
+   ],
+   "wing": "Maraudon"
+  }
+ ],
+ "RFC": [
+  {
+   "creature": "Oggleflint",
+   "id": "11517",
+   "journal": [
+    {
+     "effect": "Oggleflint cleaves all enemies in front of him.",
+     "flags": [],
+     "name": "Cleave"
+    }
+   ],
+   "level": [
+    16,
+    16
+   ],
+   "name": "Oggleflint",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 15584,
+     "name": "Cleave",
+     "school": "Physical",
+     "when": [
+      "Oggleflint - Cast Cleave"
+     ]
+    }
+   ],
+   "wing": "Ragefire Chasm"
+  },
+  {
+   "creature": "Taragaman the Hungerer",
+   "id": "11520",
+   "journal": [
+    {
+     "effect": "Taragaman the Hungerer inflicts fire damage to nearby enemies.",
+     "flags": [],
+     "name": "Fire Nova"
+    },
+    {
+     "effect": "Taragaman the Hungerer punches an enemy, knocking them back.",
+     "flags": [],
+     "name": "Uppercut"
+    }
+   ],
+   "level": [
+    16,
+    16
+   ],
+   "name": "Taragaman the Hungerer",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (near)"
+     ],
+     "id": 11970,
+     "name": "Fire Nova",
+     "school": "Fire",
+     "when": [
+      "Taragaman the Hungerer - Cast Fire Nova"
+     ]
+    },
+    {
+     "does": [
+      "knockback (target)",
+      "weapon damage (target)"
+     ],
+     "id": 18072,
+     "name": "Uppercut",
+     "school": "Physical",
+     "when": [
+      "Taragaman the Hungerer - Cast Uppercut"
+     ]
+    }
+   ],
+   "wing": "Ragefire Chasm"
+  },
+  {
+   "creature": "Jergosh the Invoker",
+   "id": "11518",
+   "journal": [
+    {
+     "effect": "Jergosh the Invoker burns an enemy, inflicting fire damage over time.",
+     "flags": [],
+     "name": "Immolate"
+    },
+    {
+     "effect": "Jergosh the Invoker curses an enemy, reducing their physical damage dealt for 30 seconds.",
+     "flags": [
+      "Curse"
+     ],
+     "name": "Curse of Weakness"
+    }
+   ],
+   "level": [
+    16,
+    16
+   ],
+   "name": "Jergosh the Invoker",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Curse",
+     "does": [
+      "damage done (target)"
+     ],
+     "id": 18267,
+     "name": "Curse of Weakness",
+     "school": "Shadow",
+     "when": [
+      "Jergosh the Invoker - Cast Curse of Weakness"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (target)",
+      "dot (target)"
+     ],
+     "id": 20800,
+     "interruptible": true,
+     "name": "Immolate",
+     "school": "Fire",
+     "when": [
+      "Jergosh the Invoker - Cast Immolate"
+     ]
+    }
+   ],
+   "wing": "Ragefire Chasm"
+  },
+  {
+   "creature": "Bazzalan",
+   "id": "11519",
+   "journal": [
+    {
+     "effect": "Bazzalan poisons an enemy, dealing nature damage over time.",
+     "flags": [
+      "Poison"
+     ],
+     "name": "Poison"
+    },
+    {
+     "effect": "Bazzalan strikes an enemy, dealing physical damage.",
+     "flags": [],
+     "name": "Sinister Strike"
+    }
+   ],
+   "level": [
+    16,
+    16
+   ],
+   "name": "Bazzalan",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 3616,
+     "name": "Poison Proc",
+     "school": "Physical",
+     "then": [
+      {
+       "dispel": "Poison",
+       "does": [
+        "dot (target)"
+       ],
+       "id": 744,
+       "name": "Poison",
+       "school": "Nature"
+      }
+     ],
+     "when": [
+      "Bazzalan - Cast Poison Proc on Spawn"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 14873,
+     "name": "Sinister Strike",
+     "school": "Physical",
+     "when": [
+      "Bazzalan - Cast Sinister Strike"
+     ]
+    }
+   ],
+   "wing": "Ragefire Chasm"
+  }
+ ],
+ "RFD": [
+  {
+   "creature": "Plaguemaw the Rotting",
+   "id": "7356",
+   "journal": [],
+   "level": [
+    40,
+    40
+   ],
+   "name": "Plaguemaw the Rotting",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Disease",
+     "does": [
+      "silence (near)",
+      "stats (near)"
+     ],
+     "id": 12946,
+     "mechanic": "silence",
+     "name": "Putrid Stench",
+     "school": "Physical",
+     "when": [
+      "Plaguemaw the Rotting - Putrid Stench"
+     ]
+    },
+    {
+     "does": [],
+     "id": 12947,
+     "name": "Withered Touch",
+     "school": "Physical",
+     "then": [
+      {
+       "dispel": "Disease",
+       "does": [
+        "dot (target)",
+        "mana leech (target)"
+       ],
+       "id": 11442,
+       "name": "Withered Touch",
+       "school": "Shadow"
+      }
+     ],
+     "when": []
+    }
+   ],
+   "wing": "Razorfen Downs"
+  },
+  {
+   "creature": "Tuten'kash",
+   "id": "7355",
+   "journal": [],
+   "level": [
+    40,
+    40
+   ],
+   "name": "Tuten'kash",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "root (in front)"
+     ],
+     "id": 12252,
+     "mechanic": "root",
+     "name": "Web Spray",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [],
+       "id": 11920,
+       "name": "Net Guard",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Tuten Kash - Web Spray"
+     ]
+    },
+    {
+     "does": [],
+     "id": 12254,
+     "name": "Virulent Poison Proc",
+     "school": "Physical",
+     "then": [
+      {
+       "dispel": "Poison",
+       "does": [
+        "dot (target)"
+       ],
+       "id": 12251,
+       "name": "Virulent Poison",
+       "school": "Nature"
+      }
+     ],
+     "when": []
+    },
+    {
+     "dispel": "Curse",
+     "does": [
+      "cast speed (near)",
+      "haste (near)"
+     ],
+     "id": 12255,
+     "name": "Curse of Tuten'kash",
+     "school": "Shadow",
+     "when": [
+      "Tuten Kash - Curse of Tuten Kash"
+     ]
+    }
+   ],
+   "wing": "Razorfen Downs"
+  },
+  {
+   "creature": "Mordresh Fire Eye",
+   "id": "7357",
+   "journal": [],
+   "level": [
+    39,
+    39
+   ],
+   "name": "Mordresh Fire Eye",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 12466,
+     "interruptible": true,
+     "name": "Fireball",
+     "school": "Fire",
+     "when": [
+      "Modresh Fire Eye - Cast Fireball"
+     ]
+    },
+    {
+     "does": [
+      "damage (near)"
+     ],
+     "id": 12470,
+     "name": "Fire Nova",
+     "school": "Fire",
+     "when": [
+      "Modresh Fireeye - Fire Nova"
+     ]
+    }
+   ],
+   "wing": "Razorfen Downs"
+  },
+  {
+   "creature": "Glutton",
+   "id": "8567",
+   "journal": [],
+   "level": [
+    40,
+    40
+   ],
+   "name": "Glutton",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 8876,
+     "name": "Thrash",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [],
+       "id": 3391,
+       "name": "Thrash",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Glutton - Cast Thrash and Disease Cloud and Remove Thrash OOC"
+     ]
+    },
+    {
+     "does": [],
+     "id": 12627,
+     "name": "Disease Cloud",
+     "school": "Nature",
+     "then": [
+      {
+       "does": [
+        "damage (near)"
+       ],
+       "id": 12626,
+       "name": "Disease Cloud",
+       "school": "Nature"
+      }
+     ],
+     "when": [
+      "Glutton - Cast Thrash and Disease Cloud and Remove Thrash OOC"
+     ]
+    },
+    {
+     "does": [],
+     "id": 12787,
+     "name": "Thrash",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [],
+       "id": 3391,
+       "name": "Thrash",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Glutton - Cast Thrash and Remove Thrash at 50% HP"
+     ]
+    },
+    {
+     "does": [
+      "damage done (self)",
+      "haste (self)"
+     ],
+     "id": 12795,
+     "name": "Enrage",
+     "school": "Physical",
+     "when": [
+      "Glutton - Cast Frenzy at 15% HP"
+     ]
+    },
+    {
+     "does": [],
+     "id": 16345,
+     "name": "Disease Cloud",
+     "school": "Nature",
+     "then": [
+      {
+       "does": [
+        "damage (near)"
+       ],
+       "id": 16346,
+       "name": "Disease Cloud",
+       "school": "Nature"
+      }
+     ],
+     "when": []
+    }
+   ],
+   "wing": "Razorfen Downs"
+  },
+  {
+   "id": "62679",
+   "journal": [],
+   "name": "Death Prophet Rakameg",
+   "rare": false,
+   "wing": "Razorfen Downs"
+  },
+  {
+   "creature": "Ragglesnout",
+   "id": "7354",
+   "journal": [],
+   "level": [
+    40,
+    40
+   ],
+   "name": "Ragglesnout",
+   "rare": true,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "charm (target)",
+      "haste (target)"
+     ],
+     "id": 7645,
+     "interruptible": true,
+     "mechanic": "charm",
+     "name": "Dominate Mind",
+     "school": "Shadow",
+     "when": [
+      "Ragglesnout - Cast Dominate Mind"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "dot (target)"
+     ],
+     "id": 10892,
+     "name": "Shadow Word: Pain",
+     "school": "Shadow",
+     "when": []
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "dot (target)"
+     ],
+     "id": 11639,
+     "name": "Shadow Word: Pain",
+     "school": "Shadow",
+     "when": [
+      "Ragglesnout - Cast Shadow Word: Pain"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 11659,
+     "interruptible": true,
+     "name": "Shadow Bolt",
+     "school": "Shadow",
+     "when": []
+    },
+    {
+     "does": [
+      "heal (allies)"
+     ],
+     "id": 12039,
+     "interruptible": true,
+     "name": "Heal",
+     "school": "Holy",
+     "when": [
+      "Ragglesnout - Cast Heal on Friendly Missing HP"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 12471,
+     "interruptible": true,
+     "name": "Shadow Bolt",
+     "school": "Shadow",
+     "when": [
+      "Ragglesnout - Cast Shadow Bolt"
+     ]
+    }
+   ],
+   "wing": "Razorfen Downs"
+  },
+  {
+   "creature": "Amnennar the Coldbringer",
+   "id": "7358",
+   "journal": [],
+   "level": [
+    41,
+    41
+   ],
+   "name": "Amnennar the Coldbringer",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 12642,
+     "name": "Summon Frost Spectres",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [
+        "summon (target)"
+       ],
+       "id": 12670,
+       "name": "Summon Frost Spectres",
+       "school": "Physical"
+      },
+      {
+       "does": [
+        "summon (target)"
+       ],
+       "id": 12671,
+       "name": "Summon Frost Spectres",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Amnennar the Coldbringer - Cast Summon Frost Spectres and Yell at 33% HP",
+      "Amnennar the Coldbringer - Cast Summon Frost Spectres and Yell at 66% HP"
+     ]
+    },
+    {
+     "does": [
+      "knockback (target)"
+     ],
+     "id": 13009,
+     "name": "Amnennar's Wrath",
+     "school": "Physical",
+     "when": [
+      "Amnennar the Coldbringer - Cast Amnennar's Wrath"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (target)",
+      "slow (target)"
+     ],
+     "id": 15530,
+     "interruptible": true,
+     "mechanic": "snare",
+     "name": "Frostbolt",
+     "school": "Frost",
+     "when": [
+      "Amnennar the Coldbringer - Cast Frostbolt"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (near)",
+      "root (near)"
+     ],
+     "id": 15531,
+     "mechanic": "root",
+     "name": "Frost Nova",
+     "school": "Frost",
+     "when": [
+      "Amnennar the Coldbringer - Cast Frost Nova"
+     ]
+    }
+   ],
+   "wing": "Razorfen Downs"
+  }
+ ],
+ "RFK": [
+  {
+   "creature": "Death Speaker Jargba",
+   "id": "4428",
+   "journal": [],
+   "level": [
+    30,
+    30
+   ],
+   "name": "Death Speaker Jargba",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 9613,
+     "interruptible": true,
+     "name": "Shadow Bolt",
+     "school": "Shadow",
+     "when": [
+      "Death Speaker Jargba - Cast Shadow Bolt"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "charm (target)"
+     ],
+     "id": 14515,
+     "interruptible": true,
+     "mechanic": "charm",
+     "name": "Dominate Mind",
+     "school": "Shadow",
+     "when": [
+      "Death Speaker Jargba - Cast Dominate Mind"
+     ]
+    }
+   ],
+   "wing": "Razorfen Kraul"
+  },
+  {
+   "creature": "Aggem Thorncurse",
+   "id": "4424",
+   "journal": [],
+   "level": [
+    30,
+    30
+   ],
+   "name": "Aggem Thorncurse",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "attack power (allies)"
+     ],
+     "id": 6192,
+     "name": "Battle Shout",
+     "school": "Physical",
+     "when": [
+      "Aggem Thorncurse - Cast Battle Shout"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 8286,
+     "interruptible": true,
+     "name": "Summon Boar Spirit",
+     "school": "Physical",
+     "when": [
+      "Aggem Thorncurse - Cast Summon Boar Spirit"
+     ]
+    },
+    {
+     "does": [
+      "heal (target)"
+     ],
+     "id": 14900,
+     "interruptible": true,
+     "name": "Chain Heal",
+     "school": "Nature",
+     "when": [
+      "Aggem Thorncurse - Cast Chain Heal at 75% HP"
+     ]
+    }
+   ],
+   "wing": "Razorfen Kraul"
+  },
+  {
+   "creature": "Overlord Ramtusk",
+   "id": "4420",
+   "journal": [],
+   "level": [
+    32,
+    32
+   ],
+   "name": "Overlord Ramtusk",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "stance (self)"
+     ],
+     "id": 7165,
+     "name": "Battle Stance",
+     "school": "Physical",
+     "when": [
+      "Overlord Ramtusk - Cast Battle Stance on Spawn"
+     ]
+    },
+    {
+     "does": [
+      "attack power (allies)"
+     ],
+     "id": 9128,
+     "name": "Battle Shout",
+     "school": "Physical",
+     "when": [
+      "Overlord Ramtusk - Cast Battle Shout"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (near)",
+      "haste (near)",
+      "slow (near)"
+     ],
+     "id": 15548,
+     "mechanic": "snare",
+     "name": "Thunderclap",
+     "school": "Nature",
+     "when": [
+      "Overlord Ramtusk - Cast Thunderclap"
+     ]
+    }
+   ],
+   "wing": "Razorfen Kraul"
+  },
+  {
+   "creature": "Earthcaller Halmgar",
+   "id": "4842",
+   "journal": [],
+   "level": [
+    32,
+    32
+   ],
+   "name": "Earthcaller Halmgar",
+   "rare": true,
+   "spells": [
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 2484,
+     "name": "Earthbind Totem",
+     "school": "Nature",
+     "when": [
+      "Earthcaller Halmgar - Cast Earthbind Totem"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 8270,
+     "name": "Summon Earth Rumbler",
+     "school": "Physical",
+     "when": [
+      "Earthcaller Halmgar - Cast Summon Earth Rumbler on OOC"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 9532,
+     "interruptible": true,
+     "name": "Lightning Bolt",
+     "school": "Nature",
+     "when": [
+      "Earthcaller Halmgar - Cast Lightning Bolt"
+     ]
+    }
+   ],
+   "wing": "Razorfen Kraul"
+  },
+  {
+   "id": "62503",
+   "journal": [],
+   "name": "Rotthorn",
+   "rare": false,
+   "wing": "Razorfen Kraul"
+  },
+  {
+   "creature": "Agathelos the Raging",
+   "id": "4422",
+   "journal": [],
+   "level": [
+    33,
+    33
+   ],
+   "name": "Agathelos the Raging",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage done (self)",
+      "speed (self)"
+     ],
+     "id": 8260,
+     "name": "Rushing Charge",
+     "school": "Physical",
+     "when": [
+      "Agathelos the Raging - Cast Rushing Charge"
+     ]
+    },
+    {
+     "does": [
+      "damage done (self)",
+      "haste (self)"
+     ],
+     "id": 8269,
+     "name": "Enrage",
+     "school": "Physical",
+     "when": [
+      "Agathelos the Raging - Cast Frenzy at 40% HP",
+      "Agathelos the Raging - Cast Frenzy at 60% HP"
+     ]
+    },
+    {
+     "does": [
+      "stun (near)",
+      "weapon damage (near)"
+     ],
+     "id": 8285,
+     "mechanic": "stun",
+     "name": "Rampage",
+     "school": "Physical",
+     "when": [
+      "Agathelos the Raging - Cast Rampage"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 8555,
+     "name": "Left for Dead",
+     "school": "Physical",
+     "when": [
+      "Agathelos the Raging - Cast Left for Dead"
+     ]
+    }
+   ],
+   "wing": "Razorfen Kraul"
+  },
+  {
+   "creature": "Blind Hunter",
+   "id": "4425",
+   "journal": [],
+   "level": [
+    32,
+    32
+   ],
+   "name": "Blind Hunter",
+   "rare": true,
+   "spells": [],
+   "wing": "Razorfen Kraul"
+  },
+  {
+   "creature": "Charlga Razorflank",
+   "id": "4421",
+   "journal": [],
+   "level": [
+    33,
+    33
+   ],
+   "name": "Charlga Razorflank",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "hot (allies)"
+     ],
+     "id": 6077,
+     "name": "Renew",
+     "school": "Holy",
+     "when": [
+      "Charlga Razorflank - Cast Renew on Friendly Missing HP"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 8292,
+     "interruptible": true,
+     "name": "Chain Bolt",
+     "school": "Nature",
+     "when": [
+      "Charlga Razorflank - Cast Chain Bolt"
+     ]
+    },
+    {
+     "does": [
+      "energize (self)"
+     ],
+     "id": 8358,
+     "name": "Mana Spike",
+     "school": "Holy",
+     "when": [
+      "Charlga Razorflank - Cast Mana Spike at 10% Mana"
+     ]
+    },
+    {
+     "does": [
+      "immune (self)"
+     ],
+     "id": 8361,
+     "name": "Purity",
+     "school": "Holy",
+     "when": [
+      "Charlga Razorflank - Cast Purity"
+     ]
+    }
+   ],
+   "wing": "Razorfen Kraul"
+  }
+ ],
+ "SFK": [
+  {
+   "creature": "Rethilgore",
+   "id": "3914",
+   "journal": [],
+   "level": [
+    20,
+    20
+   ],
+   "name": "Rethilgore",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "leech (target)",
+      "root (target)"
+     ],
+     "id": 7295,
+     "interruptible": true,
+     "name": "Soul Drain",
+     "school": "Shadow",
+     "when": [
+      "Rethilgore - Cast Soul Drain"
+     ]
+    }
+   ],
+   "wing": "Shadowfang Keep"
+  },
+  {
+   "creature": "Razorclaw the Butcher",
+   "id": "3886",
+   "journal": [],
+   "level": [
+    22,
+    22
+   ],
+   "name": "Razorclaw the Butcher",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "power drain (target)"
+     ],
+     "id": 7485,
+     "name": "Butcher Drain",
+     "school": "Shadow",
+     "when": [
+      "Razorclaw the Butcher - Cast Butcher Drain"
+     ]
+    }
+   ],
+   "wing": "Shadowfang Keep"
+  },
+  {
+   "creature": "Baron Silverlaine",
+   "id": "3887",
+   "journal": [],
+   "level": [
+    24,
+    24
+   ],
+   "name": "Baron Silverlaine",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Curse",
+     "does": [
+      "healing taken (target)"
+     ],
+     "id": 7068,
+     "interruptible": true,
+     "name": "Veil of Shadow",
+     "school": "Shadow",
+     "when": [
+      "Baron Silverlaine - Cast Veil of Shadow"
+     ]
+    }
+   ],
+   "wing": "Shadowfang Keep"
+  },
+  {
+   "id": "61969",
+   "journal": [],
+   "name": "Prelate Ironmane",
+   "rare": false,
+   "wing": "Shadowfang Keep"
+  },
+  {
+   "creature": "Commander Springvale",
+   "id": "4278",
+   "journal": [],
+   "level": [
+    24,
+    24
+   ],
+   "name": "Commander Springvale",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 1026,
+     "interruptible": true,
+     "name": "Holy Light",
+     "school": "Holy",
+     "when": [
+      "Commander Springvale - Cast Holy Light on Friendlies"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "stun (target)"
+     ],
+     "id": 5588,
+     "mechanic": "stun",
+     "name": "Hammer of Justice",
+     "school": "Holy",
+     "when": [
+      "Commander Springvale - Cast Hammer of Justice"
+     ]
+    }
+   ],
+   "wing": "Shadowfang Keep"
+  },
+  {
+   "creature": "Odo the Blindwatcher",
+   "id": "4279",
+   "journal": [],
+   "level": [
+    24,
+    24
+   ],
+   "name": "Odo the Blindwatcher",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage done (allies)"
+     ],
+     "id": 7481,
+     "interruptible": true,
+     "name": "Howling Rage",
+     "school": "Shadow",
+     "when": [
+      "Odo the Blindwatcher - Cast Howling Rage at 75% HP"
+     ]
+    },
+    {
+     "does": [
+      "damage done (allies)"
+     ],
+     "id": 7483,
+     "interruptible": true,
+     "name": "Howling Rage",
+     "school": "Shadow",
+     "when": [
+      "Odo the Blindwatcher - Cast Howling Rage at 50% HP"
+     ]
+    },
+    {
+     "does": [
+      "damage done (allies)"
+     ],
+     "id": 7484,
+     "interruptible": true,
+     "name": "Howling Rage",
+     "school": "Shadow",
+     "when": [
+      "Odo the Blindwatcher - Cast Howling Rage at 25% HP"
+     ]
+    }
+   ],
+   "wing": "Shadowfang Keep"
+  },
+  {
+   "creature": "Deathsworn Captain",
+   "id": "3872",
+   "journal": [],
+   "level": [
+    25,
+    25
+   ],
+   "name": "Deathsworn Captain",
+   "rare": true,
+   "spells": [
+    {
+     "does": [
+      "stance (self)"
+     ],
+     "id": 7165,
+     "name": "Battle Stance",
+     "school": "Physical",
+     "when": [
+      "Deathsworn Captain - Cast Battle Stance on Spawn"
+     ]
+    },
+    {
+     "does": [
+      "slow (target)",
+      "weapon damage (target)"
+     ],
+     "id": 9080,
+     "mechanic": "snare",
+     "name": "Hamstring",
+     "school": "Physical",
+     "when": [
+      "Deathsworn Captain - Cast Hamstring"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 15584,
+     "name": "Cleave",
+     "school": "Physical",
+     "when": [
+      "Deathsworn Captain - Cast Cleave"
+     ]
+    }
+   ],
+   "wing": "Shadowfang Keep"
+  },
+  {
+   "creature": "Fenrus the Devourer",
+   "id": "4274",
+   "journal": [],
+   "level": [
+    25,
+    25
+   ],
+   "name": "Fenrus the Devourer",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Poison",
+     "does": [
+      "dot (target)",
+      "mana leech (target)"
+     ],
+     "id": 7125,
+     "interruptible": true,
+     "name": "Toxic Saliva",
+     "school": "Nature",
+     "when": [
+      "Fenrus the Devourer - Cast Toxic Saliva"
+     ]
+    }
+   ],
+   "wing": "Shadowfang Keep"
+  },
+  {
+   "creature": "Wolf Master Nandos",
+   "id": "3927",
+   "journal": [],
+   "level": [
+    25,
+    25
+   ],
+   "name": "Wolf Master Nandos",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 7487,
+     "interruptible": true,
+     "name": "Call Bleak Worg",
+     "school": "Shadow",
+     "when": [
+      "Wolf Master Nandos - Cast Call Bleak Worg"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 7488,
+     "interruptible": true,
+     "name": "Call Slavering Worg",
+     "school": "Shadow",
+     "when": [
+      "Wolf Master Nandos - Cast Call Slavering Worg"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 7489,
+     "interruptible": true,
+     "name": "Call Lupine Horror",
+     "school": "Shadow",
+     "when": [
+      "Wolf Master Nandos - Cast Call Lupine Horror"
+     ]
+    }
+   ],
+   "wing": "Shadowfang Keep"
+  },
+  {
+   "creature": "Archmage Arugal",
+   "id": "4275",
+   "journal": [],
+   "level": [
+    26,
+    26
+   ],
+   "name": "Archmage Arugal",
+   "rare": false,
+   "script": null,
+   "spells": [
+    {
+     "does": [
+      "damage (near)",
+      "stun (near)"
+     ],
+     "id": 7803,
+     "mechanic": "stun",
+     "name": "Thundershock",
+     "school": "Nature",
+     "when": []
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 22709,
+     "interruptible": true,
+     "name": "Void Bolt",
+     "school": "Shadow",
+     "when": []
+    }
+   ],
+   "wing": "Shadowfang Keep"
+  }
+ ],
+ "SM": [
+  {
+   "creature": "Interrogator Vishas",
+   "id": "3983",
+   "journal": [],
+   "level": [
+    32,
+    32
+   ],
+   "name": "Interrogator Vishas",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 8981,
+     "name": "Immolate",
+     "school": "Physical",
+     "then": [
+      {
+       "dispel": "Magic",
+       "does": [
+        "damage (target)",
+        "dot (target)"
+       ],
+       "id": 9034,
+       "name": "Immolate",
+       "school": "Fire"
+      }
+     ],
+     "when": [
+      "Interrogator Vishas - Cast Immolate on Spawn"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "dot (target)"
+     ],
+     "id": 14032,
+     "name": "Shadow Word: Pain",
+     "school": "Shadow",
+     "when": [
+      "Interrogator Vishas - Cast Shadow Word Pain"
+     ]
+    }
+   ],
+   "wing": "Scarlet Monastery (Graveyard)"
+  },
+  {
+   "id": "61972",
+   "journal": [],
+   "name": "Duke Dreadmoore",
+   "rare": false,
+   "wing": "Scarlet Monastery (Graveyard)"
+  },
+  {
+   "creature": "Ironspine",
+   "id": "6489",
+   "journal": [],
+   "level": [
+    33,
+    33
+   ],
+   "name": "Ironspine",
+   "rare": true,
+   "spells": [
+    {
+     "dispel": "Poison",
+     "does": [
+      "dot (near)"
+     ],
+     "id": 3815,
+     "interruptible": true,
+     "name": "Poison Cloud",
+     "school": "Nature",
+     "when": [
+      "Ironspine - Cast Poison Cloud"
+     ]
+    },
+    {
+     "dispel": "Curse",
+     "does": [
+      "damage done (near)"
+     ],
+     "id": 21007,
+     "name": "Curse of Weakness",
+     "school": "Shadow",
+     "when": [
+      "Ironspine - Cast Curse of Weakness"
+     ]
+    }
+   ],
+   "wing": "Scarlet Monastery (Graveyard)"
+  },
+  {
+   "creature": "Azshir the Sleepless",
+   "id": "6490",
+   "journal": [],
+   "level": [
+    33,
+    33
+   ],
+   "name": "Azshir the Sleepless",
+   "rare": true,
+   "spells": [
+    {
+     "dispel": "Curse",
+     "does": [
+      "dot (target)"
+     ],
+     "id": 5137,
+     "interruptible": true,
+     "name": "Call of the Grave",
+     "school": "Shadow",
+     "when": [
+      "Azshir the Sleepless - Cast Call of the Grave"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "fear (target)"
+     ],
+     "id": 7399,
+     "mechanic": "fear",
+     "name": "Terrify",
+     "school": "Shadow",
+     "when": [
+      "Azshir the Sleepless - Cast Terrify"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "leech (target)"
+     ],
+     "id": 9373,
+     "interruptible": true,
+     "name": "Soul Siphon",
+     "school": "Shadow",
+     "when": [
+      "Azshir the Sleepless - Cast Soul Siphon"
+     ]
+    }
+   ],
+   "wing": "Scarlet Monastery (Graveyard)"
+  },
+  {
+   "creature": "Fallen Champion",
+   "id": "6488",
+   "journal": [],
+   "level": [
+    33,
+    33
+   ],
+   "name": "Fallen Champion",
+   "rare": true,
+   "spells": [
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 7160,
+     "name": "Execute",
+     "school": "Physical",
+     "when": [
+      "Fallen Champion - Cast Execute at 20% Target HP"
+     ]
+    },
+    {
+     "does": [
+      "stance (self)"
+     ],
+     "id": 7366,
+     "name": "Berserker Stance",
+     "school": "Physical",
+     "when": [
+      "Fallen Champion - Cast Berserker Stance"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 15496,
+     "name": "Cleave",
+     "school": "Physical",
+     "when": [
+      "Fallen Champion - Cast Cleave"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 19642,
+     "name": "Cleave",
+     "school": "Physical",
+     "when": []
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 19644,
+     "name": "Strike",
+     "school": "Physical",
+     "when": []
+    },
+    {
+     "does": [
+      "dot (target)"
+     ],
+     "id": 21949,
+     "mechanic": "bleed",
+     "name": "Rend",
+     "school": "Physical",
+     "when": []
+    }
+   ],
+   "wing": "Scarlet Monastery (Graveyard)"
+  },
+  {
+   "creature": "Bloodmage Thalnos",
+   "id": "4543",
+   "journal": [],
+   "level": [
+    34,
+    34
+   ],
+   "name": "Bloodmage Thalnos",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (target)",
+      "dot (target)"
+     ],
+     "id": 8053,
+     "name": "Flame Shock",
+     "school": "Fire",
+     "when": [
+      "Bloodmage Thalnos - Cast Flame Shock",
+      "Scarlet Monastery - Bloodmage Thalnos - Flame Shock (Rank 3)"
+     ]
+    },
+    {
+     "does": [
+      "damage (near)"
+     ],
+     "id": 8814,
+     "interruptible": true,
+     "name": "Flame Spike",
+     "school": "Fire",
+     "when": [
+      "Bloodmage Thalnos - Cast Flame Spike",
+      "Scarlet Monastery - Bloodmage Thalnos - Flame Spike"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 9613,
+     "interruptible": true,
+     "name": "Shadow Bolt",
+     "school": "Shadow",
+     "when": [
+      "Bloodmage Thalnos - Cast Shadow Bolt (Melee Mode)",
+      "Bloodmage Thalnos - Cast Shadow Bolt (Range Mode)",
+      "Scarlet Monastery - Bloodmage Thalnos - Shadow Bolt"
+     ]
+    },
+    {
+     "does": [
+      "damage (near)"
+     ],
+     "id": 12470,
+     "name": "Fire Nova",
+     "school": "Fire",
+     "when": [
+      "Bloodmage Thalnos - Cast Fire Nova",
+      "Scarlet Monastery - Bloodmage Thalnos - Fire Nova"
+     ]
+    }
+   ],
+   "wing": "Scarlet Monastery (Graveyard)"
+  },
+  {
+   "creature": "Houndmaster Loksey",
+   "id": "3974",
+   "journal": [],
+   "level": [
+    34,
+    34
+   ],
+   "name": "Houndmaster Loksey",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "attack power (allies)"
+     ],
+     "id": 6192,
+     "name": "Battle Shout",
+     "school": "Physical",
+     "when": [
+      "Houndmaster Loksey - Cast Battle Shout"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "haste (allies)"
+     ],
+     "id": 6742,
+     "name": "Bloodlust",
+     "school": "Nature",
+     "when": [
+      "Houndmaster Loksey - Cast Bloodlust on Friendlies",
+      "Houndmaster Loksey - Cast Bloodlust on Self"
+     ]
+    }
+   ],
+   "wing": "Scarlet Monastery (Library)"
+  },
+  {
+   "id": "61983",
+   "journal": [],
+   "name": "Brother Wystan",
+   "rare": false,
+   "wing": "Scarlet Monastery (Library)"
+  },
+  {
+   "creature": "Arcanist Doan",
+   "id": "6487",
+   "journal": [],
+   "level": [
+    37,
+    37
+   ],
+   "name": "Arcanist Doan",
+   "rare": false,
+   "script": "boss_arcanist_doan.cpp",
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "silence (near)"
+     ],
+     "id": 8988,
+     "interruptible": true,
+     "mechanic": "silence",
+     "name": "Silence",
+     "school": "Nature",
+     "when": [
+      "SPELL_SILENCE"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (near)"
+     ],
+     "id": 9433,
+     "name": "Arcane Explosion",
+     "school": "Arcane",
+     "when": [
+      "SPELL_ARCANE_EXPLOSION"
+     ]
+    },
+    {
+     "does": [
+      "damage (near)"
+     ],
+     "id": 9435,
+     "interruptible": true,
+     "name": "Detonation",
+     "school": "Fire",
+     "when": [
+      "SPELL_DETONATION"
+     ]
+    },
+    {
+     "does": [
+      "immune (self)",
+      "pacify (self)"
+     ],
+     "id": 9438,
+     "name": "Arcane Bubble",
+     "school": "Holy",
+     "when": [
+      "SPELL_ARCANE_BUBBLE"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "confuse (target)",
+      "transform (target)"
+     ],
+     "id": 13323,
+     "interruptible": true,
+     "mechanic": "polymorph",
+     "name": "Polymorph",
+     "school": "Physical",
+     "when": [
+      "SPELL_POLYMORPH"
+     ]
+    }
+   ],
+   "wing": "Scarlet Monastery (Library)"
+  },
+  {
+   "id": "61982",
+   "journal": [],
+   "name": "Armory Quartermaster Daghelm",
+   "rare": false,
+   "wing": "Scarlet Monastery (Armory)"
+  },
+  {
+   "creature": "Herod",
+   "id": "3975",
+   "journal": [],
+   "level": [
+    40,
+    40
+   ],
+   "name": "Herod",
+   "rare": false,
+   "script": "boss_herod.cpp",
+   "spells": [
+    {
+     "does": [
+      "damage done (self)",
+      "speed (self)"
+     ],
+     "id": 6268,
+     "name": "Rushing Charge",
+     "school": "Physical",
+     "when": []
+    },
+    {
+     "does": [
+      "damage done (self)",
+      "speed (self)"
+     ],
+     "id": 8260,
+     "name": "Rushing Charge",
+     "school": "Physical",
+     "when": [
+      "SPELL_RUSHINGCHARGE"
+     ]
+    },
+    {
+     "does": [
+      "damage done (self)",
+      "haste (self)"
+     ],
+     "id": 8269,
+     "name": "Enrage",
+     "school": "Physical",
+     "when": [
+      "SPELL_FRENZY"
+     ]
+    },
+    {
+     "does": [
+      "damage done (self)",
+      "haste (self)"
+     ],
+     "id": 8599,
+     "name": "Enrage",
+     "school": "Physical",
+     "when": []
+    },
+    {
+     "does": [
+      "immune (self)"
+     ],
+     "id": 8989,
+     "name": "Whirlwind",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [
+        "weapon damage (near)"
+       ],
+       "id": 15578,
+       "name": "Whirlwind",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "SPELL_WHIRLWIND"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 15496,
+     "name": "Cleave",
+     "school": "Physical",
+     "when": [
+      "SPELL_CLEAVE"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 15579,
+     "name": "Cleave",
+     "school": "Physical",
+     "when": []
+    }
+   ],
+   "summons": [
+    "NPC_SCARLET_TRAINEE: Scarlet Trainee"
+   ],
+   "wing": "Scarlet Monastery (Armory)"
+  },
+  {
+   "creature": "High Inquisitor Fairbanks",
+   "id": "4542",
+   "journal": [],
+   "level": [
+    40,
+    40
+   ],
+   "name": "High Inquisitor Fairbanks",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 8278,
+     "name": "Invisibility Detection",
+     "school": "Physical",
+     "when": [
+      "High Inquisitor Fairbanks - Cast Invisibility Detection and Cast Stealth Detection and Set Stand State Dead on Spawn"
+     ]
+    },
+    {
+     "does": [],
+     "id": 8279,
+     "name": "Stealth Detection",
+     "school": "Physical",
+     "when": [
+      "High Inquisitor Fairbanks - Cast Invisibility Detection and Cast Stealth Detection and Set Stand State Dead on Spawn"
+     ]
+    },
+    {
+     "dispel": "Curse",
+     "does": [],
+     "id": 8282,
+     "interruptible": true,
+     "name": "Curse of Blood",
+     "school": "Shadow",
+     "when": [
+      "High Inquisitor Fairbanks - Cast Curse of Blood"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "stun (near)"
+     ],
+     "id": 8399,
+     "interruptible": true,
+     "mechanic": "sleep",
+     "name": "Sleep",
+     "school": "Shadow",
+     "when": [
+      "High Inquisitor Fairbanks - Cast Sleep"
+     ]
+    },
+    {
+     "does": [
+      "absorb (self)"
+     ],
+     "id": 11647,
+     "name": "Power Word: Shield",
+     "school": "Holy",
+     "when": [
+      "High Inquisitor Fairbanks - Cast Power Word: Shield at 25% HP"
+     ]
+    },
+    {
+     "does": [
+      "heal (allies)"
+     ],
+     "id": 12039,
+     "interruptible": true,
+     "name": "Heal",
+     "school": "Holy",
+     "when": [
+      "High Inquisitor Fairbanks - Cast Heal at 30% HP"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "fear (target)"
+     ],
+     "id": 12096,
+     "interruptible": true,
+     "mechanic": "fear",
+     "name": "Fear",
+     "school": "Shadow",
+     "when": [
+      "High Inquisitor Fairbanks - Cast Fear"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "dispel (target)"
+     ],
+     "id": 15090,
+     "name": "Dispel Magic",
+     "school": "Holy",
+     "when": [
+      "High Inquisitor Fairbanks - Cast Dispel Magic"
+     ]
+    }
+   ],
+   "wing": "Scarlet Monastery (Cathedral)"
+  },
+  {
+   "creature": "Scarlet Commander Mograine",
+   "id": "3976",
+   "journal": [],
+   "level": [
+    42,
+    42
+   ],
+   "name": "Scarlet Commander Mograine",
+   "rare": false,
+   "script": "boss_mograine_and_whitemane.cpp",
+   "spells": [
+    {
+     "does": [
+      "haste (self)",
+      "immune (self)"
+     ],
+     "id": 642,
+     "name": "Divine Shield",
+     "school": "Holy",
+     "when": [
+      "SPELL_DIVINESHIELD"
+     ]
+    },
+    {
+     "does": [
+      "haste (self)",
+      "immune (self)"
+     ],
+     "id": 1020,
+     "name": "Divine Shield",
+     "school": "Holy",
+     "when": []
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "stun (target)"
+     ],
+     "id": 5589,
+     "mechanic": "stun",
+     "name": "Hammer of Justice",
+     "school": "Holy",
+     "when": [
+      "SPELL_HAMMEROFJUSTICE"
+     ]
+    },
+    {
+     "does": [
+      "thorns (self)"
+     ],
+     "id": 8990,
+     "name": "Retribution Aura",
+     "school": "Holy",
+     "when": [
+      "SPELL_RETRIBUTIONAURA"
+     ]
+    },
+    {
+     "does": [
+      "energize (target)"
+     ],
+     "id": 9232,
+     "interruptible": true,
+     "name": "Scarlet Resurrection",
+     "school": "Physical",
+     "when": [
+      "SPELL_SCARLETRESURRECTION"
+     ]
+    },
+    {
+     "does": [
+      "energize (target)"
+     ],
+     "id": 9257,
+     "name": "Lay on Hands",
+     "school": "Holy",
+     "when": [
+      "SPELL_LAYONHANDS"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (target)"
+     ],
+     "id": 14518,
+     "name": "Crusader Strike",
+     "school": "Physical",
+     "when": [
+      "SPELL_CRUSADERSTRIKE"
+     ]
+    },
+    {
+     "does": [],
+     "id": 28441,
+     "name": "AB Effect 000",
+     "school": "Physical",
+     "when": [
+      "SPELL_AB_EFFECT_000"
+     ]
+    }
+   ],
+   "summons": [
+    "NPC_SCARLET_ABBOT: Scarlet Abbot",
+    "NPC_SCARLET_CENTURION: Scarlet Centurion",
+    "NPC_SCARLET_CHAMPION: Scarlet Champion",
+    "NPC_SCARLET_CHAPLAIN: Scarlet Chaplain",
+    "NPC_SCARLET_MONK: Scarlet Monk",
+    "NPC_SCARLET_WIZARD: Scarlet Wizard"
+   ],
+   "wing": "Scarlet Monastery (Cathedral)"
+  },
+  {
+   "creature": "High Inquisitor Whitemane",
+   "id": "3977",
+   "journal": [],
+   "level": [
+    42,
+    42
+   ],
+   "name": "High Inquisitor Whitemane",
+   "rare": false,
+   "script": "boss_mograine_and_whitemane.cpp",
+   "spells": [
+    {
+     "does": [
+      "energize (target)"
+     ],
+     "id": 9232,
+     "interruptible": true,
+     "name": "Scarlet Resurrection",
+     "school": "Physical",
+     "when": [
+      "SPELL_SCARLETRESURRECTION"
+     ]
+    },
+    {
+     "does": [
+      "stun (near)"
+     ],
+     "id": 9256,
+     "name": "Deep Sleep",
+     "school": "Shadow",
+     "when": [
+      "SPELL_DEEPSLEEP"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 9481,
+     "interruptible": true,
+     "name": "Holy Smite",
+     "school": "Holy",
+     "when": [
+      "SPELL_HOLYSMITE"
+     ]
+    },
+    {
+     "does": [
+      "heal (allies)"
+     ],
+     "id": 12039,
+     "interruptible": true,
+     "name": "Heal",
+     "school": "Holy",
+     "when": [
+      "SPELL_HEAL"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "charm (target)"
+     ],
+     "id": 14515,
+     "interruptible": true,
+     "mechanic": "charm",
+     "name": "Dominate Mind",
+     "school": "Shadow",
+     "when": [
+      "SPELL_DOMINATEMIND"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "absorb (allies)"
+     ],
+     "id": 22187,
+     "name": "Power Word: Shield",
+     "school": "Holy",
+     "when": [
+      "SPELL_POWERWORDSHIELD"
+     ]
+    }
+   ],
+   "wing": "Scarlet Monastery (Cathedral)"
+  }
+ ],
+ "ST": [
+  {
+   "creature": "Atal'alarion",
+   "id": "8580",
+   "journal": [],
+   "level": [
+    50,
+    50
+   ],
+   "name": "Atal'alarion",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "stun (near)"
+     ],
+     "id": 6524,
+     "mechanic": "stun",
+     "name": "Ground Tremor",
+     "school": "Physical",
+     "when": [
+      "Atal'alarion - Cast Ground Tremor"
+     ]
+    },
+    {
+     "does": [
+      "knockback (in front)",
+      "weapon damage (in front)"
+     ],
+     "id": 12887,
+     "name": "Sweeping Slam",
+     "school": "Physical",
+     "when": [
+      "Atal'alarion - Cast Sweeping Slam"
+     ]
+    }
+   ],
+   "wing": "The Temple of Atal'Hakkar"
+  },
+  {
+   "creature": "Spawn of Hakkar",
+   "id": "5708",
+   "journal": [],
+   "level": [
+    51,
+    51
+   ],
+   "name": "Spawn of Hakkar",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "dot (target)"
+     ],
+     "id": 12280,
+     "interruptible": true,
+     "name": "Acid of Hakkar",
+     "school": "Nature",
+     "when": [
+      "Spawn of Hakkar - Cast Acid of Hakkar"
+     ]
+    }
+   ],
+   "wing": "The Temple of Atal'Hakkar"
+  },
+  {
+   "creature": "Gasher",
+   "id": "5713",
+   "journal": [],
+   "level": [
+    51,
+    51
+   ],
+   "name": "Gasher",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 13540,
+     "name": "Green Channeling",
+     "school": "Physical",
+     "when": [
+      "Gasher - Cast Green Channelling OOC"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 15580,
+     "name": "Strike",
+     "school": "Physical",
+     "when": [
+      "Gasher - Cast Strike"
+     ]
+    }
+   ],
+   "wing": "The Temple of Atal'Hakkar"
+  },
+  {
+   "creature": "Mijan",
+   "id": "5717",
+   "journal": [],
+   "level": [
+    52,
+    52
+   ],
+   "name": "Mijan",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "thorns (self)"
+     ],
+     "id": 8148,
+     "name": "Thorns Aura",
+     "school": "Nature",
+     "when": [
+      "Mijan - Cast Thorns Aura"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "hot (allies)"
+     ],
+     "id": 8362,
+     "interruptible": true,
+     "name": "Renew",
+     "school": "Holy",
+     "when": [
+      "Mijan - Cast Renew on Friendly Missing HP"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 11899,
+     "interruptible": true,
+     "name": "Healing Ward",
+     "school": "Physical",
+     "when": [
+      "Mijan - Cast Healing Ward"
+     ]
+    },
+    {
+     "does": [
+      "heal (allies)"
+     ],
+     "id": 12492,
+     "interruptible": true,
+     "name": "Healing Wave",
+     "school": "Nature",
+     "when": [
+      "Mijan - Cast Healing Wave at 50% HP"
+     ]
+    },
+    {
+     "does": [],
+     "id": 13540,
+     "name": "Green Channeling",
+     "school": "Physical",
+     "when": [
+      "Mijan - Cast Green Channelling OOC"
+     ]
+    }
+   ],
+   "wing": "The Temple of Atal'Hakkar"
+  },
+  {
+   "creature": "Zolo",
+   "id": "5712",
+   "journal": [],
+   "level": [
+    51,
+    51
+   ],
+   "name": "Zolo",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 12058,
+     "interruptible": true,
+     "name": "Chain Lightning",
+     "school": "Nature",
+     "when": [
+      "Zolo - Cast Chain Lightning"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 12506,
+     "name": "Atal'ai Skeleton Totem",
+     "school": "Physical",
+     "when": [
+      "Zolo - Cast Atal'ai Skeleton Totem"
+     ]
+    },
+    {
+     "does": [],
+     "id": 13540,
+     "name": "Green Channeling",
+     "school": "Physical",
+     "when": [
+      "Zolo - Cast Green Channelling OOC"
+     ]
+    }
+   ],
+   "wing": "The Temple of Atal'Hakkar"
+  },
+  {
+   "creature": "Zul'Lor",
+   "id": "5716",
+   "journal": [],
+   "level": [
+    52,
+    52
+   ],
+   "name": "Zul'Lor",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "stats (near)"
+     ],
+     "id": 12530,
+     "name": "Frailty",
+     "school": "Shadow",
+     "when": [
+      "Zul'Lor - Cast Frailty"
+     ]
+    },
+    {
+     "does": [],
+     "id": 13540,
+     "name": "Green Channeling",
+     "school": "Physical",
+     "when": [
+      "Zul'Lor - Cast Green Channelling OOC"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 15584,
+     "name": "Cleave",
+     "school": "Physical",
+     "when": [
+      "Zul'Lor - Cast Cleave"
+     ]
+    }
+   ],
+   "wing": "The Temple of Atal'Hakkar"
+  },
+  {
+   "creature": "Hukku",
+   "id": "5715",
+   "journal": [],
+   "level": [
+    52,
+    52
+   ],
+   "name": "Hukku",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (near)"
+     ],
+     "id": 9081,
+     "interruptible": true,
+     "name": "Shadow Bolt Volley",
+     "school": "Shadow",
+     "when": [
+      "Hukku - Cast Shadow Bolt Volley"
+     ]
+    },
+    {
+     "dispel": "Curse",
+     "does": [],
+     "id": 12279,
+     "interruptible": true,
+     "name": "Curse of Blood",
+     "school": "Shadow",
+     "when": [
+      "Hukku - Cast Curse of Blood"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 12471,
+     "interruptible": true,
+     "name": "Shadow Bolt",
+     "school": "Shadow",
+     "when": [
+      "Hukku - Cast Shadow Bolt"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 12790,
+     "name": "Hukku's Guardians",
+     "school": "Shadow",
+     "when": [
+      "Hukku - Cast Hukku's Guardians and Cast Green Channeling OOC"
+     ]
+    },
+    {
+     "does": [],
+     "id": 13540,
+     "name": "Green Channeling",
+     "school": "Physical",
+     "when": [
+      "Hukku - Cast Hukku's Guardians and Cast Green Channeling OOC"
+     ]
+    }
+   ],
+   "wing": "The Temple of Atal'Hakkar"
+  },
+  {
+   "creature": "Loro",
+   "id": "5714",
+   "journal": [],
+   "level": [
+    51,
+    51
+   ],
+   "name": "Loro",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 3639,
+     "name": "Improved Blocking",
+     "school": "Physical",
+     "when": [
+      "Loro - Cast Improved Blocking"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)",
+      "stun (target)"
+     ],
+     "id": 8242,
+     "mechanic": "stun",
+     "name": "Shield Slam",
+     "school": "Physical",
+     "when": [
+      "Loro - Cast Shield Slam"
+     ]
+    },
+    {
+     "does": [],
+     "id": 9205,
+     "name": "Hate to Zero",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [],
+       "id": 9204,
+       "name": "Hate to Zero",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Loro - Cast Shield Spike, Hate to Zero (Hate to Zero) on Spawn"
+     ]
+    },
+    {
+     "does": [],
+     "id": 12782,
+     "name": "Shield Spike",
+     "school": "Physical",
+     "when": [
+      "Loro - Cast Shield Spike, Hate to Zero (Hate to Zero) on Spawn"
+     ]
+    },
+    {
+     "does": [],
+     "id": 13540,
+     "name": "Green Channeling",
+     "school": "Physical",
+     "when": [
+      "Loro - Cast Green Channelling OOC"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)",
+      "stun (target)"
+     ],
+     "id": 15655,
+     "mechanic": "stun",
+     "name": "Shield Slam",
+     "school": "Physical",
+     "when": []
+    }
+   ],
+   "wing": "The Temple of Atal'Hakkar"
+  },
+  {
+   "creature": "Jammal'an the Prophet",
+   "id": "5710",
+   "journal": [],
+   "level": [
+    54,
+    54
+   ],
+   "name": "Jammal'an the Prophet",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 8376,
+     "interruptible": true,
+     "name": "Earthgrab Totem",
+     "school": "Physical",
+     "when": [
+      "Jammal'an the Prophet - Cast Earthgrab Totem"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "dot (target)"
+     ],
+     "id": 10893,
+     "name": "Shadow Word: Pain",
+     "school": "Shadow",
+     "when": []
+    },
+    {
+     "does": [
+      "damage (near)"
+     ],
+     "id": 12468,
+     "interruptible": true,
+     "name": "Flamestrike",
+     "school": "Fire",
+     "when": [
+      "Jammal'an the Prophet - Cast Flamestrike"
+     ]
+    },
+    {
+     "does": [],
+     "id": 12479,
+     "name": "Hex of Jammal'an",
+     "school": "Shadow",
+     "when": [
+      "Jammal'an the Prophet - Cast Hex of Jammal'an and Yell"
+     ]
+    },
+    {
+     "dispel": "Curse",
+     "does": [
+      "damage done (target)",
+      "transform (target)"
+     ],
+     "id": 12480,
+     "name": "Hex of Jammal'an",
+     "school": "Shadow",
+     "when": []
+    },
+    {
+     "does": [
+      "heal (allies)"
+     ],
+     "id": 12492,
+     "interruptible": true,
+     "name": "Healing Wave",
+     "school": "Nature",
+     "when": [
+      "Jammal'an the Prophet - Cast Healing Wave at 50% HP"
+     ]
+    },
+    {
+     "does": [],
+     "id": 13540,
+     "name": "Green Channeling",
+     "school": "Physical",
+     "when": [
+      "Jammal'an the Prophet - Cast Green Channelling OOC"
+     ]
+    }
+   ],
+   "wing": "The Temple of Atal'Hakkar"
+  },
+  {
+   "creature": "Dreamscythe",
+   "id": "5721",
+   "journal": [],
+   "level": [
+    53,
+    53
+   ],
+   "name": "Dreamscythe",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "knockback (in front)"
+     ],
+     "id": 12882,
+     "name": "Wing Flap",
+     "school": "Nature",
+     "when": [
+      "Dreamscythe - Cast Wing Flap"
+     ]
+    },
+    {
+     "does": [
+      "damage (in front)",
+      "dot (in front)"
+     ],
+     "id": 12884,
+     "name": "Acid Breath",
+     "school": "Nature",
+     "when": [
+      "Dreamscythe - Cast Acid Breath"
+     ]
+    },
+    {
+     "does": [
+      "damage (in front)",
+      "dot (in front)",
+      "resistance (in front)"
+     ],
+     "id": 16359,
+     "name": "Corrosive Acid Breath",
+     "school": "Nature",
+     "when": []
+    }
+   ],
+   "wing": "The Temple of Atal'Hakkar"
+  },
+  {
+   "creature": "Weaver",
+   "id": "5720",
+   "journal": [],
+   "level": [
+    51,
+    51
+   ],
+   "name": "Weaver",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "knockback (in front)"
+     ],
+     "id": 12882,
+     "name": "Wing Flap",
+     "school": "Nature",
+     "when": [
+      "Weaver - Cast Wing Flap"
+     ]
+    },
+    {
+     "does": [
+      "damage (in front)",
+      "dot (in front)"
+     ],
+     "id": 12884,
+     "name": "Acid Breath",
+     "school": "Nature",
+     "when": [
+      "Weaver - Cast Acid Breath"
+     ]
+    },
+    {
+     "does": [
+      "damage (in front)",
+      "dot (in front)",
+      "resistance (in front)"
+     ],
+     "id": 16359,
+     "name": "Corrosive Acid Breath",
+     "school": "Nature",
+     "when": []
+    }
+   ],
+   "wing": "The Temple of Atal'Hakkar"
+  },
+  {
+   "creature": "Morphaz",
+   "id": "5719",
+   "journal": [],
+   "level": [
+    52,
+    52
+   ],
+   "name": "Morphaz",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "knockback (in front)"
+     ],
+     "id": 12882,
+     "name": "Wing Flap",
+     "school": "Nature",
+     "when": [
+      "Morphaz - Cast Wing Flap"
+     ]
+    },
+    {
+     "does": [
+      "damage (in front)",
+      "dot (in front)"
+     ],
+     "id": 12884,
+     "name": "Acid Breath",
+     "school": "Nature",
+     "when": [
+      "Morphaz - Cast Acid Breath"
+     ]
+    }
+   ],
+   "wing": "The Temple of Atal'Hakkar"
+  },
+  {
+   "creature": "Hazzas",
+   "id": "5722",
+   "journal": [],
+   "level": [
+    53,
+    53
+   ],
+   "name": "Hazzas",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "knockback (in front)"
+     ],
+     "id": 12882,
+     "name": "Wing Flap",
+     "school": "Nature",
+     "when": [
+      "Hazzas - Cast Wing Flap"
+     ]
+    },
+    {
+     "does": [
+      "damage (in front)",
+      "dot (in front)"
+     ],
+     "id": 12884,
+     "name": "Acid Breath",
+     "school": "Nature",
+     "when": [
+      "Hazzas - Cast Acid Breath"
+     ]
+    }
+   ],
+   "wing": "The Temple of Atal'Hakkar"
+  },
+  {
+   "creature": "Shade of Eranikus",
+   "id": "5709",
+   "journal": [],
+   "level": [
+    55,
+    55
+   ],
+   "name": "Shade of Eranikus",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 8876,
+     "name": "Thrash",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [],
+       "id": 3391,
+       "name": "Thrash",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Shade of Eranikus - Cast Shade of Eranikus Passive Visual, Thrash and Set Stand State Sleep OOC"
+     ]
+    },
+    {
+     "does": [
+      "stun (near)",
+      "weapon damage (near)"
+     ],
+     "id": 11876,
+     "mechanic": "stun",
+     "name": "War Stomp",
+     "school": "Physical",
+     "when": [
+      "Shade of Eranikus - Cast War Stomp"
+     ]
+    },
+    {
+     "does": [],
+     "id": 12535,
+     "name": "Shade of Eranikus Passive Visual",
+     "school": "Physical",
+     "when": [
+      "Shade of Eranikus - Cast Shade of Eranikus Passive Visual, Thrash and Set Stand State Sleep OOC"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "immune (target)",
+      "stun (target)"
+     ],
+     "id": 12890,
+     "interruptible": true,
+     "name": "Deep Slumber",
+     "school": "Shadow",
+     "when": [
+      "Shade of Eranikus - Cast Deep Slumber"
+     ]
+    },
+    {
+     "does": [
+      "damage (in front)",
+      "dot (in front)"
+     ],
+     "id": 12891,
+     "name": "Acid Breath",
+     "school": "Nature",
+     "when": [
+      "Shade of Eranikus - Cast Acid Breath"
+     ]
+    }
+   ],
+   "wing": "The Temple of Atal'Hakkar"
+  },
+  {
+   "creature": "Avatar of Hakkar",
+   "id": "8443",
+   "journal": [],
+   "level": [
+    49,
+    50
+   ],
+   "name": "Avatar of Hakkar",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "stun (target)"
+     ],
+     "id": 6607,
+     "mechanic": "stun",
+     "name": "Lash",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [
+        "disarm (self)"
+       ],
+       "id": 6608,
+       "mechanic": "disarm",
+       "name": "Dropped Weapon",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Avatar of Hakkar - Cast Lash"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "dot (target)"
+     ],
+     "id": 10893,
+     "name": "Shadow Word: Pain",
+     "school": "Shadow",
+     "when": []
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "charm (target)",
+      "haste (target)",
+      "speed (target)"
+     ],
+     "id": 12888,
+     "name": "Cause Insanity",
+     "school": "Shadow",
+     "when": [
+      "Avatar of Hakkar - Cast Cause Insanity"
+     ]
+    },
+    {
+     "dispel": "Curse",
+     "does": [
+      "cast speed (near)"
+     ],
+     "id": 12889,
+     "name": "Curse of Tongues",
+     "school": "Shadow",
+     "when": [
+      "Avatar of Hakkar - Cast Curse of Tongues on Random Player Mana User"
+     ]
+    }
+   ],
+   "wing": "The Temple of Atal'Hakkar"
+  }
+ ],
+ "STOCKADES": [
+  {
+   "creature": "Targorr the Dread",
+   "id": "1696",
+   "journal": [
+    {
+     "effect": "Targorr the Dread becomes enraged, increasing his physical damage and attack speed for 2 minutes.",
+     "flags": [
+      "Heal"
+     ],
+     "name": "Enrage"
+    },
+    {
+     "effect": "Targorr the Dread gains a chance to do two additional attacks.",
+     "flags": [],
+     "name": "Thrash"
+    }
+   ],
+   "level": [
+    24,
+    24
+   ],
+   "name": "Targorr the Dread",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 674,
+     "name": "Dual Wield",
+     "school": "Physical",
+     "when": [
+      "Targorr the Dread - Cast Dual Wield on Aggro"
+     ]
+    },
+    {
+     "does": [
+      "damage done (self)",
+      "haste (self)"
+     ],
+     "id": 8599,
+     "name": "Enrage",
+     "school": "Physical",
+     "when": [
+      "Targorr the Dread - Cast Enrage at 30% HP"
+     ]
+    },
+    {
+     "does": [],
+     "id": 8876,
+     "name": "Thrash",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [],
+       "id": 3391,
+       "name": "Thrash",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Targorr the Dread - Cast Thrash on Spawn"
+     ]
+    }
+   ],
+   "wing": "The Stockade"
+  },
+  {
+   "creature": "Kam Deepfury",
+   "id": "1666",
+   "journal": [
+    {
+     "effect": "Kam Deepfury assumes a defensive stance, reducing incoming damage.",
+     "flags": [],
+     "name": "Defensive Stance"
+    },
+    {
+     "effect": "Kam Deepfury slams his shield against an enemy, dealing damage and stunning them for 2 seconds.",
+     "flags": [],
+     "name": "Shield Slam"
+    },
+    {
+     "effect": "Kam Deepfury raises his shield, reducing all incoming damage by 60% for 12 seconds.",
+     "flags": [],
+     "name": "Shield Wall"
+    }
+   ],
+   "level": [
+    27,
+    27
+   ],
+   "name": "Kam Deepfury",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "stance (self)"
+     ],
+     "id": 7164,
+     "name": "Defensive Stance",
+     "school": "Physical",
+     "when": [
+      "Kam Deepfury - Cast Defensive Stance"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)",
+      "stun (target)"
+     ],
+     "id": 8242,
+     "mechanic": "stun",
+     "name": "Shield Slam",
+     "school": "Physical",
+     "when": [
+      "Kam Deepfury - Cast Shield Slam"
+     ]
+    }
+   ],
+   "wing": "The Stockade"
+  },
+  {
+   "creature": "Hamhock",
+   "id": "1717",
+   "journal": [
+    {
+     "effect": "Hamhock is taken by bloodlust, increasing him and his allies' attack speed by 30% for 30 seconds.",
+     "flags": [
+      "Heal"
+     ],
+     "name": "Bloodlust"
+    },
+    {
+     "effect": "Hamhock casts a lightning bolt at an enemy, jumping to two other targets and dealing 190 to 220 nature damage to each.",
+     "flags": [
+      "Heal",
+      "Interruptible",
+      "Important"
+     ],
+     "name": "Chain Lightning"
+    }
+   ],
+   "level": [
+    28,
+    28
+   ],
+   "name": "Hamhock",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 421,
+     "interruptible": true,
+     "name": "Chain Lightning",
+     "school": "Nature",
+     "when": [
+      "Hamhock - Cast Chain Lightning"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "haste (allies)"
+     ],
+     "id": 6742,
+     "name": "Bloodlust",
+     "school": "Nature",
+     "when": [
+      "Hamhock - Cast Bloodlust"
+     ]
+    }
+   ],
+   "wing": "The Stockade"
+  },
+  {
+   "creature": "Bazil Thredd",
+   "id": "1716",
+   "journal": [
+    {
+     "effect": "Bazil Thredd shouts, empowering him and other allies granting them extra melee attack power for 2 minutes.",
+     "flags": [],
+     "name": "Battle Shout"
+    },
+    {
+     "effect": "Bazil Thredd throws a smoke bomb, stunning all nearby enemies for 4 seconds.",
+     "flags": [
+      "Important"
+     ],
+     "name": "Smoke Bomb"
+    }
+   ],
+   "level": [
+    29,
+    29
+   ],
+   "name": "Bazil Thredd",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 674,
+     "name": "Dual Wield",
+     "school": "Physical",
+     "when": [
+      "Bazil Thredd - Cast Dual Wield on Aggro"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "stun (near)"
+     ],
+     "id": 7964,
+     "mechanic": "stun",
+     "name": "Smoke Bomb",
+     "school": "Physical",
+     "when": [
+      "Bazil Thredd - Cast Smoke Bomb"
+     ]
+    },
+    {
+     "does": [
+      "attack power (allies)"
+     ],
+     "id": 9128,
+     "name": "Battle Shout",
+     "school": "Physical",
+     "when": [
+      "Bazil Thredd - Cast Battle Shout"
+     ]
+    }
+   ],
+   "wing": "The Stockade"
+  },
+  {
+   "creature": "Bruegal Ironknuckle",
+   "id": "1720",
+   "journal": [],
+   "level": [
+    26,
+    26
+   ],
+   "name": "Bruegal Ironknuckle",
+   "rare": true,
+   "spells": [],
+   "wing": "The Stockade"
+  },
+  {
+   "creature": "Dextren Ward",
+   "id": "1663",
+   "journal": [
+    {
+     "effect": "Dextren Ward shouts at nearby enemies, causing them to flee in fear for 6 seconds.\n\nMake sure to clear the rooms around the encounter or you might accidentally overpull while feared!",
+     "flags": [
+      "Important"
+     ],
+     "name": "Frightening Shout"
+    },
+    {
+     "effect": "Dextren Ward strikes his target for additional physical damage.",
+     "flags": [],
+     "name": "Strike"
+    }
+   ],
+   "level": [
+    26,
+    26
+   ],
+   "name": "Dextren Ward",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "stance (self)"
+     ],
+     "id": 2457,
+     "name": "Battle Stance",
+     "school": "Physical",
+     "when": []
+    },
+    {
+     "does": [
+      "fear (near)",
+      "speed (near)"
+     ],
+     "id": 5246,
+     "mechanic": "fear",
+     "name": "Intimidating Shout",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [
+        "stun (target)"
+       ],
+       "id": 20511,
+       "mechanic": "fear",
+       "name": "Intimidating Shout",
+       "school": "Physical"
+      }
+     ],
+     "when": []
+    },
+    {
+     "does": [
+      "stance (self)"
+     ],
+     "id": 7165,
+     "name": "Battle Stance",
+     "school": "Physical",
+     "when": [
+      "Dextren Ward - Cast Battle Stance on Spawn"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 11976,
+     "name": "Strike",
+     "school": "Physical",
+     "when": [
+      "Dextren Ward - Cast Strike"
+     ]
+    },
+    {
+     "does": [
+      "fear (near)",
+      "speed (near)"
+     ],
+     "id": 19134,
+     "mechanic": "fear",
+     "name": "Intimidating Shout",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [
+        "stun (target)"
+       ],
+       "id": 29544,
+       "mechanic": "fear",
+       "name": "Intimidating Shout",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Dextren Ward - Cast Frightening Shout"
+     ]
+    }
+   ],
+   "wing": "The Stockade"
+  }
+ ],
+ "SWR": [
+  {
+   "id": "62548",
+   "journal": [],
+   "name": "Oronok Torn-Heart",
+   "rare": false,
+   "wing": "Stormwrought Ruins"
+  },
+  {
+   "id": "62547",
+   "journal": [],
+   "name": "Dagar the Glutton",
+   "rare": false,
+   "wing": "Stormwrought Ruins"
+  },
+  {
+   "id": "62552",
+   "journal": [],
+   "name": "Librarian Theodorus",
+   "rare": false,
+   "wing": "Stormwrought Ruins"
+  },
+  {
+   "id": "62549",
+   "journal": [],
+   "name": "Duke Balor the IV",
+   "rare": false,
+   "wing": "Stormwrought Ruins"
+  },
+  {
+   "id": "62551",
+   "journal": [],
+   "name": "Chieftain Stormsong",
+   "rare": false,
+   "wing": "Stormwrought Ruins"
+  },
+  {
+   "id": "62550",
+   "journal": [],
+   "name": "Deathlord Tidebane",
+   "rare": false,
+   "wing": "Stormwrought Ruins"
+  },
+  {
+   "id": "62652",
+   "journal": [],
+   "name": "Subjugator Halthas Shadecrest",
+   "rare": false,
+   "wing": "Stormwrought Ruins"
+  },
+  {
+   "id": "62664",
+   "journal": [],
+   "name": "Mycellakos",
+   "rare": false,
+   "wing": "Stormwrought Ruins"
+  },
+  {
+   "id": "62661",
+   "journal": [],
+   "name": "Eldermaw the Primordial",
+   "rare": false,
+   "wing": "Stormwrought Ruins"
+  },
+  {
+   "id": "62665",
+   "journal": [],
+   "name": "Lady Drazare",
+   "rare": false,
+   "wing": "Stormwrought Ruins"
+  },
+  {
+   "id": "62670",
+   "journal": [],
+   "name": "Remains of the Innocent",
+   "rare": false,
+   "wing": "Stormwrought Ruins"
+  },
+  {
+   "id": "62673",
+   "journal": [],
+   "name": "Ighal'for",
+   "rare": false,
+   "wing": "Stormwrought Ruins"
+  }
+ ],
+ "ULDA": [
+  {
+   "creature": "Baelog",
+   "id": "6906",
+   "journal": [],
+   "level": [
+    41,
+    41
+   ],
+   "name": "The Lost Dwarves",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 14516,
+     "name": "Strike",
+     "school": "Physical",
+     "when": [
+      "Baelog - Cast Strike"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 15620,
+     "name": "Shoot",
+     "school": "Physical",
+     "when": [
+      "Baelog - Cast Shoot"
+     ]
+    }
+   ],
+   "wing": "Uldaman"
+  },
+  {
+   "creature": "Revelosh",
+   "id": "6910",
+   "journal": [],
+   "level": [
+    40,
+    40
+   ],
+   "name": "Revelosh",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 15117,
+     "interruptible": true,
+     "name": "Chain Lightning",
+     "school": "Nature",
+     "when": []
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 15801,
+     "interruptible": true,
+     "name": "Lightning Bolt",
+     "school": "Nature",
+     "when": [
+      "Revelosh - Cast Lightning Bolt"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 16006,
+     "interruptible": true,
+     "name": "Chain Lightning",
+     "school": "Nature",
+     "when": [
+      "Revelosh - Cast Chain Lightning"
+     ]
+    }
+   ],
+   "wing": "Uldaman"
+  },
+  {
+   "creature": "Ironaya",
+   "id": "7228",
+   "journal": [],
+   "level": [
+    40,
+    40
+   ],
+   "name": "Ironaya",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "weapon damage (in front)"
+     ],
+     "id": 8374,
+     "name": "Arcing Smash",
+     "school": "Physical",
+     "when": [
+      "Ironaya - Cast Arcing Smash"
+     ]
+    },
+    {
+     "does": [
+      "knockback (target)",
+      "weapon damage (target)"
+     ],
+     "id": 10101,
+     "name": "Knock Away",
+     "school": "Physical",
+     "when": [
+      "Ironaya - Cast Knock Away"
+     ]
+    },
+    {
+     "does": [
+      "stun (near)",
+      "weapon damage (near)"
+     ],
+     "id": 11876,
+     "mechanic": "stun",
+     "name": "War Stomp",
+     "school": "Physical",
+     "when": [
+      "Ironaya - Cast War Stomp"
+     ]
+    }
+   ],
+   "wing": "Uldaman"
+  },
+  {
+   "creature": "Obsidian Sentinel",
+   "id": "7023",
+   "journal": [],
+   "level": [
+    42,
+    42
+   ],
+   "name": "Obsidian Sentinel",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 10061,
+     "name": "Summon Obsidian Shard",
+     "school": "Physical",
+     "when": [
+      "Obsidian Sentinel - Summon Obsidian Shard and Cast Splintered Obsidian at 20% HP",
+      "Obsidian Sentinel - Summon Obsidian Shard and Cast Splintered Obsidian at 40% HP",
+      "Obsidian Sentinel - Summon Obsidian Shard and Cast Splintered Obsidian at 60% HP",
+      "Obsidian Sentinel - Summon Obsidian Shard and Cast Splintered Obsidian at 80% HP"
+     ]
+    },
+    {
+     "does": [
+      "damage done (self)"
+     ],
+     "id": 10072,
+     "name": "Splintered Obsidian",
+     "school": "Physical",
+     "when": [
+      "Obsidian Sentinel - Summon Obsidian Shard and Cast Splintered Obsidian at 20% HP",
+      "Obsidian Sentinel - Summon Obsidian Shard and Cast Splintered Obsidian at 40% HP",
+      "Obsidian Sentinel - Summon Obsidian Shard and Cast Splintered Obsidian at 60% HP",
+      "Obsidian Sentinel - Summon Obsidian Shard and Cast Splintered Obsidian at 80% HP"
+     ]
+    }
+   ],
+   "wing": "Uldaman"
+  },
+  {
+   "creature": "Ancient Stone Keeper",
+   "id": "7206",
+   "journal": [],
+   "level": [
+    44,
+    44
+   ],
+   "name": "Ancient Stone Keeper",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "summon (near)"
+     ],
+     "id": 10094,
+     "name": "Sand Storms",
+     "school": "Physical",
+     "when": []
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 10132,
+     "name": "Sand Storms",
+     "school": "Physical",
+     "when": [
+      "Ancient Stone Keeper - Cast Sand Storms"
+     ]
+    }
+   ],
+   "wing": "Uldaman"
+  },
+  {
+   "creature": "Galgann Firehammer",
+   "id": "7291",
+   "journal": [],
+   "level": [
+    45,
+    45
+   ],
+   "name": "Galgann Firehammer",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (target)",
+      "resistance (target)"
+     ],
+     "id": 3356,
+     "interruptible": true,
+     "name": "Flame Lash",
+     "school": "Fire",
+     "when": [
+      "Galgann Firehammer - Cast Flame Lash"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (target)",
+      "dot (target)"
+     ],
+     "id": 8053,
+     "name": "Flame Shock",
+     "school": "Fire",
+     "when": [
+      "Galgann Firehammer - Cast Flame Shock"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [],
+     "id": 9482,
+     "interruptible": true,
+     "name": "Amplify Flames",
+     "school": "Fire",
+     "when": [
+      "Galgann Firehammer - Cast Amplify Flames"
+     ]
+    },
+    {
+     "does": [
+      "damage (near)"
+     ],
+     "id": 11969,
+     "name": "Fire Nova",
+     "school": "Fire",
+     "when": [
+      "Galgann Firehammer - Cast Fire Nova"
+     ]
+    }
+   ],
+   "wing": "Uldaman"
+  },
+  {
+   "creature": "Grimlok",
+   "id": "4854",
+   "journal": [],
+   "level": [
+    45,
+    45
+   ],
+   "name": "Grimlok",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "haste (allies)"
+     ],
+     "id": 6742,
+     "name": "Bloodlust",
+     "school": "Nature",
+     "when": [
+      "Grimlock - Cast Bloodlust on Jadespine Basilisk Death"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 8143,
+     "name": "Tremor Totem",
+     "school": "Nature",
+     "when": [
+      "Grimlock - Cast Summon Tremor Totem"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 8292,
+     "interruptible": true,
+     "name": "Chain Bolt",
+     "school": "Nature",
+     "when": [
+      "Grimlock - Cast Chain Bolt"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 9532,
+     "interruptible": true,
+     "name": "Lightning Bolt",
+     "school": "Nature",
+     "when": [
+      "Grimlock - Cast Lightning Bolt"
+     ]
+    },
+    {
+     "dispel": "Curse",
+     "does": [
+      "stats (near)"
+     ],
+     "id": 11892,
+     "interruptible": true,
+     "name": "Shrink",
+     "school": "Physical",
+     "when": [
+      "Grimlock - Cast Shrink"
+     ]
+    }
+   ],
+   "wing": "Uldaman"
+  },
+  {
+   "creature": "Archaedas",
+   "id": "2748",
+   "journal": [],
+   "level": [
+    47,
+    47
+   ],
+   "name": "Archaedas",
+   "rare": false,
+   "script": "boss_archaedas.cpp",
+   "spells": [
+    {
+     "does": [
+      "stun (near)"
+     ],
+     "id": 6524,
+     "mechanic": "stun",
+     "name": "Ground Tremor",
+     "school": "Physical",
+     "when": [
+      "SPELL_GROUND_TREMOR"
+     ]
+    },
+    {
+     "does": [],
+     "id": 10252,
+     "name": "Awaken Earthen Guardians",
+     "school": "Physical",
+     "when": [
+      "SPELL_AWAKEN_EARTHEN_GUARDIAN (awaken all 7076 npcs)"
+     ]
+    },
+    {
+     "does": [],
+     "id": 10258,
+     "name": "Awaken Vault Warder",
+     "school": "Physical",
+     "when": [
+      "SPELL_AWAKEN_VAULT_WARDER (awaken 2 npcs 10120)"
+     ]
+    },
+    {
+     "does": [],
+     "id": 10259,
+     "name": "Awaken Earthen Dwarf",
+     "school": "Physical",
+     "when": [
+      "SPELL_AWAKEN_EARTHEN_DWARF (awaken random npc 7309 or 7077)"
+     ]
+    },
+    {
+     "does": [],
+     "id": 10347,
+     "name": "Archaedas Awaken Visual (DND)",
+     "school": "Physical",
+     "when": [
+      "SPELL_ARCHAEDAS_AWAKEN_VISUAL"
+     ]
+    }
+   ],
+   "wing": "Uldaman"
+  }
+ ],
+ "WC": [
+  {
+   "creature": "Kresh",
+   "id": "3653",
+   "journal": [],
+   "level": [
+    20,
+    20
+   ],
+   "name": "Kresh",
+   "rare": false,
+   "spells": [],
+   "wing": "Wailing Caverns"
+  },
+  {
+   "creature": "Lord Cobrahn",
+   "id": "3669",
+   "journal": [],
+   "level": [
+    20,
+    20
+   ],
+   "name": "Lord Cobrahn",
+   "rare": false,
+   "spells": [
+    {
+     "does": [],
+     "id": 3616,
+     "name": "Poison Proc",
+     "school": "Physical",
+     "then": [
+      {
+       "dispel": "Poison",
+       "does": [
+        "dot (target)"
+       ],
+       "id": 744,
+       "name": "Poison",
+       "school": "Nature"
+      }
+     ],
+     "when": [
+      "Lord Cobrahn - Cast Poison Proc OOC"
+     ]
+    },
+    {
+     "does": [
+      "heal (allies)"
+     ],
+     "id": 5188,
+     "interruptible": true,
+     "name": "Healing Touch",
+     "school": "Nature",
+     "when": [
+      "Lord Cobrahn - Cast Healing Touch on Friendly Missing HP"
+     ]
+    },
+    {
+     "does": [
+      "damage done (self)",
+      "haste (self)",
+      "transform (self)"
+     ],
+     "id": 7965,
+     "name": "Cobrahn Serpent Form",
+     "school": "Physical",
+     "when": [
+      "Lord Cobrahn - Cast Cobrahn Serpent Form and Set Phase 1 at 30% HP"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "stun (target)"
+     ],
+     "id": 8040,
+     "interruptible": true,
+     "mechanic": "sleep",
+     "name": "Druid's Slumber",
+     "school": "Shadow",
+     "when": [
+      "Lord Cobrahn - Druids Slumber (Phase 1)"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 9532,
+     "interruptible": true,
+     "name": "Lightning Bolt",
+     "school": "Nature",
+     "when": [
+      "Lord Cobrahn - Cast Lightning Bolt"
+     ]
+    }
+   ],
+   "wing": "Wailing Caverns"
+  },
+  {
+   "creature": "Deviate Faerie Dragon",
+   "id": "5912",
+   "journal": [],
+   "level": [
+    20,
+    20
+   ],
+   "name": "Deviate Faerie Dragon",
+   "rare": true,
+   "spells": [],
+   "wing": "Wailing Caverns"
+  },
+  {
+   "id": "61968",
+   "journal": [],
+   "name": "Zandara Windhoof",
+   "rare": false,
+   "wing": "Wailing Caverns"
+  },
+  {
+   "creature": "Lord Pythas",
+   "id": "3670",
+   "journal": [],
+   "level": [
+    21,
+    21
+   ],
+   "name": "Lord Pythas",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "stun (target)"
+     ],
+     "id": 700,
+     "interruptible": true,
+     "mechanic": "sleep",
+     "name": "Sleep",
+     "school": "Shadow",
+     "when": [
+      "Lord Pythas - Cast Sleep"
+     ]
+    },
+    {
+     "does": [
+      "heal (allies)"
+     ],
+     "id": 5187,
+     "interruptible": true,
+     "name": "Healing Touch",
+     "school": "Nature",
+     "when": [
+      "Lord Pythas - Cast Healing Touch on Friendly Missing HP"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (near)",
+      "haste (near)",
+      "slow (near)"
+     ],
+     "id": 8147,
+     "mechanic": "snare",
+     "name": "Thunderclap",
+     "school": "Nature",
+     "when": [
+      "Lord Pythas - Cast Thunderclap"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 9532,
+     "interruptible": true,
+     "name": "Lightning Bolt",
+     "school": "Nature",
+     "when": [
+      "Lord Pythas - Cast Lightning Bolt"
+     ]
+    }
+   ],
+   "wing": "Wailing Caverns"
+  },
+  {
+   "creature": "Skum",
+   "id": "3674",
+   "journal": [],
+   "level": [
+    21,
+    21
+   ],
+   "name": "Skum",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 6254,
+     "interruptible": true,
+     "name": "Chained Bolt",
+     "school": "Nature",
+     "when": [
+      "Skum - Cast Chained Bolt"
+     ]
+    }
+   ],
+   "wing": "Wailing Caverns"
+  },
+  {
+   "id": "61965",
+   "journal": [],
+   "name": "Vangros",
+   "rare": false,
+   "wing": "Wailing Caverns"
+  },
+  {
+   "creature": "Lord Serpentis",
+   "id": "3673",
+   "journal": [],
+   "level": [
+    21,
+    21
+   ],
+   "name": "Lord Serpentis",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "stun (target)"
+     ],
+     "id": 700,
+     "interruptible": true,
+     "mechanic": "sleep",
+     "name": "Sleep",
+     "school": "Shadow",
+     "when": [
+      "Lord Serpentis - Cast Sleep"
+     ]
+    },
+    {
+     "does": [
+      "heal (allies)"
+     ],
+     "id": 6778,
+     "interruptible": true,
+     "name": "Healing Touch",
+     "school": "Nature",
+     "when": [
+      "Lord Serpentis - Cast Healing Touch on Friendly Missing HP"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 9532,
+     "interruptible": true,
+     "name": "Lightning Bolt",
+     "school": "Nature",
+     "when": [
+      "Lord Serpentis - Cast Lightning Bolt"
+     ]
+    }
+   ],
+   "wing": "Wailing Caverns"
+  },
+  {
+   "creature": "Lady Anacondra",
+   "id": "3671",
+   "journal": [],
+   "level": [
+    20,
+    20
+   ],
+   "name": "Lady Anacondra",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "stun (target)"
+     ],
+     "id": 700,
+     "interruptible": true,
+     "mechanic": "sleep",
+     "name": "Sleep",
+     "school": "Shadow",
+     "when": [
+      "Lady Anacondra - Cast Sleep"
+     ]
+    },
+    {
+     "does": [
+      "heal (allies)"
+     ],
+     "id": 5187,
+     "interruptible": true,
+     "name": "Healing Touch",
+     "school": "Nature",
+     "when": [
+      "Lady Anacondra - Cast Healing Touch on Friendly Missing HP"
+     ]
+    },
+    {
+     "does": [
+      "thorns (self)"
+     ],
+     "id": 8148,
+     "name": "Thorns Aura",
+     "school": "Nature",
+     "when": [
+      "Lady Anacondra - Cast Thorns Aura"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 9532,
+     "interruptible": true,
+     "name": "Lightning Bolt",
+     "school": "Nature",
+     "when": [
+      "Lady Anacondra - Cast Lightning Bolt"
+     ]
+    }
+   ],
+   "wing": "Wailing Caverns"
+  },
+  {
+   "creature": "Verdan the Everliving",
+   "id": "5775",
+   "journal": [],
+   "level": [
+    21,
+    21
+   ],
+   "name": "Verdan the Everliving",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (near)",
+      "root (near)"
+     ],
+     "id": 8142,
+     "interruptible": true,
+     "mechanic": "root",
+     "name": "Grasping Vines",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [
+        "stun (target)"
+       ],
+       "id": 5164,
+       "mechanic": "stun",
+       "name": "Knockdown",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Verdan the Everliving - Cast Grasping Vines"
+     ]
+    }
+   ],
+   "wing": "Wailing Caverns"
+  },
+  {
+   "creature": "Mutanus the Devourer",
+   "id": "3654",
+   "journal": [],
+   "level": [
+    22,
+    22
+   ],
+   "name": "Mutanus the Devourer",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "fear (target)"
+     ],
+     "id": 7399,
+     "mechanic": "fear",
+     "name": "Terrify",
+     "school": "Shadow",
+     "when": [
+      "Mutanus the Devourer - Cast Terrify"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "charm (target)",
+      "stun (target)"
+     ],
+     "id": 7967,
+     "interruptible": true,
+     "mechanic": "sleep",
+     "name": "Naralex's Nightmare",
+     "school": "Shadow",
+     "when": [
+      "Mutanus the Devourer - Cast Naralex's Nightmare"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "damage (near)",
+      "stun (near)"
+     ],
+     "id": 8150,
+     "mechanic": "stun",
+     "name": "Thundercrack",
+     "school": "Nature",
+     "when": [
+      "Mutanus the Devourer - Cast Thundercrack"
+     ]
+    }
+   ],
+   "wing": "Wailing Caverns"
+  }
+ ],
+ "WHC": [
+  {
+   "id": "pathun",
+   "journal": [],
+   "name": "Pathun Duskhide",
+   "rare": false,
+   "wing": "Windhorn Canyon"
+  },
+  {
+   "id": "ahgktos",
+   "journal": [],
+   "name": "Ahgk'tos the Pure",
+   "rare": false,
+   "wing": "Windhorn Canyon"
+  },
+  {
+   "id": "vortalus",
+   "journal": [
+    {
+     "effect": "Vortalus stuns a random enemy, rendering them unable to move or attack for 4 seconds.",
+     "flags": [
+      "Interruptible",
+      "Important"
+     ],
+     "name": "Gust of Wind"
+    },
+    {
+     "effect": "Vortalus creates a lightning bolt that chains between all enemies.",
+     "flags": [
+      "Interruptible"
+     ],
+     "name": "Chain Lightning"
+    }
+   ],
+   "name": "Ambassador Vortalus",
+   "rare": false,
+   "wing": "Windhorn Canyon"
+  },
+  {
+   "id": "walgan",
+   "journal": [],
+   "name": "Walgan Bloodcaller",
+   "rare": false,
+   "wing": "Windhorn Canyon"
+  },
+  {
+   "id": "narlgom",
+   "journal": [],
+   "name": "Bonespeaker Narlgom",
+   "rare": false,
+   "wing": "Windhorn Canyon"
+  },
+  {
+   "id": "stormhoof",
+   "journal": [
+    {
+     "effect": "Stormhoof corrupts a random enemy, dealing shadow damage over time.",
+     "flags": [
+      "Curse"
+     ],
+     "name": "Corruption"
+    }
+   ],
+   "name": "Prophet Stormhoof",
+   "rare": false,
+   "wing": "Windhorn Canyon"
+  },
+  {
+   "id": "shalk",
+   "journal": [],
+   "name": "Chieftain Shalk Blackwind",
+   "rare": false,
+   "wing": "Windhorn Canyon"
+  }
+ ],
+ "ZF": [
+  {
+   "creature": "Zerillis",
+   "id": "10082",
+   "journal": [],
+   "level": [
+    45,
+    45
+   ],
+   "name": "Zerillis",
+   "rare": true,
+   "spells": [
+    {
+     "does": [
+      "root (target)"
+     ],
+     "id": 6533,
+     "mechanic": "root",
+     "name": "Net",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [],
+       "id": 11920,
+       "name": "Net Guard",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Zerillis - Cast Net"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "slow (target)",
+      "weapon damage (target)"
+     ],
+     "id": 12551,
+     "mechanic": "snare",
+     "name": "Frost Shot",
+     "school": "Frost",
+     "when": [
+      "Zerillis - Cast Frost Shot"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 15547,
+     "name": "Shoot",
+     "school": "Physical",
+     "when": [
+      "Zerillis - Cast Shoot"
+     ]
+    }
+   ],
+   "wing": "Zul'Farrak"
+  },
+  {
+   "creature": "Theka the Martyr",
+   "id": "7272",
+   "journal": [],
+   "level": [
+    45,
+    46
+   ],
+   "name": "Theka the Martyr",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Disease",
+     "does": [
+      "damage (target)",
+      "dot (target)"
+     ],
+     "id": 8600,
+     "interruptible": true,
+     "name": "Fevered Plague",
+     "school": "Nature",
+     "when": [
+      "Theka the Martyr - Cast Fevered Plague"
+     ]
+    },
+    {
+     "does": [
+      "immune (self)",
+      "transform (self)"
+     ],
+     "id": 11089,
+     "name": "Theka Transform",
+     "school": "Physical",
+     "when": [
+      "Theka the Martyr - Cast Theka Transform at 30% HP"
+     ]
+    }
+   ],
+   "wing": "Zul'Farrak"
+  },
+  {
+   "creature": "Antu'sul",
+   "id": "8127",
+   "journal": [],
+   "level": [
+    48,
+    48
+   ],
+   "name": "Antu'sul",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 8376,
+     "interruptible": true,
+     "name": "Earthgrab Totem",
+     "school": "Physical",
+     "when": [
+      "Antu'sul - Random Cast Earthgrab Totem or Healing Ward"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 11894,
+     "name": "Antu'sul's Minion",
+     "school": "Shadow",
+     "when": [
+      "Antu'sul - Yell and Cast 2 Antu'sul's Minions at 25% HP",
+      "Antu'sul - Yell and Cast Antu'sul's Minion at 75% HP"
+     ]
+    },
+    {
+     "does": [
+      "heal (self)"
+     ],
+     "id": 11895,
+     "interruptible": true,
+     "name": "Healing Wave of Antu'sul",
+     "school": "Holy",
+     "when": [
+      "Antu'sul - Cast Healing Wave of Antu'sul at 20% HP"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 11899,
+     "interruptible": true,
+     "name": "Healing Ward",
+     "school": "Physical",
+     "when": [
+      "Antu'sul - Random Cast Earthgrab Totem or Healing Ward"
+     ]
+    }
+   ],
+   "wing": "Zul'Farrak"
+  },
+  {
+   "creature": "Witch Doctor Zum'rah",
+   "id": "7271",
+   "journal": [],
+   "level": [
+    46,
+    46
+   ],
+   "name": "Witch Doctor Zum'rah",
+   "rare": false,
+   "script": "boss_zumrah.cpp",
+   "spells": [
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 10247,
+     "name": "Summon Zul'Farrak Zombies",
+     "school": "Physical",
+     "when": [
+      "SPELL_SUMMON_ZOMBIES (spell should be triggered by missing trap 128972)"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 11086,
+     "name": "Ward of Zum'rah",
+     "school": "Physical",
+     "when": [
+      "SPELL_WARD_OF_ZUMRAH"
+     ]
+    },
+    {
+     "does": [
+      "heal (allies)"
+     ],
+     "id": 12491,
+     "interruptible": true,
+     "name": "Healing Wave",
+     "school": "Nature",
+     "when": [
+      "SPELL_HEALING_WAVE"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 12739,
+     "interruptible": true,
+     "name": "Shadow Bolt",
+     "school": "Shadow",
+     "when": [
+      "SPELL_SHADOW_BOLT"
+     ]
+    },
+    {
+     "does": [
+      "damage (near)"
+     ],
+     "id": 15245,
+     "interruptible": true,
+     "name": "Shadow Bolt Volley",
+     "school": "Shadow",
+     "when": [
+      "SPELL_SHADOW_BOLT_VOLLEY"
+     ]
+    }
+   ],
+   "summons": [
+    "NPC_ZULFARRAK_DEAD_HERO: Zul'Farrak Dead Hero",
+    "NPC_ZULFARRAK_ZOMBIE: Zul'Farrak Zombie"
+   ],
+   "wing": "Zul'Farrak"
+  },
+  {
+   "creature": "Shadowpriest Sezz'ziz",
+   "id": "7275",
+   "journal": [],
+   "level": [
+    47,
+    47
+   ],
+   "name": "Shadowpriest Sezz'ziz",
+   "rare": false,
+   "spells": [
+    {
+     "dispel": "Magic",
+     "does": [
+      "hot (allies)"
+     ],
+     "id": 8362,
+     "interruptible": true,
+     "name": "Renew",
+     "school": "Holy",
+     "when": [
+      "Shadowpriest Sezz'ziz - Cast Renew on Friendly Missing HP"
+     ]
+    },
+    {
+     "does": [
+      "heal (allies)"
+     ],
+     "id": 12039,
+     "interruptible": true,
+     "name": "Heal",
+     "school": "Holy",
+     "when": [
+      "Shadowpriest Sezz'ziz - Cast Heal on Friendly Missing HP"
+     ]
+    },
+    {
+     "does": [
+      "fear (near)"
+     ],
+     "id": 13704,
+     "mechanic": "fear",
+     "name": "Psychic Scream",
+     "school": "Shadow",
+     "when": [
+      "Shadowpriest Sezz'ziz - Cast Psychic Scream"
+     ]
+    },
+    {
+     "does": [
+      "damage (target)"
+     ],
+     "id": 15537,
+     "interruptible": true,
+     "name": "Shadow Bolt",
+     "school": "Shadow",
+     "when": [
+      "Shadowpriest Sezz'ziz - Cast Shadow Bolt"
+     ]
+    }
+   ],
+   "wing": "Zul'Farrak"
+  },
+  {
+   "creature": "Chief Ukorz Sandscalp",
+   "id": "7267",
+   "journal": [],
+   "level": [
+    48,
+    48
+   ],
+   "name": "Chief Ukorz Sandscalp",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "stance (self)"
+     ],
+     "id": 7366,
+     "name": "Berserker Stance",
+     "school": "Physical",
+     "when": [
+      "Chief Ukorz Sandscalp - Cast Berserker Stance"
+     ]
+    },
+    {
+     "does": [
+      "damage done (self)",
+      "haste (self)"
+     ],
+     "id": 8269,
+     "name": "Enrage",
+     "school": "Physical",
+     "when": [
+      "Chief Ukorz Sandscalp - Yell and Cast Frenzy at 60% HP"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (in front)"
+     ],
+     "id": 11837,
+     "name": "Wide Slash",
+     "school": "Physical",
+     "when": [
+      "Chief Ukorz Sandscalp - Cast Wide Slash"
+     ]
+    },
+    {
+     "does": [],
+     "id": 11838,
+     "name": "Hate to Zero",
+     "school": "Physical",
+     "then": [
+      {
+       "does": [],
+       "id": 9204,
+       "name": "Hate to Zero",
+       "school": "Physical"
+      }
+     ],
+     "when": [
+      "Chief Ukorz Sandscalp - Cast Hate to Zero on Spawn"
+     ]
+    },
+    {
+     "does": [
+      "summon (target)"
+     ],
+     "id": 11904,
+     "name": "Summon Sandfury Slave",
+     "school": "Physical",
+     "when": [
+      "Chief Ukorz Sandscalp - Yell and Cast Summon Sandfury Slave, Summon Sandfury Slave at 30% HP"
+     ]
+    },
+    {
+     "does": [
+      "weapon damage (target)"
+     ],
+     "id": 15496,
+     "name": "Cleave",
+     "school": "Physical",
+     "when": [
+      "Chief Ukorz Sandscalp - Cast Cleave"
+     ]
+    }
+   ],
+   "wing": "Zul'Farrak"
+  },
+  {
+   "creature": "Gahz'rilla",
+   "id": "7273",
+   "journal": [],
+   "level": [
+    46,
+    46
+   ],
+   "name": "Gahz'rilla",
+   "rare": false,
+   "spells": [
+    {
+     "does": [
+      "damage (target)",
+      "slow (target)"
+     ],
+     "id": 11131,
+     "interruptible": true,
+     "name": "Icicle",
+     "school": "Frost",
+     "when": [
+      "Gahz'rilla - Cast Icicle"
+     ]
+    },
+    {
+     "dispel": "Magic",
+     "does": [
+      "dot (target)",
+      "stun (target)"
+     ],
+     "id": 11836,
+     "interruptible": true,
+     "mechanic": "stun",
+     "name": "Freeze Solid",
+     "school": "Frost",
+     "when": [
+      "Gahz'rilla - Cast Freeze Solid"
+     ]
+    },
+    {
+     "does": [
+      "knockback (near)",
+      "weapon damage (near)"
+     ],
+     "id": 11902,
+     "name": "Gahz'rilla Slam",
+     "school": "Physical",
+     "when": [
+      "Gahz'rilla - Cast Gahz'rilla Slam"
+     ]
+    }
+   ],
+   "wing": "Zul'Farrak"
+  },
+  {
+   "id": "62495",
+   "journal": [],
+   "name": "Zel'jeb the Ancient",
+   "rare": false,
+   "wing": "Zul'Farrak"
+  },
+  {
+   "id": "62498",
+   "journal": [],
+   "name": "Farraki Arena",
+   "rare": false,
+   "wing": "Zul'Farrak"
+  }
+ ]
+}

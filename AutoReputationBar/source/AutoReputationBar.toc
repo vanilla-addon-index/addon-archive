@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: Automatically switch your reputation bar to factions you gain rep with
+## Author: Giselbaer
+## Version: 0.0.1
+
+AutoReputationBar.lua

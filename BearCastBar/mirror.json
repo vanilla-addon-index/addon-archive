@@ -1,0 +1,57 @@
+{
+  "upstream": "https://github.com/Fiskehatt/BearCastBar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Fiskehatt",
+    "repo": "BearCastBar",
+    "name": "BearCastBar",
+    "url": "https://github.com/Fiskehatt/BearCastBar",
+    "api": "https://api.github.com/repos/Fiskehatt/BearCastBar"
+  },
+  "commit": "64944e8c4c653ae9415eae64d4024c23241416c6",
+  "sourceFiles": {
+    "addon.lua": {
+      "sha256": "0a8d1b1cf7c97c138160df8dbcef7fa10c34203238b13bcf1eece1be5dfafd94",
+      "bytes": 35532
+    },
+    "attackbar.lua": {
+      "sha256": "6433c6571aba803f408a9edc05d93254509d1c068e4661142034906a4d8474b0",
+      "bytes": 10679
+    },
+    "attackbar.xml": {
+      "sha256": "831d2dc7f2a02e88e7df9f351555d0fcb85890e1bd1588b761d870598b390093",
+      "bytes": 4209
+    },
+    "BearCastBar.toc": {
+      "sha256": "eea63eb408b32b1d6bfae98a05196638799e4bdb26f0a72cc1ced905d3f339cb",
+      "bytes": 433
+    },
+    "localization.lua": {
+      "sha256": "2a73d4fe2c0d8715cd6ba5db943fbd9bdfda1db5ac4192f39a5ac0c05ba39e30",
+      "bytes": 5743
+    },
+    "README.md": {
+      "sha256": "91ad254c6def8e4d6d035f9132b1580bb8b907e33dc2a93069c90634417a2e4a",
+      "bytes": 1839
+    },
+    "textures/flat.tga": {
+      "sha256": "818b53b794877328af7cc3bc01fa0b8016ced0b20de8143315294092748df89f",
+      "bytes": 32786
+    },
+    "textures/glaze.tga": {
+      "sha256": "5bd704e0c4d1c3553823a48905d107694aba5f40e0ad985404ef02d8c618081b",
+      "bytes": 32812
+    },
+    "textures/smooth.tga": {
+      "sha256": "00e8084e83bf25b941464e2619b59e993b6ac7ae0bd8a6f37b12872e686ded6d",
+      "bytes": 32812
+    },
+    "textures/striped.tga": {
+      "sha256": "9c02969479e5dcbce2bcbb4f48bf2f0b2b00c44fa7556140fc8958ba0e9ad09d",
+      "bytes": 32812
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

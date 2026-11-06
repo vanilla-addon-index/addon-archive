@@ -1,0 +1,518 @@
+{
+  "upstream": "https://github.com/Torchlite-bit/Aegis_Exchange",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Torchlite-bit",
+    "repo": "Aegis_Exchange",
+    "name": "Aegis_Exchange",
+    "url": "https://github.com/Torchlite-bit/Aegis_Exchange",
+    "api": "https://api.github.com/repos/Torchlite-bit/Aegis_Exchange"
+  },
+  "commit": "0947faa72a59fee5ee8afeed8c99e25fe37802b2",
+  "sourceFiles": {
+    ".github/discord_changelog.py": {
+      "sha256": "6988838f1f6b5c03d55dca5cb1711973a89f22b420bad2dad4dd90b95be43192",
+      "bytes": 4860
+    },
+    ".github/discord-logo.png": {
+      "sha256": "cad4d1aa629130475b9fa13f3a75a072d931fc2674506a5aa019f6d3508043cc",
+      "bytes": 118724
+    },
+    ".github/workflows/release.yml": {
+      "sha256": "040ea81e4ac514012da6f7a405c59fb46ebbc69fc3d1a783aedaeaf3af75a1f8",
+      "bytes": 5462
+    },
+    ".gitignore.upstream": {
+      "sha256": "738b5b0a80ec3757135bda32b3fbe74bdaf83460f1b03a38e84d75d531c9f0f5",
+      "bytes": 510
+    },
+    ".pkgmeta": {
+      "sha256": "9bc9f8a38ee4bfcf5fcb62f00c4d9700ae554da5ade44b85005a4663e9c6e9eb",
+      "bytes": 437
+    },
+    "Aegis_Exchange.toc": {
+      "sha256": "45560ba9d488f52d4420d592a065ffb9c8c4e937395bd0fbcbc68c6edd541949",
+      "bytes": 345
+    },
+    "art/gradient-fill.tga": {
+      "sha256": "a943072cc22456df33292f437aabccf77e8274e1ff1f477630f28114945c8efb",
+      "bytes": 8210
+    },
+    "CHANGELOG.md": {
+      "sha256": "5b0714f133cfbf640faa6db2c1232ebdffeebcd57dc9a6242474c6e50ed1f5e8",
+      "bytes": 357279
+    },
+    "CLAUDE.md": {
+      "sha256": "7c2514fdc3da9f94bcd2fa938d3e65b321266f715adeed6a001c2dfbaff59fdc",
+      "bytes": 33154
+    },
+    "core/buy.lua": {
+      "sha256": "6ab5da53b6a06f1217a0d6fb8a34c1c7799f3fcd3388936fd78bae68ab0bb9f1",
+      "bytes": 172716
+    },
+    "core/db.lua": {
+      "sha256": "33a7d79e92c3e22b448a55d471bce42458832ae79fc55f270160de2911d38429",
+      "bytes": 149978
+    },
+    "core/disenchant.lua": {
+      "sha256": "2baa3746ebb74f03b039eea187020f2c5632ba669ff75b5a2eb4b7f96af74ddf",
+      "bytes": 55684
+    },
+    "core/init.lua": {
+      "sha256": "1d8be34545ee7ed2dcd61ef60a4c556af99c88231ac0a38194b173009a89b36c",
+      "bytes": 4069
+    },
+    "core/scan.lua": {
+      "sha256": "7cf8305930357461b03c1c9eb360ffb43ff4a8d0532eecd4b14fc20be0776fd7",
+      "bytes": 28314
+    },
+    "core/sell.lua": {
+      "sha256": "840d45febc3e16ef645573f89c42cb0a30faa49bd9c11029919c70174e30869c",
+      "bytes": 125346
+    },
+    "core/util.lua": {
+      "sha256": "77c682fae8e1db631ebd44b5a01a71d6df7cfcd31d2da4943bcb0482a84a1242",
+      "bytes": 30600
+    },
+    "design/01-scan-strip.png": {
+      "sha256": "177e828274ef03f8a3032cf04079777dda6190ce1bd17021067750c5c9dfc68b",
+      "bytes": 152755
+    },
+    "design/02-aegis-scan-console.png": {
+      "sha256": "d8909079f95c4c9c6917f3e14fa409aeebb4f3b6a36f73c030bc0342e2ffcf65",
+      "bytes": 171277
+    },
+    "design/03-standalone-window.png": {
+      "sha256": "a0bbcfb472ed9d152c4a8135140f7b7309059c16be48a96dfddcd334ff5aa5d6",
+      "bytes": 35001
+    },
+    "design/04-scan-strip-live.png": {
+      "sha256": "4701983e19acc786dd5345252e9b00ed771a1c28e38f673d058ac3b6c7b5cb1b",
+      "bytes": 38492
+    },
+    "design/05-category-picker.png": {
+      "sha256": "6065f40439be9f6adc220db2e6ad55395b50fe502e52cc1f42e00c58aabf8e62",
+      "bytes": 77046
+    },
+    "design/06-sell-tab.png": {
+      "sha256": "965aff4eaf3f920135c524a913da824d1ce8492dcafe73d65d6dd6bef07eac25",
+      "bytes": 142956
+    },
+    "design/07-buy-tab.png": {
+      "sha256": "9f6f6fc8448cb121d77359996db3fbb3aab95237d6c7e548680bd3d7b1a55da2",
+      "bytes": 147916
+    },
+    "design/1a - Overview.png": {
+      "sha256": "4b418082ecf0bfefaf5ac626208b2fd2632572f8a150f96eded32598220ed857",
+      "bytes": 107714
+    },
+    "design/1b - full scan - scanning in progress.png": {
+      "sha256": "bb68a3856036930cda5d53cc32bd226d07774d6a09b895e8d683104ba346e5d3",
+      "bytes": 58486
+    },
+    "design/1c - fullscan-idle.png": {
+      "sha256": "ced7a40d1c171cf8396ad1eabfbe21665950bf04408a7c4f8963199facb5ad23",
+      "bytes": 58141
+    },
+    "design/1d - buy sub-tab.png": {
+      "sha256": "766fa174cb1c34e53231cbc6b657dbeba015df2a2053fb9329ceb662b0e0f70c",
+      "bytes": 159160
+    },
+    "design/1e - buy empty-states.png": {
+      "sha256": "7a9d30a190ee7d24c8ee386cf3e8fa1e7487b6519168d28db5a90db9e51bf5fb",
+      "bytes": 53878
+    },
+    "design/1g - sell - low price warning.png": {
+      "sha256": "9961096b6aac27a25d748a3c4c9e1b990152392556f1dcc16bb7d30dea913a5b",
+      "bytes": 84103
+    },
+    "design/1h - auction sub-tab.png": {
+      "sha256": "b8cfde2337b7d58bef92ce251a10e008a548921acb2b862666a5b3178c09e08c",
+      "bytes": 114783
+    },
+    "design/1i - Crafting sub-tab.png": {
+      "sha256": "ba855d2d490243bd542162e49619609d69afe7f964e04d98b7a1e1f7f14c48dd",
+      "bytes": 95020
+    },
+    "design/1j - tooltip mochup.png": {
+      "sha256": "f50d5b4a6ca0bc87ddf92891d3d5da1dbda416acd3e557264c662ec6c8c9bb4e",
+      "bytes": 65477
+    },
+    "design/2a - sell sub-tab.png": {
+      "sha256": "fcc6a8d758a11ab053e49e24fecf27d912bbceb86fe187e5af642229703bfa0b",
+      "bytes": 340020
+    },
+    "design/Aegis Exchange UI Concept.zip": {
+      "sha256": "6616893255c20fcd0f56fb368f4481afa4d04ffe318bfe705a9c72efde8a4a0c",
+      "bytes": 3348843
+    },
+    "design/aegis-exchange.dc.html": {
+      "sha256": "8f31e7a3c56f5e549fdf71cfc15f9836dfb694c4ff0ea27747b4ec6cbd610b40",
+      "bytes": 9163
+    },
+    "design/Design readme.md": {
+      "sha256": "df8c967992bb389d2175da7e327be979585131499a1e1ddde498a343b2afd42a",
+      "bytes": 2669
+    },
+    "design/overview.png": {
+      "sha256": "b3cfa3125ddc84ac50126478fc27d9748636b0daf06ca0bcd15d0b83e52f09ea",
+      "bytes": 81045
+    },
+    "design/README.md": {
+      "sha256": "3858003694984e0c2667bba6063a8088579cda7e5899bb512f16e74e0853355c",
+      "bytes": 727
+    },
+    "DISCORD.md": {
+      "sha256": "9d8d8c4277610ae6464020cd2b77d81afa76f9801a3524490b062c72a41702ad",
+      "bytes": 2004
+    },
+    "LICENSE": {
+      "sha256": "76fbcf2e5f0d64574b16aea330c69a97e48e90a117d9e78248808f00b51d595c",
+      "bytes": 1066
+    },
+    "media/ResizeGrip.tga": {
+      "sha256": "c96bf1c4be764a43c11168d047aaa230649dd9b9dc5e334ffe7b7748d918d9f2",
+      "bytes": 1042
+    },
+    "pfui/Aegis_Exchange.lua": {
+      "sha256": "a2991064c53169f5d2c68a4a80e193c84e345cb4851400078970d98c0f001568",
+      "bytes": 1192
+    },
+    "README.md": {
+      "sha256": "07eeac9d824e280acf64dd2580218140d1b3814dc469fb9371a9b3c29110ff06",
+      "bytes": 27254
+    },
+    "ROADMAP.md": {
+      "sha256": "2adc6cca7134010b503865985f09955f45a6dab64a67be62b280ac9308bb987a",
+      "bytes": 355245
+    },
+    "tests/lint/anchorchain.py": {
+      "sha256": "0b0d0cad61f716432c97f61837b5fc27052d2b1636b0e954b9c19f1175f4517b",
+      "bytes": 5693
+    },
+    "tests/lint/definitions.py": {
+      "sha256": "1d78923da5dcbc3fe5bc43abb1e58e690814722a36ac48c8d6ce8675a7895477",
+      "bytes": 18015
+    },
+    "tests/lint/lua50.py": {
+      "sha256": "90b4a4858df2a97eeb676cd9fd39174d938ab5d889d03fe79c755185ba00725e",
+      "bytes": 5712
+    },
+    "tests/lint/modebits.py": {
+      "sha256": "4f15518b9741362ee7de254219a62110ed918b54635a1cbf1bee60969af5043c",
+      "bytes": 5222
+    },
+    "tests/lint/palette.py": {
+      "sha256": "cc0ce9ff2e40a7773bc92f8908944099bb8556748af7148f8db0b715c1124707",
+      "bytes": 3576
+    },
+    "tests/lint/rowchain.py": {
+      "sha256": "e0d51be143ef43a99dba369e9964efa51110295ee08635c91cd005085fdea2e3",
+      "bytes": 4504
+    },
+    "tests/lint/rowskin.py": {
+      "sha256": "5c1e7b229f6de19cf53f5a25a728da23c95033f153e86127d4df691771749484",
+      "bytes": 4566
+    },
+    "tests/lint/scoping.py": {
+      "sha256": "461bf095c1ae2d16e491eb56169fd0ea80c6b6a63a9bd1a1b277f50a3675bf12",
+      "bytes": 3911
+    },
+    "tests/lint/selftest.py": {
+      "sha256": "c953257471ae2715ebaaa964ee55824279e003942e39d18354b4251df1b82a6b",
+      "bytes": 3544
+    },
+    "tests/lint/sharedlayout.py": {
+      "sha256": "f18f6fbaeee5fcc906ab5a8f290e1ebe79ce095c1a61e93b9fa2b6ec00ba027f",
+      "bytes": 3540
+    },
+    "tests/lint/upvalues.py": {
+      "sha256": "61894314f03a91a31962dfee13117a570eb6f397f936084e8c92f27f18e6c897",
+      "bytes": 2989
+    },
+    "tests/lint/version.py": {
+      "sha256": "c02352a011773e69db9dec9a566fa1243f57e7cfac545683cdf9bd99eef3d1e8",
+      "bytes": 2863
+    },
+    "tests/README.md": {
+      "sha256": "8bd121b01ed0ba19e7136006dbe043420db3d40f6bfb7b0bbdee1aa9cb6b3869",
+      "bytes": 12691
+    },
+    "tests/run.sh": {
+      "sha256": "2c5fc38c561309cbe612b46292eb8cf7cbffddbe4b12112688ce85f777c0b0ea",
+      "bytes": 5440
+    },
+    "tests/sabotage.py": {
+      "sha256": "7fcf288d97120bb39861a2fea9122d2df2d1e121e399b5c4e77d6a836ad59cc1",
+      "bytes": 423394
+    },
+    "tests/support/harness.lua": {
+      "sha256": "903497da7ae69712be056fec623c0b6e60770b3b2fe742e0fdd1994c5ea06a68",
+      "bytes": 4622
+    },
+    "tests/support/wow.lua": {
+      "sha256": "eba030b37c1dcfdc370e222903f84c8906f9e9538d976829946e2446e71408f8",
+      "bytes": 45938
+    },
+    "tests/units/bags_test.lua": {
+      "sha256": "0ad6ef8e51c658f729187f5528d7225b55fe5f181562eefd7b1fbb49845c5c96",
+      "bytes": 12345
+    },
+    "tests/units/bidpath_test.lua": {
+      "sha256": "3f177e692d287584906edbd27e6893ab70aed7aed960ffa32bdeec8e53ceb188",
+      "bytes": 13587
+    },
+    "tests/units/bids_test.lua": {
+      "sha256": "e898d404bc16add205c6e7338366be0945d7bccb7977716bb3fd48e4ce2477b0",
+      "bytes": 12949
+    },
+    "tests/units/blacklist_test.lua": {
+      "sha256": "4908e4197b0f128c575db2a50da13eac27e7c7d423c414570b5fa1add18b6130",
+      "bytes": 11879
+    },
+    "tests/units/builder_term_test.lua": {
+      "sha256": "e48336e0043674dee19bf3be91d434e444ff7a619d241195e6cd4911c9c51aea",
+      "bytes": 9361
+    },
+    "tests/units/buy_batch_test.lua": {
+      "sha256": "f5109ae5a2424dcf47a6cf36e80f490d201bfa813319c37dacf2bf6b0f494dbe",
+      "bytes": 23521
+    },
+    "tests/units/buy_page_test.lua": {
+      "sha256": "2a429103d3fc460be6d74b9c2037f90689233d34e63162a79bb98268d38620e4",
+      "bytes": 7953
+    },
+    "tests/units/buy_term_test.lua": {
+      "sha256": "aab209f85f022916bfb80a35edc7f7c2bef35a759900e8b172ea6c519f4644e1",
+      "bytes": 14393
+    },
+    "tests/units/buychecks_test.lua": {
+      "sha256": "719790658e36a0fb4d24f92cfa13a61cc7be8571744cffdfaac56b6b70e242e4",
+      "bytes": 20649
+    },
+    "tests/units/buygroup_test.lua": {
+      "sha256": "be5cb8fbc250e5d548c0c5759bbb75d87d6861514a73aca977069eeb435b1642",
+      "bytes": 30427
+    },
+    "tests/units/charges_test.lua": {
+      "sha256": "a894d3f2608b2b5ff650e2a21a6c3087798ab20f22150ce4335a3333ef70c270",
+      "bytes": 16007
+    },
+    "tests/units/clientdata_test.lua": {
+      "sha256": "d499334311b72c09874797454cea2efd878bc7020a8041d509f74a16d14265a8",
+      "bytes": 20989
+    },
+    "tests/units/cooldowns_test.lua": {
+      "sha256": "ce7985d2c28ca13ae7daa666e1a1a164f941378da33c53cb68c3b10f953c7e67",
+      "bytes": 14240
+    },
+    "tests/units/craft_plan_test.lua": {
+      "sha256": "dcb10d59ed29425ec5aa148aa9a7844f5f0bc5bb837fca5ec51efdd2d0740511",
+      "bytes": 35034
+    },
+    "tests/units/craftqueue_test.lua": {
+      "sha256": "2973a0edfeea2aa84988175db4f5d5848cfa46fdd0919f49abb0cf27cd2294ca",
+      "bytes": 10113
+    },
+    "tests/units/crafttree_test.lua": {
+      "sha256": "b81e08df01ef82950e2daf1328a2925583b419d8cec34c94a52f325da0f98c0f",
+      "bytes": 39134
+    },
+    "tests/units/db_test.lua": {
+      "sha256": "e7489964f6093df8b855e6bf88b8711b64a255ba523ef50c2d84ee93f2f6a763",
+      "bytes": 17409
+    },
+    "tests/units/disenchant_learn_test.lua": {
+      "sha256": "6497b27e4dc2ae8e855a2e59be293e7cf75dc18690316b9ec28311e770b6348a",
+      "bytes": 15883
+    },
+    "tests/units/disenchant_test.lua": {
+      "sha256": "4a609292dc042a4dc28bd793c7e88ea56b1aac3fd8250d7401b8a4b7aceb1b56",
+      "bytes": 33504
+    },
+    "tests/units/external_buttons_test.lua": {
+      "sha256": "5ede4e86f3a24c84e9cd5c440d31e69da0278dda738f2dec2c6dee5e1edc77ce",
+      "bytes": 9326
+    },
+    "tests/units/gather_test.lua": {
+      "sha256": "bc5b1c6b4902b496e9070cafacf814e98b6c9d5482659a8c1df010756b756ba1",
+      "bytes": 22777
+    },
+    "tests/units/geometry_test.lua": {
+      "sha256": "3062a3f1c6e0a5eaec5abb10f7b96106f5c0a597a81299bd298bb010ae23d1bf",
+      "bytes": 100643
+    },
+    "tests/units/histgraph_test.lua": {
+      "sha256": "e8b7e40deccc5423061f49ea2b557d1c9127b8bcc60dfc6d9f61005d83ceb9c8",
+      "bytes": 76929
+    },
+    "tests/units/histstats_test.lua": {
+      "sha256": "32e6620f8eab493dfda8efc7487204ca139005d533287d38ac2a4809896c95ee",
+      "bytes": 39591
+    },
+    "tests/units/inventory_test.lua": {
+      "sha256": "f6e271ab40996b4dc3bfb37b982c3bb566c824ad44d71995f3f48c77d60e6d36",
+      "bytes": 31248
+    },
+    "tests/units/ledgeritems_test.lua": {
+      "sha256": "0cc466bd9e9c0f763e1599cfd7b0421cd2fa665f4103533e12891bc5aa018287",
+      "bytes": 21126
+    },
+    "tests/units/livefile_test.lua": {
+      "sha256": "5a677db75ee6e40cf08b6fd38a6246048a17fccb991c07551085fc7a16af982f",
+      "bytes": 20532
+    },
+    "tests/units/mailscan_test.lua": {
+      "sha256": "1b976c4901214763826811e18d28c06ca03b8f5bbd199fbb41375ca9a414ebeb",
+      "bytes": 5926
+    },
+    "tests/units/post_filter_test.lua": {
+      "sha256": "6ec3caae416a54f2cd466706b4a96f9f834232119332832912da5dbaf38eef45",
+      "bytes": 31127
+    },
+    "tests/units/postall_test.lua": {
+      "sha256": "fe8d6a6711e4da48e713ba0daf8b4dff2c09725c938555e663a0e04ef59091dc",
+      "bytes": 32286
+    },
+    "tests/units/postbook_test.lua": {
+      "sha256": "71e03593287c8812b522f51ebff08020aba3ac451a4572ba59fbafe8212defb4",
+      "bytes": 28129
+    },
+    "tests/units/purse_test.lua": {
+      "sha256": "b13145a44fca0a97c15fb48337bc954f1bbbe7566e1100af193c8b8792b424b3",
+      "bytes": 40429
+    },
+    "tests/units/raise_test.lua": {
+      "sha256": "bbc819a319f18fcb67cbb2e4807297dc3ac42c1ce85c2da9860a17a102d7210c",
+      "bytes": 11486
+    },
+    "tests/units/reagentcost_test.lua": {
+      "sha256": "bd2c60d5ad8fbf51deb9229c62839a09538cb7c61a2bc3b734583ca83917c150",
+      "bytes": 7300
+    },
+    "tests/units/rowbudget_test.lua": {
+      "sha256": "459f4335d920cc23a20eccee0973268a90f78447026d7f52e4bca9edb788a037",
+      "bytes": 4386
+    },
+    "tests/units/rowchrome_test.lua": {
+      "sha256": "c7d0f12ad25981b9148257d2841d3aa29a1f9e200f564b7381fc2874d071dfa1",
+      "bytes": 43212
+    },
+    "tests/units/scan_leak_test.lua": {
+      "sha256": "4a31488299652f16d87d34c2cc806d941433e5aad5bcb33f966fac7cf8ccd6f2",
+      "bytes": 17399
+    },
+    "tests/units/selection_test.lua": {
+      "sha256": "fdece1abb1d6ec49ac97a169890287e9ee6d5c2fd5fda07e322072e6a3ca9364",
+      "bytes": 9475
+    },
+    "tests/units/sellslot_test.lua": {
+      "sha256": "f5d71e5d206434a14be36da8f1091293760df3829c0948fadc2c0017378371db",
+      "bytes": 38986
+    },
+    "tests/units/session_buys_test.lua": {
+      "sha256": "baf3c69990cc1d6303cd33635e1b5ac77fba870ad4950b7bfe5207b41b1fa1ac",
+      "bytes": 20494
+    },
+    "tests/units/shiftclick_test.lua": {
+      "sha256": "57876bbb0e96a34885f54de326a11d5c0a61edc1de0f225227c020b9723c6aa4",
+      "bytes": 8420
+    },
+    "tests/units/shoplist_test.lua": {
+      "sha256": "f4bd9034df46047dc41a0c7bc0c57ec7d246532b07454ca8ea9e15a805344b87",
+      "bytes": 22928
+    },
+    "tests/units/sort_results_test.lua": {
+      "sha256": "c27c873ab07b3f09cec432de69313e3b2e3eebcc555565e2490b9489cba268e3",
+      "bytes": 14476
+    },
+    "tests/units/sweep_test.lua": {
+      "sha256": "54976366b4c75e16937b6510b33b9fb94ac14c4a367596fc7e57a681c9dd9181",
+      "bytes": 17053
+    },
+    "tests/units/taborder_test.lua": {
+      "sha256": "b3220308338969d612691a8eea0a5fc7d32bf6b1df4672b748bc68730ad920d4",
+      "bytes": 11735
+    },
+    "tests/units/tooltip_hook_test.lua": {
+      "sha256": "088d72eaf87f6ceb705bec717bd1e001321676a8294ada5cec0b698ea9b1622b",
+      "bytes": 7211
+    },
+    "tests/units/tooltip_test.lua": {
+      "sha256": "b04e3e0a575544579a2bd48de858fbbc7195652b1609be024f7ae9291391dc59",
+      "bytes": 34819
+    },
+    "tests/units/util_test.lua": {
+      "sha256": "d17dd5d0a1a6a7b359bbb58c5e5f5556f5696d67e61c299ab409864f8caab710",
+      "bytes": 23945
+    },
+    "tests/units/vendorbuy_test.lua": {
+      "sha256": "07fbb2b65ca3623acc852247acb78a3548f4d5c568482c6b5630527643974115",
+      "bytes": 15519
+    },
+    "tests/units/wheel_test.lua": {
+      "sha256": "23052186c5e6334986bd91b0686943728cc35af7be1617cb0cd9bfee1bf86d33",
+      "bytes": 10352
+    },
+    "tests/units/window_point_test.lua": {
+      "sha256": "2781486920c24e49700244480231dac6d08ac3c8b7a320a9f81b610cf825fc11",
+      "bytes": 9933
+    },
+    "tools/gen_charges.py": {
+      "sha256": "68946987d9ee9fb91c58730bc9745c54cd17c97398608ce349379e7e705b3fb0",
+      "bytes": 5553
+    },
+    "tools/gen_disenchant.py": {
+      "sha256": "b16d7cba17904663da1eea0d9cbadd36f9d56d27172195fbc6fd31e11a675cb5",
+      "bytes": 15639
+    },
+    "tools/README.md": {
+      "sha256": "83eaeab11338783f135f1b264463ed87070b7dc83ea9d3153e8ba28c2d8e9a6a",
+      "bytes": 6685
+    },
+    "ui/frame.lua": {
+      "sha256": "3706290d990a4cd53fd5ab5b9955a50c6b706219e0039cb37560e5f04252a154",
+      "bytes": 936727
+    },
+    "ui/skin.lua": {
+      "sha256": "8de6ad11adc8fda80f4d5476f4c49f9e4e35ca68a733b29c380a8f4b2abc2b98",
+      "bytes": 21485
+    },
+    "ui/tooltip.lua": {
+      "sha256": "a10d240d524f903e28edc7e23ddab0ab7f8e2068da0ca4d54ecf5b5898f5c5bd",
+      "bytes": 28921
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "435199244": {
+      "tag": "v1.55.4",
+      "folder": "v1.55.4--435199244",
+      "assets": {
+        "713407567": {
+          "sha256": "49b0ce5bee2da8bc88ed1de50972ab75e6286dce21019d77016521a4f8fd74fc",
+          "bytes": 493024,
+          "id": "713407567",
+          "name": "Aegis_Exchange-v1.55.4-classic.zip",
+          "url": "https://github.com/Torchlite-bit/Aegis_Exchange/releases/download/v1.55.4/Aegis_Exchange-v1.55.4-classic.zip",
+          "path": "releases/v1.55.4--435199244/assets/Aegis_Exchange-v1.55.4-classic.zip"
+        },
+        "713407635": {
+          "sha256": "315c0400e0db3109dad1132b32c89539d4b58492ae02c50330de9a6aa464122e",
+          "bytes": 176,
+          "id": "713407635",
+          "name": "release.json",
+          "url": "https://github.com/Torchlite-bit/Aegis_Exchange/releases/download/v1.55.4/release.json",
+          "path": "releases/v1.55.4--435199244/assets/release.json"
+        }
+      },
+      "source": {
+        "sha256": "79a920a65d07ffc6ca64eaa858c5be1838d77b2a91bc458a0ea2bc6fcff6bde6",
+        "bytes": 6527080,
+        "path": "releases/v1.55.4--435199244/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Torchlite-bit/Aegis_Exchange/tarball/v1.55.4"
+      }
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "upstream": "https://github.com/Autignem/aDF",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Autignem",
+    "repo": "aDF",
+    "name": "aDF",
+    "url": "https://github.com/Autignem/aDF",
+    "api": "https://api.github.com/repos/Autignem/aDF"
+  },
+  "commit": "cab4853dcc4a7372f7c41f8939efea80b6aa1056",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "69506cc380834fe9a916d479f4cd969e488c003e947ff1fc7cd74452c1021b90",
+      "bytes": 323
+    },
+    "aDF.toc": {
+      "sha256": "0e4bb1628d5dde7edd97c7c206cb26ea184fa94354f84f012ce1e7c4c0b0e3c6",
+      "bytes": 568
+    },
+    "config/config_defaults_ini.lua": {
+      "sha256": "e6738c067571b6a62425830b2a180e49c4480a47ade3d88384f65c6c7c5535d0",
+      "bytes": 650
+    },
+    "config/config_variables.lua": {
+      "sha256": "77d30f859cb4807cd9965890c815dc3f9594aa6196b54ac0ab1236af9eae0120",
+      "bytes": 4351
+    },
+    "core/data.lua": {
+      "sha256": "1091520245871294bc79c2f94d810ccbe1987408e09e3b2cbb1c98f74c1837a0",
+      "bytes": 6140
+    },
+    "core/events.lua": {
+      "sha256": "6a1e6d16130e3734e898a9439982b38582b9977f3ff66ad0fb93e32fa71f9edd",
+      "bytes": 2721
+    },
+    "core/init.lua": {
+      "sha256": "bf9979e20da424deefb0d3dd708d43f15875913340b2feee7f078f4ba535803e",
+      "bytes": 2336
+    },
+    "core/slash.lua": {
+      "sha256": "91fb73a8edc22793d6e20782e764f2251e171def7482fc1d97f9d1faf6b9c069",
+      "bytes": 2671
+    },
+    "core/state.lua": {
+      "sha256": "2222595e3e337374764c09351de5d35bf8a79b282e178db223d9cfb75233e4dd",
+      "bytes": 686
+    },
+    "logic/aura.lua": {
+      "sha256": "87625168b5d0afd4fc8adb62af9c52e3d8da829482c1a8145c3931155e15e522",
+      "bytes": 1871
+    },
+    "logic/sort.lua": {
+      "sha256": "0fc7dd609cc0921de6ca539062031e4f2504cce5dc57bbad6b7cbad868780e5e",
+      "bytes": 2364
+    },
+    "logic/update.lua": {
+      "sha256": "5ecd10fc85686759ae34b407e14a55550cce25e1bda83911a102a811e6712594",
+      "bytes": 3853
+    },
+    "README.md": {
+      "sha256": "95c01ec560f147db0b5a46e8d8ac7e793dc7ebbbc93a22d368f41357252ac51b",
+      "bytes": 2681
+    },
+    "readme.txt": {
+      "sha256": "7362e181feb81de39dd053866375692a8ba245d67e8694a660058712a904bf34",
+      "bytes": 7388
+    },
+    "ui/debuff_icons.lua": {
+      "sha256": "2b37d343f30cde1d4545bc1c1d4b17e45bc051735c060764f061b762f93eb2b9",
+      "bytes": 1114
+    },
+    "ui/frames.lua": {
+      "sha256": "1e9184d6e4a05f3bf3693cd37e2139b3f05034fa7fc9359eec5dd98617f0b0a0",
+      "bytes": 8155
+    },
+    "ui/options_registry.lua": {
+      "sha256": "ba5906e8bda3526023a91d6da9351c7f0f8fa1db27fe6f9894c025f1ce8b962d",
+      "bytes": 1586
+    },
+    "ui/options_shell.lua": {
+      "sha256": "80552dff2dd6de6f49e2ef631c36ee2fae77e2b0f3930569ee335462e3f580e6",
+      "bytes": 20680
+    },
+    "ui/options_widgets.lua": {
+      "sha256": "143613b26f71f5613218f89e0be9d35c7051e1ad3f684b2f1502f606f458b90c",
+      "bytes": 1450
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

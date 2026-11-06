@@ -1,0 +1,50 @@
+{
+  "upstream": "https://github.com/Road-block/AttackBar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "AttackBar",
+    "name": "AttackBar",
+    "url": "https://github.com/Road-block/AttackBar",
+    "api": "https://api.github.com/repos/Road-block/AttackBar"
+  },
+  "commit": "75501c71bb102b5c1ec5cdfae196e77ab5d987f8",
+  "sourceFiles": {
+    "Attackbar.lua": {
+      "sha256": "9437dc7da9ff5e07f2c4f31d5a487b7a841564c8b897fe0e61bb8de921826a93",
+      "bytes": 14248
+    },
+    "AttackBar.toc": {
+      "sha256": "6bf5ee590a1c8e64ab6fe1a1c5b551b9fbf98bd70e2e2df43aa05df8782611f5",
+      "bytes": 229
+    },
+    "Attackbar.xml": {
+      "sha256": "21da4afdf03b4a6bd2ab44587d72791e714ed9e528b423061eef2177daabf33d",
+      "bytes": 6523
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "5440333": {
+      "tag": "5.01-11200",
+      "folder": "5.01-11200--5440333",
+      "assets": {
+        "3182607": {
+          "sha256": "bd6ccac9eaa1491862ef84e879f6a21814525737599512705736b5a910c343eb",
+          "bytes": 5083,
+          "id": "3182607",
+          "name": "AttackBar-5.01-11200.zip",
+          "url": "https://github.com/Road-block/AttackBar/releases/download/5.01-11200/AttackBar-5.01-11200.zip",
+          "path": "releases/5.01-11200--5440333/assets/AttackBar-5.01-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "f4a0d1ee79df841a5bf85d592d7ab132ea556bb67452395df13548e49e37e223",
+        "bytes": 4392,
+        "path": "releases/5.01-11200--5440333/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/AttackBar/tarball/5.01-11200"
+      }
+    }
+  }
+}

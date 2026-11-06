@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/leenux/AutoExpEnable",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "leenux",
+    "repo": "AutoExpEnable",
+    "name": "AutoExpEnable",
+    "url": "https://github.com/leenux/AutoExpEnable",
+    "api": "https://api.github.com/repos/leenux/AutoExpEnable"
+  },
+  "commit": "d4a134d62aae9ceab4e42152a7803a1556bb1015",
+  "sourceFiles": {
+    "AutoExpEnable.lua": {
+      "sha256": "2d83239c53ebfb66ff8701b8c7ebd4e23ef280308afe2fa4a3ed156903ff1a64",
+      "bytes": 829
+    },
+    "AutoExpEnable.toc": {
+      "sha256": "565ba0eefae9e78d451151873a97ff617e5761650c986ce5323293e2e409446d",
+      "bytes": 131
+    },
+    "LICENSE": {
+      "sha256": "16858e645cdb285a81aba54e80ab483f743356d26e618820f02b192d552913b8",
+      "bytes": 1063
+    },
+    "README.md": {
+      "sha256": "c4a2403557e4f4170070145e4bc7658145af5b4868abefda61e70e524756c51c",
+      "bytes": 380
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

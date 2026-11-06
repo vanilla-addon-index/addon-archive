@@ -1,0 +1,58 @@
+{
+  "upstream": "https://github.com/EinBaum/AnnounceKick",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "AnnounceKick",
+    "name": "AnnounceKick",
+    "url": "https://github.com/EinBaum/AnnounceKick",
+    "api": "https://api.github.com/repos/EinBaum/AnnounceKick"
+  },
+  "commit": "95e17fc04b70eb48cee7051ff2d739927c0eaafb",
+  "sourceFiles": {
+    "AnnounceKick.lua": {
+      "sha256": "9988b35412d28aac551c6c3add429b03d2414fe717d24484b9f2d03daf05d49a",
+      "bytes": 2513
+    },
+    "AnnounceKick.toc": {
+      "sha256": "5e653473ede12365124519acf295d398841f2fd4c4f96dc0b3d3b6cef32397be",
+      "bytes": 203
+    },
+    "LICENSE": {
+      "sha256": "cb90bb0e412e64b0e3283e53e9d4aa6e22386f9fbc79e6df154b1c377a467e7c",
+      "bytes": 1075
+    },
+    "make_release": {
+      "sha256": "a5918db8fda4ecfb5080701b973981de1871b25246117e3ad74fa6868df49480",
+      "bytes": 160
+    },
+    "README.md": {
+      "sha256": "c43deb671fc1406e787f64a69ae9d3563eb435dee2da6d059b2d432058a78ad9",
+      "bytes": 273
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "16422580": {
+      "tag": "1.0.0",
+      "folder": "1.0.0--16422580",
+      "assets": {
+        "11781920": {
+          "sha256": "4315ef793174537eeacdbc3277013fe37aa9f4e1674d17d0ce7b0cb43d6b141d",
+          "bytes": 2733,
+          "id": "11781920",
+          "name": "AnnounceKick.zip",
+          "url": "https://github.com/EinBaum/AnnounceKick/releases/download/1.0.0/AnnounceKick.zip",
+          "path": "releases/1.0.0--16422580/assets/AnnounceKick.zip"
+        }
+      },
+      "source": {
+        "sha256": "67a318fa00b777708fa30464f28c06616653df17fdf4a7239ec2cca6b7d78076",
+        "bytes": 2209,
+        "path": "releases/1.0.0--16422580/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/EinBaum/AnnounceKick/tarball/1.0.0"
+      }
+    }
+  }
+}

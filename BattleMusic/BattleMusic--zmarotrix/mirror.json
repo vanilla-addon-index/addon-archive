@@ -1,0 +1,66 @@
+{
+  "upstream": "https://github.com/zmarotrix/BattleMusic",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "zmarotrix",
+    "repo": "BattleMusic",
+    "name": "BattleMusic",
+    "url": "https://github.com/zmarotrix/BattleMusic",
+    "api": "https://api.github.com/repos/zmarotrix/BattleMusic"
+  },
+  "commit": "82e9e93785e34741387da6aa4ae564c48a310ac2",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "20548dac1a3f39ad034e3b2458fe29a58ed4597b4ec516832ec8d36a4dc9a16e",
+      "bytes": 5
+    },
+    "BattleMusic.lua": {
+      "sha256": "2c42a42e5ba59ffd097f4316e9716cf87c13f491169964bc47839e926a527f85",
+      "bytes": 10479
+    },
+    "BattleMusic.toc": {
+      "sha256": "9c65121ac1324b2926afb65830e441addca46dc6b29116303afa6875bee6cb8a",
+      "bytes": 282
+    },
+    "BattleMusic.xml": {
+      "sha256": "c42bc5bfb252afdc87ecb4031583587fb438d822d06ae2b21e770f6adb643fcb",
+      "bytes": 408
+    },
+    "music/Put your music files here.txt": {
+      "sha256": "d2f5f646511cf2d1b0dab8e70a729b83845de0e0929338eb9d4d37ac0be8d0fd",
+      "bytes": 198
+    },
+    "music/Update Playlist.bat": {
+      "sha256": "877ebb0a235a91b8b51448a3faa3b4320bd5f4ec068faf478f96ee9218dc70df",
+      "bytes": 1140
+    },
+    "README.md": {
+      "sha256": "7530bf344d947d3daabcea3ae6e4c142e1c36efcc536ad8e77cfba62737e79e8",
+      "bytes": 1667
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "171169173": {
+      "tag": "Publish",
+      "folder": "Publish--171169173",
+      "assets": {
+        "187273377": {
+          "sha256": "11029bd6e4b15df4373574d50a54e5eef9d38e9fb134ead966dbed2be1b100c7",
+          "bytes": 5790,
+          "id": "187273377",
+          "name": "BattleMusic.zip",
+          "url": "https://github.com/zmarotrix/BattleMusic/releases/download/Publish/BattleMusic.zip",
+          "path": "releases/Publish--171169173/assets/BattleMusic.zip"
+        }
+      },
+      "source": {
+        "sha256": "66d4a6c36cb88448af201004ae1f422cc05c7571df200c0bc6c51ffb38f25121",
+        "bytes": 5106,
+        "path": "releases/Publish--171169173/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/zmarotrix/BattleMusic/tarball/Publish"
+      }
+    }
+  }
+}

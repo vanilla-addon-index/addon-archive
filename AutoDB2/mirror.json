@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/refaim/AutoDB2",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "refaim",
+    "repo": "AutoDB2",
+    "name": "AutoDB2",
+    "url": "https://github.com/refaim/AutoDB2",
+    "api": "https://api.github.com/repos/refaim/AutoDB2"
+  },
+  "commit": "30969e81d98def1e948426f405e7f510563d78c8",
+  "sourceFiles": {
+    "AutoDB2.lua": {
+      "sha256": "6f16957483eca72d3429b248563509f31ca75493a141f47f70f0becd0073ba28",
+      "bytes": 3391
+    },
+    "AutoDB2.toc": {
+      "sha256": "be9ecc281be9213b082f68becf0ad4cc9444b6c1ecd6b74a34fa582f56bba59a",
+      "bytes": 268
+    },
+    "helpers.lua": {
+      "sha256": "b3cfed4b40feda8f21f896540b7d492b2111aec7fb1044b225728537286adea0",
+      "bytes": 1138
+    },
+    "README.md": {
+      "sha256": "b1957b25f6fb4770329acf5b0b873eda4e09c3bb38629290156e0611665d7425",
+      "bytes": 825
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

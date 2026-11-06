@@ -1,0 +1,9 @@
+{
+  "id": "5440333",
+  "tag": "5.01-11200",
+  "name": "5.01-11200",
+  "body": "Udokus Attack bar timer addon cleaned up.\n- Player and Enemy swing timer, `/abar` for options.\n",
+  "published": "2017-02-13T14:37:28Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/AttackBar/releases/tag/5.01-11200"
+}

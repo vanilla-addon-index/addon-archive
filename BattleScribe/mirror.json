@@ -1,0 +1,77 @@
+{
+  "upstream": "https://github.com/gabcinder2004/BattleScribe",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "gabcinder2004",
+    "repo": "BattleScribe",
+    "name": "BattleScribe",
+    "url": "https://github.com/gabcinder2004/BattleScribe",
+    "api": "https://api.github.com/repos/gabcinder2004/BattleScribe"
+  },
+  "commit": "e7c702ed8b38867acf60b796f9545d8153a77d87",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "296d4776cdfd0b8b0ed3271f4578ceecb103a270ee80c26e2d66faeba1c856c7",
+      "bytes": 42
+    },
+    "BattleScribe.lua": {
+      "sha256": "aea838049f995e05f1edddb55fcedc38d6942b0f9e4d14f5a20b2faa6ad9464c",
+      "bytes": 64948
+    },
+    "BattleScribe.toc": {
+      "sha256": "ec31767d5c492ce6d7b615a6f5734cffd6b4f0bc0f1a3cdaf088fcca1e4cf143",
+      "bytes": 216
+    },
+    "battlescribe1.png": {
+      "sha256": "3a68e97da8b5061e74f053f7f4aa9e9916e06de7940cb640a7c0f0c9a0e2d5f0",
+      "bytes": 116860
+    },
+    "battlescribe2.png": {
+      "sha256": "965735fe743972bf3baf46d0efb21b85ea666b8e8290def24fefa13b973d1180",
+      "bytes": 83350
+    },
+    "images/ResizeGrip.tga": {
+      "sha256": "f17e6620869ab39c230f860d13e5e9cda42b03938b27b922c99a6e4109bcf5cf",
+      "bytes": 2085
+    },
+    "images/textures/Smooth.tga": {
+      "sha256": "00e8084e83bf25b941464e2619b59e993b6ac7ae0bd8a6f37b12872e686ded6d",
+      "bytes": 32812
+    },
+    "images/yellow_close_x_icon.tga": {
+      "sha256": "032d7a756006f430e0eb8d6ff3a8fa43856cbcb791e3486c15a539aef9b391d9",
+      "bytes": 4140
+    },
+    "images/yellow_cogwheel_icon.tga": {
+      "sha256": "5046db2c4eaf498dfd96ca935e6b15ee168ebb1829367059c71720e7efcfd1e3",
+      "bytes": 4140
+    },
+    "images/yellow_lock_icon_ui.tga": {
+      "sha256": "963d38e92e6e63670b9338dcba029e213ba627546951bacb81c7db534ab60048",
+      "bytes": 4140
+    },
+    "images/yellow_unlock_icon_ui.tga": {
+      "sha256": "38f4500604292e585851414afa4dd56846c43bfdd1907fb62f8e9cfa9930c890",
+      "bytes": 4140
+    },
+    "README.md": {
+      "sha256": "2bb37ee2660885f8f701ab278157a6e073fc18310d76785225424b3c307840b2",
+      "bytes": 2784
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "260888031": {
+      "tag": "v1.1",
+      "folder": "v1.1--260888031",
+      "assets": {},
+      "source": {
+        "sha256": "a2821c53c2e2997c5df7d053616e2d97988fe40e525a73cd4cf25e9d519a2398",
+        "bytes": 220107,
+        "path": "releases/v1.1--260888031/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/gabcinder2004/BattleScribe/tarball/v1.1"
+      }
+    }
+  }
+}

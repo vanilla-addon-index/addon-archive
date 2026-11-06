@@ -1,0 +1,77 @@
+{
+  "upstream": "https://github.com/CamA-dev/TurtleBeastiary",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "CamA-dev",
+    "repo": "TurtleBeastiary",
+    "name": "TurtleBeastiary",
+    "url": "https://github.com/CamA-dev/TurtleBeastiary",
+    "api": "https://api.github.com/repos/CamA-dev/TurtleBeastiary"
+  },
+  "commit": "6def1c555106db9d181b4820edd53f7a4ea3561f",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "Application/ApplicationService.lua": {
+      "sha256": "e88fbacb9416f782bb1baeb7c16e121cdd21d118f3159214368500a0d5434db1",
+      "bytes": 602
+    },
+    "Boot.lua": {
+      "sha256": "af61fac47ceb946af5c2e73292bc367558eaa5ddde1f5cf82e2156fc53319382",
+      "bytes": 84
+    },
+    "db.lua": {
+      "sha256": "dd73f2ee5f8d14570b9c11ea3199ca5443cba1cf428601f580875dca1e636527",
+      "bytes": 737157
+    },
+    "Domain/Ability.lua": {
+      "sha256": "cbdcf81ec87c7fc14bb837913d7d555c0791cd9b5226e9387a0c77c4921e37eb",
+      "bytes": 640
+    },
+    "Environment.lua": {
+      "sha256": "f512abe0e49ee772e388b27271f30e8f9378826abc893981e20565d439b91ebe",
+      "bytes": 195
+    },
+    "img/example.png": {
+      "sha256": "40df58dcb8e87d48a955270f75f12a7ef5910777667e720367cdfcf454cc74d7",
+      "bytes": 63044
+    },
+    "Infrastructure/GameAPI.lua": {
+      "sha256": "5a9581b4a67dfb88b3036efae9dc430716b14f5ce3faa026f6878bb30cbd2652",
+      "bytes": 2431
+    },
+    "Presentation/Drawers/AbilityDrawer.lua": {
+      "sha256": "0411014a283df854e89b8f12541f5bfb508dc10918d34ed9902e48291a4ff910",
+      "bytes": 707
+    },
+    "Presentation/TooltipController.lua": {
+      "sha256": "c2d518afb1d85fb33a6b91634c0b87bf7241aa9b8bc976f8f791a33a1a9e5a85",
+      "bytes": 731
+    },
+    "Presentation/TooltipInterface.lua": {
+      "sha256": "6cfbc5bf8a68107425e85f7241aeebc8fc8acd1d7decedf7fcd8bc4520111624",
+      "bytes": 1142
+    },
+    "Presentation/Utils.lua": {
+      "sha256": "7e1675f73d529e33bee5ec87cdae8554873ca569fd5ba0aea0aa56fef4a7f883",
+      "bytes": 855
+    },
+    "README.md": {
+      "sha256": "97a95007e1bcaeb7ce12961f93f1e461fe543ce42d025f1961d356a0eae88837",
+      "bytes": 977
+    },
+    "TurtleBeastiary.toc": {
+      "sha256": "062220fe25939de6b2abc0034424dedc8a25a521cd79cca6fbddb5caebc5b9dc",
+      "bytes": 461
+    },
+    "Utils.lua": {
+      "sha256": "43fc47bc1f8df734604c1b5b3ae220225b20ef18ceeeeffe07c24cd1a0fc471f",
+      "bytes": 664
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

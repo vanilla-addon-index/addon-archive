@@ -1,0 +1,54 @@
+{
+  "upstream": "https://github.com/gashole/Aero",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "gashole",
+    "repo": "Aero",
+    "name": "Aero",
+    "url": "https://github.com/gashole/Aero",
+    "api": "https://api.github.com/repos/gashole/Aero"
+  },
+  "commit": "f6304c8834f1c8a0289f5ce93e49b29aed0585dc",
+  "sourceFiles": {
+    "Aero.lua": {
+      "sha256": "9cb7b7f70141d27f77a94e8df727593257fd700d02eb98e904b7428224827f75",
+      "bytes": 5039
+    },
+    "Aero.toc": {
+      "sha256": "0c64d4aab4b9034760ef7557b0c85a49270630e8104f9330ba5eaf0db2dc6635",
+      "bytes": 134
+    },
+    "Frames.lua": {
+      "sha256": "b29f8d0a717c938b8cc00ba92f09d53ca13e2879270852aab9a4ae9c00761e30",
+      "bytes": 9579
+    },
+    "README.md": {
+      "sha256": "92a81bfde641626a6ca0fcb6312e33423546d215a78f9828cbaa309ddc6e13f7",
+      "bytes": 435
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "299672478": {
+      "tag": "current",
+      "folder": "current--299672478",
+      "assets": {
+        "378368672": {
+          "sha256": "940b3047476fc28a25fb205def80363d595729447564f27efb68517fa011a3fc",
+          "bytes": 4670,
+          "id": "378368672",
+          "name": "Aero.zip",
+          "url": "https://github.com/gashole/Aero/releases/download/current/Aero.zip",
+          "path": "releases/current--299672478/assets/Aero.zip"
+        }
+      },
+      "source": {
+        "sha256": "04d9655435d4ebcba6e45f0199b6a5e6d97cfad61074a0dcfb548b7a93511c3b",
+        "bytes": 4206,
+        "path": "releases/current--299672478/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/gashole/Aero/tarball/current"
+      }
+    }
+  }
+}

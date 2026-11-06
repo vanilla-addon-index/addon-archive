@@ -1,0 +1,2930 @@
+-- ============================================================
+-- Class_Warlock  -  warlock module for Aegis_SBR
+-- Turtle WoW 1.12 (SuperWoW). DoT priority, configurable, level 1+.
+-- ============================================================
+-- Model (mirrors the proven leveling macro):
+--  * Keep the enabled damage-over-time effects up in priority order:
+--    Immolate, the chosen Curse, Siphon Life, the Malediction Curse of
+--    Agony, then Corruption (see the order block in Rotate for why).
+--  * Below an optional target-health threshold no DoT is re-applied at all
+--    (a fresh DoT never pays its mana back on a mob about to die), with an
+--    opt-in exception for Corruption, the cheapest and shortest of them.
+--  * Malediction (optional): if the main curse is not Curse of Agony or
+--    Curse of Doom, that talent piggybacks Curse of Agony on every curse
+--    cast. Enabling coaSecondary tracks and refreshes that DoT on its own.
+--  * Detection is by debuff texture on the target. A short per-effect
+--    memory keyed by target GUID prevents re-queuing a cast-time DoT
+--    while it is still landing.
+--  * Survival / execute / pet tools, each optional:
+--      - Drain Life kicks in as a self-heal channel when your health dips
+--        below a threshold (the drain-tank safety net).
+--      - Health Funnel tops the pet when it drops, as long as you are not
+--        low yourself (it costs your health).
+--      - Shadowburn executes the target under 20% (instant, costs a shard,
+--        skipped with zero shards in the bag).
+--      - Drain Soul channels in the target's last seconds to bank a Soul
+--        Shard and regen mana (the leveling finisher). Optionally capped by
+--        keepShards/shardTarget so it stops once enough shards are banked.
+--  * When nothing above applies, fall back to the filler: the wand, Shadow
+--    Bolt, Drain Life, Drain Soul, or Dark Harvest. The wand filler degrades
+--    to Shadow Bolt when no wand is equipped, so a level 1 warlock (Shadow
+--    Bolt only) still nukes. Drain Soul is there for the low-level warlock
+--    with no wand yet; being a channel it stands down for a press whenever a
+--    DoT would lapse while it runs. Dark Harvest fills the gap between its own cooldowns with
+--    a configurable choice (dhGapFiller: wand, Shadow Bolt, Drain Life or
+--    Drain Soul) instead of leaving the rotation idle.
+--  * Optional Life Tap when mana is low and health is high.
+--  * Nightfall reaction: a free instant Shadow Bolt the moment Shadow Trance
+--    procs. This auto-enables when the Nightfall talent is detected (the one
+--    place a talent-tree read helps here; almost everything else is covered
+--    by KnowsSpell since talented spells appear in the spellbook).
+--  * The pet is sent onto the target when enabled.
+-- Cast-time spells are queued with QueueSpellByName when available, so
+-- the rotation never clips the current cast.
+-- ============================================================
+
+local M = Aegis_SBR:NewClassModule("WARLOCK")
+M.uiTitle = "Warlock"
+-- Rotate runs under Aegis_SBR:Preview without casting (see Pick/Later).
+M.previewReady = true
+M.uiHeight = 1050
+M.meleeAutoAttack = false   -- caster, no white melee swing
+
+-- Talent that turns on the free instant Shadow Bolt proc (Shadow Trance).
+-- It grants no spell, so KnowsSpell cannot see it; reading the talent rank is
+-- the only way to know it is present. Adjust the name here if Turtle renames it.
+local TALENT_NIGHTFALL = "Nightfall"
+
+-- Dark Harvest base (pre-talent) channel length in seconds. SuperCleveRoidMacros'
+-- TWoW-specific Dark Harvest handling (Utility.lua, credited to Avitasia/
+-- Cursive) uses 8s as the base. Confirmed in-game: Rapid Deterioration also
+-- shortens the channel itself by the same percentage as the three DoTs it
+-- affects (8s * 0.94 = 7.52s matches the tooltip exactly at rank 2), so this
+-- is scaled by RapidDeteriorationPct just like Corruption/Curse of Agony/
+-- Siphon Life - see DHChannelLength below, use that instead of this raw base.
+local DH_CHANNEL_BASE = 8
+
+-- Dark Harvest boosts this warlock's own DoT tick rate by 30% on the target
+-- for the length of its (talent-scaled) channel, which also burns through the
+-- DoTs' own remaining duration 30% faster while it runs. So a DoT needs a full
+-- channel's worth of *accelerated* life left, i.e. channel * (1 + boost)
+-- seconds of normal remaining duration, to survive the whole channel. Any
+-- enabled DoT with less than that is topped up first (see DotRemaining, which
+-- also backs this boost out of its estimate for a channel that already ran).
+local DH_TICK_BOOST = 0.30
+
+-- Dark Harvest's mana cost, read off the in-game tooltip (Rank 1/1, 230 mana -
+-- it has a single rank, so there is no per-rank table to keep). Used only to
+-- decide whether a ready channel is actually affordable before letting it take
+-- priority over Life Tap (see the Life Tap block in Rotate). Deliberately
+-- compared as a hard floor: understating it would let the rotation queue a
+-- channel that fails in-game while the cooldown never starts, which stalls the
+-- next press on the same dead attempt. Adjust here if Turtle changes the cost.
+local DH_MANA = 230
+
+-- How long a spell that has been SENT has to reach the client before the
+-- rotation stops believing in it.
+--
+-- Measured across sessions, the delay from send to the client acting on it runs
+-- 0.24s to 1.27s - the rest of the global cooldown plus the round trip. 1.5s
+-- covers the range with a little room.
+--
+-- NOTHING may be sent inside this window. Nampower's queue holds exactly ONE
+-- spell, so a second send does not join a line - it replaces what is there, and
+-- the first spell simply never happens.
+--
+-- Measured, t=336.63: a Nightfall Shadow Bolt sent, the next three presses ran
+-- the whole rotation again and queued over it, and the player's mana never moved
+-- - the bolt was thrown away by the addon that had just asked for it. The same
+-- shape was reported for Corruption, visible in Nampower's own queue display as
+-- a spell that appears for one press and is gone the next.
+local SEND_GRACE = 1.5
+
+-- And having failed once, do not send again immediately. The same ten seconds
+-- carried three sends inside three seconds, which bought a global cooldown and
+-- some mana each time and nothing else.
+local DH_RETRY_BACKOFF = 3.0
+
+-- A channel start belongs to the last CHANNEL this module sent, not the last
+-- spell - the queue routinely holds a channel behind an instant, so the two are
+-- different. Beyond this window the association is too old to trust and the
+-- channel came from somewhere else.
+local CHANNEL_ATTRIB_WINDOW = 5.0
+
+-- Once an enabled DoT is due to fall off within this many seconds, the wand
+-- filler stops (or does not start) feeding new shots. Reacting only after the
+-- DoT is actually gone risks the recast racing a wand shot already in
+-- flight; holding off a moment early instead means the wand is idle - not
+-- mid-shot - by the time the DoT genuinely needs recasting.
+local WAND_STOP_BEFORE_DOT = 1.5
+
+-- Chat output is shared in the core; this shim keeps call sites unchanged.
+local function msgOut(text, r, g, b) Aegis_SBR:Msg(text, r, g, b) end
+
+-- Channel-clip protection (merged from the modified branch). Drain Life and
+-- Drain Soul are channels; once one is running the rotation must not queue a
+-- DoT refresh or the filler over it. This frame flags while any channel runs
+-- and clears the instant it stops (including an early stop when the target
+-- dies mid-channel).
+M.channeling = false
+M.chanStart = 0
+-- Nightfall single-use tracking (merged from the modified branch). The instant
+-- Shadow Bolt from a Shadow Trance proc is spent once per proc; the icon can
+-- linger after the proc is consumed, so we consume on the rising edge and rearm
+-- only once the icon clears.
+M.stConsumed = false
+M.stConsumedAt = 0
+local GCD = 1.5
+
+-- Seconds past busyUntil before a direct cast is trusted over the queue. Covers
+-- the round trip on the cast that just ended.
+local DIRECT_MARGIN = 0.3
+
+-- The global cooldown is spent when a cast STARTS, so an instant that has gone
+-- out, and a cast-time spell that was cut off halfway, both leave the same floor
+-- behind: the client is busy until a GCD after the send, whatever else happened
+-- to the spell.
+local function ReleaseBusy()
+    local floor = (Aegis_SBR.lastSpellAt or 0) + GCD
+    if (M.busyUntil or 0) > floor then M.busyUntil = floor end
+end
+
+local wlChannelFrame = CreateFrame("Frame")
+wlChannelFrame:RegisterEvent("SPELLCAST_CHANNEL_START")
+-- The START of an ordinary cast. Registered purely as evidence that the client
+-- has taken the spell we sent - a cast-time spell announces itself here, an
+-- instant through SPELLCAST_STOP, a channel through CHANNEL_START.
+wlChannelFrame:RegisterEvent("SPELLCAST_START")
+wlChannelFrame:RegisterEvent("SPELLCAST_CHANNEL_STOP")
+-- The end of an ordinary cast, so a DoT waiting for confirmation is released on
+-- evidence instead of on a two second timer.
+--
+-- ApplyDot answers "wait" while a cast it sent has not been confirmed, and the
+-- caller returns from the WHOLE rotation on that answer - deliberately, because
+-- Nampower's queue holds one spell and anything else would evict it. But when
+-- the confirmation never arrives, that guess costs two full seconds of doing
+-- nothing, spamming the button. Reported as the rotation stalling for a few
+-- seconds; this is the only path in the module that can stall for that long.
+wlChannelFrame:RegisterEvent("SPELLCAST_STOP")
+wlChannelFrame:RegisterEvent("SPELLCAST_FAILED")
+wlChannelFrame:RegisterEvent("SPELLCAST_INTERRUPTED")
+wlChannelFrame:SetScript("OnEvent", function()
+    -- Evidence that the client has taken the spell we sent: a cast began, a
+    -- channel began, or it was refused.
+    --
+    -- SPELLCAST_STOP is deliberately NOT on that list. It fires at the end of
+    -- whatever was already casting, so a stop belonging to the PREVIOUS spell
+    -- would clear the guard while ours was still sitting in the queue - the
+    -- eviction this guard exists to prevent. An instant therefore has no event
+    -- of its own and waits out the window, which costs nothing: an instant that
+    -- has gone out is inside its global cooldown for that whole time anyway.
+    if event == "SPELLCAST_START" then
+        M.sentSeen = true
+        -- A cast of ours is now RUNNING, which is a different fact from the
+        -- client having taken the spell. Starting the wand during it kills it -
+        -- see Shoot.
+        M.casting = true
+        return
+    end
+
+    if event == "SPELLCAST_CHANNEL_START" then
+        M.sentSeen = true
+        M.channeling = true
+        M.chanStart = GetTime()
+        -- Whom it is on, so the guard can tell when that mob is gone.
+        M.chanTarget = Aegis_SBR:TargetId()
+        M.chanTargetName = UnitName("target")
+        -- Which channel this is. The event does not say, and the last spell SENT
+        -- is the wrong answer whenever the queue held the channel behind
+        -- something else. Measured at 34 of 598 guard presses in one session: a
+        -- Dark Harvest that started after a Corruption had gone out was recorded
+        -- as "Corruption", which has no channel length on file, so the guard fell
+        -- back to its 16s ceiling instead of the real 7.8s.
+        --
+        -- The last CHANNEL sent is the right answer. The old reading stays as the
+        -- fallback for a channel that did not come from this module.
+        local sent = M.lastChannelSent
+        if sent and (GetTime() - (M.lastChannelSentAt or 0)) <= CHANNEL_ATTRIB_WINDOW then
+            M.chanSpell = sent
+        else
+            M.chanSpell = Aegis_SBR.lastSpell
+        end
+        -- The channel announced itself, so the send is no longer pending.
+        M.lastChannelSentAt = nil
+        -- Evidence that Dark Harvest is really channelling, which is what its
+        -- own guard below waits for.
+        if M.chanSpell == "Dark Harvest" then
+            M.dhChannelSeen = true
+            M.dhFailedAt = nil
+        end
+    elseif event == "SPELLCAST_CHANNEL_STOP" then
+        -- Read before the flags are cleared: this stop belongs to whatever
+        -- chanSpell says is running.
+        --
+        -- Dark Harvest's own guard is stamped for the channel's full length and
+        -- had no release on this event at all, only on INTERRUPTED/FAILED. A
+        -- channel that started and stopped 0.3s later therefore held the
+        -- rotation for the remaining 6.5s - measured, with the stop event
+        -- present in the same log and simply not acted on.
+        if M.chanSpell == "Dark Harvest" then M.dhEnd = nil end
+        M.channeling = false
+        M.chanSpell = nil
+        ReleaseBusy()
+    else
+        -- A cast ended, one way or another. Nothing is left in the queue to
+        -- protect, so no DoT should still be waiting on one.
+        M.casting = false
+        M.dotPending = {}
+        -- The busy window is deliberately NOT cleared here.
+        --
+        -- Clearing it on this branch cost a global cooldown on every instant in
+        -- the rotation. SPELLCAST_STOP fires the moment an instant goes out, so
+        -- the window died immediately, the next press cast directly INTO the
+        -- global cooldown, the client refused it - which raises SPELLCAST_FAILED,
+        -- clearing the window again - and the loop ran until the cooldown was
+        -- over. Nothing was ever handed to the queue, so nothing was waiting to
+        -- fire at the end of it: every instant waited out a full cooldown before
+        -- the next was even attempted.
+        --
+        -- Neither event means the client is free. STOP means a spell went out,
+        -- which is when the cooldown STARTS, and FAILED most often means the
+        -- cooldown is still running.
+        --
+        -- And a channel that was INTERRUPTED is over too. This branch used to
+        -- leave the channel flags alone, on the assumption that a broken channel
+        -- would still announce itself through CHANNEL_STOP - which is exactly the
+        -- event this client is unreliable about. So the rotation went on holding
+        -- still for the channel's whole expected length after it had already been
+        -- broken. Reported as the warlock standing there doing nothing.
+        --
+        -- FAILED is included: a channel refused at the moment it should have
+        -- started never runs, and waiting out its length is the same mistake.
+        if event == "SPELLCAST_INTERRUPTED" or event == "SPELLCAST_FAILED" then
+            -- The client answered, even if the answer was no.
+            M.sentSeen = true
+            if M.channeling and Aegis_SBR.Tracing and Aegis_SBR:Tracing() then
+                Aegis_SBR:Trace("channel " .. event .. " after "
+                    .. string.format("%.1fs", GetTime() - (M.chanStart or GetTime())))
+            end
+            M.channeling = false
+            M.chanSpell = nil
+            -- The client has answered, so nothing is pending any more.
+            M.lastChannelSentAt = nil
+            -- A cast that was cut off is not still occupying the client, so the
+            -- queue has nothing left to hold against - down to the cooldown the
+            -- send itself spent, which ReleaseBusy keeps.
+            ReleaseBusy()
+            -- Dark Harvest keeps its own protection window on top of this one,
+            -- for the cooldown race described at that guard. It has the same
+            -- blind spot and needs the same release.
+            M.dhEnd = nil
+        end
+    end
+end)
+
+-- Confirms whether a DoT cast sent via QueueDot actually landed, using
+-- SuperWoW's UNIT_CASTEVENT (casterGUID, targetGUID, type, spellId,
+-- castDuration; type is one of START/CAST/FAIL/CHANNEL/MAINHAND/OFFHAND).
+-- dotThrottle is only stamped on a confirmed CAST; a FAIL (most commonly the
+-- GCD still being active while the wand fires) just drops the pending mark,
+-- so ApplyDot retries on the very next press instead of blanking out the
+-- full interval on a cast that never happened. Requires SpellInfo (spell id
+-- -> name) to resolve which of our pending DoTs the event is about.
+--
+-- A RESIST is not a cast failure and never shows up here: the cast completes,
+-- the spell is thrown away on landing. UNIT_CASTEVENT reports CAST, the throttle
+-- is stamped as though the DoT were up, and every press for the next interval
+-- reads "missing but recently cast" and answers "wait" - the rotation visibly
+-- stalls for a couple of seconds on a DoT that was never applied. The combat log
+-- is the only place that knows, so it is read below.
+-- Between presses, too: a running Drain Soul at the shard cap is stopped the
+-- moment the target is about to die, whether a press comes or not.
+local dsCapFrame = CreateFrame("Frame")
+dsCapFrame:SetScript("OnUpdate", function()
+    if Aegis_SBR.active ~= M then return end
+    if not (M.channeling and M.chanSpell == "Drain Soul") then return end
+    local now = GetTime()
+    if (M.dsCapTick or 0) > now then return end
+    M.dsCapTick = now + 0.1
+    local cfg = Aegis_SBR:GetActiveProfile()
+    if not cfg then return end
+    if M:DrainSoulMustStop(cfg) then
+        SpellStopCasting()
+        M.channeling = false
+        M.chanSpell = nil
+        if M:Tracing() then M:Trace("Drain Soul stopped at the shard cap, target about to die") end
+    end
+end)
+
+local wlCastEventFrame = CreateFrame("Frame")
+wlCastEventFrame:RegisterEvent("UNIT_CASTEVENT")
+-- "Your Corruption was resisted by X." - see the resist branch at the bottom.
+wlCastEventFrame:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE")
+-- Learned immunity is relearned every fight rather than remembered: a GUID
+-- belongs to one mob for one pull, and carrying the table around for a session
+-- would eventually answer for a different creature entirely.
+wlCastEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+wlCastEventFrame:SetScript("OnEvent", function()
+    if event == "PLAYER_REGEN_ENABLED" then
+        M.dotImmune = {}
+        M.dotLanded = {}
+        M.dotSeenOn = {}
+        return
+    end
+    if event == "CHAT_MSG_SPELL_SELF_DAMAGE" then
+        -- A resisted or missed DoT never landed, so both the confirmation stamp
+        -- and any pending mark are wrong and are cleared: the next press applies
+        -- it again immediately instead of waiting out the interval.
+        --
+        -- Deliberately NOT "immune". An immune target would turn an immediate
+        -- retry into a loop, and the interval that suppresses it there is doing
+        -- its job. Only genuinely wasted casts are unblocked here.
+        if not arg1 then return end
+        -- "Your Immolate failed. X is immune." Definitive, and the only signal
+        -- there is. Recorded against the current target and only when the line
+        -- names it, so a message about something else cannot silence a DoT here.
+        if string.find(arg1, "immune") then
+            local tname = UnitName("target")
+            local _, guid = UnitExists("target")
+            if not (tname and guid and string.find(arg1, tname, 1, true)) then return end
+            local function mark(name)
+                if string.find(arg1, name, 1, true) then
+                    M.dotImmune[guid .. "|" .. name] = GetTime()
+                    M.dotThrottle[name] = nil
+                    M.dotPending[name] = nil
+                    M:ForgetDot(guid, name)
+                    return true
+                end
+            end
+            for name in pairs(M.dotTex) do if mark(name) then return end end
+            for i = 1, table.getn(M.CURSES) do if mark(M.CURSES[i]) then return end end
+            return
+        end
+        if not (string.find(arg1, "resist") or string.find(arg1, "miss")) then return end
+        -- The "mine" record goes too: it is written when the cast is sent, so
+        -- after a resist it would claim another warlock's copy on the target
+        -- as ours, and the DoT was not cast again until that copy ran out.
+        local tid = M:TargetId()
+        for name in pairs(M.dotTex) do
+            if string.find(arg1, name, 1, true) then
+                M.dotThrottle[name] = nil
+                M.dotPending[name] = nil
+                M:ForgetDot(tid, name)
+                return
+            end
+        end
+        for i = 1, table.getn(M.CURSES) do
+            local name = M.CURSES[i]
+            if string.find(arg1, name, 1, true) then
+                M.dotThrottle[name] = nil
+                M.dotPending[name] = nil
+                M:ForgetDot(tid, name)
+                return
+            end
+        end
+        return
+    end
+    if event ~= "UNIT_CASTEVENT" or not SpellInfo then return end
+    if not M.playerGUID then
+        local _, guid = UnitExists("player")
+        M.playerGUID = guid
+    end
+    if not M.playerGUID or arg1 ~= M.playerGUID then return end
+    if arg3 ~= "CAST" and arg3 ~= "FAIL" then return end
+    local name = SpellInfo(arg4)
+    if not name then return end
+    local pend = M.dotPending[name]
+    if not pend or pend.id ~= arg2 then return end
+    M.dotPending[name] = nil
+    -- How long this confirmation took. The ceiling that decides how long the
+    -- rotation may wait for the NEXT one is built from these, so it tracks the
+    -- connection instead of a number somebody picked once.
+    M:NoteConfirmLatency(GetTime() - pend.t)
+    -- Refused by the client: never applied, so not ours either.
+    if arg3 == "FAIL" then M:ForgetDot(pend.id, name) end
+    if arg3 == "CAST" then
+        -- One arriving confirmation is the proof that confirmations arrive on
+        -- this client. Until that has happened even once, QueueDot stamps the
+        -- throttle itself - see there.
+        M.castEventSeen = true
+        M.dotThrottle[name] = { id = pend.id, t = GetTime() }
+        -- A confirmed cast on this target that has not yet been read back as a
+        -- debuff. ApplyDot counts these when it is about to re-send: two in a
+        -- row with nothing ever read is an immunity the client never announced.
+        local key = tostring(pend.id) .. "|" .. name
+        M.dotLanded[key] = (M.dotLanded[key] or 0) + 1
+    end
+end)
+
+-- Debuff textures on the TARGET (fragment match)
+M.dotTex = {
+    ["Immolate"]     = "Immolation",                      -- Spell_Fire_Immolation
+    ["Corruption"]   = "Spell_Shadow_AbominationExplosion",
+    ["Siphon Life"]  = "Spell_Shadow_Requiem",
+}
+
+-- Curses the UI may offer. Only those with a verified texture get exact
+-- upkeep, the rest are reapplied on a timer (see CurseInterval).
+M.CURSES = {
+    "Curse of Agony", "Curse of Weakness", "Curse of Recklessness",
+    "Curse of the Elements", "Curse of Shadow", "Curse of Tongues", "Curse of Doom",
+}
+-- Set form of the list above, for "is this spell a curse" tests.
+M.curseIsA = {}
+for i = 1, table.getn(M.CURSES) do M.curseIsA[M.CURSES[i]] = true end
+
+M.curseTex = {
+    ["Curse of Agony"] = "Spell_Shadow_CurseOfSargeras",
+    -- The rest are LEARNED rather than listed; see CurseTex below. A guessed
+    -- fragment re-casts the curse every three seconds forever, which is why
+    -- this table only ever holds icons somebody confirmed in game.
+}
+
+-- Base duration in seconds for each DoT, used only to estimate remaining time
+-- before starting Dark Harvest (see DotRemaining/DHMinDotRemain below).
+-- 1.12 has no API for a debuff's remaining time, so this pairs the known,
+-- rank-independent duration with our own last-cast timestamp. Adjust here if
+-- Turtle's values differ from stock classic. These are pre-Rapid Deterioration
+-- base values; DotRemaining applies that talent's reduction on top (below).
+M.dotDuration = {
+    ["Immolate"]              = 15,
+    ["Corruption"]            = 18,
+    ["Siphon Life"]           = 30,
+    ["Curse of Agony"]        = 24,
+    ["Curse of Weakness"]     = 120,
+    ["Curse of Recklessness"] = 120,
+    ["Curse of the Elements"] = 300,
+    ["Curse of Shadow"]       = 300,
+    ["Curse of Tongues"]      = 30,
+    ["Curse of Doom"]         = 60,
+}
+
+-- Rapid Deterioration (Turtle-specific Affliction talent): 2 ranks, 3% shorter
+-- duration per rank in exchange for more damage per tick. Confirmed in-game at
+-- rank 2 (6% total): Corruption 18s->~17s, Curse of Agony 24s->~22.5s, Siphon
+-- Life 30s->~28s. Only these three are affected: not Immolate (Destruction) or
+-- the other curses. Scales with the rank actually taken, not just presence.
+M.rapidDetSpells = { ["Corruption"] = true, ["Curse of Agony"] = true, ["Siphon Life"] = true }
+local TALENT_RAPID_DETERIORATION = "Rapid Deterioration"
+local TALENT_IMP_CORRUPTION = "Improved Corruption"
+local TALENT_BANE = "Bane"
+
+-- Base cast time of each DoT we apply. Anything absent is instant, which covers
+-- every curse and Siphon Life.
+--
+-- Needed for one question only: may this be cast while moving. Movement breaks a
+-- cast exactly as it breaks a channel, and the shape of that failure is worse -
+-- the rotation RETURNS after sending a DoT, so a cast movement keeps breaking
+-- takes every press and nothing else ever runs. Reported as "hangups in rotation
+-- and dot wasnt applied while moving", which is both halves of the same defect.
+--
+-- The talent reductions are the vanilla ones. If Turtle has changed a number,
+-- the symptom is mild and visible - a DoT skipped while running that could have
+-- landed - and `/sbr talents` prints the exact talent names to correct against.
+local DOT_CAST_TIME = {
+    ["Corruption"] = 2.0,   -- Improved Corruption: -0.4s per rank, instant at 5/5
+    ["Immolate"]   = 2.0,   -- Bane: -0.1s per rank, never instant
+}
+local RAPID_DETERIORATION_PCT_PER_RANK = 3
+
+-- Tick count for the three Dark-Harvest-eligible DoTs at max rank, taken
+-- directly from Cursive's spells/warlock.lua (numTicks field) so our tick
+-- alignment matches its verified GetLastTickTime exactly: Corruption 18s/6
+-- ticks, Curse of Agony 24s/12 ticks, Siphon Life 30s/10 ticks - all a flat
+-- rate regardless of Rapid Deterioration, since duration and tick count
+-- shrink together (tick interval scales, tick count does not).
+M.dotNumTicks = { ["Corruption"] = 6, ["Curse of Agony"] = 12, ["Siphon Life"] = 10 }
+
+-- Filler universe
+M.FILLERS = { "Shoot", "Shadow Bolt", "Drain Life", "Drain Soul", "Dark Harvest" }
+
+-- What fills the gap while Dark Harvest is on cooldown. Only consulted when
+-- Dark Harvest is the chosen filler; the wand stays the default because it is
+-- free. Drain Soul is here by user request (a player who does not want to wand
+-- at all) - note it is a CHANNEL, which is why DS_CHANNEL_BASE below exists.
+M.GAP_FILLERS = { "Shoot", "Shadow Bolt", "Drain Life", "Drain Soul" }
+
+-- Drain Soul's base channel length on Turtle. NOT the vanilla 15s: confirmed
+-- in-game at 5.64s with Rapid Deterioration 2/2, and 6 * 0.94 = 5.64 exactly,
+-- so the base is 6 and the talent scales it - the same relationship already
+-- established for Dark Harvest (8 -> 7.52 at the same rank). Use
+-- DSChannelLength() rather than this raw base.
+--
+-- Only used to decide whether STARTING a channel is safe, never to track a
+-- running one (the SPELLCAST_CHANNEL_* watcher does that). Two things must not
+-- happen while it runs, because the channel guard stops the rotation acting at
+-- all: a DoT lapsing unrefreshed, and Dark Harvest coming off cooldown with
+-- nobody there to press it.
+local DS_CHANNEL_BASE = 6
+
+-- How far a gap channel may run past Dark Harvest's return before it is held
+-- back. Roughly two global cooldowns: enough that Drain Life always goes ahead
+-- (it is shorter than the gap it fills anyway, bar the last moments), tight
+-- enough that Drain Soul's fifteen seconds never sit on top of the cooldown.
+local DH_OVERRUN_MAX = 3.0
+
+M.templates = {
+    starter = {  -- usable from level 1: the filler is the wand, which falls
+                 -- back to Shadow Bolt when no wand is equipped, so a fresh
+                 -- warlock nukes with Shadow Bolt and the DoTs/curse switch
+                 -- themselves on as they are learned. Drain-tank survival and
+                 -- the Drain Soul shard finisher are on for leveling.
+        useImmolate = true, curse = "Curse of Agony", useCorruption = true, useSiphonLife = false,
+        filler = "Shoot", petAttack = true,
+        lifeTap = false, lifeTapMana = 20, lifeTapHpMin = 40,
+        drainLifeSustain = true, drainLifeHp = 35,
+        healthFunnel = true, healthFunnelPetHp = 50, healthFunnelHpMin = 45,
+        useShadowburn = false, shadowburnHp = 20,
+        useDrainSoul = true, drainSoulHp = 20,
+        dotStopHp = 20, dotStopKeepCorruption = true,
+    },
+    affliction = {
+        -- Dark Harvest is the Affliction capstone and the strongest filler by a
+        -- wide margin (it also accelerates the shadow DoTs already ticking), so
+        -- it leads here. Until it is talented, ResolveFiller drops to the wand -
+        -- deliberately not Shadow Bolt, which is far too mana-hungry to spam as
+        -- a filler; it stays reserved for the free Shadow Trance procs.
+        useImmolate = false, curse = "Curse of Agony", useCorruption = true, useSiphonLife = true,
+        filler = "Dark Harvest", petAttack = true,
+        lifeTap = true, lifeTapMana = 25, lifeTapHpMin = 40,
+        drainLifeSustain = true, drainLifeHp = 35,
+        healthFunnel = true, healthFunnelPetHp = 50, healthFunnelHpMin = 45,
+        useShadowburn = false, shadowburnHp = 20,
+        useDrainSoul = false, drainSoulHp = 20,
+        dotStopHp = 20, dotStopKeepCorruption = true,
+    },
+    destruction = {
+        -- Shadow Bolt stays the filler here: Destruction never reaches Dark
+        -- Harvest, and its whole kit is built around Shadow Bolt spam.
+        useImmolate = true, curse = "Curse of the Elements", useCorruption = false, useSiphonLife = false,
+        filler = "Shadow Bolt", petAttack = true,
+        lifeTap = true, lifeTapMana = 25, lifeTapHpMin = 40,
+        drainLifeSustain = false, drainLifeHp = 35,
+        healthFunnel = true, healthFunnelPetHp = 50, healthFunnelHpMin = 45,
+        useShadowburn = true, shadowburnHp = 20,
+        useDrainSoul = false, drainSoulHp = 20,
+        dotStopHp = 20, dotStopKeepCorruption = true,
+    },
+}
+
+M.curseAlias = {
+    agony = "Curse of Agony", coa = "Curse of Agony",
+    weakness = "Curse of Weakness", cow = "Curse of Weakness",
+    recklessness = "Curse of Recklessness", cor = "Curse of Recklessness",
+    elements = "Curse of the Elements", coe = "Curse of the Elements",
+    shadow = "Curse of Shadow", cos = "Curse of Shadow",
+    tongues = "Curse of Tongues", cot = "Curse of Tongues",
+    doom = "Curse of Doom", cod = "Curse of Doom",
+    none = "",
+}
+
+function M:NormalizeProfile(c)
+    if c.useImmolate == nil then c.useImmolate = true end
+    if c.curse == nil then c.curse = "Curse of Agony" end
+    if c.useCorruption == nil then c.useCorruption = true end
+    if c.useSiphonLife == nil then c.useSiphonLife = false end
+    -- DoT order, 1 first. Equal numbers keep the order listed here.
+    if c.orderImmolate == nil then c.orderImmolate = 1 end
+    if c.orderCurse == nil then c.orderCurse = 2 end
+    if c.orderCorruption == nil then c.orderCorruption = 3 end
+    if c.orderSiphonLife == nil then c.orderSiphonLife = 4 end
+    if c.orderCoaSecondary == nil then c.orderCoaSecondary = 5 end
+    if c.filler == nil then c.filler = "Shoot" end
+    if c.petAttack == nil then c.petAttack = true end
+    if c.petMeleeOnly == nil then c.petMeleeOnly = false end
+    if c.lifeTap == nil then c.lifeTap = false end
+    if c.lifeTapMana == nil then c.lifeTapMana = 20 end
+    if c.lifeTapHpMin == nil then c.lifeTapHpMin = 40 end
+    -- The floor while a mob is on you: health the tap takes is health the
+    -- next hits do not have to take.
+    if c.lifeTapAggroHp == nil then c.lifeTapAggroHp = 70 end
+    if c.lifeTapIdle == nil then c.lifeTapIdle = false end
+    if c.lifeTapIdleMana == nil then c.lifeTapIdleMana = 100 end
+    if c.drainMana == nil then c.drainMana = false end
+    if c.useHellfire == nil then c.useHellfire = false end
+    if c.hellfireHp == nil then c.hellfireHp = 50 end
+    if c.wandManaFloor == nil then c.wandManaFloor = 15 end
+    -- What fills the gap while Dark Harvest is on cooldown (Dark Harvest filler
+    -- only). Defaults to the wand, which is what the gap used to be hardcoded to.
+    if c.dhGapFiller == nil then c.dhGapFiller = "Shoot" end
+    -- How much time a DoT must have left before a channel is allowed to start.
+    -- Two numbers, because the two cases are not the same job.
+    --
+    -- Dark Harvest accelerates the DoTs already on the target, so a DoT that
+    -- drops out partway through loses that boost for the rest of the channel -
+    -- worth topping up generously. The default is the old computed value: the
+    -- channel's length at its accelerated tick rate.
+    --
+    -- Every other channel does nothing for the DoTs. There the only question is
+    -- whether they keep running alongside it, so a much shorter margin is
+    -- enough. The default is roughly the length of those channels, which is what
+    -- was hardcoded before.
+    --
+    -- 0 on either one means the channel is never held back for a DoT.
+    if c.dhDotRemain == nil then c.dhDotRemain = 10 end
+    if c.chanDotRemain == nil then c.chanDotRemain = 5 end
+    if c.nightfall == nil then c.nightfall = false end
+    -- On by default: an AoE press has nothing else to do in this module.
+    if c.useRainOfFire == nil then c.useRainOfFire = true end
+    if c.drainLifeSustain == nil then c.drainLifeSustain = false end
+    if c.drainLifeHp == nil then c.drainLifeHp = 35 end
+    if c.healthFunnel == nil then c.healthFunnel = false end
+    if c.healthFunnelPetHp == nil then c.healthFunnelPetHp = 50 end
+    if c.healthFunnelHpMin == nil then c.healthFunnelHpMin = 45 end
+    if c.useShadowburn == nil then c.useShadowburn = false end
+    if c.shadowburnHp == nil then c.shadowburnHp = 20 end
+    if c.useDrainSoul == nil then c.useDrainSoul = false end
+    if c.drainSoulHp == nil then c.drainSoulHp = 20 end
+    if c.coaSecondary == nil then c.coaSecondary = false end
+    if c.keepShards == nil then c.keepShards = false end
+    if c.shardTarget == nil then c.shardTarget = 3 end
+    -- Execute-phase DoT stop. Defaults to 0 (off) rather than the templates'
+    -- 20, so a profile saved before this existed keeps its old behaviour until
+    -- the slider is moved; fresh profiles get the efficiency straight away.
+    if c.dotStopHp == nil then c.dotStopHp = 0 end
+    -- Immolate's own stop line: a two second cast that a dying mob does not
+    -- repay, so it can stop earlier than the instant DoTs. 0 = off.
+    if c.immolateStopHp == nil then c.immolateStopHp = 0 end
+    -- Immolate's two second cast takes pushback, and Affliction has no talent
+    -- against it on Destruction spells: with a mob on you it may be left out.
+    if c.immolateNoAggro == nil then c.immolateNoAggro = false end
+    if c.dotStopKeepCorruption == nil then c.dotStopKeepCorruption = true end
+    return c
+end
+
+function M:AvailableCursesOf()
+    local out = {}
+    for i = 1, table.getn(self.CURSES) do
+        if self:KnowsSpell(self.CURSES[i]) then table.insert(out, self.CURSES[i]) end
+    end
+    return out
+end
+
+-- Everything in the warlock kit is gated by KnowsSpell in the rotation, and
+-- the filler falls back to Shadow Bolt when the chosen one is not usable yet
+-- (see ResolveFiller), so nothing here is strictly required. A profile is
+-- never flagged just because an ability is not trained yet: a level 1 warlock
+-- whose only damage is Shadow Bolt reads as a clean, usable profile and the
+-- DoTs/curse switch themselves on as they are learned. Mirrors the hunter and
+-- druid, which do not flag not-yet-learned abilities.
+function M:ProfileValidity(cfg)
+    return true, {}
+end
+
+-- True while the wand is auto-repeating. The last seen auto-repeat slot is
+-- cached, so the common case (already wanding) costs a single check; the
+-- full action bar scan only runs when the cached slot is not repeating.
+function M:Wanding()
+    local slot = self.wandSlot
+    if slot and IsAutoRepeatAction(slot) then return true end
+    for s = 1, 120 do
+        if IsAutoRepeatAction(s) then self.wandSlot = s; return true end
+    end
+    return false
+end
+
+-- A wand is equipped when there is an item in the ranged slot (18); warlocks
+-- can only put wands there. Used so the "Shoot" filler degrades gracefully
+-- when no wand is available (notably at level 1).
+function M:HasWand()
+    return GetInventoryItemLink("player", 18) ~= nil
+end
+
+-- Resolve the configured filler to one that can actually fire right now.
+-- The wand filler needs a wand equipped; a spell filler needs to be learned.
+-- When the chosen one cannot fire, fall back to the WAND first and only then to
+-- Shadow Bolt: spamming Shadow Bolt as a filler burns far more mana than it is
+-- worth (it is kept for the free Shadow Trance procs instead), while the wand
+-- costs nothing. This matters most for an Affliction profile set to Dark
+-- Harvest before the capstone is talented - that used to silently fall through
+-- to Shadow Bolt spam. Shadow Bolt remains the last resort so a warlock with no
+-- wand equipped still has something to cast; nil only if even that is unknown.
+function M:ResolveFiller(cfg)
+    local f = cfg.filler or "Shoot"
+    if f ~= "Shoot" and self:KnowsSpell(f) then return f end
+    if self:HasWand() then return "Shoot" end
+    if self:KnowsSpell("Shadow Bolt") then return "Shadow Bolt" end
+    return nil
+end
+
+-- Queue a known spell. Normally this uses SuperWoW's cast queue so a
+-- cast in progress is not clipped. While the wand is auto-repeating,
+-- though, a queued cast would have to wait for the current shot (up to
+-- the full wand speed), which shows up as a pause after a target switch.
+-- In that case cast directly instead, which interrupts the wand and fires
+-- now. This must always end up taking SOME action here (direct cast or
+-- queue): an earlier version added an IsReady gate that returned with
+-- nothing done when the GCD looked active, on the assumption the very next
+-- press would catch it once ready. In testing that starved the rotation
+-- completely once the wand was running - IsReady evidently does not clear
+-- reliably while auto-repeat is active on this server, so that gate was a
+-- dead end rather than an optimization. Removed; always act.
+-- Everything that CHANNELS. Movement breaks a channel outright, so starting one
+-- while running is not a slightly worse cast - it is a global cooldown spent on
+-- nothing at all.
+-- The channels aimed at the target - the ones a range check applies to.
+-- Hellfire is around you, Rain of Fire is on the ground, Health Funnel is on
+-- the pet.
+M.TARGET_CHANNELS = {
+    ["Drain Life"]   = true,
+    ["Drain Soul"]   = true,
+    ["Dark Harvest"] = true,
+    ["Drain Mana"]   = true,
+}
+
+M.CHANNELED = {
+    ["Drain Life"]    = true,
+    ["Drain Soul"]    = true,
+    ["Dark Harvest"]  = true,
+    ["Health Funnel"] = true,
+    ["Rain of Fire"]  = true,
+    ["Drain Mana"]    = true,
+    ["Hellfire"]      = true,
+}
+
+-- Cast time of what this module sends that is neither a DoT nor a channel.
+-- Read off the client: Shadow Bolt rank 7 is a 3 sec cast, and Bane reduces
+-- Shadow Bolt, Searing Pain and Immolate by 0.1 sec per rank.
+local CAST_TIME = {
+    ["Shadow Bolt"] = 3.0,
+}
+
+-- How long the client is occupied by the spell just sent.
+--
+-- The set of spells this module can send is closed: four channels, three
+-- cast-time spells (Shadow Bolt, Immolate, Corruption), and instants for the
+-- rest - Life Tap, the curses, Siphon Life, Shadowburn. An unrecognised name is
+-- therefore an instant, and the global cooldown is the right floor. A cast-time
+-- spell added later must be entered in CAST_TIME above, or the choice in Queue
+-- below will cast straight into its cast.
+--
+-- busy = 0 from the caller means "this one is instant regardless": the Nightfall
+-- bolt is free and instant, and charging it three seconds would arm the queue
+-- across the presses that follow it.
+function M:BusyFor(name, busy)
+    if busy then return busy end
+    if M.CHANNELED[name] then return self:ChannelLength(name) or GCD end
+    local ct = self:DotCastTime(name)
+    if ct == 0 and CAST_TIME[name] then
+        ct = CAST_TIME[name] - 0.1 * self:TalentRank(TALENT_BANE)
+        if ct < 0 then ct = 0 end
+    end
+    if ct > GCD then return ct end
+    return GCD
+end
+
+-- Why a channel cannot be started right now, or nil. One answer for the two
+-- places that ask: Queue, which refuses the send, and WandAllowed, which
+-- must not protect a channel that is not going to happen - a log showed the
+-- wand refused on every press for an affordable Drain Life that was out of
+-- range, so the press did nothing at all.
+--
+--   * moving breaks a channel outright, so starting one is a global cooldown
+--     spent on nothing;
+--   * a channel aimed at the target that cannot reach it: Drain Life reaches
+--     twenty yards where the DoTs reach thirty, so at the edge of range every
+--     press sent a channel the client refused;
+--   * a target that takes no life drain (see LifeDrainImmune).
+local MOVE_BUFFER = 1.0
+-- Refused for movement? Then the wand is no answer either: it cannot shoot on
+-- the move, and started there it kept repeating after the stop, ahead of the
+-- channels and DoTs - reported as the rotation reaching for the wand after
+-- moving. The press waits instead.
+local function MoveRefusal(why) return why == "moving" or why == "just moved" end
+
+function M:ChannelRefusal(name)
+    if not M.CHANNELED[name] then return nil end
+    -- A school lockout (interrupted while casting) is not a debuff: the client
+    -- shows it as a cooldown of several seconds on every spell of the school.
+    -- Queue refuses such a spell, and the wand must not stay protected for it.
+    if self:LockedOut(name) then return "locked out" end
+    if Aegis_SBR:Moving() then return "moving" end
+    -- And not in the first second after stopping: the movement reading lags a
+    -- sample, and a channel sent on the stop was broken by the last step -
+    -- reported as Dark Harvest tried over and over while moving around.
+    if Aegis_SBR.MovedWithin and Aegis_SBR:MovedWithin(MOVE_BUFFER) then return "just moved" end
+    if M.TARGET_CHANNELS[name] and not Aegis_SBR:SpellReaches(name, "target") then return "out of range" end
+    if name == "Drain Life" and self:LifeDrainImmune() then return "target takes no life drain" end
+    return nil
+end
+
+-- Is this spell on a cooldown longer than the global one - its own, or the
+-- school lockout after an interrupt? Read off the spell itself.
+function M:LockedOut(name)
+    local slot = Aegis_SBR:FindSpellSlot(name)
+    if not slot then return false end
+    local start, dur = GetSpellCooldown(slot, BOOKTYPE_SPELL)
+    if not start or start == 0 then return false end
+    return (start + dur - GetTime()) > GCD + 0.1
+end
+
+function M:Queue(name, reason, busy)
+    if not self:KnowsSpell(name) then return false end
+    -- Moving: refuse every channel, and let the caller fall through to whatever
+    -- it would have done otherwise. Refused here rather than at each decision
+    -- so no channel site can be forgotten - there are six of them.
+    --
+    -- The affliction rotation is built for exactly this: instant DoTs, the
+    -- instant Shadow Bolt off a Nightfall proc, and channels. Only the last of
+    -- those cares where you are standing, so moving costs nothing but the
+    -- channel, and standing still runs the complete rotation.
+    local why = self:ChannelRefusal(name)
+    if why then
+        if self:Tracing() then self:Trace(why .. ", no " .. name) end
+        return false
+    end
+    if Aegis_SBR.deciding then
+        local p = Aegis_SBR.decidePlan
+        p.spell = name; p.reason = reason; p.queue = true
+        return true
+    end
+    -- Nothing in flight, and the spell cannot go out yet: HOLD the press
+    -- instead of queueing. Nampower's queue exists to hold a spell until what
+    -- is already in flight finishes; behind a bare global cooldown it has
+    -- nothing to hold against, and on some clients the spell is never fired at
+    -- all - a tester's log had every Corruption after Curse of Agony die that
+    -- way, caught only by the dead-send guard a second later. The hold costs
+    -- one press interval at most: the next press reads the cooldown gone and
+    -- casts directly. "held" is truthy so every caller stops here like a send,
+    -- and distinct from true so nothing is stamped as sent.
+    --
+    -- Two things hold: the global cooldown (read off the spell itself), and the
+    -- tail of a cast-time spell that has just landed - a direct cast a few
+    -- hundredths of a second after the land is dropped silently by the client
+    -- (measured: Immolate lands, Curse of Agony sent 40ms later, nothing).
+    -- A spell on its OWN cooldown is not held, it is refused, so the caller
+    -- falls through.
+    local inFlight = M.casting or M.channeling
+    if not inFlight then
+        local slot = Aegis_SBR:FindSpellSlot(name)
+        if slot then
+            local start, dur = GetSpellCooldown(slot, BOOKTYPE_SPELL)
+            local left = (start and start > 0) and (start + dur - GetTime()) or 0
+            if left > GCD + 0.1 then return false end
+            if left > 0 then
+                if self:Tracing() then self:Trace("cooldown " .. string.format("%.2f", left) .. "s, holding " .. name) end
+                return "held"
+            end
+        end
+        local idleFor = GetTime() - (self.busyUntil or 0)
+        if M.lastSentHadCast and idleFor < DIRECT_MARGIN and idleFor > -GCD then
+            if self:Tracing() then self:Trace("cast tail, holding " .. name) end
+            return "held"
+        end
+    end
+    Aegis_SBR:NoteSpellCast(name)
+    -- Which channel a later SPELLCAST_CHANNEL_START belongs to. Kept separately
+    -- from lastSpell, which the queue makes unreliable for this.
+    if M.CHANNELED[name] then
+        M.lastChannelSent = name
+        M.lastChannelSentAt = GetTime()
+    end
+    -- One spell is in flight from here until the client answers.
+    M.sentSpell = name
+    M.sentAt = GetTime()
+    M.sentSeen = false
+    -- Whether the spell was OFF cooldown at the moment it was sent. The guard
+    -- below reads a ready spell going on cooldown as proof the client took it,
+    -- and that reading is only valid if it was ready to begin with.
+    M.sentWasReady = Aegis_SBR:IsReady(name)
+    -- Nampower's queue exists to hold a press until what is ALREADY IN FLIGHT
+    -- finishes. With nothing in flight it has nothing to hold against and the
+    -- press is not passed through. Measured in the mage module out of the same
+    -- idle state: 0.37s through the queue against 0.05s direct, one word apart.
+    --
+    -- Reported here as a single press after the global cooldown that spends a
+    -- cooldown and casts nothing, while spamming - where something is always in
+    -- flight - runs seamlessly.
+    --
+    -- Overestimating busyUntil only queues where a direct cast would also have
+    -- worked, which is the behaviour this replaces. Underestimating casts into a
+    -- running cast and loses the press, so the estimate rounds up.
+    --
+    -- The wand shortcut casts directly so the spell does not sit behind the
+    -- current shot - but a direct cast into a RUNNING global cooldown is refused
+    -- by the client, and a cooldown refusal is one the ledgers deliberately
+    -- ignore, so it vanished without a trace. Measured on a wand-filler warlock:
+    -- Curse of Agony sent, the next press 0.3s later cast Corruption straight
+    -- into that cooldown, nothing happened, and the DoT was only re-sent once
+    -- the confirmation wait ran out two seconds later. Every DoT after an
+    -- instant cost two extra seconds - the reported constant hangs.
+    --
+    -- While the cooldown runs, nothing goes out before it ends whichever way it
+    -- is sent, so queueing loses nothing there. The shortcut is kept for the
+    -- case it was written for: a spell that is ready now.
+    --
+    -- And a margin after busyUntil. busyUntil is the cast time exactly, and a
+    -- direct cast a few hundredths of a second after it lands in the tail of the
+    -- cast the server is still finishing - Nampower drops that silently, no
+    -- refusal, no cooldown. Measured: Immolate lands, the next press casts
+    -- Curse of Agony directly 40ms later, and nothing happens at all. The queue
+    -- is the right tool for that moment; direct is only for a client that has
+    -- been idle for long enough to be sure of it.
+    -- Direct unless a cast or channel is actually running: that is the one
+    -- case the queue is for. The global cooldown and the cast tail were
+    -- handled above by holding the press, so a direct cast here is one the
+    -- client can take.
+    local direct = not QueueSpellByName or not inFlight or M.forceDirect
+    M.forceDirect = nil
+    if direct then
+        CastSpellByName(name)
+        M.sentDueAt = nil
+    else
+        QueueSpellByName(name)
+        -- When the queue should fire this: the end of whatever is in flight now.
+        -- Read BEFORE busyUntil is restamped below, and kept for the send guard,
+        -- which treats a queued send that is still untaken past this point as
+        -- dead rather than waiting out its full window.
+        M.sentDueAt = self.busyUntil or GetTime()
+    end
+    local busyFor = self:BusyFor(name, busy)
+    self.busyUntil = GetTime() + busyFor
+    -- Whether the tail rule above applies to the NEXT send: only after a spell
+    -- with a cast time or a channel, never after an instant.
+    M.lastSentHadCast = busyFor > GCD or M.CHANNELED[name] or false
+    return true
+end
+
+-- True while the Nightfall proc (Shadow Trance) is on the warlock.
+function M:ShadowTranceUp()
+    if self:HasBuff("Shadow Trance") then return true end
+    for i = 1, 32 do
+        local b = UnitBuff("player", i)
+        if b and string.find(b, "Spell_Shadow_Twilight") then return true end
+    end
+    return false
+end
+
+-- Shadow Trance runs 10s and a fresh proc restarts it, so a reading HIGHER than
+-- the one taken when the last bolt went out is a new proc - a lingering icon can
+-- only count down.
+--
+-- This is the piece the 2026-09-04 attempt was missing. That version re-sent
+-- whenever the icon was still up, which fires on a leftover buff exactly as
+-- readily as on a real proc, and the wasted hard-casts cost more than the missed
+-- procs did. A gain in remaining time cannot come from a leftover.
+--
+local ST_REPROC_GAIN = 1.0
+
+-- Seconds left on Shadow Trance, or nil if it is not up.
+--
+-- Found by TEXTURE, not by name. The name path needs SuperWoW's SpellInfo, and
+-- on the client this was measured on it does not answer - every logged press
+-- reads conf=N and the curse shows as "?", both of which are the same missing
+-- lookup. The buff timer itself is plain 1.12 API and answers regardless, which
+-- is why ShadowTranceUp finds the icon by texture too.
+function M:TranceTimeLeft()
+    if not GetPlayerBuff or not GetPlayerBuffTexture then return nil end
+    for i = 0, 31 do
+        local ix = GetPlayerBuff(i, "HELPFUL")
+        if ix and ix ~= -1 then
+            local tex = GetPlayerBuffTexture(ix)
+            if tex and string.find(tex, "Spell_Shadow_Twilight") then
+                return GetPlayerBuffTimeLeft and GetPlayerBuffTimeLeft(ix) or nil
+            end
+        end
+    end
+    return nil
+end
+
+-- Keep the Nightfall latch honest, every press, BEFORE anything can return out
+-- of Rotate.
+--
+-- The latch used to be maintained inside the Nightfall block itself, which sits
+-- below the channel guards - and those return. So for the whole length of a
+-- channel the latch was neither cleared nor re-examined, and a proc that landed
+-- during one found the latch still set from the bolt before it. Measured: a proc
+-- up at t=133.8 with the latch still reading spent, and 108 seconds before the
+-- next proc was used at all.
+--
+-- Three ways the latch is released, in order of evidence:
+--   the icon is gone          - the proc is over, nothing to protect
+--   the timer went UP         - a fresh proc restarted it; a leftover only
+--                               counts down, which is what the 2026-09-04
+--                               attempt could not tell apart
+--   15s have passed           - safety net, above the buff's own duration
+function M:TranceTick()
+    -- The preview runs this same body four times a second and must never write
+    -- state; that is what Later guards everywhere else.
+    if Aegis_SBR.deciding then return end
+    local tl = self:TranceTimeLeft()
+    if not (tl or self:ShadowTranceUp()) then
+        self.stConsumed = false
+        self.stConsumedTL = nil
+        return
+    end
+    if not self.stConsumed then return end
+    if tl and self.stConsumedTL and (tl - self.stConsumedTL) >= ST_REPROC_GAIN then
+        if self:Tracing() then self:Trace("trance re-procced, rearming") end
+        self.stConsumed = false
+        self.stConsumedTL = nil
+        return
+    end
+    if self.stConsumedAt and (GetTime() - self.stConsumedAt) > 15 then
+        self.stConsumed = false
+        self.stConsumedTL = nil
+    end
+end
+
+-- May Shadow Bolt be HARD cast, as opposed to spent instantly off a proc?
+--
+-- On a Nightfall build it may not. Three seconds of casting is the most
+-- expensive press in an affliction rotation, and the sites that reach this are
+-- fallbacks for having no wand equipped, not choices anyone made.
+--
+-- An explicitly configured Shadow Bolt filler is a choice and stays honoured -
+-- and the Nightfall reaction is skipped entirely in that case anyway, so the
+-- two never contradict each other.
+function M:HardCastBoltOK(cfg)
+    if cfg.filler == "Shadow Bolt" then return true end
+    return not (cfg.nightfall or self:HasNightfall())
+end
+
+-- True while a Dark Harvest send that produced no channel is still too recent to
+-- try again. The rotation falls through to the gap filler meanwhile, so the press
+-- is spent on something rather than on a second dead attempt.
+function M:DHRetryHeld()
+    return (self.dhFailedAt and (GetTime() - self.dhFailedAt) < DH_RETRY_BACKOFF) and true or false
+end
+
+-- 100 means "nothing to heal here", which covers both no pet and a dead one -
+-- a dead pet still EXISTS as a unit and reads 0 health, so without the second
+-- test every pet-health gate in the module fires at a corpse.
+function M:PetHPPct()
+    if not UnitExists("pet") or UnitIsDead("pet") then return 100 end
+    local mx = UnitHealthMax("pet")
+    if mx and mx > 0 then return UnitHealth("pet") / mx * 100 end
+    return 100
+end
+
+-- Talent rank by name, cached and cleared on CHARACTER_POINTS_CHANGED / login
+-- (see the frame at the bottom of this file). Same approach as the paladin.
+-- Used only for talents that grant no spell (so KnowsSpell cannot see them).
+function M:TalentRank(name)
+    if not self.talentCache then self.talentCache = {} end
+    if self.talentCache[name] ~= nil then return self.talentCache[name] end
+    local rank = 0
+    local tabs = GetNumTalentTabs and GetNumTalentTabs() or 0
+    for tab = 1, tabs do
+        for i = 1, GetNumTalents(tab) do
+            local n, _, _, _, r = GetTalentInfo(tab, i)
+            if n == name then rank = r or 0; break end
+        end
+        if rank > 0 then break end
+    end
+    self.talentCache[name] = rank
+    return rank
+end
+
+-- Nightfall (Shadow Trance proc) is a passive talent with no spell of its own,
+-- so we read the talent tree to know it is present and react to the proc
+-- automatically, even if the manual toggle is off.
+function M:HasNightfall()
+    return self:TalentRank(TALENT_NIGHTFALL) > 0
+end
+
+-- Rapid Deterioration is also a no-spell passive, read the same way. Returns
+-- the total percent duration reduction for the rank actually taken (0, 3, or 6).
+function M:RapidDeteriorationPct()
+    return self:TalentRank(TALENT_RAPID_DETERIORATION) * RAPID_DETERIORATION_PCT_PER_RANK
+end
+
+-- Cast time of a DoT for THIS character, talents included. 0 means instant.
+function M:DotCastTime(spell)
+    local t = DOT_CAST_TIME[spell]
+    if not t then return 0 end
+    if spell == "Corruption" then
+        t = t - 0.4 * self:TalentRank(TALENT_IMP_CORRUPTION)
+    elseif spell == "Immolate" then
+        t = t - 0.1 * self:TalentRank(TALENT_BANE)
+    end
+    if t < 0 then t = 0 end
+    return t
+end
+
+-- Dark Harvest's own channel length, scaled by Rapid Deterioration exactly
+-- like the three DoTs it affects (confirmed in-game: 8s base -> 7.52s tooltip
+-- at rank 2, i.e. the same 6% cut). Use this instead of DH_CHANNEL_BASE
+-- anywhere the actual channel length matters.
+function M:DHChannelLength()
+    return DH_CHANNEL_BASE * (1 - self:RapidDeteriorationPct() / 100)
+end
+
+-- Drain Soul's channel length, scaled by Rapid Deterioration exactly like Dark
+-- Harvest's (see DS_CHANNEL_BASE for the in-game confirmation).
+function M:DSChannelLength()
+    return DS_CHANNEL_BASE * (1 - self:RapidDeteriorationPct() / 100)
+end
+
+-- How long each channel is expected to run, for the stall guard in Rotate.
+--
+-- The talent matters more here than anywhere else: Rapid Deterioration cuts
+-- these durations, and a guard that waited for the UNSHORTENED length would sit
+-- idle for exactly the time the talent saves - turning a damage talent into
+-- dead air.
+--
+-- Drain Life was left out of this when the guard was written, because whether
+-- the talent reached it had not been established. It has been now, from a
+-- captured log rather than a respec: Drain Life ticks once a second, and across
+-- 33 intervals in 8 channels the median gap was 0.950s. Ungated it would be
+-- 1.000s and nothing would sit below it; at the talent's 6% it is 0.940s. Not
+-- one measured gap exceeded 0.98. The talent's own text agrees - it names
+-- "damage over time AND CHANNELED Affliction spells" and says it reduces their
+-- duration.
+--
+-- Health Funnel stays on its base length: it is not an Affliction spell, so the
+-- talent has nothing to say about it, and guessing SHORT is the direction that
+-- clips a channel.
+local CHANNEL_BASE = {
+    ["Drain Life"]    = 5,
+    ["Health Funnel"] = 10,
+    ["Rain of Fire"]  = 8,
+    ["Drain Mana"]    = 5,
+    ["Hellfire"]      = 15,
+}
+local CHANNEL_TALENTED = {
+    ["Drain Life"]   = true,
+    ["Drain Soul"]   = true,
+    ["Dark Harvest"] = true,
+}
+
+-- Grace on top, so a channel that runs marginally longer than the table says is
+-- never cut off. Small: the whole point is to stop waiting, and the measured
+-- overshoot being repaired here was three to four times this.
+local CHANNEL_GRACE = 0.25
+
+-- ============================================================
+-- How long to wait for a confirmation
+-- ============================================================
+-- ApplyDot holds the whole rotation while a DoT it sent is unconfirmed, so the
+-- ceiling on that wait is dead air whenever it is too generous. It used to be a
+-- flat two seconds, picked as "comfortably above normal ack latency" without
+-- anyone measuring the latency.
+--
+-- Measured now, as a slow-decaying maximum: the worst confirmation seen
+-- recently, times a safety factor, clamped to a floor and to the old two second
+-- ceiling. On a quiet connection it settles near two thirds of a second; when
+-- the server is struggling the observed latency rises and the ceiling rises
+-- with it, which is the direction that matters - too SHORT re-sends a DoT that
+-- was only slow to be acknowledged, wasting a global cooldown and the mana.
+--
+-- Decaying rather than a plain maximum, so one bad moment does not widen the
+-- ceiling for the rest of the session.
+-- Seconds past a DoT's own cast time before an unconfirmed cast may be
+-- re-sent. Covers the round trip after the cast completes; the cast time itself
+-- is added separately, per spell and with talents.
+local CAST_LAND_MARGIN = 1.0
+
+local CONFIRM_MIN = 0.6
+local CONFIRM_MAX = 2.0
+local CONFIRM_FACTOR = 3
+local CONFIRM_DECAY = 0.97
+
+M.confirmSeen = 0
+
+function M:NoteConfirmLatency(dt)
+    if not dt or dt < 0 then return end
+    if dt > self.confirmSeen then
+        self.confirmSeen = dt
+    else
+        self.confirmSeen = self.confirmSeen * CONFIRM_DECAY
+    end
+end
+
+function M:ConfirmCeiling()
+    local c = (self.confirmSeen or 0) * CONFIRM_FACTOR
+    if c < CONFIRM_MIN then c = CONFIRM_MIN end
+    if c > CONFIRM_MAX then c = CONFIRM_MAX end
+    return c
+end
+
+function M:ChannelLength(name)
+    if not name then return nil end
+    if name == "Dark Harvest" then return self:DHChannelLength() end
+    if name == "Drain Soul"   then return self:DSChannelLength() end
+    local b = CHANNEL_BASE[name]
+    if not b then return nil end
+    if CHANNEL_TALENTED[name] then
+        return b * (1 - self:RapidDeteriorationPct() / 100)
+    end
+    return b
+end
+
+-- Minimum DoT time remaining before Dark Harvest is allowed to start.
+--
+-- The player's slider, in seconds. It was computed here instead - the channel's
+-- length at its 30%-accelerated tick rate (see DH_TICK_BOOST above), which came
+-- to about ten seconds - and that number is now the slider's default rather than
+-- the only option.
+function M:DHMinDotRemain(cfg)
+    if cfg and cfg.dhDotRemain then return cfg.dhDotRemain end
+    return self:DHChannelLength() * (1 + DH_TICK_BOOST)
+end
+
+-- Is this one DoT going to be running for the whole of a channel `need` seconds
+-- long? Three sources, best first, and each one is only consulted when the one
+-- above it has no answer:
+--
+--   1. A remaining time. Exact where ClassicAPI supplies it, estimated from our
+--      own last cast otherwise. Short means short.
+--   2. Whether it is visibly on the target and ours. No remaining time, but
+--      "not there at all" is an answer, and it is the important one.
+--   3. Our own reapply stamp, for a DoT the client cannot show us - an
+--      unresolvable curse is the case that matters. No stamp for this target
+--      means we have not put it up.
+--
+-- Only when all three are silent does it answer "assume covered", which is the
+-- module's standing rule: a detection that cannot answer must not close a gate.
+function M:DotCoversChannel(sp, tex, need)
+    local remain = self:DotRemaining(sp)
+    if remain and remain > 0 then return remain >= need end
+
+    local detectable = tex or Aegis_SBR:CanResolveDebuffNames()
+    if detectable then
+        return (self:TargetDebuffUp(sp, tex) and self:DotIsMine(sp)) and true or false
+    end
+
+    local rec = self.dotThrottle[sp]
+    if rec and rec.id == self:TargetId() and rec.t then
+        local dur = self:DotAppliedDuration(sp)
+        if dur then return (dur - (GetTime() - rec.t)) >= need end
+        return true
+    end
+    return false
+end
+
+-- Would every enabled DoT still be running at the end of this channel?
+--
+-- A MISSING DoT blocks the channel, which is the correction here. It used to
+-- count as fine on the reasoning that the ladder below would apply it anyway -
+-- but the channel RETURNS when it starts, so the ladder never ran that press,
+-- and the DoT stayed missing for the five seconds the channel held. Reported
+-- as Drain Life being prioritised over DoTs that are not up at all.
+--
+-- Blocking here costs nothing: the ladder is directly below, so the press that
+-- would have started the channel applies the missing DoT instead and the
+-- channel starts on the next one.
+function M:DotsCoverChannel(channel, cfg)
+    local need = self:ChannelLength(channel)
+    if not need then return true end
+    local list = {
+        { "Corruption",  self.dotTex["Corruption"],  cfg and cfg.useCorruption },
+        { "Siphon Life", self.dotTex["Siphon Life"], cfg and cfg.useSiphonLife },
+    }
+    if cfg and cfg.curse and cfg.curse ~= "" then
+        table.insert(list, { cfg.curse, self:CurseTex(cfg.curse), true })
+    end
+    for i = 1, table.getn(list) do
+        local sp, tex, enabled = list[i][1], list[i][2], list[i][3]
+        if enabled and self:KnowsSpell(sp) and not self:DotCoversChannel(sp, tex, need) then
+            if self:Tracing() then
+                self:Trace("channel held: " .. sp .. " would not last the channel")
+            end
+            return false
+        end
+    end
+    return true
+end
+
+-- Number of Soul Shards across all bags (they stack, so sum the counts).
+function M:CountSoulShards()
+    local total = 0
+    for bag = 0, 4 do
+        local slots = GetContainerNumSlots(bag)
+        if slots then
+            for slot = 1, slots do
+                local link = GetContainerItemLink(bag, slot)
+                if link and string.find(link, "Soul Shard") then
+                    local _, count = GetContainerItemInfo(bag, slot)
+                    total = total + (count or 1)
+                end
+            end
+        end
+    end
+    return total
+end
+
+function M:TargetHasTexture(frag)
+    if not frag or frag == "" then return false end
+    return self:TargetDebuffUp(nil, frag)
+end
+
+-- ============================================================
+-- Learned curse textures
+-- ============================================================
+-- Only Curse of Agony has a confirmed icon in the table above, and the comment
+-- there says why the rest are missing: a GUESSED fragment is worse than none.
+-- It makes `detectable` true, which drops the reapply interval from 20 seconds
+-- to 3, and then never matches - so the curse is re-cast every three seconds
+-- for the rest of the fight. A five minute curse becomes the most expensive
+-- spell in the rotation.
+--
+-- So it is learned rather than guessed, the same way the hunter learns sting
+-- immunity and the paladin learns what Repentance does to a creature: cast the
+-- curse, look at what appeared on the target that was not there before, and
+-- only accept the answer when it is unambiguous.
+--
+-- Worth having even where SuperWoW resolves debuff names, for the one case a
+-- timestamp can never cover: a curse that was DISPELLED still has four minutes
+-- on our own clock and is not on the target at all.
+local CURSE_LEARN_MIN = 0.3    -- before this the debuff may not have landed yet
+local CURSE_LEARN_MAX = 4.0    -- after this, something else could have applied it
+local CURSE_TEX_STRIKES = 3    -- wrong-looking answers tolerated before unlearning
+
+function M:CurseTexMemory()
+    if not AegisDB then return nil end
+    if type(AegisDB.warlockCurseTex) ~= "table" then AegisDB.warlockCurseTex = {} end
+    return AegisDB.warlockCurseTex
+end
+
+function M:CurseTex(name)
+    if not name then return nil end
+    if self.curseTex[name] then return self.curseTex[name] end
+    local mem = self:CurseTexMemory()
+    return mem and mem[name] or nil
+end
+
+-- A texture path we are willing to store. The basename only, because the full
+-- path varies, and rejected outright if it carries a Lua pattern character -
+-- ScanTargetDebuff matches with string.find in PATTERN mode, so a stray "-"
+-- would quietly match the wrong thing.
+local function CurseTexCandidate(path)
+    if type(path) ~= "string" or path == "" then return nil end
+    local base = path
+    local cut = string.len(base)
+    while cut > 0 do
+        local c = string.sub(base, cut, cut)
+        if c == "\\" or c == "/" then base = string.sub(base, cut + 1); break end
+        cut = cut - 1
+    end
+    if base == "" then return nil end
+    if string.find(base, "[%^%$%(%)%%%.%[%]%*%+%-%?]") then return nil end
+    return base
+end
+
+-- Snapshot of what is on the target right now, so the cast below can be
+-- compared against it.
+function M:TargetTexSet()
+    local set = {}
+    Aegis_SBR:SnapshotTargetDebuffs()
+    local snap = Aegis_SBR.tdebuffSnap
+    if snap and snap.list then
+        for i = 1, table.getn(snap.list) do
+            if snap.list[i].tex then set[snap.list[i].tex] = true end
+        end
+    end
+    return set
+end
+
+function M:BeginCurseLearn(spell, id)
+    if self:CurseTex(spell) then return end
+    if not self:CurseTexMemory() then return end
+    self.curseLearn = { spell = spell, id = id, t = GetTime(), before = self:TargetTexSet() }
+end
+
+-- Run once per press. Accepts an answer only when EXACTLY ONE new texture
+-- appeared: two means we cannot tell which is ours, and guessing here is the
+-- thing this whole mechanism exists to avoid.
+function M:CurseLearnTick()
+    local L = self.curseLearn
+    if not L then return end
+    local age = GetTime() - L.t
+    if age < CURSE_LEARN_MIN then return end
+    if age > CURSE_LEARN_MAX or self:TargetId() ~= L.id then
+        self.curseLearn = nil
+        return
+    end
+    local now, new, count = self:TargetTexSet(), nil, 0
+    for tex in pairs(now) do
+        if not L.before[tex] then new = tex; count = count + 1 end
+    end
+    if count ~= 1 then
+        if count > 1 then self.curseLearn = nil end
+        return
+    end
+    local cand = CurseTexCandidate(new)
+    self.curseLearn = nil
+    if not cand then return end
+    local mem = self:CurseTexMemory()
+    if not mem then return end
+    mem[L.spell] = cand
+    if self:Tracing() then self:Trace("learned curse icon: " .. L.spell .. " = " .. cand) end
+end
+
+-- A learned texture that turns out not to match is the failure mode the guess
+-- was avoiding, so it is watched: three casts that leave the icon invisible and
+-- it is dropped, back to the blind timer that at least does no harm.
+function M:CurseTexStrike(spell)
+    local mem = self:CurseTexMemory()
+    if not mem or not mem[spell] then return end
+    self.curseTexMiss = self.curseTexMiss or {}
+    self.curseTexMiss[spell] = (self.curseTexMiss[spell] or 0) + 1
+    if self.curseTexMiss[spell] >= CURSE_TEX_STRIKES then
+        if self:Tracing() then self:Trace("dropped learned icon for " .. spell .. ": never visible") end
+        mem[spell] = nil
+        self.curseTexMiss[spell] = nil
+    end
+end
+
+-- Estimated seconds left on a DoT we currently have on the target, or nil if
+-- its duration is unknown or we have no record of casting it on this target.
+-- Approximated from our own last-(re)cast timestamp (dotThrottle) plus the
+-- spell's known base duration, since 1.12 exposes no real remaining-time API
+-- for target debuffs. Only meant to gate the Dark Harvest start (see
+-- DHMinDotRemain); it is not precise enough to drive normal DoT upkeep.
+--
+-- The Dark Harvest correction below is a direct port of Cursive's verified
+-- curses:TrackDarkHarvest / GetLastTickTime / GetDarkHarvestReduction
+-- (curses.lua), not our own guess: align the boost's start to this DoT's own
+-- last tick at-or-before the channel, then charge 30% of the resulting active
+-- span. One simplification versus Cursive: Cursive polls this live, including
+-- while a channel is still running, so it tracks dhStartTime/dhEndTime as two
+-- separate fields. We only ever call this once any channel has already ended
+-- (Rotate()'s guard returns early while self.dhEnd is still in the future),
+-- so there is no "currently channeling" case to handle - only "did the last
+-- completed channel on this target overlap this DoT's lifetime".
+function M:DotRemaining(spellName)
+    -- ClassicAPI, when present, knows the server's real expiration for a debuff
+    -- on ANOTHER unit, including the caster-modified duration - so Rapid
+    -- Deterioration, Dark Harvest and Conflagrate's Immolate shave are already
+    -- folded in, and none of the estimation below is needed.
+    --
+    -- Three conditions before we trust it:
+    --   * a remaining time is actually known (nil = the cast predates login or
+    --     the cache evicted; that is UNKNOWN, not zero)
+    --   * the DoT is OURS. mine == false means another warlock's, and refreshing
+    --     our own priority off someone else's timer would be wrong. mine == nil
+    --     is "cannot tell" and is accepted, matching the pre-ClassicAPI
+    --     assumption that a tracked DoT on our target is ours.
+    -- Anything else falls through to the original estimate below, unchanged.
+    if Aegis_SBR.TargetDebuffRemaining then
+        local mine = Aegis_SBR:TargetDebuffMine(spellName)
+        if mine ~= false then
+            local exact = Aegis_SBR:TargetDebuffRemaining(spellName)
+            if exact then return exact end
+        end
+    end
+
+    local dur = self.dotDuration[spellName]
+    if not dur then return nil end
+    if self.rapidDetSpells[spellName] then
+        dur = dur * (1 - self:RapidDeteriorationPct() / 100)
+    end
+    local id = self:TargetId()
+    local rec = self.dotThrottle[spellName]
+    if not rec or rec.id ~= id then return nil end
+    local now = GetTime()
+    local remain = dur - (now - rec.t)
+
+    local ticks = self.dotNumTicks[spellName]
+    if ticks and self.dhStart and self.dhEnd and self.dhTarget == id
+        and self.dhStart < rec.t + dur and self.dhEnd > rec.t then
+        local tickTime = dur / ticks
+        local dhStartTime = math.floor((self.dhStart - rec.t) / tickTime) * tickTime + rec.t
+        if dhStartTime < rec.t then dhStartTime = rec.t end
+        local dhActiveTime = self.dhEnd - dhStartTime
+        if dhActiveTime > 0 then
+            remain = remain - dhActiveTime * DH_TICK_BOOST
+        end
+    end
+    return remain
+end
+
+-- True when any enabled, tracked DoT is due to fall off within `within`
+-- seconds. A DoT with no confident estimate (DotRemaining returns nil) never
+-- counts, matching the "unknown is not urgent" stance used for the Dark
+-- Harvest pre-check.
+-- The DoT that would lapse during a channel of `len` seconds, or nil.
+--
+-- The channel guard stops the rotation for the channel's whole length, so
+-- anything due inside it has to go out BEFORE it starts. Returning the spell
+-- rather than a yes/no lets the caller top it up, which is what Dark Harvest
+-- has done since v1.2.6 - the other channels used to ride the wand until the
+-- danger passed instead, which is the behaviour being removed here.
+function M:DotLapsingWithin(order, len, dotsSuppressed)
+    if dotsSuppressed then return nil end
+    for i = 1, table.getn(order) do
+        local sp = order[i][1]
+        if self:KnowsSpell(sp) then
+            local remain = self:DotRemaining(sp)
+            if remain and remain < len then return sp, remain end
+        end
+    end
+    return nil
+end
+
+function M:DotExpiringSoonBy(order, within)
+    for i = 1, table.getn(order) do
+        local sp = order[i][1]
+        if self:KnowsSpell(sp) then
+            local remain = self:DotRemaining(sp)
+            if remain and remain <= within then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+-- The wand's own horizon (see WAND_STOP_BEFORE_DOT).
+function M:DotExpiringSoon(order)
+    return self:DotExpiringSoonBy(order, WAND_STOP_BEFORE_DOT)
+end
+
+-- Seconds left on a spell's OWN cooldown, ignoring the global cooldown; 0 when
+-- it is ready. Needed to tell whether a long channel would still be running
+-- when Dark Harvest comes back up.
+function M:OwnCDLeft(name)
+    local slot = self:FindSpellSlot(name)
+    if not slot then return 0 end
+    local start, dur = GetSpellCooldown(slot, BOOKTYPE_SPELL)
+    if start == 0 or dur <= 1.55 then return 0 end
+    local left = start + dur - GetTime()
+    if left < 0 then left = 0 end
+    return left
+end
+
+-- Throttle memory per DoT, keyed by target GUID. Only stamped once
+-- UNIT_CASTEVENT confirms the cast actually landed (see the frame near the
+-- end of this file) - not the instant it is sent.
+M.dotThrottle = {}
+
+-- Spells a given target turned out to be immune to, learned for the current
+-- combat and keyed by "<targetGUID>|<spell>". Cleared on leaving combat, like
+-- the hunter's sting immunity this mirrors.
+--
+-- 1.12 offers no way to ask whether a mob resists a school, so the only honest
+-- source is the client saying so: "Your Immolate failed. X is immune." Without
+-- it the rotation re-applied a DoT that cannot land every three seconds for the
+-- whole fight - reported as Immolate being spammed on fire-immune mobs.
+M.dotImmune = {}
+
+-- Kept for a while, not for the fight: some immunities are timed - a boss
+-- immune to spells for a phase - and a DoT learned immune then was never
+-- tried again, the rotation standing still after the phase ended. A permanent
+-- immunity costs one re-learning cast per window, which is cheap.
+local IMMUNE_TTL = 20.0
+
+M.LEARN_IMMUNE = { ["Corruption"] = true, ["Curse of Agony"] = true, ["Immolate"] = true,
+    ["Siphon Life"] = true, ["Drain Life"] = true }
+function M:DotImmune(spellName)
+    -- Kept across fights by the core, by mob name (/sbr immune). A phase
+    -- immunity is not written there: the core withholds the entry while
+    -- anything else reported "immune" at the same time.
+    if Aegis_SBR.KnownImmune and Aegis_SBR:KnownImmune(spellName) then return true end
+    local _, guid = UnitExists("target")
+    if not guid then return false end
+    local at = self.dotImmune[guid .. "|" .. spellName]
+    if not at then return false end
+    if at == true then return true end
+    if GetTime() - at > IMMUNE_TTL then
+        self.dotImmune[guid .. "|" .. spellName] = nil
+        return false
+    end
+    return true
+end
+
+-- Confirmed casts per "<targetId>|<spell>" not yet read back (see the CAST
+-- handler), and the DoTs this client has ever read back at all. The second is
+-- the guard on the first: a client that cannot read a debuff would otherwise
+-- call every DoT immune after two casts.
+M.dotLanded = {}
+M.dotSeenEver = {}
+-- Our DoT read back on this target at least once, by "target|spell".
+M.dotSeenOn = {}
+-- A target carries at most this many debuffs (Turtle WoW).
+local DEBUFF_CAP = 16
+
+-- Immunity with no message. Some mobs take a DoT's cast - the client confirms
+-- it, mana is spent - and never carry the debuff, and say nothing: reported on
+-- golems for Siphon Life, re-cast every three seconds for the whole fight.
+-- Two confirmed casts on the same target with the debuff never read in between
+-- is that case, provided this client has read the debuff on SOME target
+-- before (otherwise the reader is what is broken, not the mob).
+function M:NoteDotUnseen(spellName, id)
+    if not self.dotSeenEver[spellName] then return false end
+    local key = tostring(id) .. "|" .. spellName
+    if (self.dotLanded[key] or 0) < 2 then return false end
+    local _, guid = UnitExists("target")
+    if guid then self.dotImmune[guid .. "|" .. spellName] = GetTime() end
+    self.dotLanded[key] = nil
+    if self:Tracing() then
+        self:Trace(spellName .. ": two casts confirmed, never seen on the target - immune for this fight")
+    end
+    return true
+end
+
+-- Life drains against this target. Mechanical creatures take neither Drain
+-- Life nor Siphon Life, and the client refuses neither: the channel runs, the
+-- DoT is confirmed, nothing happens. The creature type is the prior, cached
+-- per target; a Siphon Life learned immune the way above stands in for Drain
+-- Life too, since the two share the mechanic.
+function M:LifeDrainImmune()
+    local id = self:TargetId()
+    if id ~= self.drainTypeId then
+        self.drainTypeId = id
+        self.drainImmune = (UnitCreatureType("target") == "Mechanical")
+    end
+    if self.drainImmune then return true end
+    if Aegis_SBR.KnownImmune and Aegis_SBR:KnownImmune("Drain Life") then return true end
+    return self:DotImmune("Siphon Life")
+end
+
+-- Casts sent but not yet confirmed CAST or FAIL by UNIT_CASTEVENT, keyed by
+-- spell name -> { id = targetId at cast time, t = time sent }.
+M.dotPending = {}
+
+-- Send a DoT cast and mark it pending confirmation.
+--
+-- Where UNIT_CASTEVENT answers, dotThrottle is stamped only once it confirms the
+-- cast went out, so a cast that silently failed (the GCD was still up) is
+-- retried on the very next press rather than blocking for the whole interval on
+-- a guess. That replaced an older version which stamped optimistically here, and
+-- it is the right design - on a client that confirms.
+--
+-- On one that does not, it degrades to no throttle at all, and a captured
+-- session showed exactly that: 746 seconds of play, 580 measurements, and
+-- throttleAge was -1 in every single one. The throttle had never been stamped
+-- once. With the debuff read also failing much of the time (Corruption was
+-- readable on a quarter of presses in the same log), nothing was left to stop a
+-- re-send but the two second pending window - so every press went into sending
+-- the same DoT again or waiting on it, and the filler was never reached. That is
+-- the reported multi-second hangup.
+--
+-- So the confirmation is treated as a capability to be established, not assumed:
+-- until one has actually arrived, the send stamps the throttle itself. Where
+-- confirmations do arrive, the first one flips castEventSeen and this behaves
+-- exactly as before. Same shape as the hunter's stingSeen / debuffSeen, and the
+-- same lesson - a detection that never answers must not be the only thing a
+-- decision rests on.
+function M:QueueDot(spellName, id)
+    -- A hold (see Queue) is truthy but not a send: nothing to stamp. A refusal
+    -- (false) is handed back so ApplyDot can move the ladder on.
+    local r = self:Queue(spellName, "DoT missing")
+    if r ~= true then return r end
+    self:Later(function()
+        local now = GetTime()
+        -- A curse we have no icon for: watch what appears on the target.
+        if self.curseIsA and self.curseIsA[spellName] then self:BeginCurseLearn(spellName, id) end
+        self.dotPending[spellName] = { id = id, t = now }
+        if not M.castEventSeen then
+            self.dotThrottle[spellName] = { id = id, t = now }
+        end
+        -- Per TARGET, unlike dotThrottle, which holds only the most recent cast
+        -- of each spell and is overwritten the instant you dot a second mob -
+        -- the normal affliction pattern. Without this, coming back to the first
+        -- mob would read as "never cast here".
+        Aegis_SBR:NoteDebuffApplied(id, spellName, self:DotAppliedDuration(spellName))
+    end)
+end
+
+-- Apply or maintain one DoT. Returns:
+--   "up"   the effect is present (or assumed present within its interval)
+--   "cast" a cast was sent this press
+--   "wait" recently cast (confirmed or still awaiting confirmation) and
+--          landing/pending, do nothing further this press
+-- Detection prefers the exact spell name (SuperWoW id path), then the icon
+-- fragment. When the effect is detectable (a texture is known, or SuperWoW can
+-- resolve names), missing-but-recent counts as "wait" so the cast is allowed to
+-- land before re-queuing. Otherwise recent counts as "up" and the effect is
+-- simply reapplied on the interval, the old texture-less blind-timer path.
+-- Whose DoT is on the target? The model lives in the core (DebuffMine) because
+-- every class that keeps a debuff up has the same question; here it only needs
+-- this warlock's duration table, Rapid Deterioration included.
+-- Drop the record that this DoT on this target is ours (see QueueDot, which
+-- writes it on send).
+function M:ForgetDot(targetId, spellName)
+    if not targetId or not spellName then return end
+    Aegis_SBR.debuffLedger[tostring(targetId) .. "|" .. spellName] = nil
+end
+
+function M:DotIsMine(spellName)
+    return Aegis_SBR:DebuffMine(spellName, self:TargetId())
+end
+
+-- The duration this DoT will actually run for, Rapid Deterioration folded in,
+-- handed to the ledger at the moment it is applied.
+function M:DotAppliedDuration(spellName)
+    local dur = self.dotDuration[spellName]
+    if dur and self.rapidDetSpells[spellName] then
+        dur = dur * (1 - self:RapidDeteriorationPct() / 100)
+    end
+    return dur
+end
+
+function M:ApplyDot(spellName, texFrag, interval)
+    interval = interval or 3
+    local dotKey = tostring(self:TargetId()) .. "|" .. spellName
+    if self:TargetDebuffUp(spellName, texFrag) and self:DotIsMine(spellName) then
+        self.dotSeenEver[spellName] = true
+        self.dotLanded[dotKey] = nil
+        self.dotSeenOn[dotKey] = true
+        return "up"
+    end
+    -- Pushed off by the debuff limit: ours was on this target and should still
+    -- be running (the ledger says so), but it is gone and the target is full.
+    -- In a larger group every new debuff from somebody else pushes one off, and
+    -- recasting ours only pushes it off again - reported as Siphon Life cast
+    -- over and over. It is left until its own duration would have ended; a
+    -- free slot ends the hold at once.
+    if self.dotSeenOn[dotKey] and Aegis_SBR:DebuffMine(spellName, self:TargetId())
+        and Aegis_SBR:TargetDebuffCount() >= DEBUFF_CAP then
+        if self:Tracing() then self:Trace(spellName .. " pushed off, target at the debuff limit") end
+        return "up"
+    end
+    -- Not on the target at all: ours is gone (expired early, dispelled,
+    -- replaced), so the record goes, and a copy that shows up afterwards -
+    -- another warlock's - is no longer taken for ours. Not while our own cast
+    -- may still be on its way, and not at the debuff limit (handled above).
+    if ((texFrag ~= nil) or Aegis_SBR:CanResolveDebuffNames())
+        and not self:TargetDebuffUp(spellName, texFrag)
+        and Aegis_SBR:TargetDebuffCount() < DEBUFF_CAP then
+        local tid = self:TargetId()
+        local r0, p0 = self.dotThrottle[spellName], self.dotPending[spellName]
+        local recent = (r0 and r0.id == tid and r0.t and (GetTime() - r0.t) <= interval)
+            or (p0 and p0.id == tid)
+        if not recent then self:ForgetDot(tid, spellName) end
+    end
+    -- Immune to this one: report it as handled so the DoT chain moves on to the
+    -- next spell instead of stopping here for the rest of the fight.
+    if self:DotImmune(spellName) then return "up" end
+    if spellName == "Siphon Life" and self:LifeDrainImmune() then return "up" end
+    -- Moving, and this one is not instant: skip it and let the chain carry on to
+    -- the DoTs that ARE instant, then to the filler.
+    --
+    -- Reported as "up" rather than "wait" deliberately. "wait" returns from the
+    -- whole rotation, which is the stall being fixed here; "up" means "nothing to
+    -- do about this one", which is exactly true while running.
+    if self:DotCastTime(spellName) > 0 and Aegis_SBR:Moving() then
+        if self:Tracing() then self:Trace("moving, skipping " .. spellName) end
+        return "up"
+    end
+
+    local detectable = (texFrag ~= nil) or Aegis_SBR:CanResolveDebuffNames()
+    local id = self:TargetId()
+    local rec = self.dotThrottle[spellName]
+    local now = GetTime()
+    if self:Tracing() then
+        local throttleAge = (rec and rec.id == id and rec.t) and (now - rec.t) or -1
+        local pend = self.dotPending[spellName]
+        local pendAge = (pend and pend.id == id) and (now - pend.t) or -1
+        self:Trace(string.format("%s missing wanding=%s throttleAge=%.2f pendAge=%.2f conf=%s vis=%s",
+            spellName, tostring(self:Wanding()), throttleAge, pendAge,
+            M.castEventSeen and "Y" or "N",
+            -- Visible on the target but not ours: the second-warlock case.
+            self:TargetDebuffUp(spellName, texFrag) and "other's" or "no"))
+    end
+    -- Stamping on send (see QueueDot) means a cast the CLIENT threw away would
+    -- otherwise hold the throttle for the whole interval - the exact regression
+    -- the old comment there warns about. Out of range and line of sight arrive
+    -- as an error message, never in the combat log, so the resist / miss handler
+    -- cannot see them. Discard the stamp when one of those named this spell.
+    if rec and Aegis_SBR.SpellRefusedSince and Aegis_SBR:SpellRefusedSince(spellName, rec.t) then
+        self.dotThrottle[spellName] = nil
+        rec = nil
+    end
+    if rec and rec.id == id and rec.t and (now - rec.t) <= interval then
+        -- A learned icon that stays invisible right after our own cast is a
+        -- wrong icon. Counted here, dropped after a few (see CurseTexStrike).
+        if detectable and texFrag and self.curseIsA[spellName]
+            and not self:TargetDebuffUp(spellName, texFrag) then
+            self:CurseTexStrike(spellName)
+        end
+        if detectable then return "wait" else return "up" end
+    end
+    -- A cast already sent is still awaiting CAST/FAIL confirmation, and this is
+    -- the one early exit that holds the WHOLE rotation without casting anything.
+    --
+    -- The ceiling used to be a flat two seconds, chosen as "comfortably above
+    -- normal ack latency" without ever measuring what that latency is. On a
+    -- training dummy it cost eleven seconds of a two and a half minute session,
+    -- three of them in one go, all on Corruption.
+    --
+    -- It is measured now: ConfirmCeiling watches how long confirmations actually
+    -- take on this connection and allows a generous multiple of that. On a quiet
+    -- server it settles near two thirds of a second; under the lag that produced
+    -- those three second holes it widens by itself rather than double-casting a
+    -- DoT that was merely slow to be acknowledged.
+    --
+    -- The ceiling is a LATENCY allowance, and a spell with a cast time needs the
+    -- cast time on top of it. Measured on a warlock without Improved Corruption:
+    -- Corruption is a 2.0s cast, the ceiling is 2.0s, so the ceiling ran out at
+    -- the moment the cast was about to land, the DoT was re-sent, and the
+    -- re-send RESTARTED the cast - throwing away the one that was a few tenths
+    -- of a second from completing. Every Corruption cost four seconds instead
+    -- of two, twice per DoT cycle: the reported constant three-second hangs.
+    -- Immolate escaped by a tenth of a second, which is why only one of the two
+    -- was obvious.
+    --
+    -- Two things end the wait now, and the second is evidence rather than a
+    -- number: a cast that has announced its start and not its end is running,
+    -- whatever the clock says, and re-sending into it can only destroy it.
+    local pend = self.dotPending[spellName]
+    if pend and pend.id == id then
+        local allow = self:ConfirmCeiling()
+        local ct = self:DotCastTime(spellName)
+        if ct > 0 and (ct + CAST_LAND_MARGIN) > allow then allow = ct + CAST_LAND_MARGIN end
+        if (now - pend.t) <= allow or M.casting then return "wait" end
+    end
+    -- About to re-send. Two confirmed casts on this target with nothing ever
+    -- read back is an unannounced immunity - handled, not re-sent.
+    if self:NoteDotUnseen(spellName, id) then return "up" end
+    -- Refused outright (the school locked out after an interrupt, or the spell
+    -- on a cooldown of its own): nothing this press can do about this DoT, so
+    -- the ladder goes on and the press ends at the wand rather than here.
+    if self:QueueDot(spellName, id) == false then return "up" end
+    return "cast"
+end
+
+-- Is the wand allowed to start right now?
+--
+-- With a CHANNEL configured as the filler, the only exception is mana: if the
+-- channel is affordable, the wand does not run. Enforced here rather than at
+-- the call sites because eight paths can ask for a wand shot.
+function M:WandAllowed()
+    local cfg = Aegis_SBR:GetActiveProfile()
+    if not cfg then return true end
+    -- Below the mana floor the wand is the entire point. That valve exists to
+    -- stop the rotation casting itself dry, and it cannot be overruled by "a
+    -- channel is still affordable" - a cheap channel is affordable long past the
+    -- floor, which is how the two rules deadlocked.
+    --
+    -- Measured: 17 consecutive presses over 4.2s doing nothing at all, at 12%
+    -- mana with the floor at 15. The valve asked for the wand on every one of
+    -- them and this refused it, because Drain Life was still payable. Neither
+    -- wanding nor casting, until Life Tap happened to become available.
+    if self:ManaPct() < (cfg.wandManaFloor or 15) then return true end
+
+    local f = cfg.filler
+    if not f then return true end
+
+    -- Dark Harvest runs on a cooldown, so a gap between channels exists BY
+    -- DESIGN and something has to fill it. What fills it is the player's own
+    -- setting, and the wand is one of the choices offered.
+    --
+    -- Testing the main filler here refused the wand in exactly that gap, which
+    -- left the press doing nothing at all: five consecutive empty presses in one
+    -- measured window, and the next-spell preview showing a wand that was then
+    -- refused. The spell to protect is the one that would otherwise run, which
+    -- in the gap is the gap filler.
+    if f == "Dark Harvest" then f = cfg.dhGapFiller end
+
+    if not (f and M.CHANNELED[f] and self:KnowsSpell(f)) then return true end
+    if self:ChannelRefusal(f) then return true end
+    -- At the shard cap Drain Soul stands down on a dying target (see
+    -- DrainSoulMustStop), and the wand is what takes over. Protected for it
+    -- here, the wand was refused as well: the rotation did nothing at all in a
+    -- mob's last seconds.
+    if f == "Drain Soul" and self:DrainSoulMustStop(cfg) then return true end
+    return not Aegis_SBR:CanAfford(f)
+end
+
+-- Stop a wand auto-repeat that is running and should not be. Shoot starts a
+-- repeat that keeps firing on its own, so refusing to start it does nothing
+-- about one begun earlier - by the low-mana valve, or before the filler was
+-- changed.
+--
+-- Shoot TOGGLES, and IsAutoRepeatAction does not update within a press, so an
+-- unthrottled stop reads the wand as still running and toggles it back on. One
+-- attempt, then a gap long enough for the client to catch up.
+--
+-- Only called with no channel running: the guards at the top of Rotate return
+-- before this point.
+local WAND_STOP_GAP = 1.5
+
+function M:StopStrayWand()
+    if not self:Wanding() then
+        self.wandStopAt = nil
+        return
+    end
+    if self:WandAllowed() then return end
+    if self.wandStopAt and (GetTime() - self.wandStopAt) < WAND_STOP_GAP then return end
+    self.wandStopAt = GetTime()
+    if self:Tracing() then self:Trace("stopping a stray wand auto-repeat") end
+    CastSpellByName("Shoot")   -- toggles the repeat OFF
+end
+
+-- Start or stop the wand. Shoot toggles auto-repeat, so casting it while it
+-- is already running is how the rotation stops it - both directions are a real
+-- press and are reported as such.
+--
+-- A refusal here that is still followed by a wand shot means the shot did not
+-- come from this addon.
+-- The wand is already auto-repeating, so the press has nothing to add. True
+-- means "return now", exactly as the bare Wanding() test it replaces - but the
+-- preview is told what is happening. A silent return left the window reading
+-- "hold / nothing due right now" while the wand fired every second, which a
+-- player reads as the rotation having stopped: reported as Immolate showing for
+-- a moment, then the wand, then nothing.
+function M:WandRepeating()
+    if not self:Wanding() then return false end
+    if Aegis_SBR.deciding then
+        local p = Aegis_SBR.decidePlan
+        p.spell = "Shoot"; p.reason = "wand repeating"
+    end
+    return true
+end
+
+-- `stop` is set by the two callers that want the wand OFF (a DoT is about to
+-- fall off). Those go out as the plain toggle cast, which is the only way to
+-- stop an auto-repeat. Every other caller is a START and goes through
+-- Aegis_SBR:StartRepeating, which cannot toggle the wand off by accident where
+-- ClassicAPI provides a start-only cast. All start callers already check
+-- Wanding() first, so the fallback path is unchanged.
+function M:Shoot(reason, stop)
+    -- Tested BEFORE the preview branch, or the next-spell window announces a
+    -- wand the real press then refuses - which is what it was doing.
+    if not self:WandAllowed() then
+        if not Aegis_SBR.deciding and self:Tracing() then
+            self:Trace("wand refused (" .. tostring(reason) .. "): "
+                .. tostring(Aegis_SBR:GetActiveProfile().filler) .. " is affordable")
+        end
+        return false
+    end
+    -- Starting the wand while one of our own casts is running CANCELS that cast.
+    --
+    -- Reported at low level with the wand as the filler: the pull sent Immolate,
+    -- the very next press found Immolate marked as sent and fell through to the
+    -- filler, and the wand it started killed the cast still in flight. Nothing
+    -- landed, the rotation sat out the send interval, and only then did Immolate
+    -- go again - "pet attack, wand twice, two or three seconds of nothing, then
+    -- Immolate and Corruption". Intermittent, because it depends on the press
+    -- landing inside the cast.
+    --
+    -- Only a START is refused. A call made WHILE the wand is already repeating
+    -- is the stop (see `stop`), and stopping is exactly what a cast wants.
+    if M.casting and not self:Wanding() then
+        if not Aegis_SBR.deciding and self:Tracing() then
+            self:Trace("wand held (" .. tostring(reason) .. "): a cast is running")
+        end
+        return false
+    end
+    if Aegis_SBR.deciding then
+        local p = Aegis_SBR.decidePlan
+        p.spell = "Shoot"; p.reason = reason
+        return true
+    end
+    if stop then
+        CastSpellByName("Shoot")
+    else
+        if Aegis_SBR.StartRepeating then Aegis_SBR:StartRepeating("Shoot") else CastSpellByName("Shoot") end
+    end
+    return true
+end
+
+-- ============================================================
+-- Rotation. The core has already secured a target (no melee auto
+-- attack for this class). One queued cast per press, DoTs first.
+-- ============================================================
+-- A press with NO target, out of combat: the core hands it here instead of
+-- the rotation. One use so far - Life Tap up to a mana level of the player's
+-- choosing before the next pull, so the health regenerates on the walk and the
+-- mana is there at the pull. The HP floor from the in-combat tap applies; the
+-- combat mana slider does not, this has its own. Nothing else is done here:
+-- with a friendly target, or in combat, the press stays idle as before.
+-- ============================================================
+-- Life Tap: what it costs, and when it is safe
+--
+-- Every tap used to test the health BEFORE it: 45% against a 40% line was
+-- "safe", and the tap then left the warlock at 35% - under the line the player
+-- set, which is how it was reported ("tapping under my health threshold").
+-- The test is now on the health the tap leaves. The cost is read off the
+-- tooltip ("Converts N health into N mana"); rank values are the fallback
+-- when the tooltip does not read.
+-- ============================================================
+local LT_TIP = "AegisWarlockTapTip"
+local ltTip
+local LIFE_TAP_HEALTH = { 30, 75, 140, 220, 310, 424 }   -- ranks 1-6, fallback
+local LT_CACHE_SECS = 30
+
+-- Health taken and mana given by one Life Tap at the highest known rank.
+function M:LifeTapCost()
+    local slot = Aegis_SBR:FindSpellSlot("Life Tap")
+    if not slot then return nil, nil end
+    local now = GetTime()
+    if self.ltSlot == slot and self.ltCost and now - (self.ltAt or 0) < LT_CACHE_SECS then
+        return self.ltCost, self.ltGain
+    end
+    if not ltTip then ltTip = CreateFrame("GameTooltip", LT_TIP, nil, "GameTooltipTemplate") end
+    ltTip:SetOwner(UIParent, "ANCHOR_NONE")
+    ltTip:ClearLines()
+    ltTip:SetSpell(slot, BOOKTYPE_SPELL)
+    local cost, gain
+    for i = 2, 10 do
+        local fs = getglobal(LT_TIP .. "TextLeft" .. i)
+        local txt = fs and fs:GetText()
+        if txt and not cost then
+            local _, _, a = string.find(txt, "(%d+) health")
+            if a then
+                cost = tonumber(a)
+                local _, _, b = string.find(txt, "(%d+) mana")
+                if b then gain = tonumber(b) end
+            end
+        end
+    end
+    if not cost then
+        local r = self:MaxRank("Life Tap")
+        cost = LIFE_TAP_HEALTH[r] or LIFE_TAP_HEALTH[table.getn(LIFE_TAP_HEALTH)]
+    end
+    gain = gain or cost
+    self.ltSlot, self.ltCost, self.ltGain, self.ltAt = slot, cost, gain, now
+    return cost, gain
+end
+
+-- Health percent left after one Life Tap.
+function M:HPAfterTap()
+    local mx = UnitHealthMax("player") or 0
+    if mx <= 0 then return 0 end
+    local cost = self:LifeTapCost() or 0
+    return (UnitHealth("player") - cost) / mx * 100
+end
+
+-- A mob on the warlock: the target's target is the player. A pet holding the
+-- mob answers no, which is what the pet is for.
+function M:HasAggro()
+    if not UnitExists("target") or not UnitCanAttack("player", "target") then return false end
+    return (UnitExists("targettarget") and UnitIsUnit("targettarget", "player")) and true or false
+end
+
+-- The one in-combat Life Tap gate: the switch, the spell, and the health the
+-- tap leaves above "Keep HP above" - or above "Keep HP above with aggro" when
+-- a mob is on you, whichever is higher.
+function M:TapSafe(cfg)
+    if not cfg.lifeTap or not self:KnowsSpell("Life Tap") then return false end
+    local floor = cfg.lifeTapHpMin or 40
+    if self:HasAggro() then
+        local af = cfg.lifeTapAggroHp or 70
+        if af > floor then floor = af end
+    end
+    return self:HPAfterTap() > floor
+end
+
+-- Enough shards banked (the "Stop early to keep shards" line)?
+--
+-- A shard is made only when the target dies inside a Drain Soul. So at the
+-- cap the execute Drain Soul, which exists for the shard, is not started, and
+-- the filler and the between-channels Drain Soul - the hardest-hitting drain,
+-- kept in the rotation for its damage - run as before but are stopped before
+-- the target dies (DrainSoulMustStop). An earlier version stopped starting them
+-- at the cap, which took the strongest channel out of the rotation.
+function M:ShardsFull(cfg)
+    return cfg.keepShards and self:CountSoulShards() >= (cfg.shardTarget or 0) and true or false
+end
+
+-- About to die: the time-to-kill estimate under DS_STOP_TTK seconds, or, with
+-- no estimate, the health under DS_STOP_HP percent. The margin covers a tick of
+-- somebody else's damage and the latency of the stop.
+local DS_STOP_TTK = 3.0
+local DS_STOP_HP = 3
+function M:TargetDyingSoon()
+    local ttk = Aegis_SBR:TargetTTK()
+    if ttk then return ttk < DS_STOP_TTK end
+    return self:TargetHPPct() <= DS_STOP_HP
+end
+
+-- Stop (or do not start) a Drain Soul that would make a shard over the cap.
+function M:DrainSoulMustStop(cfg)
+    return self:ShardsFull(cfg) and self:TargetDyingSoon()
+end
+
+-- Before a Drain Life: tap first while there is health to spare and room in
+-- the mana bar. Drain Life's return is health, and at a full bar that return
+-- is thrown away; the tap turns the spare health into mana and the channel
+-- then gives it back. Not with a mob on you - there the health is not spare -
+-- and only when the whole tap fits under the mana bar.
+function M:TapBeforeDrain(cfg, channel)
+    if channel ~= "Drain Life" then return false end
+    if self:HasAggro() then return false end
+    if not self:TapSafe(cfg) then return false end
+    local _, gain = self:LifeTapCost()
+    local missing = (UnitManaMax("player") or 0) - (UnitMana("player") or 0)
+    if not gain or missing < gain then return false end
+    return self:Queue("Life Tap", "mana before Drain Life") and true or false
+end
+
+-- Whether the core should leave the target alone this press: the idle tap
+-- wants a press with no target, and auto-acquire would hand it a mob and a
+-- DoT on it instead - reported as pulling while tapping up between fights.
+function M:HoldAcquire(cfg)
+    if not cfg.lifeTapIdle then return false end
+    if UnitAffectingCombat("player") then return false end
+    if not self:KnowsSpell("Life Tap") then return false end
+    if self:ManaPct() >= (cfg.lifeTapIdleMana or 100) then return false end
+    return self:HPAfterTap() > (cfg.lifeTapHpMin or 40)
+end
+
+function M:Prebuff(cfg)
+    if not cfg.lifeTapIdle then return false end
+    if UnitExists("target") or UnitAffectingCombat("player") then return false end
+    if not self:KnowsSpell("Life Tap") then return false end
+    if self:ManaPct() >= (cfg.lifeTapIdleMana or 100) then return false end
+    if self:HPAfterTap() <= (cfg.lifeTapHpMin or 40) then return false end
+    return self:Pick("Life Tap", "mana before the pull")
+end
+
+function M:Rotate(cfg)
+    -- Before every guard below, because they return.
+    self:TranceTick()
+
+    -- Send the pet in. With petMeleeOnly, only when the target is within melee
+    -- range (the same gate as the melee auto-attack), so an accidentally
+    -- targeted far enemy never pulls the pet away.
+    if cfg.petAttack and UnitExists("pet") and not UnitIsDead("pet") then
+        if not cfg.petMeleeOnly or self:InMeleeRange() then PetAttack() end
+    end
+
+    -- Never act while a channel runs (Drain Life / Drain Soul), so a DoT refresh
+    -- or the filler cannot clip it. The stop event also fires when the target
+    -- dies mid-channel; a 16s ceiling guards against a missed stop so the
+    -- rotation can never get stuck.
+    --
+    -- The ceiling used to be the ONLY time-based release, and sixteen seconds is
+    -- no release at all: it is there for a lost event, not for the normal case.
+    -- Measured on a training dummy, every one of nine channels held the rotation
+    -- for roughly nine tenths of a second AFTER its last tick - the stop event
+    -- simply arrives late. Nine holes of a second in two and a half minutes is
+    -- what "choppy" means from the outside.
+    --
+    -- So the guard now ends at whichever comes first: the event, or the length
+    -- the channel was always going to have. That length is known - it is the
+    -- same number DHChannelLength already computes for Dark Harvest, talent
+    -- included - it was just never used here.
+    -- A spell has been sent and the client has not acted on it yet. Hold
+    -- everything until it has.
+    --
+    -- This is the whole of the eviction problem. The rotation re-decides on
+    -- every press, a quarter of a second apart, and each decision used to be
+    -- sent - but Nampower holds ONE spell, so every send after the first threw
+    -- away the one before it. Worse, the addon did it to itself: having queued
+    -- Corruption it marks Corruption as handled, so the next press moves on down
+    -- the priority list and queues the filler straight over it.
+    --
+    -- Once the client HAS taken the spell, re-deciding is fine again - a press
+    -- during a cast queues the next one behind it, which is what the queue is
+    -- for. Only the gap between asking and being answered is closed here.
+    -- An instant has no start event of its own, so the first version of this
+    -- guard waited out the whole window after one. That window is the same
+    -- length as the global cooldown, measured from the SEND rather than from the
+    -- cast, so it outlived the cooldown by however long the send took to be
+    -- acted on - and the first press after the cooldown ended landed inside it
+    -- and did nothing. Reported as needing to press twice to start a channel
+    -- once the global cooldown was over.
+    --
+    -- The cooldown itself is the missing evidence: a spell that was ready when
+    -- we sent it and is not ready now has been taken by the client. That reading
+    -- is only sound BECAUSE it was ready at send time - a spell sent into a
+    -- cooldown that was already running reads "not ready" immediately and would
+    -- clear the guard before anything had happened.
+    local answered = M.sentSeen
+    if not answered and M.sentWasReady and M.sentSpell
+        and not Aegis_SBR:IsReady(M.sentSpell) then
+        answered = true
+        self:Later(function() M.sentSeen = true end)
+    end
+    --
+    -- A QUEUED send has a known moment at which it is due: the end of the cast
+    -- or cooldown it was queued behind. If the client has not taken it shortly
+    -- after that moment, it is not going to - and waiting out the full window
+    -- on top is dead time. Measured on a client whose Nampower never fires a
+    -- spell queued behind a bare global cooldown: every queued send died and
+    -- every direct one landed, so each DoT cost the 1.5s window plus its own
+    -- cast. The window is now the due moment plus a margin for queued sends,
+    -- and the full 1.5s only for direct ones, where there is no due moment.
+    local limit = SEND_GRACE
+    if M.sentAt and M.sentDueAt then
+        local q = (M.sentDueAt + DIRECT_MARGIN) - M.sentAt
+        if q < DIRECT_MARGIN then q = DIRECT_MARGIN end
+        if q < limit then limit = q end
+        -- And no margin at all where the client answers the question itself.
+        -- Past the due moment, a spell that reads READY has not been fired by
+        -- the queue: had it gone out, its own global cooldown would be running
+        -- and IsReady would say no. That is evidence, and it beats waiting a
+        -- fixed 0.3s for it - the difference between the rotation and a player
+        -- pressing the key by hand at cooldown end, which is what this was
+        -- measured against.
+        if not answered and GetTime() >= M.sentDueAt and not M.casting
+            and M.sentSpell and Aegis_SBR:IsReady(M.sentSpell) then
+            limit = 0
+        end
+    end
+    if M.sentAt and not answered and (GetTime() - M.sentAt) < limit then
+        if self:Tracing() then
+            self:Trace(string.format("STALL %s sent, waiting for the client",
+                tostring(M.sentSpell)))
+        end
+        return
+    end
+    -- The window ran out and the client never took the spell: no cast started,
+    -- no global cooldown began, no refusal came. The send is dead, and the
+    -- stamps QueueDot put down for it - "sent, assume it lands" - are stamps for
+    -- something that did not happen. Left in place they held the DoT for the
+    -- full three second interval on top of the 1.5s already spent here.
+    --
+    -- Measured, current code, every mob: Curse of Agony sent, five presses of
+    -- this guard, then "unconfirmed" up to 3.2s, then a re-send that landed at
+    -- once. Mana unchanged the whole time. Same for Corruption. The first send
+    -- went nowhere and the addon spent 3.2 seconds believing in it.
+    if M.sentAt and not answered and M.sentSpell then
+        local sp = M.sentSpell
+        if self:Tracing() then self:Trace(sp .. " sent, never taken - dropping it") end
+        self:Later(function()
+            M.sentAt = nil
+            self.dotThrottle[sp] = nil
+            self.dotPending[sp] = nil
+            -- The dead send stamped busyUntil as if it had gone out. It did
+            -- not, so the client has been idle since the send it was queued
+            -- behind ended - which is what lets the re-send go out direct.
+            if M.sentDueAt then self.busyUntil = M.sentDueAt end
+            M.sentDueAt = nil
+            -- The re-send goes DIRECT. Queued again it would die again on a
+            -- client whose queue does not fire behind a cooldown, and be
+            -- declared dead again a press later - a loop that only ends once
+            -- the idle margin happens to run out.
+            M.forceDirect = true
+        end)
+    end
+
+    if self.channeling and self.chanStart then
+        local held = GetTime() - self.chanStart
+        local expect = self:ChannelLength(self.chanSpell)
+        local limit = expect and (expect + CHANNEL_GRACE) or 16
+
+        -- Moving breaks a channel outright - it is why Queue refuses to START
+        -- one while moving, and the same fact ends one that is already running.
+        -- Checked here rather than waited for, because the client announces a
+        -- broken channel through an event this one does not reliably send.
+        local why = nil
+        -- The mob the channel was on is dead or no longer the target. A channel
+        -- cannot outlive its target, and the stop event that would say so is the
+        -- one this client does not reliably send - so without this the guard
+        -- held the NEXT mob for the rest of the old channel's length. Drain Soul
+        -- as the finisher makes that the normal end of every fight: reported as
+        -- a hang on the third mob before any DoT went out.
+        --
+        -- Both id forms are kept, as in the Dark Harvest guard: TargetId flips
+        -- between GUID and name from press to press.
+        local sameTarget = self.chanTarget and (Aegis_SBR:TargetId() == self.chanTarget
+            or (self.chanTargetName and UnitName("target") == self.chanTargetName))
+        if self.chanTarget and not sameTarget then
+            why = "target changed"
+        elseif UnitIsDead("target") then
+            why = "target dead"
+        elseif Aegis_SBR:Moving() then
+            why = "broken by movement"
+        elseif self.chanSpell == "Drain Soul" and self:DrainSoulMustStop(cfg) then
+            -- At the shard cap: the kill inside the channel would make one more.
+            SpellStopCasting()
+            why = "stopped at the shard cap, target about to die"
+        elseif held < limit then
+            if self:Tracing() then
+                self:Trace(string.format("STALL channel %.1fs of %.1fs (%s)",
+                    held, limit, self.chanSpell or "unknown"))
+            end
+            return
+        else
+            why = "released on time, no stop event"
+        end
+        -- Cleared here, or every following press would re-enter this branch and
+        -- re-decide the same way.
+        self.channeling = false
+        self.chanSpell = nil
+        self.dhEnd = nil
+        if self:Tracing() then
+            self:Trace(string.format("channel %s after %.1fs", why, held))
+        end
+    end
+
+    -- Protect a running Dark Harvest channel. While it channels, do nothing so
+    -- neither the wand nor any spell clips it. The 30s cooldown is active for
+    -- the whole channel, so OwnCDReady is false during it. If the target dies
+    -- the cooldown resets to ready, which ends the protection at once and lets
+    -- the next target be channeled immediately.
+    -- The OwnCDReady read lags the actual cast by a tick or two (the client's
+    -- cooldown API is not updated the instant the cast is queued), so trusting
+    -- it right away raced a Rotate() call right after the channel started: it
+    -- still saw the cooldown as "ready" and let another spell through, which
+    -- clipped the channel it had just begun. A short unconditional grace
+    -- window after dhStart closes that race; only past it does an early
+    -- CD-ready reading (an early kill) end the protection ahead of time.
+    -- TargetId returns SuperWoW's GUID when it can and falls back to the unit
+    -- NAME when it cannot, and which of the two comes back varies press to
+    -- press. Comparing only the id therefore dropped the guard at random on a
+    -- target that had not changed - and the rotation, running on past it,
+    -- re-sent Dark Harvest. Three sends inside 2.4s in one measured window.
+    --
+    -- Either form matching is enough to say it is still the same target.
+    local dhSame = self.dhTarget and (self:TargetId() == self.dhTarget
+        or (self.dhTargetName and UnitName("target") == self.dhTargetName))
+    if self.dhEnd and GetTime() < self.dhEnd and dhSame then
+        local since = GetTime() - (self.dhStart or 0)
+        if not self.dhChannelSeen then
+            -- Still inside the window in which the channel may yet announce
+            -- itself. Hold - the old version stopped holding after one second
+            -- and let the next press queue over a Dark Harvest that had not
+            -- been cast yet, which is how it came to be evicted.
+            if since < SEND_GRACE then
+                if self:Tracing() then
+                    self:Trace(string.format("STALL harvest sent %.1fs ago, no channel yet", since))
+                end
+                return
+            end
+            -- The window is up and nothing started. A send is not a channel.
+            if self:Tracing() then
+                self:Trace(string.format("harvest never started, released after %.1fs", since))
+            end
+            self.dhEnd = nil
+            self.dhFailedAt = GetTime()
+        elseif not self:OwnCDReady("Dark Harvest") then
+            if self:Tracing() then
+                self:Trace(string.format("STALL harvest %.1fs left", self.dhEnd - GetTime()))
+            end
+            return
+        end
+    end
+
+    -- Resolve a pending icon observation before anything else reads CurseTex.
+    self:CurseLearnTick()
+
+    -- Past the channel guards, so nothing is running that this could clip.
+    self:StopStrayWand()
+
+    local nightfall = cfg.nightfall or self:HasNightfall()
+
+    -- P0 Nightfall reaction (highest priority): spend the free instant Shadow
+    -- Bolt the moment Shadow Trance procs. This costs no mana, no GCD beyond
+    -- the instant cast itself, and clips nothing, so it is checked before any
+    -- other priority. Left any lower and a channel started first (Drain Life,
+    -- Drain Soul) can burn through the whole proc window before the rotation
+    -- gets back around to it, wasting the proc entirely. Only the FIRST cast
+    -- is instant; the proc is then gone even though the icon can linger, so a
+    -- second cast would be a full-cast Shadow Bolt that clips the rotation.
+    -- Fire on the rising edge only and rearm when the icon clears (a 15s
+    -- ceiling, above the buff's duration, recovers from a missed clear).
+    -- Skipped when Shadow Bolt is already the filler.
+    --
+    -- REVERTED, 2026-09-04. Re-sending while the buff was still up - on the
+    -- reading that a lingering buff proved the bolt had never landed - played
+    -- measurably worse and was taken straight back out. The measurement behind
+    -- it stands (nine sends, the buff surviving every one of them), so the
+    -- reading of WHY is what was wrong: the extra sends cost more than the
+    -- missed procs did. Anything tried here next needs to explain that.
+    if nightfall and cfg.filler ~= "Shadow Bolt" and self:KnowsSpell("Shadow Bolt") then
+        -- Releasing the latch is TranceTick's job, above every guard. All that
+        -- is left here is the decision to spend the proc.
+        if self:ShadowTranceUp() then
+            if self:Tracing() then
+                self:Trace(string.format("trance up spent=%s tl=%s",
+                    self.stConsumed and "Y" or "n",
+                    self:TranceTimeLeft() and string.format("%.1f", self:TranceTimeLeft()) or "?"))
+            end
+            if not self.stConsumed then
+                -- Instant off the proc, so it occupies the client for a global
+                -- cooldown and not for Shadow Bolt's three seconds.
+                local r = self:Queue("Shadow Bolt", "Nightfall proc", 0)
+                if r == "held" then return end
+                if r then
+                    if self:Tracing() then self:Trace("trance SENT Shadow Bolt") end
+                    self:Later(function()
+                        self.stConsumed = true
+                        self.stConsumedAt = GetTime()
+                        -- What the timer read as it was spent, for the
+                        -- comparison in TranceTick.
+                        self.stConsumedTL = self:TranceTimeLeft()
+                    end)
+                    return
+                end
+            end
+        end
+    end
+
+    local hp     = self:PlayerHPPct()
+    local thp    = self:TargetHPPct()
+
+    -- P1 Drain Life self-heal: your survival comes first. Channels Drain Life
+    -- when you drop below the threshold (the drain-tank safety net).
+    -- The channel is five seconds in which no global cooldown is spent, so a
+    -- DoT that runs out during it is five seconds of ticks thrown away - and
+    -- re-applying it afterwards costs the global cooldown that was saved. Dark
+    -- Harvest has topped its DoTs up before channelling since v1.2.6; this is
+    -- the same rule for the same reason, one channel later.
+    --
+    -- Falling through is all that is needed: the DoT ladder is directly below,
+    -- so the press applies what is short and the channel starts on the next one.
+    --
+    -- Except when health is genuinely low. Drain Life at that point is not a
+    -- filler, it is the reason the warlock is still alive, and holding it for a
+    -- DoT refresh would be the wrong trade. Half the configured threshold is
+    -- where it stops waiting for anything.
+    --
+    -- And never held for a DoT the low-mana valve below is about to refuse:
+    -- with mana under the wand floor the ladder does not run, so waiting for
+    -- Corruption meant waiting forever - a log showed a warlock at 29% health
+    -- and 25% mana wanding for a minute with Drain Life held on every press.
+    if cfg.drainLifeSustain and self:KnowsSpell("Drain Life") and hp < (cfg.drainLifeHp or 35) then
+        local urgent = hp < (cfg.drainLifeHp or 35) / 2
+        local valve = self:ManaPct() < (cfg.wandManaFloor or 15)
+        if urgent or valve or self:DotsCoverChannel("Drain Life", cfg) then
+            if self:Queue("Drain Life", "filler, self healing") then return end
+        end
+    end
+
+    -- P2 Health Funnel: keep the pet alive when it drops, but only while you
+    -- can spare the health (it transfers yours to the pet).
+    if cfg.healthFunnel and self:KnowsSpell("Health Funnel")
+        and UnitExists("pet") and not UnitIsDead("pet")
+        and self:PetHPPct() < (cfg.healthFunnelPetHp or 50) and hp > (cfg.healthFunnelHpMin or 45) then
+        if self:Queue("Health Funnel", "pet is hurt") then return end
+    end
+
+    -- P2a Hellfire, on an AoE press only: the pack is ON you - a mob within
+    -- melee range stands in for that, the client cannot count - and Hellfire
+    -- burns everything around you, yourself included, so it needs health to
+    -- spare (its own floor). Ahead of Rain of Fire, which is for a pack you
+    -- are not standing in. A channel like the others: not while moving.
+    if cfg.useHellfire and Aegis_SBR:AoeMode(cfg) and self:KnowsSpell("Hellfire")
+        and not M.casting and self:InMeleeRange()
+        and hp > (cfg.hellfireHp or 50) then
+        if self:Queue("Hellfire", "AoE, the pack is on you") then return end
+    end
+
+    -- P2b Rain of Fire, on an AoE press only (/sbr run aoe, or the profile's
+    -- AoE toggle). Placed under the mouse by the core (Aegis_SBR:CastAtMouse:
+    -- only while the mouse rests on an enemy), sent through Queue so the send
+    -- and channel guards above see it like any other channel. Below the two
+    -- survival steps, above everything single-target.
+    if cfg.useRainOfFire and Aegis_SBR:AoeMode(cfg) and self:KnowsSpell("Rain of Fire")
+        and self:IsReady("Rain of Fire") and not M.casting then
+        if self:CastAtMouse("Rain of Fire", "AoE, under the mouse", function()
+            return self:Queue("Rain of Fire", "AoE, under the mouse")
+        end) then return end
+    end
+
+    -- P3 Shadowburn execute: instant finish under the execute threshold (costs
+    -- a Soul Shard). On a cooldown, so it is gated by IsReady. Also gated on
+    -- actually holding a shard: without one the cast fails in-game while
+    -- IsReady/Queue both still report success, which would stall the rotation
+    -- on a dead attempt instead of falling through to Drain Soul or the filler.
+    if cfg.useShadowburn and self:KnowsSpell("Shadowburn") and self:IsReady("Shadowburn")
+        and thp < (cfg.shadowburnHp or 20) and self:CountSoulShards() > 0 then
+        if self:Queue("Shadowburn", "finisher") then return end
+    end
+
+    -- P4 Drain Soul finisher: channel in the target's last seconds to bank a
+    -- Soul Shard and regen mana. (If both this and Shadowburn are enabled,
+    -- Shadowburn fires first when ready; this fills otherwise.) With
+    -- keepShards on, it stops once shardTarget is banked so it does not keep
+    -- draining a target you could just finish off with the filler.
+    if cfg.useDrainSoul and self:KnowsSpell("Drain Soul") and thp < (cfg.drainSoulHp or 20)
+        and (not cfg.keepShards or self:CountSoulShards() < (cfg.shardTarget or 0)) then
+        if self:Queue("Drain Soul", "filler channel") then return end
+    end
+
+    -- Low-mana safety valve. ApplyDot has no notion of cost, so without this a
+    -- DoT that needs refreshing but cannot be afforded would still be queued,
+    -- fail in-game, and stall the rotation on its throttle window doing
+    -- nothing. Below the floor, prefer Life Tap if it is safe to use (it fixes
+    -- the actual problem); otherwise drop to the wand, which is free and, on a
+    -- target carrying a mana-return debuff (e.g. a paladin's Seal of Wisdom),
+    -- can even help you recover.
+    if self:ManaPct() < (cfg.wandManaFloor or 15) then
+        if self:TapSafe(cfg) then
+            if self:Queue("Life Tap", "mana from health") then return end
+        end
+        if self:HasWand() then
+            if self:WandRepeating() then return end
+            if self:Tracing() then
+                self:Trace(string.format("wandstart ready=%s mana=%.0f hp=%.0f",
+                    tostring(self:IsReady("Shoot")), self:ManaPct(), hp))
+            end
+            self:Shoot("wanding")
+            return
+        end
+    end
+
+    -- Build the ordered DoT list from the enabled, known effects. The order is
+    -- deliberate, and anything switched off simply lets the rest move up:
+    --  1. Immolate, while it is still in use. Its cast time is the point at low
+    --     levels: those extra ~1.5s let the pet build aggro before your own
+    --     damage lands. It is normally switched off around 30, where its
+    --     damage-per-mana falls behind the shadow DoTs and the cast time turns
+    --     from an asset into a cost.
+    --  2. The chosen curse. Curse of Agony's damage is back-loaded, so it needs
+    --     the head start; Curse of the Elements/Shadow amplify damage taken and
+    --     are applied per tick (not snapshot at cast), so landing them before
+    --     the DoTs means every later tick is already buffed.
+    --  3. Corruption. Instant and the strongest of the shadow DoTs, so it goes
+    --     on ahead of Siphon Life (requested by a warlock player; it used to
+    --     come last as the best damage per mana).
+    --  4. Siphon Life.
+    --  5. The Malediction Curse of Agony.
+    -- That is the default. Each DoT has an "order" slider on the panel, and the
+    -- list is sorted by it; equal numbers keep the default order.
+    local order = {}
+    if cfg.useImmolate and not (cfg.immolateStopHp and cfg.immolateStopHp > 0 and thp < cfg.immolateStopHp)
+        and not (cfg.immolateNoAggro and self:HasAggro()) then
+        table.insert(order, { "Immolate", self.dotTex["Immolate"], 3, cfg.orderImmolate or 1, 1 })
+    end
+    if cfg.curse ~= "" then
+        local tex = self:CurseTex(cfg.curse)
+        -- Exact upkeep when the curse is detectable (known icon, or SuperWoW
+        -- name resolution); only a curse we cannot see at all falls back to the
+        -- 20s blind reapply timer.
+        local detectable = tex or Aegis_SBR:CanResolveDebuffNames()
+        table.insert(order, { cfg.curse, tex, detectable and 3 or 20, cfg.orderCurse or 2, 2 })
+    end
+    if cfg.useCorruption then table.insert(order, { "Corruption", self.dotTex["Corruption"], 3, cfg.orderCorruption or 3, 3 }) end
+    if cfg.useSiphonLife then table.insert(order, { "Siphon Life", self.dotTex["Siphon Life"], 3, cfg.orderSiphonLife or 4, 4 }) end
+    -- Malediction secondary curse: with that talent Curse of Agony coexists
+    -- with the main curse, but expires sooner and is otherwise unmonitored.
+    -- When enabled, keep it up on its own. Skipped if the main curse already
+    -- is Curse of Agony, or is Curse of Doom, which the talent does not
+    -- combine with.
+    if cfg.coaSecondary and self:KnowsSpell("Curse of Agony")
+        and cfg.curse ~= "Curse of Agony" and cfg.curse ~= "Curse of Doom" then
+        local coaTex = self:CurseTex("Curse of Agony")
+        local coaDetectable = coaTex or Aegis_SBR:CanResolveDebuffNames()
+        table.insert(order, { "Curse of Agony", coaTex, coaDetectable and 3 or 20, cfg.orderCoaSecondary or 5, 5 })
+    end
+    -- By the panel's order numbers; a tie keeps the default position (5th field).
+    table.sort(order, function(a, b)
+        if a[4] ~= b[4] then return a[4] < b[4] end
+        return a[5] < b[5]
+    end)
+
+    -- Execute phase: stop RE-APPLYING DoTs once the target is nearly dead. A
+    -- fresh DoT never pays its mana back on a mob with seconds to live - Siphon
+    -- Life needs most of its 30s to break even and Curse of Agony's damage is
+    -- back-loaded, so both are pure waste there. Corruption can be exempted
+    -- (dotStopKeepCorruption): it is the shortest and cheapest of them, which
+    -- is exactly why the drain-tank guides keep refreshing that one alone.
+    -- Only re-application stops; DoTs already ticking are never touched, and
+    -- the press falls through to the filler (or Shadowburn / Drain Soul, which
+    -- have already had their own shot above).
+    local dotStopHp = cfg.dotStopHp or 0
+    local dotsSuppressed = dotStopHp > 0 and thp <= dotStopHp
+
+    if self:Tracing() then
+        local up = ""
+        for i = 1, table.getn(order) do
+            local sp, tex = order[i][1], order[i][2]
+            up = up .. " " .. sp .. "=" .. (tex and (self:TargetHasTexture(tex) and "Y" or "n") or "?")
+        end
+        self:Trace("dots" .. up .. " mana=" .. string.format("%.0f", self:ManaPct())
+            .. " dotstop=" .. (dotStopHp > 0 and (dotsSuppressed and "Y" or "n") or "-"))
+    end
+
+    for i = 1, table.getn(order) do
+        local sp, tex, iv = order[i][1], order[i][2], order[i][3]
+        local exempt = cfg.dotStopKeepCorruption and sp == "Corruption"
+        local allowed = (not dotsSuppressed) or exempt
+        if self:KnowsSpell(sp) and allowed then
+            local st = self:ApplyDot(sp, tex, iv)
+            if st == "wait" and self:Tracing() then
+                -- The one early exit that can hold the WHOLE rotation without
+                -- casting anything, which is what a reported "it did nothing for
+                -- two seconds" looks like from outside. Says which of the two
+                -- waits it is: a cast still awaiting confirmation, or the
+                -- interval after a confirmed cast whose debuff is not visible.
+                local rec, pend = self.dotThrottle[sp], self.dotPending[sp]
+                local id = self:TargetId()
+                local kind = "?"
+                if pend and pend.id == id then kind = string.format("unconfirmed %.1fs", GetTime() - pend.t)
+                elseif rec and rec.id == id then kind = string.format("throttle %.1fs of %ds", GetTime() - rec.t, iv) end
+                self:Trace("STALL dot " .. sp .. " " .. kind)
+            end
+            if st == "cast" or st == "wait" then return end
+            -- "up": continue to the next DoT
+        end
+    end
+
+    -- All enabled DoTs up. Optional Life Tap, then the filler.
+    --
+    -- A Dark Harvest that is ready AND affordable goes first, though. The DoT
+    -- top-up in the branch below exists precisely so the channel gets its full
+    -- boosted duration; spending a GCD on Life Tap here eats into that same
+    -- headroom, so by the time the channel would start a DoT has dropped under
+    -- the threshold again and gets re-applied - a second GCD and the mana Life
+    -- Tap had just bought, both wasted. Tapping one press later costs nothing:
+    -- the channel itself is ~7.5s during which no GCD is spent anyway.
+    -- The affordability check matters - without it a channel we cannot pay for
+    -- would be queued, fail in-game, and (its cooldown never having started)
+    -- be retried on the very next press, stalling the rotation instead of
+    -- fixing the mana. Below the cost, Life Tap keeps its turn.
+    local dhFirst = cfg.filler == "Dark Harvest" and self:KnowsSpell("Dark Harvest")
+        and self:OwnCDReady("Dark Harvest") and (UnitMana("player") or 0) >= DH_MANA
+        and not self:DHRetryHeld()
+    -- Drain Mana ahead of Life Tap, against a target that HAS mana: the same
+    -- mana threshold, but paid by the mob rather than by our health. A mob
+    -- without a mana bar, or with an empty one, is never drained - there the
+    -- tap keeps its turn. A channel: not while moving (Queue refuses), and the
+    -- DoTs get their top-up first, as before every other channel.
+    if cfg.drainMana and self:KnowsSpell("Drain Mana") and not dhFirst and not M.casting
+        and self:ManaPct() < (cfg.lifeTapMana or 20)
+        and UnitPowerType("target") == 0 and (UnitMana("target") or 0) > 0 then
+        local lapsing = self:DotLapsingWithin(order, cfg.chanDotRemain or 0, dotsSuppressed)
+        if lapsing then
+            if self:Tracing() then self:Trace("Drain Mana held: " .. lapsing .. " would lapse during it") end
+            self:QueueDot(lapsing, self:TargetId())
+            return
+        end
+        if self:Queue("Drain Mana", "mana from the target") then return end
+    end
+    if not dhFirst and self:ManaPct() < (cfg.lifeTapMana or 20) and self:TapSafe(cfg) then
+        if self:Queue("Life Tap", "mana from health") then return end
+    end
+
+    -- Dark Harvest is cooldown-gated rather than learned/unlearned, so it needs
+    -- its own dispatch ahead of ResolveFiller: channel it the instant it is off
+    -- cooldown, otherwise wand-fill the gap (degrading to Shadow Bolt if no
+    -- wand is equipped) so the rotation is never idle between channels.
+    if cfg.filler == "Dark Harvest" and self:KnowsSpell("Dark Harvest") then
+        -- Moving is handled here rather than at the Queue below, because that
+        -- branch returns either way: refused there, the press would be spent on
+        -- nothing instead of falling through to the gap filler.
+        if self:OwnCDReady("Dark Harvest") and not self:Moving() and not self:DHRetryHeld() then
+            -- Every enabled DoT is already up at this point (the loop above
+            -- only falls through once none of them needed casting). Before
+            -- committing to the channel, make sure none of them will fall off
+            -- partway through it: top up anything estimated to have less than
+            -- DHMinDotRemain() seconds left so the full channel ticks at the
+            -- boosted rate. Unknown remaining time (no duration on file, or no
+            -- cast record for this target) is not treated as urgent, so the
+            -- channel is not blocked on a guess.
+            local minRemain = self:DHMinDotRemain(cfg)
+            if self:Tracing() then
+                local id = self:TargetId()
+                for i = 1, table.getn(order) do
+                    local sp = order[i][1]
+                    if self:KnowsSpell(sp) then
+                        local remain = self:DotRemaining(sp)
+                        local rec = self.dotThrottle[sp]
+                        self:Trace(string.format("DHcheck %s remain=%s min=%.2f rec=%s",
+                            sp, remain and string.format("%.2f", remain) or "nil", minRemain,
+                            (rec and rec.id == id) and "ok" or "missing/other-target"))
+                    end
+                end
+            end
+            -- Skipped entirely in the execute phase: topping a DoT up there is
+            -- the same wasted mana the stop above avoids, and the sooner the
+            -- channel starts on a dying target the better - a target that dies
+            -- mid-channel resets Dark Harvest's cooldown outright.
+            if not dotsSuppressed then
+                for i = 1, table.getn(order) do
+                    local sp = order[i][1]
+                    if self:KnowsSpell(sp) then
+                        local remain = self:DotRemaining(sp)
+                        if remain and remain < minRemain then
+                            self:QueueDot(sp, self:TargetId())
+                            return
+                        end
+                    end
+                end
+            end
+            -- A hold (see Queue: the global cooldown of the DoT just sent is
+            -- still running) is truthy but not a send. Stamped as one, the
+            -- guard at the top of Rotate waited its window for a channel that
+            -- was never sent, declared the send dead, and backed off for
+            -- three seconds - in which the gap channel stood down for a Dark
+            -- Harvest that read as ready. Reported as four seconds of nothing
+            -- after every set of DoTs, and Drain Life never seen.
+            local r = self:Queue("Dark Harvest", "mana from the channel")
+            if r == true then
+                self:Later(function()
+                    self.dhStart = GetTime()
+                    self.dhEnd = self.dhStart + self:DHChannelLength()
+                    self.dhTarget = self:TargetId()
+                    self.dhTargetName = UnitName("target")
+                    -- Nothing seen yet; the channel start event sets this.
+                    self.dhChannelSeen = false
+                end)
+            end
+            return
+        end
+        -- Dark Harvest is on cooldown: fill the gap with the configured choice.
+        local gap = cfg.dhGapFiller or "Shoot"
+        if gap == "Drain Soul" and self:DrainSoulMustStop(cfg) then
+            if self:Tracing() then self:Trace("shards banked and the target dying, no Drain Soul between channels") end
+            gap = "Shoot"
+        end
+
+        -- A CHANNEL in the gap - Drain Life or Drain Soul. The guard at the top
+        -- of Rotate stops the rotation for the channel's whole length, so two
+        -- things have to be true before one starts: no enabled DoT may lapse
+        -- inside it, and Dark Harvest must not come off cooldown mid-channel and
+        -- sit there unpressed.
+        --
+        -- What CHANGED is what happens when they are not true. Both used to fall
+        -- back to the wand - "ride the wand until it is safe" - and Drain Life
+        -- was not checked at all, so it channelled straight over a lapsing DoT
+        -- and over Dark Harvest's return. Reported as the wand still being woven
+        -- in at full mana with Drain Life set as the gap filler.
+        --
+        -- Now a DoT that would lapse is topped up instead, which is what the
+        -- press was needed for anyway, and the wand is left for the one case
+        -- where there is genuinely nothing else: Dark Harvest due back sooner
+        -- than the channel would take.
+        if M.CHANNELED[gap] and self:KnowsSpell(gap) then
+            local len = (gap == "Drain Soul") and self:DSChannelLength()
+                or (self:ChannelLength(gap) or 0)
+            -- The gap channel does nothing for the DoTs, so this asks the
+            -- player's margin for ordinary channels - NOT the channel's length,
+            -- which is still what the overrun test below needs.
+            local lapsing = self:DotLapsingWithin(order, cfg.chanDotRemain or 0, dotsSuppressed)
+            if lapsing then
+                if self:Tracing() then
+                    self:Trace("gap channel held: " .. lapsing .. " would lapse during it")
+                end
+                self:QueueDot(lapsing, self:TargetId())
+                return
+            end
+            -- How far this channel would run past Dark Harvest's return.
+            --
+            -- Requiring it to fit ENTIRELY was the first rule here and it was
+            -- too strict. Dark Harvest cycles every 30s and channels for 7.5;
+            -- Drain Life is 4.7. Four fit in the gap, and the ~3.7s left over
+            -- went to the wand - which is what "the wand still gets woven in
+            -- despite the setting" is.
+            --
+            -- The trade is not close. Waiting costs almost the whole value of a
+            -- Drain Life; overrunning costs Dark Harvest a few seconds of delay,
+            -- once per cycle. A channel tick beats a wand shot.
+            --
+            -- The guard still matters for Drain Soul, which runs 15s and could
+            -- hold Dark Harvest up for half its cooldown. So the limit is on the
+            -- OVERRUN rather than on fitting: a short channel goes ahead, a long
+            -- one stands down.
+            -- While a failed send backs off, Dark Harvest is not coming back
+            -- before the backoff ends whatever its cooldown says.
+            local dhBack = self:OwnCDLeft("Dark Harvest")
+            if self.dhFailedAt then
+                local left = DH_RETRY_BACKOFF - (GetTime() - self.dhFailedAt)
+                if left > dhBack then dhBack = left end
+            end
+            local overrun = len - dhBack
+            if overrun <= DH_OVERRUN_MAX then
+                if self:TapBeforeDrain(cfg, gap) then return end
+                if self:Queue(gap, "gap channel") then return end
+                -- Refused (moving, out of range, locked out - see ChannelRefusal).
+                if MoveRefusal(self:ChannelRefusal(gap)) then return end
+                if self:HasWand() and not self:Wanding() then
+                    self:Shoot("wanding, channel refused")
+                    return
+                end
+            elseif self:Tracing() then
+                self:Trace(string.format(
+                    "gap channel held: would overrun Dark Harvest by %.1fs", overrun))
+            end
+            gap = "Shoot"
+        end
+        if gap == "Shadow Bolt" and self:KnowsSpell("Shadow Bolt") then
+            self:Queue("Shadow Bolt", "filler nuke")
+            return
+        end
+
+        if self:HasWand() then
+            if self:DotExpiringSoon(order) then
+                if self:Wanding() then self:Shoot("stopping the wand for a DoT", true) end -- toggles the repeat off
+                return
+            end
+            if self:WandRepeating() then return end
+            self:Shoot(gap == "Shoot" and "wanding, gap filler" or "wanding, gap unavailable")
+        elseif self:KnowsSpell("Shadow Bolt") and self:HardCastBoltOK(cfg) then
+            self:Queue("Shadow Bolt", "filler nuke")
+        end
+        return
+    end
+
+    local filler = self:ResolveFiller(cfg)
+    if filler == "Shoot" then
+        if self:DotExpiringSoon(order) then
+            -- A tracked DoT is about to fall off. Stop feeding the wand (or
+            -- don't start it) instead of risking the recast racing a shot
+            -- already in flight - Shoot toggles the repeat off when cast
+            -- again while it is already running.
+            if self:Wanding() then self:Shoot("stopping the wand for a DoT", true) end
+            return
+        end
+        -- spammable wand, only start it if it is not already auto repeating
+        if self:WandRepeating() then return end
+        self:Shoot("wanding")
+    elseif filler == "Drain Soul" and self:DrainSoulMustStop(cfg) then
+        -- Shards banked and the target about to die: a Drain Soul now would
+        -- make a shard over the cap. The wand, or Shadow Bolt without one.
+        if self:Tracing() then self:Trace("shards banked and the target dying, no Drain Soul") end
+        if self:HasWand() then
+            if not self:WandRepeating() then self:Shoot("wanding, shards banked") end
+        elseif self:KnowsSpell("Shadow Bolt") and self:HardCastBoltOK(cfg) then
+            self:Queue("Shadow Bolt", "filler nuke")
+        end
+    elseif filler == "Drain Soul" then
+        -- Same channel caution as the Dark Harvest gap filler, minus the
+        -- cooldown half: there is no Dark Harvest to be held up here, only the
+        -- DoTs, which cannot be refreshed while the channel guard is holding
+        -- the rotation. Anything due inside the channel has to go out first.
+        --
+        -- TOP THE DOT UP, rather than falling through to the wand. This branch
+        -- was the only one of the three that did not, and the cost was measured:
+        -- with four DoTs running, one is nearly always inside the channel's own
+        -- length, so the channel was blocked almost every press - and the wand it
+        -- fell through to is refused while an affordable channel filler is set.
+        -- The press did nothing at all. Three runs in one session, the longest 25
+        -- consecutive presses over 4.3 seconds at 85% mana.
+        --
+        -- Refreshing costs one press and produces something; the channel then
+        -- starts on the next one with the DoT long enough to survive it. That is
+        -- what the Dark Harvest gap filler and the plain channel filler have both
+        -- done since v1.2.6.
+        local dsNeed = cfg.chanDotRemain or 0
+        local lapsing = self:DotLapsingWithin(order, dsNeed, dotsSuppressed)
+        if lapsing then
+            if self:Tracing() then
+                self:Trace(string.format("filler channel held: %s lapses inside %.1fs",
+                    lapsing, dsNeed))
+            end
+            self:QueueDot(lapsing, self:TargetId())
+            return
+        end
+        if self:Queue("Drain Soul", "filler channel") then return end
+        if self:HasWand() then
+            if self:WandRepeating() then return end
+            self:Shoot("wanding")
+        elseif self:KnowsSpell("Shadow Bolt") and self:HardCastBoltOK(cfg) then
+            self:Queue("Shadow Bolt", "filler nuke")
+        end
+    elseif filler and M.CHANNELED[filler] then
+        -- A CHANNEL as the configured filler, which is a different job from the
+        -- Dark Harvest branch above: Dark Harvest has a cooldown, so there is a
+        -- gap between channels that something has to fill. Drain Life and the
+        -- others have none. There is no gap - the right behaviour is to start
+        -- the next one as soon as the last ends, and to stop only when a DoT
+        -- needs the press.
+        --
+        -- Reported: with Drain Life as the filler the rotation wove the wand in
+        -- between channels. It fell into the generic branch below, whose only
+        -- answer to "cannot channel right now" was the wand.
+        --
+        -- A DoT that would lapse DURING the channel is topped up first rather
+        -- than waited out on the wand - the same rule Dark Harvest has used
+        -- since v1.2.6, and for the same reason: the channel guard stops the
+        -- rotation for its whole length, so anything due inside it has to go out
+        -- before it starts.
+        local len = cfg.chanDotRemain or 0
+        if not dotsSuppressed then
+            for i = 1, table.getn(order) do
+                local sp = order[i][1]
+                if self:KnowsSpell(sp) then
+                    local remain = self:DotRemaining(sp)
+                    if remain and remain < len then
+                        if self:Tracing() then
+                            self:Trace(string.format("filler channel held: %s has %.1fs of %.1fs",
+                                sp, remain, len))
+                        end
+                        self:QueueDot(sp, self:TargetId())
+                        return
+                    end
+                end
+            end
+        end
+        if self:TapBeforeDrain(cfg, filler) then return end
+        if self:Queue(filler, "filler channel") then return end
+        -- Refused - moving, out of the channel's range, or a target that takes
+        -- no life drain. The wand is the one ranged attack that costs nothing
+        -- to give up - except for movement, where it cannot shoot either.
+        if MoveRefusal(self:ChannelRefusal(filler)) then return end
+        if self:HasWand() and not self:Wanding() then self:Shoot("wanding, channel refused") end
+    elseif filler then
+        if self:Queue(filler, "filler") then return end
+        if self:HasWand() and not self:Wanding() then self:Shoot("wanding, filler refused") end
+    end
+end
+
+-- ============================================================
+-- Class specific slash subcommands, dispatched from the core
+-- ============================================================
+function M:HandleCommand(cmd, t)
+    if cmd == "curse" then
+        local curse = self.curseAlias[string.lower(t[2] or "")]
+        local cfg = Aegis_SBR:GetActiveProfile()
+        if cfg and curse ~= nil then
+            cfg.curse = curse
+            msgOut("curse = " .. ((curse == "") and "(none)" or curse) .. ".")
+        else
+            msgOut("usage: /sbr curse <agony|elements|shadow|weakness|recklessness|tongues|doom|none>", 1, 0.5, 0.3)
+        end
+        return true
+    end
+    return false
+end
+
+-- ============================================================
+-- Talent cache invalidation. Cleared at login and whenever talent points
+-- change, so TalentRank() (used for Nightfall detection) re-reads fresh data
+-- on its next call. Same approach as the paladin.
+-- ============================================================
+local talentFrame = CreateFrame("Frame")
+talentFrame:RegisterEvent("PLAYER_LOGIN")
+talentFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+talentFrame:RegisterEvent("CHARACTER_POINTS_CHANGED")
+talentFrame:SetScript("OnEvent", function()
+    M.talentCache = nil
+end)

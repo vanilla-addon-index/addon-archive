@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/LukeElrod/AutoConfirm",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "LukeElrod",
+    "repo": "AutoConfirm",
+    "name": "AutoConfirm",
+    "url": "https://github.com/LukeElrod/AutoConfirm",
+    "api": "https://api.github.com/repos/LukeElrod/AutoConfirm"
+  },
+  "commit": "fe4495d0d32a1d208900a6fed1de8a05af844329",
+  "sourceFiles": {
+    "AutoConfirm.toc": {
+      "sha256": "3b4073cf50718a41a6e86f19c98ad8b500d7001433fb52316213083f0066004a",
+      "bytes": 179
+    },
+    "Core.lua": {
+      "sha256": "b3407cb87a1ccb1ccedc12d49af5f8dd8ff6e4d191446c265a1f78e5ec2712a5",
+      "bytes": 6319
+    },
+    "Options.lua": {
+      "sha256": "eca5c96240427ec615ca13add181c383dee800956b29885130754400e4cc90af",
+      "bytes": 4633
+    },
+    "readme.md": {
+      "sha256": "2db9e8aa29290e939439ce4d6ec723994ba1d3301e5249f065c9fc58e8b98a9b",
+      "bytes": 748
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

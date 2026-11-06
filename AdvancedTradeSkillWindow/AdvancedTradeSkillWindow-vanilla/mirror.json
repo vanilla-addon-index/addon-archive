@@ -1,0 +1,89 @@
+{
+  "upstream": "https://github.com/KameleonUK/AdvancedTradeSkillWindow-vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "KameleonUK",
+    "repo": "AdvancedTradeSkillWindow-vanilla",
+    "name": "AdvancedTradeSkillWindow-vanilla",
+    "url": "https://github.com/KameleonUK/AdvancedTradeSkillWindow-vanilla",
+    "api": "https://api.github.com/repos/KameleonUK/AdvancedTradeSkillWindow-vanilla"
+  },
+  "commit": "5aa0e5a3c6791bb8c3c2d08f7518874e129cb6c7",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    ".gitignore.upstream": {
+      "sha256": "cea207e4ec711cfaa43d397dcf886592239eb5719212833ece2bc588f3d5760d",
+      "bytes": 9
+    },
+    "AdvancedTradeSkillWindow/AdvancedTradeSkillWindow.toc": {
+      "sha256": "016cc67451e4ab66903aeef1117b7613fffbcf363cb1cdd829352c1d3aab1395",
+      "bytes": 689
+    },
+    "AdvancedTradeSkillWindow/atsw_abstraction.lua": {
+      "sha256": "fc107a72307ce99033a6f4b4dd7bc5e4ecf2891b9936f3aee2ac76abd4abc3b1",
+      "bytes": 3418
+    },
+    "AdvancedTradeSkillWindow/atsw_customsorting.lua": {
+      "sha256": "9291c4b2048e395ef8b9a319f7dd29944c5643c45ed5631152f876e78da5c519",
+      "bytes": 17654
+    },
+    "AdvancedTradeSkillWindow/atsw_customsorting.xml": {
+      "sha256": "bb6c5ca7f96eceda85bfc8607744b4ae557948298a12578a40175817b458498b",
+      "bytes": 26795
+    },
+    "AdvancedTradeSkillWindow/atsw_language.lua": {
+      "sha256": "01f765f6dd6579e171777f67da81a2caab17ba8b48d1e892208d0aef0cf73fb4",
+      "bytes": 21763
+    },
+    "AdvancedTradeSkillWindow/atsw.lua": {
+      "sha256": "cb311c8b57950d4aeff0dfd24ead9e5ed5b9813efb45f116aa4707946c918333",
+      "bytes": 107077
+    },
+    "AdvancedTradeSkillWindow/atsw.xml": {
+      "sha256": "6671ab5ed95de561e4180950084860d2eaae5622e794443f02aab2771d388c54",
+      "bytes": 149197
+    },
+    "AdvancedTradeSkillWindow/README.txt": {
+      "sha256": "4eefd571c9d2558fb1ddbd6dfae149ca0c05127fe588aeea44afcb64a990c3d5",
+      "bytes": 14874
+    },
+    "AdvancedTradeSkillWindow/UI-TaxiFrame-BotLeftReplacement.blp": {
+      "sha256": "8a31d7c314fca7d01bba038aa20c1fe2ffd207d76385f80c919d7a5c14ea5894",
+      "bytes": 88580
+    },
+    "AdvancedTradeSkillWindow/UI-TaxiFrame-BotRightReplacement.blp": {
+      "sha256": "56d2f4b6f8198db2127a5f1934103f282b51987dc2672e009045ed0a94c452d8",
+      "bytes": 44900
+    },
+    "AdvancedTradeSkillWindow/UI-TaxiFrame-BotRightReplacement2.blp": {
+      "sha256": "cf5aa97ce7fc0d7b4abbc47e29f79630f7fea2ee5b3409c4787b712e460a6c9a",
+      "bytes": 88580
+    },
+    "AdvancedTradeSkillWindow/UI-TaxiFrame-InBetween1.blp": {
+      "sha256": "9aaf1af9cb9b1ffeb28e2b8def2e74fc1822d4ed4b073a2d5dbb4213d216b3a6",
+      "bytes": 88612
+    },
+    "AdvancedTradeSkillWindow/UI-TaxiFrame-InBetween2.blp": {
+      "sha256": "61b03704e882ff52378cff026b0155e42fd0ad5a38a23b361bc135cd2797fa7e",
+      "bytes": 175972
+    },
+    "AdvancedTradeSkillWindow/UI-TaxiFrame-TopLeftReplacement2.blp": {
+      "sha256": "414e1a9a62e3c09a05db9f038d2489295b92adff53bf740cec2626ace3be6a0f",
+      "bytes": 88580
+    },
+    "AdvancedTradeSkillWindow/UI-TaxiFrame-TopRightReplacement2.blp": {
+      "sha256": "d5a73ca908cd8c68541045efbc97a470cff8e6ce92be5febe8b7b663fe30800d",
+      "bytes": 88580
+    },
+    "README.md": {
+      "sha256": "0a953e58e11816319d40a608ea11ed924765c48828ead0990de6de6d86d9793e",
+      "bytes": 5752
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

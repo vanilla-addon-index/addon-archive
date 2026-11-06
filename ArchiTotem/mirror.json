@@ -1,0 +1,69 @@
+{
+  "upstream": "https://github.com/codeshard/ArchiTotem",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "codeshard",
+    "repo": "ArchiTotem",
+    "name": "ArchiTotem",
+    "url": "https://github.com/codeshard/ArchiTotem",
+    "api": "https://api.github.com/repos/codeshard/ArchiTotem"
+  },
+  "commit": "b2aa56ca6ba10b52bcf3cdb7eb91c43f3a822abc",
+  "sourceFiles": {
+    ".github/workflows/release.yaml": {
+      "sha256": "fe90f6157e023a0a8b8ca46d874149051ed5f9966f2dc258876dd8c7e82e2424",
+      "bytes": 1137
+    },
+    ".gitignore.upstream": {
+      "sha256": "6b67a8aefe6f764d3aa6c0dbcf7aa0d917355ca9e5685f1ac406c061bed35966",
+      "bytes": 12
+    },
+    "ArchiTotem.lua": {
+      "sha256": "8be834b3c4dd95caaf982e3d666f9129a0f86abb1058f9345f3a5561bd7bd2c7",
+      "bytes": 31897
+    },
+    "ArchiTotem.toc": {
+      "sha256": "7b752a97ab168352f0b469fcc2405e569694b2636f3dfc8f51fdeb767cb32da8",
+      "bytes": 389
+    },
+    "ArchiTotem.xml": {
+      "sha256": "4b4d3bebc1967c90e8c433ab099ddc93ae2d4e81eacf027227eadcefe87e7597",
+      "bytes": 6128
+    },
+    "Bindings.xml": {
+      "sha256": "2b3f5f5c809af93ff405ed502562dc2837ea5a81714325fe88cc2d8daeefc478",
+      "bytes": 1564
+    },
+    "Changelog.txt": {
+      "sha256": "ac9af6ea44dc465712e05f8a7f1674e02dd5d7e82d07a6e4880009681c62a7ca",
+      "bytes": 2589
+    },
+    "Locale/Localization.lua": {
+      "sha256": "658d00b2724bd8406c5adb722c156fcf84056f069a710b5245849b71bb6bb8a0",
+      "bytes": 5783
+    },
+    "Locale/Localization.xml": {
+      "sha256": "fc4713e389a6cd575fc4c917a5ac0562faf37a1c6fb7f04602d5d679a902de16",
+      "bytes": 212
+    },
+    "README.md": {
+      "sha256": "e0d95f526666b9f70c50ffbab9ac361dfd37c3e00f1bfa5664bcd8209206166c",
+      "bytes": 2473
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "193846804": {
+      "tag": "v1.6.3",
+      "folder": "v1.6.3--193846804",
+      "assets": {},
+      "source": {
+        "sha256": "fb92a4aa2f7cde7db8c930a35a403eee35f7738cf936f955743689f0a11eaacc",
+        "bytes": 11900,
+        "path": "releases/v1.6.3--193846804/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/codeshard/ArchiTotem/tarball/v1.6.3"
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+# BigWigsMods/packager manifest.
+#
+# package-as pins the FOLDER NAME the zip installs as. A 1.12 client loads an
+# addon from the folder named after its .toc, and the packager otherwise names
+# that folder after the repository - which was RallyPowerCP when this was
+# written and is Aegis_RallyPower now. Stating it means a future rename cannot
+# ship a zip that installs and never loads.
+package-as: Aegis_RallyPower
+
+manual-changelog:
+    filename: RELEASE_NOTES.md
+    markup-type: markdown
+
+# Development-only. Everything else ships, including the vendored PallyPower
+# engine, the media folders and Bindings.xml.
+ignore:
+    - .github
+    - .gitignore
+    - CLAUDE.md
+    - docs
+    - scripts

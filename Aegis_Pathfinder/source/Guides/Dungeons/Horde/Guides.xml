@@ -1,0 +1,25 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+	<!-- Horde dungeon guides: written by Tools/build/build_dungeon_guides.py -->
+	<Script file="BFD.lua"/>
+	<Script file="BRD.lua"/>
+	<Script file="CG.lua"/>
+	<Script file="DM.lua"/>
+	<Script file="DMR.lua"/>
+	<Script file="FH.lua"/>
+	<Script file="GC.lua"/>
+	<Script file="GNOMER.lua"/>
+	<Script file="HQ.lua"/>
+	<Script file="MARA.lua"/>
+	<Script file="RFC.lua"/>
+	<Script file="RFD.lua"/>
+	<Script file="RFK.lua"/>
+	<Script file="SFK.lua"/>
+	<Script file="SM.lua"/>
+	<Script file="ST.lua"/>
+	<Script file="SWR.lua"/>
+	<Script file="ULDA.lua"/>
+	<Script file="WC.lua"/>
+	<Script file="WHC.lua"/>
+	<Script file="ZF.lua"/>
+</Ui>

@@ -1,0 +1,45 @@
+{
+  "upstream": "https://gitlab.com/aead/aBindings",
+  "source": {
+    "kind": "repository",
+    "host": "gitlab.com",
+    "owner": "aead",
+    "repo": "aBindings",
+    "name": "aBindings",
+    "url": "https://gitlab.com/aead/aBindings",
+    "api": "https://gitlab.com/api/v4/projects/aead%2FaBindings"
+  },
+  "commit": "86766d4764fb0834079ef21e77d13a8de96b0bb9",
+  "sourceFiles": {
+    "aBindings.toc": {
+      "sha256": "58f135b80bd1a31c6e54c725d99ca34c8fc04b5609311b8b5688b65c1d05b1c2",
+      "bytes": 192
+    },
+    "bindings/common.lua": {
+      "sha256": "b93ea9b4fcabc8b3f7a4dbcdcb74649e59dbfa74d16e3d582f7a069e54254afa",
+      "bytes": 24
+    },
+    "bindings/druid.lua": {
+      "sha256": "6eb895d78de35eff9f7882d27ba085d02e4ad745f77f98601a0a699364410981",
+      "bytes": 3779
+    },
+    "bindings/mage.lua": {
+      "sha256": "f2067f1d064571a81b3dc83474166faf16bec1a156b7c31187cbef15aa147059",
+      "bytes": 2848
+    },
+    "bindings/rogue.lua": {
+      "sha256": "7b57f2a39efe11a31a04c0737b2f7f1094a9fcd2d2e86f6668a4f4bbfa581768",
+      "bytes": 3290
+    },
+    "bindings.xml": {
+      "sha256": "011c7dac8828aeffe50add548a33c130f1d23e2bc2776b674df88a3d0e2f0c76",
+      "bytes": 6116
+    },
+    "main.lua": {
+      "sha256": "d57d69501f4cb178c70b452be46eb308585576a374a04ebae6f8a3474a931586",
+      "bytes": 1280
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

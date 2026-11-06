@@ -1,0 +1,2912 @@
+-- Aegis: Exchange
+-- core/sell.lua
+--
+-- Posting engine: wraps the 1.12 create-auction API (each call verified against
+-- the Turtle UI source) and layers Aegis price context + Turtle specifics on
+-- top. The UI lives in ui/frame.lua's Sell tab, exactly as the scanner engine
+-- (core/scan.lua) is driven from the Scan tab.
+--
+-- 1.12 API used here (all globals, valid while the AH SESSION is open —
+-- independent of whether the Blizzard AuctionFrame is shown):
+--   ClickAuctionSellItemButton()       -- move the cursor item into the sell slot
+--   GetAuctionSellItemInfo()           -> name, texture, count, quality, canUse,
+--                                         price, maxStack, link   (8 values)
+--   CalculateAuctionDeposit(minutes)   -- client deposit math for the slot item
+--   StartAuction(minBid, buyout, mins) -- COPPER for the WHOLE stack in the slot;
+--                                         mins is 120 / 480 / 1440
+--   GetNumAuctionItems("owner")        -> batch, total (total = your auctions)
+--
+-- Turtle specifics (CLAUDE.md): durations are x3, so 120/480/1440 minutes are
+-- really 6h / 24h / 72h; 120-auction account cap; 5% consignment cut on sales;
+-- and the shown deposit is inflated -- we scale it by ~0.6 and ALWAYS label it
+-- "approx", never exact.
+
+local A = AegisExchange
+A.sell = {}
+local sell = A.sell
+local util = A.util
+
+-- Duration options. `minutes` is what the client / StartAuction expects;
+-- `label` is the Turtle-real time (x3) we actually SHOW.
+sell.DURATIONS = {
+    { minutes = 120,  label = "6h"  },
+    { minutes = 480,  label = "24h" },
+    { minutes = 1440, label = "72h" },
+}
+sell.DEFAULT_DURATION = 480   -- 24h, matching the stock UI's default radio
+
+sell.CAP = 120     -- Turtle account-wide auction cap
+sell.CUT = 0.05    -- 5% consignment cut taken on a sale
+
+-- THE VANILLA DEPOSIT FORMULA, which is not a guess:
+--
+--   floor(vendorUnit * rate * stackSize) * stackCount * (minutes / 120)
+--
+-- `rate` is 5% at your own faction's auction house and 25% at a neutral one --
+-- the neutral penalty, which this addon ignored entirely until now and which
+-- makes a real difference to whether a posting is worth it. `minutes / 120`
+-- turns the duration into units of two hours: 1, 4, 12 in vanilla.
+--
+-- This replaces a home-grown 2.5% plus a stack-size fudge that appeared in no
+-- client and matched nothing. aux uses the formula above, and it is what the
+-- vanilla client's own CalculateAuctionDeposit computes.
+sell.DEPOSIT_RATE_HOME    = 0.05
+sell.DEPOSIT_RATE_NEUTRAL = 0.25
+
+-- Turtle's shown deposit is inflated relative to what actually gets charged;
+-- scale by this to approximate. The result is ALWAYS presented as "approx".
+--
+-- STILL A GUESS, and now only a STARTING guess: sell.ChargeFactor prefers a
+-- ratio measured from the money that actually left the bags (see the deposit
+-- watch below), and falls back to this only until the player has posted
+-- something. Do not tune the constant -- post an auction and let it learn.
+sell.TURTLE_DEPOSIT_FACTOR = 0.6
+
+-- Bounds on a learned ratio. Anything outside this band is not a calibration,
+-- it is a bad reading: a vendor price for the wrong item, a charge-item stack,
+-- a client that answered zero, or money that moved for some other reason in
+-- the same frame. Discard it rather than average it in.
+sell.RATIO_MIN = 0.1
+sell.RATIO_MAX = 3.0
+
+-- Our formula against the client's own CalculateAuctionDeposit, for the same
+-- item, stack and duration. Pure; nil when either side has nothing to say or
+-- the answer is not believable.
+--
+-- WHY THIS EXISTS. On a real Turtle client the two disagreed by roughly 2x:
+-- for a 2s50c vendor item at 480 minutes the client said 25 and the vanilla
+-- formula said 48. Both figures are the CLIENT's, so the disagreement is not
+-- about what the server charges -- it is our arithmetic being wrong for this
+-- server. The slot could ask the client directly and the bag preview could
+-- not, so the two paths showed different numbers for the same item. Rather
+-- than tune a second constant by hand, learn the ratio wherever both answers
+-- are available and apply it where only the formula is.
+function sell.DepositRatio(clientCopper, formulaCopper)
+    if not clientCopper or not formulaCopper then return nil end
+    if clientCopper <= 0 or formulaCopper <= 0 then return nil end
+    local r = clientCopper / formulaCopper
+    if r < sell.RATIO_MIN or r > sell.RATIO_MAX then return nil end
+    return r
+end
+
+-- What to multiply a formula result by so it agrees with the client.
+-- Returns factor, measured.
+function sell.FormulaScale()
+    local r = A.db and A.db.DepositRatio and A.db.DepositRatio()
+    if r then return r, true end
+    return 1, false
+end
+
+-- What fraction of the client's deposit actually leaves your bags.
+-- Returns factor, measured.
+function sell.ChargeFactor()
+    if not A.isTurtle then return 1, false end
+    local r = A.db and A.db.DepositCharge and A.db.DepositCharge()
+    if r then return r, true end
+    return sell.TURTLE_DEPOSIT_FACTOR, false
+end
+
+-- Which rate applies where the player is standing. UnitFactionGroup("npc")
+-- answers only at a faction auctioneer; at a neutral one it is nil.
+function sell.DepositRate()
+    if UnitFactionGroup and UnitFactionGroup("npc") then
+        return sell.DEPOSIT_RATE_HOME
+    end
+    return sell.DEPOSIT_RATE_NEUTRAL
+end
+
+-- The formula itself, with nothing read from the world. One writer, so the
+-- slotted path and the bag preview cannot drift apart -- which is how they
+-- came to disagree in the first place.
+function sell.DepositAmount(vendorUnit, stackSize, stackCount, minutes, rate)
+    if not vendorUnit or vendorUnit <= 0 then return nil end
+    if not minutes or minutes <= 0 then return nil end
+    stackSize  = stackSize  or 1
+    stackCount = stackCount or 1
+    rate = rate or sell.DepositRate()
+    return math.floor(vendorUnit * rate * stackSize)
+        * stackCount * (minutes / 120)
+end
+
+-- ---------------------------------------------------------------------------
+-- Reads
+-- ---------------------------------------------------------------------------
+
+-- Normalized view of the item currently in the sell slot, or nil if empty.
+function sell.GetItem()
+    local name, texture, count, quality, canUse, price, maxStack, link =
+        GetAuctionSellItemInfo()
+    if not name then return nil end
+    count = count or 1
+    local itemId = link and util.ItemIdFromLink(link) or nil
+    -- IN ITEMS. A charge item reports its charges as the count, and every
+    -- reader of this -- the post's buyout (unit x count), the posting book,
+    -- the vendor price per unit, the assembler's "is this the stack I asked
+    -- for" -- means items. A client with no link here still names the item,
+    -- and the name map knows its id.
+    local unitsId = itemId
+        or (A.db and A.db.IdFromName and A.db.IdFromName(name))
+    local units = util.ItemUnits(unitsId, count)
+    return {
+        name     = name,
+        texture  = texture,
+        count    = units,
+        -- What the client said, when that was charges rather than items.
+        charges  = (units ~= count) and count or nil,
+        quality  = quality,
+        canUse   = canUse,
+        price    = price or 0,          -- vendor deposit-base for the whole stack
+        maxStack = maxStack or units,
+        link     = link,
+        itemId   = itemId,
+    }
+end
+
+-- ---------------------------------------------------------------------------
+-- Vendor price, learned from the SELL SLOT
+-- ---------------------------------------------------------------------------
+--
+-- GetAuctionSellItemInfo's 6th return is the item's VENDOR price for the whole
+-- stack in the slot -- the client states it, we do not derive it. sell.GetItem
+-- has always read it (as `price`, the deposit base) and thrown it away.
+--
+-- It is worth keeping because it is the one vendor-price source that costs the
+-- player nothing. Learning at a merchant needs them to walk to a merchant with
+-- the item in their bags; ClassicAPI needs a DLL. This needs them to do the
+-- thing they already opened the auction house to do. Every item anyone ever
+-- posts teaches its exact vendor price.
+--
+-- CHARGE ITEMS. The client reports the FULL-charge price here, and the count
+-- beside it is the item's charges. sell.GetItem turns that count into items --
+-- one Wizard Oil is one -- so the division below gives the price of one whole
+-- item, which is what a merchant pays for an unused one. A partly-used one
+-- still resolves at that full price (aux carries the same exposure and ships
+-- it); a merchant-learned price for the same item overwrites it, and that one
+-- is exact.
+
+-- itemId and per-unit vendor price for whatever is in the sell slot, or nil.
+--
+-- Split out from the recording so the arithmetic is testable without a DB: the
+-- whole function is one division and one floor, and both have been got wrong in
+-- this file before (a stack price shown as a unit price).
+function sell.VendorUnitFromSlot()
+    local it = sell.GetItem()
+    if not it or not it.itemId then return nil end
+    local count = it.count or 1
+    if count < 1 then return nil end
+    -- price 0 means "this cannot be sold to a vendor", which is a fact about
+    -- the item and NOT a price of zero. Recording it would make db.GetVendor
+    -- answer 0 for grey vendor trash it simply has not seen properly.
+    if not it.price or it.price <= 0 then return nil end
+    return it.itemId, math.floor(it.price / count)
+end
+
+-- Record it. Safe to call on every NEW_AUCTION_UPDATE: one API read, one
+-- division, one table write, and nothing when the slot is empty. See HARD
+-- RULE 16 -- this is the O(1) shape, not the dirty-flag one.
+function sell.LearnVendorFromSlot()
+    local itemId, unit = sell.VendorUnitFromSlot()
+    if not itemId or not unit or unit <= 0 then return nil end
+    if A.db and A.db.SetVendor then A.db.SetVendor(itemId, unit) end
+    return itemId, unit
+end
+
+-- ---------------------------------------------------------------------------
+-- Vendor BUY prices: what a merchant CHARGES
+-- ---------------------------------------------------------------------------
+
+-- Merchant pages are small (the client shows ten at a time and vanilla vendors
+-- rarely exceed a few dozen lines), but a cap costs nothing and means a server
+-- that reports a nonsense count cannot hang the client.
+sell.MERCHANT_MAX = 200
+
+-- One merchant line, normalised. Returns itemId, unit copper, limited -- or
+-- nil for a line we should not learn from.
+--
+-- Two things get skipped, and both would otherwise poison the table:
+--   * `price` 0, which is not free -- it is what an EXTENDED-COST item shows,
+--     the ones bought with honour, marks or tokens. Recording zero would make
+--     every such item look like the cheapest source in the game.
+--   * a quantity of 0 or less, because the unit price is price / quantity and
+--     a vendor selling in bundles of five is the normal case, not the odd one.
+function sell.MerchantLine(index)
+    if not GetMerchantItemInfo then return nil end
+    local name, texture, price, quantity, numAvailable = GetMerchantItemInfo(index)
+    if not name then return nil end
+    if not price or price <= 0 then return nil end
+    quantity = quantity or 1
+    if quantity < 1 then return nil end
+    local link = GetMerchantItemLink and GetMerchantItemLink(index)
+    local itemId = link and util.ItemIdFromLink(link)
+    if not itemId then return nil end
+    -- -1 is the client's "unlimited". ANY number, zero included, means finite
+    -- supply -- a vendor that is sold out right now still has limited stock.
+    local limited = (numAvailable or -1) >= 0
+    return itemId, math.floor(price / quantity), limited
+end
+
+-- Walk the open merchant's inventory and record what it charges.
+--
+-- HARD RULE 16: this is the BOUNDED shape. MERCHANT_SHOW fires once per
+-- merchant, the loop is capped, and every call inside it is a cheap client
+-- read -- no GetItemInfo, no tooltip, no list repaint. Returns how many lines
+-- it learned from.
+function sell.ScanMerchant()
+    if not GetMerchantNumItems then return 0 end
+    local n = GetMerchantNumItems() or 0
+    if n > sell.MERCHANT_MAX then n = sell.MERCHANT_MAX end
+    local learned, i = 0, 1
+    while i <= n do
+        local itemId, unit, limited = sell.MerchantLine(i)
+        if itemId and unit and unit > 0 then
+            if A.db and A.db.SetVendorBuy then
+                A.db.SetVendorBuy(itemId, unit, limited)
+            end
+            learned = learned + 1
+        end
+        i = i + 1
+    end
+    return learned
+end
+
+-- ---------------------------------------------------------------------------
+-- Inventory sweeps: what is in the bags, and what is in the bank
+-- ---------------------------------------------------------------------------
+
+-- The bank's containers. BANK_CONTAINER is -1 (the bank's own slots) and the
+-- purchased bank bags are 5..10. NONE of them answer unless the bank frame is
+-- open -- which is the whole reason the bank is a snapshot rather than a read.
+sell.BANK_CONTAINERS = { -1, 5, 6, 7, 8, 9, 10 }
+sell.BAG_CONTAINERS  = { 0, 1, 2, 3, 4 }
+
+-- Count every item across a list of containers.
+--
+-- Returns { [itemId] = n }, TOTAL SLOTS SEEN.
+--
+-- ONE walker for bags and bank, because they are the same walk over different
+-- container numbers, and two copies would drift the moment one of them learned
+-- something the other did not.
+--
+-- THE SECOND RETURN IS NOT A STATISTIC, it is the difference between "empty"
+-- and "the client did not answer". Early in a session GetContainerNumSlots
+-- reports 0 for bags the client has not finished sending, and a walk over
+-- nothing returns the same {} a genuinely empty character does. Writing that
+-- over a stored snapshot erases a real count; see sell.SnapshotWritable.
+function sell.CountContainers(bags)
+    local out, seen = {}, 0
+    local bi = 1
+    while bi <= table.getn(bags or {}) do
+        local bag = bags[bi]
+        local slots = GetContainerNumSlots(bag) or 0
+        seen = seen + slots
+        local slot = 1
+        while slot <= slots do
+            local link = GetContainerItemLink(bag, slot)
+            local id = link and util.ItemIdFromLink(link)
+            if id then
+                local count = util.SlotUnits(bag, slot, id)
+                out[id] = (out[id] or 0) + (count or 1)
+            end
+            slot = slot + 1
+        end
+        bi = bi + 1
+    end
+    return out, seen
+end
+
+-- Bag counts for the character you are on, rebuilt only when the bags have
+-- actually changed.
+--
+-- HARD RULE 16 IS THE WHOLE DESIGN HERE. BAG_UPDATE storms: the client fires
+-- it repeatedly while item data resolves, and the stock MAIL_SHOW handler
+-- calls OpenBackpack(), so a mailbox with unseen attachments sets it off. A
+-- bag walk inside that handler is the exact shape that froze other addons in
+-- the suite. So the handler sets a boolean and does nothing else; the walk
+-- happens here, at most once per actual change, driven by whoever asks.
+sell.bagsDirty = true
+sell.bagCounts = nil
+sell.bagSlots  = 0
+
+function sell.BagCounts(force)
+    if force or sell.bagsDirty or not sell.bagCounts then
+        sell.bagCounts, sell.bagSlots =
+            sell.CountContainers(sell.BAG_CONTAINERS)
+        sell.bagsDirty = false
+    end
+    return sell.bagCounts
+end
+
+-- Read the bank and remember it.
+--
+-- WRITING IS CONDITIONAL, exactly as it is for the bags, and for the same
+-- reason -- see sell.SnapshotWritable. The bank containers answer ONLY while
+-- the frame is open, so a walk taken a moment too late returns {} and an
+-- unguarded write turns a real count into none. That is not a hypothetical:
+-- this function used to write whatever it found, which was safe only because
+-- BANKFRAME_OPENED was its single caller. The moment anything else called it
+-- -- a close, a slot change, a flush one frame behind the player walking away
+-- -- it became a way to erase the whole bucket.
+--
+-- Returns the counts, and whether they were stored.
+-- The player's class TOKEN ("MAGE"), or nil.
+--
+-- Its own function because of a Lua trap that cost this file two nil classes:
+-- `local _, class = UnitClass and UnitClass("player")` yields ONE value, not
+-- two -- an `and` expression truncates a multiple return to its first result,
+-- so `class` is always nil. Written out, it works.
+function sell.PlayerClass()
+    if not UnitClass then return nil end
+    local _, token = UnitClass("player")
+    if token == "" then return nil end
+    return token
+end
+
+function sell.SnapshotBank()
+    local counts, slots = sell.CountContainers(sell.BANK_CONTAINERS)
+    if not sell.SnapshotWritable(slots) then return counts, false end
+    if A.db and A.db.SetInventoryBucket then
+        A.db.SetInventoryBucket("bank", counts, sell.PlayerClass())
+        return counts, true
+    end
+    return counts, false
+end
+
+-- ---------------------------------------------------------------------------
+-- Keeping the bank current FOR THE WHOLE VISIT
+-- ---------------------------------------------------------------------------
+--
+-- THE BUG THIS EXISTS FOR. BANKFRAME_OPENED fires before the player has moved
+-- anything, so a snapshot taken there records the state they ARRIVED in. Every
+-- deposit and withdrawal for the rest of the visit then went unrecorded, and
+-- the tooltip kept answering with the pre-visit number until the next visit
+-- overwrote it. Reported with a screenshot: 203 where the player could count
+-- 215, the twelve missing ones being exactly what had just been deposited.
+--
+-- The bags half of that same tooltip was RIGHT, which is what made the report
+-- so sharp -- bags are read live, so only the bank number lagged. And the mail
+-- bucket already had the answer written in its own handler: "take one last
+-- look, so what is recorded is the state you left rather than the state you
+-- arrived in". The bank was the one bucket doing the opposite.
+--
+-- HARD RULE 16 is why this is a flag and not a walk in the handler. Both
+-- events below storm -- PLAYERBANKSLOTS_CHANGED as the client resolves item
+-- data for a bank it has not seen this session, BAG_UPDATE always -- and the
+-- work is a seven-container walk. That is the freeze shape, so the handlers
+-- set a boolean and the driver does the walk at most once a frame.
+sell.bankOpen  = false
+sell.bankDirty = false
+
+-- Re-read the bank if something changed it. O(1) when nothing did.
+--
+-- Returns true if a walk happened, false if there was nothing to do.
+function sell.FlushBank()
+    if not sell.bankDirty then return false end
+    sell.bankDirty = false
+    sell.SnapshotBank()
+    return true
+end
+
+-- May a walk that saw `slots` container slots be WRITTEN to the DB?
+--
+-- Pure, and the whole of the answer, so the rule lives in one place and can be
+-- tested without a client.
+--
+-- THE BUG THIS EXISTS FOR. Two characters holding an item in their BAGS were
+-- missing from the account-wide tooltip while two holding it in their BANK
+-- were present. The asymmetry was the clue: the bank bucket is only ever
+-- written from BANKFRAME_OPENED, a moment the client can always answer, while
+-- the bags bucket had just been given a second writer -- PLAYER_ENTERING_WORLD
+-- -- which fires at a moment it frequently cannot. A walk over containers that
+-- report no slots yet returns {}, and {} overwrote a good snapshot with an
+-- empty one. The character then held none of anything and was dropped from the
+-- rows entirely, which is exactly how it looked: the alt simply was not there.
+--
+-- Slots, not items, because a character really can be carrying nothing and
+-- that empty answer is worth storing. No slots is not an empty bag, it is an
+-- unanswered question, and a question must never overwrite an answer.
+function sell.SnapshotWritable(slots)
+    return (slots or 0) > 0
+end
+
+-- Write the bag snapshot as well, so the OTHER characters can see what this
+-- one is carrying. The live read above is what this character's own row uses;
+-- this is the copy that has to outlive the session.
+--
+-- Returns the counts, and whether they were stored.
+function sell.SnapshotBags()
+    -- FORCED, not the cached answer. This copy is what other characters read,
+    -- possibly for days, so it is worth one walk to be certain -- and the
+    -- cache is only as good as the BAG_UPDATE that should have invalidated it.
+    local counts = sell.BagCounts(true)
+    if not sell.SnapshotWritable(sell.bagSlots) then return counts, false end
+    if A.db and A.db.SetInventoryBucket then
+        A.db.SetInventoryBucket("bags", counts, sell.PlayerClass())
+        return counts, true
+    end
+    return counts, false
+end
+
+-- ---------------------------------------------------------------------------
+-- The arrival snapshot, and why it waits
+-- ---------------------------------------------------------------------------
+--
+-- PLAYER_ENTERING_WORLD is the only event an alt is guaranteed to fire -- 1.12
+-- clients are closed with alt-F4 and they crash, and neither sends
+-- PLAYER_LEAVING_WORLD -- so it has to be the one that records what a
+-- character is carrying. But it fires at the WORST possible moment to read
+-- bags: the containers are still arriving, and the item data behind
+-- GetContainerItemLink is resolving for several seconds afterwards. That
+-- resolution is what makes BAG_UPDATE storm, and a snapshot taken mid-storm is
+-- a partial one.
+--
+-- So arrival ARMS a snapshot rather than taking one, and the driver takes it
+-- once the bags have gone quiet. sell.BagSettleVerdict is the whole rule.
+sell.BAG_SETTLE     = 3     -- seconds of quiet bags before the snapshot
+sell.BAG_SETTLE_MAX = 30    -- ...and the longest we will wait for that quiet
+sell.bagArmedAt   = nil     -- GetTime() when arrival armed it
+sell.bagTouchedAt = nil     -- GetTime() of the last BAG_UPDATE
+
+-- Pure: four numbers in, one of three words out.
+--
+--   "idle" -- nothing armed
+--   "wait" -- the client is still talking, or has not started
+--   "take" -- quiet long enough, or waited long enough to stop caring
+--
+-- The MAX arm is not a nicety. A character parked somewhere with an addon
+-- writing to their bags every second would never see quiet, and never
+-- recording anything is a worse failure than recording something imperfect.
+function sell.BagSettleVerdict(now, armedAt, touchedAt, slots)
+    if not armedAt then return "idle" end
+    if (now - armedAt) >= sell.BAG_SETTLE_MAX then return "take" end
+    if not sell.SnapshotWritable(slots) then return "wait" end
+    if (now - (touchedAt or armedAt)) < sell.BAG_SETTLE then return "wait" end
+    return "take"
+end
+
+function sell.ArmBagSnapshot(now)
+    sell.bagArmedAt   = now
+    sell.bagTouchedAt = now
+end
+
+-- How many bag slots the client will admit to RIGHT NOW. Five calls and no
+-- item reads, so it is safe to ask every frame -- which is the point: the
+-- expensive part of a bag walk is the per-slot link and item lookup, and this
+-- deliberately does none of it.
+function sell.BagSlotsNow()
+    if not GetContainerNumSlots then return 0 end
+    local seen, i = 0, 1
+    while i <= table.getn(sell.BAG_CONTAINERS) do
+        seen = seen + (GetContainerNumSlots(sell.BAG_CONTAINERS[i]) or 0)
+        i = i + 1
+    end
+    return seen
+end
+
+-- One step of the armed snapshot. Returns true while it still has work, so the
+-- driver knows whether to keep running.
+function sell.StepBagSnapshot(now)
+    local verdict = sell.BagSettleVerdict(now, sell.bagArmedAt,
+                                          sell.bagTouchedAt,
+                                          sell.BagSlotsNow())
+    if verdict == "idle" then return false end
+    if verdict == "wait" then return true end
+    sell.bagArmedAt, sell.bagTouchedAt = nil, nil
+    sell.SnapshotBags()
+    return false
+end
+
+-- ---------------------------------------------------------------------------
+-- Inventory: what is at auction, and what is in the post
+-- ---------------------------------------------------------------------------
+
+-- Pages the owner sweep will walk before giving up. Turtle's cap is 120 and a
+-- page is 50, so three clears a full book; the rest is slack against a server
+-- reporting a total it cannot actually deliver. Without a bound the sweep's
+-- exit condition is "we reached the last page", and a total that never shrinks
+-- would walk for ever.
+sell.OWNER_SWEEP_MAX_PAGES = 6
+
+-- Counting your own auctions needs every PAGE, and the client holds one at a
+-- time -- the same constraint the Auctions tab lives with. So this is a walk
+-- driven by AUCTION_OWNED_LIST_UPDATE: request a page, count what arrives,
+-- ask for the next.
+--
+-- IT YIELDS TO THE PLAYER. If someone presses Next on the Auctions tab while
+-- this is running, the sweep is cancelled rather than fighting them for the
+-- page the client is holding -- their click is a real intent and ours is
+-- bookkeeping. It restarts on the next visit.
+sell.ownerSweep = nil
+
+function sell.StartOwnerSweep()
+    if not GetNumAuctionItems then return nil end
+    local _, pages, total = sell.OwnerPageInfo()
+    if (total or 0) < 1 then
+        -- No auctions at all is a real answer, and it has to be RECORDED --
+        -- otherwise cancelling your last auction leaves the old count on the
+        -- tooltip until you post something again.
+        sell.FinishOwnerSweep({}, {})
+        return nil
+    end
+    if pages > sell.OWNER_SWEEP_MAX_PAGES then
+        pages = sell.OWNER_SWEEP_MAX_PAGES
+    end
+    sell.ownerSweep = { page = 0, pages = pages, counts = {}, stacks = {} }
+    sell.RequestOwnerAuctions(0)
+    return sell.ownerSweep
+end
+
+function sell.CancelOwnerSweep()
+    sell.ownerSweep = nil
+end
+
+-- One page has arrived. Count it, then ask for the next or finish.
+-- Returns true while the sweep is still running.
+function sell.OwnerSweepStep()
+    local sw = sell.ownerSweep
+    if not sw then return false end
+    local rows = sell.OwnerAuctions()
+    local i = 1
+    while i <= table.getn(rows) do
+        local r = rows[i]
+        if r.itemId then
+            sw.counts[r.itemId] = (sw.counts[r.itemId] or 0) + (r.count or 1)
+        end
+        -- One entry per AUCTION, not per item: the posting book is about stack
+        -- SIZES, and sw.counts has already thrown those away by summing. Kept
+        -- even for a row with no id, because a sale mail matches on the name.
+        --
+        -- With what each is asking, so a book topped up from here can still
+        -- tell one stack size's sale from another's (db.MatchPosting).
+        table.insert(sw.stacks, { name = r.name, id = r.itemId,
+                                  qty = r.count or 1,
+                                  b = r.buyout, s = r.minBid })
+        i = i + 1
+    end
+    sw.page = sw.page + 1
+    if sw.page < sw.pages then
+        sell.RequestOwnerAuctions(sw.page)
+        return true
+    end
+    sell.FinishOwnerSweep(sw.counts, sw.stacks)
+    -- Put the client back on page 0, which is where the Auctions tab expects
+    -- to find it and where the player left it.
+    sell.RequestOwnerAuctions(0)
+    return false
+end
+
+function sell.FinishOwnerSweep(counts, stacks)
+    sell.ownerSweep = nil
+    if A.db and A.db.SetInventoryBucket then
+        A.db.SetInventoryBucket("ah", counts or {}, sell.PlayerClass())
+    end
+    -- The sweep is the only place the server tells us what is up and in what
+    -- stack sizes, which is the one thing a sale mail can never say. Folding it
+    -- into the posting book is what lets an auction posted before that book
+    -- existed -- or from anywhere else -- still report its quantity when it
+    -- sells. Additive only; see db.ReconcilePostings.
+    if A.db and A.db.ReconcilePostings then
+        A.db.ReconcilePostings(stacks or {})
+    end
+    return counts
+end
+
+-- What is sitting in the mailbox.
+--
+-- 1.12 has NO GetInboxItemLink, so an attachment can only be named, not
+-- identified -- the id comes from the scan-fed name map, the same route
+-- ui/tooltip.lua's inbox resolver takes. An item that map has never seen is
+-- skipped rather than guessed at, which means mail counts cover what you trade
+-- in and quietly miss the rest. That is the honest limit of the API.
+--
+-- HARD RULE 16: this is a per-item read, and MAIL_INBOX_UPDATE is THE storm
+-- event -- the client fires it dozens of times in a few frames while
+-- attachments resolve, which is what hard-froze Courier. It never runs inside
+-- the handler. The handler sets a flag; sell.FlushInventory does the work once,
+-- from an OnUpdate.
+sell.mailDirty = false
+
+function sell.MailCounts()
+    local out = {}
+    if not GetInboxNumItems or not GetInboxItem then return out end
+    local n = GetInboxNumItems() or 0
+    local i = 1
+    while i <= n do
+        local name, _, count = GetInboxItem(i)
+        local id = name and A.db and A.db.IdFromName and A.db.IdFromName(name)
+        if id then out[id] = (out[id] or 0) + (count or 1) end
+        i = i + 1
+    end
+    return out
+end
+
+function sell.SnapshotMail()
+    local counts = sell.MailCounts()
+    if A.db and A.db.SetInventoryBucket then
+        A.db.SetInventoryBucket("mail", counts, sell.PlayerClass())
+    end
+    return counts
+end
+
+-- The once-per-frame flush behind the mail dirty flag. Returns whether it did
+-- anything, so the driver knows when to stop running.
+function sell.FlushInventory()
+    if not sell.mailDirty then return false end
+    sell.mailDirty = false
+    sell.SnapshotMail()
+    return true
+end
+
+-- Your current number of active auctions (second return of GetNumAuctionItems).
+function sell.OwnerCount()
+    local _, total = GetNumAuctionItems("owner")
+    return total or 0
+end
+
+function sell.AtCap()
+    return sell.OwnerCount() >= sell.CAP
+end
+
+-- ---------------------------------------------------------------------------
+-- Owned auctions (Auctions tab): read + cancel
+-- ---------------------------------------------------------------------------
+
+-- 1.12 time-left codes -> short labels. Turtle multiplies real durations x3, so
+-- these buckets are wider in wall-clock time, but the codes are unchanged.
+local TIME_LEFT = { "< 30m", "< 2h", "< 12h", "> 12h" }
+function sell.TimeLeftText(code)
+    return code and TIME_LEFT[code] or "\226\128\148"
+end
+
+-- Ask the server to (re)send your auction list. Fires AUCTION_OWNED_LIST_UPDATE
+-- when it lands. Optional on some clients, so it's guarded.
+--
+-- The resulting event ALSO reaches Blizzard's own auction UI, whose
+-- AuctionFrameAuctions_Update() does arithmetic on AuctionFrameAuctions.page.
+-- We replace the stock AH window, so its Auctions tab may never have been
+-- shown and that field can still be nil -- which threw
+--   Blizzard_AuctionUI.lua:836: attempt to perform arithmetic on field 'page'
+-- Seed it (harmless: 0 is exactly what their OnShow sets) before asking.
+-- THE OWNER LIST IS PAGED, and this addon spent its whole life reading only
+-- page 0.
+--
+-- GetNumAuctionItems("owner") returns (BATCH, TOTAL): the batch is what the
+-- client is holding right now, capped at 50, and the total is how many auctions
+-- you actually have. Turtle's cap is 120, so anyone with a full book saw fewer
+-- than half of them and nothing said so.
+--
+-- WHY THIS PAGES RATHER THAN ACCUMULATING every page into one list. CancelAuction
+-- takes an index into the page the CLIENT currently holds. Gather 120 auctions
+-- into one table and the index stored against row 80 belongs to page 2 -- cancel
+-- it while the client is on page 1 and you destroy a different auction, lose its
+-- deposit, and mail the wrong item back. Showing exactly the page the client is
+-- on makes every index correct by construction.
+sell.OWNER_PAGE_SIZE = 50
+
+-- Ask for one page (0-indexed, like QueryAuctionItems). The reply arrives as
+-- AUCTION_OWNED_LIST_UPDATE.
+function sell.RequestOwnerAuctions(page)
+    if AuctionFrameAuctions and AuctionFrameAuctions.page == nil then
+        AuctionFrameAuctions.page = 0
+    end
+    page = page or 0
+    if page < 0 then page = 0 end
+    sell.ownerPage = page
+    -- Kept in step with the Blizzard frame's own idea of the page: its
+    -- AUCTION_OWNED_LIST_UPDATE handler does arithmetic on this field, and it
+    -- is still registered even though the window is hidden.
+    if AuctionFrameAuctions then AuctionFrameAuctions.page = page end
+    if GetOwnerAuctionItems then GetOwnerAuctionItems(page) end
+end
+
+-- Which page the client is holding, and how many there are in total.
+-- Returns page (0-indexed), pageCount, total.
+function sell.OwnerPageInfo()
+    local _, total = GetNumAuctionItems("owner")
+    total = total or 0
+    local pages = math.ceil(total / sell.OWNER_PAGE_SIZE)
+    if pages < 1 then pages = 1 end
+    local page = sell.ownerPage or 0
+    -- Clamp: auctions expire and sell while you are looking at them, so the
+    -- page you were on can stop existing.
+    if page > pages - 1 then page = pages - 1 end
+    return page, pages, total
+end
+
+-- Read your active auctions from the "owner" list into plain rows. Bid/buyout
+-- are per WHOLE stack (as the API reports); unit is derived for undercut checks.
+function sell.OwnerAuctions()
+    local rows = {}
+    local n = GetNumAuctionItems("owner")
+    local i = 1
+    while i <= (n or 0) do
+        local name, texture, count, quality, canUse, level, minBid, minInc,
+              buyout, bidAmount, highBidder = GetAuctionItemInfo("owner", i)
+        if name then
+            count = count or 1
+            local itemId
+            if GetAuctionItemLink then
+                itemId = util.ItemIdFromLink(GetAuctionItemLink("owner", i))
+            end
+            local timeLeft
+            if GetAuctionItemTimeLeft then
+                timeLeft = GetAuctionItemTimeLeft("owner", i)
+            end
+            -- In items: one posted Wizard Oil is one, not its five charges.
+            local units = util.ItemUnits(itemId, count)
+            table.insert(rows, {
+                index      = i,
+                name       = name,
+                texture    = texture,
+                count      = units,
+                charges    = (units ~= count) and count or nil,
+                quality    = quality,
+                buyout     = buyout or 0,
+                unit       = (buyout and buyout > 0)
+                             and math.floor(buyout / units) or nil,
+                bid        = bidAmount or 0,
+                minBid     = minBid or 0,
+                hasBid     = (bidAmount and bidAmount > 0) and true or false,
+                highBidder = highBidder,
+                timeLeft   = timeLeft,
+                itemId     = itemId,
+            })
+        end
+        i = i + 1
+    end
+    return rows
+end
+
+-- The order a batch of cancels must run in: HIGHEST owner index first.
+--
+-- Cancelling shifts every later index down by one, so a pass that walked
+-- upward would cancel row 3, watch rows 4..n slide down into 3..n-1, and then
+-- cancel what used to be row 5 -- skipping one auction for every one it took.
+-- Nothing errors and the count still looks plausible, which is why this is a
+-- function with a test rather than a `table.sort` written twice.
+--
+-- Returns a NEW array; the caller's list keeps whatever order it was painted
+-- in, because the on-screen order is the player's sort, not ours.
+function sell.CancelOrder(rows)
+    local out, i = {}, 1
+    while i <= table.getn(rows or {}) do
+        out[i] = rows[i]
+        i = i + 1
+    end
+    table.sort(out, function(a, b) return (a.index or 0) > (b.index or 0) end)
+    return out
+end
+
+-- How many times "cancel everything on this page" may run before we stop.
+--
+-- Turtle's cap is 120 and a page is 50, so three rounds clears a full book and
+-- the rest is slack. The bound exists because the loop's exit condition is
+-- "nothing left", and an auction the server refuses to cancel would otherwise
+-- be retried forever -- a hang with no error, on a list that never shrinks.
+sell.CANCEL_ALL_MAX_ROUNDS = 6
+
+-- Is another round due? Pure, so the stop condition can be tested without an
+-- auction house.
+function sell.CancelAllNextRound(remaining, round)
+    if not remaining or remaining <= 0 then return false end
+    if not round or round >= sell.CANCEL_ALL_MAX_ROUNDS then return false end
+    return true
+end
+
+-- Cancel the auction at owner index `i`. The refreshed list arrives via
+-- AUCTION_OWNED_LIST_UPDATE.
+function sell.CancelOwnerAuction(i)
+    if not i or not CancelAuction then return false end
+    CancelAuction(i)
+    return true
+end
+
+-- ---------------------------------------------------------------------------
+-- What the book is worth, and what you have bid
+-- ---------------------------------------------------------------------------
+
+-- What this page of your auctions would pay IF EVERY ONE OF THEM SOLD AT
+-- BUYOUT. Returns gross, net, counted, skipped.
+--
+-- `skipped` is not a footnote. A bid-only auction has no buyout, so there is
+-- no figure to add -- it could fetch its minimum bid or ten times that, and
+-- averaging a guess into a total makes the whole total a guess. It is counted
+-- separately and the UI says how many, because "3,412g (2 bid-only auctions
+-- not counted)" is an answer a player can act on and "3,412g" alone is not.
+--
+-- THE CUT COMES OFF THE SALE. Five percent of what the buyer pays leaves
+-- before you ever see it, the same convention ui.ListNet uses on the Crafting
+-- tab -- one flooring at the end, not one per row, because the rounding of a
+-- hundred separate sales is noise next to the fact that this is a maximum.
+--
+-- And it IS a maximum: nothing here says anything will sell. Label it so.
+function sell.BookValue(rows, cut)
+    cut = cut or sell.CUT
+    local gross, counted, skipped = 0, 0, 0
+    local i = 1
+    while i <= table.getn(rows or {}) do
+        local r = rows[i]
+        if r.buyout and r.buyout > 0 then
+            gross = gross + r.buyout
+            counted = counted + 1
+        else
+            skipped = skipped + 1
+        end
+        i = i + 1
+    end
+    return gross, math.floor(gross * (1 - cut)), counted, skipped
+end
+
+-- ---- your bids ----------------------------------------------------------
+
+-- The bidder list is paged exactly like the owner list, and for the same
+-- reason: the client holds one page and every index is an index into it.
+sell.BIDDER_PAGE_SIZE = 50
+
+-- Ask the server for one page of the auctions you have bid on (0-indexed).
+-- The reply arrives as AUCTION_BIDDER_LIST_UPDATE.
+--
+-- Seeds AuctionFrameBidder.page for the same reason RequestOwnerAuctions seeds
+-- AuctionFrameAuctions.page: we replace the stock AH window, so Blizzard's
+-- Bidder tab may never have been shown and its own handler does arithmetic on
+-- a field its OnShow would have set.
+function sell.RequestBidderAuctions(page)
+    if AuctionFrameBidder and AuctionFrameBidder.page == nil then
+        AuctionFrameBidder.page = 0
+    end
+    page = page or 0
+    if page < 0 then page = 0 end
+    sell.bidderPage = page
+    if AuctionFrameBidder then AuctionFrameBidder.page = page end
+    if GetBidderAuctionItems then GetBidderAuctionItems(page) end
+end
+
+-- Which page of bids the client holds, and how many there are.
+-- Returns page (0-indexed), pageCount, total.
+function sell.BidderPageInfo()
+    local total = 0
+    if GetNumAuctionItems then
+        local _, t = GetNumAuctionItems("bidder")
+        total = t or 0
+    end
+    local pages = math.ceil(total / sell.BIDDER_PAGE_SIZE)
+    if pages < 1 then pages = 1 end
+    local page = sell.bidderPage or 0
+    -- Bids resolve while you are looking at them, so the page you were on can
+    -- stop existing. Same clamp the owner list needs.
+    if page > pages - 1 then page = pages - 1 end
+    return page, pages, total
+end
+
+-- The auctions you have bid on, from the "bidder" list.
+--
+-- `bidAmount` IS THE AUCTION'S CURRENT BID, NOT YOURS. That is the whole
+-- subtlety of this list and it decides how every number below is labelled.
+-- While `highBidder` is set, the current bid is yours -- it is what you will
+-- pay and it has already left your purse. Once someone outbids you the client
+-- still reports a bid amount, but it is THEIRS; your gold is already on its
+-- way back by mail and nothing in the 1.12 API will tell you what you bid.
+-- So an outbid row shows the price to beat, never a figure presented as yours.
+function sell.BidderAuctions()
+    local rows = {}
+    if not GetNumAuctionItems or not GetAuctionItemInfo then return rows end
+    local n = GetNumAuctionItems("bidder")
+    local i = 1
+    while i <= (n or 0) do
+        local name, texture, count, quality, canUse, level, minBid, minInc,
+              buyout, bidAmount, highBidder, owner =
+              GetAuctionItemInfo("bidder", i)
+        if name then
+            count = count or 1
+            local itemId
+            if GetAuctionItemLink then
+                itemId = util.ItemIdFromLink(GetAuctionItemLink("bidder", i))
+            end
+            local timeLeft
+            if GetAuctionItemTimeLeft then
+                timeLeft = GetAuctionItemTimeLeft("bidder", i)
+            end
+            local bid = bidAmount or 0
+            local units = util.ItemUnits(itemId, count)
+            table.insert(rows, {
+                index    = i,
+                name     = name,
+                texture  = texture,
+                count    = units,
+                charges  = (units ~= count) and count or nil,
+                quality  = quality,
+                bid      = bid,
+                unit     = (bid > 0) and math.floor(bid / units) or nil,
+                minBid   = minBid or 0,
+                minInc   = minInc or 0,
+                buyout   = buyout or 0,
+                winning  = (highBidder and highBidder ~= 0) and true or false,
+                timeLeft = timeLeft,
+                owner    = owner,
+                itemId   = itemId,
+            })
+        end
+        i = i + 1
+    end
+    return rows
+end
+
+-- What your bids add up to. Returns committed, winning, outbid.
+--
+-- COMMITTED COUNTS ONLY THE ROWS YOU ARE WINNING, and that is the exact figure
+-- rather than a cautious one: 1.12 takes the gold when you bid and mails it
+-- back the moment someone beats you, so an outbid row is money you already
+-- have. Adding those in would double-count gold sitting in your purse, and
+-- adding the price-to-beat instead would report a number you never agreed to
+-- pay.
+function sell.BidTotals(rows)
+    local committed, winning, outbid = 0, 0, 0
+    local i = 1
+    while i <= table.getn(rows or {}) do
+        local r = rows[i]
+        if r.winning then
+            committed = committed + (r.bid or 0)
+            winning = winning + 1
+        else
+            outbid = outbid + 1
+        end
+        i = i + 1
+    end
+    return committed, winning, outbid
+end
+
+-- ---------------------------------------------------------------------------
+-- Vendor list: bag items worth MORE at a vendor than on the AH
+-- ---------------------------------------------------------------------------
+
+-- Compare each auctionable bag item's vendor price against what it would net
+-- on the AH (best known unit price minus the 5% consignment cut). Returns rows
+-- sorted by the biggest vendor advantage first:
+--   { name, itemId, texture, count, vendorUnit, ahUnit, netAh, diff, total }
+-- `diff` is per unit (vendor - net AH); `total` is diff x count. Items with no
+-- recorded vendor price are skipped -- vendor prices come from hovering an
+-- item at a merchant, so the list fills in as you play.
+function sell.VendorList()
+    local rows = {}
+    local cats = sell.ScanBags()
+    local ci = 1
+    while ci <= table.getn(cats) do
+        local items = cats[ci].items
+        local ii = 1
+        while ii <= table.getn(items) do
+            local it = items[ii]
+            local vendor = it.itemId and A.db.GetVendor(it.itemId)
+            if vendor and vendor > 0 then
+                -- Best AH unit price we know, after the consignment cut.
+                local ah = A.db.MinBuyout(it.itemId) or A.db.MarketValue(it.itemId)
+                local netAh = ah and math.floor(ah * (1 - sell.CUT)) or 0
+                if vendor > netAh then
+                    local diff = vendor - netAh
+                    table.insert(rows, {
+                        name       = it.name,
+                        itemId     = it.itemId,
+                        texture    = it.texture,
+                        count      = it.count or 1,
+                        vendorUnit = vendor,
+                        ahUnit     = ah,
+                        netAh      = netAh,
+                        diff       = diff,
+                        total      = diff * (it.count or 1),
+                    })
+                end
+            end
+            ii = ii + 1
+        end
+        ci = ci + 1
+    end
+    table.sort(rows, function(a, b) return a.total > b.total end)
+    return rows
+end
+
+-- Bag stacks whose item is marked for vendoring. Rows are
+-- { bag, slot, itemId, name, count, vendorUnit, value } — `value` is the
+-- vendor payout for that whole stack, when we know the unit price.
+function sell.MarkedInBags()
+    local rows = {}
+    local cats = sell.ScanBags()
+    local ci = 1
+    while ci <= table.getn(cats) do
+        local items = cats[ci].items
+        local ii = 1
+        while ii <= table.getn(items) do
+            local it = items[ii]
+            if it.itemId and A.db.IsVendorMarked(it.itemId) then
+                local unit = A.db.GetVendor(it.itemId)
+                -- ONE ROW PER PHYSICAL STACK, deliberately, even though
+                -- sell.ScanBags now hands back one ENTRY per item.
+                -- sell.SellMarkedToVendor calls UseContainerItem(bag, slot)
+                -- once per row, and that sells exactly one stack -- so an
+                -- aggregated row here would sell a third of what was marked
+                -- and report success.
+                local si = 1
+                while si <= table.getn(it.slots or {}) do
+                    local sl = it.slots[si]
+                    table.insert(rows, {
+                        bag = sl.bag, slot = sl.slot, itemId = it.itemId,
+                        name = it.name, count = sl.count or 1,
+                        vendorUnit = unit,
+                        value = unit and unit * (sl.count or 1) or nil,
+                    })
+                    si = si + 1
+                end
+            end
+            ii = ii + 1
+        end
+        ci = ci + 1
+    end
+    return rows
+end
+
+-- Sell every marked bag stack to the open merchant. On 1.12 that is
+-- UseContainerItem(bag, slot) while the merchant window is up. Returns
+-- (stacksSold, estimatedCopper). Caller must confirm first -- this spends
+-- items. Refuses unless a merchant window is actually open.
+function sell.SellMarkedToVendor()
+    if not (MerchantFrame and MerchantFrame:IsVisible()) then
+        return 0, 0
+    end
+    if not UseContainerItem then return 0, 0 end
+    local rows = sell.MarkedInBags()
+    -- Sell from the LAST slot backwards: selling shifts nothing on 1.12, but
+    -- reverse order keeps our captured bag/slot pairs valid if it ever does.
+    local sold, value = 0, 0
+    local i = table.getn(rows)
+    while i >= 1 do
+        local r = rows[i]
+        UseContainerItem(r.bag, r.slot)
+        sold = sold + 1
+        value = value + (r.value or 0)
+        i = i - 1
+    end
+    return sold, value
+end
+
+-- Approximate deposit (copper) for the slotted item at `minutes`. Prefers the
+-- client's own CalculateAuctionDeposit (present once the AH UI has loaded),
+-- then the charge factor. Returns (copper, isApprox); isApprox is true on
+-- Turtle so the UI can label it honestly.
+--
+-- The client's figure is used RAW as the base. It used to be scaled by the
+-- formula's correction as well, which double-counted: the ratio exists to make
+-- the formula agree with the client, so applying it to the client itself
+-- pushes the one reliable number away from the truth.
+function sell.EstimateDeposit(minutes)
+    if not minutes or minutes <= 0 then return 0, true end
+    local base
+    if CalculateAuctionDeposit then
+        base = CalculateAuctionDeposit(minutes)
+    else
+        -- Fallback: the same formula the bag preview uses, from the slot item.
+        -- `it.price` is the vendor price for the WHOLE stack, so the unit price
+        -- is what the formula wants. Scaled, because this branch IS the
+        -- formula and the client is not answering.
+        local it = sell.GetItem()
+        if not it then return 0, true end
+        base = sell.DepositAmount(it.price / (it.count or 1),
+            it.count or 1, 1, minutes)
+        if base then base = base * sell.FormulaScale() end
+    end
+    base = base or 0
+    if A.isTurtle then
+        return math.floor(base * sell.ChargeFactor()), true
+    end
+    return math.floor(base), false
+end
+
+-- Learn the formula-to-client ratio from the item in the sell slot. Cheap and
+-- opportunistic: both numbers are already computed for the item the player is
+-- looking at, so this costs one division whenever the Sell tab redraws.
+--
+-- Returns the ratio it recorded, or nil when it could not.
+-- ONE MEASUREMENT PER OPPORTUNITY, and the key is what defines one.
+--
+-- WHY IT IS NEEDED. The Sell tab learns this ratio while repainting, which is
+-- the right place -- an item is slotted, so the client will answer, and both
+-- numbers are being computed anyway. But a repaint happens on every keystroke
+-- and every button click, and the measurement does not change between them:
+-- it is the same item, the same stack, the same duration.
+--
+-- Recording it again on each repaint is not harmless. db.RecordDepositRatio
+-- keeps a running mean over the last 20 samples, so clicking Undercut twenty
+-- times makes the account-wide correction ENTIRELY that one item's ratio. The
+-- deposit figure then walks toward that item's number while you click, which
+-- is how it was reported: "spam the undercut or price match button and it
+-- increases the deposit cost".
+--
+-- The stack size is in the key because the client's figure is per stack.
+function sell.DepositSampleKey(itemId, count, minutes)
+    if not itemId or not minutes then return nil end
+    return tostring(itemId) .. ":" .. tostring(count or 1)
+        .. ":" .. tostring(minutes)
+end
+
+-- Which measurement has already been taken. A SESSION value: the ratio is a
+-- property of the server's arithmetic, so re-measuring the same item next
+-- login adds nothing, but forgetting across a reload costs only one sample.
+sell.ratioSampledFor = nil
+
+function sell.LearnDepositRatio(minutes)
+    if not CalculateAuctionDeposit then return nil end
+    if not minutes or minutes <= 0 then return nil end
+    local it = sell.GetItem()
+    if not it or not it.price or it.price <= 0 then return nil end
+    local key = sell.DepositSampleKey(it.itemId, it.count, minutes)
+    if key and sell.ratioSampledFor == key then return nil end
+    local ours = sell.DepositAmount(it.price / (it.count or 1),
+        it.count or 1, 1, minutes)
+    local ratio = sell.DepositRatio(CalculateAuctionDeposit(minutes), ours)
+    if not ratio then return nil end
+    sell.ratioSampledFor = key
+    if A.db and A.db.RecordDepositRatio then A.db.RecordDepositRatio(ratio) end
+    return ratio
+end
+
+-- Suggested per-unit prices for `itemId` from the price DB (any may be nil).
+function sell.Suggest(itemId)
+    if not itemId then return nil end
+    return {
+        market    = A.db.MarketValue(itemId),
+        minBuyout = A.db.MinBuyout(itemId),
+        vendor    = A.db.GetVendor(itemId),
+    }
+end
+
+-- Undercut a reference price by the user's configured rule (Aegis tab): either
+-- a percent below, or a fixed copper amount below. Always lands at least 1
+-- copper under. Defaults to 5%.
+local function ApplyUndercut(ref)
+    if not ref or ref <= 1 then return ref end
+    local mode = A.db and A.db.Setting and A.db.Setting("undercutMode") or "pct"
+    local under
+    if mode == "flat" then
+        local amt = A.db.Setting("undercutAmount") or 100
+        if amt < 1 then amt = 1 end
+        under = ref - amt
+    else
+        local pct = A.db.Setting("undercutPct") or 5
+        if pct < 0 then pct = 5 end
+        under = math.floor(ref * (1 - pct / 100))
+    end
+    if under >= ref then under = ref - 1 end   -- guarantee a real undercut
+    if under < 1 then under = 1 end
+    return under
+end
+
+-- The price the competition is asking, per unit -- the reference both pricing
+-- buttons work from. Prefer the freshest thing we have: the lowest OTHER
+-- seller from the last item scan; else the DB's min buyout / market.
+-- Returns copper, or nil if we have no data for the item.
+function sell.MatchUnit(itemId)
+    local low = sell.LowestListingUnit(true)
+    if low and low > 1 then return low end
+    local s = sell.Suggest(itemId)
+    if not s then return nil end
+    return s.minBuyout or s.market
+end
+
+-- WHICH price to work from, and whether to go BELOW it.
+--
+-- Returns (reference, undercut). `undercut` false means MATCH: your own
+-- auction is already the cheapest, so there is nobody to go under and the only
+-- thing an undercut could achieve is walking your own price down.
+--
+-- REPORTED FROM A LIVE CLIENT: posting the same item repeatedly while holding
+-- the cheapest listing dropped the price a step each time -- the seller
+-- competing with nobody but themselves, a few percent at a time, for as long
+-- as they kept posting.
+--
+-- TIES MATCH TOO. Level with somebody else and you are already as cheap as the
+-- market; a step under buys nothing an equal price does not, and it is a step
+-- somebody else then takes back. `<=`, not `<`.
+--
+-- Pure, and separate from the reading, because this is the whole of the
+-- decision and every way it can be wrong costs real money.
+function sell.PriceReference(lowestOther, lowestMine)
+    if lowestMine and (not lowestOther or lowestMine <= lowestOther) then
+        return lowestMine, false
+    end
+    if lowestOther then return lowestOther, true end
+    return nil, true
+end
+
+-- Per-unit price to undercut the cheapest OTHER seller -- or to match your own
+-- when yours is the cheapest. Falls back to the price DB, then market value.
+-- Returns copper, or nil if we have no data for the item.
+function sell.UndercutUnit(itemId)
+    return sell.UndercutFrom(sell.listings, itemId)
+end
+
+-- The same rule over any set of listing rows -- the slotted item's live scan
+-- (above), or an item's CACHED scan, which is how Post All prices an item it
+-- has not slotted yet (sell.PlannedUnit). One rule, so the walk's plan and
+-- the price that lands in the box cannot disagree.
+function sell.UndercutFrom(rows, itemId)
+    local ref, under = sell.PriceReference(sell.LowestUnitIn(rows, true),
+                                           sell.LowestOwnUnitIn(rows))
+    if ref then
+        if not under then return ref end
+        return ApplyUndercut(ref)
+    end
+    -- NO SCAN FOR THIS ITEM. The price DB cannot answer whose auction a figure
+    -- came from -- it records what was seen, not who posted it -- so this path
+    -- genuinely cannot tell your own listing from anyone else's. It is the
+    -- uncommon one: slotting an item on the Sell tab scans it, which is what
+    -- fills the list the branch above reads.
+    local s = sell.Suggest(itemId)
+    local db = s and (s.minBuyout or s.market)
+    if not db then return nil end
+    return ApplyUndercut(db)
+end
+
+-- ---------------------------------------------------------------------------
+-- Per-item listing scan (drives the Sell tab's price table)
+-- ---------------------------------------------------------------------------
+
+sell.listings   = nil   -- raw rows from the last item scan (sorted cheapest 1st)
+sell.scanItemId = nil   -- item those rows are for
+sell.scanName   = nil
+sell.scanWhen   = nil   -- epoch of the last completed item scan
+
+sell.cache      = {}    -- { [itemId] = { listings, when } }
+sell.CACHE_TTL  = 3600   -- seconds a cached result stays valid
+
+-- Batch "Scan All" state: iterates every bag item, scanning uncached ones one
+-- at a time. The UI reads batchCurrentItemId to show a yellow * while the item
+-- is being fetched.
+sell.batchActive        = false
+sell.batchCurrentItemId = nil
+sell.batchQueue         = nil
+sell.batchIndex         = 1
+
+-- Walk every auctionable bag item and scan the AH for it, skipping items that
+-- already have a fresh cache entry. onItemDone(itemId) fires after EACH item
+-- is processed (cache hit or scan complete); onAllDone() fires when the queue
+-- is exhausted or the batch is stopped.
+function sell.ScanAllBags(onItemDone, onAllDone)
+    -- What Post All offers -- the blacklist left out, so a listed item costs
+    -- no query either.
+    local queue = sell.PostAllItems()
+    sell.batchQueue  = queue
+    sell.batchIndex  = 1
+    sell.batchActive = true
+
+    local function processNext()
+        if not sell.batchActive then
+            sell.batchCurrentItemId = nil
+            if onAllDone then onAllDone() end
+            return
+        end
+        local idx = sell.batchIndex
+        if idx > table.getn(queue) then
+            sell.batchActive = false
+            sell.batchCurrentItemId = nil
+            if onAllDone then onAllDone() end
+            return
+        end
+        local item = queue[idx]
+        sell.batchIndex = idx + 1
+        sell.batchCurrentItemId = item.itemId
+
+        -- Already cached? Fire the per-item callback immediately (the UI just
+        -- needs to redraw the green dot) and move on.
+        local entry = sell.cache[item.itemId]
+        if entry and time() - entry.when < sell.CACHE_TTL then
+            if onItemDone then onItemDone(item.itemId) end
+            processNext()
+            return
+        end
+
+        -- Not cached: run a targeted AH scan for this item. Reuse sell.ScanItem
+        -- which handles the query, filtering, sorting, and deep-copy caching.
+        sell.ScanItem(item.name, item.itemId, nil, function()
+            if onItemDone then onItemDone(item.itemId) end
+            processNext()
+        end)
+    end
+
+    processNext()
+end
+
+-- Abort a running batch scan. The current item's scan will still finish (it is
+-- already in flight), but no further items will be queued.
+function sell.StopBatchScan()
+    sell.batchActive = false
+    sell.batchCurrentItemId = nil
+end
+
+-- A shallow copy of a listings array, row tables included.
+--
+-- ONE WRITER, because the cache has to be copied on the way IN and on the way
+-- OUT and only one of those was ever done. `sell.listings` is a live table
+-- that a running scan appends to; handing out the cached array by reference
+-- meant an append landed in the cache, and the corruption then survived for
+-- CACHE_TTL -- an hour of a Sell tab quietly getting slower, which is exactly
+-- how this presented in the field ("worse the longer the session runs, fine
+-- after a /reload").
+--
+-- ui/frame.lua already worked around this in two places by rendering straight
+-- from the cache and never touching sell.listings. Those comments describe
+-- this bug; the fix belongs here, where the alias was created.
+function sell.CopyListings(rows)
+    local out, i = {}, 1
+    while i <= table.getn(rows or {}) do
+        local r = rows[i]
+        out[i] = {
+            count  = r.count,
+            buyout = r.buyout,
+            unit   = r.unit,
+            minBid = r.minBid,
+            owner  = r.owner,
+            isMine = r.isMine,
+        }
+        i = i + 1
+    end
+    return out
+end
+
+-- Lowest per-unit buyout among the last scan's listings. `excludeMine` skips
+-- your own auctions (so undercut targets other sellers). Returns nil if none.
+function sell.LowestListingUnit(excludeMine)
+    return sell.LowestUnitIn(sell.listings, excludeMine)
+end
+
+function sell.LowestUnitIn(rows, excludeMine)
+    if not rows then return nil end
+    local best = nil
+    local i = 1
+    while i <= table.getn(rows) do
+        local r = rows[i]
+        if r.unit and r.unit > 0 and not (excludeMine and r.isMine) then
+            if not best or r.unit < best then best = r.unit end
+        end
+        i = i + 1
+    end
+    return best
+end
+
+-- ...and the cheapest of YOUR OWN, which is the other half of the question.
+--
+-- sell.LowestListingUnit(true) answers "what is the competition asking". On
+-- its own that is not enough to price against: when the cheapest thing on the
+-- list is YOURS, there is no competition to undercut and the honest answer is
+-- to match what you already have. See sell.PriceReference.
+function sell.LowestOwnUnit()
+    return sell.LowestOwnUnitIn(sell.listings)
+end
+
+function sell.LowestOwnUnitIn(rows)
+    if not rows then return nil end
+    local best = nil
+    local i = 1
+    while i <= table.getn(rows) do
+        local r = rows[i]
+        if r.unit and r.unit > 0 and r.isMine then
+            if not best or r.unit < best then best = r.unit end
+        end
+        i = i + 1
+    end
+    return best
+end
+
+-- Scan the AH for every listing of one item (by name), keeping only exact
+-- itemId matches (a name query is a substring search on 1.12). Collects rows
+-- {count, buyout, unit, minBid, owner, isMine}, sorts cheapest-first, and calls
+-- onDone(rows). onProgress(page, total) fires per page. Returns false if the
+-- scanner is busy with another scan.
+-- Is this auction row the item we asked for?
+--
+-- WHY IT IS NOT JUST `id == itemId`, which is what it was. The row's id comes
+-- from GetAuctionItemLink, and on 1.12 THAT RETURNS NIL FOR AN ITEM THE CLIENT
+-- HAS NOT CACHED. A player who has never linked or looted Truesilver Bar gets
+-- nil for all 50 rows on the page, every row is discarded, and the scan
+-- reports success with nothing in it -- "0 price(s), scanned just now" over an
+-- auction house holding 158 of them. It was reported exactly that way, along
+-- with the detail that explains it: searching for the item on the Buy tab
+-- first makes the Sell tab work, because the search is what caches the links.
+--
+-- THE NAME IS A SAFE FALLBACK HERE AND ONLY HERE, because the query WAS the
+-- name. The server matches names as a SUBSTRING -- a query for "Silk Cloth"
+-- returns "Bolt of Silk Cloth" too -- so the comparison has to be exact, and
+-- a row whose id we CAN read is still judged on the id. The fallback only
+-- covers the one case the id cannot: no link at all.
+--
+-- A row carrying a DIFFERENT id is never accepted on a name match. Two items
+-- can share a name across a rename or a server's custom content, and pricing
+-- against the wrong one is worse than pricing against nothing.
+function sell.SameItem(rowId, rowName, wantId, wantName)
+    if rowId and wantId then return rowId == wantId end
+    if rowId then return false end
+    if not rowName or not wantName then return false end
+    return rowName == wantName
+end
+
+function sell.ScanItem(itemName, itemId, onProgress, onDone)
+    -- Cache hit: return stored results without a new scan.
+    local entry = sell.cache[itemId]
+    if entry and time() - entry.when < sell.CACHE_TTL then
+        -- A COPY. Aliasing the cached array here is what let a stray append
+        -- rewrite the cache itself -- see sell.CopyListings.
+        sell.listings   = sell.CopyListings(entry.listings)
+        sell.scanItemId = itemId
+        sell.scanName   = itemName
+        sell.scanWhen   = entry.when
+        if onDone then onDone(sell.listings) end
+        return true
+    end
+    if A.scan.IsRunning() or A.scan.IsPaused() then
+        return false
+    end
+    sell.listings   = {}
+    sell.scanItemId = itemId
+    sell.scanName   = itemName
+    local me = UnitName("player")
+    A.scan.Start({ name = itemName }, {
+        onListing = function(id, name, count, buyout, minBid, owner)
+            if sell.SameItem(id, name, itemId, itemName) then
+                table.insert(sell.listings, {
+                    count  = count,
+                    buyout = buyout,   -- stack buyout (copper); 0 = bid only
+                    unit   = (buyout > 0) and math.floor(buyout / count) or nil,
+                    minBid = minBid,
+                    owner  = owner,
+                    isMine = (owner and me and owner == me) and true or false,
+                })
+            end
+        end,
+        onPage = onProgress,
+        stampLast = false,   -- price lookup; don't reset the "last full scan"
+        onComplete = function()
+            table.sort(sell.listings, function(a, b)
+                local au = a.unit or a.buyout or 1e18
+                local bu = b.unit or b.buyout or 1e18
+                return au < bu
+            end)
+            sell.scanWhen = time()
+            -- Store a copy so later mutations to sell.listings cannot reach
+            -- the cached data. The read side copies too; see sell.CopyListings.
+            sell.cache[itemId] = {
+                listings = sell.CopyListings(sell.listings),
+                when     = sell.scanWhen,
+            }
+            if onDone then onDone(sell.listings) end
+        end,
+    })
+    return true
+end
+
+-- Collapse listings into display groups keyed by (unit price, stack size),
+-- preserving the cheapest-first order. Each group: {unit, count, buyout, num,
+-- mine, pct} where num = how many such auctions and pct = % of market value.
+function sell.GroupListings(rows, marketValue)
+    local order = {}
+    local byKey = {}
+    local i = 1
+    while i <= table.getn(rows) do
+        local r = rows[i]
+        local key = tostring(r.unit or 0) .. ":" .. tostring(r.count)
+        local g = byKey[key]
+        if not g then
+            g = { unit = r.unit, count = r.count, buyout = r.buyout,
+                  num = 0, mine = false }
+            if marketValue and marketValue > 0 and r.unit then
+                g.pct = math.floor(r.unit / marketValue * 100)
+            end
+            byKey[key] = g
+            table.insert(order, g)
+        end
+        g.num = g.num + 1
+        if r.isMine then g.mine = true end
+        i = i + 1
+    end
+    return order
+end
+
+-- How a per-unit price compares to the item's vendor sell price. Returns
+-- What ONE unit actually nets you from a sale, after the auction house takes
+-- its consignment cut.
+--
+-- THE DEPOSIT IS NOT IN HERE, and that is a fact about the game rather than an
+-- omission: a deposit is REFUNDED in full when the auction sells, and
+-- forfeited only when it expires or you cancel. So it is a risk you carry
+-- while the auction is up, not a cost of selling -- and subtracting it from a
+-- successful sale would understate every price on the tab.
+--
+-- (ROADMAP 5.3 said otherwise -- `unitPrice * 0.95 - deposit` -- and the entry
+-- has been corrected. The number it asked for would have been wrong in the
+-- other direction from the one it was replacing.)
+function sell.NetUnit(unitPrice, cut)
+    if not unitPrice or unitPrice <= 0 then return nil end
+    cut = cut or sell.CUT
+    return math.floor(unitPrice * (1 - cut))
+end
+
+-- { vendor, pct, above, mult } or nil when we have no vendor data.
+function sell.VendorCompare(itemId, unitPrice)
+    local vendor = A.db.GetVendor(itemId)
+    if not vendor or vendor <= 0 or not unitPrice or unitPrice <= 0 then
+        return nil
+    end
+    return {
+        vendor = vendor,
+        pct    = math.floor(unitPrice / vendor * 100),
+        mult   = unitPrice / vendor,
+        above  = unitPrice >= vendor,
+    }
+end
+
+-- ---------------------------------------------------------------------------
+-- Bag enumeration (drives the Sell tab's "Your Bags" list)
+-- ---------------------------------------------------------------------------
+
+-- Tooltip phrases that mark an item you cannot put on the auction house. 1.12
+-- exposes no soulbound flag, so we read the item's tooltip text (the same trick
+-- aux / Auctionator use). Globals fall back to English literals off Turtle.
+local BLOCK_PHRASES = {
+    ITEM_SOULBOUND  or "Soulbound",
+    ITEM_BIND_QUEST or "Quest Item",
+    ITEM_CONJURED   or "Conjured Item",
+}
+
+-- Hidden tooltip we own, created lazily, for reading bind status.
+local function ScanTip()
+    if not sell._scanTip then
+        sell._scanTip = CreateFrame("GameTooltip", "AegisExchangeScanTooltip",
+            nil, "GameTooltipTemplate")
+    end
+    return sell._scanTip
+end
+
+-- True unless the bag item is soulbound / quest / conjured (i.e. postable).
+function sell.IsAuctionable(bag, slot)
+    local tip = ScanTip()
+    tip:SetOwner(UIParent, "ANCHOR_NONE")
+    tip:ClearLines()
+    tip:SetBagItem(bag, slot)
+    local n = tip:NumLines() or 0
+    local i = 2   -- line 1 is the item name; bind text sits below it
+    while i <= n do
+        local fs = getglobal("AegisExchangeScanTooltipTextLeft" .. i)
+        local txt = fs and fs:GetText()
+        if txt then
+            local b = 1
+            while b <= table.getn(BLOCK_PHRASES) do
+                if string.find(txt, BLOCK_PHRASES[b], 1, true) then
+                    return false
+                end
+                b = b + 1
+            end
+        end
+        i = i + 1
+    end
+    return true
+end
+
+-- Walk bags 0..4 and group every POSTABLE item by its category (util.ItemInfo's
+-- normalised itemType). Soulbound / quest / conjured items are skipped. Returns an ordered
+-- list of { name = className, items = { entry, ... } } where entry =
+-- { bag, slot, itemId, name, texture, count }. Order follows first appearance
+-- so the grouping is stable between refreshes.
+function sell.ScanBags()
+    local order = {}
+    local byCat = {}
+    local byId  = {}      -- item key -> entry, so a second stack finds the first
+    local bag = 0
+    while bag <= 4 do
+        local slots = GetContainerNumSlots(bag) or 0
+        local slot = 1
+        while slot <= slots do
+            local link = GetContainerItemLink(bag, slot)
+            if link and sell.IsAuctionable(bag, slot) then
+                local texture, count = GetContainerItemInfo(bag, slot)
+                -- Through util.ItemInfo, NOT by indexing GetItemInfo: its
+                -- slots shift by one between vanilla 1.12 and later clients,
+                -- so the old `select 6` read the item's SUBTYPE ("Cloth") on
+                -- one and its TYPE ("Trade Goods") on the other -- meaning
+                -- these group headers silently differed by client.
+                local info = util.ItemInfo(link)
+                local iname = info and info.name
+                local itype = info and info.type
+                -- On 1.12 GetItemInfo may return nil until the client-side
+                -- item cache is warm. Fall back to the name between [...] in
+                -- the link so AH queries don't send a raw item-link string
+                -- (which the server won't understand and would return 0
+                -- results for, storing a bogus empty cache).
+                if not iname then
+                    local _, _, n = string.find(link, "%[([^%]]+)%]")
+                    iname = n
+                end
+                local cname = itype or "Other"
+                local cat = byCat[cname]
+                if not cat then
+                    cat = { name = cname, items = {} }
+                    byCat[cname] = cat
+                    table.insert(order, cat)
+                end
+
+                -- ONE ENTRY PER ITEM, not per bag slot.
+                --
+                -- This used to insert a row for every slot, so thirty Lesser
+                -- Magic Essence held as three stacks of ten drew three
+                -- identical lines -- and the vendor list, the batch scanner
+                -- and the post-scan sell queue each processed the same item
+                -- three times over.
+                --
+                -- WHAT THE ENTRY HAS TO CARRY, because a row is not just a
+                -- label. `count` is the HOLDINGS TOTAL. `stackMax` is the
+                -- largest SINGLE stack, and those are different numbers that
+                -- must not be confused: 1.12 has no merge API, so what can
+                -- actually be posted as one stack is bounded by stackMax, not
+                -- by count. `slots` keeps every physical stack, because
+                -- selling to a vendor acts on each one separately.
+                --
+                -- `bag`/`slot` stay on the entry and point at the LARGEST
+                -- stack, so every existing caller that places or hovers an
+                -- item keeps working and gets the most useful stack while
+                -- doing it.
+                local id = util.ItemIdFromLink(link)
+                -- Keyed by name when the id is unreadable, so a cold cache
+                -- groups by the only thing it does know rather than making
+                -- every slot its own entry again.
+                local key = id or ("n:" .. tostring(iname or link))
+                -- In ITEMS: a Wizard Oil's count is its charges. See
+                -- util.ItemUnits.
+                local c = util.ItemUnits(id, count or 1)
+                local entry = byId[key]
+                if not entry then
+                    entry = {
+                        bag      = bag,
+                        slot     = slot,
+                        itemId   = id,
+                        name     = iname or link,
+                        texture  = texture,
+                        -- Carried so the bag list can colour the name the way
+                        -- every other table in the window does. nil on a cold
+                        -- item cache, which the row falls back from.
+                        quality  = info and info.quality,
+                        count    = 0,
+                        stackMax = 0,
+                        slots    = {},
+                    }
+                    byId[key] = entry
+                    table.insert(cat.items, entry)
+                end
+                entry.count = entry.count + c
+                table.insert(entry.slots, { bag = bag, slot = slot, count = c })
+                if c > entry.stackMax then
+                    entry.stackMax = c
+                    entry.bag, entry.slot = bag, slot
+                end
+            end
+            slot = slot + 1
+        end
+        bag = bag + 1
+    end
+    return order
+end
+
+-- ---------------------------------------------------------------------------
+-- The Post All blacklist
+-- ---------------------------------------------------------------------------
+--
+-- Items Post All never offers -- the Sell tab's Scan, and the Post / Skip walk
+-- that follows it. Asked for as "items you don't want, or never want, to
+-- sell", with a manager: add from bags, drag and drop, icon and name, easy
+-- remove and clear.
+--
+-- STORED AS A GROUP (db.GROUP_NO_POST), not a list of its own: groups are the
+-- next thing on the roadmap, and two item-set stores would disagree.
+--
+-- NOT A LOCK. A blacklisted item can still be slotted and posted by hand; the
+-- list is about what Post All puts in front of you, and an item you decide to
+-- sell after all should not need taking off a list first.
+
+function sell.IsBlacklisted(itemId)
+    return A.db and A.db.GroupHas
+        and A.db.GroupHas(A.db.GROUP_NO_POST, itemId) or false
+end
+
+function sell.Blacklist()
+    return A.db.GroupList(A.db.GROUP_NO_POST)
+end
+
+function sell.BlacklistAdd(itemId, name, texture)
+    return A.db.GroupAdd(A.db.GROUP_NO_POST, itemId, name, texture)
+end
+
+function sell.BlacklistRemove(itemId)
+    return A.db.GroupRemove(A.db.GROUP_NO_POST, itemId)
+end
+
+function sell.BlacklistClear()
+    A.db.GroupClear(A.db.GROUP_NO_POST)
+end
+
+-- Add whatever is in bag (bag, slot). Returns true, name -- or false, reason.
+--
+-- AN ITEM POST ALL WOULD NEVER OFFER IS REFUSED, and says so. Soulbound, quest
+-- and conjured items are left out of Post All already; listing one would look
+-- like it did something and do nothing.
+function sell.BlacklistAddFromBag(bag, slot)
+    local link = bag and slot and GetContainerItemLink(bag, slot)
+    if not link then return false, "That bag slot is empty." end
+    local itemId = util.ItemIdFromLink(link)
+    if not itemId then return false, "Aegis cannot read that item." end
+    local info = util.ItemInfo(link)
+    local name = (info and info.name) or util.ItemNameFromLink(link)
+    if not sell.IsAuctionable(bag, slot) then
+        return false, (name or "That item")
+            .. " cannot be auctioned, so Post All never offers it anyway."
+    end
+    local texture = GetContainerItemInfo(bag, slot)
+    sell.BlacklistAdd(itemId, name, texture or (info and info.texture))
+    return true, name
+end
+
+-- The bag slot whose item is ON THE CURSOR, or nil -- for a drop onto the
+-- blacklist.
+--
+-- NO HOOK NEEDED. 1.12 has no GetCursorInfo, but an item picked up out of a bag
+-- leaves its slot LOCKED (GetContainerItemInfo's third return) until it is put
+-- down, so the slot that is locked is where it came from. Read only on a drop
+-- -- one bounded walk of five bags on a click, never from an event.
+function sell.CursorBagItem()
+    if not (CursorHasItem and CursorHasItem()) then return nil end
+    local bag = 0
+    while bag <= 4 do
+        local slots = GetContainerNumSlots(bag) or 0
+        local slot = 1
+        while slot <= slots do
+            if GetContainerItemLink(bag, slot) then
+                local _, _, locked = GetContainerItemInfo(bag, slot)
+                if locked then return bag, slot end
+            end
+            slot = slot + 1
+        end
+        bag = bag + 1
+    end
+    return nil
+end
+
+-- Everything Post All will offer, in bag-list order: every postable item in
+-- the bags, minus the blacklist. Returns the list and how many were left out.
+--
+-- ONE LIST FOR BOTH HALVES. The Scan and the Post / Skip walk after it each
+-- built their own flat copy of sell.ScanBags, so a rule added to one was
+-- missing from the other. The blacklist manager's "in your bags" column is
+-- this list too: what you could still add is what Post All would offer.
+function sell.PostAllItems()
+    local cats = sell.ScanBags()
+    local out, skipped = {}, 0
+    local ci = 1
+    while ci <= table.getn(cats) do
+        local items = cats[ci].items
+        local ii = 1
+        while ii <= table.getn(items) do
+            local it = items[ii]
+            if it.itemId and sell.IsBlacklisted(it.itemId) then
+                skipped = skipped + 1
+            else
+                table.insert(out, it)
+            end
+            ii = ii + 1
+        end
+        ci = ci + 1
+    end
+    return out, skipped
+end
+
+-- How Post All posts ONE item: returns (size, count). PURE -- the bag reads
+-- come in through `stacksAt(size)`, which answers how many stacks of that size
+-- can be made (sell.MaxStacks).
+--
+--   mode       db.PostOp("stackMode"): "bags" | "max" | "singles" | "fixed"
+--   fixed      the "fixed" stack size
+--   slotted    units in the slot -- the walk slots the LARGEST stack held
+--   maxStack   the item's own limit; nil when the client did not say
+--   remainder  db.PostOp("remainder")
+--
+-- COUNT 0 MEANS NOTHING TO POST under this plan, and the walk moves on: a
+-- fixed size of 10 with the remainder off, and only 3 held.
+--
+-- NO SIZE ABOVE THE LARGEST STACK HELD, except "fixed", which says what it
+-- wants. 1.12 has no merge: thirty held as three tens makes no stack of 20,
+-- so "full stacks" there means stacks of ten -- the biggest that exist.
+function sell.PlanStacks(mode, fixed, slotted, maxStack, remainder, stacksAt)
+    slotted = slotted or 0
+    if slotted < 1 then return 1, 0 end
+    local cap = maxStack
+    if not cap or cap < 1 then cap = slotted end
+    local size
+    if mode == "singles" then
+        size = 1
+    elseif mode == "max" then
+        size = cap
+        if size > slotted then size = slotted end
+    elseif mode == "fixed" then
+        size = math.floor(fixed or 0)
+        if size < 1 then size = 1 end
+        if size > cap then size = cap end
+    else
+        -- "bags", and anything unrecognised: exactly what Post All did before
+        -- it had a choice -- one stack, the size it is in the slot.
+        size = slotted
+        if size > cap then size = cap end
+        return size, 1
+    end
+    local n = stacksAt(size) or 0
+    if n < 1 and remainder then
+        -- Not one stack of the size asked for. With the remainder on, what
+        -- there is goes up as it is.
+        size = slotted
+        if size > cap then size = cap end
+        n = stacksAt(size) or 0
+        if n < 1 then n = 1 end
+    end
+    return size, n
+end
+
+-- Every stack of `itemId` held, as a list of unit counts: ONE bag walk, so a
+-- plan that asks about several sizes (sell.SmartStacks) does not walk the bags
+-- -- and read a tooltip per matching slot -- once per size.
+function sell.HeldStacks(itemId)
+    local out = {}
+    if not itemId then return out end
+    local bag = 0
+    while bag <= 4 do
+        local slots = GetContainerNumSlots(bag) or 0
+        local slot = 1
+        while slot <= slots do
+            local link = GetContainerItemLink(bag, slot)
+            if link and util.ItemIdFromLink(link) == itemId
+                and sell.IsAuctionable(bag, slot) then
+                table.insert(out, util.SlotUnits(bag, slot, itemId) or 0)
+            end
+            slot = slot + 1
+        end
+        bag = bag + 1
+    end
+    return out
+end
+
+-- How many stacks of `size` the held stacks make: per stack, since 1.12
+-- splits but never merges. sell.MaxStacks over a list. PURE.
+function sell.StacksAt(held, size)
+    if not size or size < 1 then return 0 end
+    local n = 0
+    local i = 1
+    while i <= table.getn(held or {}) do
+        n = n + math.floor((held[i] or 0) / size)
+        i = i + 1
+    end
+    return n
+end
+
+-- The listing rows known for `itemId`: its cached scan while fresh, else the
+-- live scan when that is for this item. nil when there is neither.
+function sell.ListingsFor(itemId)
+    if not itemId then return nil end
+    local entry = sell.cache[itemId]
+    if entry and time() - entry.when < sell.CACHE_TTL then return entry.listings end
+    if sell.scanItemId == itemId then return sell.listings end
+    return nil
+end
+
+-- After posting `itemId`, its cached scan no longer shows your own auctions --
+-- the ones just posted. Forget it, so the next Scan reads the auction house
+-- again; otherwise a second Post All in the same visit would count too few
+-- of your auctions against Smart's limit and post past it.
+function sell.ForgetListings(itemId)
+    if itemId then sell.cache[itemId] = nil end
+end
+
+-- SMART STACKS: which stack size nets the most, within a limit on auctions.
+--
+-- Asked for as "smart stacks based on profitability" and "profit comparison
+-- between different stack sizes". From one snapshot of listings that has to
+-- mean something measurable, and the owner chose this:
+--
+--   * CANDIDATES are the stack sizes other sellers are listing -- where buyers
+--     are evidently shopping -- that you can make, plus your full stack.
+--   * EACH IS PRICED against listings OF ITS OWN SIZE (undercut, or matched
+--     when yours is the cheapest), since a buyer of singles is not looking at
+--     stacks of 20. Your full stack, when nobody lists that size, is priced
+--     against the cheapest listing of any size.
+--   * THE LIMIT is what keeps it honest: `limit` auctions of this item on the
+--     auction house at once, YOURS ALREADY THERE INCLUDED. Without it singles
+--     win every time on unit price, flood the market and fill the 120 cap.
+--   * The winner nets the most if everything posted sold: net unit x size x
+--     stacks. A tie goes to the larger stack -- fewer auctions, same money.
+--
+-- `held` is sell.HeldStacks. Returns the best option {size, count, unit,
+-- total} and every option, smallest size first, for the comparison line --
+-- or nil, {}, "limit" when your own auctions already fill the limit. nil and
+-- an empty list with no reason means no price is known at any size. PURE but
+-- for the price DB fallback that sell.UndercutFrom shares with the slot.
+function sell.SmartStacks(itemId, rows, held, maxStack, limit)
+    local largest = 0
+    local hi = 1
+    while hi <= table.getn(held or {}) do
+        if (held[hi] or 0) > largest then largest = held[hi] end
+        hi = hi + 1
+    end
+    if largest < 1 then return nil, {} end
+    local cap = maxStack
+    if not cap or cap < 1 then cap = largest end
+    local full = (cap < largest) and cap or largest
+
+    local mine, sizes, seen = 0, {}, {}
+    local i = 1
+    while i <= table.getn(rows or {}) do
+        local r = rows[i]
+        if r.isMine then
+            mine = mine + 1
+        elseif r.unit and r.unit > 0 and r.count and r.count >= 1
+            and not seen[r.count] then
+            seen[r.count] = true
+            table.insert(sizes, r.count)
+        end
+        i = i + 1
+    end
+    if not seen[full] then table.insert(sizes, full) end
+    local left = (limit or 0) - mine
+    if left < 1 then return nil, {}, "limit" end
+
+    local general = sell.UndercutFrom(rows, itemId)
+    local opts, best = {}, nil
+    i = 1
+    while i <= table.getn(sizes) do
+        local size = sizes[i]
+        local unit = general
+        if seen[size] then
+            local same = {}
+            local j = 1
+            while j <= table.getn(rows) do
+                if rows[j].count == size then table.insert(same, rows[j]) end
+                j = j + 1
+            end
+            unit = sell.UndercutFrom(same, itemId)
+        end
+        local n = sell.StacksAt(held, size)
+        if n > left then n = left end
+        if unit and n >= 1 then
+            local o = { size = size, count = n, unit = unit,
+                        total = sell.NetUnit(unit) * size * n }
+            table.insert(opts, o)
+            if not best or o.total > best.total
+                or (o.total == best.total and o.size > best.size) then
+                best = o
+            end
+        end
+        i = i + 1
+    end
+    table.sort(opts, function(a, b) return a.size < b.size end)
+    return best, opts
+end
+
+-- The per-item price Post All expects to post `itemId` at, BEFORE it is
+-- slotted: what the price box will be filled with when the walk reaches it.
+-- nil when nothing is known.
+--
+-- FROM THE PRE-SCAN'S CACHE. Scan fills sell.cache for every bag item before
+-- the walk starts, and slotting reads that same cache, so a price computed here
+-- is the price that lands in the box -- through the same rule
+-- (sell.UndercutFrom) and the same "Default sell price" setting
+-- (`priceMode`, ui.DefaultSellUnit's). "none" leaves the box empty, but the
+-- walk still needs an estimate, so it is planned as "undercut".
+function sell.PlannedUnit(itemId, priceMode)
+    if not itemId then return nil end
+    if priceMode == "market" then
+        local m = A.db.MarketValue(itemId)
+        if m then return m end
+    end
+    local entry = sell.cache[itemId]
+    local rows = nil
+    if entry and time() - entry.when < sell.CACHE_TTL then rows = entry.listings end
+    return sell.UndercutFrom(rows, itemId)
+end
+
+-- Would posting at `unit` keep less than a merchant pays? Only TRUE WHEN BOTH
+-- ARE KNOWN: an item with no vendor price, or no price at all, is not proven
+-- to be below anything, and Post All does not leave out what it cannot prove.
+--
+-- AGAINST THE NET, the same comparison as the Sell tab's "Nets below vendor
+-- price" line. The deposit stays out: it is refunded when the auction sells
+-- (ROADMAP 5.3).
+function sell.NetsBelowVendor(itemId, unit)
+    local vc = sell.VendorCompare(itemId, sell.NetUnit(unit))
+    return (vc and not vc.above) and true or false
+end
+
+-- Comparator for "most valuable first": by `value` (what the whole holding
+-- nets), highest first; anything without a value after everything with one;
+-- ties and unknowns keep bag order (`i`), since table.sort is not stable.
+function sell.ValueFirst(a, b)
+    if a.value and b.value then
+        if a.value ~= b.value then return a.value > b.value end
+        return a.i < b.i
+    end
+    if a.value then return true end
+    if b.value then return false end
+    return a.i < b.i
+end
+
+-- The Post / Skip walk's queue: sell.PostAllItems, then Post All's own rules.
+--   gate      leave out what nets below vendor (sell.NetsBelowVendor)
+--   byValue   most valuable holding first, rather than bag order
+-- Returns the queue, how many the blacklist left out, and how many the gate
+-- did.
+--
+-- NOT the Scan's list. The Scan is what FETCHES the prices this needs, so it
+-- walks sell.PostAllItems unfiltered; only the walk after it is gated.
+function sell.PostAllQueue(gate, byValue, priceMode)
+    local items, blacklisted = sell.PostAllItems()
+    local rows, below = {}, 0
+    local i = 1
+    while i <= table.getn(items) do
+        local it = items[i]
+        local unit = sell.PlannedUnit(it.itemId, priceMode)
+        if gate and unit and sell.NetsBelowVendor(it.itemId, unit) then
+            below = below + 1
+        else
+            local net = sell.NetUnit(unit)
+            table.insert(rows, { item = it, i = i,
+                                 value = net and net * (it.count or 1) })
+        end
+        i = i + 1
+    end
+    if byValue then table.sort(rows, sell.ValueFirst) end
+    local out = {}
+    i = 1
+    while i <= table.getn(rows) do
+        out[i] = rows[i].item
+        i = i + 1
+    end
+    return out, blacklisted, below
+end
+
+-- Put the item at (bag, slot) into the auction sell slot.
+--
+-- EMPTY THE SLOT FIRST, and that is the whole function.
+-- ClickAuctionSellItemButton SWAPS: it puts what the cursor holds into the
+-- slot and hands back whatever was already there. So placing a second item
+-- while the first is still slotted left the first one ON THE CURSOR, where it
+-- stayed until something else put it down -- which presents as "the item I
+-- moved on from never went back to my bag".
+--
+-- The old `ClearCursor()` at the top did not help: it runs BEFORE the pickup,
+-- so it clears a cursor that is already empty and is long finished by the time
+-- the swap happens. Clearing the SLOT first turns the click back into a plain
+-- placement, which is what it was assumed to be.
+function sell.PlaceFromBag(bag, slot)
+    sell.ClearSlot()          -- returns any slotted item to the bags
+    ClearCursor()             -- ...and drops anything the user was carrying
+    PickupContainerItem(bag, slot)
+    ClickAuctionSellItemButton()
+end
+
+-- Where does `itemId` live in the bags RIGHT NOW? Returns (bag, slot) for the
+-- largest auctionable stack, or nil.
+--
+-- Bag positions shift as you post, so any bag/slot captured earlier can be
+-- stale (that slot may now be empty or hold something else). Anything acting on
+-- a remembered item -- the post-scan sell queue especially -- must re-locate it
+-- through here rather than trusting the old coordinates.
+function sell.FindItemSlot(itemId)
+    if not itemId then return nil end
+    local bestBag, bestSlot, bestCount = nil, nil, 0
+    local bag = 0
+    while bag <= 4 do
+        local slots = GetContainerNumSlots(bag) or 0
+        local slot = 1
+        while slot <= slots do
+            local link = GetContainerItemLink(bag, slot)
+            if link and util.ItemIdFromLink(link) == itemId
+                and sell.IsAuctionable(bag, slot) then
+                local count = util.SlotUnits(bag, slot, itemId)
+                if (count or 0) > bestCount then
+                    bestBag, bestSlot, bestCount = bag, slot, count or 0
+                end
+            end
+            slot = slot + 1
+        end
+        bag = bag + 1
+    end
+    return bestBag, bestSlot
+end
+
+-- Place `itemId` into the sell slot, finding it fresh. Returns true if placed.
+function sell.PlaceItemById(itemId)
+    local bag, slot = sell.FindItemSlot(itemId)
+    if not bag then return false end
+    sell.PlaceFromBag(bag, slot)
+    return true
+end
+
+-- ---------------------------------------------------------------------------
+-- What the deposit ACTUALLY cost
+-- ---------------------------------------------------------------------------
+
+-- The only measurement in this addon of what the SERVER charges, as opposed to
+-- what the client says it will. Posting is the moment both numbers exist: the
+-- client states a deposit for the slotted item, and a moment later exactly
+-- that much money -- or not -- leaves the bags.
+--
+-- The deduction is not synchronous, so this cannot be a subtraction around
+-- StartAuction. Arm a watch with the balance and the expectation, and let the
+-- next PLAYER_MONEY do the subtraction.
+sell.WATCH_TIMEOUT = 5   -- seconds before an unanswered watch is abandoned
+
+-- Remember the balance and what the client expects to charge. Returns the
+-- watch, or nil when it declined to arm.
+--
+-- ONE AT A TIME, deliberately. Multi-stack posting fires StartAuction every
+-- 0.45s, and a second watch armed before the first one's money event landed
+-- would take a balance that still contained the first deposit -- then measure
+-- both deductions as one and record a ratio of about 2. Skipping the arm
+-- learns less often and never learns something false.
+function sell.ArmDepositWatch(minutes, now)
+    now = now or (GetTime and GetTime()) or 0
+    local live = sell.depositWatch
+    if live and (now - live.at) <= sell.WATCH_TIMEOUT then return nil end
+    sell.depositWatch = nil
+    if not CalculateAuctionDeposit or not GetMoney then return nil end
+    if not minutes or minutes <= 0 then return nil end
+    local expect = CalculateAuctionDeposit(minutes)
+    if not expect or expect <= 0 then return nil end
+    sell.depositWatch = { money = GetMoney(), expect = expect, at = now }
+    return sell.depositWatch
+end
+
+-- Money changed. Returns (ratio, spent) when that settled a watch.
+--
+-- THE FIRST MONEY EVENT SETTLES IT, whatever it was, and a watch is never
+-- reused. A balance that went UP is somebody else's event -- a loot, a quest
+-- reward, a sale mail -- and holding the watch across it would leave the
+-- baseline stale: the next delta would then be the deposit MINUS that income,
+-- and a small enough income lands inside the plausibility band and gets
+-- recorded as a real reading. Abandoning the sample loses a measurement;
+-- keeping it invents one.
+function sell.SettleDepositWatch(money, now)
+    local w = sell.depositWatch
+    if not w then return nil end
+    now = now or (GetTime and GetTime()) or 0
+    if (now - w.at) > sell.WATCH_TIMEOUT then
+        sell.depositWatch = nil
+        return nil
+    end
+    if money == nil then return nil end
+    sell.depositWatch = nil
+    local spent = w.money - money
+    if spent <= 0 then return nil end
+    local ratio = spent / w.expect
+    if ratio < sell.RATIO_MIN or ratio > sell.RATIO_MAX then return nil end
+    if A.db and A.db.RecordDepositCharge then
+        A.db.RecordDepositCharge(ratio)
+    end
+    return ratio, spent
+end
+
+-- ---------------------------------------------------------------------------
+-- Posting
+-- ---------------------------------------------------------------------------
+
+-- Post the item currently in the slot. `unitBuyout` / `unitStart` are per-unit
+-- copper (the whole stack is auctioned; totals are unit * count). `minutes` is
+-- 120 / 480 / 1440. Returns (true) once the auction is fired, or (false,
+-- reason) on a validation failure. Success is otherwise confirmed by the
+-- follow-up NEW_AUCTION_UPDATE / AUCTION_OWNED_LIST_UPDATE events.
+function sell.Post(unitBuyout, unitStart, minutes)
+    local it = sell.GetItem()
+    if not it then return false, "No item in the sell slot." end
+    if sell.AtCap() then
+        return false, "You are at the " .. sell.CAP .. "-auction cap."
+    end
+    if not minutes or minutes <= 0 then
+        return false, "Pick a duration."
+    end
+    local count  = it.count
+    local buyout = math.floor((unitBuyout or 0) * count)
+    -- Start bid defaults to the buyout when left blank.
+    local start  = math.floor((unitStart or unitBuyout or 0) * count)
+    if start < 1 then
+        return false, "Enter a start bid or buyout of at least 1 copper."
+    end
+    if buyout > 0 and start > buyout then
+        return false, "Start bid can't exceed the buyout."
+    end
+    sell.ArmDepositWatch(minutes)
+    -- REMEMBERED BEFORE IT IS FIRED, because this is the only moment the stack
+    -- size exists anywhere: the sale mail carries a name and money and no
+    -- count. See db.RecordPosting. With its PRICE and deposit, so that when
+    -- this item is up in two sizes the sale's money can say which one sold.
+    if A.db and A.db.RecordPosting then
+        A.db.RecordPosting(it.name, it.itemId, count, nil,
+            { b = buyout, s = start, d = sell.EstimateDeposit(minutes) })
+    end
+    StartAuction(start, buyout, minutes)
+    return true
+end
+
+-- ---------------------------------------------------------------------------
+-- Multi-stack posting (post N stacks of a chosen size)
+-- ---------------------------------------------------------------------------
+
+-- Seconds between the two legs of a post (assemble a stack, then fire it) and
+-- between consecutive posts, so the client settles and we never spam the server.
+local ASSEMBLE_DELAY = 0.25
+local POST_DELAY     = 0.45
+local MAX_RETRIES    = 4
+-- How long to wait for a split/pickup to actually reach the cursor before
+-- treating the attempt as lost. SplitContainerItem needs a server round-trip on
+-- 1.12, so this has to tolerate realm latency; the poll exits the instant the
+-- cursor fills, so a fast realm never pays the full budget.
+local CURSOR_TIMEOUT = 2.0
+
+-- Total count of an item across all POSTABLE bag slots.
+function sell.CountInBags(itemId)
+    if not itemId then return 0 end
+    local total = 0
+    local bag = 0
+    while bag <= 4 do
+        local slots = GetContainerNumSlots(bag) or 0
+        local slot = 1
+        while slot <= slots do
+            local link = GetContainerItemLink(bag, slot)
+            if link and util.ItemIdFromLink(link) == itemId
+                and sell.IsAuctionable(bag, slot) then
+                local count = util.SlotUnits(bag, slot, itemId)
+                total = total + (count or 0)
+            end
+            slot = slot + 1
+        end
+        bag = bag + 1
+    end
+    return total
+end
+
+-- How many stacks of `stackSize` we can actually assemble by splitting (each
+-- split leaves the remainder in the same slot, so a slot of C yields
+-- floor(C / stackSize) stacks). This is honest about fragmentation — we never
+-- promise stacks we can't build without merging partials.
+function sell.MaxStacks(itemId, stackSize)
+    if not itemId or not stackSize or stackSize < 1 then return 0 end
+    local n = 0
+    local bag = 0
+    while bag <= 4 do
+        local slots = GetContainerNumSlots(bag) or 0
+        local slot = 1
+        while slot <= slots do
+            local link = GetContainerItemLink(bag, slot)
+            if link and util.ItemIdFromLink(link) == itemId
+                and sell.IsAuctionable(bag, slot) then
+                local count = util.SlotUnits(bag, slot, itemId)
+                n = n + math.floor((count or 0) / stackSize)
+            end
+            slot = slot + 1
+        end
+        bag = bag + 1
+    end
+    return n
+end
+
+-- The biggest SINGLE stack of `itemId` in the bags, which is the largest stack
+-- that can actually be posted.
+--
+-- Different from sell.CountInBags, and the difference is load-bearing: 1.12
+-- cannot merge two partial stacks, so thirty held as three tens can be posted
+-- as three stacks of ten and never as one of thirty. The Sell tab shows the
+-- total and ranges its stack-size control by THIS.
+function sell.LargestStack(itemId)
+    if not itemId then return 0 end
+    local best = 0
+    local bag = 0
+    while bag <= 4 do
+        local slots = GetContainerNumSlots(bag) or 0
+        local slot = 1
+        while slot <= slots do
+            local link = GetContainerItemLink(bag, slot)
+            if link and util.ItemIdFromLink(link) == itemId
+                and sell.IsAuctionable(bag, slot) then
+                local count = util.SlotUnits(bag, slot, itemId)
+                if (count or 0) > best then best = count or 0 end
+            end
+            slot = slot + 1
+        end
+        bag = bag + 1
+    end
+    return best
+end
+
+-- Per-stack deposit estimate for a stack of `stackSize`, from the item's vendor
+-- unit price (nil if we have no vendor data). Turtle-scaled + approximate.
+function sell.DepositFor(itemId, stackSize, minutes, maxStack)
+    local vendorUnit = A.db.GetVendor(itemId)
+    local base = sell.DepositAmount(vendorUnit, stackSize, 1, minutes)
+    if not base then return nil end
+    -- Two corrections, in order, and they are different claims. The first
+    -- makes our arithmetic agree with the CLIENT (measured wherever an item is
+    -- slotted); the second turns the client's figure into what the SERVER
+    -- takes (measured from a real post). Floor once, at the end -- flooring
+    -- between them threw away up to a copper per correction and was how this
+    -- path and the slotted one drifted apart in the first place.
+    return math.floor(base * sell.FormulaScale() * sell.ChargeFactor())
+end
+
+-- Trace the posting state machine. Shares the /aex debug flag with the scanner,
+-- because "it says couldn't assemble a stack" is impossible to diagnose from
+-- the outside -- this prints which phase gave up and what the slot actually
+-- held.
+function sell.Debug(msg)
+    if A.debugScan and DEFAULT_CHAT_FRAME then
+        DEFAULT_CHAT_FRAME:AddMessage("|cff5fc8f8Aegis post:|r " .. msg)
+    end
+end
+
+-- First postable bag slot holding at least `minCount` of the item, or nil.
+local function FindStack(itemId, minCount)
+    local bag = 0
+    while bag <= 4 do
+        local slots = GetContainerNumSlots(bag) or 0
+        local slot = 1
+        while slot <= slots do
+            local link = GetContainerItemLink(bag, slot)
+            if link and util.ItemIdFromLink(link) == itemId
+                and sell.IsAuctionable(bag, slot) then
+                local count = util.SlotUnits(bag, slot, itemId)
+                if (count or 0) >= minCount then return bag, slot end
+            end
+            slot = slot + 1
+        end
+        bag = bag + 1
+    end
+    return nil
+end
+
+-- A bag slot holding EXACTLY `count` of the item. This is the stack the
+-- assembler actually wants: the auction slot takes a whole bag stack reliably,
+-- which is why posting always worked when the bag already held the right sizes.
+local function FindExactStack(itemId, count)
+    local bag = 0
+    while bag <= 4 do
+        local slots = GetContainerNumSlots(bag) or 0
+        local slot = 1
+        while slot <= slots do
+            local link = GetContainerItemLink(bag, slot)
+            if link and util.ItemIdFromLink(link) == itemId
+                and sell.IsAuctionable(bag, slot) then
+                local c = util.SlotUnits(bag, slot, itemId)
+                if (c or 0) == count then return bag, slot end
+            end
+            slot = slot + 1
+        end
+        bag = bag + 1
+    end
+    return nil
+end
+
+-- Is this bag slot mid-move? GetContainerItemInfo's 3rd return is `locked`,
+-- which the client sets while the server is still processing a move. Acting on
+-- a locked slot is how a split silently does nothing -- so we wait instead of
+-- burning a retry. (Technique noted from how aux paces its stack moves.)
+local function SlotLocked(bag, slot)
+    local _, _, locked = GetContainerItemInfo(bag, slot)
+    return locked and true or false
+end
+
+-- Can a free slot in `bag` hold ANY item?
+--
+-- REPORTED: "whenever I post and have slots free in my ammo bag, Aegis tries to
+-- split into the ammo bag". A quiver or ammo pouch takes only ammo, a soul bag
+-- only shards, a herb bag only herbs -- so a split dropped there bounces, the
+-- carve times out, and the post gives up with free space sitting in an
+-- ordinary bag.
+--
+-- THE CLIENT'S OWN WORD, NOT OURS. An ordinary bag is one whose subclass is the
+-- first Container subclass in the auction house's own list -- "Bag" on an
+-- English client, whatever it is on any other -- which is how aux tells them
+-- apart. A quiver is not a Container at all, so it never matches. Comparing
+-- against English strings would have been wrong on every other locale.
+--
+-- Anything that cannot be read -- no bag link, a cold cache, no class list --
+-- answers yes, which is what every bag was treated as before.
+function sell.IsGeneralBag(bag)
+    if bag == 0 then return true end        -- the backpack takes anything
+    if not (GetInventoryItemLink and ContainerIDToInventoryID
+            and GetAuctionItemSubClasses) then
+        return true
+    end
+    local link = GetInventoryItemLink("player", ContainerIDToInventoryID(bag))
+    if not link then return true end
+    local info = util.ItemInfo(link)
+    if not info or not info.subType then return true end
+    local ordinary = GetAuctionItemSubClasses(3)   -- 3 = Container
+    if not ordinary then return true end
+    return info.subType == ordinary
+end
+
+-- First empty bag slot, for carving a split stack into. Backpack (0) last so we
+-- prefer real bags and leave the backpack free for loot. Only a bag that can
+-- hold anything -- see sell.IsGeneralBag.
+local function FindEmptySlot()
+    local order = { 1, 2, 3, 4, 0 }
+    local i = 1
+    while i <= table.getn(order) do
+        local bag = order[i]
+        local slots = 0
+        if sell.IsGeneralBag(bag) then
+            slots = GetContainerNumSlots(bag) or 0
+        end
+        local slot = 1
+        while slot <= slots do
+            if not GetContainerItemLink(bag, slot) then return bag, slot end
+            slot = slot + 1
+        end
+        i = i + 1
+    end
+    return nil
+end
+
+-- Return any item sitting in the sell slot back to the bags (the Auctionator
+-- clear pattern: pick it up, then ClearCursor drops it to its bag origin).
+function sell.ClearSlot()
+    if GetAuctionSellItemInfo() then
+        ClickAuctionSellItemButton()
+        ClearCursor()
+    end
+end
+
+sell.job = nil   -- active multi-stack posting job
+
+local function PostDriver()
+    if not sell._postDriver then
+        sell._postDriver = CreateFrame("Frame", "AegisExchangeSellDriver")
+        sell._postDriver:Hide()
+        sell._postDriver:SetScript("OnUpdate", function()
+            sell.PostTick(arg1)
+        end)
+    end
+    return sell._postDriver
+end
+
+local function FinishJob(reason)
+    local job = sell.job
+    sell.job = nil
+    if sell._postDriver then sell._postDriver:Hide() end
+    if job and job.callbacks and job.callbacks.onDone then
+        job.callbacks.onDone(job.posted, job.requested, reason)
+    end
+end
+
+-- Begin posting `numStacks` auctions of `stackSize` at the given per-unit
+-- prices. Non-destructive: each stack is split off a bag stack, so partials
+-- and other items are never shuffled. Returns (true) or (false, reason).
+function sell.StartPosting(itemId, itemName, stackSize, numStacks,
+                           unitBuyout, unitStart, minutes, callbacks)
+    if sell.job then return false, "Already posting." end
+    if not itemId then return false, "No item selected." end
+    if not stackSize or stackSize < 1 then return false, "Bad stack size." end
+    if not numStacks or numStacks < 1 then return false, "Bad stack count." end
+    if not minutes or minutes <= 0 then return false, "Pick a duration." end
+    if CursorHasItem() then
+        return false, "Clear your cursor first."
+    end
+    if not (unitBuyout and unitBuyout > 0) then
+        return false, "Enter a buyout."
+    end
+    local unitStartUse = unitStart or unitBuyout
+    if unitStartUse > unitBuyout then
+        return false, "Start bid can't exceed the buyout."
+    end
+    -- Don't exceed the account cap.
+    local room = sell.CAP - sell.OwnerCount()
+    if room <= 0 then return false, "You are at the auction cap." end
+    if numStacks > room then numStacks = room end
+    -- Don't promise more than we can assemble.
+    local avail = sell.MaxStacks(itemId, stackSize)
+    if avail < 1 then return false, "Not enough of that item to make a stack." end
+    if numStacks > avail then numStacks = avail end
+
+    sell.ClearSlot()
+    sell.job = {
+        itemId = itemId, itemName = itemName, stackSize = stackSize,
+        requested = numStacks, remaining = numStacks, posted = 0,
+        unitBuyout = unitBuyout, unitStart = unitStartUse, minutes = minutes,
+        phase = "assemble", cool = 0, retries = 0, callbacks = callbacks,
+    }
+    PostDriver():Show()
+    return true
+end
+
+function sell.PostTick(dt)
+    local job = sell.job
+    if not job then return end
+    job.cool = job.cool - (dt or 0)
+    if job.cool > 0 then return end
+
+    if job.remaining <= 0 then
+        FinishJob("done")
+        return
+    end
+    if sell.AtCap() then
+        FinishJob("cap")
+        return
+    end
+
+    -- ASSEMBLY STRATEGY. The auction slot reliably accepts a WHOLE bag stack --
+    -- that is why posting always worked when the bags already held the right
+    -- sizes, and why every attempt that needed a genuine split failed, both
+    -- before 1.1.5 and after it. Waiting for the split to reach the cursor
+    -- (1.1.5) was necessary but not sufficient.
+    --
+    -- So we never hand the auction slot a floating split. When the bag has more
+    -- than we want, we CARVE: split the exact amount off, drop it into an empty
+    -- bag slot, wait for the bags to settle, and then post that new stack down
+    -- the same whole-stack path that has always worked. Phases:
+    --
+    --   assemble -> (exact stack exists?) -> place -> verify -> post
+    --            -> (need to carve)       -> carve -> settle -> assemble
+    if job.phase == "assemble" then
+        local it = sell.GetItem()
+        if it and it.itemId == job.itemId and it.count == job.stackSize then
+            -- Already assembled (e.g. the user had it slotted). Go straight to
+            -- the phase that fires the auction. This used to say "post", which
+            -- no branch below handles -- the job would sit in a dead state
+            -- forever instead of posting.
+            job.phase = "verify"
+            return
+        end
+        if CursorHasItem() then ClearCursor() end
+        -- An occupied slot makes ClickAuctionSellItemButton SWAP rather than
+        -- place, so empty it before we put anything in.
+        if it then sell.ClearSlot() end
+
+        -- Preferred: a bag stack that is already exactly the size we want.
+        local bag, slot = FindExactStack(job.itemId, job.stackSize)
+        if bag then
+            sell.Debug("placing exact stack from bag " .. bag .. " slot " .. slot)
+            PickupContainerItem(bag, slot)
+            job.phase = "place"
+            job.wait  = CURSOR_TIMEOUT
+            job.cool  = 0
+            return
+        end
+
+        -- Otherwise carve one off a larger stack.
+        local src, srcSlot = FindStack(job.itemId, job.stackSize + 1)
+        if not src then
+            -- Nothing big enough either. Items can be briefly absent -- a stack
+            -- we just posted leaves the bags via the server -- so retry a few
+            -- times before declaring we've run out.
+            job.finds = (job.finds or 0) + 1
+            if job.finds > MAX_RETRIES then
+                sell.Debug("no stack of " .. job.stackSize .. " left; finishing")
+                FinishJob("out")
+                return
+            end
+            job.cool = ASSEMBLE_DELAY
+            return
+        end
+        job.finds = 0
+        local eb, es = FindEmptySlot()
+        if not eb then
+            sell.Debug("no free bag slot to carve into")
+            FinishJob("nospace")
+            return
+        end
+        -- Never split out of a slot the server is still moving: the call is
+        -- silently dropped and we'd waste a retry waiting for a cursor that
+        -- was never going to fill.
+        if SlotLocked(src, srcSlot) or SlotLocked(eb, es) then
+            job.cool = ASSEMBLE_DELAY
+            return
+        end
+        sell.Debug("carving " .. job.stackSize .. " off bag " .. src
+            .. " slot " .. srcSlot .. " into bag " .. eb .. " slot " .. es)
+        job.carveBag, job.carveSlot = eb, es
+        SplitContainerItem(src, srcSlot, job.stackSize)
+        job.phase = "carve"
+        job.wait  = CURSOR_TIMEOUT
+        job.cool  = 0
+
+    elseif job.phase == "carve" then
+        -- SplitContainerItem is a server round-trip; wait for the cursor, then
+        -- drop the carved stack into the empty slot we reserved.
+        if CursorHasItem() then
+            PickupContainerItem(job.carveBag, job.carveSlot)
+            job.phase = "settle"
+            job.wait  = CURSOR_TIMEOUT
+            job.cool  = 0
+            return
+        end
+        job.wait = job.wait - (dt or 0)
+        if job.wait <= 0 then
+            sell.Debug("split never reached the cursor")
+            job.retries = job.retries + 1
+            if job.retries > MAX_RETRIES then FinishJob("stuck"); return end
+            job.phase = "assemble"
+            job.cool  = ASSEMBLE_DELAY
+        end
+
+    elseif job.phase == "settle" then
+        -- Wait for the bags to actually show the new stack, then let assemble
+        -- pick it up down the proven whole-stack path.
+        if FindExactStack(job.itemId, job.stackSize) then
+            if CursorHasItem() then ClearCursor() end
+            job.phase = "assemble"
+            job.cool  = 0
+            return
+        end
+        job.wait = job.wait - (dt or 0)
+        if job.wait <= 0 then
+            sell.Debug("carved stack never appeared in the bags")
+            job.retries = job.retries + 1
+            if job.retries > MAX_RETRIES then FinishJob("stuck"); return end
+            job.phase = "assemble"
+            job.cool  = ASSEMBLE_DELAY
+        end
+
+    elseif job.phase == "place" then
+        -- Wait for the pickup to land on the cursor, then hand it to the slot.
+        if CursorHasItem() then
+            ClickAuctionSellItemButton()               -- cursor -> sell slot
+            job.phase = "verify"
+            job.cool  = ASSEMBLE_DELAY
+            return
+        end
+        job.wait = job.wait - (dt or 0)
+        if job.wait <= 0 then
+            sell.Debug("pickup never reached the cursor")
+            job.retries = job.retries + 1
+            if job.retries > MAX_RETRIES then FinishJob("stuck"); return end
+            job.phase = "assemble"
+            job.cool  = ASSEMBLE_DELAY
+        end
+
+    elseif job.phase == "verify" then
+        local it = sell.GetItem()
+        if it and it.itemId == job.itemId and it.count == job.stackSize then
+            local buyout = math.floor(job.unitBuyout * job.stackSize)
+            local start  = math.floor(job.unitStart * job.stackSize)
+            if start < 1 then start = 1 end
+            sell.ArmDepositWatch(job.minutes)
+            -- ...and the same for every stack a multi-post puts up. One
+            -- posting per StartAuction, or a run of ten stacks leaves nine
+            -- sales unable to say how many they were.
+            if A.db and A.db.RecordPosting then
+                A.db.RecordPosting(it.name, job.itemId, job.stackSize, nil,
+                    { b = buyout, s = start,
+                      d = sell.EstimateDeposit(job.minutes) })
+            end
+            StartAuction(start, buyout, job.minutes)   -- posts, clears slot
+            job.posted = job.posted + 1
+            job.remaining = job.remaining - 1
+            job.retries = 0
+            job.phase = "assemble"
+            job.cool = POST_DELAY
+            if job.callbacks and job.callbacks.onProgress then
+                job.callbacks.onProgress(job.posted, job.requested)
+            end
+        else
+            -- Assembly didn't land yet; retry a few times, then give up. The
+            -- trace names what the slot actually held, which is the one thing
+            -- "couldn't assemble a stack" never told anybody.
+            local got = "empty"
+            if it then
+                got = tostring(it.itemId) .. " x" .. tostring(it.count)
+            end
+            sell.Debug("verify: slot has " .. got .. ", wanted "
+                .. tostring(job.itemId) .. " x" .. tostring(job.stackSize))
+            job.retries = job.retries + 1
+            if job.retries > MAX_RETRIES then
+                FinishJob("stuck")
+                return
+            end
+            job.phase = "assemble"
+            job.cool = ASSEMBLE_DELAY
+        end
+    end
+end
+
+function sell.PostingActive()
+    return sell.job ~= nil
+end
+
+function sell.CancelPosting()
+    if sell.job then FinishJob("cancelled") end
+end
+
+-- ---------------------------------------------------------------------------
+-- Events
+-- ---------------------------------------------------------------------------
+
+-- The once-per-frame flush the mail snapshot hangs off.
+--
+-- A DRIVER FRAME, not the handler, and not a hover. MAIL_INBOX_UPDATE storms
+-- and the work is a read per attachment, so it cannot run inline. It cannot
+-- wait for a hover either -- the mailbox only answers while you are standing
+-- at it, and by the time anyone hovers an item they have usually walked away.
+-- One frame, shown while there is something to do and hidden the moment there
+-- is not, so it costs nothing for the rest of the session.
+sell.invDriver = CreateFrame("Frame", "AegisExchangeInventory")
+sell.invDriver:Hide()
+sell.invDriver:SetScript("OnUpdate", function()
+    -- Flush, then stop in the SAME frame if there is nothing left. Testing the
+    -- flush's return instead would leave the driver running one extra frame
+    -- after every flush, for no work.
+    sell.FlushInventory()
+    -- The bank rides the same frame, and for the same reason the mail does:
+    -- the events that dirty it storm, so the walk belongs here rather than in
+    -- a handler. O(1) per tick when the player is nowhere near a bank, which
+    -- is almost always.
+    sell.FlushBank()
+    -- The armed arrival snapshot rides the same frame. Both are O(1) per tick:
+    -- a flag test and a clock comparison.
+    local busy = sell.StepBagSnapshot(GetTime and GetTime() or 0)
+    -- bankDirty is deliberately NOT tested here: FlushBank has already cleared
+    -- it a few lines up, so it is false every time we reach this and a test of
+    -- it would be dead code. What keeps the bank honest is that every handler
+    -- which sets the flag also Shows this frame.
+    if not sell.mailDirty and not busy then sell.invDriver:Hide() end
+end)
+
+if A.RegisterEvent then
+    -- The mailbox changed. O(1): a flag and a Show, nothing else. See
+    -- sell.MailCounts for why the read itself must not happen here.
+    A.RegisterEvent("MAIL_INBOX_UPDATE", function()
+        sell.mailDirty = true
+        sell.invDriver:Show()
+    end)
+    -- Walking away from the mailbox: take one last look, so what is recorded
+    -- is the state you left rather than the state you arrived in.
+    A.RegisterEvent("MAIL_CLOSED", function()
+        sell.mailDirty = true
+        sell.invDriver:Show()
+    end)
+    -- The auction house is open, which is the only moment your own auctions
+    -- can be counted. Walks every page; see sell.StartOwnerSweep.
+    A.RegisterEvent("AUCTION_HOUSE_SHOW", function() sell.StartOwnerSweep() end)
+    A.RegisterEvent("AUCTION_OWNED_LIST_UPDATE", function()
+        sell.OwnerSweepStep()
+    end)
+    A.RegisterEvent("AUCTION_HOUSE_CLOSED", function() sell.CancelOwnerSweep() end)
+    -- Bags changed. O(1) BY DESIGN -- see sell.BagCounts. This event storms,
+    -- and the walk it invites is the shape that hard-froze Courier.
+    --
+    -- It also stamps the clock the arrival snapshot waits on: a storming
+    -- BAG_UPDATE is the client still talking, and a snapshot taken while it is
+    -- still talking is a partial one. Two assignments, still O(1).
+    A.RegisterEvent("BAG_UPDATE", function()
+        sell.bagsDirty   = true
+        sell.bagTouchedAt = GetTime and GetTime() or 0
+        -- THE BANK BAGS (5..10) REPORT THROUGH THIS EVENT, not through
+        -- PLAYERBANKSLOTS_CHANGED -- that one covers only the bank's own
+        -- slots, container -1. So a deposit into a bank bag is invisible
+        -- unless this marks it.
+        --
+        -- Gated on the bank actually being open, because this event fires for
+        -- every loot, trade, sale and move the player makes all session, and
+        -- away from a bank the walk it would invite answers nothing anyway.
+        --
+        -- AND IT MUST WAKE THE DRIVER. bagsDirty gets away without one because
+        -- sell.BagCounts rebuilds lazily when somebody asks; nothing ever asks
+        -- for the bank, so a dirty flag with a sleeping driver is a flush that
+        -- never happens. This was wrong in the first draft of the fix and the
+        -- sabotage run is what caught it.
+        if sell.bankOpen then
+            sell.bankDirty = true
+            sell.invDriver:Show()
+        end
+    end)
+    -- The bank is open, which is the only window in which the client will tell
+    -- us what is in it. Fires once per visit, and everything below keeps that
+    -- window honest until it shuts.
+    A.RegisterEvent("BANKFRAME_OPENED", function()
+        sell.bankOpen = true
+        sell.SnapshotBank()
+        sell.SnapshotBags()
+    end)
+    -- A bank slot changed: container -1, the bank's own slots. Marked, not
+    -- walked -- see sell.FlushBank.
+    --
+    -- NOT gated on bankOpen, unlike BAG_UPDATE. This event is the bank's own
+    -- and cannot fire when the bank is unreadable, so gating it could only
+    -- ever lose a change if the open/close bookkeeping drifted. The write is
+    -- guarded at the other end regardless.
+    A.RegisterEvent("PLAYERBANKSLOTS_CHANGED", function()
+        sell.bankDirty = true
+        sell.invDriver:Show()
+    end)
+    -- Walking away: take one last look, the same thing MAIL_CLOSED does.
+    --
+    -- INLINE, where the mail's equivalent defers to the driver, and the
+    -- difference is deliberate. The mailbox's contents survive the frame
+    -- closing; the bank's do not, and a walk one frame late can come back
+    -- empty. It fires once per visit, so there is no storm to coalesce.
+    --
+    -- This is only a BACKSTOP. The per-change flushes above are what actually
+    -- keep the count right, so the bucket is already correct by the time this
+    -- runs and nothing depends on the client still answering here. If it does
+    -- not, SnapshotWritable refuses the write and the good count stands.
+    A.RegisterEvent("BANKFRAME_CLOSED", function()
+        sell.bankDirty = false
+        sell.SnapshotBank()
+        sell.SnapshotBags()
+        sell.bankOpen = false
+    end)
+    -- Leaving the world: keep what this character is carrying, so the others
+    -- can see it. PLAYER_LEAVING_WORLD covers logout, exit and a zone change.
+    A.RegisterEvent("PLAYER_LEAVING_WORLD", function() sell.SnapshotBags() end)
+    -- ...AND ARRIVING, which is the one that was missing.
+    --
+    -- Until now a character recorded what it was carrying only when it opened
+    -- a bank or left the world. An alt you have not played since installing
+    -- therefore had NO record -- and a character with no record is left out of
+    -- the inventory block entirely, so the whole account-wide feature read as
+    -- "only shows the character I am on". It was reported exactly that way.
+    --
+    -- Leaving is also the less reliable half: 1.12 clients are closed by
+    -- alt-F4 and they crash, and neither fires it. Arriving always does, so
+    -- one visit to an alt is now enough and it counts from the moment you get
+    -- there rather than when you remember to leave properly.
+    --
+    -- It ARMS the snapshot rather than taking one, because arrival is the
+    -- worst moment to read bags -- see sell.BagSettleVerdict. Taking it inline
+    -- here is what made this fix incomplete the first time: the read came back
+    -- empty or partial and overwrote a good snapshot with it.
+    A.RegisterEvent("PLAYER_ENTERING_WORLD", function()
+        sell.ArmBagSnapshot(GetTime and GetTime() or 0)
+        sell.invDriver:Show()
+    end)
+    -- At a merchant: learn what it charges. Bounded, one fire per merchant.
+    A.RegisterEvent("MERCHANT_SHOW", function() sell.ScanMerchant() end)
+    -- Money moved. O(1): a subtraction against an armed watch, and an
+    -- immediate return when there is none -- which is every other time this
+    -- fires, and it fires for every copper the player earns or spends.
+    A.RegisterEvent("PLAYER_MONEY", function()
+        local coin = GetMoney and GetMoney() or nil
+        sell.SettleDepositWatch(coin)
+        -- ...and remember what this character is carrying, so the other
+        -- characters can be counted. O(1) -- a compare and a table write, see
+        -- db.SetCharMoney. This event fires for every copper the player earns,
+        -- spends, loots or is mailed, so it is the one handler in the file
+        -- that has no room at all for a walk.
+        if coin and A.db and A.db.SetCharMoney then A.db.SetCharMoney(coin) end
+    end)
+    -- The purse, on arrival. PLAYER_MONEY only fires when the figure CHANGES,
+    -- so a character you log in on and do nothing with would never record what
+    -- it is carrying -- the same gap that made the account-wide inventory read
+    -- as "only shows the character I am on" until v1.53.1.
+    --
+    -- Unlike the bag snapshot this needs no settle: GetMoney is answered from
+    -- the login packet and has nothing to resolve, so there is no partial
+    -- reading of it to wait out.
+    A.RegisterEvent("PLAYER_ENTERING_WORLD", function()
+        if A.db and A.db.SetCharMoney and GetMoney then
+            A.db.SetCharMoney(GetMoney())
+        end
+    end)
+end

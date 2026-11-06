@@ -1,0 +1,35 @@
+## Interface: 11200
+## Title: Ade Alts
+## Notes: Alt manager: cooldowns, inventory, bank, gear, professions and missing recipes of all your characters. /ade
+## Author: Ade
+## Version: 1.3.0
+## SavedVariables: AdeAltsDB, ProfCDTrackerDB
+## OptionalDeps: pfUI, SuperWoW, nampower
+core.lua
+data_alchemy.lua
+data_blacksmithing.lua
+data_cooking.lua
+data_enchanting.lua
+data_engineering.lua
+data_firstaid.lua
+data_jewelcrafting.lua
+data_leatherworking.lua
+data_mining.lua
+data_survival.lua
+data_tailoring.lua
+recipes.lua
+skin.lua
+scan.lua
+cdwin.lua
+ui_base.lua
+ui_panel.lua
+ui_equip.lua
+ui_profs.lua
+ui_show.lua
+ui_layout.lua
+ui_config.lua
+tooltip.lua
+sync.lua
+minimap.lua
+alert.lua
+events.lua

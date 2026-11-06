@@ -1,0 +1,11 @@
+<Bindings>
+	<Binding name="BAGNON_TOGGLE" description="Toggle Inventory" header="BAGNON">
+		BagnonFrame_Toggle("Bagnon");
+	</Binding>
+	<Binding name="BANKNON_TOGGLE" description="Toggle Bank">
+		BagnonFrame_Toggle("Banknon");
+	</Binding>
+	<Binding name="BAGNON_SORT" description="Sort Bags">
+		if Bagnon_RequestSort then Bagnon_RequestSort(false); end
+	</Binding>
+</Bindings>

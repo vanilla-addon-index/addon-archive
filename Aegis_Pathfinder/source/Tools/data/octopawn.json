@@ -1,0 +1,1676 @@
+{
+ "labels": {
+  "AGILITY": "AGILITY",
+  "ALL RESISTANCES": "ALL RESISTANCES",
+  "ARCANE DAMAGE": "ARCANE DAMAGE",
+  "ARCANE RESISTANCE": "ARCANE RESISTANCE",
+  "ARMOR": "ARMOR",
+  "ARMOR PENETRATION": "ARMOR PENETRATION",
+  "ATTACK POWER": "ATTACK POWER",
+  "ATTACK POWER UNDEAD": "ATTACK POWER UNDEAD",
+  "AVOIDANCE": "AVOIDANCE %",
+  "BLOCK": "BLOCK %",
+  "BLOCK VALUE": "BLOCK VALUE",
+  "CASTING REGEN": "CASTING REGEN %",
+  "CRIT": "CRIT %",
+  "DEFENSE": "DEFENSE",
+  "DODGE": "DODGE %",
+  "DPS": "WEAPON DPS",
+  "EXTRA ATTACK": "EXTRA ATTACK %",
+  "FERAL ATTACK POWER": "FERAL ATTACK POWER",
+  "FIRE DAMAGE": "FIRE DAMAGE",
+  "FIRE RESISTANCE": "FIRE RESISTANCE",
+  "FORTUNE": "FORTUNE",
+  "FROST DAMAGE": "FROST DAMAGE",
+  "FROST RESISTANCE": "FROST RESISTANCE",
+  "HASTE": "HASTE %",
+  "HEALING": "HEALING",
+  "HEALTH": "HEALTH",
+  "HEALTH PER 5": "HEALTH PER 5",
+  "HIT": "HIT %",
+  "HOLY CRIT": "HOLY CRIT %",
+  "HOLY DAMAGE": "HOLY DAMAGE",
+  "INTELLECT": "INTELLECT",
+  "LIFESTEAL": "LIFESTEAL %",
+  "MANA": "MANA",
+  "MANA PER 5": "MANA PER 5",
+  "MOUNT SPEED": "MOUNT SPEED %",
+  "MOVEMENT SPEED": "MOVEMENT SPEED %",
+  "NATURE DAMAGE": "NATURE DAMAGE",
+  "NATURE RESISTANCE": "NATURE RESISTANCE",
+  "PARRY": "PARRY %",
+  "RANGED ATTACK POWER": "RANGED ATTACK POWER",
+  "RANGED CRIT": "RANGED CRIT %",
+  "RANGED HASTE": "RANGED HASTE %",
+  "RESILIENCE": "RESILIENCE %",
+  "SHADOW DAMAGE": "SHADOW DAMAGE",
+  "SHADOW RESISTANCE": "SHADOW RESISTANCE",
+  "SPELL CRIT": "SPELL CRIT %",
+  "SPELL DAMAGE": "SPELL DAMAGE",
+  "SPELL DAMAGE UNDEAD": "SPELL DAMAGE UNDEAD",
+  "SPELL HIT": "SPELL HIT %",
+  "SPELL PENETRATION": "SPELL PENETRATION",
+  "SPELL POWER": "SPELL POWER",
+  "SPIRIT": "SPIRIT",
+  "STAMINA": "STAMINA",
+  "STRENGTH": "STRENGTH"
+ },
+ "licence": "MIT License\n\nCopyright (c) 2026 iGreed\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+ "patterns": [
+  [
+   "DAMAGE AND HEALING DONE BY MAGICAL SPELLS",
+   "SPELL POWER"
+  ],
+  [
+   "DAMAGE AND HEALING DONE BY SPELLS",
+   "SPELL POWER"
+  ],
+  [
+   "DAMAGE DONE BY SHADOW SPELLS",
+   "SHADOW DAMAGE"
+  ],
+  [
+   "DAMAGE DONE BY FIRE SPELLS",
+   "FIRE DAMAGE"
+  ],
+  [
+   "DAMAGE DONE BY FROST SPELLS",
+   "FROST DAMAGE"
+  ],
+  [
+   "DAMAGE DONE BY NATURE SPELLS",
+   "NATURE DAMAGE"
+  ],
+  [
+   "DAMAGE DONE BY ARCANE SPELLS",
+   "ARCANE DAMAGE"
+  ],
+  [
+   "DAMAGE DONE BY HOLY SPELLS",
+   "HOLY DAMAGE"
+  ],
+  [
+   "NATURE SPELL DAMAGE",
+   "NATURE DAMAGE"
+  ],
+  [
+   "FIRE SPELL DAMAGE",
+   "FIRE DAMAGE"
+  ],
+  [
+   "FROST SPELL DAMAGE",
+   "FROST DAMAGE"
+  ],
+  [
+   "SHADOW SPELL DAMAGE",
+   "SHADOW DAMAGE"
+  ],
+  [
+   "ARCANE SPELL DAMAGE",
+   "ARCANE DAMAGE"
+  ],
+  [
+   "HOLY SPELL DAMAGE",
+   "HOLY DAMAGE"
+  ],
+  [
+   "NATURE DAMAGE",
+   "NATURE DAMAGE"
+  ],
+  [
+   "FIRE DAMAGE",
+   "FIRE DAMAGE"
+  ],
+  [
+   "FROST DAMAGE",
+   "FROST DAMAGE"
+  ],
+  [
+   "SHADOW DAMAGE",
+   "SHADOW DAMAGE"
+  ],
+  [
+   "ARCANE DAMAGE",
+   "ARCANE DAMAGE"
+  ],
+  [
+   "HOLY DAMAGE",
+   "HOLY DAMAGE"
+  ],
+  [
+   "INCREASES HEALING DONE",
+   "HEALING"
+  ],
+  [
+   "HEALING DONE BY SPELLS",
+   "HEALING"
+  ],
+  [
+   "DAMAGE DEALT IS RETURNED AS HEALING",
+   "LIFESTEAL"
+  ],
+  [
+   "RETURNED AS HEALING",
+   "LIFESTEAL"
+  ],
+  [
+   "VAMPIRISM",
+   "LIFESTEAL"
+  ],
+  [
+   "VAMPIRIC",
+   "LIFESTEAL"
+  ],
+  [
+   "DECREASES THE MAGICAL RESISTANCES OF YOUR SPELL TARGETS",
+   "SPELL PENETRATION"
+  ],
+  [
+   "DECREASES THE MAGICAL RESISTANCES",
+   "SPELL PENETRATION"
+  ],
+  [
+   "SPELL PENETRATION",
+   "SPELL PENETRATION"
+  ],
+  [
+   "YOUR ATTACKS IGNORE",
+   "ARMOR PENETRATION"
+  ],
+  [
+   "IGNORE .* OF THE TARGET'S ARMOR",
+   "ARMOR PENETRATION"
+  ],
+  [
+   "ARMOR PENETRATION",
+   "ARMOR PENETRATION"
+  ],
+  [
+   "INCREASES YOUR ATTACK AND CASTING SPEED",
+   "HASTE"
+  ],
+  [
+   "ATTACK AND CASTING SPEED",
+   "HASTE"
+  ],
+  [
+   "INCREASES YOUR ATTACK SPEED",
+   "HASTE"
+  ],
+  [
+   "INCREASES YOUR CASTING SPEED",
+   "HASTE"
+  ],
+  [
+   "CHANCE TO GRANT .* EXTRA ATTACK",
+   "EXTRA ATTACK"
+  ],
+  [
+   "CHANCE TO GET .* EXTRA ATTACK",
+   "EXTRA ATTACK"
+  ],
+  [
+   "CHANCE ON HIT TO GRANT .* EXTRA ATTACK",
+   "EXTRA ATTACK"
+  ],
+  [
+   "CHANCE OF GETTING AN EXTRA ATTACK",
+   "EXTRA ATTACK"
+  ],
+  [
+   "% CHANCE .* EXTRA ATTACK",
+   "EXTRA ATTACK"
+  ],
+  [
+   "GRANT .* EXTRA ATTACK",
+   "EXTRA ATTACK"
+  ],
+  [
+   "EXTRA ATTACK",
+   "EXTRA ATTACK"
+  ],
+  [
+   "CHANCE TO TRIGGER CHANCE BASED ITEM EFFECTS",
+   "FORTUNE"
+  ],
+  [
+   "TRIGGER EFFECTS FROM EQUIPPED ITEMS",
+   "FORTUNE"
+  ],
+  [
+   "TRIGGER CHANCE BASED ITEM EFFECTS",
+   "FORTUNE"
+  ],
+  [
+   "INCREASES YOUR CHANCE TO TRIGGER",
+   "FORTUNE"
+  ],
+  [
+   "DAMAGE YOU TAKE FROM AREA OF EFFECT",
+   "AVOIDANCE"
+  ],
+  [
+   "DAMAGE FROM AREA OF EFFECT",
+   "AVOIDANCE"
+  ],
+  [
+   "AREA OF EFFECT ATTACKS BY",
+   "AVOIDANCE"
+  ],
+  [
+   "AVOIDANCE",
+   "AVOIDANCE"
+  ],
+  [
+   "DAMAGE TAKEN FROM CRITICAL HITS AND DAMAGE OVER TIME",
+   "RESILIENCE"
+  ],
+  [
+   "DAMAGE TAKEN FROM CRITICAL HITS",
+   "RESILIENCE"
+  ],
+  [
+   "CRITICAL HITS AND DAMAGE OVER TIME",
+   "RESILIENCE"
+  ],
+  [
+   "DAMAGE FROM CRITICAL HITS",
+   "RESILIENCE"
+  ],
+  [
+   "RESILIENCE",
+   "RESILIENCE"
+  ],
+  [
+   "ATTACK POWER IN CAT, BEAR, DIRE BEAR, AND MOONKIN",
+   "FERAL ATTACK POWER"
+  ],
+  [
+   "ATTACK POWER IN CAT, BEAR",
+   "FERAL ATTACK POWER"
+  ],
+  [
+   "ATTACK POWER IN CAT",
+   "FERAL ATTACK POWER"
+  ],
+  [
+   "ATTACK POWER IN BEAR",
+   "FERAL ATTACK POWER"
+  ],
+  [
+   "FERAL ATTACK POWER",
+   "FERAL ATTACK POWER"
+  ],
+  [
+   "ATTACK POWER VERSUS UNDEAD",
+   "ATTACK POWER UNDEAD"
+  ],
+  [
+   "ATTACK POWER AGAINST UNDEAD",
+   "ATTACK POWER UNDEAD"
+  ],
+  [
+   "SPELL DAMAGE VERSUS UNDEAD",
+   "SPELL DAMAGE UNDEAD"
+  ],
+  [
+   "SPELL DAMAGE AGAINST UNDEAD",
+   "SPELL DAMAGE UNDEAD"
+  ],
+  [
+   "DAMAGE TO UNDEAD",
+   "SPELL DAMAGE UNDEAD"
+  ],
+  [
+   "CHANCE TO HIT WITH SPELLS",
+   "SPELL HIT"
+  ],
+  [
+   "HIT WITH SPELLS",
+   "SPELL HIT"
+  ],
+  [
+   "SPELL HIT",
+   "SPELL HIT"
+  ],
+  [
+   "IMPROVES YOUR CHANCE TO HIT",
+   "HIT"
+  ],
+  [
+   "INCREASES YOUR CHANCE TO HIT",
+   "HIT"
+  ],
+  [
+   "INCREASE TO HIT",
+   "HIT"
+  ],
+  [
+   "TO HIT BY",
+   "HIT"
+  ],
+  [
+   "CRITICAL STRIKE WITH SPELLS",
+   "SPELL CRIT"
+  ],
+  [
+   "CRITICAL STRIKE WITH HOLY",
+   "HOLY CRIT"
+  ],
+  [
+   "CRITICAL STRIKE WITH RANGED",
+   "RANGED CRIT"
+  ],
+  [
+   "RANGED CRITICAL",
+   "RANGED CRIT"
+  ],
+  [
+   "STRENGTH",
+   "STRENGTH"
+  ],
+  [
+   "AGILITY",
+   "AGILITY"
+  ],
+  [
+   "STAMINA",
+   "STAMINA"
+  ],
+  [
+   "INTELLECT",
+   "INTELLECT"
+  ],
+  [
+   "SPIRIT",
+   "SPIRIT"
+  ],
+  [
+   "RANGED ATTACK POWER",
+   "RANGED ATTACK POWER"
+  ],
+  [
+   "ATTACK POWER",
+   "ATTACK POWER"
+  ],
+  [
+   "SPELL DAMAGE",
+   "SPELL DAMAGE"
+  ],
+  [
+   "SPELL POWER",
+   "SPELL POWER"
+  ],
+  [
+   "SPELL CRIT",
+   "SPELL CRIT"
+  ],
+  [
+   "HEALTH PER 5",
+   "HEALTH PER 5"
+  ],
+  [
+   "MANA PER 5",
+   "MANA PER 5"
+  ],
+  [
+   "MANA REGENERATION TO CONTINUE WHILE CASTING",
+   "CASTING REGEN"
+  ],
+  [
+   "REGENERATION TO CONTINUE WHILE CASTING",
+   "CASTING REGEN"
+  ],
+  [
+   "CONTINUE WHILE CASTING",
+   "CASTING REGEN"
+  ],
+  [
+   "WHILE CASTING",
+   "CASTING REGEN"
+  ],
+  [
+   "INCREASES HEALTH",
+   "HEALTH"
+  ],
+  [
+   "HEALTH",
+   "HEALTH"
+  ],
+  [
+   "INCREASES MANA",
+   "MANA"
+  ],
+  [
+   "MANA",
+   "MANA"
+  ],
+  [
+   "DAMAGE PER SECOND",
+   "DPS"
+  ],
+  [
+   "DPS",
+   "DPS"
+  ],
+  [
+   "CRIT",
+   "CRIT"
+  ],
+  [
+   "DEFENSE",
+   "DEFENSE"
+  ],
+  [
+   "DODGE",
+   "DODGE"
+  ],
+  [
+   "PARRY",
+   "PARRY"
+  ],
+  [
+   "BLOCK VALUE",
+   "BLOCK VALUE"
+  ],
+  [
+   "BLOCK",
+   "BLOCK"
+  ],
+  [
+   "REINFORCED ARMOR",
+   "ARMOR"
+  ],
+  [
+   "ARMOR",
+   "ARMOR"
+  ],
+  [
+   "TO ALL RESISTANCES",
+   "ALL RESISTANCES"
+  ],
+  [
+   "ALL RESISTANCES",
+   "ALL RESISTANCES"
+  ],
+  [
+   "ALL RESISTANCE",
+   "ALL RESISTANCES"
+  ],
+  [
+   "FIRE RESISTANCE",
+   "FIRE RESISTANCE"
+  ],
+  [
+   "FROST RESISTANCE",
+   "FROST RESISTANCE"
+  ],
+  [
+   "SHADOW RESISTANCE",
+   "SHADOW RESISTANCE"
+  ],
+  [
+   "NATURE RESISTANCE",
+   "NATURE RESISTANCE"
+  ],
+  [
+   "ARCANE RESISTANCE",
+   "ARCANE RESISTANCE"
+  ],
+  [
+   "RANGED ATTACK SPEED",
+   "RANGED HASTE"
+  ],
+  [
+   "MOUNT SPEED",
+   "MOUNT SPEED"
+  ],
+  [
+   "RUN SPEED",
+   "MOVEMENT SPEED"
+  ],
+  [
+   "MOVEMENT SPEED",
+   "MOVEMENT SPEED"
+  ]
+ ],
+ "softcaps": {
+  "ARMOR PENETRATION": [
+   30.0,
+   0.45
+  ],
+  "BLOCK": [
+   25.0,
+   0.4
+  ],
+  "CRIT": [
+   25.0,
+   0.4
+  ],
+  "DEFENSE": [
+   25.0,
+   0.35
+  ],
+  "DODGE": [
+   25.0,
+   0.4
+  ],
+  "HASTE": [
+   20.0,
+   0.45
+  ],
+  "HIT": [
+   6.0,
+   0.35
+  ],
+  "HOLY CRIT": [
+   25.0,
+   0.4
+  ],
+  "PARRY": [
+   20.0,
+   0.4
+  ],
+  "RANGED CRIT": [
+   25.0,
+   0.4
+  ],
+  "RANGED HASTE": [
+   20.0,
+   0.45
+  ],
+  "SPELL CRIT": [
+   25.0,
+   0.4
+  ],
+  "SPELL HIT": [
+   10.0,
+   0.3
+  ],
+  "SPELL PENETRATION": [
+   20.0,
+   0.4
+  ]
+ },
+ "weights": {
+  "DRUID": {
+   "Balance": {
+    "AGILITY": 0.05,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE DAMAGE": 0.95,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.005,
+    "AVOIDANCE": 0.3,
+    "CASTING REGEN": 2.0,
+    "DEFENSE": 0.1,
+    "DODGE": 0.15,
+    "DPS": 0.1,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 0.85,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.6,
+    "HEALING": 0.25,
+    "HEALTH": 0.04,
+    "HEALTH PER 5": 0.2,
+    "INTELLECT": 1.05,
+    "LIFESTEAL": 0.25,
+    "MANA": 0.09,
+    "MANA PER 5": 1.15,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE DAMAGE": 1.3,
+    "NATURE RESISTANCE": 0.12,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 2.1,
+    "SPELL DAMAGE": 1.05,
+    "SPELL DAMAGE UNDEAD": 0.4,
+    "SPELL HIT": 2.6,
+    "SPELL PENETRATION": 1.25,
+    "SPELL POWER": 1.05,
+    "SPIRIT": 0.7,
+    "STAMINA": 0.4,
+    "STRENGTH": 0.05
+   },
+   "FeralBear": {
+    "AGILITY": 0.95,
+    "ALL RESISTANCES": 0.9,
+    "ARCANE RESISTANCE": 0.25,
+    "ARMOR": 0.025,
+    "ARMOR PENETRATION": 0.3,
+    "ATTACK POWER": 0.55,
+    "AVOIDANCE": 1.6,
+    "CRIT": 0.7,
+    "DEFENSE": 2.3,
+    "DODGE": 2.7,
+    "DPS": 0.15,
+    "EXTRA ATTACK": 0.8,
+    "FERAL ATTACK POWER": 0.65,
+    "FIRE RESISTANCE": 0.25,
+    "FORTUNE": 0.5,
+    "FROST RESISTANCE": 0.25,
+    "HASTE": 0.6,
+    "HEALTH": 0.16,
+    "HEALTH PER 5": 0.9,
+    "HIT": 1.6,
+    "INTELLECT": 0.1,
+    "LIFESTEAL": 1.0,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.15,
+    "NATURE RESISTANCE": 0.25,
+    "SHADOW RESISTANCE": 0.25,
+    "SPIRIT": 0.1,
+    "STAMINA": 1.65,
+    "STRENGTH": 0.7
+   },
+   "FeralCat": {
+    "AGILITY": 1.35,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.01,
+    "ARMOR PENETRATION": 1.15,
+    "ATTACK POWER": 1.05,
+    "ATTACK POWER UNDEAD": 0.4,
+    "AVOIDANCE": 0.35,
+    "BLOCK": 0.2,
+    "BLOCK VALUE": 0.1,
+    "CRIT": 2.35,
+    "DEFENSE": 0.15,
+    "DODGE": 1.2,
+    "DPS": 0.25,
+    "EXTRA ATTACK": 3.0,
+    "FERAL ATTACK POWER": 1.1,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 1.0,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 2.0,
+    "HEALTH": 0.045,
+    "HEALTH PER 5": 0.25,
+    "HIT": 2.15,
+    "INTELLECT": 0.05,
+    "LIFESTEAL": 1.4,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "PARRY": 1.2,
+    "RANGED ATTACK POWER": 0.15,
+    "SHADOW RESISTANCE": 0.12,
+    "SPIRIT": 0.05,
+    "STAMINA": 0.45,
+    "STRENGTH": 0.85
+   },
+   "Restoration": {
+    "AGILITY": 0.05,
+    "ALL RESISTANCES": 0.5,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.006,
+    "AVOIDANCE": 0.35,
+    "CASTING REGEN": 2.6,
+    "DEFENSE": 0.15,
+    "DODGE": 0.2,
+    "DPS": 0.08,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 0.5,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.25,
+    "HEALING": 1.45,
+    "HEALTH": 0.055,
+    "HEALTH PER 5": 0.3,
+    "INTELLECT": 1.1,
+    "LIFESTEAL": 0.2,
+    "MANA": 0.1,
+    "MANA PER 5": 1.5,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE DAMAGE": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 1.25,
+    "SPELL DAMAGE": 0.3,
+    "SPELL HIT": 0.4,
+    "SPELL PENETRATION": 0.2,
+    "SPELL POWER": 0.55,
+    "SPIRIT": 1.35,
+    "STAMINA": 0.55,
+    "STRENGTH": 0.05
+   }
+  },
+  "HUNTER": {
+   "BeastMastery": {
+    "AGILITY": 1.35,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.01,
+    "ARMOR PENETRATION": 1.1,
+    "ATTACK POWER": 0.45,
+    "ATTACK POWER UNDEAD": 0.4,
+    "AVOIDANCE": 0.35,
+    "BLOCK": 0.2,
+    "BLOCK VALUE": 0.1,
+    "CRIT": 1.7,
+    "DEFENSE": 0.15,
+    "DODGE": 1.2,
+    "DPS": 1.25,
+    "EXTRA ATTACK": 3.0,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 1.0,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.5,
+    "HEALTH": 0.045,
+    "HEALTH PER 5": 0.25,
+    "HIT": 2.1,
+    "INTELLECT": 0.05,
+    "LIFESTEAL": 1.4,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "PARRY": 1.2,
+    "RANGED ATTACK POWER": 1.25,
+    "RANGED CRIT": 2.15,
+    "RANGED HASTE": 1.9,
+    "SHADOW RESISTANCE": 0.12,
+    "SPIRIT": 0.05,
+    "STAMINA": 0.5,
+    "STRENGTH": 0.25
+   },
+   "Marksmanship": {
+    "AGILITY": 1.4,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.01,
+    "ARMOR PENETRATION": 0.9,
+    "ATTACK POWER": 0.35,
+    "ATTACK POWER UNDEAD": 0.4,
+    "AVOIDANCE": 0.35,
+    "BLOCK": 0.2,
+    "BLOCK VALUE": 0.1,
+    "CRIT": 1.9,
+    "DEFENSE": 0.15,
+    "DODGE": 1.2,
+    "DPS": 1.35,
+    "EXTRA ATTACK": 3.0,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 1.0,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 2.0,
+    "HEALTH": 0.045,
+    "HEALTH PER 5": 0.25,
+    "HIT": 2.25,
+    "INTELLECT": 0.05,
+    "LIFESTEAL": 1.4,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "PARRY": 1.2,
+    "RANGED ATTACK POWER": 1.35,
+    "RANGED CRIT": 2.5,
+    "RANGED HASTE": 2.1,
+    "SHADOW RESISTANCE": 0.12,
+    "SPIRIT": 0.05,
+    "STAMINA": 0.45,
+    "STRENGTH": 0.2
+   },
+   "Survival": {
+    "AGILITY": 1.3,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.01,
+    "ARMOR PENETRATION": 1.1,
+    "ATTACK POWER": 0.5,
+    "ATTACK POWER UNDEAD": 0.4,
+    "AVOIDANCE": 0.35,
+    "BLOCK": 0.2,
+    "BLOCK VALUE": 0.1,
+    "CRIT": 1.8,
+    "DEFENSE": 0.15,
+    "DODGE": 1.2,
+    "DPS": 1.2,
+    "EXTRA ATTACK": 3.0,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 1.0,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.7,
+    "HEALTH": 0.045,
+    "HEALTH PER 5": 0.25,
+    "HIT": 2.0,
+    "INTELLECT": 0.05,
+    "LIFESTEAL": 1.2,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "PARRY": 1.2,
+    "RANGED ATTACK POWER": 1.15,
+    "RANGED CRIT": 2.0,
+    "RANGED HASTE": 1.8,
+    "SHADOW RESISTANCE": 0.12,
+    "SPIRIT": 0.05,
+    "STAMINA": 0.55,
+    "STRENGTH": 0.3
+   }
+  },
+  "MAGE": {
+   "Arcane": {
+    "AGILITY": 0.05,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE DAMAGE": 1.35,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.005,
+    "AVOIDANCE": 0.3,
+    "CASTING REGEN": 2.0,
+    "DEFENSE": 0.1,
+    "DODGE": 0.15,
+    "DPS": 0.1,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 0.85,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.6,
+    "HEALING": 0.25,
+    "HEALTH": 0.04,
+    "HEALTH PER 5": 0.2,
+    "INTELLECT": 1.15,
+    "LIFESTEAL": 0.25,
+    "MANA": 0.09,
+    "MANA PER 5": 1.15,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 2.2,
+    "SPELL DAMAGE": 1.05,
+    "SPELL DAMAGE UNDEAD": 0.4,
+    "SPELL HIT": 2.5,
+    "SPELL PENETRATION": 1.25,
+    "SPELL POWER": 1.05,
+    "SPIRIT": 0.5,
+    "STAMINA": 0.4,
+    "STRENGTH": 0.05
+   },
+   "Fire": {
+    "AGILITY": 0.05,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.005,
+    "AVOIDANCE": 0.3,
+    "CASTING REGEN": 2.0,
+    "DEFENSE": 0.1,
+    "DODGE": 0.15,
+    "DPS": 0.1,
+    "FIRE DAMAGE": 1.4,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 0.85,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.5,
+    "HEALING": 0.25,
+    "HEALTH": 0.04,
+    "HEALTH PER 5": 0.2,
+    "INTELLECT": 1.05,
+    "LIFESTEAL": 0.25,
+    "MANA": 0.09,
+    "MANA PER 5": 1.15,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 2.4,
+    "SPELL DAMAGE": 1.05,
+    "SPELL DAMAGE UNDEAD": 0.4,
+    "SPELL HIT": 2.4,
+    "SPELL PENETRATION": 1.25,
+    "SPELL POWER": 1.05,
+    "SPIRIT": 0.55,
+    "STAMINA": 0.4,
+    "STRENGTH": 0.05
+   },
+   "Frost": {
+    "AGILITY": 0.05,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.005,
+    "AVOIDANCE": 0.3,
+    "CASTING REGEN": 2.0,
+    "DEFENSE": 0.1,
+    "DODGE": 0.15,
+    "DPS": 0.1,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 0.85,
+    "FROST DAMAGE": 1.4,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.6,
+    "HEALING": 0.25,
+    "HEALTH": 0.04,
+    "HEALTH PER 5": 0.2,
+    "INTELLECT": 1.05,
+    "LIFESTEAL": 0.25,
+    "MANA": 0.09,
+    "MANA PER 5": 1.15,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 2.0,
+    "SPELL DAMAGE": 1.05,
+    "SPELL DAMAGE UNDEAD": 0.4,
+    "SPELL HIT": 2.7,
+    "SPELL PENETRATION": 1.4,
+    "SPELL POWER": 1.05,
+    "SPIRIT": 0.55,
+    "STAMINA": 0.4,
+    "STRENGTH": 0.05
+   }
+  },
+  "PALADIN": {
+   "Holy": {
+    "AGILITY": 0.05,
+    "ALL RESISTANCES": 0.5,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.006,
+    "AVOIDANCE": 0.35,
+    "CASTING REGEN": 2.6,
+    "DEFENSE": 0.15,
+    "DODGE": 0.2,
+    "DPS": 0.08,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 0.5,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.25,
+    "HEALING": 1.4,
+    "HEALTH": 0.055,
+    "HEALTH PER 5": 0.3,
+    "HOLY CRIT": 1.4,
+    "HOLY DAMAGE": 0.25,
+    "INTELLECT": 1.15,
+    "LIFESTEAL": 0.2,
+    "MANA": 0.1,
+    "MANA PER 5": 1.5,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 1.25,
+    "SPELL DAMAGE": 0.3,
+    "SPELL HIT": 0.4,
+    "SPELL PENETRATION": 0.2,
+    "SPELL POWER": 0.5,
+    "SPIRIT": 1.15,
+    "STAMINA": 0.55,
+    "STRENGTH": 0.05
+   },
+   "Protection": {
+    "AGILITY": 0.85,
+    "ALL RESISTANCES": 0.9,
+    "ARCANE RESISTANCE": 0.25,
+    "ARMOR": 0.02,
+    "ARMOR PENETRATION": 0.3,
+    "ATTACK POWER": 0.45,
+    "AVOIDANCE": 1.6,
+    "BLOCK": 2.35,
+    "BLOCK VALUE": 1.35,
+    "CASTING REGEN": 0.5,
+    "CRIT": 0.7,
+    "DEFENSE": 2.6,
+    "DODGE": 2.6,
+    "DPS": 0.45,
+    "EXTRA ATTACK": 0.8,
+    "FIRE RESISTANCE": 0.25,
+    "FORTUNE": 0.5,
+    "FROST RESISTANCE": 0.25,
+    "HASTE": 0.6,
+    "HEALTH": 0.16,
+    "HEALTH PER 5": 0.9,
+    "HIT": 1.6,
+    "HOLY CRIT": 0.6,
+    "HOLY DAMAGE": 0.75,
+    "INTELLECT": 0.45,
+    "LIFESTEAL": 1.0,
+    "MANA": 0.06,
+    "MANA PER 5": 0.5,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.15,
+    "NATURE RESISTANCE": 0.25,
+    "PARRY": 2.3,
+    "SHADOW RESISTANCE": 0.25,
+    "SPELL CRIT": 0.5,
+    "SPELL DAMAGE": 0.35,
+    "SPELL HIT": 0.4,
+    "SPELL POWER": 0.4,
+    "SPIRIT": 0.2,
+    "STAMINA": 1.6,
+    "STRENGTH": 0.9
+   },
+   "Retribution": {
+    "AGILITY": 0.7,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.01,
+    "ARMOR PENETRATION": 1.1,
+    "ATTACK POWER": 1.0,
+    "ATTACK POWER UNDEAD": 0.4,
+    "AVOIDANCE": 0.35,
+    "BLOCK": 0.2,
+    "BLOCK VALUE": 0.1,
+    "CASTING REGEN": 0.4,
+    "CRIT": 2.15,
+    "DEFENSE": 0.15,
+    "DODGE": 1.2,
+    "DPS": 1.4,
+    "EXTRA ATTACK": 3.0,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 1.0,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 2.0,
+    "HEALTH": 0.045,
+    "HEALTH PER 5": 0.25,
+    "HIT": 2.0,
+    "HOLY CRIT": 1.6,
+    "HOLY DAMAGE": 0.85,
+    "INTELLECT": 0.35,
+    "LIFESTEAL": 1.4,
+    "MANA": 0.05,
+    "MANA PER 5": 0.35,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "PARRY": 1.2,
+    "RANGED ATTACK POWER": 0.15,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 0.8,
+    "SPELL DAMAGE": 0.35,
+    "SPELL HIT": 0.6,
+    "SPELL POWER": 0.45,
+    "SPIRIT": 0.15,
+    "STAMINA": 0.45,
+    "STRENGTH": 1.2
+   }
+  },
+  "PRIEST": {
+   "Discipline": {
+    "AGILITY": 0.05,
+    "ALL RESISTANCES": 0.5,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.006,
+    "AVOIDANCE": 0.35,
+    "CASTING REGEN": 2.6,
+    "DEFENSE": 0.15,
+    "DODGE": 0.2,
+    "DPS": 0.08,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 0.5,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.25,
+    "HEALING": 1.25,
+    "HEALTH": 0.055,
+    "HEALTH PER 5": 0.3,
+    "INTELLECT": 1.15,
+    "LIFESTEAL": 0.2,
+    "MANA": 0.1,
+    "MANA PER 5": 1.5,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 1.35,
+    "SPELL DAMAGE": 0.45,
+    "SPELL HIT": 0.4,
+    "SPELL PENETRATION": 0.2,
+    "SPELL POWER": 0.75,
+    "SPIRIT": 1.15,
+    "STAMINA": 0.55,
+    "STRENGTH": 0.05
+   },
+   "Holy": {
+    "AGILITY": 0.05,
+    "ALL RESISTANCES": 0.5,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.006,
+    "AVOIDANCE": 0.35,
+    "CASTING REGEN": 2.6,
+    "DEFENSE": 0.15,
+    "DODGE": 0.2,
+    "DPS": 0.08,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 0.5,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.25,
+    "HEALING": 1.45,
+    "HEALTH": 0.055,
+    "HEALTH PER 5": 0.3,
+    "HOLY CRIT": 1.5,
+    "HOLY DAMAGE": 0.2,
+    "INTELLECT": 1.1,
+    "LIFESTEAL": 0.2,
+    "MANA": 0.1,
+    "MANA PER 5": 1.5,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 1.25,
+    "SPELL DAMAGE": 0.3,
+    "SPELL HIT": 0.4,
+    "SPELL PENETRATION": 0.2,
+    "SPELL POWER": 0.55,
+    "SPIRIT": 1.35,
+    "STAMINA": 0.55,
+    "STRENGTH": 0.05
+   },
+   "Shadow": {
+    "AGILITY": 0.05,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.005,
+    "AVOIDANCE": 0.3,
+    "CASTING REGEN": 2.0,
+    "DEFENSE": 0.1,
+    "DODGE": 0.15,
+    "DPS": 0.1,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 0.85,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.6,
+    "HEALING": 0.15,
+    "HEALTH": 0.04,
+    "HEALTH PER 5": 0.2,
+    "INTELLECT": 1.05,
+    "LIFESTEAL": 0.25,
+    "MANA": 0.09,
+    "MANA PER 5": 1.15,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "SHADOW DAMAGE": 1.35,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 2.1,
+    "SPELL DAMAGE": 1.05,
+    "SPELL DAMAGE UNDEAD": 0.55,
+    "SPELL HIT": 2.6,
+    "SPELL PENETRATION": 1.25,
+    "SPELL POWER": 1.05,
+    "SPIRIT": 0.85,
+    "STAMINA": 0.4,
+    "STRENGTH": 0.05
+   }
+  },
+  "ROGUE": {
+   "Assassination": {
+    "AGILITY": 1.45,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.01,
+    "ARMOR PENETRATION": 1.25,
+    "ATTACK POWER": 1.0,
+    "ATTACK POWER UNDEAD": 0.4,
+    "AVOIDANCE": 0.35,
+    "BLOCK": 0.2,
+    "BLOCK VALUE": 0.1,
+    "CRIT": 2.55,
+    "DEFENSE": 0.15,
+    "DODGE": 1.2,
+    "DPS": 1.5,
+    "EXTRA ATTACK": 3.0,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 1.0,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.9,
+    "HEALTH": 0.045,
+    "HEALTH PER 5": 0.25,
+    "HIT": 2.35,
+    "INTELLECT": 0.05,
+    "LIFESTEAL": 1.4,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "PARRY": 1.2,
+    "RANGED ATTACK POWER": 0.15,
+    "SHADOW RESISTANCE": 0.12,
+    "SPIRIT": 0.05,
+    "STAMINA": 0.45,
+    "STRENGTH": 0.55
+   },
+   "Combat": {
+    "AGILITY": 1.35,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.01,
+    "ARMOR PENETRATION": 1.15,
+    "ATTACK POWER": 1.0,
+    "ATTACK POWER UNDEAD": 0.4,
+    "AVOIDANCE": 0.35,
+    "BLOCK": 0.2,
+    "BLOCK VALUE": 0.1,
+    "CRIT": 2.35,
+    "DEFENSE": 0.15,
+    "DODGE": 1.2,
+    "DPS": 1.65,
+    "EXTRA ATTACK": 3.4,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 1.0,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 2.25,
+    "HEALTH": 0.045,
+    "HEALTH PER 5": 0.25,
+    "HIT": 2.25,
+    "INTELLECT": 0.05,
+    "LIFESTEAL": 1.4,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "PARRY": 1.2,
+    "RANGED ATTACK POWER": 0.15,
+    "SHADOW RESISTANCE": 0.12,
+    "SPIRIT": 0.05,
+    "STAMINA": 0.45,
+    "STRENGTH": 0.7
+   },
+   "Subtlety": {
+    "AGILITY": 1.4,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.01,
+    "ARMOR PENETRATION": 1.1,
+    "ATTACK POWER": 1.0,
+    "ATTACK POWER UNDEAD": 0.4,
+    "AVOIDANCE": 0.35,
+    "BLOCK": 0.2,
+    "BLOCK VALUE": 0.1,
+    "CRIT": 2.3,
+    "DEFENSE": 0.15,
+    "DODGE": 1.2,
+    "DPS": 1.45,
+    "EXTRA ATTACK": 3.0,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 1.15,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 2.0,
+    "HEALTH": 0.045,
+    "HEALTH PER 5": 0.25,
+    "HIT": 2.15,
+    "INTELLECT": 0.05,
+    "LIFESTEAL": 1.6,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "PARRY": 1.2,
+    "RANGED ATTACK POWER": 0.15,
+    "SHADOW RESISTANCE": 0.12,
+    "SPIRIT": 0.05,
+    "STAMINA": 0.45,
+    "STRENGTH": 0.5
+   }
+  },
+  "SHAMAN": {
+   "Elemental": {
+    "AGILITY": 0.05,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.005,
+    "AVOIDANCE": 0.3,
+    "CASTING REGEN": 2.0,
+    "DEFENSE": 0.1,
+    "DODGE": 0.15,
+    "DPS": 0.1,
+    "FIRE DAMAGE": 0.55,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 0.85,
+    "FROST DAMAGE": 0.25,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.6,
+    "HEALING": 0.25,
+    "HEALTH": 0.04,
+    "HEALTH PER 5": 0.2,
+    "INTELLECT": 1.05,
+    "LIFESTEAL": 0.25,
+    "MANA": 0.09,
+    "MANA PER 5": 1.15,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE DAMAGE": 1.3,
+    "NATURE RESISTANCE": 0.12,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 2.1,
+    "SPELL DAMAGE": 1.05,
+    "SPELL DAMAGE UNDEAD": 0.4,
+    "SPELL HIT": 2.6,
+    "SPELL PENETRATION": 1.25,
+    "SPELL POWER": 1.05,
+    "SPIRIT": 0.55,
+    "STAMINA": 0.4,
+    "STRENGTH": 0.05
+   },
+   "Enhancement": {
+    "AGILITY": 1.05,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.01,
+    "ARMOR PENETRATION": 1.1,
+    "ATTACK POWER": 1.0,
+    "ATTACK POWER UNDEAD": 0.4,
+    "AVOIDANCE": 0.35,
+    "BLOCK": 0.2,
+    "BLOCK VALUE": 0.1,
+    "CASTING REGEN": 0.45,
+    "CRIT": 2.2,
+    "DEFENSE": 0.15,
+    "DODGE": 1.2,
+    "DPS": 1.45,
+    "EXTRA ATTACK": 3.0,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 1.0,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 2.1,
+    "HEALTH": 0.045,
+    "HEALTH PER 5": 0.25,
+    "HIT": 2.1,
+    "INTELLECT": 0.4,
+    "LIFESTEAL": 1.4,
+    "MANA": 0.05,
+    "MANA PER 5": 0.45,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE DAMAGE": 0.5,
+    "NATURE RESISTANCE": 0.12,
+    "PARRY": 1.2,
+    "RANGED ATTACK POWER": 0.15,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 0.7,
+    "SPELL DAMAGE": 0.35,
+    "SPELL HIT": 0.5,
+    "SPELL POWER": 0.4,
+    "SPIRIT": 0.2,
+    "STAMINA": 0.45,
+    "STRENGTH": 1.05
+   },
+   "EnhancementTank": {
+    "AGILITY": 0.95,
+    "ALL RESISTANCES": 0.9,
+    "ARCANE RESISTANCE": 0.25,
+    "ARMOR": 0.02,
+    "ARMOR PENETRATION": 0.3,
+    "ATTACK POWER": 0.55,
+    "AVOIDANCE": 1.4,
+    "BLOCK": 1.8,
+    "BLOCK VALUE": 1.0,
+    "CASTING REGEN": 0.5,
+    "CRIT": 0.9,
+    "DEFENSE": 2.3,
+    "DODGE": 2.4,
+    "DPS": 0.6,
+    "EXTRA ATTACK": 0.8,
+    "FIRE RESISTANCE": 0.25,
+    "FORTUNE": 0.5,
+    "FROST RESISTANCE": 0.25,
+    "HASTE": 0.8,
+    "HEALTH": 0.16,
+    "HEALTH PER 5": 0.9,
+    "HIT": 1.7,
+    "INTELLECT": 0.35,
+    "LIFESTEAL": 1.0,
+    "MANA": 0.05,
+    "MANA PER 5": 0.55,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.15,
+    "NATURE DAMAGE": 0.55,
+    "NATURE RESISTANCE": 0.25,
+    "PARRY": 2.2,
+    "SHADOW RESISTANCE": 0.25,
+    "SPELL CRIT": 0.4,
+    "SPELL DAMAGE": 0.35,
+    "SPELL HIT": 0.5,
+    "SPELL POWER": 0.4,
+    "SPIRIT": 0.1,
+    "STAMINA": 1.55,
+    "STRENGTH": 0.95
+   },
+   "Restoration": {
+    "AGILITY": 0.05,
+    "ALL RESISTANCES": 0.5,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.006,
+    "AVOIDANCE": 0.35,
+    "CASTING REGEN": 2.6,
+    "DEFENSE": 0.15,
+    "DODGE": 0.2,
+    "DPS": 0.08,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 0.5,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.25,
+    "HEALING": 1.4,
+    "HEALTH": 0.055,
+    "HEALTH PER 5": 0.3,
+    "INTELLECT": 1.1,
+    "LIFESTEAL": 0.2,
+    "MANA": 0.1,
+    "MANA PER 5": 1.5,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE DAMAGE": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 1.25,
+    "SPELL DAMAGE": 0.3,
+    "SPELL HIT": 0.4,
+    "SPELL PENETRATION": 0.2,
+    "SPELL POWER": 0.55,
+    "SPIRIT": 1.2,
+    "STAMINA": 0.55,
+    "STRENGTH": 0.05
+   }
+  },
+  "WARLOCK": {
+   "Affliction": {
+    "AGILITY": 0.05,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.005,
+    "AVOIDANCE": 0.3,
+    "CASTING REGEN": 2.0,
+    "DEFENSE": 0.1,
+    "DODGE": 0.15,
+    "DPS": 0.1,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 0.85,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.6,
+    "HEALING": 0.25,
+    "HEALTH": 0.04,
+    "HEALTH PER 5": 0.2,
+    "INTELLECT": 1.05,
+    "LIFESTEAL": 0.25,
+    "MANA": 0.09,
+    "MANA PER 5": 1.15,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "SHADOW DAMAGE": 1.4,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 1.7,
+    "SPELL DAMAGE": 1.1,
+    "SPELL DAMAGE UNDEAD": 0.6,
+    "SPELL HIT": 2.7,
+    "SPELL PENETRATION": 1.35,
+    "SPELL POWER": 1.1,
+    "SPIRIT": 0.7,
+    "STAMINA": 0.4,
+    "STRENGTH": 0.05
+   },
+   "Demonology": {
+    "AGILITY": 0.05,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.005,
+    "AVOIDANCE": 0.3,
+    "CASTING REGEN": 2.0,
+    "DEFENSE": 0.1,
+    "DODGE": 0.15,
+    "DPS": 0.1,
+    "FIRE DAMAGE": 0.9,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 0.85,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.6,
+    "HEALING": 0.25,
+    "HEALTH": 0.04,
+    "HEALTH PER 5": 0.2,
+    "INTELLECT": 1.1,
+    "LIFESTEAL": 0.25,
+    "MANA": 0.09,
+    "MANA PER 5": 1.15,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "SHADOW DAMAGE": 1.15,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 1.9,
+    "SPELL DAMAGE": 1.05,
+    "SPELL DAMAGE UNDEAD": 0.4,
+    "SPELL HIT": 2.5,
+    "SPELL PENETRATION": 1.25,
+    "SPELL POWER": 1.05,
+    "SPIRIT": 0.55,
+    "STAMINA": 0.55,
+    "STRENGTH": 0.05
+   },
+   "Destruction": {
+    "AGILITY": 0.05,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.005,
+    "AVOIDANCE": 0.3,
+    "CASTING REGEN": 2.0,
+    "DEFENSE": 0.1,
+    "DODGE": 0.15,
+    "DPS": 0.1,
+    "FIRE DAMAGE": 1.35,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 0.85,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.7,
+    "HEALING": 0.25,
+    "HEALTH": 0.04,
+    "HEALTH PER 5": 0.2,
+    "INTELLECT": 1.05,
+    "LIFESTEAL": 0.25,
+    "MANA": 0.09,
+    "MANA PER 5": 1.15,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "SHADOW DAMAGE": 0.9,
+    "SHADOW RESISTANCE": 0.12,
+    "SPELL CRIT": 2.45,
+    "SPELL DAMAGE": 1.1,
+    "SPELL DAMAGE UNDEAD": 0.4,
+    "SPELL HIT": 2.5,
+    "SPELL PENETRATION": 1.25,
+    "SPELL POWER": 1.1,
+    "SPIRIT": 0.55,
+    "STAMINA": 0.4,
+    "STRENGTH": 0.05
+   }
+  },
+  "WARRIOR": {
+   "Arms": {
+    "AGILITY": 0.75,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.01,
+    "ARMOR PENETRATION": 1.35,
+    "ATTACK POWER": 1.0,
+    "ATTACK POWER UNDEAD": 0.4,
+    "AVOIDANCE": 0.35,
+    "BLOCK": 0.2,
+    "BLOCK VALUE": 0.1,
+    "CRIT": 2.35,
+    "DEFENSE": 0.15,
+    "DODGE": 1.2,
+    "DPS": 1.7,
+    "EXTRA ATTACK": 3.0,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 1.0,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 1.7,
+    "HEALTH": 0.045,
+    "HEALTH PER 5": 0.25,
+    "HIT": 2.3,
+    "INTELLECT": 0.05,
+    "LIFESTEAL": 1.4,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "PARRY": 1.2,
+    "RANGED ATTACK POWER": 0.15,
+    "SHADOW RESISTANCE": 0.12,
+    "SPIRIT": 0.05,
+    "STAMINA": 0.45,
+    "STRENGTH": 1.25
+   },
+   "Fury": {
+    "AGILITY": 1.05,
+    "ALL RESISTANCES": 0.45,
+    "ARCANE RESISTANCE": 0.12,
+    "ARMOR": 0.01,
+    "ARMOR PENETRATION": 1.1,
+    "ATTACK POWER": 1.0,
+    "ATTACK POWER UNDEAD": 0.4,
+    "AVOIDANCE": 0.35,
+    "BLOCK": 0.2,
+    "BLOCK VALUE": 0.1,
+    "CRIT": 2.5,
+    "DEFENSE": 0.15,
+    "DODGE": 1.2,
+    "DPS": 1.55,
+    "EXTRA ATTACK": 3.6,
+    "FIRE RESISTANCE": 0.12,
+    "FORTUNE": 1.0,
+    "FROST RESISTANCE": 0.12,
+    "HASTE": 2.3,
+    "HEALTH": 0.045,
+    "HEALTH PER 5": 0.25,
+    "HIT": 2.15,
+    "INTELLECT": 0.05,
+    "LIFESTEAL": 1.4,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.2,
+    "NATURE RESISTANCE": 0.12,
+    "PARRY": 1.2,
+    "RANGED ATTACK POWER": 0.15,
+    "SHADOW RESISTANCE": 0.12,
+    "SPIRIT": 0.05,
+    "STAMINA": 0.45,
+    "STRENGTH": 1.15
+   },
+   "Protection": {
+    "AGILITY": 0.75,
+    "ALL RESISTANCES": 0.9,
+    "ARCANE RESISTANCE": 0.25,
+    "ARMOR": 0.02,
+    "ARMOR PENETRATION": 0.3,
+    "ATTACK POWER": 0.5,
+    "AVOIDANCE": 1.6,
+    "BLOCK": 2.3,
+    "BLOCK VALUE": 1.25,
+    "CRIT": 0.7,
+    "DEFENSE": 2.6,
+    "DODGE": 2.6,
+    "DPS": 0.45,
+    "EXTRA ATTACK": 0.8,
+    "FIRE RESISTANCE": 0.25,
+    "FORTUNE": 0.5,
+    "FROST RESISTANCE": 0.25,
+    "HASTE": 0.6,
+    "HEALTH": 0.16,
+    "HEALTH PER 5": 0.9,
+    "HIT": 1.7,
+    "INTELLECT": 0.1,
+    "LIFESTEAL": 1.0,
+    "MOUNT SPEED": 0.08,
+    "MOVEMENT SPEED": 0.15,
+    "NATURE RESISTANCE": 0.25,
+    "PARRY": 2.5,
+    "SHADOW RESISTANCE": 0.25,
+    "SPIRIT": 0.1,
+    "STAMINA": 1.6,
+    "STRENGTH": 0.95
+   }
+  }
+ }
+}

@@ -1,0 +1,186 @@
+{
+  "upstream": "https://github.com/Fostercare5988/Bagnon",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Fostercare5988",
+    "repo": "Bagnon",
+    "name": "Bagnon",
+    "url": "https://github.com/Fostercare5988/Bagnon",
+    "api": "https://api.github.com/repos/Fostercare5988/Bagnon"
+  },
+  "commit": "762b69ed853a0dc98ce331a101fd813c3fb54f9c",
+  "sourceFiles": {
+    "assets/bank.blp": {
+      "sha256": "09e903a796b2d7cb7de17ff9b0ec709b47f4f14d6e98e55b5e7d90e94d309654",
+      "bytes": 6660
+    },
+    "assets/preview.png": {
+      "sha256": "fc4fb24312bd9f607ecca9214d6a071189de69a371c1e8b88d7bfe957c5651b0",
+      "bytes": 876361
+    },
+    "assets/sort-pushed.blp": {
+      "sha256": "39fc20fe32c3e43de6886c5feb2dc0456b2c3ffafa25334dc0a8d8373951b5a7",
+      "bytes": 6660
+    },
+    "assets/sort-pushed.tga": {
+      "sha256": "d10371bd2820be9339e1dbee528118e01b3b1fa6984138954353ce76b18e8fd0",
+      "bytes": 16428
+    },
+    "assets/sort.blp": {
+      "sha256": "326f1b11b940f9aae5157610d0d56fc2200834c9d1fd01bd0da61bd94b484dca",
+      "bytes": 6660
+    },
+    "assets/sort.tga": {
+      "sha256": "074403701c3f3de7739f1ad39b389b0f9c38db078e7f938859b56dd67a23f18f",
+      "bytes": 16428
+    },
+    "Bagnon.lua": {
+      "sha256": "b46da0c25dd1b99db5c59875d2a8d27919b28a9b23ba07730f3d37024e033520",
+      "bytes": 4269
+    },
+    "Bagnon.toc": {
+      "sha256": "d36910f0a04b1e1258f6406ca0a7fcf9e06edc268bd1150e0ea8d8877964abb1",
+      "bytes": 968
+    },
+    "Bagnon.xml": {
+      "sha256": "02317fe71edc4c55a4ed91884605807ab2ee00ce9d445a1e111b162c12cbfc27",
+      "bytes": 5563
+    },
+    "BagnonForever.lua": {
+      "sha256": "745386c7157c0283c3908ec351af99175910ad2aa14f92bdf82e5215f7ae7de3",
+      "bytes": 7351
+    },
+    "Banknon.lua": {
+      "sha256": "13acdfd085ba1e7c0a1ff78e895a177fd267a897854c9c08c4f654faf692ffa8",
+      "bytes": 3038
+    },
+    "Banknon.xml": {
+      "sha256": "20170518908d1e15e1787caf7845560fac80559965ed76ef4b4aa0952966cb82",
+      "bytes": 3478
+    },
+    "Bindings.xml": {
+      "sha256": "5cf95ca825f4452416d6ca2a030a035fcbe7e4bc8afce649b9446288e880e4f2",
+      "bytes": 376
+    },
+    "Bootstrap.lua": {
+      "sha256": "5fbdbe20cbc00f77571a75b65a9cd933af922868408b3fa428b4a1c2b032cd3e",
+      "bytes": 940
+    },
+    "core/Bag.lua": {
+      "sha256": "cceb8d7058c91816aa28afe7860fc1ea0c89100937a1ff59ff542e5df6b487b8",
+      "bytes": 10687
+    },
+    "core/Bag.xml": {
+      "sha256": "48b3cb07b70a9b1ff1ff6d35c3aaa755545e787a1895255904280cd88962739f",
+      "bytes": 1797
+    },
+    "core/Frame.lua": {
+      "sha256": "3f8c7069bdebf718591cfd0707e375fb92b4e88f7d7b6053da8d83eb68b6ef53",
+      "bytes": 25749
+    },
+    "core/Frame.xml": {
+      "sha256": "e90610203bcfec4ed203f8e161ae2e8672e29846b1e734574848319104d167c9",
+      "bytes": 7979
+    },
+    "core/Item.lua": {
+      "sha256": "f99ffe7c2b967e621765760ecc8c47390f720af81cfcc82ebfb4fdfc23fd13d3",
+      "bytes": 12561
+    },
+    "core/Item.xml": {
+      "sha256": "f3af636d8065a3b458f55b04ace72152077fde8ee5abe218f6d6406ab293e34e",
+      "bytes": 1099
+    },
+    "core/Overrides.lua": {
+      "sha256": "e9e9495ff85df64cd308c864c8aaea0c3b43510212e9b455a6a97c73deac8952",
+      "bytes": 1683
+    },
+    "core/Search.lua": {
+      "sha256": "ff51922cd68b7609c7dea6f8d04579c09e43bb312dae09eb4b37e1bf2a3bf702",
+      "bytes": 2384
+    },
+    "core/Utility.lua": {
+      "sha256": "37c690783404c1d416e592629b0942546e59b8440193590420bb8261e25bd4df",
+      "bytes": 3655
+    },
+    "database/database.lua": {
+      "sha256": "c7a188eba894d4a50cf1aaaade0a5b281e120c7ae10d902e93eb26c2fba42778",
+      "bytes": 10098
+    },
+    "database/ui.lua": {
+      "sha256": "2a92c92ffd1fff1a9e64f60effd5b54cec510fdae72a2b61ed081c389a8bab21",
+      "bytes": 2389
+    },
+    "database/ui.xml": {
+      "sha256": "6768fe4dd8f4aa3cea245e528e5f9cc19206cfc881bee21cff0f8ca644db249b",
+      "bytes": 1939
+    },
+    "docs/USER_GUIDE.md": {
+      "sha256": "75166e98450632a299a96a37d07a3d9cc259b12b3af3a4f60bd956a291183c3b",
+      "bytes": 3376
+    },
+    "Events.lua": {
+      "sha256": "3456c6a4439111a7ae394c204305eefdccdff36698150becdb18534ea1165442",
+      "bytes": 7648
+    },
+    "ForgeUI.lua": {
+      "sha256": "4c2c06a7249c50c8f3b0d482526dfd3a9ca47e769b6a7688cfa2441b5ff082f3",
+      "bytes": 18856
+    },
+    "localization.lua": {
+      "sha256": "a5d22734f98a1153d4f4bec62cd1d4fd0fa0055112a480235188741240a037a9",
+      "bytes": 3715
+    },
+    "Media/Close.tga": {
+      "sha256": "f07813415b7c27422d0e4e45386fde9c903c21f399c7e6927339306e305e1146",
+      "bytes": 4114
+    },
+    "Media/Disc.tga": {
+      "sha256": "746305f80c83020061e05967dc774891e0a12cc4814f20b5e1b9ca52f8b5b1e0",
+      "bytes": 16402
+    },
+    "Media/Shadow.tga": {
+      "sha256": "7dab96ab788a0306d7cfce5b9c262c730704fed4cb3398ffb089b4016c13bb07",
+      "bytes": 16402
+    },
+    "options/Options.lua": {
+      "sha256": "4c53a54f67b748b4de565820fab48cd6ee388764430e4e3231228a6f9f02c741",
+      "bytes": 9528
+    },
+    "README.md": {
+      "sha256": "06824f12ea96ad80fdeb7fa69eee90bd160ca0afa68ad801429c264b8463a896",
+      "bytes": 3673
+    },
+    "Slash.lua": {
+      "sha256": "cec20dc617fe6a553d608b6c218411bf8f495fc80914625972f079a350f34f5d",
+      "bytes": 2291
+    },
+    "tooltips.lua": {
+      "sha256": "f3b073e76a44165a233228fec1a3e8c544f6b4756dad491eb073d1f5ecd4207a",
+      "bytes": 2872
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "431487585": {
+      "tag": "v1.0.0",
+      "folder": "v1.0.0--431487585",
+      "assets": {
+        "701833627": {
+          "sha256": "fd7b91e3c8c7b04b7fe27ced452ceec310cc36a1aa258ad7026006307f86f852",
+          "bytes": 61162,
+          "id": "701833627",
+          "name": "Bagnon-1.0.0.zip",
+          "url": "https://github.com/Fostercare5988/Bagnon/releases/download/v1.0.0/Bagnon-1.0.0.zip",
+          "path": "releases/v1.0.0--431487585/assets/Bagnon-1.0.0.zip"
+        }
+      },
+      "source": {
+        "sha256": "e54f720230146edb6ba30d1071244b971d388285ea61b770c0a24b59f4de7abf",
+        "bytes": 946404,
+        "path": "releases/v1.0.0--431487585/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Fostercare5988/Bagnon/tarball/v1.0.0"
+      }
+    }
+  }
+}

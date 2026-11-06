@@ -1,0 +1,162 @@
+{
+  "upstream": "https://github.com/xorann/Abraxas",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "xorann",
+    "repo": "Abraxas",
+    "name": "Abraxas",
+    "url": "https://github.com/xorann/Abraxas",
+    "api": "https://api.github.com/repos/xorann/Abraxas"
+  },
+  "commit": "9eb1bc1b81f27943c605bb39d383f10fad4fe0b7",
+  "sourceFiles": {
+    "Abraxas.lua": {
+      "sha256": "25898609b8d5de6a6a32c0c698ee70b048fecd677ea0bef761d215e8709b12d9",
+      "bytes": 11311
+    },
+    "Abraxas.toc": {
+      "sha256": "6dbb633e784d6a52ef9694d377d33a37a3f0432ce5e44b0b7b01ab50eb3c8d22",
+      "bytes": 1016
+    },
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "24eccd5ddd032bfe3f449219f8a0ce4d05b6df2753be2c02073bb80ecabb04b0",
+      "bytes": 33306
+    },
+    "Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "64e94c958c92cba85b4a2a3214ef8d0fd6d86594abfc7a3bb3fd2d262875d055",
+      "bytes": 66933
+    },
+    "Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "a31166b787873d5551180e0600a7f9d2a529fb7f3ee9606e71b91dcf4123a025",
+      "bytes": 44509
+    },
+    "Libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "384d5dd3a2d9c1fd896fc7b2cac78e03fc4ba27c5e69dcdfda266003b721ed3d",
+      "bytes": 7943
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "Libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "09cfc0b69a0feb644fa1a9e5fc6715a4e76e0b2f6c7c04a3a0ea693d633770cd",
+      "bytes": 23114
+    },
+    "Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "31bc9cfda434c890574d1bbfc48c9e1d068f45ff73e1023ca452dedab0bdef41",
+      "bytes": 15957
+    },
+    "Libs/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "a3de67878b122a9f6c937462b9641f7a029b55605107f2db03953fe7a1d412ff",
+      "bytes": 13981
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "Libs/Babble-Boss-2.2/Babble-Boss-2.2.lua": {
+      "sha256": "5c84bd9d6bf0147ddbcf82d8f7111e0cdd53e73a91959321ec38b3a9b1ac7e65",
+      "bytes": 74104
+    },
+    "Libs/Babble-Spell-2.2/Babble-Spell-2.2.lua": {
+      "sha256": "3eb926df9321c3b816e732779ff6a7cefd8e8c86d408ac13882a735e3a8e19be",
+      "bytes": 449931
+    },
+    "Libs/Babble-Zone-2.2/Babble-Zone-2.2.lua": {
+      "sha256": "8b3620d8f023e180b493733c808aab01b223720dc76f4a1e1a7b8934d68a7cbc",
+      "bytes": 42174
+    },
+    "Libs/Deformat-2.0/Deformat-2.0.lua": {
+      "sha256": "6491e26c67bc4e35eecead3aac60dd1e02abe39a8b281ff6f10bb223e78b7f50",
+      "bytes": 9438
+    },
+    "Libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "0e1c2e893ae0342170ffc3d8f816b765eaf8dbed689da5cf5353f6e9271b9c06",
+      "bytes": 85808
+    },
+    "Libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "019a3ddec75f04b5d78fc8361e0364c8be1deebddfe34c65f8e185e3ae3e9f5c",
+      "bytes": 46454
+    },
+    "Libs/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "1927177be6990043bc63bc8c36168408957c6d1ed86ef971d72415f7dd14d430",
+      "bytes": 7889
+    },
+    "Libs/SpellCache-1.0/SpellCache-1.0.lua": {
+      "sha256": "2d789aea89dcf0f98b068fa24d27427409eaa1603db1fd27b2fff09158ae8e8d",
+      "bytes": 8287
+    },
+    "Libs/SpellStatus-1.0/SpellStatus-1.0.lua": {
+      "sha256": "cc03245cfeb1662165bdfbcca6367fbb2f68f79230fb1ce85f49cfb5ec5b7af5",
+      "bytes": 28309
+    },
+    "Libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "0f320f2c8feec2d0d17d6550a550a9df22295510b06ade9a43925383c43c5416",
+      "bytes": 85746
+    },
+    "Locale-deDE.lua": {
+      "sha256": "7942792a7015dbfd161a893beeb9d0c074706be7dd7c14867a63fe01e9c18fa9",
+      "bytes": 3873
+    },
+    "Locale-enUS.lua": {
+      "sha256": "4abd683c0527520736161db07f941cdaeb7ab86de9304b41442407f5eab67579",
+      "bytes": 2193
+    },
+    "README.md": {
+      "sha256": "76864fef46f8fb5457588ceb1f744cafb8b8830380dff7db4d357fde71b14e68",
+      "bytes": 1091
+    },
+    "Summon.lua": {
+      "sha256": "72d444a13d21ee3518f14f3c259836366d36fb0a88cbfb2fc777a1b4d92fb2cc",
+      "bytes": 21570
+    },
+    "Textures/Armory.tga": {
+      "sha256": "7f5d7718082fc4f2bfda40f264d550eb6cc141922acfc7e1554aebad4744015e",
+      "bytes": 812
+    },
+    "Textures/otravi-close.tga": {
+      "sha256": "1fabd54e89479911f78f6e0cc4745bba9776abe11cca79110010dd849020b4ef",
+      "bytes": 2092
+    },
+    "Textures/otravi-semi-full-border.tga": {
+      "sha256": "ff73aef38d16aaca994d40891d207f876b8e5d7d13e9486397b6b3829cd5ff3e",
+      "bytes": 32812
+    },
+    "Textures/otravi.tga": {
+      "sha256": "e300a87224e7c1a044574ec915a1f9c0de49c3e26f854ecd3e1ea8ed920aaba9",
+      "bytes": 32812
+    },
+    "Version.lua": {
+      "sha256": "978097350fafc8c436672fe9e3c5a036d1d6e2ed9fcc62eacf3f4a873eb9eef9",
+      "bytes": 3782
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "9819858": {
+      "tag": "r2",
+      "folder": "r2--9819858",
+      "assets": {
+        "6315326": {
+          "sha256": "16070dbd96aac4b752867e3b257a1672b26167e2c5f732dcf5a979c6e16fa7d8",
+          "bytes": 271498,
+          "id": "6315326",
+          "name": "Abraxas.zip",
+          "url": "https://github.com/xorann/Abraxas/releases/download/r2/Abraxas.zip",
+          "path": "releases/r2--9819858/assets/Abraxas.zip"
+        }
+      },
+      "source": {
+        "sha256": "74f60af5bf6d0c5626f1336e4b90c1c7f9b7d525c07a2009a404c55c975f7ef8",
+        "bytes": 268311,
+        "path": "releases/r2--9819858/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/xorann/Abraxas/tarball/r2"
+      }
+    }
+  }
+}

@@ -1,0 +1,4398 @@
+{
+ "DRUID": {
+  "class": "Druid",
+  "saved": "2026-10-01",
+  "trees": [
+   {
+    "name": "Balance",
+    "talents": [
+     {
+      "column": 1,
+      "max": 5,
+      "name": "Improved Wrath",
+      "prereqs": [],
+      "text": "Improved Wrath | Rank 0/5 | Reduces the cast time and global cooldown of your Wrath spell by 0.1 sec.",
+      "tier": 1
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Nature's Grasp",
+      "prereqs": [],
+      "text": "Nature's Grasp | Rank 0/1 | 50 Mana | Instant cast | While active, any time an enemy strikes the caster they have a 35% chance to become afflicted by Entangling Roots (Rank 1).  Only useable outdoors.  1 charge.  Lasts 45 sec.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 4,
+      "name": "Improved Nature's Grasp",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 1
+       }
+      ],
+      "text": "Improved Nature's Grasp | Rank 0/4 | Requires 1 point in Nature's Grasp | Increases the chance for your Nature's Grasp to entangle an enemy by 15%.",
+      "tier": 1
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Sylvan Blessing",
+      "prereqs": [],
+      "text": "Sylvan Blessing | Rank 0/2 | Gives you a 50% chance after killing a target that yields experience or honor to allow your Mana to regenerate at a 100% rate while casting.  Lasts 15 sec.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Guidance of the Dream",
+      "prereqs": [],
+      "text": "Guidance of the Dream | Rank 0/3 | Requires 5 points in Balance Talents | Gives you a 23% chance to avoid interruption caused by damage while casting your Balance spells.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Improved Moonfire",
+      "prereqs": [],
+      "text": "Improved Moonfire | Rank 0/2 | Requires 5 points in Balance Talents | Increases the damage and critical strike chance of your Moonfire spell by 5%.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Natural Weapons",
+      "prereqs": [],
+      "text": "Natural Weapons | Rank 0/3 | Requires 5 points in Balance Talents | Increases the damage you deal with physical attacks in all forms by 3%. Also increases chance to hit with melee attacks and spells by 1%.",
+      "tier": 2
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Natural Shapeshifter",
+      "prereqs": [],
+      "text": "Natural Shapeshifter | Rank 0/3 | Requires 5 points in Balance Talents | Reduces the mana cost of all shapeshifting by 10%.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Moonfury",
+      "prereqs": [],
+      "text": "Moonfury | Rank 0/3 | Requires 10 points in Balance Talents | Increases the damage of your Starfire, Moonfire, Hurricane, Insect Swarm, and Wrath spells by 4%.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Omen of Clarity",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 2
+       }
+      ],
+      "text": "Omen of Clarity | Rank 0/1 | Requires 3 points in Natural Weapons | Requires 10 points in Balance Talents | Imbues the Druid with natural energy.  Each of the Druid's melee attacks or offensive spell casts has a chance of causing the caster to enter a Clearcasting state.  The Clearcasting state reduces the Mana, Rage or Energy cost of your next damage or healing spell or offensive ability by 100%.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Nature's Reach",
+      "prereqs": [],
+      "text": "Nature's Reach | Rank 0/2 | Requires 10 points in Balance Talents | Increases the range of your Wrath, Entangling Roots, Faerie Fire, Moonfire, Starfire, Insect Swarm, Hurricane, Remove Curse, Abolish Poison, and Cure Poison spells by 10%.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Vengeance",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 2
+       }
+      ],
+      "text": "Vengeance | Rank 0/5 | Requires 2 points in Improved Moonfire | Requires 15 points in Balance Talents | Increases the critical strike damage bonus of your Starfire, Moonfire, and Wrath spells by 20%.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Moonglow",
+      "prereqs": [],
+      "text": "Moonglow | Rank 0/3 | Requires 15 points in Balance Talents | Reduces the Mana cost of your Moonfire, Starfire, Wrath, Hurricane, Insect Swarm, Healing Touch, Regrowth and Rejuvenation spells by 3%.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Owlkin Frenzy",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Owlkin Frenzy | Rank 0/3 | Requires 1 point in Moonkin Form | Requires 20 points in Balance Talents | Damage taken while in Moonkin Form has a 10% chance to enrage you, granting a 30% chance to avoid interruption caused by damage while casting and regenerating 1% of your maximum mana per second for 10 sec. This effect can only trigger once every 30 seconds.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Moonkin Form",
+      "prereqs": [],
+      "text": "Moonkin Form | Rank 0/1 | Requires 20 points in Balance Talents | 11 Mana | Instant cast | Transforms the Druid into Moonkin Form. While in this form the armor contribution from items is increased by 180%, the Mana cost of your Balance spells is reduced by 20%, and all party members within 30 yards have their spell critical chance increased by 3%. The Moonkin can only cast Balance spells, Innervate, and Remove Curse while shapeshifted. The act of shapeshifting frees the caster of Polymorph and Movement Impairing effects.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Nature's Grace",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 4
+       }
+      ],
+      "text": "Nature's Grace | Rank 0/1 | Requires 3 points in Moonglow | Requires 20 points in Balance Talents | All spell criticals grace you with a blessing of nature, reducing the casting time of your next spell by 0.5 sec.",
+      "tier": 5
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Improved Starfire",
+      "prereqs": [],
+      "text": "Improved Starfire | Rank 0/3 | Requires 20 points in Balance Talents | Reduces the cast time of Starfire by 0.2 sec and gives it a 5% chance to stun the target for 3 sec.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Balance of All Things",
+      "prereqs": [],
+      "text": "Balance of All Things | Rank 0/3 | Requires 25 points in Balance Talents | Damaging a target afflicted by Insect Swarm with Wrath refunds 10% of its mana cost.\n\nStarfire has a 3% increased chance to critically strike against targets affected by Moonfire.",
+      "tier": 6
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Gale Winds",
+      "prereqs": [],
+      "text": "Gale Winds | Rank 0/2 | Requires 25 points in Balance Talents | Reduces the mana cost of Hurricane by 10% and causes it to reduce the attack speed of affected enemies by 12%.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Eclipse",
+      "prereqs": [],
+      "text": "Eclipse | Rank 0/1 | Requires 30 points in Balance Talents | Aligns natural and astral energies. Damage from Wrath has a 40% chance to grant Arcane Eclipse, increasing Arcane damage dealt. Damage from Starfire has a 60% chance to grant Nature Eclipse, increasing Nature damage dealt.\n\nThe damage bonus is 10% plus 60% of your spell critical strike chance. Each effect lasts 15 sec and has its own 30 sec cooldown. Only one Eclipse can be active at a time.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Feral Combat",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Ferocity",
+      "prereqs": [],
+      "text": "Ferocity | Rank 0/5 | Reduces the cost of your Maul, Swipe, Savage Bite, Claw, and Rake abilities by 1 Rage or Energy.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Feral Aggression",
+      "prereqs": [],
+      "text": "Feral Aggression | Rank 0/5 | Increases the Attack Power reduction of your Demoralizing Roar by 8% and the damage caused by your Ferocious Bite by 3%.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Feral Instinct",
+      "prereqs": [],
+      "text": "Feral Instinct | Rank 0/3 | Requires 5 points in Feral Combat Talents | Increases threat caused in Bear and Dire Bear Form by 5% and reduces the chance enemies have to detect you while Prowling.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Brutal Impact",
+      "prereqs": [],
+      "text": "Brutal Impact | Rank 0/2 | Requires 5 points in Feral Combat Talents | Increases the stun duration of your Bash and Pounce abilities by 0.5 sec.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Thick Hide",
+      "prereqs": [],
+      "text": "Thick Hide | Rank 0/3 | Requires 5 points in Feral Combat Talents | Increases your Armor contribution from items by 3%.",
+      "tier": 2
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Open Wounds",
+      "prereqs": [],
+      "text": "Open Wounds | Rank 0/3 | Requires 5 points in Feral Combat Talents | Increases the damage of Rip by 5%. In addition, increases the damage of Claw by 10% for each of your active Bleed effects on the target.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Feral Swiftness",
+      "prereqs": [],
+      "text": "Feral Swiftness | Rank 0/2 | Requires 10 points in Feral Combat Talents | Increases your movement speed by 15% while outdoors in Cat Form and increases your chance to dodge while in Bear, Dire Bear and Cat Form by 2%.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Feral Charge",
+      "prereqs": [],
+      "text": "Feral Charge | Rank 0/1 | Requires 10 points in Feral Combat Talents | 5 Rage | Instant | Requires Bear Form, Dire Bear Form | Causes you to charge an enemy, immobilizing and interrupting any spell being cast for 4 sec.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Sharpened Claws",
+      "prereqs": [],
+      "text": "Sharpened Claws | Rank 0/3 | Requires 10 points in Feral Combat Talents | Increases your critical strike chance while in Bear, Dire Bear or Cat Form by 2%.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Primal Fury",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 3
+       }
+      ],
+      "text": "Primal Fury | Rank 0/2 | Requires 3 points in Sharpened Claws | Requires 10 points in Feral Combat Talents | Gives you a 50% chance to gain an additional 5 Rage anytime you get a critical strike while in Bear and Dire Bear Form and your critical strikes from Cat Form abilities that add combo points have a chance to add an additional combo point.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Predatory Strikes",
+      "prereqs": [],
+      "text": "Predatory Strikes | Rank 0/3 | Requires 15 points in Feral Combat Talents | Increases your melee attack power in Cat, Bear, and Dire Bear Forms by 3%. In addition, increases the damage caused by your Claw, Rake, Maul, Swipe, and Savage Bite abilities by 7%.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Blood Frenzy",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 3
+       }
+      ],
+      "text": "Blood Frenzy | Rank 0/2 | Requires 3 points in Sharpened Claws | Requires 15 points in Feral Combat Talents | Increases the duration of Tiger's Fury by 6 sec, and causes Enrage to instantly generate 5 Rage. In addition, Tiger's Fury and Enrage increase your attack speed by 10% for 9 sec.",
+      "tier": 4
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Improved Shred",
+      "prereqs": [],
+      "text": "Improved Shred | Rank 0/2 | Requires 15 points in Feral Combat Talents | Increases the damage of Shred by 5% and reduces its Energy cost by 6.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Ancient Brutality",
+      "prereqs": [],
+      "text": "Ancient Brutality | Rank 0/2 | Requires 20 points in Feral Combat Talents | Dodging an attack while in Bear or Dire Bear Form imbues you with the spirit of the Ancients, generating 2 Rage per second for 5 sec. This effect can only occur once every 9 seconds.  While in Cat Form, periodic ticks of your Bleed effects restore 3 Energy.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Berserk",
+      "prereqs": [],
+      "text": "Berserk | Rank 0/1 | Requires 20 points in Feral Combat Talents | Instant | Requires Cat Form, Bear Form, Dire Bear Form | Removes all Fear effects and increases your energy regeneration rate by 100% while in Cat form, and increases your total health by 20% while in Bear form. After the effect ends, the health is lost. Effect lasts 20 seconds.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Heart of the Wild",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 4
+       }
+      ],
+      "text": "Heart of the Wild | Rank 0/5 | Requires 3 points in Predatory Strikes | Requires 25 points in Feral Combat Talents | Increases your Intellect by 4%.  In addition, while in Bear or Dire Bear Form your Stamina is increased by 4% and while in Cat Form your Strength is increased by 4%.",
+      "tier": 6
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Carnage",
+      "prereqs": [],
+      "text": "Carnage | Rank 0/2 | Requires 25 points in Feral Combat Talents | Your Maul, Swipe, and Savage Bite abilities return 5% of their damage as healing to you. In addition, gives your Ferocious Bite a 10% chance per combo point spent to refresh your active Rake and Rip effects and to add an additional combo point.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Leader of the Pack",
+      "prereqs": [],
+      "text": "Leader of the Pack | Rank 0/1 | Requires 30 points in Feral Combat Talents | While in Cat, Bear or Dire Bear Form, the Leader of the Pack increases ranged and melee critical chance of all party members within 45 yards by 3%.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Restoration",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Improved Mark of the Wild",
+      "prereqs": [],
+      "text": "Improved Mark of the Wild | Rank 0/5 | Increases the effects of your Mark of the Wild and Gift of the Wild spells by 7%.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Furor",
+      "prereqs": [],
+      "text": "Furor | Rank 0/5 | Gives you 20% chance to gain 10 Rage when you shapeshift into Bear and Dire Bear Form or 40 Energy when you shapeshift into Cat Form.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 5,
+      "name": "Improved Healing Touch",
+      "prereqs": [],
+      "text": "Improved Healing Touch | Rank 0/5 | Requires 5 points in Restoration Talents | Reduces the cast time of your Healing Touch spell by 0.1 sec.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Nature's Focus",
+      "prereqs": [],
+      "text": "Nature's Focus | Rank 0/5 | Requires 5 points in Restoration Talents | Gives you a 14% chance to avoid interruption caused by damage while casting the Healing Touch, Regrowth, and Tranquility spells.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Subtlety",
+      "prereqs": [],
+      "text": "Subtlety | Rank 0/5 | Requires 5 points in Restoration Talents | Reduces the threat generated by your spells by 4%.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Swiftmend",
+      "prereqs": [],
+      "text": "Swiftmend | Rank 0/1 | Requires 10 points in Restoration Talents | 8 Mana | Instant cast | Consumes a Rejuvenation or Regrowth effect on a friendly target to instantly heal them an amount equal to 12 sec. of Rejuvenation or 18 sec. of Regrowth.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Genesis",
+      "prereqs": [],
+      "text": "Genesis | Rank 0/3 | Requires 10 points in Restoration Talents | Increases the damage and healing of your periodic magical spells and effects by 5%.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Reflection",
+      "prereqs": [],
+      "text": "Reflection | Rank 0/3 | Requires 10 points in Restoration Talents | Allows 5% of your Mana regeneration to continue while casting.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Gift of Nature",
+      "prereqs": [],
+      "text": "Gift of Nature | Rank 0/5 | Requires 15 points in Restoration Talents | Increases the effectiveness of all healing spells by 2%.",
+      "tier": 4
+     },
+     {
+      "column": 4,
+      "max": 5,
+      "name": "Tranquil Spirit",
+      "prereqs": [],
+      "text": "Tranquil Spirit | Rank 0/5 | Requires 15 points in Restoration Talents | Reduces the mana cost of your Healing Touch, Regrowth and Tranquility spells by 2%.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Aessina's Bloom",
+      "prereqs": [
+       {
+        "column": 1,
+        "tier": 2
+       }
+      ],
+      "text": "Aessina's Bloom | Rank 0/2 | Requires 5 points in Improved Healing Touch | Requires 20 points in Restoration Talents | Healing a target affected by Regrowth or Rejuvenation with your Healing Touch spells reduces the casting time of your next Healing Touch spell by 0.15 sec and refunds 5% of its mana cost within 20 sec.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Nature's Swiftness",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 3
+       }
+      ],
+      "text": "Nature's Swiftness | Rank 0/1 | Requires 3 points in Genesis | Requires 20 points in Restoration Talents | Instant | When activated, your next Nature spell becomes an instant cast spell.",
+      "tier": 5
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Preservation",
+      "prereqs": [],
+      "text": "Preservation | Rank 0/3 | Requires 20 points in Restoration Talents | Increases the periodic healing of Regrowth by 10% if the friendly target is affected by Rejuvenation.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Improved Regrowth",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 4
+       }
+      ],
+      "text": "Improved Regrowth | Rank 0/5 | Requires 5 points in Gift of Nature | Requires 25 points in Restoration Talents | Increases the critical effect chance of your Regrowth spell by 10%.",
+      "tier": 6
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Improved Tranquility",
+      "prereqs": [],
+      "text": "Improved Tranquility | Rank 0/2 | Requires 25 points in Restoration Talents | Increases the healing done by your Tranquility spell by 20%.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Tree of Life Form",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 6
+       }
+      ],
+      "text": "Tree of Life Form | Rank 0/1 | Requires 5 points in Improved Regrowth | Requires 30 points in Restoration Talents | 14 Mana | Instant cast | Shapeshift into the Tree of Life.  While in this form armor contribution from items is inreased by 180%, the healing power of nearby party members is increased by an amount equal to 20% of your spirit, your movement speed is reduced by 20%, and you cannot cast damaging spells or Healing Touch, but the mana cost of heal over time spells is reduced by 20%.\n\nThe act of shapeshifting frees the caster of Polymorph and Movement Impairing effects.",
+      "tier": 7
+     }
+    ]
+   }
+  ],
+  "version": "0.22.9"
+ },
+ "HUNTER": {
+  "class": "Hunter",
+  "saved": "2026-10-01",
+  "trees": [
+   {
+    "name": "Beast Mastery",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Swift Aspects",
+      "prereqs": [],
+      "text": "Swift Aspects | Rank 0/5 | While Aspect of the Hawk is active, all normal ranged attacks have a 10% chance of increasing ranged attack speed by 3% for 12 sec.  While Aspect of the Wolf is active, all normal melee attacks have a 10% chance of increasing melee attack speed by 3% for 12 sec.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Endurance Training",
+      "prereqs": [],
+      "text": "Endurance Training | Rank 0/5 | Adds 6% of your Stamina to your pets' Stamina and increases their health by 2%.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Eyes of the Beast",
+      "prereqs": [],
+      "text": "Improved Eyes of the Beast | Rank 0/2 | Requires 5 points in Beast Mastery Talents | Increases the duration of your Eyes of the Beast by 30 sec.\n\nWhile channeling Eyes of the Beast, your pet deals 15% additional damage and gains 15% increased Focus regeneration.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Improved Primal Aspects",
+      "prereqs": [],
+      "text": "Improved Primal Aspects | Rank 0/3 | Requires 5 points in Beast Mastery Talents | Increases the Dodge bonus of your Aspect of the Monkey by 2%. While Aspect of the Wolf is active, you're healed for 2% of your melee damage.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Thick Hide",
+      "prereqs": [],
+      "text": "Thick Hide | Rank 0/3 | Requires 5 points in Beast Mastery Talents | Adds 12% of your armor value from items to the armor value of your pets and increases the armor value of your pets by 7%.",
+      "tier": 2
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Improved Revive Pet",
+      "prereqs": [],
+      "text": "Improved Revive Pet | Rank 0/2 | Requires 5 points in Beast Mastery Talents | Revive Pet's casting time is reduced by 3 sec, mana cost is reduced by 20%, and increases the health your pet returns with by an additional 15%.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Pathfinding",
+      "prereqs": [],
+      "text": "Pathfinding | Rank 0/2 | Requires 10 points in Beast Mastery Talents | Increases the speed bonus of your Aspect of the Cheetah and Aspect of the Pack by 3% and increases your pet's movement speed by 15%. ",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Coordinated Assault",
+      "prereqs": [],
+      "text": "Coordinated Assault | Rank 0/1 | Requires 10 points in Beast Mastery Talents | Hitting an enemy with Arcane Shot, Steady Shot, or Raptor Strike causes your pet's next attack within 6 sec to also strike for Physical damage equal to 20% of your Attack Power. This effect can only occur once every 3 sec.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Unleashed Fury",
+      "prereqs": [],
+      "text": "Unleashed Fury | Rank 0/5 | Requires 10 points in Beast Mastery Talents | Increases the damage done by your pets by 4%.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Bestial Discipline",
+      "prereqs": [],
+      "text": "Bestial Discipline | Rank 0/2 | Requires 15 points in Beast Mastery Talents | Increases the Focus regeneration of your pets by 2 each tick and reduces the cooldown of your pets' special ability by 10%.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Improved Mend Pet",
+      "prereqs": [],
+      "text": "Improved Mend Pet | Rank 0/2 | Requires 15 points in Beast Mastery Talents | Increases amount you heal your pet with Mend Pet by 20% and gives the spell a 15% chance of cleansing 1 Curse, Disease, Magic or Poison effect from the pet each tick.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Ferocity",
+      "prereqs": [],
+      "text": "Ferocity | Rank 0/5 | Requires 15 points in Beast Mastery Talents | Increases the critical strike chance of your pets by 3%.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Scent of Blood",
+      "prereqs": [],
+      "text": "Scent of Blood | Rank 0/3 | Requires 20 points in Beast Mastery Talents | Your attacks have a 5% chance to send your pet into a rage, causing it to deal 40% additional damage for 8 sec.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Bestial Wrath",
+      "prereqs": [
+       {
+        "column": 1,
+        "tier": 5
+       }
+      ],
+      "text": "Bestial Wrath | Rank 0/1 | Requires 3 points in Scent of Blood | Requires 20 points in Beast Mastery Talents | 7 Mana | Instant cast | Sends your pet into a rage, granting it Scent of Blood for 18 sec. While enraged, the beast does not feel pity, remorse, or fear, and cannot be stopped except by death.",
+      "tier": 5
+     },
+     {
+      "column": 4,
+      "max": 1,
+      "name": "Intimidation",
+      "prereqs": [],
+      "text": "Intimidation | Rank 0/1 | Requires 20 points in Beast Mastery Talents | 5 Mana | Instant cast | Command your pet to intimidate the target on the next successful melee attack, stunning the target for 3 sec, and increasing the pet's threat generation by 50% for 8 sec.",
+      "tier": 5
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Bestial Precision",
+      "prereqs": [],
+      "text": "Bestial Precision | Rank 0/2 | Requires 25 points in Beast Mastery Talents | Increases the physical hit chance of your pets by 4% and the spell hit chance of your pets by 9%. In addition, increases the weapon skill of your pets by 5.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Spirit Bond",
+      "prereqs": [],
+      "text": "Spirit Bond | Rank 0/2 | Requires 25 points in Beast Mastery Talents | Your pet gains melee attack power equal to 12% of your ranged attack power and spell power equal to 7% of your ranged attack power. While your pet is active, you and your pet will regenerate 1% of total health every 5 sec.",
+      "tier": 6
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Frenzy",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 4
+       }
+      ],
+      "text": "Frenzy | Rank 0/5 | Requires 5 points in Ferocity | Requires 25 points in Beast Mastery Talents | Gives your pet a 20% chance to gain a 30% attack speed increase for 8 sec after dealing a critical strike.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Kill Command",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 6
+       }
+      ],
+      "text": "Kill Command | Rank 0/1 | Requires 2 points in Spirit Bond | Requires 30 points in Beast Mastery Talents | 3 Mana | Instant cast | Commands your pet to instantly attack for 80% of its Attack Power. Can only be used after the Hunter lands a critical strike on the target.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Marksmanship",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Improved Concussive Shot",
+      "prereqs": [],
+      "text": "Improved Concussive Shot | Rank 0/5 | Gives your Concussive Shot a 4% chance to stun the target for 3 sec.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Efficiency",
+      "prereqs": [],
+      "text": "Efficiency | Rank 0/5 | Reduces the Mana cost of your Shots and Stings by 2%.",
+      "tier": 1
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Improved Stings",
+      "prereqs": [],
+      "text": "Improved Stings | Rank 0/5 | Requires 5 points in Marksmanship Talents | Increases the damage of Serpent Sting by 6%, increases the mana drained by Viper Sting by 1%, and causes Scorpid Sting to reduce attack speed by an additional 2%.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Lethal Shots",
+      "prereqs": [],
+      "text": "Lethal Shots | Rank 0/5 | Requires 5 points in Marksmanship Talents | Increases your critical strike chance with ranged weapons by 1%.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Hawk Eye",
+      "prereqs": [],
+      "text": "Hawk Eye | Rank 0/2 | Requires 10 points in Marksmanship Talents | Increases the range of your ranged weapons by 3 yards.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Aimed Shot",
+      "prereqs": [],
+      "text": "Aimed Shot | Rank 0/1 | Requires 10 points in Marksmanship Talents | 50 Mana | 2 sec cast | Requires Ranged Weapon | An aimed shot that increases ranged damage by 70.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Swiftshot",
+      "prereqs": [],
+      "text": "Swiftshot | Rank 0/3 | Requires 10 points in Marksmanship Talents | Reduces the cooldown of Arcane Shot by 0.5 sec and the cooldown of Aimed Shot by 2 sec.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Endless Quiver",
+      "prereqs": [],
+      "text": "Endless Quiver | Rank 0/2 | Requires 15 points in Marksmanship Talents | Your Auto Shot, Arcane Shot, Steady Shot and Multi-Shot have a 3% chance to fire an additional normal ranged attack.  This additional shot does not spend ammo.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Mortal Shots",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 2
+       }
+      ],
+      "text": "Mortal Shots | Rank 0/5 | Requires 5 points in Lethal Shots | Requires 15 points in Marksmanship Talents | Increases your ranged weapon critical strike damage bonus by 6%.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 1,
+      "name": "Scatter Shot",
+      "prereqs": [],
+      "text": "Scatter Shot | Rank 0/1 | Requires 20 points in Marksmanship Talents | 5 Mana | Instant cast | Requires Ranged Weapon | A short-range shot that deals 50% weapon damage and disorients the target for 4 sec.  Any damage caused will remove the effect.  Turns off your attack when used.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Experimental Ammunition",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 3
+       }
+      ],
+      "text": "Experimental Ammunition | Rank 0/1 | Requires 1 point in Aimed Shot | Requires 20 points in Marksmanship Talents | Your Aimed Shot deals an additional 5% of its damage as Fire, Arcane, or Nature damage, based on the active effect. Grants a further benefit depending on the element:\n- Explosive Ammunition: Your next Multi-Shot causes hits to explode, dealing 20% ranged weapon damage to enemies within 5 yards of the targets.\n- Poisonous Ammunition: Your next Serpent Sting deals 100% increased damage and applies a corrosive poison that reduces the target's armor by 4 for 15 sec.\n- Enchanted Ammunition: Your next Arcane Shot deals 100% increased damage and weakens the target's resistance to magic, increasing magic damage taken by 3% for 6 sec.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Piercing Shots",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 4
+       }
+      ],
+      "text": "Piercing Shots | Rank 0/2 | Requires 5 points in Mortal Shots | Requires 20 points in Marksmanship Talents | Your critical strikes from Multi-Shot, Steady Shot and Aimed Shot cause the target to bleed, dealing 15% of the damage over 8 sec.  This damage generates no threat.",
+      "tier": 5
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Barrage",
+      "prereqs": [],
+      "text": "Barrage | Rank 0/3 | Requires 20 points in Marksmanship Talents | Increases the damage of Multi-Shot and Volley by 5% and reduces the cast time of Volley by 1 sec.",
+      "tier": 5
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Marksmanship",
+      "prereqs": [],
+      "text": "Improved Marksmanship | Rank 0/2 | Requires 25 points in Marksmanship Talents | Increases the damage of Steady Shot and Aimed Shot by 5%.",
+      "tier": 6
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Ranged Weapon Specialization",
+      "prereqs": [],
+      "text": "Ranged Weapon Specialization | Rank 0/5 | Requires 25 points in Marksmanship Talents | Increases the damage you deal with ranged weapons by 2%.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Lock and Load",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Lock and Load | Rank 0/1 | Requires 1 point in Experimental Ammunition | Requires 30 points in Marksmanship Talents | Your Steady Shot, Aimed Shot, and Arcane Shot critical strikes have a 100% chance to reset the cooldown of Aimed Shot and trigger Lock and Load. Lock and Load reduces the cast time of Aimed Shot by 1 sec and causes Aimed Shot to hit all enemies between you and the target. Lasts 10 sec or until Aimed Shot is cast.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Survival",
+    "talents": [
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Improved Slaying",
+      "prereqs": [],
+      "text": "Improved Slaying | Rank 0/3 | Increases all damage caused against Beasts, Giants, Dragonkin, and Humanoid targets by 1% and increases critical damage caused against Beasts, Giants, Dragonkin, and Humanoid targets by an additional 1%.",
+      "tier": 1
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Resourcefulness",
+      "prereqs": [],
+      "text": "Resourcefulness | Rank 0/5 | Reduces the Mana cost of all traps and melee abilities by 2%.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Swift Reflexes",
+      "prereqs": [],
+      "text": "Swift Reflexes | Rank 0/2 | Increases your Parry chance and attack speed by 1%.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Entrapment",
+      "prereqs": [],
+      "text": "Entrapment | Rank 0/3 | Requires 5 points in Survival Talents | Gives your Immolation Trap, Frost Trap, and Explosive Trap a 8% chance to entrap the target, preventing them from moving for 5 sec.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Savage Strikes",
+      "prereqs": [],
+      "text": "Savage Strikes | Rank 0/2 | Requires 5 points in Survival Talents | Increases the damage done by your offhand weapon by 13% and the critical strike chance of your Lacerate, Raptor Strike, Mongoose Bite, Carve and Wing Clip abilities by 3%.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Improved Wing Clip",
+      "prereqs": [],
+      "text": "Improved Wing Clip | Rank 0/3 | Requires 5 points in Survival Talents | Gives your Wing Clip ability a 14% chance to immobilize the target for 5 sec.",
+      "tier": 2
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Alone Against the World",
+      "prereqs": [],
+      "text": "Alone Against the World | Rank 0/2 | Requires 5 points in Survival Talents | While you have no pet under your control, all damage dealt is increased by 3%.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Planning Ahead",
+      "prereqs": [],
+      "text": "Planning Ahead | Rank 0/2 | Requires 10 points in Survival Talents | The duration of Freezing and Frost Trap effects and the damage of Immolation and Explosive Trap effects are increased by 13% if the traps are not triggered within the first 5 sec after being placed.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Survivalist",
+      "prereqs": [],
+      "text": "Survivalist | Rank 0/5 | Requires 10 points in Survival Talents | Increases total health by 2%.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Carve",
+      "prereqs": [],
+      "text": "Carve | Rank 0/1 | Requires 10 points in Survival Talents | 5 Mana | Instant cast | Requires Melee Weapon | A sweeping attack that strikes up to 5 enemies in a 10 yard cone in front of you, dealing 60% weapon damage.\nThis ability shares a cooldown with Multi-Shot.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 1,
+      "name": "Deterrence",
+      "prereqs": [],
+      "text": "Deterrence | Rank 0/1 | Requires 10 points in Survival Talents | Instant | When activated, increases your Dodge and Parry chance by 25% for 10 sec.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Stinging Nettle",
+      "prereqs": [],
+      "text": "Stinging Nettle | Rank 0/2 | Requires 15 points in Survival Talents | Your Mongoose Bite and triggered Fire traps now apply your highest rank of Serpent Sting for 20% of the duration. Serpent Stings applied this way ignore resistances and immunities.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Surefooted",
+      "prereqs": [],
+      "text": "Surefooted | Rank 0/3 | Requires 15 points in Survival Talents | Increases hit chance by 1%, and by an additional 1% while dual wielding.\nIn addition, increases the chance to resist movement impairing effects by 5%.",
+      "tier": 4
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Improved Feign Death",
+      "prereqs": [],
+      "text": "Improved Feign Death | Rank 0/2 | Requires 15 points in Survival Talents | Reduces the chance your Feign Death ability will be resisted by 4%.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Killer Instinct",
+      "prereqs": [],
+      "text": "Killer Instinct | Rank 0/3 | Requires 20 points in Survival Talents | Increases your critical strike chance with all attacks by 1%, increases your melee critical strike damage bonus by 7%.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Trap Mastery",
+      "prereqs": [],
+      "text": "Trap Mastery | Rank 0/3 | Requires 20 points in Survival Talents | Increases the duration of Freezing and Frost Trap effects by 10% and the damage of Immolation and Explosive Trap effects by 10%.  In addition, reduces the chance that enemies will resist trap effects by 4%.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Lacerate",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 3
+       }
+      ],
+      "text": "Lacerate | Rank 0/1 | Requires 1 point in Carve | Requires 20 points in Survival Talents | 5 Mana | Instant cast | Requires Melee Weapon | Deepens the target's open wound, dealing damage equal to 40% of melee Attack Power and causing the target to bleed for 20% of that damage over 8 sec. Can only be used after critically striking the target. Using this ability from the target's sides increases its damage by 15%.",
+      "tier": 5
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Vicious Strikes",
+      "prereqs": [],
+      "text": "Vicious Strikes | Rank 0/2 | Requires 25 points in Survival Talents | Reduces the cooldown of Raptor Strike and Mongoose Bite by 0.5 sec and increases the damage they deal by 5%.",
+      "tier": 6
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Lightning Reflexes",
+      "prereqs": [],
+      "text": "Lightning Reflexes | Rank 0/5 | Requires 25 points in Survival Talents | Increases your Agility by 2% and increases your melee attack power by an amount equal to 20% of your Agility.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Untamed Trapper",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Untamed Trapper | Rank 0/1 | Requires 3 points in Trap Mastery | Requires 30 points in Survival Talents | Reduces the mana cost of your Immolation Trap and Explosive Trap effects by 20% and increases their damage based on your melee Attack Power. In addition, all traps can be placed while in combat.",
+      "tier": 7
+     }
+    ]
+   }
+  ],
+  "version": "0.22.9"
+ },
+ "MAGE": {
+  "class": "Mage",
+  "saved": "2026-10-01",
+  "trees": [
+   {
+    "name": "Arcane",
+    "talents": [
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Arcane Subtlety",
+      "prereqs": [],
+      "text": "Arcane Subtlety | Rank 0/2 | Reduces your target's resistance to all your spells by 5 and reduces the threat caused by your Arcane spells by 20%.",
+      "tier": 1
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Magic Absorption",
+      "prereqs": [],
+      "text": "Magic Absorption | Rank 0/3 | Increases all resistances by 4 and whenever one of your spells is partially or fully resisted you restore 1% of your maximum mana.  This effect can occur once every 2 sec.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Improved Arcane Missiles",
+      "prereqs": [],
+      "text": "Improved Arcane Missiles | Rank 0/5 | Gives you a 20% chance to avoid interruption caused by damage while channeling Arcane Missiles.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Wand Specialization",
+      "prereqs": [],
+      "text": "Wand Specialization | Rank 0/2 | Requires 5 points in Arcane Talents | Increases your damage and chance to hit with Wands by 13% and 5%, respectively.  Successful Wand attacks have a chance to restore 0 mana.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Arcane Focus",
+      "prereqs": [],
+      "text": "Arcane Focus | Rank 0/5 | Requires 5 points in Arcane Talents | Reduces the chance that the opponent can resist your Arcane spells by 2%.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Arcane Concentration",
+      "prereqs": [],
+      "text": "Arcane Concentration | Rank 0/5 | Requires 5 points in Arcane Talents | Gives you a 2% chance of entering a Clearcasting state after any damage spell hits a target.  The Clearcasting state reduces the mana cost of your next damage spell by 100%.  This effect can occur once every 8 sec.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 1,
+      "name": "Magic Attunement",
+      "prereqs": [],
+      "text": "Magic Attunement | Rank 0/1 | Requires 10 points in Arcane Talents | Increases the effect of your Amplify Magic and Dampen Magic spells by 100% and allows them to be cast on enemies.  Only affects targets level 62 or lower.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Arcane Impact",
+      "prereqs": [],
+      "text": "Arcane Impact | Rank 0/3 | Requires 10 points in Arcane Talents | Increases the critical strike chance of your Arcane spells by an additional 2%.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Arcane Rupture",
+      "prereqs": [],
+      "text": "Arcane Rupture | Rank 0/1 | Requires 10 points in Arcane Talents | 80 Mana | 2.5 sec cast | Rupture your target with the force of concentrated arcane energy, dealing 101 to 114 Arcane damage and increasing the damage and mana cost of your Arcane Missiles spell by 20% for 8 sec.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Mana Shield",
+      "prereqs": [],
+      "text": "Improved Mana Shield | Rank 0/2 | Requires 15 points in Arcane Talents | Decreases the mana lost per point of damage taken when Mana Shield is active by 13%.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Improved Counterspell",
+      "prereqs": [],
+      "text": "Improved Counterspell | Rank 0/2 | Requires 15 points in Arcane Talents | Gives your Counterspell a 50% chance to silence the target for 4 sec.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Temporal Convergence",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 3
+       }
+      ],
+      "text": "Temporal Convergence | Rank 0/3 | Requires 1 point in Arcane Rupture | Requires 15 points in Arcane Talents | Your Arcane Missiles have a chance of 5% to reset the cooldown of Arcane Rupture and cause it to return its base mana cost on its next cast.  This effect can occur once every 15 sec.",
+      "tier": 4
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Arcane Meditation",
+      "prereqs": [],
+      "text": "Arcane Meditation | Rank 0/3 | Requires 15 points in Arcane Talents | Allows 7% of your Mana regeneration to continue while casting. This effect is tripled while below 35% total mana.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Arcane Instability",
+      "prereqs": [],
+      "text": "Arcane Instability | Rank 0/3 | Requires 20 points in Arcane Talents | Your successful damaging Arcane spells have an 8% chance to uncontrollably erupt, consuming 2% of your base mana to deal 25% more damage.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Presence of Mind",
+      "prereqs": [],
+      "text": "Presence of Mind | Rank 0/1 | Requires 20 points in Arcane Talents | Instant | When activated, your next Mage spell with a casting time less than 10 sec becomes an instant cast spell.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Accelerated Arcana",
+      "prereqs": [],
+      "text": "Accelerated Arcana | Rank 0/1 | Requires 20 points in Arcane Talents | Increases the casting speed of your Arcane spells by 5%.  In addition, casting speed increase effects increase the cooldown recovery speed of your Arcane spells and the tick speed of your Arcane Missiles, reducing their duration.",
+      "tier": 5
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Arcane Potency",
+      "prereqs": [],
+      "text": "Arcane Potency | Rank 0/2 | Requires 20 points in Arcane Talents | Increases the critical strike damage bonus of your Arcane spells by 50%.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Resonance Cascade",
+      "prereqs": [],
+      "text": "Resonance Cascade | Rank 0/5 | Requires 25 points in Arcane Talents | Your successful damaging Arcane spells have a 4% chance to duplicate for 50% of the damage.  This effect can trigger off of itself and duplicated Arcane Missiles are channeled in tandem with the original cast.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Arcane Power",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Arcane Power | Rank 0/1 | Requires 1 point in Presence of Mind | Requires 30 points in Arcane Talents | Instant | When activated, your casting speed is increased by 30% while draining 1% of your maximum mana every second and reducing all mana gain by 50%.\nFalling below 10% maximum mana causes you to violently combust from uncontrollable power, killing you instantly.  Lasts 20 sec and cannot be cancelled.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Fire",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Improved Fireball",
+      "prereqs": [],
+      "text": "Improved Fireball | Rank 0/5 | Reduces the casting time of your Fireball spell by 0.1 sec.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Impact",
+      "prereqs": [],
+      "text": "Impact | Rank 0/5 | Gives your Fire spells a 2% chance to stun the target for 2 sec.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 5,
+      "name": "Ignite",
+      "prereqs": [],
+      "text": "Ignite | Rank 0/5 | Requires 5 points in Fire Talents | Your critical strikes from Fire damage spells cause the target to burn for an additional 8% of your spell's damage over 4 sec.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Flame Throwing",
+      "prereqs": [],
+      "text": "Flame Throwing | Rank 0/2 | Requires 5 points in Fire Talents | Increases the range of your Fire spells by 3 yards and the radius of your Blast Wave by 10%.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Improved Fire Blast",
+      "prereqs": [],
+      "text": "Improved Fire Blast | Rank 0/3 | Requires 5 points in Fire Talents | Reduces the cooldown of your Fire Blast spell by 0.5 sec and its global cooldown by 0.3 sec.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Incinerate",
+      "prereqs": [],
+      "text": "Incinerate | Rank 0/2 | Requires 10 points in Fire Talents | Increases the critical strike chance of your Fire Blast and Scorch spells by 2%.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Improved Flamestrike",
+      "prereqs": [],
+      "text": "Improved Flamestrike | Rank 0/3 | Requires 10 points in Fire Talents | Increases the critical strike chance of your Flamestrike spell by 5%.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Pyroblast",
+      "prereqs": [],
+      "text": "Pyroblast | Rank 0/1 | Requires 10 points in Fire Talents | 125 Mana | 6 sec cast | Hurls an immense fiery boulder that causes 141 to 187 Fire damage and an additional 56 Fire damage over 12 sec.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Burning Soul",
+      "prereqs": [],
+      "text": "Burning Soul | Rank 0/2 | Requires 10 points in Fire Talents | Gives your Fire spells a 35% chance to not lose casting time when you take damage and reduces the threat caused by your Fire spells by 15%.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Fire Vulnerability",
+      "prereqs": [],
+      "text": "Fire Vulnerability | Rank 0/3 | Requires 15 points in Fire Talents | Your Scorch and Fire Blast spells have a 33% chance to cause your target to be vulnerable to Fire damage.  This vulnerability increases the Fire damage dealt to your target by 3% and lasts 30 sec.  Stacks up to 5 times.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Improved Fire Ward",
+      "prereqs": [],
+      "text": "Improved Fire Ward | Rank 0/2 | Requires 15 points in Fire Talents | Causes your Fire Ward to have a 10% chance to reflect Fire spells while active.",
+      "tier": 4
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Master of Elements",
+      "prereqs": [],
+      "text": "Master of Elements | Rank 0/3 | Requires 15 points in Fire Talents | Your Fire and Frost spell criticals will refund 15% of their base mana cost.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 1,
+      "name": "Blast Wave",
+      "prereqs": [],
+      "text": "Blast Wave | Rank 0/1 | Requires 20 points in Fire Talents | 215 Mana | Instant cast | A wave of flame radiates outward from the caster, damaging all enemies caught within the 10 yard blast for 154 to 186 Fire damage, and dazing them for 6 sec.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Critical Mass",
+      "prereqs": [],
+      "text": "Critical Mass | Rank 0/3 | Requires 20 points in Fire Talents | Increases the critical strike chance of your Fire spells by 2%.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Hot Streak",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 3
+       }
+      ],
+      "text": "Hot Streak | Rank 0/2 | Requires 1 point in Pyroblast | Requires 20 points in Fire Talents | Gives your Fireball and Fire Blast critical strikes a 50% chance to grant Hot Streak, reducing the cast time of your next Pyroblast by 1 sec per stack for 3 min. Stacks up to 5 times.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Fire Power",
+      "prereqs": [],
+      "text": "Fire Power | Rank 0/5 | Requires 25 points in Fire Talents | Increases the damage done by your Fire spells by 2%.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Combustion",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Combustion | Rank 0/1 | Requires 3 points in Critical Mass | Requires 30 points in Fire Talents | Instant | When activated, this spell causes each of your Fire damage spell hits to increase your critical strike chance with Fire damage spells by 10%.  This effect lasts until you have caused 3 critical strikes with Fire spells.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Frost",
+    "talents": [
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Frost Warding",
+      "prereqs": [],
+      "text": "Frost Warding | Rank 0/2 | Increases the armor and resistances given by your Frost Armor and Ice Armor spells by 15%.  In addition, gives your Frost Ward a 10% chance to reflect Frost spells and effects while active.",
+      "tier": 1
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Improved Frostbolt",
+      "prereqs": [],
+      "text": "Improved Frostbolt | Rank 0/5 | Reduces the casting time of your Frostbolt spell by 0.1 sec.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Elemental Precision",
+      "prereqs": [],
+      "text": "Elemental Precision | Rank 0/3 | Reduces the chance that the opponent can resist your Frost and Fire spells by 2%.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Piercing Ice",
+      "prereqs": [],
+      "text": "Piercing Ice | Rank 0/3 | Requires 5 points in Frost Talents | Increases the damage done by your Frost spells by 2%.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Frostbite",
+      "prereqs": [],
+      "text": "Frostbite | Rank 0/3 | Requires 5 points in Frost Talents | Gives your Chill effects a 5% chance to freeze the target for 5 sec.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Improved Frost Nova",
+      "prereqs": [],
+      "text": "Improved Frost Nova | Rank 0/2 | Requires 5 points in Frost Talents | Reduces the cooldown of your Frost Nova spell by 2 sec.",
+      "tier": 2
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Permafrost",
+      "prereqs": [],
+      "text": "Permafrost | Rank 0/3 | Requires 5 points in Frost Talents | Increases the duration of your Chill effects by 1 sec and reduces the target's speed by an additional 4%.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 5,
+      "name": "Ice Shards",
+      "prereqs": [],
+      "text": "Ice Shards | Rank 0/5 | Requires 10 points in Frost Talents | Increases the critical strike damage bonus of your Frost spells by 20%.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Cold Snap",
+      "prereqs": [],
+      "text": "Cold Snap | Rank 0/1 | Requires 10 points in Frost Talents | Instant | When activated, this spell finishes the cooldown on all of your Frost spells.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Improved Blizzard",
+      "prereqs": [],
+      "text": "Improved Blizzard | Rank 0/3 | Requires 10 points in Frost Talents | Adds a chill effect to your Blizzard spell.  This effect lowers the target's movement speed by 20%.  Lasts 1.50 sec.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Arctic Reach",
+      "prereqs": [],
+      "text": "Arctic Reach | Rank 0/2 | Requires 15 points in Frost Talents | Increases the range of your Frostbolt, Icicles and Blizzard spells and the radius of your Frost Nova and Cone of Cold spells by 10%.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Frost Channeling",
+      "prereqs": [],
+      "text": "Frost Channeling | Rank 0/3 | Requires 15 points in Frost Talents | Reduces the mana cost of your Frost spells by 5% and reduces the threat caused by your Frost spells by 10%.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Shatter",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 2
+       }
+      ],
+      "text": "Shatter | Rank 0/5 | Requires 2 points in Improved Frost Nova | Requires 15 points in Frost Talents | Increases the critical strike chance of all your spells against frozen targets by 7%.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Ice Block",
+      "prereqs": [],
+      "text": "Ice Block | Rank 0/1 | Requires 20 points in Frost Talents | 15 Mana | Instant cast | You become encased in a block of ice, protecting you from all physical attacks and spells for 10 sec, but during that time you cannot attack, move or cast spells.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Icicles",
+      "prereqs": [],
+      "text": "Icicles | Rank 0/1 | Requires 20 points in Frost Talents | 200 Mana | Channeled | Draw upon frost leylines, becoming frozen in place, and launch icicles at the enemy, dealing 101 Frost damage every 1 sec for 5 sec.  Damage taken has a high chance to shatter your icy prison, dealing 30% of your base health as Frost damage to you.  Cancelling the effect early will not remove the freeze effect.",
+      "tier": 5
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Improved Cone of Cold",
+      "prereqs": [],
+      "text": "Improved Cone of Cold | Rank 0/3 | Requires 20 points in Frost Talents | Increases the damage dealt by your Cone of Cold spell by 15%.",
+      "tier": 5
+     },
+     {
+      "column": 1,
+      "max": 5,
+      "name": "Winter's Chill",
+      "prereqs": [],
+      "text": "Winter's Chill | Rank 0/5 | Requires 25 points in Frost Talents | Gives your Frost damage spells a 20% chance to apply the Winter's Chill effect, which increases the chance a Frost spell will critically hit the target by 2% for 15 sec.  Stacks up to 5 times.",
+      "tier": 6
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Flash Freeze",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 5
+       }
+      ],
+      "text": "Flash Freeze | Rank 0/2 | Requires 1 point in Icicles | Requires 25 points in Frost Talents | If an effect that causes a target to freeze is not applied due to the target being permanently immune to freeze effects, you have a 50% chance to gain Flash Freeze instead. Flash Freeze resets the cooldown of Icicles and reduces the duration and the time between each Icicle by 80% for your next Icicles.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Ice Barrier",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Ice Barrier | Rank 0/1 | Requires 1 point in Ice Block | Requires 30 points in Frost Talents | 305 Mana | Instant cast | Instantly shields you, absorbing 438 damage and increasing your Frost damage by 10% for 1 min. While the shield holds, spells will not be interrupted and Frost damage is increased by an additional 5%.",
+      "tier": 7
+     }
+    ]
+   }
+  ],
+  "version": "0.22.9"
+ },
+ "PALADIN": {
+  "class": "Paladin",
+  "saved": "2026-10-01",
+  "trees": [
+   {
+    "name": "Holy",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Divine Strength",
+      "prereqs": [],
+      "text": "Divine Strength | Rank 0/5 | Increases your Strength by 2%. | Click to learn",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Divine Intellect",
+      "prereqs": [],
+      "text": "Divine Intellect | Rank 0/5 | Increases your total Intellect by 2%. | Click to learn",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Holy Judgement",
+      "prereqs": [],
+      "text": "Holy Judgement | Rank 0/3 | Requires 5 points in Holy Talents | Casting Judgement reduces the casting time of your next Holy Light by 0.3 sec.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Spiritual Focus",
+      "prereqs": [],
+      "text": "Spiritual Focus | Rank 0/2 | Requires 5 points in Holy Talents | Gives your Flash of Light and Holy Light spells a 35% chance to not lose casting time when you take damage.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Improved Seal of Righteousness",
+      "prereqs": [],
+      "text": "Improved Seal of Righteousness | Rank 0/5 | Requires 5 points in Holy Talents | Increases the damage done by your Seal of Righteousness and Judgement of Righteousness by 2%.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Healing Light",
+      "prereqs": [],
+      "text": "Healing Light | Rank 0/3 | Requires 10 points in Holy Talents | Increases the amount healed by your Holy Light, Flash of Light and Holy Shock spells by 4%.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Sanctity Aura",
+      "prereqs": [],
+      "text": "Sanctity Aura | Rank 0/1 | Requires 10 points in Holy Talents | Instant | Increases Holy damage done by party members within 30 yards by 10%.  Players may only have one Aura on them per Paladin at any one time.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Improved Lay on Hands",
+      "prereqs": [],
+      "text": "Improved Lay on Hands | Rank 0/2 | Requires 10 points in Holy Talents | Gives the target of your Lay on Hands spell a 15% bonus to their armor value from items for 2 min.  In addition, the cooldown for your Lay on Hands spell is reduced by 10 min.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Unyielding Faith",
+      "prereqs": [],
+      "text": "Unyielding Faith | Rank 0/2 | Requires 10 points in Holy Talents | Increases your chance to resist Fear and Disorient effects by an additional 5%.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Improved Concentration Aura",
+      "prereqs": [],
+      "text": "Improved Concentration Aura | Rank 0/3 | Requires 15 points in Holy Talents | Increases the effect of your Concentration Aura by an additional 5% and gives all group members affected by the aura an additional 5% chance to resist Silence and Interrupt effects.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Illumination",
+      "prereqs": [],
+      "text": "Illumination | Rank 0/5 | Requires 15 points in Holy Talents | After getting a critical effect from your Flash of Light, Holy Light, or Holy Shock heal spell, you regain Mana equal to 12% of the base cost of the spell.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Ironclad",
+      "prereqs": [],
+      "text": "Ironclad | Rank 0/2 | Requires 15 points in Holy Talents | Increases healing done by spells and effects by up to 1% of your Armor from items.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 5,
+      "name": "Divine Favor",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Divine Favor | Rank 0/5 | Requires 1 point in Holy Shock | Requires 20 points in Holy Talents | Improves your chance to get a critical strike with Holy Shock by 10%.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Holy Shock",
+      "prereqs": [],
+      "text": "Holy Shock | Rank 0/1 | Requires 20 points in Holy Talents | 280 Mana | Instant cast | Blasts the target with Holy energy, causing 97 to 104 Holy damage to an enemy, or 311 to 320 healing to an ally. Casting Holy Shock has a chance to have no cooldown for its next cast.",
+      "tier": 5
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Holy Power",
+      "prereqs": [],
+      "text": "Holy Power | Rank 0/3 | Requires 25 points in Holy Talents | Increases the critical effect chance of your Holy Light and Flash of Light by 2%.",
+      "tier": 6
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Blessed Strikes",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Blessed Strikes | Rank 0/5 | Requires 1 point in Holy Shock | Requires 25 points in Holy Talents | Crusader Strike has a 20% chance to reset the cooldown of your Holy Shock.  In addition, the healing effect of your Holy Strike is increased by 20% and benefits from an additional 5% of your healing power.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Daybreak",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Daybreak | Rank 0/1 | Requires 1 point in Holy Shock | Requires 30 points in Holy Talents | Critically healing an ally applies Daybreak for 30 sec. When the ally takes damage, Daybreak is consumed to heal them for 248 to 289.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Protection",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Improved Devotion Aura",
+      "prereqs": [],
+      "text": "Improved Devotion Aura | Rank 0/5 | Increases the armor bonus of your Devotion Aura by 5%. | Click to learn",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Redoubt",
+      "prereqs": [],
+      "text": "Redoubt | Rank 5/5 | Successful melee and ranged attacks against you have a 10% chance to increase your chance to block by 15%. Lasts 10 sec or 5 blocks.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Precision",
+      "prereqs": [],
+      "text": "Precision | Rank 3/3 | Increases your chance to hit with melee attacks and spells by 3%.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Guardian's Favor",
+      "prereqs": [],
+      "text": "Guardian's Favor | Rank 0/2 | Reduces the cooldown of your Hand of Protection by 60 sec and increases the duration of your Hand of Freedom by 3 sec. | Click to learn",
+      "tier": 2
+     },
+     {
+      "column": 4,
+      "max": 5,
+      "name": "Toughness",
+      "prereqs": [],
+      "text": "Toughness | Rank 2/5 | Increases your armor value from items by 4%. |   | Next rank: | Increases your armor value from items by 6%. | Click to learn",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Improved Righteous Fury",
+      "prereqs": [],
+      "text": "Improved Righteous Fury | Rank 0/3 | Increases the amount of threat generated by your Righteous Fury spell by 25%. | Click to learn",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Blessing of Sanctuary",
+      "prereqs": [],
+      "text": "Blessing of Sanctuary | Rank 0/1 | 60 Mana | Instant cast | Places a Blessing on the friendly target, reducing damage taken from all sources by up to 10 for 10 min.  In addition, when the target blocks a melee attack, the attacker takes 14 Holy damage.  Players may only have one Blessing on them per Paladin at any one time. | Click to learn",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Shield Specialization",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 1
+       }
+      ],
+      "text": "Shield Specialization | Rank 0/3 | Increases the amount of damage absorbed by your shield by 10% and has a 33% chance to restore 2% of maximum mana when a block occurs. This effect cannot occur more than once every 5 sec. | Click to learn",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Anticipation",
+      "prereqs": [],
+      "text": "Anticipation | Rank 0/3 | Increases your Defense skill by 7. | Click to learn",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Improved Hand of Reckoning",
+      "prereqs": [],
+      "text": "Improved Hand of Reckoning | Rank 0/2 | Requires 15 points in Protection Talents | Improves your chance to hit with Hand of Reckoning by 4%.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Improved Hammer of Justice",
+      "prereqs": [],
+      "text": "Improved Hammer of Justice | Rank 0/3 | Requires 15 points in Protection Talents | Decreases the cooldown of your Hammer of Justice spell by 5 sec.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Righteous Defense",
+      "prereqs": [
+       {
+        "column": 1,
+        "tier": 3
+       }
+      ],
+      "text": "Righteous Defense | Rank 0/3 | Requires 3 points in Improved Righteous Fury | Requires 20 points in Protection Talents | While Righteous Fury is active, your damage taken is reduced by 3%.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Holy Shield",
+      "prereqs": [],
+      "text": "Holy Shield | Rank 0/1 | Requires 20 points in Protection Talents | 135 Mana | Instant cast | Requires Shields | Increases chance to block by 45% for 10 sec. While active, each blocked attack deals 35 Holy damage to the attacker.  Damage caused by Holy Shield generates 50% additional threat.  Each block expends a charge.  4 charges.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Reckoning",
+      "prereqs": [],
+      "text": "Reckoning | Rank 0/5 | Requires 20 points in Protection Talents | Gives you a 10% chance after blocking an attack to generate an additional attack.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Righteous Strikes",
+      "prereqs": [],
+      "text": "Righteous Strikes | Rank 0/5 | Requires 25 points in Protection Talents | Increases the threat generated by your Holy Strike by 5% and its damage by 5%. In addition, Crusader Strike grants Zealous Defense, reducing the damage of the next blocked attack by 6%.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Bulwark of the Righteous",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Bulwark of the Righteous | Rank 0/1 | Requires 1 point in Holy Shield | Requires 30 points in Protection Talents | 200 Mana | Instant cast | Requires Shields | Bash the target with your shield, dealing 274 to 301 Holy damage and reducing the damage you take by 30% for 12 sec.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Retribution",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Improved Blessings",
+      "prereqs": [],
+      "text": "Improved Blessings | Rank 0/5 | Increases the effectiveness your Blessing of Might and Wisdom by 4%. | Click to learn",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Benediction",
+      "prereqs": [],
+      "text": "Benediction | Rank 0/5 | Reduces the Mana cost of your Judgement and Seal spells by 3%. | Click to learn",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Judgement",
+      "prereqs": [],
+      "text": "Improved Judgement | Rank 0/2 | Requires 5 points in Retribution Talents | Decreases the cooldown of your Judgement spell by 1 sec.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Improved Seal of the Crusader",
+      "prereqs": [],
+      "text": "Improved Seal of the Crusader | Rank 0/3 | Requires 5 points in Retribution Talents | Increases the melee attack power bonus of your Seal of the Crusader and the Holy damage increase of your Judgement of the Crusader by 5%.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Deflection",
+      "prereqs": [],
+      "text": "Deflection | Rank 0/5 | Requires 5 points in Retribution Talents | Increases your Parry chance by 1%.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Retribution Aura",
+      "prereqs": [],
+      "text": "Improved Retribution Aura | Rank 0/2 | Requires 10 points in Retribution Talents | Increases the damage done by your Retribution Aura by 25%.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Conviction",
+      "prereqs": [],
+      "text": "Conviction | Rank 0/5 | Requires 10 points in Retribution Talents | Increases your chance to get a critical strike with melee weapons by 1%.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Blessing of Kings",
+      "prereqs": [],
+      "text": "Blessing of Kings | Rank 0/1 | Requires 10 points in Retribution Talents | 32 Mana | Instant cast | Places a Blessing on the friendly target, increasing total stats by 10% for 10 min.  Players may only have one Blessing on them per Paladin at any one time.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Pursuit of Justice",
+      "prereqs": [],
+      "text": "Pursuit of Justice | Rank 0/2 | Requires 10 points in Retribution Talents | Increases movement and mounted movement speed by 4%.  This does not stack with other movement speed increasing effects.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Two-Handed Weapon Specialization",
+      "prereqs": [],
+      "text": "Two-Handed Weapon Specialization | Rank 0/3 | Requires 15 points in Retribution Talents | Increases the damage you deal with two-handed melee weapons by 2%, and your weapon skill with two-handed swords, maces and axes by 1.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Vindication",
+      "prereqs": [],
+      "text": "Vindication | Rank 0/3 | Requires 15 points in Retribution Talents | Gives the Paladin's damaging melee attacks a chance to reduce the target's damage dealt by 3% for 10 sec. Only affects targets of level 62 or lower. Chance: 40%",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Eye for an Eye",
+      "prereqs": [],
+      "text": "Eye for an Eye | Rank 0/2 | Requires 20 points in Retribution Talents | All spell criticals against you cause 15% of the damage taken to the caster as well.  The damage caused by Eye for an Eye will not exceed 50% of the Paladin's total health.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Vengeance",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 3
+       }
+      ],
+      "text": "Vengeance | Rank 0/5 | Requires 5 points in Conviction | Requires 20 points in Retribution Talents | Gives you a 1% bonus to all damage you deal and decreases threat you generate by 2% for 30 sec after dealing a critical strike from a weapon swing, spell, or ability. This effect stacks up to 3 times. Threat reduction does not apply if the Paladin is under the effect of Righteous Fury.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Seal of Command",
+      "prereqs": [],
+      "text": "Seal of Command | Rank 0/1 | Requires 20 points in Retribution Talents | 65 Mana | Instant cast | Gives the Paladin a chance to deal additional Holy damage equal to 70% of melee damage.  Only one Seal can be active on the Paladin at any one time.  Lasts 30 sec.\n\nUnleashing this Seal's energy will judge an enemy, instantly causing 46 to 51 Holy damage, 93 to 101 if the target is stunned or incapacitated. This damage is increased by 15% of your attack power.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Vengeful Strikes",
+      "prereqs": [],
+      "text": "Vengeful Strikes | Rank 0/5 | Requires 25 points in Retribution Talents | Crusader Strike deals an additional 2% damage and Zeal increases your attack and casting speed by an additional 2% per stack.\nHoly Strike infuses you with Holy Might, increasing your Strength by 4% for 20 sec.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Repentance",
+      "prereqs": [],
+      "text": "Repentance | Rank 0/1 | Requires 30 points in Retribution Talents | 60 Mana | Instant cast | Puts the enemy target in a state of meditation, incapacitating them for up to 6 sec.  Any damage caused will awaken the target.\n\nIf the target is immune to the effect, they repent for their sins, taking 80 Holy damage each time they perform a melee attack for 20 sec.",
+      "tier": 7
+     }
+    ]
+   }
+  ],
+  "version": "0.22.9"
+ },
+ "PRIEST": {
+  "class": "Priest",
+  "saved": "2026-10-01",
+  "trees": [
+   {
+    "name": "Discipline",
+    "talents": [
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Wand Specialization",
+      "prereqs": [],
+      "text": "Wand Specialization | Rank 0/2 | Increases your damage and chance to hit with Wands and Bows by 13% and 5%, respectively.  Successful Wand and Bow attacks have a chance to restore 0 mana.",
+      "tier": 1
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Piercing Light",
+      "prereqs": [],
+      "text": "Piercing Light | Rank 0/3 | Reduces the chance for enemies to resist your Holy and Discipline spells by 2%.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Mental Agility",
+      "prereqs": [],
+      "text": "Mental Agility | Rank 0/5 | Reduces the mana cost of your instant cast spells and offensive Holy and Discipline spells by 2%.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 5,
+      "name": "Silent Resolve",
+      "prereqs": [],
+      "text": "Silent Resolve | Rank 0/5 | Requires 5 points in Discipline Talents | Reduces the threat generated by your spells by 4%.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Unbreakable Will",
+      "prereqs": [],
+      "text": "Unbreakable Will | Rank 0/5 | Requires 5 points in Discipline Talents | Increases your chance to resist Stun, Fear, and Silence effects by an additional 3%.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Blessed Concentration",
+      "prereqs": [],
+      "text": "Blessed Concentration | Rank 0/2 | Requires 5 points in Discipline Talents | Gives you a 50% chance to gain the Focused Casting effect that lasts for 6 sec after being the victim of a melee or ranged critical strike.  The Focused Casting effect prevents you from losing casting time when taking damage and increases resistance to Interrupt effects by 10%.",
+      "tier": 2
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Improved Power Word: Fortitude",
+      "prereqs": [],
+      "text": "Improved Power Word: Fortitude | Rank 0/2 | Requires 5 points in Discipline Talents | Increases the effect of your Power Word: Fortitude and Prayer of Fortitude spells by 15%.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Inner Fire",
+      "prereqs": [],
+      "text": "Improved Inner Fire | Rank 0/2 | Requires 10 points in Discipline Talents | Increases the effects of your Inner Fire spell by 15%.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Inner Focus",
+      "prereqs": [],
+      "text": "Inner Focus | Rank 0/1 | Requires 10 points in Discipline Talents | Instant | When activated, reduces the Mana cost of your next spell by 100% and increases its critical effect chance by 25% if it is capable of a critical effect.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Improved Power Word: Shield",
+      "prereqs": [],
+      "text": "Improved Power Word: Shield | Rank 0/3 | Requires 10 points in Discipline Talents | Increases the damage absorbed by your Power Word: Shield by 5%.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Meditation",
+      "prereqs": [],
+      "text": "Meditation | Rank 0/3 | Requires 10 points in Discipline Talents | Allows 5% of your Mana regeneration to continue while casting.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Searing Light",
+      "prereqs": [],
+      "text": "Searing Light | Rank 0/3 | Requires 15 points in Discipline Talents | Your damaging Holy and Discipline spell critical strikes have a 33% chance to cause your next Smite spell to be instant cast and cost 60% less mana.  Lasts 10 sec.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Purifying Flames",
+      "prereqs": [],
+      "text": "Purifying Flames | Rank 0/2 | Requires 15 points in Discipline Talents | Your Holy Fire has a 50% chance to increase your Holy damage by 12% for 10 sec.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Mental Strength",
+      "prereqs": [],
+      "text": "Mental Strength | Rank 0/3 | Requires 20 points in Discipline Talents | Increases your total Intellect by 3% and your spell casting speed by 1%.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Enlighten",
+      "prereqs": [],
+      "text": "Enlighten | Rank 0/1 | Requires 20 points in Discipline Talents | 11 Mana | Instant cast | Bring a party member under your tutelage for 30 min. Whenever you cast a Discipline or Holy spell, you have a 10% chance with helpful spells, or 15% chance with harmful spells, to burn them for 4% of their total health as Holy damage and increase both your and their spell damage and healing by 10% for 8 sec.  If cast on yourself, the spell damage and healing bonus is increased to 15%.  Only one party member can be under your tutelage at a time.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Resurgent Shield",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 3
+       }
+      ],
+      "text": "Resurgent Shield | Rank 0/1 | Requires 3 points in Improved Power Word: Shield | Requires 20 points in Discipline Talents | When your Power Word: Shield is broken, 25% of its base mana cost is refunded and increases damage and healing done by Holy spells and effects by up to 10% of the shield's total absorption amount for 8 sec.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Force of Will",
+      "prereqs": [],
+      "text": "Force of Will | Rank 0/5 | Requires 25 points in Discipline Talents | Increases your spell damage and the critical strike chance of your offensive spells by 1% and the amount of damage absorbed by your Power Word: Shield by 4%.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Chastise",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Chastise | Rank 0/1 | Requires 1 point in Enlighten | Requires 30 points in Discipline Talents | 6 Mana | Instant cast | Chastise the target, causing 139 to 160 Holy damage.  If the target is an enemy, they are disoriented for up to 2 sec or until they take damage.  If the target is an ally, their attack and casting speed is increased by 13% for 8 sec, increased to 12 sec if the damage results in a critical strike.  Cannot be used on allies with less than 80% health or below level 35.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Holy",
+    "talents": [
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Improved Renew",
+      "prereqs": [],
+      "text": "Improved Renew | Rank 0/3 | Increases the amount healed by your Renew spell by 5%.",
+      "tier": 1
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Holy Focus",
+      "prereqs": [],
+      "text": "Holy Focus | Rank 0/2 | Gives you a 35% chance to avoid interruption caused by damage while casting any Holy spell.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Divinity",
+      "prereqs": [],
+      "text": "Divinity | Rank 0/5 | Increases the critical effect chance of your Holy and Discipline spells by 1%.",
+      "tier": 1
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Divine Fury",
+      "prereqs": [],
+      "text": "Divine Fury | Rank 0/5 | Requires 5 points in Holy Talents | Reduces the casting time of your Smite, Holy Fire, Heal and Greater Heal spells by 0.1 sec.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Spell Warding",
+      "prereqs": [],
+      "text": "Spell Warding | Rank 0/3 | Requires 5 points in Holy Talents | Reduces all spell damage taken by 3%.",
+      "tier": 2
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Holy Reach",
+      "prereqs": [],
+      "text": "Holy Reach | Rank 0/2 | Requires 5 points in Holy Talents | Increases the range of your Smite, Holy Fire and Chastise spells and the radius of your Prayer of Healing and Holy Nova spells by 10%.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Blessed Recovery",
+      "prereqs": [],
+      "text": "Blessed Recovery | Rank 0/3 | Requires 10 points in Holy Talents | After being struck by a melee or ranged critical hit, heal 8% of the damage taken over 6 sec.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Inspiration",
+      "prereqs": [],
+      "text": "Inspiration | Rank 0/3 | Requires 10 points in Holy Talents | Increases your target's armor by 8% for 15 sec after getting a critical effect from your Flash Heal, Heal, Greater Heal, or Prayer of Healing spell.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 1,
+      "name": "Holy Nova",
+      "prereqs": [],
+      "text": "Holy Nova | Rank 0/1 | Requires 10 points in Holy Talents | 130 Mana | Instant cast | Causes an explosion of holy light around the caster, causing 26 to 30 Holy damage to all enemy targets within 10 yards and healing all party members within 10 yards for 52 to 60. Using this spell while in Shadowform damages you instead of healing you. These effects cause reduced threat.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Empowered Recovery",
+      "prereqs": [
+       {
+        "column": 1,
+        "tier": 1
+       }
+      ],
+      "text": "Empowered Recovery | Rank 0/2 | Requires 3 points in Improved Renew | Requires 15 points in Holy Talents | Increases the duration of Renew by 3 sec and increases healing done by your healing spells by 3% to targets affected by Renew.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Improved Healing",
+      "prereqs": [],
+      "text": "Improved Healing | Rank 0/3 | Requires 15 points in Holy Talents | Reduces the Mana cost of your Lesser Heal, Heal, Greater Heal and Prayer of Healing spells by 5%.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Spiritual Guidance",
+      "prereqs": [],
+      "text": "Spiritual Guidance | Rank 0/5 | Requires 15 points in Holy Talents | Increases spell damage and healing by up to 5% of your total Spirit.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Book of Prayer",
+      "prereqs": [],
+      "text": "Book of Prayer | Rank 0/2 | Requires 20 points in Holy Talents | Whenever you cast a healing spell, you regain 15% of its mana cost if it is different from your previous healing spell.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Spirit of Redemption",
+      "prereqs": [],
+      "text": "Spirit of Redemption | Rank 0/1 | Requires 20 points in Holy Talents | Increases total Spirit by 10%. Upon death, the priest becomes the Spirit of Redemption for 10 sec. While in this form, the priest cannot move, attack, be attacked, or be targeted by spells or effects, but can cast healing spells at no cost. When the effect ends, the priest dies.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Reservoir of Light",
+      "prereqs": [],
+      "text": "Reservoir of Light | Rank 0/3 | Requires 20 points in Holy Talents | Increases the effectiveness of Lightwell's Splendor of Light by 33%.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Spiritual Healing",
+      "prereqs": [],
+      "text": "Spiritual Healing | Rank 0/5 | Requires 25 points in Holy Talents | Increases the amount healed by your healing spells by 6%.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Ascendance",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Ascendance | Rank 0/1 | Requires 1 point in Spirit of Redemption | Requires 30 points in Holy Talents | 280 Mana | Instant cast | Calls upon divine aid, purging all forms of crowd control and empowering your healing spells. Healing spells cost 33% less mana and their cast time is reduced by 20%. Allies healed gain Apotheosis, increasing healing received by 15% for 10 sec. Lasts 30 sec.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Shadow",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Spirit Tap",
+      "prereqs": [],
+      "text": "Spirit Tap | Rank 0/5 | Gives you a 20% chance to gain a 100% bonus to your Spirit after killing a target that yields experience or critically striking a target with Mind Blast. For the duration, mana regenerates at 50% of the normal rate while casting. Lasts 15 sec.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Improved Mind Blast",
+      "prereqs": [],
+      "text": "Improved Mind Blast | Rank 0/5 | Reduces the cooldown of your Mind Blast spell by 0.5 sec.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Shadow Affinity",
+      "prereqs": [],
+      "text": "Shadow Affinity | Rank 0/3 | Requires 5 points in Shadow Talents | Reduces the threat generated by your Shadow spells by 8%.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Improved Shadow Word: Pain",
+      "prereqs": [],
+      "text": "Improved Shadow Word: Pain | Rank 0/2 | Requires 5 points in Shadow Talents | Increases the duration of your Shadow Word: Pain spell by 3 sec.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Shadow Focus",
+      "prereqs": [],
+      "text": "Shadow Focus | Rank 0/5 | Requires 5 points in Shadow Talents | Reduces your target's chance to resist your Shadow spells by 2%.",
+      "tier": 2
+     },
+     {
+      "column": 4,
+      "max": 5,
+      "name": "Blackout",
+      "prereqs": [],
+      "text": "Blackout | Rank 0/5 | Requires 5 points in Shadow Talents | Gives your Shadow damage spells a 2% chance to stun the target for 2 sec.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Psychic Scream",
+      "prereqs": [],
+      "text": "Improved Psychic Scream | Rank 0/2 | Requires 10 points in Shadow Talents | Reduces the cooldown of your Psychic Scream spell by 2 sec.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Improved Fade",
+      "prereqs": [],
+      "text": "Improved Fade | Rank 0/2 | Requires 10 points in Shadow Talents | Reduces the cooldown of Fade by 3 sec and the threat returned when Fade ends by 25%.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Mind Flay",
+      "prereqs": [],
+      "text": "Mind Flay | Rank 0/1 | Requires 10 points in Shadow Talents | 45 Mana | Channeled | Assault the target's mind with Shadow energy, causing 75 Shadow damage over 3 sec and slowing their movement speed by 50%.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Improved Mana Burn",
+      "prereqs": [],
+      "text": "Improved Mana Burn | Rank 0/2 | Requires 15 points in Shadow Talents | Reduces the casting time of your Mana Burn spell by 0.25 secs.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Shadow Reach",
+      "prereqs": [],
+      "text": "Shadow Reach | Rank 0/2 | Requires 15 points in Shadow Talents | Increases the range of your Shadow damage spells by 10%.",
+      "tier": 4
+     },
+     {
+      "column": 4,
+      "max": 5,
+      "name": "Shadow Weaving",
+      "prereqs": [],
+      "text": "Shadow Weaving | Rank 0/5 | Requires 15 points in Shadow Talents | Your Shadow damage spells have a 20% chance to grant you Shadow Weaving for 10 sec. Your Shadow damage spells apply a vulnerability that increases Shadow damage taken by 3% per stack of Shadow Weaving for 15 sec. Stacks up to 5 times.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 1,
+      "name": "Silence",
+      "prereqs": [
+       {
+        "column": 1,
+        "tier": 3
+       }
+      ],
+      "text": "Silence | Rank 0/1 | Requires 2 points in Improved Psychic Scream | Requires 20 points in Shadow Talents | 225 Mana | Instant cast | Silences the target, preventing them from casting spells for 5 sec.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Vampiric Embrace",
+      "prereqs": [],
+      "text": "Vampiric Embrace | Rank 0/1 | Requires 20 points in Shadow Talents | 40 Mana | Instant cast | Afflicts your target with Shadow energy that causes all party members to be healed for 20% of any Shadow spell damage you deal for 1 min.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Vampiric Touch",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Vampiric Touch | Rank 0/2 | Requires 1 point in Vampiric Embrace | Requires 20 points in Shadow Talents | Increases the percentage healed by Vampiric Embrace by an additional 2% and your Vampiric Embrace now causes all party members to also gain mana equal to 1% of any Shadow spell damage you deal.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Darkness",
+      "prereqs": [],
+      "text": "Darkness | Rank 0/5 | Requires 25 points in Shadow Talents | Increases your Shadow spell damage by 2%.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Shadowform",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Shadowform | Rank 0/1 | Requires 1 point in Vampiric Embrace | Requires 30 points in Shadow Talents | 44 Mana | Instant cast | Assume a Shadowform, increasing your Shadow damage by 15% and reducing Physical damage done to you by 15%.  However, you may not cast Holy spells with the exception of Holy Nova while in this form.",
+      "tier": 7
+     }
+    ]
+   }
+  ],
+  "version": "0.22.9"
+ },
+ "ROGUE": {
+  "class": "Rogue",
+  "saved": "2026-10-01",
+  "trees": [
+   {
+    "name": "Assassination",
+    "talents": [
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Improved Eviscerate",
+      "prereqs": [],
+      "text": "Improved Eviscerate | Rank 0/3 | Increases the damage done by your Eviscerate ability by 5%.",
+      "tier": 1
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Remorseless Attacks",
+      "prereqs": [],
+      "text": "Remorseless Attacks | Rank 0/2 | After killing an opponent that yields experience or honor, gives you a 20% increased critical strike chance on your next Combo Point generating ability.  Lasts 40 sec.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Malice",
+      "prereqs": [],
+      "text": "Malice | Rank 0/5 | Increases your critical strike chance by 1%.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Ruthlessness",
+      "prereqs": [],
+      "text": "Ruthlessness | Rank 0/3 | Requires 5 points in Assassination Talents | Gives your finishing moves a 33% chance to add a combo point to your target.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Murder",
+      "prereqs": [],
+      "text": "Murder | Rank 0/2 | Requires 5 points in Assassination Talents | Increases all damage caused against Humanoid, Giant, Beast and Dragonkin targets by 1%.",
+      "tier": 2
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Improved Blade Tactics",
+      "prereqs": [],
+      "text": "Improved Blade Tactics | Rank 0/3 | Requires 5 points in Assassination Talents | Increases the duration of your Slice and Dice and Flourish abilities by 15%.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 1,
+      "name": "Relentless Strikes",
+      "prereqs": [],
+      "text": "Relentless Strikes | Rank 0/1 | Requires 10 points in Assassination Talents | Your finishing moves have a 20% chance per combo point to restore 20 energy and increase the damage of your finishing moves by 5% for 30 sec.  Stacks up to 5 times.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Throwing Weapon Specialization",
+      "prereqs": [],
+      "text": "Throwing Weapon Specialization | Rank 0/2 | Requires 10 points in Assassination Talents | Increases the range of Throw and Deadly Throw by 3 yards and gives your Deadly Throw a 50% chance to apply your off-hand weapon poison.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Lethality",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 1
+       }
+      ],
+      "text": "Lethality | Rank 0/5 | Requires 5 points in Malice | Requires 10 points in Assassination Talents | Increases the critical strike damage bonus of your combo point generating abilities by 6%.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Taste for Blood",
+      "prereqs": [],
+      "text": "Taste for Blood | Rank 0/2 | Requires 15 points in Assassination Talents | Increases the duration of your Rupture by 4 sec. Each time you use Rupture, your melee damage is increased by 1% per combo point for its full duration, regardless of successful application.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Vile Poisons",
+      "prereqs": [],
+      "text": "Vile Poisons | Rank 0/3 | Requires 15 points in Assassination Talents | Increases the damage dealt by your poisons by 10% and gives your poisons an additional 14% chance to resist dispel effects.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Improved Poisons",
+      "prereqs": [],
+      "text": "Improved Poisons | Rank 0/3 | Requires 15 points in Assassination Talents | Increases the chance to apply poisons to your target by 3%.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Efficient Poisons",
+      "prereqs": [],
+      "text": "Efficient Poisons | Rank 0/3 | Requires 20 points in Assassination Talents | Reduces the chance your poisons will be resisted by 4% and gives your poison applications a 15% chance to not consume a charge.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Envenom",
+      "prereqs": [],
+      "text": "Envenom | Rank 0/1 | Requires 20 points in Assassination Talents | 20 Energy | Instant | Finishing move that increases the effectiveness and the chance to apply poisons to your target by 30%.  Lasts longer per combo point:\n   1 point  : 12 seconds\n   2 points: 16 seconds\n   3 points: 20 seconds\n   4 points: 24 seconds\n   5 points: 28 seconds",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Cold Blood",
+      "prereqs": [],
+      "text": "Cold Blood | Rank 0/1 | Requires 20 points in Assassination Talents | Instant | When activated, increases the critical strike chance of your next Sinister Strike, Backstab, Ambush, Noxious Assault, or Eviscerate by 100%.",
+      "tier": 5
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Vigor",
+      "prereqs": [],
+      "text": "Vigor | Rank 0/2 | Requires 25 points in Assassination Talents | Increases your maximum Energy by 5.  Each time you apply poison to your target, you have a 50% chance to gain 2 Energy.",
+      "tier": 6
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Seal Fate",
+      "prereqs": [],
+      "text": "Seal Fate | Rank 0/5 | Requires 25 points in Assassination Talents | Your critical strikes from abilities that add combo points have a 20% chance to add an additional combo point.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Noxious Assault",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Noxious Assault | Rank 0/1 | Requires 1 point in Envenom | Requires 30 points in Assassination Talents | 45 Energy | Instant | Strikes with both weapons, dealing 30 damage plus 30% of your Attack Power and applies poisons from both weapons. Awards 1 combo point.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Combat",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Opportunity",
+      "prereqs": [],
+      "text": "Opportunity | Rank 0/5 | Increases the damage dealt when striking from behind with your Backstab, Garrote, or Ambush abilities by 3%.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Lightning Reflexes",
+      "prereqs": [],
+      "text": "Lightning Reflexes | Rank 0/5 | Increases your Dodge chance by 1%.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 5,
+      "name": "Deflection",
+      "prereqs": [],
+      "text": "Deflection | Rank 0/5 | Requires 5 points in Combat Talents | Increases your Parry chance by 1%.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Improved Backstab",
+      "prereqs": [],
+      "text": "Improved Backstab | Rank 0/3 | Requires 5 points in Combat Talents | Increases the critical strike chance of your Backstab ability by 10% and gives your Backstab a 15% chance to award an additional combo point.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Precision",
+      "prereqs": [],
+      "text": "Precision | Rank 0/5 | Requires 5 points in Combat Talents | Increases your chance to hit with melee weapons by 1%.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 1,
+      "name": "Riposte",
+      "prereqs": [
+       {
+        "column": 1,
+        "tier": 2
+       }
+      ],
+      "text": "Riposte | Rank 0/1 | Requires 5 points in Deflection | Requires 10 points in Combat Talents | 10 Energy | Instant | A strike that becomes active after parrying an opponent's attack.  This attack deals 150% weapon damage and disarms the target for 6 sec.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Improved Sprint",
+      "prereqs": [],
+      "text": "Improved Sprint | Rank 0/2 | Requires 10 points in Combat Talents | Gives a 50% chance to remove all movement impairing effects when you activate your Sprint ability.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Setup",
+      "prereqs": [],
+      "text": "Setup | Rank 0/3 | Requires 10 points in Combat Talents | Gives you a 15% chance to add a combo point to your target after dodging their attack or fully resisting one of their spells.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Kick",
+      "prereqs": [],
+      "text": "Improved Kick | Rank 0/2 | Requires 15 points in Combat Talents | Gives your Kick ability a 50% chance to silence the target for 2 sec.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Concussive Blows",
+      "prereqs": [],
+      "text": "Concussive Blows | Rank 0/5 | Requires 15 points in Combat Talents | Gives you a 1% chance to stun your target for 3 sec with a mace.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Dual Wield Specialization",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 2
+       }
+      ],
+      "text": "Dual Wield Specialization | Rank 0/5 | Requires 5 points in Precision | Requires 15 points in Combat Talents | Increases the damage done by your offhand weapon by 10%.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Close Quarters Combat",
+      "prereqs": [],
+      "text": "Close Quarters Combat | Rank 0/2 | Requires 20 points in Combat Talents | Increases your chance to get a critical strike with Maces, Daggers and Fist Weapons by 2%.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Surprise Attack",
+      "prereqs": [],
+      "text": "Surprise Attack | Rank 0/1 | Requires 20 points in Combat Talents | 10 Energy | Instant | Requires Melee Weapon | A surprise strike that deals 25% of your Attack Power as damage.\nOnly useable after the target dodges and cannot be blocked, dodged or parried by the target.  Awards 1 combo point.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Hack and Slash",
+      "prereqs": [],
+      "text": "Hack and Slash | Rank 0/2 | Requires 20 points in Combat Talents | Gives you a 2% chance to get an extra attack on the same target after dealing damage with your Axe or Sword.",
+      "tier": 5
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Weapon Expertise",
+      "prereqs": [],
+      "text": "Weapon Expertise | Rank 0/2 | Requires 20 points in Combat Talents | Increases your skill with Axe, Dagger, Fist, Mace and Sword weapons by 3.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Blade Rush",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Blade Rush | Rank 0/2 | Requires 1 point in Surprise Attack | Requires 25 points in Combat Talents | Increases your melee attack speed by 2% and reduces the time between your Energy regeneration ticks by an amount equal to your Agility.",
+      "tier": 6
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Aggression",
+      "prereqs": [],
+      "text": "Aggression | Rank 0/3 | Requires 25 points in Combat Talents | Increases the damage of your Sinister Strike, Eviscerate, Riposte and Surprise Attack abilities by 3%.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Adrenaline Rush",
+      "prereqs": [],
+      "text": "Adrenaline Rush | Rank 0/1 | Requires 30 points in Combat Talents | Instant | Increases your Energy regeneration rate by 100% for 15 sec.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Subtlety",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Camouflage",
+      "prereqs": [],
+      "text": "Camouflage | Rank 0/5 | Increases your speed while stealthed by 3% and reduces the cooldown of your Stealth ability by 1 sec. In addition, reduces the chance enemies have to detect you while in Stealth mode.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Improved Expose Armor",
+      "prereqs": [],
+      "text": "Improved Expose Armor | Rank 0/2 | Increases the armor reduced by your Expose Armor ability by 25%.",
+      "tier": 1
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Improved Gouge",
+      "prereqs": [],
+      "text": "Improved Gouge | Rank 0/3 | Increases the effect duration of your Gouge ability by 0.5 sec.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Improved Ambush",
+      "prereqs": [],
+      "text": "Improved Ambush | Rank 0/3 | Requires 5 points in Subtlety Talents | Increases the critical strike chance of your Ambush ability by 15%.  Your Ambush will refund 5 Energy if it does not result in a critical strike.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Elusiveness",
+      "prereqs": [],
+      "text": "Elusiveness | Rank 0/2 | Requires 5 points in Subtlety Talents | Reduces the cooldown of your Vanish and Blind abilities by 45 sec.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Serrated Blades",
+      "prereqs": [],
+      "text": "Serrated Blades | Rank 0/3 | Requires 5 points in Subtlety Talents | Increases the damage dealt by your Rupture and Garrote abilities by 10% and causes your attacks to ignore 11 of your target's Armor.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Initiative",
+      "prereqs": [],
+      "text": "Initiative | Rank 0/3 | Requires 10 points in Subtlety Talents | Gives you a 33% chance to add an additional combo point to your target when using your Ambush, Garrote, or Cheap Shot ability.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Improved Ghostly Strike",
+      "prereqs": [],
+      "text": "Improved Ghostly Strike | Rank 0/3 | Requires 10 points in Subtlety Talents | Your Ghostly Strike increases your movement speed by 5% and increases your party members' movement speed by 2% within 30 yards for 5 sec. In addition, reduces the Energy cost of your Ghostly Strike by 3. Chance: 33%",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Smoke Bomb",
+      "prereqs": [],
+      "text": "Smoke Bomb | Rank 0/1 | Requires 10 points in Subtlety Talents | 35 Energy | Instant | Creates a cloud of thick smoke in 8 yards around you for 8 sec. All targets inside the smoke have a 20% reduced chance of being hit by attacks and spells for the duration.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 1,
+      "name": "Hemorrhage",
+      "prereqs": [],
+      "text": "Hemorrhage | Rank 0/1 | Requires 10 points in Subtlety Talents | 40 Energy | Instant | Requires Melee Weapon | An instant strike that deals 110% weapon damage and causes the target to hemorrhage, increasing any Physical damage dealt to the target by 2%.  Lasts 50 charges or 15 sec.  Awards 1 combo point.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Cloaked in Shadows",
+      "prereqs": [],
+      "text": "Cloaked in Shadows | Rank 0/2 | Requires 15 points in Subtlety Talents | Whenever you Vanish, you and nearby party members within 20 yards are cloaked in shadows, gaining a barrier that absorbs up to 6% of your maximum health for 20 sec.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Blackjack",
+      "prereqs": [],
+      "text": "Blackjack | Rank 0/2 | Requires 15 points in Subtlety Talents | Your Sap and Blind abilities reduce the target's damage dealt by 5% for 8 sec when their effect ends or fails to apply. In addition, you have a 50% chance to return to stealth after using your Sap ability.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Blinding Haze",
+      "prereqs": [],
+      "text": "Blinding Haze | Rank 0/3 | Requires 15 points in Subtlety Talents | Reduces the Energy cost of your Distract by 5. In addition, targets hit by your Distract have their chance to hit reduced by 2% for 6 sec. This effect is guaranteed to be applied.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Dirty Deeds",
+      "prereqs": [],
+      "text": "Dirty Deeds | Rank 0/2 | Requires 20 points in Subtlety Talents | Reduces the Energy cost of your Cheap Shot and Garrote abilities by 10.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Preparation",
+      "prereqs": [],
+      "text": "Preparation | Rank 0/1 | Requires 20 points in Subtlety Talents | Instant | When activated, this ability immediately finishes the cooldown on your other Rogue abilities.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Shadow of Death",
+      "prereqs": [],
+      "text": "Shadow of Death | Rank 0/1 | Requires 20 points in Subtlety Talents | 30 Energy | Instant | Requires Melee Weapon | A finishing move that etches a sigil onto the target for 6 sec. The sigil accumulates damage equal to a percentage of all damage the target takes during its duration, up to a percentage of your Attack Power. When the maximum capacity is reached or the sigil expires, the stored damage is unleashed as Physical damage. Both values increase with each combo point:\n   1 point : 10% of damage accumulated, up to 50% of Attack Power\n   2 points: 20% of damage accumulated, up to 100% of Attack Power\n   3 points: 30% of damage accumulated, up to 150% of Attack Power\n   4 points: 40% of damage accumulated, up to 200% of Attack Power\n   5 points: 50% of damage accumulated, up to 250% of Attack Power",
+      "tier": 5
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Bloody Mess",
+      "prereqs": [
+       {
+        "column": 4,
+        "tier": 3
+       }
+      ],
+      "text": "Bloody Mess | Rank 0/2 | Requires 1 point in Hemorrhage | Requires 20 points in Subtlety Talents | Reduces the Energy cost of your Hemorrhage by 2 and increases the Physical damage dealt bonus of your Hemorrhage by 50%.",
+      "tier": 5
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Honor Among Thieves",
+      "prereqs": [],
+      "text": "Honor Among Thieves | Rank 0/2 | Requires 25 points in Subtlety Talents | Physical critical strikes by you or party members within 20 yards grant you 2 Energy.",
+      "tier": 6
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Tricks of the Trade",
+      "prereqs": [],
+      "text": "Tricks of the Trade | Rank 0/5 | Requires 25 points in Subtlety Talents | Your opening moves have a 20% chance and your finishing moves have a 4% chance per combo point to increase your party members' critical strike chance by 2% for 12 sec. This effect stacks up to 2 times.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Mark for Death",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Mark for Death | Rank 0/1 | Requires 1 point in Preparation | Requires 30 points in Subtlety Talents | 40 Energy | Instant | Requires Melee Weapon | A marking strike that deals 135% weapon damage and reveals the target\u2019s vulnerabilities, increasing your party members' Attack Power by 30% and damage done by magical spells and effects up to 18% of your melee Attack Power for 8 sec. Cannot be blocked, dodged or parried by the target. Awards 2 combo points.",
+      "tier": 7
+     }
+    ]
+   }
+  ],
+  "version": "0.22.9"
+ },
+ "SHAMAN": {
+  "class": "Shaman",
+  "saved": "2026-10-01",
+  "trees": [
+   {
+    "name": "Elemental",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Convection",
+      "prereqs": [],
+      "text": "Convection | Rank 0/5 | Reduces the mana cost of your offensive Fire, Frost, and Nature spells by 2%.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Concussion",
+      "prereqs": [],
+      "text": "Concussion | Rank 0/5 | Increases the damage done by your Fire, Frost, and Nature spells by 1%.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Earth's Grasp",
+      "prereqs": [],
+      "text": "Earth's Grasp | Rank 0/2 | Requires 5 points in Elemental Talents | Increases the health of your Stoneclaw Totem by 25% and the radius of your Earthbind Totem by 10%.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Elemental Warding",
+      "prereqs": [],
+      "text": "Elemental Warding | Rank 0/3 | Requires 5 points in Elemental Talents | Reduces damage taken from Fire, Frost and Nature effects by 4%.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Elemental Devastation",
+      "prereqs": [],
+      "text": "Elemental Devastation | Rank 0/3 | Requires 5 points in Elemental Talents | Increases your chance to hit with spells and melee attacks by 1% and your melee critical strikes increase your chance to hit with spells by additional 3% for 10 sec.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 1,
+      "name": "Elemental Focus",
+      "prereqs": [],
+      "text": "Elemental Focus | Rank 0/1 | Requires 10 points in Elemental Talents | After landing a critical strike with a Fire, Frost, or Nature damage spell or melee attack, you enter a Clearcasting state.  The Clearcasting state reduces the mana cost of your next two damage spells or abilities by 60%.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Reverberation",
+      "prereqs": [],
+      "text": "Reverberation | Rank 0/3 | Requires 10 points in Elemental Talents | Reduces the cooldown of your Shock spells by 0.3 sec.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Call of Thunder",
+      "prereqs": [],
+      "text": "Call of Thunder | Rank 0/5 | Requires 10 points in Elemental Talents | Increases the critical strike chance of your Lightning Bolt and Chain Lightning spells by an additional 1%.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Improved Molten Blast",
+      "prereqs": [],
+      "text": "Improved Molten Blast | Rank 0/2 | Requires 10 points in Elemental Talents | Refreshing Flame Shock with Molten Blast deals damage equal to 30% of the refreshed duration.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Fire Totems",
+      "prereqs": [],
+      "text": "Improved Fire Totems | Rank 0/2 | Requires 15 points in Elemental Talents | Reduces the delay before your Fire Nova Totem activates by 1 sec, decreases the threat generated by your Magma Totem by 25%, and increases your Searing Totem's attack speed by 10% and its attack range by 5 yards.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Call of Earth",
+      "prereqs": [],
+      "text": "Call of Earth | Rank 0/2 | Requires 15 points in Elemental Talents | Increases the maximum charges of your Earth Shield by 2. While Earth Shield is active, increases your chance to avoid interruption caused by damage while casting damaging spells by an additional 25%, and causes your direct damaging spells to replenish 1 charge.",
+      "tier": 4
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Call of Flame",
+      "prereqs": [],
+      "text": "Call of Flame | Rank 0/3 | Requires 15 points in Elemental Talents | Increases the damage done by your Fire Totems and Fire spells by 5%, and the range of your Flame Shock by 3 yards.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Storm Reach",
+      "prereqs": [],
+      "text": "Storm Reach | Rank 0/2 | Requires 20 points in Elemental Talents | Increases the range of your Lightning Bolt and Chain Lightning spells by 3 yards.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Elemental Mastery",
+      "prereqs": [],
+      "text": "Elemental Mastery | Rank 0/1 | Requires 20 points in Elemental Talents | Instant | Increases your Fire, Frost, and Nature damage by 15% and reduces the mana cost of your offensive spells by 20% for 10 sec.",
+      "tier": 5
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Elemental Fury",
+      "prereqs": [],
+      "text": "Elemental Fury | Rank 0/2 | Requires 20 points in Elemental Talents | Increases damage done by your Frost, Fire, and Nature spells by 5%, and increases the critical strike damage bonus of Searing, Magma, and Fire Nova Totems, as well as your Fire, Frost, and Nature spells, by 50%.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Lightning Mastery",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 3
+       }
+      ],
+      "text": "Lightning Mastery | Rank 0/5 | Requires 5 points in Call of Thunder | Requires 25 points in Elemental Talents | Reduces the cast time of your Lightning Bolt and Chain Lightning spells by 0.2 sec.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Earthquake",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Earthquake | Rank 0/1 | Requires 1 point in Elemental Mastery | Requires 30 points in Elemental Talents | 225 Mana | 2.5 sec cast | Breaks the earth beneath the target, dealing 262 to 291 Nature damage to the target and an additional 35% of that damage as Nature damage to other enemies within 10 yards. Creates a patch of broken earth that slows enemies inside it by 15%. After 4 sec, the broken earth erupts in an aftershock, dealing Nature damage equal to 30% of the initial damage to all enemies within the area.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Enhancement",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Ancestral Knowledge",
+      "prereqs": [],
+      "text": "Ancestral Knowledge | Rank 0/5 | Increases the total value of all your stats by 1%.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Shield Specialization",
+      "prereqs": [],
+      "text": "Shield Specialization | Rank 0/5 | Increases your chance to block attacks with a shield by 1% and increases the amount blocked by 6%.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Totemic Alignment",
+      "prereqs": [],
+      "text": "Totemic Alignment | Rank 0/2 | Requires 5 points in Enhancement Talents | 45% of the threat generated by your totems is transferred to you.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Thundering Strikes",
+      "prereqs": [],
+      "text": "Thundering Strikes | Rank 0/5 | Requires 5 points in Enhancement Talents | Improves your chance to get a critical strike with your weapon attacks by 1%.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Stable Shields",
+      "prereqs": [],
+      "text": "Stable Shields | Rank 0/3 | Requires 5 points in Enhancement Talents | Increases the number of charges of your shield spells by 2, but increases the cooldown between activations by 1 sec.",
+      "tier": 2
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Improved Ghost Wolf",
+      "prereqs": [],
+      "text": "Improved Ghost Wolf | Rank 0/2 | Requires 5 points in Enhancement Talents | Reduces the cast time of your Ghost Wolf spell by 1 sec.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Calming Winds",
+      "prereqs": [],
+      "text": "Calming Winds | Rank 0/3 | Requires 10 points in Enhancement Talents | Reduces threat generated by your physical attacks, weapon imbue effects, and your Lightning Strike and Stormstrike abilities by 8%. This effect does not apply while Rockbiter Weapon is active.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Lightning Strike",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 2
+       }
+      ],
+      "text": "Lightning Strike | Rank 0/1 | Requires 3 points in Stable Shields | Requires 10 points in Enhancement Talents | 15 Mana | Instant cast | Requires Melee Weapon | Instantly strikes your target, causing 20% weapon damage and an additional 10% as Nature damage.  This strike also triggers an empowered version of your active shield, consuming 1 charge.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Ancestral Guardian",
+      "prereqs": [],
+      "text": "Ancestral Guardian | Rank 0/3 | Requires 10 points in Enhancement Talents | Increases your armor value from items by 5% and chance to dodge by an additional 2%.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Flurry",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 2
+       }
+      ],
+      "text": "Flurry | Rank 0/5 | Requires 5 points in Thundering Strikes | Requires 15 points in Enhancement Talents | Increases your attack speed by 8% for your next 3 swings after dealing a critical strike.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Spirit Armor",
+      "prereqs": [],
+      "text": "Spirit Armor | Rank 0/2 | Requires 15 points in Enhancement Talents | Increases the armor gained from shields by 15% and threat generated by 5% while wearing a shield.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Enhancing Totems",
+      "prereqs": [],
+      "text": "Enhancing Totems | Rank 0/2 | Requires 20 points in Enhancement Talents | Increases the effect of your Strength of Earth and Grace of Air Totems by 12% and reduces the cooldown of your Grounding Totem by 1 sec. Stoneskin Totem's damage reduction is increased by 15%, and in addition, it increases block amount by 15%.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Elemental Weapons",
+      "prereqs": [],
+      "text": "Elemental Weapons | Rank 0/3 | Requires 20 points in Enhancement Talents | Imbuing your weapon grants a special benefit based on the imbue:\n- Flametongue: Hitting enemies with your attacks increases damage done by Fire Totems and Fire spells by 10% for 5 sec.\n- Frostbrand: Increases the chance to trigger the effect by 8% and causes it to critically hit if the target is afflicted with Frost Shock.\n- Windfury: Gaining extra attacks increases attack speed by 1% for 5 sec. Stacks up to 2 times.\n- Rockbiter: Physical damage builds up an earthen bulwark equal to 20% of damage dealt, tripled while wearing a shield. The bulwark absorbs 5% of incoming damage for 8 sec or until it mitigates enough damage. Its durability cannot exceed 20% of maximum health. ",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Stormstrike",
+      "prereqs": [],
+      "text": "Stormstrike | Rank 0/1 | Requires 20 points in Enhancement Talents | 13 Mana | Instant cast | Requires Melee Weapon | Gives you an extra attack for 100% weapon damage and increases the next 2 sources of Nature damage you deal by 25%.  Lasts 12 sec.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Element's Grace",
+      "prereqs": [],
+      "text": "Element's Grace | Rank 0/5 | Requires 25 points in Enhancement Talents | Increases the damage you deal with all weapons, Stormstrike and Lightning Strike abilities by 2%. Increases the critical strike chance of your instant cast spells by 2%.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Bloodlust",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Bloodlust | Rank 0/1 | Requires 3 points in Elemental Weapons | Requires 30 points in Enhancement Talents | 34 Mana | Instant cast | Fly into a frenzy, increasing your attack speed by 20% and spell casting speed by 20% for 30 sec.  While under this effect, your melee critical strikes increase the attack and spell casting speed of all party members within 30 yards by 8% for 6 sec.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Restoration",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Improved Healing Wave",
+      "prereqs": [],
+      "text": "Improved Healing Wave | Rank 0/5 | Reduces the casting time of your Healing Wave spell by 0.15 sec.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Tidal Focus",
+      "prereqs": [],
+      "text": "Tidal Focus | Rank 0/5 | Reduces the Mana cost of your healing spells by 1% and your totems by 5%.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Reincarnation",
+      "prereqs": [],
+      "text": "Improved Reincarnation | Rank 0/2 | Requires 5 points in Restoration Talents | Reduces the cooldown of your Reincarnation spell by 10 min and increases the amount of health and mana you reincarnate with by an additional 10%.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Ancestral Healing",
+      "prereqs": [],
+      "text": "Ancestral Healing | Rank 0/3 | Requires 5 points in Restoration Talents | Increases your target's armor value by 8% for 15 sec after getting a critical effect from one of your healing spells.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Tidal Mastery",
+      "prereqs": [],
+      "text": "Tidal Mastery | Rank 0/5 | Requires 5 points in Restoration Talents | Increases the critical effect chance of your healing and lightning spells by 1%.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Healing Way",
+      "prereqs": [],
+      "text": "Healing Way | Rank 0/3 | Requires 10 points in Restoration Talents | Your Healing Wave and Lesser Healing Wave spells each have a 33% chance, and your Chain Heal spell has a 11% chance to increase the healing of your next Healing Wave or Chain Heal on that target by 6% for 15 sec. This effect stacks up to 3 times.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Healing Focus",
+      "prereqs": [],
+      "text": "Healing Focus | Rank 0/2 | Requires 10 points in Restoration Talents | Gives you a 35% chance to avoid interruption caused by damage while casting any healing spell.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Totemic Mastery",
+      "prereqs": [],
+      "text": "Totemic Mastery | Rank 0/1 | Requires 10 points in Restoration Talents | Increases the duration of your helpful totems by 20% and the amount of mana refunded by Totemic Recall by an additional 15%.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Nature's Grace",
+      "prereqs": [],
+      "text": "Nature's Grace | Rank 0/3 | Requires 10 points in Restoration Talents | Reduces the threat generated by your Nature spells by 5%.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Restorative Totems",
+      "prereqs": [],
+      "text": "Restorative Totems | Rank 0/5 | Requires 15 points in Restoration Talents | Reduces mana cost of your Mana Spring Totem by 10% and increases the effect of your Healing Stream Totem by 5%.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Improved Water Shield",
+      "prereqs": [],
+      "text": "Improved Water Shield | Rank 0/3 | Requires 15 points in Restoration Talents | While your Water Shield is active, you restore 3 Mana every 5 sec, and your total mana regeneration is increased by 1% for each active Water Shield globe.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Tidal Surge",
+      "prereqs": [
+       {
+        "column": 1,
+        "tier": 3
+       }
+      ],
+      "text": "Tidal Surge | Rank 0/2 | Requires 3 points in Healing Way | Requires 20 points in Restoration Talents | After healing a target affected by your Healing Way effect, you have a 15% chance to regain mana equal to 15% of the base cost of the spell.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Ancestral Swiftness",
+      "prereqs": [],
+      "text": "Ancestral Swiftness | Rank 0/1 | Requires 20 points in Restoration Talents | Instant | When activated, your next Nature spell with a casting time less than 10 sec becomes an instant cast spell. Affected damaging spells have 25% reduced effectiveness.",
+      "tier": 5
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Undertow",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 4
+       }
+      ],
+      "text": "Undertow | Rank 0/2 | Requires 3 points in Improved Water Shield | Requires 20 points in Restoration Talents | Your Healing Wave and Lesser Healing Wave spells have a 25% chance to restore a charge of your active Water Shield.  When your Water Shield is at maximum charges, this effect consumes a charge instead.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Improved Chain Heal",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 4
+       }
+      ],
+      "text": "Improved Chain Heal | Rank 0/5 | Requires 5 points in Restorative Totems | Requires 25 points in Restoration Talents | Reduces the cast time of your Chain Heal spell by 0.2 sec.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Spirit Link",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 6
+       }
+      ],
+      "text": "Spirit Link | Rank 0/1 | Requires 5 points in Improved Chain Heal | Requires 30 points in Restoration Talents | 405 Mana | Instant cast | Links the spirit of an ally to that of other group members within 35 yards. When the target takes damage, 30% is distributed among nearby allies. Lasts 20 sec.",
+      "tier": 7
+     }
+    ]
+   }
+  ],
+  "version": "0.22.9"
+ },
+ "WARLOCK": {
+  "class": "Warlock",
+  "saved": "2026-10-01",
+  "trees": [
+   {
+    "name": "Affliction",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Suppression",
+      "prereqs": [],
+      "text": "Suppression | Rank 0/5 | Reduces the chance for enemies to resist your Affliction spells by 2%.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Improved Corruption",
+      "prereqs": [],
+      "text": "Improved Corruption | Rank 0/5 | Reduces the casting time of your Corruption spell by 0.3 sec.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Curse of Weakness",
+      "prereqs": [],
+      "text": "Improved Curse of Weakness | Rank 0/2 | Requires 5 points in Affliction Talents | Increases the attack speed reduction of your Curse of Weakness by 3%.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Resilient Shadows",
+      "prereqs": [],
+      "text": "Resilient Shadows | Rank 0/3 | Requires 5 points in Affliction Talents | Reduces the chance your Affliction spells will be dispelled by an additional 5%.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Improved Life Tap",
+      "prereqs": [],
+      "text": "Improved Life Tap | Rank 0/2 | Requires 5 points in Affliction Talents | Increases the amount of Mana awarded by your Life Tap spell by 10%.",
+      "tier": 2
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Improved Drains",
+      "prereqs": [],
+      "text": "Improved Drains | Rank 0/2 | Requires 5 points in Affliction Talents | Increases the effectiveness of your Drain Soul, Drain Life and Drain Mana by 5%.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Improved Curse of Agony",
+      "prereqs": [],
+      "text": "Improved Curse of Agony | Rank 0/3 | Requires 10 points in Affliction Talents | Increases the damage done by your Curse of Agony by 3%.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Fel Concentration",
+      "prereqs": [],
+      "text": "Fel Concentration | Rank 0/2 | Requires 10 points in Affliction Talents | Gives your Affliction spells a 35% chance to not lose casting time when you take damage.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Curse of Exhaustion",
+      "prereqs": [],
+      "text": "Curse of Exhaustion | Rank 0/1 | Requires 10 points in Affliction Talents | 12 Mana | Instant cast | Reduces the target's movement speed by 10% for 12 sec.  Only one Curse per Warlock can be active on any one target.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Grim Reach",
+      "prereqs": [],
+      "text": "Grim Reach | Rank 0/2 | Requires 15 points in Affliction Talents | Increases the range of your Affliction spells by 10%.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Nightfall",
+      "prereqs": [],
+      "text": "Nightfall | Rank 0/2 | Requires 15 points in Affliction Talents | Gives your Corruption, Dark Harvest and Drain spells a 2% chance to cause you to enter a Shadow Trance state after damaging the opponent.  The Shadow Trance state reduces the casting time of your next Shadow Bolt spell by 100% and makes it guaranteed to land.",
+      "tier": 4
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Soul Siphon",
+      "prereqs": [],
+      "text": "Soul Siphon | Rank 0/3 | Requires 15 points in Affliction Talents | Increases the damage of your Drain Soul, Dark Harvest and Death Coil by an additional 2% for each of your Affliction effects on the target, up to a maximum of 4 effects.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Rapid Deterioration",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Rapid Deterioration | Rank 0/2 | Requires 1 point in Siphon Life | Requires 20 points in Affliction Talents | Increases the casting speed of your Affliction spells by 6%.  In addition, casting speed increase effects increase the tick speed of your damage over time and channeled Affliction spells with 50% efficiency, reducing their duration.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Siphon Life",
+      "prereqs": [],
+      "text": "Siphon Life | Rank 0/1 | Requires 20 points in Affliction Talents | 150 Mana | Instant cast | Transfers 150 Health from the target to the caster over 30 sec.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Improved Curse of Exhaustion",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 3
+       }
+      ],
+      "text": "Improved Curse of Exhaustion | Rank 0/2 | Requires 1 point in Curse of Exhaustion | Requires 20 points in Affliction Talents | Increases the speed reduction of your Curse of Exhaustion by 15%.",
+      "tier": 5
+     },
+     {
+      "column": 4,
+      "max": 1,
+      "name": "Malediction",
+      "prereqs": [],
+      "text": "Malediction | Rank 0/1 | Requires 20 points in Affliction Talents | Your Curse of Agony can be used alongside your other curses, except Curse of Doom.\n\nApplying Curse of Recklessness, Curse of Shadows, or Curse of Elements also afflicts the target with the highest rank of your Curse of Agony.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Shadow Mastery",
+      "prereqs": [],
+      "text": "Shadow Mastery | Rank 0/5 | Requires 25 points in Affliction Talents | Increases the damage dealt or life drained by your Shadow spells by 2%.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Dark Harvest",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 6
+       }
+      ],
+      "text": "Dark Harvest | Rank 0/1 | Requires 5 points in Shadow Mastery | Requires 30 points in Affliction Talents | 230 Mana | Channeled | Reaps the target's life, dealing 704 Shadow damage over 8 sec. While channeling, the time between periodic ticks of your Affliction spells on the target is reduced by 30%. If the target dies while channeling, the cooldown of Dark Harvest is reset.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Demonology",
+    "talents": [
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Sinister Pursuit",
+      "prereqs": [],
+      "text": "Sinister Pursuit | Rank 0/2 | Increases the movement speed of your demons by 5%.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Demonic Embrace",
+      "prereqs": [],
+      "text": "Demonic Embrace | Rank 0/5 | Increases your total Stamina by 3% but reduces your total Spirit by 1%.",
+      "tier": 1
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Soul Entrapment",
+      "prereqs": [],
+      "text": "Soul Entrapment | Rank 0/3 | While you have no demon under your control, all damage dealt is increased by 2%.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Soul Funnel",
+      "prereqs": [],
+      "text": "Soul Funnel | Rank 0/2 | Requires 5 points in Demonology Talents | Increases the amount of Health transferred by your Health Funnel by 10% of your demon's missing Health and the Mana transferred by your Mana Funnel by 10% of your demon's missing Mana. This additional transfer drains 30% of that amount from you.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Demonic Aegis",
+      "prereqs": [],
+      "text": "Demonic Aegis | Rank 0/3 | Requires 5 points in Demonology Talents | Increases the effectiveness of your Demon Armor spell by 20%.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Fel Intellect",
+      "prereqs": [],
+      "text": "Fel Intellect | Rank 0/3 | Requires 5 points in Demonology Talents | Increases your demon's Intellect by 10% of your total Intellect and allows 5% of its Mana regeneration to continue while casting.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Fel Domination",
+      "prereqs": [],
+      "text": "Fel Domination | Rank 0/1 | Requires 10 points in Demonology Talents | Instant | Your next Common demon summoning spell has its casting time reduced by 4.5 sec and its Mana cost reduced by 40%.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Fel Stamina",
+      "prereqs": [],
+      "text": "Fel Stamina | Rank 0/5 | Requires 10 points in Demonology Talents | Increases your demon's Stamina by 10% of your total Stamina and reduces its chance to be critically struck by 1%.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 1,
+      "name": "Demonic Sacrifice",
+      "prereqs": [
+       {
+        "column": 4,
+        "tier": 1
+       }
+      ],
+      "text": "Demonic Sacrifice | Rank 0/1 | Requires 3 points in Soul Entrapment | Requires 10 points in Demonology Talents | Instant | When activated, sacrifices your summoned demon to grant you an effect. The effect is canceled if any demon is summoned or enslaved.\n\nImp: Increases spell damage done by 4%.\n\nVoidwalker: Restores 3% of total Health every 4 sec.\n\nSuccubus: Reduces threat generated by 10%.\n\nFelhunter: Restores 3% of total Mana every 4 sec.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Stones",
+      "prereqs": [],
+      "text": "Improved Stones | Rank 0/2 | Requires 15 points in Demonology Talents | Increases the effectiveness of your Felstone, Wrathstone, Voidstone, and Spellstone by 25%, and increases the critical strike chance bonus of your Firestone by 50%.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Master Summoner",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 3
+       }
+      ],
+      "text": "Master Summoner | Rank 0/2 | Requires 1 point in Fel Domination | Requires 15 points in Demonology Talents | Reduces the casting time of your Imp, Voidwalker, Succubus, and Felhunter summoning spells by 2 sec and their mana cost by 30%. In addition, reduces the cooldown of Inferno, Ritual of Doom, and Demon Gate by 25%.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Nether Studies",
+      "prereqs": [],
+      "text": "Nether Studies | Rank 0/3 | Requires 15 points in Demonology Talents | Increases the effect of your Succubus' Seduction, your Voidwalker's Torment, your Imp's Blood Pact, and your Felhunter's Tainted Blood spells by 15%.",
+      "tier": 4
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Unholy Power",
+      "prereqs": [],
+      "text": "Unholy Power | Rank 0/3 | Requires 15 points in Demonology Talents | Increases the damage done by your demons by 5%.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Power Overwhelming",
+      "prereqs": [],
+      "text": "Power Overwhelming | Rank 0/1 | Requires 20 points in Demonology Talents | 80 Mana | Instant cast | Channel energy into your demon, breaking all crowd control effects and increasing its damage dealt by 20% for 10 sec. The demon takes 40% of its base health as damage over the duration.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Demonic Precision",
+      "prereqs": [],
+      "text": "Demonic Precision | Rank 0/3 | Requires 20 points in Demonology Talents | Your demons gain 1% increased chance to hit and critically strike, and they also inherit 30% of your spell hit and crit chance as melee and spell hit and crit chance, respectively.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Master Demonologist",
+      "prereqs": [],
+      "text": "Master Demonologist | Rank 0/5 | Requires 25 points in Demonology Talents | Grants both the Warlock and the summoned demon an effect as long as that demon is active.\n\nImp - Reduces spell costs by 3%.\n\nVoidwalker - Reduces physical damage taken by 2%.\n\nSuccubus - Increases all damage done by 2%.\n\nFelhunter - Increases all resistances by 0.\n\nGreater Demons - Increases spell critical strike chance by 2%.\n",
+      "tier": 6
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Unleashed Potential",
+      "prereqs": [],
+      "text": "Unleashed Potential | Rank 0/3 | Requires 25 points in Demonology Talents | Your direct damage spell hits allow your demon to benefit from 5% of your Fire and Shadow spell bonus damage for 20 sec. Each tick of your funnel spells refreshes its duration. Stacks up to 3 times.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Soul Link",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 6
+       }
+      ],
+      "text": "Soul Link | Rank 0/1 | Requires 5 points in Master Demonologist | Requires 30 points in Demonology Talents | While a demon is under your control, the damage dealt by you and your demon is increased by 5%. In addition, 20% of all damage you take is taken by your demon.  Your Greater and Enslaved Demons can no longer break free from your control early.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Destruction",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Shadow Vulnerability",
+      "prereqs": [],
+      "text": "Shadow Vulnerability | Rank 0/5 | Your Shadow Bolt and Drain Soul have a 2% chance to increase Shadow damage dealt to the target by 20% for 10 sec, with a higher chance to trigger on critical hits.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Cataclysm",
+      "prereqs": [],
+      "text": "Cataclysm | Rank 0/5 | Reduces the Mana cost of your Destruction spells by 2%.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Demonic Swiftness",
+      "prereqs": [],
+      "text": "Demonic Swiftness | Rank 0/2 | Requires 5 points in Destruction Talents | Reduces the casting time of your Imp's Firebolt spell by 0.3 sec and reduces the cooldown of your Succubus' Lash of Pain spell by 3 sec.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Bane",
+      "prereqs": [],
+      "text": "Bane | Rank 0/5 | Requires 5 points in Destruction Talents | Reduces the casting time of your Shadow Bolt, Searing Pain, and Immolate spells by 0.1 sec and your Soul Fire spell by 0.4 sec.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Aftermath",
+      "prereqs": [],
+      "text": "Aftermath | Rank 0/3 | Requires 5 points in Destruction Talents | Increases the periodic damage of your Immolate spell by 2% and gives your Destruction spells a 4% chance to slow the target by 50% for 5 sec.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Intensity",
+      "prereqs": [],
+      "text": "Intensity | Rank 0/2 | Requires 10 points in Destruction Talents | Gives your Fire spells a 35% chance to not lose casting time when you take damage.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Shadowburn",
+      "prereqs": [],
+      "text": "Shadowburn | Rank 0/1 | Requires 10 points in Destruction Talents | 105 Mana | Instant cast | Reagents: |cffff2020Soul Shard|r | Instantly blasts the target for 87 to 99 Shadow damage.  If the target dies within 5 sec of Shadowburn, and yields experience or honor, the caster gains a Soul Shard.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Devastation",
+      "prereqs": [],
+      "text": "Devastation | Rank 0/5 | Requires 10 points in Destruction Talents | Increases the critical strike chance of your Destruction spells by 1%.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Pyroclasm",
+      "prereqs": [
+       {
+        "column": 1,
+        "tier": 3
+       }
+      ],
+      "text": "Pyroclasm | Rank 0/2 | Requires 2 points in Intensity | Requires 15 points in Destruction Talents | Gives your Rain of Fire, Hellfire, Conflagrate, and Soul Fire spells a 13% chance to stun the target for 3 sec.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Destructive Reach",
+      "prereqs": [],
+      "text": "Destructive Reach | Rank 0/2 | Requires 15 points in Destruction Talents | Increases the range of your Destruction spells by 10% and the radius of your Hellfire by 10%.",
+      "tier": 4
+     },
+     {
+      "column": 4,
+      "max": 5,
+      "name": "Improved Searing Pain",
+      "prereqs": [],
+      "text": "Improved Searing Pain | Rank 0/5 | Requires 15 points in Destruction Talents | Increases the critical strike chance of your Searing Pain spell by 2%.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Soul Fire",
+      "prereqs": [],
+      "text": "Improved Soul Fire | Rank 0/2 | Requires 20 points in Destruction Talents | Your Soul Fire has a 50% chance to refund a Soul Shard and increase your Fire damage by 10% for 30 sec.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Improved Immolate",
+      "prereqs": [],
+      "text": "Improved Immolate | Rank 0/5 | Requires 20 points in Destruction Talents | Increases the damage of your Immolate spell by 4%.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 1,
+      "name": "Ruin",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 3
+       }
+      ],
+      "text": "Ruin | Rank 0/1 | Requires 5 points in Devastation | Requires 20 points in Destruction Talents | Increases the critical strike damage bonus of your Destruction spells by 100%.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Emberstorm",
+      "prereqs": [],
+      "text": "Emberstorm | Rank 0/5 | Requires 25 points in Destruction Talents | Increases the damage done by your Fire spells by 2%.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Conflagrate",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Conflagrate | Rank 0/1 | Requires 5 points in Improved Immolate | Requires 30 points in Destruction Talents | 165 Mana | Instant cast | Ignites the target, dealing 240 to 306 Fire damage and consuming 3 sec of your Immolate spell to deal an amount of damage equal to it.",
+      "tier": 7
+     }
+    ]
+   }
+  ],
+  "version": "0.22.9"
+ },
+ "WARRIOR": {
+  "class": "Warrior",
+  "saved": "2026-10-01",
+  "trees": [
+   {
+    "name": "Arms",
+    "talents": [
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Improved Heroic Strike",
+      "prereqs": [],
+      "text": "Improved Heroic Strike | Rank 0/3 | Reduces the cost of your Heroic Strike ability by 1 rage point.",
+      "tier": 1
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Tactical Mastery",
+      "prereqs": [],
+      "text": "Tactical Mastery | Rank 1/5 | You retain up to 5 of your rage points when you change stances. |   | Next rank: | You retain up to 10 of your rage points when you change stances.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Improved Rend",
+      "prereqs": [],
+      "text": "Improved Rend | Rank 2/2 | Increases the bleed damage done by your Rend ability by 20%.",
+      "tier": 1
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Charge",
+      "prereqs": [],
+      "text": "Improved Charge | Rank 0/2 | Requires 5 points in Arms Talents | Increases the amount of rage generated by your Charge ability by 5.",
+      "tier": 2
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Deflection",
+      "prereqs": [],
+      "text": "Deflection | Rank 0/5 | Requires 5 points in Arms Talents | Increases your Parry chance by 1%.",
+      "tier": 2
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Improved Thunder Clap",
+      "prereqs": [],
+      "text": "Improved Thunder Clap | Rank 0/3 | Requires 5 points in Arms Talents | Reduces the cost of your Thunder Clap ability by 1 rage point and increases the damage by 20%.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 1,
+      "name": "Master Strike",
+      "prereqs": [],
+      "text": "Master Strike | Rank 0/1 | Requires 10 points in Arms Talents | 20 Rage | Instant | Requires Melee Weapon | Performs a skillful attack, dealing 35% weapon damage and causing an additional effect depending on your main hand weapon.\n\nMace: Disorients the target for 3 sec. Any damage caused will remove the effect.\nSword: Disarms the target for 3 sec.\nAxe: Immobilizes the target for 4 sec.\nPolearm: Deals an additional 100% weapon damage if the target is mounted and dismounts them.\nFist Weapon: Knocks down the target for 2 sec.\nStaff: Increases your chance to parry by 25% for 10 sec.\nDagger: Silences the target for 3 sec.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Improved Overpower",
+      "prereqs": [],
+      "text": "Improved Overpower | Rank 0/2 | Requires 10 points in Arms Talents | Increases the critical strike chance of your Overpower ability by 25%.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Deep Wounds",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 1
+       }
+      ],
+      "text": "Deep Wounds | Rank 0/3 | Requires 10 points in Arms Talents | Your critical strikes cause the opponent to bleed, dealing 20% of your melee weapon's average damage over 6 sec.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 3,
+      "name": "Two-Handed Weapon Specialization",
+      "prereqs": [],
+      "text": "Two-Handed Weapon Specialization | Rank 0/3 | Requires 15 points in Arms Talents | Increases the damage you deal with two-handed melee weapons by 2% and increases your skill in all two-handed weapons by 1.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Impale",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 3
+       }
+      ],
+      "text": "Impale | Rank 0/2 | Requires 3 points in Deep Wounds | Requires 15 points in Arms Talents | Increases the critical strike damage bonus of your abilities in Battle, Defensive, and Berserker stance by 10%.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 5,
+      "name": "Master of Arms",
+      "prereqs": [
+       {
+        "column": 1,
+        "tier": 3
+       }
+      ],
+      "text": "Master of Arms | Rank 0/5 | Requires 1 point in Master Strike | Requires 20 points in Arms Talents | Adds the following effects to your weapons, based on the weapon type:\n\nAxe - Increases your chance to get a critical strike by 1%.\nMace - Causes your attacks to ignore 1.2 of your target's Armor per level.\nSword - Gives you a 1% chance to get an extra attack on the same target after hitting your target.\nPolearm - Increases the range of melee attacks by 0.4 yd.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Sweeping Strikes",
+      "prereqs": [],
+      "text": "Sweeping Strikes | Rank 0/1 | Requires 20 points in Arms Talents | 20 Rage | Instant | Requires Battle Stance | Your next 5 abilities and main-hand melee attacks strike an additional nearby opponent.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Boundless Anger",
+      "prereqs": [],
+      "text": "Boundless Anger | Rank 0/3 | Requires 20 points in Arms Talents | Increases your maximum Rage by 10.",
+      "tier": 5
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Improved Disciplines",
+      "prereqs": [],
+      "text": "Improved Disciplines | Rank 0/3 | Requires 20 points in Arms Talents | Reduces the cooldown of your Retaliation, Recklessness and Shield Wall abilities by 4 min.",
+      "tier": 5
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Slam",
+      "prereqs": [],
+      "text": "Improved Slam | Rank 0/2 | Requires 25 points in Arms Talents | Reduces the cast time and global cooldown of your Slam ability by 0.3 sec.",
+      "tier": 6
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Precision Cut",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 5
+       }
+      ],
+      "text": "Precision Cut | Rank 0/3 | Requires 3 points in Boundless Anger | Requires 25 points in Arms Talents | Increases damage dealt per extra rage point spent on Execute by 25%.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Mortal Strike",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Mortal Strike | Rank 0/1 | Requires 1 point in Sweeping Strikes | Requires 30 points in Arms Talents | 30 Rage | Instant | Requires Melee Weapon | A vicious strike that deals 115% weapon damage and wounds the target, reducing the effectiveness of any healing by 50% for 10 sec.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Fury",
+    "talents": [
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Booming Voice",
+      "prereqs": [],
+      "text": "Booming Voice | Rank 0/5 | Increases the area of effect of all shouts by 12% and the duration of your Battle and Demoralizing Shout by 12%.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Cruelty",
+      "prereqs": [],
+      "text": "Cruelty | Rank 0/5 | Increases your chance to get a critical strike with melee weapons by 1%.",
+      "tier": 1
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Dual Wield Specialization",
+      "prereqs": [],
+      "text": "Dual Wield Specialization | Rank 0/5 | Requires 5 points in Fury Talents | Increases the damage done by your offhand weapon by 5% and your chance to hit with your offhand weapon by 2%.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Unbridled Wrath",
+      "prereqs": [],
+      "text": "Unbridled Wrath | Rank 0/5 | Requires 5 points in Fury Talents | Gives you a 15% chance to generate an additional Rage point when you deal melee damage with a weapon. The effect is doubled for two-handed weapons. ICD: 3s",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 5,
+      "name": "Improved Shouts",
+      "prereqs": [],
+      "text": "Improved Shouts | Rank 0/5 | Requires 10 points in Fury Talents | Increases the melee attack power bonus of your Battle Shout by 5% and increases the melee attack power reduction of your Demoralizing Shout by 8%.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Piercing Howl",
+      "prereqs": [],
+      "text": "Piercing Howl | Rank 0/1 | Requires 10 points in Fury Talents | 10 Rage | Instant | Causes all enemies near the warrior to be dazed, reducing movement speed by 50% for 6 sec.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Blood Craze",
+      "prereqs": [],
+      "text": "Blood Craze | Rank 0/3 | Requires 10 points in Fury Talents | Regenerates 2% of your total Health over 6 sec after being the victim of a critical strike.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Battlefield Mobility",
+      "prereqs": [],
+      "text": "Battlefield Mobility | Rank 0/2 | Requires 15 points in Fury Talents | Reduces the cooldown of your Intercept and Intervene abilities by 5 sec, and your Charge ability by 2 sec.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Enrage",
+      "prereqs": [],
+      "text": "Enrage | Rank 0/5 | Requires 15 points in Fury Talents | Gives you a 4% melee damage bonus for 8 sec after being the victim of a critical strike.",
+      "tier": 4
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Improved Pummel",
+      "prereqs": [],
+      "text": "Improved Pummel | Rank 0/2 | Requires 15 points in Fury Talents | Gives your Pummel ability a 50% chance to slow the victim for 4 sec. In addition, increases the duration of spellcasting school lockouts by 1 sec.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 3,
+      "name": "Ravager",
+      "prereqs": [],
+      "text": "Ravager | Rank 0/3 | Requires 20 points in Fury Talents | Reduces the cooldown of your Whirlwind by 1 sec and the Rage cost of your Cleave by 1.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Death Wish",
+      "prereqs": [],
+      "text": "Death Wish | Rank 0/1 | Requires 20 points in Fury Talents | 10 Rage | Instant | When activated, increases your physical damage by 20% and makes you immune to Fear effects, but lowers your armor and all resistances by 20%.  Lasts 30 sec.",
+      "tier": 5
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Improved Execute",
+      "prereqs": [],
+      "text": "Improved Execute | Rank 0/2 | Requires 20 points in Fury Talents | Reduces the Rage cost of your Execute ability by 2.",
+      "tier": 5
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Berserker Rage",
+      "prereqs": [],
+      "text": "Improved Berserker Rage | Rank 0/2 | Requires 25 points in Fury Talents | Using Berserker Rage generates 5 Rage and grants a 50% chance to break free from movement impairing effects when activated.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Flurry",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Flurry | Rank 0/5 | Requires 1 point in Death Wish | Requires 25 points in Fury Talents | Increases your attack speed by 10% for your next 3 swings after dealing a melee critical strike.",
+      "tier": 6
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Blood Drinker",
+      "prereqs": [
+       {
+        "column": 3,
+        "tier": 4
+       }
+      ],
+      "text": "Blood Drinker | Rank 0/3 | Requires 5 points in Enrage | Requires 25 points in Fury Talents | While affected by Enrage, Death Wish, or Recklessness, your melee attacks and abilities restore 1% of your maximum health.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Bloodthirst",
+      "prereqs": [],
+      "text": "Bloodthirst | Rank 0/1 | Requires 30 points in Fury Talents | 30 Rage | Instant | Instantly perform a reckless attack, dealing 100 damage plus 35% of your Attack Power and increasing your movement speed by 10% for 6 sec.",
+      "tier": 7
+     }
+    ]
+   },
+   {
+    "name": "Protection",
+    "talents": [
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Bloodrage",
+      "prereqs": [],
+      "text": "Improved Bloodrage | Rank 0/2 | Increases the instant Rage generated by your Bloodrage ability by 5.",
+      "tier": 1
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Shield Specialization",
+      "prereqs": [],
+      "text": "Shield Specialization | Rank 0/5 | Increases your chance to block attacks with a shield by 1% and generates 1 rage when a block occurs.",
+      "tier": 1
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Anticipation",
+      "prereqs": [],
+      "text": "Anticipation | Rank 0/3 | Increases your Defense skill by 7.",
+      "tier": 1
+     },
+     {
+      "column": 2,
+      "max": 5,
+      "name": "Iron Will",
+      "prereqs": [],
+      "text": "Iron Will | Rank 0/5 | Requires 5 points in Protection Talents | Increases your chance to resist Stun and Charm effects by an additional 3%.",
+      "tier": 2
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Toughness",
+      "prereqs": [],
+      "text": "Toughness | Rank 0/5 | Requires 5 points in Protection Talents | Increases your armor value from items by 2% and the amount of damage absorbed by your shield by 3%.",
+      "tier": 2
+     },
+     {
+      "column": 1,
+      "max": 1,
+      "name": "Last Stand",
+      "prereqs": [
+       {
+        "column": 1,
+        "tier": 1
+       }
+      ],
+      "text": "Last Stand | Rank 0/1 | Requires 2 points in Improved Bloodrage | Requires 10 points in Protection Talents | Instant | When activated, this ability temporarily grants you 30% of your maximum hit points for 20 seconds.  After the effect expires, the hit points are lost.",
+      "tier": 3
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Improved Intervene",
+      "prereqs": [],
+      "text": "Improved Intervene | Rank 0/2 | Requires 10 points in Protection Talents | Grants a 50% chance to gain immunity to movement impairing effects for 3 sec after using Intervene.",
+      "tier": 3
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Improved Taunt",
+      "prereqs": [],
+      "text": "Improved Taunt | Rank 0/2 | Requires 10 points in Protection Talents | Reduces the cooldown of your Taunt ability by 1 sec.",
+      "tier": 3
+     },
+     {
+      "column": 4,
+      "max": 3,
+      "name": "Improved Revenge",
+      "prereqs": [],
+      "text": "Improved Revenge | Rank 0/3 | Requires 10 points in Protection Talents | Gives your Revenge ability a 15% chance to stun the target for 3 sec and reduces its cooldown by 0.5 sec.",
+      "tier": 3
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Gag Order",
+      "prereqs": [],
+      "text": "Gag Order | Rank 0/2 | Requires 15 points in Protection Talents | Your Shield Slam has an additional 50% chance to dispel 1 magic effect on the target and your Shield Bash ability has a 50% chance to silence the target for 3 sec.",
+      "tier": 4
+     },
+     {
+      "column": 2,
+      "max": 2,
+      "name": "Improved Disarm",
+      "prereqs": [],
+      "text": "Improved Disarm | Rank 0/2 | Requires 15 points in Protection Talents | Decreases the cooldown of your Disarm ability by 10 secs.",
+      "tier": 4
+     },
+     {
+      "column": 3,
+      "max": 5,
+      "name": "Defiance",
+      "prereqs": [],
+      "text": "Defiance | Rank 0/5 | Requires 15 points in Protection Talents | Increases the threat generated while in Defensive Stance by an additional 4%.",
+      "tier": 4
+     },
+     {
+      "column": 1,
+      "max": 5,
+      "name": "One-Handed Weapon Specialization",
+      "prereqs": [],
+      "text": "One-Handed Weapon Specialization | Rank 0/5 | Requires 20 points in Protection Talents | Increases the damage you deal with One-Handed Melee weapons by 2%.",
+      "tier": 5
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Shield Slam",
+      "prereqs": [],
+      "text": "Shield Slam | Rank 0/1 | Requires 20 points in Protection Talents | 20 Rage | Instant | Requires Shields | Slam the target with your shield, causing 174 to 184 damage, modified by your shield block value and attack power. This attack causes a high amount of threat, and has a 50% chance of dispelling 1 magic effect on the target.",
+      "tier": 5
+     },
+     {
+      "column": 3,
+      "max": 2,
+      "name": "Improved Shield Slam",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Improved Shield Slam | Rank 0/2 | Requires 1 point in Shield Slam | Requires 20 points in Protection Talents | Reduces the cooldown of Shield Slam by 0.75 sec, and using this ability will also grant you an extra 35% chance to block the next attack within 4.50 sec.",
+      "tier": 5
+     },
+     {
+      "column": 4,
+      "max": 2,
+      "name": "Reprisal",
+      "prereqs": [
+       {
+        "column": 4,
+        "tier": 3
+       }
+      ],
+      "text": "Reprisal | Rank 0/2 | Requires 3 points in Improved Revenge | Requires 20 points in Protection Talents | Increases the damage dealt by your Revenge ability by 25%, and has a 50% chance to refund its rage cost if successful.",
+      "tier": 5
+     },
+     {
+      "column": 1,
+      "max": 2,
+      "name": "Improved Shield Wall",
+      "prereqs": [],
+      "text": "Improved Shield Wall | Rank 0/2 | Requires 25 points in Protection Talents | Increases the effect duration of your Shield Wall ability by 1 secs and reduces its cooldown by 5 min.",
+      "tier": 6
+     },
+     {
+      "column": 3,
+      "max": 3,
+      "name": "Defensive Tactics",
+      "prereqs": [],
+      "text": "Defensive Tactics | Rank 0/3 | Requires 25 points in Protection Talents | While wearing a shield, you retain 60% of the increased threat generation from Defensive Stance in other stances.",
+      "tier": 6
+     },
+     {
+      "column": 2,
+      "max": 1,
+      "name": "Concussion Blow",
+      "prereqs": [
+       {
+        "column": 2,
+        "tier": 5
+       }
+      ],
+      "text": "Concussion Blow | Rank 0/1 | Requires 1 point in Shield Slam | Requires 30 points in Protection Talents | 5 yd range | Instant | Requires Melee Weapon | Deals 115 damage and stuns the opponent for 3 sec. This ability deals a high amount of threat and penetrates 100% of the enemy's armor. Instantly generates 10 rage.",
+      "tier": 7
+     }
+    ]
+   }
+  ],
+  "version": "0.22.9"
+ }
+}

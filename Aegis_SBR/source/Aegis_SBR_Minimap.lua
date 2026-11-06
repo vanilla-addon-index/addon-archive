@@ -1,0 +1,510 @@
+-- ============================================================
+-- Aegis_SBR_Minimap  -  draggable minimap button + addon options
+-- Turtle WoW 1.12 frame API. No external libraries.
+--   * Left-click  : open the class configuration window (Aegis_SBR_UI:Toggle).
+--   * Right-click : open a small options panel (self-targeting toggle plus a
+--                   shortcut to the config window).
+--   * Drag        : ride the minimap edge; position saved per character in
+--                   AegisDB.minimapAngle, visibility in AegisDB.minimapHide.
+-- The button wears the player's class crest, falling back to a cog.
+-- ============================================================
+
+Aegis_SBR_Minimap = {}
+local AM = Aegis_SBR_Minimap
+
+local DEFAULT_ANGLE = 200   -- degrees around the minimap, lower-left by default
+local RADIUS = 80           -- fallback distance from centre if the minimap size is unreadable
+
+-- The built-in class crest sheet (4x4 grid, 0.25 steps). We pick the cell
+-- matching the player's class so the button wears their class icon, and fall
+-- back to a cog for anything unrecognised.
+local CLASS_ICON = "Interface\\Glues\\CharacterCreate\\UI-CharacterCreate-Classes"
+local FALLBACK_ICON = "Interface\\Icons\\INV_Misc_Gear_01"
+local CLASS_TCOORDS = {
+    WARRIOR = { 0,    0.25, 0,    0.25 },
+    MAGE    = { 0.25, 0.5,  0,    0.25 },
+    ROGUE   = { 0.5,  0.75, 0,    0.25 },
+    DRUID   = { 0.75, 1.0,  0,    0.25 },
+    HUNTER  = { 0,    0.25, 0.25, 0.5  },
+    SHAMAN  = { 0.25, 0.5,  0.25, 0.5  },
+    PRIEST  = { 0.5,  0.75, 0.25, 0.5  },
+    WARLOCK = { 0.75, 1.0,  0.25, 0.5  },
+    PALADIN = { 0,    0.25, 0.5,  0.75 },
+}
+
+-- ------------------------------------------------------------
+-- placement, dragging, and the class icon
+-- ------------------------------------------------------------
+-- Distance from the minimap centre, derived from the minimap's ACTUAL size so
+-- the button hugs the edge of whatever minimap is present. A fixed radius floats
+-- the button out past the edge when another addon resizes the minimap - pfUI in
+-- particular shrinks it, and the button then lands over pfUI's border frame
+-- where only a sliver stays clickable. Falls back to RADIUS if the size reads 0.
+local function minimapRadius()
+    local w = (Minimap and Minimap.GetWidth and Minimap:GetWidth()) or 0
+    if w > 4 then return w / 2 + 5 end
+    return RADIUS
+end
+
+local function placeButton()
+    local angle = math.rad((AegisDB and AegisDB.minimapAngle) or DEFAULT_ANGLE)
+    local r = minimapRadius()
+    AM.button:ClearAllPoints()
+    AM.button:SetPoint("CENTER", Minimap, "CENTER", r * math.cos(angle), r * math.sin(angle))
+end
+
+local function dragUpdate()
+    local cx, cy = Minimap:GetCenter()
+    local scale = Minimap:GetEffectiveScale()
+    local px, py = GetCursorPosition()
+    px = px / scale; py = py / scale
+    if AegisDB then AegisDB.minimapAngle = math.deg(math.atan2(py - cy, px - cx)) end
+    placeButton()
+end
+
+local function applyClassIcon()
+    local _, class = UnitClass("player")
+    local c = class and CLASS_TCOORDS[class]
+    if c then
+        AM.icon:SetTexture(CLASS_ICON)
+        AM.icon:SetTexCoord(c[1], c[2], c[3], c[4])
+    else
+        AM.icon:SetTexture(FALLBACK_ICON)
+        AM.icon:SetTexCoord(0, 1, 0, 1)
+    end
+end
+
+-- ============================================================
+-- shared group-member picker popup, used by the assist-target row below.
+-- Lists raid1-40 while in a raid, else party1-4 plus the player. Only feeds
+-- a NAME into the edit box; the actual assist logic (Aegis_SBR:RunAssist)
+-- re-resolves the unit and matches by GUID every press, so a stale or
+-- same-named pick here can never cause it to track the wrong mob.
+-- ============================================================
+local pickerFrame = nil
+
+local function showGroupPicker(anchorFrame, onPick)
+    if not pickerFrame then
+        local pf = CreateFrame("Frame", "Aegis_SBR_GroupPicker", UIParent)
+        pf:SetWidth(150)
+        pf:SetBackdrop({
+            bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+            edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+            tile = true, tileSize = 16, edgeSize = 12,
+            insets = { left = 3, right = 3, top = 3, bottom = 3 },
+        })
+        pf:SetBackdropColor(0.08, 0.08, 0.12, 0.95)
+        pf:SetBackdropBorderColor(0.5, 0.5, 0.7, 0.9)
+        pf:SetFrameStrata("TOOLTIP")
+        pf:EnableMouse(true)
+        pf:Hide()
+        pf.rows = {}
+        for i = 1, 40 do
+            local row = CreateFrame("Button", nil, pf)
+            row:SetPoint("TOPLEFT", pf, "TOPLEFT", 4, -4 - (i - 1) * 16)
+            row:SetWidth(142); row:SetHeight(14)
+            local t = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+            t:SetPoint("LEFT", row, "LEFT", 4, 0)
+            row.text = t
+            row:SetScript("OnEnter", function() this.text:SetTextColor(0.4, 1, 0.6); pf.mouseInside = true end)
+            row:SetScript("OnLeave", function() this.text:SetTextColor(1, 1, 1); pf.mouseInside = false end)
+            row:Hide()
+            pf.rows[i] = row
+        end
+        -- Close automatically once the mouse has been outside for 2 seconds.
+        pf:SetScript("OnUpdate", function()
+            if not this:IsVisible() then return end
+            if this.mouseInside then this.closeTimer = nil; return end
+            if not this.closeTimer then this.closeTimer = GetTime() end
+            if GetTime() - this.closeTimer > 2 then this:Hide(); this.closeTimer = nil end
+        end)
+        pf:SetScript("OnEnter", function() this.mouseInside = true end)
+        pf:SetScript("OnLeave", function() this.mouseInside = false end)
+        pickerFrame = pf
+    end
+
+    local pf = pickerFrame
+    if pf:IsShown() and pf.currentAnchor == anchorFrame then
+        pf:Hide()
+        return
+    end
+    pf.currentAnchor = anchorFrame
+    pf.mouseInside = true
+    pf.closeTimer = nil
+
+    local members = {}
+    if GetNumRaidMembers() > 0 then
+        for i = 1, 40 do
+            local n = UnitName("raid" .. i)
+            if n then table.insert(members, n) end
+        end
+    else
+        local pn = UnitName("player")
+        if pn then table.insert(members, pn) end
+        for i = 1, 4 do
+            local n = UnitName("party" .. i)
+            if n then table.insert(members, n) end
+        end
+    end
+
+    if table.getn(members) == 0 then
+        pf:Hide()
+        DEFAULT_CHAT_FRAME:AddMessage("Aegis: no group members found.", 1, 0.5, 0.3)
+        return
+    end
+
+    pf:ClearAllPoints()
+    pf:SetPoint("TOPLEFT", anchorFrame, "BOTTOMLEFT", 0, 2)
+    pf:SetClampedToScreen(true)
+
+    local count = 0
+    for i = 1, 40 do pf.rows[i]:Hide() end
+    for i, name in ipairs(members) do
+        count = count + 1
+        pf.rows[i].text:SetText(name)
+        pf.rows[i].text:SetTextColor(1, 1, 1)
+        pf.rows[i].memberName = name
+        pf.rows[i]:SetScript("OnClick", function()
+            onPick(this.memberName)
+            pf:Hide()
+        end)
+        pf.rows[i]:Show()
+    end
+    pf:SetHeight(count * 16 + 8)
+    pf:Show()
+end
+
+-- ============================================================
+-- options panel (right-click): addon-wide, non class-specific options
+-- ============================================================
+local function buildPanel()
+    local p = CreateFrame("Frame", "Aegis_SBR_MinimapPanel", UIParent)
+    p:SetWidth(232); p:SetHeight(316)
+    p:SetClampedToScreen(true)
+    p:SetFrameStrata("DIALOG")
+    p:SetBackdrop({
+        bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+        edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+        tile = true, tileSize = 16, edgeSize = 12,
+        insets = { left = 3, right = 3, top = 3, bottom = 3 },
+    })
+    -- match the config window's flat dark skin
+    p:SetBackdropColor(0.088, 0.096, 0.116, 0.98)
+    p:SetBackdropBorderColor(0.15, 0.165, 0.196, 1)
+    p:EnableMouse(true)
+    p:Hide()
+
+    local title = p:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    title:SetPoint("TOPLEFT", 12, -10)
+    title:SetText("Aegis SBR options")
+
+    local modeLabel = p:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    modeLabel:SetPoint("TOPLEFT", 12, -30)
+    modeLabel:SetText("Targeting")
+
+    -- Three mutually exclusive radios. Each one, on click, just writes its
+    -- own mode to AegisDB and re-syncs all three from that single source
+    -- of truth (RefreshPanel), rather than manually unchecking siblings.
+    local function makeRadio(yOff, text, mode)
+        local r = CreateFrame("CheckButton", nil, p, "UIRadioButtonTemplate")
+        r:SetWidth(16); r:SetHeight(16)
+        r:SetPoint("TOPLEFT", 14, yOff)
+        local lbl = p:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        lbl:SetPoint("LEFT", r, "RIGHT", 4, 0)
+        lbl:SetText(text)
+        r.mode = mode
+        r:SetScript("OnClick", function()
+            if AegisDB then AegisDB.targetMode = this.mode end
+            AM:RefreshPanel()
+        end)
+        return r
+    end
+
+    p.autoRadio   = makeRadio(-48, "Auto (nearest enemy)", "auto")
+    p.manualRadio = makeRadio(-66, "Manual (defer to me / assist addon)", "manual")
+    p.assistRadio = makeRadio(-84, "Assist:", "assist")
+
+    -- Assist target: a name (typed or picked), matched to a live group unit
+    -- and then to that unit's target by GUID every press - see RunAssist.
+    local edit = CreateFrame("EditBox", "Aegis_SBR_AssistEdit", p, "InputBoxTemplate")
+    edit:SetWidth(112); edit:SetHeight(18)
+    edit:SetAutoFocus(false)
+    edit:SetPoint("LEFT", p.assistRadio, "RIGHT", 44, 0)
+    edit:SetScript("OnEnterPressed", function()
+        local txt = edit:GetText()
+        if AegisDB then
+            AegisDB.assistTarget = txt
+            if txt ~= "" then AegisDB.targetMode = "assist" end
+        end
+        AM:RefreshPanel()
+        edit:ClearFocus()
+    end)
+    edit:SetScript("OnEscapePressed", function() edit:ClearFocus() end)
+    p.assistEdit = edit
+
+    local pickBtn = CreateFrame("Button", nil, p)
+    pickBtn:SetWidth(18); pickBtn:SetHeight(18)
+    pickBtn:SetPoint("LEFT", edit, "RIGHT", 4, 0)
+    pickBtn:SetBackdrop({
+        bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+        edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+        tile = true, tileSize = 16, edgeSize = 8,
+        insets = { left = 2, right = 2, top = 2, bottom = 2 },
+    })
+    pickBtn:SetBackdropColor(0.15, 0.15, 0.25, 0.9)
+    pickBtn:SetBackdropBorderColor(0.4, 0.4, 0.6, 0.7)
+    local pickText = pickBtn:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    pickText:SetPoint("CENTER", pickBtn, "CENTER", 0, 0)
+    pickText:SetText("|cff88ccffP|r")
+    pickBtn:SetScript("OnEnter", function()
+        this:SetBackdropBorderColor(0.6, 0.6, 0.8, 1)
+        GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+        GameTooltip:SetText("Pick a group member")
+        GameTooltip:Show()
+    end)
+    pickBtn:SetScript("OnLeave", function()
+        this:SetBackdropBorderColor(0.4, 0.4, 0.6, 0.7)
+        GameTooltip:Hide()
+    end)
+    pickBtn:SetScript("OnClick", function()
+        showGroupPicker(pickBtn, function(name)
+            p.assistEdit:SetText(name)
+            if AegisDB then
+                AegisDB.assistTarget = name
+                AegisDB.targetMode = "assist"
+            end
+            AM:RefreshPanel()
+        end)
+    end)
+
+    local hint = p:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+    hint:SetPoint("TOPLEFT", 12, -108)
+    hint:SetWidth(208)
+    hint:SetJustifyH("LEFT")
+    hint:SetText("Assist mirrors that player's target by GUID, not by name - a same-named mob from another group is never mistaken for theirs.")
+
+    -- Upkeep monitors: two INDEPENDENT toggles (Aegis_SBR_BuffUp). Buff monitor
+    -- watches self-buffs and shows rebuff buttons; poison control drives the
+    -- rogue poison Quick Bar. Each writes only its own flag, so one can run
+    -- without the other.
+    local monLabel = p:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    monLabel:SetPoint("TOPLEFT", 12, -156)
+    monLabel:SetText("Upkeep monitors")
+
+    local function makeCheck(yOff, text, onClick)
+        local c = CreateFrame("CheckButton", nil, p, "UICheckButtonTemplate")
+        c:SetWidth(16); c:SetHeight(16)
+        c:SetPoint("TOPLEFT", 14, yOff)
+        local lbl = p:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        lbl:SetPoint("LEFT", c, "RIGHT", 4, 0)
+        lbl:SetText(text)
+        c:SetScript("OnClick", function() onClick(this:GetChecked() and true or false) end)
+        return c
+    end
+
+    p.buffMonCheck = makeCheck(-176, "Buff monitor", function(on)
+        if Aegis_SBR_BuffUp then Aegis_SBR_BuffUp:SetBuffMonitor(on) end
+    end)
+    -- Opens the buff monitor's own config window (watch list + buff scan).
+    local buffCfgBtn = CreateFrame("Button", nil, p, "UIPanelButtonTemplate")
+    buffCfgBtn:SetWidth(74); buffCfgBtn:SetHeight(18)
+    buffCfgBtn:SetPoint("TOPRIGHT", p, "TOPRIGHT", -12, -175)
+    buffCfgBtn:SetText("Configure")
+    buffCfgBtn:SetScript("OnClick", function()
+        if Aegis_SBR_BuffUp then Aegis_SBR_BuffUp:ToggleConfigWindow() end
+    end)
+    p.poisonCheck = makeCheck(-196, "Poison control (rogue)", function(on)
+        if Aegis_SBR_BuffUp then Aegis_SBR_BuffUp:SetPoisonControl(on) end
+    end)
+
+    p.previewCheck = makeCheck(-216, "Upcoming spell window", function(on)
+        if Aegis_SBR_Preview then Aegis_SBR_Preview:SetShown(on) end
+    end)
+
+    -- Distance to the target plus a melee / ranged / out band. Exact where
+    -- ClassicAPI is installed, flat thresholds otherwise.
+    p.rangeCheck = makeCheck(-236, "Range window", function(on)
+        if Aegis_SBR_Range then Aegis_SBR_Range:SetShown(on) end
+    end)
+
+    -- Movement detection. Off, channels and cast-time spells are attempted
+    -- whenever the rotation reaches them, and the client decides.
+    p.moveCheck = makeCheck(-256, "Movement detection", function(on)
+        if AegisDB then AegisDB.moveDetect = on end
+    end)
+
+    local cfg = CreateFrame("Button", nil, p, "UIPanelButtonTemplate")
+    cfg:SetWidth(208); cfg:SetHeight(22)
+    cfg:SetPoint("BOTTOM", 0, 12)
+    cfg:SetText("Open rotation config")
+    cfg:SetScript("OnClick", function()
+        p:Hide()
+        if Aegis_SBR_UI then Aegis_SBR_UI:Toggle() end
+    end)
+
+    AM.panel = p
+end
+
+-- Re-sync all three radios and the assist edit box from AegisDB.
+function AM:RefreshPanel()
+    local p = self.panel
+    if not p then return end
+    local mode = Aegis_SBR and Aegis_SBR:TargetMode() or "auto"
+    p.autoRadio:SetChecked(mode == "auto")
+    p.manualRadio:SetChecked(mode == "manual")
+    p.assistRadio:SetChecked(mode == "assist")
+    p.assistEdit:SetText((AegisDB and AegisDB.assistTarget) or "")
+    if p.previewCheck and Aegis_SBR_Preview then
+        p.previewCheck:SetChecked(Aegis_SBR_Preview:Enabled())
+    end
+    if p.rangeCheck and Aegis_SBR_Range then
+        p.rangeCheck:SetChecked(Aegis_SBR_Range:Enabled())
+    end
+    if p.moveCheck and Aegis_SBR and Aegis_SBR.MoveDetectEnabled then
+        p.moveCheck:SetChecked(Aegis_SBR:MoveDetectEnabled())
+    end
+    if p.buffMonCheck and Aegis_SBR_BuffUp then
+        p.buffMonCheck:SetChecked(Aegis_SBR_BuffUp:BuffMonitorEnabled())
+        p.poisonCheck:SetChecked(Aegis_SBR_BuffUp:PoisonControlEnabled())
+    end
+end
+
+-- Open the panel on the side of the button that has room. It used to hang
+-- below and to the left of the button always, so with the minimap at the
+-- bottom of the screen it opened off screen. The button's edges are read in
+-- its own scale (the minimap cluster may be scaled) and converted to the
+-- UIParent scale the panel lives in. Clamped as well, for the corner cases.
+function AM:PlacePanel()
+    local p, b = self.panel, self.button
+    p:ClearAllPoints()
+    local k = (b:GetEffectiveScale() or 1) / (UIParent:GetEffectiveScale() or 1)
+    local left = (b:GetLeft() or 0) * k
+    local bottom = (b:GetBottom() or 0) * k
+    local below = bottom - p:GetHeight() >= 0
+    local leftward = left - p:GetWidth() >= 0
+    local v = below and "TOP" or "BOTTOM"
+    local bv = below and "BOTTOM" or "TOP"
+    local h = leftward and "RIGHT" or "LEFT"
+    local bh = leftward and "LEFT" or "RIGHT"
+    p:SetPoint(v .. h, b, bv .. bh, leftward and 4 or -4, 0)
+end
+
+function AM:TogglePanel()
+    if not self.panel then return end
+    if self.panel:IsShown() then self.panel:Hide(); return end
+    self:RefreshPanel()
+    self:PlacePanel()
+    self.panel:Show()
+end
+
+-- ============================================================
+-- the button
+-- ============================================================
+local function buildButton()
+    local b = CreateFrame("Button", "Aegis_SBR_MinimapButton", Minimap)
+    b:SetWidth(31); b:SetHeight(31)
+    -- pfUI layers its minimap border/click-catcher on a HIGHER STRATA than the
+    -- minimap, so a raised frame LEVEL (which only orders frames within the same
+    -- strata) wasn't enough - the overlay still ate the clicks. Put the button on
+    -- a strata above that overlay so the whole button is clickable, with a high
+    -- level so it also sits above any same-strata siblings.
+    b:SetFrameStrata("HIGH")
+    b:SetFrameLevel((Minimap:GetFrameLevel() or 4) + 10)
+    b:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+    b:RegisterForDrag("LeftButton")
+    b:SetMovable(true)
+    AM.button = b
+
+    -- icon (class crest at login; cog as a pre-login fallback)
+    local icon = b:CreateTexture(nil, "BACKGROUND")
+    icon:SetTexture(FALLBACK_ICON)
+    icon:SetWidth(20); icon:SetHeight(20)
+    icon:SetPoint("TOPLEFT", b, "TOPLEFT", 7, -6)
+    AM.icon = icon
+
+    -- the standard circular minimap-button border
+    local border = b:CreateTexture(nil, "OVERLAY")
+    border:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
+    border:SetWidth(53); border:SetHeight(53)
+    border:SetPoint("TOPLEFT", b, "TOPLEFT", 0, 0)
+
+    b:SetHighlightTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
+
+    b:SetScript("OnClick", function()
+        if arg1 == "RightButton" then
+            AM:TogglePanel()
+        else
+            if AM.panel then AM.panel:Hide() end
+            if Aegis_SBR_UI then
+                Aegis_SBR_UI:Toggle()
+            else
+                Aegis_SBR:Throttle("UI framework not loaded. Aegis_SBR_UI.lua is missing or mislabeled in your Aegis_SBR folder, reinstall the files.")
+            end
+        end
+    end)
+
+    b:SetScript("OnDragStart", function() this:LockHighlight(); this:SetScript("OnUpdate", dragUpdate) end)
+    b:SetScript("OnDragStop", function() this:UnlockHighlight(); this:SetScript("OnUpdate", nil) end)
+
+    b:SetScript("OnEnter", function()
+        GameTooltip:SetOwner(this, "ANCHOR_LEFT")
+        GameTooltip:SetText("Aegis SBR", 1, 0.82, 0)
+        GameTooltip:AddLine("Left-click: configure rotation.", 1, 1, 1)
+        GameTooltip:AddLine("Right-click: addon options.", 1, 1, 1)
+        GameTooltip:AddLine("Drag: move around the minimap.", 0.7, 0.7, 0.7)
+        GameTooltip:AddLine("/sbrmap or /sbr minimap to hide or show.", 0.7, 0.7, 0.7)
+        GameTooltip:Show()
+    end)
+    b:SetScript("OnLeave", function() GameTooltip:Hide() end)
+end
+
+-- Show or hide the button, remembered across sessions. Called by /sbr
+-- minimap (through the core) and by /sbrmap. Returns the new hidden state.
+function AM:ToggleShown()
+    if type(AegisDB) ~= "table" then AegisDB = {} end
+    AegisDB.minimapHide = not AegisDB.minimapHide
+    if self.button then
+        if AegisDB.minimapHide then self.button:Hide() else self.button:Show() end
+    end
+    return AegisDB.minimapHide
+end
+
+-- ============================================================
+-- initialise: refine saved position, class icon, and hide state. Runs at
+-- ADDON_LOADED and PLAYER_LOGIN so it is robust to reload timing.
+-- ============================================================
+local function init()
+    if type(AegisDB) ~= "table" then AegisDB = {} end
+    if AegisDB.minimapAngle == nil then AegisDB.minimapAngle = DEFAULT_ANGLE end
+    applyClassIcon()
+    placeButton()
+    if AegisDB.minimapHide then AM.button:Hide() else AM.button:Show() end
+end
+
+local ev = CreateFrame("Frame")
+ev:RegisterEvent("ADDON_LOADED")
+ev:RegisterEvent("PLAYER_LOGIN")
+ev:RegisterEvent("PLAYER_ENTERING_WORLD")
+ev:SetScript("OnEvent", function()
+    if event == "ADDON_LOADED" and arg1 ~= "Aegis_SBR" then return end
+    init()
+end)
+
+-- Build and anchor the button right away with defaults, so it is visible even
+-- before the events above fire (some 1.12 clients skip PLAYER_LOGIN on a
+-- /reload, and saved variables may not be ready during file execution). init()
+-- then refines the saved position, class icon, and hide state.
+buildButton()
+buildPanel()
+placeButton()
+if not (AegisDB and AegisDB.minimapHide) then AM.button:Show() end
+
+-- /sbrmap toggles visibility (kept as a convenience alongside /sbr minimap;
+-- /armap stays as a legacy alias on the same handler key).
+SLASH_AEGIS_SBR_MAP1 = "/sbrmap"
+SLASH_AEGIS_SBR_MAP2 = "/armap"
+SlashCmdList["AEGIS_SBR_MAP"] = function()
+    local hidden = AM:ToggleShown()
+    DEFAULT_CHAT_FRAME:AddMessage("Aegis: minimap button "
+        .. (hidden and "hidden (/sbrmap to show)." or "shown."), 1, 0.8, 0)
+end

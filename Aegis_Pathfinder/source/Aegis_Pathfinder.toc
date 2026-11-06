@@ -1,0 +1,128 @@
+## Interface: 11200
+
+## Title: Aegis: Pathfinder
+## Notes: Classic+ leveling guide for the Turtle WoW-lineage 1.12 client family.|nPart of the Aegis addon suite.
+## Author: Aegis: Pathfinder Contributors (see CONTRIBUTORS.md)
+## Version: 0.26.0
+## X-Category: Quest
+
+## SavedVariables: AegisPathfinderDB, TurtleGuideDB
+
+## OptionalDeps: TomTom, pfQuest, MetaMap, MetaMapBWP
+
+# libs Core
+libs\AceLibrary\AceLibrary.lua
+libs\AceOO-2.0\AceOO-2.0.lua
+libs\AceConsole-2.0\AceConsole-2.0.lua
+libs\AceEvent-2.0\AceEvent-2.0.lua
+libs\AceDebug-2.0\AceDebug-2.0.lua
+libs\AceDB-2.0\AceDB-2.0.lua
+libs\AceAddon-2.0\AceAddon-2.0.lua
+libs\AceHook-2.1\AceHook-2.1.lua
+
+# Core Addon files
+Locale.lua
+Core.lua
+Theme.lua
+Credits.lua
+Parser.lua
+QuestShellPlusParser.lua
+Navigation.lua
+QuestTracker.lua
+Professions.lua
+CraftPlanner.lua
+CraftScan.lua
+# Item score: the stat weights and OctoPawn's stat patterns (MIT), and the scorer
+ItemScoreData.lua
+ItemScore.lua
+# Gear data from CMaNGOS: quest reward sell prices, and dungeon and raid loot
+GearData.lua
+GuideEngine.lua
+NavCallout.lua
+# The objectives panel is the addon's only window, and the other panels anchor
+# themselves to it at load, so it has to exist before they do.
+ObjectivesFrame.lua
+OptionsFrame.lua
+# The guide browser: what it lists, the map reveal data (pfUI, MIT) and
+# the guides' pictures, then the window
+GuideBrowser.lua
+MapOverlays.lua
+GuidePictures.lua
+GuideListFrame.lua
+MaterialsFrame.lua
+CraftRouteFrame.lua
+GearFrame.lua
+GearAdvisor.lua
+GearFinder.lua
+# The Gear Finder as a tab on the character panel
+GearFinderTab.lua
+ActiveFrames.lua
+# Flights, buying, selling greys, repairing and making room in full bags,
+# for the Automation and Action Buttons pages; what vendors pay (CMaNGOS)
+SellPrices.lua
+Automation.lua
+# What the Maps page draws on the world map and minimap: where the rares can
+# spawn (pfQuest-turtle), then the reveal, the step's places and the ant trail
+Rares.lua
+Maps.lua
+# The Extras page: detailed reputation gains and level-up announcements
+Extras.lua
+# The Talent Advisor: the builds, which talent each point goes to, and its
+# marks on Blizzard's talent window
+TalentBuilds.lua
+TalentAdvisor.lua
+TalentWindow.lua
+TalentModern.lua
+NextGuideFrame.lua
+DungeonQuests.lua
+SetupFrame.lua
+PartySync.lua
+MinimapButton.lua
+
+# Routes
+Routes\Routes.lua
+
+# Recipe and merchant-price data for the crafting route planner
+# (converted from CraftRoute by Tools/build/import_recipes.py)
+Crafting\Crafting.xml
+
+# Optimized guides
+Guides\Optimized\Alliance\Guides.xml
+Guides\Optimized\Horde\Guides.xml
+
+# Dungeon guides: every quest for a dungeon, then the way in
+# (written by Tools/build/build_dungeon_guides.py)
+Guides\Dungeons\Alliance\Guides.xml
+Guides\Dungeons\Horde\Guides.xml
+
+# Class quest guides: a guide per class quest chain, offered at its level
+# (written by Tools/build/build_class_guides.py)
+Guides\Class\Alliance\Guides.xml
+Guides\Class\Horde\Guides.xml
+
+# Attunement guides: the quests that open each raid and dungeon
+# (written by Tools/build/build_attunement_guides.py)
+Guides\Attunements\Alliance\Guides.xml
+Guides\Attunements\Horde\Guides.xml
+
+# Alliance Zone Completion Guides
+Guides\Alliance\Guides.xml
+
+# Horde Zone Completion Guides
+Guides\Horde\Guides.xml
+
+# Both Factions Guides
+Guides\Both\Guides.xml
+
+# Profession Guides (generated from Tools/data/Professions_Reference.docx)
+Guides\Professions\Guides.xml
+
+# RestedXP Converted Guides (Survival routes)
+Guides\RXP\Alliance\Guides.xml
+Guides\RXP\Horde\Guides.xml
+
+# RestedXP Hardcore Converted Guides (Survival routes)
+Guides\RXP_Hardcore\Alliance\Guides.xml
+Guides\RXP_Hardcore\Horde\Guides.xml
+
+

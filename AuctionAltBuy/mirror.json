@@ -1,0 +1,58 @@
+{
+  "upstream": "https://github.com/EinBaum/AuctionAltBuy",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "AuctionAltBuy",
+    "name": "AuctionAltBuy",
+    "url": "https://github.com/EinBaum/AuctionAltBuy",
+    "api": "https://api.github.com/repos/EinBaum/AuctionAltBuy"
+  },
+  "commit": "dca00f12e9a9290b6de5dc48de25a2ee018db7ab",
+  "sourceFiles": {
+    "AuctionAltBuy.lua": {
+      "sha256": "6295edd25cc19ba117f8f5fd4209213aa7acd05fda3706c66826a2087e1e19b6",
+      "bytes": 1112
+    },
+    "AuctionAltBuy.toc": {
+      "sha256": "12f7fbaeb542a93f3125c251b40886e038bbb3d7a847b2da2d3883becb2261a1",
+      "bytes": 266
+    },
+    "AuctionAltBuy.xml": {
+      "sha256": "800cd58555884867d765d4a2e1e2e85055a278002733ecb5ed92634266909bad",
+      "bytes": 372
+    },
+    "LICENSE.txt": {
+      "sha256": "22168e305b1f66bc78530be168f140a0601093a5d51105dbc0ca20a4591aa427",
+      "bytes": 1075
+    },
+    "README.md": {
+      "sha256": "b65843610e066fccfe9737f94684b1b524e6db3fd838fc458d38283dedc7474d",
+      "bytes": 230
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "9779830": {
+      "tag": "1.0.0",
+      "folder": "1.0.0--9779830",
+      "assets": {
+        "6287323": {
+          "sha256": "67f1dc8c1963bcda5b584be6d3b4e95ceee8f40d107d9ffe96e6cc40ef755e13",
+          "bytes": 2583,
+          "id": "6287323",
+          "name": "AuctionAltBuy.zip",
+          "url": "https://github.com/EinBaum/AuctionAltBuy/releases/download/1.0.0/AuctionAltBuy.zip",
+          "path": "releases/1.0.0--9779830/assets/AuctionAltBuy.zip"
+        }
+      },
+      "source": {
+        "sha256": "594058db1384c7d7fb1174a05e4f02aed707987fa54859d3da9e71485e3cf2b4",
+        "bytes": 1797,
+        "path": "releases/1.0.0--9779830/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/EinBaum/AuctionAltBuy/tarball/1.0.0"
+      }
+    }
+  }
+}

@@ -1,0 +1,1177 @@
+--=============================================================================
+-- Aegis_Assign.lua  -  the shared assignment data model
+-- (docs\DESIGN_ASSIGNMENTS.md - step 1 of the Assignment & Sync milestone)
+--
+-- One caster-major store covering the totem and duty domains, with the
+-- blessing domain delegated to the UNTOUCHED PallyPower tables (locked
+-- interop decision: no blessing data is ever copied out of the legacy
+-- engine). The sync protocol (step 2) serializes caster blocks from here;
+-- the assignment panel (step 3) renders them; the strips already read their
+-- own row ("effective selection" = my assignment first, my local preference
+-- second).
+--
+--   AegisRP_Assign = {                 -- SavedVariablePerCharacter
+--     v = 1,
+--     casters = {
+--       ["Stormtide"] = {
+--         class = "SHAMAN",                 -- English token, set on write
+--         seq   = 12,                       -- bumped on every local edit
+--                                           -- (reserved: sync LWW ordering)
+--         totem = { Earth = "Strength of Earth Totem", party = 2 },
+--         duty  = { SUNDER = true, SOULSTONE = "Seraphine", FEARWARD = "@TANK" },
+--       },
+--     },
+--   }
+--
+-- Duty values are scalars: true (untargeted - kill-target debuffs, raid
+-- buffs), "PlayerName" (Soulstone, Innervate), or "@ROLE" ("@MT"/"@MA"/...,
+-- resolved at cast time through the role tables; player names can never
+-- contain '@'). What a duty key MEANS lives in the catalog the class modules
+-- register at load (RegisterDuty); totem options come from Class_Shaman
+-- (RegisterTotems). Catalog `wid`s are the stable numeric wire ids reserved
+-- for the future RPCX protocol: append-only, never renumbered, never reused.
+--
+-- Runtime status ("actually up", vs "assigned") is the separate, NEVER-saved
+-- mirror AegisRP.AssignStatus with the same keying; the strip modules
+-- write their own cast-derived timers through it today, and sync (step 2)
+-- fills other casters' entries from broadcast cast times.
+--=============================================================================
+
+AegisRP_Assign = AegisRP_Assign or {}
+if not AegisRP_Assign.v then AegisRP_Assign.v = 1 end
+AegisRP_Assign.casters = AegisRP_Assign.casters or {}
+
+AegisRP.AssignStatus = {}   -- [caster][domain][slot] = { expires=, ... }
+
+local A = {}
+AegisRP.Assign = A
+
+--------------------------------------------------------------------------
+-- catalogs (registered by the class modules at load; pure static data)
+--------------------------------------------------------------------------
+
+A.duties = {}          -- [key] = { key, wid, class, tab, spell, target, multi, dur,
+                       --           note (cc only: what it works on) }
+A.dutyOrder = {}       -- keys in registration order (the panel iterates this)
+A.totems = {}          -- [element] = { { name=, wid=, dur= }, ... }
+A.elements = {}        -- ordered element keys
+
+function A.RegisterDuty(def)
+    if not def or not def.key or A.duties[def.key] then return end
+    A.duties[def.key] = def
+    table.insert(A.dutyOrder, def.key)
+end
+
+function A.RegisterTotems(element, list)
+    if A.totems[element] then return end
+    A.totems[element] = list
+    table.insert(A.elements, element)
+end
+
+--------------------------------------------------------------------------
+-- change notification (the panel subscribes; strips poll their own tick)
+--------------------------------------------------------------------------
+
+local listeners = {}
+function A.Subscribe(fn) table.insert(listeners, fn) end
+
+local function Notify(domain, caster)
+    for _, fn in ipairs(listeners) do
+        local ok, err = pcall(fn, domain, caster)
+        if not ok then
+            DEFAULT_CHAT_FRAME:AddMessage("|cffff5555Aegis error:|r "
+                .. tostring(err) .. " |cffaaaaaa(assignment listener)|r")
+        end
+    end
+end
+
+--------------------------------------------------------------------------
+-- store internals
+--------------------------------------------------------------------------
+
+-- English class token for a group member (nil when not resolvable).
+local function ClassOf(name)
+    if name == UnitName("player") then
+        local _, cls = UnitClass("player")
+        return cls
+    end
+    local n = GetNumRaidMembers()
+    if n > 0 then
+        for i = 1, n do
+            if UnitName("raid" .. i) == name then
+                local _, cls = UnitClass("raid" .. i)
+                return cls
+            end
+        end
+        return nil
+    end
+    for i = 1, GetNumPartyMembers() do
+        if UnitName("party" .. i) == name then
+            local _, cls = UnitClass("party" .. i)
+            return cls
+        end
+    end
+    return nil
+end
+
+local function Block(name, create)
+    local c = AegisRP_Assign.casters[name]
+    if not c and create then
+        c = { seq = 0 }
+        AegisRP_Assign.casters[name] = c
+    end
+    return c
+end
+
+local function Touch(c, name)
+    c.seq = (c.seq or 0) + 1
+    c.class = c.class or ClassOf(name)
+end
+
+--------------------------------------------------------------------------
+-- permissions: self, or lead/assist. This is the LOCAL edit rule (strip
+-- self-assign and, later, the panel); acceptance of remote writes - and the
+-- Free Assignment flag - is the sync layer's job (step 2), exactly as in
+-- PallyPower's ASSIGN handling.
+--------------------------------------------------------------------------
+
+-- Am I (the player) raid lead / assist / party leader? TRUTHY-safe: the
+-- 1.12 Is*Leader() API returns 1-or-nil on some clients and true-or-false on
+-- others, so we never compare == 1 (PallyPower treats them as booleans too,
+-- e.g. PallyPower_CanControl). Solo counts as leading a party of one, and
+-- test mode always leads (the preview raid must be fully editable).
+function A.IAmLead()
+    if GetNumRaidMembers() > 0 then
+        return (IsRaidLeader() or IsRaidOfficer()) and true or false
+    end
+    if GetNumPartyMembers() > 0 then
+        return IsPartyLeader() and true or false
+    end
+    return true   -- solo: you lead your party of one (test mode included, so
+                  -- the preview raid is editable; grouped test respects the
+                  -- real leader so a party simulates lead/member roles)
+end
+
+-- Best-effort English class token for a caster (block cache -> roster ->
+-- preview raid). nil when we genuinely can't tell (offline/out-of-range).
+local function ClassKnown(name)
+    local c = AegisRP_Assign.casters[name]
+    if c and c.class then return c.class end
+    local cls = ClassOf(name)
+    if cls then return cls end
+    if AegisRP.PreviewNames then return AegisRP.PreviewNames[name] end
+    return nil
+end
+
+-- Free Assignment: a raid-wide flag the LEADER controls (synced over RPCX).
+-- When on, any member may edit any row - so the leader can let people spread
+-- the assignments out themselves. Mirrors PallyPower's free-assign intent.
+function A.GetFreeAssign()
+    return AegisRP_Assign.freeAssign and true or false
+end
+
+-- Only a leader may flip it locally; the sync layer relays a remote leader's
+-- flip through A.ApplyFreeAssign (no gate - the sender was already checked).
+function A.SetFreeAssign(on)
+    if not A.IAmLead() then return false end
+    AegisRP_Assign.freeAssign = on and true or false
+    Notify("free", nil)
+    return true
+end
+
+function A.ApplyFreeAssign(on)
+    AegisRP_Assign.freeAssign = on and true or false
+    Notify("free", nil)
+end
+
+function A.CanEdit(editor, caster)
+    if editor == caster then return true end
+    if editor == UnitName("player") then
+        return A.IAmLead() or A.GetFreeAssign()
+    end
+    return false
+end
+
+local function Editable(caster)
+    return A.CanEdit(UnitName("player"), caster)
+end
+
+--------------------------------------------------------------------------
+-- totem domain: shaman x element -> totem spell name, plus a covered party
+--------------------------------------------------------------------------
+
+function A.SetTotem(caster, element, totemName)
+    if not Editable(caster) then return false end
+    local c = Block(caster, true)
+    c.totem = c.totem or {}
+    c.totem[element] = totemName
+    Touch(c, caster)
+    Notify("totem", caster)
+    return true
+end
+
+function A.GetTotem(caster, element)
+    local c = Block(caster)
+    return c and c.totem and c.totem[element]
+end
+
+-- party: 1-8 = the group this shaman covers; nil = their own subgroup
+function A.SetTotemParty(caster, party)
+    if not Editable(caster) then return false end
+    local c = Block(caster, true)
+    c.totem = c.totem or {}
+    c.totem.party = party
+    Touch(c, caster)
+    Notify("totem", caster)
+    return true
+end
+
+function A.GetTotemParty(caster)
+    local c = Block(caster)
+    return c and c.totem and c.totem.party
+end
+
+--------------------------------------------------------------------------
+-- duty domain: dutyKey -> true | "PlayerName" | "@ROLE"
+--------------------------------------------------------------------------
+
+function A.SetDuty(caster, dutyKey, value)
+    local def = A.duties[dutyKey]
+    if not def then return false end
+    if not Editable(caster) then return false end
+    -- a duty may only be held by a caster of its class (a priest can't take
+    -- Sunder Armor). Enforced only when the caster's class is known, and only
+    -- for assignments - clearing (value == nil) is always allowed.
+    if value ~= nil and def.class then
+        local cls = ClassKnown(caster)
+        if cls and cls ~= def.class then return false end
+    end
+    if value ~= nil and def.target == "none" then value = true end
+    local c = Block(caster, true)
+    c.duty = c.duty or {}
+    c.duty[dutyKey] = value
+    Touch(c, caster)
+    Notify("duty", caster)
+    return true
+end
+
+function A.ClearDuty(caster, dutyKey)
+    return A.SetDuty(caster, dutyKey, nil)
+end
+
+--------------------------------------------------------------------------
+-- class-buff domain (blessing-shaped): caster x legacy class id 0-9 ->
+-- buff spell name. The catalog is the caster class's own M.buffs list
+-- (AegisRP.classes[token].buffs); the class-buff strips read their
+-- own row through this, exactly like blessings drive the paladin bar.
+--------------------------------------------------------------------------
+
+function A.SetClassBuff(caster, classID, buffName)
+    if not Editable(caster) then return false end
+    local c = Block(caster, true)
+    c.cbuff = c.cbuff or {}
+    c.cbuff[classID] = buffName
+    Touch(c, caster)
+    Notify("cbuff", caster)
+    return true
+end
+
+function A.GetClassBuff(caster, classID)
+    local c = Block(caster)
+    return c and c.cbuff and c.cbuff[classID]
+end
+
+--------------------------------------------------------------------------
+-- player-override domain: caster x PLAYER NAME -> buff spell name.
+--
+-- The exception that proves the class rule. cbuff answers "which buff does
+-- this caster give class X", which is right for nearly everyone - but a raid
+-- always has the one warrior who wants Shadow Protection while the rest of
+-- his class row takes Fortitude. Without this, honouring that means
+-- retargeting the whole row and hand-fixing everyone else.
+--
+-- An override is a single name, not a set: it REPLACES what that player would
+-- otherwise get rather than adding to it, which is what makes it an override
+-- and not a second assignment. Clearing it (nil) drops the player back onto
+-- their class row, so the row stays the default and this stays the exception.
+--------------------------------------------------------------------------
+
+function A.SetPlayerBuff(caster, player, buffName)
+    if not player then return false end
+    if not Editable(caster) then return false end
+    local c = Block(caster, true)
+    c.pbuff = c.pbuff or {}
+    c.pbuff[player] = buffName          -- nil clears, back to the class row
+    Touch(c, caster)
+    Notify("pbuff", caster)
+    return true
+end
+
+function A.GetPlayerBuff(caster, player)
+    if not player then return nil end
+    local c = Block(caster)
+    return c and c.pbuff and c.pbuff[player]
+end
+
+-- every override this caster holds, as { {player=, buff=}, ... } sorted by
+-- name so the panel and the wire both see a stable order
+function A.GetPlayerBuffs(caster)
+    local c, out = Block(caster), {}
+    if not (c and c.pbuff) then return out end
+    for p, b in pairs(c.pbuff) do
+        if b then table.insert(out, { player = p, buff = b }) end
+    end
+    table.sort(out, function(x, y) return x.player < y.player end)
+    return out
+end
+
+function A.ClearPlayerBuffs(caster)
+    if not Editable(caster) then return false end
+    local c = Block(caster, true)
+    c.pbuff = nil
+    Touch(c, caster)
+    Notify("pbuff", caster)
+    return true
+end
+
+--------------------------------------------------------------------------
+-- group-buff domain: caster x raid group (1-8) -> SET of buff spell names.
+--
+-- Deliberately separate from the class-buff domain above. Assigning by CLASS
+-- is a PALADIN mechanic - Greater Blessings are cast per class, which is why
+-- PallyPower is class-shaped and why blessings keep that model untouched. But
+-- a priest/mage/druid group buff (Prayer of Fortitude, Arcane Brilliance,
+-- Gift of the Wild) lands on a PARTY, so "Priest 1 covers groups 2 and 3" is
+-- the shape raids actually organise around. The class grid was inherited from
+-- the paladin design, where it fits, into a place where it does not.
+--
+-- The two answer different questions and both stay: cbuff is "which buff do I
+-- give class X" (what the strip's per-class wheel drives); gbuff is "which
+-- groups do I cover, and with what".
+--
+-- A group holds a SET, not a single value, so one caster can own both Spirit
+-- and Stamina for group 2.
+--------------------------------------------------------------------------
+
+local MAX_GROUPS = 8            -- a 40-man raid is 8 groups of 5
+
+function A.MaxGroups() return MAX_GROUPS end
+
+local function ValidGroup(g)
+    g = tonumber(g)
+    if not g or g < 1 or g > MAX_GROUPS then return nil end
+    return g
+end
+
+-- Catalog of buffs the caster's class can give, in declaration order.
+local function BuffCatalogFor(caster, c)
+    local token = (c and c.class) or ClassKnown(caster)
+    local m = token and AegisRP.classes and AegisRP.classes[token]
+    return (m and m.buffs) or {}
+end
+
+-- `on` true adds, false/nil removes. Returns false when not permitted.
+function A.SetGroupBuff(caster, group, buffName, on)
+    group = ValidGroup(group)
+    if not group or not buffName then return false end
+    if not Editable(caster) then return false end
+    local c = Block(caster, true)
+    c.gbuff = c.gbuff or {}
+    if on then
+        c.gbuff[group] = c.gbuff[group] or {}
+        c.gbuff[group][buffName] = true
+    elseif c.gbuff[group] then
+        c.gbuff[group][buffName] = nil
+        -- drop an emptied group so serialisation stays tight
+        local any = nil
+        for _ in pairs(c.gbuff[group]) do any = true; break end
+        if not any then c.gbuff[group] = nil end
+    end
+    Touch(c, caster)
+    Notify("gbuff", caster)
+    return true
+end
+
+function A.HasGroupBuff(caster, group, buffName)
+    group = ValidGroup(group)
+    local c = group and Block(caster)
+    return (c and c.gbuff and c.gbuff[group]
+            and c.gbuff[group][buffName]) and true or false
+end
+
+function A.ToggleGroupBuff(caster, group, buffName)
+    return A.SetGroupBuff(caster, group, buffName,
+                          not A.HasGroupBuff(caster, group, buffName))
+end
+
+-- Buff names this caster covers for `group`, in catalog order so the panel
+-- and the wire agree on sequence. Always returns a table (possibly empty).
+function A.GetGroupBuffs(caster, group)
+    local out = {}
+    group = ValidGroup(group)
+    local c = group and Block(caster)
+    if not (c and c.gbuff and c.gbuff[group]) then return out end
+    local cat = BuffCatalogFor(caster, c)
+    for i = 1, table.getn(cat) do
+        local nm = cat[i].name or cat[i].group
+        if nm and c.gbuff[group][nm] then table.insert(out, nm) end
+    end
+    return out
+end
+
+-- Every group this caster covers at all, ascending. Used by the panel's
+-- coverage line and by the report.
+function A.GetCoveredGroups(caster)
+    local out = {}
+    local c = Block(caster)
+    if not (c and c.gbuff) then return out end
+    for g = 1, MAX_GROUPS do
+        if c.gbuff[g] then
+            for _ in pairs(c.gbuff[g]) do table.insert(out, g); break end
+        end
+    end
+    return out
+end
+
+-- leader-gated bulk clear for one caster's whole group plan
+function A.ClearGroupBuffs(caster)
+    if not Editable(caster) then return false end
+    local c = Block(caster)
+    if not (c and c.gbuff) then return true end
+    c.gbuff = nil
+    Touch(c, caster)
+    Notify("gbuff", caster)
+    return true
+end
+
+--------------------------------------------------------------------------
+-- crowd-control domain: caster x raid MARK (1-8) -> a cc duty key.
+--
+-- Stored caster-major like everything else, because that is what the sync
+-- protocol ships and what PruneToRoster cleans: when the mage holding Skull
+-- leaves the raid their whole block goes, and the mark falls vacant on its
+-- own with nothing to remember to tidy up. The panel reads the MARK-major
+-- view (A.GetCCForMark), which is derived on demand and never stored, so
+-- there is no second copy to drift.
+--
+-- The SPELL is part of the plan rather than implied by class: "the warlock
+-- banishes the moon" and "the warlock fears the moon" are different
+-- instructions, and a rogue can either sap or blind. So the value is a key
+-- from the shared duty catalog (tab="cc"), which also puts CC on the same
+-- append-only wid space as every other duty - one pool, so a CC entry can
+-- never collide with a debuff on the wire.
+--------------------------------------------------------------------------
+local CC_MARKS = 8      -- the eight raid target icons; 1 = Star .. 8 = Skull
+
+function A.MaxMarks() return CC_MARKS end
+
+local function ValidMark(m)
+    m = tonumber(m)
+    if not m or m < 1 or m > CC_MARKS then return nil end
+    return m
+end
+
+-- nil ccKey clears this caster's claim on the mark. An unknown key is REFUSED
+-- rather than stored: nothing in the catalog answers to it, so it would
+-- serialise to nothing and vanish silently on every other client while still
+-- looking assigned here.
+function A.SetCC(caster, mark, ccKey)
+    local m = ValidMark(mark)
+    if not m or not Editable(caster) then return false end
+    if ccKey ~= nil then
+        local def = A.duties[ccKey]
+        if not (def and def.tab == "cc") then return false end
+    end
+    local c = Block(caster, true)
+    c.cc = c.cc or {}
+    if c.cc[m] == ccKey then return true end
+    c.cc[m] = ccKey
+    Touch(c, caster)
+    Notify("cc", caster)
+    return true
+end
+
+function A.GetCC(caster, mark)
+    local m = ValidMark(mark)
+    local c = m and Block(caster)
+    return c and c.cc and c.cc[m]
+end
+
+-- Every mark this caster holds, ascending, as { mark=, key= }. Used by the
+-- panel's per-caster summary and by the report.
+function A.GetCCMarks(caster)
+    local out = {}
+    local c = Block(caster)
+    if not (c and c.cc) then return out end
+    for m = 1, CC_MARKS do
+        if c.cc[m] then table.insert(out, { mark = m, key = c.cc[m] }) end
+    end
+    return out
+end
+
+-- leader-gated bulk clear of one caster's whole CC plan
+function A.ClearCC(caster)
+    if not Editable(caster) then return false end
+    local c = Block(caster)
+    if not (c and c.cc) then return true end
+    c.cc = nil
+    Touch(c, caster)
+    Notify("cc", caster)
+    return true
+end
+
+function A.GetDuty(caster, dutyKey)
+    local c = Block(caster)
+    return c and c.duty and c.duty[dutyKey]
+end
+
+-- Whole caster block (the sync unit; treat as read-only outside this file).
+function A.GetCaster(name)
+    return Block(name)
+end
+
+--------------------------------------------------------------------------
+-- derived views (rebuilt on demand - raid-size loops are trivial next to
+-- the 1-second roster scan; never stored, never a second source of truth)
+--------------------------------------------------------------------------
+
+-- duty-major view: who holds a duty -> array of { caster =, target = }
+function A.GetDutyCasters(dutyKey)
+    local out = {}
+    for name, c in pairs(AegisRP_Assign.casters) do
+        local v = c.duty and c.duty[dutyKey]
+        if v then table.insert(out, { caster = name, target = v }) end
+    end
+    return out
+end
+
+-- mark-major view: everyone who has claimed `mark`, as { caster=, key= },
+-- sorted by caster name so every client renders the same order from the same
+-- data. Normally one entry. More than one is a real double-claim - two people
+-- told to sheep the same skull - and it is returned as-is so the panel can
+-- SAY so, rather than silently picking a winner and hiding the mistake.
+function A.GetCCForMark(mark)
+    local out = {}
+    local m = ValidMark(mark)
+    if not m then return out end
+    local names = {}
+    for name, c in pairs(AegisRP_Assign.casters) do
+        if c.cc and c.cc[m] then table.insert(names, name) end
+    end
+    table.sort(names)
+    for i = 1, table.getn(names) do
+        table.insert(out, { caster = names[i], key = AegisRP_Assign.casters[names[i]].cc[m] })
+    end
+    return out
+end
+
+-- Give one mark to one caster, evicting whoever held it. A mark has ONE owner
+-- by nature, so this - not A.SetCC - is the write the panel uses; the
+-- primitive stays available for the sync layer and for tests.
+--
+-- Eviction only reaches casters this editor may edit. A member with no lead
+-- can still claim a mark for themselves; they just cannot remove the person
+-- who had it, and the panel shows that clash instead of pretending it fixed it.
+-- Passing nil for `caster` clears the mark as far as the editor is allowed to.
+function A.AssignMark(mark, caster, ccKey)
+    local m = ValidMark(mark)
+    if not m then return false end
+    local holders = A.GetCCForMark(m)
+    if caster == nil then
+        local any = false
+        for i = 1, table.getn(holders) do
+            if A.SetCC(holders[i].caster, m, nil) then any = true end
+        end
+        return any
+    end
+    if not Editable(caster) then return false end
+    for i = 1, table.getn(holders) do
+        if holders[i].caster ~= caster then A.SetCC(holders[i].caster, m, nil) end
+    end
+    return A.SetCC(caster, m, ccKey)
+end
+
+-- Which subgroup a member is in (raid 1-8; party/solo counts as group 1).
+local function SubgroupOf(name)
+    local n = GetNumRaidMembers()
+    if n > 0 then
+        for i = 1, n do
+            local rname, _, subgroup = GetRaidRosterInfo(i)
+            if rname == name then return subgroup end
+        end
+    end
+    return 1
+end
+
+-- [party][element] = array of { caster =, totem = }; an explicit party
+-- assignment wins, otherwise the shaman covers their own subgroup.
+function A.GetTotemCoverage()
+    local cov = {}
+    for name, c in pairs(AegisRP_Assign.casters) do
+        if c.totem then
+            local party = c.totem.party or SubgroupOf(name)
+            for i = 1, table.getn(A.elements) do
+                local el = A.elements[i]
+                local tn = c.totem[el]
+                if tn then
+                    cov[party] = cov[party] or {}
+                    cov[party][el] = cov[party][el] or {}
+                    table.insert(cov[party][el], { caster = name, totem = tn })
+                end
+            end
+        end
+    end
+    return cov
+end
+
+--------------------------------------------------------------------------
+-- roster pruning (mirrors PallyPower: leavers drop out of the plan; your
+-- own block always survives, so a leader's plan persists across relogs)
+--------------------------------------------------------------------------
+
+-- defined with the rotations further down (it needs their store layout);
+-- forward-declared here because PruneToRoster is written above them
+local PruneRotations
+
+function A.PruneToRoster()
+    local present = {}
+    present[UnitName("player")] = true
+    local n = GetNumRaidMembers()
+    if n > 0 then
+        for i = 1, n do
+            local rname = GetRaidRosterInfo(i)
+            if rname then present[rname] = true end
+        end
+    else
+        for i = 1, GetNumPartyMembers() do
+            local pn = UnitName("party" .. i)
+            if pn then present[pn] = true end
+        end
+    end
+    -- while test mode is on, the preview raid's rows survive a roster change
+    -- so the panel stays usable in a party (they never touch the wire either)
+    local testing = AegisRP.IsTestMode and AegisRP.IsTestMode()
+    local preview = AegisRP.PreviewNames
+    local kill = {}
+    for name in pairs(AegisRP_Assign.casters) do
+        if not present[name] and not (testing and preview and preview[name]) then
+            table.insert(kill, name)
+        end
+    end
+    for _, name in ipairs(kill) do
+        AegisRP_Assign.casters[name] = nil
+        AegisRP.AssignStatus[name] = nil
+    end
+    -- drop rotation members who left: a rotation skips absent people anyway,
+    -- but a stale name would sit in the list forever and confuse the panel's
+    -- order. (Only the real stores - the test-mode previews are separate.)
+    if not testing then PruneRotations(present) end
+    -- heal duties held by a caster of the wrong class (stale data from before
+    -- class-matching was enforced), where the class is known
+    local healed = false
+    for name, c in pairs(AegisRP_Assign.casters) do
+        if c.duty or c.cc then
+            local cls = ClassKnown(name)
+            if cls then
+                if c.duty then
+                    for key, val in pairs(c.duty) do
+                        local def = A.duties[key]
+                        if val and def and def.class and def.class ~= cls then
+                            c.duty[key] = nil
+                            healed = true
+                        end
+                    end
+                end
+                -- same heal for crowd control: a mark claimed with a spell the
+                -- caster's class cannot cast is stale, not a plan
+                if c.cc then
+                    for m, key in pairs(c.cc) do
+                        local def = A.duties[key]
+                        if def and def.class and def.class ~= cls then
+                            c.cc[m] = nil
+                            healed = true
+                        end
+                    end
+                end
+            end
+        end
+    end
+    if table.getn(kill) > 0 or healed then Notify("prune", nil) end
+end
+
+--------------------------------------------------------------------------
+-- blessing domain: ADAPTER over the untouched PallyPower engine. Reads and
+-- writes go straight to the legacy tables and out over the byte-identical
+-- PLPWR messages via the engine's own send path.
+--------------------------------------------------------------------------
+
+function A.GetBlessing(pally, classID)
+    local t = PallyPower_Assignments and PallyPower_Assignments[pally]
+    local v = t and t[classID]
+    if v == nil then return -1 end
+    return v
+end
+
+function A.SetBlessing(pally, classID, bid)
+    if not PallyPower_Assignments then return false end
+    if not Editable(pally) then return false end
+    PallyPower_Assignments[pally] = PallyPower_Assignments[pally] or {}
+    PallyPower_Assignments[pally][classID] = bid
+    if PallyPower_SendMessage then
+        PallyPower_SendMessage("ASSIGN " .. pally .. " " .. classID .. " " .. bid)
+    end
+    Notify("blessings", pally)
+    return true
+end
+
+function A.GetNormalBlessing(pally, classID, tname)
+    if GetNormalBlessings then
+        return GetNormalBlessings(pally, classID, tname)
+    end
+    return -1
+end
+
+function A.SetNormalBlessing(pally, classID, tname, bid)
+    if not SetNormalBlessings then return false end
+    if not Editable(pally) then return false end
+    SetNormalBlessings(pally, classID, tname, bid)
+    if PallyPower_SendMessage then
+        PallyPower_SendMessage("NASSIGN " .. pally .. " " .. classID .. " " .. tname .. " " .. bid)
+    end
+    Notify("blessings", pally)
+    return true
+end
+
+--------------------------------------------------------------------------
+-- role domain: ADAPTER over PallyPower's own Tanks/Healers tables. Reusing
+-- them (not a parallel store) means roles are shared byte-for-byte with
+-- stock PallyPower over the legacy PLPWR channel AND drive its own tank
+-- logic (e.g. no Salvation on a marked tank). Nothing role-related rides
+-- RPCX. A player marked here shows up in a stock-PallyPower user's raid and
+-- vice versa.
+--------------------------------------------------------------------------
+
+-- Preview-raid roles/overrides live here (never saved, never broadcast), so
+-- a solo tester can mark preview tanks without polluting the real
+-- PallyPower_Tanks table or the PLPWR wire.
+local previewRoles = {}          -- [name] = "TANK" | "HEALER"
+local previewTankBless = {}      -- [name][classID] = bid
+
+local function IsPreview(name)
+    return AegisRP.PreviewNames and AegisRP.PreviewNames[name]
+end
+
+function A.GetRole(name)
+    if IsPreview(name) then return previewRoles[name] end
+    if PallyPower_Tanks and PallyPower_Tanks[name] then return "TANK" end
+    if PallyPower_Healers and PallyPower_Healers[name] then return "HEALER" end
+    return nil
+end
+
+-- role = "TANK" | "HEALER" | nil. Leader-gated (roles are a raid-wide plan);
+-- sends the byte-identical TANK/HEALER/CLTNK/CLHLR messages PallyPower uses.
+function A.SetRole(name, role)
+    if not (A.IAmLead() or A.GetFreeAssign()) then return false end
+    -- leaving the tank role also drops the tank's blessing override (we
+    -- present it as "the tank's blessing"), so an ex-tank stops overriding
+    -- their class blessing
+    if role ~= "TANK" and A.GetRole(name) == "TANK" then
+        local tok = ClassKnown(name)
+        local cid = tok and AegisRP.Token2ClassID and AegisRP.Token2ClassID[tok]
+        if cid then A.SetTankBlessing(name, cid, -1) end
+    end
+    if IsPreview(name) then
+        previewRoles[name] = role     -- sandbox: no legacy table, no wire
+        Notify("role", name)
+        return true
+    end
+    PallyPower_Tanks = PallyPower_Tanks or {}
+    PallyPower_Healers = PallyPower_Healers or {}
+    local wasTank, wasHealer = PallyPower_Tanks[name], PallyPower_Healers[name]
+    PallyPower_Tanks[name] = nil
+    PallyPower_Healers[name] = nil
+    local send = PallyPower_SendMessage
+    if role == "TANK" then
+        PallyPower_Tanks[name] = true
+        if send then send("TANK " .. name) end
+    elseif role == "HEALER" then
+        PallyPower_Healers[name] = true
+        if send then send("HEALER " .. name) end
+    else
+        if wasTank and send then send("CLTNK " .. name) end
+        if wasHealer and send then send("CLHLR " .. name) end
+    end
+    Notify("role", name)
+    return true
+end
+
+--------------------------------------------------------------------------
+-- tank blessing override: the blessing a specific player (tank) gets instead
+-- of their class default. This is PallyPower's per-player NormalAssignments,
+-- byte-identical NASSIGN. Read from any known paladin; write to every paladin
+-- the editor controls, so the tank gets it whoever buffs them.
+--------------------------------------------------------------------------
+
+function A.GetTankBlessing(tname, classID)
+    if IsPreview(tname) then
+        local t = previewTankBless[tname]
+        return (t and t[classID]) or -1
+    end
+    if not AllPallys then return -1 end
+    for pally in pairs(AllPallys) do
+        local bid = A.GetNormalBlessing(pally, classID, tname)
+        if bid and bid ~= -1 then return bid end
+    end
+    return -1
+end
+
+-- Can any known paladin actually cast blessing `bid`? (the override only
+-- fires when the paladin has that blessing - PallyPower.lua line 3232 - so a
+-- non-castable pick silently drops the tank's blessing.)
+function A.TankBlessingCastable(bid)
+    if bid == -1 then return true end
+    if not AllPallys then return false end
+    for pally in pairs(AllPallys) do
+        if PallyPower_CanBuff and PallyPower_CanBuff(pally, bid) then return true end
+    end
+    return false
+end
+
+function A.SetTankBlessing(tname, classID, bid)
+    if IsPreview(tname) then
+        previewTankBless[tname] = previewTankBless[tname] or {}
+        previewTankBless[tname][classID] = bid   -- sandbox: no legacy, no wire
+        Notify("blessings", tname)
+        return true
+    end
+    if not AllPallys then return false end
+    local any = false
+    for pally in pairs(AllPallys) do
+        -- only set the override on paladins that can cast it (clear always);
+        -- a non-castable override would just drop the tank's blessing
+        if bid == -1 or (PallyPower_CanBuff and PallyPower_CanBuff(pally, bid)) then
+            if A.SetNormalBlessing(pally, classID, tname, bid) then any = true end
+        end
+    end
+    if any then Notify("blessings", tname) end
+    return any
+end
+
+--------------------------------------------------------------------------
+-- tank slots: an ordered plan (Main Tank, Off-Tank 1, Off-Tank 2) layered on
+-- top of PallyPower_Tanks. Membership (who IS a tank - for the no-Salvation
+-- rule, tank blessings, and stock-PallyPower interop) still rides SetRole /
+-- PLPWR; only the SLOT ORDER is Aegis-specific, and it rides RPCX
+-- (leader-gated) so the raid shares one MT/OT plan. Test mode keeps its own
+-- sandbox copy so a solo tester never persists or broadcasts.
+--------------------------------------------------------------------------
+local TANK_SLOTS = 3
+local previewTankSlots = {}
+
+local function SlotStore()
+    if AegisRP.IsTestMode and AegisRP.IsTestMode() then return previewTankSlots end
+    AegisRP_Roles = AegisRP_Roles or {}
+    AegisRP_Roles.tankSlots = AegisRP_Roles.tankSlots or {}
+    return AegisRP_Roles.tankSlots
+end
+
+function A.TankSlotCount() return TANK_SLOTS end
+
+function A.GetTankSlot(i) return SlotStore()[i] end
+
+function A.GetTankSlots()
+    local s, out = SlotStore(), {}
+    for i = 1, TANK_SLOTS do out[i] = s[i] end
+    return out
+end
+
+-- which slot (1..N) holds `name`, or nil
+function A.TankSlotOf(name)
+    if not name then return nil end
+    local s = SlotStore()
+    for i = 1, TANK_SLOTS do if s[i] == name then return i end end
+    return nil
+end
+
+-- leader-gated. `name` may be nil to empty the slot. A name only ever holds
+-- one slot (setting it elsewhere moves it). Clearing/replacing a slot un-tanks
+-- the previous occupant unless they still hold another slot.
+function A.SetTankSlot(i, name)
+    if i < 1 or i > TANK_SLOTS then return false end
+    if not (A.IAmLead() or A.GetFreeAssign()) then return false end
+    local s = SlotStore()
+    if name == "" then name = nil end
+    if name then
+        for j = 1, TANK_SLOTS do if s[j] == name then s[j] = nil end end
+    end
+    local old = s[i]
+    s[i] = name
+    if old and old ~= name and not A.TankSlotOf(old) then
+        if A.GetRole(old) == "TANK" then A.SetRole(old, nil) end
+    end
+    if name and A.GetRole(name) ~= "TANK" then A.SetRole(name, "TANK") end
+    Notify("tankslots", name or old)
+    return true
+end
+
+-- leader-gated bulk clear (the panel's Clear button on the Roles tab)
+function A.ClearTankSlots()
+    if not (A.IAmLead() or A.GetFreeAssign()) then return false end
+    local s = SlotStore()
+    for i = 1, TANK_SLOTS do
+        local nm = s[i]
+        s[i] = nil
+        if nm and not A.TankSlotOf(nm) and A.GetRole(nm) == "TANK" then A.SetRole(nm, nil) end
+    end
+    Notify("tankslots", nil)
+    return true
+end
+
+-- remote apply (RPCX): install a shared slot order without re-broadcasting.
+-- Membership arrives separately over PLPWR (TANK/CLTNK); here we only record
+-- the ordering. Ignored in test mode (the sandbox stays local).
+function A.ApplyTankSlots(list)
+    if AegisRP.IsTestMode and AegisRP.IsTestMode() then return end
+    AegisRP_Roles = AegisRP_Roles or {}
+    AegisRP_Roles.tankSlots = AegisRP_Roles.tankSlots or {}
+    local s = AegisRP_Roles.tankSlots
+    for i = 1, TANK_SLOTS do s[i] = list[i] end
+    Notify("tankslots", nil)
+end
+
+--------------------------------------------------------------------------
+-- ROTATIONS - ordered priority lists of people who share one job.
+--
+-- Two of them exist: "kick" (who interrupts) and "taunt" (who picks the boss
+-- up). They are the same problem, so they are one implementation with a `kind`
+-- rather than two copies: a bug fixed in the rotation rules is fixed in both,
+-- and a third rotation later costs a table entry, not another 100 lines.
+--
+-- Deliberately just an ORDER, with no "whose turn" pointer: whose turn it is
+-- falls out of the order plus everyone's cooldowns (the first person in the
+-- list whose ability is actually ready). That makes a rotation stateless -
+-- every client computes the same answer from the same synced data, so there is
+-- no turn counter to drift, desync, or reset on a wipe. Using the ability puts
+-- you on cooldown, which hands the top spot to the next person automatically.
+--------------------------------------------------------------------------
+local MAX_ROT = 10              -- keeps the wire message well inside one send
+
+-- kind -> { save = AegisRP_Roles field, domain = Notify domain }. The saved
+-- field names are frozen: `kickOrder` is what every existing character already
+-- has on disk, so it keeps its name rather than being migrated.
+local ROT_KIND = {
+    kick  = { save = "kickOrder",  domain = "kickorder"  },
+    taunt = { save = "tauntOrder", domain = "tauntorder" },
+}
+local ROT_ORDER = { "kick", "taunt" }     -- iteration order, for the pruner
+
+-- test mode gets its own rotations so a preview never touches the raid's plan
+local previewRot = { kick = {}, taunt = {} }
+
+local function RotStore(kind)
+    local def = ROT_KIND[kind]
+    if not def then return nil end
+    if AegisRP.IsTestMode and AegisRP.IsTestMode() then
+        previewRot[kind] = previewRot[kind] or {}
+        return previewRot[kind]
+    end
+    AegisRP_Roles = AegisRP_Roles or {}
+    AegisRP_Roles[def.save] = AegisRP_Roles[def.save] or {}
+    return AegisRP_Roles[def.save]
+end
+
+function A.MaxRotation() return MAX_ROT end
+
+function A.GetRotation(kind)
+    local s, out = RotStore(kind), {}
+    if not s then return out end
+    for i = 1, table.getn(s) do out[i] = s[i] end
+    return out
+end
+
+-- position of `name` in the rotation (1-based), or nil
+function A.RotationIndexOf(kind, name)
+    if not name then return nil end
+    local s = RotStore(kind)
+    if not s then return nil end
+    for i = 1, table.getn(s) do if s[i] == name then return i end end
+    return nil
+end
+
+-- leader-gated. Adds to the end if absent, removes if already present.
+function A.ToggleRotationMember(kind, name)
+    local def = ROT_KIND[kind]
+    if not (def and name) then return false end
+    if not (A.IAmLead() or A.GetFreeAssign()) then return false end
+    local s = RotStore(kind)
+    local at = A.RotationIndexOf(kind, name)
+    if at then
+        table.remove(s, at)
+    else
+        if table.getn(s) >= MAX_ROT then return false end
+        table.insert(s, name)
+    end
+    Notify(def.domain, name)
+    return true
+end
+
+-- leader-gated. dir = -1 up (higher priority) / +1 down.
+function A.MoveRotationMember(kind, name, dir)
+    local def = ROT_KIND[kind]
+    if not def then return false end
+    if not (A.IAmLead() or A.GetFreeAssign()) then return false end
+    local s = RotStore(kind)
+    local at = A.RotationIndexOf(kind, name)
+    if not at then return false end
+    local to = at + dir
+    if to < 1 or to > table.getn(s) then return false end
+    s[at], s[to] = s[to], s[at]
+    Notify(def.domain, name)
+    return true
+end
+
+function A.ClearRotation(kind)
+    local def = ROT_KIND[kind]
+    if not def then return false end
+    if not (A.IAmLead() or A.GetFreeAssign()) then return false end
+    local s = RotStore(kind)
+    for i = table.getn(s), 1, -1 do table.remove(s, i) end
+    Notify(def.domain, nil)
+    return true
+end
+
+-- leader-gated bulk set (used by the panel's "suggest order")
+function A.SetRotation(kind, list)
+    local def = ROT_KIND[kind]
+    if not def then return false end
+    if not (A.IAmLead() or A.GetFreeAssign()) then return false end
+    local s = RotStore(kind)
+    for i = table.getn(s), 1, -1 do table.remove(s, i) end
+    for i = 1, table.getn(list) do
+        if i > MAX_ROT then break end
+        s[i] = list[i]
+    end
+    Notify(def.domain, nil)
+    return true
+end
+
+-- remote apply (RPCX): install without re-broadcasting. Sandbox stays local.
+function A.ApplyRotation(kind, list)
+    local def = ROT_KIND[kind]
+    if not def then return end
+    if AegisRP.IsTestMode and AegisRP.IsTestMode() then return end
+    AegisRP_Roles = AegisRP_Roles or {}
+    AegisRP_Roles[def.save] = AegisRP_Roles[def.save] or {}
+    local s = AegisRP_Roles[def.save]
+    for i = table.getn(s), 1, -1 do table.remove(s, i) end
+    for i = 1, table.getn(list) do s[i] = list[i] end
+    Notify(def.domain, nil)
+end
+
+function A.EncodeRotation(kind)
+    local s, out = RotStore(kind), {}
+    if s then for i = 1, table.getn(s) do out[i] = s[i] end end
+    if table.getn(out) == 0 then out[1] = "-" end   -- "empty" needs a token
+    return out
+end
+
+-- forward-declared above PruneToRoster: drop anyone no longer in the group
+-- from every rotation at once, so adding a rotation never means remembering
+-- to add it to the pruner too.
+function PruneRotations(present)
+    if not AegisRP_Roles then return end
+    for i = 1, table.getn(ROT_ORDER) do
+        local def = ROT_KIND[ROT_ORDER[i]]
+        local s = AegisRP_Roles[def.save]
+        if s then
+            for j = table.getn(s), 1, -1 do
+                if not present[s[j]] then table.remove(s, j) end
+            end
+        end
+    end
+end
+
+function A.DecodeRotation(tokens, base)
+    local list = {}
+    local i = base
+    while tokens[i] do
+        if tokens[i] ~= "-" then table.insert(list, tokens[i]) end
+        i = i + 1
+    end
+    return list
+end
+
+-- Kick-specific names, kept because the panel, the strip and the sync layer all
+-- call them and because "kick" reads better than GetRotation("kick") at a call
+-- site that is only ever about interrupts.
+function A.MaxKickers()             return A.MaxRotation() end
+function A.GetKickOrder()           return A.GetRotation("kick") end
+function A.KickIndexOf(name)        return A.RotationIndexOf("kick", name) end
+function A.ToggleKicker(name)       return A.ToggleRotationMember("kick", name) end
+function A.MoveKicker(name, dir)    return A.MoveRotationMember("kick", name, dir) end
+function A.ClearKickOrder()         return A.ClearRotation("kick") end
+function A.SetKickOrder(list)       return A.SetRotation("kick", list) end
+function A.ApplyKickOrder(list)     return A.ApplyRotation("kick", list) end
+function A.EncodeKickOrder()        return A.EncodeRotation("kick") end
+function A.DecodeKickOrder(t, base) return A.DecodeRotation(t, base) end
+
+-- wire encode/decode: N tokens, "-" = empty (player names carry no "-"/space
+-- on a single-realm server).
+function A.EncodeTankSlots()
+    local s, out = SlotStore(), {}
+    for i = 1, TANK_SLOTS do out[i] = (s[i] and s[i] ~= "") and s[i] or "-" end
+    return out
+end
+
+function A.DecodeTankSlots(tokens, base)
+    local list = {}
+    for i = 1, TANK_SLOTS do
+        local t = tokens[base + i - 1]
+        if t and t ~= "-" then list[i] = t end
+    end
+    return list
+end
+
+--------------------------------------------------------------------------
+-- sync bridge (step 2): the RPCX layer decodes a remote caster block and
+-- installs it here. Whole-block REPLACE (the sender is authoritative for
+-- that caster), then the same Notify the panel already listens to. Kept in
+-- this file so Notify stays private; the sync module owns the wire.
+--------------------------------------------------------------------------
+
+function A.ApplyRemoteBlock(caster, block)
+    if not caster or not block then return end
+    block.class = block.class or ClassOf(caster)
+    AegisRP_Assign.casters[caster] = block
+    Notify("sync", caster)
+end
+
+function A.RemoveRemoteBlock(caster)
+    if not caster then return end
+    AegisRP_Assign.casters[caster] = nil
+    AegisRP.AssignStatus[caster] = nil
+    Notify("sync", caster)
+end
+
+--------------------------------------------------------------------------
+-- runtime status mirror (assigned vs actually-up; GetTime-based, never
+-- saved). info tables carry { expires = <GetTime deadline>, name=/target= }.
+--------------------------------------------------------------------------
+
+function A.SetStatus(caster, domain, slot, info)
+    local S = AegisRP.AssignStatus
+    if info == nil then
+        local c = S[caster]
+        if c and c[domain] then c[domain][slot] = nil end
+        return
+    end
+    S[caster] = S[caster] or {}
+    S[caster][domain] = S[caster][domain] or {}
+    S[caster][domain][slot] = info
+end
+
+function A.GetStatus(caster, domain, slot)
+    local c = AegisRP.AssignStatus[caster]
+    local d = c and c[domain]
+    return d and d[slot]
+end

@@ -1,0 +1,35 @@
+{
+  "upstream": "https://github.com/fa1l1l/TW-Auto-Turn-In-fixed-/tree/main",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "fa1l1l",
+    "repo": "TW-Auto-Turn-In-fixed-",
+    "name": "TW-Auto-Turn-In-fixed-",
+    "ref": "main",
+    "subpath": "",
+    "url": "https://github.com/fa1l1l/TW-Auto-Turn-In-fixed-",
+    "api": "https://api.github.com/repos/fa1l1l/TW-Auto-Turn-In-fixed-"
+  },
+  "commit": "3dfde1a53fd6b8da4914ab44d90017a81d5ba43a",
+  "sourceFiles": {
+    ".DS_Store": {
+      "sha256": "873ab241c8a1d5fe288df8ee0467e44862c3090f5b12fbd6b7764e923672bd9a",
+      "bytes": 8196
+    },
+    "AutoTurnIn.lua": {
+      "sha256": "be8e30d9399e7c4922611d9454f9890b6ef12111bb563bba67f8cb7d7cf8210c",
+      "bytes": 21314
+    },
+    "AutoTurnIn.toc": {
+      "sha256": "78fe30b8197561dedc676e1d52676635c85bb2960b63d61ac5d5b937154e1b2b",
+      "bytes": 198
+    },
+    "README.md": {
+      "sha256": "f90b44b1ff5b4c1361c4f870ded41e26be6e762433cdb8b94219e548c481eb91",
+      "bytes": 163
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

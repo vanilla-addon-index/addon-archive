@@ -1,0 +1,62 @@
+{
+  "upstream": "https://github.com/EinBaum/_AutoBG",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "_AutoBG",
+    "name": "_AutoBG",
+    "url": "https://github.com/EinBaum/_AutoBG",
+    "api": "https://api.github.com/repos/EinBaum/_AutoBG"
+  },
+  "commit": "55899bc3aa9acc1e6659e7481ea4f5e424534cc4",
+  "sourceFiles": {
+    "_AutoBG.lua": {
+      "sha256": "bafaa5f85144b1676fe5fcb3822b0f936c124695adfdd95767ed6d1df2cb1583",
+      "bytes": 3075
+    },
+    "_AutoBG.toc": {
+      "sha256": "e250075cb8444dd887f906228a814cda9fcb246c026e4a107a16145411f2a204",
+      "bytes": 210
+    },
+    "LICENSE": {
+      "sha256": "e02cc9347f2df9d2fb8ae624e90c380c78e87d5c46d51626bfd1cef35569f475",
+      "bytes": 1075
+    },
+    "make_release": {
+      "sha256": "8fa417eef0e9a119a95e58af7bc16930dc4372e763001fb9bd69f7973a2544b6",
+      "bytes": 122
+    },
+    "preview.jpg": {
+      "sha256": "5c7168fef73ba866976406cbbec4888ac01d9d14f2bd75aefb24aebbf9dc261a",
+      "bytes": 21316
+    },
+    "README.md": {
+      "sha256": "d640aff48a197e84c6cdcae2093eda78e2a63a65ce666c8d38e9f01d0a4bdc72",
+      "bytes": 363
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "13979155": {
+      "tag": "1.0.0",
+      "folder": "1.0.0--13979155",
+      "assets": {
+        "9675271": {
+          "sha256": "8aab152ff233168ac29b2349984e40a38018f52751fdd3c5b6481d2bf8ca50b0",
+          "bytes": 2964,
+          "id": "9675271",
+          "name": "_AutoBG.zip",
+          "url": "https://github.com/EinBaum/_AutoBG/releases/download/1.0.0/_AutoBG.zip",
+          "path": "releases/1.0.0--13979155/assets/_AutoBG.zip"
+        }
+      },
+      "source": {
+        "sha256": "098d590a8e6a6c62ad275ffe5c1bf69621565764cf08221f05ccab0848ad67c7",
+        "bytes": 23946,
+        "path": "releases/1.0.0--13979155/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/EinBaum/_AutoBG/tarball/1.0.0"
+      }
+    }
+  }
+}

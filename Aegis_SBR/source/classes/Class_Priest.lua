@@ -1,0 +1,1194 @@
+-- ============================================================
+-- Class_Priest  -  priest module for Aegis_SBR
+-- Turtle WoW 1.12 (SuperWoW). Shadow / leveling DPS + Disc/Holy healing.
+-- ============================================================
+-- Two play modes, switched by the heal toggle (or /sbr heal on|off):
+--
+--  DPS (Shadow + leveling), the default:
+--   * Keep Inner Fire up; optionally hold Shadowform.
+--   * Power Word: Shield as mitigation when a mob is in melee or you are
+--     taking heavy hits, gated on Weakened Soul so it never tries to re-shield.
+--   * Mind Blast on cooldown (the Shadow Weaving trigger and the leveling pull).
+--   * Spirit Tap finisher: under the execute threshold, prioritise a burst
+--     (Mind Blast then Smite) so the priest secures the experience-yielding kill.
+--   * Damage-over-time upkeep: Shadow Word: Pain (toggleable for raid debuff
+--     limits), Devouring Plague (Undead), Holy Fire (only out of Shadowform).
+--   * Filler: the chosen damage spell while mana is healthy, falling back to the
+--     WAND when mana drops below a floor. That is the 5-second-rule loop -- the
+--     engine wands to let mana regenerate instead of casting itself dry.
+--
+--  Heal (Discipline / Holy):
+--   * Responsive triage with rank downranking (reuses the paladin heal engine):
+--     the most-hurt reachable member is healed with the smallest rank that
+--     covers the deficit, to conserve mana.
+--   * Flash Heal is reserved for emergencies (a target near death).
+--   * Greater Heal for big deficits, Heal for efficient sustained healing.
+--   * Prayer of Healing for AoE, paired with Inner Focus (when ready) to negate
+--     its mana cost.
+--   * Power Word: Shield and Renew as maintenance, both Weakened-Soul / throttle
+--     guarded so dungeons do not get over-bubbled.
+--   * Between heals it can weave Smite / Holy Fire as offensive support (the
+--     Enlighten / atonement style), and place Lightwell when enabled.
+--
+-- Almost everything is KnowsSpell-gated, so one profile scales from level 1 to
+-- 60 -- abilities switch themselves on as they are trained. Cast-time spells are
+-- queued with QueueSpellByName so the rotation never clips a cast or a channel.
+-- ============================================================
+
+local M = Aegis_SBR:NewClassModule("PRIEST")
+M.uiTitle = "Priest"
+-- Rotate runs under Aegis_SBR:Preview without casting (see Pick/Later).
+M.previewReady = true
+M.uiHeight = 928
+M.meleeAutoAttack = false   -- caster, no white melee swing
+
+-- Chat output is shared in the core; this shim keeps call sites unchanged.
+local function msgOut(text, r, g, b) Aegis_SBR:Msg(text, r, g, b) end
+
+-- ---------- channel-clip protection ----------
+-- Mind Flay (and Mana Burn) are channels; once one runs the rotation must not
+-- queue another cast over it. Flag while any channel runs, clear on stop
+-- (including the early stop when the target dies mid-channel). A 16s ceiling
+-- guards a missed stop event so the rotation can never wedge.
+M.channeling = false
+M.chanStart = 0
+local prChannelFrame = CreateFrame("Frame")
+prChannelFrame:RegisterEvent("SPELLCAST_CHANNEL_START")
+prChannelFrame:RegisterEvent("SPELLCAST_CHANNEL_STOP")
+prChannelFrame:SetScript("OnEvent", function()
+    if event == "SPELLCAST_CHANNEL_START" then
+        M.channeling = true; M.chanStart = GetTime()
+    elseif event == "SPELLCAST_CHANNEL_STOP" then
+        M.channeling = false
+    end
+end)
+
+-- ---------- weave nuke: stopped for a heal ----------
+-- In heal mode a Smite or Holy Fire is cast only while nobody needs healing,
+-- but it runs for 2.5 to 3.5 seconds, and a member who dropped under the heal
+-- line meanwhile waited for it to finish - reported as heals starting near
+-- half health with the line at 70. The cast is stopped instead, and the next
+-- press heals. Checked ten times a second, only while such a cast runs.
+local NUKE_TICK = 0.1
+local NUKES = { ["Smite"] = true, ["Holy Fire"] = true }
+-- The same events also give the running cast's end (castUntil, for the hold
+-- in Rotate) and settle the pending-heal ledger (see CommitHeal): a heal the
+-- client refused before it started, or that was interrupted, will not land.
+local prNukeFrame = CreateFrame("Frame")
+prNukeFrame:RegisterEvent("SPELLCAST_START")
+prNukeFrame:RegisterEvent("SPELLCAST_STOP")
+prNukeFrame:RegisterEvent("SPELLCAST_FAILED")
+prNukeFrame:RegisterEvent("SPELLCAST_INTERRUPTED")
+prNukeFrame:RegisterEvent("SPELLCAST_DELAYED")
+prNukeFrame:SetScript("OnEvent", function()
+    local now = GetTime()
+    if event == "SPELLCAST_START" then
+        M.nukeCasting = (arg1 and NUKES[arg1]) and true or nil
+        M.castUntil = now + (tonumber(arg2) or 0) / 1000
+        -- The heal sent last has started: it is the one now casting.
+        local e = M.lastCommit and M.pending[M.lastCommit]
+        if e and not e.started then
+            e.started = true
+            M.castEntry = M.lastCommit
+        else
+            M.castEntry = nil
+        end
+    elseif event == "SPELLCAST_DELAYED" then
+        -- Pushback moves the end of the cast.
+        if M.castUntil then M.castUntil = M.castUntil + (tonumber(arg1) or 0) / 1000 end
+    elseif event == "SPELLCAST_FAILED" then
+        -- A heal refused right after it was sent was never cast: Book of
+        -- Prayer still counts the one before it.
+        if M.lastHealT and (now - M.lastHealT) < 0.5 then
+            M.lastHeal = M.healBefore; M.lastHealT = nil
+        end
+        local e = M.lastCommit and M.pending[M.lastCommit]
+        if e and not e.started then
+            -- Refused before it began (another cast running, range, line of
+            -- sight): only that heal's mark goes, the running cast stays.
+            M.pending[M.lastCommit] = nil
+            M.lastCommit = nil
+        else
+            M.nukeCasting = nil
+            M.castUntil = nil
+            if M.castEntry then M.pending[M.castEntry] = nil; M.castEntry = nil end
+        end
+    elseif event == "SPELLCAST_INTERRUPTED" then
+        M.nukeCasting = nil
+        M.castUntil = nil
+        if M.castEntry then M.pending[M.castEntry] = nil; M.castEntry = nil end
+    else -- SPELLCAST_STOP: finished; the heal lands, its mark runs out by itself
+        M.nukeCasting = nil
+        M.castUntil = nil
+        M.castEntry = nil
+    end
+end)
+prNukeFrame:SetScript("OnUpdate", function()
+    if not M.nukeCasting or Aegis_SBR.active ~= M then return end
+    local now = GetTime()
+    if (M.nukeTick or 0) > now then return end
+    M.nukeTick = now + NUKE_TICK
+    local cfg = Aegis_SBR:GetActiveProfile()
+    if cfg then cfg = Aegis_SBR:EffectiveConfig(cfg) end
+    if not cfg or not cfg.healMode then return end
+    if M:WorstHurt((cfg.healThreshold or 85) / 100, cfg) then
+        M.nukeCasting = nil
+        SpellStopCasting()
+    end
+end)
+
+-- ---------- combat-state flag ----------
+-- UnitAffectingCombat is unavailable on 1.12, so combat is tracked with the
+-- regen events. Used to hold Lightwell placement until out of combat.
+M.inCombat = false
+local prCombatFrame = CreateFrame("Frame")
+prCombatFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+prCombatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+prCombatFrame:SetScript("OnEvent", function()
+    if event == "PLAYER_REGEN_DISABLED" then M.inCombat = true
+    elseif event == "PLAYER_REGEN_ENABLED" then M.inCombat = false end
+end)
+
+-- ============================================================
+-- Heal value tables (APPROXIMATE, tunable for Turtle WoW). The rank picker
+-- downranks against these plus the gear +healing bonus. If downranking picks a
+-- rank that over- or under-heals, adjust the numbers here.
+-- ============================================================
+M.FH_HEAL = { 220, 290, 370, 490, 630, 800, 950 }                 -- Flash Heal
+M.FH_MANA = { 125, 155, 185, 225, 290, 350, 410 }
+M.GH_HEAL = { 900, 1150, 1500, 1900, 2250, 2600 }                 -- Greater Heal
+M.GH_MANA = { 370, 440, 510, 590, 650, 710 }
+M.HEAL_HEAL = { 310, 500, 685, 900 }                              -- Heal
+M.HEAL_MANA = { 155, 205, 255, 305 }
+M.LH_HEAL = { 55, 95, 150 }                                       -- Lesser Heal
+M.LH_MANA = { 30, 45, 65 }
+-- Lesser Heal casts 1.5 / 2.0 / 2.5 s by rank and is learned at levels 1, 4
+-- and 10, so its +healing share is cut by the low-level penalty (3.75% per
+-- level under 20): rank 3 gets about 45% of the bonus.
+M.LH_CAST  = { 1.5, 2.0, 2.5 }
+M.LH_LEVEL = { 1, 4, 10 }
+
+-- ---------- gear +healing scan (own tooltip, unique global name) ----------
+local healScanTip = CreateFrame("GameTooltip", "Aegis_SBR_PriestHealScan", nil, "GameTooltipTemplate")
+healScanTip:SetOwner(healScanTip, "ANCHOR_NONE")
+M.cachedHealBonus = nil
+local healBonusFrame = CreateFrame("Frame")
+healBonusFrame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
+healBonusFrame:RegisterEvent("UNIT_INVENTORY_CHANGED")
+healBonusFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+healBonusFrame:SetScript("OnEvent", function() M.cachedHealBonus = nil end)
+
+function M:ParseHealBonus(txt)
+    local _, _, n
+    _, _, n = string.find(txt, "[Hh]ealing done by spells and effects by up to (%d+)")
+    if n then return tonumber(n) end
+    _, _, n = string.find(txt, "damage and healing done by magical spells and effects by up to (%d+)")
+    if n then return tonumber(n) end
+    _, _, n = string.find(txt, "[Hh]ealing %+(%d+)")
+    if n then return tonumber(n) end
+    _, _, n = string.find(txt, "^%+(%d+) [Hh]ealing")
+    if n then return tonumber(n) end
+    _, _, n = string.find(txt, "[Hh]eilung von Zaubern und Effekten um bis zu (%d+)")
+    if n then return tonumber(n) end
+    return 0
+end
+
+function M:GearHealBonus()
+    if self.cachedHealBonus then return self.cachedHealBonus end
+    local total = 0
+    for slot = 1, 19 do
+        if GetInventoryItemLink("player", slot) then
+            healScanTip:ClearLines()
+            healScanTip:SetInventoryItem("player", slot)
+            for i = 1, healScanTip:NumLines() do
+                local fs = getglobal("Aegis_SBR_PriestHealScanTextLeft" .. i)
+                local txt = fs and fs:GetText()
+                if txt then total = total + self:ParseHealBonus(txt) end
+            end
+        end
+    end
+    self.cachedHealBonus = total
+    return total
+end
+
+-- ============================================================
+-- Templates: starting presets, copied into the char's saved profiles once.
+-- ============================================================
+M.templates = {
+    starter = {  -- solo from level 1: shadow damage + wand finisher, mana aware.
+        healMode = false,
+        useInnerFire = true, useShadowform = false,
+        usePWShieldMelee = true,
+        useMindBlast = true, useShadowWordPain = true, useDevouringPlague = true,
+        useHolyFire = true, useMindFlay = true,
+        useSpiritTapFinisher = true, executeHp = 25,
+        filler = "Wand", fillerManaFloor = 25, useWand = true,
+    },
+    shadow = {  -- endgame shadow: Mind Flay filler, raid-friendly DoT control.
+        healMode = false,
+        useInnerFire = true, useShadowform = true,
+        usePWShieldMelee = false,
+        useMindBlast = true, useShadowWordPain = true, useDevouringPlague = true,
+        useVampiricEmbrace = true,
+        useHolyFire = false, useMindFlay = true,
+        useSpiritTapFinisher = false, executeHp = 20,
+        filler = "Mind Flay", fillerManaFloor = 15, useWand = true,
+    },
+    heal = {  -- Discipline / Holy group healer that weaves damage between heals.
+        healMode = true, healThreshold = 85,
+        useFlashHeal = true, flashHealPct = 40,
+        useGreaterHeal = true, greaterHealDeficit = 1000,
+        usePWShield = true, useRenew = true,
+        usePrayer = false, prayerCount = 3, useInnerFocus = true,
+        offensiveWeave = false, useLightwell = false,
+        useInnerFire = true, healPower = 0,
+    },
+}
+
+function M:NormalizeProfile(c)
+    -- shared
+    if c.useInnerFire == nil then c.useInnerFire = true end
+    -- DPS / shadow / leveling
+    if c.healMode == nil then c.healMode = false end
+    if c.useShadowform == nil then c.useShadowform = false end
+    if c.usePWShieldMelee == nil then c.usePWShieldMelee = true end
+    if c.useMindBlast == nil then c.useMindBlast = true end
+    if c.useShadowWordPain == nil then c.useShadowWordPain = true end
+    if c.useDevouringPlague == nil then c.useDevouringPlague = true end
+    if c.useVampiricEmbrace == nil then c.useVampiricEmbrace = false end
+    if c.useHolyFire == nil then c.useHolyFire = true end
+    if c.useMindFlay == nil then c.useMindFlay = true end
+    if c.useSpiritTapFinisher == nil then c.useSpiritTapFinisher = true end
+    if c.usePainSpike == nil then c.usePainSpike = true end
+    if c.executeHp == nil then c.executeHp = 25 end
+    if c.filler == nil then c.filler = "Wand" end
+    if c.fillerManaFloor == nil then c.fillerManaFloor = 25 end
+    if c.useWand == nil then c.useWand = true end
+    -- healing
+    if c.healThreshold == nil then c.healThreshold = 85 end
+    -- Heal / dispel priority. A list of player names, in order: position 1 is
+    -- healed first on a near tie, position 2 next, everyone else last. The same
+    -- list decides who is dispelled first, where order is the only lever.
+    if c.healPrio == nil then c.healPrio = false end
+    if c.healPrioTarget == nil then c.healPrioTarget = false end
+    -- Heal only the names on the priority list (and yourself).
+    if c.healListOnly == nil then c.healListOnly = false end
+    if type(c.healPrioList) ~= "table" then c.healPrioList = {} end
+    -- Dispelling. Off by default: it spends a global cooldown that would
+    -- otherwise be a heal, and which afflictions are worth removing is a
+    -- judgement call that belongs to the player.
+    if c.useCure == nil then c.useCure = false end
+    -- The crossover. Curing runs BEFORE healing while the worst-hurt member is
+    -- above this; below it, healing wins. At 90 the group is cleansed first and
+    -- topped up from 90 to 100 afterwards - the order that matters when the
+    -- affliction is doing more damage than the missing tenth of a health bar.
+    -- 0 makes curing always yield, 100 makes it always come first.
+    if c.curePct == nil then c.curePct = 90 end
+    if c.useFlashHeal == nil then c.useFlashHeal = true end
+    if c.flashHealPct == nil then c.flashHealPct = 40 end
+    if c.useGreaterHeal == nil then c.useGreaterHeal = true end
+    if c.greaterHealDeficit == nil then c.greaterHealDeficit = 1000 end
+    if c.usePWShield == nil then c.usePWShield = true end
+    if c.useRenew == nil then c.useRenew = true end
+    if c.usePrayer == nil then c.usePrayer = false end
+    if c.prayerCount == nil then c.prayerCount = 3 end
+    -- Prayer of Healing counts only members below this health (and in a raid
+    -- only your own party, the one it heals).
+    if c.prayerPct == nil then c.prayerPct = 70 end
+    -- The shield only below this health, and only in combat.
+    if c.shieldPct == nil then c.shieldPct = 40 end
+    if c.useInnerFocus == nil then c.useInnerFocus = true end
+    if c.offensiveWeave == nil then c.offensiveWeave = false end
+    -- Heal mode, between heals: Smite / Holy Fire only above this mana, and
+    -- the wand below it (or with the weave off), so the five-second rule can
+    -- bring the mana back. Requested for a duo priest healing a paladin.
+    if c.healNukeMana == nil then c.healNukeMana = 50 end
+    if c.healWand == nil then c.healWand = false end
+    -- Pets in the heal list: 0 never, 1 when no player needs it, 2 like players.
+    if c.petPriority == nil then c.petPriority = 1 end
+    -- Heal mode, between heals: Holy Nova with this many enemies within its
+    -- radius (and the mana above the weave line). Off by default.
+    if c.useHolyNova == nil then c.useHolyNova = false end
+    if c.holyNovaCount == nil then c.holyNovaCount = 3 end
+    -- Heal mode, nobody hurt: a rank 1 Flash Heal / Heal on the tank (first
+    -- on the priority list, else your friendly target) while Inspiration is
+    -- missing on it and the mana is above the line - a crit puts the armor
+    -- buff up. Off by default: about 7 to 10 casts per proc.
+    if c.useInspiration == nil then c.useInspiration = false end
+    if c.inspirationMana == nil then c.inspirationMana = 60 end
+    -- Heal mode: Lesser Heal for the lightly hurt - between the heal line and
+    -- this health, instead of Heal / Greater Heal. Off by default.
+    if c.useLesserHeal == nil then c.useLesserHeal = false end
+    if c.lesserHealPct == nil then c.lesserHealPct = 80 end
+    if c.useLightwell == nil then c.useLightwell = false end
+    if c.healPower == nil then c.healPower = 0 end
+    return c
+end
+
+function M:ProfileValidity(cfg)
+    return true, {}   -- everything degrades via KnowsSpell; no nag.
+end
+
+-- ============================================================
+-- Talent rank by name (cached, cleared on point changes / login). Used only for
+-- talents that grant no spell, so KnowsSpell cannot see them.
+-- ============================================================
+function M:TalentRank(name)
+    if not self.talentCache then self.talentCache = {} end
+    if self.talentCache[name] ~= nil then return self.talentCache[name] end
+    local rank = 0
+    local tabs = GetNumTalentTabs and GetNumTalentTabs() or 0
+    for tab = 1, tabs do
+        for i = 1, GetNumTalents(tab) do
+            local n, _, _, _, r = GetTalentInfo(tab, i)
+            if n == name then rank = r or 0; break end
+        end
+        if rank > 0 then break end
+    end
+    self.talentCache[name] = rank
+    return rank
+end
+local prTalentFrame = CreateFrame("Frame")
+prTalentFrame:RegisterEvent("CHARACTER_POINTS_CHANGED")
+prTalentFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+prTalentFrame:SetScript("OnEvent", function() M.talentCache = nil end)
+
+-- ============================================================
+-- Wand / filler helpers
+-- ============================================================
+function M:Wanding()
+    local slot = self.wandSlot
+    if slot and IsAutoRepeatAction(slot) then return true end
+    for s = 1, 120 do
+        if IsAutoRepeatAction(s) then self.wandSlot = s; return true end
+    end
+    return false
+end
+
+-- Priests can only equip a wand in the ranged slot, so an occupied ranged slot
+-- means a wand is available.
+function M:HasWand()
+    return GetInventoryItemLink("player", 18) ~= nil
+end
+
+-- Start the wand if it is not already auto-repeating. The start cannot stop
+-- a wand that Wanding() failed to see (no Shoot button on any bar) where
+-- ClassicAPI offers a start-only cast; see Aegis_SBR:StartRepeating.
+function M:Wand()
+    if self:Wanding() then return true end
+    if not self:HasWand() then return false end
+    if Aegis_SBR.deciding then
+        local p = Aegis_SBR.decidePlan
+        p.spell = "Shoot"; p.reason = "wanding"
+        return true
+    end
+    -- Guarded: a class file handed out ahead of the core that carries this
+    -- (v1.2.28) must still wand rather than error.
+    if Aegis_SBR.StartRepeating then Aegis_SBR:StartRepeating("Shoot") else CastSpellByName("Shoot") end
+    return true
+end
+
+-- Whether the wand may be used as the mana-regen filler right now: enabled in
+-- the profile (the "Use wand" toggle) AND a wand is actually equipped, since a
+-- priest can only wand from the ranged slot. When this is false the rotation
+-- casts a damage spell instead of an empty wand press.
+function M:WandUsable(cfg)
+    return (cfg.useWand ~= false) and self:HasWand()
+end
+
+-- ============================================================
+-- Cast / DoT helpers (mirror the warlock caster pattern)
+-- ============================================================
+-- Everything this module sends goes through one of these two, and both refuse
+-- what cannot be paid for.
+--
+-- `Pick` in the core reports success on "known and learned", not on "accepted",
+-- which is correct for it - most classes check the cost at the decision. This one
+-- did not, and at zero mana the consequence is the same one the hunter was
+-- reported for: every press spent on a cast that never happens, while the free
+-- wand filler sitting at the bottom of the rotation is never reached. The wand is
+-- the one attack that still works at zero mana, and on a target carrying a
+-- mana-return debuff it is how you climb back out.
+--
+-- Gated here rather than at the call sites because there are 15 of them and a
+-- new one would eventually forget.
+--
+-- HEALS ARE NOT AFFECTED: those go out through CastOn with a unit argument, and
+-- their rank is already chosen against available mana.
+--
+-- An unreadable cost answers YES (see CanAfford), so a tooltip that failed to
+-- populate can never lock a step out.
+function M:Pick(name, reason)
+    if not Aegis_SBR:CanAfford(name) then return false end
+    return Aegis_SBR.Pick(self, name, reason)
+end
+
+function M:Queue(name, reason)
+    if not self:KnowsSpell(name) then return false end
+    if not Aegis_SBR:CanAfford(name) then return false end
+    if Aegis_SBR.deciding then
+        local p = Aegis_SBR.decidePlan
+        p.spell = name; p.reason = reason; p.queue = true
+        return true
+    end
+    if self:Wanding() or not QueueSpellByName then
+        CastSpellByName(name)
+    else
+        QueueSpellByName(name)
+    end
+    return true
+end
+
+-- True if the named aura is on a unit (SuperWoW id -> SpellInfo name path, with
+-- a texture-fragment fallback). Works on any unit, not just the target.
+function M:UnitHasAura(unit, name, harmful, texFrag)
+    if not UnitExists(unit) then return false end
+    local fn = harmful and UnitDebuff or UnitBuff
+    for i = 1, 40 do
+        local tex, _, d3, d4, d5 = fn(unit, i)
+        if not tex then break end
+        local id
+        if type(d3) == "number" then id = d3
+        elseif type(d4) == "number" then id = d4
+        elseif type(d5) == "number" then id = d5 end
+        if id and SpellInfo then
+            if id < -1 then id = id + 65536 end
+            if SpellInfo(id) == name then return true end
+        end
+        if texFrag and tex and string.find(tex, texFrag) then return true end
+    end
+    return false
+end
+
+function M:TargetHasTexture(frag)
+    if not frag or frag == "" then return false end
+    return self:TargetDebuffUp(nil, frag)
+end
+
+-- Throttle memory per DoT, keyed by target GUID, so a cast-time DoT is not
+-- re-queued while it is still landing and an instant DoT is reapplied on a
+-- sensible interval.
+M.dotThrottle = {}
+
+-- The DoTs this module maintains, for the resist handler at the bottom of the
+-- file. Kept next to the throttle it clears, since the two only make sense
+-- together.
+M.DOT_NAMES = { "Shadow Word: Pain", "Vampiric Embrace", "Devouring Plague", "Holy Fire" }
+-- Applied duration of each DoT, handed to the ledger so a second priest on the
+-- same mob is told apart from us. Only the length matters here, not the damage.
+M.DOT_DUR = {
+    ["Shadow Word: Pain"] = 18,
+    ["Vampiric Embrace"]  = 60,   -- Turtle spell 15286: one minute
+    ["Devouring Plague"]  = 24,
+    ["Holy Fire"]         = 10,
+}
+
+-- Learned by the core from "Your Shadow Word: Pain failed. X is immune." and
+-- kept by mob name across sessions (/sbr immune).
+M.LEARN_IMMUNE = { ["Shadow Word: Pain"] = true, ["Vampiric Embrace"] = true }
+function M:ApplyDot(spellName, texFrag, interval)
+    interval = interval or 3
+    if Aegis_SBR.KnownImmune and Aegis_SBR:KnownImmune(spellName) then return "up" end
+    -- Ours, or another priest's? Shadow Word: Pain, Devouring Plague and Holy
+    -- Fire are all per-caster, so somebody else's answering for ours means
+    -- applying nothing for as long as they keep theirs up.
+    if self:TargetDebuffUp(spellName, texFrag)
+        and Aegis_SBR:DebuffMine(spellName, self:TargetId()) then
+        return "up"
+    end
+    local detectable = (texFrag ~= nil) or self:CanResolveDebuffNames()
+    local id = self:TargetId()
+    local rec = self.dotThrottle[spellName]
+    local now = GetTime()
+    if rec and rec.id == id and rec.t and (now - rec.t) <= interval then
+        if detectable then return "wait" else return "up" end
+    end
+    if not self:Queue(spellName, "DoT missing") then return "up" end
+    self:Later(function()
+        self.dotThrottle[spellName] = { id = id, t = now }
+        Aegis_SBR:NoteDebuffApplied(id, spellName, M.DOT_DUR[spellName])
+    end)
+    return "cast"
+end
+
+-- ============================================================
+-- Healing engine (adapted from the paladin; self-contained).
+-- ============================================================
+-- Heals on their way, one mark per member: the amount and until when it
+-- counts. There used to be one mark for everybody, so a second heal sent while
+-- the first was still casting - refused by the client - overwrote it, the
+-- member under the running heal read as unhealed again, and the next press
+-- queued a second full heal on top: reported as the priest overhealing itself
+-- while the paladin had to drink a potion. A refused or interrupted heal
+-- removes only its own mark (see the cast events above).
+M.pending = {}
+function M:CommitHeal(unit, amount, castTime)
+    self:Later(function()
+        local name = UnitName(unit)
+        if not name then return end
+        self.pending[name] = { amount = amount or 0, untilT = GetTime() + (castTime or 0) + 1.0 }
+        self.lastCommit = name
+    end)
+end
+
+function M:PendingFor(unit)
+    local e = self.pending[UnitName(unit) or "?"]
+    if e and GetTime() < e.untilT then return e.amount end
+    return 0
+end
+
+function M:AnyPending()
+    local now = GetTime()
+    for _, e in pairs(self.pending) do
+        if now < e.untilT then return true end
+    end
+    return false
+end
+
+function M:GroupUnits()
+    local units = {}
+    local nr = (GetNumRaidMembers and GetNumRaidMembers()) or 0
+    if nr > 0 then
+        for i = 1, nr do table.insert(units, "raid" .. i) end
+    else
+        table.insert(units, "player")
+        local np = (GetNumPartyMembers and GetNumPartyMembers()) or 0
+        for i = 1, np do table.insert(units, "party" .. i) end
+    end
+    return units
+end
+
+-- Uses IsSpellInRange against the longest-range known heal for an exact
+-- answer instead of CheckInteractDistance's ~28yd proxy (priest heals reach
+-- 40yd, so the proxy was under-filtering by 12yd). Falls back to the proxy
+-- only if none of the probed heals are learned yet (very early leveling).
+function M:Reachable(u)
+    if UnitIsUnit(u, "player") then return true end
+    -- Recently refused by the client (no line of sight, or out of range after
+    -- IsSpellInRange could not judge). Never for yourself: you are always in
+    -- your own line of sight, and a stale mark would drop you from your own
+    -- heal list.
+    if Aegis_SBR:CastBlocked(u) then return false end
+    -- Line of sight, asked outright instead of learned from a refusal that costs
+    -- a press and then holds for five seconds. Answers true whenever it cannot
+    -- know - no UnitXP_SP3, or too early in the session - so nobody is dropped
+    -- from the heal list on ignorance.
+    if not Aegis_SBR:InSight(u) then return false end
+    if self:KnowsSpell("Heal") then return Aegis_SBR:SpellReaches("Heal", u)
+    elseif self:KnowsSpell("Flash Heal") then return Aegis_SBR:SpellReaches("Flash Heal", u)
+    elseif self:KnowsSpell("Renew") then return Aegis_SBR:SpellReaches("Renew", u) end
+    return CheckInteractDistance(u, 4)
+end
+
+-- Lowest effective-health reachable member below ratio, counting our pending
+-- heal. Returns unit, missing health, ratio.
+M.CURES = {
+    { spell = "Abolish Disease", types = { Disease = true } },
+    { spell = "Cure Disease",    types = { Disease = true } },
+    { spell = "Dispel Magic",    types = { Magic = true } },
+}
+
+-- Cure somebody, if there is nothing more pressing.
+--
+-- The threshold is a CROSSOVER, not an on/off switch: above it the affliction
+-- outranks the missing health, below it the heal does.
+--
+-- Never loops on a cure that cannot work. The unit is stamped on the attempt and
+-- left alone for a few seconds afterwards, which covers a resisted dispel, an
+-- affliction that outlasts its own removal, and a client that refused the cast.
+M.cureFail = {}
+function M:CureStep(cfg, worst)
+    if not cfg.useCure then return false end
+    if not self:GcdReady() then return false end
+    if worst and worst < ((cfg.curePct or 90) / 100) then return false end
+    -- Ordered by the same priority list the healing uses.
+    local units = Aegis_SBR:AppendPets(Aegis_SBR:PrioOrderUnits(cfg, self:GroupUnits()))
+    local unit, spell = Aegis_SBR:PickCure(units, self.CURES,
+        function(u) return self:Reachable(u) end, self.cureFail)
+    if not unit or not spell then return false end
+    self:Later(function() self.cureFail[UnitName(unit) or "?"] = GetTime() end)
+    self:CastOn(spell, unit)
+    return true
+end
+
+function M:WorstHurt(ratio, cfg)
+    local units = Aegis_SBR:HealUnits(cfg, self:GroupUnits())
+    local bestU, bestPct, bestDef, bestAdj = nil, 1, 0, 99
+    -- A pet ranked apart (Pet priority 1) is kept on its own and only gets the
+    -- cast when no player wants it.
+    local petU, petPct, petDef, petAdj = nil, 1, 0, 99
+    for i = 1, table.getn(units) do
+        local u = units[i]
+        if UnitExists(u) and UnitIsConnected(u) and not UnitIsDeadOrGhost(u)
+            and UnitIsFriend("player", u) and UnitHealthMax(u) > 0 and self:Reachable(u)
+            and Aegis_SBR:ListAllows(cfg, u) then
+            local mx = UnitHealthMax(u)
+            local cur = UnitHealth(u) + self:PendingFor(u)
+            if cur > mx then cur = mx end
+            local pct = cur / mx
+            -- Eligible on REAL health, ranked on adjusted: a priority handicap
+            -- may reorder the queue but never remove anyone from it.
+            local adj = pct + (Aegis_SBR:PrioListHandicap(cfg, u) / 100)
+            if adj > 1 then adj = 1 end
+            if pct < ratio then
+                if Aegis_SBR:PetRankedApart(cfg, u) then
+                    if adj < petAdj then petAdj = adj; petPct = pct; petU = u; petDef = mx - cur end
+                elseif adj < bestAdj then
+                    bestAdj = adj; bestPct = pct; bestU = u; bestDef = mx - cur
+                end
+            end
+        end
+    end
+    if not bestU and Aegis_SBR:PetMayHave(cfg, petU, false) then return petU, petDef, petPct end
+    if bestU and petU and UnitExists("target") and UnitIsUnit(petU, "target") then return petU, petDef, petPct end
+    return bestU, bestDef, bestPct
+end
+
+-- How many reachable members are below ratio (for the AoE heal trigger).
+-- Your own party: the player and, in a raid, the members of the same
+-- subgroup. Prayer of Healing heals only these.
+function M:OwnPartyUnits()
+    local nr = (GetNumRaidMembers and GetNumRaidMembers()) or 0
+    if nr == 0 then return self:GroupUnits() end
+    local me = UnitName("player")
+    local roster, mine = {}, nil
+    for i = 1, nr do
+        local name, _, sub = GetRaidRosterInfo(i)
+        roster[i] = sub
+        if name == me then mine = sub end
+    end
+    local units = {}
+    for i = 1, nr do
+        if roster[i] and roster[i] == mine then table.insert(units, "raid" .. i) end
+    end
+    return units
+end
+
+function M:HurtCount(ratio, units)
+    units = units or self:GroupUnits()
+    local n = 0
+    for i = 1, table.getn(units) do
+        local u = units[i]
+        if UnitExists(u) and UnitIsConnected(u) and not UnitIsDeadOrGhost(u)
+            and UnitIsFriend("player", u) and UnitHealthMax(u) > 0 and self:Reachable(u) then
+            if UnitHealth(u) / UnitHealthMax(u) < ratio then n = n + 1 end
+        end
+    end
+    return n
+end
+
+function M:HealDemand(cfg)
+    if self:AnyPending() then return true end
+    return self:HurtCount((cfg.healThreshold or 85) / 100) > 0
+end
+
+-- Healing talent modifier: Spiritual Healing +2%/rank (name-based, so it is not
+-- fragile to talent positions). Divine spec talents could be added the same way.
+function M:HealMods()
+    return 1 + 0.02 * self:TalentRank("Spiritual Healing")
+end
+
+-- Lesser Heal per rank: its own cast time and the low-level penalty.
+function M:LesserHealEffs(mods, healPower)
+    local t = {}
+    for r = 1, table.getn(self.LH_HEAL) do
+        local pen = 1 - (20 - self.LH_LEVEL[r]) * 0.0375
+        if pen < 0 then pen = 0 end
+        t[r] = (self.LH_HEAL[r] + (self.LH_CAST[r] / 3.5) * pen * (healPower or 0)) * mods
+    end
+    return t
+end
+
+function M:EffHeals(baseHeals, coeff, mods, healPower)
+    local t = {}
+    for r = 1, table.getn(baseHeals) do
+        t[r] = (baseHeals[r] + coeff * (healPower or 0)) * mods
+    end
+    return t
+end
+
+-- Smallest affordable rank whose effective heal covers the deficit; else the
+-- largest affordable rank.
+function M:PickRank(baseName, effHeals, manas, deficit, mana)
+    local maxr = self:MaxRank(baseName)
+    if maxr < 1 then return nil end
+    if maxr > table.getn(effHeals) then maxr = table.getn(effHeals) end
+    local chosen = nil
+    for r = 1, maxr do
+        if manas[r] and mana >= manas[r] then
+            chosen = r
+            if effHeals[r] and effHeals[r] >= deficit then break end
+        end
+    end
+    if not chosen then return nil end
+    return baseName .. "(Rank " .. chosen .. ")", (effHeals[chosen] or 0)
+end
+
+-- Book of Prayer (talent): a healing spell different from the previous one
+-- refunds 30% of its mana. These are the spells it counts.
+local HEAL_SPELLS = { ["Lesser Heal"] = true, ["Heal"] = true, ["Greater Heal"] = true,
+    ["Flash Heal"] = true, ["Renew"] = true, ["Prayer of Healing"] = true }
+local TALENT_BOP = "Book of Prayer"
+local TALENT_INSPIRATION = "Inspiration"
+
+-- Cast a heal on a unit without dropping the current target (SuperWoW unit arg).
+-- Targeted heal. Under a preview it is reported rather than cast; the unit
+-- goes into the reason so the window says who would be healed.
+function M:CastOn(spell, unit, reason)
+    if Aegis_SBR.deciding then
+        local p = Aegis_SBR.decidePlan
+        p.spell = spell
+        p.reason = reason or ("on " .. (UnitName(unit) or unit or "?"))
+        return
+    end
+    Aegis_SBR:NoteUnitCast(unit)
+    -- Book of Prayer: the healing spell sent last, by name (the rank does
+    -- not make it a different spell).
+    local base = string.gsub(spell, "%(Rank %d+%)$", "")
+    if HEAL_SPELLS[base] then
+        self.healBefore = self.lastHeal
+        self.lastHeal = base
+        self.lastHealT = GetTime()
+    end
+    -- The spell too: OnCastError compares the two stamps to decide whether a
+    -- refusal about a unit really belongs to this cast or to something the
+    -- rotation sent afterwards.
+    Aegis_SBR:NoteSpellCast(spell)
+    CastSpellByName(spell, unit)
+end
+
+-- True when the global cooldown is free (probed through a cooldown-less spell).
+function M:GcdReady()
+    local probes = { "Lesser Heal", "Heal", "Flash Heal", "Smite", "Renew" }
+    for i = 1, table.getn(probes) do
+        if self:KnowsSpell(probes[i]) then return self:IsReady(probes[i]) end
+    end
+    return true
+end
+
+-- Per-unit Renew reapply throttle (Renew lasts ~15s; reapply a little before).
+M.renewThrottle = {}
+function M:RenewDue(unit)
+    local name = UnitName(unit) or "?"
+    local rec = self.renewThrottle[name]
+    if rec and (GetTime() - rec) < 13 then return false end
+    return true
+end
+
+-- Heal decision. Returns true when a heal was cast (or the GCD is held) this
+-- press. Triage order: AoE -> emergency (shield, then Flash Heal) -> Renew on
+-- a mildly hurt unit -> big Greater Heal -> efficient Heal/Flash/Lesser Heal.
+function M:DoHeal(cfg)
+    local ratio = (cfg.healThreshold or 85) / 100
+    local unit, deficit, pct = self:WorstHurt(ratio, cfg)
+    -- Curing, above the heal but only while nobody is hurt past the crossover.
+    -- Placed inside DoHeal so it sits exactly where the healing decision is made
+    -- and cannot drift away from it.
+    if self:CureStep(cfg, pct) then return true end
+    if not unit then return false end
+    if not self:GcdReady() then return true end
+
+    local mana = UnitMana("player")
+    local hp = (cfg.healPower and cfg.healPower > 0) and cfg.healPower or self:GearHealBonus()
+    local mods = self:HealMods()
+    local C15, C30 = 1.5 / 3.5, 3.0 / 3.5
+    local fhEff   = self:EffHeals(self.FH_HEAL, C15, mods, hp)
+    local ghEff   = self:EffHeals(self.GH_HEAL, C30, mods, hp)
+    local healEff = self:EffHeals(self.HEAL_HEAL, C30, mods, hp)
+    local lhEff   = self:LesserHealEffs(mods, hp)
+
+    -- AoE: Prayer of Healing, fronted by Inner Focus (instant, off-GCD) to wipe
+    -- its mana cost. Inner Focus on one press, the prayer on the next.
+    if cfg.usePrayer and self:KnowsSpell("Prayer of Healing") and not Aegis_SBR:ListOnlyActive(cfg)
+        and self:HurtCount((cfg.prayerPct or 70) / 100, self:OwnPartyUnits()) >= (cfg.prayerCount or 3) then
+        if cfg.useInnerFocus and self:KnowsSpell("Inner Focus") and self:OwnCDReady("Inner Focus")
+            and not self:HasBuff("Inner Focus") then
+            self:Pick("Inner Focus", "free cast next"); return true
+        end
+        if self:Queue("Prayer of Healing", "group healing") and not Aegis_SBR.deciding then
+            self.healBefore = self.lastHeal; self.lastHeal = "Prayer of Healing"; self.lastHealT = GetTime()
+        end
+        return true
+    end
+
+    -- Emergency, below the Flash Heal line: the shield first - instant, and
+    -- it stops the damage while the Flash Heal is cast on the next press -
+    -- then Flash Heal (reserved for this so it does not drain the pool on
+    -- routine damage). Renew and the shield used to sit behind the direct
+    -- heals, which always found an affordable rank, so they never went out.
+    -- Read on the REAL health: a heal still on its way does not lift the
+    -- target out of the emergency (it used to get Renew instead of Flash Heal).
+    local realPct = UnitHealth(unit) / UnitHealthMax(unit)
+    local emergency = realPct <= (cfg.flashHealPct or 40) / 100
+    -- The shield on its own line, in combat only: out of combat the 500 mana
+    -- are better spent on a heal.
+    local shieldNow = cfg.usePWShield and self.inCombat and realPct <= (cfg.shieldPct or 40) / 100
+    if emergency and shieldNow and self:ShieldOK(unit) then
+        self:CastOn("Power Word: Shield", unit); return true
+    end
+    if emergency and cfg.useFlashHeal and self:KnowsSpell("Flash Heal") then
+        local fh, amt = self:PickRank("Flash Heal", fhEff, self.FH_MANA, deficit, mana)
+        if fh then self:CommitHeal(unit, amt, 1.5); self:CastOn(fh, unit); return true end
+    end
+
+    -- Mildly hurt: Renew first when it is missing, the direct heal after it.
+    if not emergency and cfg.useRenew and self:KnowsSpell("Renew") and self:RenewDue(unit)
+        and not self:UnitHasAura(unit, "Renew", false, "Spell_Holy_Renew") then
+        self.renewThrottle[UnitName(unit) or "?"] = GetTime()
+        self:CastOn("Renew", unit); return true
+    end
+
+    -- Lightly hurt, above the Lesser Heal line: Lesser Heal, downranked. Cheap
+    -- enough that Book of Prayer does not swap it.
+    if not emergency and cfg.useLesserHeal and self:KnowsSpell("Lesser Heal")
+        and pct >= (cfg.lesserHealPct or 80) / 100 then
+        local lh, amt = self:PickRank("Lesser Heal", lhEff, self.LH_MANA, deficit, mana)
+        if lh then self:CommitHeal(unit, amt, 2.5); self:CastOn(lh, unit); return true end
+    end
+
+    -- Book of Prayer: the direct heal the steps below would choose is swapped
+    -- for another one when it repeats the previous healing spell. Greater
+    -- Heal and Heal stand in for each other, Flash Heal for both - each only
+    -- while its smallest rank does not overheal the deficit.
+    if not emergency and self:TalentRank(TALENT_BOP) > 0 and self.lastHeal then
+        local wantGH = cfg.useGreaterHeal and self:KnowsSpell("Greater Heal") and deficit >= (cfg.greaterHealDeficit or 1000)
+        local nxt = wantGH and "Greater Heal" or "Heal"
+        if nxt == self.lastHeal then
+            local alts = {
+                { "Greater Heal", ghEff, self.GH_MANA, 3.0, cfg.useGreaterHeal },
+                { "Heal", healEff, self.HEAL_MANA, 3.0, true },
+                { "Flash Heal", fhEff, self.FH_MANA, 1.5, cfg.useFlashHeal },
+            }
+            for i = 1, table.getn(alts) do
+                local a = alts[i]
+                if a[1] ~= self.lastHeal and a[5] and self:KnowsSpell(a[1]) and (a[2][1] or 0) <= deficit then
+                    local sp, amt = self:PickRank(a[1], a[2], a[3], deficit, mana)
+                    if sp then
+                        if self:Tracing() then self:Trace("Book of Prayer: " .. a[1] .. " after " .. self.lastHeal) end
+                        self:CommitHeal(unit, amt, a[4]); self:CastOn(sp, unit, "Book of Prayer"); return true
+                    end
+                end
+            end
+        end
+    end
+
+    -- Big deficit: Greater Heal, downranked.
+    if cfg.useGreaterHeal and self:KnowsSpell("Greater Heal") and deficit >= (cfg.greaterHealDeficit or 1000) then
+        local gh, amt = self:PickRank("Greater Heal", ghEff, self.GH_MANA, deficit, mana)
+        if gh then self:CommitHeal(unit, amt, 3.0); self:CastOn(gh, unit); return true end
+    end
+
+    -- Efficient sustained healing: Heal, downranked. Falls back to Flash Heal,
+    -- then Lesser Heal, so a low-level priest still heals.
+    local h, amt = self:PickRank("Heal", healEff, self.HEAL_MANA, deficit, mana)
+    if h then self:CommitHeal(unit, amt, 3.0); self:CastOn(h, unit); return true end
+    local fh2, amt2 = self:PickRank("Flash Heal", fhEff, self.FH_MANA, deficit, mana)
+    if fh2 then self:CommitHeal(unit, amt2, 1.5); self:CastOn(fh2, unit); return true end
+    local lh, amt3 = self:PickRank("Lesser Heal", lhEff, self.LH_MANA, deficit, mana)
+    if lh then self:CommitHeal(unit, amt3, 2.0); self:CastOn(lh, unit); return true end
+
+    -- No direct heal affordable: the shield still costs less than any of them.
+    if cfg.usePWShield and self.inCombat and self:ShieldOK(unit) then
+        self:CastOn("Power Word: Shield", unit); return true
+    end
+    return false
+end
+
+-- The tank for Inspiration: the first name on the priority list when it is
+-- in the group, else a friendly target that is not the priest.
+function M:InspirationUnit(cfg)
+    local list = cfg.healPrioList
+    local first = list and list[1]
+    if first then
+        local units = self:GroupUnits()
+        for i = 1, table.getn(units) do
+            if UnitName(units[i]) == first then return units[i] end
+        end
+    end
+    if UnitExists("target") and UnitIsFriend("player", "target") and UnitIsPlayer("target")
+        and not UnitIsUnit("target", "player") then
+        return "target"
+    end
+    return nil
+end
+
+-- Nobody hurt: a rank 1 heal on the tank to proc Inspiration (armor +25%
+-- for 15 s after a critical Flash Heal, Heal or Greater Heal). Only in
+-- combat, above the mana line, while the buff is missing. With Book of
+-- Prayer, Flash Heal and Heal alternate.
+function M:InspirationStep(cfg)
+    if not cfg.useInspiration or not self.inCombat then return false end
+    if self:TalentRank(TALENT_INSPIRATION) < 1 then return false end
+    if self:ManaPct() < (cfg.inspirationMana or 60) then return false end
+    local u = self:InspirationUnit(cfg)
+    if not u or not UnitExists(u) or UnitIsDeadOrGhost(u) or not self:Reachable(u) then return false end
+    if self:UnitHasAura(u, "Inspiration", false, nil) then return false end
+    if not self:GcdReady() then return true end
+    local sp = "Flash Heal"
+    if not self:KnowsSpell(sp) or (self:TalentRank(TALENT_BOP) > 0 and self.lastHeal == sp) then sp = "Heal" end
+    if not self:KnowsSpell(sp) then return false end
+    self:CastOn(sp .. "(Rank 1)", u, "Inspiration on " .. (UnitName(u) or u))
+    return true
+end
+
+-- The shield can go on this unit: known, no Weakened Soul (the over-bubble
+-- guard) and no shield already up.
+function M:ShieldOK(unit)
+    return self:KnowsSpell("Power Word: Shield")
+        and not self:UnitHasAura(unit, "Weakened Soul", true, nil)
+        and not self:UnitHasAura(unit, "Power Word: Shield", false, "Spell_Holy_PowerWordShield")
+end
+
+-- Heal mode runs even with no attackable target, so the priest heals at range.
+function M:RunsWithoutTarget(cfg)
+    return cfg.healMode == true
+end
+
+local HOLY_NOVA_RADIUS = 10
+local CAST_QUEUE_WINDOW = 0.3
+
+-- ============================================================
+-- Rotation entry point
+-- ============================================================
+function M:Rotate(cfg)
+    -- Never act over a running channel (Mind Flay / Mana Burn).
+    if self.channeling and self.chanStart and (GetTime() - self.chanStart) < 16 then return end
+
+    local shadowform = self:HasBuff("Shadowform")
+
+    -- Keep Inner Fire up in any mode (it is cheap and always wanted).
+    if cfg.useInnerFire and self:KnowsSpell("Inner Fire") and not self:HasBuff("Inner Fire") then
+        if self:Pick("Inner Fire", "buff missing") then return end
+    end
+
+    -- ---------------- HEAL MODE ----------------
+    if cfg.healMode then
+        -- Nothing new while a cast runs: the client refuses it anyway, and the
+        -- decision would be made on a health bar the running heal is about to
+        -- change. Spamming the key mid-cast used to pick a second target or a
+        -- second heal on the same one. The last moment of the cast is left
+        -- open, so the next spell joins Nampower's queue without a gap.
+        if self.castUntil and GetTime() < self.castUntil - CAST_QUEUE_WINDOW then return end
+        if self:DoHeal(cfg) then return end
+        if self:InspirationStep(cfg) then return end
+
+        -- No one needs healing: optional offensive support / maintenance.
+        -- Lightwell first (placed when enabled, known, off cooldown, out of
+        -- combat so it is not wasted mid-pull).
+        if cfg.useLightwell and self:KnowsSpell("Lightwell") and self:OwnCDReady("Lightwell")
+            and not self.inCombat then
+            if self:Pick("Lightwell", "off cooldown") then return end
+        end
+
+        -- Offensive weave: only with an attackable target and out of Shadowform,
+        -- and only above the "Smite/Holy Fire above mana" line. Below it - or
+        -- with the weave off - the wand, when "Wand between heals" is on: no
+        -- mana spent, so the five-second rule regenerates it for the next heal.
+        -- Heals above still go first at any mana.
+        local hasEnemy = UnitExists("target") and not UnitIsDead("target") and UnitCanAttack("player", "target")
+        local nukeOK = self:ManaPct() >= (cfg.healNukeMana or 50)
+        -- Holy Nova between heals: with enough enemies around the priest, above
+        -- the same mana line. It also heals the group. Requested by a priest
+        -- who pressed it by hand between the rotation's heals. With no count
+        -- from the nameplates, the target in melee range counts as one.
+        if cfg.useHolyNova and nukeOK and not shadowform and self:KnowsSpell("Holy Nova")
+            and not Aegis_SBR:ListOnlyActive(cfg) then
+            local n = Aegis_SBR:CountEnemiesNear(HOLY_NOVA_RADIUS)
+            if n == nil then n = (hasEnemy and Aegis_SBR:InMeleeRange()) and 1 or 0 end
+            if n >= (cfg.holyNovaCount or 3) then
+                if self:Pick("Holy Nova", n .. " enemies within " .. HOLY_NOVA_RADIUS .. " yd") then return end
+            end
+        end
+        if cfg.offensiveWeave and hasEnemy and not shadowform and nukeOK then
+            if self:KnowsSpell("Holy Fire") then
+                local r = self:ApplyDot("Holy Fire", "Spell_Holy_SearingLight", 4)
+                if r == "cast" or r == "wait" then return end
+            end
+            if self:Queue("Smite", "filler nuke") then return end
+        end
+        if cfg.healWand and hasEnemy and self:HasWand() then
+            if self:Wand() then return end
+        end
+        return
+    end
+
+    -- ---------------- DPS MODE (shadow / leveling) ----------------
+    -- Shadowform upkeep (optional).
+    if cfg.useShadowform and self:KnowsSpell("Shadowform") and not shadowform then
+        if self:Pick("Shadowform", "form missing") then return end
+    end
+
+    -- Power Word: Shield mitigation: when a mob is in melee or you are taking
+    -- heavy hits, and only if there is no Weakened Soul on you and no shield up.
+    if cfg.usePWShieldMelee and self:KnowsSpell("Power Word: Shield")
+        and not self:HasBuff("Power Word: Shield")
+        and not self:UnitHasAura("player", "Weakened Soul", true, nil)
+        and (self:InMeleeRange() or self:PlayerHPPct() < 50) then
+        if self:Pick("Power Word: Shield", "shield missing") then return end
+    end
+
+    -- Everything below needs an attackable target.
+    if not (UnitExists("target") and not UnitIsDead("target") and UnitCanAttack("player", "target")) then
+        return
+    end
+
+    -- Spirit Tap finisher: under the execute threshold, burst to secure the kill
+    -- (and the experience), Mind Blast then Smite.
+    if cfg.useSpiritTapFinisher and self:TargetHPPct() < (cfg.executeHp or 25) then
+        -- Pain Spike first: instant shadow burst on a 30s cooldown whose damage
+        -- heals itself back after landing (Turtle tooltip) - so it is a kill
+        -- shot and nothing else, and belongs only here.
+        if cfg.usePainSpike and self:KnowsSpell("Pain Spike") and self:IsReady("Pain Spike") then
+            if self:Queue("Pain Spike", "finisher") then return end
+        end
+        if cfg.useMindBlast and self:KnowsSpell("Mind Blast") and self:IsReady("Mind Blast") then
+            if self:Queue("Mind Blast", "on cooldown") then return end
+        end
+        if not shadowform and self:KnowsSpell("Smite") then
+            if self:Queue("Smite", "filler nuke") then return end
+        end
+    end
+
+    -- Damage-over-time upkeep, ahead of Mind Blast: the shadow priest's order
+    -- as played on Turtle - Shadow Word: Pain, Vampiric Embrace, then Mind
+    -- Blast, Mind Flay to fill. A DoT missing for the length of a Mind Blast
+    -- cast costs more ticks than the Blast gains.
+    if cfg.useShadowWordPain and self:KnowsSpell("Shadow Word: Pain") then
+        local r = self:ApplyDot("Shadow Word: Pain", "Spell_Shadow_ShadowWordPain", 3)
+        if r == "cast" or r == "wait" then return end
+    end
+    -- Vampiric Embrace: a one-minute debuff on the target that heals the party
+    -- for a share of the shadow damage dealt to it. Kept up like a DoT; it is
+    -- per caster, so DebuffMine applies. Off by default - it takes a debuff
+    -- slot and adds threat, both of which matter on a raid boss.
+    if cfg.useVampiricEmbrace and self:KnowsSpell("Vampiric Embrace") then
+        local r = self:ApplyDot("Vampiric Embrace", "Spell_Shadow_UnsummonBuilding", 3)
+        if r == "cast" or r == "wait" then return end
+    end
+
+    -- Mind Blast on cooldown: the Shadow Weaving trigger and a strong nuke.
+    if cfg.useMindBlast and self:KnowsSpell("Mind Blast") and self:IsReady("Mind Blast") then
+        if self:Queue("Mind Blast", "on cooldown") then return end
+    end
+
+    if cfg.useDevouringPlague and self:KnowsSpell("Devouring Plague") then
+        local r = self:ApplyDot("Devouring Plague", "Spell_Shadow_DevouringPlague", 3)
+        if r == "cast" or r == "wait" then return end
+    end
+    if cfg.useHolyFire and not shadowform and self:KnowsSpell("Holy Fire") then
+        local r = self:ApplyDot("Holy Fire", "Spell_Holy_SearingLight", 4)
+        if r == "cast" or r == "wait" then return end
+    end
+
+    -- ---- Filler / mana-regen tail ----
+    -- The wand is the mana-regen filler only when enabled in the profile (the
+    -- "Use wand" toggle) AND a wand is actually equipped. When it is not usable,
+    -- a damage spell is cast instead so a press is never wasted -- this covers a
+    -- wandless priest and the toggle being off, including in Shadowform where
+    -- Smite is blocked and only Mind Flay can fill.
+    local wandUsable = self:WandUsable(cfg)
+    local manaOK = self:ManaPct() >= (cfg.fillerManaFloor or 25)
+
+    -- Mind Flay filler (a channel; counts as a cast) while mana is healthy.
+    if cfg.useMindFlay and cfg.filler ~= "Wand" and self:KnowsSpell("Mind Flay") and manaOK then
+        if self:Queue("Mind Flay", "channel filler") then return end
+    end
+
+    -- The chosen spell filler while mana is healthy -- or always, when there is
+    -- no wand to drop to for regen (so disabling the wand keeps it casting).
+    local fill = cfg.filler or "Wand"
+    if fill ~= "Wand" and self:KnowsSpell(fill) and (manaOK or not wandUsable) then
+        if self:Queue(fill, "filler") then return end
+    end
+
+    -- Wand for mana regen (the 5-second-rule loop), when usable.
+    if wandUsable and self:Wand() then return end
+
+    -- Wand not usable (disabled, or none equipped): keep doing damage instead of
+    -- an empty press -- Mind Flay if known (works in Shadowform), else Smite out
+    -- of Shadowform.
+    if not wandUsable then
+        if self:KnowsSpell("Mind Flay") then if self:Queue("Mind Flay", "channel filler") then return end end
+        if not shadowform and self:KnowsSpell("Smite") then if self:Queue("Smite", "filler nuke") then return end end
+    end
+end
+
+-- ============================================================
+-- Slash subcommands
+-- ============================================================
+function M:HandleCommand(cmd, t)
+    if cmd == "heal" then
+        local cfg = Aegis_SBR:GetActiveProfile()
+        if not cfg then return true end
+        local a = string.lower(t[2] or "")
+        if a == "on" then cfg.healMode = true; msgOut("heal mode on.")
+        elseif a == "off" then cfg.healMode = false; msgOut("heal mode off.")
+        else msgOut("heal mode is " .. (cfg.healMode and "on" or "off") .. ". Use /sbr heal on or off.") end
+        return true
+    end
+    if cmd == "healat" then
+        local cfg = Aegis_SBR:GetActiveProfile()
+        if not cfg then return true end
+        local v = tonumber(t[2])
+        if v and v >= 1 and v <= 100 then cfg.healThreshold = v; msgOut("healing members below " .. v .. "% health.")
+        else msgOut("usage: /sbr healat <1-100>.", 1, 0.5, 0.3) end
+        return true
+    end
+    if cmd == "flashat" then
+        local cfg = Aegis_SBR:GetActiveProfile()
+        if not cfg then return true end
+        local v = tonumber(t[2])
+        if v and v >= 1 and v <= 100 then cfg.flashHealPct = v; msgOut("Flash Heal reserved for below " .. v .. "% health.")
+        else msgOut("usage: /sbr flashat <1-100>.", 1, 0.5, 0.3) end
+        return true
+    end
+    if cmd == "filler" then
+        local cfg = Aegis_SBR:GetActiveProfile()
+        if not cfg then return true end
+        local a = t[2]
+        if a == "wand" then cfg.filler = "Wand"; msgOut("filler = Wand.")
+        elseif a == "flay" then cfg.filler = "Mind Flay"; msgOut("filler = Mind Flay.")
+        elseif a == "smite" then cfg.filler = "Smite"; msgOut("filler = Smite.")
+        else msgOut("usage: /sbr filler <wand|flay|smite>.", 1, 0.5, 0.3) end
+        return true
+    end
+    if cmd == "healpower" then
+        local cfg = Aegis_SBR:GetActiveProfile()
+        if not cfg then return true end
+        local v = tonumber(t[2])
+        if v and v >= 0 then cfg.healPower = v; msgOut("healing bonus set to " .. v .. " (0 = auto from gear).")
+        else msgOut("usage: /sbr healpower <number>.", 1, 0.5, 0.3) end
+        return true
+    end
+    return false
+end
+
+-- ============================================================
+-- Resisted DoTs
+-- ============================================================
+-- A resist is not a cast failure: the cast completes and the spell is thrown
+-- away on landing, so nothing in the cast path can see it. The throttle above is
+-- stamped as though the DoT were up, and every press until the interval runs out
+-- reads "missing but recently cast" and answers "wait" - which returns from the
+-- rotation without doing anything. The result on screen is a priest that stalls
+-- for a few seconds after a resisted Shadow Word: Pain.
+--
+-- The combat log is the only place that knows, so it is read here and the
+-- throttle cleared: the next press re-applies immediately.
+--
+-- Deliberately not "immune": an immune target would turn the immediate retry
+-- into a loop, and there the interval is doing its job.
+-- ============================================================
+local priestResistFrame = CreateFrame("Frame")
+priestResistFrame:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE")
+priestResistFrame:SetScript("OnEvent", function()
+    if not arg1 then return end
+    if not (string.find(arg1, "resist") or string.find(arg1, "miss")) then return end
+    for i = 1, table.getn(M.DOT_NAMES) do
+        local name = M.DOT_NAMES[i]
+        if string.find(arg1, name, 1, true) then
+            M.dotThrottle[name] = nil
+            return
+        end
+    end
+end)

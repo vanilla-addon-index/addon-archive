@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: AdePet
+## Notes: Hunter pet loyalty window with hunger warning
+## Version: 1.0.2
+## SavedVariablesPerCharacter: AdePetDB
+
+AdePet.lua

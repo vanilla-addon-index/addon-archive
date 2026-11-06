@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/EinBaum/AuctionSearchTimer",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "AuctionSearchTimer",
+    "name": "AuctionSearchTimer",
+    "url": "https://github.com/EinBaum/AuctionSearchTimer",
+    "api": "https://api.github.com/repos/EinBaum/AuctionSearchTimer"
+  },
+  "commit": "639a5b7765a6d3d1bb18a8e053865401e0493f89",
+  "sourceFiles": {
+    "AuctionSearchTimer.lua": {
+      "sha256": "a4c8e535c509268dc4ca587be625e5c875fa44b9208e1c255eb535c4051a5d80",
+      "bytes": 1512
+    },
+    "AuctionSearchTimer.toc": {
+      "sha256": "594b7978c6d4400ae46ed93677074a296ce12a12b7d91e33efc69c9bb73d72fb",
+      "bytes": 265
+    },
+    "AuctionSearchTimer.xml": {
+      "sha256": "215e582780ede6955b5604788e8362625af797f4f72ff1b03f0c08fa90a4a4eb",
+      "bytes": 403
+    },
+    "LICENSE": {
+      "sha256": "22168e305b1f66bc78530be168f140a0601093a5d51105dbc0ca20a4591aa427",
+      "bytes": 1075
+    },
+    "preview.jpg": {
+      "sha256": "92d98b2d1d2edb2606282d4433d7ac9cae02d2aca14fb5366c10222cd15c3bf0",
+      "bytes": 8134
+    },
+    "README.md": {
+      "sha256": "ee60668672c24ef7ff39b3620d6e90bd35a20b45e02aa027f375efa60ddc795c",
+      "bytes": 262
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

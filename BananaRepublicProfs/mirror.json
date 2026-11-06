@@ -1,0 +1,65 @@
+{
+  "upstream": "https://github.com/Fox2k7/BananaRepublicProfs",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Fox2k7",
+    "repo": "BananaRepublicProfs",
+    "name": "BananaRepublicProfs",
+    "url": "https://github.com/Fox2k7/BananaRepublicProfs",
+    "api": "https://api.github.com/repos/Fox2k7/BananaRepublicProfs"
+  },
+  "commit": "fa360b807e302fb40002539c70c9ee3f9099ea3c",
+  "sourceFiles": {
+    "BananaRepublicProfs_RecipeMaps.lua": {
+      "sha256": "ce9f1d7ad3883939f37b3af9e0158bd307b392835bbfb642cc8b390a0d9c8970",
+      "bytes": 60772
+    },
+    "BananaRepublicProfs.lua": {
+      "sha256": "6dc3767d51952ba314d0047d92a15b14837be95e06382ec564ca3987ced79be1",
+      "bytes": 83161
+    },
+    "BananaRepublicProfs.toc": {
+      "sha256": "fa99dadc1eff0e7eca84da9a57e7d359c301a05a3f3a832f7e7002bf398da205",
+      "bytes": 285
+    },
+    "BananaRepublicProfs.xml": {
+      "sha256": "419b2394534df6f5ae761daf8c8367cead5e4c6c7c558273c9b1a2f51feddd78",
+      "bytes": 2261
+    },
+    "BRP_MinimapIcon.tga": {
+      "sha256": "6f43e9fb1427f5b559357ec0b4e22174b21cfe86f3cc57588e84a2193609961e",
+      "bytes": 3090
+    },
+    "INSTALLATION.md": {
+      "sha256": "fc607b0e7d3d841a001f8fed1f3943222a5bf03f8dad296ba7d73816d428cc47",
+      "bytes": 2267
+    },
+    "LICENSE": {
+      "sha256": "e2c8adbe62521c678264baee6f92a85a5a3bd11f302a848ed44cdce5156a4b0d",
+      "bytes": 1089
+    },
+    "README.md": {
+      "sha256": "e2738849f3fa37251e1641ebef18142db9d26910a717845d3ad0587abcd4b33d",
+      "bytes": 8571
+    },
+    "RELEASE_NOTES.md": {
+      "sha256": "0445b3c27a7a32a0c1277c1ce0ca5c5c617bd88fca94ba4b4950a52271d2e5df",
+      "bytes": 7002
+    },
+    "screenshots/main-ui.png": {
+      "sha256": "893e3bd508528eacd091658a088810c1c0802b691d132be5e11d144ad7078bdd",
+      "bytes": 125471
+    },
+    "screenshots/minimap-button.png": {
+      "sha256": "c2f8be7e24c3b2e625eb8711e6ae48d6ae301ba3e312423cae51deb1aaca639b",
+      "bytes": 3782
+    },
+    "screenshots/recipe-popup.png": {
+      "sha256": "1e7c850e232b4ec7bdad1afd483f0f6a748ccea10337e5b2a0a049b912295efc",
+      "bytes": 105711
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

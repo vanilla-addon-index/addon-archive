@@ -1,0 +1,45 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+  
+  <!-- Custom EditBox Template following your example structure -->
+  <EditBox name="AkkioEditBoxTemplate" virtual="true" letters="10">
+    <Size>
+      <AbsDimension x="40" y="25"/>
+    </Size>
+    <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+      <EdgeSize>
+        <AbsValue val="8"/>
+      </EdgeSize>
+      <TileSize>
+        <AbsValue val="8"/>
+      </TileSize>
+      <BackgroundInsets>
+        <AbsInset left="2" right="2" top="2" bottom="2"/>
+      </BackgroundInsets>
+    </Backdrop>
+    <FontString inherits="GameFontNormalSmall"/>
+    <TextInsets>
+      <AbsInset left="5" right="5" top="3" bottom="3"/>
+    </TextInsets>
+    <Scripts>
+      <OnLoad>
+        this:SetAutoFocus(false);
+        this:SetBackdropColor(0, 0, 0, 0.8);
+        this:SetBackdropBorderColor(0.5, 0.5, 0.5, 1);
+        this:SetJustifyH("CENTER");
+      </OnLoad>
+      <OnEnter>
+        this:SetBackdropBorderColor(1, 1, 1, 1);
+      </OnEnter>
+      <OnLeave>
+        this:SetBackdropBorderColor(0.5, 0.5, 0.5, 1);
+      </OnLeave>
+      <OnEditFocusGained>
+        this:SetBackdropBorderColor(0, 0.5, 1, 1);
+      </OnEditFocusGained>
+      <OnEditFocusLost>
+        this:SetBackdropBorderColor(0.5, 0.5, 0.5, 1);
+      </OnEditFocusLost>
+    </Scripts>
+  </EditBox>
+  
+</Ui>

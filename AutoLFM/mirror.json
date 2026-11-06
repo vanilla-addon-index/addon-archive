@@ -1,0 +1,549 @@
+{
+  "upstream": "https://github.com/FSuhas/AutoLFM",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "FSuhas",
+    "repo": "AutoLFM",
+    "name": "AutoLFM",
+    "url": "https://github.com/FSuhas/AutoLFM",
+    "api": "https://api.github.com/repos/FSuhas/AutoLFM"
+  },
+  "commit": "168f9e2966a5ddb980be05433e45bf648363b6bb",
+  "sourceFiles": {
+    "_assets/AutoLFM.gif": {
+      "sha256": "dc29549c3f984261db227053f7da1ca85ab98cce4919661cd8ac89137ee340d9",
+      "bytes": 1807749
+    },
+    "_assets/Screenshots/01-Dungeons.png": {
+      "sha256": "2bb81d81f2361e14f4100e2391482f87874da1eb30064b679cc21b2220401f26",
+      "bytes": 294349
+    },
+    "_assets/Screenshots/02-Raids.png": {
+      "sha256": "ddb3650fa4af8c95b541d999426e3b3f0d185b002e0667aad03c50b9aef3b8a3",
+      "bytes": 284634
+    },
+    "_assets/Screenshots/03-Quests.png": {
+      "sha256": "a9492816f044a4c0d57e0df84a7b2945b02555bb753b1811e9b8bb08ce706897",
+      "bytes": 254174
+    },
+    "_assets/Screenshots/04-Details.png": {
+      "sha256": "f402023cd3279eb925f0e23694d1be63d79e337bc80511b337ba513ab514a9cc",
+      "bytes": 280289
+    },
+    "_assets/Screenshots/05-Custom.png": {
+      "sha256": "fe51dff2edf7ba26b6d72275e48325bd5e939cd27cf43d9bb8368c421ccc3caa",
+      "bytes": 279067
+    },
+    "_assets/Screenshots/06-Presets.png": {
+      "sha256": "c8a901bb334255bca901ae677b213bc220a8c643ccc0b5414cb2fd6f5a7570da",
+      "bytes": 276534
+    },
+    "_assets/Screenshots/07-Autoinv.png": {
+      "sha256": "bbfb49098850b23832c414bdcb5c56cb2b6533d6acca135821f0750e9fc62634",
+      "bytes": 266612
+    },
+    "_assets/Screenshots/08-Settings.png": {
+      "sha256": "e8d093493e0725c9af644338574040a0fa877119f3f1781ac542d59a0727b9ee",
+      "bytes": 279142
+    },
+    "_wiki/API.md": {
+      "sha256": "2cdc44f0618bfc7907dde4975d6e27f369a4069e7ec0de5820cb480d46f5fbff",
+      "bytes": 9674
+    },
+    "_wiki/Best-Practices.md": {
+      "sha256": "106223f10ebbda10fea65bb36229e2f82b500ec61c21b4c20daa4de5b5956411",
+      "bytes": 11232
+    },
+    "_wiki/Developer-Guide.md": {
+      "sha256": "724a912faa0412033a63056c16fa9258373d1dd4348db43255eaa5d407e69a32",
+      "bytes": 3245
+    },
+    "_wiki/Home.md": {
+      "sha256": "aa2644a9c9457bff410342c34775fc958fac4581cc3ec0eaee7f19ffbb6afa41",
+      "bytes": 5421
+    },
+    "_wiki/ID-System-Reference.md": {
+      "sha256": "200ae3edc72d7b4d3710dee09c802204ccd5c4048398930b294504361dca81f8",
+      "bytes": 15066
+    },
+    "_wiki/Installation-Usage.md": {
+      "sha256": "c9db0ba45dec2109cf6b33dd560f7d4cd4533615ba9d33381786856563296ee4",
+      "bytes": 4519
+    },
+    "_wiki/Maestro-Architecture.md": {
+      "sha256": "4f4b2fc818ddd270b5134dd29748cebf66a1064d2953fce0edf7064534ecc010",
+      "bytes": 9568
+    },
+    "AutoLFM.toc": {
+      "sha256": "4b23c0fa497ee319d83cae0018352c463135e0ca1ee3a73c2889e5464245626f",
+      "bytes": 2419
+    },
+    "CHANGELOG.md": {
+      "sha256": "656240a6fedb36d06275f5ba7beddc8a6d1ac820b7b021b2f22b53f9e7dc831f",
+      "bytes": 8097
+    },
+    "Components/DarkUI.lua": {
+      "sha256": "232c0b145e306cd86fcb841ad8f261763ab2138481511a9023f1eb8660c6fd4f",
+      "bytes": 7941
+    },
+    "Components/Debug.lua": {
+      "sha256": "b548d601995f421aa1e6b8892bc8128c8e6a54349f10aa07e219091f39c151ac",
+      "bytes": 21970
+    },
+    "Components/EyeAnimation.lua": {
+      "sha256": "be6bdbd40c9c6a96eaf415b19d6d4d49ae9a9f0f0f1dcee7646c8e117b8ef03f",
+      "bytes": 4523
+    },
+    "Components/MinimapButton.lua": {
+      "sha256": "77c2a7ec2b8073bed6204b6f0e249e258e68ef7ac3894913fddb09c9fb58a7dc",
+      "bytes": 4610
+    },
+    "Components/WelcomePopup.lua": {
+      "sha256": "40ca1c91e640bd296e8c41e8a2e765d1a6b5578e3d6cb6abf94af42e12f3d160",
+      "bytes": 11854
+    },
+    "Core/API.lua": {
+      "sha256": "44b3db698738fdc8ac90e24a8cdf49c9eb86f86bbad9e5f9d7ac3b9329ac2a79",
+      "bytes": 10864
+    },
+    "Core/Cache.lua": {
+      "sha256": "cf155d70b093445cc1fd954cadc0b96bfb2e95d5bce41b21e679d21caaa7a360",
+      "bytes": 4019
+    },
+    "Core/Constants.lua": {
+      "sha256": "36676f92eb0136f968a4b4cd3b788995f8fab041bd603c13e2a139d94b25a596",
+      "bytes": 19342
+    },
+    "Core/Events.lua": {
+      "sha256": "582389e48a612bd14848e0c9255bc23642d954086df15424c46ffaef2221d836",
+      "bytes": 8561
+    },
+    "Core/Maestro.lua": {
+      "sha256": "62524a39ec62f5ed900869fd6818b22cdebb16dacf3e5d9943b704833a60dc97",
+      "bytes": 31088
+    },
+    "Core/Storage.lua": {
+      "sha256": "7f923839e524dd4bd3e504f191b7fb2c33fe5fb48458a36a4440bb9ee9e6723c",
+      "bytes": 15189
+    },
+    "Core/Ticker.lua": {
+      "sha256": "7f102fd1b64e2dde5cd5629120b9fe196c10b3c9cccfdc0ce527e4b203737285",
+      "bytes": 8510
+    },
+    "Core/Utils.lua": {
+      "sha256": "b5a3791a4787000ee94499d3e7e573d23b992ed8336e6a7b66ce57987829e891",
+      "bytes": 24171
+    },
+    "Logic/Broadcaster.lua": {
+      "sha256": "650dc9d126c19a22f92b827fc11ca2538ebe2183d6ee979061f49ea320692450",
+      "bytes": 17775
+    },
+    "Logic/Content/AutoInvite.lua": {
+      "sha256": "c2285cc48cb99f0f9fd71a75b4443e55309835f30dea125ad12dd55d46adb83c",
+      "bytes": 10881
+    },
+    "Logic/Content/Dungeons.lua": {
+      "sha256": "414d30b4e480ca6701d7d20e62206182cf5b465157da2da68a0e1394d55d3a6d",
+      "bytes": 4688
+    },
+    "Logic/Content/Messaging.lua": {
+      "sha256": "71e77fed1b14a3903194c9f93158ce8017c6ab9366d1f714378df454c3fdeedc",
+      "bytes": 12135
+    },
+    "Logic/Content/Presets.lua": {
+      "sha256": "4d939e601abf9e70998eca7be1a59b98ad6dce8d5b40ce4b8d57285fc5d342bf",
+      "bytes": 14900
+    },
+    "Logic/Content/Quests.lua": {
+      "sha256": "205489633106d3db129fb16681e5eb04bf3eedd17067d83c8d170db1205613b3",
+      "bytes": 9518
+    },
+    "Logic/Content/Raids.lua": {
+      "sha256": "de153fac42fc8f0722f4c327e17e457e94ecef84880e12c5cc75bf2b5711fddb",
+      "bytes": 740
+    },
+    "Logic/Content/Settings.lua": {
+      "sha256": "ab03678493fb58bc11b8d91d7a23bf83d399cf9e4f8c4a1621ec54a6c1957e31",
+      "bytes": 9309
+    },
+    "Logic/Group.lua": {
+      "sha256": "34ca611c37a4bf8b92949b3ad64172cb81d02e5cc0ea6fb7c71567e8d796a332",
+      "bytes": 4820
+    },
+    "Logic/MainFrame.lua": {
+      "sha256": "b55513e1e2c3d9ae4828f094939fb25b4ac7660df0e95387acfa194e73872259",
+      "bytes": 7110
+    },
+    "Logic/Message.lua": {
+      "sha256": "3d0db875f62865500511f786ef15bb59d7ac5e5caaf384166c7838ba11d64dd4",
+      "bytes": 11019
+    },
+    "Logic/Selection.lua": {
+      "sha256": "02e31472013227d1de2396430b090512f309f907fb7566046b9ae80865782904",
+      "bytes": 17222
+    },
+    "README.md": {
+      "sha256": "abdab62581be09284f0cacb7c28ae0dbe7e12e76419e09f55b2257f74ff27d75",
+      "bytes": 6232
+    },
+    "UI/Content/AutoInvite.lua": {
+      "sha256": "ef6c4478441f8d5540d844cd772b5929b0aa9e6a69c0d7bc3763b7ea131cf98e",
+      "bytes": 21238
+    },
+    "UI/Content/Dungeons.lua": {
+      "sha256": "fde98ab50113eac12039d401930da3a481e26e2a0e614ec8b638ec60f39261aa",
+      "bytes": 3397
+    },
+    "UI/Content/Messaging.lua": {
+      "sha256": "70e5e70f7d3d6fc64086d5b3bc14e5fed5803b0b6c9915eab333c0df154d1e50",
+      "bytes": 36514
+    },
+    "UI/Content/Presets.lua": {
+      "sha256": "59fc6498fa22de893fd12dc760fe89170b52aa071054dbdf9666b74d19e775aa",
+      "bytes": 17988
+    },
+    "UI/Content/Quests.lua": {
+      "sha256": "8425030f2187d2048aa168ed587cd31188ea795d7786bf924d1b2d21560f6215",
+      "bytes": 3790
+    },
+    "UI/Content/Raids.lua": {
+      "sha256": "86e57cab38563e1f98b2655c8716570b264128709930ab069e1923ed961ad1fb",
+      "bytes": 5982
+    },
+    "UI/Content/Settings.lua": {
+      "sha256": "595fa94214168e21e96b65a6df254472edc89be9473f7c28ff08e8ea818b1df0",
+      "bytes": 21739
+    },
+    "UI/ContentPanel.lua": {
+      "sha256": "0f00b1fd50fc0f80168b37637ae5bc08f626382169472f154c28986efe0b1d45",
+      "bytes": 4219
+    },
+    "UI/MainFrame.lua": {
+      "sha256": "a7be338ccd8a87c921f209bc5157a37056fd8bd380b6af7164a24bc54a2f2c6b",
+      "bytes": 17146
+    },
+    "UI/RowList.lua": {
+      "sha256": "5463f72820d610c45edd89b89f19bc04e761b525a2dfdbc4653df7f1ea29e275",
+      "bytes": 11375
+    },
+    "UI/SizeControl.lua": {
+      "sha256": "fbbde542eacf521f5691ba9a90b0b83f77df9322e903fe0767a0bd86c52148af",
+      "bytes": 9216
+    },
+    "UI/Sounds/Full.ogg": {
+      "sha256": "1153339e3d4fab1cfcb2c37ab3781462b517f6c69616c6e2b4326b76c73d1e68",
+      "bytes": 60724
+    },
+    "UI/Sounds/Start.ogg": {
+      "sha256": "77e24671b9507fa7e6fd239aa1ac8999d5a04cbd32255dc87079829e59b25f4a",
+      "bytes": 29481
+    },
+    "UI/Sounds/Stop.ogg": {
+      "sha256": "6dd5b1aa3f179203a38c5c25575ea93ffd9ee56175e353977a90172256d2423f",
+      "bytes": 23475
+    },
+    "UI/Templates/AutoInvite.xml": {
+      "sha256": "1db33ca54f60462506febd500ec4233ac9d8e53c6d2b738ba8bc2d05fa3afa82",
+      "bytes": 33205
+    },
+    "UI/Templates/Lists.xml": {
+      "sha256": "6b90484f25fdb619fe75630d4e914656edec1bdc0cd09eeed715ec4bb78cedbb",
+      "bytes": 5215
+    },
+    "UI/Templates/MainFrame.xml": {
+      "sha256": "f1a9eedd1c4878d4e35db34acefd29613963c48edb1529d82671542871f61604",
+      "bytes": 33597
+    },
+    "UI/Templates/Messaging.xml": {
+      "sha256": "45713115330bda00aa4143ffb9bbfa9c9adca40d132fcf499dd692a5556c9bb6",
+      "bytes": 40683
+    },
+    "UI/Templates/Presets.xml": {
+      "sha256": "9d2ca22124b747d8d9a45d650c4f10ce58c9d287c1a839078664341d3ef8586e",
+      "bytes": 4468
+    },
+    "UI/Templates/Settings.xml": {
+      "sha256": "b7fc929355ae1fce9dfdd63aa16ded60b7ac62130e74ec6a46588afbc7d4cd7a",
+      "bytes": 33157
+    },
+    "UI/Textures/ContentBackground.blp": {
+      "sha256": "f82f402c362a889a3fa2e5a0f108e7e61a7b9277bad5cef410a499de5c497759",
+      "bytes": 88572
+    },
+    "UI/Textures/DialogBoxBackground.blp": {
+      "sha256": "d3829984f48afddb8e6288dffa784efb6bd84b2e8aebc31422c47d3988dcff33",
+      "bytes": 6660
+    },
+    "UI/Textures/DialogBoxBorder.blp": {
+      "sha256": "b554c691aee643f0a9b09360f96d0385935d7d5f2541a4cd045704aefb48f229",
+      "bytes": 12132
+    },
+    "UI/Textures/Eye/Eye00.blp": {
+      "sha256": "b0256c788e6ce6045044b7fff71be87c271d6799117fe31bc2c0b2dd0fa4b96c",
+      "bytes": 6676
+    },
+    "UI/Textures/Eye/Eye01.blp": {
+      "sha256": "746647750a3c79f727cddd90f76783fa7bf80bfe9fdb2218a28eec1b6a791277",
+      "bytes": 6676
+    },
+    "UI/Textures/Eye/Eye02.blp": {
+      "sha256": "d8a06c7d2cd529cb7ad5a71fd408ca9f4ced5e424f8b347af7da7a33dbbe7630",
+      "bytes": 6676
+    },
+    "UI/Textures/Eye/Eye03.blp": {
+      "sha256": "8f1156e76589ba2abbc0ee70d24e061696a5f8cbfb1c40e923a6d5152c28384d",
+      "bytes": 6676
+    },
+    "UI/Textures/Eye/Eye04.blp": {
+      "sha256": "c2c1662109f6697f91803d6dd6eec945e7068ecb5b5b5483e0acfe381824a851",
+      "bytes": 6676
+    },
+    "UI/Textures/Eye/Eye05.blp": {
+      "sha256": "5c33934074d226ce87dfb3c2a93d1c52378c94179d37f71a45fe2e0f5a3397bb",
+      "bytes": 6676
+    },
+    "UI/Textures/Eye/Eye06.blp": {
+      "sha256": "2d34dc77790ff5cf4b3eadc4392f756e7583a7e1b404a6abec49eb06f9d6bc5f",
+      "bytes": 6676
+    },
+    "UI/Textures/Eye/Eye07.blp": {
+      "sha256": "a2d0ba1ea7561da7417a868d608a87a6f8c7f6b80402cdcce69e667bf8c340e7",
+      "bytes": 6676
+    },
+    "UI/Textures/Eye/Eye08.blp": {
+      "sha256": "5c97095ef73727a5eb8147740bdcaa5fc93b622744e36cd72f6719a2d8cd2948",
+      "bytes": 6676
+    },
+    "UI/Textures/Eye/Eye09.blp": {
+      "sha256": "7cde9529dac303c0ef5d16815a63df7ce5f10ef9e8db10b067cfe4b942f7c844",
+      "bytes": 6676
+    },
+    "UI/Textures/Eye/Eye10.blp": {
+      "sha256": "2bbc5b76806ac90e09bbacd6ec16aa48196d97496595147fe520a93cd7508df5",
+      "bytes": 6676
+    },
+    "UI/Textures/Eye/Eye11.blp": {
+      "sha256": "86d85f4e1e7385560216636e5e7bfc81d60bd56f6e65f3131b5b0e2ae59a0fd0",
+      "bytes": 6676
+    },
+    "UI/Textures/Eye/Eye12.blp": {
+      "sha256": "84f0541281961835394bb51064e34fec8d9f64316040a035a31066a25b9a1646",
+      "bytes": 6676
+    },
+    "UI/Textures/Eye/Eye13.blp": {
+      "sha256": "265558b1dcf57f0a0b458b841f34c690fce1798e3f5cf8fd7e72caaf6ef4e3b5",
+      "bytes": 6676
+    },
+    "UI/Textures/Eye/Eye14.blp": {
+      "sha256": "f9842634587427b3a7f4fb33477c5de47918563196c6e60a05e756ba9fe41937",
+      "bytes": 6676
+    },
+    "UI/Textures/Eye/Eye15.blp": {
+      "sha256": "c462a3374e644093da9a228360b99e290f40b7c09716952b10072645ced5c335",
+      "bytes": 6676
+    },
+    "UI/Textures/Icons/Channels.blp": {
+      "sha256": "ed9866278e212f2d62dfb67f9c4386bc118c55e41b6bbe08c222e21075b6e901",
+      "bytes": 6676
+    },
+    "UI/Textures/Icons/close.blp": {
+      "sha256": "8a67f51c4013a68e6a83f6113c5e6211ca04265c681ffda5a631d27a2294f668",
+      "bytes": 1868
+    },
+    "UI/Textures/Icons/down.blp": {
+      "sha256": "27989ca9a14497834e8c1dccc5470912b94a7a87be2a0fab433da1afb2412058",
+      "bytes": 2580
+    },
+    "UI/Textures/Icons/dps.blp": {
+      "sha256": "b7f959db2f3288341d36bcc7a445b8fa0a624c702f400aed09bc9c93e19f670a",
+      "bytes": 2580
+    },
+    "UI/Textures/Icons/Duration.blp": {
+      "sha256": "a7949c36afea5cd80bd783fad47d4f0d7cc517b8486b78d2076c77ba9df0f287",
+      "bytes": 6676
+    },
+    "UI/Textures/Icons/Group.blp": {
+      "sha256": "6ef82eb6b662ae62de52fd812bd46b4abe5dc91d0c9ef938619cd8c1077c18e0",
+      "bytes": 6676
+    },
+    "UI/Textures/Icons/heal.blp": {
+      "sha256": "e2b0b30e5dc1686bc17bbb698689f4f101fc5a653d604611b8735b2769592fd0",
+      "bytes": 2580
+    },
+    "UI/Textures/Icons/Interval.blp": {
+      "sha256": "6cff38a8072a8549d609ab60deb1467a38e69c298a4c8778ee3506c0e950d56c",
+      "bytes": 6676
+    },
+    "UI/Textures/Icons/Message.blp": {
+      "sha256": "6003db1f96569d2250608a88b26fc98b5b5ee54c54757e61914250ac17b3bd4e",
+      "bytes": 6676
+    },
+    "UI/Textures/Icons/Next.blp": {
+      "sha256": "5daf1223796e0bd784516a1dc4c64342839ee2ff1a123f9c1cae373d7797c905",
+      "bytes": 6676
+    },
+    "UI/Textures/Icons/Sent.blp": {
+      "sha256": "f4608c467510bcd2911f8ac4476bd3829dcdbbb04bbd4427fcff26ae7d3ee2f0",
+      "bytes": 6676
+    },
+    "UI/Textures/Icons/Stats.blp": {
+      "sha256": "61184485f824aa7e28c0aa64fb84e5bae3216f6dab5b63ccff875cfeefbe7867",
+      "bytes": 6676
+    },
+    "UI/Textures/Icons/tank.blp": {
+      "sha256": "87e2db4bde530d71aa4ce3317a2393dc91bd56fce7a230b3a4dd33675c19b204",
+      "bytes": 2580
+    },
+    "UI/Textures/Icons/up.blp": {
+      "sha256": "786980635866f809008cf37a6ccad0a3e4a58e5ac1ab2ea501c2cd35dd309d89",
+      "bytes": 2580
+    },
+    "UI/Textures/Icons/Var.blp": {
+      "sha256": "c5220d7c1839e44505569680d93135bde7ebe5a9e2ed979692afa92c4dfdfc03",
+      "bytes": 2580
+    },
+    "UI/Textures/Icons/VarC.blp": {
+      "sha256": "0e460ec13e5a70d13882f042cd46364a2d7c43fe97a6630d77b4c378f1d9f6da",
+      "bytes": 2580
+    },
+    "UI/Textures/Icons/VarHighlight.blp": {
+      "sha256": "8671971e2b6ba327c23e764379d77947a311575489f44e78cc4578f33aca41e9",
+      "bytes": 2580
+    },
+    "UI/Textures/Icons/VarM.blp": {
+      "sha256": "efe09db48a16e8e51e0daef7aef85e3de974a7b4ce4dc470f08d62a9c4e21cd3",
+      "bytes": 2580
+    },
+    "UI/Textures/Icons/VarR.blp": {
+      "sha256": "a1d0fcb74bf046945298dfbb66cc7a345e2a7358abc5445cdfe0a30102027c6c",
+      "bytes": 2580
+    },
+    "UI/Textures/Icons/VarT.blp": {
+      "sha256": "42c9bea6a72641a04b8ca1845ad02d9fc41263d45bb0638490b734b23470b4cb",
+      "bytes": 2580
+    },
+    "UI/Textures/MainFrame.blp": {
+      "sha256": "edb54986afe296ac17ccdff0797c75a561b3aa34b8bcd6fe755781e476117a9f",
+      "bytes": 350740
+    },
+    "UI/Textures/MinimapBorder.blp": {
+      "sha256": "863708bbe6e1b2b7f6fb82385457eba32dc59cba62c90cebf0d2f3ebc29407ac",
+      "bytes": 6660
+    },
+    "UI/Textures/MinimapHighlight.blp": {
+      "sha256": "42c10d35fc7f08f1b6da9a7852ec020f6f94f77abb94cc0de5cc0a21168a8c72",
+      "bytes": 1868
+    },
+    "UI/Textures/Preview.blp": {
+      "sha256": "4ffd15080a3746539c77e52975131fc23471820bff5fafec8177e33175daa339",
+      "bytes": 3940
+    },
+    "UI/Textures/RadioButton.blp": {
+      "sha256": "bb13690654186bcb25199ab62b293e1f6884be11ca409d89e4ca5f41a428d3ad",
+      "bytes": 1876
+    },
+    "UI/Textures/RolesBackground.blp": {
+      "sha256": "cb8e26cf3ec52c924fd1c3182f65682a214670e02f20613d6da82443c898f3e9",
+      "bytes": 44900
+    },
+    "UI/Textures/RolesDps.blp": {
+      "sha256": "b6ea615741e2f4814fbaee974386a5d0f5cec5d83777dab773660ef5efe3c7cb",
+      "bytes": 6676
+    },
+    "UI/Textures/RolesHeal.blp": {
+      "sha256": "4d8dcc5f95bc90fac32aea3c67112a2cccadaac8c425988e1803ca4fbdcaab43",
+      "bytes": 6676
+    },
+    "UI/Textures/RolesHighlight.blp": {
+      "sha256": "b335db03a3c26d2def29dd8180c74a18842a8113b5b743bcd217cb76bded92ba",
+      "bytes": 6676
+    },
+    "UI/Textures/RolesTank.blp": {
+      "sha256": "dfdc78f9170deb3b895ea1aaa445c521aa825e116eecb983ce37f3552aaa346a",
+      "bytes": 6676
+    },
+    "UI/Textures/SliderBackground.blp": {
+      "sha256": "03946695c5c1497560e553843198985c2693cf1d18cc7e8e313e2c916ec2a6e5",
+      "bytes": 1284
+    },
+    "UI/Textures/sliderBackgroundLight.blp": {
+      "sha256": "e865c0dd35785a9caecd6e22dd18df0b56ca20d006f32b49c52173fda2d08e9c",
+      "bytes": 1300
+    },
+    "UI/Textures/SliderBorder.blp": {
+      "sha256": "b36a0ac1862216835d7883f130c54d3f2656a1480d8beb9bbfb2a9d4e8008118",
+      "bytes": 1892
+    },
+    "UI/Textures/SliderButton.blp": {
+      "sha256": "3dcdae2afae4d2018de829d4935c39434c1c92c624b762cfa929de9397c94916",
+      "bytes": 2564
+    },
+    "UI/Textures/SliderButtonl.blp": {
+      "sha256": "3dcdae2afae4d2018de829d4935c39434c1c92c624b762cfa929de9397c94916",
+      "bytes": 2564
+    },
+    "UI/Textures/Tabs/AddPreset.blp": {
+      "sha256": "9787348ef50e633802f5e3b9b5187f11cbc09f86e4cef89a0fe2003facfd44ee",
+      "bytes": 6676
+    },
+    "UI/Textures/Tabs/AutoInvite.blp": {
+      "sha256": "369d7a7b830572d92a2d680c99d18ef286d69cba770f32acb0399472e8d6d667",
+      "bytes": 6676
+    },
+    "UI/Textures/Tabs/BottomTabActive.blp": {
+      "sha256": "c01cf91b82454bc0a79ddf4eca49d930c214af66edb9826c1635bb4aa8e9f33c",
+      "bytes": 6676
+    },
+    "UI/Textures/Tabs/BottomTabHighlight.blp": {
+      "sha256": "10db7222535fc1e23286df5d37f9ce73bacc49a682e7d8bfe645bb526ff3a8fd",
+      "bytes": 6676
+    },
+    "UI/Textures/Tabs/BottomTabInactive.blp": {
+      "sha256": "98149a20d3a4a2b4dad4db848a661890aaa585b3d7b537c3b9c3c3fdc6ab13e6",
+      "bytes": 6676
+    },
+    "UI/Textures/Tabs/ClearAll.blp": {
+      "sha256": "3a6fffcf581ea5169aaae47d93a3357457ffcabc27e55395fa15ec8e019bbd84",
+      "bytes": 6676
+    },
+    "UI/Textures/Tabs/Presets.blp": {
+      "sha256": "bb021eae0391de81323f5f69f1d370828e0144c1d84b92ab60c4a60234b70c48",
+      "bytes": 6676
+    },
+    "UI/Textures/Tabs/Settings.blp": {
+      "sha256": "221b56dce50838aad519a8df78ef824a99494ca91e6d05550d47e10445ca3d0b",
+      "bytes": 6676
+    },
+    "UI/Textures/Tabs/SideTab.blp": {
+      "sha256": "9034804b3236699f40d506dedc9562cee655f5c3f1f2c1044211158a604f7e1e",
+      "bytes": 6660
+    },
+    "UI/Textures/Tabs/SideTabActive.blp": {
+      "sha256": "e138a6f66ee58cda431917975f2577f39259b1ac402850e55907dbdd0f012083",
+      "bytes": 6676
+    },
+    "UI/Textures/Tabs/SideTabClick.blp": {
+      "sha256": "d49af5e005ca04a08109af760b6f9af5aa65969f96a0fc21846ac9af019437bd",
+      "bytes": 6676
+    },
+    "UI/Textures/Tabs/SideTabHighlight.blp": {
+      "sha256": "88996ddf8ef5d2d35c582812af332f84d08c74b36025d0e5f33c08f310b9227c",
+      "bytes": 6676
+    },
+    "UI/Textures/TooltipBackground.blp": {
+      "sha256": "cf44686081767a422a601e566c936e98edf857b9f8717c40993a6c898171f87e",
+      "bytes": 6660
+    },
+    "UI/Textures/TooltipBorder.blp": {
+      "sha256": "6a6a1946032606c1237fce51746411282383869e021bacdf4043d4b8a11c84fc",
+      "bytes": 3940
+    },
+    "UI/Textures/White.blp": {
+      "sha256": "123d507049cbd02b06d8d9352fd613f05ee69e0d25d25a91c99ba2ee380b774a",
+      "bytes": 1228
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/AutoMarker",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "AutoMarker",
+    "name": "AutoMarker",
+    "url": "https://github.com/MarcelineVQ/AutoMarker",
+    "api": "https://api.github.com/repos/MarcelineVQ/AutoMarker"
+  },
+  "commit": "cd66b7ae08da2a6258f53778a73689aca4ec027b",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "758af68311437be79a4d8feb72e9ca7cd7a05af71fc2aa96f52ec1b6e4f7918b",
+      "bytes": 9
+    },
+    "AutoMarker.lua": {
+      "sha256": "82879735c650ad9e5275091d5a20837303080afc1fb68a507e9fce01430d7693",
+      "bytes": 45619
+    },
+    "AutoMarker.toc": {
+      "sha256": "b9c3375e3b15575f8f8876622ad01ce35cd4c75ef4b7684b6821e68f2ad85462",
+      "bytes": 246
+    },
+    "Bindings.xml": {
+      "sha256": "4d5288f7052a29460982d98f50ae633e6d4b88ff07dc34832aaf49f60206ab2b",
+      "bytes": 345
+    },
+    "Locale/Localization_enUS.lua": {
+      "sha256": "6b12ef35ec2a1b54cbd93c0a277843bd9862c7ae9318ff937570ca2a2d3c6a9e",
+      "bytes": 7896
+    },
+    "Locale/Localization_zhCN.lua": {
+      "sha256": "eb0e805b4faa6c012b893a815be54eaba01d6c7df884cb97e28a85ed40ecfd8b",
+      "bytes": 7568
+    },
+    "Locale/Localization.xml": {
+      "sha256": "f55ab9b7075bca00b5220373907efe4d155ed9f1e681dc60aeb46945659223d9",
+      "bytes": 553
+    },
+    "NPCList.lua": {
+      "sha256": "74c9214c0a44952b0e089d50a8310685b6c80ae121979d3871d7cd97531232bb",
+      "bytes": 133143
+    },
+    "README.md": {
+      "sha256": "bc8228d48050f78d96fffb2638c83d4f28edcf27ff62e86e5dcea7008c015a7c",
+      "bytes": 2139
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

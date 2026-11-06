@@ -1,0 +1,930 @@
+--=============================================================================
+-- Aegis_Strip.lua  -  shared utility-strip engine
+--
+-- The reusable machinery behind every "cycle button" class (Hunter stings,
+-- Warlock curses/armor/soulstone, Rogue poisons/expose, Warrior debuffs, and
+-- eventually a refactored Shaman): a movable titled strip of skinned buttons,
+-- where each button is pure BEHAVIOUR supplied by the class module:
+--
+--   strip = AegisRP.NewStrip("hunter", "Stings")
+--   strip:AddButton{
+--       key     = "sting",
+--       refresh = function(b) ... set b.icon/b.label/b.sub/b.timer + state ... end,
+--       onClick = function(b, mouseBtn) ... end,       -- optional
+--       onWheel = function(b, delta) ... end,          -- optional
+--       tooltip = function(b, tt) tt:AddLine(...) end, -- optional
+--   }
+--   strip:Finish()   -- sizes the frame, restores position, starts the ticker
+--
+-- Inside refresh, helpers on the button:
+--   b:SetIcon(tex) b:SetLabel(txt) b:SetSub(txt) b:SetTimer(txt)
+--   b:SetState("good"|"need"|"warn"|"off")  -- green / red / amber / neutral
+--
+-- The strip is per-character positioned (saved under its key), participates in
+-- the Core's OnActivate/Toggle hooks via the returned object, and ticks every
+-- 0.25s calling each button's refresh.
+--
+-- Also exported: spellbook + target-debuff helpers shared by these classes.
+--=============================================================================
+
+local HAS_SUPERWOW = (SUPERWOW_VERSION ~= nil)
+
+AegisRP_Settings = AegisRP_Settings or {}
+
+-- Registry of live strips ([key] = strip object). The options UI iterates it
+-- for re-flow, scale and position resets; only the active class's strip exists.
+AegisRP.strips = AegisRP.strips or {}
+-- ...and the same keys in creation order. pairs() over the registry is
+-- unordered, so anything the player READS - the Options list of strips - walks
+-- this instead, or the rows would shuffle between logins.
+AegisRP.stripOrder = AegisRP.stripOrder or {}
+
+local SKIN = {
+    bgFile   = "Interface\\AddOns\\Aegis_RallyPower\\Skins\\Smooth",
+    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+    tile = false, tileSize = 8, edgeSize = 8,
+    insets = { left = 0, right = 0, top = 0, bottom = 0 },
+}
+-- good/need/off are PallyPower's own three (locked). `warn` is ours: amber for
+-- "not yet, but be ready" - the same meaning yellow already carries on the
+-- Core's class rows (a buff about to expire).
+--
+-- `warn` has no backdrop user as of 1.13.5: the rotation strips took it for
+-- their on-deck state and gave it back, because on deck means the ability IS
+-- up and the backdrop there carries readiness only. It stays in the engine's
+-- vocabulary for the next thing that genuinely means "soon".
+local COLORS = {
+    good = { 0, 0.7, 0, 0.5 },
+    need = { 1, 0,   0, 0.5 },
+    warn = { 0.85, 0.65, 0, 0.5 },
+    off  = { 0.25, 0.25, 0.25, 0.5 },
+}
+
+-- Paladin-template geometry: PallyPower's buttons are 100x34 with a 26px icon;
+-- the strip mirrors that exactly so every class reads as one family.
+local STRIP_W = 100
+local BTN_H   = 34
+local BTN_GAP = 2
+
+--------------------------------------------------------------------------
+-- shared helpers
+--------------------------------------------------------------------------
+
+-- last path segment, lowercased ("Interface\Icons\Foo_Bar" -> "foo_bar")
+function AegisRP.TexBase(path)
+    if not path then return "" end
+    local s = string.lower(path)
+    local last = s
+    for seg in string.gfind(s, "[^\\/]+") do last = seg end
+    return last
+end
+
+-- Find a spell in YOUR spellbook by exact name; returns { index, texture } of
+-- the highest rank, or nil. Cached: modules call this inside 4Hz refresh ticks,
+-- so results are cached and invalidated on SPELLS_CHANGED.
+local spellCache = {}
+function AegisRP.FindSpell(name)
+    local hit = spellCache[name]
+    if hit ~= nil then
+        if hit == false then return nil end
+        return hit
+    end
+    local found = nil
+    local i = 1
+    while true do
+        local sn = GetSpellName(i, "spell")
+        if not sn then break end
+        if sn == name then
+            found = { index = i, texture = GetSpellTexture(i, "spell") }
+        end
+        i = i + 1
+    end
+    spellCache[name] = found or false
+    return found
+end
+
+-- Bag scan: highest item whose name matches `pattern` (plain find).
+-- Returns bag, slot, name or nil. Later bags/slots win, which favours the
+-- highest rank when several match. Bag contents are cached and invalidated on
+-- BAG_UPDATE, since strips poll every 0.25s.
+local bagCache = nil
+local function BagContents()
+    if bagCache then return bagCache end
+    bagCache = {}
+    for bag = 0, 4 do
+        local n = GetContainerNumSlots(bag)
+        for slot = 1, n do
+            local link = GetContainerItemLink(bag, slot)
+            if link then
+                local _, _, iname = string.find(link, "%[(.-)%]")
+                if iname then
+                    table.insert(bagCache, { bag = bag, slot = slot, name = iname })
+                end
+            end
+        end
+    end
+    return bagCache
+end
+-- NOTE: this returns the LAST match in bag order, which is arbitrary whenever
+-- several items share the pattern. A caller that has to pick the BEST of a
+-- tiered family (Minor/Lesser/Greater/Major Soulstone) must rank them itself -
+-- see StoneTier in Class_Warlock.lua - and walk AegisRP.BagItems() rather than
+-- hoping bag order happens to agree.
+function AegisRP.FindBagItem(pattern)
+    local fb, fs, fn = nil, nil, nil
+    local items = BagContents()
+    for _, it in ipairs(items) do
+        if string.find(it.name, pattern, 1, true) then
+            fb, fs, fn = it.bag, it.slot, it.name
+        end
+    end
+    return fb, fs, fn
+end
+
+-- The cached bag list, as { {bag=, slot=, name=}, ... }. Treat it as read-only:
+-- it IS the cache, handed out rather than copied so a caller that needs to rank
+-- or filter does not trigger a second bag walk. Invalidated on BAG_UPDATE with
+-- everything else.
+function AegisRP.BagItems()
+    return BagContents()
+end
+
+-- cache invalidation
+local inv = CreateFrame("Frame", "AegisRP_StripCacheWatch")
+inv:RegisterEvent("SPELLS_CHANGED")
+inv:RegisterEvent("BAG_UPDATE")
+inv:SetScript("OnEvent", function()
+    if event == "SPELLS_CHANGED" then
+        for k in pairs(spellCache) do spellCache[k] = nil end
+    else
+        bagCache = nil
+    end
+end)
+
+-- Target-debuff presence with SuperWoW id-learning.
+-- `entry` carries: _tex (spellbook texture base) and _ids (learned id set).
+-- Returns true if the debuff is on the given unit.
+function AegisRP.UnitHasDebuffEntry(unit, entry)
+    if not UnitExists(unit) then return false end
+    entry._ids = entry._ids or {}
+    local j = 1
+    while j <= 24 do
+        local tex, _, _, id = UnitDebuff(unit, j)
+        if not tex then break end
+        local base = AegisRP.TexBase(tex)
+        if HAS_SUPERWOW and id then
+            if entry._ids[id] then return true end
+            if entry._tex and base == entry._tex then
+                entry._ids[id] = true          -- learn the real id from the icon seed
+                return true
+            end
+        elseif entry._tex and base == entry._tex then
+            return true
+        end
+        j = j + 1
+    end
+    return false
+end
+
+-- Cast an offensive spell at your current (hostile) target.
+function AegisRP.CastAtTarget(name)
+    if not UnitExists("target") then return false end
+    if HAS_SUPERWOW then
+        CastSpellByName(name, "target")
+    else
+        CastSpellByName(name)              -- lands on the selected target
+    end
+    return true
+end
+
+--------------------------------------------------------------------------
+-- the strip factory
+--------------------------------------------------------------------------
+
+local function fmtTime(t)
+    if not t or t < 0 then return "" end
+    local m = math.floor(t / 60)
+    return string.format("%d:%02d", m, math.floor(t - m * 60))
+end
+AegisRP.FmtTime = fmtTime
+
+local function Btn_SetIcon(self, tex)  self.icon:SetTexture(tex or "Interface\\Icons\\INV_Misc_QuestionMark") end
+local function Btn_SetLabel(self, txt) self.eln:SetText(txt or "") end
+local function Btn_SetSub(self, txt)   self.tn:SetText(txt or "") end
+local function Btn_SetTimer(self, txt) self.tm:SetText(txt or "") end
+
+-- Optional second icon (paladin-bar look: class icon + buff icon side by
+-- side); created lazily so single-icon buttons pay nothing.
+local function Btn_SetIcon2(self, tex)
+    if not self.icon2 then
+        if not tex then return end
+        local i2 = self:CreateTexture(nil, "ARTWORK")
+        i2:SetWidth(26); i2:SetHeight(26)
+        i2:SetPoint("LEFT", self, "LEFT", 33, 0)
+        self.icon2 = i2
+    end
+    if tex then self.icon2:SetTexture(tex); self.icon2:Show()
+    else self.icon2:Hide() end
+end
+
+-- Effective backdrop alpha for a button's state colour.
+--
+-- Transparency is a single global multiplier on the ONE thing that carries
+-- state: green covered / red needed / amber expiring / grey off. Turn it far
+-- enough down and every state paints the same nothing - and because
+-- SetBackdropColor only touches the fill, the SKIN border keeps drawing, so
+-- you get outlined boxes with empty middles. That reads as "the addon is
+-- broken", not as "I chose a transparent backdrop", and nothing on screen
+-- says which. The setting is per character, so one alt looking flat while
+-- another looks right is the signature of this.
+--
+-- Hence a floor. It was 0.15 and that was still too low to do its own job: a
+-- saturated green at 0.15 over a dark game background is not meaningfully
+-- different from grey, so the state was legible in principle and invisible in
+-- practice. Every entry in COLORS carries 0.5 as its natural alpha, so 0.3
+-- keeps a real range to adjust within while guaranteeing the colour reads.
+local ALPHA_FLOOR = 0.3
+
+function AegisRP.StripAlpha(fallback)
+    local a = AegisRP_Settings.stripAlpha
+    if a == nil then a = fallback or 0.5 end
+    if a < ALPHA_FLOOR then a = ALPHA_FLOOR end
+    return a
+end
+
+-- The scale a strip should run at. Per-strip grip scales win; below that the
+-- answer is class-dependent, and that is the point of this function existing.
+--
+-- A Paladin has no class-buff strip of ours - the legacy buff bar IS their
+-- class strip - so their Kick and Taunt strips have to follow the ENGINE's
+-- "Buff bar scale" or the three bars sit at different sizes and no slider in
+-- our options fixes it. Everyone else follows uiScale, which is the only
+-- scale they have. PP_PerUser is read defensively: it belongs to the engine
+-- and does not exist on eight of the nine classes.
+function AegisRP.StripScale(key)
+    local s = key and AegisRP_Settings["stripScale_" .. key]
+    if s then return s end
+    local _, cls = UnitClass("player")
+    if cls == "PALADIN" and PP_PerUser and PP_PerUser.scalebar then
+        return PP_PerUser.scalebar
+    end
+    return AegisRP_Settings.uiScale or 1
+end
+
+local function Btn_SetState(self, st)
+    local c = COLORS[st] or COLORS.off
+    self:SetBackdropColor(c[1], c[2], c[3], AegisRP.StripAlpha(c[4]))
+    self.icon:SetAlpha(st == "good" and 1 or 0.55)
+    if self.icon2 then self.icon2:SetAlpha(st == "good" and 1 or 0.55) end
+end
+
+--------------------------------------------------------------------------
+-- Scale grip, borrowed from PallyPower's resize corner (same art, same
+-- cursor math as PallyPower_StartScaling/ScaleFrame) but self-contained:
+-- the legacy functions hard-code their own frame names and PP_PerUser
+-- keys, so they are not callable for our frames. Drag the grip and the
+-- frame rescales around its TOPLEFT (clamped 0.5-2.0); scale and the
+-- re-anchored position persist per frame.
+--------------------------------------------------------------------------
+
+local GRIP_TEX = "Interface\\AddOns\\Aegis_RallyPower\\PallyPower-ResizeGrip"
+local scaling = {}
+local scaleDriver = CreateFrame("Frame")
+scaleDriver:Hide()
+
+local function ApplyScale(frame, scale)
+    if scale < 0.5 then scale = 0.5 elseif scale > 2 then scale = 2 end
+    local old = frame:GetScale() or 1
+    local x = (frame:GetLeft() or 0) * old
+    local y = (frame:GetTop() or 0) * old
+    frame:SetScale(scale)
+    frame:ClearAllPoints()
+    frame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / scale, y / scale)
+    return scale
+end
+
+scaleDriver:SetScript("OnUpdate", function()
+    local f = scaling.frame
+    if not f then scaleDriver:Hide(); return end
+    scaling.t = (scaling.t or 0) + (arg1 or 0)
+    if scaling.t < 0.08 then return end
+    scaling.t = 0
+    local eff = f:GetEffectiveScale()
+    local left = (f:GetLeft() or 0) * eff
+    local top = (f:GetTop() or 0) * eff
+    local cx, cy = GetCursorPosition()
+    local newscale
+    -- drive off the longer axis, exactly like the legacy grip
+    if scaling.w > scaling.h then
+        if (cx - left) > 32 then newscale = (cx - left) / scaling.w end
+    else
+        if (top - cy) > 32 then newscale = (top - cy) / scaling.h end
+    end
+    if newscale then
+        newscale = ApplyScale(f, newscale)
+        AegisRP_Settings[scaling.scaleKey] = newscale
+        if scaling.onChanged then scaling.onChanged(newscale) end
+    end
+end)
+
+-- onChanged(scale) runs after every applied step - use it to persist the
+-- re-anchored position (GetLeft/GetTop are SetPoint-compatible offsets at
+-- the frame's current scale).
+function AegisRP.AddScaleGrip(frame, scaleKey, onChanged)
+    local grip = CreateFrame("Button", nil, frame)
+    grip:SetWidth(16); grip:SetHeight(16)
+    grip:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)
+    grip:SetFrameLevel(frame:GetFrameLevel() + 10)
+    grip:SetNormalTexture(GRIP_TEX)
+    local hl = grip:CreateTexture(nil, "HIGHLIGHT")
+    hl:SetAllPoints(grip)
+    hl:SetTexture(GRIP_TEX)
+    hl:SetBlendMode("ADD")
+    grip:SetScript("OnMouseDown", function()
+        if arg1 ~= "LeftButton" then return end
+        if AegisRP_Settings.locked then return end
+        scaling.frame = frame
+        scaling.scaleKey = scaleKey
+        scaling.onChanged = onChanged
+        scaling.t = 0
+        local pscale = frame:GetParent():GetEffectiveScale()
+        scaling.w = frame:GetWidth() * pscale
+        scaling.h = frame:GetHeight() * pscale
+        scaleDriver:Show()
+    end)
+    grip:SetScript("OnMouseUp", function()
+        scaleDriver:Hide()
+        scaling.frame = nil
+    end)
+    grip:SetScript("OnEnter", function()
+        if AegisRP_Settings.tooltips == false then return end
+        GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+        if AegisRP_Settings.locked then
+            GameTooltip:SetText("Frames locked", 1, 0.5, 0.5)
+        else
+            GameTooltip:SetText("Drag to scale", 1, 1, 1)
+        end
+        GameTooltip:Show()
+    end)
+    grip:SetScript("OnLeave", function() GameTooltip:Hide() end)
+    return grip
+end
+
+--------------------------------------------------------------------------
+-- EDGE SNAPPING - let go of a strip near a screen edge, or near another
+-- strip, and it lines up flush instead of a few pixels off.
+--
+-- Everything is converted into the DRAGGED frame's own coordinate space
+-- first. Each strip carries its own grip scale, so another strip's GetLeft()
+-- is measured in a different space; comparing them raw would snap to visibly
+-- the wrong place at any scale but 1.0.
+--------------------------------------------------------------------------
+local SNAP_PX = 12          -- how close an edge has to be before it grabs
+
+-- Frames that are NOT our strips but that a strip should still line up with:
+-- the vendored engine's own movable windows. Without these a paladin's Taunt
+-- strip had nothing to snap to but the screen edge, because a paladin runs the
+-- legacy engine and has no class-buff strip - the legacy buff bar IS the
+-- neighbour you want to align with, and the snapper could not see it.
+--
+-- Looked up by name at drag time rather than held: they belong to the engine,
+-- may not exist on a non-paladin, and are hidden until it decides to show them.
+--
+-- `pad` is the frame's own inset to the visible column of buttons inside it.
+-- PallyPowerBuffBar is 110 wide but its buttons are the same 100 as ours and
+-- start 5px in, so lining the FRAME edges up leaves the two columns 5px out
+-- of step - and the column is the only part a player can see. Snapping to the
+-- content box is what makes a docked strip read as part of the same bar.
+local FOREIGN_SNAP = {
+    { name = "PallyPowerBuffBar", pad = 5 },
+    { name = "PallyPowerFrame" },
+}
+
+-- nearest candidate to v within SNAP_PX, else v unchanged
+local function NearestSnap(v, cands)
+    local best, bestD = v, SNAP_PX
+    for i = 1, table.getn(cands) do
+        local d = cands[i] - v
+        if d < 0 then d = -d end
+        if d < bestD then best, bestD = cands[i], d end
+    end
+    return best
+end
+
+local function SnapStrip(f)
+    if AegisRP_Settings.stripSnap == false then return end
+    local es = f:GetEffectiveScale()
+    local left, top = f:GetLeft(), f:GetTop()
+    if not (es and es > 0 and left and top) then return end
+    local w, h = f:GetWidth(), f:GetHeight()
+    local sw = UIParent:GetWidth() * UIParent:GetEffectiveScale() / es
+    local sh = UIParent:GetHeight() * UIParent:GetEffectiveScale() / es
+
+    -- screen edges. GetTop() measures from the screen BOTTOM, so a frame sits
+    -- flush against the bottom at top == h, and against the top at top == sh.
+    local xs = { 0, sw - w }
+    local ys = { h, sh }
+
+    -- one neighbour's edges, converted into our space. `pad` trims the frame
+    -- box down to the button column inside it (see FOREIGN_SNAP); our own
+    -- strips have no inset, so they pass none.
+    local function neighbour(o, pad)
+        if not o or o == f then return end
+        if o.IsShown and not o:IsShown() then return end
+        local os, ol, ot = o:GetEffectiveScale(), o:GetLeft(), o:GetTop()
+        if not (os and ol and ot and os > 0) then return end
+        local k = os / es                      -- their space -> ours
+        ol, ot = ol * k, ot * k
+        local ow, oh = o:GetWidth() * k, o:GetHeight() * k
+        local oright, obottom = ol + ow, ot - oh
+        if pad then ol = ol + pad * k; oright = oright - pad * k end
+        table.insert(xs, ol)                   -- left edges flush
+        table.insert(xs, oright - w)           -- right edges flush
+        table.insert(xs, oright)               -- sit to its right
+        table.insert(xs, ol - w)               -- sit to its left
+        table.insert(ys, ot)                   -- top edges flush
+        table.insert(ys, obottom + h)          -- bottom edges flush
+        table.insert(ys, obottom)              -- sit under it
+        table.insert(ys, ot + h)               -- sit above it
+    end
+
+    for _, other in pairs(AegisRP.strips) do neighbour(other.frame) end
+    for i = 1, table.getn(FOREIGN_SNAP) do
+        local fs = FOREIGN_SNAP[i]
+        neighbour(getglobal(fs.name), fs.pad)
+    end
+
+    local nx, ny = NearestSnap(left, xs), NearestSnap(top, ys)
+    if nx == left and ny == top then return end
+    -- TOPLEFT->BOTTOMLEFT is the anchor pair the scale grip already persists,
+    -- so a snapped strip survives a later rescale the same way a dragged one does
+    f:ClearAllPoints()
+    f:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", nx, ny)
+end
+
+-- Exposed as the seam for scripts/test_snap.lua. The arithmetic here (edge
+-- candidates, and the scale conversion between two strips) is the kind that is
+-- silently wrong rather than visibly broken, so it gets an off-client test.
+AegisRP.SnapStrip = SnapStrip
+
+--------------------------------------------------------------------------
+-- SAVED POSITIONS - stored, restored and kept on screen.
+--
+-- A strip that is Shown but anchored off the screen is indistinguishable from
+-- an addon that has stopped working, and this is the failure players report as
+-- "my whole UI is gone". Nothing used to catch it: the Options checkbox reads
+-- the stripHidden_* FLAG, not the frame, so it goes on showing a tick next to
+-- a strip nobody can see.
+--
+-- Three separate ways in, which is why the guard belongs here rather than at
+-- any one call site:
+--
+--  * an incomplete stored table. The scale grip persists x = f:GetLeft(), and
+--    GetLeft() is nil on a frame with no anchor yet, so { p, rel } could be
+--    saved with no offsets at all. Restoring that anchors TOPLEFT to the
+--    screen's BOTTOM-LEFT - the whole strip hangs below the bottom edge.
+--  * a rescale. SetScale does not re-anchor, so a TOPLEFT->BOTTOMLEFT frame
+--    moves proportionally: at 1.5 a strip stored at y=620 lands at 930 on a
+--    768-unit screen. AegisRP_ApplyStripScale rescales every strip at once.
+--  * anything that leaves SavedVariables half-written - a crash mid-session, a
+--    hand-edited file, a resolution change between logins.
+--
+-- One shape fixes all three: never STORE a position that isn't complete, and
+-- never TRUST a restored one without checking it landed somewhere visible.
+--------------------------------------------------------------------------
+
+local POS = {}
+
+-- Enough of the frame to grab with the mouse. Not "fully on screen": a player
+-- may deliberately park a strip half off the edge, and healing that would move
+-- a frame they placed on purpose. Only an unreachable one is a fault.
+POS.MIN_VISIBLE = 24
+
+-- UIParent's extent in `f`'s own coordinate space, which is what GetLeft() and
+-- GetTop() report (see the coordinate note on SnapStrip).
+function POS.Screen(f)
+    local es = f:GetEffectiveScale()
+    if not (es and es > 0) then return nil end
+    local ps = UIParent:GetEffectiveScale()
+    if not (ps and ps > 0) then return nil end
+    return UIParent:GetWidth() * ps / es, UIParent:GetHeight() * ps / es
+end
+
+-- Is enough of the frame reachable? Answers true, false, or NIL for "cannot
+-- tell yet" - and only false is a reason to move anything.
+--
+-- The nil case is the whole of the 1.15.3 fix. A frame's rect is not resolved
+-- until the client has laid it out, so GetLeft() on a strip that has just been
+-- anchored but not yet shown returns nil. Restore runs at exactly that moment,
+-- inside Finish at login, and 1.14.3 read the nil as "no position at all":
+-- every saved strip position was judged unreachable, DELETED, and replaced by
+-- the default, on every login. "Cannot tell" is permission, never refusal.
+function POS.OnScreen(f)
+    local sw, sh = POS.Screen(f)
+    if not sw then return nil end
+    local l, t = f:GetLeft(), f:GetTop()
+    if not (l and t) then return nil end
+    local w, h = f:GetWidth() or 0, f:GetHeight() or 0
+    local vis = POS.MIN_VISIBLE
+    if w < vis then vis = w end
+    if h < vis then vis = h end
+    if l + w < vis or l > sw - vis then return false end
+    if t < vis or t - h > sh - vis then return false end
+    return true
+end
+
+-- Every field or none. A table missing p/x/y is what produced the bottom-left
+-- anchor above, so it is not a position and must never reach SetPoint.
+function POS.Valid(pos)
+    return pos and type(pos.p) == "string"
+       and type(pos.x) == "number" and type(pos.y) == "number"
+end
+
+function POS.Default(f)
+    f:ClearAllPoints()
+    f:SetPoint("CENTER", UIParent, "CENTER", 260, 0)
+end
+
+-- Apply a stored position, falling back to the default when the stored one is
+-- incomplete or lands somewhere unreachable. Returns true when the stored
+-- value was used; a rejected one is CLEARED, so the strip does not have to be
+-- rescued again on the next login.
+function POS.Restore(f, posKey)
+    local pos = AegisRP_Settings[posKey]
+    if not POS.Valid(pos) then
+        AegisRP_Settings[posKey] = nil
+        POS.Default(f)
+        return false
+    end
+    f:ClearAllPoints()
+    f:SetPoint(pos.p, UIParent, pos.rel or pos.p, pos.x, pos.y)
+    -- No on-screen judgement here. This runs inside Finish at login, the one
+    -- moment the strip cannot be measured reliably; POS.Settle makes the check
+    -- later, from the strip's own ticker.
+    return true
+end
+
+-- The deferred half of Restore: once the frame can actually be measured, check
+-- it once. Returns true when the check has been made (whatever its outcome),
+-- false while the rect is still unreadable - the caller keeps asking until then.
+--
+-- A strip found off screen is MOVED for this session and its stored value is
+-- left alone. 1.14.3 deleted it "so the rescue need not repeat next login", and
+-- a measurement that was wrong at login turned that into permanent loss of
+-- every player's layout. Repeating a rescue costs nothing; the only writers of
+-- a position are the player's own drag and Reset Frames.
+function POS.Settle(f, posKey)
+    local on = POS.OnScreen(f)
+    if on == nil then return false end
+    if on == false then POS.Default(f) end
+    return true
+end
+
+-- How long a strip must have been on screen before Settle measures it.
+-- Deliberately late: waiting costs nothing, and a measurement taken in the
+-- first frames after login has already been wrong once in a way the off-client
+-- tests could not see.
+POS.SETTLE_AFTER = 2
+
+-- The one writer. Both persist sites (drag end, and the scale grip's
+-- re-anchor) come through here so neither can store a partial table.
+--
+-- After a drag it stores the strip's TOP-LEFT corner - never whatever point the
+-- client re-anchored the frame to when the drag ended, which is what 1.15.3 and
+-- earlier saved. A strip grows DOWN from its title, and the class strip's height
+-- follows the roster (one button per class present), so a position saved by any
+-- other point moved the title whenever the group changed: dragged into place in
+-- a raid, it came back mid-screen solo. Rotation strips are one row and never
+-- change height, which is why only the class strip would not stay.
+--
+-- The live frame is re-pinned to that corner as well, so growth during the
+-- session goes downward too. Coordinates are the frame's own (GetLeft/GetTop
+-- and SetPoint offsets share its scale) - the same pair SnapStrip and the
+-- scale grip already use.
+function POS.Save(f, posKey, p, rel, x, y)
+    if p == nil then
+        local l, t = f:GetLeft(), f:GetTop()
+        if not (l and t) then return false end   -- cannot measure: keep what is stored
+        p, rel, x, y = "TOPLEFT", "BOTTOMLEFT", l, t
+        f:ClearAllPoints()
+        f:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", l, t)
+    end
+    local pos = { p = p, rel = rel, x = x, y = y }
+    if not POS.Valid(pos) then return false end
+    AegisRP_Settings[posKey] = pos
+    return true
+end
+
+-- Exposed whole, the way class modules expose M.StoneTier: /rpc strips reads
+-- OnScreen so "my strip is gone" is answered from the frame rather than
+-- guessed at, and scripts/test_strip.lua drives Save and Restore off-client.
+-- Validation that is never exercised is the same as no validation.
+AegisRP.StripPos = POS
+
+-- Post-rescale rescue, called from AegisRP_ApplyStripScale: SetScale moves a
+-- frame without re-anchoring it, so the same position can be on screen at one
+-- scale and off it at another.
+function AegisRP.EnsureOnScreen(f, posKey)
+    -- the rescale path runs on hidden strips too: only a measured miss moves one
+    -- like Settle, it moves the frame and leaves the stored value alone
+    if not f or POS.OnScreen(f) ~= false then return false end
+    POS.Default(f)
+    return true
+end
+
+--------------------------------------------------------------------------
+-- PANEL DOCKING - the options frame and the assignment panel both open
+-- centred, so opening both put one squarely on top of the other. Docked, they
+-- sit side by side with their tops aligned: options to the RIGHT of the panel
+-- when there is room on screen, to its LEFT otherwise.
+--
+-- Only the OPTIONS frame moves. The assignment panel has a position the player
+-- dragged and that we persist; the options frame has none, so it is the one
+-- with no intent to overwrite.
+--
+-- On a 4:3 or 5:4 client the pair genuinely does not fit. UIParent is 768
+-- units tall and 768 x aspect wide - 1024 at 4:3, 960 at 5:4 - against a
+-- 760-wide panel plus a ~360-wide options frame plus the gap. There the
+-- options frame goes to whichever screen edge has more room, tops still
+-- aligned, so the overlap is only the deficit instead of one frame covering
+-- the other. Dragging the panel aside re-docks it.
+--------------------------------------------------------------------------
+local DOCK_GAP = 6
+
+function AegisRP.DockPanels()
+    local panel = getglobal("AegisRP_AssignFrame")
+    local opts  = getglobal("AegisRP_OptionsFrame")
+    if not (panel and opts) then return false end
+    if not (panel:IsShown() and opts:IsShown()) then return false end
+
+    local as, ms = panel:GetEffectiveScale(), opts:GetEffectiveScale()
+    local al, ar, at = panel:GetLeft(), panel:GetRight(), panel:GetTop()
+    if not (as and ms and al and ar and at and as > 0 and ms > 0) then return false end
+
+    -- Compared in SCREEN pixels. The two frames carry independent scales (the
+    -- panel has a grip, the options frame does not), so comparing raw GetLeft()
+    -- across them is the same mistake SnapStrip exists to avoid.
+    local sw = UIParent:GetWidth() * UIParent:GetEffectiveScale()
+    local needPx = (opts:GetWidth() + DOCK_GAP) * ms
+    local roomRight, roomLeft = sw - ar * as, al * as
+
+    opts:ClearAllPoints()
+    if roomRight >= needPx then
+        -- frame-to-frame, so the pair stays together if the panel is rescaled,
+        -- and TOPLEFT so a taller options tab grows DOWN instead of sideways
+        opts:SetPoint("TOPLEFT", panel, "TOPRIGHT", DOCK_GAP, 0)
+    elseif roomLeft >= needPx then
+        opts:SetPoint("TOPRIGHT", panel, "TOPLEFT", -DOCK_GAP, 0)
+    else
+        local x = DOCK_GAP
+        if roomRight >= roomLeft then x = sw / ms - opts:GetWidth() - DOCK_GAP end
+        -- TOPLEFT->BOTTOMLEFT in our OWN space, as everywhere else in this file
+        opts:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x, at * as / ms)
+    end
+    return true
+end
+
+-- Two frames in the same strata can end up with INTERLEAVED frame levels, and
+-- then the lower one's buttons draw above the upper one's backdrop. That reads
+-- as "the panel went half transparent" rather than as a z-order problem.
+--
+-- `SetToplevel` is the whole fix, and deliberately the ONLY thing here.
+--
+-- **Never raise one of these frames with SetFrameLevel.** It does not carry
+-- the frame's children with it - they keep the absolute level they were
+-- created at - so raising the window lifts its BACKDROP above its own buttons.
+-- The window is mouse-enabled (that is how it is dragged), so it then swallows
+-- every click meant for them: the frame looks perfectly normal and nothing
+-- inside it works. That shipped in 1.13.1 and made the options frame dead to
+-- the mouse the moment it docked. SetToplevel hands the whole subtree to the
+-- client to re-level on click, which is the only correct way to do it here.
+function AegisRP.MakeToplevel(f)
+    if f and f.SetToplevel then f:SetToplevel(true) end
+end
+
+function AegisRP.NewStrip(key, title)
+    local S = { key = key, buttons = {} }
+    local posKey = "stripPos_" .. key
+    local hidKey = "stripHidden_" .. key
+
+    local f = CreateFrame("Frame", "AegisRP_Strip_" .. key, UIParent)
+    S.frame = f
+    if not AegisRP.strips[key] then table.insert(AegisRP.stripOrder, key) end
+    AegisRP.strips[key] = S
+    f:SetWidth(STRIP_W)
+    -- per-strip grip scale wins; the global slider resets it (see Core)
+    f:SetScale(AegisRP.StripScale(key))
+    f:SetMovable(true)
+    f:EnableMouse(true)
+    f:RegisterForDrag("LeftButton")
+    f:SetScript("OnDragStart", function()
+        if AegisRP_Settings.locked then return end
+        f:StartMoving()
+    end)
+    f:SetScript("OnDragStop", function()
+        f:StopMovingOrSizing()
+        SnapStrip(f)                  -- may re-anchor, so snap BEFORE saving
+        -- keep the relative point: grip-scaling re-anchors TOPLEFT->BOTTOMLEFT.
+        -- POS.Save reads the live point itself and refuses a partial one.
+        POS.Save(f, posKey)
+    end)
+    -- Right-click on the strip frame (the title area - the buttons swallow
+    -- their own clicks) opens the assignment panel.
+    f:SetScript("OnMouseUp", function()
+        if arg1 == "RightButton" and AegisRP_AssignPanelToggle then
+            AegisRP_AssignPanelToggle()
+        end
+    end)
+
+    local hdr = f:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    hdr:SetPoint("TOP", f, "TOP", 0, -2)
+    S.header = hdr
+    S.title = title
+    local function SetHeader()
+        if AegisRP.IsTestMode and AegisRP.IsTestMode() then
+            hdr:SetText("|cffffd100" .. title .. "|r |cffff8800[TEST]|r")
+        else
+            hdr:SetText("|cffffd100" .. title .. "|r")
+        end
+    end
+    S.SetHeader = SetHeader
+    SetHeader()
+
+    function S:AddButton(def)
+        local i = table.getn(self.buttons) + 1
+        local b = CreateFrame("Button", "AegisRP_Strip_" .. key .. "_" .. i, f)
+        b:SetWidth(STRIP_W); b:SetHeight(BTN_H)
+        b:SetPoint("TOPLEFT", f, "TOPLEFT", 0, -18 - (i - 1) * (BTN_H + BTN_GAP))
+        b:SetBackdrop(SKIN)
+        b:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+        b:EnableMouseWheel(true)
+
+        local icon = b:CreateTexture(nil, "ARTWORK")
+        icon:SetWidth(26); icon:SetHeight(26)                 -- template icon size
+        icon:SetPoint("LEFT", b, "LEFT", 4, 0)
+        b.icon = icon
+
+        local eln = b:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+        eln:SetPoint("TOPLEFT", icon, "TOPRIGHT", 4, -3); eln:SetJustifyH("LEFT")
+        b.eln = eln
+
+        local tm = b:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        tm:SetPoint("TOPRIGHT", b, "TOPRIGHT", -4, -5); tm:SetJustifyH("RIGHT")
+        b.tm = tm
+
+        local tn = b:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        tn:SetPoint("BOTTOMLEFT", icon, "BOTTOMRIGHT", 4, 3)
+        tn:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", -4, 3)
+        tn:SetJustifyH("LEFT")
+        b.tn = tn
+
+        b.SetIcon = Btn_SetIcon; b.SetLabel = Btn_SetLabel
+        b.SetSub = Btn_SetSub; b.SetTimer = Btn_SetTimer; b.SetState = Btn_SetState
+        b.SetIcon2 = Btn_SetIcon2
+        b.def = def
+
+        b:SetScript("OnClick", function()
+            if def.onClick then def.onClick(b, arg1); S:Refresh() end
+        end)
+        b:SetScript("OnMouseWheel", function()
+            if def.onWheel then def.onWheel(b, arg1); S:Refresh() end
+        end)
+        b:SetScript("OnEnter", function()
+            -- A button may take over hover entirely (the class-buff buttons use
+            -- this for the paladin-style player pop-out instead of a tooltip).
+            if def.onEnter then def.onEnter(b); return end
+            if AegisRP_Settings.tooltips == false then return end
+            if def.tooltip then
+                GameTooltip:SetOwner(b, "ANCHOR_LEFT")
+                def.tooltip(b, GameTooltip)
+                GameTooltip:Show()
+            end
+        end)
+        b:SetScript("OnLeave", function()
+            if def.onLeave then def.onLeave(b); return end
+            GameTooltip:Hide()
+        end)
+
+        table.insert(self.buttons, b)
+        return b
+    end
+
+    function S:Refresh()
+        if self.SetHeader then self.SetHeader() end
+        for _, b in ipairs(self.buttons) do
+            if b.def.refresh then b.def.refresh(b) end
+        end
+    end
+
+    -- Re-anchor only the enabled buttons and collapse the frame height around
+    -- them. A button is disabled when the options Buttons tab wrote an explicit
+    -- false to "btn_" .. lower(def.key); absent means enabled. A def.visible()
+    -- predicate gates it further (the class-buff strips use it for roster
+    -- presence: absent classes hide, test mode shows all).
+    function S:Reflow()
+        local horiz = AegisRP_Settings.stripHorizontal and true or false
+        local shown = 0
+        for _, b in ipairs(self.buttons) do
+            if AegisRP_Settings["btn_" .. string.lower(b.def.key or "")] == false
+               or (b.def.visible and not b.def.visible()) then
+                b:Hide()
+            else
+                b:ClearAllPoints()
+                if horiz then
+                    b:SetPoint("TOPLEFT", f, "TOPLEFT", shown * (STRIP_W + BTN_GAP), -18)
+                else
+                    b:SetPoint("TOPLEFT", f, "TOPLEFT", 0, -18 - shown * (BTN_H + BTN_GAP))
+                end
+                b:Show()
+                shown = shown + 1
+            end
+        end
+        if horiz then
+            local w = shown * STRIP_W
+            if shown > 1 then w = w + (shown - 1) * BTN_GAP end
+            if w < STRIP_W then w = STRIP_W end
+            f:SetWidth(w)
+            f:SetHeight(18 + BTN_H + 2)
+        else
+            f:SetWidth(STRIP_W)
+            local h = 18 + shown * BTN_H + 2
+            if shown > 1 then h = h + (shown - 1) * BTN_GAP end
+            f:SetHeight(h)
+        end
+    end
+
+    function S:Finish()
+        self:Reflow()
+        POS.Restore(f, posKey)
+        -- scale grip (bottom-right, PallyPower art); scaling re-anchors the
+        -- frame, so persist the new position alongside the scale. GetLeft() is
+        -- nil on an unanchored frame, which is how a { p, rel } table with no
+        -- offsets used to get stored - POS.Save drops it instead.
+        if not S.grip then
+            S.grip = AegisRP.AddScaleGrip(f, "stripScale_" .. key, function()
+                POS.Save(f, posKey, "TOPLEFT", "BOTTOMLEFT", f:GetLeft(), f:GetTop())
+            end)
+        end
+        local accum = 0
+        local settled, shownFor = false, 0
+        f:SetScript("OnUpdate", function()
+            accum = accum + (arg1 or 0)
+            if accum < 0.25 then return end
+            local dt = accum
+            accum = 0
+            -- one real on-screen check, made once the strip has been shown for
+            -- a while; a cheap comparison on every tick after that
+            if not settled then
+                shownFor = shownFor + dt
+                if shownFor >= POS.SETTLE_AFTER then settled = POS.Settle(f, posKey) end
+            end
+            S:Refresh()
+        end)
+        -- Shown BEFORE the first refresh, not after. A button whose refresh
+        -- throws on its very first call used to abort Finish with the frame
+        -- still hidden, and the Options tick - which reads the flag, not the
+        -- frame - went on claiming the strip was shown. The strip is built at
+        -- this point; whether one button can paint itself is a separate
+        -- question, and it must not decide whether the strip exists on screen.
+        if AegisRP_Settings[hidKey] then f:Hide() else f:Show() end
+        local ok, err = pcall(function() S:Refresh() end)
+        if not ok then
+            DEFAULT_CHAT_FRAME:AddMessage("|cffff5555AegisRP error:|r " .. tostring(err)
+                .. " |cffaaaaaa(" .. key .. " strip, first refresh)|r")
+        end
+    end
+
+    function S:Toggle() AegisRP.SetStripShown(key, not f:IsShown()) end
+    function S:Show()   AegisRP.SetStripShown(key, true) end
+
+    return S
+end
+
+--------------------------------------------------------------------------
+-- Show/hide by key. The slash commands, the Options checkboxes and a strip's
+-- own Toggle all come through here, so the frame's shown state and its saved
+-- flag can never disagree - and showing defers to AegisRP_ApplyVisibility so
+-- the solo/party/raid rules still get the last word (asking for a strip while
+-- "Show when solo" is off writes the flag but correctly leaves it hidden).
+--------------------------------------------------------------------------
+
+function AegisRP.IsStripShown(key)
+    return not AegisRP_Settings["stripHidden_" .. key]
+end
+
+function AegisRP.SetStripShown(key, shown)
+    AegisRP_Settings["stripHidden_" .. key] = (not shown) and true or false
+    local S = AegisRP.strips[key]
+    if not (S and S.frame) then return end          -- flag remembered for when it builds
+    if not shown then S.frame:Hide()
+    elseif AegisRP_ApplyVisibility then AegisRP_ApplyVisibility()
+    else S.frame:Show() end
+end
+
+-- Options hook: re-flow every live strip after a per-button enable changed.
+function AegisRP.ReflowStrips()
+    for _, S in pairs(AegisRP.strips) do
+        S:Reflow()
+        S:Refresh()
+    end
+end

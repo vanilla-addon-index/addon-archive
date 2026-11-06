@@ -1,0 +1,70 @@
+{
+  "upstream": "https://github.com/MickeyPickey/AutoQuest",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MickeyPickey",
+    "repo": "AutoQuest",
+    "name": "AutoQuest",
+    "url": "https://github.com/MickeyPickey/AutoQuest",
+    "api": "https://api.github.com/repos/MickeyPickey/AutoQuest"
+  },
+  "commit": "0190202588b29d1d7f8bac73845e78ce46301210",
+  "sourceFiles": {
+    ".github/workflows/release.yml": {
+      "sha256": "fd207edb932177a2f5ddf84f1d986a44d2374d65f5441f2cf16c4582a457a851",
+      "bytes": 880
+    },
+    "AutoQuest.lua": {
+      "sha256": "8d6660316ae9ada5e1b7d7af31cf7e61e49c4338d62e84313dd96cd646696c07",
+      "bytes": 12152
+    },
+    "AutoQuest.png": {
+      "sha256": "fefd3afc4daa048ba1f63c27cf82643c94053a549a1502cd4c4022f0fea0c702",
+      "bytes": 2661588
+    },
+    "AutoQuest.toc": {
+      "sha256": "bd8c64c3c2fa946913f4182a02a03112b1caf68c6bff733756487897e326a492",
+      "bytes": 646
+    },
+    "Format.lua": {
+      "sha256": "839282ea5dbb7359bcb8d310eaaaaf3b8db3570f180f1bef7fb0862a5f80b821",
+      "bytes": 1046
+    },
+    "ItemDB.lua": {
+      "sha256": "ab1dbc88b6677ecf0d5a6e22ff525150de965b52399cbd1203e84b442b9f73cd",
+      "bytes": 433983
+    },
+    "README.md": {
+      "sha256": "c922f2f48866574418daa53b82e198e755a70724c1ac06b51b412de495121460",
+      "bytes": 2709
+    },
+    "Settings.lua": {
+      "sha256": "bdfbd3ffca6c0da096f3dcb7662988e69321b0932dcf2cb1b981dc5d3a899a77",
+      "bytes": 719
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "255811324": {
+      "tag": "v2.0.3",
+      "folder": "v2.0.3--255811324",
+      "assets": {
+        "306564422": {
+          "sha256": "d73ebdf95e3ee9a9ec4794a66667a0fc81325d79d9771a85c445557c42750dad",
+          "bytes": 2816242,
+          "id": "306564422",
+          "name": "AutoQuest-v2.0.3.zip",
+          "url": "https://github.com/MickeyPickey/AutoQuest/releases/download/v2.0.3/AutoQuest-v2.0.3.zip",
+          "path": "releases/v2.0.3--255811324/assets/AutoQuest-v2.0.3.zip"
+        }
+      },
+      "source": {
+        "sha256": "b3b7be5202830aeb5a1997cb7162b816189b8d2ebbc78ce68aa80df1c4ef9171",
+        "bytes": 2816890,
+        "path": "releases/v2.0.3--255811324/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/MickeyPickey/AutoQuest/tarball/v2.0.3"
+      }
+    }
+  }
+}

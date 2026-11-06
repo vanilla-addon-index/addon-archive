@@ -1,0 +1,506 @@
+-- Aegis: Exchange -- tests/units/util_test.lua
+--
+-- core/util.lua under a simulated 1.12 client. This is the layer with no
+-- client dependencies at all, so everything here is exact.
+
+package.path = "tests/support/?.lua;" .. package.path
+local W = require("wow")
+local H = require("harness")
+
+W.Reset()
+local A = W.LoadCore("util")
+local util = A.util
+
+-- ---------------------------------------------------------------------------
+H.section("MoneyParts / FormatMoney")
+-- ---------------------------------------------------------------------------
+
+local g, s, c = util.MoneyParts(123456)
+H.eq("12g of 123456 copper", g, 12)
+H.eq("34s of 123456 copper", s, 34)
+H.eq("56c of 123456 copper", c, 56)
+
+-- math.mod and math.floor, not "%" and integer division -- the arithmetic the
+-- Lua 5.0 rules force. A wrong split here is silent: the number still prints.
+local g2, s2, c2 = util.MoneyParts(10000)
+H.eq("exactly one gold -> 1g", g2, 1)
+H.eq("exactly one gold -> 0s", s2, 0)
+H.eq("exactly one gold -> 0c", c2, 0)
+
+local g3, s3, c3 = util.MoneyParts(99)
+H.eq("under a silver -> 0g", g3, 0)
+H.eq("under a silver -> 0s", s3, 0)
+H.eq("under a silver -> 99c", c3, 99)
+
+H.eq("nil is treated as zero", util.FormatMoney(nil), "0c")
+H.eq("zero shows copper, not empty", util.FormatMoney(0), "0c")
+H.eq("leading zero denominations dropped", util.FormatMoney(10000), "1g")
+H.eq("interior zero denomination dropped too",
+     util.FormatMoney(10000 + 5), "1g 5c")
+H.eq("all three", util.FormatMoney(123456), "12g 34s 56c")
+
+-- Negative input is normalised rather than printing a "-" mid-string. Deposit
+-- and profit maths can go negative and this is the display path for both.
+H.eq("negative is absolute", util.FormatMoney(-123456), "12g 34s 56c")
+
+-- ---------------------------------------------------------------------------
+H.section("FormatMoneyGold")
+-- ---------------------------------------------------------------------------
+
+-- The Buy table's format: value bright, unit letter dim. Colour codes are part
+-- of the contract -- a FontString has one font on 1.12, so the |c escapes are
+-- the ONLY way this reads as "number then unit".
+local fm = util.FormatMoneyGold(123456)
+H.check("gold digits carry the bright code",
+        string.find(fm, "|cffffd70012|r", 1, true) ~= nil, fm)
+H.check("unit letter carries the dim code",
+        string.find(fm, "|cff9d8b5ag|r", 1, true) ~= nil, fm)
+H.check("zero still prints a copper figure",
+        string.find(util.FormatMoneyGold(0), "0", 1, true) ~= nil,
+        util.FormatMoneyGold(0))
+
+-- ---------------------------------------------------------------------------
+H.section("ParseMoney")
+-- ---------------------------------------------------------------------------
+
+H.eq("round trip 12g 34s 56c", util.ParseMoney("12g 34s 56c"), 123456)
+H.eq("spaces optional", util.ParseMoney("12g34s56c"), 123456)
+H.eq("case insensitive", util.ParseMoney("12G 34S 56C"), 123456)
+H.eq("partial denominations", util.ParseMoney("5g"), 50000)
+H.eq("silver only", util.ParseMoney("7s"), 700)
+H.eq("copper only", util.ParseMoney("9c"), 9)
+H.isNil("nothing parseable returns nil", util.ParseMoney("hello"))
+H.isNil("empty string returns nil", util.ParseMoney(""))
+H.isNil("a non-string returns nil", util.ParseMoney(42))
+H.isNil("nil returns nil", util.ParseMoney(nil))
+
+-- nil and 0 must stay distinguishable: "could not read this" and "free" are
+-- different answers, and a price field that confuses them posts an auction at
+-- the wrong number.
+H.neq("unparseable is nil, NOT zero", util.ParseMoney("abc"), 0)
+
+-- ---------------------------------------------------------------------------
+H.section("Split / Trim / ItemIdFromLink")
+-- ---------------------------------------------------------------------------
+
+local parts, n = util.Split("a b  c")
+H.eq("split drops empty tokens", n, 3)
+H.listEq("split on whitespace", parts, { "a", "b", "c" })
+
+local csv, cn = util.Split("x,y,z", ",")
+H.eq("split on a given separator", cn, 3)
+H.listEq("split on comma", csv, { "x", "y", "z" })
+
+local none, nn = util.Split(nil)
+H.eq("split of nil is empty", nn, 0)
+
+H.eq("trim both ends", util.Trim("  padded  "), "padded")
+H.eq("trim leaves interior spaces", util.Trim("  a b  "), "a b")
+H.eq("trim of an untouched string", util.Trim("clean"), "clean")
+
+-- Trim returns ONE value. It uses gsub, which returns two, and a bare
+-- `return string.gsub(...)` would leak the substitution count into any caller
+-- doing f(util.Trim(x), y) -- shifting every later argument along.
+local function countReturns(...) return select("#", ...) end
+H.eq("Trim returns exactly one value", countReturns(util.Trim(" x ")), 1)
+
+H.eq("id from a full link",
+     util.ItemIdFromLink("|cffffffff|Hitem:2589:0:0:0|h[Linen Cloth]|h|r"), 2589)
+H.eq("id from a bare item string", util.ItemIdFromLink("item:2589:0:0:0"), 2589)
+H.isNil("no id in plain text", util.ItemIdFromLink("Linen Cloth"))
+H.isNil("no id in nil", util.ItemIdFromLink(nil))
+
+-- ---------------------------------------------------------------------------
+H.section("FormatDuration / FormatAgo")
+-- ---------------------------------------------------------------------------
+
+H.eq("seconds", util.FormatDuration(42), "42s")
+H.eq("minutes round up", util.FormatDuration(90), "2m")
+H.eq("hours and minutes", util.FormatDuration(8040), "2h 14m")
+H.eq("negative clamps to zero", util.FormatDuration(-5), "0s")
+H.eq("nil is zero", util.FormatDuration(nil), "0s")
+
+H.eq("under a minute", util.FormatAgo(30), "just now")
+H.eq("minutes ago", util.FormatAgo(300), "5m ago")
+H.eq("hours ago", util.FormatAgo(8040), "2h 14m ago")
+H.eq("days ago", util.FormatAgo(3 * 86400), "3d ago")
+
+-- ---------------------------------------------------------------------------
+H.section("Table helpers")
+-- ---------------------------------------------------------------------------
+
+local src = { a = 1, b = 2 }
+local cp = util.CopyTable(src)
+cp.a = 99
+H.eq("CopyTable does not write through", src.a, 1)
+
+-- CopyList is one level deeper, and the reason is concrete: post-filter clause
+-- lists are handed between the builder's live state and parsed terms, and a
+-- shallow copy let an edit in one show up in the other.
+local list = { { op = "eq", v = 1 }, { op = "gt", v = 2 } }
+local lc = util.CopyList(list)
+lc[1].v = 99
+H.eq("CopyList copies the RECORDS, not just the array", list[1].v, 1)
+H.eq("CopyList keeps the length", table.getn(lc), 2)
+H.eq("CopyList of nil is empty", table.getn(util.CopyList(nil)), 0)
+
+local found, idx = util.ArrayContains({ "x", "y", "z" }, "y")
+H.check("ArrayContains finds", found, tostring(found))
+H.eq("ArrayContains returns the index", idx, 2)
+local missing = util.ArrayContains({ "x" }, "q")
+H.eq("ArrayContains reports absence as false", missing, false)
+
+H.eq("CountKeys counts hash entries", util.CountKeys({ a = 1, b = 2, c = 3 }), 3)
+H.eq("CountKeys of empty", util.CountKeys({}), 0)
+
+-- ---------------------------------------------------------------------------
+H.section("ItemInfo -- the vanilla 9-value shape")
+-- ---------------------------------------------------------------------------
+
+W.AddItem(2589, {
+    name = "Linen Cloth", quality = 1, minLevel = 0,
+    type = "Trade Goods", subType = "Cloth", stackCount = 20,
+    equipLoc = "", texture = "linen",
+})
+
+local info = util.ItemInfo(2589)
+H.check("ItemInfo answers for a cached item", info ~= nil, tostring(info))
+H.eq("name", info.name, "Linen Cloth")
+H.eq("quality", info.quality, 1)
+
+-- The whole point of ItemInfo: stackCount is found by anchoring on the LAST
+-- NUMBER, not by a fixed index, because later clients insert itemLevel at slot
+-- 4 and shift everything after it. Reading a fixed position is wrong on one
+-- client or the other, silently -- and /stack shipped broken for four rounds
+-- because of exactly that.
+H.eq("stackCount found by anchoring, not by index", info.stackCount, 20)
+H.eq("type is one slot back from stackCount", info.type, "Trade Goods")
+H.eq("subType is the slot before stackCount", info.subType, "Cloth")
+H.eq("minLevel is three slots back", info.minLevel, 0)
+
+H.isNil("uncached item returns nil", util.ItemInfo(999999))
+H.isNil("nil link returns nil", util.ItemInfo(nil))
+
+-- A stack size of 1 is a real answer and must not read as "unknown". The
+-- unknown-stack path is what suppresses rows in /stack searches.
+W.AddItem(12345, {
+    name = "Bind on Pickup Thing", quality = 3, stackCount = 1,
+    type = "Armor", subType = "Cloth", equipLoc = "INVTYPE_CHEST",
+})
+local one = util.ItemInfo(12345)
+H.eq("stackCount of 1 is reported as 1", one.stackCount, 1)
+H.eq("equipLoc is one slot FORWARD of stackCount",
+     one.equipLoc, "INVTYPE_CHEST")
+
+-- ---------------------------------------------------------------------------
+H.section("ItemInfo -- the SAME code against the 10-value later shape")
+-- ---------------------------------------------------------------------------
+
+-- Reading a fixed index is right on exactly ONE client and silently wrong on
+-- the other: with itemLevel inserted at slot 4, index 7 stops being stackCount
+-- and becomes subType. Running the same assertions against both shapes is the
+-- only thing that can tell the anchor apart from a lucky constant -- with just
+-- the vanilla shape below, `stackCount = r[7]` passes every check above.
+W.itemInfoShape = "later"
+
+local later = util.ItemInfo(2589)
+H.eq("name still reads absolutely", later.name, "Linen Cloth")
+H.eq("quality still reads absolutely", later.quality, 1)
+H.eq("stackCount is STILL found on the shifted shape", later.stackCount, 20)
+H.eq("type is still resolved correctly", later.type, "Trade Goods")
+H.eq("subType is still resolved correctly", later.subType, "Cloth")
+
+local laterOne = util.ItemInfo(12345)
+H.eq("a stack of 1 survives the shift too", laterOne.stackCount, 1)
+H.eq("equipLoc survives the shift", laterOne.equipLoc, "INVTYPE_CHEST")
+
+W.itemInfoShape = "vanilla"          -- leave the client as we found it
+
+-- ---------------------------------------------------------------------------
+H.section("ItemInfo takes an ID, because half the addon has one")
+-- ---------------------------------------------------------------------------
+
+-- THE BUG THIS EXISTS FOR, and it is the most expensive one in this project so
+-- far measured in releases: 1.12's GetItemInfo takes an item NAME, an item
+-- LINK or an item STRING. It does NOT take an id as a number.
+--
+-- de.Resolve passed the raw numeric id, carrying a comment asserting "both are
+-- valid on 1.12". They are not. So util.ItemInfo returned nil for every item
+-- reached by id, de.Resolve returned nil, and THE DISENCHANT TOOLTIP LINE
+-- NEVER APPEARED ON A REAL CLIENT -- across every release that shipped it,
+-- while the price lines beside it (DB reads keyed by id) worked perfectly.
+-- Nothing errored. It read as "that feature must not be finished".
+--
+-- Every GetItemInfo call in aux builds an itemstring. That is why.
+--
+-- The mock hid it by resolving numbers, which the client does not. It no
+-- longer does, and this section is what holds that line.
+
+local byId = util.ItemInfo(2589)
+H.check("a numeric id resolves", byId ~= nil)
+H.eq("...to the right item", byId and byId.name, "Linen Cloth")
+
+local byString = util.ItemInfo("item:2589:0:0:0")
+H.eq("an itemstring resolves the same", byString and byString.name, "Linen Cloth")
+
+local byLink = util.ItemInfo(W.items[2589].link)
+H.eq("and so does a link", byLink and byLink.name, "Linen Cloth")
+
+-- The name-only helper the tooltip and the /aex de report use. Three sites
+-- passed a bare number to GetItemInfo and silently got nothing; two of them
+-- then printed "item:10940" at a player instead of a material name.
+H.eq("util.ItemName answers for an id", util.ItemName(2589), "Linen Cloth")
+H.isNil("...and nil for an id nobody knows", util.ItemName(999999))
+
+-- ---------------------------------------------------------------------------
+H.section("a client that sends no equip slot at all")
+-- ---------------------------------------------------------------------------
+
+-- REPORTED FROM A REAL CLIENT. Turtle 1.12 with ClassicAPI returns TEN values
+-- with a HOLE where equipLoc should sit. The anchor found the right
+-- stackCount, counted forward, and read the hole -- so equipLoc came back nil,
+-- de.Class went nil, CanDisenchant went false, and the disenchant line
+-- silently never rendered on that client. Nothing errored.
+--
+-- The slot is not SHIFTED, it is ABSENT -- so it cannot be recovered by
+-- looking harder, only stood in for. `type` is still there and still says
+-- "Weapon" or "Armor", which is the only question the disenchant rule ever
+-- asks a slot.
+
+W.AddItem(4242, { name = "Training Sword", quality = 2, minLevel = 1,
+                  itemLevel = 5, type = "Weapon",
+                  subType = "One-Handed Swords", stackCount = 1,
+                  equipLoc = "INVTYPE_WEAPONMAINHAND", texture = "t" })
+
+W.itemInfoShape = "holey"
+local holey = util.ItemInfo(4242)
+H.check("the item still resolves", holey ~= nil)
+H.eq("...quality is still read absolutely", holey and holey.quality, 2)
+H.eq("...and the type survives", holey and holey.type, "Weapon")
+
+-- The slot is GONE from the tuple, so it cannot be recovered -- only stood in
+-- for. What matters downstream is not the literal slot but the one question
+-- the disenchant rule asks it, so that is what this pins.
+H.eq("a stand-in slot is supplied from the type", holey and holey.equipLoc,
+     "AEGIS_ANY_WEAPON")
+-- What that stand-in has to MEAN is asserted in clientdata_test, which loads
+-- core/disenchant.lua; this suite loads util alone.
+
+-- The same lookup on every other shape, so the marker search cannot be a fix
+-- that only works on the broken one.
+local shapes = { "vanilla", "later", "wide" }
+local si = 1
+while si <= table.getn(shapes) do
+    W.itemInfoShape = shapes[si]
+    local info = util.ItemInfo(4242)
+    H.eq("the real equipLoc is used where the client sends one ("
+         .. shapes[si] .. ")", info and info.equipLoc, "INVTYPE_WEAPONMAINHAND")
+    si = si + 1
+end
+
+-- A trade good has no INVTYPE_ anywhere, and must NOT acquire one.
+W.itemInfoShape = "vanilla"
+local cloth = util.ItemInfo(2589)
+H.check("a trade good still reports no equip slot",
+        cloth.equipLoc == nil or cloth.equipLoc == "",
+        tostring(cloth.equipLoc))
+
+-- ---------------------------------------------------------------------------
+H.section("a client that APPENDS a value to the tuple")
+-- ---------------------------------------------------------------------------
+
+-- REPORTED FROM A REAL CLIENT via /aex diag. Turtle 1.12 with ClassicAPI
+-- returns vanilla's nine values plus a TRAILING NUMBER at ten. Nothing is
+-- shifted and nothing is missing -- something is appended -- and the old
+-- "last value that is a number" anchor landed on it, moving every field by
+-- three: minLevel read the stack size, type read the equip slot, subType read
+-- the texture path, equipLoc read off the end.
+--
+-- Nothing errored. The visible symptom was bag categories named
+-- "INVTYPE_2HWEAPON" and a disenchant line that never appeared.
+--
+-- The texture is the anchor now: it starts with "Interface\\" on every 1.12
+-- client, and minLevel..texture is one contiguous run in every shape, so a
+-- field appended AFTER it cannot move anything.
+
+W.AddItem(8178, { name = "Training Sword", quality = 2, minLevel = 5,
+                  type = "Weapon", subType = "Two-Handed Swords",
+                  stackCount = 1, equipLoc = "INVTYPE_2HWEAPON",
+                  texture = "Interface\\Icons\\INV_Sword_45" })
+
+W.itemInfoShape = "trailing"
+local t = util.ItemInfo(8178)
+H.eq("name still reads absolutely", t.name, "Training Sword")
+H.eq("quality still reads absolutely", t.quality, 2)
+H.eq("minLevel is NOT the stack size", t.minLevel, 5)
+H.eq("type is NOT the equip slot", t.type, "Weapon")
+H.eq("subType is NOT the texture path", t.subType, "Two-Handed Swords")
+H.eq("stackCount is the stack size", t.stackCount, 1)
+H.eq("equipLoc survives the appended field", t.equipLoc, "INVTYPE_2HWEAPON")
+
+-- The same item on every other shape, so the texture anchor is not a fix that
+-- only works on the one that reported the bug.
+local shapes = { "vanilla", "later", "wide" }
+local si = 1
+while si <= table.getn(shapes) do
+    W.itemInfoShape = shapes[si]
+    local info = util.ItemInfo(8178)
+    H.eq("minLevel on " .. shapes[si], info.minLevel, 5)
+    H.eq("type on " .. shapes[si], info.type, "Weapon")
+    H.eq("equipLoc on " .. shapes[si], info.equipLoc, "INVTYPE_2HWEAPON")
+    si = si + 1
+end
+W.itemInfoShape = "vanilla"
+
+-- ---------------------------------------------------------------------------
+H.section("the display name out of an item link")
+-- ---------------------------------------------------------------------------
+
+-- Shift-clicking an item hands us the full link. The NAME is read off it
+-- rather than asked of GetItemInfo, which on 1.12 answers only for cached
+-- items and costs a server round trip for anything else. A parse cannot fail
+-- for an item the player is holding; a lookup can.
+local LINK = "|cff1eff00|Hitem:2589:0:0:0|h[Linen Cloth]|h|r"
+H.eq("the name comes out of a full link",
+     util.ItemNameFromLink(LINK), "Linen Cloth")
+H.eq("...with no colour codes on it",
+     util.ItemNameFromLink("|Hitem:2589:0:0:0|h[Linen Cloth]|h"), "Linen Cloth")
+
+-- Names with the characters that would break a lazy pattern.
+H.eq("a name with brackets in it",
+     util.ItemNameFromLink("|Hitem:1:0:0:0|h[Pattern: Red Linen Robe]|h"),
+     "Pattern: Red Linen Robe")
+H.eq("a name with an apostrophe",
+     util.ItemNameFromLink("|Hitem:1:0:0:0|h[Thief's Blade]|h"),
+     "Thief's Blade")
+
+-- A BARE ITEMSTRING CARRIES NO NAME. Answering "item" or "" here would put
+-- nonsense in a search box; nil lets the caller fall back to the client.
+H.isNil("a bare itemstring has no name",
+        util.ItemNameFromLink("item:2589:0:0:0"))
+H.isNil("an empty name is not a name",
+        util.ItemNameFromLink("|Hitem:1:0:0:0|h[]|h"))
+H.isNil("plain text is not a link", util.ItemNameFromLink("Linen Cloth"))
+H.isNil("nil is handled", util.ItemNameFromLink(nil))
+H.isNil("a number is handled", util.ItemNameFromLink(2589))
+
+-- LAZY, NOT GREEDY. One link makes the two identical; two links in one string
+-- is what separates them, and a greedy capture swallows everything between the
+-- first "[" and the LAST "]" -- returning one run-on name for the pair. The
+-- helper is general, so it has to survive a chat line, not just the single
+-- link a shift-click hands it.
+H.eq("two links in one string yields the FIRST name",
+     util.ItemNameFromLink(
+         "|Hitem:2589:0:0:0|h[Linen Cloth]|h and |Hitem:2592:0:0:0|h[Wool Cloth]|h"),
+     "Linen Cloth")
+
+-- The id parser still works on the same links, so the two agree about what a
+-- link is.
+H.eq("...and the id comes off the same link", util.ItemIdFromLink(LINK), 2589)
+
+-- ---------------------------------------------------------------------------
+H.section("how long ago, said as short as it goes")
+-- ---------------------------------------------------------------------------
+
+local DAY = 86400
+H.eq("under a minute is now", util.FormatAgoShort(30), "now")
+H.eq("minutes", util.FormatAgoShort(45 * 60), "45m")
+H.eq("hours", util.FormatAgoShort(18 * 3600), "18h")
+H.eq("...with no trailing zero minutes",
+     util.FormatAgoShort(18 * 3600), "18h")
+H.eq("days", util.FormatAgoShort(3 * DAY), "3d")
+H.eq("a negative age is not negative", util.FormatAgoShort(-500), "now")
+H.eq("nil is now", util.FormatAgoShort(nil), "now")
+-- SHORTER THAN THE LONG FORM, which is the entire reason it exists.
+H.check("it is shorter than the full form",
+        string.len(util.FormatAgoShort(18 * 3600 + 120))
+            < string.len(util.FormatAgo(18 * 3600 + 120)),
+        util.FormatAgoShort(18 * 3600 + 120))
+
+-- ---------------------------------------------------------------------------
+H.section("money, said as short as it can be")
+-- ---------------------------------------------------------------------------
+
+-- FOR AN AXIS, where the whole figure has to fit a narrow gutter and the exact
+-- copper is noise. util.FormatMoney's "1,240g 17s 3c" is longer than the plot
+-- is tall, which defeats the point of a label beside a chart: which order of
+-- magnitude the line is at.
+H.eq("copper stays copper", util.ShortMoney(7), "7c")
+H.eq("...right up to a silver", util.ShortMoney(99), "99c")
+H.eq("a silver is silver", util.ShortMoney(100), "1s")
+H.eq("...and stays so under a gold", util.ShortMoney(9999), "99s")
+H.eq("a gold is gold", util.ShortMoney(10000), "1g")
+H.eq("...rounded DOWN, never up past what the line reached",
+     util.ShortMoney(19999), "1g")
+H.eq("hundreds of gold stay gold", util.ShortMoney(999 * 10000), "999g")
+
+-- ONE significant fraction digit above a thousand gold, none below it: 4.2kg
+-- is a different number from 4.3kg at a glance and 4.23kg is not.
+H.eq("a thousand gold becomes kilogold", util.ShortMoney(1000 * 10000), "1.0kg")
+H.eq("...with one decimal", util.ShortMoney(4249 * 10000), "4.2kg")
+-- Rounded by string.format, which is C's printf -- so an exact half goes to
+-- the EVEN digit (4.25 -> 4.2), not always up. Asserted as it behaves rather
+-- than as anyone would guess.
+H.eq("...rounded", util.ShortMoney(4260 * 10000), "4.3kg")
+H.eq("...with an exact half going to even", util.ShortMoney(4250 * 10000),
+     "4.2kg")
+
+-- The axis runs below zero whenever what it plots can, so the label has to.
+H.eq("negative keeps its sign", util.ShortMoney(-10000), "-1g")
+H.eq("...at every scale", util.ShortMoney(-5), "-5c")
+
+H.eq("nothing is nothing", util.ShortMoney(0), "0c")
+H.eq("...and so is nil", util.ShortMoney(nil), "0c")
+
+-- SHORTER THAN THE LONG FORM, which is the entire reason it exists.
+H.check("it is shorter than the full figure",
+        string.len(util.ShortMoney(1234 * 10000 + 5678))
+            < string.len(util.FormatMoney(1234 * 10000 + 5678)),
+        util.ShortMoney(1234 * 10000 + 5678))
+
+-- ---------------------------------------------------------------------------
+H.section("money, coloured by denomination")
+-- ---------------------------------------------------------------------------
+
+-- The same text ShortMoney gives, wrapped in the game's own colour for the
+-- denomination it ends in.
+do
+    local function strip(t) return string.gsub(string.gsub(t, "|c%x%x%x%x%x%x%x%x", ""), "|r", "") end
+    H.eq("the text is unchanged", strip(util.ShortMoneyColored(1234567)),
+         util.ShortMoney(1234567))
+    H.eq("...for silver too", strip(util.ShortMoneyColored(8400)),
+         util.ShortMoney(8400))
+    H.eq("...and copper", strip(util.ShortMoneyColored(84)),
+         util.ShortMoney(84))
+end
+
+do
+    local GOLD, SILVER, COPPER = "|cffffd700", "|cffc7c7cf", "|cffeda55f"
+    H.check("gold is gold",
+            string.find(util.ShortMoneyColored(120000), GOLD, 1, true) == 1,
+            util.ShortMoneyColored(120000))
+    H.check("silver is silver",
+            string.find(util.ShortMoneyColored(8400), SILVER, 1, true) == 1,
+            util.ShortMoneyColored(8400))
+    H.check("copper is copper",
+            string.find(util.ShortMoneyColored(84), COPPER, 1, true) == 1,
+            util.ShortMoneyColored(84))
+
+    -- THE THOUSANDS FORM IS A GOLD FIGURE SAID SHORT. "4.2kg" ends in "g" and
+    -- is gold; reading the last letter alone is right here and would not be if
+    -- the suffix ever changed, which is why it is asserted.
+    H.check("thousands of gold are still gold",
+            string.find(util.ShortMoneyColored(42000000), GOLD, 1, true) == 1,
+            util.ShortMoneyColored(42000000))
+
+    -- A loss keeps its sign inside the colour.
+    H.check("a negative keeps its sign",
+            string.find(util.ShortMoneyColored(-84), "-", 1, true) ~= nil,
+            util.ShortMoneyColored(-84))
+end
+
+H.check("every colour is closed",
+        string.find(util.ShortMoneyColored(84), "|r", 1, true) ~= nil,
+        "an unclosed escape colours the rest of the line")
+
+os.exit(H.report("util"))

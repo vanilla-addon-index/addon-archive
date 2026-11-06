@@ -1,0 +1,550 @@
+{
+ "_about": "The repository owner's answers to Tools/data/filter_candidates.json, given on the review page on 2026-09-27: for each item, each suggested tag and whether to add it. Tools/build/apply_filter_tags.py applies them.",
+ "_revised": "2026-09-27, by the owner: q1644/q1648 (Tome of Divinity -- 10 Linen Cloth, which humanoids drop) and q6123/q6128 (Gathering the Cure -- Earthroot, and Lunar Fungus or Kodo Horns, all gathered or dropped) can be done without the Auction House; q61's tagged step is the trip to Stormwind for Shipment to Stormwind, not part of Hogger. Later the same day: the Auction House tag belongs on the step that sends you there, not on a quest you can also do another way. The fishing quests (q1141, q5386, q5421) are no longer tagged; Look To The Stars (q174: Bronze Tubes drop, and a vendor sometimes has one) keeps the tag on its buy steps only; notes that are about farming (q136, q185, q605, q3785, q3786, the Silk Cloth notes) are no longer tagged. Quests that need a crafted item -- q1073, q4244, q40190, q40730, q40735, q40736 -- keep theirs. 2026-09-28, at the owner's request: three reviewed steps had another quest's id. Jammal'an the Prophet (Alliance, Hinterlands) was filed as q3528, The God Hakkar: it is q1446, whose ST answer it shares. Seeing What Happens and Return to Ironforge were filed as q2963, Portents of Uldum: they are q2946 and q2977, and keep its ULDA answer. Yuka Screwspigot was filed as q2768, Divino-matic Rod, whose Zul'Farrak tag it took: it is q4324, and its quests are in Blackrock Depths, so the owner's dungeon answer is BRD.",
+ "_followups": "Quests you can only pick up after a quest tagged whole, with the tag they inherit and the quest they follow -- derived from pfQuest's prerequisites by Tools/build/apply_filter_tags.py --pfquest, not answered by anyone.",
+ "decisions": {
+  "q45": {
+   "GROUP": "yes"
+  },
+  "q176": {
+   "GROUP": "yes"
+  },
+  "q412": {
+   "GNOMER": "yes"
+  },
+  "q2238": {
+   "GNOMER": "yes"
+  },
+  "q2239": {
+   "GNOMER": "yes"
+  },
+  "q2499": {
+   "GROUP": "yes"
+  },
+  "q61": {
+   "GROUP": "no"
+  },
+  "q1141": {
+   "AH": "no"
+  },
+  "q4740": {
+   "GROUP": "yes"
+  },
+  "q6123": {
+   "AH": "no"
+  },
+  "q219": {
+   "GROUP": "yes"
+  },
+  "q174": {
+   "AH": "steps"
+  },
+  "q1448": {
+   "ST": "yes"
+  },
+  "q202": {
+   "GROUP": "yes"
+  },
+  "q2944": {
+   "GROUP": "yes"
+  },
+  "q3445": {
+   "ST": "yes"
+  },
+  "q2954": {
+   "ULDA": "yes"
+  },
+  "q627": {
+   "GROUP": "yes"
+  },
+  "q614": {
+   "GROUP": "yes"
+  },
+  "q3181": {
+   "GROUP": "yes"
+  },
+  "q3371": {
+   "GROUP": "yes"
+  },
+  "q7701": {
+   "GROUP": "yes"
+  },
+  "q4243": {
+   "AH": "yes"
+  },
+  "q2948": {
+   "GNOMER": "yes"
+  },
+  "q4024": {
+   "BRD": "yes"
+  },
+  "q3825": {
+   "GROUP": "yes"
+  },
+  "q5726": {
+   "RFC": "yes"
+  },
+  "q5727": {
+   "RFC": "yes"
+  },
+  "q1136": {
+   "GROUP": "yes"
+  },
+  "q5386": {
+   "AH": "no"
+  },
+  "q5421": {
+   "AH": "no"
+  },
+  "q639": {
+   "GROUP": "yes"
+  },
+  "q652": {
+   "GROUP": "yes"
+  },
+  "q710": {
+   "AH": "yes"
+  },
+  "q1488": {
+   "GROUP": "yes"
+  },
+  "q1169": {
+   "GROUP": "yes"
+  },
+  "q1446": {
+   "ST": "yes"
+  },
+  "q8551": {
+   "GROUP": "yes"
+  },
+  "q630": {
+   "GROUP": "yes"
+  },
+  "q3452": {
+   "GROUP": "yes"
+  },
+  "q3380": {
+   "ST": "yes"
+  },
+  "q4244": {
+   "AH": "yes"
+  },
+  "q4146": {
+   "ST": "yes"
+  },
+  "q4134": {
+   "BRD": "yes"
+  },
+  "q4061": {
+   "BRD": "yes"
+  },
+  "q4022": {
+   "GROUP": "yes"
+  },
+  "q4062": {
+   "BRD": "yes"
+  },
+  "q5781": {
+   "GROUP": "yes"
+  },
+  "q6025": {
+   "GROUP": "yes"
+  },
+  "q41223": {
+   "GROUP": "yes"
+  },
+  "q1880": {
+   "GNOMER": "yes"
+  },
+  "q88": {
+   "GROUP": "yes"
+  },
+  "q1644": {
+   "AH": "no"
+  },
+  "q1648": {
+   "AH": "no"
+  },
+  "q136": {
+   "AH": "no"
+  },
+  "q132": {
+   "DM": "yes"
+  },
+  "q135": {
+   "DM": "yes"
+  },
+  "q141": {
+   "DM": "yes"
+  },
+  "q116": {
+   "AH": "yes"
+  },
+  "q142": {
+   "DM": "yes"
+  },
+  "q103": {
+   "AH": "yes"
+  },
+  "q155": {
+   "DM": "yes"
+  },
+  "q2609": {
+   "AH": "yes"
+  },
+  "q1073": {
+   "AH": "yes"
+  },
+  "q180": {
+   "GROUP": "yes"
+  },
+  "q66": {
+   "AH": "yes"
+  },
+  "q41676": {
+   "GROUP": "yes"
+  },
+  "q1012": {
+   "GROUP": "yes"
+  },
+  "q474": {
+   "GROUP": "yes"
+  },
+  "q185": {
+   "AH": "no"
+  },
+  "q41880": {
+   "GROUP": "yes"
+  },
+  "q193": {
+   "GROUP": "yes"
+  },
+  "q339": {
+   "AH": "yes"
+  },
+  "q340": {
+   "AH": "yes"
+  },
+  "q341": {
+   "AH": "yes"
+  },
+  "q342": {
+   "AH": "yes"
+  },
+  "q40945": {
+   "GROUP": "yes"
+  },
+  "q713": {
+   "AH": "yes"
+  },
+  "q704": {
+   "ULDA": "yes"
+  },
+  "q40324": {
+   "GROUP": "yes"
+  },
+  "q3372": {
+   "GROUP": "yes"
+  },
+  "q40303": {
+   "GROUP": "yes"
+  },
+  "q3842": {
+   "AH": "yes"
+  },
+  "q3785": {
+   "AH": "no"
+  },
+  "q40730": {
+   "AH": "yes"
+  },
+  "q40735": {
+   "AH": "yes"
+  },
+  "q40736": {
+   "AH": "yes"
+  },
+  "q40785": {
+   "GROUP": "yes"
+  },
+  "q40757": {
+   "BRD": "yes"
+  },
+  "q4023": {
+   "GROUP": "yes"
+  },
+  "q5121": {
+   "GROUP": "yes"
+  },
+  "q6128": {
+   "AH": "no"
+  },
+  "q450": {
+   "GROUP": "yes"
+  },
+  "q442": {
+   "GROUP": "yes"
+  },
+  "q41721": {
+   "GROUP": "yes"
+  },
+  "q605": {
+   "AH": "no"
+  },
+  "q679": {
+   "GROUP": "yes"
+  },
+  "q680": {
+   "GROUP": "yes"
+  },
+  "q40847": {
+   "GROUP": "yes"
+  },
+  "q40974": {
+   "GROUP": "yes"
+  },
+  "q40190": {
+   "AH": "yes"
+  },
+  "q1173": {
+   "GROUP": "yes"
+  },
+  "q3786": {
+   "AH": "no"
+  },
+  "q6135": {
+   "GROUP": "yes"
+  },
+  "q6136": {
+   "GROUP": "yes"
+  },
+  "q5054": {
+   "GROUP": "yes"
+  },
+  "q5055": {
+   "GROUP": "yes"
+  },
+  "n-Optimized-Alliance-43-45-Feralas-114": {
+   "AH": "yes"
+  },
+  "n-Optimized-Alliance-43-45-Feralas-121": {
+   "ULDA": "yes"
+  },
+  "n-Optimized-Alliance-45-46-Uldaman-9": {
+   "ULDA": "yes"
+  },
+  "n-Optimized-Alliance-45-46-Uldaman-11": {
+   "ULDA": "yes"
+  },
+  "n-Optimized-Alliance-45-46-Uldaman-13": {
+   "ULDA": "yes"
+  },
+  "n-Optimized-Alliance-45-46-Uldaman-15": {
+   "ULDA": "yes"
+  },
+  "n-Optimized-Alliance-48-49-Stranglethorn-64": {
+   "AH": "yes"
+  },
+  "n-Optimized-Alliance-50-51-Searing-Gorge-11": {
+   "AH": "no"
+  },
+  "n-Optimized-Horde-18-20-Barrens-90": {
+   "GROUP": "yes",
+   "WC": "yes"
+  },
+  "n-Alliance-33-38-Grim-Reaches-165": {
+   "GROUP": "yes"
+  },
+  "n-Alliance-39-46-Gilneas-167": {
+   "SM": "yes"
+  },
+  "n-Alliance-47-48-Searing-Gorge-5": {
+   "AH": "no"
+  },
+  "n-Alliance-48-53-Lapidis-Isle-157": {
+   "GROUP": "yes"
+  },
+  "n-Alliance-54-60-TelAbim-132": {
+   "AH": "yes"
+  },
+  "n-Alliance-54-60-TelAbim-159": {
+   "GROUP": "yes"
+  },
+  "n-Horde-48-53-Gillijims-Isle-104": {
+   "ST": "yes"
+  },
+  "n-Horde-54-60-TelAbim-132": {
+   "AH": "yes"
+  },
+  "n-Horde-54-60-TelAbim-159": {
+   "GROUP": "yes"
+  },
+  "n-Both-55-60-Scarlet-Enclave-5": {
+   "GROUP": "yes"
+  },
+  "n-Both-55-60-Scarlet-Enclave-11": {
+   "GROUP": "yes"
+  },
+  "n-Both-55-60-Scarlet-Enclave-13": {
+   "GROUP": "yes"
+  },
+  "n-Both-55-60-Scarlet-Enclave-17": {
+   "GROUP": "yes"
+  },
+  "n-Both-55-60-Scarlet-Enclave-19": {
+   "GROUP": "yes"
+  },
+  "n-Both-55-60-Scarlet-Enclave-21": {
+   "GROUP": "yes"
+  },
+  "n-Both-55-60-Scarlet-Enclave-23": {
+   "GROUP": "yes"
+  },
+  "n-Both-55-60-Scarlet-Enclave-25": {
+   "GROUP": "yes"
+  },
+  "n-Both-55-60-Scarlet-Enclave-35": {
+   "GROUP": "yes"
+  },
+  "n-Both-55-60-Scarlet-Enclave-45": {
+   "GROUP": "yes"
+  },
+  "q2946": {
+   "ULDA": "yes"
+  },
+  "q2977": {
+   "ULDA": "yes"
+  },
+  "q4324": {
+   "BRD": "yes"
+  }
+ },
+ "followups": {
+  "q39": {
+   "GROUP": "q45"
+  },
+  "q59": {
+   "GROUP": "q45"
+  },
+  "q71": {
+   "GROUP": "q45"
+  },
+  "q208": {
+   "GROUP": "q193"
+  },
+  "q451": {
+   "GROUP": "q450"
+  },
+  "q640": {
+   "GROUP": "q639"
+  },
+  "q1170": {
+   "GROUP": "q1169"
+  },
+  "q1171": {
+   "GROUP": "q1169"
+  },
+  "q1172": {
+   "GROUP": "q1169"
+  },
+  "q1449": {
+   "ST": "q1448"
+  },
+  "q1450": {
+   "ST": "q1448"
+  },
+  "q1451": {
+   "ST": "q1448"
+  },
+  "q1452": {
+   "ST": "q1448"
+  },
+  "q1469": {
+   "ST": "q1448"
+  },
+  "q2879": {
+   "GROUP": "q2944"
+  },
+  "q2942": {
+   "GROUP": "q2944"
+  },
+  "q2943": {
+   "GROUP": "q2944"
+  },
+  "q2964": {
+   "ULDA": "q2954"
+  },
+  "q3182": {
+   "GROUP": "q3181"
+  },
+  "q3201": {
+   "GROUP": "q3181"
+  },
+  "q3372": {
+   "GROUP": "q3371"
+  },
+  "q3444": {
+   "ST": "q3380"
+  },
+  "q3453": {
+   "GROUP": "q3452"
+  },
+  "q3454": {
+   "GROUP": "q3452"
+  },
+  "q3462": {
+   "GROUP": "q3452"
+  },
+  "q3463": {
+   "GROUP": "q3452"
+  },
+  "q3481": {
+   "GROUP": "q3452"
+  },
+  "q4022": {
+   "GROUP": "q3452"
+  },
+  "q4245": {
+   "AH": "q4244"
+  },
+  "q5056": {
+   "GROUP": "q5054"
+  },
+  "q5845": {
+   "GROUP": "q5781"
+  },
+  "q5846": {
+   "GROUP": "q5781"
+  },
+  "q40731": {
+   "AH": "q40730"
+  },
+  "q40732": {
+   "AH": "q40730"
+  },
+  "q40733": {
+   "AH": "q40730"
+  },
+  "q40734": {
+   "AH": "q40730"
+  },
+  "q40737": {
+   "AH": "q40730"
+  },
+  "q40738": {
+   "AH": "q40730"
+  },
+  "q40752": {
+   "AH": "q40730"
+  },
+  "q40753": {
+   "AH": "q40730"
+  },
+  "q40754": {
+   "AH": "q40730"
+  },
+  "q41882": {
+   "GROUP": "q41880"
+  }
+ }
+}

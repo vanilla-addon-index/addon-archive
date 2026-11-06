@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Fiurs-Hearth/BattleMusic",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Fiurs-Hearth",
+    "repo": "BattleMusic",
+    "name": "BattleMusic",
+    "url": "https://github.com/Fiurs-Hearth/BattleMusic",
+    "api": "https://api.github.com/repos/Fiurs-Hearth/BattleMusic"
+  },
+  "commit": "e92c913c3366dbfb7dc5cd97c67e36dd0d4440c7",
+  "sourceFiles": {
+    "BattleMusic.lua": {
+      "sha256": "356b5fd9c4e49463c13d254a37e46e316cd10ae33e687f5d1e309a12be869a85",
+      "bytes": 27459
+    },
+    "BattleMusic.toc": {
+      "sha256": "aab921e6f5fc4342e6455ca75486393aa3b2d58580e37f5ba2586c5f9b63068e",
+      "bytes": 255
+    },
+    "BattleMusic.xml": {
+      "sha256": "e3c70782de621d98cda095e782dd26244d3c1f6cd4cfe95f5dedf3e676f9b5fa",
+      "bytes": 1870
+    },
+    "music/Put your music files here.txt": {
+      "sha256": "2916c7473db92c4d9c17ae9c3b41db9236443d3a02a60a36f9b56a59b63d32bc",
+      "bytes": 200
+    },
+    "README.md": {
+      "sha256": "dfabcf4f73fbf0c87c258fee024ae9215a91fb663f233a10727d57e1fa5805d3",
+      "bytes": 2276
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Kirchlive/AtlasLoot-GearFilter",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Kirchlive",
+    "repo": "AtlasLoot-GearFilter",
+    "name": "AtlasLoot-GearFilter",
+    "url": "https://github.com/Kirchlive/AtlasLoot-GearFilter",
+    "api": "https://api.github.com/repos/Kirchlive/AtlasLoot-GearFilter"
+  },
+  "commit": "7b24283dc1e428b01d9a9535c5ae9c05e666336d",
+  "sourceFiles": {
+    "AtlasLoot-GearFilter.toc": {
+      "sha256": "103c12ab8cc64aceee2327b4d61d9437b212a0a8f529e9401cf5fd3584fce78f",
+      "bytes": 290
+    },
+    "GearFilter.lua": {
+      "sha256": "0fa085998ec41959afbbb735998d44229411a54a7d68dbbae48f2546052e6313",
+      "bytes": 25796
+    },
+    "README.md": {
+      "sha256": "05ee7b7f6548f2d1076bc80c4c01b3d24b52b9ab92fa02b1ae7a5867d24f9140",
+      "bytes": 5805
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

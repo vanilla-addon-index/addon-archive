@@ -1,0 +1,25 @@
+{
+  "upstream": "https://github.com/shirsig/aux_merchant_prices",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "aux_merchant_prices",
+    "name": "aux_merchant_prices",
+    "url": "https://github.com/shirsig/aux_merchant_prices",
+    "api": "https://api.github.com/repos/shirsig/aux_merchant_prices"
+  },
+  "commit": "dc3b12d9f6ed4b37df78fdd84721552d00f5025e",
+  "sourceFiles": {
+    "aux_merchant_prices.lua": {
+      "sha256": "786da6837b7df69864967c63f79415ea04a4653a682d034088248030d9ed695a",
+      "bytes": 461080
+    },
+    "aux_merchant_prices.toc": {
+      "sha256": "53338786a0fadfa98b5765fb109f452af490b3d699e60fe09e736acc7a3a0b4b",
+      "bytes": 200
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

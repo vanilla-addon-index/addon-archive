@@ -1,0 +1,15 @@
+package-as: Aegis_Pathfinder
+
+# The release's text: this version's CHANGELOG.md entry, which the release
+# workflow writes here before packaging (.github/workflows/release.yml).
+manual-changelog:
+    filename: RELEASE_NOTES.md
+    markup-type: markdown
+
+ignore:
+    - README.md
+    - Tools
+    - docs
+    - .luarc.json
+    - CONTRIBUTORS.md
+    - CONTRIBUTING.md

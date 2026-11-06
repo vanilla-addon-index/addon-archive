@@ -1,0 +1,190 @@
+{
+  "upstream": "https://github.com/Torchlite-bit/Aegis_Courier",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Torchlite-bit",
+    "repo": "Aegis_Courier",
+    "name": "Aegis_Courier",
+    "url": "https://github.com/Torchlite-bit/Aegis_Courier",
+    "api": "https://api.github.com/repos/Torchlite-bit/Aegis_Courier"
+  },
+  "commit": "438160ae427057134a5dee7418e34b9c7af07e95",
+  "sourceFiles": {
+    ".github/discord_changelog.py": {
+      "sha256": "6988838f1f6b5c03d55dca5cb1711973a89f22b420bad2dad4dd90b95be43192",
+      "bytes": 4860
+    },
+    ".github/discord-logo.png": {
+      "sha256": "d35f9338b3ce31deb5e6a6f993459d0bbbfebfa74627b32fc551412654879bfe",
+      "bytes": 122485
+    },
+    ".github/workflows/release.yml": {
+      "sha256": "93e22c0ed8985cf8f9a11aa45542ec3b6fc648b2ae1ebfa8242331adaa0ad45c",
+      "bytes": 5720
+    },
+    ".gitignore.upstream": {
+      "sha256": "71c9890313f82c49d2316bd6a60875291fc03ea3dfc97b9db12a944546c24be1",
+      "bytes": 413
+    },
+    ".pkgmeta": {
+      "sha256": "0ba8a7dfc33572e60d64a0f72f3ebfbb582e7caa8a48a5be58d5200fecc21c2b",
+      "bytes": 1312
+    },
+    "Aegis_Courier.toc": {
+      "sha256": "74283b7edc62ca4d51873bd71a19978660429f75762ef63dfeac35748cfd63d5",
+      "bytes": 303
+    },
+    "CHANGELOG.md": {
+      "sha256": "363d66ab0a3b2f3b650b78ca44806ba7a8d27f4727a5a06b5c174493a92309ce",
+      "bytes": 78588
+    },
+    "CLAUDE.md": {
+      "sha256": "016808c9e6e31995c363b60fa1c6f3331ca4776216a5308b877bc7a223137774",
+      "bytes": 66463
+    },
+    "core/bridge.lua": {
+      "sha256": "cadda1c0c5670963d859c5146e32435fb927e30d8e144ddeb61d01997663b19f",
+      "bytes": 6987
+    },
+    "core/db.lua": {
+      "sha256": "97cef8d2d23653166068e188f6825707a8c94b320deae43c4dbeffc84003e1ab",
+      "bytes": 28343
+    },
+    "core/inbox.lua": {
+      "sha256": "d02d6b8873f36eb317695417e2aa02a4a5a4c552baf9c8ef64cb5a6090440185",
+      "bytes": 44289
+    },
+    "core/init.lua": {
+      "sha256": "62bd0b3621cdae209e92f7875257721f71706ec5b4e9c612d9c6f5e2beefeee2",
+      "bytes": 5007
+    },
+    "core/send.lua": {
+      "sha256": "7841d045a2bd0b73c1eb8cfff900920b67d61e9203a0ac67da7d0556114ea25a",
+      "bytes": 59118
+    },
+    "core/util.lua": {
+      "sha256": "ba89f1c03837866e9e61eac8ebb67b857a619cc1cac3a7dcdc242b6f8b56e0de",
+      "bytes": 10581
+    },
+    "docs/turtlemail-audit.md": {
+      "sha256": "842d68e3adf6e1b67940adfa59bb26cc79ec0320db427a159f7ee53a4a163b54",
+      "bytes": 11835
+    },
+    "LICENSE": {
+      "sha256": "76fbcf2e5f0d64574b16aea330c69a97e48e90a117d9e78248808f00b51d595c",
+      "bytes": 1066
+    },
+    "media/aegis-courier-logo.jpg": {
+      "sha256": "e7b7720c9041c231cf65c9ca84c441d3f6345263000e34b9618a2b1f0d62c7e1",
+      "bytes": 1758115
+    },
+    "media/make-minimap-icon.py": {
+      "sha256": "573e1dd64fe0ac87332aa5654d2c00d77491c91299dc1b5ad541a97c4afc905b",
+      "bytes": 6334
+    },
+    "media/minimap-ring.tga": {
+      "sha256": "a66ea273917b1ed2721c0850498b900d3363de51999ea49b07179b852c87a0a9",
+      "bytes": 2262
+    },
+    "media/minimap-source.jpg": {
+      "sha256": "84088bd46b7540fa4a02e774f25cb0bde5d03462484677236390d1580dfa4218",
+      "bytes": 215563
+    },
+    "media/minimap.tga": {
+      "sha256": "75228534c42387a2c9ce5067d13572d8759905fb5729a36bbd9e74a1423e25e3",
+      "bytes": 14538
+    },
+    "media/README.md": {
+      "sha256": "a282725425b74256938d1186b77bf71a7821aa15bc53f29153184224a8b3018d",
+      "bytes": 2706
+    },
+    "media/ResizeGrip.tga": {
+      "sha256": "c96bf1c4be764a43c11168d047aaa230649dd9b9dc5e334ffe7b7748d918d9f2",
+      "bytes": 1042
+    },
+    "media/screenshot-inbox.jpg": {
+      "sha256": "ed50a97e4f9392ff3ba7d585915390b78566c58b860f3e0f6867e62825beca9b",
+      "bytes": 273453
+    },
+    "media/screenshot-ledger.png": {
+      "sha256": "20b1c3614abe999262680b6fa50aa8c54cffb70eda18a13cbc046fe23008275c",
+      "bytes": 209671
+    },
+    "media/screenshot-log.png": {
+      "sha256": "5249b077526fb91f14ce7f359edf8309a21b518a26985ac7017fbc9440ad01f7",
+      "bytes": 237759
+    },
+    "media/screenshot-pfui.jpg": {
+      "sha256": "5ce485a4c503d54a5e5a6be1fb63c69b0778fb470bb21c8001e2564fb5d8cad7",
+      "bytes": 289093
+    },
+    "media/screenshot-send.jpg": {
+      "sha256": "f11399c5d9ae4016b661444f10cdecce873dc13f41aed824be8132a048c44c1d",
+      "bytes": 336775
+    },
+    "media/screenshot-settings.jpg": {
+      "sha256": "835f0a2b47426b50881b4b2f6f5e9bf94c2e4a55aef6b4dcbfd8807d75fbbdc0",
+      "bytes": 312997
+    },
+    "media/test": {
+      "sha256": "f2ca1bb6c7e907d06dafe4687e579fce76b37e4e93b7605022da52e6ccc26fd2",
+      "bytes": 5
+    },
+    "pfui/Aegis_Courier.lua": {
+      "sha256": "aa08e6daa8a747a48e34e7baa2ca1411da053685c7f2b56ea4c7d7a352f3df10",
+      "bytes": 1398
+    },
+    "README.md": {
+      "sha256": "ab0cd9deb5c50e648fe427528ca67a6d97529b6e646332ae78b5b17431e59761",
+      "bytes": 16020
+    },
+    "ROADMAP.md": {
+      "sha256": "a96222b043ca6888097d90225e12d6521eea1fb17dd53205e5251436bc7fb543",
+      "bytes": 6872
+    },
+    "tests/harness.lua": {
+      "sha256": "44e891656f6c6a245ecdada92a343ff50020e97f2ebcfe89b7329352f1b9f412",
+      "bytes": 302441
+    },
+    "ui/frame.lua": {
+      "sha256": "e0ae9bf6d12e1255ffa3cd528ee381ea18ae235ed47af0cbeb68722946d24fb5",
+      "bytes": 205416
+    },
+    "ui/skin.lua": {
+      "sha256": "36f9366d42bc5deea7e30e5fb3ca845ee25d1925f379dd9977ae9f47e5d2efe7",
+      "bytes": 12560
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "402268556": {
+      "tag": "v1.9.12",
+      "folder": "v1.9.12--402268556",
+      "assets": {
+        "606910495": {
+          "sha256": "8cbc87750a38a8e921193c29f714b8c33d2bbb380374c3cde3db9a72b6f038f7",
+          "bytes": 170080,
+          "id": "606910495",
+          "name": "Aegis_Courier-v1.9.12-classic.zip",
+          "url": "https://github.com/Torchlite-bit/Aegis_Courier/releases/download/v1.9.12/Aegis_Courier-v1.9.12-classic.zip",
+          "path": "releases/v1.9.12--402268556/assets/Aegis_Courier-v1.9.12-classic.zip"
+        },
+        "606910515": {
+          "sha256": "f9372ab8f25fc7a6c338ed3dc9d646312d837c661cebc3779bfb8a1d7b30f62c",
+          "bytes": 174,
+          "id": "606910515",
+          "name": "release.json",
+          "url": "https://github.com/Torchlite-bit/Aegis_Courier/releases/download/v1.9.12/release.json",
+          "path": "releases/v1.9.12--402268556/assets/release.json"
+        }
+      },
+      "source": {
+        "sha256": "d3e2f940d0a201d2a3d8048468784ca4d306fdb8675b4e58f5c62a794f9fe2c0",
+        "bytes": 3914440,
+        "path": "releases/v1.9.12--402268556/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Torchlite-bit/Aegis_Courier/tarball/v1.9.12"
+      }
+    }
+  }
+}

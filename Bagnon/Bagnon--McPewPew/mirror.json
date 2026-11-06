@@ -1,0 +1,169 @@
+{
+  "upstream": "https://github.com/McPewPew/Bagnon",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "McPewPew",
+    "repo": "Bagnon",
+    "name": "Bagnon",
+    "url": "https://github.com/McPewPew/Bagnon",
+    "api": "https://api.github.com/repos/McPewPew/Bagnon"
+  },
+  "commit": "06ee0b46ebda38470ef60ede699280454a812f97",
+  "sourceFiles": {
+    "Bagnon.lua": {
+      "sha256": "a992e0ed9735046aa0f19570ff2d974ccb12ca03029c63e0a5dc5921875572a5",
+      "bytes": 3407
+    },
+    "Bagnon.toc": {
+      "sha256": "cedb2aa9b08905744a9b4377b8709a57848b5890fe26f723de7b5c7ffd26141a",
+      "bytes": 640
+    },
+    "Bagnon.xml": {
+      "sha256": "581be31ee6884e9e3c50d9056ed91882b7310cb8649b86e06e4030ca6d830ce8",
+      "bytes": 5783
+    },
+    "BagnonForever.lua": {
+      "sha256": "0ec4ba582945251031eba79d2b97839a1b55680644789f0fce3a1fbdd241eb8d",
+      "bytes": 5451
+    },
+    "bank.blp": {
+      "sha256": "09e903a796b2d7cb7de17ff9b0ec709b47f4f14d6e98e55b5e7d90e94d309654",
+      "bytes": 6660
+    },
+    "Banknon.lua": {
+      "sha256": "34b58daaefcaa527bd87118cfb781b956ec702aec1214ed6d80f2d8a65827c48",
+      "bytes": 2966
+    },
+    "Banknon.xml": {
+      "sha256": "6747ec23c00ec9f0a7d8c45edc1b2f14ba27843175aefae2ca62af918930b79d",
+      "bytes": 3723
+    },
+    "Bindings.xml": {
+      "sha256": "56e5fa6b72babf9dec4e8cfd600aeeed2efcd62dbcd951e82c2776f33523e738",
+      "bytes": 249
+    },
+    "core/Bag.lua": {
+      "sha256": "2292e1fd2e323e2e0dc19bfebd5350eead59141db7d370dd534bfd405f61e6f4",
+      "bytes": 7412
+    },
+    "core/Bag.xml": {
+      "sha256": "2afeda612d4c0ed84224094851b6788f9d4316748ae5fd16de9aa38efbe56c33",
+      "bytes": 1766
+    },
+    "core/Frame.lua": {
+      "sha256": "1bb61de23c772ed11b9bbddbc45cc85f11af36fae2a0a450df104f8dce56917c",
+      "bytes": 15516
+    },
+    "core/Frame.xml": {
+      "sha256": "e08535732a2e439fdef89bc132fd453e5f0dc25cfd82462c21717d0748dd8947",
+      "bytes": 4565
+    },
+    "core/Item.lua": {
+      "sha256": "9aef2ccac254ee1deed6f2845d2066bf7884e2dd36331582a7a5a5b362e019d5",
+      "bytes": 8055
+    },
+    "core/Item.xml": {
+      "sha256": "ddcd4edd3923b3873c9775e6ec1b341b7bcb641f8846e894811cc439e0daa548",
+      "bytes": 1383
+    },
+    "core/Overrides.lua": {
+      "sha256": "b412e567f9029f41c4673f2097fbf5a42614d675bdb03cc57c7192a8321ca666",
+      "bytes": 2163
+    },
+    "core/Utility.lua": {
+      "sha256": "73e2edf3ff17f6e9db4490ceac2c68c31be0863bbbdc8cf22c0ed897d19c264a",
+      "bytes": 3731
+    },
+    "database/database.lua": {
+      "sha256": "9bb604f9ff04551a552196f004e62f0c80f2439603a4664db0b7ac38d68c071e",
+      "bytes": 6583
+    },
+    "database/ui.lua": {
+      "sha256": "f6cb5ad8c09f186545742c26a743ddc62322d054a375ab044ee8c6085cc7e6b3",
+      "bytes": 2721
+    },
+    "database/ui.xml": {
+      "sha256": "643bccfb7418f745e7647bed3a5f7ac849a838afa07acfd169e88d4edaeefd28",
+      "bytes": 2167
+    },
+    "Events.lua": {
+      "sha256": "7c5facf39c4e0bbeaffbdc03a7760cedda908eed586833704047f13c4c6663d6",
+      "bytes": 6946
+    },
+    "lib/Infield.lua": {
+      "sha256": "3b8fe709af139b3fa9dfea9306c5d51742a85274ce2f9fa50e4ec398c5b632c6",
+      "bytes": 3481
+    },
+    "lib/TLib.lua": {
+      "sha256": "b96d886d45d3379c075b0958e884db616f64f1010cb272ec5f40eef9ba528d68",
+      "bytes": 2383
+    },
+    "localization.lua": {
+      "sha256": "a67cccbe71d7cae76553b1ada01f10584eab96a734a1b845bf0f4959c85d3d19",
+      "bytes": 4187
+    },
+    "menu/Menu.lua": {
+      "sha256": "7ec37389715ff6b6ff9528e50508a753ac967c9068d80b5df66d8c5a4099bf34",
+      "bytes": 4781
+    },
+    "menu/Menu.xml": {
+      "sha256": "ca7ba8a0ed8911c3a84faf22ad181e9ded56aa92c267c6b835842a7d5e6f82d9",
+      "bytes": 8788
+    },
+    "Menu.lua": {
+      "sha256": "a11081d759807b1611dd24b8a1f07f1ec095a47197105f18967b94933b4077e8",
+      "bytes": 4101
+    },
+    "Menu.xml": {
+      "sha256": "0e71274745caf894c8e6cc33642cd4bbe7bd110eded6d98eb77a7a1bb4261330",
+      "bytes": 11071
+    },
+    "Reading from other addons.txt": {
+      "sha256": "4267985780741b9f1699bd004120a7b0c9e9a3e7bde28eea65b2f83664a42f92",
+      "bytes": 474
+    },
+    "README.md": {
+      "sha256": "c58c7958d95342fda0beb74645cee683b81cc636bfd782ed1f6d6b1fac23a16f",
+      "bytes": 1712
+    },
+    "Slash.lua": {
+      "sha256": "182615db9619f244320b6829e559bb1339c032883b3759cbcc3024f33e8be200",
+      "bytes": 1306
+    },
+    "spot/spot.lua": {
+      "sha256": "3acd8f1397cd305bee890d6c375541d8e381746a00470e1b4dee3f3dceb51f0b",
+      "bytes": 2335
+    },
+    "spot/spot.xml": {
+      "sha256": "324a69c66de523d5a08f015ef1bb7295bdb76a16681d4def6e14a968e490fde1",
+      "bytes": 755
+    },
+    "tooltips.lua": {
+      "sha256": "d00b9fb31c78661881a6c9f9435f0bd8683dd67401bbb25778ac324aaa872518",
+      "bytes": 3124
+    },
+    "trans/localization.cn.lua": {
+      "sha256": "f583d0d3a06cd807408fd08a3ac2ec222eea7295e2a44f13bb8a9f018012b585",
+      "bytes": 4386
+    },
+    "trans/localization.de.lua": {
+      "sha256": "d2836b32f264baf1a7c180cf3797356aec14f1799f045d64a6376afec1bc6f91",
+      "bytes": 2860
+    },
+    "trans/localization.es.lua": {
+      "sha256": "9b877bc7a9c9cb9608fcb900b697e65a6fdca710503f2f0fefb3d88a5f1a3731",
+      "bytes": 4463
+    },
+    "trans/localization.fr.lua": {
+      "sha256": "23f47205a0fa6043da014aa1c921f05f2f12c3bc41a2f6527fbcdd078f812553",
+      "bytes": 4431
+    },
+    "trans/localization.tw.lua": {
+      "sha256": "f2b7d37d5c846499b276491f7d6a4ddf93308c71d0b5c0a90e77127675f4317b",
+      "bytes": 520
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,77 @@
+{
+  "upstream": "https://github.com/Zerf/AuctionLink",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Zerf",
+    "repo": "AuctionLink",
+    "name": "AuctionLink",
+    "url": "https://github.com/Zerf/AuctionLink",
+    "api": "https://api.github.com/repos/Zerf/AuctionLink"
+  },
+  "commit": "a4f2092848244ebef4ee2f57c3ca32775af934a0",
+  "sourceFiles": {
+    "AuctionLink/AuctionLink-enUS.lua": {
+      "sha256": "df35421f9bfbf3adea04fcaa51100ec293cdcffd3480ee8dad4c4f70f57abbf2",
+      "bytes": 254
+    },
+    "AuctionLink/AuctionLink.lua": {
+      "sha256": "c7572d926c67e550e26964a691ca2bc1d23a4834e8ecfa77456c04a41299dcd5",
+      "bytes": 16574
+    },
+    "AuctionLink/AuctionLink.toc": {
+      "sha256": "4127dda88783f11cd52fb13138d87fc536fcd9adab7dd8ca3337e738758c0fe4",
+      "bytes": 649
+    },
+    "AuctionLink/Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "e977ae5a93e6e0120481cd44f96e6050949d3ade56d6168577a4c829df1b1c67",
+      "bytes": 32120
+    },
+    "AuctionLink/Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "6bcd5625a8c14866bec07d52f3b8fbbe1e00291bab5afe75548547dd69510fa3",
+      "bytes": 67903
+    },
+    "AuctionLink/Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "d94da32d564024e176da8fe6cc4f31c2f0cf680ad756dce490d01688a9b657d3",
+      "bytes": 44956
+    },
+    "AuctionLink/Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "8222e7a75d0f0fba8030099939611732b50c28cb26b6ce6427f52fd5f2f409d8",
+      "bytes": 29927
+    },
+    "AuctionLink/Libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "274b2b060bd6fb7131ba81dd2a38272004d402354591bb393b29b65377af70bf",
+      "bytes": 17388
+    },
+    "AuctionLink/Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "a421bd39e4cb7bcd54bb79de85c21d6e8c4c56551406972141bba26ae7d0c16d",
+      "bytes": 23871
+    },
+    "AuctionLink/Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "6646e83c71c5ef9ffdeb2d0cb0b31d346a21df5322e4c5b10bc3bcf360b9eb14",
+      "bytes": 16487
+    },
+    "AuctionLink/Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "03e71bcf0ba8ce7c806c5ffe966991cb997c12c25b351198c918fe32e469bdaf",
+      "bytes": 31435
+    },
+    "README.md": {
+      "sha256": "6466b775776b187f2e1250e76aece7a1e64f7bb169a269cfdb90a78b358a0575",
+      "bytes": 617
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "1739778": {
+      "tag": "v2.0.1",
+      "folder": "v2.0.1--1739778",
+      "assets": {},
+      "source": {
+        "sha256": "984739dca3efe577d02afbfa35d4a94e19116caf650242e76aaa2fc902d94c74",
+        "bytes": 53287,
+        "path": "releases/v2.0.1--1739778/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Zerf/AuctionLink/tarball/v2.0.1"
+      }
+    }
+  }
+}

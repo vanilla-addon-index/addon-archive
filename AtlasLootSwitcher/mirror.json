@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/mycoursehqazsedc00-boop/AtlasLootSwitcher",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "mycoursehqazsedc00-boop",
+    "repo": "AtlasLootSwitcher",
+    "name": "AtlasLootSwitcher",
+    "url": "https://github.com/mycoursehqazsedc00-boop/AtlasLootSwitcher",
+    "api": "https://api.github.com/repos/mycoursehqazsedc00-boop/AtlasLootSwitcher"
+  },
+  "commit": "f8ddae41b3862a36f5845407d7124bd5ad688edf",
+  "sourceFiles": {
+    "AtlasLootSwitcher-README.md": {
+      "sha256": "3c0e568d0c14a834d5008b1698cfd6570504c7a04939ef97ad8f2e28dabac690",
+      "bytes": 4998
+    },
+    "AtlasLootSwitcher.lua": {
+      "sha256": "a9524c3bd5ff5d4116103f6f94f2ed536ba7a6b50448df035ea2d72b887b235c",
+      "bytes": 2771
+    },
+    "AtlasLootSwitcher.toc": {
+      "sha256": "8d75c12e85b67b02b48f0c53c55d1fbfd7d1aa0bee4d4e6db3a03f316f52d9de",
+      "bytes": 231
+    },
+    "README.md": {
+      "sha256": "3c0e568d0c14a834d5008b1698cfd6570504c7a04939ef97ad8f2e28dabac690",
+      "bytes": 4998
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

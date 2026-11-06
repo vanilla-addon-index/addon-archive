@@ -1,0 +1,81 @@
+{
+  "upstream": "https://github.com/Otari98/Artisan",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Otari98",
+    "repo": "Artisan",
+    "name": "Artisan",
+    "url": "https://github.com/Otari98/Artisan",
+    "api": "https://api.github.com/repos/Otari98/Artisan"
+  },
+  "commit": "93f1165faca8e219a98a1b616b864c97535b1dca",
+  "sourceFiles": {
+    "Artisan.lua": {
+      "sha256": "932b49e14b3b36f3f77482c087d3f7c3246137e59ad2c8d20a9c5fbbef769e40",
+      "bytes": 59715
+    },
+    "Artisan.toc": {
+      "sha256": "387d2c287869051d6f2851c193d40888a333df29648784a7f57c84e65f922a68",
+      "bytes": 256
+    },
+    "Artisan.xml": {
+      "sha256": "2badca8806ee315c0037237d81f69cf2c07847a6c168a3cdd34bc5a760ba8a97",
+      "bytes": 49492
+    },
+    "ArtisanEditor.lua": {
+      "sha256": "711251e94be800d82777ae58d52e6a0f19b93a9e656b366fc4303abe1f6fa805",
+      "bytes": 24136
+    },
+    "ArtisanEditor.xml": {
+      "sha256": "c15653236205603304a2ef53dd8710ff4be418db7baef41aeb66c4691a0b9310",
+      "bytes": 17572
+    },
+    "Bindings.xml": {
+      "sha256": "a093e9a07af91f5fab1002e7665795df6f03e6f954d2d15620e6f6391f1a8b9c",
+      "bytes": 236
+    },
+    "LICENSE": {
+      "sha256": "e15165469fd7608920861fac345c71d500067fdf1ed123ee27cf75932d3f2d86",
+      "bytes": 1061
+    },
+    "README.md": {
+      "sha256": "d8b7c72b64804f7abc10bb32da9236f201f8c27e508fa5298f5a4e35c3d196bc",
+      "bytes": 473
+    },
+    "Textures/BottomLeft.blp": {
+      "sha256": "f32a710a178dcd13fb6ba100860b928bdd7e86a0fa54b2261d9a52b25e31eb08",
+      "bytes": 88580
+    },
+    "Textures/BottomLeft2.blp": {
+      "sha256": "9d9d0d0a0f67f96714c6fe8ee6d21f49c707ec4fe886b02dd910b344de336726",
+      "bytes": 88580
+    },
+    "Textures/BottomLeft3.blp": {
+      "sha256": "7a65f272f11ebb4d594d0decae26792c9808b76e42d99ee0d47cbb4e7b9a3faf",
+      "bytes": 65684
+    },
+    "Textures/BottomRight.blp": {
+      "sha256": "e613df23f88e37fdd8666327b7c7c780b5c84254bf7d0f88251cf834ea2ff579",
+      "bytes": 43860
+    },
+    "Textures/BottomRight2.blp": {
+      "sha256": "b87ebe7fbd3c321524594013007950c7185a98cad658e57c4d7a0a5344fe4de6",
+      "bytes": 32916
+    },
+    "Textures/UI-SearchBox-Clear.blp": {
+      "sha256": "51356eefbad8636bcc16fa65d3522d1ccdae42093451494f40315c87d1779d36",
+      "bytes": 1556
+    },
+    "Textures/UI-SearchBox-Icon.blp": {
+      "sha256": "87c43505ed6ac359b7138fc68a50e619e915e4c872fecb9618b7f3488f1d7162",
+      "bytes": 1556
+    },
+    "Textures/UI-TradeSkill-LinkButton.blp": {
+      "sha256": "99ddfce89f636dbcfe47cf1a3652ec03ef82502ea076585f900fe9c3650efa8a",
+      "bytes": 2564
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,285 @@
+{
+  "upstream": "https://github.com/rivi-s/Altoholic_Vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "rivi-s",
+    "repo": "Altoholic_Vanilla",
+    "name": "Altoholic_Vanilla",
+    "url": "https://github.com/rivi-s/Altoholic_Vanilla",
+    "api": "https://api.github.com/repos/rivi-s/Altoholic_Vanilla"
+  },
+  "commit": "a45d996a4f5f6f0afadf83edf61eef40e7e5bd6c",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "89963003e24870c466d1d11cb66e4fbc6644af909b9dcd8911a50aabb009bdc5",
+      "bytes": 18
+    },
+    "Altoholic/Altoholic.lua": {
+      "sha256": "152746d08ae1a7d1cc43d4abfeb5f8613794d4a3ecf534007e9654684078676b",
+      "bytes": 92512
+    },
+    "Altoholic/Altoholic.toc": {
+      "sha256": "37421cb00e876a3ddb5c1398d3016d9d242b75750aed133fbf2bd56d7f250978",
+      "bytes": 1910
+    },
+    "Altoholic/Altoholic.xml": {
+      "sha256": "45f4481759c8145372327a71725675daf3eae1d0a087a3aaa78aa1ec48f5d926",
+      "bytes": 20218
+    },
+    "Altoholic/AltoholicTemplates.xml": {
+      "sha256": "e20a71797f275b8d7069ff98283d18ef062bfd6697585df7a8d75e3bcb08bc74",
+      "bytes": 2092
+    },
+    "Altoholic/changelog.txt": {
+      "sha256": "5402b00019f69672ad2671366478ead8ea27bcb1954ab7f7a47cf9c8e85f17be",
+      "bytes": 5181
+    },
+    "Altoholic/Core.lua": {
+      "sha256": "7658b5d184b22ff9f330f798627086cc93f1aba931a5b49061f917ffd46ee1bb",
+      "bytes": 23650
+    },
+    "Altoholic/Items/Loots.lua": {
+      "sha256": "0bdc1286689a5bf97546ed4e9b7f861bffd3a583d8798aa4036085a5de3d2025",
+      "bytes": 124259
+    },
+    "Altoholic/Items/Suggestions_zhCN.lua": {
+      "sha256": "3dc88388f363da0cb9eb290f5f08b2057ebbd65076561bdea35f67b3cc792581",
+      "bytes": 20735
+    },
+    "Altoholic/Items/Suggestions_zhTW.lua": {
+      "sha256": "cd9fedc31ced2dfdfb8f4fa113830c9f39f9714302720832de5cdd1a3f08fbf0",
+      "bytes": 20148
+    },
+    "Altoholic/Items/Suggestions.lua": {
+      "sha256": "0393ac9bae1c85901427ab03257b9b86a3033368c1a1810939cf2a0e9c001796",
+      "bytes": 14471
+    },
+    "Altoholic/Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "bd2c58e226cbd3ec0ce23933ae5232b37f6ad693cac1e0238c2548a43e4f9b7b",
+      "bytes": 33310
+    },
+    "Altoholic/Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "64e94c958c92cba85b4a2a3214ef8d0fd6d86594abfc7a3bb3fd2d262875d055",
+      "bytes": 66933
+    },
+    "Altoholic/Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "a31166b787873d5551180e0600a7f9d2a529fb7f3ee9606e71b91dcf4123a025",
+      "bytes": 44509
+    },
+    "Altoholic/Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "Altoholic/Libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "Altoholic/Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "d05fb28fb6d7dbd9a8be4faea455388fd629342491699aa8fe7c3f8b8d6416c4",
+      "bytes": 23442
+    },
+    "Altoholic/Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "31bc9cfda434c890574d1bbfc48c9e1d068f45ff73e1023ca452dedab0bdef41",
+      "bytes": 15957
+    },
+    "Altoholic/Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "Altoholic/Libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "0e1c2e893ae0342170ffc3d8f816b765eaf8dbed689da5cf5353f6e9271b9c06",
+      "bytes": 85808
+    },
+    "Altoholic/Libs/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "1927177be6990043bc63bc8c36168408957c6d1ed86ef971d72415f7dd14d430",
+      "bytes": 7889
+    },
+    "Altoholic/Libs/LibBabble-Boss-3.0/LibBabble-Boss-3.0.lua": {
+      "sha256": "23948c81facf44388bd4c350fd6cab165277e25eb50e145bbf3eb650b6c777da",
+      "bytes": 173358
+    },
+    "Altoholic/Libs/LibBabble-Faction-3.0/LibBabble-Faction-3.0.lua": {
+      "sha256": "e924b64ecea48f530fdce9493164de7931d288793c9c67c0cfb7fcad3af58976",
+      "bytes": 22101
+    },
+    "Altoholic/Libs/LibBabble-Inventory-3.0/LibBabble-Inventory-3.0.lua": {
+      "sha256": "40cb87c644eb3d30dfb98951987ecd4273f18addb873ea2335125377a68aec4c",
+      "bytes": 41069
+    },
+    "Altoholic/Libs/LibBabble-Zone-3.0/LibBabble-Zone-3.0.lua": {
+      "sha256": "64a4b45d0d9574366e0d03d7db4d5a9a0ca33034b80dcf178906f25bb355ad19",
+      "bytes": 67666
+    },
+    "Altoholic/Libs/LibStub/LibStub.lua": {
+      "sha256": "3be355ecd82d7b8de5abb5ac8c1affefd3600e1083fc36d1c916e528532e3d85",
+      "bytes": 1461
+    },
+    "Altoholic/Libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "38adf6b62990e56169e9840585f17f71a00659185ea2d0a12bcc007ca9e14b53",
+      "bytes": 86674
+    },
+    "Altoholic/Locale/localization_deDE.lua": {
+      "sha256": "b5d7f9f64fc658a2bee2e1485f4ea62c026b5c797b54b24397a26e915868a7cb",
+      "bytes": 33159
+    },
+    "Altoholic/Locale/localization_enUS.lua": {
+      "sha256": "d600deacb59b3aeb235ea4d6805502605e1b5cc653db77d26a7f05f37fa20386",
+      "bytes": 20141
+    },
+    "Altoholic/Locale/localization_frFR.lua": {
+      "sha256": "d04543f2032e8013bb1646a89759fb7ec65e6fc153e1bcb1bff70a2f0da5643c",
+      "bytes": 29277
+    },
+    "Altoholic/Locale/localization_zhCN.lua": {
+      "sha256": "822e6459cdfcf7a3e9221c0f92ae83553487a627490e72d096f599cb8a107c02",
+      "bytes": 26593
+    },
+    "Altoholic/Locale/localization_zhTW.lua": {
+      "sha256": "d6e55c4eae1f084c45dd6cea4544a71c51129ce57ac6e0dba2312d8287a82aa1",
+      "bytes": 26592
+    },
+    "Altoholic/Modules/AccountSummary.lua": {
+      "sha256": "c122e55a501479eabcf0d514ebc94ed9509f0bb6ff22f915a54a75ecde33f168",
+      "bytes": 14489
+    },
+    "Altoholic/Modules/AccountSummary.xml": {
+      "sha256": "c622896a394c54b36a07b75f76afecf4102c49e7c02498a044fb6f696f39a9dd",
+      "bytes": 6100
+    },
+    "Altoholic/Modules/Attunements.lua": {
+      "sha256": "0eb438fa511e395187f344a23f896378ff3337c7f85bcdae3db57c4468678ee9",
+      "bytes": 8934
+    },
+    "Altoholic/Modules/Attunements.xml": {
+      "sha256": "a938686e7d484d382507705237617616109cde8fb53669402643cbf43e6d2c51",
+      "bytes": 5593
+    },
+    "Altoholic/Modules/AuctionHouse.lua": {
+      "sha256": "f58c60759f888238524767e04397db61f4c895ed7ef62822b4866ee2cf604b5f",
+      "bytes": 10968
+    },
+    "Altoholic/Modules/AuctionHouse.xml": {
+      "sha256": "89761f1c2f6bc93fa9e7e46b69dccf28e8864828effa7ce4b847e1c35959afc3",
+      "bytes": 5823
+    },
+    "Altoholic/Modules/BagUsage.lua": {
+      "sha256": "633d8b612c1cbf9c4ab481a25b1c8be056d6f25c478beef046015deb797e08bd",
+      "bytes": 8656
+    },
+    "Altoholic/Modules/BagUsage.xml": {
+      "sha256": "4574c23d25750b35b0008fac00358c858fb3e5c04a2008bcd9c109579b9f0bc5",
+      "bytes": 5226
+    },
+    "Altoholic/Modules/Containers.lua": {
+      "sha256": "ef807c363531f302e741573752bcbea3bc1336e74f0fba3c6b787c0fc60a98ca",
+      "bytes": 6560
+    },
+    "Altoholic/Modules/Containers.xml": {
+      "sha256": "81760973c76847de095c38f15f036f9a4aa69e87d50dcb8b4649350ba75a0b88",
+      "bytes": 2926
+    },
+    "Altoholic/Modules/Equipment.lua": {
+      "sha256": "f11f9d7097b7e59374f63dd695748212d90c8af66c7856781852d7a9e5d0aca6",
+      "bytes": 10627
+    },
+    "Altoholic/Modules/Equipment.xml": {
+      "sha256": "28431a6be45de38128206898507e72b5036dc82610f8c90b5494590416c0b032",
+      "bytes": 3372
+    },
+    "Altoholic/Modules/LinkSync.lua": {
+      "sha256": "e2a4cadbb53e860ba2587c8af57f6a64e69a8e5e7cd5ee96bbbebdeab16a3f80",
+      "bytes": 13284
+    },
+    "Altoholic/Modules/Mails.lua": {
+      "sha256": "b421cbf5896579feaefa441d78318c1273601f5f312edd9c9c8b5490b5be2ca4",
+      "bytes": 9211
+    },
+    "Altoholic/Modules/Mails.xml": {
+      "sha256": "19ea15308120849d9d29e6877f1489177ca58be175e3312f33afdf20bf681e67",
+      "bytes": 3775
+    },
+    "Altoholic/Modules/Options.xml": {
+      "sha256": "9d18548510e1f13e08596c6377dd55f154835f99bad36f935c96544f350e979f",
+      "bytes": 12533
+    },
+    "Altoholic/Modules/Quests.lua": {
+      "sha256": "0b5c0d4533b11546f3faa094238f1c7dfa93f23688152247347cb5ea61400766",
+      "bytes": 10276
+    },
+    "Altoholic/Modules/Quests.xml": {
+      "sha256": "f2b728000eb90948584fae73d1b8cdfb970a61a426a4541a2e1cc4ef29a49dd3",
+      "bytes": 5027
+    },
+    "Altoholic/Modules/Raids.lua": {
+      "sha256": "2a5eff3d5521c073999af85b04bdb104599e909bd87514052fdb31181e9b6b26",
+      "bytes": 8563
+    },
+    "Altoholic/Modules/Raids.xml": {
+      "sha256": "55aacce2fe439ebde38066b4d49133b1174a30fa5d562d37eac9b1ee26a6f5dd",
+      "bytes": 6898
+    },
+    "Altoholic/Modules/Recipes.lua": {
+      "sha256": "66ccc56c40fb3288ec6e9f2e56343dda76efafc73188dcff239626cf758ef050",
+      "bytes": 7829
+    },
+    "Altoholic/Modules/Recipes.xml": {
+      "sha256": "bd9c60f0094a42a551e09fb0d3af69bf313577139f5c91fc1957fabdd7035ba1",
+      "bytes": 6789
+    },
+    "Altoholic/Modules/Reputations.lua": {
+      "sha256": "a0c5c417aefe2fe481010daff332b4f729a6a39ace5b2ac53b04b3933891bee5",
+      "bytes": 9466
+    },
+    "Altoholic/Modules/Reputations.xml": {
+      "sha256": "b061519fb4aa98800842cb58489b6a8ca8f45c2a95fc144cb1c630dc1d72d89d",
+      "bytes": 5802
+    },
+    "Altoholic/Modules/Search.lua": {
+      "sha256": "b78056d206e31b8cf3727a095900a85304d34046cb063da8e11d8545c381db26",
+      "bytes": 16640
+    },
+    "Altoholic/Modules/Search.xml": {
+      "sha256": "fd3091a28a6e1416a29094c5ce374e260ace0dd8593072be5dbd45c7526ebeec",
+      "bytes": 6162
+    },
+    "Altoholic/Modules/Skills.lua": {
+      "sha256": "6f772c4f1847f776e24051166b6fdf01151a4412bb9fd1f2aa15ad24d64f4373",
+      "bytes": 15011
+    },
+    "Altoholic/Modules/Skills.xml": {
+      "sha256": "30722e450020bffdc040a5439dea3a4df9e68897b2e3e96e39037887b9c3ad7e",
+      "bytes": 5856
+    },
+    "make-altoholic-links.ps": {
+      "sha256": "e2539a53213009b4ef1ae1946c70cfb9e6cff55a3f7e3a8d1260b3b1a8d169af",
+      "bytes": 838
+    },
+    "README.md": {
+      "sha256": "77d0ec5baaca8c506d7b83aeca8dfaa00e5f349912dc1009412a6ca52e42e86e",
+      "bytes": 10210
+    },
+    "Screenshots/Attunements.png": {
+      "sha256": "66acef82f2876391398d78ae142456f9fc16d0414fcb22f7ccc9fba3c39fa66c",
+      "bytes": 277842
+    },
+    "Screenshots/Characters_Tooltips.JPG": {
+      "sha256": "9e2aa26cb46c50c0d61028cbcd1be80ebac8421008d415cf44cd62f7389e878c",
+      "bytes": 183885
+    },
+    "Screenshots/Containers.JPG": {
+      "sha256": "22a4a711ca8fcff08193dcf593cf83c7c7ce6a53986d64d87cf4108fc837a8c8",
+      "bytes": 149040
+    },
+    "Screenshots/Equipment.JPG": {
+      "sha256": "3b890af44d2df53e9174ba4366a0ffa1d8e14807958a3c8fb5710434d3cdf56e",
+      "bytes": 189022
+    },
+    "Screenshots/Raids.png": {
+      "sha256": "999bcb12fe6ed5892fad1ef2f3b9c283b37cd0058e948fa6ae2a20c672885015",
+      "bytes": 888364
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

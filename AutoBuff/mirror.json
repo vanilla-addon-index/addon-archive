@@ -1,0 +1,91 @@
+{
+  "upstream": "https://github.com/Nikoichu/AutoBuff-Turtle/tree/main",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Nikoichu",
+    "repo": "AutoBuff-Turtle",
+    "name": "AutoBuff-Turtle",
+    "ref": "main",
+    "subpath": "",
+    "url": "https://github.com/Nikoichu/AutoBuff-Turtle",
+    "api": "https://api.github.com/repos/Nikoichu/AutoBuff-Turtle"
+  },
+  "commit": "5d9bb8404ac80d344c3b4a8c3cf98015e0170d7b",
+  "sourceFiles": {
+    "AutoBuff/ABDisabled.tga": {
+      "sha256": "51f0edf658bc2626984a82154b0a62f2fe973ca3c8315cc2cc95b15f3f8f82a1",
+      "bytes": 16428
+    },
+    "AutoBuff/ABEnabled.tga": {
+      "sha256": "905ae41db17ba51515f46a0df9f39837e522330b982bf3da457bbcbbe6ef070f",
+      "bytes": 16428
+    },
+    "AutoBuff/AutoBuff.lua": {
+      "sha256": "7f26209961dfe47f2b558f59822d469b064b9ef9c26c6753e8722aed51fa6f53",
+      "bytes": 137557
+    },
+    "AutoBuff/AutoBuff.toc": {
+      "sha256": "2ab831756b9a9c298081602336d1c56aa016c7cbfd553a672942566f4bd13752",
+      "bytes": 600
+    },
+    "AutoBuff/AutoBuff.xml": {
+      "sha256": "8b31fb57d0f65aceb257deddc94ab82c9fe735406ba8ca6d036c632c475703e7",
+      "bytes": 38913
+    },
+    "AutoBuff/Bindings.xml": {
+      "sha256": "d344ae3416b89de8e63219f28865488a69bac2721524d2ffafc43d764c235130",
+      "bytes": 193
+    },
+    "AutoBuff/CloseButton-Down.blp": {
+      "sha256": "a032436a5c28a667e7670d2f9d7a3db4e9ca0467d9df3946fc6f1e75a791ede0",
+      "bytes": 1684
+    },
+    "AutoBuff/CloseButton-Up.blp": {
+      "sha256": "c7f9cb277b6e664926b8fce583bc7f25b025953e61d881473f098c365dab2493",
+      "bytes": 1684
+    },
+    "AutoBuff/libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "e6022fd4f85fafbabe511880b8145dd8208779f16d567515dbd21eb6a9183f02",
+      "bytes": 75857
+    },
+    "AutoBuff/libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "b08c3ef607bcad9d6b6ed0be51664d59999a8d208f51f7c47b018e7600b66fb3",
+      "bytes": 35622
+    },
+    "AutoBuff/libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "6ef303b0bf679e388540db3bdb47229ab4f86ea01205cb411e4059f3a83c5ba2",
+      "bytes": 79557
+    },
+    "AutoBuff/localization.de.lua": {
+      "sha256": "77730420f2a679aecaf25fda54f7a4b8e2ddfc13a82d93ebdbd8fcf36f6248fb",
+      "bytes": 19203
+    },
+    "AutoBuff/localization.en.lua": {
+      "sha256": "53844c01254a46bd154f460e03c277cd5dcd983f6925df0cb9567dc430452647",
+      "bytes": 18199
+    },
+    "AutoBuff/localization.fr.lua": {
+      "sha256": "762232e975a8039d1a1eaaec0aed6a0636543f00ecbb75f4b7b5a7ce67ae8787",
+      "bytes": 20386
+    },
+    "AutoBuff/localization.ko.lua": {
+      "sha256": "98d0ef6a3284fe4063749508f0787145fea286d214251a9b209bbd98210645dd",
+      "bytes": 18183
+    },
+    "AutoBuff/OldPatchNotes.txt": {
+      "sha256": "7489886c5661becc2ca2c789f0b8ecf0dfaef3c8f9ff1042463c1aa50f8e795c",
+      "bytes": 14001
+    },
+    "AutoBuff/ReadMe.txt": {
+      "sha256": "ed177a91217120501eba7efa98ce1226f1871ffcef4afe23e19ec6da44ffdc69",
+      "bytes": 6316
+    },
+    "AutoBuff/Status-Idle.blp": {
+      "sha256": "88f6bf91712246583042bc1d4779e366f789100c710152e167e155fcb4731782",
+      "bytes": 1684
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

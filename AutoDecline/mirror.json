@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/McPewPew/AutoDecline",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "McPewPew",
+    "repo": "AutoDecline",
+    "name": "AutoDecline",
+    "url": "https://github.com/McPewPew/AutoDecline",
+    "api": "https://api.github.com/repos/McPewPew/AutoDecline"
+  },
+  "commit": "119aa402925bc5a427b07c6eb0e21696e639b54d",
+  "sourceFiles": {
+    "ADOptions.lua": {
+      "sha256": "6f809f520af3420b6bfedd36749e238cd73bd6fdf0a1877fff900141e1af28f9",
+      "bytes": 5077
+    },
+    "ADOptions.xml": {
+      "sha256": "feba3300ee2910b0329c9dafce8a798f7d53e94cb4f37bff978e832b95cdcfdf",
+      "bytes": 7810
+    },
+    "AutoDecline Screen Shot.jpg": {
+      "sha256": "48cabddb0fbf99d5df46843b04a30e2b548e84c18f8e8226fe57be2c714bcf35",
+      "bytes": 44183
+    },
+    "AutoDecline.lua": {
+      "sha256": "7bc43d0acfc2b7e8819190e67a87fbf472f1393f83df48fcfebd58b790ce0c53",
+      "bytes": 40865
+    },
+    "AutoDecline.toc": {
+      "sha256": "ccf1922aae4d2b04568921eb69d7b89d091860414d6e04fdf8ffcf18a8b93875",
+      "bytes": 351
+    },
+    "AutoDecline.txt": {
+      "sha256": "7826964efe62c03d81dce412cf4b689dd6bc4d410ee8be904644df9363c24af0",
+      "bytes": 9241
+    },
+    "AutoDecline.xml": {
+      "sha256": "d04206c370449da50da9d3934312d6e16fa83a34bc8d24948e855bdb27727d2c",
+      "bytes": 477
+    },
+    "BetaNotes.txt": {
+      "sha256": "b0d38afbec191314c64479352df8448329a0303880af93f593227c0de06c742d",
+      "bytes": 3174
+    },
+    "localization.lua": {
+      "sha256": "a8a16c51f205692dd2adc606f88b7dd1dfd27074ac505bba5aca97a64b8ca365",
+      "bytes": 4711
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

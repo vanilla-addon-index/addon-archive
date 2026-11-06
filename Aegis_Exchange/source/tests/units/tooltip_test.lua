@@ -1,0 +1,761 @@
+-- Aegis: Exchange -- tests/units/tooltip_test.lua
+--
+-- The lines Aegis adds to a GameTooltip.
+--
+-- WHY THIS EXISTS AT ALL. Tooltip code is easy to leave untested because it
+-- "just draws" -- but what it draws is a set of DECISIONS: which lines appear,
+-- whether a per-item number gets multiplied by a stack count, and when the
+-- addon should say nothing rather than say "unknown". Those are all wrong-able
+-- without anything erroring, and every one of them is visible to a player on
+-- every item they hover.
+--
+-- The tooltip itself is a capture table rather than a frame. Nothing here
+-- checks how the lines LOOK -- fonts, colour, wrapping and placement are not
+-- testable from a terminal and are deliberately not faked into looking so.
+
+package.path = "tests/support/?.lua;" .. package.path
+local W = require("wow")
+local H = require("harness")
+
+W.Reset()
+local A = W.LoadCore()
+W.LoadUI("tooltip")
+W.FireAddonLoaded(A)
+
+local GREEN = 2
+
+-- A tooltip that records instead of drawing.
+local function Capture()
+    local t = { lines = {}, shown = 0 }
+    function t:AddDoubleLine(left, right)
+        table.insert(self.lines, { left = left, right = right })
+    end
+    function t:AddLine(text, r, g, b)
+        table.insert(self.lines, { left = text, r = r, g = g, b = b })
+    end
+    function t:Show() self.shown = self.shown + 1 end
+    return t
+end
+
+-- The disenchant label carries its verdict and provenance inside it
+-- ("Disenchant (worth more than vendor):"), so an exact match on the bare word
+-- would only ever pass on the one case with neither. Prefix instead -- and
+-- REQUIRE A VALUE, because "Disenchants Into:" shares the prefix and is a
+-- heading with nothing on the right. Matching it and then reading .right is a
+-- nil, which is how this helper failed the first time.
+local function valueLinePrefixed(t, prefix)
+    for i = 1, table.getn(t.lines) do
+        local L = t.lines[i].left or ""
+        if t.lines[i].right
+            and string.sub(L, 1, string.len(prefix)) == prefix then
+            return t.lines[i]
+        end
+    end
+    return nil
+end
+
+local function lineFor(t, label)
+    for i = 1, table.getn(t.lines) do
+        if t.lines[i].left == label then return t.lines[i] end
+    end
+    return nil
+end
+
+-- A BREAKDOWN row specifically -- "78%  Dream Dust  x1.5" -- not merely a line
+-- that mentions a material. The diagnosis line names a material too ("no price
+-- yet for Dream Dust"), and matching on the name alone caught that instead,
+-- which made a test of the breakdown pass on a line that is not one.
+local function breakdownLineFor(t, needle)
+    for i = 1, table.getn(t.lines) do
+        local L = t.lines[i].left or ""
+        if string.find(L, "%d+%%") and string.find(L, needle, 1, true) then
+            return t.lines[i]
+        end
+    end
+    return nil
+end
+
+local function anyLineWith(t, needle)
+    for i = 1, table.getn(t.lines) do
+        if string.find(t.lines[i].left or "", needle, 1, true) then
+            return t.lines[i]
+        end
+    end
+    return nil
+end
+
+-- Either half. The Inventory rows carry the character on the left and the
+-- count plus its breakdown on the right, so a left-only search cannot see
+-- half of what that block prints.
+local function anyHalfWith(t, needle)
+    for i = 1, table.getn(t.lines) do
+        local L = t.lines[i]
+        if string.find(L.left or "", needle, 1, true)
+            or string.find(L.right or "", needle, 1, true) then
+            return L
+        end
+    end
+    return nil
+end
+
+-- A green chest whose item level the shipped table knows, and priced
+-- materials so the value can actually be computed.
+W.AddItem(900, { name = "Test Chest", quality = GREEN,
+                 equipLoc = "INVTYPE_CHEST", itemLevel = 48,
+                 type = "Armor", subType = "Cloth" })
+W.AddItem(11176, { name = "Dream Dust", quality = 1 })
+W.AddItem(11175, { name = "Greater Nether Essence", quality = 1 })
+W.AddItem(11178, { name = "Large Radiant Shard", quality = 3 })
+W.SetClientItemData(true)
+A.db.RecordAuction(11176, 5000, "Dream Dust")
+A.db.RecordAuction(11175, 20000, "Greater Nether Essence")
+A.db.RecordAuction(11178, 300000, "Large Radiant Shard")
+
+local shiftHeld = false
+function IsShiftKeyDown() return shiftHeld end
+
+-- ---------------------------------------------------------------------------
+H.section("the disenchant line appears, and says one item's worth")
+-- ---------------------------------------------------------------------------
+
+local t = Capture()
+A.tooltip.Extend(t, 900, 1)
+local line = valueLinePrefixed(t, "Disenchant")
+H.check("a disenchantable item gets the line", line ~= nil)
+H.check("the tooltip was re-flowed", t.shown > 0)
+
+-- A disenchant value is PER ITEM. Each break rolls the table again, so a
+-- stack of twenty is twenty separate draws -- not twenty times this number.
+-- The price lines beside it DO multiply, which is exactly why this is easy to
+-- get wrong: the obvious edit is to route it through the same helper.
+local single = Capture()
+A.tooltip.Extend(single, 900, 1)
+local stacked = Capture()
+A.tooltip.Extend(stacked, 900, 20)
+H.eq("a stack of twenty does not multiply the disenchant value",
+     valueLinePrefixed(stacked, "Disenchant").right,
+     valueLinePrefixed(single, "Disenchant").right)
+H.check("...and no stack total is appended to it",
+        string.find(valueLinePrefixed(stacked, "Disenchant").right, "x20", 1, true)
+        == nil, valueLinePrefixed(stacked, "Disenchant").right)
+
+-- ---------------------------------------------------------------------------
+H.section("silence, where silence is right")
+-- ---------------------------------------------------------------------------
+
+-- Nothing the rule cannot answer for gets a line. An "unknown" row on every
+-- grey, every trade good and every uncached item would be noise on hundreds
+-- of items to be informative about a handful.
+W.AddItem(902, { name = "Test Cloth", quality = 1, equipLoc = "" })
+local cloth = Capture()
+A.tooltip.Extend(cloth, 902, 5)
+H.isNil("a trade good gets no disenchant line",
+        valueLinePrefixed(cloth, "Disenchant"))
+
+-- Cached, disenchantable, and the client has no level for it: the state of
+-- every item on a client with no mod exposing one.
+W.AddItem(903, { name = "Unknown Level", quality = GREEN,
+                 equipLoc = "INVTYPE_CHEST" })
+local noLevel = Capture()
+A.tooltip.Extend(noLevel, 903, 1)
+H.isNil("an item whose level no source knows gets no line",
+        valueLinePrefixed(noLevel, "Disenchant"))
+H.isNil("...and no 'unknown' text either", anyLineWith(noLevel, "unknown"))
+
+-- ---------------------------------------------------------------------------
+H.section("the per-line setting")
+-- ---------------------------------------------------------------------------
+
+A.db.SetSetting("tipDisenchant", false)
+local off = Capture()
+A.tooltip.Extend(off, 900, 1)
+H.isNil("switched off, the line is gone", valueLinePrefixed(off, "Disenchant"))
+A.db.SetSetting("tipDisenchant", true)
+H.check("switched back on, it returns",
+        valueLinePrefixed((function() local c = Capture()
+                 A.tooltip.Extend(c, 900, 1); return c end)(),
+                "Disenchant") ~= nil)
+
+A.db.SetSetting("tooltip", false)
+local master = Capture()
+A.tooltip.Extend(master, 900, 1)
+H.eq("the master switch silences it too", table.getn(master.lines), 0)
+A.db.SetSetting("tooltip", true)
+
+-- ---------------------------------------------------------------------------
+H.section("the breakdown, on by default and gated when turned off")
+-- ---------------------------------------------------------------------------
+
+-- ON BY DEFAULT, and that default is the point. The split is a fact about the
+-- ITEM -- required level gives the band, the band gives the probabilities --
+-- and it needs no market data at all, so it is exactly what is left to show
+-- when the VALUE cannot be computed. It was off, which meant the common case
+-- showed a bare "?" while the one thing Aegis knew sat behind a checkbox.
+
+shiftHeld = false
+local onByDefault = Capture()
+A.tooltip.Extend(onByDefault, 900, 1)
+H.check("the breakdown shows with no Shift and no setting touched",
+        anyLineWith(onByDefault, "Dream Dust") ~= nil)
+H.check("...with a percentage", anyLineWith(onByDefault, "%") ~= nil)
+H.check("...alongside the value rather than replacing it",
+        valueLinePrefixed(onByDefault, "Disenchant") ~= nil)
+
+-- Turned off, it goes -- and Shift still brings it back, so the checkbox
+-- never takes away the gesture.
+A.db.SetSetting("tipDisenchantRows", false)
+local plain = Capture()
+A.tooltip.Extend(plain, 900, 1)
+H.isNil("turned off, there is no breakdown",
+        anyLineWith(plain, "Dream Dust"))
+H.check("...and it is fewer lines, not the same ones",
+        table.getn(plain.lines) < table.getn(onByDefault.lines))
+
+shiftHeld = true
+local expanded = Capture()
+A.tooltip.Extend(expanded, 900, 1)
+H.check("Shift shows it whatever the setting says",
+        anyLineWith(expanded, "Dream Dust") ~= nil)
+shiftHeld = false
+A.db.SetSetting("tipDisenchantRows", true)
+
+-- ---------------------------------------------------------------------------
+H.section("it does not disturb the price lines it sits with")
+-- ---------------------------------------------------------------------------
+
+A.db.RecordAuction(900, 12345, "Test Chest")
+local both = Capture()
+A.tooltip.Extend(both, 900, 4)
+H.check("the market line is still there", lineFor(both, "Aegis Market:") ~= nil)
+H.check("...and still multiplies by the stack",
+        string.find(lineFor(both, "Aegis Market:").right, "x4", 1, true) ~= nil,
+        lineFor(both, "Aegis Market:").right)
+
+-- ---------------------------------------------------------------------------
+H.section("an approximated level is LABELLED as one")
+-- ---------------------------------------------------------------------------
+
+-- WHY THIS EXISTS. Without a client mod the item level is inferred from the
+-- level needed to equip the item, which can land a band out -- and adjacent
+-- bands differ by more than double in yield. The number is worth showing; it
+-- is not worth showing as though it were measured.
+--
+-- Nothing about the VALUE changes when the label is dropped, which is what
+-- makes this the kind of regression only a test catches. The line still
+-- appears, still holds money, and still looks right.
+
+-- Required level 45 lands in band 50, whose materials are the three priced at
+-- the top of this file -- so the value actually computes rather than going
+-- silent for an unrelated reason.
+W.AddItem(904, { name = "Approx Chest", quality = GREEN,
+                 equipLoc = "INVTYPE_CHEST", minLevel = 45 })
+
+local approx = Capture()
+A.tooltip.Extend(approx, 904, 1)
+H.check("an item known only by its required level still gets a line",
+        valueLinePrefixed(approx, "Disenchant") ~= nil)
+H.check("...and the provenance is stated in words",
+        anyLineWith(approx, "approx, from required level") ~= nil)
+
+-- The converse, so the label cannot simply be hardcoded on: item 900's level
+-- comes from the client, and that answer is exact.
+local exact = Capture()
+A.tooltip.Extend(exact, 900, 1)
+H.check("a client-measured level keeps the plain label",
+        valueLinePrefixed(exact, "Disenchant") ~= nil)
+H.isNil("...and is never marked approximate",
+        anyLineWith(exact, "approx"))
+
+-- ---------------------------------------------------------------------------
+H.section("confidence comes before the figures, not appended to one")
+-- ---------------------------------------------------------------------------
+
+-- A median resting on one auction and one resting on thirty produce the same
+-- figure and are not the same claim. That used to ride as a suffix on the
+-- market value; it is now its own line ABOVE the group, because it qualifies
+-- every number below it rather than any single one.
+local q = Capture()
+A.tooltip.Extend(q, 900, 1)
+H.check("the sighting count leads",
+        anyLineWith(q, "times at auction total") ~= nil)
+
+-- ORDER. Buyout above Market: today's cheapest is what a buyer acts on, and
+-- the median is context for it rather than the other way round.
+local iBuy, iMkt
+for i = 1, table.getn(q.lines) do
+    if q.lines[i].left == "Aegis Buyout:" then iBuy = i end
+    if q.lines[i].left == "Aegis Market:" then iMkt = i end
+end
+H.check("both price lines are present", iBuy ~= nil and iMkt ~= nil)
+H.check("...buyout above market", iBuy and iMkt and iBuy < iMkt)
+
+-- GROUPS. Auction house, then vendor, then disenchant -- separated by blank
+-- lines. An empty string collapses to nothing on 1.12, so the separator has to
+-- be a space; a test that accepts either would pass on a tooltip with no gaps.
+local blanks = 0
+for i = 1, table.getn(q.lines) do
+    if q.lines[i].left == " " then blanks = blanks + 1 end
+end
+H.check("the groups are separated", blanks >= 2, "got " .. blanks)
+
+-- The item class frames the split: armour and weapons break into different
+-- things, so it is part of reading the breakdown rather than trivia.
+-- Class is a plain LEFT line, not a label/value pair: a double line reserves
+-- the right column whether or not anything sits in it, and the label then
+-- reads as half a pair with a missing value rather than as a statement.
+H.check("the class is shown, hard left",
+        anyLineWith(q, "Class: Armor") ~= nil)
+
+-- ---------------------------------------------------------------------------
+H.section("the verdict, and only when there is one")
+-- ---------------------------------------------------------------------------
+
+-- The number alone still leaves the reader doing the comparison that made them
+-- hover. Item 900's materials are priced high above its (unset) market price.
+H.check("a clearly-better disenchant says so",
+        anyLineWith(q, "worth more than") ~= nil)
+
+-- ...and the reverse. An item listing far above what it breaks for should say
+-- that instead, or the line only ever gives one kind of advice.
+-- A FRESH id: db.RecordAuction keeps the day's MINIMUM, so a high price
+-- written over an item something earlier in this file already recorded
+-- cheaply is silently discarded -- and the test then passes or fails on
+-- whatever that earlier price happened to be.
+W.AddItem(906, { name = "Pricey Chest", quality = GREEN,
+                 equipLoc = "INVTYPE_CHEST", itemLevel = 48 })
+A.db.RecordAuction(906, 99999999, "Pricey Chest")
+local pricey = Capture()
+A.tooltip.Extend(pricey, 906, 1)
+H.check("an item worth more sold than broken says THAT",
+        anyLineWith(pricey, "sells for more") ~= nil)
+H.isNil("...and does not also claim the opposite",
+        anyLineWith(pricey, "worth more than the AH"))
+
+-- ---------------------------------------------------------------------------
+H.section("a value that cannot resolve says WHY")
+-- ---------------------------------------------------------------------------
+
+-- THE DEVOUT BELT CASE. de.Value is all-or-nothing: one unpriced material and
+-- the whole figure disappears. That is right for the number and useless as an
+-- explanation -- aux does the same, and the visible result is a tooltip that
+-- says nothing about an item you have scanned repeatedly, with no way to tell
+-- whether the rule failed or one shard has simply never been listed.
+--
+-- Band 50 needs Dream Dust, Greater Nether Essence and Large Radiant Shard.
+-- This item's level is known; the market's knowledge of one material is not.
+W.AddItem(905, { name = "Unpriced Chest", quality = GREEN,
+                 equipLoc = "INVTYPE_CHEST", itemLevel = 48 })
+
+local before = A.db.MarketValue(11178)
+A.db.account.realms = {}            -- forget every market price
+A.db.Init()
+
+local blind = Capture()
+A.tooltip.Extend(blind, 905, 1)
+H.check("the line appears rather than vanishing",
+        valueLinePrefixed(blind, "Disenchant") ~= nil)
+H.check("...and names a material it has no price for",
+        anyLineWith(blind, "no price yet for") ~= nil
+        or anyLineWith(blind, "never seen on the AH") ~= nil)
+
+-- ---------------------------------------------------------------------------
+H.section("the breakdown is gated two ways")
+-- ---------------------------------------------------------------------------
+
+-- Three extra lines on every disenchantable item is a lot of tooltip, so the
+-- breakdown is off unless asked for -- by the setting, or by Shift, and the
+-- two are independent. A change that collapses them into one takes away either
+-- the checkbox or the gesture.
+shiftHeld = false
+A.db.SetSetting("tipDisenchantRows", false)
+local quiet = Capture()
+A.tooltip.Extend(quiet, 900, 1)
+H.isNil("off and no Shift: no breakdown", breakdownLineFor(quiet, "Dream Dust"))
+
+A.db.SetSetting("tipDisenchantRows", true)
+local always = Capture()
+A.tooltip.Extend(always, 900, 1)
+H.check("the setting alone shows it", breakdownLineFor(always, "Dream Dust") ~= nil)
+
+A.db.SetSetting("tipDisenchantRows", false)
+shiftHeld = true
+local shifted = Capture()
+A.tooltip.Extend(shifted, 900, 1)
+H.check("Shift alone still shows it, whatever the setting says",
+        breakdownLineFor(shifted, "Dream Dust") ~= nil)
+shiftHeld = false
+
+-- ---------------------------------------------------------------------------
+H.section("the diagnosis costs nothing extra")
+-- ---------------------------------------------------------------------------
+
+-- de.ValueOf hands back WHY it failed alongside the failure. Asking separately
+-- resolves the item a second time, and the unpriced path is the common one
+-- before a scan -- so the naive version made the most frequent case the most
+-- expensive.
+W.itemInfoCalls = 0
+local cheap = Capture()
+A.tooltip.Extend(cheap, 905, 1)
+H.check("an unresolvable value still costs one item lookup, not two",
+        W.itemInfoCalls <= 2, "got " .. W.itemInfoCalls)
+
+-- ---------------------------------------------------------------------------
+H.section("the breakdown reads as a sentence, in quality colour")
+-- ---------------------------------------------------------------------------
+
+-- ORDER. "78% Dream Dust x1.5" answers how often, what, how many -- the order
+-- the question is asked. The old form put the quantity before the name, which
+-- reads as arithmetic and buries the material a player is scanning for in the
+-- middle of the line.
+A.db.SetSetting("tipDisenchantRows", true)
+shiftHeld = false
+local fmt = Capture()
+A.tooltip.Extend(fmt, 900, 1)
+local row = breakdownLineFor(fmt, "Dream Dust")
+H.check("a material line exists", row ~= nil)
+H.check("...the quantity is a SUFFIX, not a prefix",
+        row and string.find(row.left, "x1.5", 1, true) ~= nil, row and row.left)
+H.check("...and the name comes before it",
+        row and string.find(row.left, "Dream Dust", 1, true)
+             < string.find(row.left, "x1.5", 1, true))
+
+-- COLOUR. A breakdown is a list of items, and a list of items in flat grey is
+-- the only place in this UI that does not say at a glance which of them is the
+-- valuable one. Large Radiant Shard is rare; Dream Dust is not.
+H.check("names carry a quality colour escape",
+        row and string.find(row.left, "|c", 1, true) ~= nil, row and row.left)
+local shard = breakdownLineFor(fmt, "Large Radiant Shard")
+H.check("the shard line exists", shard ~= nil)
+-- A rare shard and a common dust must not read the same. Comparing the escape
+-- itself, because that IS the difference a player sees.
+local function colourOf(line)
+    local a = string.find(line, "|c", 1, true)
+    return a and string.sub(line, a, a + 9) or nil
+end
+H.neq("...and a rare shard does not share the common dust's colour",
+      shard and colourOf(shard.left), row and colourOf(row.left))
+
+-- ---------------------------------------------------------------------------
+H.section("crafting cost, when a captured recipe makes the item")
+-- ---------------------------------------------------------------------------
+
+-- PER UNIT, not per craft. A recipe that makes four costs a quarter as much
+-- per item, and this line sits beside per-unit auction prices -- comparing a
+-- four-stack craft cost against one item's buyout is the mistake the divide
+-- exists to prevent.
+W.AddItem(910, { name = "Craftable Thing", quality = GREEN,
+                 equipLoc = "", type = "Trade Goods", subType = "Cloth" })
+A.db.RecordAuction(910, 5000, "Craftable Thing")
+-- An earlier section clears every market price to test the unpriced path, so
+-- the reagent has to be priced again here rather than relying on the top of
+-- the file. Shared fixtures have already changed what two tests measured.
+A.db.RecordAuction(11176, 5000, "Dream Dust")
+
+local before = Capture()
+A.tooltip.Extend(before, 910, 1)
+H.isNil("nothing captured, no line", lineFor(before, "Crafting Cost:"))
+
+-- Dream Dust is priced at 5000 above; four of them, and the recipe makes two.
+A.craft.AddProject({ name = "Craftable Thing", itemId = 910, made = 2,
+    reagents = { { name = "Dream Dust", itemId = 11176, count = 4 } } })
+local after = Capture()
+A.tooltip.Extend(after, 910, 1)
+local cc = lineFor(after, "Crafting Cost:")
+H.check("a captured recipe adds the line", cc ~= nil)
+
+-- 4 x 5000 = 20000 for a craft that makes 2, so 10000 each. If the divide is
+-- missing this reads 20000 and the item looks twice as expensive to make.
+H.check("...divided by how many the craft makes",
+        cc and string.find(cc.right, "1g", 1, true) ~= nil, cc and cc.right)
+
+-- An unpriced reagent means no answer at all: a partial total is SMALLER than
+-- the real one, and a crafting cost that reads low is the direction that loses
+-- money.
+-- ONE priced reagent and one not, deliberately. A recipe where nothing is
+-- priced totals zero and is rejected by the zero check alone -- so it cannot
+-- tell a completeness rule from its absence, and a version that answers with
+-- partial totals passes.
+A.craft.AddProject({ name = "Half Known", itemId = 911, made = 1,
+    reagents = {
+        { name = "Dream Dust", itemId = 11176, count = 1 },
+        { name = "Nobody Prices This", itemId = 999123, count = 1 },
+    } })
+W.AddItem(911, { name = "Half Known", quality = GREEN, equipLoc = "",
+                 type = "Trade Goods", subType = "Cloth" })
+A.db.RecordAuction(911, 5000, "Half Known")
+local partial = Capture()
+A.tooltip.Extend(partial, 911, 1)
+H.isNil("an unpriced reagent gives no cost rather than a low one",
+        lineFor(partial, "Crafting Cost:"))
+
+-- ---------------------------------------------------------------------------
+H.section("the two lines that are read by colour")
+-- ---------------------------------------------------------------------------
+
+-- THE SIGHTING COUNT is a hint, not a footnote. It was grey, which in a
+-- tooltip reads as "ignore me" -- and it is context for every figure under it.
+-- Amber is the register 1.12 writes "Alt+Click to ..." in.
+A.db.SetSetting("tipDisenchantRows", true)
+shiftHeld = false
+-- An earlier section clears every market price to exercise the unpriced path,
+-- so both the materials AND the item's own sightings have to be re-recorded
+-- here. Shared fixtures have already quietly changed what three tests in this
+-- file were measuring.
+A.db.RecordAuction(11176, 5000, "Dream Dust")
+A.db.RecordAuction(11175, 20000, "Greater Nether Essence")
+A.db.RecordAuction(11178, 300000, "Large Radiant Shard")
+local n = 1
+while n <= 12 do A.db.RecordAuction(900, 1000, "Test Chest"); n = n + 1 end
+
+local c = Capture()
+A.tooltip.Extend(c, 900, 1)
+local seenLine
+for i = 1, table.getn(c.lines) do
+    if string.find(c.lines[i].left or "", "times at auction total", 1, true) then
+        seenLine = c.lines[i]
+    end
+end
+H.check("the sighting line exists", seenLine ~= nil)
+H.check("...and is not grey", seenLine and not (seenLine.r == seenLine.g
+        and seenLine.g == seenLine.b), "r/g/b were equal")
+H.check("...it is warm -- red above green above blue",
+        seenLine and seenLine.r > seenLine.g and seenLine.g > seenLine.b)
+
+-- THE VERDICT is opposite advice about an irreversible action: green says
+-- destroy it, red says sell it. They must not read alike at a glance, and the
+-- clause is coloured INLINE because AddDoubleLine takes one colour for the
+-- whole left string.
+local good = valueLinePrefixed(c, "Disenchant")
+H.check("a positive verdict is present",
+        good and string.find(good.left, "worth more", 1, true) ~= nil,
+        good and good.left)
+H.check("...and carries the green escape",
+        good and string.find(good.left, "|cff4cd94c", 1, true) ~= nil,
+        good and good.left)
+
+-- The reverse: an item listing far above what it breaks for.
+W.AddItem(912, { name = "Dear Chest", quality = GREEN,
+                 equipLoc = "INVTYPE_CHEST", itemLevel = 48,
+                 type = "Armor", subType = "Cloth" })
+A.db.RecordAuction(912, 99999999, "Dear Chest")
+local bad = Capture()
+A.tooltip.Extend(bad, 912, 1)
+local badLine = valueLinePrefixed(bad, "Disenchant")
+H.check("a negative verdict is present",
+        badLine and string.find(badLine.left, "sells for more", 1, true) ~= nil,
+        badLine and badLine.left)
+H.check("...and carries the RED escape, not the green",
+        badLine and string.find(badLine.left, "|cffe6663d", 1, true) ~= nil,
+        badLine and badLine.left)
+H.isNil("...and not both",
+        badLine and string.find(badLine.left, "|cff4cd94c", 1, true))
+
+-- ---------------------------------------------------------------------------
+H.section("Buy from Vendor -- what a merchant CHARGES")
+-- ---------------------------------------------------------------------------
+
+-- A plain trade good, so nothing else claims the tooltip.
+W.AddItem(920, { name = "Test Thread", quality = 1, type = "Trade Goods" })
+
+local none = Capture()
+A.tooltip.Extend(none, 920, 1)
+H.isNil("no merchant seen, no line", lineFor(none, "Buy from Vendor:"))
+
+A.db.SetVendorBuy(920, 1000, false)
+local unlimited = Capture()
+A.tooltip.Extend(unlimited, 920, 1)
+local buyLine = lineFor(unlimited, "Buy from Vendor:")
+H.check("an unlimited source gets the plain label", buyLine ~= nil)
+H.eq("...at its price", buyLine and buyLine.right,
+     A.util.FormatMoney(1000, true))
+H.isNil("...and NOT the limited label",
+        lineFor(unlimited, "Buy from Vendor (limited):"))
+
+-- The flag is not decoration: a finite-stock price is not a supply, and must
+-- not read as one you can go and buy out.
+A.db.SetVendorBuy(921, 1000, true)
+W.AddItem(921, { name = "Test Scroll", quality = 1, type = "Trade Goods" })
+local limited = Capture()
+A.tooltip.Extend(limited, 921, 1)
+H.check("a limited source is labelled as such",
+        lineFor(limited, "Buy from Vendor (limited):") ~= nil)
+H.isNil("...and not as an unlimited one",
+        lineFor(limited, "Buy from Vendor:"))
+
+-- Unlike the disenchant value, a BUY price is per unit of a thing you buy in
+-- quantity, so the stack total belongs on it.
+local stackedBuy = Capture()
+A.tooltip.Extend(stackedBuy, 920, 20)
+H.check("a stack total is appended",
+        string.find(lineFor(stackedBuy, "Buy from Vendor:").right,
+                    "x20", 1, true) ~= nil,
+        lineFor(stackedBuy, "Buy from Vendor:").right)
+
+-- Its own switch, and it must not take the others with it.
+A.db.SetSetting("tipVendorBuy", false)
+local offBuy = Capture()
+A.tooltip.Extend(offBuy, 920, 1)
+H.isNil("switched off, the line is gone", lineFor(offBuy, "Buy from Vendor:"))
+A.db.SetSetting("tipVendorBuy", true)
+
+-- And on its own it is enough to open the tooltip: an item Aegis knows
+-- NOTHING else about still gets the one line it can answer.
+W.AddItem(922, { name = "Test Twine", quality = 1, type = "Trade Goods" })
+A.db.SetVendorBuy(922, 250, false)
+local alone = Capture()
+A.tooltip.Extend(alone, 922, 1)
+H.check("the vendor buy price alone opens the tooltip",
+        lineFor(alone, "Buy from Vendor:") ~= nil)
+
+-- It is a DIFFERENT fact from what a merchant pays, and the two must never be
+-- confused: one is money in, the other money out.
+A.db.SetVendor(922, 60)
+local both = Capture()
+A.tooltip.Extend(both, 922, 1)
+H.eq("what a merchant pays", lineFor(both, "Sell to Vendor:").right,
+     A.util.FormatMoney(60, true))
+H.eq("what a merchant charges", lineFor(both, "Buy from Vendor:").right,
+     A.util.FormatMoney(250, true))
+
+-- ---------------------------------------------------------------------------
+H.section("Inventory -- how many I own, and where")
+-- ---------------------------------------------------------------------------
+
+W.AddItem(930, { name = "Test Twine", quality = 1, type = "Trade Goods" })
+local TWINE = W.items[930].link
+
+local noInv = Capture()
+A.tooltip.Extend(noInv, 930, 1)
+H.isNil("owning none of it shows no block", lineFor(noInv, "Inventory"))
+
+W.SetBags({ [0] = { { link = TWINE, count = 6 } } })
+A.sell.bagsDirty = true
+local inv = Capture()
+A.tooltip.Extend(inv, 930, 1)
+local head = lineFor(inv, "Inventory")
+H.check("owning some of it opens the block", head ~= nil)
+H.eq("...with the account total on the right", head and head.right, "6 total")
+H.check("...and a row for you",
+        anyLineWith(inv, "Tester") ~= nil)
+H.check("...naming where it is", anyHalfWith(inv, "6 bags") ~= nil)
+
+-- Bags alone are LIVE, so the "as of your last visit" line must not appear --
+-- a caveat on a number that does not need one teaches players to ignore it.
+H.isNil("a bags-only holding carries no staleness line",
+        anyLineWith(inv, "as of"))
+
+-- Put some in the bank and the caveat appears, because now something in the
+-- block really is a memory.
+W.SetBags({ [0] = { { link = TWINE, count = 6 } },
+            [-1] = { { link = TWINE, count = 20 } } })
+A.sell.bagsDirty = true
+W.FireEvent(A.frame, "BANKFRAME_OPENED")
+local banked = Capture()
+A.tooltip.Extend(banked, 930, 1)
+H.eq("the total spans both", lineFor(banked, "Inventory").right, "26 total")
+H.check("...the bank is named", anyHalfWith(banked, "20 bank") ~= nil)
+H.check("...and NOW the caveat appears", anyLineWith(banked, "as of") ~= nil)
+
+-- Empty buckets are not printed. "0 ah, 0 mail" on every row is noise on a
+-- block that is already the longest thing on the tooltip.
+H.isNil("a bucket holding none of it is not listed",
+        anyHalfWith(banked, "0 mail"))
+
+-- Its own switch, and it must not take the others with it.
+A.db.SetSetting("tipInventory", false)
+local offInv = Capture()
+A.tooltip.Extend(offInv, 930, 1)
+H.isNil("switched off, the block is gone", lineFor(offInv, "Inventory"))
+A.db.SetSetting("tipInventory", true)
+
+-- ---------------------------------------------------------------------------
+H.section("one unpriced material: the priced ones still prove a verdict")
+-- ---------------------------------------------------------------------------
+
+-- REPORTED (Discord), with a screenshot: a Heavy Mithril Gauntlet sells to a
+-- vendor for 24s 76c and disenchants 75% into Vision Dust x3.5, at 9s 76c a
+-- dust -- 25s 62c from the dust alone -- yet the line said "?" and "no price
+-- yet for Small Radiant Shard". The priced materials are a floor under the
+-- value; the line shows it as "at least", and lets it call the verdicts a
+-- floor can prove.
+local T = A.tooltip
+H.eq("a floor can say worth more than vendor",
+     T.DisenchantVerdict(3000, 2000, nil, true), "worth more than vendor")
+H.eq("...or worth more than the AH",
+     T.DisenchantVerdict(3000, 100, 2000, true), "worth more than the AH")
+-- Listed far above the floor: whether the AH beats breaking it is UNKNOWN --
+-- the missing material could be worth anything -- so nothing is said about
+-- the AH. What the floor does prove still stands.
+H.isNil("...but NEVER that it sells for more: the real value may be far higher",
+        T.DisenchantVerdict(1000, nil, 5000, true))
+H.eq("...though what it does prove still stands",
+     T.DisenchantVerdict(1000, 100, 5000, true), "worth more than vendor")
+H.eq("a whole value still can",
+     T.DisenchantVerdict(1000, 100, 5000, false), "sells for more than it breaks for")
+H.isNil("a 3% edge is no verdict, floor or not",
+        T.DisenchantVerdict(2562, 2476, nil, true))
+
+W.AddItem(11137, { name = "Vision Dust", quality = 1 })
+W.AddItem(11174, { name = "Lesser Nether Essence", quality = 2 })
+W.AddItem(11177, { name = "Small Radiant Shard", quality = 3 })
+-- Item level 41 (Classic-DB item 7919), the 41-45 band -- which is why it
+-- yields Vision Dust x3.5 and not the 36-40 band's x1.5.
+W.AddItem(930, { name = "Heavy Mithril Gauntlet", quality = GREEN,
+                 equipLoc = "INVTYPE_HAND", itemLevel = 41,
+                 type = "Armor", subType = "Plate", sellPrice = 2476 })
+A.db.SetVendor(930, 2476)
+A.db.account.realms = {}
+A.db.Init()
+A.db.RecordAuction(11137, 976, "Vision Dust")
+
+local gRows = A.de.Yield(41, GREEN, "INVTYPE_HAND")
+local gIds = {}
+for i = 1, table.getn(gRows) do gIds[gRows[i].itemId] = gRows[i] end
+H.check("(the band is the report's: Vision Dust, Lesser Nether Essence, "
+        .. "Small Radiant Shard)", gIds[11137] and gIds[11174] and gIds[11177])
+local function floorFrom(prices)
+    local f = 0
+    for id, p in pairs(prices) do
+        f = f + gIds[id].chance * gIds[id].mean * p
+    end
+    return math.floor(f)
+end
+
+local g1 = Capture()
+A.tooltip.Extend(g1, 930, 1)
+local l1 = valueLinePrefixed(g1, "Disenchant")
+H.eq("the line gives the floor instead of '?'", l1 and l1.right,
+     "at least " .. A.util.FormatMoney(floorFrom({ [11137] = 976 }), true))
+H.check("...and still names what is missing",
+        anyLineWith(g1, "no price yet for") ~= nil)
+-- 25s 62c against 24s 76c is 3% -- inside the 10% the tooltip wants before it
+-- calls anything, floor or not.
+H.check("dust alone is only 3% over vendor: no verdict yet",
+        l1 and not string.find(l1.left, "worth more", 1, true),
+        l1 and l1.left)
+
+-- As in the screenshot: the essence priced too, only the shard unknown.
+A.db.RecordAuction(11174, 5000, "Lesser Nether Essence")
+local g2 = Capture()
+A.tooltip.Extend(g2, 930, 1)
+local l2 = valueLinePrefixed(g2, "Disenchant")
+H.check("with the essence priced, the floor proves it",
+        l2 and string.find(l2.left, "worth more than vendor", 1, true) ~= nil,
+        l2 and l2.left)
+H.check("...in green", l2 and string.find(l2.left, "|cff4cd94c", 1, true) ~= nil)
+H.eq("...quoted as a floor", l2 and l2.right, "at least "
+     .. A.util.FormatMoney(floorFrom({ [11137] = 976, [11174] = 5000 }), true))
+H.check("...and the shard is named",
+        anyLineWith(g2, "no price yet for Small Radiant Shard") ~= nil)
+
+-- Listed far above the floor: a floor can never say "sell it instead".
+A.db.RecordAuction(930, 99999999, "Heavy Mithril Gauntlet")
+local g3 = Capture()
+A.tooltip.Extend(g3, 930, 1)
+local l3 = valueLinePrefixed(g3, "Disenchant")
+H.check("a floor never says it sells for more than it breaks for",
+        l3 and not string.find(l3.left, "sells for more", 1, true), l3 and l3.left)
+H.check("...and is never red", l3 and not string.find(l3.left, "|cffe6663d", 1, true),
+        l3 and l3.left)
+
+os.exit(H.report("tooltip"))

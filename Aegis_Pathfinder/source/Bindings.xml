@@ -1,0 +1,10 @@
+<Bindings>
+	<!-- Key bindings for the Active Items and Active Targets windows
+	     (ActiveFrames.lua). The labels are BINDING_NAME_* globals there. -->
+	<Binding name="AEGISPATHFINDER_ACTIVEITEM" header="AEGISPATHFINDER">
+		AegisPathfinder:UseActiveItem(1)
+	</Binding>
+	<Binding name="AEGISPATHFINDER_ACTIVETARGET">
+		AegisPathfinder:TargetNextActive()
+	</Binding>
+</Bindings>

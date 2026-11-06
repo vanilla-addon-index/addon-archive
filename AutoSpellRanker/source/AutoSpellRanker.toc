@@ -1,0 +1,5 @@
+## Interface: 11200
+## Title: AutoSpellRanker
+## Notes: Automatically updates spells on your action bar to their highest rank.
+## Version: 1.0
+AutoSpellRanker.lua

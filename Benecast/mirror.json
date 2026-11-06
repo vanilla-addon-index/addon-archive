@@ -1,0 +1,65 @@
+{
+  "upstream": "https://github.com/TcavemanT/BeneCast",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "TcavemanT",
+    "repo": "BeneCast",
+    "name": "BeneCast",
+    "url": "https://github.com/TcavemanT/BeneCast",
+    "api": "https://api.github.com/repos/TcavemanT/BeneCast"
+  },
+  "commit": "f6b875c385302f1c9015448c4f4a3ad8ad5c20c4",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "bebbf1139e9dcc02e1e09268272ccc9ef4555e133b3c91097f5a6a3f74ae972b",
+      "bytes": 251
+    },
+    "BeneCast.lua": {
+      "sha256": "f6428b8eb6facb947b5a9d997526d001fca58769a0dac6b2491c7cfe19ca71dd",
+      "bytes": 160164
+    },
+    "BeneCast.toc": {
+      "sha256": "e49614ef677d8b3be505dbef82f6fecc37bd051ef6c9d6a7a7d5c71c2034b4e2",
+      "bytes": 356
+    },
+    "BeneCast.xml": {
+      "sha256": "f4d31f6788e663d9c3e6b27fe8deb25b58baab926a443c49cd5c538b75051956",
+      "bytes": 106251
+    },
+    "BeneCastButton.tga": {
+      "sha256": "c08444db5066c6d3fe0ee7b0da3b85b9748121d2e7a7a3ab4f8f0d9690bd689d",
+      "bytes": 16428
+    },
+    "BeneCastButtonDown.tga": {
+      "sha256": "18fd711c1616639d7033b6ebf93e140b96cf6cc6b228d5b83f95a9737220c02e",
+      "bytes": 16428
+    },
+    "BeneCastLocalization.lua": {
+      "sha256": "db5906f553c695a37583f6a21c5403a70626bc98e95db8c5f99b52a7a5e7c1e1",
+      "bytes": 34547
+    },
+    "BeneCastSnapTo.lua": {
+      "sha256": "ba123593ad07338a7e2234f364f5bd271064b337552816ddd6b2bc2316946b48",
+      "bytes": 26629
+    },
+    "BeneCastSpellList.lua": {
+      "sha256": "98f55fdad490484d780f595d699af307333d42d4442edb1dea861db21e1f7906",
+      "bytes": 25487
+    },
+    "Bindings.xml": {
+      "sha256": "a9e51c7ee591e76e424186ad8f7a0c1f1e0c738160528ed8d31737c063cdea74",
+      "bytes": 952
+    },
+    "LICENSE": {
+      "sha256": "19cd6161ea5880da894b3d681aeb86a3f84b8acbbed130cb924eceab4c744303",
+      "bytes": 1066
+    },
+    "README.txt": {
+      "sha256": "ace76dfeab4b3508cabd06f7ac2fbf0adafdaf8b4e4339e0c79dd21c8c09c09a",
+      "bytes": 12280
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

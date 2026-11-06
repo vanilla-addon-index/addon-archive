@@ -1,0 +1,6775 @@
+-- Stubbed WoW 1.12 / Lua 5.0 environment for testing Aegis: Courier off-client.
+-- Run with lua5.1 from the repo root.
+
+-- ---- Lua 5.0 shims (we run on 5.1 here; the addon targets 5.0) -----------
+math.mod = math.fmod
+string.gfind = string.gmatch
+time = os.time   -- WoW exposes time() as a global
+
+local failures, checks = 0, 0
+local function check(cond, label, extra)
+    checks = checks + 1
+    if not cond then
+        failures = failures + 1
+        print("  FAIL: " .. label .. (extra and ("  [" .. tostring(extra) .. "]") or ""))
+    end
+end
+
+-- ---- Frame mock ----------------------------------------------------------
+--
+-- The fallback below absorbs the hundreds of widget methods the addon calls
+-- without implementing each one. It must NOT do the same for data fields: an
+-- earlier version returned a no-op function for every unknown key, so
+-- `frame.text` and `frame.backdrop` came back as functions -- truthy, and
+-- silently wrong wherever the addon tested them. That cost two debugging
+-- rounds before it was pinned down.
+--
+-- WoW widget methods are CamelCase (SetPoint, GetObjectType); the fields this
+-- addon and pfUI attach are lowercase (backdrop, labelText, mailIndex). So the
+-- initial capital is the discriminator: methods get a no-op, data fields get
+-- nil like a real table. Accessors additionally use rawget.
+local function MockIndex(_, key)
+    if type(key) == "string" and string.find(key, "^%u") then
+        return function() end
+    end
+    return nil
+end
+
+-- ---------------------------------------------------------------------------
+-- REAL VERTICAL GEOMETRY, resolved through the anchor chain.
+--
+-- GetTop / GetBottom fell through to the CamelCase no-op, which made "does
+-- this panel's content actually fit inside its well" -- the exact question the
+-- settings tab overflowing its footer raised -- unanswerable. Courier measures
+-- its settings content by sweeping children and regions for the lowest
+-- GetBottom(), and a mock that answers nil for every one of them would agree
+-- with a panel that spills a hundred pixels past the window.
+--
+-- The model is the client's: y grows UPWARD, a widget's own named edge is
+-- placed at its anchor's named edge plus the offset, and a widget with no
+-- point at all has no position. Only the vertical axis is resolved, because
+-- that is the axis every overflow in this addon has been on.
+-- Size DERIVED from opposite-corner anchors when none was set explicitly.
+-- A texture pinned TOPLEFT and BOTTOMRIGHT inside its parent has a real size
+-- -- that is how an inset icon is built, and how every panel sits in its well
+-- -- and a mock that answers 0 cannot tell an inset that silently became a
+-- fill from one that did not, nor a panel from the empty space around it.
+local function derivedSize(self, horizontal)
+    local tl, br = self:PointOffset("TOPLEFT"), self:PointOffset("BOTTOMRIGHT")
+    if not tl or not br then return nil end
+    local rel = tl.rel
+    if type(rel) ~= "table" or not rel.GetWidth then return nil end
+    if horizontal then
+        return rel:GetWidth() + (br.x or 0) - (tl.x or 0)
+    end
+    return rel:GetHeight() + (tl.y or 0) - (br.y or 0)
+end
+
+local function edgeNames(pt)
+    pt = pt or "CENTER"
+    if string.find(pt, "^TOP") then return "top" end
+    if string.find(pt, "^BOTTOM") then return "bottom" end
+    return "middle"
+end
+
+local RESOLVING = {}
+
+-- Absolute y of `o`'s `which` edge ("top" / "bottom" / "middle"), or nil.
+local function edgeY(o, which)
+    if type(o) ~= "table" then return nil end
+    if o.MockEdgeY then return o:MockEdgeY(which) end
+    return nil
+end
+
+-- Installed on both frames and regions, so a font string trailing a button
+-- resolves exactly as the button does.
+local function installGeometry(o)
+    function o:MockEdgeY(which)
+        -- A cycle in the anchor graph is a bug in the addon, not something to
+        -- loop on: answer nil and let the measurement come back short.
+        if RESOLVING[self] then return nil end
+        local pts = rawget(self, "points") or {}
+        local n = table.getn(pts)
+        if n == 0 then
+            -- NO POINT MEANS NO POSITION, exactly as on the client, where
+            -- GetTop() on an unplaced frame answers nil. Only the SCREEN has
+            -- an origin of its own (mockOrigin, set on UIParent), and every
+            -- chain resolves back to it.
+            --
+            -- This is not a detail: answering 0 here put an unanchored
+            -- stand-in BELOW every real widget, because these coordinates are
+            -- positive. A content sweep then measured to that stand-in and
+            -- reported a height bigger than anything in the frame -- which is
+            -- how a mock that hands back a fresh region instead of the real
+            -- ones passed a measurement it could not make.
+            if rawget(self, "mockOrigin") then
+                local h = self:GetHeight() or 0
+                if which == "top" then return 0 end
+                if which == "bottom" then return -h end
+                return -h / 2
+            end
+            -- A FRAME the client placed for us -- our own window is positioned
+            -- by the client's user-placed machinery, not by a SetPoint of
+            -- ours -- resolves to its parent's top, which keeps every offset
+            -- below it a real, comparable number.
+            --
+            -- A REGION cannot reach this: regions carry no parent, so a bare
+            -- stand-in handed back by a mock that lost the real ones answers
+            -- nil and is skipped, instead of reporting a position BELOW every
+            -- real widget (these coordinates are positive) and inflating a
+            -- content measurement past anything in the frame.
+            local parent = rawget(self, "parent")
+            if not parent then return nil end
+            local pt = edgeY(parent, "top")
+            if not pt then return nil end
+            local h = self:GetHeight() or 0
+            if which == "top" then return pt end
+            if which == "bottom" then return pt - h end
+            return pt - h / 2
+        end
+        RESOLVING[self] = true
+        local h = self:GetHeight() or 0
+        local myTop
+        local i = 1
+        while i <= n do
+            local pt = pts[i]
+            local anchor = edgeY(pt.rel, edgeNames(pt.relPoint or pt.point))
+            if anchor then
+                local y = anchor + (pt.y or 0)
+                local mine = edgeNames(pt.point)
+                local top
+                if mine == "top" then top = y
+                elseif mine == "bottom" then top = y + h
+                else top = y + h / 2 end
+                -- The HIGHEST top wins, which is what a frame pinned at both
+                -- TOPLEFT and BOTTOMRIGHT resolves to on the client: its top
+                -- comes from the top point.
+                if mine == "top" or not myTop then myTop = top end
+            end
+            i = i + 1
+        end
+        RESOLVING[self] = nil
+        if not myTop then return nil end
+        if which == "top" then return myTop end
+        if which == "bottom" then return myTop - h end
+        return myTop - h / 2
+    end
+    function o:GetTop() return self:MockEdgeY("top") end
+    function o:GetBottom() return self:MockEdgeY("bottom") end
+end
+
+local function newRegion()
+    local r = { visible = true }
+    setmetatable(r, { __index = MockIndex })
+    -- Regions get the same anchor tracking frames do. A font string that
+    -- trails a button is exactly the case this exists to check, so leaving it
+    -- to the CamelCase no-op would have made those assertions unanswerable.
+    function r:SetPoint(pt, rel, relPt, x, y)
+        local pts = rawget(self, "points")
+        if not pts then pts = {}; rawset(self, "points", pts) end
+        table.insert(pts, { point = pt, rel = rel, relPoint = relPt, x = x, y = y })
+    end
+    function r:ClearAllPoints() rawset(self, "points", {}) end
+    function r:AnchorTarget()
+        local pts = rawget(self, "points")
+        if not pts or table.getn(pts) == 0 then return nil end
+        return pts[table.getn(pts)].rel
+    end
+    function r:SetText(t) rawset(self, "text", t) end
+    function r:GetText() return rawget(self, "text") end
+    -- REAL fonts. SetFont and SetFontObject both fell through to the
+    -- CamelCase no-op, so "is this string actually bigger" -- the entire
+    -- question a text-size setting exists to answer -- was unanswerable, and a
+    -- setting that changed nothing at all would have passed.
+    function r:SetFont(path, size, flags)
+        rawset(self, "font", { path = path, size = size, flags = flags })
+    end
+    function r:GetFont()
+        local f = rawget(self, "font")
+        if not f then return nil end
+        return f.path, f.size, f.flags
+    end
+    function r:SetFontObject(t)
+        rawset(self, "fontObject", t)
+        -- The client resolves the object's font onto the string; without this
+        -- a reset-to-birth-font would leave the old size in place and the
+        -- compounding bug would be invisible.
+        local o = type(t) == "string" and _G[t] or t
+        if type(o) == "table" and o.GetFont then
+            local path, size, flags = o:GetFont()
+            rawset(self, "font", { path = path, size = size, flags = flags })
+        end
+    end
+    function r:GetFontObject() return rawget(self, "fontObject") end
+    -- REAL size on regions too, not just on frames. A texture's dimensions are
+    -- the whole question for anything that has to FILL its parent -- an icon
+    -- sized to 20 inside a 32px button looks nothing like one sized to 30, and
+    -- with these falling through to the CamelCase no-op the difference was
+    -- unanswerable.
+    function r:SetWidth(w) rawset(self, "w", w) end
+    function r:SetHeight(h) rawset(self, "h", h) end
+    -- The LAST point set with this name, or nil.
+    function r:PointOffset(name)
+        local pts = rawget(self, "points") or {}
+        local found, i = nil, 1
+        while i <= table.getn(pts) do
+            if pts[i].point == name then found = pts[i] end
+            i = i + 1
+        end
+        return found
+    end
+    local derived = derivedSize
+    function r:GetWidth() return rawget(self, "w") or derived(self, true) or 0 end
+    function r:GetHeight()
+        return rawget(self, "h") or derived(self, false)
+            or self:MockTextHeight() or 0
+    end
+    function r:SetAllPoints(other)
+        rawset(self, "allPoints", other or true)
+        if type(other) == "table" and other.GetWidth then
+            rawset(self, "w", other:GetWidth())
+            rawset(self, "h", other:GetHeight())
+        end
+    end
+    function r:GetStringWidth() return string.len(rawget(self, "text") or "") * 6 end
+    -- A FONT STRING HAS A HEIGHT even though nothing ever calls SetHeight on
+    -- one: the client gives it its font's line height, times however many
+    -- lines the text wraps to. Answering 0 is what let a panel whose content
+    -- is almost entirely text measure as empty, which is the one measurement
+    -- the settings overflow turns on. The per-character width model is the
+    -- same 6px one GetStringWidth already uses, so the two agree.
+    local LINE_PAD = 2
+    function r:MockTextHeight()
+        local text = rawget(self, "text")
+        if not text or text == "" then return nil end
+        local _, size = self:GetFont()
+        local line = size or 12
+        local lines = 1
+        local w = rawget(self, "w")
+        if w and w > 0 then
+            lines = math.ceil(self:GetStringWidth() / w)
+            if lines < 1 then lines = 1 end
+        end
+        return lines * line + (lines - 1) * (rawget(self, "spacing") or LINE_PAD)
+    end
+    function r:SetSpacing(s) rawset(self, "spacing", s) end
+    installGeometry(r)
+    function r:SetTexture(t) self.texture = t end
+    -- REAL ALPHA. SetDimmed is entirely alpha, so a mock that swallows it can
+    -- only ever assert "it did not error" -- which is how a disabled option
+    -- that still looks available ships.
+    rawset(r, "alpha", 1)
+    function r:SetAlpha(a) rawset(self, "alpha", a or 1) end
+    function r:GetAlpha() return rawget(self, "alpha") or 1 end
+    function r:Show() self.visible = true end
+    function r:Hide() self.visible = false end
+    function r:IsVisible() return self.visible end
+    return r
+end
+
+CreateFrame = function(kind, name, parent, template)
+    local f = { name = name, kind = kind, template = template,
+                scripts = {}, events = {}, children = {},
+                visible = false, checked = false }
+    setmetatable(f, { __index = MockIndex })
+    -- Real parent/child wiring, so anything that WALKS the frame tree (the
+    -- pfUI skin does) is actually exercised rather than silently traversing an
+    -- empty list. Regions from CreateFontString/CreateTexture are deliberately
+    -- not children, matching GetChildren's real behaviour.
+    if type(parent) == "table" and rawget(parent, "children") then
+        table.insert(parent.children, f)
+    end
+    -- Kept for the geometry resolver: a frame with no point of its own falls
+    -- back to its parent's top. See MockEdgeY.
+    if type(parent) == "table" then rawset(f, "parent", parent) end
+    function f:GetParent() return rawget(self, "parent") end
+    function f:GetChildren() return unpack(rawget(self, "children") or {}) end
+    function f:GetObjectType() return rawget(self, "kind") or "Frame" end
+    function f:SetScript(k, fn) self.scripts[k] = fn end
+    function f:GetScript(k) return self.scripts[k] end
+    function f:HasScript() return true end
+    function f:RegisterEvent(e) self.events[e] = true end
+    -- REAL region tracking. GetRegions() handed back a single FRESH region, so
+    -- a sweep over a frame's own font strings and textures -- which is how the
+    -- settings content measures itself -- found one empty stand-in and
+    -- concluded the panel was empty. Regions are still not CHILDREN, matching
+    -- the client.
+    local function keepRegion(self, rname)
+        local rs = rawget(self, "regions")
+        if not rs then rs = {}; rawset(self, "regions", rs) end
+        local r = newRegion()
+        r.name = rname
+        -- A NAMED region becomes a GLOBAL, exactly as on the client. The name
+        -- argument was swallowed, so "did this stop creating a global for its
+        -- caption" -- the whole reason the checkbox label is a method now --
+        -- was unanswerable.
+        -- _G directly, not setglobal: this runs inside CreateFrame, which is
+        -- defined above the setglobal shim.
+        if rname then _G[rname] = r end
+        table.insert(rs, r)
+        return r
+    end
+    function f:CreateFontString(rname) return keepRegion(self, rname) end
+    function f:CreateTexture(rname) return keepRegion(self, rname) end
+    function f:GetRegions() return unpack(rawget(self, "regions") or {}) end
+    installGeometry(f)
+    function f:IsVisible() return self.visible end
+    -- REAL mouse-enable tracking. A plain Frame does NOT receive mouse events
+    -- until EnableMouse(true) -- only Buttons are interactive by default -- so
+    -- a hover target built as a Frame and never enabled is simply dead. The
+    -- CamelCase no-op swallowed this, and a test that called OnEnter directly
+    -- could not tell a live target from a dead one. Buttons start true, other
+    -- frames false, exactly as the client has it.
+    rawset(f, "mouseEnabled", (kind == "Button"))
+    function f:EnableMouse(on) rawset(self, "mouseEnabled", on and true or false) end
+    function f:IsMouseEnabled() return rawget(self, "mouseEnabled") end
+    -- The CHECKED TEXTURE is a real region. SetCheckedTexture takes a PATH on
+    -- 1.12 and the only way to recolour the tick is to ask for the region back
+    -- and repaint it; a mock that hands back nil cannot tell the gold tick
+    -- from Blizzard's blue-grey one, and the code's own nil fallback would
+    -- have been the only path ever tested.
+    function f:SetCheckedTexture(path)
+        local r = rawget(self, "checkedTex")
+        if not r then r = newRegion(); rawset(self, "checkedTex", r) end
+        r.texture = path
+        return r
+    end
+    function f:GetCheckedTexture() return rawget(self, "checkedTex") end
+    rawset(f, "alpha", 1)
+    function f:SetAlpha(a) rawset(self, "alpha", a or 1) end
+    function f:GetAlpha() return rawget(self, "alpha") or 1 end
+    function f:GetChecked() return self.checked end
+    function f:SetChecked(v) self.checked = v and true or false end
+    -- Fonts, same as on regions: an EditBox is a FRAME, so a text-size setting
+    -- that reaches labels but not input boxes would look right in every test
+    -- that only measured a label.
+    function f:SetFont(path, size, flags)
+        rawset(self, "font", { path = path, size = size, flags = flags })
+    end
+    function f:GetFont()
+        local ft = rawget(self, "font")
+        if not ft then return nil end
+        return ft.path, ft.size, ft.flags
+    end
+    function f:SetFontObject(t)
+        rawset(self, "fontObject", t)
+        local o = type(t) == "string" and _G[t] or t
+        if type(o) == "table" and o.GetFont then
+            local path, size, flags = o:GetFont()
+            rawset(self, "font", { path = path, size = size, flags = flags })
+        end
+    end
+    function f:GetFontObject() return rawget(self, "fontObject") end
+    -- EditBoxes are frames, so text lives here too, not only on regions.
+    -- rawget throughout: see the note above newRegion.
+    --
+    -- SetText FIRES OnTextChanged, because the client's does -- including on a
+    -- programmatic write. That matters here: the recipient box's handler
+    -- repaints the suggestion list, so a completion that fills the box
+    -- re-enters the very function that drew it. A mock that swallowed the
+    -- event could not see that at all, and would happily pass a Tab-accept
+    -- that reopened the list it had just closed.
+    --
+    -- Re-entrancy is modelled rather than blocked: a handler that writes back
+    -- to its own box recurses on the real client too. It is bounded only so a
+    -- runaway loop fails loudly here instead of hanging the suite.
+    function f:SetText(t)
+        rawset(self, "text", t)
+        local fn = self.scripts and self.scripts.OnTextChanged
+        if not fn then return end
+        local d = (rawget(self, "textDepth") or 0) + 1
+        if d > 8 then
+            rawset(self, "textDepth", 0)
+            error("OnTextChanged recursed without end on " ..
+                  tostring(rawget(self, "name")))
+        end
+        rawset(self, "textDepth", d)
+        fn()
+        rawset(self, "textDepth", d - 1)
+    end
+    function f:GetText() return rawget(self, "text") end
+    -- REAL focus tracking. There was none: SetFocus fell through to the
+    -- CamelCase no-op, so a Tab chain could be entirely broken and the suite
+    -- would agree with it. Exactly one widget holds focus at a time, as on the
+    -- client.
+    -- REAL size and frame level. Both were CamelCase no-ops, so GetHeight
+    -- returned nil -- which matters now that the row count is computed FROM
+    -- the frame's height. A mock that cannot report a size cannot test a
+    -- resizable window at all.
+    -- Backdrop colours, tracked for real. The button system is ENTIRELY
+    -- colour -- there are no textures to inspect -- so a mock that swallows
+    -- SetBackdropColor can only ever assert "it did not error", which is
+    -- exactly how a button that looks disabled but still clicks ships.
+    -- REAL anchor tracking, enough to answer "what is this pinned to". The
+    -- CamelCase no-op swallowed SetPoint, so a widget could be anchored to a
+    -- HIDDEN frame -- which keeps its last position on 1.12 and therefore
+    -- silently draws the follower through whatever is really there -- and the
+    -- suite would have nothing to say about it.
+    function f:SetPoint(pt, rel, relPt, x, y)
+        local pts = rawget(self, "points")
+        if not pts then pts = {}; rawset(self, "points", pts) end
+        table.insert(pts, { point = pt, rel = rel, relPoint = relPt, x = x, y = y })
+    end
+    function f:ClearAllPoints() rawset(self, "points", {}) end
+    function f:PointOffset(name)
+        local pts = rawget(self, "points") or {}
+        local found, i = nil, 1
+        while i <= table.getn(pts) do
+            if pts[i].point == name then found = pts[i] end
+            i = i + 1
+        end
+        return found
+    end
+    -- Which frame this is currently pinned to, or nil.
+    function f:AnchorTarget()
+        local pts = rawget(self, "points")
+        if not pts or table.getn(pts) == 0 then return nil end
+        return pts[table.getn(pts)].rel
+    end
+    function f:SetBackdropColor(r, g, b, a)
+        rawset(self, "bdColor", { r, g, b, a })
+    end
+    function f:GetBackdropColor()
+        local c = rawget(self, "bdColor")
+        if not c then return nil end
+        return c[1], c[2], c[3], c[4]
+    end
+    function f:SetBackdropBorderColor(r, g, b, a)
+        rawset(self, "bdBorder", { r, g, b, a })
+    end
+    function f:GetBackdropBorderColor()
+        local c = rawget(self, "bdBorder")
+        if not c then return nil end
+        return c[1], c[2], c[3], c[4]
+    end
+    function f:SetWidth(w) rawset(self, "w", w) end
+    function f:SetHeight(h) rawset(self, "h", h) end
+    -- Derived from opposite-corner anchors when no size was set, exactly as on
+    -- regions. A panel pinned TOPLEFT and BOTTOMRIGHT inside its well has a
+    -- real height, and answering 0 for it made every "does the content fit"
+    -- question compare against nothing.
+    function f:GetWidth()
+        return rawget(self, "w") or derivedSize(self, true) or 0
+    end
+    function f:GetHeight()
+        return rawget(self, "h") or derivedSize(self, false) or 0
+    end
+    -- REAL SLIDER AND SCROLLFRAME BEHAVIOUR. Both fell through to the
+    -- CamelCase no-op, so GetValue answered nil and a settings pane that
+    -- scrolled nowhere at all -- or crashed comparing that nil -- would have
+    -- passed. A scrollbar is value, range and clamping; a mock that holds none
+    -- of the three cannot answer "did the content fit".
+    rawset(f, "value", 0)
+    rawset(f, "minV", 0)
+    rawset(f, "maxV", 0)
+    function f:SetMinMaxValues(lo, hi)
+        rawset(self, "minV", lo or 0)
+        rawset(self, "maxV", hi or 0)
+        -- The client clamps the current value into the new range, and that
+        -- re-fires OnValueChanged. Modelled, because a range that shrinks
+        -- under a scrolled-down bar is exactly the resize case.
+        local v = rawget(self, "value") or 0
+        if v > (hi or 0) then self:SetValue(hi or 0) end
+    end
+    function f:GetMinMaxValues()
+        return rawget(self, "minV") or 0, rawget(self, "maxV") or 0
+    end
+    function f:SetValue(v)
+        v = v or 0
+        local lo, hi = self:GetMinMaxValues()
+        if v < lo then v = lo end
+        if v > hi then v = hi end
+        local was = rawget(self, "value")
+        rawset(self, "value", v)
+        if was == v then return end
+        local fn = self.scripts and self.scripts.OnValueChanged
+        if not fn then return end
+        local prev = this
+        this = self
+        fn()
+        this = prev
+    end
+    function f:GetValue() return rawget(self, "value") or 0 end
+    function f:SetValueStep(s) rawset(self, "valueStep", s) end
+    function f:SetScrollChild(c) rawset(self, "scrollChild", c) end
+    function f:GetScrollChild() return rawget(self, "scrollChild") end
+    function f:SetVerticalScroll(v) rawset(self, "vScroll", v or 0) end
+    function f:GetVerticalScroll() return rawget(self, "vScroll") or 0 end
+    function f:EnableMouseWheel(on)
+        rawset(self, "wheelEnabled", on and true or false)
+    end
+    function f:IsMouseWheelEnabled() return rawget(self, "wheelEnabled") end
+    function f:SetFrameLevel(n) rawset(self, "level", n) end
+    function f:GetFrameLevel() return rawget(self, "level") or 1 end
+    function f:SetFocus() focusedBox = self end
+    function f:ClearFocus() if focusedBox == self then focusedBox = nil end end
+    function f:HasFocus() return focusedBox == self end
+    function f:Enable() rawset(self, "enabled", true) end
+    function f:Disable() rawset(self, "enabled", false) end
+    -- 1/nil, NOT true/false -- that is what the real 1.12 widget returns, and
+    -- RepaintButton branches on it. A mock answering `false` where the client
+    -- answers `nil` hides any caller that compares against one specifically.
+    function f:IsEnabled()
+        if rawget(self, "enabled") == false then return nil end
+        return 1
+    end
+    function f:GetPoint() return "CENTER", nil, "CENTER", 0, 0 end
+    function f:Show()
+        -- A frame Shown during this frame's work does not run its OnUpdate
+        -- until the NEXT one. That is why hiding a driver between steps costs
+        -- a frame every time it has to be brought back, and modelling Show as
+        -- instant hid that cost completely.
+        if not self.visible then rawset(self, "justShown", true) end
+        self.visible = true
+        if self.scripts.OnShow then self.scripts.OnShow() end
+    end
+    function f:Hide()
+        self.visible = false
+        if self.scripts.OnHide then self.scripts.OnHide() end
+    end
+    if name then _G[name] = f end
+    -- Blizzard names child regions like "<name>Text" for check buttons.
+    if name and template == "UICheckButtonTemplate" then
+        _G[name .. "Text"] = newRegion()
+    end
+    return f
+end
+
+getglobal = function(n) return _G[n] end
+setglobal = function(n, v) _G[n] = v end
+
+UIParent = CreateFrame("Frame", "UIParent")
+-- The screen is the one frame with an origin of its own; see MockEdgeY.
+rawset(UIParent, "mockOrigin", true)
+UIParent:SetWidth(1024)
+UIParent:SetHeight(768)
+UISpecialFrames = {}
+
+-- ---- font objects ----------------------------------------------------------
+-- The real ones are FontStrings the client creates from FontFamily XML. All
+-- that matters here is that GetFont answers a path, a SIZE and flags, because
+-- the text-size setting scales that size.
+local function FontObject(name, size)
+    local o = { name = name }
+    function o:GetFont() return "Fonts\\FRIZQT__.TTF", size, "" end
+    _G[name] = o
+    return o
+end
+FontObject("GameFontNormalSmall", 10)
+FontObject("GameFontHighlightSmall", 10)
+FontObject("GameFontNormal", 12)
+FontObject("GameFontNormalLarge", 16)
+
+-- ---- bags ------------------------------------------------------------------
+-- Courier opens NO bags. What opens one is the client: 1.12's
+-- MailFrame_OnEvent calls OpenBackpack() in its MAIL_SHOW branch. Modelled so
+-- a test can play that part -- without it there is no bag to close and the
+-- setting tests nothing.
+bagsOpen = 0
+OpenBackpack = function() bagsOpen = bagsOpen + 1 end
+OpenAllBags = function() bagsOpen = bagsOpen + 1 end
+CloseAllBags = function() bagsOpen = 0 end
+IsBagOpen = function() return bagsOpen > 0 and 1 or nil end
+
+-- ---- minimap ---------------------------------------------------------------
+-- The minimap button is placed by an ANGLE around the ring, and dragged by
+-- comparing the cursor to the minimap's centre -- so a mock that cannot report
+-- either a centre or a cursor cannot test the placement at all, and a
+-- CamelCase no-op would quietly answer nil to both.
+Minimap = CreateFrame("Frame", "Minimap")
+Minimap:SetWidth(140)
+Minimap:SetHeight(140)
+minimapCX, minimapCY = 1000, 500
+function Minimap:GetCenter() return minimapCX, minimapCY end
+
+cursorX, cursorY = 1000, 500
+GetCursorPosition = function() return cursorX * uiScale, cursorY * uiScale end
+
+-- The cursor comes back in SCREEN coordinates, which are the frame's own
+-- multiplied by the effective scale. Modelled rather than left at 1: an addon
+-- that forgets to divide it out tracks the mouse at the wrong rate on any
+-- scale but 1, and at 1 the bug is invisible.
+--
+-- On BOTH frames, because the minimap can be rescaled independently of
+-- UIParent -- plenty of UI addons do exactly that -- and the drag has to use
+-- the minimap's, since that is whose centre it is measuring from.
+uiScale = 1
+function UIParent:GetEffectiveScale() return uiScale end
+function Minimap:GetEffectiveScale() return uiScale end
+
+shiftDown = false
+IsShiftKeyDown = function() return shiftDown end
+DEFAULT_CHAT_FRAME = { messages = {} }
+function DEFAULT_CHAT_FRAME:AddMessage(m) table.insert(self.messages, m) end
+
+UNKNOWN = "Unknown"
+TURTLE_WOW_VERSION = "1.18.1"
+
+ShowUIPanel = function(f) if f then f:Show() end end
+HideUIPanel = function(f) if f then f:Hide() end end
+
+-- FauxScrollFrame, modelled faithfully from the 1.12.1 FrameXML
+-- (UIPanelTemplates.lua/.xml) -- the previous no-op stubs are why the 11+ mail
+-- freeze was unreachable by any test.
+--
+-- The load-bearing quirk: on a LIVE scrollbar (numItems > numToDisplay),
+-- SetMinMaxValues / a value clamp re-fires the slider's OnValueChanged, whose
+-- template body is GetParent():SetVerticalScroll(arg1), which fires the scroll
+-- frame's OnVerticalScroll SYNCHRONOUSLY -- re-entering whatever update
+-- function the addon wired in. At numToDisplay or fewer items the real code
+-- takes the frame:Hide() branch and the slider never fires, which is exactly
+-- why the crash threshold sat at ROWS + 1 = 11 mails. A quiet scrollbar at
+-- value 0 also does not fire, which is why a freshly opened, unscrolled
+-- 54-mail inbox could still paint once.
+scrollRefires = 0
+FauxScrollFrame_Update = function(frame, numItems, numToDisplay, itemHeight)
+    local value = rawget(frame, "value") or 0
+    if numItems <= numToDisplay then
+        -- scrollBar:SetValue(0); frame:Hide() -- dormant unless that clamped.
+        rawset(frame, "value", 0)
+        rawset(frame, "offset", 0)
+        return
+    end
+    local max = (numItems - numToDisplay) * itemHeight
+    local clamped = value
+    if clamped > max then clamped = max end
+    rawset(frame, "value", clamped)
+    -- Live scrollbar with a nonzero value (or a clamp): OnValueChanged ->
+    -- SetVerticalScroll -> OnVerticalScroll, synchronously, mid-Update.
+    if clamped > 0 or clamped ~= value then
+        scrollRefires = scrollRefires + 1
+        local script = frame.scripts and frame.scripts.OnVerticalScroll
+        if script then
+            local oldThis, oldArg1 = this, arg1
+            this, arg1 = frame, clamped
+            script()
+            this, arg1 = oldThis, oldArg1
+        end
+    end
+end
+FauxScrollFrame_GetOffset = function(frame)
+    return rawget(frame, "offset") or 0
+end
+FauxScrollFrame_SetOffset = function(frame, offset)
+    rawset(frame, "offset", offset)
+end
+-- The real 2-arg 1.12 signature: frame and value arrive as this/arg1 globals.
+FauxScrollFrame_OnVerticalScroll = function(itemHeight, updateFunction)
+    rawset(this, "value", arg1)
+    rawset(this, "offset", math.floor((arg1 / itemHeight) + 0.5))
+    updateFunction()
+end
+
+SlashCmdList = {}
+
+-- Auction subject formats, exactly as 1.12.1 GlobalStrings.lua defines them.
+AUCTION_SOLD_MAIL_SUBJECT    = "Auction successful: %s"
+AUCTION_WON_MAIL_SUBJECT     = "Auction won: %s"
+AUCTION_EXPIRED_MAIL_SUBJECT = "Auction expired: %s"
+AUCTION_REMOVED_MAIL_SUBJECT = "Auction cancelled: %s"
+AUCTION_OUTBID_MAIL_SUBJECT  = "Outbid on %s"
+
+-- ---- Mail API mock -------------------------------------------------------
+local INBOX = {}
+closeMailCalls = 0
+CloseMail = function() closeMailCalls = closeMailCalls + 1 end
+CheckInbox = function() end
+
+GetInboxNumItems = function() return table.getn(INBOX) end
+-- Counts every raw header read. The storm test below asserts on this directly:
+-- a walk of the whole inbox is the unit of work that made a big mailbox freeze
+-- the client, so the only honest way to prove the coalescing works is to count
+-- the reads themselves rather than trust a paint counter.
+headerReads = 0
+GetInboxHeaderInfo = function(i)
+    headerReads = headerReads + 1
+    local m = INBOX[i]
+    if not m then return nil end
+    -- The verified 13-value 1.12 signature.
+    return m.packageIcon, m.stationeryIcon, m.sender, m.subject, m.money,
+           m.cod, m.daysLeft, m.hasItem, m.wasRead, m.wasReturned,
+           m.textCreated, m.canReply, m.isGM
+end
+GetInboxItem = function(i)
+    local m = INBOX[i]
+    if not m or not m.itemName then return nil end
+    return m.itemName, "tex", m.itemCount or 1, 1
+end
+
+-- Mutating mail API. `failTakeMoney` / `failTakeItem` let a test simulate the
+-- server refusing, which is the case the engine must never book a ledger
+-- entry for.
+failTakeMoney, failTakeItem = false, false
+-- GetInboxText is what marks a mail READ on 1.12 -- there is no separate call.
+-- The stub models that side effect, because it is the whole point of calling it.
+readCalls = 0
+GetInboxText = function(i)
+    readCalls = readCalls + 1
+    local m = INBOX[i]
+    if not m then return nil end
+    m.wasRead = 1
+    -- THE side effect the whole reader design is built around: reading mail
+    -- that still holds something drops its expiry to three days. Modelled here
+    -- so a test can prove the reader does not trigger it behind the player's
+    -- back -- an assertion about daysLeft is worth more than one about which
+    -- function got called.
+    if (m.money or 0) > 0 or m.hasItem or (m.cod or 0) > 0 then
+        if (m.daysLeft or 30) > 3 then m.daysLeft = 3 end
+    end
+    -- The body is not always there on the first call: the client asks the
+    -- server for it and fires MAIL_INBOX_UPDATE when it arrives. Mail flagged
+    -- bodyDelay withholds it once, so the "Loading..." path gets exercised.
+    if m.bodyDelay then
+        m.bodyDelay = nil
+        return nil, m.stationery
+    end
+    local takeable = ((m.money or 0) > 0 or m.hasItem) and true or false
+    return m.body, m.stationery, takeable
+end
+-- Auction invoices. Returns nil for ordinary mail, exactly as the real call
+-- does, which is what inbox.Body uses to decide whether a mail is an invoice.
+GetInboxInvoiceInfo = function(i)
+    local m = INBOX[i]
+    if not m or not m.invoice then return nil end
+    local v = m.invoice
+    return v.kind, v.item, v.who, v.bid, v.buyout, v.deposit, v.consignment
+end
+-- The client's high-resolution timer. Advanced by the send pump so an elapsed
+-- time can be asserted rather than eyeballed.
+fakeClock = 0
+GetTime = function() return fakeClock end
+-- Whichever EditBox currently holds the keyboard, or nil.
+focusedBox = nil
+-- GameTooltip, recording what it was asked to show rather than drawing it.
+--
+-- 1.12 has no GetInboxItemLink (rule 10), so the ONLY way to show a mail
+-- attachment's tooltip is SetInboxItem(index) -- the call Blizzard's own
+-- InboxFrameItem_OnEnter makes. A mock that swallowed these would let a
+-- tooltip point at the wrong mail, or at nothing, and say nothing about it.
+-- `shown` is what a test asserts on; `owner` catches a tooltip anchored to
+-- the wrong frame, which is how one ends up drawn across the window.
+-- The client's ITEM CACHE, keyed by name. GetItemInfo takes a name on 1.12 and
+-- answers for anything the client has seen; it is how a record that only wrote
+-- down a name can still be turned back into a real tooltip.
+--
+-- It is keyed on the BASE item, which is the limit that matters here: a
+-- random-suffix item is cached as "Training Sword", so looking up "Training
+-- Sword of Agility" misses and always will. A mock that answered for every
+-- name would hide that and make the text fallback look dead code.
+ITEM_CACHE = {}
+GetItemInfo = function(nameOrLink)
+    local e = ITEM_CACHE[nameOrLink]
+    if not e then return nil end
+    return e.name, e.link, e.quality or 1
+end
+
+GameTooltip = CreateFrame("Frame", "GameTooltip")
+GameTooltip.shown = nil
+GameTooltip.owner = nil
+function GameTooltip:SetOwner(owner, anchor)
+    rawset(self, "owner", owner)
+    rawset(self, "anchor", anchor)
+end
+function GameTooltip:SetInboxItem(index)
+    rawset(self, "shown", { kind = "inbox", index = index })
+end
+function GameTooltip:SetBagItem(bag, slot)
+    rawset(self, "shown", { kind = "bag", bag = bag, slot = slot })
+end
+-- The real item tooltip from an "item:id:enchant:suffix:unique" string. This
+-- is the only route open to a SENT item: the mail is gone from the client, so
+-- there is no inbox index and the stack is no longer in a bag.
+function GameTooltip:SetHyperlink(link)
+    rawset(self, "shown", { kind = "link", link = link })
+end
+function GameTooltip:SetText(t)
+    rawset(self, "shown", { kind = "text", text = t })
+    -- SetText starts a fresh tooltip, so it clears the body with it.
+    rawset(self, "lines", {})
+end
+-- REAL AddLine, because a multi-line tooltip IS the documentation for anything
+-- with more than one click behaviour. This fell through to the CamelCase no-op,
+-- so a button could describe nothing at all and the suite would agree with it.
+function GameTooltip:AddLine(t)
+    local l = rawget(self, "lines")
+    if not l then l = {}; rawset(self, "lines", l) end
+    table.insert(l, tostring(t))
+end
+function GameTooltip:AddDoubleLine(a, b)
+    self:AddLine(tostring(a) .. "  " .. tostring(b))
+end
+-- Every line as one string, for a test that only cares that something was said.
+function GameTooltip:Body()
+    local l = rawget(self, "lines") or {}
+    local out, i = "", 1
+    while i <= table.getn(l) do
+        out = out .. l[i] .. " | "
+        i = i + 1
+    end
+    return out
+end
+function GameTooltip:Show() rawset(self, "visible", true) end
+function GameTooltip:Hide()
+    rawset(self, "visible", false)
+    rawset(self, "shown", nil)
+    rawset(self, "owner", nil)
+    rawset(self, "lines", {})
+end
+
+MiniMapMailFrame = CreateFrame("Frame", "MiniMapMailFrame")
+MiniMapMailFrame:Show()
+-- Counts operations the SERVER would have to perform. The pump below clocks
+-- the engine off this and nothing else, because on a real client
+-- MAIL_INBOX_UPDATE is the server acknowledging an operation it actually did
+-- -- it does not arrive because an addon felt like stepping.
+serverCalls = 0
+TakeInboxMoney = function(i)
+    serverCalls = serverCalls + 1
+    local m = INBOX[i]
+    if not m or failTakeMoney then return end
+    m.money = 0
+end
+TakeInboxItem = function(i)
+    serverCalls = serverCalls + 1
+    local m = INBOX[i]
+    if not m or failTakeItem then return end
+    -- Taking the item off a COD mail is what PAYS the COD -- the money leaves
+    -- the player at that moment. Modelled because "the mail went away" is not
+    -- evidence a COD was paid: a COD mail carrying no item at all is simply
+    -- deleted as empty, which passed a test that only counted mails.
+    if (m.cod or 0) > 0 then
+        playerMoney = playerMoney - m.cod
+        m.cod = 0
+    end
+    m.itemName = nil
+    m.hasItem = nil
+end
+DeleteInboxItem = function(i)
+    serverCalls = serverCalls + 1
+    if INBOX[i] then table.remove(INBOX, i) end
+end
+returned = {}
+ReturnInboxItem = function(i)
+    local m = INBOX[i]
+    if not m then return end
+    table.insert(returned, m.sender)
+    -- Like a delete, this removes the mail and shifts every later index down.
+    table.remove(INBOX, i)
+end
+
+ERR_INV_FULL = "Your bags are full."
+INVENTORY_FULL = "Inventory is full."
+ERR_ITEM_MAX_COUNT = "You cannot carry any more of those items."
+
+-- ---- outgoing mail + bags ------------------------------------------------
+BAGS = {}            -- BAGS[bag][slot] = { name, texture, count }
+SENT = {}            -- every SendMail call, in order
+playerMoney = 10000000
+attachSlot = nil     -- the single vanilla attachment slot
+cursor = nil
+sendMoneyAmt, sendCODAmt = 0, 0
+failAttach = false   -- simulate an item that will not attach
+failSend = false     -- simulate the server rejecting a mail
+
+GetMoney = function() return playerMoney end
+GetSendMailPrice = function() return 30 end
+GetCVar = function(k) return k == "realmName" and "TestRealm" or "" end
+UnitFactionGroup = function() return "Alliance" end
+UnitName = function() return "Tester" end
+
+-- ---- guild + friends rosters ----------------------------------------------
+-- Modelled the way 1.12 actually behaves, which is the whole hazard of the
+-- recipient picker: the counts answer ZERO until the request has been made AND
+-- the reply event has fired. A mock that simply returned the list would make
+-- the async path untestable -- and that path is the one most likely to ship
+-- broken, because on a fast local reply it looks fine either way.
+GUILD = {}           -- { { name, online }, ... } -- what the SERVER holds
+FRIENDS = {}
+guildDelivered, friendsDelivered = false, false
+guildRequests, friendRequests = 0, 0
+inGuild = true
+
+IsInGuild = function() return inGuild end
+GuildRoster = function()
+    guildRequests = guildRequests + 1
+    -- Requesting does not deliver. fire("GUILD_ROSTER_UPDATE") is the reply,
+    -- and setting guildDelivered is what makes one land.
+end
+
+-- "Show offline members" is NOT a display filter on the guild pane -- it
+-- filters the roster the client will answer for at all. Modelled, because a
+-- mock that always returns everyone cannot tell whether the addon remembered
+-- to ask for the offline half, and offline guildmates are most of a guild.
+guildShowOffline = false
+GetGuildRosterShowOffline = function() return guildShowOffline end
+SetGuildRosterShowOffline = function(v) guildShowOffline = v and true or false end
+
+local function guildView()
+    if not guildDelivered then return {} end
+    local out = {}
+    local i = 1
+    while i <= table.getn(GUILD) do
+        local m = GUILD[i]
+        if guildShowOffline or m.online then table.insert(out, m) end
+        i = i + 1
+    end
+    return out
+end
+
+-- ONE delivery gate, in guildView above, deliberately. It was gated here as
+-- well; that redundancy meant no single sabotage could prove any of them, and
+-- a guard nothing can prove is a guard nobody can trust.
+GetNumGuildMembers = function() return table.getn(guildView()) end
+-- name, rank, rankIndex, level, class, zone, note, officernote, online
+GetGuildRosterInfo = function(i)
+    local m = guildView()[i]
+    if not m then return nil end
+    return m.name, "Member", 4, 60, "Mage", "Ironforge", "", "",
+           m.online and 1 or nil
+end
+
+ShowFriends = function() friendRequests = friendRequests + 1 end
+GetNumFriends = function()
+    if not friendsDelivered then return 0 end
+    return table.getn(FRIENDS)
+end
+-- name, level, class, area, connected
+GetFriendInfo = function(i)
+    if not friendsDelivered then return nil end
+    local f = FRIENDS[i]
+    if not f then return nil end
+    return f.name, 60, "Rogue", "Stormwind", f.connected and 1 or nil
+end
+-- Cursor and attachment slot, modelled the way the real client behaves,
+-- because the retry path depends on it: picking an item up REMOVES it from the
+-- bag, ClearCursor puts it BACK where it came from, and clicking the
+-- attachment button with an empty cursor takes the attached item back off.
+-- The old stub modelled none of that, which is why nothing here could exercise
+-- a send that the server refuses.
+-- Picking an item up LEAVES it in the bag slot, flagged locked -- it only
+-- really moves once it is dropped somewhere. (That locked flag is why
+-- TurtleMail hooks GetContainerItemInfo.) So ClearCursor just drops the
+-- reference; the bag was never changed.
+ClearCursor = function() cursor = nil end
+CursorHasItem = function() return cursor ~= nil end
+
+-- texture, itemCount, locked, quality, readable -- the 1.12 signature. The
+-- THIRD value is the one that matters: the addon has to read it, because
+-- PickupContainerItem on a locked slot is a silent no-op on the real client.
+-- A slot is locked while its item is on the cursor, or while a test pins it.
+GetContainerItemInfo = function(bag, slot)
+    containerInfoCalls = containerInfoCalls + 1
+    local it = BAGS[bag] and BAGS[bag][slot]
+    if not it then return nil end
+    local locked = it.locked
+    if cursor and cursor.bag == bag and cursor.slot == slot then locked = 1 end
+    return it.texture, it.count, locked, 1, nil
+end
+-- The backpack is bag 0 and always has 16 slots; a nil BAGS entry is a bag the
+-- character does not have equipped.
+-- Bag-inspection call counts. The send fast path's whole claim is that a
+-- HEALTHY item costs no bag inspection at all -- relocating a stack walks five
+-- bags with a link read and a pattern match per slot -- so the claim is
+-- asserted as a number rather than described.
+containerInfoCalls, containerLinkCalls = 0, 0
+GetContainerNumSlots = function(bag)
+    if type(bag) ~= "number" or bag < 0 or bag > 4 then return 0 end
+    if bag == 0 or BAGS[bag] then return 16 end
+    return 0
+end
+GetContainerItemLink = function(bag, slot)
+    containerLinkCalls = containerLinkCalls + 1
+    local it = BAGS[bag] and BAGS[bag][slot]
+    if not it then return nil end
+    -- A REAL link, per item. Every stack used to answer "item:1:0:0:0", which
+    -- meant a test could not tell the right item's link from the wrong one --
+    -- and could not see a random SUFFIX at all. "Training Sword of Agility" is
+    -- a base item plus a suffix id, and dropping that field renders it as the
+    -- plain base weapon with none of the stats the player actually has.
+    local id = it.id or 1
+    local suffix = it.suffix or 0
+    return "|cff1eff00|Hitem:" .. id .. ":0:" .. suffix ..
+        ":0|h[" .. it.name .. "]|h|r"
+end
+-- Test hook for the race the post-attach name check exists to catch: the slot
+-- verified a moment ago, but the server hands us a different stack when the
+-- pickup actually lands. Nothing but a name comparison after the fact can see
+-- this, so the mock has to be able to produce it.
+swapPickupWith = nil
+PickupContainerItem = function(bag, slot)
+    if swapPickupWith then
+        bag, slot = swapPickupWith.bag, swapPickupWith.slot
+        swapPickupWith = nil
+    end
+    local it = BAGS[bag] and BAGS[bag][slot]
+    if not it then return end
+    -- A LOCKED SLOT DOES NOT RESPOND. No error, no event, nothing on the
+    -- cursor -- this silent no-op is what produced "could not attach" in the
+    -- field, and a mock that ignored the flag could never reproduce it.
+    if it.locked then return end
+    -- ...and `locked` is only the CLIENT'S CACHED view. The server can be
+    -- holding a stack the cache still reports as free, which is routine right
+    -- after a BAG_UPDATE. The pickup is a silent no-op just the same, and
+    -- since GetContainerItemInfo reports it as UNLOCKED, no amount of reading
+    -- that flag can predict it -- only CursorHasItem afterwards can see it.
+    -- This is the field bug "skipped Light Feather -- the game would not
+    -- attach it", and a mock without it cannot reproduce that report.
+    if it.serverHolds then return end
+    cursor = { bag = bag, slot = slot, item = it }
+end
+SplitContainerItem = function() end
+useContainerCalls = 0
+UseContainerItem = function() useContainerCalls = useContainerCalls + 1 end
+
+ClickSendMailItemButton = function()
+    if cursor then
+        if failAttach then
+            -- A MAIL THAT REFUSES AN ITEM LEAVES IT ON THE CURSOR. Nothing
+            -- moves, nothing errors, and the item is still held -- which is
+            -- the only signal telling "the mail will not carry this" apart
+            -- from "the pickup never landed". A mock that quietly dropped the
+            -- cursor here made the two indistinguishable.
+            return
+        end
+        attachSlot = cursor
+        -- NOW it leaves the bag: it is committed to the mail.
+        BAGS[cursor.bag][cursor.slot] = nil
+        cursor = nil
+    elseif attachSlot then
+        -- Empty cursor takes the attachment back off: it returns to the slot
+        -- it came from and ends up on the cursor. This is the path a retry
+        -- after a refused mail goes through.
+        BAGS[attachSlot.bag] = BAGS[attachSlot.bag] or {}
+        BAGS[attachSlot.bag][attachSlot.slot] = attachSlot.item
+        cursor = attachSlot
+        attachSlot = nil
+    end
+end
+GetSendMailItem = function()
+    if not attachSlot then return nil end
+    return attachSlot.item.name, attachSlot.item.texture, attachSlot.item.count
+end
+moneyCalls, codCalls = 0, 0
+SetSendMailMoney = function(c) moneyCalls = moneyCalls + 1; sendMoneyAmt = c or 0 end
+SetSendMailCOD   = function(c) codCalls = codCalls + 1; sendCODAmt = c or 0 end
+
+-- Every SendMail gets exactly one of MAIL_SEND_SUCCESS / MAIL_FAILED back, as
+-- on the real client. `failSendCount` makes the server refuse the next N.
+-- One response per SendMail, tracked as a PENDING ACK rather than by watching
+-- a counter move. The counter version could only see sends that happened while
+-- the pump was looping -- and the first mail of a batch now goes out
+-- synchronously from send.Start, before any pump exists, exactly as
+-- TurtleMail's send button does. A pump that snapshots the counter on entry
+-- silently never acknowledges that mail, and the batch looks like it stalled.
+pendingAck = nil
+sendAttempts, failSendCount, lastSendFailed = 0, 0, false
+SendMail = function(to, subject, body)
+    sendAttempts = sendAttempts + 1
+    if failSendCount > 0 then
+        failSendCount = failSendCount - 1
+        lastSendFailed = true
+        pendingAck = "MAIL_FAILED"
+        -- A refused mail keeps its attachment: nothing left the client.
+        return
+    end
+    lastSendFailed = false
+    pendingAck = "MAIL_SEND_SUCCESS"
+    table.insert(SENT, { to = to, subject = subject, body = body,
+        item = attachSlot and attachSlot.item.name or nil,
+        count = attachSlot and attachSlot.item.count or nil,
+        money = sendMoneyAmt, cod = sendCODAmt })
+    attachSlot = nil
+    sendMoneyAmt, sendCODAmt = 0, 0
+end
+
+-- MailFrame as FrameXML builds it: an OnHide that ends the session.
+MailFrame = CreateFrame("Frame", "MailFrame")
+MailFrame:SetScript("OnHide", function() CloseMail() end)
+OpenMailFrame = CreateFrame("Frame", "OpenMailFrame")
+MailFrameCloseButton = CreateFrame("Button", "MailFrameCloseButton")
+
+-- ---- Load the addon in .toc order ---------------------------------------
+local files = { "core/init.lua", "core/util.lua", "core/db.lua",
+                "core/bridge.lua", "core/inbox.lua", "core/send.lua",
+                "ui/frame.lua", "ui/skin.lua" }
+for _, f in ipairs(files) do assert(loadfile(f))() end
+
+local A = AegisCourier
+-- Click a button the way the CLIENT would. A real 1.12 Button does not
+-- dispatch OnClick while disabled -- the widget gates it, which is why
+-- ui.MakeButton (and Exchange's original) only wraps Enable/Disable for
+-- APPEARANCE and adds no Lua guard. Calling btn.scripts.OnClick() directly
+-- reaches past that gate and tests something the player cannot do.
+local function Click(btn)
+    if not btn or not btn.scripts or not btn.scripts.OnClick then return false end
+    if btn.IsEnabled and not btn:IsEnabled() then return false end
+    -- A CHECKBUTTON TOGGLES ITSELF BEFORE OnClick RUNS on this client, and
+    -- every handler in the addon is written against that -- they read
+    -- GetChecked() inside OnClick and expect the NEW value. Firing OnClick
+    -- without the toggle hand-feeds the handler the old state, and it also
+    -- means a widget whose SetChecked/GetChecked had been shadowed by a
+    -- private flag would pass: the shadow and the widget only disagree once
+    -- the WIDGET is the thing that moved.
+    if btn.GetObjectType and btn:GetObjectType() == "CheckButton" then
+        -- RAW, not through SetChecked: the ENGINE flips the widget, it does
+        -- not call a Lua method. Going through the method is what let a
+        -- shadowed SetChecked/GetChecked pair look self-consistent -- the
+        -- shadow and the widget only disagree because the engine writes one
+        -- and the handler reads the other.
+        rawset(btn, "checked", not rawget(btn, "checked"))
+    end
+    btn.scripts.OnClick()
+    return true
+end
+
+-- Hover a frame the way the client would: a frame that is hidden, or that
+-- never enabled the mouse, receives nothing at all. Calling OnEnter directly
+-- bypasses both and will happily "test" a target the player cannot reach.
+local function hover(f)
+    if not f then return false end
+    -- Mouse-enable only. Visibility is NOT checked here: this mock creates
+    -- frames hidden, where the client creates them shown, so `visible` is only
+    -- meaningful on a frame something explicitly Show()s or Hide()s. The tests
+    -- that care assert it directly rather than having it silently swallow a
+    -- hover here.
+    if not f:IsMouseEnabled() then return false end
+    if not f.scripts.OnEnter then return false end
+    f.scripts.OnEnter()
+    return true
+end
+
+local function unhover(f)
+    if f and f.scripts.OnLeave then f.scripts.OnLeave() end
+end
+
+local function fire(e, a1)
+    -- Firing a mail response IS the acknowledgement, so it consumes the one
+    -- the mock is holding. Without this, a test that fires the event by hand
+    -- and then hands over to pumpSend would have it delivered twice, and the
+    -- batch would send a mail it was never asked for.
+    if e == "MAIL_SEND_SUCCESS" or e == "MAIL_FAILED" then pendingAck = nil end
+    event, arg1 = e, a1
+    A.Dispatch()
+end
+
+print("== load ==")
+fire("ADDON_LOADED", "Aegis_Courier")
+check(A.loaded, "ADDON_LOADED ran init callbacks")
+check(type(CourierDB) == "table", "CourierDB created")
+check(type(CourierCharDB) == "table", "CourierCharDB created")
+check(type(CourierDB.ledger) == "table", "ledger table present")
+check(SlashCmdList["AEGISCOURIER"] ~= nil, "slash command registered")
+
+print("== util.SaleSplit (5% consignment) ==")
+local gross, cut, net = A.util.SaleSplit(9500)
+check(net == 9500, "net is what arrived", net)
+check(gross - cut == net, "gross - cut reconciles to net", gross .. "-" .. cut)
+check(gross == 10000, "9500 net implies 10000 gross", gross)
+check(cut == 500, "cut is 500", cut)
+local g2, c2, n2 = A.util.SaleSplit(0)
+check(g2 == 0 and c2 == 0 and n2 == 0, "zero is safe")
+-- The wrong formula (net * 1.05) would give 9975 here, not 10000.
+check(A.util.SaleSplit(1) >= 1, "tiny amounts do not go negative")
+
+print("== util.SubjectItem / inbox.ClassifySubject ==")
+local kind, item = A.inbox.ClassifySubject("Auction successful: Silk Cloth")
+check(kind == "sold" and item == "Silk Cloth", "sold parsed", tostring(kind) .. "/" .. tostring(item))
+kind, item = A.inbox.ClassifySubject("Auction won: Black Lotus")
+check(kind == "won" and item == "Black Lotus", "won parsed")
+kind, item = A.inbox.ClassifySubject("Outbid on Arcanite Bar")
+check(kind == "outbid" and item == "Arcanite Bar", "outbid parsed")
+kind, item = A.inbox.ClassifySubject("Auction expired: Copper Ore")
+check(kind == "expired" and item == "Copper Ore", "expired parsed")
+kind, item = A.inbox.ClassifySubject("Auction cancelled: Linen Cloth")
+check(kind == "cancelled" and item == "Linen Cloth", "cancelled parsed")
+check(A.inbox.ClassifySubject("Hey there") == nil, "ordinary mail unclassified")
+check(A.inbox.ClassifySubject("re: Auction successful: nice") == nil,
+      "unanchored lookalike rejected")
+check(A.inbox.ClassifySubject("") == nil, "empty subject safe")
+check(A.inbox.ClassifySubject(nil) == nil, "nil subject safe")
+-- Item names that themselves contain the stem must survive.
+kind, item = A.inbox.ClassifySubject("Auction successful: Auction won: Thing")
+check(kind == "sold" and item == "Auction won: Thing", "greedy item name kept", tostring(item))
+
+print("== localized subject formats ==")
+-- Prove the matching is not English-specific: swap the globals for a locale
+-- whose placeholder is not at the end, reload inbox.lua, re-test.
+AUCTION_SOLD_MAIL_SUBJECT = "Verkauf von %s erfolgreich"
+assert(loadfile("core/inbox.lua"))()
+kind, item = A.inbox.ClassifySubject("Verkauf von Seidenstoff erfolgreich")
+check(kind == "sold" and item == "Seidenstoff", "non-terminal placeholder parsed", tostring(item))
+AUCTION_SOLD_MAIL_SUBJECT = "Auction successful: %s"
+assert(loadfile("core/inbox.lua"))()
+
+print("== inbox.Header field mapping ==")
+INBOX = {
+    { packageIcon = "pkg", stationeryIcon = "st", sender = "Stormwind Auction House",
+      subject = "Auction successful: Silk Cloth", money = 9500, cod = 0,
+      daysLeft = 29.5, hasItem = nil, wasRead = nil, wasReturned = nil,
+      textCreated = nil, canReply = 1, isGM = nil },
+    { packageIcon = "pkg", stationeryIcon = "st", sender = "Bob",
+      subject = "hi", money = 0, cod = 500, daysLeft = 0.25,
+      hasItem = 1, wasRead = 1, wasReturned = 1, textCreated = nil,
+      canReply = 1, isGM = nil },
+    { packageIcon = nil, stationeryIcon = "st", sender = nil,
+      subject = "GM stuff", money = 0, cod = 0, daysLeft = 5,
+      hasItem = nil, wasRead = nil, wasReturned = nil, textCreated = nil,
+      canReply = nil, isGM = 1 },
+}
+local h1 = A.inbox.Header(1)
+check(h1.money == 9500, "money read", h1.money)
+check(h1.cod == 0, "cod read")
+check(h1.auctionKind == "sold", "auction kind from subject")
+check(h1.auctionItem == "Silk Cloth", "auction item from subject")
+check(h1.fromAuctionHouse == true, "AH sender recognised")
+check(h1.wasRead == false, "unread mapped to false not nil")
+local h2 = A.inbox.Header(2)
+check(h2.cod == 500, "COD amount read", h2.cod)
+check(h2.wasReturned == true, "wasReturned is field 10")
+check(h2.hasItem == true, "hasItem truthy-mapped")
+check(h2.auctionKind == nil, "player mail not classified")
+local h3 = A.inbox.Header(3)
+check(h3.isGM == true, "isGM is field 13")
+check(h3.sender == "Unknown", "nil sender substituted")
+check(A.inbox.Header(99) == nil, "out-of-range index returns nil")
+local total, unread, money = A.inbox.Summary()
+check(total == 3 and unread == 2 and money == 9500, "summary counts",
+      total .. "/" .. unread .. "/" .. money)
+-- Double-spaced AH name normalises.
+check(A.inbox.IsAuctionSender("Thunder Bluff  Auction House"), "double-space AH name")
+check(A.inbox.IsAuctionSender("Everlook Auction House"), "neutral AH name")
+check(not A.inbox.IsAuctionSender("Bob"), "player is not an AH")
+check(not A.inbox.IsAuctionSender(nil), "nil sender safe")
+
+print("== util.FormatDaysLeft (fractional DAYS) ==")
+check(A.util.FormatDaysLeft(29.5) == "29d", "days", A.util.FormatDaysLeft(29.5))
+check(A.util.FormatDaysLeft(0.25) == "6h", "sub-day becomes hours", A.util.FormatDaysLeft(0.25))
+check(A.util.FormatDaysLeft(0.0005) == "1m", "floor clamps to 1m", A.util.FormatDaysLeft(0.0005))
+
+print("== db ledger + dedupe ==")
+A.db.RecordTxn("sale", "Silk Cloth", 9500, nil, 10000, 500, 9500)
+A.db.RecordTxn("buy", "Black Lotus", 20000)
+local income, spend, n = A.db.LedgerTotals(nil)
+check(income == 9500, "income totalled", income)
+check(spend == 20000, "spend totalled", spend)
+check(n == 2, "entry count", n)
+check(A.db.CutTotal(nil) == 500, "cut totalled", A.db.CutTotal(nil))
+check(A.db.RecordTxn("sale", "x", 0) == nil, "zero amount rejected")
+local e = A.db.Ledger()[1]
+check(e.t and e.kind and e.item and e.amount, "entry carries Aegis's 5 fields")
+check(not A.db.WasSeen("k1"), "unseen key")
+A.db.MarkSeen("k1")
+check(A.db.WasSeen("k1"), "marked key is seen")
+check(type(CourierDB.ledgerSeen["k1"]) == "number", "seen key stores a timestamp")
+
+print("== bridge: dormant with no Aegis ==")
+check(AegisExchange == nil, "no Aegis in this environment")
+check(A.bridge.Ready() == false, "bridge not ready")
+check(A.bridge.Push("sale", "Silk Cloth", 9500) == false, "push is a no-op")
+check(A.bridge.StatusText() == "standalone", "status reads standalone", A.bridge.StatusText())
+
+-- A FAITHFUL stand-in for Aegis: Exchange's RecordExternalTxn, ported from
+-- that repo's core/db.lua under the "Companion-addon integration surface"
+-- heading. Every behaviour below is one Courier depends on:
+--
+--   * it takes ONE TABLE, not positional arguments;
+--   * it RETURNS false plus a reason for a bad payload -- it does NOT error,
+--     so a pcall around it reports success either way;
+--   * it returns true when the entry is recorded.
+--
+-- This fake used to take (kind, item, amount, itemId), mirroring the mistake
+-- in bridge.Push rather than the real addon. Both agreed, so 346 checks
+-- passed over a seam that dropped every entry on the floor. A mock written
+-- from the caller's assumption tests nothing; this one is written from the
+-- far side's source and disagrees with a wrong caller on purpose.
+--
+-- If Aegis's INTEGRATION_VERSION ever moves past 1, re-port this from there.
+function FakeAegis(sink)
+    return {
+        INTEGRATION_VERSION = 1,
+        RecordExternalTxn = function(txn)
+            if type(txn) ~= "table" then
+                return false, "payload must be a table"
+            end
+            if txn.kind ~= "sale" and txn.kind ~= "buy" then
+                return false, "kind must be 'sale' or 'buy'"
+            end
+            if type(txn.amount) ~= "number" or txn.amount <= 0 then
+                return false, "amount must be a positive number of copper"
+            end
+            table.insert(sink, {
+                kind = txn.kind, item = txn.item,
+                amount = txn.amount, id = txn.itemId, key = txn.key,
+            })
+            return true
+        end,
+    }
+end
+
+print("== bridge: with Aegis present ==")
+local pushed = {}
+AegisExchange = FakeAegis(pushed)
+check(A.bridge.Ready() == true, "bridge ready")
+check(A.bridge.Push("sale", "Silk Cloth", 9500, 4306) == true, "push succeeds")
+check(table.getn(pushed) == 1, "one entry pushed")
+check(pushed[1].kind == "sale" and pushed[1].item == "Silk Cloth"
+      and pushed[1].amount == 9500 and pushed[1].id == 4306,
+      "the payload reaches Aegis as a TABLE with the documented field names")
+
+-- No dedup key is sent, and that is deliberate. Aegis's MailTxnKey buckets
+-- subject+money+arrival-hour, which is exactly the fingerprint inbox.lua's
+-- Stage B note rejects: two identical stacks sold at one price in one hour
+-- collide, and a collision silently UNDER-counts. Courier books on
+-- COLLECTION, so an emptied mail cannot be booked twice and no key is
+-- needed. Sending one would trade a bounded, one-time handover overlap for
+-- a permanent undercount.
+check(pushed[1].key == nil, "no dedup key is sent (see inbox.lua Stage B note)")
+
+-- A future contract version we do not understand must stand us down.
+AegisExchange.INTEGRATION_VERSION = 99
+check(A.bridge.Ready() == false, "unsupported contract version stands down")
+AegisExchange.INTEGRATION_VERSION = 1
+
+-- An error on the far side must not propagate.
+AegisExchange.RecordExternalTxn = function() error("boom") end
+check(A.bridge.Push("sale", "x", 1) == false, "far-side error swallowed")
+
+-- ...and neither must a REFUSAL, which is the far more likely failure: Aegis
+-- returns false rather than erroring, so a bridge that only inspects pcall's
+-- ok flag reports success and loses the entry. That is precisely how the
+-- positional-call bug survived. Push must report what Aegis actually said.
+AegisExchange.RecordExternalTxn = function() return false, "payload must be a table" end
+check(A.bridge.Push("sale", "x", 1) == false, "a REFUSAL is reported as failure")
+AegisExchange.RecordExternalTxn = function() return true end
+check(A.bridge.Push("sale", "x", 1) == true, "and acceptance as success")
+
+-- The user's own setting wins.
+A.db.SetSetting("pushToAegis", false)
+check(A.bridge.Ready() == false, "push disabled by setting")
+A.db.SetSetting("pushToAegis", true)
+AegisExchange = nil
+
+print("== takeover: the two silent-failure traps ==")
+closeMailCalls = 0
+-- Client MAIL_SHOW path: ShowUIPanel(MailFrame) happens first, then the event.
+ShowUIPanel(MailFrame)
+check(MailFrame:IsVisible(), "client showed MailFrame")
+fire("MAIL_SHOW")
+check(A.ui.mailOpen == true, "mailOpen set")
+-- TRAP 2: the hide must NOT have happened synchronously.
+check(MailFrame:IsVisible(), "MailFrame still visible in the same frame (deferred hide)")
+check(closeMailCalls == 0, "no CloseMail during MAIL_SHOW")
+check(A.ui.frame:IsVisible(), "Courier window shown")
+-- Now let the deferred hider tick.
+local hider = getglobal("AegisCourierHider")
+check(hider ~= nil, "hider frame exists")
+hider.scripts.OnUpdate()
+-- TRAP 1: hidden, but the session must survive.
+check(not MailFrame:IsVisible(), "MailFrame hidden after one tick")
+check(closeMailCalls == 0, "session survived the takeover hide")
+
+print("== takeover: a normal hide still ends the session ==")
+closeMailCalls = 0
+MailFrame:Show()
+MailFrame:Hide()   -- somebody else hiding it, e.g. the client on MAIL_CLOSED
+check(closeMailCalls == 1, "original OnHide body ran", closeMailCalls)
+
+print("== takeover: hand-off to the Blizzard UI ==")
+closeMailCalls = 0
+A.ui.ShowBlizzardMail()
+check(not A.ui.frame:IsVisible(), "Courier window hidden")
+check(MailFrame:IsVisible(), "Blizzard mail shown")
+check(closeMailCalls == 0, "hand-off did not close the session")
+-- While handed off, the hider must not snatch it back.
+hider.scripts.OnUpdate()
+check(MailFrame:IsVisible(), "hider respects showBlizzard")
+-- And back again.
+A.ui.OpenWindow()
+check(A.ui.frame:IsVisible() and not MailFrame:IsVisible(), "swapped back to Courier")
+check(closeMailCalls == 0, "swapping back kept the session")
+
+print("== takeover: closing Courier closes the mailbox ==")
+closeMailCalls = 0
+A.ui.CloseWindow()
+check(closeMailCalls == 1, "CloseWindow ended the session", closeMailCalls)
+fire("MAIL_CLOSED")
+check(A.ui.mailOpen == false, "mailOpen cleared")
+check(not A.ui.frame:IsVisible(), "window hidden on MAIL_CLOSED")
+
+print("== takeover: Escape must not strand the player ==")
+-- UISpecialFrames hides the frame DIRECTLY, never via ui.CloseWindow.
+check(UISpecialFrames[1] == "AegisCourierFrame", "registered with UISpecialFrames")
+ShowUIPanel(MailFrame)
+fire("MAIL_SHOW")
+hider.scripts.OnUpdate()
+check(A.ui.frame:IsVisible() and not MailFrame:IsVisible(), "took over again")
+closeMailCalls = 0
+A.ui.frame:Hide()   -- exactly what Escape does
+check(closeMailCalls == 1, "Escape ended the mail session", closeMailCalls)
+fire("MAIL_CLOSED")
+check(A.ui.mailOpen == false, "mailOpen cleared after Escape")
+
+print("== takeover: MAIL_CLOSED hide does not re-close ==")
+ShowUIPanel(MailFrame)
+fire("MAIL_SHOW")
+hider.scripts.OnUpdate()
+closeMailCalls = 0
+fire("MAIL_CLOSED")   -- client-initiated close: session is already gone
+check(closeMailCalls == 0, "no redundant CloseMail from the MAIL_CLOSED path",
+      closeMailCalls)
+
+print("== takeover disabled by setting ==")
+A.db.SetSetting("takeover", false)
+closeMailCalls = 0
+ShowUIPanel(MailFrame)
+fire("MAIL_SHOW")
+hider.scripts.OnUpdate()
+check(MailFrame:IsVisible(), "Blizzard mailbox left alone when takeover is off")
+check(closeMailCalls == 0, "no session damage when takeover is off")
+A.db.SetSetting("takeover", true)
+
+print("== refresh paths run clean ==")
+fire("MAIL_CLOSED")
+A.ui.OpenWindow()
+A.ui.SelectSubTab("Inbox")
+A.ui.SelectSubTab("Ledger")
+A.ui.SelectSubTab("Courier")
+fire("MAIL_INBOX_UPDATE")
+check(true, "all three tabs refreshed without error")
+
+-- =========================================================================
+-- Stage B: the take engine
+-- =========================================================================
+
+local take = A.take
+local driver = getglobal("AegisCourierTaker")
+check(driver ~= nil, "take driver frame exists")
+
+-- One tick of our OnUpdate, then the server's reply. That reply is the engine's
+-- clock -- the whole design rests on not driving this from a timer.
+--
+-- The reply is FAITHFUL: MAIL_INBOX_UPDATE is fired only when the step
+-- actually asked the server to do something. An earlier version of this pump
+-- fired it every iteration regardless, which hand-fed the engine a clock a
+-- real client would never provide -- and hid a bug where any step that skipped
+-- a mail (COD, GM, wedge guard, the terminal step of a "take") issued no call,
+-- got no acknowledgement, and hung the run for good. 388 checks passed over
+-- that stall. A mock more generous than the server cannot fail.
+local function pump(limit)
+    local n = 0
+    while take.running and n < (limit or 400) do
+        local before = serverCalls
+        driver.scripts.OnUpdate()
+        -- No operation issued means no acknowledgement is coming; the engine
+        -- has to have armed itself or it is wedged. Keep pumping frames so a
+        -- self-armed step still runs, but never invent a server reply.
+        if serverCalls ~= before and take.running then
+            fire("MAIL_INBOX_UPDATE")
+        end
+        n = n + 1
+    end
+    return n
+end
+
+local function mail(t)
+    return { packageIcon = "pkg", stationeryIcon = "st",
+             sender = t.sender or "Bob", subject = t.subject or "hi",
+             money = t.money or 0, cod = t.cod or 0,
+             daysLeft = t.daysLeft or 20, hasItem = t.item and 1 or nil,
+             itemName = t.item, wasRead = t.read and 1 or nil,
+             wasReturned = nil, textCreated = nil,
+             -- `x == false and nil or 1` is the classic Lua and/or trap: the
+             -- `and nil` arm is itself falsy, so `or 1` always fires and the
+             -- helper could never express UNRETURNABLE mail. Auction and
+             -- system mail have canReply unset, and every test that needed
+             -- that had to reach in and clear the field by hand afterwards.
+             canReply = (t.canReply ~= false) and 1 or nil,
+             isGM = t.gm and 1 or nil,
+             body = t.body, invoice = t.invoice, bodyDelay = t.bodyDelay }
+end
+
+local AH = "Stormwind Auction House"
+
+print("== take: Open All ==")
+A.db.ClearLedger()
+INBOX = {
+    mail{ sender = AH, subject = "Auction successful: Silk Cloth", money = 9500 },
+    mail{ sender = "Bob", subject = "here you go", item = "Copper Ore" },
+    mail{ sender = "Ann", subject = "pay up", money = 100, cod = 5000 },
+    mail{ sender = "GM", subject = "ticket", money = 700, gm = true },
+    mail{ sender = AH, subject = "Auction successful: Black Lotus", money = 190000 },
+}
+check(take.HasWork(take.MODE_OPEN), "HasWork sees collectable mail")
+check(take.Start(take.MODE_OPEN), "run started")
+local steps = pump()
+check(not take.running, "run finished", steps)
+check(table.getn(INBOX) == 2, "only COD + GM mail remain", table.getn(INBOX))
+check(INBOX[1].cod == 5000, "COD mail untouched")
+check(INBOX[1].money == 100, "COD mail money not taken")
+check(INBOX[2].isGM == 1, "GM mail untouched")
+check(INBOX[2].money == 700, "GM mail money not taken")
+check(take.money == 199500, "collected total", take.money)
+check(take.items == 1, "one item taken", take.items)
+
+local led = A.db.Ledger()
+check(table.getn(led) == 2, "two sales booked", table.getn(led))
+check(led[1].item == "Silk Cloth", "item name from subject", led[1].item)
+check(led[1].amount == 9500, "amount is NET", led[1].amount)
+check(led[1].gross == 10000, "gross derived", led[1].gross)
+check(led[1].cut == 500, "5% cut derived", led[1].cut)
+check(led[1].gross - led[1].cut == led[1].amount, "entry reconciles")
+check(led[2].item == "Black Lotus", "second sale booked")
+
+print("== take: only 'sold' mail books income ==")
+A.db.ClearLedger()
+INBOX = {
+    -- Outbid mail returns YOUR OWN BID. Booking it as income would inflate
+    -- every total the addon reports.
+    mail{ sender = AH, subject = "Outbid on Arcanite Bar", money = 50000 },
+    -- Won mail delivers the item; the buyer already paid, so there is no price.
+    mail{ sender = AH, subject = "Auction won: Righteous Orb", item = "Righteous Orb" },
+    mail{ sender = AH, subject = "Auction expired: Copper Ore", item = "Copper Ore" },
+    mail{ sender = AH, subject = "Auction cancelled: Linen Cloth", item = "Linen Cloth" },
+}
+take.Start(take.MODE_OPEN)
+pump()
+check(table.getn(INBOX) == 0, "all four collected", table.getn(INBOX))
+check(take.money == 50000, "outbid refund WAS collected", take.money)
+check(table.getn(A.db.Ledger()) == 0, "but nothing booked as a sale",
+      table.getn(A.db.Ledger()))
+local income = A.db.LedgerTotals(nil)
+check(income == 0, "income stays zero", income)
+
+print("== take: Take All keeps the mail ==")
+A.db.ClearLedger()
+INBOX = {
+    mail{ sender = AH, subject = "Auction successful: Silk Cloth", money = 9500 },
+    mail{ sender = "Bob", subject = "gift", item = "Copper Ore" },
+}
+take.Start(take.MODE_TAKE)
+pump()
+check(table.getn(INBOX) == 2, "mails kept", table.getn(INBOX))
+check(INBOX[1].money == 0, "money taken")
+check(INBOX[2].itemName == nil, "item taken")
+check(take.money == 9500, "money counted")
+check(table.getn(A.db.Ledger()) == 1, "sale still booked")
+
+print("== take: re-running does not double-count ==")
+-- The dedupe claim: recording on COLLECTION means an emptied mail has nothing
+-- left to book, so a second pass over the same inbox is inert. No arrival
+-- fingerprint, so no chance of two identical sales colliding into one.
+local before = table.getn(A.db.Ledger())
+take.Start(take.MODE_TAKE)
+pump()
+check(table.getn(A.db.Ledger()) == before, "second pass booked nothing",
+      table.getn(A.db.Ledger()))
+check(take.money == 0, "and collected nothing", take.money)
+
+print("== take: two identical sales both book ==")
+-- The exact case an arrival-bucket key would have collapsed into one entry.
+A.db.ClearLedger()
+INBOX = {
+    mail{ sender = AH, subject = "Auction successful: Silk Cloth", money = 9500 },
+    mail{ sender = AH, subject = "Auction successful: Silk Cloth", money = 9500 },
+}
+take.Start(take.MODE_OPEN)
+pump()
+check(table.getn(A.db.Ledger()) == 2, "both identical sales booked",
+      table.getn(A.db.Ledger()))
+local inc2 = A.db.LedgerTotals(nil)
+check(inc2 == 19000, "income counts both", inc2)
+
+print("== take: Delete Read is conservative ==")
+INBOX = {
+    mail{ sender = "Bob", subject = "read and empty", read = true },
+    mail{ sender = "Ann", subject = "unread and empty" },
+    mail{ sender = "Cid", subject = "read with gold", money = 500, read = true },
+    mail{ sender = "Dot", subject = "read with item", item = "Copper Ore", read = true },
+}
+take.Start(take.MODE_DELETE)
+pump()
+check(table.getn(INBOX) == 3, "only the read+empty mail was deleted",
+      table.getn(INBOX))
+check(INBOX[1].subject == "unread and empty", "unread kept")
+check(INBOX[2].money == 500, "unclaimed gold kept")
+check(INBOX[3].itemName == "Copper Ore", "unclaimed item kept")
+check(take.money == 0, "delete mode takes nothing")
+
+print("== take: a failed take books nothing and never deletes ==")
+A.db.ClearLedger()
+INBOX = { mail{ sender = AH, subject = "Auction successful: Silk Cloth", money = 9500 } }
+failTakeMoney = true
+take.Start(take.MODE_OPEN)
+pump()
+failTakeMoney = false
+check(table.getn(INBOX) == 1, "mail survived a failed take", table.getn(INBOX))
+check(INBOX[1].money == 9500, "money still in the mail")
+check(table.getn(A.db.Ledger()) == 0, "nothing booked",
+      table.getn(A.db.Ledger()))
+check(take.money == 0, "nothing counted")
+
+print("== take: never deletes a mail still holding an item ==")
+INBOX = { mail{ sender = "Bob", subject = "gift", item = "Copper Ore" } }
+failTakeItem = true
+take.Start(take.MODE_OPEN)
+pump()
+failTakeItem = false
+check(table.getn(INBOX) == 1, "mail survived", table.getn(INBOX))
+check(INBOX[1].itemName == "Copper Ore", "item NOT destroyed by a delete")
+
+print("== take: bag-full aborts, item-cap skips ==")
+INBOX = {
+    mail{ sender = "Bob", subject = "a", item = "Copper Ore" },
+    mail{ sender = "Ann", subject = "b", money = 100 },
+}
+failTakeItem = true
+take.Start(take.MODE_OPEN)
+driver.scripts.OnUpdate()          -- issues TakeInboxItem
+fire("UI_ERROR_MESSAGE", ERR_INV_FULL)
+check(not take.running, "ERR_INV_FULL stopped the run")
+failTakeItem = false
+
+INBOX = {
+    mail{ sender = "Bob", subject = "a", item = "Copper Ore" },
+    mail{ sender = AH, subject = "Auction successful: Silk Cloth", money = 9500 },
+}
+A.db.ClearLedger()
+failTakeItem = true
+take.Start(take.MODE_OPEN)
+driver.scripts.OnUpdate()
+fire("UI_ERROR_MESSAGE", ERR_ITEM_MAX_COUNT)
+check(take.running, "ERR_ITEM_MAX_COUNT did not stop the run")
+failTakeItem = false
+pump()
+check(table.getn(A.db.Ledger()) == 1, "run continued past the capped item",
+      table.getn(A.db.Ledger()))
+
+print("== take: wedge guard ==")
+-- A mail the server simply will not hand over must not spin forever.
+INBOX = { mail{ sender = "Bob", subject = "stuck", money = 100 },
+          mail{ sender = "Ann", subject = "fine", money = 200 } }
+failTakeMoney = true
+take.Start(take.MODE_TAKE)
+local n = pump(100)
+failTakeMoney = false
+check(not take.running, "run terminated rather than wedging", n)
+check(n < 100, "and did so promptly", n)
+
+print("== take: right-click a single mail ==")
+A.db.ClearLedger()
+INBOX = {
+    mail{ sender = "Bob", subject = "keep me", money = 300 },
+    mail{ sender = AH, subject = "Auction successful: Silk Cloth", money = 9500 },
+}
+check(take.Single(2), "single take started")
+pump()
+check(not take.running, "single take finished")
+check(table.getn(INBOX) == 1, "only the clicked mail was taken",
+      table.getn(INBOX))
+check(INBOX[1].money == 300, "the other mail is untouched")
+check(table.getn(A.db.Ledger()) == 1, "its sale was booked")
+
+print("== take: COD is never taken by right-click either ==")
+INBOX = { mail{ sender = "Ann", subject = "pay up", money = 100, cod = 5000 } }
+check(take.Single(1) == false, "single take refuses COD")
+check(INBOX[1].money == 100, "COD mail untouched")
+
+print("== take: money and item leave in ONE round trip ==")
+-- A server call is a full latency wait and that is the unit the user feels --
+-- Lua time is nothing next to it (a whole 12-mail send is under a millisecond).
+-- Courier used to spend one trip on the money, wait, then another on the item,
+-- so a mail holding both cost three trips with the delete. TurtleMail costs
+-- one. This asserts the two takes share a trip; the delete still has its own.
+INBOX = { mail{ sender = "Bob", subject = "parcel", money = 500,
+                item = "Black Lotus" } }
+serverCalls = 0
+local tripCount = 0
+take.Start(take.MODE_OPEN)
+local tdrv = getglobal("AegisCourierTaker")
+local tg = 0
+while take.running and tg < 200 do
+    local before = serverCalls
+    tdrv.scripts.OnUpdate()
+    if serverCalls ~= before and take.running then
+        tripCount = tripCount + 1
+        fire("MAIL_INBOX_UPDATE")
+    end
+    tg = tg + 1
+end
+check(table.getn(INBOX) == 0, "the mail was collected and deleted")
+check(serverCalls == 3, "three server calls were needed", serverCalls)
+check(tripCount == 2, "but only TWO waits -- money and item shared one",
+      tripCount)
+check(take.money == 500, "the money was booked once", take.money)
+check(take.items == 1, "and the item once", take.items)
+
+print("== take: a full bag books the money but NOT the item ==")
+-- The hazard the combined step creates: one call can be honoured and the other
+-- refused. A full bag rejects the item while the gold arrives anyway. Booking
+-- them together on the strength of the money would credit an item still
+-- sitting in the mail -- and the next step, which takes it properly, would
+-- count it a second time. Worse, nothing may delete a mail still holding it.
+INBOX = { mail{ sender = "Bob", subject = "parcel", money = 500,
+                item = "Black Lotus" } }
+failTakeItem = true
+take.Start(take.MODE_OPEN)
+pump(12)
+check(take.money == 500, "the gold was collected", take.money)
+check(take.items == 0, "the refused item was NOT booked", take.items)
+check(table.getn(INBOX) == 1, "and the mail was NOT deleted", table.getn(INBOX))
+check(INBOX[1].hasItem, "with the item still safely in it")
+failTakeItem = false
+-- ...and once the bag has room, a re-run collects it without double counting.
+take.Start(take.MODE_OPEN)
+pump()
+check(table.getn(INBOX) == 0, "the re-run collected it", table.getn(INBOX))
+check(take.items == 1, "counted exactly once", take.items)
+
+print("== take: Take Sold collects sales and leaves everything else ==")
+-- The bank-alt case: a mailbox that is mostly auction traffic plus a few real
+-- letters. Open All takes the lot; this takes the gold from completed sales
+-- and leaves the rest untouched.
+INBOX = {
+    mail{ sender = AH,    subject = "Auction successful: Silk Cloth", money = 9500 },
+    mail{ sender = "Ann", subject = "hey",  money = 300 },
+    mail{ sender = AH,    subject = "Auction expired: Black Lotus", item = "Black Lotus" },
+    mail{ sender = AH,    subject = "Outbid on Arcanite Bar", money = 1200 },
+    mail{ sender = AH,    subject = "Auction successful: Copper Ore", money = 400 },
+}
+check(take.HasWork(take.MODE_OPEN, "sold"), "there are sales to take")
+check(take.Start(take.MODE_OPEN, "sold"), "the run started")
+pump()
+check(not take.running, "and finished rather than stalling on a skip")
+check(table.getn(INBOX) == 3, "the two sales were collected", table.getn(INBOX))
+check(INBOX[1].sender == "Ann", "the player letter survived", INBOX[1].sender)
+check(INBOX[1].money == 300, "with its gold untouched", INBOX[1].money)
+check(A.util.Contains(INBOX[2].subject, "expired"),
+      "the expired auction survived", INBOX[2].subject)
+check(INBOX[2].hasItem, "still holding its goods")
+check(A.util.Contains(INBOX[3].subject, "Outbid"),
+      "and the outbid refund survived", INBOX[3].subject)
+check(INBOX[3].money == 1200, "with its returned bid untouched", INBOX[3].money)
+check(take.money == 9900, "only the two sales were collected", take.money)
+check(take.only == nil, "the filter did not outlive the run")
+
+print("== take: Take Sold books BOTH sales in the ledger ==")
+-- Filtered or not, collection is still what writes the ledger -- and outbid
+-- money must still never be booked as income (rule 20).
+A.db.ClearLedger()
+INBOX = {
+    mail{ sender = AH, subject = "Auction successful: Silk Cloth", money = 9500 },
+    mail{ sender = AH, subject = "Outbid on Arcanite Bar", money = 1200 },
+    mail{ sender = AH, subject = "Auction successful: Copper Ore", money = 400 },
+}
+take.Start(take.MODE_OPEN, "sold")
+pump()
+check(table.getn(A.db.Ledger()) == 2, "two sales booked",
+      table.getn(A.db.Ledger()))
+check(table.getn(INBOX) == 1, "the outbid mail is still there", table.getn(INBOX))
+
+print("== take: Take Sold with nothing sold does nothing at all ==")
+-- The filtered run walks past far more mail than an ordinary one, so its skips
+-- are the ones most likely to expose a missing re-arm (rule 16). A mailbox
+-- with no sales at all is that walk end to end.
+INBOX = {
+    mail{ sender = "Ann", subject = "hey", money = 300 },
+    mail{ sender = AH,    subject = "Outbid on Arcanite Bar", money = 1200 },
+    mail{ sender = "Bob", subject = "parcel", item = "Black Lotus" },
+}
+check(take.HasWork(take.MODE_OPEN, "sold") == false,
+      "the button would not be offered")
+check(take.Start(take.MODE_OPEN, "sold"), "but a run started anyway still...")
+pump()
+check(not take.running, "...walks the whole inbox and STOPS rather than hanging")
+check(table.getn(INBOX) == 3, "having taken nothing", table.getn(INBOX))
+check(take.money == 0, "and collected nothing", take.money)
+
+print("== take: a stopped filtered run does not leak its filter ==")
+-- take.Start always overwrites take.only, so a leak cannot show up there --
+-- but take.Single and take.PayCOD do not go through Start, and a filter left
+-- behind would make a right-clicked letter silently do nothing. Those are the
+-- entry points a stale filter can actually reach.
+INBOX = {
+    mail{ sender = AH,    subject = "Auction successful: Silk Cloth", money = 9500 },
+    mail{ sender = "Ann", subject = "hey", money = 300 },
+}
+take.Start(take.MODE_OPEN, "sold")
+take.Stop(true)                        -- user hits Stop mid-run
+check(take.only == nil, "Stop cleared the filter")
+-- Right-click the PLAIN letter, which a leaked "sold" filter would skip.
+check(take.Single(2), "a single take on a non-sale still starts")
+pump()
+check(not take.running, "and finishes")
+check(table.getn(INBOX) == 1, "the letter was taken", table.getn(INBOX))
+check(INBOX[1].subject ~= "hey", "and it was the right mail", INBOX[1].subject)
+
+print("== take UI: the Take Sold button tracks the same filter ==")
+INBOX = { mail{ sender = "Ann", subject = "hey", money = 300 } }
+A.ui.mailOpen = true
+A.ui.OnTakeStateChanged()
+check(A.ui.btnOpenAll:IsEnabled(), "Open All is live for a plain money mail")
+check(not A.ui.btnTakeSold:IsEnabled(),
+      "but Take Sold is not -- there are no sales")
+INBOX = {
+    mail{ sender = AH, subject = "Auction successful: Silk Cloth", money = 9500 },
+}
+A.ui.OnTakeStateChanged()
+check(A.ui.btnTakeSold:IsEnabled() and true,
+      "and it lights up once a sale is there")
+
+print("== take: a COD can be paid deliberately, by index, once ==")
+-- THE FIELD BUG: there was no way to pay a COD at all. Every automatic path
+-- refuses one (rule 21, and rightly), the reader hid its Take button, and
+-- Courier's takeover keeps the Blizzard mailbox hidden -- so users were
+-- DISABLING THE ADDON to collect COD mail. Rule 21 bars paying one
+-- AUTOMATICALLY; it does not bar the player from paying one on purpose.
+INBOX = {
+    mail{ sender = "Ann", subject = "pay up", cod = 5000,
+          item = "Black Lotus" },
+    mail{ sender = "Bob", subject = "hi", money = 300 },
+}
+playerMoney = 10000000
+check(take.CanPayCOD(1), "the COD mail is payable")
+check(take.PayCOD(1), "paying it started a run")
+pump()
+check(not take.running, "the run finished")
+check(table.getn(INBOX) == 1, "the COD mail was collected", table.getn(INBOX))
+check(INBOX[1].sender == "Bob", "and the OTHER mail was left alone",
+      INBOX[1].sender)
+-- The mail going away proves nothing on its own: an empty COD mail is simply
+-- deleted. The money leaving is the only evidence the COD was actually PAID.
+check(playerMoney == 10000000 - 5000, "the COD was actually paid", playerMoney)
+check(take.codIndex == nil, "and the permission did not outlive the run")
+
+print("== take: a COD you cannot afford is refused before anything happens ==")
+INBOX = { mail{ sender = "Ann", subject = "pay up", cod = 5000,
+                item = "Black Lotus" } }
+playerMoney = 100                    -- 50s short
+local okPay, whyPay = take.CanPayCOD(1)
+check(okPay == false, "CanPayCOD says no")
+check(A.util.Contains(whyPay or "", "afford"), "and says why", whyPay)
+check(take.PayCOD(1) == false, "PayCOD refuses to start")
+check(table.getn(INBOX) == 1, "the mail is untouched")
+check(INBOX[1].cod == 5000, "and still owes its COD")
+playerMoney = 10000000
+
+print("== take: the COD permission is ONE index, not a mode ==")
+-- take.codIndex is compared against the index the engine is STANDING ON, so a
+-- permission granted for one mail cannot pay a different one. The comparison
+-- is what makes it a permission rather than a mode.
+--
+-- Driven through take.Step directly and deliberately: take.PayCOD always sets
+-- take.single, which stops the run after one mail, so a black-box run can
+-- never walk onto a second COD and therefore can never tell the two apart. A
+-- test that ran PayCOD and checked the next mail survived passed just as
+-- happily with the index comparison deleted.
+INBOX = {
+    mail{ sender = "Ann", subject = "first", cod = 5000,
+          item = "Black Lotus" },
+    mail{ sender = "Bob", subject = "second", cod = 7000,
+          item = "Arcanite Bar" },
+}
+local moneyBeforePair = playerMoney
+-- Permission for mail 1, engine standing on mail 2.
+take.running  = true
+take.mode     = take.MODE_OPEN
+take.codIndex = 1
+take.index    = 2
+take.attempts = 0
+take.lastSig  = nil
+take.pending  = nil
+take.logSnap  = nil
+take.Step()
+check(take.index == 3, "the engine stepped OVER the COD it had no permission for",
+      take.index)
+check(playerMoney == moneyBeforePair, "paying nothing", playerMoney)
+check(INBOX[2].cod == 7000, "and left it owing", INBOX[2].cod)
+take.Stop(true)
+
+-- ...and the same engine, standing on the mail it DOES have permission for,
+-- goes through with it. Both halves matter: the first alone passes if the
+-- guard simply refuses everything.
+INBOX = {
+    mail{ sender = "Ann", subject = "first", cod = 5000,
+          item = "Black Lotus" },
+}
+local moneyBeforeOne = playerMoney
+check(take.PayCOD(1), "paid the one it was pointed at")
+pump()
+check(playerMoney == moneyBeforeOne - 5000, "the money left the player",
+      playerMoney)
+check(table.getn(INBOX) == 0, "and the mail was collected", table.getn(INBOX))
+
+print("== take: Open All still refuses every COD, permission or not ==")
+-- The whole point of the narrow exception. Open All never sets codIndex, so a
+-- COD sitting in the middle of an inbox is stepped over exactly as before.
+-- TWO COD mails, and the ordinary one FIRST so that after it is taken and
+-- deleted the run stands on index 1 and then index 2 with a COD under each.
+-- A single COD tucked at one index proves nothing: a leaked permission naming
+-- a different index would sail past it unnoticed, which is exactly what an
+-- earlier version of this test did.
+INBOX = {
+    mail{ sender = "Ann", subject = "sale", money = 500 },
+    mail{ sender = "Bob", subject = "pay up", cod = 5000,
+          item = "Black Lotus" },
+    mail{ sender = "Cid", subject = "pay up too", cod = 7000,
+          item = "Arcanite Bar" },
+}
+local moneyBeforeOpen = playerMoney
+check(take.Start(take.MODE_OPEN), "Open All started")
+check(take.codIndex == nil, "with no COD permission granted")
+pump()
+check(not take.running, "and finished rather than stalling on the COD")
+check(table.getn(INBOX) == 2, "the ordinary mail was taken, both CODs left",
+      table.getn(INBOX))
+check(INBOX[1].cod == 5000 and INBOX[2].cod == 7000,
+      "neither COD was paid",
+      tostring(INBOX[1].cod) .. "/" .. tostring(INBOX[2].cod))
+check(playerMoney == moneyBeforeOpen, "and no money left the player",
+      playerMoney)
+
+print("== take: GM mail has no such exception ==")
+INBOX = { mail{ sender = "GM", subject = "ticket", cod = 5000,
+                item = "Thing", gm = true } }
+check(take.CanPayCOD(1) == false, "a GM COD is not payable")
+check(take.PayCOD(1) == false, "and PayCOD refuses it")
+check(table.getn(INBOX) == 1, "the mail is untouched")
+
+print("== take: pushes to Aegis when the seam is live ==")
+A.db.ClearLedger()
+local pushed2 = {}
+AegisExchange = FakeAegis(pushed2)
+INBOX = { mail{ sender = AH, subject = "Auction successful: Silk Cloth", money = 9500 } }
+take.Start(take.MODE_OPEN)
+pump()
+check(table.getn(pushed2) == 1, "one push", table.getn(pushed2))
+check(pushed2[1].kind == "sale" and pushed2[1].item == "Silk Cloth"
+      and pushed2[1].amount == 9500, "pushed the NET, matching Aegis's shape")
+check(table.getn(A.db.Ledger()) == 1, "and kept its own entry")
+AegisExchange = nil
+
+print("== take: driver only runs at a mailbox ==")
+take.SetMailboxOpen(true)
+check(driver.visible, "driver shown at a mailbox")
+INBOX = { mail{ sender = "Bob", subject = "x", money = 100 } }
+take.Start(take.MODE_TAKE)
+take.SetMailboxOpen(false)
+check(not driver.visible, "driver hidden away from a mailbox")
+check(not take.running, "run abandoned when the mailbox closed")
+
+print("== take: action bar enable state ==")
+A.ui.mailOpen = true
+INBOX = { mail{ sender = "Bob", subject = "x", money = 100 } }
+A.ui.OpenWindow()
+A.ui.SelectSubTab("Inbox")
+check(A.ui.btnOpenAll ~= nil, "action bar built")
+check(take.HasWork(take.MODE_OPEN), "work available")
+INBOX = {}
+check(not take.HasWork(take.MODE_OPEN), "no work on an empty inbox")
+check(not take.HasWork(take.MODE_DELETE), "nothing to delete either")
+A.ui.OnTakeStateChanged()
+check(true, "action bar refresh runs clean on an empty inbox")
+
+-- =========================================================================
+-- Stage C: sending mail
+-- =========================================================================
+
+local send = A.send
+local sdriver = getglobal("AegisCourierSender")
+check(sdriver ~= nil, "send driver frame exists")
+
+-- Our tick issues one mail; the server then confirms it. Sending a batch from
+-- inside the success handler is exactly what this deferral avoids.
+local function pumpSend(limit)
+    local n = 0
+    -- The batch's FIRST mail is issued synchronously by send.Start, so an
+    -- acknowledgement can already be outstanding before the first tick.
+    while send.sending and n < (limit or 60) do
+        if pendingAck then
+            local ack = pendingAck
+            pendingAck = nil
+            fire(ack)
+        end
+        if not send.sending then break end
+        -- A generous frame delta so any retry wait elapses in one tick. The
+        -- fake clock advances with it, so elapsed time is measurable.
+        fakeClock = fakeClock + 5
+        arg1 = 5
+        -- A HIDDEN FRAME RUNS NO OnUpdate. The mock used to tick the driver
+        -- regardless, which made frame cost invisible: a driver that hid
+        -- itself between mails and had to be re-Shown looked exactly as fast
+        -- as one that stayed live. The wall clock still advances -- that is
+        -- the whole point of the frame being wasted.
+        if sdriver.visible and not rawget(sdriver, "justShown") then
+            sdriver.scripts.OnUpdate()
+        end
+        rawset(sdriver, "justShown", nil)
+        arg1 = nil
+        n = n + 1
+    end
+    if pendingAck then
+        local ack = pendingAck
+        pendingAck = nil
+        fire(ack)
+    end
+    return n
+end
+
+local function stockBags()
+    BAGS = { [0] = {
+        [1] = { name = "Silk Cloth",   texture = "t1", count = 20 },
+        [2] = { name = "Copper Ore",   texture = "t2", count = 5 },
+        [3] = { name = "Black Lotus",  texture = "t3", count = 1 },
+    } }
+    SENT = {}
+    attachSlot, cursor = nil, nil
+    send.ClearAttachments()
+end
+
+print("== util: item links and money parsing ==")
+check(A.util.ItemNameFromLink("|cff1eff00|Hitem:2589:0:0:0|h[Linen Cloth]|h|r")
+      == "Linen Cloth", "name extracted from link")
+check(A.util.ItemNameFromLink(nil) == nil, "nil link safe")
+check(A.util.ItemIdFromLink("|Hitem:2589:0:0:0|h") == 2589, "id extracted")
+check(A.util.ParseMoney("12g 30s") == 123000, "g+s parsed", A.util.ParseMoney("12g 30s"))
+check(A.util.ParseMoney("50") == 500000, "bare number reads as gold",
+      A.util.ParseMoney("50"))
+check(A.util.ParseMoney("7c") == 7, "copper parsed")
+check(A.util.ParseMoney("") == nil, "empty is nil")
+check(A.util.ParseMoney("abc") == nil, "junk is nil")
+
+print("== send: attachment list ==")
+stockBags()
+check(send.Attach(0, 1), "attached first item")
+check(send.Count() == 1, "count is 1")
+check(send.attachments[1].name == "Silk Cloth", "name resolved from the link",
+      send.attachments[1].name)
+check(send.attachments[1].count == 20, "stack count kept")
+check(send.Attach(0, 1) == false, "same slot cannot be attached twice")
+check(send.Attach(0, 99) == false, "empty slot cannot be attached")
+check(send.Attach(0, 2), "second item attached")
+check(send.Count() == 2, "count is 2")
+check(send.Detach(1), "detached")
+check(send.Count() == 1 and send.attachments[1].name == "Copper Ore",
+      "the right one was removed")
+send.ClearAttachments()
+check(send.Count() == 0, "cleared")
+
+print("== send: cost is per MAIL, not per send ==")
+stockBags()
+check(send.MailCount() == 1, "no attachments still means one mail")
+check(send.Postage() == 30, "one mail's postage", send.Postage())
+send.Attach(0, 1); send.Attach(0, 2); send.Attach(0, 3)
+check(send.MailCount() == 3, "three items means three mails")
+check(send.Postage() == 90, "postage multiplies", send.Postage())
+check(send.TotalCost(5000, false) == 5090, "attached gold is spent",
+      send.TotalCost(5000, false))
+check(send.TotalCost(5000, true) == 90, "COD gold is collected, not spent",
+      send.TotalCost(5000, true))
+
+print("== send: validation ==")
+stockBags()
+-- A LIVE MAIL SESSION IS PART OF THE FIXTURE. These checks used to run with
+-- send.atMailbox false, which is a state the player cannot actually be in when
+-- the Send button is in front of them -- so every one of them was answering
+-- the wrong question and none could see the missing session guard.
+local wasAt = send.atMailbox
+send.atMailbox = true
+local ok, why = send.Validate("", 0, false)
+check(not ok and why == "no recipient", "empty recipient rejected", why)
+ok, why = send.Validate("   ", 0, false)
+check(not ok, "whitespace recipient rejected")
+ok, why = send.Validate("Bob", 0, false)
+check(not ok and why == "nothing to send", "wholly empty mail rejected", why)
+
+-- A LETTER IS A MAIL. Courier used to refuse anything carrying neither an item
+-- nor gold, which made it impossible to write to anyone -- reported from live
+-- play as "can't send without an item attached".
+ok, why = send.Validate("Bob", 0, false, "How are you?", "")
+check(ok, "a subject alone is sendable", why)
+ok, why = send.Validate("Bob", 0, false, "", "just checking in")
+check(ok, "a body alone is sendable", why)
+ok, why = send.Validate("Bob", 0, false, "How are you?", "long time no see")
+check(ok, "subject and body are sendable", why)
+ok, why = send.Validate("Bob", 0, false, "   ", "  ")
+check(not ok and why == "nothing to send",
+      "but whitespace is not content", why)
+
+ok, why = send.Validate("Bob", 5000, true)
+check(not ok and why == "COD needs an item", "COD without an item rejected", why)
+send.Attach(0, 1)
+ok, why = send.Validate("Bob", 0, false)
+check(ok, "item alone is sendable", why)
+playerMoney = 10
+ok, why = send.Validate("Bob", 0, false)
+check(not ok, "cannot afford postage", why)
+playerMoney = 10000000
+
+print("== send: one item, one mail ==")
+stockBags()
+send.Attach(0, 1)
+-- THE SESSION ITSELF. /courier opens the window anywhere and the minimap
+-- button makes that a normal thing to do, so "no mailbox" is a real state the
+-- form can be looked at in -- and with no session SendMail posts into nothing
+-- and fails silently, which is the worst way for it to fail.
+send.atMailbox = false
+ok, why = send.Validate("Bob", 0, false, "hi", "there")
+check(not ok and why == "not at a mailbox",
+      "a mail that is fine in every other way still needs a mailbox", why)
+check(not send.Start("Bob", "hi", "there", 0, false, false),
+      "and Start refuses outright")
+send.atMailbox = true
+ok, why = send.Validate("Bob", 0, false, "hi", "there")
+check(ok, "at a mailbox the same mail is fine", why)
+
+check(send.Start("Bob", "hello", "body text", 0, false, false), "send started")
+pumpSend()
+check(not send.sending, "finished")
+check(table.getn(SENT) == 1, "one mail sent", table.getn(SENT))
+check(SENT[1].to == "Bob", "recipient")
+check(SENT[1].subject == "hello", "subject verbatim for a single mail",
+      SENT[1].subject)
+check(SENT[1].body == "body text", "body")
+check(SENT[1].item == "Silk Cloth", "item attached", tostring(SENT[1].item))
+check(send.Count() == 0, "attachment list cleared after success")
+
+print("== send: a plain letter, no attachment and no gold ==")
+-- The reported bug, end to end rather than only through Validate: the whole
+-- point is that this reaches the server.
+stockBags()
+SENT = {}
+check(send.Count() == 0, "nothing attached")
+send.atMailbox = true   -- sending needs a live session
+check(send.Start("Torchlyte", "How are you?", "long time no see", 0, false,
+      false), "a letter starts sending")
+pumpSend()
+check(not send.sending, "finished")
+check(table.getn(SENT) == 1, "one letter sent", table.getn(SENT))
+check(SENT[1].to == "Torchlyte", "recipient", SENT[1].to)
+check(SENT[1].subject == "How are you?", "subject", SENT[1].subject)
+check(SENT[1].body == "long time no see", "body", SENT[1].body)
+check(SENT[1].item == nil, "and no item rode along", tostring(SENT[1].item))
+check(send.MailCount() == 1, "a letter is one mail for postage", send.MailCount())
+
+print("== send: three items become three mails ==")
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2); send.Attach(0, 3)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "stuff", "", 0, false, false)
+pumpSend()
+check(table.getn(SENT) == 3, "three mails", table.getn(SENT))
+check(SENT[1].subject == "stuff [1/3]", "batch subjects numbered", SENT[1].subject)
+check(SENT[3].subject == "stuff [3/3]", "last numbered", SENT[3].subject)
+check(SENT[1].item == "Silk Cloth" and SENT[2].item == "Copper Ore"
+      and SENT[3].item == "Black Lotus", "one item per mail, in order")
+check(send.sentCount == 3, "count tracked")
+
+print("== send: blank subject auto-names from the item ==")
+stockBags()
+send.Attach(0, 1); send.Attach(0, 3)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "", "", 0, false, false)
+pumpSend()
+check(SENT[1].subject == "Silk Cloth (20)", "stack count included",
+      SENT[1].subject)
+check(SENT[2].subject == "Black Lotus", "single item has no count suffix",
+      SENT[2].subject)
+
+print("== send: gold rides the FIRST mail only ==")
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "gold", "", 5000, false, false)
+pumpSend()
+check(table.getn(SENT) == 2, "two mails")
+check(SENT[1].money == 5000, "first mail carries the gold", SENT[1].money)
+check(SENT[2].money == 0, "second does NOT resend it", SENT[2].money)
+
+print("== send: COD on the first vs on every mail ==")
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "cod", "", 5000, true, false)
+pumpSend()
+check(SENT[1].cod == 5000, "COD on the first", SENT[1].cod)
+check(SENT[2].cod == 0, "not on the second", SENT[2].cod)
+
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "cod", "", 5000, true, true)
+pumpSend()
+check(SENT[1].cod == 5000 and SENT[2].cod == 5000, "codAll charges every mail",
+      tostring(SENT[1].cod) .. "/" .. tostring(SENT[2].cod))
+
+print("== send: a stack the server has LOCKED is waited for, not abandoned ==")
+-- The reported "could not attach X -- send stopped". GetContainerItemInfo's
+-- third return is `locked`, and PickupContainerItem on a locked slot does
+-- nothing at all -- so a run that ignores the flag attaches nothing, fails its
+-- own verification, and used to throw the rest of the queue away.
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2)
+BAGS[0][2].locked = 1                 -- the server is holding Copper Ore
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "x", "", 0, false, false)
+pumpSend(8)
+check(send.sending, "the run is still alive, waiting on the lock")
+check(table.getn(SENT) == 1, "the unlocked item went out", table.getn(SENT))
+check(SENT[1].item == "Silk Cloth", "and it was the right one", SENT[1].item)
+check((send.skipped or 0) == 0, "nothing has been skipped yet", send.skipped)
+BAGS[0][2].locked = nil               -- server releases it
+pumpSend()
+check(not send.sending, "run completes once the lock clears")
+check(table.getn(SENT) == 2, "both items sent", table.getn(SENT))
+check(SENT[2].item == "Copper Ore", "including the one that was locked",
+      SENT[2].item)
+check((send.skipped or 0) == 0, "and nothing was skipped", send.skipped)
+
+print("== send: a lock that never clears costs one item, not the batch ==")
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2); send.Attach(0, 3)
+BAGS[0][1].locked = 1                 -- stuck forever
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "x", "", 0, false, false)
+pumpSend(200)
+BAGS[0][1].locked = nil
+check(not send.sending, "the run finished rather than hanging")
+check(send.skipped == 1, "the stuck item was skipped", send.skipped)
+check(table.getn(SENT) == 2, "the other two still went out", table.getn(SENT))
+check(BAGS[0][1] ~= nil, "and the stuck item is still in the bag")
+
+print("== send: a stack that MOVED is found again, not lost ==")
+-- Bag coordinates are the only address 1.12 gives us and they are not stable:
+-- a snapshot taken at queue time can be wrong by the time the batch reaches it.
+stockBags()
+send.Attach(0, 1)                     -- Silk Cloth at slot 1
+send.Attach(0, 2)
+BAGS[0][7] = BAGS[0][1]               -- player reshuffles: Silk Cloth -> slot 7
+BAGS[0][1] = nil
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "x", "", 0, false, false)
+pumpSend()
+check(not send.sending, "run finished")
+check((send.skipped or 0) == 0, "nothing was skipped", send.skipped)
+check(table.getn(SENT) == 2, "both mails sent", table.getn(SENT))
+check(SENT[1].item == "Silk Cloth", "the moved stack was relocated by name",
+      SENT[1].item)
+
+print("== send: a DIFFERENT item in the remembered slot is never mailed ==")
+-- First line of defence: ResolveSlot compares names before touching anything.
+-- The dangerous case. The old verification asked only "is something
+-- attached?", so a stack that had moved out and been replaced sent the
+-- REPLACEMENT to the recipient silently. Worse than the visible abort.
+stockBags()
+send.Attach(0, 1)                     -- queue Silk Cloth
+send.Attach(0, 2)                     -- and Copper Ore
+-- Silk Cloth leaves the bags entirely; Black Lotus takes its slot.
+BAGS[0][1] = { name = "Black Lotus", texture = "t9", count = 1 }
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "x", "", 0, false, false)
+pumpSend()
+check(not send.sending, "run finished")
+check(send.skipped == 1, "the vanished item was skipped", send.skipped)
+local mailedLotus = false
+local mi = 1
+while mi <= table.getn(SENT) do
+    if SENT[mi].item == "Black Lotus" then mailedLotus = true end
+    mi = mi + 1
+end
+check(mailedLotus == false, "the WRONG item was never mailed")
+check(BAGS[0][1] ~= nil and BAGS[0][1].name == "Black Lotus",
+      "and it is still safely in the bag")
+check(table.getn(SENT) == 1, "the other item still went out", table.getn(SENT))
+check(SENT[1].item == "Copper Ore", "and it was the right one", SENT[1].item)
+
+print("== send: a last-instant swap is caught AFTER the attach ==")
+-- Second line of defence, and the one the first cannot cover. ResolveSlot
+-- verified the slot, but the server can still move the stack in the instant
+-- between that check and the pickup landing. Only comparing what actually
+-- ended up on the mail against what we queued catches that -- which is why
+-- "is something attached?" was never a sufficient question.
+stockBags()
+send.Attach(0, 1)                      -- queue Silk Cloth, slot verified fine
+swapPickupWith = { bag = 0, slot = 3 } -- server hands over Black Lotus instead
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "x", "", 0, false, false)
+pumpSend()
+swapPickupWith = nil
+check(send.skipped == 1, "the mismatch was caught", send.skipped)
+check(table.getn(SENT) == 0, "and NOTHING was mailed", table.getn(SENT))
+check(BAGS[0][3] ~= nil and BAGS[0][3].name == "Black Lotus",
+      "the wrong item was put back in the bag, not posted")
+
+print("== send: a partial run reports what it left behind ==")
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2); send.Attach(0, 3)
+BAGS[0][2] = nil                      -- Copper Ore is gone
+DEFAULT_CHAT_FRAME.messages = {}
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "x", "", 0, false, false)
+pumpSend()
+check(send.skipped == 1, "one skipped", send.skipped)
+check(send.sentCount == 2, "two sent", send.sentCount)
+local msgs = DEFAULT_CHAT_FRAME.messages
+local saidSkipped = false
+local pi = 1
+while pi <= table.getn(msgs) do
+    if A.util.Contains(msgs[pi], "skipped") then saidSkipped = true end
+    pi = pi + 1
+end
+check(saidSkipped, "the user is told, rather than the run looking complete")
+
+print("== send: an item the game refuses to attach costs only that item ==")
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2)
+failAttach = true
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "x", "", 0, false, false)
+pumpSend()
+failAttach = false
+check(not send.sending, "run ended")
+check(table.getn(SENT) == 0, "NOTHING was sent -- no empty mail went out",
+      table.getn(SENT))
+check(send.skipped == 2, "both were skipped rather than aborting the batch",
+      send.skipped)
+check(send.Count() == 2, "attachments kept so the user can retry", send.Count())
+
+print("== send: a healthy batch never walks the bags ==")
+-- The speed fix, as a number. Courier used to re-resolve every attachment's
+-- coordinate and poll its `locked` flag BEFORE picking it up -- correct, but
+-- paid on every item whether or not anything was wrong, and a relocate walks
+-- five bags with a link read and a pattern match per slot. That work is now
+-- spent only when an attach actually fails, which is TurtleMail's shape and
+-- most of the gap users measured side by side.
+--
+-- Asserted as zero rather than "fewer": one stray inspection per item is
+-- exactly how this creeps back.
+stockBags()
+send.atMailbox = false                 -- no mailable probe; measuring the SEND
+send.Attach(0, 1); send.Attach(0, 2); send.Attach(0, 3)
+-- Queued away from a mailbox and sent at one, which is also how a player does
+-- it. Sending needs the session: with none, SendMail posts into nothing.
+send.atMailbox = true
+containerInfoCalls, containerLinkCalls = 0, 0
+send.Start("Ann", "x", "", 0, false, false)
+pumpSend()
+check(not send.sending, "the batch finished")
+check(table.getn(SENT) == 3, "all three mails went out", table.getn(SENT))
+check(containerInfoCalls == 0,
+      "no bag slot was inspected during a clean batch", containerInfoCalls)
+check(containerLinkCalls == 0,
+      "and no bag was walked to relocate anything", containerLinkCalls)
+
+print("== send: a STALE cached lock costs nothing ==")
+-- Where the measured time actually went. `locked` is the client's cached view
+-- and it is routinely still set on a stack the server has already released --
+-- normal in the frames after the previous mail's BAG_UPDATE. The old path
+-- consulted that flag BEFORE picking anything up and waited LOCK_WAIT on it,
+-- so every item paid for a lock that was not really there. Measured over three
+-- items with the flag stuck for three polls: 45 frames then, 3 frames now.
+--
+-- The fast path does not ask. It picks the stack up, and the pickup either
+-- works -- which is the answer -- or it does not and the recovery path asks
+-- properly. A stack that is GENUINELY held still gets waited for; the test
+-- above this one covers that and must keep passing.
+stockBags()
+send.atMailbox = false
+-- Cached flag set, but the stack itself is free: PickupContainerItem checks
+-- `locked`, and this is deliberately NOT that field.
+local realInfo = GetContainerItemInfo
+GetContainerItemInfo = function(bag, slot)
+    local it = BAGS[bag] and BAGS[bag][slot]
+    if it and it.staleLock then return it.texture, it.count, 1, 1, nil end
+    return realInfo(bag, slot)
+end
+BAGS[0][1].staleLock = true
+BAGS[0][2].staleLock = true
+send.Attach(0, 1); send.Attach(0, 2)
+send.atMailbox = true                  -- queued away, sent at a mailbox
+send.Start("Ann", "x", "", 0, false, false)
+-- ONE pump tick per mail plus its confirmation. If the run consulted the stale
+-- flag it would arm a LOCK_WAIT instead and still be going.
+pumpSend(4)
+GetContainerItemInfo = realInfo
+check(not send.sending, "the batch finished without waiting on a lie")
+check(table.getn(SENT) == 2, "both mails went out", table.getn(SENT))
+check((send.skipped or 0) == 0, "and nothing was skipped", send.skipped)
+
+print("== send: a FAILED attach still pays for the careful path ==")
+-- The other half: dropping the pre-emptive check must not drop the recovery.
+-- A stack that moved is still found and still mailed -- it just costs the walk
+-- only when it is actually needed.
+stockBags()
+send.atMailbox = false                 -- no probe; the recovery path is the subject
+send.Attach(0, 1)
+BAGS[0][9] = BAGS[0][1]                -- the player reshuffles before sending
+BAGS[0][1] = nil
+send.atMailbox = true
+containerInfoCalls, containerLinkCalls = 0, 0
+send.Start("Ann", "x", "", 0, false, false)
+pumpSend()
+check(not send.sending, "the run finished")
+check(table.getn(SENT) == 1, "the moved stack was still mailed", table.getn(SENT))
+check(SENT[1].item == "Silk Cloth", "and it was the right item", SENT[1].item)
+check((send.skipped or 0) == 0, "nothing was skipped", send.skipped)
+check(containerLinkCalls > 0,
+      "the bag walk DID happen -- once it was needed", containerLinkCalls)
+
+print("== send: a pickup the server silently ignores is WAITED for ==")
+-- THE FIELD BUG: "skipped Light Feather -- the game would not attach it",
+-- twice in a row, on an item plainly sitting in the player's bags.
+--
+-- GetContainerItemInfo's `locked` is the CLIENT'S CACHED view. The server can
+-- be holding a stack the cache still reports free -- routine in the moments
+-- after a BAG_UPDATE -- and PickupContainerItem is then a silent no-op. The
+-- run used to go straight on to the attach, find nothing there, and blame the
+-- item permanently. It is the same transient condition as a plain lock, so it
+-- gets the same patience.
+stockBags()
+BAGS[0][1].serverHolds = true         -- cache says free; the server disagrees
+send.Attach(0, 1)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "x", "", 0, false, false)
+pumpSend(8)
+check(send.sending, "the run is still alive rather than blaming the item")
+check((send.skipped or 0) == 0, "and nothing has been skipped", send.skipped)
+check(table.getn(SENT) == 0, "nothing went out yet", table.getn(SENT))
+BAGS[0][1].serverHolds = nil          -- the server lets go, as it always does
+pumpSend()
+check(not send.sending, "the run completes once the stack is free")
+check(table.getn(SENT) == 1, "the item was sent, not abandoned", table.getn(SENT))
+check(SENT[1].item == "Silk Cloth", "and it was the right one", SENT[1].item)
+check((send.skipped or 0) == 0, "with nothing skipped", send.skipped)
+
+print("== send: a pickup that never lands still costs one item, not the batch ==")
+-- The budget is shared with the lock wait on purpose: an item that alternated
+-- between the two would otherwise never exhaust either and would hang the run.
+stockBags()
+BAGS[0][1].serverHolds = true         -- stuck forever
+send.Attach(0, 1); send.Attach(0, 2)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "x", "", 0, false, false)
+pumpSend(400)
+check(not send.sending, "the run finished rather than hanging")
+check(send.skipped == 1, "the unreachable stack was skipped", send.skipped)
+check(table.getn(SENT) == 1, "the other item still went out", table.getn(SENT))
+check(SENT[1].item == "Copper Ore", "and it was the reachable one", SENT[1].item)
+check(BAGS[0][1] ~= nil, "the stuck item is still in the player's bag")
+
+print("== send: an item the mail REFUSES is rejected when it is ATTACHED ==")
+-- TurtleMail's sendmail_pickup_mailable, and the reason it belongs here rather
+-- than in the send loop: the answer is definite and cheap, so asking it when
+-- the user adds the item means they find out while they can still do something
+-- about it. Courier used to discover this mid-batch, which was both too late
+-- and -- because an attach can fail for transient reasons too -- sometimes
+-- simply wrong.
+stockBags()
+send.atMailbox = true
+failAttach = true
+DEFAULT_CHAT_FRAME.messages = {}
+check(send.Attach(0, 1) == false, "an unmailable item is refused")
+check(send.Count() == 0, "and never reaches the list", send.Count())
+local saidUnmailable = false
+local ui2 = 1
+while ui2 <= table.getn(DEFAULT_CHAT_FRAME.messages) do
+    if A.util.Contains(DEFAULT_CHAT_FRAME.messages[ui2], "cannot be mailed") then
+        saidUnmailable = true
+    end
+    ui2 = ui2 + 1
+end
+check(saidUnmailable, "the user is told which item and why")
+check(BAGS[0][1] ~= nil, "and the probe left the stack in the bag")
+check(attachSlot == nil, "with nothing left on the mail slot")
+check(cursor == nil, "and nothing left on the cursor")
+failAttach = false
+check(send.Attach(0, 1), "a mailable item still attaches normally")
+check(send.Count() == 1, "and reaches the list", send.Count())
+
+print("== send: a BUSY slot never condemns the item ==")
+-- The field report: "Training Sword of the Tiger cannot be mailed", on an
+-- ordinary weapon. The probe took "nothing attached" as proof the item was
+-- unmailable -- the exact mistake it exists to fix in the send loop. A slot
+-- the server is holding makes the pickup a silent no-op, and the probe then
+-- refused the attach outright, so the player could not mail the item at all.
+--
+-- A wrong "no" costs the player the item; a wrong "yes" costs one skipped
+-- mail the batch already reports. So this must fail OPEN.
+stockBags()
+send.atMailbox = true
+BAGS[0][1].locked = 1                  -- the server is holding the stack
+DEFAULT_CHAT_FRAME.messages = {}
+check(send.Attach(0, 1), "a busy stack still attaches")
+check(send.Count() == 1, "and reaches the list", send.Count())
+local condemned = false
+local mi = 1
+while mi <= table.getn(DEFAULT_CHAT_FRAME.messages) do
+    if A.util.Contains(DEFAULT_CHAT_FRAME.messages[mi], "cannot be mailed") then
+        condemned = true
+    end
+    mi = mi + 1
+end
+check(not condemned, "and the player is told nothing of the sort")
+BAGS[0][1].locked = nil
+
+-- Same again for the cached flag that lies: `locked` clear, server holding.
+stockBags()
+BAGS[0][1].serverHolds = true
+check(send.Attach(0, 1), "a stack behind a stale lock attaches too")
+check(send.Count() == 1, "and reaches the list", send.Count())
+BAGS[0][1].serverHolds = nil
+
+print("== send: probing never drops what the player is dragging ==")
+-- The drag-to-attach path calls Attach with the item ON THE CURSOR, and the
+-- bag slot it came from is locked until the server says otherwise. Clearing
+-- the cursor to run a probe would drop the item being dragged, and the pickup
+-- would then no-op against that locked slot and condemn it.
+stockBags()
+send.atMailbox = true
+cursor = { bag = 0, slot = 1, item = BAGS[0][1] }
+-- The client locks the slot an item was lifted from, and that lock outlives
+-- ClearCursor -- it clears on the server's ITEM_LOCK_CHANGED, not instantly.
+BAGS[0][1].locked = 1
+send.cursorItem = { bag = 0, slot = 1 }
+-- The probe must not touch the attachment slot AT ALL in this state. Counting
+-- the clicks is what makes that checkable: the guard is otherwise redundant
+-- with the pickup check below it, and nothing would prove it was doing
+-- anything.
+local clicksBefore = 0
+local realClick = ClickSendMailItemButton
+ClickSendMailItemButton = function() clicksBefore = clicksBefore + 1; return realClick() end
+check(send.AttachCursor(), "a dragged item attaches")
+ClickSendMailItemButton = realClick
+check(clicksBefore == 0, "and the probe never touched the mail slot to do it",
+      clicksBefore)
+check(send.Count() == 1, "it reaches the list", send.Count())
+check(BAGS[0][1] ~= nil, "the dragged stack is still in the bag")
+check(attachSlot == nil, "and nothing was left on the mail slot")
+BAGS[0][1].locked = nil
+
+print("== send: a genuinely unmailable item is STILL caught ==")
+-- Failing open must not mean failing blind. When the pickup lands and the mail
+-- refuses it -- the item stays on the cursor -- that is positive evidence and
+-- the only thing that answers no.
+stockBags()
+send.atMailbox = true
+cursor = nil
+failAttach = true
+DEFAULT_CHAT_FRAME.messages = {}
+check(send.Attach(0, 1) == false, "the soulbound-style item is refused")
+check(send.Count() == 0, "and never reaches the list", send.Count())
+local saidNo = false
+mi = 1
+while mi <= table.getn(DEFAULT_CHAT_FRAME.messages) do
+    if A.util.Contains(DEFAULT_CHAT_FRAME.messages[mi], "cannot be mailed") then
+        saidNo = true
+    end
+    mi = mi + 1
+end
+check(saidNo, "with the reason named")
+failAttach = false
+check(cursor == nil, "and the probe put the cursor down after itself")
+check(attachSlot == nil, "leaving nothing on the mail slot")
+
+print("== send: the mailable probe is not run without a live mail session ==")
+-- Away from a mailbox the attach slot does not respond and GetSendMailItem
+-- answers nil for everything, so probing there would condemn every item in the
+-- game. The question is deferred to the send loop instead.
+stockBags()
+send.atMailbox = false
+failAttach = true                      -- would fail the probe if it ran
+check(send.Attach(0, 1), "the item is accepted away from a mailbox")
+check(send.Count() == 1, "and is on the list", send.Count())
+failAttach = false
+send.atMailbox = true
+
+print("== send: MAIL_FAILED aborts the batch ==")
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "x", "", 0, false, false)
+arg1 = 5
+sdriver.scripts.OnUpdate()          -- first mail issued
+arg1 = nil
+check(table.getn(SENT) == 1, "first mail out")
+-- One refusal no longer kills the batch; exhaust the budget to abort it.
+local guard = 0
+while send.sending and guard < 10 do
+    fire("MAIL_FAILED")
+    guard = guard + 1
+end
+check(not send.sending, "run aborted once the retry budget ran out")
+check(send.Count() == 2, "attachment list preserved")
+
+print("== send: a refused mail is retried, not thrown away ==")
+-- The reported symptom: "the server rejected that mail; 1 of 2 sent." One
+-- refusal on the second mail used to abandon the whole batch.
+stockBags()
+A.db.ClearLog()
+send.Attach(0, 1); send.Attach(0, 2)
+failSendCount = 0
+sendAttempts = 0
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "batch", "", 0, false, false)
+-- Let the first mail go, then make the server refuse exactly once.
+arg1 = 5
+sdriver.scripts.OnUpdate()
+arg1 = nil
+fire("MAIL_SEND_SUCCESS")
+check(table.getn(SENT) == 1, "first mail out")
+failSendCount = 1
+pumpSend()
+check(not send.sending, "run finished")
+check(table.getn(SENT) == 2, "BOTH mails were sent despite the refusal",
+      table.getn(SENT))
+check(SENT[2].item == "Copper Ore", "the retried mail kept its attachment",
+      tostring(SENT[2].item))
+check(SENT[2].subject == "batch [2/2]", "and its subject numbering",
+      SENT[2].subject)
+check(send.Count() == 0, "attachment list cleared on success")
+
+print("== send: a retry does not renumber or duplicate gold ==")
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2)
+sendAttempts = 0
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "gold", "", 5000, false, false)
+arg1 = 5
+sdriver.scripts.OnUpdate()
+arg1 = nil
+fire("MAIL_SEND_SUCCESS")
+check(SENT[1].money == 5000, "gold on the first mail")
+failSendCount = 1          -- refuse the second once
+pumpSend()
+check(table.getn(SENT) == 2, "second mail eventually sent")
+check(SENT[2].money == 0, "the retry did NOT resend the gold", SENT[2].money)
+
+print("== send: a persistently refused mail gives up cleanly ==")
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2)
+sendAttempts = 0
+failSendCount = 99         -- the server refuses everything
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "doomed", "", 0, false, false)
+local spins = pumpSend(80)
+failSendCount = 0
+check(not send.sending, "gave up rather than spinning", spins)
+check(table.getn(SENT) == 0, "nothing was sent")
+check(send.Count() == 2, "and BOTH attachments are still on the list to retry",
+      send.Count())
+
+print("== send: the retry budget is per mail, not per batch ==")
+-- A long batch that hits a transient refusal on several different mails must
+-- still complete; only one mail failing repeatedly aborts.
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2); send.Attach(0, 3)
+sendAttempts = 0
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "long", "", 0, false, false)
+local sent, guard3 = 0, 0
+while send.sending and guard3 < 200 do
+    -- Refuse once before each mail, then let it through.
+    if sendAttempts == sent * 2 then failSendCount = 1 end
+    arg1 = 5
+    sdriver.scripts.OnUpdate()
+    arg1 = nil
+    if sendAttempts > 0 then
+        if lastSendFailed then fire("MAIL_FAILED") else
+            fire("MAIL_SEND_SUCCESS")
+            sent = table.getn(SENT)
+        end
+    end
+    guard3 = guard3 + 1
+end
+check(table.getn(SENT) == 3, "all three sent despite a refusal each",
+      table.getn(SENT))
+
+print("== send: gold mode never touches the COD channel ==")
+-- Zeroing BOTH channels on later mails poked a plain gold send into COD mode
+-- with a zero amount. Only the channel in use is ever set.
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2)
+sendAttempts = 0
+moneyCalls, codCalls = 0, 0
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "g", "", 5000, false, false)
+pumpSend()
+check(table.getn(SENT) == 2, "two mails sent")
+check(codCalls == 0, "SetSendMailCOD was never called for a gold send",
+      codCalls)
+check(moneyCalls > 0, "SetSendMailMoney was", moneyCalls)
+
+-- ...and the mirror image: a COD send never touches the gold channel.
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2)
+sendAttempts = 0
+moneyCalls, codCalls = 0, 0
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "c", "", 2500, true, false)
+pumpSend()
+check(moneyCalls == 0, "SetSendMailMoney was never called for a COD send",
+      moneyCalls)
+check(codCalls > 0, "SetSendMailCOD was", codCalls)
+
+print("== send: recipient autocomplete ==")
+A.db.ForgetContacts()
+A.db.AddContact("Bobbie")
+A.db.AddContact("Bobby")
+A.db.AddContact("Annie")
+local m = A.db.MatchContacts("Bob", 5)
+check(table.getn(m) == 2, "prefix matched", table.getn(m))
+check(A.db.MatchContacts("bob", 5)[1] ~= nil, "match is case-insensitive")
+check(table.getn(A.db.MatchContacts("Zed", 5)) == 0, "no false matches")
+check(table.getn(A.db.MatchContacts("", 2)) == 2, "limit respected")
+-- A successful send remembers the recipient.
+stockBags()
+send.Attach(0, 1)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Carlos", "hi", "", 0, false, false)
+pumpSend()
+check(table.getn(A.db.MatchContacts("Carl", 5)) == 1, "recipient remembered")
+
+print("== send: contacts harvested from the inbox ==")
+A.db.ForgetContacts()
+INBOX = {
+    mail{ sender = "Wanda", subject = "hello" },
+    mail{ sender = AH, subject = "Auction successful: Silk Cloth", money = 10 },
+    mail{ sender = "GMBob", subject = "ticket", gm = true },
+}
+-- The harvest is deliberately NOT on MAIL_INBOX_UPDATE any more: that event
+-- storms while the client resolves uncached items, and this walks every header.
+fire("MAIL_INBOX_UPDATE")
+check(table.getn(A.db.MatchContacts("Wanda", 5)) == 0,
+      "the event alone does NOT walk the inbox for contacts")
+send.HarvestContacts()
+check(table.getn(A.db.MatchContacts("Wanda", 5)) == 1, "player sender kept")
+check(table.getn(A.db.MatchContacts("Stormwind", 5)) == 0,
+      "auction house not offered as a contact")
+check(table.getn(A.db.MatchContacts("GMBob", 5)) == 0, "GM not offered")
+
+print("== send: bag right-click only hijacked on the Send tab ==")
+stockBags()
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+A.ui.SelectSubTab("Inbox")
+check(not A.ui.SendAttachActive(), "not active on the Inbox tab")
+local before = useContainerCalls
+UseContainerItem(0, 1)
+check(useContainerCalls == before + 1, "right-click passed through to the game")
+check(send.Count() == 0, "and attached nothing")
+
+A.ui.SelectSubTab("Send")
+check(A.ui.SendAttachActive(), "active on the Send tab at a mailbox")
+before = useContainerCalls
+UseContainerItem(0, 1)
+check(useContainerCalls == before, "right-click intercepted")
+check(send.Count() == 1, "and attached the item", send.Count())
+
+A.ui.mailOpen = false
+check(not A.ui.SendAttachActive(), "not active away from a mailbox")
+A.ui.mailOpen = true
+
+print("== send: drag-to-attach uses the remembered cursor origin ==")
+stockBags()
+A.ui.SelectSubTab("Send")
+PickupContainerItem(0, 2)           -- goes through our hook
+check(send.cursorItem ~= nil, "cursor origin remembered")
+check(send.AttachCursor(), "attached from the cursor")
+check(send.attachments[1].name == "Copper Ore", "the right item",
+      send.attachments[1].name)
+
+print("== send UI: autocomplete stays shut until you type ==")
+A.db.ForgetContacts()
+A.db.AddContact("Torchlyte")
+A.db.AddContact("Torchlite")
+A.db.AddContact("Subtilizer")
+A.ui.SelectSubTab("Send")
+A.ui.sendTo:SetText("")
+A.ui.UpdateAutoComplete()
+check(not A.ui.sendAuto:IsVisible(),
+      "empty recipient box does not drop the list open")
+A.ui.sendTo:SetText("Torch")
+A.ui.UpdateAutoComplete()
+check(A.ui.sendAuto:IsVisible(), "typing opens it")
+A.ui.sendTo:SetText("")
+A.ui.UpdateAutoComplete()
+check(not A.ui.sendAuto:IsVisible(), "clearing closes it again")
+-- The dropdown button lists everyone regardless of what is typed.
+check(A.ui.sendAutoButton ~= nil, "dropdown button exists")
+A.ui.sendAutoButton.scripts.OnClick()
+check(A.ui.sendAuto:IsVisible(), "button opens the full list on an empty box")
+A.ui.sendAutoButton.scripts.OnClick()
+check(not A.ui.sendAuto:IsVisible(), "button toggles it shut")
+A.ui.sendTo:SetText("Zebra")
+A.ui.UpdateAutoComplete()
+check(not A.ui.sendAuto:IsVisible(), "no matches means no list")
+A.ui.sendTo:SetText("")
+
+-- THE REPORTED BUG. The check above only ever clicked the button with an EMPTY
+-- box, which is the one case that worked -- so a dead button passed the suite.
+-- With a complete name typed, the button used to filter by that name, match
+-- exactly one contact (itself), hit the exact-match rule and hide the list
+-- again: it appeared to do nothing whatsoever.
+A.ui.sendTo:SetText("Torchlyte")
+A.ui.UpdateAutoComplete()
+check(not A.ui.sendAuto:IsVisible(),
+      "typing a complete name shows no suggestion, correctly")
+-- Clear every row first. The mock does not propagate a parent's Hide() to its
+-- children, so leftover rows from the previous show would otherwise still look
+-- "visible" and the count below would pass on stale state.
+local AC_ROWS = table.getn(A.ui.sendAutoRows)
+local function clearAutoRows()
+    local si = 1
+    while si <= AC_ROWS do
+        A.ui.sendAutoRows[si].name = nil
+        A.ui.sendAutoRows[si].label:SetText("")
+        A.ui.sendAutoRows[si]:Hide()
+        si = si + 1
+    end
+end
+-- Count the CLICKABLE rows. The list carries section headers and "and N more"
+-- notes now, so a raw count of visible rows counts chrome as contacts; a row
+-- with a name on it is exactly what "a contact is listed" means.
+local function autoNames()
+    local out = {}
+    local si = 1
+    while si <= AC_ROWS do
+        local row = A.ui.sendAutoRows[si]
+        if row.visible and row.name then table.insert(out, row.name) end
+        si = si + 1
+    end
+    return out
+end
+clearAutoRows()
+A.ui.sendAutoButton.scripts.OnClick()
+check(A.ui.sendAuto:IsVisible(),
+      "but the BUTTON still opens the list with that name in the box")
+-- It lists everyone, not just what matches the typed text.
+local shown = table.getn(autoNames())
+check(shown == 3, "all three contacts are listed, not just the typed one", shown)
+A.ui.sendAutoButton.scripts.OnClick()
+check(not A.ui.sendAuto:IsVisible(), "and it still toggles shut")
+
+-- With no contacts at all the button must still visibly answer, or it is the
+-- same "does nothing" complaint wearing a different hat.
+A.db.ForgetContacts()
+A.ui.sendTo:SetText("")
+A.ui.sendAutoButton.scripts.OnClick()
+check(A.ui.sendAuto:IsVisible(), "an empty contact list still opens the list")
+check(A.util.Contains(rawget(A.ui.sendAutoRows[1].label, "text") or "",
+      "no names to suggest"), "and says so",
+      rawget(A.ui.sendAutoRows[1].label, "text"))
+check(A.ui.sendAutoRows[1].name == nil, "the placeholder row is not clickable")
+A.ui.sendAutoButton.scripts.OnClick()
+A.db.AddContact("Torchlyte")
+A.db.AddContact("Torchlite")
+A.db.AddContact("Subtilizer")
+A.ui.sendTo:SetText("")
+
+-- Scoped: the main chunk is near Lua's 200-local ceiling, and a block
+-- releases its slots at the end. Nothing here is needed afterwards.
+do
+print("== picker: the rosters are ASYNCHRONOUS ==")
+-- The whole hazard of this feature. GetNumGuildMembers answers 0 until the
+-- request has been made and the reply has landed, so a picker that reads the
+-- count once concludes "no guild" for a player who has one.
+local wasAtMailbox = A.send.atMailbox
+-- The offline entries sort alphabetically BEFORE the online ones on purpose.
+-- With Gladys/Gomer and Fiona/Fred the two orderings agree, so dropping the
+-- online-first rule changed nothing and the sort was untestable.
+GUILD = { { name = "Gladys", online = true },
+          { name = "Bartho", online = false },
+          { name = "Tester", online = true } }   -- the player is ON the roster
+FRIENDS = { { name = "Fiona", connected = true },
+            { name = "Fred",  connected = false },
+            { name = "Bob",   connected = false } }
+guildDelivered, friendsDelivered = false, false
+A.send.guildDirty, A.send.friendDirty = true, true
+
+check(table.getn(A.send.GuildNames()) == 0,
+      "an undelivered guild roster reads as empty")
+check(table.getn(A.send.FriendNames()) == 0,
+      "an undelivered friends list reads as empty")
+
+guildRequests, friendRequests = 0, 0
+fire("MAIL_SHOW")
+check(guildRequests == 1, "opening the mailbox asks for the guild roster",
+      guildRequests)
+check(friendRequests == 1, "and for the friends list", friendRequests)
+
+-- Typing must not re-ask. Both calls are throttled server-side exactly like
+-- CheckInbox(), and a request per keystroke is the shape of that mistake.
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+A.ui.SelectSubTab("Send")
+A.ui.sendTo:SetText("G")
+A.ui.sendTo:SetText("Gl")
+A.ui.sendTo:SetText("Gla")
+check(guildRequests == 1 and friendRequests == 1,
+      "typing does not re-ask for either roster",
+      guildRequests .. "/" .. friendRequests)
+A.ui.sendTo:SetText("")
+
+-- The reply lands.
+guildDelivered, friendsDelivered = true, true
+fire("GUILD_ROSTER_UPDATE")
+fire("FRIENDLIST_UPDATE")
+check(table.getn(A.send.GuildNames()) == 2,
+      "the delivered roster arrives, minus the player",
+      table.getn(A.send.GuildNames()))
+check(table.getn(A.send.FriendNames()) == 3, "and the friends list",
+      table.getn(A.send.FriendNames()))
+
+print("== picker: the player is not offered their own guild row ==")
+local gnames = {}
+local gi = 1
+while gi <= table.getn(A.send.GuildNames()) do
+    gnames[A.send.GuildNames()[gi].name] = true
+    gi = gi + 1
+end
+check(not gnames["Tester"], "the player is filtered out of Guild")
+-- And not from anywhere ELSE either. The server refuses mail addressed to
+-- yourself, so a row for the character being played can only fail -- which is
+-- why the exclusion is seeded once for the whole picker rather than applied
+-- to the Guild walk alone. Seeded into every source here on purpose: contacts
+-- really does hold it (send.lua writes it at load, and upgrading players have
+-- it), and the roster really does include it.
+A.db.AddContact("Tester")
+A.db.AddAlt("Tester")
+check(table.getn(A.db.MatchContacts("Tester", 5)) == 1,
+      "the contact list does still hold the player's own name")
+check(table.getn(A.send.PickerSections("Tester")) == 0,
+      "but the picker offers it from no section at all")
+
+print("== picker: online first, then alphabetical ==")
+-- Resolved first rather than indexed inline: this depends on the OFFLINE half
+-- of the roster being present at all, so when that breaks it should read as a
+-- failed check and not as an index error three lines further on.
+local g1 = A.send.GuildNames()[1]
+local g2 = A.send.GuildNames()[2]
+check(g1 and g1.name == "Gladys",
+      "the online guildmate sorts first", g1 and g1.name or "nil")
+check(g2 and g2.name == "Bartho",
+      "ahead of the offline one, which is alphabetically FIRST",
+      g2 and g2.name or "nil")
+check(A.send.FriendNames()[1].name == "Fiona",
+      "same for friends", A.send.FriendNames()[1].name)
+check(A.send.FriendNames()[2].name == "Bob",
+      "and alphabetical inside each group", A.send.FriendNames()[2].name)
+
+print("== picker: sections, in order, deduped ==")
+A.db.ForgetContacts()
+A.db.AddContact("Torchlyte")
+A.db.AddContact("Gladys")     -- also a guildmate: must not appear twice
+local secs = A.send.PickerSections("")
+check(table.getn(secs) == 3, "three sections", table.getn(secs))
+check(secs[1].key == "Friends" and secs[2].key == "Guild"
+      and secs[3].key == "Recent", "in the order the picker declares")
+local dupes = 0
+local di = 1
+while di <= table.getn(secs) do
+    local nj = 1
+    while nj <= table.getn(secs[di].names) do
+        if secs[di].names[nj] == "Gladys" then dupes = dupes + 1 end
+        nj = nj + 1
+    end
+    di = di + 1
+end
+check(dupes == 1, "a guildmate who is also a contact is listed once", dupes)
+check(secs[2].names[1] == "Gladys",
+      "and it is the earlier section that keeps them", secs[2].names[1])
+
+print("== picker: an empty section is not given a header ==")
+inGuild = false
+A.send.guildDirty = true
+secs = A.send.PickerSections("")
+local keys = ""
+di = 1
+while di <= table.getn(secs) do keys = keys .. secs[di].key .. " "; di = di + 1 end
+check(not A.util.Contains(keys, "Guild"), "no guild, no Guild section", keys)
+inGuild = true
+A.send.guildDirty = true
+
+print("== picker: no guild and no friends degrades quietly ==")
+inGuild = false
+FRIENDS = {}
+A.send.guildDirty, A.send.friendDirty = true, true
+secs = A.send.PickerSections("")
+check(table.getn(secs) == 1 and secs[1].key == "Recent",
+      "only Recent is left, and nothing errored")
+inGuild = true
+FRIENDS = { { name = "Fiona", connected = true },
+            { name = "Fred",  connected = false },
+            { name = "Bob",   connected = false } }
+A.send.guildDirty, A.send.friendDirty = true, true
+
+print("== picker UI: the list draws sections ==")
+A.ui.sendTo:SetText("")
+clearAutoRows()
+A.ui.sendAutoButton.scripts.OnClick()
+check(A.ui.sendAuto:IsVisible(), "the button opens it")
+local labels = {}
+local ri = 1
+while ri <= AC_ROWS do
+    local row = A.ui.sendAutoRows[ri]
+    if row.visible then
+        table.insert(labels, (rawget(row.label, "text") or "") ..
+                     (row.name and "*" or ""))
+    end
+    ri = ri + 1
+end
+check(labels[1] == "Friends", "the first row is the Friends header", labels[1])
+check(A.ui.sendAutoRows[1].name == nil, "a header is not a name")
+check(not A.ui.sendAutoRows[1]:IsMouseEnabled(),
+      "and it does not take the mouse, so it cannot look clickable")
+check(A.ui.sendAutoRows[2].name == "Fiona",
+      "the first friend follows it", A.ui.sendAutoRows[2].name)
+check(A.ui.sendAutoRows[2]:IsMouseEnabled(), "a name DOES take the mouse")
+check(hover(A.ui.sendAutoRows[2]) or true, "and can be hovered at all")
+local joined = ""
+ri = 1
+while ri <= table.getn(labels) do joined = joined .. labels[ri] .. "|"; ri = ri + 1 end
+check(A.util.Contains(joined, "Guild") and A.util.Contains(joined, "Recent"),
+      "all three headers are drawn", joined)
+
+print("== picker UI: a roster arriving repaints an OPEN list ==")
+-- The reply can land while the player is looking at a list built before it.
+-- Sitting there empty until the next keystroke is the bug this prevents.
+guildDelivered = false
+A.send.guildDirty = true
+A.ui.sendTo:SetText("")
+clearAutoRows()
+A.ui.sendAutoButton.scripts.OnClick()
+local before = ""
+ri = 1
+while ri <= AC_ROWS do
+    local row = A.ui.sendAutoRows[ri]
+    if row.visible then before = before .. (rawget(row.label, "text") or "") .. "|" end
+    ri = ri + 1
+end
+-- Bartho is in the guild and NOWHERE else, so his absence is really the
+-- roster's absence. Gladys would prove nothing: she is also a contact, and
+-- Recent would carry her whether the roster had landed or not.
+check(not A.util.Contains(before, "Bartho"),
+      "the open list has no guild in it yet", before)
+check(not A.util.Contains(before, "Guild|"),
+      "and no Guild header either", before)
+guildDelivered = true
+fire("GUILD_ROSTER_UPDATE")
+local after = ""
+ri = 1
+while ri <= AC_ROWS do
+    local row = A.ui.sendAutoRows[ri]
+    if row.visible then after = after .. (rawget(row.label, "text") or "") .. "|" end
+    ri = ri + 1
+end
+check(A.util.Contains(after, "Bartho"),
+      "and it fills in when the reply lands, without a keystroke", after)
+check(A.util.Contains(after, "Guild|"), "header and all", after)
+-- Repainted in the mode it was OPENED in: an async reply must not quietly turn
+-- a browse list into a typed one.
+check(A.util.Contains(after, "Friends"),
+      "still the full browse list, not a filtered one", after)
+
+print("== picker UI: a roster arriving does NOT open a closed list ==")
+A.ui.sendAuto:Hide()
+A.send.guildDirty = true
+fire("GUILD_ROSTER_UPDATE")
+check(not A.ui.sendAuto:IsVisible(),
+      "a background roster update does not pop the list open")
+
+print("== picker UI: typing matches across all three sources ==")
+A.ui.sendTo:SetText("F")
+check(A.ui.sendAuto:IsVisible(), "typing a friend's initial opens the list")
+local names = autoNames()
+check(table.getn(names) == 2 and names[1] == "Fiona",
+      "and offers the friends", table.getn(names) .. " " .. tostring(names[1]))
+A.ui.sendTo:SetText("Gl")
+names = autoNames()
+check(names[1] == "Gladys", "a guildmate matches too", tostring(names[1]))
+A.ui.sendTo:SetText("Zzz")
+check(not A.ui.sendAuto:IsVisible(), "and no match still means no list")
+
+print("== picker UI: Tab fills in the suggestion ==")
+A.ui.sendTo:SetText("Fio")
+check(A.ui.sendAuto:IsVisible(), "a suggestion is showing")
+A.ui.sendTo:SetFocus()
+A.ui.sendTo.scripts.OnTabPressed()
+check(A.ui.sendTo:GetText() == "Fiona",
+      "Tab completed the name", A.ui.sendTo:GetText())
+check(A.ui.sendTo:HasFocus(),
+      "and the keyboard stayed in the box -- the field is not finished with")
+check(not A.ui.sendAuto:IsVisible(),
+      "the list closed, and the repaint SetText triggers did not reopen it")
+
+-- What Tab fills must be what the top row shows. These are the same lookup on
+-- purpose: a second ranking would drift from the one on screen.
+A.ui.sendTo:SetText("G")
+names = autoNames()
+local top = names[1]
+A.ui.sendTo:SetFocus()
+A.ui.sendTo.scripts.OnTabPressed()
+check(A.ui.sendTo:GetText() == top,
+      "Tab fills the TOP row, whatever it is", tostring(top))
+
+print("== picker UI: a complete name is still a suggestion when others share it ==")
+-- Bob is a friend and Bobby is a contact, so "Bob" is an exact match that is
+-- ALONE IN ITS SECTION while two names are still on offer. The "an exact
+-- single match is not a suggestion" rule has to count across sections to get
+-- this right -- counting within the first section hides a list that has a
+-- second name in it.
+A.db.AddContact("Bobby")
+A.ui.sendTo:SetText("Bob")
+check(A.ui.sendAuto:IsVisible(),
+      "a complete name with a longer neighbour still suggests")
+names = autoNames()
+check(table.getn(names) == 2, "both are offered", table.getn(names))
+check(names[1] == "Bob", "the friend first", tostring(names[1]))
+
+-- And accepting it must CLOSE the list and leave it closed. Filling the box
+-- re-fires OnTextChanged, which repaints this very list -- and here the
+-- repaint finds two matches and wants to open it again, so a hide issued
+-- before the fill is simply undone. This is the case that proves the order.
+A.ui.sendTo:SetFocus()
+A.ui.sendTo.scripts.OnTabPressed()
+check(A.ui.sendTo:GetText() == "Bob", "Tab took the friend",
+      A.ui.sendTo:GetText())
+check(not A.ui.sendAuto:IsVisible(),
+      "and the list stayed shut through its own repaint")
+A.ui.sendTo:SetText("")
+
+print("== picker UI: Tab still walks the form when there is no suggestion ==")
+A.ui.sendTo:SetText("")
+check(not A.ui.sendAuto:IsVisible(), "no list open")
+A.ui.sendTo:SetFocus()
+A.ui.sendTo.scripts.OnTabPressed()
+check(A.ui.sendSubject:HasFocus(),
+      "Tab moves to Subject exactly as it did before")
+-- A complete name typed shows no suggestion either, and Tab must not eat the
+-- key there: that is the most common moment to press it.
+A.ui.sendTo:SetText("Fiona")
+check(not A.ui.sendAuto:IsVisible(), "a complete name shows no suggestion")
+A.ui.sendTo:SetFocus()
+A.ui.sendTo.scripts.OnTabPressed()
+check(A.ui.sendSubject:HasFocus(), "and Tab still moves on")
+A.ui.sendTo:SetText("")
+
+print("== picker UI: a long section is capped and says so ==")
+GUILD = {}
+local bi = 1
+while bi <= 40 do
+    table.insert(GUILD, { name = "Guildie" .. (bi < 10 and "0" or "") .. bi,
+                          online = true })
+    bi = bi + 1
+end
+guildDelivered = true
+A.send.guildDirty = true
+A.ui.sendTo:SetText("")
+clearAutoRows()
+A.ui.sendAutoButton.scripts.OnClick()
+local liveSections = table.getn(A.send.PickerSections(""))
+local cap = A.ui.AutoCompleteSectionCap(A.ui.AutoCompleteRowCount(),
+                                        liveSections)
+local guildShown = 0
+local sawMore = false
+ri = 1
+while ri <= AC_ROWS do
+    local row = A.ui.sendAutoRows[ri]
+    if row.visible then
+        local t = rawget(row.label, "text") or ""
+        if row.name and A.util.Contains(row.name, "Guildie") then
+            guildShown = guildShown + 1
+        end
+        if A.util.Contains(t, "more") then sawMore = true end
+    end
+    ri = ri + 1
+end
+check(guildShown == cap, "the guild section is capped at the row budget",
+      guildShown .. " vs " .. cap)
+check(sawMore, "and the list says how many it left out")
+-- Typing narrows it, which is what the note tells you to do. And with only
+-- one section left standing the cap RELAXES -- the other three sections'
+-- reserved rows are not being used, so all ten matches fit where four would
+-- have shown in the browse list.
+A.ui.sendTo:SetText("Guildie1")
+names = autoNames()
+check(table.getn(names) == 10,
+      "typing narrows to Guildie10-19, all of them", table.getn(names))
+check(table.getn(names) > cap,
+      "and the cap relaxed, because only one section is left to pay for",
+      table.getn(names) .. " vs a browse cap of " .. cap)
+A.ui.sendTo:SetText("")
+
+print("== picker UI: the dropdown fits under the To box at every size ==")
+-- 1.12 does not clip children: a list taller than the panel draws over the
+-- window's own footer rather than being cut off. Asserted across the SIZE
+-- RANGE, not at one height.
+local gm = A.ui.Geometry()
+local heights = { gm.minH, gm.defaultH, gm.maxH }
+local hi = 1
+while hi <= 3 do
+    local gh = A.ui.Geometry(heights[hi])
+    local rows = A.ui.AutoCompleteRowCount(heights[hi])
+    local need = gh.ac.top + rows * gh.ac.rowH + gh.ac.pad
+    check(need <= gh.panelH,
+          "the list fits inside the panel at height " .. heights[hi],
+          need .. " vs " .. gh.panelH)
+    check(rows >= gh.ac.minRows and rows <= gh.ac.maxRows,
+          "and the row count stays in its bounds at " .. heights[hi], rows)
+    check(A.ui.AutoCompleteSectionCap(rows, 4) >= gm.ac.sectionMin,
+          "every section still gets at least two names at " .. heights[hi])
+    -- Four full sections plus their chrome must still fit the budget, or the
+    -- cap is promising rows the list does not have.
+    check(4 * (A.ui.AutoCompleteSectionCap(rows, 4) + gm.ac.chromePerSection)
+          <= rows,
+          "and four capped sections fit inside the budget at " .. heights[hi])
+    hi = hi + 1
+end
+-- At every size the window can actually be, the panel is roomier than the
+-- list's own ceiling, so AC_MAX_ROWS is what binds and the dropdown does not
+-- grow into a 46-row wall at full height. The derivation still earns its keep
+-- by binding FIRST if the window ever gets shorter -- if MIN_H drops, or the
+-- To box moves down the panel, the list shrinks instead of drawing over the
+-- window's footer. Proven at a height below today's minimum, because that is
+-- the only place the arithmetic is reachable.
+check(A.ui.AutoCompleteRowCount(gm.minH) == gm.ac.maxRows,
+      "at real window sizes the list's own ceiling is what binds",
+      A.ui.AutoCompleteRowCount(gm.minH))
+local tinyRows = A.ui.AutoCompleteRowCount(300)
+local tiny = A.ui.Geometry(300)
+check(tinyRows < gm.ac.maxRows,
+      "a shorter window than we allow today would shrink the list", tinyRows)
+check(tiny.ac.top + tinyRows * tiny.ac.rowH + tiny.ac.pad <= tiny.panelH,
+      "and it would still fit inside the panel")
+
+print("== picker: offline guildmates are in the list ==")
+-- "Show offline members" filters the ROSTER, not the pane, so with it off the
+-- client will not answer for anyone who is logged out -- which on a mailbox is
+-- precisely who you want. The mock models that; without it this feature cannot
+-- be tested at all, because everyone would show up either way.
+guildShowOffline = false
+GUILD = { { name = "Gladys", online = true },
+          { name = "Bartho", online = false },
+          { name = "Tester", online = true } }
+guildDelivered = true
+A.send.guildDirty = true
+check(GetNumGuildMembers() == 2,
+      "with the filter off the client hides the offline member",
+      GetNumGuildMembers())
+
+send.borrowedShowOffline = false
+fire("MAIL_SHOW")
+check(guildShowOffline, "opening the mailbox turns the filter on")
+A.send.guildDirty = true
+local names = A.send.GuildNames()
+local joined = ""
+local i = 1
+while i <= table.getn(names) do joined = joined .. names[i].name .. "|"; i = i + 1 end
+check(A.util.Contains(joined, "Bartho"),
+      "so the offline guildmate is offered", joined)
+
+fire("MAIL_CLOSED")
+check(not guildShowOffline,
+      "and closing the mailbox puts the player's own setting back")
+
+-- A player who already had it on must not have it switched off underneath
+-- them: we only ever hand back what we borrowed.
+guildShowOffline = true
+fire("MAIL_SHOW")
+check(guildShowOffline, "a setting already on is left alone")
+fire("MAIL_CLOSED")
+check(guildShowOffline,
+      "and stays on afterwards -- nothing was borrowed, so nothing is returned")
+guildShowOffline = false
+
+print("== picker: Alts ==")
+-- 1.12 has no API that enumerates your own characters -- there is no
+-- account-level anything -- so the only way to know an alt exists is to have
+-- played it with Courier installed.
+A.db.ForgetAlts()
+A.db.AddAlt("Bankalt")
+A.db.AddAlt("Gladys")     -- also a guildmate: dedupe must pick one
+A.db.AddAlt("Tester")     -- the character being played
+local alts = A.db.Alts("Tester")
+check(table.getn(alts) == 2, "two alts, not counting who you are",
+      table.getn(alts))
+check(alts[1] == "Bankalt" and alts[2] == "Gladys", "alphabetical",
+      alts[1] .. "," .. alts[2])
+
+fire("MAIL_SHOW")
+local secs = A.send.PickerSections("")
+check(secs[1].key == "Alts", "Alts leads the picker", secs[1].key)
+check(secs[1].names[1] == "Bankalt", "and the bank alt is the first name",
+      tostring(secs[1].names[1]))
+-- Dedupe runs first-section-wins, so a character who is also in your guild is
+-- listed as an alt -- which is the more useful thing to be told.
+local gjoined = ""
+i = 1
+while i <= table.getn(secs) do
+    if secs[i].key == "Guild" then
+        local j = 1
+        while j <= table.getn(secs[i].names) do
+            gjoined = gjoined .. secs[i].names[j] .. "|"
+            j = j + 1
+        end
+    end
+    i = i + 1
+end
+check(not A.util.Contains(gjoined, "Gladys"),
+      "an alt who is also a guildmate is not listed twice", gjoined)
+
+print("== picker: an alt is never aged out ==")
+-- Contacts are pruned at 30 days. A bank alt you have not played since March
+-- is still your bank alt, and it is the name you least want to have to type.
+local key = GetCVar("realmName") .. "|" .. UnitFactionGroup("player")
+CourierDB.contacts[key]["Ancient"] = 1      -- epoch 1: about as stale as it gets
+CourierDB.alts[key]["Ancientalt"] = 1
+A.db.Init()
+check(CourierDB.contacts[key]["Ancient"] == nil,
+      "a 30-day-old contact is dropped at load")
+check(CourierDB.alts[key]["Ancientalt"] == 1,
+      "but an alt of the same age is kept")
+CourierDB.alts[key]["Ancientalt"] = nil
+
+print("== picker UI: Alts wins Tab ==")
+A.db.ForgetContacts()
+A.db.AddContact("Banker")       -- a contact that shares the alt's prefix
+A.db.ForgetAlts()
+A.db.AddAlt("Bankalt")
+A.send.guildDirty, A.send.friendDirty = true, true
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+A.ui.SelectSubTab("Send")
+A.ui.sendTo:SetText("Bank")
+check(A.ui.sendAuto:IsVisible(), "both are on offer")
+names = autoNames()
+check(table.getn(names) == 2, "two of them", table.getn(names))
+check(names[1] == "Bankalt", "the alt is first", tostring(names[1]))
+A.ui.sendTo:SetFocus()
+A.ui.sendTo.scripts.OnTabPressed()
+check(A.ui.sendTo:GetText() == "Bankalt",
+      "so Tab fills the alt, not the contact", A.ui.sendTo:GetText())
+
+print("== picker UI: the Alts header is drawn ==")
+A.ui.sendTo:SetText("")
+clearAutoRows()
+A.ui.sendAutoButton.scripts.OnClick()
+check(rawget(A.ui.sendAutoRows[1].label, "text") == "Alts",
+      "Alts heads the browse list",
+      rawget(A.ui.sendAutoRows[1].label, "text"))
+check(A.ui.sendAutoRows[2].name == "Bankalt", "with the alt under it",
+      tostring(A.ui.sendAutoRows[2].name))
+
+print("== picker: no alts recorded yet is not a section ==")
+A.db.ForgetAlts()
+secs = A.send.PickerSections("")
+check(not secs[1] or secs[1].key ~= "Alts",
+      "a fresh install has no Alts section, and nothing errored",
+      secs[1] and secs[1].key or "none")
+A.db.AddAlt("Tester")
+secs = A.send.PickerSections("")
+check(not secs[1] or secs[1].key ~= "Alts",
+      "and neither does an account with only the character you are on",
+      secs[1] and secs[1].key or "none")
+
+A.ui.sendTo:SetText("")
+A.ui.sendAuto:Hide()
+clearAutoRows()
+fire("MAIL_CLOSED")
+focusedBox = nil
+
+-- Leave the picker as the rest of the suite expects to find it.
+GUILD, FRIENDS = {}, {}
+guildDelivered, friendsDelivered = false, false
+inGuild = true
+A.send.guildDirty, A.send.friendDirty = true, true
+A.ui.sendTo:SetText("")
+A.ui.sendAuto:Hide()
+clearAutoRows()
+A.db.ForgetContacts()
+A.db.AddContact("Torchlyte")
+A.db.AddContact("Torchlite")
+A.db.AddContact("Subtilizer")
+A.db.AddContact("Tester")
+fire("MAIL_CLOSED")
+A.send.atMailbox = wasAtMailbox
+focusedBox = nil
+end
+
+do
+print("== settings: forgetting saved names ==")
+-- Friends and guild are live reads that correct themselves. The two lists
+-- Courier KEEPS do not: a contact ages out after 30 days and an alt never
+-- does, so a deleted or renamed character would sit in the picker for good.
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+A.db.ForgetContacts()
+A.db.ForgetAlts()
+A.db.AddContact("Someone")
+A.db.AddAlt("Deletedalt")
+-- The character being played is on the alt list too (send.lua seeds it at
+-- load). Seeded here on purpose: with only Deletedalt stored, counting the
+-- player and not counting them give the same answer, and the check below
+-- could not tell the two apart.
+A.db.AddAlt("Tester")
+A.ui.SelectSubTab("Courier")
+check(A.ui.btnForgetNames ~= nil, "the Courier tab has a Forget names button")
+check(table.getn(A.db.Alts()) == 2, "two names are stored", table.getn(A.db.Alts()))
+check(A.util.Contains(rawget(A.ui.courierStats, "text") or "", "1 alts"),
+      "but the stats line counts them the way the PICKER does, minus yourself",
+      rawget(A.ui.courierStats, "text"))
+
+check(Click(A.ui.btnForgetNames), "it is clickable")
+check(table.getn(A.db.MatchContacts("Someone", 5)) == 0, "the contact is gone")
+check(table.getn(A.db.Alts("Tester")) == 0, "and so is the alt")
+-- Empty, not WRONG: the character being played is still an alt of this
+-- account whatever the player just cleared, so it is re-seeded exactly as a
+-- fresh login would.
+check(A.db.Alts()[1] == "Tester",
+      "the character being played is re-seeded", tostring(A.db.Alts()[1]))
+check(table.getn(A.send.PickerSections("")) == 0,
+      "and the picker has nothing left to offer")
+
+print("== rosters: the borrowed setting survives a missing MAIL_CLOSED ==")
+-- Log out or hearth away with the mailbox open and MAIL_CLOSED never arrives,
+-- which would leave the player's guild pane filter switched on for good.
+guildShowOffline = false
+inGuild = true
+send.borrowedShowOffline = false
+fire("MAIL_SHOW")
+check(guildShowOffline, "borrowed on open")
+fire("PLAYER_LEAVING_WORLD")
+check(not guildShowOffline, "and handed back when the world goes away")
+check(not send.borrowedShowOffline, "with nothing still marked as borrowed")
+-- Still only ever hands back what it borrowed.
+guildShowOffline = true
+send.borrowedShowOffline = false
+fire("PLAYER_LEAVING_WORLD")
+check(guildShowOffline, "a setting it never borrowed is left alone")
+guildShowOffline = false
+fire("MAIL_CLOSED")
+
+end
+
+do
+print("== minimap: the button exists and sits on the ring ==")
+local mb = A.ui.minimapButton
+check(mb ~= nil, "the minimap button was built at load")
+-- Guarded rather than indexed straight: everything below depends on the button
+-- existing, and an index error two lines down is a worse report than a failed
+-- check that names the cause.
+if not mb then
+    -- A stand-in with inert scripts, so every check below reports itself
+    -- rather than the block dying on the first nil handler.
+    mb = CreateFrame("Button", "MissingMinimapButton")
+    mb.scripts.OnDragStart = function() end
+    mb.scripts.OnDragStop = function() end
+    mb.scripts.OnClick = function() end
+    mb.scripts.OnEnter = function() end
+end
+check(mb:AnchorTarget() == Minimap, "parented and anchored to the minimap")
+check(mb.courierNoSkin == true,
+      "it opts out of the pfUI skin -- skinning a button ERASES its icon")
+
+-- The texture path has to resolve to a file that is actually shipped. A typo
+-- renders nothing at all in game and errors nowhere, so this is the only place
+-- it can be caught.
+local iconPath = mb.icon and rawget(mb.icon, "texture") or nil
+check(iconPath == "Interface\\AddOns\\Aegis_Courier\\media\\minimap",
+      "the icon points at our own art", tostring(iconPath))
+
+-- THE ICON IS INSET, AND BOTH BOUNDS MATTER. Blizzard's shape is a 20px icon
+-- inside a tracking-border ring; this logo IS a ring, so the border is not
+-- drawn. Filling the frame edge to edge then made the visible disc bigger than
+-- every neighbouring button -- measured on a player's own minimap at ~42px
+-- against ~35 -- while shrinking it back to 20 is the squeeze that read as
+-- pixelated in the first place.
+--
+-- Asserted as a PROPORTION at both ends, so neither mistake can come back: a
+-- future resize cannot shrink the art into the middle, and a future "let it
+-- fill the button" cannot make it the biggest thing on the ring.
+local bw = mb:GetWidth()
+local iw = mb.icon and mb.icon:GetWidth() or 0
+check(bw > 0 and iw / bw > 0.7,
+      "the icon is most of its button, not a squeeze in the middle",
+      iw .. " of " .. bw)
+check(bw > 0 and iw < bw,
+      "but inset from it, so it does not outsize its neighbours",
+      iw .. " of " .. bw)
+check(iw == mb.icon:GetHeight(), "and it is square", iw .. "x" .. mb.icon:GetHeight())
+check(mb.border == nil,
+      "and Blizzard's border ring is not drawn over the logo's own")
+
+-- The hover ring, the pressed nudge and the drag maths are all ported from
+-- Aegis: Pathfinder's MinimapButton.lua, so that two Aegis buttons on the
+-- same minimap behave the same way under the same mouse.
+check(mb.ring ~= nil, "there is a hover ring of our own")
+check(mb.ring and not mb.ring:IsVisible(), "hidden until hovered")
+local ringTex = mb.ring and rawget(mb.ring, "texture") or nil
+check(ringTex == "Interface\\AddOns\\Aegis_Courier\\media\\minimap-ring",
+      "and it is our art, not Blizzard's highlight", tostring(ringTex))
+local rf = io.open("media/minimap-ring.tga", "rb")
+check(rf ~= nil, "which is really in the repo")
+if rf then rf:close() end
+check(hover(mb), "hovering works")
+check(mb.ring and mb.ring:IsVisible(), "and shows the ring")
+unhover(mb)
+check(mb.ring and not mb.ring:IsVisible(), "which goes again on leave")
+
+-- Pressed: the logo sinks a pixel. On a button with no plate behind it this
+-- is the only thing that makes a click feel like one.
+-- Read off the TOPLEFT anchor. The icon is pinned at two opposite corners, so
+-- the nudge has to move BOTH -- adding a CENTER point on top would
+-- over-constrain the texture rather than shift it.
+local function iconNudge()
+    local tl = mb.icon:PointOffset("TOPLEFT")
+    local br = mb.icon:PointOffset("BOTTOMRIGHT")
+    if not tl or not br then return nil end
+    return tl.x .. "," .. tl.y .. " / " .. br.x .. "," .. br.y
+end
+local atRest = iconNudge()
+check(atRest == "3,-3 / -3,3", "the logo sits inset at rest", tostring(atRest))
+arg1 = "LeftButton"
+mb.scripts.OnMouseDown()
+check(iconNudge() == "4,-4 / -2,2", "and sinks a pixel when pressed",
+      tostring(iconNudge()))
+check(mb.icon:GetWidth() == iw, "without changing size", mb.icon:GetWidth())
+-- EXACTLY TWO ANCHORS, the opposite corners. A texture pinned at both is
+-- already fully constrained, so nudging it with an extra CENTER point adds a
+-- third, conflicting rule rather than moving anything -- which is what the
+-- nudge used to do before the icon was inset.
+local function anchorNames(r)
+    local pts = rawget(r, "points") or {}
+    local out, i = {}, 1
+    while i <= table.getn(pts) do
+        table.insert(out, pts[i].point); i = i + 1
+    end
+    table.sort(out)
+    return table.concat(out, "+")
+end
+check(anchorNames(mb.icon) == "BOTTOMRIGHT+TOPLEFT",
+      "and by exactly its two opposite corners", anchorNames(mb.icon))
+mb.scripts.OnMouseUp()
+check(iconNudge() == atRest, "then comes back up", tostring(iconNudge()))
+
+-- A RIGHT-click press neither sinks the logo nor arms a drag.
+arg1 = "RightButton"
+mb.scripts.OnMouseDown()
+check(iconNudge() == atRest, "a right-click press does not sink it",
+      tostring(iconNudge()))
+check(mb.scripts.OnUpdate == nil, "nor arm the drag tracker")
+arg1 = "LeftButton"
+local f = io.open("media/minimap.tga", "rb")
+check(f ~= nil, "and that art is really in the repo")
+if f then
+    -- Same format as media/ResizeGrip.tga, which is already proven on the
+    -- 1.12 client: uncompressed true-colour, 32-bit, powers of two.
+    local hdr = f:read(18)
+    f:close()
+    local function byte(i) return string.byte(hdr, i) end
+    -- Type 10 is RLE true-colour, which is what every texture in Aegis:
+    -- Pathfinder's media folder is. Courier's older ResizeGrip.tga is type 2
+    -- (uncompressed) and also loads fine -- both work on 1.12, and matching
+    -- the sibling addon's pipeline is worth more than matching our own older
+    -- file. Anything OTHER than these two would not load at all.
+    check(byte(3) == 10 or byte(3) == 2,
+          "a true-colour TGA the 1.12 client can load", byte(3))
+    check(byte(17) == 32, "32-bit, so it has an alpha channel", byte(17))
+    local w = byte(13) + byte(14) * 256
+    local h = byte(15) + byte(16) * 256
+    -- A power of two, which 1.12 requires -- and deliberately CLOSE to the
+    -- 20px the button draws it at. A .tga carries no mipmaps (only .blp
+    -- does), so the client minifies a single image straight down to display
+    -- size, and the further that has to travel the more it shimmers. 64x64
+    -- was three times over and read as noise.
+    local function pow2(n) return n > 0 and math.mod(n, 2) == 0 end
+    check(pow2(w) and w == h, "square and a power of two", w .. "x" .. h)
+    check(w <= 64, "and not far above the size it is drawn at", w)
+end
+
+-- The default spot is deliberately NOT Aegis: Pathfinder's, which is 215.
+-- A 32px button orbiting at radius 80 spans about 23 degrees, so two Aegis
+-- addons defaulting to the same place would stack on top of each other for
+-- anyone running both -- and they are written to be run together.
+check(A.ui.MinimapAngle ~= nil, "there is a default angle")
+A.db.SaveMinimapAngle(nil)
+local defaultAngle = A.ui.MinimapAngle()
+local function angleGap(a, b)
+    local d = math.abs(a - b)
+    if d > 180 then d = 360 - d end
+    return d
+end
+check(angleGap(defaultAngle, 215) > 23,
+      "and it clears Pathfinder's default by more than a button's width",
+      defaultAngle .. " vs 215, gap " .. angleGap(defaultAngle, 215))
+
+print("== minimap: the angle is remembered ==")
+A.ui.SetMinimapAngle(90)
+check(A.db.GetMinimapAngle() == 90, "a new angle is saved",
+      A.db.GetMinimapAngle())
+check(A.ui.MinimapAngle() == 90, "and read back")
+-- Wrapped, not clamped: dragging past 360 keeps going round.
+A.ui.SetMinimapAngle(380)
+check(A.ui.MinimapAngle() == 20, "past a full turn it wraps", A.ui.MinimapAngle())
+A.ui.SetMinimapAngle(-30)
+check(A.ui.MinimapAngle() == 330, "and backwards too", A.ui.MinimapAngle())
+
+print("== minimap: dragging follows the cursor ==")
+-- Straight up from the centre is 90 degrees. The cursor is converted out of
+-- screen coordinates first, which is why the scale below matters.
+A.ui.SetMinimapAngle(0)
+hover(mb)
+mb.scripts.OnDragStart()
+check(mb.dragging == true, "the drag started")
+check(not GameTooltip:IsVisible(),
+      "and the tooltip got out of the way of the thing being dragged")
+check(mb.scripts.OnUpdate ~= nil, "and it tracks the mouse per frame")
+-- Same reason as above: a missing tracker should read as the check it failed,
+-- not as an error inside the next line.
+if not mb.scripts.OnUpdate then mb.scripts.OnUpdate = function() end end
+cursorX, cursorY = minimapCX, minimapCY + 50
+mb.scripts.OnUpdate()
+check(A.ui.MinimapAngle() == 90, "cursor above the centre puts it at the top",
+      A.ui.MinimapAngle())
+cursorX, cursorY = minimapCX - 50, minimapCY
+mb.scripts.OnUpdate()
+check(A.ui.MinimapAngle() == 180, "and to the left, on the left",
+      A.ui.MinimapAngle())
+
+-- THE SCALE. GetCursorPosition answers in screen coordinates; a frame's centre
+-- is in its own. At scale 1 the two agree and the bug hides, so this checks it
+-- somewhere else.
+uiScale = 2
+cursorX, cursorY = minimapCX, minimapCY - 50
+mb.scripts.OnUpdate()
+check(A.ui.MinimapAngle() == 270,
+      "the cursor is still tracked correctly at a different UI scale",
+      A.ui.MinimapAngle())
+uiScale = 1
+
+mb.scripts.OnDragStop()
+check(mb.dragging == false, "the drag stopped")
+check(mb.scripts.OnUpdate == nil, "and it stopped tracking")
+
+print("== minimap: a PRESS drags it, and a click still clicks ==")
+-- Reported as "it is not movable". The old code leaned entirely on
+-- RegisterForDrag + OnDragStart, which is the tidy mechanism and the one
+-- Pathfinder uses -- and on at least one player's client the button would not
+-- move at all. The press now drives it, with a slop threshold so that a plain
+-- click is not a one-pixel drag.
+A.ui.SetMinimapAngle(0)
+cursorX, cursorY = minimapCX + 60, minimapCY
+arg1 = "LeftButton"
+mb.scripts.OnMouseDown()
+check(mb.scripts.OnUpdate ~= nil, "pressing arms the tracker")
+check(mb.dragging == false, "but it is not a drag yet")
+-- Guarded: with no tracker armed every call below would error on a nil, which
+-- reports worse than the check that already failed.
+if not mb.scripts.OnUpdate then mb.scripts.OnUpdate = function() end end
+
+-- Below the threshold: the tracker runs and deliberately does nothing. This is
+-- what keeps clicking usable -- without it the icon would creep around the
+-- ring every time you opened the window.
+cursorX, cursorY = minimapCX + 61, minimapCY + 1
+mb.scripts.OnUpdate()
+check(mb.dragging == false, "a twitch is not a drag")
+check(A.ui.MinimapAngle() == 0, "and the button has not moved",
+      A.ui.MinimapAngle())
+
+-- Past it: now it is a drag, and the button follows the cursor.
+cursorX, cursorY = minimapCX, minimapCY + 60
+mb.scripts.OnUpdate()
+check(mb.dragging == true, "a real movement IS a drag")
+check(A.ui.MinimapAngle() == 90, "and the button followed the cursor",
+      A.ui.MinimapAngle())
+
+mb.scripts.OnMouseUp()
+check(mb.scripts.OnUpdate == nil, "releasing stops the tracker")
+check(mb.dragging == false, "and clears the drag")
+
+-- A press and release with no movement at all leaves the angle alone, which is
+-- what every ordinary click is.
+A.ui.SetMinimapAngle(45)
+cursorX, cursorY = minimapCX + 10, minimapCY + 10
+mb.scripts.OnMouseDown()
+-- Same guard as above: an unarmed tracker is a failed check further up, not a
+-- reason for this line to error.
+if mb.scripts.OnUpdate then mb.scripts.OnUpdate() end
+mb.scripts.OnMouseUp()
+check(A.ui.MinimapAngle() == 45, "a click moves nothing", A.ui.MinimapAngle())
+A.ui.CloseWindow()
+mb.scripts.OnClick()
+check(A.ui.frame:IsVisible(), "and still opens the window")
+A.ui.CloseWindow()
+
+-- Hidden mid-drag: no tracker left running on a frame nobody can see.
+mb.scripts.OnMouseDown()
+check(mb.scripts.OnUpdate ~= nil, "armed again")
+check(mb.scripts.OnHide ~= nil, "the button handles being hidden")
+if mb.scripts.OnHide then mb.scripts.OnHide() end
+check(mb.scripts.OnUpdate == nil, "hiding the button stops the tracker")
+mb.scripts.OnUpdate = nil
+
+print("== minimap: /courier icon places it when dragging cannot ==")
+-- A minimap-button collector -- the kind that arranges every button into an
+-- even ring -- re-anchors what it manages, and will put ours back wherever it
+-- likes however well our own drag works. This is the way out that nothing can
+-- argue with.
+local slash = SlashCmdList["AEGISCOURIER"]
+check(slash ~= nil, "the slash handler is registered")
+A.ui.SetMinimapAngle(0)
+slash("icon 135")
+check(A.ui.MinimapAngle() == 135, "a number places it", A.ui.MinimapAngle())
+check(A.db.GetMinimapAngle() == 135, "and is remembered")
+slash("icon 400")
+check(A.ui.MinimapAngle() == 40, "out of range wraps rather than refusing",
+      A.ui.MinimapAngle())
+slash("icon -30")
+check(A.ui.MinimapAngle() == 330, "and negatives wrap the other way",
+      A.ui.MinimapAngle())
+local before = A.ui.MinimapAngle()
+DEFAULT_CHAT_FRAME.messages = {}
+slash("icon sideways")
+check(A.ui.MinimapAngle() == before, "nonsense moves nothing", A.ui.MinimapAngle())
+local said = table.concat(DEFAULT_CHAT_FRAME.messages, " | ")
+check(A.util.Contains(said, "not a number"), "and says so", said)
+DEFAULT_CHAT_FRAME.messages = {}
+slash("icon")
+said = table.concat(DEFAULT_CHAT_FRAME.messages, " | ")
+check(A.util.Contains(said, "330"), "bare 'icon' reports where it is", said)
+
+print("== minimap: the three clicks ==")
+A.ui.CloseWindow()
+shiftDown = false
+arg1 = "LeftButton"
+mb.scripts.OnClick()
+check(A.ui.frame:IsVisible(), "left-click opens the window")
+arg1 = "LeftButton"
+mb.scripts.OnClick()
+check(not A.ui.frame:IsVisible(), "and left-click again closes it")
+
+arg1 = "RightButton"
+mb.scripts.OnClick()
+check(A.ui.frame:IsVisible() and A.ui.selectedSubTab == "Sent",
+      "right-click goes straight to Sent", A.ui.selectedSubTab)
+-- A click that asks for a TAB must not toggle the window shut: it asked for
+-- that tab to be in front of you, and it already is.
+arg1 = "RightButton"
+mb.scripts.OnClick()
+check(A.ui.frame:IsVisible() and A.ui.selectedSubTab == "Sent",
+      "and again leaves it open on Sent, rather than closing")
+
+shiftDown = true
+arg1 = "LeftButton"
+mb.scripts.OnClick()
+check(A.ui.frame:IsVisible() and A.ui.selectedSubTab == "Courier",
+      "shift-click goes to the settings tab", A.ui.selectedSubTab)
+shiftDown = false
+
+print("== minimap: away from a mailbox nothing is half-done ==")
+-- The reason this button is safe to add. Everything that needs a live mail
+-- session is already gated, so opening the window from the minimap can only
+-- show you things.
+A.ui.mailOpen = false
+A.send.atMailbox = false
+arg1 = "LeftButton"
+A.ui.CloseWindow()
+mb.scripts.OnClick()
+check(A.ui.frame:IsVisible(), "the window opens with no mailbox in sight")
+A.ui.SelectSubTab("Inbox")
+check(not A.ui.btnOpenAll:IsEnabled(), "Open All is dead")
+check(not A.ui.btnTakeSold:IsEnabled(), "Take Sold is dead")
+check(not A.ui.btnDeleteRead:IsEnabled(), "Delete Read is dead")
+A.ui.SelectSubTab("Send")
+A.ui.sendTo:SetText("Bob")
+A.ui.sendSubject:SetText("hello")
+A.ui.RefreshSend()
+check(not A.ui.btnSend:IsEnabled(),
+      "and Send is dead, however complete the form")
+A.ui.sendTo:SetText("")
+A.ui.sendSubject:SetText("")
+-- The tabs that do not need a mailbox still work.
+A.ui.SelectSubTab("Sent")
+check(A.ui.selectedSubTab == "Sent", "the Sent tab still opens")
+A.ui.SelectSubTab("Courier")
+check(A.ui.selectedSubTab == "Courier", "and so does settings")
+-- The tooltip says so rather than leaving it to be discovered.
+check(hover(mb), "the button takes a hover")
+local shown = rawget(GameTooltip, "shown") or {}
+check(shown.text == "Aegis: Courier", "the tooltip names the addon",
+      tostring(shown.text))
+local joined = GameTooltip:Body()
+check(A.util.Contains(joined, "Right-click"), "and documents right-click", joined)
+check(A.util.Contains(joined, "Shift-click"), "and shift-click")
+check(A.util.Contains(joined, "Drag"), "and that it can be dragged")
+check(A.util.Contains(joined, "need a mailbox"),
+      "and warns which tabs are inert away from a mailbox", joined)
+unhover(mb)
+
+print("== minimap: the icon can be switched off ==")
+A.ui.SelectSubTab("Courier")
+check(A.ui.checkMinimap ~= nil, "the Courier tab has the toggle")
+check(A.ui.checkMinimap:GetChecked(), "on by default")
+A.ui.checkMinimap:SetChecked(false)
+A.ui.checkMinimap.scripts.OnClick()
+check(not A.db.Setting("minimapIcon"), "clicking it stores the setting off")
+check(A.ui.minimapButton and not A.ui.minimapButton:IsVisible(),
+      "and the button goes away")
+A.ui.checkMinimap:SetChecked(true)
+A.ui.checkMinimap.scripts.OnClick()
+check(A.db.Setting("minimapIcon"), "and back on")
+check(A.ui.minimapButton and A.ui.minimapButton:IsVisible(),
+      "the button returns")
+
+A.ui.CloseWindow()
+
+end
+
+do
+print("== bags: Courier opens none, and can close the one the client opens ==")
+-- THE PREMISE OF THE BUG REPORT IS WRONG AND THAT IS THE POINT. Courier has
+-- no bag API call anywhere. The backpack at a mailbox is 1.12's own
+-- MailFrame_OnEvent, MAIL_SHOW branch, calling OpenBackpack() -- and two bag
+-- addons both hooking that is two bag windows, which is between them.
+-- The DEFAULT first, before anything in this block touches it: off, because it
+-- changes behaviour the client has always had and most players want their bags
+-- there to drag from. Asserted here rather than after the first SetSetting,
+-- which would only ever prove that SetSetting works.
+check(A.db.Setting("closeBagsAtMailbox") == false,
+      "the option is OFF by default",
+      tostring(A.db.Setting("closeBagsAtMailbox")))
+
+A.ui.mailOpen = false
+A.db.SetSetting("closeBagsAtMailbox", false)
+bagsOpen = 0
+fire("MAIL_SHOW")
+hider.scripts.OnUpdate()
+check(bagsOpen == 0, "Courier opened no bag of its own", bagsOpen)
+
+-- Now play the client's part: this is the call Courier does not make.
+OpenBackpack()
+check(bagsOpen == 1, "the CLIENT is what opens one")
+hider.scripts.OnUpdate()
+check(bagsOpen == 1, "and with the setting off Courier leaves it alone")
+fire("MAIL_CLOSED")
+
+-- With the setting on, Courier declines the backpack the client opened on
+-- behalf of the window Courier replaced.
+A.db.SetSetting("closeBagsAtMailbox", true)
+bagsOpen = 0
+fire("MAIL_SHOW")
+OpenBackpack()          -- the client, during the same event
+OpenBackpack()          -- and a second bag addon answering the same call
+check(bagsOpen == 2, "two bag addons, two windows", bagsOpen)
+hider.scripts.OnUpdate()
+check(bagsOpen == 0, "one deferred close takes care of both", bagsOpen)
+
+-- DEFERRED, not inline: closing during MAIL_SHOW would run before the client's
+-- own handler and simply be undone by it. Nothing may have closed until the
+-- tick after.
+A.db.SetSetting("closeBagsAtMailbox", true)
+bagsOpen = 0
+fire("MAIL_CLOSED")
+fire("MAIL_SHOW")
+check(bagsOpen == 0, "nothing open yet")
+OpenBackpack()
+check(bagsOpen == 1, "the client opens one after our handler ran")
+check(A.ui.closeBagsQueued == true, "and the close is still only QUEUED")
+hider.scripts.OnUpdate()
+check(bagsOpen == 0, "the tick after is what closes it")
+
+-- It must work with the takeover OFF too: a player running two bag addons has
+-- the same problem whether or not they let Courier replace the mail window.
+fire("MAIL_CLOSED")
+A.db.SetSetting("takeover", false)
+bagsOpen = 0
+fire("MAIL_SHOW")
+OpenBackpack()
+hider.scripts.OnUpdate()
+check(bagsOpen == 0, "and it still closes with the takeover switched off")
+A.db.SetSetting("takeover", true)
+fire("MAIL_CLOSED")
+A.db.SetSetting("closeBagsAtMailbox", false)
+
+-- And it never fires away from a mailbox: the player's bags are their own
+-- business everywhere else in the game.
+A.db.SetSetting("closeBagsAtMailbox", true)
+A.ui.mailOpen = false
+bagsOpen = 3
+A.ui.CloseBagsAtMailbox()
+check(bagsOpen == 3, "bags away from a mailbox are left alone", bagsOpen)
+
+-- The setting is checked in TWO places -- once before queueing and once before
+-- closing -- so neither can be proved through the queue alone. Called directly,
+-- at a mailbox, with the setting off: the guard inside is the only thing that
+-- can stop this.
+A.db.SetSetting("closeBagsAtMailbox", false)
+A.ui.mailOpen = true
+bagsOpen = 3
+A.ui.CloseBagsAtMailbox()
+check(bagsOpen == 3,
+      "and refuses on its own account when the setting is off", bagsOpen)
+A.ui.mailOpen = false
+
+print("== settings: the bag option is in the Courier tab ==")
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+A.ui.SelectSubTab("Courier")
+check(A.ui.checkCloseBags ~= nil, "there is a checkbox for it")
+check(not A.ui.checkCloseBags:GetChecked(),
+      "off by default -- it changes behaviour the client has always had")
+A.ui.checkCloseBags:SetChecked(true)
+A.ui.checkCloseBags.scripts.OnClick()
+check(A.db.Setting("closeBagsAtMailbox"), "clicking it stores the setting")
+A.ui.checkCloseBags:SetChecked(false)
+A.ui.checkCloseBags.scripts.OnClick()
+check(not A.db.Setting("closeBagsAtMailbox"), "and back off")
+
+print("== text size: the setting actually changes the font ==")
+-- A font string is registered with the object it was BORN with, and the scale
+-- is applied against that -- see ui.ApplyFontScale.
+local sample = A.ui.inboxSummary
+check(sample ~= nil, "a string to measure")
+A.ui.SetFontScale(1.0)
+local _, base = sample:GetFont()
+check(base ~= nil, "it has a font at 100%", tostring(base))
+
+A.ui.SetFontScale(1.2)
+local _, bigger = sample:GetFont()
+-- Guarded rather than compared straight: if the scale never applies at all
+-- these come back nil, and that should read as the check it failed rather than
+-- as an error on the comparison.
+check(base and bigger and bigger > base, "at 120% it is bigger",
+      tostring(base) .. " -> " .. tostring(bigger))
+check(base and bigger and math.abs(bigger - base * 1.2) < 0.001,
+      "and by exactly the scale asked for", tostring(bigger))
+
+-- THE COMPOUNDING TRAP. Scaling whatever size the string currently has means
+-- the fifth press multiplies an already-multiplied number: the steps drift
+-- apart and 100% never comes back. Re-deriving from the birth font makes
+-- every scale exact whatever route you took to it.
+A.ui.SetFontScale(1.1)
+A.ui.SetFontScale(1.2)
+A.ui.SetFontScale(1.3)
+A.ui.SetFontScale(1.2)
+local _, afterWandering = sample:GetFont()
+check(afterWandering and bigger and math.abs(afterWandering - bigger) < 0.001,
+      "120% is 120% however many steps you took to get there",
+      tostring(bigger) .. " vs " .. tostring(afterWandering))
+A.ui.SetFontScale(1.0)
+local _, backTo100 = sample:GetFont()
+check(backTo100 and base and math.abs(backTo100 - base) < 0.001,
+      "and 100% is exactly where it started",
+      tostring(base) .. " vs " .. tostring(backTo100))
+
+print("== text size: bounds, persistence and the buttons ==")
+local fmin, fmax = A.ui.FontScaleBounds()
+A.ui.SetFontScale(fmax + 5)
+check(A.ui.FontScale() == fmax, "it cannot go past the maximum", A.ui.FontScale())
+A.ui.SetFontScale(fmin - 5)
+check(A.ui.FontScale() == fmin, "nor below the minimum", A.ui.FontScale())
+check(A.db.GetFontScale() == fmin, "and the choice is saved per character")
+
+A.ui.SelectSubTab("Courier")
+check(A.ui.btnFontUp ~= nil and A.ui.btnFontDown ~= nil,
+      "the Courier tab has the text-size buttons")
+check(Click(A.ui.btnFontUp), "plus is clickable")
+check(A.ui.FontScale() > fmin, "and makes the text bigger", A.ui.FontScale())
+check(A.util.Contains(rawget(A.ui.fontText, "text") or "", "%"),
+      "the readout is a percentage", rawget(A.ui.fontText, "text"))
+Click(A.ui.btnFontDown)
+check(A.ui.FontScale() == fmin, "minus brings it back")
+Click(A.ui.btnFontUp)
+Click(A.ui.btnFontUp)
+check(Click(A.ui.btnFontReset), "reset is clickable")
+check(A.ui.FontScale() == 1.0, "and returns to 100%", A.ui.FontScale())
+
+-- It reaches BUTTON labels and EDIT BOXES too, not only plain labels -- those
+-- are separate creation paths and each had to be registered by hand.
+A.ui.SetFontScale(1.3)
+local _, btnSize = A.ui.btnFontReset.label:GetFont()
+local _, boxSize = A.ui.sendTo:GetFont()
+check(btnSize ~= nil and btnSize > 12, "button labels scale too", tostring(btnSize))
+check(boxSize ~= nil and boxSize > 10, "and so do the edit boxes", tostring(boxSize))
+A.ui.SetFontScale(1.0)
+
+end
+
+do
+print("== send: a server that never answers does not hang the addon ==")
+-- REPORTED AS "it gets stuck when sending mail". Between SendMail and the
+-- server's reply the run is armed by NOTHING -- only MAIL_SEND_SUCCESS or
+-- MAIL_FAILED arms the next step. If neither ever comes, send.sending stays
+-- true for the rest of the session, the Send button reads "already sending"
+-- forever, and only a /reload clears it. No bug in the send loop is needed:
+-- the server going quiet once is enough.
+local function tickSilent(seconds)
+    -- The driver, with NO acknowledgement delivered. pumpSend always hands one
+    -- over, so it can never see this state.
+    --
+    -- A HIDDEN FRAME RUNS NO OnUpdate on the real client, so this must be a
+    -- loud failure and not a silent skip: a mock that ticks a hidden frame
+    -- hands the watchdog a clock the client would never provide, and the
+    -- watchdog is only reachable at all because send.Wake keeps the driver
+    -- shown for the whole batch.
+    if not sdriver.visible then
+        check(false, "the send driver must be SHOWN to tick")
+        return
+    end
+    arg1 = seconds
+    sdriver.scripts.OnUpdate()
+    arg1 = nil
+end
+
+-- Everything below is DERIVED from send.ACK_TIMEOUT so the behaviour test
+-- cannot drift from the constant -- but that also means the constant itself
+-- needs a bound of its own, or a patience of ten hours would satisfy every
+-- check here and still be an unrecoverable hang to the player.
+check(send.ACK_TIMEOUT >= 3 and send.ACK_TIMEOUT <= 30,
+      "the patience is a human timeframe", send.ACK_TIMEOUT)
+
+stockBags()
+send.atMailbox = true
+send.ClearAttachments()
+send.Attach(0, 1); send.Attach(0, 2)
+DEFAULT_CHAT_FRAME.messages = {}
+check(send.Start("Ann", "x", "", 0, false, false), "a batch started")
+pendingAck = nil                      -- the server simply says nothing
+check(send.sending, "and is waiting on the server")
+check(sdriver.visible, "with the driver live to notice the silence")
+
+tickSilent(send.ACK_TIMEOUT - 1)
+check(send.sending, "a slow reply is still waited for")
+
+tickSilent(2)
+check(not send.sending, "but silence past the timeout stops the run")
+check(send.armed == false, "with nothing left armed")
+local said = table.concat(DEFAULT_CHAT_FRAME.messages, " | ")
+check(A.util.Contains(said, "no reply"), "and says why", said)
+check(A.util.Contains(said, "still attached"),
+      "and what is still waiting to go", said)
+-- The attachments are the player's list, and a run that stopped must leave
+-- them alone -- every item is still in their bags.
+check(send.Count() > 0, "the attachment list survives", send.Count())
+
+-- And the driver puts ITSELF away afterwards, with the clock wound back. It
+-- stays up for one more frame because only an OnUpdate can notice the run has
+-- ended -- which is also the frame that has to leave send.silent at zero, or
+-- the next batch inherits this one's accumulated silence and trips early.
+check(sdriver.visible, "the driver is up for one more frame")
+tickSilent(1)
+check(not sdriver.visible, "and then puts itself away")
+check((send.silent or 0) == 0, "with the clock wound back for the next batch",
+      send.silent)
+
+print("== send: an acknowledgement resets the patience ==")
+-- A long healthy batch must never trip the watchdog: arming the next step
+-- restarts the clock, so only a genuinely silent server reaches it.
+--
+-- The silence has to land in SEVERAL un-armed frames PER MAIL for this to test
+-- anything. An earlier version of this test ticked once and acknowledged in
+-- the same breath, so the clock never got a second reading and every reset in
+-- the file could be deleted with the suite still green.
+send.ClearAttachments()
+send.Attach(0, 1); send.Attach(0, 2); send.Attach(0, 3)
+send.atMailbox = true
+DEFAULT_CHAT_FRAME.messages = {}
+send.Start("Ann", "x", "", 0, false, false)
+local long, half = 0, (send.ACK_TIMEOUT - 1) / 2
+while send.sending and long < 40 do
+    if send.armed then
+        tickSilent(0)                     -- the armed step issues the next mail
+    else
+        tickSilent(half)                  -- nearly out of patience...
+        tickSilent(half)                  -- ...and this is the second reading
+        if send.sending and pendingAck then
+            local ack = pendingAck; pendingAck = nil; fire(ack)   -- then a reply
+        end
+    end
+    long = long + 1
+end
+check(not send.sending, "the batch finished")
+check(table.getn(SENT) >= 3, "and every mail went out", table.getn(SENT))
+check(not A.util.Contains(
+          table.concat(DEFAULT_CHAT_FRAME.messages, " | "), "no reply"),
+      "and the watchdog never fired on it")
+
+print("== send: a step waiting on a locked slot is not silence ==")
+-- The watchdog must only ever see "mail issued, server quiet". A step that is
+-- merely re-arming itself to wait for a bag lock is armed, so it never reaches
+-- the silence branch -- otherwise a slow bag update would abort a healthy run.
+send.ClearAttachments()
+send.sending = true
+send.armed = true
+send.wait = 999                       -- armed and waiting a long time
+send.silent = 0
+sdriver:Show()
+rawset(sdriver, "justShown", nil)
+tickSilent(send.ACK_TIMEOUT * 3)
+check(send.sending, "an armed step is left alone")
+check((send.silent or 0) == 0, "and the silence clock never started",
+      send.silent)
+send.sending = false
+send.armed = false
+send.wait = 0
+sdriver:Hide()
+
+print("== send: closing the mailbox mid-batch stops it cleanly ==")
+-- The easy way to hit the hang: closing Courier's own window calls
+-- CloseMail(), so starting a twelve-item send and shutting the window was all
+-- it took. With the session gone no acknowledgement can arrive at all.
+stockBags()
+send.atMailbox = true
+send.ClearAttachments()
+send.Attach(0, 1); send.Attach(0, 2)
+send.Start("Ann", "x", "", 0, false, false)
+pendingAck = nil
+check(send.sending, "a batch is running")
+DEFAULT_CHAT_FRAME.messages = {}
+fire("MAIL_CLOSED")
+check(not send.sending, "closing the mailbox stops it")
+said = table.concat(DEFAULT_CHAT_FRAME.messages, " | ")
+check(A.util.Contains(said, "mailbox closed"), "and says so", said)
+check(A.util.Contains(said, "still attached"), "and what is left", said)
+check(send.Count() > 0, "the attachment list survives that too", send.Count())
+
+-- And it says nothing at all when no batch was running, which is every other
+-- time a player walks away from a mailbox.
+DEFAULT_CHAT_FRAME.messages = {}
+fire("MAIL_SHOW")
+fire("MAIL_CLOSED")
+said = table.concat(DEFAULT_CHAT_FRAME.messages, " | ")
+check(not A.util.Contains(said, "mid-send"),
+      "walking away with nothing in flight is silent", said)
+send.ClearAttachments()
+
+end
+
+do
+print("== checkbox: our art, not the template's and not pfUI's ==")
+-- A VERBATIM PORT of Exchange's ui.MakeCheckBox, for the reason BTN_KIND is
+-- one: the two addons sit in the same UI and a hand-adjusted copy drifts.
+local box = A.ui.MakeCheckBox(A.ui.frame, nil, "AegisCourierTestChk")
+check(box:GetObjectType() == "CheckButton", "still a real CheckButton",
+      box:GetObjectType())
+check(box.courierNoSkin and true or false,
+      "opted out of pfUI -- its SkinCheckbox renders a small box as a circle")
+check(box:GetWidth() == box:GetHeight(), "square", box:GetWidth())
+check(box.fill ~= nil, "a flat fill rather than template art")
+check(table.getn(box.edge) == 4,
+      "and FOUR 1px borders, not a backdrop -- an edgeSize approaching the "
+      .. "frame size renders as a garbled cross", table.getn(box.edge))
+-- Each border is 1px on its own axis and stretched on the other, which is
+-- what keeps it square at any size.
+check(box.edge[1]:GetHeight() == 1, "top edge is 1px", box.edge[1]:GetHeight())
+check(box.edge[3]:GetWidth() == 1, "left edge is 1px", box.edge[3]:GetWidth())
+
+-- THE CHECKED STATE IS THE WIDGET'S OWN. SetChecked/GetChecked must not be
+-- shadowed: a CheckButton toggles itself BEFORE OnClick runs and every handler
+-- here reads GetChecked() inside OnClick expecting the new value, so a private
+-- flag would leave two answers and each handler reading the wrong one.
+box:SetChecked(true)
+check(box:GetChecked() and true or false, "checked state is the widget's")
+box:SetChecked(false)
+check(not box:GetChecked(), "and clears")
+
+-- AND THE CLICK PATH PROVES IT. The client toggles the widget before OnClick
+-- runs, so a handler reading GetChecked() reads the new value; shadowing the
+-- pair with a private flag leaves the widget and the shadow disagreeing the
+-- moment the WIDGET is what moved, and every settings handler then writes the
+-- wrong thing to the DB.
+local wasLog = A.db.Setting("logEnabled") and true or false
+check(Click(A.ui.checkLog), "a settings box is clickable")
+check((A.db.Setting("logEnabled") and true or false) ~= wasLog,
+      "and one click flips the setting it is bound to",
+      tostring(A.db.Setting("logEnabled")))
+check(Click(A.ui.checkLog), "clickable again")
+check((A.db.Setting("logEnabled") and true or false) == wasLog,
+      "and the second click flips it back -- not stuck on one value",
+      tostring(A.db.Setting("logEnabled")))
+
+-- The tick is the widget's CHECKED texture, recoloured -- so the client shows
+-- and hides it for us and it can never disagree with the state.
+check(box.tick ~= nil, "the tick is the widget's own checked texture")
+if box.tick then
+    local tl = box.tick:PointOffset("TOPLEFT")
+    local br = box.tick:PointOffset("BOTTOMRIGHT")
+    check(tl ~= nil and br ~= nil, "inset at both corners")
+    if tl and br then
+        check(tl.x > 0 and br.x < 0, "inside the box, not filling it",
+              tostring(tl.x) .. "/" .. tostring(br.x))
+    end
+end
+
+print("== checkbox: the caption is a METHOD, not a global ==")
+-- UICheckButtonTemplate supplied one as a global named "<name>Text", so every
+-- settings row needed a frame name just to reach its own label.
+local lbl = box:SetLabel("Hello")
+check(lbl ~= nil and lbl:GetText() == "Hello", "SetLabel returns the string",
+      lbl and lbl:GetText())
+check(getglobal("AegisCourierTestChkText") == nil,
+      "and no global was created for it")
+local pt = lbl:PointOffset("LEFT")
+check(pt ~= nil and pt.relPoint == "RIGHT", "sitting to the right of the box")
+
+-- Rule 32: every creation path REGISTERS with the font it was born with, or it
+-- silently stays small forever.
+A.ui.SetFontScale(1.4)
+local _, sz = lbl:GetFont()
+check(sz ~= nil and sz > 10, "and the text-size setting reaches it", tostring(sz))
+A.ui.SetFontScale(1.0)
+
+print("== checkbox: dimmed reads as unavailable, not as missing ==")
+box:SetLabel("Hello")
+box:SetDimmed(true)
+check(box.fill:GetAlpha() < 1, "the box fades", box.fill:GetAlpha())
+check(box.label:GetAlpha() < 1, "and so does the caption", box.label:GetAlpha())
+check(box.edge[1]:GetAlpha() < 1, "borders too", box.edge[1]:GetAlpha())
+-- 1.12's IsEnabled answers 1 or NIL, never false.
+check(not box:IsEnabled(),
+      "and the click is actually refused, not just greyed")
+box:SetDimmed(false)
+check(box.fill:GetAlpha() == 1, "and it all comes back", box.fill:GetAlpha())
+check(box:IsEnabled() and true or false, "clickable again")
+end
+
+do
+print("== settings: the block SCROLLS, so it cannot clip the footer ==")
+-- REPORTED AS "when it's at its smallest size it clips at the bottom". The
+-- settings block is a fixed stack of controls and hint lines taller than the
+-- panel is at the window's minimum height, and 1.12 does not clip children --
+-- it draws over whatever is there, which was the footer and the window edge.
+local g = A.ui.Geometry()
+local scroll = A.ui.courierScroll
+local child  = A.ui.courierScrollChild
+local sb     = A.ui.courierScrollBar
+check(scroll ~= nil and child ~= nil and sb ~= nil, "there is a scroll frame")
+check(scroll:GetObjectType() == "ScrollFrame",
+      "a REAL ScrollFrame -- the only 1.12 widget that clips",
+      scroll:GetObjectType())
+check(scroll:GetScrollChild() == child, "with the settings block as its child")
+check(sb.courierNoSkin and true or false,
+      "the bar opts out of pfUI, which reaches for buttons we never built")
+
+A.ui.frame:Show()
+local function fitAt(h)
+    A.ui.frame:SetHeight(h)
+    A.ui.SelectSubTab("Courier")
+    A.ui.RefreshCourier()
+    return scroll:GetHeight() or 0, child:GetHeight() or 0
+end
+
+-- ACROSS THE SIZE RANGE, not at one height: the whole bug lived at the
+-- minimum and was invisible at the default.
+local heights = { g.minH, g.defaultH, g.maxH }
+local i = 1
+while i <= table.getn(heights) do
+    local h = heights[i]
+    local viewH, contentH = fitAt(h)
+    check(viewH > 0, "at h=" .. h .. " the view has a height", viewH)
+    check(contentH > 0, "and the content measures itself", contentH)
+    -- The invariant: either everything fits, or the bar is there to reach the
+    -- rest. Never "content taller than the view and no way down".
+    local fits = contentH <= viewH
+    check(fits or sb:IsVisible(),
+          "either it fits or the bar is up (h=" .. h .. ")",
+          contentH .. " in " .. viewH)
+    check((not fits) or (not sb:IsVisible()),
+          "and the bar is NOT up when it fits (h=" .. h .. ")")
+    if not fits then
+        local _, maxV = sb:GetMinMaxValues()
+        check(maxV >= contentH - viewH,
+              "the bar reaches the bottom of the content (h=" .. h .. ")",
+              maxV .. " vs " .. (contentH - viewH))
+    end
+    i = i + 1
+end
+
+print("== settings: the measurement sweeps children AND regions ==")
+-- The block is half frames (checkboxes, buttons) and half font strings, so a
+-- sweep that looks at only one of them under-measures and the bar stops short
+-- of the bottom. Both are checked against the child's own measured height.
+local viewH0, contentH0 = fitAt(g.minH)
+local top = child:GetTop()
+local function lowest(list)
+    local low, i, n = nil, 1, table.getn(list)
+    while i <= n do
+        local o = list[i]
+        if o and o.GetBottom then
+            local b = o:GetBottom()
+            if b and (not low or b < low) then low = b end
+        end
+        i = i + 1
+    end
+    return low
+end
+local lowKid = lowest({ child:GetChildren() })
+local lowReg = lowest({ child:GetRegions() })
+check(lowKid ~= nil, "there are child frames to measure")
+check(lowReg ~= nil, "and regions to measure")
+if top and lowKid then
+    check(contentH0 >= top - lowKid,
+          "the measured height reaches the lowest CHILD",
+          contentH0 .. " vs " .. (top - lowKid))
+end
+if top and lowReg then
+    check(contentH0 >= top - lowReg,
+          "and the lowest REGION", contentH0 .. " vs " .. (top - lowReg))
+end
+
+-- Directly, on a frame whose LOWEST item is a region. Today the settings
+-- block ends in a button, so the region sweep rides along without being
+-- load-bearing -- and the day a hint line is the last thing, a children-only
+-- sweep would under-measure and the bar would stop short of it.
+local probe = CreateFrame("Frame", nil, A.ui.frame)
+probe:SetWidth(100); probe:SetHeight(10)
+probe:SetPoint("TOPLEFT", A.ui.frame, "TOPLEFT", 0, 0)
+local pk = CreateFrame("Frame", nil, probe)
+pk:SetWidth(10); pk:SetHeight(10)
+pk:SetPoint("TOPLEFT", probe, "TOPLEFT", 0, -20)
+local pr = probe:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+pr:SetPoint("TOPLEFT", pk, "BOTTOMLEFT", 0, -40)
+pr:SetText("the last word")
+local extent = A.ui.ContentExtent(probe)
+check(extent ~= nil and extent >= 70,
+      "a trailing font string is measured, not just the child frames",
+      tostring(extent))
+
+print("== settings: the smallest window is the case that broke ==")
+local viewH, contentH = fitAt(g.minH)
+check(contentH > viewH,
+      "the block really is taller than the panel at minimum size",
+      contentH .. " > " .. viewH)
+check(sb:IsVisible(), "so the bar is there")
+
+-- The wheel scrolls it. arg1 is the wheel delta GLOBAL on this client, so a
+-- handler written to take a parameter would scroll by nil.
+local before = sb:GetValue()
+arg1 = -1
+scroll.scripts.OnMouseWheel()
+arg1 = nil
+check(sb:GetValue() > before, "the wheel scrolls down", sb:GetValue())
+check(scroll:GetVerticalScroll() == sb:GetValue(),
+      "and the view follows the bar", scroll:GetVerticalScroll())
+check(scroll:IsMouseWheelEnabled() and true or false,
+      "because the frame actually takes wheel events")
+
+arg1 = 1
+scroll.scripts.OnMouseWheel()
+arg1 = nil
+check(sb:GetValue() == before, "and back up", sb:GetValue())
+
+-- Scrolled to the bottom, then the window is dragged tall enough to fit:
+-- the bar goes away and the view must come back to the top, or the block sits
+-- shifted up with empty space under it.
+sb:SetValue(1000)
+fitAt(g.defaultH)
+check(not sb:IsVisible(), "growing the window puts the bar away")
+check(scroll:GetVerticalScroll() == 0, "and scrolls back to the top",
+      scroll:GetVerticalScroll())
+
+print("== settings: nothing is anchored to the clipping frame ==")
+-- A widget pinned to the PANEL rather than to the scroll child sits outside
+-- the scroll and keeps the exact overflow this exists to fix. `panel` is
+-- shadowed in the builder so that cannot happen by accident; this is the
+-- assertion that says so.
+local panel = A.ui.panels["Courier"]
+local strays = 0
+local kids = { panel:GetChildren() }
+local k = 1
+while k <= table.getn(kids) do
+    local c = kids[k]
+    if c ~= scroll and c ~= sb then strays = strays + 1 end
+    k = k + 1
+end
+check(strays == 0,
+      "the panel holds only the scroll frame and its bar", strays)
+
+-- And the Forget button is IN THE FLOW. Pinned to a scroll child's bottom it
+-- would sit at the bottom of the 417px child -- off screen -- and pinned to
+-- the panel it drew over the stats line at minimum height.
+local forget = A.ui.btnForgetNames
+check(forget:PointOffset("BOTTOMRIGHT") == nil,
+      "Forget names is not pinned to a bottom")
+check(forget:AnchorTarget() ~= panel,
+      "and not to the clipping panel either")
+
+print("== settings: the clip line does not shave the checkboxes ==")
+-- The clip line falls on the scroll child's left edge. Text gets away with
+-- sitting on it because a glyph carries its own side bearing; a checkbox's
+-- solid 1px edge texture does not, and comes back shaved. The block is inset
+-- and the scroll frame pulled left by the same amount, so the inset is pure
+-- clip margin and the layout does not move.
+local box = A.ui.checkTakeover
+local sp = scroll:PointOffset("TOPLEFT")
+check(sp ~= nil and sp.x < 0,
+      "the scroll frame is pulled LEFT of the panel by the inset",
+      sp and sp.x)
+-- Walk the checkbox's anchor chain back to the child and sum the x offsets.
+local function leftInset(w)
+    local total, guard = 0, 0
+    while w and w ~= child and guard < 20 do
+        local pts = rawget(w, "points") or {}
+        local p = pts[table.getn(pts)]
+        if not p then return nil end
+        total = total + (p.x or 0)
+        w = p.rel
+        guard = guard + 1
+    end
+    if w ~= child then return nil end
+    return total
+end
+local inset = leftInset(box)
+check(inset ~= nil and inset > 0,
+      "and every checkbox sits INSIDE it, not on it", tostring(inset))
+
+-- The wrapping status block follows the scroll's width rather than a literal,
+-- or it is wrong the moment the bar appears and wrong again when the window
+-- is widened.
+fitAt(g.minH)
+local narrow = A.ui.integStatus:GetWidth()
+A.ui.frame:SetWidth(900)
+fitAt(g.minH)
+check(A.ui.integStatus:GetWidth() > narrow,
+      "the status text widens with the window", narrow .. " -> " ..
+      A.ui.integStatus:GetWidth())
+A.ui.frame:SetWidth(660)
+fitAt(g.defaultH)
+end
+
+print("== version: the title bar cannot drift from the .toc ==")
+-- Two releases shipped with the .toc bumped and this literal left behind, so
+-- the in-game title kept reporting an old build and bug reports came in
+-- against a version that was not running.
+local tocVersion
+local tf = io.open("Aegis_Courier.toc", "r")
+if tf then
+    local line = tf:read("*l")
+    while line do
+        local _, _, v = string.find(line, "^##%s*Version:%s*(.-)%s*$")
+        if v then tocVersion = v end
+        line = tf:read("*l")
+    end
+    tf:close()
+end
+check(tocVersion ~= nil, "found ## Version in the .toc", tostring(tocVersion))
+check(A.version == tocVersion,
+      "A.version agrees with the .toc",
+      tostring(A.version) .. " vs " .. tostring(tocVersion))
+
+print("== compose: Tab walks the form ==")
+-- 1.12 has no Tab-order property on an EditBox; OnTabPressed plus an explicit
+-- SetFocus is the whole mechanism, which is why this is worth asserting.
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+A.ui.SelectSubTab("Send")
+-- The money field is a THREE-box group now (gold/silver/copper), so the chain
+-- threads each of them rather than treating it as one stop.
+local chain = { A.ui.sendTo, A.ui.sendSubject, A.ui.sendBody,
+                A.ui.sendMoney.g, A.ui.sendMoney.s, A.ui.sendMoney.c }
+local names = { "To", "Subject", "Body", "Gold", "Silver", "Copper" }
+local nChain = table.getn(chain)
+
+local ci = 1
+while ci <= nChain do
+    check(chain[ci].scripts.OnTabPressed ~= nil,
+          names[ci] .. " handles Tab")
+    ci = ci + 1
+end
+
+A.ui.sendTo:SetFocus()
+check(A.ui.sendTo:HasFocus(), "To has the keyboard")
+ci = 1
+while ci <= nChain - 1 do
+    chain[ci].scripts.OnTabPressed()
+    check(chain[ci + 1]:HasFocus(),
+          "Tab from " .. names[ci] .. " lands on " .. names[ci + 1])
+    check(chain[ci]:HasFocus() == false,
+          "and " .. names[ci] .. " gives it up")
+    ci = ci + 1
+end
+
+-- Copper is the last field. Wrapping means Tab never reads as a dead key.
+chain[nChain].scripts.OnTabPressed()
+check(A.ui.sendTo:HasFocus(), "Tab from the last field wraps back to To")
+
+-- The multiline body is in the chain deliberately: handling OnTabPressed is
+-- also what stops Tab typing a literal tab into the message.
+A.ui.sendBody:SetFocus()
+A.ui.sendBody:SetText("hello")
+A.ui.sendBody.scripts.OnTabPressed()
+check(A.ui.sendMoney.g:HasFocus(), "Tab out of the multiline body works")
+check(A.ui.sendBody:GetText() == "hello",
+      "and does not type a tab character into it",
+      A.ui.sendBody:GetText())
+
+-- Escape on the recipient box still closes the autocomplete first; the Tab
+-- wiring must not have displaced it.
+check(A.ui.sendTo.scripts.OnEscapePressed ~= nil,
+      "To still handles Escape")
+focusedBox = nil
+
+print("== send UI: the Send BUTTON is clickable for a letter ==")
+-- The assertion that was missing when "cannot send without an item" was first
+-- fixed. send.Validate and send.Start were both corrected and tested, but
+-- ui.RefreshSend calls Validate a SECOND time to decide whether the button is
+-- clickable at all -- and it was still passing no subject and no body, so the
+-- button stayed greyed and the bug survived the fix untouched.
+--
+-- Testing the engine is not testing the button. This asserts the thing the
+-- player actually has to be able to press.
+A.ui.SelectSubTab("Send")
+A.send.ClearAttachments()
+-- At a mailbox, because that is where a player presses this button. The block
+-- below adds the case where they are NOT.
+A.send.atMailbox = true
+A.ui.sendCOD:SetChecked(false)
+A.ui.sendCODAll:SetChecked(false)
+A.ui.sendMoney:SetText("")
+A.ui.sendTo:SetText("")
+A.ui.sendSubject:SetText("")
+A.ui.sendBody:SetText("")
+A.ui.RefreshSend()
+check(not A.ui.btnSend:IsEnabled(), "an empty form cannot be sent")
+
+A.ui.sendTo:SetText("Subtilizer")
+A.ui.RefreshSend()
+check(not A.ui.btnSend:IsEnabled(), "a recipient alone is not enough")
+
+-- AND THE SESSION IS A BUTTON RULE TOO. ui.RefreshSend asks send.Validate
+-- whether the button may be pressed, so a guard added only to the engine would
+-- leave a live Send button that posts into nothing. That is the exact shape of
+-- the bug this whole block exists to remember, so it is asserted on the
+-- BUTTON and not only on the function.
+A.ui.sendSubject:SetText("test")
+A.send.atMailbox = false
+A.ui.RefreshSend()
+check(not A.ui.btnSend:IsEnabled(),
+      "away from a mailbox the Send button is dead, however complete the form")
+A.send.atMailbox = true
+A.ui.RefreshSend()
+check(A.ui.btnSend:IsEnabled(), "and live again at one")
+A.ui.sendSubject:SetText("")
+A.ui.RefreshSend()
+
+A.ui.sendSubject:SetText("test")
+A.ui.RefreshSend()
+check(A.ui.btnSend:IsEnabled() and true,
+      "recipient + subject, no attachment: the button is LIVE")
+
+A.ui.sendSubject:SetText("")
+A.ui.sendBody:SetText("hi")
+A.ui.RefreshSend()
+check(A.ui.btnSend:IsEnabled() and true,
+      "recipient + body, no attachment: also live")
+
+-- And pressing it actually sends, rather than merely being enabled.
+SENT = {}
+A.ui.sendSubject:SetText("test")
+A.ui.RefreshSend()
+A.ui.btnSend.scripts.OnClick()
+pumpSend()
+check(table.getn(SENT) == 1, "clicking Send posts the letter", table.getn(SENT))
+check(SENT[1].to == "Subtilizer", "to the right person", SENT[1].to)
+check(SENT[1].item == nil, "with nothing attached", tostring(SENT[1].item))
+
+A.ui.sendTo:SetText("")
+A.ui.sendSubject:SetText("")
+A.ui.sendBody:SetText("")
+A.ui.RefreshSend()
+
+print("== send UI: COD-all is greyed until COD is checked ==")
+A.ui.sendCOD:SetChecked(false)
+A.ui.sendCODAll:SetChecked(true)     -- stale state from a previous send
+A.ui.RefreshSend()
+check(A.ui.sendCODAll:GetChecked() == false,
+      "a disabled COD-all cannot stay checked")
+check(not A.ui.sendCODAll:IsEnabled(), "and is greyed out")
+A.ui.sendCOD:SetChecked(true)
+A.ui.RefreshSend()
+check(A.ui.sendCODAll:IsEnabled() and true, "checking COD enables it")
+A.ui.sendCODAll:SetChecked(true)
+A.ui.RefreshSend()
+check(A.ui.sendCODAll:GetChecked() == true, "and it stays checked while COD is on")
+A.ui.sendCOD:SetChecked(false)
+A.ui.RefreshSend()
+check(not A.ui.sendCODAll:IsEnabled(), "unchecking COD greys it again")
+check(A.ui.sendCODAll:GetChecked() == false, "and clears it")
+
+print("== send: UI refresh paths run clean ==")
+A.ui.RefreshSend()
+A.ui.ClearSendForm()
+check(send.Count() == 0, "Clear empties the form")
+A.ui.SelectSubTab("Send")
+A.ui.Refresh()
+check(true, "send tab refresh runs without error")
+
+-- =========================================================================
+-- Stage C.2: the correspondence log
+-- =========================================================================
+
+print("== unread flag: taking a mail marks it read ==")
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+readCalls = 0
+INBOX = {
+    mail{ sender = AH, subject = "Auction successful: Silk Cloth", money = 9500 },
+    mail{ sender = "Bob", subject = "gift", item = "Copper Ore" },
+}
+check(INBOX[1].wasRead == nil, "starts unread")
+take.Start(take.MODE_TAKE)     -- keeps the mail, so we can inspect it after
+pump()
+check(readCalls >= 2, "GetInboxText called for each mail taken", readCalls)
+check(INBOX[1].wasRead == 1, "first mail marked read")
+check(INBOX[2].wasRead == 1, "second mail marked read")
+check(A.inbox.UnreadCount() == 0, "nothing unread left",
+      A.inbox.UnreadCount())
+
+print("== unread flag: mail we only LOOK at is never marked read ==")
+-- Reading a mail with attachments drops its expiry to three days, so merely
+-- displaying the inbox must not do it.
+readCalls = 0
+INBOX = { mail{ sender = "Bob", subject = "keep me", money = 100 } }
+A.ui.SelectSubTab("Inbox")
+A.ui.RefreshInbox()
+A.inbox.All()
+A.inbox.Summary()
+check(readCalls == 0, "browsing the inbox marks nothing read", readCalls)
+check(INBOX[1].wasRead == nil, "and the mail is still unread")
+
+print("== unread flag: COD and GM mail are not marked read either ==")
+readCalls = 0
+INBOX = {
+    mail{ sender = "Ann", subject = "pay up", money = 100, cod = 5000 },
+    mail{ sender = "GM", subject = "ticket", money = 700, gm = true },
+}
+take.Start(take.MODE_OPEN)
+pump()
+check(readCalls == 0, "skipped mail is left completely alone", readCalls)
+check(INBOX[1].wasRead == nil, "COD mail still unread")
+
+print("== unread flag: Delete Read now has something to find ==")
+-- Same root cause: with nothing ever marked read, Delete Read was permanently
+-- empty-handed and its button permanently greyed.
+INBOX = {
+    mail{ sender = "Bob", subject = "gift", item = "Copper Ore" },
+    mail{ sender = "Ann", subject = "note", money = 50 },
+}
+check(take.HasWork(take.MODE_DELETE) == false, "nothing to delete yet")
+take.Start(take.MODE_TAKE)      -- empties them but keeps them
+pump()
+check(table.getn(INBOX) == 2, "mails kept")
+check(take.HasWork(take.MODE_DELETE) == true,
+      "emptied-and-read mail is now deletable")
+take.Start(take.MODE_DELETE)
+pump()
+check(table.getn(INBOX) == 0, "and Delete Read clears them",
+      table.getn(INBOX))
+
+print("== unread flag: the minimap icon is put out on close ==")
+INBOX = { mail{ sender = "Bob", subject = "x", money = 100 } }
+fire("MAIL_INBOX_UPDATE")
+driver.scripts.OnUpdate()       -- the count settles on the coalesced flush
+check(A.inbox.lastUnread == 1, "unread tracked while open", A.inbox.lastUnread)
+MiniMapMailFrame:Show()
+fire("MAIL_CLOSED")
+check(MiniMapMailFrame:IsVisible(),
+      "icon LEFT ALONE while a mail is still unread")
+
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+take.Start(take.MODE_OPEN)
+pump()
+fire("MAIL_INBOX_UPDATE")
+driver.scripts.OnUpdate()
+check(A.inbox.lastUnread == 0, "nothing unread after the run")
+MiniMapMailFrame:Show()
+fire("MAIL_CLOSED")
+check(not MiniMapMailFrame:IsVisible(), "icon cleared once nothing is unread")
+
+print("== unread flag: an empty inbox also clears it ==")
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+INBOX = {}
+fire("MAIL_INBOX_UPDATE")
+MiniMapMailFrame:Show()
+fire("MAIL_CLOSED")
+check(not MiniMapMailFrame:IsVisible(), "no mail means nothing unread")
+
+print("== big inbox: no freeze past ROWS mails ==")
+-- The reported crash: 11+ mails (list rows = 10) hang then kill the client.
+-- The FrameXML chain FauxScrollFrame_Update -> OnValueChanged ->
+-- SetVerticalScroll -> OnVerticalScroll -> updateFunction is mutual recursion
+-- unless the refresher bounces re-entry; the mock above reproduces it, so an
+-- unguarded RefreshInbox blows the Lua stack right here.
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+A.ui.SelectSubTab("Inbox")
+
+local function bigInbox(n)
+    INBOX = {}
+    local i = 1
+    while i <= n do
+        table.insert(INBOX, mail{ sender = "Bob" .. i, subject = "mail " .. i,
+            money = 10 })
+        i = i + 1
+    end
+end
+
+-- Row counts derive from ROWS, not literals: the crash threshold IS
+-- ROWS + 1, so a hardcoded 11 silently stops testing anything the moment the
+-- list grows.
+local ROWS_N = A.ui.Geometry().rows
+
+-- Exactly ROWS mails: scrollbar dormant, nothing refires.
+bigInbox(ROWS_N)
+scrollRefires = 0
+check(pcall(A.ui.RefreshInbox) == true, "a full page refreshes cleanly")
+check(scrollRefires == 0, "scrollbar dormant at exactly ROWS mails",
+      scrollRefires)
+
+-- ROWS + 1, scrolled: the scrollbar is live and refires synchronously.
+bigInbox(ROWS_N + 1)
+rawset(A.ui.inboxScroll, "value", 28)      -- user has scrolled one row down
+scrollRefires = 0
+local okBig = pcall(A.ui.RefreshInbox)
+check(okBig == true,
+      "ROWS+1 mails, scrolled: refresh terminates (the crash case)")
+check(scrollRefires > 0, "and the re-entrant scroll path genuinely fired",
+      scrollRefires)
+
+-- A full 54-mail box, scrolled deep -- the reporter's screenshot.
+bigInbox(54)
+rawset(A.ui.inboxScroll, "value", 40 * 28)
+check(pcall(A.ui.RefreshInbox) == true, "54 mails, scrolled deep: no freeze")
+
+print("== big inbox: Open All completes while the list shrinks ==")
+-- The worst case in play: every delete shifts the list under a live, scrolled
+-- scrollbar, so every MAIL_INBOX_UPDATE clamps the value and re-enters.
+bigInbox(30)
+rawset(A.ui.inboxScroll, "value", 20 * 28)
+A.db.ClearLedger()
+take.Start(take.MODE_OPEN)
+local okRun, err = pcall(pump, 400)
+check(okRun == true, "run survived", err)
+check(not take.running, "and finished")
+check(table.getn(INBOX) == 0, "30-mail box fully emptied", table.getn(INBOX))
+
+print("== storm: MAIL_INBOX_UPDATE is coalesced to one flush per frame ==")
+-- A first mailbox open fires MAIL_INBOX_UPDATE once per mail whose item the
+-- client still has to resolve from the server, so a full box lands hundreds of
+-- events across a handful of frames. Each one used to walk every header about
+-- five times over (UnreadCount, HasWork x3, All, Summary) and repaint the list.
+-- At 70 mails that is ~350 header reads and a full paint PER EVENT -- the
+-- freeze the reporters hit. The events now only raise a flag; the driver does
+-- the work once per frame.
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+A.ui.SelectSubTab("Inbox")
+bigInbox(70)
+rawset(A.ui.inboxScroll, "value", 30 * 28)   -- scrollbar live and scrolled
+
+-- Warm up first, then measure: the very first flush of a visit also seeds
+-- inbox.lastUnread, so measuring from a settled state keeps the comparison
+-- below honest rather than accidentally passing on a state difference.
+A.inbox.MarkDirty()
+driver.scripts.OnUpdate()
+
+A.inbox.MarkDirty()
+headerReads = 0
+driver.scripts.OnUpdate()
+local oneFlush = headerReads
+check(oneFlush > 0, "a flush does read the inbox", oneFlush)
+
+headerReads = 0
+local stormN = 1
+while stormN <= 200 do
+    fire("MAIL_INBOX_UPDATE")
+    stormN = stormN + 1
+end
+check(headerReads == 0, "200 events did NO inbox work of their own", headerReads)
+check(A.inbox.dirty == true, "they only raised the dirty flag")
+
+driver.scripts.OnUpdate()
+check(headerReads == oneFlush,
+      "200 events cost exactly one flush, not 200",
+      headerReads .. " reads vs one flush = " .. oneFlush)
+check(A.inbox.dirty == false, "and the frame cleared the flag")
+
+-- Nothing dirty means nothing to do: a quiet frame must not walk the inbox
+-- either, or the coalescing just moves the cost from the event to every frame.
+headerReads = 0
+driver.scripts.OnUpdate()
+check(headerReads == 0, "an idle frame does no inbox work at all", headerReads)
+
+-- AND THAT ONE FLUSH IS ONE WALK. It was five -- UnreadCount, HasWork x3, and
+-- the paint's own All plus Summary -- so 70 mails cost 351 reads every frame
+-- the inbox was dirty, which during a take run is every frame. The flush now
+-- walks once and passes the headers to the read-only consumers.
+--
+-- Asserted as a RATIO of the mailbox size, not a magic number: at exactly one
+-- walk this is 70, and any consumer that starts re-reading for itself pushes
+-- it straight back to a multiple.
+check(oneFlush == A.inbox.NumItems(),
+      "a flush reads every header exactly ONCE, not five times over",
+      oneFlush .. " reads for " .. A.inbox.NumItems() .. " mails")
+
+-- The saving has to survive the questions that walk FURTHEST. Take Sold and
+-- Delete Read both scan to the end when the answer is no, which is the common
+-- case in a mailbox of ordinary letters -- so a box with no sales and nothing
+-- read-and-empty is the shape that used to cost the most.
+INBOX = {}
+local plainN = 1
+while plainN <= 70 do
+    table.insert(INBOX, mail({ sender = "Player" .. plainN,
+                               subject = "hello " .. plainN, item = "Thing" }))
+    plainN = plainN + 1
+end
+A.inbox.MarkDirty()
+driver.scripts.OnUpdate()          -- settle
+A.inbox.MarkDirty()
+headerReads = 0
+driver.scripts.OnUpdate()
+check(headerReads == 70,
+      "still one walk when every HasWork has to scan to the end", headerReads)
+check(not A.ui.btnTakeSold:IsEnabled(),
+      "and Take Sold correctly found nothing to do")
+
+print("== storm: the take engine still steps once per confirmation ==")
+-- Coalescing must not reach the take engine's clock. MAIL_INBOX_UPDATE is the
+-- server's acknowledgement that the last operation landed, and one Step per
+-- confirmation is what keeps the run in lockstep with the server instead of
+-- racing it. Arming has to stay per-event even though the repaint does not.
+bigInbox(3)
+A.db.ClearLedger()
+take.Start(take.MODE_OPEN)
+check(take.running, "run started")
+take.armed = false
+fire("MAIL_INBOX_UPDATE")
+check(take.armed == true, "a confirmation still arms the next step")
+local okStorm = pcall(pump, 400)
+check(okStorm == true, "and the run completes")
+check(table.getn(INBOX) == 0, "emptying the box", table.getn(INBOX))
+
+print("== reader: opening a mail ==")
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+A.ui.SelectSubTab("Inbox")
+INBOX = {
+    mail{ sender = "Wanda", subject = "hello there", body = "see you at 8" },
+    mail{ sender = "Bob", subject = "supplies", money = 500,
+          item = "Copper Ore", body = "here you go" },
+}
+check(A.ui.ReaderOpen() == false, "the list is what shows first")
+check(A.ui.OpenReader(1) == true, "left-click opens mail 1")
+check(A.ui.ReaderOpen(), "the reader is open")
+check(A.ui.reader.visible == true, "and visible")
+check(rawget(A.ui.readerFrom, "text") == "Wanda", "sender shown",
+      rawget(A.ui.readerFrom, "text"))
+check(A.ui.inboxRows[1].visible == false, "the list rows gave up the well")
+A.ui.CloseReader()
+check(A.ui.ReaderOpen() == false, "Back returns to the list")
+check(A.ui.inboxRows[1].visible == true, "and the rows come back")
+
+print("== reader: an empty mail is read at once, a loaded one is not ==")
+-- CLAUDE.md rule 17: GetInboxText marks a mail read AND, on mail that still
+-- holds something, drops the expiry to three days. So opening a loaded mail
+-- must NOT fetch a body until the player asks for it. These assert on the
+-- mail's own daysLeft rather than on call counts -- the expiry IS the damage.
+INBOX = {
+    mail{ sender = "Wanda", subject = "just a note", body = "no strings" },
+    mail{ sender = "Bob", subject = "loot", money = 500, item = "Copper Ore",
+          body = "enjoy", daysLeft = 29 },
+}
+A.ui.OpenReader(1)
+check(rawget(A.ui.readerBody, "text") == "no strings",
+      "an empty mail renders its body immediately",
+      rawget(A.ui.readerBody, "text"))
+check(INBOX[1].wasRead == 1, "and is marked read, which is what clears the icon")
+check(A.ui.readerReveal.visible == false, "no reveal button needed")
+
+A.ui.CloseReader()
+local before = readCalls
+A.ui.OpenReader(2)
+check(readCalls == before, "opening a LOADED mail calls GetInboxText 0 times",
+      readCalls - before)
+check(INBOX[2].daysLeft == 29, "so its expiry is untouched", INBOX[2].daysLeft)
+check(INBOX[2].wasRead == nil, "and it is still unread")
+check(A.ui.readerReveal.visible == true, "the reveal button is offered instead")
+check(A.ui.readerWarn.visible == true, "with the three-day warning")
+check(rawget(A.ui.readerBody, "text") == "", "and no body is shown")
+-- Header detail is free: it all comes from GetInboxHeaderInfo.
+check(rawget(A.ui.readerFrom, "text") == "Bob", "sender still shown")
+check(rawget(A.ui.readerAttach, "text") == "Copper Ore", "attachment named",
+      rawget(A.ui.readerAttach, "text"))
+
+-- Now the player accepts the cost.
+A.ui.readerReveal.scripts.OnClick()
+check(rawget(A.ui.readerBody, "text") == "enjoy", "the body appears on request",
+      rawget(A.ui.readerBody, "text"))
+check(INBOX[2].daysLeft == 3, "and only NOW does the expiry drop to three days",
+      INBOX[2].daysLeft)
+check(A.ui.readerReveal.visible == false, "the reveal button steps aside")
+
+print("== reader: a body that has not arrived yet ==")
+-- GetInboxText returns nil while the client is still asking the server for the
+-- text. That is not an empty message and must not be rendered as one.
+INBOX = { mail{ sender = "Wanda", subject = "slow", body = "at last",
+                bodyDelay = true } }
+A.ui.CloseReader()
+A.ui.OpenReader(1)
+check(A.util.Contains(rawget(A.ui.readerBody, "text") or "", "Loading"),
+      "a nil body reads as loading, not as an empty message",
+      rawget(A.ui.readerBody, "text"))
+fire("MAIL_INBOX_UPDATE")
+driver.scripts.OnUpdate()
+check(rawget(A.ui.readerBody, "text") == "at last",
+      "and the text lands on the next refresh",
+      rawget(A.ui.readerBody, "text"))
+
+print("== reader: auction invoices ==")
+INBOX = { mail{ sender = AH, subject = "Auction successful: Silk Cloth",
+                money = 9500, body = "",
+                invoice = { kind = "seller", item = "Silk Cloth",
+                            bid = 10000, buyout = 10000, deposit = 60,
+                            consignment = 500 } } }
+A.ui.CloseReader()
+A.ui.OpenReader(1)
+A.ui.readerReveal.scripts.OnClick()
+local invText = rawget(A.ui.readerBody, "text") or ""
+check(A.util.Contains(invText, "Silk Cloth"), "the invoice names the item")
+check(A.util.Contains(invText, "house cut"), "and reports the consignment cut")
+
+print("== reader: it never outlives the mail it is showing ==")
+-- A held index is only meaningful while the inbox does not move under it.
+-- Three mails, reading the middle one. Deleting mail 1 shifts mail 3 into
+-- index 2, so the index STAYS VALID but now addresses a different mail --
+-- which is the case a nil-header check alone would sail straight past.
+INBOX = {
+    mail{ sender = "Wanda", subject = "one" },
+    mail{ sender = "Bob", subject = "two" },
+    mail{ sender = "Cass", subject = "three" },
+}
+A.ui.CloseReader()
+A.ui.OpenReader(2)
+check(A.ui.ReaderOpen(), "reading mail 2")
+check(rawget(A.ui.readerFrom, "text") == "Bob", "which is Bob's")
+table.remove(INBOX, 1)             -- Cass's mail slides into index 2
+check(A.inbox.Header(2) ~= nil, "index 2 is still a real mail")
+check(A.inbox.Header(2).sender == "Cass", "but a DIFFERENT one now")
+A.ui.RefreshInbox()
+check(A.ui.ReaderOpen() == false,
+      "a different mail sliding into the index closes the reader")
+check(A.ui.inboxRows[1].visible == true, "and the list is painted instead")
+
+INBOX = { mail{ sender = "Wanda", subject = "one" } }
+A.ui.OpenReader(1)
+check(A.ui.ReaderOpen(), "reading the only mail")
+INBOX = {}
+A.ui.RefreshInbox()
+check(A.ui.ReaderOpen() == false, "an emptied inbox closes the reader too")
+
+print("== reader: it stands aside for a take run ==")
+INBOX = {
+    mail{ sender = "Bob", subject = "gold", money = 100 },
+    mail{ sender = "Ann", subject = "more gold", money = 200 },
+}
+A.ui.CloseReader()
+A.ui.OpenReader(1)
+check(A.ui.ReaderOpen(), "reader open before the run")
+take.Start(take.MODE_OPEN)
+A.ui.RefreshInbox()
+check(A.ui.ReaderOpen() == false,
+      "a run closes it -- deletes shift every later index")
+check(A.ui.OpenReader(1) == false, "and it refuses to reopen mid-run")
+pump()
+check(not take.running, "run finished")
+check(A.ui.OpenReader ~= nil, "the reader is available again afterwards")
+
+print("== reader: leaving the Inbox tab drops it ==")
+INBOX = { mail{ sender = "Wanda", subject = "one" } }
+A.ui.SelectSubTab("Inbox")
+A.ui.OpenReader(1)
+check(A.ui.ReaderOpen(), "open on the Inbox tab")
+A.ui.SelectSubTab("Log")
+check(A.ui.ReaderOpen() == false, "switching tabs closes it")
+A.ui.SelectSubTab("Inbox")
+check(A.ui.ReaderOpen() == false, "and coming back lands on the list")
+
+print("== tooltips: an inbox row shows its attachment's real tooltip ==")
+-- 1.12 has NO GetInboxItemLink, so an attachment cannot be turned into a link
+-- and handed to SetHyperlink (rule 10). SetInboxItem(index) needs no link --
+-- it is what Blizzard's own InboxFrameItem_OnEnter calls -- and it takes the
+-- ABSOLUTE index, which is the one thing that must not be got wrong: point it
+-- at the wrong number and the player reads the wrong item's tooltip.
+INBOX = {
+    mail{ sender = "Ann", subject = "letter", money = 100 },
+    mail{ sender = "Bob", subject = "parcel", item = "Black Lotus" },
+}
+A.ui.CloseReader()
+A.ui.SelectSubTab("Inbox")
+A.ui.RefreshInbox()
+GameTooltip:Hide()
+local rowA, rowB = A.ui.inboxRows[1], A.ui.inboxRows[2]
+check(rowB.mailIndex == 2, "row 2 is the mail with the item", rowB.mailIndex)
+check(hover(rowB), "the row is a live hover target")
+check(GameTooltip.shown ~= nil, "hovering it opened a tooltip")
+check(GameTooltip.shown.kind == "inbox",
+      "and it is the CLIENT's item tooltip, not text we invented",
+      GameTooltip.shown.kind)
+check(GameTooltip.shown.index == 2,
+      "pointed at the absolute index of THAT mail", GameTooltip.shown.index)
+check(GameTooltip.owner == rowB, "anchored to the row it came from")
+unhover(rowB)
+check(GameTooltip.shown == nil, "and it closes on leaving")
+
+-- A mail with nothing attached has nothing to show, and must not leave the
+-- previous mail's tooltip standing.
+check(hover(rowA), "the letter row is live too")
+check(GameTooltip.shown == nil, "a letter opens no tooltip at all")
+
+print("== tooltips: the reader shows the attachment it is displaying ==")
+A.ui.OpenReader(2)
+GameTooltip:Hide()
+check(A.ui.readerIconHover.visible == true,
+      "the hover target is live on a mail with an item")
+check(hover(A.ui.readerIconHover), "the reader hover target is live")
+check(GameTooltip.shown and GameTooltip.shown.kind == "inbox",
+      "the real item tooltip again")
+check(GameTooltip.shown.index == 2, "for the mail the reader is on",
+      GameTooltip.shown.index)
+unhover(A.ui.readerIconHover)
+A.ui.CloseReader()
+-- ...and it is not left hovering over an empty mail.
+A.ui.OpenReader(1)
+check(A.ui.readerIconHover.visible == false,
+      "no hover target on a mail with no attachment")
+A.ui.CloseReader()
+
+print("== tooltips: a compose slot shows the BAG item, live ==")
+-- These are real stacks in the player's bags, so the full tooltip is
+-- available through SetBagItem -- no need to settle for a name.
+stockBags()
+send.atMailbox = false
+send.Attach(0, 1)
+A.ui.RefreshSend()
+GameTooltip:Hide()
+local slot1 = A.ui.sendSlots[1]
+check(hover(slot1), "the compose slot is a live hover target")
+check(GameTooltip.shown and GameTooltip.shown.kind == "bag",
+      "the bag item's own tooltip")
+check(GameTooltip.shown.bag == 0 and GameTooltip.shown.slot == 1,
+      "for the slot the attachment points at",
+      tostring(GameTooltip.shown.bag) .. "/" .. tostring(GameTooltip.shown.slot))
+unhover(slot1)
+
+-- A coordinate goes stale (rule 24). If the stack has left the slot, fall back
+-- to the name rather than pointing SetBagItem at nothing.
+BAGS[0][1] = nil
+GameTooltip:Hide()
+check(hover(slot1), "the compose slot is a live hover target")
+check(GameTooltip.shown and GameTooltip.shown.kind == "text",
+      "an emptied slot falls back to text",
+      GameTooltip.shown and GameTooltip.shown.kind)
+check(A.util.Contains(GameTooltip.shown.text or "", "Silk Cloth"),
+      "naming the item that was queued", GameTooltip.shown.text)
+unhover(slot1)
+
+-- An empty slot is not a target at all.
+send.ClearAttachments()
+A.ui.RefreshSend()
+GameTooltip:Hide()
+check(hover(slot1), "the compose slot is a live hover target")
+check(GameTooltip.shown == nil, "an unused slot opens nothing")
+
+print("== reader: an ALREADY-READ mail opens its body at once ==")
+-- The reported friction: a warning button on a mail the player had already
+-- opened. Reading costs the three-day expiry drop, but that clock starts on
+-- the FIRST read and re-reading neither restarts nor shortens it -- so on a
+-- mail already marked read the button was guarding a cost already paid.
+INBOX = {
+    mail{ sender = "Bob", subject = "parcel", item = "Black Lotus" },
+    mail{ sender = "Bob", subject = "opened", item = "Black Lotus",
+          read = true },
+}
+A.ui.SelectSubTab("Inbox")
+A.ui.OpenReader(1)
+check(A.ui.readerWantBody == false,
+      "an UNREAD loaded mail still asks first")
+check(A.ui.readerReveal.visible == true, "so the button is offered")
+A.ui.CloseReader()
+A.ui.OpenReader(2)
+check(A.ui.readerWantBody == true,
+      "an already-read one opens straight away")
+check(A.ui.readerReveal.visible == false, "with no button in the way")
+A.ui.CloseReader()
+
+print("== reader: the auto-open setting removes the button entirely ==")
+-- Off by default, because on this client the cost is real and players use the
+-- mailbox as storage. Opting in is the player's call to make.
+check(A.db.Setting("autoReadBody") == false, "off by default")
+A.ui.OpenReader(1)
+check(A.ui.readerWantBody == false, "so the unread mail still asks")
+A.ui.CloseReader()
+A.db.SetSetting("autoReadBody", true)
+A.ui.OpenReader(1)
+check(A.ui.readerWantBody == true, "with it on, the body opens at once")
+check(A.ui.readerReveal.visible == false, "and the button is gone")
+A.ui.CloseReader()
+A.db.SetSetting("autoReadBody", false)
+
+print("== reader UI: Delete appears only on an emptied mail ==")
+INBOX = {
+    mail{ sender = "Bob", subject = "gold", money = 900 },
+    mail{ sender = "Ann", subject = "empty", read = true },
+    mail{ sender = "GM",  subject = "ticket", gm = true },
+}
+A.ui.OpenReader(1)
+check(A.ui.readerDelete.visible == false,
+      "a mail still holding gold offers no Delete")
+A.ui.CloseReader()
+A.ui.OpenReader(2)
+check(A.ui.readerDelete.visible == true, "an emptied one does")
+A.ui.CloseReader()
+A.ui.OpenReader(3)
+check(A.ui.readerDelete.visible == true,
+      "and so does GM mail -- the only way one ever leaves the mailbox")
+-- Clicking it removes the mail and closes the reader.
+A.ui.readerDelete.scripts.OnClick()
+check(table.getn(INBOX) == 2, "the GM mail was deleted", table.getn(INBOX))
+check(A.ui.ReaderOpen() == false, "and the reader closed behind it")
+
+print("== reader: COD and GM mail offer no Take button ==")
+INBOX = {
+    mail{ sender = "Ann", subject = "pay up", money = 100, cod = 5000 },
+    mail{ sender = "GM", subject = "ticket", money = 700, gm = true },
+}
+A.ui.OpenReader(1)
+check(A.ui.readerTake.visible == false, "no Take button on COD mail")
+check(A.util.Contains(rawget(A.ui.readerStatus, "text") or "", "COD"),
+      "and the reason is stated")
+A.ui.CloseReader()
+A.ui.OpenReader(2)
+check(A.ui.readerTake.visible == true,
+      "GM mail DOES offer Take -- it is barred from automatic paths, not from "
+      .. "the player")
+check(A.ui.readerPay.visible == false, "and no Pay button -- GM COD is barred")
+A.ui.CloseReader()
+
+print("== take: GM mail is collected only from the reader, and is KEPT ==")
+-- The reported dead end: a GM mail carrying restored gold could not be
+-- collected by anything and could not be deleted either, so the player's own
+-- property was stuck in it permanently.
+INBOX = { mail{ sender = "GM", subject = "restored", money = 5000, gm = true } }
+check(take.Single(1) == false,
+      "a list right-click still refuses it -- that is muscle memory")
+check(INBOX[1].money == 5000, "so the mail is untouched")
+check(take.Single(1, true), "but the reader's Take collects it")
+pump()
+check(not take.running, "the run finished")
+check(table.getn(INBOX) == 1, "and the GM MAIL IS STILL THERE", table.getn(INBOX))
+check(INBOX[1].money == 0, "emptied, not deleted", INBOX[1].money)
+check(take.money == 5000, "with the gold collected", take.money)
+check(take.gmIndex == nil, "and the permission did not outlive the run")
+
+print("== take: the GM permission is ONE index, not a mode ==")
+-- take.gmIndex is compared against the index the engine is STANDING ON, so a
+-- permission granted for one mail cannot collect a different one. Driven
+-- through take.Step directly and deliberately: take.Single sets take.single,
+-- which stops the run after one mail, so a black-box run can never walk onto a
+-- second GM mail and therefore cannot tell a permission from a mode.
+INBOX = {
+    mail{ sender = "GM", subject = "first", money = 5000, gm = true },
+    mail{ sender = "GM", subject = "second", money = 7000, gm = true },
+}
+take.running  = true
+take.mode     = take.MODE_TAKE
+take.gmIndex  = 1                    -- permission for mail 1...
+take.index    = 2                    -- ...engine standing on mail 2
+take.codIndex = nil
+take.only     = nil
+take.attempts = 0
+take.lastSig  = nil
+take.pending  = nil
+take.logSnap  = nil
+take.Step()
+check(take.index == 3,
+      "the engine stepped OVER the GM mail it had no permission for",
+      take.index)
+check(INBOX[2].money == 7000, "leaving it untouched", INBOX[2].money)
+take.Stop(true)
+
+print("== take: Open All still steps over GM mail ==")
+INBOX = {
+    mail{ sender = "Ann", subject = "sale", money = 400 },
+    mail{ sender = "GM",  subject = "ticket", money = 5000, gm = true },
+    mail{ sender = "GM",  subject = "ticket2", money = 700, gm = true },
+}
+check(take.Start(take.MODE_OPEN), "Open All started")
+check(take.gmIndex == nil, "with no GM permission granted")
+pump()
+check(not take.running, "and finished rather than stalling")
+check(table.getn(INBOX) == 2, "only the ordinary mail was taken",
+      table.getn(INBOX))
+check(INBOX[1].money == 5000 and INBOX[2].money == 700,
+      "both GM mails untouched",
+      tostring(INBOX[1].money) .. "/" .. tostring(INBOX[2].money))
+
+print("== take: a single delete removes an emptied mail, GM included ==")
+INBOX = { mail{ sender = "GM", subject = "read me", gm = true } }
+check(take.DeleteSingle(1), "an empty GM mail can be deleted")
+check(table.getn(INBOX) == 0, "and it is gone", table.getn(INBOX))
+
+print("== take: a single delete NEVER removes a loaded mail ==")
+-- Rule 14 is the whole guard on that button. It must refuse on its own, not
+-- rely on the UI only showing it at the right moment.
+INBOX = {
+    mail{ sender = "Bob", subject = "gold", money = 900 },
+    mail{ sender = "Bob", subject = "parcel", item = "Black Lotus" },
+    mail{ sender = "Ann", subject = "pay up", cod = 500, item = "Thing" },
+}
+check(take.DeleteSingle(1) == false, "money in it -- refused")
+check(take.DeleteSingle(2) == false, "an item in it -- refused")
+check(take.DeleteSingle(3) == false, "a COD on it -- refused")
+check(table.getn(INBOX) == 3, "all three still there", table.getn(INBOX))
+-- ...and never mid-run, because a delete shifts every later index.
+INBOX = { mail{ sender = "Ann", subject = "read", read = true } }
+take.running = true
+check(take.DeleteSingle(1) == false, "refused while a run is walking the inbox")
+take.running = false
+check(table.getn(INBOX) == 1, "the mail survived")
+
+print("== reader UI: paying a COD takes TWO deliberate clicks ==")
+-- The manual path that had to exist: with no way to pay a COD, and the
+-- Blizzard mailbox hidden by our takeover, users were disabling the addon.
+-- One click must never be enough -- a COD cannot be unpaid.
+INBOX = { mail{ sender = "Ann", subject = "pay up", cod = 5000,
+                item = "Black Lotus" } }
+playerMoney = 10000000
+A.ui.OpenReader(1)
+check(A.ui.readerPay.visible == true, "the Pay button is offered on COD mail",
+      tostring(A.ui.readerPay.visible))
+check(A.util.Contains(A.ui.readerPay:GetText(), "Pay"),
+      "and it is labelled Pay", A.ui.readerPay:GetText())
+check(A.util.Contains(A.ui.readerPay:GetText(), "50"),
+      "with the amount owed on it", A.ui.readerPay:GetText())
+local moneyBeforeClick = playerMoney
+A.ui.readerPay.scripts.OnClick()          -- FIRST click: arms only
+check(playerMoney == moneyBeforeClick, "the first click pays nothing",
+      playerMoney)
+check(not take.running, "and starts nothing")
+check(A.util.Contains(A.ui.readerPay:GetText(), "Confirm"),
+      "the button now asks for confirmation", A.ui.readerPay:GetText())
+A.ui.readerPay.scripts.OnClick()          -- SECOND click: commits
+pump()
+check(playerMoney == moneyBeforeClick - 5000, "the second click paid it",
+      playerMoney)
+check(table.getn(INBOX) == 0, "and the mail was collected", table.getn(INBOX))
+
+print("== reader UI: the confirmation does not survive navigation ==")
+-- An armed one-click payment left sitting under the cursor is exactly the
+-- accident the two-step exists to prevent.
+INBOX = {
+    mail{ sender = "Ann", subject = "pay up", cod = 5000, item = "Black Lotus" },
+    mail{ sender = "Bob", subject = "also pay", cod = 900, item = "Copper Ore" },
+}
+A.ui.OpenReader(1)
+A.ui.readerPay.scripts.OnClick()          -- armed on mail 1
+check(A.ui.readerPayArmed == 1, "armed")
+A.ui.CloseReader()
+check(A.ui.readerPayArmed == nil, "closing the reader disarms it")
+A.ui.OpenReader(1)
+A.ui.readerPay.scripts.OnClick()
+check(A.ui.readerPayArmed == 1, "armed again")
+A.ui.OpenReader(2)                        -- walk to a different COD mail
+check(A.ui.readerPayArmed == nil, "opening another mail disarms it")
+check(not A.util.Contains(A.ui.readerPay:GetText(), "Confirm"),
+      "and the button is back to asking, not confirming",
+      A.ui.readerPay:GetText())
+local moneyBeforeNav = playerMoney
+A.ui.readerPay.scripts.OnClick()          -- one click on the NEW mail
+check(playerMoney == moneyBeforeNav,
+      "so a single click on the new mail still pays nothing", playerMoney)
+A.ui.CloseReader()
+
+print("== reader UI: what trails the corner button follows the LIVE one ==")
+-- Pay is nearly twice Take's width. A hidden frame keeps its last position on
+-- 1.12, so anything pinned to a fixed one of the two ends up drawn straight
+-- through the other whenever the wrong button is showing.
+INBOX = {
+    mail{ sender = "Ann", subject = "pay up", cod = 5000, item = "Black Lotus" },
+    mail{ sender = "Bob", subject = "sale", money = 400 },
+}
+playerMoney = 10000000
+A.ui.OpenReader(1)                              -- COD: Pay occupies the corner
+check(A.ui.readerPay.visible == true, "Pay is the corner button here")
+check(A.ui.readerTake.visible == false, "and Take is hidden")
+check(A.ui.readerReturn:AnchorTarget() == A.ui.readerPay,
+      "Return follows Pay, not the hidden Take")
+check(A.ui.readerStatus:AnchorTarget() == A.ui.readerReturn,
+      "and the status line follows Return")
+A.ui.CloseReader()
+A.ui.OpenReader(2)                              -- ordinary: Take is back
+check(A.ui.readerTake.visible == true, "Take is the corner button here")
+check(A.ui.readerPay.visible == false, "and Pay is hidden")
+check(A.ui.readerReturn:AnchorTarget() == A.ui.readerTake,
+      "Return follows Take, not the hidden Pay")
+A.ui.CloseReader()
+
+-- ...and with Return absent entirely, the status must fall back to the corner
+-- button rather than trailing a Return frame parked wherever it last was.
+INBOX = { mail{ sender = AH, subject = "pay up", cod = 5000,
+                item = "Black Lotus", canReply = false } }
+A.ui.OpenReader(1)
+check(A.ui.readerReturn.visible == false, "auction COD cannot be returned")
+check(A.ui.readerStatus:AnchorTarget() == A.ui.readerPay,
+      "so the status trails Pay directly")
+A.ui.CloseReader()
+
+print("== reader UI: a COD you cannot afford is shown, greyed, with the reason ==")
+INBOX = { mail{ sender = "Ann", subject = "pay up", cod = 5000,
+                item = "Black Lotus" } }
+playerMoney = 100
+A.ui.OpenReader(1)
+check(A.ui.readerPay.visible == true, "the button is still shown",
+      tostring(A.ui.readerPay.visible))
+check(not A.ui.readerPay:IsEnabled(), "but greyed out")
+check(A.util.Contains(rawget(A.ui.readerStatus, "text") or "", "afford"),
+      "and the status says why", rawget(A.ui.readerStatus, "text"))
+local pooooor = playerMoney
+A.ui.readerPay.scripts.OnClick()
+A.ui.readerPay.scripts.OnClick()
+pump()
+check(playerMoney == pooooor, "and clicking it twice still pays nothing",
+      playerMoney)
+check(table.getn(INBOX) == 1, "the mail is untouched")
+A.ui.CloseReader()
+playerMoney = 10000000
+
+print("== ui: the Take All button is gone ==")
+check(A.ui.btnTakeAll == nil, "no Take All button is built")
+check(getglobal("AegisCourierBtnTakeAll") == nil, "and no global left behind")
+check(A.ui.btnOpenAll ~= nil and A.ui.btnDeleteRead ~= nil and
+      A.ui.btnStop ~= nil, "the other three action buttons survive")
+-- The mode stays reachable from Lua on purpose: it is how the tests below
+-- observe an emptied-but-still-present mail.
+check(take.MODE_TAKE == "take", "MODE_TAKE remains available to callers")
+
+print("== geometry: the Inbox action row still fits the panel ==")
+-- Take Sold was inserted into a row that was already four items wide. 1.12
+-- does not clip children, so an overflowing row just draws off the panel and
+-- over whatever is beside it. Summed from the LIVE widths rather than the
+-- literals, so changing a button label or width is what fires this.
+local btns = { A.ui.btnOpenAll, A.ui.btnTakeSold, A.ui.btnDeleteRead,
+               A.ui.btnStop }
+local rowW, bi = 0, 1
+while bi <= table.getn(btns) do
+    rowW = rowW + (btns[bi]:GetWidth() or 0)
+    bi = bi + 1
+end
+rowW = rowW + 4 + 4 + 12          -- the gaps the anchors use
+local panelW = A.ui.frame:GetWidth() - 2 * 10
+check(rowW < panelW, "the four action buttons fit across the panel",
+      rowW .. " wide vs " .. panelW)
+-- And leave room for the running total that trails them.
+check(panelW - rowW >= 60, "with room left for the collected total",
+      panelW - rowW)
+
+print("== geometry: every list's rows fit inside its own well ==")
+-- The reported clipping bug: the window was a literal 440 tall, which left the
+-- Inbox well 264px while its own ten rows needed 288. 1.12 frames do not clip
+-- their children, so row 10 drew through the well border and over the hint
+-- line. The mock does not simulate layout, so this asserts the arithmetic the
+-- anchors themselves are built from -- change ROWS or an inset and it fires.
+local geom = A.ui.Geometry()
+check(geom.need == geom.rows * geom.rowH + 8,
+      "rows plus padding is what a well must hold", geom.need)
+check(geom.inbox >= geom.need,
+      "Inbox well holds its rows", geom.inbox .. " have vs " .. geom.need)
+check(geom.log >= geom.need,
+      "Log well holds its rows", geom.log .. " have vs " .. geom.need)
+check(geom.ledger >= geom.need,
+      "Ledger well holds its rows", geom.ledger .. " have vs " .. geom.need)
+-- The Inbox is the tightest panel, so it is the one that sets the window
+-- height. If it ever stops being the binding constraint the window is bigger
+-- than it needs to be, which is worth noticing.
+check(geom.inbox <= geom.log and geom.inbox <= geom.ledger,
+      "the Inbox is still the tightest list, so it sets the window height")
+check(geom.winH == geom.panelH + geom.panelTop + geom.panelBottom,
+      "window height derives from the panel", geom.winH)
+-- The panels must start BELOW the title bar and the tab row. Arithmetic that
+-- merely balances can still put a panel on top of the tabs, and 1.12 draws
+-- that overlap instead of clipping it.
+check(geom.panelTop >= geom.chromeH,
+      "panels clear the title bar and tab row",
+      geom.panelTop .. " top vs " .. geom.chromeH .. " of chrome")
+-- And they must clear the dialog border's 10px art on the sides.
+check(geom.side >= 10, "panels clear the window border", geom.side)
+
+-- The footer sits BELOW the content well, on the window itself, so the well's
+-- bottom edge has to clear it. It did not: the well ended 16px up while the
+-- footer occupied 14..26, and the recessed plate drew straight over the text.
+-- Reported from live play as clipping at "At mailbox | linked to Aegis".
+check(geom.contentBottom >= geom.footerTop,
+      "the content well clears the footer text",
+      geom.contentBottom .. " well bottom vs " .. geom.footerTop ..
+      " footer top")
+-- The footer itself has to clear the dialog border's 10px of art, or it is
+-- drawn half-underneath the frame instead of half-underneath the well.
+check(geom.footerInset >= 10, "and the footer clears the window border",
+      geom.footerInset)
+
+print("== resize: rows are derived from the live window height ==")
+-- The dependency used to run ROWS -> height. With a grip it must run the other
+-- way, or dragging taller leaves a blank gap instead of showing more mail.
+local gr = A.ui.Geometry()
+check(gr.minH < gr.defaultH and gr.defaultH < gr.maxH,
+      "min < default < max", gr.minH .. " / " .. gr.defaultH .. " / " .. gr.maxH)
+check(A.ui.Geometry(gr.minH).rows < A.ui.Geometry(gr.maxH).rows,
+      "a taller window shows more rows",
+      A.ui.Geometry(gr.minH).rows .. " -> " .. A.ui.Geometry(gr.maxH).rows)
+check(A.ui.Geometry(gr.maxH).rows <= gr.maxRows,
+      "and never more rows than there are frames built",
+      A.ui.Geometry(gr.maxH).rows .. " vs " .. gr.maxRows)
+check(A.ui.Geometry(gr.minH).rows >= gr.minRows,
+      "nor fewer than the floor", A.ui.Geometry(gr.minH).rows)
+-- Absurd heights must clamp rather than produce a negative or vast row count.
+check(A.ui.Geometry(10).rows == gr.minRows, "a tiny height clamps to the floor",
+      A.ui.Geometry(10).rows)
+check(A.ui.Geometry(99999).rows == gr.maxRows, "a huge one clamps to the ceiling",
+      A.ui.Geometry(99999).rows)
+
+-- The original clipping invariant still has to hold at EVERY size, not just
+-- the one the window happens to open at.
+local hs = { gr.minH, gr.defaultH, gr.maxH }
+local hn = { "minimum", "default", "maximum" }
+local ri = 1
+while ri <= 3 do
+    local g = A.ui.Geometry(hs[ri])
+    check(g.inbox >= g.need, "Inbox rows fit their well at " .. hn[ri],
+          g.inbox .. " have vs " .. g.need)
+    check(g.log >= g.need, "Log rows fit at " .. hn[ri], g.log)
+    check(g.ledger >= g.need, "Ledger rows fit at " .. hn[ri], g.ledger)
+    ri = ri + 1
+end
+
+check(A.ui.resizeGrip ~= nil, "the resize grip exists")
+check(A.ui.resizeGrip.courierNoSkin == true,
+      "and opts out of the pfUI skin, which would strip its texture")
+
+print("== resize: the size is remembered, clamped ==")
+A.db.SaveWindowSize(700, 600)
+local sw, sh = A.db.GetWindowSize()
+check(sw == 700 and sh == 600, "a size round-trips", tostring(sw) .. "x" .. tostring(sh))
+-- Storage is raw; the clamp happens on restore, because MIN/MAX can change
+-- between releases and a window smaller than its contents cannot be recovered
+-- from in-game.
+A.db.SaveWindowSize(10, 10)
+sw, sh = A.db.GetWindowSize()
+check(sw == 10, "storage does not clamp", sw)
+
+print("== scale: clamped, stepped, and independent of size ==")
+A.db.SaveWindowScale(nil)
+check(A.ui.WindowScale() == 1, "defaults to 1", A.ui.WindowScale())
+A.ui.StepWindowScale(0.05)
+check(A.ui.WindowScale() > 1, "a step up raises it", A.ui.WindowScale())
+A.ui.StepWindowScale(nil)
+check(A.ui.WindowScale() == 1, "reset returns to 1", A.ui.WindowScale())
+local si = 1
+while si <= 40 do A.ui.StepWindowScale(0.05) si = si + 1 end
+check(A.ui.WindowScale() <= 1.50, "cannot exceed the ceiling", A.ui.WindowScale())
+-- The STORED value must be clamped too, not just the value WindowScale hands
+-- back. Reading clamps as well, so asserting only on the reader passes even
+-- when the writer stores nonsense -- and a saved 3.0 is a latent surprise for
+-- anything that reads the DB directly.
+check(A.db.GetWindowScale() <= 1.50, "and the stored value is clamped, not just the read",
+      A.db.GetWindowScale())
+si = 1
+while si <= 60 do A.ui.StepWindowScale(-0.05) si = si + 1 end
+check(A.ui.WindowScale() >= 0.70, "nor drop below the floor", A.ui.WindowScale())
+check(A.db.GetWindowScale() >= 0.70, "stored value clamped at the floor too",
+      A.db.GetWindowScale())
+A.ui.StepWindowScale(nil)
+-- Scale is stored separately from size: someone who scaled but never dragged
+-- has no saved width, and restoring must not lose their scale on that account.
+A.db.SaveWindowScale(1.25)
+check(A.db.GetWindowScale() == 1.25, "scale persists on its own",
+      A.db.GetWindowScale())
+A.db.SaveWindowScale(nil)
+
+print("== money: the gold/silver/copper group ==")
+local mg = A.ui.sendMoney
+check(mg.g ~= nil and mg.s ~= nil and mg.c ~= nil, "three boxes exist")
+mg:SetText("12g 30s 5c")
+check(mg.g:GetText() == "12", "gold box", mg.g:GetText())
+check(mg.s:GetText() == "30", "silver box", mg.s:GetText())
+check(mg.c:GetText() == "5", "copper box", mg.c:GetText())
+check(A.util.ParseMoney(mg:GetText()) == 123005, "round-trips to copper",
+      A.util.ParseMoney(mg:GetText()))
+-- LEADING zeros blank, trailing ones shown. Exchange shipped [ ][0][11] for
+-- 11 copper, where the empty gold box beside a zero silver read as a missing
+-- value rather than "no silver".
+mg:SetText("11c")
+check(mg.g:GetText() == "", "no gold: blank, not 0", "[" .. mg.g:GetText() .. "]")
+check(mg.s:GetText() == "", "no silver: blank too", "[" .. mg.s:GetText() .. "]")
+check(mg.c:GetText() == "11", "copper shown", mg.c:GetText())
+mg:SetText("1g 0s 0c")
+check(mg.s:GetText() == "0", "an INNER zero is shown, not blanked",
+      "[" .. mg.s:GetText() .. "]")
+check(mg.c:GetText() == "0", "and so is a trailing one", "[" .. mg.c:GetText() .. "]")
+mg:SetText("")
+check(mg:GetText() == "", "empty round-trips as empty", "[" .. mg:GetText() .. "]")
+check(A.ui.SendMoneyValue() == 0, "and reads as zero copper",
+      A.ui.SendMoneyValue())
+
+print("== geometry: the Sent reader's blocks fit without overlapping ==")
+local sg = A.ui.SentGeometry()
+check(sg.slots >= send.MAX_ATTACHMENTS,
+      "every item a batch can hold has a visible slot -- no scrolling needed",
+      sg.slots .. " slots for " .. send.MAX_ATTACHMENTS .. " max items")
+
+-- The window resizes now, so the reader is checked ACROSS THE RANGE rather
+-- than at one hand-picked height. The blocks must FIT -- they no longer sum to
+-- exactly the reader, because the message well is capped and anything past the
+-- cap is deliberately left blank.
+local gg = A.ui.Geometry()
+local heights = { gg.minH, gg.defaultH, gg.maxH }
+local hnames  = { "minimum", "default", "maximum" }
+local hi = 1
+while hi <= 3 do
+    local sgh = A.ui.SentGeometry(heights[hi])
+    check(sgh.head + sgh.items + sgh.gap + sgh.bodyH + sgh.foot <= sgh.readerH,
+          "reader blocks fit at " .. hnames[hi] .. " size",
+          sgh.head + sgh.items + sgh.gap + sgh.bodyH + sgh.foot ..
+          " into " .. sgh.readerH)
+    -- The floor exists because a 500-character message needs somewhere to go.
+    -- Before MIN_H was derived from the reader it collapsed to 36px here.
+    check(sgh.bodyH >= sgh.bodyMin,
+          "the message well stays usable at " .. hnames[hi] .. " size",
+          sgh.bodyH .. " vs floor " .. sgh.bodyMin)
+    -- And the ceiling exists because past it the well is empty space, not
+    -- more message. v1.5.0 let it reach 204px and it read as a huge blank box.
+    check(sgh.bodyH <= sgh.bodyMax,
+          "and never grows into empty space at " .. hnames[hi] .. " size",
+          sgh.bodyH .. " vs cap " .. sgh.bodyMax)
+    hi = hi + 1
+end
+check(A.ui.SentGeometry(gg.defaultH).bodyH < 204,
+      "the default message well is shorter than v1.5.0's",
+      A.ui.SentGeometry(gg.defaultH).bodyH)
+
+print("== clock: a step that skips a mail must re-arm itself ==")
+-- take.armed is set by nothing but MAIL_INBOX_UPDATE, and the server only
+-- sends that after an operation it actually performed. So a step that SKIPS a
+-- mail issues no call, gets no acknowledgement, and -- before the self-clock
+-- in take.Advance -- hung the run for good with take.running still true.
+--
+-- These assert on serverCalls directly rather than trusting the pump, because
+-- the pump firing an unconditional event is exactly what hid this for 388
+-- checks. The mail placed at index 1 is one the engine must step OVER, so the
+-- very first step is the silent one.
+
+-- COD at the head: Open All must skip it and still reach the mail behind it.
+INBOX = {
+    mail{ sender = "Ann", subject = "pay up", money = 100, cod = 5000 },
+    mail{ sender = "Bob", subject = "gold", money = 400 },
+}
+A.db.ClearLedger()
+take.Start(take.MODE_OPEN)
+local callsBefore = serverCalls
+driver.scripts.OnUpdate()          -- the skip step: issues nothing
+check(serverCalls == callsBefore, "skipping a COD mail calls the server 0 times")
+check(take.armed == true, "and the engine re-armed itself instead of hanging")
+check(pump() > 0 and not take.running, "the run then completes")
+check(table.getn(INBOX) == 1, "COD mail survives", table.getn(INBOX))
+check(INBOX[1].cod == 5000, "and it is the COD one that survived")
+
+-- GM mail at the head: same path.
+INBOX = {
+    mail{ sender = "GM", subject = "ticket", money = 700, gm = true },
+    mail{ sender = "Bob", subject = "gold", money = 400 },
+}
+take.Start(take.MODE_OPEN)
+pump()
+check(not take.running, "a GM mail at the head does not hang the run")
+check(table.getn(INBOX) == 1, "GM mail survives", table.getn(INBOX))
+
+-- Delete Read walking past mail it must not touch.
+INBOX = {
+    mail{ sender = "Bob", subject = "unread", money = 0 },
+    mail{ sender = "Ann", subject = "read+empty", money = 0, read = true },
+}
+take.Start(take.MODE_DELETE)
+pump()
+check(not take.running, "Delete Read does not hang on the first mail it skips")
+check(table.getn(INBOX) == 1, "it deleted only the read empty mail",
+      table.getn(INBOX))
+check(INBOX[1].subject == "unread", "and kept the unread one")
+
+-- The wedge guard's give-up path is a skip too.
+-- The second mail carries an ITEM rather than money, because failTakeMoney is
+-- a global switch on the stub: leaving it money would refuse that one too and
+-- the test would pass for the wrong reason.
+INBOX = {
+    mail{ sender = "Bob", subject = "stuck", money = 100 },
+    mail{ sender = "Ann", subject = "fine", item = "Copper Ore" },
+}
+failTakeMoney = true               -- the server refuses money forever
+take.Start(take.MODE_OPEN)
+pump()
+failTakeMoney = false
+check(not take.running, "the wedge guard giving up does not hang the run")
+check(table.getn(INBOX) == 1, "it moved on and cleared the mail it could",
+      table.getn(INBOX))
+check(INBOX[1].subject == "stuck", "leaving the refused mail alone")
+
+print("== big lists: Log and Ledger carry the same guard ==")
+A.db.ClearLog()
+local i2 = 1
+while i2 <= 15 do
+    A.db.LogAdd("received", { who = "Bob" .. i2, subject = "x" })
+    i2 = i2 + 1
+end
+A.ui.SelectSubTab("Log")
+rawset(A.ui.logScroll, "value", 28)
+check(pcall(A.ui.RefreshLog) == true, "Log refresh terminates at 15 entries")
+A.db.ClearLedger()
+i2 = 1
+while i2 <= 15 do
+    A.db.RecordTxn("sale", "Item" .. i2, 100)
+    i2 = i2 + 1
+end
+A.ui.SelectSubTab("Ledger")
+rawset(A.ui.ledgerScroll, "value", 28)
+check(pcall(A.ui.RefreshLedger) == true,
+      "Ledger refresh terminates at 15 entries")
+A.db.ClearLedger()
+A.db.ClearLog()
+
+print("== inbox: return to sender ==")
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+A.ui.SelectSubTab("Inbox")
+returned = {}
+INBOX = {
+    mail{ sender = "Bob", subject = "wrong person", item = "Copper Ore" },
+    mail{ sender = AH, subject = "Auction expired: Silk Cloth",
+          item = "Silk Cloth" },
+    mail{ sender = "GMBob", subject = "ticket", gm = true },
+}
+-- canReply is what FrameXML itself gates its Reply button on, and the server
+-- leaves it unset on auction and GM mail.
+INBOX[2].canReply = nil
+INBOX[3].canReply = nil
+
+A.ui.RefreshInbox()
+check(A.ui.inboxRows[1].ret:IsVisible(), "player mail offers Return")
+check(not A.ui.inboxRows[2].ret:IsVisible(),
+      "auction mail does not -- it cannot be returned")
+check(not A.ui.inboxRows[3].ret:IsVisible(), "GM mail does not either")
+
+A.ui.ReturnMail(1)
+check(table.getn(returned) == 1, "returned once", table.getn(returned))
+check(returned[1] == "Bob", "to the right sender", returned[1])
+check(table.getn(INBOX) == 2, "and the mail left the inbox", table.getn(INBOX))
+
+-- Refusals.
+returned = {}
+A.ui.ReturnMail(1)      -- now the auction mail, canReply unset
+check(table.getn(returned) == 0, "refuses mail that cannot be returned")
+A.ui.ReturnMail(nil)
+check(table.getn(returned) == 0, "nil index is safe")
+A.ui.ReturnMail(99)
+check(table.getn(returned) == 0, "out-of-range index is safe")
+
+print("== inbox: Return is unavailable during a run ==")
+INBOX = { mail{ sender = "Bob", subject = "x", money = 100 },
+          mail{ sender = "Ann", subject = "y", money = 200 } }
+returned = {}
+take.Start(take.MODE_TAKE)
+A.ui.RefreshInbox()
+check(not A.ui.inboxRows[1].ret:IsVisible(),
+      "hidden while the take engine is walking the inbox")
+A.ui.ReturnMail(1)
+check(table.getn(returned) == 0,
+      "and refused if called anyway -- it would shift indices mid-run")
+take.Stop(true)
+A.ui.RefreshInbox()
+check(A.ui.inboxRows[1].ret:IsVisible(), "back once the run ends")
+
+print("== log: received mail is logged on collection ==")
+A.db.ClearLog()
+A.db.ClearLedger()
+INBOX = {
+    mail{ sender = AH, subject = "Auction successful: Silk Cloth", money = 9500 },
+    mail{ sender = "Bob", subject = "a gift", item = "Copper Ore" },
+    mail{ sender = "Ann", subject = "pay up", money = 100, cod = 5000 },
+}
+take.Start(take.MODE_OPEN)
+pump()
+local rec = A.db.Log("received")
+check(table.getn(rec) == 2, "two mails logged, COD skipped", table.getn(rec))
+check(rec[1].who == AH, "sender recorded", rec[1].who)
+check(rec[1].money == 9500, "money recorded", rec[1].money)
+check(rec[1].auction == "sold", "auction kind tagged", tostring(rec[1].auction))
+check(rec[2].item == "Copper Ore", "attached item name recorded",
+      tostring(rec[2].item))
+check(rec[2].count == 1, "item count recorded")
+check(rec[1].char == "Tester", "acting character recorded", rec[1].char)
+check(rec[1].t ~= nil, "timestamped")
+
+print("== log: a mail we never emptied is not logged ==")
+A.db.ClearLog()
+INBOX = { mail{ sender = "Bob", subject = "stuck", money = 500 } }
+failTakeMoney = true
+take.Start(take.MODE_TAKE)
+pump(60)
+failTakeMoney = false
+check(table.getn(A.db.Log("received")) == 0,
+      "a refused take logs nothing", table.getn(A.db.Log("received")))
+
+print("== log: delete-read logs nothing ==")
+A.db.ClearLog()
+INBOX = { mail{ sender = "Bob", subject = "old news", read = true } }
+take.Start(take.MODE_DELETE)
+pump()
+check(table.getn(INBOX) == 0, "mail was deleted")
+check(table.getn(A.db.Log("received")) == 0,
+      "an already-empty mail carries nothing to log")
+
+print("== pacing: a batch starts at full speed and earns any delay ==")
+-- Courier used to pause a fixed 0.3s between every mail, which on a 12-item
+-- send is 3.6 seconds of pure waiting that TurtleMail does not pay -- it
+-- re-arms on the next frame. The fixed pause this replaced was chosen when
+-- MAIL_FAILED threw the whole batch away; it now retries per mail, so no delay
+-- is assumed at all.
+A.db.ClearLog()
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "quick", "", 0, false, false)
+check(send.SETTLE == 0, "a batch pays no settle", send.SETTLE)
+pumpSend()
+check(send.SETTLE == 0, "and a clean run never slows itself down", send.SETTLE)
+
+print("== pacing: a batch reports its own elapsed time ==")
+send.atMailbox = true   -- a batch is sent AT a mailbox; Validate needs the session
+-- "Did the speed change?" was not answerable by feel. A batch that measures
+-- itself turns it into a number.
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2)
+DEFAULT_CHAT_FRAME.messages = {}
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "timed", "", 0, false, false)
+pumpSend()
+check(send.lastElapsed ~= nil, "the batch measured itself",
+      tostring(send.lastElapsed))
+check(send.lastElapsed > 0, "and the clock moved", send.lastElapsed)
+local saidTime = false
+local ti = 1
+while ti <= table.getn(DEFAULT_CHAT_FRAME.messages) do
+    if A.util.Contains(DEFAULT_CHAT_FRAME.messages[ti], " in ") then
+        saidTime = true
+    end
+    ti = ti + 1
+end
+check(saidTime, "and it told the user how long it took")
+check(A.util.FormatSeconds(4.24) == "4.2s", "seconds format to one decimal",
+      A.util.FormatSeconds(4.24))
+check(A.util.FormatSeconds(4.26) == "4.3s", "rounding to nearest",
+      A.util.FormatSeconds(4.26))
+check(A.util.FormatSeconds(0) == "0.0s", "zero is fine")
+
+print("== pacing: a confirmed mail is followed on the VERY NEXT FRAME ==")
+-- Arm(0) sets wait = 0; the driver's guard is `waited < wait`, so with a wait
+-- of zero the first tick after arming steps immediately. If this ever became
+-- `<=` the batch would silently cost an extra frame per mail.
+send.Arm(0)
+check(send.armed == true, "armed")
+local steppedOn = nil
+local origStep = send.Step
+send.Step = function() steppedOn = "yes" end
+arg1 = 0.016            -- one 60fps frame
+sdriver.scripts.OnUpdate()
+arg1 = nil
+send.Step = origStep
+check(steppedOn == "yes", "one frame later, it stepped")
+send.armed = false
+check(send.SETTLE == 0, "and there is no settle to pay", send.SETTLE)
+
+print("== pacing: the driver stays live across the server's latency ==")
+send.atMailbox = true   -- a batch is sent AT a mailbox; Validate needs the session
+-- With a real server the acknowledgement does not come back in the same frame
+-- the mail went out -- there are frames of waiting in between. A driver that
+-- hides itself the moment it has nothing to do must then be Shown again when
+-- the ack lands, and a frame Shown during this frame's work does not run its
+-- OnUpdate until the next one. That is a wasted frame per mail, every mail.
+-- TurtleMail's update frame is simply always live while the mailbox is open.
+stockBags()
+send.atMailbox = false
+send.ClearAttachments()
+send.Attach(0, 1); send.Attach(0, 2); send.Attach(0, 3)
+SENT = {}
+-- Start from a genuinely idle driver. Left visible by an earlier test, the
+-- wake-up cost this measures is already paid and invisible.
+sdriver:Hide()
+rawset(sdriver, "justShown", nil)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "laggy", "", 0, false, false)
+local LATENCY = 4                  -- frames between SendMail and its answer
+local lagFrames, ackIn = 0, LATENCY
+while send.sending and lagFrames < 400 do
+    if pendingAck then
+        ackIn = ackIn - 1
+        if ackIn <= 0 then
+            local a = pendingAck; pendingAck = nil; ackIn = LATENCY
+            fire(a)
+        end
+    end
+    if not send.sending then break end
+    arg1 = 0.016
+    if sdriver.visible and not rawget(sdriver, "justShown") then
+        sdriver.scripts.OnUpdate()
+    end
+    rawset(sdriver, "justShown", nil)
+    arg1 = nil
+    lagFrames = lagFrames + 1
+end
+if pendingAck then local a = pendingAck; pendingAck = nil; fire(a) end
+check(table.getn(SENT) == 3, "all three mails went out", table.getn(SENT))
+-- Mail 1 is free (sent synchronously). Mails 2 and 3 each wait LATENCY frames
+-- for the ack and then step on the very next frame. Anything more means the
+-- driver went to sleep and had to be woken.
+-- Three mails, three acknowledgements, LATENCY frames of waiting for each --
+-- and the loop exits the moment the last one lands, before that iteration is
+-- counted. So the floor is LATENCY * 3 - 1 and every frame above it is one the
+-- driver spent asleep, waiting to be Shown again.
+local floorFrames = LATENCY * 3 - 1
+check(lagFrames == floorFrames,
+      "no frame was lost re-waking the driver",
+      lagFrames .. " frames, floor is " .. floorFrames)
+
+print("== pacing: ONE refusal does not tax the rest of the batch ==")
+send.atMailbox = true   -- a batch is sent AT a mailbox; Validate needs the session
+-- Courier used to escalate: every MAIL_FAILED added 0.3s and KEPT it for the
+-- remaining mails, so a single hiccup on mail two cost every mail after it --
+-- nearly nine seconds on a twelve-item send. TurtleMail has no such delay and
+-- does not need one; the per-mail retry is what makes a batch survive a
+-- refusal. This is the assertion that stops the escalation coming back.
+stockBags()
+send.atMailbox = false
+send.Attach(0, 1); send.Attach(0, 2); send.Attach(0, 3)
+failSendCount = 1                  -- the server refuses the first mail once
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "bumpy", "", 0, false, false)
+pumpSend()
+failSendCount = 0
+check(table.getn(SENT) == 3, "the batch still completed", table.getn(SENT))
+check(send.SETTLE == 0,
+      "and the refusal bought no standing delay", send.SETTLE)
+
+-- The mail that was actually refused is the only one that waits, and the wait
+-- applies to it alone.
+check(send.RETRY_WAIT > 0, "a refused mail does pause before retrying",
+      send.RETRY_WAIT)
+check(send.RETRY_WAIT <= 0.5,
+      "but briefly -- this used to be a full second", send.RETRY_WAIT)
+
+-- Frame-count the whole thing: with no settle, a clean batch costs one frame
+-- per mail and nothing more.
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2); send.Attach(0, 3)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "clean", "", 0, false, false)
+-- The first mail is already out -- send.Start issued it synchronously, as
+-- TurtleMail's button does -- so only the SECOND and THIRD cost a frame.
+check(table.getn(SENT) == 1, "the first mail left without waiting a frame",
+      table.getn(SENT))
+local paceFrames = 0
+while send.sending and paceFrames < 200 do
+    if pendingAck then
+        local ack = pendingAck; pendingAck = nil; fire(ack)
+    end
+    if not send.sending then break end
+    fakeClock = fakeClock + 0.016
+    arg1 = 0.016
+    if sdriver.visible and not rawget(sdriver, "justShown") then
+        sdriver.scripts.OnUpdate()
+    end
+    rawset(sdriver, "justShown", nil)
+    arg1 = nil
+    paceFrames = paceFrames + 1
+end
+if pendingAck then local ack = pendingAck; pendingAck = nil; fire(ack) end
+check(table.getn(SENT) == 3, "three mails out", table.getn(SENT))
+check(paceFrames == 2, "the other two cost one frame each -- no more",
+      paceFrames)
+
+fire("MAIL_FAILED")                -- not sending, so this must be inert
+check(not send.sending, "MAIL_FAILED outside a run changes nothing")
+
+print("== sent box: a batch is ONE record carrying its items ==")
+send.atMailbox = true   -- a batch is sent AT a mailbox; Validate needs the session
+-- Vanilla mail has one attachment per message, so mailing two items is two
+-- mails and the server has no notion they belong together. The grouping is
+-- ours, and it can only be captured at send time.
+A.db.ClearLog()
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "supplies", "", 5000, false, false)
+pumpSend()
+local box = A.db.SentBox()
+check(table.getn(box) == 1, "two mails, ONE sent-box record", table.getn(box))
+local rec = box[1]
+check(rec.to == "Ann", "recipient recorded", rec.to)
+check(rec.s == "supplies", "the subject as TYPED, not the per-mail numbering",
+      rec.s)
+check(rec.mails == 2, "both mails counted", rec.mails)
+check(table.getn(rec.items) == 2, "both items listed",
+      table.getn(rec.items))
+check(rec.items[1].n == "Silk Cloth", "item name", rec.items[1].n)
+check(rec.items[1].c == 20, "stack count", rec.items[1].c)
+check(rec.items[2].n == "Copper Ore", "second item", rec.items[2].n)
+check(rec.money == 5000, "gold recorded once for the batch", rec.money)
+check(rec.char ~= nil, "and which character sent it", tostring(rec.char))
+
+print("== util: an item STRING is pulled out of a link, suffix and all ==")
+check(A.util.ItemStringFromLink(
+        "|cff1eff00|Hitem:6273:0:1783:0|h[Training Sword of Agility]|h|r")
+      == "item:6273:0:1783:0", "the whole item string, not just the id",
+      A.util.ItemStringFromLink(
+        "|cff1eff00|Hitem:6273:0:1783:0|h[Training Sword of Agility]|h|r"))
+check(A.util.ItemStringFromLink("item:6273:0:1783:0") == "item:6273:0:1783:0",
+      "a bare item string passes through")
+check(A.util.ItemStringFromLink(nil) == nil, "nil is nil")
+check(A.util.ItemStringFromLink("not a link") == nil, "junk is nil")
+
+print("== sent box: the item LINK is captured at send time ==")
+-- The one moment a sent item is addressable. The inbox has no link at all and
+-- a sent mail is gone from the client -- but at send time it is still a stack
+-- in a bag, which does have one. Miss it here and the reader can never show
+-- more than a name, because nothing about a sent mail can be backfilled.
+A.db.ClearLog()
+BAGS = { [0] = {
+    [1] = { name = "Training Sword of Agility", texture = "t1", count = 1,
+            id = 6273, suffix = 1783 },
+} }
+SENT = {}; attachSlot, cursor = nil, nil
+send.atMailbox = false
+send.ClearAttachments()
+send.Attach(0, 1)
+send.atMailbox = true   -- sending needs a live session
+send.Start("subtilizer", "kit", "", 0, false, false)
+pumpSend()
+local box = A.db.SentBox()
+check(table.getn(box) == 1, "one record", table.getn(box))
+check(box[1].items[1].l == "item:6273:0:1783:0",
+      "carrying the item string, SUFFIX INCLUDED", box[1].items[1].l)
+
+print("== tooltips: a sent item shows its REAL tooltip ==")
+A.ui.SelectSubTab("Sent")
+A.ui.OpenSentRecord(1)
+GameTooltip:Hide()
+local sword = A.ui.sentItemRows[1]
+check(hover(sword), "the item row is hoverable")
+check(GameTooltip.shown and GameTooltip.shown.kind == "link",
+      "and opens the game's own item tooltip",
+      GameTooltip.shown and GameTooltip.shown.kind)
+check(GameTooltip.shown.link == "item:6273:0:1783:0",
+      "for exactly the item that was sent", GameTooltip.shown.link)
+unhover(sword)
+
+print("== tooltips: an OLD record recovers its link from the item cache ==")
+-- Everything sent before the link was captured has only a name -- which is
+-- most of an existing player's history, so "works on new mail only" is a poor
+-- answer when the client can often do better. GetItemInfo takes a name on 1.12
+-- and returns a link for anything cached.
+box[1].items[1].l = nil                -- as an old record has it
+ITEM_CACHE["Warrior's Pants"] =
+    { name = "Warrior's Pants",
+      link = "|cffffffff|Hitem:6521:0:0:0|h[Warrior's Pants]|h|r" }
+box[1].items[1].n = "Warrior's Pants"
+A.ui.OpenSentRecord(1)
+GameTooltip:Hide()
+check(hover(sword), "the old record's row is hoverable")
+check(GameTooltip.shown and GameTooltip.shown.kind == "link",
+      "and still opens the REAL tooltip, recovered from the cache",
+      GameTooltip.shown and GameTooltip.shown.kind)
+check(GameTooltip.shown.link == "item:6521:0:0:0",
+      "for the right item", GameTooltip.shown.link)
+unhover(sword)
+
+print("== tooltips: an old SUFFIXED record recovers from the player's bags ==")
+-- The case the item cache cannot serve, and the one the user actually hit: a
+-- record from before the link was captured, holding a random-suffix item. The
+-- cache is keyed on the base item so "Training Sword of Agility" misses -- but
+-- a BAG SLOT's link carries the suffix, because it links the real item. People
+-- routinely mail one of something they still have more of.
+box[1].items[1].n = "Training Sword of Agility"
+box[1].items[1].l = nil
+ITEM_CACHE["Training Sword of Agility"] = nil     -- as the real cache behaves
+BAGS = { [0] = {
+    [1] = { name = "Training Sword of Agility", texture = "t1", count = 1,
+            id = 6273, suffix = 1783 },
+} }
+A.ui.OpenSentRecord(1)
+GameTooltip:Hide()
+check(hover(sword), "the row is hoverable")
+check(GameTooltip.shown and GameTooltip.shown.kind == "link",
+      "and opens the REAL tooltip, recovered from the bags",
+      GameTooltip.shown and GameTooltip.shown.kind)
+check(GameTooltip.shown.link == "item:6273:0:1783:0",
+      "with the SUFFIX intact -- the whole point of using the bag link",
+      GameTooltip.shown.link)
+unhover(sword)
+
+print("== tooltips: a suffixed old record falls back to the name ==")
+-- The limit of that recovery, and it is a real one: the item cache is keyed on
+-- the BASE item, so "Training Sword of Agility" is not a lookup key -- only
+-- "Training Sword" is. This is why capturing the link at SEND time is the
+-- thing that actually fixes it, and the cache lookup is only a bonus.
+box[1].items[1].n = "Training Sword of Agility"
+box[1].items[1].l = nil
+BAGS = { [0] = {} }                    -- the player mailed away their only one
+A.ui.OpenSentRecord(1)
+GameTooltip:Hide()
+check(hover(sword), "the row is hoverable")
+check(GameTooltip.shown and GameTooltip.shown.kind == "text",
+      "and falls back to the name rather than showing the wrong item",
+      GameTooltip.shown and GameTooltip.shown.kind)
+check(A.util.Contains(GameTooltip.shown.text or "", "Training Sword of Agility"),
+      "naming exactly what was written down", GameTooltip.shown.text)
+unhover(sword)
+
+print("== tooltips: a SENT item can only offer what was written down ==")
+-- The one place the real tooltip is unavailable, and it is not a shortcoming
+-- of this code: a sent mail is GONE from the client. There is no index to give
+-- SetInboxItem and no link to build, so the name and count Courier captured at
+-- send time are the whole of what exists. Worth showing anyway -- the list
+-- clips long names and this is where the full one is readable.
+A.db.ClearLog()
+stockBags()
+send.atMailbox = false
+send.Attach(0, 1)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "supplies", "", 0, false, false)
+pumpSend()
+A.ui.SelectSubTab("Sent")
+A.ui.OpenSentRecord(1)
+GameTooltip:Hide()
+local itemRow = A.ui.sentItemRows[1]
+check(itemRow.visible == true, "the record lists its item")
+check(hover(itemRow), "the sent item row is a live hover target")
+check(GameTooltip.shown ~= nil, "hovering it opens a tooltip")
+check(GameTooltip.shown.kind == "link",
+      "the item's REAL tooltip, from the link captured at send time",
+      GameTooltip.shown.kind)
+check(A.util.Contains(GameTooltip.shown.link or "", "item:"),
+      "built from an item string", GameTooltip.shown.link)
+unhover(itemRow)
+check(GameTooltip.shown == nil, "and closes again")
+
+-- Item rows are RECYCLED between records. A row that carried an item for a
+-- two-item mail must not still answer for it when a one-item mail reuses it --
+-- the row is hidden, but a hidden frame keeps whatever was last written to it,
+-- and this hover reads a field rather than the label.
+A.db.ClearLog()
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2)          -- a TWO-item batch first
+send.atMailbox = true   -- sending needs a live session
+send.Start("Bob", "two things", "", 0, false, false)
+pumpSend()
+A.ui.OpenSentRecord(1)
+check(A.ui.sentItemRows[2].visible == true, "row 2 carried the second item")
+check(A.ui.sentItemRows[2].itemName ~= nil, "and remembers its name")
+
+send.Attach(0, 3)                              -- then a ONE-item batch
+send.atMailbox = true   -- sending needs a live session
+send.Start("Cid", "one thing", "", 0, false, false)
+pumpSend()
+-- The box is appended in order, so the one-item batch is record 2.
+A.ui.OpenSentRecord(2)
+local stale = A.ui.sentItemRows[2]
+check(stale.visible == false, "row 2 is no longer shown")
+GameTooltip:Hide()
+stale.scripts.OnEnter()
+check(GameTooltip.shown == nil,
+      "and it no longer answers for the item it used to hold",
+      GameTooltip.shown and GameTooltip.shown.text)
+
+print("== sent box: COD is recorded as COD, not as gold ==")
+A.db.ClearLog()
+stockBags()
+send.Attach(0, 1)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "cod parcel", "", 2500, true, false)
+pumpSend()
+rec = A.db.SentBox()[1]
+check(rec.cod == 2500, "cod recorded", rec.cod)
+check(rec.money == 0, "and not counted as attached gold", rec.money)
+
+print("== sent box: nothing is recorded until the server confirms ==")
+A.db.ClearLog()
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "x", "", 0, false, false)
+arg1 = 5
+sdriver.scripts.OnUpdate()      -- first mail issued, not yet confirmed
+arg1 = nil
+check(table.getn(A.db.SentBox()) == 0, "nothing recorded before confirmation")
+local guard2 = 0
+while send.sending and guard2 < 10 do
+    fire("MAIL_FAILED")
+    guard2 = guard2 + 1
+end
+check(table.getn(A.db.SentBox()) == 0,
+      "and a batch that got NOTHING out leaves no record at all",
+      table.getn(A.db.SentBox()))
+
+print("== sent box: a batch abandoned halfway keeps what did go ==")
+-- The record is opened by the first confirmed mail and appended to per
+-- confirmation, so a run that dies partway is neither lost nor overstated.
+A.db.ClearLog()
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2); send.Attach(0, 3)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "partial", "", 0, false, false)
+arg1 = 5
+sdriver.scripts.OnUpdate()
+arg1 = nil
+fire("MAIL_SEND_SUCCESS")       -- mail 1 lands
+arg1 = 5
+sdriver.scripts.OnUpdate()
+arg1 = nil
+local g3 = 0
+while send.sending and g3 < 12 do      -- the server then refuses forever
+    fire("MAIL_FAILED")
+    g3 = g3 + 1
+end
+check(table.getn(A.db.SentBox()) == 1, "the record exists",
+      table.getn(A.db.SentBox()))
+rec = A.db.SentBox()[1]
+check(rec.mails == 1, "and counts only the mail that actually went", rec.mails)
+check(table.getn(rec.items) == 1, "with only that item listed",
+      table.getn(rec.items))
+
+print("== sent box: the logEnabled setting is honoured ==")
+A.db.ClearLog()
+A.db.SetSetting("logEnabled", false)
+stockBags()
+send.Attach(0, 1)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Ann", "quiet", "", 0, false, false)
+pumpSend()
+check(table.getn(A.db.SentBox()) == 0, "logging off records nothing")
+A.db.SetSetting("logEnabled", true)
+
+print("== sent box: pruning by age and by ceiling ==")
+A.db.ClearLog()
+local boxRef = A.db.SentBox()
+-- Append-ordered, oldest first, exactly as the real writer produces them.
+table.insert(boxRef, { t = time() - (31 * 86400), to = "Old", s = "a",
+    mails = 1, items = {} })
+table.insert(boxRef, { t = time() - (29 * 86400), to = "Recent", s = "b",
+    mails = 1, items = {} })
+table.insert(boxRef, { t = time(), to = "Now", s = "c", mails = 1, items = {} })
+local dropped = A.db.SentPrune()
+check(dropped == 1, "the 31-day-old record went", dropped)
+check(table.getn(A.db.SentBox()) == 2, "two survive",
+      table.getn(A.db.SentBox()))
+check(A.db.SentBox()[1].to == "Recent", "and the 29-day-old one stayed",
+      A.db.SentBox()[1].to)
+
+A.db.ClearLog()
+boxRef = A.db.SentBox()
+local seed = 1
+while seed <= A.db.SENT_MAX + 25 do
+    table.insert(boxRef, { t = time(), to = "R" .. seed, s = "x",
+        mails = 1, items = {} })
+    seed = seed + 1
+end
+A.db.SentPrune()
+check(table.getn(A.db.SentBox()) == A.db.SENT_MAX,
+      "the ceiling trims a box that is young but huge",
+      table.getn(A.db.SentBox()))
+check(A.db.SentBox()[1].to == "R26", "oldest go first", A.db.SentBox()[1].to)
+A.db.ClearLog()
+
+print("== buttons: the ported kind x state colour table ==")
+-- Ported verbatim from Aegis: Exchange (f84f423). These literals are the
+-- CONTRACT: if they drift, the two addons' buttons stop matching and nobody
+-- notices until they are side by side. Asserted against the numbers, not
+-- against "some colour changed".
+local KINDS = {
+    primary = { bg = {0.42,0.31,0.13}, over = {0.52,0.39,0.17},
+                down = {0.30,0.22,0.09}, border = {0.62,0.49,0.22},
+                text = {1.00,0.86,0.48} },
+    accent  = { bg = {0.36,0.26,0.56}, over = {0.45,0.33,0.68},
+                down = {0.26,0.18,0.40}, border = {0.58,0.45,0.80},
+                text = {0.95,0.92,1.00} },
+    quiet   = { bg = {0.17,0.16,0.15}, over = {0.27,0.25,0.22},
+                down = {0.11,0.10,0.09}, border = {0.13,0.12,0.10},
+                text = {0.80,0.71,0.42} },
+}
+local DIM_BG, DIM_TEXT = 0.55, 0.45
+
+local function near(a, b)
+    if a == nil or b == nil then return false end
+    local d = a - b
+    if d < 0 then d = -d end
+    return d < 0.0001
+end
+local function bgIs(btn, want, what)
+    local r, g, b = btn:GetBackdropColor()
+    check(near(r, want[1]) and near(g, want[2]) and near(b, want[3]),
+          what, tostring(r) .. "," .. tostring(g) .. "," .. tostring(b))
+end
+
+local kindNames = { "primary", "accent", "quiet" }
+local ki = 1
+while ki <= 3 do
+    local kind = kindNames[ki]
+    local spec = KINDS[kind]
+    local b = A.ui.MakeButton(A.ui.frame, kind)
+    b:SetText("X")
+
+    bgIs(b, spec.bg, kind .. ": normal plate")
+    local br, bgc, bbl = b:GetBackdropBorderColor()
+    check(near(br, spec.border[1]) and near(bgc, spec.border[2])
+          and near(bbl, spec.border[3]), kind .. ": border")
+
+    b.scripts.OnEnter()
+    bgIs(b, spec.over, kind .. ": hover plate")
+    b.scripts.OnMouseDown()
+    bgIs(b, spec.down, kind .. ": pressed plate")
+    b.scripts.OnMouseUp()
+    bgIs(b, spec.over, kind .. ": back to hover on release")
+    -- A press dragged OFF the button never gets an OnMouseUp, so OnLeave has
+    -- to clear BOTH flags or the pressed plate sticks until the next hover.
+    b.scripts.OnMouseDown()
+    b.scripts.OnLeave()
+    bgIs(b, spec.bg, kind .. ": leaving mid-press clears the pressed plate")
+
+    -- Disabled is DERIVED (bg * 0.55), not a fourth hand-picked row. Asserting
+    -- the arithmetic means a change to BTN_DIM_BG cannot silently stop being
+    -- covered.
+    b:Disable()
+    bgIs(b, { spec.bg[1]*DIM_BG, spec.bg[2]*DIM_BG, spec.bg[3]*DIM_BG },
+         kind .. ": disabled plate is the derived dim, not a literal")
+    b:Enable()
+    bgIs(b, spec.bg, kind .. ": enabling restores the plate")
+    ki = ki + 1
+end
+
+print("== buttons: disabled must BLOCK clicks, not just look disabled ==")
+-- The trap Exchange's own comment calls out: a bare CreateFrame("Button") has
+-- working Enable/Disable with no appearance attached. Get the wrapping wrong
+-- and you ship a button that either looks dead and still fires, or looks live
+-- and does nothing. Both are invisible in a screenshot.
+local fired = 0
+local cb = A.ui.MakeButton(A.ui.frame, "primary")
+cb:SetText("Go")
+cb:SetScript("OnClick", function() fired = fired + 1 end)
+check(Click(cb), "an enabled button dispatches")
+check(fired == 1, "and its handler ran", fired)
+cb:Disable()
+check(not cb:IsEnabled(), "it reports itself disabled")
+check(Click(cb) == false, "a DISABLED button does not dispatch at all")
+check(fired == 1, "so its handler did not run", fired)
+cb:Enable()
+check(Click(cb), "re-enabling restores dispatch")
+check(fired == 2, "and the handler runs again", fired)
+
+print("== buttons: text round-trips through the shadowed accessors ==")
+local tb = A.ui.MakeButton(A.ui.frame, "quiet")
+tb:SetText("Delete Read")
+check(tb:GetText() == "Delete Read", "GetText returns what SetText stored",
+      tb:GetText())
+-- GetFontString must answer the real label: a template-less button has none
+-- registered, and anything measuring a label to clip it would error on nil.
+check(tb:GetFontString() ~= nil, "GetFontString answers the label, not nil")
+check(rawget(tb:GetFontString(), "text") == "Delete Read",
+      "and that label carries the text")
+
+print("== buttons: every converted call site kept its intended kind ==")
+-- A sample across the areas rather than all 17: an action-bar button, a
+-- per-row button, both readers' Back, and the two primaries.
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+local function kindIs(btn, want, what)
+    check(btn and btn.courierKind == want, what,
+          tostring(btn and btn.courierKind))
+end
+kindIs(A.ui.btnOpenAll, "primary", "Open All is the Inbox's primary")
+kindIs(A.ui.btnDeleteRead, "quiet", "Delete Read is quiet")
+kindIs(A.ui.btnStop, "quiet", "Stop is quiet")
+kindIs(A.ui.inboxRows[1].ret, "quiet", "the per-row Return is quiet")
+kindIs(A.ui.readerBack, "accent", "the mail reader's Back is accent")
+kindIs(A.ui.readerTake, "primary", "Take is the reader's primary")
+kindIs(A.ui.sentBack, "accent", "the Sent reader's Back is accent")
+kindIs(A.ui.sentCompose, "primary", "Compose-to is the Sent reader's primary")
+kindIs(A.ui.btnSend, "primary", "Send is the Compose tab's primary")
+kindIs(A.ui.blizBtn, "quiet", "the Blizzard UI toggle is quiet")
+
+print("== buttons: MarkChosen restores each button's OWN prior kind ==")
+-- Not a hardcoded "quiet": a row of accent buttons must come back accent.
+local m1 = A.ui.MakeButton(A.ui.frame, "quiet")
+local m2 = A.ui.MakeButton(A.ui.frame, "accent")
+m1.tag, m2.tag = "one", "two"
+local row = { m1, m2 }
+A.ui.MarkChosen(row, function(b) return b.tag == "one" end)
+check(m1.courierKind == "primary", "the chosen one goes primary", m1.courierKind)
+check(m2.courierKind == "accent", "the other keeps ITS kind, not quiet",
+      m2.courierKind)
+A.ui.MarkChosen(row, function(b) return b.tag == "two" end)
+check(m2.courierKind == "primary", "choosing the other swaps them")
+check(m1.courierKind == "quiet", "and the first returns to where it started",
+      m1.courierKind)
+
+print("== tabs: Send is labelled Compose, but its KEY is unchanged ==")
+-- The key names the panel frame, the ui.panels entry, the comparison in
+-- SendAttachActive, and the remembered tab in db.char.ui.tab. Renaming it to
+-- relabel the tab would drop every player onto a different tab after updating.
+check(A.ui.subTabs["Send"] ~= nil, "the tab is still keyed Send")
+check(rawget(A.ui.subTabs["Send"].label, "text") == "Compose",
+      "but reads Compose", rawget(A.ui.subTabs["Send"].label, "text"))
+check(getglobal("AegisCourierPanelSend") ~= nil,
+      "the panel frame global is unchanged")
+check(A.ui.panels["Send"] ~= nil, "and so is the panels entry")
+A.ui.SelectSubTab("Send")
+check(A.ui.selectedSubTab == "Send", "selection still uses the key")
+check(A.ui.SendAttachActive() == true,
+      "and the bag hook still recognises the compose tab")
+
+check(A.ui.subTabs["Sent"] ~= nil, "Sent is a tab of its own")
+check(rawget(A.ui.subTabs["Sent"].label, "text") == "Sent",
+      "labelled plainly", rawget(A.ui.subTabs["Sent"].label, "text"))
+check(A.ui.panels["Sent"] ~= nil, "with its own panel")
+
+print("== tabs: the Log tab is received-only now ==")
+check(A.ui.logSentBtn == nil, "the Sent/Received toggle is gone")
+check(A.ui.logDir == "received", "and the log is fixed to received",
+      A.ui.logDir)
+
+print("== Sent tab: a batch is ONE row you can click ==")
+A.db.ClearLog()
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+A.ui.SelectSubTab("Sent")
+stockBags()
+send.Attach(0, 1); send.Attach(0, 2); send.Attach(0, 3)
+send.atMailbox = true   -- sending needs a live session
+send.Start("Torchbank", "supplies", "letters and parcels", 0, false, false)
+pumpSend()
+A.ui.sentFind:SetText("")
+A.ui.sentMine:SetChecked(false)
+local srows = A.ui.SentRows()
+check(table.getn(srows) == 1, "three mails render as ONE row",
+      table.getn(srows))
+check(srows[1].rec.to == "Torchbank", "recipient", srows[1].rec.to)
+check(srows[1].rec.s == "supplies", "subject as typed", srows[1].rec.s)
+check(srows[1].rec.mails == 3, "and it cost three mails", srows[1].rec.mails)
+check(pcall(A.ui.RefreshSent) == true, "the list paints clean")
+
+-- The find box has to search the item list, or a sent box you cannot search
+-- is just a list you scroll.
+A.ui.sentFind:SetText("copper")
+check(table.getn(A.ui.SentRows()) == 1, "found by an item inside the batch")
+A.ui.sentFind:SetText("torchbank")
+check(table.getn(A.ui.SentRows()) == 1, "found by recipient")
+A.ui.sentFind:SetText("parcels")
+check(table.getn(A.ui.SentRows()) == 1, "found by body text")
+A.ui.sentFind:SetText("nonesuch")
+check(table.getn(A.ui.SentRows()) == 0, "and a miss is a miss")
+A.ui.sentFind:SetText("")
+
+print("== Sent tab: the reader replays what was recorded ==")
+check(A.ui.SentReaderOpen() == false, "the list shows first")
+check(A.ui.OpenSentRecord(1) == true, "clicking a send opens it")
+check(A.ui.SentReaderOpen(), "the reader is open")
+check(A.ui.sentReader.visible == true, "and visible")
+check(A.ui.sentRows[1].visible == false, "the list gave up the well")
+check(rawget(A.ui.sentTo, "text") == "Torchbank", "recipient shown",
+      rawget(A.ui.sentTo, "text"))
+check(rawget(A.ui.sentBody, "text") == "letters and parcels",
+      "the body was captured at send time and replays here",
+      rawget(A.ui.sentBody, "text"))
+check(A.util.Contains(rawget(A.ui.sentMeta, "text") or "", "3 mails"),
+      "the meta line says what the send actually cost",
+      rawget(A.ui.sentMeta, "text"))
+check(A.util.Contains(rawget(A.ui.sentItemsHead, "text") or "", "3 item"),
+      "and how many items went", rawget(A.ui.sentItemsHead, "text"))
+check(A.util.Contains(rawget(A.ui.sentItemRows[1].label, "text") or "",
+      "Silk Cloth"), "the first item is named",
+      rawget(A.ui.sentItemRows[1].label, "text"))
+check(A.ui.sentItemRows[3].visible == true, "all three item rows shown")
+check(A.ui.sentItemRows[4].visible == false, "and no more than that")
+-- The icon path is captured at attach time; nothing can recover it later.
+check(A.ui.sentItemRows[1].icon.visible == true, "the item icon is shown")
+check(rawget(A.ui.sentItemRows[1].icon, "texture") ~= nil,
+      "and it has a real texture",
+      tostring(rawget(A.ui.sentItemRows[1].icon, "texture")))
+-- Through GetText, not rawget: ui.MakeButton shadows SetText/GetText on the
+-- object, so the label no longer lands in the mock's own `text` field.
+check(A.util.Contains(A.ui.sentCompose:GetText() or "", "Torchbank"),
+      "the compose action names the recipient",
+      A.ui.sentCompose:GetText())
+-- The one action that makes sense here: write to the same person again.
+A.ui.sentCompose.scripts.OnClick()
+check(A.ui.selectedSubTab == "Send", "it switches to the compose tab",
+      A.ui.selectedSubTab)
+check(A.ui.sendTo:GetText() == "Torchbank", "with the recipient filled in",
+      A.ui.sendTo:GetText())
+A.ui.SelectSubTab("Sent")
+A.ui.OpenSentRecord(1)
+A.ui.CloseSentRecord()
+check(A.ui.SentReaderOpen() == false, "Back returns to the list")
+check(A.ui.sentRows[1].visible == true, "and the rows come back")
+
+print("== Sent tab: there is nothing to Take or Return ==")
+-- A sent mail is GONE from the client -- vanilla has no API to read one back,
+-- so this reader replays Courier's own record and has nothing to act on.
+check(A.ui.sentTake == nil, "no Take button exists")
+check(A.ui.sentReturn == nil, "and no Return button")
+
+print("== Sent tab: old records without body or icons still render ==")
+-- Nothing captured before this release can be backfilled: the mail is gone.
+A.db.ClearSentBox()
+local legacy = A.db.SentBegin("Oldfriend", "legacy", 0, 0)   -- no body passed
+A.db.SentAdd(legacy, "Linen Cloth", 5)                       -- no texture
+check(A.ui.OpenSentRecord(1) == true, "a legacy record opens")
+check(pcall(A.ui.RefreshSent) == true, "and paints without erroring")
+check(A.util.Contains(rawget(A.ui.sentBody, "text") or "", "no message"),
+      "a missing body says so rather than showing an empty well",
+      rawget(A.ui.sentBody, "text"))
+check(A.ui.sentItemRows[1].visible == true, "the item still lists")
+check(A.ui.sentItemRows[1].icon.visible == false,
+      "with its icon simply absent")
+A.ui.CloseSentRecord()
+
+print("== Sent tab: the reader never outlives its record ==")
+A.db.ClearSentBox()
+local r1 = A.db.SentBegin("First", "one", 0, 0)
+A.db.SentAdd(r1, "Thing", 1)
+local r2 = A.db.SentBegin("Second", "two", 0, 0)
+A.db.SentAdd(r2, "Thing", 1)
+A.ui.OpenSentRecord(1)
+check(rawget(A.ui.sentTo, "text") == "First", "reading the first send")
+-- Remove the record being read. Index 1 STAYS VALID -- the second send slides
+-- into it -- so a nil check alone sails straight past this and the reader
+-- would quietly show a different send under the first one's heading.
+table.remove(A.db.SentBox(), 1)
+check(A.db.SentBox()[1] ~= nil, "index 1 is still a real record")
+check(A.db.SentBox()[1].to == "Second", "but a DIFFERENT one now",
+      A.db.SentBox()[1].to)
+A.ui.RefreshSent()
+check(A.ui.SentReaderOpen() == false,
+      "a record shifting under the index closes the reader")
+check(A.ui.sentRows[1].visible == true, "and the list is painted instead")
+
+-- And the simpler case: the box emptied entirely.
+A.db.ClearSentBox()
+local r3 = A.db.SentBegin("Third", "three", 0, 0)
+A.db.SentAdd(r3, "Thing", 1)
+A.ui.OpenSentRecord(1)
+check(A.ui.SentReaderOpen(), "reading again")
+A.db.ClearSentBox()
+A.ui.RefreshSent()
+check(A.ui.SentReaderOpen() == false,
+      "clearing the box drops the reader back to the list")
+
+print("== Sent tab: long batches summarise but stay searchable ==")
+A.db.ClearSentBox()
+local many = A.db.SentBegin("Torchbank", "big", 0, 0)
+local mi2 = 1
+while mi2 <= 9 do
+    A.db.SentAdd(many, "Thing " .. mi2, 1)
+    mi2 = mi2 + 1
+end
+local bigRow = A.ui.SentRow(A.db.SentBox()[1])
+check(A.util.Contains(bigRow.item, "Thing 1"), "the first items are named",
+      bigRow.item)
+check(A.util.Contains(bigRow.item, "+6 more"), "and the rest are counted",
+      bigRow.item)
+-- The label is truncated for width; SEARCH must not be. A bank-alt send is
+-- exactly where an item sits ninth in the list, and "I know I mailed it" is
+-- the whole reason to open a sent box.
+A.ui.sentFind:SetText("thing 9")
+check(table.getn(A.ui.SentRows()) == 1,
+      "an item past the visible ones is still findable",
+      table.getn(A.ui.SentRows()))
+A.ui.sentFind:SetText("")
+
+print("== Sent tab: Clear empties the box ==")
+A.db.ClearSentBox()
+check(table.getn(A.db.SentBox()) == 0, "the box is empty",
+      table.getn(A.db.SentBox()))
+check(table.getn(A.ui.SentRows()) == 0, "and so is the view")
+A.ui.SelectSubTab("Log")
+A.ui.logDir = "received"
+
+print("== log: filtering ==")
+A.db.ClearLog()
+A.db.LogAdd("received", { who = "Bob", subject = "hello", char = "Tester" })
+A.db.LogAdd("received", { who = "Ann", subject = "cloth order",
+    item = "Silk Cloth", char = "Tester" })
+A.db.LogAdd("received", { who = "Stormwind Auction House",
+    subject = "Auction successful: Black Lotus", auction = "sold",
+    money = 500, char = "AltGuy" })
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+A.ui.SelectSubTab("Log")
+check(A.ui.logDir == "received", "defaults to received")
+A.ui.logFind:SetText("")
+A.ui.logMine:SetChecked(false)
+check(table.getn(A.ui.LogRows()) == 3, "all three shown",
+      table.getn(A.ui.LogRows()))
+-- Newest first.
+check(A.ui.LogRows()[1].who == "Stormwind Auction House", "newest first")
+A.ui.logFind:SetText("bob")
+check(table.getn(A.ui.LogRows()) == 1, "participant filter, case-insensitive")
+A.ui.logFind:SetText("cloth")
+check(table.getn(A.ui.LogRows()) == 1, "matches the item too")
+A.ui.logFind:SetText("sold")
+check(table.getn(A.ui.LogRows()) == 1, "matches the auction category tag")
+A.ui.logFind:SetText("zzz")
+check(table.getn(A.ui.LogRows()) == 0, "no matches")
+A.ui.logFind:SetText("")
+-- The cross-alt question TurtleMail's per-character store cannot answer.
+A.ui.logMine:SetChecked(true)
+check(table.getn(A.ui.LogRows()) == 2, "this-character filter excludes the alt",
+      table.getn(A.ui.LogRows()))
+A.ui.logMine:SetChecked(false)
+check(table.getn(A.ui.LogRows()) == 3, "and the alt is visible again")
+
+print("== log: directions are separate ==")
+A.db.ClearLog()
+A.db.LogAdd("received", { who = "Bob", subject = "in" })
+A.db.LogAdd("sent", { who = "Ann", subject = "out" })
+check(table.getn(A.db.Log("received")) == 1, "received bucket")
+check(table.getn(A.db.Log("sent")) == 1, "sent bucket")
+A.db.ClearLog("sent")
+check(table.getn(A.db.Log("sent")) == 0, "clearing one direction")
+check(table.getn(A.db.Log("received")) == 1, "leaves the other alone")
+
+print("== log: capped ==")
+A.db.ClearLog()
+local i = 1
+while i <= 300 do
+    A.db.LogAdd("received", { who = "Bob", subject = "n" .. i })
+    i = i + 1
+end
+local capped = table.getn(A.db.Log("received"))
+check(capped == 250, "capped at 250", capped)
+check(A.db.Log("received")[capped].subject == "n300",
+      "the newest entry survives", A.db.Log("received")[capped].subject)
+
+print("== log: UI refresh runs clean ==")
+A.ui.SelectSubTab("Log")
+A.ui.RefreshLog()
+A.ui.logDir = "sent"
+A.ui.RefreshLog()
+A.ui.logDir = "received"
+A.ui.Refresh()
+check(true, "log tab refreshes in both directions")
+
+-- =========================================================================
+-- Stage C.3: the optional pfUI skin
+-- =========================================================================
+
+local skin = A.skin
+check(skin ~= nil, "skin module loaded")
+
+print("== skin: dormant and harmless without pfUI ==")
+check(pfUI == nil, "no pfUI in this environment")
+check(skin.Available() == false, "not available")
+check(skin.Enabled() == false, "not enabled")
+check(skin.Apply() == false, "Apply is a no-op")
+A.ui.mailOpen = true
+A.ui.OpenWindow()
+check(A.ui.frame ~= nil, "and the window still builds fine")
+-- Toggling the setting with no pfUI must explain itself, not fail.
+skin.OnSettingChanged(true)
+check(true, "toggling on without pfUI is safe")
+
+print("== skin: the setting defaults ON ==")
+-- So that installing pfUI later just works, with nothing to switch on.
+check(A.db.Setting("pfSkin") == true, "pfSkin defaults to on")
+
+print("== skin: the option is greyed when pfUI is absent ==")
+A.ui.SelectSubTab("Courier")
+check(A.ui.checkPfSkin ~= nil, "the option exists in the Courier tab")
+check(A.ui.checkPfSkin:GetChecked() == true, "and reads as on")
+check(not A.ui.checkPfSkin:IsEnabled(),
+      "but is greyed out with no pfUI to match")
+
+print("== skin: applies when pfUI is present ==")
+-- A stub standing in for pfUI's helper environment.
+local calls = { backdrop = 0, button = 0, checkbox = 0, editbox = 0,
+                slider = 0, close = 0, strip = 0 }
+pfUI = {
+    GetEnvironment = function()
+        return {
+            -- REAL pfUI builds a CHILD FRAME and hangs it on frame.backdrop.
+            -- Counting the call is not enough: the entire button cooperation
+            -- turns on that child existing, RepaintButton resolving to it, and
+            -- the label being re-homed onto it. A stub that only counts leaves
+            -- all three untested.
+            CreateBackdrop  = function(frame)
+                calls.backdrop = calls.backdrop + 1
+                if frame and not frame.backdrop then
+                    frame.backdrop = CreateFrame("Frame", nil, frame)
+                end
+            end,
+            StripTextures   = function() calls.strip = calls.strip + 1 end,
+            SkinButton      = function() calls.button = calls.button + 1 end,
+            SkinCloseButton = function() calls.close = calls.close + 1 end,
+            SkinCheckbox    = function() calls.checkbox = calls.checkbox + 1 end,
+            SkinScrollbar   = function() calls.slider = calls.slider + 1 end,
+        }
+    end,
+}
+skin.env = nil          -- force a refetch
+skin.applied = false
+check(skin.Available() == true, "now available")
+check(skin.Enabled() == true, "and enabled")
+check(skin.Apply() == true, "Apply reports success")
+check(skin.applied == true, "and marks itself applied")
+check(calls.backdrop > 0, "backdrops applied", calls.backdrop)
+check(calls.button > 0, "buttons skinned", calls.button)
+check(calls.close > 0, "the close button used pfUI's close skin", calls.close)
+-- NOT skinned, and that is the point. pfUI's SkinCheckbox replaces the box
+-- art, which on our 14px flat boxes renders as a circle -- correct unskinned,
+-- wrong under the skin, which is how it shipped in Exchange before the same
+-- port. Every checkbox here opts out, so pfUI is never asked.
+check(calls.checkbox == 0, "checkboxes are NOT handed to pfUI", calls.checkbox)
+check(A.ui.checkTakeover.courierNoSkin and true or false,
+      "because each one opts out by name")
+check(A.ui.sendCODAll.courierNoSkin and true or false,
+      "the send form's toggles too")
+check(calls.editbox + calls.strip > 0, "edit boxes stripped and backdropped",
+      calls.strip)
+-- Opt-outs must be honoured: inbox rows and attachment slots are click targets
+-- and icon wells, not buttons.
+check(A.ui.inboxRows[1].courierSkinned == true, "inbox rows were visited")
+check(A.ui.sendSlots[1].courierSkinned == true, "attachment slots were visited")
+
+-- Second pass must not redo the work.
+local before = calls.backdrop
+skin.Apply()
+check(calls.backdrop == before, "a second Apply is idempotent",
+      calls.backdrop .. " vs " .. before)
+
+print("== skin: pfUI plates are COLOURED by the button, not replaced ==")
+-- The point of the courierButton branch: pfUI supplies the plate's edge and
+-- corner art, and RepaintButton then paints THAT child with the same BTN_KIND
+-- colours it uses unskinned. Skip the branch and pfUI's generic SkinButton
+-- flattens every button to one look, losing primary/accent/quiet entirely.
+local pb = A.ui.btnOpenAll
+check(pb.courierButton == true, "Open All is one of our drawn buttons")
+check(pb.backdrop ~= nil, "pfUI gave it a backdrop child", tostring(pb.backdrop))
+check(pb.courierSkinned == true, "and the skin pass claimed it")
+
+-- The CHILD carries the colour now, not the button. This is what breaks if
+-- RepaintButton ever caches its target at creation instead of resolving live.
+local function childBg(btn)
+    if not btn.backdrop or not btn.backdrop.GetBackdropColor then return nil end
+    local r, g, b = btn.backdrop:GetBackdropColor()
+    return r, g, b
+end
+-- Enable it explicitly: Open All greys itself out when the inbox has no work,
+-- and an incidental disabled state would have this asserting the dimmed
+-- derivative instead of the plate colour.
+pb:Enable()
+local pr, pg, pbl = childBg(pb)
+check(pr ~= nil, "the backdrop child was painted at all", tostring(pr))
+local function close(a, b) local d = a - b if d < 0 then d = -d end return d < 0.0001 end
+check(close(pr, 0.42) and close(pg, 0.31) and close(pbl, 0.13),
+      "and painted with primary's own plate colour",
+      tostring(pr) .. "," .. tostring(pg) .. "," .. tostring(pbl))
+
+-- Hover still drives the child, not the now-invisible parent backdrop.
+pb.scripts.OnEnter()
+pr, pg, pbl = childBg(pb)
+check(close(pr, 0.52) and close(pg, 0.39) and close(pbl, 0.17),
+      "hover repaints the pfUI child too",
+      tostring(pr) .. "," .. tostring(pg) .. "," .. tostring(pbl))
+pb.scripts.OnLeave()
+
+-- An accent button keeps its purple under pfUI rather than being flattened.
+local ab = A.ui.readerBack
+ab:Enable()
+check(ab.courierKind == "accent", "the reader's Back is accent")
+local ar, ag, abl = childBg(ab)
+check(ar == nil or (close(ar, 0.36) and close(ag, 0.26) and close(abl, 0.56)),
+      "and if painted, painted purple -- not flattened to one plate",
+      tostring(ar) .. "," .. tostring(ag) .. "," .. tostring(abl))
+
+-- The label is re-homed onto the backdrop child: a FontString on the child's
+-- OVERLAY layer sits above that child's own textures whatever the frame
+-- levels around it are. Without it, buttons inside a scroll child came back
+-- as blank plates.
+check(pb.courierLabelLifted == true, "the label was lifted onto the child")
+check(pb:GetText() == "Open All", "and still answers GetText afterwards",
+      pb:GetText())
+
+print("== skin: the option is live when pfUI is present ==")
+A.ui.SelectSubTab("Courier")
+check(A.ui.checkPfSkin:IsEnabled() and true, "no longer greyed")
+
+print("== skin: the user setting still wins ==")
+A.db.SetSetting("pfSkin", false)
+check(skin.Enabled() == false, "off means off even with pfUI installed")
+check(skin.Apply() == false, "and Apply refuses")
+A.db.SetSetting("pfSkin", true)
+check(skin.Enabled() == true, "back on")
+
+print("== skin: a broken pfUI cannot break Courier ==")
+-- Every helper throws. The addon must degrade to "unskinned", not error.
+pfUI = {
+    GetEnvironment = function()
+        return {
+            CreateBackdrop  = function() error("boom") end,
+            StripTextures   = function() error("boom") end,
+            SkinButton      = function() error("boom") end,
+            SkinCloseButton = function() error("boom") end,
+            SkinCheckbox    = function() error("boom") end,
+            SkinScrollbar   = function() error("boom") end,
+        }
+    end,
+}
+skin.env = nil
+skin.applied = false
+check(skin.Apply() == true, "Apply survives a pfUI that throws on every call")
+
+-- A pfUI whose GetEnvironment itself explodes.
+pfUI = { GetEnvironment = function() error("boom") end }
+skin.env = nil
+skin.applied = false
+check(skin.Apply() == false, "and one whose environment cannot be fetched")
+
+-- A pfUI missing every helper we want.
+pfUI = { GetEnvironment = function() return {} end }
+skin.env = nil
+skin.applied = false
+check(skin.Apply() == true, "and one exposing no helpers at all")
+
+pfUI = nil
+skin.env = nil
+skin.applied = false
+
+print("== skin: the window still works unskinned ==")
+A.ui.SelectSubTab("Inbox")
+A.ui.SelectSubTab("Send")
+A.ui.SelectSubTab("Log")
+A.ui.SelectSubTab("Courier")
+check(true, "every tab still selects after the skin passes")
+
+print("")
+if failures == 0 then
+    print("ALL " .. checks .. " CHECKS PASSED")
+else
+    print(failures .. " of " .. checks .. " CHECKS FAILED")
+    os.exit(1)
+end

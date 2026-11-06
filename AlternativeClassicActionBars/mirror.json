@@ -1,0 +1,270 @@
+{
+  "upstream": "https://github.com/TrusT-Codes/AlternativeClassicActionBars",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "TrusT-Codes",
+    "repo": "AlternativeClassicActionBars",
+    "name": "AlternativeClassicActionBars",
+    "url": "https://github.com/TrusT-Codes/AlternativeClassicActionBars",
+    "api": "https://api.github.com/repos/TrusT-Codes/AlternativeClassicActionBars"
+  },
+  "commit": "caf73fa27c769f916ab161c48aff6c897a97a67e",
+  "sourceFiles": {
+    ".claude/agents/refactor-agent.md": {
+      "sha256": "efa01065bec27931383ab3af00070d0a08c28791f1f2ae8917a48833561d53aa",
+      "bytes": 10416
+    },
+    ".claude/agents/trustybars-dev.md": {
+      "sha256": "35e717698a9a8bd419d367c69a2dcee9967b236a4884ab1e0080a0c3cea77052",
+      "bytes": 1876
+    },
+    ".gitattributes.upstream": {
+      "sha256": "b64d436796be7d0efadf79618c10c7982f4c6995d23ea778082d938896d35d3b",
+      "bytes": 116
+    },
+    ".github/PULL_REQUEST_TEMPLATE.md": {
+      "sha256": "dd61853c13979aca568d80a0c44d6f0040c216f5e85d7d58e340e806ec386d5d",
+      "bytes": 109
+    },
+    ".github/workflows/release.yml": {
+      "sha256": "0028077a24db7a345cb6a9786920843e0b51f0b8de02252e2897d1020bb55241",
+      "bytes": 1048
+    },
+    ".gitignore.upstream": {
+      "sha256": "3d1c27810736e57e915465b657170e6f23e6c4df4d3e055e0bd348eb8ad34ca8",
+      "bytes": 172
+    },
+    ".luarc.json": {
+      "sha256": "9d3eedf6bcad2024d20a9188cd84445760e87867ad74fd4e23bee8360db5201f",
+      "bytes": 481
+    },
+    "AlternativeClassicActionBars.toc": {
+      "sha256": "101601f247f975d51f4f4c2dd1b6b476d5fee886466c5526db4c0c7f72fdde35",
+      "bytes": 836
+    },
+    "Bar.lua": {
+      "sha256": "39d8a840e6534cb0bd6f90592cbd4993beadb7688b7deb730f4a75047a9b262d",
+      "bytes": 28120
+    },
+    "bindings.xml": {
+      "sha256": "b7023106d84d3988078000eedb565c75400f679bcbdbf9fd7f87cebc8ecd9f6c",
+      "bytes": 5199
+    },
+    "Button.lua": {
+      "sha256": "e7e61ce062241e08a2879df3e230bdc1dfe8ad1e16f5f324e6c5da9e78a91b97",
+      "bytes": 69167
+    },
+    "CHANGELOG.md": {
+      "sha256": "9baae09a18b0a71efcdd43f4760a5e0f2746acea17ac5f8537f7d7b5fab7cfe5",
+      "bytes": 18490
+    },
+    "CLAUDE.md": {
+      "sha256": "315ffb434d2769412067971d373c87b769ead99f70bdd7ef3d557475f0347da4",
+      "bytes": 6687
+    },
+    "Core.lua": {
+      "sha256": "feca47fa9e925fd49be629d6e207b54928822106e568eedc48f00279effea101",
+      "bytes": 72531
+    },
+    "Database.lua": {
+      "sha256": "75c0e08960ff2d5d13c2c4896473be7fdfe7db100343be7b79e8d4225ddf3980",
+      "bytes": 60085
+    },
+    "DefaultBars.lua": {
+      "sha256": "f2c5f146b3a428c9d7bffbeb04cf41c9d782daf79b2ab729ef406f7d1385abf9",
+      "bytes": 67208
+    },
+    "Dialog.lua": {
+      "sha256": "ddb5db8281b376c30c8a0ff4fc6df9c15612a630b75a67d82382bd4b5ddc43f3",
+      "bytes": 15241
+    },
+    "docs/01-Environment-Capability-Analysis.md": {
+      "sha256": "5e77bf59014266ff574fb6eedaa95ee7ff439b102355df4bbfb29679d728ce6f",
+      "bytes": 5382
+    },
+    "docs/architecture.md": {
+      "sha256": "4f8ccba2822f11884f136f9ef10eab425166e5b2d88892a9a9dd0e4c390a25dc",
+      "bytes": 34761
+    },
+    "docs/known-problems.md": {
+      "sha256": "2c7e57dda20a0c7fb5ef08a2b56f96c27c8020ae06016544d3d98444c09353a1",
+      "bytes": 54793
+    },
+    "docs/plan/_brief-template.md": {
+      "sha256": "f850746cc6e0fd68c897c391917240f64be52ea989d60ad77a8e9b95c960e7a2",
+      "bytes": 1573
+    },
+    "docs/plan/CustomBarKeybinding_DLL.md": {
+      "sha256": "d9794d875c77ecdf88b2c1c6a65822b08dcb14e5c22280c5cb41937b4734ae0f",
+      "bytes": 8156
+    },
+    "docs/release-checklist.md": {
+      "sha256": "7f02e18fbd47f30ea01d140f42cdd4e8f88651213ca3ae342b4cf3acbcebb62f",
+      "bytes": 5596
+    },
+    "docs/symbols.txt": {
+      "sha256": "9f7fe7e0087abe49529f0f57db42bb013b7b256fb8f254ebf0b22b52fd693bef",
+      "bytes": 30951
+    },
+    "ElementEngine.lua": {
+      "sha256": "052ec1e1968bbb3e241a75dc4686477aa714defdd66f975131fd196484d42e2b",
+      "bytes": 39343
+    },
+    "Events.lua": {
+      "sha256": "3b0a8122d3cfd478319a1efbe61ce07ab196c1a750aacba1aeaec383615f4cd3",
+      "bytes": 8672
+    },
+    "ExperienceBar.lua": {
+      "sha256": "cb14835e73c35dc275dd21e49ce8c292c5157e7c33d965f8ccb1e69c94b3dc34",
+      "bytes": 29993
+    },
+    "ExtraBars.lua": {
+      "sha256": "f0c36e85af5d6ec1307b09be3f5daf8cc50f8678f4c60522b6bc5bde11ed9575",
+      "bytes": 3686
+    },
+    "ForceVanillaLayout.lua": {
+      "sha256": "b801f955c9364a7e31ea97329ad274b3ce21ed7ee89c5a4366d65d42d77450e6",
+      "bytes": 7429
+    },
+    "HoverBind.lua": {
+      "sha256": "62d4dffdaf07d4fb2a541c3834d6dbf2ce573e318171c3efb9c4cd5817b3c908",
+      "bytes": 13728
+    },
+    "LayoutGrid.lua": {
+      "sha256": "527bb3ae2c3ae78ce100859d88c2d5370ffd8a733f030d3485069c35845a289c",
+      "bytes": 4734
+    },
+    "LICENSE": {
+      "sha256": "a0ee746064b06d09cab0768116ec265fd0d45261d4087c9ad2c698a07c7aac0e",
+      "bytes": 35803
+    },
+    "Menu.lua": {
+      "sha256": "f8fd5c04fd940b1f6d1cc1cd43e3272261a29cbab99cf1169beadca9ed71487e",
+      "bytes": 1682
+    },
+    "Minimap.lua": {
+      "sha256": "a23c7d49bf352e44cca83c782b0126381c60b2d48c986ac0d943ba3b0949d3cb",
+      "bytes": 2939
+    },
+    "MISTAKES.md": {
+      "sha256": "6b1731f11ec385aeedb10febe6d6a65b2276cc01b97ed63b8b9e97b4a54e95b3",
+      "bytes": 23517
+    },
+    "NativeElements.lua": {
+      "sha256": "0796fe6fd86493bd983fcf4440908e770948322e9c2338c3b595a3b802a90bd6",
+      "bytes": 30600
+    },
+    "PageIndicator.lua": {
+      "sha256": "0e12829a78e98e8549e6033e257b10979e8cab974da588133b91caf25a2c2fbe",
+      "bytes": 15732
+    },
+    "PetStanceBars.lua": {
+      "sha256": "3de9b948ff4acf064d1d04139b4cb058dde9b3e9176eaf99bbb53c388ecfdbe9",
+      "bytes": 28320
+    },
+    "ProfileDialogs.lua": {
+      "sha256": "5ee77c3faf3dc2a4adfa2e0e2b809ba06993cddd26b130be5984ebaee6d1904c",
+      "bytes": 3000
+    },
+    "ProfileIO.lua": {
+      "sha256": "85f9e9fb50cf2f2d0127c6cb1bc87a466370fe6f895dd587b52dd9b8b4ede373",
+      "bytes": 10167
+    },
+    "README.md": {
+      "sha256": "82c0725eea7b0e5b9724c0f1a72a4f14d19b43acab9bc565824d33a3928c164b",
+      "bytes": 7274
+    },
+    "scripts/Build-Release.ps1": {
+      "sha256": "278fac47bbd229a59a3f1d5277792c80da97502b7dc73fc76295e9676af746ee",
+      "bytes": 3447
+    },
+    "scripts/docs-for.sh": {
+      "sha256": "75e52739538bba5132644a34adc6a04748d9c8ebe17cf54ef4c6c81a204385ea",
+      "bytes": 1779
+    },
+    "scripts/symbols.sh": {
+      "sha256": "6ad2627ba949a1c7bcb17324dc4da16c630741bcfb9015b4cea26eb042ed0229",
+      "bytes": 1137
+    },
+    "scripts/verify/load.lua": {
+      "sha256": "a2c7355c5d203e096a34f37a7bdfe319a0956fd1fcb06cf59a84fa2c17bbb3b0",
+      "bytes": 1422
+    },
+    "scripts/verify/verify.sh": {
+      "sha256": "cd36085f4ddf7ac00430676ba554b62d8e1d77906e9b5d00d444bf4973fb809c",
+      "bytes": 2205
+    },
+    "Settings.lua": {
+      "sha256": "e65c534c61ae96d7fc5da4debee41bac575054824b9ac207298d4ee7ac9cd5bc",
+      "bytes": 48253
+    },
+    "SettingsBars.lua": {
+      "sha256": "757c89c80ff9ae6220a51a690fc7f13d8d6504c5f659531b399667fc5e8b107c",
+      "bytes": 79770
+    },
+    "SettingsGeneral.lua": {
+      "sha256": "cc47d1b383f5267b5cf1d7b46459122c9232330855cec6888b005e9f39e1decf",
+      "bytes": 47517
+    },
+    "SettingsSimplePages.lua": {
+      "sha256": "444b902b87da2d5011c7acbe75cc22915e2ab8607714baed1b3205e298c3d21c",
+      "bytes": 32855
+    },
+    "SetupWizard.lua": {
+      "sha256": "37b39e73ac9cd8b01a5b1ade5b02a78c0e409cb4aa4799fc5403748614e9dcf7",
+      "bytes": 35082
+    },
+    "Textures/BEB-ExhaustionTicks.tga": {
+      "sha256": "4841b470c6d9534d3534972ae4859340a8d60b1fd979b0a59582c63507e6bfe4",
+      "bytes": 65580
+    },
+    "Textures/BEB-ExhaustionTicksGlow.tga": {
+      "sha256": "25b3dbe01c337f9cf723bc5333a84d7ad5ecb2fd45bf80408bae298f60a6e486",
+      "bytes": 65580
+    },
+    "Textures/LockIcon-Locked.tga": {
+      "sha256": "d1af8c95a2cb2d5f67f5276e9897bfaae2e5d3f641bb028ee56c564c44821681",
+      "bytes": 4114
+    },
+    "Textures/LockIcon-Unlocked.tga": {
+      "sha256": "272a2fa19971f4f183a38a58a0b7d72b61a9c7bc84f550ca7328aa30d56b7a6b",
+      "bytes": 4114
+    },
+    "Tooltip.lua": {
+      "sha256": "1f7f9c13217c47b7d9010fb9989a7a087ed3de693425a72b44e71d75240089aa",
+      "bytes": 4750
+    },
+    "UIWidgets.lua": {
+      "sha256": "b0c0cdda63d1e9b684f685caed180b2d396ece1ac7906f05190bf9b119337587",
+      "bytes": 32495
+    },
+    "UpdateCheck.lua": {
+      "sha256": "df5f3724c941cced0ac897c740f628e4eceec029cd754103a4f6765bb869aa96",
+      "bytes": 9458
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "418811015": {
+      "tag": "v1.4.0-rc1",
+      "folder": "v1.4.0-rc1--418811015",
+      "assets": {
+        "660326080": {
+          "sha256": "8ae5f6d72ba54f14e6c6da133c1d00b612994904ebbe8addeae14cf3f5b3729a",
+          "bytes": 240963,
+          "id": "660326080",
+          "name": "AlternativeClassicActionBars-1.4.0-rc1.zip",
+          "url": "https://github.com/TrusT-Codes/AlternativeClassicActionBars/releases/download/v1.4.0-rc1/AlternativeClassicActionBars-1.4.0-rc1.zip",
+          "path": "releases/v1.4.0-rc1--418811015/assets/AlternativeClassicActionBars-1.4.0-rc1.zip"
+        }
+      },
+      "source": {
+        "sha256": "67eac8ed050864d0b0e860eb3127628038a0f424ff47dd38a3a2c298b7be43b5",
+        "bytes": 308151,
+        "path": "releases/v1.4.0-rc1--418811015/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/TrusT-Codes/AlternativeClassicActionBars/tarball/v1.4.0-rc1"
+      }
+    }
+  }
+}

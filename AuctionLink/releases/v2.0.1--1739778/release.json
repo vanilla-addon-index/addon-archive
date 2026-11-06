@@ -1,0 +1,9 @@
+{
+  "id": "1739778",
+  "tag": "v2.0.1",
+  "name": "",
+  "body": "Updated Ace libraries\nFixed typo that caused AceLocale lua errors\nAdded EngInventory addon support\n",
+  "published": "2015-08-29T04:15:28Z",
+  "prerelease": false,
+  "url": "https://github.com/Zerf/AuctionLink/releases/tag/v2.0.1"
+}

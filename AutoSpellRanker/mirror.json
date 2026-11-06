@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Dayfiree/AutoSpellRanker",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Dayfiree",
+    "repo": "AutoSpellRanker",
+    "name": "AutoSpellRanker",
+    "url": "https://github.com/Dayfiree/AutoSpellRanker",
+    "api": "https://api.github.com/repos/Dayfiree/AutoSpellRanker"
+  },
+  "commit": "625e2088a50f2df30314b740356a06f875e13600",
+  "sourceFiles": {
+    "AutoSpellRanker.lua": {
+      "sha256": "a3ca8ada22b0abd8668f52abceca868899d9a9e9b634a96bcc5d94d10c54e6f5",
+      "bytes": 3788
+    },
+    "AutoSpellRanker.toc": {
+      "sha256": "b1dbf2a1be45650e53039094b99bb6fb992a5a893b12824df9c72089c707255a",
+      "bytes": 168
+    },
+    "README.md": {
+      "sha256": "0dbae741efdd14dcdcfd76eb575d2ca53870db184a661f281f7f5430e5299fa3",
+      "bytes": 433
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

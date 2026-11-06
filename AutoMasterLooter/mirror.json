@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/balakethelock/AutoMasterLooter",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "balakethelock",
+    "repo": "AutoMasterLooter",
+    "name": "AutoMasterLooter",
+    "url": "https://github.com/balakethelock/AutoMasterLooter",
+    "api": "https://api.github.com/repos/balakethelock/AutoMasterLooter"
+  },
+  "commit": "5d2b0cf849120ff7bd4835c1593c4a2e28a843ab",
+  "sourceFiles": {
+    "AutoMasterLooter.lua": {
+      "sha256": "f3bbc066badc22e4ef61a23aa706d9709ef26f8915bb8b379fde6c35094db73b",
+      "bytes": 4073
+    },
+    "AutoMasterLooter.toc": {
+      "sha256": "69c9557eaca4c9321703c280715d2ef5a07e9a544a634b08d2c4b83226f58e45",
+      "bytes": 204
+    },
+    "AutoMasterLooter.xml": {
+      "sha256": "0b0f11036eb802926d2ddcfc311a49e6cde4f32be552bfdf78269e5ee4dfd53b",
+      "bytes": 427
+    },
+    "README.md": {
+      "sha256": "6b7c61d82a72bec443cfd41864312c70d387d59190eff48b63d7da774029c84c",
+      "bytes": 953
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

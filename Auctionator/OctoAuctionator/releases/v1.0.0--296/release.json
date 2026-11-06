@@ -1,0 +1,9 @@
+{
+  "id": "296",
+  "tag": "v1.0.0",
+  "name": "OctoAuctionator 1.0.0",
+  "body": "Made by John The Baptist.\r\n\r\nAuctionator 2.6.2 port for OctoWoW 1.18.1: Buy, Sell and More tabs, shopping lists, optional Full Scan and tooltip prices. Original addon by Zirco.\r\n\r\nDownload **OctoAuctionator-1.0.0.zip** below, extract into `Interface/AddOns`, restart WoW and enable OctoAuctionator. Disable other auction house addons to avoid conflicting UIs. SellValue is optional.\r\n\r\nReadable source code, installation guide, and Buy/Sell screenshots are included in the repository. This ZIP is the same 1.0.0 package published on the forum.\r\n\r\n*It's not much, but it's honest work.*",
+  "published": "2026-10-07T19:13:24Z",
+  "prerelease": false,
+  "url": "https://octowow.st/git/John-The-Baptist/OctoAuctionator/releases/tag/v1.0.0"
+}

@@ -1,0 +1,25 @@
+{
+  "upstream": "https://github.com/shirsig/attack",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "attack",
+    "name": "attack",
+    "url": "https://github.com/shirsig/attack",
+    "api": "https://api.github.com/repos/shirsig/attack"
+  },
+  "commit": "2b6aa85fe9693f540fee8dfa3b90e6e0768237a3",
+  "sourceFiles": {
+    "attack.lua": {
+      "sha256": "94c5e40af503ff2935475d59882be5b2f7d51d83aa4477a5e343f570e27ac833",
+      "bytes": 572
+    },
+    "attack.toc": {
+      "sha256": "860316c318f24c0797bad89dfacb7e5f23842e58f480b8e07555459564ca1522",
+      "bytes": 64
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

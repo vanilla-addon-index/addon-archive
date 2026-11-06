@@ -1,0 +1,64 @@
+{
+  "upstream": "https://github.com/Lanrutcon/ABreathBeneath/tree/Vanilla-Port",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Lanrutcon",
+    "repo": "ABreathBeneath",
+    "name": "ABreathBeneath",
+    "ref": "Vanilla-Port",
+    "subpath": "",
+    "url": "https://github.com/Lanrutcon/ABreathBeneath",
+    "api": "https://api.github.com/repos/Lanrutcon/ABreathBeneath"
+  },
+  "commit": "d13d3093be77ff4fd25cf3567c9d0fdd865428fa",
+  "sourceFiles": {
+    "ABreathBeneath.lua": {
+      "sha256": "0e3f7fc1a27a558cf9ab857e100216de2303fee1d9da94fd4463fc6f26172bc8",
+      "bytes": 4487
+    },
+    "ABreathBeneath.toc": {
+      "sha256": "33efe83b2c7e44790f72e02faaf373de4b7b542fdac2420ec91d83082e1ac1b9",
+      "bytes": 125
+    },
+    "Futura-Condensed-Normal.ttf": {
+      "sha256": "aea63dbb83f03ea2f8919ac64255f467513ba80d44d981e4444cc1d0a020eb80",
+      "bytes": 27708
+    },
+    "Textures/Minimap_skull_normal.blp": {
+      "sha256": "846b64fa2875db4ba19289c5e0949df515fa04123a8536aa2da57fce9dd4c789",
+      "bytes": 2564
+    },
+    "Textures/nameplateBorder.blp": {
+      "sha256": "06a01ab5f2099ce947b74f2ae475bb86343b32b41abc9656deb70cee6f9dd3ec",
+      "bytes": 44964
+    },
+    "Textures/texture.blp": {
+      "sha256": "596e500fc887f7612159558c3761333101766a23be063c9ae887a98ca060b99a",
+      "bytes": 3996
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "3361967": {
+      "tag": "Vanilla_v1.0",
+      "folder": "Vanilla_v1.0--3361967",
+      "assets": {
+        "1784334": {
+          "sha256": "cdae0f10a1e19d5cd85f536379eee99a174a91d1d967a392b9402a2745fe339b",
+          "bytes": 21413,
+          "id": "1784334",
+          "name": "Vanilla.Backport.ABreathBeneath.v1.0.zip",
+          "url": "https://github.com/Lanrutcon/ABreathBeneath/releases/download/Vanilla_v1.0/Vanilla.Backport.ABreathBeneath.v1.0.zip",
+          "path": "releases/Vanilla_v1.0--3361967/assets/Vanilla.Backport.ABreathBeneath.v1.0.zip"
+        }
+      },
+      "source": {
+        "sha256": "e8489cadf121d118e9bf9d3eb49947cbe40b438ef3cbf90685e028aa5b7b57fb",
+        "bytes": 10181,
+        "path": "releases/Vanilla_v1.0--3361967/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Lanrutcon/ABreathBeneath/tarball/Vanilla_v1.0"
+      }
+    }
+  }
+}

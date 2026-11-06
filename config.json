@@ -1,0 +1,13 @@
+{
+  "catalogue": "https://raw.githubusercontent.com/vanilla-addon-index/vanilla-addon-index.github.io/snapshot/addons.json",
+  "entryType": "addon",
+  "listingRoute": "addon",
+  "archiveTitle": "Addon archive",
+  "maxArchiveBytes": 17179869184,
+  "maxFileBytes": 2147483648,
+  "batchSize": {
+    "discover": 50,
+    "update": 200
+  },
+  "releaseScope": "latest"
+}

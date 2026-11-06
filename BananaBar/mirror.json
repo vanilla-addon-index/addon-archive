@@ -1,0 +1,73 @@
+{
+  "upstream": "https://github.com/balakethelock/bananabar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "balakethelock",
+    "repo": "bananabar",
+    "name": "bananabar",
+    "url": "https://github.com/balakethelock/bananabar",
+    "api": "https://api.github.com/repos/balakethelock/bananabar"
+  },
+  "commit": "d1f000b43d7e5e42f1b249b0a280ccf66aa3fb22",
+  "sourceFiles": {
+    "Banana.lua": {
+      "sha256": "e21b082d9fb2dd1567ba57b67ad76f71ee4409c679bea815c813259d721cc4d0",
+      "bytes": 40901
+    },
+    "Banana.xml": {
+      "sha256": "5f079388b9cf610c8a73458626aa66fc23cf2f735476cb75f71b948db2e4089b",
+      "bytes": 3853
+    },
+    "bananabar.toc": {
+      "sha256": "a3cdd1950cf46e9015cded93e8340b2d3c152938d6a5e7ba31e46f1bf3e9b499",
+      "bytes": 447
+    },
+    "BananaConfig.xml": {
+      "sha256": "e3e7c33327d02364061f91ba31720535e7787630c13f7fd1808c74956ca9226b",
+      "bytes": 90176
+    },
+    "Bindings.xml": {
+      "sha256": "849d2fe8394d12d6af50806f36d3b862deb354b304393d0c46ca20f5c953078c",
+      "bytes": 1211
+    },
+    "changelog.txt": {
+      "sha256": "d033839649f06a87655a3d07968ab612300adb9f0656fda555badbf0fc849563",
+      "bytes": 2335
+    },
+    "Images/HuntermarkArrow.blp": {
+      "sha256": "6e44a8049a1113382d31f058047ece9d660b928280136fe84233d1d25bd3b44f",
+      "bytes": 6660
+    },
+    "Localization.lua": {
+      "sha256": "c47f6c889ba673c60bced6415b81ed363bdde08a81bc4adea325070ed788906e",
+      "bytes": 218
+    },
+    "readme.md": {
+      "sha256": "c94c13c9a05e479dc988fe4d22a0d3c597b72d5ee4f4907c85ffe9bb48649f39",
+      "bytes": 1707
+    },
+    "readme.txt": {
+      "sha256": "e84ccdc8c4dc3e9d7f7bc7cc7224c7851c332aa3ad3adbb01ad92381332e0ea3",
+      "bytes": 2840
+    },
+    "Sound/BananaNo.mp3": {
+      "sha256": "4f14dde70f11c4d41433c756f3d4b38bce4bad41201b059120f08cd97800ab53",
+      "bytes": 7523
+    },
+    "Sound/BananaPlop1.mp3": {
+      "sha256": "4576adf333f9b08854e38846967499e2508034d92093dc3cfa00ca03a25cdfc3",
+      "bytes": 3761
+    },
+    "Sound/BananaPlop8.mp3": {
+      "sha256": "2c0109f6b54e9aa99cef189aa7ac2af02fbceea4ab2f4c5be8c3f5346f7076a9",
+      "bytes": 20480
+    },
+    "Sound/BananaSetSymbol.mp3": {
+      "sha256": "ddf75a01b516a49d6fd68dc8d12314d51402b03f4ff3e4c0b691574c951788f4",
+      "bytes": 6269
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

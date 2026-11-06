@@ -1,0 +1,68 @@
+{
+  "upstream": "https://gitlab.com/woblight/actionmirroringframe/-/tree/vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "gitlab.com",
+    "owner": "woblight",
+    "repo": "actionmirroringframe",
+    "name": "actionmirroringframe",
+    "ref": "vanilla",
+    "subpath": "",
+    "url": "https://gitlab.com/woblight/actionmirroringframe",
+    "api": "https://gitlab.com/api/v4/projects/woblight%2Factionmirroringframe"
+  },
+  "commit": "ed82c343774d1846a4ad68b01d86fd6b4a0895aa",
+  "sourceFiles": {
+    "ActionMirroringFrame.lua": {
+      "sha256": "dc9ce05e948923620fa835832388340ab871f6df875a2d1423811a2066059d62",
+      "bytes": 60992
+    },
+    "ActionMirroringFrame.toc": {
+      "sha256": "7427e4f3413db5464e21db468e8d46bd9f2651a99bb3f80d97940e3e5fbc3748",
+      "bytes": 306
+    },
+    "ButtonBorder.tga": {
+      "sha256": "01bee9039affa3bec097476cf41a912ac4da2d07ba42a34a78e53f03f1a3b26c",
+      "bytes": 6466
+    },
+    "ButtonHighlight.tga": {
+      "sha256": "c4ebe556fb4bdd2ce758196ad309aebc48fdebbfb6483b58956f43b951037966",
+      "bytes": 7190
+    },
+    "handle.tga": {
+      "sha256": "b841854bee820c9d165f3168b0d7afbcfb645793d261957edcb8d00cdbb612ba",
+      "bytes": 6198
+    },
+    "Rank.tga": {
+      "sha256": "2bf96ac75406a816828f1096fed264eb2b046da31648eac828ea7f4b61053823",
+      "bytes": 8290
+    },
+    "README.md": {
+      "sha256": "657c44344f60e8f76213d4c7f5d11cf6f055b0c82f721534bcd739800b40b2cd",
+      "bytes": 1386
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "undefined": {
+      "tag": "v0.3-21-g24ad720-auto",
+      "folder": "v0.3-21-g24ad720-auto--undefined",
+      "assets": {
+        "6561467": {
+          "sha256": "995495914db2db794c0e91a40e8a53dd960a5f5d29e4a33d77278ef96ad8bc91",
+          "bytes": 25153,
+          "id": "6561467",
+          "name": "ActionMirroringFrame",
+          "url": "https://gitlab.com/woblight/actionmirroringframe/-/releases/v0.3-21-g24ad720-auto/downloads/ActionMirroringFrame",
+          "path": "releases/v0.3-21-g24ad720-auto--undefined/assets/ActionMirroringFrame"
+        }
+      },
+      "source": {
+        "sha256": "1a66b7822ae27edcd7645e5406fd26ebd16105a10be19ff281cd6949e0e6af3c",
+        "bytes": 21833,
+        "path": "releases/v0.3-21-g24ad720-auto--undefined/upstream-source.tar.gz",
+        "url": "https://gitlab.com/api/v4/projects/woblight%2Factionmirroringframe/repository/archive.tar.gz?sha=v0.3-21-g24ad720-auto"
+      }
+    }
+  }
+}

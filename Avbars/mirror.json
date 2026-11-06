@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/topfreestyle/avbars",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "topfreestyle",
+    "repo": "avbars",
+    "name": "avbars",
+    "url": "https://github.com/topfreestyle/avbars",
+    "api": "https://api.github.com/repos/topfreestyle/avbars"
+  },
+  "commit": "4f86368f80da3cb52c6fd5bd05cb9f3e968e4cfa",
+  "sourceFiles": {
+    "avbars.lua": {
+      "sha256": "e377718a5a8592e2c2583b40bb65e2815302a2e976b0ea758368e283ede20e11",
+      "bytes": 21419
+    },
+    "avbars.toc": {
+      "sha256": "6b3b927e577147a7074ed7209deb4d7814c8a94dd4a02522b5da92d2a955c7ed",
+      "bytes": 165
+    },
+    "avbars.xml": {
+      "sha256": "fa7fd95aefff0ce4e7d0744d6b0ce1ce4fae050a56c487dcd28cade88b4a7c41",
+      "bytes": 24530
+    },
+    "README.md": {
+      "sha256": "37b385f476abad0702bf9aac974ccacedf58da885d134ef93b58744f54db334e",
+      "bytes": 699
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

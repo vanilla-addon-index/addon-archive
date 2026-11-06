@@ -1,0 +1,9 @@
+{
+  "id": "431487585",
+  "tag": "v1.0.0",
+  "name": "Bagnon 1.0.0",
+  "body": "Download **Bagnon-1.0.0.zip** below, extract the `Bagnon` folder into `Interface/AddOns`, and enable it. Requires WoW 1.12.1 with ClassicAPI. Documentation is in the [README](https://github.com/Fostercare5988/Bagnon#readme).",
+  "published": "2026-11-02T13:20:42Z",
+  "prerelease": false,
+  "url": "https://github.com/Fostercare5988/Bagnon/releases/tag/v1.0.0"
+}

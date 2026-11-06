@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Valiusha90/AutoTurnIn",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Valiusha90",
+    "repo": "AutoTurnIn",
+    "name": "AutoTurnIn",
+    "url": "https://github.com/Valiusha90/AutoTurnIn",
+    "api": "https://api.github.com/repos/Valiusha90/AutoTurnIn"
+  },
+  "commit": "9c8c0c08863cab9860b79205ffea1358b65aae29",
+  "sourceFiles": {
+    ".DS_Store": {
+      "sha256": "873ab241c8a1d5fe288df8ee0467e44862c3090f5b12fbd6b7764e923672bd9a",
+      "bytes": 8196
+    },
+    "AutoTurnIn.lua": {
+      "sha256": "e7a2b11cdf0970e3edb732a3c831fd9c88a9b55524b1ce475f55b16f8f4e3b13",
+      "bytes": 19107
+    },
+    "AutoTurnIn.toc": {
+      "sha256": "d89762b13856e4f67e167b0d6b8e3f4e2005d6337e12a15e9c1b5615d426cfb2",
+      "bytes": 194
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}
