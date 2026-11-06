@@ -8,7 +8,7 @@ The newest stable release is selected by publication date; projects with only pr
 
 ## Automatic updates
 
-- **Discover addons:** nightly at 01:23 UTC. Reads the published `addons.json` snapshot and mirrors up to 50 components per run. New entries and source links are queued automatically; each run resumes at the next batch. The initial catalogue contains 1,038 addon entries.
+- **Discover addons:** nightly at 01:23 UTC. Reads the published `addons.json` snapshot and mirrors up to 250 components per run. New entries and source links are queued automatically; each run resumes at the next batch. The initial catalogue contains 1,038 addon entries.
 - **Refresh mirrors:** Sundays at 02:41 UTC. Checks up to 200 components per run and resumes at the next batch. Each mirror keeps the current upstream source and latest release. Source archives and assets without trusted SHA-256 digests are downloaded again to detect replacements.
 - Both workflows have a **Run workflow** button. A shared writer lock prevents concurrent commits. Failed components retain their last successful copy and are retried in later discovery runs. GitHub schedules are best effort.
 

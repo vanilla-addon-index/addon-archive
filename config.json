@@ -6,7 +6,7 @@
   "maxArchiveBytes": 17179869184,
   "maxFileBytes": 2147483648,
   "batchSize": {
-    "discover": 50,
+    "discover": 250,
     "update": 200
   },
   "releaseScope": "latest"
