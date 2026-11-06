@@ -1,0 +1,1158 @@
+-- OGRH_MainUI.lua
+if not OGRH then
+  DEFAULT_CHAT_FRAME:AddMessage("|cffff0000Error: OGRH_MainUI requires OGRH_Core to be loaded first!|r")
+  return
+end
+
+-- MainUI State
+OGRH.MainUI = OGRH.MainUI or {}
+OGRH.MainUI.State = {
+  debug = false  -- Toggle with /ogrh debug ui
+}
+
+local Main = CreateFrame("Frame","OGRH_Main",UIParent)
+Main:SetWidth(180); Main:SetHeight(56)  -- Fixed height for title bar + encounter nav
+Main:SetPoint("CENTER", UIParent, "CENTER", -380, 120)
+Main:SetFrameStrata("HIGH")
+Main:SetBackdrop({bgFile="Interface/Tooltips/UI-Tooltip-Background", edgeFile="Interface/Tooltips/UI-Tooltip-Border", edgeSize=12, insets={left=4,right=4,top=4,bottom=4}})
+Main:SetBackdropColor(0,0,0,0.85)
+Main:EnableMouse(true); Main:SetMovable(true)
+Main:RegisterForDrag("LeftButton")
+Main:SetScript("OnDragStart", function() if not OGRH.SVM.Get("ui", "locked") then Main:StartMoving() end end)
+Main:SetScript("OnDragStop", function()
+  Main:StopMovingOrSizing()
+  local p,_,r,x,y = Main:GetPoint()
+  OGRH.SVM.Set("ui", "point", p)
+  OGRH.SVM.Set("ui", "relPoint", r)
+  OGRH.SVM.Set("ui", "x", x)
+  OGRH.SVM.Set("ui", "y", y)
+end)
+
+local H = CreateFrame("Frame", nil, Main)
+H:SetPoint("TOPLEFT", Main, "TOPLEFT", 4, -4)
+H:SetPoint("TOPRIGHT", Main, "TOPRIGHT", -4, -4)
+H:SetHeight(20)
+
+-- RH button (opens menu like minimap right-click)
+local rhBtn = CreateFrame("Button", nil, H, "UIPanelButtonTemplate")
+rhBtn:SetWidth(28)
+rhBtn:SetHeight(20)
+rhBtn:SetPoint("LEFT", H, "LEFT", 2, 0)
+rhBtn:SetText("RH")
+OGRH.StyleButton(rhBtn)
+
+rhBtn:SetScript("OnClick", function()
+  -- Initialize menu if needed by calling the global show function
+  if OGRH.ShowMinimapMenu then
+    -- This will create the menu if it doesn't exist
+    OGRH.ShowMinimapMenu(rhBtn)
+  elseif OGRH_MinimapMenu then
+    -- Menu exists, just toggle it
+    local menu = OGRH_MinimapMenu
+    
+    if menu:IsVisible() then
+      menu:Hide()
+      return
+    end
+    
+    -- Update toggle button text
+    if menu.UpdateToggleText then
+      menu.UpdateToggleText()
+    end
+    
+    -- Position menu near RH button
+    menu:ClearAllPoints()
+    menu:SetPoint("TOPLEFT", rhBtn, "BOTTOMLEFT", 0, -2)
+    menu:Show()
+  end
+end)
+
+-- ReadyCheck button
+local readyCheck = CreateFrame("Button", nil, H, "UIPanelButtonTemplate"); readyCheck:SetWidth(33); readyCheck:SetHeight(20); readyCheck:SetText("Rdy"); readyCheck:SetPoint("LEFT", rhBtn, "RIGHT", 2, 0); OGRH.StyleButton(readyCheck)
+
+readyCheck:SetScript("OnEnter", function()
+  GameTooltip:SetOwner(readyCheck, "ANCHOR_TOP")
+  GameTooltip:ClearLines()
+  GameTooltip:AddLine("Ready Check", 1, 1, 1)
+  GameTooltip:Show()
+end)
+
+readyCheck:SetScript("OnLeave", function()
+  GameTooltip:Hide()
+end)
+
+-- Admin button - Manage raid admin and poll
+local adminBtn = CreateFrame("Button", nil, H, "UIPanelButtonTemplate"); adminBtn:SetWidth(45); adminBtn:SetHeight(20); adminBtn:SetText("Admin"); adminBtn:SetPoint("LEFT", readyCheck, "RIGHT", 2, 0); OGRH.StyleButton(adminBtn)
+
+-- Lock button
+local btnLock = CreateFrame("Button", nil, H, "UIPanelButtonTemplate"); btnLock:SetWidth(20); btnLock:SetHeight(20); btnLock:SetPoint("RIGHT", H, "RIGHT", -4, 0); OGRH.StyleButton(btnLock)
+
+-- Roles button (fills remaining space between Admin and Lock)
+local btnRoles = CreateFrame("Button", nil, H, "UIPanelButtonTemplate")
+btnRoles:SetHeight(20)
+btnRoles:SetPoint("LEFT", adminBtn, "RIGHT", 2, 0)
+btnRoles:SetPoint("RIGHT", btnLock, "LEFT", -2, 0)
+btnRoles:SetText("Roles")
+OGRH.StyleButton(btnRoles)
+OGRH.MainUI_RolesBtn = btnRoles  -- Store reference for menu access
+
+btnRoles:SetScript("OnEnter", function()
+  GameTooltip:SetOwner(btnRoles, "ANCHOR_TOP")
+  GameTooltip:ClearLines()
+  GameTooltip:AddLine("Roles UI", 1, 1, 1)
+  GameTooltip:AddLine("Assign Player roles for Tanks, Healers, Melee and Ranged", 0.8, 0.8, 0.8, 1)
+  GameTooltip:Show()
+end)
+
+btnRoles:SetScript("OnLeave", function()
+  GameTooltip:Hide()
+end)
+
+adminBtn:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+
+-- Function to update admin button color based on admin status
+local function UpdateAdminButtonColor()
+  OGRH.EnsureSV()
+  local currentAdmin = OGRH.GetRaidAdmin and OGRH.GetRaidAdmin() or nil
+  local isCurrentAdmin = (currentAdmin == UnitName("player"))
+  
+  if isCurrentAdmin then
+    adminBtn:SetText("|cff00ff00Admin|r")  -- Bright green when you are admin
+  else
+    adminBtn:SetText("|cffffff00Admin|r")  -- Yellow when not admin
+  end
+end
+
+-- Store globally for access from other files
+OGRH.UpdateAdminButtonColor = UpdateAdminButtonColor
+-- Backward compatibility alias
+OGRH.UpdateSyncButtonColor = UpdateAdminButtonColor
+
+-- Add tooltip to show current raid admin
+adminBtn:SetScript("OnEnter", function()
+  local adminName = "None"
+  if OGRH.GetRaidAdmin then
+    adminName = OGRH.GetRaidAdmin() or "None"
+  end
+  
+  local isRaidAdmin = OGRH.IsRaidAdmin and OGRH.IsRaidAdmin(UnitName("player"))
+  
+  GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+  GameTooltip:SetText("Raid Admin", 1, 1, 1)
+  GameTooltip:AddLine("Current Raid Admin: " .. adminName, 1, 0.82, 0)
+  GameTooltip:AddLine(" ", 1, 1, 1)
+  GameTooltip:AddLine("Left-click: Open admin poll interface", 0.7, 0.7, 0.7)
+  GameTooltip:AddLine("Right-click: Take over as raid admin", 0.7, 0.7, 0.7)
+  GameTooltip:Show()
+end)
+
+adminBtn:SetScript("OnLeave", function()
+  GameTooltip:Hide()
+end)
+
+adminBtn:SetScript("OnClick", function()
+  local btn = arg1 or "LeftButton"
+  
+  if btn == "RightButton" then
+    -- Right-click: Take over as raid admin
+    if GetNumRaidMembers() == 0 then
+      OGRH.Msg("You must be in a raid to take over as raid admin.")
+      return
+    end
+    
+    -- Use Permissions system to request admin role
+    if OGRH.RequestAdminRole then
+      OGRH.RequestAdminRole()
+    else
+      OGRH.Msg("ERROR: Permissions system not loaded.")
+    end
+    return
+  end
+  
+  -- Left-click: Open admin poll interface
+  if OGRH.PollAddonUsers then
+    OGRH.PollAddonUsers()
+  end
+end)
+
+-- ReadyCheck button click handlers
+readyCheck:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+
+-- Roles button handler
+btnRoles:SetScript("OnClick", function()
+  -- Close encounter windows if they're open
+  if OGRH_EncounterFrame and OGRH_EncounterFrame:IsVisible() then
+    OGRH_EncounterFrame:Hide()
+  end
+  if OGRH_EncounterSetupFrame and OGRH_EncounterSetupFrame:IsVisible() then
+    OGRH_EncounterSetupFrame:Hide()
+  end
+  if OGRH_InvitesFrame and OGRH_InvitesFrame:IsVisible() then
+    OGRH_InvitesFrame:Hide()
+  end
+  if OGRH_SRValidationFrame and OGRH_SRValidationFrame:IsVisible() then
+    OGRH_SRValidationFrame:Hide()
+  end
+  if OGRH_AddonAuditFrame and OGRH_AddonAuditFrame:IsVisible() then
+    OGRH_AddonAuditFrame:Hide()
+  end
+  -- Close encounters menu if it's open
+  if OGRH_EncountersMenu and OGRH_EncountersMenu:IsVisible() then
+    OGRH_EncountersMenu:Hide()
+  end
+  -- Close Trade menu if it's open
+  if OGRH_TradeMenu and OGRH_TradeMenu:IsVisible() then
+    OGRH_TradeMenu:Hide()
+  end
+  
+  if OGRH.ShowRolesUI then OGRH.ShowRolesUI()
+  else OGRH.Msg("Roles UI not yet loaded. If this persists after /reload, a Lua error prevented it from loading.");
+  end
+end)
+
+-- Encounter navigation controls
+local encounterNav = CreateFrame("Frame", nil, Main)
+encounterNav:SetPoint("TOPLEFT", Main, "TOPLEFT", 6, -26)
+encounterNav:SetPoint("TOPRIGHT", Main, "TOPRIGHT", -6, -26)
+encounterNav:SetHeight(24)
+encounterNav:Show()
+
+-- Mark button
+local markBtn = CreateFrame("Button", nil, encounterNav, "UIPanelButtonTemplate")
+markBtn:SetWidth(20)
+markBtn:SetHeight(20)
+markBtn:SetPoint("LEFT", encounterNav, "LEFT", 0, 0)
+markBtn:SetText("M")
+OGRH.StyleButton(markBtn)
+markBtn:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+
+markBtn:SetScript("OnEnter", function()
+  GameTooltip:SetOwner(markBtn, "ANCHOR_TOP")
+  GameTooltip:ClearLines()
+  GameTooltip:AddLine("Mark Players", 1, 1, 1)
+  GameTooltip:AddLine(" ")
+  GameTooltip:AddLine("Left Click: Mark from encounter", 0.5, 1, 0.5)
+  GameTooltip:AddLine("Right Click: Clear all marks", 0.5, 1, 0.5)
+  GameTooltip:Show()
+end)
+
+markBtn:SetScript("OnLeave", function()
+  GameTooltip:Hide()
+end)
+
+markBtn:SetScript("OnClick", function()
+  local btn = arg1 or "LeftButton"
+  
+  if btn == "RightButton" then
+    -- Right-click: Clear all raid marks
+    local numRaidMembers = GetNumRaidMembers()
+    if numRaidMembers > 0 then
+      for i = 1, numRaidMembers do
+        SetRaidTarget("raid"..i, 0)
+      end
+      if OGRH and OGRH.Msg then
+        OGRH.Msg("Cleared all raid marks.")
+      end
+    else
+      if OGRH and OGRH.Msg then
+        OGRH.Msg("Not in a raid group.")
+      end
+    end
+  else
+    -- Left-click: Mark players from encounter
+    if OGRH.MarkPlayersFromMainUI then
+      OGRH.MarkPlayersFromMainUI()
+    end
+  end
+end)
+encounterNav.markBtn = markBtn
+
+-- Announce button
+local announceBtn = CreateFrame("Button", nil, encounterNav, "UIPanelButtonTemplate")
+announceBtn:SetWidth(20)
+announceBtn:SetHeight(20)
+announceBtn:SetPoint("LEFT", markBtn, "RIGHT", 2, 0)
+announceBtn:SetText("A")
+OGRH.StyleButton(announceBtn)
+announceBtn:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+announceBtn:SetScript("OnClick", function()
+  local button = arg1 or "LeftButton"
+  
+  -- Check authorization - must be raid lead, raid leader, or assistant
+  if GetNumRaidMembers() > 0 then
+    if not OGRH.CanNavigateEncounter or not OGRH.CanNavigateEncounter() then
+      OGRH.Msg("Only the Raid Leader, Assistants, or Raid Admin can announce.")
+      return
+    end
+  end
+  
+  if button == "RightButton" then
+    -- Right-click: Announce consumes
+    if not OGRH.GetCurrentEncounter then
+      OGRH.Msg("Encounter management not loaded.")
+      return
+    end
+    
+    -- Get indices (v2 schema)
+    local raidIdx, encounterIdx = OGRH.GetCurrentEncounter()
+    if not raidIdx or not encounterIdx then
+      return -- Silently do nothing if no encounter selected
+    end
+    
+    -- Get role configuration using v2 schema index-based path
+    OGRH.EnsureSV()
+    local raids = OGRH.SVM.GetPath("encounterMgmt.raids")
+    if not raids or not raids[raidIdx] or not raids[raidIdx].encounters or not raids[raidIdx].encounters[encounterIdx] then
+      return -- Silently do nothing if no encounter found
+    end
+    
+    local encounter = raids[raidIdx].encounters[encounterIdx]
+    local rolesData = encounter.roles
+    
+    if not rolesData or table.getn(rolesData) == 0 then
+      return -- Silently do nothing if no roles configured
+    end
+    
+    -- Find consume check role (v2 schema: flat array with column field)
+    local consumeRole = nil
+    for i = 1, table.getn(rolesData) do
+      if rolesData[i].isConsumeCheck then
+        consumeRole = rolesData[i]
+        break
+      end
+    end
+    
+    -- If no consume role found, do nothing
+    if not consumeRole or not consumeRole.consumes then
+      return
+    end
+    
+    -- Check if in raid
+    if GetNumRaidMembers() == 0 then
+      OGRH.Msg("You must be in a raid to announce.")
+      return
+    end
+    
+    -- Build consume announcement lines
+    local announceLines = {}
+    local titleColor = OGRH.COLOR.HEADER or "|cFFFFD100"
+    local encounterName = encounter.name or "Unknown Encounter"
+    table.insert(announceLines, titleColor .. "Consumes for " .. encounterName .. OGRH.COLOR.RESET)
+    
+    for i = 1, (consumeRole.slots or 1) do
+      if consumeRole.consumes[i] then
+        local consumeData = consumeRole.consumes[i]
+        local items = {}
+        
+        -- Add primary item
+        if consumeData.primaryId then
+          table.insert(items, consumeData.primaryId)
+        end
+        
+        -- Add secondary item if alternate allowed
+        if consumeData.allowAlternate and consumeData.secondaryId then
+          table.insert(items, consumeData.secondaryId)
+        end
+        
+        -- Build line with item links
+        if table.getn(items) > 0 then
+          local lineText = ""
+          for j = 1, table.getn(items) do
+            local itemId = items[j]
+            local itemName, itemLink, quality = GetItemInfo(itemId)
+            
+            if j > 1 then
+              lineText = lineText .. " / "
+            end
+            
+            -- Construct chat link using AtlasLoot method
+            if itemLink and itemName then
+              local _, _, _, color = GetItemQualityColor(quality)
+              lineText = lineText .. color .. "|H" .. itemLink .. "|h[" .. itemName .. "]|h|r"
+            elseif itemName then
+              lineText = lineText .. itemName
+            else
+              lineText = lineText .. "Item " .. itemId
+            end
+          end
+          table.insert(announceLines, lineText)
+        end
+      end
+    end
+    
+    -- Send to raid warning
+    for _, line in ipairs(announceLines) do
+      SendChatMessage(line, "RAID_WARNING")
+    end
+    
+    OGRH.Msg("Consumes announced to raid warning.")
+    return
+  end
+  
+  -- Left-click: Normal announcement
+  if IsShiftKeyDown() then
+    -- Shift+Left-click: Announce Admin encounter
+    if OGRH.Announcements and OGRH.Announcements.SendAdminAnnouncement then
+      OGRH.Announcements.SendAdminAnnouncement()
+    else
+      OGRH.Msg("Admin announcement not available.")
+    end
+    return
+  end
+  
+  if OGRH.Announcements and OGRH.Announcements.SendEncounterAnnouncement then
+    local selectedRaid, selectedEncounter = OGRH.GetCurrentEncounterNames()
+    OGRH.Announcements.SendEncounterAnnouncement(selectedRaid, selectedEncounter)
+  end
+end)
+announceBtn:SetScript("OnEnter", function()
+  GameTooltip:SetOwner(this, "ANCHOR_TOP")
+  GameTooltip:ClearLines()
+  
+  -- Always show all three click options
+  GameTooltip:AddLine("Left Click: Encounter Announcement", 1, 0.82, 0)
+  GameTooltip:AddLine("Shift Left Click: Admin Announcement", 1, 0.82, 0)
+  GameTooltip:AddLine("Right Click: Consume Announcement", 1, 0.82, 0)
+  
+  -- Show preview based on modifier held
+  if IsShiftKeyDown() then
+    GameTooltip:AddLine(" ", 1, 1, 1)  -- blank separator
+    if OGRH.ShowAdminAnnouncementTooltip then
+      OGRH.ShowAdminAnnouncementTooltip()
+    end
+  else
+    -- Show encounter announcement preview by default
+    if OGRH.ShowAnnouncementTooltip then
+      GameTooltip:AddLine(" ", 1, 1, 1)  -- blank separator
+      OGRH.ShowAnnouncementTooltip(this)
+    end
+  end
+  
+  GameTooltip:Show()
+end)
+announceBtn:SetScript("OnLeave", function()
+  GameTooltip:Hide()
+end)
+encounterNav.announceBtn = announceBtn
+
+-- Previous Encounter button
+local prevEncBtn = CreateFrame("Button", nil, encounterNav, "UIPanelButtonTemplate")
+prevEncBtn:SetWidth(20)
+prevEncBtn:SetHeight(20)
+prevEncBtn:SetPoint("LEFT", announceBtn, "RIGHT", 2, 0)
+prevEncBtn:SetText("<")
+OGRH.StyleButton(prevEncBtn)
+
+prevEncBtn:SetScript("OnEnter", function()
+  GameTooltip:SetOwner(prevEncBtn, "ANCHOR_TOP")
+  GameTooltip:ClearLines()
+  GameTooltip:AddLine("Previous Encounter", 1, 1, 1)
+  GameTooltip:Show()
+end)
+
+prevEncBtn:SetScript("OnLeave", function()
+  GameTooltip:Hide()
+end)
+
+prevEncBtn:SetScript("OnClick", function()
+  if OGRH.NavigateToPreviousEncounter then
+    OGRH.NavigateToPreviousEncounter()
+  end
+end)
+encounterNav.prevEncBtn = prevEncBtn
+
+-- Next Encounter button
+local nextEncBtn = CreateFrame("Button", nil, encounterNav, "UIPanelButtonTemplate")
+nextEncBtn:SetWidth(20)
+nextEncBtn:SetHeight(20)
+nextEncBtn:SetPoint("RIGHT", encounterNav, "RIGHT", 0, 0)
+nextEncBtn:SetText(">")
+OGRH.StyleButton(nextEncBtn)
+
+nextEncBtn:SetScript("OnEnter", function()
+  GameTooltip:SetOwner(nextEncBtn, "ANCHOR_TOP")
+  GameTooltip:ClearLines()
+  GameTooltip:AddLine("Next Encounter", 1, 1, 1)
+  GameTooltip:Show()
+end)
+
+nextEncBtn:SetScript("OnLeave", function()
+  GameTooltip:Hide()
+end)
+
+nextEncBtn:SetScript("OnClick", function()
+  if OGRH.NavigateToNextEncounter then
+    OGRH.NavigateToNextEncounter()
+  end
+end)
+encounterNav.nextEncBtn = nextEncBtn
+
+-- Encounter button (middle, fills remaining space)
+local encounterBtn = CreateFrame("Button", nil, encounterNav, "UIPanelButtonTemplate")
+encounterBtn:SetHeight(20)
+encounterBtn:SetPoint("LEFT", prevEncBtn, "RIGHT", 2, 0)
+encounterBtn:SetPoint("RIGHT", nextEncBtn, "LEFT", -2, 0)
+encounterBtn:SetText("Select Raid")
+OGRH.StyleButton(encounterBtn)
+encounterBtn:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+
+encounterBtn:SetScript("OnEnter", function()
+  GameTooltip:SetOwner(encounterBtn, "ANCHOR_TOP")
+  GameTooltip:ClearLines()
+  GameTooltip:AddLine("Encounter Selection", 1, 1, 1)
+  GameTooltip:AddLine(" ")
+  GameTooltip:AddLine("Left Click: Encounter Planning", 0.5, 1, 0.5)
+  GameTooltip:AddLine("Right Click: Select Active Raid or Encounter", 0.5, 1, 0.5)
+  GameTooltip:Show()
+end)
+
+encounterBtn:SetScript("OnLeave", function()
+  GameTooltip:Hide()
+end)
+
+encounterBtn:SetScript("OnClick", function()
+  if arg1 == "RightButton" then
+    -- Show raid selection menu
+    if OGRH.ShowEncounterRaidMenu then
+      OGRH.ShowEncounterRaidMenu(encounterBtn)
+    end
+  else
+    -- Left click: Open Encounter Planning with selected encounter
+    -- Close Roles UI if it's open
+    if getglobal("OGRH_RolesFrame") and getglobal("OGRH_RolesFrame"):IsVisible() then
+      getglobal("OGRH_RolesFrame"):Hide()
+    end
+    
+    OGRH.CloseAllWindows("OGRH_EncounterFrame")
+    
+    if OGRH.OpenEncounterPlanning then
+      OGRH.OpenEncounterPlanning()
+    end
+  end
+end)
+encounterNav.encounterBtn = encounterBtn
+
+-- Store reference for external access
+OGRH.encounterNav = encounterNav
+
+-- ============================================
+-- ENCOUNTER NAVIGATION FUNCTIONS
+-- ============================================
+
+function OGRH.NavigateToPreviousEncounter()
+  -- Check authorization - must be raid lead, assistant, or designated raid admin
+  if not OGRH.CanNavigateEncounter or not OGRH.CanNavigateEncounter() then
+    OGRH.Msg("Only the Raid Leader, Assistants, or Raid Admin can change the selected encounter.")
+    return
+  end
+  
+  -- Get current encounter from main UI selection (indices)
+  local raidIdx, encounterIdx = OGRH.GetCurrentEncounter()
+  
+  if not raidIdx or not encounterIdx then
+    return
+  end
+  
+  -- Access raid by index (Active Raid is always at index 1)
+  local raids = OGRH.SVM.GetPath("encounterMgmt.raids")
+  if not raids or not raids[raidIdx] then
+    return
+  end
+  
+  local raid = raids[raidIdx]
+  if raid and raid.encounters then
+    -- Determine minimum navigable index (skip Admin encounter at index 1)
+    local minIdx = 1
+    if OGRH.IsAdminEncounter and raid.encounters[1] and OGRH.IsAdminEncounter(raid.encounters[1]) then
+      minIdx = 2
+    end
+    
+    -- Navigate to previous encounter by index
+    if encounterIdx > minIdx then
+      -- Update encounter using centralized setter (triggers REALTIME sync)
+      OGRH.SetCurrentEncounter(raidIdx, encounterIdx - 1)
+      
+      -- Update UI
+      OGRH.UpdateEncounterNavButton()
+      
+      -- Refresh Encounter Planning window if it's open
+      if OGRH_EncounterFrame and OGRH_EncounterFrame:IsVisible() then
+        if OGRH_EncounterFrame.RefreshRoleContainers then
+          OGRH_EncounterFrame.RefreshRoleContainers()
+        end
+        if OGRH_EncounterFrame.UpdateAnnouncementBuilder then
+          OGRH_EncounterFrame.UpdateAnnouncementBuilder()
+        end
+      end
+      
+      -- Update consume monitor if enabled
+      if OGRH.ShowConsumeMonitor then
+        OGRH.ShowConsumeMonitor()
+      end
+    end
+  end
+end
+
+function OGRH.NavigateToNextEncounter()
+  -- Check authorization - must be raid lead, assistant, or designated raid admin
+  if not OGRH.CanNavigateEncounter or not OGRH.CanNavigateEncounter() then
+    OGRH.Msg("Only the Raid Leader, Assistants, or Raid Admin can change the selected encounter.")
+    return
+  end
+  
+  -- Get current encounter from main UI selection (indices)
+  local raidIdx, encounterIdx = OGRH.GetCurrentEncounter()
+  
+  if not raidIdx or not encounterIdx then
+    return
+  end
+  
+  -- Access raid by index (Active Raid is always at index 1)
+  local raids = OGRH.SVM.GetPath("encounterMgmt.raids")
+  if not raids or not raids[raidIdx] then
+    return
+  end
+  
+  local raid = raids[raidIdx]
+  if raid and raid.encounters then
+    -- Navigate to next encounter by index
+    if encounterIdx < table.getn(raid.encounters) then
+      -- Update encounter using centralized setter (triggers REALTIME sync)
+      OGRH.SetCurrentEncounter(raidIdx, encounterIdx + 1)
+      
+      -- Update UI
+      OGRH.UpdateEncounterNavButton()
+      
+      -- Refresh Encounter Planning window if it's open
+      if OGRH_EncounterFrame and OGRH_EncounterFrame:IsVisible() then
+        if OGRH_EncounterFrame.RefreshRoleContainers then
+          OGRH_EncounterFrame.RefreshRoleContainers()
+        end
+        if OGRH_EncounterFrame.UpdateAnnouncementBuilder then
+          OGRH_EncounterFrame.UpdateAnnouncementBuilder()
+        end
+      end
+      
+      -- Update consume monitor if enabled
+      if OGRH.ShowConsumeMonitor then
+        OGRH.ShowConsumeMonitor()
+      end
+    end
+  end
+end
+
+-- ============================================
+-- UPDATE ENCOUNTER NAVIGATION BUTTON
+-- ============================================
+
+function OGRH.UpdateEncounterNavButton()
+  if not OGRH.encounterNav then return end
+  
+  local btn = OGRH.encounterNav.encounterBtn
+  local prevBtn = OGRH.encounterNav.prevEncBtn
+  local nextBtn = OGRH.encounterNav.nextEncBtn
+  
+  -- Get raid and encounter indices from SVM (v2 schema)
+  local raidIdx, encounterIdx = OGRH.GetCurrentEncounter()
+  
+  if OGRH.MainUI.State.debug then
+    OGRH.Msg("|cff66ccff[RH][DEBUG]|r UpdateEncounterNavButton called: raidIdx=" .. tostring(raidIdx) .. ", encounterIdx=" .. tostring(encounterIdx))
+  end
+  
+  -- If we don't have indices, try to initialize them
+  if not raidIdx or not encounterIdx then
+    local raids = OGRH.SVM.GetPath("encounterMgmt.raids")
+    if raids and raids[1] and raids[1].encounters and table.getn(raids[1].encounters) > 0 then
+      raidIdx = 1
+      -- Skip Admin encounter at index 1 for default selection
+      local startIdx = 1
+      if OGRH.IsAdminEncounter and OGRH.IsAdminEncounter(raids[1].encounters[1]) then
+        startIdx = 2
+      end
+      if startIdx <= table.getn(raids[1].encounters) then
+        encounterIdx = startIdx
+        OGRH.SVM.Set("ui", "selectedRaidIndex", 1)
+        OGRH.SVM.Set("ui", "selectedEncounterIndex", startIdx)
+        if OGRH.MainUI.State.debug then
+          OGRH.Msg("|cff66ccff[RH][DEBUG]|r Initialized indices to 1, " .. startIdx)
+        end
+      end
+    end
+  end
+  
+  -- Load modules for the selected encounter (main UI only)
+  if OGRH.LoadModulesForRole and OGRH.UnloadAllModules and raidIdx and encounterIdx then
+    -- Get raids array to find the encounter's roles
+    local raids = OGRH.SVM.GetPath("encounterMgmt.raids")
+    
+    if OGRH.MainUI.State.debug then
+      OGRH.Msg("|cff66ccff[RH][DEBUG]|r raids = " .. tostring(raids) .. " (count: " .. (raids and table.getn(raids) or 0) .. ")")
+    end
+    
+    if raids and raids[raidIdx] and raids[raidIdx].encounters and raids[raidIdx].encounters[encounterIdx] then
+      -- Get roles from the encounter using indices
+      local rolesPath = string.format("encounterMgmt.raids.%d.encounters.%d.roles", raidIdx, encounterIdx)
+      local rolesData = OGRH.SVM.GetPath(rolesPath)
+      
+      if OGRH.MainUI.State.debug then
+        OGRH.Msg(string.format("|cff66ccff[RH][DEBUG]|r rolesData = %s", tostring(rolesData)))
+      end
+      
+      if rolesData then
+        if OGRH.MainUI.State.debug then
+          OGRH.Msg(string.format("|cff66ccff[RH][DEBUG]|r roles array count: %d", table.getn(rolesData)))
+        end
+        
+        -- Collect all modules from custom module roles
+        -- Roles are stored as a flat array with column field inside each role
+        local allModules = {}
+        for i = 1, table.getn(rolesData) do
+          local role = rolesData[i]
+          if OGRH.MainUI.State.debug then
+            OGRH.Msg(string.format("|cff66ccff[RH][DEBUG]|r Role %d: isCustomModule=%s, modules=%s, column=%s", 
+              i, tostring(role.isCustomModule), tostring(role.modules), tostring(role.column)))
+          end
+          if role.isCustomModule and role.modules then
+            if OGRH.MainUI.State.debug then
+              OGRH.Msg(string.format("|cff66ccff[RH][DEBUG]|r Found custom module role with %d modules", table.getn(role.modules)))
+            end
+            for _, moduleId in ipairs(role.modules) do
+              if OGRH.MainUI.State.debug then
+                OGRH.Msg(string.format("|cff66ccff[RH][DEBUG]|r Adding module: %s", tostring(moduleId)))
+              end
+              table.insert(allModules, moduleId)
+            end
+          end
+        end
+        
+        -- Load the modules
+        if table.getn(allModules) > 0 then
+          OGRH.Msg(string.format("|cff00ff00[RH-MainUI]|r Loading %d custom modules for encounter", table.getn(allModules)))
+          OGRH.LoadModulesForRole(allModules)
+        else
+          if OGRH.MainUI.State.debug then
+            OGRH.Msg("|cff00ccff[RH-MainUI-DEBUG]|r No modules found, unloading all")
+          end
+          OGRH.UnloadAllModules()
+        end
+      else
+        OGRH.UnloadAllModules()
+      end
+    else
+      OGRH.UnloadAllModules()
+    end
+  end
+  
+  -- Get Active Raid info for display
+  local activeRaid = OGRH.GetActiveRaid and OGRH.GetActiveRaid()
+  local activeRaidName = ""
+  if activeRaid and activeRaid.displayName then
+    activeRaidName = activeRaid.displayName
+  end
+  
+  if not raidIdx then
+    if activeRaidName ~= "" then
+      btn:SetText(activeRaidName)
+    else
+      btn:SetText("Select Raid")
+    end
+    prevBtn:Disable()
+    nextBtn:Disable()
+    return
+  end
+  
+  -- Get raid and encounter objects by index
+  local raids = OGRH.SVM.GetPath("encounterMgmt.raids")
+  local raid = raids and raids[raidIdx]
+  local encounter = raid and raid.encounters and raid.encounters[encounterIdx]
+  
+  if OGRH.MainUI.State.debug then
+    OGRH.Msg(string.format("|cff66ccff[RH][DEBUG]|r raids=%s, raid=%s, encounter=%s", 
+      tostring(raids), tostring(raid), tostring(encounter)))
+    if encounter then
+      OGRH.Msg(string.format("|cff66ccff[RH][DEBUG]|r encounter.name=%s", tostring(encounter.name)))
+    end
+  end
+  
+  -- Always show encounter name if one is selected
+  if encounter and encounter.name then
+    local displayName = encounter.name
+    if string.len(displayName) > 15 then
+      displayName = string.sub(displayName, 1, 12) .. "..."
+    end
+    btn:SetText(displayName)
+  elseif activeRaidName ~= "" then
+    -- Show Active Raid name when no encounter selected
+    btn:SetText(activeRaidName)
+  elseif raid then
+    btn:SetText("Select Encounter")
+  else
+    btn:SetText("Select Raid")
+  end
+  
+  -- Enable/disable prev/next buttons based on encounter index
+  if raid and raid.encounters then
+    -- Determine minimum navigable index (skip Admin encounter at index 1)
+    local minIdx = 1
+    if OGRH.IsAdminEncounter and raid.encounters[1] and OGRH.IsAdminEncounter(raid.encounters[1]) then
+      minIdx = 2
+    end
+    
+    if encounterIdx and encounterIdx > minIdx then
+      prevBtn:Enable()
+    else
+      prevBtn:Disable()
+    end
+    
+    if encounterIdx and encounterIdx < table.getn(raid.encounters) then
+      nextBtn:Enable()
+    else
+      nextBtn:Disable()
+    end
+  else
+    prevBtn:Disable()
+    nextBtn:Disable()
+  end
+end
+
+-- ============================================
+-- UI STATE MANAGEMENT
+-- ============================================
+
+local function applyLocked(lock)
+  if lock then
+    btnLock:SetText("|cff00ff00L|r")  -- Green when locked
+  else
+    btnLock:SetText("|cffffff00L|r")  -- Yellow when unlocked
+  end
+end
+
+btnLock:SetScript("OnEnter", function()
+  GameTooltip:SetOwner(btnLock, "ANCHOR_TOP")
+  GameTooltip:ClearLines()
+  GameTooltip:AddLine("Lock Window", 1, 1, 1)
+  GameTooltip:Show()
+end)
+
+btnLock:SetScript("OnLeave", function()
+  GameTooltip:Hide()
+end)
+
+btnLock:SetScript("OnClick", function() ensureSV(); local locked = not OGRH.SVM.Get("ui", "locked"); OGRH.SVM.Set("ui", "locked", locked); applyLocked(locked) end)
+
+-- ReadyCheck button handler
+readyCheck:SetScript("OnClick", function()
+  local btn = arg1 or "LeftButton"
+  
+  if btn == "RightButton" then
+    -- Show RC settings menu
+    if not OGRH_RCMenu then
+      local M = CreateFrame("Frame", "OGRH_RCMenu", UIParent)
+      M:SetFrameStrata("FULLSCREEN_DIALOG")
+      M:SetBackdrop({bgFile="Interface/Tooltips/UI-Tooltip-Background", edgeFile="Interface/Tooltips/UI-Tooltip-Border", edgeSize=12, insets={left=4,right=4,top=4,bottom=4}})
+      M:SetBackdropColor(0,0,0,0.95); M:SetWidth(180); M:SetHeight(50); M:Hide()
+      
+      local toggleBtn = CreateFrame("Button", nil, M, "UIPanelButtonTemplate")
+      toggleBtn:SetWidth(160); toggleBtn:SetHeight(20)
+      toggleBtn:SetPoint("TOPLEFT", M, "TOPLEFT", 10, -15)
+      OGRH.StyleButton(toggleBtn)
+      
+      local fs = toggleBtn:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+      fs:SetAllPoints(); fs:SetJustifyH("CENTER")
+      toggleBtn.fs = fs
+      
+      toggleBtn:SetScript("OnClick", function()
+        OGRH.EnsureSV()
+        -- Toggle the setting
+        local newValue = not OGRH.SVM.Get("allowRemoteReadyCheck")
+        OGRH.SVM.Set("allowRemoteReadyCheck", nil, newValue)
+        
+        -- Update button text
+        if newValue then
+          fs:SetText("|cff00ff00Allow Remote Readycheck|r")
+        else
+          fs:SetText("|cffff0000Allow Remote Readycheck|r")
+        end
+        
+        if OGRH and OGRH.Msg then
+          if newValue then
+            OGRH.Msg("Remote ready checks |cff00ff00enabled|r.")
+          else
+            OGRH.Msg("Remote ready checks |cffff0000disabled|r.")
+          end
+        end
+        
+        -- Hide the menu after toggling
+        M:Hide()
+      end)
+      
+      M.toggleBtn = toggleBtn
+    end
+    
+    local M = OGRH_RCMenu
+    
+    -- Toggle menu visibility
+    if M:IsVisible() then
+      M:Hide()
+      return
+    end
+    
+    -- Update button text based on current setting
+    OGRH.EnsureSV()
+    if OGRH.SVM.Get("allowRemoteReadyCheck") then
+      M.toggleBtn.fs:SetText("|cff00ff00Allow Remote Readycheck|r")
+    else
+      M.toggleBtn.fs:SetText("|cffff0000Allow Remote Readycheck|r")
+    end
+    
+    M:ClearAllPoints(); M:SetPoint("TOPLEFT", readyCheck, "BOTTOMLEFT", 0, -2); M:Show()
+  else
+    -- Left click: Do ready check
+    if OGRH.DoReadyCheck then
+      OGRH.DoReadyCheck()
+    else
+      OGRH.Msg("Ready check functionality not loaded.")
+    end
+  end
+end)
+
+-- Expose sync button for external access
+OGRH.adminButton = adminBtn
+-- Backward compatibility alias
+OGRH.syncButton = adminBtn
+
+local function restoreMain()
+  ensureSV()
+  local point = OGRH.SVM.Get("ui", "point")
+  local relPoint = OGRH.SVM.Get("ui", "relPoint")
+  local x = OGRH.SVM.Get("ui", "x")
+  local y = OGRH.SVM.Get("ui", "y")
+  if point and x and y then Main:ClearAllPoints(); Main:SetPoint(point, UIParent, relPoint or point, x, y) end
+  applyLocked(OGRH.SVM.Get("ui", "locked"))
+  
+  -- Initialize raid lead system
+  if OGRH.InitRaidLead then
+    OGRH.InitRaidLead()
+  end
+  
+  -- Update raid lead UI state
+  if OGRH.UpdateRaidAdminUI then
+    OGRH.UpdateRaidAdminUI()
+  end
+  
+  -- Update encounter nav button with saved state
+  if OGRH.UpdateEncounterNavButton then
+    -- Ensure we have indices set (migrate from old name-based system if needed)
+    local raidIdx = OGRH.SVM.Get("ui", "selectedRaidIndex")
+    local encIdx = OGRH.SVM.Get("ui", "selectedEncounterIndex")
+    
+    -- If indices don't exist but we have Active Raid, initialize to first encounter
+    if not raidIdx and not encIdx then
+      local raids = OGRH.SVM.GetPath("encounterMgmt.raids")
+      if raids and raids[1] and raids[1].encounters and table.getn(raids[1].encounters) > 0 then
+        OGRH.SVM.Set("ui", "selectedRaidIndex", 1)
+        OGRH.SVM.Set("ui", "selectedEncounterIndex", 1)
+      end
+    end
+    
+    OGRH.UpdateEncounterNavButton()
+  end
+  
+  -- Show consume monitor if enabled and encounter has consumes
+  if OGRH.ShowConsumeMonitor then
+    OGRH.ShowConsumeMonitor()
+  end
+  
+  -- Check if window should be hidden
+  if OGRH.SVM.Get("ui", "hidden") then
+    Main:Hide()
+  end
+end
+local _loader = CreateFrame("Frame"); _loader:RegisterEvent("VARIABLES_LOADED"); _loader:SetScript("OnEvent", function() restoreMain() end)
+
+SlashCmdList[string.upper(OGRH.CMD)] = function(m)
+  local fullMsg = OGRH.Trim(m or "")
+  local sub = string.lower(fullMsg)
+  
+  -- Phase 1 Debug Commands
+  if sub == "debug messages" or sub == "messages" then
+    if OGRH.DebugPrintMessageTypes then
+      OGRH.DebugPrintMessageTypes()
+    else
+      OGRH.Msg("Message types not loaded.")
+    end
+  elseif sub == "debug permissions" or sub == "permissions" then
+    if OGRH.Permissions and OGRH.Permissions.DebugPrintRaidPermissions then
+      OGRH.Permissions.DebugPrintRaidPermissions()
+    else
+      OGRH.Msg("Permissions system not loaded.")
+    end
+  elseif sub == "debug denials" or sub == "denials" then
+    if OGRH.Permissions and OGRH.Permissions.DebugPrintDenials then
+      OGRH.Permissions.DebugPrintDenials()
+    else
+      OGRH.Msg("Permissions system not loaded.")
+    end
+  elseif sub == "debug handlers" or sub == "handlers" then
+    if OGRH.MessageRouter and OGRH.MessageRouter.DebugPrintHandlers then
+      OGRH.MessageRouter.DebugPrintHandlers()
+    else
+      OGRH.Msg("Message router not loaded.")
+    end
+  -- Debug Commands (centralized under /ogrh debug [option])
+  elseif string.find(sub, "^debug ") then
+    local _, _, debugOption = string.find(sub, "^debug%s+(.+)")
+    if debugOption == "help" then
+      -- Show all debug options and their current state
+      OGRH.Msg("|cff66ccff[RH][DEBUG]|r Available debug options:")
+      OGRH.Msg("  |cff00ccff/ogrh debug sync|r - Toggle SyncIntegrity verbose messages " ..
+        (OGRH.SyncIntegrity and (OGRH.SyncIntegrity.State.debug and "|cff00ff00(ON)|r" or "|cffff0000(OFF)|r") or "|cff888888(not loaded)|r"))
+      OGRH.Msg("  |cff00ccff/ogrh debug ui|r - Toggle MainUI debug messages " ..
+        (OGRH.MainUI and (OGRH.MainUI.State.debug and "|cff00ff00(ON)|r" or "|cffff0000(OFF)|r") or "|cff888888(not loaded)|r"))
+      OGRH.Msg("  |cff00ccff/ogrh debug svm-read|r - Toggle SVM read operations " ..
+        (OGRH.SVM and (OGRH.SVM.SyncConfig.debugRead and "|cff00ff00(ON)|r" or "|cffff0000(OFF)|r") or "|cff888888(not loaded)|r"))
+      OGRH.Msg("  |cff00ccff/ogrh debug svm-write|r - Toggle SVM write operations " ..
+        (OGRH.SVM and (OGRH.SVM.SyncConfig.debugWrite and "|cff00ff00(ON)|r" or "|cffff0000(OFF)|r") or "|cff888888(not loaded)|r"))
+      OGRH.Msg("  |cff00ccff/ogrh debug consumes|r - Toggle ConsumesTracking debug messages " ..
+        (OGRH.ConsumesTracking and (OGRH.ConsumesTracking.State.debug and "|cff00ff00(ON)|r" or "|cffff0000(OFF)|r") or "|cff888888(not loaded)|r"))
+      OGRH.Msg("  |cff00ccff/ogrh debug bigwigs|r - Toggle BigWigs integration debug messages " ..
+        (OGRH.BigWigs and (OGRH.BigWigs.State.debug and "|cff00ff00(ON)|r" or "|cffff0000(OFF)|r") or "|cff888888(not loaded)|r"))
+      OGRH.Msg("  |cff00ccff/ogrh debug ready|r - Toggle ReadynessDashboard debug messages " ..
+        (OGRH.ReadynessDashboard and (OGRH.ReadynessDashboard.State.debug and "|cff00ff00(ON)|r" or "|cffff0000(OFF)|r") or "|cff888888(not loaded)|r"))
+      OGRH.Msg("  |cff00ccff/ogrh debug pp|r - Toggle PallyPower bridge debug messages " ..
+        (OGRH.BuffManagerPP and (OGRH.BuffManagerPP.debug and "|cff00ff00(ON)|r" or "|cffff0000(OFF)|r") or "|cff888888(not loaded)|r"))
+      OGRH.Msg("|cff66ccff[RH][DEBUG]|r Use /ogrh debug [option] to toggle")
+    elseif debugOption == "sync" then
+      if OGRH.SyncIntegrity then
+        OGRH.SyncIntegrity.State.debug = not OGRH.SyncIntegrity.State.debug
+        local status = OGRH.SyncIntegrity.State.debug and "|cff00ff00ON|r" or "|cffff0000OFF|r"
+        OGRH.Msg("Sync debug: " .. status)
+      else
+        OGRH.Msg("SyncIntegrity not loaded.")
+      end
+    elseif debugOption == "ui" then
+      if OGRH.MainUI then
+        OGRH.MainUI.State.debug = not OGRH.MainUI.State.debug
+        local status = OGRH.MainUI.State.debug and "|cff00ff00ON|r" or "|cffff0000OFF|r"
+        OGRH.Msg("MainUI debug: " .. status)
+      else
+        OGRH.Msg("MainUI not loaded.")
+      end
+    elseif debugOption == "svm-read" then
+      if OGRH.SVM and OGRH.SVM.SyncConfig then
+        OGRH.SVM.SyncConfig.debugRead = not OGRH.SVM.SyncConfig.debugRead
+        local status = OGRH.SVM.SyncConfig.debugRead and "|cff00ff00ON|r" or "|cffff0000OFF|r"
+        OGRH.Msg("SVM read debug: " .. status)
+      else
+        OGRH.Msg("SavedVariablesManager not loaded.")
+      end
+    elseif debugOption == "svm-write" then
+      if OGRH.SVM and OGRH.SVM.SyncConfig then
+        OGRH.SVM.SyncConfig.debugWrite = not OGRH.SVM.SyncConfig.debugWrite
+        local status = OGRH.SVM.SyncConfig.debugWrite and "|cff00ff00ON|r" or "|cffff0000OFF|r"
+        OGRH.Msg("SVM write debug: " .. status)
+      else
+        OGRH.Msg("SavedVariablesManager not loaded.")
+      end
+    elseif debugOption == "consumes" then
+      if OGRH.ConsumesTracking then
+        OGRH.ConsumesTracking.State.debug = not OGRH.ConsumesTracking.State.debug
+        local status = OGRH.ConsumesTracking.State.debug and "|cff00ff00ON|r" or "|cffff0000OFF|r"
+        OGRH.Msg("ConsumesTracking debug: " .. status)
+      else
+        OGRH.Msg("ConsumesTracking not loaded.")
+      end
+    elseif debugOption == "bigwigs" then
+      if OGRH.BigWigs then
+        OGRH.BigWigs.State.debug = not OGRH.BigWigs.State.debug
+        local status = OGRH.BigWigs.State.debug and "|cff00ff00ON|r" or "|cffff0000OFF|r"
+        OGRH.Msg("BigWigs debug: " .. status)
+      else
+        OGRH.Msg("BigWigs integration not loaded.")
+      end
+    elseif debugOption == "ready" then
+      if OGRH.ReadynessDashboard then
+        OGRH.ReadynessDashboard.State.debug = not OGRH.ReadynessDashboard.State.debug
+        local status = OGRH.ReadynessDashboard.State.debug and "|cff00ff00ON|r" or "|cffff0000OFF|r"
+        OGRH.Msg("ReadynessDashboard debug: " .. status)
+      else
+        OGRH.Msg("ReadynessDashboard not loaded.")
+      end
+    elseif debugOption == "pp" then
+      if OGRH.BuffManagerPP then
+        OGRH.BuffManagerPP.debug = not OGRH.BuffManagerPP.debug
+        local status = OGRH.BuffManagerPP.debug and "|cff00ff00ON|r" or "|cffff0000OFF|r"
+        OGRH.Msg("PallyPower bridge debug: " .. status)
+      else
+        OGRH.Msg("BuffManagerPP not loaded.")
+      end
+    else
+      OGRH.Msg("|cffff0000[RH]|r Unknown debug option: " .. debugOption)
+      OGRH.Msg("Use |cff00ccff/ogrh debug help|r to see available options")
+    end
+  elseif sub == "admin take" or sub == "takeadmin" then
+    if OGRH.RequestAdminRole then
+      OGRH.RequestAdminRole()
+    else
+      OGRH.Msg("Permission system not loaded.")
+    end
+  elseif sub == "sa" then
+    if OGRH.SetSessionAdmin then
+      OGRH.SetSessionAdmin()
+    else
+      OGRH.Msg("Permission system not loaded.")
+    end
+  elseif string.find(sub, "^ready") then
+    local _, _, readyArgs = string.find(sub, "^ready%s*(.*)")
+    if OGRH.ReadynessDashboard and OGRH.ReadynessDashboard.HandleSlashCommand then
+      OGRH.ReadynessDashboard.HandleSlashCommand(readyArgs or "")
+    else
+      OGRH.Msg("ReadynessDashboard not loaded.")
+    end
+  elseif string.find(sub, "^test rebirth") then
+    if OGRH.RebirthCaller and OGRH.RebirthCaller.TestMode then
+      local _, _, countStr = string.find(sub, "^test rebirth%s+(%d+)")
+      local count = countStr and tonumber(countStr) or nil
+      OGRH.RebirthCaller.TestMode(count)
+    else
+      OGRH.Msg("RebirthCaller module not loaded.")
+    end
+  elseif sub == "help" or sub == "" then
+    OGRH.Msg("Usage: /" .. OGRH.CMD .. " <command>")
+    OGRH.Msg("Commands:")
+    OGRH.Msg("  ready - Toggle Readyness Dashboard")
+    OGRH.Msg("  ready dock|undock|scan|reset")
+    OGRH.Msg("  test rebirth [N] - Toggle Rebirth Caller test mode (N = 1-40 dead)")
+    OGRH.Msg("  debug help - Show debug toggle options")
+    OGRH.Msg("  messages - Show all message types")
+    OGRH.Msg("  permissions - Show raid permissions")
+    OGRH.Msg("  denials - Show permission denials")
+    OGRH.Msg("  version - Show version state")
+    OGRH.Msg("  changes - Show recent changes")
+    OGRH.Msg("  handlers - Show message handlers")
+    OGRH.Msg("  takeadmin - Request admin role")
+    OGRH.Msg("  sa - Set session admin (temporary)")
+  else
+    OGRH.Msg("Unknown command. Type /" .. OGRH.CMD .. " help for usage.")
+  end
+end
+_G["SLASH_"..string.upper(OGRH.CMD).."1"] = "/"..OGRH.CMD
+
+if OGRH and OGRH.Msg then
+  if OGRH.MainUI.State.debug then
+    OGRH.Msg("|cff66ccff[RH][DEBUG]|r v" .. OGRH.VERSION .. " loaded")
+  end
+  
+  -- Notify about RollFor status
+  if OGRH.ROLLFOR_AVAILABLE then
+    OGRH.Msg("|cff66ccff[RH]|r RollFor v" .. OGRH.ROLLFOR_REQUIRED_VERSION .. " detected")
+  else
+    local rollForVersion = GetAddOnMetadata("RollFor", "Version")
+    if rollForVersion then
+      OGRH.Msg("|cffffaa00[RH] Warning:|r RollFor v" .. rollForVersion .. " found, but v" .. OGRH.ROLLFOR_REQUIRED_VERSION .. " required")
+    else
+      OGRH.Msg("|cffffaa00[RH] Warning:|r RollFor v" .. OGRH.ROLLFOR_REQUIRED_VERSION .. " not found")
+    end
+    OGRH.Msg("|cff66ccff[RH]|r Some features disabled: Invites, SR Validation, RollFor sync")
+  end
+end

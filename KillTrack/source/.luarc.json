@@ -1,0 +1,35 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "Lua.diagnostics.globals": [
+    "arg1",
+    "date",
+    "getn",
+    "event",
+    "floor",
+    "mod",
+    "this",
+    "time",
+    "FauxScrollFrame_GetOffset",
+    "FauxScrollFrame_OnVerticalScroll",
+    "FauxScrollFrame_Update",
+    "GameFontHighlight",
+    "GameFontHighlightSmall",
+    "LibStub",
+    "RaidWarningFrame",
+    "SELFKILLOTHER",
+    "StaticPopup_Show",
+    "StaticPopupDialogs",
+    "TOOLTIP_DEFAULT_BACKGROUND_COLOR",
+    "TOOLTIP_DEFAULT_COLOR",
+    "UNITDIESOTHER"
+  ],
+  "Lua.runtime.version": "Lua 5.1",
+  "Lua.workspace.checkThirdParty": false,
+  "Lua.workspace.ignoreDir": [
+    "libs"
+  ],
+  "type.inferParamType": true,
+  "workspace.library": [ "../wow-api-type-definitions" ],
+  "diagnostics.disable": [],
+  "Lua.hint.enable": true
+}

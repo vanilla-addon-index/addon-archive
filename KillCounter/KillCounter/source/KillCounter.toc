@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: Kill Counter
+## Notes: Tracks player and creature kills
+## Author: Backported to 1.12 by arc
+## Version: 1.6.9
+## SavedVariablesPerCharacter: KillCounterCharDB
+
+Locale.lua
+KillCounter.lua
+KillCounter.xml

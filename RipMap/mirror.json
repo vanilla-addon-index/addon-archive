@@ -1,0 +1,57 @@
+{
+  "upstream": "https://github.com/DaniilSokolyuk/RipMap",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "DaniilSokolyuk",
+    "repo": "RipMap",
+    "name": "RipMap",
+    "url": "https://github.com/DaniilSokolyuk/RipMap",
+    "api": "https://api.github.com/repos/DaniilSokolyuk/RipMap"
+  },
+  "commit": "0f864a5e25de22ee7f5dd66ee740434a12d07bba",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "64d9400e7d713edebbcab7d29adb410c40428690cbdb0b16b5c01f5f38f5b895",
+      "bytes": 14
+    },
+    "Data/heatmap.lua": {
+      "sha256": "58d3c2bbcd621670476a4bd118bf27e1b64f3e1a4803913392db2f466051d07c",
+      "bytes": 44113
+    },
+    "Data/zone_ids.lua": {
+      "sha256": "ab415191456fc8159bcc1131f0fba09ed7b053bf6fa9936e5188d1ef4b133309",
+      "bytes": 1518
+    },
+    "DataLoader.lua": {
+      "sha256": "4450df5b5bff68573d1eea4c836d78a11f7fd8e887542281999f017523a1622f",
+      "bytes": 1478
+    },
+    "db.json": {
+      "sha256": "ba82bfe98777c3af5020efeb2af61381f17b76da1a15b0d6945c4b47b0e53f34",
+      "bytes": 13875573
+    },
+    "DiePlease.lua": {
+      "sha256": "9d1a3a2d62373a261fabd599460f9fa43f0987eaec9506ab61505ad0f36bd561",
+      "bytes": 7620
+    },
+    "HeatmapRenderer.lua": {
+      "sha256": "4a3b091d4d4b4f52e80cd3edac973f1417d42faa7b78e6b5708ad3ade8a66db4",
+      "bytes": 8006
+    },
+    "process_deaths.py": {
+      "sha256": "1f4b4e81b9cbc6b846182a49c41a35ff6d76c4329697af45641232a351108d2f",
+      "bytes": 3948
+    },
+    "README.md": {
+      "sha256": "3264cad4e375365fa6fb96564ba959b8e3e55d8d7dd8a5b31f7954876c4ec8c5",
+      "bytes": 136
+    },
+    "RipMap.toc": {
+      "sha256": "a8b7f1d5ffaa9a64a4f6eb787eb5f0c34df551a705de25668a8d860dbc0d766a",
+      "bytes": 227
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

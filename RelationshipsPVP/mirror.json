@@ -1,0 +1,54 @@
+{
+  "upstream": "https://octowow.st/git/Relationship/RelationshipsPVP",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Relationship",
+    "repo": "RelationshipsPVP",
+    "name": "RelationshipsPVP",
+    "url": "https://octowow.st/git/Relationship/RelationshipsPVP",
+    "api": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsPVP"
+  },
+  "commit": "7070b4b263c80f380102a4193de490df1d67fdef",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "915088c9b1683c20c6ef88d24efb5e658d0a930e36f807c8f2fa9d52d54aeae1",
+      "bytes": 3491
+    },
+    "RelationshipsPVP.lua": {
+      "sha256": "44bdd94ff6e6b09514fb2177b7c63314c9d90812e260b2a53a46107bedf6ef30",
+      "bytes": 45496
+    },
+    "RelationshipsPVP.toc": {
+      "sha256": "6e8aebc5ed879f57edef8a6f25e687b890b1752ea5553a9f29246443284ead82",
+      "bytes": 356
+    },
+    "RelationshipsPVP.xml": {
+      "sha256": "7dc4391e629187f86c6c54decc9840994a3da9a9091cee2ebb4c02371c55364e",
+      "bytes": 20385
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "19": {
+      "tag": "a",
+      "folder": "a--19",
+      "assets": {
+        "12": {
+          "sha256": "8bfaacefe67d814c65023576d87e04ad71595db6089ca68a75dc0da8db84b631",
+          "bytes": 16033,
+          "id": "12",
+          "name": "RelationshipsPVP.zip",
+          "url": "https://octowow.st/git/Relationship/RelationshipsPVP/releases/download/a/RelationshipsPVP.zip",
+          "path": "releases/a--19/assets/RelationshipsPVP.zip"
+        }
+      },
+      "source": {
+        "sha256": "a2f180db637c79d7cc4ca26d67eed2fe2a5d6d6fb393975f93b4837fd3282151",
+        "bytes": 14331,
+        "path": "releases/a--19/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsPVP/archive/a.tar.gz"
+      }
+    }
+  }
+}

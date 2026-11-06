@@ -1,0 +1,6 @@
+611c0baaad88b123caea392634192b9f52ec6e334e33b8ad73ed88bef164d611  releases/1.30--12289585/assets/ColorSocialFrame-1.30-11200.zip
+268ebfe8d0ee2e62a975895922fa9d3f1f26cd4710d1689adebc3bef66e5bae7  releases/1.30--12289585/upstream-source.tar.gz
+8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79  source/.gitignore.upstream
+772e3f3023a16338e2d7f68a4b53319c8a2789145d30bb67f9e99374d2b3d70c  source/ColorSocialFrame.toc
+bd3fcf3a74ca540a1813066778dd4bdfecf54229f96369afbe35a4c79606ffbc  source/core.lua
+4a72aa2d8117510cf3c70dd919e712705fcf415c1321da7010655dafc080982c  source/README.md

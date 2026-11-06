@@ -1,0 +1,317 @@
+{
+  "upstream": "https://github.com/jacamo555/Bongos",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jacamo555",
+    "repo": "Bongos",
+    "name": "Bongos",
+    "url": "https://github.com/jacamo555/Bongos",
+    "api": "https://api.github.com/repos/jacamo555/Bongos"
+  },
+  "commit": "00873e5dca5468f89c384e7d6d471fa0b74f6e73",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "Bongos/bar.lua": {
+      "sha256": "81f3b3aed6ef263ca741840dcb6f2c475479171e7a0cf1ac8fe09c856f2f50f7",
+      "bytes": 8829
+    },
+    "Bongos/Bongos.toc": {
+      "sha256": "d889562982987b3ae3fabb4615c7971e771a4116629d08ba8b73ed0413fb3c81",
+      "bytes": 369
+    },
+    "Bongos/Donations.txt": {
+      "sha256": "223dc562bfe6ecf4ea3ad65dab79128b5df8375edece1302afa0f2a9cd8f1b02",
+      "bytes": 286
+    },
+    "Bongos/lib/BEvent.lua": {
+      "sha256": "006df7ccdf06c9c098b4ef6ee9c02ed849bb9995c0e8caabc68bad959746cec8",
+      "bytes": 2499
+    },
+    "Bongos/lib/FlyPaper.lua": {
+      "sha256": "9a9689aa802be0757309ff01fe4ec811abc9d769d487ae7317a695096009ab41",
+      "bytes": 10420
+    },
+    "Bongos/lib/Infield.lua": {
+      "sha256": "c0482fe9290d6d379087a8a6d496883e1667c2488dfa76317f435e44843e106d",
+      "bytes": 3597
+    },
+    "Bongos/lib/TLib.lua": {
+      "sha256": "3d4d9368ff26ea52900e081c0ac842433da73cc78cb53f7689b8b21b7fe75764",
+      "bytes": 2485
+    },
+    "Bongos/localization.lua": {
+      "sha256": "f4cd3e0bcdfea95dd220eb69d748607c066cac0b0e09b3498d05e31f9413e847",
+      "bytes": 2873
+    },
+    "Bongos/main.lua": {
+      "sha256": "e5df4cfe453db91caa6a064863c29096752cbce2921efdba96c6aaa016018aa7",
+      "bytes": 1030
+    },
+    "Bongos/menu.lua": {
+      "sha256": "757aaa86d4dc8a97aced9abc4b65359da988c7e03243399472d89b337f982b93",
+      "bytes": 449
+    },
+    "Bongos/menu.xml": {
+      "sha256": "d3179259b6f7f000678a81887c7713114629aa61bb9a0ddba88da402510a86d2",
+      "bytes": 4540
+    },
+    "Bongos/profiles.lua": {
+      "sha256": "703b0a97d77a92bab0948073687797c6cf7f2cacad43e9b3760602e6a56e5b07",
+      "bytes": 2873
+    },
+    "Bongos/slash.lua": {
+      "sha256": "2d9654f92bf081813555f79c13a6335df85309980dd3446067ef36495e0edbeb",
+      "bytes": 3167
+    },
+    "Bongos/utility.lua": {
+      "sha256": "5d35a383253e9e672e8908d69c65789fe1d0d578391effbd517171d73bfc8f34",
+      "bytes": 2518
+    },
+    "Bongos/Version History.txt": {
+      "sha256": "d1455df58172b1e6cf643635352636c30f970929d568ffa850a11ebccff89ba9",
+      "bytes": 15039
+    },
+    "Bongos_ActionBar/actionBar/bar.lua": {
+      "sha256": "955a1baa2bd09e49c64c746157bde00fbc7e2c8ad0a541f32f5ce01ed87ec003",
+      "bytes": 11688
+    },
+    "Bongos_ActionBar/actionBar/button.lua": {
+      "sha256": "335dd28a3b7754a7f76931243f67485ce41988067db7a7358e405936cb75244c",
+      "bytes": 13569
+    },
+    "Bongos_ActionBar/actionBar/context.lua": {
+      "sha256": "c5cb18b65b7ccfa8827c558dd6dcfbf751edaba841e9d0ca0959447565ccc3a8",
+      "bytes": 2262
+    },
+    "Bongos_ActionBar/actionBar/main.lua": {
+      "sha256": "94b574ba8d9c36aca34b4230d0afee5e1f68980b42d1d095febe4bb2e1fab5a7",
+      "bytes": 6277
+    },
+    "Bongos_ActionBar/actionBar/stance.lua": {
+      "sha256": "67749bd4b17bde5a8b9b435f12477d97098a12fa859fde5540c9b6502cea6252",
+      "bytes": 4393
+    },
+    "Bongos_ActionBar/bagBar/bar.lua": {
+      "sha256": "f9cb18deb6f007ab9253eba3222963a6e2fcdc6cddf116d41779b6c11f53c0ae",
+      "bytes": 5303
+    },
+    "Bongos_ActionBar/Bindings.xml": {
+      "sha256": "e0da882d62d3c7d438327a2f8550fb7c9f6d66290ab9347e76d1baf04354e83e",
+      "bytes": 18665
+    },
+    "Bongos_ActionBar/Bongos_ActionBar.toc": {
+      "sha256": "a05f65dc09c0e0df4f827224c990dfd7981e03464cd248ffc5a6057bdafd07ca",
+      "bytes": 561
+    },
+    "Bongos_ActionBar/classBar/bar.lua": {
+      "sha256": "fbcdfce55b6da6fff1f98f7e718292facad6a48af45994732eb9e5104fe2edd1",
+      "bytes": 5791
+    },
+    "Bongos_ActionBar/classBar/button.lua": {
+      "sha256": "7b9f33bf7211a566a8fafe773a0cae8a76f86c993423e4633540ddf9a8d421f7",
+      "bytes": 1798
+    },
+    "Bongos_ActionBar/core/button.lua": {
+      "sha256": "3478bf8147f111c1b36e9af54f7e363bb761999933a0fe80fd3fb3515dfdd179",
+      "bytes": 2922
+    },
+    "Bongos_ActionBar/core/unreg.lua": {
+      "sha256": "7d04fce93654705f508d2b6b717e79559f0f79638853998be6db1a7698359a8d",
+      "bytes": 1845
+    },
+    "Bongos_ActionBar/core/utility.lua": {
+      "sha256": "d5d1b6eb286f056e634e435ea62ed69c4db70b5856e60d561664ac6ccca3beeb",
+      "bytes": 3826
+    },
+    "Bongos_ActionBar/keyBar/bar.lua": {
+      "sha256": "a204cdc81a8cb58579d945be084df39adc842626e94dab26ebe1d568d38bd0a4",
+      "bytes": 1907
+    },
+    "Bongos_ActionBar/lib/IsBuffActive.lua": {
+      "sha256": "d5562e9e98d25a264ddd4151ef2b94972310a86446fb5c851a65f461b74defdc",
+      "bytes": 1728
+    },
+    "Bongos_ActionBar/localization.lua": {
+      "sha256": "1d5b47ca308817a9f632dcc27806842438321bd39d29a144aab447845959c061",
+      "bytes": 2238
+    },
+    "Bongos_ActionBar/main.lua": {
+      "sha256": "7a1017ade5e5d5ed05be464b896cc9d65a25022fafff6811be05af0404b251b2",
+      "bytes": 988
+    },
+    "Bongos_ActionBar/menuBar/bar.lua": {
+      "sha256": "0b1ebda84a23fb87208cbc75872c6e602e9563936b7cb2b8c68384c276352de9",
+      "bytes": 5987
+    },
+    "Bongos_ActionBar/petBar/bar.lua": {
+      "sha256": "d7ec1184f23d1aab8646ed5bb10f0951d53771f2b7eef33bf62f7c139dc2888e",
+      "bytes": 6107
+    },
+    "Bongos_ActionBar/petBar/button.lua": {
+      "sha256": "894e8fa04353ac84763db936eca52b154e0d69eeee69bc46e5415116decb5108",
+      "bytes": 5491
+    },
+    "Bongos_CastBar/bar.lua": {
+      "sha256": "0d810222c147a30a825d136ee16631ee5f9dc90a129c2598944b5f6c8d04b4ab",
+      "bytes": 8832
+    },
+    "Bongos_CastBar/bar.xml": {
+      "sha256": "0dcee3cbcf7be207870dd8e69fb5a83a8a00b583314d064ffb9f567da33c3119",
+      "bytes": 1871
+    },
+    "Bongos_CastBar/Bongos_CastBar.toc": {
+      "sha256": "f94c8553b14747ee601347c3643162fa55100c590f54389d53049f3136ccbc08",
+      "bytes": 207
+    },
+    "Bongos_CastBar/localization.lua": {
+      "sha256": "eb7acc7674d92ba3d76a5d574f958b169d478d8b6708307b56493704fdad6c7a",
+      "bytes": 87
+    },
+    "Bongos_MapBar/bar.lua": {
+      "sha256": "b4cb1815614fc3efcfffc00ae8c832dca5ca8f0438d8ef98b8bde1ab318ccdbc",
+      "bytes": 4684
+    },
+    "Bongos_MapBar/bar.xml": {
+      "sha256": "f893ee8e845f806c7336c8c229adf778d82c00e947f46f1dc55e232880b6b4e6",
+      "bytes": 549
+    },
+    "Bongos_MapBar/Bongos_MapBar.toc": {
+      "sha256": "3c5f688395a78814e7d7a996574857fc67c3d95d95ba9849470aeeef1de3fdcf",
+      "bytes": 287
+    },
+    "Bongos_MapBar/localization.lua": {
+      "sha256": "25ea9daf5fe66df9cf25af77a2097a857433eee15d712e6d83678b0997aad960",
+      "bytes": 182
+    },
+    "Bongos_MapBar/questWatch.lua": {
+      "sha256": "866cb7129fd502d5be4b87eb8025e41114c68ab24badefd5dfdc8dbcb076b165",
+      "bytes": 1608
+    },
+    "Bongos_Options/Bongos_Options.toc": {
+      "sha256": "63265ee4b823bf1fba627d30c4e4ab6be6b3d5b4a386713f8a5bf64256656205",
+      "bytes": 184
+    },
+    "Bongos_Options/localization.lua": {
+      "sha256": "0660bfd558d36583b0b7db94dc0e7bdc6de7f62ad684cb9da1519c58e5fb621f",
+      "bytes": 1960
+    },
+    "Bongos_Options/menu.lua": {
+      "sha256": "63bb379db997860f357495448bf348c73b66121adf493f08c411602c5544a1dd",
+      "bytes": 2108
+    },
+    "Bongos_Options/menu.xml": {
+      "sha256": "07cd0c72f7a38c7c3eb603db1c3c5a2d41b4d3a904ea0a0dac20798376384025",
+      "bytes": 4142
+    },
+    "Bongos_Options/panels/actionBarGlobal.lua": {
+      "sha256": "529650a2e49d8ca21ffc03373f357b4ed32ed3fae89a4ae3105d46fef80c2fe1",
+      "bytes": 3252
+    },
+    "Bongos_Options/panels/actionBarGlobal.xml": {
+      "sha256": "dcc70701dc1c311249fee2c7cc4648eec9bba142709ca392645d0d2986c2f996",
+      "bytes": 5465
+    },
+    "Bongos_Options/panels/general.lua": {
+      "sha256": "b07954e65661fc0148788915fc6b05d2b0a2e4ebd3493489fca5ea96a6141d1e",
+      "bytes": 481
+    },
+    "Bongos_Options/panels/general.xml": {
+      "sha256": "18329874bb0078258e18b8161d6d335237231e47e6e004c10e3f291f67445133",
+      "bytes": 2443
+    },
+    "Bongos_Options/panels/paging.lua": {
+      "sha256": "2ae69666575e9d702241b9223039c20371bbc003d523061738f37a3c93b6b780",
+      "bytes": 2535
+    },
+    "Bongos_Options/panels/paging.xml": {
+      "sha256": "16ad4174f4ed381e09e96119c354a5e4e49a71a975ae06106db018a763459512",
+      "bytes": 2277
+    },
+    "Bongos_Options/panels/profiles.lua": {
+      "sha256": "fd46a1a049524708e2cb82d0cee8319bdb927ad2fc2a17afd0fd951cc93649ec",
+      "bytes": 3937
+    },
+    "Bongos_Options/panels/profiles.xml": {
+      "sha256": "75e5a8913d38ab67c895d59d632c59cb672ec995bf851978e0f79f7b554ccff7",
+      "bytes": 3042
+    },
+    "Bongos_Options/panels/selfCast.lua": {
+      "sha256": "ae43ea705db252ae21c41e71a73e06b3a10fcee27a2a965d4579012181fac274",
+      "bytes": 1596
+    },
+    "Bongos_Options/panels/selfCast.xml": {
+      "sha256": "cc1cb3f67c9e696640f102db0025ab19cf01b2f98ddb576e8781bd0adf084151",
+      "bytes": 1750
+    },
+    "Bongos_Options/panels/stance.lua": {
+      "sha256": "ceafff1f03829b40ba14980924e803c9284db954202c21469ccd411d7a45965c",
+      "bytes": 6418
+    },
+    "Bongos_Options/panels/stance.xml": {
+      "sha256": "810d1f0edadb0e4fd62c12d690f6db9fef0030109019374c4d5606c87418c931",
+      "bytes": 9177
+    },
+    "Bongos_Options/panels/visibility.lua": {
+      "sha256": "98165c1cb0862c81e290a5b337a54cbdfb95cbc2d0e7867693f9970fb3e3bc74",
+      "bytes": 3129
+    },
+    "Bongos_Options/panels/visibility.xml": {
+      "sha256": "fd2d7cad9c6349d1e7f710bd919bf6c8734f9d49776b9fed64ce8d8b068597c5",
+      "bytes": 1607
+    },
+    "Bongos_Options/templates.xml": {
+      "sha256": "2f60af083605b53f5a71d7a85b4b3ea12963513ea5e219b3ce39310479edf824",
+      "bytes": 1219
+    },
+    "Bongos_RollBar/bar.lua": {
+      "sha256": "d598c948b8a77d3e75591c4231a386641361dbcfc35f61eaa36cf5334864748b",
+      "bytes": 3527
+    },
+    "Bongos_RollBar/Bongos_RollBar.toc": {
+      "sha256": "edf1242cf97c9f944901efe67e11e2aa4cede0b134584b813c8c9f132f62e41a",
+      "bytes": 200
+    },
+    "Bongos_Stats/Bindings.xml": {
+      "sha256": "72752ac80a9ad3d9065fb96888d934d064307bdb9065e786e23415bb4db10e94",
+      "bytes": 158
+    },
+    "Bongos_Stats/Bongos_Stats.toc": {
+      "sha256": "368a45525643b7add4f2aef6661d57a1e9ddcdaa6d1983d0b67831b221c609ef",
+      "bytes": 215
+    },
+    "Bongos_Stats/BStats.lua": {
+      "sha256": "9dac35019a991d9438cfd9b8c80ea69be171e9af51162ee3e4cfc9488d726bce",
+      "bytes": 5276
+    },
+    "Bongos_Stats/localization.lua": {
+      "sha256": "107dcffcd53f8e317956b6746c9606a932177e70da2fa1444a6c2375bfda5f6e",
+      "bytes": 268
+    },
+    "Bongos_XP/bar.lua": {
+      "sha256": "ff03ebe2cbf5ac171a29582cef8b8919fc0cd524329708289533c5b4b0ac261b",
+      "bytes": 7647
+    },
+    "Bongos_XP/Bongos_XP.toc": {
+      "sha256": "7b3ed690058cb71bce9ab009c2848400658dbb331af043504adb7182c379e9bc",
+      "bytes": 233
+    },
+    "Bongos_XP/localization.lua": {
+      "sha256": "5c2dac0a5dca0e27a88826f9b6f32b23b0b0c91afd8c48ba76b04d7af825dea5",
+      "bytes": 282
+    },
+    "Bongos_XP/statusbar6.tga": {
+      "sha256": "5a21d3c9b37fea87bef4471e27d573f371274cd0cb1c2f5c8f94fc7824e3396c",
+      "bytes": 3090
+    },
+    "Bongos_XP/statusbar6v.tga": {
+      "sha256": "bbed3e5e8f3b76a7d59197263d390beee9ae5510f88fda1c609060c2595805e6",
+      "bytes": 3116
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

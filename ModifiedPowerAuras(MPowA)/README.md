@@ -4,6 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| ModifiedPowerAuras(MPowA) | https://github.com/MarcelineVQ/ModifiedPowerAuras | new |
+| ModifiedPowerAuras(MPowA) | https://github.com/MarcelineVQ/ModifiedPowerAuras | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

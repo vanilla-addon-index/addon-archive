@@ -1,0 +1,9 @@
+{
+  "id": "19",
+  "tag": "a",
+  "name": "V1.4",
+  "body": "#V1.4\r\n\r\n### ⚔️ PvP Nemesis & KOS Tracking\r\n\r\nAdded two new PvP relationship stats to the bottom row of the stats panel:\r\n\r\n* **Last BG Nemesis** – The player who killed you the most in your most recent battleground.\r\n* **KOS Enemy (All-Time)** – The player who has killed you the most across all tracked battlegrounds.\r\n\r\n### 📊 How It Works\r\n\r\nWhile you're in **Alterac Valley**, **Warsong Gulch**, or **Arathi Basin**, the addon now:\r\n\r\n* Tracks the last hostile player to damage you (within a 15-second window).\r\n* Credits that player when you die.\r\n* Counts repeated deaths to build a per-match tally.\r\n\r\nWhen you leave the battleground:\r\n\r\n* Your top killer becomes **Last BG Nemesis**.\r\n* The results are added to your persistent all-time statistics to determine your **KOS Enemy**.\r\n\r\nAll data is saved **per character**.\r\n\r\n### 🧹 New Slash Command\r\n\r\nYou can now reset your killer history at any time with:\r\n\r\n```\r\n/rpvp kos\r\n```\r\n\r\nor\r\n\r\n```\r\n/rpvp clearkos\r\n```\r\n\r\nBoth commands clear all tracked killer statistics.",
+  "published": "2026-07-13T18:29:56Z",
+  "prerelease": false,
+  "url": "https://octowow.st/git/Relationship/RelationshipsPVP/releases/tag/a"
+}

@@ -1,0 +1,93 @@
+{
+  "upstream": "https://github.com/ZenSociety/RoundRobinhood",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ZenSociety",
+    "repo": "RoundRobinhood",
+    "name": "RoundRobinhood",
+    "url": "https://github.com/ZenSociety/RoundRobinhood",
+    "api": "https://api.github.com/repos/ZenSociety/RoundRobinhood"
+  },
+  "commit": "df93c2b0966e07b25e5daa3d671c7d9246a719c5",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    ".gitignore.upstream": {
+      "sha256": "28727e4629b7b59eb7062fd2df32432cd86c14eb35011334368698ef4776d7cf",
+      "bytes": 392
+    },
+    "LICENSE": {
+      "sha256": "9417f54d901a30002ce7b145151a637eaaa405c709c5e9809f0196e432a6fdec",
+      "bytes": 1089
+    },
+    "localization_en.lua": {
+      "sha256": "fe46161c56dd0dff81ebb68fd831e3d9143d73cf5cef077e3f7e66c5849bed42",
+      "bytes": 4647
+    },
+    "README.md": {
+      "sha256": "9a26b18743a1fa72f03a44558333a47520d10d711dd778efb7c24f070d99c5a8",
+      "bytes": 2665
+    },
+    "RoundRobinhood_Minimap.lua": {
+      "sha256": "e88e1ee9384f4eb68e3f497a9a0879d25e95a8740ecb42e8fc22d83bacca12fd",
+      "bytes": 282
+    },
+    "RoundRobinhood_Minimap.xml": {
+      "sha256": "6a835bca1ad97a23c144fb89723638e93608cd3f75d55af03ac96cf5be2ea0d1",
+      "bytes": 2012
+    },
+    "RoundRobinhood_UI.lua": {
+      "sha256": "692f26576a51bd9db17b02414f822cadf76e9f8b1bb2fe918c523d52801ff7de",
+      "bytes": 3026
+    },
+    "RoundRobinhood_UI.xml": {
+      "sha256": "442b5ae467ae10d9dea251932591ab81f81ecb39f0f802e061ebaa328f8cf140",
+      "bytes": 8783
+    },
+    "RoundRobinhood.lua": {
+      "sha256": "25efb8005d4b82b692e2ec78d30aab39a833c8da21e320a62516f9da2ee81c28",
+      "bytes": 29763
+    },
+    "RoundRobinhood.toc": {
+      "sha256": "3ea8f650630e9fd4d97b6497201fddde38f0630b51b5c204f2864b1a255f4ed8",
+      "bytes": 419
+    },
+    "TabAbout.lua": {
+      "sha256": "36fc4fdba6a90dce3bc9b52a3187b3ac0370cb37cfe0348d0073c1ede1be89cb",
+      "bytes": 852
+    },
+    "TabAbout.xml": {
+      "sha256": "2152ad677cb5af0d9af3da98d1978867ee81dc6e39e347d3296dfadcbef2e987",
+      "bytes": 2108
+    },
+    "TabAuto.lua": {
+      "sha256": "a1f81f40d3d6a0dcfa24f89ffffa44873876677e1046e1eef2bc2d92ebd7043c",
+      "bytes": 9644
+    },
+    "TabAuto.xml": {
+      "sha256": "ea588f05e58cd77655a5960d2993fd8e5aedcbd6e064c0979bad938fbae2fe6c",
+      "bytes": 10518
+    },
+    "TabGeneral.lua": {
+      "sha256": "602ae351301733608c3f780129b57a0790ffadec15fe887dd27eb75a5c57ffaa",
+      "bytes": 20
+    },
+    "TabGeneral.xml": {
+      "sha256": "d93c792d216a16fd940b5be2c6acd886df30582eef26c57a8d631cdfdeadde60",
+      "bytes": 576
+    },
+    "TabRR.lua": {
+      "sha256": "05fcae2bef8d2e82854c241db8c21f3d3e1306bb751a8199fec8ca7891334290",
+      "bytes": 10350
+    },
+    "TabRR.xml": {
+      "sha256": "180ec8cd32c06099ddae8b6d43bab18eaac68a93eec69d9f837832e720480870",
+      "bytes": 14915
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

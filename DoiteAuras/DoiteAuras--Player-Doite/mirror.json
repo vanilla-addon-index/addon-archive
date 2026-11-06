@@ -1,0 +1,1325 @@
+{
+  "upstream": "https://github.com/Player-Doite/DoiteAuras",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Player-Doite",
+    "repo": "DoiteAuras",
+    "name": "DoiteAuras",
+    "url": "https://github.com/Player-Doite/DoiteAuras",
+    "api": "https://api.github.com/repos/Player-Doite/DoiteAuras"
+  },
+  "commit": "cbb3e01b82bb84122bc5ccdf35a06ae803edd6df",
+  "sourceFiles": {
+    "DoiteAuras.lua": {
+      "sha256": "6791d03dafc2bd367a6569b3d083b91e45244f7b178c5847bfe35e39f118a20d",
+      "bytes": 145471
+    },
+    "DoiteAuras.toc": {
+      "sha256": "7dfb4cf8197bacad5f70988db89fea861ba98c85244d422851a66644f9b5e578",
+      "bytes": 505
+    },
+    "LICENSE": {
+      "sha256": "c3a5873f4f20dbb746ab9db4b1da6c39fb723b9786e07da5d614a173e4e9f93b",
+      "bytes": 1701
+    },
+    "Modules/DoiteBars.lua": {
+      "sha256": "db34ab37df43812c445aa6eb47544894185a8763e8ba9d2ed1922d1af450f5f9",
+      "bytes": 70339
+    },
+    "Modules/DoiteBuffData.lua": {
+      "sha256": "cfaa888f0b6328aa94ff9eb98289cc35758ff45044580d1f520d7abcafc194c3",
+      "bytes": 3234
+    },
+    "Modules/DoiteConditions.lua": {
+      "sha256": "7eefa228ecf4c715c1d5b57b226a15ac296ed42a2ae8da405b854adfbc08edef",
+      "bytes": 238644
+    },
+    "Modules/DoiteEdit.lua": {
+      "sha256": "d56a9550c2a144b56ad9de848195eb853044f6d9a0da3507c29a34a456407653",
+      "bytes": 421915
+    },
+    "Modules/DoiteExport.lua": {
+      "sha256": "117c79560dbd444c67a3bcffe73e5d162c227f6ca824c37122c7f148127a871a",
+      "bytes": 69217
+    },
+    "Modules/DoiteGlow.lua": {
+      "sha256": "738dd879b3e48356041b0299c9d99f2583cde56e67116ce7c5e9b386201c9b88",
+      "bytes": 3354
+    },
+    "Modules/DoiteGroup.lua": {
+      "sha256": "3b1c42084d5bf9082cffc6f666fd05181461dba6f3e6f9ef2ae058fdee599cd7",
+      "bytes": 48374
+    },
+    "Modules/DoiteLogic.lua": {
+      "sha256": "37ca611eaf03907169518ec310987c0a8af767a47afc18c0a476cd32f8917781",
+      "bytes": 29455
+    },
+    "Modules/DoitePetAuras.lua": {
+      "sha256": "94ae44e6b5097527898e48ceb785199c5468ba7e4edaa849502813758d1acd0d",
+      "bytes": 15695
+    },
+    "Modules/DoitePlayerAuras.lua": {
+      "sha256": "3f91d0d3421362bf52098ff88a9488d0af1fe7301e1eedf984dce99b84abdd5f",
+      "bytes": 22130
+    },
+    "Modules/DoiteSettings.lua": {
+      "sha256": "25edcb7e8250cdde644e2c830f20ee8762c8ff525c3a615211fe7d0d76f3a1b8",
+      "bytes": 24925
+    },
+    "Modules/DoiteTargetAuras.lua": {
+      "sha256": "309ec489d9e67bfd1351de149f1a80fc830b303796fb44b8d542dfcb33d5726a",
+      "bytes": 85515
+    },
+    "README.md": {
+      "sha256": "aa75809561ad436fafdeafb9dd555bf053a59ae6be83c071f4390a9bf8e6c1dc",
+      "bytes": 3474
+    },
+    "Sounds/Custom - Arcane ammo.ogg": {
+      "sha256": "78d439314b76ac2baed65c01fd8c7c494850935aff5e99063a576683cb74a6ea",
+      "bytes": 16612
+    },
+    "Sounds/Custom - Explosive ammo.ogg": {
+      "sha256": "96b6fc191b56416054a3da8e631e87005eef3acbb23ce6089da10c3367e79cea",
+      "bytes": 14702
+    },
+    "Sounds/Custom - Lock n Load.ogg": {
+      "sha256": "74d1e1bafa86457866a82763381da6b951ea976db39730bb1f1d4b620310179d",
+      "bytes": 18078
+    },
+    "Sounds/Custom - Poison ammo.ogg": {
+      "sha256": "30f3d6da6a3496658f23a3212db6009fa92e012fa62359cce6180a5feb92fb7e",
+      "bytes": 28317
+    },
+    "Sounds/JDO - Dont move, Shackles.ogg": {
+      "sha256": "77a7b8f01c60b939abeefeaa16315def0520f900568ed493aec0cf3742d0ddc3",
+      "bytes": 44610
+    },
+    "Sounds/JDO - Loot banned.ogg": {
+      "sha256": "fa35d2480ca0a3d68e6095bf4748e5218dc0c54b03ddd92d7c0d4f2328b8d375",
+      "bytes": 45069
+    },
+    "Sounds/MPOWA - Aggro.ogg": {
+      "sha256": "ad4f41f9bc1acc951f00dd1b25289facf10dcfdb4fea73c557d372e57a88f921",
+      "bytes": 10323
+    },
+    "Sounds/MPOWA - Arrow Swoosh.ogg": {
+      "sha256": "e43f8c00eeda892ff8fe114a90ac4966e41bc9be0244eab2948e5c1a6e66636e",
+      "bytes": 8361
+    },
+    "Sounds/MPOWA - Bam.ogg": {
+      "sha256": "2f7185707cb7cff8bfbf7ee30feeaeb24cdef1beb55f5fd8563013c59c2589c1",
+      "bytes": 15001
+    },
+    "Sounds/MPOWA - Bigkiss.ogg": {
+      "sha256": "0e243ec802ad8dc04f048e3c136b36e5ef30bd3389ab70eea001d721c9799e48",
+      "bytes": 23517
+    },
+    "Sounds/MPOWA - Bite.ogg": {
+      "sha256": "58b0d4eeed553d6ea64cc8d9a6cfad1bdf2aea0147baae93e5f094fd42c5af82",
+      "bytes": 6360
+    },
+    "Sounds/MPOWA - Burp.ogg": {
+      "sha256": "f2a532fb6e6eb70feb75f596627dab43011e173b298129789322d550dd929d56",
+      "bytes": 38066
+    },
+    "Sounds/MPOWA - Cat.ogg": {
+      "sha256": "3137f20313c4e753716c96f9c73e8ea0776e1fe080df25287eb5d5766a111581",
+      "bytes": 16721
+    },
+    "Sounds/MPOWA - Chant (1).ogg": {
+      "sha256": "b4f1d5226bf9343e63948fd54913455b22e6188aa40cbd8015800d100af4f5bf",
+      "bytes": 53204
+    },
+    "Sounds/MPOWA - Chant (2).ogg": {
+      "sha256": "063c6d6b10529efc11864d8d323d8b9bc1fa670e11700195c4824c09c15b604b",
+      "bytes": 63078
+    },
+    "Sounds/MPOWA - Chimes.ogg": {
+      "sha256": "af86fce1fbbca4ddfee5e2cb74afef778da80ee0c585a77f13776899ef359fdd",
+      "bytes": 59299
+    },
+    "Sounds/MPOWA - Cookie.ogg": {
+      "sha256": "98a5f358f1f1e46f6cf10a78efc59c433d40958a3030422382b8bd82279155b5",
+      "bytes": 80147
+    },
+    "Sounds/MPOWA - ESpark.ogg": {
+      "sha256": "6f94b8b45295b51bca8555ebc5cb2f4710d18801c67642391cbdbe2a7bd20fc7",
+      "bytes": 24358
+    },
+    "Sounds/MPOWA - Fireball.ogg": {
+      "sha256": "c1df3a9a24856cb8b1b07e4a6c98d36ee261be57b9a52c09e4085eeaf06addba",
+      "bytes": 25069
+    },
+    "Sounds/MPOWA - Gasp.ogg": {
+      "sha256": "7dbef6bdb57ba49325acf0ebedf1c0a421fa1158eb04b774bddf4ea6c0b4cb92",
+      "bytes": 11062
+    },
+    "Sounds/MPOWA - Heartbeat.ogg": {
+      "sha256": "d34e9595cbb73990335e33e89052faa19022cb2440d819e50b3089d12e8c77c3",
+      "bytes": 35793
+    },
+    "Sounds/MPOWA - Hic.ogg": {
+      "sha256": "018482a07a06c6c511899bffd1481fee1a2fd486c419c6e77f6b0be844c22e7b",
+      "bytes": 7608
+    },
+    "Sounds/MPOWA - Hit (1).ogg": {
+      "sha256": "f407248f101ccae003e32dbfa151a968b6d4f429dfa688b03ecedce0d7c05476",
+      "bytes": 7665
+    },
+    "Sounds/MPOWA - Hit (2).ogg": {
+      "sha256": "d639fd0ad5f1785e1299ce386ab20e48aa17300b507c9d59d10b286d811af92d",
+      "bytes": 14095
+    },
+    "Sounds/MPOWA - Hit (3).ogg": {
+      "sha256": "d617fbbd0e36a00f382a5195bfd9a85b67af43e737f1524a51fd62a8e9a2cbd6",
+      "bytes": 20881
+    },
+    "Sounds/MPOWA - Hit (4).ogg": {
+      "sha256": "e2aedbbf0adc72a9d58398418253774f3b028fca69b39e16ef73d5f2bdf96e79",
+      "bytes": 21740
+    },
+    "Sounds/MPOWA - Hit (5).ogg": {
+      "sha256": "400a235b3645a748899da956117c799bf1f17ee8c5e6964b90d93d6d2b3e0de5",
+      "bytes": 21205
+    },
+    "Sounds/MPOWA - Hit (6).ogg": {
+      "sha256": "24cc2d5c5907f3bd0cd6c34a5aa730b1a06abe294efdd5be27b404eb74c30f7e",
+      "bytes": 16089
+    },
+    "Sounds/MPOWA - Hit (7).ogg": {
+      "sha256": "651f667192f0ea76f05d5343b3c4ef3c76225752aa52fef4fa6b8ff48a46239f",
+      "bytes": 7343
+    },
+    "Sounds/MPOWA - Hit (8).ogg": {
+      "sha256": "277cbdfa180d95233a51da21de0507af3cfe705b999fda01981b2321a95b8d00",
+      "bytes": 6604
+    },
+    "Sounds/MPOWA - Huh.ogg": {
+      "sha256": "d3485fd3c58726cbd819e212f3eac10986f3f3fda5bb21a2571b1051a903bdbd",
+      "bytes": 10122
+    },
+    "Sounds/MPOWA - hurricane.ogg": {
+      "sha256": "71550469cbe1e091c149b7772a5b901db8b6007ce155e65c76ad48caae699e02",
+      "bytes": 41337
+    },
+    "Sounds/MPOWA - hyena.ogg": {
+      "sha256": "29d19cb22284e2fc79e90792ec9633a517f79e0f2e8d8768964207f2221fd030",
+      "bytes": 20599
+    },
+    "Sounds/MPOWA - Kaching.ogg": {
+      "sha256": "6f0deee5c2d0925059a78d45eea08a79e2ffc3c864fccfb3660c798cda1569f7",
+      "bytes": 12162
+    },
+    "Sounds/MPOWA - Moan.ogg": {
+      "sha256": "f0fad61c4db2cdd432cbe5a9812409a607b06b979ca674472482ceb143a05311",
+      "bytes": 31262
+    },
+    "Sounds/MPOWA - Panther.ogg": {
+      "sha256": "34415046809e642bd39f40ee9791658ac73e5945da58fc585fc527dfdb3a2550",
+      "bytes": 13248
+    },
+    "Sounds/MPOWA - Phone.ogg": {
+      "sha256": "90a9a303ca98648fb1832f888ed0f2c5bb5b50b3d88bc8dd58987ccff46418a4",
+      "bytes": 16775
+    },
+    "Sounds/MPOWA - Polarbear.ogg": {
+      "sha256": "ec6f8070d27ea650846122f369bd40fca4af712b8d40739dc68eb75f3d8bb91b",
+      "bytes": 23323
+    },
+    "Sounds/MPOWA - Punch.ogg": {
+      "sha256": "bcfa29186deda57b5bd34e09d47b9b5c18102582578c9638bd99f002410f336f",
+      "bytes": 6672
+    },
+    "Sounds/MPOWA - Rainroof.ogg": {
+      "sha256": "4708948c9a9485861883b4f77fb234ea1ac1b2f7e1f6d310c405a429cb750453",
+      "bytes": 41242
+    },
+    "Sounds/MPOWA - Rocket.ogg": {
+      "sha256": "d6ae42c28917dd89993b0902d54794f51aff95ec71eb6c674bc251fc5d664b84",
+      "bytes": 37521
+    },
+    "Sounds/MPOWA - Shipswhistle.ogg": {
+      "sha256": "032e6de40eadfcd575e58eee03df9c1a64bac550885045d64536ca9972620725",
+      "bytes": 32510
+    },
+    "Sounds/MPOWA - Shot.ogg": {
+      "sha256": "6f8417e4d6908d34ed4a0893decf912ae0a89bb5cdbd373bcd8b732dcf2d9fa2",
+      "bytes": 28108
+    },
+    "Sounds/MPOWA - Snakeatt.ogg": {
+      "sha256": "1193dbaac65cb2cce5f82be1abc43249fd152edba1c0a19876a9e4aa0695ceee",
+      "bytes": 17966
+    },
+    "Sounds/MPOWA - Sneeze.ogg": {
+      "sha256": "32640c9ccc1b0978d37b7a5affbcc29ea42cdb09b53bfd437d142e5d98f0153e",
+      "bytes": 16376
+    },
+    "Sounds/MPOWA - Sonar.ogg": {
+      "sha256": "8b630564f7f77791f9b0e4f6f59ee0bebc8c163f4824032ead60e506747f49e1",
+      "bytes": 25876
+    },
+    "Sounds/MPOWA - Splash.ogg": {
+      "sha256": "1348a8335f676ebf7c08b0c0ae882699ee00b94aa9b10e407eca83df576b018f",
+      "bytes": 22195
+    },
+    "Sounds/MPOWA - Squeakypig.ogg": {
+      "sha256": "565bcfcf3a1cf3847598aa0b36018ccc5cd0f560f13ead0a9849dea829a3d5de",
+      "bytes": 87931
+    },
+    "Sounds/MPOWA - Swordecho.ogg": {
+      "sha256": "f21e375fd42e2f4f997db0876e8b2da1be47435bae7bbb49de6d7583fd3f80a5",
+      "bytes": 12823
+    },
+    "Sounds/MPOWA - Throwknife.ogg": {
+      "sha256": "26d606c4fff54d559a8636af62a20284f29c38aa7239b7a350aad362aff96318",
+      "bytes": 14696
+    },
+    "Sounds/MPOWA - Thunder.ogg": {
+      "sha256": "7ab4ccca0b5786b01ef159c995d0324b94d8dc17ef9c3c93018f5e321d5395a1",
+      "bytes": 31765
+    },
+    "Sounds/MPOWA - Wickedlaugh (1).ogg": {
+      "sha256": "3a2ea608249efa546695431d6d93aa3e592fa6fb9db9d227f7e3064c6875da06",
+      "bytes": 28044
+    },
+    "Sounds/MPOWA - Wickedlaugh (2).ogg": {
+      "sha256": "2e8eab5dfdec1748589bf9b14989c55d39788544ca62e9b00ef18411127b1602",
+      "bytes": 42223
+    },
+    "Sounds/MPOWA - Wilhelm.ogg": {
+      "sha256": "ac8ba942436d980b5911151ce9ffc20fdb90082d81d72990a12abb86e629e416",
+      "bytes": 12524
+    },
+    "Sounds/MPOWA - Wolf.ogg": {
+      "sha256": "317c58ddb9aef8f03df5f62fb8e8fab866467fdea9783458c49c8a72fae27283",
+      "bytes": 17620
+    },
+    "Sounds/MPOWA - Yeehaw.ogg": {
+      "sha256": "4868923855958f9de2fa9d6e71980c6679ae32655c70553d683aa3203188c56d",
+      "bytes": 34073
+    },
+    "Sounds/Trend - Uwu.ogg": {
+      "sha256": "4dc5305b9391d5ab6feefb4946d813fb0a3026570347fb13e2ee99b8e3a44f75",
+      "bytes": 12189
+    },
+    "Textures/doiteauras-icon.tga": {
+      "sha256": "7b2004fbc11a240f8446f4d132d7f494bc93fcb4d3ba911cc0e2cc8a77a4a26e",
+      "bytes": 4140
+    },
+    "Textures/IconAlert.tga": {
+      "sha256": "7405c34a77a983fbb79d7d835f5abe970e5e127002078d447d195c46330b0435",
+      "bytes": 24247
+    },
+    "Textures/IconAlertAnts.tga": {
+      "sha256": "dd5c9c0a4b31e99701cf300ab031e3fa1bb72142e200d22c703678a513063918",
+      "bytes": 58207
+    },
+    "Textures/MPOWA/Aura1.tga": {
+      "sha256": "dd0e71f62c0961df4c00e060809398282019ceffe52b548f9008da2522503f2d",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura10.tga": {
+      "sha256": "bf9a89ff3a36d0919b43cf5de6c196ea5ad03c14aa8a6ae2311ac8393fa5ffd2",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura100.tga": {
+      "sha256": "044cdd1d8727c2eafe6419581c4b7cdbb602757455251620e4120d039348789b",
+      "bytes": 23857
+    },
+    "Textures/MPOWA/Aura101.tga": {
+      "sha256": "631709adc41dc098d6353b3fdf5ce274a61fc88962e541ea9d5cbc19c087bb62",
+      "bytes": 11146
+    },
+    "Textures/MPOWA/Aura102.tga": {
+      "sha256": "e6d1a9c197b76a9be9b06407cb5a1aedc774af51e0c6b2516de3a6cd5d8f936d",
+      "bytes": 16582
+    },
+    "Textures/MPOWA/Aura103.tga": {
+      "sha256": "64d4250f41445c5a9357a484dcbce3f4a0ace4cd173971baa7ea1e512bc81ac3",
+      "bytes": 11549
+    },
+    "Textures/MPOWA/Aura104.tga": {
+      "sha256": "0155fa40d26ba1489802eebf8b944b86e4625b2bb84c071fc63496e1eeca342b",
+      "bytes": 1744
+    },
+    "Textures/MPOWA/Aura105.tga": {
+      "sha256": "c1e256f54cc181a9dc1babb548b3484bc54b59940da3f30cdb2467b9a34aae56",
+      "bytes": 12444
+    },
+    "Textures/MPOWA/Aura106.tga": {
+      "sha256": "af7e2446887902fa0460e76442eb8aa180bea2e0d00cae02520b31c07d907fee",
+      "bytes": 2568
+    },
+    "Textures/MPOWA/Aura107.tga": {
+      "sha256": "7227bffcedfe371352aac19e3c72181f89a1dd98ce2808af4de83ed15dddf1a9",
+      "bytes": 2566
+    },
+    "Textures/MPOWA/Aura108.tga": {
+      "sha256": "de206c8d7d94cec5c8a703e383ebb84c838f5d728cc85d653014382ed3319f83",
+      "bytes": 3920
+    },
+    "Textures/MPOWA/Aura109.tga": {
+      "sha256": "0f5651f4838e9393cf0dceb22bb274fd5260520b059ee2a1a6dcf7b07686cbd3",
+      "bytes": 4338
+    },
+    "Textures/MPOWA/Aura11.tga": {
+      "sha256": "d059f0938efbb4377a96e3c0821a77d15ae05ac4f3d65a6dfc79fe558dc4c298",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura110.tga": {
+      "sha256": "c3f8980bc866e3a63e96b63f368abbdd653ffce286e5eaa00edf3c86b754d9d3",
+      "bytes": 6992
+    },
+    "Textures/MPOWA/Aura111.tga": {
+      "sha256": "455865e30e44248d282bf4b59ea6c40e56decb2a3427b870e84f89fc3b786491",
+      "bytes": 6526
+    },
+    "Textures/MPOWA/Aura112.tga": {
+      "sha256": "15a41b10536a4989b3a7367e500416f0104328073604810255ec191295bd7384",
+      "bytes": 15700
+    },
+    "Textures/MPOWA/Aura113.tga": {
+      "sha256": "b0615478df9fb1693630af1b9c4df79e2eb7c5e52ab1e8155367783261f19afb",
+      "bytes": 24858
+    },
+    "Textures/MPOWA/Aura114.tga": {
+      "sha256": "573533e49de7fa50e54c87437dfde607499b83e6e65f73dbbc2dcffcb1d2ebe8",
+      "bytes": 4338
+    },
+    "Textures/MPOWA/Aura115.tga": {
+      "sha256": "6190f682ac3faa3a9e5135a811e9bd5fc3a52c1eac4a8686db2c12c90a42a8fb",
+      "bytes": 4398
+    },
+    "Textures/MPOWA/Aura116.tga": {
+      "sha256": "86d065f3f69451981741798c56965ea84ccd049a6cfd9d5105048c6130435581",
+      "bytes": 1178
+    },
+    "Textures/MPOWA/Aura117.tga": {
+      "sha256": "673c0378fb83f7d8522908447bf6d1b89c6cc99feec3fe1e4a15a1169e484f27",
+      "bytes": 8756
+    },
+    "Textures/MPOWA/Aura118.tga": {
+      "sha256": "234bfbbea6d76ddb49f4bfa30db56d97b1f869c0eaa1b839432a3c1879114958",
+      "bytes": 19210
+    },
+    "Textures/MPOWA/Aura119.tga": {
+      "sha256": "a5aace0764760a3bc243c918d935ca19c4447bd8e2643640ebe307982e26d5e8",
+      "bytes": 13590
+    },
+    "Textures/MPOWA/Aura12.tga": {
+      "sha256": "75f28cb6a1bf272dc8f9f7cf43556fe6a1fe977a068a7b357b195a9cc8660390",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura120.tga": {
+      "sha256": "c958de6ba955bdab0b3f9c2dfccc7d4700cdb7a28f0f9f4f8aa2ca262dc8c54a",
+      "bytes": 11756
+    },
+    "Textures/MPOWA/Aura121.tga": {
+      "sha256": "297850c1a6ccd172f77f98e90371beca833bd69cca6b532879cdcd107c5d34fd",
+      "bytes": 3437
+    },
+    "Textures/MPOWA/Aura122.tga": {
+      "sha256": "a82221096657b649ab1e3046c2d67ab29e169a67292b8a44ac757cbc15561b11",
+      "bytes": 4915
+    },
+    "Textures/MPOWA/Aura123.tga": {
+      "sha256": "240b5fdada9b8243a5e30b7ec815e06092b7348b5a5d0b66c0b0a9e08db46259",
+      "bytes": 4887
+    },
+    "Textures/MPOWA/Aura124.tga": {
+      "sha256": "ff8897e22072b03a46d517d8a8a73168f3e900ab8bc3eea003313e31cacffc4a",
+      "bytes": 5415
+    },
+    "Textures/MPOWA/Aura125.tga": {
+      "sha256": "2a1312f8459095c6d6ba14f3a47ccd652ab28b54b3cef8f20cba7aa26dc74608",
+      "bytes": 8644
+    },
+    "Textures/MPOWA/Aura126.tga": {
+      "sha256": "4b3c89c0320a330a918537b9c597577377e408bf3114b5fc2be51d0955eed5c9",
+      "bytes": 8898
+    },
+    "Textures/MPOWA/Aura127.tga": {
+      "sha256": "a69612fa1873a59dee99b98654ff4adbff6eb15dfd3c04292083dd9861c88476",
+      "bytes": 7761
+    },
+    "Textures/MPOWA/Aura128.tga": {
+      "sha256": "bd86a1a134ff41ddbe8f14c1efd9560a44e5a371dda13e582f720487fb98cc08",
+      "bytes": 9239
+    },
+    "Textures/MPOWA/Aura129.tga": {
+      "sha256": "69a0c515d6ac2939363ee4a13377bdcc1a9fc62963db02deccd25237313bf7fd",
+      "bytes": 24212
+    },
+    "Textures/MPOWA/Aura13.tga": {
+      "sha256": "ce32dc5b20275dd529cbe538a05603ae007447b3250ecf9ee3e458b315d77ccc",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura130.tga": {
+      "sha256": "98d3b1ce57bc874969b29c3016eeac1218c2a2e10eeb69be950c97823cd93c26",
+      "bytes": 35017
+    },
+    "Textures/MPOWA/Aura131.tga": {
+      "sha256": "c287c29a67ac2c4e27f1cdfd43897a8e6762b9c1cf0b5921df1d667996c7a4c7",
+      "bytes": 20623
+    },
+    "Textures/MPOWA/Aura132.tga": {
+      "sha256": "e1ae6f9f2b7c1ef69c9684724aa0c4a09920982f64daad034b9a79aaca0728f2",
+      "bytes": 11268
+    },
+    "Textures/MPOWA/Aura133.tga": {
+      "sha256": "a4916119a5f65538f41150176e2ed856c12cd7dcf2fb0e429c3c03a932c6bbab",
+      "bytes": 25204
+    },
+    "Textures/MPOWA/Aura134.tga": {
+      "sha256": "2a08e556d88846a6a83f9809239393675a874098bbeaa17df883b60aff9b0e35",
+      "bytes": 21407
+    },
+    "Textures/MPOWA/Aura135.tga": {
+      "sha256": "571a4ed84771ae294a5fcda202160f5bea8c6b894cf8001ea7178fa66d85f7ef",
+      "bytes": 24661
+    },
+    "Textures/MPOWA/Aura136.tga": {
+      "sha256": "fa5b42d8d7675b41fbc1ed503b698fad02b23fe8dd446826b34d76edaea34d8a",
+      "bytes": 26926
+    },
+    "Textures/MPOWA/Aura137.tga": {
+      "sha256": "d2293a95fff50d7d6f75cabad77cc74bea3fa7e1ad064d47073a185f50b4573c",
+      "bytes": 30173
+    },
+    "Textures/MPOWA/Aura138.tga": {
+      "sha256": "afb1c7e1c3fdc2a899a0fda69eb555cda3face34f79fe792994f5fc8a495b69e",
+      "bytes": 28183
+    },
+    "Textures/MPOWA/Aura139.tga": {
+      "sha256": "86c0f362a801c290ebaf0c5d7ec11f0219d0db54771164521e4365c6781d56a5",
+      "bytes": 21062
+    },
+    "Textures/MPOWA/Aura14.tga": {
+      "sha256": "a9fbd9c042159a4fd37f7462f50e7225e1ad1e948af14dcb2f7269721b8e802f",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura140.tga": {
+      "sha256": "959e36c0f954c5e9ed37147f1e30b2d41795fc00404b5f0d1762dd963b481cd2",
+      "bytes": 12772
+    },
+    "Textures/MPOWA/Aura141.tga": {
+      "sha256": "113dc0fce5cc3b0b774b68d78dfdbd417ceb7e79889d9151f1a512d07143f43e",
+      "bytes": 21388
+    },
+    "Textures/MPOWA/Aura142.tga": {
+      "sha256": "32084d6e602c84a2253d2980600ca33442c40eab8b642f528611c874bca60a98",
+      "bytes": 19723
+    },
+    "Textures/MPOWA/Aura143.tga": {
+      "sha256": "4054968263c895e35b27d2793ec767912b88b7bcac94da2f87aadfa53d0f5a0d",
+      "bytes": 108184
+    },
+    "Textures/MPOWA/Aura144.tga": {
+      "sha256": "1f4f0fa6c943f05835dc69d6b9381292b1243ad902478e692989bc9d0775b6e3",
+      "bytes": 77124
+    },
+    "Textures/MPOWA/Aura145.tga": {
+      "sha256": "89725c83f5472479cbb8af09f029960bdcc554978b1ea37c5a8a9767584c2a2a",
+      "bytes": 77220
+    },
+    "Textures/MPOWA/Aura146.tga": {
+      "sha256": "de1064017a7d4490c7608db0509f7c7a99c0a19f30439c3374a4e0f92647254a",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura147.tga": {
+      "sha256": "74ed2810de27eea6cfdc6f8051f54c2130ecde93cc7f107199b1a367b1b9ce2e",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura148.tga": {
+      "sha256": "5bda70a1d3f2c79a56853da32e5707289f48099db7469bcf07897e8929172d3d",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura149.tga": {
+      "sha256": "a23c27648630f606d3b03b10e586263fc9046744c32226e0fed6ded553063b3d",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura15.tga": {
+      "sha256": "c0b4fa81265ffa35ef1c8ff3a7f3bf79082830e3633e5a2475bad5a2899dea14",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura150.tga": {
+      "sha256": "ef4adf93e5fdf74e8258a99ed0727979ddbb20ef0e80609f4c980e1f9b850579",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura151.tga": {
+      "sha256": "115d8a01ce1507d615cef7156bedfa4e88bfdd777bfc9ae926ce0a4cd8d30a23",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura152.tga": {
+      "sha256": "b412e13c8c496c6985f24318fe0b7d51626a01cabab8154b5eb21ddaac5d4453",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura153.tga": {
+      "sha256": "b9faaeb9926cb58ca2600fc77b38f5bcdb55de15e96405cc38c7865cea505117",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura154.tga": {
+      "sha256": "37c94161bf76163c0b4468e891fc5e5f6b6b78f863d119319c27c903499d9315",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura155.tga": {
+      "sha256": "c1f1b319b363f54227cb1f6eef03117c6a263303bd1f74a0eb94e571ef42fa58",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura156.tga": {
+      "sha256": "3fa2b57fb3016c5bb6a98eecefe3fbdf32ac0ceab11b73e75a61748d33c2a650",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura157.tga": {
+      "sha256": "3a363ac30488cf0441b1202806500b07dc912fc353348de3e9d4841c4c1cfa43",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura158.tga": {
+      "sha256": "5f09ac4e27eb480dcf24ff83663d4667687662633e17b7f276702e020fd881e2",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura159.tga": {
+      "sha256": "1940070376569ae0c3cac00375d1dc0c43e2531fe25b25646221a16c2ffb76ad",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura16.tga": {
+      "sha256": "73fd834c1718f488fb01a0cbae5bd38dc109ca0ff1469df9192e237ae842e08a",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura160.tga": {
+      "sha256": "6707c2ee9910a0ee740b51a37de68bfa936c74d5e37030399a0b301923e7c660",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura161.tga": {
+      "sha256": "ff40c664fdab717f3f3059b9a641d1028fe63d87dcc7d866dfce889dc39e7957",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura162.tga": {
+      "sha256": "c9bd8569b5775cc4ceedda0ce93b736270c1091e2b3e8fd1ae3678fb6164a4d4",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura163.tga": {
+      "sha256": "87bb71871b56d4e96ee23124b1e5cf5be99b14b9547c437055a0c57b90b30f0b",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura164.tga": {
+      "sha256": "54c74f87ade7086fb17d6afd9c23170d185c391a3aac8dfb1a33ce13b0aabc92",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura165.tga": {
+      "sha256": "033734f30e12b87cae00bcc1d53f790f4400a1497445fed244b9662a6a20bb15",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura166.tga": {
+      "sha256": "570d77d531f988acafe461bd9a0ef082d1ae4754a00eddbe23ae964924d43810",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura167.tga": {
+      "sha256": "dcaaec505fb7366289acbff3c3a3a20efb7eceb04bd7d964fa0bf45820c2c71e",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura168.tga": {
+      "sha256": "1fe38cbd5d8b4d91a5985ef78607f77b8ad0dd279cfa2a015aa4251d67cf4559",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura169.tga": {
+      "sha256": "19c90e9b8e13c06034a7d98b95a105053da34375d105c6286d451110d5e478fb",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura17.tga": {
+      "sha256": "220a11967790012be6c98cab40ebb20f407e47bc76a573ae45db9c87e6256a1c",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura170.tga": {
+      "sha256": "4fd3af033d95e9b8d2645b855ce82e37010a06e8b9847434078a9f334cad0c68",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura171.tga": {
+      "sha256": "bb62ac6049d1b3b19fdde20f893e758239758a2ea55b3a69b42a931afd3cf10a",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura172.tga": {
+      "sha256": "48ed4bb1312307dedc856ea3223fd7865e689d2aa869cdfb908e1b02978fc694",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura173.tga": {
+      "sha256": "37ce6e79bce3ffc7d5401ff64d37ba2cd313bee97f9010d3b0a91a9a1550db77",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura174.tga": {
+      "sha256": "f6d259b1c6851347031f22304fa51da4b3ddd325c4e31eb86036bada7cb7a1e5",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura175.tga": {
+      "sha256": "8c1e5267f68f8aa2399ff2ff9e0e558ffceeafac6ebc6ceb54370da4fa36239f",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura176.tga": {
+      "sha256": "6d401f281ac130b2c9b89e83b25bccb275235bbf10d9250d5f6b640d74e095c1",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura177.tga": {
+      "sha256": "1b3be0fd44d50a7496caab0d0a80b75cc5604621db7a6b6825ce8fab51285ea3",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura178.tga": {
+      "sha256": "28d7e73a75e31cdbd0c1d1a3feb29f2e7c09b902f6950b79b3501d32c9c92448",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura179.tga": {
+      "sha256": "731ac3cfcfc77942e9556634d65ab9d0578b677431402c8d6e9f7ce4e69ec85a",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura18.tga": {
+      "sha256": "d950a50294cdd28c781b0c44d2ffe836212d70228ce40b7586d350045ab63e3f",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura180.tga": {
+      "sha256": "86c6a39c57e455999db1419eb8f5ee58173d654b0049db4e4440fb3231bdc5ba",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura181.tga": {
+      "sha256": "078be1d6b675f4eb9ff8287caa540a8bd066bf73dbfc9dd52a511010259de4b7",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura182.tga": {
+      "sha256": "056513af30b2fdfe1dc4b59280a5b9644b858a87edda3750448bfca532bf455f",
+      "bytes": 171700
+    },
+    "Textures/MPOWA/Aura183.tga": {
+      "sha256": "faa24770bc2f97cd00a82621d4d66b37774d2ce3d388752acd3ee620a1741f52",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura184.tga": {
+      "sha256": "721178ea80634a8cc801c64911b2682179f5f9ff89df0eac6bd6e6c9d72eb930",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura185.tga": {
+      "sha256": "e2e86c6c0d43ec26ac1db8167d04ee65e63505098e2ce53f1dadd5cc17ab9fdb",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura186.tga": {
+      "sha256": "4ff194eeb2535d17ee2ac15209aadf6c4e468cb76b1ed1cf142687ab6edc2967",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura187.tga": {
+      "sha256": "7218e84243ce2ca2cbbfe4060f5592da568d7ee38141e13bb3bbbb518866a660",
+      "bytes": 79160
+    },
+    "Textures/MPOWA/Aura188.tga": {
+      "sha256": "ef7ee2f439400781d28b2cfdf3171c608a9d6215930b05ea0c885b9352f57d5f",
+      "bytes": 75755
+    },
+    "Textures/MPOWA/Aura189.tga": {
+      "sha256": "4223458db80139e9edf96fbcd169861e2d577c5fe6086aff7c7aedbbfc5e852f",
+      "bytes": 68711
+    },
+    "Textures/MPOWA/Aura19.tga": {
+      "sha256": "08b9c14532e0c8c448e3bff17af19fdc24923fbffd315b14aa4fad9dc8bde6cd",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura190.tga": {
+      "sha256": "b435c3a9676f152a271ffef975aa32d8b0e756e1e6132c4526b9be492c5de34f",
+      "bytes": 70896
+    },
+    "Textures/MPOWA/Aura191.tga": {
+      "sha256": "b2782a738af752ab341e769f10828c576ca1c79e647f1df5971b448c93e990bc",
+      "bytes": 77043
+    },
+    "Textures/MPOWA/Aura192.tga": {
+      "sha256": "09bb5c089a49cf73699e857db7cb3ab319b2c592c75c9bbeb75c4fdc7b04dac9",
+      "bytes": 68681
+    },
+    "Textures/MPOWA/Aura193.tga": {
+      "sha256": "b154370a61ef76e4698bd6a71559e851c1c54d81368ac33b8323575b6fe7693f",
+      "bytes": 60852
+    },
+    "Textures/MPOWA/Aura194.tga": {
+      "sha256": "8bce25567287f1b4eca94eb3e32b44c80e1b0a6cc2cf1e357915b7c88a017f68",
+      "bytes": 74257
+    },
+    "Textures/MPOWA/Aura195.tga": {
+      "sha256": "0038fbf5c85af4ed48fadb11985b50feaf32fb054541eac02d5c1f9c53dac82e",
+      "bytes": 54514
+    },
+    "Textures/MPOWA/Aura196.tga": {
+      "sha256": "48656afc81000c196f35badb2007237955df867c7b0db5a73fcb282ed4229c5e",
+      "bytes": 64617
+    },
+    "Textures/MPOWA/Aura197.tga": {
+      "sha256": "943b9cf2def806f3d67e5d0bb353a5ff026b12ef2a07f85a80ca2f7704a94ed3",
+      "bytes": 44143
+    },
+    "Textures/MPOWA/Aura198.tga": {
+      "sha256": "6acc7caf5f2d62e36f600eb8d7aa741227e8fe6aabe39d4a0337351b2abff1b4",
+      "bytes": 41385
+    },
+    "Textures/MPOWA/Aura199.tga": {
+      "sha256": "13ab50c2940b9fcdd97ebabb4daf95a72e4f750bb944d1cbdc4f6e300696d22f",
+      "bytes": 48213
+    },
+    "Textures/MPOWA/Aura2.tga": {
+      "sha256": "f69770c93ec16f49746fbee9a46840c3e677fadb476aefeaca79c9abf9976be1",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura20.tga": {
+      "sha256": "3ae344fa33dfb6f3cc419d2cb4e7d1fb6d8081bcf40211e54eb0050d233ea953",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura200.tga": {
+      "sha256": "8d2b4cdde8cb0e0fda65cb419e6b4129096eead8a755e1b280f42d6de05855f0",
+      "bytes": 94759
+    },
+    "Textures/MPOWA/Aura201.tga": {
+      "sha256": "07ddc9823fcf16286e58d4b1bf54e72c1a8a2ad89bc01fc6bed13114a1f97a0b",
+      "bytes": 37858
+    },
+    "Textures/MPOWA/Aura202.tga": {
+      "sha256": "7246d4069640aec56422046fe5e13ca1c357f03366744dcad5b6c8c7f91ab014",
+      "bytes": 48960
+    },
+    "Textures/MPOWA/Aura203.tga": {
+      "sha256": "5e8d3fd7c5547f9a3166b0fd9c3f70d1f431526bd42526088a48c4e81ab849b4",
+      "bytes": 60241
+    },
+    "Textures/MPOWA/Aura204.tga": {
+      "sha256": "c91cfeefbdc609b50a6d975b810e32ddcb0667f63f0757f498eeb31478ec9e85",
+      "bytes": 49956
+    },
+    "Textures/MPOWA/Aura205.tga": {
+      "sha256": "b42e4020c3ae27e8ab3ec12ece760a9c50b50e8c7eee7cbbc8ca5bbc23571721",
+      "bytes": 49461
+    },
+    "Textures/MPOWA/Aura206.tga": {
+      "sha256": "f7e53919ea8616703812aab7a467b81be4d5679a98c6b92ad01f084b8764c4c0",
+      "bytes": 74507
+    },
+    "Textures/MPOWA/Aura207.tga": {
+      "sha256": "9887e69032d1563c1d19b03ee67eb51f2a24513f2296d678dd845fce37f821e3",
+      "bytes": 39497
+    },
+    "Textures/MPOWA/Aura208.tga": {
+      "sha256": "1ec83779b00ae8546d907f4587c3227b125b29eef0fb43dbf97082fd1ed67d8f",
+      "bytes": 35015
+    },
+    "Textures/MPOWA/Aura209.tga": {
+      "sha256": "3bb212ba3f69a1704bc478b85af7374dd0a2a95d390ed7c1ddca1a87b5259158",
+      "bytes": 26658
+    },
+    "Textures/MPOWA/Aura21.tga": {
+      "sha256": "605cd097b1d057ea5d7ee90ee24b2f19613b32a15fc2ca32984b9518a974b03e",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura210.tga": {
+      "sha256": "4712a38def5cc092a35abcc809e7cc630fbbb99c3eb43fd6fa065205058fdb30",
+      "bytes": 28799
+    },
+    "Textures/MPOWA/Aura211.tga": {
+      "sha256": "0610decdd230a80c2e2093e30a79aa3e804535a881d47b36f3693fac771f48d1",
+      "bytes": 30786
+    },
+    "Textures/MPOWA/Aura212.tga": {
+      "sha256": "9d7774dd17ccde212dcba00c414c5a5565aecfc99e63cf5e3fd73c78227e8f94",
+      "bytes": 14710
+    },
+    "Textures/MPOWA/Aura213.tga": {
+      "sha256": "c5f7a1e5862e388e3a23b22e7d5212239c07cd58f6aac0c74812bbf2cff55cbc",
+      "bytes": 22718
+    },
+    "Textures/MPOWA/Aura214.tga": {
+      "sha256": "becc9dc0e779b9c46aa592f698320ea81621a2b9132d207558c9bc4178d60ad4",
+      "bytes": 63459
+    },
+    "Textures/MPOWA/Aura215.tga": {
+      "sha256": "946356cbce3493aef560f0a25b9eab140bd1fcdce2153de1af7199e5614db063",
+      "bytes": 47930
+    },
+    "Textures/MPOWA/Aura216.tga": {
+      "sha256": "2798d824a31a211cea10bc1ef39397aa9e918721b90feb597ca4c9f26dcd7446",
+      "bytes": 74337
+    },
+    "Textures/MPOWA/Aura217.tga": {
+      "sha256": "35b52af07328379fa2f89fe46bff11a06e5f7752ce102a18c058d8f7dd542a54",
+      "bytes": 80380
+    },
+    "Textures/MPOWA/Aura218.tga": {
+      "sha256": "a0bc7ba98d8e13d7fca8c8542a4d86ee4f28ea8ff32c20fd73baf339495b9fbc",
+      "bytes": 79183
+    },
+    "Textures/MPOWA/Aura219.tga": {
+      "sha256": "0b70ae23a774148a63417eaa17f4efa5245d3145260b9aea39a9b44f919249e1",
+      "bytes": 62359
+    },
+    "Textures/MPOWA/Aura22.tga": {
+      "sha256": "02b602cacce3442e5ac7abb1bbf55989c7289daa21a5a61bf4664d2ee6c0fd7d",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura220.tga": {
+      "sha256": "e7df65e7e2d4f696590b9b635d35845a11d90fb41d3f4c17e206ddc8ec350ab4",
+      "bytes": 63363
+    },
+    "Textures/MPOWA/Aura221.tga": {
+      "sha256": "35a65b1d6b2a42fa2bb43d0a877c89ce7e7882cfd71ab91f09a34c1f5a727159",
+      "bytes": 83005
+    },
+    "Textures/MPOWA/Aura222.tga": {
+      "sha256": "31a8b28c3e53714124dda0a13c35a928d20f80e09345160d8acaedde0e6d5ec0",
+      "bytes": 56039
+    },
+    "Textures/MPOWA/Aura223.tga": {
+      "sha256": "1b39f908ce3729ea709f2f72c05f1679346c4de557a50817d7ac03be9419c57f",
+      "bytes": 49649
+    },
+    "Textures/MPOWA/Aura224.tga": {
+      "sha256": "b2b78e0870a7f680592696db766e057171ab388ea976408b870b065e3c344a7f",
+      "bytes": 43839
+    },
+    "Textures/MPOWA/Aura225.tga": {
+      "sha256": "14199b6898185f23203b8055d5186924aab979eaf3e87e50e679a8a3d3fe5d7b",
+      "bytes": 25049
+    },
+    "Textures/MPOWA/Aura226.tga": {
+      "sha256": "e539b33fdf094d3e0f6a9822e136aab9a6d6cb64ef95c4613f434f685b345d67",
+      "bytes": 73744
+    },
+    "Textures/MPOWA/Aura227.tga": {
+      "sha256": "a336390e7787cd49f249cc0577944804145b95e3da975cada3c2d4376816fd1a",
+      "bytes": 64379
+    },
+    "Textures/MPOWA/Aura228.tga": {
+      "sha256": "b1461da3e5234dc8129fb56c860300fc513a858a44e1540136ae5e90c2b3e41a",
+      "bytes": 42932
+    },
+    "Textures/MPOWA/Aura229.tga": {
+      "sha256": "888f0bf1b130f05a4a4637167549c10b66cb7536a37c633add32d38cf75fa2c8",
+      "bytes": 55281
+    },
+    "Textures/MPOWA/Aura23.tga": {
+      "sha256": "6b31f16fc71c926ef554d03f752e386e3564ff6c98f65cdbd1038f0ad8284797",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura230.tga": {
+      "sha256": "50e82b9a01286b3b94a4058b50fbb80c0ab22398a84e3d92d593963e4b32760a",
+      "bytes": 66900
+    },
+    "Textures/MPOWA/Aura231.tga": {
+      "sha256": "5061627653f5b6e3ddcf80156ff3723d47d0fd15b3b8325b29b89374f8992a3b",
+      "bytes": 65855
+    },
+    "Textures/MPOWA/Aura232.tga": {
+      "sha256": "b3965174fba831296024fc2da5b5649aa8cc3efdeac0b2f19b2d86f1b26c1b50",
+      "bytes": 36713
+    },
+    "Textures/MPOWA/Aura233.tga": {
+      "sha256": "293d3252e960c966365b10275dfa402e1197fb0a820ddec1b2fabe06309d42b8",
+      "bytes": 62107
+    },
+    "Textures/MPOWA/Aura234.tga": {
+      "sha256": "77b7ad24826142a850e98de3eb1e3e6ac83363ed0bd34620478c3c90e6cb4fb8",
+      "bytes": 35805
+    },
+    "Textures/MPOWA/Aura235.tga": {
+      "sha256": "1096bfbde4315145386c6f40864165113ea1ea6e36c679cd19df35847eae7305",
+      "bytes": 65536
+    },
+    "Textures/MPOWA/Aura236.tga": {
+      "sha256": "0aabf45fc821ba220a93da4fdb0ad845157ce650ba69dd3251fe3e6ba8ffc102",
+      "bytes": 98135
+    },
+    "Textures/MPOWA/Aura237.tga": {
+      "sha256": "c84f40933e8332faca51656fa7f6742e8caee77bf0e502efb42e3b556559a064",
+      "bytes": 61738
+    },
+    "Textures/MPOWA/Aura238.tga": {
+      "sha256": "25c31fe9bff0390ae228260ba64351c78eda919287c22eb047f97ab37f96a9f0",
+      "bytes": 64114
+    },
+    "Textures/MPOWA/Aura239.tga": {
+      "sha256": "4d3de292401a46ca3b24d7ad76662f670b34f993a0a797b36143ff39fcd572fc",
+      "bytes": 66597
+    },
+    "Textures/MPOWA/Aura24.tga": {
+      "sha256": "95d74ebd6036df5ee16b844a8a4c5be026b18420c33896264326d37d1be1abcd",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura240.tga": {
+      "sha256": "2d6e63aec8f3c4212cc32c74332ca7ef4a9871ed725ff988d3a34bba73110d9c",
+      "bytes": 66597
+    },
+    "Textures/MPOWA/Aura241.tga": {
+      "sha256": "ce32dc5b20275dd529cbe538a05603ae007447b3250ecf9ee3e458b315d77ccc",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura242.tga": {
+      "sha256": "f32c4b5f37f3a1944f8b8b0d241d1f1e6abe3188d3d82d5e0ee834c07bba2226",
+      "bytes": 66597
+    },
+    "Textures/MPOWA/Aura243.tga": {
+      "sha256": "06f8d48e9fd9963da4a42a899d838deb832a6aa364d366407ce73ff46352f4c5",
+      "bytes": 66597
+    },
+    "Textures/MPOWA/Aura244.tga": {
+      "sha256": "b587f9bd21263e82ebe156417cfab1bc2c1b9d6ff943aaa6d31bf609dcdedf2b",
+      "bytes": 65554
+    },
+    "Textures/MPOWA/Aura245.tga": {
+      "sha256": "15a24bf409a8004716a2d7afe5b2ab712a903412441980efb95c2b5598ff64ee",
+      "bytes": 65554
+    },
+    "Textures/MPOWA/Aura246.tga": {
+      "sha256": "561f9abc4d5139cf37f69b1fa80c99295dc7abb5247ed72ac6eade1956694201",
+      "bytes": 65554
+    },
+    "Textures/MPOWA/Aura25.tga": {
+      "sha256": "a3aed1fad34c4d2d192d3eed5f329fbf0dc1b051c8eedaff8efb2da3038bbe71",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura26.tga": {
+      "sha256": "7745ff0fb3be1b667aca80e44257aeec62988c58c36e8769eceaee9c34c2b8c6",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura27.tga": {
+      "sha256": "8e63294c3e5d357a7deff6c83a11f08212afd9ced21c3d1fbd7e78920abffb07",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura28.tga": {
+      "sha256": "018f4867f6fd02698f2e511a709b4483816356292d83c5110b6574169826fca5",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura29.tga": {
+      "sha256": "ffa89a8a0a8064b44ae9400ab01d7c73d019c0fb95ba9e6e56aec6989521e007",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura3.tga": {
+      "sha256": "cfa2940f2dfa0768dc728fca55425e0793551af8688beb0157364a9e2dd5e083",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura30.tga": {
+      "sha256": "b353a36877e6d900e8d82a3a7d11d978e690da755379a70910e6775dd31bc395",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura31.tga": {
+      "sha256": "8376d32b2c0f717c50df1d63d152799b76b2d9359004d783865b0958daff6de7",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura32.tga": {
+      "sha256": "e03c1c6e9e4a55d0fc1934a5664f58d375762f7899bddd0c3a6cedee61c81551",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura33.tga": {
+      "sha256": "73eecdbb38be03ab6be1b1c5870e746fac1f7252024eb3cd6e2374f26236b68d",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura34.tga": {
+      "sha256": "ed46b63ef0beb9b8529cf3a1ef3bc1b0e1d13d014829bcd8bd3d9749e087cb52",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura35.tga": {
+      "sha256": "e7e14a8498eb935d27f22f50a7aa638f68f35bb188c04c70230f8ca9f5ce32d2",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura36.tga": {
+      "sha256": "5eaa655e40ce1d677d7a9e599e4000ec4644681c9a6266dda409d5ab2214579a",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura37.tga": {
+      "sha256": "cd252711e641e0bca5f743ffa20f7e23f32882a8acd9a249aeff7427ad6440c8",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura38.tga": {
+      "sha256": "6e7d5b68e75e1efdf55bc179e5da02794332447049a0e6cc3b5a48ea6f9f809c",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura39.tga": {
+      "sha256": "a7c269ffbbd5da5c2dde164f72a90ff0e14025735050a5c2f58adf5e14e5d366",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura4.tga": {
+      "sha256": "69890885ad8a491bdcd368335ce653041eb7b146f3c19cb3c99da3e443a1b5ef",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura40.tga": {
+      "sha256": "e62fe705c025e2422f6e086c0d7db20111c9c33671241a80abccc91cd5440d7e",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura41.tga": {
+      "sha256": "e8201a78b5059fafa5c92461302eafef4e75a23bd974027c6319fb58b8b03559",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura42.tga": {
+      "sha256": "ab75671837e7e4d51e7f4143ba419361b5490f2c9ebff010166597c186a1146c",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura43.tga": {
+      "sha256": "7de516f1fba32154f840c23813fb3d1b6480e5d08f3501c27ba466862aa7b28c",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura44.tga": {
+      "sha256": "c19e8ab0c1fc701bbbc16466ca9d0f517cc830873e4ff9cf25f248937e445e26",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura45.tga": {
+      "sha256": "43171d4db032cbb5e259c1b6d9ed1bd87cfe4ce4e42260fc2a2512b1a39667d0",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura46.tga": {
+      "sha256": "a7d5a7a749eca91a254ff85b510df1ce1116f3a9c27e2dff4c7146d6cb9a7825",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura47.tga": {
+      "sha256": "016b4fcd66139f3dd67dcf0d5a8070eb300cc9943ccf297ae04f7b3dfd9ecb00",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura48.tga": {
+      "sha256": "90f6c7437103a7b0de0ee6c7d7799ab4f030820ce527e23590fe0c8f308d9108",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura49.tga": {
+      "sha256": "87289bbccf6516e13b4769df5133559a8623998b23bbf7213272889b3d2c9646",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura5.tga": {
+      "sha256": "dc0059e5ca49f38eaf2742e5b22c104f9407f8cae2ac2f6b3803df6906816fed",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura50.tga": {
+      "sha256": "89cb7c098b64a21dc243be826a99d6d16dd17cd011f5f207f304891f1bb7c8e2",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura51.tga": {
+      "sha256": "c841d8e347275029e1c80964ad1355b4e9c7cd139eb1755a28190194c45bec59",
+      "bytes": 16762
+    },
+    "Textures/MPOWA/Aura52.tga": {
+      "sha256": "b59993a825d8ae1616229ecf54172fbe9526fed0eec4b9583bd7518947708d2e",
+      "bytes": 21406
+    },
+    "Textures/MPOWA/Aura53.tga": {
+      "sha256": "f80b95ee9116ac579a9686124152b0ab2461a1e4525f3c4712c3d88e61743f6a",
+      "bytes": 18731
+    },
+    "Textures/MPOWA/Aura54.tga": {
+      "sha256": "ac093656d0c4e8d4b05d23477f345c0ae08e002c56c4e4ba2530f2a1f69f4c79",
+      "bytes": 10119
+    },
+    "Textures/MPOWA/Aura55.tga": {
+      "sha256": "16de71a3260d996f91e64dbc305f14848c6b5c35b386ebd6c80b2103a6bab9bc",
+      "bytes": 148575
+    },
+    "Textures/MPOWA/Aura56.tga": {
+      "sha256": "e0c1bcd1a76428daaa6d09d43d898356fb1ddc9519823160af2e0e1cc650c9ca",
+      "bytes": 164828
+    },
+    "Textures/MPOWA/Aura57.tga": {
+      "sha256": "87fabea923cee38ba422faca368304dc3ab200afcb3a2082f939cc5566bbcb2a",
+      "bytes": 177085
+    },
+    "Textures/MPOWA/Aura58.tga": {
+      "sha256": "e5ea8104f6387222980cb04ee7778510f87aa382e8d363529e23c6b6581f4925",
+      "bytes": 180175
+    },
+    "Textures/MPOWA/Aura59.tga": {
+      "sha256": "15944c56b78c03f9e632b8132a39c1f5560a95e8f8c5936b91a9c4b276ec159a",
+      "bytes": 200785
+    },
+    "Textures/MPOWA/Aura6.tga": {
+      "sha256": "541c2c431b575a882912717514438aaa5129db75f27e3691e7e5b488d9130a2e",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura60.tga": {
+      "sha256": "a9b66512b195be0b6a5c3fc3850cbc664273682376c5be7ce13659363d66cd5a",
+      "bytes": 200246
+    },
+    "Textures/MPOWA/Aura61.tga": {
+      "sha256": "810c1c3f3860b00eef8b08b63b987d55c9299e1a53054518b9bf980e60dc7e4d",
+      "bytes": 29077
+    },
+    "Textures/MPOWA/Aura62.tga": {
+      "sha256": "1fe1e8abc349d5645797d05e54cda0bcc2d76f426bf3f216b525bbde6d983fd6",
+      "bytes": 30203
+    },
+    "Textures/MPOWA/Aura63.tga": {
+      "sha256": "8fc1f9850534bbcb9b3d8f9ae61c383b6746b00425a95872e25ec574a0999302",
+      "bytes": 143531
+    },
+    "Textures/MPOWA/Aura64.tga": {
+      "sha256": "4263cdb380c1a49600a9381cb55e275b2075df657273eebd8d6e8205b2e96ef3",
+      "bytes": 142767
+    },
+    "Textures/MPOWA/Aura65.tga": {
+      "sha256": "7c133e5bd8fe40c009a4d6edfcff67f31aad18a59dc594d6bd5b8a9048de033a",
+      "bytes": 21937
+    },
+    "Textures/MPOWA/Aura66.tga": {
+      "sha256": "c056b350e03540f4923118a06c25ae567f1bb671ab1f7a313dca72607353991d",
+      "bytes": 19911
+    },
+    "Textures/MPOWA/Aura67.tga": {
+      "sha256": "19ae4dfbf41b7f9a538cbe30eb3d2fd2ec9b88efd835cd79eef960b30352f7be",
+      "bytes": 21937
+    },
+    "Textures/MPOWA/Aura68.tga": {
+      "sha256": "13efa0ebe8bd1f920acbfd20b58303db56374e65a612d4ff17e629cf72e0f28e",
+      "bytes": 44126
+    },
+    "Textures/MPOWA/Aura69.tga": {
+      "sha256": "9ca71e531315715e07e0437b87f1b59e8e7e8d86507a51330c324d67b5f03bc3",
+      "bytes": 9674
+    },
+    "Textures/MPOWA/Aura7.tga": {
+      "sha256": "4c6e36b71cc71d9bb246c8249b63dee58f2895e7ba41389b6f74ac2f23f063c4",
+      "bytes": 262188
+    },
+    "Textures/MPOWA/Aura70.tga": {
+      "sha256": "104772e5b28ff560be6cbbb1a5628abfbf3d9323c57999013f476e34ed01600d",
+      "bytes": 11591
+    },
+    "Textures/MPOWA/Aura71.tga": {
+      "sha256": "d0c20b3cb6cf000a62f0786d6bd199c70119e02ac07d79c9f33bbd88dc3dadbc",
+      "bytes": 764783
+    },
+    "Textures/MPOWA/Aura72.tga": {
+      "sha256": "14005e9bb9af3511d0c0f6fa7c50a0f04af4d0e270d65abaf9fd46c468a3f1f9",
+      "bytes": 42480
+    },
+    "Textures/MPOWA/Aura73.tga": {
+      "sha256": "de2290a170a7ef42f5fd04ee5a4b47a868f10b57890e7c9b8785d391d49cc9b9",
+      "bytes": 78204
+    },
+    "Textures/MPOWA/Aura74.tga": {
+      "sha256": "cf3934b20f5058fe69387a9a87ecfabc93afab9e3171fc858915c727bb498de4",
+      "bytes": 5144
+    },
+    "Textures/MPOWA/Aura75.tga": {
+      "sha256": "5c01ce4aabcd85631c4b981621d2119362bd4246a040f7776c022687fbfeed7d",
+      "bytes": 21467
+    },
+    "Textures/MPOWA/Aura76.tga": {
+      "sha256": "5db97ce747aa59e802387ad826046e7d20ca4e2a18f33ed89079000bb1bae399",
+      "bytes": 12083
+    },
+    "Textures/MPOWA/Aura77.tga": {
+      "sha256": "1c65378adc87e41395788cd32a1eb18da15c31d6bc0bdaa569e6270fa9932d80",
+      "bytes": 24560
+    },
+    "Textures/MPOWA/Aura78.tga": {
+      "sha256": "0824f328e55ef119bed67230901514e0806766f5721c4082044350cc154bba2b",
+      "bytes": 15153
+    },
+    "Textures/MPOWA/Aura79.tga": {
+      "sha256": "8c980dd649a9ce8bb4a0f169a82175fb2c79c09360a911cbf195fd4832b565f3",
+      "bytes": 32497
+    },
+    "Textures/MPOWA/Aura8.tga": {
+      "sha256": "45ec8ef650631d676f7b45f3b4a5e690d818958e47c3107d9a15340fc25313c4",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura80.tga": {
+      "sha256": "d414f97fa53f3c41b931bc065029b082cc1d38059bb2da443a78d91d71fa35d9",
+      "bytes": 24938
+    },
+    "Textures/MPOWA/Aura81.tga": {
+      "sha256": "5e8f10c5ee24a7cbb22f5fe1ad4a582ba6dc11e90e2b951d0d2a66ca463ab3ce",
+      "bytes": 55725
+    },
+    "Textures/MPOWA/Aura82.tga": {
+      "sha256": "5996ed4a41c9c24234c6e427342ff3a582f45a480efd1fb3d7b3d6b3b88f46cc",
+      "bytes": 13788
+    },
+    "Textures/MPOWA/Aura83.tga": {
+      "sha256": "80a25faa14945bf9b22973f75416a08a52ad8c548b9d768a692f439388d057b6",
+      "bytes": 15187
+    },
+    "Textures/MPOWA/Aura84.tga": {
+      "sha256": "d74f9b4dcf1639fe2ce0d855906fdc441c67d32374a0395d5b9a3d6481b2d759",
+      "bytes": 7734
+    },
+    "Textures/MPOWA/Aura85.tga": {
+      "sha256": "76f4dda0c338586992045270b493ce4be74867efee48d5b2feb07398d2fc0ab1",
+      "bytes": 10367
+    },
+    "Textures/MPOWA/Aura86.tga": {
+      "sha256": "4fd6c1c2448fbe91c0f33889d8abf9083b19602e1ea2a6b8b81cf6aec2bb228b",
+      "bytes": 10438
+    },
+    "Textures/MPOWA/Aura87.tga": {
+      "sha256": "9a17be0b3475372f93c2a36dd25e334ab2ac0312fe53b2a46ed21da4a6d0b4ee",
+      "bytes": 16759
+    },
+    "Textures/MPOWA/Aura88.tga": {
+      "sha256": "5cb3bd5f9e043115709812d55d8901ab2a3f5e7c755834bc985809939083de23",
+      "bytes": 32253
+    },
+    "Textures/MPOWA/Aura89.tga": {
+      "sha256": "dbf05bc7998008e8709f983318cb078b410e305057e59bafc7e714ae97010b2c",
+      "bytes": 10646
+    },
+    "Textures/MPOWA/Aura9.tga": {
+      "sha256": "913d08d4c3aff493ad5b8383c4e636b43d9e8ee17aaeb2a28f34bbf61cf2a542",
+      "bytes": 65580
+    },
+    "Textures/MPOWA/Aura90.tga": {
+      "sha256": "d8680c5848ebb3588b7c1f23b9151d2da0f93a388546f21b23bb02f159300767",
+      "bytes": 10100
+    },
+    "Textures/MPOWA/Aura91.tga": {
+      "sha256": "81c4373e44fd0377384a4567b8ba961e9a14366eacb8abc6645af2e494b4c529",
+      "bytes": 9988
+    },
+    "Textures/MPOWA/Aura92.tga": {
+      "sha256": "7ebacb8f411543b54f6e65e25f4ca4520b34b1e998225bd8825e67f42e9b2df5",
+      "bytes": 10745
+    },
+    "Textures/MPOWA/Aura93.tga": {
+      "sha256": "8a94da29fc2ea5e54efcfe6bcde5aceafaac79bf7ee40bc8ddb2b7aa9f2a510b",
+      "bytes": 9074
+    },
+    "Textures/MPOWA/Aura94.tga": {
+      "sha256": "819ed6afd307a403cb8be4d30e6dcd05a5874acacdc91bf8b51fae400a986e9a",
+      "bytes": 39905
+    },
+    "Textures/MPOWA/Aura95.tga": {
+      "sha256": "d7d1c80c518703af4a37e1249c6c87ac8b8ce6dd37d819ca5f0423fb8984b71a",
+      "bytes": 15284
+    },
+    "Textures/MPOWA/Aura96.tga": {
+      "sha256": "9a25ab4a6c3a6088ecfc6145ef04c2fbec83859b630c4f8f6c677e56fb839298",
+      "bytes": 12477
+    },
+    "Textures/MPOWA/Aura97.tga": {
+      "sha256": "4725b52677d81f67cf8684c90f4e5ab8d92cd0c20c9b50522b9277013ef33184",
+      "bytes": 25475
+    },
+    "Textures/MPOWA/Aura98.tga": {
+      "sha256": "167d858646acd24d9ab92b7e144e491ef069ae70ae6d27377dfe9e549a17b64e",
+      "bytes": 26751
+    },
+    "Textures/MPOWA/Aura99.tga": {
+      "sha256": "8fe5c0d0f158f808bf1ddc8679f31bac5ad54dacbcd0a0febf775881832c7124",
+      "bytes": 36004
+    },
+    "Textures/pfUI/bar_elvui.tga": {
+      "sha256": "965dcab4e85bad31eecdfa0159484246ef2e40dd2dca023fa53dda6097d5e90c",
+      "bytes": 32812
+    },
+    "Textures/pfUI/bar_gradient.tga": {
+      "sha256": "15fc5bc47f07b1937297f69d50cad18436d7685c497cccf24a94490d5b992549",
+      "bytes": 24202
+    },
+    "Textures/pfUI/bar_striped.tga": {
+      "sha256": "9c02969479e5dcbce2bcbb4f48bf2f0b2b00c44fa7556140fc8958ba0e9ad09d",
+      "bytes": 32812
+    },
+    "Textures/pfUI/bar_tukui.tga": {
+      "sha256": "500b74637f1d0fa7a75b965152de3e9c1814cad3706526938ea251f683da8e7e",
+      "bytes": 14690
+    },
+    "Textures/pfUI/bar.tga": {
+      "sha256": "be38c30d46b0872762f6b8b785004a7b641170e0036100765c4643d6945bccaa",
+      "bytes": 247
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

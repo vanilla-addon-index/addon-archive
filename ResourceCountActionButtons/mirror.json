@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/jsb/ResourceCountActionButtons",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jsb",
+    "repo": "ResourceCountActionButtons",
+    "name": "ResourceCountActionButtons",
+    "url": "https://github.com/jsb/ResourceCountActionButtons",
+    "api": "https://api.github.com/repos/jsb/ResourceCountActionButtons"
+  },
+  "commit": "aeaeb3aa940ba2cfb4a87b75b2b6f46b22b9ec14",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "cf237c7aff44efbe6e502e645c3e06da03a69d7bdeb43392108ef3348143417e",
+      "bytes": 10
+    },
+    "RCAB_Scan.lua": {
+      "sha256": "f58e02b78b880e5fa167cdf159c3bd46b965c8afd6c1a7677d789bfe42e1faf0",
+      "bytes": 3031
+    },
+    "RCAB.lua": {
+      "sha256": "c13e0cfad513d83e905e718e0487d755a8cad9eb3c6c7b015d28fc5ad6177557",
+      "bytes": 7053
+    },
+    "ResourceCountActionButtons.toc": {
+      "sha256": "b0cb43131ae28e4e2ff5ee9146552b550c441ac9053470df4cb1b682d5d01596",
+      "bytes": 218
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: BossMechanicHelper
+## Notes: An addon to share boss mechanics in a raid or group.
+## Version: 1.0.0
+## Author: YamaYAML
+## License: MIT
+
+BossMechanicHelper.lua
+BossMechanicHelperConfig.lua
+BossMechanicHelperDefaultMechanics.lua
+BossMechanicHelper.xml

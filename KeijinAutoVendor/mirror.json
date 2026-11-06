@@ -1,0 +1,70 @@
+{
+  "upstream": "https://github.com/KeijinDE/KeijinAutoVendor",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "KeijinDE",
+    "repo": "KeijinAutoVendor",
+    "name": "KeijinAutoVendor",
+    "url": "https://github.com/KeijinDE/KeijinAutoVendor",
+    "api": "https://api.github.com/repos/KeijinDE/KeijinAutoVendor"
+  },
+  "commit": "4cefadbc99d7c5d452e67c7c151bdf917c8de0cc",
+  "sourceFiles": {
+    "auto_vendor_repair.lua": {
+      "sha256": "be77b1a560754a6a21ff4db1138a257d6d09b21d6af318ea5ab9933056d3dd58",
+      "bytes": 897
+    },
+    "auto_vendor_sell.lua": {
+      "sha256": "116f47f6b8833c12ba8b312c02401b926f62f7c63bfd9fd87cdbb00fecb965d2",
+      "bytes": 1780
+    },
+    "core.lua": {
+      "sha256": "9a647288d0c6aa15345a9c7fbab08136ca737b83f99dce22cdccf3d751ed5460",
+      "bytes": 1230
+    },
+    "DEVNOTES.txt": {
+      "sha256": "98d447513245ac8ef5ca0292a0db847a4f977717cb7e419961094146c9aea8ad",
+      "bytes": 3108
+    },
+    "KeijinAutoVendor.toc": {
+      "sha256": "304c90f98cacb7c708f06b2cf51d03b002efa5094d607d02bc0b4866e3974fd8",
+      "bytes": 190
+    },
+    "LICENSE": {
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "bytes": 18092
+    },
+    "LICENSE_GPLv2.txt": {
+      "sha256": "7a13bbb95afb11ada9afbfb320a4849c79382798c0176c39a742029b1cc1c89b",
+      "bytes": 1274
+    },
+    "README.md": {
+      "sha256": "3f7f951aa288f5cd7b1ace280949fb483a93a0a6f8c9f9fc5c717fa99edc9336",
+      "bytes": 1894
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "226839616": {
+      "tag": "v0.1.4",
+      "folder": "v0.1.4--226839616",
+      "assets": {
+        "266015852": {
+          "sha256": "8a83cfc8c714730e6a8d46bb5afc793b8dd9e9da8ba21af8feac1f9682862b59",
+          "bytes": 70062,
+          "id": "266015852",
+          "name": "KeijinAutoVendor.zip",
+          "url": "https://github.com/KeijinDE/KeijinAutoVendor/releases/download/v0.1.4/KeijinAutoVendor.zip",
+          "path": "releases/v0.1.4--226839616/assets/KeijinAutoVendor.zip"
+        }
+      },
+      "source": {
+        "sha256": "750eb9b6b01ea68047119351c52454b5653d98dc4f7aaa1b01f9fed8deb83a24",
+        "bytes": 10134,
+        "path": "releases/v0.1.4--226839616/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/KeijinDE/KeijinAutoVendor/tarball/v0.1.4"
+      }
+    }
+  }
+}

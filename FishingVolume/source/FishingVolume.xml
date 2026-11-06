@@ -1,0 +1,31 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Frame name="FishingVolumeFrame" parent="UIParent" frameStrata="DIALOG" hidden="true" movable="true" enableMouse="true" clampedToScreen="true">
+        <Size>
+            <AbsDimension x="300" y="490"/>
+        </Size>
+        <Anchors>
+            <Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">
+                <Offset><AbsDimension x="0" y="80"/></Offset>
+            </Anchor>
+        </Anchors>
+
+        <Scripts>
+            <OnLoad>FishingVolume_OnLoad(this);</OnLoad>
+            <OnShow>FishingVolume_OnShow(this);</OnShow>
+            <OnDragStart>this:StartMoving();</OnDragStart>
+            <OnDragStop>this:StopMovingOrSizing();</OnDragStop>
+        </Scripts>
+
+        <Layers>
+            <Layer level="ARTWORK">
+                <FontString name="FishingVolumeTitleText" inherits="GameFontNormal" text="Fishing Volume 2.3">
+                    <Anchors>
+                        <Anchor point="TOP" relativeTo="FishingVolumeFrame" relativePoint="TOP">
+                            <Offset><AbsDimension x="0" y="-14"/></Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+    </Frame>
+</Ui>

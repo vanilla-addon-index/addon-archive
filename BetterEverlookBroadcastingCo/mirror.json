@@ -1,0 +1,66 @@
+{
+  "upstream": "https://github.com/JeromeM/BetterEverlookBroadcastingCo",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "JeromeM",
+    "repo": "BetterEverlookBroadcastingCo",
+    "name": "BetterEverlookBroadcastingCo",
+    "url": "https://github.com/JeromeM/BetterEverlookBroadcastingCo",
+    "api": "https://api.github.com/repos/JeromeM/BetterEverlookBroadcastingCo"
+  },
+  "commit": "1be039605b90931afbed8533034618da54a1504d",
+  "sourceFiles": {
+    ".github/workflows/release.yml": {
+      "sha256": "fe06c6d9afbc803705ecbea51aaf897470fb1e99c314dee882731fc3980937ab",
+      "bytes": 1699
+    },
+    "BetterEverlookBroadcastingCo.lua": {
+      "sha256": "e66615f16aa611a0c3b65894439cc0235d1e0fd38e30ed141858ed1d15b41470",
+      "bytes": 18454
+    },
+    "BetterEverlookBroadcastingCo.toc": {
+      "sha256": "a8ba2f6b5b62e715165bd235fb73d88737eb2d51c892bfb1ceac510b99116305",
+      "bytes": 283
+    },
+    "BetterEverlookBroadcastingCo.xml": {
+      "sha256": "a0fbaa66baf95e15270510c6e188286f54d5713edddccd26843f78fed7af01ad",
+      "bytes": 234
+    },
+    "localization.cn.lua": {
+      "sha256": "c867400215ee885d38e9dc54bab650860d5b0ed50d824a98e87cc0a0998ec2a0",
+      "bytes": 591
+    },
+    "localization.en.lua": {
+      "sha256": "6a5f849c8838f22dce6e352d5c74842ec5921bf1c9d3ba883f7694def59f21df",
+      "bytes": 491
+    },
+    "README.md": {
+      "sha256": "c9889773ab6cb013e48203ad850233e8101240eb29c39d315e03ed883748f7d7",
+      "bytes": 1836
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "289511264": {
+      "tag": "v1.1.0",
+      "folder": "v1.1.0--289511264",
+      "assets": {
+        "360910273": {
+          "sha256": "619d5ec890671c677e94a00bed54d37ea7b8968a4f74f336fd9dabed871ab0f9",
+          "bytes": 6643,
+          "id": "360910273",
+          "name": "BetterEverlookBroadcastingCo-v1.1.0.zip",
+          "url": "https://github.com/JeromeM/BetterEverlookBroadcastingCo/releases/download/v1.1.0/BetterEverlookBroadcastingCo-v1.1.0.zip",
+          "path": "releases/v1.1.0--289511264/assets/BetterEverlookBroadcastingCo-v1.1.0.zip"
+        }
+      },
+      "source": {
+        "sha256": "1ab7b655603f54189427a1a87cc0115c5a8fb9f336d07d6a3f662dd50447e26f",
+        "bytes": 6751,
+        "path": "releases/v1.1.0--289511264/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/JeromeM/BetterEverlookBroadcastingCo/tarball/v1.1.0"
+      }
+    }
+  }
+}

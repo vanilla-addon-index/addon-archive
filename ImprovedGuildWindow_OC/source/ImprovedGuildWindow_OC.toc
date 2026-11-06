@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: Improved Guild Window
+## Notes: Enhanced guild management for World of Warcraft 1.12.1 (Octo)
+## Author: Olzon
+## Version: 3.3
+## SavedVariables: ImprovedGuildWindowDB
+
+Bindings.xml
+ImprovedGuildWindow_OC.lua

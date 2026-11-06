@@ -1,0 +1,3922 @@
+{
+  "build": "d5ab1aa04c0a81f3",
+  "sourceRevision": "sha256:3e3a787de08525f0aa8853212141a9517ddd30b1734b453fc5d1f4011ddeefaf",
+  "grid": 1280,
+  "quests": 6704,
+  "targets": 7502,
+  "zones": 120,
+  "unmappedTargets": 951,
+  "issues": [
+    {
+      "target": "item:15885",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6037",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:5895",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17114",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18598",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:14444",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2382",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2756",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2757",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2758",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2759",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3080",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:1755",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:2068",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3388",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3668",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18642",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:14305",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3719",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3898",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3913",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3912",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3935",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:4457",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9438",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9440",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9441",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3823",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2868",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:4615",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:4645",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:4703",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2318",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:4847",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:4904",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16782",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5184",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18643",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5639",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5645",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5646",
+      "issue": "no-locations"
+    },
+    {
+      "target": "use:5623",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:object:10076",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8585",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11516",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5455",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5519",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5462",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2458",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5692",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5693",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5694",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5695",
+      "issue": "no-locations"
+    },
+    {
+      "target": "use:5692",
+      "issue": "no-locations"
+    },
+    {
+      "target": "use:5693",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6637",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17346",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12238",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5843",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5845",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5868",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3853",
+      "issue": "no-locations"
+    },
+    {
+      "target": "use:6684",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18336",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:4392",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6435",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7770",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7769",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7771",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2845",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2851",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6717",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6718",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2454",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5997",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2309",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2310",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:4239",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2857",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6214",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6993",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7083",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6926",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6851",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6894",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:6238",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5770",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:6390",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3575",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7134",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7208",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7295",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7206",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7292",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7268",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:6549",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:6550",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:11836",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2842",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:object:112877",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7867",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7675",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7737",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8050",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8072",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:7750",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:7729",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8643",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8644",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8645",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8646",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7957",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7956",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7958",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3835",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3836",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3842",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3482",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3483",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3851",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7922",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7963",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6040",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3860",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7928",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7931",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7926",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7933",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7927",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7930",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9153",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9299",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8187",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8189",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8175",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8176",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8193",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8197",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8191",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8198",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9250",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9306",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9275",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9284",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:7800",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9316",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9307",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9330",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9326",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:7918",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9365",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9463",
+      "issue": "no-locations"
+    },
+    {
+      "target": "use:9466",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9471",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9594",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9595",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9596",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9593",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9597",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10441",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10455",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:8612",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10662",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10663",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10447",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10691",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10692",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10693",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10694",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6451",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11270",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:4384",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:4394",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10507",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11283",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:4407",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10559",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11282",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11040",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:9136",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3825",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11104",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11105",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11106",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11131",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11243",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11149",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11522",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11169",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11227",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11230",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3577",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11512",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11174",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11286",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11312",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11413",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12234",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12236",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11470",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8424",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8411",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11952",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11564",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11567",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11563",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11951",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12567",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11947",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11949",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11954",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12291",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12283",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12263",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12241",
+      "issue": "no-locations"
+    },
+    {
+      "target": "use:12287",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:10296",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12324",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12349",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12355",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6265",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12293",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:14339",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12712",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12648",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12649",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:10717",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12723",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12739",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12731",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12360",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12736",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12925",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12655",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:10931",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12847",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8203",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8204",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8211",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8214",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12885",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12907",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12871",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13155",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13156",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13172",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13194",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13195",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13197",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13196",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11562",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16973",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13250",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:11122",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7935",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7936",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7937",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3855",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7941",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7945",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13351",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13350",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13448",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13471",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13542",
+      "issue": "no-locations"
+    },
+    {
+      "target": "object:176544",
+      "issue": "no-locations"
+    },
+    {
+      "target": "object:176545",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:11261",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:10506",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13546",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13626",
+      "issue": "no-locations"
+    },
+    {
+      "target": "use:13752",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18597",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12844",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18501",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18540",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:11627",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:11937",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:10936",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:14645",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:14610",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:12126",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15448",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10560",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10562",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11128",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12359",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15803",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:14342",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15845",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15843",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15849",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15924",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13852",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15875",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:12339",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15880",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:12580",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:11920",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16642",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16643",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16644",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16763",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16764",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16765",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16746",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16742",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:4369",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16967",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16968",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16969",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16970",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7974",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16976",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17012",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17309",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17353",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:13446",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17442",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:13449",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17197",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18956",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17696",
+      "issue": "no-locations"
+    },
+    {
+      "target": "use:17696",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:13696",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17758",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:13756",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:13778",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:13796",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17690",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17905",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17906",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17907",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17908",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17691",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17900",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17901",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17902",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17903",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15997",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18142",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18143",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18144",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18145",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18146",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18147",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18151",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18206",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18207",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18261",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:11486",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:11496",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:14358",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:object:179517",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18299",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:14368",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:14344",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18426",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:14383",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:14382",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:14381",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18492",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17771",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18566",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18603",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18605",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:9264",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:14500",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:14502",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:14504",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:14526",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:14525",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18952",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18953",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18954",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18955",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:14564",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18775",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:14566",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18799",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:14568",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19003",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19002",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19017",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19018",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20558",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19034",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2314",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5739",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8185",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19213",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3240",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3486",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12644",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11590",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19322",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19182",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19423",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19424",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19443",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19452",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19574",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19575",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19576",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19579",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19585",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19586",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19591",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19592",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19593",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20559",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19725",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19598",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19599",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19600",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:15002",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:15003",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:15004",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:15005",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19602",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19603",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19604",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19610",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19611",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19612",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19606",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19607",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19608",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:15001",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19614",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19615",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19616",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19618",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19619",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19620",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19807",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19858",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19880",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20256",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20454",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20455",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20456",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20490",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20492",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20494",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20496",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20491",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20493",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20495",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20497",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20465",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20452",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20513",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20514",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20515",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20560",
+      "issue": "no-locations"
+    },
+    {
+      "target": "use:20604",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:2840",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8545",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:19440",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20810",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:23024",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:1251",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6450",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:14529",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5095",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12210",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21158",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:15212",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:15307",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:15209",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:15206",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:15207",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:15208",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:15220",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:7966",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3576",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20800",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20801",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20802",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20927",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21508",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21515",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:object:180652",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3530",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:8544",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12209",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13935",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21111",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20931",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21138",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:15211",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21160",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21161",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21175",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21211",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21196",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21197",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21198",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21199",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21201",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21202",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21203",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21204",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21206",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21207",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21208",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21209",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21200",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21210",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21205",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15992",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11178",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21436",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21438",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21100",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:22143",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:22145",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13423",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16006",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16203",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16684",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16737",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:16031",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:16031",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11371",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15407",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:16032",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:22224",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16718",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16689",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16725",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16695",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16669",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16734",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21989",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:22049",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:22050",
+      "issue": "no-locations"
+    },
+    {
+      "target": "use:22050",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:16097",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:22051",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:22052",
+      "issue": "no-locations"
+    },
+    {
+      "target": "use:22052",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:16118",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:22263",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:22048",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:22262",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13512",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:22056",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16720",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16677",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16686",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16727",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16693",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16707",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16698",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16731",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16667",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:22047",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:16166",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20725",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:16143",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:22484",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:16254",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12643",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12422",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12792",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12775",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:12417",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15086",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15088",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15095",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:14104",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13864",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:14046",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13858",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10646",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15993",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10725",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16000",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13461",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13506",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13422",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13890",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:13757",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18331",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18329",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:18330",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:22524",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:22523",
+      "issue": "no-locations"
+    },
+    {
+      "target": "object:181349",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:16479",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:18199",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:82001",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:2000092",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61107",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61108",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61109",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61675",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:60683",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60680",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60681",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60682",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:60679",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20709",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60301",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60313",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60319",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60323",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:80935",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:60441",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60324",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60325",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60326",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60327",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60244",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60332",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60328",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60247",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60333",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60463",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:60464",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60330",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60331",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60334",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60499",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60293",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60335",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60332",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60337",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60338",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60345",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60339",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60349",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60189",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60190",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60391",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60340",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60341",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60342",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60344",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:91928",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60345",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:91195",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60347",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60348",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60349",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60350",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60351",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60352",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60353",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60354",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60510",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60355",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60442",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:66000",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:83016",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:83017",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:83018",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:83019",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60148",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:60670",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60673",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60674",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:60677",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60370",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60375",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60731",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:10268",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60377",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60381",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60378",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60379",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60380",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60382",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60388",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60389",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60390",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60825",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60392",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60846",
+      "issue": "no-locations"
+    },
+    {
+      "target": "object:2010929",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60393",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60394",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60398",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:91243",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:60972",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:61053",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10841",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11135",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11177",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60010",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60011",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60012",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6662",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60013",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60955",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:61138",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60989",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:60998",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16004",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60015",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60016",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60017",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60018",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60019",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60020",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60021",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60022",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60023",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60024",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60025",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60026",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60034",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60035",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60036",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60037",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60038",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60039",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61232",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60040",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60042",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60043",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61403",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61415",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:61514",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61460",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61461",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11139",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60044",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61559",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61560",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60045",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60046",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60047",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60048",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61693",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61695",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60049",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61696",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61702",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60050",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61759",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:61608",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61760",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16204",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61793",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61794",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60052",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60053",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:56002",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:56004",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:56006",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:56082",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41331",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:55153",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:56050",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:56051",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:56052",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41340",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:56047",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:55143",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:56048",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41343",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:56049",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41342",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41397",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41445",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41377",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:61985",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21114",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:21151",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41386",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60054",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:56088",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:56087",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41398",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:55154",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:55248",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61731",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61771",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41372",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41413",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41385",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60055",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41418",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41422",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60056",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41424",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:62059",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60057",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60058",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60059",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60060",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61732",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41433",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41439",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41444",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:20002",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61229",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:61230",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41449",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:62106",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:62105",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16897",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16901",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16931",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16930",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16966",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16962",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16923",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16922",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16916",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16915",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16958",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16954",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16950",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:16946",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41457",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41462",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41477",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41479",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60065",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60078",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41687",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60066",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60067",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60068",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41695",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60069",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41735",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41737",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60070",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60071",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60072",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60073",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60074",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60075",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60076",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60077",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41765",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41773",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:11082",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:62355",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60079",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41800",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:62585",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41820",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:62611",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60080",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41865",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41870",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:41877",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60081",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:62947",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:62861",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:63047",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60686",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:42256",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:42257",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:42261",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:42303",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:42343",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:42344",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:42345",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:42349",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60089",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60090",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:object:7000030",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:51248",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60000",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60001",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60002",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60003",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60004",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60005",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60006",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60007",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:70000",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:70001",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:70002",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:70003",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:70004",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:70005",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:70010",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:70011",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:81315",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:81318",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:91294",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:91296",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:91301",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:51220",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:51223",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:6385",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3845",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:4236",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:5783",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:3490",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:10040",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:51330",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:51573",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:80100",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:80103",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:80101",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:80114",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:80115",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:80112",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:80118",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:80119",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:80120",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:80121",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:80129",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:80170",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:80200",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:80201",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:80202",
+      "issue": "no-locations"
+    },
+    {
+      "target": "object:3000202",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:80204",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:80206",
+      "issue": "no-locations"
+    },
+    {
+      "target": "object:3000204",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:80224",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:80232",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:80233",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:12261",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:80600",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:80606",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:80865",
+      "issue": "no-locations"
+    },
+    {
+      "target": "turnin:unit:80903",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:81000",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:81001",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:81002",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:81282",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:81252",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:60373",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:128",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:50665",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:50666",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:50667",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:53002",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:50670",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:50671",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:50675",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:53010",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:50668",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:50681",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:50669",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:50684",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:50685",
+      "issue": "no-locations"
+    },
+    {
+      "target": "unit:50686",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:15410",
+      "issue": "no-locations"
+    },
+    {
+      "target": "item:17967",
+      "issue": "no-locations"
+    }
+  ],
+  "barrens": {
+    "quests": 682,
+    "examples": [
+      {
+        "id": 844,
+        "title": "Plainstrider Menace",
+        "targets": [
+          {
+            "key": "item:5087",
+            "spawns": 327,
+            "scanlines": 663,
+            "points": 0
+          }
+        ]
+      },
+      {
+        "id": 845,
+        "title": "The Zhevra",
+        "targets": [
+          {
+            "key": "item:5086",
+            "spawns": 239,
+            "scanlines": 769,
+            "points": 2
+          }
+        ]
+      },
+      {
+        "id": 903,
+        "title": "Prowlers of the Barrens",
+        "targets": [
+          {
+            "key": "item:5096",
+            "spawns": 103,
+            "scanlines": 526,
+            "points": 1
+          }
+        ]
+      },
+      {
+        "id": 855,
+        "title": "Centaur Bracers",
+        "targets": [
+          {
+            "key": "item:5030",
+            "spawns": 170,
+            "scanlines": 394,
+            "points": 0
+          }
+        ]
+      },
+      {
+        "id": 895,
+        "title": "WANTED: Baron Longshore",
+        "targets": [
+          {
+            "key": "item:5084",
+            "spawns": 1,
+            "scanlines": 0,
+            "points": 1
+          }
+        ]
+      },
+      {
+        "id": 881,
+        "title": "Echeyakee",
+        "targets": [
+          {
+            "key": "item:5100",
+            "spawns": 1,
+            "scanlines": 0,
+            "points": 1
+          },
+          {
+            "key": "use:10327",
+            "spawns": 1,
+            "scanlines": 0,
+            "points": 1
+          }
+        ]
+      },
+      {
+        "id": 900,
+        "title": "Samophlange",
+        "targets": [
+          {
+            "key": "object:4072",
+            "spawns": 1,
+            "scanlines": 0,
+            "points": 1
+          },
+          {
+            "key": "object:61935",
+            "spawns": 1,
+            "scanlines": 0,
+            "points": 1
+          },
+          {
+            "key": "object:61936",
+            "spawns": 1,
+            "scanlines": 0,
+            "points": 1
+          }
+        ]
+      }
+    ]
+  }
+}

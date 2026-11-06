@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: Relationships Auction Price
+## Notes: AH scanner + tooltip prices (highest to lowest) for Octowow. Supports a shared PriceData.lua for transfers.
+## Author: Relationship
+## Version: 1.1
+## SavedVariables: RelationshipsAuctionPriceDB, RAP_SHARED_DATA_EXPORT
+
+PriceData.lua
+RelationshipsAuctionPrice.lua

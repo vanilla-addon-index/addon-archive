@@ -1,0 +1,12 @@
+## Interface: 11200
+## Title: OctoQuestRewards
+## Notes: Quest XP estimates in the original quest UI, with optional reward debugging.
+## Author: John The Baptist
+## Version: 1.0.0
+## OptionalDeps: pfQuest, pfQuest-turtle, pfExtend, ClassicAPI, AI_VoiceOver
+## SavedVariablesPerCharacter: OctoQuestRewardsDB
+
+QuestData.lua
+VanillaXP.lua
+UI.lua
+Core.lua

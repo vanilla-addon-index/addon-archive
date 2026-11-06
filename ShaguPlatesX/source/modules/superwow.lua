@@ -1,0 +1,229 @@
+-- Compatibility layer to use castbars provided by SuperWoW:
+-- https://github.com/balakethelock/SuperWoW
+
+ShaguPlatesX:RegisterModule("superwow", "vanilla", function ()
+  if SetAutoloot and SpellInfo and not SUPERWOW_VERSION then
+    -- Turn every enchanting link that we create in the enchanting frame,
+    -- from "spell:" back into "enchant:". The enchant-version is what is
+    -- used by all unmodified game clients. This is required to generate
+    -- usable links for everyone from the enchant frame while having SuperWoW.
+    local HookGetCraftItemLink = GetCraftItemLink
+    _G.GetCraftItemLink = function(index)
+      local link = HookGetCraftItemLink(index)
+      return string.gsub(link, "spell:", "enchant:")
+    end
+
+    -- Convert every enchanting link that we receive into a
+    -- spell link, as for some reason SuperWoW can't handle
+    -- enchanting links at all and requires it to be a spell.
+    local HookSetItemRef = SetItemRef
+    _G.SetItemRef = function(link, text, button)
+      link = string.gsub(link, "enchant:", "spell:")
+      HookSetItemRef(link, text, button)
+    end
+
+    local HookGameTooltipSetHyperlink = GameTooltip.SetHyperlink
+    _G.GameTooltip.SetHyperlink = function(self, link)
+      link = string.gsub(link, "enchant:", "spell:")
+      HookGameTooltipSetHyperlink(self, link)
+    end
+
+    DEFAULT_CHAT_FRAME:AddMessage("|cffffffaaAn old version of SuperWoW was detected. Please consider updating:")
+    DEFAULT_CHAT_FRAME:AddMessage("-> https://github.com/balakethelock/SuperWoW/releases/")
+  end
+
+  if SUPERWOW_VERSION == "1.5" then
+    QueueFunction(function()
+      local pfCombatText_AddMessage = _G.CombatText_AddMessage
+      _G.CombatText_AddMessage = function(message, a, b, c, d, e, f)
+        local match, _, hex = string.find(message, ".+ %[(0x.+)%]")
+        if hex and UnitName(hex) then
+          message = string.gsub(message, hex, UnitName(hex))
+        end
+
+        pfCombatText_AddMessage(message, a, b, c, d, e, f)
+      end
+    end)
+  end
+
+  -- Add native mouseover support
+  if SUPERWOW_VERSION and ShaguPlatesX.uf and ShaguPlatesX.uf.mouseover then
+    _G.SlashCmdList.PFCAST = function(msg)
+      local func = loadstring(msg or "")
+      local unit = "mouseover"
+
+      if not UnitExists(unit) then
+        local frame = GetMouseFocus()
+        if frame.label and frame.id then
+          unit = frame.label .. frame.id
+        elseif UnitExists("target") then
+          unit = "target"
+        elseif GetCVar("autoSelfCast") == "1" then
+          unit = "player"
+        else
+          return
+        end
+      end
+
+      if func then
+        -- set mouseover to target for script if needed
+        local switch_target = not UnitIsUnit("target", unit)
+        if switch_target then TargetUnit(unit) end
+        func()
+        if switch_target then TargetLastTarget() end
+      else
+        -- write temporary unit name
+        ShaguPlatesX.uf.mouseover.unit = unit
+
+        -- cast spell to unitstr
+        CastSpellByName(msg, unit)
+
+        -- remove temporary mouseover unit
+        ShaguPlatesX.uf.mouseover.unit = nil
+      end
+    end
+  end
+
+  -- Add support for druid mana bars
+  if SUPERWOW_VERSION and ShaguPlatesX.uf and ShaguPlatesX.uf.player and ShaguPlatesX_config.unitframes.druidmanabar == "1" then
+    local parent = ShaguPlatesX.uf.player.power.bar
+    local config = ShaguPlatesX.uf.player.config
+    local mana = config.defcolor == "0" and config.manacolor or ShaguPlatesX_config.unitframes.manacolor
+    local r, g, b, a = ShaguPlatesX.api.strsplit(",", mana)
+    local rawborder, default_border = GetBorderSize("unitframes")
+    local _, class = UnitClass("player")
+    local width = config.pwidth ~= "-1" and config.pwidth or config.width
+
+    local fontname = ShaguPlatesX.font_unit
+    local fontsize = tonumber(ShaguPlatesX_config.global.font_unit_size)
+    local fontstyle = ShaguPlatesX_config.global.font_unit_style
+
+    if config.customfont == "1" then
+      fontname = ShaguPlatesX.media[config.customfont_name]
+      fontsize = tonumber(config.customfont_size)
+      fontstyle = config.customfont_style
+    end
+
+    local druidmana = CreateFrame("StatusBar", "pfDruidMana", UIParent)
+    druidmana:SetFrameStrata(parent:GetFrameStrata())
+    druidmana:SetFrameLevel(parent:GetFrameLevel() + 16)
+    druidmana:SetStatusBarTexture(ShaguPlatesX.media[config.pbartexture])
+    druidmana:SetStatusBarColor(r, g, b, a)
+    druidmana:SetPoint("TOPLEFT", parent, "BOTTOMLEFT", 0, -2*default_border - config.pspace)
+    druidmana:SetPoint("TOPRIGHT", parent, "BOTTOMRIGHT", 0, -2*default_border - config.pspace)
+    druidmana:SetWidth(width)
+    druidmana:SetHeight(tonumber(ShaguPlatesX_config.unitframes.druidmanaheight) or 6)
+    druidmana:EnableMouse(true)
+    druidmana:Hide()
+
+    UpdateMovable(druidmana)
+    CreateBackdrop(druidmana)
+    CreateBackdropShadow(druidmana)
+
+    druidmana:RegisterEvent("UNIT_MANA")
+    druidmana:RegisterEvent("UNIT_MAXMANA")
+    druidmana:RegisterEvent("UNIT_DISPLAYPOWER")
+    druidmana:SetScript("OnEvent", function()
+      if UnitPowerType("player") == 0 then
+        this:Hide()
+        return
+      end
+
+      local _, mana = UnitMana("player")
+      local _, max = UnitManaMax("player")
+      local perc = math.ceil(mana / max * 100)
+      if perc == 100 then
+        this.text:SetText(string.format("%s", Abbreviate(mana)))
+      else
+        this.text:SetText(string.format("%s - %s%%", Abbreviate(mana), perc))
+      end
+      this:SetMinMaxValues(0, max)
+      this:SetValue(mana)
+      this:Show()
+    end)
+
+    druidmana.text = druidmana:CreateFontString("Status", "OVERLAY", "GameFontNormalSmall")
+    druidmana.text:SetFontObject(GameFontWhite)
+    druidmana.text:SetFont(fontname, fontsize, fontstyle)
+    druidmana.text:SetPoint("RIGHT", -2*(default_border + config.txtpowerrightoffx), 0)
+    druidmana.text:SetPoint("LEFT", 2*(default_border + config.txtpowerrightoffx), 0)
+    druidmana.text:SetJustifyH("RIGHT")
+
+    if config["powercolor"] == "1" then
+      local r = ManaBarColor[0].r
+      local g = ManaBarColor[0].g
+      local b = ManaBarColor[0].b
+
+      if ShaguPlatesX_config.unitframes.pastel == "1" then
+        druidmana.text:SetTextColor((r+.75)*.5, (g+.75)*.5, (b+.75)*.5, 1)
+      else
+        druidmana.text:SetTextColor(r, g, b, a)
+      end
+    end
+
+    if ShaguPlatesX_config.unitframes.druidmanatext == "1" then
+      druidmana.text:Show()
+    else
+      druidmana.text:Hide()
+    end
+
+    if class ~= "DRUID" then
+      druidmana:UnregisterAllEvents()
+      druidmana:Hide()
+    end
+  end
+
+  -- Add support for guid based focus frame
+  if SUPERWOW_VERSION and ShaguPlatesX.uf and ShaguPlatesX.uf.focus then
+    local focus = function(unitstr)
+      -- try to read target's unit guid
+      local _, guid = UnitExists(unitstr)
+
+      if guid and ShaguPlatesX.uf.focus then
+        -- update focus frame
+        ShaguPlatesX.uf.focus.unitname = nil
+        ShaguPlatesX.uf.focus.label = guid
+        ShaguPlatesX.uf.focus.id = ""
+
+        -- update focustarget frame
+        ShaguPlatesX.uf.focustarget.unitname = nil
+        ShaguPlatesX.uf.focustarget.label = guid .. "target"
+        ShaguPlatesX.uf.focustarget.id = ""
+      end
+
+      return guid
+    end
+
+    -- extend the builtin /focus slash command
+    local legacyfocus = SlashCmdList.PFFOCUS
+    function SlashCmdList.PFFOCUS(msg)
+      -- try to perform guid based focus
+      local guid = focus("target")
+
+      -- run old focus emulation
+      if not guid then legacyfocus(msg) end
+    end
+
+    -- extend the builtin /swapfocus slash command
+    local legacyswapfocus = SlashCmdList.PFSWAPFOCUS
+    function SlashCmdList.PFSWAPFOCUS(msg)
+      -- save previous focus values
+      local oldlabel = ShaguPlatesX.uf.focus.label or ""
+      local oldid = ShaguPlatesX.uf.focus.id or ""
+
+      -- try to perform guid based focus
+      local guid = focus("target")
+
+      -- target old focus
+      if guid and oldlabel and oldid then
+        TargetUnit(oldlabel..oldid)
+      end
+
+      -- run old focus emulation
+      if not guid then legacyswapfocus(msg) end
+    end
+  end
+
+  -- Mark SuperWoW as active
+  superwow_active = true
+end)

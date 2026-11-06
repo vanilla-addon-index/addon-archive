@@ -1,0 +1,32 @@
+## Interface: 11200
+## Title: HealBotBlue
+## Version: 1.7.6
+## Author: Bluewhale
+## Notes: Raidframe replacement for healing, decursing, resource tracking and buffing with optional support for SuperWow, ClassicAPI, UnitXP_SP3 and Nampower.
+## SavedVariablesPerCharacter:  HealBot_Config
+..\..\FrameXML\Fonts.xml
+..\..\FrameXML\OptionsFrameTemplates.xml
+..\..\FrameXML\UIPanelTemplates.xml
+..\..\FrameXML\UIDropDownMenu.xml
+HealBot_Error.xml
+HealBot_Model.lua
+HealBot_Integrations.lua
+HealBot_Controller_Range.lua
+HealBot_Controller_Comms.lua
+HealBot_Controller_Aura.lua
+HealBot_Controller_Spells.lua
+HealBot_Controller_Events.lua
+HealBot.xml
+HealBot_View_Layout.lua
+HealBot_View_Tooltip.lua
+HealBot_Action.xml
+HealBot_Options.xml
+HealBot_Options_General.xml
+HealBot_Options_Spells.xml
+HealBot_Options_Healing.xml
+HealBot_Options_CDC.xml
+HealBot_Options_Skins.xml
+HealBot_Options_Buffs.xml
+HealBot_Options_Chat.xml
+HealBot_Options_Auto.xml
+HealBot_Options_Integrations.xml

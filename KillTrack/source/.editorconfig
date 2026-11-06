@@ -1,0 +1,22 @@
+[*]
+charset = utf-8
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_size = 2
+
+[*.lua]
+indent_size = 2
+max_line_length = 160
+space_inside_function_call_parentheses = true
+space_inside_function_param_list_parentheses = true
+space_inside_square_brackets = true
+
+[*.xml]
+indent_size = 2
+
+[*.yml]
+indent_size = 2
+
+[*.py]
+indent_size = 4

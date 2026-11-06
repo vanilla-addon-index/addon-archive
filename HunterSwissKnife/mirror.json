@@ -1,0 +1,129 @@
+{
+  "upstream": "https://github.com/enn-wow-addons/HunterSwissKnife",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "enn-wow-addons",
+    "repo": "HunterSwissKnife",
+    "name": "HunterSwissKnife",
+    "url": "https://github.com/enn-wow-addons/HunterSwissKnife",
+    "api": "https://api.github.com/repos/enn-wow-addons/HunterSwissKnife"
+  },
+  "commit": "441cae66541d9031efeb29fb899b4021a56e35b2",
+  "sourceFiles": {
+    "Core/Aliases/Auras.lua": {
+      "sha256": "6a86e33aee2b72438f806ca667f488aa1cc5324169e1dc545f223df72af99a44",
+      "bytes": 1068
+    },
+    "Core/Aliases/Colors.lua": {
+      "sha256": "c4c3a98bc2b76b453e64d6294c08d9536adfbcba5522eb1a52173be175b0f3b2",
+      "bytes": 273
+    },
+    "Core/Core.lua": {
+      "sha256": "af4b9ef5051e49b9918bda593c2e97dd3f3906999bbc40d748efab9f29bed444",
+      "bytes": 2382
+    },
+    "HunterSwissKnife.lua": {
+      "sha256": "c022bbbe4e64662403b81301336be75e8bcb64ca2cef43a3f76cb42b9becf394",
+      "bytes": 3717
+    },
+    "HunterSwissKnife.toc": {
+      "sha256": "7a42222e2bd40e749a8c0ff2db909fecb7841896d51e30d1a5ab02927061cbf2",
+      "bytes": 738
+    },
+    "HunterSwissKnife.xml": {
+      "sha256": "7938692cca5015742070f8ae46b850ab2d1e8cd510dc14731de533a6ef81476a",
+      "bytes": 439
+    },
+    "LICENSE": {
+      "sha256": "a4be8a9621c74c3fbab5e20de18ca2167c07b19abddb63dab4f89b9e75c54f9b",
+      "bytes": 1088
+    },
+    "Locale/deDE.lua": {
+      "sha256": "cc214d99d60b1f3503f96ace974fdda4380bca7e4c26f99d0d1f3d8aca69f869",
+      "bytes": 35
+    },
+    "Locale/enUS.lua": {
+      "sha256": "ffb9df2becc9106de7a5a46a18069d2af96529dbc272710cdd953b1215755dfd",
+      "bytes": 3178
+    },
+    "Locale/frFR.lua": {
+      "sha256": "23a0032b3996939fc99b1c305050dd2943ff034954d70bf7b024d858178cd462",
+      "bytes": 35
+    },
+    "Locale/ruRU.lua": {
+      "sha256": "1dd1157c5ff9b1f25c040901ab2f30f6769cf041633d6927b3f7e533f7c15c06",
+      "bytes": 3743
+    },
+    "Locale/zhCN.lua": {
+      "sha256": "8b7f4c524cdd7a1b103e7f4f5b31dd5814edde550a57d5c3623da612aa973351",
+      "bytes": 3144
+    },
+    "Locale/zhTW.lua": {
+      "sha256": "56d2abd5dc6a8f1378893fb526e0dbb77870486735952fc36dd72d044047cb85",
+      "bytes": 35
+    },
+    "Modules/AimedShotCastbar/AimedShotCastbar.lua": {
+      "sha256": "d6fad60184a1aee7868e0aecdc6cbb2293a08bcde0549ee03178daaf37c8ebf3",
+      "bytes": 3647
+    },
+    "Modules/AspectsAntiDaze/AspectsAntiDaze.lua": {
+      "sha256": "c29f9eafaf7c7d63253f7f382e7a233b3c68194e147c7bac30bcc1a5d2916f19",
+      "bytes": 926
+    },
+    "Modules/AspectsOverride/AspectsOverride.lua": {
+      "sha256": "a54ba2e5262088d7f9eb81501d1a3741f16684902e0c1ecdbe649d1971c7999c",
+      "bytes": 1614
+    },
+    "Modules/AutoShotCastbar/AutoShotCastbar.lua": {
+      "sha256": "f2935512086a9a3902c7e4ab7c1c1be6a484425f8cefe628493fb92b92fc2689",
+      "bytes": 5122
+    },
+    "Modules/AutoShotCastbar/AutoShotCastbar.xml": {
+      "sha256": "73c6329da523d8266a1d2179102150e0b81e8fed68d8d9764249e4c06ae1e478",
+      "bytes": 2034
+    },
+    "Modules/AutoShotCastbar/Textures/Bar.tga": {
+      "sha256": "167e24dbb60cd98116873f3fbf9ed1229faae955ca6ff85055c12aff59c9f1f2",
+      "bytes": 3792
+    },
+    "Modules/AutoShotOverride/AutoShotOverride.lua": {
+      "sha256": "f7fef40567937f49264ae82beabae06b1a65281ed9296bbdc3eb32fb5ec0c519",
+      "bytes": 352
+    },
+    "Modules/CallPetOverride/CallPetOverride.lua": {
+      "sha256": "3bf66edbaae747cbc372e945ae2a26befbd4486fd496420604d91efc36022fd6",
+      "bytes": 371
+    },
+    "README.md": {
+      "sha256": "474f89551ecbc0ddbfadac414576fec16add6730196f250460849bc2281124d2",
+      "bytes": 2983
+    },
+    "UI/MainMenu/MainMenu.lua": {
+      "sha256": "258b529f5eeb15d091b622cec797334bea6db5920471ec77f7918a903374940c",
+      "bytes": 5890
+    },
+    "UI/MainMenu/MainMenu.xml": {
+      "sha256": "a2865cd0a3db187792a4d9587349d771809f01514d2740db89cb568cde8e6e1c",
+      "bytes": 5818
+    },
+    "UI/Templates/Window.xml": {
+      "sha256": "c503c86f3c7324b9c72b3f09cfbeacf6e5db55febf1ea3fb69992a6abd3eee75",
+      "bytes": 2208
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "13960154": {
+      "tag": "v1.1",
+      "folder": "v1.1--13960154",
+      "assets": {},
+      "source": {
+        "sha256": "1593cda0ffb22a273c3a7419fcbad4298c46a82e5eb626aaba5b25e1bf316734",
+        "bytes": 11292,
+        "path": "releases/v1.1--13960154/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/enn-wow-addons/HunterSwissKnife/tarball/v1.1"
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "upstream": "https://github.com/gimerstedt/ElkBuffBarHor",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "gimerstedt",
+    "repo": "ElkBuffBarHor",
+    "name": "ElkBuffBarHor",
+    "url": "https://github.com/gimerstedt/ElkBuffBarHor",
+    "api": "https://api.github.com/repos/gimerstedt/ElkBuffBarHor"
+  },
+  "commit": "8a19d06cdd306fb161b497f8ef8e2952f080c414",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "12ca81b43544aad1199998a226e032a9ffd27a827437fbb3e9edb5f2f7223bcc",
+      "bytes": 505
+    },
+    ".gitignore.upstream": {
+      "sha256": "a5e54048202def346fcd461496aaaf0b42d313153bee1d54f46242e7b4ed9d20",
+      "bytes": 485
+    },
+    "ElkBuffBar/BarTexture.tga": {
+      "sha256": "00e8084e83bf25b941464e2619b59e993b6ac7ae0bd8a6f37b12872e686ded6d",
+      "bytes": 32812
+    },
+    "ElkBuffBar/changelog-r12180.txt": {
+      "sha256": "9c18925791a3b707295a8215bd2555577ae7469e56f9f3da6ff3a3ecc09438e4",
+      "bytes": 4149
+    },
+    "ElkBuffBar/ElkBuffBar.lua": {
+      "sha256": "58e19daf89043c61e6b53ea23bea64363e4478f15d23c399b83bc388f09e6741",
+      "bytes": 46199
+    },
+    "ElkBuffBar/ElkBuffBar.toc": {
+      "sha256": "0a3d75815e5b2a23645202e235a337a269a2ef77c025a54a101c001b3f2f2983",
+      "bytes": 360
+    },
+    "ElkBuffBar/ElkBuffBar.xml": {
+      "sha256": "426654e69459a038480b606fbe4599abf776db414f07870c7f1d66702bd6e7d9",
+      "bytes": 3545
+    },
+    "ElkBuffBar/ElkBuffData.lua": {
+      "sha256": "556e67a038a7f9c2a8032584f37b739d6fcafe43184443061e2dcc2bc7d6cecd",
+      "bytes": 9968
+    },
+    "ElkBuffBar/Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "f1765304b6ac1521a15c4bd32d42e5dd00e57b0593ba4031553207396512d30f",
+      "bytes": 22600
+    },
+    "ElkBuffBar/Libs/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "cbb8577f5a891481cfe0b61f3b3f84cc9c10bed5dcb1137d6f2672d5772df277",
+      "bytes": 9486
+    },
+    "ElkBuffBar/readme.txt": {
+      "sha256": "7c7ac0a90a6ebdab4e4268031222089b17aa89c18de0c29395b4849d10d7623a",
+      "bytes": 1506
+    },
+    "README.md": {
+      "sha256": "c1250ae080177a32c7879689b11053a01185e812cdcce3c2c31a0302e474b909",
+      "bytes": 735
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

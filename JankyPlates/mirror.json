@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Ageous27/JankyPlates",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Ageous27",
+    "repo": "JankyPlates",
+    "name": "JankyPlates",
+    "url": "https://github.com/Ageous27/JankyPlates",
+    "api": "https://api.github.com/repos/Ageous27/JankyPlates"
+  },
+  "commit": "c40a9dd6f35eae609071e0d4a5a0fc81a12d706c",
+  "sourceFiles": {
+    "JankyPlates.lua": {
+      "sha256": "3d71b229be0720f9281ee22295b5bc135faf8123053f59e8abb3ca7f4b10361c",
+      "bytes": 93207
+    },
+    "JankyPlates.toc": {
+      "sha256": "52e51e41e147a59832a596fe3d45e8a54e591ebaecec83dfaf6a1a9e66681e06",
+      "bytes": 313
+    },
+    "README.txt": {
+      "sha256": "7d807b3c33d9ad11b7c43c9acaf7af3b74daa14c04f9537ada4afabc08e63c40",
+      "bytes": 4905
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

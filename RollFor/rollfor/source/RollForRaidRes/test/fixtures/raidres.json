@@ -1,0 +1,31 @@
+{
+    "metadata": {
+        "id": "GQZDMQ",
+        "instance": 209,
+        "instances": [
+            "Black Temple"
+        ],
+        "origin": "raidres"
+    },
+    "softreserves": [
+        {
+            "name": "Boulderdash",
+            "role": "WarriorProtection",
+            "items": [
+                {
+                    "id": 32241,
+                    "quality": 4
+                },
+                {
+                    "id": 32232,
+                    "quality": 4
+                },
+                {
+                    "id": 32236,
+                    "quality": 4
+                }
+            ]
+        }
+    ],
+    "hardreserves": []
+}

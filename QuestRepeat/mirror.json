@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/QuestRepeat",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "QuestRepeat",
+    "name": "QuestRepeat",
+    "url": "https://github.com/MarcelineVQ/QuestRepeat",
+    "api": "https://api.github.com/repos/MarcelineVQ/QuestRepeat"
+  },
+  "commit": "eb577bd4ac51759ff6c7f5d723ca2d270325a4bf",
+  "sourceFiles": {
+    "QuestRepeat.lua": {
+      "sha256": "a136ff7f693a37ca8eff051c475a0f63cca65345972b43d71de8f331da211f02",
+      "bytes": 4972
+    },
+    "QuestRepeat.toc": {
+      "sha256": "ef7110c18db58ba2d3d48efb50d57c632bcbfe75b0bc12cf4506f1618d716011",
+      "bytes": 211
+    },
+    "readme.md": {
+      "sha256": "47ebd040c77802c3343ef44447d654e5bdf56e10ee9fa4a6ab82053a13d520be",
+      "bytes": 343
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,62 @@
+{
+  "upstream": "https://github.com/Terrub/Samuel",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Terrub",
+    "repo": "Samuel",
+    "name": "Samuel",
+    "url": "https://github.com/Terrub/Samuel",
+    "api": "https://api.github.com/repos/Terrub/Samuel"
+  },
+  "commit": "22e5869ca3fce7dd535443bbca575da609273579",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "12ca81b43544aad1199998a226e032a9ffd27a827437fbb3e9edb5f2f7223bcc",
+      "bytes": 505
+    },
+    ".github/workflows/pre_release.yml": {
+      "sha256": "fccc340728216458bdda5560851575959c7f50a3d6b68b5ab690c2309ff724e3",
+      "bytes": 669
+    },
+    ".gitignore.upstream": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "README.md": {
+      "sha256": "1254fffede98b79e5199a79bed2ba91b67447fe9ac60e104c93a06c98ca2be32",
+      "bytes": 1390
+    },
+    "Samuel/Samuel.lua": {
+      "sha256": "9b4c20fc93296dc0c58a113a468858f1dac722d947703c72aee66277ae2e409b",
+      "bytes": 39192
+    },
+    "Samuel/Samuel.toc": {
+      "sha256": "4e6aa1b1fe1b5103a08860e5ae1d36b8c23753648b6a16ccded47e12c4803924",
+      "bytes": 223
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "78500150": {
+      "tag": "latest",
+      "folder": "latest--78500150",
+      "assets": {
+        "79334033": {
+          "sha256": "cb37698156446a29fdea9dd38395db96704797afe9f90f5775f5d69acc91b26b",
+          "bytes": 8694,
+          "id": "79334033",
+          "name": "Samuel.zip",
+          "url": "https://github.com/Terrub/Samuel/releases/download/latest/Samuel.zip",
+          "path": "releases/latest--78500150/assets/Samuel.zip"
+        }
+      },
+      "source": {
+        "sha256": "c5e480090eb14b3f3a8e49d3985debb393795d87431a4e71e8d68ccce1c81086",
+        "bytes": 9789,
+        "path": "releases/latest--78500150/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Terrub/Samuel/tarball/latest"
+      }
+    }
+  }
+}

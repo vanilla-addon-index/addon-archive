@@ -1,0 +1,9 @@
+{
+  "id": "25",
+  "tag": "a",
+  "name": "V1.1",
+  "body": "## V1.1\r\n\r\n---\r\n\r\n## 🚀 Performance Improvements\r\n\r\nThis update focuses on improving performance and reducing unnecessary CPU usage in the chat integration.\r\n\r\n### ✨ What's Changed\r\n\r\n* **Removed the constant 33 Hz chat scanning.**\r\n\r\n  * Chat is now scanned only when needed, significantly reducing idle CPU usage.\r\n\r\n* **Event-driven chat updates.**\r\n\r\n  * Chat scans are now triggered by chat events (Say, Party, Raid, Guild, Whisper, Battleground, Loot, Tradeskills, Channels, and more) instead of continuous polling.\r\n\r\n* **Smart scan delay.**\r\n\r\n  * A short **50 ms delay** is used before scanning to ensure chat messages have finished rendering, improving positioning accuracy.\r\n\r\n* **Built-in rate limiting.**\r\n\r\n  * Scans are limited to **once every 0.25 seconds**, preventing excessive updates during busy chat activity.\r\n\r\n* **Scrolling support retained.**\r\n\r\n  * Scrolling chat (Page Up/Down, Top/Bottom, Mouse Wheel, etc.) now automatically refreshes the **[+]** buttons, preserving previous behavior without constant background scanning.\r\n\r\n* **Login initialization.**\r\n\r\n  * A single scan runs **0.3 seconds after login** so existing chat messages are processed immediately.\r\n\r\n* **Smarter frame handling.**\r\n\r\n  * Hidden or inactive chat windows are ignored, avoiding unnecessary work for docked or non-visible chat frames.\r\n\r\n### ⚡ Result\r\n\r\nThe addon now behaves exactly as before while using **far less CPU time**, especially when idle, making it more efficient during long play sessions.",
+  "published": "2026-07-13T12:39:15Z",
+  "prerelease": false,
+  "url": "https://octowow.st/git/Relationship/RelationshipsQuestAndItemBrowser/releases/tag/a"
+}

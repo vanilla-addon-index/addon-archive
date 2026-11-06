@@ -1,0 +1,177 @@
+{
+  "upstream": "https://github.com/DeterminedPanda/DifficultBulletinBoard",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "DeterminedPanda",
+    "repo": "DifficultBulletinBoard",
+    "name": "DifficultBulletinBoard",
+    "url": "https://github.com/DeterminedPanda/DifficultBulletinBoard",
+    "api": "https://api.github.com/repos/DeterminedPanda/DifficultBulletinBoard"
+  },
+  "commit": "2db7bd20a95a4e80cd8d5218ce0c6a22d99c711d",
+  "sourceFiles": {
+    "api/blacklist.lua": {
+      "sha256": "87fac9e7380a5b441fec71d1c239f31d24f8ba04575ca98b34a3987d84644579",
+      "bytes": 9754
+    },
+    "api/categories.lua": {
+      "sha256": "1628fe89aa5ca84c45ccf4096d45094e394af030697ad64b08c563f40077cc7f",
+      "bytes": 45516
+    },
+    "api/channels.lua": {
+      "sha256": "4180f2ccfc5234775972c6204c9a6095d5e3f1d4936148f40eb149026e66f180",
+      "bytes": 9994
+    },
+    "api/chat_filter.lua": {
+      "sha256": "e5ffb94b6ee0afa9f38084aaab20f9a59dc35288d91b2d044d1c018bc9c352ed",
+      "bytes": 35634
+    },
+    "api/config_schema.lua": {
+      "sha256": "beec50591ddab45b5c50d8ffbe7bc99a9e364c27862b050538c04854bde0b123",
+      "bytes": 25805
+    },
+    "api/config_widgets.lua": {
+      "sha256": "02f4d8f612cd199762f4f2d5e3920b06ee490e28573969096c1ad94482b789f8",
+      "bytes": 41198
+    },
+    "api/debug.lua": {
+      "sha256": "da0c2f0c0fa07c0c4ed3772675ef83b48ed6eb27f365a2b89390584310e7603f",
+      "bytes": 71751
+    },
+    "api/gui_schema.lua": {
+      "sha256": "e2752477ce20a26553f65d3caf2b128356478c82d402804c7f185c99fc68dfb2",
+      "bytes": 57295
+    },
+    "api/hardcore.lua": {
+      "sha256": "23fad0fc94389cca7185f13a9dce03cbb700de4690875c75468c474b19edabf3",
+      "bytes": 3673
+    },
+    "api/lockouts.lua": {
+      "sha256": "4706e2e5a5e8dded71f793d4015e44384811ba6890c7601e6a22b28fbb43de12",
+      "bytes": 3947
+    },
+    "api/messages.lua": {
+      "sha256": "1fd71a9c3ece16ebe242994d75d52cb09b16523f1126790d135dae7dd57a9ae4",
+      "bytes": 23113
+    },
+    "api/notifications.lua": {
+      "sha256": "94d4d17c2eadc1824daec067558086df49498e6bca2195ee22f91a5886dce1e1",
+      "bytes": 15635
+    },
+    "api/tooltip.lua": {
+      "sha256": "4464ad4560e36a98ae1ebd50bc2a964234dbfa4293a38b1fd3806ac665357c67",
+      "bytes": 10736
+    },
+    "api/utils.lua": {
+      "sha256": "cbab79aa4695b6eeac3ed12a932aff4bf097da3e78b685a233e2e866ca54f956",
+      "bytes": 5303
+    },
+    "api/wildcards.lua": {
+      "sha256": "a48d84f2f43e7faab6e5a80551b9d4d022c661d78f2e1b66d9fab2713ac76794",
+      "bytes": 12720
+    },
+    "Bindings.xml": {
+      "sha256": "e0890dff0be5e06c41f85daac500fb0fdb4c11b10bf096c5574ad8bc69283436",
+      "bytes": 102
+    },
+    "DifficultBulletinBoard.lua": {
+      "sha256": "e621b5b4d79c22b9f28518025058435e58b8fe9721fd78d21a7508d22a82ceea",
+      "bytes": 26918
+    },
+    "DifficultBulletinBoard.toc": {
+      "sha256": "2bf2139f744bd733be6167c11756f71ef0396f64bece8cd36b923762abbbd95e",
+      "bytes": 813
+    },
+    "env/constants.lua": {
+      "sha256": "2b6209bc22f8231cb9c2f703cc95d9f8c0c5e29415b11a024643f975a3a8ebaf",
+      "bytes": 1748
+    },
+    "env/defaults.lua": {
+      "sha256": "f17625c220f4c22a224bf5dff0b1025ad01222c0e804fa820078a54795a5286d",
+      "bytes": 10454
+    },
+    "env/tables.lua": {
+      "sha256": "539d44eedc337eaa137d056080ac53b8385a471e28e1843dbae6a78aadaa29d4",
+      "bytes": 1329
+    },
+    "env/tag_exclusions.lua": {
+      "sha256": "1924862dda344ed253cad501e3b84a27f008436713bb3cecd5989f97375b6446",
+      "bytes": 9498
+    },
+    "env/versions.lua": {
+      "sha256": "6d1f2d1533edbb329df97c2214b6bd26e2c9880e3aa7de3132354c71a53d92c5",
+      "bytes": 962
+    },
+    "font/IBMPlexMono-SemiBold.ttf": {
+      "sha256": "b1a936f96266fbe036b112f659155f7c32222af44a9a20f3bb011f51050669d5",
+      "bytes": 138448
+    },
+    "img/bell.tga": {
+      "sha256": "adebedb5ffac1bed2aa2115237ea983c979f9515b19ff29ba8caaee701884451",
+      "bytes": 2089
+    },
+    "img/close.tga": {
+      "sha256": "ff89f4fed436728155fdb1ae16796c8fb9426b239327dc437c431bf015f38726",
+      "bytes": 518
+    },
+    "img/sizegrabber-down.tga": {
+      "sha256": "099102522b5f45ba28df0abf2f54ec5574a29b258c25330360780fdc2553159b",
+      "bytes": 824
+    },
+    "img/sizegrabber-highlight.tga": {
+      "sha256": "5829b57218b92b8c979e9e54d1daab948a096f987e0f536f175f7b102f6c24ac",
+      "bytes": 862
+    },
+    "img/sizegrabber-up.tga": {
+      "sha256": "9b35b6497bc801b7bcaf4e4313ed58e06022e7908f1805c9d14a1ed140aa42c3",
+      "bytes": 795
+    },
+    "modules/categories.lua": {
+      "sha256": "bec5bb6c68b4aa6e27914e25bb5229d7b5ad585f41a9001f21a9dcb91512e06a",
+      "bytes": 7864
+    },
+    "modules/config.lua": {
+      "sha256": "436ba7a7c8c694b7d238c3580744cef57f46133f8b6f5ae00224034298f5ee4a",
+      "bytes": 21384
+    },
+    "modules/debug_viewer.lua": {
+      "sha256": "dbdff6a43121e818017cf6f00e23692ab26bc059c05117002677c96a982bdf70",
+      "bytes": 23447
+    },
+    "modules/gui.lua": {
+      "sha256": "0fe6901796a0d90eb8c3da80c2617a7e781e399376eb91cbe3c2268c6fc42480",
+      "bytes": 49233
+    },
+    "modules/minimap.lua": {
+      "sha256": "add2bfe801f8bc33ab6544f9b7e142f9d03a4793cfff3bd05e467f2a7f081dce",
+      "bytes": 5053
+    },
+    "modules/version_check.lua": {
+      "sha256": "98e0562c5107c6ff735521ffd8fcd1bf11cd560822623164c89a0e3dd782eade",
+      "bytes": 3484
+    },
+    "README.md": {
+      "sha256": "340ca6df3e0b667879038fed47dc65f56d7790164995af2a32f45ca5121c6b96",
+      "bytes": 3929
+    },
+    "sound/duck.wav": {
+      "sha256": "90911ff7ac221c2a9b376b4745095edf9d1f96f9c06cd03a05fad5b46d01f9ba",
+      "bytes": 11854
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "418267705": {
+      "tag": "V3.01",
+      "folder": "V3.01--418267705",
+      "assets": {},
+      "source": {
+        "sha256": "dd37499b1a1fd9cecad0717739646714272e2f7f4ac16a157277f3458d4efd38",
+        "bytes": 192319,
+        "path": "releases/V3.01--418267705/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/DeterminedPanda/DifficultBulletinBoard/tarball/V3.01"
+      }
+    }
+  }
+}

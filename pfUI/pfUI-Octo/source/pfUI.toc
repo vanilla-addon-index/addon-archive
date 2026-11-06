@@ -1,0 +1,19 @@
+## Interface: 11200
+## Title: |cff33ffccpf|cffffffffUI |cff8888ccOcto
+## Author: Shagu, Octo edition by bdot89
+## Notes: A complete user interface replacement. Octo edition: ElvUI-style look, movers, install wizard, profiles, meters and combat text.
+## Notes-ruRU: Полная замена пользовательского интерфейса.
+## Version: 5.5.4
+## X-Octo-Version: 1.0.0
+## SavedVariables: pfUI_profiles, pfUI_addon_profiles, pfUI_cache
+## SavedVariablesPerCharacter: pfUI_config, pfUI_init, pfUI_playerDB, BCSConfig
+
+pfUI.lua
+charstats\charstats.xml
+
+init\env.xml
+init\compat.xml
+init\api.xml
+init\libs.xml
+init\skins.xml
+init\modules.xml

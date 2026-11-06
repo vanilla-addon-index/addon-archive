@@ -1,0 +1,54 @@
+{
+  "upstream": "https://github.com/Road-block/ColorSocialFrame",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "ColorSocialFrame",
+    "name": "ColorSocialFrame",
+    "url": "https://github.com/Road-block/ColorSocialFrame",
+    "api": "https://api.github.com/repos/Road-block/ColorSocialFrame"
+  },
+  "commit": "723fe40b9635fc96c48960cbb9b8bd189a4a4f06",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "ColorSocialFrame.toc": {
+      "sha256": "772e3f3023a16338e2d7f68a4b53319c8a2789145d30bb67f9e99374d2b3d70c",
+      "bytes": 381
+    },
+    "core.lua": {
+      "sha256": "bd3fcf3a74ca540a1813066778dd4bdfecf54229f96369afbe35a4c79606ffbc",
+      "bytes": 16281
+    },
+    "README.md": {
+      "sha256": "4a72aa2d8117510cf3c70dd919e712705fcf415c1321da7010655dafc080982c",
+      "bytes": 623
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "12289585": {
+      "tag": "1.30",
+      "folder": "1.30--12289585",
+      "assets": {
+        "8157600": {
+          "sha256": "611c0baaad88b123caea392634192b9f52ec6e334e33b8ad73ed88bef164d611",
+          "bytes": 4760,
+          "id": "8157600",
+          "name": "ColorSocialFrame-1.30-11200.zip",
+          "url": "https://github.com/Road-block/ColorSocialFrame/releases/download/1.30/ColorSocialFrame-1.30-11200.zip",
+          "path": "releases/1.30--12289585/assets/ColorSocialFrame-1.30-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "268ebfe8d0ee2e62a975895922fa9d3f1f26cd4710d1689adebc3bef66e5bae7",
+        "bytes": 4631,
+        "path": "releases/1.30--12289585/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/ColorSocialFrame/tarball/1.30"
+      }
+    }
+  }
+}

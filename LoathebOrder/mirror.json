@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/LoathebOrder",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "LoathebOrder",
+    "name": "LoathebOrder",
+    "url": "https://github.com/MarcelineVQ/LoathebOrder",
+    "api": "https://api.github.com/repos/MarcelineVQ/LoathebOrder"
+  },
+  "commit": "2ae69de1aa38abe90acc9e24996ccf7546e704c3",
+  "sourceFiles": {
+    "LoathebOrder.lua": {
+      "sha256": "cde90f8318150f0cc6bda17aac6b03612d03a3e75007188dbd99b803b4e23c2f",
+      "bytes": 2202
+    },
+    "LoathebOrder.toc": {
+      "sha256": "71577f0cf9dbae186b62f1eaec364ecba367b4d0fced604458aabeaaa1d430a0",
+      "bytes": 295
+    },
+    "readme.md": {
+      "sha256": "fba38ddfa76ff4db2362be6ebdf59b1a82df247ef8bea23ccb3c492b530ef090",
+      "bytes": 667
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

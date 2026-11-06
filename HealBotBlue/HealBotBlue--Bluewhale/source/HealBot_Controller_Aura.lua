@@ -1,0 +1,388 @@
+local HealBot_Buff_Equivalents = nil
+-- HealBot_Controller_Aura.lua
+-- Handles tracking buffs/debuffs (auras) on group/raid units
+
+HealBot_MissingBuffs = {}
+local StaticHasBuff = {}
+
+-- HealBot_UnitAffected: Checks if a specific buff/debuff exists on a unit.
+function HealBot_UnitAffected(unit, effect)
+    if string.find(unit, "^Test") then return nil; end
+    if not effect then return nil; end
+    local i = 1
+    while true do
+        local buff = UnitBuff(unit, i)
+        if not buff then
+            break
+        end
+        if buff == effect then
+            return buff
+        end
+        i = i + 1
+    end
+    i = 1
+    while true do
+        local debuff = UnitDebuff(unit, i)
+        if not debuff then
+            break
+        end
+        if debuff == effect then
+            return debuff
+        end
+        i = i + 1
+    end
+    return nil;
+end
+
+-- HealBot_CheckShamanWeaponBuff: Checks for Shaman weapon enchants via API.
+function HealBot_CheckShamanWeaponBuff(spellName)
+    local hasMainHandEnchant, _, _, hasOffHandEnchant = GetWeaponEnchantInfo()
+    if not (hasMainHandEnchant or hasOffHandEnchant) then return false end
+    
+    local firstWord = string.match(spellName, "^(%w+)")
+    if not firstWord then return false end
+
+    HealBot_ScanTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+    if not HealBot_ScanTooltip_Lines then HealBot_ScanTooltip_Lines = {} end
+    local slots = HealBot_GetTable()
+    if hasMainHandEnchant then table.insert(slots, 16) end
+    if hasOffHandEnchant then table.insert(slots, 17) end
+    
+    for _, slot in ipairs(slots) do
+        HealBot_ScanTooltip:ClearLines()
+        HealBot_ScanTooltip:SetInventoryItem("player", slot)
+        for i = 1, HealBot_ScanTooltip:NumLines() do
+            local textObj = HealBot_ScanTooltip_Lines[i]
+            if not textObj then
+                textObj = getglobal("HealBot_ScanTooltipTextLeft" .. i)
+                HealBot_ScanTooltip_Lines[i] = textObj
+            end
+            if textObj then
+                local text = textObj:GetText()
+                if text and string.find(text, firstWord) then
+                    HealBot_ScanTooltip:Hide()
+                    HealBot_ReleaseTable(slots)
+                    return true
+                end
+            end
+        end
+    end
+    
+    HealBot_ScanTooltip:Hide()
+    HealBot_ReleaseTable(slots)
+    return false
+end
+
+-- HealBot_CheckBuffs: Scans unit for missing tracked buffs.
+function HealBot_CheckBuffs(unit)
+    if string.find(unit, "^Test") then return end
+    if HealBot_Config.BuffWatch ~= 1 then
+        HealBot_MissingBuffs[unit] = nil
+        return
+    end
+    
+    local inCombat = UnitAffectingCombat("player") or UnitAffectingCombat(unit)
+    if inCombat and HealBot_Config.BuffWatchInCombat ~= 1 then
+        HealBot_MissingBuffs[unit] = nil
+        return
+    end
+    
+    local myClass = UnitClass("player")
+    if not HealBot_Buff_Spells[myClass] then return end
+    
+    if UnitIsDeadOrGhost(unit) or not UnitIsConnected(unit) then
+        HealBot_MissingBuffs[unit] = nil
+        return
+    end
+    
+    if not HealBot_Buff_Equivalents then
+        HealBot_Buff_Equivalents = {
+            -- Priest Fortitude
+            [HEALBOT_POWER_WORD_FORTITUDE] = { HEALBOT_PRAYER_OF_FORTITUDE },
+            [HEALBOT_PRAYER_OF_FORTITUDE] = { HEALBOT_POWER_WORD_FORTITUDE },
+            -- Priest Spirit
+            [HEALBOT_DIVINE_SPIRIT] = { HEALBOT_PRAYER_OF_SPIRIT },
+            [HEALBOT_PRAYER_OF_SPIRIT] = { HEALBOT_DIVINE_SPIRIT },
+            -- Priest Shadow Protection
+            [HEALBOT_SHADOW_PROTECTION] = { HEALBOT_PRAYER_OF_SHADOW_PROTECTION },
+            [HEALBOT_PRAYER_OF_SHADOW_PROTECTION] = { HEALBOT_SHADOW_PROTECTION },
+            -- Mage Intellect
+            [HEALBOT_ARCANE_INTELLECT] = { HEALBOT_ARCANE_BRILLIANCE },
+            [HEALBOT_ARCANE_BRILLIANCE] = { HEALBOT_ARCANE_INTELLECT },
+            -- Mage Armors
+            [HEALBOT_FROST_ARMOR] = { HEALBOT_ICE_ARMOR },
+            [HEALBOT_ICE_ARMOR] = { HEALBOT_FROST_ARMOR },
+            -- Druid MotW
+            [HEALBOT_MARK_OF_THE_WILD] = { HEALBOT_GIFT_OF_THE_WILD },
+            [HEALBOT_GIFT_OF_THE_WILD] = { HEALBOT_MARK_OF_THE_WILD },
+            -- Paladin Kings
+            [HEALBOT_BLESSING_OF_KINGS] = { HEALBOT_GREATER_BLESSING_OF_KINGS },
+            [HEALBOT_GREATER_BLESSING_OF_KINGS] = { HEALBOT_BLESSING_OF_KINGS },
+            -- Paladin Might
+            [HEALBOT_BLESSING_OF_MIGHT] = { HEALBOT_GREATER_BLESSING_OF_MIGHT },
+            [HEALBOT_GREATER_BLESSING_OF_MIGHT] = { HEALBOT_BLESSING_OF_MIGHT },
+            -- Paladin Wisdom
+            [HEALBOT_BLESSING_OF_WISDOM] = { HEALBOT_GREATER_BLESSING_OF_WISDOM },
+            [HEALBOT_GREATER_BLESSING_OF_WISDOM] = { HEALBOT_BLESSING_OF_WISDOM },
+            -- Paladin Salvation
+            [HEALBOT_BLESSING_OF_SALVATION] = { HEALBOT_GREATER_BLESSING_OF_SALVATION },
+            [HEALBOT_GREATER_BLESSING_OF_SALVATION] = { HEALBOT_BLESSING_OF_SALVATION },
+            -- Paladin Light
+            [HEALBOT_BLESSING_OF_LIGHT] = { HEALBOT_GREATER_BLESSING_OF_LIGHT },
+            [HEALBOT_GREATER_BLESSING_OF_LIGHT] = { HEALBOT_BLESSING_OF_LIGHT },
+            -- Paladin Sanctuary
+            [HEALBOT_BLESSING_OF_SANCTUARY] = { HEALBOT_GREATER_BLESSING_OF_SANCTUARY },
+            [HEALBOT_GREATER_BLESSING_OF_SANCTUARY] = { HEALBOT_BLESSING_OF_SANCTUARY },
+            -- Warlock Armors
+            [HEALBOT_DEMON_SKIN] = { HEALBOT_DEMON_ARMOR },
+            [HEALBOT_DEMON_ARMOR] = { HEALBOT_DEMON_SKIN },
+            -- Warlock Invisibility
+            [HEALBOT_DETECT_LESSER_INVISIBILITY] = { HEALBOT_DETECT_INVISIBILITY },
+            [HEALBOT_DETECT_INVISIBILITY] = { HEALBOT_DETECT_LESSER_INVISIBILITY },
+        }
+    end
+    
+    -- Gather buffs on unit
+    local hasBuff = StaticHasBuff
+    for k in pairs(hasBuff) do
+        hasBuff[k] = nil
+    end
+    local i = 1
+    if not HealBot_TextureToName then HealBot_TextureToName = {} end
+    while true do
+        local buffTexture = UnitBuff(unit, i)
+        if not buffTexture then break end
+        
+        local buffName = HealBot_TextureToName[buffTexture]
+        if buffName == nil then
+            HealBot_ScanTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+            HealBot_ScanTooltip:ClearLines()
+            HealBot_ScanTooltip:SetUnitBuff(unit, i)
+            local textObj = HealBot_ScanTooltipTextLeft1
+            if textObj then
+                buffName = textObj:GetText()
+            end
+            if buffName then
+                HealBot_TextureToName[buffTexture] = buffName
+            end
+        end
+        
+        if buffName then
+            hasBuff[buffName] = true
+        end
+        i = i + 1
+    end
+    HealBot_ScanTooltip:Hide()
+
+    HealBot_MissingBuffs[unit] = nil
+    
+    if HealBot_Config.BuffDropDowns and HealBot_Config.BuffDropDowns[myClass] then
+        for j = 1, 8 do
+            local val = HealBot_Config.BuffDropDowns[myClass][j]
+            if val and val > 0 then
+                local spellName = HealBot_Buff_Spells[myClass][val]
+                local isSelfOnly = (HealBot_Config.BuffWatchSelf and HealBot_Config.BuffWatchSelf[j] == 1) or (HealBot_SelfOnly_Buffs and HealBot_SelfOnly_Buffs[spellName])
+                if not (isSelfOnly and not UnitIsUnit(unit, "player")) then
+                    local hasIt = hasBuff[spellName]
+                    if not hasIt and HealBot_Buff_Equivalents[spellName] then
+                        for _, equiv in ipairs(HealBot_Buff_Equivalents[spellName]) do
+                            if hasBuff[equiv] then
+                                hasIt = true
+                                break
+                            end
+                        end
+                    end
+                    
+                    if not hasIt then
+                        if myClass == HEALBOT_SHAMAN and UnitIsUnit(unit, "player") and string.find(spellName, " Weapon") then
+                            hasIt = HealBot_CheckShamanWeaponBuff(spellName)
+                        end
+                    end
+                    
+                    if not hasIt then
+                        HealBot_MissingBuffs[unit] = spellName
+                        break
+                    end
+                end
+            end
+        end
+    end
+end
+
+local HealBot_DebuffTypeMap = nil
+local HealBot_AuraWarningPlayed = {}
+
+-- HealBot_OnEvent_UnitAura: Updates debuff lists and icon textures on aura change.
+function HealBot_OnEvent_UnitAura(this, unit)
+    if string.find(unit, "^Test") then return end
+    if not HealBot_DebuffTypeMap then
+        HealBot_DebuffTypeMap = {
+            [HEALBOT_DISEASE] = HEALBOT_DISEASE_en,
+            [HEALBOT_MAGIC] = HEALBOT_MAGIC_en,
+            [HEALBOT_POISON] = HEALBOT_POISON_en,
+            [HEALBOT_CURSE] = HEALBOT_CURSE_en
+        }
+        if HealBot_Init_TrackedAuras then
+            HealBot_Init_TrackedAuras()
+        end
+    end
+    
+    local DebuffType;
+    
+    if HealBot_Heals[unit] then
+        if not HealBot_UnitIcons[unit] then
+            HealBot_UnitIcons[unit] = {}
+        end
+        for j = 1, 10 do
+            HealBot_UnitIcons[unit][j] = nil
+        end
+        local iconCount = 0
+        local i = 1;
+        HealBot_UnitDebuff[unit] = nil;
+        local trackedTextures = HealBot_GetTable()
+        
+        while true do
+            local debuff, tmp, debuff_type = UnitDebuff(unit, i, 1)
+            if debuff then
+                local mapped_type = nil
+                if debuff_type then
+                    mapped_type = HealBot_DebuffTypeMap[debuff_type] or debuff_type
+                end
+                
+                local localizedClass = UnitClass(unit)
+                local shouldTrack = false
+                if unit == "target" then
+                    shouldTrack = true
+                elseif localizedClass and HealBot_CDCInc[localizedClass] == 1 then
+                    shouldTrack = true
+                elseif not localizedClass or HealBot_CDCInc[localizedClass] == nil then
+                    shouldTrack = true
+                end
+
+                local isDispellable = false
+                if mapped_type and HealBot_DebuffWatch[mapped_type] then
+                    isDispellable = true
+                end
+
+                if isDispellable or HealBot_Config.CDCShowAllDebuffs == 1 then
+                    if iconCount < 10 and not trackedTextures[debuff] then
+                        iconCount = iconCount + 1
+                        HealBot_UnitIcons[unit][iconCount] = debuff
+                        trackedTextures[debuff] = true
+                    end
+                end
+
+                if shouldTrack and isDispellable then
+                    HealBot_UnitDebuff[unit] = mapped_type
+                    DebuffType = mapped_type;
+                    
+                    local isPriority = false
+                    if HealBot_DebuffPriority then
+                        for _, pType in ipairs(HealBot_DebuffPriority) do
+                            if pType == mapped_type then
+                                isPriority = true
+                                break
+                            end
+                        end
+                    end
+                    if isPriority then
+                        break
+                    end
+                end
+                i = i + 1;
+            else
+                break
+            end 
+        end
+
+        if HealBot_Config.CDCShowAllDebuffs == 1 then
+            local k = 1
+            while true do
+                local debuff = UnitDebuff(unit, k)
+                if not debuff then break end
+                if not trackedTextures[debuff] and iconCount < 10 then
+                    iconCount = iconCount + 1
+                    HealBot_UnitIcons[unit][iconCount] = debuff
+                    trackedTextures[debuff] = true
+                end
+                k = k + 1
+            end
+        end
+        
+        local b = 1
+        local activeBuffs = HealBot_GetTable()
+        while true do
+            local buff = UnitBuff(unit, b)
+            if not buff then break end
+            activeBuffs[buff] = true
+            if HealBot_TrackedAura_Textures and HealBot_TrackedAura_Textures[buff] and iconCount < 10 then
+                iconCount = iconCount + 1
+                HealBot_UnitIcons[unit][iconCount] = buff
+            end
+            b = b + 1
+        end
+
+        local d = 1
+        local activeDebuffs = HealBot_GetTable()
+        while true do
+            local debuff = UnitDebuff(unit, d)
+            if not debuff then break end
+            activeDebuffs[debuff] = true
+            if HealBot_TrackedAura_Textures and HealBot_TrackedAura_Textures[debuff] and iconCount < 10 then
+                iconCount = iconCount + 1
+                HealBot_UnitIcons[unit][iconCount] = debuff
+            end
+            d = d + 1
+        end
+
+        if HealBot_Integrations_Nampower_Active and HealBot_Nampower_Auras then
+            local guid = HealBot_GetUnitGUID and HealBot_GetUnitGUID(unit)
+            if guid then
+                if not HealBot_Nampower_NameCache then HealBot_Nampower_NameCache = HealBot_GetTable() end
+                HealBot_Nampower_NameCache[guid] = UnitName(unit)
+                
+                if HealBot_Nampower_Auras[guid] then
+                    for spellName, _ in pairs(HealBot_Nampower_Auras[guid]) do
+                        local auraInfo = HealBot_TrackedAura_Spells and HealBot_TrackedAura_Spells[spellName]
+                        if auraInfo then
+                            local tex = auraInfo.texture
+                            local isActive = auraInfo.isDebuff and activeDebuffs[tex] or activeBuffs[tex]
+                            if not isActive then
+                                HealBot_Nampower_Auras[guid][spellName] = nil
+                            end
+                        end
+                    end
+                end
+            end
+        end
+        HealBot_ReleaseTable(activeBuffs)
+        HealBot_ReleaseTable(activeDebuffs)
+        
+        if HealBot_UnitDebuff[unit] then
+            if DebuffType and HealBot_Range_Check(unit, 40) == 1 then
+                if HealBot_AuraWarningPlayed[unit] ~= DebuffType then
+                    HealBot_AuraWarningPlayed[unit] = DebuffType
+                    if HealBot_Config.ShowDebuffWarning == 1 then
+                        local color = HealBot_Config.CDCBarColour[DebuffType]
+                        local r, g, b = 1, 0, 0
+                        if color then
+                            r, g, b = color.R, color.G, color.B
+                        end
+                        UIErrorsFrame:AddMessage(UnitName(unit) .. " suffers from " .. DebuffType, 
+                                                 r, g, b,
+                                                 1, UIERRORS_HOLD_TIME);
+                    end
+                    if HealBot_Config.SoundDebuffWarning == 1 then HealBot_PlaySound(HealBot_Config.SoundDebuffPlay); end
+                end
+            end
+        else
+            HealBot_AuraWarningPlayed[unit] = nil
+        end
+        -- Check buffs synchronously because tooltip scanning fails in OnUpdate
+        HealBot_CheckBuffs(unit)
+        
+        -- Defer UI updates
+        HealBot_View_DirtyUnits[unit] = true
+        HealBot_ReleaseTable(trackedTextures)
+    end
+end

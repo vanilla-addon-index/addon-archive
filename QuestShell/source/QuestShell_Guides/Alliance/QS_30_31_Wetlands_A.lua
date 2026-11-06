@@ -1,0 +1,61 @@
+-- =========================
+-- QS_Wetlands_30_31.lua
+-- Converted from TourGuide format on 2025-08-16 22:16:18
+-- =========================
+
+QuestShellGuides = QuestShellGuides or {}
+
+QuestShellGuides["QS_Wetlands_30_31_A"] = {
+  title    = "Wetlands (30-31)",
+  next     = "Hillsbrad Foothills (31-32)",
+  nextKey  = "QS_Hillsbrad_Foothills_31_32_A",
+  faction  = "Alliance",
+  minLevel = 30,
+  maxLevel = 31,
+  steps = {
+    { type="ACCEPT", class="Warlock", title="Seeking Strahad", questId=1798, npc = { name="Lago Blackwrench" }, note="Lago Blackwrench in Stormwind (39.0 85.2)" },
+    { type="ACCEPT", class="Warrior", title="The Islander", questId=1718, coords={ x=71.5, y=91.2 }, npc = { name="Kelv Sternhammer" }, note="Kelv Sternhammer in Ironforge (71.5, 91.2)" },
+    { type="TRAVEL", class="Warrior", coords={ x=68.6, y=49.1 }, note="Travel to Fray Island (68.6, 49.1)" },
+    { type="TURNIN", class="Warrior", title="The Islander", questId=1718, coords={ x=68.6, y=49.1 }, npc = { name="Klannoc Macleod" }, note="Klannoc Macleod in Fray Island (68.6, 49.1)" },
+    { type="ACCEPT", class="Warrior", title="The Affray", questId=1719, coords={ x=68.6, y=49.1 }, npc = { name="Klannoc Macleod" }, note="Klannoc Macleod in Fray Island (68.6, 49.1)" },
+    { type="COMPLETE", class="Warrior", title="The Affray", questId=1719, coords={ x=68.6, y=48.7 }, note="Kill the series of Mobs, bandage and eat in between Mobs. As for Big Will, you're given the privilege to attack him first because he's neutral, so just run back and (spell:100) then use your (spell:20230) for Big Will (68.6, 48.7)" },
+    { type="TURNIN", class="Warrior", title="The Affray", questId=1719, coords={ x=68.6, y=49.1 }, npc = { name="Klannoc Macleod" }, note="Klannoc Macleod in Fray Island (68.6, 49.1)" },
+    { type="TURNIN", class="Warlock", title="Seeking Strahad", questId=1798, coords={ x=62.6, y=35.5 }, npc = { name="Strahad Farsan" }, note="Strahad Farsan in Ratchet (62.6, 35.5)" },
+    { type="ACCEPT", class="Warlock", title="Tome of the Cabal", questId=1758, coords={ x=62.6, y=35.5 }, npc = { name="Strahad Farsan" }, note="Strahad Farsan in Ratchet (62.6, 35.5)" },
+    { type="TURNIN", class="Warlock", title="Tome of the Cabal", questId=1758, coords={ x=74.3, y=9.4 }, npc = { name="Krom Stoutarm" }, note="Krom Stoutarm in Ironforge (74.3, 9.4)" },
+    { type="ACCEPT", class="Warlock", title="Tome of the Cabal", questId=1802, coords={ x=74.3, y=9.4 }, npc = { name="Krom Stoutarm" }, note="Krom Stoutarm in Ironforge (74.3, 9.4)" },
+    { type="NOTE", class="Warlock", note="Collect Tattered Manuscript inside the cave east of the Great Lift in Thousand Needles. Take the path to the right at the fork in the cave. (43.5, 32.7)", coords={ x=43.5, y=32.7 } },
+    { type="COMPLETE", class="Warlock", title="Tome of the Cabal", questId=1802, coords={ x=27.7, y=72.8 }, note="Collect the Moldy Tome (27.7, 72.8)" },
+    { type="TURNIN", class="Warlock", title="Tome of the Cabal", questId=1802, coords={ x=74.3, y=9.8 }, npc = { name="Krom Stoutarm" }, note="Krom Stoutarm in Ironforge (74.3, 9.8)" },
+    { type="ACCEPT", class="Warlock", title="Tome of the Cabal", questId=1804, coords={ x=74.3, y=9.8 }, npc = { name="Krom Stoutarm" }, note="Krom Stoutarm in Ironforge (74.3, 9.8)" },
+    { type="COMPLETE", class="Warlock", title="Tome of the Cabal", questId=1804, coords={ x=49.0, y=46.0 }, note="Kill Dragonmaw Bonewarder and Dragonmaw Shadowwarder to collect 3 Rod of Channeling (49, 46)" },
+    { type="TURNIN", class="Warlock", title="Tome of the Cabal", questId=1804, coords={ x=62.6, y=35.5 }, npc = { name="Strahad Farsan" }, note="Strahad Farsan in Ratchet (62.6, 35.5)" },
+    { type="ACCEPT", class="Warlock", title="The Binding", questId=1795, coords={ x=62.6, y=35.5 }, npc = { name="Strahad Farsan" }, note="Strahad Farsan in Ratchet (62.6, 35.5)" },
+    { type="COMPLETE", class="Warlock", title="The Binding", questId=1795, itemId=6999, coords={ x=62.6, y=35.3 }, note="Using the Tome of the Cabal, summon and subdue a Summoned Felhunter (62.6, 35.3)" },
+    { type="TURNIN", class="Warlock", title="The Binding", questId=1795, coords={ x=62.6, y=35.5 }, npc = { name="Strahad Farsan" }, note="Strahad Farsan in Ratchet (62.6, 35.5)" },
+    { type="TRAVEL", coords={ x=10.68, y=60.92 }, note="Travel to Deepwater Tavern (10.68, 60.92)" },
+    { type="SET_HEARTH", title="The Third Fleet", coords={ x=10.7, y=60.9 }, npc = { name="Innkeeper Helbrek" }, note="Speak to Innkeeper Helbrek and set hearth at Deepwater Tavern (10.7, 60.9)" },
+    { type="ACCEPT", title="The Third Fleet", questId=288, coords={ x=10.88, y=59.64 }, npc = { name="First Mate Fitzsimmons" }, note="First Mate Fitzsimmons in Menethil Harbor (10.88, 59.64)" },
+    { type="NOTE", note="Purchase Flagon of Mead from Innkeeper Helbrek in Deepwater Tavern (10.69, 60.89)", coords={ x=10.69, y=60.89 } },
+    { type="TURNIN", title="The Third Fleet", questId=288, coords={ x=10.88, y=59.64 }, npc = { name="First Mate Fitzsimmons" }, note="First Mate Fitzsimmons in Menethil Harbor (10.88, 59.64)" },
+    { type="ACCEPT", title="The Cursed Crew", questId=289, coords={ x=10.91, y=59.53 }, npc = { name="First Mate Fitzsimmons" }, note="First Mate Fitzsimmons in Menethil Harbor (10.91, 59.53)" },
+    { type="TRAVEL", coords={ x=13.91, y=31.03 }, note="Travel to The Lost Fleet (13.91, 31.03)" },
+    { type="COMPLETE", title="The Cursed Crew", questId=289, coords={ x=13.91, y=31.03 }, note="Collect Snellig's Snuffbox in The Lost Fleet (13.91, 31.03) | Kill 13 Cursed Sailor and 5 Cursed Marine which are found around the shipwreck (13, 27) (14, 30)" },
+    { type="TURNIN", title="The Cursed Crew", questId=289, coords={ x=10.91, y=59.53 }, npc = { name="First Mate Fitzsimmons" }, note="First Mate Fitzsimmons in Menethil Harbor (10.91, 59.53)" },
+    { type="ACCEPT", title="Lifting the Curse", questId=290, coords={ x=10.91, y=59.53 }, npc = { name="First Mate Fitzsimmons" }, note="First Mate Fitzsimmons in Menethil Harbor (10.91, 59.53)" },
+    { type="TRAVEL", coords={ x=15.2, y=23.63 }, note="Travel to The Lost Fleet (15.20, 23.63)" },
+    { type="COMPLETE", title="Lifting the Curse", questId=290, coords={ x=15.5, y=23.5 }, note="Kill Captain Halyndor for the Intrepid Strongbox Key. Walk up the rudder on the top floor to reach him (15.5, 23.5)" },
+    { type="TURNIN", title="Lifting the Curse", questId=290, coords={ x=14.5, y=24.1 }, note="Intrepid's Locked Strongbox (14.5, 24.1) Open the box on bottom floor of the boat, it's underwater" },
+    { type="ACCEPT", title="The Eye of Paleth", questId=292, coords={ x=14.5, y=24.1 }, note="Intrepid's Locked Strongbox (14.5, 24.1)" },
+    { type="TRAVEL", coords={ x=47.5, y=46.9 }, note="Travel to Angerfang Encampment (47.5, 46.9)" },
+    { type="TURNIN", title="Nek'rosh's Gambit", questId=465, coords={ x=47.5, y=46.9 }, npc = { name="Dragonmaw Catapult" }, note="Dragonmaw Catapult in Angerfang Encampment (47.5, 46.9)" },
+    { type="ACCEPT", title="Defeat Nek'rosh", questId=474, coords={ x=47.4, y=46.9 }, npc = { name="Dragonmaw Catapult" }, note="Dragonmaw Catapult in Angerfang Encampment (47.40, 46.90)" },
+    { type="COMPLETE", title="Defeat Nek'rosh", questId=474, coords={ x=53.5, y=54.67 }, note="Kill Chieftain Nek'rosh in Angerfang Encampment. Chieftain Nek'rosh is a level 32 elite npc and difficult to solo, you can give it a try if you're good, the graveyard is nearby otherwise safe to skip (53.50, 54.67)" },
+    { type="TRAVEL", coords={ x=10.6, y=60.61 }, note="Travel or Hearthstone to Deepwater Tavern (10.60, 60.61)" },
+    { type="TURNIN", title="The Eye of Paleth", questId=292, coords={ x=10.6, y=60.61 }, npc = { name="Glorin Steelbrow" }, note="Glorin Steelbrow in Deepwater Tavern (10.60, 60.61)" },
+    { type="ACCEPT", title="Cleansing the Eye", questId=293, coords={ x=10.6, y=60.61 }, npc = { name="Glorin Steelbrow" }, note="Glorin Steelbrow in Deepwater Tavern (10.60, 60.61)" },
+    { type="TRAVEL", coords={ x=9.9, y=57.45 }, note="Travel to Menethil Keep (9.90, 57.45)" },
+    { type="TURNIN", title="Defeat Nek'rosh", questId=474, coords={ x=9.9, y=57.45 }, npc = { name="Captain Stoutfist" }, note="Captain Stoutfist in Menethil Keep (9.90, 57.45)" },
+    { type="NOTE", note="Tick to continue to the next guide" },
+  }
+}

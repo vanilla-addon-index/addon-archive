@@ -1,0 +1,41 @@
+<Bindings>
+	<Binding name="Target Skull" header="RETHERZTARGETTRACKER">
+		RTT_Target(8);
+	</Binding>
+	<Binding name="Target Cross" header="RETHERZTARGETTRACKER">
+		RTT_Target(7);
+	</Binding>
+	<Binding name="Target Square" header="RETHERZTARGETTRACKER">
+		RTT_Target(6);
+	</Binding>
+	<Binding name="Target Moon" header="RETHERZTARGETTRACKER">
+		RTT_Target(5);
+	</Binding>
+	<Binding name="Target Triangle" header="RETHERZTARGETTRACKER">
+		RTT_Target(4);
+	</Binding>
+	<Binding name="Target Diamond" header="RETHERZTARGETTRACKER">
+		RTT_Target(3);
+	</Binding>
+	<Binding name="Target Circle" header="RETHERZTARGETTRACKER">
+		RTT_Target(2);
+	</Binding>
+	<Binding name="Target Star" header="RETHERZTARGETTRACKER">
+		RTT_Target(1);
+	</Binding>
+	<Binding name="Clear all Symbols" header="RETHERZTARGETTRACKER">
+		RTT_ClearSymbols();
+	</Binding>
+	<Binding name="Assign Next (Mouseover)" header="RETHERZTARGETTRACKER">
+		RTT_AssignNextMO();
+	</Binding>
+	<Binding name="Assign Next (Target)" header="RETHERZTARGETTRACKER">
+		RTT_AssignNext();
+	</Binding>
+	<Binding name="Assign Free (Mouseover)" header="RETHERZTARGETTRACKER">
+		RTT_AssignFreeMO();
+	</Binding>
+	<Binding name="Assign Free (Target)" header="RETHERZTARGETTRACKER">
+		RTT_AssignFree();
+	</Binding>
+</Bindings>

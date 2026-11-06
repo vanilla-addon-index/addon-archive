@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/vakos1/HatTrick",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "vakos1",
+    "repo": "HatTrick",
+    "name": "HatTrick",
+    "url": "https://github.com/vakos1/HatTrick",
+    "api": "https://api.github.com/repos/vakos1/HatTrick"
+  },
+  "commit": "fd14ab1622f2beb2c8af16ee2400752494f4a599",
+  "sourceFiles": {
+    "changelog.txt": {
+      "sha256": "f0bcb73dd8586e89e0c3cce8f89bc17ad166f714860aeac4152944aac4590d4a",
+      "bytes": 221
+    },
+    "HatTrick.lua": {
+      "sha256": "e36936ea667ea2f4e53c888833cfe6ff86fce7d14da6d661843da19c38756285",
+      "bytes": 1471
+    },
+    "HatTrick.toc": {
+      "sha256": "2a6e92d0d680013b63dbbc366861b25268637c579169bfdeabaad01b8164d1da",
+      "bytes": 264
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

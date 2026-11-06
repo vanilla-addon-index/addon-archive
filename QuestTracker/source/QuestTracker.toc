@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: QuestTracker - Zone Progress
+## Notes: Tracks quest completion progress per zone. Hover over zones on the world map to see progress.
+## Author: Custom
+## Version: 1.0.0
+## Dependencies: pfQuest
+## SavedVariablesPerCharacter: QuestTracker_Cache
+
+ZoneData.lua
+QuestTracker.lua

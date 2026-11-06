@@ -1,0 +1,28 @@
+## Interface: 11200
+## Version: 2.7
+## Title: KillTrack
+## Notes: Keeps track of how many kills you have per mob and displays them in a list.
+## Author: Sharparam/Sica
+## SavedVariables: KILLTRACK
+## SavedVariablesPerCharacter: KILLTRACK_CHAR
+## OptionalDeps: LibStub, CallbackHandler-1.0, LibDataBroker-1.1, LibDBIcon-1.1
+
+libs\LibStub\LibStub.lua
+libs\AceCore-3.0\AceCore-3.0.lua
+libs\AceHook-3.0\AceHook-3.0.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+libs\LibDataBroker-1-1\LibDataBroker-1.1.lua
+libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
+libs\LibScrollDrop-1.0\LibScrollDrop-1.0.lua
+
+Tools.lua
+KillTrack.lua
+Dialogs.lua
+Command.lua
+MobList.lua
+Timer.lua
+TimerFrame.lua
+ImmediateFrame.lua
+ExpTracker.lua
+Broker.lua
+Options.lua

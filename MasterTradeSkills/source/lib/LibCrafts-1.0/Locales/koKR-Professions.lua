@@ -1,0 +1,21 @@
+local lib = LibCraftsGetLibrary()
+local name, locale, version = "Locales-Professions", "koKR", 5
+local module = --[[---@type LcLocaleModule]] lib:RegisterLocaleModule(name, locale, version)
+if not module then return end
+
+local L = module:GetStrings()
+L["Alchemy"] = "연금술"
+L["Blacksmithing"] = "대장기술"
+L["Cooking"] = "요리"
+L["Enchanting"] = "마법부여"
+L["Engineering"] = "기계공학"
+L["First Aid"] = "응급치료"
+L["Leatherworking"] = "가죽세공"
+L["Mining"] = "채광"
+L["Poisons"] = "독 조제"
+L["Tailoring"] = "재봉술"
+
+if lib.env.is_turtle_wow then
+    L["Disguise"] = "변장술"
+    L["Jewelcrafting"] = "보석세공"
+end

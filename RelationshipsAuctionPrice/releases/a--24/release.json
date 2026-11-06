@@ -1,0 +1,9 @@
+{
+  "id": "24",
+  "tag": "a",
+  "name": "V1.1",
+  "body": "### Added\r\n\r\n* **Draggable Auction House panel:** The Relationships Auction Price panel can now be repositioned by clicking and dragging it with the left mouse button while the Auction House window is open. Its position is clamped to the screen, preventing it from being dragged off-screen.\r\n\r\n* **Persistent panel position:** The panel's location is now saved to `RelationshipsAuctionPriceDB.panelPos` and restored after logging in or using `/reload`. To reset the panel to its default position (anchored above the Auction House frame), delete the `panelPos` field or clear the addon's SavedVariables.\r\n\r\n* ** Added a fresh updated scan of the Auction House. ( PriceData.lua )",
+  "published": "2026-07-15T14:25:05Z",
+  "prerelease": false,
+  "url": "https://octowow.st/git/Relationship/RelationshipsAuctionPrice/releases/tag/a"
+}

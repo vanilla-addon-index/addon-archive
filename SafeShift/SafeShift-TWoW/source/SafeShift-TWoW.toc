@@ -1,0 +1,9 @@
+## Interface: 11200
+## Author: DeterminedPanda. Original Author: Idiot
+## Title: SafeShift-TWoW
+## Notes: Safety measure against accidentally unshifting immediately after shapeshifting for Turtle WoW
+## Version: 1.0
+## DefaultState: enabled
+## SavedVariables: SafeShiftOptions
+
+SafeShift.lua

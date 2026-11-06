@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: GearSet Tooltips
+## Notes: Shows which ItemRack/Outfitter sets an item belongs to
+## Author: Olzon
+## Version: 1.1
+## OptionalDeps: ItemRack, Outfitter
+## SavedVariables: GearSetTooltipsDB
+
+GearSetTooltips.lua

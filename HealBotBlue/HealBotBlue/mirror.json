@@ -1,0 +1,277 @@
+{
+  "upstream": "https://github.com/Bluewhale1337/HealBotBlue",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Bluewhale1337",
+    "repo": "HealBotBlue",
+    "name": "HealBotBlue",
+    "url": "https://github.com/Bluewhale1337/HealBotBlue",
+    "api": "https://api.github.com/repos/Bluewhale1337/HealBotBlue"
+  },
+  "commit": "18eff88f7b99c148e5674eceb85242e7d316b04a",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "aea076152bbf47f4bbecc7041ae8730221097f257e1213c57e7cebebc7386015",
+      "bytes": 999
+    },
+    "HealBot_Action.lua": {
+      "sha256": "79f475a1099022764f3609b82d2485203092e69fdd6208c1d34b2ad2b5c91254",
+      "bytes": 16157
+    },
+    "HealBot_Action.xml": {
+      "sha256": "5612a8b8e098b46951b61be1b63e7c4779eb8becd485be479996d8a4fc7f4a73",
+      "bytes": 23996
+    },
+    "HealBot_BonusScanner.lua": {
+      "sha256": "4542ce61e34f635a3f5797688508000b2908cb872c61002b90a493478a98a772",
+      "bytes": 7304
+    },
+    "HealBot_Controller_Aura.lua": {
+      "sha256": "ba2d299579c770ba3963260023f00fa9d1101ab8fe3db4ff68a2b1121fc47e82",
+      "bytes": 15382
+    },
+    "HealBot_Controller_Comms.lua": {
+      "sha256": "2a9676189ea8327ffb08f82d809dad1353daade81c5b55a59eca3a286257e6ad",
+      "bytes": 8876
+    },
+    "HealBot_Controller_Events.lua": {
+      "sha256": "56ba0fc3616d1f905c8e11352f52a361ea9c8fb2c1dd15e030e932f2fb6ae771",
+      "bytes": 26705
+    },
+    "HealBot_Controller_Range.lua": {
+      "sha256": "f154ccccb87c28080e331f41bf0c129e08ad391db0fb981d7d4b4dbf568472c9",
+      "bytes": 2611
+    },
+    "HealBot_Controller_Spells.lua": {
+      "sha256": "8bfde7324c48466d25c29d1fddd8de39f6c8f69888acd35fd6915d4ce1ee9aaa",
+      "bytes": 37220
+    },
+    "HealBot_Data.lua": {
+      "sha256": "97f7401101b63349bd75637da803f416e5b89f219dd935d11b160d20d6c0639b",
+      "bytes": 38227
+    },
+    "HealBot_Error.xml": {
+      "sha256": "fce407b00447c3b9d7e97fc6fdbe66114e5005e7dc800315c9a38d2c404a4e63",
+      "bytes": 12796
+    },
+    "HealBot_Errors.lua": {
+      "sha256": "ffb3d77898b9b43b627d178eaa3b17ac411c2e01d89c0d58a22000186eec88ad",
+      "bytes": 1242
+    },
+    "HealBot_Integrations.lua": {
+      "sha256": "3a42760250f623a41725c3e10894d41cc17e065fae8fd8bc0827d66405a9c147",
+      "bytes": 8201
+    },
+    "HealBot_Localization.de.lua": {
+      "sha256": "f779c9e4fddf2b0e6fceb7d26aa5a47b8a1cd52e8cbddb4f2f946e75c19cc117",
+      "bytes": 19540
+    },
+    "HealBot_Localization.en.lua": {
+      "sha256": "0f14a77ddedd93a4052ef1f77f64d6092246c65f967a4a4875b96f9ed13ba0d3",
+      "bytes": 20490
+    },
+    "HealBot_Localization.fr.lua": {
+      "sha256": "f182e9bf1cef75c605b6baf87f4c9f5eb318d3d076c17057b15583f41fcd3f60",
+      "bytes": 22738
+    },
+    "HealBot_Localization.kr.lua": {
+      "sha256": "bc23abd84ecea335126fee26b87b9b3f136fe01ee63be07bda5b98771622c133",
+      "bytes": 17919
+    },
+    "HealBot_Model.lua": {
+      "sha256": "8d78084cfb125c3418146aeb6eec90bc69caad35fb6ad34cb79eb620b59833dc",
+      "bytes": 16750
+    },
+    "HealBot_Options_Auto.lua": {
+      "sha256": "364c5601d8dea90c1722909bc149cfaf99e9c625d6f8973dd9dd0065f713d3d5",
+      "bytes": 2820
+    },
+    "HealBot_Options_Auto.xml": {
+      "sha256": "03abc7bc13791ff1a9126c4b6cc8045fd0d1d4e284025eec98a90e814ecc4fa4",
+      "bytes": 5367
+    },
+    "HealBot_Options_Buffs.lua": {
+      "sha256": "ed542d73efbb1bbb598af9d8bfdb7854e047d7d5813d4b1ffa10e16aadb20633",
+      "bytes": 4797
+    },
+    "HealBot_Options_Buffs.xml": {
+      "sha256": "1d537f147fe5b8fb65f65624498f239ce2819b389287329d398d47da06daee30",
+      "bytes": 13619
+    },
+    "HealBot_Options_CDC.lua": {
+      "sha256": "4d8b0e17d8e67c925923d266541aabb1d08e0f3e239087a2b14920cbe265124c",
+      "bytes": 18212
+    },
+    "HealBot_Options_CDC.xml": {
+      "sha256": "053a70ba8f30161e8ec14ecc097426840b0b474317f91dc2efd60fc8744c3819",
+      "bytes": 14359
+    },
+    "HealBot_Options_Chat.lua": {
+      "sha256": "8981ba1a1886b09b7431a3d582aedaffe518c8cb9cd7b49d647392b514b6b3ab",
+      "bytes": 2103
+    },
+    "HealBot_Options_Chat.xml": {
+      "sha256": "c8fdda80e097507015eeef3aedb1e6283eff3a002acaf9c9cfc95c2e3bee8ec9",
+      "bytes": 9907
+    },
+    "HealBot_Options_General.lua": {
+      "sha256": "984456992cb7f243c8739a9d532e9e9ced240aa6da47dfaae16284a626872275",
+      "bytes": 19243
+    },
+    "HealBot_Options_General.xml": {
+      "sha256": "687d399b9a28df76aecca153fb696c74475b8af813cd0199c58400cfa3a50f6d",
+      "bytes": 11155
+    },
+    "HealBot_Options_Healing.lua": {
+      "sha256": "9cd4ac65d635ec17c2b59259ab3c52824da28464c31c6b31456b5ea761858f61",
+      "bytes": 20562
+    },
+    "HealBot_Options_Healing.xml": {
+      "sha256": "2480eb5d747784adba26bd9e44d41a78b3dd3fd538d3fde45f2a944ff182a929",
+      "bytes": 13736
+    },
+    "HealBot_Options_Integrations.lua": {
+      "sha256": "4476c069499d7914996b5eb6f5b31c7f961d748d295197a5f9f17e040c220baf",
+      "bytes": 5088
+    },
+    "HealBot_Options_Integrations.xml": {
+      "sha256": "fbea12711815a083f6d2bda8e2c0ec21511bef8a943756d865860b9db0d6a817",
+      "bytes": 8360
+    },
+    "HealBot_Options_Skins.lua": {
+      "sha256": "5ea99f2a2864e67593d0e3eadbcfc2753cb649834b41ad1d2924b90d13e93d54",
+      "bytes": 15592
+    },
+    "HealBot_Options_Skins.xml": {
+      "sha256": "98a977860ec712dccfaa9287a5b4d4de34febc897973c52765afa04b71b0bfae",
+      "bytes": 30886
+    },
+    "HealBot_Options_Spells.lua": {
+      "sha256": "4036e3df0cc3ca19736ed88c8f34dc8b971831d8557e46b1bd18615626025670",
+      "bytes": 8066
+    },
+    "HealBot_Options_Spells.xml": {
+      "sha256": "25bcaa5b9bf9d3dc5d756c62e3f09b728a427a40ee888ba0d102dc691bc509d5",
+      "bytes": 12638
+    },
+    "HealBot_Options.lua": {
+      "sha256": "6dabec728b9df58e469e2f8cae3b93d12b91c104281200bed7bb719895addd1b",
+      "bytes": 16826
+    },
+    "HealBot_Options.xml": {
+      "sha256": "f7ba3213bdf14ba519ae0060c405cc0897ad928b201c5d4bbadc54aada98a57e",
+      "bytes": 8189
+    },
+    "HealBot_View_Layout.lua": {
+      "sha256": "1980f123d3fcbd04f4f055372c25df02a8df24775cf85a833441fcf4eb34f305",
+      "bytes": 74014
+    },
+    "HealBot_View_Tooltip.lua": {
+      "sha256": "d943119a5b46981207f7178c61362bf983824026959a91dd048117d0d339aa89",
+      "bytes": 12880
+    },
+    "HealBot.lua": {
+      "sha256": "d11e11e314c8d53b5b39e8d75a759e10e93adae4c4e40bb14e68cb3572fbce64",
+      "bytes": 13880
+    },
+    "HealBot.xml": {
+      "sha256": "fc3f26d9d6dc19c29d740778ead98301160bf8436d091765eb4db72a17f2ca74",
+      "bytes": 23178
+    },
+    "HealBotBlue.toc": {
+      "sha256": "9bcc3c77ac230f00d43a3aefd09a9f126c63b3d8124ca79c4e8c455b7610f4c0",
+      "bytes": 972
+    },
+    "Images/bar1.tga": {
+      "sha256": "891891be795bb8c35fcb78f6e11763fb26c4bff17d30e959f8e9df4db9aeb393",
+      "bytes": 8236
+    },
+    "Images/bar10.tga": {
+      "sha256": "3d8a59983aada06845871a1eeb65e3b4085d2ebde5de2fd19b503a4fed564855",
+      "bytes": 6188
+    },
+    "Images/bar11.tga": {
+      "sha256": "692b8e6c995d23bbb60b8da4393005eb9242652f1d04af287911d49ff1721865",
+      "bytes": 32812
+    },
+    "Images/bar12.tga": {
+      "sha256": "bde678313ba8bc8cfd913e27af9e3bfe623d7a0aa8b4921caab5196d773b67f0",
+      "bytes": 32812
+    },
+    "Images/bar13.tga": {
+      "sha256": "f51d3556b666ae2c7c1ab4edd0e2d10f8f55be80eb315dafc4f86a0d0375cff3",
+      "bytes": 32812
+    },
+    "Images/bar14.tga": {
+      "sha256": "da316f59d129ad8458082f83f925ccb4ca455071b129bdd21e4d6adc86714880",
+      "bytes": 6188
+    },
+    "Images/bar2.tga": {
+      "sha256": "5bf478e5878f91a958f2d604152fc888588ccb5bf7d7370f1015281323068ca6",
+      "bytes": 6188
+    },
+    "Images/bar3.tga": {
+      "sha256": "8bd07b7fbe43437928eb4c83464b909395cf669f6ff560a21b4e5dc994555ad1",
+      "bytes": 6188
+    },
+    "Images/bar4.tga": {
+      "sha256": "c1903732217941fcab9d1de4ac2ad454e647433c69d07033d76b9df7a10522ff",
+      "bytes": 6188
+    },
+    "Images/bar5.tga": {
+      "sha256": "7a2f1532b62f9d467ddd16702a14d5b840ad9d1babec7bc6252ffbc5b9c20fd3",
+      "bytes": 6188
+    },
+    "Images/bar6.tga": {
+      "sha256": "5a5deac548c4639de44db55ed79a6784bba95fc8286e7a4e7235ea7da24e19c3",
+      "bytes": 32812
+    },
+    "Images/bar7.tga": {
+      "sha256": "e300a87224e7c1a044574ec915a1f9c0de49c3e26f854ecd3e1ea8ed920aaba9",
+      "bytes": 32812
+    },
+    "Images/bar8.tga": {
+      "sha256": "00e8084e83bf25b941464e2619b59e993b6ac7ae0bd8a6f37b12872e686ded6d",
+      "bytes": 32812
+    },
+    "Images/bar9.tga": {
+      "sha256": "dfb8508485a3dbf5dc3c479d3f6b4555fbaeb47118c9ef58cb1adaeac114d757",
+      "bytes": 65580
+    },
+    "Images/HealBot.tga": {
+      "sha256": "68b6435b6eee56a3bc98b4d93e9c30a9775c7c62b664db3fa63d52ae8777885d",
+      "bytes": 3090
+    },
+    "Images/WhiteLine.tga": {
+      "sha256": "61f41c08e649545b14cdc226c9e26bc4f4f061f357150cf7e7ac1250dc2c5c7f",
+      "bytes": 1068
+    },
+    "Images/WhiteLine2.tga": {
+      "sha256": "a961d524fe8c24fe8e55f7fcd3c4e2c864fcc607d0408069b92e989a6bf62640",
+      "bytes": 1042
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "README.md": {
+      "sha256": "2ed611b52cf0202b474880d830dadc3af041b0a0cbfd57f4253c575e424854a3",
+      "bytes": 33787
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "409010214": {
+      "tag": "v1.7.5",
+      "folder": "v1.7.5--409010214",
+      "assets": {},
+      "source": {
+        "sha256": "d72c27b41e203b6281431537ec45048462dac46d3eb95eb2a377f0223330becf",
+        "bytes": 182686,
+        "path": "releases/v1.7.5--409010214/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Bluewhale1337/HealBotBlue/tarball/v1.7.5"
+      }
+    }
+  }
+}

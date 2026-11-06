@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/jrc13245/BonusScanner",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jrc13245",
+    "repo": "BonusScanner",
+    "name": "BonusScanner",
+    "url": "https://github.com/jrc13245/BonusScanner",
+    "api": "https://api.github.com/repos/jrc13245/BonusScanner"
+  },
+  "commit": "caf3cbf3836e84d740934b9fb8752eaa1a9b62c4",
+  "sourceFiles": {
+    "BonusScanner.lua": {
+      "sha256": "6691d0f1773f20823c6fc57822e5ed3744a4569b0f2d88325e71b3b5b1fa2c75",
+      "bytes": 15668
+    },
+    "BonusScanner.toc": {
+      "sha256": "a278c0f81d8b928a8aecd6d02d3a6cbdbcda8c60c7f7948aa3412d2d08c3f00b",
+      "bytes": 313
+    },
+    "BonusScanner.xml": {
+      "sha256": "3a81c60604b3fb7d42fbf8d38c4e885a8f37b20a88518d5d6f55b3cf76ad8e9c",
+      "bytes": 723
+    },
+    "Localization.DE.lua": {
+      "sha256": "78a1a74c1cad3fd81c449d111b0045639cb0bfb32df4d6f33ef7ebab02a3ab52",
+      "bytes": 8176
+    },
+    "Localization.FR.lua": {
+      "sha256": "20ee0abcb033e63b25d60469a5da11e8da8593d81a42272931f2a3ef0711fb4a",
+      "bytes": 6756
+    },
+    "Localization.lua": {
+      "sha256": "2a79e17be335c5bb8b4344394bc79dc335c9ed6376be2d397985415a742b34de",
+      "bytes": 7818
+    },
+    "README.md": {
+      "sha256": "650051ac67ebde46bc53d68d9a3f0df3646f2fc0e875f45326a4a27170af9aa8",
+      "bytes": 174
+    },
+    "TitanItemBonuses.xml": {
+      "sha256": "ba820cc7062ab1ac1bedf73dd08f2924ba8264c3a218d5202d2ed1b085aed06e",
+      "bytes": 699
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

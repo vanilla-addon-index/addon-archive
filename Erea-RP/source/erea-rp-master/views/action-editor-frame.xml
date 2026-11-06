@@ -1,0 +1,472 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+  <!-- ======================================================================
+       action-editor-frame.xml - Action Editor Dialog (combined list + detail)
+       ======================================================================
+       PURPOSE: Defines the action editor dialog for managing all actions on an item.
+                Left panel: action list. Right panel: action detail editor.
+       PRESENTER: presenters/action-editor.lua adds behavior
+       ====================================================================== -->
+
+  <!-- Method controls overlay template (Remove/Down/Up buttons per method row) -->
+  <!-- Used by CreateMethodFrame in action-editor.lua via a named overlay frame -->
+  <Frame name="EreaRpMasterMethodControlsTemplate" virtual="true">
+    <Frames>
+      <Button name="$parentRemoveBtn" inherits="UIPanelButtonTemplate" text="Remove">
+        <Size><AbsDimension x="60" y="20"/></Size>
+        <Anchors>
+          <Anchor point="TOPRIGHT">
+            <Offset><AbsDimension x="-5" y="-2"/></Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+      <!-- DownBtn right edge = -5(margin) - 60(Remove) - 5(gap) = -70 -->
+      <Button name="$parentDownBtn" inherits="UIPanelButtonTemplate" text="v">
+        <Size><AbsDimension x="25" y="20"/></Size>
+        <Anchors>
+          <Anchor point="TOPRIGHT">
+            <Offset><AbsDimension x="-70" y="-2"/></Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+      <!-- UpBtn right edge = -70 - 25(Down) - 5(gap) = -100 -->
+      <Button name="$parentUpBtn" inherits="UIPanelButtonTemplate" text="^">
+        <Size><AbsDimension x="25" y="20"/></Size>
+        <Anchors>
+          <Anchor point="TOPRIGHT">
+            <Offset><AbsDimension x="-100" y="-2"/></Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+    </Frames>
+  </Frame>
+
+  <!-- Action list row template (used by RefreshActionList in Lua) -->
+  <Button name="EreaRpMasterActionRowTemplate" virtual="true">
+    <Size>
+      <AbsDimension x="155" y="22"/>
+    </Size>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <Texture name="$parentHighlight" setAllPoints="true" hidden="true">
+          <Color r="1" g="1" b="1" a="0.1"/>
+        </Texture>
+        <Texture name="$parentSelected" setAllPoints="true" hidden="true">
+          <Color r="0.2" g="0.4" b="0.8" a="0.5"/>
+        </Texture>
+      </Layer>
+      <Layer level="OVERLAY">
+        <FontString name="$parentLabel" inherits="GameFontNormalSmall" justifyH="LEFT">
+          <Anchors>
+            <Anchor point="LEFT">
+              <Offset><AbsDimension x="5" y="0"/></Offset>
+            </Anchor>
+            <Anchor point="RIGHT">
+              <Offset><AbsDimension x="-5" y="0"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Scripts>
+      <OnEnter>
+        if not this.isSelected then
+          _G[this:GetName() .. "Highlight"]:Show()
+        end
+      </OnEnter>
+      <OnLeave>
+        _G[this:GetName() .. "Highlight"]:Hide()
+      </OnLeave>
+    </Scripts>
+  </Button>
+
+  <Frame name="EreaRpMasterActionEditorFrame" parent="UIParent" frameStrata="DIALOG"
+         enableMouse="true" movable="true" resizable="true" hidden="true" toplevel="true">
+    <Size>
+      <AbsDimension x="800" y="500"/>
+    </Size>
+    <Anchors>
+      <Anchor point="CENTER"/>
+    </Anchors>
+    <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+              edgeFile="Interface\DialogFrame\UI-DialogBox-Border"
+              tile="true">
+      <EdgeSize>
+        <AbsValue val="32"/>
+      </EdgeSize>
+      <TileSize>
+        <AbsValue val="32"/>
+      </TileSize>
+      <BackgroundInsets>
+        <AbsInset left="11" right="12" top="12" bottom="11"/>
+      </BackgroundInsets>
+    </Backdrop>
+
+    <Layers>
+      <Layer level="OVERLAY">
+        <!-- Title -->
+        <FontString name="$parentTitle" inherits="GameFontNormalLarge" text="Action Editor">
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset><AbsDimension x="0" y="-20"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <!-- Left panel header -->
+        <FontString name="$parentActionsLabel" inherits="GameFontNormal" text="Actions">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="20" y="-50"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <!-- Right panel header: Label -->
+        <FontString name="$parentLabelLabel" inherits="GameFontNormal" text="Label (shown to player):">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="220" y="-50"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <!-- Conditions label -->
+        <FontString name="$parentConditionsLabel" inherits="GameFontNormal" text="Conditions (show when):">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="220" y="-100"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <!-- Custom Text Empty label -->
+        <FontString name="$parentCustomTextLabel" inherits="GameFontNormalSmall" text="Custom Text Empty">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="245" y="-120"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <!-- Counter > 0 label -->
+        <FontString name="$parentCounterLabel" inherits="GameFontNormalSmall" text="Counter > 0">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="420" y="-120"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <!-- Send Status label -->
+        <FontString name="$parentSendStatusLabel" inherits="GameFontNormalSmall" text="Send Status">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="560" y="-120"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <!-- Methods label -->
+        <FontString name="$parentMethodsLabel" inherits="GameFontNormal" text="Methods (executed in order):">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="220" y="-145"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <!-- Hint when no action is selected -->
+        <FontString name="$parentNoSelectionHint" inherits="GameFontNormal" text="|cFF888888Select or add an action|r">
+          <Anchors>
+            <Anchor point="CENTER">
+              <Offset><AbsDimension x="105" y="0"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+
+    <Frames>
+      <!-- Draggable title bar -->
+      <Frame name="$parentTitleBar" enableMouse="true">
+        <Size>
+          <AbsDimension x="0" y="30"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="10" y="-10"/></Offset>
+          </Anchor>
+          <Anchor point="TOPRIGHT">
+            <Offset><AbsDimension x="-30" y="-10"/></Offset>
+          </Anchor>
+        </Anchors>
+      </Frame>
+
+      <!-- Close button -->
+      <Button name="$parentCloseButton" inherits="UIPanelCloseButton">
+        <Anchors>
+          <Anchor point="TOPRIGHT">
+            <Offset><AbsDimension x="-5" y="-5"/></Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+
+      <!-- ================================================================
+           LEFT PANEL: Action List (200px wide)
+           ================================================================ -->
+
+      <!-- Action list scroll frame -->
+      <ScrollFrame name="$parentActionListScroll" enableMouse="true">
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="20" y="-68"/></Offset>
+          </Anchor>
+          <Anchor point="BOTTOMLEFT">
+            <Offset><AbsDimension x="20" y="80"/></Offset>
+          </Anchor>
+        </Anchors>
+        <Size>
+          <AbsDimension x="175" y="0"/>
+        </Size>
+        <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                  edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                  tile="true">
+          <EdgeSize>
+            <AbsValue val="10"/>
+          </EdgeSize>
+          <TileSize>
+            <AbsValue val="16"/>
+          </TileSize>
+          <BackgroundInsets>
+            <AbsInset left="3" right="3" top="3" bottom="3"/>
+          </BackgroundInsets>
+        </Backdrop>
+        <Scripts>
+          <OnLoad>
+            this:SetBackdropColor(0.1, 0.1, 0.1, 0.8)
+            this:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
+          </OnLoad>
+        </Scripts>
+        <Frames>
+          <Frame name="$parentChild">
+            <Size>
+              <AbsDimension x="160" y="1"/>
+            </Size>
+          </Frame>
+        </Frames>
+      </ScrollFrame>
+
+      <!-- Action list scrollbar -->
+      <Slider name="$parentActionListSlider" inherits="UIPanelScrollBarTemplate">
+        <Size>
+          <AbsDimension x="16" y="0"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parentActionListScroll" relativePoint="TOPRIGHT">
+            <Offset><AbsDimension x="0" y="-16"/></Offset>
+          </Anchor>
+          <Anchor point="BOTTOMLEFT" relativeTo="$parentActionListScroll" relativePoint="BOTTOMRIGHT">
+            <Offset><AbsDimension x="0" y="16"/></Offset>
+          </Anchor>
+        </Anchors>
+      </Slider>
+
+      <!-- Add Action button -->
+      <Button name="$parentAddActionButton" inherits="UIPanelButtonTemplate" text="Add">
+        <Size>
+          <AbsDimension x="85" y="22"/>
+        </Size>
+        <Anchors>
+          <Anchor point="BOTTOMLEFT">
+            <Offset><AbsDimension x="20" y="52"/></Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+
+      <!-- Remove Action button -->
+      <Button name="$parentRemoveActionButton" inherits="UIPanelButtonTemplate" text="Remove">
+        <Size>
+          <AbsDimension x="85" y="22"/>
+        </Size>
+        <Anchors>
+          <Anchor point="BOTTOMLEFT">
+            <Offset><AbsDimension x="110" y="52"/></Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+
+      <!-- ================================================================
+           RIGHT PANEL: Action Detail Editor
+           ================================================================ -->
+
+      <!-- Label EditBox (dual-anchored: stretches with frame width) -->
+      <EditBox name="$parentLabelEdit" inherits="InputBoxTemplate" autoFocus="false">
+        <Size>
+          <AbsDimension x="0" y="25"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="220" y="-70"/></Offset>
+          </Anchor>
+          <Anchor point="TOPRIGHT">
+            <Offset><AbsDimension x="-40" y="-70"/></Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnEscapePressed>
+            this:ClearFocus()
+          </OnEscapePressed>
+        </Scripts>
+      </EditBox>
+
+      <!-- Custom Text Empty checkbox -->
+      <CheckButton name="$parentCustomTextCheck" inherits="UICheckButtonTemplate">
+        <Size>
+          <AbsDimension x="20" y="20"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="220" y="-117"/></Offset>
+          </Anchor>
+        </Anchors>
+      </CheckButton>
+
+      <!-- Counter > 0 checkbox -->
+      <CheckButton name="$parentCounterCheck" inherits="UICheckButtonTemplate">
+        <Size>
+          <AbsDimension x="20" y="20"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="395" y="-117"/></Offset>
+          </Anchor>
+        </Anchors>
+      </CheckButton>
+
+      <!-- Send Status checkbox -->
+      <CheckButton name="$parentSendStatusCheck" inherits="UICheckButtonTemplate">
+        <Size>
+          <AbsDimension x="20" y="20"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="535" y="-117"/></Offset>
+          </Anchor>
+        </Anchors>
+      </CheckButton>
+
+      <!-- Methods scroll frame -->
+      <ScrollFrame name="$parentMethodsScroll" enableMouse="true">
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="220" y="-165"/></Offset>
+          </Anchor>
+          <Anchor point="BOTTOMRIGHT">
+            <Offset><AbsDimension x="-40" y="80"/></Offset>
+          </Anchor>
+        </Anchors>
+        <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                  edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+          <EdgeSize><AbsValue val="10"/></EdgeSize>
+          <TileSize><AbsValue val="16"/></TileSize>
+          <BackgroundInsets><AbsInset left="3" right="3" top="3" bottom="3"/></BackgroundInsets>
+        </Backdrop>
+        <Scripts>
+          <OnLoad>
+            this:SetBackdropColor(0.1, 0.1, 0.1, 0.8)
+            this:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
+          </OnLoad>
+        </Scripts>
+        <Frames>
+          <Frame name="EreaRpMasterActionEditorFrameMethodsScrollChild">
+            <Size>
+              <AbsDimension x="530" y="1"/>
+            </Size>
+          </Frame>
+        </Frames>
+      </ScrollFrame>
+
+      <!-- Methods scrollbar -->
+      <Slider name="$parentMethodsSlider" inherits="UIPanelScrollBarTemplate">
+        <Size>
+          <AbsDimension x="16" y="0"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parentMethodsScroll" relativePoint="TOPRIGHT">
+            <Offset><AbsDimension x="4" y="-16"/></Offset>
+          </Anchor>
+          <Anchor point="BOTTOMLEFT" relativeTo="$parentMethodsScroll" relativePoint="BOTTOMRIGHT">
+            <Offset><AbsDimension x="4" y="16"/></Offset>
+          </Anchor>
+        </Anchors>
+      </Slider>
+
+      <!-- Add Method button -->
+      <Button name="$parentAddMethodButton" inherits="UIPanelButtonTemplate" text="Add Method">
+        <Size>
+          <AbsDimension x="100" y="22"/>
+        </Size>
+        <Anchors>
+          <Anchor point="BOTTOMLEFT">
+            <Offset><AbsDimension x="220" y="52"/></Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+
+      <!-- ================================================================
+           BOTTOM BUTTONS
+           ================================================================ -->
+
+      <!-- Save button -->
+      <Button name="$parentSaveButton" inherits="UIPanelButtonTemplate" text="Save">
+        <Size>
+          <AbsDimension x="80" y="24"/>
+        </Size>
+        <Anchors>
+          <Anchor point="BOTTOMRIGHT">
+            <Offset><AbsDimension x="-110" y="20"/></Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+
+      <!-- Cancel button -->
+      <Button name="$parentCancelButton" inherits="UIPanelButtonTemplate" text="Cancel">
+        <Size>
+          <AbsDimension x="80" y="24"/>
+        </Size>
+        <Anchors>
+          <Anchor point="BOTTOMRIGHT">
+            <Offset><AbsDimension x="-20" y="20"/></Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+
+      <!-- Resize grip (bottom-right corner) -->
+      <Button name="$parentResizeButton" enableMouse="true">
+        <Size>
+          <AbsDimension x="20" y="20"/>
+        </Size>
+        <Anchors>
+          <Anchor point="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="-7" y="7"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <NormalTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Up" alpha="0.3"/>
+        <HighlightTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Highlight"/>
+        <PushedTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Down"/>
+      </Button>
+    </Frames>
+
+    <Scripts>
+      <OnLoad>
+        this:SetBackdropColor(0, 0, 0, 1)
+        this:SetMinResize(800, 400)
+        this:SetMaxResize(1200, 900)
+      </OnLoad>
+    </Scripts>
+  </Frame>
+
+</Ui>

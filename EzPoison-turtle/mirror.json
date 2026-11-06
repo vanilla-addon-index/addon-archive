@@ -1,0 +1,79 @@
+{
+  "upstream": "https://github.com/wierdthing/EzPoison/tree/main",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "wierdthing",
+    "repo": "EzPoison",
+    "name": "EzPoison",
+    "ref": "main",
+    "subpath": "",
+    "url": "https://github.com/wierdthing/EzPoison",
+    "api": "https://api.github.com/repos/wierdthing/EzPoison"
+  },
+  "commit": "eb0184efaed84992dd652b2ad82a49679177d6f6",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    ".gitignore.upstream": {
+      "sha256": "3593d7cdb24d1a41b8154313c1e5df6db33c4f93895eb7cb1a852854cf11ac9d",
+      "bytes": 696
+    },
+    "Bindings.xml": {
+      "sha256": "36e5f454cd0748b7ae0f8ab574dbe96e6b77e4db8e461fe980ce01bfc53d5cc4",
+      "bytes": 607
+    },
+    "EzPoison.lua": {
+      "sha256": "12317b7c44e4aa1082383fb445586650cf58addf422b4e507f3baf049bf470ec",
+      "bytes": 34122
+    },
+    "EzPoison.toc": {
+      "sha256": "e18c9b5816abc7cea707b3576d87ade66d42153549b763d8d13876de14913103",
+      "bytes": 514
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "86cc8f401185d4112ac572b6a40c34902559783768f7bc36db932d79570114c3",
+      "bytes": 31893
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "7b483c934b58101f46b277d61b9ee0d04825c4c2a91f89ba2af26172c5d76fad",
+      "bytes": 29795
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "8cfb1867731508d450b095626dcf7bea715d33900a5b2001d285fae862dc9f9b",
+      "bytes": 23606
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "03e71bcf0ba8ce7c806c5ffe966991cb997c12c25b351198c918fe32e469bdaf",
+      "bytes": 31435
+    },
+    "libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "7496ed3e339a5d5d171d7986d2a12ffa5223800594056d127a942c201d2ac105",
+      "bytes": 88536
+    },
+    "libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "410ccaabc384c52103978b4488e5f5f57613e7251d2998c5d506f6b7631f2e4f",
+      "bytes": 46611
+    },
+    "libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "8f04e4cb6f8b2e15621f6621e5bfd01ddd75177b85fe075654ed49ba5ece4209",
+      "bytes": 87766
+    },
+    "Media/buttonD.tga": {
+      "sha256": "8d7ac5f67140552ec7742b7cf9b5bc5b7c866b7c24c6d082ffde085d7ca6dc22",
+      "bytes": 1068
+    },
+    "Media/buttonDselected.tga": {
+      "sha256": "8dde6bc89529c1613fa71c9b40e23a47dfb20045f5516a572b553ea29e5e3d04",
+      "bytes": 966
+    },
+    "README.md": {
+      "sha256": "2bc215b148b8f5d1ac57965eb590581382644cb5e6411be424f8a00e11909320",
+      "bytes": 3923
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

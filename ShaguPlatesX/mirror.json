@@ -1,0 +1,305 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/ShaguPlatesX",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "ShaguPlatesX",
+    "name": "ShaguPlatesX",
+    "url": "https://github.com/MarcelineVQ/ShaguPlatesX",
+    "api": "https://api.github.com/repos/MarcelineVQ/ShaguPlatesX"
+  },
+  "commit": "86cc312adece44b24378fe9c10854f7c7c4f6cd7",
+  "sourceFiles": {
+    ".github/FUNDING.yml": {
+      "sha256": "a11eece9ed2552e47d9d1f94d41f851678835c5ac491a141ed4e3aca58d72bf5",
+      "bytes": 29
+    },
+    "api/api.lua": {
+      "sha256": "b760eef58897ccbbdaa733c86d0fae1c11511b058b7e44465890a2411b384523",
+      "bytes": 47227
+    },
+    "api/config.lua": {
+      "sha256": "a0c2c4c0bbe91af750052b988bdeb77b9445f3f5c2ec657e590ae61d2fb03844",
+      "bytes": 25519
+    },
+    "api/ui-widgets.lua": {
+      "sha256": "b7410d4bc922aa863d66eecb13c5d37be4be39f2affdb0deacf79062a1cb1a5b",
+      "bytes": 39715
+    },
+    "compat/vanilla.lua": {
+      "sha256": "d3e8fae7634d3dea82572ae2d61358f24a46e88f5a474ec698a79f43373e396d",
+      "bytes": 2627
+    },
+    "env/locales_deDE.lua": {
+      "sha256": "38840110ca3aa7d8cc8ae9c3c0321162d910aa1fe8d443ccebb86467babcafe1",
+      "bytes": 185294
+    },
+    "env/locales_enUS.lua": {
+      "sha256": "f8e8b81c109320c86348ddcf20ffac1d5f419cca3e0af48231357b4a0a0e0f39",
+      "bytes": 175829
+    },
+    "env/locales_esES.lua": {
+      "sha256": "e94c6fd0ecaa6898cfd28756256263d94475f912fb522fec67e765056ec53842",
+      "bytes": 189276
+    },
+    "env/locales_frFR.lua": {
+      "sha256": "1ff7ff9ff583269029fe7fb01b20363497a6e87f08ceff85042810f1395f082f",
+      "bytes": 192421
+    },
+    "env/locales_koKR.lua": {
+      "sha256": "f3f636d0b3ed144452b3207ebfbe1aa042642873e17466801cd64a5818ebd8f9",
+      "bytes": 178821
+    },
+    "env/locales_ruRU.lua": {
+      "sha256": "87f91ff0d99792cf23c3d779f1d6a97522d8b16d3bdedfbdc276ab813e923412",
+      "bytes": 239578
+    },
+    "env/locales_zhCN.lua": {
+      "sha256": "aa0b0982ee07381cacb2a5e482c2529127601a34daf708977b2c9eb9224edf4d",
+      "bytes": 169614
+    },
+    "env/profiles.lua": {
+      "sha256": "b5c6966b0c47d90b91c267a239aad678894e644fa1f7caae839e82fad9f44c0d",
+      "bytes": 11545
+    },
+    "env/tables.lua": {
+      "sha256": "6d7352e14d043364bd118819fb946be24635ffdfc5d738daffce7c29ae19bcba",
+      "bytes": 313675
+    },
+    "env/translations_deDE.lua": {
+      "sha256": "bc49df7173030c004712b81488b005e5079a08e169db6e8c5fe0644bb7e7f79f",
+      "bytes": 7504
+    },
+    "env/translations_enUS.lua": {
+      "sha256": "20a274f4d083c2fedcea40184a398e47f8308a7bba9cc7164fd4d849aaaaf4b6",
+      "bytes": 7504
+    },
+    "env/translations_esES.lua": {
+      "sha256": "c6226d94d663600c0bbf9f60a4c29b282ec6511abb6a327d70160903fb95d99e",
+      "bytes": 12081
+    },
+    "env/translations_frFR.lua": {
+      "sha256": "abd01272c3537af8e28187d14b88d097c21f2470c82da20c2141510fd578ac8d",
+      "bytes": 12030
+    },
+    "env/translations_koKR.lua": {
+      "sha256": "d76b0800e9c2652289b44df97f451f9554e1632a63903e897b82ea45c0426af1",
+      "bytes": 8956
+    },
+    "env/translations_ruRU.lua": {
+      "sha256": "dfca20622fbb1b56a9b03f199ca0717dd65cd46e8ec9e02d8db0d205473cb5c5",
+      "bytes": 15937
+    },
+    "env/translations_zhCN.lua": {
+      "sha256": "ede78db02a664d9537c2a343aeffd18726c3178bc1c80c07691123856f5b1384",
+      "bytes": 11425
+    },
+    "env/translations_zhTW.lua": {
+      "sha256": "7c5f02ef02ee30236c8d3735566a1df80bdd6f3d2b43ed303d3ac429f65879af",
+      "bytes": 9411
+    },
+    "fonts/AdobeBlank.ttf": {
+      "sha256": "c42347a12f7ce92cc155579b7ab12e3d1edcd59d127b7715b933933d6a7459e2",
+      "bytes": 72384
+    },
+    "fonts/BigNoodleTitling.ttf": {
+      "sha256": "99fcb8e6f65d2d4e443091d856eb4eabec079f08245d31d02695aea860d7ddf1",
+      "bytes": 75156
+    },
+    "fonts/Continuum.ttf": {
+      "sha256": "28e295353b910b9ca7bf3d2b437bb5873ce49d5db1df661f8c97efeb9399d8b9",
+      "bytes": 92656
+    },
+    "fonts/DieDieDie.ttf": {
+      "sha256": "83a4de712fe501c0026b32955265da787993cc3ca224a918e179ffdef982ee21",
+      "bytes": 384412
+    },
+    "fonts/Expressway.ttf": {
+      "sha256": "06a2106170c2b5b736955cc749ed755f3757d103230645158f0bd5b5b91c386b",
+      "bytes": 99820
+    },
+    "fonts/Homespun.ttf": {
+      "sha256": "00987661c58306d4166af5c94d69b2becb21548097658e4627ef4dfdfb6b3f90",
+      "bytes": 21196
+    },
+    "fonts/Hooge.ttf": {
+      "sha256": "0570ff71826c135d343bce9a707ea49d56ad37c229a3adc6a53f443580943cdc",
+      "bytes": 70016
+    },
+    "fonts/Myriad-Pro.ttf": {
+      "sha256": "a4eefdaeccae42faeaf989b6b642f2e39386fd33a7e11c39e7c08d3bfc4eb18a",
+      "bytes": 209700
+    },
+    "fonts/PT-Sans-Narrow-Bold.ttf": {
+      "sha256": "e69d83bcf5bd647892b4e2b22f5098dabd55c989413513197722fc156fb9f00e",
+      "bytes": 487720
+    },
+    "fonts/PT-Sans-Narrow-Regular.ttf": {
+      "sha256": "4102edda03059163771869d258df54ac8563c408fa6e9ef75b2ddc85eabea6f4",
+      "bytes": 396212
+    },
+    "img/bar_elvui.tga": {
+      "sha256": "965dcab4e85bad31eecdfa0159484246ef2e40dd2dca023fa53dda6097d5e90c",
+      "bytes": 32812
+    },
+    "img/bar_gradient.tga": {
+      "sha256": "15fc5bc47f07b1937297f69d50cad18436d7685c497cccf24a94490d5b992549",
+      "bytes": 24202
+    },
+    "img/bar_striped.tga": {
+      "sha256": "9c02969479e5dcbce2bcbb4f48bf2f0b2b00c44fa7556140fc8958ba0e9ad09d",
+      "bytes": 32812
+    },
+    "img/bar_tukui.tga": {
+      "sha256": "500b74637f1d0fa7a75b965152de3e9c1814cad3706526938ea251f683da8e7e",
+      "bytes": 14690
+    },
+    "img/bar.tga": {
+      "sha256": "be38c30d46b0872762f6b8b785004a7b641170e0036100765c4643d6945bccaa",
+      "bytes": 247
+    },
+    "img/bg.tga": {
+      "sha256": "293b1c024f2cfb00b6017ee80922259e5d13a1384dbd8da82affc07fa3c5d2ea",
+      "bytes": 236
+    },
+    "img/border_blizz.tga": {
+      "sha256": "7acec112994f8aa09c4e9496d824e3edf979e936ca0bb56cc6793e38166f3d17",
+      "bytes": 1570
+    },
+    "img/border_no_top.tga": {
+      "sha256": "9bdddeb467ebf59a554de964be84ec349501eb63c69bf079f80ffde018d1084e",
+      "bytes": 2092
+    },
+    "img/border.tga": {
+      "sha256": "72ae40482d789c23129ff8f3e71bdd840afc285f912cc051e52afc6a87d757d6",
+      "bytes": 1190
+    },
+    "img/close.tga": {
+      "sha256": "10ff2d1f26241a6fc6ca4539cf1f7e464a578e73828da87d0b130ab733cc4892",
+      "bytes": 1068
+    },
+    "img/col.tga": {
+      "sha256": "2fb5dbe30b8728c0010bf53e6b9dc13b83110a08e1ac43ee1db34dd195397903",
+      "bytes": 76
+    },
+    "img/dot.tga": {
+      "sha256": "0d09b1317fc964b83c786c932054976690d9e3df0f2b70680503d3edcebf8971",
+      "bytes": 824
+    },
+    "img/down.tga": {
+      "sha256": "84357402c7e8ab85fcda56204f5b1033b9fc33ec082e0ea0327f9d4663e8bb00",
+      "bytes": 204
+    },
+    "img/glow.tga": {
+      "sha256": "6f7edf3e33f4d4735a8e907ee03ac1cea3cbf65b0d9021ead50be6a3e246b3e0",
+      "bytes": 6990
+    },
+    "img/glow2.tga": {
+      "sha256": "3d80b172ee7ee007834edbc5329543a8982a18c67a103f54fc64317691bc78fc",
+      "bytes": 5366
+    },
+    "img/gradient_down.tga": {
+      "sha256": "054f4322e0a0e1a134ba01476d97687a7ba38315da8e16d065d92a7402494163",
+      "bytes": 1068
+    },
+    "img/gradient_up.tga": {
+      "sha256": "d778b95f0152ef3190bc6518df400af332415979c560023e5c90da4e264482e6",
+      "bytes": 1068
+    },
+    "img/left.tga": {
+      "sha256": "fd1097767114d6ac88941a21f48f21d3789019dc7dc278df5a92c3dd09cdb67a",
+      "bytes": 1068
+    },
+    "img/raidicons.blp": {
+      "sha256": "4b4f76b2cec7530f54ac36b80db7f79c52c3ac2bb024e65e1745f02d224114d1",
+      "bytes": 88580
+    },
+    "img/right.tga": {
+      "sha256": "6fa1c09e626123f8a7ec819101ab211e952fe9d3884a92203a152d3cac6f81be",
+      "bytes": 1068
+    },
+    "img/underline.tga": {
+      "sha256": "ba95101104b8546f7cf9805e8d5a67832d8fb6fa9e9aef23c780ae77e71e86c3",
+      "bytes": 1214
+    },
+    "img/up.tga": {
+      "sha256": "d615db55286c613613cf77bc9b5abac00ac5e8fe2f1b7b0b90bad472b945375c",
+      "bytes": 1068
+    },
+    "init/api.xml": {
+      "sha256": "ba87b45b9dcf71ae4242fa91d0e3b5b7f19cd28471ba35c67d32759218171f19",
+      "bytes": 166
+    },
+    "init/compat.xml": {
+      "sha256": "be9ba7cf94d2e1e1de42df55f3661131e9b165a883ed9c2669a85af05ec35310",
+      "bytes": 93
+    },
+    "init/env.xml": {
+      "sha256": "6d8e26576fdae0046495ba41793323dfbf07c5c99098463b2e870515026e34f6",
+      "bytes": 831
+    },
+    "init/modules.xml": {
+      "sha256": "e3346868c3406228bc05f0b384828f796c87b5d3d217a5a1683efac47c14c7fb",
+      "bytes": 275
+    },
+    "LICENSE": {
+      "sha256": "fdff8c9bd8c425e443d4bbaef96bd02c68f543c0f064c090351e29b9e8b74482",
+      "bytes": 1091
+    },
+    "make.sh": {
+      "sha256": "898363c64a668504a4ae2c7d7b02299414f9a1e9a19eac5570a8187cbcec2164",
+      "bytes": 4670
+    },
+    "modules/cooldown.lua": {
+      "sha256": "8281b474c9c4c19875994909fda171224aa735b07ad6c16349e04e83181479ea",
+      "bytes": 5096
+    },
+    "modules/nameplates.lua": {
+      "sha256": "6d6144988fd7c321236d7967ee03cf4821991aab79e13ab7fe1e791a8da2c688",
+      "bytes": 53146
+    },
+    "modules/settings.lua": {
+      "sha256": "a3ec7aa9fb8d2af682f8ee5adddf5cc1487625f14338192e2ecbc2ba5aeb9cfc",
+      "bytes": 43802
+    },
+    "modules/superwow.lua": {
+      "sha256": "2fdd1c1812a5ff36659251bb47093ba7c785e409ed75f368ac67251767edbf2b",
+      "bytes": 8162
+    },
+    "modules/turtle-wow.lua": {
+      "sha256": "e1ebe8ed2dccc52fd6c069bc668dec800eebb21b48d074d4cfb0c7dcf33ebe52",
+      "bytes": 406104
+    },
+    "preview/center.jpg": {
+      "sha256": "49d2bfd17997828a858d1997aae93e9fd3e47655700d29da935f5cb2b3445f25",
+      "bytes": 120128
+    },
+    "preview/left.jpg": {
+      "sha256": "8f1d42c5828a2799de53ac86ebe1c9949e5ee6ba6269282f04bbf12d7f8019f6",
+      "bytes": 124472
+    },
+    "preview/right.jpg": {
+      "sha256": "266b746a805e537263fd62215f447234862c7c1f8a3b67e7314cf70b7f416388",
+      "bytes": 115452
+    },
+    "preview/rounded.jpg": {
+      "sha256": "f2f308f2bc99c6d33ac2d5785df40d19cdb5e877a14c8be2d66aecf41bc8fb3a",
+      "bytes": 85829
+    },
+    "README.md": {
+      "sha256": "37af6376e8b7d31751679b396c02da5a529ae74404a8424704218e8e90bbaa8c",
+      "bytes": 4562
+    },
+    "ShaguPlates.lua": {
+      "sha256": "f0bfd47486889d701dad095d34c8fc71164e4086d1eb41ca40de7afbde67014b",
+      "bytes": 17676
+    },
+    "ShaguPlatesX.toc": {
+      "sha256": "482f08f0e17f721804ee1131db8318f5822dc98b8b38faf31187ea1e1fdb7b5d",
+      "bytes": 531
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

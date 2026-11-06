@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/shirsig/crafty",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "crafty",
+    "name": "crafty",
+    "url": "https://github.com/shirsig/crafty",
+    "api": "https://api.github.com/repos/shirsig/crafty"
+  },
+  "commit": "06ec40f0c4820ae14a1d959fbeb1492fe2b44fe5",
+  "sourceFiles": {
+    "ClearBroadcastIcon.blp": {
+      "sha256": "6d6bdeec04bd26d6f67037ecfd9bec4a6b0360f6de0c2b391e4404611c841964",
+      "bytes": 1540
+    },
+    "crafty.lua": {
+      "sha256": "1edd6b799c0fed40f399bed6b386057ac4a10f3250fe7bc07e619af4d77d1644",
+      "bytes": 21713
+    },
+    "crafty.toc": {
+      "sha256": "adc2ae1804b38da02fc44bd3d3fcc6b629494ea130021cb63b755658dd7caf55",
+      "bytes": 240
+    },
+    "README.md": {
+      "sha256": "d0012c870275419035fa8246df009294c653dcef371db832119ecb69037cb301",
+      "bytes": 1229
+    },
+    "UI-Searchbox-Icon.blp": {
+      "sha256": "ae9cc763b66368e14cf4b945ada489370d08e524ff0e2fcd16e1e1bceefa91ab",
+      "bytes": 1540
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,6496 @@
+-- Caw DPS Meter v1.1.8
+-- RavenCraft/Octo / WoW 1.12 + SuperWoW/SuperAPI
+-- Lua 5.0 compatible. RAW_COMBATLOG based damage + utility meter.
+
+CAW_DPS_METER = CAW_DPS_METER or {}
+local D = CAW_DPS_METER
+D.version = "1.1.8"
+function D.parserEnabled()
+    return not CawDPSMeterCharDB or CawDPSMeterCharDB.parserEnabled~=false
+end
+function D.combatSyncEnabled()
+    return D.parserEnabled() and (not CawDPSMeterCharDB or CawDPSMeterCharDB.combatSyncEnabled~=false)
+end
+D.parserEvents={RAW_COMBATLOG=true,UNIT_CASTEVENT=true,CHAT_MSG_COMBAT_FRIENDLY_DEATH=true,
+    PLAYER_REGEN_DISABLED=true,PLAYER_REGEN_ENABLED=true,UNIT_INVENTORY_CHANGED=true,PLAYER_AURAS_CHANGED=true}
+D.inCombat = false
+D.startTime = 0
+D.fightStartedAt = nil
+D.fightStartClock = nil
+-- Keep the wall-clock label separate from GetTime-based fight duration.
+-- Adjust the original wall-clock anchor when a sync snapshot reveals an
+-- earlier pull, instead of recording receipt time or combat-end time.
+function D.setFightStartTime(start)
+    if D.fightStartedAt and D.fightStartClock then
+        D.fightStartedAt=D.fightStartedAt+start-D.fightStartClock
+    elseif type(time)=="function" then
+        D.fightStartedAt=time()-(GetTime()-start)
+    end
+    D.startTime=start; D.fightStartClock=start
+end
+D.lastDuration = 0
+D.rawTotal = 0
+D.parsedTotal = 0
+D.lastParsed = "none"
+D.actors = {}
+D.guidToActor = {}
+D.petOwner = {}
+D.summonActors = {}
+D.history = {}
+D.maxHistory = 10
+D.segment = "current"
+D.segmentIndex = 0
+D.fightHistory = {}
+D.currentEnemyDamage = {}
+D.deadEnemies = {}
+D.currentEnemyNames = {}
+D.currentEnemyBestGuid = nil
+D.currentEnemyBestDamage = 0
+D.currentFightName = "Current"
+D.overallSegment = {actors={}, duration=0, fights=0}
+D.mode = "damage"
+D.scrollOffset = 0
+D.rawUnknown = {}
+D.rawUnknownCount = 0
+D.rawDebugEnabled = false
+D.rawDebugLines = {}
+D.rawDebugCount = 0
+D.threatDebugEnabled = false
+D.threatDebugLines = {}
+D.threatDebugCount = 0
+D.threatDebugLastTarget = ""
+D.threatDebugNextSnapshot = 0
+D.utilityUnknown = {}
+D.utilityUnknownCount = 0
+D.ignoredOutsiders = 0
+D.globalUtility = {buffs={}, debuffsReceived={}, debuffsCast={}, cc={}, ccBreaks={}, interrupts={}, dispels={}}
+D.recentAuraCasts = {}
+D.recentAuraOrigins = {}
+D.recentDirectRosterAuraCasts = {}
+D.activeAuraSources = {}
+D.activeRosterBuffs = {}
+D.weaponBuffState = {main=nil,off=nil}
+D.pendingSelfTotem = nil
+D.pendingItemSummons = {}
+D.activeCC = {}
+D.lastCCDamage = nil
+D.ccDamageByTarget = {}
+D.lastCCBreak = nil
+D.lastCCLanded = nil
+D.lastCCCastEvent = nil
+D.lastCCSpellInfo = nil
+D.lastCCSegmentOpen = nil
+D.lastIncomingDamage = {}
+D.lastDeathStamp = {}
+D.lastDeathRaw = nil
+D.lastDeathRecord = nil
+D.lastSelfIncomingDamage = nil
+D.lastRosterCombatActivity = 0
+D.localPlayerDead = false
+D.deadSyncLastReceived = 0
+D.deadSyncNextRequest = 0
+D.combatStateCheckAt = 0
+D.outOfCombatSince = 0
+D.weaponBuffKeywords = {
+    "Poison",
+    "Rockbiter",
+    "Flametongue",
+    "Frostbrand",
+    "Windfury",
+    "Shadow Oil",
+    "Wizard Oil",
+    "Mana Oil",
+    "Sharpening Stone",
+    "Weightstone"
+}
+
+D.getWeaponBuffName = function(slot,label)
+    if not CreateFrame then return nil end
+    if not D.weaponTooltip then
+        D.weaponTooltip=CreateFrame("GameTooltip","CawDPSMeterWeaponTooltip",UIParent,"GameTooltipTemplate")
+        if D.weaponTooltip.SetOwner then D.weaponTooltip:SetOwner(UIParent,"ANCHOR_NONE") end
+    end
+
+    local tt=D.weaponTooltip
+    if tt.ClearLines then tt:ClearLines() end
+    if not tt.SetInventoryItem then return nil end
+    local ok=pcall(tt.SetInventoryItem,tt,"player",slot)
+    if not ok then return nil end
+
+    local i=1
+    local n=tt.NumLines and tt:NumLines() or 0
+    while i<=n do
+        local fs=getglobal and getglobal("CawDPSMeterWeaponTooltipTextLeft"..tostring(i)) or nil
+        local line=fs and fs.GetText and fs:GetText() or nil
+        if line and line~="" then
+            local k=1
+            while k<=table.getn(D.weaponBuffKeywords) do
+                if string.find(line,D.weaponBuffKeywords[k],1,true) then
+                    local name=line
+                    local _,_,trim=string.find(name,"^(.-) %(")
+                    if trim and trim~="" then name=trim end
+                    return label..": "..name
+                end
+                k=k+1
+            end
+        end
+        i=i+1
+    end
+    return nil
+end
+
+D.scanWeaponBuffs = function()
+    if not D.parserEnabled() then return end
+    if not GetWeaponEnchantInfo then return end
+
+    -- Remove only weapon entries; ordinary aura-scan entries stay untouched.
+    local key,b
+    local remove={}
+    for key,b in D.activeRosterBuffs do
+        if b and b.weaponBuff then table.insert(remove,key) end
+    end
+    local i=1
+    while i<=table.getn(remove) do
+        D.activeRosterBuffs[remove[i]]=nil
+        i=i+1
+    end
+
+    -- Own player: preserve Vanilla/SuperWoW's original six-value form because
+    -- it contains remaining duration/charges rather than enchant names.
+    local ok,hasMain,mainExp,mainCharges,hasOff,offExp,offCharges=pcall(GetWeaponEnchantInfo)
+    if ok then
+        local mainName=nil
+        local offName=nil
+        if hasMain then mainName=D.getWeaponBuffName(16,"Main Hand") or "Main Hand: Weapon Enchant" end
+        if hasOff then offName=D.getWeaponBuffName(17,"Off Hand") or "Off Hand: Weapon Enchant" end
+        D.weaponBuffState.main=mainName
+        D.weaponBuffState.off=offName
+        if mainName then
+            D.activeRosterBuffs["player|"..mainName]={target="player",spell=mainName,weaponBuff=true,weaponSlot="main",unit="player"}
+        end
+        if offName then
+            D.activeRosterBuffs["player|"..offName]={target="player",spell=offName,weaponBuff=true,weaponSlot="off",unit="player"}
+        end
+    end
+
+    -- SuperWoW extension: GetWeaponEnchantInfo(friendlyUnit) returns the
+    -- temporary enchant NAMES for that unit's main hand and off hand.
+    -- Scan only the active group roster; no name heuristics or proc inference.
+    local raidCount=GetNumRaidMembers and GetNumRaidMembers() or 0
+    local maxCount=raidCount
+    local prefix="raid"
+    if raidCount<=0 then
+        maxCount=GetNumPartyMembers and GetNumPartyMembers() or 0
+        prefix="party"
+    end
+
+    i=1
+    while i<=maxCount do
+        local unit=prefix..tostring(i)
+        local exists,guid=UnitExists(unit)
+        if exists and guid then
+            local wok,mainEnchant,offEnchant=pcall(GetWeaponEnchantInfo,unit)
+            if wok then
+                if mainEnchant and mainEnchant~="" then
+                    local mainName="Main Hand: "..tostring(mainEnchant)
+                    D.activeRosterBuffs[tostring(guid).."|"..mainName]={target=guid,spell=mainName,weaponBuff=true,weaponSlot="main",unit=unit}
+                end
+                if offEnchant and offEnchant~="" then
+                    local offName="Off Hand: "..tostring(offEnchant)
+                    D.activeRosterBuffs[tostring(guid).."|"..offName]={target=guid,spell=offName,weaponBuff=true,weaponSlot="off",unit=unit}
+                end
+            end
+        end
+        i=i+1
+    end
+end
+
+D.buffSpellNames = {
+    [19740]="Blessing of Might",
+    [20217]="Blessing of Kings",
+    [1038]="Blessing of Salvation",
+    [20911]="Blessing of Sanctuary",
+    [19742]="Blessing of Wisdom",
+    [19746]="Concentration Aura",
+    [465]="Devotion Aura",
+    [7294]="Retribution Aura",
+    [19876]="Shadow Resistance Aura",
+    [19888]="Frost Resistance Aura",
+    [19891]="Fire Resistance Aura",
+    [1243]="Power Word: Fortitude",
+    [21562]="Prayer of Fortitude",
+    [14752]="Divine Spirit",
+    [27681]="Prayer of Spirit",
+    [976]="Shadow Protection",
+    [27683]="Prayer of Shadow Protection",
+    [1459]="Arcane Intellect",
+    [23028]="Arcane Brilliance",
+    [1126]="Mark of the Wild",
+    [21849]="Gift of the Wild",
+    [467]="Thorns"
+}
+
+D.playerBuffScanState = {}
+
+D.getUnitBuffName = function(unit,index,spellId)
+    if spellId and D.buffSpellNames[spellId] then return D.buffSpellNames[spellId] end
+
+    -- DPSLog/compatible extensions expose names directly. Resolve each new
+    -- spell ID once without constructing a tooltip during the opening scan.
+    if type(spellId)=="number" and type(GetSpellInfo)=="function" then
+        local ok,name=pcall(GetSpellInfo,spellId)
+        if ok and type(name)=="string" and name~="" then
+            D.buffSpellNames[spellId]=name
+            return name
+        end
+    end
+
+    -- RavenCraft's UnitBuff exposes the spell ID as return #3 but not the
+    -- localized aura name. Read the first line of Blizzard's buff tooltip so
+    -- item buffs, Aspects, Paladin auras and other unknown spell IDs do not
+    -- require a hardcoded lookup table.
+    if not CreateFrame then return nil end
+    if not D.buffScanTooltip then
+        D.buffScanTooltip=CreateFrame("GameTooltip","CawDPSMeterBuffScanTooltip",UIParent,"GameTooltipTemplate")
+        if D.buffScanTooltip.SetOwner then D.buffScanTooltip:SetOwner(UIParent,"ANCHOR_NONE") end
+    end
+
+    local tt=D.buffScanTooltip
+    if not tt.SetUnitBuff then return nil end
+    if tt.ClearLines then tt:ClearLines() end
+    local ok=pcall(tt.SetUnitBuff,tt,unit,index)
+    if not ok then return nil end
+
+    local fs=getglobal and getglobal("CawDPSMeterBuffScanTooltipTextLeft1") or nil
+    local name=fs and fs.GetText and fs:GetText() or nil
+    if name and name~="" then
+        if spellId then D.buffSpellNames[spellId]=name end
+        return name
+    end
+    return nil
+end
+
+D.scanUnitBuffs = function(unit,targetKey,current)
+    if not D.parserEnabled() then return end
+    if not UnitBuff or not unit or not targetKey then return end
+    local observed={}
+    local i
+    for i=1,32 do
+        local ok,texture,count,spellId=pcall(UnitBuff,unit,i)
+        if not ok then return false end
+        if not texture then break end
+
+        local name=D.getUnitBuffName(unit,i,spellId)
+        if not name or name=="" then return false end
+        if name and name~="" then
+            observed[name]=true
+        end
+    end
+    local key,b
+    for key,b in D.activeRosterBuffs do
+        if b.target==targetKey and not b.weaponBuff and not observed[b.spell] then D.activeRosterBuffs[key]=nil end
+    end
+    local name
+    for name in observed do
+        if current then current[name]=true end
+        D.activeRosterBuffs[targetKey.."|"..name]={target=targetKey,spell=name}
+    end
+    return true
+end
+
+D.scanPlayerBuffs = function(applyLive)
+    if not UnitBuff then return end
+
+    local current={}
+    if not D.scanUnitBuffs("player","player",current) then return end
+
+    if applyLive and D.inCombat then
+        local pg=nil
+        if UnitExists then
+            local exists,guid=UnitExists("player")
+            if exists and guid then pg=guid end
+        end
+        local ti=D.guidToActor[pg or D.selfKey]
+        if ti and D.applyLivePlayerAuraDiff then
+            D.applyLivePlayerAuraDiff(ti,current)
+        end
+    end
+
+    -- Keep the pre-combat roster cache authoritative too. PLAYER_AURAS_CHANGED
+    -- also fires while we are out of combat (for example when Drink or First Aid
+    -- expires). Previously those vanished from playerBuffScanState but remained
+    -- in activeRosterBuffs, so the next fight seeded them again as if they were
+    -- still active for the whole encounter.
+    local cachedKey,cachedBuff
+    for cachedKey,cachedBuff in D.activeRosterBuffs do
+        if cachedBuff and cachedBuff.target=="player" and not cachedBuff.weaponBuff then
+            if not current[cachedBuff.spell] then D.activeRosterBuffs[cachedKey]=nil end
+        end
+    end
+
+    D.playerBuffScanState=current
+end
+
+D.scanGroupBuffs = function()
+    if not UnitBuff or not UnitExists then return end
+
+    -- Player is kept as the stable "player" target because the live
+    -- PLAYER_AURAS_CHANGED path uses that key.
+    D.scanPlayerBuffs(false)
+
+    local raidCount=GetNumRaidMembers and GetNumRaidMembers() or 0
+    local i=1
+    if raidCount>0 then
+        while i<=raidCount do
+            local unit="raid"..tostring(i)
+            local exists,guid=UnitExists(unit)
+            if exists and guid then D.scanUnitBuffs(unit,guid,nil) end
+            i=i+1
+        end
+    else
+        while i<=4 do
+            local unit="party"..tostring(i)
+            local exists,guid=UnitExists(unit)
+            if exists and guid then D.scanUnitBuffs(unit,guid,nil) end
+            i=i+1
+        end
+    end
+end
+
+D.activeEnemyCasts = {}
+D.pendingSelfDispel = nil
+D.recentSelfDispelCast = nil
+D.lastSelfDispelRecord = nil
+
+-- Caw Sync v1: current-fight snapshot exchange between party/raid members.
+-- The sync is intentionally conservative: no per-hit network spam. A client
+-- entering an already-running fight requests one cumulative snapshot and then
+-- continues from its own RAW_COMBATLOG.
+D.syncPrefix = "CAWDPS2"
+D.syncNonce = nil
+D.syncRequested = false
+D.syncReceived = 0
+D.syncLastSource = "none"
+D.syncBestAge = 0
+D.syncQueue = {}
+D.syncQueueDropped = 0
+D.syncQueueMax = 1000
+D.syncNextSend = 0
+D.syncSent = 0
+D.syncAddonEvents = 0
+D.syncRequestsSeen = 0
+D.syncSendAttempts = 0
+D.syncRequestSent = false
+D.syncLastError = "none"
+D.syncLastChannel = "none"
+D.syncAPI = "unknown"
+D.syncOffers = {}
+D.syncOfferDeadline = 0
+D.syncSelectedSource = nil
+D.syncIncoming = nil
+D.syncRejectedSources = 0
+
+-- Short combat-end grace window:
+-- keeps brief combat drops in one segment and gives Caw Sync time for one
+-- final reconciliation snapshot before the fight is committed.
+D.pendingCombatEndAt = 0
+D.pendingCombatEndStopTime = 0
+D.pendingCombatEndFirstAt = 0
+D.lastFinalizeAt = 0
+D.combatEndGrace = 1.50
+-- Never let a stuck crowd-control entry hold the fight open longer than
+-- grace + this many seconds past the moment the player actually left combat.
+D.combatEndHardCap = 4.0
+
+-- === Local diagnostic log =================================================
+-- Off by default. Never committed or shipped. Toggle/export with /cdlog.
+-- Traces the combat-end lifecycle so a mis-timed fight boundary can be seen.
+D.logEnabled = false
+D.log = {}
+D.logMax = 800
+D.logSeq = 0
+D.logStart = 0
+D.logLine = function(cat, text)
+    if not D.logEnabled then return end
+    local now = GetTime()
+    if D.logStart == 0 then D.logStart = now end
+    D.logSeq = D.logSeq + 1
+    table.insert(D.log, {seq=D.logSeq, rel=now-D.logStart, cat=tostring(cat or "?"), text=tostring(text or "")})
+    while table.getn(D.log) > D.logMax do table.remove(D.log, 1) end
+end
+D.logState = function(tag)
+    if not D.logEnabled then return end
+    local uac = "?"
+    if UnitAffectingCombat then local ok,v=pcall(UnitAffectingCombat,"player"); if ok then uac=(v and "1" or "0") end end
+    local grace = 0
+    if D.pendingCombatEndAt and D.pendingCombatEndAt>0 then grace=D.pendingCombatEndAt-GetTime() end
+    local nCC=0; local kk,vv; for kk,vv in D.activeCC do nCC=nCC+1 end
+    local rAge=-1; if D.lastRosterCombatActivity and D.lastRosterCombatActivity>0 then rAge=GetTime()-D.lastRosterCombatActivity end
+    D.logLine("state", tostring(tag)
+        .." inCombat="..tostring(D.inCombat and 1 or 0)
+        .." uac="..uac
+        .." pendingEnd="..string.format("%.2f", grace)
+        .." rosterAge="..string.format("%.2f", rAge)
+        .." activeCC="..tostring(nCC)
+        .." dead="..tostring(D.localPlayerDead and 1 or 0))
+end
+-- =========================================================================
+
+local requestCombatSync = nil
+local finalizeSyncOfferSelection = nil
+
+-- Persistent settings -------------------------------------------------------
+-- IMPORTANT for Vanilla 1.12/custom clients:
+-- SavedVariables are guaranteed to be available only when ADDON_LOADED fires.
+-- Do NOT bind a local DB reference at file-load time; otherwise the client may
+-- later replace the global SavedVariables table and our local reference would
+-- point at an orphan table that is never written to disk.
+local DB = nil
+local CharDB = nil
+D.savedVariablesReady = false
+D.locked = false
+
+
+local function skinCawHoverTooltip(tt)
+    if not tt or not tt.SetBackdrop then return end
+    tt:SetBackdrop({
+        bgFile="Interface\\Buttons\\WHITE8X8",
+        edgeFile="Interface\\Buttons\\WHITE8X8",
+        tile=false,
+        edgeSize=1,
+        insets={left=1,right=1,top=1,bottom=1}
+    })
+    tt:SetBackdropColor(0.10,0.105,0.12,0.98)
+    tt:SetBackdropBorderColor(0.23,0.24,0.27,1)
+end
+
+local playerTooltip=nil
+local function getPlayerTooltip()
+    if not playerTooltip then
+        playerTooltip=CreateFrame("GameTooltip","CawDPSMeterPlayerTooltip",UIParent,"GameTooltipTemplate")
+        skinCawHoverTooltip(playerTooltip)
+    end
+    return playerTooltip
+end
+
+function D.getControlTooltip()
+    if not D.controlTooltip then
+        D.controlTooltip=CreateFrame("GameTooltip","CawDPSMeterControlTooltip",UIParent,"GameTooltipTemplate")
+        skinCawHoverTooltip(D.controlTooltip)
+    end
+    return D.controlTooltip
+end
+
+-- Window layouts are shared across characters. Mirror only these UI fields;
+-- recording, sync and calibration preferences remain character-specific.
+local windowSettingsKeys={"width","height","point","relativePoint","x","y","left","top",
+    "centerX","centerY","layoutVersion","layoutSaved","locked","mode","segment","segmentIndex",
+    "appearance","windowHidden","pfDockMain","pfDockAlternate","pfDockRevision","bagLayerAlwaysBehind",
+    "extraWindows","extraWindowsVersion","extraWindowsExplicit","extraWindowCount","extraWindowsRevision",
+    "closedWindows","windowSettingsVersion"}
+local function copyWindowValue(value)
+    if type(value)~="table" then return value end
+    local copy={}
+    for k,v in pairs(value) do copy[k]=copyWindowValue(v) end
+    return copy
+end
+local function copyWindowSettings(src,dst)
+    for _,key in ipairs(windowSettingsKeys) do dst[key]=copyWindowValue(src[key]) end
+end
+
+local function initializeSavedVariables()
+    if D.savedVariablesReady then return end
+    if not CawDPSMeterDB then CawDPSMeterDB = {} end
+    if not CawDPSMeterCharDB then CawDPSMeterCharDB = {} end
+    DB = CawDPSMeterDB
+    CharDB = CawDPSMeterCharDB
+
+    -- One-time legacy SavedVariables migration; all active state uses CawDPSMeterDB.
+    if not DB.migratedFromDetails and DetailsRavenDB then
+        if DB.width == nil then DB.width = DetailsRavenDB.width end
+        if DB.height == nil then DB.height = DetailsRavenDB.height end
+        if DB.point == nil then DB.point = DetailsRavenDB.point end
+        if DB.relativePoint == nil then DB.relativePoint = DetailsRavenDB.relativePoint end
+        if DB.x == nil then DB.x = DetailsRavenDB.x end
+        if DB.y == nil then DB.y = DetailsRavenDB.y end
+        if DB.left == nil then DB.left = DetailsRavenDB.left end
+        if DB.top == nil then DB.top = DetailsRavenDB.top end
+        if DB.locked == nil then DB.locked = DetailsRavenDB.locked end
+        DB.migratedFromDetails = true
+    end
+
+    if DB.windowSettingsVersion==1 then
+        copyWindowSettings(DB,CharDB)
+    elseif CharDB.windowSettingsVersion==1 then
+        copyWindowSettings(CharDB,DB)
+    end
+    if DB.locked == nil then DB.locked = false end
+    D.locked = DB.locked and true or false
+    if D.uiCopySettings then D.appearance=D.uiCopySettings(DB.appearance) end
+
+    -- Restore the last selected meter mode. Keep validation explicit so a
+    -- stale/invalid SavedVariable can never break the mode selector.
+    local savedMode=nil
+    if CharDB and CharDB.mode then savedMode=CharDB.mode
+    elseif DB and DB.mode then savedMode=DB.mode end
+    if savedMode=="damage" or savedMode=="healing" or savedMode=="overhealing" or savedMode=="threat" or savedMode=="damageTaken" or savedMode=="deaths"
+        or savedMode=="interrupts" or savedMode=="cc" or savedMode=="ccBreaks" or savedMode=="dispels"
+        or savedMode=="buffs" or savedMode=="debuffsCast" or savedMode=="debuffsReceived" then
+        D.mode=savedMode
+    end
+
+    -- Persist the primary window's selected segment as well. History entries are
+    -- intentionally not restored across a reload because fightHistory itself is
+    -- session-only; Current and Overall can be restored safely.
+    local savedSegment=nil
+    if CharDB and CharDB.segment then savedSegment=CharDB.segment
+    elseif DB and DB.segment then savedSegment=DB.segment end
+    if savedSegment=="overall" or savedSegment=="current" then
+        D.segment=savedSegment
+        D.segmentIndex=0
+    end
+
+    D.savedVariablesReady = true
+end
+
+
+local CLASS_COLORS = {
+    WARRIOR={0.78,0.61,0.43}, MAGE={0.41,0.80,0.94}, ROGUE={1.00,0.96,0.41},
+    DRUID={1.00,0.49,0.04}, HUNTER={0.67,0.83,0.45}, SHAMAN={0.00,0.44,0.87},
+    PRIEST={1.00,1.00,1.00}, WARLOCK={0.58,0.51,0.79}, PALADIN={0.96,0.55,0.73}
+}
+
+-- Blizzard's classic class-icon atlas. Keeping this on a built-in WoW texture
+-- avoids shipping nine separate icon files and works on the 1.12 client.
+local CLASS_ICON_TEXTURE="Interface\\Glues\\CharacterCreate\\UI-CharacterCreate-Classes"
+local CLASS_ICON_TCOORDS={
+    WARRIOR={0.000000,0.250000,0.000000,0.250000},
+    MAGE={0.250000,0.496094,0.000000,0.250000},
+    ROGUE={0.496094,0.742188,0.000000,0.250000},
+    DRUID={0.742188,0.988281,0.000000,0.250000},
+    HUNTER={0.000000,0.250000,0.250000,0.500000},
+    SHAMAN={0.250000,0.496094,0.250000,0.500000},
+    PRIEST={0.496094,0.742188,0.250000,0.500000},
+    WARLOCK={0.742188,0.988281,0.250000,0.500000},
+    PALADIN={0.000000,0.250000,0.500000,0.750000}
+}
+
+local CC_SPELLS = {
+    ["Polymorph"]=true, ["Sap"]=true, ["Blind"]=true, ["Gouge"]=true,
+    ["Fear"]=true, ["Psychic Scream"]=true, ["Intimidating Shout"]=true,
+    ["Seduction"]=true, ["Banish"]=true, ["Hibernate"]=true,
+    ["Freezing Trap Effect"]=true, ["Freezing Trap"]=true, ["Scatter Shot"]=true,
+    ["Wyvern Sting"]=true, ["Scare Beast"]=true, ["Repentance"]=true,
+    ["Entangling Roots"]=true, ["Frost Nova"]=true, ["Hammer of Justice"]=true,
+    ["Cheap Shot"]=true, ["Kidney Shot"]=true, ["Bash"]=true, ["Pounce"]=true,
+    ["War Stomp"]=true, ["Death Coil"]=true
+}
+
+local function chat(msg)
+    if DEFAULT_CHAT_FRAME and DEFAULT_CHAT_FRAME.AddMessage then
+        DEFAULT_CHAT_FRAME:AddMessage("|cff7fbf4dCaw DPS Meter|r: " .. tostring(msg))
+    end
+end
+
+local function comma(n)
+    n = math.floor(tonumber(n) or 0)
+    local s = tostring(n)
+    local len = string.len(s)
+    if len <= 3 then return s end
+    local out = ""
+    local first = len - math.floor((len - 1) / 3) * 3
+    out = string.sub(s, 1, first)
+    local i = first + 1
+    while i <= len do out = out .. "," .. string.sub(s, i, i + 2); i = i + 3 end
+    return out
+end
+
+local function clearTable(t) local k; for k in t do t[k] = nil end end
+local function currentFightDuration()
+    if D.startTime == 0 then return D.lastDuration or 0 end
+    if D.inCombat then
+        -- Once a grace close is scheduled the fight is over for display: freeze
+        -- the duration at the moment combat actually ended so DPS/HPS stop
+        -- decaying while the grace window and trailing reconciliation run.
+        if D.pendingCombatEndAt and D.pendingCombatEndAt>0
+            and D.pendingCombatEndStopTime and D.pendingCombatEndStopTime>D.startTime then
+            return D.pendingCombatEndStopTime-D.startTime
+        end
+        local t=GetTime()-D.startTime; if t<0 then t=0 end; return t
+    end
+    return D.lastDuration or 0
+end
+local function getSelectedHistoryFight()
+    if D.segment~="history" then return nil end
+    local idx=D.segmentIndex or 1
+    return D.fightHistory[idx]
+end
+local function getDisplayActors()
+    if D.mode=="threat" and D.segment=="current" and D.serverThreatActors then return D.serverThreatActors() end
+    local h=getSelectedHistoryFight()
+    if h and h.actors then return h.actors end
+    if D.segment=="overall" and D.overallSegment and D.overallSegment.actors then return D.overallSegment.actors end
+    return D.actors
+end
+D.threatDisplayActors=getDisplayActors
+D.threatHistoryFight=getSelectedHistoryFight
+local function getDuration()
+    local h=getSelectedHistoryFight()
+    if h then return h.duration or 0 end
+    if D.segment=="overall" and D.overallSegment then return D.overallSegment.duration or 0 end
+    return currentFightDuration()
+end
+
+local function newCounterTable() return {} end
+local function newActor(key,name,guid,ownerKey,isPet,classToken)
+    local a={key=key,name=name or key,guid=guid,ownerKey=ownerKey,isPet=isPet,classToken=classToken,
+        damage=0,hits=0,crits=0,spells={},healing=0,heals=0,healCrits=0,healSpells={},
+        damageTaken=0,damageTakenSpells={},deaths=0,deathCauses={},deathLast=nil,
+        buffs=newCounterTable(),debuffsReceived=newCounterTable(),debuffsCast=newCounterTable(),
+        interrupts=newCounterTable(),cc=newCounterTable(),ccBreaks=newCounterTable(),dispels=newCounterTable()}
+    -- Backward-compatible alias used by older tooltip/debug code.
+    a.debuffs=a.debuffsReceived
+    D.actors[key]=a; return a
+end
+local function getActor(key,name,guid,ownerKey,isPet,classToken)
+    -- Damage events only contain GUIDs. Pull the class from the current party/raid
+    -- roster when the caller did not explicitly pass it. This is what makes
+    -- group members use their real class colour instead of the grey fallback.
+    if not classToken and guid and D.guidToActor and D.guidToActor[guid] then
+        classToken=D.guidToActor[guid].classToken
+    end
+    if not classToken and key and D.guidToActor and D.guidToActor[key] then
+        classToken=D.guidToActor[key].classToken
+    end
+    local a=D.actors[key]; if not a then a=newActor(key,name,guid,ownerKey,isPet,classToken) end
+    if name then a.name=name end; if guid then a.guid=guid end; if ownerKey then a.ownerKey=ownerKey end
+    if isPet~=nil then a.isPet=isPet end; if classToken then a.classToken=classToken end
+    local meta=nil
+    if guid and D.guidToActor then meta=D.guidToActor[guid] end
+    if not meta and key and D.guidToActor then meta=D.guidToActor[key] end
+    if meta and meta.isTotem then a.isTotem=true end
+    if isPet and ownerKey and ownerKey~=key and not D.actors[ownerKey] then
+        local owner=D.guidToActor[ownerKey]
+        if owner then newActor(owner.key,owner.name,owner.guid,nil,false,owner.classToken) end
+    end
+    return a
+end
+-- CawThreat loads after the main file and needs the same actor constructor when
+-- a threat-only cast (for example pet Growl) opens combat before any damage.
+D.getActor=getActor
+local function addCount(tbl,name,amount)
+    if not name or name=="" then name="Unknown" end
+    local e=tbl[name]; if not e then e={count=0}; tbl[name]=e end
+    e.count=e.count+(amount or 1); return e
+end
+
+-- Aura uptime helpers. Each aura keeps independent active timers per target so
+-- multi-target debuffs can be measured without losing applications.
+local function auraEntry(tbl,name)
+    if not name or name=="" then name="Unknown" end
+    local e=tbl[name]
+    if not e then e={count=0,total=0,active={},targets={}}; tbl[name]=e end
+    if not e.active then e.active={} end
+    if not e.targets then e.targets={} end
+    if not e.total then e.total=0 end
+    if not e.count then e.count=0 end
+    if not e.sources then e.sources={} end
+    return e
+end
+local function auraClock()
+    if D.inCombat then return GetTime() end
+    if D.startTime and D.startTime>0 and D.lastDuration and D.lastDuration>0 then return D.startTime+D.lastDuration end
+    return GetTime()
+end
+local function startAura(tbl,spell,targetKey,sourceName,sourceKey)
+    if not tbl or not spell then return nil end
+    targetKey=targetKey or "self"
+    local e=auraEntry(tbl,spell)
+    if sourceName and sourceName~="" and sourceName~="Unknown" then e.sources[sourceKey or sourceName]=sourceName end
+    if not e.active[targetKey] then
+        e.active[targetKey]=auraClock()
+        e.count=e.count+1
+        if not e.targets then e.targets={} end
+        if e.targets[targetKey]==nil then e.targets[targetKey]=0 end
+    end
+    return e
+end
+local function stopAura(tbl,spell,targetKey,stopTime)
+    if not tbl or not spell then return false end
+    local e=tbl[spell]; if not e or not e.active then return false end
+    targetKey=targetKey or "self"
+    local st=e.active[targetKey]
+    if st then
+        local et=stopTime or auraClock()
+        if et>st then
+            local delta=et-st
+            e.total=(e.total or 0)+delta
+            if not e.targets then e.targets={} end
+            e.targets[targetKey]=(e.targets[targetKey] or 0)+delta
+        end
+        e.active[targetKey]=nil
+        return true
+    end
+    return false
+end
+local function auraEntryDuration(e)
+    if not e then return 0 end
+    local total=e.total or 0; local now=auraClock(); local k,st
+    if e.active then for k,st in e.active do if st and now>st then total=total+(now-st) end end end
+    return total
+end
+local function auraTableDuration(tbl)
+    local total=0; if not tbl then return 0 end; local k,e; for k,e in tbl do total=total+auraEntryDuration(e) end; return total
+end
+local function auraTargetCount(e)
+    if not e then return 1 end
+    local n=0; local k,v
+    if e.targets then for k,v in e.targets do n=n+1 end end
+    if e.active then for k,v in e.active do if not e.targets or e.targets[k]==nil then n=n+1 end end end
+    if n<1 then n=1 end
+    return n
+end
+local function auraExposureCount(tbl)
+    if not tbl then return 0 end
+    local n=0; local k,e
+    for k,e in tbl do n=n+auraTargetCount(e) end
+    return n
+end
+local function rememberAuraCast(sourceInfo,spell,target)
+    if not sourceInfo or not spell or not target then return end
+    D.recentAuraCasts[target.."|"..spell]={source=sourceInfo,time=GetTime()}
+end
+local function recentAuraCaster(target,spell)
+    local r=D.recentAuraCasts[target.."|"..spell]; if not r then return nil end
+    if GetTime()-(r.time or 0)>4 then D.recentAuraCasts[target.."|"..spell]=nil; return nil end
+    return r.source
+end
+local function clearRecentAuraCast(target,spell)
+    if not target or not spell then return end
+    D.recentAuraCasts[target.."|"..spell]=nil
+end
+D.rememberAuraOrigin = function(sourceToken,spell,target)
+    if not sourceToken or not spell or not target then return end
+    local info=D.guidToActor and D.guidToActor[sourceToken] or nil
+    local name=nil
+    if info then name=info.name else name=D.currentEnemyNames[sourceToken] or D.enemyNameFromGUID(sourceToken) end
+    if name then D.recentAuraOrigins[target.."|"..spell]={name=name,key=sourceToken,time=GetTime()} end
+end
+D.recentAuraOrigin = function(target,spell)
+    local r=D.recentAuraOrigins[target.."|"..spell]; if not r then return nil end
+    if GetTime()-(r.time or 0)>4 then D.recentAuraOrigins[target.."|"..spell]=nil; return nil end
+    return r
+end
+D.backfillAuraSource = function(tbl,spell,sourceName,sourceKey)
+    if not tbl or not spell or not sourceName or sourceName=="" or sourceName=="Unknown" then return end
+    -- Never expose unresolved RAW GUIDs as player/mob names.
+    if string.find(sourceName,"^0x[%x]+$") then return end
+    local e=tbl[spell]
+    if not e then return end
+    if not e.sources then e.sources={} end
+    e.sources[sourceKey or sourceName]=sourceName
+end
+D.auraSourceText = function(e)
+    if not e or not e.sources then return nil end
+    local names={}; local n=0; local k,v
+    for k,v in e.sources do if v and v~="" and v~="Unknown" then n=n+1; names[n]=v end end
+    if n<1 then return nil end
+    table.sort(names)
+    -- Keep aura tooltips compact in large raids: show at most five source names.
+    -- The complete source set remains stored on the aura entry; this only limits display.
+    local limit=n; if limit>5 then limit=5 end
+    local out=names[1]; local i=2
+    while i<=limit do out=out..", "..names[i]; i=i+1 end
+    if n>limit then out=out.."  +"..tostring(n-limit).." more" end
+    return out
+end
+D.auraSourceCount = function(e)
+    if not e or not e.sources then return 0 end
+    local n=0; local k,v
+    for k,v in e.sources do if v and v~="" and v~="Unknown" then n=n+1 end end
+    return n
+end
+D.addAuraSourceHealing = function(tbl,spell,sourceName,sourceKey,amount)
+    if not tbl or not spell or not sourceName or sourceName=="" or sourceName=="Unknown" then return end
+    if string.find(sourceName,"^0x[%x]+$") then return end
+    amount=tonumber(amount); if not amount or amount<=0 then return end
+    local e=tbl[spell]; if not e then return end
+    local key=sourceKey or sourceName
+    if not e.sources then e.sources={} end
+    e.sources[key]=sourceName
+    if not e.sourceHealing then e.sourceHealing={} end
+    local h=e.sourceHealing[key]
+    if not h then h={name=sourceName,healing=0}; e.sourceHealing[key]=h end
+    h.name=sourceName; h.healing=(h.healing or 0)+amount
+end
+D.auraHealingSourceRows = function(e)
+    if not e or not e.sourceHealing then return nil,0,0 end
+    local rows={}; local n=0; local k,h
+    for k,h in e.sourceHealing do
+        if h and h.name and h.name~="" and (h.healing or 0)>0 then n=n+1; rows[n]={name=h.name,healing=h.healing or 0} end
+    end
+    if n<1 then return nil,0,0 end
+    table.sort(rows,function(x,y) return (x.healing or 0)>(y.healing or 0) end)
+    local shown=n; if shown>5 then shown=5 end
+    return rows,shown,n
+end
+D.addAuraSourceDamage = function(tbl,spell,sourceName,sourceKey,amount)
+    if not tbl or not spell or not sourceName or sourceName=="" or sourceName=="Unknown" then return end
+    if string.find(sourceName,"^0x[%x]+$") then return end
+    amount=tonumber(amount); if not amount or amount<=0 then return end
+    -- Damage may only enrich an aura that was already observed as a debuff.
+    -- Never manufacture Debuffs Received entries from combat damage alone.
+    local e=tbl[spell]; if not e then return end
+    local key=sourceKey or sourceName
+    if not e.sources then e.sources={} end
+    e.sources[key]=sourceName
+    if not e.sourceDamage then e.sourceDamage={} end
+    local h=e.sourceDamage[key]
+    if not h then h={name=sourceName,damage=0}; e.sourceDamage[key]=h end
+    h.name=sourceName; h.damage=(h.damage or 0)+amount
+end
+D.auraDamageSourceRows = function(e)
+    if not e or not e.sourceDamage then return nil,0,0 end
+    local rows={}; local n=0; local k,h
+    for k,h in e.sourceDamage do
+        if h and h.name and h.name~="" and (h.damage or 0)>0 then n=n+1; rows[n]={name=h.name,damage=h.damage or 0} end
+    end
+    if n<1 then return nil,0,0 end
+    table.sort(rows,function(x,y) return (x.damage or 0)>(y.damage or 0) end)
+    local shown=n; if shown>5 then shown=5 end
+    return rows,shown,n
+end
+local function resetFight()
+    if D.threatCalRecordEvent then D.threatCalRecordEvent({kind="segment-reset",source="Current reset/start"}) end
+    clearTable(D.actors); D.startTime=0; D.lastDuration=0; D.parsedTotal=0; D.lastParsed="none"
+    D.fightStartedAt=nil; D.fightStartClock=nil
+    D.rawUnknown={}; D.rawUnknownCount=0; D.utilityUnknown={}; D.utilityUnknownCount=0; D.ignoredOutsiders=0
+    D.globalUtility={buffs={},debuffsReceived={},debuffsCast={},cc={},ccBreaks={},interrupts={},dispels={}}
+    D.pendingSelfTotem=nil
+    D.activeCC={}; D.lastCCDamage=nil; D.ccDamageByTarget={}; D.lastCCBreak=nil; D.lastCCLanded=nil
+    D.lastIncomingDamage={}; D.lastDeathStamp={}
+    D.lastSelfIncomingDamage=nil
+    D.lastRosterCombatActivity=0
+    D.deadSyncLastReceived=0; D.deadSyncNextRequest=0
+    D.combatStateCheckAt=0; D.outOfCombatSince=0
+    D.recentAuraCasts={}; D.recentAuraOrigins={}; D.recentDirectRosterAuraCasts={}; D.activeAuraSources={}
+    D.pendingSelfDispel=nil; D.recentSelfDispelCast=nil; D.lastSelfDispelRecord=nil
+    D.currentEnemyDamage={}; D.currentEnemyNames={}; D.currentEnemyBestGuid=nil; D.currentEnemyBestDamage=0; D.currentFightName="Current"
+    clearTable(D.activeEnemyCasts)
+    D.syncNonce=nil; D.syncRequested=false; D.syncRequestSent=false; D.syncReceived=0; D.syncLastSource="none"; D.syncBestAge=0
+    D.syncLastError="none"; D.syncLastChannel="none"
+    D.syncOffers={}; D.syncOfferDeadline=0; D.syncSelectedSource=nil; D.syncIncoming=nil; D.syncRejectedSources=0
+    D.pendingCombatEndAt=0; D.pendingCombatEndStopTime=0; D.pendingCombatEndFirstAt=0
+    D.deadEnemies={}
+    D.recentInterrupts={}
+    D.threatPendingCast={}; D.threatPendingReset={}; D.threatFeignEarly={}; D.threatFeignCommitted={}; D.threatFeignUndo={}
+    D.segmentSerial=(D.segmentSerial or 0)+1
+end
+local function ensureStarted()
+    if not D.parserEnabled() then return false end
+    -- A roster damage/heal event can arrive before this client receives
+    -- PLAYER_REGEN_DISABLED. If the previous fight is already closed,
+    -- start a fresh segment *before* counting this first RAW event.
+    local opened=false
+    if not D.inCombat then
+        -- Do not spawn a phantom segment from group activity in the first
+        -- seconds after the local player's fight ended. The healer topping the
+        -- tank off right after a pull is the common case. A genuine next pull
+        -- re-arms through PLAYER_REGEN_DISABLED, or once the local player is
+        -- actually fighting again.
+        if D.lastFinalizeAt and D.lastFinalizeAt>0 and GetTime()-D.lastFinalizeAt<3.0 then
+            local playerOOC=false
+            if UnitAffectingCombat then local ok,v=pcall(UnitAffectingCombat,"player"); if ok and not v then playerOOC=true end end
+            -- A SELF event means the local player is the one acting/being hit:
+            -- they are engaging, the combat flag just has not flipped yet. Only
+            -- suppress pure group/creature activity.
+            local selfEvent=(D.currentRawEv and string.find(D.currentRawEv,"SELF",1,true)) or D.threatOpeningCastActive
+            if playerOOC and not selfEvent then
+                D.logLine("seg","ensureStarted SUPPRESSED (<3s after finalize, player OOC) via "..tostring(D.currentRawEv or "?"))
+                return false
+            end
+        end
+        D.logLine("seg","ensureStarted OPEN (was closed) via "..tostring(D.currentRawEv or "?").." | "..tostring(D.currentRawText or ""))
+        resetFight()
+        D.inCombat=true
+        D.setFightStartTime(GetTime())
+        opened=true
+        if D.seedActiveRosterBuffs then D.seedActiveRosterBuffs() end
+    elseif D.startTime==0 then
+        D.logLine("seg","ensureStarted set startTime (inCombat, start 0) via "..tostring(D.currentRawEv or "?"))
+        D.setFightStartTime(GetTime())
+        opened=true
+    end
+    if opened and requestCombatSync then requestCombatSync() end
+    return true
+end
+-- Threat-generating UNIT_CASTEVENTs can arrive before the first RAW damage line.
+-- Expose the existing segment opener so CawThreat can start the same fight before
+-- booking flat threat such as Hunter pet Growl; otherwise resetFight() on the
+-- first damage event would erase that pre-combat threat.
+D.ensureStarted=ensureStarted
+local function addSpell(a,spell,amount,crit,spellId)
+    spell=spell or "Melee"; local s=a.spells[spell]
+    if not s then s={damage=0,hits=0,crits=0}; a.spells[spell]=s end
+    if spellId and not s.spellId then s.spellId=tonumber(spellId) end
+    s.damage=s.damage+amount; s.hits=s.hits+1; if crit then s.crits=s.crits+1 end
+end
+local function addDamage(actorKey,actorName,guid,ownerKey,isPet,amount,spell,crit,sourceEvent,spellId)
+    amount=tonumber(amount); if not amount or amount<=0 then return false end
+    if not ensureStarted() then return false end
+    if sourceEvent~="DPSLog" then D.dpsLogRawCommitted=true end
+    local a=getActor(actorKey,actorName,guid,ownerKey,isPet)
+    a.damage=a.damage+amount; a.hits=a.hits+1; if crit then a.crits=a.crits+1 end
+    addSpell(a,spell,amount,crit,spellId); if D.threatOnDamage then D.threatOnDamage(a,amount,spell,crit,D.threatEventTarget) end; D.parsedTotal=D.parsedTotal+1
+    D.lastRosterCombatActivity=GetTime()
+    D.lastParsed=tostring(sourceEvent).." "..tostring(a.name).." "..tostring(spell).." +"..tostring(amount); return true
+end
+
+
+local function addHealSpell(a,spell,amount,crit,spellId)
+    spell=spell or "Healing"; local h=a.healSpells[spell]
+    if not h then h={healing=0,hits=0,crits=0}; a.healSpells[spell]=h end
+    if spellId and not h.spellId then h.spellId=tonumber(spellId) end
+    h.healing=h.healing+amount; h.hits=h.hits+1; if crit then h.crits=h.crits+1 end
+    return h
+end
+D.overhealFields={"overhealing","overhealTotal","overhealHits","overhealCrits"}
+function D.overhealSummary(actors,actor)
+    local over,gross=nil,nil
+    for _,a in pairs(actors or {}) do
+        if (not actor or a==actor or (not actor.isPet and a.isPet and a.ownerKey==actor.key))
+            and a.overhealTotal~=nil then
+            over=(over or 0)+(a.overhealing or 0); gross=(gross or 0)+a.overhealTotal
+        end
+    end
+    return over,gross
+end
+function D.overhealPercent(over,gross)
+    if over==nil or gross==nil then return "--" end
+    return string.format("%.1f%%",gross>0 and 100*over/gross or 0)
+end
+function D.overhealFooter(actors)
+    local over,gross=D.overhealSummary(actors)
+    if over==nil then return "No overheal data" end
+    return "Total: "..comma(over).." | "..D.overhealPercent(over,gross).." OH"
+end
+local function addHealing(actorKey,actorName,guid,ownerKey,isPet,amount,spell,crit,sourceEvent,spellId,over)
+    amount=tonumber(amount); if not amount or amount<0 or (amount==0 and (not over or over<=0)) then return false end
+    if not ensureStarted() then return false end
+    if sourceEvent~="DPSLog" then D.dpsLogRawCommitted=true end
+    local a=getActor(actorKey,actorName,guid,ownerKey,isPet)
+    a.healing=a.healing+amount; a.heals=a.heals+1; if crit then a.healCrits=a.healCrits+1 end
+    local h=addHealSpell(a,spell,amount,crit,spellId)
+    if over~=nil then
+        a.overhealing=(a.overhealing or 0)+over; h.overhealing=(h.overhealing or 0)+over
+        a.overhealTotal=(a.overhealTotal or 0)+amount+over; h.overhealTotal=(h.overhealTotal or 0)+amount+over
+        a.overhealHits=(a.overhealHits or 0)+1; h.overhealHits=(h.overhealHits or 0)+1
+        local critical=crit and 1 or 0
+        a.overhealCrits=(a.overhealCrits or 0)+critical; h.overhealCrits=(h.overhealCrits or 0)+critical
+    end
+    if amount>0 and D.threatOnHealing then D.threatOnHealing(a,amount,spell) end; D.parsedTotal=D.parsedTotal+1
+    D.lastRosterCombatActivity=GetTime()
+    D.lastParsed=tostring(sourceEvent).." "..tostring(a.name).." "..tostring(spell).." +"..tostring(amount).." heal"; return true
+end
+
+local function safeUnitGUID(unit)
+    if UnitExists then local ok,exists,guid=pcall(UnitExists,unit); if ok and exists and guid and guid~="" then return guid end end
+    if UnitGUID then local ok,guid=pcall(UnitGUID,unit); if ok and guid and guid~="" then return guid end end
+    return nil
+end
+local function safeUnitName(unit)
+    if not unit or not UnitName then return nil end
+    local ok,name=pcall(UnitName,unit)
+    if ok and name and name~="" and name~="Unknown" and name~="UNKNOWN" then return name end
+    return nil
+end
+
+D.enemyNameFromGUID = function(guid)
+    if not guid then return nil end
+    local name=safeUnitName(guid)
+    if name then return name end
+    local units={"target","mouseover","targettarget"}
+    local i=1
+    while i<=table.getn(units) do
+        local u=units[i]
+        local ug=safeUnitGUID(u)
+        if ug and ug==guid then
+            name=safeUnitName(u)
+            if name then return name end
+        end
+        i=i+1
+    end
+    return nil
+end
+
+local function noteEnemyTarget(guid,amount)
+    if not guid or not string.find(guid,"^0x") then return end
+    if not ensureStarted() then return end
+    D.threatEventTarget=guid
+    amount=tonumber(amount) or 0
+
+    local total=(D.currentEnemyDamage[guid] or 0)+amount
+    D.currentEnemyDamage[guid]=total
+
+    if not D.currentEnemyNames[guid] then
+        D.currentEnemyNames[guid]=D.enemyNameFromGUID(guid)
+    end
+
+    -- Incremental dominant-target cache. Damage totals only ever increase
+    -- during a segment, so a full scan of every enemy on every hit is not
+    -- necessary.
+    if not D.currentEnemyBestGuid or total>D.currentEnemyBestDamage then
+        D.currentEnemyBestGuid=guid
+        D.currentEnemyBestDamage=total
+    end
+
+    local bestGuid=D.currentEnemyBestGuid
+    if bestGuid then
+        local bestName=D.currentEnemyNames[bestGuid] or D.enemyNameFromGUID(bestGuid)
+        if bestName then
+            D.currentEnemyNames[bestGuid]=bestName
+            D.currentFightName=bestName
+        elseif D.currentFightName=="Current" then
+            D.currentFightName="Unknown Enemy"
+        end
+    end
+end
+
+local function isHostileUnit(unit)
+    if not unit or not UnitCanAttack then return false end
+    local ok,hostile=pcall(UnitCanAttack,"player",unit)
+    return ok and hostile and true or false
+end
+
+local function currentFightLabel()
+    if D.currentFightName and D.currentFightName~="" and D.currentFightName~="Current" then return D.currentFightName end
+    -- Only use the current target as a fallback when it is actually hostile.
+    -- This prevents healing-only fights from being named after a friendly target.
+    if isHostileUnit("target") then
+        local tn=safeUnitName("target")
+        if tn then return tn end
+    end
+    return "Current"
+end
+
+local function safeClass(unit)
+    if not UnitClass then return nil end
+    local ok,localized,token=pcall(UnitClass,unit)
+    if not ok then return nil end
+    if token and CLASS_COLORS[token] then return token end
+    -- Some 1.12/SuperWoW builds only expose the localized class name.
+    -- Normalize the common English return value to the class token used above.
+    if localized then
+        local up=string.upper(localized)
+        if CLASS_COLORS[up] then return up end
+        local names={Krieger="WARRIOR",Magier="MAGE",Schurke="ROGUE",Druide="DRUID",Jaeger="HUNTER",Jager="HUNTER",Schamane="SHAMAN",Priester="PRIEST",Hexenmeister="WARLOCK",Paladin="PALADIN"}
+        if names[localized] then return names[localized] end
+    end
+    return token or localized
+end
+local function addRosterUnit(unit,ownerKey,isPet)
+    if not UnitExists or not UnitExists(unit) then return end
+    local name=UnitName(unit) or unit; local guid=safeUnitGUID(unit); local key=guid or unit
+    local classToken=nil; if not isPet then classToken=safeClass(unit) end
+    D.guidToActor[guid or key]={key=key,name=name,guid=guid,ownerKey=ownerKey,isPet=isPet,classToken=classToken}
+    if isPet and ownerKey then D.petOwner[guid or key]=ownerKey end
+end
+local function refreshRoster()
+    clearTable(D.guidToActor); clearTable(D.petOwner)
+    local pg=safeUnitGUID("player"); local pn=UnitName("player") or "You"; local pk=pg or "player"; D.selfKey=pk
+    D.guidToActor[pg or pk]={key=pk,name=pn,guid=pg,isPet=false,classToken=safeClass("player")}
+    addRosterUnit("pet",pk,true)
+    local i=1
+    while i<=4 do local u="party"..tostring(i); if UnitExists and UnitExists(u) then
+        local g=safeUnitGUID(u); local k=g or u; addRosterUnit(u,nil,false); addRosterUnit("partypet"..tostring(i),k,true)
+    end; i=i+1 end
+    i=1
+    while i<=40 do local u="raid"..tostring(i); if UnitExists and UnitExists(u) then
+        local g=safeUnitGUID(u); local k=g or u; addRosterUnit(u,nil,false); addRosterUnit("raidpet"..tostring(i),k,true)
+    end; i=i+1 end
+    -- Roster rebuilds must not erase already observed summons still owned by a member.
+    local summonGuid,summon
+    for summonGuid,summon in D.summonActors do
+        if summon and D.guidToActor[summon.ownerKey] then
+            D.guidToActor[summonGuid]=summon; D.petOwner[summonGuid]=summon.ownerKey
+        else D.summonActors[summonGuid]=nil end
+    end
+    local buffKey,buff
+    for buffKey,buff in D.activeRosterBuffs do
+        if buff.target~="player" and not D.guidToActor[buff.target] then D.activeRosterBuffs[buffKey]=nil end
+    end
+    -- Refresh metadata for actors that already exist (for example when joining
+    -- a party during a session or after a roster update).
+    local ak,av
+    for ak,av in D.actors do
+        local ri=D.guidToActor[av.guid or ak]
+        if ri then
+            av.name=ri.name or av.name
+            av.classToken=ri.classToken or av.classToken
+            av.ownerKey=ri.ownerKey or av.ownerKey
+            av.isPet=ri.isPet
+        end
+    end
+end
+
+-- Caw Sync -----------------------------------------------------------------
+function D.cancelCombatSync()
+    if D.cancelTargetSync then D.cancelTargetSync() end
+    D.syncQueue={}; D.syncNonce=nil; D.syncIncoming=nil; D.syncSelectedSource=nil
+    D.syncOffers={}; D.syncOfferDeadline=0; D.syncRequested=false; D.syncRequestSent=false
+    D.nextCombatSyncCheck=0
+end
+function D.setCombatSyncEnabled(enabled)
+    CawDPSMeterCharDB=CawDPSMeterCharDB or {}
+    CawDPSMeterCharDB.combatSyncEnabled=enabled and true or false
+    D.cancelCombatSync()
+end
+local function syncChannel()
+    if GetNumRaidMembers and GetNumRaidMembers()>0 then return "RAID" end
+    if GetNumPartyMembers and GetNumPartyMembers()>0 then return "PARTY" end
+    return nil
+end
+
+local function syncRosterSender(sender)
+    if not sender or sender=="" then return false end
+    local me=UnitName("player")
+    if me and sender==me then return true end
+    local i=1
+    while i<=4 do
+        local u="party"..tostring(i)
+        if UnitExists and UnitExists(u) and UnitName(u)==sender then return true end
+        i=i+1
+    end
+    i=1
+    while i<=40 do
+        local u="raid"..tostring(i)
+        if UnitExists and UnitExists(u) and UnitName(u)==sender then return true end
+        i=i+1
+    end
+    return false
+end
+
+local function syncField(v)
+    local s=tostring(v or "")
+    s=string.gsub(s,"~","/")
+    s=string.gsub(s,"|","/")
+    s=string.gsub(s,"\n"," ")
+    return s
+end
+
+local function splitSync(msg)
+    local out={}; local n=0; local pos=1
+    while true do
+        local a,b=string.find(msg,"~",pos,true)
+        if not a then n=n+1; out[n]=string.sub(msg,pos); break end
+        n=n+1; out[n]=string.sub(msg,pos,a-1); pos=b+1
+    end
+    return out
+end
+
+local function queueSync(message,channel,target)
+    if not D.combatSyncEnabled() then return end
+    if not message or string.len(message)>240 then return end
+    if table.getn(D.syncQueue)>=(D.syncQueueMax or 1000) then
+        D.syncQueueDropped=(D.syncQueueDropped or 0)+1
+        D.syncLastError="Sync queue limit reached"
+        return
+    end
+    table.insert(D.syncQueue,{message=message,channel=channel,target=target})
+end
+
+local function getAddonSender()
+    if type(SendAddonMessage)=="function" then
+        D.syncAPI="SendAddonMessage"
+        return SendAddonMessage
+    end
+    if C_ChatInfo and type(C_ChatInfo.SendAddonMessage)=="function" then
+        D.syncAPI="C_ChatInfo.SendAddonMessage"
+        return C_ChatInfo.SendAddonMessage
+    end
+    D.syncAPI="missing"
+    return nil
+end
+
+local function sendSyncNow(message,channel,target)
+    D.syncSendAttempts=(D.syncSendAttempts or 0)+1
+    D.syncLastChannel=tostring(channel or "none")
+    local sender=getAddonSender()
+    if not sender then
+        D.syncLastError="No addon-message API available"
+        return false
+    end
+    if not channel then
+        D.syncLastError="No PARTY/RAID channel available"
+        return false
+    end
+
+    local ok,err
+    if channel=="WHISPER" then
+        ok,err=pcall(sender,D.syncPrefix,message,channel,target)
+    else
+        ok,err=pcall(sender,D.syncPrefix,message,channel)
+    end
+    if ok then
+        D.syncSent=(D.syncSent or 0)+1
+        D.syncLastError="none"
+        return true
+    end
+    D.syncLastError=tostring(err or "unknown send error")
+    return false
+end
+
+local function flushSyncQueue()
+    if not D.combatSyncEnabled() then D.cancelCombatSync(); return end
+    if table.getn(D.syncQueue)<=0 or not getAddonSender() then return end
+    local now=GetTime()
+    if now<(D.syncNextSend or 0) then return end
+    local item=table.remove(D.syncQueue,1)
+    if item then sendSyncNow(item.message,item.channel,item.target) end
+    D.syncNextSend=now+0.04
+end
+
+local function dominantEnemyGUID()
+    return D.currentEnemyBestGuid or ""
+end
+
+local function buildSyncSnapshot(nonce,target)
+    if not D.inCombat or not nonce or not target then return end
+    local replyChannel=syncChannel()
+    if not replyChannel then return end
+    local age=0
+    if D.startTime and D.startTime>0 then age=GetTime()-D.startTime end
+    if age<0 then age=0 end
+
+    -- Snapshot values are read now and queued immediately after the header.
+    -- The receiver buffers the complete snapshot and merges it atomically at Z.
+    queueSync("H~"..syncField(nonce).."~"..tostring(math.floor(age*10)).."~"..syncField(dominantEnemyGUID()).."~"..syncField(currentFightLabel()).."~"..D.syncEnemySet(),replyChannel,nil)
+
+    local key,a
+    for key,a in D.actors do
+        queueSync("A~"..syncField(nonce).."~"..syncField(a.key or key).."~"..syncField(a.name).."~"..syncField(a.guid).."~"..syncField(a.ownerKey).."~"..(a.isPet and "1" or "0").."~"..syncField(a.classToken).."~"..tostring(math.floor(a.damage or 0)).."~"..tostring(math.floor(a.healing or 0)).."~"..tostring(math.floor(a.hits or 0)).."~"..tostring(math.floor(a.crits or 0)).."~"..tostring(math.floor(a.heals or 0)).."~"..tostring(math.floor(a.healCrits or 0)),replyChannel,nil)
+        local spell,s
+        for spell,s in a.spells do
+            queueSync("D~"..syncField(nonce).."~"..syncField(a.key or key).."~"..syncField(spell).."~"..tostring(math.floor(s.damage or 0)).."~"..tostring(math.floor(s.hits or 0)).."~"..tostring(math.floor(s.crits or 0)).."~"..syncField(s.spellId),replyChannel,nil)
+        end
+        local hname,h
+        for hname,h in a.healSpells do
+            local message="E~"..syncField(nonce).."~"..syncField(a.key or key).."~"..syncField(hname).."~"..tostring(math.floor(h.healing or 0)).."~"..tostring(math.floor(h.hits or 0)).."~"..tostring(math.floor(h.crits or 0)).."~"..syncField(h.spellId)
+            if h.overhealTotal~=nil then
+                local extended=message
+                for _,field in ipairs(D.overhealFields) do extended=extended.."~"..tostring(math.floor(h[field] or 0)) end
+                -- Older clients ignore trailing fields. Never drop the original
+                -- healing packet if the optional extension would exceed its cap.
+                if string.len(extended)<=240 then message=extended end
+            end
+            queueSync(message,replyChannel,nil)
+        end
+    end
+    queueSync("Z~"..syncField(nonce),replyChannel,nil)
+end
+
+local function syncOfferCount()
+    local n=0; local k,v
+    for k,v in D.syncOffers do n=n+1 end
+    return n
+end
+
+local function captureSyncBaseline()
+    local base={actors={}}
+    local key,a
+    for key,a in D.actors do
+        local b={
+            damage=a.damage or 0, healing=a.healing or 0,
+            hits=a.hits or 0, crits=a.crits or 0,
+            heals=a.heals or 0, healCrits=a.healCrits or 0,
+            spells={}, healSpells={}
+        }
+        local spell,s
+        for spell,s in a.spells do
+            b.spells[spell]={damage=s.damage or 0,hits=s.hits or 0,crits=s.crits or 0,spellId=s.spellId}
+        end
+        local hname,h
+        for hname,h in a.healSpells do
+            b.healSpells[hname]={healing=h.healing or 0,hits=h.hits or 0,crits=h.crits or 0,spellId=h.spellId}
+            for _,field in ipairs(D.overhealFields) do b.healSpells[hname][field]=h[field] end
+        end
+        base.actors[key]=b
+    end
+    return base
+end
+
+local function syncNumber(v)
+    return tonumber(v) or 0
+end
+
+local function syncMergedValue(remote,baseline,current)
+    remote=syncNumber(remote); baseline=syncNumber(baseline); current=syncNumber(current)
+    local floorValue=baseline
+    if remote>floorValue then floorValue=remote end
+    local delta=current-baseline
+    if delta<0 then delta=0 end
+    return floorValue+delta
+end
+
+local function applyBufferedSnapshot(incoming)
+    if not incoming or not incoming.actors then return false end
+    local baseline=incoming.baseline or {actors={}}
+    local key,r
+    for key,r in incoming.actors do
+        local a=getActor(key,r.name,r.guid,r.ownerKey,r.isPet,r.classToken)
+        local b=baseline.actors[key] or {spells={},healSpells={}}
+        a.damage=syncMergedValue(r.damage,b.damage,a.damage)
+        a.healing=syncMergedValue(r.healing,b.healing,a.healing)
+        a.hits=syncMergedValue(r.hits,b.hits,a.hits)
+        a.crits=syncMergedValue(r.crits,b.crits,a.crits)
+        a.heals=syncMergedValue(r.heals,b.heals,a.heals)
+        a.healCrits=syncMergedValue(r.healCrits,b.healCrits,a.healCrits)
+
+        local spell,rs
+        for spell,rs in r.spells do
+            local live=a.spells[spell]
+            if not live then live={damage=0,hits=0,crits=0}; a.spells[spell]=live end
+            if rs.spellId and not live.spellId then live.spellId=tonumber(rs.spellId) end
+            local bs=b.spells and b.spells[spell] or nil
+            if not bs then bs={damage=0,hits=0,crits=0} end
+            live.damage=syncMergedValue(rs.damage,bs.damage,live.damage)
+            live.hits=syncMergedValue(rs.hits,bs.hits,live.hits)
+            live.crits=syncMergedValue(rs.crits,bs.crits,live.crits)
+        end
+
+        local hname,rh
+        for hname,rh in r.healSpells do
+            local live=a.healSpells[hname]
+            if not live then live={healing=0,hits=0,crits=0}; a.healSpells[hname]=live end
+            if rh.spellId and not live.spellId then live.spellId=tonumber(rh.spellId) end
+            local bh=b.healSpells and b.healSpells[hname] or nil
+            if not bh then bh={healing=0,hits=0,crits=0} end
+            live.healing=syncMergedValue(rh.healing,bh.healing,live.healing)
+            live.hits=syncMergedValue(rh.hits,bh.hits,live.hits)
+            live.crits=syncMergedValue(rh.crits,bh.crits,live.crits)
+            if rh.overhealTotal~=nil then
+                for _,field in ipairs(D.overhealFields) do live[field]=syncMergedValue(rh[field],bh[field],live[field]) end
+            end
+        end
+
+        -- Keep aggregate actor totals consistent with the spell breakdown
+        -- after independent baseline+delta network merges.
+        local sumDamage=0; local sumHits=0; local sumCrits=0
+        local sn,sv
+        for sn,sv in a.spells do
+            sumDamage=sumDamage+(sv.damage or 0)
+            sumHits=sumHits+(sv.hits or 0)
+            sumCrits=sumCrits+(sv.crits or 0)
+        end
+        a.damage=sumDamage; a.hits=sumHits; a.crits=sumCrits
+
+        local sumHealing=0; local sumHeals=0; local sumHealCrits=0
+        for sn,sv in a.healSpells do
+            sumHealing=sumHealing+(sv.healing or 0)
+            sumHeals=sumHeals+(sv.hits or 0)
+            sumHealCrits=sumHealCrits+(sv.crits or 0)
+        end
+        a.healing=sumHealing; a.heals=sumHeals; a.healCrits=sumHealCrits
+        -- Derive optional totals from the spell records that actually carry
+        -- structured coverage; legacy snapshots cannot erase known data.
+        for _,field in ipairs(D.overhealFields) do
+            local sum=nil
+            for _,h in pairs(a.healSpells) do if h[field]~=nil then sum=(sum or 0)+h[field] end end
+            a[field]=sum
+        end
+    end
+
+    -- Preserve the older source's fight age. Time spent receiving the snapshot
+    -- is added so DPS/HPS duration does not become artificially short.
+    local remoteAge=incoming.remoteAge or 0
+    if incoming.headerReceivedAt then remoteAge=remoteAge+(GetTime()-incoming.headerReceivedAt) end
+    local localAge=0
+    if D.startTime and D.startTime>0 then localAge=GetTime()-D.startTime end
+    if remoteAge>localAge and remoteAge>D.syncBestAge then
+        D.setFightStartTime(GetTime()-remoteAge)
+        D.syncBestAge=remoteAge
+    end
+    if incoming.fightName and incoming.fightName~="" and (not D.currentFightName or D.currentFightName=="Current" or D.currentFightName=="Unknown Enemy") then
+        D.currentFightName=incoming.fightName
+    end
+    return true
+end
+
+requestCombatSync=function(force)
+    if not D.combatSyncEnabled() then return end
+    if D.syncRequested and not force then return end
+    if not D.inCombat and not force then return end
+    if D.syncEnemySet and D.syncEnemySet()=="" then return end
+    if D.syncIncoming and GetTime()-(D.syncIncoming.headerReceivedAt or 0)<8 then return end
+    local ch=syncChannel()
+    D.syncRequested=true
+    D.syncRequestSent=false
+    D.syncOffers={}
+    D.syncOfferDeadline=0
+    D.syncSelectedSource=nil
+    D.syncIncoming=nil
+    if not ch then
+        D.syncLastError="Not in PARTY/RAID"
+        D.syncLastChannel="none"
+        return
+    end
+    D.syncNonce=tostring(math.floor(GetTime()*1000)).."-"..syncField(UnitName("player") or "player")
+    if sendSyncNow("R~"..D.syncNonce.."~"..D.syncEnemySet(),ch,nil) then
+        D.syncRequestSent=true
+    end
+end
+
+D.syncEnemySet=function()
+    local set={}; local guid,amount; local n=0
+    for guid,amount in D.currentEnemyDamage do
+        if not D.deadEnemies[guid] then set[guid]=true end
+    end
+    local target=safeUnitGUID("target")
+    if target and isHostileUnit("target") then set[target]=true end
+    local out=""
+    for guid in set do
+        if n<8 then if out~="" then out=out.."," end; out=out..guid; n=n+1 end
+    end
+    return out
+end
+D.syncEnemyCompatible=function(remote)
+    if not remote or remote=="" then return false end
+    local own=","..D.syncEnemySet()..","; local guid
+    for guid in string.gfind(remote,"(0x[%x]+)") do
+        if string.find(own,","..guid..",",1,true) then return true end
+    end
+    return false
+end
+
+finalizeSyncOfferSelection=function()
+    if not D.syncNonce or D.syncSelectedSource or (D.syncOfferDeadline or 0)<=0 then return end
+    if GetTime()<D.syncOfferDeadline then return end
+
+    local bestName=nil; local bestAge=-1; local name,offer
+    for name,offer in D.syncOffers do
+        local age=offer.age or 0
+        if D.syncEnemyCompatible(offer.enemies) and age>bestAge then bestAge=age; bestName=name end
+    end
+    D.syncOfferDeadline=0
+    if not bestName then return end
+
+    D.syncSelectedSource=bestName
+    local ch=syncChannel()
+    if ch then
+        queueSync("P~"..syncField(D.syncNonce).."~"..syncField(bestName).."~"..D.syncEnemySet(),ch,nil)
+    end
+end
+
+local function applySyncMessage(sender,msg,channel)
+    if not syncRosterSender(sender) then return end
+    local p=splitSync(msg)
+    local kind=p[1]
+    if kind=="V" then
+        if D.talentViewReceive then D.talentViewReceive(sender,p,channel) end
+        return
+    end
+    if kind=="K" then
+        if D.talentSyncReceive then D.talentSyncReceive(sender,p,channel) end
+        return
+    end
+    -- P~1~GUID announces a peer; P~nonce~name selects a combat source.
+    -- Combat nonces contain a timestamp and player name, never just "1".
+    -- Keep both wire formats so existing clients can still request snapshots.
+    if kind=="P" and p[2]=="1" then
+        if D.threatPeerReceive then D.threatPeerReceive(sender,p,channel) end
+        return
+    end
+    if kind=="T" then
+        if D.threatSyncReceive then D.threatSyncReceive(sender,p,channel) end
+        return
+    end
+    if kind=="Y" then
+        if D.targetSyncReceive then D.targetSyncReceive(sender,p,channel) end
+        return
+    end
+    if not D.combatSyncEnabled() then return end
+    local selfName=UnitName("player") or ""
+
+    -- Phase 1: responders advertise only their current fight age. This avoids
+    -- every Caw client blasting a full snapshot into a raid simultaneously.
+    if kind=="R" then
+        D.syncRequestsSeen=(D.syncRequestsSeen or 0)+1
+        local nonce=p[2]
+        if sender==selfName then return end
+        if nonce and D.inCombat and D.startTime and D.startTime>0 and D.syncEnemyCompatible(p[3]) then
+            local age=GetTime()-D.startTime; if age<0 then age=0 end
+            local ch=syncChannel()
+            if ch then
+                queueSync("O~"..syncField(nonce).."~"..tostring(math.floor(age*10)).."~"..syncField(dominantEnemyGUID()).."~"..syncField(currentFightLabel()).."~"..D.syncEnemySet(),ch,nil)
+            end
+        end
+        return
+    end
+
+    -- Phase 2: requester gathers offers for 0.30s and then chooses the oldest
+    -- available source. Other responders remain silent.
+    if kind=="O" then
+        if not D.syncNonce or p[2]~=D.syncNonce or sender==selfName then return end
+        if not D.inCombat or not D.syncEnemyCompatible(p[6]) then return end
+        D.syncOffers[sender]={age=(tonumber(p[3]) or 0)/10,enemy=p[4],fightName=p[5],enemies=p[6]}
+        if (D.syncOfferDeadline or 0)<=0 then D.syncOfferDeadline=GetTime()+0.30 end
+        return
+    end
+
+    if kind=="P" then
+        local nonce=p[2]; local selected=p[3]
+        if nonce and selected and selected==selfName and sender~=selfName and D.inCombat and D.startTime and D.startTime>0 and D.syncEnemyCompatible(p[4]) then
+            buildSyncSnapshot(nonce,sender)
+        end
+        return
+    end
+
+    if not D.inCombat or not D.syncNonce or p[2]~=D.syncNonce then return end
+    if not D.syncSelectedSource or sender~=D.syncSelectedSource then
+        D.syncRejectedSources=(D.syncRejectedSources or 0)+1
+        return
+    end
+
+    -- Phase 3: buffer one selected source atomically.
+    if kind=="H" then
+        if not D.syncEnemyCompatible(p[6]) then D.syncIncoming=nil; return end
+        D.syncIncoming={
+            segmentSerial=D.segmentSerial,
+            source=sender,
+            remoteAge=(tonumber(p[3]) or 0)/10,
+            enemy=p[4],
+            fightName=p[5],
+            headerReceivedAt=GetTime(),
+            baseline=captureSyncBaseline(),
+            actors={}
+        }
+        D.syncLastSource=sender
+        return
+    end
+
+    local incoming=D.syncIncoming
+    if not incoming or incoming.source~=sender then return end
+    if incoming.segmentSerial~=D.segmentSerial then D.syncIncoming=nil; return end
+
+    if kind=="A" then
+        local key=p[3]; if not key or key=="" then return end
+        local guid=p[5]; if guid=="" then guid=nil end
+        local owner=p[6]; if owner=="" then owner=nil end
+        local classToken=p[8]; if classToken=="" then classToken=nil end
+        local r=incoming.actors[key]
+        if not r then r={spells={},healSpells={}}; incoming.actors[key]=r end
+        r.name=p[4]; r.guid=guid; r.ownerKey=owner; r.isPet=(p[7]=="1"); r.classToken=classToken
+        r.damage=p[9]; r.healing=p[10]; r.hits=p[11]; r.crits=p[12]; r.heals=p[13]; r.healCrits=p[14]
+        return
+    end
+
+    if kind=="D" then
+        local key=p[3]; local spell=p[4]; if not key or not spell then return end
+        local r=incoming.actors[key]
+        if not r then r={spells={},healSpells={}}; incoming.actors[key]=r end
+        r.spells[spell]={damage=p[5],hits=p[6],crits=p[7],spellId=tonumber(p[8])}
+        return
+    end
+
+    if kind=="E" then
+        local key=p[3]; local spell=p[4]; if not key or not spell then return end
+        local r=incoming.actors[key]
+        if not r then r={spells={},healSpells={}}; incoming.actors[key]=r end
+        r.healSpells[spell]={healing=p[5],hits=p[6],crits=p[7],spellId=tonumber(p[8])}
+        local over,gross,hits,crits=tonumber(p[9]),tonumber(p[10]),tonumber(p[11]),tonumber(p[12])
+        if over and gross and hits and crits and over>=0 and gross>=over and gross<math.huge
+            and hits>=1 and hits<math.huge and hits==math.floor(hits) and crits>=0 and crits<=hits and crits==math.floor(crits) then
+            local h=r.healSpells[spell]
+            h.overhealing=over; h.overhealTotal=gross; h.overhealHits=hits; h.overhealCrits=crits
+        end
+        return
+    end
+
+    if kind=="Z" then
+        if applyBufferedSnapshot(incoming) then
+            D.syncReceived=(D.syncReceived or 0)+1
+            D.syncLastSource=sender
+            if D.localPlayerDead then
+                D.deadSyncLastReceived=GetTime()
+                if D.pendingCombatEndAt and D.pendingCombatEndAt>0 then
+                    D.pendingCombatEndAt=GetTime()+2.00
+                    D.pendingCombatEndStopTime=GetTime()
+                end
+            end
+        end
+        D.syncIncoming=nil
+        return
+    end
+end
+
+local function actorFromSourceToken(token)
+    if token=="You" or token=="your" or token=="Your" then return D.guidToActor[safeUnitGUID("player") or D.selfKey] end
+    return D.guidToActor[token]
+end
+local function ignoreOutsideRoster(source)
+    if source and string.find(source,"^0x") and not D.guidToActor[source] then D.ignoredOutsiders=D.ignoredOutsiders+1; return true end
+    return false
+end
+local function isCritText(text)
+    if string.find(text," crits ",1,true) or string.find(text," crit ",1,true) or string.find(text," critically ",1,true) then return true end
+    return false
+end
+local function ringCapture(tbl,countField,ev,text)
+    D[countField]=D[countField]+1; local idx=math.mod(D[countField]-1,20)+1; tbl[idx]=tostring(ev).." | "..tostring(text)
+end
+local function captureUnknown(ev,text) ringCapture(D.rawUnknown,"rawUnknownCount",ev,text) end
+local function captureUtilityUnknown(ev,text) ringCapture(D.utilityUnknown,"utilityUnknownCount",ev,text) end
+
+local function captureRawDebug(ev,text)
+    if not D.rawDebugEnabled then return end
+    D.rawDebugCount=D.rawDebugCount+1
+    if D.rawDebugCount<=80 then
+        D.rawDebugLines[D.rawDebugCount]=tostring(ev).." | "..tostring(text)
+    end
+end
+
+-- Threat diagnostic only: capture evidence without estimating threat yet.
+-- Kept on D to avoid adding more top-level locals on the old Lua 5.0 client.
+D.captureThreatDebug = function(kind,text)
+    if not D.threatDebugEnabled then return end
+    D.threatDebugCount=(D.threatDebugCount or 0)+1
+    if D.threatDebugCount<=160 then
+        D.threatDebugLines[D.threatDebugCount]=string.format("%.2f",GetTime()).." | "..tostring(kind).." | "..tostring(text)
+    end
+end
+
+D.captureThreatTargetState = function(force)
+    if not D.threatDebugEnabled then return end
+    local now=GetTime()
+    if not force and now<(D.threatDebugNextSnapshot or 0) then return end
+    D.threatDebugNextSnapshot=now+0.20
+    local tName=UnitName and UnitName("target") or nil
+    local tGuid=safeUnitGUID("target")
+    local ttName=UnitName and UnitName("targettarget") or nil
+    local ttGuid=safeUnitGUID("targettarget")
+    local state=tostring(tGuid or "nil").."/"..tostring(tName or "nil").." -> "..tostring(ttGuid or "nil").."/"..tostring(ttName or "nil")
+    if force or state~=(D.threatDebugLastTarget or "") then
+        D.threatDebugLastTarget=state
+        D.captureThreatDebug("TARGET",state)
+    end
+end
+
+-- Interrupt abilities supported by the Vanilla/RavenCraft ruleset.
+-- RAW_COMBATLOG often does not emit a separate "interrupts" line, so a landed
+-- interrupt ability is correlated with the target's current "begins to cast" entry.
+local INTERRUPT_SPELLS = {
+    ["Kick"]=true,
+    ["Pummel"]=true,
+    ["Shield Bash"]=true,
+    ["Counterspell"]=true,
+    ["Earth Shock"]=true,
+    ["Feral Charge"]=true,
+    ["Feral Charge - Bear"]=true,
+    ["Spell Lock"]=true,
+    ["Silence"]=true
+}
+
+-- RavenCraft reports an interrupted enemy cast as UNIT_CASTEVENT FAIL at the
+-- same timestamp as the player's Kick/Pummel hit. Keep that cast alive for a
+-- short hand-off window so the damage line can still prove the interrupt.
+-- A normal failed cast is discarded by tryRecordInterrupt once this window
+-- expires, so it cannot turn a later Kick into a false interrupt.
+local INTERRUPT_FAIL_GRACE=0.75
+
+-- Common Vanilla/RavenCraft dispel/cleanse abilities. RavenCraft can log a
+-- successful self-dispel as "Your <aura> is removed." followed by "You cast X."
+-- rather than an explicit "X dispels Y" combat-log line.
+local DISPEL_SPELLS = {
+    ["Purify"]=true,
+    ["Cleanse"]=true,
+    ["Dispel Magic"]=true,
+    ["Purge"]=true,
+    ["Remove Curse"]=true,
+    ["Remove Lesser Curse"]=true,
+    ["Abolish Disease"]=true,
+    ["Cure Disease"]=true,
+    ["Abolish Poison"]=true,
+    ["Cure Poison"]=true,
+    ["Devour Magic"]=true
+}
+
+local function rememberEnemyCast(target,spell)
+    if not target or not spell then return end
+    D.activeEnemyCasts[target]={spell=spell,time=GetTime()}
+end
+local function clearEnemyCastOnResult(source,spell)
+    if not source or not spell then return end
+    local cast=D.activeEnemyCasts[source]
+    if cast and cast.spell==spell then D.activeEnemyCasts[source]=nil end
+end
+
+local function utilityActor(info)
+    if not info then return nil end
+    return getActor(info.key,info.name,info.guid,info.ownerKey,info.isPet,info.classToken)
+end
+
+D.captureIncomingDamage = function(ev,text)
+    if not ev or not text then return false end
+    -- Every supported incoming hit contains one of these literal fragments.
+    -- Aura, miss and cast messages need none of the damage-pattern scans.
+    if not string.find(text," for ",1,true)
+        and not string.find(text," damage from ",1,true) then return false end
+
+    local targetInfo=nil
+    local sourceGuid=nil
+    local ability=nil
+    local amount=nil
+    local crit=false
+    local targetGuid=nil
+    local isSelfTarget=false
+    local _,_,a,b,c,d
+
+    -- Only direct self-target hits can match the first four patterns.
+    if string.find(text," you for ",1,true) then
+        -- Enemy melee -> player.
+        _,_,sourceGuid,amount=string.find(text,"^(0x[%x]+) hits you for ([0-9]+)")
+        if not amount then
+            _,_,sourceGuid,amount=string.find(text,"^(0x[%x]+) crits you for ([0-9]+)")
+            if amount then crit=true end
+        end
+        if amount then
+            isSelfTarget=true
+            targetInfo=D.guidToActor[safeUnitGUID("player") or D.selfKey]
+            targetGuid=targetInfo and (targetInfo.guid or targetInfo.key) or nil
+            ability="Melee"
+        end
+
+        -- Enemy spell/ability -> player.
+        if not amount then
+            _,_,sourceGuid,ability,amount=string.find(text,"^(0x[%x]+)'s (.-) hits you for ([0-9]+)")
+            if not amount then
+                _,_,sourceGuid,ability,amount=string.find(text,"^(0x[%x]+)'s (.-) crits you for ([0-9]+)")
+                if amount then crit=true end
+            end
+            if amount then
+                isSelfTarget=true
+                targetInfo=D.guidToActor[safeUnitGUID("player") or D.selfKey]
+                targetGuid=targetInfo and (targetInfo.guid or targetInfo.key) or nil
+            end
+        end
+    end
+
+    -- GUID -> roster member melee.
+    if not amount then
+        _,_,sourceGuid,targetGuid,amount=string.find(text,"^(0x[%x]+) hits (0x[%x]+) for ([0-9]+)")
+        if not amount then
+            _,_,sourceGuid,targetGuid,amount=string.find(text,"^(0x[%x]+) crits (0x[%x]+) for ([0-9]+)")
+            if amount then crit=true end
+        end
+        if amount then
+            targetInfo=D.guidToActor[targetGuid]
+            ability="Melee"
+        end
+    end
+
+    -- GUID -> roster member spell/ability.
+    if not amount then
+        _,_,sourceGuid,ability,targetGuid,amount=string.find(text,"^(0x[%x]+)'s (.-) hits (0x[%x]+) for ([0-9]+)")
+        if not amount then
+            _,_,sourceGuid,ability,targetGuid,amount=string.find(text,"^(0x[%x]+)'s (.-) crits (0x[%x]+) for ([0-9]+)")
+            if amount then crit=true end
+        end
+        if amount then targetInfo=D.guidToActor[targetGuid] end
+    end
+
+    -- Periodic damage -> player.
+    if not amount then
+        _,_,amount,sourceGuid,ability=string.find(text,"^You suffer ([0-9]+) .- damage from (0x[%x]+)'s (.-)%.")
+        if amount then
+            isSelfTarget=true
+            targetInfo=D.guidToActor[safeUnitGUID("player") or D.selfKey]
+            targetGuid=targetInfo and (targetInfo.guid or targetInfo.key) or nil
+        end
+    end
+
+    -- Periodic damage -> roster member.
+    if not amount then
+        _,_,targetGuid,amount,sourceGuid,ability=string.find(text,"^(0x[%x]+) suffers ([0-9]+) .- damage from (0x[%x]+)'s (.-)%.")
+        if amount then targetInfo=D.guidToActor[targetGuid] end
+    end
+
+    if not amount or not targetInfo or targetInfo.isPet then return false end
+
+    amount=tonumber(amount) or 0
+    if amount<=0 then return false end
+
+    -- After the local player dies, preserve the death segment. Once its
+    -- combat-end grace has finalized, continuing party combat must not create
+    -- a fresh "Current" segment and visually erase Damage Taken / Deaths.
+    if D.localPlayerDead and not D.inCombat then return false end
+
+    -- Group members can be observed taking damage even when this client never
+    -- enters personal combat. That incoming roster damage is valid encounter
+    -- activity and may open the segment while the local player is alive.
+    if not ensureStarted() then return false end
+    D.lastRosterCombatActivity=GetTime()
+
+    local actor=utilityActor(targetInfo)
+    if not actor then return false end
+
+    local sourceName=nil
+    if sourceGuid then
+        sourceName=D.currentEnemyNames[sourceGuid] or D.enemyNameFromGUID(sourceGuid)
+        if sourceName then D.currentEnemyNames[sourceGuid]=sourceName end
+    end
+    if not sourceName then sourceName=sourceGuid or "Environment" end
+    if not ability or ability=="" then ability="Melee" end
+
+    -- Aura application lines often omit their caster on Vanilla. Once a later
+    -- tick/hit gives us a resolvable enemy name, attach it to an already tracked
+    -- Debuffs Received entry with the same spell. This backfills the tooltip
+    -- without guessing and never creates a debuff from damage alone.
+    if sourceName and not string.find(sourceName,"^0x[%x]+$") then
+        D.backfillAuraSource(actor.debuffsReceived,ability,sourceName,sourceGuid or sourceName)
+    end
+
+    -- For periodic harmful auras, keep the same compact per-source breakdown
+    -- as HoT buffs: source -> actual damage dealt by this debuff. Direct hits
+    -- are deliberately excluded so a spell's impact damage is not presented
+    -- as DoT/debuff damage.
+    if sourceName and not string.find(sourceName,"^0x[%x]+$") and
+       (string.find(text,"^You suffer ") or string.find(text,"^0x[%x]+ suffers ")) then
+        D.addAuraSourceDamage(actor.debuffsReceived,ability,sourceName,sourceGuid or sourceName,amount)
+    end
+
+    -- Only trust overkill when the combat text explicitly exposes it.
+    local overkill=nil
+    _,_,overkill=string.find(text,"%(([0-9]+) overkill%)")
+    if not overkill then _,_,overkill=string.find(text,"%(([0-9]+) Overkill%)") end
+    if not overkill then _,_,overkill=string.find(text,"overkill:? ([0-9]+)") end
+    if overkill then overkill=tonumber(overkill) end
+
+    actor.damageTaken=(actor.damageTaken or 0)+amount
+    if not actor.damageTakenSpells then actor.damageTakenSpells={} end
+    local detail=sourceName.." - "..ability
+    local entry=actor.damageTakenSpells[detail]
+    if not entry then entry={damage=0,hits=0,crits=0,critDamage=0,maxCrit=0,overkill=0,overkillKnown=0}; actor.damageTakenSpells[detail]=entry end
+    entry.damage=(entry.damage or 0)+amount
+    entry.hits=(entry.hits or 0)+1
+    if crit then
+        entry.crits=(entry.crits or 0)+1
+        entry.critDamage=(entry.critDamage or 0)+amount
+        if amount>(entry.maxCrit or 0) then entry.maxCrit=amount end
+    end
+    if overkill~=nil then
+        entry.overkill=(entry.overkill or 0)+overkill
+        entry.overkillKnown=(entry.overkillKnown or 0)+1
+    end
+
+    local hit={
+        targetKey=actor.key,
+        sourceGuid=sourceGuid,
+        sourceName=sourceName,
+        ability=ability,
+        amount=amount,
+        crit=crit,
+        overkill=overkill,
+        time=GetTime()
+    }
+    D.lastIncomingDamage[actor.key]=hit
+    if isSelfTarget then
+        D.lastSelfIncomingDamage=hit
+    end
+    return true
+end
+
+-- An enemy dying is often the last time we ever hear about its GUID. Drop any
+-- control / cast state bound to it so a CC whose "fades from" line never
+-- arrives (target killed while stunned) cannot block combat end.
+D.clearDeadEnemyState = function(ev,text)
+    if not text then return end
+    local _,_,guid=string.find(text,"^(0x[%x]+) dies%.$")
+    if not guid then return end
+    if D.summonActors[guid] then
+        D.summonActors[guid]=nil; D.guidToActor[guid]=nil; D.petOwner[guid]=nil
+        return
+    end
+    if D.guidToActor and D.guidToActor[guid] then return end
+    D.deadEnemies[guid]=true
+    if D.activeCC[guid] then
+        D.logLine("cc","enemy died, purging CC "..tostring(D.activeCC[guid].spell).." on "..tostring(guid))
+        D.activeCC[guid]=nil
+    end
+    if D.ccDamageByTarget then D.ccDamageByTarget[guid]=nil end
+    if D.activeEnemyCasts then D.activeEnemyCasts[guid]=nil end
+end
+
+D.captureFriendlyDeath = function(ev,text)
+    if not text or text=="" then return false end
+    if not string.find(text,"die",1,true) and not string.find(text,"dies",1,true) then return false end
+
+    local targetInfo=nil
+    local targetGuid=nil
+    local deadName=nil
+    local selfDeath=false
+    local _,_,token
+
+    if string.find(text,"^You die%.$") or string.find(text,"^You have died%.$") then
+        selfDeath=true
+        D.localPlayerDead=true
+        D.deadSyncLastReceived=0
+        D.deadSyncNextRequest=GetTime()
+        targetInfo=D.guidToActor[safeUnitGUID("player") or D.selfKey]
+    else
+        _,_,targetGuid=string.find(text,"^(0x[%x]+) dies%.$")
+        if targetGuid then
+            targetInfo=D.guidToActor[targetGuid]
+        else
+            _,_,deadName=string.find(text,"^(.-) dies%.$")
+            if deadName and deadName~="" then
+                local k,info
+                for k,info in D.guidToActor do
+                    if info and not info.isPet and info.name==deadName then targetInfo=info; break end
+                end
+            end
+        end
+    end
+
+    if not targetInfo or targetInfo.isPet then return false end
+    if D.localPlayerDead and not selfDeath
+        and (not D.inCombat or not D.startTime or D.startTime<=0) then
+        return false
+    end
+    if not D.inCombat or not D.startTime or D.startTime<=0 then if not ensureStarted() then return false end end
+    D.lastRosterCombatActivity=GetTime()
+
+    local actor=utilityActor(targetInfo)
+    if not actor then return false end
+
+    local now=GetTime()
+    local lastStamp=D.lastDeathStamp[actor.key] or 0
+    if now-lastStamp<1.0 then return true end
+    D.lastDeathStamp[actor.key]=now
+
+    local hit=D.lastIncomingDamage[actor.key]
+    -- On RavenCraft the player GUID/actor key can transiently disagree around
+    -- the death boundary. "You die." is authoritative, so fall back to the
+    -- separately captured last hit that explicitly targeted "you".
+    if selfDeath and (not hit or now-(hit.time or 0)>2.0) then
+        local selfHit=D.lastSelfIncomingDamage
+        if selfHit and now-(selfHit.time or 0)<=2.0 then hit=selfHit end
+    end
+    if hit and now-(hit.time or 0)>2.0 then hit=nil end
+
+    actor.deaths=(actor.deaths or 0)+1
+    if not actor.deathCauses then actor.deathCauses={} end
+
+    local sourceName=hit and hit.sourceName or "Unknown"
+    local ability=hit and hit.ability or "Unknown"
+    local damage=hit and (hit.amount or 0) or 0
+    local crit=hit and hit.crit or false
+    local overkill=hit and hit.overkill or nil
+    local causeName=sourceName.." - "..ability
+    local cause=actor.deathCauses[causeName]
+    if not cause then cause={count=0,damage=0,crits=0,overkill=0,overkillKnown=0}; actor.deathCauses[causeName]=cause end
+    cause.count=(cause.count or 0)+1
+    cause.damage=(cause.damage or 0)+damage
+    if crit then cause.crits=(cause.crits or 0)+1 end
+    if overkill~=nil then
+        cause.overkill=(cause.overkill or 0)+overkill
+        cause.overkillKnown=(cause.overkillKnown or 0)+1
+    end
+
+    actor.deathLast={
+        sourceName=sourceName,
+        ability=ability,
+        damage=damage,
+        crit=crit,
+        overkill=overkill,
+        time=now
+    }
+
+    -- If combat end is already pending, give this late death event time to
+    -- be committed into the same segment before snapshot/finalization.
+    if D.pendingCombatEndAt and D.pendingCombatEndAt>0 then
+        local minEnd=now+0.50
+        if not D.pendingCombatEndAt or D.pendingCombatEndAt<minEnd then D.pendingCombatEndAt=minEnd end
+    end
+
+    D.lastDeathRaw=tostring(ev).." | "..tostring(text)
+    D.lastDeathRecord=actor.name.." | "..causeName.." | "..tostring(damage).." dmg"
+    if overkill~=nil then D.lastDeathRecord=D.lastDeathRecord.." | "..tostring(overkill).." overkill" end
+    if crit then D.lastDeathRecord=D.lastDeathRecord.." | CRIT" end
+    return true
+end
+
+D.tryClaimSelfTotemSource = function(source,spell,ev)
+    if not source or not spell or ev~="CHAT_MSG_SPELL_PET_DAMAGE" then return nil end
+    if D.guidToActor[source] then return D.guidToActor[source] end
+
+    local p=D.pendingSelfTotem
+    if not p or not p.time or (GetTime()-p.time)>12 then return nil end
+
+    -- The last cast is only an ownership hint, never the source's identity.
+    -- Different elemental totems may be active at the same time.
+    local names={['Searing Bolt']='Searing Totem',['Fire Nova']='Fire Nova Totem',
+        ['Magma Totem']='Magma Totem',['Magma Totem Effect']='Magma Totem'}
+    local totemName=names[spell]
+    if not totemName then return nil end
+
+    local owner=D.guidToActor[safeUnitGUID("player") or D.selfKey]
+    if not owner then return nil end
+
+    local info={
+        key=source,
+        name=totemName,
+        guid=source,
+        ownerKey=owner.key,
+        isPet=true,
+        classToken=nil,
+        isTotem=true
+    }
+    D.guidToActor[source]=info
+    D.summonActors[source]=info
+    D.petOwner[source]=owner.key
+    -- Keep the short-lived ownership hint for other simultaneous totem GUIDs.
+    return info
+end
+
+-- Item summons do not always emit SPELL_SUMMON on the vanilla combat-text
+-- path.  The item cast is visible as a UNIT_CASTEVENT from the player, while
+-- the summoned creature later reports its own cast from a new GUID.  Keep a
+-- short ownership chain for those known pairs instead of assigning the source
+-- to the normal Hunter pet or to the last totem.
+D.itemSummonCasts = {
+    [4074]={name="Explosive Sheep",lifetime=20,petSpells={[4050]=true}},
+}
+D.itemPetSpells = {
+    [4050]={name="Explosive Sheep",summonSpell=4074},
+}
+
+function D.itemSummonSelfInfo()
+    local pg=safeUnitGUID("player") or D.selfKey
+    return pg and D.guidToActor and D.guidToActor[pg]
+end
+
+function D.itemSummonOwnerKey()
+    local owner=D.itemSummonSelfInfo()
+    return owner and (owner.key or owner.guid) or nil
+end
+
+function D.bindSelfItemSummon(source,definition)
+    if not source or not definition then return nil end
+    local owner=D.itemSummonSelfInfo(); if not owner then return nil end
+    local ownerKey=owner.key or owner.guid
+    if source==ownerKey or source==owner.guid then return nil end
+    local existing=D.guidToActor[source]
+    if existing and existing.ownerKey and existing.ownerKey~=ownerKey then return nil end
+    local info=existing or {key=source,guid=source}
+    info.name=definition.name; info.guid=source; info.key=source
+    info.ownerKey=ownerKey; info.isPet=true; info.classToken=nil
+    info.isTotem=false; info.itemSummon=true; info.itemSummonSpell=definition.summonSpell
+    D.guidToActor[source]=info; D.summonActors[source]=info; D.petOwner[source]=ownerKey
+    if D.logLine then D.logLine("pet","bound item summon "..tostring(definition.name).." "..tostring(source).." -> "..tostring(ownerKey)) end
+    return info
+end
+
+function D.observeItemSummonCast(casterGuid,targetGuid,castType,spellId)
+    local id=tonumber(spellId); if not id then return nil end
+    local now=GetTime()
+    local pg=safeUnitGUID("player") or D.selfKey
+    local ownerKey=D.itemSummonOwnerKey()
+    local summon=D.itemSummonCasts[id]
+    if summon and casterGuid==pg then
+        D.pendingItemSummons=D.pendingItemSummons or {}
+        table.insert(D.pendingItemSummons,{spellId=id,name=summon.name,time=now,ownerKey=ownerKey,
+            targetGuid=targetGuid,lifetime=summon.lifetime})
+        while table.getn(D.pendingItemSummons)>8 do table.remove(D.pendingItemSummons,1) end
+        if D.logLine then D.logLine("pet","item summon cast "..tostring(summon.name).." ("..tostring(id)..")") end
+        return true
+    end
+    local petSpell=D.itemPetSpells[id]
+    if not petSpell or not casterGuid or casterGuid==pg then return nil end
+    local list=D.pendingItemSummons or {}; local i=table.getn(list)
+    while i>=1 do
+        local pending=list[i]
+        local age=now-(pending.time or 0)
+        if age>(pending.lifetime or 20) then table.remove(list,i)
+        elseif not pending.used and pending.ownerKey==ownerKey
+            and (not pending.targetGuid or not targetGuid or pending.targetGuid==targetGuid) then
+            local definition={name=petSpell.name,summonSpell=petSpell.summonSpell}
+            local info=D.bindSelfItemSummon(casterGuid,definition)
+            if info then pending.used=true; return info end
+        end
+        i=i-1
+    end
+    return nil
+end
+
+function D.tryClaimSelfItemSource(source,spell,ev)
+    if not source or not spell or D.guidToActor[source] then return D.guidToActor[source] end
+    local lowered=string.lower(tostring(spell))
+    local petSpell
+    if string.find(lowered,"explosive sheep",1,true) then petSpell=D.itemPetSpells[4050] end
+    if not petSpell then return nil end
+    local list=D.pendingItemSummons or {}; local now=GetTime(); local i=table.getn(list)
+    while i>=1 do
+        local pending=list[i]
+        if now-(pending.time or 0)>=(pending.lifetime or 20) then table.remove(list,i)
+        elseif not pending.used and pending.ownerKey==D.itemSummonOwnerKey() then
+            local info=D.bindSelfItemSummon(source,{name=petSpell.name,summonSpell=petSpell.summonSpell})
+            if info then pending.used=true; return info end
+        end
+        i=i-1
+    end
+    return nil
+end
+
+D.applyLivePlayerAuraDiff = function(ti,current)
+    if not ti or not current then return end
+    local a=utilityActor(ti)
+    local tk=a and (a.guid or a.key) or nil
+    if not a or not tk then return end
+
+    local name,v
+    for name,v in current do
+        if not D.playerBuffScanState[name] then startAura(a.buffs,name,tk) end
+    end
+    for name,v in D.playerBuffScanState do
+        if not current[name] then
+            stopAura(a.buffs,name,tk)
+            D.activeRosterBuffs["player|"..name]=nil
+        end
+    end
+end
+local function recordUtility(kind,sourceInfo,spell,targetToken)
+    if not ensureStarted() then return false end
+    local targetInfo=targetToken and D.guidToActor[targetToken] or nil
+    local a=utilityActor(sourceInfo)
+    if a and a[kind] then addCount(a[kind],spell,1) else addCount(D.globalUtility[kind],spell,1) end
+    D.lastUtility=(a and a.name or "Global").." "..kind.." "..tostring(spell)..(targetInfo and (" -> "..targetInfo.name) or "")
+    return true
+end
+D.recordUtility=recordUtility -- exposed for CawDPSLog.lua's DPSLog-driven dispel path
+
+D.handleUnitCastAuraSource = function(casterGUID,targetGUID,eventType,spellId)
+    -- UNIT_CASTEVENT is the only reliable source for many direct, non-ticking
+    -- auras (for example Power Word: Shield). Cache the cast only; the later
+    -- RAW aura gain/afflicted message still proves that the aura actually landed.
+    if not casterGUID or not targetGUID or eventType~="CAST" or not spellId then return end
+    if not D.guidToActor or not D.guidToActor[targetGUID] then return end
+    if not SpellInfo then return end
+    local ok,spell=pcall(SpellInfo,spellId)
+    if not ok or not spell or spell=="" then return end
+
+    local sourceInfo=actorFromSourceToken(casterGUID)
+    if sourceInfo then
+        rememberAuraCast(sourceInfo,spell,targetGUID)
+        D.rememberAuraOrigin(sourceInfo.guid or sourceInfo.key or casterGUID,spell,targetGUID)
+        -- Some spells apply a secondary aura with a different name. Example:
+        -- Power Word: Shield -> Weakened Soul. The afflicted line contains no
+        -- caster, so keep the most recent roster cast for this exact target as
+        -- a short-lived causal fallback. Exact spell correlation still wins.
+        D.recentDirectRosterAuraCasts[targetGUID]={source=sourceInfo,spell=spell,time=GetTime()}
+        return
+    end
+
+    -- Hostile casts can also be the source of Debuffs Received. Keep an origin
+    -- only when the GUID can be resolved to a real enemy name; never expose a
+    -- raw GUID as tooltip text.
+    D.rememberAuraOrigin(casterGUID,spell,targetGUID)
+end
+
+D.handleUnitCastCC = function(casterGUID,targetGUID,eventType,spellId)
+    -- Keep the latest CAST visible in /cdcc. RavenCraft/SuperWoW builds can
+    -- differ in SpellInfo return shape, and this tells us exactly what this
+    -- client provides without changing the proven combat parser blindly.
+    if eventType=="CAST" then
+        D.lastCCCastEvent=tostring(casterGUID).." | "..tostring(targetGUID).." | "..tostring(eventType).." | "..tostring(spellId)
+    end
+
+    if not casterGUID or not targetGUID or not eventType or not spellId then return end
+    if eventType~="CAST" then return end
+    if not SpellInfo then
+        D.lastCCSpellInfo="SpellInfo unavailable"
+        return
+    end
+
+    local ok,s1,s2,s3,s4,s5=pcall(SpellInfo,spellId)
+    if ok then
+        D.lastCCSpellInfo=tostring(s1).." | "..tostring(s2).." | "..tostring(s3).." | "..tostring(s4).." | "..tostring(s5)
+    else
+        D.lastCCSpellInfo="ERROR: "..tostring(s1)
+        return
+    end
+
+    local spell=s1
+    if not spell or not CC_SPELLS[spell] then return end
+
+    local si=actorFromSourceToken(casterGUID)
+    if not si then return end
+
+    -- UNIT_CASTEVENT supplies the source GUID that the RAW aura line lacks.
+    -- Do not count here: the actual "is afflicted by" line proves the CC landed
+    -- and avoids counting resisted/immune/failed casts.
+    rememberAuraCast(si,spell,targetGUID)
+end
+
+D.captureCCDamageCandidate = function(ev,text)
+    if not D.inCombat or not ev or not text then return end
+    if not string.find(text," for ",1,true) then return end
+
+    local source=nil
+    local target=nil
+    local ability="Melee"
+    local namedAbility
+
+    -- Self melee/spell damage.
+    local _,_,selfTarget=string.find(text,"^You hit (0x[%x]+) for ")
+    if not selfTarget then _,_,selfTarget=string.find(text,"^You crit (0x[%x]+) for ") end
+    if not selfTarget then _,_,namedAbility,selfTarget=string.find(text,"^Your (.-) hits (0x[%x]+) for ") end
+    if not selfTarget then _,_,namedAbility,selfTarget=string.find(text,"^Your (.-) crits (0x[%x]+) for ") end
+    if selfTarget then
+        source=D.guidToActor[safeUnitGUID("player") or D.selfKey]
+        target=selfTarget
+    else
+        -- Group melee/spell damage. This is deliberately roster-only.
+        local _,_,guid,guidTarget=string.find(text,"^(0x[%x]+) hits (0x[%x]+) for ")
+        if not guid then _,_,guid,guidTarget=string.find(text,"^(0x[%x]+) crits (0x[%x]+) for ") end
+        if not guid then _,_,guid,namedAbility,guidTarget=string.find(text,"^(0x[%x]+)'s (.-) hits (0x[%x]+) for ") end
+        if not guid then _,_,guid,namedAbility,guidTarget=string.find(text,"^(0x[%x]+)'s (.-) crits (0x[%x]+) for ") end
+        if guid then
+            source=actorFromSourceToken(guid)
+            target=guidTarget
+        end
+    end
+
+    if source and target then
+        -- The successful source/target pattern already extracted the ability.
+        if namedAbility and namedAbility~="" then ability=namedAbility end
+
+        local _,_,breakAmount=string.find(text," for ([0-9]+)")
+        breakAmount=tonumber(breakAmount) or 0
+        local hit={source=source,target=target,ability=ability,amount=breakAmount,time=GetTime()}
+        D.lastCCDamage=hit
+        D.ccDamageByTarget[target]=hit
+
+        -- Bind the breaking hit to the active CC at damage time. RAW ordering
+        -- on RavenCraft is not guaranteed to leave D.activeCC intact until the
+        -- later AURA_GONE parser runs.
+        local active=D.activeCC[target]
+        if active then
+            active.breakSource=source
+            active.breakAbility=ability
+            active.breakAmount=breakAmount
+            active.breakTime=hit.time
+        end
+    end
+end
+
+D.recordInterrupt=function(sourceInfo,ability,target,interruptedSpell)
+    if not sourceInfo or not target then return false end
+    D.recentInterrupts=D.recentInterrupts or {}
+    local last=D.recentInterrupts[target]
+    if last and last.source==sourceInfo.key and last.ability==ability and GetTime()-last.time<0.50 then return true end
+    local cast=D.activeEnemyCasts[target]
+    if not recordUtility("interrupts",sourceInfo,interruptedSpell or (cast and cast.spell) or ability,target) then return false end
+    D.activeEnemyCasts[target]=nil
+    D.recentInterrupts[target]={source=sourceInfo.key,ability=ability,time=GetTime()}
+    return true
+end
+local function tryRecordInterrupt(sourceInfo,ability,target)
+    if not sourceInfo or not ability or not target or not INTERRUPT_SPELLS[ability] then return false end
+    local cast=D.activeEnemyCasts[target]
+    if not cast then return false end
+    local age=GetTime()-(cast.time or 0)
+    if age<0 or age>8 then
+        D.activeEnemyCasts[target]=nil
+        return false
+    end
+    if cast.failedAt and GetTime()-(cast.failedAt or 0)>INTERRUPT_FAIL_GRACE then
+        D.activeEnemyCasts[target]=nil
+        return false
+    end
+    local interruptedSpell=cast.spell or "Unknown Spell"
+    return D.recordInterrupt(sourceInfo,ability,target,interruptedSpell)
+end
+
+-- Damage shields (Thorns, Retribution Aura, item effects) log their retaliation as
+-- "You reflect N School damage to X." / "Y reflects N School damage to X." without
+-- naming the spell, so the school labels the entry. Enemy shields hitting the group
+-- and units outside the roster are ignored. DPSLog reports these as DAMAGE_SHIELD.
+local function parseReflect(ev,text)
+    if D.dpsLogActive then return false end
+    local _,_,amount,school,target=string.find(text,"^You reflect ([0-9]+) (.-) damage to (0x[%x]+)")
+    local a
+    if amount then
+        a=actorFromSourceToken("You")
+    else
+        local source
+        _,_,source,amount,school,target=string.find(text,"^(0x[%x]+) reflects ([0-9]+) (.-) damage to (0x[%x]+)")
+        if not amount then return false end
+        a=actorFromSourceToken(source)
+        if not a then return ignoreOutsideRoster(source) end
+    end
+    if not a or a.isTotem then return false end
+    if D.guidToActor[target] then return true end -- a shield never counts for hitting a group member
+    noteEnemyTarget(target,amount)
+    return addDamage(a.key,a.name,a.guid,a.ownerKey,a.isPet,amount,"Damage Shield ("..school..")",false,ev)
+end
+local function parseSelf(ev,text)
+    if D.dpsLogActive then return false end
+    local crit=isCritText(text); local _,_,amount; local spell
+
+    if ev=="CHAT_MSG_SPELL_SELF_BUFF" then
+        local _,_,totemName=string.find(text,"^You cast (.- Totem)%.")
+        if totemName then
+            D.pendingSelfTotem={name=totemName,time=GetTime()}
+            return false
+        end
+    end
+    if ev=="CHAT_MSG_COMBAT_SELF_HITS" then
+        local target
+        _,_,target,amount=string.find(text,"^You hit (0x[%x]+) for ([0-9]+)")
+        if not amount then _,_,target,amount=string.find(text,"^You crit (0x[%x]+) for ([0-9]+)") end
+        if not amount then _,_,amount=string.find(text," for ([0-9]+)") end
+        if amount then if target then noteEnemyTarget(target,amount) end; return addDamage(D.selfKey,UnitName("player") or "You",safeUnitGUID("player"),nil,false,amount,"Melee",crit,ev) end
+    elseif ev=="CHAT_MSG_SPELL_SELF_DAMAGE" then
+        local target
+        _,_,spell,target,amount=string.find(text,"Your (.-) hits (0x[%x]+) for ([0-9]+)")
+        if not amount then _,_,spell,target,amount=string.find(text,"Your (.-) crits (0x[%x]+) for ([0-9]+)") end
+        if amount then noteEnemyTarget(target,amount); local si=D.guidToActor[safeUnitGUID("player") or D.selfKey]; if si then rememberAuraCast(si,spell,target); tryRecordInterrupt(si,spell,target) end; return addDamage(D.selfKey,UnitName("player") or "You",safeUnitGUID("player"),nil,false,amount,spell or "Spell",crit,ev) end
+    elseif ev=="CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE" then
+        local target
+        _,_,target,amount,spell=string.find(text,"^(0x[%x]+) suffers ([0-9]+) .- damage from your (.-)%.")
+        if amount then noteEnemyTarget(target,amount); local si=D.guidToActor[safeUnitGUID("player") or D.selfKey]; if si then rememberAuraCast(si,spell,target); local a=utilityActor(si); startAura(a.debuffsCast,spell,target); D.activeAuraSources[target.."|"..spell]=a.key end; return addDamage(D.selfKey,UnitName("player") or "You",safeUnitGUID("player"),nil,false,amount,spell or "DoT",false,ev) end
+    elseif ev=="CHAT_MSG_COMBAT_PET_HITS" or ev=="CHAT_MSG_SPELL_PET_DAMAGE" then
+        local pg=safeUnitGUID("pet"); local pi=D.guidToActor[pg or "pet"]; if not pi then return false end
+        local _,_,explicitSource=string.find(text,"^(0x[%x]+)")
+        if explicitSource and explicitSource~=pg then return false end
+        local livePetName=safeUnitName("pet"); if livePetName and (not pi.name or pi.name=="Unknown" or pi.name=="UNKNOWN") then pi.name=livePetName end
+        local target
+        _,_,target,amount=string.find(text," (0x[%x]+) for ([0-9]+)")
+        if not amount then _,_,amount=string.find(text," for ([0-9]+)") end
+        if amount then
+            if target then noteEnemyTarget(target,amount) end
+            spell="Melee"; local _,_,s=string.find(text,"'s (.-) hits "); if s then spell=s end
+            local _,_,cs=string.find(text,"'s (.-) crits "); if cs then spell=cs end
+            return addDamage(pi.key,pi.name,pi.guid,pi.ownerKey,true,amount,spell,crit,ev)
+        end
+    end
+    return false
+end
+local function parseGeneric(ev,text)
+    if D.dpsLogActive then return false end
+    if string.sub(text,1,2)~="0x" then return false end
+    local crit=isCritText(text); local _,_,source,spell,amount
+    local meleeTarget
+    _,_,source,meleeTarget,amount=string.find(text,"^(0x[%x]+) hits (0x[%x]+) for ([0-9]+)")
+    if not amount then _,_,source,meleeTarget,amount=string.find(text,"^(0x[%x]+) crits (0x[%x]+) for ([0-9]+)") end
+    if amount then local a=actorFromSourceToken(source); if a then noteEnemyTarget(meleeTarget,amount); return addDamage(a.key,a.name,a.guid,a.ownerKey,a.isPet,amount,"Melee",crit,ev) end; if ignoreOutsideRoster(source) then return true end end
+    local hitTarget
+    _,_,source,spell,hitTarget,amount=string.find(text,"^(0x[%x]+)'s (.-) hits (0x[%x]+) for ([0-9]+)")
+    if not amount then _,_,source,spell,hitTarget,amount=string.find(text,"^(0x[%x]+)'s (.-) crits (0x[%x]+) for ([0-9]+)") end
+    if amount then
+        local a=actorFromSourceToken(source)
+        if not a and D.tryClaimSelfTotemSource then a=D.tryClaimSelfTotemSource(source,spell,ev) end
+        if not a and D.tryClaimSelfItemSource then a=D.tryClaimSelfItemSource(source,spell,ev) end
+        if a then
+            noteEnemyTarget(hitTarget,amount)
+            rememberAuraCast(a,spell,hitTarget)
+            tryRecordInterrupt(a,spell,hitTarget)
+            return addDamage(a.key,a.name,a.guid,a.ownerKey,a.isPet,amount,spell,crit,ev)
+        end
+        if ignoreOutsideRoster(source) then return true end
+    end
+    local target
+    _,_,target,amount,source,spell=string.find(text,"^(0x[%x]+) suffers ([0-9]+) .- damage from (0x[%x]+)'s (.-)%.")
+    if amount then local a=actorFromSourceToken(source); if a then noteEnemyTarget(target,amount); rememberAuraCast(a,spell,target); local aa=utilityActor(a); startAura(aa.debuffsCast,spell,target); D.activeAuraSources[target.."|"..spell]=aa.key; return addDamage(a.key,a.name,a.guid,a.ownerKey,a.isPet,amount,spell,false,ev) end; if ignoreOutsideRoster(source) then return true end end
+    return false
+end
+
+
+local function parseHealing(ev,text)
+    if D.dpsLogActive then return false end
+    if not string.find(text," heals ",1,true)
+        and not string.find(text," health from ",1,true) then
+        if string.find(ev,"HEAL",1,true) then captureUtilityUnknown(ev,text) end
+        return false
+    end
+    local crit=isCritText(text); local _,_,source,spell,target,amount
+
+    -- Self direct heals. Check the critical form first: the generic
+    -- "heals" pattern would otherwise capture "Spell critically" as the name.
+    _,_,spell,amount=string.find(text,"^Your (.-) critically heals .- for ([0-9]+)")
+    if not amount then _,_,spell,amount=string.find(text,"^Your (.-) heals .- for ([0-9]+)") end
+    if amount then return addHealing(D.selfKey,UnitName("player") or "You",safeUnitGUID("player"),nil,false,amount,spell,crit,ev) end
+
+    -- Generic direct heals from a player/pet GUID.
+    _,_,source,spell,target,amount=string.find(text,"^(0x[%x]+)'s (.-) critically heals (0x[%x]+) for ([0-9]+)")
+    if not amount then _,_,source,spell,target,amount=string.find(text,"^(0x[%x]+)'s (.-) heals (0x[%x]+) for ([0-9]+)") end
+    if amount then
+        local a=actorFromSourceToken(source); if a then
+            local ti=D.guidToActor[target]
+            if ti then local ta=utilityActor(ti); D.backfillAuraSource(ta and ta.buffs,spell,a.name,a.guid or a.key); D.addAuraSourceHealing(ta and ta.buffs,spell,a.name,a.guid or a.key,amount) end
+            return addHealing(a.key,a.name,a.guid,a.ownerKey,a.isPet,amount,spell,crit,ev)
+        end
+        if ignoreOutsideRoster(source) then return true end
+    end
+
+    -- HoT forms: target gains 123 health from source's Rejuvenation.
+    _,_,target,amount,source,spell=string.find(text,"^(0x[%x]+) gains ([0-9]+) health from (0x[%x]+)'s (.-)%.")
+    if amount then
+        local a=actorFromSourceToken(source); if a then
+            local ti=D.guidToActor[target]
+            if ti then local ta=utilityActor(ti); D.backfillAuraSource(ta and ta.buffs,spell,a.name,a.guid or a.key); D.addAuraSourceHealing(ta and ta.buffs,spell,a.name,a.guid or a.key,amount) end
+            return addHealing(a.key,a.name,a.guid,a.ownerKey,a.isPet,amount,spell,false,ev)
+        end
+        if ignoreOutsideRoster(source) then return true end
+    end
+
+    -- Target-local HoT form used by RavenCraft on the receiving client:
+    -- You gain 123 health from <caster GUID>'s Rejuvenation.
+    -- Healing/HPS already knows how to count the GUID-target form above; this
+    -- local-target form must also feed the recipient's Buff Uptime entry.
+    _,_,amount,source,spell=string.find(text,"^You gain ([0-9]+) health from (0x[%x]+)'s (.-)%.")
+    if amount then
+        local a=actorFromSourceToken(source)
+        if a then
+            local pi=D.guidToActor[safeUnitGUID("player") or D.selfKey]
+            local pa=utilityActor(pi)
+            D.backfillAuraSource(pa and pa.buffs,spell,a.name,a.guid or a.key)
+            D.addAuraSourceHealing(pa and pa.buffs,spell,a.name,a.guid or a.key,amount)
+            return addHealing(a.key,a.name,a.guid,a.ownerKey,a.isPet,amount,spell,false,ev)
+        end
+        if ignoreOutsideRoster(source) then return true end
+    end
+
+    -- Your HoT on anyone / yourself.  Feed the same per-source aura-healing
+    -- accumulator instead of only the general Healing/HPS totals.
+    _,_,target,amount,spell=string.find(text,"^(0x[%x]+) gains ([0-9]+) health from your (.-)%.")
+    if amount then
+        local ti=D.guidToActor[target]
+        local ta=utilityActor(ti)
+        local selfName=UnitName("player") or "You"
+        local selfGuid=safeUnitGUID("player")
+        D.backfillAuraSource(ta and ta.buffs,spell,selfName,selfGuid or D.selfKey)
+        D.addAuraSourceHealing(ta and ta.buffs,spell,selfName,selfGuid or D.selfKey,amount)
+        return addHealing(D.selfKey,selfName,selfGuid,nil,false,amount,spell,false,ev)
+    end
+    _,_,amount,spell=string.find(text,"^You gain ([0-9]+) health from your (.-)%.")
+    if amount then
+        local pi=D.guidToActor[safeUnitGUID("player") or D.selfKey]
+        local pa=utilityActor(pi)
+        local selfName=UnitName("player") or "You"
+        local selfGuid=safeUnitGUID("player")
+        D.backfillAuraSource(pa and pa.buffs,spell,selfName,selfGuid or D.selfKey)
+        D.addAuraSourceHealing(pa and pa.buffs,spell,selfName,selfGuid or D.selfKey,amount)
+        return addHealing(D.selfKey,selfName,selfGuid,nil,false,amount,spell,false,ev)
+    end
+
+    -- Some 1.12 clients phrase self-target direct heals as 'Your X heals you for N'.
+    _,_,spell,amount=string.find(text,"^Your (.-) critically heals you for ([0-9]+)")
+    if not amount then _,_,spell,amount=string.find(text,"^Your (.-) heals you for ([0-9]+)") end
+    if amount then return addHealing(D.selfKey,UnitName("player") or "You",safeUnitGUID("player"),nil,false,amount,spell,crit,ev) end
+
+    if string.find(ev,"HEAL",1,true) then captureUtilityUnknown(ev,text) end
+    return false
+end
+
+local function selfSourceInfo()
+    return D.guidToActor[safeUnitGUID("player") or D.selfKey]
+end
+
+local function selfDispelAlreadyRecorded(spell,aura)
+    local r=D.lastSelfDispelRecord
+    if not r then return false end
+    if GetTime()-(r.time or 0)>0.75 then return false end
+    return r.spell==spell and r.aura==aura
+end
+
+local function recordSelfDispel(spell,aura)
+    if not spell or not DISPEL_SPELLS[spell] then return false end
+    if selfDispelAlreadyRecorded(spell,aura) then return true end
+    local si=selfSourceInfo()
+    if not si then return false end
+    D.lastSelfDispelRecord={spell=spell,aura=aura,time=GetTime()}
+    return recordUtility("dispels",si,spell,si.guid or si.key)
+end
+
+-- Utility parser. Vanilla combat log formats vary; source-GUID formats get actor attribution,
+-- target-only aura lines are still tracked globally/at target and kept diagnosable.
+D.seedActiveRosterBuffs = function()
+    if D.scanGroupBuffs then D.scanGroupBuffs() else D.scanPlayerBuffs(false) end
+    D.scanWeaponBuffs()
+    local key,b
+    for key,b in D.activeRosterBuffs do
+        if b and b.target and b.spell then
+            local targetKey=b.target
+            local ti=nil
+            if targetKey=="player" then
+                local pg=safeUnitGUID("player")
+                ti=D.guidToActor[pg or D.selfKey]
+                if ti then targetKey=ti.guid or ti.key end
+            else
+                ti=D.guidToActor[targetKey]
+            end
+            if ti then
+                local a=utilityActor(ti)
+                if a then startAura(a.buffs,b.spell,targetKey) end
+            end
+        end
+    end
+end
+
+D.updateWeaponBuffs = function()
+    if not D.inCombat or not GetWeaponEnchantInfo then return end
+
+    -- Snapshot the current weapon cache, rebuild it for the full friendly
+    -- roster, then apply only the actual additions/removals to aura uptime.
+    local old={}
+    local key,b
+    for key,b in D.activeRosterBuffs do
+        if b and b.weaponBuff then old[key]=b end
+    end
+
+    D.scanWeaponBuffs()
+
+    for key,b in old do
+        if not D.activeRosterBuffs[key] and b and b.target and b.spell then
+            local ti=nil
+            local tk=b.target
+            if tk=="player" then
+                local pg=safeUnitGUID("player")
+                ti=D.guidToActor[pg or D.selfKey]
+                if ti then tk=ti.guid or ti.key end
+            else
+                ti=D.guidToActor[tk]
+            end
+            if ti then
+                local a=utilityActor(ti)
+                if a then stopAura(a.buffs,b.spell,tk) end
+            end
+        end
+    end
+
+    for key,b in D.activeRosterBuffs do
+        if b and b.weaponBuff and not old[key] and b.target and b.spell then
+            local ti=nil
+            local tk=b.target
+            if tk=="player" then
+                local pg=safeUnitGUID("player")
+                ti=D.guidToActor[pg or D.selfKey]
+                if ti then tk=ti.guid or ti.key end
+            else
+                ti=D.guidToActor[tk]
+            end
+            if ti then
+                local a=utilityActor(ti)
+                if a then startAura(a.buffs,b.spell,tk) end
+            end
+        end
+    end
+end
+
+
+-- Resource ticks share one shape. Keep the accepted spellings exact; the
+-- pre-combat boundary deliberately normalizes case before using this helper.
+do
+    local resourceWords={health=true,Health=true,mana=true,Mana=true,
+        rage=true,Rage=true,energy=true,Energy=true}
+    function D.isRawResourceGain(text)
+        local _,_,resource=string.find(text,"^[0-9]+ ([^ ]+) from ")
+        return resource and resourceWords[resource]
+    end
+end
+
+-- Literal guards only reject impossible matches. Custom RAW subtypes still
+-- reach every applicable pattern in the original order and keep diagnostics.
+local function parseUtility(ev,text)
+    local _,_,source,spell,target,removed
+
+    if string.find(text," begins to cast ",1,true) then
+        -- Enemy cast start, e.g. "0xF130... begins to cast Lizard Bolt."
+        _,_,target,spell=string.find(text,"^(0x[%x]+) begins to cast (.-)%.")
+        if target and spell then
+            rememberEnemyCast(target,spell)
+            return true
+        end
+    end
+
+    if string.find(text," misses ",1,true) or string.find(text," by ",1,true) then
+        -- Failed interrupt attempts do not count and leave the enemy cast active.
+        _,_,spell,target=string.find(text,"^Your (.-) misses (0x[%x]+)%.")
+        if not spell then _,_,spell,target=string.find(text,"^Your (.-) was dodged by (0x[%x]+)%.") end
+        if not spell then _,_,spell,target=string.find(text,"^Your (.-) was parried by (0x[%x]+)%.") end
+        if not spell then _,_,spell,target=string.find(text,"^Your (.-) was resisted by (0x[%x]+)%.") end
+        if not spell then _,_,spell,target=string.find(text,"^Your (.-) is resisted by (0x[%x]+)%.") end
+        if spell and target then
+            local pg=safeUnitGUID("player") or D.selfKey
+            local si=D.guidToActor[pg]
+            if D.threatOnSpellFailed then D.threatOnSpellFailed(pg,target,spell) end
+            clearRecentAuraCast(target,spell)
+            if si then return true end
+        end
+
+        _,_,source,spell,target=string.find(text,"^(0x[%x]+)'s (.-) misses (0x[%x]+)%.")
+        if not source then _,_,source,spell,target=string.find(text,"^(0x[%x]+)'s (.-) was dodged by (0x[%x]+)%.") end
+        if not source then _,_,source,spell,target=string.find(text,"^(0x[%x]+)'s (.-) was parried by (0x[%x]+)%.") end
+        if not source then _,_,source,spell,target=string.find(text,"^(0x[%x]+)'s (.-) was resisted by (0x[%x]+)%.") end
+        if not source then _,_,source,spell,target=string.find(text,"^(0x[%x]+)'s (.-) is resisted by (0x[%x]+)%.") end
+        if source and spell and target then
+            local si=actorFromSourceToken(source)
+            if si then
+                if D.threatOnSpellFailed then D.threatOnSpellFailed(source,target,spell) end
+                clearRecentAuraCast(target,spell)
+                return true
+            end
+            if ignoreOutsideRoster(source) then return true end
+        end
+    end
+
+    local hasHit=string.find(text," hits ",1,true)
+    if hasHit then
+        -- Non-damaging interrupt abilities such as Counterspell/Spell Lock can
+        -- appear as a plain hit without a numeric damage amount.
+        _,_,spell,target=string.find(text,"^Your (.-) hits (0x[%x]+)%.")
+        if spell and target then
+            local pg=safeUnitGUID("player") or D.selfKey
+            if D.threatOnSpellLanded then D.threatOnSpellLanded(pg,target,spell) end
+            if INTERRUPT_SPELLS[spell] then
+                local si=D.guidToActor[pg]
+                if si then tryRecordInterrupt(si,spell,target); return true end
+            end
+        end
+        _,_,source,spell,target=string.find(text,"^(0x[%x]+)'s (.-) hits (0x[%x]+)%.")
+        if source and spell then
+            local si=actorFromSourceToken(source)
+            if si then
+                if D.threatOnSpellLanded then D.threatOnSpellLanded(source,target,spell) end
+                if INTERRUPT_SPELLS[spell] then tryRecordInterrupt(si,spell,target); return true end
+            elseif ignoreOutsideRoster(source) then return true end
+        end
+    end
+
+    if string.find(text," interrupts ",1,true) then
+        -- Interrupts: GUID's Kick interrupts GUID's Spell.
+        _,_,source,spell,target,removed=string.find(text,"^(0x[%x]+)'s (.-) interrupts (0x[%x]+)'s (.-)%.")
+        if source then local si=actorFromSourceToken(source); if si then return D.recordInterrupt(si,spell,target,removed) end; if ignoreOutsideRoster(source) then return true end end
+        _,_,source,spell,target=string.find(text,"^(0x[%x]+)'s (.-) interrupts (0x[%x]+)%.")
+        if source then local si=actorFromSourceToken(source); if si then return D.recordInterrupt(si,spell,target) end; if ignoreOutsideRoster(source) then return true end end
+    end
+
+    -- DPSLog's SPELL_DISPEL (see CawDPSLog.lua's dpsLogReceive) fires directly
+    -- from the game's own dispel processing, self-dispels included, so it
+    -- doesn't need the two-line BREAK_AURA/cast correlation heuristic below.
+    -- Each dispel-specific branch is individually gated on D.dpsLogActive
+    -- rather than the whole block, since "You cast " here is shared with the
+    -- unrelated Feign Death check.
+    if not D.dpsLogActive and ev=="CHAT_MSG_SPELL_BREAK_AURA" and string.find(text," is removed.",1,true) then
+        -- RavenCraft self-dispel form observed live:
+        -- CHAT_MSG_SPELL_BREAK_AURA | Your Decayed Strength is removed.
+        -- followed immediately by one or more duplicate "You cast Purify." lines.
+        local removedAura
+        _,_,removedAura=string.find(text,"^Your (.-) is removed%.")
+        if removedAura then
+            local recent=D.recentSelfDispelCast
+            if recent and GetTime()-(recent.time or 0)<=1.0 and DISPEL_SPELLS[recent.spell] then
+                D.recentSelfDispelCast=nil
+                return recordSelfDispel(recent.spell,removedAura)
+            end
+            D.pendingSelfDispel={aura=removedAura,time=GetTime()}
+            return true
+        end
+    end
+
+    local isSelfCast=string.sub(text,1,9)=="You cast "
+    if isSelfCast then
+        _,_,spell=string.find(text,"^You cast (.-)%.")
+        if spell=="Feign Death" and D.threatOnFeignSuccess then D.threatOnFeignSuccess(safeUnitGUID("player") or D.selfKey); return true end
+        if not D.dpsLogActive and spell and DISPEL_SPELLS[spell] then
+            local pending=D.pendingSelfDispel
+            if pending and GetTime()-(pending.time or 0)<=1.0 then
+                D.pendingSelfDispel=nil
+                D.recentSelfDispelCast=nil
+                return recordSelfDispel(spell,pending.aura)
+            end
+            -- Keep a short reverse-order cache as some RavenCraft spell logs can
+            -- arrive before the corresponding BREAK_AURA line.
+            D.recentSelfDispelCast={spell=spell,time=GetTime()}
+            return true
+        end
+    end
+
+    if not D.dpsLogActive and (string.find(text," removes ",1,true) or string.find(text," dispels ",1,true)) then
+        -- Explicit dispel/remove forms with source.
+        _,_,source,spell,target,removed=string.find(text,"^(0x[%x]+)'s (.-) removes (.-) from (0x[%x]+)%.")
+        if source then local si=actorFromSourceToken(source); if si then return recordUtility("dispels",si,spell,target) end; if ignoreOutsideRoster(source) then return true end end
+        _,_,source,spell,target=string.find(text,"^(0x[%x]+)'s (.-) dispels (.-) from (0x[%x]+)%.")
+        if source then local si=actorFromSourceToken(source); if si then return recordUtility("dispels",si,spell,target) end; if ignoreOutsideRoster(source) then return true end end
+    end
+
+    -- Casts are cached for a few seconds. Vanilla aura-application messages often
+    -- omit the caster, so the subsequent 'is afflicted by' line is correlated
+    -- back to this source/target/spell tuple.
+    if isSelfCast then
+        _,_,spell,target=string.find(text,"^You cast (.-) on (0x[%x]+)%.")
+        if spell and target then
+            local pg=safeUnitGUID("player") or D.selfKey
+            -- RC24: RavenCraft emits this explicit RAW line after a successful
+            -- non-damaging cast (confirmed for Distracting Shot).  Use it as the
+            -- success signal for pending flat-threat abilities instead of booking
+            -- threat on UNIT_CASTEVENT alone. Miss/resist paths therefore remain
+            -- able to clear the pending cast without false threat.
+            if D.threatOnSpellLanded then D.threatOnSpellLanded(pg,target,spell) end
+            local si=D.guidToActor[pg]
+            if si then D.rememberAuraOrigin(si.guid or si.key,spell,target); rememberAuraCast(si,spell,target); return true end
+        end
+    end
+
+    if string.find(text," casts ",1,true) then
+        _,_,source,spell,target=string.find(text,"^(0x[%x]+) casts (.-) on (0x[%x]+)%.")
+        if source then
+            D.rememberAuraOrigin(source,spell,target)
+            local si=actorFromSourceToken(source)
+            if si then if D.threatOnSpellLanded then D.threatOnSpellLanded(source,target,spell) end; rememberAuraCast(si,spell,target); return true end
+            if ignoreOutsideRoster(source) then return true end
+        end
+    end
+    if hasHit then
+        _,_,source,spell,target=string.find(text,"^(0x[%x]+)'s (.-) hits (0x[%x]+)%.")
+        if source and CC_SPELLS[spell] then
+            local si=actorFromSourceToken(source)
+            if si then rememberAuraCast(si,spell,target); return true end
+            if ignoreOutsideRoster(source) then return true end
+        end
+    end
+
+    -- Helpful aura gained by a roster member. RavenCraft uses *_BUFFS (plural)
+    -- for lines such as "You gain Blessing of Might.". Only parse "gain" as a
+    -- buff when the RAW subtype itself is a buff event, so XP gain cannot leak
+    -- into Buff Uptime.
+    if ev and string.find(ev,"_BUFF",1,true) and string.find(text," gain",1,true) then
+        _,_,target,spell=string.find(text,"^(0x[%x]+) gains (.-)%.")
+        if target and spell then
+            -- Periodic heal/resource ticks can arrive on *_BUFFS events too, e.g.
+            -- "GUID gains 38 health from GUID's Renew."  They are healing/resource
+            -- combat-log lines, not aura applications.  Never seed them as Buff Uptime.
+            if D.isRawResourceGain(spell) then
+                -- This is not an aura application, but it can carry the caster
+                -- that the actual aura-gain line omitted.  Use it to backfill
+                -- the already existing Buff Uptime entry before discarding it
+                -- as a buff event. Example: "38 health from GUID's Renew".
+                local _,_,gainSource,gainSpell=string.find(spell,"^[0-9]+ [^ ]+ from (0x[%x]+)'s (.-)$")
+                if gainSource and gainSpell then
+                    local gainActor=actorFromSourceToken(gainSource)
+                    local gainTarget=D.guidToActor[target]
+                    if gainActor and gainTarget then
+                        local gainTargetActor=utilityActor(gainTarget)
+                        D.backfillAuraSource(gainTargetActor and gainTargetActor.buffs,gainSpell,gainActor.name,gainActor.guid or gainActor.key)
+                    end
+                end
+                return true
+            end
+            local ti=D.guidToActor[target]
+            if ti then
+                D.activeRosterBuffs[target.."|"..spell]={target=target,spell=spell}
+                if D.inCombat then
+                    local ta=utilityActor(ti); local origin=D.recentAuraOrigin(target,spell); local caster=recentAuraCaster(target,spell)
+                    if caster then startAura(ta.buffs,spell,target,caster.name,caster.guid or caster.key)
+                    elseif origin then startAura(ta.buffs,spell,target,origin.name,origin.key)
+                    else startAura(ta.buffs,spell,target) end
+                    D.lastUtility=ta.name.." buff "..spell
+                end
+            end
+            return true
+        end
+        _,_,spell=string.find(text,"^You gain (.-)%.")
+        if spell then
+            -- Resource gains are not buffs.
+            if D.isRawResourceGain(spell) then
+                -- Same backfill for the self-target wording: "You gain ...".
+                local _,_,gainSource,gainSpell=string.find(spell,"^[0-9]+ [^ ]+ from (0x[%x]+)'s (.-)$")
+                if gainSource and gainSpell then
+                    local gainActor=actorFromSourceToken(gainSource)
+                    local selfInfo=D.guidToActor[safeUnitGUID("player") or D.selfKey]
+                    if gainActor and selfInfo then
+                        local selfActor=utilityActor(selfInfo)
+                        D.backfillAuraSource(selfActor and selfActor.buffs,gainSpell,gainActor.name,gainActor.guid or gainActor.key)
+                    end
+                end
+                return true
+            end
+
+            -- RavenCraft stack updates arrive as separate names such as
+            -- "Zeal (2)" / "Zeal (3)". Keep one aura entry instead.
+            local _,_,baseSpell=string.find(spell,"^(.-) %([0-9]+%)$")
+            if baseSpell then spell=baseSpell end
+
+            D.activeRosterBuffs["player|"..spell]={target="player",spell=spell}
+            if D.inCombat then
+                local si=D.guidToActor[safeUnitGUID("player") or D.selfKey]
+                if si then
+                    local a=utilityActor(si); local tk=a.guid or a.key; local origin=D.recentAuraOrigin(tk,spell); local caster=recentAuraCaster(tk,spell)
+                    if caster then startAura(a.buffs,spell,tk,caster.name,caster.guid or caster.key)
+                    elseif origin then startAura(a.buffs,spell,tk,origin.name,origin.key)
+                    else startAura(a.buffs,spell,tk) end
+                    D.lastUtility=a.name.." buff "..spell
+                end
+            end
+            return true
+        end
+    end
+
+    if string.find(text," afflicted by ",1,true) then
+        -- Harmful aura applied. Always track it as Received when the target is in
+        -- our roster, and as Cast when a recent source can be correlated.
+        _,_,target,spell=string.find(text,"^(0x[%x]+) is afflicted by (.-)%.")
+        if target and spell then
+            if D.threatOnAuraLanded then D.threatOnAuraLanded(target,spell) end
+            local ti=D.guidToActor[target]
+            local si=recentAuraCaster(target,spell); local origin=D.recentAuraOrigin(target,spell)
+            -- Secondary debuffs can have a different name from the cast that caused
+            -- them (Power Word: Shield -> Weakened Soul). If exact spell matching
+            -- found nothing, accept only a very recent roster cast on this same
+            -- target. The narrow window avoids attributing unrelated raid debuffs.
+            if not si and not origin then
+                local direct=D.recentDirectRosterAuraCasts and D.recentDirectRosterAuraCasts[target] or nil
+                if direct then
+                    if GetTime()-(direct.time or 0)<=1.25 then si=direct.source
+                    else D.recentDirectRosterAuraCasts[target]=nil end
+                end
+            end
+            if ti then
+                local ta=utilityActor(ti)
+                if si then startAura(ta.debuffsReceived,spell,target,si.name,si.guid or si.key)
+                elseif origin then startAura(ta.debuffsReceived,spell,target,origin.name,origin.key)
+                else startAura(ta.debuffsReceived,spell,target) end
+            end
+            if si then
+                -- A landed hostile CC is itself enough to open the encounter.
+                -- This is especially important for Sap: RavenCraft may not put the
+                -- player into normal combat until the later breaking hit.
+                if CC_SPELLS[spell] and (not D.inCombat or D.startTime==0) then
+                    if not ensureStarted() then return false end
+                end
+                local sa=utilityActor(si); startAura(sa.debuffsCast,spell,target); D.activeAuraSources[target.."|"..spell]=sa.key
+                clearRecentAuraCast(target,spell)
+                if CC_SPELLS[spell] then
+                    addCount(sa.cc,spell,1)
+                    D.activeCC[target]={spell=spell,sourceKey=sa.key,time=GetTime()}
+                    D.logLine("cc","CC landed "..tostring(spell).." on "..tostring(target).." by "..tostring(sa.name))
+                    D.lastCCLanded=spell.." | "..target.." | "..sa.name
+                    D.lastCCSegmentOpen="inCombat="..tostring(D.inCombat).." | start="..tostring(D.startTime)
+                end
+            end
+            if not ti and not si then addCount(D.globalUtility.debuffsReceived,spell,1) end
+            D.lastUtility=(si and si.name or "Unknown").." debuff "..spell
+            return true
+        end
+        _,_,spell=string.find(text,"^You are afflicted by (.-)%.")
+        if spell then local si=D.guidToActor[safeUnitGUID("player") or D.selfKey]; if si then local a=utilityActor(si); startAura(a.debuffsReceived,spell,a.guid or a.key) end; if CC_SPELLS[spell] then addCount(D.globalUtility.cc,spell,1) end; return true end
+    end
+
+    if string.find(text," fades from ",1,true) then
+        -- Aura fades. Close both the target-side timer and the source-side Debuffs
+        -- Cast timer when we know who applied it.
+        _,_,spell,target=string.find(text,"^(.-) fades from (0x[%x]+)%.")
+        if spell and target then
+            local ti=D.guidToActor[target]
+            if ti then D.activeRosterBuffs[target.."|"..spell]=nil; local ta=utilityActor(ti); stopAura(ta.buffs,spell,target); stopAura(ta.debuffsReceived,spell,target) end
+            local sourceKey=D.activeAuraSources[target.."|"..spell]
+            if sourceKey and D.actors[sourceKey] then stopAura(D.actors[sourceKey].debuffsCast,spell,target); D.activeAuraSources[target.."|"..spell]=nil end
+            if CC_SPELLS[spell] then
+                local active=D.activeCC[target]
+                local hit=D.ccDamageByTarget[target]
+                local breakSource=nil
+                local breakAbility="Melee"
+                local breakAmount=0
+                local breakTime=0
+                if active and active.breakSource then
+                    breakSource=active.breakSource
+                    breakAbility=active.breakAbility or "Melee"
+                    breakAmount=active.breakAmount or 0
+                    breakTime=active.breakTime or 0
+                elseif hit then
+                    breakSource=hit.source
+                    breakAbility=hit.ability or "Melee"
+                    breakAmount=hit.amount or 0
+                    breakTime=hit.time or 0
+                end
+                if active and active.spell==spell and ev=="CHAT_MSG_SPELL_BREAK_AURA" and breakSource and GetTime()-breakTime<=2.00 then
+                    local breaker=utilityActor(breakSource)
+                    if breaker then
+                        addCount(breaker.ccBreaks,spell,1)
+                        if not breaker.ccBreakAbilities then breaker.ccBreakAbilities={} end
+                        local breakEntry=addCount(breaker.ccBreakAbilities,spell.." | "..breakAbility,1)
+                        breakEntry.damage=(breakEntry.damage or 0)+breakAmount
+                        D.lastUtility=breaker.name.." ccBreaks "..spell.." with "..breakAbility.." for "..tostring(breakAmount)
+                        D.lastCCBreak=breaker.name.." | "..spell.." | "..breakAbility.." | "..tostring(breakAmount).." | "..target
+                    else
+                        addCount(D.globalUtility.ccBreaks,spell,1)
+                        D.lastCCBreak="Global | "..spell.." | "..breakAbility.." | "..target
+                    end
+                end
+                D.logLine("cc","CC cleared (fade) "..tostring(spell).." on "..tostring(target))
+                D.activeCC[target]=nil
+                D.ccDamageByTarget[target]=nil
+            end
+            return true
+        end
+        _,_,spell=string.find(text,"^(.-) fades from you%.")
+        if spell then local _,_,baseSpell=string.find(spell,"^(.-) %([0-9]+%)$"); if baseSpell then spell=baseSpell end; D.activeRosterBuffs["player|"..spell]=nil; local si=D.guidToActor[safeUnitGUID("player") or D.selfKey]; if si then local a=utilityActor(si); local tk=a.guid or a.key; D.activeRosterBuffs[tk.."|"..spell]=nil; stopAura(a.buffs,spell,tk); stopAura(a.debuffsReceived,spell,tk) end; if CC_SPELLS[spell] and ev=="CHAT_MSG_SPELL_BREAK_AURA" then addCount(D.globalUtility.ccBreaks,spell,1) end; return true end
+    end
+
+    if string.find(ev,"AURA",1,true) or string.find(ev,"BUFF",1,true) or string.find(ev,"PERIODIC",1,true) or string.find(ev,"BREAK",1,true) then captureUtilityUnknown(ev,text) end
+    return false
+end
+
+-- Event names repeat for thousands of lines. Cache only their parser order,
+-- never message results or actor data; unknown extension events keep the same
+-- fallback. Cap the cache in case an extension generates dynamic event names.
+local parseRaw
+do
+local rawEventRoutes,rawEventRouteCount={},0
+local function rawEventRoute(ev)
+    local route=rawEventRoutes[ev]
+    if route then return route end
+    if string.find(ev,"HEAL",1,true) then route=1
+    elseif string.find(ev,"AURA_GONE",1,true)
+        or string.find(ev,"BREAK_AURA",1,true)
+        or string.find(ev,"_BUFF",1,true) then route=2
+    elseif string.find(ev,"COMBAT_SELF_HITS",1,true)
+        or string.find(ev,"SPELL_SELF_DAMAGE",1,true)
+        or string.find(ev,"COMBAT_PET_HITS",1,true) then route=3
+    elseif string.find(ev,"FRIENDLYPLAYER_HITS",1,true)
+        or string.find(ev,"CREATURE_VS_CREATURE_DAMAGE",1,true)
+        or string.find(ev,"PERIODIC_CREATURE_DAMAGE",1,true) then route=4
+    else route=5 end
+    if rawEventRouteCount<128 then
+        rawEventRoutes[ev]=route
+        rawEventRouteCount=rawEventRouteCount+1
+    end
+    return route
+end
+
+parseRaw=function(rawEvent,text)
+    if not D.parserEnabled() then return end
+    if not text then return end
+    if D.dpsLogRawGate and D.dpsLogRawGate(rawEvent,text) then return end
+    local ev=rawEvent or ""
+    local route=rawEventRoute(ev)
+    if string.find(ev,"DAMAGESHIELD",1,true) and parseReflect(ev,text) then return end
+
+    -- Conservative dispatch: only specialize event families whose purpose is
+    -- unambiguous. Unknown/custom RavenCraft events still use the exact proven
+    -- full parser chain at the bottom.
+    if route==1 then
+        if parseHealing(ev,text) then return end
+        if parseUtility(ev,text) then return end
+        if parseSelf(ev,text) then return end
+        if not parseGeneric(ev,text) then captureUnknown(ev,text) end
+        return
+    end
+
+    if route==2 then
+        -- RavenCraft/SuperWoW can deliver HoT/resource healing lines through
+        -- *_BUFFS events (for example: GUID gains 38 health from GUID's Rejuvenation).
+        -- Healing must get first refusal here.  parseUtility intentionally consumes
+        -- resource-gain lines so they do not become fake Buff Uptime entries; if it
+        -- runs first, the same line never reaches addHealing.
+        if parseHealing(ev,text) then return end
+        if parseUtility(ev,text) then return end
+        if parseSelf(ev,text) then return end
+        if parseGeneric(ev,text) then return end
+        captureUnknown(ev,text)
+        return
+    end
+
+    if route==3 then
+        if parseSelf(ev,text) then return end
+        if parseGeneric(ev,text) then return end
+        if not parseUtility(ev,text) then captureUnknown(ev,text) end
+        return
+    end
+
+    if route==4 then
+        if parseGeneric(ev,text) then return end
+        if parseSelf(ev,text) then return end
+        if not parseUtility(ev,text) then captureUnknown(ev,text) end
+        return
+    end
+
+    -- Exact RC18 fallback for every unknown/custom subtype.
+    if parseSelf(ev,text) then return end
+    if parseGeneric(ev,text) then return end
+    if parseHealing(ev,text) then return end
+    if string.find(text," reflect",1,true) and parseReflect(ev,text) then return end
+    if not parseUtility(ev,text) then captureUnknown(ev,text) end
+end
+
+end -- private dispatch cache scope (Vanilla limits locals per function)
+
+-- Narrow structured-input bridge; utility/death/RAW threat confirmation remain
+-- on their existing paths. Only damage and healing have one exclusive producer.
+D.parseRawReplay=parseRaw
+D.acceptStructuredAmount=function(kind,info,target,targetName,spell,amount,crit,spellId,over)
+    if not D.parserEnabled() then return false end
+    if D.localPlayerDead and not D.inCombat then return false end
+    if not info or not ensureStarted() then return false end
+    D.threatEventTarget=nil
+    if kind=="damage" then
+        if target then
+            if targetName then D.currentEnemyNames[target]=targetName end
+            noteEnemyTarget(target,amount)
+            rememberAuraCast(info,spell,target)
+            local hit={source=info,target=target,ability=spell,amount=amount,time=GetTime()}
+            D.lastCCDamage=hit; D.ccDamageByTarget[target]=hit
+            local active=D.activeCC[target]
+            if active then
+                active.breakSource=info; active.breakAbility=spell
+                active.breakAmount=amount; active.breakTime=hit.time
+            end
+        end
+        local accepted=addDamage(info.key,info.name,info.guid,info.ownerKey,info.isPet,amount,spell,crit,"DPSLog",spellId)
+        if accepted and D.recordTargetAmount then D.recordTargetAmount(D.actors[info.key],kind,target,targetName,spell,amount,crit,spellId) end
+        return accepted
+    end
+    local ti=target and D.guidToActor[target]
+    if ti then
+        local ta=utilityActor(ti)
+        D.backfillAuraSource(ta and ta.buffs,spell,info.name,info.guid or info.key)
+        D.addAuraSourceHealing(ta and ta.buffs,spell,info.name,info.guid or info.key,amount)
+    end
+    local accepted=addHealing(info.key,info.name,info.guid,info.ownerKey,info.isPet,amount,spell,crit,"DPSLog",spellId,over)
+    if accepted and D.recordTargetAmount then D.recordTargetAmount(D.actors[info.key],"healing",target,targetName,spell,amount,crit,spellId,over) end
+    return accepted
+end
+
+local function deepCopyTable(src)
+    if type(src)~="table" then return src end
+    local dst={}; local k,v
+    for k,v in src do
+        if k~="debuffs" and k~="_cawDisplayValue" then
+            if type(v)=="table" then dst[k]=deepCopyTable(v) else dst[k]=v end
+        end
+    end
+    if dst.debuffsReceived then dst.debuffs=dst.debuffsReceived end
+    return dst
+end
+
+local function mergeNumericTable(dst,src)
+    if not src then return end
+    local k,v
+    for k,v in src do
+        if k~="active" and k~="debuffs" and k~="deathLast" and k~="_cawDisplayValue" then
+            if type(v)=="number" then
+                if k=="spellId" then
+                    if not dst[k] then dst[k]=v end
+                elseif k=="maxCrit" then
+                    if v>(dst[k] or 0) then dst[k]=v end
+                else
+                    dst[k]=(dst[k] or 0)+v
+                end
+            elseif type(v)=="table" then
+                if not dst[k] then dst[k]={} end
+                mergeNumericTable(dst[k],v)
+            elseif dst[k]==nil then
+                dst[k]=v
+            end
+        end
+    end
+end
+
+local function mergeOverallActors(srcActors)
+    local key,a
+    for key,a in srcActors do
+        local dst=D.overallSegment.actors[key]
+        if not dst then
+            dst=deepCopyTable(a)
+            -- Overall auras must not carry active timers between fights.
+            local kinds={"buffs","debuffsCast","debuffsReceived"}; local i=1
+            while i<=table.getn(kinds) do
+                local tbl=dst[kinds[i]]; local spell,e
+                if tbl then for spell,e in tbl do e.active={} end end
+                i=i+1
+            end
+            D.overallSegment.actors[key]=dst
+        else
+            local preservedName=dst.name; local preservedClass=dst.classToken
+            mergeNumericTable(dst,a)
+            dst.name=a.name or preservedName
+            dst.classToken=a.classToken or preservedClass
+            dst.guid=a.guid or dst.guid
+            dst.ownerKey=a.ownerKey or dst.ownerKey
+            dst.isPet=a.isPet
+            if a.isTotem then dst.isTotem=true end
+            if a.deathLast then dst.deathLast=deepCopyTable(a.deathLast) end
+            if dst.debuffsReceived then dst.debuffs=dst.debuffsReceived end
+        end
+    end
+end
+
+local function snapshotFinishedFight()
+    local total=0; local k,a
+    for k,a in D.actors do total=total+(a.damage or 0)+(a.healing or 0)+(a.overhealing or 0)+(a.damageTaken or 0)+(a.deaths or 0) end
+    if total<=0 then D.logLine("hist","snapshotFinishedFight SKIPPED (total 0)"); return end
+    D.logLine("hist","snapshotFinishedFight '"..tostring(currentFightLabel()).."' dur="..string.format("%.2f",D.lastDuration or 0))
+    local entry={
+        enemyGuid=D.currentEnemyBestGuid,
+        enemyName=D.currentEnemyBestGuid and D.currentEnemyNames[D.currentEnemyBestGuid] or nil,
+        actors=deepCopyTable(D.actors),
+        duration=D.lastDuration or 0,
+        name=currentFightLabel(),
+        startedAt=D.fightStartedAt,
+        when=GetTime()
+    }
+    if D.targetSyncSaveFight then D.targetSyncSaveFight(entry) end
+    table.insert(D.fightHistory,1,entry)
+    while table.getn(D.fightHistory)>10 do table.remove(D.fightHistory) end
+    mergeOverallActors(D.actors)
+    D.overallSegment.duration=(D.overallSegment.duration or 0)+(D.lastDuration or 0)
+    D.overallSegment.fights=(D.overallSegment.fights or 0)+1
+    if D.targetSyncFinishFight then D.targetSyncFinishFight(entry) end
+end
+
+local function totalDamage()
+    local total=0; local k,a; local actors=getDisplayActors()
+    for k,a in actors do total=total+(a.damage or 0) end
+    return total
+end
+local function actorDisplayDamage(a)
+    if not a then return 0 end
+    local val=a.damage or 0; local actors=getDisplayActors()
+    if not a.isPet then local k,p; for k,p in actors do if p.isPet and p.ownerKey==a.key then val=val+(p.damage or 0) end end end
+    return val
+end
+local function totalHealing()
+    local total=0; local k,a; local actors=getDisplayActors()
+    for k,a in actors do total=total+(a.healing or 0) end
+    return total
+end
+local function actorDisplayHealing(a)
+    if not a then return 0 end
+    local val=a.healing or 0; local actors=getDisplayActors()
+    if not a.isPet then local k,p; for k,p in actors do if p.isPet and p.ownerKey==a.key then val=val+(p.healing or 0) end end end
+    return val
+end
+local function utilityTotal(a,kind)
+    if not a or not a[kind] then return 0 end
+    if kind=="buffs" or kind=="debuffsCast" or kind=="debuffsReceived" then return auraTableDuration(a[kind]) end
+    local t=0; local k,e; for k,e in a[kind] do t=t+(e.count or 0) end; return t
+end
+D.auraEntryCount = function(tbl)
+    if not tbl then return 0 end
+    local n=0
+    local k,v
+    for k,v in tbl do n=n+1 end
+    return n
+end
+
+local function auraAverageUptime(a,kind,duration)
+    if not a or not a[kind] then return 0 end
+    local dur=duration or getDuration(); local exposures=auraExposureCount(a[kind]); if dur<=0 or exposures<=0 then return 0 end
+    local pct=(auraTableDuration(a[kind])/(dur*exposures))*100
+    if pct<0 then pct=0 end
+    if pct>100 then pct=100 end
+    return pct
+end
+do
+    -- Display-only caches: never copied into combat snapshots or saved data.
+    -- Validate actual values on every read, including late sync corrections.
+    -- Weak actor-map keys let discarded encounters and their caches expire.
+    local caches=setmetatable({}, {__mode="k"})
+    -- Server Threat rows carry the percentage of the pull threshold (110% melee,
+    -- 130% ranged), so a ranged player can hold more raw threat than the tank
+    -- while showing less than 100%. Like TWThreat, order those rows by percentage.
+    local function order(x,y)
+        local kx,ky=x.sortKey or x.value,y.sortKey or y.value
+        if kx==ky then
+            if x.value~=y.value then return x.value>y.value end
+            return tostring(x.actor.key)<tostring(y.actor.key)
+        end
+        return kx>ky
+    end
+    function D.meterSortedRows(actors,mode)
+        local modes=caches[actors]
+        if not modes then modes={}; caches[actors]=modes end
+        local c=modes[mode]
+        if not c then
+            c={rows={},actorList={},byActor={},pets={},petGross={},revision=0,pass=0}
+            modes[mode]=c
+        end
+        c.pass=c.pass+1
+        local changed=false; local petTotals=c.pets
+        clearTable(petTotals); clearTable(c.petGross)
+        local k,a
+        if mode=="damage" or mode=="healing" or mode=="overhealing" then
+            for k,a in actors do
+                if a.isPet and a.ownerKey then
+                    petTotals[a.ownerKey]=(petTotals[a.ownerKey] or 0)+(a[mode] or 0)
+                    if mode=="overhealing" then c.petGross[a.ownerKey]=(c.petGross[a.ownerKey] or 0)+(a.overhealTotal or 0) end
+                end
+            end
+        end
+        for k,a in actors do
+            if not a.isPet or mode=="threat" then
+                local val
+                if mode=="damage" or mode=="healing" or mode=="overhealing" then val=(a[mode] or 0)+(petTotals[a.key] or 0)
+                elseif mode=="threat" then val=D.threatValueForActor and D.threatValueForActor(a) or 0
+                elseif mode=="damageTaken" or mode=="deaths" then val=a[mode] or 0
+                elseif mode=="buffs" or mode=="debuffsCast" or mode=="debuffsReceived" then val=D.auraEntryCount(a[mode])
+                else val=utilityTotal(a,mode) end
+                if val>0 then
+                    local gross=mode=="overhealing" and ((a.overhealTotal or 0)+(c.petGross[a.key] or 0)) or nil
+                    local sortKey=nil
+                    if mode=="threat" and a._serverThreatValue then sortKey=tonumber(a._serverThreatPercent) or 0 end
+                    local row=c.byActor[a]
+                    if not row then row={actor=a}; c.byActor[a]=row; changed=true end
+                    if row.value~=val or row.name~=a.name or row.classToken~=a.classToken or row.sortKey~=sortKey
+                        or row.key~=a.key or row.isPet~=a.isPet or row.isTotem~=a.isTotem or row.overhealTotal~=gross then changed=true end
+                    row.overhealTotal=gross; row.sortKey=sortKey
+                    row.value=val; row.name=a.name; row.classToken=a.classToken
+                    row.key=a.key; row.isPet=a.isPet; row.isTotem=a.isTotem; row.pass=c.pass
+                end
+            end
+        end
+        for a,k in c.byActor do
+            if k.pass~=c.pass then c.byActor[a]=nil; changed=true end
+        end
+        if changed then
+            local n=0
+            for a,k in c.byActor do n=n+1; c.rows[n]=k end
+            for k=table.getn(c.rows),n+1,-1 do c.rows[k]=nil end
+            table.sort(c.rows,order)
+            for k=1,n do c.actorList[k]=c.rows[k].actor end
+            for k=table.getn(c.actorList),n+1,-1 do c.actorList[k]=nil end
+            c.revision=c.revision+1
+        end
+        return c.rows,table.getn(c.rows),c
+    end
+    function D.meterRowsUnchanged(f,c,duration,offset,mode,periodic,pinned)
+        if not c then f.cawRowsState=nil; return false end
+        local s=f.cawRowsState
+        if not s then s={}; f.cawRowsState=s end
+        local same=periodic and mode~="threat" and s.cache==c and s.revision==c.revision
+            and s.duration==duration and s.offset==offset and s.pinned==pinned
+            and s.width==f:GetWidth() and s.height==f:GetHeight()
+        s.cache=c; s.revision=c.revision; s.duration=duration; s.offset=offset; s.pinned=pinned
+        s.width=f:GetWidth(); s.height=f:GetHeight()
+        return same
+    end
+end
+local function sortedActors()
+    local rows,n,c=D.meterSortedRows(getDisplayActors(),D.mode)
+    -- Preserve the primary meter/report API without sharing mutable display
+    -- values across modes. Extra windows consume their own row.value instead.
+    local i
+    for i=1,n do rows[i].actor._cawDisplayValue=rows[i].value end
+    return c.actorList,n,c
+end
+
+-- "Always show me": when the window cannot show the local player's bar, the last
+-- row is replaced by it and keeps the player's real rank. A bar already in view
+-- stays in place, so no player appears twice. The scroll range grows by one step
+-- so the actor covered by the pinned row can still be reached.
+function D.uiIsSelf(a)
+    if not a or a.isPet then return false end
+    local pg=safeUnitGUID("player")
+    if pg and (a.guid==pg or a.key==pg) then return true end
+    if a.key==D.selfKey then return true end
+    local pn=safeUnitName("player")
+    return pn~=nil and a.name==pn
+end
+-- Returns the local player's rank when the pinned row can apply, otherwise nil.
+-- list holds actors (main window) or rows with an .actor field (extra windows).
+function D.uiPinState(list,count,visible,settings,isRows)
+    if not settings or not settings.alwaysShowMe or visible<2 or count<=visible then return nil end
+    local i=1
+    while i<=count do
+        local a=list[i]; if isRows then a=a and a.actor end
+        if D.uiIsSelf(a) then return i end
+        i=i+1
+    end
+    return nil
+end
+function D.uiMaxOffset(count,visible,selfRank)
+    local m=count-visible; if m<0 then m=0 end
+    if selfRank and selfRank<=count-visible then m=m+1 end
+    return m
+end
+-- Server Threat bars show the server percentage (full at 100%), matching the
+-- percentage ordering; every other row scales against the top value.
+function D.uiBarFill(mode,a,value,top)
+    if mode=="threat" and a and a._serverThreatValue then
+        local pct=tonumber(a._serverThreatPercent) or 0
+        if pct>100 then pct=100 end
+        return pct,100
+    end
+    return value,top
+end
+function D.uiRowIndex(r,offset,visible,selfRank)
+    if selfRank and r==visible and (selfRank<offset+1 or selfRank>offset+visible) then return selfRank end
+    return offset+r
+end
+local function sortedTable(tbl,field)
+    local list={}; local n=0; if not tbl then return list,0 end; local name,s
+    for name,s in tbl do local value=s[field or "count"] or 0; if field=="duration" then value=auraEntryDuration(s) end; n=n+1; list[n]={name=name,value=value,count=s.count or 0,hits=s.hits or 0,crits=s.crits or 0,damage=s.damage or 0,critDamage=s.critDamage or 0,maxCrit=s.maxCrit or 0,overkill=s.overkill or 0,overkillKnown=s.overkillKnown or 0,targetCount=auraTargetCount(s),sourceText=D.auraSourceText(s),sourceCount=D.auraSourceCount(s),sourceHealing=s.sourceHealing,sourceDamage=s.sourceDamage} end
+    table.sort(list,function(x,y) return x.value>y.value end); return list,n
+end
+local function sortedSpells(a)
+    local list={}; local n=0; if not a then return list,0 end; local name,s
+    for name,s in a.spells do n=n+1; list[n]={name=name,damage=s.damage,hits=s.hits,crits=s.crits,value=s.damage} end
+    table.sort(list,function(x,y) return x.damage>y.damage end); return list,n
+end
+local function sortedHeals(a)
+    local list={}; local n=0; if not a then return list,0 end; local name,h
+    for name,h in a.healSpells do n=n+1; list[n]={name=name,healing=h.healing,hits=h.hits,crits=h.crits,value=h.healing} end
+    table.sort(list,function(x,y) return x.healing>y.healing end); return list,n
+end
+local function classColor(a)
+    if a and a.classToken and CLASS_COLORS[a.classToken] then return CLASS_COLORS[a.classToken][1],CLASS_COLORS[a.classToken][2],CLASS_COLORS[a.classToken][3] end
+    return 0.45,0.45,0.45
+end
+
+local MODE_LABELS={damage="Damage / DPS",healing="Healing / HPS",overhealing="Overheal",threat="Threat",damageTaken="Damage Taken",deaths="Deaths",interrupts="Interrupts",cc="Crowd Control",ccBreaks="CC Breaks",dispels="Dispels",buffs="Buff Uptime",debuffsCast="Debuffs Cast",debuffsReceived="Debuffs Received"}
+
+-- UI -----------------------------------------------------------------------
+local frame=CreateFrame("Frame","CawDPSMeterWindow",UIParent); D.window=frame
+frame:SetWidth(360); frame:SetHeight(178); frame:EnableMouse(true)
+-- Do not call SetClampedToScreen on this custom 1.12 client.
+-- Native frame-clamping has caused ACCESS_VIOLATION crashes while dragging on some builds;
+-- Caw clamps manually after the drag instead.
+-- The window must be movable/resizable before any drag handler can ever run.
+-- Do this during base-frame creation; applyWindowLock later only toggles it.
+if frame.SetMovable then frame:SetMovable(true) end
+if frame.SetResizable then frame:SetResizable(true) end
+frame:SetPoint("CENTER",UIParent,"CENTER",260,0)
+D.layoutRestored=false
+
+-- Keep account-wide and per-character layout copies for custom-client reliability.
+-- Some 1.12/custom clients are inconsistent about one SavedVariables scope, so
+-- either copy can restore the window. Restore is deliberately delayed until
+-- PLAYER_ENTERING_WORLD, when UIParent has its final dimensions/scale.
+local function layoutIsValid(t)
+    if not t then return false end
+    if t.layoutSaved and t.width and t.height then
+        if (t.layoutVersion and t.layoutVersion>=4 and t.centerX ~= nil and t.centerY ~= nil)
+            or (t.left ~= nil and t.top ~= nil) or (t.point and t.x ~= nil and t.y ~= nil) then return true end
+    end
+    -- Accept pre-v1.13 settings as a migration source as well.
+    if t.width and t.height and ((t.left ~= nil and t.top ~= nil) or (t.point and t.x ~= nil and t.y ~= nil)) then return true end
+    return false
+end
+
+local function copyLayout(src,dst)
+    if not src or not dst then return end
+    dst.width=src.width; dst.height=src.height
+    dst.point=src.point; dst.relativePoint=src.relativePoint
+    dst.x=src.x; dst.y=src.y
+    dst.left=src.left; dst.top=src.top
+    dst.centerX=src.centerX; dst.centerY=src.centerY
+    dst.locked=src.locked and true or false
+    dst.layoutVersion=4; dst.layoutSaved=true
+end
+
+local function resetWindowPosition()
+    frame:ClearAllPoints()
+    frame:SetPoint("CENTER",UIParent,"CENTER",260,0)
+    if frame:GetWidth()<160 or frame:GetWidth()>900 then frame:SetWidth(440) end
+    if frame:GetHeight()<70 or frame:GetHeight()>900 then frame:SetHeight(260) end
+end
+
+local function ensureWindowOnScreen()
+    if D.uiClamp then return D.uiClamp(frame) end
+    -- Manual clamp using the ACTUAL rendered edges of UIParent and the meter.
+    -- Do NOT use SetClampedToScreen on this custom 1.12 client: native clamping
+    -- has caused ACCESS_VIOLATION crashes while dragging.
+    --
+    -- Important: do not derive the right/top screen edge from GetWidth()/GetHeight().
+    -- On some 1.12/custom-client UI-scale combinations those values do not line up
+    -- exactly with the coordinate space returned by GetLeft/GetRight/GetTop/GetBottom.
+    -- That was the reason right/top appeared to rubber-band much earlier than
+    -- left/bottom. Compare edge coordinates directly instead.
+    if not UIParent then return false end
+    local pl=UIParent:GetLeft(); local pr=UIParent:GetRight()
+    local pb=UIParent:GetBottom(); local pt=UIParent:GetTop()
+    local l=frame:GetLeft(); local r=frame:GetRight()
+    local b=frame:GetBottom(); local t=frame:GetTop()
+    if not pl or not pr or not pb or not pt or not l or not r or not b or not t then return false end
+
+    -- Small visual tolerance keeps the one-pixel border flush with the screen edge
+    -- without allowing the meter to be meaningfully lost off-screen.
+    local edgeBleed=8
+    local dx=0
+    local dy=0
+
+    if l < pl-edgeBleed then
+        dx=(pl-edgeBleed)-l
+    elseif r > pr+edgeBleed then
+        dx=(pr+edgeBleed)-r
+    end
+
+    if b < pb-edgeBleed then
+        dy=(pb-edgeBleed)-b
+    elseif t > pt+edgeBleed then
+        dy=(pt+edgeBleed)-t
+    end
+
+    if dx==0 and dy==0 then return false end
+
+    -- Move by the required correction delta instead of reconstructing the frame
+    -- position from width/height. This preserves the exact dragged position and
+    -- avoids scale-dependent right/top snapping.
+    local cx,cy=frame:GetCenter()
+    local ux,uy=UIParent:GetCenter()
+    if not cx or not cy or not ux or not uy then return false end
+    frame:ClearAllPoints()
+    frame:SetPoint("CENTER",UIParent,"CENTER",(cx-ux)+dx,(cy-uy)+dy)
+    return true
+end
+
+local function restoreWindowState()
+    initializeSavedVariables()
+    -- Clamp the restored frame at its saved scale, not the initial 100% size.
+    -- Otherwise a valid small window near an edge is pushed inward on reload.
+    if D.uiSettings then frame:SetScale(D.uiSettings().scale) end
+    local src=nil
+    -- The meter layout is shared. Prefer the account-wide copy so a stale
+    -- per-character layout from another client/older build cannot reset or
+    -- override the position that was just saved on the other character.
+    if layoutIsValid(DB) then src=DB elseif layoutIsValid(CharDB) then src=CharDB end
+    if src then
+        if src.width and src.width>=160 and src.width<=900 then frame:SetWidth(src.width) end
+        if src.height and src.height>=70 and src.height<=900 then frame:SetHeight(src.height) end
+        frame:ClearAllPoints()
+        -- Layout v4 stores only a CENTER offset.  This avoids restoring absolute
+        -- GetLeft/GetTop coordinates across UI-scale/resolution changes, which
+        -- could make the custom 1.12 client decide the frame was off-screen and
+        -- snap it back to Caw's default position.
+        if src.layoutVersion and src.layoutVersion>=4 and src.centerX ~= nil and src.centerY ~= nil then
+            if D.uiAnchorCenter then D.uiAnchorCenter(frame,src.centerX,src.centerY) else frame:SetPoint("CENTER",UIParent,"CENTER",src.centerX,src.centerY) end
+        elseif src.point and src.x ~= nil and src.y ~= nil then
+            frame:SetPoint(src.point,UIParent,src.relativePoint or src.point,src.x,src.y)
+        elseif src.left ~= nil and src.top ~= nil then
+            frame:SetPoint("TOPLEFT",UIParent,"BOTTOMLEFT",src.left,src.top)
+        else
+            frame:SetPoint("CENTER",UIParent,"CENTER",260,0)
+        end
+        D.locked=src.locked and true or false
+        copyLayout(src,DB); copyLayout(src,CharDB)
+    else
+        frame:ClearAllPoints(); frame:SetPoint("CENTER",UIParent,"CENTER",260,0)
+        frame:SetWidth(360); frame:SetHeight(178)
+    end
+    ensureWindowOnScreen()
+    D.layoutRestored=true
+    if D.uiSetMeterShown then D.uiSetMeterShown(frame,not DB.windowHidden) end
+end
+
+if frame.SetMinResize then pcall(frame.SetMinResize,frame,160,70) end
+if frame.SetMaxResize then pcall(frame.SetMaxResize,frame,900,900) end
+
+local function writeWindowState(dst)
+    if not dst then return end
+    local w=frame:GetWidth(); local h=frame:GetHeight()
+    if w and w>0 then dst.width=w end
+    if h and h>0 then dst.height=h end
+    local point,relativeTo,relativePoint,x,y=frame:GetPoint()
+    if point then
+        dst.point=point; dst.relativePoint=relativePoint or point; dst.x=x or 0; dst.y=y or 0
+    end
+    local left=frame:GetLeft(); local top=frame:GetTop()
+    if left ~= nil then dst.left=left end
+    if top ~= nil then dst.top=top end
+    -- Persist a resolution/UI-scale-stable center offset as the authoritative
+    -- position for new saves. GetCenter is read only after movement has stopped.
+    local cx,cy=frame:GetCenter()
+    local ux,uy=nil,nil
+    if UIParent and UIParent.GetCenter then ux,uy=UIParent:GetCenter() end
+    if cx and cy and ux and uy then
+        dst.centerX=cx-ux
+        dst.centerY=cy-uy
+    end
+    if D.uiCenterOffset then dst.centerX,dst.centerY=D.uiCenterOffset(frame) end
+    dst.locked=D.locked and true or false
+    if frame.cawDockFree then dst.centerX=frame.cawDockFree.x; dst.centerY=frame.cawDockFree.y end
+    dst.mode=D.mode
+    dst.segment=(D.segment=="overall") and "overall" or "current"
+    dst.segmentIndex=0
+    dst.layoutVersion=4
+    dst.layoutSaved=true
+    dst.appearance=D.uiCopySettings and D.uiCopySettings(D.uiSettings()) or nil
+    dst.windowHidden=frame.cawManuallyHidden and true or false
+end
+
+local function saveWindowState()
+    initializeSavedVariables()
+    if not D.layoutRestored or not D.multiWindowsRestored or D.restoringMultiWindows then return end
+    -- Re-bind to the globals immediately before every write. This is deliberate:
+    -- if a custom client swapped the SavedVariables table during loading, we
+    -- always write into the exact table WoW will serialize on logout.
+    DB = CawDPSMeterDB
+    CharDB = CawDPSMeterCharDB
+    writeWindowState(DB)
+    writeWindowState(CharDB)
+    DB.pfDockMain=CharDB.pfDockMain
+    DB.pfDockAlternate=CharDB.pfDockAlternate
+    DB.pfDockRevision=CharDB.pfDockRevision
+    DB.bagLayerAlwaysBehind=CharDB.bagLayerAlwaysBehind
+    DB.closedWindows=copyWindowValue(CharDB.closedWindows)
+end
+
+frame:RegisterForDrag("LeftButton")
+frame:SetScript("OnDragStart",function() if not D.locked and not this.cawDockFree then this:StartMoving() end end)
+frame:SetScript("OnDragStop",function()
+    this:StopMovingOrSizing()
+    ensureWindowOnScreen()
+    saveWindowState()
+end)
+
+-- Clean pfUI/ElvUI-inspired shell: square corners, very dark panels and
+-- restrained one-pixel separators instead of Blizzard's ornate borders.
+local FLAT_TEX="Interface\\Buttons\\WHITE8X8"
+local function flatPanel(f,r,g,b,a,border)
+    f:SetBackdrop({bgFile=FLAT_TEX,edgeFile=FLAT_TEX,edgeSize=1,insets={left=1,right=1,top=1,bottom=1}})
+    f:SetBackdropColor(r or 0.035,g or 0.035,b or 0.035,a or 0.96)
+    local br=border or 0.20
+    f:SetBackdropBorderColor(br,br,br,1)
+end
+flatPanel(frame,0.025,0.025,0.025,0.98,0.18)
+
+-- Top title bar, based on the approved Caw mockup.
+local header=frame:CreateTexture(nil,"ARTWORK"); header:SetTexture(FLAT_TEX); header:SetVertexColor(0.035,0.035,0.035,1); header:SetPoint("TOPLEFT",frame,"TOPLEFT",1,-1); header:SetPoint("TOPRIGHT",frame,"TOPRIGHT",-1,-1); header:SetHeight(26)
+local headerLine=frame:CreateTexture(nil,"ARTWORK"); headerLine:SetTexture(FLAT_TEX); headerLine:SetVertexColor(0.18,0.18,0.18,1); headerLine:SetPoint("TOPLEFT",frame,"TOPLEFT",1,-27); headerLine:SetPoint("TOPRIGHT",frame,"TOPRIGHT",-1,-27); headerLine:SetHeight(1)
+-- Branded header artwork: the attack-claw and stylized CAW DPS METER wordmark
+-- are baked into one transparent texture so the header stays compact and crisp.
+local brand=frame:CreateTexture(nil,"ARTWORK"); brand:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\CawBrand.tga"); brand:SetWidth(168); brand:SetHeight(21); brand:SetPoint("TOPLEFT",frame,"TOPLEFT",6,-3)
+
+-- Second toolbar: mode selector left, clearly labelled total right.
+local toolbar=frame:CreateTexture(nil,"ARTWORK"); toolbar:SetTexture(FLAT_TEX); toolbar:SetVertexColor(0.065,0.065,0.065,1); toolbar:SetPoint("TOPLEFT",frame,"TOPLEFT",1,-28); toolbar:SetPoint("TOPRIGHT",frame,"TOPRIGHT",-1,-28); toolbar:SetHeight(22)
+local toolbarLine=frame:CreateTexture(nil,"ARTWORK"); toolbarLine:SetTexture(FLAT_TEX); toolbarLine:SetVertexColor(0.18,0.18,0.18,1); toolbarLine:SetPoint("TOPLEFT",frame,"TOPLEFT",1,-50); toolbarLine:SetPoint("TOPRIGHT",frame,"TOPRIGHT",-1,-50); toolbarLine:SetHeight(1)
+local summary=frame:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); summary:SetPoint("RIGHT",frame,"TOPRIGHT",-8,-39); summary:SetJustifyH("RIGHT"); summary:SetTextColor(0.90,0.90,0.90)
+
+local updateUI
+local segmentMenu=nil
+local segmentText=nil
+local segmentButton=nil
+local segmentMenuButtons={}
+local SEGMENT_MENU_VISIBLE=6
+local segmentMenuOffset=0
+local segmentItems={}
+local segmentItemCount=0
+
+local function shortFightName(name)
+    if not name or name=="" then return "Unknown Enemy" end
+    if string.len(name)<=14 then return name end
+
+    -- Prefer the common addon style: abbreviate earlier words and keep the
+    -- final creature name readable, e.g. "Thunderhawk Hatchling" -> "T. Hatchling".
+    local _,_,prefix,last=string.find(name,"^(.*) ([^ ]+)$")
+    if prefix and last then
+        local initials=string.sub(prefix,1,1).."."
+        local pos=1
+        while true do
+            local s=string.find(prefix," ",pos,true)
+            if not s then break end
+            if s<string.len(prefix) then
+                initials=initials.." "..string.sub(prefix,s+1,s+1).."."
+            end
+            pos=s+1
+        end
+        local compact=initials.." "..last
+        if string.len(compact)<=16 then return compact end
+
+        -- If the final word itself is unusually long, keep the initials and
+        -- trim only the tail rather than chopping the whole name arbitrarily.
+        local room=16-string.len(initials)-1
+        if room>=4 then return initials.." "..string.sub(last,1,room-2)..".." end
+    end
+
+    -- Single very long word fallback.
+    return string.sub(name,1,14)..".."
+end
+
+function D.historyLabel(h,index,compact)
+    local name=h and h.name or "Unknown Enemy"
+    if compact then name=shortFightName(name) end
+    if h and type(h.startedAt)=="number" and type(date)=="function" then
+        if h.labelStartedAt~=h.startedAt then
+            h.startLabel=date("%H:%M:%S",math.floor(h.startedAt))
+            h.labelStartedAt=h.startedAt
+        end
+        return h.startLabel.." - "..name
+    end
+    -- Older/incomplete records have no trustworthy wall-clock start.
+    return (index and (tostring(index)..". ") or "")..name
+end
+
+local function selectedSegmentLabel()
+    if D.mode=="threat" and D.segment=="current" and D.serverThreatTargetName then return shortFightName(D.serverThreatTargetName()) end
+    if D.segment=="overall" then return "Overall" end
+    if D.segment=="history" then
+        local h=D.fightHistory[D.segmentIndex or 1]
+        if h then return D.historyLabel(h,nil,true) end
+        return "Previous Fight"
+    end
+    local name=currentFightLabel()
+    if name=="Current" then return "Current" end
+    return shortFightName(name)
+end
+
+local function selectSegment(kind,index)
+    D.segment=kind
+    D.segmentIndex=index or 0
+    D.scrollOffset=0
+    initializeSavedVariables()
+    DB=CawDPSMeterDB
+    CharDB=CawDPSMeterCharDB
+    -- Fight history is not persisted across reloads, so only Current/Overall
+    -- are meaningful persistent selections for the primary window.
+    local persistSegment=(kind=="overall") and "overall" or "current"
+    if DB then DB.segment=persistSegment; DB.segmentIndex=0 end
+    if CharDB then CharDB.segment=persistSegment; CharDB.segmentIndex=0 end
+    if segmentMenu then segmentMenu:Hide() end
+    if updateUI then updateUI() end
+end
+
+local function buildSegmentItems()
+    segmentItems={}
+    segmentItemCount=0
+    segmentItemCount=segmentItemCount+1
+    segmentItems[segmentItemCount]={kind="current",label=(currentFightLabel()=="Current" and "Current" or ("Current - "..shortFightName(currentFightLabel())))}
+    local i=1
+    while i<=table.getn(D.fightHistory) and i<=10 do
+        local h=D.fightHistory[i]
+        segmentItemCount=segmentItemCount+1
+        segmentItems[segmentItemCount]={kind="history",index=i,label=D.historyLabel(h,i,true),fullLabel=D.historyLabel(h,i)}
+        i=i+1
+    end
+    segmentItemCount=segmentItemCount+1
+    segmentItems[segmentItemCount]={kind="overall",label="Overall ("..tostring(D.overallSegment.fights or 0)..")"}
+end
+
+local function clampSegmentOffset()
+    local maxOffset=segmentItemCount-SEGMENT_MENU_VISIBLE
+    if maxOffset<0 then maxOffset=0 end
+    if segmentMenuOffset<0 then segmentMenuOffset=0 end
+    if segmentMenuOffset>maxOffset then segmentMenuOffset=maxOffset end
+end
+
+local refreshSegmentMenu
+
+segmentButton=CreateFrame("Button",nil,frame)
+segmentButton:SetWidth(118); segmentButton:SetHeight(17); segmentButton:SetPoint("LEFT",frame,"TOPLEFT",145,-39)
+flatPanel(segmentButton,0.065,0.065,0.065,1,0.25)
+segmentButton:SetBackdropColor(0.08,0.08,0.08,1)
+segmentText=segmentButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall")
+segmentText:SetPoint("LEFT",segmentButton,"LEFT",6,0); segmentText:SetWidth(94); segmentText:SetJustifyH("LEFT"); segmentText:SetText("Current")
+local segmentArrow=segmentButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall")
+segmentArrow:SetPoint("RIGHT",segmentButton,"RIGHT",-6,0); segmentArrow:SetText("v")
+
+segmentMenu=CreateFrame("Frame",nil,frame)
+segmentMenu:SetWidth(178); segmentMenu:SetHeight((SEGMENT_MENU_VISIBLE*20)+30)
+segmentMenu:SetPoint("TOPLEFT",segmentButton,"BOTTOMLEFT",0,-1)
+flatPanel(segmentMenu,0.035,0.035,0.045,0.98,0.28)
+segmentMenu.cawDropdown=true; segmentMenu:SetFrameStrata("DIALOG"); segmentMenu:SetFrameLevel(60)
+segmentMenu:EnableMouseWheel(true)
+segmentMenu:Hide()
+
+local segUp=CreateFrame("Button",nil,segmentMenu)
+segUp:SetWidth(22); segUp:SetHeight(18); segUp:SetPoint("TOPRIGHT",segmentMenu,"TOPRIGHT",-4,-4)
+local segUpText=segUp:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); segUpText:SetPoint("CENTER",segUp,"CENTER",0,0); segUpText:SetText("^")
+
+local segDown=CreateFrame("Button",nil,segmentMenu)
+segDown:SetWidth(22); segDown:SetHeight(18); segDown:SetPoint("BOTTOMRIGHT",segmentMenu,"BOTTOMRIGHT",-4,4)
+local segDownText=segDown:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); segDownText:SetPoint("CENTER",segDown,"CENTER",0,0); segDownText:SetText("v")
+segmentMenu.buttons=segmentMenuButtons; segmentMenu.up=segUp; segmentMenu.down=segDown
+
+refreshSegmentMenu=function()
+    buildSegmentItems()
+    clampSegmentOffset()
+    local i=1
+    while i<=SEGMENT_MENU_VISIBLE do
+        local b=segmentMenuButtons[i]
+        local item=segmentItems[segmentMenuOffset+i]
+        if b and item then
+            b.kind=item.kind
+            b.historyIndex=item.index
+            b.cawSegmentFullLabel=item.fullLabel or item.label
+            b.text:SetText(item.label)
+            local active=(D.segment==item.kind and (item.kind~="history" or D.segmentIndex==item.index))
+            if active then
+                b.bg:SetVertexColor(0.34,0.24,0.08,0.95)
+                b.text:SetTextColor(1.00,0.82,0.35)
+            else
+                b.bg:SetVertexColor(0.12,0.12,0.12,0)
+                b.text:SetTextColor(0.92,0.92,0.92)
+            end
+            b:Show()
+        elseif b then
+            b.kind=nil
+            b.historyIndex=nil
+            b:Hide()
+        end
+        i=i+1
+    end
+    if segmentMenuOffset>0 then segUp:Enable(); segUpText:SetTextColor(1,1,1) else segUp:Disable(); segUpText:SetTextColor(0.4,0.4,0.4) end
+    if segmentMenuOffset+SEGMENT_MENU_VISIBLE<segmentItemCount then segDown:Enable(); segDownText:SetTextColor(1,1,1) else segDown:Disable(); segDownText:SetTextColor(0.4,0.4,0.4) end
+    if D.layoutSegmentMenu and D.mainView then D.layoutSegmentMenu(D.mainView) end
+end
+
+local si=1
+while si<=SEGMENT_MENU_VISIBLE do
+    local b=CreateFrame("Button",nil,segmentMenu)
+    b:SetHeight(20)
+    b:SetPoint("TOPLEFT",segmentMenu,"TOPLEFT",4,-4-((si-1)*20))
+    b:SetPoint("RIGHT",segmentMenu,"RIGHT",-30,0)
+    b.bg=b:CreateTexture(nil,"BACKGROUND"); b.bg:SetTexture(FLAT_TEX); b.bg:SetAllPoints(b); b.bg:SetVertexColor(0.12,0.12,0.12,0)
+    b.text=b:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); b.text:SetPoint("LEFT",b,"LEFT",6,0); b.text:SetPoint("RIGHT",b,"RIGHT",-4,0); b.text:SetJustifyH("LEFT")
+    b:SetScript("OnClick",function() if this.kind then selectSegment(this.kind,this.historyIndex) end end)
+    b:SetScript("OnEnter",function() this.bg:SetVertexColor(0.22,0.22,0.22,0.95) end)
+    b:SetScript("OnLeave",function()
+        local active=(D.segment==this.kind and (this.kind~="history" or D.segmentIndex==this.historyIndex))
+        if active then this.bg:SetVertexColor(0.34,0.24,0.08,0.95) else this.bg:SetVertexColor(0.12,0.12,0.12,0) end
+    end)
+    segmentMenuButtons[si]=b
+    si=si+1
+end
+
+local function scrollSegmentMenu(delta)
+    buildSegmentItems()
+    if delta>0 then segmentMenuOffset=segmentMenuOffset-1 else segmentMenuOffset=segmentMenuOffset+1 end
+    clampSegmentOffset()
+    refreshSegmentMenu()
+end
+
+segmentMenu:SetScript("OnMouseWheel",function() scrollSegmentMenu(arg1 or 0) end)
+segUp:SetScript("OnClick",function() scrollSegmentMenu(1) end)
+segDown:SetScript("OnClick",function() scrollSegmentMenu(-1) end)
+
+segmentButton:SetScript("OnClick",function()
+    if segmentMenu:IsShown() then
+        segmentMenu:Hide()
+    else
+        buildSegmentItems()
+        if D.segment=="history" and D.segmentIndex and D.segmentIndex>0 then
+            segmentMenuOffset=D.segmentIndex-2
+        elseif D.segment=="overall" then
+            segmentMenuOffset=segmentItemCount-SEGMENT_MENU_VISIBLE
+        else
+            segmentMenuOffset=0
+        end
+        clampSegmentOffset()
+        refreshSegmentMenu()
+        segmentMenu:Show()
+    end
+end)
+segmentButton:SetScript("OnEnter",function() segmentButton:SetBackdropColor(0.14,0.14,0.14,1) end)
+segmentButton:SetScript("OnLeave",function() segmentButton:SetBackdropColor(0.08,0.08,0.08,1) end)
+
+-- MODE_LABELS is declared once above the UI section.
+local MODE_ORDER={"damage","healing","overhealing","threat","damageTaken","deaths","interrupts","cc","ccBreaks","dispels","buffs","debuffsCast","debuffsReceived"}
+local modeMenu
+
+local modeButton=CreateFrame("Button",nil,frame)
+modeButton:SetWidth(132); modeButton:SetHeight(17); modeButton:SetPoint("TOPLEFT",frame,"TOPLEFT",7,-31)
+flatPanel(modeButton,0.065,0.065,0.065,1,0.25)
+modeButton:SetBackdropColor(0.08,0.08,0.08,1)
+local modeText=modeButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); modeText:SetPoint("LEFT",modeButton,"LEFT",7,0); modeText:SetJustifyH("LEFT")
+-- Always render a valid initial selection even before PLAYER_ENTERING_WORLD/updateUI.
+modeText:SetText(MODE_LABELS[D.mode] or "Damage / DPS")
+local modeArrow=modeButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); modeArrow:SetPoint("RIGHT",modeButton,"RIGHT",-6,0); modeArrow:SetText("v")
+
+modeMenu=CreateFrame("Frame",nil,frame)
+-- Keep the mode selector compact. Only a subset of entries is shown at once;
+-- the rest can be reached with the mouse wheel or the arrow buttons.
+local MODE_MENU_VISIBLE=6
+local modeMenuOffset=0
+local modeMenuButtons={}
+modeMenu:SetWidth(152); modeMenu:SetHeight((MODE_MENU_VISIBLE*20)+30); modeMenu:SetPoint("TOPLEFT",modeButton,"BOTTOMLEFT",0,-1)
+flatPanel(modeMenu,0.025,0.025,0.025,0.99,0.25)
+modeMenu:SetBackdropColor(0.025,0.025,0.025,0.99)
+if modeMenu.SetFrameStrata then modeMenu.cawDropdown=true; modeMenu:SetFrameStrata("DIALOG"); modeMenu:SetFrameLevel(60) end
+if modeMenu.EnableMouseWheel then modeMenu:EnableMouseWheel(true) end
+modeMenu:Hide()
+
+local function setMode(mode)
+    D.mode=mode
+    D.scrollOffset=0
+    initializeSavedVariables()
+    DB=CawDPSMeterDB
+    CharDB=CawDPSMeterCharDB
+    if DB then DB.mode=mode end
+    if CharDB then CharDB.mode=mode end
+    if modeMenu then modeMenu:Hide() end
+    if updateUI then updateUI() end
+end
+
+local function clampModeMenuOffset()
+    local maxOffset=table.getn(MODE_ORDER)-MODE_MENU_VISIBLE
+    if maxOffset<0 then maxOffset=0 end
+    if modeMenuOffset<0 then modeMenuOffset=0 end
+    if modeMenuOffset>maxOffset then modeMenuOffset=maxOffset end
+end
+
+local function refreshModeMenu()
+    clampModeMenuOffset()
+    local i=1
+    while i<=MODE_MENU_VISIBLE do
+        local b=modeMenuButtons[i]
+        local idx=modeMenuOffset+i
+        local m=MODE_ORDER[idx]
+        if m then
+            b.mode=m
+            b.text:SetText(MODE_LABELS[m] or m)
+            if m==D.mode then
+                b.hi:SetVertexColor(0.34,0.24,0.08,0.95)
+                b.text:SetTextColor(1.00,0.82,0.35)
+            else
+                b.hi:SetVertexColor(0.24,0.24,0.24,0)
+                b.text:SetTextColor(0.92,0.92,0.92)
+            end
+            b:Show()
+        else
+            b.mode=nil
+            b:Hide()
+        end
+        i=i+1
+    end
+    if D.uiStyleMeterMenu and D.mainView then D.uiStyleMeterMenu(D.mainView,modeMenu,"mode") end
+end
+
+local function scrollModeMenu(delta)
+    if not delta or delta==0 then return end
+    if delta>0 then modeMenuOffset=modeMenuOffset-1 else modeMenuOffset=modeMenuOffset+1 end
+    refreshModeMenu()
+end
+
+local modeUp=CreateFrame("Button",nil,modeMenu)
+modeUp:SetWidth(144); modeUp:SetHeight(13); modeUp:SetPoint("TOPLEFT",modeMenu,"TOPLEFT",4,-3)
+local modeUpHi=modeUp:CreateTexture(nil,"BACKGROUND"); modeUpHi:SetAllPoints(modeUp); modeUpHi:SetTexture(FLAT_TEX); modeUpHi:SetVertexColor(0.24,0.24,0.24,0)
+local modeUpText=modeUp:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); modeUpText:SetPoint("CENTER",modeUp,"CENTER",0,0); modeUpText:SetText("^")
+modeUp:SetScript("OnClick",function() scrollModeMenu(1) end)
+modeUp:SetScript("OnEnter",function() modeUpHi:SetVertexColor(0.24,0.24,0.24,0.85) end)
+modeUp:SetScript("OnLeave",function() modeUpHi:SetVertexColor(0.24,0.24,0.24,0) end)
+
+local mi=1
+while mi<=MODE_MENU_VISIBLE do
+    local b=CreateFrame("Button",nil,modeMenu)
+    b:SetWidth(144); b:SetHeight(19); b:SetPoint("TOPLEFT",modeMenu,"TOPLEFT",4,-16-((mi-1)*20))
+    local hi=b:CreateTexture(nil,"BACKGROUND"); hi:SetAllPoints(b); hi:SetTexture(FLAT_TEX); hi:SetVertexColor(0.24,0.24,0.24,0)
+    local fs=b:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); fs:SetPoint("LEFT",b,"LEFT",6,0)
+    b.hi=hi; b.text=fs
+    b:SetScript("OnClick",function() if this.mode then setMode(this.mode) end end)
+    b:SetScript("OnEnter",function() this.hi:SetVertexColor(0.24,0.24,0.24,0.85) end)
+    b:SetScript("OnLeave",function()
+        if this.mode==D.mode then
+            this.hi:SetVertexColor(0.34,0.24,0.08,0.95)
+            this.text:SetTextColor(1.00,0.82,0.35)
+        else
+            this.hi:SetVertexColor(0.24,0.24,0.24,0)
+            this.text:SetTextColor(0.92,0.92,0.92)
+        end
+    end)
+    modeMenuButtons[mi]=b
+    mi=mi+1
+end
+
+local modeDown=CreateFrame("Button",nil,modeMenu)
+modeMenu.buttons=modeMenuButtons; modeMenu.up=modeUp; modeMenu.down=modeDown
+modeDown:SetWidth(144); modeDown:SetHeight(13); modeDown:SetPoint("BOTTOMLEFT",modeMenu,"BOTTOMLEFT",4,3)
+local modeDownHi=modeDown:CreateTexture(nil,"BACKGROUND"); modeDownHi:SetAllPoints(modeDown); modeDownHi:SetTexture(FLAT_TEX); modeDownHi:SetVertexColor(0.24,0.24,0.24,0)
+local modeDownText=modeDown:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); modeDownText:SetPoint("CENTER",modeDown,"CENTER",0,0); modeDownText:SetText("v")
+modeDown:SetScript("OnClick",function() scrollModeMenu(-1) end)
+modeDown:SetScript("OnEnter",function() modeDownHi:SetVertexColor(0.24,0.24,0.24,0.85) end)
+modeDown:SetScript("OnLeave",function() modeDownHi:SetVertexColor(0.24,0.24,0.24,0) end)
+
+modeMenu:SetScript("OnMouseWheel",function() scrollModeMenu(arg1) end)
+modeButton:SetScript("OnClick",function()
+    if modeMenu:IsVisible() then
+        modeMenu:Hide()
+    else
+        -- Open around the current selection where possible, so the active mode
+        -- is visible even when it is near the bottom of the list.
+        local currentIndex=1
+        local i=1
+        while i<=table.getn(MODE_ORDER) do
+            if MODE_ORDER[i]==D.mode then currentIndex=i; break end
+            i=i+1
+        end
+        if currentIndex>MODE_MENU_VISIBLE then modeMenuOffset=currentIndex-MODE_MENU_VISIBLE else modeMenuOffset=0 end
+        refreshModeMenu()
+        modeMenu:Show()
+    end
+end)
+modeButton:SetScript("OnEnter",function() modeButton:SetBackdropColor(0.14,0.14,0.14,1) end)
+modeButton:SetScript("OnLeave",function() modeButton:SetBackdropColor(0.08,0.08,0.08,1) end)
+
+-- Explicit text buttons: much clearer than the former single-letter controls.
+local resetButton=CreateFrame("Button",nil,frame)
+resetButton:SetWidth(56); resetButton:SetHeight(17); resetButton:SetPoint("TOPRIGHT",frame,"TOPRIGHT",-25,-5)
+flatPanel(resetButton,0.065,0.065,0.065,1,0.25)
+resetButton:SetBackdropColor(0.08,0.08,0.08,1)
+local resetText=resetButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); resetText:SetPoint("CENTER",resetButton,"CENTER",0,0); resetText:SetText("")
+resetButton.icon=resetButton:CreateTexture(nil,"ARTWORK"); resetButton.icon:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\CawReset.tga"); resetButton.icon:SetWidth(12); resetButton.icon:SetHeight(12); resetButton.icon:SetPoint("CENTER",resetButton,"CENTER",0,0)
+resetButton:SetScript("OnClick",function() if D.uiConfirmReset then D.uiConfirmReset() end end)
+resetButton:SetScript("OnEnter",function()
+    this:SetBackdropColor(0.15,0.15,0.15,1)
+    local tt=D.getControlTooltip(); if tt then tt:SetOwner(this,"ANCHOR_TOP"); tt:SetText("Reset meter data",1,1,1); tt:Show() end
+end)
+resetButton:SetScript("OnLeave",function() this:SetBackdropColor(0.08,0.08,0.08,1); if D.controlTooltip then D.controlTooltip:Hide() end end)
+
+local closeButton=CreateFrame("Button",nil,frame)
+closeButton:SetWidth(17); closeButton:SetHeight(17); closeButton:SetPoint("TOPRIGHT",frame,"TOPRIGHT",-5,-5)
+flatPanel(closeButton,0.065,0.065,0.065,1,0.25)
+closeButton:SetBackdropColor(0.08,0.08,0.08,1)
+local closeText=closeButton:CreateFontString(nil,"OVERLAY","GameFontHighlight"); closeText:SetPoint("CENTER",closeButton,"CENTER",0,0); closeText:SetText("")
+closeButton.icon=closeButton:CreateTexture(nil,"ARTWORK"); closeButton.icon:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\CawClose.tga"); closeButton.icon:SetWidth(12); closeButton.icon:SetHeight(12); closeButton.icon:SetPoint("CENTER",closeButton,"CENTER",0,0)
+closeButton:SetScript("OnClick",function() if D.uiSetMeterShown then D.uiSetMeterShown(frame,false) else frame:Hide() end end)
+closeButton:SetScript("OnEnter",function() this:SetBackdropColor(0.28,0.08,0.08,1); local tt=D.getControlTooltip(); if tt then tt:SetOwner(this,"ANCHOR_TOP"); tt:SetText("Close window",1,1,1); tt:Show() end end)
+closeButton:SetScript("OnLeave",function() this:SetBackdropColor(0.08,0.08,0.08,1); if D.controlTooltip then D.controlTooltip:Hide() end end)
+
+local sizeGrip
+local lockButton=CreateFrame("Button",nil,frame)
+lockButton:SetWidth(56); lockButton:SetHeight(17); lockButton:SetPoint("RIGHT",resetButton,"LEFT",-4,0)
+flatPanel(lockButton,0.065,0.065,0.065,1,0.25)
+local lockText=lockButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); lockText:SetPoint("CENTER",lockButton,"CENTER",0,0); lockText:SetText("")
+lockButton.icon=lockButton:CreateTexture(nil,"ARTWORK"); lockButton.icon:SetWidth(12); lockButton.icon:SetHeight(12); lockButton.icon:SetPoint("CENTER",lockButton,"CENTER",0,0)
+local function applyWindowLock()
+    -- UI construction happens before ADDON_LOADED. Never dereference DB here
+    -- until SavedVariables have actually been initialized.
+    if D.savedVariablesReady and DB then DB.locked=D.locked and true or false end
+    if D.savedVariablesReady and CharDB then CharDB.locked=D.locked and true or false end
+    if frame.SetMovable then frame:SetMovable(not D.locked) end
+    if frame.SetResizable then frame:SetResizable(not D.locked) end
+    if sizeGrip then
+        if D.locked then
+            sizeGrip:Hide()
+        else
+            sizeGrip:Show()
+            if sizeGrip.SetAlpha then sizeGrip:SetAlpha(0.92) end
+        end
+    end
+    if D.locked then
+        lockText:SetText(""); if lockButton.icon then lockButton.icon:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\CawLock.tga") end; lockButton:SetBackdropColor(0.22,0.15,0.05,1)
+    else
+        lockText:SetText(""); if lockButton.icon then lockButton.icon:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\CawUnlock.tga") end; lockButton:SetBackdropColor(0.08,0.08,0.08,1)
+    end
+end
+lockButton:SetScript("OnClick",function() D.locked=not D.locked; saveWindowState(); applyWindowLock(); if D.applyCompactWindowLayout then D.applyCompactWindowLayout() end end)
+D.mainLockButton=lockButton
+lockButton:SetScript("OnEnter",function()
+    local tt=D.getControlTooltip()
+    if tt then
+        tt:SetOwner(this,"ANCHOR_TOP")
+        if D.locked then tt:SetText("Unlock position and size",1,1,1)
+        else tt:SetText("Lock position and size",1,1,1) end
+        tt:Show()
+    end
+end)
+lockButton:SetScript("OnLeave",function() if D.controlTooltip then D.controlTooltip:Hide() end end)
+
+function D.buildReportUI()
+    D.reportButton=CreateFrame("Button",nil,frame)
+    D.reportButton:SetWidth(56)
+    D.reportButton:SetHeight(17)
+    D.reportButton:SetPoint("RIGHT",lockButton,"LEFT",-4,0)
+    flatPanel(D.reportButton,0.065,0.065,0.065,1,0.25)
+    D.reportButton:SetBackdropColor(0.08,0.08,0.08,1)
+
+    D.reportText=D.reportButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall")
+    D.reportText:SetPoint("CENTER",D.reportButton,"CENTER",0,0)
+    D.reportText:SetText("Report")
+    D.reportIcon=D.reportButton:CreateTexture(nil,"ARTWORK")
+    D.reportIcon:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\CawReport.tga")
+    D.reportIcon:SetWidth(12); D.reportIcon:SetHeight(12); D.reportIcon:SetPoint("CENTER",D.reportButton,"CENTER",0,0); D.reportIcon:Hide()
+
+    D.reportMenu=CreateFrame("Frame",nil,frame)
+    D.reportMenu:SetWidth(96)
+    D.reportMenu:SetHeight(106)
+    D.reportMenu:SetPoint("TOPRIGHT",D.reportButton,"BOTTOMRIGHT",0,-2)
+    flatPanel(D.reportMenu,0.025,0.025,0.025,0.99,0.25)
+    D.reportMenu:SetBackdropColor(0.025,0.025,0.025,0.99)
+    if D.reportMenu.SetFrameStrata then D.reportMenu.cawDropdown=true; D.reportMenu:SetFrameStrata("DIALOG"); D.reportMenu:SetFrameLevel(60) end
+    D.reportMenu:Hide()
+
+    local channels={
+        {label="Say",channel="SAY"},
+        {label="Party",channel="PARTY"},
+        {label="Raid",channel="RAID"},
+        {label="Guild",channel="GUILD"},
+        {label="Whisper...",channel="WHISPER"}
+    }
+    local i=1
+    while i<=table.getn(channels) do
+        local info=channels[i]
+        local b=CreateFrame("Button",nil,D.reportMenu)
+        b:SetWidth(88)
+        b:SetHeight(18)
+        b:SetPoint("TOPLEFT",D.reportMenu,"TOPLEFT",4,-4-((i-1)*20))
+        local hi=b:CreateTexture(nil,"BACKGROUND")
+        hi:SetAllPoints(b)
+        hi:SetTexture(FLAT_TEX)
+        hi:SetVertexColor(0.24,0.24,0.24,0)
+        local fs=b:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall")
+        fs:SetPoint("LEFT",b,"LEFT",7,0)
+        fs:SetText(info.label)
+        b.channel=info.channel
+        b.hi=hi; b.text=fs
+        D.reportMenu.buttons=D.reportMenu.buttons or {}; D.reportMenu.buttons[i]=b
+        b:SetScript("OnClick",function()
+            D.reportMenu:Hide()
+            if this.channel=="WHISPER" then D.openWhisperReport(nil) else D.sendReport(this.channel) end
+        end)
+        b:SetScript("OnEnter",function()
+            this.hi:SetVertexColor(0.24,0.24,0.24,0.85)
+        end)
+        b:SetScript("OnLeave",function()
+            this.hi:SetVertexColor(0.24,0.24,0.24,0)
+        end)
+        i=i+1
+    end
+
+    D.reportButton:SetScript("OnClick",function()
+        if D.reportMenu:IsShown() then
+            D.reportMenu:Hide()
+        else
+            if modeMenu then modeMenu:Hide() end
+            if segmentMenu then segmentMenu:Hide() end
+            D.reportMenu:Show()
+        end
+    end)
+    D.reportButton:SetScript("OnEnter",function()
+        D.reportButton:SetBackdropColor(0.14,0.14,0.14,1)
+        local tt=D.getControlTooltip(); if tt then tt:SetOwner(this,"ANCHOR_TOP"); tt:SetText("Report this view",1,1,1); tt:Show() end
+    end)
+    D.reportButton:SetScript("OnLeave",function()
+        D.reportButton:SetBackdropColor(0.08,0.08,0.08,1)
+        if D.controlTooltip then D.controlTooltip:Hide() end
+    end)
+end
+
+D.buildReportUI()
+
+-- Main and additional windows share the same compact single-row header.
+function D.applyCompactWindowLayout()
+    D.mainView=D.mainView or {id=1,frame=frame,brand=brand,header=header,headerLine=headerLine,toolbar=toolbar,toolbarLine=toolbarLine,
+        summary=summary,modeButton=modeButton,modeMenu=modeMenu,modeText=modeText,modeArrow=modeArrow,segmentButton=segmentButton,segmentMenu=segmentMenu,segmentText=segmentText,segmentArrow=segmentArrow,
+        closeButton=closeButton,resetButton=resetButton,lockButton=lockButton,reportButton=D.reportButton,reportMenu=D.reportMenu,addButton=D.multiAddButton}
+    D.layoutMeterHeader(D.mainView)
+    if D.uiStyleView then D.uiStyleView(D.mainView) end
+    D.reportText:SetText(""); resetText:SetText("")
+    if D.reportIcon then D.reportIcon:Show() end
+    if lockButton.icon then lockButton.icon:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\"..(D.locked and "CawLock.tga" or "CawUnlock.tga")) end
+end
+
+-- Short labels leave room for the controls in narrower windows. The dropdown
+-- menus still show the normal full labels when opened.
+function D.compactModeLabel()
+    if D.mode=="damage" then return "DPS" end
+    if D.mode=="healing" then return "HPS" end
+    if D.mode=="overhealing" then return "Overheal" end
+    if D.mode=="threat" then return "Threat" end
+    if D.mode=="damageTaken" then return "Taken" end
+    if D.mode=="deaths" then return "Deaths" end
+    if D.mode=="interrupts" then return "Int" end
+    if D.mode=="cc" then return "CC" end
+    if D.mode=="ccBreaks" then return "CC Brk" end
+    if D.mode=="dispels" then return "Disp" end
+    if D.mode=="buffs" then return "Buffs" end
+    if D.mode=="debuffsCast" then return "D.Cast" end
+    if D.mode=="debuffsReceived" then return "D.Recv" end
+    return MODE_LABELS[D.mode] or D.mode
+end
+
+function D.compactSegmentLabel()
+    if D.segment=="overall" then return "All" end
+    if D.segment=="history" then return "#"..tostring(D.segmentIndex or 1) end
+    return "Cur"
+end
+
+function D.refreshSelectorLabels()
+    local w=frame:GetWidth() or 440
+    if w<360 then
+        modeText:SetText(D.compactModeLabel())
+        if segmentText then segmentText:SetText(selectedSegmentLabel()) end
+    else
+        modeText:SetText(MODE_LABELS[D.mode] or D.mode)
+        if segmentText then segmentText:SetText(selectedSegmentLabel()) end
+    end
+end
+
+sizeGrip=CreateFrame("Button",nil,frame)
+-- Classic Details-style resize marker: three visible diagonal slashes.
+-- The hit area remains larger than the artwork so resizing is easy.
+sizeGrip:SetWidth(24); sizeGrip:SetHeight(24); sizeGrip:SetPoint("BOTTOMRIGHT",frame,"BOTTOMRIGHT",-1,1)
+
+local gripSlash1=sizeGrip:CreateFontString(nil,"OVERLAY","GameFontNormalSmall")
+gripSlash1:SetText("/")
+gripSlash1:SetPoint("BOTTOMRIGHT",sizeGrip,"BOTTOMRIGHT",-3,1)
+gripSlash1:SetTextColor(0.72,0.72,0.72,1)
+
+local gripSlash2=sizeGrip:CreateFontString(nil,"OVERLAY","GameFontNormalSmall")
+gripSlash2:SetText("/")
+gripSlash2:SetPoint("BOTTOMRIGHT",sizeGrip,"BOTTOMRIGHT",-7,1)
+gripSlash2:SetTextColor(0.72,0.72,0.72,1)
+
+local gripSlash3=sizeGrip:CreateFontString(nil,"OVERLAY","GameFontNormalSmall")
+gripSlash3:SetText("/")
+gripSlash3:SetPoint("BOTTOMRIGHT",sizeGrip,"BOTTOMRIGHT",-11,1)
+gripSlash3:SetTextColor(0.72,0.72,0.72,1)
+
+sizeGrip.gripSlash1=gripSlash1
+sizeGrip.gripSlash2=gripSlash2
+sizeGrip.gripSlash3=gripSlash3
+local function setGripSlashColor(r,g,b,a)
+    if sizeGrip.gripSlash1 then sizeGrip.gripSlash1:SetTextColor(r,g,b,a) end
+    if sizeGrip.gripSlash2 then sizeGrip.gripSlash2:SetTextColor(r,g,b,a) end
+    if sizeGrip.gripSlash3 then sizeGrip.gripSlash3:SetTextColor(r,g,b,a) end
+end
+sizeGrip:RegisterForDrag("LeftButton")
+sizeGrip:SetScript("OnDragStart",function() if not D.locked and frame.StartSizing then frame:StartSizing("BOTTOMRIGHT") end end)
+sizeGrip:SetScript("OnDragStop",function()
+    frame:StopMovingOrSizing()
+    ensureWindowOnScreen()
+    saveWindowState()
+    if D.applyCompactWindowLayout then D.applyCompactWindowLayout() end
+    if updateUI then updateUI() end
+end)
+sizeGrip:SetScript("OnEnter",function()
+    setGripSlashColor(1.00,0.82,0.35,1)
+    if not D.locked and this.SetAlpha then this:SetAlpha(1) end
+    local tt=D.getControlTooltip()
+    if tt then
+        tt:SetOwner(this,"ANCHOR_TOP")
+        if D.locked then tt:SetText("Window is locked - click Unlock to resize",1,1,1)
+        else tt:SetText("Drag this corner to resize",1,1,1) end
+        tt:Show()
+    end
+end)
+sizeGrip:SetScript("OnLeave",function()
+    setGripSlashColor(0.72,0.72,0.72,1)
+    if this.SetAlpha then this:SetAlpha(0.92) end
+    if D.controlTooltip then D.controlTooltip:Hide() end
+end)
+applyWindowLock()
+
+D.fillThreatTooltip=function(tt,a)
+    if not tt or not a then return end
+    if a._serverThreatValue then
+        tt:AddDoubleLine("Server threat",comma(math.floor(a._serverThreatValue+0.5)),1,0.82,0,1,1,1)
+        tt:AddLine("Target: "..tostring(a._serverTarget),0.8,0.8,0.8)
+        tt:AddLine("Provisional target context: API has no target ID",0.85,0.75,0.45)
+        tt:AddLine("Percent uses server aggro thresholds",0.8,0.8,0.8)
+        if a.guid and D.threatPeerStatus then local status=D.threatPeerStatus(a); tt:AddDoubleLine("Caw Sync",status,0.8,0.8,0.8,1,1,1) end
+        if a._serverLocalValue then tt:AddDoubleLine("Local estimate",comma(math.floor(a._serverLocalValue+0.5)),0.8,0.8,0.8,1,1,1) end
+        return
+    end
+    tt:AddLine("Source: local estimate",0.85,0.75,0.45)
+    local tv=D.threatValueForActor and D.threatValueForActor(a) or 0
+    local refThreat=D.threatReferenceForDisplay and D.threatReferenceForDisplay() or (D.threatTopForDisplay and D.threatTopForDisplay() or 0)
+    local pct=D.threatPercentForActor and D.threatPercentForActor(a) or 0
+    tt:AddDoubleLine("Threat",comma(math.floor(tv+0.5)).." | "..string.format("%.1f%%",pct),1,0.82,0,1,1,1)
+    if D.segment=="current" and not a.isPet and D.threatPeerStatus then
+        local state,data,version=D.threatPeerStatus(a)
+        local labels={localState="Local client",detected="Detected",stale="Last response expired",["not-detected"]="Not detected (no current response)"}
+        tt:AddDoubleLine("Caw Sync",state=="local" and labels.localState or (labels[state] or state),0.82,0.82,0.82,1,1,1)
+        if version then tt:AddDoubleLine("Caw model",version,0.72,0.72,0.72,1,1,1) end
+        if a.classToken=="DRUID" then
+            local _,_,knowledge=D.threatDruidModifiers(a)
+            local texts={ ["feral-instinct-current"]="Feral Instinct received; other rules may be incomplete",["feral-instinct-unavailable"]="Feral Instinct supported; no current value",unsupported="No supported talent sync",unknown="Talents unknown; local estimate",["local-api"]="Own talent API" }
+            tt:AddLine(texts[data] or "Talent data unavailable",0.85,0.75,0.45)
+            if knowledge=="form-unknown" then tt:AddLine("Current form unavailable",0.85,0.75,0.45) end
+        elseif state~="local" then
+            local profile=D.talentProfileFor and D.talentProfileFor(a)
+            tt:AddLine(profile and profile.available and "Talent ranks received; threat rules incomplete" or "No current talent layout received",0.85,0.75,0.45)
+        end
+    end
+    local holder=D.threatAggroHolderGUID and D.threatAggroHolderGUID()
+    tt:AddLine(holder and "Aggro reference: current holder = 100%" or "Reference: highest displayed threat = 100%",0.72,0.72,0.72)
+    if D.segment=="current" then tt:AddLine("Pull threshold: 110% melee / 130% ranged",0.72,0.72,0.72) end
+    local tg=D.threatDisplayTargetGUID and D.threatDisplayTargetGUID() or nil
+    if tg then
+        local base=a.threatBase and (a.threatBase[tg] or 0) or 0
+        local mod=a.threatModifier and (a.threatModifier[tg] or 0) or 0
+        local special=a.threatSpecial and (a.threatSpecial[tg] or 0) or 0
+        tt:AddLine(" ")
+        tt:AddLine("Calculation",1,0.82,0)
+        tt:AddDoubleLine("Base threat",comma(math.floor(base+0.5)),0.82,0.82,0.82,1,1,1)
+        if math.abs(mod)>0.05 then tt:AddDoubleLine("Modifiers",(mod>=0 and "+" or "")..comma(math.floor(mod+0.5)),0.82,0.82,0.82,1,1,1) end
+        if math.abs(special)>0.05 then tt:AddDoubleLine("Special threat",(special>=0 and "+" or "")..comma(math.floor(special+0.5)),0.82,0.82,0.82,1,1,1) end
+    end
+    if a.threatAbilities and tg then
+        local ab=a.threatAbilities[tg]
+        if ab then
+            local al={}; local an=0; local ak,av
+            for ak,av in ab do an=an+1; al[an]={name=ak,value=av} end
+            table.sort(al,function(x,y) return x.value>y.value end)
+            if an>0 then tt:AddLine(" "); tt:AddLine("Threat sources",1,0.82,0) end
+            local ai=1
+            while ai<=an and ai<=10 do tt:AddDoubleLine(al[ai].name,comma(math.floor(al[ai].value+0.5)),1,1,1,0.86,0.86,0.86); ai=ai+1 end
+            if an>10 then tt:AddLine("+"..tostring(an-10).." more",0.7,0.7,0.7) end
+        end
+    end
+end
+
+D.rows={}
+local MAX_ROWS=20
+local ROW_HEIGHT=23
+local ROW_STEP=26
+local LIST_TOP=29
+local i=1
+while i<=MAX_ROWS do
+    local rowFrame=CreateFrame("Frame",nil,frame); rowFrame:SetHeight(ROW_HEIGHT); rowFrame:SetPoint("TOPLEFT",frame,"TOPLEFT",6,-LIST_TOP-((i-1)*ROW_STEP)); rowFrame:SetPoint("TOPRIGHT",frame,"TOPRIGHT",-6,-LIST_TOP-((i-1)*ROW_STEP))
+    flatPanel(rowFrame,0.055,0.055,0.055,0.96,0.16)
+    local bar=CreateFrame("StatusBar",nil,rowFrame); bar:SetPoint("TOPLEFT",rowFrame,"TOPLEFT",1,-1); bar:SetPoint("BOTTOMRIGHT",rowFrame,"BOTTOMRIGHT",-1,1); bar:SetStatusBarTexture(FLAT_TEX); bar:SetMinMaxValues(0,1); bar:SetValue(0); bar:EnableMouse(true)
+    if bar.EnableMouseWheel then bar:EnableMouseWheel(true) end
+    local bg=bar:CreateTexture(nil,"BACKGROUND"); bg:SetAllPoints(bar); bg:SetTexture(FLAT_TEX); bg:SetVertexColor(0.06,0.06,0.06,0.96)
+    local shade=bar:CreateTexture(nil,"ARTWORK"); shade:SetAllPoints(bar); shade:SetTexture(FLAT_TEX); shade:SetVertexColor(0,0,0,0.10)
+
+    -- Class icon lives inside the player bar. The actor's classToken already
+    -- comes from the party/raid roster, the same source used for class colours.
+    local classIcon=bar:CreateTexture(nil,"OVERLAY")
+    classIcon:SetTexture(CLASS_ICON_TEXTURE)
+    classIcon:SetWidth(18); classIcon:SetHeight(18)
+    classIcon:SetPoint("LEFT",bar,"LEFT",3,0)
+    classIcon:Hide()
+
+    local rank=bar:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); rank:SetPoint("LEFT",bar,"LEFT",24,0); rank:SetWidth(23); rank:SetJustifyH("RIGHT")
+    local left=bar:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); left:SetPoint("LEFT",rank,"RIGHT",7,0); left:SetJustifyH("LEFT")
+    local right=bar:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); right:SetPoint("RIGHT",bar,"RIGHT",-6,0); right:SetJustifyH("RIGHT")
+    local hover=bar:CreateTexture(nil,"HIGHLIGHT"); hover:SetAllPoints(bar); hover:SetTexture(FLAT_TEX); hover:SetVertexColor(1,1,1,0.06)
+    bar:SetScript("OnEnter",function()
+        local row=this.detailsRow; local a=row and row.actor
+        if D.showActorHover and D.showActorHover(this,a) then return end
+        local tt=getPlayerTooltip()
+        if not a or not tt then return end
+        local cr,cg,cb=classColor(a)
+        tt:SetOwner(this,"ANCHOR_RIGHT")
+        tt:ClearLines()
+        tt:SetText(a.name,cr,cg,cb)
+        local dur=getDuration()
+        -- Every contribution uses the displayed owner total, including summons.
+        -- Spell coverage can be incomplete, so never normalize to recorded spells.
+        local contributionTotal=0
+        if D.mode=="damage" then contributionTotal=actorDisplayDamage(a)
+        elseif D.mode=="healing" then contributionTotal=actorDisplayHealing(a) end
+        local function contributionText(value)
+            local pct=0
+            if contributionTotal>0 then pct=value/contributionTotal*100 end
+            return comma(value).."  "..string.format("%.1f%%",pct)
+        end
+
+        if D.mode=="damage" then
+            local dmg=contributionTotal; local dps=0
+            if dur>0 then dps=dmg/dur end
+            tt:AddDoubleLine("Damage",comma(dmg).."  |  "..string.format("%.1f DPS",dps),0.78,0.78,0.78,1,1,1)
+
+            local spells,sn=sortedSpells(a); local x=1
+            if sn>0 then tt:AddLine(" "); tt:AddLine("Damage abilities",1,0.82,0) end
+            while x<=sn and x<=8 do
+                local sp=spells[x]
+                local critPct=0
+                if (sp.hits or 0)>0 then critPct=((sp.crits or 0)/(sp.hits or 1))*100 end
+                tt:AddDoubleLine(sp.name,contributionText(sp.damage).."  |  "..string.format("%.0f%% crit",critPct),1,1,1,0.88,0.88,0.88)
+                x=x+1
+            end
+
+        elseif D.mode=="threat" then
+            D.fillThreatTooltip(tt,a)
+
+        elseif D.mode=="damageTaken" then
+            tt:AddDoubleLine("Damage Taken",comma(a.damageTaken or 0),0.95,0.55,0.35,1,1,1)
+            local taken,tn=sortedTable(a.damageTakenSpells,"damage"); local tx=1
+            if tn>0 then tt:AddLine(" "); tt:AddLine("Incoming damage",1,0.82,0) end
+            while tx<=tn and tx<=10 do
+                local e=taken[tx]
+                local critPct=0
+                if (e.hits or 0)>0 then critPct=((e.crits or 0)/(e.hits or 1))*100 end
+                local right=comma(e.damage).." | "..tostring(e.hits or 0).." hits | "..string.format("%.0f%% crit",critPct)
+                if (e.crits or 0)>0 then
+                    right=right.." | "..comma(e.critDamage or 0).." crit dmg"
+                    right=right.." | max "..comma(e.maxCrit or 0)
+                end
+                if (e.overkillKnown or 0)>0 then right=right.." | "..comma(e.overkill or 0).." overkill" end
+                tt:AddDoubleLine(e.name,right,1,1,1,0.88,0.88,0.88)
+                tx=tx+1
+            end
+            if a.deathLast then
+                local dl=a.deathLast
+                tt:AddLine(" ")
+                local kb=tostring(dl.sourceName or "Unknown").." - "..tostring(dl.ability or "Unknown")
+                local kr=comma(dl.damage or 0).." dmg"
+                if dl.overkill~=nil then kr=kr.." | "..comma(dl.overkill).." overkill" end
+                if dl.crit then kr=kr.." | CRIT" end
+                tt:AddDoubleLine("Killing Blow: "..kb,kr,1,0.45,0.35,1,0.75,0.65)
+                tt:AddLine(tostring(a.name).." dies",1,0.25,0.25)
+            end
+
+        elseif D.mode=="deaths" then
+            tt:AddDoubleLine("Deaths",tostring(a.deaths or 0),1,0.35,0.35,1,1,1)
+            local causes,cn=sortedTable(a.deathCauses,"count"); local cx=1
+            if cn>0 then tt:AddLine(" "); tt:AddLine("Killing blows",1,0.82,0) end
+            while cx<=cn and cx<=8 do
+                local e=causes[cx]
+                local right=tostring(e.count or 0).."x | "..comma(e.damage or 0).." dmg"
+                if (e.overkillKnown or 0)>0 then right=right.." | "..comma(e.overkill or 0).." overkill" end
+                if (e.crits or 0)>0 then right=right.." | "..tostring(e.crits).." crit" end
+                tt:AddDoubleLine(e.name,right,1,1,1,0.88,0.88,0.88)
+                cx=cx+1
+            end
+            if a.deathLast then
+                local dl=a.deathLast
+                tt:AddLine(" ")
+                local last=tostring(dl.sourceName or "Unknown").." - "..tostring(dl.ability or "Unknown")
+                local lr=comma(dl.damage or 0).." dmg"
+                if dl.overkill~=nil then lr=lr.." | "..comma(dl.overkill).." overkill" end
+                if dl.crit then lr=lr.." | CRIT" end
+                tt:AddDoubleLine("Last death: "..last,lr,1,0.45,0.35,1,0.75,0.65)
+            end
+
+        elseif D.mode=="healing" then
+            local heal=contributionTotal; local hps=0
+            if dur>0 then hps=heal/dur end
+            tt:AddDoubleLine("Healing",comma(heal).."  |  "..string.format("%.1f HPS",hps),0.55,0.90,0.55,0.75,1,0.75)
+
+            local heals,hn=sortedHeals(a); local x=1
+            if hn>0 then tt:AddLine(" "); tt:AddLine("Healing abilities",1,0.82,0) end
+            while x<=hn and x<=8 do
+                local sp=heals[x]
+                local critPct=0
+                if (sp.hits or 0)>0 then critPct=((sp.crits or 0)/(sp.hits or 1))*100 end
+                tt:AddDoubleLine(sp.name,contributionText(sp.healing).."  |  "..string.format("%.0f%% crit",critPct),1,1,1,0.88,0.88,0.88)
+                x=x+1
+            end
+
+        elseif D.mode=="buffs" or D.mode=="debuffsCast" or D.mode=="debuffsReceived" then
+            local auraLabels={buffs="Buff Uptime",debuffsCast="Debuffs Cast",debuffsReceived="Debuffs Received"}
+            local auraCount=D.auraEntryCount(a[D.mode])
+            if D.mode=="buffs" then
+                tt:AddDoubleLine(auraLabels[D.mode] or D.mode,tostring(auraCount).." buffs",1,0.82,0,1,0.82,0)
+            else
+                tt:AddDoubleLine(auraLabels[D.mode] or D.mode,tostring(auraCount).." debuffs",1,0.82,0,1,0.82,0)
+            end
+
+            local al,an=sortedTable(a[D.mode],"duration"); local ax=1
+            while ax<=an and ax<=8 do
+                local ae=al[ax]; local pct=0
+                local exposure=(ae.targetCount or 1)
+                if dur>0 and exposure>0 then pct=(ae.value/(dur*exposure))*100 end
+                if pct>100 then pct=100 end
+                tt:AddDoubleLine(ae.name,string.format("%.1fs | %.1f%% | %dx",ae.value,pct,ae.count or 0),1,1,1,0.86,0.86,0.86)
+                if (D.mode=="buffs" or D.mode=="debuffsReceived") and ae.sourceText then
+                    local healingRows,healingShown,healingTotal=D.auraHealingSourceRows(ae)
+                    if D.mode=="buffs" and healingRows and healingShown>0 then
+                        tt:AddLine("  Sources",0.65,0.65,0.65)
+                        local hi=1
+                        while hi<=healingShown do
+                            local hr=healingRows[hi]
+                            tt:AddDoubleLine("    "..tostring(hr.name),comma(hr.healing or 0).." healing",0.82,0.92,1,0.82,0.92,1)
+                            hi=hi+1
+                        end
+                        if healingTotal>healingShown then tt:AddLine("    +"..tostring(healingTotal-healingShown).." more",0.65,0.65,0.65) end
+                    elseif D.mode=="debuffsReceived" then
+                        local damageRows,damageShown,damageTotal=D.auraDamageSourceRows(ae)
+                        if damageRows and damageShown>0 then
+                            tt:AddLine("  Sources",0.65,0.65,0.65)
+                            local di=1
+                            while di<=damageShown do
+                                local dr=damageRows[di]
+                                tt:AddDoubleLine("    "..tostring(dr.name),comma(dr.damage or 0).." damage",0.82,0.92,1,0.82,0.92,1)
+                                di=di+1
+                            end
+                            if damageTotal>damageShown then tt:AddLine("    +"..tostring(damageTotal-damageShown).." more",0.65,0.65,0.65) end
+                        else
+                            local sourceLabel="  Source"
+                            if (ae.sourceCount or 0)>1 then sourceLabel="  Sources ("..tostring(ae.sourceCount)..")" end
+                            tt:AddDoubleLine(sourceLabel,ae.sourceText,0.65,0.65,0.65,0.82,0.92,1)
+                        end
+                    else
+                        local sourceLabel="  Source"
+                        if (ae.sourceCount or 0)>1 then sourceLabel="  Sources ("..tostring(ae.sourceCount)..")" end
+                        tt:AddDoubleLine(sourceLabel,ae.sourceText,0.65,0.65,0.65,0.82,0.92,1)
+                    end
+                end
+                ax=ax+1
+            end
+
+        else
+            local labels={interrupts="Interrupts",cc="Crowd Control",ccBreaks="CC Breaks",dispels="Dispels"}
+            local total=utilityTotal(a,D.mode)
+            tt:AddDoubleLine(labels[D.mode] or D.mode,tostring(total),1,0.82,0,1,0.82,0)
+            local ul,un=sortedTable(a[D.mode],"count"); local ux=1
+            while ux<=un and ux<=8 do
+                tt:AddDoubleLine(ul[ux].name,tostring(ul[ux].value),1,1,1,0.86,0.86,0.86)
+                if D.mode=="ccBreaks" and a.ccBreakAbilities then
+                    local bk,bv
+                    for bk,bv in a.ccBreakAbilities do
+                        local _,_,ccName,abilityName=string.find(bk,"^(.-) | (.+)$")
+                        if ccName==ul[ux].name then
+                            local abilityDamage=0
+                            if type(bv)=="table" then abilityDamage=bv.damage or 0 end
+                            tt:AddDoubleLine("  "..tostring(abilityName),tostring(abilityDamage).." dmg",0.75,0.75,0.75,0.75,0.75,0.75)
+                        end
+                    end
+                end
+                ux=ux+1
+            end
+        end
+
+        local petDmg=0; local petHeal=0; local totemDmg=0; local totemHeal=0
+        local actors=getDisplayActors(); local k,p
+        local totemGroups={}
+        for k,p in actors do
+            if p.isPet and p.ownerKey==a.key then
+                if p.isTotem then
+                    totemDmg=totemDmg+(p.damage or 0)
+                    totemHeal=totemHeal+(p.healing or 0)
+                    local tn=p.name or "Totem"
+                    local tg=totemGroups[tn]
+                    if not tg then tg={damage=0,healing=0,spells={},healSpells={}}; totemGroups[tn]=tg end
+                    tg.damage=tg.damage+(p.damage or 0)
+                    tg.healing=tg.healing+(p.healing or 0)
+                    local sn,se
+                    if p.spells then
+                        for sn,se in p.spells do
+                            local dst=tg.spells[sn]
+                            if not dst then dst={damage=0}; tg.spells[sn]=dst end
+                            dst.damage=dst.damage+(se.damage or 0)
+                        end
+                    end
+                    if p.healSpells then
+                        for sn,se in p.healSpells do
+                            local dst=tg.healSpells[sn]
+                            if not dst then dst={healing=0}; tg.healSpells[sn]=dst end
+                            dst.healing=dst.healing+(se.healing or 0)
+                        end
+                    end
+                else
+                    petDmg=petDmg+(p.damage or 0)
+                    petHeal=petHeal+(p.healing or 0)
+                end
+            end
+        end
+
+        if D.mode=="damage" then
+            if petDmg>0 then
+                tt:AddLine(" "); tt:AddDoubleLine("Pet contribution",contributionText(petDmg),1,0.82,0,1,0.75,0.25)
+            end
+            if totemDmg>0 then
+                tt:AddLine(" "); tt:AddDoubleLine("Totem contribution",contributionText(totemDmg),1,0.82,0,1,0.75,0.25)
+                local tn,tg
+                for tn,tg in totemGroups do
+                    if (tg.damage or 0)>0 then
+                        tt:AddDoubleLine(tn,contributionText(tg.damage or 0),1,1,1,0.86,0.86,0.86)
+                    end
+                end
+            end
+        elseif D.mode=="healing" then
+            if petHeal>0 then
+                tt:AddLine(" "); tt:AddDoubleLine("Pet contribution",contributionText(petHeal),1,0.82,0,0.7,1,0.7)
+            end
+            if totemHeal>0 then
+                tt:AddLine(" "); tt:AddDoubleLine("Totem contribution",contributionText(totemHeal),1,0.82,0,0.7,1,0.7)
+                local tn,tg
+                for tn,tg in totemGroups do
+                    if (tg.healing or 0)>0 then
+                        tt:AddDoubleLine(tn,contributionText(tg.healing or 0),1,1,1,0.86,0.86,0.86)
+                    end
+                end
+            end
+        end
+
+        skinCawHoverTooltip(tt)
+        tt:Show()
+    end)
+    bar:SetScript("OnLeave",function()
+        if D.hideActorHover then D.hideActorHover() end
+        local tt=getPlayerTooltip(); if tt then tt:Hide() end
+    end)
+    -- Keep one reference to the full primary actor-tooltip handler so extra
+    -- windows can render the exact same mouseover details for every mode.
+    if not D.actorTooltipOnEnter and bar.GetScript then D.actorTooltipOnEnter=bar:GetScript("OnEnter") end
+    bar:SetScript("OnMouseWheel",function() if D.scrollBy then if arg1 and arg1>0 then D.scrollBy(-1) else D.scrollBy(1) end end end)
+    local row={frame=rowFrame,bar=bar,background=bg,shade=shade,hover=hover,classIcon=classIcon,rank=rank,left=left,right=right,actor=nil}; bar.detailsRow=row; D.rows[i]=row; i=i+1
+end
+
+local function shortNumber(n)
+    n=tonumber(n) or 0
+    if n>=1000000 then return string.format("%.1fm",n/1000000) end
+    if n>=10000 then return string.format("%.1fk",n/1000) end
+    return comma(n)
+end
+
+-- Chat report --------------------------------------------------------------
+function D.reportSegmentName()
+    if D.segment=="overall" then return "Overall" end
+    if D.segment=="history" then
+        local h=getSelectedHistoryFight()
+        if h and h.name and h.name~="" then return D.historyLabel(h) end
+        return "Previous Fight"
+    end
+    local name=currentFightLabel()
+    if name and name~="" then return name end
+    return "Current"
+end
+
+function D.reportLineForActor(a,rank,dur)
+    local prefix="#"..tostring(rank).." "..tostring(a.name)..": "
+    if D.mode=="damage" then
+        local value=actorDisplayDamage(a); local rate=0
+        if dur>0 then rate=value/dur end
+        return prefix..comma(value).." damage - "..string.format("%.1f",rate).." DPS"
+    elseif D.mode=="threat" then
+        local value=D.threatValueForActor and D.threatValueForActor(a) or 0
+        local pct=D.threatPercentForActor and D.threatPercentForActor(a) or 0
+        return prefix..comma(math.floor(value+0.5)).." threat - "..string.format("%.1f%%",pct)
+    elseif D.mode=="damageTaken" then
+        return prefix..comma(a.damageTaken or 0).." damage taken"
+    elseif D.mode=="deaths" then
+        local deaths=a.deaths or 0
+        local word="deaths"
+        if deaths==1 then word="death" end
+        local line=prefix..tostring(deaths).." "..word
+        if a.deathLast then
+            line=line.." - Killing Blow: "..tostring(a.deathLast.sourceName or "Unknown")
+                .." - "..tostring(a.deathLast.ability or "Unknown")
+                .." - "..comma(a.deathLast.damage or 0).." dmg"
+            if a.deathLast.crit then line=line.." (crit)" end
+            if a.deathLast.overkill~=nil then line=line.." - "..comma(a.deathLast.overkill).." overkill" end
+        end
+        return line
+    elseif D.mode=="healing" then
+        local value=actorDisplayHealing(a); local rate=0
+        if dur>0 then rate=value/dur end
+        return prefix..comma(value).." healing - "..string.format("%.1f",rate).." HPS"
+    elseif D.mode=="overhealing" then
+        local over,gross=D.overhealSummary(getDisplayActors(),a)
+        return prefix..comma(over).." overheal - "..D.overhealPercent(over,gross).." of recorded healing"
+    elseif D.mode=="buffs" or D.mode=="debuffsCast" or D.mode=="debuffsReceived" then
+        local value=utilityTotal(a,D.mode)
+        return prefix..string.format("%.1fs",value).." - "..string.format("%.1f%%",auraAverageUptime(a,D.mode)).." uptime"
+    end
+    return prefix..tostring(utilityTotal(a,D.mode))
+end
+
+function D.reportTotalLine(list,count,dur)
+    local total=0; local i=1
+    if D.mode=="overhealing" then return D.overhealFooter(getDisplayActors()) end
+    if D.mode=="damage" then
+        while i<=count do total=total+actorDisplayDamage(list[i]); i=i+1 end
+        local rate=0; if dur>0 then rate=total/dur end
+        return "Total: "..comma(total).." damage - "..string.format("%.1f",rate).." DPS"
+    elseif D.mode=="threat" then
+        local top=0; if count>0 then top=D.threatValueForActor and D.threatValueForActor(list[1]) or 0 end
+        return "Top threat: "..comma(math.floor(top+0.5)).." (100%)"
+    elseif D.mode=="damageTaken" then
+        while i<=count do total=total+(list[i].damageTaken or 0); i=i+1 end
+        return "Total: "..comma(total).." damage taken"
+    elseif D.mode=="deaths" then
+        while i<=count do total=total+(list[i].deaths or 0); i=i+1 end
+        local word="deaths"; if total==1 then word="death" end
+        return "Total: "..tostring(total).." "..word
+    elseif D.mode=="healing" then
+        while i<=count do total=total+actorDisplayHealing(list[i]); i=i+1 end
+        local rate=0; if dur>0 then rate=total/dur end
+        return "Total: "..comma(total).." healing - "..string.format("%.1f",rate).." HPS"
+    else
+        while i<=count do total=total+utilityTotal(list[i],D.mode); i=i+1 end
+        if D.mode=="buffs" or D.mode=="debuffsCast" or D.mode=="debuffsReceived" then
+            return "Total active time: "..string.format("%.1fs",total)
+        end
+        return "Total: "..tostring(total)
+    end
+end
+
+function D.safeReportText(line)
+    line=tostring(line or "")
+    line=string.gsub(line,"|","/")
+    line=string.gsub(line,"\n"," ")
+    return line
+end
+
+function D.reportRecipient(name)
+    if type(name)~="string" then return nil end
+    name=string.gsub(name,"^%s*(.-)%s*$","%1")
+    if string.len(name)<2 or string.len(name)>64 or not string.find(name,"^[%a\128-\255][%a\128-\255%-]*$") then return nil end
+    return name
+end
+local function reportFailure(message)
+    chat(message); return false,message
+end
+function D.buildReportLines(v)
+    if v and v.closed then return nil,"This window has been closed." end
+    local list,count,dur,mode,segment
+    if v then
+        list,count=D.multiViewSortedActors(v); dur=D.multiViewDuration(v)
+        mode=v.mode; segment=D.multiReportSegmentName(v)
+    else
+        list,count=sortedActors(); dur=getDuration(); mode=D.mode; segment=D.reportSegmentName()
+    end
+    if count<=0 then return nil,"Nothing to report for the selected mode/segment." end
+    local header="Caw DPS Meter: "..(MODE_LABELS[mode] or tostring(mode)).." - "..segment
+    if dur>0 then header=header.." - "..string.format("%.1fs",dur) end
+    local lines={D.safeReportText(header)}
+    for i=1,math.min(5,count) do
+        local line=v and D.multiReportLine(v,list[i],i,dur) or D.reportLineForActor(list[i],i,dur)
+        table.insert(lines,D.safeReportText(line))
+    end
+    table.insert(lines,D.safeReportText(v and D.multiReportTotalLine(v,list,count,dur) or D.reportTotalLine(list,count,dur)))
+    return lines
+end
+function D.sendReportLines(lines,channel,recipient)
+    if not channel or not SendChatMessage then return reportFailure("Chat reporting is unavailable on this client.") end
+    if channel=="WHISPER" then
+        recipient=D.reportRecipient(recipient)
+        if not recipient then return reportFailure("Enter a character name.") end
+    else recipient=nil end
+    if not lines or table.getn(lines)==0 then return reportFailure("Nothing to report for the selected mode/segment.") end
+    if channel=="PARTY" then
+        local inParty=GetNumPartyMembers and GetNumPartyMembers()>0
+        local inRaid=GetNumRaidMembers and GetNumRaidMembers()>0
+        if not inParty and not inRaid then return reportFailure("You are not in a party.") end
+    end
+    if channel=="RAID" and ((not GetNumRaidMembers) or GetNumRaidMembers()<=0) then
+        return reportFailure("You are not in a raid.")
+    end
+    if channel=="GUILD" and IsInGuild and not IsInGuild() then
+        return reportFailure("You are not in a guild.")
+    end
+    for _,line in ipairs(lines) do
+        local ok,err=pcall(SendChatMessage,D.safeReportText(line),channel,nil,recipient)
+        if not ok then return reportFailure("Report failed: "..tostring(err)) end
+    end
+    return true
+end
+function D.sendReport(channel,recipient)
+    local lines,err=D.buildReportLines(nil)
+    if not lines then return reportFailure(err) end
+    return D.sendReportLines(lines,channel,recipient)
+end
+
+local function visibleRowCount()
+    local h=frame:GetHeight() or 280
+    local n=D.uiVisibleRows and D.uiVisibleRows(nil,frame) or math.floor((h-(LIST_TOP+22))/ROW_STEP)
+    if n<1 then n=1 end; if n>MAX_ROWS then n=MAX_ROWS end
+    return n
+end
+
+-- Mouse-wheel scrolling reuses the small row pool for the full raid list,
+-- without reserving a column for separate scroll controls.
+local function clampScroll(total,selfRank)
+    local maxOffset=D.uiMaxOffset(total,visibleRowCount(),selfRank)
+    if D.scrollOffset<0 then D.scrollOffset=0 end
+    if D.scrollOffset>maxOffset then D.scrollOffset=maxOffset end
+    return maxOffset
+end
+local function scrollBy(delta)
+    local list,total=sortedActors()
+    local maxOffset=clampScroll(total,D.uiPinState(list,total,visibleRowCount(),D.uiSettings and D.uiSettings(),false))
+    D.scrollOffset=D.scrollOffset+delta
+    if D.scrollOffset<0 then D.scrollOffset=0 end
+    if D.scrollOffset>maxOffset then D.scrollOffset=maxOffset end
+    if D.hideActorHover then D.hideActorHover() end
+    if playerTooltip then playerTooltip:Hide() end
+    if updateUI then updateUI() end
+end
+D.scrollBy=scrollBy
+
+local wheelArea=CreateFrame("Frame",nil,frame); wheelArea:SetPoint("TOPLEFT",frame,"TOPLEFT",4,-LIST_TOP); wheelArea:SetPoint("BOTTOMRIGHT",frame,"BOTTOMRIGHT",-4,4); wheelArea:EnableMouse(true)
+D.mainWheelArea=wheelArea
+if wheelArea.EnableMouseWheel then wheelArea:EnableMouseWheel(true) end
+wheelArea:SetScript("OnMouseWheel",function() if arg1 and arg1>0 then scrollBy(-1) else scrollBy(1) end end)
+if frame.EnableMouseWheel then frame:EnableMouseWheel(true) end
+frame:SetScript("OnMouseWheel",function() if arg1 and arg1>0 then scrollBy(-1) else scrollBy(1) end end)
+-- Keep row frames above the mouse-wheel catcher so hover tooltips still work.
+if wheelArea.SetFrameLevel then wheelArea:SetFrameLevel(frame:GetFrameLevel()+1) end
+local ri=1; while ri<=MAX_ROWS do if D.rows[ri].frame.SetFrameLevel then D.rows[ri].frame:SetFrameLevel(frame:GetFrameLevel()+2) end; ri=ri+1 end
+
+-- Keep actor names from colliding with the numeric value at narrow widths.
+-- The right-hand value always wins; names are shortened with an ellipsis and
+-- the full actor name remains available in the existing hover tooltip.
+function D.petIconForActor(a)
+    local owner=a.ownerKey and ((D.guidToActor and D.guidToActor[a.ownerKey]) or (D.actors and D.actors[a.ownerKey]))
+    local ownerClass=a.petOwnerClass or (owner and owner.classToken)
+    if ownerClass=="WARLOCK" then return "Interface\\Icons\\Spell_Shadow_SummonFelHunter" end
+    return "Interface\\Icons\\Ability_Hunter_BeastTaming"
+end
+
+function D.setBarActorIcon(row)
+    local a=row.actor
+    if not row.classIcon then return end
+    if a and a.isPet then
+        row.classIcon:SetTexture(D.petIconForActor(a))
+        row.classIcon:SetTexCoord(0,1,0,1)
+        row.lastClassToken="PET"
+        return true
+    else
+        local tc=a and a.classToken and CLASS_ICON_TCOORDS[a.classToken]
+        row.lastClassToken=a and a.classToken
+        if tc then
+            row.classIcon:SetTexture(CLASS_ICON_TEXTURE)
+            row.classIcon:SetTexCoord(tc[1],tc[2],tc[3],tc[4])
+        end
+        return tc~=nil
+    end
+end
+
+function D.fitBarActorName(row,fullName,startPad)
+    if not row or not row.left or not row.right or not row.bar then return end
+    fullName=tostring(fullName or "")
+    if D.uiFitRowText then D.uiFitRowText(row,fullName); return end
+    local bw=row.bar:GetWidth() or 0
+    local rw=0
+    if row.right.GetStringWidth then local ok,v=pcall(row.right.GetStringWidth,row.right); if ok and v then rw=v end end
+    local avail=bw-(startPad or 58)-rw-10
+    if row.classIcon and row.rank then
+        D.setBarActorIcon(row)
+        local token=row.actor and row.actor.classToken
+        local settings=D.uiSettings and D.uiSettings(row.view)
+        local showIcon=((row.actor and row.actor.isPet) or (token and CLASS_ICON_TCOORDS[token])) and avail>=48
+        if bw<220 and row.left.GetStringWidth and row.left:GetStringWidth()>avail then showIcon=false end
+        if settings and not settings.icons then showIcon=false end
+        row.rank:ClearAllPoints()
+        row.rank:SetPoint("LEFT",row.bar,"LEFT",showIcon and 24 or 3,0)
+        if showIcon then row.classIcon:Show()
+        else row.classIcon:Hide(); avail=avail+21 end
+        if settings and not settings.ranks then
+            row.rank:SetWidth(0); row.rank:SetText(""); avail=avail+23
+        else
+            local rankWidth=23
+            if bw<220 and row.rank.GetStringWidth then rankWidth=math.min(23,row.rank:GetStringWidth()+4) end
+            row.rank:SetWidth(rankWidth); avail=avail+23-rankWidth
+        end
+    end
+    if avail<0 then avail=0 end
+    row.left:SetWidth(avail)
+    if avail<12 then row.left:SetText(""); return end
+    row.left:SetText(fullName)
+    if not row.left.GetStringWidth then return end
+    local ok,tw=pcall(row.left.GetStringWidth,row.left)
+    if not ok or not tw or tw<=avail then return end
+    local n=string.len(fullName)
+    while n>1 do
+        local candidate=string.sub(fullName,1,n).."..."
+        row.left:SetText(candidate)
+        local ok2,cw=pcall(row.left.GetStringWidth,row.left)
+        if not ok2 or not cw or cw<=avail then return end
+        n=n-1
+    end
+    row.left:SetText("")
+end
+
+updateUI=function(periodic)
+    local layoutWidth=frame:GetWidth(); local layoutHeight=frame:GetHeight()
+    if D.lastLayoutWidth~=layoutWidth or D.lastLayoutHeight~=layoutHeight then
+        D.lastLayoutWidth=layoutWidth; D.lastLayoutHeight=layoutHeight
+        if D.applyCompactWindowLayout then D.applyCompactWindowLayout() end
+    end
+    local dur=getDuration(); local list,count,cache=sortedActors(); local top=1
+
+    if segmentText then segmentText:SetText(selectedSegmentLabel()) end
+    if count>0 then top=list[1]._cawDisplayValue or 0 end; if top<=0 then top=1 end
+    modeText:SetText(MODE_LABELS[D.mode] or D.mode)
+    if D.refreshSelectorLabels then D.refreshSelectorLabels() end
+    if D.mode=="damage" then
+        local total=totalDamage(); local totalDPS=0; if dur>0 then totalDPS=total/dur end
+        summary:SetText("Total: "..comma(total).." | "..string.format("%.1f",totalDPS).." DPS")
+    elseif D.mode=="healing" then
+        local total=totalHealing(); local totalHPS=0; if dur>0 then totalHPS=total/dur end
+        summary:SetText("Total: "..comma(total).." | "..string.format("%.1f",totalHPS).." HPS")
+    elseif D.mode=="overhealing" then summary:SetText(D.overhealFooter(getDisplayActors()))
+    elseif D.mode=="threat" then
+        local targetName=D.threatDisplayTargetName and D.threatDisplayTargetName() or "Current Target"
+        summary:SetText(D.segment=="current" and D.serverThreatLabel and D.serverThreatLabel() or tostring(targetName))
+    elseif D.mode=="damageTaken" then
+        local total=0; local ui=1; while ui<=count do total=total+(list[ui].damageTaken or 0); ui=ui+1 end
+        summary:SetText("Total: "..comma(total))
+    elseif D.mode=="deaths" then
+        local total=0; local ui=1; while ui<=count do total=total+(list[ui].deaths or 0); ui=ui+1 end
+        summary:SetText("Deaths: "..tostring(total))
+    else
+        if D.mode=="buffs" or D.mode=="debuffsCast" or D.mode=="debuffsReceived" then
+            local auraTotal=0; local ui=1
+            while ui<=count do auraTotal=auraTotal+D.auraEntryCount(list[ui][D.mode]); ui=ui+1 end
+            if D.mode=="buffs" then summary:SetText(tostring(auraTotal).." buffs")
+            else summary:SetText(tostring(auraTotal).." debuffs") end
+        else
+            local utilTotal=0; local ui=1; while ui<=count do utilTotal=utilTotal+utilityTotal(list[ui],D.mode); ui=ui+1 end
+            summary:SetText("Total: "..tostring(utilTotal))
+        end
+    end
+    if D.uiUpdateMeterFooter then D.uiUpdateMeterFooter(D.mainView) end
+    local rowsVisible=visibleRowCount()
+    local selfRank=D.uiPinState(list,count,rowsVisible,D.uiSettings and D.uiSettings(),false)
+    if D.meterRowsUnchanged(frame,cache,dur,D.scrollOffset,D.mode,periodic,selfRank) then return end
+    local displayTotal=0
+    for _,actor in ipairs(list) do displayTotal=displayTotal+(actor._cawDisplayValue or 0) end
+    clampScroll(count,selfRank)
+    local r=1
+    while r<=MAX_ROWS do
+        local row=D.rows[r]; local absoluteIndex=D.uiRowIndex(r,D.scrollOffset,rowsVisible,selfRank); local a=nil
+        if r<=rowsVisible then a=list[absoluteIndex] end
+        if a then
+            row.actor=a; row.frame:Show(); local value
+            row.overhealTotal=cache and cache.rows[absoluteIndex] and cache.rows[absoluteIndex].overhealTotal
+            value=a._cawDisplayValue or 0
+            local barValue,barMax=D.uiBarFill(D.mode,a,value,top)
+            row.bar:SetMinMaxValues(0,barMax); row.bar:SetValue(barValue); local cr,cg,cb=classColor(a); row.bar:SetStatusBarColor(cr,cg,cb)
+            row.rank:SetText(tostring(absoluteIndex).."."); row.left:SetText(tostring(a.name)); row.left:SetTextColor(cr,cg,cb)
+            if D.mode=="damage" then local dps=0; if dur>0 then dps=value/dur end; row.right:SetText(shortNumber(value).." | "..string.format("%.1f",dps).." DPS")
+            elseif D.mode=="healing" then local hps=0; if dur>0 then hps=value/dur end; row.right:SetText(shortNumber(value).." | "..string.format("%.1f",hps).." HPS")
+            elseif D.mode=="threat" then local pct=D.threatPercentForActor and D.threatPercentForActor(a) or 0; row.right:SetText(shortNumber(value).." | "..string.format("%.1f%%",pct))
+            elseif D.mode=="damageTaken" then row.right:SetText(shortNumber(value))
+            elseif D.mode=="deaths" then row.right:SetText(tostring(value))
+            elseif D.mode=="buffs" then row.right:SetText(tostring(value).." buffs")
+            elseif D.mode=="debuffsCast" or D.mode=="debuffsReceived" then row.right:SetText(tostring(value).." debuffs")
+            else row.right:SetText(tostring(value)) end
+            if D.uiFormatRow then D.uiFormatRow(row,value,dur,displayTotal,D.mode) end
+            D.fitBarActorName(row,a.name,58)
+        else row.actor=nil; row.lastClassToken=nil; if row.classIcon then row.classIcon:Hide() end; row.frame:Hide() end
+        r=r+1
+    end
+end
+
+D.uiClassColor=classColor
+D.uiNumber=shortNumber
+D.uiAuraDuration=auraEntryDuration
+D.uiDuration=currentFightDuration
+D.uiSaveMain=saveWindowState
+D.uiSelectMain=selectSegment
+D.uiRefreshMeters=function()
+    updateUI()
+    for _,v in pairs(D.multiWindows or {}) do D.updateMultiWindow(v) end
+end
+D.uiSetLock=function(v,locked)
+    if v then v.locked=locked; D.applyMultiWindowLock(v)
+    else D.locked=locked; applyWindowLock() end
+end
+D.uiResetData=function(kind)
+    if kind=="current" or kind=="all" then resetFight(); D.inCombat=false; D.scrollOffset=0 end
+    if kind=="overall" or kind=="all" then D.overallSegment={actors={},duration=0,fights=0} end
+    if kind=="all" then
+        -- Reset clears data, not window settings: every window keeps its Current or
+        -- Overall selection. Only a selected saved fight no longer exists.
+        D.fightHistory={}
+        if D.segment=="history" then selectSegment("current",0) end
+        for _,v in pairs(D.multiWindows or {}) do
+            if v.segment=="history" then v.segment="current"; v.segmentIndex=0 end
+            v.scrollOffset=0
+        end
+    end
+    D.uiRefreshMeters()
+end
+D.uiCombatSelection=function()
+    if D.uiSettings and D.uiSettings().autoCurrent then selectSegment("current",0) end
+    for _,v in pairs(D.multiWindows or {}) do
+        if D.uiSettings and D.uiSettings(v).autoCurrent then v.segment="current"; v.segmentIndex=0; v.scrollOffset=0 end
+    end
+end
+
+-- Multi-window -------------------------------------------------------------
+-- Additional meter windows are display-only views over the SAME combat data.
+-- They do not register combat events and do not run another parser. Each view
+-- keeps its own mode, segment, position, size and scroll offset.
+D.multiWindows={}
+D.multiWindowPool={}
+D.multiWindowMax=4 -- primary + up to three additional views
+D.multiWindowsRestored=false
+
+-- Keep the add-window control visible only while another view can actually be
+-- created. This avoids a dead/disabled + button at the four-window limit.
+function D.updateMultiAddButtons()
+    local count=1 -- the primary meter window
+    local i=2
+    while i<=D.multiWindowMax do
+        local v=D.multiWindows[i]
+        if v and v.frame and not v.closed then count=count+1 end
+        i=i+1
+    end
+    local canAdd=(count<D.multiWindowMax)
+    if D.multiAddButton then
+        if canAdd and (frame:GetWidth() or 440)>=300 then D.multiAddButton:Show() else D.multiAddButton:Hide() end
+    end
+    i=2
+    while i<=D.multiWindowMax do
+        local v=D.multiWindows[i]
+        if v and v.addButton then
+            if canAdd and (v.frame:GetWidth() or 440)>=300 then v.addButton:Show() else v.addButton:Hide() end
+        end
+        i=i+1
+    end
+end
+
+function D.multiViewActors(v)
+    if v.mode=="threat" and v.segment=="current" and D.serverThreatActors then return D.serverThreatActors() end
+    if v.segment=="history" then
+        local h=D.fightHistory[v.segmentIndex or 1]
+        if h and h.actors then return h.actors end
+    elseif v.segment=="overall" and D.overallSegment and D.overallSegment.actors then
+        return D.overallSegment.actors
+    end
+    return D.actors
+end
+
+function D.multiViewDuration(v)
+    if v.segment=="history" then
+        local h=D.fightHistory[v.segmentIndex or 1]
+        if h then return h.duration or 0 end
+    elseif v.segment=="overall" and D.overallSegment then
+        return D.overallSegment.duration or 0
+    end
+    return currentFightDuration()
+end
+
+function D.multiViewSegmentLabel(v)
+    -- The compact header reserves real space for the encounter name.
+    if v.mode=="threat" and v.segment=="current" and D.serverThreatTargetName then return shortFightName(D.serverThreatTargetName()) end
+    if v.segment=="overall" then return "Overall" end
+    if v.segment=="history" then
+        local h=D.fightHistory[v.segmentIndex or 1]
+        if h then return D.historyLabel(h,nil,true) end
+        return "Previous Fight"
+    end
+    local name=currentFightLabel()
+    if name=="Current" then return "Current" end
+    return shortFightName(name)
+end
+
+function D.multiViewModeLabel(v)
+    local w=v.frame and v.frame:GetWidth() or 440
+    -- Same ultra-compact threshold and abbreviations as the primary window.
+    if w<360 then
+        if v.mode=="damage" then return "DPS" end
+        if v.mode=="healing" then return "HPS" end
+        if v.mode=="overhealing" then return "Overheal" end
+        if v.mode=="threat" then return "Threat" end
+        if v.mode=="damageTaken" then return "Taken" end
+        if v.mode=="deaths" then return "Deaths" end
+        if v.mode=="interrupts" then return "Int" end
+        if v.mode=="cc" then return "CC" end
+        if v.mode=="ccBreaks" then return "CC Brk" end
+        if v.mode=="dispels" then return "Disp" end
+        if v.mode=="buffs" then return "Buffs" end
+        if v.mode=="debuffsCast" then return "D.Cast" end
+        if v.mode=="debuffsReceived" then return "D.Recv" end
+    end
+    return MODE_LABELS[v.mode] or v.mode
+end
+
+function D.multiViewSortedActors(v)
+    return D.meterSortedRows(D.multiViewActors(v),v.mode)
+end
+
+function D.clampMultiWindow(f)
+    if D.uiClamp then return D.uiClamp(f) end
+    if not f or not UIParent then return end
+    local pl=UIParent:GetLeft(); local pr=UIParent:GetRight(); local pb=UIParent:GetBottom(); local pt=UIParent:GetTop()
+    local l=f:GetLeft(); local r=f:GetRight(); local b=f:GetBottom(); local t=f:GetTop()
+    if not pl or not pr or not pb or not pt or not l or not r or not b or not t then return end
+    local bleed=8; local dx=0; local dy=0
+    if l<pl-bleed then dx=(pl-bleed)-l elseif r>pr+bleed then dx=(pr+bleed)-r end
+    if b<pb-bleed then dy=(pb-bleed)-b elseif t>pt+bleed then dy=(pt+bleed)-t end
+    if dx==0 and dy==0 then return end
+    local cx,cy=f:GetCenter(); local ux,uy=UIParent:GetCenter()
+    if cx and cy and ux and uy then
+        f:ClearAllPoints(); f:SetPoint("CENTER",UIParent,"CENTER",(cx-ux)+dx,(cy-uy)+dy)
+    end
+end
+
+function D.multiWindowSnapshot(v)
+    local f=v.frame
+    local cx,cy=f:GetCenter(); local ux,uy=UIParent:GetCenter()
+    local x,y=(cx and ux) and (cx-ux) or 0,(cy and uy) and (cy-uy) or 0
+    if D.uiCenterOffset then x,y=D.uiCenterOffset(f) end
+    if f.cawDockFree then x,y=f.cawDockFree.x,f.cawDockFree.y end
+    local seg=v.segment; local index=v.segmentIndex or 0
+    if seg=="history" then seg="current"; index=0 end
+    return {mode=v.mode,segment=seg,segmentIndex=index,locked=v.locked and true or false,
+        hidden=f.cawManuallyHidden and true or false,
+        pfDock=v.pfDock and true or false,appearance=D.uiCopySettings and D.uiCopySettings(v.appearance) or nil,
+        width=f:GetWidth(),height=f:GetHeight(),centerX=x,centerY=y}
+end
+
+function D.saveMultiWindows()
+    initializeSavedVariables()
+    if not D.layoutRestored or not D.multiWindowsRestored or D.restoringMultiWindows then return end
+    DB=CawDPSMeterDB
+    CharDB=CawDPSMeterCharDB
+    if not DB and not CharDB then return end
+
+    local saved={}
+    local out=1; local i=1
+    while i<=D.multiWindowMax do
+        local v=D.multiWindows[i]
+        -- RC35: a closed view is a tombstone and must never be re-serialized,
+        -- even if an old frame object still exists until the next reload.
+        -- Hidden is still an active layout (chat arrow, context rules or /cd hide).
+        -- Only explicitly closed windows leave the active list.
+        if v and not v.closed and v.frame then
+            saved[out]=D.multiWindowSnapshot(v)
+            out=out+1
+        end
+        i=i+1
+    end
+
+    local function copySavedWindows(dst)
+        if not dst then return end
+        dst.extraWindows={}
+        dst.extraWindowsVersion=3
+        dst.extraWindowsExplicit=true
+        dst.extraWindowCount=table.getn(saved)
+        dst.extraWindowsRevision=(tonumber(dst.extraWindowsRevision) or 0)+1
+        local si=1
+        while si<=table.getn(saved) do
+            local src=saved[si]
+            dst.extraWindows[si]={mode=src.mode,segment=src.segment,segmentIndex=src.segmentIndex,locked=src.locked,pfDock=src.pfDock,
+                hidden=src.hidden,
+                width=src.width,height=src.height,centerX=src.centerX,centerY=src.centerY,
+                appearance=D.uiCopySettings and D.uiCopySettings(src.appearance) or nil}
+            si=si+1
+        end
+    end
+    copySavedWindows(DB)
+    saveWindowState()
+    DB.windowSettingsVersion=1
+    copyWindowSettings(DB,CharDB)
+end
+
+function D.removeMultiWindow(v)
+    if not v or v.closed then return end
+    if D.uiStopMeterDrag then D.uiStopMeterDrag(v.frame.cawDragHandle) end
+    initializeSavedVariables()
+    -- Keep only the three most recently closed layouts. They are restored by
+    -- an explicit Add window / show action, never by login or reload.
+    if type(CawDPSMeterCharDB.closedWindows)~="table" then CawDPSMeterCharDB.closedWindows={} end
+    table.insert(CawDPSMeterCharDB.closedWindows,1,D.multiWindowSnapshot(v))
+    while table.getn(CawDPSMeterCharDB.closedWindows)>D.multiWindowMax-1 do table.remove(CawDPSMeterCharDB.closedWindows) end
+    -- RC35: mark closed before touching UI/state. This makes close persistence
+    -- independent of the frame's shown state or id bookkeeping.
+    v.closed=true
+    if D.pfDockDetach then D.pfDockDetach(v.frame) end
+    if v.modeMenu then v.modeMenu:Hide() end
+    if v.segmentMenu then v.segmentMenu:Hide() end
+    if v.reportMenu then v.reportMenu:Hide() end
+    if v.frame then
+        v.frame:SetScript("OnUpdate",nil)
+        v.frame:Hide()
+    end
+    if v.rows then
+        local ri=1
+        while ri<=20 do if v.rows[ri] then v.rows[ri].actor=nil end; ri=ri+1 end
+    end
+    D.multiWindowPool[v.id]=v
+    -- Remove by identity as well as id, so a stale/mismatched id cannot leave
+    -- a live entry behind to be written again during PLAYER_LOGOUT.
+    local i=1
+    while i<=D.multiWindowMax do
+        if D.multiWindows[i]==v then D.multiWindows[i]=nil end
+        i=i+1
+    end
+    D.saveMultiWindows()
+    if D.diagLog then D.diagLog("INFO","MW_CLOSE","extra window closed and persisted","count="..tostring((CawDPSMeterDB and CawDPSMeterDB.extraWindowCount) or -1),nil) end
+    D.updateMultiAddButtons()
+end
+
+function D.layoutMultiWindow(v)
+    if not v or not v.frame then return end
+    v.lastLayoutWidth=v.frame:GetWidth(); v.lastLayoutHeight=v.frame:GetHeight()
+    D.layoutMeterHeader(v)
+    if D.uiStyleView then D.uiStyleView(v) end
+    v.modeText:SetText(D.multiViewModeLabel(v)); v.segmentText:SetText(D.multiViewSegmentLabel(v))
+    if v.lockIcon then v.lockIcon:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\"..(v.locked and "CawLock.tga" or "CawUnlock.tga")) end
+end
+
+function D.applyMultiWindowLock(v)
+    if not v or not v.frame then return end
+    if v.frame.SetMovable then v.frame:SetMovable(not v.locked) end
+    if v.frame.SetResizable then v.frame:SetResizable(not v.locked) end
+    if v.grip then
+        if v.locked then v.grip:Hide() else v.grip:Show() end
+    end
+    if v.lockButton then
+        if v.locked then v.lockButton:SetBackdropColor(0.22,0.15,0.05,1); if v.lockIcon then v.lockIcon:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\CawLock.tga") end
+        else v.lockButton:SetBackdropColor(0.08,0.08,0.08,1); if v.lockIcon then v.lockIcon:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\CawUnlock.tga") end end
+    end
+    D.layoutMultiWindow(v)
+end
+
+function D.multiReportSegmentName(v)
+    if v.segment=="overall" then return "Overall" end
+    if v.segment=="history" then
+        local h=D.fightHistory[v.segmentIndex or 1]
+        if h and h.name and h.name~="" then return D.historyLabel(h) end
+        return "Previous Fight"
+    end
+    local name=currentFightLabel()
+    if name and name~="" then return name end
+    return "Current"
+end
+
+function D.multiReportLine(v,item,rank,dur)
+    local a=item.actor; local value=item.value or 0
+    local prefix="#"..tostring(rank).." "..tostring(a.name)..": "
+    if v.mode=="damage" then
+        local rate=0; if dur>0 then rate=value/dur end
+        return prefix..comma(value).." damage - "..string.format("%.1f",rate).." DPS"
+    elseif v.mode=="healing" then
+        local rate=0; if dur>0 then rate=value/dur end
+        return prefix..comma(value).." healing - "..string.format("%.1f",rate).." HPS"
+    elseif v.mode=="overhealing" then
+        local over,gross=D.overhealSummary(D.multiViewActors(v),a)
+        return prefix..comma(over).." overheal - "..D.overhealPercent(over,gross).." of recorded healing"
+    elseif v.mode=="damageTaken" then return prefix..comma(value).." damage taken"
+    elseif v.mode=="deaths" then
+        local word="deaths"; if value==1 then word="death" end
+        return prefix..tostring(value).." "..word
+    elseif v.mode=="buffs" or v.mode=="debuffsCast" or v.mode=="debuffsReceived" then
+        return prefix..string.format("%.1fs",utilityTotal(a,v.mode)).." - "..string.format("%.1f%%",auraAverageUptime(a,v.mode,dur)).." uptime"
+    end
+    return prefix..tostring(value)
+end
+
+function D.multiReportTotalLine(v,list,count,dur)
+    local total=0; local i=1
+    if v.mode=="overhealing" then return D.overhealFooter(D.multiViewActors(v)) end
+    while i<=count do
+        if v.mode=="buffs" or v.mode=="debuffsCast" or v.mode=="debuffsReceived" then total=total+utilityTotal(list[i].actor,v.mode)
+        else total=total+(list[i].value or 0) end
+        i=i+1
+    end
+    if v.mode=="damage" then
+        local rate=0; if dur>0 then rate=total/dur end
+        return "Total: "..comma(total).." damage - "..string.format("%.1f",rate).." DPS"
+    elseif v.mode=="healing" then
+        local rate=0; if dur>0 then rate=total/dur end
+        return "Total: "..comma(total).." healing - "..string.format("%.1f",rate).." HPS"
+    elseif v.mode=="damageTaken" then return "Total: "..comma(total).." damage taken"
+    elseif v.mode=="deaths" then
+        local word="deaths"; if total==1 then word="death" end
+        return "Total: "..tostring(total).." "..word
+    elseif v.mode=="buffs" or v.mode=="debuffsCast" or v.mode=="debuffsReceived" then
+        return "Total active time: "..string.format("%.1fs",total)
+    end
+    return "Total: "..tostring(total)
+end
+
+function D.sendMultiReport(v,channel,recipient)
+    if not v then return reportFailure("This window is unavailable.") end
+    local lines,err=D.buildReportLines(v)
+    if not lines then return reportFailure(err) end
+    return D.sendReportLines(lines,channel,recipient)
+end
+
+function D.scrollMultiWindow(v,delta)
+    v.scrollOffset=(v.scrollOffset or 0)+delta
+    if D.hideActorHover then D.hideActorHover() end
+    if playerTooltip then playerTooltip:Hide() end
+    D.updateMultiWindow(v)
+end
+
+function D.updateMultiWindow(v,periodic)
+    if not v or v.closed or not v.frame or not v.frame:IsShown() then return end
+    local cw=v.frame:GetWidth() or 440; local ch=v.frame:GetHeight() or 260
+    if v.lastLayoutWidth~=cw or v.lastLayoutHeight~=ch then D.layoutMultiWindow(v) end
+    v.modeText:SetText(D.multiViewModeLabel(v))
+    v.segmentText:SetText(D.multiViewSegmentLabel(v))
+    local list,count,cache=D.multiViewSortedActors(v)
+
+    local dur=D.multiViewDuration(v)
+    local top=1
+    if count>0 then top=list[1].value or 1 end
+    if top<=0 then top=1 end
+    local total=0; local ti=1
+    while ti<=count do total=total+(list[ti].value or 0); ti=ti+1 end
+    if v.summary then
+        if v.mode=="damage" then local rate=0; if dur>0 then rate=total/dur end; v.summary:SetText("Total: "..comma(total).." | "..string.format("%.1f",rate).." DPS")
+        elseif v.mode=="healing" then local rate=0; if dur>0 then rate=total/dur end; v.summary:SetText("Total: "..comma(total).." | "..string.format("%.1f",rate).." HPS")
+        elseif v.mode=="overhealing" then v.summary:SetText(D.overhealFooter(D.multiViewActors(v)))
+        elseif v.mode=="threat" then local tn=D.threatDisplayTargetName and D.threatDisplayTargetName() or "Current Target"; v.summary:SetText(v.segment=="current" and D.serverThreatLabel and D.serverThreatLabel() or tostring(tn))
+        elseif v.mode=="damageTaken" then v.summary:SetText("Total: "..comma(total))
+        elseif v.mode=="deaths" then v.summary:SetText("Deaths: "..tostring(total))
+        elseif v.mode=="buffs" then v.summary:SetText(tostring(total).." buffs")
+        elseif v.mode=="debuffsCast" or v.mode=="debuffsReceived" then v.summary:SetText(tostring(total).." debuffs")
+        else v.summary:SetText("Total: "..tostring(total)) end
+    end
+    if D.uiUpdateMeterFooter then D.uiUpdateMeterFooter(v) end
+    local h=v.frame:GetHeight() or 260
+    local visible=D.uiVisibleRows and D.uiVisibleRows(v,v.frame) or math.floor((h-(LIST_TOP+22))/ROW_STEP)
+    if visible<1 then visible=1 end
+    if visible>20 then visible=20 end
+    local selfRank=D.uiPinState(list,count,visible,D.uiSettings and D.uiSettings(v),true)
+    if D.meterRowsUnchanged(v.frame,cache,dur,v.scrollOffset,v.mode,periodic,selfRank) then return end
+    local maxOffset=D.uiMaxOffset(count,visible,selfRank)
+    if v.scrollOffset<0 then v.scrollOffset=0 end
+    if v.scrollOffset>maxOffset then v.scrollOffset=maxOffset end
+    local i=1
+    while i<=20 do
+        local row=v.rows[i]
+        local item=nil
+        local rank=D.uiRowIndex(i,v.scrollOffset,visible,selfRank)
+        if i<=visible then item=list[rank] end
+        if item then
+            local a=item.actor; local value=item.value or 0
+            row.overhealTotal=item.overhealTotal
+            local barValue,barMax=D.uiBarFill(v.mode,a,value,top)
+            row.actor=a; row.frame:Show(); row.bar:SetMinMaxValues(0,barMax); row.bar:SetValue(barValue)
+            local cr,cg,cb=classColor(a); row.bar:SetStatusBarColor(cr,cg,cb)
+            row.rank:SetText(tostring(rank).."."); row.left:SetText(tostring(a.name)); row.left:SetTextColor(cr,cg,cb)
+            if v.mode=="damage" then local rate=0; if dur>0 then rate=value/dur end; row.right:SetText(shortNumber(value).." | "..string.format("%.1f",rate))
+            elseif v.mode=="healing" then local rate=0; if dur>0 then rate=value/dur end; row.right:SetText(shortNumber(value).." | "..string.format("%.1f",rate))
+            elseif v.mode=="threat" then local pct=D.threatPercentForActor and D.threatPercentForActor(a) or 0; row.right:SetText(shortNumber(value).." | "..string.format("%.1f%%",pct))
+            elseif v.mode=="damageTaken" then row.right:SetText(shortNumber(value))
+            elseif v.mode=="deaths" then row.right:SetText(tostring(value))
+            elseif v.mode=="buffs" then row.right:SetText(tostring(value).." buffs")
+            elseif v.mode=="debuffsCast" or v.mode=="debuffsReceived" then row.right:SetText(tostring(value).." debuffs")
+            else row.right:SetText(tostring(value)) end
+            if D.uiFormatRow then D.uiFormatRow(row,value,dur,total,v.mode) end
+            D.fitBarActorName(row,a.name,58)
+        else
+            row.actor=nil; row.classIcon:Hide(); row.frame:Hide()
+        end
+        i=i+1
+    end
+end
+
+function D.createMultiWindow(saved)
+    local id=nil; local i=2
+    while i<=D.multiWindowMax do if not D.multiWindows[i] then id=i; break end; i=i+1 end
+    if not id then D.updateMultiAddButtons(); return nil end
+    local closed=CawDPSMeterCharDB and CawDPSMeterCharDB.closedWindows
+    if not saved and type(closed)=="table" and table.getn(closed)>0 then
+        saved=table.remove(closed,1); saved.hidden=false
+    end
+    local savedMode=(saved and saved.mode) or "healing"
+    if not MODE_LABELS[savedMode] then savedMode="healing" end
+    local savedSegment=(saved and saved.segment) or "current"
+    if savedSegment~="current" and savedSegment~="overall" then savedSegment="current" end
+    local savedWidth=tonumber(saved and saved.width) or (frame:GetWidth() or 440)
+    local savedHeight=tonumber(saved and saved.height) or 178
+    if savedWidth<160 then savedWidth=160 elseif savedWidth>900 then savedWidth=900 end
+    if savedHeight<70 then savedHeight=70 elseif savedHeight>900 then savedHeight=900 end
+    local pooled=D.multiWindowPool[id]
+    if pooled then
+        D.multiWindowPool[id]=nil; D.multiWindows[id]=pooled
+        pooled.appearance=D.uiCopySettings and D.uiCopySettings(saved and saved.appearance) or nil
+        pooled.closed=false; pooled.mode=savedMode; pooled.segment=savedSegment; pooled.segmentIndex=0
+        pooled.scrollOffset=0; pooled.locked=(saved and saved.locked) and true or false
+        pooled.pfDock=(saved and saved.pfDock) and true or false
+        local pf=pooled.frame
+        pf:SetScale(pooled.appearance and pooled.appearance.scale or 1); pf:SetWidth(savedWidth); pf:SetHeight(savedHeight)
+        local cx=tonumber(saved and saved.centerX) or (220+id*26); local cy=tonumber(saved and saved.centerY) or (-40-id*20)
+        if D.uiAnchorCenter then D.uiAnchorCenter(pf,cx,cy)
+        else pf:ClearAllPoints(); pf:SetPoint("CENTER",UIParent,"CENTER",cx,cy) end
+        pf.nextUpdate=nil
+        pf:SetScript("OnUpdate",function() if not this.nextUpdate or GetTime()>=this.nextUpdate then this.nextUpdate=GetTime()+0.20; D.updateMultiWindow(pooled,true) end end)
+        D.clampMultiWindow(pf); D.applyMultiWindowLock(pooled)
+        if D.uiSetMeterShown then D.uiSetMeterShown(pf,not (saved and saved.hidden)) else pf:Show() end
+        D.updateMultiWindow(pooled); D.updateMultiAddButtons()
+        return pooled
+    end
+    local v={id=id,mode=savedMode,segment=savedSegment,segmentIndex=0,locked=(saved and saved.locked) and true or false,scrollOffset=0,rows={}}
+    v.appearance=D.uiCopySettings and D.uiCopySettings(saved and saved.appearance) or nil
+    v.pfDock=(saved and saved.pfDock) and true or false
+    local f=CreateFrame("Frame",nil,UIParent); v.frame=f; D.multiWindows[id]=v
+    -- A newly created view starts at the primary window's current dimensions.
+    -- Saved views keep their own dimensions, but identical dimensions now produce
+    -- the exact same compact/full-layout decision as the primary window.
+    f:SetWidth(savedWidth); f:SetHeight(savedHeight); f:EnableMouse(true)
+    if f.SetMovable then f:SetMovable(true) end; if f.SetResizable then f:SetResizable(true) end
+    if f.SetMinResize then pcall(f.SetMinResize,f,160,70) end; if f.SetMaxResize then pcall(f.SetMaxResize,f,900,900) end
+    -- Same shell/chrome as the primary window.
+    flatPanel(f,0.025,0.025,0.025,0.98,0.18)
+    v.header=f:CreateTexture(nil,"ARTWORK"); v.header:SetTexture(FLAT_TEX); v.header:SetVertexColor(0.035,0.035,0.035,1); v.header:SetPoint("TOPLEFT",f,"TOPLEFT",1,-1); v.header:SetPoint("TOPRIGHT",f,"TOPRIGHT",-1,-1); v.header:SetHeight(26)
+    v.headerLine=f:CreateTexture(nil,"ARTWORK"); v.headerLine:SetTexture(FLAT_TEX); v.headerLine:SetVertexColor(0.18,0.18,0.18,1); v.headerLine:SetPoint("TOPLEFT",f,"TOPLEFT",1,-27); v.headerLine:SetPoint("TOPRIGHT",f,"TOPRIGHT",-1,-27); v.headerLine:SetHeight(1)
+    v.toolbar=f:CreateTexture(nil,"ARTWORK"); v.toolbar:SetTexture(FLAT_TEX); v.toolbar:SetVertexColor(0.065,0.065,0.065,1); v.toolbar:SetPoint("TOPLEFT",f,"TOPLEFT",1,-28); v.toolbar:SetPoint("TOPRIGHT",f,"TOPRIGHT",-1,-28); v.toolbar:SetHeight(22)
+    v.toolbarLine=f:CreateTexture(nil,"ARTWORK"); v.toolbarLine:SetTexture(FLAT_TEX); v.toolbarLine:SetVertexColor(0.18,0.18,0.18,1); v.toolbarLine:SetPoint("TOPLEFT",f,"TOPLEFT",1,-50); v.toolbarLine:SetPoint("TOPRIGHT",f,"TOPRIGHT",-1,-50); v.toolbarLine:SetHeight(1)
+    local cx=tonumber(saved and saved.centerX) or (220+(id*26)); local cy=tonumber(saved and saved.centerY) or (-40-(id*20))
+    f:SetScale(v.appearance and v.appearance.scale or 1)
+    if D.uiAnchorCenter then D.uiAnchorCenter(f,cx,cy) else f:SetPoint("CENTER",UIParent,"CENTER",cx,cy) end
+    f:RegisterForDrag("LeftButton")
+    f:SetScript("OnDragStart",function() if not v.locked and not this.cawDockFree then this:StartMoving() end end)
+    f:SetScript("OnDragStop",function() this:StopMovingOrSizing(); D.clampMultiWindow(this); D.saveMultiWindows() end)
+
+    local brandTex=f:CreateTexture(nil,"ARTWORK"); v.brand=brandTex; brandTex:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\CawBrand.tga"); brandTex:SetWidth(168); brandTex:SetHeight(21); brandTex:SetPoint("TOPLEFT",f,"TOPLEFT",6,-3)
+    v.modeButton=CreateFrame("Button",nil,f); v.modeButton:SetHeight(17); v.modeButton:SetPoint("TOPLEFT",f,"TOPLEFT",7,-31); flatPanel(v.modeButton,0.065,0.065,0.065,1,0.24)
+    v.modeText=v.modeButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); v.modeText:SetPoint("LEFT",v.modeButton,"LEFT",5,0); v.modeText:SetPoint("RIGHT",v.modeButton,"RIGHT",-13,0); v.modeText:SetJustifyH("LEFT")
+    local ma=v.modeButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); v.modeArrow=ma; ma:SetPoint("RIGHT",v.modeButton,"RIGHT",-4,0); ma:SetText("v")
+    v.segmentButton=CreateFrame("Button",nil,f); v.segmentButton:SetHeight(17); v.segmentButton:SetPoint("LEFT",v.modeButton,"RIGHT",3,0); flatPanel(v.segmentButton,0.065,0.065,0.065,1,0.24)
+    v.segmentText=v.segmentButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); v.segmentText:SetPoint("LEFT",v.segmentButton,"LEFT",5,0); v.segmentText:SetPoint("RIGHT",v.segmentButton,"RIGHT",-13,0); v.segmentText:SetJustifyH("LEFT")
+    v.segmentArrow=v.segmentButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); v.segmentArrow:SetPoint("RIGHT",v.segmentButton,"RIGHT",-4,0); v.segmentArrow:SetText("v")
+    v.closeButton=CreateFrame("Button",nil,f); v.closeButton:SetWidth(17); v.closeButton:SetHeight(17); v.closeButton:SetPoint("TOPRIGHT",f,"TOPRIGHT",-5,-5); flatPanel(v.closeButton,0.065,0.065,0.065,1,0.25); v.closeButton:SetBackdropColor(0.08,0.08,0.08,1)
+    local xt=v.closeButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); xt:SetPoint("CENTER",v.closeButton,"CENTER",0,0); xt:SetText("")
+    v.closeIcon=v.closeButton:CreateTexture(nil,"ARTWORK"); v.closeIcon:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\CawClose.tga"); v.closeIcon:SetWidth(12); v.closeIcon:SetHeight(12); v.closeIcon:SetPoint("CENTER",v.closeButton,"CENTER",0,0)
+    v.closeButton:SetScript("OnClick",function() D.removeMultiWindow(v) end)
+    v.closeButton:SetScript("OnEnter",function() this:SetBackdropColor(0.28,0.08,0.08,1); local tt=D.getControlTooltip(); if tt then tt:SetOwner(this,"ANCHOR_TOP"); tt:SetText("Close window",1,1,1); tt:Show() end end)
+    v.closeButton:SetScript("OnLeave",function() this:SetBackdropColor(0.08,0.08,0.08,1); if D.controlTooltip then D.controlTooltip:Hide() end end)
+
+    v.lockButton=CreateFrame("Button",nil,f); v.lockButton:SetHeight(17); v.lockButton:SetPoint("RIGHT",v.closeButton,"LEFT",-3,0); flatPanel(v.lockButton,0.065,0.065,0.065,1,0.25); v.lockButton:SetBackdropColor(0.08,0.08,0.08,1)
+    v.lockText=v.lockButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); v.lockText:SetPoint("CENTER",v.lockButton,"CENTER",0,0); v.lockText:SetText("")
+    v.lockIcon=v.lockButton:CreateTexture(nil,"ARTWORK"); v.lockIcon:SetWidth(12); v.lockIcon:SetHeight(12); v.lockIcon:SetPoint("CENTER",v.lockButton,"CENTER",0,0)
+    v.lockButton:SetScript("OnClick",function() v.locked=not v.locked; D.applyMultiWindowLock(v); D.saveMultiWindows() end)
+    v.lockButton:SetScript("OnEnter",function() local tt=D.getControlTooltip(); if tt then tt:SetOwner(this,"ANCHOR_TOP"); if v.locked then tt:SetText("Unlock this window",1,1,1) else tt:SetText("Lock this window",1,1,1) end; tt:Show() end end)
+    v.lockButton:SetScript("OnLeave",function() if D.controlTooltip then D.controlTooltip:Hide() end end)
+
+    v.resetButton=CreateFrame("Button",nil,f); v.resetButton:SetWidth(17); v.resetButton:SetHeight(17); v.resetButton:SetPoint("RIGHT",v.closeButton,"LEFT",-3,0); flatPanel(v.resetButton,0.065,0.065,0.065,1,0.25); v.resetButton:SetBackdropColor(0.08,0.08,0.08,1)
+    v.resetIcon=v.resetButton:CreateTexture(nil,"ARTWORK"); v.resetIcon:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\CawReset.tga"); v.resetIcon:SetWidth(12); v.resetIcon:SetHeight(12); v.resetIcon:SetPoint("CENTER",v.resetButton,"CENTER",0,0)
+    v.resetButton:SetScript("OnClick",function() if D.uiConfirmReset then D.uiConfirmReset() end end)
+    v.resetButton:SetScript("OnEnter",function() this:SetBackdropColor(0.15,0.15,0.15,1); local tt=D.getControlTooltip(); if tt then tt:SetOwner(this,"ANCHOR_TOP"); tt:SetText("Reset meter data",1,1,1); tt:Show() end end)
+    v.resetButton:SetScript("OnLeave",function() this:SetBackdropColor(0.065,0.065,0.065,1); if D.controlTooltip then D.controlTooltip:Hide() end end)
+
+    v.reportButton=CreateFrame("Button",nil,f); v.reportButton:SetHeight(17); v.reportButton:SetPoint("RIGHT",v.lockButton,"LEFT",-3,0); flatPanel(v.reportButton,0.065,0.065,0.065,1,0.25); v.reportButton:SetBackdropColor(0.08,0.08,0.08,1)
+    v.reportText=v.reportButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); v.reportText:SetPoint("CENTER",v.reportButton,"CENTER",0,0); v.reportText:SetText("")
+    v.reportIcon=v.reportButton:CreateTexture(nil,"ARTWORK"); v.reportIcon:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\CawReport.tga"); v.reportIcon:SetWidth(12); v.reportIcon:SetHeight(12); v.reportIcon:SetPoint("CENTER",v.reportButton,"CENTER",0,0)
+    v.addButton=CreateFrame("Button",nil,f); v.addButton:SetWidth(17); v.addButton:SetHeight(17); v.addButton:SetPoint("RIGHT",v.reportButton,"LEFT",-3,0); flatPanel(v.addButton,0.065,0.065,0.065,1,0.25); v.addButton:SetBackdropColor(0.08,0.08,0.08,1)
+    v.addText=v.addButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); v.addText:SetPoint("CENTER",v.addButton,"CENTER",0,0); v.addText:SetText("")
+    v.addIcon=v.addButton:CreateTexture(nil,"ARTWORK"); v.addIcon:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\CawAdd.tga"); v.addIcon:SetWidth(12); v.addIcon:SetHeight(12); v.addIcon:SetPoint("CENTER",v.addButton,"CENTER",0,0)
+    v.addButton:SetScript("OnClick",function() D.createMultiWindow(nil); D.saveMultiWindows() end)
+    v.addButton:SetScript("OnEnter",function() this:SetBackdropColor(0.14,0.14,0.14,1); local tt=D.getControlTooltip(); if tt then tt:SetOwner(this,"ANCHOR_TOP"); tt:SetText("Add window",1,1,1); tt:AddLine("Reopens the last closed window with its position and settings.",0.8,0.8,0.8); tt:Show() end end)
+    v.addButton:SetScript("OnLeave",function() this:SetBackdropColor(0.055,0.055,0.055,1); if D.controlTooltip then D.controlTooltip:Hide() end end)
+    v.reportMenu=CreateFrame("Frame",nil,f); v.reportMenu:SetWidth(96); v.reportMenu:SetHeight(106); v.reportMenu:SetPoint("TOPRIGHT",v.reportButton,"BOTTOMRIGHT",0,-2); flatPanel(v.reportMenu,0.025,0.025,0.025,0.99,0.25); v.reportMenu.cawDropdown=true; v.reportMenu:SetFrameStrata("DIALOG"); v.reportMenu:SetFrameLevel(60); v.reportMenu:Hide()
+    local reportChannels={{label="Say",channel="SAY"},{label="Party",channel="PARTY"},{label="Raid",channel="RAID"},{label="Guild",channel="GUILD"},{label="Whisper...",channel="WHISPER"}}
+    local rci=1
+    while rci<=table.getn(reportChannels) do
+        local info=reportChannels[rci]; local rb=CreateFrame("Button",nil,v.reportMenu); rb:SetWidth(88); rb:SetHeight(18); rb:SetPoint("TOPLEFT",v.reportMenu,"TOPLEFT",4,-4-((rci-1)*20))
+        local rfs=rb:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); rfs:SetPoint("LEFT",rb,"LEFT",7,0); rfs:SetText(info.label); rb.channel=info.channel; rb.text=rfs
+        rb:SetScript("OnClick",function() v.reportMenu:Hide(); if this.channel=="WHISPER" then D.openWhisperReport(v) else D.sendMultiReport(v,this.channel) end end)
+        v.reportMenu.buttons=v.reportMenu.buttons or {}; v.reportMenu.buttons[rci]=rb; rci=rci+1
+    end
+    v.reportButton:SetScript("OnClick",function() if v.reportMenu:IsShown() then v.reportMenu:Hide() else v.modeMenu:Hide(); if v.segmentMenu then v.segmentMenu:Hide() end; v.reportMenu:Show() end end)
+    v.reportButton:SetScript("OnEnter",function() this:SetBackdropColor(0.14,0.14,0.14,1); local tt=D.getControlTooltip(); if tt then tt:SetOwner(this,"ANCHOR_TOP"); tt:SetText("Report this view",1,1,1); tt:Show() end end)
+    v.reportButton:SetScript("OnLeave",function() this:SetBackdropColor(0.08,0.08,0.08,1); if D.controlTooltip then D.controlTooltip:Hide() end end)
+
+    v.modeMenu=CreateFrame("Frame",nil,f); v.modeMenu:SetWidth(152); v.modeMenu:SetHeight((table.getn(MODE_ORDER)*18)+8); v.modeMenu:SetPoint("TOPLEFT",v.modeButton,"BOTTOMLEFT",0,-1); flatPanel(v.modeMenu,0.025,0.025,0.025,0.99,0.28); v.modeMenu.cawDropdown=true; v.modeMenu:SetFrameStrata("DIALOG"); v.modeMenu:SetFrameLevel(60); v.modeMenu:Hide()
+    i=1
+    while i<=table.getn(MODE_ORDER) do
+        local b=CreateFrame("Button",nil,v.modeMenu); b:SetHeight(18); b:SetPoint("TOPLEFT",v.modeMenu,"TOPLEFT",4,-4-((i-1)*18)); b:SetPoint("RIGHT",v.modeMenu,"RIGHT",-4,0)
+        local fs=b:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); fs:SetPoint("LEFT",b,"LEFT",4,0); fs:SetText(MODE_LABELS[MODE_ORDER[i]] or MODE_ORDER[i]); b.mode=MODE_ORDER[i]
+        b:SetScript("OnClick",function() v.mode=this.mode; v.scrollOffset=0; v.modeMenu:Hide(); D.updateMultiWindow(v); D.saveMultiWindows() end)
+        b.text=fs
+        v.modeMenu.buttons=v.modeMenu.buttons or {}; v.modeMenu.buttons[i]=b; i=i+1
+    end
+    v.modeButton:SetScript("OnClick",function() if v.modeMenu:IsShown() then v.modeMenu:Hide() else if v.segmentMenu then v.segmentMenu:Hide() end; if v.reportMenu then v.reportMenu:Hide() end; v.modeMenu:Show() end end)
+
+    v.segmentMenu=CreateFrame("Frame",nil,f); v.segmentMenu:SetWidth(178); v.segmentMenu:SetPoint("TOPLEFT",v.segmentButton,"BOTTOMLEFT",0,-1); flatPanel(v.segmentMenu,0.025,0.025,0.025,0.99,0.28); v.segmentMenu.cawDropdown=true; v.segmentMenu:SetFrameStrata("DIALOG"); v.segmentMenu:SetFrameLevel(60); v.segmentMenu:Hide()
+    function v.rebuildSegments()
+        local items={}; local n=1; items[n]={kind="current",label="Current"}; local hi=1
+        while hi<=table.getn(D.fightHistory) and hi<=10 do
+            local h=D.fightHistory[hi]; n=n+1
+            items[n]={kind="history",index=hi,label=D.historyLabel(h,hi,true),fullLabel=D.historyLabel(h,hi)}
+            hi=hi+1
+        end
+        n=n+1; items[n]={kind="overall",label="Overall"}; v.segmentMenu:SetHeight((n*18)+8)
+        local bi=1
+        while bi<=12 do
+            local b=v.segmentMenu.buttons and v.segmentMenu.buttons[bi] or nil
+            if bi<=n then
+                if not b then b=CreateFrame("Button",nil,v.segmentMenu); b:SetHeight(18); b:SetPoint("TOPLEFT",v.segmentMenu,"TOPLEFT",4,-4-((bi-1)*18)); b:SetPoint("RIGHT",v.segmentMenu,"RIGHT",-4,0); b.text=b:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); b.text:SetPoint("LEFT",b,"LEFT",4,0); b:SetScript("OnClick",function() v.segment=this.kind; v.segmentIndex=this.historyIndex or 0; v.scrollOffset=0; v.segmentMenu:Hide(); D.updateMultiWindow(v); D.saveMultiWindows() end); v.segmentMenu.buttons=v.segmentMenu.buttons or {}; v.segmentMenu.buttons[bi]=b end
+                b.kind=items[bi].kind; b.historyIndex=items[bi].index
+                b.cawSegmentFullLabel=items[bi].fullLabel or items[bi].label; b.text:SetText(items[bi].label); b:Show()
+            elseif b then b:Hide() end
+            bi=bi+1
+        end
+        D.layoutSegmentMenu(v)
+    end
+    v.segmentButton:SetScript("OnClick",function() if v.segmentMenu:IsShown() then v.segmentMenu:Hide() else v.modeMenu:Hide(); if v.reportMenu then v.reportMenu:Hide() end; v.rebuildSegments(); v.segmentMenu:Show() end end)
+
+    v.summary=f:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); v.summary:SetPoint("RIGHT",f,"TOPRIGHT",-8,-39); v.summary:SetJustifyH("RIGHT"); v.summary:SetTextColor(0.90,0.90,0.90)
+
+    local ri=1
+    while ri<=20 do
+        local rf=CreateFrame("Frame",nil,f); rf:SetHeight(ROW_HEIGHT); rf:SetPoint("TOPLEFT",f,"TOPLEFT",6,-LIST_TOP-((ri-1)*ROW_STEP)); rf:SetPoint("TOPRIGHT",f,"TOPRIGHT",-6,-LIST_TOP-((ri-1)*ROW_STEP))
+        flatPanel(rf,0.055,0.055,0.055,0.96,0.16)
+        local bar=CreateFrame("StatusBar",nil,rf); bar:SetPoint("TOPLEFT",rf,"TOPLEFT",1,-1); bar:SetPoint("BOTTOMRIGHT",rf,"BOTTOMRIGHT",-1,1); bar:SetStatusBarTexture(FLAT_TEX); bar:SetMinMaxValues(0,1); bar:SetValue(0)
+        local bg=bar:CreateTexture(nil,"BACKGROUND"); bg:SetAllPoints(bar); bg:SetTexture(FLAT_TEX); bg:SetVertexColor(0.055,0.055,0.055,0.96)
+        local classIcon=bar:CreateTexture(nil,"OVERLAY"); classIcon:SetTexture(CLASS_ICON_TEXTURE)
+        classIcon:SetWidth(18); classIcon:SetHeight(18); classIcon:SetPoint("LEFT",bar,"LEFT",3,0); classIcon:Hide()
+        local rank=bar:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); rank:SetPoint("LEFT",bar,"LEFT",24,0); rank:SetWidth(23); rank:SetJustifyH("RIGHT")
+        local left=bar:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); left:SetPoint("LEFT",rank,"RIGHT",7,0); left:SetJustifyH("LEFT")
+        local right=bar:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); right:SetPoint("RIGHT",bar,"RIGHT",-6,0); right:SetJustifyH("RIGHT")
+        v.rows[ri]={frame=rf,bar=bar,background=bg,classIcon=classIcon,rank=rank,left=left,right=right}
+        bar:EnableMouse(true)
+        if bar.EnableMouseWheel then bar:EnableMouseWheel(true) end
+        bar:SetScript("OnMouseWheel",function() D.scrollMultiWindow(v,arg1 and arg1>0 and -1 or 1) end)
+        bar:SetScript("OnEnter",function()
+            local row=this.multiRow; local a=row and row.actor
+            if not a then return end
+            -- Reuse the primary window's complete tooltip renderer. Temporarily
+            -- switch only the display context so getDisplayActors()/getDuration()
+            -- resolve against this extra window's selected mode and segment.
+            if D.actorTooltipOnEnter then
+                local oldMode=D.mode; local oldSegment=D.segment; local oldIndex=D.segmentIndex
+                local oldDetailsRow=this.detailsRow
+                D.mode=v.mode; D.segment=v.segment; D.segmentIndex=v.segmentIndex or 0
+                this.detailsRow=row
+                local tooltipOK,tooltipError=pcall(D.actorTooltipOnEnter)
+                this.detailsRow=oldDetailsRow
+                D.mode=oldMode; D.segment=oldSegment; D.segmentIndex=oldIndex
+                if not tooltipOK then error(tooltipError) end
+            else
+                local tt=getPlayerTooltip(); if not tt then return end
+                local cr,cg,cb=classColor(a)
+                tt:SetOwner(this,"ANCHOR_RIGHT"); tt:ClearLines(); tt:SetText(a.name,cr,cg,cb)
+                if v.mode=="threat" then D.fillThreatTooltip(tt,a) end
+                tt:Show()
+            end
+        end)
+        bar:SetScript("OnLeave",function()
+            if D.hideActorHover then D.hideActorHover() end
+            local tt=getPlayerTooltip(); if tt then tt:Hide() end
+        end)
+        bar.multiRow=v.rows[ri]
+        ri=ri+1
+    end
+
+    v.grip=CreateFrame("Button",nil,f); v.grip:SetWidth(24); v.grip:SetHeight(24); v.grip:SetPoint("BOTTOMRIGHT",f,"BOTTOMRIGHT",-1,1); v.grip:RegisterForDrag("LeftButton")
+    local gs=v.grip:CreateFontString(nil,"OVERLAY","GameFontNormalSmall"); gs:SetPoint("BOTTOMRIGHT",v.grip,"BOTTOMRIGHT",-3,1); gs:SetText("/"); gs:SetTextColor(0.72,0.72,0.72)
+    local gs2=v.grip:CreateFontString(nil,"OVERLAY","GameFontNormalSmall"); gs2:SetPoint("BOTTOMRIGHT",v.grip,"BOTTOMRIGHT",-7,1); gs2:SetText("/"); gs2:SetTextColor(0.72,0.72,0.72)
+    local gs3=v.grip:CreateFontString(nil,"OVERLAY","GameFontNormalSmall"); gs3:SetPoint("BOTTOMRIGHT",v.grip,"BOTTOMRIGHT",-11,1); gs3:SetText("/"); gs3:SetTextColor(0.72,0.72,0.72)
+    v.grip:SetScript("OnDragStart",function() if not v.locked and f.StartSizing then f:StartSizing("BOTTOMRIGHT") end end)
+    v.grip:SetScript("OnDragStop",function() f:StopMovingOrSizing(); D.clampMultiWindow(f); D.layoutMultiWindow(v); D.updateMultiWindow(v); D.saveMultiWindows() end)
+    if f.EnableMouseWheel then f:EnableMouseWheel(true) end
+    f:SetScript("OnMouseWheel",function() D.scrollMultiWindow(v,arg1 and arg1>0 and -1 or 1) end)
+    f:SetScript("OnUpdate",function() if not this.nextUpdate or GetTime()>=this.nextUpdate then this.nextUpdate=GetTime()+0.20; D.updateMultiWindow(v,true) end end)
+    D.clampMultiWindow(f); D.layoutMultiWindow(v); D.applyMultiWindowLock(v)
+    if D.uiSetMeterShown then D.uiSetMeterShown(f,not (saved and saved.hidden))
+    elseif D.uiUpdateWindowVisibility then D.uiUpdateWindowVisibility(v) end
+    D.updateMultiWindow(v)
+    D.updateMultiAddButtons()
+    return v
+end
+
+function D.restoreMultiWindows()
+    if D.multiWindowsRestored then return end
+    D.restoringMultiWindows=true
+    initializeSavedVariables(); DB=CawDPSMeterDB; CharDB=CawDPSMeterCharDB
+
+    -- Use the complete account layout after migration. Older installations
+    -- still honor an explicitly empty character list once, so previously closed
+    -- windows do not resurrect when moving to the shared layout.
+    local list=nil
+    local count=nil
+    local source="none"
+    -- The stored count is authoritative, including an explicit zero.
+    if DB and DB.windowSettingsVersion==1 then
+        list=DB.extraWindows or {}
+        count=tonumber(DB.extraWindowCount) or table.getn(list)
+        source="account-shared"
+    elseif CharDB and CharDB.extraWindowsExplicit then
+        list=CharDB.extraWindows or {}
+        count=tonumber(CharDB.extraWindowCount) or table.getn(list)
+        source="character-v3"
+    elseif CharDB and (CharDB.extraWindowsVersion or CharDB.extraWindows ~= nil) then
+        list=CharDB.extraWindows or {}
+        count=tonumber(CharDB.extraWindowCount) or table.getn(list)
+        source="character-legacy"
+    elseif DB and DB.extraWindowsExplicit then
+        list=DB.extraWindows or {}
+        count=tonumber(DB.extraWindowCount) or table.getn(list)
+        source="account-v3"
+    elseif DB and (DB.extraWindowsVersion or DB.extraWindows ~= nil) then
+        list=DB.extraWindows or {}
+        count=tonumber(DB.extraWindowCount) or table.getn(list)
+        source="account-legacy"
+    else list={}; count=0 end
+
+    if count<0 then count=0 elseif count>3 then count=3 end
+    local i=1
+    while i<=count do
+        if list[i] then D.createMultiWindow(list[i]) end
+        i=i+1
+    end
+    if D.diagLog then D.diagLog("INFO","MW_RESTORE","extra-window restore","source="..source.." count="..tostring(count),nil) end
+
+    D.restoringMultiWindows=nil; D.multiWindowsRestored=true
+    D.saveMultiWindows()
+end
+
+function D.reopenClosedMultiWindows()
+    local closed=CawDPSMeterCharDB and CawDPSMeterCharDB.closedWindows
+    while type(closed)=="table" and table.getn(closed)>0 do
+        if not D.createMultiWindow(nil) then break end
+    end
+    D.saveMultiWindows()
+end
+
+D.multiAddButton=CreateFrame("Button",nil,frame)
+D.multiAddButton:SetWidth(17); D.multiAddButton:SetHeight(17)
+flatPanel(D.multiAddButton,0.055,0.055,0.055,1,0.25)
+D.multiAddText=D.multiAddButton:CreateFontString(nil,"OVERLAY","GameFontHighlightSmall"); D.multiAddText:SetPoint("CENTER",D.multiAddButton,"CENTER",0,0); D.multiAddText:SetText("")
+D.multiAddIcon=D.multiAddButton:CreateTexture(nil,"ARTWORK"); D.multiAddIcon:SetTexture("Interface\\AddOns\\CawDPSMeter\\Media\\CawAdd.tga"); D.multiAddIcon:SetWidth(12); D.multiAddIcon:SetHeight(12); D.multiAddIcon:SetPoint("CENTER",D.multiAddButton,"CENTER",0,0)
+D.multiAddButton:SetScript("OnClick",function() D.createMultiWindow(nil); D.saveMultiWindows() end)
+D.multiAddButton:SetScript("OnEnter",function() this:SetBackdropColor(0.14,0.14,0.14,1); local tt=D.getControlTooltip(); if tt then tt:SetOwner(this,"ANCHOR_TOP"); tt:SetText("Add window",1,1,1); tt:AddLine("Reopens the last closed window with its position and settings.",0.8,0.8,0.8); tt:Show() end end)
+D.multiAddButton:SetScript("OnLeave",function() this:SetBackdropColor(0.055,0.055,0.055,1); if D.controlTooltip then D.controlTooltip:Hide() end end)
+if D.applyCompactWindowLayout then D.applyCompactWindowLayout() end
+D.updateMultiAddButtons()
+
+frame:SetScript("OnUpdate",function()
+    if not this.nextUpdate or GetTime()>=this.nextUpdate then
+        this.nextUpdate=GetTime()+0.20
+        updateUI(true)
+    end
+end)
+
+local function finalizeAuraTimers(stopTime)
+    local k,a; for k,a in D.actors do
+        local kinds={"buffs","debuffsCast","debuffsReceived"}; local i=1
+        while i<=table.getn(kinds) do local tbl=a[kinds[i]]; local spell,e; if tbl then for spell,e in tbl do local tk,st; if e.active then for tk,st in e.active do stopAura(tbl,spell,tk,stopTime) end end end end; i=i+1 end
+    end
+end
+
+local function finalizePendingCombatEnd(force)
+    if not D.pendingCombatEndAt or D.pendingCombatEndAt<=0 then return end
+    if GetTime()<D.pendingCombatEndAt then return end
+
+    if not D.pendingCombatEndFirstAt or D.pendingCombatEndFirstAt<=0 then
+        D.pendingCombatEndFirstAt=(D.pendingCombatEndStopTime and D.pendingCombatEndStopTime>0) and D.pendingCombatEndStopTime or GetTime()
+    end
+    -- Hard ceiling: once the player has been out of combat for grace + hardcap
+    -- seconds, close the fight no matter what a stuck CC entry claims. Dead-sync
+    -- is exempt (the player is dead and still wants the group's final numbers).
+    local hardCapHit=(GetTime()-D.pendingCombatEndFirstAt) > ((D.combatEndGrace or 1.5)+(D.combatEndHardCap or 4.0))
+
+    if not force and D.localPlayerDead and D.deadSyncLastReceived and D.deadSyncLastReceived>0
+        and GetTime()-D.deadSyncLastReceived<2.25 then
+        D.pendingCombatEndAt=GetTime()+0.75
+        D.logLine("end","finalize DEFER dead-sync recent ("..string.format("%.2f",GetTime()-D.deadSyncLastReceived).."s) -> +0.75")
+        return
+    end
+
+    -- Sap and similar crowd control can be applied before WoW considers the
+    -- player "in combat". Caw already opened a utility segment for the landed
+    -- CC, so do not close that segment while the CC is still active. Otherwise
+    -- the later damage event would start a fresh segment and the recorded Sap
+    -- would appear to vanish exactly when it was broken.
+    -- Guard against stale entries: if the CC target dies while controlled, or
+    -- the client never emits the fade/break line, the entry would otherwise
+    -- block every combat end until the next resetFight().
+    local ccTarget,ccData
+    local ccActive=false
+    for ccTarget,ccData in D.activeCC do
+        if ccData and ccData.time and GetTime()-ccData.time<=25 then
+            ccActive=true
+        elseif ccData then
+            D.logLine("cc","stale activeCC purged at finalize: "..tostring(ccData.spell).." on "..tostring(ccTarget).." (age "..string.format("%.1f",ccData.time and (GetTime()-ccData.time) or -1).."s)")
+            D.activeCC[ccTarget]=nil
+            if D.ccDamageByTarget then D.ccDamageByTarget[ccTarget]=nil end
+        end
+    end
+    if ccActive and not hardCapHit and not force then
+        D.pendingCombatEndAt=GetTime()+0.50
+        D.logLine("end","finalize DEFER activeCC not empty -> +0.50")
+        return
+    end
+    if ccActive and hardCapHit then
+        D.logLine("end","finalize FORCED past active CC (hard cap "..string.format("%.1f",(D.combatEndGrace or 1.5)+(D.combatEndHardCap or 4.0)).."s reached)")
+        clearTable(D.activeCC); clearTable(D.ccDamageByTarget)
+    end
+
+    local stopTime=D.pendingCombatEndStopTime
+    if not stopTime or stopTime<=0 then stopTime=GetTime() end
+
+    if D.startTime>0 then
+        D.lastDuration=stopTime-D.startTime
+        if D.lastDuration<0 then D.lastDuration=0 end
+    end
+    D.logLine("end","finalize DONE dur="..string.format("%.2f",(D.startTime>0) and (stopTime-D.startTime) or 0))
+    finalizeAuraTimers(stopTime)
+    D.inCombat=false
+    D.lastFinalizeAt=GetTime()
+    D.pendingCombatEndAt=0
+    D.pendingCombatEndStopTime=0
+    D.pendingCombatEndFirstAt=0
+    snapshotFinishedFight()
+    D.syncNonce=nil; D.syncIncoming=nil; D.syncSelectedSource=nil; D.syncOfferDeadline=0
+    D.startTime=0
+    updateUI()
+end
+
+-- Events -------------------------------------------------------------------
+function D.setParserEnabled(enabled)
+    enabled=enabled and true or false
+    if D.parserEnabled()==enabled then return end
+    if not enabled and D.startTime>0 then
+        D.pendingCombatEndStopTime=GetTime(); D.pendingCombatEndAt=GetTime()
+        finalizePendingCombatEnd(true)
+    end
+    if not enabled and D.threatCalEnabled and D.threatCalSession then
+        D.threatCalSession.endedAt=D.threatCalStamp()
+        D.threatCalSession.stopReason="parser paused"
+    end
+    CawDPSMeterCharDB=CawDPSMeterCharDB or {}
+    CawDPSMeterCharDB.parserEnabled=enabled
+    if not enabled then D.inCombat=false end
+    D.cancelCombatSync()
+    D.dpsLogQueue={}; D.dpsLogProbeAt=nil
+    D.pendingCombatEndAt=0; D.pendingCombatEndStopTime=0; D.pendingCombatEndFirstAt=0
+    D.localPlayerDead=false; D.deadSyncLastReceived=0; D.deadSyncNextRequest=0
+    D.activeRosterBuffs={}; D.activeEnemyCasts={}; D.activeCC={}; D.ccDamageByTarget={}
+    D.pendingSelfTotem=nil; D.pendingItemSummons={}
+    if enabled then
+        D.lastFinalizeAt=0
+        refreshRoster()
+        if D.threatCalEnabled and D.threatCalNewSession then D.threatCalNewSession()
+        elseif CawDPSMeterCharDB.threatCalAutoStart and D.threatCalStart then D.threatCalStart() end
+    end
+    if D.uiRefreshMeters then D.uiRefreshMeters() else updateUI() end
+end
+local events=CreateFrame("Frame","CawDPSMeterEvents",UIParent); D.events=events
+
+-- RC29: RavenCraft Threat API v4 normal-mob capability probe/sniffer.
+-- Keeps the RC26 threat calculator untouched. Unlike RC28, this probe intentionally
+-- removes TWThreat's elite/worldboss classification gate so RavenCraft can be tested
+-- against normal mobs. It still requires party/raid, a living NPC target, and combat.
+D.threatApiRequestPrefix = "TWT_UDTSv4"
+D.threatApiResponseMarker = "TWTv4="
+D.threatApiLimit = 10
+D.threatApiProbeEnabled = false
+D.threatApiNextRequest = 0
+D.threatApiRequests = 0
+D.threatApiResponses = 0
+D.threatApiLastError = nil
+D.threatApiDebugLines = D.threatApiDebugLines or {}
+D.threatApiPacketsSeen = 0
+D.threatApiRelevantPackets = 0
+D.threatApiSkipped = 0
+D.threatApiLastGate = "not checked"
+D.threatApiRequestsNormal = 0
+D.threatApiRequestsElite = 0
+D.threatApiResponsesNormal = 0
+D.threatApiResponsesElite = 0
+D.threatApiLastRequestClass = nil
+D.threatApiLastRequestAt = 0
+
+D.threatApiProbeLog=function(line)
+    D.threatApiDebugLines=D.threatApiDebugLines or {}
+    D.threatApiDebugCount=(D.threatApiDebugCount or 0)+1
+    if table.getn(D.threatApiDebugLines)<200 then
+        table.insert(D.threatApiDebugLines,string.format("%.2f | %s",GetTime(),tostring(line)))
+    end
+end
+
+D.threatApiProbeChannel=function()
+    if GetNumRaidMembers and GetNumRaidMembers()>0 then return "RAID" end
+    if GetNumPartyMembers and GetNumPartyMembers()>0 then return "PARTY" end
+    return nil
+end
+
+
+
+D.threatApiTargetGate=function()
+    if not D.threatApiProbeChannel() then return false,"not in party/raid" end
+    if not UnitExists or not UnitExists("target") then return false,"no target" end
+    if UnitIsDead and UnitIsDead("target") then return false,"target dead" end
+    if UnitIsPlayer and UnitIsPlayer("target") then return false,"target is player" end
+    local c=(UnitClassification and UnitClassification("target")) or "unknown"
+    if UnitAffectingCombat and not UnitAffectingCombat("target") then return false,"target not in combat ["..tostring(c).."]" end
+    return true,"eligible: "..tostring(UnitName and UnitName("target") or "?").." ["..tostring(c).."]"
+end
+
+D.sendThreatApiProbe=function(force)
+    if D.threatCalEnabled then D.threatApiLastError="Calibration owns the threat API"; return false end
+    local channel=D.threatApiProbeChannel()
+    if not channel then
+        D.threatApiLastError="Not in party/raid"
+        D.threatApiLastGate=D.threatApiLastError
+        return false
+    end
+    if not force then
+        local eligible,reason=D.threatApiTargetGate()
+        D.threatApiLastGate=reason
+        if not eligible then
+            D.threatApiSkipped=(D.threatApiSkipped or 0)+1
+            return false
+        end
+    end
+    local sender=getAddonSender()
+    if not sender then
+        D.threatApiLastError="No SendAddonMessage API"
+        return false
+    end
+    local msg="limit="..tostring(D.threatApiLimit or 10)
+    local ok,err=pcall(sender,D.threatApiRequestPrefix,msg,channel)
+    if not ok then
+        D.threatApiLastError=tostring(err)
+        D.threatApiProbeLog("SEND FAILED | prefix="..D.threatApiRequestPrefix.." | channel="..channel.." | "..tostring(err))
+        return false
+    end
+    D.threatApiRequests=(D.threatApiRequests or 0)+1
+    local rc=(UnitClassification and UnitClassification("target")) or "unknown"
+    D.threatApiLastRequestClass=rc
+    D.threatApiLastRequestAt=GetTime()
+    if rc=="elite" or rc=="worldboss" or rc=="rareelite" then
+        D.threatApiRequestsElite=(D.threatApiRequestsElite or 0)+1
+    else
+        D.threatApiRequestsNormal=(D.threatApiRequestsNormal or 0)+1
+    end
+    D.threatApiLastError=nil
+    D.threatApiProbeLog("SEND | class="..tostring(rc).." | prefix="..D.threatApiRequestPrefix.." | channel="..channel.." | msg="..msg)
+    return true
+end
+-- Sync timing must not depend on the meter window being visible. Hidden frames
+-- do not receive OnUpdate on the 1.12 client, so drive sync from this always-on frame.
+events:SetScript("OnUpdate",function()
+    if D.threatAlertTick then D.threatAlertTick() end
+    if D.threatPeerTick then D.threatPeerTick(sendSyncNow,syncChannel()) end
+    if D.talentSyncTick then D.talentSyncTick(sendSyncNow,syncChannel()) end
+    if D.talentViewTick then D.talentViewTick(sendSyncNow,syncChannel()) end
+    if D.threatSyncTick then D.threatSyncTick(sendSyncNow,syncChannel()) end
+    if D.targetSyncTick then D.targetSyncTick(sendSyncNow,syncChannel()) end
+    if not D.parserEnabled() then return end
+    if D.inCombat and not D.syncRequested and D.combatSyncEnabled() and syncChannel()
+        and GetTime()>=(D.nextCombatSyncCheck or 0) then
+        D.nextCombatSyncCheck=GetTime()+0.25
+        requestCombatSync()
+    end
+    if D.threatPrunePending and GetTime()>=(D.nextThreatPrune or 0) then D.nextThreatPrune=GetTime()+1; D.threatPrunePending() end
+    if D.threatApiProbeEnabled and GetTime()>=(D.threatApiNextRequest or 0) then
+        D.threatApiNextRequest=GetTime()+0.50
+        D.sendThreatApiProbe()
+    end
+    if D.threatDebugEnabled and D.captureThreatTargetState then D.captureThreatTargetState(false) end
+    if D.threatCalcDebugEnabled and D.threatValidationTick then D.threatValidationTick() end
+    if finalizeSyncOfferSelection and D.syncNonce and not D.syncSelectedSource
+        and (D.syncOfferDeadline or 0)>0 then
+        finalizeSyncOfferSelection()
+    end
+    if table.getn(D.syncQueue)>0 then flushSyncQueue() end
+
+    -- Keep receiving the surviving group's Damage/Healing after the local
+    -- player dies. Use a lower-frequency cumulative snapshot so multiple dead
+    -- Caw clients do not create a 1 Hz snapshot storm in a raid. PARTY/RAID
+    -- transport is retained for Vanilla/RavenCraft compatibility.
+    if D.localPlayerDead and D.startTime and D.startTime>0 then
+        local deadNow=GetTime()
+        if deadNow>=(D.deadSyncNextRequest or 0) then
+            local lastAge=999
+            if D.deadSyncLastReceived and D.deadSyncLastReceived>0 then
+                lastAge=deadNow-D.deadSyncLastReceived
+            end
+            D.deadSyncNextRequest=deadNow+2.25
+            if lastAge>=1.75 and requestCombatSync then requestCombatSync(true) end
+        end
+    end
+
+    if D.pendingCombatEndAt and D.pendingCombatEndAt>0 then finalizePendingCombatEnd() end
+
+    -- RavenCraft/custom-client safety net: PLAYER_REGEN_ENABLED can
+    -- occasionally be missed on one client. While a fight is open, confirm
+    -- the player's actual combat state four times per second. Only schedule
+    -- the normal 1.5s grace close after being out of combat for 0.5s, so brief
+    -- combat-state flicker does not split an encounter.
+    if D.inCombat and UnitAffectingCombat then
+        local now=GetTime()
+        if now>=(D.combatStateCheckAt or 0) then
+            D.combatStateCheckAt=now+0.25
+            if UnitAffectingCombat("player") then
+                D.outOfCombatSince=0
+            else
+                local rosterRecent=false
+                if D.lastRosterCombatActivity and D.lastRosterCombatActivity>0
+                    and now-D.lastRosterCombatActivity<4.00 then
+                    rosterRecent=true
+                end
+                if D.pendingCombatEndAt and D.pendingCombatEndAt>0 then
+                    -- A grace close is already scheduled, normally by
+                    -- PLAYER_REGEN_ENABLED. Let it run: the local player has left
+                    -- combat and their segment must end even while the rest of the
+                    -- group is still fighting. Re-entering combat is handled by
+                    -- PLAYER_REGEN_DISABLED, which cancels this.
+                elseif rosterRecent then
+                    -- Group still active and nothing scheduled yet: hold off so a
+                    -- brief personal combat drop mid-encounter does not split it.
+                    D.outOfCombatSince=0
+                    if not D.lastRosterHoldLog or now-D.lastRosterHoldLog>1.0 then
+                        D.lastRosterHoldLog=now
+                        D.logLine("net","HOLD player OOC, no grace scheduled, roster active "..string.format("%.2f",now-D.lastRosterCombatActivity).."s ago")
+                    end
+                elseif not D.outOfCombatSince or D.outOfCombatSince<=0 then
+                    D.outOfCombatSince=now
+                elseif now-D.outOfCombatSince>=0.50 then
+                    D.pendingCombatEndStopTime=D.outOfCombatSince
+                    D.pendingCombatEndAt=now+(D.combatEndGrace or 1.50)
+                    if not D.pendingCombatEndFirstAt or D.pendingCombatEndFirstAt<=0 then D.pendingCombatEndFirstAt=D.outOfCombatSince end
+                    D.logLine("net","FALLBACK PLAYER_REGEN_ENABLED missed, scheduling grace close +"..string.format("%.2f",D.combatEndGrace or 1.5))
+                    if requestCombatSync then requestCombatSync(true) end
+                end
+            end
+        end
+    end
+end)
+local function reg(ev) local ok=pcall(events.RegisterEvent,events,ev); if ev=="RAW_COMBATLOG" then D.rawRegistered=ok end end
+reg("ADDON_LOADED"); reg("RAW_COMBATLOG"); reg("UNIT_CASTEVENT"); reg("CHAT_MSG_ADDON"); reg("CHAT_MSG_COMBAT_FRIENDLY_DEATH"); reg("PLAYER_REGEN_DISABLED"); reg("PLAYER_REGEN_ENABLED"); reg("PLAYER_ENTERING_WORLD"); reg("PARTY_MEMBERS_CHANGED"); reg("RAID_ROSTER_UPDATE"); reg("UNIT_PET"); reg("UNIT_INVENTORY_CHANGED"); reg("PLAYER_AURAS_CHANGED"); reg("PLAYER_LOGOUT")
+refreshRoster()
+events:SetScript("OnEvent",function()
+    if D.parserEvents[event] and not D.parserEnabled() then return end
+    if event=="ADDON_LOADED" then
+        if arg1=="CawDPSMeter" or arg1==nil then initializeSavedVariables() end
+    elseif event=="UNIT_INVENTORY_CHANGED" then
+        -- SuperWoW exposes friendly players' temporary weapon enchants too.
+        -- Re-scan on any roster inventory-change event; the event is infrequent
+        -- and the updater diffs the cache before touching uptime timers.
+        if D.updateWeaponBuffs then D.updateWeaponBuffs() end
+    elseif event=="PLAYER_AURAS_CHANGED" then
+        if D.scanPlayerBuffs then D.scanPlayerBuffs(true) end
+    elseif event=="PLAYER_REGEN_DISABLED" then
+        D.logState("REGEN_DISABLED (enter combat)")
+        D.localPlayerDead=false
+        D.deadSyncLastReceived=0
+        D.deadSyncNextRequest=0
+        D.outOfCombatSince=0
+        D.combatStateCheckAt=0
+        -- Re-entering combat during the short grace window means this is still
+        -- the same encounter; cancel the pending close instead of resetting.
+        if D.pendingCombatEndAt and D.pendingCombatEndAt>0 then
+            local graceAge=(D.pendingCombatEndFirstAt and D.pendingCombatEndFirstAt>0) and (GetTime()-D.pendingCombatEndFirstAt) or 0
+            if graceAge<=1.5 then
+                D.logLine("regen","REGEN_DISABLED cancelled fresh grace (age "..string.format("%.2f",graceAge).."s) -> same fight")
+                D.pendingCombatEndAt=0
+                D.pendingCombatEndStopTime=0
+                D.pendingCombatEndFirstAt=0
+            else
+                -- The grace has been pending far longer than its window: the
+                -- prior fight's close was being blocked (stuck CC / dead-sync).
+                -- The player is genuinely re-entering combat now, so force the
+                -- prior fight closed and let a fresh segment open below.
+                D.logLine("regen","REGEN_DISABLED stale grace (age "..string.format("%.2f",graceAge).."s) -> force-close prior fight")
+                clearTable(D.activeCC); clearTable(D.ccDamageByTarget)
+                D.pendingCombatEndAt=GetTime()-0.01
+                finalizePendingCombatEnd()
+            end
+        end
+
+        -- RAW_COMBATLOG can reach us before this client fires PLAYER_REGEN_DISABLED.
+        -- In that case ensureStarted() has already opened the group fight.
+        refreshRoster()
+        local opened=false
+        if not D.inCombat or D.startTime==0 then
+            resetFight()
+            D.inCombat=true
+            D.setFightStartTime(GetTime())
+            opened=true
+        end
+        if opened then
+            D.logLine("seg","REGEN_DISABLED opened a NEW segment")
+            if D.seedActiveRosterBuffs then D.seedActiveRosterBuffs() end
+            if requestCombatSync then requestCombatSync() end
+        else
+            local segAge=(D.startTime and D.startTime>0) and (GetTime()-D.startTime) or -1
+            if segAge>=0 and segAge<1.5 then
+                D.logLine("seg","REGEN_DISABLED: segment already opened "..string.format("%.2f",segAge).."s ago by RAW, kept")
+            else
+                D.logLine("seg","REGEN_DISABLED: kept running segment (age "..string.format("%.2f",segAge).."s) = flicker within grace")
+            end
+        end
+        if D.uiCombatSelection then D.uiCombatSelection() end
+        updateUI()
+    elseif event=="PLAYER_REGEN_ENABLED" then
+        D.logState("REGEN_ENABLED (leave combat)")
+        D.outOfCombatSince=GetTime()
+        D.combatStateCheckAt=0
+        -- Keep the current fight alive briefly. During this window Caw performs
+        -- one final sync pass, trailing RAW events remain attached to the fight,
+        -- and very short Vanilla combat drops do not fragment the segment.
+        local stopTime=GetTime()
+        D.pendingCombatEndStopTime=stopTime
+        D.pendingCombatEndAt=stopTime+(D.combatEndGrace or 1.50)
+        if not D.pendingCombatEndFirstAt or D.pendingCombatEndFirstAt<=0 then D.pendingCombatEndFirstAt=stopTime end
+        D.logLine("regen","REGEN_ENABLED scheduled grace close +"..string.format("%.2f",D.combatEndGrace or 1.5))
+        if requestCombatSync then requestCombatSync(true) end
+        updateUI()
+    elseif event=="UNIT_CASTEVENT" then
+        local castGuid=arg1 or ""
+        if arg3=="CAST" then
+            -- CAST is a completed enemy cast. It must not remain eligible for
+            -- the next damaging ability as a ghost interrupt.
+            D.activeEnemyCasts[castGuid]=nil
+        elseif arg3=="FAIL" then
+            -- On RavenCraft, an interrupted cast emits FAIL in the same frame
+            -- as the player's Kick/Pummel hit. Defer removal briefly so the
+            -- RAW damage line can correlate the landed interrupt. A genuine
+            -- failed cast is removed by tryRecordInterrupt after the grace
+            -- window expires.
+            local pending=D.activeEnemyCasts[castGuid]
+            if pending then pending.failedAt=GetTime() end
+        end
+        if D.threatDebugEnabled and D.captureThreatDebug then
+            D.captureThreatDebug("CAST",tostring(arg1).." -> "..tostring(arg2).." | "..tostring(arg3).." | spellId "..tostring(arg4).." | duration "..tostring(arg5))
+        end
+        -- RC23 validation: retain every UNIT_CASTEVENT while /cdthreatcalc is
+        -- active. This lets us see the exact RavenCraft success/failure event
+        -- sequence for non-damaging threat abilities such as Distracting Shot.
+        if D.threatCalcDebugEnabled and D.threatCalcLog then
+            D.threatCalcLog("CAST RAW | "..tostring(arg1).." -> "..tostring(arg2).." | "..tostring(arg3).." | spellId "..tostring(arg4).." | duration "..tostring(arg5))
+        end
+        if D.handleUnitCastAuraSource then D.handleUnitCastAuraSource(arg1,arg2,arg3,arg4) end
+        if D.handleUnitCastCC then D.handleUnitCastCC(arg1,arg2,arg3,arg4) end
+        if D.observeItemSummonCast then D.observeItemSummonCast(arg1,arg2,arg3,arg4) end
+        if D.threatOnCast then D.threatOnCast(arg1,arg2,arg3,arg4) end
+    elseif event=="CHAT_MSG_COMBAT_FRIENDLY_DEATH" then
+        if D.captureFriendlyDeath then D.captureFriendlyDeath(event,arg1) end
+    elseif event=="RAW_COMBATLOG" then
+        D.threatEventTarget=nil
+        if D.threatCalRecordRaw then D.threatCalRecordRaw(arg1,arg2) end
+        if D.threatFeignRawFailure then D.threatFeignRawFailure(arg2) end
+        if D.threatFeignHitCheck then D.threatFeignHitCheck(arg2) end
+        if arg2 then
+            local _,_,castSource,castSpell=string.find(arg2,"^(0x[%x]+)'s (.-) hits ")
+            if not castSource then _,_,castSource,castSpell=string.find(arg2,"^(0x[%x]+)'s (.-) crits ") end
+            if not castSource then _,_,castSource,castSpell=string.find(arg2,"^(0x[%x]+) casts (.-) on ") end
+            if not castSource then _,_,castSource,castSpell=string.find(arg2,"^(0x[%x]+) casts (.-)%.") end
+            if castSource then clearEnemyCastOnResult(castSource,castSpell) end
+            if D.threatOnFeignSuccess then
+                if arg2=="You gain Feign Death." then D.threatOnFeignSuccess(safeUnitGUID("player") or D.selfKey)
+                else
+                    local _,_,fg=string.find(arg2,"^(0x[%x]+) gains Feign Death%.$")
+                    if not fg then _,_,fg=string.find(arg2,"^(0x[%x]+) casts Feign Death%.$") end
+                    if fg then D.threatOnFeignSuccess(fg) end
+                end
+            end
+        end
+        D.rawTotal=D.rawTotal+1
+        D.currentRawEv=arg1; D.currentRawText=arg2
+        captureRawDebug(arg1,arg2)
+        -- RC23 validation: include the unmodified SuperWoW RAW stream in the
+        -- threat calculation log. The requested isolated test is intentionally
+        -- short, so the 300-line cap remains practical while preserving events
+        -- immediately before and after Distracting Shot.
+        if D.threatCalcDebugEnabled and D.threatCalcLog then
+            D.threatCalcLog("RAW | "..tostring(arg1).." | "..tostring(arg2))
+        end
+        if D.threatDebugEnabled and D.captureThreatDebug then D.captureThreatDebug("RAW",tostring(arg1).." | "..tostring(arg2)) end
+        if D.captureIncomingDamage then D.captureIncomingDamage(arg1,arg2) end
+        if D.captureFriendlyDeath then D.captureFriendlyDeath(arg1,arg2) end
+        if D.clearDeadEnemyState then D.clearDeadEnemyState(arg1,arg2) end
+        if D.captureCCDamageCandidate then D.captureCCDamageCandidate(arg1,arg2) end
+
+        -- Pre-combat long buffs must survive until the next segment starts.
+        -- Capture the observed RavenCraft self-buff form directly at the RAW
+        -- boundary so it cannot be lost in later parser routing:
+        -- CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS | You gain Blessing of Might.
+        if arg1 and arg2 and string.find(arg1,"_BUFF",1,true) then
+            local _,_,preBuff=string.find(arg2,"^You gain (.-)%.")
+            if preBuff then
+                if not D.isRawResourceGain(string.lower(preBuff)) then
+                    local _,_,baseBuff=string.find(preBuff,"^(.-) %([0-9]+%)$")
+                    if baseBuff then preBuff=baseBuff end
+                    D.activeRosterBuffs["player|"..preBuff]={target="player",spell=preBuff}
+                    D.lastPreCombatBuff=preBuff
+                end
+            end
+        end
+
+        if not (D.localPlayerDead and not D.inCombat) then
+            parseRaw(arg1,arg2)
+        end
+    elseif event=="CHAT_MSG_ADDON" then
+        if D.threatApiProbeEnabled then
+            D.threatApiPacketsSeen=(D.threatApiPacketsSeen or 0)+1
+            local packet="PACKET #"..tostring(D.threatApiPacketsSeen).." | prefix="..tostring(arg1).." | channel="..tostring(arg3).." | sender="..tostring(arg4).." | msg="..tostring(arg2)
+            D.threatApiProbeLog(packet)
+            local a1=tostring(arg1 or "")
+            local a2=tostring(arg2 or "")
+            local relevant=(string.find(a1,"TWT",1,true)~=nil) or (string.find(a2,"TWT",1,true)~=nil) or (string.find(a2,"Threat",1,true)~=nil) or (string.find(a2,"threat",1,true)~=nil)
+            if relevant then
+                D.threatApiRelevantPackets=(D.threatApiRelevantPackets or 0)+1
+                chat("|cffffff00Threat API sniff|r "..packet)
+            end
+            if arg2 and string.find(a2,D.threatApiResponseMarker,1,true) then
+                D.threatApiResponses=(D.threatApiResponses or 0)+1
+                local rc=(UnitClassification and UnitClassification("target")) or D.threatApiLastRequestClass or "unknown"
+                if rc=="elite" or rc=="worldboss" or rc=="rareelite" then
+                    D.threatApiResponsesElite=(D.threatApiResponsesElite or 0)+1
+                else
+                    D.threatApiResponsesNormal=(D.threatApiResponsesNormal or 0)+1
+                end
+                chat("|cff7fbf4dThreat API v4 response received!|r #"..tostring(D.threatApiResponses).." ["..tostring(rc).."] | "..a2)
+            end
+        end
+        -- Threat diagnostic: passively record every addon-message prefix seen on the
+        -- server.  Do not send/probe unknown prefixes; this only observes traffic
+        -- the client already receives.  Useful for spotting a RavenCraft/Octo
+        -- server-side threat service comparable in principle to Turtle's custom API.
+        if D.threatDebugEnabled and D.captureThreatDebug then
+            D.captureThreatDebug("ADDON", "prefix="..tostring(arg1).." | channel="..tostring(arg3).." | sender="..tostring(arg4).." | msg="..tostring(arg2))
+        end
+        if arg1==D.syncPrefix and arg2 then
+            D.syncAddonEvents=(D.syncAddonEvents or 0)+1
+            applySyncMessage(arg4,arg2,arg3)
+        end
+    elseif event=="PLAYER_LOGOUT" then saveWindowState(); if D.saveMultiWindows then D.saveMultiWindows() end
+    elseif event=="PLAYER_ENTERING_WORLD" then if not D.layoutRestored then restoreWindowState() end; refreshRoster(); if applyWindowLock then applyWindowLock() end; D.applyCompactWindowLayout(); updateUI(); if D.restoreMultiWindows then D.restoreMultiWindows() end
+    elseif event=="PARTY_MEMBERS_CHANGED" or event=="RAID_ROSTER_UPDATE" or event=="UNIT_PET" then refreshRoster() end
+end)
+
+-- Commands -----------------------------------------------------------------
+
+-- Optional local diagnostic log control.
+SLASH_CAWDPSLOG1="/cdlog"
+SlashCmdList["CAWDPSLOG"]=function(msg)
+    msg=string.lower(tostring(msg or ""))
+    if msg=="on" then
+        D.logEnabled=true; D.log={}; D.logSeq=0; D.logStart=0
+        chat("|cff7fbf4dlog ON|r (cleared). Do your pulls, then /cdlog save + /reload, or /cdlog dump.")
+    elseif msg=="off" then
+        D.logEnabled=false
+        chat("log OFF ("..tostring(table.getn(D.log)).." lines kept in memory)")
+    elseif msg=="clear" then
+        D.log={}; D.logSeq=0; D.logStart=0
+        chat("log cleared")
+    elseif string.find(msg,"^dump") then
+        local _,_,num=string.find(msg,"^dump%s*(%d+)")
+        local n=tonumber(num) or 60
+        local total=table.getn(D.log)
+        local from=total-n+1; if from<1 then from=1 end
+        chat("--- log "..tostring(from).."-"..tostring(total).." of "..tostring(total).." ---")
+        local i=from
+        while i<=total do
+            local e=D.log[i]
+            if e then chat(string.format("%4d %8.2f [%-5s] %s", e.seq or 0, e.rel or 0, e.cat or "?", e.text or "")) end
+            i=i+1
+        end
+        chat("--- end ---")
+    elseif msg=="save" then
+        CawDPSMeterLog={
+            savedAt=(date and date("%Y-%m-%d %H:%M:%S")) or "",
+            version=D.version,
+            count=table.getn(D.log),
+            lines=D.log
+        }
+        chat("saved to CawDPSMeterLog ("..tostring(table.getn(D.log)).." lines). /reload now, then send me the file.")
+    else
+        chat("/cdlog on | off | clear | dump [n] | save   (state: "..(D.logEnabled and "ON" or "OFF")..", "..tostring(table.getn(D.log)).." lines)")
+    end
+end
+
+-- /cd hide|show and the bare toggle only ever touched the primary window;
+-- the up to three additional windows (D.multiWindows[2..4]) were left as-is,
+-- so hiding the meter left extra windows sitting on screen. Apply the same
+-- action to every open window instead.
+local function forEachMeterWindow(fn)
+    fn(frame)
+    local i=2
+    while i<=D.multiWindowMax do
+        local v=D.multiWindows[i]
+        if v and not v.closed and v.frame then fn(v.frame) end
+        i=i+1
+    end
+end
+
+SLASH_CAWDPS1="/cawdps"
+SLASH_CAWDPS2="/cd"
+SlashCmdList["CAWDPS"]=function(msg)
+    if msg=="hide" then forEachMeterWindow(function(f) if D.uiSetMeterShown then D.uiSetMeterShown(f,false) else f:Hide() end end)
+    elseif msg=="show" then
+        forEachMeterWindow(function(f) if D.uiSetMeterShown then D.uiSetMeterShown(f,true) else f:Show() end end)
+        D.reopenClosedMultiWindows()
+    elseif msg=="reset" then D.uiResetData("all"); chat("All combat data reset. Window settings kept.")
+    elseif msg=="resetpos" then resetWindowPosition(); saveWindowState(); updateUI(); chat("Window position reset.")
+    elseif msg=="resetoverall" then D.overallSegment={actors={},duration=0,fights=0}; updateUI(); chat("Overall segment reset.")
+    elseif msg=="current" then D.segment="current"; D.segmentIndex=0; D.scrollOffset=0; updateUI()
+    elseif msg=="last" then if D.fightHistory[1] then D.segment="history"; D.segmentIndex=1; D.scrollOffset=0; updateUI() end
+    elseif msg=="overall" then D.segment="overall"; D.segmentIndex=0; D.scrollOffset=0; updateUI()
+    elseif msg=="damage" or msg=="healing" or msg=="overhealing" or msg=="damageTaken" or msg=="deaths" or msg=="interrupts" or msg=="cc" or msg=="ccBreaks" or msg=="dispels" or msg=="buffs" or msg=="debuffsCast" or msg=="debuffsReceived" then setMode(msg)
+    elseif msg=="lock" then D.locked=true; saveWindowState(); applyWindowLock(); chat("Window locked.")
+    elseif msg=="unlock" then D.locked=false; saveWindowState(); applyWindowLock(); chat("Window unlocked.")
+    elseif msg=="history" then
+        chat("Last fights:")
+        local i=1
+        while i<=table.getn(D.fightHistory) do
+            local h=D.fightHistory[i]
+            local dmg=0; local heal=0; local k,a
+            if h and h.actors then
+                for k,a in h.actors do
+                    dmg=dmg+(a.damage or 0)
+                    heal=heal+(a.healing or 0)
+                end
+            end
+            local dps=0
+            if h and h.duration and h.duration>0 then dps=dmg/h.duration end
+            chat(D.historyLabel(h,i).." - "..comma(dmg).." dmg, "..comma(heal).." heal, "..string.format("%.1fs",(h and h.duration) or 0)..", "..string.format("%.1f DPS",dps))
+            i=i+1
+        end
+    else
+        local shown=not frame:IsVisible()
+        forEachMeterWindow(function(f)
+            if D.uiSetMeterShown then D.uiSetMeterShown(f,shown)
+            elseif shown then f:Show() else f:Hide() end
+        end)
+        if shown then D.reopenClosedMultiWindows() end
+    end
+end
+SLASH_CAWDPSDEBUG1="/cddebug"
+SlashCmdList["CAWDPSDEBUG"]=function(msg)
+    chat("Caw DPS Meter v"..D.version)
+    chat("Client: WoW 1.12 / RavenCraft-Octo compatibility mode")
+    chat("SuperAPI RAW_COMBATLOG: "..tostring(D.rawRegistered).." | RAW events: "..tostring(D.rawTotal))
+    getAddonSender()
+    chat("Caw Sync: requested "..tostring(D.syncRequested).." | request sent "..tostring(D.syncRequestSent).." | received "..tostring(D.syncReceived or 0).." | source "..tostring(D.syncLastSource or "none"))
+    chat("Caw Sync API: "..tostring(D.syncAPI or "unknown").." | last error "..tostring(D.syncLastError or "none"))
+    chat("Caw Sync transport: addon events "..tostring(D.syncAddonEvents or 0).." | requests seen "..tostring(D.syncRequestsSeen or 0).." | sent "..tostring(D.syncSent or 0))
+    chat("SavedVariables: "..tostring(D.savedVariablesReady).." | layout saved: "..tostring(CawDPSMeterDB and CawDPSMeterDB.layoutSaved).." | locked: "..tostring(D.locked))
+    chat("Mode: current "..tostring(D.mode).." | global "..tostring(CawDPSMeterDB and CawDPSMeterDB.mode).." | character "..tostring(CawDPSMeterCharDB and CawDPSMeterCharDB.mode))
+    chat("Segment: "..tostring(D.segment).." | selected history: "..tostring(D.segmentIndex or 0).." | current target: "..tostring(currentFightLabel()).." | stored fights: "..tostring(table.getn(D.fightHistory)).." | overall fights: "..tostring(D.overallSegment and D.overallSegment.fights or 0))
+    chat("Parsed hits: "..tostring(D.parsedTotal).." | last parsed: "..tostring(D.lastParsed))
+    chat("Last utility: "..tostring(D.lastUtility or "none").." | ignored outsiders: "..tostring(D.ignoredOutsiders or 0))
+    local list,actorCount=sortedActors(); local mapCount=0; local k,v; for k,v in D.guidToActor do mapCount=mapCount+1 end
+    chat("Displayed actors: "..tostring(actorCount).." | roster GUIDs: "..tostring(mapCount).." | damage: "..tostring(totalDamage()).." | healing: "..tostring(totalHealing()))
+end
+SLASH_CAWDPSSYNCDEBUG1="/cdsync"
+SlashCmdList["CAWDPSSYNCDEBUG"]=function(msg)
+    if msg=="retry" or msg=="test" then
+        requestCombatSync(true)
+        chat("Sync manual send attempted.")
+    end
+    getAddonSender()
+    chat("Sync requested: "..tostring(D.syncRequested).." | request sent: "..tostring(D.syncRequestSent).." | snapshots received: "..tostring(D.syncReceived or 0).." | source: "..tostring(D.syncLastSource or "none").." | adopted age: "..string.format("%.1fs",D.syncBestAge or 0))
+    chat("Sync transport: API "..tostring(D.syncAPI or "unknown").." | attempts "..tostring(D.syncSendAttempts or 0).." | sent "..tostring(D.syncSent or 0).." | addon events "..tostring(D.syncAddonEvents or 0).." | requests seen "..tostring(D.syncRequestsSeen or 0).." | queued "..tostring(table.getn(D.syncQueue)))
+    chat("Sync last: channel "..tostring(D.syncLastChannel or "none").." | error: "..tostring(D.syncLastError or "none"))
+    chat("Sync wire format: tilde delimiter (chat-safe)")
+    chat("Sync source selection: offers "..tostring(syncOfferCount()).." | selected "..tostring(D.syncSelectedSource or "none").." | rejected packets "..tostring(D.syncRejectedSources or 0))
+    chat("Sync queue: "..tostring(table.getn(D.syncQueue)).." / "..tostring(D.syncQueueMax or 1000).." | dropped "..tostring(D.syncQueueDropped or 0))
+    local graceLeft=0
+    if D.pendingCombatEndAt and D.pendingCombatEndAt>GetTime() then graceLeft=D.pendingCombatEndAt-GetTime() end
+    if graceLeft>0 then
+        chat("Combat-end reconcile: pending "..string.format("%.2fs",graceLeft))
+    else
+        chat("Combat-end reconcile: idle")
+    end
+end
+
+SLASH_CAWDPSDAMAGEDEBUG1="/cddamage"
+SlashCmdList["CAWDPSDAMAGEDEBUG"]=function(msg)
+    local actors=getDisplayActors()
+    chat("Damage debug for selected segment:")
+    local k,a
+    for k,a in actors do
+        if a and (a.damage or 0)>0 and not a.isPet then
+            chat(tostring(a.name)..": "..tostring(a.damage or 0))
+            local spell,entry
+            for spell,entry in a.spells do
+                if entry and (entry.damage or 0)>0 then
+                    chat("  "..tostring(spell)..": "..tostring(entry.damage or 0))
+                end
+            end
+            local petDamage=0
+            local pk,pa
+            for pk,pa in actors do
+                if pa and pa.isPet and pa.ownerKey==a.key then
+                    if pa.isTotem then
+                        chat("  Totem "..tostring(pa.name or "Totem")..": "..tostring(pa.damage or 0))
+                        local ts,te
+                        for ts,te in pa.spells do
+                            if te and (te.damage or 0)>0 then chat("    "..tostring(ts)..": "..tostring(te.damage or 0)) end
+                        end
+                    else
+                        petDamage=petDamage+(pa.damage or 0)
+                    end
+                end
+            end
+            if petDamage>0 then chat("  Pet: "..tostring(petDamage)) end
+        end
+    end
+end
+
+SLASH_CAWDPSCCDEBUG1="/cdcc"
+SlashCmdList["CAWDPSCCDEBUG"]=function()
+    chat("CC debug:")
+    local n=0; local target,c
+    for target,c in D.activeCC do
+        n=n+1
+        chat("active "..tostring(n)..": "..tostring(c and c.spell).." | target "..tostring(target).." | source "..tostring(c and c.sourceKey))
+    end
+    if n==0 then chat("active CC: none") end
+    local h=D.lastCCDamage
+    if h then
+        chat("last damage: "..tostring(h.source and h.source.name or "?").." -> "..tostring(h.target).." | "..tostring(h.ability or "Melee").." | "..tostring(h.amount or 0).." dmg | age "..string.format("%.2f",GetTime()-(h.time or 0)))
+    else
+        chat("last damage: none")
+    end
+    local tk,th
+    for tk,th in D.ccDamageByTarget do
+        chat("break candidate: "..tostring(th.source and th.source.name or "?").." -> "..tostring(tk).." | "..tostring(th.ability or "Melee").." | "..tostring(th.amount or 0).." dmg | age "..string.format("%.2f",GetTime()-(th.time or 0)))
+    end
+    chat("last cast event: "..tostring(D.lastCCCastEvent or "none"))
+    chat("SpellInfo: "..tostring(D.lastCCSpellInfo or "none"))
+    chat("last landed: "..tostring(D.lastCCLanded or "none"))
+    chat("segment on land: "..tostring(D.lastCCSegmentOpen or "none"))
+    chat("last break: "..tostring(D.lastCCBreak or "none"))
+end
+
+SLASH_CAWDPSDEATHDEBUG1="/cddeath"
+SlashCmdList["CAWDPSDEATHDEBUG"]=function()
+    chat("Damage Taken / Death debug:")
+    chat("last death RAW: "..tostring(D.lastDeathRaw or "none"))
+    chat("last death record: "..tostring(D.lastDeathRecord or "none"))
+    local activityAge="none"
+    if D.lastRosterCombatActivity and D.lastRosterCombatActivity>0 then activityAge=string.format("%.2f",GetTime()-D.lastRosterCombatActivity) end
+    chat("last roster combat activity age: "..tostring(activityAge))
+    chat("local player dead freeze: "..tostring(D.localPlayerDead and true or false).." | inCombat "..tostring(D.inCombat and true or false).." | start "..tostring(D.startTime or 0))
+    local deadSyncAge="none"
+    if D.deadSyncLastReceived and D.deadSyncLastReceived>0 then deadSyncAge=string.format("%.2f",GetTime()-D.deadSyncLastReceived) end
+    chat("dead-client sync age: "..tostring(deadSyncAge).." | next request "..tostring(D.deadSyncNextRequest or 0))
+    local selfHit=D.lastSelfIncomingDamage
+    if selfHit then
+        chat("self incoming: "..tostring(selfHit.sourceName).." | "..tostring(selfHit.ability).." | "..tostring(selfHit.amount).." dmg | age "..string.format("%.2f",GetTime()-(selfHit.time or 0)))
+    else
+        chat("self incoming: none")
+    end
+    local key,hit
+    local n=0
+    for key,hit in D.lastIncomingDamage do
+        n=n+1
+        chat("incoming "..tostring(key).." | "..tostring(hit.sourceName or hit.sourceGuid or "?").." | "..tostring(hit.ability or "?").." | "..tostring(hit.amount or 0).." dmg | crit "..tostring(hit.crit and true or false).." | overkill "..tostring(hit.overkill))
+        if n>=20 then chat("... output capped at 20 entries"); break end
+    end
+    if n==0 then chat("incoming: none") end
+end
+
+SLASH_CAWDPSGROUPAURADEBUG1="/cdgroupscan"
+SlashCmdList["CAWDPSGROUPAURADEBUG"]=function()
+    if D.scanGroupBuffs then D.scanGroupBuffs() end
+    chat("Group aura cache:")
+    local key,b
+    local n=0
+    for key,b in D.activeRosterBuffs do
+        if b and b.target and b.spell then
+            n=n+1
+            chat(tostring(b.target).." | "..tostring(b.spell))
+            if n>=80 then chat("... output capped at 80 entries"); break end
+        end
+    end
+    if n==0 then chat("No roster buffs found.") end
+end
+
+SLASH_CAWDPSAURASCANDEBUG1="/cdaurascan"
+SlashCmdList["CAWDPSAURASCANDEBUG"]=function()
+    chat("Player aura scan:")
+    if not UnitBuff then chat("UnitBuff unavailable."); return end
+    local i
+    for i=1,32 do
+        local ok,texture,count,spellId=pcall(UnitBuff,"player",i)
+        if not ok or not texture then break end
+        local name=D.getUnitBuffName("player",i,spellId)
+        chat(tostring(i)..": "..tostring(name or "unknown").." | spellId "..tostring(spellId or "nil"))
+    end
+end
+
+SLASH_CAWDPSWEAPONDEBUG1="/cdweapon"
+SlashCmdList["CAWDPSWEAPONDEBUG"]=function()
+    D.scanWeaponBuffs()
+    chat("Weapon buff debug:")
+    chat("Player Main Hand: "..tostring(D.weaponBuffState.main))
+    chat("Player Off Hand: "..tostring(D.weaponBuffState.off))
+    local n=0; local key,b
+    for key,b in D.activeRosterBuffs do
+        if b and b.weaponBuff then
+            n=n+1
+            chat(tostring(n)..": "..tostring(b.unit or "?").." | "..tostring(b.target or "?").." | "..tostring(b.spell or "?"))
+        end
+    end
+    if n==0 then chat("Weapon cache: empty") end
+end
+
+SLASH_CAWDPSBUFFDEBUG1="/cdbuffs"
+SlashCmdList["CAWDPSBUFFDEBUG"]=function()
+    chat("Buff debug:")
+    chat("inCombat="..tostring(D.inCombat).." | startTime="..tostring(D.startTime).." | selfKey="..tostring(D.selfKey))
+    local pg=safeUnitGUID("player")
+    chat("playerGUID="..tostring(pg).." | rosterSelf="..tostring(D.guidToActor[pg or D.selfKey]~=nil))
+    chat("last RAW self-buff="..tostring(D.lastPreCombatBuff or "none"))
+    local n=0; local k,b
+    for k,b in D.activeRosterBuffs do
+        n=n+1
+        chat("cache "..tostring(n)..": "..tostring(k).." -> "..tostring(b and b.spell).." / target "..tostring(b and b.target))
+    end
+    if n==0 then chat("cache: empty") end
+    local si=D.guidToActor[pg or D.selfKey]
+    local a=si and D.actors[si.key] or nil
+    if not a then
+        chat("current actor: none")
+    else
+        local bn=0; local spell,e
+        for spell,e in a.buffs do
+            bn=bn+1
+            chat("actor buff "..tostring(bn)..": "..tostring(spell).." | count "..tostring(e.count or 0).." | duration "..string.format("%.1f",auraEntryDuration(e)))
+        end
+        if bn==0 then chat("actor buffs: empty") end
+    end
+end
+
+SLASH_CAWDPSHEALINGDEBUG1="/cdhealing"
+SlashCmdList["CAWDPSHEALINGDEBUG"]=function(msg)
+    local actors=getDisplayActors()
+    chat("Healing debug for selected segment:")
+    local k,a
+    for k,a in actors do
+        if a and (a.healing or 0)>0 and not a.isPet then
+            chat(tostring(a.name)..": "..tostring(a.healing or 0))
+            local spell,entry
+            for spell,entry in a.healSpells do
+                if entry and (entry.healing or 0)>0 then
+                    local hits=entry.hits or 0
+                    local crits=entry.crits or 0
+                    local critPct=0
+                    if hits>0 then critPct=(crits/hits)*100 end
+                    chat("  "..tostring(spell)..": "..tostring(entry.healing or 0)..
+                        " | heals "..tostring(hits)..
+                        " | crits "..tostring(crits)..
+                        " ("..string.format("%.1f%%",critPct)..")")
+                end
+            end
+            local petHealing=0
+            local pk,pa
+            for pk,pa in actors do
+                if pa and pa.isPet and pa.ownerKey==a.key then
+                    petHealing=petHealing+(pa.healing or 0)
+                end
+            end
+            if petHealing>0 then chat("  Pet: "..tostring(petHealing)) end
+        end
+    end
+end
+
+SLASH_CAWDPSTHREATAPI1="/cdthreatapi"
+SlashCmdList["CAWDPSTHREATAPI"]=function(msg)
+    msg=string.lower(tostring(msg or ""))
+    if D.threatCalEnabled and msg~="status" then chat("Calibration owns the threat API. Stop /cdthreatcal before probing."); return end
+    if msg=="status" then
+        local eligible,reason=D.threatApiTargetGate()
+        chat("Threat API RC29: "..(D.threatApiProbeEnabled and "ON" or "OFF").." | requests "..tostring(D.threatApiRequests or 0).." | v4 responses "..tostring(D.threatApiResponses or 0).." | packets "..tostring(D.threatApiPacketsSeen or 0).." | TWT/relevant "..tostring(D.threatApiRelevantPackets or 0))
+        chat("By class: normal req "..tostring(D.threatApiRequestsNormal or 0).." / resp "..tostring(D.threatApiResponsesNormal or 0).." | elite/boss req "..tostring(D.threatApiRequestsElite or 0).." / resp "..tostring(D.threatApiResponsesElite or 0))
+        chat("RC29 gate: "..tostring(reason).." | skipped ticks "..tostring(D.threatApiSkipped or 0).." | last error "..tostring(D.threatApiLastError or "none"))
+        if IsAddOnLoaded then chat("TWThreat loaded: "..tostring(IsAddOnLoaded("TWThreat") and true or false)) end
+        return
+    end
+    if msg=="once" then
+        local eligible,reason=D.threatApiTargetGate()
+        if not eligible then chat("Threat API request NOT sent: "..tostring(reason)); return end
+        if D.sendThreatApiProbe() then chat("Threat API v4 one-shot request sent (exact TWThreat format).")
+        else chat("Threat API request not sent: "..tostring(D.threatApiLastError or D.threatApiLastGate or "unknown error")) end
+        return
+    end
+    if msg=="force" then
+        if D.sendThreatApiProbe(true) then chat("Threat API v4 FORCE request sent (gate bypassed).")
+        else chat("Threat API FORCE request failed: "..tostring(D.threatApiLastError or "unknown error")) end
+        return
+    end
+    if D.threatApiProbeEnabled then
+        D.threatApiProbeEnabled=false
+        CawDPSMeterLog={savedAt=(date and date("%Y-%m-%d %H:%M:%S")) or "",version=D.version,type="THREAT_API_V4_RC29_NORMAL_MOB_PROBE",count=D.threatApiDebugCount or 0,requests=D.threatApiRequests or 0,responses=D.threatApiResponses or 0,normalRequests=D.threatApiRequestsNormal or 0,normalResponses=D.threatApiResponsesNormal or 0,eliteRequests=D.threatApiRequestsElite or 0,eliteResponses=D.threatApiResponsesElite or 0,packets=D.threatApiPacketsSeen or 0,relevantPackets=D.threatApiRelevantPackets or 0,skipped=D.threatApiSkipped or 0,lastGate=D.threatApiLastGate,lastError=D.threatApiLastError,lines=D.threatApiDebugLines or {}}
+        chat("Threat API RC29 stopped. Requests: "..tostring(D.threatApiRequests or 0).." | v4 responses: "..tostring(D.threatApiResponses or 0).." | addon packets seen: "..tostring(D.threatApiPacketsSeen or 0).." | relevant: "..tostring(D.threatApiRelevantPackets or 0)..".")
+        chat("Normal mobs: requests "..tostring(D.threatApiRequestsNormal or 0).." | responses "..tostring(D.threatApiResponsesNormal or 0)..". Elite/boss: requests "..tostring(D.threatApiRequestsElite or 0).." | responses "..tostring(D.threatApiResponsesElite or 0)..".")
+        chat("Full sniff saved to CawDPSMeterLog; /reload before copying SavedVariables.")
+    else
+        D.threatApiDebugLines={}
+        D.threatApiDebugCount=0
+        D.threatApiRequests=0
+        D.threatApiResponses=0
+        D.threatApiRequestsNormal=0
+        D.threatApiRequestsElite=0
+        D.threatApiResponsesNormal=0
+        D.threatApiResponsesElite=0
+        D.threatApiLastRequestClass=nil
+        D.threatApiLastRequestAt=0
+        D.threatApiPacketsSeen=0
+        D.threatApiRelevantPackets=0
+        D.threatApiSkipped=0
+        D.threatApiLastError=nil
+        D.threatApiLastGate="not checked"
+        D.threatApiNextRequest=0
+        D.threatApiProbeEnabled=true
+        chat("Threat API RC29 sniffer started. NORMAL mobs are now intentionally allowed; recording ALL CHAT_MSG_ADDON packets.")
+        if IsAddOnLoaded then chat("TWThreat loaded: "..tostring(IsAddOnLoaded("TWThreat") and true or false).." (it may run alongside Caw for comparison).") end
+        local eligible,reason=D.threatApiTargetGate()
+        chat("Current RC29 gate: "..tostring(reason))
+        if eligible then
+            D.sendThreatApiProbe()
+            D.threatApiNextRequest=GetTime()+0.50
+        else
+            chat("No request yet. Target ANY living non-player mob in combat while grouped; RC29 will begin automatically.")
+        end
+    end
+end
+
+SLASH_CAWDPSTHREATDEBUG1="/cdthreat"
+SlashCmdList["CAWDPSTHREATDEBUG"]=function(msg)
+    if not D.threatDebugEnabled then
+        D.threatDebugLines={}
+        D.threatDebugCount=0
+        D.threatDebugLastTarget=""
+        D.threatDebugNextSnapshot=0
+        D.threatDebugEnabled=true
+        chat("Threat diagnostic started. Fight normally, then type /cdthreat again.")
+        chat("Capturing RAW_COMBATLOG, UNIT_CASTEVENT, target -> targettarget changes and passive CHAT_MSG_ADDON traffic.")
+        chat("RC14 does not transmit unknown threat requests; it only observes server/addon traffic already received.")
+        chat("Threat APIs: UnitThreatSituation="..tostring(UnitThreatSituation~=nil).." | UnitDetailedThreatSituation="..tostring(UnitDetailedThreatSituation~=nil))
+        if D.captureThreatTargetState then D.captureThreatTargetState(true) end
+    else
+        D.threatDebugEnabled=false
+        CawDPSMeterLog={
+            savedAt=(date and date("%Y-%m-%d %H:%M:%S")) or "",
+            version=D.version,
+            type="THREAT_DIAGNOSTIC_RC16",
+            count=D.threatDebugCount or 0,
+            lines=D.threatDebugLines
+        }
+        chat("Threat diagnostic stopped. Captured "..tostring(D.threatDebugCount or 0).." entries (showing up to 160):")
+        chat("Full captured diagnostic was also saved to CawDPSMeterLog. Use /reload before copying the SavedVariables file.")
+        local i=1
+        local n=table.getn(D.threatDebugLines)
+        while i<=n do
+            chat("["..tostring(i).."] "..tostring(D.threatDebugLines[i]))
+            i=i+1
+        end
+        if (D.threatDebugCount or 0)>160 then chat("More than 160 entries occurred; capture was truncated.") end
+    end
+end
+
+SLASH_CAWDPSTHREATCALC1="/cdthreatcalc"
+SlashCmdList["CAWDPSTHREATCALC"]=function(msg)
+    if not D.threatCalcDebugEnabled then
+        D.threatCalcDebugLines={}; D.threatCalcDebugCount=0; D.threatCalcDebugEnabled=true
+        D.threatValidationLastTarget={}
+        D.threatValidationLastSnapshot={}
+        D.threatValidationLastEvent={}
+        D.threatValidationNext=0
+        chat("Threat validation logging started (RC26 RavenCraft threat validation). Run the isolated test, then type /cdthreatcalc again.")
+    else
+        D.threatCalcDebugEnabled=false
+        CawDPSMeterLog={savedAt=(date and date("%Y-%m-%d %H:%M:%S")) or "",version=D.version,type="THREAT_VALIDATION_RC23",count=D.threatCalcDebugCount or 0,lines=D.threatCalcDebugLines}
+        chat("Threat validation logging stopped. Captured "..tostring(D.threatCalcDebugCount or 0).." entries.")
+        chat("Full calculation log saved to CawDPSMeterLog. Use /reload before copying SavedVariables.")
+        local i=1; local n=table.getn(D.threatCalcDebugLines or {})
+        while i<=n and i<=60 do chat("["..tostring(i).."] "..tostring(D.threatCalcDebugLines[i])); i=i+1 end
+        if n>60 then chat("Chat output limited to 60 lines; SavedVariables contains up to 300 entries.") end
+    end
+end
+
+SLASH_CAWDPSRAWDEBUG1="/cdraw"
+SlashCmdList["CAWDPSRAWDEBUG"]=function(msg)
+    if not D.rawDebugEnabled then
+        D.rawDebugLines={}
+        D.rawDebugCount=0
+        D.rawDebugEnabled=true
+        chat("RAW capture started. Perform the interrupt, then type /cdraw again.")
+    else
+        D.rawDebugEnabled=false
+        chat("RAW capture stopped. Captured "..tostring(D.rawDebugCount).." lines (showing up to 80):")
+        local n=table.getn(D.rawDebugLines)
+        local i=1
+        while i<=n do
+            chat("["..tostring(i).."] "..tostring(D.rawDebugLines[i]))
+            i=i+1
+        end
+        if D.rawDebugCount>80 then
+            chat("More than 80 RAW lines occurred; capture was truncated.")
+        end
+    end
+end
+SLASH_CAWDPSRAWUNKNOWN1="/cdunknown"
+SlashCmdList["CAWDPSRAWUNKNOWN"]=function(msg) chat("Recent unparsed RAW lines (up to 20):"); local n=table.getn(D.rawUnknown); local i=1; while i<=n do chat("["..tostring(i).."] "..tostring(D.rawUnknown[i])); i=i+1 end end
+SLASH_CAWDPSUTILITYUNKNOWN1="/cdutilityunknown"
+SlashCmdList["CAWDPSUTILITYUNKNOWN"]=function(msg) chat("Recent unclassified aura/utility lines (up to 20):"); local n=table.getn(D.utilityUnknown); local i=1; while i<=n do chat("["..tostring(i).."] "..tostring(D.utilityUnknown[i])); i=i+1 end end
+SLASH_CAWDPSROSTER1="/cdroster"
+SlashCmdList["CAWDPSROSTER"]=function(msg) refreshRoster(); chat("Roster GUID map:"); local count=0; local guid,info; for guid,info in D.guidToActor do count=count+1; chat(tostring(info.name).." = "..tostring(guid)..(info.classToken and (" ["..info.classToken.."]") or "")..(info.isPet and " [pet]" or "")) end; chat("Mapped units: "..tostring(count)) end
+SLASH_CAWDPSBOOT1="/cdboot"
+SlashCmdList["CAWDPSBOOT"]=function(msg) chat("Caw DPS Meter v"..D.version.." loaded; RAW_COMBATLOG="..tostring(D.rawRegistered)) end
+
+updateUI()

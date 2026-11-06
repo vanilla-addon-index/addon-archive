@@ -1,0 +1,173 @@
+{
+  "upstream": "https://github.com/thezephyrsong/DifficultBulletinBoard",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "thezephyrsong",
+    "repo": "DifficultBulletinBoard",
+    "name": "DifficultBulletinBoard",
+    "url": "https://github.com/thezephyrsong/DifficultBulletinBoard",
+    "api": "https://api.github.com/repos/thezephyrsong/DifficultBulletinBoard"
+  },
+  "commit": "78b78354dc51a75aa63058ad90ab3530ed64e9b1",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8601957a879f11659856ab5c7300962967c498851b0586886dc2cad39e9380a7",
+      "bytes": 4
+    },
+    "api/blacklist.lua": {
+      "sha256": "03ac126e3f3a19191a596a0ca8f067f6b1328124d860d71ac3d59cf16c7d2398",
+      "bytes": 9214
+    },
+    "api/categories.lua": {
+      "sha256": "e5342dde209b94645f805698bb530cb156218c4813df02c88c9f688336eb6f2e",
+      "bytes": 32775
+    },
+    "api/channels.lua": {
+      "sha256": "8c3a56a3d9c01a5bcddf1bea1b38d0d711f9b33f5a4908d263e55726c51beb66",
+      "bytes": 7186
+    },
+    "api/chat_filter.lua": {
+      "sha256": "f642b3edf96f6b0cf6a9bd43ca9b400c93ee18feab325c0f371d9e0a63162516",
+      "bytes": 15573
+    },
+    "api/config_schema.lua": {
+      "sha256": "0d788cfd6da4fae2a234765cdee3c970e25fca8e30ab3d4c161d65a4001d6b1f",
+      "bytes": 24435
+    },
+    "api/config_widgets.lua": {
+      "sha256": "e5753db60c7a9d7f0ac0045f9afb7d9ed82f02aa8afd01186b80a02125aeffb5",
+      "bytes": 34224
+    },
+    "api/dict_cn_misc.lua": {
+      "sha256": "cddde6a3529c9ec35efb55148656ccdff0ba1e171aa043547b49582a1e1dcaa7",
+      "bytes": 50234
+    },
+    "api/dict_cn_phrases.lua": {
+      "sha256": "1cae07ecfcc1a3e8e2f6be2b976238d3b30ec920ebfa3fa3ad2fbf88aeed1c9e",
+      "bytes": 18883
+    },
+    "api/gui_schema.lua": {
+      "sha256": "522762fdf1a69b44934947f62b83bb891989b485da1fe57a05bb3dc1d052b798",
+      "bytes": 51623
+    },
+    "api/hardcore.lua": {
+      "sha256": "23fad0fc94389cca7185f13a9dce03cbb700de4690875c75468c474b19edabf3",
+      "bytes": 3673
+    },
+    "api/lockouts.lua": {
+      "sha256": "4706e2e5a5e8dded71f793d4015e44384811ba6890c7601e6a22b28fbb43de12",
+      "bytes": 3947
+    },
+    "api/messages.lua": {
+      "sha256": "72997cc9b475e75f83d24a086c271ce6aedf61ee1ad9facd543571884b434b1b",
+      "bytes": 13385
+    },
+    "api/notifications.lua": {
+      "sha256": "b5043ad4e338ea750680148c83251323b274a3871f94c376d5498671d1669918",
+      "bytes": 12434
+    },
+    "api/tooltip.lua": {
+      "sha256": "18f51dba1cfe0ae795a07befb2c45434235eead6061ea7d84ff0c9698e52ce48",
+      "bytes": 10789
+    },
+    "api/translate_cn.lua": {
+      "sha256": "df795da493a10dabadef4041a19ae0b6cec3d4534c27c4e6cd72bc7665490350",
+      "bytes": 5153
+    },
+    "api/utils.lua": {
+      "sha256": "06d535ceedc8f655f60cdc9f8e9e5044b5ced9fae280d943e41496a317222bc0",
+      "bytes": 6795
+    },
+    "api/wildcards.lua": {
+      "sha256": "9986e6811d8d10859d7386782ba03c83537edb2310a23f8fa7c4d3c15ebaf699",
+      "bytes": 11266
+    },
+    "DifficultBulletinBoard.lua": {
+      "sha256": "6e3cc635f71a79dbd31427f6ff3a34b94839a5975dd243d7a7dea58625fe8116",
+      "bytes": 19420
+    },
+    "DifficultBulletinBoard.toc": {
+      "sha256": "eaf3bde0b60ed907c864259d01f3a59e6eb1aaaa2d85d955a02185af2785ce09",
+      "bytes": 850
+    },
+    "env/constants.lua": {
+      "sha256": "2b6209bc22f8231cb9c2f703cc95d9f8c0c5e29415b11a024643f975a3a8ebaf",
+      "bytes": 1748
+    },
+    "env/defaults.lua": {
+      "sha256": "ce9817c3daf6693c23b93c66922eda5bd91ef688eec912ab9443608735803610",
+      "bytes": 10599
+    },
+    "env/tables.lua": {
+      "sha256": "8d624024406ceef1a1e00203414655d85a1ab1ff118414b8052a6ba546cc1e67",
+      "bytes": 1264
+    },
+    "env/tag_exclusions.lua": {
+      "sha256": "aa698449dfec20fd00c81b13b32ba41f5dc74210992b9d176a96acc96b8a88db",
+      "bytes": 9477
+    },
+    "env/versions.lua": {
+      "sha256": "d4a84d8b9b2c17ac8485c7618b5678dc6b81d6e1d62381fc118fd1051a6a39bd",
+      "bytes": 962
+    },
+    "font/IBMPlexMono-SemiBold.ttf": {
+      "sha256": "b1a936f96266fbe036b112f659155f7c32222af44a9a20f3bb011f51050669d5",
+      "bytes": 138448
+    },
+    "font/WarSansTT-Bliz-500.ttf": {
+      "sha256": "1fa4ca36819a843e6cfb475c94a7bfba701170494ff335141e824ab03f273926",
+      "bytes": 8438732
+    },
+    "img/bell.tga": {
+      "sha256": "adebedb5ffac1bed2aa2115237ea983c979f9515b19ff29ba8caaee701884451",
+      "bytes": 2089
+    },
+    "img/close.tga": {
+      "sha256": "ff89f4fed436728155fdb1ae16796c8fb9426b239327dc437c431bf015f38726",
+      "bytes": 518
+    },
+    "img/sizegrabber-down.tga": {
+      "sha256": "099102522b5f45ba28df0abf2f54ec5574a29b258c25330360780fdc2553159b",
+      "bytes": 824
+    },
+    "img/sizegrabber-highlight.tga": {
+      "sha256": "5829b57218b92b8c979e9e54d1daab948a096f987e0f536f175f7b102f6c24ac",
+      "bytes": 862
+    },
+    "img/sizegrabber-up.tga": {
+      "sha256": "9b35b6497bc801b7bcaf4e4313ed58e06022e7908f1805c9d14a1ed140aa42c3",
+      "bytes": 795
+    },
+    "modules/categories.lua": {
+      "sha256": "bec5bb6c68b4aa6e27914e25bb5229d7b5ad585f41a9001f21a9dcb91512e06a",
+      "bytes": 7864
+    },
+    "modules/config.lua": {
+      "sha256": "c0ff2984ebed98864220e3475bbf1439b26d5594225cb2fe5707df2c38a62f1d",
+      "bytes": 18810
+    },
+    "modules/gui.lua": {
+      "sha256": "5a85e3113f098aa4f97b1584e227463a1db3814eb9200f271210e918f20daeef",
+      "bytes": 46678
+    },
+    "modules/minimap.lua": {
+      "sha256": "89bf5b82c41b0331e42e21274cdeb986c9f247709906a0eeb19f5f7ed15c5845",
+      "bytes": 5128
+    },
+    "modules/version_check.lua": {
+      "sha256": "94aa546ca7cba2396ed709b82b5173505f9ae0e204211eccaa4388cf62c8c83b",
+      "bytes": 3764
+    },
+    "README.md": {
+      "sha256": "d4ea9ee291b47ded70bc50e47ccd68ae1770556665d57ffd8355ff5a2a5add33",
+      "bytes": 3338
+    },
+    "sound/duck.wav": {
+      "sha256": "90911ff7ac221c2a9b376b4745095edf9d1f96f9c06cd03a05fad5b46d01f9ba",
+      "bytes": 11854
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/Otari98/Overhead",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Otari98",
+    "repo": "Overhead",
+    "name": "Overhead",
+    "url": "https://github.com/Otari98/Overhead",
+    "api": "https://api.github.com/repos/Otari98/Overhead"
+  },
+  "commit": "43cc3bd31aab8d62f20393e7447483f3b31d6459",
+  "sourceFiles": {
+    "CastBar.BLP": {
+      "sha256": "5fd7d561169201550955c442b5ef6b2d5607fd277a3df239cb3a0582c77a9aca",
+      "bytes": 5268
+    },
+    "Elite.BLP": {
+      "sha256": "66763c8e6baf0423f9ed34fe4740d190b809120ad58c6c52489179b56bf2f19b",
+      "bytes": 3220
+    },
+    "Glow.BLP": {
+      "sha256": "91b3c36af57cb98f58f262b401566b7d610e8a75b644aa1c0465ba6c21f95b3e",
+      "bytes": 1428
+    },
+    "Overhead.lua": {
+      "sha256": "053588d0438a665294ee34a3fa40d4f1b4cb59b44d5f2bcd3d7fcfbaa3cf40c3",
+      "bytes": 21800
+    },
+    "Overhead.toc": {
+      "sha256": "f2eca6cf2bc03b98bf50086b927d3151245240f51d759d687511752170a03978",
+      "bytes": 145
+    },
+    "README.md": {
+      "sha256": "775482378a97a21e65de7ba23824b3ebbc3760d9899800a14be51fef3c6424ba",
+      "bytes": 525
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

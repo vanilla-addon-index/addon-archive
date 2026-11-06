@@ -1,0 +1,20 @@
+RollFor/
+MIGRATION_PLAN_EncounterSetup.md
+OGRH_EncounterMgmt copy.lua
+PHASE1_TODO.md
+OGRH_Core copy.lua
+OGRH_Core copy.lua
+/MessageBox-main
+Scripts/backup/
+Scripts/output/
+Scripts/WoWCombatLog.txt
+Documentation/Archive/
+Documentation/~$v1-to-v2-deep-migration-map.xlsx
+Documentation/v1-to-v2-deep-migration-map.xlsx
+Scripts/WoWCombatLog.txt
+Scripts/WoWCombatLog.txt
+Scripts/WoWCombatLog.txt
+Scripts/WoWCombatLog.txt
+Documentation/Temp/tankmedady.md
+bump.ps1
+/Documentation/Temp

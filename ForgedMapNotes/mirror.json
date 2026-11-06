@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/nemanuel/Forged_MapNotes",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "nemanuel",
+    "repo": "Forged_MapNotes",
+    "name": "Forged_MapNotes",
+    "url": "https://github.com/nemanuel/Forged_MapNotes",
+    "api": "https://api.github.com/repos/nemanuel/Forged_MapNotes"
+  },
+  "commit": "ef4ee14d1b94a55312d23aab0ddfac8eb9cea1b7",
+  "sourceFiles": {
+    "coordinates.lua": {
+      "sha256": "6112b5e667fa72785b6edd136efa336a5553cba74a9c6f42d7eaf4ca84dc33e3",
+      "bytes": 2760
+    },
+    "core.lua": {
+      "sha256": "893304013f36b6ccef4f878e4394083385d751494b23efecb1e080127038f1a3",
+      "bytes": 17269
+    },
+    "dialogs.lua": {
+      "sha256": "694644778b8dc595159762f6ae8f63ca19f086e1a542cd231b0453e17c68e618",
+      "bytes": 8631
+    },
+    "Forged_MapNotes.toc": {
+      "sha256": "199e473892769097bfde09d4166c096ae57e2523462d5e131faf14daf9fbfe12",
+      "bytes": 349
+    },
+    "gathering.lua": {
+      "sha256": "5db017ce18a146971d45d1f66f1b8dd070dd2e6dce6cb6f8b2e19201f7c49bdb",
+      "bytes": 13537
+    },
+    "README.md": {
+      "sha256": "dadf9fcb198cbbde2c917b6a93180032f4359d48dbe52518473a93be0e3415c4",
+      "bytes": 2320
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,34 @@
+## Interface: 11200
+## Title: ConsoleExperience |cff7fff7f Classic|r
+## Title-esES: Experiencia de Consola |cff7fff7f Classic|r
+## Title-frFR: Expérience de Console |cff7fff7f Classic|r
+## Title-koKR: 콘솔 경험 |cff7fff7f Classic|r
+## Title-zhCN: 游戏手柄支持 |cff7fff7f Classic|r
+## Title-zhTW: 遊戲控制器支援 |cff7fff7f Classic|r
+## Author: pepordev
+# x-release-please-start-version
+## Version: 0.17.3
+# x-release-please-end
+## Notes: Console Experience for WoW Vanilla
+## Notes-esES: Experiencia de consola para WoW Vanilla
+## Notes-frFR: Expérience de console pour WoW Vanilla
+## Notes-koKR: WoW Vanilla 를 위한 콘솔 경험
+## Notes-zhCN: 魔兽世界游戏手柄支持（Classic）
+## Notes-zhTW: 魔獸世界遊戲手柄支援（Classic）
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## SavedVariablesPerCharacter: ConsoleExperienceDB
+## OptionalDeps: pfUI
+
+main.lua
+init\locale.xml
+keybindings.lua
+init\actionbars.xml
+init\cursor.xml
+init\radial.xml
+init\config.xml
+init\chat.xml
+init\keyboard.xml
+init\xpbar.xml
+init\castbar.xml
+Bindings.xml

@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: |cFFCA4020Caramel|rNotes
+## Author: MrToffee
+## Notes: Write notes about other players.
+## Version: 1.3.1
+## SavedVariables: CaramelNotes_Data, CaramelNotes_Settings
+
+Main.xml

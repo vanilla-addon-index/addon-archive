@@ -1,0 +1,157 @@
+{
+  "upstream": "https://github.com/sica42/KillTrack",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "sica42",
+    "repo": "KillTrack",
+    "name": "KillTrack",
+    "url": "https://github.com/sica42/KillTrack",
+    "api": "https://api.github.com/repos/sica42/KillTrack"
+  },
+  "commit": "4e6132ddffd2669ae7855ef241cb18d839183f83",
+  "sourceFiles": {
+    ".editorconfig": {
+      "sha256": "b90c7e07798839cd1a77adb17aa053253e182ca452987bcebbc0f78421de8b0b",
+      "bytes": 372
+    },
+    ".github/workflows/build.yml": {
+      "sha256": "e8543e9fb646899f1aecf837c4fcca85041d95384348f7fc456eca07f8d5c7db",
+      "bytes": 798
+    },
+    ".github/workflows/lint.yml": {
+      "sha256": "b70eaa06501bb8e743db3bb5016a6324aa5b59b5ce0b86b72a29b8abfbcf7db3",
+      "bytes": 317
+    },
+    ".github/workflows/pr.yml": {
+      "sha256": "c896bb13263c7e2163ca591bf447b90c947467e461dda8a3b7674056bb8cabf1",
+      "bytes": 280
+    },
+    ".gitignore.upstream": {
+      "sha256": "92ccf9247d58e46ffae1e250d165faa3bbed6cfbd05ec6a7a8188d81166c70cd",
+      "bytes": 30
+    },
+    ".luarc.json": {
+      "sha256": "8ad5e646fc82b856b0279d08255bbb34123d6144f5899b423e12e07010b799e1",
+      "bytes": 857
+    },
+    ".pkgmeta": {
+      "sha256": "bf9b33e8becb35936533d23620e60b52b5b7bd555f7fe15d14756e9e6220b2af",
+      "bytes": 483
+    },
+    ".vscode/extensions.json": {
+      "sha256": "c94522f3459718597bbb6247f28310576fd7530125162222628b61e46d5c0586",
+      "bytes": 57
+    },
+    "Broker.lua": {
+      "sha256": "14afdd8de63f10f952f946907b24826da0c8e16e3ab8857336eb075fd8cbe17b",
+      "bytes": 5599
+    },
+    "Command.lua": {
+      "sha256": "99dfc54b334d2c59055acf993f7138c904dbbcbf396da0c63c0e35309dc0c2c1",
+      "bytes": 9304
+    },
+    "COPYING": {
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    "Dialogs.lua": {
+      "sha256": "d01c98836d9e66cf2f0607629e26dadf73cd43d6faa9b480665f2c315a42ffcf",
+      "bytes": 3448
+    },
+    "ExpTracker.lua": {
+      "sha256": "e8c89e5890088340e616fd224f26eb0119cd635edb999ee634ac83fb6aa96805",
+      "bytes": 3279
+    },
+    "icon.tga": {
+      "sha256": "41f0978702bf3409d4c32c46c3f0b46e26119ee4c7d04f1979310d8c47b0b39c",
+      "bytes": 2237
+    },
+    "ImmediateFrame.lua": {
+      "sha256": "4d34d8dd6bb9977e9b6c47039eec886ab69d0c142a699b8c76f849b93ba5be01",
+      "bytes": 3611
+    },
+    "KillTrack.lua": {
+      "sha256": "71053b4f114360038dd70d6e6efbe63aa2b6468f2331b9537b2eb662373ba068",
+      "bytes": 24253
+    },
+    "KillTrack.toc": {
+      "sha256": "11852eead9255b808a3d6ac1a68c84b9fe383a98b0c2ec5347a1f8f52498b8e9",
+      "bytes": 734
+    },
+    "libs/AceCore-3.0/AceCore-3.0.lua": {
+      "sha256": "9763f58f27029b3e0f74a9f170a26252c65856bf4c8d364d773a1df2e8fed36a",
+      "bytes": 5937
+    },
+    "libs/AceCore-3.0/AceCore-3.0.xml": {
+      "sha256": "419199448cc39d247d0d2edbeb62c47383344e65a26fb001d6571c5eed0db5e4",
+      "bytes": 210
+    },
+    "libs/AceHook-3.0/AceHook-3.0.lua": {
+      "sha256": "1ec5bedbef9519a7fd126abd07e49e1e4ef6268fbf7601ea8a4664bf8417b203",
+      "bytes": 20120
+    },
+    "libs/AceHook-3.0/AceHook-3.0.xml": {
+      "sha256": "85bcbb10046c613cd86cbd99b8e3cb645cbb05982480af7e3a667a101a56bc04",
+      "bytes": 210
+    },
+    "libs/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "75cc380a1b0035a2d3de506ed269fbec951be6219e994d702067ed3bc95dcd64",
+      "bytes": 9742
+    },
+    "libs/CallbackHandler-1.0/CallbackHandler-1.0.xml": {
+      "sha256": "9310765c5310a395652e60a04f378e836785deb6f0b7181a448c74751d6f0185",
+      "bytes": 218
+    },
+    "libs/LibDataBroker-1-1/LibDataBroker-1.1.lua": {
+      "sha256": "b54eab4a2ae3a47c2b3b386e8498a35a9f1acbe87c2288e905d3ae060c4369e6",
+      "bytes": 3439
+    },
+    "libs/LibDataBroker-1-1/LibDataBroker-1.1.xml": {
+      "sha256": "81c6248848b0bff05486c653f1fea501b340cb5fdbe695f7141faeb3229c5a83",
+      "bytes": 216
+    },
+    "libs/LibDataBroker-1-1/README.textile": {
+      "sha256": "1824b7091f7535e822d3fc0138013e0370eb894efcf7cc2ef1babb81f7997fcf",
+      "bytes": 1037
+    },
+    "libs/LibDBIcon-1.0/LibDBIcon-1.0.lua": {
+      "sha256": "bedf722ab33d0d480adb5759a87c8c633a5644564bdd57adf248dd41aacff6f8",
+      "bytes": 13861
+    },
+    "libs/LibScrollDrop-1.0/LibScrollDrop-1.0.lua": {
+      "sha256": "edb7b579395218c76b607664668a1b428c34771d9f8852d2f23912c93921718a",
+      "bytes": 14967
+    },
+    "libs/LibStub/LibStub.lua": {
+      "sha256": "d8c6edc55479c0044658a066f33a26352943855754b0f0505f4d0cb8c9177328",
+      "bytes": 1535
+    },
+    "MobList.lua": {
+      "sha256": "62b50939573331459b4dde2d3678b797f40a9860ce7c3e8b4f40bf82daad950e",
+      "bytes": 17289
+    },
+    "Options.lua": {
+      "sha256": "557e070ea4a8bea3ad03943ef066635c1e7b5055d1e63358cf47749c15813b57",
+      "bytes": 12020
+    },
+    "README.md": {
+      "sha256": "e417f4981a2ad4a2c9d9ff3fd889bc86dc8ba87b91031a38365a3eadf3a0bf79",
+      "bytes": 3049
+    },
+    "Timer.lua": {
+      "sha256": "42b7e364c3646a8baf174a89ab25b83aab99e293d51febded0aaf6d3f74a2b11",
+      "bytes": 4547
+    },
+    "TimerFrame.lua": {
+      "sha256": "2cb0e52ef2aece14430e17bb4ee8e325d20f04bbeebe3154f4907e769793fcfa",
+      "bytes": 7941
+    },
+    "Tools.lua": {
+      "sha256": "b954bd82c1e631b64da449f9fa3a5d646384a57081ec943be5afb06404753497",
+      "bytes": 4342
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

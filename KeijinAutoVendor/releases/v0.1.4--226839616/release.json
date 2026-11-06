@@ -1,0 +1,9 @@
+{
+  "id": "226839616",
+  "tag": "v0.1.4",
+  "name": "KeijinAutoVendor 0.1.4.",
+  "body": "🇬🇧 KeijinAutoVendor v0.1.4 – Release Notes\r\n[EN]\r\n\r\n🔧 KeijinAutoVendor v0.1.4 brings full auto-sell and auto-repair functionality in one lightweight Turtle WoW Addon.\r\n\r\n✅ Gray item detection and selling logic based on the proven GrayAutoSell addon by ttcremers (GPLv2+ licensed)\r\n✅ Automatic gear repair when interacting with a vendor (if possible)\r\n✅ Debug mode added via /kav debug – shows info about repair costs and sold items\r\n✅ Stable performance on Turtle WoW – tested with multiple characters\r\n✅ Unified with KeijinAddons design and internal framework\r\n\r\nCredits:\r\nGrayAutoSell logic originally by Thomas T. Cremers – GPLv2 compliant reuse with full attribution.\r\n\r\n🇩🇪 KeijinAutoVendor v0.1.4 – Versionshinweise\r\n[DE]\r\n\r\n🔧 KeijinAutoVendor v0.1.4 bietet eine vollständige Auto-Sell- und Reparatur-Funktion in einem schlanken Addon für Turtle WoW.\r\n\r\n✅ Verkauf von grauen Items auf Basis des bewährten GrayAutoSell Addons von ttcremers (GPLv2+ Lizenz)\r\n✅ Automatische Reparatur der Ausrüstung beim Händlerbesuch (sofern möglich)\r\n✅ Debugmodus über /kav debug – zeigt Informationen zu Reparaturkosten und verkauften Items\r\n✅ Stabiler Betrieb auf Turtle WoW – getestet mit mehreren Charakteren\r\n✅ Angepasst an das einheitliche KeijinAddons-Framework\r\n\r\nCredits:\r\nGrayAutoSell-Logik stammt ursprünglich von Thomas T. Cremers – wiederverwendet gemäß GPLv2 mit vollständiger Nennung.",
+  "published": "2025-06-21T14:59:29Z",
+  "prerelease": false,
+  "url": "https://github.com/KeijinDE/KeijinAutoVendor/releases/tag/v0.1.4"
+}

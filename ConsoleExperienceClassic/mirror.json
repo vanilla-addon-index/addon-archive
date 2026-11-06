@@ -1,0 +1,385 @@
+{
+  "upstream": "https://github.com/pepordev/ConsoleExperienceClassic",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "pepordev",
+    "repo": "ConsoleExperienceClassic",
+    "name": "ConsoleExperienceClassic",
+    "url": "https://github.com/pepordev/ConsoleExperienceClassic",
+    "api": "https://api.github.com/repos/pepordev/ConsoleExperienceClassic"
+  },
+  "commit": "c2f2dfc555ff4bc2ec625281e813b4eb7a080aa0",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "2eb776286157f0553578e40cd232f1bd4f650f4ec41fd4c359bbbb05de92eadf",
+      "bytes": 500
+    },
+    ".github/FUNDING.yml": {
+      "sha256": "6787934e72d42413af666ff75cc4de80cb83394aada376d4e0782dbe52095270",
+      "bytes": 891
+    },
+    ".github/workflows/release.yml": {
+      "sha256": "22f9a65b68d65a4a7794daf688cef9ce5b7cfae8286f5cfa6f18f8da93872aab",
+      "bytes": 551
+    },
+    ".gitignore.upstream": {
+      "sha256": "680226d5f6d110e7f87aed800efb79b4b86043729fa1f37da6d6a1547a099ccc",
+      "bytes": 503
+    },
+    ".release-please-manifest.json": {
+      "sha256": "bb10d873f4366e6e9ed00ae34388353d9ffd37ba29bc714c4d5371c560206785",
+      "bytes": 21
+    },
+    "actionbars/actionbars.xml": {
+      "sha256": "1b3082ecc489b5b08b35812b4ac9d03139f6e09cc8ed23810b49ef059fe85824",
+      "bytes": 9441
+    },
+    "actionbars/autorank.lua": {
+      "sha256": "104918849b0ca7a886bfb53b972b4378cc2e8a6d0231d6330205dbed13242e6c",
+      "bytes": 13621
+    },
+    "actionbars/bars.lua": {
+      "sha256": "4ad75b453b3d2152b20ebbbd41e597f9bdadbe3066d057992300e641fc29d485",
+      "bytes": 101128
+    },
+    "actionbars/placement.lua": {
+      "sha256": "eb85153a8e4e69c78960fe8eac96768c8bf944262f33afb756676e293aee2f58",
+      "bytes": 45835
+    },
+    "Bindings.xml": {
+      "sha256": "a3fbb48d675f4360563e0bebe3f5949ae2b4a4bdc011565fef5b429d83fe6c23",
+      "bytes": 5267
+    },
+    "castbar/castbar.lua": {
+      "sha256": "55ef1e037a5e5f755a7efe8993f9ff3d88f7d9a29ddd8f3b76beb136b6e1e10d",
+      "bytes": 20912
+    },
+    "CHANGELOG.md": {
+      "sha256": "1ac348fdb20e3d59f01fb6bdf1a60ace989f8c2a2007f0f39d2967196b7d493b",
+      "bytes": 15547
+    },
+    "chat/chat.lua": {
+      "sha256": "188bf703ebe474da5efdec3310ea873075ebbd14af2ac45519fbf4c0dab66222",
+      "bytes": 22972
+    },
+    "config/config.lua": {
+      "sha256": "2b1bc4cdbec573967460571fdd67b3ed3534b70353dbc3390e8e9caf78e03318",
+      "bytes": 163598
+    },
+    "config/profiles.lua": {
+      "sha256": "51aee58e39b71ba98fbc4662249edb70aed33b530cc08a46f8f20e350e28d3d0",
+      "bytes": 31149
+    },
+    "config/proxied.lua": {
+      "sha256": "0961804448d115144d89c6fae92936bd87be52852642134fb82ccfcac0add848",
+      "bytes": 29193
+    },
+    "ConsoleExperienceClassic.toc": {
+      "sha256": "b22fbc0e73027a400a54acb78e46db780394e1bebbbce14c3909b4c02a4428e1",
+      "bytes": 1074
+    },
+    "cursor/actions.lua": {
+      "sha256": "87f117b8fe733aa26f46b43ddb971ca725c140207d97c25ede137b673bd02279",
+      "bytes": 54670
+    },
+    "cursor/cursor.lua": {
+      "sha256": "740021b7b21ab8f8bbf1374a22e1e291b8f11c337f7cda0ed531ce3bcb820ce0",
+      "bytes": 22534
+    },
+    "cursor/hooks.lua": {
+      "sha256": "37472c0db5ac4eebc166f093bd33699ec578748efdd5b13e11d848aba30c7587",
+      "bytes": 50708
+    },
+    "cursor/keybindings.lua": {
+      "sha256": "523b589a1b02400512fa3e796d509c3ce8167cd4ae5989dfc5eba835891cd26a",
+      "bytes": 11050
+    },
+    "cursor/tooltip.lua": {
+      "sha256": "9039a499c3d6513a2a381f974777b219c90c15648ca1118da802625a43244394",
+      "bytes": 34481
+    },
+    "docs/AddonIntegrations.md": {
+      "sha256": "d19f2603a94c5e451568a0af729420ce9d1079ac5acb503feda9a5d2cf600bd3",
+      "bytes": 4188
+    },
+    "docs/Configuration.md": {
+      "sha256": "c6a7798ebd03b8263ad7a98ab41aa1402ec392302438b2b900a69526aa395570",
+      "bytes": 4767
+    },
+    "docs/features/ActionBars.md": {
+      "sha256": "834e7b598fb94f402418bc55b58f2b83e573fb6774f4f7a3ee2040bc51eda5a9",
+      "bytes": 4910
+    },
+    "docs/features/AutoRank.md": {
+      "sha256": "cd132393abd31417f4a210f401b9c37f675216f2a231bafd7dbafdab5fa90a18",
+      "bytes": 2441
+    },
+    "docs/features/CastBar.md": {
+      "sha256": "0e7dfa5a7ad1ad3ab19802805fd6cf527e3bc99f5d6f9dc28e380b2abe0e5548",
+      "bytes": 1676
+    },
+    "docs/features/CursorNavigation.md": {
+      "sha256": "a6a8f21dcfd0a68c27ae0672623eb859b67b46d90aad3386518bf743e47cd82f",
+      "bytes": 1081
+    },
+    "docs/features/Keyboard.md": {
+      "sha256": "3c5725473dcd51b8c53431613614945ad29acca851cb6d6df36656cbee8479a7",
+      "bytes": 1294
+    },
+    "docs/features/RadialMenu.md": {
+      "sha256": "423af8d49c1b4e65073bbdd72ad64e50452e292dbf8f2a8544f174cdb905aa8a",
+      "bytes": 811
+    },
+    "docs/features/XPBars.md": {
+      "sha256": "fc9d1f6b6f6060b680e782bf511df8696840e94d39c8d2c5abd2191f6485f840",
+      "bytes": 2048
+    },
+    "docs/Home.md": {
+      "sha256": "e741e75de0b6d9be4b22c664b828ded6dc1d8fe637d5dc141978e015be6c6517",
+      "bytes": 2186
+    },
+    "docs/images/bars.png": {
+      "sha256": "6f716ed769604cb3ad3dc37a6f8f96549aada53544d196d432dd0a26b4ed438f",
+      "bytes": 1394275
+    },
+    "docs/images/bindings.png": {
+      "sha256": "8bc66a7202f27ea881094188cb38e14c34d404c830fdda5cf6833bb8b7a06b62",
+      "bytes": 1018656
+    },
+    "docs/images/keyboard.png": {
+      "sha256": "ccf7ded0dcebf8275300b47e4035bdd47a5f713ebede5d16f13fba645cc4ae92",
+      "bytes": 1553449
+    },
+    "docs/images/menu.png": {
+      "sha256": "0ea210d0e2deca6b32a7db311e3ed86d357ad68b79a209a90ba3089d5328a92d",
+      "bytes": 486732
+    },
+    "docs/images/placement.png": {
+      "sha256": "d4007c68ff94d7b89eb6e4235e5cad9e0729765d95d6796d7a32070518e386d7",
+      "bytes": 615840
+    },
+    "docs/images/radial.png": {
+      "sha256": "b3727610b4df8ec1429da10f8f9469f23adf519ff1f69c0c9d1d52c60927f6cb",
+      "bytes": 2138579
+    },
+    "docs/Installation.md": {
+      "sha256": "9e1b5ca5d6e95d849373bba4843ff6b18b5a0bbdecce297ec0de776c339cd683",
+      "bytes": 2409
+    },
+    "docs/Keybindings.md": {
+      "sha256": "84493969035b0997de2e4ffde4ddd1f825e51a391f64b2ca61f8caa7c364ea8c",
+      "bytes": 5801
+    },
+    "docs/macros.md": {
+      "sha256": "87c50a591753f2f30cdc097582c5566b0689a4b014766f8ee01d822a5b2c2b31",
+      "bytes": 1463
+    },
+    "docs/Troubleshooting.md": {
+      "sha256": "e20cea61a2cc1911bcc3b11a822427989cf249593f88b4aedab941dc65fe2bc6",
+      "bytes": 3625
+    },
+    "init/actionbars.xml": {
+      "sha256": "a0b5d9742589b8bff84184e9c7cb3e277c034002a5ea858a9c09070984f91f18",
+      "bytes": 238
+    },
+    "init/castbar.xml": {
+      "sha256": "0c8c7b8065edd17962488dab9b4560ec18b1274b2c8406ec968a23d57a687fdb",
+      "bytes": 95
+    },
+    "init/chat.xml": {
+      "sha256": "01058d53f80a54bc4c2f97be5fd97c32ea3bc26f70d1ba49687e71300fc18003",
+      "bytes": 87
+    },
+    "init/config.xml": {
+      "sha256": "f90dc278d99e0a93d0174cb1f0e263b5c4add9a46f4e742ef3e56fb59a3db34a",
+      "bytes": 176
+    },
+    "init/cursor.xml": {
+      "sha256": "522f26e5b72a07c214c9fc25a06ff7ce330700ca80bbfd822b1cfad710688170",
+      "bytes": 262
+    },
+    "init/keyboard.xml": {
+      "sha256": "eb318bbd19eb502d67c30d13555a8125a56312e63682fb9a6587a92419918e25",
+      "bytes": 95
+    },
+    "init/locale.xml": {
+      "sha256": "2084e7cd54ed59732d3748ba761549af8577445302cbcf6de0befdb8c9dbbde8",
+      "bytes": 352
+    },
+    "init/radial.xml": {
+      "sha256": "f4ec4bdffc5d5a25c49f4dd6a945df23cb58edb916fbce450138b53250dfbb4f",
+      "bytes": 91
+    },
+    "init/xpbar.xml": {
+      "sha256": "6cbfb82136e7dba7f562ceaa7e6a5dec1368fad3fe979fadb59d7705fb61f55b",
+      "bytes": 91
+    },
+    "keybindings.lua": {
+      "sha256": "fd1fcd2971361de21aec2cc43a663a4b3817755faea104c5703e715af4149f02",
+      "bytes": 13229
+    },
+    "keyboard/keyboard.lua": {
+      "sha256": "32e0494931285c0dca989216b461cb9e1373cc78ff3ee07289d1347962781717",
+      "bytes": 70076
+    },
+    "locale/locale.lua": {
+      "sha256": "8cbe1c8f5fb12e3efb407d9494dfa8ff3c7078d53e3e05273428b70e8e3163e0",
+      "bytes": 2911
+    },
+    "locale/translations_deDE.lua": {
+      "sha256": "f9c293b74a155e2d88b0e31d96ad00d0b814ba3f2a6981c07a54991f7765cde0",
+      "bytes": 21122
+    },
+    "locale/translations_enUS.lua": {
+      "sha256": "6d225602f302c4ae05c97831fa81eb2417ab8d8a014bd29112d96fd3efbe2039",
+      "bytes": 19950
+    },
+    "locale/translations_esES.lua": {
+      "sha256": "9432a44985f1d0e89588ff0b43c5072d63549723386ab6dd7cc664fe49ef001d",
+      "bytes": 21927
+    },
+    "locale/translations_zhCN.lua": {
+      "sha256": "b45312519588d3417713f14de3eca74b79cf1eaee80e64cf32058fb0cd435631",
+      "bytes": 19831
+    },
+    "locale/translations_zhTW.lua": {
+      "sha256": "c580e89742f2492b213295b34612c54c920f4021e429bd344d18c764c595598d",
+      "bytes": 19813
+    },
+    "main.lua": {
+      "sha256": "04e5707fd2850da5894cf98061920324561d24394f97b91821f8345a23c14709",
+      "bytes": 10116
+    },
+    "radial/radial.lua": {
+      "sha256": "a6dacf0860eafb7bf3665cd19c2208f4eed589265c6cea1de152823fdfa0bf02",
+      "bytes": 12096
+    },
+    "README.md": {
+      "sha256": "b1155789f67ece7188824120d99340a0b1a6fd000c759e23faa1d3af9fe33e56",
+      "bytes": 3468
+    },
+    "release-please-config.json": {
+      "sha256": "4c9e4a04d931c1e63299cd5ce6f76dc7a4ad8c06deece75a5cb0699ff17dbeb9",
+      "bytes": 376
+    },
+    "scripts/create-release.ps1": {
+      "sha256": "5171fe839af4ac9306ce50cd109b675e4b81a5e195a3fb17a4d50c41931c85c1",
+      "bytes": 4576
+    },
+    "scripts/README.md": {
+      "sha256": "7777935b60694352c5a333df6d5351998bc0175d376c74a786bc9f7346dc74f9",
+      "bytes": 927
+    },
+    "textures/actionbars/overlayred.tga": {
+      "sha256": "2127dcd2f77f12da42bee616034997bb4ffea08bfead96bcf2e72231ae500bb1",
+      "bytes": 3545
+    },
+    "textures/actionbars/serenity.tga": {
+      "sha256": "2b962c19e5f28a42cea96f4eabbef9f7f732c93af72b2f657942afb4a8d4ca9d",
+      "bytes": 16402
+    },
+    "textures/controllers/down.tga": {
+      "sha256": "52ca62f6374119ede0f54aa1329e406be4a37c0405ad57fb30c9696f0bf6e3de",
+      "bytes": 3912
+    },
+    "textures/controllers/left.tga": {
+      "sha256": "f8f093a8d27ef87017bf142f821a9c35bd7efe01b2971155060039ab6826e058",
+      "bytes": 4005
+    },
+    "textures/controllers/ps/a.tga": {
+      "sha256": "56127a358d87df38fa1730f072fee5a3cfa059e817fdac80562cf6893c4ac701",
+      "bytes": 5106
+    },
+    "textures/controllers/ps/b.tga": {
+      "sha256": "444ace93f0c0f7fc306424bc8e24f7d24c3bf7840f41fab3d8a966c825a58078",
+      "bytes": 5150
+    },
+    "textures/controllers/ps/lb.tga": {
+      "sha256": "b2d61128670e7f3a3eb3fe20e7a95e54cc8a57100942b5b6e39d06c25311934d",
+      "bytes": 3952
+    },
+    "textures/controllers/ps/lt.tga": {
+      "sha256": "6e861ffc1e00c27a96130dff3b3ce70dafebaf31f0fc0f3ff3991f76cece224d",
+      "bytes": 4458
+    },
+    "textures/controllers/ps/rb.tga": {
+      "sha256": "f556cfdb1b590dbd3a81c3884a592d1f7088c070cc5567d0c91cb849dd49409f",
+      "bytes": 4304
+    },
+    "textures/controllers/ps/rt.tga": {
+      "sha256": "b296a3dd1b62268173fbadf26ebbbd7c0cbf2883f6a677fe19807db284c05946",
+      "bytes": 4842
+    },
+    "textures/controllers/ps/x.tga": {
+      "sha256": "4a0af5d420ffcee9eb2eac83dca94bfc554bd708540c0d835aebdcbb5904cff0",
+      "bytes": 4482
+    },
+    "textures/controllers/ps/y.tga": {
+      "sha256": "4ac7b4ea151d57a608ece4a10b29d0081beda35dd4322fff77463aee49b39686",
+      "bytes": 4722
+    },
+    "textures/controllers/right.tga": {
+      "sha256": "f027d80dcc8cd1a0d7cfb23d1154555636482e2d3be63d44c4907927edbd78d8",
+      "bytes": 4005
+    },
+    "textures/controllers/up.tga": {
+      "sha256": "92d76228e397be87f2159c83e6dfb44e1df3d05a2f142617d93d750672b97720",
+      "bytes": 3912
+    },
+    "textures/controllers/xbox/a.tga": {
+      "sha256": "693a36fc113a5a31b5f9ba522f837c0300d07dda0e7ecf37dc218d7cad23177e",
+      "bytes": 4754
+    },
+    "textures/controllers/xbox/b.tga": {
+      "sha256": "55eeb82c89e7b0c7607704c0dceeb3550ce700d604bd0738490f9685d6b01e3e",
+      "bytes": 4766
+    },
+    "textures/controllers/xbox/lb.tga": {
+      "sha256": "d8bdbc83d1538230d8d3fd9270ed591aa454219bf0cddbc7a8af6de8312b4a5c",
+      "bytes": 4171
+    },
+    "textures/controllers/xbox/lt.tga": {
+      "sha256": "6e47e505ee991b8f38a00a818c29da6cfbf84dc904c8c8417bc7131d68add3f7",
+      "bytes": 3971
+    },
+    "textures/controllers/xbox/rb.tga": {
+      "sha256": "92fec1aaba5ee2957713bb8a5b311687c7d9d1756f8ce93c25c0de00843127a8",
+      "bytes": 4466
+    },
+    "textures/controllers/xbox/rt.tga": {
+      "sha256": "67e06f179755279b99acbff4d82b5209aaa4a58925fe717995081a413e390f27",
+      "bytes": 4294
+    },
+    "textures/controllers/xbox/x.tga": {
+      "sha256": "5babf29b3dda3b5eb039f04f5a3ff917a05d6bdfba7b36dfe8a9aee3a8f7e724",
+      "bytes": 4846
+    },
+    "textures/controllers/xbox/y.tga": {
+      "sha256": "e14e77b06b8b07a8f8de744344f8f9912e4c5879d5b7a4f8e0ee51043e102a16",
+      "bytes": 4656
+    },
+    "version.txt": {
+      "sha256": "a62bd57b15af08804d58a4f79926c6cdf88f9b15aa42b35864a9a9268106da43",
+      "bytes": 7
+    },
+    "xpbar/xpbar.lua": {
+      "sha256": "3be73abcaf5fec46612904373b49a1d85c68512730c47b035d65681fcf70aef0",
+      "bytes": 28096
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "295112420": {
+      "tag": "v0.17.3",
+      "folder": "v0.17.3--295112420",
+      "assets": {},
+      "source": {
+        "sha256": "280e7a46ea6c5a4d3915fc63da72391da9e35395bd41b81738db1721fd70cf7e",
+        "bytes": 184291,
+        "path": "releases/v0.17.3--295112420/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/pepordev/ConsoleExperienceClassic/tarball/v0.17.3"
+      }
+    }
+  }
+}

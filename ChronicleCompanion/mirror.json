@@ -1,0 +1,189 @@
+{
+  "upstream": "https://github.com/Emyrk/ChronicleCompanion/",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Emyrk",
+    "repo": "ChronicleCompanion",
+    "name": "ChronicleCompanion",
+    "url": "https://github.com/Emyrk/ChronicleCompanion",
+    "api": "https://api.github.com/repos/Emyrk/ChronicleCompanion"
+  },
+  "commit": "f42632fa20bd9568c525693609a1abc810ac0841",
+  "sourceFiles": {
+    ".github/workflows/validate.yml": {
+      "sha256": "266d1c27ddd5da4bd85610bc15fa645b51553f52ddcbc44735c1fd4c2d39dd22",
+      "bytes": 1109
+    },
+    ".gitignore.upstream": {
+      "sha256": "fcea09193159957af84bc8af9a90cc7168de06232b65a792c74ec6617c8b670d",
+      "bytes": 44
+    },
+    "advancedlogging/combatant.lua": {
+      "sha256": "0357cf839426539cd54bfe0452005845888559d56dc474e5f27d7bce63b35131",
+      "bytes": 6923
+    },
+    "advancedlogging/config.lua": {
+      "sha256": "031a754d2b5d61862f86e473c1157959425fad107aca970a59e3b2657ba9ae25",
+      "bytes": 30902
+    },
+    "advancedlogging/core.lua": {
+      "sha256": "f6a29420b03b9d6830cedd18304d3ac16b40d9857ce96d411d0afbc297df7fd1",
+      "bytes": 79143
+    },
+    "advancedlogging/reference.md": {
+      "sha256": "f1304910c041503aa89f8a91c10b7074ae39690216cf9c86e9fa686099c7809d",
+      "bytes": 46961
+    },
+    "advancedlogging/sidekick_ui.lua": {
+      "sha256": "85d958e431001588679e64fa7eccc7657387707cd646e005845bb0e70e3fc58c",
+      "bytes": 16749
+    },
+    "advancedlogging/talents_format.md": {
+      "sha256": "4210852f2d615f108f1e5227f4b268c59a03e1aad413b5813556dc9fbb41c542",
+      "bytes": 2871
+    },
+    "advancedlogging/talents.lua": {
+      "sha256": "6f2b2663083ea7fd0ea4ecf1343e67977e6cee85900ce35caf3d7cff2528fd05",
+      "bytes": 13727
+    },
+    "advancedlogging/units.lua": {
+      "sha256": "beefbb19dce5f87c596fecd8ecb2e279eca6464aefd055135e7244424954d2c2",
+      "bytes": 11900
+    },
+    "advancedlogging/ursol.lua": {
+      "sha256": "267e2e7a05bb1dba018951185329ef508321dad0e6bf2a634e580082a76e9c29",
+      "bytes": 41325
+    },
+    "assets/ChronicleLogoCenter.svg": {
+      "sha256": "fa0b776e0ccb353e7ba3ac6c54cd52188afe19576bb0d523f324b82b7f5e8e74",
+      "bytes": 246439
+    },
+    "ChronicleCompanion.toc": {
+      "sha256": "ce8d480649912afd151746df3247cfd29f8f71d306f03eb57c868c10d7b46b3c",
+      "bytes": 571
+    },
+    "core.lua": {
+      "sha256": "cf796ac16c449ff1def333c70a8f59342f29af818863e84bfe5fd2c14e1ae826",
+      "bytes": 2758
+    },
+    "debug.lua": {
+      "sha256": "663836ce11eef58619b702952f3f5172628095555de0118fbcf66ed576ed22ff",
+      "bytes": 3866
+    },
+    "file.lua": {
+      "sha256": "018b94d0ac9d43ecbf00a2aed17b1db318fb686f2c5a1c00e64dd00d9c842afe",
+      "bytes": 2974
+    },
+    "globaldefs.lua": {
+      "sha256": "fe550f2084d5c98203c0f8bcc59b21347b0fea7c9b7abb70e0b271ab7ef9233a",
+      "bytes": 472
+    },
+    "init.lua": {
+      "sha256": "668ad500c2903e74622db46f21e26f425ba1fe51917e176affba67ea761f2429",
+      "bytes": 274
+    },
+    "minimap.lua": {
+      "sha256": "6595b3f68827748025322d0fdc5ed6ac6a2d6db3c00d97083434e6653d8a2258",
+      "bytes": 5615
+    },
+    "README.md": {
+      "sha256": "ca44dce8c92287f56bed181b7ef682256ccba1aeaea4060e0c2326865dbdbaee",
+      "bytes": 5276
+    },
+    "SIDEKICK_PROTOCOL.md": {
+      "sha256": "babe4bf1243c39b346a97c8344f46af6104d54b83d2636bab435812f0e256935",
+      "bytes": 17963
+    },
+    "sidekick.lua": {
+      "sha256": "a130273a1a78c89759f154ca54f7b46b5529dcabafe3150c046cc8b82c749044",
+      "bytes": 12471
+    },
+    "slash.lua": {
+      "sha256": "90d233b669bde8761dc07952bb122c2a73ec72de8015d5de1594845733006f17",
+      "bytes": 5603
+    },
+    "tests/lint/write_arity_bad_declaration.lua": {
+      "sha256": "f71261f1d9d16804a62172efadc49490c84da52aee1d9f88ce1125c83f1187ce",
+      "bytes": 118
+    },
+    "tests/lint/write_arity_invalid.lua": {
+      "sha256": "662e3c974373a9c1dea7f3c589322af03f28fd047d12dce34911b5b396b94004",
+      "bytes": 369
+    },
+    "tests/lint/write_arity_valid.lua": {
+      "sha256": "44cff81224e273b058b90f424d06464350c1778ecad12e983f2aecdc4e99bf1e",
+      "bytes": 385
+    },
+    "tests/options_refresh_test.lua": {
+      "sha256": "7328a58c0e785375dc0c8472b1b044a16f420e0733356f1159632e6b3dba0195",
+      "bytes": 2859
+    },
+    "tests/raid_composition_test.lua": {
+      "sha256": "a46dfcd875bffc83418f7dc781db6f9088583fb2ea3abcfbdedfe3f4fae3e074",
+      "bytes": 4954
+    },
+    "tests/sidekick_test.lua": {
+      "sha256": "9369cb2acd25220be5e2579df2e879d0f70b00a0ed2467cedaad0261590bc580",
+      "bytes": 15536
+    },
+    "tests/sidekick_ui_test.lua": {
+      "sha256": "976d9c6e2c95da06abbd357fd6c298a5047ea704796b90198b2f2ad566daf0e6",
+      "bytes": 10547
+    },
+    "tests/talent_invalidation_test.lua": {
+      "sha256": "e168e30c8eb499facc220430a112c0036dc061281f5bfeae3da75c6090fe838c",
+      "bytes": 5158
+    },
+    "tests/ursol_client_test.lua": {
+      "sha256": "cffc027e83b936af52c2119103eea1aa91a85c486e3e6d818db0e268c0753c19",
+      "bytes": 5846
+    },
+    "tests/write_correctness_test.lua": {
+      "sha256": "c041b36725eb6f02f342e1a12ca9619b51e3139bccb9beb00946ff67c5847a09",
+      "bytes": 4187
+    },
+    "textures/Off.tga": {
+      "sha256": "9b01a08a87257bc49fa68281ca9c400fd6c90bca1c2ab295d7d54597e4eb1838",
+      "bytes": 16402
+    },
+    "textures/On.tga": {
+      "sha256": "d525537e15801ebb430e3d96772027a54cf9bd122af783fb4acf9bc055d8701a",
+      "bytes": 16402
+    },
+    "TODO.md": {
+      "sha256": "e6699250ff9d739fbdb5972b79a0931593940b1094dae95a674a6894162b35dc",
+      "bytes": 212
+    },
+    "tools/install_lua_5_0_3.sh": {
+      "sha256": "5f48209e758fe0d612e6985840992761d156be27c70361dbd33a6ad824fc0b11",
+      "bytes": 715
+    },
+    "tools/write-arity/check_write_arity.js": {
+      "sha256": "67b34c6dcb4faac5002cfa979990eff2815cea295777d7167684ecd65fd02af9",
+      "bytes": 4765
+    },
+    "tools/write-arity/package-lock.json": {
+      "sha256": "f93533bc08c2768dbaa8cd356b67b3706bf53d53c57f78c577279e7f0aca1fb7",
+      "bytes": 602
+    },
+    "tools/write-arity/package.json": {
+      "sha256": "805ac6d427e9d5d22dc3dd2d4ac7c2f8b053bfd1e34192458f112fd86e98be23",
+      "bytes": 373
+    },
+    "tools/write-arity/write_arity_checker_test.js": {
+      "sha256": "4dd470294afe624cdb09921074ec7e62e92bf4125bfeb0382ac8bdf98f2935a6",
+      "bytes": 1222
+    },
+    "URSOL_EVENTS.md": {
+      "sha256": "9f0ca1c032b6550642cdf55155e327cd43c16fb33e8e7fa36cdb5a63359722b1",
+      "bytes": 9231
+    },
+    "util.lua": {
+      "sha256": "86f577a9a0cf3de4af33bd0e051cc3400615eace38f1aceb8131e0f4737097e3",
+      "bytes": 2780
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

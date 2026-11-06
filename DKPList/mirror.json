@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/quakerzz/DKPList",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "quakerzz",
+    "repo": "DKPList",
+    "name": "DKPList",
+    "url": "https://github.com/quakerzz/DKPList",
+    "api": "https://api.github.com/repos/quakerzz/DKPList"
+  },
+  "commit": "5c1b387e10d53eb246c0374536918b5b88ecd64e",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "DKPList.lua": {
+      "sha256": "49ad3db31e85c1364e654492092ee3827b0c328ab013050fdd3a8daaf8178267",
+      "bytes": 13892
+    },
+    "DKPList.toc": {
+      "sha256": "eb96d5444c1b46269b4e4095d3feba6fc99053e62ea7450e3a68b1b715a9c972",
+      "bytes": 90
+    },
+    "DKPList.xml": {
+      "sha256": "41b57ee687398a4b2710e1fbd741f9d51520c0675163c3042c9fcdc4e2dd39e5",
+      "bytes": 12906
+    },
+    "Icon.tga": {
+      "sha256": "bb4d53eeaa25d4a02f1f46f07e1eff547863dd26742a9cac6d3367599bc81cf3",
+      "bytes": 3121
+    },
+    "README.md": {
+      "sha256": "9f3c321a192fb0d8e9ea49433ad1c2b7eb1628c59b4afd3d8ff3995cf3d90ec7",
+      "bytes": 1126
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

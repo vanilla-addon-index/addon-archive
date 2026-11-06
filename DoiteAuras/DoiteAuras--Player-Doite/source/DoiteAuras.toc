@@ -1,0 +1,21 @@
+## Interface: 11200
+## Title: |cff6FA8DC[DoiteAuras]|r
+## Notes: WeakAuras-light addon for vanilla by Doite.
+## Author: Doite
+## Version: 1.8.7
+## SavedVariablesPerCharacter: DoiteAurasDB
+
+DoiteAuras.lua
+
+Modules\DoiteBuffData.lua
+Modules\DoitePlayerAuras.lua
+Modules\DoitePetAuras.lua
+Modules\DoiteEdit.lua
+Modules\DoiteGlow.lua
+Modules\DoiteConditions.lua
+Modules\DoiteGroup.lua
+Modules\DoiteLogic.lua
+Modules\DoiteExport.lua
+Modules\DoiteTargetAuras.lua
+Modules\DoiteSettings.lua
+Modules\DoiteBars.lua

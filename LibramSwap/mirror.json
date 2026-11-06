@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/jvaneg/Libramswap",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jvaneg",
+    "repo": "Libramswap",
+    "name": "Libramswap",
+    "url": "https://github.com/jvaneg/Libramswap",
+    "api": "https://api.github.com/repos/jvaneg/Libramswap"
+  },
+  "commit": "46114022eb4a33eefcb2189f24ddb4d5b620b364",
+  "sourceFiles": {
+    "LibramSwap.lua": {
+      "sha256": "c09b97d3afbd4ddb49716c3d2c73bcf6818963f6249e0d5c18fb5dae67d5496c",
+      "bytes": 22182
+    },
+    "LibramSwap.toc": {
+      "sha256": "63709e039b5e155c0043fb19890722a040994daa87f7ff0942f679b8995eaa4a",
+      "bytes": 181
+    },
+    "README.md": {
+      "sha256": "7f79e1bf4a3f34243c58859211a4f15b2a9f9c41b7f6662b7986428122a604ea",
+      "bytes": 2013
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

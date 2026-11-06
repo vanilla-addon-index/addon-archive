@@ -1,0 +1,14 @@
+## Interface: 20506
+## Title: RollFor - Gargul
+## Author: Obszczymucha
+## Version: 1.0.0
+## Notes: Speaks Gargul's comm protocol, so Gargul users see RollFor's roll-offs and soft-res data.
+## Dependencies: RollFor
+## Group: RollFor
+## IconTexture: Interface\AddOns\RollFor\assets\icon-white
+## X-RollFor-Extension: gargul
+
+src\GargulBridge.lua
+src\OptionsPage.lua
+
+RollForGargul.lua

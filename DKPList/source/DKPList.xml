@@ -1,0 +1,478 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Script file="DKPList.lua" />
+
+	<!-- template for DKP entries -->
+	<Button name="DKPList_EntryTemplate" hidden="true" virtual="true">
+		<Size>
+			<AbsDimension x="420" y="16"/>
+		</Size>
+		<Layers>
+			<Layer>
+				<!-- Player number in list-->
+				<FontString name="$parentNumber" justifyH="RIGHT" inherits="GameFontNormal">
+					<Size>
+						<AbsDimension x="20" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="-2" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<Color r="1" g="1" b="1" />
+				</FontString>
+				<!-- Player name -->
+				<FontString name="$parentName" justifyH="LEFT" inherits="GameFontNormal">
+					<Size>
+						<AbsDimension x="100" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parentNumber">
+							<Offset>
+								<AbsDimension x="15" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<!-- Player DKP -->
+				<FontString name="$parentDKP" justifyH="LEFT" inherits="GameFontNormal">
+					<Size>
+						<AbsDimension x="80" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parentName"/>
+					</Anchors>
+				</FontString>
+				<!-- Guild rank -->
+				<FontString name="$parentRank" justifyH="LEFT" inherits="GameFontNormal">
+					<Size>
+						<AbsDimension x="200" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parentDKP"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<NormalTexture name="$parentBG">
+			<Color r="0.0" g="0.0" b="0.0" a="0.7"/>
+		</NormalTexture>
+		<HighlightTexture name="$parentHL">
+			<Color r="1.0" g="0.9" b="0.0" a="0.3"/>
+		</HighlightTexture>
+		<PushedTexture name="$parentPU">
+			<Color r="1.0" g="0.9" b="0.0" a="0.3"/>
+		</PushedTexture>
+		<Scripts>
+			<OnClick>
+				PlaySound("igMainMenuOptionCheckBoxOn")
+				getglobal(this:GetName().."BG"):SetVertexColor(1.0, 1.0, 1.0, 1.0)	
+			</OnClick>
+			<OnEnter>
+				getglobal(this:GetName().."BG"):SetVertexColor(1.0, 1.0, 1.0, 1.0)
+			</OnEnter>
+			<OnLeave>
+				getglobal(this:GetName().."BG"):SetVertexColor(0.0, 0.0, 0.0, 0.5)
+			</OnLeave>
+			<OnLoad>
+				this:GetScript("OnLeave")(this)
+			</OnLoad>
+		</Scripts>
+	</Button>
+
+    <Button name="DKPList_MinimapButtonFrame" toplevel="true" frameStrata="LOW" parent="Minimap" enableMouse="true" movable="true" hidden="false">
+		<Size>
+			<AbsDimension x="33" y="33"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset>
+					<AbsDimension x="-18" y="-100"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parent_Texture" file="Interface\AddOns\DKPList\Icon">
+					<Size>
+						<AbsDimension x="17" y="17"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="8" y="-8"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.075" right="0.925" top="0.075" bottom="0.925"/>
+				</Texture>
+			</Layer>
+		<Layer level="OVERLAY">
+			<Texture file="Interface\Minimap\MiniMap-TrackingBorder">
+				<Size>
+					<AbsDimension x="56" y="56"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT"/>
+				</Anchors>
+			</Texture>
+		</Layer>
+		</Layers>
+		<HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight"/>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonUp")
+				this:RegisterForDrag("RightButton")
+				this:SetClampedToScreen(true)
+			</OnLoad>
+			<OnClick>
+                DKPList_OnClickMinimapButton();
+			</OnClick>
+			<OnDragStart>
+				this:LockHighlight()
+				this:StartMoving()
+			</OnDragStart>
+			<OnDragStop>
+				this:UnlockHighlight()
+				this:StopMovingOrSizing()
+			</OnDragStop>
+		</Scripts>
+	</Button>
+
+	<!--	DKPList UI Frame	-->
+	<Frame name="DKPListUIFrame" parent="UIParent" toplevel="true" hidden="true">
+		<Size>
+			<AbsDimension x="460" y="480" />
+		</Size>
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset x="312" y="-118" />
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+		</Backdrop>
+		
+		<Frames>
+			<!-- DKP list frame -->
+			<Frame name="$parentTableList">
+				<Size>
+					<AbsDimension x="430" y="332"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="16" y="-135"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+					<EdgeSize>
+						<AbsValue val="16"/>
+					</EdgeSize>
+					<TileSize>
+						<AbsValue val="16"/>
+					</TileSize>
+				</Backdrop>
+				<Frames>
+					<ScrollFrame name="$parentScrollFrame" inherits="FauxScrollFrameTemplate">
+					<Anchors>
+						<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-8"/>
+						</Offset>
+						</Anchor>
+						<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-30" y="8"/>
+						</Offset>
+						</Anchor>
+					</Anchors>
+    		    	<Scripts>
+    		    	  <OnVerticalScroll>
+    		    	    FauxScrollFrame_OnVerticalScroll(16, DKPList_ScrollBarUpdate);
+    		    	  </OnVerticalScroll>
+    		    	  <OnShow>
+    		    	    DKPList_ScrollBarUpdate();
+    		    	  </OnShow>
+    		    	</Scripts>
+					</ScrollFrame>
+				</Frames>
+			</Frame>
+			<!-- Buttons to filter classes -->
+			<Button name="DKPList_DruidButton" inherits="UIPanelButtonTemplate" text="Druid">
+				<Size>
+					<AbsDimension x="100" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="16" y="-30" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnMouseUp>DKPList_DruidButtonOnClick(arg1);</OnMouseUp>
+				</Scripts>
+			</Button>
+			<Button name="DKPList_HunterButton" inherits="UIPanelButtonTemplate" text="Hunter">
+				<Size>
+					<AbsDimension x="100" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="118" y="-30" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnMouseUp>DKPList_HunterButtonOnClick(arg1);</OnMouseUp>
+				</Scripts>
+			</Button>
+			<Button name="DKPList_MageButton" inherits="UIPanelButtonTemplate" text="Mage">
+				<Size>
+					<AbsDimension x="100" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="220" y="-30" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnMouseUp>DKPList_MageButtonOnClick(arg1);</OnMouseUp>
+				</Scripts>
+			</Button>
+			<Button name="DKPList_PaladinButton" inherits="UIPanelButtonTemplate" text="Paladin">
+				<Size>
+					<AbsDimension x="100" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="16" y="-55" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnMouseUp>DKPList_PaladinButtonOnClick(arg1);</OnMouseUp>
+				</Scripts>
+			</Button>
+			<Button name="DKPList_PriestButton" inherits="UIPanelButtonTemplate" text="Priest">
+				<Size>
+					<AbsDimension x="100" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="118" y="-55" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnMouseUp>DKPList_PriestButtonOnClick(arg1);</OnMouseUp>
+				</Scripts>
+			</Button>
+			<Button name="DKPList_RogueButton" inherits="UIPanelButtonTemplate" text="Rogue">
+				<Size>
+					<AbsDimension x="100" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="220" y="-55" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnMouseUp>DKPList_RogueButtonOnClick(arg1);</OnMouseUp>
+				</Scripts>
+			</Button>
+			<Button name="DKPList_ShamanButton" inherits="UIPanelButtonTemplate" text="Shaman">
+				<Size>
+					<AbsDimension x="100" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="16" y="-80" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnMouseUp>DKPList_ShamanButtonOnClick(arg1);</OnMouseUp>
+				</Scripts>
+			</Button>
+			<Button name="DKPList_WarlockButton" inherits="UIPanelButtonTemplate" text="Warlock">
+				<Size>
+					<AbsDimension x="100" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="118" y="-80" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnMouseUp>DKPList_WarlockButtonOnClick(arg1);</OnMouseUp>
+				</Scripts>
+			</Button>
+			<Button name="DKPList_WarriorButton" inherits="UIPanelButtonTemplate" text="Warrior">
+				<Size>
+					<AbsDimension x="100" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="220" y="-80" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnMouseUp>DKPList_WarriorButtonOnClick(arg1);</OnMouseUp>
+				</Scripts>
+			</Button>
+
+
+			<!-- Refresh button -->
+			<Button name="DKPList_RefreshButton" inherits="UIPanelButtonTemplate" text="Refresh">
+				<Size>
+					<AbsDimension x="100" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="344" y="-30" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						DKPList_RefreshRoster();
+						DKPList_UpdateDKPElements();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<!-- reset button -->
+			<Button name="DKPList_ResetButton" inherits="UIPanelButtonTemplate" text="Reset">
+				<Size>
+					<AbsDimension x="100" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="344" y="-55" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>DKPList_ResetButtonOnClick();</OnClick>
+				</Scripts>
+			</Button>
+			<!-- is in raid button -->
+			<Button name="DKPList_IsInRaidButton" inherits="UIPanelButtonTemplate" text="In Raid">
+				<Size>
+					<AbsDimension x="100" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="344" y="-80" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>DKPList_IsInRaidButtonOnClick();</OnClick>
+				</Scripts>
+			</Button>
+
+			<!-- list of filters button -->
+			<Button name="DKPList_FiltersShownButton">
+				<Size>
+					<AbsDimension x="430" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="16" y="-105" />
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<FontString name="$parentText" justifyH="LEFT" inherits="GameFontNormal">
+							<Size>
+								<AbsDimension x="425" y="16"/>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="4" y="-1"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+							<Color r="1" g="1" b="1" />
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>DKPList_FiltersShownButtonOnLoad();</OnLoad>
+				</Scripts>
+			</Button>
+
+			<!-- Top right corner close button -->
+			<Button name="$parentTopCloseButton" inherits="UIPanelCloseButton">
+				<Anchors>
+					<Anchor point="TOPLeft">
+						<Offset x="425" y="-4" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						DKPList_CloseUI();
+					</OnClick>
+				</Scripts>
+			</Button>
+
+
+		</Frames>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="$parentHeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="360" y="64" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString inherits="GameFontNormal" text="DKP List">
+					<Anchors>
+						<Anchor point="TOP" relativeTo="$parentHeaderTexture">
+							<Offset>
+								<AbsDimension x="0" y="-14" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:SetMovable(true)
+				this:SetUserPlaced(true)
+				this:RegisterForDrag("LeftButton")
+			</OnLoad>
+			<OnDragStart>
+				this:StartMoving()
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing()
+			</OnDragStop>
+		</Scripts>
+	</Frame>
+
+    <!-- Dummy event frame -->
+	<Frame name="DKPListEventFrame">
+		<Scripts>
+			<OnLoad>
+				DKPList_OnLoad();
+			</OnLoad>
+			<OnEvent>
+				if (DKPList_OnEvent) then
+					DKPList_OnEvent(event, arg1, arg2, arg3, arg4, arg5);
+				end
+			</OnEvent>
+		</Scripts>
+	</Frame>
+</Ui>

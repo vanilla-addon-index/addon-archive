@@ -1,0 +1,101 @@
+{
+  "upstream": "https://github.com/TrangOul/FlightMap",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "TrangOul",
+    "repo": "FlightMap",
+    "name": "FlightMap",
+    "url": "https://github.com/TrangOul/FlightMap",
+    "api": "https://api.github.com/repos/TrangOul/FlightMap"
+  },
+  "commit": "8231f8f95de2f361774bb55162a731702409a26c",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "e9ca68ee521eabffc22080a5576fe43305f12825c318bdd1a7a61004570c3f43",
+      "bytes": 119
+    },
+    "Defaults.lua": {
+      "sha256": "f41e628813255bd1208f4882c05c3eef2117c90e9bff33f5c165f1e05732ebbb",
+      "bytes": 46593
+    },
+    "FlightMap.lua": {
+      "sha256": "caf830cb61d40a64ba53dbf541472543a142826321421fd84396f6bd6059eb82",
+      "bytes": 30547
+    },
+    "FlightMap.toc": {
+      "sha256": "d277637b3030e240fc73a79177ba45b898feca1c403ac92622550b21fe3360e4",
+      "bytes": 297
+    },
+    "FlightMap.xml": {
+      "sha256": "f8feb6fd6047d32650376581dbee7d4543a6d261001102b1a602c3d772364642",
+      "bytes": 12426
+    },
+    "FlightMapDown.tga": {
+      "sha256": "3d118a73d0a22d0d6ab2fbad5be9739721d274cb1d113d762af6429316338258",
+      "bytes": 5143
+    },
+    "FlightMapTaxi.lua": {
+      "sha256": "9464feb743d3d61b7dc30dc66efce3ef64fa44ba21cad9032b2bbc181d6db297",
+      "bytes": 6539
+    },
+    "FlightMapTaxi.xml": {
+      "sha256": "c20f4175bffb8b9dd656510e6c840096a974cdb837e20de8d6a595f27f796913",
+      "bytes": 9534
+    },
+    "FlightMapTimes.lua": {
+      "sha256": "2790c9e4600724e92bd0eb7dda2ba4f50c6a3e12750cb9b774411ce01e08c1d5",
+      "bytes": 8981
+    },
+    "FlightMapTimes.xml": {
+      "sha256": "aac5cf93bfdefd7deffce89f6d27c09d729c52f3a1ea485e751a2a13b4592802",
+      "bytes": 3568
+    },
+    "FlightMapUp.tga": {
+      "sha256": "8e0b5ef153543982a09887300b909210828c60cac614d751b2e0fd329a3e4f59",
+      "bytes": 5143
+    },
+    "FlightMapUtil.lua": {
+      "sha256": "1ecacdd2a1199b36881870fafa91b7b435b9bd24f94c0b5d1835e875d6a7bc49",
+      "bytes": 7922
+    },
+    "localisation.cn.lua": {
+      "sha256": "9be861f8dc5f6233d06ab25003eb16bf68b3d786dc01a90f378126fa061ce3d9",
+      "bytes": 7313
+    },
+    "localisation.de.lua": {
+      "sha256": "5b2a0b40900fe8744e3de576a899c0257ed3a940526e7c205bfcec64a124ab1d",
+      "bytes": 6796
+    },
+    "localisation.en.lua": {
+      "sha256": "9e42e4f1abfdb2dcf81053fbd9baa485512af01465291ed8a8edcf27693ba9fa",
+      "bytes": 5959
+    },
+    "localisation.fr.lua": {
+      "sha256": "f222644866fb535de160e9ce0b296dde7f487eb46e496fc7b8bebe70d16a9eac",
+      "bytes": 7686
+    },
+    "localisation.ko.lua": {
+      "sha256": "d957496906a866d8bec81a81895936a785a0f4d95fa4d701f5aac49633f0d947",
+      "bytes": 7100
+    },
+    "localisation.tw.lua": {
+      "sha256": "f4b271f84cce21b5ed979c5a00df5d8a59c3408d5ad85ff1c9ba3cfa8d7c4fee",
+      "bytes": 6382
+    },
+    "README.md": {
+      "sha256": "70b69bfd704bea160f2fd867ace416139d8df932be76116a04e61f279776dfba",
+      "bytes": 368
+    },
+    "readme.txt": {
+      "sha256": "8a7ba9d169731c80e459b36e3f9a5d6d748a5071f2b6badf35cc1af3750317f7",
+      "bytes": 3717
+    },
+    "UI-Taxi-Icon-Blue.tga": {
+      "sha256": "848c083cba469fc76784d624968bf0a6408f92a5f4a63b11f6f4e8f953e59121",
+      "bytes": 666
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

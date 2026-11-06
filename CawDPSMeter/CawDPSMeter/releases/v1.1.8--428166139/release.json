@@ -1,0 +1,9 @@
+{
+  "id": "428166139",
+  "tag": "v1.1.8",
+  "name": "Caw DPS Meter 1.1.8",
+  "body": "# Caw DPS Meter 1.1.8\n\n- **DPSLog stays active next to other addons.** With the DPSLog Community\n  Edition installed, another addon or client mod that fires the game's\n  combat-log event could make Caw report an \"unsupported header\" and switch to\n  reading the combat text. When that happened during start-up, DPSLog was\n  dropped for the whole session and did nothing. Caw now takes DPSLog's events\n  only through its own polling channel and ignores unrelated combat-log events,\n  so these rejections stop and DPSLog keeps working. The one-time chat warning\n  about a rejected event is removed; the counters are still shown by\n  `/cawinput`. Reported by Icekronik and Taroven. Installations using the older\n  DPSLog DLL are unchanged; if you still see combat text instead of DPSLog,\n  updating to the DPSLog Community Edition is recommended.\n\n## Updating\n\nDownload `CawDPSMeter-1.1.8.zip` and replace the addon folder with the\n`CawDPSMeter` folder inside it. Use `/reload` or restart the game.\nExisting saved settings are retained. SuperWoW and SuperAPI are still required;\nDPSLog remains optional and is installed separately.\n\n## Validation\n\nAutomated regression checks cover the DPSLog producer selection: a foreign\nnative combat-log event is ignored while polling is available and can no longer\nend the start-up probe, polling still selects DPSLog from the first real event\nwithout any rejection, and an older DLL without the polling channel still\ndelivers through the native event. These tests use a mocked WoW client.\n\nThe public ZIP contains runtime files, media and documentation. Collected logs,\nSavedVariables and the maintainer's private status overlay are excluded.\n",
+  "published": "2026-10-29T17:10:47Z",
+  "prerelease": false,
+  "url": "https://github.com/NovaElysium/CawDPSMeter/releases/tag/v1.1.8"
+}

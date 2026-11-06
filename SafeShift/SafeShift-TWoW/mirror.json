@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/DeterminedPanda/SafeShift-TWoW",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "DeterminedPanda",
+    "repo": "SafeShift-TWoW",
+    "name": "SafeShift-TWoW",
+    "url": "https://github.com/DeterminedPanda/SafeShift-TWoW",
+    "api": "https://api.github.com/repos/DeterminedPanda/SafeShift-TWoW"
+  },
+  "commit": "8436ae757e4405e939fe22415cf925515c5a179a",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "README.md": {
+      "sha256": "9ba9db957f0ba66afbd49785b8b941be2571ebfe2233cb79827bca9b7a2290d6",
+      "bytes": 1106
+    },
+    "SafeShift-TWoW.toc": {
+      "sha256": "58aef9f586d5e03b5b9b8d9c15347252e93dd2cce5af6b585a008cb5e2e34a33",
+      "bytes": 299
+    },
+    "SafeShift.lua": {
+      "sha256": "70c7f05d933c946fcfec7003a7463e10c11e50bc18f25acf22755b9a189205ca",
+      "bytes": 4956
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,5 @@
+<Bindings>
+  <Binding name="DBB2_TOGGLE" header="DBB2">
+    DBB2:ToggleGUI()
+  </Binding>
+</Bindings>

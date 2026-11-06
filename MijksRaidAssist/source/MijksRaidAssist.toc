@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: MijksRaidAssist
+## Notes: Checks for Flask, GGSP/GGNP/GGFP/GGAP/GGFRP, Mageblood and Mongoose potions.
+## Author: mijk
+## Version: 0.3
+
+MijksRaidAssist.lua

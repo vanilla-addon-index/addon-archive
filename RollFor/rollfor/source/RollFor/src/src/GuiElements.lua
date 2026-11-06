@@ -1,0 +1,1555 @@
+RollFor = RollFor or {}
+local m = RollFor
+
+if m.GuiElements then return end
+
+local hl = m.colors.hl
+local blue = m.colors.blue
+local getn = m.getn
+
+-- Grouped (soft-res) row metrics. The cell width is fixed at three digits: a ragged grid
+-- across 25 rows is unscannable, and the wasted pixels on single-digit rolls are the
+-- better trade. Cells sit flush against each other, so the cell width *is* the gap
+-- between two rolls - which is why it is configurable (sr_roll_spacing); this is only
+-- the fallback for callers that pass nothing.
+local roll_cell_width = 24
+-- The pip textures are 32x32 sheets with the die drawn at x 2-24, y 5-26 and transparent
+-- padding around it - and the padding is lopsided (2 left, 7 right). Cropping to the die
+-- makes the texture's own edges the ones we anchor, so a pip lands in the same column as
+-- the right-aligned digits instead of ~4px to their left.
+local pip_size = 12
+local pip_left, pip_right, pip_top, pip_bottom = 2 / 32, 25 / 32, 5 / 32, 27 / 32
+-- The cropped die is still a hair right of where the digits' ink centre lands, so the pip
+-- is nudged a pixel left to sit in the same column as the numbers it stands in for.
+local pip_x_offset = -1
+-- Matches the breathing room the ungrouped rows have. Theirs varies with name length,
+-- since the name is centred in a fixed 170px row while the label is pinned 37px from the
+-- right; for their widest name it works out at ~22.6 units, which is what a grouped row's
+-- widest name gets here. Applied to both sides, or the name comes off centre.
+local grouped_name_gap = 22
+-- The roll-type label mirrors the cell zone on the far side of the name. Reserving the
+-- same width on both sides is what puts the name on the row's centre line - and so on
+-- the popup's, since lines are anchored by their TOP centre.
+local roll_type_zone = 37
+-- The label is centred in a box just big enough for it, for the same reason the roll
+-- cells are: left-aligning "MS" (16 units of ink) and "OS" (14) lines up their left edges
+-- and dumps the whole difference on the right. The box is narrower than the zone it sits
+-- in, so ungrouped rows offset its anchor by the difference to keep the label where it
+-- has always been. Fontstrings are not clipped by their container, so a wider label than
+-- this still renders in full - it just centres on the same point.
+local roll_type_label_width = 16
+local spent_cell_alpha = 0.5
+local single_roll_width = 170
+
+-- Colour encodes the roll *type*, so emphasis lives on the alpha axis instead.
+---@param roll_type RollType
+---@param roll number
+local function cell_text( roll_type, roll )
+  if roll_type == m.Types.RollType.SoftRes then return blue( roll ) end
+  return m.roll_type_color( roll_type, roll )
+end
+
+-- The pip crop and offset above are measured against this sheet's opaque die.
+local cell_icon_texture = "Interface\\AddOns\\RollFor\\assets\\icon-white2.tga"
+
+---@class GuiElements
+---@field item_link fun( parent: Frame ): Frame
+---@field item_link_with_icon fun( parent: Frame, text: string, spacing: number?, count_color: ColorFn? ): Frame
+---@field text fun( parent: Frame, text: string ): Frame
+---@field paragraph fun( parent: Frame ): Frame
+---@field section_header fun( parent: Frame ): Frame
+---@field icon fun( parent: Frame, show: boolean, width: number, height: number ): Frame
+---@field icon_text fun( parent: Frame, text: string ): Frame
+---@field roll fun( parent: Frame ): Frame
+---@field button fun( parent: Frame ): Frame
+---@field info fun( parent: Frame ): Frame
+---@field dropped_item fun( parent: Frame, text: string ): Frame
+---@field checkbox fun( parent: Frame ): Frame
+---@field slider fun( parent: Frame ): Frame
+---@field dropdown fun( parent: Frame ): Frame
+---@field editbox fun( parent: Frame ): Frame
+---@field tree_node fun( parent: Frame ): Frame
+
+local M = {}
+
+function M.create_text_in_container( type, parent, container_width, alignment, text, inner_field, font_type )
+  local container = m.create_backdrop_frame( m.api, type, nil, parent )
+  container:SetWidth( container_width )
+  local label = container:CreateFontString( nil, "ARTWORK", font_type or "GameFontNormalSmall" )
+
+  label:SetTextColor( 1, 1, 1 )
+  if text then label:SetText( text ) end
+
+  if alignment then label:SetPoint( alignment, 0, 0 ) end
+  container:SetHeight( label:GetHeight() )
+
+  if inner_field then
+    container[ inner_field ] = label
+  else
+    container.inner = label
+  end
+
+  return container
+end
+
+function M.empty_line( parent )
+  local result = m.api.CreateFrame( "Frame", nil, parent )
+  result:SetWidth( 2 )
+
+  return result
+end
+
+-- The tooltip, the dressing room and the chat link: the behaviour that makes an item link an item
+-- link rather than a coloured word. Shared by both link widgets below, which differ in what they
+-- draw and not in what they do -- the state they need is kept on the frame so the same handlers
+-- serve either.
+--
+-- ANCHOR_CURSOR ignores SetOwner's offsetX/offsetY -- the client repositions the tooltip to the
+-- raw cursor position every frame regardless of what's passed there. Shifting it requires
+-- fighting that same per-frame repositioning with our own OnUpdate. tooltip_position (supplied
+-- per item, see SetItem) decides how far and in which direction; this only feeds it the cursor.
+---@param container table
+local function reposition_at_cursor( container )
+  return function( tooltip )
+    local x, y = m.api.GetCursorPosition()
+    local scale = m.api.UIParent:GetEffectiveScale()
+    local anchor, px, py = container.tooltip_position( x / scale, y / scale )
+
+    -- px/py are absolute screen coordinates (GetCursorPosition's origin), so the relative-to point
+    -- has to stay UIParent's BOTTOMLEFT -- the only UIParent anchor that actually sits at (0, 0).
+    -- Only the tooltip's own corner/edge is meant to be configurable via `anchor`.
+    tooltip:ClearAllPoints()
+    tooltip:SetPoint( anchor, m.api.UIParent, "BOTTOMLEFT", px, py )
+  end
+end
+
+---@param container table
+local function bind_link_scripts( container )
+  container:SetScript( "OnEnter", function( self )
+    if not container.tooltip_link then return end
+
+    m.api.GameTooltip:SetOwner( self, "ANCHOR_CURSOR" )
+    m.api.GameTooltip:SetHyperlink( container.tooltip_link )
+    m.api.GameTooltip:Show()
+
+    if container.tooltip_position then
+      m.api.GameTooltip:SetScript( "OnUpdate", reposition_at_cursor( container ) )
+    end
+  end )
+
+  container:SetScript( "OnLeave", function()
+    if container.tooltip_position then m.api.GameTooltip:SetScript( "OnUpdate", nil ) end
+
+    m.api.GameTooltip:Hide()
+  end )
+
+  container:SetScript( "OnClick", function()
+    if not container.tooltip_link then return end
+
+    -- What is drawn is not always what should leave the window. A list that greys a link out to
+    -- say it doesn't count is still pointing at an epic, and pasting our grey into somebody's
+    -- chat would call it a common one -- so a caller may hand over the real link separately.
+    local link = container.chat_link or container.text:GetText()
+
+    if m.is_ctrl_key_down() then
+      m.api.DressUpItemLink( link )
+      return
+    end
+
+    if m.is_shift_key_down() then
+      m.link_item_in_chat( link )
+      return
+    end
+
+    if container.on_click then container.on_click() end
+  end )
+end
+
+-- An item link and nothing else. Its own widget rather than the one below drawing no icon: a
+-- window either shows icons or it doesn't, and a widget told which by being handed a missing
+-- texture is a widget with a hole where the icon goes -- the stack size, drawn in that icon's
+-- corner, ends up painted over the item's name.
+--
+-- The count is not the icon's business, so it stays: it is how many of this item there are, drawn
+-- in front of the name as text.
+--
+-- SetItem takes `link` (what is drawn) and optionally `chat_link` (what a shift-click pastes and
+-- ctrl-click dresses up, when the two differ -- see bind_link_scripts).
+---@param parent table
+---@param text string?
+function M.item_link( parent, text )
+  local container = M.create_text_in_container( "Button", parent, 20, nil, nil, "text" )
+
+  local count = 0
+
+  container.count = M.text( container )
+  container.text:SetTextColor( 1, 1, 1 )
+  container.text:SetText( text or "PrincessKenny" )
+  container:SetHeight( container.text:GetHeight() )
+
+  local function resize()
+    container.text:ClearAllPoints()
+
+    if count > 1 then
+      container.count:Show()
+      container.count:ClearAllPoints()
+      container.count:SetPoint( "LEFT", container, "LEFT", 0, 0 )
+      container.text:SetPoint( "LEFT", container.count, "RIGHT", 0, 0 )
+      container:SetWidth( container.count:GetWidth() + container.text:GetWidth() )
+    else
+      container.count:Hide()
+      container.text:SetPoint( "LEFT", container, "LEFT", 0, 0 )
+      container:SetWidth( container.text:GetWidth() )
+    end
+  end
+
+  container.SetItem = function( _, i, tooltip_link )
+    count = i.count or 0
+    container.tooltip_link = tooltip_link
+    container.tooltip_position = i.tooltip_position
+    -- Written on every call, nil included: line frames are recycled, and a link left over from
+    -- the previous occupant would paste the wrong item entirely.
+    container.chat_link = i.chat_link
+
+    container.text:SetText( i.link )
+    container.count:SetText( count > 1 and hl( string.format( "%sx", count ) ) or nil )
+
+    resize()
+  end
+
+  bind_link_scripts( container )
+
+  return container
+end
+
+-- The same link with the item's icon in front of it, and the stack size in the icon's corner.
+-- `count_color` is for a window whose rows already spend the highlight colour on something else:
+-- the pending list draws an orange SR indicator right next to the count, and two oranges a foot
+-- apart meaning different things is what a caller gets to opt out of. Everything that names none
+-- keeps the highlight this has always drawn.
+---@param count_color ColorFn?
+function M.item_link_with_icon( parent, text, spacing, count_color )
+  local container = M.create_text_in_container( "Button", parent, 20, nil, nil, "text" )
+  local colorize_count = count_color or hl
+
+  local w = 14
+  local h = 14
+  spacing = spacing or 10
+  local count = 0
+  local quantity = 1
+  local texture
+
+  container:SetPoint( "TOP", 0, 0 )
+  container.icon = M.icon( container, true, w, h )
+  container.icon:SetPoint( "LEFT", 0, 0 )
+  container.icon:SetTexCoord( 1 / w, (w - 1) / w, 1 / h, (h - 1) / h )
+  container.count = M.text( container )
+  container.quantity = M.text( container )
+  container.quantity:SetPoint( "BOTTOMRIGHT", container.icon, "BOTTOMRIGHT", 4, -2 )
+  container.quantity:SetScale( 0.75 )
+  container.text:SetTextColor( 1, 1, 1 )
+
+  if text then
+    container.text:SetText( text )
+  else
+    container.text:SetText( "PrincessKenny" )
+  end
+
+  container:SetHeight( container.text:GetHeight() )
+
+  local function resize()
+    if texture then
+      container.icon:Show()
+
+      local anchor = container.icon
+      local padding = spacing
+      local count_width = 0
+
+      if count > 1 then
+        container.count:Show()
+        container.count:ClearAllPoints()
+        container.count:SetPoint( "LEFT", container.icon, "RIGHT", spacing, 0 )
+        anchor = container.count
+        padding = 0
+        count_width = container.count:GetWidth()
+      end
+
+      container.text:ClearAllPoints()
+      container.text:SetPoint( "LEFT", anchor, "RIGHT", padding, 0 )
+      container:SetWidth( container.text:GetWidth() + w + count_width + spacing )
+    else
+      container.icon:Hide()
+      container.text:ClearAllPoints()
+
+      if count > 1 then
+        container.count:Show()
+        container.count:ClearAllPoints()
+        container.count:SetPoint( "LEFT", container, "LEFT", 0, 0 )
+        container.text:SetPoint( "LEFT", container.count, "RIGHT", 0, 0 )
+        container:SetWidth( container.count:GetWidth() + container.text:GetWidth() )
+      else
+        container.text:SetPoint( "LEFT", container, 0, 0 )
+        container:SetWidth( container.text:GetWidth() )
+      end
+    end
+  end
+
+  container.SetItem = function( _, i, tooltip_link )
+    texture = i.texture
+    count = i.count or 0
+    quantity = i.quantity or 1
+    container.tooltip_link = tooltip_link
+    container.tooltip_position = i.tooltip_position
+
+    container.text:SetText( i.link )
+    container.icon:SetTexture( texture )
+    container.count:SetText( count > 1 and colorize_count( string.format( "%sx", count ) ) or nil )
+    container.quantity:SetText( quantity > 1 and quantity or "" )
+
+    resize()
+  end
+
+  bind_link_scripts( container )
+
+  return container
+end
+
+function M.text( parent, text )
+  local label = parent:CreateFontString( nil, "ARTWORK", "GameFontNormalSmall" )
+
+  label:SetTextColor( 1, 1, 1 )
+  label:SetNonSpaceWrap( false )
+
+  if text then label:SetText( text ) end
+
+  return label
+end
+
+-- Prose, as opposed to M.text's single line. Fixed width so it wraps rather than
+-- stretching whatever it sits in -- the options page sizes itself to its widest line, so
+-- an unwrapped sentence would make the whole page as wide as the sentence.
+--
+-- The height is deliberately *not* set. A font string with a fixed width grows its own
+-- height to fit the wrapped text; pinning that height instead truncates the text with an
+-- ellipsis the moment the measurement is taken before the string has been laid out --
+-- which is a one-line measurement, and why the summary used to end in "only ever lo...".
+local paragraph_width = 380
+
+function M.paragraph( parent )
+  local label = parent:CreateFontString( nil, "ARTWORK", "GameFontHighlight" )
+
+  label:SetWidth( paragraph_width )
+  label:SetJustifyH( "LEFT" )
+  label:SetJustifyV( "TOP" )
+  label:SetNonSpaceWrap( false )
+  label:SetWordWrap( true )
+  label:SetTextColor( 0.8, 0.8, 0.8 )
+
+  return label
+end
+
+-- A heading for a section of the options page. Distinct from M.text, which the rolling
+-- popup and the loot frame also use at their own size.
+function M.section_header( parent )
+  local label = parent:CreateFontString( nil, "ARTWORK", "GameFontNormal" )
+
+  label:SetJustifyH( "LEFT" )
+  label:SetNonSpaceWrap( false )
+
+  return label
+end
+
+function M.icon( parent, show, width, height )
+  local icon = parent:CreateTexture( nil, "ARTWORK" )
+  if not show then icon:Hide() end
+  icon:SetWidth( width or 16 )
+  icon:SetHeight( height or 16 )
+  icon:SetTexture( "Interface\\AddOns\\RollFor\\assets\\icon-white2.tga" )
+
+  return icon
+end
+
+function M.icon_text( parent, text )
+  local container = M.create_text_in_container( "Button", parent, 20, nil, nil, "text" )
+
+  container:SetPoint( "CENTER", 0, 0 )
+  container.icon = M.icon( container, true )
+  container.icon:SetPoint( "LEFT", 0, 0 )
+  container.text:SetPoint( "LEFT", container.icon, "RIGHT", 3, 0 )
+  container.text:SetTextColor( 1, 1, 1 )
+
+  if text then container.text:SetText( text ) end
+
+  container.SetText = function( _, v )
+    container.text:SetText( v )
+    container:SetWidth( container.text:GetWidth() + 19 )
+  end
+
+  return container
+end
+
+function M.roll( parent )
+  local frame = m.create_backdrop_frame( m.api, "Button", nil, parent )
+  frame:SetWidth( single_roll_width )
+  frame:SetHeight( 14 )
+  frame:SetFrameStrata( "DIALOG" )
+  frame:SetFrameLevel( parent:GetFrameLevel() + 1 )
+  frame:SetBackdrop( {
+    bgFile = "Interface/Buttons/WHITE8x8",
+    tile = true,
+    tileSize = 22,
+  } )
+
+  local function blue_hover( a )
+    frame:SetBackdropColor( 0.125, 0.624, 0.976, a )
+  end
+
+  local function hover()
+    if frame.is_selected then
+      return
+    end
+
+    blue_hover( 0.2 )
+  end
+
+  frame.select = function()
+    blue_hover( 0.3 )
+    frame.is_selected = true
+  end
+
+  local function no_hover()
+    if frame.is_selected then
+      frame.select()
+    else
+      blue_hover( 0 )
+    end
+  end
+
+  frame.deselect = function()
+    blue_hover( 0 )
+    frame.is_selected = false
+  end
+
+  frame:deselect()
+
+  -- How modifiers arrived at each of the player's rolls, one line per roll. Set by set_cells.
+  ---@type string[]?
+  local breakdowns
+
+  -- The tooltip's first line always uses the big header font, so swap it to the regular
+  -- body font for the first breakdown and put it back afterwards -- the tooltip is shared
+  -- with the rest of the UI.
+  local function set_title_font( font )
+    local title = m.api.GameTooltip.TextLeft1
+    if title then title:SetFontObject( font ) end
+  end
+
+  -- Whether this row is the one currently showing the tooltip. Only the owner puts the
+  -- title font back and hides it: without this, a row that never opened a tooltip would
+  -- close whichever frame's tooltip happens to be up when the mouse crosses it.
+  local showing_tooltip = false
+
+  local function hide_tooltip()
+    if not showing_tooltip then return end
+
+    showing_tooltip = false
+    set_title_font( m.api.GameTooltipHeaderText )
+    m.api.GameTooltip:Hide()
+  end
+
+  frame:SetScript( "OnEnter", function( self )
+    hover()
+    if not breakdowns then return end
+
+    m.api.GameTooltip:SetOwner( self, "ANCHOR_CURSOR" )
+    for _, breakdown in ipairs( breakdowns ) do m.api.GameTooltip:AddLine( breakdown, 1, 1, 1 ) end
+
+    set_title_font( m.api.GameTooltipText )
+    showing_tooltip = true
+    m.api.GameTooltip:Show()
+  end )
+
+  frame:SetScript( "OnLeave", function()
+    no_hover()
+    hide_tooltip()
+  end )
+
+  -- The popup redraws while the mouse is still over a row, and a row hidden out from under
+  -- the mouse never gets its OnLeave, which would leave the swapped title font on the shared
+  -- tooltip for the rest of the session.
+  frame:SetScript( "OnHide", hide_tooltip )
+
+  frame:EnableMouse( true )
+
+  local roll_container = M.create_text_in_container( "Button", frame, 35, "RIGHT" )
+  roll_container:SetPoint( "LEFT", 0, 0 )
+  frame.roll = roll_container.inner
+
+  local icon = M.icon( frame )
+  icon:SetPoint( "LEFT", 22, 0 )
+  frame.icon = icon
+
+  roll_container:SetPoint( "LEFT", 0, 0 )
+  frame.roll = roll_container.inner
+
+  local player_name = M.text( frame )
+  player_name:SetPoint( "CENTER", frame, "CENTER", 0, 0 )
+  frame.player_name = player_name
+
+  local roll_type_container = M.create_text_in_container( "Button", frame, roll_type_label_width, "CENTER" )
+  roll_type_container:SetPoint( "RIGHT", -(roll_type_zone - roll_type_label_width), 0 )
+  frame.roll_type = roll_type_container.inner
+  roll_type_container:EnableMouse( false )
+
+  -- What modifiers add to the player's soft-res rolls, trailing the label: "SR +30".
+  local adjustment_text = M.text( frame )
+  adjustment_text:SetPoint( "LEFT", frame.roll_type, "RIGHT", 0, 0 )
+  adjustment_text:Hide()
+
+  frame.cells = {}
+
+  -- The gap between two of a player's rolls is the cell width, since the cells are flush
+  -- and their contents centred. set_cells refreshes it from the config on every render.
+  local cell_width = roll_cell_width
+
+  -- Each cell is its own frame and its contents are centred in it, so a column of rolls
+  -- lines up on the numbers' centres. Right-aligning them instead lines up the advance
+  -- edges, which puts the font's uneven side bearings on show: "75" is a 14px ink block
+  -- where "50" is 17px, so right-aligned they start 3px apart.
+  ---@param index number
+  local function create_cell( index )
+    local cell = M.create_text_in_container( "Button", frame, cell_width, "CENTER" )
+    cell.icon = M.icon( cell, false, pip_size, pip_size )
+    cell.icon:SetTexCoord( pip_left, pip_right, pip_top, pip_bottom )
+    cell.icon:SetPoint( "CENTER", pip_x_offset, 0 )
+    -- The hover belongs to the whole row, so a cell must not catch the mouse on its way there.
+    cell:EnableMouse( false )
+    table.insert( frame.cells, index, cell )
+
+    return cell
+  end
+
+  -- Grouped mode: one row per player, one cell per roll, the name centred between the
+  -- cell zone and the roll-type label.
+  local side_zone = roll_type_zone
+
+  -- Lines are anchored by their TOP centre to the line above, so grouped rows must all
+  -- come out the same width or their cell columns drift apart. The name column is sized
+  -- to the widest name in the popup, which is only known once every row has its text -
+  -- hence a separate step the popup re-runs afterwards.
+  ---@param name_zone number
+  local function layout_name( name_zone )
+    player_name:ClearAllPoints()
+    player_name:SetPoint( "CENTER", frame, "LEFT", side_zone + grouped_name_gap + name_zone / 2, 0 )
+
+    roll_type_container:ClearAllPoints()
+    roll_type_container:SetPoint( "LEFT", frame, "LEFT", side_zone + grouped_name_gap + name_zone + grouped_name_gap, 0 )
+
+    -- Symmetric by construction, so the name's centre is the row's centre.
+    frame:SetWidth( side_zone * 2 + grouped_name_gap * 2 + name_zone )
+  end
+
+  frame.set_name_zone = layout_name
+
+  ---@param cells table[] -- { roll_type = RollType, roll = number?, adjustments = RollAdjustment[]? }
+  ---@param cell_count number -- uniform across the popup, so the name column lines up
+  ---@param best_index number? -- the player's own best cast roll, rendered at full alpha
+  ---@param width number? -- gap between adjacent rolls; defaults to the built-in metric
+  ---@param adjustment number? -- what modifiers add to the player's rolls
+  frame.set_cells = function( cells, cell_count, best_index, width, adjustment )
+    local count = getn( cells )
+    cell_width = width or roll_cell_width
+
+    -- Whichever side needs more room sets the width of both, or the name comes off centre.
+    side_zone = (cell_count or count) * cell_width
+    if roll_type_zone > side_zone then side_zone = roll_type_zone end
+
+    roll_container:Hide()
+    icon:Hide()
+
+    roll_type_container:Show()
+    local label_roll_type = cells[ 1 ].roll_type
+    frame.roll_type:SetText( m.roll_type_color( label_roll_type, m.roll_type_abbrev( label_roll_type ) ) )
+
+    if adjustment then
+      adjustment_text:SetText( m.colors.white( string.format( "%s%d", adjustment > 0 and "+" or "-", math.abs( adjustment ) ) ) )
+      adjustment_text:Show()
+    else
+      adjustment_text:Hide()
+    end
+
+    -- Cells arrive in cast order with the pending ones trailing. On screen the cast rolls
+    -- sit against the name and the pending pips fill in to their left, so the numbers form
+    -- one block that right-aligns on the name. Cast cells keep their chronological order.
+    local ordered, best_slot = {}, nil
+    breakdowns = nil
+
+    for i = 1, count do
+      if not cells[ i ].roll then table.insert( ordered, cells[ i ] ) end
+    end
+
+    for i = 1, count do
+      if cells[ i ].roll then
+        table.insert( ordered, cells[ i ] )
+        if i == best_index then best_slot = getn( ordered ) end
+      end
+    end
+
+    for i = 1, count do
+      local cell = frame.cells[ i ] or create_cell( i )
+      local data = ordered[ i ]
+
+      -- Cells fill from the right of the zone, so a player with fewer rolls than the
+      -- widest gets his blanks on the left and his cells still abut the name.
+      -- Pooled cells were sized by whatever spacing was in force when they were created.
+      cell:SetWidth( cell_width )
+      cell:ClearAllPoints()
+      cell:SetPoint( "LEFT", side_zone - (count - i + 1) * cell_width, 0 )
+
+      -- Only a roll something changed has a breakdown to show.
+      if data.roll and data.adjustments then
+        breakdowns = breakdowns or {}
+        table.insert( breakdowns, m.RollingLogicUtils.decompose( data.roll, data.adjustments ) )
+      end
+
+      if data.roll then
+        cell.inner:SetText( cell_text( data.roll_type, data.roll ) )
+        cell.icon:Hide()
+        cell:SetAlpha( i == best_slot and 1 or spent_cell_alpha )
+      else
+        cell.inner:SetText( "" )
+        cell.icon:SetTexture( cell_icon_texture )
+        cell.icon:Show()
+        cell:SetAlpha( 1 )
+      end
+
+      cell:Show()
+    end
+
+    -- Line frames are pooled and reused across refreshes, so surplus cells left over from
+    -- a previous, longer row have to be hidden explicitly or their numbers bleed into
+    -- this one. frame.clear only hides the line frame, not its children.
+    for i = count + 1, getn( frame.cells ) do
+      frame.cells[ i ]:Hide()
+    end
+
+    layout_name( player_name:GetStringWidth() )
+  end
+
+  -- The same pooled frame may come back as an ungrouped row, so grouped mode has to be
+  -- undoable.
+  frame.set_single_cell = function()
+    for i = 1, getn( frame.cells ) do
+      frame.cells[ i ]:Hide()
+    end
+
+    adjustment_text:Hide()
+    breakdowns = nil
+    roll_container:Show()
+    roll_type_container:Show()
+    roll_type_container:ClearAllPoints()
+    roll_type_container:SetPoint( "RIGHT", -(roll_type_zone - roll_type_label_width), 0 )
+
+    player_name:ClearAllPoints()
+    player_name:SetPoint( "CENTER", frame, "CENTER", 0, 0 )
+
+    frame:SetWidth( single_roll_width )
+  end
+
+  return frame
+end
+
+function M.button( parent )
+  local template = "UIPanelButtonTemplate"
+  local height = 21
+
+  local button = m.api.CreateFrame( "Button", nil, parent, template )
+  button:SetWidth( 100 )
+  button:SetHeight( height )
+  button:SetText( "" )
+  button:GetFontString():SetPoint( "CENTER", 0, -1 )
+
+  return button
+end
+
+function M.award_button( parent )
+  local template = "UIPanelButtonTemplate"
+  local height = 21
+
+  local button = m.api.CreateFrame( "Button", nil, parent, template )
+  button:SetWidth( 100 )
+  button:SetHeight( height )
+  button:SetText( "" )
+  button:GetFontString():SetPoint( "CENTER", 0, -1 )
+
+  return button
+end
+
+function M.info( parent )
+  local frame = m.api.CreateFrame( "Frame", nil, parent )
+  frame:SetWidth( 11 )
+  frame:SetHeight( 11 )
+  frame:SetFrameStrata( "DIALOG" )
+  frame:SetFrameLevel( parent:GetFrameLevel() + 1 )
+  frame:EnableMouse( true )
+
+  local icon = frame:CreateTexture( nil, "BACKGROUND" )
+  icon:SetWidth( 11 )
+  icon:SetHeight( 11 )
+  icon:SetTexture( "Interface\\AddOns\\RollFor\\assets\\info.tga" )
+  icon:SetPoint( "CENTER", 0, 0 )
+
+  frame:SetScript( "OnEnter", function( self )
+    self.tooltip_scale = m.api.GameTooltip:GetScale()
+    m.api.GameTooltip:SetOwner( self, "ANCHOR_CURSOR" )
+    m.api.GameTooltip:AddLine( frame.tooltip_info, 1, 1, 1 )
+    m.api.GameTooltip:SetScale( 0.75 )
+    m.api.GameTooltip:Show()
+  end )
+
+  frame:SetScript( "OnLeave", function( self )
+    m.api.GameTooltip:Hide()
+    m.api.GameTooltip:SetScale( self.tooltip_scale or 1 )
+  end )
+
+  return frame
+end
+
+function M.create_icon_in_container( type, parent, w, h, icon_zoom )
+  local result = m.create_backdrop_frame( m.api, type or "Button", nil, parent )
+  result:SetWidth( w + 1 )
+  result:SetHeight( h )
+
+  result:SetBackdrop( {
+    bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+    edgeFile = "Interface\\Buttons\\WHITE8X8",
+    tile = false,
+    tileSize = 0,
+    edgeSize = 1,
+    insets = { left = 0, right = 0, top = 0, bottom = 0 }
+  } )
+
+  result:SetBackdropBorderColor( 0, 0, 0, 1 )
+  result:SetBackdropColor( 0, 0, 0, 0 )
+
+  result.texture = M.icon( result, true, w, h )
+  result.texture:SetPoint( "CENTER", 0, 0 )
+  result.texture:SetTexCoord( icon_zoom / w, (w - icon_zoom) / w, icon_zoom / h, (h - icon_zoom) / h )
+
+  return result
+end
+
+function M.checkbox( parent )
+  local container = m.api.CreateFrame( "Frame", nil, parent )
+  local button = m.api.CreateFrame( "CheckButton", nil, container, "UICheckButtonTemplate" )
+  button:SetWidth( 20 )
+  button:SetHeight( 20 )
+  button:SetPoint( "LEFT", container, "LEFT", 0, 0 )
+
+  -- The box and its label are two separate widgets, so without this they sit flush
+  -- against each other and the label reads as part of the box.
+  local label_gap = 3
+
+  local label = container:CreateFontString( nil, "ARTWORK", "GameFontNormal" )
+  label:SetTextColor( 1, 1, 1 )
+  label:SetPoint( "LEFT", button, "RIGHT", label_gap, 1 )
+
+  container:SetHeight( button:GetHeight() )
+
+  container.SetText = function( _, text )
+    label:SetText( text )
+    container:SetWidth( button:GetWidth() + label_gap + label:GetWidth() )
+  end
+
+  container.SetChecked = function( _, checked )
+    button:SetChecked( checked and true or false )
+  end
+
+  button:SetScript( "OnClick", function()
+    if container.on_click then
+      container.on_click( button:GetChecked() and true or false )
+    end
+  end )
+
+  return container
+end
+
+-- A row of tabs, one of them selected. Only the row: what sits under it is the caller's to
+-- draw, and a click just reports which tab was picked through on_select.
+--
+-- The buttons are the client's own TabButtonTemplate, so the tabs look like tabs everywhere
+-- else in the UI, and PanelTemplates does the selecting: a selected tab is disabled, which is
+-- also what keeps clicking it again from doing anything.
+--
+-- Buttons are kept between SetTabs calls and only ever added to, since a page is rebuilt on
+-- every visit and a frame can't be destroyed; the ones a shorter list doesn't need are hidden.
+local tab_height = 32
+
+function M.tabs( parent )
+  local container = m.api.CreateFrame( "Frame", nil, parent )
+  container:SetHeight( tab_height )
+
+  local buttons = {}
+
+  local function button_for( index )
+    if buttons[ index ] then return buttons[ index ] end
+
+    local button = m.api.CreateFrame( "Button", nil, container, "TabButtonTemplate" )
+    button:SetScript( "OnClick", function()
+      if container.on_select then container.on_select( index ) end
+    end )
+
+    buttons[ index ] = button
+    return button
+  end
+
+  ---@param labels string[]
+  ---@param selected number
+  container.SetTabs = function( _, labels, selected )
+    local width = 0
+
+    for index, label in ipairs( labels ) do
+      local button = button_for( index )
+      button:SetText( label )
+      m.api.PanelTemplates_TabResize( button, 0 )
+
+      button:ClearAllPoints()
+      button:SetPoint( "BOTTOMLEFT", container, "BOTTOMLEFT", width, 0 )
+      width = width + button:GetWidth()
+
+      if index == selected then
+        m.api.PanelTemplates_SelectTab( button )
+      else
+        m.api.PanelTemplates_DeselectTab( button )
+      end
+
+      button:Show()
+    end
+
+    for index = getn( labels ) + 1, getn( buttons ) do
+      buttons[ index ]:Hide()
+    end
+
+    container:SetWidth( width )
+  end
+
+  return container
+end
+
+-- A row of an ordered list the user rearranges: up and down, then the name.
+--
+-- The arrows lead rather than trail. They are the only part of the row anyone clicks, and a
+-- fixed-width column of them on the left puts every row's buttons -- and every row's title --
+-- at the same x, where anchoring them after a self-sizing label staggered both down the page.
+--
+-- The buttons are the client's own textured scroll arrows rather than text on a
+-- UIPanelButton. They already mean "move this up/down" everywhere else in the UI, and they
+-- carry Disabled artwork -- so the arrow at the end of a list looks unavailable rather than
+-- merely doing nothing when clicked.
+--
+-- The template is its own fixed size (18x16), so it is scaled into the row rather than
+-- resized: scaling keeps the artwork's proportions, where SetWidth on a textured button
+-- stretches it. Each offset is divided by the scale because it is expressed in the button's
+-- own coordinates, which keeps the pair a fixed distance apart on screen.
+local priority_row_height = 20
+local priority_label_gap = 6
+local priority_arrow_scale = 0.85
+local priority_arrow_width = 18 * priority_arrow_scale
+-- Left edge to left edge: a shade wider than an arrow is drawn, so the two do not touch.
+local priority_arrow_pitch = 17
+local priority_arrows = {
+  { field = "up",   template = "UIPanelScrollUpButtonTemplate",   x = 0 },
+  { field = "down", template = "UIPanelScrollDownButtonTemplate", x = priority_arrow_pitch }
+}
+
+function M.priority_row( parent )
+  local container = m.api.CreateFrame( "Frame", nil, parent )
+  container:SetHeight( priority_row_height )
+
+  local buttons = {}
+  local arrows = m.api.CreateFrame( "Frame", nil, container )
+  arrows:SetHeight( priority_row_height )
+  arrows:SetWidth( priority_arrow_pitch + priority_arrow_width )
+  arrows:SetPoint( "LEFT", container, "LEFT", 0, 0 )
+
+  for _, definition in ipairs( priority_arrows ) do
+    local button = m.api.CreateFrame( "Button", nil, arrows, definition.template )
+    button:SetScale( priority_arrow_scale )
+    button:SetPoint( "LEFT", arrows, "LEFT", definition.x / priority_arrow_scale, 0 )
+
+    button:SetScript( "OnClick", function()
+      local callback = container[ "on_" .. definition.field ]
+      if callback then callback() end
+    end )
+
+    buttons[ definition.field ] = button
+  end
+
+  local label = container:CreateFontString( nil, "ARTWORK", "GameFontNormal" )
+  label:SetTextColor( 1, 1, 1 )
+  label:SetJustifyH( "LEFT" )
+  label:SetPoint( "LEFT", arrows, "RIGHT", priority_label_gap, 0 )
+
+  -- The label sizes itself and the arrows do not, so only the row's own width follows the
+  -- title: a page of two rows would otherwise be as wide as the longest title anybody might
+  -- have.
+  container.SetText = function( _, text )
+    label:SetText( text )
+    container:SetWidth( arrows:GetWidth() + priority_label_gap + label:GetWidth() )
+  end
+
+  -- Lines are cached per type and reused across refreshes, so both are written every time --
+  -- a frame left holding the previous row's closure would move the wrong policy.
+  container.SetMoveable = function( _, up, down )
+    if up then buttons.up:Enable() else buttons.up:Disable() end
+    if down then buttons.down:Enable() else buttons.down:Disable() end
+  end
+
+  return container
+end
+
+local slider_count = 0
+
+function M.slider( parent )
+  slider_count = slider_count + 1
+  local name = "RollForOptionsSlider" .. slider_count
+
+  local slider_width = 80
+  local value_gap = 34
+  -- Extra room for a decimal readout. The value sits to the *left* of the slider and
+  -- grows leftward, so "20.0" reaches back toward the label in a way "8" does not, and
+  -- without this the two end up almost touching.
+  local decimal_value_gap = 10
+
+  local container = m.api.CreateFrame( "Frame", nil, parent )
+  local slider = m.api.CreateFrame( "Slider", name, container, "OptionsSliderTemplate" )
+  slider:SetWidth( slider_width )
+  slider:SetHeight( 16 )
+  slider:SetOrientation( "HORIZONTAL" )
+  slider:SetValueStep( 1 )
+
+  -- OptionsSliderTemplate creates Low/High/Text FontStrings named after the slider and registers them globally.
+  local slider_low = m.api[ name .. "Low" ]
+  local slider_high = m.api[ name .. "High" ]
+  local slider_text = m.api[ name .. "Text" ]
+
+  if slider_low then slider_low:SetText( "" ) end
+  if slider_high then slider_high:SetText( "" ) end
+  if slider_text then slider_text:SetFontObject( m.api.GameFontHighlight ) end
+
+  local label = container:CreateFontString( nil, "ARTWORK", "GameFontNormal" )
+  label:SetTextColor( 1, 1, 1 )
+  label:SetPoint( "LEFT", container, "LEFT", 0, 0 )
+
+  -- Decimal places the knob snaps to and the readout shows. Declared up here because the
+  -- anchoring below reads it.
+  local m_precision = 0
+
+  -- A pixel below the label's centre line. The knob's artwork sits high in the slider's
+  -- own frame, so anchoring the two centres together makes the knob look like it floats
+  -- above the text it belongs to.
+  local function anchor_slider()
+    slider:ClearAllPoints()
+    slider:SetPoint( "LEFT", label, "RIGHT",
+      value_gap + (m_precision > 0 and decimal_value_gap or 0), -1 )
+  end
+
+  anchor_slider()
+
+  if slider_text then
+    -- Move the built-in value readout from above the slider to its left, right up against it.
+    slider_text:ClearAllPoints()
+    slider_text:SetPoint( "RIGHT", slider, "LEFT", -6, 1 )
+  end
+
+  container:SetHeight( slider:GetHeight() )
+
+  local updating = false
+  -- Only commit on mouse release, not on every drag tick. pending_value tracks what's on
+  -- screen while dragging; committed_value is what on_change was last called with.
+  local pending_value
+  local committed_value
+  -- 0 means whole numbers, which is what the SetValueStep above already enforces until
+  -- SetPrecision says otherwise.
+
+  local function format_value( value )
+    if not value then return "" end
+    if m_precision > 0 then return string.format( "%." .. m_precision .. "f", value ) end
+
+    return string.format( "%d", math.floor( value + 0.5 ) )
+  end
+
+  local function round( value )
+    return tonumber( format_value( value ) )
+  end
+
+  container.SetText = function( _, text )
+    label:SetText( text )
+    container:SetWidth( label:GetWidth() + value_gap + slider_width )
+  end
+
+  container.SetMinMaxValues = function( _, min, max )
+    slider:SetMinMaxValues( min or 0, max or 100 )
+  end
+
+  -- Must be called before SetValue: it decides the step the knob snaps to and how the readout
+  -- is formatted.
+  container.SetPrecision = function( _, precision )
+    m_precision = precision or 0
+    slider:SetValueStep( m_precision > 0 and 1 / (10 ^ m_precision) or 1 )
+    anchor_slider()
+  end
+
+  container.SetValue = function( _, value )
+    updating = true
+    slider:SetValue( value )
+    if slider_text then slider_text:SetText( format_value( value ) ) end
+    pending_value = value
+    committed_value = value
+    updating = false
+  end
+
+  slider:SetScript( "OnValueChanged", function( _, value )
+    value = round( value )
+    if slider_text then slider_text:SetText( format_value( value ) ) end
+    pending_value = value
+
+    if updating then return end
+  end )
+
+  slider:SetScript( "OnMouseUp", function()
+    if pending_value == nil or pending_value == committed_value then return end
+
+    committed_value = pending_value
+    if container.on_change then container.on_change( pending_value ) end
+  end )
+
+  return container
+end
+
+local dropdown_count = 0
+
+function M.dropdown( parent )
+  dropdown_count = dropdown_count + 1
+  local name = "RollForOptionsDropdown" .. dropdown_count
+
+  -- Where the selected value sits inside the box. x is the template's own; y is the template's
+  -- own minus the two pixels it lifts the text by (see below).
+  local dropdown_text_x = -43
+  local dropdown_text_y = 0
+
+  -- Wide enough for the longest option any caller has, which is not the same number for all of
+  -- them -- a short name needs a good deal less room than "Uncommon" -- so callers that want it
+  -- narrower say so with SetDropdownWidth.
+  local default_dropdown_width = 90
+  local dropdown_width = default_dropdown_width
+  -- UIDropDownMenuTemplate bakes in ~16px of empty space to the left of its visible box.
+  local value_gap = 4 - 16
+
+  local container = m.api.CreateFrame( "Frame", nil, parent )
+  local dropdown = m.api.CreateFrame( "Frame", name, container, "UIDropDownMenuTemplate" )
+  m.api.UIDropDownMenu_SetWidth( dropdown, dropdown_width )
+
+  -- UIDropDownMenuTemplate anchors its selected-value text RIGHT to $parentRight at (-43, 2) --
+  -- lifted two pixels above where the box's artwork wants it. Re-anchored to the same point with
+  -- the lift taken out; nothing else about it changes.
+  --
+  -- Safe to do once here: UIDropDownMenu_SetWidth only ever sets this FontString's width, never
+  -- its anchor, so a later SetDropdownWidth cannot undo it.
+  local dropdown_text = dropdown.Text or m.api[ name .. "Text" ]
+  local right = dropdown.Right or m.api[ name .. "Right" ]
+
+  if dropdown_text and right then
+    dropdown_text:ClearAllPoints()
+    dropdown_text:SetPoint( "RIGHT", right, "RIGHT", dropdown_text_x, dropdown_text_y )
+  end
+
+  -- The template's box sits low inside its own frame, so a label centred against it reads as
+  -- sitting below the text in the box. Lifting the label alone is not enough on its own: the
+  -- dropdown is anchored to the label (it needs the label's width to know where to start), so it
+  -- would rise with it. The same lift comes back off the dropdown's own anchor, leaving the box
+  -- exactly where it was.
+  local label_lift = 3
+
+  local label = container:CreateFontString( nil, "ARTWORK", "GameFontNormalSmall" )
+  label:SetTextColor( 1, 1, 1 )
+  label:SetPoint( "LEFT", container, "LEFT", 0, label_lift )
+
+  dropdown:SetPoint( "LEFT", label, "RIGHT", value_gap, -label_lift )
+
+  container:SetHeight( dropdown:GetHeight() )
+
+  local options = {}
+
+  local function option_label( value )
+    for _, option in ipairs( options ) do
+      if option.value == value then return option.label end
+    end
+  end
+
+  local function initialize()
+    for _, option in ipairs( options ) do
+      local info = m.api.UIDropDownMenu_CreateInfo()
+      info.text = option.label
+      info.value = option.value
+      info.checked = option.value == container.value
+
+      info.func = function()
+        container.value = option.value
+        m.api.UIDropDownMenu_SetSelectedValue( dropdown, option.value )
+        m.api.UIDropDownMenu_SetText( dropdown, option.label )
+        if container.on_change then container.on_change( option.value ) end
+      end
+
+      m.api.UIDropDownMenu_AddButton( info )
+    end
+  end
+
+  m.api.UIDropDownMenu_Initialize( dropdown, initialize )
+
+  -- The container is what the popup measures, so it has to be recomputed whenever either the
+  -- label or the box changes width.
+  local function resize()
+    container:SetWidth( label:GetWidth() + value_gap + dropdown_width + 40 )
+  end
+
+  container.SetText = function( _, text )
+    label:SetText( text )
+    resize()
+  end
+
+  -- Nudges the selected value inside the box, in pixels, positive being up. The template
+  -- anchors it two pixels above where the box artwork wants it and that lift is taken back
+  -- out above; this is for a caller that wants it somewhere else again.
+  ---@param lift number
+  container.SetValueLift = function( _, lift )
+    if not dropdown_text or not right then return end
+
+    dropdown_text:ClearAllPoints()
+    dropdown_text:SetPoint( "RIGHT", right, "RIGHT", dropdown_text_x, lift )
+  end
+
+  -- Nudges the label alone, in pixels, positive being up. The box is anchored to the label
+  -- -- it needs the label's width to know where to start -- so the same offset comes back
+  -- off the box's own anchor, leaving the box exactly where it was.
+  ---@param lift number
+  container.SetLabelLift = function( _, lift )
+    label_lift = lift
+    label:ClearAllPoints()
+    label:SetPoint( "LEFT", container, "LEFT", 0, label_lift )
+    dropdown:ClearAllPoints()
+    dropdown:SetPoint( "LEFT", label, "RIGHT", value_gap, -label_lift )
+  end
+
+  ---@param width number? -- nil restores the default
+  container.SetDropdownWidth = function( _, width )
+    dropdown_width = width or default_dropdown_width
+    m.api.UIDropDownMenu_SetWidth( dropdown, dropdown_width )
+    resize()
+  end
+
+  container.SetOptions = function( _, opts )
+    options = opts or {}
+  end
+
+  container.SetValue = function( _, value )
+    container.value = value
+    m.api.UIDropDownMenu_SetSelectedValue( dropdown, value )
+    m.api.UIDropDownMenu_SetText( dropdown, option_label( value ) or "" )
+  end
+
+  return container
+end
+
+function M.editbox( parent )
+  local edit_width = 40
+  local value_gap = 16
+
+  local container = m.api.CreateFrame( "Frame", nil, parent )
+  local edit = m.api.CreateFrame( "EditBox", nil, container, "InputBoxTemplate" )
+  edit:SetWidth( edit_width )
+  edit:SetHeight( 16 )
+  edit:SetAutoFocus( false )
+  edit:SetNumeric( true )
+  edit:SetFontObject( m.api.GameFontHighlight )
+
+  local label = container:CreateFontString( nil, "ARTWORK", "GameFontNormal" )
+  label:SetTextColor( 1, 1, 1 )
+  label:SetPoint( "LEFT", container, "LEFT", 0, 0 )
+
+  edit:SetPoint( "LEFT", label, "RIGHT", value_gap, 1 )
+
+  container:SetHeight( edit:GetHeight() )
+
+  -- Last committed valid value. Restored whenever the typed text is rejected.
+  local last_valid_value
+  -- Decimal places this box accepts and displays. 0 means whole numbers only, which is also what
+  -- the SetNumeric above enforces until SetPrecision says otherwise.
+  local m_precision = 0
+
+  local function format_value( value )
+    if not value then return "" end
+    if m_precision > 0 then return string.format( "%." .. m_precision .. "f", value ) end
+
+    return string.format( "%d", math.floor( value + 0.5 ) )
+  end
+
+  local function revert()
+    edit:SetText( format_value( last_valid_value ) )
+  end
+
+  -- Range/legality is Config's call, not ours: on_change (a Config setter) returns whether it
+  -- accepted the value. We only rule out text that isn't even a number (e.g. an emptied box).
+  local function commit()
+    -- Round to our precision first, so the setter never sees more decimals than we display.
+    local value = tonumber( format_value( tonumber( edit:GetText() ) ) )
+
+    -- Enter runs commit and then drops focus, which runs commit again. Bail out when nothing
+    -- actually changed, so the setter (and its notification) only fires once per edit. The text
+    -- still needs normalizing: typing 1.52 at precision 1 rounds to the value we already hold,
+    -- but the box is showing what was typed.
+    if format_value( value ) == format_value( last_valid_value ) then
+      revert()
+      edit:ClearFocus()
+      return
+    end
+
+    local accepted = value ~= nil and container.on_change and container.on_change( value )
+
+    if accepted then
+      last_valid_value = value
+      edit:SetText( format_value( value ) )
+    else
+      revert()
+    end
+
+    edit:ClearFocus()
+  end
+
+  edit:SetScript( "OnEnterPressed", commit )
+  edit:SetScript( "OnEditFocusLost", commit )
+  edit:SetScript( "OnEscapePressed", function()
+    revert()
+    edit:ClearFocus()
+  end )
+
+  container.SetText = function( _, text )
+    label:SetText( text )
+    container:SetWidth( label:GetWidth() + value_gap + edit_width )
+  end
+
+  -- Must be called before SetValue: it decides how the value is rendered and whether the box
+  -- will even accept a decimal point.
+  container.SetPrecision = function( _, precision )
+    m_precision = precision or 0
+    edit:SetNumeric( m_precision == 0 )
+  end
+
+  container.SetValue = function( _, value )
+    last_valid_value = value
+    edit:SetText( format_value( value ) )
+  end
+
+  return container
+end
+
+local tree_node_indent_step = 14
+local tree_node_toggle_size = 14
+local tree_node_label_gap = 4
+local tree_node_checkbox_size = 14
+local tree_node_checkbox_gap = 4
+local tree_node_icon_spacing = 4
+local tree_node_row_right_margin = 18
+
+-- A row in a tree/list view (e.g. SelectionTreeFrame): an expand/collapse icon button (only shown for
+-- expandable nodes) followed by a label. Indentation is baked into the row's own internal layout
+-- (rather than the row frame's outer position) so the popup's own width-to-content math, which
+-- only looks at each line's width, keeps working unmodified.
+function M.tree_node( parent )
+  local container = m.api.CreateFrame( "Frame", nil, parent )
+  container:SetHeight( tree_node_toggle_size )
+
+  local checkbox = m.api.CreateFrame( "CheckButton", nil, container, "UICheckButtonTemplate" )
+  checkbox:SetWidth( tree_node_checkbox_size )
+  checkbox:SetHeight( tree_node_checkbox_size )
+
+  local toggle = m.api.CreateFrame( "Button", nil, container )
+  toggle:SetWidth( tree_node_toggle_size )
+  toggle:SetHeight( tree_node_toggle_size )
+
+  local label = container:CreateFontString( nil, "ARTWORK", "GameFontNormalSmall" )
+  label:SetJustifyH( "LEFT" )
+
+  -- L-shaped connector back to the parent row's icon column: a vertical tick from this row's top
+  -- down to icon-center, then a horizontal tick over to this row's own icon. Only shown at depth > 0.
+  local connector_right_margin = 3
+  local connector_x_offset = 1
+
+  local connector_v = container:CreateTexture( nil, "ARTWORK" )
+  connector_v:SetTexture( "Interface\\Buttons\\WHITE8x8" )
+  connector_v:SetVertexColor( 0.5, 0.5, 0.5, 0.7 )
+  connector_v:SetWidth( 0.8 )
+
+  local connector_h = container:CreateTexture( nil, "ARTWORK" )
+  connector_h:SetTexture( "Interface\\Buttons\\WHITE8x8" )
+  connector_h:SetVertexColor( 0.5, 0.5, 0.5, 0.7 )
+  connector_h:SetHeight( 0.8 )
+
+  -- Leaf rows that carry a real item use the existing item_link_with_icon widget (tooltip,
+  -- shift-click chat link, ctrl-click dress up) instead of reinventing that behaviour here.
+  local item_link_widget = M.item_link_with_icon( container, nil, tree_node_icon_spacing )
+  item_link_widget:Hide()
+
+  -- Native Button highlight layer: Blizzard shows/hides it automatically on hover, always above
+  -- the button's own content, so there's no custom OnEnter/OnLeave or z-order to get wrong. Its
+  -- color comes from item.hover_background_color (set via SetItem below).
+  item_link_widget:SetHighlightTexture( "Interface\\Buttons\\WHITE8x8", "BLEND" )
+  local item_highlight = item_link_widget:GetHighlightTexture()
+  -- Re-anchored slightly taller than the button itself (1px above, 2px below) instead of the
+  -- default exact fill.
+  item_highlight:ClearAllPoints()
+  item_highlight:SetPoint( "TOPLEFT", item_link_widget, "TOPLEFT", 0, 2 )
+  item_highlight:SetPoint( "BOTTOMRIGHT", item_link_widget, "BOTTOMRIGHT", 0, -2 )
+
+  -- Lets clicking the label itself (not just the +/- icon) expand/collapse a branch row. Also
+  -- drives the hover feedback (background + text color) for branch rows.
+  local label_button = m.api.CreateFrame( "Button", nil, container )
+  label_button:Hide()
+
+  -- Set per row via SetLabelStyle below. nil means exactly that -- no color override, no hover
+  -- effect at all -- not "pick a default", this widget doesn't get to decide that. Hover text and
+  -- hover background are independent -- a row can set either, both, or neither.
+  local label_color
+  local label_hover_text_color
+  local label_hover_background_color
+
+  -- Set per row via SetLabelTooltip below. Same nil-means-nothing rule as the colors.
+  local label_tooltip
+
+  local label_highlight = container:CreateTexture( nil, "BACKGROUND" )
+  label_highlight:SetTexture( "Interface\\Buttons\\WHITE8x8" )
+  label_highlight:Hide()
+
+  local depth = 0
+  local expandable = false
+  -- Whether this row renders as an item link or as a plain label. Decided by which of SetItem /
+  -- SetText the caller reaches for, not by whether the row has children: a leaf that names a
+  -- quality rather than an item (see SelectionTree.build_qualities) is childless and still a label.
+  local is_link = false
+
+  local function layout()
+    local indent = depth * tree_node_indent_step
+
+    checkbox:ClearAllPoints()
+    toggle:ClearAllPoints()
+    label:ClearAllPoints()
+    label_button:ClearAllPoints()
+    label_highlight:ClearAllPoints()
+    item_link_widget:ClearAllPoints()
+    connector_v:ClearAllPoints()
+    connector_h:ClearAllPoints()
+
+    local after_toggle
+
+    if expandable then
+      toggle:SetPoint( "LEFT", container, "LEFT", indent, 0 )
+      toggle:Show()
+      after_toggle = indent + tree_node_toggle_size + tree_node_checkbox_gap
+    else
+      -- No icon to align with, so don't reserve room for one: checkbox sits right after the indent.
+      toggle:Hide()
+      after_toggle = indent
+    end
+
+    checkbox:SetPoint( "LEFT", container, "LEFT", after_toggle, 0 )
+
+    local content_start = after_toggle + tree_node_checkbox_size + tree_node_label_gap
+
+    local content_width
+
+    if is_link then
+      label:Hide()
+      label_button:Hide()
+      label_highlight:Hide()
+      item_link_widget:SetPoint( "LEFT", container, "LEFT", content_start, 0 )
+      item_link_widget:Show()
+      -- Measure the natural (unstretched) width first -- this is what container reports for the
+      -- popup's own auto-sizing below. Stretching to the popup's right edge is purely visual/click
+      -- -area (the highlight fills whatever the frame's actual width ends up being).
+      content_width = item_link_widget:GetWidth()
+      item_link_widget:SetPoint( "RIGHT", parent, "RIGHT", -tree_node_row_right_margin, 0 )
+    else
+      item_link_widget:Hide()
+      label:SetPoint( "LEFT", container, "LEFT", content_start, 0 )
+      if label_color then label:SetTextColor( unpack( label_color ) ) end
+      label:Show()
+      content_width = label:GetWidth()
+
+      -- Every label row gets the button, expandable or not: it carries the hover feedback and the
+      -- tooltip as well as the click, and a label leaf wants all three. What the click does
+      -- differs by row kind -- see label_button's OnClick below. Stretched to the popup's right
+      -- edge (like item rows), so hover/click covers the full row, not just the text --
+      -- content_width above stays the natural (unstretched) measurement used for auto-sizing.
+      label_button:SetPoint( "LEFT", container, "LEFT", content_start, 0 )
+      label_button:SetPoint( "RIGHT", parent, "RIGHT", -tree_node_row_right_margin, 0 )
+      label_button:SetHeight( tree_node_toggle_size )
+      label_button:Show()
+
+      label_highlight:SetPoint( "LEFT", container, "LEFT", content_start, 0 )
+      label_highlight:SetPoint( "RIGHT", parent, "RIGHT", -tree_node_row_right_margin, 0 )
+      label_highlight:SetHeight( tree_node_toggle_size )
+    end
+
+    if depth > 0 then
+      local parent_column = (depth - 1) * tree_node_indent_step + tree_node_toggle_size / 2 - connector_x_offset
+      local mid_height = tree_node_toggle_size / 2
+
+      connector_v:SetPoint( "TOPLEFT", container, "TOPLEFT", parent_column, 0 )
+      connector_v:SetHeight( mid_height )
+      connector_v:Show()
+
+      connector_h:SetPoint( "TOPLEFT", container, "TOPLEFT", parent_column, -mid_height )
+      connector_h:SetWidth( indent - parent_column - connector_right_margin + 1 )
+      connector_h:Show()
+    else
+      connector_v:Hide()
+      connector_h:Hide()
+    end
+
+    container:SetWidth( content_start + content_width )
+  end
+
+  -- Which of the two the row renders through is decided here and in SetItem, not by whether the
+  -- row happens to be expandable: rows are recycled between refreshes, and a flat tree puts item
+  -- leaves and label leaves at the same depth, so the row that drew an item last pass is the one
+  -- drawing a label this pass.
+  container.SetText = function( _, text )
+    is_link = false
+    label:SetText( text )
+    layout()
+  end
+
+  container.SetDepth = function( _, d )
+    depth = d or 0
+    layout()
+  end
+
+  container.SetChecked = function( _, checked )
+    checkbox:SetChecked( checked and true or false )
+  end
+
+  -- Why this row is the way it is, when that is decided outside the tree -- a quality row the
+  -- loot threshold has made inert, say. Title first, body after.
+  --
+  -- Plain text, unrelated to the item tooltip item_link_with_icon puts up from a hyperlink: label
+  -- rows have no item to ask the client about, which is the whole reason they're label rows.
+  ---@param lines string[]?
+  container.SetLabelTooltip = function( _, lines )
+    label_tooltip = lines
+  end
+
+  -- Per-row label styling: base text color (required) and hover text/background color
+  -- (optional -- nil means no hover effect), all { r, g, b }. Only meaningful for label rows
+  -- (dungeon/boss), not item rows.
+  container.SetLabelStyle = function( _, color, hover_text_color, hover_background_color )
+    label_color = color
+    label_hover_text_color = hover_text_color
+    label_hover_background_color = hover_background_color
+
+    label:SetTextColor( unpack( label_color ) )
+
+    if label_hover_background_color then
+      local c = label_hover_background_color
+      label_highlight:SetVertexColor( c[ 1 ], c[ 2 ], c[ 3 ], c[ 4 ] )
+    end
+  end
+
+  -- Greyed-out, slightly translucent checkmark: used to show a node is effectively off because an
+  -- ancestor is unchecked, independent of this node's own checked state. Desaturation alone reads
+  -- as barely-there at this size, so alpha is dropped too for a clearer visual cue.
+  container.SetDesaturated = function( _, desaturated )
+    local texture = checkbox:GetCheckedTexture()
+    if not texture then return end
+
+    if texture.SetDesaturated then texture:SetDesaturated( desaturated and true or false ) end
+    texture:SetAlpha( desaturated and 0.55 or 1 )
+  end
+
+  -- item: { link, texture, count, quantity, hover_background_color } -- hover_background_color
+  -- ({r,g,b}) comes from SelectionTree, the rest is consumed by item_link_with_icon.SetItem.
+  container.SetItem = function( _, item, tooltip_link )
+    -- Rows are recycled between refreshes, so an item row has to drop whatever a label row left
+    -- behind: it renders through item_link_widget, which brings its own tooltip.
+    is_link = true
+    label_tooltip = nil
+
+    if item.hover_background_color then
+      local c = item.hover_background_color
+      item_highlight:SetVertexColor( c[ 1 ], c[ 2 ], c[ 3 ], c[ 4 ] )
+    end
+    item_link_widget:SetItem( item, tooltip_link )
+    layout()
+  end
+
+  container.SetExpandable = function( _, is_expandable, is_expanded )
+    expandable = is_expandable and true or false
+
+    if expandable then
+      toggle:SetNormalTexture( is_expanded and "Interface\\Buttons\\UI-MinusButton-Up" or "Interface\\Buttons\\UI-PlusButton-Up" )
+      toggle:SetPushedTexture( is_expanded and "Interface\\Buttons\\UI-MinusButton-Down" or "Interface\\Buttons\\UI-PlusButton-Down" )
+    end
+
+    layout()
+  end
+
+  toggle:SetScript( "OnClick", function()
+    if container.on_click then container.on_click() end
+  end )
+
+  label_button:SetScript( "OnClick", function()
+    -- An expandable row expands. A label leaf has nothing to expand, so clicking it toggles its
+    -- own checkbox instead -- the same thing clicking an item leaf's link does, and better than
+    -- leaving a whole row inert.
+    if expandable then
+      if container.on_click then container.on_click() end
+    else
+      checkbox:Click()
+    end
+  end )
+
+  label_button:SetScript( "OnEnter", function( self )
+    if label_hover_background_color then label_highlight:Show() end
+    if label_hover_text_color then label:SetTextColor( unpack( label_hover_text_color ) ) end
+    if not label_tooltip then return end
+
+    m.api.GameTooltip:SetOwner( self, "ANCHOR_RIGHT" )
+    m.api.GameTooltip:SetText( label_tooltip[ 1 ] )
+
+    -- Wrapped: these are sentences, not the short labels the rest of the window is made of.
+    for i = 2, getn( label_tooltip ) do
+      m.api.GameTooltip:AddLine( label_tooltip[ i ], 1, 1, 1, true )
+    end
+
+    m.api.GameTooltip:Show()
+  end )
+
+  label_button:SetScript( "OnLeave", function()
+    if label_hover_background_color then label_highlight:Hide() end
+    if label_hover_text_color then label:SetTextColor( unpack( label_color ) ) end
+    if label_tooltip then m.api.GameTooltip:Hide() end
+  end )
+
+  checkbox:SetScript( "OnClick", function()
+    if container.on_check then container.on_check( checkbox:GetChecked() and true or false ) end
+  end )
+
+  -- Clicking the item link itself toggles the same checkbox shown to its left.
+  item_link_widget.on_click = function()
+    checkbox:Click()
+  end
+
+  return container
+end
+
+m.GuiElements = M
+return M

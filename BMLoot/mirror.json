@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/McPewPew/BMLoot",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "McPewPew",
+    "repo": "BMLoot",
+    "name": "BMLoot",
+    "url": "https://github.com/McPewPew/BMLoot",
+    "api": "https://api.github.com/repos/McPewPew/BMLoot"
+  },
+  "commit": "73585e353410ea0bbf205fc22ef337ad3c850d5b",
+  "sourceFiles": {
+    "BMLoot.lua": {
+      "sha256": "37faaf9393bc7b6689e28c0a292dafaec8a2e3004cc95207732112f649c3e049",
+      "bytes": 916
+    },
+    "BMLoot.toc": {
+      "sha256": "93e5a6c7b5e526394f6aac5a0e029d6a8fe324e095e43255aee420c4afbc5868",
+      "bytes": 137
+    },
+    "README.md": {
+      "sha256": "5d6c9ea57d311c3d78e33c2f4a485fe5ed34852f3821f7f769973d2ad7c8b7ce",
+      "bytes": 177
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

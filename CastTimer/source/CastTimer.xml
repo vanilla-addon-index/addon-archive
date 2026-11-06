@@ -1,0 +1,12 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+ <!-- Frame that handles core events -->
+ <Frame name="CastTimerEventFrame" toplevel="true" parent="UIParent" frameStrata="LOW">
+  <Scripts>
+   <OnEvent>CastTimer.OnEvent();</OnEvent>
+   <OnLoad>CastTimer.OnLoad();</OnLoad>
+  </Scripts>
+ </Frame>
+</Ui>

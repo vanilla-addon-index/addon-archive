@@ -1,0 +1,34 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Pin ClassicAPI latest version to current release
+        run: |
+          LATEST=$(gh api repos/brues-code/ClassicAPI/releases/latest --jq .tag_name | tr -d v)
+          IFS=. read -r MAJOR MINOR PATCH <<<"$LATEST"
+          PACKED=$((MAJOR * 10000 + MINOR * 100 + PATCH))
+          echo "Pinning PFUI_CLASSIC_API_LATEST to $LATEST ($PACKED)"
+          sed -i "s/^\([[:space:]]*\)local PFUI_CLASSIC_API_LATEST  = .*/\1local PFUI_CLASSIC_API_LATEST  = $PACKED/" API_Check.lua
+          grep 'local PFUI_CLASSIC_API_' API_Check.lua
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Package and release to GitHub
+        uses: brues-code/packager@vCAPI
+        env:
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}

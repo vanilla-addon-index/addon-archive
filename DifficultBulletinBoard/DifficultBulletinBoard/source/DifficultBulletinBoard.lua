@@ -1,0 +1,685 @@
+-- Create main addon namespace
+DBB2 = CreateFrame("Frame", nil, UIParent)
+DBB2:RegisterEvent("ADDON_LOADED")
+DBB2:RegisterEvent("PLAYER_ENTERING_WORLD")
+DBB2:RegisterEvent("CHAT_MSG_CHANNEL")
+DBB2:RegisterEvent("CHAT_MSG_GUILD")
+DBB2:RegisterEvent("CHAT_MSG_SAY")
+DBB2:RegisterEvent("CHAT_MSG_YELL")
+DBB2:RegisterEvent("CHAT_MSG_PARTY")
+DBB2:RegisterEvent("CHAT_MSG_WHISPER")
+DBB2:RegisterEvent("CHAT_MSG_SYSTEM")
+DBB2:RegisterEvent("UPDATE_INSTANCE_INFO")
+DBB2:RegisterEvent("CHAT_MSG_HARDCORE")  -- Turtle WoW hardcore chat
+DBB2:RegisterEvent("CHAT_MSG_CHANNEL_NOTICE")  -- Channel join/leave notifications
+DBB2:RegisterEvent("PARTY_MEMBERS_CHANGED")  -- Party join/leave for notification clearing
+DBB2:RegisterEvent("RAID_ROSTER_UPDATE")  -- Raid join/leave for notification clearing
+
+-- [ After ]
+-- Runs 'func' once after 'delay' seconds using a single shared OnUpdate frame
+-- that is hidden (and therefore costs nothing) whenever no timer is pending.
+local timerQueue = {}
+local timerFrame = CreateFrame("Frame")
+timerFrame:Hide()
+timerFrame:SetScript("OnUpdate", function()
+  local now = GetTime()
+  local i = 1
+  while timerQueue[i] do
+    local t = timerQueue[i]
+    if now >= t.at then
+      table.remove(timerQueue, i)
+      t.func()
+    else
+      i = i + 1
+    end
+  end
+  if not timerQueue[1] then this:Hide() end
+end)
+
+function DBB2.After(delay, func)
+  table.insert(timerQueue, { at = GetTime() + delay, func = func })
+  timerFrame:Show()
+end
+
+-- Initialize saved variables
+DBB2_Config = {}
+
+-- Initialize addon tables
+DBB2.messages = {}
+DBB2.modules = {}
+DBB2.api = {}  -- Initialize API table
+DBB2.pendingMessages = {}  -- Queue for messages to display after login
+
+-- Store minimap button angle
+if not DBB2_Config.minimapAngle then
+  DBB2_Config.minimapAngle = 45
+end
+
+-- Backdrop definitions
+DBB2.backdrop = {
+  bgFile = "Interface\\BUTTONS\\WHITE8X8", 
+  tile = false, 
+  tileSize = 0,
+  edgeFile = "Interface\\BUTTONS\\WHITE8X8", 
+  edgeSize = 1,
+  insets = {left = -1, right = -1, top = -1, bottom = -1},
+}
+
+DBB2.backdrop_shadow = {
+  edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+  edgeSize = 8,
+  insets = {left = 0, right = 0, top = 0, bottom = 0},
+}
+
+-- Blizzard's original dialog artwork, used only by the opt-in Classic theme.
+DBB2.classicBackdrop = {
+  bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+  edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+  tile = true,
+  tileSize = 32,
+  edgeSize = 32,
+  insets = {left = 11, right = 12, top = 12, bottom = 11},
+}
+
+DBB2.classicTooltipBackdrop = {
+  bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+  edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+  tile = true,
+  tileSize = 16,
+  edgeSize = 16,
+  insets = {left = 4, right = 4, top = 4, bottom = 4},
+}
+
+DBB2.classicHighlightColor = {r = 1, g = 0.82, b = 0, a = 1}
+
+function DBB2:IsClassicTheme()
+  if self.activeClassicTheme ~= nil then return self.activeClassicTheme end
+  return DBB2_Config and DBB2_Config.classicTheme == true
+end
+
+-- Some existing callers tint a widget's modern backdrop directly. Native
+-- Blizzard templates do not expose that field, so give them a harmless proxy
+-- and keep the schema's public widget contract unchanged.
+function DBB2:CreateWidgetBackdropProxy(frame)
+  if frame.backdrop then return frame.backdrop end
+  local proxy = CreateFrame("Frame", nil, frame)
+  proxy:SetAllPoints(frame)
+  proxy:Hide()
+  frame.backdrop = proxy
+  return proxy
+end
+
+function DBB2:GetClassicWidgetName(name, prefix)
+  if name then return name end
+  self.classicWidgetId = (self.classicWidgetId or 0) + 1
+  return "DBB2Classic" .. (prefix or "Widget") .. self.classicWidgetId
+end
+
+-- Helper function to create backdrop
+-- useFixedBg: if true, uses the default dark charcoal instead of configurable color
+function DBB2:CreateBackdrop(frame, inset, legacy, transp, useFixedBg)
+  local border = 1
+
+  if self:IsClassicTheme() then
+    if not frame.backdrop then
+      local b = CreateFrame("Frame", nil, frame)
+      local level = frame:GetFrameLevel()
+      b:SetFrameLevel(math.max(0, level - 1))
+      frame.backdrop = b
+    end
+    frame.backdrop:SetPoint("TOPLEFT", frame, "TOPLEFT", -5, 5)
+    frame.backdrop:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 5, -5)
+    frame.backdrop:SetBackdrop(useFixedBg and self.classicTooltipBackdrop or self.classicBackdrop)
+    if useFixedBg then
+      frame.backdrop:SetBackdropColor(0.09, 0.09, 0.09, transp or 1)
+    else
+      -- Blizzard's dialog background has only one visible layer in parts of
+      -- the config UI, so applying the modern 0.85 alpha makes it look notably
+      -- translucent. Keep classic windows opaque; tooltips remain independent.
+      frame.backdrop:SetBackdropColor(1, 1, 1, 1)
+    end
+    frame.backdrop:SetBackdropBorderColor(1, 1, 1, 1)
+    return
+  end
+  
+  -- Use configurable background color (with fallback to default dark charcoal)
+  -- Unless useFixedBg is true, then always use the default
+  local br, bg, bb, ba
+  if useFixedBg then
+    br, bg, bb, ba = 0.08, 0.08, 0.10, 0.85
+  else
+    local bgColor = DBB2_Config.backgroundColor or {r = 0.08, g = 0.08, b = 0.10, a = 0.85}
+    br, bg, bb, ba = bgColor.r, bgColor.g, bgColor.b, bgColor.a or 0.85
+  end
+  local er, eg, eb, ea = 0.25, 0.25, 0.25, 1  -- Border: subtle gray
+  
+  -- Override transparency if specified
+  if transp and transp < ba then ba = transp end
+  
+  if not frame.backdrop then
+    local b = CreateFrame("Frame", nil, frame)
+    local level = frame:GetFrameLevel()
+    if level < 1 then
+      b:SetFrameLevel(level)
+    else
+      b:SetFrameLevel(level - 1)
+    end
+    frame.backdrop = b
+  end
+  
+  frame.backdrop:SetPoint("TOPLEFT", frame, "TOPLEFT", -border, border)
+  frame.backdrop:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", border, -border)
+  frame.backdrop:SetBackdrop(DBB2.backdrop)
+  frame.backdrop:SetBackdropColor(br, bg, bb, ba)
+  frame.backdrop:SetBackdropBorderColor(er, eg, eb, ea)
+end
+
+-- Helper function to create shadow
+function DBB2:CreateBackdropShadow(frame)
+  if frame.backdrop_shadow then return end
+  
+  local anchor = frame.backdrop or frame
+  frame.backdrop_shadow = CreateFrame("Frame", nil, anchor)
+  frame.backdrop_shadow:SetFrameStrata("BACKGROUND")
+  frame.backdrop_shadow:SetFrameLevel(1)
+  frame.backdrop_shadow:SetPoint("TOPLEFT", anchor, "TOPLEFT", -5, 5)
+  frame.backdrop_shadow:SetPoint("BOTTOMRIGHT", anchor, "BOTTOMRIGHT", 5, -5)
+  frame.backdrop_shadow:SetBackdrop(DBB2.backdrop_shadow)
+  frame.backdrop_shadow:SetBackdropBorderColor(0, 0, 0, 0.8)
+end
+
+-- Helper function to queue a message for display after login
+-- Used by modules that run during ADDON_LOADED when chat frame may not be ready
+function DBB2:QueueMessage(msg)
+  table.insert(DBB2.pendingMessages, msg)
+end
+
+-- Event handler
+DBB2:SetScript("OnEvent", function()
+  if DBB2.debug and DBB2.debug.enabled then
+    DBB2.api.DebugSetCurrentEvent(event)
+    DBB2.api.DebugCountSilent("event." .. (event or "unknown"), 1)
+  end
+  if event == "ADDON_LOADED" and arg1 == "DifficultBulletinBoard" then
+    -- Initialize config with defaults if needed
+    DBB2_Config = DBB2_Config or {}
+    
+    if not DBB2_Config.initialized then
+      DBB2_Config.initialized = true
+      DBB2_Config.version = "1.0.0"
+      DBB2_Config.position = {}
+      DBB2_Config.fontOffset = 0  -- Font size offset (-6 to +6)
+      DBB2_Config.classicTheme = false  -- Opt-in original Blizzard widget theme
+      DBB2_Config.highlightColor = {r = 0.667, g = 0.655, b = 0.8, a = 1}  -- Default highlight color (#aaa7cc)
+      DBB2_Config.backgroundColor = {r = 0.08, g = 0.08, b = 0.10, a = 0.85}  -- Default background color (dark charcoal)
+      DBB2_Config.spamFilterSeconds = 150  -- Duplicate message filter time
+      DBB2_Config.duplicateFilterMode = 1  -- Duplicate scope (0=off, 1=matches, 2=all chat)
+      DBB2_Config.messageExpireMinutes = 15  -- Auto-remove messages older than X minutes (0 = disabled)
+      DBB2_Config.hideFromChat = 0  -- Hide captured messages from chat (0=disabled, 1=filtered, 2=all)
+      DBB2_Config.showUnsortedMessagesInLogs = false  -- Show Filter Tag matches with no known category in Logs only
+      DBB2_Config.maxMessagesPerCategory = 5  -- Max messages shown per category (0 = unlimited)
+      DBB2_Config.scrollSpeed = 55  -- Scroll speed (pixels per wheel tick)
+      DBB2_Config.defaultTab = 0  -- Default tab (0=Logs, 1=Groups, 2=Professions, 3=Hardcore)
+      DBB2_Config.showCurrentTime = true  -- Show current time above timestamps
+      DBB2_Config.timeDisplayMode = 2  -- Time format (0=timestamp, 1=relative, 2=elapsed)
+      DBB2_Config.showLevelFilteredGroups = false  -- Level filter for groups tab
+      DBB2_Config.showGroupLevelRanges = true  -- Show recommended dungeon level ranges in Groups tab
+      DBB2_Config.notificationSound = 1  -- Notification sound (0=off, 1=on)
+      DBB2_Config.clearNotificationsOnGroupJoin = true  -- Clear notifications when joining group
+      DBB2_Config.persistNotifications = false  -- Remember active notification bells between sessions
+      DBB2_Config.autoJoinChannels = true  -- Auto-join World and LFG channels
+      DBB2_Config.minimapAngle = 45  -- Minimap button angle
+      DBB2_Config.minimapFreeMode = false  -- Minimap button free positioning mode
+      DBB2_Config.clampToScreen = true  -- Prevent dragging frames off-screen
+      DBB2_Config.closeOnEscape = true  -- Allow the Escape key to close the main window
+    end
+    
+    -- Ensure fontOffset exists for existing configs and is within safe bounds
+    if DBB2_Config.fontOffset == nil or type(DBB2_Config.fontOffset) ~= "number" then
+      DBB2_Config.fontOffset = 0
+    end
+    -- Clamp fontOffset to safe range (-6 to +6) to prevent crashes
+    if DBB2_Config.fontOffset < -6 then
+      DBB2_Config.fontOffset = -6
+    elseif DBB2_Config.fontOffset > 6 then
+      DBB2_Config.fontOffset = 6
+    end
+
+    -- Existing characters stay on the current modern theme unless they opt in.
+    if DBB2_Config.classicTheme == nil then
+      DBB2_Config.classicTheme = false
+    end
+    -- Theme changes are intentionally applied only on reload, preventing a
+    -- mixture of modern and native widgets during the current session.
+    DBB2.activeClassicTheme = DBB2_Config.classicTheme == true
+    
+    -- Ensure highlightColor exists for existing configs
+    if DBB2_Config.highlightColor == nil then
+      DBB2_Config.highlightColor = {r = 0.667, g = 0.655, b = 0.8, a = 1}
+    end
+    
+    -- Ensure backgroundColor exists for existing configs
+    if DBB2_Config.backgroundColor == nil then
+      DBB2_Config.backgroundColor = {r = 0.08, g = 0.08, b = 0.10, a = 0.85}
+    end
+    
+    -- Ensure spamFilterSeconds exists for existing configs
+    if DBB2_Config.spamFilterSeconds == nil then
+      DBB2_Config.spamFilterSeconds = 150
+    end
+
+    -- Migrate the old seconds-only duplicate filter to the new scope control.
+    -- A zero-second window meant disabled; every enabled installation keeps the
+    -- exact previous behavior through Matches mode.
+    if DBB2_Config.duplicateFilterMode == nil then
+      if DBB2_Config.spamFilterSeconds <= 0 then
+        DBB2_Config.duplicateFilterMode = 0
+        DBB2_Config.spamFilterSeconds = 150
+      else
+        DBB2_Config.duplicateFilterMode = 1
+      end
+    end
+    
+    -- Ensure maxMessagesPerCategory exists for existing configs
+    if DBB2_Config.maxMessagesPerCategory == nil then
+      DBB2_Config.maxMessagesPerCategory = 5
+    end
+    
+    -- Ensure messageExpireMinutes exists for existing configs
+    if DBB2_Config.messageExpireMinutes == nil then
+      DBB2_Config.messageExpireMinutes = 15
+    end
+    
+    -- Ensure hideFromChat exists for existing configs (migrate boolean to number)
+    if DBB2_Config.hideFromChat == nil then
+      DBB2_Config.hideFromChat = 0
+    elseif DBB2_Config.hideFromChat == true then
+      DBB2_Config.hideFromChat = 1
+    elseif DBB2_Config.hideFromChat == false then
+      DBB2_Config.hideFromChat = 0
+    end
+
+    -- Ensure optional Logs-only unsorted capture exists for existing configs.
+    if DBB2_Config.showUnsortedMessagesInLogs == nil then
+      DBB2_Config.showUnsortedMessagesInLogs = false
+    end
+    
+    -- Ensure scrollSpeed exists for existing configs
+    if DBB2_Config.scrollSpeed == nil then
+      DBB2_Config.scrollSpeed = 55
+    end
+    
+    -- Ensure showLevelFilteredGroups exists for existing configs (default off)
+    if DBB2_Config.showLevelFilteredGroups == nil then
+      DBB2_Config.showLevelFilteredGroups = false
+    end
+
+    -- Ensure showGroupLevelRanges exists for existing configs (default on)
+    if DBB2_Config.showGroupLevelRanges == nil then
+      DBB2_Config.showGroupLevelRanges = true
+    end
+    
+    -- Ensure autoJoinChannels exists for existing configs (default on)
+    if DBB2_Config.autoJoinChannels == nil then
+      DBB2_Config.autoJoinChannels = true
+    end
+    
+    -- Ensure defaultTab exists for existing configs (default 0 = Logs)
+    if DBB2_Config.defaultTab == nil then
+      DBB2_Config.defaultTab = 0
+    end
+    
+    -- Ensure showCurrentTime exists for existing configs (default on)
+    if DBB2_Config.showCurrentTime == nil then
+      DBB2_Config.showCurrentTime = true
+    end
+    
+    -- Ensure timeDisplayMode exists for existing configs (default elapsed)
+    if DBB2_Config.timeDisplayMode == nil then
+      DBB2_Config.timeDisplayMode = 2
+    end
+    
+    -- Ensure notificationSound exists for existing configs (default on)
+    if DBB2_Config.notificationSound == nil then
+      DBB2_Config.notificationSound = 1
+    end
+    
+    -- Ensure clearNotificationsOnGroupJoin exists for existing configs (default on)
+    if DBB2_Config.clearNotificationsOnGroupJoin == nil then
+      DBB2_Config.clearNotificationsOnGroupJoin = true
+    end
+
+    -- Ensure persistNotifications exists for existing configs (default off)
+    if DBB2_Config.persistNotifications == nil then
+      DBB2_Config.persistNotifications = false
+    end
+    
+    -- Ensure minimap button position fields exist for existing configs
+    if DBB2_Config.minimapAngle == nil then
+      DBB2_Config.minimapAngle = 45
+    end
+    if DBB2_Config.minimapFreeMode == nil then
+      DBB2_Config.minimapFreeMode = false
+    end
+    -- minimapFreePos can be nil (means not in free mode)
+    
+    -- Ensure clampToScreen exists for existing configs (default on)
+    if DBB2_Config.clampToScreen == nil then
+      DBB2_Config.clampToScreen = true
+    end
+
+    -- Ensure closeOnEscape exists for existing configs (default on)
+    if DBB2_Config.closeOnEscape == nil then
+      DBB2_Config.closeOnEscape = true
+    end
+    
+    -- Load modules (use ipairs to preserve load order from TOC file)
+    for i, module in ipairs(DBB2.modules) do
+      if module then
+        module()
+      end
+    end
+    
+    -- Initialize notification state (session-only, all off by default)
+    DBB2.api.InitNotificationState()
+    
+    -- Setup chat filter hook for hiding captured messages
+    DBB2.api.SetupChatFilter()
+    
+    -- Initialize lockout tracking
+    DBB2.api.InitLockouts()
+    
+    -- Initialize channel monitoring config
+    DBB2.api.InitChannelConfig()
+
+    DEFAULT_CHAT_FRAME:AddMessage("|cff33ffccDifficult|cffffffffBulletinBoard |cff555555v" .. (GetAddOnMetadata("DifficultBulletinBoard", "Version") or "?") .. "|r loaded. Click minimap button to open.")
+  end
+  
+  if event == "PLAYER_ENTERING_WORLD" then
+    -- Display any queued messages from module initialization
+    if table.getn(DBB2.pendingMessages) > 0 then
+      for _, msg in ipairs(DBB2.pendingMessages) do
+        DEFAULT_CHAT_FRAME:AddMessage(msg)
+      end
+      DBB2.pendingMessages = {}
+    end
+    
+    -- Clear hardcore detection cache to force fresh detection on each login/switch
+    DBB2_Config.isHardcoreCharacter = nil
+    local isHardcore = DBB2.api.DetectHardcoreCharacter()
+    
+    -- For hardcore characters, apply defaults ONLY if user hasn't customized channels yet
+    -- Once user makes any change, their preferences are saved like normal characters
+    if isHardcore and not DBB2_Config.hardcoreChannelsInitialized then
+      DBB2_Config.hardcoreChannelsInitialized = true
+      DBB2.api.SetChannelMonitored("World", false)
+      DBB2.api.SetChannelMonitored("LookingForGroup", false)
+      DBB2.api.SetChannelMonitored("General", false)
+      DBB2.api.SetChannelMonitored("Trade", false)
+      DBB2.api.SetChannelMonitored("Say", false)
+      DBB2.api.SetChannelMonitored("Yell", false)
+      DBB2.api.SetChannelMonitored("Whisper", false)
+      DBB2.api.SetChannelMonitored("Party", false)
+      DBB2.api.SetChannelMonitored("LocalDefense", false)
+      DBB2.api.SetChannelMonitored("WorldDefense", false)
+      DBB2.api.SetChannelMonitored("GuildRecruitment", false)
+    end
+    
+    -- Rebuild channel config panel if it exists (updates states)
+    if DBB2.gui and DBB2.gui.configTabs and DBB2.gui.configTabs.panels then
+      local channelsPanel = DBB2.gui.configTabs.panels["Channels"]
+      if channelsPanel and channelsPanel.RequestChannelRebuild then
+        channelsPanel.RequestChannelRebuild()  -- [PerfFix] deferred + coalesced
+      elseif channelsPanel and channelsPanel.RebuildChannelCheckboxes then
+        channelsPanel.RebuildChannelCheckboxes()
+      end
+    end
+    
+    -- Auto-join required channels (World, LookingForGroup) if not already joined
+    -- Use a small delay to ensure channel system is ready
+    if not DBB2._autoJoinScheduled then
+      DBB2._autoJoinScheduled = true
+      DBB2.After(2, DBB2.api.AutoJoinRequiredChannels)
+    end
+  end
+  
+  if event == "CHAT_MSG_CHANNEL" or event == "CHAT_MSG_GUILD" then
+    -- Capture chat messages using API
+    local message = arg1
+    local sender = arg2
+    local channel = arg9 or "Guild"
+    local diagnosticID = nil
+    
+    -- For Guild messages, check if Guild channel is monitored
+    if event == "CHAT_MSG_GUILD" then
+      if not DBB2.api.IsChannelMonitored("Guild") then
+        -- Disabled/unconfigured sources are intentionally a silent debug path.
+        -- Loud addon channels can otherwise evict useful diagnostic entries.
+        if DBB2.debug.enabled then DBB2.api.DebugCountSilent("source.ignoredUnmonitored", 1) end
+        return  -- Guild channel not monitored, ignore
+      end
+    end
+    
+    -- For channel messages, only capture from whitelisted LFG-relevant channels
+    -- This automatically filters out addon channels like TTRP, XTENSIONXTOOLTIP, etc.
+    if event == "CHAT_MSG_CHANNEL" then
+      if not DBB2.api.IsChannelWhitelisted(channel) then
+        if DBB2.debug.enabled then DBB2.api.DebugCountSilent("source.ignoredUnwhitelisted", 1) end
+        return  -- Not an LFG channel, ignore
+      end
+
+      -- A stale/custom whitelist entry must not opt the addon into hidden
+      -- server or addon-transport channels the player has not joined.
+      if not DBB2.api.IsChannelJoined(channel) then
+        if DBB2.debug.enabled then DBB2.api.DebugCountSilent("source.ignoredUnjoined", 1) end
+        return
+      end
+      
+      -- Ignore World channel when hardcore is active
+      local lowerChannel = string.lower(channel or "")
+      if DBB2.api.IsHardcoreChatActive() and lowerChannel == "world" then
+        if DBB2.debug.enabled then DBB2.api.DebugCountSilent("source.ignoredWorldDuringHardcore", 1) end
+        return
+      end
+    end
+
+    -- Begin diagnostics only after the source gate. High-volume ignored
+    -- channels are counted above without filling the diagnostic trace.
+    diagnosticID = DBB2.debug.enabled and DBB2.api.DebugBeginMessage(message, sender, channel, event) or nil
+    
+    DBB2.api.AddMessage(message, sender, channel, event, diagnosticID)
+  end
+  
+  if event == "CHAT_MSG_SAY" or event == "CHAT_MSG_YELL" or event == "CHAT_MSG_PARTY" or event == "CHAT_MSG_WHISPER" then
+    -- Capture Say, Yell, Party, Whisper messages
+    local message = arg1
+    local sender = arg2
+    local channel
+    
+    if event == "CHAT_MSG_SAY" then
+      channel = "Say"
+    elseif event == "CHAT_MSG_YELL" then
+      channel = "Yell"
+    elseif event == "CHAT_MSG_WHISPER" then
+      channel = "Whisper"
+    else
+      channel = "Party"
+    end
+    local diagnosticID = DBB2.debug.enabled and DBB2.api.DebugBeginMessage(message, sender, channel, event) or nil
+    
+    -- Check if this channel is monitored
+    if not DBB2.api.IsChannelMonitored(channel) then
+      if DBB2.debug.enabled then DBB2.api.DebugCountSilent("source.ignoredUnmonitored", 1) end
+      if diagnosticID then DBB2.api.DebugLifecycleTerminal(diagnosticID, "rejected-source", "reason=source-not-monitored") end
+      return
+    end
+    
+    DBB2.api.AddMessage(message, sender, channel, event, diagnosticID)
+  end
+  
+  if event == "CHAT_MSG_HARDCORE" then
+    -- Turtle WoW hardcore chat messages
+    local message = arg1
+    local sender = arg2
+    local diagnosticID = DBB2.debug.enabled and DBB2.api.DebugBeginMessage(message, sender, "Hardcore", event) or nil
+    
+    -- Check if Hardcore channel is monitored
+    if not DBB2.api.IsChannelMonitored("Hardcore") then
+      if DBB2.debug.enabled then DBB2.api.DebugCountSilent("source.ignoredUnmonitored", 1) end
+      if diagnosticID then DBB2.api.DebugLifecycleTerminal(diagnosticID, "rejected-source", "reason=hardcore-not-monitored") end
+      return  -- Hardcore channel not monitored, ignore
+    end
+    
+    -- Mark hardcore chat as active (enables auto-switch from World)
+    if not DBB2.api.IsHardcoreChatActive() then
+      DBB2.api.SetHardcoreChatActive()
+    end
+    
+    DBB2.api.AddMessage(message, sender, "Hardcore", event, diagnosticID)
+  end
+  
+  if event == "CHAT_MSG_SYSTEM" then
+    -- Capture system messages (hardcore deaths, level ups, etc.)
+    local message = arg1
+    -- System messages don't have a sender, use "System" as placeholder
+    local sender = "System"
+    local channel = "System"
+    local diagnosticID = DBB2.debug.enabled and DBB2.api.DebugBeginMessage(message, sender, channel, event) or nil
+    
+    DBB2.api.AddMessage(message, sender, channel, event, diagnosticID)
+  end
+  
+  if event == "UPDATE_INSTANCE_INFO" then
+    if DBB2.debug.enabled then DBB2.api.DebugTrace(2, "event", "lockouts-update", "Server lockout data changed") end
+    DBB2.api.UpdateLockouts()
+  end
+  
+  if event == "CHAT_MSG_CHANNEL_NOTICE" then
+    -- Channel join/leave notification - refresh channel list if panel exists
+    -- arg1 = notice type (e.g. "YOU_JOINED", "YOU_LEFT")
+    -- arg9 = channel name
+    if DBB2.gui and DBB2.gui.configTabs and DBB2.gui.configTabs.panels then
+      local channelsPanel = DBB2.gui.configTabs.panels["Channels"]
+      if channelsPanel and channelsPanel.RequestChannelRebuild then
+        channelsPanel.RequestChannelRebuild()  -- [PerfFix] deferred + coalesced
+      elseif channelsPanel and channelsPanel.RebuildChannelCheckboxes then
+        channelsPanel.RebuildChannelCheckboxes()
+      end
+    end
+  end
+  
+  if event == "PARTY_MEMBERS_CHANGED" or event == "RAID_ROSTER_UPDATE" then
+    -- Disable all category notifications when joining a group (if enabled)
+    if DBB2_Config.clearNotificationsOnGroupJoin then
+      -- Check if in a party or raid
+      if GetNumPartyMembers() > 0 or GetNumRaidMembers() > 0 then
+        if DBB2.debug.enabled then DBB2.api.DebugTrace(2, "notify", "cleared-on-group-join", "Notification state and queue cleared by configuration") end
+        DBB2.api.DisableAllNotifications()
+      end
+    end
+  end
+end)
+
+-- Register module function
+function DBB2:RegisterModule(name, func)
+  if DBB2.modules[name] then return end
+  DBB2.modules[name] = func
+  table.insert(DBB2.modules, func)
+end
+
+-- Cache tables for scaled values (populated on first call, constant per session)
+DBB2._fontCache = {}
+DBB2._scaledCache = {}
+
+-- [ GetEffectiveFontOffset ]
+-- Converts the UI font offset step into the actual font-size delta.
+-- Each visible step is 0.5 font size to allow finer adjustments while
+-- keeping the saved/configured slider values at whole numbers.
+-- return:      [number]        actual font size delta
+function DBB2:GetEffectiveFontOffset()
+  local offset = DBB2_Config.fontOffset
+  if type(offset) ~= "number" then offset = 0 end
+  if offset < -6 then offset = -6 end
+  if offset > 6 then offset = 6 end
+  return offset * 0.5
+end
+
+-- Get font size with offset applied (cached)
+-- 'baseSize'   [number]        the base font size
+-- return:      [number]        font size with offset applied (minimum 6, maximum 24)
+-- Note: WoW 1.12.1 has internal font size limits. Large fonts can cause crashes.
+function DBB2:GetFontSize(baseSize)
+  if self._fontCache[baseSize] then
+    return self._fontCache[baseSize]
+  end
+  local size = baseSize + DBB2:GetEffectiveFontOffset()
+  -- Clamp between 6 and 24 to prevent crashes in WoW 1.12.1
+  -- Using conservative limits as vanilla WoW has strict font rendering constraints
+  if size < 6 then size = 6 end
+  if size > 24 then size = 24 end
+  self._fontCache[baseSize] = size
+  return size
+end
+
+-- [ GetScaleFactor ]
+-- Returns a scale factor based on font offset for scaling UI element widths/heights
+-- return:      [number]        scale factor (1.0 at offset 0, increases with positive offset)
+function DBB2:GetScaleFactor()
+  local effectiveOffset = DBB2:GetEffectiveFontOffset()
+  -- Scale by ~10% per actual font size increase (UI step of +6 = 1.3x scale)
+  return 1 + (effectiveOffset * 0.1)
+end
+
+-- [ ScaleSize ]
+-- Scales a base size value according to font offset (cached)
+-- 'baseSize'   [number]        the base size value
+-- return:      [number]        scaled size (minimum 1 to prevent zero/negative dimensions)
+function DBB2:ScaleSize(baseSize)
+  if self._scaledCache[baseSize] then
+    return self._scaledCache[baseSize]
+  end
+  local scaled = math.floor(baseSize * DBB2:GetScaleFactor() + 0.5)
+  -- Ensure minimum size of 1 to prevent invalid frame dimensions
+  if scaled < 1 then scaled = 1 end
+  self._scaledCache[baseSize] = scaled
+  return scaled
+end
+
+-- Get highlight color
+-- return:      [r, g, b, a]    highlight color components
+function DBB2:GetHighlightColor()
+  if self:IsClassicTheme() then
+    local classic = self.classicHighlightColor
+    return classic.r, classic.g, classic.b, classic.a
+  end
+  local c = DBB2_Config.highlightColor or {r = 0.2, g = 1, b = 0.8, a = 1}
+  return c.r, c.g, c.b, c.a
+end
+
+-- Shared by the slash command, minimap button and user-assigned key binding.
+function DBB2:ToggleGUI()
+  if not self.gui then return end
+  if self.gui:IsShown() then
+    self.gui:Hide()
+  else
+    self.gui:Show()
+  end
+end
+
+BINDING_HEADER_DBB2 = "DifficultBulletinBoard"
+BINDING_NAME_DBB2_TOGGLE = "Toggle Bulletin Board"
+
+-- Slash command to toggle GUI
+SLASH_DBB1 = "/dbb"
+SlashCmdList["DBB"] = function(msg)
+  local _, _, command = string.find(msg or "", "^%s*(%S*)")
+  command = string.lower(command or "")
+
+  if command == "debug" then
+    DBB2:ToggleDebugViewer()
+    return
+  end
+
+  DBB2:ToggleGUI()
+end
+

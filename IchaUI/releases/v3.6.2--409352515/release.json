@@ -1,0 +1,9 @@
+{
+  "id": "409352515",
+  "tag": "v3.6.2",
+  "name": "v3.6.2",
+  "body": "## What's new\n\n- **XP bar** — reset and a fresh install show the experience bar. The baked default was hidden and anchored off the bottom of shorter screens, and `/icha xp show` stored a missing flag that the next login filled back in as hidden. The default is now visible at bottom center. Login moves that old factory anchor on screen and shows it. A bar you hid on purpose, at your own position, stays hidden.\n\n## Install\n\n1. Download **IchaUI-3.6.2.zip** below.\n2. Extract it into `Interface\\AddOns`. You should see `AddOns\\IchaUI`, `AddOns\\IchaUI_Bars`, and the other `IchaUI*` folders directly, not nested inside another folder.\n3. Fully restart WoW so the new TOC files load, then `/reload`.\n\n**Requirements:** ClassicAPI (required), SuperWoW (required for IchaPlates). See the README FAQ for addons to disable.",
+  "published": "2026-10-11T02:40:26Z",
+  "prerelease": false,
+  "url": "https://github.com/brutaliccus/IchaUI/releases/tag/v3.6.2"
+}

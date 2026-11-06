@@ -1,0 +1,113 @@
+{
+  "upstream": "https://github.com/Wurmschwanz/ButtonForge-Classic-Reforged",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Wurmschwanz",
+    "repo": "ButtonForge-Classic-Reforged",
+    "name": "ButtonForge-Classic-Reforged",
+    "url": "https://github.com/Wurmschwanz/ButtonForge-Classic-Reforged",
+    "api": "https://api.github.com/repos/Wurmschwanz/ButtonForge-Classic-Reforged"
+  },
+  "commit": "a0e381b63970ffe81e0de0796f9045bbe0f3a63b",
+  "sourceFiles": {
+    "Bar.lua": {
+      "sha256": "d7b07c6babe605e51f37cc1a297acaa36c87a989bbd6fd5af9451d5ffc8841a7",
+      "bytes": 24330
+    },
+    "Bindings.xml": {
+      "sha256": "207e6f7f5fde1f2348e274d8e1682078bb872ffb973ffa9de858a977454f36a9",
+      "bytes": 5237
+    },
+    "Button.lua": {
+      "sha256": "cf952bf5668d22a9162bf3f3f80d24ef926b87e05f264e64f869f4ee4ea5a2b6",
+      "bytes": 48810
+    },
+    "ButtonForgeClassic.toc": {
+      "sha256": "9ea5e71973d1ad1c6d6d2d757860efce95245af37037a4131d737dc98797aedf",
+      "bytes": 421
+    },
+    "Const.lua": {
+      "sha256": "c01ae3333980937f04f6aa98d965c0bac8b323f6e14f350b9b9e81e5a230aea4",
+      "bytes": 684
+    },
+    "Core.lua": {
+      "sha256": "50d02fe0012486a7441ee6e5cc8afa32fc5c9ca84926bf1f467a195f19390966",
+      "bytes": 4977
+    },
+    "Declares.lua": {
+      "sha256": "b6e95b3e03dae88c595c56517f571a15ecfb5e5bc98aab12fd2bedb1314526c8",
+      "bytes": 150
+    },
+    "Images/Backdrop.tga": {
+      "sha256": "b8708890fc934dbd686f58792008056d03f040963599dfc1686fe07e8267b43a",
+      "bytes": 16402
+    },
+    "Images/BarBackdrop.tga": {
+      "sha256": "6c2ce63bdaeace07b3392d14e7e15ce0a85376657b7862a808bd52236209f13a",
+      "bytes": 16402
+    },
+    "Images/ButtonsLocked.tga": {
+      "sha256": "8fc6cf571c5020db64075fbecef0d889e27306e6502198c204569d0f09900ea8",
+      "bytes": 4114
+    },
+    "Images/ButtonsUnlocked.tga": {
+      "sha256": "fa1c11301b061dd8647bff4deab93aaa4df285e4f138b2af5e001095b686ca1b",
+      "bytes": 4114
+    },
+    "Images/Configure.tga": {
+      "sha256": "35d80b387d5b33541db8bc2e81f87a087138c4204da834cc5373f5dd6b526956",
+      "bytes": 16402
+    },
+    "Images/DestroyBar.tga": {
+      "sha256": "53b80be5f2c46149f5564f2ea323953f5e6bcc6c6e0b7655a2df54934898840b",
+      "bytes": 16402
+    },
+    "Images/DragCols.tga": {
+      "sha256": "70b673ecef19807a852012e65ed255e2c1d0ef242b40a377869b2e6bd0bbf5c9",
+      "bytes": 8210
+    },
+    "Images/DragRows.tga": {
+      "sha256": "363d3c740453db5e78bec5ac44c100071398ae63dfac35693c07b5daeaa78d90",
+      "bytes": 8210
+    },
+    "Images/DragScale.tga": {
+      "sha256": "912c527632f636ed8959e8c10561087371c3d74385290ae956ab2b55e00e7b69",
+      "bytes": 4114
+    },
+    "Images/GridOff.tga": {
+      "sha256": "3d90cde9282f4f9d367015c01aaf451b7d0ce5d9bd9305afb1d89fa1bee6f886",
+      "bytes": 4114
+    },
+    "Images/GridOn.tga": {
+      "sha256": "3de97082474689e9fae04b307703c9b3464a0c438e9ae2f6f41b376bf6f717e7",
+      "bytes": 4114
+    },
+    "Keybind.lua": {
+      "sha256": "99619e6e9f22c64c191e405ccc2dc5d3d3720cb8eb144fd323a7c78ab62e262c",
+      "bytes": 11992
+    },
+    "Locale.lua": {
+      "sha256": "4c43f1db53a86a89f194651604e0b65514171cc8420d6b30b8d07e98ed37ad10",
+      "bytes": 2382
+    },
+    "Minimap.lua": {
+      "sha256": "7765eef38da0039d2a84516024b5686459085d71333bbeb4d54e4c16a9a1dbce",
+      "bytes": 27366
+    },
+    "Mouseover.lua": {
+      "sha256": "2e63c19c6a6c382eaec7fc31366c3cf3cb51c456497ae3c6032e850c6f20ba60",
+      "bytes": 5780
+    },
+    "README.md": {
+      "sha256": "c945b66bbb5f15b1fe2c792e7fe61bcfd5078f40c0c00bb40e0ee2353719844d",
+      "bytes": 4738
+    },
+    "Util.lua": {
+      "sha256": "85ab74649abb3af893b1e14f888cc1ebce9e3703aca11993c5e59a8e60cf5ce6",
+      "bytes": 5598
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

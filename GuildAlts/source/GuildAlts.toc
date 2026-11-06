@@ -1,0 +1,15 @@
+## Interface: 11200
+## Title: GuildAlts
+## Author: Sica
+## Version: 0.5.12
+## Notes: Manage guild alts and shows main character for alts in chat
+## SavedVariablesPerCharacter: GuildAltsDB
+
+libs\LibStub\LibStub.lua
+libs\Libs.xml
+
+GuildAlts.lua
+MessageHandler.lua
+FrameBuilder.lua
+GuiElements.lua
+Utils.lua

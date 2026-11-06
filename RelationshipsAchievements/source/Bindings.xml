@@ -1,0 +1,5 @@
+<Bindings>
+    <Binding name="TOGGLERELATIONSHIPSACHIEVEMENT" header="RELATIONSHIPSACHIEVEMENTS" runOnUp="false">
+        RelationshipsAchievements_Toggle()
+    </Binding>
+</Bindings>

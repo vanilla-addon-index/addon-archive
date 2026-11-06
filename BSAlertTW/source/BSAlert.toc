@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: |cffffff00BS|rAlert |cff00ff98Turtle
+## Author: |cffadd8e6Gon|r|cffffffffdo|r|cffff7f7fLeon|r
+## Notes: Notifies you when BattleShout is not up
+## Version: 0.0.1
+## SavedVariables: BSAlertDB
+
+BSAlert.lua
+BSAlert.xml

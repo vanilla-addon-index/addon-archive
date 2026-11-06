@@ -1,0 +1,103 @@
+{
+  "upstream": "https://github.com/Arthur-Helias/BetterCharacterPanel/tree/main?tab=readme-ov-file",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Arthur-Helias",
+    "repo": "BetterCharacterPanel",
+    "name": "BetterCharacterPanel",
+    "ref": "main",
+    "subpath": "",
+    "url": "https://github.com/Arthur-Helias/BetterCharacterPanel",
+    "api": "https://api.github.com/repos/Arthur-Helias/BetterCharacterPanel"
+  },
+  "commit": "c81f8b7146fc34927f43331b469d08ce5556b78d",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "dae39dfb8bfa0c2aa1d2abc3db2af5262d54e1aa8c771fd6b5bc537c4ee08d3e",
+      "bytes": 19
+    },
+    "BetterCharacterPanel-config.lua": {
+      "sha256": "e4711ab9815d9341a096bd453387931410bb4748b04771aa63a14fb1f2e9e2a8",
+      "bytes": 25968
+    },
+    "BetterCharacterPanel-dbenchants.lua": {
+      "sha256": "5bdc2613f54dcceec854a637a90e8e7af92996aef74b2528249c7fcc935376df",
+      "bytes": 53409
+    },
+    "BetterCharacterPanel-lib.lua": {
+      "sha256": "a5d3d8a4be94259f9770f027be0adabf42938178cb558ae68201aa1c837055b7",
+      "bytes": 7365
+    },
+    "BetterCharacterPanel-notifications.lua": {
+      "sha256": "70c4ff9af84acd8a63725352ee68cb2d414598e6b4e781fae56b7ad330a933c8",
+      "bytes": 3062
+    },
+    "BetterCharacterPanel-paperdoll.lua": {
+      "sha256": "7c6031d7cc00b7352beab264f9be81f05f3438d185835151ee35febc1ba0cd2a",
+      "bytes": 27431
+    },
+    "BetterCharacterPanel.lua": {
+      "sha256": "2d6cf8503da0ca694552a90a133a584eaac1ad26125fa58765d466a0944f6793",
+      "bytes": 1307
+    },
+    "BetterCharacterPanel.toc": {
+      "sha256": "7b85acbdf76e0bb9c88b91ac9ebd25682dd1a107d15d5a670918b9dbb7958a2b",
+      "bytes": 899
+    },
+    "BetterCharacterPanel.xml": {
+      "sha256": "f17e655c7b03eb4bc109ef4b9400bd4ad7404a4019d0cc6dc810247bdbb40018",
+      "bytes": 47431
+    },
+    "CHANGELOG.md": {
+      "sha256": "d3258c4c69f7bd8d9b9b08f37bf43019bba6a8b70e0bce778ddbd7ca1be7bf89",
+      "bytes": 2017
+    },
+    "LICENSE": {
+      "sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+      "bytes": 1211
+    },
+    "locale/BetterCharacterPanel-deDE.lua": {
+      "sha256": "a53bbdb60901ee8d99367dc34282592adafcc3b5384db81d97752db7c5f908b1",
+      "bytes": 27322
+    },
+    "locale/BetterCharacterPanel-enUS.lua": {
+      "sha256": "a825593b8f5b74fd560fe1c229ba2aceec15e22d7e3e76c257bc4092c1eb3359",
+      "bytes": 24293
+    },
+    "locale/BetterCharacterPanel-esES.lua": {
+      "sha256": "40a6676550f204d347cf5eb673d50661a584d2fd16c5d23851d300a95f3f9ca5",
+      "bytes": 26920
+    },
+    "locale/BetterCharacterPanel-frFR.lua": {
+      "sha256": "aaf2e0980b3f304dbb7ec677c8d637533cae9076e21f0a917d1781a48635b799",
+      "bytes": 27222
+    },
+    "locale/BetterCharacterPanel-ptBR.lua": {
+      "sha256": "32eabd66fce5ff37bb67e3ab082facf60b0f108fc4afd6c510ca58521da24f35",
+      "bytes": 26753
+    },
+    "locale/BetterCharacterPanel-ruRU.lua": {
+      "sha256": "9240a1cdedf0f1af1a66beceb32b3546d81f3474ad9428fda4d0c4f49efca0d7",
+      "bytes": 31017
+    },
+    "locale/BetterCharacterPanel-zhCN.lua": {
+      "sha256": "9b5ed42d89ade305bc4725b3ff600960f272f86ab7f18ea65da1bbed6f6c536b",
+      "bytes": 26398
+    },
+    "README.md": {
+      "sha256": "6af9dad6b02a9b6af08445ea8357deeb14eac695239a41c16a622fe2a26c06da",
+      "bytes": 4416
+    },
+    "skins/paperdoll/BetterCharacterPanel-paperdoll-pfUI.lua": {
+      "sha256": "dc95fc2903a0c41d2f2875122c3570f8a0a901608898884fcd7a4103612a406a",
+      "bytes": 12702
+    },
+    "skins/paperdoll/BetterCharacterPanel-paperdoll-Vanilla.lua": {
+      "sha256": "942f08f9114c8cde0e25a8005b04847e89aa44c52b37db9d64e1f50794a2dfd7",
+      "bytes": 10663
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

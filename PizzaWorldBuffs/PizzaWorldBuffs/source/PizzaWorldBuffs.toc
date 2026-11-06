@@ -1,0 +1,30 @@
+## Interface: 11200
+## Title: |cffa050ffPizza|cffffffffWorldBuffs
+## Author: Pizzahawaii
+## Notes: Shows Ony/Nef head despawn timers and DMF location.
+## Version: 1.7.2
+## SavedVariablesPerCharacter: PWB_config, PWB_timers, PWB_dmf
+
+# NOTE: this Version is the display/release version only - it is NOT what goes
+# on the wire. We broadcast a fixed PWB.protocolVersion (see main.lua) so our
+# releases never trigger "new version available" popups on other clients,
+# including the "2.0.0" fork by Juliette. Bump this Version freely on release.
+#
+# Identity rule: never release a 2.x version - "2.0.0" is the fork. The next
+# major after 1.x is 3.0.0. Nothing on the wire depends on this anymore; it's
+# purely a naming choice to stay clearly distinct from the fork.
+
+translations\enUS.lua
+translations\zhCN.lua
+translations\esES.lua
+
+src\main.lua
+src\config.lua
+src\utils.lua
+src\core.lua
+src\map.lua
+src\share.lua
+src\frame.lua
+src\logoutframe.lua
+src\channel.lua
+src\slashcommands.lua

@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: EM_CritBam
+## Notes: EasyMachines CritBam Mod
+## Author: Reginald Leonczuk, 2019
+## SavedVariables: CritBamConfig
+## Version: 0.1
+
+EM_CritBam.lua

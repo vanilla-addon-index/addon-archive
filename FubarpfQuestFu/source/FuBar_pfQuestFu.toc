@@ -1,0 +1,15 @@
+
+## Interface: 11200
+## Name: FuBar - pfQuestFu
+## Title: FuBar - |cffffffffpfQuest|r|cff00ff00Fu|r
+## Notes: A FuBar button to load pfQuest.
+## Version: 1.0.0
+## X-Category: Map
+## X-Date: 2026-02-02
+## X-eMail: your@email.com
+## X-Website: http://www.wowinterface.com/
+## Author: Goldenpipes
+## Dependencies: pfQuest, FuBar
+## SavedVariables: FuBar_pfQuestFuDB
+## LoadOnDemand: 1
+FuBar_pfQuestFu.lua

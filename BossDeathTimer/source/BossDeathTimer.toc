@@ -1,0 +1,7 @@
+## Author: Croc
+## Title: Boss Death Timer
+## Notes: A simple countdown timer that displays how long the boss will die. |cffffcc00cmd is: /dt about
+## Interface: 11200
+## Version: 1.0
+## SavedVariablesPerCharacter: DCT_FONTSIZE, DCT_MINDMG, DCT_INTERVAL, DCT_ALERT_SECONDS
+BossDeathTimer.xml

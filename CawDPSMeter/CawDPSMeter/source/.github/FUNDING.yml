@@ -1,0 +1,7 @@
+# Shows a "Sponsor" button at the top of the GitHub repo.
+# Docs: https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository
+
+ko_fi: huginnandmuginn      # -> https://ko-fi.com/huginnandmuginn
+
+# --- Optional: add more later ---
+# github: [NovaElysium]      # needs GitHub Sponsors enabled (Stripe Express + tax form)

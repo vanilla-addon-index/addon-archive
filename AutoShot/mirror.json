@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/WouterBink/AutoShot",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "WouterBink",
+    "repo": "AutoShot",
+    "name": "AutoShot",
+    "url": "https://github.com/WouterBink/AutoShot",
+    "api": "https://api.github.com/repos/WouterBink/AutoShot"
+  },
+  "commit": "0a8b53551bda2bd1fd76c532b1f558d0bf6b30bb",
+  "sourceFiles": {
+    "AutoShot.lua": {
+      "sha256": "e37f6120ac5abc1511816912255290aeea8fbcff1d7221e3a969994d22c191a0",
+      "bytes": 4225
+    },
+    "AutoShot.toc": {
+      "sha256": "9319348f7548128d492868a91b4e9563018b8c361a823a734e351a5b68caa021",
+      "bytes": 194
+    },
+    "AutoShot.xml": {
+      "sha256": "94dc76c98f3ed5856c6d971f7c1565d5df1ad3412137531b0cfde31a0c8f5feb",
+      "bytes": 233
+    },
+    "readme.txt": {
+      "sha256": "5073620c4eb4b10f94dda0e181cc9419f8b27d7429970adc028bf7089c8e9500",
+      "bytes": 661
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

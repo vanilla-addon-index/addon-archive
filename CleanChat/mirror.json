@@ -1,0 +1,69 @@
+{
+  "upstream": "https://github.com/refaim/CleanChat",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "refaim",
+    "repo": "CleanChat",
+    "name": "CleanChat",
+    "url": "https://github.com/refaim/CleanChat",
+    "api": "https://api.github.com/repos/refaim/CleanChat"
+  },
+  "commit": "84e0e57e306265ae4f5ace596678cefd27ff4475",
+  "sourceFiles": {
+    "CleanChat/Bindings.xml": {
+      "sha256": "1f5659d3d79dc410f9c91d904f624f7727f8845d5ee95c05988d4428e9d5234c",
+      "bytes": 408
+    },
+    "CleanChat/CleanChat.lua": {
+      "sha256": "5cb1dbe3183f20519a6642052ff2997ec0ad2429acc3dba0926d06b75c06a19a",
+      "bytes": 30844
+    },
+    "CleanChat/CleanChat.toc": {
+      "sha256": "87c77b9bb62b5a7f0af89dabe3e54d9e964ce1607ff9e8f07aad0848ed0f7b52",
+      "bytes": 1046
+    },
+    "CleanChat/CleanChat.xml": {
+      "sha256": "f3c5fb8396b80e300727be5dcaf391ee333b15c92ffdba00382115ff3a7efed3",
+      "bytes": 7843
+    },
+    "CleanChat/CleanChatOptions.xml": {
+      "sha256": "1199f80ce88de4cbcba9132c4d9e32bcf43fb04fdea01c222ab02224ee75c098",
+      "bytes": 30761
+    },
+    "CleanChat/HighlightConfig.lua": {
+      "sha256": "f05c6660dd929ee46744f485dc2987b0e4ced423a4a9785534316d1c918d362c",
+      "bytes": 2050
+    },
+    "CleanChat/Localization.de.lua": {
+      "sha256": "56495d0969ec50ac1c06e846fa0974204076784c4bbfe70894f287fef3175024",
+      "bytes": 4669
+    },
+    "CleanChat/Localization.en.lua": {
+      "sha256": "3357051f8352f806bb4c7df403da55141e2c9ca8edcfed56a4ea6aeb9ec0e3e3",
+      "bytes": 4598
+    },
+    "CleanChat/Localization.fr.lua": {
+      "sha256": "b099542fb689af76fd125846ebd5918bd349af40d227f1e7e6599951ce8739bf",
+      "bytes": 5126
+    },
+    "CleanChat/Localization.kr.lua": {
+      "sha256": "0efe0b451299388e4a6bd0a958bbc3b8127a4b28559c8b8d957315563b28cb99",
+      "bytes": 6776
+    },
+    "CleanChat/Localization.lua": {
+      "sha256": "d155e0a9150ce50cb09e8d4b9b9fc005563e6aa80d0f55c328394de9292137a9",
+      "bytes": 1166
+    },
+    "CleanChat/test": {
+      "sha256": "e16f1596201850fd4a63680b27f603cb64e67176159be3d8ed78a4403fdb1700",
+      "bytes": 2
+    },
+    "README.md": {
+      "sha256": "98059d833acb576c283fff0e1ed38bf7f3da7e50b3d36d3d8ec38b0a5c34fbc5",
+      "bytes": 3748
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

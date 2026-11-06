@@ -1,0 +1,9 @@
+{
+  "id": "316167340",
+  "tag": "v1.1.3",
+  "name": "Puppeteer 1.1.3",
+  "body": "**New Features/Changes:**\r\n- Auto Role experiment updates\r\n  - More reliable and no longer blocks talent requests from others while finding roles\r\n  - Changed Discipline Priest from Healer to Damage\r\n- Enemy frames no longer populate with your teammates while you're mind controlled\r\n- Added many debuffs from Timbermaw Hold to the tracked list\r\n- Reduced AoE heal predict range of Prayer of Healing from 30 to 28 yd, since it is actually 28 yd despite the description\r\n- Your own pet is now sorted above other players’ pets",
+  "published": "2026-04-30T23:06:13Z",
+  "prerelease": false,
+  "url": "https://github.com/OldManAlpha/Puppeteer/releases/tag/v1.1.3"
+}

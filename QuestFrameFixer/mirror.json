@@ -1,0 +1,64 @@
+{
+  "upstream": "https://github.com/fusionpit/QuestFrameFixer/tree/1.12.1",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "fusionpit",
+    "repo": "QuestFrameFixer",
+    "name": "QuestFrameFixer",
+    "ref": "1.12.1",
+    "subpath": "",
+    "url": "https://github.com/fusionpit/QuestFrameFixer",
+    "api": "https://api.github.com/repos/fusionpit/QuestFrameFixer"
+  },
+  "commit": "7b1b84594279fde59bd8382dcb177892b55a6487",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "64c4e54df59cc6516ddffd512abb053e7cee2e064d2af53ce5ada164be4a67fa",
+      "bytes": 1055
+    },
+    "QuestFrameFixer.lua": {
+      "sha256": "780037c3e14637d090428d1e5b73179901e78b3b9b6eb63af686fe16d010e6cc",
+      "bytes": 598
+    },
+    "QuestFrameFixer.toc": {
+      "sha256": "ac9d4574622be1a01dbc1f8a1264524d48ba9baccf8fefeaf66f0dbf054da54a",
+      "bytes": 194
+    },
+    "README.MD": {
+      "sha256": "449574fda832ccc00cd6ee3b05c80f68a7e830f9ee94f1bf5a5f22bf1e0bec05",
+      "bytes": 451
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "358371620": {
+      "tag": "4.0.2",
+      "folder": "4.0.2--358371620",
+      "assets": {
+        "486512728": {
+          "sha256": "670587f03abb4a5dd264f4c9d937cc72900a3e83e4f99ec155481b494b5ee056",
+          "bytes": 3317,
+          "id": "486512728",
+          "name": "QuestFrameFixer-4.0.2.zip",
+          "url": "https://github.com/fusionpit/QuestFrameFixer/releases/download/4.0.2/QuestFrameFixer-4.0.2.zip",
+          "path": "releases/4.0.2--358371620/assets/QuestFrameFixer-4.0.2.zip"
+        },
+        "486512739": {
+          "sha256": "3ecfec598dac23fcc92df4530ea5492d74b901a840ff4d863efe52fb85627f5b",
+          "bytes": 200,
+          "id": "486512739",
+          "name": "release.json",
+          "url": "https://github.com/fusionpit/QuestFrameFixer/releases/download/4.0.2/release.json",
+          "path": "releases/4.0.2--358371620/assets/release.json"
+        }
+      },
+      "source": {
+        "sha256": "e1aba43b581add7881669819d184a6667040a16960c4a0c0e3fea0c82add5208",
+        "bytes": 3041,
+        "path": "releases/4.0.2--358371620/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/fusionpit/QuestFrameFixer/tarball/4.0.2"
+      }
+    }
+  }
+}

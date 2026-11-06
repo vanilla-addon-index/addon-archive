@@ -1,0 +1,9 @@
+{
+  "id": "302964711",
+  "tag": "0.2",
+  "name": "Stable Enough for 1.12.1",
+  "body": "- CPU/GPU AI voice generation locally free \r\n- Scrapes client data and when the pipeline runs it will sync the data back to the game\r\n- Currently only compatible with 1.12.1 playing through to get more coverage\r\n- Will track zones of NPCs with missing dialogue so that we can filter by zone while you progress through wow later\r\n- Handles books, in game speech, portraits, VO, etc. \r\n- Modular design with good seperation of concerns at this point\r\n- Good grouping for most NPCs to race/sex for appropriate VO assignment",
+  "published": "2026-03-30T03:21:48Z",
+  "prerelease": false,
+  "url": "https://github.com/tlplayer/BetterQuest/releases/tag/0.2"
+}

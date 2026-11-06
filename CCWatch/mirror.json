@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/shirsig/ccwatch",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "ccwatch",
+    "name": "ccwatch",
+    "url": "https://github.com/shirsig/ccwatch",
+    "api": "https://api.github.com/repos/shirsig/ccwatch"
+  },
+  "commit": "b88c980aca96632a61406f525e776095be21a2bb",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "25999e1aec00d52999be6731a50961473ef6110bd24aa17690118418bcea10cf",
+      "bytes": 8
+    },
+    "bar.tga": {
+      "sha256": "5a5deac548c4639de44db55ed79a6784bba95fc8286e7a4e7235ea7da24e19c3",
+      "bytes": 32812
+    },
+    "ccwatch.lua": {
+      "sha256": "14249dbb43e063435ba18c42838090b97c6375f294f0af60ab5b7ffabd90ffc8",
+      "bytes": 18860
+    },
+    "ccwatch.toc": {
+      "sha256": "9f6f80d2d818e8244037a662da0c4f0ff9c0b310096d0ca0201e93b050bfdc3d",
+      "bytes": 165
+    },
+    "data.lua": {
+      "sha256": "2773ebfa1e09cf4e40c2553cfbde792de12b1c286964d58593e8179a2d9a1d47",
+      "bytes": 7970
+    },
+    "README.md": {
+      "sha256": "03a439307f661d42f840aa667950bf2ca5b19c76b37b9ac82ea4b73da835e480",
+      "bytes": 1127
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

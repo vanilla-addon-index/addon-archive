@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/maxcodk/PaladinSalvaRemover",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "maxcodk",
+    "repo": "PaladinSalvaRemover",
+    "name": "PaladinSalvaRemover",
+    "url": "https://github.com/maxcodk/PaladinSalvaRemover",
+    "api": "https://api.github.com/repos/maxcodk/PaladinSalvaRemover"
+  },
+  "commit": "f2c68fd14699b54e4ba3230fc28b94783401987c",
+  "sourceFiles": {
+    "PaladinSalvaRemover.lua": {
+      "sha256": "172f762634b77c5a83cd99fe396442cce9061e0e361adf1e969c3c3112d4a3fe",
+      "bytes": 1611
+    },
+    "PaladinSalvaRemover.toc": {
+      "sha256": "5c0b4874a08931a2ad03508ffc7c8145c05880bd8ef169aa67af48df839472b0",
+      "bytes": 212
+    },
+    "readme.txt": {
+      "sha256": "0dee9b5b3f985cd9f1f5a92d3590f5f4aaaf372a298e9065ad466ea4f6a50dc0",
+      "bytes": 217
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

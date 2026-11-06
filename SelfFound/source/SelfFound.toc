@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: SelfFound
+## Author: kawerte
+## Notes: Implement self found mechanics
+## Version: GIT
+## SavedVariables: SF_CONF
+
+SelfFound.lua

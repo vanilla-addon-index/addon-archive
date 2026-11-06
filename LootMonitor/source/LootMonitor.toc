@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: Loot Monitor
+## Notes: Enhanced loot notifications with quality filtering, history tracking and more for Turtle WoW
+## Author: Croome
+## Version: 2.0
+## SavedVariables: LootMonitorDB, LootMonitorHistory
+
+LootMonitor.lua 

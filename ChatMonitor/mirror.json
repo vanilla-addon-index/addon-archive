@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/cryptokn1ght-dev/ChatMonitor",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "cryptokn1ght-dev",
+    "repo": "ChatMonitor",
+    "name": "ChatMonitor",
+    "url": "https://github.com/cryptokn1ght-dev/ChatMonitor",
+    "api": "https://api.github.com/repos/cryptokn1ght-dev/ChatMonitor"
+  },
+  "commit": "2095edc3e5a10c8065304dbb567914424b8d9bf5",
+  "sourceFiles": {
+    "ChatMonitor.lua": {
+      "sha256": "bbca4df5c3e641ab4f6e921334ca99c62c42d729490b23d8dd792cd0520c6d6a",
+      "bytes": 44913
+    },
+    "ChatMonitor.toc": {
+      "sha256": "782f607400dfb5165633363bca3a99fffcdd3d0186314612f5832bc487657887",
+      "bytes": 183
+    },
+    "cm_preview_.png": {
+      "sha256": "e092a016d13007b91c6a7114826a246604d8615bbb1e5983501b812845a5d9c7",
+      "bytes": 817595
+    },
+    "README.md": {
+      "sha256": "d8f6554f1710d1d9ed99d2ca7c64a25b9437a33065fbf7aad2450de0294e9712",
+      "bytes": 1026
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

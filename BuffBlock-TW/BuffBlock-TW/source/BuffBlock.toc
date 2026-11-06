@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: BuffBlock
+## Version: 1.4
+## Author: Zeitung - Forked from Armilus's BuffBlock
+## SavedVariables: BUFF_CONFIG
+## Notes: Automatically removes selected buffs
+BuffBlock.xml
+BuffBlockMenu.xml

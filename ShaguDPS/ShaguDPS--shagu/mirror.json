@@ -1,0 +1,89 @@
+{
+  "upstream": "https://github.com/shagu/ShaguDPS",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguDPS",
+    "name": "ShaguDPS",
+    "url": "https://github.com/shagu/ShaguDPS",
+    "api": "https://api.github.com/repos/shagu/ShaguDPS"
+  },
+  "commit": "79c25e60f9ab3f314d69bec3d3edcbf965b7c312",
+  "sourceFiles": {
+    "core.lua": {
+      "sha256": "352226cf2da102aaa072ed99faa5b70af034a6d9659ab439647a6239598c5d4a",
+      "bytes": 2053
+    },
+    "docs/combat-log.md": {
+      "sha256": "aebd2c2b0f4e133095fc212fe50772d0dc49e4587aa4caf6fa1228a1c53b54e8",
+      "bytes": 4179
+    },
+    "img/announce.tga": {
+      "sha256": "04e7b547af29dc4bd701a2b35165ec433de74b529b8fb561cba9b0c3d0c9471a",
+      "bytes": 559
+    },
+    "img/minus.tga": {
+      "sha256": "a8b22181f55a2794eaebe9b66fe8daec95754ded3f287afbda457e3528d2d88e",
+      "bytes": 144
+    },
+    "img/plus.tga": {
+      "sha256": "37b20b12cdbde50f84cac39de12628f03cf288a04c8e2d2d8e71205272add3c4",
+      "bytes": 224
+    },
+    "img/reset.tga": {
+      "sha256": "7b651ecc44844c6c39899267ce46b68112294fabca2b94155229924b46884dbd",
+      "bytes": 783
+    },
+    "img/resize.tga": {
+      "sha256": "d1fd2989983c32884b01bc473ea2dacbb9d623bbebf8260cd8176300af00b8ef",
+      "bytes": 397
+    },
+    "img/settings.tga": {
+      "sha256": "7097eb2c11431e49feda1560dcd2bd51a0ec180dc251623f2d439adc7dff0b45",
+      "bytes": 698
+    },
+    "parser-tbc.lua": {
+      "sha256": "f18a3f15b184d5ca5ef2f34cec86ffdaad72784ff09a6f7319e5074998dea683",
+      "bytes": 1238
+    },
+    "parser-vanilla.lua": {
+      "sha256": "f28e12cffb77f83caa8945010a93b52a035ee3fd4c040eff93480c49d8219628",
+      "bytes": 16737
+    },
+    "parser.lua": {
+      "sha256": "97dc3c63122c5e5af3bd00d91fca42d4620a706a4aea8a0eb9650c9b6b1d78c0",
+      "bytes": 7325
+    },
+    "README.md": {
+      "sha256": "cfa78b8079e40281a9c2ed7018a39a2ffd46dc60e4ad63550a7e4218500595c4",
+      "bytes": 2895
+    },
+    "screenshot.jpg": {
+      "sha256": "b95f6b0be67f4df6018a42e8dce1f66bcaa0e95497b7d2c147b863d3da6606c5",
+      "bytes": 59618
+    },
+    "screenshot2.jpg": {
+      "sha256": "a6780ea6f1e525aaabafc373f5fb9c04c2df2b88bf458b092533e245b7b006ee",
+      "bytes": 50336
+    },
+    "settings.lua": {
+      "sha256": "43fe36b9394dbd0249418b4446b438422174405d15f70138aff0c08393b897c5",
+      "bytes": 13606
+    },
+    "ShaguDPS-tbc.toc": {
+      "sha256": "48130ca718ceb3174e942e13c8d0ab84e612cd89bb64d1d5ef6d598e01c4de12",
+      "bytes": 314
+    },
+    "ShaguDPS.toc": {
+      "sha256": "2c7635a5aeda3cb2ea8e028647209c917ec76f86d8cde257f040793e232d1eb9",
+      "bytes": 314
+    },
+    "window.lua": {
+      "sha256": "c4ecfa4ddd06f67f6774fd012ee9cbec64b680fcbf11e71d0a5c293ec445a627",
+      "bytes": 34297
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

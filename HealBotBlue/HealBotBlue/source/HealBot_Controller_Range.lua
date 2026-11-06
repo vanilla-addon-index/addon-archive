@@ -1,0 +1,81 @@
+-- HealBot_Controller_Range.lua
+-- Handles periodic range checking for units
+
+local _scale = 0
+
+-- HealBot_ResetRangeScale: Resets map range scaling on zone change.
+function HealBot_ResetRangeScale()
+    _scale = 0
+end
+
+local _rangeCache = {}
+local _lastFrameTime = 0
+
+-- HealBot_Range_Check: Checks if unit is in range via map distance or API.
+function HealBot_Range_Check(unit, range)
+    local currentTime = GetTime()
+    if _lastFrameTime ~= currentTime then
+        for r, cacheTable in pairs(_rangeCache) do
+            for u in pairs(cacheTable) do
+                cacheTable[u] = nil
+            end
+        end
+        _lastFrameTime = currentTime
+    end
+
+    local return_val = 0;
+    if not range then 
+        range = 40;
+    end
+    
+    _rangeCache[range] = _rangeCache[range] or {}
+    if _rangeCache[range][unit] ~= nil then
+        return _rangeCache[range][unit]
+    end
+
+    if ( unit and (unit == "player" or UnitIsUnit(unit, "player") or string.find(unit, "^Test")) ) then 
+        return_val = 1;
+    elseif HealBot_Integrations_ClassicAPI_Active and UnitDistanceSquared and UnitInLineOfSight then
+        local inSight = UnitInLineOfSight("player", unit)
+        if inSight then
+            local distSq = UnitDistanceSquared(unit)
+            if distSq and distSq <= (range * range) then
+                return_val = 1;
+            end
+        end
+    elseif HealBot_Integrations_UnitXP_Active then
+        local inSight = UnitXP("inSight", "player", unit)
+        if inSight then
+            local dist = UnitXP("distanceBetween", "player", unit, "Gaussian")
+            if dist and dist <= range then
+                return_val = 1;
+            end
+        end
+    elseif ( UnitIsVisible(unit) == 1 ) then
+        local tx, ty = GetPlayerMapPosition(unit)
+        local dist
+        if tx > 0 or ty > 0 then
+            local px, py = GetPlayerMapPosition("player")
+            dist = math.sqrt((px - tx)^2 + (py - ty)^2)
+            if dist > _scale and (px > 0 or py > 0) then
+                if ( CheckInteractDistance(unit, 4) ) then
+                    _scale = dist
+                end
+            end
+            if dist <= (_scale * range / 27) then
+                return_val = 1
+            end
+        else
+            if ( HealBot_Config.QualityRange == 1 ) or range <= 27 then
+                if ( CheckInteractDistance(unit, 4) ) then
+                    return_val = 1;
+                end                    
+            else
+                return_val = 1;
+            end
+        end
+    end
+    
+    _rangeCache[range][unit] = return_val
+    return return_val;
+end

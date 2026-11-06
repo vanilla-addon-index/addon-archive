@@ -1,0 +1,61 @@
+{
+  "upstream": "https://octowow.st/git/Relationship/RelationshipsAttune",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Relationship",
+    "repo": "RelationshipsAttune",
+    "name": "RelationshipsAttune",
+    "url": "https://octowow.st/git/Relationship/RelationshipsAttune",
+    "api": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsAttune"
+  },
+  "commit": "fc4dbc4fb39a5703a10edf42e9285ec1627ccc77",
+  "sourceFiles": {
+    "Comm.lua": {
+      "sha256": "f8f70985bb90b70a99c6e2092b4dcd6de30fe02d456ce61b1c58bca33baeeeaf",
+      "bytes": 4433
+    },
+    "Core.lua": {
+      "sha256": "7dfc82a0465993ef14c92fb5950003c6e988bbd83e99ad6246ef093da5943e2e",
+      "bytes": 37611
+    },
+    "Data.lua": {
+      "sha256": "d1445ab1056af22b90146df94522efdee55c23d6b287f9448ab7e2524c701b35",
+      "bytes": 49458
+    },
+    "Locales.lua": {
+      "sha256": "b37819f101183f849327ff7ddb4e5d8312e4a0597df1c83021b73473fd005ce5",
+      "bytes": 1375
+    },
+    "Minimap.lua": {
+      "sha256": "5648921f04529dbe62a3cad621a46b918176ac460bda1c0dd55b8cbf0abb122a",
+      "bytes": 6095
+    },
+    "README.md": {
+      "sha256": "309e347e61994126e91d34c3942e0632904761f5c6e2133920f4445d17375cc8",
+      "bytes": 2285
+    },
+    "RelationshipsAttune.toc": {
+      "sha256": "19d6d19bd4bbb709ea90854ce6e10368e23ea15bd82d868947469a5e1c80d820",
+      "bytes": 333
+    },
+    "UI.lua": {
+      "sha256": "0c8a8b83700a2888fcd9844d869071413b65760c018f3e03c20a31cfe8c89c36",
+      "bytes": 31847
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "10": {
+      "tag": "AA",
+      "folder": "AA--10",
+      "assets": {},
+      "source": {
+        "sha256": "79b2703d8b61e1af0d2c7802d5765fb2437465702dfb08af85a0a74326005bc5",
+        "bytes": 31667,
+        "path": "releases/AA--10/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsAttune/archive/AA.tar.gz"
+      }
+    }
+  }
+}

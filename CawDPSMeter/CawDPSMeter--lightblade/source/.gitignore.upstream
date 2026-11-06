@@ -1,0 +1,35 @@
+# --- Operating system ---
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# --- Editors / IDEs ---
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+*~
+*.swp
+*.swo
+
+# --- Lua tooling ---
+.luacheckcache
+
+# --- Build / packaging output ---
+.release/
+dist/
+*.zip
+
+# --- Local scratch / private notes (never published) ---
+*.bak
+*.orig
+*.tmp
+scratch/
+NOTES.local.md
+
+# --- Local maintainer scripts (kept on disk, not published) ---
+tools/

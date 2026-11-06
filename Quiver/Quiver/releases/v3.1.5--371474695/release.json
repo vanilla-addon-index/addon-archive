@@ -1,0 +1,9 @@
+{
+  "id": "371474695",
+  "tag": "v3.1.5",
+  "name": "v3.1.5",
+  "body": "- Fix a [bug](https://github.com/SabineWren/Quiver/pull/59) where unlocked frames overwrote shot timer state.",
+  "published": "2026-08-17T00:43:27Z",
+  "prerelease": false,
+  "url": "https://github.com/SabineWren/Quiver/releases/tag/v3.1.5"
+}

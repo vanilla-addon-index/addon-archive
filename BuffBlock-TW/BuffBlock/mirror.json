@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/towneh/BuffBlock",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "towneh",
+    "repo": "BuffBlock",
+    "name": "BuffBlock",
+    "url": "https://github.com/towneh/BuffBlock",
+    "api": "https://api.github.com/repos/towneh/BuffBlock"
+  },
+  "commit": "cbcd2d23d6860049bad69f52574f193fbeb3c93d",
+  "sourceFiles": {
+    "BuffBlock.lua": {
+      "sha256": "cb1983ba7d5dd113e2c94553ba7df80d41db9b84dfdb3cfc7a05680ea0103c64",
+      "bytes": 7291
+    },
+    "BuffBlock.toc": {
+      "sha256": "2eea97bd70310c2723ce946b541133806e6dd94d6b3a2366a0f94be0ff4819a6",
+      "bytes": 185
+    },
+    "BuffBlock.xml": {
+      "sha256": "299d987241633c4bdeba0435775ef50236d9c300c54bed7e0555f7860a3bd369",
+      "bytes": 390
+    },
+    "BuffBlockMenu.xml": {
+      "sha256": "5391d949648a23d4d03fbbc9d0e39422d86bb641dd45ab9593c6a5398d592f4b",
+      "bytes": 6282
+    },
+    "README.md": {
+      "sha256": "c003ca1153caa5f68d28fec89c7898fbd86e63e9ac2dff48ccfb6ffcc457a139",
+      "bytes": 904
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "14148685": {
+      "tag": "v1.0",
+      "folder": "v1.0--14148685",
+      "assets": {},
+      "source": {
+        "sha256": "778769bf856f18591de923c7b450d3f097b3dce6a495fa5f1cb1fd14e2d3b224",
+        "bytes": 3554,
+        "path": "releases/v1.0--14148685/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/towneh/BuffBlock/tarball/v1.0"
+      }
+    }
+  }
+}

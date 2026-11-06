@@ -1,0 +1,5 @@
+<Bindings>
+	<Binding name="BISLIST_ADD" header="BISLIST" runOnUp="false" default="ALT-B">
+		BISList_AddHoveredItem();
+	</Binding>
+</Bindings>

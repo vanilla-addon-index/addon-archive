@@ -1,0 +1,105 @@
+{
+  "upstream": "https://github.com/maztheman/HealComm",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "maztheman",
+    "repo": "HealComm",
+    "name": "HealComm",
+    "url": "https://github.com/maztheman/HealComm",
+    "api": "https://api.github.com/repos/maztheman/HealComm"
+  },
+  "commit": "67ab0e137acbbdad4cfa7d2af0ca58f77474ba7f",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "HealComm.lua": {
+      "sha256": "8a1a6527f7c4b134da189e2b03dfc2ad385bd003c1e45826323b9081218106a3",
+      "bytes": 5332
+    },
+    "HealComm.toc": {
+      "sha256": "b702185798fd257f1883d53c0eb4ec861851d19c55438f79d3b8188a28e4d8db",
+      "bytes": 821
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "278c3a70577d7e5beee8ed2c0485b4a1dcb3be68cfd7e79fe86abfd6f0606149",
+      "bytes": 33137
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "aa3ebcfcaba6e430258e525770c90db05c638455473032d555fcd452515837b6",
+      "bytes": 68825
+    },
+    "libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "572609eee03594abc51d3335ac38e50632714ec1672e56dbc06a05f1f075a6e6",
+      "bytes": 8182
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "dea6d7efcf983344ccd4c242a743f927ed654092d0bc3553fe1943085b103d63",
+      "bytes": 29839
+    },
+    "libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "e5defd2a1efe661ce7970891762d76a27ce539e65dd1a7894c8391ebd941be80",
+      "bytes": 17515
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "88b267fa4a98996bdcf7a1eff2cfdf47099f94cb066731aa7e7a6efc706d45a0",
+      "bytes": 23806
+    },
+    "libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "c25a4743636b95e546e45ad0acfc4bb10053d07a2af4ac336bbbc2849ccf67b6",
+      "bytes": 16490
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "1f0747179da3962dcf2e592d4e0b251158f5cef70319336af7fa63aac85fa685",
+      "bytes": 31280
+    },
+    "libs/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "1a4e7cb0a1a668f9b5b1a0bb36759542093a3e497b2a590fa8bfbe66d67b7cd2",
+      "bytes": 11401
+    },
+    "libs/Deformat-2.0/Deformat-2.0.lua": {
+      "sha256": "843f4e0d82213521bfcc6ec1cd0b78eeac6d74bf98eb65029abdedc6ed9cef11",
+      "bytes": 9781
+    },
+    "libs/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "0e551ad3aa9619cf7287d1a7cfff6588324a47be14ac357426be785041e40a69",
+      "bytes": 8109
+    },
+    "libs/HealComm-1.0/HealComm-1.0.lua": {
+      "sha256": "f3ca1dbe06a2372e6f2227d59fef38d508b0b7171ad4fe1f2a68828efd7276b6",
+      "bytes": 55437
+    },
+    "libs/ItemBonusLib-1.0/ItemBonusLib-1.0.lua": {
+      "sha256": "369231e4fc912e91e99081e6be6ee779ea7fed5379f6f9d81c68e39fb50f3f17",
+      "bytes": 12644
+    },
+    "libs/ItemBonusLib-1.0/Locales/deDE.lua": {
+      "sha256": "1207540ad02316c097eb50eb521fb6b6c24467968e57aa4816dfc0f677b7d223",
+      "bytes": 7918
+    },
+    "libs/ItemBonusLib-1.0/Locales/enUS.lua": {
+      "sha256": "19bf9703f0c310db47bfe60494493ab8ded20649727b7c8692ad96ab6f6a9069",
+      "bytes": 11228
+    },
+    "libs/ItemBonusLib-1.0/Locales/frFR.lua": {
+      "sha256": "780bf9b64536fdeb151d4517e051bb3cfdd7ec9e78533c7ba01254c7b22070d2",
+      "bytes": 11600
+    },
+    "libs/ItemBonusLib-1.0/Locales/ruRU.lua": {
+      "sha256": "df039509f0cfd8e3e152f8d77dff1f4972d87cd0795cff890f9f392582fd05cb",
+      "bytes": 17075
+    },
+    "libs/RosterLib-2.0/RosterLib-2.0.lua": {
+      "sha256": "f6408d2b85e49548da2aa9b8064803c54c414e8a2ec0eaa87666ecf32fef09dd",
+      "bytes": 11098
+    },
+    "README.md": {
+      "sha256": "ecbb66a0dcd1ab07413e502015059fa066c8aaba281857466579f5d1e9ca63ff",
+      "bytes": 272
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,50 @@
+{
+  "upstream": "https://github.com/OldManAlpha/FastTOT",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "OldManAlpha",
+    "repo": "FastTOT",
+    "name": "FastTOT",
+    "url": "https://github.com/OldManAlpha/FastTOT",
+    "api": "https://api.github.com/repos/OldManAlpha/FastTOT"
+  },
+  "commit": "a001f678d24ac14146c8ee20f73dd54a1fcdfde9",
+  "sourceFiles": {
+    "FastTOT.lua": {
+      "sha256": "39ea168d937f9f233559b7076e9f6ef13f9c627518809bc47e50ae8e9eb34f37",
+      "bytes": 1907
+    },
+    "FastTOT.toc": {
+      "sha256": "aae729bd1e3b23914a48eb9e4700839272db47501f19e5b1bbeebaeedc81444b",
+      "bytes": 178
+    },
+    "README.md": {
+      "sha256": "19f5b3a419c43e29381cbdb8bc4a566e8d67e5948ff5d80f4709e4fc3c3dec3f",
+      "bytes": 582
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "282007544": {
+      "tag": "v1.0",
+      "folder": "v1.0--282007544",
+      "assets": {
+        "349310137": {
+          "sha256": "eaccc3e73a3432f271ea2f6d4160bc50ea245fa58da442965b87656ee9f2b3dd",
+          "bytes": 1340,
+          "id": "349310137",
+          "name": "FastTOT-1.0.zip",
+          "url": "https://github.com/OldManAlpha/FastTOT/releases/download/v1.0/FastTOT-1.0.zip",
+          "path": "releases/v1.0--282007544/assets/FastTOT-1.0.zip"
+        }
+      },
+      "source": {
+        "sha256": "7b1cec02191e6d04ff71c28046b5f9a9677420f3242b9a32dab00a8208949759",
+        "bytes": 1430,
+        "path": "releases/v1.0--282007544/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/OldManAlpha/FastTOT/tarball/v1.0"
+      }
+    }
+  }
+}

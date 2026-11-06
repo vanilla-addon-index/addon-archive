@@ -1,0 +1,9 @@
+{
+  "id": "20499499",
+  "tag": "v2.2.1",
+  "name": "v2.2.1",
+  "body": "Fixes an issue where RingMenu would not load if no LibStub was present.",
+  "published": "2019-10-06T12:18:47Z",
+  "prerelease": false,
+  "url": "https://github.com/jsb/RingMenu/releases/tag/v2.2.1"
+}

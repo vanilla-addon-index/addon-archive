@@ -1,0 +1,34 @@
+﻿## Interface: 11200
+## Title: E'rea RP Common
+## Notes: Common Libraries for E'rea RP Addons
+## Author: Erea
+## Version: 1.0.9
+## DefaultState: enabled
+
+# Version (generated during build)
+version.lua
+
+# Core namespace (MUST load first)
+libraries\core.lua
+
+# Common Libraries (stateless, pure functions)
+libraries\logging.lua
+libraries\encoding.lua
+libraries\unit-utils.lua
+libraries\messaging.lua
+libraries\object-database.lua
+libraries\inventory.lua
+libraries\rp-business.lua
+blp-videos\animation-registry.lua
+libraries\cinematic-animations.lua
+libraries\video-player.lua
+libraries\rp-actions.lua
+libraries\merge-manager.lua
+
+# Common Views (XML UI definitions)
+views\log-viewer.xml
+views\cinematic-frame.xml
+
+# Common Presenters (UI controllers)
+presenters\log-viewer.lua
+presenters\cinematic-frame.lua

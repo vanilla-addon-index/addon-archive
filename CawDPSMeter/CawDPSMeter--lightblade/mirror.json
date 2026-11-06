@@ -1,0 +1,357 @@
+{
+  "upstream": "https://octowow.st/git/lightblade/CawDPSMeter",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "lightblade",
+    "repo": "CawDPSMeter",
+    "name": "CawDPSMeter",
+    "url": "https://octowow.st/git/lightblade/CawDPSMeter",
+    "api": "https://octowow.st/git/api/v1/repos/lightblade/CawDPSMeter"
+  },
+  "commit": "b5f9b09c34da60ac22da7569f8fb1c88c7fb1001",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "1511ddc49e012212d0677c945ebb57482a58c41c5fe0b4ce95735dc9d46a821f",
+      "bytes": 532
+    },
+    ".github/banner.png": {
+      "sha256": "aea818c75bbef59b2632785dc5cf28af6748b810224e788725bce1b090933b2c",
+      "bytes": 82498
+    },
+    ".github/FUNDING.yml": {
+      "sha256": "04b7fa57085e5b438f9bd150ab674f8da0bf8277078603e9a688ecf5c1e8bc25",
+      "bytes": 419
+    },
+    ".github/screenshot-meter.png": {
+      "sha256": "8d604e44303ffb48a2709702a832c217e11657585ad4a126a566ae5802244539",
+      "bytes": 101310
+    },
+    ".github/screenshot-modes.png": {
+      "sha256": "c010d2d12e324e6975b11de66a01d5432103707b654ff1de30704418a90c83d7",
+      "bytes": 60081
+    },
+    ".gitignore.upstream": {
+      "sha256": "76c1a301b876dbde58011e0eb1b37ac6a7f6cb2a45cbf3718e121f116e6eb906",
+      "bytes": 479
+    },
+    "CawBreakdown.lua": {
+      "sha256": "00a508a094ca95b62425a9c33cfd14742a669d495180d1b235b9f6522fd4c782",
+      "bytes": 59398
+    },
+    "CawDiagnostics.lua": {
+      "sha256": "78d29cc7bc3eb2ef5c3464a1fac054fd7058c7aed9d20159a874cb1634ef5411",
+      "bytes": 11088
+    },
+    "CawDiagnosticsCommands.lua": {
+      "sha256": "3f6484828f3376d73407949c311ed5ac73b3cae7cb8dd34612378724f37e297a",
+      "bytes": 3986
+    },
+    "CawDPSLog.lua": {
+      "sha256": "e1ff7623eb20e585c946b299a0ee679ead58e5b9bf3948584834b5c773ecb869",
+      "bytes": 17348
+    },
+    "CawDPSMeter.lua": {
+      "sha256": "679635b80425fb6846a9ec7029dc4522403abfeb58e273d2bd87b593638399c1",
+      "bytes": 326744
+    },
+    "CawDPSMeter.toc": {
+      "sha256": "cc8dc79b0aa05a919bfc03cb38553ae0e195281a87889ca3161ab767964e7f42",
+      "bytes": 824
+    },
+    "CawHeader.lua": {
+      "sha256": "194e134cd65fb6d6c89521fafe1558e0622b1bd75c1e9d5295f5bfd3358bd4c8",
+      "bytes": 6581
+    },
+    "CawPfUI.lua": {
+      "sha256": "ee0b01a78b2887f9f9ff73a909cfb422679fda59b2a75be6a2125b44571efae7",
+      "bytes": 11349
+    },
+    "CawServerThreat.lua": {
+      "sha256": "4de1d9a0c5525449ef2fe71b9fc16edeac3dfcfefd928d4aeeb861983f97bac2",
+      "bytes": 8364
+    },
+    "CawSpellIcons.lua": {
+      "sha256": "d04983647d98763aeb93df97d54c4f560e07b5f6cfe668fb5ce04dd5d74e7143",
+      "bytes": 50411
+    },
+    "CawTalentSync.lua": {
+      "sha256": "431b4fc1295db3750b42b7439a34a12fafd3fb8b9cde007fb93e07a9a8b2e5e0",
+      "bytes": 5086
+    },
+    "CawTalentView.lua": {
+      "sha256": "17a0142ed07786d80cf17307011351928649ba574f708e0a808dbdac7fd27367",
+      "bytes": 13611
+    },
+    "CawTargets.lua": {
+      "sha256": "414714bcef8725c57f3b7c746a6208391794dba2407e1124a8db59f946703445",
+      "bytes": 7963
+    },
+    "CawTargetSync.lua": {
+      "sha256": "a3ab867720e0d6c5834da6b19c012916f4ca38bad230fbd7d10e6cb1be9a055b",
+      "bytes": 23101
+    },
+    "CawThreat.lua": {
+      "sha256": "4a080d52621447bc2aaac199053cfaadeeffc214593d8c8110ec003847f45808",
+      "bytes": 32026
+    },
+    "CawThreatCalibration.lua": {
+      "sha256": "cd3ab171892d5ef29fc3830db1819cc7421c2c135d1082051a4e84c938e656ed",
+      "bytes": 40390
+    },
+    "CawThreatSync.lua": {
+      "sha256": "5c59eb67018667a498a8e7ee9853988f70ac911fb590dd9c06d79d29d68c06e1",
+      "bytes": 5053
+    },
+    "CawUI.lua": {
+      "sha256": "5054eb94dcac50cc6e0c69474b7b3078f6dad3204a4689a9e0d1b1142d3f711a",
+      "bytes": 88575
+    },
+    "CHANGELOG.md": {
+      "sha256": "cc45643133c28ecd854a15e1638ea3af358bf753b39d2ac0cad788ca8a93b454",
+      "bytes": 32691
+    },
+    "LICENSE": {
+      "sha256": "0dde2244efcddaf9b3116e16583b9f22ffad5ada36f758e57ca3e175023f47ea",
+      "bytes": 1072
+    },
+    "Media/CawAdd_preview.png": {
+      "sha256": "8a9e3af450cc5a75e296925525f3891ce2e0d93a00bb4d7b54cf3b150fc34476",
+      "bytes": 777
+    },
+    "Media/CawAdd.tga": {
+      "sha256": "c38b8d1f7af5c2bc14df46e47fe959d485e20bc999c89c0f07a9e742c71bd0ea",
+      "bytes": 4140
+    },
+    "Media/CawBrand_preview.png": {
+      "sha256": "02cc15cb9b6de201d1ee0b52e70d9a299b5188942fd26ba18b18430c73542b4f",
+      "bytes": 33090
+    },
+    "Media/CawBrand.tga": {
+      "sha256": "4e7733ba0cb0493244570982aa3c5637de0d8b75f8e79edbbdd16636f964fec6",
+      "bytes": 131116
+    },
+    "Media/CawClaw_preview.png": {
+      "sha256": "46566bcac4c18097761b4b4818cf1007f377b16b33660b151c58980f6f65514d",
+      "bytes": 12345
+    },
+    "Media/CawClaw.tga": {
+      "sha256": "6dd139e736edf3c43f5b63ad976528a02ecf1be4ea9853f86b32ee2fb7a3c567",
+      "bytes": 65580
+    },
+    "Media/CawClose_preview.png": {
+      "sha256": "c3b12087a91cfa599e9dd41348eeeb091d67afa562499a0bdd4f454c21e8f4ea",
+      "bytes": 1082
+    },
+    "Media/CawClose.tga": {
+      "sha256": "4ecad545acde97de15aa48cff1b6039fc1ba43b929f7bbe83c2f03ea0f7efdcd",
+      "bytes": 4140
+    },
+    "Media/CawLock_preview.png": {
+      "sha256": "342359605c020e1c173377e8dc20a585b3723ba78a9883d7d7fa80ca8cc1b14f",
+      "bytes": 1717
+    },
+    "Media/CawLock.tga": {
+      "sha256": "c93b4d1723fadc96c57281c84402011c010b8d4dd7101f7c2349fc5f271b515e",
+      "bytes": 4140
+    },
+    "Media/CawReport_preview.png": {
+      "sha256": "6fc18709688f27bd26c855e0f7e753e73500d7a530e64397e0afc1b89aba4375",
+      "bytes": 857
+    },
+    "Media/CawReport.tga": {
+      "sha256": "780d86f1aa5f9281b6eaccd6d86fad48ffe2381b435dc523b29e82e609d78c92",
+      "bytes": 4140
+    },
+    "Media/CawReset_preview.png": {
+      "sha256": "ee51de146ee5dbb31b72f3b80c7368348f34f5cc8f70eba1f218778865cd7eaf",
+      "bytes": 2324
+    },
+    "Media/CawReset.tga": {
+      "sha256": "64e3e5fced9c75e9fca1a57b3c09e80d6db129ac7fffa4c608f47ae108c23051",
+      "bytes": 4140
+    },
+    "Media/CawUnlock_preview.png": {
+      "sha256": "e8d1fd0dd8154ec1b20f02607bdc07dc01b9745e28a2b4f37c5aac12eb1f784d",
+      "bytes": 1533
+    },
+    "Media/CawUnlock.tga": {
+      "sha256": "6ef6d4112d56d4c438a9eec3c8c968456779e765049f072b2b3896a930599363",
+      "bytes": 4140
+    },
+    "Media/CawWarning.wav": {
+      "sha256": "7f816229f38c0480d25d56d5308e6c01d04d5f88f4571a6ed67a84118d3a132e",
+      "bytes": 15920
+    },
+    "README.md": {
+      "sha256": "619232dcf9a768941807efc8618e95370cfdf1506caeca2b0d8478cea8964451",
+      "bytes": 21938
+    },
+    "RELEASE_NOTES_1.0.8.md": {
+      "sha256": "6d7b588cc8626c6b6c2f6fe99681d8e8a891836834c32c94311200ae3034248c",
+      "bytes": 5001
+    },
+    "RELEASE_NOTES_1.0.9.md": {
+      "sha256": "2758d81192af5ec576c00e608db90417b1930e7520710ab8313578a45f53d19f",
+      "bytes": 1452
+    },
+    "RELEASE_NOTES_1.1.0.md": {
+      "sha256": "62e82b6aff54772bbfa44f26f32c994a990891f1690854c689d95ff87b17efa0",
+      "bytes": 7342
+    },
+    "RELEASE_NOTES_1.1.1.md": {
+      "sha256": "543921280ab42d2377af2533031f59aeb08fe3ec1600a8caf36c9ab4645a48bf",
+      "bytes": 2067
+    },
+    "RELEASE_NOTES_1.1.2.md": {
+      "sha256": "1aaac4051a0afffec06aa30dbfa58112193e3c6fd985c744a4943b87fcb0fb64",
+      "bytes": 2298
+    },
+    "RELEASE_NOTES_1.1.3.md": {
+      "sha256": "9a2f98f61b1b138b89429b91d7489d87e07b4af20025c765e799e72f6faafe83",
+      "bytes": 2402
+    },
+    "RELEASE_NOTES_1.1.4.md": {
+      "sha256": "73b586dfc177dd8aadc6cc25059560f72880b7a4cdadd5f7bb29cc2492445921",
+      "bytes": 5675
+    },
+    "RELEASE_NOTES_1.1.5.md": {
+      "sha256": "d82567ef8147f1c95488fdae1c0c648161eccfecd2c15358ddc7a01c92756c5e",
+      "bytes": 1991
+    },
+    "RELEASE_NOTES_1.1.6.md": {
+      "sha256": "9386cfa173d9f6212cfa48d1e4fa2814e5a39feeaa7e175104fc5ab892e69f51",
+      "bytes": 2050
+    },
+    "RELEASE_NOTES_1.1.7.md": {
+      "sha256": "61a86e029c71151021be16d5d3ffd8b0d6ad918707485d0a6296bd9d855b525b",
+      "bytes": 1856
+    },
+    "RELEASE_NOTES_1.1.8.md": {
+      "sha256": "1fe43210a2e84aa851a58dada1e809ae133f2a9e62ccbb01c2452b287630ffcb",
+      "bytes": 1678
+    },
+    "tests/always_show_me_regressions.lua": {
+      "sha256": "2b2a943557e213059dd2c54b2e4c4500202fd60ef523351848c489309144852c",
+      "bytes": 5821
+    },
+    "tests/appearance_regressions.lua": {
+      "sha256": "0bc6b99ceb41189f52252094cdde3a859802ecb72cfb11657f371848b13db874",
+      "bytes": 9053
+    },
+    "tests/benchmark_display.py": {
+      "sha256": "8340ebf00ec003319e8d233821bc3b40ec1cb19414768ad22bc6ac8f4e97b25f",
+      "bytes": 7284
+    },
+    "tests/benchmark_raw_parser.py": {
+      "sha256": "37eccfab7954b695bca1b1441d5cff6be3b69e8a3eb14ea5dac93a5ee75b0136",
+      "bytes": 20064
+    },
+    "tests/build_release.py": {
+      "sha256": "ba23811972a18e103dc67bab36afe6efaee79b184442c80d908a078a9400ffe7",
+      "bytes": 4401
+    },
+    "tests/community_feedback_regressions.lua": {
+      "sha256": "2802e61b46d8a450fbfebd4acbe141ba5d0289019165af9724b2439c7c3efac2",
+      "bytes": 8740
+    },
+    "tests/data_source_regressions.lua": {
+      "sha256": "0332562ce0bd413848fee054cecfeff93fa2a3a0f34398a6c41916a90d350d14",
+      "bytes": 7280
+    },
+    "tests/display_performance_regressions.lua": {
+      "sha256": "4b8fdf013f2b78d9d3f93be1b0f426ecdd3da99304fa7f96d21033e88c7ec0fa",
+      "bytes": 8047
+    },
+    "tests/DISPLAY_PERFORMANCE.md": {
+      "sha256": "3fe747da7d897206c53e9f48d3a5ed62a7b98c318cfd74053056d957ed95f046",
+      "bytes": 5692
+    },
+    "tests/mock_wow.lua": {
+      "sha256": "68076c03fff676ff4f316e18213999c29976a6a288c392d62b59f6b4beea1ca0",
+      "bytes": 6517
+    },
+    "tests/overheal_regressions.lua": {
+      "sha256": "78500996c25cc6abc7874e0a47a9e365c820ab7efdf01511320d5fce44fac285",
+      "bytes": 8031
+    },
+    "tests/parser_control_regressions.lua": {
+      "sha256": "6089ef0b912ade77bf894ba817e49bfe8669291f8f4d6a24bb7fcf5c86a87d19",
+      "bytes": 6436
+    },
+    "tests/RAW_PARSER_PERFORMANCE.md": {
+      "sha256": "df054b1c992df2b536cb29ef33dfb0ab52227dec5e4ad29868724b1ff821a614",
+      "bytes": 7879
+    },
+    "tests/reflect_regressions.lua": {
+      "sha256": "d5236cda11f0cdaae5f563995d2de5a693686841eb66ac22b32e7b02b1953e05",
+      "bytes": 4399
+    },
+    "tests/regressions.lua": {
+      "sha256": "5da21c86903f58fbe6eb1fba1a26e29596ba62eedb4f5361ba285840c0392a2d",
+      "bytes": 80389
+    },
+    "tests/run_regressions.py": {
+      "sha256": "e19247bbec6f000474edd642e50f5bf14f7b919ba0ee209f17e53cf81aa42a99",
+      "bytes": 3274
+    },
+    "tests/run_sync_integration.py": {
+      "sha256": "ac917e3fba8106256c96ff3818278c2f877ae9838d0c671ed9cc5399d18679fc",
+      "bytes": 21267
+    },
+    "tests/run_target_sync.py": {
+      "sha256": "73fb41228bd89427938b862b3e18414c53423565d2fbc3110e03d71454b3fcd5",
+      "bytes": 16957
+    },
+    "tests/run_window_persistence.py": {
+      "sha256": "bc3c415bf534ca09d200c34b931cdc7ef18cf8c8d3027153b5f45e16e473bcd4",
+      "bytes": 7701
+    },
+    "tests/segment_timestamp_regressions.lua": {
+      "sha256": "d7e30667697ec55efc2a9811a43df25565c73908180ac3f63c4fcc5f92f23a4e",
+      "bytes": 4875
+    },
+    "tests/settings_popup_regressions.lua": {
+      "sha256": "b05922ab697a3b329b047e3e4427687179f65552b4e50e098cbc500def0e3708",
+      "bytes": 6309
+    },
+    "tests/settings_usability_regressions.lua": {
+      "sha256": "eba0037332ab3b01e4488b3632c0272433708ba53ce663ff887c6cb991effdbf",
+      "bytes": 6615
+    },
+    "tests/target_breakdown_regressions.lua": {
+      "sha256": "955e3b0862dba3f54b77e50563cc9115f0fdf8dda0a2ebfab23b0c783e76993f",
+      "bytes": 9819
+    },
+    "tests/threat_alert_regressions.lua": {
+      "sha256": "32e48ef112ba89a45717f984c5d2d3f7e042f83430bcece68963bb2488197921",
+      "bytes": 7771
+    },
+    "tests/threat_order_regressions.lua": {
+      "sha256": "ee4c2bc574258f746c835828bd3db1ff5461127f687830c52e8b76a64613ccc7",
+      "bytes": 4503
+    },
+    "tests/threat_retry_regressions.lua": {
+      "sha256": "e85f5af1ba80c138be91b2308c948ffac68ae57f4168a23c0e61b8e6a72fdc88",
+      "bytes": 7488
+    },
+    "tests/ui_regressions.lua": {
+      "sha256": "bb184f9b45075105934b32deb6c34efd9d81adc9225cb68d1e32d8658b3c6d04",
+      "bytes": 39062
+    },
+    "tests/ui_release_regressions.lua": {
+      "sha256": "14286bc278cf443295bd03143a2a1fd5a23a28936acaeb6b0cc8a6ce9a3c98a5",
+      "bytes": 10803
+    },
+    "tests/window_customization_regressions.lua": {
+      "sha256": "5bf41f577f710411df88d09c9a0bc04e798cc7f8036c43e99737e5824fdb5f6c",
+      "bytes": 9257
+    },
+    "tests/window_state_regressions.lua": {
+      "sha256": "c35afd7528a5b29260f47fc59261b8f1918500c7572b6b6e4b1cc653daff284d",
+      "bytes": 15858
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

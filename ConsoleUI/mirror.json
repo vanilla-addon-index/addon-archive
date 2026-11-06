@@ -1,0 +1,1270 @@
+{
+  "upstream": "https://github.com/racha/ConsoleUI",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "racha",
+    "repo": "ConsoleUI",
+    "name": "ConsoleUI",
+    "url": "https://github.com/racha/ConsoleUI",
+    "api": "https://api.github.com/repos/racha/ConsoleUI"
+  },
+  "commit": "21b67390dad745b5f90d8963e54d8e16cfd4d4d1",
+  "sourceFiles": {
+    ".github/workflows/pages.yml": {
+      "sha256": "2a8c3daf048c7f3c5875dc28e272bf746480be3a88f53722d087d6a4d5a0430c",
+      "bytes": 900
+    },
+    ".gitignore.upstream": {
+      "sha256": "7f143b1d98e1ea1f81c51150495db692fa19e4e62781a9db46bbb669575515f3",
+      "bytes": 101
+    },
+    "ConsoleUI/actionbars/actionbars.xml": {
+      "sha256": "35d0b898981b9d781ff5a2fa1433fd6565c1ae150bcd9860cf14902df1777054",
+      "bytes": 9494
+    },
+    "ConsoleUI/actionbars/autorank.lua": {
+      "sha256": "6fe7ecc02aead0a849247dc96c5e6b3808b35db231d43680bc274e7fac41e7f0",
+      "bytes": 14322
+    },
+    "ConsoleUI/actionbars/bars.lua": {
+      "sha256": "d1d0c58ee67864b734a2bdc8130fe50a4ca30f74f230dcadde236438a130e006",
+      "bytes": 110494
+    },
+    "ConsoleUI/actionbars/check_extra.lua": {
+      "sha256": "ba48d3208277f19f727fa5365e8f385aaedef21bf2bd35610371972d91b0f7b8",
+      "bytes": 17097
+    },
+    "ConsoleUI/actionbars/check_layout.lua": {
+      "sha256": "4decde9e9bc0149fc14a53ea92b5176d6a7a18346536eb33ce8a30d941ef8ace",
+      "bytes": 26931
+    },
+    "ConsoleUI/actionbars/check_range.lua": {
+      "sha256": "a49ec5bda81474c9a8d30a3d7c6b6098a38b024a706aa2873527156d22e59917",
+      "bytes": 7853
+    },
+    "ConsoleUI/actionbars/extra.lua": {
+      "sha256": "4db79742c4ee7684d813e6ba009f9c28eecc76b466d66be734d30fe5b9537304",
+      "bytes": 36654
+    },
+    "ConsoleUI/actionbars/layout.lua": {
+      "sha256": "3395678e8c0c4a9b241d941c2d4370abcb2f86f4a770d84b65e18f8070c28fea",
+      "bytes": 16317
+    },
+    "ConsoleUI/actionbars/placement.lua": {
+      "sha256": "530efcbf6a707773819da90463528fe02bc880558b4855bd22df544b1a2a7553",
+      "bytes": 47745
+    },
+    "ConsoleUI/actionbars/slicemask.lua": {
+      "sha256": "c2ecf3a7e2fd7e157ee4caa8c998c5639beb4204daa66b0faa265ce79e3752f5",
+      "bytes": 4101
+    },
+    "ConsoleUI/audit.lua": {
+      "sha256": "d4c3c4854bf9c691df8b62bbe47234792bf373ff3931230d1bbaa7b42b559704",
+      "bytes": 33091
+    },
+    "ConsoleUI/Bindings.xml": {
+      "sha256": "5f81dcb2b51f97cba34006d34daa6754b0d616d406a93a645dbaea88a3c373e5",
+      "bytes": 9496
+    },
+    "ConsoleUI/castbar/castbar.lua": {
+      "sha256": "58908f6c3719d6af1373e3250b1534ee7494e9d5039ba1203308a2459a14e3e4",
+      "bytes": 27591
+    },
+    "ConsoleUI/config/bindings_ui.lua": {
+      "sha256": "3da0077193c938edfbc86ed5ca012ef39c5e67757b5bd7f90f94c98611738331",
+      "bytes": 20867
+    },
+    "ConsoleUI/config/changelog.lua": {
+      "sha256": "6c504d5ab93d49c0515e427557de31ee508c9d355bed0f78da2d178e136ad15c",
+      "bytes": 15809
+    },
+    "ConsoleUI/config/check_frame_restore.lua": {
+      "sha256": "024753528d23ac4993ee270c66ca8d2ca3868efb3ae857badbca1ced9c96455c",
+      "bytes": 7371
+    },
+    "ConsoleUI/config/check_mouse.lua": {
+      "sha256": "6992d418dd8dda14448a8fac6ad495fcdc63d17e12900b47188704c010d076d8",
+      "bytes": 3225
+    },
+    "ConsoleUI/config/check_profile_copy.lua": {
+      "sha256": "56a5c32a34dda1832671c7dd375d1b0c84e442ff51052d8cb3fe90d5d314b2f7",
+      "bytes": 5347
+    },
+    "ConsoleUI/config/config.lua": {
+      "sha256": "2897910ac21d39f822b1350349c7744d8beea05d6136cf65db40b868cc4f55f4",
+      "bytes": 230836
+    },
+    "ConsoleUI/config/mouse.lua": {
+      "sha256": "15484e91d78cde4679cc17b85c1b1e54edb06b30caa5d72a4cfbe0cb88151057",
+      "bytes": 8227
+    },
+    "ConsoleUI/config/onboarding.lua": {
+      "sha256": "570d7ed5f6533cdeb8ec8a1f7000b4271fb22a0d5017129587e434f6811d280d",
+      "bytes": 7390
+    },
+    "ConsoleUI/config/profiles.lua": {
+      "sha256": "3c3bb428b1d2e0bb8a4cd501a64405968524562081b8b99a1c88c53d21813dfd",
+      "bytes": 31534
+    },
+    "ConsoleUI/config/proxied.lua": {
+      "sha256": "027d61896969c99d0ebedf574838e7baf5404625c27f708afd35d64db7dcb4c7",
+      "bytes": 36260
+    },
+    "ConsoleUI/config/unitframes.lua": {
+      "sha256": "8e87cb09a13f783e777aa58dd9d4a927f1f26f56f67e13be6e5daee99b7bf569",
+      "bytes": 28687
+    },
+    "ConsoleUI/ConsoleUI.toc": {
+      "sha256": "f44ac1528a2328e14ae7573f9fd0442e8245ba7bae964a6233a6a16a46ef96a3",
+      "bytes": 1231
+    },
+    "ConsoleUI/cursor/actions.lua": {
+      "sha256": "2489dbd56f9889cbe77c54cc565da8d1f7802849aa3b0e63b7d3405aac3fc714",
+      "bytes": 55663
+    },
+    "ConsoleUI/cursor/check_mouselook.lua": {
+      "sha256": "bbbd2ecb136e1500183854e5411a94b34098e08e7d1c2539addb9c97f2a08493",
+      "bytes": 11146
+    },
+    "ConsoleUI/cursor/cursor.lua": {
+      "sha256": "e06d573fbe2694f0b77606240735feb884d6c5f5ed5da613ff996f109a67e148",
+      "bytes": 28142
+    },
+    "ConsoleUI/cursor/hintbar.lua": {
+      "sha256": "c40fd320aa1f5c7711fd8c7378c5df1711f312309532d5976df19d68708c0aea",
+      "bytes": 5618
+    },
+    "ConsoleUI/cursor/hints.lua": {
+      "sha256": "697d1092487459ffe7e0ffb4049ce6c82e1e85687f8b8c5113bb62dc080aec30",
+      "bytes": 3850
+    },
+    "ConsoleUI/cursor/hooks.lua": {
+      "sha256": "33b112784123792cb296cdaafd55a4c6caf022f795b61303ea80812d0872ae4a",
+      "bytes": 53140
+    },
+    "ConsoleUI/cursor/keybindings.lua": {
+      "sha256": "a6c7f858f736cd0fbd9ad5356dc5d125d0551fc6fcd75244fbb055ba46465550",
+      "bytes": 12324
+    },
+    "ConsoleUI/cursor/mouselook.lua": {
+      "sha256": "256eb3bc1964b9f1b15786d211c461f68bbff6209768448f8c50cb2871e4973a",
+      "bytes": 14909
+    },
+    "ConsoleUI/cursor/tooltip.lua": {
+      "sha256": "b032e174e91f32f69d40e7ef8260eb724d2bedc8f63f557e7386c9d2603cbdb0",
+      "bytes": 39996
+    },
+    "ConsoleUI/cursor/unit.lua": {
+      "sha256": "b1c43ea78c3d92d25db323100dfe7b79e5d8c24f1ca0cf5ed8a85909f672808b",
+      "bytes": 19603
+    },
+    "ConsoleUI/init/actionbars.xml": {
+      "sha256": "c8d2f58ee461bc013bef691473c32a83131b87f9f076ca0a1774e5d631b09ab6",
+      "bytes": 476
+    },
+    "ConsoleUI/init/castbar.xml": {
+      "sha256": "0c8c7b8065edd17962488dab9b4560ec18b1274b2c8406ec968a23d57a687fdb",
+      "bytes": 95
+    },
+    "ConsoleUI/init/config.xml": {
+      "sha256": "e9f8a11f59d282aee227760acf53abce230382c88fa384f96add785df3ae638e",
+      "bytes": 397
+    },
+    "ConsoleUI/init/cursor.xml": {
+      "sha256": "11231ce95758f7dfe3a6517dbf3c894b8d2c6623339ea60c1dc3094ca31691ac",
+      "bytes": 427
+    },
+    "ConsoleUI/init/locale.xml": {
+      "sha256": "2084e7cd54ed59732d3748ba761549af8577445302cbcf6de0befdb8c9dbbde8",
+      "bytes": 352
+    },
+    "ConsoleUI/init/loot.xml": {
+      "sha256": "74aafe1ca853643205fe0363ee0ca8c73060b595a5d32c0e4deba676757ff2bc",
+      "bytes": 90
+    },
+    "ConsoleUI/init/radial.xml": {
+      "sha256": "174f6963019556882de3cce62400c99e478d222e737fe9aabf88a85fe3833756",
+      "bytes": 218
+    },
+    "ConsoleUI/init/swingbar.xml": {
+      "sha256": "89e99c796813831b1b6840f79fe1e498121abe92a18ae2beb8e90e0048b7e513",
+      "bytes": 96
+    },
+    "ConsoleUI/init/xpbar.xml": {
+      "sha256": "6cbfb82136e7dba7f562ceaa7e6a5dec1368fad3fe979fadb59d7705fb61f55b",
+      "bytes": 91
+    },
+    "ConsoleUI/keybindings.lua": {
+      "sha256": "d1c9f18e77e48ffcb56ea117c50fef2b17a5f6116c30d6bc2556567087fc6e13",
+      "bytes": 28912
+    },
+    "ConsoleUI/locale/locale.lua": {
+      "sha256": "3cba5406af093174ec22e0671fcd3213e5ba7f87e39cb291bd54653b62487012",
+      "bytes": 2828
+    },
+    "ConsoleUI/locale/translations_deDE.lua": {
+      "sha256": "b15c0f030a00f1f79c0ef45307e6373388199255844267109bed608537458555",
+      "bytes": 24238
+    },
+    "ConsoleUI/locale/translations_enUS.lua": {
+      "sha256": "97fe2a0c1ab7c959f99a088da53119d65d1548856fb7427525dec24a246b6f8e",
+      "bytes": 30680
+    },
+    "ConsoleUI/locale/translations_esES.lua": {
+      "sha256": "f197c239330e3f2a8166ec9ff09a81e012993a8da6435824fa638dc7917be6f9",
+      "bytes": 25106
+    },
+    "ConsoleUI/locale/translations_zhCN.lua": {
+      "sha256": "251ab4f79903221500b2b29468749e78cd643c223e0e6d6e08031878611b7dc8",
+      "bytes": 22772
+    },
+    "ConsoleUI/locale/translations_zhTW.lua": {
+      "sha256": "d9ce8a0b3e0ce1b6c618af647616f2505eaac12076af55f8bc35c80b87f47f49",
+      "bytes": 22755
+    },
+    "ConsoleUI/loot/loot.lua": {
+      "sha256": "ad8f334794e3bed764295e1800700514958cf127f7e0bb85f3fd958d59bffcde",
+      "bytes": 34726
+    },
+    "ConsoleUI/main.lua": {
+      "sha256": "e1f157bcc4309ae2e009be3df38001eb95facfb3c80ce1f77659245b4c67dadb",
+      "bytes": 23010
+    },
+    "ConsoleUI/radial/check_navigation.lua": {
+      "sha256": "bdddc469e385d4bf54fd1a8989083f740733061669d79b8ce75d03064c6e3d6e",
+      "bytes": 3061
+    },
+    "ConsoleUI/radial/check_rings.lua": {
+      "sha256": "8deae98ad92cba15c62737a3f9f6ba584cf0ea4c5551894c0d850bd9e6447527",
+      "bytes": 8140
+    },
+    "ConsoleUI/radial/editor.lua": {
+      "sha256": "94ce742ebd764730f3a4e320c06c88e375af392ad6d856bb61fea12c2ff71c10",
+      "bytes": 18639
+    },
+    "ConsoleUI/radial/radial.lua": {
+      "sha256": "72ca21f0553a03276dbe8fdd221870d9be33a06fc48ff0c15d0270ed6a3e294a",
+      "bytes": 29332
+    },
+    "ConsoleUI/radial/rings.lua": {
+      "sha256": "bb17e1389b7fb0bd6f7df86e1ef16844446845cf644920eb95aa877b74466f5f",
+      "bytes": 22707
+    },
+    "ConsoleUI/swingbar/check_performance.lua": {
+      "sha256": "4ea4d7990b142ca27c60b5d20263c5b5e31141d6e7ddafe5221bf01808cbfa63",
+      "bytes": 14266
+    },
+    "ConsoleUI/swingbar/swingbar.lua": {
+      "sha256": "8ae0da3c36650af5bc3536226e21cfede4189621f039dfd18a40f186f619883a",
+      "bytes": 31494
+    },
+    "ConsoleUI/textures/actionbars/overlayred.tga": {
+      "sha256": "2127dcd2f77f12da42bee616034997bb4ffea08bfead96bcf2e72231ae500bb1",
+      "bytes": 3545
+    },
+    "ConsoleUI/textures/actionbars/serenity.tga": {
+      "sha256": "2b962c19e5f28a42cea96f4eabbef9f7f732c93af72b2f657942afb4a8d4ca9d",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/brand/consoleui-icon.png": {
+      "sha256": "620ccfb7dd73eebee070f21fc8c5df0d7639dfaea012a4394795280937ec86e6",
+      "bytes": 833900
+    },
+    "ConsoleUI/textures/brand/consoleui-logo.png": {
+      "sha256": "5fc4678f0abfd850a6066056328dc432467251ea6d55e31379c902385085de2c",
+      "bytes": 1142250
+    },
+    "ConsoleUI/textures/brand/Mark.tga": {
+      "sha256": "6bccfb4efbe1c621eb00cf72c6f6484cd1024fb51f5d591cc02491b83cdebbf8",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/controllers/down.tga": {
+      "sha256": "52ca62f6374119ede0f54aa1329e406be4a37c0405ad57fb30c9696f0bf6e3de",
+      "bytes": 3912
+    },
+    "ConsoleUI/textures/controllers/left.tga": {
+      "sha256": "f8f093a8d27ef87017bf142f821a9c35bd7efe01b2971155060039ab6826e058",
+      "bytes": 4005
+    },
+    "ConsoleUI/textures/controllers/ps/a.tga": {
+      "sha256": "56127a358d87df38fa1730f072fee5a3cfa059e817fdac80562cf6893c4ac701",
+      "bytes": 5106
+    },
+    "ConsoleUI/textures/controllers/ps/b.tga": {
+      "sha256": "444ace93f0c0f7fc306424bc8e24f7d24c3bf7840f41fab3d8a966c825a58078",
+      "bytes": 5150
+    },
+    "ConsoleUI/textures/controllers/ps/lb.tga": {
+      "sha256": "b2d61128670e7f3a3eb3fe20e7a95e54cc8a57100942b5b6e39d06c25311934d",
+      "bytes": 3952
+    },
+    "ConsoleUI/textures/controllers/ps/lt.tga": {
+      "sha256": "6e861ffc1e00c27a96130dff3b3ce70dafebaf31f0fc0f3ff3991f76cece224d",
+      "bytes": 4458
+    },
+    "ConsoleUI/textures/controllers/ps/rb.tga": {
+      "sha256": "f556cfdb1b590dbd3a81c3884a592d1f7088c070cc5567d0c91cb849dd49409f",
+      "bytes": 4304
+    },
+    "ConsoleUI/textures/controllers/ps/rt.tga": {
+      "sha256": "b296a3dd1b62268173fbadf26ebbbd7c0cbf2883f6a677fe19807db284c05946",
+      "bytes": 4842
+    },
+    "ConsoleUI/textures/controllers/ps/x.tga": {
+      "sha256": "4a0af5d420ffcee9eb2eac83dca94bfc554bd708540c0d835aebdcbb5904cff0",
+      "bytes": 4482
+    },
+    "ConsoleUI/textures/controllers/ps/y.tga": {
+      "sha256": "4ac7b4ea151d57a608ece4a10b29d0081beda35dd4322fff77463aee49b39686",
+      "bytes": 4722
+    },
+    "ConsoleUI/textures/controllers/right.tga": {
+      "sha256": "f027d80dcc8cd1a0d7cfb23d1154555636482e2d3be63d44c4907927edbd78d8",
+      "bytes": 4005
+    },
+    "ConsoleUI/textures/controllers/up.tga": {
+      "sha256": "92d76228e397be87f2159c83e6dfb44e1df3d05a2f142617d93d750672b97720",
+      "bytes": 3912
+    },
+    "ConsoleUI/textures/controllers/xbox/a.tga": {
+      "sha256": "693a36fc113a5a31b5f9ba522f837c0300d07dda0e7ecf37dc218d7cad23177e",
+      "bytes": 4754
+    },
+    "ConsoleUI/textures/controllers/xbox/b.tga": {
+      "sha256": "55eeb82c89e7b0c7607704c0dceeb3550ce700d604bd0738490f9685d6b01e3e",
+      "bytes": 4766
+    },
+    "ConsoleUI/textures/controllers/xbox/lb.tga": {
+      "sha256": "d8bdbc83d1538230d8d3fd9270ed591aa454219bf0cddbc7a8af6de8312b4a5c",
+      "bytes": 4171
+    },
+    "ConsoleUI/textures/controllers/xbox/lt.tga": {
+      "sha256": "6e47e505ee991b8f38a00a818c29da6cfbf84dc904c8c8417bc7131d68add3f7",
+      "bytes": 3971
+    },
+    "ConsoleUI/textures/controllers/xbox/rb.tga": {
+      "sha256": "92fec1aaba5ee2957713bb8a5b311687c7d9d1756f8ce93c25c0de00843127a8",
+      "bytes": 4466
+    },
+    "ConsoleUI/textures/controllers/xbox/rt.tga": {
+      "sha256": "67e06f179755279b99acbff4d82b5209aaa4a58925fe717995081a413e390f27",
+      "bytes": 4294
+    },
+    "ConsoleUI/textures/controllers/xbox/x.tga": {
+      "sha256": "5babf29b3dda3b5eb039f04f5a3ff917a05d6bdfba7b36dfe8a9aee3a8f7e724",
+      "bytes": 4846
+    },
+    "ConsoleUI/textures/controllers/xbox/y.tga": {
+      "sha256": "e14e77b06b8b07a8f8de744344f8f9912e4c5879d5b7a4f8e0ee51043e102a16",
+      "bytes": 4656
+    },
+    "ConsoleUI/textures/hud/CastFill.tga": {
+      "sha256": "60eb76264e5fab36eb435284ad15bca05c8785a6d44fb5806fc6a53c399849cb",
+      "bytes": 32786
+    },
+    "ConsoleUI/textures/hud/CastPlate.tga": {
+      "sha256": "45ffa13640b5efc08beef9e4826b7b3ea503ad945902ceeaae56899168cae9cf",
+      "bytes": 32786
+    },
+    "ConsoleUI/textures/hud/CastSpark.tga": {
+      "sha256": "4913122012e3a1a7f7d3136ffc067660f9f757fe408b14776afe4df6bb9ee8fc",
+      "bytes": 1042
+    },
+    "ConsoleUI/textures/hud/StatusFill.tga": {
+      "sha256": "c0eab5aaae644d3b0c65ffc97d43f5670c850322afc4370a0a59b9cb40ee6de0",
+      "bytes": 32786
+    },
+    "ConsoleUI/textures/hud/Wash.tga": {
+      "sha256": "4d5cc00d34c136ad2026e8a83260cef806b96b4112c36d62261255c9b8ef6347",
+      "bytes": 262162
+    },
+    "ConsoleUI/textures/hud/WashPanel.tga": {
+      "sha256": "a2928faf537ff3236c07d3630d5bc383d54c33b99d46cd16f41dfb2b821c149f",
+      "bytes": 262162
+    },
+    "ConsoleUI/textures/hud/WatchBack.tga": {
+      "sha256": "e0947889712184fd7ad3265086c77d22cf8c44a08c3185b51536014ad7ea1171",
+      "bytes": 131090
+    },
+    "ConsoleUI/textures/hud/WatchFill.tga": {
+      "sha256": "cf55b531448d748162424053310454abdcb3b051154b9250cbba794dca98b2e4",
+      "bytes": 131090
+    },
+    "ConsoleUI/textures/hud/WatchFillShade.tga": {
+      "sha256": "a1a8d8d533e2e1c76597a89b159114f3d9617717e019fc9dc3d91ec6bc66c769",
+      "bytes": 131090
+    },
+    "ConsoleUI/textures/hud/WatchGaps.tga": {
+      "sha256": "1528caeafb98551c7c9ecc0d59c5490dc700db865a9339914f4ad5749b6b402e",
+      "bytes": 65554
+    },
+    "ConsoleUI/textures/hud/WatchRim.tga": {
+      "sha256": "e0947889712184fd7ad3265086c77d22cf8c44a08c3185b51536014ad7ea1171",
+      "bytes": 131090
+    },
+    "ConsoleUI/textures/hud/White.tga": {
+      "sha256": "57dd82303a6a5a4a790431efa248c10a1a11885cac2aaef8243dd94e96e773b0",
+      "bytes": 274
+    },
+    "ConsoleUI/textures/hud/XPBar.tga": {
+      "sha256": "de8b707d05b52adbcb4a5561a85d86f7baff61ea841bff50bf4b21fb69b77eba",
+      "bytes": 65554
+    },
+    "ConsoleUI/textures/hud/XPNotch.tga": {
+      "sha256": "060612bab7c4431e63ab2ffccf9ea34bc124b8276c74ef46487650e5b4022404",
+      "bytes": 32786
+    },
+    "ConsoleUI/textures/hud/XPPip.tga": {
+      "sha256": "bda5afddd9fee9f2d24e3718c7f02d86a4ebac8bcd22362d41a8e1058c7d14bc",
+      "bytes": 1042
+    },
+    "ConsoleUI/textures/lk/bars/CastBar.tga": {
+      "sha256": "6e09eaa3faf7dd7f3a01b75a81b2f2d2f01529f97486c5e494b7ea21629b54b1",
+      "bytes": 1048620
+    },
+    "ConsoleUI/textures/lk/button/Normal.tga": {
+      "sha256": "4425c4bc28fa112f78c58ef4ef2f1a3d94f9ac572a1ab227061ce2cc7f36e8c0",
+      "bytes": 65580
+    },
+    "ConsoleUI/textures/lk/button/Pushed.tga": {
+      "sha256": "1973c09d22522734c140c156aaa33aed418f30deb33355b20e48c4081084d268",
+      "bytes": 65580
+    },
+    "ConsoleUI/textures/lk/utility/Pie_Arrow.blp": {
+      "sha256": "0ccc409477460ec63d1d777fc10fb3dab413a334da43d604855f3479b153e60a",
+      "bytes": 44932
+    },
+    "ConsoleUI/textures/lk/utility/Pie_Background.blp": {
+      "sha256": "5f8c51fa6f340951df5bc2509ed07af9d107e62f44b309542713641f03abedbc",
+      "bytes": 700244
+    },
+    "ConsoleUI/textures/lk/utility/Pie_Band.blp": {
+      "sha256": "22cbf0e78fe1d79193b4531821666fd47356e4b016165d8811449689b950a24c",
+      "bytes": 350724
+    },
+    "ConsoleUI/textures/lk/utility/Pie_InnerMask.blp": {
+      "sha256": "dfb6508e8a51307fba5050f246e6fc76e38042267989fc8ee18d88d371bbf3d9",
+      "bytes": 88580
+    },
+    "ConsoleUI/textures/lk/utility/Pie_Line1.blp": {
+      "sha256": "e8e8056eeae1c9384cb12e5e271c3161c4749bb45a5579e48746778e13fd438b",
+      "bytes": 4180
+    },
+    "ConsoleUI/textures/lk/utility/Pie_Line2.blp": {
+      "sha256": "413c52c7ef9dd4f4ed8cdfbae6ec92ca027fe096c9f35b4d7ff4ae80bd1b7b96",
+      "bytes": 4180
+    },
+    "ConsoleUI/textures/lk/utility/Pie_Rect.blp": {
+      "sha256": "188bb721e20b3e74a327cb9de41d2a005be05f6cc8a8af6c992324a84d249b22",
+      "bytes": 350724
+    },
+    "ConsoleUI/textures/lk/utility/Pie_RingMask.blp": {
+      "sha256": "77f58af6d38c34a2bdde03eb56f98cf558a5759bf7ad49c8f4d52404a1d0e163",
+      "bytes": 88580
+    },
+    "ConsoleUI/textures/lk/utility/Pie_Separator_Active.blp": {
+      "sha256": "2d331c780aa2dcfcfe37ee44f11b326eba8c1e108b2287223484fdd2560db726",
+      "bytes": 700244
+    },
+    "ConsoleUI/textures/lk/utility/Pie_Separator_Inactive.blp": {
+      "sha256": "f9fdec2e394c602a425c845e069b026b63630cf7bfe2e1678529d5b991dc6270",
+      "bytes": 700244
+    },
+    "ConsoleUI/textures/lk/utility/UtilityArrow.blp": {
+      "sha256": "2a5119e3f7530600c6f6638bc2a4b09637e8b70e8250f897a296efdd16ee37e0",
+      "bytes": 350740
+    },
+    "ConsoleUI/textures/lk/utility/UtilityArrows.blp": {
+      "sha256": "76bd9f0b5200689c37a16bc8da40ce80a93805e56ca1265674f8548a3f707858",
+      "bytes": 350724
+    },
+    "ConsoleUI/textures/lk/utility/UtilityCircle.blp": {
+      "sha256": "5a0342f960f52748cb88918dedd125b7a532613bd0f92f12daac4636d7eaae18",
+      "bytes": 350724
+    },
+    "ConsoleUI/textures/lk/utility/UtilityCircleBind.blp": {
+      "sha256": "22d417e8908ddbd382be8d1f1999df184d24d14b4a073939305a1f26e74a4a95",
+      "bytes": 350724
+    },
+    "ConsoleUI/textures/lk/utility/UtilityGlow16.blp": {
+      "sha256": "c6cd0e80146544fbb3361828d25a50b79d72a0447fdf0530faeb8177c9c525e2",
+      "bytes": 350724
+    },
+    "ConsoleUI/textures/lk/utility/UtilityGlow8.blp": {
+      "sha256": "1ecc6f10ae045cc74f06550e6b86ded484825534971ed6914524b837c3a718be",
+      "bytes": 350724
+    },
+    "ConsoleUI/textures/lk/utility/UtilityGlowBind.blp": {
+      "sha256": "416e2ffe52f0562ebd65f9a3e155aae4b67e004ec3a3484a421cb6b3064ec89b",
+      "bytes": 350724
+    },
+    "ConsoleUI/textures/lk/utility/UtilityRunes.blp": {
+      "sha256": "927ba3705b8f11ae41a2945e652418423cf15a5cd945efa1b1730845d36055aa",
+      "bytes": 350724
+    },
+    "ConsoleUI/textures/lk/window/Circle.tga": {
+      "sha256": "7dc94d570b8da26023c52a8473c9f21a3dc7fff9949cda76d1ecae5e138148db",
+      "bytes": 262188
+    },
+    "ConsoleUI/textures/lk/wotlk/BigHilite.blp": {
+      "sha256": "4f9e7aa67f00c912c335a7b88c85229bc4c829a921415edcaa7852b629bdd52f",
+      "bytes": 6660
+    },
+    "ConsoleUI/textures/lk/wotlk/BigNormal.blp": {
+      "sha256": "b7d41f6cfd3f445cc82072ffa5efaafc2cf0f348255914eb85bdff01c2bfe004",
+      "bytes": 23016
+    },
+    "ConsoleUI/textures/lk/wotlk/BigPushed.blp": {
+      "sha256": "ad61b3b42ac9c7b0857f845e0c07d93a574416d26ad29ee4c7a2e6370e053428",
+      "bytes": 6660
+    },
+    "ConsoleUI/textures/lk/wotlk/BigShadow.blp": {
+      "sha256": "ba2f8167361520654b30caae00f735f776f0b2c25fed7830155bdc4b71a464d7",
+      "bytes": 6660
+    },
+    "ConsoleUI/textures/lk/wotlk/Hilite.blp": {
+      "sha256": "2fc3b6b142f6b79206a8ef34db54563632876b05d22ff09772d8995bf0789f68",
+      "bytes": 23044
+    },
+    "ConsoleUI/textures/lk/wotlk/Mask.blp": {
+      "sha256": "1e0a08533a1629ea38e0506e9ba93eacd23a101a355582f4635216d62c304ee7",
+      "bytes": 6660
+    },
+    "ConsoleUI/textures/lk/wotlk/Normal_glass.blp": {
+      "sha256": "f9955e2d7c1a0b5fd920942aa6901407a8ce6a74d8f54e08d04fe35ce5d729f6",
+      "bytes": 23044
+    },
+    "ConsoleUI/textures/lk/wotlk/Normal.blp": {
+      "sha256": "3a3f28e14ec77ea5baed9a4721ece34c756a366e996ea057f07f38d5c0c0bb66",
+      "bytes": 23016
+    },
+    "ConsoleUI/textures/lk/wotlk/NormalShadow.blp": {
+      "sha256": "ba2f8167361520654b30caae00f735f776f0b2c25fed7830155bdc4b71a464d7",
+      "bytes": 6660
+    },
+    "ConsoleUI/textures/lk/wotlk/Pushed_glass.blp": {
+      "sha256": "77a49a1330a63351f79a5085c24d8820770abf5e124c70b5234898cab6afc070",
+      "bytes": 23044
+    },
+    "ConsoleUI/textures/lk/wotlk/Pushed.blp": {
+      "sha256": "8430d14de8cce52fb26f0238022ec90512655d9e23f3d1a62f348b6d14ff4bff",
+      "bytes": 6660
+    },
+    "ConsoleUI/textures/lk/wotlk/Square_Hilite.blp": {
+      "sha256": "de4b905c904baf067b0ef9d874b1cb9425e7855a14eea2cc18019198fddb557b",
+      "bytes": 6660
+    },
+    "ConsoleUI/textures/lk/wotlk/Square_Normal.blp": {
+      "sha256": "1f2ad40845a6e4e0aa66c219a2e53d79e7f94926e56637e28246bc6a4c2b4e3c",
+      "bytes": 6660
+    },
+    "ConsoleUI/textures/lk/wotlk/Square_Pushed.blp": {
+      "sha256": "e0b477afe335a11c4acfa432543cb804a13753aa0397eab809aaa66b093d8516",
+      "bytes": 6660
+    },
+    "ConsoleUI/textures/radial/Confirm.tga": {
+      "sha256": "05a17bfe50d5d6a3840320c28414b2dab061326dfcbbc50617d4f5e0ca549434",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/CountBadge.tga": {
+      "sha256": "f3b1a588c5b4858d69277fbe320a6c4f97919d72b072b0192db5e08dd9feaed2",
+      "bytes": 4114
+    },
+    "ConsoleUI/textures/radial/Donut.tga": {
+      "sha256": "7d6b3bf6ea59fcb028cb009c80cf3ffd93afa5750d3b75194fe1b8c12cb1993f",
+      "bytes": 262162
+    },
+    "ConsoleUI/textures/radial/Inner.tga": {
+      "sha256": "46203becee61e98ce00e3aa7cd712146d8ae35fa845f8674fd7e563a140d6bfe",
+      "bytes": 65554
+    },
+    "ConsoleUI/textures/radial/Key.tga": {
+      "sha256": "d4885b653fcf421ebb2ec67a91023dfd6e75b5d5c5ec84cf913ace26226fbe02",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/KeyE.tga": {
+      "sha256": "7f22335f114b36b47d7193597a5065310308ca83cba1c79061096d4220003add",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/KeyHi.tga": {
+      "sha256": "0b9bb0e66f09e112dec4dbe155db68cabb73b9539c6f6776f30b18d5122df217",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/KeyHiE.tga": {
+      "sha256": "a3ac066ca502a0e35879e42999ab688d246e3877c8dd59451b0d3e8559f27468",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/KeyHiIn.tga": {
+      "sha256": "a55b972f74fe9c01e457342f5acda8a57235ae5dc4ca6eb7e33b42c7331dff3c",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/KeyHiN.tga": {
+      "sha256": "0b9bb0e66f09e112dec4dbe155db68cabb73b9539c6f6776f30b18d5122df217",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/KeyHiS.tga": {
+      "sha256": "b3774c915e09ed08d243e6ef956568656541930bd875bd73074e9a7750bfc20f",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/KeyHiSq.tga": {
+      "sha256": "3d0baf44c36fd90f9d84b0bddbf5cb38687c0345004f2f839bad31bebe84b796",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/KeyHiSqIn.tga": {
+      "sha256": "c21cb06c6ccf2785c796bced40d4149a67ecb9a781b1a58ff88583b30fcb3005",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/KeyHiW.tga": {
+      "sha256": "fd890c31cdb911588ad7f7a64feca55bd82fff14b2bd24cfee575b26eb5583b8",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/KeyN.tga": {
+      "sha256": "d4885b653fcf421ebb2ec67a91023dfd6e75b5d5c5ec84cf913ace26226fbe02",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/KeyS.tga": {
+      "sha256": "d4e77f00d0144d2ff4bfe5e21ff1985f2293f9f5a94d3eecb3477dcc00eb073e",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/KeySq.tga": {
+      "sha256": "dadf722abb409c09846cf5bddc89014ec26b622d5c2a4d739f00a6eced6f2b72",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/KeyW.tga": {
+      "sha256": "eb859c96f28882bd0a3bc72bc3171d520e95af5f8b81f0cc50dcf5adb575298b",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/Menu.tga": {
+      "sha256": "0dc59b832b5b227a22265fb082eaba4b15c03dda4947734703a3167c233c66e3",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/Reload.tga": {
+      "sha256": "4809b50e84f7fe2716bd257362870f5ce42d467360e967eaba6c4fd18eff7db4",
+      "bytes": 16402
+    },
+    "ConsoleUI/textures/radial/Ring.tga": {
+      "sha256": "d0c5035be32e6ad2d8d5b0f25239892d2ebad6fb0ba12e84e7da2c3ac38dfc85",
+      "bytes": 262162
+    },
+    "ConsoleUI/textures/radial/Separators.tga": {
+      "sha256": "9cd7899245ff5d135e23d959a7901d6c88d5b9c917ad181e3e6e808a3dc37a42",
+      "bytes": 1048594
+    },
+    "ConsoleUI/textures/radial/Slice1.tga": {
+      "sha256": "014b703fe08223ebbd397ae0f1633aad1d2c05a57829ed98bfbb2e3ecac21cde",
+      "bytes": 1048594
+    },
+    "ConsoleUI/textures/radial/Slice2.tga": {
+      "sha256": "345f369fcd13630ea980b4dfff7e1163050ccff11d59a65cbede2b650183913b",
+      "bytes": 1048594
+    },
+    "ConsoleUI/textures/radial/Slice3.tga": {
+      "sha256": "0d4ad674e16d42035d71591e097909e86067cee8cc7aeeda3801b4003af55c0b",
+      "bytes": 1048594
+    },
+    "ConsoleUI/textures/radial/Slice4.tga": {
+      "sha256": "9a477e6df70c00903fcd6176daaaf056ebed9cf759c0f09e1746d6e5efcc49fe",
+      "bytes": 1048594
+    },
+    "ConsoleUI/textures/radial/Slice5.tga": {
+      "sha256": "0f3184aae1c604c951d7f9ca2ce0ecfea900a155548bcaa9c0046cc249389c3a",
+      "bytes": 1048594
+    },
+    "ConsoleUI/textures/radial/Slice6.tga": {
+      "sha256": "6d894f70f3431039021b1614ed65b58718ec8010258cce642af750c41f89fc1d",
+      "bytes": 1048594
+    },
+    "ConsoleUI/textures/radial/Slice7.tga": {
+      "sha256": "8b04124e856a4f8a8b1ff8b6bf3f91214a98a3f125f3bee3b9ab4a32eab1cd58",
+      "bytes": 1048594
+    },
+    "ConsoleUI/textures/radial/Slice8.tga": {
+      "sha256": "42b0417d83f29433bfe660e9429907de036443ac83a4c47c8b71bd2fa93d3129",
+      "bytes": 1048594
+    },
+    "ConsoleUI/xpbar/check_autohide.lua": {
+      "sha256": "e428f1984b00103021fe8c8295c7618d56391aec4a81e26ac170b22cec6bee29",
+      "bytes": 2448
+    },
+    "ConsoleUI/xpbar/check_rested.lua": {
+      "sha256": "364035052ef444f38e4f7418b7c5a3af0f0d351c50cf48e1df1163e23df5fb44",
+      "bytes": 4642
+    },
+    "ConsoleUI/xpbar/xpbar.lua": {
+      "sha256": "072f3b2fb9d8d62c19660b72a307feb5fed54a65ea53a38e6b948f038d9c92df",
+      "bytes": 31066
+    },
+    "ConsoleUIKeyboard/Bindings.xml": {
+      "sha256": "02f3a4d8656c477e57b12d1f6675bdfad50abb38bb61df8a5b8b5ff0f6ffc0ea",
+      "bytes": 1484
+    },
+    "ConsoleUIKeyboard/ConsoleUIKeyboard.toc": {
+      "sha256": "54de4b98ce85a02d4c6c2b48d961d81cbd6609b3d0d5550f9293ad0e16584d79",
+      "bytes": 531
+    },
+    "ConsoleUIKeyboard/Core/AutoComplete.lua": {
+      "sha256": "1661eddfe8bf2d124cfe5d128ef7483d28b561a97a884800f9103f5207fd3fd2",
+      "bytes": 8759
+    },
+    "ConsoleUIKeyboard/Core/Charset.lua": {
+      "sha256": "98143d8980f3bcd56f8311424837dad295587e383ceb38ae8caf3cc3b7b9e45e",
+      "bytes": 7150
+    },
+    "ConsoleUIKeyboard/Core/Config.lua": {
+      "sha256": "5132feaafeae900146a143a7f20583d6f64357d48b98c6e04d07e866d48573a9",
+      "bytes": 1318
+    },
+    "ConsoleUIKeyboard/Core/Dictionary.lua": {
+      "sha256": "4d6c422da38805b60cb2887d12d713386283e24009e1bf66252698d3cb94be8a",
+      "bytes": 2631
+    },
+    "ConsoleUIKeyboard/Core/Init.lua": {
+      "sha256": "52f2451f5265dcd6b2f6705f53c704c52151036c6617cbdbb06b546728166cc6",
+      "bytes": 89
+    },
+    "ConsoleUIKeyboard/Core/Keyboard.lua": {
+      "sha256": "fab40368817eab931cec59863b9b30b2f61be20a7099c17b04c6e0d2401875ac",
+      "bytes": 27459
+    },
+    "ConsoleUIKeyboard/Core/Mime.lua": {
+      "sha256": "e04aa51ea0a9fa88fe10840f46210a451125f7cb66a837125c26240d7f601fc7",
+      "bytes": 651
+    },
+    "ConsoleUIKeyboard/Core/SelfCheck.lua": {
+      "sha256": "0d1c28296b0cc636bc1709ab21d996a78ed31c7906119f189d780b4ef0c72df9",
+      "bytes": 5309
+    },
+    "ConsoleUIKeyboard/Core/Update.lua": {
+      "sha256": "792600358acfff734ea5a30a2361ccea5899a181a34a218de1f08683cd49c9c5",
+      "bytes": 4940
+    },
+    "ConsoleUIKeyboard/Core/Util.lua": {
+      "sha256": "41a479e2fac71718c170db4d34a4bb8c8e041ab37762c54be8da20e531a835c6",
+      "bytes": 4751
+    },
+    "ConsoleUIKeyboard/Languages/Default.lua": {
+      "sha256": "8305544da52a63ba706974b79fccbbd6fb3cd9e38a744f4dd211c0fe0bf86ea0",
+      "bytes": 1337
+    },
+    "ConsoleUIKeyboard/Languages/English.lua": {
+      "sha256": "5e3b9db95f9af34201da2bcdac6d266889ab5f8097a3cff3667003fdca7abd7f",
+      "bytes": 1463
+    },
+    "ConsoleUIKeyboard/Languages/Languages.xml": {
+      "sha256": "3a6605fc4f0af260d979812e217d8be03c08c2cbf043cca7c6b2eda9d7421c6a",
+      "bytes": 113
+    },
+    "ConsoleUIKeyboard/Textures/brand/consoleui-icon.png": {
+      "sha256": "620ccfb7dd73eebee070f21fc8c5df0d7639dfaea012a4394795280937ec86e6",
+      "bytes": 833900
+    },
+    "ConsoleUIKeyboard/Textures/brand/consoleui-keyboard-icon.png": {
+      "sha256": "695ac9c8f687a8c78724adbd95eecde7cfd1a7860b61f12fb1a0275962a8c14d",
+      "bytes": 861534
+    },
+    "ConsoleUIKeyboard/Textures/Char.blp": {
+      "sha256": "38327041aeb02e09a230d6a67f7d3b01540e5c3123df18db23e948899e870e0f",
+      "bytes": 6660
+    },
+    "ConsoleUIKeyboard/Textures/CharMask.blp": {
+      "sha256": "20d076a6b108a54847b26295fa9abfcb459c9f9362e1a895928508a8ef9aeb2e",
+      "bytes": 6660
+    },
+    "ConsoleUIKeyboard/Textures/Disc.tga": {
+      "sha256": "e84b0611e5393e1923cae68f629c53ad737641f84d36fcc4de1ae6d23644babf",
+      "bytes": 262162
+    },
+    "ConsoleUIKeyboard/Textures/Donut.tga": {
+      "sha256": "7d6b3bf6ea59fcb028cb009c80cf3ffd93afa5750d3b75194fe1b8c12cb1993f",
+      "bytes": 262162
+    },
+    "ConsoleUIKeyboard/Textures/Glow.tga": {
+      "sha256": "d0d5442029d198e3f06419f2813110e78383931aaa009cbab1df282bc2c1f48d",
+      "bytes": 65554
+    },
+    "ConsoleUIKeyboard/Textures/IconEraser.tga": {
+      "sha256": "1a01f81889291019b879db3eb8d23028db262bd1c3229b29d75f7aeb5e226f00",
+      "bytes": 1068
+    },
+    "ConsoleUIKeyboard/Textures/IconSpace.tga": {
+      "sha256": "e9e2b87abdb842d6b22eea3e37b47852a64cfc68a1d8f60102209c2d4c321472",
+      "bytes": 1068
+    },
+    "ConsoleUIKeyboard/Textures/Inner.tga": {
+      "sha256": "46203becee61e98ce00e3aa7cd712146d8ae35fa845f8674fd7e563a140d6bfe",
+      "bytes": 65554
+    },
+    "ConsoleUIKeyboard/Textures/Key.tga": {
+      "sha256": "d4885b653fcf421ebb2ec67a91023dfd6e75b5d5c5ec84cf913ace26226fbe02",
+      "bytes": 16402
+    },
+    "ConsoleUIKeyboard/Textures/KeyE.tga": {
+      "sha256": "7f22335f114b36b47d7193597a5065310308ca83cba1c79061096d4220003add",
+      "bytes": 16402
+    },
+    "ConsoleUIKeyboard/Textures/KeyHi.tga": {
+      "sha256": "0b9bb0e66f09e112dec4dbe155db68cabb73b9539c6f6776f30b18d5122df217",
+      "bytes": 16402
+    },
+    "ConsoleUIKeyboard/Textures/KeyHiE.tga": {
+      "sha256": "a3ac066ca502a0e35879e42999ab688d246e3877c8dd59451b0d3e8559f27468",
+      "bytes": 16402
+    },
+    "ConsoleUIKeyboard/Textures/KeyHiN.tga": {
+      "sha256": "0b9bb0e66f09e112dec4dbe155db68cabb73b9539c6f6776f30b18d5122df217",
+      "bytes": 16402
+    },
+    "ConsoleUIKeyboard/Textures/KeyHiS.tga": {
+      "sha256": "b3774c915e09ed08d243e6ef956568656541930bd875bd73074e9a7750bfc20f",
+      "bytes": 16402
+    },
+    "ConsoleUIKeyboard/Textures/KeyHiW.tga": {
+      "sha256": "fd890c31cdb911588ad7f7a64feca55bd82fff14b2bd24cfee575b26eb5583b8",
+      "bytes": 16402
+    },
+    "ConsoleUIKeyboard/Textures/KeyN.tga": {
+      "sha256": "d4885b653fcf421ebb2ec67a91023dfd6e75b5d5c5ec84cf913ace26226fbe02",
+      "bytes": 16402
+    },
+    "ConsoleUIKeyboard/Textures/KeyS.tga": {
+      "sha256": "d4e77f00d0144d2ff4bfe5e21ff1985f2293f9f5a94d3eecb3477dcc00eb073e",
+      "bytes": 16402
+    },
+    "ConsoleUIKeyboard/Textures/KeyW.tga": {
+      "sha256": "eb859c96f28882bd0a3bc72bc3171d520e95af5f8b81f0cc50dcf5adb575298b",
+      "bytes": 16402
+    },
+    "ConsoleUIKeyboard/Textures/Palette.blp": {
+      "sha256": "2a7d72efa200f3c1e0cede5197c3281bc189adce977bf22d88abbc0c6a83ee5c",
+      "bytes": 350724
+    },
+    "ConsoleUIKeyboard/Textures/PaletteMask.blp": {
+      "sha256": "148f339caf972123d5f5b636e836926b703cefe92e119bba6d26b24fa5dd9062",
+      "bytes": 350724
+    },
+    "ConsoleUIKeyboard/Textures/Panel.tga": {
+      "sha256": "a380099cfc4cc1befb06cf2eedb2562e9a9ca9f1c05f173b718d9f552c5166c2",
+      "bytes": 131090
+    },
+    "ConsoleUIKeyboard/Textures/PanelHi.tga": {
+      "sha256": "9b5747d81556738ea07163252483c140204f55023513f149793d254a492ff9a2",
+      "bytes": 131090
+    },
+    "ConsoleUIKeyboard/Textures/Ring.tga": {
+      "sha256": "d0c5035be32e6ad2d8d5b0f25239892d2ebad6fb0ba12e84e7da2c3ac38dfc85",
+      "bytes": 262162
+    },
+    "ConsoleUIKeyboard/Textures/RowHi.tga": {
+      "sha256": "fc206abdbf7927d789f78d67f56ea145909f1cf1c4d4654f2393815df79d070a",
+      "bytes": 32786
+    },
+    "CONTRIBUTING.md": {
+      "sha256": "5baf6d14deb2fa9614154bc60fa97962c2c258bff96173ebb37a411092ecb304",
+      "bytes": 784
+    },
+    "docs/_config.yml": {
+      "sha256": "337e68666834e062e1e0c9eae12ad051c9b1a2fe3dac5809015583a869eeeef3",
+      "bytes": 419
+    },
+    "docs/_data/navigation.yml": {
+      "sha256": "691373f92052a8ce53ce59289a007419cce6e939d9909303ce7f54a6ceb1114d",
+      "bytes": 2300
+    },
+    "docs/_data/pages.yml": {
+      "sha256": "4ed7b2a6772f8073461f143cda628d4d3323e0673d3863bcd949479e551fd464",
+      "bytes": 1892
+    },
+    "docs/_data/project.yml": {
+      "sha256": "4cbf4448ebc448245699eb9c010ddaa86afc4ee777ac5be112b179558cdf6c3c",
+      "bytes": 903
+    },
+    "docs/_data/screenshots.yml": {
+      "sha256": "35d98a4e25801f0ed58f54e45d9b229f5a3072939d966da643258a438ca61035",
+      "bytes": 1761
+    },
+    "docs/_includes/breadcrumbs.html": {
+      "sha256": "aa7429aaee9c266a8e4c44b653f122372ba3417a932532aed5884e5a0d956dce",
+      "bytes": 212
+    },
+    "docs/_includes/footer.html": {
+      "sha256": "8919214c19d72fefae0d8c110c46dd749711e50d296a18ee4ccffed8a72560fb",
+      "bytes": 408
+    },
+    "docs/_includes/header.html": {
+      "sha256": "ae670c8342c14ebff45061f98efbec7f8b23cf6e97939597f0b391c47914eda5",
+      "bytes": 766
+    },
+    "docs/_includes/navigation.html": {
+      "sha256": "8082221071aeb906060e317ce0627726aa53f457287ebad9460f85bc26b3d106",
+      "bytes": 436
+    },
+    "docs/_includes/page-nav.html": {
+      "sha256": "cb318f1d92490aa0e0fda89efe825fee103a894bb614c20aae5ee13827d81546",
+      "bytes": 817
+    },
+    "docs/_layouts/default.html": {
+      "sha256": "dc71a1a022d453c74daaeeeb526b82530fda12123d5d27a7f4667f7d51977e38",
+      "bytes": 1392
+    },
+    "docs/_layouts/home.html": {
+      "sha256": "3f1d9a544de1d9db4b2c075d9eda925ba3fce08b5c56f4f8926ea201ac7e94eb",
+      "bytes": 38
+    },
+    "docs/_layouts/page.html": {
+      "sha256": "40d02b797106dfe80feadca2e6d74c1d6990f43f500d751d845f0f0b6b839ad6",
+      "bytes": 285
+    },
+    "docs/404.md": {
+      "sha256": "5f017f4e3940c7bde580b8024387250427151856939c3009e4adc331e485834a",
+      "bytes": 243
+    },
+    "docs/assets/css/style.css": {
+      "sha256": "b91beac94cc1c25173e764a0312056362b68e57a1a0fab4ca84f676474a2e33c",
+      "bytes": 12571
+    },
+    "docs/assets/icons/apple-touch-icon.png": {
+      "sha256": "207d415e728c4b96f28f61c932c62d75bb070481bfcf2fb3beef448893c9cda4",
+      "bytes": 34160
+    },
+    "docs/assets/icons/consoleui-icon.png": {
+      "sha256": "620ccfb7dd73eebee070f21fc8c5df0d7639dfaea012a4394795280937ec86e6",
+      "bytes": 833900
+    },
+    "docs/assets/icons/favicon.png": {
+      "sha256": "949c61cafd6d5ada08104ef68f7325ceacd7b6b44a22cb22bb928b9aa19c856c",
+      "bytes": 1620
+    },
+    "docs/assets/icons/favicon.svg": {
+      "sha256": "77b581e7e0d1d720526473672407ad4d1885d09a6c4e821f4a998d066b24a160",
+      "bytes": 424
+    },
+    "docs/assets/icons/keyboard-icon.png": {
+      "sha256": "695ac9c8f687a8c78724adbd95eecde7cfd1a7860b61f12fb1a0275962a8c14d",
+      "bytes": 861534
+    },
+    "docs/assets/images/brand/consoleui-cluster.png": {
+      "sha256": "b6dbbed30171e95357c61ed148c1bca4cfdba31693cc5585c2b691c911eb01d9",
+      "bytes": 3498
+    },
+    "docs/assets/images/brand/consoleui-plus.png": {
+      "sha256": "3bc9e06d683f47bb956a9342ba37789ac40480df6ed071ef546555996dd5eefd",
+      "bytes": 1575
+    },
+    "docs/assets/images/brand/consoleui-wordmark-light.png": {
+      "sha256": "c7192f2e92d0210745d3db8fe2f93b897bcc5cd086ea8217f554a6fbefc9abfe",
+      "bytes": 33373
+    },
+    "docs/assets/images/brand/consoleui-wordmark-light.svg": {
+      "sha256": "a8ea720343e977cfb0bc71386475b9c51d30493ca1349cc2aa243c7ab6c37cf5",
+      "bytes": 673
+    },
+    "docs/assets/images/brand/consoleui-wordmark-readme.png": {
+      "sha256": "920c9fe680964a6d510a67400a6c6700808baf28b935caa25bb54da9c7de9ad6",
+      "bytes": 27626
+    },
+    "docs/assets/images/brand/consoleui-wordmark-readme.svg": {
+      "sha256": "57ddc9782ecd1e1a313243c60c64ea2b776a53586d6bc8fae0ef7fda6244979b",
+      "bytes": 733
+    },
+    "docs/assets/images/brand/consoleui-wordmark.png": {
+      "sha256": "f535e6fe1c0cc5b147ea720f674d2a28769b00537ee712a4e2b9868ad9feae41",
+      "bytes": 71147
+    },
+    "docs/assets/images/brand/consoleui-wordmark.svg": {
+      "sha256": "f4af8b22ecf25b4e8bf2e4999872a9abf7134824d86fbf55bbb6c2f7e4be6768",
+      "bytes": 661
+    },
+    "docs/assets/images/controller-setup/steam-community-layout-mouselock.png": {
+      "sha256": "c1e7b7717e81adaa59e65ed807d8c18c19a77d82464bc414d90c972e7ce2088f",
+      "bytes": 242919
+    },
+    "docs/assets/images/controller-setup/steam-community-layout-standard.png": {
+      "sha256": "1fa4b1bb0132aa648a667ac3a12c731d1250fcfb9cd3a14c3c0e6041b99a5ad3",
+      "bytes": 250774
+    },
+    "docs/assets/images/gameplay/consoleui-gameplay-overview.png": {
+      "sha256": "48066e454fe5bd725a2a62f94435a736b8ff94611a90a59ab2edb73f46d05171",
+      "bytes": 694766
+    },
+    "docs/assets/js/site.js": {
+      "sha256": "b3ecfcb841d484099549dc8b795f23adf4b558c727468d10f517ce0837317ca4",
+      "bytes": 323
+    },
+    "docs/controller/mapping-reference.md": {
+      "sha256": "17b088a688b9ae124bdeb578c19779b7e3c1b610f8b96bcaf3bb7f657b16c680",
+      "bytes": 2195
+    },
+    "docs/controller/other-mappers.md": {
+      "sha256": "cdd86a502dee3440f02d26b4361f3bf42b7046bb1e34dd1e01ce8190cea76952",
+      "bytes": 1680
+    },
+    "docs/controller/steam-mouselock.md": {
+      "sha256": "e06375a76641790610511ec5e20559b14c1fbdbf512c612106fa62461edbf6ac",
+      "bytes": 2561
+    },
+    "docs/controller/steam-standard.md": {
+      "sha256": "a09dc59d3ebad071b018c2d02cce716e527a1cf5495a671ad323ffb467369fb6",
+      "bytes": 2365
+    },
+    "docs/development/api.md": {
+      "sha256": "dc3a2fa7506b301c552a5780478ce46305e3a9f0d351d77ead6717f9af032329",
+      "bytes": 5714
+    },
+    "docs/development/architecture.md": {
+      "sha256": "adbf6c8824d5a3c3893dfe503ed9044bf0fb5ec80d783c411a97403d5f56f93f",
+      "bytes": 5067
+    },
+    "docs/development/cursor-integrations.md": {
+      "sha256": "c05ab38d242322a1394094f48f560ac23e39ed30afad74f34717e0f55d6a4c21",
+      "bytes": 8486
+    },
+    "docs/development/documentation.md": {
+      "sha256": "b06f99a86a1bfe0756394284bb837ac0bebcdc158e3e6d753448b36bd4ea40fe",
+      "bytes": 2614
+    },
+    "docs/development/extending.md": {
+      "sha256": "469e1509d044c5ae4a63e0bc56904d8f59130c7115681d3e2452125b854689cd",
+      "bytes": 2821
+    },
+    "docs/development/input-and-bindings.md": {
+      "sha256": "22443655a67a2c45962d7a8158fb8f7150bf4f834322b7eb7ed85f52d48d5349",
+      "bytes": 4027
+    },
+    "docs/development/localization.md": {
+      "sha256": "e4ce48a308e16ecfed850cf73c00798a37ad80cf4b4729f13264e0b535466fda",
+      "bytes": 1491
+    },
+    "docs/development/overview.md": {
+      "sha256": "9823aacfb9262065a520c587a5d9317465eb5f21add0e33fd16d5afd40ac31f6",
+      "bytes": 4200
+    },
+    "docs/development/settings-and-profiles.md": {
+      "sha256": "77e1de7f0de3fdbaa61db36f6fa1f9b81abb6d281cabb1ca9b22d4d10d57a7a8",
+      "bytes": 3535
+    },
+    "docs/development/testing-releases.md": {
+      "sha256": "84878d49e9bc7025841268c5b0c54f1e71e188511181750255d727274b853e28",
+      "bytes": 3003
+    },
+    "docs/development/visual-language.md": {
+      "sha256": "524a1df4bcfa1dbdbe206b950d84b8862738e7b46bd5b6a97e9645d24d9760d4",
+      "bytes": 4807
+    },
+    "docs/features/action-bars.md": {
+      "sha256": "7fd201dbdf3592a29bc473e7a1f0a36c71784dff7588769c11f090696ddd2883",
+      "bytes": 1782
+    },
+    "docs/features/bindings.md": {
+      "sha256": "ef1c29783e54eeb6b7a078133f62434099aa955e39e979dac32b3323924f6f9d",
+      "bytes": 1583
+    },
+    "docs/features/hud-frames.md": {
+      "sha256": "1b8aaf143ce67d36254ad96eb8b082c9a7197848cac3bfe3e1c88fcd9f851f50",
+      "bytes": 1297
+    },
+    "docs/features/keyboard.md": {
+      "sha256": "9974d07343aea69d1b81651980ae59c52d6343a8fa2db15f7a73900840fe5dd7",
+      "bytes": 1193
+    },
+    "docs/features/mouse-look.md": {
+      "sha256": "f3ab48aac2c3b342d4fe763c592886ee5df8fd075efaefc3e46647cfb6496f7b",
+      "bytes": 2492
+    },
+    "docs/features/profiles.md": {
+      "sha256": "5099c99729d392c29173526b89d028d7dbf27f50d3acf78a4023a653b8cdac25",
+      "bytes": 909
+    },
+    "docs/features/quick-menu.md": {
+      "sha256": "6615bb490e08d9eddbec7a14cc30ac1e45970906b9c2b074a25c5212220c9621",
+      "bytes": 1139
+    },
+    "docs/features/rings.md": {
+      "sha256": "f96524ed9a25071e78dd47dbb98fd743457af100db175c0b8fe37693536d02b2",
+      "bytes": 1026
+    },
+    "docs/features/touch-cursor.md": {
+      "sha256": "7af0b815f50f60d9502ea9fe8b26bfd891bc4969be90d4f56ca80abfe69b2225",
+      "bytes": 1445
+    },
+    "docs/Gemfile": {
+      "sha256": "faeec583708435d859e6d5675357dc38213a53acb896550daf16d76fd869d05d",
+      "bytes": 78
+    },
+    "docs/getting-started/controller-setup.md": {
+      "sha256": "ef94a01e1c8ad0583f4f3bdd18885d75ca00ddb795dd72825dee2e2b58935c8b",
+      "bytes": 2150
+    },
+    "docs/getting-started/first-launch.md": {
+      "sha256": "19ee79dfcf704919477d083db726ecff58f4338d0d0fb361cb7e8f5c8c55740d",
+      "bytes": 1901
+    },
+    "docs/getting-started/install.md": {
+      "sha256": "a68ac57b67567792e4ef0515d690591e1ca21ef73e4abd67ecff010a39e351d5",
+      "bytes": 3221
+    },
+    "docs/index.md": {
+      "sha256": "b9df274cd9c11edd07515277fb4cf19c7736a9aa2ab8cfecf622306bebc6aae0",
+      "bytes": 5391
+    },
+    "docs/preview.html": {
+      "sha256": "ce75a2c0707a40fa45321777cfa1ad9ab37e4a5154e666d7666f742d08df9f9c",
+      "bytes": 460
+    },
+    "docs/README.md": {
+      "sha256": "88138950e045cdafa872c07ddffca86ed8722f23406f9a3afa133bd1f153112c",
+      "bytes": 447
+    },
+    "docs/reference/changelog.md": {
+      "sha256": "69bc9b5f3ae70fd9987135d797ce83d9f800934f936b03a8764567aa56adeadb",
+      "bytes": 4473
+    },
+    "docs/reference/commands.md": {
+      "sha256": "a579c51d135085f2495d2903d97fa6013ce0ea781bd0a60cd0c27285711aea74",
+      "bytes": 1275
+    },
+    "docs/reference/compatibility.md": {
+      "sha256": "d8be95b6ca04d8a0d3b7a47c899f4b91824b89b331130ac535588e5712b2b98e",
+      "bytes": 964
+    },
+    "docs/reference/credits.md": {
+      "sha256": "6cbb146fed22e7c94dd9d7121ff6505d1b752a6fbdb27964435890f2379e9abd",
+      "bytes": 2171
+    },
+    "docs/reference/faq.md": {
+      "sha256": "f0fbc952e874bcfdbaf5ee341b528600c8accd82f6de53a8b5c573e015888756",
+      "bytes": 2029
+    },
+    "docs/reference/settings.md": {
+      "sha256": "1437c4e71fa32a75139aaf9ca43a503a0eb34b61d1b864aea07858d746275a63",
+      "bytes": 1302
+    },
+    "docs/reference/troubleshooting.md": {
+      "sha256": "3ae6093f5503336aac5e3bd0e98f00ed512409638515cc5ee98e9975f710a5fc",
+      "bytes": 1763
+    },
+    "docs/tools/preview.py": {
+      "sha256": "621120694dd5f43243409ddf2e5f30a362a7c4bf5565b6c5f705f0569014fa03",
+      "bytes": 12057
+    },
+    "README.md": {
+      "sha256": "ac22d40a1cb5acc7bb4c818bc2614bda6131331ad88b396cec5e3f16093591a9",
+      "bytes": 7865
+    },
+    "screenshots/action-bars.png": {
+      "sha256": "3fb808f64399b70815ce5aabeb4d9f29b0fc5bb15d7a0bf96befce64b76adfe4",
+      "bytes": 26920
+    },
+    "screenshots/bindings.png": {
+      "sha256": "9c482e6b910c931314eabf9eb24edc1621e79167f84afc04257b048c407c9256",
+      "bytes": 150580
+    },
+    "screenshots/keyboard.png": {
+      "sha256": "38c5360798978257be36b8be563ee97d097cf300b636178fc7d5b9a870443127",
+      "bytes": 88096
+    },
+    "screenshots/quick-menu.png": {
+      "sha256": "86091a9b615be5c359024917bb01ee80bd5ad762a22a3f1fa8ee8bf1b0934fad",
+      "bytes": 156419
+    },
+    "screenshots/rings-settings.png": {
+      "sha256": "8000ccca119fc86cdde623d15454e733f0a1a9e8fcc8933b7f4c2369586889dd",
+      "bytes": 127975
+    },
+    "screenshots/settings.png": {
+      "sha256": "5c05c1ac18a33a2fb57089f259d9684cdddf4b7c49b3dbe54e9599f7031d388d",
+      "bytes": 89317
+    },
+    "screenshots/user-ring.png": {
+      "sha256": "0f11c59553d45777ba1a080b8706a2298f2407ad594a30b94f4fc0b8ed6609c1",
+      "bytes": 178480
+    },
+    "web/.gitignore.upstream": {
+      "sha256": "bafabbdab4293b1b35fb801c26b9d6e39d5b907f545bb20520139fcf50fc4cfa",
+      "bytes": 32
+    },
+    "web/index.html": {
+      "sha256": "4d755063dad27d793b4048b9e4779aba8d1e5ba92de6702c7d4cd69605b5f90b",
+      "bytes": 669
+    },
+    "web/package-lock.json": {
+      "sha256": "25c0bacf0e9725a161b29f4b53fb180f5a12738c706956339ab27d302d0512f9",
+      "bytes": 63846
+    },
+    "web/package.json": {
+      "sha256": "bbbab2f8d179a4f4159db17429099ff002b03b059f9ce330f19658e327a80b5a",
+      "bytes": 560
+    },
+    "web/scripts/check-docs.js": {
+      "sha256": "24a011c7eab7ce53874f55566be334c88946706b46bc2baa87bc7923b50cacc8",
+      "bytes": 2213
+    },
+    "web/scripts/spa-fallback.js": {
+      "sha256": "ed70e8ac300ad8be1fa976af49e1fc0c50386cb15b9945a47c67b1b33911f0a5",
+      "bytes": 326
+    },
+    "web/scripts/sync-assets.js": {
+      "sha256": "3029b4f046eb92d7f981af1554c693c12f91702f0b05f1c3561cfe9630ade5a9",
+      "bytes": 509
+    },
+    "web/src/App.jsx": {
+      "sha256": "596473e78799d381ca574b2a26a43a9e1f0fa6cd67ff50403b3d8b969ed5cc57",
+      "bytes": 11016
+    },
+    "web/src/content.js": {
+      "sha256": "8c3343da95b82b3136a2e8e26933a8a5e01521011d9cb2715d828c10483fef95",
+      "bytes": 5855
+    },
+    "web/src/data.js": {
+      "sha256": "5f7d63606f63e94889823a212998a47dea8a423616029ae3a447bca622dd5ce4",
+      "bytes": 6665
+    },
+    "web/src/home.css": {
+      "sha256": "7b67b6b4b03a953d3a8beb82ad1099e5f304b1f6803a5fb32df0992047895476",
+      "bytes": 4393
+    },
+    "web/src/Home.jsx": {
+      "sha256": "8680dd900e0e645a62bca73c0890aa50ee1aac3b1540319f0431a29732889948",
+      "bytes": 5927
+    },
+    "web/src/main.jsx": {
+      "sha256": "7f1bc3cd63e5d43cf59c8f88321c855e80a03e7917b8911742ddf83d409de5c2",
+      "bytes": 422
+    },
+    "web/src/SiteFx.jsx": {
+      "sha256": "42a729d3d8fdf9faca97457926cf0c3e8d21f9b3b391a119ed67f24a7a40fff3",
+      "bytes": 4472
+    },
+    "web/src/styles.css": {
+      "sha256": "cbe67e328f08b576dabde123a35d5e642960b78d44326b9a5a797f43194b8576",
+      "bytes": 3917
+    },
+    "web/vite.config.js": {
+      "sha256": "073810c13533aac10000b2e39006467886a59fc69ed8d37df8e710c81b64bf9c",
+      "bytes": 499
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "394546395": {
+      "tag": "v1.0.2",
+      "folder": "v1.0.2--394546395",
+      "assets": {
+        "583539953": {
+          "sha256": "f086db82ae32bfdca55ad3d5f25fc65751c6bfc37fd671648c70524bcfb242c0",
+          "bytes": 4054023,
+          "id": "583539953",
+          "name": "ConsoleUI-1.0.2.zip",
+          "url": "https://github.com/racha/ConsoleUI/releases/download/v1.0.2/ConsoleUI-1.0.2.zip",
+          "path": "releases/v1.0.2--394546395/assets/ConsoleUI-1.0.2.zip"
+        }
+      },
+      "source": {
+        "sha256": "7f062dd530b1519ed2e64952f1817be3644d1986e6ddfd9ef9bcea8c61d22d78",
+        "bytes": 7545664,
+        "path": "releases/v1.0.2--394546395/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/racha/ConsoleUI/tarball/v1.0.2"
+      }
+    }
+  }
+}

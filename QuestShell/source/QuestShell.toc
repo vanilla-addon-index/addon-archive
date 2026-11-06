@@ -1,0 +1,30 @@
+## Interface: 11200
+## Title: QuestShell
+## Notes: Leveling/quest helper with auto-accept/turn-in and progress tracker
+## Author: Valiusha
+## Version: 0.3
+## SavedVariables: QuestShellDB
+
+## SavedVariables: QuestShellDB
+## SavedVariablesPerCharacter: QuestShellCDB
+
+core_utils.lua
+core_debug.lua
+core_debug_commands.lua
+core_guides.lua
+core_gossip.lua
+core_stepviz.lua
+core_stepbehave.lua
+core_events.lua
+core_commands.lua
+core_taxi.lua
+
+ui_shared.lua
+ui_tracker.lua
+ui_arrow.lua
+ui_steps.lua
+ui_menu.lua
+ui_options.lua
+
+QuestShell_Guides\Alliance\AllianceGuides.xml
+QuestShell_Guides\Horde\HordeGuides.xml

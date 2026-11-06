@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: |cff3fcf26PaladinSalvaRemover|r  |cfff05cdc-Svarrog-|r
+## Version: 1.0.0.
+## Notes: Addon removes salvation if u have righteous fury buff
+## Author: Svarrog
+
+PaladinSalvaRemover.lua

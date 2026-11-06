@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/nemanuel/Forged_SellAllGrays",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "nemanuel",
+    "repo": "Forged_SellAllGrays",
+    "name": "Forged_SellAllGrays",
+    "url": "https://github.com/nemanuel/Forged_SellAllGrays",
+    "api": "https://api.github.com/repos/nemanuel/Forged_SellAllGrays"
+  },
+  "commit": "308a2e673f71e398c1e32f30b22c195630da9e6a",
+  "sourceFiles": {
+    "core.lua": {
+      "sha256": "4dce0c33e4be2798b265afa0cd856eb23c196bdcf29303eb9851fffa0d5205b8",
+      "bytes": 1278
+    },
+    "Forged_SellAllGrays.toc": {
+      "sha256": "079d3c1189339228ba40a9bfbf4768d35a82d025cd5e480bd5a9a1c18cdc3d5d",
+      "bytes": 290
+    },
+    "item_utils.lua": {
+      "sha256": "2adf8257a3a3a58ee6579aa9da29c6028f58581e6b827463ccf843ecb6cf931c",
+      "bytes": 2483
+    },
+    "money.lua": {
+      "sha256": "50de92d914aa391f6680c42348172234ba79a9dd954f903726f2a637fe823d03",
+      "bytes": 675
+    },
+    "README.md": {
+      "sha256": "4c5126635d66159f68b0c398159ffb26a7d4e2521ae73d2df27b882af9ac79b2",
+      "bytes": 2153
+    },
+    "screenshot-1.png": {
+      "sha256": "20da06f82b531544055fac2bf34875887ccb8a060d9b55c62e17a344f7b65aec",
+      "bytes": 296079
+    },
+    "screenshot-2.png": {
+      "sha256": "17ba011ff2fd3b97dc23752cad7fee60679336c2fcffc54a41bbc339d5d96233",
+      "bytes": 201365
+    },
+    "ui.lua": {
+      "sha256": "928b73e0e0b7cec5cc559135f36c0f35287987587b39f2a1d346467011e1b93e",
+      "bytes": 1934
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

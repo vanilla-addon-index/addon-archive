@@ -1,0 +1,377 @@
+-- HealBot Options panel file: HealBot_Options_General.lua
+-- Split from original HealBot_Options.lua
+
+-- HealBot_Options_ShowHeaders_OnLoad: UI handler for OnLoad options panel.
+function HealBot_Options_ShowHeaders_OnLoad(this)
+  getglobal(this:GetName().."Text"):SetText(HEALBOT_OPTIONS_SHOWHEADERS);
+end
+-- HealBot_Options_ShowHeaders_OnClick: UI handler for OnClick options panel.
+function HealBot_Options_ShowHeaders_OnClick(this)
+  local isChecked = this:GetChecked()
+  HealBot_Config.ShowHeader[HealBot_Config.Current_Skin] = isChecked and 1 or 0;
+  HealBot_Action_ResetSkin()
+end
+-- HealBot_Options_BarTextureS_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_BarTextureS_OnValueChanged(this)
+  HealBot_Config.btexture[HealBot_Config.Current_Skin] = this:GetValue();
+  getglobal(this:GetName().."Text"):SetText(this.text .. ": " .. this:GetValue());
+  HealBot_Action_ResetSkin()
+end
+-- HealBot_Options_BarHeightS_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_BarHeightS_OnValueChanged(this)
+  HealBot_Config.bheight[HealBot_Config.Current_Skin] = this:GetValue();
+  getglobal(this:GetName().."Text"):SetText(this.text .. ": " .. this:GetValue());
+  HealBot_Action_ResetSkin()
+end
+-- HealBot_Options_BarWidthS_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_BarWidthS_OnValueChanged(this)
+  HealBot_Config.bwidth[HealBot_Config.Current_Skin] = this:GetValue();
+  getglobal(this:GetName().."Text"):SetText(this.text .. ": " .. this:GetValue());
+  HealBot_Action_ResetSkin()
+end
+-- HealBot_Options_BarNumColsS_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_BarNumColsS_OnValueChanged(this)
+  HealBot_Config.numcols[HealBot_Config.Current_Skin] = this:GetValue();
+  getglobal(this:GetName().."Text"):SetText(this.text .. ": " .. this:GetValue());
+  HealBot_Action_ResetSkin()
+end
+-- HealBot_Options_BarBRSpaceS_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_BarBRSpaceS_OnValueChanged(this)
+  HealBot_Config.brspace[HealBot_Config.Current_Skin] = this:GetValue();
+  getglobal(this:GetName().."Text"):SetText(this.text .. ": " .. this:GetValue());
+  HealBot_Action_ResetSkin()
+end
+-- HealBot_Options_BarBCSpaceS_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_BarBCSpaceS_OnValueChanged(this)
+  HealBot_Config.bcspace[HealBot_Config.Current_Skin] = this:GetValue();
+  getglobal(this:GetName().."Text"):SetText(this.text .. ": " .. this:GetValue());
+  HealBot_Action_ResetSkin()
+end
+-- HealBot_Options_FontHeight_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_FontHeight_OnValueChanged(this)
+  HealBot_Config.btextheight[HealBot_Config.Current_Skin] = this:GetValue();
+  getglobal(this:GetName().."Text"):SetText(this.text .. ": " .. this:GetValue());
+  HealBot_Action_ResetSkin()
+end
+-- HealBot_Options_IconSizeS_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_IconSizeS_OnValueChanged(this)
+  HealBot_Config.biconsize[HealBot_Config.Current_Skin] = this:GetValue();
+  getglobal(this:GetName().."Text"):SetText(this.text .. ": " .. this:GetValue());
+  HealBot_Action_ResetSkin()
+end
+-- HealBot_Options_AbortBarSize_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_AbortBarSize_OnValueChanged(this)
+  HealBot_Config.abortsize[HealBot_Config.Current_Skin] = this:GetValue();
+  getglobal(this:GetName().."Text"):SetText(this.text .. ": " .. this:GetValue());
+  HealBot_Action_ResetSkin()
+end
+-- HealBot_Options_ActionAlpha_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_ActionAlpha_OnValueChanged(this)
+  HealBot_Config.backcola[HealBot_Config.Current_Skin] = HealBot_Options_Pct_OnValueChanged(this);
+  HealBot_Action_ResetSkin()
+end
+-- HealBot_Options_BarAlpha_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_BarAlpha_OnValueChanged(this)
+  HealBot_Config.Barcola[HealBot_Config.Current_Skin] = HealBot_Options_Pct_OnValueChanged(this);
+  HealBot_Action_ResetSkin()
+end
+-- HealBot_Options_BarAlphaInHeal_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_BarAlphaInHeal_OnValueChanged(this)
+  HealBot_Config.BarcolaInHeal[HealBot_Config.Current_Skin] = HealBot_Options_Pct_OnValueChanged(this);
+  HealBot_Action_ResetSkin()
+end
+-- HealBot_Options_BarAlphaDis_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_BarAlphaDis_OnValueChanged(this)
+  HealBot_Config.bardisa[HealBot_Config.Current_Skin] = HealBot_Options_Pct_OnValueChanged(this);
+  HealBot_Action_ResetSkin()
+end
+-- HealBot_SkinColorpick_OnClick: Opens color picker for skin customization.
+function HealBot_SkinColorpick_OnClick(SkinType)
+  HealBot_ColourObjWaiting=SkinType;
+
+  if SkinType=="En" then
+    HealBot_UseColourPick(HealBot_Config.btextenabledcolr[HealBot_Config.Current_Skin],
+                          HealBot_Config.btextenabledcolg[HealBot_Config.Current_Skin],
+                          HealBot_Config.btextenabledcolb[HealBot_Config.Current_Skin],
+                          HealBot_Config.btextenabledcola[HealBot_Config.Current_Skin]);
+  elseif SkinType=="Dis" then
+    HealBot_UseColourPick(HealBot_Config.btextdisbledcolr[HealBot_Config.Current_Skin],
+                          HealBot_Config.btextdisbledcolg[HealBot_Config.Current_Skin],
+                          HealBot_Config.btextdisbledcolb[HealBot_Config.Current_Skin],
+                          HealBot_Config.btextdisbledcola[HealBot_Config.Current_Skin])
+  elseif SkinType=="Debuff" then
+    HealBot_UseColourPick(HealBot_Config.btextcursecolr[HealBot_Config.Current_Skin],
+                          HealBot_Config.btextcursecolg[HealBot_Config.Current_Skin],
+                          HealBot_Config.btextcursecolb[HealBot_Config.Current_Skin],
+                          HealBot_Config.btextcursecola[HealBot_Config.Current_Skin])
+  elseif SkinType=="Back" then
+    HealBot_UseColourPick(HealBot_Config.backcolr[HealBot_Config.Current_Skin],
+                          HealBot_Config.backcolg[HealBot_Config.Current_Skin],
+                          HealBot_Config.backcolb[HealBot_Config.Current_Skin],
+                          HealBot_Config.backcola[HealBot_Config.Current_Skin])
+  elseif SkinType=="Bor" then
+    HealBot_UseColourPick(HealBot_Config.borcolr[HealBot_Config.Current_Skin],
+                          HealBot_Config.borcolg[HealBot_Config.Current_Skin],
+                          HealBot_Config.borcolb[HealBot_Config.Current_Skin],
+                          HealBot_Config.borcola[HealBot_Config.Current_Skin])
+  elseif SkinType=="Abort" then
+    HealBot_UseColourPick(HealBot_Config.babortcolr[HealBot_Config.Current_Skin],
+                          HealBot_Config.babortcolg[HealBot_Config.Current_Skin],
+                          HealBot_Config.babortcolb[HealBot_Config.Current_Skin],
+                          HealBot_Config.babortcola[HealBot_Config.Current_Skin])
+  elseif SkinType=="MaxHP" then
+    local r = HealBot_Config.bcolormaxr and HealBot_Config.bcolormaxr[HealBot_Config.Current_Skin] or 0.0
+    local g = HealBot_Config.bcolormaxg and HealBot_Config.bcolormaxg[HealBot_Config.Current_Skin] or 1.0
+    local b = HealBot_Config.bcolormaxb and HealBot_Config.bcolormaxb[HealBot_Config.Current_Skin] or 0.0
+    HealBot_UseColourPick(r, g, b, 1.0)
+  elseif SkinType=="MinHP" then
+    local r = HealBot_Config.bcolorminr and HealBot_Config.bcolorminr[HealBot_Config.Current_Skin] or 1.0
+    local g = HealBot_Config.bcolorming and HealBot_Config.bcolorming[HealBot_Config.Current_Skin] or 0.0
+    local b = HealBot_Config.bcolorminb and HealBot_Config.bcolorminb[HealBot_Config.Current_Skin] or 0.0
+    HealBot_UseColourPick(r, g, b, 1.0)
+  end
+end
+-- HealBot_SetSkinColours: Applies skin configuration to UI elements.
+function HealBot_SetSkinColours()
+  -- Cache the current skin configuration for performance and readability
+  local skin = HealBot_Config.Current_Skin
+  local btextheight = HealBot_Config.btextheight[skin] or 10
+  
+  -- 1. Set Status Bar Colors (Green with variations based on configuration)
+  local alpha = HealBot_Config.Barcola[skin]
+  local inHealAlpha = alpha * (HealBot_Config.BarcolaInHeal[skin] or 1)
+  local disabledAlpha = HealBot_Config.bardisa[skin]
+
+  HealBot_EnTextColorpick:SetStatusBarColor(0, 1, 0, alpha)
+  HealBot_EnTextColorpickin:SetStatusBarColor(0, 1, 0, inHealAlpha)
+  HealBot_DisTextColorpick:SetStatusBarColor(0, 1, 0, disabledAlpha)
+
+  local maxR = HealBot_Config.bcolormaxr and HealBot_Config.bcolormaxr[skin] or 0.0
+  local maxG = HealBot_Config.bcolormaxg and HealBot_Config.bcolormaxg[skin] or 1.0
+  local maxB = HealBot_Config.bcolormaxb and HealBot_Config.bcolormaxb[skin] or 0.0
+  if HealBot_MaxHPColorpick then
+    HealBot_MaxHPColorpick:SetStatusBarColor(maxR, maxG, maxB, 1.0)
+  end
+
+  local minR = HealBot_Config.bcolorminr and HealBot_Config.bcolorminr[skin] or 1.0
+  local minG = HealBot_Config.bcolorming and HealBot_Config.bcolorming[skin] or 0.0
+  local minB = HealBot_Config.bcolorminb and HealBot_Config.bcolorminb[skin] or 0.0
+  if HealBot_MinHPColorpick then
+    HealBot_MinHPColorpick:SetStatusBarColor(minR, minG, minB, 1.0)
+  end
+
+  -- 2. Set Text Colors
+  HealBot_EnTextColorpickt:SetTextColor(
+    HealBot_Config.btextenabledcolr[skin], HealBot_Config.btextenabledcolg[skin], 
+    HealBot_Config.btextenabledcolb[skin], HealBot_Config.btextenabledcola[skin]
+  )
+  HealBot_DisTextColorpickt:SetTextColor(
+    HealBot_Config.btextdisbledcolr[skin], HealBot_Config.btextdisbledcolg[skin], 
+    HealBot_Config.btextdisbledcolb[skin], HealBot_Config.btextdisbledcola[skin]
+  )
+  HealBot_DebTextColorpickt:SetTextColor(
+    HealBot_Config.btextcursecolr[skin], HealBot_Config.btextcursecolg[skin], 
+    HealBot_Config.btextcursecolb[skin], HealBot_Config.btextcursecola[skin]
+  )
+
+  -- 3. Set Preview Component Colors
+  local bgR, bgG, bgB, bgA = HealBot_Config.backcolr[skin], HealBot_Config.backcolg[skin], HealBot_Config.backcolb[skin], HealBot_Config.backcola[skin]
+  local borderR, borderG, borderB, borderA = HealBot_Config.borcolr[skin], HealBot_Config.borcolg[skin], HealBot_Config.borcolb[skin], HealBot_Config.borcola[skin]
+
+  HealBot_BackgroundColorpick:SetStatusBarColor(bgR, bgG, bgB, bgA)
+  HealBot_BorderColorpick:SetStatusBarColor(borderR, borderG, borderB, borderA)
+  HealBot_AbortColorpick:SetStatusBarColor(
+    HealBot_Config.babortcolr[skin], HealBot_Config.babortcolg[skin], 
+    HealBot_Config.babortcolb[skin], HealBot_Config.babortcola[skin]
+  )
+
+  -- 4. Setup Main Panel Backdrop (Fixed scoping bugs)
+  local borderStyle = HealBot_Config.bborder[skin] or 2
+  local backdrop = {
+    bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+    tile = true, 
+    tileSize = 8,
+  }
+
+  if borderStyle == 0 then
+    -- No border
+    backdrop.edgeFile = "Interface\\Buttons\\WHITE8X8"
+    backdrop.edgeSize = 1
+    backdrop.insets = { left = 1, right = 1, top = 1, bottom = 1 }
+    HealBot_Action:SetBackdrop(backdrop)
+    HealBot_Action:SetBackdropBorderColor(0, 0, 0, 0)
+    HealBot_Action:SetBackdropColor(bgR, bgG, bgB, bgA)
+
+  elseif borderStyle == 1 then
+    -- Custom flat border
+    local bboffset = (HealBot_Config.bboffset and HealBot_Config.bboffset[skin]) or 1
+    local bpadding = (HealBot_Config.bpadding and HealBot_Config.bpadding[skin]) or 10
+    
+    backdrop.edgeFile = "Interface\\Buttons\\WHITE8X8"
+    backdrop.edgeSize = bboffset
+    backdrop.insets = { left = bpadding, right = bpadding, top = bpadding, bottom = bpadding }
+    
+    HealBot_Action:SetBackdrop(backdrop)
+    HealBot_Action:SetBackdropColor(bgR, bgG, bgB, bgA)
+    HealBot_Action:SetBackdropBorderColor(borderR, borderG, borderB, borderA)
+
+  else
+    -- Default Blizzard Tooltip Border
+    backdrop.edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border"
+    backdrop.edgeSize = 16
+    backdrop.insets = { left = 4, right = 4, top = 4, bottom = 4 }
+    
+    HealBot_Action:SetBackdrop(backdrop)
+    HealBot_Action:SetBackdropColor(bgR, bgG, bgB, bgA)
+    HealBot_Action:SetBackdropBorderColor(borderR, borderG, borderB, borderA)
+  end
+
+  -- 5. Update Text Labels
+  local bfont = (HealBot_Config.bfont and HealBot_Config.bfont[skin]) or "Fonts\\FRIZQT__.TTF"
+  local fontOutline = (HealBot_Config.bfontoutline and HealBot_Config.bfontoutline[skin]) or 0
+  local expectedFlags = fontOutline == 1 and "OUTLINE" or ""
+
+  if HealBot_EnTextColorpickt then
+    HealBot_EnTextColorpickt:SetFont(bfont, btextheight, expectedFlags)
+    HealBot_EnTextColorpickt:SetText(HEALBOT_SKIN_ENTEXT)
+  end
+  if HealBot_DisTextColorpickt then
+    HealBot_DisTextColorpickt:SetFont(bfont, btextheight, expectedFlags)
+    HealBot_DisTextColorpickt:SetText(HEALBOT_SKIN_DISTEXT)
+  end
+  if HealBot_DebTextColorpickt then
+    HealBot_DebTextColorpickt:SetFont(bfont, btextheight, expectedFlags)
+    HealBot_DebTextColorpickt:SetText(HEALBOT_SKIN_DEBTEXT)
+  end
+  if HealBot_MaxHPColorpickt then
+    HealBot_MaxHPColorpickt:SetFont(bfont, btextheight, expectedFlags)
+    HealBot_MaxHPColorpickt:SetText(HEALBOT_SKIN_MAXHPTEXT or "Max HP")
+  end
+  if HealBot_MinHPColorpickt then
+    HealBot_MinHPColorpickt:SetFont(bfont, btextheight, expectedFlags)
+    HealBot_MinHPColorpickt:SetText(HEALBOT_SKIN_MINHPTEXT or "Min HP")
+  end
+
+  -- 6. Force UI redraw (Kept the scale hack since it addresses a specific engine quirk)
+  local barScale = HealBot_EnTextColorpick:GetScale()
+  HealBot_EnTextColorpick:SetScale(barScale + 0.01); HealBot_EnTextColorpick:SetScale(barScale)
+  HealBot_DisTextColorpick:SetScale(barScale + 0.01); HealBot_DisTextColorpick:SetScale(barScale)
+  HealBot_DebTextColorpick:SetScale(barScale + 0.01); HealBot_DebTextColorpick:SetScale(barScale)
+     
+  HealBot_Action_PartyChanged()
+end
+-- HealBot_Options_AlertLevel_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_AlertLevel_OnValueChanged(this)
+  HealBot_Config.AlertLevel = HealBot_Options_Pct_OnValueChanged(this);
+  HealBot_Action_Refresh();
+end
+-- HealBot_Options_AutoShow_OnLoad: UI handler for OnLoad options panel.
+function HealBot_Options_AutoShow_OnLoad(this)
+  getglobal(this:GetName().."Text"):SetText(HEALBOT_OPTIONS_AUTOSHOW);
+end
+-- HealBot_Options_AutoShow_OnClick: UI handler for OnClick options panel.
+function HealBot_Options_AutoShow_OnClick(this)
+  HealBot_Config.AutoClose = this:GetChecked() or 0;
+  HealBot_Action_Refresh();
+end
+-- HealBot_Options_PanelSounds_OnLoad: UI handler for OnLoad options panel.
+function HealBot_Options_PanelSounds_OnLoad(this)
+  getglobal(this:GetName().."Text"):SetText(HEALBOT_OPTIONS_PANELSOUNDS);
+end
+-- HealBot_Options_PanelSounds_OnClick: UI handler for OnClick options panel.
+function HealBot_Options_PanelSounds_OnClick(this)
+  HealBot_Config.PanelSounds = this:GetChecked() or 0;
+end
+-- HealBot_Options_ActionMouseover_OnLoad: UI handler for OnLoad options panel.
+function HealBot_Options_ActionMouseover_OnLoad(this, text)
+  getglobal(this:GetName().."Text"):SetText(text);
+end
+-- HealBot_Options_ActionMouseover_OnClick: UI handler for OnClick options panel.
+function HealBot_Options_ActionMouseover_OnClick(this)
+  HealBot_Config.ActionMouseover = this:GetChecked() or 0;
+end
+-- HealBot_Options_ActionLocked_OnLoad: UI handler for OnLoad options panel.
+function HealBot_Options_ActionLocked_OnLoad(this)
+  getglobal(this:GetName().."Text"):SetText(HEALBOT_OPTIONS_ACTIONLOCKED);
+end
+-- HealBot_Options_ActionLocked_OnClick: UI handler for OnClick options panel.
+function HealBot_Options_ActionLocked_OnClick(this)
+  HealBot_Config.ActionLocked = this:GetChecked() or 0;
+end
+-- HealBot_Options_HideOptions_OnLoad: UI handler for OnLoad options panel.
+function HealBot_Options_HideOptions_OnLoad(this,text)
+  getglobal(this:GetName().."Text"):SetText(text);
+end
+-- HealBot_Options_HideOptions_OnClick: UI handler for OnClick options panel.
+function HealBot_Options_HideOptions_OnClick(this)
+  HealBot_Config.HideOptions = this:GetChecked() or 0;
+  HealBot_Action_PartyChanged();
+end
+-- HealBot_Options_HideAbort_OnLoad: UI handler for OnLoad options panel.
+function HealBot_Options_HideAbort_OnLoad(this,text)
+  getglobal(this:GetName().."Text"):SetText(text);
+end
+-- HealBot_Options_HideAbort_OnClick: UI handler for OnClick options panel.
+function HealBot_Options_HideAbort_OnClick(this)
+  HealBot_Config.HideAbort = this:GetChecked() or 0;
+  HealBot_Action_PartyChanged();
+end
+-- HealBot_Options_GrowUpwards_OnLoad: UI handler for OnLoad options panel.
+function HealBot_Options_GrowUpwards_OnLoad(this,text)
+  getglobal(this:GetName().."Text"):SetText(text);
+end
+-- HealBot_Options_GrowUpwards_OnClick: UI handler for OnClick options panel.
+function HealBot_Options_GrowUpwards_OnClick(this)
+  HealBot_Config.GrowUpwards = this:GetChecked() or 0;
+  HealBot_Action_PartyChanged();
+end
+-- HealBot_Options_QualityRange_OnLoad: UI handler for OnLoad options panel.
+function HealBot_Options_QualityRange_OnLoad(this,text)
+  getglobal(this:GetName().."Text"):SetText(text);
+end
+-- HealBot_Options_QualityRange_OnClick: UI handler for OnClick options panel.
+function HealBot_Options_QualityRange_OnClick(this)
+  HealBot_Config.QualityRange = this:GetChecked() or 0;
+end
+-- HealBot_Options_ProtectPvP_OnLoad: UI handler for OnLoad options panel.
+function HealBot_Options_ProtectPvP_OnLoad(this,text)
+  getglobal(this:GetName().."Text"):SetText(text);
+end
+-- HealBot_Options_ProtectPvP_OnClick: UI handler for OnClick options panel.
+function HealBot_Options_ProtectPvP_OnClick(this)
+  HealBot_Config.ProtectPvP = this:GetChecked() or 0;
+end
+-- HealBot_Options_FramePaddingS_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_FramePaddingS_OnValueChanged(this)
+  if not HealBot_Config.bpadding then HealBot_Config.bpadding = {} end
+  HealBot_Config.bpadding[HealBot_Config.Current_Skin] = this:GetValue();
+  getglobal(this:GetName().."Text"):SetText(this.text .. ": " .. this:GetValue());
+  HealBot_Action_ResetSkin()
+end
+-- HealBot_Options_BorderThicknessS_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_BorderThicknessS_OnValueChanged(this)
+  if not HealBot_Config.bboffset then HealBot_Config.bboffset = {} end
+  HealBot_Config.bboffset[HealBot_Config.Current_Skin] = this:GetValue();
+  getglobal(this:GetName().."Text"):SetText(this.text .. ": " .. this:GetValue());
+  HealBot_Action_ResetSkin()
+end
+
+-- HealBot_Options_HideParty_OnLoad: UI handler for OnLoad options panel.
+function HealBot_Options_HideParty_OnLoad(this, text)
+  getglobal(this:GetName().."Text"):SetText(text);
+end
+
+-- HealBot_Options_HideParty_OnClick: UI handler for OnClick options panel.
+function HealBot_Options_HideParty_OnClick(this)
+  HealBot_Config.HideParty = this:GetChecked() or 0;
+  HealBot_Options_TogglePartyFrames();
+end
+
+-- HealBot_Options_TogglePartyFrames: UI handler for TogglePartyFrames options panel.
+function HealBot_Options_TogglePartyFrames()
+  if HealBot_Config.HideParty == 1 then
+    if HidePartyFrame then HidePartyFrame(); end
+  else
+    if ShowPartyFrame then ShowPartyFrame(); end
+  end
+end

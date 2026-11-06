@@ -1,0 +1,519 @@
+RollFor = RollFor or {}
+local m = RollFor
+
+if m.RollingPopupContentTransformer then return end
+
+local M = m.Module.new( "RollingPopupContentTransformer" )
+
+local RT = m.Types.RollType ---@type RT
+local RS = m.Types.RollingStrategy ---@type RS
+
+local getn = m.getn
+local c = m.colorize_player_by_class
+local blue = m.colors.blue
+local red = m.colors.red
+local r = m.roll_type_color
+
+---@param label string
+---@param width number
+local function button_definition( label, width )
+  return { type = "button", label = label, width = width }
+end
+
+M.button_definitions = {
+  [ "AwardOther" ] = button_definition( "...", 40 ),
+  [ "AwardWinner" ] = button_definition( "Award", 75 ),
+  [ "Cancel" ] = button_definition( "Cancel", 80 ),
+  [ "Close" ] = button_definition( "Close", 70 ),
+  [ "FinishEarly" ] = button_definition( "Finish early", 110 ),
+  [ "InstaRaidRoll" ] = button_definition( "Raid roll", 90 ),
+  [ "RaidRoll" ] = button_definition( "Raid roll", 90 ),
+  [ "RaidRollAgain" ] = button_definition( "Raid roll again", 130 ),
+  [ "Roll" ] = button_definition( "Roll", 60 ),
+  [ "MS" ] = button_definition( "MS", 50 ),
+  [ "OS" ] = button_definition( "OS", 50 )
+}
+
+local top_padding = 11
+
+-- Roll types that collapse into a single row per player, one cell per roll. Everything
+-- else keeps the one-line-per-roll shape, because its per-row roll-type label is what
+-- distinguishes the lines.
+local groupable_roll_types = {
+  [ RT.SoftRes ] = true
+}
+
+-- The number of cells the widest grouped row needs. It has to be uniform across the
+-- whole popup, or the name column shifts between the main roll list and the tie list.
+---@param rolls RollData[]
+---@param current number?
+---@return number
+local function max_cell_count( rolls, current )
+  local result = current or 0
+  local counts = {}
+
+  for i = 1, getn( rolls ) do
+    local roll = rolls[ i ]
+
+    if groupable_roll_types[ roll.roll_type ] then
+      local count = (counts[ roll.player_name ] or 0) + 1
+      counts[ roll.player_name ] = count
+      if count > result then result = count end
+    end
+  end
+
+  return result
+end
+
+---@param a table
+---@param b table
+local function by_cast_order( a, b )
+  if a.ordinal and b.ordinal then return a.ordinal < b.ordinal end
+  if a.ordinal then return true end
+  if b.ordinal then return false end
+
+  -- Both cells are pending, and they are interchangeable, so neither leads.
+  return false
+end
+
+-- Cells arrive sorted by value (that's how the roll data is sorted), but a row reads in
+-- cast order with the pending cells trailing. The best cell is marked for emphasis
+-- instead, which is what makes the row ordering legible.
+---@param row table
+local function finalize_row( row )
+  table.sort( row.rolls, by_cast_order )
+
+  local best_roll
+
+  for i, cell in ipairs( row.rolls ) do
+    if cell.roll and (not best_roll or cell.roll > best_roll) then
+      best_roll = cell.roll
+      row.best_index = i
+    end
+
+    cell.ordinal = nil -- internal sort key; not part of the rendered cell
+  end
+end
+
+---@alias RollingPopupButtonType
+---| "Roll"
+---| "AwardWinner"
+---| "AwardOther"
+---| "RaidRoll"
+---| "InstaRaidRoll"
+---| "RaidRollAgain"
+---| "Close"
+---| "FinishEarly"
+---| "Cancel"
+
+---@class RollingPopupContentTransformer
+---@field transform fun( data: RollingPopupData ): table
+
+---@param config Config
+---@diagnostic disable-next-line: unused-local
+function M.new( config )
+  ---@param on_click fun()
+  local function award_winner_button( on_click )
+    return { type = "award_button", label = "Award", width = 90, on_click = on_click, padding = 6 }
+  end
+
+  ---@param content table
+  ---@param message string
+  ---@param padding number?
+  local function add_text( content, message, padding )
+    table.insert( content, { type = "text", value = message, padding = padding } )
+  end
+
+  ---@param content table
+  ---@param height number
+  ---@param padding number?
+  local function add_empty_line( content, height, padding )
+    table.insert( content, { type = "empty_line", height = height, padding = padding } )
+  end
+
+  ---@param content table
+  ---@param item_link ItemLink
+  ---@param item_tooltip_link TooltipItemLink
+  ---@param item_texture ItemTexture
+  ---@param item_count number
+  ---@param item_quantity number
+  local function add_item( content, item_link, item_tooltip_link, item_texture, item_count, item_quantity )
+    table.insert( content, {
+      type = "item_link_with_icon",
+      link = item_link,
+      tooltip_link = item_tooltip_link,
+      texture = item_texture,
+      count = item_count,
+      quantity = item_quantity,
+      padding = 5
+    } )
+  end
+
+  ---@param content table
+  local function add_hr_info( content )
+    table.insert( content, { type = "text", value = string.format( "This item is %s.", red( "hard-ressed" ) ), padding = top_padding } )
+  end
+
+  ---@param result table
+  ---@param rolls RollData[]
+  ---@param cell_count number? -- precomputed so it stays uniform across popup sections
+  local function add_rolls( result, rolls, cell_count )
+    M.debug.add( "rolls_content" )
+
+    cell_count = cell_count or max_cell_count( rolls )
+
+    local rows = {}
+    local grouped = {}
+
+    for i = 1, getn( rolls ) do
+      local roll = rolls[ i ]
+      local padding = i == 1 and top_padding or nil
+
+      if groupable_roll_types[ roll.roll_type ] then
+        local row = rows[ roll.player_name ]
+
+        -- The input is already sorted best-roll-first, so first-sighting order is row order.
+        if not row then
+          row = {
+            type = "roll",
+            player_name = roll.player_name,
+            player_class = roll.player_class,
+            rolls = {},
+            cell_count = cell_count,
+            adjustment = roll.adjustment,
+            padding = padding
+          }
+
+          rows[ roll.player_name ] = row
+          table.insert( grouped, row )
+          table.insert( result, row )
+        end
+
+        table.insert( row.rolls, { roll_type = roll.roll_type, roll = roll.roll, ordinal = roll.ordinal, adjustments = roll.adjustments } )
+      else
+        table.insert( result, {
+          type = "roll",
+          roll_type = roll.roll_type,
+          player_name = roll.player_name,
+          player_class = roll.player_class,
+          roll = roll.roll,
+          padding = padding
+        } )
+      end
+    end
+
+    for _, row in ipairs( grouped ) do
+      finalize_row( row )
+    end
+  end
+
+  ---@param content table
+  ---@param player string
+  ---@param padding number
+  local function add_raid_roll_winner_new( content, player, padding )
+    M.debug.add( "add_insta_raid_roll_winner" )
+    table.insert( content, { type = "text", value = string.format( "%s wins the %s.", player, blue( "raid-roll" ) ), padding = padding } )
+  end
+
+  ---@param content table
+  ---@param player string
+  ---@param roll_type RollType
+  ---@param winning_roll number?
+  ---@param padding number
+  local function add_roll_winner_new( content, player, roll_type, winning_roll, strategy, padding )
+    M.debug.add( "add_roll_winner" )
+    local roll = winning_roll and blue( winning_roll )
+
+    if roll then
+      table.insert( content,
+        { type = "text", value = string.format( "%s wins the %s roll with %s.", player, r( roll_type ), roll ), padding = padding } )
+    elseif strategy == RS.SoftResRoll or roll_type == RT.SoftRes then
+      local soft_ressed = r( RT.SoftRes, "soft-ressed" )
+      table.insert( content, { type = "text", value = string.format( "%s %s this item.", player, soft_ressed ), padding = padding or top_padding } )
+    else
+      table.insert( content, { type = "text", value = string.format( "%s %s win the roll.", player, red( "did not" ) ), padding = padding } )
+    end
+  end
+
+  ---@param content table
+  ---@param winners WinnerWithAwardCallback[]
+  ---@param strategy_type RollingStrategyType
+  local function add_winners( content, winners, strategy_type )
+    local was_there_award_button = false
+
+    for i, winner in ipairs( winners ) do
+      local player = c( winner.name, winner.class )
+      local padding = i == 1 and 11 or was_there_award_button and 8 or 2
+
+      if strategy_type == RS.InstaRaidRoll or strategy_type == RS.RaidRoll then
+        add_raid_roll_winner_new( content, player, padding )
+      else
+        add_roll_winner_new( content, player, winner.roll_type, winner.roll, strategy_type, padding )
+      end
+
+      if winner.award_callback then
+        table.insert( content, award_winner_button( winner.award_callback ) )
+        was_there_award_button = true
+      else
+        was_there_award_button = false
+      end
+    end
+  end
+
+  ---@param content table
+  ---@param buttons RollingPopupButtonWithCallback[]
+  local function add_buttons( content, buttons )
+    for _, button in ipairs( buttons ) do
+      local definition = M.button_definitions[ button.type ]
+      if not definition then error( string.format( "Unsupported button type: %s", button.type or "nil" ) ) end
+
+      if not button.should_display_callback or button.should_display_callback() then
+        table.insert( content, {
+          type = definition.type,
+          label = definition.label,
+          width = definition.width,
+          on_click = button.callback
+        } )
+      end
+    end
+  end
+
+  ---@class RollingPopupItemData
+  ---@field item_link ItemLink
+  ---@field item_tooltip_link TooltipItemLink
+  ---@field item_texture ItemTexture
+  ---@field item_count number
+  ---@field item_quantity number
+  ---@field buttons RollingPopupButtonWithCallback[]
+  ---@field type "Item"
+
+  ---@param data RollingPopupItemData
+  local function item_content( data )
+    local content = {}
+    add_item( content, data.item_link, data.item_tooltip_link, data.item_texture, data.item_count, data.item_quantity )
+    add_buttons( content, data.buttons )
+    return content
+  end
+
+  ---@class RollingPopupPreviewData
+  ---@field item_link ItemLink
+  ---@field item_tooltip_link TooltipItemLink
+  ---@field item_texture ItemTexture
+  ---@field item_count number
+  ---@field item_quantity number
+  ---@field hard_ressed boolean
+  ---@field winners WinnerWithAwardCallback[]
+  ---@field rolls RollData[]
+  ---@field strategy_type RollingStrategyType
+  ---@field buttons RollingPopupButtonWithCallback[]
+  ---@field type "Preview"
+
+  ---@param data RollingPopupPreviewData
+  local function preview_content( data )
+    local content = {}
+
+    add_item( content, data.item_link, data.item_tooltip_link, data.item_texture, data.item_count, data.item_quantity )
+
+    if data.hard_ressed then
+      add_hr_info( content )
+    else
+      add_rolls( content, data.rolls )
+      add_winners( content, data.winners, data.strategy_type )
+    end
+
+    add_buttons( content, data.buttons )
+
+    return content
+  end
+
+  ---@class RollingPopupRaidRollData
+  ---@field item_link ItemLink
+  ---@field item_tooltip_link TooltipItemLink
+  ---@field item_texture ItemTexture
+  ---@field item_count number
+  ---@field item_quantity number
+  ---@field winners WinnerWithAwardCallback[]
+  ---@field buttons RollingPopupButtonWithCallback[]
+  ---@field type "RaidRoll"
+
+  ---@param data RollingPopupRaidRollData
+  local function insta_raid_roll_content( data )
+    local content = {}
+
+    add_item( content, data.item_link, data.item_tooltip_link, data.item_texture, data.item_count, data.item_quantity )
+    add_winners( content, data.winners, "InstaRaidRoll" )
+    add_buttons( content, data.buttons )
+
+    return content
+  end
+
+  ---@param content table
+  ---@param seconds_left number
+  local function seconds_left_content( content, seconds_left )
+    local color = m.interpolate_color( seconds_left )
+    local seconds = m.colorize( color, seconds_left )
+    add_text( content, string.format( "Rolling ends in %s second%s.", seconds, seconds_left == 1 and "" or "s" ), top_padding )
+  end
+
+  ---@class RollingPopupRollData
+  ---@field item_link ItemLink
+  ---@field item_tooltip_link TooltipItemLink
+  ---@field item_texture ItemTexture
+  ---@field item_count number
+  ---@field item_quantity number
+  ---@field seconds_left number?
+  ---@field rolls RollData[]
+  ---@field winners WinnerWithAwardCallback[]
+  ---@field buttons RollingPopupButtonWithCallback[]
+  ---@field strategy_type RollingStrategyType
+  ---@field waiting_for_rolls boolean?
+  ---@field type "Roll"
+
+  ---@param data RollingPopupRollData
+  local function roll_content( data )
+    local content = {}
+
+    add_item( content, data.item_link, data.item_tooltip_link, data.item_texture, data.item_count, data.item_quantity )
+
+    if not data.seconds_left and getn( data.rolls ) == 0 and getn( data.winners ) == 0 then
+      add_text( content, "Rolling finished. No one rolled.", top_padding )
+    else
+      add_rolls( content, data.rolls )
+    end
+
+    -- Winners already decided before/independently of the countdown (e.g. soft-ressers
+    -- who each won a copy outright while the leftover goes to a normal roll) are listed
+    -- ahead of the "Rolling ends in..." line.
+    add_winners( content, data.winners, data.strategy_type )
+
+    if data.seconds_left then seconds_left_content( content, data.seconds_left ) end
+
+    if data.waiting_for_rolls then
+      add_text( content, "Waiting for remaining rolls...", top_padding )
+    end
+
+    add_buttons( content, data.buttons )
+
+    return content
+  end
+
+  ---@class RollingPopupRollingCanceledData
+  ---@field item_link ItemLink
+  ---@field item_tooltip_link TooltipItemLink
+  ---@field item_texture ItemTexture
+  ---@field item_count number
+  ---@field item_quantity number
+  ---@field buttons RollingPopupButtonWithCallback[]
+  ---@field type "RollingCanceled"
+
+  ---@param data RollingPopupRollingCanceledData
+  local function rolling_canceled_content( data )
+    local content = {}
+
+    add_item( content, data.item_link, data.item_tooltip_link, data.item_texture, data.item_count, data.item_quantity )
+    add_text( content, "Rolling was canceled.", top_padding )
+    add_buttons( content, data.buttons )
+
+    return content
+  end
+
+  ---@class RollingPopupRaidRollingData
+  ---@field item_link ItemLink
+  ---@field item_tooltip_link TooltipItemLink
+  ---@field item_texture ItemTexture
+  ---@field item_count number
+  ---@field item_quantity number
+  ---@field type "RaidRolling"
+
+  ---@param data RollingPopupRaidRollingData
+  local function raid_rolling_content( data )
+    local content = {}
+
+    add_item( content, data.item_link, data.item_tooltip_link, data.item_texture, data.item_count, data.item_quantity )
+    add_text( content, "Raid rolling...", top_padding )
+    add_empty_line( content, config.classic_look() and 11 or 0, config.classic_look() and 0 or -2 )
+
+    return content
+  end
+
+  ---@class TieIteration
+  ---@field tied_roll number
+  ---@field rolls RollData[]
+
+  ---@class RollingPopupTieData
+  ---@field roll_data RollingPopupRollData
+  ---@field tie_iterations TieIteration[]
+  ---@field type "Tie"
+
+  ---@param data RollingPopupTieData
+  local function tie_content( data )
+    local content = {}
+
+    add_item( content, data.roll_data.item_link, data.roll_data.item_tooltip_link, data.roll_data.item_texture, data.roll_data.item_count, data.roll_data.item_quantity )
+
+    local cell_count = max_cell_count( data.roll_data.rolls )
+
+    for _, iteration in ipairs( data.tie_iterations ) do
+      cell_count = max_cell_count( iteration.rolls, cell_count )
+    end
+
+    add_rolls( content, data.roll_data.rolls, cell_count )
+
+    for _, iteration in ipairs( data.tie_iterations ) do
+      add_text( content, string.format( "There was a tie (%s):", blue( iteration.tied_roll ) ), top_padding )
+      add_rolls( content, iteration.rolls, cell_count )
+    end
+
+    if data.roll_data.waiting_for_rolls then
+      add_text( content, "Waiting for remaining rolls...", top_padding )
+    elseif getn( data.roll_data.winners ) == 0 then
+      add_empty_line( content, 10 )
+    else
+      add_winners( content, data.roll_data.winners, data.roll_data.strategy_type )
+    end
+
+    add_buttons( content, data.roll_data.buttons )
+
+    return content
+  end
+
+  ---@param data RollingPopupItemData|RollingPopupPreviewData|RollingPopupRaidRollData|RollingPopupRollData|RollingPopupRollingCanceledData|RollingPopupRaidRollingData|RollingPopupTieData
+  local function transform( data )
+    if data.type == "Item" then
+      return item_content( data )
+    end
+
+    if data.type == "Preview" then
+      return preview_content( data )
+    end
+
+    if data.type == "RaidRoll" then
+      return insta_raid_roll_content( data )
+    end
+
+    if data.type == "Roll" then
+      return roll_content( data )
+    end
+
+    if data.type == "RollingCanceled" then
+      return rolling_canceled_content( data )
+    end
+
+    if data.type == "RaidRolling" then
+      return raid_rolling_content( data )
+    end
+
+    if data.type == "Tie" then
+      return tie_content( data )
+    end
+
+    error( string.format( "Unsupported type: %s", data.type or "nil" ) )
+  end
+
+  return {
+    transform = transform
+  }
+end
+
+m.RollingPopupContentTransformer = M
+return M

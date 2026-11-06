@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/computerequipmentgroup/Bubbles",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "computerequipmentgroup",
+    "repo": "Bubbles",
+    "name": "Bubbles",
+    "url": "https://github.com/computerequipmentgroup/Bubbles",
+    "api": "https://api.github.com/repos/computerequipmentgroup/Bubbles"
+  },
+  "commit": "d6e07f8b958ade654fa5e02be6f63ae22e7f634f",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "e2eb93a61ffd7877ea5c751abcb3a618e8e2e9a2073a27f66d4114fe10819f86",
+      "bytes": 9
+    },
+    "Bubbles.lua": {
+      "sha256": "83ddaaf5bc863b8ea9761cf329245ab648f2108ace90839125f238f83395d7a1",
+      "bytes": 4470
+    },
+    "Bubbles.toc": {
+      "sha256": "b5188d088464633e8fd5c05ede147d5eb67bc721fc88236c1f09d27af2fc8abc",
+      "bytes": 167
+    },
+    "README.md": {
+      "sha256": "4567242629f41617d272a6cbf6fe473037a7b5ec952e736fab4c4ec3752dac83",
+      "bytes": 534
+    },
+    "ui.png": {
+      "sha256": "672788de62bfd6909b271f1ddad1de784fd76db716866f40e0121d5afecdf9b5",
+      "bytes": 711685
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "287429688": {
+      "tag": "1.2",
+      "folder": "1.2--287429688",
+      "assets": {},
+      "source": {
+        "sha256": "7248416d5ad7a727d0541493e04e690253bae4ee0268e81865d635f19ac510d1",
+        "bytes": 714470,
+        "path": "releases/1.2--287429688/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/computerequipmentgroup/Bubbles/tarball/1.2"
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/McPewPew/GoblinBrainwashingHelper",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "McPewPew",
+    "repo": "GoblinBrainwashingHelper",
+    "name": "GoblinBrainwashingHelper",
+    "url": "https://github.com/McPewPew/GoblinBrainwashingHelper",
+    "api": "https://api.github.com/repos/McPewPew/GoblinBrainwashingHelper"
+  },
+  "commit": "26159e4ef29e0af7259ae92b66dde3da4c68f7d2",
+  "sourceFiles": {
+    "GoblinBrainwashingHelper.lua": {
+      "sha256": "6a585f36b781211854bcd3277fdebe5181e7baa3a8a2b98f4da99dda0baf0d90",
+      "bytes": 12366
+    },
+    "GoblinBrainwashingHelper.toc": {
+      "sha256": "41875ea9ec43ac139b6ad87591c7a2488630767e71bd6fc95c28f5d9b4a3107f",
+      "bytes": 287
+    },
+    "README.md": {
+      "sha256": "4523541c373df50fe531fbcf334602d3ab983ea76b460e9ecf953ff6e75b6a94",
+      "bytes": 584
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "280888934": {
+      "tag": "v0.1",
+      "folder": "v0.1--280888934",
+      "assets": {},
+      "source": {
+        "sha256": "99567ba578da5424c03e44575efbd73a41e860dba06873bafc6c3d96c669fe59",
+        "bytes": 2596,
+        "path": "releases/v0.1--280888934/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/McPewPew/GoblinBrainwashingHelper/tarball/v0.1"
+      }
+    }
+  }
+}

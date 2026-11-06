@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/vortigern11/SelfFound",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "vortigern11",
+    "repo": "SelfFound",
+    "name": "SelfFound",
+    "url": "https://github.com/vortigern11/SelfFound",
+    "api": "https://api.github.com/repos/vortigern11/SelfFound"
+  },
+  "commit": "fadf4c12dd9d9653c76cd9f6773d0e90cdb0c729",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "800bacb0f9db4df8203f0dad1f99947109a44f4097380807e0483bd62dee0d41",
+      "bytes": 1068
+    },
+    "README.md": {
+      "sha256": "ef25fd4893866e78317373bad2f5b59e4da54f2eed86793be4d9401d3bd1beb9",
+      "bytes": 266
+    },
+    "SelfFound-tbc.toc": {
+      "sha256": "2c458e2450d48435bfa10c2d002189d1b0ab3e9ca5d206e90b4c9c2e2a014cc9",
+      "bytes": 158
+    },
+    "SelfFound-wotlk.toc": {
+      "sha256": "449b33984432cd9d6b6d839317af2802f7e3dfa965ed96570beb4a7e39ba80d1",
+      "bytes": 158
+    },
+    "SelfFound.lua": {
+      "sha256": "edae171413b6b4dbdd13d9e5034d156b72601200da612ffe505d4eface7bb9d8",
+      "bytes": 2793
+    },
+    "SelfFound.toc": {
+      "sha256": "e30d5606705b78ad48e95223ba06abf02cc1ee568be05c674b4004d56bd10570",
+      "bytes": 158
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

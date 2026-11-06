@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/BrainSaver",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "BrainSaver",
+    "name": "BrainSaver",
+    "url": "https://github.com/MarcelineVQ/BrainSaver",
+    "api": "https://api.github.com/repos/MarcelineVQ/BrainSaver"
+  },
+  "commit": "35aa13b050915862b5a7303eb43bd6525876fb09",
+  "sourceFiles": {
+    "BrainSaver.lua": {
+      "sha256": "e231fe4d9084c296a62ae4a855707f3978b1f75f09cc4cbca7200217d146aba5",
+      "bytes": 28495
+    },
+    "BrainSaver.toc": {
+      "sha256": "5c6c13b7f1bb8c4c9f32f7fc14ffa3ec61d3fcd1c5f0cf30742ba711fa4cf399",
+      "bytes": 243
+    },
+    "brainsaver1.png": {
+      "sha256": "1e48b86e9c3e43fc80b26b14ce8c7c08c21c22828760d072a7d20f6c08efa18d",
+      "bytes": 253694
+    },
+    "locale.lua": {
+      "sha256": "1ab9642699995af2f8cbfe6cf63212a7f785fd04b5a3c97e298d29b44e5ad13d",
+      "bytes": 4360
+    },
+    "README.md": {
+      "sha256": "f88a4b3194d8beaca9f7d90c775b9e19e7d92b3825075994ca25b217a3812482",
+      "bytes": 583
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

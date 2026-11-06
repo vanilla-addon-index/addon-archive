@@ -1,0 +1,85 @@
+{
+  "upstream": "https://github.com/Brqje/EngInventory",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Brqje",
+    "repo": "EngInventory",
+    "name": "EngInventory",
+    "url": "https://github.com/Brqje/EngInventory",
+    "api": "https://api.github.com/repos/Brqje/EngInventory"
+  },
+  "commit": "10b1471b51bc3472f4a05a9bb7553646d61b47fe",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "2c4ee0309a1805fafbae4807ff9207fd12f0b1f857924f33557739d764432af7",
+      "bytes": 126
+    },
+    "changelog.txt": {
+      "sha256": "6005bd1322f292e4a27fe85a899663f6b136c218df9cdffbdce9b1dea42f3c37",
+      "bytes": 6139
+    },
+    "chat_cmd_handler.lua": {
+      "sha256": "39fac06b8deb4540498d1d548cc05ab826e891cee8f13656e672041165b8b481",
+      "bytes": 5212
+    },
+    "curse_gaming.txt": {
+      "sha256": "e60db432e73821236d639cb2d488c97243fd4901938263afc5fa5d738ecfa8de",
+      "bytes": 6845
+    },
+    "DAB_CooldownFont.ttf": {
+      "sha256": "8f798feb09a0e9dc97daf0a54b52a9a1a7b4cf7103fcb2aa1566ab36ac4dc41c",
+      "bytes": 62316
+    },
+    "default_items.lua": {
+      "sha256": "8b0afe5728f5e5e6b1196e63d916082862401047e0517baca04404054e2a32b6",
+      "bytes": 27788
+    },
+    "ei_options.lua": {
+      "sha256": "1d6d880d4913e500ca885e8fa5df8423d38cb4f85d31c6119e23872787b80198",
+      "bytes": 8844
+    },
+    "ei_options.xml": {
+      "sha256": "893838551f057a449d0b091fd04b5325debbd1caa75f20c9cc2c48b1c9723fcf",
+      "bytes": 9305
+    },
+    "enginventory.lua": {
+      "sha256": "4578b080dab0c01cb11254e2ea1046a690632ad1b0c90ad31aa34fd748add1cf",
+      "bytes": 157688
+    },
+    "enginventory.toc": {
+      "sha256": "6f0de5ba75d27e2422c4684d7a51903c74d0385239f65e87e458faf64b572abc",
+      "bytes": 291
+    },
+    "enginventory.xml": {
+      "sha256": "e11fed5d09c91fd0505fa3816aeaf714218bf9ed6ad4dbaf8b25269ebe3246ed",
+      "bytes": 40464
+    },
+    "hooks.lua": {
+      "sha256": "6ab894ae61618c70edb8c044c441125e6bc84d680fa84b35e2246b5aa57a85d9",
+      "bytes": 7148
+    },
+    "localization.lua": {
+      "sha256": "22a5809913c1dfcec7db54c781efa6939aa3d0fac6cf7a03873fdcd81ac5bf4c",
+      "bytes": 9345
+    },
+    "README.md": {
+      "sha256": "4ed05607bfd136e95c283b8100b0bd694fb861f87a67a130ef9d2bf945d76184",
+      "bytes": 3610
+    },
+    "skin/button_background.tga": {
+      "sha256": "0bdf9343270bf0e0fac2f059bfa6c32b2f9deffd3a3217212863ba229c026325",
+      "bytes": 16428
+    },
+    "support_funcs.lua": {
+      "sha256": "c98c69f1db33f94e066b30897dac5956126fbbcdd1385bd0023a08dd85c88075",
+      "bytes": 4316
+    },
+    "tooltip.lua": {
+      "sha256": "c63df461b6c6ecfd6daf99b29e006655dc1872d219d690b1d85cecb41559b678",
+      "bytes": 6311
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

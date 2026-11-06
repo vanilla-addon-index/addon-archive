@@ -1,0 +1,713 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+  <!-- Script List Frame - content for the Scripts tab -->
+  <!-- Split-pane: left list (200px) + right (edit top / test bottom) -->
+  <Frame name="EreaRpMasterScriptListFrame" parent="EreaRpMasterMainWindowContentFrame" hidden="true">
+    <Anchors>
+      <Anchor point="TOPLEFT"/>
+      <Anchor point="BOTTOMRIGHT"/>
+    </Anchors>
+
+    <Frames>
+      <!-- ================================================================ -->
+      <!-- LEFT PANEL: Script name list (200px wide) -->
+      <!-- ================================================================ -->
+      <Frame name="$parentLeftPanel">
+        <Size>
+          <AbsDimension x="200" y="0"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT"/>
+          <Anchor point="BOTTOMLEFT"/>
+        </Anchors>
+        <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                  edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                  tile="true">
+          <EdgeSize>
+            <AbsValue val="12"/>
+          </EdgeSize>
+          <TileSize>
+            <AbsValue val="16"/>
+          </TileSize>
+          <BackgroundInsets>
+            <AbsInset left="3" right="3" top="3" bottom="3"/>
+          </BackgroundInsets>
+        </Backdrop>
+
+        <Scripts>
+          <OnLoad>
+            this:SetBackdropColor(0.05, 0.05, 0.05, 1)
+            this:SetBackdropBorderColor(0.6, 0.6, 0.6, 1)
+          </OnLoad>
+        </Scripts>
+
+        <Frames>
+          <!-- Scroll frame for script name rows -->
+          <ScrollFrame name="EreaRpMasterScriptListScrollFrame" inherits="UIPanelScrollFrameTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT">
+                <Offset>
+                  <AbsDimension x="4" y="-4"/>
+                </Offset>
+              </Anchor>
+              <Anchor point="BOTTOMRIGHT">
+                <Offset>
+                  <AbsDimension x="-4" y="34"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+
+            <Frames>
+              <Frame name="$parentScrollChild">
+                <Size>
+                  <AbsDimension x="0" y="1"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="TOPLEFT"/>
+                  <Anchor point="TOPRIGHT"/>
+                </Anchors>
+              </Frame>
+            </Frames>
+
+            <Scripts>
+              <OnLoad>
+                this:SetScrollChild(EreaRpMasterScriptListScrollFrameScrollChild)
+              </OnLoad>
+            </Scripts>
+          </ScrollFrame>
+
+          <!-- Bottom buttons for left panel -->
+          <Button name="$parentNewButton" inherits="UIPanelButtonTemplate" text="New">
+            <Size>
+              <AbsDimension x="70" y="22"/>
+            </Size>
+            <Anchors>
+              <Anchor point="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="8" y="6"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+
+          <Button name="$parentDeleteButton" inherits="UIPanelButtonTemplate" text="Delete">
+            <Size>
+              <AbsDimension x="70" y="22"/>
+            </Size>
+            <Anchors>
+              <Anchor point="BOTTOMLEFT" relativeTo="$parentNewButton" relativePoint="BOTTOMRIGHT">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+        </Frames>
+      </Frame>
+
+      <!-- ================================================================ -->
+      <!-- RIGHT PANEL: Edit (top) + Test Console (bottom) -->
+      <!-- ================================================================ -->
+      <Frame name="$parentRightPanel">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parentLeftPanel" relativePoint="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="12" y="0"/>
+            </Offset>
+          </Anchor>
+          <Anchor point="BOTTOMRIGHT"/>
+        </Anchors>
+
+        <Frames>
+
+          <!-- ============================================================ -->
+          <!-- EDIT SECTION (top portion, above test panel) -->
+          <!-- ============================================================ -->
+          <Frame name="$parentEditSection" enableMouse="false">
+            <Anchors>
+              <Anchor point="TOPLEFT"/>
+              <Anchor point="BOTTOMRIGHT">
+                <Offset>
+                  <AbsDimension x="0" y="194"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                      edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                      tile="true">
+              <EdgeSize>
+                <AbsValue val="12"/>
+              </EdgeSize>
+              <TileSize>
+                <AbsValue val="16"/>
+              </TileSize>
+              <BackgroundInsets>
+                <AbsInset left="3" right="3" top="3" bottom="3"/>
+              </BackgroundInsets>
+            </Backdrop>
+
+            <Scripts>
+              <OnLoad>
+                this:SetBackdropColor(0.06, 0.06, 0.08, 1)
+                this:SetBackdropBorderColor(0.5, 0.5, 0.6, 1)
+              </OnLoad>
+            </Scripts>
+
+            <Layers>
+              <Layer level="OVERLAY">
+                <!-- Section header -->
+                <FontString name="$parentHeader" inherits="GameFontNormal" text="Edit Script">
+                  <Color r="1" g="0.82" b="0"/>
+                  <Anchors>
+                    <Anchor point="TOPLEFT">
+                      <Offset>
+                        <AbsDimension x="10" y="-8"/>
+                      </Offset>
+                    </Anchor>
+                  </Anchors>
+                </FontString>
+
+                <!-- Separator line texture -->
+                <Texture name="$parentSeparator">
+                  <Size>
+                    <AbsDimension x="0" y="1"/>
+                  </Size>
+                  <Anchors>
+                    <Anchor point="TOPLEFT">
+                      <Offset>
+                        <AbsDimension x="8" y="-24"/>
+                      </Offset>
+                    </Anchor>
+                    <Anchor point="TOPRIGHT">
+                      <Offset>
+                        <AbsDimension x="-8" y="-24"/>
+                      </Offset>
+                    </Anchor>
+                  </Anchors>
+                  <Color r="0.4" g="0.4" b="0.5" a="0.6"/>
+                </Texture>
+
+                <!-- Name label -->
+                <FontString name="EreaRpMasterScriptListFrameRightPanelNameLabel" inherits="GameFontNormalSmall" text="Name:">
+                  <Anchors>
+                    <Anchor point="TOPLEFT">
+                      <Offset>
+                        <AbsDimension x="10" y="-32"/>
+                      </Offset>
+                    </Anchor>
+                  </Anchors>
+                </FontString>
+
+                <!-- Description label -->
+                <FontString name="EreaRpMasterScriptListFrameRightPanelDescLabel" inherits="GameFontNormalSmall" text="Description:">
+                  <Anchors>
+                    <Anchor point="TOPLEFT">
+                      <Offset>
+                        <AbsDimension x="10" y="-58"/>
+                      </Offset>
+                    </Anchor>
+                  </Anchors>
+                </FontString>
+
+                <!-- Script body label -->
+                <FontString name="EreaRpMasterScriptListFrameRightPanelBodyLabel" inherits="GameFontNormalSmall" text="Script:">
+                  <Anchors>
+                    <Anchor point="TOPLEFT">
+                      <Offset>
+                        <AbsDimension x="10" y="-84"/>
+                      </Offset>
+                    </Anchor>
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+
+            <Frames>
+              <!-- Name EditBox -->
+              <EditBox name="EreaRpMasterScriptListFrameRightPanelNameEditBox" autoFocus="false">
+                <Size>
+                  <AbsDimension x="0" y="22"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="TOPLEFT">
+                    <Offset>
+                      <AbsDimension x="80" y="-28"/>
+                    </Offset>
+                  </Anchor>
+                  <Anchor point="TOPRIGHT">
+                    <Offset>
+                      <AbsDimension x="-80" y="-28"/>
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Layers>
+                  <Layer level="BACKGROUND">
+                    <FontString inherits="ChatFontNormal" setAllPoints="true"/>
+                  </Layer>
+                </Layers>
+                <FontString inherits="ChatFontNormal"/>
+                <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                          edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                          tile="true">
+                  <EdgeSize>
+                    <AbsValue val="10"/>
+                  </EdgeSize>
+                  <TileSize>
+                    <AbsValue val="16"/>
+                  </TileSize>
+                  <BackgroundInsets>
+                    <AbsInset left="3" right="3" top="3" bottom="3"/>
+                  </BackgroundInsets>
+                </Backdrop>
+                <Scripts>
+                  <OnLoad>
+                    this:SetBackdropColor(0.1, 0.1, 0.1, 1)
+                    this:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
+                    this:SetTextInsets(5, 5, 0, 0)
+                    this:SetMaxLetters(50)
+                  </OnLoad>
+                  <OnEscapePressed>
+                    this:ClearFocus()
+                  </OnEscapePressed>
+                  <OnTabPressed>
+                    EreaRpMasterScriptListFrameRightPanelDescEditBox:SetFocus()
+                  </OnTabPressed>
+                  <OnEnterPressed>
+                    EreaRpMasterScriptListFrameRightPanelDescEditBox:SetFocus()
+                  </OnEnterPressed>
+                </Scripts>
+              </EditBox>
+
+              <!-- Save button (top-right of edit section, beside name) -->
+              <Button name="EreaRpMasterScriptListFrameRightPanelSaveButton" inherits="UIPanelButtonTemplate" text="Save">
+                <Size>
+                  <AbsDimension x="64" y="22"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="TOPRIGHT">
+                    <Offset>
+                      <AbsDimension x="-8" y="-28"/>
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+
+              <!-- Description EditBox -->
+              <EditBox name="EreaRpMasterScriptListFrameRightPanelDescEditBox" autoFocus="false">
+                <Size>
+                  <AbsDimension x="0" y="22"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="TOPLEFT">
+                    <Offset>
+                      <AbsDimension x="80" y="-54"/>
+                    </Offset>
+                  </Anchor>
+                  <Anchor point="TOPRIGHT">
+                    <Offset>
+                      <AbsDimension x="-8" y="-54"/>
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Layers>
+                  <Layer level="BACKGROUND">
+                    <FontString inherits="ChatFontNormal" setAllPoints="true"/>
+                  </Layer>
+                </Layers>
+                <FontString inherits="ChatFontNormal"/>
+                <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                          edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                          tile="true">
+                  <EdgeSize>
+                    <AbsValue val="10"/>
+                  </EdgeSize>
+                  <TileSize>
+                    <AbsValue val="16"/>
+                  </TileSize>
+                  <BackgroundInsets>
+                    <AbsInset left="3" right="3" top="3" bottom="3"/>
+                  </BackgroundInsets>
+                </Backdrop>
+                <Scripts>
+                  <OnLoad>
+                    this:SetBackdropColor(0.1, 0.1, 0.1, 1)
+                    this:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
+                    this:SetTextInsets(5, 5, 0, 0)
+                    this:SetMaxLetters(200)
+                  </OnLoad>
+                  <OnEscapePressed>
+                    this:ClearFocus()
+                  </OnEscapePressed>
+                  <OnTabPressed>
+                    EreaRpMasterScriptBodyEditBox:SetFocus()
+                  </OnTabPressed>
+                  <OnEnterPressed>
+                    EreaRpMasterScriptBodyEditBox:SetFocus()
+                  </OnEnterPressed>
+                </Scripts>
+              </EditBox>
+
+              <!-- Script body container (multiline with scroll) -->
+              <Frame name="EreaRpMasterScriptListFrameRightPanelBodyContainer" enableMouse="true">
+                <Anchors>
+                  <Anchor point="TOPLEFT">
+                    <Offset>
+                      <AbsDimension x="8" y="-98"/>
+                    </Offset>
+                  </Anchor>
+                  <Anchor point="BOTTOMRIGHT">
+                    <Offset>
+                      <AbsDimension x="-30" y="8"/>
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                          edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                          tile="true">
+                  <EdgeSize>
+                    <AbsValue val="10"/>
+                  </EdgeSize>
+                  <TileSize>
+                    <AbsValue val="16"/>
+                  </TileSize>
+                  <BackgroundInsets>
+                    <AbsInset left="3" right="3" top="3" bottom="3"/>
+                  </BackgroundInsets>
+                </Backdrop>
+                <Scripts>
+                  <OnLoad>
+                    this:SetBackdropColor(0.08, 0.08, 0.1, 1)
+                    this:SetBackdropBorderColor(0.35, 0.35, 0.45, 1)
+                  </OnLoad>
+                  <OnMouseDown>
+                    EreaRpMasterScriptBodyEditBox:SetFocus()
+                  </OnMouseDown>
+                </Scripts>
+                <Frames>
+                  <ScrollFrame name="EreaRpMasterScriptBodyScroll" inherits="UIPanelScrollFrameTemplate">
+                    <Anchors>
+                      <Anchor point="TOPLEFT">
+                        <Offset>
+                          <AbsDimension x="6" y="-6"/>
+                        </Offset>
+                      </Anchor>
+                      <Anchor point="BOTTOMRIGHT">
+                        <Offset>
+                          <AbsDimension x="-2" y="6"/>
+                        </Offset>
+                      </Anchor>
+                    </Anchors>
+                    <Frames>
+                      <EditBox name="EreaRpMasterScriptBodyEditBox" multiLine="true" autoFocus="false">
+                        <Size>
+                          <AbsDimension x="0" y="1"/>
+                        </Size>
+                        <Anchors>
+                          <Anchor point="TOPLEFT"/>
+                          <Anchor point="TOPRIGHT"/>
+                        </Anchors>
+                        <FontString inherits="ChatFontNormal"/>
+                        <Scripts>
+                          <OnLoad>
+                            this:SetTextInsets(5, 5, 5, 5)
+                            this:SetMaxLetters(0)
+                          </OnLoad>
+                          <OnTextChanged>
+                            EreaRpMasterScriptBodyScroll:UpdateScrollChildRect()
+                          </OnTextChanged>
+                          <OnCursorChanged>
+                            ScrollingEdit_OnCursorChanged(arg1, arg2, arg3, arg4)
+                          </OnCursorChanged>
+                          <OnEscapePressed>
+                            this:ClearFocus()
+                          </OnEscapePressed>
+                        </Scripts>
+                      </EditBox>
+                    </Frames>
+                    <Scripts>
+                      <OnLoad>
+                        this:SetScrollChild(EreaRpMasterScriptBodyEditBox)
+                      </OnLoad>
+                    </Scripts>
+                  </ScrollFrame>
+                </Frames>
+              </Frame>
+            </Frames>
+          </Frame>
+
+          <!-- ============================================================ -->
+          <!-- TEST CONSOLE SECTION (bottom 190px) -->
+          <!-- ============================================================ -->
+          <Frame name="$parentTestSection" enableMouse="false">
+            <Size>
+              <AbsDimension x="0" y="190"/>
+            </Size>
+            <Anchors>
+              <Anchor point="BOTTOMLEFT"/>
+              <Anchor point="BOTTOMRIGHT"/>
+            </Anchors>
+            <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                      edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                      tile="true">
+              <EdgeSize>
+                <AbsValue val="12"/>
+              </EdgeSize>
+              <TileSize>
+                <AbsValue val="16"/>
+              </TileSize>
+              <BackgroundInsets>
+                <AbsInset left="3" right="3" top="3" bottom="3"/>
+              </BackgroundInsets>
+            </Backdrop>
+
+            <Scripts>
+              <OnLoad>
+                this:SetBackdropColor(0.04, 0.05, 0.06, 1)
+                this:SetBackdropBorderColor(0.45, 0.5, 0.55, 1)
+              </OnLoad>
+            </Scripts>
+
+            <Layers>
+              <Layer level="OVERLAY">
+                <!-- Section header -->
+                <FontString name="$parentHeader" inherits="GameFontNormal" text="Test Console">
+                  <Color r="1" g="0.82" b="0"/>
+                  <Anchors>
+                    <Anchor point="TOPLEFT">
+                      <Offset>
+                        <AbsDimension x="10" y="-8"/>
+                      </Offset>
+                    </Anchor>
+                  </Anchors>
+                </FontString>
+
+                <!-- Separator line -->
+                <Texture name="$parentSeparator">
+                  <Size>
+                    <AbsDimension x="0" y="1"/>
+                  </Size>
+                  <Anchors>
+                    <Anchor point="TOPLEFT">
+                      <Offset>
+                        <AbsDimension x="8" y="-24"/>
+                      </Offset>
+                    </Anchor>
+                    <Anchor point="TOPRIGHT">
+                      <Offset>
+                        <AbsDimension x="-8" y="-24"/>
+                      </Offset>
+                    </Anchor>
+                  </Anchors>
+                  <Color r="0.4" g="0.4" b="0.5" a="0.6"/>
+                </Texture>
+
+                <!-- Variables sub-header -->
+                <FontString name="$parentVarsHeader" inherits="GameFontNormalSmall" text="Sandbox Variables">
+                  <Color r="0.7" g="0.7" b="0.8"/>
+                  <Anchors>
+                    <Anchor point="TOPLEFT">
+                      <Offset>
+                        <AbsDimension x="10" y="-30"/>
+                      </Offset>
+                    </Anchor>
+                  </Anchors>
+                </FontString>
+
+                <!-- Player label -->
+                <FontString name="$parentPlayerLabel" inherits="GameFontHighlightSmall" text="player">
+                  <Color r="0.6" g="0.8" b="1.0"/>
+                  <Anchors>
+                    <Anchor point="TOPLEFT">
+                      <Offset>
+                        <AbsDimension x="14" y="-48"/>
+                      </Offset>
+                    </Anchor>
+                  </Anchors>
+                </FontString>
+
+                <!-- Item label -->
+                <FontString name="$parentItemLabel" inherits="GameFontHighlightSmall" text="item.name">
+                  <Color r="0.6" g="0.8" b="1.0"/>
+                  <Anchors>
+                    <Anchor point="TOPLEFT">
+                      <Offset>
+                        <AbsDimension x="14" y="-74"/>
+                      </Offset>
+                    </Anchor>
+                  </Anchors>
+                </FontString>
+
+                <!-- Result label -->
+                <FontString name="$parentResultLabel" inherits="GameFontNormalSmall" text="Output:">
+                  <Color r="0.7" g="0.7" b="0.8"/>
+                  <Anchors>
+                    <Anchor point="TOPLEFT">
+                      <Offset>
+                        <AbsDimension x="10" y="-100"/>
+                      </Offset>
+                    </Anchor>
+                  </Anchors>
+                </FontString>
+
+              </Layer>
+            </Layers>
+
+            <Frames>
+              <!-- Result output (selectable EditBox) -->
+              <EditBox name="EreaRpMasterScriptListFrameRightPanelResultText" multiLine="true" autoFocus="false">
+                <Anchors>
+                  <Anchor point="TOPLEFT">
+                    <Offset>
+                      <AbsDimension x="14" y="-116"/>
+                    </Offset>
+                  </Anchor>
+                  <Anchor point="BOTTOMRIGHT">
+                    <Offset>
+                      <AbsDimension x="-84" y="8"/>
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <FontString inherits="GameFontHighlight"/>
+                <Scripts>
+                  <OnLoad>
+                    this:SetTextInsets(0, 0, 0, 0)
+                    this:SetMaxLetters(0)
+                  </OnLoad>
+                  <OnEscapePressed>
+                    this:ClearFocus()
+                  </OnEscapePressed>
+                </Scripts>
+              </EditBox>
+
+              <!-- Player name input -->
+              <EditBox name="$parentPlayerInput" autoFocus="false">
+                <Size>
+                  <AbsDimension x="0" y="20"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="TOPLEFT">
+                    <Offset>
+                      <AbsDimension x="80" y="-44"/>
+                    </Offset>
+                  </Anchor>
+                  <Anchor point="TOPRIGHT">
+                    <Offset>
+                      <AbsDimension x="-8" y="-44"/>
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Layers>
+                  <Layer level="BACKGROUND">
+                    <FontString inherits="ChatFontNormal" setAllPoints="true"/>
+                  </Layer>
+                </Layers>
+                <FontString inherits="ChatFontNormal"/>
+                <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                          edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                          tile="true">
+                  <EdgeSize>
+                    <AbsValue val="10"/>
+                  </EdgeSize>
+                  <TileSize>
+                    <AbsValue val="16"/>
+                  </TileSize>
+                  <BackgroundInsets>
+                    <AbsInset left="3" right="3" top="3" bottom="3"/>
+                  </BackgroundInsets>
+                </Backdrop>
+                <Scripts>
+                  <OnLoad>
+                    this:SetBackdropColor(0.08, 0.08, 0.1, 1)
+                    this:SetBackdropBorderColor(0.35, 0.35, 0.45, 1)
+                    this:SetTextInsets(5, 5, 0, 0)
+                    this:SetMaxLetters(50)
+                  </OnLoad>
+                  <OnEscapePressed>
+                    this:ClearFocus()
+                  </OnEscapePressed>
+                  <OnTabPressed>
+                    EreaRpMasterScriptListFrameRightPanelTestSectionItemInput:SetFocus()
+                  </OnTabPressed>
+                  <OnEnterPressed>
+                    EreaRpMasterScriptListFrameRightPanelTestSectionItemInput:SetFocus()
+                  </OnEnterPressed>
+                </Scripts>
+              </EditBox>
+
+              <!-- Item name input -->
+              <EditBox name="$parentItemInput" autoFocus="false">
+                <Size>
+                  <AbsDimension x="0" y="20"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="TOPLEFT">
+                    <Offset>
+                      <AbsDimension x="80" y="-70"/>
+                    </Offset>
+                  </Anchor>
+                  <Anchor point="TOPRIGHT">
+                    <Offset>
+                      <AbsDimension x="-8" y="-70"/>
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+                <Layers>
+                  <Layer level="BACKGROUND">
+                    <FontString inherits="ChatFontNormal" setAllPoints="true"/>
+                  </Layer>
+                </Layers>
+                <FontString inherits="ChatFontNormal"/>
+                <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                          edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                          tile="true">
+                  <EdgeSize>
+                    <AbsValue val="10"/>
+                  </EdgeSize>
+                  <TileSize>
+                    <AbsValue val="16"/>
+                  </TileSize>
+                  <BackgroundInsets>
+                    <AbsInset left="3" right="3" top="3" bottom="3"/>
+                  </BackgroundInsets>
+                </Backdrop>
+                <Scripts>
+                  <OnLoad>
+                    this:SetBackdropColor(0.08, 0.08, 0.1, 1)
+                    this:SetBackdropBorderColor(0.35, 0.35, 0.45, 1)
+                    this:SetTextInsets(5, 5, 0, 0)
+                    this:SetMaxLetters(100)
+                  </OnLoad>
+                  <OnEscapePressed>
+                    this:ClearFocus()
+                  </OnEscapePressed>
+                  <OnTabPressed>
+                    EreaRpMasterScriptListFrameRightPanelTestSectionPlayerInput:SetFocus()
+                  </OnTabPressed>
+                  <OnEnterPressed>
+                    this:ClearFocus()
+                  </OnEnterPressed>
+                </Scripts>
+              </EditBox>
+
+              <!-- Run Test button -->
+              <Button name="EreaRpMasterScriptListFrameRightPanelTestButton" inherits="UIPanelButtonTemplate" text="Run Test">
+                <Size>
+                  <AbsDimension x="70" y="22"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="BOTTOMRIGHT">
+                    <Offset>
+                      <AbsDimension x="-8" y="8"/>
+                    </Offset>
+                  </Anchor>
+                </Anchors>
+              </Button>
+            </Frames>
+          </Frame>
+
+        </Frames>
+      </Frame>
+    </Frames>
+  </Frame>
+
+</Ui>

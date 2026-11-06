@@ -1,0 +1,190 @@
+# Changelog
+
+All notable changes to **PriestBiS** will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+---
+
+## [1.3.5] - 2026-10-12
+
+### Fixed
+- **Equipped Item Live Paperdoll Scanning & Enchant Stripping**:
+  - `UA.GetEquippedItemData(slotName)` now forwards `slotID` to `UA.GetItemData(itemID, link, slotID)` to utilize Blizzard's native `scanTooltip:SetInventoryItem("player", slotID)` API instead of relying on synthetic item hyperlinks (`item:itemID:0:0:0`), which frequently dropped lines or failed to load set names on Vanilla 1.12.1.
+  - Added native permanent enchant stripping in `UA.ScanItemStats`: detects green tooltip font string text (`r < 0.35 and g > 0.65 and b < 0.35`) without `Equip:`, `Use:`, or `Set:` prefixes on items with an applied enchant ID (`encID ~= "0"`), ensuring apples-to-apples comparisons without penalizing unenchanted drops or inflating equipped gear.
+  - Synchronized `UA.ClearCache()` invocation on `UNIT_INVENTORY_CHANGED` event in `PriestBiS.lua`, keeping equipped slot stats and tier set counts refreshed upon gear swaps.
+- **Set Bonus Breakpoint & Set Break Penalty Calculation**:
+  - Resolved false upgrade recommendations when evaluating lower tier pieces against higher tier sets (e.g. Tier 1 *Vambraces of Prophecy* vs Tier 2 *Bindings of Transcendence*): correctly detects that transitioning from 3 to 4 pieces of a set grants 0 additional breakpoint EP, while breaking the equipped 3-piece *Transcendence* set deducts the full 25 EP penalty (`lostSetBonusEP = 25`), correctly identifying the swap as a -33 EP downgrade.
+- **Tooltip Right-Edge Truncation / Fixed Width Clipping**:
+  - Updated `UA.AdjustTooltipSize(tooltip)` to scan all visible lines (both native 1..30 and custom lines) and calculate `maxLineWidth` across left and right font strings, dynamically executing `tooltip:SetWidth(maxLineWidth)` so long comparison strings and localized set descriptions are never clipped on the right.
+
+### Added
+- **Suite 6 In-Memory Simulation Verification**: Added comprehensive test suite in `tools/test_simulation_vm.py` testing live paperdoll inventory scanning, green enchant stripping, tier set breakpoints, and set breaking penalties.
+
+---
+
+## [1.3.4] - 2026-09-25
+
+### Fixed
+- **Equipped Item Enchantment Inflation (Apples-to-Apples Gear Comparisons)**:
+  - `UA.GetEquippedItemData(slotName)` now normalizes equipped item hyperlinks to base item links (`item:itemID:0:suffixID:0`) before querying scanning tooltips.
+  - Previously, permanent weapon enchants like `+55 Healing` or oils applied to equipped weapons were parsed from the equipped slot tooltip, inflating equipped gear (e.g. Benediction inflated from 133 EP to 188 EP) and causing raw dungeon/raid drops in AtlasLoot or boss loot to be falsely flagged as downgrades.
+- **Missing Tooltip Parsing for Casting Regen & Haste**:
+  - Added regex pattern tables and localization strings across all 5 supported locales (enUS, zhCN, ruRU, deDE, frFR) for:
+    - `Equip: Allows X% of your Mana regeneration to continue while casting.` (`casting_regen`, weight = 5.0 EP per 1%)
+    - `Equip: Increases your attack and casting speed by X%.` (`haste`, weight = 10.0 EP per 1%)
+  - Staff of the Dreamer (Turtle WoW) now captures its full stat profile (+134 Healing, +25 Int, +32 Spirit, +5 MP5, +5% Casting Regen, +1% Haste), evaluating to 195 EP (base) / 208 EP (with Holy talents), correctly ranking as a massive +70 EP upgrade over Benediction (138 EP).
+- **Prohibited Equipment Filtering (Shields, Offhand Weapons, and Ranged Weapons)**:
+  - Hardened `IsItemEquipableByPriest()` and `ScanItemStats()` to strictly reject `INVTYPE_SHIELD`, shields across all 5 languages, `INVTYPE_WEAPONOFFHAND`, `INVTYPE_RANGED`, and `INVTYPE_THROWN`.
+  - Offhand slot items must strictly have `INVTYPE_HOLDABLE` to prevent shields or offhand weapons from triggering false upgrade alerts.
+- **Tooltip Frame Text Overflow / Clipping Beyond Line 30**:
+  - Hooked `tooltip.Show` and added `UA.AdjustTooltipSize(tooltip)` across `GameTooltip`, `ItemRefTooltip`, and all `AtlasLootTooltip` instances.
+  - Previously, when an item with extensive text (such as 8-piece tier set bonuses) had PriestBiS upgrade badges, source, and note lines appended beyond Vanilla's native 30-line limit, subsequent `Show()` calls from AtlasLoot or the game engine reset the tooltip height to line 30, causing custom lines to bleed outside the bottom of the tooltip box. The frame height is now dynamically anchored to the bottom coordinate of the last rendered custom line.
+- **Tier 2 (Vestments of Transcendence) 3-Piece Bonus Reconciliation**:
+  - Updated the 3-piece set bonus (+15% Mana Regen while casting) from static 25 EP to **75 EP** ($15\% \times 5.0\text{ EP}$) across all 5 supported locales, reconciling it with the casting regen stat weight.
+  - Standalone, Robes of Transcendence (+59 Heal, +16 Spirit, +27 Int) is a pure stat sidegrade (77 EP vs 77 EP) against Stratholme's overtuned Robes of the Exalted (+68 Heal) until the 3-piece T2 bonus (+75 EP) is activated.
+- **Static Quest Token & Ring Override Removal**:
+  - Removed static `ep_override = 74` from `Pure Elementium Band` (19382); it is now evaluated dynamically based on active player talents.
+  - Converted quest turn-in tokens (Head of Nefarian, The Eye of Divinity, Head of Onyxia, Heart of Hakkar) from hardcoded static EP values to dynamic reward inheritance via `rewardID`.
+
+### Added
+- **Multi-Language Parsing Test Coverage**: Added 10 new test assertions in `tools/test_gear_patterns.py` verifying `casting_regen` and `haste` parsing in English, Chinese, Russian, German, and French.
+- **Staff of the Dreamer vs Enchanted Benediction Test**: Added explicit simulation in `tools/test_priest_bis.lua` verifying that an equipped Benediction with +55 Healing enchant does not inflate the comparison or downgrade Staff of the Dreamer.
+
+---
+
+## [1.3.3] - 2026-09-25
+
+### Fixed
+- **Physical Items with Spirit Mistakenly Categorized as Healer Gear**: Items with physical melee/tank stats (Strength, Agility, Attack Power, Defense, Dodge, Parry, Block) that also rolled Spirit (e.g. "of the Gorilla", "of the Wolf", or leveling melee items) previously bypassed the `MELEE` role check because the check required `spirit == 0`. These items are now strictly classified as `role = "MELEE"` and rejected by role mismatch filtering.
+- **Melee Weapons in Bags Picked as Paired Mainhands**: `UA.ScanBagsForBestMainhand()` and `UA.ScanBankForBestMainhand()` did not check `itemData.role`. If a priest carried a rogue dagger or warrior mace with high agility/crit, the addon could pair it with a dropped offhand to recommend replacing a 2H staff (Benediction). Both bag and bank scans now strictly enforce `role == "HEAL"` and `score > 0`.
+- **Bag Scan Dirty-Flag Desynchronization & Redundant Passes**:
+  - Replaced separate loops for offhand, mainhand, and set pieces with a single unified `UA.ScanAllBags()` pass over containers 0..4.
+  - Synchronously updates `cachedBagOffhand`, `cachedBagMainhand`, and `cachedBagSetPieces`, eliminating cache desync and reducing container scanning overhead by 66%.
+- **Random Enchant / Suffix Cache Collision**: In `UA.ScanItemStats`, variant items sharing a base `itemID` with different enchants/suffixes (`enchantID ~= "0"` or `suffixID ~= "0"`, e.g. "of Healing" vs "of the Owl") are now cached strictly by their full hyperlink key rather than base item ID.
+- **Third-Person Chat Loot False Positives**: In `UA.CheckLootChatMessage`, added negative checks for `receives`, `erhält`, and `reçoit` to prevent third-person messages containing player names beginning with "You" (e.g. "Youth receives loot: ...") from being mistakenly flagged as self-loot.
+- **Uncolored ItemLink Support in Raid Roll Monitor**: Added fallback matching for uncolored hyperlinks (`|Hitem:...|h[...]`) and raw `item:ID` patterns in raid chat roll announcements.
+- **Class Restriction Match for 'Requires Priest'**: Added Priest and its localized equivalents ("Priest", "Priester", "Prêtre", "Жрец", "牧师") to the `Requires <Class>` regex pattern match list.
+- **Pure Spell Damage Misclassification**: Moved `"Spell Damage %+(%d+)"` from `DAMAGE_HEALING` to `DAMAGE_ONLY` in `Locales/Localization.enUS.lua` so pure shadow/spell damage items are correctly identified with `role = "DPS"`.
+
+### Added
+- **Tests 18 through 25**: Extended automated simulation test suite in `tools/test_priest_bis.lua` covering third-person loot grammar, uncolored raid rolls, variant item independence, pure spell damage DPS assignment, physical items with spirit rejection, melee bag pair rejection, "Requires Priest" parsing, and unified bag scan cache consistency.
+
+---
+
+## [1.3.2] - 2026-09-10
+
+### Fixed
+- **Non-Priest Equipment Showing as Upgrades**: Items that priests cannot equip (class-restricted plate/mail/chain, other-class trinkets) were incorrectly flagged as upgrades. Three root causes fixed:
+  - Changed default `role` from `"HEAL"` to `nil` in `ScanItemStats`/`GetItemData`, preventing non-healer items from bypassing role mismatch checks.
+  - Added `DAMAGE_ONLY` pattern tables across all 5 locales (enUS, zhCN, ruRU, deDE, frFR) to detect pure `+Spell Damage` items (DPS gear without +healing), enabling stat-based role inference to `role = "DPS"`.
+  - Added `GetItemInfo` equipLoc cross-check in `IsItemEquipableByPriest` so trinkets and armor without `restrictedClasses` metadata are still validated against priest-valid equip slots.
+
+### Added
+- **Stat-Based Role Inference**: New `DAMAGE_ONLY` localization pattern tables and `spell_damage` field in stat scanner to distinguish healer items from caster DPS items.
+- **Equip Location Validation**: `IsItemEquipableByPriest` now calls `GetItemInfo` to verify the item's `equipLoc` against known priest-valid slots (INVTYPE_*), catching items that lack tooltip class-restriction lines.
+- **4 New Test Cases**: Warrior-only plate gauntlets, DPS trinket with pure spell damage, Warlock-only trinket, Druid/Rogue leather helm with healing stats.
+
+### Changed
+- `Core/Comparison.lua`: Role mismatch check now uses `effectiveRole = itemData.role or "HEAL"` to catch items that scanned with no explicit role but have DPS stats.
+
+---
+
+## [1.3.1] - 2026-09-04
+
+### Added
+- **Universal Role Mismatch Filtering**: Promoted role mismatch validation to the global entry point of `Core/Comparison.lua`, instantly rejecting curated non-healer items (`role = "TANK"`, `"MELEE"`, `"CASTER_DPS"`) across all armor, jewelry, and weapon slots.
+- **Alert Frame Drag Position Persistence**: Added `OnDragStop` coordinate saving to `PriestBiSDB.alertPos` and automatic frame restoration via `UA.RestoreAlertFramePosition()` on addon load.
+- **Multi-Drop Alert Queueing**: Implemented sequential alert queueing in `UI/AlertFrame.lua` to gracefully queue and display rapid multi-drop raid loot without clobbering or losing alerts.
+- **Full 5-Locale Set Bonus Coverage**: Completed localized definitions in `Data/SetBonuses.lua` for Dungeon 1 *The Devout* (German *Die Andacht*, French *Les dévots*) and Dungeon 2 *Vestments of the Virtuous* (Russian *Одеяния Добродетели*, German *Gewänder der Tugendhaften*, French *Habits des vertueux*), plus Russian aliases for Turtle custom sets.
+- **Localized Bag Piece Tooltip Annotation**: Replaced remaining hardcoded English text in `UI/TooltipHooks.lua` with localized `L["WITH_BAG_PIECES"]` across all 5 languages (`enUS`, `zhCN`, `ruRU`, `deDE`, `frFR`).
+- **Hierarchical Set Breakpoint Display**: Sorted set breakpoint keys ascending with `table.sort` in `/pbis gear` to guarantee proper sequential order (3-pc -> 5-pc -> 8-pc).
+- **pfDB Drop Rate Priority Sorting**: Sorted candidate drop units descending by rate in `Core/Engine.lua` so the primary high-probability encounter is always listed first.
+- **Top 0.1% GitHub Infrastructure**: Added multi-version Python CI matrix (3.10, 3.11, 3.12) to `.github/workflows/ci.yml`, `CONTRIBUTING.md` with Lua 5.0 rules, `SECURITY.md`, and `.github/pull_request_template.md`.
+
+### Fixed
+- **Missing Event Registrations in Event Lifecycle**: Registered `BAG_UPDATE`, `PLAYERBANKSLOTS_CHANGED`, `PLAYERBANKBAGSLOTS_CHANGED`, and `UNIT_INVENTORY_CHANGED` in `PriestBiS.lua` to ensure `UA.bagCacheDirty` is invalidated upon looting or gear swaps, preventing stale container caches.
+- **Database Validator Truncation**: Fixed non-greedy regex flaw in `tools/validate_item_database.py` that halted at the first set definition; expanded auditor to verify all 36 set tier definitions (84 breakpoints), token turn-in `rewardID` integrity, slot consistency, and 44 boss encounters.
+- **Version String Harmonization**: Synchronized version strings across `PriestBiS.toc`, `Core/Engine.lua`, and all 5 client localization files (`enUS`, `zhCN`, `ruRU`, `deDE`, `frFR`).
+
+---
+
+## [1.3.0] - 2026-09-03
+
+### Added
+- **Modular Addon Architecture**: Decomposed monolith into clean, single-responsibility modules under `Data/`, `Core/`, and `UI/`:
+  - `Data/ItemDatabase.lua`: Curated item metadata, boss drop mappings, and upgrade tables.
+  - `Data/SetBonuses.lua`: Multilingual tier set bonus tables and EP breakpoint values.
+  - `Core/Engine.lua`: Stat weighting, dynamic talent weight sync, tooltip stat scanner, item data extraction, base EP calculation, and priest equipability validation.
+  - `Core/Comparison.lua`: Inventory & bank offhand scanning, bag set piece detection, set breakpoint math, net character delta evaluation, and dual-slot resolution.
+  - `UI/AlertFrame.lua`: Loot popup alert frame, visual flash animations, audio cues, and movable frame handlers.
+  - `UI/TooltipHooks.lua`: 80-line font string pool expansion, dynamic line cleanup, EP badge rendering, and universal hook engine for GameTooltip, ItemRefTooltip, and AtlasLoot.
+  - `PriestBiS.lua`: Lean lifecycle event listener, loot monitor, and slash command dispatcher.
+- **Raid Quest Token & Starter Item Resolution**:
+  - `[18646]` *The Eye of Divinity* mapped to `[18608]` *Benediction* (Twohand staff, 215 EP override) for Majordomo Executus drops.
+  - `[19002]` *Head of Onyxia* mapped to `[17064]` *Shard of the Scale* (Trinket, 85 EP override).
+  - `[19003]` *Head of Nefarian* mapped to `[19382]` *Pure Elementium Band* (Ring, 74 EP override).
+  - `[19802]` *Heart of Hakkar* mapped to `[19950]` *Zandalarian Hero Charm* (Trinket, 90 EP override).
+- **Curated On-Use & Proc Trinket EP Ratings**:
+  - `[19288]` *Darkmoon Card: Blue Dragon* (+90 EP sustain override).
+  - `[23047]` *Eye of the Dead* (+130 EP Naxxramas BiS on-use burst override).
+  - `[21625]` *Scarab Brooch* (+80 EP AQ40 heal shield override).
+  - `[19930]` *Mar'li's Eye* (+45 EP ZG decaying on-use override).
+  - `[18820]` *Talisman of Ephemeral Power* (+70 EP MC burst override).
+- **Bag Set Piece Detection**: Discovers unequipped set pieces in player bags to project upcoming set completion bonuses (+25 EP for 3-pc T2, etc.) when looting or considering a candidate set piece.
+- **Dual-Slot Ring Net Delta Replacement**: Simultaneously evaluates Ring 1 and Ring 2, factoring individual set losses and gains to recommend the replacement yielding the greatest net character EP.
+
+### Fixed
+- **Set Bonus Double-Counting & Contamination**: Fixed item base EP calculation to strictly measure item base stats; set bonuses are now added as character-level deltas during comparison rather than mutating item base scores.
+- **Empty Slot Set Bonus Calculation**: Fixed early return when slot was unequipped, ensuring set bonuses and bag-assisted completions are properly recognized when equipping into empty slots.
+
+---
+
+## [1.2.0] - 2026-08-31
+
+### Added
+- **Bags & Bank Off-Hand Scanner**: Automatically scans player's inventory (`Bags 0..4`) and bank containers (`-1`, `5..10`) for owned Off-Hands, persisting the best bank Off-Hand in `PriestBiSDB.characters[realm][playerName]`.
+- **Smart 2H-to-1H Projection Engine**: Eliminates false-negative downgrade alerts when holding a 2H Staff by projecting candidate 1H weapons with the player's best owned bag/bank Off-Hand against the 2H staff.
+- **Dedicated Projected OH Tooltip Badge**: Displays `Projected OH: [Item] (+X EP | Bags/Bank)` in tooltips across all 5 supported client locales.
+- **Bagshui-Inspired Scoped Character Storage**: Scopes bank caches and user data under `[Realm][PlayerName]` for complete alt and cross-realm isolation.
+- **Real-Time Bank Event Lifecycle**: Registered `PLAYERBANKSLOTS_CHANGED` and `PLAYERBANKBAGSLOTS_CHANGED` in addition to `BANKFRAME_OPENED` for instant live bank updates.
+- **Debounced Dirty-Flag Inventory Caching**: Implemented `UA.bagCacheDirty` on `BAG_UPDATE` to prevent unnecessary container looping on every tooltip hover.
+- **Set Bonus Breakpoint Engine**: Dynamically detects equipped set item counts (`UA.GetEquippedSetCount`) and factors tier set breakpoints (+25 EP for 3-pc T2 *Transcendence*, +15 EP for 3-pc T1 *Prophecy*, +21 EP for *ZG Mojo Infusion*) into gear evaluation and upgrade scoring.
+- **Set Break Warnings**: Warns players in upgrade tooltips when replacing a set piece will deactivate a critical set bonus threshold.
+- **Active Set Bonuses Display**: Added active set bonuses summary to `/pbis gear` with individual breakpoint EP breakdown.
+- **Raid Roll "rush" Keyword Support**: Added `"rush"` keyword recognition to `ROLL_KEYWORDS` to natively support Turtle WoW raid roll conventions (e.g. `rush [Item] 100`).
+- **Spell Power & Healing Scanner Fallback**: Enhanced tooltip scanning engine to parse dual `DAMAGE_HEALING` ("Increases damage and healing done by magical spells...") as a fallback when pure +healing is not listed.
+- **Dynamic Talent Weight & Multi-Language Unit Tests**: Added comprehensive test coverage in `tools/test_priest_bis.lua` for dynamic *Spiritual Guidance* and *Meditation* scaling across all talent combinations (0.30 to 0.70 EP), 1H mace stat scanning (*Jin'do's Hexxer*), raid roll detection with `"rush"`, non-roll chatter rejection, and alert frame nil-safety.
+
+### Fixed
+- **Re-entrancy Guard Hardening (`insideAppend`)**: Extracted tooltip rendering into `UA.RenderTooltipLines` and wrapped execution in `pcall` to ensure `insideAppend = false` on all error/exit paths, preventing silent tooltip lockups.
+- **Unified `/pbis gear` Localization**: Refactored `UA.FormatItemInfo` to use `UA.FormatStatBreakdown(data)` directly, ensuring full localized stat formatting across all languages.
+- **Empty-Slot Percentage Roll Formatting**: Cleaned up percentage calculations for empty slots in roll alerts and LootBlare hooks to default to 100% rather than displaying `+0.0%`.
+- **Tightened `IsSetLine` Detection**: Replaced loose word matching with structured set patterns (`%(%d+/%d+%)`, `%(%d+%)%s*Set`, `Комплект`, `套装`), preventing false positives on Russian and French stat lines.
+- **LootBlare Hook Hardening & Exception Isolation**: Refactored `HookLootBlare()` with `pcall` error isolation, colon/dot invocation safety (`frame = self or itemRollFrame`), and nil-safe text setter guards to guarantee master loot UI is never interrupted.
+- **Alert Frame `OnUpdate` Nil-Safety**: Protected `alertFrame._timer` against `nil` `arg1` elapsed time parameters during frame update cycles.
+- **Raid Roll Hyperlink Regex**: Corrected hyperlink regex pattern in `CheckRaidRollMessage` to ensure reliable capture across different client chat channels.
+
+---
+
+## [1.1.0] - 2026-08-28
+
+### Added
+- **Multi-Language Localization Framework (i18n)**: Full native localization support for English (`enUS`), Simplified Chinese (`zhCN`), Russian (`ruRU`), German (`deDE`), and French (`frFR`).
+- **Cross-Language Item Link Scanning**: Capability to evaluate item hyperlinks shared by players using different language clients.
+- **Dynamic Talent Synchronization**: Multi-lingual talent scanning for *Spiritual Guidance* and *Meditation* across all 5 supported languages.
+- **Turtle WoW Karazhan & Custom Items Database**: Ingested Lower/Upper Karazhan loot (*Sliver of Hope*, *Clawlord Howlfang*, custom cloaks, wands, rings) into `UA.ITEM_METADATA` and `UA.BOSS_DROPS`.
+
+---
+
+## [1.0.0] - 2026-08-25
+
+### Added
+- **100% Dynamic Live-Query Architecture**: Real-time evaluation directly from client memory (`GetInventoryItemLink`) and tooltips without static gear snapshot desyncs.
+- **Priest Equivalence Points (EP) Model**: Tailored EP weights for Holy and Discipline Priests (+Healing, Spirit FSR scaling, MP5, Spell Crit, Intellect, Stamina).
+- **Dual-Slot Matrix Math**: Automatic evaluation against the weaker equipped piece for Rings and Trinkets (`math.min(score1, score2)`).
+- **2H Staff vs. MH+OH Math**: Dynamic combined set comparison for staves vs. main-hand and off-hand combinations.
+- **LootBlare & Raid Roll Hooking**: Visual upgrade badges and audio alerts during master looter rolls and chat roll calls.
+- **pfQuest & pfDB Dynamic Drop Source Engine**: Dynamic resolver for unit drops, shared loot, and quest rewards.
+- **Interactive Slash Commands**: `/pbis gear`, `/pbis toggle`, `/pbis tooltip`, `/pbis downgrades`, `/pbis db`, `/pbis help`.

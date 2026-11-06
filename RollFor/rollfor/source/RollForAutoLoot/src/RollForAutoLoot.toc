@@ -1,0 +1,15 @@
+## Interface: 20506
+## Title: RollFor - Auto Loot
+## Author: Obszczymucha
+## Version: 1.0.2
+## Notes: Automatically master-loots the items you tick.
+## Dependencies: RollFor
+## Group: RollFor
+## IconTexture: Interface\AddOns\RollFor\assets\icon-white
+## X-RollFor-Extension: auto_loot
+
+src\AutoLootDb.lua
+src\AutoLoot.lua
+src\OptionsPage.lua
+
+RollForAutoLoot.lua

@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/anzz1/SellValue",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "anzz1",
+    "repo": "SellValue",
+    "name": "SellValue",
+    "url": "https://github.com/anzz1/SellValue",
+    "api": "https://api.github.com/repos/anzz1/SellValue"
+  },
+  "commit": "5683c445bd08e0fd46dc090b2c5a8e235989ec7e",
+  "sourceFiles": {
+    "Database.lua": {
+      "sha256": "19dbab0c9c1449e10c0e2518d770787b918ad5432f426baf08c94163f1e25df6",
+      "bytes": 347539
+    },
+    "README.md": {
+      "sha256": "936d699441eb94144ee252091712cb432671e423081e10a02e45fbcbc589d5fa",
+      "bytes": 385
+    },
+    "SellValue.lua": {
+      "sha256": "c63f3a0ef2107cdc0fdbd11ac8d64b8bec7104aa980ec28536441a69426d20ba",
+      "bytes": 7421
+    },
+    "SellValue.toc": {
+      "sha256": "0b4a1219eb590b853b3c5c6c1a23e5646d7a93f9c3559d0e3133ff6bef5989f4",
+      "bytes": 219
+    },
+    "SellValue.xml": {
+      "sha256": "f6123e37f25027d3b3368930a029a10bd517b1802879018a2b413941ab4f1ce1",
+      "bytes": 1099
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

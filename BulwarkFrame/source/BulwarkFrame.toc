@@ -1,0 +1,17 @@
+## Interface: 11200
+## Title: BulwarkFrame
+## Notes: Compact real-time readout for the shaman Earthen Bulwark. Requires SuperWoW.
+## Author: ShempError
+## Version: 0.3.1
+## SavedVariables: BulwarkFrameDB
+
+core\env.lua
+core\calc.lua
+core\swing.lua
+core\config.lua
+data.lua
+ui.lua
+options.lua
+minimap.lua
+probe.lua
+main.lua

@@ -1,0 +1,98 @@
+<Ui>
+	<Script file="BossDeathTimer.lua" />
+	<Frame name="DeathTimerFrame" hidden="true" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" parent="UIParent">
+		<Size>
+			<AbsDimension x="128" y="32" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0" />
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop name="DeathTimerBackdropOne" bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="16" />
+			</EdgeSize>
+		</Backdrop>
+		<Frames name="DeathTimerBtnFrame">
+			<Button name="DeathTimerTargetButton">
+				<Size>
+					<AbsDimension x="128" y="32" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer name="DeathTimerBtnLayer" level="BACKGROUND">
+						<FontString name="DeathTimerText" justifyH="CENTER" justifyV="CENTER" inherits="GameFontNormalSmall">
+							<Size>
+								<AbsDimension x="128" y="32" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER">
+									<Offset>
+										<AbsDimension x="0" y="0" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnMouseDown>
+						if ( arg1 == "LeftButton" ) then
+						DeathTimerFrame:StartMoving()
+						end
+					</OnMouseDown>
+					<OnMouseUp>
+						if ( arg1 == "LeftButton" ) then
+						DeathTimerFrame:StopMovingOrSizing()
+						end
+					</OnMouseUp>
+				</Scripts>
+			</Button>
+			<Button name="DeathTimerTextureBox">
+				<Size>
+					<AbsDimension x="128" y="32" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				DeathTimer_OnLoad()
+			</OnLoad>
+			<OnEvent>
+				DeathTimer_OnEvent(event)
+			</OnEvent>
+			<OnMouseDown>
+				if ( arg1 == "LeftButton" ) then
+				DeathTimerFrame:StartMoving()
+				end
+			</OnMouseDown>
+			<OnMouseUp>
+				if ( arg1 == "LeftButton" ) then
+				DeathTimerFrame:StopMovingOrSizing()
+				end
+			</OnMouseUp>
+		</Scripts>
+	</Frame>
+</Ui>

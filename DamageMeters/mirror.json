@@ -1,0 +1,109 @@
+{
+  "upstream": "https://github.com/dogmax/DamageMeters",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "dogmax",
+    "repo": "DamageMeters",
+    "name": "DamageMeters",
+    "url": "https://github.com/dogmax/DamageMeters",
+    "api": "https://api.github.com/repos/dogmax/DamageMeters"
+  },
+  "commit": "4b42534ff9c80b128d5830985c812ea08e77e267",
+  "sourceFiles": {
+    "Artwork/TitanDamageMeters.blp": {
+      "sha256": "9b4545ea5cdd790528ef41a6eca44d8ca3d098510c890a967d976ba5341dae3a",
+      "bytes": 1340
+    },
+    "Bindings.xml": {
+      "sha256": "0f02a158c78d9bc6250040ad00a1a6bd305161ba34e830bd430e5c1bdfd6d114",
+      "bytes": 1973
+    },
+    "ChatThrottleLib/ChatThrottleLib.lua": {
+      "sha256": "78ab7b9325c49c3d8ad71cd297bac12cd6a951531d021dc1860e46976ede8f4e",
+      "bytes": 13029
+    },
+    "ChatThrottleLib/ChatThrottleLib.lua.PreUpdate": {
+      "sha256": "69f70f4e6c980b0ae131b872ce531089854d149259cf8bc47606d3cf6ba19358",
+      "bytes": 12743
+    },
+    "ChatThrottleLib/ChatThrottleLib.toc": {
+      "sha256": "4ef67c7abaab781227e3adef0a02e22a1f13e36c403d1dd18176b472e917d1b2",
+      "bytes": 319
+    },
+    "ChatThrottleLib/ChatThrottleLib.toc.PreUpdate": {
+      "sha256": "659e97317c8f4e1800bdab67819d4e6e826c67e343c1d1316d7b1a887455caf4",
+      "bytes": 319
+    },
+    "ChatThrottleLib/ChatThrottleLib.xml": {
+      "sha256": "aa8e573cd424c829ef362a4eda0f907b61ce242e10e815391d7538a70fcdc179",
+      "bytes": 346
+    },
+    "ChatThrottleLib/ChatThrottleStats.lua": {
+      "sha256": "6cf952d25cc8e7be4decdf4484c3bce0d395fad3dd18a6b8bcfa3ce53234d894",
+      "bytes": 1126
+    },
+    "ChatThrottleLib/README.txt": {
+      "sha256": "69461138fb719d22c851557eb22d54f01a55386ecf46bb1e697ed247c4f9883a",
+      "bytes": 2456
+    },
+    "DamageMeters_Globals.lua": {
+      "sha256": "d610e6bf7f82745747578e132c9ea0ef990a27e2da30f8e2210de32f2a44257b",
+      "bytes": 2339
+    },
+    "DamageMeters_Report.lua": {
+      "sha256": "aec43fbbff2e8e584de8308495239d08fb7eaada42c655227bf75d83a502b338",
+      "bytes": 35492
+    },
+    "DamageMeters.lua": {
+      "sha256": "5776b819699552105d4c7827907cd90d91f92ce0e6d2384d9af63525002f1cb9",
+      "bytes": 240516
+    },
+    "DamageMeters.toc": {
+      "sha256": "26e6eeb90874f9ecb30d08354cbe4cccd4ff2d7a2628e4feff961e02f21e29fb",
+      "bytes": 1166
+    },
+    "DamageMeters.xml": {
+      "sha256": "de7f5329b3fd621306dd816a640495995169ac76f320d0b8933cacceb2363fd3",
+      "bytes": 20364
+    },
+    "DMEventCaseTable.lua": {
+      "sha256": "0c052e014eddbdf4584d54ea04c568fdd12e6229977186ea351268148fa0bd98",
+      "bytes": 14426
+    },
+    "DMReporter_settings.lua.template": {
+      "sha256": "516f1c30858e32ffbeca7eb635035f3e496bf7e7fb5ff3eda7e9de8e00df10ae",
+      "bytes": 480
+    },
+    "DMReporter.lua": {
+      "sha256": "9284d08a42904734e2c8dbdd191279cfe7e94de6a71ee55e8dc61cef8d36085c",
+      "bytes": 19179
+    },
+    "localization.de.lua": {
+      "sha256": "6d3bd09ab69188b475356494525a29dd0b0f962d3658a6ecdc1c885b768c21fc",
+      "bytes": 51445
+    },
+    "localization.en.lua": {
+      "sha256": "b9cc6a62963a0fe29b10980a263f5bc2517e68bd78fca384894613ff4e8cee52",
+      "bytes": 46620
+    },
+    "localization.fr.lua": {
+      "sha256": "aa3376cefc40811873337d794600f599b581caee6f2f24817d7af45b9827a9a3",
+      "bytes": 279
+    },
+    "Readme.md": {
+      "sha256": "54a481a9866dbadc67ec3058ae3df1152db502bc58164ba1c13ea71686641b85",
+      "bytes": 39416
+    },
+    "TitanDamageMeters.lua": {
+      "sha256": "9e73d41d617f068c6fbe2940dea5c19d3ceda493513abd5ee3ac0bc9255b22f2",
+      "bytes": 16164
+    },
+    "TitanDamageMeters.xml": {
+      "sha256": "5bfd862248f29b25b871a85838a415467febc824e3fa097fc2630ea3091d00a7",
+      "bytes": 1215
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

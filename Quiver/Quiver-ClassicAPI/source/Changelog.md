@@ -1,0 +1,196 @@
+# 3.1.5-Octo5-Diag1
+
+Corrected stabilization build with automatic diagnostics retained for player testing.
+
+- Requires and version-gates ClassicAPI 1.14.0+ (`CLASSIC_API_VERSION >= 11400`).
+- Defers Quiver feature custom-event registration until the ClassicAPI contract passes.
+- Removed dead/unnecessary startup API requirements.
+- Uses stable spell IDs plus ClassicAPI-localized names for hunter combat logic.
+- Range Indicator uses numeric spell IDs directly; no dedicated action-bar spell is required and Wing Clip can probe melee range even when unlearned.
+- Fixed Aspect Tracker being re-shown while already on a taxi.
+- Fixed Tranq miss/failure announcements bypassing the configured None/Say/Raid channel.
+- Improved Tranq failure correlation with localized Vanilla combat GlobalStrings and a post-Tranq time window.
+- Fixed visually disabled buttons still running click callbacks.
+- Trinket swap now prefers exact item IDs/item links, refuses ambiguous shared-icon texture requests, preserves the real bag slot, and returns the replaced trinket to that source slot instead of leaving it on the cursor.
+- Preserves previous ClassicAPI Auto Shot, castbar, movement, border-style, UI-scale, migration, bag-ID and updater fixes.
+- Rewrote OctoWoW documentation to match the current DLL-only ClassicAPI architecture.
+- Keeps `Quiver_Diagnostics` active by default so intermittent player bugs can be reconstructed from SavedVariables; its 20,000-record cap is rolling so late-session evidence replaces the oldest block instead of being discarded.
+
+# 3.1.5-Octo4-Diag1
+
+Diagnostic-only build based on the working Octo4 runtime. Adds SavedVariables tracing of ClassicAPI spellcast events/API snapshots and Quiver module state transitions. No stabilization fixes from the post-Octo4 audit are applied in this build; it exists to collect dynamic evidence before Octo5.
+
+# 3.1.5-Octo4
+
+- Fixed ClassicAPI cast API namespace: Quiver now uses `C_Spell.UnitCastingInfo` instead of the intentionally-unregistered global `UnitCastingInfo`.
+- Fixed the ClassicAPI readiness gate to test `C_Spell.UnitCastingInfo`.
+- Startup diagnostics now name the exact missing ClassicAPI function instead of reporting a generic failure.
+- Verified the supplied ClassicAPI 1.14.0 DLL contains every API required by this build.
+
+# 3.1.5-Octo3
+
+- Fixed addon startup on DLL-only ClassicAPI installations. Removed the incorrect hard TOC dependency on a separate `!!!ClassicAPI` addon folder.
+- Quiver remains ClassicAPI-only through runtime API validation.
+- Initialization now retries at `PLAYER_LOGIN` if ClassicAPI APIs were not ready at `VARIABLES_LOADED`.
+- `/quiver` and `/qq` are registered immediately and report a clear ClassicAPI initialization error instead of silently doing nothing.
+
+# 3.1.5
+- Fix a [bug](https://github.com/SabineWren/Quiver/pull/59) where unlocked frames overwrote shot timer state.
+
+# 3.1.4
+- [@Otari98](https://github.com/Otari98) [#54](https://github.com/SabineWren/Quiver/pull/54) Remove aspect + trueshot alerts while flying/taxiing
+- (TWoW) Aspect Tracker - Added Fox and Viper aspects
+- (TWoW) Cast Bar - Added variable Aimed Shot cast time
+
+# 3.1.3
+- Added support for Baited Shot.
+- Fixed a regression bug related to instant shots.
+
+# 3.1.2
+- Fixed issue with frames resetting saved position for some users.
+- Removed workaround for a [bug](https://github.com/gashole/Aero/issues/2) in pre-2025 versions of Aero.
+
+# 3.1.1
+Config menu improvements:
+- [Aero](https://github.com/gashole/Aero) integration (dialog animations)
+- Escape key closes the dialog
+- Open/Close dialog sound effects
+
+# 3.1.0-twow-cc2
+Added "Steady Shot" alias for "Trueshot".
+- Only necessary for English clients on Turtle WoW 1.17.2 servers
+
+# 3.1.0
+### Features
+Implemented tooltip border style option for auto shot timer and castbar. Improved grid-snapping for these frames when dragging or resizing.
+
+API functions:
+- Quiver.FdPrepareTrap
+- Quiver.GetSecondsRemainingReload
+- Quiver.GetSecondsRemainingShoot
+```lua
+-- Spammable FD-Trap macro
+-- Checks: FD CD, Trap CD, is-player-in-combat, is-pet-in-combat
+-- Casts: FD, petPassive, petFollow
+-- WARNING: this will pull your pet even if you're stunned etc.
+/script CastSpellByName("Frost Trap"); Quiver.FdPrepareTrap()
+```
+
+Timing functions return true/false (isShooting/isReloading) and the time remaining (zero if false).
+```lua
+-- This macro detects when the auto shot timer bugs out by more than
+-- 0.25 seconds, and switches from CastNoClip to CastSpellByName.
+-- Steady Shot can hang a while before firing, so tune the cutoff.
+/script local a, b = Quiver.GetSecondsRemainingShoot(); local c = a and b < -0.25; local f = c and CastSpellByName or Quiver.CastNoClip; f("Steady Shot")
+```
+
+### Bugfixes
+1. Fixed Multi-Shot occasionally triggering a reload on the auto shot bar.
+2. Adjusted shoot time from 0.65 to 0.5 seconds. This is different from other addons, but seems more accurate.
+
+# 3.0.0
+### Breaking Changes
+1. Quiver now has a build step. See Readme for updated installation instructions.
+
+2. Removed specialized /qq-macros. Instead, Quiver exposes global functions for use within user-defined macros.
+
+CastNoClip – Cast spell by name if it won't clip a shot.
+```lua
+-- ex. equivalent to the old /qqtrueshot
+/script Quiver.CastNoClip("Trueshot")
+```
+
+CastPetAction – Find and cast pet action if possible.
+```lua
+/script Quiver.CastPetAction("Furious Howl"); CastSpellByName("Multi-Shot")
+```
+
+PredMidShot – Low level predicate for no-clip behavior. Used internally to implement CastNoClip.
+```lua
+/script if not Quiver.PredMidShot() then DEFAULT_CHAT_FRAME:AddMessage("Reloading") end
+```
+
+### Features
+Implemented localization. Translation files for zhCN locale.
+
+### Bugfixes
+Fixes several common problems with the Range Indicator or Castbar not working. You no longer need raw spell abilities on your bars for Quiver to detect them, although this might fix edge cases. Macros that use textures of important spells (ex. Multi-Shot, Hunter's Mark) and cast unrelated spells can interfere with Quiver.
+
+# 2.7.1
+Fixes bugs reported by brcz:
+- Spells can partially reset auto shot timer
+- Aspect of the Beast uses correct texture
+
+# 2.7.0
+### Features
+Added new default mode for auto shot timer "left-to-right". You can revert to "both-directions" using a config dropdown.
+
+### Fixes
+Fixed the auto shot timer getting stuck*.
+
+[*] The game _must _trigger__ an ITEM_LOCK_CHANGED event for Quiver to handle a shot. If that event isn't there, then it's not a Quiver bug. If you think there's a bug in the auto shot timer, enable "verbose logging" in the config menu and record it to verify the game fired events. Movement often doesn't reset the timer inside instances, and that's also a game bug.
+
+# 2.6.3
+- New optional debug logging (dropdown in config menu).
+- Fixed a bug (reported by Khoni) where the auto shot timer could break by treating auto shots as casted shots.
+- There's still a bug where on rare occasions auto shot doesn't trigger an event, resulting a stuck timer bar. If you can reproduce any bugs related to the auto shot timer, please turn on debug logging and send me a video recording.
+
+# 2.6.2
+Fixed ranged weapon haste calculation.
+
+# 2.6.1
+Fixes false positives on Trueshot Alarm due to Turtle WoW update.
+
+# 2.6.0
+Auto Shot Timer module also enables macros that avoid clipping auto shot:
+- Aimed Shot `/qqaimedshot`
+- Multi-Shot `/qqmultishot`
+- Trueshot `/qqtrueshot`
+
+Casting this way won't interrupt current cast, so move first if casting volley.
+
+Added chat warnings when missing the corresponding action bar icons for castable shots.
+
+# 2.5.3
+- Fixed false-positive Tranquilizing Shot announcements (for real this time).
+- Fixed saving frame positions when moving them following a frame reset.
+- Fixed default frame positions when "Use UI Scale" disabled in video settings.
+
+# 2.5.2
+- Added dropdown for Tranq Announce channel (say, raid, none).
+- Tranq progress bars now perceptually uniform brightness (the green was too bright).
+- Fixed Castbar when using Kiss of the Spider trinket.
+
+# 2.5.1
+Fixed a bug where Tranquilizing Shot announced without firing (facing away, stunned, etc.). This version checks you fired a shot before announcing. You can intentionally trigger the bug by mashing Tranq while casting another spell, but that's unlikely to happen in raid.
+
+# 2.5.0 beta
+Rebuilt Tranq Announce module with UI for showing cooldowns of other hunters.
+
+# 2.4.1
+Added full color customization.
+Fixed several strata hierarchy problems.
+
+# 2.3.1
+Created "Reset Frames" options for each individual module.
+Fixed previous colour -> color config migration for auto shot.
+
+# 2.3.0
+New Feature - Update Notifier
+
+# 2.2.1
+New Feature - Aspect Tracker
+Trueshot Aura Alarm using dynamic update frequency for aura refreshes.
+
+# 2.1.0 beta
+New feature - Trueshot Aura Alarm
+
+Some changes to frame positioning due to UI scaling.
+
+# 2.0.1
+- Fixed version checking
+
+# 2.0.0
+- Added first pass of migration support. This allows updates without damaging saved variables.
+- Renamed Auto Shot Castbar to Auto Shot Timer, and changed 'colours' to American spelling.
+- Increased Trueshot cast time from the spellbook value of 1.0 to an under-estimate of 1.3. This improves the user experience for now, but isn't perfect.

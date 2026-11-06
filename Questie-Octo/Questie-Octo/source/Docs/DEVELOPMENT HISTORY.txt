@@ -1,0 +1,2539 @@
+1.17 - PERCEPTUAL SAME-MAP OBJECTIVE COLOR PALETTE
+--------------------------------------------------
+- Built from accepted 1.16 after a player report and follow-up audit showed the 1.15 exact-RGB guarantee was too weak for map readability: many different quests could still land on visually near-identical shades even when their 8-bit RGB triplets were technically different.
+- Corrected the audit model itself. `Data/runtime/map-candidates.lua` is a starter/item-start candidate index and is not an authoritative active-objective co-occurrence graph. The new offline graph reconstructs only roles that actually receive quest colors (`objectiveCreature`, `objectiveObject`, `objectiveItemSource`), including normal item/reference/vendor sources, scripted fallbacks, objective-source overrides, and IR guidance while excluding disabled quests and currently uncolored AreaTrigger roles.
+- Current graph scope is 3,446 quests with colorized objective maps across 119 maps and 700,992 unique quest pairs that can share at least one colored-objective map. The accepted 1.16 palette had 5,076 Default pairs below CIEDE2000 2.3, 4,947 Red-deficient, 6,259 Green-deficient, 4,354 Blue-deficient, and 4,096 High Contrast; several modes still contained exact 8-bit collisions.
+- Generated `Data/ObjectiveColorPalette.lua` as a compact runtime lookup. Each current colorized-objective quest stores final 8-bit RGB for Default, Red-deficient, Green-deficient, Blue-deficient, and High Contrast. The allocator is co-occurrence-aware and optimized separately per presentation mode, then validated after 8-bit quantization.
+- Across all 700,992 same-map objective pairs, every mode now has zero exact RGB collisions and zero pairs below DeltaE00 2.3. Minimum measured DeltaE00 is 2.321 Default, 2.303 Red-deficient, 2.303 Green-deficient, 2.304 Blue-deficient, and 2.301 High Contrast. Pairs below DeltaE00 5 are also reduced substantially (Default 24,719 -> 6,768; Red-deficient 21,432 -> 6,095; Green-deficient 26,617 -> 8,510; Blue-deficient 19,689 -> 3,463; High Contrast 18,409 -> 3,640).
+- Grim Reaches (map 5602) improves from 403 Default pairs below DeltaE00 2.3 to zero and from 2,000 pairs below 5 to 801; all five modes have zero sub-2.3 pairs there. Westfall (map 40) likewise reaches zero sub-2.3 pairs in all five modes.
+- Quest color identity remains static at runtime: the same quest keeps the same mode-specific color across World Map, minimap, Full Nodes, clustered tint, and glow. There is no active-quest-list recoloring, map-dependent recoloring, polling, OnUpdate, ZoneBootstrap work, graph construction, or database scan at runtime.
+- `Map/Visuals.lua` uses the precomputed palette first and retains the accepted 1.15 deterministic generator only as a defensive fallback for future/unmapped quest IDs. Existing availability/completion/special/service marker colors are untouched.
+
+1.16 - MOONWHISPER LOOT-CHANCE CORRECTION
+--------------------------------------------------
+- Built from accepted 1.15 after a live report showed Echoes of Nendis displaying Nendis Memento at 1.00% despite the current server assigning 100% to both Nendis ground containers; the same placeholder-chance problem was reported on Moonwhisper creature objectives.
+- Root cause was source data, not tooltip formatting: the packaged Turtle item database flattens many current custom/shared loot relationships to a placeholder 1%, while Questie-Octo's existing audited `itemfix` corrections were accidentally skipped whenever the item row already existed.
+- Audited all 68 custom required-item IDs used by the current 105 Moonwhisper Coast server quests. Of 353 existing custom item/source pairs that resolve directly to current creature, skinning, or gameobject loot, 324 were wrong and 29 already matched. The 1.16 overwrite layer now matches all 353/353 directly verifiable pairs to current server percentages.
+- The correction is explicit and source-scoped; there is no global rule that rewrites 1% values. Legitimate low drop rates elsewhere are untouched. Creature-source corrections follow current creature/skinning loot ownership and object corrections follow current gameobject loot ownership.
+- Fixed the existing item correction helper to merge source fields into existing item records. All 22 pre-existing itemfix source/value pairs were reverified against current server loot data before enabling them, including the two intended 30% object relationships for items 42178/42180.
+- No tooltip formatter, active-objective state, map clustering, polling, OnUpdate, ZoneBootstrap, or minimap architecture changed.
+
+1.15 - OBJECTIVE COLOR EXACT-COLLISION TIE-BREAK
+--------------------------------------------------
+- Built from accepted 1.14 after a Grim Reaches follow-up report showed the 1.12 palette was much better visually but raised the question whether two different quests could still receive the exact same rendered color.
+- Broad audit of all 6,701 runtime quest IDs confirmed Grim Reaches itself had no exact default-color duplicates, but the 1.12/1.14 palette still produced 826 duplicate 8-bit RGB groups globally and eight same-map candidate collision pairs across five maps. The cause was a distant rational return in the hue sequence combined with the 30-ID repeat of the saturation/value bands.
+- Preserved the 1.12 hue/saturation/value palette and added only a tiny independent per-quest RGB signature (at most two 8-bit steps per channel). This removes every exact default-mode 8-bit collision across the current 6,701 runtime quests without materially changing the palette's appearance.
+- Accessibility remaps receive a second smaller per-quest signature (at most one 8-bit step per channel after remap/luma lift). Across all 108 runtime map candidate sets, Default, Red-deficient, Green-deficient, Blue-deficient, and High Contrast now have zero exact 8-bit color collisions between quests that can appear on the same map.
+- No quest ownership, map candidate generation, clustering, tracker, database payload, polling, OnUpdate, ZoneBootstrap, or refresh architecture changed.
+
+1.14 - QUEST LOG / TRACKER LEVEL-PLUS CONSISTENCY
+--------------------------------------------------
+- Built from accepted 1.13 after live testing showed The Gnarled Bramblehide correctly displayed `[31+]` on the World Map but `[31]` in both the active Quest Log and tracker.
+- Root cause: map tooltips already fell back from a missing native Quest Log tag to the audited compiled Type 1/62/81 quest classification, while Quest Log enhancement and tracker presentation trusted only the native tag.
+- Added one shared QuestModel `HasLevelPlus()` presentation helper. Native non-empty tags remain authoritative; only missing tags fall back to the compiled Elite/Raid/Dungeon type.
+- Quest Log enhancement now uses that helper for its level prefix. TrackerDriver stores a separate `levelPlus` presentation boolean and TrackerFrame renders it, leaving the preserved native `tag` field unchanged for quest-state semantics.
+- No polling, OnUpdate, ZoneBootstrap, map/objective scan, or runtime database payload change.
+
+1.13 - RAZORFEN KRAUL DUNGEON QUEST TYPE CORRECTIONS
+------------------------------------------------------------
+- Built from accepted 1.12 after a live screenshot confirmed quest 41759 The Gnarled Bramblehide is available at Calaran Windseeker but renders `[31]` rather than `[31+]`.
+- The current Turtle server row stores quest 41759 as Type=0 even though its objective text explicitly sends the player into Razorfen Kraul and item 41856 drops only from creatures 62501/62502, whose current coordinates are exclusively on AreaTable 491. The missing plus therefore comes from stale server quest-type metadata, not from quest availability, map identity, or tooltip rendering.
+- Audited the same RFK failure class by requiring a Type=0 quest's complete current objective-source set to be confined to AreaTable 491. Exactly three semantic dungeon quests are affected: 41555 Razorfen Grog, 41758 Tainted Brambleheart, and 41759 The Gnarled Bramblehide. Existing correctly typed RFK quests remain unchanged.
+- Added narrow build-time Type=81 presentation corrections for those three quests. This feeds the existing compiled `questType` field used by available/cache-cold map and minimap tooltips; active quests still prefer the native Quest Log tag. No runtime inference, creature-rank guessing, polling, map scan, or performance path was added.
+
+1.10 - GNOMEREGAN DATA RESCUE PUNCH-CARD GUIDANCE
+--------------------------------------------------
+- Built directly from the accepted 1.09 baseline after a live report showed quest 2930 Data Rescue active at Matrix Punchograph 3005-A in the Gnomeregan Entrance with a White Punch Card, but no quest marker on the terminal.
+- The runtime database only exposed the final Prismatic Punch Card (9316) objective, so the required White -> Yellow -> Blue -> Red punch-card interactions were invisible to the map system even though the live server script explicitly gates 3005-A/B/C/D on those carried cards.
+- Added the four carried punch cards as presentation-only IR dependencies for quest 2930 and mapped them to Matrix Punchographs A/B/C/D. Questie-Octo's existing active-quest IR inventory registry now advances the actionable terminal after BAG_UPDATE_DELAYED when the player's card is upgraded; no polling or new OnUpdate path is introduced and the formal quest objective remains Prismatic Punch Card 0/1.
+- Classified 142345 as Gnomeregan Entrance and 142475/142476/142696 as Gnomeregan interior sources in the dedicated AreaTable-721 context module.
+- Reprojected the current B/C/D server spawns against the current Gnomeregan WorldMapArea geometry; B/C legacy 721 coordinates were stale and D had no map coordinates. A's already-current entrance projection is retained explicitly.
+- The staged targets are source-exclusive by context, so Gnomeregan's existing source-ID context filtering remains safe in Clustered mode; the Mechanical Mailbox continues to use its dedicated point-level split.
+
+1.09 - SHARED INSTANCE CONTEXT PRE-CLUSTER CORRECTION
+------------------------------------------------------------
+- Built from the audit-failed 1.08 implementation while retaining its intended current-data repairs for Wailing Caverns 718, Uldaman 1337, Maraudon 2100, Dire Maul 2557, and Timbermaw Hold 5640. 1.07 remains the last live-validated baseline until Sandrea validates this build.
+- Fixed the 1.08 design regression where PreparedMap clustered objective coordinates before SharedInstanceContext classified entrance vs interior ownership. Shared-source cluster centroids are not guaranteed to be real source coordinates, so exact shared-point lookup could reject otherwise-valid clusters.
+- PreparedMap now enables a small point-context resolver only for the five generic SharedInstanceContext map IDs. Raw source coordinates are split by context before objective clustering; each resulting descriptor carries its proven preparedMapContext, so rendering compares that tag to the active displayed/physical context instead of reclassifying the centroid. Normal maps retain the original single-list fast path.
+- Full Nodes preserves exact point-level behavior. Exact/Full descriptors on the five shared IDs are tagged from their real coordinates, while Gnomeregan 721 and Karazhan 3457 are intentionally not owned by the generic preparation split and keep their dedicated 1.07/existing modules.
+- ItemStartAreas accepts an optional point-context callback. Normal clustered item-start areas are grouped by quest + starter item + context before geographic clustering, preventing one aggregate from mixing entrance and interior sources.
+- Ultra-rare (<1.00%) starter-item presentation now creates one representative per shared-map context rather than one representative for the shared numeric AreaTable ID. The representative remains on a real source coordinate.
+- Focused regression harness passed the audited examples: Wailing Caverns creature 3641 retained 8 entrance + 2 interior points across 2 + 1 clusters; Uldaman creature 4851 retained 10 + 19 across 4 + 3 clusters; Dire Maul object 175404 retained 2 + 7 across 1 + 1 clusters.
+- Uldaman quest 635 / item 4614 retained all 193 starter-source points as exactly two ultra-rare representatives: 121 entrance + 72 interior, in both Clustered and Full item density modes. Quest 2198 / item 7666 retained all 146 points: 104 entrance + 42 interior; Clustered builds 6 entrance + 2 interior areas, while Full keeps all 146 point descriptors.
+- Shared identity/minimap geometry checks passed for 718/1337/2100/2557/5640. Generic preparation tagging remained absent on 721 and 3457, preserving Gnomeregan and Karazhan ownership.
+- No new polling, OnUpdate path, ZoneBootstrap batching change, minimap spatial index, or runtime database payload change was introduced.
+
+1.08 - COMPLETE SHARED ENTRANCE/INTERIOR INSTANCE-MAP CORRECTION
+------------------------------------------------------------------
+- Built directly from the accepted/live-validated 1.07 baseline after the Gnomeregan fix prompted a full dungeon + raid WorldMapArea collision audit. Current client WorldMapArea.dbc contains exactly seven AreaTable IDs reused by distinct instance/detail map contexts: 718 Wailing Caverns, 721 Gnomeregan, 1337 Uldaman, 2100 Maraudon, 2557 Dire Maul, 3457 Karazhan, and 5640 Timbermaw Hold. Gnomeregan is already validated in 1.07; Karazhan retains its existing dedicated Lower/Upper split and unresolved sources remain fail-closed.
+- Added Map/SharedInstanceContext.lua for the five remaining collisions. The database continues to use the stable numeric AreaTable ID, while World Map presentation resolves the displayed entrance/interior texture and minimap presentation resolves the physical server map. Context values include the AreaTable ID so overlapping creature/object IDs across different dungeons cannot cross-contaminate the generic module.
+- Wailing Caverns 718: separated server-map-1 entrance from map-43 interior and supplied the correct 572.78x381.85 vs 1170x785 minimap spans. Existing current coordinates were verified accurate. Shared creatures 3641/3835/61218 and shared objects 1622/1624/1731/13891 are separated at the individual one-decimal point level.
+- Uldaman 1337: separated map-0 entrance from map-70 interior and supplied the correct 563.31x376.10 vs 893.67x595.78 spans. Existing coordinates were verified current. Shared creature 4851 and objects 1735/2040/126049/128293 use point-level context, preserving legitimate item-start/objective sources on both maps.
+- Maraudon 2100: separated map-1 entrance from map-349 interior and supplied the correct 824x550 vs 2112.09x1410.89 spans. Existing current coordinates remain unchanged except stale creature 62755 (Selja) map-2100 data is removed because the current server has no spawn inside either Maraudon rectangle. This intentionally removes quest 41896 Ursan Charm from the compiled map-2100 candidate bucket and reduces runtime links 8675 -> 8674 without changing quest count. Shared objects 2040/2047/142144 remain on both contexts by point.
+- Dire Maul 2557: found a real stale-geometry database problem in addition to shared-map contamination. Rebuilt all current quest-relevant map-2557 sources from current server positions/current WorldMapArea geometry: 478 creature points across 39 IDs and 53 object points across 26 IDs. Shared object 175404 is point-disambiguated. Rebuilt stale interior AreaTriggers 3193/3506/3507/3508/3509 from current AreaTrigger.dbc; entrance triggers were already correct. Correct minimap spans are 1324x869 entrance vs 1919x1250 interior.
+- Timbermaw Hold 5640: separated map-1 entrance from raid map 819 interior, corrected the legacy transposed/wrong minimap span to 1347x971 entrance vs 1425x962 interior, and rebuilt all 251 current map-5640 points for the 24 quest-relevant interior creature IDs from the July 2026 server update/current WorldMapArea. The entrance no longer inherits the raid interior population.
+- Tracker Show-on-Map target context now passes the target map ID into the generic context resolver. Existing Karazhan/Gnomeregan modules accept the extra Lua argument harmlessly and remain unchanged. Shared-map visibility caching already keys specialMapContext, so each new entrance/interior context invalidates/rebinds through the same accepted path as Gnomeregan.
+- No polling, OnUpdate, timer, new PreparedMap copy, ZoneBootstrap slowdown, delayed quest loading, or spatial index was added. Normal maps do one extra nil table lookup in SharedMapContextModule and then follow the unchanged path.
+- Validation: all addon Lua files parse; focused context harness passes texture/server-map/minimap/source/shared-point checks; runtime compiler reports 6701 quests / 108 maps / 8674 links; pruned runtime validator passes; provenance checker passes with ClassicAPI.dll absent.
+
+1.07 - GNOMEREGAN SHARED-MAP CONTEXT + CURRENT GEOMETRY REPAIR
+------------------------------------------------------------
+- Built directly from the accepted/live-validated 1.06 baseline after screenshots from both Gnomeregan Entrance and the Gnomeregan dungeon showed map-721 nodes leaking across the two layouts and interior nodes projected onto stale geometry.
+- Current client WorldMapArea data proves that AreaTable 721 is reused by two distinct map-art contexts: GnomereganEntrance on server map 0 (571.19 x 379.14) and Gnomeregan on server map 90 (1125 x 740). Questie-Octo's legacy map-721 interior coordinates were based on an obsolete ~769.67 x 513.11 span.
+- Added a narrow GnomereganContext module, following the already accepted Karazhan shared-area pattern, so World Map and minimap presentation distinguish entrance vs interior by displayed texture / physical server map while retaining numeric area ID 721 in the database.
+- Current server spawns separate 40 entrance creature IDs from 21 interior creature IDs. Current gameobject/AreaTrigger sources are likewise context-classified. Mechanical Mailbox 144112 legitimately exists in both contexts and is disambiguated by its corrected coordinate rather than hidden or assigned wholesale to one side.
+- Rebuilt only map-721 coordinates for the 21 current interior creature sources and eight current interior object sources using current server positions projected through current WorldMapArea bounds; non-721 coordinates remain untouched. Corrected interior quest AreaTriggers 322 and 1105.
+- Removed stale map-721 coordinates for creature IDs 385 and 9526 because current server data has no Gnomeregan spawn for either.
+- Shared-context filtering is coordinate-aware at prepared/render time so a source that legitimately exists in both contexts cannot leak sibling coordinates. Minimap descriptor visibility caching also includes the shared context, preventing a cached entrance decision from being reused after entering the interior (and vice versa).
+- No polling, new OnUpdate, slower ZoneBootstrap batching, spatial minimap index, navigation delay, or new persistent global map index was added.
+
+1.06 - INSTANCE/DETAIL WORLD MAP SENTINEL FIX
+------------------------------------------------------------
+- Built on consumed 1.05 after live retesting in Razorfen Kraul showed that `/reload` still left active dungeon objectives visible on the minimap but absent from the opened RFK World Map. Restarting the client is not required for this class of addon change; the failed reload test confirmed 1.05 had not reached the real blocker.
+- Root cause was `IsGlobalWorldOverview()`: current FrameXML uses continent IDs above `CONTINENTS_LENGTH` for special/native map states, and Questie-Octo treated that sentinel as global World even when `GetMapInfo()` already exposed a concrete non-`World` instance texture. This contradicted the accepted 1.0.94 regression rule that a texture-identified custom/detail map with a nonstandard continent tuple must remain selectable.
+- The rendered texture is now strictly authoritative when available: `World` still fails closed immediately (including the validated rapid zone -> continent -> global World transition with stale continent state), while any concrete non-`World` texture is allowed to resolve its WorldMapArea/AreaTable ID even when the native continent tuple is nonstandard.
+- The normal continent-overview branch is now restricted to actual client continents (`1..CONTINENTS_LENGTH`), so special instance/detail continent IDs cannot be swallowed before selected-map resolution.
+- The 1.05 duplicate-name fallback is made reachable for texture-cold cases by reading the native World Map zone dropdown only when `GetCurrentMapZone()>0`; that label must still resolve uniquely through current-client WorldMapArea art before it can override the identity-less World fallback. Ordinary GetMapZones/name lookup remains last.
+- No map polling, OnUpdate, scheduler delay, ZoneBootstrap change, node/prepared-map rebuild, database payload change, spatial index, or additional persistent Lua memory structure was added.
+
+1.05 - DUPLICATE-NAME DUNGEON WORLD MAP IDENTITY FIX
+------------------------------------------------------------
+- Built from accepted 1.04 after a live report in Razorfen Kraul showed active quest objectives on the minimap while the same objectives were absent from the opened dungeon World Map. Runtime data was verified first: Razorfen Kraul's selectable dungeon WorldMapArea resolves to AreaTable 491, and the reported active objectives (including Blueleaf Tubers and The Crone of the Kraul) have valid coordinates on map 491.
+- Root cause was the World Map identity fallback, not quest/objective data. The client has duplicate localized AreaTable names for several locations; Razorfen Kraul is both AreaTable 491 (the actual instance/map-art owner) and 1717 (an outdoor Barrens sub-area). If GetMapInfo()/texture identity is temporarily unavailable, Database:GetMapIDByName correctly refuses to guess between duplicate names, leaving DisplayedMapID nil and therefore rendering no Questie-Octo pins. The minimap is unaffected because it uses C_Map.GetBestMapForUnit("player") and already resolves physical map 491 directly.
+- ClassicAPI.lua now lazily builds a localized World Map name -> AreaTable ID index from the current client's C_Map.GetMapAreaIDs() / C_Map.GetAreas() data. Only AreaTable IDs that actually own WorldMapArea art participate; a name resolves only when that map-backed set has one unique AreaTable ID. Multiple real WorldMapArea owners with the same localized name remain ambiguous/fail-closed.
+- Map.lua uses that WorldMapArea-backed name resolution only after direct texture identity fails and before the broader AreaTable name lookup. This is generic and fixes the same class for other duplicate-name dungeon/detail maps without hardcoding Razorfen Kraul, changing quest data, or inventing exterior projections.
+- No polling, OnUpdate, scheduler delay, ZoneBootstrap batching change, map render slowdown, minimap spatial index, or new database payload was added.
+
+1.04 - LUA 5.0 WORLD MAP PIN-POOL SIZE FIX
+------------------------------------------------------------
+- Built on 1.03 after a player reported `Map/Map.lua:1031: attempt to index local pin (a nil value)`. The failure was traced to the World Map frame pool introduced in 1.01, not to quest data or the 1.03 battleground fast path.
+- Lua 5.0 table.insert() updates the table library's stored list size used by table.getn(). The pool previously popped its final element with `pool[count]=nil`, which removes the value but does not decrement that stored size. A later acquisition could therefore see `table.getn(pool)>0` while `pool[count]` was nil and then fail when assigning `pin.frameKey`. Reloading cleared the pool and temporarily masked the problem, matching the player report.
+- AcquireWorldMapPin now pops pooled frames with table.remove(), which keeps Lua 5.0's list-size bookkeeping synchronized. It also drains any stale nil tail entries defensively before allocating a new frame, so an already-corrupted pool cannot reproduce the error.
+- No new polling, OnUpdate, scheduler work, map scan, frame allocation policy, node rebuild, database change, or response delay was added. The 1.03 battleground empty-map optimization and all 1.02 tracker-hover behavior are preserved.
+
+1.03 - BATTLEGROUND EMPTY-MAP IDLE FAST PATH
+------------------------------------------------------------
+- Built from accepted 1.02 after a player reported that Arathi Basin could still reproduce the battleground FPS problem. Re-audit confirmed Arathi Basin was already covered by the 1.0.98 compiled-candidate fix; the original diagnosis removed the 6,701-quest fallback but did not remove all remaining empty-map minimap work.
+- ZoneBootstrap now publishes an authoritative empty PreparedMap immediately when the compiled candidate bucket is empty and AddActiveNodes also finds no local active objectives. This removes even the empty `zone-priority-scan` scheduler continuation on starter-less maps.
+- Minimap now tracks whether the current prepared plans contain any descriptors. With no descriptors it remains idle: no 20 Hz player-position reads, discovery checks, native map-context retarget, or active indoor/minimap zoom probe is performed. The existing low-frequency physical map identity safety check remains so unusual transitions are still detected.
+- If PREPARED_MAP_READY/NODES_READY/settings later introduce a real marker, the minimap resumes the existing immediate positioning path and settles native context before drawing it. No quest/objective/service marker support is disabled in battlegrounds.
+- Current server/reference battleground coverage checked during the audit: Alterac Valley (server map 30 / area 2597), Warsong Gulch (489 / 3277), Arathi Basin (529 / 3358), Blood Ring (26 / 4014), and Sunnyglade Valley (27 / 5023). The compiled index is not hardcoded to WSG/AB: absent buckets are authoritative for every map/area ID.
+- ZoneBootstrap's 400 indexed-candidate batch remains unchanged so ordinary zone response is not slowed. No spatial minimap index or additional persistent Lua-memory structure was added.
+
+1.02 - TRACKER-HOVER OBJECTIVE FOCUS
+------------------------------------------------------------
+- Built from accepted 1.01. Hovering an active quest title in Questie-Octo's tracker now sets a transient quest-ID focus shared by World Map and minimap presentation. Leaving the row, hiding the tracker, or changing focus restores normal presentation immediately.
+- Focus is visual-only: no canonical Nodes rebuild, PreparedMap rebuild, candidate discovery, World Map sync, minimap rediscovery, timer, or polling loop is triggered by hover. The handlers only walk the already-visible/active pin pools.
+- Active objective roles are objectiveCreature, objectiveObject, objectiveItemSource, and objectiveArea. Objective-only pins from other quests fade to 30% alpha. A pin containing the hovered quest remains fully visible even when it is a clustered/shared pin with objectives from several quests.
+- Any pin containing a non-objective semantic entry is protected at full alpha so available `!`, completed `?`, item-start, repeatable/event/PvP pickup/turn-in presentation, Flight Masters, rares, and service markers are never dimmed by tracker focus.
+- Full Nodes retain their established 0.85 base opacity and apply the hover multiplier underneath it; the hovered quest keeps the normal validated Full Nodes appearance.
+- Minimap focus reuses the existing pin alpha path and candidate pool. No QuestBeacon-style spatial bucket index or additional persistent map-node index was added.
+- World Map pooled pins clear transient focus alpha on recycle, and current focus is reapplied after normal/full-node visual refreshes so map updates cannot strand stale opacity.
+
+1.01 - STABLE LOCAL-WORK PERFORMANCE HARDENING
+------------------------------------------------------------
+- Built from accepted 1.0.99. This pass intentionally preserves Questie-Octo's immediate player-facing response: no ZoneBootstrap batch reduction, no slower icon appearance, no added navigation delay, and no QuestBeacon-style minimap spatial bucket tables. The changes remove redundant/global work instead of deferring useful work.
+- Fixed PreparedMap's 1.0.99 startup/race fallback helper referencing an undefined `self`. Once Nodes is authoritative, a missing quest -> map reverse entry is now an authoritative empty set; before Nodes is ready, the historical full-cache fallback remains available.
+- Turn-in completion now replaces the existing keyed availability timer with the fast refresh instead of scheduling a second independent full 6,701-quest availability generation.
+- World Map pin frames now use a generic reuse pool. Leaving a map context clears old semantic/node references and reuses those frame objects for later maps, so browsing many zones does not keep one keyed pin set per historical map.
+- Incremental continent updates now consume the NODES_CHANGED affected-map set and visit only changed maps on the displayed continent. Historical frame-cache scans are bounded to the current context by the new frame pool.
+- Nodes now keeps a reverse quest -> canonical-node index and stores the global node set by nodeID. A changed quest can remove its exact canonical nodes directly, including coordinate-less tooltip nodes, and each affected map is filtered once regardless of how many changed quests share it.
+- PreparedMap incremental patches now remove all changed quests from a descriptor in one pass instead of descriptor x changed-quest loops. World item-start plans are patched from changed quest nodes instead of being rebuilt from every item-start node on the map.
+- Availability builds a small dependency index during the normal full scan. UPDATE_FACTION reevaluates only reputation-gated quests, SKILL_LINES_CHANGED only skill-gated quests, and SPELLS_CHANGED only Hardcore-gated quests. Current compiled data contains 293 reputation-dependent, 200 skill-dependent, and 8 Hardcore-dependent quests versus 6,701 total. PLAYER_LEVEL_UP keeps the established full fast refresh because level changes legitimately affect a broad quest set.
+- Tooltip hover indexing now keeps quest-local reverse bucket ownership. NODES_CHANGED removes/rebuilds only changed quests' creature/object/item hover entries; full index rebuilds remain for complete NODES_READY publications and presentation-setting changes.
+- Scheduler delayed work reuses one due-key scratch array instead of allocating a new table every frame. Keyed delayed callbacks now carry monotonic tokens into the FIFO so rescheduling a key also cancels an obsolete copy that already reached the queue.
+- Runtime database content, quest data, ZoneBootstrap's 400 indexed-candidate responsiveness, minimap discovery architecture, visual behavior, accessibility colors, and existing gameplay defaults are unchanged.
+
+1.0.99 - MAP-LOCAL PREPARED QUEST REMOVAL
+------------------------------------------------------------
+- PreparedMap.RemoveQuest now reuses Nodes.questMaps, the existing reverse quest -> map index, so an accepted/abandoned/turned-in quest only scans prepared descriptors on maps that actually contain that quest.
+- The historical all-prepared-map descriptor sweep remains only as a startup/race correctness fallback when the reverse node index is unavailable.
+- Removed the second all-cache descriptor recount: descriptor accounting now subtracts only coordinate slots actually dropped from affected maps.
+- Duplicate compatibility removal events become a no-op once no prepared quest metadata remains, avoiding another global state-revision pass.
+- No additional persistent reverse/spatial index was added, preserving the current Lua-memory profile.
+- ZoneBootstrap batching and minimap spatial bucketing were deliberately left unchanged; current fast zone response and current minimap memory behavior remain intact.
+
+1.0.98 - COMPILED EMPTY-MAP CANDIDATE FAST PATH ON 1.0.96
+------------------------------------------------------------
+- Rebuilt from the accepted/live-validated 1.0.96 baseline after the 1.0.97 battleground-performance test was generated from the older 1.0.95 baseline. The full 1.0.96 Objective Color Vision accessibility feature is retained unchanged.
+- Fixed Map/ZoneBootstrap.lua so release builds with the authoritative compiled candidate index treat an absent map bucket as an empty available-quest candidate set instead of falling back to all 6,701 quest IDs.
+- This removes the unnecessary first-visit priority scan on starter-less minimap maps such as Warsong Gulch (3277) and Arathi Basin (3358).
+- Development/source mode retains the old full-database fallback because its candidate index can legitimately still be incomplete while being built.
+- Active quest objective nodes are collected before candidate selection and remain supported. No battleground-specific hiding, minimap polling change, scheduler timing change, database edit, coordinate change, or accessibility-color change was introduced.
+- 1.0.97 remains a consumed test version; 1.0.98 is the consolidated successor built on 1.0.96.
+
+1.0.96 - OBJECTIVE COLOR-VISION ACCESSIBILITY
+------------------------------------------------
+- Built directly from the accepted/live-validated 1.0.95 baseline. Added one global `objectiveColorVisionMode` presentation setting under Other -> Accessibility with player-facing choices Default, Red-deficient, Green-deficient, Blue-deficient, and High Contrast. Internal values remain default/protan/deutan/tritan/highContrast.
+- Kept `Visuals:GetQuestColor()` as the single integration point so one quest keeps one deterministic color across Full Nodes, Clustered objective tint, and enabled World Map/minimap contour/glow. Available `!`, completed `?`, repeatable/event/PvP, rare, Flight Master, and service markers remain outside the accessibility transform.
+- Default mode returns the exact 1.0.95 pfQuest-style hash color with no transform. Accessibility modes use fixed channel remaps selected by offline severe protan/deutan/tritan simulation plus a small dark-color lift; the runtime does not simulate color blindness. Across all 6,701 packaged quest IDs, the accessibility mappings eliminate the very-dark (<0.10 relative-luminance) colors seen in the unrestricted hash while retaining a deterministic continuous color space rather than assigning colors from the active quest list.
+- Changing the selector routes through the existing `Map:RefreshVisualSettings()` -> `Minimap:RefreshVisualSettings()` path. Visible pins are recolored/rebound immediately; no node/database rebuild, polling, timer, OnUpdate, scheduler work, or per-frame allocation path was added.
+- Reset Options restores Default through the normal declared-default copy path. The setting is global in `QuestieOctoGlobalDB.minimap`, so the display preference follows the player across characters.
+
+1.0.95 - HIGH-CONTRAST PER-QUEST OBJECTIVE COLORS
+--------------------------------------------------
+- Built directly from the accepted 1.0.94 baseline after its rapid World Map transition correction was live-validated.
+- Replaced Questie 5.2.3's compressed 0.45..0.95-per-channel objective palette with pfQuest's full-range deterministic RGB hash.
+- Questie-Octo keys the hash from a fixed `quest` namespace plus numeric quest ID rather than localized quest title, preserving identical quest colors across client languages and avoiding duplicate-title ambiguity.
+- Full Nodes use the resulting quest color directly; the previous extra 0.72 RGB darkening was removed because it made dark colors from the wider palette unnecessarily hard to see.
+- Clustered objective glow/contour now uses GetQuestColor(questID) instead of questID + objectiveIndex, making every objective of the same quest share one color on both World Map and minimap.
+- Available/turn-in/special/service markers are unchanged. No database, map discovery, polling, scheduler, or SavedVariables behavior changed.
+
+1.0.94 - RAPID WORLD-MAP CONTEXT CANCELLATION
+------------------------------------------------
+- Re-audited the failed 1.0.93 rapid zoom-out test against the accepted 1.0.92 source, the supplied current BlizzardInterfaceCode(6), the live failure screenshot, and Questie-Octo's asynchronous continent renderer. The screenshot shows the client already displaying the two-continent World texture while its title/context still says Kalimdor, proving that texture and continent index can briefly disagree during a fast zoom-out.
+- Current FrameXML defines CONTINENTS_LENGTH=2 and explicitly treats continent IDs greater than that value as the global World overview. WorldMapFrame_Update also renders directly from GetMapInfo(), so the World texture can become visible before the old continent index settles. The 1.0.93 cid<=0 guard therefore did not cover the reproduced transient state and is rejected rather than carried forward.
+- Added IsGlobalWorldOverview() using the displayed `World` texture as the primary signal and the current FrameXML `continentId > CONTINENTS_LENGTH` sentinel as a second guard. Both DisplayedMapID() and DisplayedContinentMapID() now fail closed on that state. Unlike 1.0.93, cid<=0 alone is not rejected when a non-World texture is known, preserving texture-identified custom instance/detail maps.
+- Found a second independent render-cancellation defect: pins produced by an unfinished asynchronous render are shown immediately and stored in buildActiveFrames until Finish(), while HideAll() previously hid only the last completed activeFrames. A context change could invalidate the generation yet strand those already-drawn build pins on the next map texture. HideAll() now de-duplicates and hides both lists before discarding the unfinished build.
+- No polling, OnUpdate, retry timer, map scan, database rebuild, coordinate change, or SavedVariables field was added. Existing generation checks remain the cancellation mechanism; this change only makes context identity and cancellation cleanup complete.
+- 1.0.93 remains a consumed failed test version. 1.0.94 is built directly from accepted 1.0.92 plus these two audited corrections.
+
+1.0.92 - CLICKABLE QUEST LINKS FROM QUEST LOG
+------------------------------------------------
+- Audited the player report against the accepted 1.0.91 Quest Log click hook, Blizzard 1.12 FrameXML, Questie-Octo's existing quest-link receiver, and pfQuest-classicAPI's Vanilla compatibility implementation. Blizzard 1.12 inserts only plain quest-name text when Shift-clicking a Quest Log quest while the chat edit box is visible; pfQuest constructs a `|Hquest:<id>:<level>|h[...]|h` hyperlink instead.
+- Added the missing outgoing half to `UI/QuestLinkTooltip.lua`: Questie-Octo can now build a difficulty-colored quest hyperlink from the live quest ID/title/level and insert it into the active Vanilla chat edit box. The existing incoming `SetItemRef` quest-link handling is unchanged and already understands the same `quest:` link format.
+- Updated TrackerDriver's existing Quest Log Shift+LeftClick pre-hook so chat retains native priority: with the chat edit box visible, Shift+LeftClick inserts the clickable quest link; with chat closed, the existing manual track/untrack toggle remains unchanged. If the hyperlink helper is unexpectedly unavailable, the hook forwards to Blizzard's original handler so the fallback remains plain quest text rather than changing tracking state.
+- Updated the Tracker options hint to document the chat-link gesture. No saved-variable field, database record, map/minimap behavior, tracker state model, quest-log scan, scheduler path, polling loop, timer, OnUpdate, or recurring allocation path was added.
+- Static validation: all 126 Lua files parse successfully with the available Lua 5.4 library. A focused hook regression harness confirmed chat-open Shift+LeftClick inserts `|Hquest:123:40|h[Test Quest]|h`, does not toggle tracking, preserves Quest Log selection/update, chat-closed Shift+LeftClick still toggles tracking, and missing-linker fallback calls Blizzard's original handler. This is static/harness validation, not live Vanilla 1.12 confirmation.
+
+1.0.85 - ARTISAN SECONDARY-PROFESSION AVAILABILITY
+------------------------------------------------------
+- Audited the level-35 / 225-skill report against the accepted 1.0.84 availability evaluator, current OctoWoW database pages, the supplied Tortoise quest_template source, Questie 6, pfQuest-Octo, and ClassicAPI's direct SkillLine-rank behavior. The availability evaluator already uses the quest's `min` field (not its display `lvl`) and the live SkillLine ID/rank, so no runtime eligibility-code change was needed.
+- Corrected current deployed truth for `To Survive in the Jungle` (42041): current OctoWoW data reports quest level 45 with required level 35. The packaged source snapshot/pfQuest-Octo reference still carried the older minimum 45. The sparse enrichment now overrides only `min=35`; its existing Survival skill ID/value are otherwise unchanged.
+- Removed stale legacy `pre` fields from the direct Artisan master quests Nat Pagle, Angler Extreme (6607), Clamlette Surprise (6610), Triage Horde (6622), and Triage Alliance (6624). Current server quest_template rows have PrevQuestId=0 for all four, while the 6608/6609, 6611/6612, and 6623/6625 quests are optional breadcrumb/travel helpers rather than mandatory prerequisites. Questie 6 independently models the master quests without those predecessor requirements.
+- Included Clamlette Surprise even though it was not part of the original player report because the full secondary-profession audit found the exact same stale prerequisite pattern there.
+- Regenerated the compiled runtime database. Only Data/runtime/quests.lua changed: four stale `pre` fields were removed and quest 42041 minimum level changed 45 -> 35. Quest count, map-candidate data, entity coordinates, objectives, rewards, and all other runtime datasets remain unchanged.
+- No event, OnUpdate, timer, polling, player-skill scan, map scan, cache, or recurring allocation path was added. ClassicAPI's C_SpellBook.GetSkillLineRank continues to provide the current rank directly by SkillLine.dbc ID.
+
+1.0.84 - COMPLETED QUEST MARKER Z-ORDER
+------------------------------------------------
+- Audited the Grim Reaches overlap report against the accepted 1.0.83 World Map/minimap renderer and Questie 5.2.3/6.0.0 draw-order behavior. Questie-Octo already gave turn-ins higher semantic priority and OVERLAY sublevel 6 versus available sublevel 5, so coincident entries merged into one pin correctly selected the completed `?`.
+- Found the remaining gap for separate Button frames whose icons overlap spatially: all non-permanent quest pins used the same frame level (World Map +8 / minimap +7). On the 1.12 client, separate frames at the same level can still overlap according to creation order, allowing an available `!` to cover part of a completed `?`.
+- Added a shared role frame-level band: permanent service/rare markers remain lowest, ordinary quest/objective/available pins retain their existing level, and turn-in pins render exactly one frame level higher. This applies to both World Map and minimap and makes completed `?` markers deterministically visible/clickable above available `!` markers.
+- Existing draw sublevels, visual role priority, prepared-pin merging, tooltip entries, icon textures/scales, quest visibility settings, map identity, objective data, and runtime database are unchanged. No new event, OnUpdate, timer, polling, scan, cache, or recurring allocation path was added.
+
+1.0.83 - COMPLETED QUEST OBJECTIVE VISIBILITY
+------------------------------------------------
+- Audited the reported completed War Banners tracker row against the accepted 1.0.82 source. TrackerDriver already respected `trackerHideCompletedObjectives`: when OFF it retained completed objectives, and when ON it filtered them out.
+- Found a second unconditional renderer gate in TrackerFrame: fully completed quests never iterated their objective rows at all. This made the Hide Completed Objectives setting ineffective whenever the whole quest was complete, even though the filtered objective state was correct.
+- Removed only that redundant renderer gate. TrackerFrame now renders exactly the objective list prepared by TrackerDriver, making the existing setting authoritative for both partially completed and fully completed quests.
+- No quest-log state, completion truth, sorting, tracker persistence, timers, map/minimap behavior, database data, events, polling, OnUpdate work, or background allocations changed.
+
+1.0.82 - CACHE-COLD AVAILABLE QUEST DIFFICULTY MARKERS
+--------------------------------------------------------
+- Re-audited the failed 1.0.81 available-quest `+` marker against ClassicAPI.dll, pfQuest-classicAPI, the compiled Questie-Octo database, and the current Tortoise quest_template source. ClassicAPI's C_QuestLog.GetQuestDetails() is cache-backed: pfQuest itself falls back to shipped quest text when that call returns nil for cache-cold quests. Therefore an unaccepted available quest cannot rely on that API to expose questType.
+- Confirmed Questie-Octo's compiled runtime preserved sparse PvP Type 41 but did not preserve the server's Elite (1), Raid (62), or Dungeon (81) types. The reported Crescent Grove quests 40089/40090 are Type 81 in the current quest_template, and 41756 is Type 81 in the current database-update quest snapshot.
+- Added a sparse build-time EliteQuestTypes projection for every runtime quest currently classified Type 1/62/81 by the supplied server quest_template (1,294 quests total). The compiler applies those values to the existing quest records, so QuestModel.questType is available before acceptance without an additional runtime lookup table.
+- Active quests still prefer the native GetQuestLogTitle().tag, preserving exact live behavior. Available quests use the compiled canonical server type. Removed the ineffective per-tooltip ClassicAPI quest-type lookup/cache from Map/Tooltips.lua.
+- No new event, OnUpdate, timer, polling loop, map scan, creature-rank inference, or persistent runtime cache was added. The runtime quest record gains only the canonical type field for the 1,294 affected quests.
+
+1.0.81 - ELITE / DUNGEON / RAID MAP TOOLTIP MARKER
+---------------------------------------------------
+- Audited the missing `+` report against the current 1.0.80 tooltip path, native Quest Log tag handling, ClassicAPI, and current Turtle server quest types. The tracker already preserved native GetQuestLogTitle().tag as `[level+]`, but Map/Tooltips.lua rendered only `[level]`, so active tagged quests lost the marker on World Map/minimap hover.
+- Confirmed the reported Crescent Grove quests 40089/40090 and Dragonmaw Retreat quest 41756 are current server quest Type 81 (Dungeon). QuestDef.h defines Type 1 = Elite, 62 = Raid, and 81 = Dungeon.
+- Map/minimap quest titles now append `+` for active quests carrying the native Quest Log tag. For available quests that are not yet in the Quest Log, the tooltip asks required ClassicAPI's C_QuestLog.GetQuestDetails(questID) for questType and marks only Elite/Raid/Dungeon types. A tiny per-hovered-quest type cache prevents repeated C API lookups.
+- No map nodes, icons, coordinates, quest availability, objective state, database records, polling loops, OnUpdate paths, or background scans were changed.
+
+1.0.80 - ITEM-START RARE SOURCE THRESHOLD 1.00%
+---------------------------------------------------
+- Raised `ItemStartAreas.zoneWideRareThreshold` from 0.50% to 1.00% to reduce World Map/minimap clutter from very low-drop-rate item-start quests.
+- Preserved the existing strict comparison: only `0 < chance < 1.00%` uses the zone-wide rare representative presentation; exactly 1.00% and higher remains normal detailed source presentation.
+- The shared ItemStartAreas plan still drives both World Map and minimap behavior, so Clustered/Full Nodes and both map surfaces keep the same threshold semantics.
+- This is presentation-only. Underlying item-start source data, quest availability, active quest objectives, drop rates, database/runtime content, and the master Show Item-Start Quests toggle are unchanged.
+- No new event, OnUpdate, timer, polling loop, frame, cache, database scan, or recurring allocation path was added.
+
+1.0.79 - STABLE ACECONFIG RUNTIME REFERENCES
+------------------------------------------------
+- Audited the player report `Questie-Octo ERROR: Questie-style AceConfig runtime unavailable` against the actual 1.0.78 Full/runtime packages and TOC. All required libraries are packaged and load before `UI/Options.lua`; the tracker and pfUI timer changes in 1.0.78 did not alter AceConfig or Options code.
+- `UI/Options.lua` previously re-queried the global `LibStub` for AceGUI and Questie-Octo's private AceConfig Registry/Dialog when settings were initialized/opened/reset. The options module now captures those already-loaded library tables once while Questie-Octo's own TOC is still loading and reuses the captured references for its lifetime.
+- Questie-Octo's private majors remain `QuestieOcto-AceConfigRegistry-3.0` and `QuestieOcto-AceConfigDialog-3.0`; no standard shared AceConfig major is republished. Shared `AceGUI-3.0` remains compatible with normal LibStub minor upgrades because LibStub upgrades the existing library table in place.
+- Failure handling remains conservative: if any required library was genuinely unavailable at Options.lua load time, settings initialization still stops safely, but the error now identifies the missing component(s) (`AceGUI`, `Registry`, and/or `Dialog`).
+- No new event, OnUpdate, timer, polling loop, frame, database scan, saved-variable field, map/minimap work, tracker work, or recurring allocation path was added. Runtime database content, README, fullscreen fixes, 1.0.78 tracker objective correction, 1.0.78 pfUI QuestTimer correction, and 1.0.74 Maul'ogg guidance are unchanged.
+
+1.0.78 - TRACKER OBJECTIVE DISPLAY INVALIDATION + PFUI QUEST TIMER COMPATIBILITY
+--------------------------------------------------------------------------------
+- Built cleanly from the accepted 1.0.74 source and merged the two isolated post-1.0.74 corrections that had previously been generated as separate test branches. Generated 1.0.75 remains discarded and is not used as a source.
+- Tracker objective display invalidation: TrackerDriver's change snapshot now includes `rawText` and `rawTextIncomplete`, matching the fields TrackerFrame actually prefers to render. This detects Turtle/ClassicAPI objective-label settlement such as generic `slain: 0/4` becoming a named objective even when normalized text and numerical progress are already unchanged. No new event, polling loop, timer, OnUpdate, map refresh, or database work was added.
+- pfUI/native Quest Timer compatibility: Questie-Octo no longer pushes Blizzard's QuestTimerFrame offscreen and no longer replaces SetPoint/ClearAllPoints/SetAllPoints. While Questie-Octo's tracker is enabled, the duplicate native timer is simply hidden; when the tracker is disabled, an active native timer can show again under Blizzard/pfUI's own positioning. Questie-Octo's own one-second timed-quest row remains unchanged.
+- The two fixes touch separate tracker files (`TrackerDriver.lua` and `TrackerFrame.lua`) and do not overlap. Fullscreen World Map behavior, minimap movement/performance, quest automation, runtime database data, Maul'ogg presentation overrides, map identity, options, and README are unchanged.
+- Preserved the detailed tracker-objective and pfUI QuestTimer audit documents in Docs for future regression work.
+
+1.0.74 - MAUL'OGG CRISIS SCRIPTED CONVERSATION GUIDANCE
+- Audited the player report for The Maul'ogg Crisis III (40266) against Questie-Octo 1.0.73 source data and the current supplied Tortoise server script `random_scripts_3.cpp`. Questie-Octo correctly retained hidden credit creature 60338 as the formal objective, but that dummy has no coordinates, so the active objective had no physical map/minimap target.
+- The server script explicitly exposes Seer Bol'ukk (91854) gossip while 40266 is incomplete and awards hidden creature credit 60338 at the end of that dialogue. Added a presentation-only objective-source override 60338 -> Seer Bol'ukk. Current bundled source coordinates are Lapidis Isle 32.6, 25.9.
+- Audited the surrounding Maul'ogg chain for the same scripted pattern rather than fixing only the reported quest. The Maul'ogg Crisis I (40264) awards hidden credit 60337 through Lord Cruk'Zogg (92180), and The Maul'ogg Crisis IX (40272) awards hidden credit 60339 through Lord Cruk'Zogg after the Elixir of Insom'ni interaction. Added the corresponding presentation-only overrides 60337 -> 92180 and 60339 -> 92180.
+- Formal quest objective IDs, completion/progress matching, quest text, quest templates, NPC coordinates, runtime database data, and server semantics are unchanged. The correction affects only actionable World Map/minimap/Show on Map guidance, using the existing sparse creature-objective source override mechanism.
+- No new polling, scheduler work, map identity logic, fullscreen behavior, tracker layout, options, or unrelated quest data changed. Questie-Octo 1.0.73 was the generated predecessor; 1.0.74 is the next build.
+
+1.0.73 - INDEPENDENT WORLD MAP AVAILABLE / COMPLETED QUEST FILTERS
+- Replaced the former continent/world-overview `Show Quests on the World Map` master with independent `Show Available Quests on the World Map` and `Show Completed Quests on the World Map` controls. This supports a turn-in-focused World Map view where ordinary available `!` markers can be hidden while completed `?` markers remain visible.
+- Available NPC/item-start markers use the Available control and turn-in markers use the Completed control. These are broad quest-state gates, so disabling Available removes every continent pickup `!`, including special quest pickups; `Show Special Quests on the World Map` remains an additional category gate for repeatable/PvP/event markers.
+- Selected zone/city maps remain governed by the existing map/minimap Available/Completed icon settings. Objective markers, Flight Masters, and minimap presentation are unchanged.
+- Upgrade migration copies the player's previous `showAllQuestsWorldMap` value into both new controls before removing the obsolete key, preserving the former normal quest-state visibility choice. The existing Special Quests preference is retained separately. Fresh/default profiles keep both new controls ON.
+- Questie-Octo 1.0.72 is the accepted implementation baseline for this release. The fullscreen World Map scheduler + WorldMapTooltip fixes are now live-confirmed working together; the earlier 1.0.59 centered-tilde tooltip cleanup is also live-confirmed good.
+
+1.0.72 - FULLSCREEN WORLD MAP TOOLTIP LIFECYCLE
+- Live testing of 1.0.71 confirmed the scheduler correction was only half of the fullscreen issue: Questie-Octo pins could now appear/update while the native World Map remained fullscreen, but hovering those visible pins produced no tooltip. The supplied player recording reproduced that split clearly.
+- Current native `GameTooltip.xml` defines `GameTooltip` as a child of `UIParent`. Native fullscreen World Map display hides `UIParent`, so Questie-Octo's existing World Map pin hover path could populate/show GameTooltip while the tooltip's parent hierarchy remained hidden.
+- Current native `WorldMapFrame.xml` defines `WorldMapTooltip` as a child of `WorldMapFrame`, specifically for interactive World Map content. That frame remains in the visible fullscreen map hierarchy.
+- The supplied pfQuest ClassicAPI reference independently uses the same native split: pins parented to `WorldMapButton` use `WorldMapTooltip`; non-World-Map hover paths use `GameTooltip`. The supplied pfUI reference also explicitly scales, skins, and uses `WorldMapTooltip`, supporting compatibility with that UI replacement.
+- Routed only Questie-Octo pins whose parent is `WorldMapButton` through the existing native `WorldMapTooltip`. Minimap pins, world-unit/object/item hover augmentation, and pfUI's private minimap-pin tooltip path retain their previous behavior.
+- Updated OnLeave/Hide to hide the same tooltip selected for the pin, preventing a fullscreen World Map tooltip from remaining visible after the cursor leaves a Questie-Octo marker.
+- This does not recreate the rejected standalone tooltip/mouse workaround: no new overlay or tooltip frame is created for fullscreen, no frame tree is crawled/reparented, and no polling or mouse tracker is added. The fix uses Blizzard's already-existing `WorldMapTooltip` only for World Map pins.
+- The 1.0.71 scheduler parent change remains unchanged: `QuestieOctoSchedulerFrame` stays under `WorldFrame` with the existing O(1) FIFO, 2-jobs/frame cap, ~4 ms budget, and delayed-callback semantics.
+- Source/static validation supports this fix, and the player recording supports the diagnosis; actual tooltip visibility in 1.0.72 still requires live confirmation.
+
+1.0.71 - FULLSCREEN WORLD MAP SCHEDULER LIFECYCLE
+- Full audit against the current supplied native FrameXML confirmed that `WorldMapFrame` is a `full` UIPanel and native full-panel display explicitly hides `UIParent`. `WorldMapFrame_Maximize()` also detaches the World Map from UIParent while fullscreen, while minimize/windowed mode returns it to UIParent.
+- Questie-Octo's single bounded scheduler was still created as a UIParent child. Normal child OnUpdate execution is visibility-dependent, so fullscreen could pause both delayed callbacks and the FIFO continuation queue. This directly explains pending map preparation/render work appearing only after the map was minimized.
+- Reparented only `QuestieOctoSchedulerFrame` from UIParent to `WorldFrame`. Current native WorldFrame documentation explicitly identifies WorldFrame children as remaining visible while the UI is turned off, making it the narrow source-backed lifecycle parent for nonvisual scheduler work.
+- Preserved the scheduler invariants unchanged: O(1) head/tail FIFO, maximum 2 jobs per frame, approximate 4 ms budget, and due timers entering the same bounded queue. No polling or additional background loop was added.
+- Audited the full map dependency chain: ZoneBootstrap, Nodes, PreparedMap, CandidateIndex, availability/objective/item-start refreshes, first-visit map preparation, continent/prepared rendering, and Map:RequestSync all depend on the shared scheduler. Existing PREPARED_MAP_READY/NODES_CHANGED/NODES_READY/WORLD_MAP_UPDATE/OnShow refresh boundaries are retained.
+- World Map pins remain children of WorldMapButton with their existing relative frame level. No standalone overlay, forced high frame level, WorldMapFrame reparent, tooltip workaround, frame-tree crawl, localization rewrite, map-identity rewrite, or minimap behavior change was introduced.
+- Other Questie-Octo OnUpdate frames were inventoried and left on their intentional UI/minimap parents; this fix does not broadly reparent unrelated UI timers or pollers. `QuestieOctoWorldMapEvents` also remains an event receiver rather than being conflated with the visibility-driven scheduler OnUpdate.
+- Added `Docs/FULLSCREEN_WORLDMAP_AUDIT_2026-08-21.md` with the source trace, rejected alternatives, compatibility notes, and live acceptance checklist. This build is source/static validated; fullscreen behavior still requires live player confirmation before being described as confirmed fixed in-game.
+
+1.0.70 - GENERIC REPEATABLE-AFTER-FIRST-COMPLETION SEMANTIC
+- Replaced the failed 1.0.69 Oink-specific live-observation assumption with an explicit generic quest semantic: `repeatableAfterFirstCompletion`. A marked quest is ordinary for a character until that character has completed it once, then becomes repeatable for availability/presentation/automation.
+- Live-verified Oink, Oink! (700001) is the first quest marked with this semantic. Its first available marker remains ordinary yellow; after one completion, future availability uses the normal blue repeatable presentation and obeys Show Repeatable Quests.
+- The transition is derived from Questie-Octo's per-character completion history, not QuestieOctoGlobalDB. This prevents one character's repeatable observation from making another character see a blue first-time marker. Existing global observed-repeatable data is ignored for quests with the explicit staged semantic.
+- Quest Automation uses the same staged state: the first offer behaves like an ordinary quest; future offers require Include Repeatable Quests.
+- Completion turn-in handling explicitly avoids leaving an ordinary one-time completion lock on a staged quest after its first reward. Direct per-quest completion-flag repair can also learn the first completion without suppressing the newly repeatable offer.
+- QuestModel refreshes the effective repeatable/presentation state when a cached staged quest is read, so completion-history changes do not require a global cache clear. No polling, OnUpdate loop, movement work, or background repeatability scan was added.
+- Oink, Oink! remains live-confirmed current Octo content: Pig (900200) is giver/finisher and Raw Black Truffle (4608) is the objective.
+
+1.0.69 - LIVE REPEATABLE PRESENTATION REFRESH / OINK, OINK! CONFIRMED
+------------------------------------------------------------------
+- Live testing confirmed quest 700001 (Oink, Oink!) is obtainable on current OctoWoW, uses Pig (900200) as giver/finisher, requires Raw Black Truffle (4608), and is presented as an ordinary quest the first time before becoming repeatable after the first completion.
+- Audited Questie-Octo's observed-repeatability path. EventAvailability correctly learns repeatability from live gossip metadata and QuestModel persists it in QuestieOctoGlobalDB.observedRepeatableQuests. That learned state also correctly changes completion filtering so a rewarded repeatable can reappear.
+- Fixed the remaining presentation race: AvailableQuests compares visible membership only, so a quest that was available both before and after repeatability observation produced no changed-quest set. Existing map/minimap nodes therefore retained their earlier repeatable=false presentation and stayed yellow until some unrelated node rebuild.
+- QuestModel:MarkObservedRepeatable now refreshes only that quest's already-published availability nodes when it is currently visible. The normal availability scan still runs afterward for completion/filter correctness. There is no new OnUpdate, ticker, movement hook, database scan, or persistent proximity-style background work.
+- Added a project data rule for staged repeatability: when live behavior proves a quest is ordinary on first completion and becomes repeatable only afterward, do not flatten that into a static repeatable flag that would miscolor the first offer. Preserve first-time ordinary presentation and promote repeatability from live server observation.
+
+1.0.68 - PFQUEST-OCTO 1.1.5 LIVE-DATABASE RECONCILIATION
+------------------------------------------------------------
+- Correct Questie-Octo package rebuilt fresh from the known-good 1.0.66 full/source baseline after the 1.0.67 delivery was rejected as the wrong project artifact. Version 1.0.67 is not a trusted baseline.
+- Audited the user-supplied pfQuest-octo 1.1.5 reference against Questie-Octo and current supplied server/source material; pfQuest remains reference-only rather than wholesale authority.
+- Added the permanent partial-extraction safeguard: a missing questgiver/ender relation in one scan is never sufficient proof that a quest is unavailable. The pfQuest-octo 1.1.4 audit found a populated scan short by 562 questgivers and 607 enders. Future suppression requires corroboration from extraction completeness/row-count stability, quest-template state, scripts/conditions, and live evidence where available.
+- Added the coordinate-diff safeguard: entity-ID set comparisons cannot detect an NPC relocation or removal of only one coordinate; those changes require current spawn evidence, patch notes, or live measurement.
+- Suppressed quests 55100 (Join The League!) and 55101 (Help The League?) from Available presentation while retaining their source records, matching the deployed placeholder signature already established for 40795.
+- Restored Shellcoins (80381) turn-in guidance through Elodia (80999) at Tanaris 67.6, 26.82.
+- Updated Voryn Skystrider (93100) to Alah'Thalas 27.65, 74.54 and its Thalassian Highlands projection 50.95, 37.48.
+- Added Oink, Oink! (700001) and Pig (900200) from the completed pfQuest-octo extraction for direct live verification; this addition remains isolated/reversible.
+- Removed only Baron Rivendare's stale Stormwind coordinate; the valid Orgrimmar 74.0, 34.9 position remains.
+- Did not import Mysterious Stranger, Innkeeper Warmbreeze, Ozzy service NPCs, or reclaim-service quests because they add no current Questie quest-guidance value.
+
+1.0.66 - REMOVE PROXIMITY TRACKER SORTING
+- Audited the existing Proximity tracker sort path and confirmed it was incomplete: TrackerDriver had a comparator for `row.distance`, but no runtime path ever populated that field, so selecting Proximity effectively fell back to Zone ordering.
+- Removed Proximity from the Tracker sort selector and removed the unused CompareProximity comparator/branch. Zone and Level remain the only supported tracker sort modes.
+- Existing SavedVariables with `trackerSort = "proximity"` migrate directly to `zone` during settings initialization. New writes accept only `zone` or `level`, so no hidden stale Proximity mode survives.
+- This intentionally avoids adding recurring player-movement distance calculations, coordinate caches, tracker resort ticks, or additional Lua allocations. The decision favors predictable memory/CPU behavior on the Vanilla/Turtle client, especially alongside large addon stacks.
+- No quest data, map/minimap node generation, tracker content, tracker layout, README, or runtime database content changed.
+
+1.0.65 - SCRIPTED / INTERACTION OBJECTIVE PRESENTATION CORRECTIONS
+- Audited quests 1435, 40099, 40174, 41243, and 41383 against the current Tortoise quest_template and server scripts. Kept formal server objective IDs authoritative and corrected only map/minimap presentation where hidden-credit/source entities have no useful physical spawn.
+- The Burning of Spirits (1435): removed ReqSourceId-derived item 6766 (Flayed Demon Skin (old2)) from the formal item objective list. The real objective remains Infused Burning Gem (6435); Burning Gem (6436) remains an IR interaction tool and its quest-item requirement targets provide the actionable Burning Blade creature locations.
+- Attack from the Inside (40099): kept hidden credit creature 60323 as live progress truth, but map guidance now uses Grain Sack object 2010824, whose server gossip script awards 60323 credit when poisoned with Grelda's Poison Vial.
+- A Cannon's Misfortune (40174): kept hidden credit creature 60328 as live progress truth, but map guidance now uses Blast Powder Keg object 2010834, whose server script awards 60328 credit when sabotaged with Special Water.
+- Wisdom of Ur (41383): kept hidden credit creature 60056 as live progress truth, but map guidance now uses Arch Druid Dreamwind (61512); the final Dreamwind gossip step awards 60056 credit. This also makes tracker Show on Map resolve to the actionable NPC.
+- A Thirst of Hope (41243) was re-audited and intentionally left unchanged: Withered Refugee 61773 is the actual server target and the user live-confirmed the camp refugees are correct. Removed it from the active data-fix backlog.
+- Runtime compiler explicitly retains the two presentation-only gameobjects needed by the source-stripped GitHub build. No quest acceptance/reward rules, objective counts, tracker progress truth, options, map geometry, README, or unrelated database records changed.
+
+1.0.64 - QUEST-BOUND AREATRIGGER LIVE COMPLETION
+- Audited Questie-Octo's restored `obj["A"]` quest-bound AreaTrigger path against current Turtle/MaNGOS quest completion semantics, current ClassicAPI quest-log access, Questie 5/6 event-objective handling, and the supplied pfQuest ClassicAPI reference. Generic exploration/fog markers remain disabled; this change concerns only AreaTriggers explicitly attached to active quest objectives.
+- Current runtime contains 39 quests with `obj["A"]`; nine use multiple trigger locations. Vanilla/Turtle stores exploration/event completion as one quest-level explored state, so multiple AreaTriggers for the same quest are OR-equivalent locations for that one live objective rather than independent ordered objectives.
+- Quest/Objectives.lua now maps those AreaTrigger locations to live Quest Log completion only when the relationship is provable without DB-order assumptions: an exact live leaderboard objective ID matching one trigger is preferred, otherwise exactly one live event/exploration-style objective row is accepted. All equivalent triggers inherit that row's objective index/text/completion state.
+- Map/Nodes.lua already suppresses objective nodes whose resolved source is complete, so a mapped AreaTrigger group now disappears immediately when its live exploration/event objective completes even if other kill/item/object objectives in the quest remain unfinished. QUEST_MAP_STATE_CHANGED already includes per-row completion state, so this refresh is event-driven and also works while the player is stationary.
+- Ambiguous, missing, or custom-script objective mappings fail safe: AreaTrigger pins retain the previous 1.0.63 behavior and remain until the whole quest completes rather than disappearing based on guessed row order. No generic fog/exploration discovery, quest templates, AreaTrigger coordinates, tracker layout, map geometry, options, README, or runtime database content changed.
+- Added focused source/static tests for unique event-row mapping, OR-equivalent multi-trigger completion, mixed quests, exact-ID preference, and fail-safe behavior for missing/ambiguous event rows.
+
+1.0.63 - KARAZHAN-ONLY LOWER/UPPER MAP IDENTITY SPLIT
+- Audited current DBFilesClient WorldMapArea/AreaTrigger data and current Turtle/Tortoise server source for the known AreaTable 3457 collision. Current client contexts are WorldMapArea 657 / server map 532 / texture `Karazhan` for Lower Karazhan Halls and WorldMapArea 682 / server map 814 / texture `UpperKarazhan` for Upper Karazhan first floor. Upper second floor remains distinct AreaTable 5557.
+- Added `Map/KarazhanContext.lua` as a deliberately narrow secondary-context layer. Normal maps continue using the existing numeric AreaTable architecture; only 3457 is split into `lower` and `upper` contexts.
+- World Map rendering now retains the native displayed texture context so switching Lower <-> Upper refreshes Questie even though both report numeric 3457. Source nodes are filtered by current server-backed Lower/Upper ownership; unclassified 3457 sources fail closed instead of appearing on a plausible but wrong floor.
+- Physical minimap handling uses ClassicAPI's backported GetInstanceInfo instance-map ID to distinguish server map 532 from 814 and applies the correct current WorldMapArea dimensions (619x410 Lower, 823x549 Upper). If physical context cannot be proven, 3457 minimap markers are hidden rather than guessed.
+- Tracker objective/finisher Show on Map now carries the same Karazhan source context. A Lower target cannot be accepted simply because Upper's shared numeric 3457 map is visible, and vice versa. Interface 11200's native map-selection limits remain respected: Questie does not invent an arbitrary Lower/Upper map setter or outdoor fallback.
+- Added `Docs/KARAZHAN_CONTEXT_AUDIT_2026-08-21.md`. No quest templates, coordinates, runtime DB contents, continent projection, dungeon entrances, README, options, or unrelated map identities changed. Karazhan is currently unavailable on live OctoWoW, so this is source/static validated preventive compatibility, not live player-confirmed behavior.
+
+1.0.62 - REMOVE UNVERIFIED TIMBERMAW SCRIPTED-ENCOUNTER PLACEHOLDERS
+- Removed only the inherited `50,50` area-5640 coordinates from scripted Timbermaw encounter units Peroth'arn (60686) and Ursol (62947). Current server source has no ordinary static map-819 spawn for either entity, so the generic center-of-map points were not authoritative objective locations.
+- Kept both unit records, levels, quest objective relationships, item/loot relationships, and all quest truth intact. Quests 41934 and 41966 still track their boss objectives normally; the map simply refuses to publish an invented boss location.
+- Available-quest discovery is unaffected because pickup markers use each quest's independent `start` relationship and starter NPC coordinates: quest 41934 starts from 62740 and quest 41966 starts from 11555. Removing objective-unit coordinates cannot remove those quest-start markers.
+- No replacement scripted position was guessed. A future current-database update or convincing live/player evidence may add verified coordinates later. No other Timbermaw Hold coordinates, instance geometry, tracker behavior, map presentation, options, or README changed.
+
+1.0.61 - REMOVE SYNTHETIC DUNGEON ENTRANCE PINS / CURRENT-DUNGEON TRACKER MAP SUPPORT
+- Reverted the 1.0.60 runtime dungeon-entrance marker feature after live map evidence showed that at least the Scarlet Monastery Cathedral exterior projection could land on the wrong side of Tirisfal Glades, and Sandrea decided that modern Turtle addon stacks already provide enough entrance guidance. Questie-Octo no longer creates synthetic outdoor/continent/minimap dungeon entrance pins for active quests.
+- Removed the unused runtime `Map/DungeonEntrances.lua` module and all `dungeonEntrance` node/render/tooltip/prepared-map handling. The 1.0.60 AreaTrigger/server-teleport research remains preserved as a historical audit under `Docs/DUNGEON_ENTRANCE_AUDIT_2026-08-21.md`; it is not runtime quest guidance.
+- Preserved normal quest markers in real pre-instance spaces such as the Deadmines/Moonbrook tunnels and Wailing Caverns approach cave. Those are ordinary creature/object/objective coordinates and were never dependent on the synthetic entrance feature. Internal dungeon objective coordinates are also unchanged.
+- Extended tracker Show on Map selection for dungeon/detail contexts without fabricating an outdoor fallback. If the native World Map is already displaying the objective's exact map (including a map opened by another addon), Questie-Octo now recognizes it directly. When the World Map is closed and the player is inside a party/raid instance, Questie-Octo may call the normal `SetMapToCurrentZone()` while the map is hidden to resolve the exact current instance texture/AreaTable identity before enabling Show on Map. It never retargets a World Map the player is actively browsing.
+- Current Octo/ClassicAPI has no arbitrary instance-map setter: `SetMapZoom` selects normal continent zones and `SetMapToCurrentZone` selects the player's physical map; ClassicAPI adds map getters but no `SetMapID` equivalent. Therefore a pure dungeon objective cannot be forced onto the native World Map while the player is standing elsewhere unless another addon has already made that dungeon map the displayed native context. No Atlas dependency, custom dungeon-map replacement, navigation arrow, or fake exterior objective was added.
+- Completed dungeon turn-ins automatically use the same improved map-selection path. No quest database, objective truth, pre-instance coordinates, tracker layout, minimap performance path, zone-range behavior, README, or options changed.
+
+1.0.60 - VERIFIED ACTIVE-QUEST DUNGEON ENTRANCE GUIDANCE
+- Audited the current Octo DBFilesClient AreaTrigger/WorldMapArea data against the current Turtle/Tortoise `areatrigger_teleport` table rather than using old `*Entrance` WorldMapArea helper rectangles as portal truth. The server snapshot contains 133 teleport rows; the runtime feature deliberately curates only physical entrance triggers that have an unambiguous exterior client map and an authoritative destination map.
+- Added `Map/DungeonEntrances.lua` with 40 unique verified entrance triggers represented across 30 current client instance/floor contexts (41 map records because Black Morass has two current client floors sharing one physical entrance). The table retains the exact current exterior AreaTrigger projection and the inside teleport destination used for multi-entrance selection.
+- Active quests now add a `dungeonEntrance` guidance node only when their currently actionable objective/turn-in node graph reaches a supported instance context. Outside the instance the entrance appears on its verified exterior map/minimap; inside the instance the normal objective nodes remain the useful markers. Completed quests keep entrance guidance only when their remaining turn-in is inside the supported instance.
+- Multi-entrance dungeons do not publish every door blindly. Gnomeregan, Uldaman, Maraudon, Stratholme, Dire Maul and Stormwind Vault compare each active internal point with the authoritative server teleport destinations, weighted by current WorldMapArea dimensions, and publish the nearest verified entrance(s). Equal target destinations intentionally keep equivalent alternatives (Stormwind Vault outside/Mirror Lake). If a multi-entrance context has no usable internal point, the feature fails safe and publishes no guessed entrance.
+- Entrance markers are exact physical markers using the existing interact artwork and `(Entrance)` tooltip status. Multiple active quests sharing one portal merge into one physical pin while retaining every quest line in the tooltip. They follow the existing objective visibility toggles; no new option, SavedVariable, polling loop, navigation arrow, or quest-description tooltip was added. Verified entrances also participate in continent quest presentation where the existing exterior-zone projection supports that map; ordinary objective nodes remain zone-only.
+- Intentionally excluded condition-gated or ambiguous cases until their runtime conditions can be evaluated safely: Onyxia, Molten Core shortcuts, AQ20/AQ40, Naxxramas and Emerald Sanctum; Blackwing Lair and the ordinary Molten Core entrance are internal-only transitions; Lower Karazhan remains excluded because current area 3457 is shared with Upper Karazhan; Grim Batol explicitly reports unavailable content. Dragonmaw Retreat, Stormwrought Ruins, Timbermaw Hold, Windhorn Canyon and Frostmane Hollow have no current authoritative target teleport row and therefore receive no fabricated entrance.
+- Deduplicated the legacy Stormwind Vault trigger 107 against the current explicit outside trigger 5002; the distinct Mirror Lake entrance 5003 remains valid. No runtime quest/entity database records were changed and the approved README remains unchanged.
+
+1.0.59 - CENTERED TILDE GAMETOOLTIP LIFECYCLE FIX
+- Confirmed the player report against Map/Tooltips.lua and the current BlizzardInterfaceCode GameTooltip lifecycle. Questie-Octo draws the accepted vertically centered ASCII `~` as a separate child FontString because FRIZQT renders that glyph too high. The child overlay remained internally shown after its parent GameTooltip was hidden, so a later unrelated GameTooltip reuse could make the old marker visible again.
+- Added one-time lifecycle cleanup to every tooltip that receives a centered tilde. The overlay pool is now reset on both OnHide and OnTooltipCleared: OnHide covers normal map-pin leave/reopen, and OnTooltipCleared covers Blizzard/UI addons that replace a still-shown tooltip in place.
+- Uses additive HookScript when available so existing Blizzard/pfUI/ShaguTweaks tooltip handlers remain intact; retains the project's forwarding SetScript fallback for older Vanilla clients. Existing ResetCenteredTildes calls during Questie-Octo tooltip construction remain harmless and provide immediate local cleanup.
+- Preserved the accepted centered ASCII tilde presentation, ARIALN-only glyph font, respawn formatting, spaced percentage ranges, tooltip text fonts, map/minimap behavior, quest data, runtime database, options, and README.
+
+1.0.58 - SAFE CURRENT-SERVER QUEST DATA CORRECTIONS / PFQUEST-OCTO 1.1.0 AUDIT
+- Re-audited the current Questie-Octo 1.0.57 source against the user-supplied pfQuest-octo 1.1.0 snapshot and the current Turtle/Tortoise server source. The supplied pfQuest archive hashes to the same current 1.1.0 reference already recorded in SOURCE_PROVENANCE; it remains a comparison source rather than database authority. The old 38-quest replacement batch was not imported wholesale.
+- Corrected quest 1704 (Klockmort Spannerspan) conservatively: the current server setup applies the historical quest-template migration that restricts the quest to race mask 68, so Questie-Octo keeps that existing restriction rather than accepting pfQuest-octo's broader 589 mask. The server also requires Furen's Notes (6926), which was missing from Questie-Octo's formal objectives and is now restored.
+- Corrected quest 5206 (Marauders of Darrowshire): formal server objectives are Resonating Skull (13155) x5 plus Mystic Crystal (13156), not Fetid Skull (13157). Presentation guidance remains useful by pointing the Resonating Skull objective to current Fetid Skull source Scourge Champion (8529), without pretending the 80% Fetid Skull drop rate is the Resonating Skull conversion chance.
+- Kept quest 6661 (Deeprun Rat Roundup) formal objective 13017 (Enthralled Deeprun Rat), matching the current server quest template. Added a presentation-only source override to normal Deeprun Rat 13016, which is the creature players actually use the Rat Catcher's Flute on. This avoids the earlier audit's unsafe idea of replacing the formal completion target.
+- Corrected quest 41312 (Restoration) to include all four current server-required items: 41371, 41373, 41397, and 41445.
+- Corrected quest 41659 (The Sal'Galaz Mines) from nonexistent objective unit 62229 to Bonesplitter Trogg 62228 while retaining Seer 62230, Skullthumper 62231, and Bonesnapper 62232. The inherited compatibility unit 62229 itself remains present because older item-source tables still reference that ID; removing those dangling historical references requires a separate loot-source audit.
+- Restored current server event-164 membership to quests 8595, 8764, 8765, and 8766. Questie-Octo already classifies event 164 as a permanent/non-seasonal 1.9 content gate, so this is metadata completeness and does not give these quests seasonal coloring/behavior.
+- Explicitly left conflicting/destructive pfQuest replacements such as 8249 and 40056 untouched, along with the rest of the deferred 38-quest replacement batch unless independently supported by current server truth.
+- Regenerated the compiled/pruned runtime. The reachable item table increases from 3,634 to 3,635 records and item names from 6,394 to 6,395 because the newly restored formal objective items change reachability; quests remain 6,700 and units remain the complete 14,136-entry table.
+- No map geometry, minimap movement/performance architecture, tracker behavior, automation, zone-level ranges, options layout, README, or ClassicAPI packaging changed.
+
+1.0.57 - ZONE LEVEL RANGE DIPLOMACY / WESTFALL HOVER IDENTITY AUDIT
+- Restored LevelRange's player-relative zone diplomacy line under the existing Show Zone Level Ranges option: faction-owned zones display Friendly for their own faction and Hostile for the opposite faction, while neutral PvP zones display Contested. Colors match the supplied LevelRange behavior (green Friendly, red Hostile, brown/gold Contested). No second option was added.
+- Audited the current Octo AreaTable.dbc faction-group mask for all 53 supported leveling zones. Mask 2 is Alliance, mask 4 is Horde, and mask 0 is Contested. The current client confirms the historical LevelRange ownership for all overlapping zones; current Turtle additions are also sourced from the client (Thalassian Highlands Alliance, Blackstone Island Horde, Icepoint Rock/Moonwhisper Coast/Northwind/Balor/Grim Reaches and the other custom leveling zones Contested).
+- Diagnosed the 1.0.56 Westfall regression: the current client contains AreaTable 40 (the outdoor Westfall zone) and AreaTable 206 (a Westfall subarea) with the same localized display name. Questie-Octo's duplicate-safe name index correctly refused to guess between them, so the range tooltip was hidden even though Westfall was present in the range table.
+- Reworked continent-hover identity to prefer Blizzard's exact native WorldMapHighlight texture name and ClassicAPI's WorldMapArea texture->AreaTable mapping before any display-name fallback. Westfall's `Westfall` texture therefore resolves deterministically to area 40. Name lookup remains a duplicate-safe fallback only. This also makes the feature more robust to future duplicate/localized area names.
+- Completed a current DBFilesClient WorldMapArea audit: all 53 supported leveling AreaTable IDs have valid map areas. The map 0/1 WorldMapArea contexts not represented by a leveling range are GM Island, dungeon entrance/helper maps, Blackrock Mountain, Gates of Ahn'Qiraj, Caverns of Time, Timbermaw Tunnels, and the Timbermaw/Windhorn entrance helpers; they remain intentionally excluded.
+- Cross-checked the newly supplied LevelRange-Octo 2.0.4 reference against the previously supplied LevelRange-Turtle 2.2.0. Their core Friendly/Hostile/Contested behavior and overlapping zone ownership agree. No fishing, instance-list, raid-list, slash-command, SavedVariables, or XML options behavior was imported.
+- No quest data, 1.0.55 instance-coordinate corrections, minimap performance/smoothness behavior, tracker behavior, automation, or README changed.
+
+1.0.56 - INTEGRATED WORLD MAP ZONE LEVEL RANGES / TURTLE 1.18.1
+- Adapted the core continent-hover zone-level presentation from the user-supplied LevelRange-Turtle 2.2.0 reference into Questie-Octo behind one global Show Zone Level Ranges toggle under Other -> Interface, immediately above Dark Theme. The setting defaults ON to match the standalone addon's primary behavior and applies immediately without /reload.
+- Reimplemented hover resolution by current AreaTable ID instead of copying LevelRange's English/localized-name-keyed runtime. Current ClassicAPI C_Map.GetAreas data is normalized and duplicate-safe, so localized clients and Turtle's historical Northwind trailing-space name do not require a hardcoded English workaround.
+- Audited current outdoor WorldMapArea contexts from the authoritative DBFilesClient extraction against LevelRange-Turtle's zone table. The genuine questing outdoor zones missing from LevelRange-Turtle 2.2.0 are Icepoint Rock (area 5024) and Moonwhisper Coast (area 5642); helper/entrance maps, Timbermaw Tunnels, Blackrock Mountain, Caverns of Time, GM Island, and other non-leveling map contexts are intentionally not treated as leveling zones.
+- Added Moonwhisper Coast at the official Patch 1.18.1 level range 50-56 and Icepoint Rock at the current Turtle zone range 40-50. Existing LevelRange-Turtle zone ranges are otherwise preserved for behavioral continuity.
+- Intentionally did not import LevelRange-Turtle's fishing, instance-list, raid-list, slash-command, SavedVariables, XML options frame, or global WorldMapButton_OnUpdate replacement. Questie-Octo owns one small read-only World Map child update frame and a separate bottom-left GameTooltip, avoiding conflicts with its existing map pin tooltips.
+- Added LevelRange-Turtle license/provenance attribution. No Questie-Octo quest database, map-node data, minimap behavior, tracker behavior, automation, README, or 1.0.55 instance-coordinate corrections changed.
+
+1.0.55 - CURRENT CLIENT INSTANCE MAP DATA / DUNGEON OBJECTIVE COORDINATES
+- Promoted the newest user-supplied DBFilesClient extraction and BlizzardInterfaceCode extraction to current-client authority for DBC/map geometry and native FrameXML behavior respectively; current Turtle/Tortoise server source remains authority for server-side spawns, quest templates, scripts, and teleport destinations.
+- Audited the current 40 dungeon/raid server maps and 47 usable client WorldMapArea instance/floor contexts against the merged Questie-Octo database. Existing Vanilla and previously supported Turtle instances were left unchanged when their coordinates were already healthy.
+- Isolated a generation gap in Timbermaw Hold (server map 819 / area 5640), Windhorn Canyon (820 / 5641), and Frostmane Hollow (822 / 5734): the inherited extractor snapshot lacked the current WorldMapArea bounds, leaving static creature rows at generic 50,50 placeholders and quest objects without local coordinates.
+- Rebuilt server-backed static creature coordinates for 24 Timbermaw Hold records, all 27 existing Windhorn Canyon records, and all 12 existing Frostmane Hollow records using the current client WorldMapArea bounds and current server spawn positions. Two Windhorn Rocktail Scorpid spawns that transform outside the playable 0-100 map rectangle are intentionally omitted.
+- Restored all 28 current Windhorn Relic (2020320) positions and the current Tablet of Kaz'gan (2020339) position. This repairs the map/minimap data used by quests such as Vortalus' Edict, In Search of Tauren Relics, Relics of the Windhorn Tribe, The Wrath of Malgan, Destroy the Deathtotem, and A Grave Misunderstanding!.
+- Did not fabricate positions for Timbermaw scripted encounters Peroth'arn (60686) or Ursol (62947), because the current server source has no ordinary map-819 creature spawn for them. Their pre-existing presentation is left untouched pending a separate scripted-encounter audit.
+- Audited AreaTrigger.dbc plus server areatrigger_teleport data as a future authoritative entrance source. No automatic outdoor dungeon-entrance markers were added in this release: multi-entrance dungeons, helper WorldMapArea rectangles, conditions, and unavailable/test content require a separate behavior pass.
+- Confirmed a separate map-identity edge case where Lower Karazhan (server map 532) and Tower of Karazhan (814) both use client area 3457 in distinct WorldMapArea contexts. Existing working Karazhan behavior is intentionally unchanged.
+- Preserved the validated 1.0.49 minimap performance work, 1.0.53 native minimap smoothness work, 1.0.54 fresh-character completion-history reset, all map visibility settings, and all quest truth.
+
+1.0.54 - FRESH CHARACTER COMPLETION-HISTORY RESET
+- Fixed character-local completed-quest history surviving into a genuinely fresh level-1/0-XP character when the same SavedVariables identity is reused, including Turtle Hardcore fresh-life resets and normal delete/recreate-with-the-same-name cases.
+- Audited Questie 5.2.3, Questie 6.0.0, and the supplied pfQuest builds. Questie replaces completion state from server truth, while pfQuest explicitly clears saved quest history when UnitLevel("player") == 1 and UnitXP("player") == 0. Questie-Octo adopts that conservative fresh-character sentinel while retaining its existing protection against occasionally incomplete bulk-completion responses.
+- The fresh-character check runs before the authoritative completion query. It clears only QuestieOctoDB.completed, QuestieOctoDB.dailyReset, and the matching in-memory completion caches; character options, tracker state/position, Quest Log collapse preferences, and other SavedVariables are preserved.
+- Normal characters above level 1 or with any XP keep the existing completion-history merge/direct-flag safeguards unchanged. No quest data, map data, tracker behavior, automation, or minimap behavior changed.
+
+1.0.53 - NATIVE MINIMAP MOVEMENT SMOOTHNESS
+- Fixed native moving minimap markers, especially party/teammate dots, visibly blinking or snapping during continuous player movement while Questie-Octo minimap pins were active.
+- The cause was a leftover pfQuest/Vanilla indoor/outdoor projection probe in the 1.0.49 candidate-discovery path. When indoor and outdoor zoom CVars were equal, each rediscovery briefly called Minimap:SetZoom twice to infer projection state; those native zoom mutations forced Blizzard's own minimap children to redraw.
+- Removed every Minimap:SetZoom call from normal movement/candidate discovery. Discovery now resolves non-ambiguous indoor/outdoor state passively and reuses a cached context state when Vanilla cannot distinguish it without a probe.
+- Added MINIMAP_UPDATE_ZOOM handling so real zoom/context changes refresh minimap geometry. The compatibility probe is retained only as a bounded context-settlement fallback at startup/zone transitions or an ambiguous native context event, with its own generated zoom events ignored.
+- Preserved the 0.05-second Questie pin movement path, the 1.5x candidate envelope, reduced full discovery frequency, stationary event-driven quest refreshes, and the validated 1.0.49 performance work. No quest/map data or marker semantics changed.
+
+1.0.52 - TRACKER LOGIN OBJECTIVE SETTLEMENT
+- Fixed the intermittent login state where tracker objective rows could retain only a counter such as `: 0/10` because Turtle/ClassicAPI had published numerical progress before the corresponding objective label.
+- The regression came from our compiled-runtime startup optimization: Questie-Octo deliberately consumed the first Quest Log snapshot immediately and incorrectly assumed another QUEST_LOG_UPDATE would always arrive after the client cache settled.
+- Kept the immediate startup snapshot and low-memory compiled database, but now primes the native Quest Log and performs bounded one-shot settled refreshes at foundation readiness plus approximately 1 and 4 seconds after login. There is no permanent polling loop.
+- If a later transient read loses a label, the Quest Log cache preserves the last complete label for the same live objective while still taking current progress/completion counters from the newest API read.
+- Until a label is settled, the tracker suppresses the malformed leading colon and can display the available counter alone rather than caching misleading objective text.
+- No quest data, map data, tracker layout/sorting, memory-database contents, or 1.0.50 right-click Show on Map behavior changed.
+
+1.0.51 - LIVE-VERIFIED QUEST AVAILABILITY SUPPRESSION
+- Temporarily marked quest 40795, In Search of Solar Knowledge, disabled in the Octo merge layer after live-realm evidence conflicted with the current bundled Turtle source data.
+- A level-eligible Priest verified that the live Magistrix Ishalah in the High Elf city does not offer quest 40795, while the second database-listed Ishalah spawn could not be found at the indicated starting-area location.
+- Preserved the complete underlying quest source record and localization for provenance/auditing; only the merged runtime availability state is disabled, so the quest can be restored without reconstructing its data.
+- Established the evidence rule for future live suppressions: a missing Questie-Octo marker alone is not sufficient; player eligibility and the expected live quest source/offer must be verified before overriding bundled database availability.
+- No other quest data, map coordinates, class/race requirements, tracker behavior, or 1.0.50 Show on Map behavior changed.
+
+1.0.50 - TRACKER SHOW ON MAP
+- Added a Questie 5/6-style right-click menu to tracked quest titles while preserving normal left-click Quest Log opening and Shift+Left Click manual untracking.
+- Active quests now expose an Objectives submenu; each unfinished objective can open the native World Map directly to a selectable zone containing that objective's existing Questie-Octo markers.
+- Completed quests now expose Show on Map for their turn-in location when the native World Map can select that map.
+- The implementation uses Turtle/Vanilla SetMapZoom / SetMapToCurrentZone behavior rather than assuming modern WorldMapFrame:SetMapID APIs, and does not add a navigation arrow, TomTom target, focus mode, or new map markers.
+- Quest, objective, tracker sorting, map-node visibility settings, and underlying database data are unchanged.
+
+1.0.49 - MINIMAP / IR INVENTORY HOT-PATH OPTIMIZATION
+- Split minimap work into a smooth 0.05-second nearby-pin movement pass and a much less frequent full descriptor discovery pass.
+- Full minimap discovery now keeps a 1.5x nearby candidate envelope and only rescans the complete zone plan after the player moves a meaningful fraction of the minimap radius, instead of scanning every descriptor on every movement tick.
+- Removed the old once-per-second forced full minimap scan while the player is stationary.
+- Reduced physical map-ID polling to a low-frequency safety check backed by normal zone events, cached zone minimap dimensions, reduced repeated square/indoor geometry work, and removed per-tick visible-group table allocation/sorting from the movement path.
+- Switched IR quest-item tracking from BAG_UPDATE/UNIT_INVENTORY_CHANGED to ClassicAPI's settled BAG_UPDATE_DELAYED path.
+- Active IR dependencies now maintain a small item-to-quest registry; bag changes scan bags/equipment once for all relevant IR items and refresh only quests whose dependency item actually appeared or disappeared.
+- Characters with no active IR-dependent quests now ignore delayed bag updates without scheduling objective work.
+- Added lightweight manual /qo perf counters for minimap discovery/candidate activity and IR bag scans; no continuous diagnostic polling was added.
+- Quest/map data, minimap icon semantics, Clustered/Full Nodes behavior, and the 0.05-second visible-pin movement cadence are unchanged.
+
+1.0.48 - TRACKER VISIBLE-ROW VIEWPORT SAFETY
+- Fixed the tracker occasionally clipping its final quest/objective even when the configured Visible Rows value had enough room.
+- Tracker layout now uses the viewport height calculated during the current render pass instead of immediately trusting Vanilla's potentially stale ScrollFrame:GetHeight() result after a resize.
+- Preserved whole-row paging and normal mouse-wheel scrolling when the tracker genuinely has more content than can fit.
+
+1.0.47 - ITEM-START WORLD-TOOLTIP VISIBILITY
+- Show Item-Start Quests now also controls available item-start information appended to creature, object, and item world-hover tooltips.
+- Disabled item-start presentation is omitted from the hover index, and a live visibility guard prevents stale/in-flight tooltip indexes from leaking item-start lines after the option is turned off.
+- Changing the master item-start toggle schedules a lightweight hover-index refresh; active quest objective tooltip information remains unaffected.
+
+1.0.46 - CONTINENT QUEST-MARKER DEDUPLICATION
+- Corrected continent/world-overview quest-marker inflation caused by overlapping zone coordinate representations.
+- Converts continent candidates back to canonical world coordinates and merges duplicate representations of the same physical quest source before display.
+- Item-start quests now use quest+starter-item geographic hunting areas on continent maps regardless of Clustered or Full Nodes; raw monster spawn density remains a zone/minimap detail only.
+- Adjacent-map item-start areas are merged only when their physical positions and represented source populations identify the same border hunting area.
+- Preserved the strict <0.50% zone-wide rare item-start behavior, selected-zone maps, minimap behavior, Full Nodes semantics, and underlying quest/drop data.
+- Continent item-start aggregation yields after each zone so the cleanup remains inside the existing bounded scheduler flow.
+
+1.0.45 - COMPLETED QUEST MARKER SAFETY
+- Added a final ClassicAPI per-quest completion check before an otherwise-eligible ordinary quest can publish an Available marker.
+- Repairs missing ordinary completion history when the bulk completed-quest cache is stale or incomplete, so already rewarded quests disappear and their follow-ups can evaluate correctly.
+- Direct completion checks are session-cached and deliberately exclude repeatable, daily, and yearly quests so resettable quest semantics remain unchanged.
+- A one-time fast availability rescan runs when missing completion history is repaired, covering follow-ups that were evaluated earlier in the same scan.
+
+1.0.44 - QUEST TURN-IN TRACKER TIMER SAFETY
+- Fixed a Lua 5.0 tracker error that could occur during quest turn-in while a removed quest still existed briefly in the tracker cache.
+- ClassicAPI quest-log ID/index lookups now normalize a C-side no-return result to explicit nil before numeric conversion.
+- Hardened the tracker timer and quest-log cache paths against the same stale-index race without changing normal timer behavior.
+
+1.0.43 - VOICEOVER QUEST LOG COMPATIBILITY
+- Fixed Questie-Octo quest-level text overwriting the left-side spacing reserved by VoiceOver's Quest Log play buttons.
+- After Questie-Octo finishes its Quest Log row presentation, it now asks VoiceOver to re-apply its own overlay layout when VoiceOver is present.
+- The compatibility is load-order tolerant and does not hardcode VoiceOver icon coordinates or modify VoiceOver itself.
+- Quest tracking state, Quest Log difficulty colors, and VoiceOver playback behavior are unchanged.
+
+1.0.42 - README BASELINE UPDATE
+- Replaced the packaged README with the newly approved current README baseline.
+- No addon behavior changed.
+
+1.0.41 - CURRENT DUNGEON MAP IDENTITY / SCRIPTED WC ENCOUNTER
+- Audited the supplied Atlas-CFM dungeon quest/map presentation against current Questie-Octo, Turtle server data, ClassicAPI and pfQuest ClassicAPI without importing Atlas as database authority.
+- World Map identity now prefers current ClassicAPI WorldMapArea texture IDs instead of display-name lookup, covering custom instances/cities/wings that GetMapZones does not enumerate.
+- Minimap physical map identity now prefers C_Map.GetBestMapForUnit("player"), avoiding ambiguous duplicate custom zone names and improving localized-client map identity.
+- Name fallback now uses current C_Map.GetAreas data and fails safe on duplicate display names instead of depending on nondeterministic pairs() order.
+- Added presentation-only Mutanus the Devourer scripted encounter guidance at current server-derived Wailing Caverns map position 45.8, 9.2. Tooltips explain the four-Fanglord + Disciple/Naralex event requirement.
+- Added Docs/DUNGEON_MAP_AUDIT_2026-08-17.md; no destructive quest-template/objective import was made from Atlas-CFM.
+
+1.0.40 - README BASELINE UPDATE
+- Replaced README.md with the current user-approved README baseline.
+- No addon behavior changed in this version.
+
+1.0.39 - README REFRESH
+- Updated README instructions to match the current Other > Interface location for Dark Theme and Show Minimap Button.
+- Added simple Quest Browser and Quest Automation guidance, including the four automation toggles and Shift manual bypass.
+- Documented that multiple reward choices, money-cost turn-ins, and quest accept confirmations remain manual.
+
+1.0.38 - QUEST AUTOMATION QUEST-GREETING FIX
+- Fixed quest automation on quest-only NPCs that use QUEST_GREETING instead of the GossipFrame.
+- Native QuestFrame rows now use SelectAvailableQuest(index) / SelectActiveQuest(index) instead of being incorrectly routed through C_GossipInfo's gossip selectors.
+- Added a safe exact-title/NPC-starter fallback to resolve quest IDs for legacy quest-greeting offers while preserving gray/repeatable automation gates.
+- Added the matching native gossip fallback when ClassicAPI's modern gossip table yields no selectable quest.
+- Kept Shift bypass, one-action-at-a-time behavior, manual multi-reward selection, money-cost protection, and manual QUEST_ACCEPT_CONFIRM unchanged.
+
+1.0.37 - QUEST AUTOMATION
+- Added a Quest Automation section to the Other tab with four opt-in, character-local toggles: Auto Accept Quests, Auto Turn In Quests, Auto Accept Gray Quests, and Include Repeatable Quests. All four default OFF.
+- Added an event-driven automation flow modeled on the Questie 6 interaction pattern but implemented independently for Octo/ClassicAPI quest-ID gossip selection.
+- Completed turn-ins are prioritized before new accepts and only one quest action is started at a time.
+- Holding Shift makes the current NPC conversation manual. QUEST_ACCEPT_CONFIRM remains manual.
+- Multiple selectable rewards and money-cost turn-ins remain manual. Repeatable quests are excluded unless explicitly enabled and the same repeatable quest is processed at most once per NPC conversation.
+
+1.0.36 - COMPACT QUEST BROWSER FOOTER BUTTON
+- Kept Quest Browser in the accepted bottom-left footer position beside Close.
+- Changed it from a footer-filling button to a compact 170-pixel button, matching the bottom-left action-button layout shown by ShaguTweaks' Defaults button.
+- Preserved the existing validation/status-text fallback behavior.
+
+1.0.35 - OTHER INTERFACE HEADER / LEVELS-BELOW LABEL
+- Added an Interface section header above Enable Dark Theme and Show Minimap Button in the Other tab.
+- Restored the low-level quest slider label and live drag label to "Levels Below: X" / "Levels Below: All".
+
+1.0.34 - COMPACT LOW-LEVEL LABEL / NOTE HEADER CLEANUP
+- Shortened the low-level quest range label from "Levels Below: X" to "Below: X" while keeping the current value visible.
+- Removed the Map Note Options header from the Map tab.
+- Removed the Minimap Note Options header from the Minimap tab.
+
+1.0.33 - QUEST BROWSER FOOTER BUTTON ARTWORK
+- Kept the accepted Quest Browser footer placement and width beside Close.
+- Switched the footer button from UIPanelButtonTemplate to UIPanelButtonTemplate2 so its left/right caps stay correctly proportioned at full footer width instead of stretching the complete button texture.
+- Preserved the existing validation/status-message fallback behavior.
+
+1.0.32 - QUEST BROWSER OPTIONS FOOTER
+- Removed Quest Browser from the General tab content.
+- Added a dedicated Quest Browser button in the bottom-left options footer, using the area beside Close that AceGUI normally reserves for status text.
+- Preserved AceGUI validation status behavior: a real status/error message can temporarily replace the footer button, and normal option interaction restores it.
+
+1.0.31 - QUEST BROWSER BOTTOM / OTHER TAB
+- Moved the full-width Quest Browser button to the bottom of General -> Quest Options, directly below Show PVP Related Quests.
+- Renamed the far-right Quests options tab to Other.
+
+1.0.30 - QUEST LOG OPTIONS PLACEMENT / RESET TEXT
+- Renamed "Show Quest Levels" to "Show Quest Levels in the Quest Log" and moved it from General > Quest Options to the Tracker tab directly above Show Quest Log Checkmarks.
+- Shortened the Reset Questie Options explanatory text to "Quest data and completed-quest history are not deleted."
+
+1.0.29 - TRACKER RESET BUTTON REORDER
+- Moved Reset Tracker Position below the manual tracker hint in the Tracker tab.
+- Kept the tracker controls otherwise unchanged.
+
+1.0.28 - QUEST BROWSER FULL-WIDTH ROW
+- Changed the General-tab Quest Browser button to use the full available row width.
+- Kept the button left-aligned in the row while letting the button span the full row width.
+
+1.0.27 - GENERAL TAB QUEST LAYOUT CLEANUP
+- Removed the "Quest Icon Types" section title.
+- Moved "Show Quests" into the World Map Visibility section as its first toggle.
+- Restored Quest Browser to a normal left-aligned standalone button above the World Map Visibility section.
+- Removed the temporary Quest Browser spacer used by 1.0.24-1.0.26.
+
+1.0.26 - QUEST BROWSER TOP-ROW SPACER TUNING
+- Reduced the General-tab spacer between Show Quests and Quest Browser from normal width to half width.
+- This keeps the button on the same top row while pushing it right, instead of wrapping it onto the line below on narrower option-window widths.
+
+1.0.25 - PACKAGE ROOT CORRECTION
+- Corrected the release ZIP so the addon directory is exactly "Questie-Octo".
+- Corrected the GitHub patch ZIP so changed files preserve their repository paths (UI/Options.lua and Docs/DEVELOPMENT HISTORY.txt).
+- No Quest Browser layout behavior changed from 1.0.24.
+
+1.0.24 - QUEST BROWSER RIGHT-SIDE PLACEMENT
+- Added a spacer in the General tab top row so the Quest Browser button sits on the right side rather than beside Show Quests.
+- Kept Show Quests on the left and left the rest of the General tab layout unchanged.
+
+1.0.23 - QUEST BROWSER GENERAL-TAB MOVE
+- Renamed the Quest Browser options button to "Quest Browser".
+- Moved Quest Browser to the right side of Show Quests at the top of the General tab.
+- Removed the Quests-tab "Quests" section header and the browser description text; the Quests tab now contains only the Dark Theme, Minimap Button, and reset controls added there previously.
+
+1.0.22 - QUEST TAB SETTINGS FOOTER CLEANUP
+- Removed the redundant Icon Settings header so Show Quests is the first General option.
+- Moved Enable Dark Theme and Show Minimap Button from General to the Quests tab beneath the quest browser controls.
+- Moved the full Reset Questie Options section to the Quests tab.
+- Removed the General-only bottom padding that was only needed for the old footer controls.
+- No option defaults or behaviors changed.
+
+1.0.21 - QUEST OPTIONS / TRACKER SORT LAYOUT CLEANUP
+- Removed the inline Quest Options box on the General tab and restored Quest Options as a real section header.
+- Kept the Show Low-Level Quests slider row layout while presenting the Quest Options entries directly under the header.
+- Simplified the Tracker tab Sort Quests row presentation while keeping it above Outline in the Appearance section.
+
+1.0.20 - ITEM-START HEADER AND NODE DENSITY ALIGNMENT
+- Removed the Item-Start Quests inline subgroup so its controls use the same full options-page width as Objective.
+- Item-Start Quests is now a normal section header like Quest Icon Types.
+- Restored the normal-width Clustered/Full Nodes selectors for Objective and Item-Start sources.
+- Objective and Show on Minimap now place their selectors in the same right-side column.
+
+1.0.19 - TRACKER SORTING LAYOUT CLEANUP
+- Tracker Options now places Hide Tracker in Combat directly below Hide Completed Objectives.
+- Removed the separate Sorting header from the Tracker tab.
+- Moved Sort Quests into the Appearance section and placed its selector on the right side of the row above Outline.
+- Objective and Item-Start Clustered/Full Nodes selectors now share aligned half-width right-side columns for a cleaner layout.
+
+1.0.18 - COMPACT NODE DENSITY OPTIONS LAYOUT
+- General options layout only: removed the separate Objective Nodes box and placed the Clustered/Full Nodes selector to the right of a simple Objective label.
+- Item-Start Quests now places its Clustered/Full Nodes selector on the same row as Show on Minimap; the separate Node Density row was removed.
+- No Clustered/Full Nodes behavior, defaults, map preparation, quest data, or gameplay semantics changed.
+
+1.0.17 - CLEAN RELEASE AFTER DATABASE LOAD DIAGNOSTIC
+- Removed the temporary 1.0.16 DBDIAG stage markers, automatic startup diagnostic line, and /qo dbdiag command after the affected player confirmed a truly clean reinstall loads correctly.
+- Keeps the private compiled/pruned runtime database, lazy availability eligibility, O(1) scheduler queue, standard minimap-button lifecycle, tracker fixes, and all other confirmed 1.0.15 behavior unchanged.
+- The 1.0.16 diagnostic history remains documented below for maintenance context.
+
+1.0.16 - COMPILED DATABASE LOAD DIAGNOSTIC
+- Diagnostic-only hardening for the player-specific compiled runtime database load failure.
+- Adds fixed one-shot stage markers for QuestieOcto.lua, Data/runtime/init.lua, Data/runtime/finalize.lua, and Database/LegacyPFDB.lua.
+- Prints one compact DBDIAG line automatically at PLAYER_ENTERING_WORLD.
+- If the compiled root is unavailable, prints two additional DBDIAG lines showing whether init/finalize ran, whether a root was created, and whether LegacyPFDB captured the same root.
+- Adds /qo dbdiag for the same fixed diagnostic on demand.
+- No polling, frame-tree traversal, database mutation, quest-data changes, or gameplay behavior changes.
+
+1.0.15 - QUEST BROWSER WORDING
+
+- Simplified the Quest Options browser description to: "Browse the quest database in a dedicated lightweight window."
+- Wording only; no quest-browser, database, search, map, tracker, or gameplay behavior changed.
+
+1.0.14 - RELOAD STABILITY / LAZY QUEST ELIGIBILITY
+
+- The global availability pass no longer materializes and retains a full canonical
+  QuestModel for all 6,700 quests. Eligibility now reads the compiled raw quest
+  record directly; full QuestModel objects remain lazy and are created only for
+  active/rendered/browsed quests that actually need objective/presentation data.
+- Completion prerequisite/blocking checks use the same static raw quest flags
+  when no canonical model is already supplied, preventing prerequisite scans from
+  recreating the eager all-quest model cache indirectly.
+- Event availability exposes raw-ID helpers so Darkmoon/event gating remains
+  semantically identical without forcing a full QuestModel during availability.
+- Replaced the startup scheduler's table.remove(queue,1) FIFO with an O(1)
+  head/tail queue. Due timers now enter the same bounded work queue instead of
+  all executing synchronously before the frame budget begins.
+- Offline equivalence tests across all 6,700 quests and five eligibility profiles
+  produced identical available/unavailable reasons to 1.0.13. Completion blocking
+  semantics also matched for all 6,700 quests under a mixed synthetic state.
+- In the isolated availability scan, retained QuestModel count fell from 6,700 to
+  0 and temporary/model allocations fell from about 24.9 MiB to under 1 MiB.
+  These are offline Lua measurements, not promises of exact in-game memory use.
+- Runtime database files/pruning, Map, Tracker, tooltip, minimap-button, and quest
+  data are unchanged from 1.0.13. No fullscreen-map experiment code was added.
+
+1.0.13 - PRIVATE COMPILED DATABASE / LOAD-COLLISION HARDENING
+
+- Release runtime data now lives under QuestieOcto.RuntimePFDB instead of the shared global pfDB name.
+- Prevents pfQuest-family or other addons from replacing/clearing Questie-Octo's compiled database between addon load and PLAYER_ENTERING_WORLD.
+- Database modules capture the private runtime DB locally and ignore foreign global pfDB values; explicit developer/source builds can opt into the legacy loader with useCompiledRuntime=false.
+- Startup error now explicitly identifies a missing/failed Data/runtime install when the private compiled DB is unavailable.
+- No quest/data semantics, pruning rules, map behavior, tracker behavior, or minimap-button behavior changed.
+
+Questie-Octo 1.0.2
+
+
+1.0.2 release notes
+-------------------
+- Active, non-failed quests with zero native quest-log objectives are now
+  treated as ready for turn-in, matching pfQuest and original Questie behavior
+  for breadcrumb/talk quests such as Professor Papucho (50003).
+- Failed timed quests remain failed and do not receive a completed turn-in
+  marker; abandoning them returns them to normal availability handling.
+- A first-accept safety check prevents a temporary empty Vanilla leaderboard
+  from falsely completing quests that the database already knows have normal
+  objectives or IR item requirements.
+
+1.0.1 release notes
+-------------------
+- Corrected Turtle WoW quest 42045, Tainted Rune, to include its Warlock-only
+  class restriction (class mask 256). Dwarf characters of other classes no
+  longer see the quest as available.
+- First-time quest acceptance primes the native Vanilla quest log and briefly
+  fast-polls while ClassicAPI publishes a never-before-seen quest ID, avoiding
+  the several-second tracker delay seen on fresh characters.
+- Enable Map Icon Glow defaults to OFF, including the one-time migration from
+  the former default ON value.
+- Objective Node Density and Item-Start Node Density now rebuild the open World
+  Map zone and current minimap zone first, so Clustered/Full Nodes changes are
+  reflected immediately on both map views.
+
+1.0 release notes
+
+- Final release branding: in-game startup text now says Questie-Octo without a Beta suffix.
+- Quest Options order is now Show Quest Levels, Show Low-Level Quests, Show Repeatable Quests, Show Event Quests, then Show PVP Related Quests.
+- Added Show PVP Related Quests (default ON). Turning it OFF hides all PvP quest markers on the World Map and Minimap, including available quests, active objectives, and turn-ins.
+- Show Event Quests now appears below Show Repeatable Quests.
+
+Beta 1.6 notes
+--------------
+- Corrected World Map Visibility scope: Show Quests on the World Map and Show Special Quests on the World Map now filter only continent/world overview quest pickup/turn-in markers.
+- Selected zone and city maps are unaffected by those overview toggles, so repeatable/PvP/event quest markers remain visible there when their normal quest-type visibility is enabled.
+- Show Special Quests on the World Map remains default OFF.
+
+
+Beta 1.4 notes
+--------------
+- Fixed Quest-browser Rewards disappearing after being moved into the shared
+  scrollable quest-detail pane. The reward panel is now anchored directly below
+  the quest text and uses Vanilla/Turtle-compatible text height measurement.
+
+Beta 1.3 notes
+--------------
+- General > World Map Visibility adds Show Special Quests on the World Map (default OFF).
+  It independently controls repeatable blue, PvP red, and verified event green quest
+  pickup/turn-in markers. Show Quests on the World Map now controls ordinary quest
+  pickup/turn-in markers.
+- Tracker defaults: font size 11, visible rows 30, background opacity 0.
+- Quest-browser Rewards now live inside the same scrollable detail pane as the quest
+  description/objectives/turn-in text.
+
+=======================
+
+CURRENT BETA 1.0 NOTES
+----------------------
+The historical alpha notes below are retained as development history and do not
+override current Beta behavior. Current Beta removes distance fading, uses one
+global World Map scale and one global Minimap scale, and keeps unknown event IDs
+on standby unless they have a verified classification/schedule.
+
+The Quests browser uses a direct bounded search over the cached pfQuest quest
+title index (maximum 100 visible results); it does not run its search through the
+shared frame scheduler.
+
+The General tab exposes Show Quests on the World Map and Show Flight Master on
+the World Map as direct controls, both enabled by default.
+
+BACKPORT SOURCES
+----------------
+Only the approved Questie chain was inspected:
+  Questie 5.2.3 -> 6.0.0 -> Questie 3.3.5 -> 7.0.0 -> 8.0.0
+
+Questie 9/10/11 were not inspected or used.
+
+STABLE QUESTIE DEFAULTS
+-----------------------
+The supplied allowed versions agree on the mature minimap defaults:
+
+  enableMiniMapIcons       = true
+  globalMiniMapScale       = 0.7
+  fadeLevel                = 20
+  fadeOverPlayer           = true
+  fadeOverPlayerDistance   = 5
+  fadeOverPlayerLevel      = 0.5
+  iconFadeLevel            = 0.3
+  alwaysGlowMinimap        = false
+  questMinimapObjectiveColors = false
+
+0.1.29 BACKPORT
+---------------
+A Questie-style global minimap settings model now lives in QuestieOctoGlobalDB.
+
+Implemented behavior:
+  * enable/disable all minimap quest icons
+  * live global minimap icon scaling
+  * Questie's far-distance fade curve:
+      full opacity until fadeLevel
+      then fade from 1.0 -> 0.0 over the next 10 Questie distance units
+  * Questie's fade-over-player behavior:
+      at distance 0 use fadeOverPlayerLevel
+      linearly return to full opacity at fadeOverPlayerDistance
+  * settings persist globally across characters
+
+Questie 3.3.5/7/8 normally calculate distance through HereBeDragons world
+coordinates. On Turtle 1.12 the already-approved pfQuest compatibility
+projection plus bundled minimap dimensions is used only to reconstruct that
+world distance before applying Questie's fade formula.
+
+DEFERRED ON PURPOSE
+-------------------
+alwaysGlowMinimap and questMinimapObjectiveColors are stored with Questie's
+defaults but are not activated yet.
+
+Those settings depend on Questie's shared quest-color/glow frame subsystem.
+Implementing a minimap-only substitute would violate the Questie Backport Rule.
+They will become functional when that shared subsystem is ported.
+
+TEST COMMANDS
+-------------
+Temporary commands are provided to validate the behavior before the full
+Questie options UI is backported:
+
+  /qo minimap
+  /qo minimap on
+  /qo minimap off
+  /qo minimap scale 0.7
+  /qo minimap fade 20
+  /qo minimap near on
+  /qo minimap near off
+  /qo minimap neardistance 5
+  /qo minimap nearalpha 0.5
+  /qo minimap reset
+
+The mature Questie option ranges are enforced:
+  scale        0.01 - 4
+  fade         10 - 100
+  nearDistance 0 - 20
+  nearAlpha    0.1 - 1
+
+PRESERVED FROM 0.1.28 HOTFIX 3
+-------------------------------
+* synchronized quest-wide world-map/minimap unload
+* accepted quest ID normalization
+* abandoned quest immediate unload/redraw
+* prepared-cache quest purge
+* Questie slay/loot/interact icons
+* item-start grouping
+* rare/static respawn tooltips
+* 0.1.27 fast scheduler/lifecycle behavior
+
+
+0.1.29 MAP-CONTEXT HOTFIX
+-------------------------
+Questie remains the authority for minimap refresh behavior and settings.
+
+The supplied allowed Questie versions rely on HereBeDragons for minimap
+projection. Turtle/Vanilla 1.12 does not provide HBD, so pfQuest is consulted
+ONLY for the compatibility layer.
+
+The first 0.1.29 build called SetMapToCurrentZone() inside PlayerPosition(),
+which runs every ~0.05s. That was too aggressive and did not faithfully match
+pfQuest's compatibility pattern.
+
+Now SetMapToCurrentZone() is used only when map context actually needs
+restoration:
+  * startup
+  * zone/minimap-zone change
+  * world map closes after browsing
+
+Normal minimap movement updates now call only GetPlayerMapPosition() and never
+force map context.
+
+No Questie quest-state, lifecycle, fading, scaling, icon, or availability
+behavior was changed.
+
+
+0.1.30 ALPHA - QUESTIE-STYLE OPTIONS MENU
+-----------------------------------------
+QUESTIE-FIRST AUDIT
+-------------------
+Inspected only the approved chain:
+  Questie 5.2.3 -> 6.0.0 -> 3.3.5 -> 7.0.0 -> 8.0.0
+
+Questie 9/10/11 were not inspected.
+
+All approved Questie generations describe their options through AceConfig /
+AceGUI. Their Blizzard-options integration depends on the post-1.12
+InterfaceOptionsFrame system, so that presentation host cannot be transferred
+directly to Turtle/Vanilla 1.12.
+
+PFQUEST COMPATIBILITY USE
+-------------------------
+Only after establishing the Questie UI-host incompatibility, pfQuest was
+consulted for Vanilla UI compatibility. pfQuest confirms that native 1.12
+CreateFrame controls such as UICheckButtonTemplate, Slider, and
+UIPanelButtonTemplate are the safe compatibility layer.
+
+Questie remains authoritative for:
+  * option labels
+  * defaults
+  * ranges / steps
+  * dependency behavior
+  * live application of settings
+  * bare slash command toggling the config window
+
+IMPLEMENTED OPTIONS
+-------------------
+Only already-working Questie-Octo features are exposed:
+  Enable Minimap Icons
+  Global Scale for Minimap Icons       0.01 - 4, step 0.01
+  Fade objective distance              10 - 100, step 1
+  Fade Icons over Player
+  Fade over Player Distance            0 - 20, step 0.5
+  Fade over Player Amount              0.1 - 1, step 0.1
+
+Fade-over-player distance/amount controls disable when the parent toggle is
+off, as in Questie.
+
+Commands:
+  /qo            toggles options, matching old Questie's bare /questie behavior
+  /qo options    toggles options
+  /qo help       command help
+
+The existing /qo minimap testing commands remain available.
+
+NOT EXPOSED YET
+---------------
+Glow, objective colors, tracker, and unsupported world-map settings remain
+absent from the menu. They will only appear after their Questie subsystems have
+actually been backported.
+
+
+0.1.31 ALPHA - VANILLA OPTIONS PRESENTATION
+-------------------------------------------
+QUESTIE SEMANTICS
+-----------------
+Questie 5.2.3 -> 6.0.0 -> 3.3.5 -> 7.0.0 -> 8.0.0 remain authoritative
+for option names, defaults, ranges, dependency rules, and live setters.
+
+SHAGUTWEAKS COMPATIBILITY LAYER
+-------------------------------
+The user-supplied ShaguTweaks source was inspected only after Questie's Ace3
+UI host was established as non-transferable to Vanilla 1.12.
+
+ShaguTweaks config.lua confirms mature 1.12-native presentation mechanics:
+  UIPanelScrollFrameTemplate
+  OptionsCheckButtonTemplate
+  OptionsSliderTemplate
+  collapsible category frames
+  movable DialogFrame shell
+  standard GameMenuButtonTemplate controls
+  GameTooltip help
+
+Questie-Octo 0.1.31 uses those presentation mechanics, but DOES NOT copy
+ShaguTweaks' delayed Okay/Cancel/ReloadUI semantics.
+
+Questie AceConfig settings apply live, so Questie-Octo settings still apply
+immediately when toggles/sliders change.
+
+The panel is now category/scroll based and ready to grow as real Questie
+subsystems are backported. Only the implemented Minimap category is present.
+
+
+0.1.32 ALPHA - QUESTIE ACECONFIG / ACEGUI PROOF OF CONCEPT
+-----------------------------------------------------------
+QUESTIE BACKPORT RULE AUDIT
+---------------------------
+Inspected only:
+  Questie 5.2.3 -> 6.0.0 -> Questie 3.3.5 -> 7.0.0 -> 8.0.0
+
+Questie 9/10/11 were not inspected or used.
+pfQuest was not needed for this options-framework pass.
+
+CHOSEN QUESTIE DESIGN
+---------------------
+Questie 5.2.3 and 6.0.0:
+  * build an AceConfig options table
+  * register it
+  * AceGUI:Create("Frame")
+  * AceConfigDialog:Open("Questie", configFrame)
+  * keep the standalone frame hidden until toggled
+
+Questie 3.3.5 preserves this design and refreshes the existing standalone
+frame with AceConfigDialog:Open() when opening it. 7/8 retain the same mature
+standalone options architecture with sizing/init refinements.
+
+That is the architecture used here.
+
+VANILLA COMPATIBILITY
+---------------------
+Questie's bundled Ace3 runtime itself targets later WoW APIs and cannot be
+dropped directly into Vanilla 1.12.
+
+The user-supplied Ace3v package targets Interface 11200 and contains Vanilla
+adaptations for AceCore/AceGUI/AceConfig. It is used only as the compatibility
+runtime for Questie's own AceConfig/AceGUI design.
+
+LibStub and CallbackHandler are taken from the supplied Questie 5.2.3 archive.
+
+No Blizzard InterfaceOptions panel is registered.
+
+OPTIONS TABLE
+-------------
+To keep this proof of concept limited to implemented features:
+  General:
+    Enable Minimap Icons
+
+  Minimap:
+    Global Scale for Minimap Icons       0.01 - 4
+    Fade objective distance              10 - 100
+    Fade Icons over Player
+    Fade over Player Distance            0 - 20
+    Fade over Player Amount              0.1 - 1
+
+Labels, ranges, dependencies and live setting behavior are taken from the
+supplied Questie option definitions.
+
+The legacy 0.1.31 hand-rendered Vanilla options fallback was removed after
+the AceConfig/AceGUI options path became the stable runtime implementation.
+
+
+0.1.32 ACE3V HOTFIX 1 - CALLBACKHANDLER LUA 5.0
+------------------------------------------------
+The first POC failed at parse time in Questie 5.2.3 CallbackHandler-1.0.
+
+Audit of Questie 5.2.3, 6.0.0, 3.3.5, 7.0.0 and 8.0.0 confirmed that all
+supplied CallbackHandler copies use Lua 5.1-style '...' expressions.
+
+The Questie CallbackHandler API and behavior are retained. Only the incompatible
+vararg implementation is translated to Vanilla Lua 5.0's implicit 'arg' table
+and unpack(), including the generated fixed-arity dispatcher.
+
+Questie's standalone AceConfig/AceGUI options architecture is unchanged.
+
+
+0.1.33 ALPHA - QUESTIE WORLD-MAP DISPLAY OPTIONS
+-------------------------------------------------
+BACKPORT TRACE
+--------------
+Inspected only:
+  Questie 5.2.3 -> 6.0.0 -> 3.3.5 -> 7.0.0 -> 8.0.0
+
+Questie 9/10/11 were not used.
+pfQuest and ShaguTweaks were not needed for this pass.
+Ace3v remains only the validated Vanilla runtime for Questie's AceConfig/AceGUI.
+
+QUESTIE BEHAVIOR BACKPORTED
+---------------------------
+General:
+  Enable Map Icons
+  Enable Minimap Icons
+  Enable Objective Icons
+  Enable Completed Quest Icons
+  Enable Available Quest Icons
+
+The Objective / Completed / Available switches are shared between world map
+and minimap, matching Questie's global presentation filters.
+
+Map:
+  Global Scale for Map Icons
+    range 0.01 - 4
+    step 0.01
+    old/mature Questie default used here: 0.7
+
+Display toggles filter presentation only. They do not alter quest availability,
+objective resolution, completion state, or prepared quest data.
+
+Item-start quest markers follow Enable Available Quest Icons because they are
+Questie-Octo's available-quest presentation for item-start quests.
+
+NOT YET EXPOSED
+---------------
+Per-icon-type scales, objective colors, and glow remain deferred. Questie ties
+those to frame metadata/color/glow systems that have not yet been backported.
+
+
+0.1.34 ALPHA - ESC MENU "QUESTIE OPTIONS"
+-----------------------------------------
+QUESTIE-FIRST AUDIT
+-------------------
+Questie 5.2.3, 6.0.0, 3.3.5, 7.0.0 and 8.0.0 were checked for GameMenuFrame /
+GameMenuButton integration. None of the supplied versions adds its own ESC-menu
+button.
+
+Therefore the Questie options architecture remains unchanged:
+  Questie AceConfig table -> AceConfigDialog -> standalone AceGUI frame.
+
+SHAGUTWEAKS COMPATIBILITY
+-------------------------
+Only the missing Vanilla presentation integration is adapted from the supplied
+ShaguTweaks config.lua:
+
+  GameMenuButtonTemplate
+  anchor below GameMenuButtonUIOptions
+  move GameMenuButtonKeybindings below the inserted button
+  hide GameMenuFrame when opening addon options
+  return to GameMenuFrame when the options window closes
+
+COEXISTENCE
+-----------
+When ShaguTweaks' GameMenuButtonAdvancedOptions exists, Questie Options anchors
+below Advanced Options instead of competing for the same slot:
+
+  Options
+  Advanced Options
+  Questie Options
+  Key Bindings
+
+Without ShaguTweaks:
+
+  Options
+  Questie Options
+  Key Bindings
+
+The button text is exactly:
+  Questie Options
+
+Opening via /qo still behaves normally and does not reopen the Game Menu when
+the options window closes.
+
+
+0.1.34 TITLE HOTFIX
+-------------------
+The validated AceConfig/AceGUI window title now matches the ESC-menu button:
+
+  Questie Options
+
+No option behavior, settings, map/minimap logic, or compatibility code changed.
+
+
+0.1.35 ALPHA - QUESTIE PER-ICON-TYPE SCALES
+--------------------------------------------
+BACKPORT TRACE
+--------------
+Inspected:
+  Questie 5.2.3 -> 6.0.0 -> 3.3.5 -> 7.0.0 -> 8.0.0
+
+Questie 9/10/11 were not used.
+Ace3v remains only the Vanilla runtime for Questie's AceConfig/AceGUI.
+ShaguTweaks and pfQuest were not needed for this feature.
+
+QUESTIE SCALE MODEL
+-------------------
+Final icon size is:
+  16 * presentation global scale * icon-type scale
+
+Map uses globalScale.
+Minimap uses globalMiniMapScale.
+
+Old Questie 5.2.3/6.0.0 defaults are retained:
+  availableScale = 1.3
+  monsterScale   = 1
+  objectScale    = 1
+  lootScale      = 1
+
+Role mapping:
+  available / complete / item-start = availableScale
+  creature/slay objective           = monsterScale
+  direct object objective           = objectScale
+  item source from object           = objectScale
+  item source from creature         = lootScale
+
+This matches Questie's objective-source scale behavior rather than scaling all
+item objectives identically.
+
+The settings affect BOTH world map and minimap, as in Questie.
+
+Event objective scaling is not exposed yet because Questie-Octo does not yet
+have an event-objective presentation path to scale.
+
+COLORS / GLOW
+-------------
+Not changed in this build. Those remain the next separate Questie frame-layer
+backport so scale behavior can be validated independently first.
+
+
+0.1.35 SCALE HOTFIX
+-------------------
+User test showed the new type-scale controls rendered but did not visibly
+affect markers.
+
+The Questie audit was revisited. Questie assigns GetIconScale/IconScale to the
+semantic quest/objective data before frame rendering. The first 0.1.35 build
+incorrectly reconstructed scale type later from merged presentation pins.
+
+Questie-Octo now mirrors Questie's semantic model:
+  semantic node -> iconScaleKey -> prepared/world/minimap presentation
+
+Mapping:
+  available/turnin/itemStart -> availableScale
+  objectiveCreature          -> monsterScale
+  objectiveObject            -> objectScale
+  item from creature         -> lootScale
+  item from gameObject       -> objectScale
+
+This also corrects the first build's object-source string mismatch
+("object" versus Questie-Octo's actual "gameObject").
+
+Both world-map and minimap visual winners carry the semantic scale key, and
+live Rescale behavior reads that key directly.
+
+Diagnostics now report scale resize counts and the last applied pixel size.
+
+
+0.1.35 SCALE HOTFIX 2 - ACE3V RANGE RELEASE
+---------------------------------------------
+User diagnostics proved the semantic scale and frame resize path worked while
+the slider was moving, but the stored value returned to the old/default value
+after release.
+
+Questie's supplied AceGUI/AceConfig range flow was compared again across
+5.2.3, 6.0.0, 3.3.5, 7.0.0 and 8.0.0. Questie commits range changes through
+OnValueChanged and refreshes the AceConfig dialog on OnMouseUp.
+
+Ace3v adapts that callback ABI for Lua 5.0 with an explicit argc slot. On the
+Turtle 1.12 native Slider, the release event can deliver the pre-drag widget
+value, causing AceConfigDialog to invoke the setting setter a second time and
+undo the already-correct OnValueChanged commit.
+
+Compatibility fix:
+  OnValueChanged -> validate + commit Questie option live
+  OnMouseUp      -> refresh AceConfigDialog only; no second setting write
+
+This is confined to the Ace3v compatibility runtime. Questie's options table,
+setting names/defaults/ranges, scale model, and map/minimap frame behavior are
+unchanged.
+
+/qo info now also reports the last AceConfig setting key/value received.
+
+
+0.1.35 SCALE HOTFIX 3 - SINGLE QUESTIE RESCALE PATH
+---------------------------------------------------
+User video proved that per-type scale values could become visible only after
+touching Global Scale.
+
+Questie version trace:
+  5.2.3 / 6.0.0:
+    several map scale setters call RescaleIcons before saving the new value.
+  3.3.5:
+    saves the new option first, then calls QuestieMap:RescaleIcons().
+  7 / 8:
+    retain the single QuestieMap:RescaleIcons frame-walk architecture.
+
+Per the backport rule, 3.3.5 is used as the compatibility bridge and mature
+ordering for this client.
+
+Questie-Octo now has ONE scale path:
+  save setting
+    -> QuestieOcto.Map:RescaleIcons()
+       -> refresh each world-map frame's semantic visual/scale data
+       -> resize every world-map frame
+       -> QuestieOcto.Minimap:RescaleIcons()
+          -> refresh each minimap frame's semantic visual/scale data
+          -> resize every minimap frame
+
+Global and per-icon-type sliders no longer use separate presentation callbacks.
+They all invoke this same path, matching Questie's frame architecture.
+
+No quest state, objective resolution, projection, fade, icon texture, or
+visibility behavior changed.
+
+
+0.1.35 TURN-IN HOTFIX - QUESTIE COMPLETE '?' + ACE3V ONUPDATE
+-------------------------------------------------------------
+Questie trace (5.2.3 -> 6.0.0 -> 3.3.5 -> 7.0.0 -> 8.0.0) found:
+
+1. Questie creates separate frames for available and completed quest icons.
+   Questie-Octo incorrectly merged exact-role descriptors by source+coordinate,
+   causing an available ! to hide a completed ?.
+
+2. Questie deliberately renders available icons at OVERLAY sublevel 5 and
+   completed icons at OVERLAY sublevel 6. Completed ? therefore stays visible
+   above an overlapping available !.
+
+3. Questie 6 falls back to IsQuestComplete(questId) when the quest-log
+   isComplete field is unavailable. Questie-Octo now uses that legacy fallback
+   and no longer treats numeric -1 (failed) as complete merely because Lua
+   considers it truthy.
+
+4. Ace3v AceConfigDialog RefreshOnUpdate used a modern self-argument style.
+   Vanilla 1.12 supplies frame-script context through global `this`, causing
+   line 1722 to index nil during refresh. The compatibility layer now consumes
+   Vanilla's global this without changing Questie's AceConfig architecture.
+
+No marker displacement was added. Exact Questie icons are allowed to overlap.
+
+
+0.1.35 TURN-IN HOTFIX 2 - QUESTIE 3.3.5 QUEST-LOG COMPAT
+----------------------------------------------------------
+The previous turn-in visual fix removed exact-marker merging, but user testing
+still showed no yellow completed-quest marker.
+
+The Questie 3.3.5 compatibility bridge exposed the actual root cause:
+raw old/Turtle GetQuestLogTitle has a legacy suggestedGroup return before
+isHeader, so isHeader/isCollapsed/isComplete are shifted by one position.
+Questie-Octo had been reading the later-client signature directly, meaning its
+'isComplete' value was actually the legacy isCollapsed value.
+
+Questie-Octo now normalizes GetQuestLogTitle at ClassicAPI, following Questie
+3.3.5. It also passes questLogIndex into the legacy GetQuestObjectives bridge.
+
+Map, minimap, turn-in texture, exact-marker layering, and scale behavior were
+not redesigned in this hotfix.
+
+
+0.1.36 ALPHA - FULL CURRENT-BUILD AUDIT
+----------------------------------------
+AUDIT SCOPE
+-----------
+Re-audited the current live build end-to-end under the Questie Backport Rule:
+  Questie 5.2.3 -> 6.0.0 -> 3.3.5 -> 7.0.0 -> 8.0.0
+
+Questie 9/10/11 were not inspected.
+Ace3v remains only the Vanilla runtime for Questie's AceConfig/AceGUI.
+ShaguTweaks remains only the Vanilla ESC-menu presentation reference.
+pfQuest was consulted only after the Questie raw client API could not transfer
+unchanged to Interface 11200.
+
+PRIMARY FINDING: COMPLETED QUESTS
+---------------------------------
+The previous turn-in hotfix applied Questie 3.3.5's raw WotLK-era
+GetQuestLogTitle signature directly to Turtle 11200:
+  title, level, tag, suggestedGroup, isHeader, isCollapsed, isComplete, ...
+
+That is NOT the Vanilla 1.12 raw signature.
+
+The supplied pfQuest compatibility layer explicitly branches on client 11200:
+  title, level, tag, isHeader, isCollapsed, isComplete = GetQuestLogTitle(index)
+
+Therefore Questie-Octo was reading Vanilla's completion field from the wrong
+return position. This is the root cause of the missing yellow completed '?'.
+
+0.1.36 now normalizes the actual Vanilla signature at API/ClassicAPI.lua and
+continues to expose the Questie-facing normalized fields to the rest of the
+addon.
+
+TURN-IN PIPELINE RE-AUDIT
+-------------------------
+Quest log complete state
+  -> QuestLog.active[questID].complete
+  -> Nodes builds role='turnin'
+  -> QuestModel finishers from raw end.U/end.O
+  -> PreparedMap exact descriptor keyed by quest+role+source+coordinate
+  -> Map/Minimap texture role='turnin'
+  -> UI/Icons/complete.blp (Questie 3.3.5 asset)
+
+The custom Turtle quest 41189 was checked explicitly:
+  finisher NPC = 61851 Commander Anarileth
+  QuestModel database contains the finisher correctly.
+
+DISPLAY AUDIT
+-------------
+Completed and available exact markers remain separate Questie-style frames.
+Completed '?' uses overlay sublevel 6; available '!' uses sublevel 5.
+Canonical coordinates are retained. Dead displacement helper code was removed.
+
+OPTIONS / SCALE AUDIT
+---------------------
+The validated Questie AceConfig/AceGUI architecture is retained.
+Ace3v Lua 5.0 CallbackHandler and AceConfig refresh compatibility fixes remain.
+All global and per-type scale controls route through one save-then-rescale path
+following the mature Questie 3.3.5 ordering.
+
+MINIMAP AUDIT
+-------------
+Questie remains authoritative for node state, icon behavior, scaling and fade.
+pfQuest remains used only for the unavoidable Vanilla minimap projection/map-
+context compatibility layer. The previous 0.05s SetMapToCurrentZone mistake
+remains fixed.
+
+LIFECYCLE AUDIT
+---------------
+Accept, abandon/remove, completion database, low-level visibility, item-start
+sources, rare static-respawn metadata, objective direct-index mapping, and the
+0.1.27 Questie-335 scheduler path remain unchanged from their validated state.
+
+DIAGNOSTICS
+-----------
+/qo info now also prints:
+  QuestLog complete IDs=...
+
+For a visibly completed quest, its ID must appear there and Nodes turnin must
+be greater than zero before any map rendering issue is considered.
+
+
+0.1.36 TURN-IN AUDIT HOTFIX - OBJECTIVE-LESS QUESTS
+----------------------------------------------------
+Full Questie trace found the missing completion rule:
+
+Questie 5.2.3:
+  QuestieQuest:IsComplete() returns true when Objectives is nil or empty.
+
+Questie 3.3.5:
+  QuestieDB.IsComplete() returns complete for an active quest with no objective
+  rows unless the special required-source-item case is missing its item.
+
+Quest 41187 in the bundled Turtle DB has no obj/source-item requirement and
+finishes at NPC 61851. Therefore it must be treated as complete immediately
+after acceptance, which produces the turn-in semantic node and yellow ?.
+
+No world-map/minimap rendering workaround was added. The fix is at QuestLog
+completion semantics, where Questie puts this behavior.
+
+
+0.1.37 ALPHA - MINIMAP PROJECTION FIX
+--------------------------------------
+FULL BACKPORT RECHECK
+---------------------
+Questie minimap architecture was rechecked through the approved chain:
+  Questie 5.2.3 -> 6.0.0 -> 3.3.5 -> 7.0.0 -> 8.0.0
+
+Those Questie versions use HereBeDragons/world-coordinate projection on newer
+clients. Turtle/Vanilla 1.12 does not provide that library, so pfQuest remains
+the permitted final compatibility reference for the projection itself.
+
+ROOT CAUSE
+----------
+Questie-Octo's initial pfQuest MinimapIndoor() adaptation inverted pfQuest's
+state mapping.
+
+pfQuest behavior:
+  state 0 -> MINIMAP_ZOOM[0] -> 300-yard family
+  state 1 -> MINIMAP_ZOOM[1] -> 466.67-yard family
+
+When current minimap zoom is NOT minimapInsideZoom, pfQuest returns state 1.
+Questie-Octo incorrectly returned 0. That selected a 300-yard span where
+pfQuest selected 466.67 yards, making projected quest-marker movement about
+1.56x too large as the player moved away from the target.
+
+0.1.37 copies pfQuest's Vanilla minimap indoor/zoom-state logic exactly,
+including its temporary zoom probe and its original state mapping.
+
+This build starts from the plain audited 0.1.36 turn-in build. None of the
+experimental native-yellow-circle backing textures or minimap-frame scanners
+are included.
+
+Retained:
+  * audited objective-less completion / yellow turn-in '?' state
+  * Questie AceConfig/AceGUI options and Ace3v Lua 5.0 compatibility
+  * map/minimap icon scaling
+  * quest accept/remove lifecycle fixes
+  * item-start markers / rare static respawn tooltips
+  * canonical marker coordinates (no displacement)
+
+
+0.1.43 ALPHA - MINIMAP RANGE + AVAILABLE/COMPLETE DEFAULT
+----------------------------------------------------------
+BASELINE
+--------
+Built from the validated 0.1.37 minimap-projection baseline.
+
+None of the experimental native-yellow-circle work from 0.1.38-0.1.42 is
+included: no nodecut mask, no native-frame hiding, no quest-watch manipulation.
+
+BACKPORT TRACE
+--------------
+Rechecked Questie:
+  5.2.3 -> 6.0.0 -> 3.3.5 -> 7.0.0 -> 8.0.0
+
+Historical availableScale values in the supplied versions are around 1.2-1.3.
+The new 1.5 value is an explicit Questie-Octo/Turtle presentation default
+requested by the user, not claimed as a historical Questie default.
+
+AVAILABLE / COMPLETE SCALE
+--------------------------
+  default availableScale = 1.5
+
+Existing saved value 1.3 (the previous untouched default) is migrated once to
+1.5. Other custom values are preserved.
+
+MINIMAP RANGE
+-------------
+Questie proper delegates edge behavior to its pin library. On Vanilla,
+Questie-Octo previously used pfQuest's conservative clipping:
+  pixelDistance + halfIcon < radius
+
+That delays a marker until its entire icon is inside the circular minimap.
+
+For the requested behavior, every Questie-Octo minimap marker now becomes
+visible as soon as its coordinate itself enters the visible minimap circle:
+  pixelDistance < radius
+
+This applies equally to:
+  available quests
+  completed quests
+  creature/slay objectives
+  loot/item-source objectives
+  object objectives
+  item-start markers
+
+Projection, coordinates, minimap zoom-state logic, scale sliders, fades and
+world-map rendering are unchanged.
+
+
+0.1.44 ALPHA - QUESTIE OPTIONS BACKPORT
+----------------------------------------
+Built from validated 0.1.43.
+
+Audited Questie 5.2.3 -> 6.0.0 -> 3.3.5 -> 7.0.0 -> 8.0.0.
+AceConfig/AceGUI remains Questie's architecture; Ace3v is only the 1.12
+compatibility layer.
+
+Backported for currently implemented subsystems:
+  General: map/minimap/type visibility, low-level quests, max levels above.
+  Map: Questie glow, per-quest objective colors, all implemented scales.
+  Minimap: Questie glow/colors, scale and fade settings.
+  Tooltips: enable, quest levels, drop rates, Quest/NPC/Object/Item IDs.
+  Advanced: reset implemented options.
+
+Questie's glow.blp and deterministic 5.2.3 color generator are used:
+  quest icon color seed = questId
+  objective glow seed = questId + 32768 * objectiveIndex
+
+Low-level quest display remains ON by default, preserving the user's validated
+Questie-Octo behavior. When disabled, the lower bound returns to Questie's
+playerLevel - GetQuestGreenRange() behavior. Higher-level default remains +7.
+
+Tracker, Nameplates, Auto-accept, Social, DBM/HUD and waypoint settings are not
+shown because those Questie subsystems are not yet backported.
+
+Map/minimap coordinate options are intentionally omitted here because the
+user's ShaguTweaks already owns the Vanilla world-map coordinate presentation;
+duplicating it would create a known UI conflict.
+
+No pfQuest compatibility code was needed for this options pass.
+
+
+0.1.45 ALPHA - OPTIONS AUDIT FIXES
+-----------------------------------
+Built directly from 0.1.44, retaining the validated 0.1.43 minimap projection
+and visibility range.
+
+LEVEL FILTER
+------------
+Questie 5.2.3 uses:
+  maxLevel = playerLevel + maxLevelFilter
+
+0.1.44 incorrectly kept a separate requiredLevel > playerLevel rejection,
+preventing the +60 setting from revealing future-level quests.
+
+0.1.45 applies the Questie 5.2.3 semantics to both quest level and required
+level. +60 therefore removes the practical Vanilla level ceiling while normal
+prerequisite/race/class/completion/active eligibility still applies.
+
+showLowLevelQuests and maxLevelFilter now live in QuestieOctoDB (per character),
+matching the mature Questie 6/3.3.5 direction and guaranteeing reload
+persistence independently of global presentation settings.
+
+TOOLTIPS
+--------
+NPC IDs now work because sourceID is preserved on world-map/minimap pins.
+
+Item drop rates no longer disappear when an objective already has quest-log
+text. Formatting follows Questie 3.3.5:
+  >=10%  whole number
+  >=2%   1 decimal
+  >=.01% 2 decimals
+  lower  3 decimals
+
+Quest ID remains Questie's title suffix format:
+  [level] Quest Name (questID)
+
+GLOW / COLOR
+------------
+Per-quest icon color is intentionally Questie behavior: the whole objective
+icon is tinted with a deterministic pseudo-random color based on quest ID.
+
+The minimap glow problem was a Vanilla frame-ordering issue in 0.1.44.
+Glow is now Questie's glow.blp placed directly on the same pin's BACKGROUND
+draw layer instead of a child frame.
+
+DEFAULTS REQUESTED BY USER
+--------------------------
+Global Map Scale:              1
+Available/Complete Icon Scale: 1
+
+Exact previous defaults (0.7 / 1.3 / 1.5 respectively) migrate once.
+Other custom values are preserved.
+
+The user-facing "Backport Scope" explanation was removed from Advanced.
+
+
+0.1.47 ALPHA - QUESTIE 3.3.5 GLOW FIX
+--------------------------------------
+Built from 0.1.45, not the broken 0.1.46 glow build.
+
+Questie 3.3.5 QuestieFrame.lua is used as the compatibility bridge:
+  glow = icon frame ARTWORK sublevel -1
+  icon = icon frame OVERLAY
+  glow size = 1.13x icon size
+
+This is the mature pre-modern Questie solution and avoids the child-frame and
+OVERLAY hacks that broke 0.1.45/0.1.46.
+
+Questie 3.3.5/7/8 also immediately update already-used frames when glow/color
+settings change. Questie-Octo now resets only the presentation winner state
+before re-applying each existing pin, so current map/minimap pins take the new
+visual setting immediately.
+
+Rare respawn wording now reads:
+  [Rare] Respawn: ~150 min
+or:
+  [Rare Elite] Respawn: ~X min
+
+The validated 0.1.43 minimap projection/range and 0.1.45 option fixes remain.
+
+
+0.1.48 ALPHA - OPTIONS RECENTER + MINIMAP VISUAL DIAGNOSTIC
+------------------------------------------------------------
+Built from 0.1.47. No minimap rendering/projection behavior changed.
+
+OPTIONS WINDOW
+--------------
+Questie keeps one persistent AceGUI configuration frame. On Vanilla/Ace3v,
+dragged anchors therefore persist while that frame exists.
+
+Questie-Octo now recenters the OUTER AceGUI frame on every explicit open:
+  ClearAllPoints()
+  SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+
+Dragging still works while the window is open; closing and reopening returns it
+to screen center.
+
+MINIMAP VISUAL DIAGNOSTIC
+-------------------------
+Adds:
+  /qo visualdiag
+
+For each currently visible objective minimap pin it prints:
+  role
+  quest ID
+  whether semantic entries exist
+  applied RGB
+  whether Questie's glow texture is shown
+
+Summary:
+  shown / objective / colored / glowing
+
+This distinguishes a Questie data/state problem from a Vanilla rendering-layer
+problem without changing the validated minimap projection/range.
+
+
+0.1.49 ALPHA - MINIMAP VISUAL LUA 5.0 SCOPE FIX
+------------------------------------------------
+Built from 0.1.48.
+
+The user's diagnostic proved:
+  glowMini=true
+  colorMini=true
+  visible objective pins=2
+  applied colored/glowing=0/0
+
+Root cause:
+  MM:RefreshVisualSettings() and MM:RescaleIcons() were defined before
+  `local function RefreshPinVisual()` in Minimap.lua.
+
+On Lua 5.0, those earlier functions do not capture a local declared later.
+They therefore resolved RefreshPinVisual as a global rather than the intended
+local helper.
+
+Fix:
+  local RefreshPinVisual
+  ...
+  RefreshPinVisual=function(pin)
+      ...
+  end
+
+This preserves Questie's existing visual logic and simply makes the intended
+local refresh function visible to all callers.
+
+Retained from 0.1.48:
+  * Questie 3.3.5 ARTWORK glow architecture
+  * current minimap color/glow settings
+  * /qo visualdiag
+  * options window recenters on every open
+  * [Rare] Respawn wording
+  * validated 0.1.43 minimap projection/range
+
+
+0.1.50 ALPHA - OPTIONS CENTERING FIX
+------------------------------------
+Built from validated 0.1.49.
+
+AceGUI's Frame widget stores dragged position in the AceConfig status table:
+  status.top
+  status.left
+
+AceConfigDialog:Open(customFrame) reapplies that status on every checkbox,
+slider, tab or other refresh. 0.1.48/0.1.49 only moved the physical frame back
+to center, leaving stale status coordinates behind.
+
+0.1.50 clears only status.top/status.left when the window opens and before
+setting-driven AceConfig refreshes. Width, height, selected tab and all other
+AceConfig state remain intact.
+
+Dragging still works while the panel is open. Closing/reopening returns to
+center, and option changes no longer restore a stale dragged anchor.
+
+The 0.1.49 minimap glow/color fix and validated minimap behavior are unchanged.
+
+
+0.1.68 ALPHA - PRE-EVENT ROLLBACK + DISPLAY TOGGLE ONLY
+--------------------------------------------------------
+Rebuilt from validated 0.1.50.
+
+All event-state work is removed:
+  no generic 1.12 server-event calendar API
+  no event schedules
+  no active/inactive event inference
+  no Darkmoon rules
+  no event-state engine
+
+The only event feature is:
+  General -> Quest Options -> Show Event Quests
+
+ON:
+  Event quests follow ordinary Questie-Octo quest availability and use
+  Questie's event quest artwork.
+
+OFF:
+  Available event quest starters, including item-start event quests, are hidden.
+  Accepted objectives and turn-ins remain visible.
+
+Questie-Octo makes no attempt to decide whether an event is active today.
+
+
+0.1.69 ALPHA - QUESTIE NATIVE OBJECTIVE NODES
+----------------------------------------------
+Backport source order:
+  Questie 5.2.3 -> 6.0.0 -> 3.3.5 -> 7.0.0 -> 8.0.0
+
+Objective semantics follow Questie's mature spawn-list behavior:
+  creature objective             -> Slay
+  item objective / creature drop -> Loot
+  direct game-object objective   -> Object
+  item objective / object source -> Object
+
+The BLP artwork is the Questie 8.0.0 objective icon set, which is identical to
+the corresponding mature 3.3.5 BLP set and is safe for the Vanilla texture
+loader. Interact/Event artwork is bundled for supported future objective data,
+but Questie-Octo does not invent those semantics when the Turtle quest model
+does not explicitly provide them.
+
+Objective Nodes option:
+  Clustered (default)
+  Full Nodes
+
+Full Nodes shows every known source spawn coordinate. Clustered keeps the
+existing Questie-Octo geographic grouping.
+
+Item-Start Quests now have an independent inline options group:
+  Show Item-Start Quests
+  Show on World Map
+  Show on Minimap
+  Node Density: Clustered / Full Nodes
+  Item-Start Quest Scale
+
+Item-start quest markers remain quest-starter markers so they cannot be
+mistaken for accepted quest objectives; their source density and visibility
+are now independently configurable.
+
+No quest arrow/navigation, nameplate objectives, or extra map interaction
+subsystems are added.
+
+
+0.1.70 ALPHA - PROFESSION RESOURCE NODES
+-----------------------------------------
+Options layout:
+  Advanced tab removed.
+  Profession tab added.
+  Reset Options moved to the bottom of General.
+
+Profession tab (all resource types disabled by default):
+  Fishing Pools
+  Herbalism
+  Mining
+  Survival Trees
+  Show on World Map
+  Show on Minimap
+  Node Density: Clustered / Full Nodes
+  Profession Node Scale
+
+Data:
+  Fishing  -> pfDB meta.fish gameobjects
+  Herbs    -> pfDB meta.herbs gameobjects
+  Ore      -> pfDB meta.mines gameobjects
+  Survival -> Turtle Simple Wood Tree objects 2020267-2020281, 2020301
+
+Artwork:
+  Fishing/Herb/Ore use Questie 11.0.0 node_fish/node_herb/node_ore BLP.
+  Survival uses the live client icon returned by GetItemInfo(4470) for
+  Simple Wood; question-mark only while the item is not cached.
+
+Profession/resource nodes have lower visual priority than quest pins.
+
+
+0.1.71 ALPHA - WOOD FAMILIES + PROXIMITY TOOLTIPS
+---------------------------------------------------
+Survival resource coverage now includes every wood-tree family in the bundled
+Turtle pfDB snapshot:
+
+  Simple Wood:
+    2020267-2020281, 2020301
+    icon item 4470 (Simple Wood)
+
+  Bright Wood:
+    2020282-2020287
+    icon item 42007 (Bright Wood)
+
+  Shade Wood:
+    2020288-2020297, 2020309
+    icon item 42008 (Shade Wood)
+
+  Tropical Wood:
+    2020298
+    icon item 42009 (Tropical Wood)
+
+  Star Wood:
+    2020299
+    icon item 11291 (Star Wood)
+
+  Dead Wood:
+    2020300
+    the supplied DB has no item literally named Dead Wood; item 42148
+    (Dead Leaves) is explicitly sourced from the Dead Wood Tree and is used as
+    the source-backed fallback rather than inventing an icon.
+
+No generated image assets are used. Survival markers use the client's real item
+textures. Vanilla's ADD blend mode is applied so the dark item-icon square is
+visually suppressed and the resource artwork reads more like a standalone node.
+
+World-map tooltip proximity:
+  When two or more QUEST pins render within 2 pixels of each other, hovering
+  any one of them shows one combined tooltip containing all nearby quest
+  sources/quests. The map markers are NOT merged, moved, displaced or resized.
+  Profession/resource pins are excluded from this proximity merge.
+
+
+0.1.72 ALPHA - QUEST-FOCUSED CLEANUP
+-------------------------------------
+Profession/resource-node subsystem removed completely:
+  no Profession tab
+  no Fishing/Herb/Ore/Survival resource nodes
+  no profession resource settings
+  no ProfessionNodes module
+  no resource-only map preparation
+  no resource tooltip/render paths
+
+Reset Options remains at the bottom of General.
+
+World-map quest tooltip proximity threshold increased:
+  2 pixels -> 5 pixels
+
+If two or more quest markers render within 5 pixels, hovering one shows a
+combined tooltip for readability. Quest markers themselves remain separate and
+are not moved, merged, nudged, resized, or redrawn.
+
+0.1.75 ALPHA - OPTIONS REFRESH CENTERING FIX
+---------------------------------------------
+Built from 0.1.74.
+
+Fixed the Questie Options window moving away from screen center after selecting
+a tab, checkbox, dropdown, or other control that triggers an AceConfigDialog
+refresh.
+
+Questie 5.2.3/6.0.0/3.3.5 establish the persistent standalone AceGUI options
+frame. Questie 7/8 refine that lifecycle by avoiding unnecessary outer-frame
+reopens. On Vanilla/Ace3v, AceConfigDialog still reapplies the custom frame
+status table during full control refreshes; stale status.top/status.left values
+could therefore move the physical frame after it had been explicitly centered.
+
+The Questie custom frame now filters only those two position fields whenever its
+AceConfig status is applied. Width, height, selected tab, scrolling, and all
+other AceConfig state remain unchanged. The Ace3 compatibility library is not
+modified globally.
+
+
+
+0.3.3 ALPHA - INFRASTRUCTURE / PERFORMANCE CORRECTIVE PASS
+-----------------------------------------------------------
+Full Nodes:
+  * compact pfQuest-style dot presentation
+  * hidden 0.70 size multiplier
+  * 15% transparency and subdued colors
+  * only global Map / Minimap scaling remains
+  * global rescaling changes size only and cannot replace Full Node artwork
+
+Repeatables:
+  * dedicated blue ! / ? artwork
+  * PvP presentation takes priority over repeatable, which takes priority over event presentation
+  * server-derived repeatable flags remain authoritative
+
+Events:
+  * DB event membership remains separate from current activity
+  * active quests, mouseover, target and quest/gossip NPC observation can
+    activate an event
+  * confirmed event observations survive /reload until next realm midnight
+
+Quests browser:
+  * fixed native recycled-row UI, no AceGUI TreeGroup
+  * opening the browser does not scan the whole quest database
+  * explicit searches run in 50-quest per-frame slices
+  * retained results capped at 100
+  * closing the browser cancels the current search generation
+
+Audit:
+  * 96 Lua files syntax-checked
+  * every TOC path verified
+  * no runtime direct pfDB access outside Database/
+  * no fading path, Object-ID UI, Completion tracker sort, or active
+    per-category scale controls remain
+
+See Docs/QUEST_SYSTEM_AUDIT.md for the authority chain, runtime limitations and
+recommended in-game regression cases.
+
+
+0.3.5 ALPHA - CONSOLIDATED QUEST INFRASTRUCTURE TEST BUILD
+----------------------------------------------------------
+Quests browser:
+  * cached lowercase quest-title search index
+  * 33-quest/frame bounded searches (about 30% faster than the previous pass)
+  * Unavailable quests explain the failing requirement in the details pane
+  * money rewards display as gold/silver/copper text
+  * guaranteed and choice reward items display as clickable WoW hyperlinks
+  * no reward icons
+  * opening Quests from Options closes the AceConfig frame after its callback
+    refresh, preventing the Options/Game Menu from remaining underneath
+
+Events:
+  * event membership, current event activity and event presentation are separate
+  * scheduled Turtle game events use the supplied server schedule
+  * Darkmoon uses the supplied Turtle hardcoded odd/even-week + Wednesday rule
+  * permanent content gates such as cloth-turn-in event 159 remain normal quests
+  * event 172 remains continuously available for Molten Core attunement
+
+Repeatables:
+  * authentic Questie 6 repeatable.blp for blue repeatable pickups
+  * normal Questie completion artwork for repeatable turn-ins
+  * PvP presentation wins over repeatable/event presentation; repeatable still wins over event
+
+Full Nodes:
+  * exact pfQuest node.tga
+  * native pfQuest 14px baseline restored at global scale 1
+  * 15% additional transparency and subdued per-quest color retained
+  * global scale never swaps Full Nodes back to ordinary objective artwork
+
+See Docs/QUEST_SYSTEM_AUDIT.md for the complete authority and validation pass.
+
+
+0.3.7 ALPHA - CONSERVATIVE EVENT BETA BUILD
+
+- Event quest availability now follows pfQuest: event membership itself never
+  locally blocks a quest while Show Event Quests is enabled.
+- Permanent Turtle content gates remain normal-looking quests rather than
+  festival-coloured quests.
+- Event schedule changes/observations no longer force availability/map rebuilds.
+- Quests browser searches cached titles in 768-ID bounded slices and exact
+  numeric quest IDs bypass the database scan.
+- Verified donation repeatables from authoritative Turtle data: Silvermoon
+  Remnants 80374 and Revantusk 80379 are repeatable; Goblin donation quests
+  41115 and 41123 are repeatable. Silvermoon 80374 has minimum level 50.
+
+
+0.3.7 ALPHA - CONSERVATIVE EVENT BETA BUILD
+--------------------------------------------
+Events:
+- Show Event Quests now defaults OFF for a fresh character/install. Existing
+  SavedVariables are preserved; Reset Options adopts the new default.
+- Permanent Turtle game_event content gates remain ordinary quest eligibility
+  metadata and are not painted/filtered as festivals.
+- Festival-style available quests require the toggle plus positive active-event
+  evidence from the supplied schedule/hardcoded policy or runtime observation.
+- Unknown/unscheduled festival events fail closed until observed. Active quests
+  already accepted by the player remain visible through the Quest Log path.
+
+
+0.3.8 ALPHA - CURATED TURTLE EVENT CALENDAR
+--------------------------------------------
+Events:
+  * major festival availability uses the manually verified 2026 Turtle
+    in-game calendar and repeats annually by month/day
+  * only visible event text counts; Raid Reset, roadmap/release entries and
+    graphic-only calendar cells are ignored
+  * Darkmoon Faire uses the anchored 14-day rule: six Elwynn days, one
+    construction Wednesday, six Mulgore days, one construction Wednesday
+  * the anchor is 2026-08-13 = first Elwynn active day
+  * known annual calendar windows are authoritative and cannot be re-enabled
+    out of season merely by clicking a lingering event NPC
+  * unknown/custom festival IDs remain conservative and require live evidence
+  * Show Event Quests remains OFF by default on a fresh install
+
+Verified recurring annual windows:
+  Love is in the Air      Feb 1-Feb 16
+  Lunar Festival          Feb 16-Mar 4
+  Noblegarden             Apr 17-May 8
+  Midsummer Fire Festival Jun 21-Jul 12
+  Brewfest                Sep 20-Oct 6
+  Harvest Festival        Oct 1-Oct 8
+  Hallow's End            Oct 20-Nov 2
+  Feast of Winter Veil    Dec 3-Jan 14
+
+
+BETA 1.2 - STABLE ADDON IDENTITY / QUEST BROWSER CORRECTIONS
+-----------------------------------------------------
+- Display title: Questie-Octo
+- Author: Questie-Octo
+- Version: 1.2
+- Internal addon folder is permanently `Questie-Octo`; only ZIP/version metadata increments.
+- Spawn of Jubjub (7946) is treated as a conditional Dark Iron Ale/Jubjub offer, not a static available pickup.
+- Quests browser requirement wording is concise and Rewards use native item hyperlink text inside the scrollable quest-detail pane.
+- Show Event Quests remains OFF by default on a fresh install.
+- Verified seasonal events use the curated calendar / Darkmoon schedule.
+- Verified release/content gates remain ordinary quest metadata.
+- Event 159 (cloth-turn-in release gate) stays ordinary; normal cloth donation
+  quests remain one-time where the data says so, and Additional Runecloth
+  remains independently repeatable/blue where the authoritative data says so.
+- Unknown or unverified event IDs are on standby: they do not publish available
+  quest markers even if an NPC is observed. Active quests already in the Quest
+  Log remain visible.
+
+
+1.0.81 - SHARED CALLBACKHANDLER ISOLATION / SPY COMPATIBILITY
+-------------------------------------------------------------
+A supplied Spy 4.5.0 archive exposed that Questie-Octo's Lua-5.0
+CallbackHandler translation was registered globally as `CallbackHandler-1.0`
+minor 6.  When Questie-Octo loaded first, LibStub caused Spy's same-minor
+CallbackHandler to be skipped.  Spy then inherited Questie-Octo's callback
+runtime even though Spy's Ace3v libraries use the Vanilla explicit-argc ABI
+`Fire(eventName, argc, ...)`.
+
+The old development note stating that CallbackHandler behavior was retained was
+therefore too broad: the Lua syntax conversion worked for Questie-Octo's option
+path, but its `Fire` entry point did not preserve Ace3v's explicit argc slot.
+
+Compatibility correction:
+  * Questie-Octo's handler is now private: `QuestieOcto-CallbackHandler-1.0`.
+  * Questie-Octo AceConfigRegistry explicitly uses the private handler.
+  * The private handler uses the Ace3v explicit-argc `Fire` contract.
+  * Questie-Octo no longer claims the global `CallbackHandler-1.0` library, so
+    unrelated addons can load their own copy without load-order interference.
+
+No Spy files are modified or bundled by Questie-Octo.
+
+
+1.0.82 - OPTIONAL QUEST LOG TRACKED CHECKMARKS
+------------------------------------------------
+The native Turtle/Vanilla Quest Log checkmark restored in 1.0.80 is now an
+opt-in presentation setting. `Show Quest Log Checkmarks` appears in Tracker
+options between `Auto Track Quests` and `Show Completed Quests` and defaults
+to OFF. The option controls only the native Quest Log row check artwork;
+tracking state and tracker behavior are unchanged.
+
+1.0.83 - UPDATED PFQUEST REFERENCES / SAFE SERVER-TRUTH DATA PASS
+-----------------------------------------------------------------
+Updated the project's current pfQuest references to the user-supplied
+pfQuest-classicAPI-octo(5) and pfQuest-octo-master(4) snapshots. The latter is
+Octo DB 1.1.0 and is now the primary Octo database reference.
+
+Safe changes only:
+  * cleared 35 stale class/race restrictions whose current Turtle
+    quest_template field is explicitly unrestricted;
+  * appended 9 server-required objective items without replacing any existing
+    objective data;
+  * added presentation-only Blighted Surge (8519) source guidance for Poisoned
+    Water (6804) / Discordant Bracers (17309), keeping the live item objective
+    authoritative.
+
+The new master's 38 non-additive 1.0.12 objective replacements are deliberately
+deferred for a dedicated full server/data audit. Several upstream merge/order
+edge cases were found, so those replacements must be applied as final semantic
+truth rather than copied literally. Future broad/full-audit work must explicitly
+remember and revisit that deferred batch.
+
+The updated classicAPI `/db checkdb` also reinforces an audit rule: a quest with
+no explicit objective table can still be a correct delivery/talk-to quest when
+its end relation provides the needed turn-in guidance.
+
+
+1.0.84 - SPY ACECONFIG ISOLATION / QUEST-GIVER FACTION ELIGIBILITY
+------------------------------------------------------------------
+A second Spy 4.5.0 test showed that 1.0.81 isolated CallbackHandler but left a
+same-minor shared AceConfigRegistry collision. Questie-Octo's modified registry
+was still published as `AceConfigRegistry-3.0` minor 16, so Spy's own minor 16
+registry could be skipped when Questie-Octo loaded first. Spy's newer
+AceConfigDialog then inherited Questie-Octo's private-registry state; the
+reported `Spy.MainWindow` nil, `Colors.lua` nil-frame, and missing
+`InterfaceOptionsFrame_OpenToCategory` errors are consistent downstream
+initialization/config symptoms.
+
+Compatibility correction:
+  * Questie-Octo's modified config registry is private as
+    `QuestieOcto-AceConfigRegistry-3.0`.
+  * Questie-Octo's modified config dialog is private as
+    `QuestieOcto-AceConfigDialog-3.0`.
+  * Questie-Octo Options references only those private config libraries.
+  * the shared LibStub and same-version AceGUI Slider are restored to the
+    supplied Spy-compatible implementations, so Questie-Octo no longer wins an
+    equal-version shared component with project-specific changes.
+  * Spy remains unmodified and unbundled.
+
+Quest availability also now respects the faction metadata already carried by
+pfQuest creature/object starters (`A`, `H`, `AH`). Turtle can leave a quest's
+RequiredRaces unrestricted while effectively faction-locking the pickup through
+a hostile quest giver. Questie-Octo now treats the starter faction as an
+effective availability gate and filters individual starter pins accordingly.
+This fixes Horde players being shown Alliance Sunsworn Camp quests on
+Moonwhisper Coast (for example Andanil Sunsworn 63119 and Rhys Dawnbreeze
+63122, both recorded as Alliance-only starter NPCs) even though the live NPCs
+will not offer those quests. Unknown faction metadata remains fail-open, and
+item-start quests remain unaffected by a separate NPC starter's faction.
+
+1.0.85 - LONG RARE RESPAWN TIME FORMATTING
+-------------------------------------------
+Rare/static respawn times shown on dedicated Rare Monster nodes and rare
+creature sources inside item-start quest tooltips now switch to hour/minute
+format when the recorded static DB respawn exceeds 60 minutes.
+
+Examples:
+  60 min  -> ~60 min
+  90 min  -> ~1h30m
+  320 min -> ~5h20m
+
+The change is presentation-only. Respawn source data and rare/item-start node
+selection are unchanged. The creature diagnostic command uses the same display
+format for consistency.
+
+1.0.86 - SHORT-RESPAWN SECONDS ONLY
+------------------------------------
+Rare/static respawn tooltips now show seconds only when the recorded respawn is
+strictly below 5 minutes. At 5 minutes and above, seconds are suppressed to keep
+long rare timers readable. Hour conversion from 1.0.85 remains unchanged.
+
+Examples:
+  25 sec      -> ~25s
+  2 min       -> ~2 min
+  2 min 30 s  -> ~2m30s
+  5 min 20 s  -> ~5 min
+  90 min 15 s -> ~1h30m
+  10h33m20s   -> ~10h33m
+
+The Silithus rare-elites Xil'xix (15286), Aluntir (15288), and Arakis (15290)
+remain without a displayed respawn timer because their current pfQuest Turtle
+coordinates record a respawn value of 0. Questie-Octo treats 0 as no reliable
+static timer rather than displaying "0s". The supplied current Tortoise server
+source retains the creature templates but has no ordinary static creature rows
+for those three IDs, so no replacement respawn value is invented.
+
+1.0.87 - Centered tooltip tilde markers
+- Rare respawn text now uses the centered mathematical tilde (∼) instead of the raised ASCII tilde (~).
+- Item-start drop-rate ranges use the same centered marker (for example, 0.02%∼0.08%).
+- Formatting, respawn values, and drop-rate values are unchanged; this is presentation-only.
+
+
+1.0.88 - Tooltip range/respawn font compatibility
+- The centered mathematical tilde introduced in 1.0.87 is not rendered by the current in-game tooltip font, causing the separator/prefix to disappear.
+- Rare respawn text no longer uses an approximation glyph; values are shown directly (for example, Respawn: 15h or Respawn: 2h30m).
+- Item-start drop-rate ranges now use a plain supported separator (for example, 0.007% - 0.20%).
+- This is presentation-only; respawn values, short-respawn second rules, drop-rate values, and item-start thresholds are unchanged.
+
+
+1.0.89 - FONT-SAFE APPROXIMATION / RANGE WORDING
+-------------------------------------------------
+The previous attempt to replace the raised ASCII tilde with a mathematical
+glyph failed because the current in-game tooltip font does not render that
+glyph. Removing the approximation marker entirely was also too ambiguous.
+
+User-facing rare respawn tooltips now use plain supported text instead:
+  Respawn: approx. 20h
+  [Rare] Respawn: approx. 15h
+
+Item-start drop-rate ranges now use the word `to` rather than a tilde-like
+glyph or punctuation:
+  0.007% to 0.20%
+
+Single drop rates remain unchanged. This is presentation-only: recorded
+respawn values, the below-five-minute seconds rule, hour conversion, drop
+rates, and the <0.50% representative item-start threshold are unchanged.
+
+
+1.0.90 - TRUE MIDDLE ASCII TILDE OVERLAY
+-----------------------------------------
+The explicit `approx.`/`to` wording from 1.0.89 was rejected because the
+preferred presentation is still the compact tilde notation. The stock FRIZQT
+tooltip font renders the supported ASCII `~` too high, while the mathematical
+Unicode tilde is absent from the current game font.
+
+Questie-Octo now keeps the ordinary ASCII `~` glyph but renders it in a small
+independent tooltip FontString shifted down by two pixels. The underlying line
+reserves two ordinary spaces at that position, so the glyph remains inline
+without relying on unsupported Unicode.
+
+Examples as presented to the player:
+  Respawn: ~15h
+  [Rare] Respawn: ~15h
+  0.007%~0.20%
+
+This is presentation-only. Respawn values, the below-five-minute seconds rule,
+hour conversion, drop-rate values, and the <0.50% item-start threshold remain
+unchanged. The overlay is reset whenever Questie-Octo rebuilds a map/minimap
+tooltip so stale markers cannot survive tooltip reuse.
+
+
+1.0.91 - Centered tilde texture
+- Replaced the raised-font tilde overlay with a small texture marker centered vertically on tooltip text.
+- Applies to rare respawn approximations and item-start drop-rate ranges.
+- No respawn/drop-rate data or thresholds changed.
+
+1.0.92 - ROLLBACK FAILED MIDDLE-TILDE EXPERIMENTS
+--------------------------------------------------
+Versions 1.0.87 through 1.0.91 experimented with alternative ways to make the
+approximation/range tilde appear vertically centered in the stock Turtle/Vanilla
+tooltip font. The mathematical Unicode glyph was not rendered, the wording
+replacements were rejected, the independent FontString did not produce the
+requested visual result, and the texture-slot approach produced a blank gap in
+actual client testing.
+
+A fresh source check also confirmed the current Turtle 1.12 UI itself documents
+that FontStrings do not paint inline |T textures; a current OctoCalendar comment
+also records that bare Texture regions did not solve a similar inline-display
+problem there. No reliable native inline-glyph mechanism was found that would
+justify further tooltip experiments without another client-side test harness.
+
+Per the maintainer's explicit fallback decision, 1.0.92 restores the exact
+1.0.86 runtime presentation for this feature:
+  * supported ASCII `~` is used again for rare respawn approximations;
+  * item-start drop-rate ranges use the same ASCII `~`;
+  * seconds remain visible only for respawns strictly below five minutes;
+  * timers above sixty minutes remain compact hour/minute values.
+
+The failed 1.0.87-1.0.91 presentation approaches are retained in history but
+must not be reintroduced as accepted behavior. The temporary `tilde_mid.tga`
+asset from 1.0.91 is removed.
+
+
+1.0.93 - ARIALN MIDDLE-TILDE TEST
+----------------------------------
+The direct current Turtle/Octo FrameXML confirms that normal tooltip rows use
+Fonts\\FRIZQT__.TTF at 12px while the client also ships and natively uses
+Fonts\\ARIALN.TTF (NumberFont/ChatFont families).
+
+Per the maintainer's request, the compact ASCII `~` notation is retained, but
+only the tilde is now drawn with ARIALN in a separate tooltip FontString. The
+normal tooltip line reserves one space at the marker position; the ARIALN tilde
+is centered over that slot and nudged down one pixel. All surrounding text
+continues to use the tooltip's normal font.
+
+This applies only to user-facing rare respawn approximation markers and
+item-start min/max drop-rate separators. No timer/drop-rate values or threshold
+rules change. If this native-font experiment is still visually unsatisfactory
+in the actual client, the accepted fallback remains the 1.0.92/1.0.86 direct
+ASCII-tilde presentation; do not revive the rejected Unicode/texture methods.
+
+
+1.0.94 - WRAPPED-LINE ARIALN TILDE ALIGNMENT
+-----------------------------------------------
+In-game 1.0.93 testing confirmed that the ARIALN ASCII tilde is visually
+centered correctly on ordinary single-line rare respawn rows. It also exposed
+a separate layout bug on long item-start drop-rate rows: GameTooltip represents
+a wrapped AddLine as one tall FontString, so anchoring the tilde to that
+FontString's vertical LEFT point placed the marker between the two visual rows.
+
+The ARIALN presentation is retained. Single-line positioning is unchanged. For
+wrapped tooltip FontStrings only, the tilde now anchors from TOPLEFT and is
+centered on the first visual row where the reserved marker slot actually lives.
+This is a presentation-only correction; no tooltip wording, rates, respawn
+values, thresholds, or item-start behavior changed.
+
+
+1.0.95 - FINALIZE WRAPPED TILDE AFTER TOOLTIP LAYOUT
+-------------------------------------------------------
+In-game 1.0.94 testing showed the ranged item-start tilde could still land
+between visual rows. The problem was timing rather than the ARIALN glyph: the
+marker position was calculated immediately after AddLine(), before GameTooltip
+had finalized wrapping. At that point the FontString could still report a
+single-row height, then become two rows only when Show() laid the tooltip out.
+
+Questie-Octo now stores each tilde's source line/prefix and performs a second
+positioning pass immediately after tooltip:Show(), when the real wrapped height
+is available. Single-line rare respawn placement is unchanged. Final wrapped
+rows anchor the ARIALN tilde to the center of the first visual row. No tooltip
+wording, respawn values, drop rates, or thresholds changed.
+
+
+1.0.96 — spaced drop-rate range separator
+- Item-start drop-rate ranges that compare min/max now display as `0.01% ~ 0.20%`.
+- Rare respawn lines remain `~15h` / `~2h30m` with no added spaces.
+
+1.0.97 - DARK THEME TOGGLE + SAFE MINIMAP SETTINGS BUTTON
+----------------------------------------------------------
+- Added `Enable Dark Theme` at the bottom of General, immediately above the
+  reset section. The accepted 1.0.96 Shagu-style dark appearance remains ON by
+  default. Turning it off restores the exact AceGUI colors captured before
+  Questie-Octo's own dark pass; no pfUI/DragonflightUI/global frame is skinned.
+- Added `Show Minimap Button` beside it, default ON. Changing this option
+  requires `/reload`. When OFF at login, Questie-Octo never creates the minimap
+  button frame instead of creating and hiding it. This avoids old Vanilla
+  minimap-button collectors discovering/reparenting a hidden frame.
+- The settings button is a small native Questie-style button with no LDB/
+  LibDBIcon dependency, opens `/qo` settings on left click, saves its dragged
+  position, and reuses Questie-Octo's round/square minimap detection for pfUI,
+  ShaguTweaks, and DragonflightUI-Reforged compatibility. Its frame name starts with
+  `MinimapIcon`, which the supplied pfUI and DragonflightUI collectors already
+  exclude from collection.
+- Updated README first-use documentation for `/qo`, moving/unlocking the tracker,
+  Dark Theme, and the reload-required Minimap Button toggle.
+- No quest/map/drop-rate/tooltip gameplay data changed. No navigation arrow was
+  added.
+
+
+
+1.0.98 - MINIMAP BUTTON LABEL + YELLOW QUEST ICON
+---------------------------------------------------
+- Minimap settings-button tooltip title is now simply `Questie-Octo`; the
+  addon version is no longer appended to the button name.
+- Replaced the completion `?` artwork on the minimap settings button with
+  Questie-Octo's existing ordinary yellow available-quest `!` artwork.
+- The safe reload-required Show Minimap Button behavior, drag position, square/
+  round minimap handling, pfUI/DragonflightUI collector avoidance, and `/qo`
+  fallback are unchanged.
+- No quest/map/drop-rate/gameplay data changed.
+
+
+1.0.99 - QUEST LOG COLLAPSE STATE
+-----------------------------------
+- Fixed a Vanilla/Turtle quest-log presentation edge case where collapsing a
+  zone header removes its child rows from GetQuestLogTitle(). Questie-Octo now
+  preserves a previously cached quest only when that quest belonged to the
+  currently collapsed header and ClassicAPI C_QuestLog.IsOnQuest still confirms
+  it is active. Collapsing a zone therefore no longer makes available `!`
+  markers/tooltips reappear for already accepted quests.
+- Collapsed Quest Log header choices are now remembered per character and
+  restored after reload. Questie-Octo observes the native header state rather
+  than replacing Blizzard's Quest Log UI; explicit expansions remove the saved
+  collapse preference, Collapse All/Expand All are naturally observed, and one
+  saved header is restored per refresh because collapsing changes later log
+  indices.
+- The restore occurs only after Questie-Octo publishes its active quest cache,
+  preserving the current Octo 25-slot polling and native abandon-selection
+  behavior. No quest database, objective, map-node, tracker presentation, or
+  availability rules changed.
+
+1.0.2 - TRACKER SCROLL POSITION PERSISTENCE (renumbered public release from development 1.0.100)
+-------------------------------------------------
+- The custom tracker now remembers its row-based scroll position per character
+  and restores the same tracker page after login or `/reload`.
+- Tracker presentation rebuilds no longer reset the visible page to row 1. The
+  saved row is clamped safely when tracked content becomes shorter or changes.
+- A transient empty tracker during startup does not erase the saved position;
+  the position is validated only after actual tracker rows are available.
+- This extends the 1.0.99 per-character Quest Log collapse persistence without
+  changing quest truth, sorting, visible-row limits, or tracker geometry.
+
+
+
+1.0.8 - TRACKER COLLAPSE STATE SEPARATION
+-------------------------------------------------
+- Reworked the failed 1.0.6/1.0.7 collapse-tracker attempt from the accepted
+  1.0.2 baseline. Saved header preferences and live tracker visibility are now
+  separate states: a saved reload preference never hides a quest whose native
+  Quest Log row is currently visible.
+- CollapseQuestHeader captures quest IDs before Vanilla removes the child rows;
+  ExpandQuestHeader clears only the live collapsed membership immediately. The
+  original 1.0.2 header-state observation remains responsible for persistence.
+- Collapsed quests stay active for availability/map truth but disappear from the
+  tracker, then return immediately when the native header is expanded.
+- Added tracker invalidation for quest title/level/zone-group changes, immediate
+  difficulty-color repaint on PLAYER_LEVEL_UP, and safe timed-quest log-index
+  validation after header reindexing.
+- No fullscreen-map experiment code is included.
+
+
+1.0.9 - MINIMAP BUTTON PANEL + GENERAL SCROLL COMPATIBILITY
+------------------------------------------------------------
+- The enabled Questie-Octo minimap settings button is no longer named with the
+  `MinimapIcon` prefix that pfUI and DragonflightUI-Reforged intentionally
+  exclude from addon-button collection. pfUI's Addon Buttons panel can now
+  discover and manage the button while it is enabled.
+- Removed the optional MBB ignore registration for the settings button. The
+  Vanilla safety rule remains stronger than Hide(): when Show Minimap Button is
+  OFF at login, Questie-Octo never creates the button frame at all, so collectors
+  have no hidden object to grab.
+- Questie-Octo no longer changes the button anchor while another button panel has
+  reparented it. The saved minimap orbit position remains available if the button
+  is later returned to the Minimap.
+- Added local blank footer space to the General options tab so Dark Theme, Show
+  Minimap Button, and Reset Options can all be scrolled fully into view. This is
+  deliberately local to Questie-Octo rather than changing the shared AceGUI
+  ScrollFrame widget, preserving the existing Spy/Ace coexistence boundary.
+- README now notes that compatible minimap-button panels may collect the enabled
+  Questie-Octo button. No quest/map/tracker gameplay behavior changed.
+
+
+1.0.10 - COMPILED RUNTIME DATABASE + VANILLA STARTUP BUDGET
+------------------------------------------------------------
+- Replaced release-time loading of the ~39.5 MB pfQuest base + Turtle/Octo Lua
+  data inputs with ~16.9 MB of build-time compiled final runtime tables. The
+  source inputs remain in the repository for provenance/regeneration but are no
+  longer referenced by the addon TOC.
+- `Tools/compile_runtime_db.lua` reproduces the existing field merge and sparse
+  enrichment offline. `Tools/validate_runtime_db.lua` reconstructs the legacy
+  path and recursively verifies quests/items/units/objects/refloot/itemreq/zone/
+  AreaTrigger/minimap/meta/localized tables are identical to the compiled result.
+- Shipped the sorted 6,700 quest-ID list and the static 109-map / 8,677-link
+  starter-source candidate index so those whole-database indexes are no longer
+  rebuilt during login.
+- DatabaseAPI quest titles/search strings are now cached lazily instead of
+  lowercasing every quest title before the addon can become ready.
+- The scheduler now runs at most two queued continuation slices per frame and
+  observes an approximate 4 ms work budget when the client timer can measure it,
+  preventing multiple individually-bounded startup jobs from combining into one
+  large Vanilla frame.
+- Quest Log/completion startup is primed before the immediately-ready compiled
+  database publishes its background consumers.
+- Removed automatic construction of the hidden AceGUI options window at login;
+  the full options tree is now created only when the player opens settings.
+- Added manual `/qo perf` startup/scheduler diagnostics. It only reports stored
+  timing/counters and performs no polling, frame-tree scan, or automatic hooks.
+- No quest, objective, map, tracker, drop-rate, faction, or tooltip semantics
+  changed. No fullscreen-map experiment code was added.
+
+1.0.11 - REACHABILITY-PRUNED RUNTIME DATABASE
+------------------------------------------------------------
+- Continued the 1.0.10 build-time database optimization by pruning only the
+  TOC-loaded compiled runtime representation. Original pfQuest/Turtle/Octo
+  source files remain packaged for provenance, audits, and regeneration.
+- All 6,700 final quest rows, quest text, zones, AreaTriggers, minimap data,
+  tracking meta, and profession names remain complete. Large entity tables now
+  retain only records reachable from quest relationships, item sources,
+  reference loot, IR interaction targets, service/rare metadata, and the two
+  explicit presentation-source corrections used by Objectives.
+- Quest-browser reward item names are retained even when those items have no
+  objective/start relationship, preserving immediate reward labels before the
+  client item cache fills.
+- Runtime entity counts are 3,634 items, all 14,136 units, 1,637 objects, and
+  124 reference-loot rows, while all 6,700 quests remain present. Creatures are
+  intentionally unpruned to preserve `/qo creature` and arbitrary live objective
+  IDs. The TOC-loaded runtime database shrinks from about 16.2 MiB in 1.0.10 to
+  about 9.3 MiB.
+- `Tools/validate_runtime_db.lua` now independently derives the reachability set
+  from the reconstructed legacy final database and verifies every retained raw
+  record/name, complete quest/global datasets, quest IDs, and the exact
+  109-map / 8,677-link candidate index.
+- `/qo perf` now reports whether the runtime DB is pruned and its loaded
+  quest/item/unit/object counts.
+- No quest, objective, map, tracker, tooltip, faction, drop-rate, or fullscreen
+  behavior was changed.
+
+1.0.12 - STANDARD EARLY MINIMAP BUTTON LIFECYCLE
+------------------------------------------------------------
+- Reworked the enabled Questie-Octo settings button as a plain, discoverable
+  Vanilla minimap button with no UI-specific collector integration. Any addon
+  button manager may reparent, hide, show, or arrange it using normal frame
+  behavior. Questie-Octo only owns its orbit position while the parent remains
+  the Minimap.
+- Removed the delayed 0.20-second PLAYER_LOGIN creation. The enabled button is
+  now created on Questie-Octo's ADDON_LOADED event, after SavedVariables are
+  available but before common one-shot minimap-button collector scans. This
+  addresses pfUI/DragonflightUI-style panels missing the button until a manual
+  rescan/open.
+- The Show Minimap Button safety boundary is unchanged: OFF still requires
+  /reload and never creates QuestieOctoMinimapButton at all for that UI session.
+  The enabled button itself may be hidden normally by its own/parent frame.
+- README/options wording now describes generic minimap-button-panel behavior
+  instead of compatibility-specific handling. No quest/map/tracker/database
+  semantics changed.
+
+1.0.90 - CLEAN TRACKER TEST CONSOLIDATION
+------------------------------------------------------------
+- Rebuilt directly from accepted 1.0.85 after live testing showed the 1.0.87,
+  1.0.88, and 1.0.89 tracker experiments did not resolve the rare category-
+  collapse/Vine Cutter reproduction.
+- Rejected 1.0.87 semantic viewport anchoring: it changes live scroll semantics,
+  adds semantic row-resolution passes on Render(), and provided no demonstrated
+  benefit for the reported failure.
+- Rejected 1.0.88 native/API objective merge: it changes objective source/count/
+  ordering authority and can pair independently-settling native and ClassicAPI
+  rows by position.
+- Rejected 1.0.89 native completion override: although it corrected the Vanilla
+  meaning of a nil/false native finished flag, it retained the same cross-source
+  positional merge and still did not solve the live reproduction.
+- Kept the accepted 1.0.83 Hide Completed Objectives renderer semantics unchanged.
+- Tracker/TrackerFrame.lua and Quest/QuestLog.lua in 1.0.90 are byte-identical
+  to accepted 1.0.85. No polling, timer, scheduler, map, database, or gameplay
+  changes were added.
+- Added Docs/TRACKER_TEST_CORRECTIONS_AUDIT_2026-08-30.md documenting the
+  rejected experiments and the remaining narrow investigation target.
+1.0.91 - QUEST LOG TRANSACTION / STALE-INDEX SAFETY
+------------------------------------------------------------
+- Full-project audit following independent player reports of apparently unrelated
+  Mulgore, Ragefire Chasm, and Durotar quests/objectives disappearing. The named
+  quest records, compiled runtime database, and map candidate index were checked
+  before changing code; no broad missing-quest/database defect was found.
+- Confirmed a systemic race in Quest/QuestLog.lua: Refresh() snapshots the native
+  Quest Log entry count and scans GetQuestLogTitle()-style numeric indices across
+  multiple scheduler frames. Native header collapse/expand and quest add/remove
+  operations can reindex that list while the old scan is still in progress. A
+  second refresh was queued, but the old partial scan could publish first, creating
+  one active snapshot assembled from two different native layouts.
+- Added an unpublished scan generation guard. Any new Quest Log refresh request
+  received while a scan is running invalidates that generation immediately. The
+  next continuation discards its local replacement state and queues a fresh pass;
+  an invalidated scan never publishes QUEST_LOG_CHANGED/active/map state. This is
+  event-driven replacement work only and adds no polling/OnUpdate/background scan.
+- Synthetic regression using the real QuestLog.lua reproduces the old failure: an
+  expanded-layout first batch followed by a header collapse publishes an incomplete
+  active set in 1.0.90. With 1.0.91, the stale continuation is aborted, the previous
+  authoritative state remains published, and the replacement scan recovers the full
+  active set while preserving collapsed-header presentation state.
+- Audited every other runtime consumer of cached Quest Log indices. Timed quests
+  already validate/re-resolve their live index by quest ID. Tracker Open/Show in
+  Quest Log now applies the same fail-closed validation before selecting a row.
+- Kept 1.0.83 Hide Completed Objectives semantics unchanged. The rejected 1.0.87
+  scroll-anchor, 1.0.88 cross-cache merge, and 1.0.89 completion override remain
+  absent. No individual quest-data override was added for the player reports.
+- Rite of Vision (772) remains a separately documented objective-free/scripted
+  semantic edge case; no unsafe global IR rule change was made. A Dryad's Gratitude
+  (40587) remains correctly marked timed in the compiled data; no speculative map
+  objective was fabricated for its courier item.
+
+1.43 - LOW-LEVEL PREREQUISITE COMPLETION REPAIR
+------------------------------------------------------------
+- Audited a Moonwhisper Coast report for missing Narvalis Point quest markers.
+  The reported quest records, starter NPC coordinates, map 5642 candidate index,
+  and current Tortoise prerequisite rows were all present and internally
+  consistent; no Moonwhisper database override was added.
+- Reproduced a generic availability defect: an ordinary completed prerequisite
+  missing from the bulk completion cache could be filtered as low-level before
+  reaching the existing direct `IsQuestFlaggedCompleted` fallback. A higher-
+  level follow-up then failed its prerequisite check even though the direct flag
+  knew the lower-level predecessor was rewarded.
+- Added a targeted predecessor repair only when the successor remains inside the
+  configured level range and the missing ordinary predecessor falls outside it.
+  Existing direct-flag caching and resettable exclusions remain authoritative.
+- Audited 970 ordinary level-differential prerequisite edges and added full-class
+  regression coverage. A broad verify-every-prerequisite prototype was rejected
+  after materially increasing direct completion calls; the selected fix adds no
+  extra predecessor calls when low-level quests are shown at the full range.
+- No quest data, starter, map coordinate, map candidate, polling, OnUpdate,
+  SavedVariables schema, tracker, or progression-chain semantics changed.
+
+
+1.44 - MOONWHISPER QUEST-GIVER COORDINATE REPAIR
+--------------------------------------------------
+- Built from accepted 1.43 after live screenshots showed Serpents Without Heads and Keeper of the Broken Grove were present on the World Map but pinned around Tyrandas instead of their current quest-giver positions. This corrected the earlier assumption that the report was solely an availability-state problem; the 1.43 prerequisite repair remains independently valid.
+- Audited current map-5642 unit coordinates against the supplied Tortoise `20260618114919_world.sql` Moonwhisper creature snapshot and the current Octo client `WorldMapArea.dbc` row for Moonwhisper Coast (AreaTable 5642). The client bounds are left=-1354, right=-9210, top=10204, bottom=4963.
+- Of 47 current Moonwhisper quest-giver units represented in both data sets, exactly seven single-spawn NPCs are large coordinate outliers (7.5-12.6 map percentage points); every other current single-spawn quest giver agrees within 0.2 points. The stale seven are 62900, 62901, 62902, 62904, 62906, 62907, and 62914.
+- Reprojected those seven current server world spawns through the current client map geometry: Renethra Moonwater 59.24,24.61; Silverstreak 59.08,24.68; Zarazar Sagewind 57.46,28.26; Irea Dawncaller 59.08,25.16; Elendon Truebough 58.83,24.48; Talanis Amberscribe 59.10,24.85; Sister Mirallun 67.79,22.05.
+- This repairs marker placement for the affected quest cluster, including The Light of Elunaris, Serpents Without Heads, and Keeper of the Broken Grove, without changing quest availability, prerequisites, objective ownership, map identity, polling, OnUpdate, or SavedVariables.

@@ -1,0 +1,9 @@
+{
+  "id": "2456123",
+  "tag": "3.11a-11200",
+  "name": "v3.11a-11200",
+  "body": "AutoProfit 3.11 with Nostalrius disconnect protection.\n- Added a small delay between individual trash item vendor.\n- Initial delay = tooltip refresh time (0.2)\n- remove a leftover duplicate info message.\n",
+  "published": "2016-01-19T22:29:19Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/AutoProfit/releases/tag/3.11a-11200"
+}

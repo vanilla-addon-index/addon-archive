@@ -1,0 +1,27 @@
+## Interface: 11200
+## Title: RetherzTargetTracker
+## Version: r4
+## Notes: Advanced Raid Target tracking with debuff timers.
+## DefaultState: enabled
+## Author: Retherz
+## SavedVariablesPerCharacter: RetherzTargetTracker
+
+Addon\RetherzTargetTracker.lua
+
+Addon\Spells\SpellData.lua
+Addon\Spells\GCDTracker.lua
+Addon\Spells\DebuffTracker.lua
+
+Addon\UI\BarData.lua
+Addon\UI\Bars.lua
+Addon\UI\Bartender.lua
+Addon\UI\ConfigHandler.lua
+Addon\UI\ConfigGUI.lua
+
+Addon\Utility\Targeting.lua
+Addon\Utility\TargetCommands.lua
+Addon\Utility\Communication.lua
+Addon\Utility\RTTUtility.lua
+
+Addon\Events\EventHandler.lua
+Bindings.xml

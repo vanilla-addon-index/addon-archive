@@ -1,0 +1,21 @@
+<Ui xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    
+
+    <!-- Databases -->
+    <Include file="db\npc_database.lua"/>
+
+
+    <!-- Core systems -->
+    <Include file="core\Config.lua"/>
+    <Include file="core\Utils.lua"/>
+    <Include file="core\Cache.lua"/>
+    <Include file="core\Search.lua"/>
+    
+    <Include file="core\Portrait.lua"/>
+    <Include file="core\UI.lua"/>
+    <Include file="core\SoundQueue.lua"/>
+    <Include file="core\Gossip.lua"/>
+    <Include file="core\Quest.lua"/>
+    <Include file="core\Book.lua"/>
+    <Include file="core\Core.lua"/>
+</Ui>

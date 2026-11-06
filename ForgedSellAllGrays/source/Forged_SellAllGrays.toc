@@ -1,0 +1,12 @@
+## Interface: 11200
+## Title: |cfff07d30Forged|r Sell All Grays
+## Notes: Merchant button that sells all poor-quality items with one click
+## Author: Chromag
+## Version: 1.0.5
+## Website: https://forgedworlds.com
+## Email: chromag@forgedworlds.com
+
+item_utils.lua
+core.lua
+money.lua
+ui.lua

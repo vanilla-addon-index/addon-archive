@@ -1,0 +1,58 @@
+{
+  "upstream": "https://github.com/bucketss/KillCounter",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "bucketss",
+    "repo": "KillCounter",
+    "name": "KillCounter",
+    "url": "https://github.com/bucketss/KillCounter",
+    "api": "https://api.github.com/repos/bucketss/KillCounter"
+  },
+  "commit": "5591d7846181c1f6ce842c435303ab0bb91fff02",
+  "sourceFiles": {
+    "KillCounter.lua": {
+      "sha256": "cf1f943008a2dbcb6fa41f8937d90cc694a1f26925512f67002d8a17150ba7fa",
+      "bytes": 21695
+    },
+    "KillCounter.toc": {
+      "sha256": "6d5d41d783b408666526aac01bb37c4cb82f8d7857eddeb051ca04f581a07b23",
+      "bytes": 234
+    },
+    "KillCounter.xml": {
+      "sha256": "5c72124691b87300d0cb50b4cc4b5aa53060e5cc169ade4dabc5e277aa63c6d0",
+      "bytes": 12655
+    },
+    "Locale.lua": {
+      "sha256": "b5e1d676ddbb7d5d36e02af3de852443601b222286d457adb0fd3636452a29c6",
+      "bytes": 767
+    },
+    "README.md": {
+      "sha256": "3fb2ac927e40bb2939f647dbb10b4cdbc9d974c52336226e9ddf1c18b4d1495c",
+      "bytes": 397
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "258307941": {
+      "tag": "1.0",
+      "folder": "1.0--258307941",
+      "assets": {
+        "310272799": {
+          "sha256": "cba0b0269cc66ac50e5626e02bee82a8c7eede1524675c9168abee6f2c6b0440",
+          "bytes": 7432,
+          "id": "310272799",
+          "name": "KillCounter.zip",
+          "url": "https://github.com/bucketss/KillCounter/releases/download/1.0/KillCounter.zip",
+          "path": "releases/1.0--258307941/assets/KillCounter.zip"
+        }
+      },
+      "source": {
+        "sha256": "f5abbf750067a69adc9ecc4d6661354144050feaf2e7eee33bb2989aa56a061f",
+        "bytes": 6685,
+        "path": "releases/1.0--258307941/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/bucketss/KillCounter/tarball/1.0"
+      }
+    }
+  }
+}

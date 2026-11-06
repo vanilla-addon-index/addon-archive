@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/Otari98/BetterCharacterStats",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Otari98",
+    "repo": "BetterCharacterStats",
+    "name": "BetterCharacterStats",
+    "url": "https://github.com/Otari98/BetterCharacterStats",
+    "api": "https://api.github.com/repos/Otari98/BetterCharacterStats"
+  },
+  "commit": "0d5d84f42267b20263cb1b5aaaa8a55f08b227d4",
+  "sourceFiles": {
+    "BetterCharacterStats.lua": {
+      "sha256": "36c4919414e3a6668b2ab9740f7560bfe25b119814aa55f20a2398028081a0ae",
+      "bytes": 40991
+    },
+    "BetterCharacterStats.toc": {
+      "sha256": "4297cdca35768b8735e5b281ddce859994a4e2ef8c6087f5429e3685974a5fa9",
+      "bytes": 279
+    },
+    "BetterCharacterStats.xml": {
+      "sha256": "1ce0dc9341cb9ed7e9b52c1c2428d401a51a1e12312df000d089afe50109b9a8",
+      "bytes": 6991
+    },
+    "helper.lua": {
+      "sha256": "b0b8993c6b6133898a9f19963d7a716c3604986be10b73ffc763c3db4866544f",
+      "bytes": 78991
+    },
+    "Localization.lua": {
+      "sha256": "c043d4de8ee8215941e785f72c77f46680d6545dd1529d965aaa0376a3d7fea5",
+      "bytes": 30807
+    },
+    "README.md": {
+      "sha256": "d5416025d87d111cea5a610fbfb3905f7acac5628eec20fbe985d328173ac841",
+      "bytes": 896
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

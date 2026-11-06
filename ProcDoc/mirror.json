@@ -1,0 +1,273 @@
+{
+  "upstream": "https://github.com/thezephyrsong/ProcDoc",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "thezephyrsong",
+    "repo": "ProcDoc",
+    "name": "ProcDoc",
+    "url": "https://github.com/thezephyrsong/ProcDoc",
+    "api": "https://api.github.com/repos/thezephyrsong/ProcDoc"
+  },
+  "commit": "7c29a57a9ce28749782dc26aa938bf85ef4e4dc0",
+  "sourceFiles": {
+    "img/Config.png": {
+      "sha256": "84f7fe6a07f9dfe554069c9a4be8e06aa6650a9b41f03fdaaadc43b18a2846bd",
+      "bytes": 1344616
+    },
+    "img/Druid.png": {
+      "sha256": "35aca1cd0dd3e5adf46564a98614ed0e373308c799b2de3357b9f05d59edfb71",
+      "bytes": 397084
+    },
+    "img/DruidArcaneEclipse.tga": {
+      "sha256": "30137a64c86b634fefd895d4b08adb62bcf25de95bbc25fe67b487dac815e33e",
+      "bytes": 131090
+    },
+    "img/DruidAstralBoon.tga": {
+      "sha256": "304877c54378553bca87e4cb68e5bbbaa318919b7fd84900f7f0e9bc47e9cd9d",
+      "bytes": 131090
+    },
+    "img/DruidClearcasting.tga": {
+      "sha256": "7b48acc5abb7f95c3483fef44d4082a7c36ebeef360735c48187cfa2a5cbd3ab",
+      "bytes": 131090
+    },
+    "img/DruidNaturalBoon.tga": {
+      "sha256": "7a73f136b5d0be8d2bdedcc074f12a804e67a144b83c3e4f4338b114044d6dcc",
+      "bytes": 131090
+    },
+    "img/DruidNatureEclipse.tga": {
+      "sha256": "24f860157b4053fa84ddfcd8864d6fdefa8807d33ab724c7021cfa8d9d7d69c6",
+      "bytes": 131090
+    },
+    "img/DruidNaturesGrace.tga": {
+      "sha256": "baf45da95db7647ed0a8e7301235fc64a9d88517fad235863892fab683bf4ea4",
+      "bytes": 131090
+    },
+    "img/Grand_Crusader.tga": {
+      "sha256": "84a0890f25d6d20cf645d7d6dec09bbcbfd1ee9a96209824faca71711537018f",
+      "bytes": 131090
+    },
+    "img/Hunter.png": {
+      "sha256": "2e2905c928b657253e3cc5e19ec517405f3ab6d3eeb5d030c191b11c1107d927",
+      "bytes": 316480
+    },
+    "img/HunterBaitedShot.tga": {
+      "sha256": "0847441a2ea803288b7f3a058a7df340ad542aa29c4fcc73cabe1c1445f3f1d4",
+      "bytes": 131090
+    },
+    "img/HunterCounterattack.tga": {
+      "sha256": "7fcfededf84e74afd9702b1883f9a4f125a4e4e13832748b88664041f2c9d737",
+      "bytes": 131090
+    },
+    "img/HunterMongooseBite.tga": {
+      "sha256": "685f7e73c8022686586c3d57634aa3fda41933780092dd62bb69829705ffa5a7",
+      "bytes": 131090
+    },
+    "img/HunterQuickShots.tga": {
+      "sha256": "6547065e65b819c9154dd208b821b0363092196478f77d182c29c258e532cbf3",
+      "bytes": 131090
+    },
+    "img/impact.blp": {
+      "sha256": "19e36e95ecc7d19cf2df1e1a54071f46a037fc3547bc1f07cc227d8fd6155a44",
+      "bytes": 44900
+    },
+    "img/Install1.png": {
+      "sha256": "758684e020e20f4976c847af48e285b318de80db9dbb2acaec74e7923883a3db",
+      "bytes": 662262
+    },
+    "img/Install2.png": {
+      "sha256": "3ac371daf303e99d2089f56cf6ad0062e01164d8e5601993b9929fedd35f3a0a",
+      "bytes": 290904
+    },
+    "img/Install3.png": {
+      "sha256": "9bbc5edbecaf12c33c6f87920f8782d5045d484bd64f9f61f9b0392f7fb09687",
+      "bytes": 234437
+    },
+    "img/Install4.png": {
+      "sha256": "1a969e315e94c28211ad889b92eaa7af863b64921d41b012bc9e610a5d6426da",
+      "bytes": 502469
+    },
+    "img/lock_and_load.blp": {
+      "sha256": "f58295401fe6c0b34ade4b2964074b1d06d3202b7e390b1cb38479fde7a6894c",
+      "bytes": 44900
+    },
+    "img/Mage.png": {
+      "sha256": "f463feba3f6c94a7616c63d255e1d7e65621ada4a71b58af5cf9631d7d3f733c",
+      "bytes": 447845
+    },
+    "img/MageArcaneRupture.tga": {
+      "sha256": "5538c2380f73a5e87e4223a9c79720129975a398d1d7fda99493d889e92ac223",
+      "bytes": 131090
+    },
+    "img/MageArcaneSurge.tga": {
+      "sha256": "d4502f5f2675ea8bcb0e01e4254a3d33821d4cc562b9721e83f34aa2c471c630",
+      "bytes": 131090
+    },
+    "img/MageFlashFreeze.tga": {
+      "sha256": "2f2d2d0997e0225d12c2c9137febfa8240e6ea057e2abc0be5250cd73a3e07df",
+      "bytes": 131090
+    },
+    "img/MageHotStreak.tga": {
+      "sha256": "7d8ca294585d8ee4e479c162abf1995707994aab369e80b0feeae38c3761d130",
+      "bytes": 131090
+    },
+    "img/MageT2.tga": {
+      "sha256": "274d5b881699bb10d41f35780cf7d5d261ea43c790c8323dea5763fce7205450",
+      "bytes": 131090
+    },
+    "img/MageTemporalConvergence.tga": {
+      "sha256": "c9e31194db7fb13dd3e6b46cd09056206e0b3c712af840c135b013e89a29554d",
+      "bytes": 131090
+    },
+    "img/natures_grace.blp": {
+      "sha256": "2be9a2b8ae6e11e4d6752aabe59dad822efd25791a6cb290d9b938d90370f38d",
+      "bytes": 44900
+    },
+    "img/Paladin.png": {
+      "sha256": "fdff13a85f7e8f78fd8092809ce2676d045327e818a2fd06409b698aac1edadb",
+      "bytes": 292581
+    },
+    "img/PaladinDaybreak.tga": {
+      "sha256": "00ec513a21fe79e104d7b31dd7d7fae72315128705e443a0a7c9f5f66cd7fbd4",
+      "bytes": 131090
+    },
+    "img/PaladinHammer.tga": {
+      "sha256": "0e81abfea81194f6dd1bd6b300c2c0e00baf92356cbbbf6b18332cf337097312",
+      "bytes": 131090
+    },
+    "img/PaladinJudgement.tga": {
+      "sha256": "a1595d3c8079f75fda88fa675aa17f63df004272f0714dd3778df5d993c5559a",
+      "bytes": 131090
+    },
+    "img/PaladinJustice.tga": {
+      "sha256": "84a0890f25d6d20cf645d7d6dec09bbcbfd1ee9a96209824faca71711537018f",
+      "bytes": 131090
+    },
+    "img/Priest.png": {
+      "sha256": "bbf289d78391aa89b9e702c2eac6c784cb5817abb26cc1d99b4361c845fd651b",
+      "bytes": 365865
+    },
+    "img/PriestEnlightened.tga": {
+      "sha256": "c3d671ccfd14f256b4fa88b782155f26281b49963099690af1c4b28508ec1245",
+      "bytes": 131090
+    },
+    "img/PriestResurgence.tga": {
+      "sha256": "4317793eb0ffdf3e5e968523da1fca8fbaf3622d48a4cb8fc2bfe74922bfbd9f",
+      "bytes": 131090
+    },
+    "img/PriestSearingLight.tga": {
+      "sha256": "ad20760519aff99d1c76d253887a0ac849e9fe0fbe97cd1f6758bc27f5690735",
+      "bytes": 131090
+    },
+    "img/PriestShadowVeil.tga": {
+      "sha256": "0a1119915d9023c6a64c0a684705148cc8afce9ca66dec78101b8a260804527b",
+      "bytes": 131090
+    },
+    "img/PriestSpellBlasting.tga": {
+      "sha256": "3552410b7790402641fdf0289a072f9cdbc92875998ed0cf5db8bb87d547b5cf",
+      "bytes": 131090
+    },
+    "img/PriestSurgeOfLight.tga": {
+      "sha256": "c747d5e3d3d598f58def112cd1ea71a08005e94f7d7be814d93f8703a64d99d2",
+      "bytes": 131090
+    },
+    "img/Rogue.png": {
+      "sha256": "af9c5ea1ab0489b518a6d2df4ac0211f29798560b2bc8463c785c9dda14441c8",
+      "bytes": 273171
+    },
+    "img/RogueRemorseless.tga": {
+      "sha256": "5331425da6d0050749cb60a86af96987c50b5e3b68dc8c6a9b22a42bf82276b0",
+      "bytes": 131090
+    },
+    "img/RogueRiposte.tga": {
+      "sha256": "4df85321c2b1bb1c1c1a7e1440e70a573648b931f637930eb39446fd31c02d22",
+      "bytes": 131090
+    },
+    "img/RogueSliceDice.tga": {
+      "sha256": "9cb6992f18e3c2b00b54e8a335ff9cdb166c1dafe2eee09600ae6a66be29f31a",
+      "bytes": 131090
+    },
+    "img/RogueSuddenDeath.tga": {
+      "sha256": "96291d8ee0a831bc6eec0bf2d28f1dd91524708d7335e2413bafe82fa3cb7363",
+      "bytes": 131090
+    },
+    "img/RogueTricksoftheTrade.tga": {
+      "sha256": "3552410b7790402641fdf0289a072f9cdbc92875998ed0cf5db8bb87d547b5cf",
+      "bytes": 131090
+    },
+    "img/serendipity.blp": {
+      "sha256": "b1ace9671cd783160a84b7187cefd7b01870abb3644be9a98e77bb70f11f0529",
+      "bytes": 44900
+    },
+    "img/Shaman.png": {
+      "sha256": "435d76103106d03959426a0bd1f264963e8ff573f81f488f8bf804e27928664e",
+      "bytes": 237652
+    },
+    "img/ShamanClearcasting.tga": {
+      "sha256": "4bd113d1cab1019f8ac3bba78da00c3ec37a9c8c916a44b4c54488d367a226af",
+      "bytes": 131090
+    },
+    "img/ShamanStormstrike.tga": {
+      "sha256": "a842429be4149634dd292c0962559e990814333fc58acf909283a96c4718821d",
+      "bytes": 131090
+    },
+    "img/SpellAlert.ogg": {
+      "sha256": "456803c0db20bdda9d57d1af58e3d3ea3b5f4b48e74c635757458b04111a1526",
+      "bytes": 29881
+    },
+    "img/SpellAlert2.ogg": {
+      "sha256": "84a2e7418628ac95bdb73309c99aab7e6bb13c2131afaf24ed8f6b6fb2b2e680",
+      "bytes": 32333
+    },
+    "img/textures": {
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "bytes": 1
+    },
+    "img/Warlock.png": {
+      "sha256": "122ebc82f89066c61340d39edba2f81747658cb5ce821784599c3f92b1417f1e",
+      "bytes": 216645
+    },
+    "img/WarlockShadowTrance.tga": {
+      "sha256": "1a0da1f20e226cf47f8eb729a830be7357b021f5066443964a00c8f9a789bd6b",
+      "bytes": 131090
+    },
+    "img/Warrior.png": {
+      "sha256": "36d9c4367a16b8d0aad4f906934e60672e8f2358872cffce2366307565bd8f95",
+      "bytes": 347514
+    },
+    "img/WarriorCounterattack.tga": {
+      "sha256": "c88c3230b56a3c2c39789ba324918ec47b950f1a8d8ac79ca57a21eca9463072",
+      "bytes": 131090
+    },
+    "img/WarriorEnrage.tga": {
+      "sha256": "60fcca976358f2e1e04321a59d7d891d2569cb67405feaaac517ce1b343af5c5",
+      "bytes": 131090
+    },
+    "img/WarriorExecute.tga": {
+      "sha256": "e44363eda4500dffb5bf1a9392a99aa68eb446f9994fa9157f725a3fdf01ab9a",
+      "bytes": 131090
+    },
+    "img/WarriorOverpower.tga": {
+      "sha256": "ce9e3dc62075f0a0f6da5e994ed6ae4b7246744741f60b14d0d2a5737f39940b",
+      "bytes": 131090
+    },
+    "img/WarriorRevenge.tga": {
+      "sha256": "4f76f8a7fa383f40e26039d12955a60ec07d4b8124dd03fa3a9990abdfc1a6e0",
+      "bytes": 131090
+    },
+    "ProcDoc.lua": {
+      "sha256": "cad193f65166194fa535c69c0755a673647b074b445629368b56eb671829aa34",
+      "bytes": 93243
+    },
+    "ProcDoc.toc": {
+      "sha256": "f0c4eaf46db09fe1ca2c964e2a46c92a1b84004dd00f194b478069f4d02734a0",
+      "bytes": 250
+    },
+    "README.md": {
+      "sha256": "3fbaa92f09e1242edc6acec989df507bb0ac881f0edb0cf22dcb70669ead904c",
+      "bytes": 6455
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

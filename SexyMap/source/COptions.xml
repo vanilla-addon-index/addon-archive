@@ -1,0 +1,711 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\..\FrameXML\UI.xsd">
+	<Script file="COptions.lua" />
+	
+	<!-- ============================================================ -->
+	<!-- Button Templates                                             -->
+	<!-- ============================================================ -->
+	
+	<Button name="CTextureButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="250" y="30" />
+		</Size>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parentTexture" inherits="GameFontNormal">
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="10" y="-3"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+			</OnLoad>
+			<OnClick>
+				CTextureButton_OnClick(arg1);
+				PlaySound("igMainMenuOptionCheckBoxOn");
+			</OnClick>
+		</Scripts>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD">
+			<Size>
+				<AbsDimension x="250" y="30"/>
+			</Size>
+			<Anchors>
+				<Anchor point="TOP">
+					<Offset>
+						<AbsDimension x="5" y="-2"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightTexture>
+	</Button>
+	
+	<!-- Simple list button template for presets/shapes -->
+	<Button name="CListButtonTemplate" inherits="UIPanelButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="200" y="24" />
+		</Size>
+		<NormalFont style="GameFontNormalSmall"/>
+		<HighlightFont style="GameFontHighlightSmall"/>
+	</Button>
+	
+	<!-- Small nav button for prev/next page -->
+	<Button name="CNavButtonTemplate" inherits="UIPanelButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="40" y="22"/>
+		</Size>
+		<NormalFont style="GameFontNormalSmall"/>
+	</Button>
+	
+	<Button name="CMenuButtonTemplate" inherits="UIPanelButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="75" y="21"/>
+		</Size>
+	</Button>
+	
+	<!-- ============================================================ -->
+	<!-- Slider Templates                                             -->
+	<!-- ============================================================ -->
+	
+	<Slider name="CHorizontalSliderTemplate" orientation="HORIZONTAL" virtual="true" enableMouse="true">
+		<Size>
+			<AbsDimension x="200" y="17"/>
+		</Size>
+		<HitRectInsets>
+			<AbsInset left="0" right="0" top="-10" bottom="-10"/>
+		</HitRectInsets>
+		<Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background" edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
+			<EdgeSize>
+				<AbsValue val="8"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="8"/>
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left="3" right="3" top="6" bottom="6"/>
+			</BackgroundInsets>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentText" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="BOTTOM" relativePoint="TOP"/>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentLow" inherits="GameFontHighlightSmall" text="LOW">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT">
+							<Offset>
+								<AbsDimension x="2" y="3"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentHigh" inherits="GameFontHighlightSmall" text="HIGH">
+					<Anchors>
+						<Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT">
+							<Offset>
+								<AbsDimension x="-2" y="3"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<ThumbTexture name="$parentThumb" file="Interface\Buttons\UI-SliderBar-Button-Horizontal">
+			<Size>
+				<AbsDimension x="32" y="32"/>
+			</Size>
+		</ThumbTexture>
+	</Slider>
+	
+	<!-- ============================================================ -->
+	<!-- Game Menu Entry                                              -->
+	<!-- ============================================================ -->
+	
+	<Button name="GameMenuButtonCMap" parent="GameMenuFrame" inherits="GameMenuButtonTemplate" text="SexyMap">
+		<Scripts>
+			<OnLoad>
+				GameMenu_AddButton(this)
+			</OnLoad>
+			<OnClick>
+				PlaySound("igMainMenuOption")
+				HideUIPanel(GameMenuFrame)
+				CInitiateMenu()
+			</OnClick>
+		</Scripts>
+	</Button>
+	
+	<!-- ============================================================ -->
+	<!-- Main Options Panel                                           -->
+	<!-- ============================================================ -->
+	
+	<Frame name="CSexyMapMainFrame" frameStrata="DIALOG" hidden="true" enableMouse="true" parent="UIParent" movable="true">
+		<Size>
+			<AbsDimension x="750" y="600" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="4" right="4" top="4" bottom="4" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+		</Backdrop>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton")
+			</OnLoad>
+			<OnDragStart>
+				this:StartMoving()
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing()
+			</OnDragStop>
+		</Scripts>
+		<Layers>
+			<Layer level="ARTWORK">
+				<!-- Title -->
+				<FontString name="CSexyMapTitle" inherits="GameFontNormalLarge" text="SexyMap - OctoWoW">
+					<Anchors>
+						<Anchor point="TOP" relativePoint="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-18"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<!-- Presets section label -->
+				<FontString name="CPresetLabel" inherits="GameFontNormal" text="Presets:">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+							<Offset>
+								<AbsDimension x="25" y="-48"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<!-- Shapes section label -->
+				<FontString name="CShapeLabel" inherits="GameFontNormal" text="Shapes:">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+							<Offset>
+								<AbsDimension x="230" y="-48"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<!-- Borders section label -->
+				<FontString name="CBordersLabel" inherits="GameFontNormal" text="Border Layers:">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+							<Offset>
+								<AbsDimension x="445" y="-48"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="CPresetBtn1" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CSexyMapMainFrame" relativePoint="TOPLEFT">
+						<Offset><AbsDimension x="15" y="-65"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CPresetBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CPresetBtn2" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CPresetBtn1" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-3"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CPresetBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CPresetBtn3" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CPresetBtn2" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-3"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CPresetBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CPresetBtn4" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CPresetBtn3" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-3"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CPresetBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CPresetBtn5" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CPresetBtn4" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-3"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CPresetBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CPresetBtn6" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CPresetBtn5" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-3"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CPresetBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CPresetBtn7" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CPresetBtn6" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-3"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CPresetBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CPresetBtn8" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CPresetBtn7" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-3"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CPresetBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<!-- Preset page nav -->
+			<Button name="CPresetPrevBtn" inherits="CNavButtonTemplate" text="Prev">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CPresetBtn8" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-5"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CPresetPrev_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CPresetNextBtn" inherits="CNavButtonTemplate" text="Next">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CPresetPrevBtn" relativePoint="TOPRIGHT">
+						<Offset><AbsDimension x="5" y="0"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CPresetNext_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			
+			<Button name="CShapeBtn1" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CSexyMapMainFrame" relativePoint="TOPLEFT">
+						<Offset><AbsDimension x="225" y="-65"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CShapeBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CShapeBtn2" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CShapeBtn1" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-3"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CShapeBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CShapeBtn3" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CShapeBtn2" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-3"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CShapeBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CShapeBtn4" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CShapeBtn3" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-3"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CShapeBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CShapeBtn5" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CShapeBtn4" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-3"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CShapeBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CShapeBtn6" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CShapeBtn5" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-3"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CShapeBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CShapeBtn7" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CShapeBtn6" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-3"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CShapeBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CShapeBtn8" inherits="CListButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CShapeBtn7" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-3"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CShapeBtn_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<!-- Shape page nav -->
+			<Button name="CShapePrevBtn" inherits="CNavButtonTemplate" text="Prev">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CShapeBtn8" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-5"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CShapePrev_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CShapeNextBtn" inherits="CNavButtonTemplate" text="Next">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CShapePrevBtn" relativePoint="TOPRIGHT">
+						<Offset><AbsDimension x="5" y="0"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>CShapeNext_OnClick()</OnClick>
+				</Scripts>
+			</Button>
+			
+			<!-- ====================================================== -->
+			<!-- Border Texture List (right column, top)                 -->
+			<!-- ====================================================== -->
+			<Frame name="CTextureOptionFrame" hidden="true">
+				<Frames>
+					<Button name="CTextureButton1" inherits="CTextureButtonTemplate" id="1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CSexyMapMainFrame" relativePoint="TOPLEFT">
+								<Offset><AbsDimension x="440" y="-65"/></Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CTextureButton2" inherits="CTextureButtonTemplate" id="2">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CTextureButton1" relativePoint="BOTTOMLEFT">
+								<Offset><AbsDimension x="0" y="0"/></Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CTextureButton3" inherits="CTextureButtonTemplate" id="3">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CTextureButton2" relativePoint="BOTTOMLEFT">
+								<Offset><AbsDimension x="0" y="0"/></Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CTextureButton4" inherits="CTextureButtonTemplate" id="4">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CTextureButton3" relativePoint="BOTTOMLEFT">
+								<Offset><AbsDimension x="0" y="0"/></Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CTextureButton5" inherits="CTextureButtonTemplate" id="5">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CTextureButton4" relativePoint="BOTTOMLEFT">
+								<Offset><AbsDimension x="0" y="0"/></Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CTextureButton6" inherits="CTextureButtonTemplate" id="6">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CTextureButton5" relativePoint="BOTTOMLEFT">
+								<Offset><AbsDimension x="0" y="0"/></Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CTextureButton7" inherits="CTextureButtonTemplate" id="7">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CTextureButton6" relativePoint="BOTTOMLEFT">
+								<Offset><AbsDimension x="0" y="0"/></Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CTextureButton8" inherits="CTextureButtonTemplate" id="8">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CTextureButton7" relativePoint="BOTTOMLEFT">
+								<Offset><AbsDimension x="0" y="0"/></Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CTextureButton9" inherits="CTextureButtonTemplate" id="9">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CTextureButton8" relativePoint="BOTTOMLEFT">
+								<Offset><AbsDimension x="0" y="0"/></Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CTextureButton10" inherits="CTextureButtonTemplate" id="10">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CTextureButton9" relativePoint="BOTTOMLEFT">
+								<Offset><AbsDimension x="0" y="0"/></Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CTextureButton11" inherits="CTextureButtonTemplate" id="11">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CTextureButton10" relativePoint="BOTTOMLEFT">
+								<Offset><AbsDimension x="0" y="0"/></Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="CTextureButton12" inherits="CTextureButtonTemplate" id="12">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CTextureButton11" relativePoint="BOTTOMLEFT">
+								<Offset><AbsDimension x="0" y="0"/></Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+				</Frames>
+			</Frame>
+			
+			<!-- ====================================================== -->
+			<!-- Separator line                                          -->
+			<!-- ====================================================== -->
+			<Frame name="CSeparatorLine">
+				<Size>
+					<AbsDimension x="710" y="1"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="CSexyMapMainFrame" relativePoint="TOPLEFT">
+						<Offset><AbsDimension x="20" y="-310"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+						<Texture name="CSeparatorTexture">
+							<Anchors>
+								<Anchor point="TOPLEFT"/>
+								<Anchor point="BOTTOMRIGHT"/>
+							</Anchors>
+							<Color r="0.5" g="0.5" b="0.5" a="0.8"/>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
+			
+			<!-- ====================================================== -->
+			<!-- Bottom row: Checkboxes + Scale Slider                   -->
+			<!-- ====================================================== -->
+			<Frame name="CMinimapOptionFrame" hidden="true">
+				<Frames>
+					<!-- Row 1 of checkboxes: Zone, Minimap Buttons, Show Minimap -->
+					<!-- Zone text checkbox -->
+					<CheckButton name="CZoneTextCheckbox" inherits="UICheckButtonTemplate" id="1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CSexyMapMainFrame" relativePoint="TOPLEFT">
+								<Offset><AbsDimension x="30" y="-325"/></Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString name="CZoneTextCheckboxText" inherits="GameFontNormalSmall" text="Show Zone Name">
+									<Anchors>
+										<Anchor point="LEFT" relativePoint="RIGHT">
+											<Offset><AbsDimension x="5" y="0"/></Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnClick>CZoneTextToggle_OnClick()</OnClick>
+						</Scripts>
+					</CheckButton>
+					
+					<!-- Show Minimap Buttons checkbox -->
+					<CheckButton name="CMinimapButtonsCheckbox" inherits="UICheckButtonTemplate" id="3">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CSexyMapMainFrame" relativePoint="TOPLEFT">
+								<Offset><AbsDimension x="310" y="-325"/></Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString name="CMinimapButtonsCheckboxText" inherits="GameFontNormalSmall" text="Show Minimap Buttons">
+									<Anchors>
+										<Anchor point="LEFT" relativePoint="RIGHT">
+											<Offset><AbsDimension x="5" y="0"/></Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnClick>CMinimapButtonsToggle_OnClick()</OnClick>
+						</Scripts>
+					</CheckButton>
+					
+					<!-- Show Minimap checkbox (replaces the X toggle button) -->
+					<CheckButton name="CMinimapCheckbox" inherits="UICheckButtonTemplate" id="4">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CSexyMapMainFrame" relativePoint="TOPLEFT">
+								<Offset><AbsDimension x="490" y="-325"/></Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString name="CMinimapCheckboxText" inherits="GameFontNormalSmall" text="Show Minimap">
+									<Anchors>
+										<Anchor point="LEFT" relativePoint="RIGHT">
+											<Offset><AbsDimension x="5" y="0"/></Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnClick>CMinimapToggle_OnClick()</OnClick>
+						</Scripts>
+					</CheckButton>
+					
+					<!-- Row 2: Map Scale slider -->
+					<Slider name="CMapScaleSlider" inherits="CHorizontalSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CSexyMapMainFrame" relativePoint="TOPLEFT">
+								<Offset><AbsDimension x="155" y="-370"/></Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString name="CMapScaleSliderLabel" inherits="GameFontNormal" text="Map Scale:">
+									<Anchors>
+										<Anchor point="RIGHT" relativeTo="CMapScaleSlider" relativePoint="LEFT">
+											<Offset><AbsDimension x="-10" y="0"/></Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="CMapScaleSliderValueText" inherits="GameFontHighlightSmall" text="1.00">
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="CMapScaleSlider" relativePoint="RIGHT">
+											<Offset><AbsDimension x="10" y="0"/></Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnValueChanged>CMapScaleSlider_OnValueChanged()</OnValueChanged>
+						</Scripts>
+					</Slider>
+				</Frames>
+			</Frame>
+			
+			<!-- Variable sliders frame (shown when a border texture is selected) -->
+			<Frame name="CVariableOptionFrame" hidden="true">
+				<Frames>
+					<!-- Slider label area -->
+					<Slider name="CVariableSlider1" inherits="CHorizontalSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CSexyMapMainFrame" relativePoint="TOPLEFT">
+								<Offset><AbsDimension x="60" y="-420"/></Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+					<Slider name="CVariableSlider2" inherits="CHorizontalSliderTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="CVariableSlider1" relativePoint="BOTTOMLEFT">
+								<Offset><AbsDimension x="0" y="-50"/></Offset>
+							</Anchor>
+						</Anchors>
+					</Slider>
+				</Frames>
+			</Frame>
+			
+			<!-- ====================================================== -->
+			<!-- Bottom buttons: Set Defaults + Close                    -->
+			<!-- ====================================================== -->
+			<Button name="CSetDefaultsBtn" inherits="UIPanelButtonTemplate" text="Set Defaults">
+				<Size>
+					<AbsDimension x="120" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" relativeTo="CSexyMapMainFrame" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="20" y="18"/></Offset>
+					</Anchor>
+				</Anchors>
+				<NormalFont style="GameFontNormalSmall"/>
+				<HighlightFont style="GameFontHighlightSmall"/>
+				<Scripts>
+					<OnClick>
+						PlaySound("igMainMenuOption")
+						CSetDefaultsBtn_OnClick()
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="CMenuCloseButton" inherits="CMenuButtonTemplate" text="Close">
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="CSexyMapMainFrame" relativePoint="BOTTOMRIGHT">
+						<Offset><AbsDimension x="-20" y="18"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("igMainMenuContinue")
+						CHideMenu()
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+	</Frame>
+</Ui>

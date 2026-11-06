@@ -1,0 +1,61 @@
+﻿## Interface: 11200
+## Title: E'rea RP Master
+## Notes: Game Master addon for creating and distributing RP quest items
+## Author: Erea
+## Version: 1.0.9
+## DefaultState: disabled
+## SavedVariables: EreaRpMasterDB, EreaRpMasterDebugLog, RPMasterDB, RPMasterDebugLog
+## RequiredDeps: erea-rp-common
+
+# Version (generated during build)
+version.lua
+
+# Data
+data\icon-list.lua
+
+# Views (XML UI definitions)
+views\main-window.xml
+views\item-editor.xml
+views\action-editor-destroy.xml
+views\action-editor-consume.xml
+views\action-editor-add-text.xml
+views\action-editor-create.xml
+views\action-editor-display.xml
+views\action-editor-merge.xml
+views\action-editor-frame.xml
+views\icon-picker.xml
+views\item-list.xml
+views\player-monitor.xml
+views\give-item.xml
+views\script-list.xml
+
+# Presenters (UI controllers)
+presenters\main-window.lua
+presenters\item-list.lua
+presenters\item-editor.lua
+presenters\action-editor-destroy.lua
+presenters\action-editor-consume.lua
+presenters\action-editor-add-text.lua
+presenters\action-editor-create.lua
+presenters\action-editor-side.lua
+presenters\action-editor-cinematic.lua
+presenters\action-editor-display.lua
+presenters\action-editor-merge.lua
+presenters\action-editor.lua
+presenters\icon-picker.lua
+presenters\player-monitor.lua
+presenters\give-item.lua
+presenters\script-list.lua
+
+# Services (Business logic)
+services\item-library.lua
+services\master-actions.lua
+services\event-handler.lua
+services\script-library.lua
+
+# Main Entry
+rp-master.lua
+
+# Minimap Entry
+minimap-button.lua
+

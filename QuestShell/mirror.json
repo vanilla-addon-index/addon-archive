@@ -1,0 +1,521 @@
+{
+  "upstream": "https://github.com/Valiusha90/QuestShell",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Valiusha90",
+    "repo": "QuestShell",
+    "name": "QuestShell",
+    "url": "https://github.com/Valiusha90/QuestShell",
+    "api": "https://api.github.com/repos/Valiusha90/QuestShell"
+  },
+  "commit": "2c18024c288f48b524175aab1ec1803db5154d60",
+  "sourceFiles": {
+    ".DS_Store": {
+      "sha256": "873ab241c8a1d5fe288df8ee0467e44862c3090f5b12fbd6b7764e923672bd9a",
+      "bytes": 8196
+    },
+    "core_commands.lua": {
+      "sha256": "c7bd9b3cb0522e9f036b6b5a00f5bd697e3a86f59624069b6c7937204e309541",
+      "bytes": 8766
+    },
+    "core_debug_commands.lua": {
+      "sha256": "f4626ec5927a2091239fff3abe1c8eca02de7ae68ce0b0f4d6a3bd89eb10f258",
+      "bytes": 2477
+    },
+    "core_debug.lua": {
+      "sha256": "254367823464c15b2caac54061169c0995b3dfff50d06091b53887083eedfc5f",
+      "bytes": 3398
+    },
+    "core_events.lua": {
+      "sha256": "a87632eb886fa0592dccef2eb01d00e7ec9e4b48be6ace07749074d9e95a327d",
+      "bytes": 41846
+    },
+    "core_gossip.lua": {
+      "sha256": "c39d91dba3b030525dfca56a7bf36b0a937eab5d15057daf74bc574e7b6c448d",
+      "bytes": 2480
+    },
+    "core_guides.lua": {
+      "sha256": "cfb0bff1f4c9549bc546614e7aae5d8a70d9a9b7bcbe260a3d75c36c3b8b3911",
+      "bytes": 14984
+    },
+    "core_stepbehave.lua": {
+      "sha256": "3e2d86073347fedfd3e8a6d696d81247c9ad979d09529bfbc4c70fbb16375cbb",
+      "bytes": 8158
+    },
+    "core_stepviz.lua": {
+      "sha256": "b1bade99594bf77f82d73ed345d7ad187d18c051bfb7faf576985604d7e49f18",
+      "bytes": 5336
+    },
+    "core_taxi.lua": {
+      "sha256": "8defc10147d6780ed76bb904dd7a2da01655bf6573372335087a5ff49540559e",
+      "bytes": 6786
+    },
+    "core_utils.lua": {
+      "sha256": "6a8050ecd8c7b9a8cf4946c943e53ce799a84a53dc66f7e5c3e18c5361fd4f36",
+      "bytes": 16792
+    },
+    "QuestShell_Guides/Alliance/AllianceGuides.xml": {
+      "sha256": "04b6c4dda79e4e446e77aa565903673726d1c0e594357b864596c33860427668",
+      "bytes": 2390
+    },
+    "QuestShell_Guides/Alliance/QS_01_12_Dun_Morogh_A.lua": {
+      "sha256": "fcad656d3b8c6bbe24f732cebde34fd6074a9aca2c4509f624b8a1867d01ebac",
+      "bytes": 38820
+    },
+    "QuestShell_Guides/Alliance/QS_01_12_Elwynn_Forest_A.lua": {
+      "sha256": "0651b5ecbd2223a39129a43322a40033114eda5dbc27509e06022fdbe3556a53",
+      "bytes": 46518
+    },
+    "QuestShell_Guides/Alliance/QS_01_12_Teldrassil_A.lua": {
+      "sha256": "a3aa53a4ff9d87cb8dc99ecbb2e369352973341c9bca527ef4b6dddb28f61bf4",
+      "bytes": 38216
+    },
+    "QuestShell_Guides/Alliance/QS_12_17_Darkshore_A.lua": {
+      "sha256": "b85c464e1267ddf0707dd3464ed49740550558cec7baab828805678492530115",
+      "bytes": 41960
+    },
+    "QuestShell_Guides/Alliance/QS_12_17_Westfall_A.lua": {
+      "sha256": "97f812313faf053f2c7550abde17273331c615f2a9bc837b9224ccf628ce2577",
+      "bytes": 37779
+    },
+    "QuestShell_Guides/Alliance/QS_17_18_Loch_Modan_A.lua": {
+      "sha256": "7026777d143bc9427d728f6b9645d5d00519310446d97562cebcabf3ad5e19fc",
+      "bytes": 11038
+    },
+    "QuestShell_Guides/Alliance/QS_18_20_Redridge_Mountains_A.lua": {
+      "sha256": "a7d3426492c944d10c31656e21d1d17ba379bac4270197d6496e4025e26da9f1",
+      "bytes": 18694
+    },
+    "QuestShell_Guides/Alliance/QS_20_21_Darkshore_A.lua": {
+      "sha256": "02e8d7bc9fadd7af20e68c3f139ee258559ebab234a3eb3997c6f8939536cbc1",
+      "bytes": 14635
+    },
+    "QuestShell_Guides/Alliance/QS_21_22_Ashenvale_A.lua": {
+      "sha256": "ed9ae63d23185e4c34d50afbc2a71ea90773fadcf1384ce373a9389cb4bed1e2",
+      "bytes": 9911
+    },
+    "QuestShell_Guides/Alliance/QS_22_23_Stonetalon_Mountains_A.lua": {
+      "sha256": "9bc4216794aba15683a005a93e513f53da440e844b91a80cad7a2aa0551d5337",
+      "bytes": 4468
+    },
+    "QuestShell_Guides/Alliance/QS_23_24_Darkshore_A.lua": {
+      "sha256": "66a1f3b839621e57dd3380797159a4d294bec07276a3a5a7316e76323eed05c9",
+      "bytes": 7058
+    },
+    "QuestShell_Guides/Alliance/QS_24_24_Ashenvale_A.lua": {
+      "sha256": "b806eb3e5ab2f9dd91ed4483a57538a9141cea738d37a67d4b9e41de132710eb",
+      "bytes": 3597
+    },
+    "QuestShell_Guides/Alliance/QS_24_27_Wetlands_A.lua": {
+      "sha256": "c5ec68e0567ab9a67f227db5360bddb595e63d37e0b7570148ffe39c5f8c22df",
+      "bytes": 16815
+    },
+    "QuestShell_Guides/Alliance/QS_27_28_Redridge_Mountains_A.lua": {
+      "sha256": "bbc3cc6175624372e86562e23ac4a72cd69900a1324c5618918163a396d6d0f4",
+      "bytes": 6450
+    },
+    "QuestShell_Guides/Alliance/QS_28_29_Duskwood_A.lua": {
+      "sha256": "68270dbaea30994136baa7341029ce3136487aed1a9f4f0dadec2a4a86c8445d",
+      "bytes": 26871
+    },
+    "QuestShell_Guides/Alliance/QS_29_30_Ashenvale_A.lua": {
+      "sha256": "8b14da2949b74d64dd81eb5a7ead312f69a6c41d8e6b1c78d3170105d6fe6edb",
+      "bytes": 15879
+    },
+    "QuestShell_Guides/Alliance/QS_30_31_Wetlands_A.lua": {
+      "sha256": "e6b12e4c5c358c37b25e44a01b3289719b3b63e4f184fe6435ccb35605dd07eb",
+      "bytes": 8324
+    },
+    "QuestShell_Guides/Alliance/QS_31_32_Hillsbrad_Foothills_A.lua": {
+      "sha256": "59cc34d4f6a35609cc2dc517836df7998d39a8f2a124a6324d2fb7e889b11617",
+      "bytes": 11242
+    },
+    "QuestShell_Guides/Alliance/QS_32_33_Stranglethorn_A.lua": {
+      "sha256": "7e08373f45597c0b05fdd4c2a844255f31bdb146837e640773b8be3a2812aafd",
+      "bytes": 14384
+    },
+    "QuestShell_Guides/Alliance/QS_33_34_Thousand_Needles_A.lua": {
+      "sha256": "a14c0b0ed11e17bbca4fc8be740cb934bf1d3af4178fd828cd389ccbe45312fa",
+      "bytes": 8479
+    },
+    "QuestShell_Guides/Alliance/QS_34_35_Desolace_A.lua": {
+      "sha256": "c09de71dab1417c3d37582ce4425291cbceacd338b951e72c415cfb8409fec2a",
+      "bytes": 15865
+    },
+    "QuestShell_Guides/Alliance/QS_36_37_Stranglethorn_A.lua": {
+      "sha256": "fd97d43f68bc00d582528782669bf49cc56e428c5ebe41643b023f9fb48a1b62",
+      "bytes": 21963
+    },
+    "QuestShell_Guides/Alliance/QS_37_37_Alterac_Mountains_A.lua": {
+      "sha256": "17affb791c65424fa25bf041bff6f9aff1aa2d7709fa392926c4531d0fc38499",
+      "bytes": 3929
+    },
+    "QuestShell_Guides/Alliance/QS_37_38_Arathi_Highlands_A.lua": {
+      "sha256": "ac2f1c6c502023e4fbc1a8feb14a5567767a64e69e77ecdd67040137c2a0885c",
+      "bytes": 12652
+    },
+    "QuestShell_Guides/Alliance/QS_38_39_Dustwallow_Marsh_A.lua": {
+      "sha256": "ee6941bb7c11d3eb69fbefcf6595db11cca52b1f3506e88e88c5c12684fd1da9",
+      "bytes": 12953
+    },
+    "QuestShell_Guides/Alliance/QS_39_40_Stranglethorn_A.lua": {
+      "sha256": "76f8e7da14e180c2156ff5f880116fa8042c0f22b77d1a8fb27f086a0a52c735",
+      "bytes": 18992
+    },
+    "QuestShell_Guides/Alliance/QS_40_41_Badlands_A.lua": {
+      "sha256": "9b7312f2d639a9fd1d7d80cafdcf81cba8ccb10ddad4055e829074de7f96d75a",
+      "bytes": 15981
+    },
+    "QuestShell_Guides/Alliance/QS_41_42_Swamp_of_Sorrows_A.lua": {
+      "sha256": "35747a764c0dc5e423c1c938a9cd38cdd63adadb44a5347659eacf5c1271dc36",
+      "bytes": 10047
+    },
+    "QuestShell_Guides/Alliance/QS_42_43_Stranglethorn_A.lua": {
+      "sha256": "59a5a4470bd48072d1ab9af813adb0b9305fb544294d419b049c6e364f11d939",
+      "bytes": 10805
+    },
+    "QuestShell_Guides/Alliance/QS_43_43_Desolace_A.lua": {
+      "sha256": "c3614d3484158085bb7142804007de0910e99ecbe9104264211119591c6fffa6",
+      "bytes": 5026
+    },
+    "QuestShell_Guides/Alliance/QS_43_44_Tanaris_A.lua": {
+      "sha256": "eae94656b927299b4d42fead934a869568122c80ff108e9c9c2753b41b879db3",
+      "bytes": 13720
+    },
+    "QuestShell_Guides/Alliance/QS_44_46_Feralas_A.lua": {
+      "sha256": "aa3145c2879810f2a0f8b0b1954ffc8108ac375d29c8d4f10de749ce346cdf44",
+      "bytes": 15625
+    },
+    "QuestShell_Guides/Alliance/QS_46_46_Azshara_A.lua": {
+      "sha256": "5bcec8bc57bc03e27f88e0e896c5c9403d4587c294fc62de2837af3d402f6e26",
+      "bytes": 2928
+    },
+    "QuestShell_Guides/Alliance/QS_46_46_Hinterlands_A.lua": {
+      "sha256": "c457f598aff85ec8b3db39eb6e17e4cbd01317cba8296cd836cae470f0bb9406",
+      "bytes": 13206
+    },
+    "QuestShell_Guides/Alliance/QS_46_47_Stranglethorn_A.lua": {
+      "sha256": "6d00f01fe41953d005eb8206d69fdf984c1842833d3cd3e2ebf2cb9185b3ef1e",
+      "bytes": 18164
+    },
+    "QuestShell_Guides/Alliance/QS_47_48_Searing_Gorge_A.lua": {
+      "sha256": "071fa88348f17135332d3cfb40a300cd8fca616e114740eefd53ecde5c774197",
+      "bytes": 18162
+    },
+    "QuestShell_Guides/Alliance/QS_48_49_Feralas_A.lua": {
+      "sha256": "1a560d8f51251db53bca89e29f3e9f919f9ce9b610a684dfc6b802deeb96a9e1",
+      "bytes": 11328
+    },
+    "QuestShell_Guides/Alliance/QS_49_50_Tanaris_A.lua": {
+      "sha256": "bb5e06af2f3d643f0f27600512cc757018d82447d4c40e31cf96aa014f7060ef",
+      "bytes": 14531
+    },
+    "QuestShell_Guides/Alliance/QS_50_50_Hinterlands_A.lua": {
+      "sha256": "07b109d4748bc9eea2f8a5283a43dd7b989f71bacfb8591f13a319617b4b0929",
+      "bytes": 7947
+    },
+    "QuestShell_Guides/Alliance/QS_50_51_Blasted_Lands_A.lua": {
+      "sha256": "3feabed6ecf2422307da3817a1a4ad5dabafbf21a6f63c0142342e11804fde69",
+      "bytes": 5736
+    },
+    "QuestShell_Guides/Alliance/QS_51_52_UnGoro_Crater_A.lua": {
+      "sha256": "f8a04376bfab89f52c493537fabc4d57953cb8af42e784beeb52226d77b184d4",
+      "bytes": 21378
+    },
+    "QuestShell_Guides/Alliance/QS_52_53_Azshara_A.lua": {
+      "sha256": "e1f552ac52897f6d2a747126fbc23ff8a5df7c52f3c85c399c88e515321b0310",
+      "bytes": 8997
+    },
+    "QuestShell_Guides/Alliance/QS_53_54_Felwood_A.lua": {
+      "sha256": "43f579a9b36d57f2f7c6fbc99841eba214cf3c455be700b231d58d8221984957",
+      "bytes": 8458
+    },
+    "QuestShell_Guides/Alliance/QS_54_55_Winterspring_A.lua": {
+      "sha256": "982fe98b58f0a89d301d547c70ae629f6fd1f4125a4fc0fc35235dd235afa247",
+      "bytes": 14093
+    },
+    "QuestShell_Guides/Alliance/QS_55_56_Burning_Steppes_A.lua": {
+      "sha256": "578c6f6f299acd29f71010416acb6eac347234904b79fcf4cfeb096f9faab691",
+      "bytes": 15450
+    },
+    "QuestShell_Guides/Alliance/QS_55_56_Felwood_A.lua": {
+      "sha256": "2deb4c8ee8d4d565bed25502cf758cf461e110204a8223f87bfd18d320fd12f4",
+      "bytes": 12157
+    },
+    "QuestShell_Guides/Alliance/QS_56_57_Western_Plaguelands_A.lua": {
+      "sha256": "1d507102d53cf12bc9afc25cd30a4533770d6a8b4f439dd7f9f847d6c3b209a7",
+      "bytes": 18859
+    },
+    "QuestShell_Guides/Alliance/QS_57_58_Eastern_Plaguelands_A.lua": {
+      "sha256": "d0afd4bf012210aba4642972d63cdc2fdb29a2267f96790ebdf235216a186c70",
+      "bytes": 15819
+    },
+    "QuestShell_Guides/Alliance/QS_57_58_Western_Plaguelands_A.lua": {
+      "sha256": "f2464208b8f3e07d21fcd0698e2cdeb93ea018454088539b5386bfb01ce55214",
+      "bytes": 10387
+    },
+    "QuestShell_Guides/Alliance/QS_58_59_Silithus_A.lua": {
+      "sha256": "33550b9bf5183ceed10258f946eb6208de5b2c29764fc98ec2c006aa3c160043",
+      "bytes": 13553
+    },
+    "QuestShell_Guides/Alliance/QS_59_60_Winterspring_A.lua": {
+      "sha256": "4270c898cb7e0827a6c4b82c667fb715b22b305f42cff2a135fc9ae33f36e5ed",
+      "bytes": 9013
+    },
+    "QuestShell_Guides/Alliance/QuestShell_Alliance.toc": {
+      "sha256": "9824efc06fb2005906a23873010ac14dfb5d715f33e347527314da552d03cf12",
+      "bytes": 207
+    },
+    "QuestShell_Guides/Horde/HordeGuides.xml": {
+      "sha256": "423832d69ecb57a7caa846c1a33db808c825c98061a0e070284c4495ecbe93d2",
+      "bytes": 2006
+    },
+    "QuestShell_Guides/Horde/QS_01_12_Durotar.lua": {
+      "sha256": "277a557e71218ffdb401e490c8fc1fc8f9c7a6633450337e4032a16c196541f1",
+      "bytes": 35036
+    },
+    "QuestShell_Guides/Horde/QS_01_12_Mulgore.lua": {
+      "sha256": "50507da086c6ee981b488ecbe2d90a99256df76e26e5a22dcfa0e7c832f7cb5b",
+      "bytes": 31218
+    },
+    "QuestShell_Guides/Horde/QS_01_12_TirisfalGlades.lua": {
+      "sha256": "6a9e1e96f2ab7678d7dda240c1531a2c3c2623238f0c132ec9d3af90753b40a1",
+      "bytes": 35218
+    },
+    "QuestShell_Guides/Horde/QS_12_20_Barrens.lua": {
+      "sha256": "dbc2054b5812b5fce7078bbd2461a34a01728b1859dc236110aaf5c30ac05449",
+      "bytes": 55931
+    },
+    "QuestShell_Guides/Horde/QS_12_20_Silverpine_Forest.lua": {
+      "sha256": "1227af484dc746f3255681a20b64d84a5bb189147aa15f9a9a830924706713b5",
+      "bytes": 55462
+    },
+    "QuestShell_Guides/Horde/QS_20_22_Stonetalon_Mountains.lua": {
+      "sha256": "e07f2e6eb19f6b0e0c7c0e24016f0c23909905ddf61340a4144264c9caddf757",
+      "bytes": 20493
+    },
+    "QuestShell_Guides/Horde/QS_22_23_Southern_Barrens.lua": {
+      "sha256": "fb4fa82ff93b393a3bc4f2fd684c47c1eef8149231a09277a6d90399f888518c",
+      "bytes": 19297
+    },
+    "QuestShell_Guides/Horde/QS_23_25_Stonetalon_Mountains.lua": {
+      "sha256": "21c48d9241476d71de62f8bbd5c16d93805dff38e3c0b893c15b9046c34193b1",
+      "bytes": 6880
+    },
+    "QuestShell_Guides/Horde/QS_25_25_Southern_Barrens.lua": {
+      "sha256": "f60f84aa842abfd404d15f647076fdb4137b33da9a2c1bf150e4946511eb0bea",
+      "bytes": 12568
+    },
+    "QuestShell_Guides/Horde/QS_25_26_Thousand_Needles.lua": {
+      "sha256": "1afe97993e3f29b624cde4110851f418b1dd9d89e734223d6cb23b4ed0633322",
+      "bytes": 5830
+    },
+    "QuestShell_Guides/Horde/QS_26_27_Ashenvale.lua": {
+      "sha256": "ec0eca79080c21a3463d7b00a0e345ab3f2d6dda894ef22ab9c3399e19785b32",
+      "bytes": 9694
+    },
+    "QuestShell_Guides/Horde/QS_27_27_StonetalonMountains.lua": {
+      "sha256": "d3dc31a1761e2f948b8160cd7ca636c6163de45ddb36e590761de2f554e08be0",
+      "bytes": 7889
+    },
+    "QuestShell_Guides/Horde/QS_27_29_ThousandNeedles.lua": {
+      "sha256": "e81e9127d29aa3c1a31fa1fc44fc5a829f979c102011814d1a5c0144d7f00b60",
+      "bytes": 15906
+    },
+    "QuestShell_Guides/Horde/QS_29_30_HillsbradFoothills.lua": {
+      "sha256": "05c16a7ad0ee1c5e56a34bb018e1216a5f7453f0cafb13f26417b55bd7f8b57e",
+      "bytes": 10871
+    },
+    "QuestShell_Guides/Horde/QS_30_30_ArathiHighlands.lua": {
+      "sha256": "25ddaf90eeb825d35f12a0f5aa093520e4e4b3d44e5337b371278df01417ef7d",
+      "bytes": 7148
+    },
+    "QuestShell_Guides/Horde/QS_30_31_StranglethornVale.lua": {
+      "sha256": "a56876f4cca25aee7c000e05ae015e0a624114466b7f32ac33a4b2d5e7aa5fee",
+      "bytes": 5186
+    },
+    "QuestShell_Guides/Horde/QS_31_32_ThousandNeedles.lua": {
+      "sha256": "1b6fc50f5b7cfd3e9a864e8ee87ed9234672d7cc13010f6a9a21b924e2b7747e",
+      "bytes": 6225
+    },
+    "QuestShell_Guides/Horde/QS_32_34_Desolace.lua": {
+      "sha256": "f7f19ec9d36f5be1945bda9cf34d50ae3071da44b2fc483d36c41ca0a2dc8df7",
+      "bytes": 21035
+    },
+    "QuestShell_Guides/Horde/QS_34_36_StranglethornVale.lua": {
+      "sha256": "83b8d22b3fad98ebd3651805ea0af7164e4ecdb9481325aa4abd540e485db9fd",
+      "bytes": 14709
+    },
+    "QuestShell_Guides/Horde/QS_36_37_Alterac_Mountains.lua": {
+      "sha256": "e0728cd542fb6f43f9b6513d8cb2d5d98b549ec0c52022c24f0173d2d8312adc",
+      "bytes": 3989
+    },
+    "QuestShell_Guides/Horde/QS_37_38_Arathi_Highlands.lua": {
+      "sha256": "7157f59b3b0b5f01f6311d9d803e95a044e314ab18e32b71925e49a28946487b",
+      "bytes": 17093
+    },
+    "QuestShell_Guides/Horde/QS_37_38_Thousand_Needles.lua": {
+      "sha256": "a0e9bd3704b78bb5df2e45ee320fd1660fa72d4c202e0e30bad68ce17e5ea4d6",
+      "bytes": 9262
+    },
+    "QuestShell_Guides/Horde/QS_38_38_Dustwallow_Marsh.lua": {
+      "sha256": "cc545a3cbc05fd074dd28e64876fe79c10b93253174a7e14cfb072a6a8cfdee8",
+      "bytes": 9301
+    },
+    "QuestShell_Guides/Horde/QS_38_40_Stranglethorn_Vale.lua": {
+      "sha256": "95cefbdbf6bbe9f61bf13ababf450056ddd9d15e1f40ac50be15c6a34dfcb226",
+      "bytes": 34753
+    },
+    "QuestShell_Guides/Horde/QS_40_41_Badlands.lua": {
+      "sha256": "544785d922f8f0fb266e3332749104e0d57d9226c4866f46d677ccfd5801715c",
+      "bytes": 10442
+    },
+    "QuestShell_Guides/Horde/QS_41_42_Swamp_of_Sorrows.lua": {
+      "sha256": "2b39cffcce4206ac1bbb90be07b64d63ff57d6b52ad6474da58cb117ffba590d",
+      "bytes": 7767
+    },
+    "QuestShell_Guides/Horde/QS_42_43_Gilneas_Horde.lua": {
+      "sha256": "1b13ff0f6be61191081ed1f80953c9737a1050d4c11b319d108533a893c747fe",
+      "bytes": 12793
+    },
+    "QuestShell_Guides/Horde/QS_42_43_Stranglethorn_Vale.lua": {
+      "sha256": "2d4b7197287921788aac6e08483fa641ecc0b2227d831c339f0acca618ab4b13",
+      "bytes": 22062
+    },
+    "QuestShell_Guides/Horde/QS_43_44_Dustwallow_Marsh.lua": {
+      "sha256": "091c41773cf109016743db00ca6ea2b8d773b947ae9754e3f59a8fc555fd6c17",
+      "bytes": 8505
+    },
+    "QuestShell_Guides/Horde/QS_44_44_Desolace.lua": {
+      "sha256": "dc235358ac8cb9ad0f9bd2ef50147f3042212b9996ef1cf43ee9e3995c2edbe5",
+      "bytes": 5178
+    },
+    "QuestShell_Guides/Horde/QS_44_45_Tanaris.lua": {
+      "sha256": "28378e8e079af2cd3f87f719aa7c279bed1f6088183be1b7efc44a4397048867",
+      "bytes": 13674
+    },
+    "QuestShell_Guides/Horde/QS_45_46_Feralas.lua": {
+      "sha256": "c1bc5dd0f231f7652943e920c0da0b393acbff79282d2aabd774c67ea4ddd133",
+      "bytes": 16507
+    },
+    "QuestShell_Guides/Horde/QS_46_47_Azshara.lua": {
+      "sha256": "4141d313561577f7c7f943aae64370bee4e790fbdf68c3b71a10b9f4c2db48dc",
+      "bytes": 4835
+    },
+    "QuestShell_Guides/Horde/QS_47_47_Hinterlands.lua": {
+      "sha256": "15f6401444fc2ede8cac3c9c19ffbc1caffdac4a8b3e9222b2b46ebd05d4335f",
+      "bytes": 13885
+    },
+    "QuestShell_Guides/Horde/QS_47_47_StranglethornVale.lua": {
+      "sha256": "78cbbc13f82280bf30dd42725eb4bd65789dbf63622b3434170afd4cfa6222b6",
+      "bytes": 17645
+    },
+    "QuestShell_Guides/Horde/QS_47_48_Searing_Gorge.lua": {
+      "sha256": "27528ef06f875a1a5b0e9e665a437e253449f88d93679655814b8ece221ff22d",
+      "bytes": 13578
+    },
+    "QuestShell_Guides/Horde/QS_48_49_Swamp_of_Sorrows.lua": {
+      "sha256": "50af06c9fd08a444d164b6f7acde380801fc49f7eefd85f16e854c3094985d17",
+      "bytes": 5764
+    },
+    "QuestShell_Guides/Horde/QS_49_49_Dustwallow_Marsh.lua": {
+      "sha256": "ee68bd089f5b1023ba6710ce60297127b1c8f6c13b3d0335f68981953c363306",
+      "bytes": 2904
+    },
+    "QuestShell_Guides/Horde/QS_49_50_Feralas.lua": {
+      "sha256": "df01c6bb173189484b632b72d28451d8201db480c4e417fd0a2fe31a95fa5c41",
+      "bytes": 9162
+    },
+    "QuestShell_Guides/Horde/QS_49_50_Tanaris.lua": {
+      "sha256": "60265e98bbea70267db2ccf805ae28305f81e33e686243dc34c7ed01c1c8ccd3",
+      "bytes": 13754
+    },
+    "QuestShell_Guides/Horde/QS_50_50_Azshara.lua": {
+      "sha256": "ff363d35a8c7a7afe8f4e541b4cc628aaf600fea2f7a6036c59cac5cb7454c14",
+      "bytes": 8121
+    },
+    "QuestShell_Guides/Horde/QS_50_51_Hinterlands.lua": {
+      "sha256": "f043922ce333918ca503b402f898a78e0116b03702d415cfc41e3cc148a1db60",
+      "bytes": 6996
+    },
+    "QuestShell_Guides/Horde/QS_51_51_Blasted_Lands.lua": {
+      "sha256": "25d60c72e09b5cb0207c292bedbccd16ab7d882692c19882f7758e729a6afc9e",
+      "bytes": 4418
+    },
+    "QuestShell_Guides/Horde/QS_51_53_UnGoro_Crater.lua": {
+      "sha256": "633e44cead49623b261114f4bda68592d1c7970349cb3e83a4690669c4bdc0be",
+      "bytes": 22572
+    },
+    "QuestShell_Guides/Horde/QS_53_54_Burning_Steppes.lua": {
+      "sha256": "b12c1819e76b95180ba64dfc84dba308acc733bb192a68e3ad0ecac004279c3d",
+      "bytes": 13903
+    },
+    "QuestShell_Guides/Horde/QS_54_54_Felwood.lua": {
+      "sha256": "e56eadd41a481f19e44ecec391c2e17085a1cb91282cba97df5b5dfde546605a",
+      "bytes": 5973
+    },
+    "QuestShell_Guides/Horde/QS_54_55_Winterspring.lua": {
+      "sha256": "447aba3f146979e25d0aaf1b47fe33b0b53281258817d74bb33dc4d4c1d25240",
+      "bytes": 9799
+    },
+    "QuestShell_Guides/Horde/QS_55_56_Felwood.lua": {
+      "sha256": "ac4600158f08b974ae91b7639b3866d8944a122cc23e23a21602d1f5ce207fc2",
+      "bytes": 12972
+    },
+    "QuestShell_Guides/Horde/QS_56_56_Western_Plaguelands.lua": {
+      "sha256": "7f7fce8024888b6701c59cbcf3360a612969562fa23fa82797bc1197bda03247",
+      "bytes": 13024
+    },
+    "QuestShell_Guides/Horde/QS_56_57_Eastern_Plaguelands.lua": {
+      "sha256": "3fdaaf558ec5dd093580ac75f828e716375f75169ded5e3472eab573e6fa2da9",
+      "bytes": 18652
+    },
+    "QuestShell_Guides/Horde/QS_57_58_Western_Plaguelands.lua": {
+      "sha256": "de7cb52443ac6f3ed4a1ffaa4f6320ba2ed5d405aaacbca56e974b10991b20ec",
+      "bytes": 15417
+    },
+    "QuestShell_Guides/Horde/QS_58_59_Silithus.lua": {
+      "sha256": "f6ff8df6a2b9026780195b942ef8189008d90b5f6d779bca9fcbdc0a10bdee9c",
+      "bytes": 9796
+    },
+    "QuestShell_Guides/Horde/QS_59_60_Winterspring.lua": {
+      "sha256": "b6805d10277ce85a6a55861f0dc0c00cab25abbb98564b4347ec54258dd33770",
+      "bytes": 12241
+    },
+    "QuestShell_Guides/Horde/TourGuide_Horde.toc": {
+      "sha256": "7f333a408e045f2b5a57e85b8e63d0eb19cd1d87779a7c204d8e23a280313d00",
+      "bytes": 204
+    },
+    "QuestShell.toc": {
+      "sha256": "4a2990e88da0b24c61e57ef36b2f260008c305b8dd66f9f1a1bbc105af24d07f",
+      "bytes": 606
+    },
+    "ui_arrow.lua": {
+      "sha256": "6881133886a836621a17e955d40d45aa5d4d506ce32b20303b027d898cfa4d3a",
+      "bytes": 2907
+    },
+    "ui_menu.lua": {
+      "sha256": "96d4a1be4bd92ae34f4f3eb51a3210a7c99398e502b16df837b9d0a6ca6589e1",
+      "bytes": 10450
+    },
+    "ui_options.lua": {
+      "sha256": "2d7f8f1ae8d3970696bebc5fc3953db61365738589cada3da1a74ba19f534ac4",
+      "bytes": 6689
+    },
+    "ui_shared.lua": {
+      "sha256": "10cf7e8823cb0db3095e31541c9f8c89e33e8653755c11bfec89cca8673a5852",
+      "bytes": 3865
+    },
+    "ui_steps.lua": {
+      "sha256": "1fcbc7269eec923c96786126524daabaf7884de2dbf57c1f5c254615aa216406",
+      "bytes": 22532
+    },
+    "ui_tracker.lua": {
+      "sha256": "f498ef01c18cacd4df8ac30cba1fa21f03a267a4b724fecd048687ade68f31df",
+      "bytes": 20724
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

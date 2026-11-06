@@ -1,0 +1,15 @@
+## Interface: 11200
+## Title: Clean Player Frame
+## Notes: Removes text "Health" and "Mana" / "Rage" / "Focus" / "Energy" from the player frame.
+## Notes-deDE: Entfernt den Text "Gesundheit" sowie "Mana" / "Wut" / "Fokus" / "Energie" vom Spielerporträt.
+## OptionalDeps: myAddOns
+## Author: Bastian Pflieger (wbb)
+## Version: 11200f
+## X-Email: wbb1977@gmail.com
+## X-Date: 2018-12-27
+## X-Category: MYADDONS_CATEGORY_COMBAT
+## X-Help: CLEANPLAYERFRAME_CHATHELP
+## X-OptionsFrame: CleanPlayerFrameOptionsFrame
+## SavedVariables: CleanPlayerFrame_Mode CleanPlayerFrame_ShowPartyHealth CleanPlayerFrame_ColorizeHealthBars CleanPlayerFrame_ShowPartyPercent CleanPlayerFrame_UseSmallFont CleanPlayerFrame_FontIndex CleanPlayerFrame_TargetFrameIndex CleanPlayerFrame_Show3D
+CleanPlayerFrame.xml
+CleanPlayerFrameOptions.xml

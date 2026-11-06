@@ -1,0 +1,9 @@
+{
+  "id": "295112420",
+  "tag": "v0.17.3",
+  "name": "v0.17.3",
+  "body": "## [0.17.3](https://github.com/pepordev/ConsoleExperienceClassic/compare/v0.17.2...v0.17.3) (2026-03-10)\n\n\n### Bug Fixes\n\n* properly handle chatbox strata ([ecde76b](https://github.com/pepordev/ConsoleExperienceClassic/commit/ecde76b3b10f55a2d7871ad1750517b8fed4e775))",
+  "published": "2026-03-10T11:11:40Z",
+  "prerelease": false,
+  "url": "https://github.com/pepordev/ConsoleExperienceClassic/releases/tag/v0.17.3"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "394546395",
+  "tag": "v1.0.2",
+  "name": "ConsoleUI v1.0.2",
+  "body": "## New\n\n- Melee swing timer, including linked main-hand and off-hand bars for dual wield.\n- Segmented ranged timer for Draw, Shoot, and Cooldown. Interrupted draws flash red; fired shots flash white.\n- Swing Timer HUD controls for size, offset, gap, color, labels, spark, and combat-only fade.\n\n## Fixed\n\n- Hunter shot icons now update their range color correctly.\n- Rested XP no longer shows stale progress after leveling up.\n- Copy From now restores action bars and Blizzard frame positions correctly.\n- Minimap and buff/debuff placement persists through reloads, including scaled minimaps.\n- XP, reputation, and swing-timer settings rows no longer overlap.\n- Missing self-check files are included in the addon package.\n- Reduced unnecessary HUD refresh work for smoother frame updates.\n\nInstall both `ConsoleUI` and `ConsoleUIKeyboard` folders. Fully quit WoW before replacing the folders.\n",
+  "published": "2026-09-23T10:29:28Z",
+  "prerelease": false,
+  "url": "https://github.com/racha/ConsoleUI/releases/tag/v1.0.2"
+}

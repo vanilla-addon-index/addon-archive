@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/FSuhas/BSAlert-TW",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "FSuhas",
+    "repo": "BSAlert-TW",
+    "name": "BSAlert-TW",
+    "url": "https://github.com/FSuhas/BSAlert-TW",
+    "api": "https://api.github.com/repos/FSuhas/BSAlert-TW"
+  },
+  "commit": "3104b532b0f0ac3d262be3398655adb0b115b5dc",
+  "sourceFiles": {
+    "BSAlert.lua": {
+      "sha256": "0f9328f3f8b17618e60cbc1b412ab41c6bb26c79f086465324f48fa15d8cd433",
+      "bytes": 5872
+    },
+    "BSAlert.toc": {
+      "sha256": "b825bb08898b9a66bad54277b11c300a9abca5cde5b1902910227c652df9c3c2",
+      "bytes": 255
+    },
+    "BSAlert.xml": {
+      "sha256": "5a0db6e672ce43b83893e5ae0d3b5864d378f81bdd4962f81c9e5e4395a2283c",
+      "bytes": 504
+    },
+    "image.png": {
+      "sha256": "e87a5a7d23c2def80836737c0841d0f4c4e161b0396ec6fc32dc7697e8b6b850",
+      "bytes": 43584
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

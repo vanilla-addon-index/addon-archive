@@ -1,0 +1,250 @@
+RollFor = RollFor or {}
+local m = RollFor
+
+if m.RollResultAnnouncer then return end
+
+local M = {}
+local getn = m.getn
+
+local RT = m.Types.RollType
+local RS = m.Types.RollingStrategy
+local hl = m.colors.hl
+local grey = m.colors.grey
+---@param chat Chat
+---@param roll_controller RollController
+---@param config Config
+function M.new( chat, roll_controller, config )
+  ---@param winners Winner[]
+  ---@param top_roll boolean
+  local announce_winner = function( winners, top_roll )
+    local roll_value = winners[ 1 ].winning_roll
+
+    if not roll_value then
+      return
+    end
+
+    local roll_type = winners[ 1 ].roll_type
+    local roll_type_str = roll_type == RT.MainSpec and "" or string.format( " (%s)", m.roll_type_abbrev_chat( roll_type ) )
+    local rerolling = winners[ 1 ].rerolling
+    local item = winners[ 1 ].item
+
+    -- Only one winner can be decomposed. Several tied on the same total need not have got
+    -- there the same way -- one 89+30, one flat 119 -- and attributing either breakdown to
+    -- both would be a lie. The total is the thing they have in common, so that is what a
+    -- tied group gets.
+    local composed = getn( winners ) == 1 and m.RollingLogicUtils.decompose( roll_value, winners[ 1 ].adjustments ) or roll_value
+
+    -- Everything after the roller list, which is what the list has left to spend.
+    local function suffix( f )
+      return string.format(
+        " %srolled the %shighest (%s) for %s%s.",
+        rerolling and "re-" or "",
+        top_roll and "" or "next ",
+        f and f( composed ) or composed,
+        item.link,
+        roll_type_str
+      )
+    end
+
+    local function message( rollers, f )
+      return string.format( "%s%s", rollers, suffix( f ) )
+    end
+
+    local name_of = function( p ) return p.name end
+    chat.info( message( m.prettify_table( winners, name_of ), hl ) )
+
+    for _, announcement in ipairs( m.split_message( nil, winners, name_of, suffix() ) ) do
+      chat.announce( announcement )
+    end
+  end
+
+  ---@param winners Winner[]
+  ---@return table<number, Winner[]>
+  local function split_winners_by_roll( winners )
+    if getn( winners ) == 0 then return {} end
+    local result = {}
+
+    local i = 0
+    local last_roll
+
+    for _, winner in ipairs( winners ) do
+      if not last_roll or last_roll ~= winner.winning_roll then
+        table.insert( result, { winner } )
+        i = i + 1
+        last_roll = winner.winning_roll
+      else
+        table.insert( result[ i ], winner )
+      end
+    end
+
+    return result
+  end
+
+  ---@param data WinnersFoundEvent
+  local function on_winners_found( data )
+    if not data then return end
+
+    local item, item_count, winners, strategy = data.item, data.item_count, data.winners, data.rolling_strategy
+    local winner_count = getn( winners )
+
+    if winner_count == 0 then
+      return
+    end
+
+    if strategy == RS.RaidRoll or strategy == RS.InstaRaidRoll then
+      for _, winner in ipairs( winners ) do
+        chat.announce( string.format( "%s wins %s (raid-roll).", winner.name, item.link ) )
+      end
+
+      return
+    end
+
+    if strategy == RS.SoftResRoll and winner_count <= item_count and not winners[ 1 ].winning_roll then
+      local names = m.map( winners, function( winner ) return winner.name end )
+      local suffix = string.format( " soft-ressed %s.", item.link )
+
+      for _, announcement in ipairs( m.split_message( nil, names, nil, suffix ) ) do
+        chat.announce( announcement, true )
+      end
+
+      return
+    end
+
+    for i, winners_by_roll in ipairs( split_winners_by_roll( winners ) ) do
+      announce_winner( winners_by_roll, i == 1 )
+    end
+  end
+
+  ---@param data { players: RollingPlayer[], item: Item, item_count: number, roll_type: RollType, roll: number, rerolling: boolean?, top_roll: boolean? }
+  local function on_tie( data )
+    local players = data.players
+    local roll_type = data.roll_type
+    local roll_value = data.roll
+    local rerolling = data.rerolling
+    local top_roll = data.top_roll
+    local item = data.item
+
+    local player_names = m.map( players,
+      function( p )
+        if type( p ) == "table" then -- Fucking lua50 and its n.
+          return p.name
+        end
+      end )
+
+    local top_rollers_str_colored = m.prettify_table( player_names, hl )
+    local roll_type_str = roll_type == RT.MainSpec and "" or string.format( " (%s)", m.roll_type_abbrev_chat( roll_type ) )
+
+    local function suffix( f )
+      return string.format(
+        " %srolled the %shighest (%s) for %s%s.",
+        rerolling and "re-" or "",
+        top_roll and "" or "next ",
+        f and f( roll_value ) or roll_value,
+        -- item_count and item_count > 1 and string.format( "%sx", item_count ) or "",
+        item.link,
+        roll_type_str
+      )
+    end
+
+    local function message( rollers, f )
+      return string.format( "%s%s", rollers, suffix( f ) )
+    end
+
+    chat.info( message( top_rollers_str_colored ) )
+
+    for _, announcement in ipairs( m.split_message( nil, player_names, nil, suffix() ) ) do
+      chat.announce( announcement )
+    end
+  end
+
+  ---@param event TieStartEvent
+  local function on_tie_start( event )
+    local data, iteration = event.tracker_data, event.iteration
+    if not data or not iteration then return end
+
+    local player_count = getn( iteration.rolls )
+    if player_count == 0 then return end
+
+    local roll_type = iteration.rolls[ 1 ].roll_type
+    local item, item_count, winners = data.item, data.item_count, data.winners
+    local winner_count = getn( winners )
+    local count = item_count - winner_count
+    local prefix = count > 1 and string.format( "%sx", count ) or ""
+    local suffix = count > 1 and string.format( " %s top rolls win.", count ) or ""
+
+    -- One entry per player, not per placeholder: naming him once per roll would read as
+    -- several players. The allowance rides along instead -- "Ayla [2 rolls]".
+    local names, allowance = {}, {}
+
+    for _, roll_data in ipairs( iteration.rolls ) do
+      local name = roll_data.player_name
+      local entry = allowance[ name ]
+
+      if not entry then
+        entry = { rolls = 0 }
+        allowance[ name ] = entry
+        table.insert( names, name )
+      end
+
+      entry.rolls = entry.rolls + 1
+    end
+
+    local player_names = m.map( names,
+      ---@param name string
+      function( name )
+        local entry = allowance[ name ]
+        if entry.rolls <= 1 then return name end
+
+        return string.format( "%s [%s roll%s]", name, entry.rolls, entry.rolls == 1 and "" or "s" )
+      end )
+
+    local roll_threshold_str = config.roll_threshold( roll_type ).str
+    local tail = string.format( " %s for %s%s now.%s", roll_threshold_str, prefix, item.link, suffix )
+
+    for _, announcement in ipairs( m.split_message( nil, player_names, nil, tail ) ) do
+      chat.announce( announcement )
+    end
+  end
+
+  local function on_tick( data )
+    if not data or not data.seconds_left then return end
+
+    local seconds_left = data.seconds_left
+
+    if seconds_left == 3 then
+      chat.announce( "Stopping rolls in 3" )
+    elseif seconds_left < 3 then
+      chat.announce( tostring( seconds_left ) )
+    end
+  end
+
+  ---@param event RollingFinishedEvent
+  local function on_rolling_finished( event )
+    local data = event.roll_tracker_data
+    if not data or not data.item then return end
+
+    local winner_count = getn( data.winners )
+
+    if winner_count == 0 then
+      local message = string.format( "No one rolled for %s.", data.item.link )
+      chat.info( message )
+      chat.announce( message )
+    end
+  end
+
+  ---@param data LootAwardedEvent
+  local function on_loot_awarded( data )
+    local player_name = data.player_class and m.colorize_player_by_class( data.player_name, data.player_class ) or grey( data.player_name )
+    chat.info( string.format( "%s received %s.", player_name, data.item_link ) )
+  end
+
+  roll_controller.subscribe( "rolling_finished", on_rolling_finished )
+  roll_controller.subscribe( "winners_found", on_winners_found )
+  roll_controller.subscribe( "there_was_a_tie", on_tie )
+  roll_controller.subscribe( "tie_start", on_tie_start )
+  roll_controller.subscribe( "tick", on_tick )
+  roll_controller.subscribe( "loot_awarded", on_loot_awarded )
+end
+
+m.RollResultAnnouncer = M
+return M

@@ -1,0 +1,132 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+  <!-- Player Monitor Frame - content for the Monitor tab -->
+  <!-- Single-panel raid overview: each row shows player + status + 16 inventory icons inline -->
+  <Frame name="EreaRpMasterPlayerMonitorFrame" parent="EreaRpMasterMainWindowContentFrame" hidden="true">
+    <Anchors>
+      <Anchor point="TOPLEFT"/>
+      <Anchor point="BOTTOMRIGHT"/>
+    </Anchors>
+
+    <Frames>
+      <!-- Full-width scroll frame for player rows -->
+      <ScrollFrame name="EreaRpMasterPlayerMonitorScrollFrame" inherits="UIPanelScrollFrameTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT"/>
+          <Anchor point="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="-22" y="54"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+
+        <Frames>
+          <!-- Scroll child (rows created by presenter) -->
+          <Frame name="$parentScrollChild">
+            <Size>
+              <AbsDimension x="0" y="1"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT"/>
+              <Anchor point="TOPRIGHT"/>
+            </Anchors>
+          </Frame>
+        </Frames>
+
+        <Scripts>
+          <OnLoad>
+            this:SetScrollChild(EreaRpMasterPlayerMonitorScrollFrameScrollChild)
+          </OnLoad>
+        </Scripts>
+      </ScrollFrame>
+
+      <!-- Bottom bar (50px) -->
+      <Frame name="$parentBottomBar">
+        <Size>
+          <AbsDimension x="0" y="50"/>
+        </Size>
+        <Anchors>
+          <Anchor point="BOTTOMLEFT"/>
+          <Anchor point="BOTTOMRIGHT"/>
+        </Anchors>
+        <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                  edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                  tile="true">
+          <EdgeSize>
+            <AbsValue val="12"/>
+          </EdgeSize>
+          <TileSize>
+            <AbsValue val="16"/>
+          </TileSize>
+          <BackgroundInsets>
+            <AbsInset left="3" right="3" top="3" bottom="3"/>
+          </BackgroundInsets>
+        </Backdrop>
+
+        <Scripts>
+          <OnLoad>
+            this:SetBackdropColor(0.05, 0.05, 0.05, 1)
+            this:SetBackdropBorderColor(0.6, 0.6, 0.6, 1)
+          </OnLoad>
+        </Scripts>
+
+        <Layers>
+          <Layer level="OVERLAY">
+            <!-- Auto-refresh label -->
+            <FontString name="$parentAutoRefreshLabel" inherits="GameFontNormalSmall" text="Auto-refresh">
+              <Anchors>
+                <Anchor point="LEFT">
+                  <Offset>
+                    <AbsDimension x="102" y="0"/>
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+
+            <!-- Status text (right-aligned) -->
+            <FontString name="$parentStatusText" inherits="GameFontNormalSmall">
+              <Anchors>
+                <Anchor point="RIGHT">
+                  <Offset>
+                    <AbsDimension x="-8" y="0"/>
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+
+        <Frames>
+          <!-- Refresh button -->
+          <Button name="$parentRefreshButton" inherits="UIPanelButtonTemplate" text="Refresh">
+            <Size>
+              <AbsDimension x="70" y="22"/>
+            </Size>
+            <Anchors>
+              <Anchor point="LEFT">
+                <Offset>
+                  <AbsDimension x="8" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+
+          <!-- Auto-refresh checkbox -->
+          <CheckButton name="$parentAutoRefreshCheck" inherits="UICheckButtonTemplate">
+            <Size>
+              <AbsDimension x="20" y="20"/>
+            </Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="$parentRefreshButton" relativePoint="RIGHT">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </CheckButton>
+        </Frames>
+      </Frame>
+    </Frames>
+  </Frame>
+
+</Ui>

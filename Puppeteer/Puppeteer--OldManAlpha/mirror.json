@@ -1,0 +1,398 @@
+{
+  "upstream": "https://github.com/OldManAlpha/Puppeteer",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "OldManAlpha",
+    "repo": "Puppeteer",
+    "name": "Puppeteer",
+    "url": "https://github.com/OldManAlpha/Puppeteer",
+    "api": "https://api.github.com/repos/OldManAlpha/Puppeteer"
+  },
+  "commit": "7fa9db6cc1032852733c0dbf77693c881719dbfd",
+  "sourceFiles": {
+    "assets/textures/arrow.tga": {
+      "sha256": "00f493e8c492a9d5e61dd9ec565e48c465698fdc7049bd2eea15e9790a8fef0d",
+      "bytes": 220404
+    },
+    "assets/textures/bars/Blizzard-Raid-Sideless.tga": {
+      "sha256": "25e3dc9c14dbd244d3b7c2a6e3bee2aa4d7f3bbacd2d05b3c43e308a6cad4c18",
+      "bytes": 667
+    },
+    "assets/textures/bars/Blizzard-Raid.tga": {
+      "sha256": "9176e05ba87ee93ec0cb9aeaae33cc135e1c955f0652e855bc7642e5d9583f8e",
+      "bytes": 935
+    },
+    "assets/textures/bars/Blizzard-Smooth.tga": {
+      "sha256": "09d76e403a36af217b827c392d1b52057af78411d83101f7f5552d29b6d0626f",
+      "bytes": 571
+    },
+    "assets/textures/bars/Puppeteer-Borderless.tga": {
+      "sha256": "cffd320598c2ff8b6ee56d068abef69028b47365c2c59d5d6d91dec74121c083",
+      "bytes": 3223
+    },
+    "assets/textures/bars/Puppeteer-Shineless-Borderless.tga": {
+      "sha256": "a87e9701249629371a10d54f1606e7fe0cc0c8617f90016daab973b7c4670c39",
+      "bytes": 795
+    },
+    "assets/textures/bars/Puppeteer-Shineless.tga": {
+      "sha256": "9713751e95bf631f54786ccbe8a394056f85069e385fdad479ffc63ab1957200",
+      "bytes": 795
+    },
+    "assets/textures/bars/Puppeteer.tga": {
+      "sha256": "2dfdf32b7bf8c0b8343305a113fcb2e1ed4f8a050c55fe7fcf2b70d4ac53799b",
+      "bytes": 3223
+    },
+    "assets/textures/roles/Damage.tga": {
+      "sha256": "77dde1c1f3a733c5a8260b63eff9d90c38a80dee51a1209738a56a5c80e35c0e",
+      "bytes": 11976
+    },
+    "assets/textures/roles/Healer.tga": {
+      "sha256": "3635f5555f4458c33944dae825b9d8b04f88700fb133931ecab6ddaf5ed0c7cd",
+      "bytes": 11614
+    },
+    "assets/textures/roles/Tank.tga": {
+      "sha256": "0002273b66c2dfa7c593be86165f0ee9c783e52dbb62b4f6b321fa6504a34d1c",
+      "bytes": 12724
+    },
+    "Bindings.xml": {
+      "sha256": "4f504dcf6d322ce7896a935650aa24585eb9757405c117527b17e9f6ff0818c8",
+      "bytes": 2615
+    },
+    "core/ActionBindings.lua": {
+      "sha256": "4c410f8758fe2c6504529d29a1ae4874aacc9d989bf692446aee50b821ab8695",
+      "bytes": 4890
+    },
+    "core/Bindings.lua": {
+      "sha256": "d8d9d199f7b69697bc2d38c63ad3557b7d693219fa202761503060201f1703cb",
+      "bytes": 23969
+    },
+    "core/Command.lua": {
+      "sha256": "7b53d6f248e918b0feaf401e026d229b1beb6aeff3627bdb46c5f34879ed8d17",
+      "bytes": 4978
+    },
+    "core/EnemyTracker.lua": {
+      "sha256": "b92694a603abeceec639d6d3abcb4d94eaa541968723043f17a27570d4076896",
+      "bytes": 3260
+    },
+    "core/EventHandler.lua": {
+      "sha256": "00a05086d8ead08eedbf62607264d6b7b8e74323b0175979542887e73e62fc0e",
+      "bytes": 4292
+    },
+    "core/OverrideBindings.lua": {
+      "sha256": "186c9a61bd1ed9a56624aaa0c92b2ada2b8b1e3a2674d1fa3e80d519f313f736",
+      "bytes": 6661
+    },
+    "core/Roles.lua": {
+      "sha256": "4fc9f1f4a7796a4853f44ad3c053b1929dd5db042bb2a8ae17a77318e6ce1e4a",
+      "bytes": 13640
+    },
+    "core/SpellsTooltip.lua": {
+      "sha256": "2696cc40f6fd66af12322dad4923f7a3963f0bd916780fcc4d800e9f6d60bc0c",
+      "bytes": 13260
+    },
+    "core/UnitTracker.lua": {
+      "sha256": "2032ae4a75082868ea5ea41d90f1736b4c064f9ea4341d0b91c9d03acf654947",
+      "bytes": 4477
+    },
+    "gui/component/BindingOptions.lua": {
+      "sha256": "e0fcb170269ddd549eb6f9290962f503f0fdbf1538884e85ef1ca59ff1f0a16b",
+      "bytes": 9682
+    },
+    "gui/component/BindingScriptEditor.lua": {
+      "sha256": "18581d2fa0ea6785b25cebc688bfb978ca05812bcc4aeeee3288ca99895426a6",
+      "bytes": 6694
+    },
+    "gui/component/ButtonEditor.lua": {
+      "sha256": "ae2cd9206f05eab3a010d29620c11c642808f0ef1bcd468e53e7f0cf48c1bbed",
+      "bytes": 13544
+    },
+    "gui/component/InputBlock.lua": {
+      "sha256": "9f4a6f0df283fe51d6c775ff5f0dcf03c28bb436d7d0aa51c96d5fe8a3a5620d",
+      "bytes": 701
+    },
+    "gui/component/LoadScriptEditor.lua": {
+      "sha256": "db0285eaf6218b817c0c67bdf11c52119fb639dd7e1aba93b68fbfbcd5db4d98",
+      "bytes": 1905
+    },
+    "gui/component/MultiEditor.lua": {
+      "sha256": "bc4c424d74e7c868b8cf689a330627b12e4aed0635e64b46147a10f93cd8f787",
+      "bytes": 5852
+    },
+    "gui/component/NewLoadout.lua": {
+      "sha256": "fa53b589b66ee8322fa0575d8963eccd04e765391666d4eca61a85b6d5f9efe9",
+      "bytes": 3489
+    },
+    "gui/component/SpellBindInterface.lua": {
+      "sha256": "35917ff69f75ddc07712e563d81fc8f1548cb6a1572bd6829225bb7478a25193",
+      "bytes": 4572
+    },
+    "gui/component/SpellLine.lua": {
+      "sha256": "9dc0391767502621a68e80fa70ca4870a27618bf42abf4412a0129ed0af2232e",
+      "bytes": 16309
+    },
+    "gui/component/uf/Arrow.lua": {
+      "sha256": "7107ac01441a91d4e5b8a3ea68fc43e16800664bcc33ce8f351e4b3a8759d115",
+      "bytes": 1448
+    },
+    "gui/component/uf/CastIcon.lua": {
+      "sha256": "a10619f7544acd5c7503e2fabcc7249621244f0fde7346ff56d62b904113d9b1",
+      "bytes": 8786
+    },
+    "gui/component/uf/HighlightBorder.lua": {
+      "sha256": "ccfa8db3801c5cf4f6194c2b0935f789698933a8534508c67932150bf5eddb07",
+      "bytes": 3986
+    },
+    "gui/GuiUtil.lua": {
+      "sha256": "2a4990be121a9bd86952a67662e74d1d6b9fa456e022f629aeebc1da197b20c6",
+      "bytes": 603
+    },
+    "gui/Settings.lua": {
+      "sha256": "66e8dcad52cb9cc5405cdb24719813daf883f8f58ca2e88977e43ba732e3996e",
+      "bytes": 59608
+    },
+    "libs/ace/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "6c4e23e37cf0893782922cdef23057ad180bca18ec85b05c35ea068209e1b167",
+      "bytes": 30892
+    },
+    "libs/ace/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "73ba2bdfaf3e496e1c1d1534110e9498805759accf0d5b9dd4b867d0207697b0",
+      "bytes": 66005
+    },
+    "libs/ace/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "34e4e52df5e10eb6ecf423e5e04768b1daa28562d8ec2206df9647cb2f6c0219",
+      "bytes": 7941
+    },
+    "libs/ace/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "2d212f65a53cf51ae5c5c65e1ad33be6aa3b4f33527dd3d9ccde322811123b60",
+      "bytes": 28825
+    },
+    "libs/ace/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "libs/ace/AceLibrary/AceLibrary.lua": {
+      "sha256": "26fcd4ed3beddcdba2e56ec97e8655883b37ff27354d2969a979812f62eb725a",
+      "bytes": 22854
+    },
+    "libs/ace/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "951a8460955cfa7a68929a7d878501d29126d1a92730b9e6cf3f692731b1d6b1",
+      "bytes": 15949
+    },
+    "libs/ace/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "libs/ace/Banzai-1.0/Banzai-1.0.lua": {
+      "sha256": "a054f6712307f1691b954759c9d051178004c69702087c0ca59aa5c84b9b618b",
+      "bytes": 5248
+    },
+    "libs/ace/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "4133b9069be339d5faca66c489e1db028ee400f114b1f437567c5f19a76f21e5",
+      "bytes": 9209
+    },
+    "libs/ace/Deformat-2.0/Deformat-2.0.lua": {
+      "sha256": "6491e26c67bc4e35eecead3aac60dd1e02abe39a8b281ff6f10bb223e78b7f50",
+      "bytes": 9438
+    },
+    "libs/ace/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "1927177be6990043bc63bc8c36168408957c6d1ed86ef971d72415f7dd14d430",
+      "bytes": 7889
+    },
+    "libs/ace/HealComm-1.0/HealComm-1.0.lua": {
+      "sha256": "633f2119a9450d43da80031838ce3051a4ce43e3b2e1df4aec9bf7d4d09f2796",
+      "bytes": 66466
+    },
+    "libs/ace/ItemBonusLib-1.0/ItemBonusLib-1.0.lua": {
+      "sha256": "f4c4e93a58e6c32a48d4e9bcdb200111c4f9c0e6a5c6b4674a52ec06c3bf85c9",
+      "bytes": 12162
+    },
+    "libs/ace/ItemBonusLib-1.0/Locales/enUS.lua": {
+      "sha256": "5808e236f087970e6de458574cfe867f4ec74094784dcf72b91ad90969c872a5",
+      "bytes": 11299
+    },
+    "libs/ace/RosterLib-2.0/RosterLib-2.0.lua": {
+      "sha256": "17d04168174793fd6cf8db81bf9e91d19781b000ec0d6a808dd502cb5491941a",
+      "bytes": 10705
+    },
+    "libs/AuraTracker.lua": {
+      "sha256": "39ed834eceb33e05cffc67bb7f4d0738573229e1c34c64d705a8e66c783733da",
+      "bytes": 8711
+    },
+    "libs/gui/abstract/TabComponent.lua": {
+      "sha256": "cd0640dce5c047e798728d482f5418e1f669886252131fefd55f8b7b7da95b67",
+      "bytes": 4246
+    },
+    "libs/gui/component/Button.lua": {
+      "sha256": "8e49295d77520fb6e5d10ebca021d8ffcdae21cba034214120e67024c5e604c6",
+      "bytes": 6140
+    },
+    "libs/gui/component/Checkbox.lua": {
+      "sha256": "d78d847853ae63e4811cfad93662a1f70a8d5e6559475d7e78c798c13030f4ce",
+      "bytes": 1457
+    },
+    "libs/gui/component/ColorSelect.lua": {
+      "sha256": "2a1db2df1c608bf096789c5dc72b7af863b005ae81fa45daa99f171d9c4521b1",
+      "bytes": 2808
+    },
+    "libs/gui/component/Container.lua": {
+      "sha256": "ed0184504a4185c9c917574fadc70294e1043941355a2c81dc10ebb86005a5b0",
+      "bytes": 297
+    },
+    "libs/gui/component/Dropdown.lua": {
+      "sha256": "2a788fc252cc54ffaa8e0f8b180c1b23dbccc0ea81a650b5454a6f1dc06a6875",
+      "bytes": 11854
+    },
+    "libs/gui/component/EditBox.lua": {
+      "sha256": "c48aec3a144efb812e0266a357a2685a36dca32192ccea7d4dd2e21e0fec2d0f",
+      "bytes": 981
+    },
+    "libs/gui/component/EditBoxSlider.lua": {
+      "sha256": "eedf6a21c3b894ad40950a7fa24e3dbea873ac709f0c2befe5bee4b041e0bc44",
+      "bytes": 2557
+    },
+    "libs/gui/component/MultiLineEditBox.lua": {
+      "sha256": "97f18184e816b52786d5a645ed0e4b7ec4d96307e2fad8e6d57d078ad06e6a83",
+      "bytes": 2545
+    },
+    "libs/gui/component/ScrollFrame.lua": {
+      "sha256": "795a0b9d8592892aa40b26a921c14cb6f6080f80427481bc8d8d09a88cce5c72",
+      "bytes": 5285
+    },
+    "libs/gui/component/Slider.lua": {
+      "sha256": "4aaab29a68bfe8fa0ccbe6629eb338bca6469024659787708b384fc1a4ddbf1c",
+      "bytes": 1692
+    },
+    "libs/gui/component/TabPanel.lua": {
+      "sha256": "b251ef018c7d75b76b98c84f5747731480e67fe639e422332654a215ac93d9a2",
+      "bytes": 289
+    },
+    "libs/gui/component/Text.lua": {
+      "sha256": "40cc0b554e75cf1d12c24bca1dadbbaa18ac61b159943fd34d9f2c9ec051857a",
+      "bytes": 1737
+    },
+    "libs/gui/component/Title.lua": {
+      "sha256": "38219de62034b380e5e2f23463644f3afce86fece21bcb8d74989aab080f61a5",
+      "bytes": 874
+    },
+    "libs/gui/Component.lua": {
+      "sha256": "c3add476126cc59c9f3acdf881d036cfa25f5c3a60f5e7696a3c435cf5cc34cc",
+      "bytes": 12429
+    },
+    "libs/gui/frame/SimpleDialog.lua": {
+      "sha256": "96495b2d1ea03ee0874608ccf0efaa46581b663ca5d9416f9ef39ecc35bf7e63",
+      "bytes": 3038
+    },
+    "libs/gui/frame/TabFrame.lua": {
+      "sha256": "643ad2ffaad9845b2ab4865cd895bfe4c6dc7896f82fb779dbc20e1de0c0bf86",
+      "bytes": 833
+    },
+    "libs/gui/PTGuiLib.lua": {
+      "sha256": "4aa7de1693be61844ceadfbb2be0eede178f9ce11368a11f75f289f388205c93",
+      "bytes": 1379
+    },
+    "libs/GuidRoster.lua": {
+      "sha256": "de61ab791e4bc7a592e4e7cee046abb2949ada88b042a7b91f9a7ec7e0b0a910",
+      "bytes": 2325
+    },
+    "libs/HealPredict.lua": {
+      "sha256": "810f986c0b8abe2269f2ad67b638c0fedf502bbb4d880e02e90eec1d0c7a2ba8",
+      "bytes": 25725
+    },
+    "libs/PTUnit.lua": {
+      "sha256": "d46f65ad32a8717b9df0f4d89469d18b9180fec857f008b1a74147947abc0591",
+      "bytes": 14090
+    },
+    "libs/ShaguUtil.lua": {
+      "sha256": "1739298600cccd24bdcf6178f997a934f26fd3f0e4b282a19976e85c8ab3ac72",
+      "bytes": 11220
+    },
+    "libs/UnitProxy.lua": {
+      "sha256": "5e7d899e82e49fcd0d55a08825c4cda1e968d6fad89d6d41221ef222c26c0595",
+      "bytes": 14530
+    },
+    "libs/Util.lua": {
+      "sha256": "3909e94d5f255bb4b01a0ec6501e78c31993456ee5a2912ed52052ada1af42dd",
+      "bytes": 46316
+    },
+    "locale/deDE.lua": {
+      "sha256": "1686d822013782debc13de008b041212e9a0a2537f8eefbcdc5a37cd946b100e",
+      "bytes": 7878
+    },
+    "locale/esES.lua": {
+      "sha256": "8a5a817ee67dfbf68656c326256be052b2783f1244a16f9799c6768057d93208",
+      "bytes": 8182
+    },
+    "locale/Locale.lua": {
+      "sha256": "073f986aa79f6942b8ef64b17c65154b02b21f05e06844c85d2eb775664388f4",
+      "bytes": 2321
+    },
+    "locale/ptBR.lua": {
+      "sha256": "6e44bc17122057135f108cbb477dc464fbcd692be8d1bbe9932b9db6a18ccbec",
+      "bytes": 8044
+    },
+    "locale/ruRU.lua": {
+      "sha256": "96050ca6dbcd34bf45c281c21d85a04d7af29647b3baee5af2b1fbc4a35206f4",
+      "bytes": 10305
+    },
+    "locale/zhCN.lua": {
+      "sha256": "9829f88009064327fcae644536f76058e1d5d87a15bb754f201e99941d55bfb4",
+      "bytes": 7155
+    },
+    "Profile.lua": {
+      "sha256": "c23451dc749a6abbd9cc92cec628bcab142298ad526b6f599f460198e17b426f",
+      "bytes": 2764
+    },
+    "ProfileManager.lua": {
+      "sha256": "fc3c3a057e87b1ab3a51ae4be7d5286d96336020c338af8bdc68dfcfc5d6a0eb",
+      "bytes": 22559
+    },
+    "PTUnitFrame.lua": {
+      "sha256": "c782ea2d9f48972aa540517a6901426e614e3aaef31a1b530e3549b2990f5e27",
+      "bytes": 60874
+    },
+    "PTUnitFrameGroup.lua": {
+      "sha256": "29cef03ddc7492e60685dc5de44c31b3d8582e365424cbb6d2f839b3cc6fc175",
+      "bytes": 17147
+    },
+    "Puppeteer.lua": {
+      "sha256": "171b2d48740a6f81a9f1762d93e8d28ba20a24d13ca6ce988778c797e1e4842b",
+      "bytes": 29059
+    },
+    "Puppeteer.toc": {
+      "sha256": "0016f8a71a84b65acafb3fe623f86c3858bb788d263f998026c5519bee7dc0ca",
+      "bytes": 2429
+    },
+    "PuppeteerSettings.lua": {
+      "sha256": "a94ab2655b8f2bcef2fef8c163439c2699ec9bf6b00284b1ab0231513cfc7d3b",
+      "bytes": 25228
+    },
+    "README.md": {
+      "sha256": "91a79b3bee4f92410c5e3b62b9576127b99fafb2dec2304bf3fd47064bb906e8",
+      "bytes": 5217
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "316167340": {
+      "tag": "v1.1.3",
+      "folder": "v1.1.3--316167340",
+      "assets": {
+        "409419865": {
+          "sha256": "dd9bc7423bb0ee8617e81927c26eb355d3178184f3250be0bd72a1163d7d389d",
+          "bytes": 341070,
+          "id": "409419865",
+          "name": "Puppeteer-1.1.3.zip",
+          "url": "https://github.com/OldManAlpha/Puppeteer/releases/download/v1.1.3/Puppeteer-1.1.3.zip",
+          "path": "releases/v1.1.3--316167340/assets/Puppeteer-1.1.3.zip"
+        }
+      },
+      "source": {
+        "sha256": "a0749e56fc10eb1bb2afb8a37375ac64431eed03d7ccca128778f5eea64f003a",
+        "bytes": 299690,
+        "path": "releases/v1.1.3--316167340/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/OldManAlpha/Puppeteer/tarball/v1.1.3"
+      }
+    }
+  }
+}

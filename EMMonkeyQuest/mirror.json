@@ -1,0 +1,93 @@
+{
+  "upstream": "https://github.com/Rumchiller/EM_MonkeyQuest",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Rumchiller",
+    "repo": "EM_MonkeyQuest",
+    "name": "EM_MonkeyQuest",
+    "url": "https://github.com/Rumchiller/EM_MonkeyQuest",
+    "api": "https://api.github.com/repos/Rumchiller/EM_MonkeyQuest"
+  },
+  "commit": "e5bc0ce47d3ae5a61ebdfd449ece7c485446cb2a",
+  "sourceFiles": {
+    "BackDrop.tga": {
+      "sha256": "bd109ea738f7956f53c671463c92b6d7c4a8b03d9c11f34832d67df9db089dd5",
+      "bytes": 204
+    },
+    "BIB/BIB_MonkeyQuest.lua": {
+      "sha256": "5001aef5b620afb6fabdd346857295173e414f409585b918821ee0791d590a91",
+      "bytes": 5468
+    },
+    "BIB/BIB_MonkeyQuest.xml": {
+      "sha256": "0ab3709f7909b30fa7612e15b0f158a316e1288e63c53365713f3d4080c87140",
+      "bytes": 1315
+    },
+    "Bindings.xml": {
+      "sha256": "9b93774ca2c1ad177781159e04165ef5c3bfa63f5b504076f29f8e555daa83e3",
+      "bytes": 608
+    },
+    "CloseButton-Down.tga": {
+      "sha256": "89388215ec147eb2ad755065a453aa204b1fce566cba031afd531a641261e646",
+      "bytes": 4140
+    },
+    "CloseButton-Up.tga": {
+      "sha256": "7fd07ff2722107a85c63b2cdf8b3da47609926c8ffa10a9a697a432209c530b1",
+      "bytes": 4140
+    },
+    "framd.ttf": {
+      "sha256": "f103d31608ff1fa1b861ff297b16a49a74441dae98ce12c506a7085c01de9a11",
+      "bytes": 135984
+    },
+    "localization.lua": {
+      "sha256": "61fcdec678c88ff421b9a071eb117141669ec182488c2bda76bc5c92ed3ffc9d",
+      "bytes": 40814
+    },
+    "MinimizeButton-Down.tga": {
+      "sha256": "84adadb20b8c4d081196b6ce35953e2375b8bf814b4abd9c9a3c649719bdf7bc",
+      "bytes": 4140
+    },
+    "MinimizeButton-Up.tga": {
+      "sha256": "722ed4837ae34cd66db8e5e38d531ceba9c47ada5ec5317ea8213561c3b9155e",
+      "bytes": 4140
+    },
+    "MonkeyQuest.lua": {
+      "sha256": "1209610db3f14fdae5b36b5c592974b692e76daa6f80a9b434f307f01f1b007c",
+      "bytes": 48715
+    },
+    "MonkeyQuest.toc": {
+      "sha256": "880af042849a99d90ea296b4bcc0bc36556901e060307e7e1dde4c35ce38d967",
+      "bytes": 322
+    },
+    "MonkeyQuest.txt": {
+      "sha256": "1fee8fca1e3e51af696ffd627d1367adfcf88db66290f1f95f98e7b213fc65d2",
+      "bytes": 136
+    },
+    "MonkeyQuest.xml": {
+      "sha256": "68da576c686ff56e534200fba1d5da9c814dedfb02183ea9469cffe7dbde4ffe",
+      "bytes": 25902
+    },
+    "MonkeyQuestDefs.lua": {
+      "sha256": "b6def35324ed2d8f0b30d63f50bd03714750ac57c20fb108209819cac2dd1260",
+      "bytes": 1660
+    },
+    "MonkeyQuestInit.lua": {
+      "sha256": "527584e6a80126ba267773df6701eb5f35c47884b7cdca893a13776152b707f1",
+      "bytes": 19091
+    },
+    "MonkeyQuestSlash.lua": {
+      "sha256": "8bff3ac9599c6d449251d414dd4f7770d51f6c6b7f51a1cf6c4d1bd9ef892fc6",
+      "bytes": 25470
+    },
+    "MonkeyQuestTooltip.lua": {
+      "sha256": "1acb9412f5bd64c78101b49f03af858cdf44543f139156abcbd52a4e9785bc77",
+      "bytes": 6445
+    },
+    "readme.txt": {
+      "sha256": "25dfbfc1c3e45735a2b8020ba3b861b2f0e812bda415c43fc13b6694534f386c",
+      "bytes": 2669
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

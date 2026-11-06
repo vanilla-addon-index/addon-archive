@@ -1,0 +1,229 @@
+{
+  "upstream": "https://github.com/cyaohiri/CensusPlusTurtle",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "cyaohiri",
+    "repo": "CensusPlusTurtle",
+    "name": "CensusPlusTurtle",
+    "url": "https://github.com/cyaohiri/CensusPlusTurtle",
+    "api": "https://api.github.com/repos/cyaohiri/CensusPlusTurtle"
+  },
+  "commit": "6dae25fad5fcf038083ded230c380cc56b142d3a",
+  "sourceFiles": {
+    "CensusButton.lua": {
+      "sha256": "edf0c58ec56a3973cc7e17189d3b0b478452eed50ff73ea67e8e8fa606d0059b",
+      "bytes": 2758
+    },
+    "CensusButton.xml": {
+      "sha256": "046f016886f368bd86fcaaf76989ca311187b7eb0bd202e94af377bb6c5f9e23",
+      "bytes": 2319
+    },
+    "CensusPlayerList.lua": {
+      "sha256": "29b8a4fbf2051b289f9af331d1f69866e02a6f0513cd4fa9f1154a75cb6a3382",
+      "bytes": 8954
+    },
+    "CensusPlayerList.xml": {
+      "sha256": "16a92ff627a95305d0d043e4e43d47991fb340bdfe9f6b2e95dce62f8aa12fcf",
+      "bytes": 18739
+    },
+    "CensusPlus.lua": {
+      "sha256": "aed20723bf6229b14ad440faac2343aed6a6fec36474213aa72b52e7de3a656d",
+      "bytes": 103446
+    },
+    "CensusPlus.xml": {
+      "sha256": "e0b26ffc490a63933fc96e037d09ca4861ad6625edc0f98defe44579c7ef9bf3",
+      "bytes": 124479
+    },
+    "CensusPlusProfiler.lua": {
+      "sha256": "b4af744e1e525477edcd536a0b956a6a6ff21f7ea705f2b521a5ca734259c150",
+      "bytes": 50796
+    },
+    "CensusPlusPVP.lua": {
+      "sha256": "ca06268f8c84abc02d11f0f1dbedc2522bdfade591262987184387eb9eb4b7b2",
+      "bytes": 5228
+    },
+    "CensusPlusTurtle.toc": {
+      "sha256": "dacd14b3e9edfded830057849bf802efde8e9e8273348f1a132dd849e1a426e2",
+      "bytes": 641
+    },
+    "GPL.txt": {
+      "sha256": "e6d6a009505e345fe949e1310334fcb0747f28dae2856759de102ab66b722cb4",
+      "bytes": 18011
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "09cfc0b69a0feb644fa1a9e5fc6715a4e76e0b2f6c7c04a3a0ea693d633770cd",
+      "bytes": 23114
+    },
+    "libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "31bc9cfda434c890574d1bbfc48c9e1d068f45ff73e1023ca452dedab0bdef41",
+      "bytes": 15957
+    },
+    "libs/Babble-Class-2.2/Babble-Class-2.2.lua": {
+      "sha256": "e8a281b32dd47aaf6683fb49cbda1e9cf46759d834e73901f27eb1698059c218",
+      "bytes": 3871
+    },
+    "localization.de.lua": {
+      "sha256": "0db2509b0b2d850e489ba23c932d88d782df9067bdec0f1d09add8fcde8fa758",
+      "bytes": 4666
+    },
+    "localization.fr.lua": {
+      "sha256": "2ee31efa4c8e651a9670852f3330206d003cfebcb9a72f0b571b957e27a84f2b",
+      "bytes": 5152
+    },
+    "localization.lua": {
+      "sha256": "e33e78f91afbfbe444b1ad1ab0d35b6524c1ec868538d4bb09d1feffdea93831",
+      "bytes": 21274
+    },
+    "Preview.png": {
+      "sha256": "2265a82217bfb09b940e8da162bf9e3c5281092f9a0856c8099b4623a61394fd",
+      "bytes": 449421
+    },
+    "README.md": {
+      "sha256": "0563afacf8a05a35f08531fcbe47b10b628a1f2609d4e619a55010e159cac6c0",
+      "bytes": 351
+    },
+    "readme.txt": {
+      "sha256": "3ce6680f1d53567d07633bf83c70980e6abc009743e47db2135e47b0b2d3d95f",
+      "bytes": 7778
+    },
+    "Skin/CensusButton-Down.tga": {
+      "sha256": "bc03046ca28fd7607d207340b62e782bf9f9bb3a94bed623a91bd4fa893da3eb",
+      "bytes": 3347
+    },
+    "Skin/CensusButton-Paused.tga": {
+      "sha256": "edfec382e53549a9cce9ba927b1c35517a71f0dc61e16752764e5dbf33c904c5",
+      "bytes": 3172
+    },
+    "Skin/CensusButton-Running.tga": {
+      "sha256": "605c920830731a955de577589a4fe3fdb4a788dfa7482de94064b20a323f13dc",
+      "bytes": 3112
+    },
+    "Skin/CensusButton-Up.tga": {
+      "sha256": "80df3467672d6774bbe5e07370ae35607749af65e7450d169a8b90fd454bc44e",
+      "bytes": 3229
+    },
+    "Skin/CensusPlus_10.tga": {
+      "sha256": "48ffcaaaa51204c1ef8f70052ce914745e50bb27d80b365fe046e00af0b8c36b",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_11.tga": {
+      "sha256": "c3e499450936bb4cacc20d01f0830c7be4782eaa8d5ed7eaf9e809b4fc56efc8",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_12.tga": {
+      "sha256": "0cf8860ee8d26dfae3ebf79e333304c66aa0a6a615dce51f5e6a7b190d4dbfb6",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_13.tga": {
+      "sha256": "3f004b3291da51252ba3e470a9775588399af0836239aabb1475832c704ebb72",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_14.tga": {
+      "sha256": "f8ae48b8b0e6bccc67077921482db047a2d9a02301f47623846b0a92a908bcb8",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_15.tga": {
+      "sha256": "8f2ff9dac07c441ea0529e3dbdf7ddee3074647b9f028c986625a107f8dbafef",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_16.tga": {
+      "sha256": "41bcdc45d7c54af3734208e72c6ca09a73f6e784ddaf28715320353f6a0c9064",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_17.tga": {
+      "sha256": "1535887231ab21d77718096b6a92da6a8e6ef39dc37afcec6b71a854a4152ce8",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_18.tga": {
+      "sha256": "3842e3b33ab275da8d8815fb593d12c8d580c155e15b33ee62decd999ffababf",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_20.tga": {
+      "sha256": "63ab3f90a2f4fa81525ad9efe06d62a75ea569250b56319cf3a38985aa8ef2c0",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_21.tga": {
+      "sha256": "129a06bcccca5a3f6222e9927031c3f372526123b33b2ca80fc42a18e7559629",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_22.tga": {
+      "sha256": "36c6f5550700207b1ac059681e22386c60361e9cbdfffc333d893b22e45bfd6d",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_23.tga": {
+      "sha256": "31873726f9a63f0095f96af85eb0e0dd8246ea29106edb1c10ea0ec3a22990cd",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_24.tga": {
+      "sha256": "9fb24027e0f524c74395bfcd988d79a509ea9f850595ebb21ba4091a2da256d9",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_25.tga": {
+      "sha256": "4e7009ebf77b1fd2bfe9ab73697c851b0e925edcdff7e88349afc8f69296f581",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_26.tga": {
+      "sha256": "947e70577d4387a3277d3d8b8c4e576172f1aa4c5da07719e814e456d89b9535",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_27.tga": {
+      "sha256": "ba119ff96de66d8c0d2593a2788501afb2b9e21b534edc97ca4cb043e09d1b07",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_28.tga": {
+      "sha256": "77adc7fa5f592f5c37ad2ca974d3bde1b978074f574f8c0007f5c98673e5d96a",
+      "bytes": 11250
+    },
+    "Skin/CensusPlus_29.tga": {
+      "sha256": "5fb96d819a6795ceb523b706331b434fc10e3c174ccf1b30e118e6c2a11ee732",
+      "bytes": 10320
+    },
+    "Skin/CensusPlus_Bar.tga": {
+      "sha256": "2d6b26fa6405565c68b7d070b0c36aab49936d816e447b686e9a41030f653c33",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_Icon.tga": {
+      "sha256": "c4515bf4907d4b213446034de04951258a78a1eb5df74a7480cb27199e9cda3a",
+      "bytes": 12332
+    },
+    "Skin/CensusPlus_LevelBar.tga": {
+      "sha256": "31ebdf3cb79ca2d977eeef5bbb4193bf1ed21a8a20187f130033589c9bd03345",
+      "bytes": 210
+    },
+    "Skin/CensusPlus_Mini.tga": {
+      "sha256": "032f59b572123098a7170a4aa28d5a60aa8c09cd903fb07a3b446bca04236a77",
+      "bytes": 196626
+    },
+    "Skin/CensusPlus_Unknown.tga": {
+      "sha256": "661b9595349c9e2c010937e98fcade856dad9fbd91ddad90670e66acbca3295d",
+      "bytes": 12306
+    },
+    "Skin/CensusPlus_Window_BottomRight.tga": {
+      "sha256": "c83cacfdd5a95eacee936c647e2be47f1b3eab1e313328301432c034bc8bfcd7",
+      "bytes": 30344
+    },
+    "Skin/CensusPlus_Window_Left.tga": {
+      "sha256": "ad66501d08dd32a3b59323fe574bc453cb9b277e357cc4e979bc41999dfd4f8a",
+      "bytes": 134203
+    },
+    "Skin/CensusPlus_Window_Mid.tga": {
+      "sha256": "65f0a6d79c922e5d48d6f774b07515385303a5445259a30a680983d53ae42a43",
+      "bytes": 91277
+    },
+    "Skin/CensusPlus_Window_TopRight.tga": {
+      "sha256": "9b75d5b889c0bfdc5b88aafe45f8a6b4298fe4f60c4cdd6e2ad56f320cd8469e",
+      "bytes": 42686
+    },
+    "Sounds/CensusComplete.ogg": {
+      "sha256": "a168c69daa43150736126eadc671a97239dc42cb0b55cd78cbc6bdab29aaaa42",
+      "bytes": 33252
+    },
+    "UpdateUI.xml": {
+      "sha256": "6e74b0781c7676a9a87abcdd9fac8848ca354d6bd8a20eba34066c9e02a048c0",
+      "bytes": 889
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

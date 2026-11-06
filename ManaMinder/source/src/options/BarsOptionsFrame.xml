@@ -1,0 +1,766 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+    ..\..\..\FrameXML\UI.xsd">
+
+  <Frame name="ManaMinder_Options_Bars" parent="ManaMinder_Options" hidden="true" id="2">
+    <Size>
+      <AbsDimension x="566" y="383"/>
+    </Size>
+    <Anchors>
+      <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options" relativePoint="TOPLEFT">
+        <Offset>
+          <AbsDimension x="12" y="-38"/>
+        </Offset>
+      </Anchor>
+    </Anchors>
+    <Frames>
+
+      <Frame name="$parent_Visibility_Section" inherits="OptionFrameBoxTemplate">
+        <Size>
+          <AbsDimension x="281" y="212"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" />
+        </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="$parentText" inherits="GameFontHighlight" text="Visibility">
+              <Anchors>
+                <Anchor point="TOPLEFT">
+                  <Offset>
+                    <AbsDimension x="6" y="12"/>
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Frames>
+
+          <CheckButton name="ManaMinder_Options_Bars_Show_Check" inherits="OptionsCheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT">
+                <Offset>
+                  <AbsDimension x="8" y="-6"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnShowLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnShowChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="ManaMinder_Options_Bars_Show_OOC_Check" inherits="OptionsCheckButtonTemplate">
+            <Size>
+              <AbsDimension x="24" y="24"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Show_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="8" y="2"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnShowOutOfCombatLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnShowOutOfCombatChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="ManaMinder_Options_Bars_Show_Solo_Check" inherits="OptionsCheckButtonTemplate">
+            <Size>
+              <AbsDimension x="24" y="24"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Show_OOC_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="2"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnShowSoloLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnShowSoloChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="ManaMinder_Options_Bars_Show_Group_Check" inherits="OptionsCheckButtonTemplate">
+            <Size>
+              <AbsDimension x="24" y="24"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Show_Solo_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="2"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnShowGroupLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnShowGroupChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="ManaMinder_Options_Bars_Show_Raid_Check" inherits="OptionsCheckButtonTemplate">
+            <Size>
+              <AbsDimension x="24" y="24"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Show_Group_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="2"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnShowRaidLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnShowRaidChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="ManaMinder_Options_Bars_Lock_Check" inherits="OptionsCheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Show_Raid_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="-8" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnLockLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnLockChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="ManaMinder_Options_Bars_Tooltips_Check" inherits="OptionsCheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Lock_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="6"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnTooltipsLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnTooltipsChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="ManaMinder_Options_Bars_Test_Check" inherits="OptionsCheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Tooltips_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="6"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnTestLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.barsFrame:OnTestChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+        </Frames>
+        <Scripts>
+          <OnLoad>
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+          </OnLoad>
+        </Scripts>
+      </Frame>
+
+      <Frame name="$parent_Display_Section" inherits="OptionFrameBoxTemplate">
+        <Size>
+          <AbsDimension x="281" y="212"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_Visibility_Section" relativePoint="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="4" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="$parentText" inherits="GameFontHighlight" text="Display">
+              <Anchors>
+                <Anchor point="TOPLEFT">
+                  <Offset>
+                    <AbsDimension x="6" y="12"/>
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Frames>
+
+          <Slider name="ManaMinder_Options_Bars_Width_Slider" inherits="OptionsSliderTemplate">
+            <Size>
+              <AbsDimension x="260" y="17"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+                <Offset>
+                  <AbsDimension x="10" y="-20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnValueChanged>
+                  ManaMinder.optionsFrame.barsFrame:OnWidthChange(this:GetValue())
+              </OnValueChanged>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnWidthLoad()
+              </OnLoad>
+            </Scripts>
+          </Slider>
+
+          <Slider name="ManaMinder_Options_Bars_Height_Slider" inherits="OptionsSliderTemplate">
+            <Size>
+              <AbsDimension x="260" y="17"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Width_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="-21" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnValueChanged>
+                  ManaMinder.optionsFrame.barsFrame:OnHeightChange(this:GetValue())
+              </OnValueChanged>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnHeightLoad()
+              </OnLoad>
+            </Scripts>
+          </Slider>
+
+          <Slider name="ManaMinder_Options_Bars_Margin_Slider" inherits="OptionsSliderTemplate">
+            <Size>
+              <AbsDimension x="260" y="17"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Height_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="-21" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnValueChanged>
+                  ManaMinder.optionsFrame.barsFrame:OnMarginChange(this:GetValue())
+              </OnValueChanged>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnMarginLoad()
+              </OnLoad>
+            </Scripts>
+          </Slider>
+
+          <Slider name="ManaMinder_Options_Bars_Font_Size_Slider" inherits="OptionsSliderTemplate">
+            <Size>
+              <AbsDimension x="260" y="17"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Margin_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="-21" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnValueChanged>
+                  ManaMinder.optionsFrame.barsFrame:OnFontSizeChange(this:GetValue())
+              </OnValueChanged>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnFontSizeLoad()
+              </OnLoad>
+            </Scripts>
+          </Slider>
+
+          <Frame name="ManaMinder_Options_Bars_Texture_DropDown" inherits="UIDropDownMenuTemplate" enableMouse="true">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Font_Size_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="112" y="-22"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Layers>
+              <Layer level="ARTWORK">
+                <FontString name="$parent_Text" inherits="GameFontNormalSmall" justifyH="LEFT" text="Texture">
+                  <Anchors>
+                    <Anchor point="TOPLEFT">
+                      <Offset x="21" y="9" />
+                    </Anchor>
+                    <Anchor pont="BOTTOMRIGHT">
+                      <Offset x="0" y="0" />
+                    </Anchor>
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnTextureDropDownLoad()
+              </OnLoad>
+              <OnEnter>
+                  GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                  GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </Frame>
+
+          <Frame name="ManaMinder_Options_Bars_Background_Picker" inherits="ManaMinder_ColorPicker">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Font_Size_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="2" y="-28" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnBackgroundPickerLoad()
+              </OnLoad>
+            </Scripts>
+          </Frame>
+
+        </Frames>
+        <Scripts>
+          <OnLoad>
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+          </OnLoad>
+        </Scripts>
+      </Frame>
+
+      <Frame name="$parent_Ready_Section" inherits="OptionFrameBoxTemplate">
+        <Size>
+          <AbsDimension x="186" y="140"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_Visibility_Section" relativePoint="BOTTOMLEFT">
+            <Offset>
+              <AbsDimension x="0" y="-18"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="$parentText" inherits="GameFontHighlight" text="Ready State">
+              <Anchors>
+                <Anchor point="TOPLEFT">
+                  <Offset>
+                    <AbsDimension x="6" y="12"/>
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Frames>
+
+          <Frame name="ManaMinder_Options_Bars_Ready_Background_Picker" inherits="ManaMinder_ColorPicker">
+            <Anchors>
+              <Anchor point="TOPLEFT">
+                <Offset>
+                  <AbsDimension x="12" y="-13" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnReadyBackgroundLoad()
+              </OnLoad>
+            </Scripts>
+          </Frame>
+
+          <Frame name="ManaMinder_Options_Bars_Ready_Font_Picker" inherits="ManaMinder_ColorPicker">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Ready_Background_Picker">
+                <Offset>
+                  <AbsDimension x="0" y="-20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnReadyFontLoad()
+              </OnLoad>
+            </Scripts>
+          </Frame>
+
+          <Slider name="ManaMinder_Options_Bars_Ready_Alpha_Slider" inherits="OptionsSliderTemplate">
+            <Size>
+              <AbsDimension x="162" y="17"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Ready_Font_Picker" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="-20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnValueChanged>
+                  ManaMinder.optionsFrame.barsFrame:OnReadyAlphaChange(this:GetValue())
+              </OnValueChanged>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnReadyAlphaLoad()
+              </OnLoad>
+            </Scripts>
+          </Slider>
+
+          <EditBox name="ManaMinder_Options_Bars_Ready_Text" autoFocus="false" inherits="InputBoxTemplate">
+            <Size x="156" y="20" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Ready_Alpha_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="6" y="-26"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Layers>
+              <Layer level="OVERLAY">
+                <FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT">
+                  <Size x="156" y="15" />
+                  <Anchors>
+                    <Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT" />
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnReadyTextLoad()
+              </OnLoad>
+              <OnEnterPressed>
+                  this:ClearFocus()
+                  ManaMinder.optionsFrame.barsFrame:OnReadyTextChange(this:GetText())
+              </OnEnterPressed>
+              <OnEscapePressed>
+                  this:ClearFocus()
+              </OnEscapePressed>
+              <OnEnter>
+                  if this.tooltipText then
+                    GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                    GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+                  end
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide()
+              </OnLeave>
+            </Scripts>
+          </EditBox>
+
+        </Frames>
+        <Scripts>
+          <OnLoad>
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+          </OnLoad>
+        </Scripts>
+      </Frame>
+
+      <Frame name="$parent_Deficit_Section" inherits="OptionFrameBoxTemplate">
+        <Size>
+          <AbsDimension x="186" y="140"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_Ready_Section" relativePoint="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="4" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="$parentText" inherits="GameFontHighlight" text="Deficit State">
+              <Anchors>
+                <Anchor point="TOPLEFT">
+                  <Offset>
+                    <AbsDimension x="6" y="12"/>
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Frames>
+
+          <Frame name="ManaMinder_Options_Bars_Deficit_Background_Picker" inherits="ManaMinder_ColorPicker">
+            <Anchors>
+              <Anchor point="TOPLEFT">
+                <Offset>
+                  <AbsDimension x="12" y="-13" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnDeficitBackgroundLoad()
+              </OnLoad>
+            </Scripts>
+          </Frame>
+
+          <Frame name="ManaMinder_Options_Bars_Deficit_Font_Picker" inherits="ManaMinder_ColorPicker">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Deficit_Background_Picker">
+                <Offset>
+                  <AbsDimension x="0" y="-20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnDeficitFontLoad()
+              </OnLoad>
+            </Scripts>
+          </Frame>
+
+          <Slider name="ManaMinder_Options_Bars_Deficit_Alpha_Slider" inherits="OptionsSliderTemplate">
+            <Size>
+              <AbsDimension x="162" y="17"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Deficit_Font_Picker" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="-20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnValueChanged>
+                ManaMinder.optionsFrame.barsFrame:OnDeficitAlphaChange(this:GetValue())
+              </OnValueChanged>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnDeficitAlphaLoad()
+              </OnLoad>
+            </Scripts>
+          </Slider>
+
+          <EditBox name="ManaMinder_Options_Bars_Deficit_Text" autoFocus="false" inherits="InputBoxTemplate">
+            <Size x="156" y="20" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Deficit_Alpha_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="6" y="-26"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Layers>
+              <Layer level="OVERLAY">
+                <FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT">
+                  <Size x="156" y="15" />
+                  <Anchors>
+                    <Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT" />
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnDeficitTextLoad()
+              </OnLoad>
+              <OnEnterPressed>
+                this:ClearFocus()
+                ManaMinder.optionsFrame.barsFrame:OnDeficitTextChange(this:GetText())
+              </OnEnterPressed>
+              <OnEscapePressed>
+                this:ClearFocus()
+              </OnEscapePressed>
+              <OnEnter>
+                  if this.tooltipText then
+                    GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                    GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+                  end
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide()
+              </OnLeave>
+            </Scripts>
+          </EditBox>
+
+        </Frames>
+        <Scripts>
+          <OnLoad>
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+          </OnLoad>
+        </Scripts>
+      </Frame>
+
+      <Frame name="$parent_Cooldown_Section" inherits="OptionFrameBoxTemplate">
+        <Size>
+          <AbsDimension x="186" y="140"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_Deficit_Section" relativePoint="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="4" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="$parentText" inherits="GameFontHighlight" text="Cooldown State">
+              <Anchors>
+                <Anchor point="TOPLEFT">
+                  <Offset>
+                    <AbsDimension x="6" y="12"/>
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Frames>
+
+          <Frame name="ManaMinder_Options_Bars_Cooldown_Background_Picker" inherits="ManaMinder_ColorPicker">
+            <Anchors>
+              <Anchor point="TOPLEFT">
+                <Offset>
+                  <AbsDimension x="12" y="-13" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnCooldownBackgroundLoad()
+              </OnLoad>
+            </Scripts>
+          </Frame>
+
+          <Frame name="ManaMinder_Options_Bars_Cooldown_Font_Picker" inherits="ManaMinder_ColorPicker">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Cooldown_Background_Picker">
+                <Offset>
+                  <AbsDimension x="0" y="-20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnCooldownFontLoad()
+              </OnLoad>
+            </Scripts>
+          </Frame>
+
+          <Slider name="ManaMinder_Options_Bars_Cooldown_Alpha_Slider" inherits="OptionsSliderTemplate">
+            <Size>
+              <AbsDimension x="162" y="17"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Cooldown_Font_Picker" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="-20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnValueChanged>
+                ManaMinder.optionsFrame.barsFrame:OnCooldownAlphaChange(this:GetValue())
+              </OnValueChanged>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnCooldownAlphaLoad()
+              </OnLoad>
+            </Scripts>
+          </Slider>
+
+          <EditBox name="ManaMinder_Options_Bars_Cooldown_Text" autoFocus="false" inherits="InputBoxTemplate">
+            <Size x="156" y="20" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Bars_Cooldown_Alpha_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="6" y="-26"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Layers>
+              <Layer level="OVERLAY">
+                <FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT">
+                  <Size x="156" y="15" />
+                  <Anchors>
+                    <Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT" />
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.barsFrame:OnCooldownTextLoad()
+              </OnLoad>
+              <OnEnterPressed>
+                this:ClearFocus()
+                ManaMinder.optionsFrame.barsFrame:OnCooldownTextChange(this:GetText())
+              </OnEnterPressed>
+              <OnEscapePressed>
+                this:ClearFocus()
+              </OnEscapePressed>
+              <OnEnter>
+                  if this.tooltipText then
+                    GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                    GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+                  end
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide()
+              </OnLeave>
+            </Scripts>
+          </EditBox>
+
+        </Frames>
+        <Scripts>
+          <OnLoad>
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+          </OnLoad>
+        </Scripts>
+      </Frame>
+
+    </Frames>
+  </Frame>
+
+</Ui>

@@ -1,0 +1,420 @@
+# Questie-Octo Changelog
+
+## Unreleased
+- Added a Quest Nodes dropdown to the world map for switching objective nodes between Clustered and Full Nodes. It sits below ModernMapMarkers-octo's Filter Markers and Find Marker controls when present and shares the existing options setting.
+- Click zone titles in the tracker to collapse or expand their quests. Collapsed zones are remembered per character.
+- Added Clickthrough Tracker under Tracker options. When enabled, the whole tracker passes mouse clicks and scrolling through to the world; turn it off in options to restore interaction.
+- Map and minimap creature tooltips now show database creature levels or level ranges, including item-start sources, nearby/clustered markers, and Shift-hover details.
+- Fixed quest links with ID 0 showing unavailable details when their title uniquely matches a database quest, including Fiery Blaze Enchantments.
+- Added an Objective Node Opacity slider to the Map options for Clustered and Full Nodes. Objective nodes and their glow become fully opaque on mouseover and return to the configured opacity afterward. Shared pickup, turn-in, and service markers remain visible.
+
+## 1.44
+- Corrected seven stale Moonwhisper Coast quest-giver positions using the current supplied Tortoise static spawns and the current Octo client WorldMapArea geometry. This fixes available/turn-in markers that were appearing around Tyrandas instead of their current locations.
+- The corrected NPCs are Arch Druid Renethra Moonwater, Sentinel Commander Silverstreak, Zarazar Sagewind, Irea Dawncaller, Elendon Truebough, Talanis Amberscribe, and Sister Mirallun. This includes the reported Serpents Without Heads, The Light of Elunaris, and Keeper of the Broken Grove marker locations.
+- Re-audited the current Moonwhisper quest-giver coordinate class: these seven were the only large single-spawn outliers; the remaining current single-spawn quest givers agree with server/client projection within 0.2 map percentage points. No quest availability, chain, objective, polling, OnUpdate, or SavedVariables behavior changed.
+
+## 1.43
+- Fixed follow-up quest markers that could disappear when their completed prerequisite was itself filtered as low-level and missing from the bulk completion cache. The availability service now repairs only that specific low-level prerequisite history through the existing cached ClassicAPI direct-completion fallback.
+- Audited Moonwhisper Coast/Narvalis Point end-to-end: The Light of Elunaris (42087), Scales of the Tideblade (42089), Serpents Without Heads (42090), and their surrounding current-server prerequisite rows, starters, coordinates, and map-candidate entries are present and consistent. The failure was availability-state repair, not missing map data.
+- Audited the wider current prerequisite graph: 970 ordinary level-differential prerequisite edges are covered by the regression class. The targeted fix adds no direct predecessor queries when the prerequisite remains inside the configured low-level range, and avoids the broad completion-query expansion rejected during the audit. No quest data, map coordinates, polling, OnUpdate, or SavedVariables schema changed.
+
+## 1.42
+- Corrected optional `NextQuestInChain` availability to match Tortoise in both directions: skipped breadcrumb quests no longer act as completion prerequisites for their follow-ups, while an actually active breadcrumb still blocks that follow-up until it is finished or abandoned.
+- Audited all 90 current chain-only relationships; 86 stale runtime prerequisite entries are now ignored only for completion gating, and four additional active-only chain locks are now represented explicitly. Real `PrevQuestId`/`NextQuestId` prerequisites remain unchanged.
+- Hardened recursive skipped-quest inference so authored optional links can never be pulled into recursive traversal after the first explicit edge. No quest is marked complete, and no polling, `OnUpdate`, SavedVariables, quest-giver, objective, map, or tracker system changed.
+
+## 1.41
+- Completed a second-pass audit of all 329 quest-chain relations deferred by 1.40, including the supplied Tortoise quest-availability code, Turtle SQL/updates, Questie 5.2.3/6.0.0, pfQuest ClassicAPI/Turtle, and targeted public pages for conflicting cases.
+- Added 323 corroborated `NextQuestInChain` relations as **immediate-only** visibility locks. They can hide an earlier unavailable quest when its direct successor is active/rewarded, but they are never recursively traversed through branches, exclusivity, events, or resettable chains.
+- Kept one relation already covered by authored data, two disabled relations archive-only, rejected the contradicted 1083 → 1084 and 41388 → 41389 links, and left 40749 → 40750 archive-only because the successor is absent from the loaded snapshot/runtime. No skipped quest is marked complete; no polling, `OnUpdate`, SavedVariables schema or quest-giver data changed.
+
+## 1.40
+- Audited all 1,822 archived Turtle quest-chain edges against supplied Questie 5.2.3, Questie 6.0.0, pfQuest ClassicAPI, pfQuest Turtle, server quest-template/update snapshots, and individually retrievable public pages; preserved an evidence matrix and remaining deferred cases in a source-only archive.
+- Restored only three separately corroborated optional introductions: Ironband's Excavation (436 → 297), Sergra Darkthorn (860 → 844), and Fiora Longears (1132 → 1133). These now disappear after the immediate follow-up becomes active/rewarded, including after skipped introductions.
+- Left 1,487 vetted generated links unchanged and kept the other uncertain, branched, repeatable and custom chains out of automatic promotion. No quest history, eligibility requirements, quest-giver changes, polling or SavedVariables edits.
+
+## 1.39
+- Restored the hand-audited optional breadcrumb relationship Trouble In Darkshore? (730) → The Absent Minded Prospector (729). Quest 729 has no server `PrevQuestId` because it can be taken without 730, so the conservative 1.38 projection correctly excluded it; a player report and independent quest-series descriptions confirm the introduction becomes unavailable after progression.
+- The existing completion/progression service now hides quest 730 when quest 729 is active or rewarded, including its cached ordinary completion-flag fallback. No generic prerequisite inference, quest completion fabrication, polling, or unrelated quest record changes.
+
+## 1.38
+- Audited all 1,822 nonzero NextQuestInChain links in the supplied Turtle SQL snapshot against the 6,704 current compiled quests and the second, reciprocal SQL predecessor field. Promoted only 1,487 ordinary single-path links; archived the remaining 335 with explicit reasons. Preserved the two separately audited 1.37 introductory links without importing 38 weaker SQL-only breadcrumbs.
+- Added a compact offline-generated progression projection. A later active/rewarded quest can hide an earlier unfinished introduction along a vetted linear chain, even when intermediate quests were skipped. This is display-only: skipped quests are never marked completed and no server quest state is modified.
+- Preserved repeatable/event/Hardcore/exclusive/branch behavior and existing direct-flag checks for the two audited 1.37 breadcrumbs. No new polling, OnUpdate, character DB writes or bulk completion-flag queries.
+
+## 1.37
+- Restored the missing reverse progression links for Mountaineer Stormpike's Task (1339 -> 1338) and Report to Mountaineer Rockgar (468 -> 455), verified against current supplied Turtle quest-template rows, reciprocal prerequisites, and classic player reports.
+- Introductory markers now disappear if their follow-up is active or completed. When the bulk completion cache is incomplete, the cached per-quest completion flag of an ordinary successor provides a narrow fallback.
+- Audited the wider failure class without bulk-importing historical chain edges; no changes to unrelated quest chains, repeatability, map logic, polling, or SavedVariables.
+
+## 1.36
+- Audited all 83 tracked flight masters against the supplied server taxi/spawn snapshot and the current client TaxiNodes.dbc, including eight custom nodes absent from the server SQL.
+- Corrected Treggi (62624) at Slickwick Oil Rig to Horde-only flight service; the client taxi node does not have an Alliance mount.
+- Suppressed obsolete Shaethis Darkoak (1233) flight markers; the server snapshot has no spawn and the client has no taxi point at either inherited location. Original unit/source data remains available for future re-evaluation.
+- Did not infer or create markers for unrepresented taxi/transport nodes, alter existing live-verified location overrides, or change quest data.
+
+## 1.35
+- Corrected Mudsprocket flight master Razzit (61133) to Horde-only flight service: the supplied server taxi node 180 has no Alliance mount, despite the neutral NPC and stale cross-faction tracking entry. Alliance characters no longer see Questie-Octo's unavailable Razzit marker.
+- Flight-master World Map/minimap tooltips now identify the service faction (Alliance, Horde, or both). No quest data or unrelated map-service categories changed.
+
+
+## 1.34
+- Added five website-corroborated objective quantities for three existing quests: Draenei Divination, Rite of Resurrection, and The Silver Blade. Display counts only; live Quest Log progress still wins.
+- Generated a source-only lookup of the six salvage archives with exact evidence pointers and parent-item/source distinctions; kept uncertain mastery rewards and all unresolved data out of gameplay.
+- No new quests, source drops, rewards, map markers, availability, polling, or compiled runtime data changes.
+
+## 1.33
+- Archived historical quest-reward provenance for 11 weapon-mastery books and older item/creature-loot records for two Damaged Relic Mechanisms, without promoting historical drop chances to gameplay.
+- Only two Squirrel Token origins remain unresolved from the focused 15-item investigation; no gameplay or compiled database changes.
+
+## 1.32
+- Archived source-only acquisition provenance for Cuergo's Treasure Map, Warlord Goretooth's Command, and Elegant Letter, including spell, reagent, container-loot, and gossip-script references.
+- No gameplay, compiled DB, quest marker, reward or quest availability changes.
+
+## 1.31
+- Preserved source-only acquisition provenance for four spell-assembled quest-starting books and the Hardcore missive mailed by server code; documented unresolved and commented-out source cases.
+- No gameplay, compiled data, map markers, quest availability, rewards or runtime behavior changes.
+
+## 1.30
+- Continued source-only quest-data salvage: preserved upstream provenance for contained quest-start items, classified remaining item-source gaps against quest rewards, vendor and mail records, and archived additional individually indexed Turtle quest pages.
+- No new in-game quests, map markers, rewards, availability or runtime behavior.
+
+## 1.29
+- Continued the Turtle database salvage in a **source-only archive**: preserved item-inside-item starter sources, relations for previously archived server-only quests, and indexed website quest/reward observations with uncertainty and provenance.
+- No new quests, runtime rewards, map markers, Quest Browser records, availability changes, or gameplay updates.
+
+## 1.28
+- Added a source-only archive of five server-snapshot quest rows excluded from the playable quest index; kept a reference roster of 720 quests already present in Questie-Octo but absent from the snapshot, plus three unverified website reward observations.
+- Archived data is not loaded or compiled and does not change in-game quest availability, markers, browser results, rewards, or runtime behavior.
+
+## 1.27
+- Fixed chat-linked quests triggering Vanilla’s “Unknown link type” error when opened, including with pfUI enabled. Questie-Octo now handles quest hyperlinks before the native item-link handler, while other links keep their existing behavior.
+- Quest links absent from the local database now show a safe unavailable-details tooltip instead of producing a Lua error.
+
+## 1.26
+- Restored **In Search of the Owner**, including its Uncommon Journal starter in Hillsbrad and Roheg Clay turn-in in Stormwind, from current server quest/relation/spawn evidence.
+- Restored the two missing Hardcore mystery-chain steps **A Mysterious Errand** and **The 52nd Package** from current Turtle server/database evidence.
+- Fixed the Hardcore mystery-chain prerequisites so the sequence now progresses 40914 -> 40915 -> 40916 -> 40917 through 40923 instead of entering the stale 40917/40922 prerequisite loop.
+- Updated the restored chain segment to the current server quest names/text and kept its dungeon-style `[level+]` classification, Hardcore gating, objective count, and Maraudon objective color mapping consistent with existing Questie-Octo behavior.
+- Audited current starter/finisher relation differences as a class; deprecated/cancelled rows remain suppressed and intentional locatable-object navigation proxies are preserved instead of being replaced by unlocatable formal NPC relations.
+
+## 1.25
+- Fixed fallback objective matching for quests with several similarly named targets, preventing one objective's completion state from being attached to the wrong map marker when ClassicAPI does not provide a reliable live objective ID.
+- **Witherbark Cages** now distinguishes the First, Second, and Third cages by their objective wording instead of relying on edit distance between similar names.
+- Audited the same multi-objective matching path against current server quest objectives; the token-aware matcher fixes additional ordinal/location-style cases without regressing the previously correct matches.
+
+## 1.24
+- Shift + Left Click on a World Map or minimap marker that represents several quests now opens the Quest Browser with every quest attached to that exact marker in the result list.
+- Single-quest markers keep the existing direct-open behavior, and the marker's primary quest remains selected initially when several quests are shown.
+
+## 1.23
+- Kept the authored objective wording for World Map/minimap Shift-hover travel and conversation quests instead of reducing them to generic destination text.
+- Fixed wrapped Shift-hover objective text being reflowed a second time by Vanilla tooltips, preventing awkward short continuation fragments while preserving the tracker-style hanging indent.
+- Quest Browser windows opened by Shift + Left Click now use FULLSCREEN_DIALOG strata so they appear in front of the World Map.
+
+## 1.22
+- Improved compact World Map/minimap Shift-hover objective layout: long fallback rows now keep a tracker-style hanging indent, and pure travel/talk quests use their real destination NPC/object instead of a long prose sentence when no counted objective exists.
+- Added Shift + Left Click on World Map and minimap quest markers to open the represented quest directly in the Quest Browser.
+- Kept authoritative required objective counts for available quests and live Quest Log progress for active quests; chat-link and tracker behavior are unchanged.
+
+## 1.21
+- Limited the compact Shift-hover quest detail view to World Map and minimap quest markers; tracker rows now keep their normal hover tooltip because their objectives are already visible in the tracker.
+- Changed map/minimap Shift-hover objectives to a tracker-style layout with `[level+] Quest` titles and `- objective` rows, using live Quest Log counters for active quests.
+- Added a compact build-time projection of authoritative quest objective requirement counts so available/non-active quests can show required item/creature/object amounts instead of generic objective names when the supplied server data provides them.
+- Kept Rewards compact beneath the objective rows and left full chat-linked quest tooltips unchanged.
+
+## 1.20
+- Reworked Shift-hover quest details into a compact Title / Objectives / Rewards view that stays near the mouse on the tracker, World Map, and minimap.
+- Active quests use their live objective progress when available; other quests fall back to the authored/database objective summary.
+- Fixed repeatable quest status resolution so a currently available repeatable is not mislabeled as completed merely because it was rewarded before.
+- Chat-linked quest details remain unchanged and keep the full description/level presentation.
+
+## 1.19
+- Extended Shift-hover full quest details to World Map and minimap quest markers, using the same quest-detail content builder as Questie-Octo chat links.
+- Fixed the tracker Shift-hover tooltip occasionally stretching into a very wide horizontal panel by rebuilding the Vanilla tooltip from a hidden/cleared state and bounding hover-only quest prose.
+- Map/minimap Shift state now refreshes immediately through `MODIFIER_STATE_CHANGED`; normal map marker tooltips and tracker interactions remain unchanged when Shift is not held.
+
+## 1.18
+- Holding Shift while hovering an active quest in the Questie-Octo tracker now shows the same detailed quest information used by Questie-Octo chat quest links: status, objective text, full description, required level, and quest level.
+- The detailed tooltip switches immediately when Shift is pressed or released through ClassicAPI's modifier-state event; no polling or new OnUpdate loop is used.
+- Normal tracker hover focus and click behavior are preserved, including Shift + Click to stop tracking a quest.
+
+## 1.17
+- Reworked active-objective colors around actual same-map quest co-occurrence so different quests are kept perceptually farther apart instead of merely avoiding exact RGB duplicates.
+- Default and all four Objective Color Vision modes now use stable, precomputed per-quest colors with a validated same-map CIEDE2000 floor after 8-bit rendering.
+- The color change remains presentation-only: one quest keeps one stable color across World Map, minimap, Full Nodes, clustered tint, and glow, with no runtime map graph or dynamic recoloring.
+
+## 1.16
+- Corrected incorrect quest-item drop and gather percentages across Moonwhisper Coast, including creature drops and ground objects that were being shown as placeholder 1% chances.
+- Fixed the Octo item-source correction layer so audited Turtle loot corrections are merged into existing item records instead of being skipped when the item already exists.
+
+## 1.15
+- Removed exact visible RGB collisions between different active-quest objective colors while preserving the 1.12 palette's overall appearance.
+- Added tiny deterministic per-quest color tie-breaks so different quests do not quantize to the same map/minimap color, including in the Objective Color Vision accessibility modes when those quests can appear on the same map.
+
+## 1.14
+- Fixed active dungeon/elite/raid quests losing the `+` level marker in the Quest Log or tracker when the native client quest tag is missing.
+- Quest Log, tracker, World Map, and minimap now use the same audited quest-type fallback for `[level+]` presentation.
+
+## 1.13
+- Fixed missing dungeon `+` markers on Razorfen Kraul quests whose current server quest type is incorrectly stored as a normal quest.
+- **The Gnarled Bramblehide**, **Tainted Brambleheart**, and **Razorfen Grog** now display `[level+]` before acceptance, matching their dungeon-only objectives.
+
+## 1.12
+- Fixed batches of nearby quest IDs receiving almost identical objective colors on the World Map and minimap, especially in dense custom zones such as Grim Reaches.
+- Active quest objective colors now spread neighboring quests across a much wider bright palette while keeping each quest's color stable across maps, objectives, and sessions.
+- Existing Objective Color Vision accessibility modes continue to use the same central quest-color path.
+
+## 1.11
+- Fixed missing map guidance for several exploration and scripted quest objectives, including custom Turtle WoW exploration quests.
+- Corrected **The Missing Diplomat** to point to Sentry Point and added the missing **Resupplying the Excavation** destination.
+- Added destination markers for the six Children's Week sightseeing quests.
+- Added map guidance for the scripted Murkdeep, Twilight Corrupter, Vartrus the Ancient, and Malfurion Stormrage encounters when their normal NPC spawns do not exist yet.
+
+## 1.10
+- Fixed **Data Rescue** guidance in Gnomeregan so the punch-card terminals are shown as the quest progresses.
+- Matrix Punchograph 3005-A now appears on the Gnomeregan Entrance map when you have a White Punch Card; the B, C, and D terminals appear at the correct dungeon locations for the later cards.
+- The marker automatically advances to the next terminal after your punch card is upgraded.
+
+## 1.09
+- Fixed clustered quest objectives sometimes disappearing on shared entrance/interior maps such as Wailing Caverns, Uldaman, Maraudon, Dire Maul, and Timbermaw Hold.
+- Item-start markers now stay on the correct entrance or dungeon map before they are grouped, including very rare zone-wide starter-item drops.
+- Full Nodes behavior and the existing Gnomeregan and Karazhan map handling are preserved.
+
+## 1.08
+- Fixed Wailing Caverns, Uldaman, Maraudon, Dire Maul, and Timbermaw Hold entrance maps sharing their dungeon/raid AreaTable ID and inheriting markers from the wrong map.
+- Corrected the minimap geometry used for each entrance/interior pair so objective nodes line up with the map the player is actually in.
+- Rebuilt stale Dire Maul and Timbermaw Hold locations against the current client/server maps, including Dire Maul interior AreaTriggers, and removed one stale Maraudon source location.
+- Sources that legitimately exist on both sides are kept on both maps and separated by their real coordinates instead of being hidden or assigned wholesale to one map.
+- Normal quest-loading speed, ZoneBootstrap batching, minimap update frequency, and Karazhan's existing fail-closed handling are unchanged.
+
+## 1.07
+- Fixed Gnomeregan's entrance map and dungeon map sharing AreaTable ID 721 and leaking each other's quest/objective/service markers.
+- Rebuilt Gnomeregan interior creature, object, and quest AreaTrigger coordinates against the current client WorldMapArea geometry and current server spawns, fixing nodes projected onto the wrong parts of the dungeon map.
+- Removed two stale Gnomeregan creature locations that no longer have current server spawns, while preserving sources such as the Mechanical Mailbox that legitimately exist in both entrance and interior contexts.
+- The split is presentation/map-context only: normal quest loading speed, ZoneBootstrap batching, minimap update frequency, and the rest of the world-map architecture are unchanged.
+
+## 1.06
+- Fixed instance/detail World Maps such as Razorfen Kraul being mistaken for the global World overview when the client reports a nonstandard continent ID.
+- A concrete non-World map texture now takes priority over the client's special continent sentinel, preserving the validated rapid World-overview protection while allowing dungeon maps to render their quest objectives.
+- When texture identity is briefly unavailable, Questie-Octo can use the native selected-zone label only when it resolves uniquely to real WorldMapArea artwork.
+- No quest-loading delay, polling, database change, or additional persistent map index was added.
+
+## 1.05
+- Fixed active dungeon quest objectives being visible on the minimap but missing from some dungeon/detail World Maps such as Razorfen Kraul.
+- World Map fallback identity now distinguishes duplicate AreaTable names using the current client's WorldMapArea data instead of dropping the map context.
+- The fix is generic for similarly duplicated dungeon/map names and does not add polling, slower map rendering, or hardcoded dungeon IDs.
+
+## 1.04
+- Fixed a World Map pin-pool error that could appear after map pins had been recycled and reused for a while.
+- The frame pool now uses Lua 5.0-safe list removal, preventing a stale pool size from returning a nil map pin.
+- Reloading the UI is no longer needed to recover from this specific map-pin reuse failure.
+- Includes the 1.03 battleground empty-map performance correction; normal quest/map response speed is unchanged.
+
+## 1.03
+- Fixed remaining unnecessary minimap work on battleground/other maps where Questie-Octo has no pins to display.
+- Starter-less compiled maps with no active objectives now publish an empty map plan immediately instead of queueing an empty zone-priority job.
+- Empty minimap plans now stay idle instead of continuously reading player position or probing/retargeting the native minimap context; real quest/objective markers still wake the normal fast path immediately.
+- This is a performance-only correction: normal zone quest loading speed and the existing 400-candidate fast ZoneBootstrap behavior are unchanged.
+
+## 1.02
+- Hovering an active quest in the tracker now focuses that quest's active objective markers on both the World Map and minimap.
+- Other active quests' objective markers fade temporarily while hovered, then return immediately when the cursor leaves the quest.
+- Available/completed quests, item-start markers, special quests, Flight Masters, rares, and service markers are never dimmed; shared clustered pins containing the hovered quest stay fully visible.
+- The focus effect is presentation-only and uses existing visible pins, so it adds no quest/node rebuild, map scan, polling loop, or navigation delay.
+
+## 1.01
+- Fixed a rare map-cleanup error that could occur when quest state changed after the map cache was already updated.
+- Reduced unnecessary background work when turning in quests and when reputation, profession, or Hardcore eligibility changes.
+- Improved long-session World Map memory behavior by reusing map pins instead of retaining old zone pins and their quest data.
+- Reduced map, continent, node, and tooltip refresh work so local quest changes stay local while keeping Questie-Octo's current fast in-game response.
+
+## 1.0.99
+- Improved quest accept, abandon, and turn-in map cleanup so removing one quest updates only the maps that quest actually uses instead of walking every prepared map.
+- Duplicate removal events for an already-cleared quest no longer trigger another prepared-map revision pass.
+
+## 1.0.98
+- Fixed a large FPS hitch when entering starter-less maps such as Warsong Gulch by no longer rescanning all 6,701 quests when the compiled map index already proves there are no available-quest starters there.
+- Active quest objectives remain supported on those maps; only the unnecessary available-quest fallback scan is skipped.
+- Keeps the validated 1.0.96 Objective Color Vision accessibility modes unchanged.
+
+## 1.0.96
+- Added **Other → Accessibility → Objective Color Vision** with Default, Red-deficient, Green-deficient, Blue-deficient, and High Contrast modes.
+- Accessibility modes recolor active quest objectives consistently across Full Nodes, Clustered objective colors, and enabled map/minimap glow without changing available, completed, special, rare, or service markers.
+- Default mode preserves the validated 1.0.95 quest colors exactly, and changing modes refreshes visible map/minimap pins immediately without rebuilding quest nodes.
+
+## 1.0.95
+- Improved per-quest objective colors so dense quest areas use a much wider, easier-to-distinguish palette inspired by pfQuest.
+- Full Nodes now use the wider quest color directly instead of muting it toward similar dark/pastel shades.
+- Clustered Map/Minimap icon glow now follows the same stable per-quest color, so every objective from one quest shares one visual identity.
+
+## 1.0.94
+- Fixed World Map pins being stranded on the two-continent World overview when zooming out faster than an asynchronous continent render could finish.
+- The global World texture is now recognized even during the client's brief stale-continent transition, so it can never be mistaken for Kalimdor or map ID 0.
+- Abandoning a map render now hides both the last completed pin set and any pins already drawn by the unfinished render.
+
+## 1.0.92
+- Shift + Left Click on a quest while typing in chat now inserts a clickable quest link instead of plain quest-name text.
+- Normal Shift + Left Click tracking/untracking is unchanged when the chat box is closed.
+- Clicking Questie-Octo quest links continues to open the existing detailed quest-link tooltip.
+
+## 1.0.91
+- Fixed Quest Log changes such as collapsing/expanding categories being able to publish a mixed active-quest snapshot while Questie-Octo was still scanning the old row layout.
+- This prevents unrelated active quests/objectives, timers, and quest-state markers from briefly disappearing because their native Quest Log indices shifted mid-refresh.
+- Tracker links now re-check the quest's current Quest Log index before opening it, avoiding a neighbouring quest during the same brief reindex window.
+
+## 1.0.90
+- Restored the tracker/objective runtime to the accepted 1.0.85 behavior after the 1.0.87-1.0.89 test fixes did not resolve the rare Quest Log category-collapse case.
+- No experimental scroll anchoring or cross-cache objective merging is retained.
+
+## 1.0.85
+- Fixed the Artisan secondary-profession master quests being hidden unless their optional city breadcrumb quest had been completed first.
+- **Nat Pagle, Angler Extreme**, **Clamlette Surprise**, and both faction versions of **Triage** now appear directly when their own level and profession requirements are met.
+- Corrected **To Survive in the Jungle** to its current level-35 minimum while keeping its quest level at 45.
+
+## 1.0.84
+- Completed quest `?` markers now always render above available quest `!` markers when their icons overlap on the World Map or minimap.
+- Existing quest tooltip grouping, icon sizes, and marker visibility settings are unchanged.
+
+## 1.0.83
+- Fixed **Hide Completed Objectives** being ignored for fully completed quests in the tracker.
+- With the option OFF, completed objective lines remain visible beneath completed quests; with it ON, they are hidden as expected.
+
+## 1.0.82
+- Fixed the `+` difficulty marker for available Elite, Dungeon, and Raid quests that have not yet been loaded into the client quest cache.
+- World Map and minimap tooltips now use the server quest type stored in Questie-Octo's compiled data, so dungeon/elite quests such as **The Rampant Groveweald** and **The Unwise Elders** show `[level+]` before acceptance.
+
+## 1.0.81
+- Added a `+` beside the quest level in World Map and minimap tooltips for Elite, Dungeon, and Raid quests.
+- Available dungeon/elite quests now show the same difficulty cue before they are accepted, while active quests continue to follow the native Quest Log tag.
+
+## 1.0.80
+- Reduced item-start quest map clutter by treating drop sources below **1.00%** as rare area markers instead of showing every individual source location.
+- Item-start sources at exactly **1.00%** or higher continue to use the normal detailed source presentation.
+
+## 1.0.79
+- Improved settings compatibility with large UI/addon stacks by keeping Questie-Octo's Ace configuration runtime references stable after addon load.
+- If a required settings library is genuinely unavailable, Questie-Octo now reports which Ace component is missing.
+
+## 1.0.78
+- Fixed quest tracker objective names/progress sometimes staying visually stale after the latest quest data had already loaded.
+- Fixed the Blizzard/pfUI **Quest Timer** getting stuck at the bottom-left while Questie-Octo's tracker is enabled.
+- Questie-Octo now hides the duplicate native timer without taking control of its movable position.
+
+## 1.0.74
+- Fixed **The Maul'ogg Crisis I**, **III**, and **IX** not showing the NPC you actually need to speak with on the map.
+- These conversation objectives now point to **Lord Cruk'Zogg** or **Seer Bol'ukk** while keeping the server's hidden completion credit unchanged.
+
+## 1.0.73
+- Split the World Map quest visibility setting into separate **Available Quests** and **Completed Quests** toggles.
+- You can now hide available `!` markers on the World Map while keeping completed `?` turn-ins visible.
+- Existing settings are preserved on upgrade, and both new toggles remain enabled by default for the current behavior.
+
+## 1.0.72
+- Fixed Questie-Octo marker tooltips not appearing while the native World Map is fullscreen.
+- World Map marker hover information now stays available in fullscreen without changing minimap tooltip behavior.
+
+## 1.0.71
+- Changed fullscreen World Map refresh handling so pending quest markers can keep processing without needing to minimize the map first.
+- The existing World Map pin layout, windowed-map behavior, and minimap logic are otherwise unchanged.
+
+## 1.0.70
+- Added generic support for quests that are ordinary on their first completion and become repeatable afterward.
+- These quests now show a normal yellow `!` the first time and a blue repeatable `!` only after that character has completed them once.
+- Repeatable visibility and quest automation settings apply only after the first completion, with no polling or background work.
+- **Oink, Oink!** now uses this confirmed first-time-ordinary / later-repeatable behavior.
+
+## 1.0.69
+- Fixed quests that become repeatable after their first completion continuing to show an ordinary yellow quest marker until another map/quest refresh occurred.
+- Live-observed repeatable quests now update their existing map and minimap markers immediately, with no polling or background distance/movement work.
+- **Oink, Oink!** is now recorded as live-confirmed current Octo content: ordinary on its first completion, then repeatable afterward.
+
+## 1.0.68
+- Hid **Join The League!** and **Help The League?** because the current Octo realm keeps those quest IDs as unimplemented placeholder quests.
+- Added **Oink, Oink!** and its Pig quest giver for live verification.
+- Fixed **Shellcoins** so its completed quest points back to **Elodia** for turn-in.
+- Updated **Voryn Skystrider** to the relocated Alah'Thalas flight-master position and removed Baron Rivendare's obsolete Stormwind marker.
+
+## 1.0.66
+- Removed the non-functional **Proximity** tracker sorting option.
+- Tracker sorting now offers only **Zone** and **Level**, avoiding unnecessary background movement/distance work on the Vanilla Lua client.
+
+## 1.0.65
+- Improved **The Burning of Spirits** map guidance so it points to the Burning Blade enemies used with the Burning Gem without showing a fake extra item objective.
+- Added the real **Grain Sack** locations for *Attack from the Inside* and **Blast Powder Keg** locations for *A Cannon's Misfortune*.
+- **Wisdom of Ur** now points to Arch Druid Dreamwind for its conversation objective.
+
+## 1.0.64
+- Quest objective AreaTrigger markers now disappear as soon as their specific exploration/event objective is completed instead of waiting for the entire quest to finish.
+- Multiple equivalent exploration locations disappear together when that shared objective is completed.
+- Ambiguous/custom trigger cases remain visible until quest completion rather than being hidden from guessed objective matching.
+
+## 1.0.63
+- Fixed Lower and Upper Karazhan first-floor quest markers sharing the same internal map identity.
+- Questie-Octo now keeps Lower Karazhan and Upper Karazhan objectives on their correct maps when that content is available.
+- Tracker **Show on Map** also respects the correct Lower/Upper Karazhan context instead of treating both maps as identical.
+
+## 1.0.62
+- Removed unverified center-of-map objective markers for **Ursol** and **Peroth'arn** in Timbermaw Hold.
+- Their quests and quest pickup markers remain available normally; only the unsupported boss objective locations are hidden until verified location data exists.
+
+## 1.0.61
+- Removed the 1.0.60 dungeon entrance quest markers from outdoor maps; normal objectives in pre-instance caves/tunnels and inside dungeons remain unchanged.
+- Dungeon objectives can now use the tracker **Objectives → Show on Map** action when their dungeon/detail map is available to the client, including while inside the dungeon or when another map addon already has that map displayed.
+
+## 1.0.60
+- Added dungeon entrance markers for active dungeon quests, so outdoor maps can point to the verified entrance while the dungeon itself continues to show the real quest objectives.
+- Dungeons with multiple entrances now choose the doorway that best matches the active objective instead of showing every entrance at once.
+- Added entrance guidance for supported Turtle dungeons such as Crescent Grove, Hateforge Quarry, Karazhan Crypt, Gilneas City, Stormwind Vault, and Black Morass alongside the classic dungeon set.
+
+## 1.0.59
+- Fixed stray `~` characters sometimes appearing in unrelated item, player, or other GameTooltips after viewing a Questie-Octo tooltip.
+- Questie-Octo's centered respawn/drop-rate separator now cleans itself up whenever the tooltip is cleared or hidden.
+
+## 1.0.58
+- Fixed **The Sal'Galaz Mines** and **Restoration** missing valid quest objectives.
+- Improved **Marauders of Darrowshire** and **Deeprun Rat Roundup** map guidance so they point to the creatures players actually need to hunt or interact with.
+- Restored the missing **Furen's Notes** delivery objective for **Klockmort Spannerspan**.
+
+## 1.0.57
+- Restored LevelRange-style **Friendly / Hostile / Contested** zone information, based on the player faction.
+- Fixed **Westfall** not showing a level-range panel: the current client contains two AreaTable entries named Westfall, so Questie-Octo now resolves continent hovers from the exact native World Map highlight texture before falling back to zone names.
+- Audited all 53 supported leveling zones against the current 1.18.1 client map data. Every supported zone has a valid WorldMapArea; the remaining outdoor map contexts are non-leveling entrance/helper/special maps and stay intentionally excluded.
+- Current-client faction ownership was audited from AreaTable data, including Turtle zones: Thalassian Highlands is Alliance, Blackstone Island is Horde, and the other supported custom leveling zones are Contested.
+
+## 1.0.56
+- Added an optional **Show Zone Level Ranges** World Map feature under **Other → Interface**, directly above Dark Theme.
+- Updated the integrated Turtle zone list for the current 1.18.1 client, adding **Moonwhisper Coast (50–56)** and the previously missing **Icepoint Rock (40–50)**.
+- Zone hover matching now uses current client map IDs/localized area data instead of relying on English zone-name keys, including the old Northwind trailing-space edge case.
+- The integration is intentionally focused on zone level ranges; LevelRange-Turtle's separate fishing/instance/raid option system is not imported.
+
+## 1.0.55
+- Rebuilt static quest-objective locations for **Windhorn Canyon, Timbermaw Hold, and Frostmane Hollow** from the current Octo client map data and current Turtle server spawns.
+- Fixed the inherited `50,50` placeholder markers in those instances and restored missing quest-object locations, including all **Windhorn Relics** and the **Tablet of Kaz'gan**.
+- Completed a wider instance/entrance audit. Ambiguous helper-map projection, unavailable content, and scripted encounters without ordinary server spawns were deliberately left unchanged rather than guessed.
+- If you are updating directly from 1.0.53, this build also includes 1.0.54's fix for stale completed-quest history after Hardcore restarts or delete/recreate cases at level 1 with 0 XP.
+
+## 1.0.54
+- Fixed old completed-quest history carrying over when a character starts fresh at level 1 with 0 XP, including Hardcore restarts and delete/recreate cases that reuse the same character name.
+- Questie-Octo now discards only the inherited completion/reset history for that unmistakably fresh character state, then rebuilds completion state from the current server character.
+- Settings, tracker position, UI preferences, and other character options are preserved.
+
+## 1.0.53
+- Fixed moving party/teammate markers appearing to blink or snap on the minimap while the player was moving continuously.
+- Our mistake was leaving an old Vanilla indoor/outdoor detection trick inside minimap movement rediscovery; it briefly changed the native minimap zoom and forced Blizzard's own moving markers to redraw.
+- Questie-Octo now keeps normal movement updates read-only and only settles that minimap state when the minimap or zone context actually changes. The 1.0.49 performance improvements remain in place.
+
+## 1.0.52
+- Fixed tracker objectives occasionally appearing as only `: 0/10` (or similar) after logging in.
+- Our mistake was trusting the first Quest Log snapshot too early, before Turtle had always finished loading objective names.
+- Questie-Octo now rechecks the Quest Log during the first few seconds after login while keeping the lower-memory compiled runtime.
+
+## 1.0.51
+- Temporarily disabled **In Search of Solar Knowledge (40795)** from appearing as an available quest because current live-realm behavior does not match the bundled database.
+- The quest data is retained so it can be restored easily when its live availability is confirmed.
+
+## 1.0.50
+- Added a right-click menu to quests in the tracker.
+- Use **Objectives → Show on Map** to open the World Map to an unfinished objective.
+- Completed quests can use **Show on Map** to locate their turn-in.
+- Existing left-click and Shift+Left Click tracker controls are unchanged.

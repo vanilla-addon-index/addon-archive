@@ -1,0 +1,28 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Frame name="RelationshipsQuestAndItemBrowserFrame" toplevel="true" movable="true" enableMouse="true" parent="UIParent" hidden="true" frameStrata="HIGH">
+    <Size><AbsDimension x="720" y="620"/></Size>
+    <Anchors><Anchor point="CENTER"/></Anchors>
+    <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+      <BackgroundInsets><AbsInset left="11" right="12" top="12" bottom="11"/></BackgroundInsets>
+      <TileSize><AbsValue val="32"/></TileSize>
+      <EdgeSize><AbsValue val="32"/></EdgeSize>
+    </Backdrop>
+    <Layers>
+      <Layer level="ARTWORK">
+        <FontString name="RelationshipsQuestAndItemBrowserFrameTitle" inherits="QuestTitleFont" text="Relationships Quest And Item Browser">
+          <Anchors><Anchor point="TOP" relativeTo="RelationshipsQuestAndItemBrowserFrame" relativePoint="TOP"><Offset><AbsDimension x="0" y="-14"/></Offset></Anchor></Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Button name="RelationshipsQuestAndItemBrowserFrameCloseButton" inherits="UIPanelCloseButton">
+        <Anchors><Anchor point="TOPRIGHT" relativeTo="RelationshipsQuestAndItemBrowserFrame" relativePoint="TOPRIGHT"><Offset><AbsDimension x="-6" y="-6"/></Offset></Anchor></Anchors>
+      </Button>
+    </Frames>
+    <Scripts>
+      <OnMouseDown>if arg1 == "LeftButton" then this:StartMoving() end</OnMouseDown>
+      <OnMouseUp>if arg1 == "LeftButton" then this:StopMovingOrSizing() end</OnMouseUp>
+      <OnHide>this:StopMovingOrSizing()</OnHide>
+    </Scripts>
+  </Frame>
+</Ui>

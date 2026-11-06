@@ -1,0 +1,261 @@
+{
+  "upstream": "https://github.com/refaim/ItemTooltipIcons",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "refaim",
+    "repo": "ItemTooltipIcons",
+    "name": "ItemTooltipIcons",
+    "url": "https://github.com/refaim/ItemTooltipIcons",
+    "api": "https://api.github.com/repos/refaim/ItemTooltipIcons"
+  },
+  "commit": "819e7565cc105cf58f54c6193d49b350a66a87c6",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "b770cd4335babdb56d1cc82e2c988e673b3b29c8757e3dea982586861c6fb7c6",
+      "bytes": 8
+    },
+    "CLAUDE.md": {
+      "sha256": "f3590844d31f5eaf194e09aca962af51f04fe3d0b8c3c6024a13521792ee5959",
+      "bytes": 2226
+    },
+    "ItemTooltipIcons.lua": {
+      "sha256": "a150357816651a95c3ba8418e1d1227bea2c372c4a8ba2c556beb1415ab28b25",
+      "bytes": 3096
+    },
+    "ItemTooltipIcons.toc": {
+      "sha256": "f3b0fc916f834409e34c5a0867e5314e0737d01d3b322b8983535ea2f88b7c4f",
+      "bytes": 1277
+    },
+    "lib/LibCraftingProfessions-1.0/CHANGES.md": {
+      "sha256": "0f92883287f14495ab3cddd503acd94d4718d0b1096138a87c9509319fd19a1b",
+      "bytes": 1344
+    },
+    "lib/LibCraftingProfessions-1.0/LibCraftingProfessions-1.0.lua": {
+      "sha256": "2ecdec18d5bed2fdd2f97077ebdb9d2502c9f3857dd2c64e22a85726a54f0634",
+      "bytes": 29716
+    },
+    "lib/LibCraftingProfessions-1.0/LibCraftingProfessions-1.0.xml": {
+      "sha256": "5c8b1701dee08ffaab6726e2a74269c59fd58e0d828285772a3ca9ef6bd264d7",
+      "bytes": 264
+    },
+    "lib/LibCraftingProfessions-1.0/LibStub.lua": {
+      "sha256": "d024dc95604e228e94a4406c2582a0ae571d829be78cd81658dcd5d44ad0eaef",
+      "bytes": 1462
+    },
+    "lib/LibCraftingProfessions-1.0/LICENSE": {
+      "sha256": "ef09d8b963f5257ce111d8c8a4551a97449bc6662708cc57552d3f46b8b12538",
+      "bytes": 1073
+    },
+    "lib/LibCraftingProfessions-1.0/README.md": {
+      "sha256": "ee3e838aa1fe3da410174bc7baa45e9f8694388fd8bd721cce437fdfbfcb23b9",
+      "bytes": 2186
+    },
+    "lib/LibCrafts-1.0/CHANGES.md": {
+      "sha256": "090f05cab81e8834f74ce8c1c92ee59b837ce28648f91a083f87fbc25f8cdd44",
+      "bytes": 1907
+    },
+    "lib/LibCrafts-1.0/LibCrafts-1.0.lua": {
+      "sha256": "2b4a92267ca6fc7c2aa43243f01cb3f7103f623f477d8c795577da108a1736be",
+      "bytes": 14139
+    },
+    "lib/LibCrafts-1.0/LibCrafts-1.0.xml": {
+      "sha256": "f17d8255405e3c8d26ff8ae3c6936b844c62a24828c4dc4d98ece45f7b9ee7c7",
+      "bytes": 349
+    },
+    "lib/LibCrafts-1.0/LibStub.lua": {
+      "sha256": "d024dc95604e228e94a4406c2582a0ae571d829be78cd81658dcd5d44ad0eaef",
+      "bytes": 1462
+    },
+    "lib/LibCrafts-1.0/LICENSE": {
+      "sha256": "ef09d8b963f5257ce111d8c8a4551a97449bc6662708cc57552d3f46b8b12538",
+      "bytes": 1073
+    },
+    "lib/LibCrafts-1.0/Locales/deDE-Professions.lua": {
+      "sha256": "94a8dc3811768ee12c97e1a13d2c2c6efea82d0edad2a3498549dcfa574d15c3",
+      "bytes": 697
+    },
+    "lib/LibCrafts-1.0/Locales/deDE-Spells.lua": {
+      "sha256": "d37d2cfa44f6a399e47350a259225f9dc5f64fd5f6a23559748be5ad0521b879",
+      "bytes": 94079
+    },
+    "lib/LibCrafts-1.0/Locales/enUS-Professions.lua": {
+      "sha256": "eb2073106a1144065c414224251a17461d35da30e690036c96f9cc3489aadc66",
+      "bytes": 585
+    },
+    "lib/LibCrafts-1.0/Locales/enUS-Spells.lua": {
+      "sha256": "6208f8703fbcd0bdeab91877d2f5e7ba9e672626f04f44e811047ef368a5b9da",
+      "bytes": 59956
+    },
+    "lib/LibCrafts-1.0/Locales/esES-Professions.lua": {
+      "sha256": "7be6f71ac14e85ab87a90a56990008452c92e16d0ad05c57ffd7bf7498399deb",
+      "bytes": 972
+    },
+    "lib/LibCrafts-1.0/Locales/esES-Spells.lua": {
+      "sha256": "6ffc20feed2dd165b53b45fba3fd535f459ea61c3131400958c835b2a97c2607",
+      "bytes": 169741
+    },
+    "lib/LibCrafts-1.0/Locales/esMX-Professions.lua": {
+      "sha256": "b2848a370a5f7f0c31a758f9afd9c2b6f80a9815b4173a746c25127d4ed79d22",
+      "bytes": 677
+    },
+    "lib/LibCrafts-1.0/Locales/esMX-Spells.lua": {
+      "sha256": "e7a82b0c52cf49107b84977121cf64393153f0f338f65ca92993a9ba2b8a55cb",
+      "bytes": 88073
+    },
+    "lib/LibCrafts-1.0/Locales/frFR-Professions.lua": {
+      "sha256": "228d919908949b81d7f2c62ab8c4b797a3a3fa9bb2f886522244de869f911b31",
+      "bytes": 674
+    },
+    "lib/LibCrafts-1.0/Locales/frFR-Spells.lua": {
+      "sha256": "abb6d5692306dfe48cd03fb463dec88d954bd96347e1e8efc49da1c722a7d5b4",
+      "bytes": 88927
+    },
+    "lib/LibCrafts-1.0/Locales/koKR-Professions.lua": {
+      "sha256": "2afd5ba84606e5be2139f813b36fe1f95edc008d56c9d34c8073f7e31b544c8d",
+      "bytes": 682
+    },
+    "lib/LibCrafts-1.0/Locales/koKR-Spells.lua": {
+      "sha256": "9a5d36f44ced08f29a2067fcbcc66ea01f447ac01377a0bd745ce50451a36868",
+      "bytes": 87960
+    },
+    "lib/LibCrafts-1.0/Locales/Locales.xml": {
+      "sha256": "7e4c8d158c8710e7faa99af1e08cb7890ab85da7e64e29d4da51a002d533970c",
+      "bytes": 1009
+    },
+    "lib/LibCrafts-1.0/Locales/ptBR-Professions.lua": {
+      "sha256": "830bb74ca79e3338a7d491db0ec40c6a71f498604e03be3fc2b3701e15361167",
+      "bytes": 681
+    },
+    "lib/LibCrafts-1.0/Locales/ptBR-Spells.lua": {
+      "sha256": "5b9547f2ba2521c5f3ace5a568655cd845ae829697e2664679df22c8cb7c40a3",
+      "bytes": 102891
+    },
+    "lib/LibCrafts-1.0/Locales/ruRU-Professions.lua": {
+      "sha256": "946ed35481513f472b003183dea6f070f993b612a656a68566dc7f850dd5ac0f",
+      "bytes": 828
+    },
+    "lib/LibCrafts-1.0/Locales/ruRU-Spells.lua": {
+      "sha256": "6f63e6374d1bc32d9630968660f3e1bddbed52d0d1221153140e2d6a7bc9d1a3",
+      "bytes": 114319
+    },
+    "lib/LibCrafts-1.0/Locales/zhCN-Professions.lua": {
+      "sha256": "c8b49628565e9e05ac358ce28d39fbc57813d14484b03deb9fe2b896d8df57a2",
+      "bytes": 648
+    },
+    "lib/LibCrafts-1.0/Locales/zhCN-Spells.lua": {
+      "sha256": "d15cbdf2744393b332ff46b32ebee282cc21650a71919e0ec6a7f11d720f6db8",
+      "bytes": 83953
+    },
+    "lib/LibCrafts-1.0/Locales/zhTW-Professions.lua": {
+      "sha256": "0bd82c1a62ae9eabc1ea23c6c8dfab20eac02aeae0fd780722edb42e5885317f",
+      "bytes": 648
+    },
+    "lib/LibCrafts-1.0/Locales/zhTW-Spells.lua": {
+      "sha256": "4474cdfb830fd19416b0bb42e9d0cfeaf0b34bee1d1027d8f357484ab654bc83",
+      "bytes": 78067
+    },
+    "lib/LibCrafts-1.0/Professions/Alchemy.lua": {
+      "sha256": "838c7ecb3df487973deaeb73d55ce05c1528fd835f63944cc61f91c71ec2fb7d",
+      "bytes": 37669
+    },
+    "lib/LibCrafts-1.0/Professions/Blacksmithing.lua": {
+      "sha256": "30a4346e543d886bb9ca774b4cbb57f7e3db88d9b05b986e6eded1a744a7749b",
+      "bytes": 103529
+    },
+    "lib/LibCrafts-1.0/Professions/Cooking.lua": {
+      "sha256": "cc02f337476524c58419dc36565f83ca128c91833b2381d70ba751c2ed446ae7",
+      "bytes": 23431
+    },
+    "lib/LibCrafts-1.0/Professions/Enchanting.lua": {
+      "sha256": "722517b0d77fa50b38e9eaec42b79872220d9d76c59bf0a5604f669bf9f511da",
+      "bytes": 42356
+    },
+    "lib/LibCrafts-1.0/Professions/Engineering.lua": {
+      "sha256": "e467c83d883385a76cbd23008a2fad042a23fac3858fbb85a628ce26e047a897",
+      "bytes": 53820
+    },
+    "lib/LibCrafts-1.0/Professions/FirstAid.lua": {
+      "sha256": "880219f763f821607ce39601d0d32732b7f86b333d2651f990483a067e578ef3",
+      "bytes": 2881
+    },
+    "lib/LibCrafts-1.0/Professions/Leatherworking.lua": {
+      "sha256": "9b81b015d171709cffa6f875021811c8df386b6b34a38dd6b01edead7950989d",
+      "bytes": 90597
+    },
+    "lib/LibCrafts-1.0/Professions/Mining.lua": {
+      "sha256": "e7031dae6c02875a4ae86def48a606696d44e19547a5ce4d635c51f2c655f08a",
+      "bytes": 2661
+    },
+    "lib/LibCrafts-1.0/Professions/Poisons.lua": {
+      "sha256": "848fa25dd1f5efe35151b7da8cd9d114acf189e480c6d38642de7f24241ca4db",
+      "bytes": 6140
+    },
+    "lib/LibCrafts-1.0/Professions/Professions.xml": {
+      "sha256": "92240654ccd850be4c2dbe3f321610cfc702a541ec9b0f143ebe7dca12884ca0",
+      "bytes": 597
+    },
+    "lib/LibCrafts-1.0/Professions/Tailoring.lua": {
+      "sha256": "570fa1ea685f2ef1ae7bf7de3435282df9839169368added7dde33000dac7d02",
+      "bytes": 84511
+    },
+    "lib/LibCrafts-1.0/Professions/Turtle/Disguise.lua": {
+      "sha256": "549f373825a360b9ab7e0d4f2c8106144bb513794d58d0556a1197aeba31aeec",
+      "bytes": 2421
+    },
+    "lib/LibCrafts-1.0/Professions/Turtle/Jewelcrafting.lua": {
+      "sha256": "68dd1ebeabe2e90ea2e6a6fe50b3f47731e123ada3931f08179e6864667b275d",
+      "bytes": 75294
+    },
+    "lib/LibCrafts-1.0/Professions/Turtle/Professions.xml": {
+      "sha256": "5d3aa086850f16c8c7cef6c07196e68b07522ae9bd96f3039aadc4c8ed13b12e",
+      "bytes": 256
+    },
+    "lib/LibCrafts-1.0/README.md": {
+      "sha256": "71f8673b14467a98f94089ee583abe7a19600a0167abd57a2eb2f9fa721ba69d",
+      "bytes": 2117
+    },
+    "lib/LibItemTooltip-1.0/LibItemTooltip-1.0.lua": {
+      "sha256": "7b9fd9881ec32245aab93d30afc8b281863f7a78dc6eb57ba688b44e9e7344a2",
+      "bytes": 6809
+    },
+    "lib/LibItemTooltip-1.0/LibItemTooltip-1.0.xml": {
+      "sha256": "aa0eb2c79fe8c17c386704e8af08b0cbd97b7f5949fa5f781e2dc398107dd506",
+      "bytes": 256
+    },
+    "lib/LibItemTooltip-1.0/LibStub.lua": {
+      "sha256": "d024dc95604e228e94a4406c2582a0ae571d829be78cd81658dcd5d44ad0eaef",
+      "bytes": 1462
+    },
+    "lib/LibItemTooltip-1.0/LICENSE": {
+      "sha256": "ef09d8b963f5257ce111d8c8a4551a97449bc6662708cc57552d3f46b8b12538",
+      "bytes": 1073
+    },
+    "lib/LibStub/LibStub.lua": {
+      "sha256": "d024dc95604e228e94a4406c2582a0ae571d829be78cd81658dcd5d44ad0eaef",
+      "bytes": 1462
+    },
+    "LICENSE": {
+      "sha256": "c0dc3dc30fad19c10f1202195dc27f5e0f90c0cf518f84e4ac413b901c7d8fc9",
+      "bytes": 1073
+    },
+    "README.md": {
+      "sha256": "fd70167634dc0f5b9a37561b993371aec6671b2eb972db730ed6c5e88fc21535",
+      "bytes": 980
+    },
+    "screenshots/copper.jpg": {
+      "sha256": "0275804b783cc9ce0b22aa622579eab05685b9ca8f8198320a1e2883b51d88b4",
+      "bytes": 6782
+    },
+    "screenshots/iron.jpg": {
+      "sha256": "722f4b6a1c3e6015fc64b5ac98cc8509408d0ffe6202dc8e8ebfeb3c14aaf570",
+      "bytes": 8358
+    },
+    "screenshots/leather.jpg": {
+      "sha256": "8a62547b301e13b07b3a424f96c28ed098d946df53311724ee8f5aa15d0ee789",
+      "bytes": 8216
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

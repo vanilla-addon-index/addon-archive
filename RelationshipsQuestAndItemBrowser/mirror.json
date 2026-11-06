@@ -1,0 +1,78 @@
+{
+  "upstream": "https://octowow.st/git/Relationship/RelationshipsQuestAndItemBrowser",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Relationship",
+    "repo": "RelationshipsQuestAndItemBrowser",
+    "name": "RelationshipsQuestAndItemBrowser",
+    "url": "https://octowow.st/git/Relationship/RelationshipsQuestAndItemBrowser",
+    "api": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsQuestAndItemBrowser"
+  },
+  "commit": "1a525a7ebd5429f60fd0987674ba566dbabab8e8",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "208ac6870f0d3f669d4d00f4d28f2da0f967978920aea4ed73c009a7862ac66a",
+      "bytes": 4764
+    },
+    "RelationshipsQuestAndItemBrowser.lua": {
+      "sha256": "f503e763d533dc962bfc44ec0bad778e4e18cb1125113a717d5087986178d073",
+      "bytes": 115239
+    },
+    "RelationshipsQuestAndItemBrowser.toc": {
+      "sha256": "681cfa36945fc67b1d928c6567b47ae625842c59637e38708ab5d331be18ba48",
+      "bytes": 617
+    },
+    "RelationshipsQuestAndItemBrowser.xml": {
+      "sha256": "e31da1cfe02fee07a317007c86b31a1bbd3b30e8693ea5b23d4cef349bfb0629",
+      "bytes": 1649
+    },
+    "RelationshipsQuestAndItemBrowserData_Init.lua": {
+      "sha256": "e64c903f7d81d74c8898ee7d92b5b846849bea31dbb7f387339f229f03703b4b",
+      "bytes": 643
+    },
+    "RelationshipsQuestAndItemBrowserData_Items.lua": {
+      "sha256": "d5b6dc6ad19d6a7d1d4924e282742a841d172ac5377e57411a03b99b86fa86e5",
+      "bytes": 907025
+    },
+    "RelationshipsQuestAndItemBrowserData_Objects.lua": {
+      "sha256": "775a9a0156acd6db53279ba9f0f8958a9de4b7430a15b12518031dc085298620",
+      "bytes": 6938352
+    },
+    "RelationshipsQuestAndItemBrowserData_Quests.lua": {
+      "sha256": "c9f548d65e2c7e509cdc712f3480c8b2d38b904f350fd19c84d6be0ea5b0824f",
+      "bytes": 5992984
+    },
+    "RelationshipsQuestAndItemBrowserData_Units.lua": {
+      "sha256": "5614d440c4de13943fc519c2cc555e2d1048625b3109160950838aeded58db26",
+      "bytes": 8622420
+    },
+    "RelationshipsQuestAndItemBrowserData_Zones.lua": {
+      "sha256": "95b1bd610a8ab2cec4f53f1130ea365e93f8587b138478ccab5cf1620488a632",
+      "bytes": 76605
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "25": {
+      "tag": "a",
+      "folder": "a--25",
+      "assets": {
+        "9": {
+          "sha256": "11a7760aa0d925a3dcead713021cecda4eb069ade43e3f84b311d62c257ef6f0",
+          "bytes": 3934385,
+          "id": "9",
+          "name": "RelationshipsQuestAndItemBrowser.zip",
+          "url": "https://octowow.st/git/Relationship/RelationshipsQuestAndItemBrowser/releases/download/a/RelationshipsQuestAndItemBrowser.zip",
+          "path": "releases/a--25/assets/RelationshipsQuestAndItemBrowser.zip"
+        }
+      },
+      "source": {
+        "sha256": "30c8e35d5a14217eb7363f5733eef90ff98593aa1dc1e1a69c3c8c54358a2ca5",
+        "bytes": 4045731,
+        "path": "releases/a--25/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsQuestAndItemBrowser/archive/a.tar.gz"
+      }
+    }
+  }
+}

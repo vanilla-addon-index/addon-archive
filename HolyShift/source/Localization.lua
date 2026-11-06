@@ -1,0 +1,2 @@
+-- Placeholder localization file required by HolyShift.xml.
+-- Add localized strings here if localization support is expanded.

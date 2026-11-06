@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.blizzard.com/wow/ui/"
+xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+    <Include file="NPCNames.lua" />
+    <Include file="Mailbox.lua" />
+    <Include file="Anvil.lua" />
+    <Include file="Forge.lua" />
+    <Include file="Moonwell.lua" />
+    <Include file="ManaLoom.lua" />
+    <Include file="AlchemyLab.lua" />
+    <Include file="AltarOfShadows.lua" />
+    <Include file="Battlemasters.lua" />
+    <Include file="ClassTrainers.lua" />
+    <Include file="ProfessionTrainers.lua" />
+    <Include file="Auctioneer.lua" />
+    <Include file="Banker.lua" />
+    <Include file="Barber.lua" />
+    <Include file="Innkeeper.lua" />
+    <Include file="StableMaster.lua" />
+    <Include file="Ammunition.lua" />
+    <Include file="Reagents.lua" />
+    <Include file="FlightMaster.lua" />
+    <Include file="FlightConnection.lua" />
+    <Include file="Quests.lua" />
+</Ui>

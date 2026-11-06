@@ -1,0 +1,9 @@
+{
+  "id": "418267705",
+  "tag": "V3.01",
+  "name": "V3.01",
+  "body": "- Added “Remember Bells” to keep notification selections between sessions.\r\n- Added clickable player names in chat notifications.\r\n- Added an option to show unsorted messages in the Logs tab.\r\n- Added Duplicate Filter modes: Off, Matches, and All Chat.\r\n- Added a Diagnostic Console through `/dbb debug` (requires SuperWoW).\r\n- Improved Hide from Chat behavior.\r\n- Improved category matching and updated blacklist defaults.\r\n- Improved performance during busy chat activity.\r\n- Fixed duplicate filtering across multiple chat windows.\r\n- Fixed minimap tooltip font sizing.",
+  "published": "2026-10-20T10:21:20Z",
+  "prerelease": false,
+  "url": "https://github.com/DeterminedPanda/DifficultBulletinBoard/releases/tag/V3.01"
+}

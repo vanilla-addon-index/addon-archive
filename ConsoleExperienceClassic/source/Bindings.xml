@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bindings>
+    <!-- Console Experience Action Bindings -->
+    <Binding name="CE_ACTION_1" header="CONSOLEEXPERIENCE">ConsoleExperience_ActionButton(1)</Binding>
+    <Binding name="CE_ACTION_2">ConsoleExperience_ActionButton(2)</Binding>
+    <Binding name="CE_ACTION_3">ConsoleExperience_ActionButton(3)</Binding>
+    <Binding name="CE_ACTION_4">ConsoleExperience_ActionButton(4)</Binding>
+    <Binding name="CE_ACTION_5">ConsoleExperience_ActionButton(5)</Binding>
+    <Binding name="CE_ACTION_6">ConsoleExperience_ActionButton(6)</Binding>
+    <Binding name="CE_ACTION_7">ConsoleExperience_ActionButton(7)</Binding>
+    <Binding name="CE_ACTION_8">ConsoleExperience_ActionButton(8)</Binding>
+    <Binding name="CE_ACTION_9">ConsoleExperience_ActionButton(9)</Binding>
+    <Binding name="CE_ACTION_10">ConsoleExperience_ActionButton(10)</Binding>
+    <Binding name="CE_ACTION_11">ConsoleExperience_ActionButton(11)</Binding>
+    <Binding name="CE_ACTION_12">ConsoleExperience_ActionButton(12)</Binding>
+    <Binding name="CE_ACTION_13">ConsoleExperience_ActionButton(13)</Binding>
+    <Binding name="CE_ACTION_14">ConsoleExperience_ActionButton(14)</Binding>
+    <Binding name="CE_ACTION_15">ConsoleExperience_ActionButton(15)</Binding>
+    <Binding name="CE_ACTION_16">ConsoleExperience_ActionButton(16)</Binding>
+    <Binding name="CE_ACTION_17">ConsoleExperience_ActionButton(17)</Binding>
+    <Binding name="CE_ACTION_18">ConsoleExperience_ActionButton(18)</Binding>
+    <Binding name="CE_ACTION_19">ConsoleExperience_ActionButton(19)</Binding>
+    <Binding name="CE_ACTION_20">ConsoleExperience_ActionButton(20)</Binding>
+    <Binding name="CE_ACTION_21">ConsoleExperience_ActionButton(21)</Binding>
+    <Binding name="CE_ACTION_22">ConsoleExperience_ActionButton(22)</Binding>
+    <Binding name="CE_ACTION_23">ConsoleExperience_ActionButton(23)</Binding>
+    <Binding name="CE_ACTION_24">ConsoleExperience_ActionButton(24)</Binding>
+    <Binding name="CE_ACTION_25">ConsoleExperience_ActionButton(25)</Binding>
+    <Binding name="CE_ACTION_26">ConsoleExperience_ActionButton(26)</Binding>
+    <Binding name="CE_ACTION_27">ConsoleExperience_ActionButton(27)</Binding>
+    <Binding name="CE_ACTION_28">ConsoleExperience_ActionButton(28)</Binding>
+    <Binding name="CE_ACTION_29">ConsoleExperience_ActionButton(29)</Binding>
+    <Binding name="CE_ACTION_30">ConsoleExperience_ActionButton(30)</Binding>
+    <Binding name="CE_ACTION_31">ConsoleExperience_ActionButton(31)</Binding>
+    <Binding name="CE_ACTION_32">ConsoleExperience_ActionButton(32)</Binding>
+    <Binding name="CE_ACTION_33">ConsoleExperience_ActionButton(33)</Binding>
+    <Binding name="CE_ACTION_34">ConsoleExperience_ActionButton(34)</Binding>
+    <Binding name="CE_ACTION_35">ConsoleExperience_ActionButton(35)</Binding>
+    <Binding name="CE_ACTION_36">ConsoleExperience_ActionButton(36)</Binding>
+    <Binding name="CE_ACTION_37">ConsoleExperience_ActionButton(37)</Binding>
+    <Binding name="CE_ACTION_38">ConsoleExperience_ActionButton(38)</Binding>
+    <Binding name="CE_ACTION_39">ConsoleExperience_ActionButton(39)</Binding>
+    <Binding name="CE_ACTION_40">ConsoleExperience_ActionButton(40)</Binding>
+    
+    <!-- Left Touch Bar Bindings -->
+    <Binding name="CE_ACTION_41" header="CELEFTBAR">ConsoleExperience_ActionButton(41)</Binding>
+    <Binding name="CE_ACTION_42">ConsoleExperience_ActionButton(42)</Binding>
+    <Binding name="CE_ACTION_43">ConsoleExperience_ActionButton(43)</Binding>
+    <Binding name="CE_ACTION_44">ConsoleExperience_ActionButton(44)</Binding>
+    <Binding name="CE_ACTION_45">ConsoleExperience_ActionButton(45)</Binding>
+    
+    <!-- Right Touch Bar Bindings -->
+    <Binding name="CE_ACTION_46" header="CERIGHTBAR">ConsoleExperience_ActionButton(46)</Binding>
+    <Binding name="CE_ACTION_47">ConsoleExperience_ActionButton(47)</Binding>
+    <Binding name="CE_ACTION_48">ConsoleExperience_ActionButton(48)</Binding>
+    <Binding name="CE_ACTION_49">ConsoleExperience_ActionButton(49)</Binding>
+    <Binding name="CE_ACTION_50">ConsoleExperience_ActionButton(50)</Binding>
+    
+    <!-- Cursor Navigation Bindings -->
+    <Binding name="CE_CURSOR_MOVE_UP" header="CECURSOR">CE_MoveCursor("UP")</Binding>
+    <Binding name="CE_CURSOR_MOVE_DOWN">CE_MoveCursor("DOWN")</Binding>
+    <Binding name="CE_CURSOR_MOVE_LEFT">CE_MoveCursor("LEFT")</Binding>
+    <Binding name="CE_CURSOR_MOVE_RIGHT">CE_MoveCursor("RIGHT")</Binding>
+    <Binding name="CE_CURSOR_CLICK_LEFT">CE_ClickCursor("LeftButton")</Binding>
+    <Binding name="CE_CURSOR_CLICK_RIGHT">CE_ClickCursor("RightButton")</Binding>
+    <Binding name="CE_CURSOR_PICKUP">CE_PickupItem()</Binding>
+    <Binding name="CE_CURSOR_BIND">CE_Bind()</Binding>
+    <Binding name="CE_CURSOR_DELETE">CE_DeleteItem()</Binding>
+    <Binding name="CE_CURSOR_UNEQUIP">CE_UnequipItem()</Binding>
+    <Binding name="CE_CURSOR_CLOSE">CE_CloseFrame()</Binding>
+    <Binding name="CE_PLACEMENT_CLEAR">CE_PLACEMENT_CLEAR()</Binding>
+    
+    <!-- Radial Menu -->
+    <Binding name="CE_TOGGLE_RADIAL" header="CERADIAL">CE_ToggleRadialMenu()</Binding>
+    
+    <!-- Interact Binding -->
+    <Binding name="CE_INTERACT" header="CEINTERACT">CE_InteractNearest()</Binding>
+</Bindings>

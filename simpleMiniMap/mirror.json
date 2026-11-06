@@ -1,0 +1,153 @@
+{
+  "upstream": "https://github.com/McPewPew/SimpleMinimap",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "McPewPew",
+    "repo": "SimpleMinimap",
+    "name": "SimpleMinimap",
+    "url": "https://github.com/McPewPew/SimpleMinimap",
+    "api": "https://api.github.com/repos/McPewPew/SimpleMinimap"
+  },
+  "commit": "b02e7be9995ecac8c7055f2f31b5d661fe65cf38",
+  "sourceFiles": {
+    "bindings.xml": {
+      "sha256": "0b9d5bd0f24632866a390adef3e6003bebae9566cb2aae7ee2fffef8680da8ea",
+      "bytes": 103
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "e460d01bc2f95f3ff01ae0fefe5a575db9748576e7b96df81e56e45bb16d0ee5",
+      "bytes": 30093
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "a26772c3673ffe61faf8fc371b0af554e2120917c506672e1dfc40efe3c208bd",
+      "bytes": 63945
+    },
+    "libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "0d55cb94c745d2940c31a4297251333d87bd238a322b375c5842eff2131c5869",
+      "bytes": 42674
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "0f7b32493afaf5b7e96f3fd1b5135cc9d8a07ded8c64aae11e75f1e0f3212902",
+      "bytes": 28515
+    },
+    "libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "610f20d3f85852c4ed8b022c4ee83d714d200a671a4a6232d8b8a1089ecbda3c",
+      "bytes": 16780
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "8c75f829e0f980aac69d53cce8f8c806ea671795f445ab736c8cf76b9fc1f586",
+      "bytes": 22725
+    },
+    "libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "6e315b0d257b7feda50ad6ef4b0c40228f7125330da7b0e4793be62e75ba81a1",
+      "bytes": 15823
+    },
+    "libs/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "2ad386facb858ca902bad0a5cbfa213d08b9c37b0850927168c312e135cae99e",
+      "bytes": 12981
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "1385526e460948771ca6db1ceec81e8b0daf33bfc391f55e6f1bbc449a341a82",
+      "bytes": 30305
+    },
+    "libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "1dd09ef587fc634d9a6f436c8590c4b04d13a0c063acc07fa985fcfcb16ffaf2",
+      "bytes": 82470
+    },
+    "localization.lua": {
+      "sha256": "e2a0f8129a8a371541c7a260599c18253907cdae77f68726f9f9c7f50b1cfef3",
+      "bytes": 1329
+    },
+    "modules/autozoom.lua": {
+      "sha256": "c9fae1f83ae4ae3df7a490764c35c2e835f7d7327b01cc2a48e4f8704b6efc58",
+      "bytes": 2239
+    },
+    "modules/coords.lua": {
+      "sha256": "8da764fa56aa1d51182b81e12be591df49e28dfd768dc91f3f70f15499211870",
+      "bytes": 8338
+    },
+    "modules/coords.xml": {
+      "sha256": "783ff014f62525056249035beef6b03f1a1d3dc4ebd9b4d47339c4f22358d336",
+      "bytes": 830
+    },
+    "modules/gui.lua": {
+      "sha256": "15a7b710a7c5204b88bf956252936a47f9fce2f85997e80ecdc8710a16820f0f",
+      "bytes": 3170
+    },
+    "modules/movers.lua": {
+      "sha256": "1d1e4c828571a586db84fafcfd8ae88328a46326bbf9119a5296588c5e99e9e0",
+      "bytes": 4531
+    },
+    "modules/movers.xml": {
+      "sha256": "7ff7e75637f0a9ed279fad425e6173bd914a453978f6068de05cdf3a8d27e9f6",
+      "bytes": 1223
+    },
+    "modules/pings.lua": {
+      "sha256": "621909359726afde430051a826f4ed4e11609434f6796ecfbaf30cbfe1d4937c",
+      "bytes": 4210
+    },
+    "modules/pings.xml": {
+      "sha256": "182ba14119145d748c964a88a62903deb95ee65df2ad7462e4f18e05806c0abf",
+      "bytes": 1220
+    },
+    "modules/skins.lua": {
+      "sha256": "f47337cd6e35efdcea76616315ca20ec1752ab2a5caeea0f8a5f902e0f167fe0",
+      "bytes": 5135
+    },
+    "simpleMinimap.lua": {
+      "sha256": "3e774d3de14f5bccdb2fc7bcecb82b1eea492124ea2c924fe5626773a2f8c3e3",
+      "bytes": 13129
+    },
+    "simpleMinimap.toc": {
+      "sha256": "2b8419c8aad5e00c3039cf0389483d309fe3945f03550a2f390ce01817a9f7c6",
+      "bytes": 843
+    },
+    "simpleMinimap.xml": {
+      "sha256": "cf0c65adb68b02bc4eece9cb006b39108930d30c9be8717514fab0e485012e89",
+      "bytes": 445
+    },
+    "skins/dLxBottomLeft.blp": {
+      "sha256": "28f433778e35bbfefc19fc8621975dbfb246250b5ea05a33e8bdf7b0bb059129",
+      "bytes": 88580
+    },
+    "skins/dLxBottomLeftMask.blp": {
+      "sha256": "9d5526ba08218c559c284f3d701158e5a3d9a4412bc607fca3f5432850134665",
+      "bytes": 6660
+    },
+    "skins/dLxBottomRight.blp": {
+      "sha256": "ce0d4c8e456be3d934c3d4ca045526ee947bf065580492b0c0240f67a8376cf2",
+      "bytes": 88580
+    },
+    "skins/dLxBottomRightMask.blp": {
+      "sha256": "41382a036cb6b223add31cc70e400595cd8a702b6bb892e4046c7d76d86e88b9",
+      "bytes": 6660
+    },
+    "skins/dLxTopLeft.blp": {
+      "sha256": "bd94383011051a1fb18b7382fb58af6dfd8185d610b51f8c15d122a23df91526",
+      "bytes": 88580
+    },
+    "skins/dLxTopLeftMask.blp": {
+      "sha256": "551187fe82e7467d67181119fb57fe4c6662d464ac0090fa80b46e2a59243e13",
+      "bytes": 6660
+    },
+    "skins/dLxTopRight.blp": {
+      "sha256": "d8cd17ba603236e11ecf5910ce2eff94372cd7dcdb160a3cbe2863c8e0d99e1f",
+      "bytes": 88580
+    },
+    "skins/dLxTopRightMask.blp": {
+      "sha256": "10d8c1ecb3f77629658f5cc896f0bf85af83d13c9b92bd40525334b3942a8704",
+      "bytes": 6660
+    },
+    "skins/SquareMinimap.blp": {
+      "sha256": "409d81c274d48024a9d42aab589089de3a341e835a827f08f66c3b71013cb9e7",
+      "bytes": 33940
+    },
+    "skins/SquareMinimapMask.blp": {
+      "sha256": "a7fb2f23c731f740b2af4c777dff205fe1088bc3a713689e9fcca43677b04b84",
+      "bytes": 6628
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

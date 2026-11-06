@@ -1,0 +1,9 @@
+{
+  "id": "10",
+  "tag": "AA",
+  "name": "V1.9",
+  "body": "V1.9\r\n\r\nFixed\r\n\r\n- Naxxramas attunement costs corrected\r\n\r\n  - Honored: 60 gold, 5 Arcane Crystals, 2 Nexus Crystals, 1 Righteous Orb\r\n  - Revered: 30 gold, 2 Arcane Crystals, 1 Nexus Crystal\r\n  - Exalted: Free\r\n\r\nAdded\r\n\r\n- Login progress detection\r\n  - On first load, the addon now scans already-completed quests in each attunement chain.\r\n  - Players who are halfway through an attunement will see their current step highlighted immediately, without needing to pick up the next quest first.",
+  "published": "2026-07-18T17:50:56Z",
+  "prerelease": false,
+  "url": "https://octowow.st/git/Relationship/RelationshipsAttune/releases/tag/AA"
+}

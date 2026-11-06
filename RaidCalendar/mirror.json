@@ -1,0 +1,269 @@
+{
+  "upstream": "https://github.com/sica42/RaidCalendar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "sica42",
+    "repo": "RaidCalendar",
+    "name": "RaidCalendar",
+    "url": "https://github.com/sica42/RaidCalendar",
+    "api": "https://api.github.com/repos/sica42/RaidCalendar"
+  },
+  "commit": "0e822dce563bd05886759e9d20cd53592305f5c1",
+  "sourceFiles": {
+    ".editorconfig": {
+      "sha256": "caea6f08051086d65175e077190f79d903c21ec8ffd4bfe84c3d003aba2f7e48",
+      "bytes": 270
+    },
+    ".github/FUNDING.yml": {
+      "sha256": "c5d5779da5a54a27ed737b93c835f371c3164f3a2c143025473c06aadaf831e8",
+      "bytes": 877
+    },
+    ".gitignore.upstream": {
+      "sha256": "8c5967fd8486f34493710cc39b240aad46536cf4ee421ffd0479e6542db03e36",
+      "bytes": 7
+    },
+    ".luarc.json": {
+      "sha256": "99cda2b8ae5209016113cf0234c92ced537b30f519f378b7f8a6c365a09f524a",
+      "bytes": 1007
+    },
+    "assets/background.tga": {
+      "sha256": "1092aff97004cc9c4fe4932ee3ac3ebffdf644338d3ae7d476b3f0fee04d14bd",
+      "bytes": 128014
+    },
+    "assets/icon_absence.tga": {
+      "sha256": "13f6012cdbb4075b327c517cd79dd7c6e38e80df1679795166dbb7e0c46b4e42",
+      "bytes": 6014
+    },
+    "assets/icon_assassination.tga": {
+      "sha256": "7cb8aec0ec96adf74a66404135c77ab0261c610e3aa2945686bbb72e65b2545b",
+      "bytes": 4140
+    },
+    "assets/icon_beastmastery.tga": {
+      "sha256": "f77ceab8c264fd3bf513ee9d70ab8d5a17482f6da9c84dcecf3d282904ecb0ca",
+      "bytes": 4140
+    },
+    "assets/icon_bench.tga": {
+      "sha256": "34cf6e989e65a5e1e1d968937a5049a8e3ab2ba10d88ae346a27255487d1585e",
+      "bytes": 2217
+    },
+    "assets/icon_comment.tga": {
+      "sha256": "7fdaaf306e1f3c4cb8b81a10717f799fe8edb7195b1cedfa49f0ba3082608b5c",
+      "bytes": 1817
+    },
+    "assets/icon_date.tga": {
+      "sha256": "4c2c1f9d40939521312a42559de828510791fb45f652ebf4344302d3416bd9c0",
+      "bytes": 7634
+    },
+    "assets/icon_dreamstate.tga": {
+      "sha256": "ff76e9f34355ee859ee50dd9d2e7deacb83aa7a7cb5f18fb22dd60b819c29c7c",
+      "bytes": 4171
+    },
+    "assets/icon_healer.tga": {
+      "sha256": "cfcb7f41b2df4bfc39bec2648a5b211f9c9f982e7665afae864e6f7f4a2f3d95",
+      "bytes": 10419
+    },
+    "assets/icon_holy_guardianspirit.tga": {
+      "sha256": "c71c4d217ed5d2fe8d37d8dcbd9e2bb8647c5777ba8033d51fb3e95bebfec7d1",
+      "bytes": 4140
+    },
+    "assets/icon_hourglass.tga": {
+      "sha256": "0021d0341f6c2d7cbb362589d0074422200449a63070c5d0bf0af869e4146b73",
+      "bytes": 1940
+    },
+    "assets/icon_late.tga": {
+      "sha256": "45def7e4451f8ce292e6e3bf1af2e3cc0021798475e4f92a2e6555920728a6a8",
+      "bytes": 3660
+    },
+    "assets/icon_leader.tga": {
+      "sha256": "ea477186ed36a6a9faba664bc8e0ac74eee808326cd00ecab859ac4aa78b261d",
+      "bytes": 2338
+    },
+    "assets/icon_marksmanship.tga": {
+      "sha256": "b43177186b8530f441b0dc01e6374ff75892a8076b9cbf26f449c3d6a6a6f359",
+      "bytes": 4140
+    },
+    "assets/icon_melee.tga": {
+      "sha256": "fc55667a77d7af4f402d852a0d76f25570f077f9c36909fb0da67d511042b01d",
+      "bytes": 9534
+    },
+    "assets/icon_ranged.tga": {
+      "sha256": "07be8debb96b5f0e4f83460270b2a868826f62422e097984deb92d0f4530d16d",
+      "bytes": 11080
+    },
+    "assets/icon_shieldofthetemplar.tga": {
+      "sha256": "3e02c146c2efe33dfc6cfb611d2756526dd32f184229be6f63c26e3e70c96a45",
+      "bytes": 4140
+    },
+    "assets/icon_signups.tga": {
+      "sha256": "e57f2dcac6c942429db324ef0d9786da35cb3d1e6aff8606d3d8b62a4c5a6507",
+      "bytes": 7562
+    },
+    "assets/icon_survival.tga": {
+      "sha256": "c07843d9aac0140dd23c4d99062dc41ebb312dc5016ce5d2302fa1d5f669d74f",
+      "bytes": 4140
+    },
+    "assets/icon_tank.tga": {
+      "sha256": "6f9edf63d6fd9decef7bf6703c7515ba10548c65ae791bf97ba565036e054229",
+      "bytes": 9137
+    },
+    "assets/icon_tentative.tga": {
+      "sha256": "a612b670dfe9f3ae7bb1febcd7b3b34188e27c6b067fdb3ac41e912212b014b3",
+      "bytes": 4502
+    },
+    "assets/icon_time.tga": {
+      "sha256": "c0058a4295da8b7ad156eb93899a302b62d7515bbf61355386d84e3130486ab3",
+      "bytes": 6269
+    },
+    "assets/icon.tga": {
+      "sha256": "e2397da0fe67fa91e5f7f6077605b0d2fa70478d03bb2f3d0fc92843db0373bf",
+      "bytes": 9574
+    },
+    "assets/Myriad-Pro.ttf": {
+      "sha256": "a4eefdaeccae42faeaf989b6b642f2e39386fd33a7e11c39e7c08d3bfc4eb18a",
+      "bytes": 209700
+    },
+    "assets/raidres.tga": {
+      "sha256": "f937228f88b62be390ffcc9b07cad35bc03da6a001cba62589e7633cff7a7c5f",
+      "bytes": 12085
+    },
+    "assets/tiny-button-down.tga": {
+      "sha256": "96d75d4e760d3b55c6938ea153b22b34bbd3c873465b5c0a379cadba37569821",
+      "bytes": 982
+    },
+    "assets/tiny-button-up.tga": {
+      "sha256": "c79dde8fdf61a098f12e25c8a240a68643cc46c0154a4c39f891abbcdc521b34",
+      "bytes": 1534
+    },
+    "CalendarPopup.lua": {
+      "sha256": "08ce35c37382960b11f9be76f1fb6ec974af446ed3f926cdf9ee202809cae5c8",
+      "bytes": 14000
+    },
+    "ChannelHandler.lua": {
+      "sha256": "bb8c68a79c03e4ac20f1cea1e255767d5078cbd30cd407e42e4d561f42f9fe5c",
+      "bytes": 4609
+    },
+    "EventPopup.lua": {
+      "sha256": "b294cb09ccafd34342ad67bb0878ccbaa1c9002d88f01cce42a4b956eadd8248",
+      "bytes": 23529
+    },
+    "FrameBuilder.lua": {
+      "sha256": "94b28c5a72badeb3c13acf29694f8c1d7f28abeec9bb70ba86c8c73b4a4a8934",
+      "bytes": 9704
+    },
+    "GuiElements.lua": {
+      "sha256": "2640f66bf05e6fa746a4532349782e5c0a186188ed3e9acb0f18cefab3b93e95",
+      "bytes": 29997
+    },
+    "libs/AceComm-3.0/AceComm-3.0.lua": {
+      "sha256": "d89a89a9a32fb17b7b5ab20991f05863d03420e4f1ca96e0e2cad686e441cdfb",
+      "bytes": 11115
+    },
+    "libs/AceComm-3.0/AceComm-3.0.xml": {
+      "sha256": "a250107c2aa6c1474c881146f774c3797aee38e5ee4c0762b09461d316ba75ee",
+      "bytes": 248
+    },
+    "libs/AceComm-3.0/ChatThrottleLib.lua": {
+      "sha256": "4c6437f5a2c7a9c29d98d8be776b801bf51f99e40cb67b4087f5117158ad8637",
+      "bytes": 14914
+    },
+    "libs/AceCore-3.0/AceCore-3.0.lua": {
+      "sha256": "9763f58f27029b3e0f74a9f170a26252c65856bf4c8d364d773a1df2e8fed36a",
+      "bytes": 5937
+    },
+    "libs/AceCore-3.0/AceCore-3.0.xml": {
+      "sha256": "419199448cc39d247d0d2edbeb62c47383344e65a26fb001d6571c5eed0db5e4",
+      "bytes": 210
+    },
+    "libs/AceHook-3.0/AceHook-3.0.lua": {
+      "sha256": "1ec5bedbef9519a7fd126abd07e49e1e4ef6268fbf7601ea8a4664bf8417b203",
+      "bytes": 20120
+    },
+    "libs/AceHook-3.0/AceHook-3.0.xml": {
+      "sha256": "85bcbb10046c613cd86cbd99b8e3cb645cbb05982480af7e3a667a101a56bc04",
+      "bytes": 210
+    },
+    "libs/AceTimer-3.0/AceTimer-3.0.lua": {
+      "sha256": "167138bfb8fb98375ba850b2995112775856fdb9052f7c84c7e8228a2bb5cf7b",
+      "bytes": 12690
+    },
+    "libs/AceTimer-3.0/AceTimer-3.0.xml": {
+      "sha256": "c6f5ceece38bd9705e0371443ee16568c547b49a71ac2008ad648c079d4f3446",
+      "bytes": 211
+    },
+    "libs/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "75cc380a1b0035a2d3de506ed269fbec951be6219e994d702067ed3bc95dcd64",
+      "bytes": 9742
+    },
+    "libs/CallbackHandler-1.0/CallbackHandler-1.0.xml": {
+      "sha256": "9310765c5310a395652e60a04f378e836785deb6f0b7181a448c74751d6f0185",
+      "bytes": 218
+    },
+    "libs/LibDataBroker-1-1/LibDataBroker-1.1.lua": {
+      "sha256": "b54eab4a2ae3a47c2b3b386e8498a35a9f1acbe87c2288e905d3ae060c4369e6",
+      "bytes": 3439
+    },
+    "libs/LibDataBroker-1-1/LibDataBroker-1.1.xml": {
+      "sha256": "81c6248848b0bff05486c653f1fea501b340cb5fdbe695f7141faeb3229c5a83",
+      "bytes": 216
+    },
+    "libs/LibDataBroker-1-1/README.textile": {
+      "sha256": "1824b7091f7535e822d3fc0138013e0370eb894efcf7cc2ef1babb81f7997fcf",
+      "bytes": 1037
+    },
+    "libs/LibDBIcon-1.0/LibDBIcon-1.0.lua": {
+      "sha256": "bedf722ab33d0d480adb5759a87c8c633a5644564bdd57adf248dd41aacff6f8",
+      "bytes": 13861
+    },
+    "libs/Libs.xml": {
+      "sha256": "1c0abb49259120ca0b553a111db70ef7ea3c765104ecee2e69f3132820c9fe18",
+      "bytes": 600
+    },
+    "libs/LibScrollDrop-1.3/LibScrollDrop-1.3.lua": {
+      "sha256": "36a4ed58c06449d32343e6a028b7869bb0477c3b88499ef5010a46d705d30f0a",
+      "bytes": 18726
+    },
+    "libs/LibStub/LibStub.lua": {
+      "sha256": "d8c6edc55479c0044658a066f33a26352943855754b0f0505f4d0cb8c9177328",
+      "bytes": 1535
+    },
+    "LootTable.lua": {
+      "sha256": "21b14a5a2a6a74033a202ab22ae192a229f75ba7e4022168d03bf75e7bb42f7d",
+      "bytes": 262357
+    },
+    "MessageHandler.lua": {
+      "sha256": "a13eb68489d1fb54f9b4e4a122d8c2cb9209938396d54a8260b6f427d3eb1c3b",
+      "bytes": 19698
+    },
+    "MinimapIcon.lua": {
+      "sha256": "c45b370bb7b64ce7d69da315f43bfc231bb063d7e000e1f01f5075491f4df722",
+      "bytes": 2513
+    },
+    "RaidCalendar.lua": {
+      "sha256": "2a0f98dcd15d8d890c67da1eb20081e0633ef42c9e5d126bfcc17f8a1bd46c8f",
+      "bytes": 7721
+    },
+    "RaidCalendar.toc": {
+      "sha256": "a342655c5c1a58a3a9c7d735553416c371edbffdc76801ee4bd38750e5b3b8b3",
+      "bytes": 398
+    },
+    "README.md": {
+      "sha256": "0cb32d6a0fa2fd3ffd130458b5da485aa204c618ae3388c39f7a4ac0db5a8dcf",
+      "bytes": 3684
+    },
+    "SRPopup.lua": {
+      "sha256": "f18018d0082fc296784dd6a12714d6aec3590dce1210df0f89e71b8dc2ca438e",
+      "bytes": 30258
+    },
+    "Utils.lua": {
+      "sha256": "9180d9eb1dd3722f4aee9afc29dfcce5d0193086ac13c95d9b34a59aba02ab63",
+      "bytes": 8104
+    },
+    "WelcomePopup.lua": {
+      "sha256": "fb94c5b8ba3e885dedc4cf3d4dbf60b8f1c81d8fba6421b23e9fd2bca3333c51",
+      "bytes": 14085
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,101 @@
+{
+  "upstream": "https://github.com/SandreaSub/Quiver-ClassicAPI",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "SandreaSub",
+    "repo": "Quiver-ClassicAPI",
+    "name": "Quiver-ClassicAPI",
+    "url": "https://github.com/SandreaSub/Quiver-ClassicAPI",
+    "api": "https://api.github.com/repos/SandreaSub/Quiver-ClassicAPI"
+  },
+  "commit": "193072feac7eacef4e5ed36351c1b1744d4751a9",
+  "sourceFiles": {
+    "Assets/Fa6/arrow-right-arrow-left.tga": {
+      "sha256": "36a7de71b6e697198e0494af2cefc63dac8bb0db9951c5052a89456ae40941b9",
+      "bytes": 4140
+    },
+    "Assets/Fa6/arrow-rotate-right.tga": {
+      "sha256": "e665be6957f0391507795c2657f21aa972e2801a0db9cc0e41ca3f9f4c1d5cdd",
+      "bytes": 4140
+    },
+    "Assets/Fa6/caret-down-fill.tga": {
+      "sha256": "dde37339d5403f6040d7c36b54593d0f0affe1b01c8260daf65f2cc5a3889e1d",
+      "bytes": 4140
+    },
+    "Assets/Fa6/lock-open.tga": {
+      "sha256": "45b07a3c1d425b8c382681fd4ae4ed335c272ca3670e7fa119a08acd1eb7d2e3",
+      "bytes": 4140
+    },
+    "Assets/Fa6/lock.tga": {
+      "sha256": "e99f72c414322956df6ef27676170b943bb3c3bc6b76b75ab368ecc8413fb32a",
+      "bytes": 4140
+    },
+    "Assets/Fa6/toggle-off.tga": {
+      "sha256": "6da993208a8c4e9aa4c2377156090a4cd3d45500ad6d523f7f9b9b46cd9e125c",
+      "bytes": 4140
+    },
+    "Assets/Fa6/toggle-on.tga": {
+      "sha256": "99eeafdcd8b9cf5758eebf0d9e7b967b5f7acf715e33a53cb1d3618b4724e271",
+      "bytes": 4140
+    },
+    "Assets/Fa6/xmark.tga": {
+      "sha256": "a93b35a95bb821b095edbe680ac60cc27459f37cf2d6bb2f7137a45d6ed097f5",
+      "bytes": 4140
+    },
+    "Assets/grip-lines.tga": {
+      "sha256": "fc247d12f6ce9e2478d1342f1c0fb22842a439b6f2609f7de36431334b5b3f57",
+      "bytes": 4140
+    },
+    "Assets/README.md": {
+      "sha256": "7687225f8ead58a3718650a13eeba0daba0f1f8a86780da222077a43d862b1a7",
+      "bytes": 448
+    },
+    "Assets/removing_wood_arrow_from_bow_4.wav": {
+      "sha256": "9943f1842c833c979784823ca49a7772b2da97d41691786f3c46b552ef4f8eb1",
+      "bytes": 39720
+    },
+    "Assets/sheathing_a_few_arrows_loosely_into_a_quiver_3.wav": {
+      "sha256": "f6e82d2c04325442f56045efa55741f942105b401e84c1b6ea5eead8d69e9087",
+      "bytes": 62640
+    },
+    "AUDIT-OCTOWOW.md": {
+      "sha256": "faad35397ab92907561c050043f8bbe0a98a7afd35d84663f05a63de12c56d00",
+      "bytes": 5523
+    },
+    "Changelog.md": {
+      "sha256": "44abf7f7b8d7163914147d81a2e7a5ec94923f1123281c83dc108f9f9c98cb23",
+      "bytes": 9292
+    },
+    "DIAGNOSTIC-TEST-MATRIX.md": {
+      "sha256": "05bf0a24c7990ce275b3a7e71451f7d9a4378d92161d4016c6f57c7ea1211c72",
+      "bytes": 4004
+    },
+    "LICENSE": {
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+      "bytes": 34523
+    },
+    "OCTOWOW-DEBUG-README.txt": {
+      "sha256": "63ad2c13f96ef944412a0f53213c4ba3a7eaa12185b44c0955ac8a4dc5d5a18a",
+      "bytes": 774
+    },
+    "Quiver.bundle.lua": {
+      "sha256": "4b314c2e9d95af77022cb78944921ed04936a033ee353b1f8b9cd85c3a356a88",
+      "bytes": 339212
+    },
+    "Quiver.toc": {
+      "sha256": "e9e05d8e6eab99b8b97e4d8aa6e779900dbb8bc8b71aff689aafccb063efd377",
+      "bytes": 316
+    },
+    "README.md": {
+      "sha256": "bae18f62b4639efb1bd43127a308e5098514152c17a6f7479950b941e7a2515d",
+      "bytes": 8195
+    },
+    "VALIDATION-OCTO5.txt": {
+      "sha256": "d39647cf34d7258211ce2c95fb1c69f0236c464213e9a94a932dc2462d9fe49e",
+      "bytes": 3826
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

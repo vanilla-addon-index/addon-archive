@@ -1,0 +1,9 @@
+{
+  "id": "435930263",
+  "tag": "v9.0.40",
+  "name": "v9.0.40",
+  "body": "# pfUI\r\n\r\n## [v9.0.40](https://github.com/brues-code/pfUI/tree/v9.0.40) (2026-11-06)\r\n[Full Changelog](https://github.com/brues-code/pfUI/compare/v9.0.39...v9.0.40) [Previous Releases](https://github.com/brues-code/pfUI/releases)\r\n\r\n- HookAddonOrVariable: drain pending variable hooks from one pfUI.events listener  \r\n",
+  "published": "2026-11-06T00:25:31Z",
+  "prerelease": false,
+  "url": "https://github.com/brues-code/pfUI/releases/tag/v9.0.40"
+}

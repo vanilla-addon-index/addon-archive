@@ -90,216 +90,216 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [Beastiary](Beastiary/) | Tooltip | 1 | mirrored |
 | [Benecast](Benecast/) | Buffs & Debuffs | 1 | mirrored |
 | [BetterAlign](BetterAlign/) | UI & Appearance | 1 | mirrored |
-| [BetterCharacterPanel](BetterCharacterPanel/) | UI & Appearance | 1 | new |
-| [BetterCharacterStats(BCS)](BetterCharacterStats(BCS)/) | UI & Appearance | 1 | new |
-| [BetterEverlookBroadcastingCo](BetterEverlookBroadcastingCo/) | UI & Appearance | 1 | new |
-| [BetterHelp](BetterHelp/) | Miscellaneous | 1 | new |
-| [BetterQuest](BetterQuest/) | Quests & Leveling | 1 | new |
-| [BGAssistRU](BGAssistRU/) | PvP | 1 | new |
-| [BISList](BISList/) | Bags & Inventory | 1 | new |
-| [BitesCookBook](BitesCookBook/) | Professions | 1 | new |
-| [BlizzNameplatesPlus](BlizzNameplatesPlus/) | Unit Frames | 1 | new |
-| [Blockvalue](Blockvalue/) | Miscellaneous | 1 | new |
-| [BMLoot](BMLoot/) | Raid & Party | 1 | new |
-| [Bongos](Bongos/) | Action Bars | 1 | new |
-| [BonusScanner](BonusScanner/) | Miscellaneous | 1 | new |
-| [BossDeathTimer](BossDeathTimer/) | Boss Mods | 1 | new |
-| [BossMechanicsHelper](BossMechanicsHelper/) | Boss Mods | 1 | new |
-| [BossTactics](BossTactics/) | Boss Mods | 1 | new |
-| [BrainSaver](BrainSaver/) | Class | 1 | new |
-| [BSAlertTW](BSAlertTW/) | Class | 1 | new |
-| [Bubble](Bubble/) | Chat & Social | 1 | new |
-| [Bubbles](Bubbles/) | Quests & Leveling | 1 | new |
-| [BuffAlert](BuffAlert/) | Buffs & Debuffs | 1 | new |
-| [BuffBlock-TW](BuffBlock-TW/) | Buffs & Debuffs | 2 | new |
-| [BuffWatch](BuffWatch/) | Buffs & Debuffs | 1 | new |
-| [BugSack](BugSack/) | Miscellaneous | 1 | new |
-| [BulwarkFrame](BulwarkFrame/) | Class | 1 | new |
-| [ButtonForgeClassic](ButtonForgeClassic/) | Action Bars | 2 | new |
-| [CaramelNotes](CaramelNotes/) | UI & Appearance | 1 | new |
-| [Carbonite](Carbonite/) | Map & Minimap | 1 | new |
-| [CartographerforTurtleWoW](CartographerforTurtleWoW/) | Map & Minimap | 1 | new |
-| [CastTimer](CastTimer/) | Combat | 1 | new |
-| [CatDruidDPS](CatDruidDPS/) | Class | 1 | new |
-| [Caterer](Caterer/) | Miscellaneous | 1 | new |
-| [CawDPSMeter](CawDPSMeter/) | Combat | 2 | new |
-| [CCWatch](CCWatch/) | Combat | 1 | new |
-| [CDFrames](CDFrames/) | Combat | 1 | new |
-| [CensusPlusTurtle](CensusPlusTurtle/) | Miscellaneous | 1 | new |
-| [AutoMessage](AutoMessage/) | Chat & Social | 1 | new |
-| [AutoProfit](AutoProfit/) | Auction & Economy | 1 | new |
-| [AutoShot](AutoShot/) | Miscellaneous | 1 | new |
-| [BetterBabelFish](BetterBabelFish/) | Miscellaneous | 1 | new |
-| [BetterScoreFrame](BetterScoreFrame/) | PvP | 1 | new |
-| [CerniesWonderfulFunctions](CerniesWonderfulFunctions/) | Macros | 1 | new |
-| [CharacterProfiler](CharacterProfiler/) | Miscellaneous | 1 | new |
-| [ChatMonitor](ChatMonitor/) | Chat & Social | 1 | new |
-| [ChronicleCompanion](ChronicleCompanion/) | Miscellaneous | 1 | new |
-| [ClassIcons](ClassIcons/) | Unit Frames | 1 | new |
-| [CleanChat](CleanChat/) | Chat & Social | 1 | new |
-| [CleanPlayerFrame](CleanPlayerFrame/) | Unit Frames | 1 | new |
-| [CleanRolls](CleanRolls/) | Loot Distribution | 2 | new |
-| [CleveRoidMacros](CleveRoidMacros/) | Macros | 1 | new |
-| [ColorSocialFrame](ColorSocialFrame/) | Chat & Social | 1 | new |
-| [Combat](Combat/) | Unit Frames | 1 | new |
-| [ConsoleExperienceClassic](ConsoleExperienceClassic/) | UI & Appearance | 1 | new |
-| [ConsoleUI](ConsoleUI/) | UI & Appearance | 1 | new |
-| [CoolHealthBar](CoolHealthBar/) | Unit Frames | 1 | new |
-| [Crafty](Crafty/) | Professions | 1 | new |
-| [Crusader](Crusader/) | Class | 1 | new |
-| [CThunWarner](CThunWarner/) | Boss Mods | 1 | new |
-| [Cursive-raid](Cursive-raid/) | Boss Mods | 1 | new |
-| [CustomNameplates](CustomNameplates/) | Unit Frames | 1 | new |
-| [cyCircled](cyCircled/) | Action Bars | 1 | new |
-| [DamageMeters](DamageMeters/) | Combat | 1 | new |
-| [DevilsHunters](DevilsHunters/) | Boss Mods | 1 | new |
-| [DialogUI](DialogUI/) | UI & Appearance | 1 | new |
-| [DifficultBulletinBoard](DifficultBulletinBoard/) | Chat & Social | 2 | new |
-| [DKPList](DKPList/) | Loot Distribution | 1 | new |
-| [DoiteAuras](DoiteAuras/) | Buffs & Debuffs | 2 | new |
-| [DragonflightUI-Reforged](DragonflightUI-Reforged/) | UI & Appearance | 4 | new |
-| [ElkBuffBar](ElkBuffBar/) | Buffs & Debuffs | 2 | new |
-| [ElvUIModernized](ElvUIModernized/) | UI & Appearance | 2 | new |
-| [EM_CritBam](EM_CritBam/) | Combat | 1 | new |
-| [EMMonkeyQuest](EMMonkeyQuest/) | Quests & Leveling | 1 | new |
-| [EngBags](EngBags/) | Bags & Inventory | 1 | new |
-| [EngInventory](EngInventory/) | Bags & Inventory | 1 | new |
-| [Erea-RP](Erea-RP/) | Roleplay | 1 | new |
-| [Explorer'sMap](Explorer'sMap/) | Map & Minimap | 1 | new |
-| [EzPoison-turtle](EzPoison-turtle/) | Class | 1 | new |
-| [FastBinding](FastBinding/) | Action Bars | 1 | new |
-| [FastTOT](FastTOT/) | Unit Frames | 1 | new |
-| [FBHealBox](FBHealBox/) | Raid & Party | 2 | new |
-| [FFXIVCrossHotbar](FFXIVCrossHotbar/) | UI & Appearance | 1 | new |
-| [FishingVolume](FishingVolume/) | Professions | 1 | new |
-| [Fizzle](Fizzle/) | UI & Appearance | 1 | new |
-| [FizzwidgetHuntersHelper](FizzwidgetHuntersHelper/) | Class | 1 | new |
-| [FlightMap](FlightMap/) | Map & Minimap | 1 | new |
-| [FlightTracker](FlightTracker/) | Map & Minimap | 1 | new |
-| [ForgedMapNotes](ForgedMapNotes/) | Map & Minimap | 1 | new |
-| [ForgedPetHappiness](ForgedPetHappiness/) | Class | 1 | new |
-| [ForgedSellAllGrays](ForgedSellAllGrays/) | Auction & Economy | 1 | new |
-| [FreeBagSlots](FreeBagSlots/) | Bags & Inventory | 1 | new |
-| [Friend-O-Tron](Friend-O-Tron/) | Chat & Social | 1 | new |
-| [FriendTracker](FriendTracker/) | Chat & Social | 1 | new |
-| [FubarpfQuestFu](FubarpfQuestFu/) | Quests & Leveling | 1 | new |
-| [GearMenu](GearMenu/) | Action Bars | 1 | new |
-| [GearSetTooltips](GearSetTooltips/) | Tooltip | 1 | new |
-| [GFWDisenchantPredictor](GFWDisenchantPredictor/) | Professions | 1 | new |
-| [GlobalFriendsList](GlobalFriendsList/) | Chat & Social | 1 | new |
-| [GoblinBrainwashingHelper](GoblinBrainwashingHelper/) | UI & Appearance | 1 | new |
-| [GryllsSwingTimer](GryllsSwingTimer/) | Combat | 1 | new |
-| [Guda-ClassicAPI](Guda-ClassicAPI/) | Bags & Inventory | 1 | new |
-| [GudaPlates](GudaPlates/) | Unit Frames | 1 | new |
-| [GuideCreator](GuideCreator/) | Quests & Leveling | 1 | new |
-| [GuildAlts](GuildAlts/) | Chat & Social | 1 | new |
-| [HatTrick](HatTrick/) | UI & Appearance | 1 | new |
-| [HealBotBlue](HealBotBlue/) | Raid & Party | 2 | new |
-| [HealComm](HealComm/) | Raid & Party | 2 | new |
-| [HealerProtection](HealerProtection/) | Raid & Party | 1 | new |
-| [HendriShift](HendriShift/) | Class | 1 | new |
-| [HolyShift](HolyShift/) | Class | 1 | new |
-| [HunterSwissKnife](HunterSwissKnife/) | Class | 1 | new |
-| [IchaUI](IchaUI/) | UI & Appearance | 1 | new |
-| [Iconic](Iconic/) | Macros | 1 | new |
-| [ImprovedGuildWindow_OC](ImprovedGuildWindow_OC/) | Chat & Social | 1 | new |
-| [ItemIDTooltip](ItemIDTooltip/) | Tooltip | 1 | new |
-| [ItemTooltipIcons](ItemTooltipIcons/) | Tooltip | 1 | new |
-| [IWIN](IWIN/) | Class | 1 | new |
-| [JankyPlates](JankyPlates/) | Unit Frames | 1 | new |
-| [KeijinAchievementMonitor](KeijinAchievementMonitor/) | Quests & Leveling | 1 | new |
-| [KeijinAutoVendor](KeijinAutoVendor/) | Auction & Economy | 1 | new |
-| [KillCounter](KillCounter/) | Combat | 2 | new |
-| [KillTrack](KillTrack/) | Combat | 1 | new |
-| [Lateral](Lateral/) | Class | 1 | new |
-| [LazySpell](LazySpell/) | Combat | 1 | new |
-| [Lern2Spell](Lern2Spell/) | Action Bars | 2 | new |
-| [LibramSwap](LibramSwap/) | Class | 1 | new |
-| [LoathebOrder](LoathebOrder/) | Boss Mods | 1 | new |
-| [LockAssignment](LockAssignment/) | Raid & Party | 1 | new |
-| [LockpickTooltip](LockpickTooltip/) | Tooltip | 1 | new |
-| [Lookup](Lookup/) | Professions | 1 | new |
-| [LootBlare](LootBlare/) | Loot Distribution | 1 | new |
-| [LootBlare2.0](LootBlare2.0/) | Loot Distribution | 1 | new |
-| [LootCrestReminder](LootCrestReminder/) | Raid & Party | 1 | new |
-| [LootMonitor](LootMonitor/) | Raid & Party | 1 | new |
-| [LootRes](LootRes/) | Loot Distribution | 1 | new |
-| [MageHud](MageHud/) | Class | 1 | new |
-| [ManaMinder](ManaMinder/) | Combat | 1 | new |
-| [MassDisenchant](MassDisenchant/) | Professions | 1 | new |
-| [MasterLootByClass](MasterLootByClass/) | Loot Distribution | 1 | new |
-| [MasterTradeSkills](MasterTradeSkills/) | Professions | 1 | new |
-| [Mendeleev](Mendeleev/) | Tooltip | 1 | new |
-| [MijksRaidAssist](MijksRaidAssist/) | Raid & Party | 1 | new |
-| [MinimapButtonFrame](MinimapButtonFrame/) | Map & Minimap | 1 | new |
-| [MinimapMenu](MinimapMenu/) | Map & Minimap | 1 | new |
-| [MissingCrafts](MissingCrafts/) | Professions | 1 | new |
-| [MissingTradeSkillsList](MissingTradeSkillsList/) | Professions | 1 | new |
-| [ModernFocusFrame](ModernFocusFrame/) | Unit Frames | 1 | new |
-| [ModernSpellBook](ModernSpellBook/) | UI & Appearance | 1 | new |
-| [ModifiedPowerAuras(MPowA)](ModifiedPowerAuras(MPowA)/) | Buffs & Debuffs | 1 | new |
-| [MoPGearTooltips](MoPGearTooltips/) | Tooltip | 1 | new |
-| [MouseoverCast](MouseoverCast/) | Combat | 1 | new |
-| [NugEnergy](NugEnergy/) | Class | 1 | new |
-| [OctoQuestRewards](OctoQuestRewards/) | Quests & Leveling | 1 | new |
-| [OG-RaidHelper](OG-RaidHelper/) | Raid & Party | 1 | new |
-| [OneButtonHunter](OneButtonHunter/) | Class | 1 | new |
-| [Outfitter](Outfitter/) | Bags & Inventory | 4 | new |
-| [Overhead](Overhead/) | Unit Frames | 1 | new |
-| [PaladinSalvaRemover](PaladinSalvaRemover/) | Class | 1 | new |
-| [pfQuest](pfQuest/) | Quests & Leveling | 3 | new |
-| [pfUI](pfUI/) | UI & Appearance | 5 | new |
-| [PizzaWorldBuffs](PizzaWorldBuffs/) | Buffs & Debuffs | 2 | new |
-| [PriestBiS](PriestBiS/) | Class | 1 | new |
-| [ProcDoc](ProcDoc/) | Combat | 1 | new |
-| [ProfessionLevels](ProfessionLevels/) | Professions | 1 | new |
-| [Puppeteer](Puppeteer/) | Unit Frames | 2 | new |
-| [QuestAnnouncer](QuestAnnouncer/) | Quests & Leveling | 1 | new |
-| [QuestFrameFixer](QuestFrameFixer/) | Quests & Leveling | 1 | new |
-| [QuestHaste](QuestHaste/) | Quests & Leveling | 1 | new |
-| [Questie-Octo](Questie-Octo/) | Quests & Leveling | 2 | new |
-| [QuestItem](QuestItem/) | Quests & Leveling | 1 | new |
-| [Questline](Questline/) | Quests & Leveling | 1 | new |
-| [QuestProgressShare](QuestProgressShare/) | Quests & Leveling | 1 | new |
-| [QuestRepeat](QuestRepeat/) | Quests & Leveling | 1 | new |
-| [QuestShell](QuestShell/) | Quests & Leveling | 1 | new |
-| [QuestTracker](QuestTracker/) | Quests & Leveling | 1 | new |
-| [Quiver](Quiver/) | Class | 2 | new |
-| [RABuffs](RABuffs/) | Buffs & Debuffs | 1 | new |
-| [RaidCalendar](RaidCalendar/) | Raid & Party | 1 | new |
-| [RaidMemberExport](RaidMemberExport/) | Raid & Party | 1 | new |
-| [RaidRollBuddy](RaidRollBuddy/) | Loot Distribution | 1 | new |
-| [RaidSummonPlus](RaidSummonPlus/) | Class | 1 | new |
-| [RallyHelper](RallyHelper/) | Buffs & Debuffs | 1 | new |
-| [RecipeRadar](RecipeRadar/) | Professions | 2 | new |
-| [RelationshipsAchievements](RelationshipsAchievements/) | Quests & Leveling | 1 | new |
-| [RelationshipsAttune](RelationshipsAttune/) | Quests & Leveling | 1 | new |
-| [RelationshipsAuctionPrice](RelationshipsAuctionPrice/) | Auction & Economy | 1 | new |
-| [RelationshipsPVP](RelationshipsPVP/) | PvP | 1 | new |
-| [RelationshipsQuestAndItemBrowser](RelationshipsQuestAndItemBrowser/) | Quests & Leveling | 1 | new |
-| [ResourceCountActionButtons](ResourceCountActionButtons/) | Action Bars | 1 | new |
-| [RetherzTargetTracker](RetherzTargetTracker/) | Buffs & Debuffs | 1 | new |
-| [RingMenu](RingMenu/) | Action Bars | 1 | new |
-| [RipMap](RipMap/) | Hardcore | 1 | new |
-| [ROAR-Guild](ROAR-Guild/) | Chat & Social | 1 | new |
-| [RoguePoker](RoguePoker/) | Class | 1 | new |
-| [RogueTick](RogueTick/) | Class | 1 | new |
-| [RogueTicker](RogueTicker/) | Class | 1 | new |
-| [RoleplayingHelper](RoleplayingHelper/) | Roleplay | 2 | new |
-| [RollFor](RollFor/) | Loot Distribution | 2 | new |
-| [RoundRobinhood](RoundRobinhood/) | Loot Distribution | 1 | new |
-| [SafeShift](SafeShift/) | Class | 2 | new |
-| [Samuel](Samuel/) | Class | 1 | new |
-| [SelfFound](SelfFound/) | Hardcore | 1 | new |
-| [SellValue](SellValue/) | Auction & Economy | 1 | new |
-| [SexyMap](SexyMap/) | Map & Minimap | 1 | new |
-| [ShaguDPS](ShaguDPS/) | Combat | 3 | new |
-| [ShaguPlates-extra](ShaguPlates-extra/) | Unit Frames | 1 | new |
-| [ShaguPlatesX](ShaguPlatesX/) | Unit Frames | 1 | new |
-| [ShardCap](ShardCap/) | Class | 3 | new |
-| [SilverFrame](SilverFrame/) | Unit Frames | 1 | new |
-| [simpleMiniMap](simpleMiniMap/) | Map & Minimap | 1 | new |
-| [SmartBuff](SmartBuff/) | Buffs & Debuffs | 2 | new |
+| [BetterCharacterPanel](BetterCharacterPanel/) | UI & Appearance | 1 | mirrored |
+| [BetterCharacterStats(BCS)](BetterCharacterStats(BCS)/) | UI & Appearance | 1 | mirrored |
+| [BetterEverlookBroadcastingCo](BetterEverlookBroadcastingCo/) | UI & Appearance | 1 | mirrored |
+| [BetterHelp](BetterHelp/) | Miscellaneous | 1 | mirrored |
+| [BetterQuest](BetterQuest/) | Quests & Leveling | 1 | mirrored |
+| [BGAssistRU](BGAssistRU/) | PvP | 1 | mirrored |
+| [BISList](BISList/) | Bags & Inventory | 1 | mirrored |
+| [BitesCookBook](BitesCookBook/) | Professions | 1 | mirrored |
+| [BlizzNameplatesPlus](BlizzNameplatesPlus/) | Unit Frames | 1 | mirrored |
+| [Blockvalue](Blockvalue/) | Miscellaneous | 1 | mirrored |
+| [BMLoot](BMLoot/) | Raid & Party | 1 | mirrored |
+| [Bongos](Bongos/) | Action Bars | 1 | mirrored |
+| [BonusScanner](BonusScanner/) | Miscellaneous | 1 | mirrored |
+| [BossDeathTimer](BossDeathTimer/) | Boss Mods | 1 | mirrored |
+| [BossMechanicsHelper](BossMechanicsHelper/) | Boss Mods | 1 | mirrored |
+| [BossTactics](BossTactics/) | Boss Mods | 1 | mirrored |
+| [BrainSaver](BrainSaver/) | Class | 1 | mirrored |
+| [BSAlertTW](BSAlertTW/) | Class | 1 | mirrored |
+| [Bubble](Bubble/) | Chat & Social | 1 | mirrored |
+| [Bubbles](Bubbles/) | Quests & Leveling | 1 | mirrored |
+| [BuffAlert](BuffAlert/) | Buffs & Debuffs | 1 | mirrored |
+| [BuffBlock-TW](BuffBlock-TW/) | Buffs & Debuffs | 2 | mirrored |
+| [BuffWatch](BuffWatch/) | Buffs & Debuffs | 1 | mirrored |
+| [BugSack](BugSack/) | Miscellaneous | 1 | mirrored |
+| [BulwarkFrame](BulwarkFrame/) | Class | 1 | mirrored |
+| [ButtonForgeClassic](ButtonForgeClassic/) | Action Bars | 2 | mirrored |
+| [CaramelNotes](CaramelNotes/) | UI & Appearance | 1 | mirrored |
+| [Carbonite](Carbonite/) | Map & Minimap | 1 | mirrored |
+| [CartographerforTurtleWoW](CartographerforTurtleWoW/) | Map & Minimap | 1 | mirrored |
+| [CastTimer](CastTimer/) | Combat | 1 | mirrored |
+| [CatDruidDPS](CatDruidDPS/) | Class | 1 | mirrored |
+| [Caterer](Caterer/) | Miscellaneous | 1 | mirrored |
+| [CawDPSMeter](CawDPSMeter/) | Combat | 2 | mirrored |
+| [CCWatch](CCWatch/) | Combat | 1 | mirrored |
+| [CDFrames](CDFrames/) | Combat | 1 | mirrored |
+| [CensusPlusTurtle](CensusPlusTurtle/) | Miscellaneous | 1 | mirrored |
+| [AutoMessage](AutoMessage/) | Chat & Social | 1 | mirrored |
+| [AutoProfit](AutoProfit/) | Auction & Economy | 1 | mirrored |
+| [AutoShot](AutoShot/) | Miscellaneous | 1 | mirrored |
+| [BetterBabelFish](BetterBabelFish/) | Miscellaneous | 1 | mirrored |
+| [BetterScoreFrame](BetterScoreFrame/) | PvP | 1 | mirrored |
+| [CerniesWonderfulFunctions](CerniesWonderfulFunctions/) | Macros | 1 | mirrored |
+| [CharacterProfiler](CharacterProfiler/) | Miscellaneous | 1 | mirrored |
+| [ChatMonitor](ChatMonitor/) | Chat & Social | 1 | mirrored |
+| [ChronicleCompanion](ChronicleCompanion/) | Miscellaneous | 1 | mirrored |
+| [ClassIcons](ClassIcons/) | Unit Frames | 1 | mirrored |
+| [CleanChat](CleanChat/) | Chat & Social | 1 | mirrored |
+| [CleanPlayerFrame](CleanPlayerFrame/) | Unit Frames | 1 | mirrored |
+| [CleanRolls](CleanRolls/) | Loot Distribution | 2 | mirrored |
+| [CleveRoidMacros](CleveRoidMacros/) | Macros | 1 | mirrored |
+| [ColorSocialFrame](ColorSocialFrame/) | Chat & Social | 1 | mirrored |
+| [Combat](Combat/) | Unit Frames | 1 | mirrored |
+| [ConsoleExperienceClassic](ConsoleExperienceClassic/) | UI & Appearance | 1 | mirrored |
+| [ConsoleUI](ConsoleUI/) | UI & Appearance | 1 | mirrored |
+| [CoolHealthBar](CoolHealthBar/) | Unit Frames | 1 | mirrored |
+| [Crafty](Crafty/) | Professions | 1 | mirrored |
+| [Crusader](Crusader/) | Class | 1 | mirrored |
+| [CThunWarner](CThunWarner/) | Boss Mods | 1 | mirrored |
+| [Cursive-raid](Cursive-raid/) | Boss Mods | 1 | mirrored |
+| [CustomNameplates](CustomNameplates/) | Unit Frames | 1 | mirrored |
+| [cyCircled](cyCircled/) | Action Bars | 1 | mirrored |
+| [DamageMeters](DamageMeters/) | Combat | 1 | mirrored |
+| [DevilsHunters](DevilsHunters/) | Boss Mods | 1 | mirrored |
+| [DialogUI](DialogUI/) | UI & Appearance | 1 | mirrored |
+| [DifficultBulletinBoard](DifficultBulletinBoard/) | Chat & Social | 2 | mirrored |
+| [DKPList](DKPList/) | Loot Distribution | 1 | mirrored |
+| [DoiteAuras](DoiteAuras/) | Buffs & Debuffs | 2 | error, mirrored |
+| [DragonflightUI-Reforged](DragonflightUI-Reforged/) | UI & Appearance | 4 | mirrored |
+| [ElkBuffBar](ElkBuffBar/) | Buffs & Debuffs | 2 | mirrored |
+| [ElvUIModernized](ElvUIModernized/) | UI & Appearance | 2 | mirrored |
+| [EM_CritBam](EM_CritBam/) | Combat | 1 | mirrored |
+| [EMMonkeyQuest](EMMonkeyQuest/) | Quests & Leveling | 1 | mirrored |
+| [EngBags](EngBags/) | Bags & Inventory | 1 | mirrored |
+| [EngInventory](EngInventory/) | Bags & Inventory | 1 | mirrored |
+| [Erea-RP](Erea-RP/) | Roleplay | 1 | mirrored |
+| [Explorer'sMap](Explorer'sMap/) | Map & Minimap | 1 | mirrored |
+| [EzPoison-turtle](EzPoison-turtle/) | Class | 1 | mirrored |
+| [FastBinding](FastBinding/) | Action Bars | 1 | mirrored |
+| [FastTOT](FastTOT/) | Unit Frames | 1 | mirrored |
+| [FBHealBox](FBHealBox/) | Raid & Party | 2 | mirrored |
+| [FFXIVCrossHotbar](FFXIVCrossHotbar/) | UI & Appearance | 1 | mirrored |
+| [FishingVolume](FishingVolume/) | Professions | 1 | mirrored |
+| [Fizzle](Fizzle/) | UI & Appearance | 1 | mirrored |
+| [FizzwidgetHuntersHelper](FizzwidgetHuntersHelper/) | Class | 1 | mirrored |
+| [FlightMap](FlightMap/) | Map & Minimap | 1 | mirrored |
+| [FlightTracker](FlightTracker/) | Map & Minimap | 1 | mirrored |
+| [ForgedMapNotes](ForgedMapNotes/) | Map & Minimap | 1 | mirrored |
+| [ForgedPetHappiness](ForgedPetHappiness/) | Class | 1 | mirrored |
+| [ForgedSellAllGrays](ForgedSellAllGrays/) | Auction & Economy | 1 | mirrored |
+| [FreeBagSlots](FreeBagSlots/) | Bags & Inventory | 1 | mirrored |
+| [Friend-O-Tron](Friend-O-Tron/) | Chat & Social | 1 | mirrored |
+| [FriendTracker](FriendTracker/) | Chat & Social | 1 | mirrored |
+| [FubarpfQuestFu](FubarpfQuestFu/) | Quests & Leveling | 1 | mirrored |
+| [GearMenu](GearMenu/) | Action Bars | 1 | mirrored |
+| [GearSetTooltips](GearSetTooltips/) | Tooltip | 1 | mirrored |
+| [GFWDisenchantPredictor](GFWDisenchantPredictor/) | Professions | 1 | mirrored |
+| [GlobalFriendsList](GlobalFriendsList/) | Chat & Social | 1 | mirrored |
+| [GoblinBrainwashingHelper](GoblinBrainwashingHelper/) | UI & Appearance | 1 | mirrored |
+| [GryllsSwingTimer](GryllsSwingTimer/) | Combat | 1 | mirrored |
+| [Guda-ClassicAPI](Guda-ClassicAPI/) | Bags & Inventory | 1 | mirrored |
+| [GudaPlates](GudaPlates/) | Unit Frames | 1 | mirrored |
+| [GuideCreator](GuideCreator/) | Quests & Leveling | 1 | mirrored |
+| [GuildAlts](GuildAlts/) | Chat & Social | 1 | mirrored |
+| [HatTrick](HatTrick/) | UI & Appearance | 1 | mirrored |
+| [HealBotBlue](HealBotBlue/) | Raid & Party | 2 | mirrored |
+| [HealComm](HealComm/) | Raid & Party | 2 | mirrored |
+| [HealerProtection](HealerProtection/) | Raid & Party | 1 | mirrored |
+| [HendriShift](HendriShift/) | Class | 1 | mirrored |
+| [HolyShift](HolyShift/) | Class | 1 | mirrored |
+| [HunterSwissKnife](HunterSwissKnife/) | Class | 1 | mirrored |
+| [IchaUI](IchaUI/) | UI & Appearance | 1 | mirrored |
+| [Iconic](Iconic/) | Macros | 1 | mirrored |
+| [ImprovedGuildWindow_OC](ImprovedGuildWindow_OC/) | Chat & Social | 1 | mirrored |
+| [ItemIDTooltip](ItemIDTooltip/) | Tooltip | 1 | mirrored |
+| [ItemTooltipIcons](ItemTooltipIcons/) | Tooltip | 1 | mirrored |
+| [IWIN](IWIN/) | Class | 1 | mirrored |
+| [JankyPlates](JankyPlates/) | Unit Frames | 1 | mirrored |
+| [KeijinAchievementMonitor](KeijinAchievementMonitor/) | Quests & Leveling | 1 | mirrored |
+| [KeijinAutoVendor](KeijinAutoVendor/) | Auction & Economy | 1 | mirrored |
+| [KillCounter](KillCounter/) | Combat | 2 | mirrored |
+| [KillTrack](KillTrack/) | Combat | 1 | mirrored |
+| [Lateral](Lateral/) | Class | 1 | mirrored |
+| [LazySpell](LazySpell/) | Combat | 1 | mirrored |
+| [Lern2Spell](Lern2Spell/) | Action Bars | 2 | mirrored |
+| [LibramSwap](LibramSwap/) | Class | 1 | mirrored |
+| [LoathebOrder](LoathebOrder/) | Boss Mods | 1 | mirrored |
+| [LockAssignment](LockAssignment/) | Raid & Party | 1 | mirrored |
+| [LockpickTooltip](LockpickTooltip/) | Tooltip | 1 | mirrored |
+| [Lookup](Lookup/) | Professions | 1 | mirrored |
+| [LootBlare](LootBlare/) | Loot Distribution | 1 | mirrored |
+| [LootBlare2.0](LootBlare2.0/) | Loot Distribution | 1 | mirrored |
+| [LootCrestReminder](LootCrestReminder/) | Raid & Party | 1 | mirrored |
+| [LootMonitor](LootMonitor/) | Raid & Party | 1 | mirrored |
+| [LootRes](LootRes/) | Loot Distribution | 1 | mirrored |
+| [MageHud](MageHud/) | Class | 1 | mirrored |
+| [ManaMinder](ManaMinder/) | Combat | 1 | mirrored |
+| [MassDisenchant](MassDisenchant/) | Professions | 1 | mirrored |
+| [MasterLootByClass](MasterLootByClass/) | Loot Distribution | 1 | mirrored |
+| [MasterTradeSkills](MasterTradeSkills/) | Professions | 1 | mirrored |
+| [Mendeleev](Mendeleev/) | Tooltip | 1 | mirrored |
+| [MijksRaidAssist](MijksRaidAssist/) | Raid & Party | 1 | mirrored |
+| [MinimapButtonFrame](MinimapButtonFrame/) | Map & Minimap | 1 | mirrored |
+| [MinimapMenu](MinimapMenu/) | Map & Minimap | 1 | mirrored |
+| [MissingCrafts](MissingCrafts/) | Professions | 1 | mirrored |
+| [MissingTradeSkillsList](MissingTradeSkillsList/) | Professions | 1 | mirrored |
+| [ModernFocusFrame](ModernFocusFrame/) | Unit Frames | 1 | mirrored |
+| [ModernSpellBook](ModernSpellBook/) | UI & Appearance | 1 | mirrored |
+| [ModifiedPowerAuras(MPowA)](ModifiedPowerAuras(MPowA)/) | Buffs & Debuffs | 1 | mirrored |
+| [MoPGearTooltips](MoPGearTooltips/) | Tooltip | 1 | mirrored |
+| [MouseoverCast](MouseoverCast/) | Combat | 1 | mirrored |
+| [NugEnergy](NugEnergy/) | Class | 1 | mirrored |
+| [OctoQuestRewards](OctoQuestRewards/) | Quests & Leveling | 1 | mirrored |
+| [OG-RaidHelper](OG-RaidHelper/) | Raid & Party | 1 | mirrored |
+| [OneButtonHunter](OneButtonHunter/) | Class | 1 | mirrored |
+| [Outfitter](Outfitter/) | Bags & Inventory | 4 | mirrored, error |
+| [Overhead](Overhead/) | Unit Frames | 1 | mirrored |
+| [PaladinSalvaRemover](PaladinSalvaRemover/) | Class | 1 | mirrored |
+| [pfQuest](pfQuest/) | Quests & Leveling | 3 | mirrored |
+| [pfUI](pfUI/) | UI & Appearance | 5 | mirrored |
+| [PizzaWorldBuffs](PizzaWorldBuffs/) | Buffs & Debuffs | 2 | mirrored |
+| [PriestBiS](PriestBiS/) | Class | 1 | mirrored |
+| [ProcDoc](ProcDoc/) | Combat | 1 | mirrored |
+| [ProfessionLevels](ProfessionLevels/) | Professions | 1 | mirrored |
+| [Puppeteer](Puppeteer/) | Unit Frames | 2 | mirrored |
+| [QuestAnnouncer](QuestAnnouncer/) | Quests & Leveling | 1 | mirrored |
+| [QuestFrameFixer](QuestFrameFixer/) | Quests & Leveling | 1 | mirrored |
+| [QuestHaste](QuestHaste/) | Quests & Leveling | 1 | mirrored |
+| [Questie-Octo](Questie-Octo/) | Quests & Leveling | 2 | mirrored |
+| [QuestItem](QuestItem/) | Quests & Leveling | 1 | mirrored |
+| [Questline](Questline/) | Quests & Leveling | 1 | mirrored |
+| [QuestProgressShare](QuestProgressShare/) | Quests & Leveling | 1 | mirrored |
+| [QuestRepeat](QuestRepeat/) | Quests & Leveling | 1 | mirrored |
+| [QuestShell](QuestShell/) | Quests & Leveling | 1 | mirrored |
+| [QuestTracker](QuestTracker/) | Quests & Leveling | 1 | mirrored |
+| [Quiver](Quiver/) | Class | 2 | mirrored |
+| [RABuffs](RABuffs/) | Buffs & Debuffs | 1 | mirrored |
+| [RaidCalendar](RaidCalendar/) | Raid & Party | 1 | mirrored |
+| [RaidMemberExport](RaidMemberExport/) | Raid & Party | 1 | mirrored |
+| [RaidRollBuddy](RaidRollBuddy/) | Loot Distribution | 1 | mirrored |
+| [RaidSummonPlus](RaidSummonPlus/) | Class | 1 | mirrored |
+| [RallyHelper](RallyHelper/) | Buffs & Debuffs | 1 | mirrored |
+| [RecipeRadar](RecipeRadar/) | Professions | 2 | mirrored |
+| [RelationshipsAchievements](RelationshipsAchievements/) | Quests & Leveling | 1 | mirrored |
+| [RelationshipsAttune](RelationshipsAttune/) | Quests & Leveling | 1 | mirrored |
+| [RelationshipsAuctionPrice](RelationshipsAuctionPrice/) | Auction & Economy | 1 | mirrored |
+| [RelationshipsPVP](RelationshipsPVP/) | PvP | 1 | mirrored |
+| [RelationshipsQuestAndItemBrowser](RelationshipsQuestAndItemBrowser/) | Quests & Leveling | 1 | mirrored |
+| [ResourceCountActionButtons](ResourceCountActionButtons/) | Action Bars | 1 | mirrored |
+| [RetherzTargetTracker](RetherzTargetTracker/) | Buffs & Debuffs | 1 | mirrored |
+| [RingMenu](RingMenu/) | Action Bars | 1 | mirrored |
+| [RipMap](RipMap/) | Hardcore | 1 | mirrored |
+| [ROAR-Guild](ROAR-Guild/) | Chat & Social | 1 | mirrored |
+| [RoguePoker](RoguePoker/) | Class | 1 | mirrored |
+| [RogueTick](RogueTick/) | Class | 1 | mirrored |
+| [RogueTicker](RogueTicker/) | Class | 1 | mirrored |
+| [RoleplayingHelper](RoleplayingHelper/) | Roleplay | 2 | mirrored |
+| [RollFor](RollFor/) | Loot Distribution | 2 | mirrored |
+| [RoundRobinhood](RoundRobinhood/) | Loot Distribution | 1 | mirrored |
+| [SafeShift](SafeShift/) | Class | 2 | mirrored |
+| [Samuel](Samuel/) | Class | 1 | mirrored |
+| [SelfFound](SelfFound/) | Hardcore | 1 | mirrored |
+| [SellValue](SellValue/) | Auction & Economy | 1 | mirrored |
+| [SexyMap](SexyMap/) | Map & Minimap | 1 | mirrored |
+| [ShaguDPS](ShaguDPS/) | Combat | 3 | mirrored |
+| [ShaguPlates-extra](ShaguPlates-extra/) | Unit Frames | 1 | mirrored |
+| [ShaguPlatesX](ShaguPlatesX/) | Unit Frames | 1 | mirrored |
+| [ShardCap](ShardCap/) | Class | 3 | mirrored |
+| [SilverFrame](SilverFrame/) | Unit Frames | 1 | mirrored |
+| [simpleMiniMap](simpleMiniMap/) | Map & Minimap | 1 | mirrored |
+| [SmartBuff](SmartBuff/) | Buffs & Debuffs | 2 | mirrored |
 | [BGFlag](BGFlag/) | PvP | 1 | new |
 | [BGReport](BGReport/) | PvP | 1 | new |
 | [BigBrother](BigBrother/) | Chat & Social | 1 | new |

@@ -1,0 +1,125 @@
+{
+  "upstream": "https://github.com/livinlicious/Smartbuff-TWOW",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "livinlicious",
+    "repo": "Smartbuff-TWOW",
+    "name": "Smartbuff-TWOW",
+    "url": "https://github.com/livinlicious/Smartbuff-TWOW",
+    "api": "https://api.github.com/repos/livinlicious/Smartbuff-TWOW"
+  },
+  "commit": "e1fd2a89c51a30cbac8b230bddf506223746f14e",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "c5e5a52f8de3f8215c3a17204433165fc120ca244dcc9a351388346364eee6e6",
+      "bytes": 2886
+    },
+    "SmartBuff/Bindings.xml": {
+      "sha256": "31ac6ee412ba6a3cee95ef6c31498e6a58bce1e11b38bb6df0125c8184c351d3",
+      "bytes": 488
+    },
+    "SmartBuff/Icons/Druid.tga": {
+      "sha256": "66f6e393a12f03fb6387064480a23e35d856a9323d73e28e6a425dee22155dca",
+      "bytes": 4645
+    },
+    "SmartBuff/Icons/Hunter.tga": {
+      "sha256": "33a9ad6169702fcc88e37c6c14db5d1fbe6134f446e363469572fd57f19075ec",
+      "bytes": 4593
+    },
+    "SmartBuff/Icons/HunterPet.tga": {
+      "sha256": "016399da05fc5855232b5f7748a8d3b683d9b907efdd6276051375eb3294c9cc",
+      "bytes": 4491
+    },
+    "SmartBuff/Icons/Mage.tga": {
+      "sha256": "f6d8e50b76ae979d4a695ec05f441dad43980e2b3ec03e7c6f93151f38aafef5",
+      "bytes": 4645
+    },
+    "SmartBuff/Icons/MiniMapButtonDisabled.tga": {
+      "sha256": "9e6a404dfc53b27fdd46a1c3392842279bffce7fef1bab3c5f17caea78226f8a",
+      "bytes": 14148
+    },
+    "SmartBuff/Icons/MiniMapButtonEnabled.tga": {
+      "sha256": "cee9f566a1a8fde7ecbeaf4f256b90787a940e917b394d15f6ce63d799bd826c",
+      "bytes": 14240
+    },
+    "SmartBuff/Icons/Paladin.tga": {
+      "sha256": "4045211d9a58aebb7b8481cc00b9ad66a60bdb84d6a009b15ed430e77b78c274",
+      "bytes": 4645
+    },
+    "SmartBuff/Icons/Priest.tga": {
+      "sha256": "50822aadf28b289f928bc35276d3c2c90ea5a495897e19768acac28ab264f011",
+      "bytes": 4645
+    },
+    "SmartBuff/Icons/Rogue.tga": {
+      "sha256": "af20ee5f4941910fda1d7e3263af7a92acb4e131b6f24de375e24f2605df6d6d",
+      "bytes": 4645
+    },
+    "SmartBuff/Icons/Shaman.tga": {
+      "sha256": "ce551d98ab817269da188c654c8fe9373581a892d8f14520dabd7db43d939606",
+      "bytes": 4645
+    },
+    "SmartBuff/Icons/Warlock.tga": {
+      "sha256": "bf2a496266bbb1847f6e0d64eb81de5ac2745171d7988d208a6f03d479312b96",
+      "bytes": 4645
+    },
+    "SmartBuff/Icons/WarlockPet.tga": {
+      "sha256": "da564b83c86c25961bf3773521a7c83450323586aa53c5b5d27989b85c988f93",
+      "bytes": 4497
+    },
+    "SmartBuff/Icons/Warrior.tga": {
+      "sha256": "ff53cea19af0ca1969457341579da49b5235134842ed5f52148e46d31f734707",
+      "bytes": 4645
+    },
+    "SmartBuff/localization.de.lua": {
+      "sha256": "c4443bdfcf68c033436bcd8f691d93b88f01c134628664259c9ee0739c0cf7e8",
+      "bytes": 21295
+    },
+    "SmartBuff/localization.en.lua": {
+      "sha256": "bba0cd598f4c21ed74385d5e8283d291cb1971d63a29b1a807672ed21a399314",
+      "bytes": 22148
+    },
+    "SmartBuff/localization.fr.lua": {
+      "sha256": "4d3043be1f370d72af466fc82bf2119365233b5fe5f8f35e1e47283f4d7efc61",
+      "bytes": 22668
+    },
+    "SmartBuff/localization.lua": {
+      "sha256": "616c52c42b465ad030c8c3e89eed0e7b6e994c232e6779bb984242d22f50696d",
+      "bytes": 31095
+    },
+    "SmartBuff/localization.tw.lua": {
+      "sha256": "68160a1167c6235365717ea42fb5743ebc9fff8b04031fb635d6689bd3cffd15",
+      "bytes": 20713
+    },
+    "SmartBuff/Preview.png": {
+      "sha256": "a80eb1c440c2399ab2881a1b83f5e30e57a3b1fa396338dc3f2c5d32c81fae5a",
+      "bytes": 862993
+    },
+    "SmartBuff/README.md": {
+      "sha256": "65b6e3382cf04c00d7745091d7458e850c66f909344ed03438ba4bb34112313b",
+      "bytes": 14029
+    },
+    "SmartBuff/SmartBuff_test.xml": {
+      "sha256": "5c66c9d7d5369653a665c11402d2115f907a515bb66d7d54111aefd276e025c1",
+      "bytes": 43675
+    },
+    "SmartBuff/SmartBuff.lua": {
+      "sha256": "7127eace6716bbb014a4dcc2507ce62d4082c58fadd2faf2e6939c602595d3f8",
+      "bytes": 112677
+    },
+    "SmartBuff/SmartBuff.tag": {
+      "sha256": "323af442c41ee66c8bff37505aa4c132026f76ae254d11e5b7d0dced8c17c9f1",
+      "bytes": 9717
+    },
+    "SmartBuff/SmartBuff.toc": {
+      "sha256": "9408783f239e86387031616f8431bdc75703179925a82b734dd7f0e780ce6a56",
+      "bytes": 280
+    },
+    "SmartBuff/SmartBuff.xml": {
+      "sha256": "72ca6a0a8675e50513664fb5b321103e977a5bab0148a021376e35ed468eef0d",
+      "bytes": 101031
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

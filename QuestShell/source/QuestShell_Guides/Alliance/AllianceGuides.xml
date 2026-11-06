@@ -1,0 +1,59 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="QS_01_12_Dun_Morogh_A.lua"/>
+	<Script file="QS_01_12_Elwynn_Forest_A.lua"/>
+	<Script file="QS_01_12_Teldrassil_A.lua"/>
+	<Script file="QS_12_17_Darkshore_A.lua"/>
+	<Script file="QS_12_17_Westfall_A.lua"/>
+
+	<Script file="QS_17_18_Loch_Modan_A.lua"/>
+	<Script file="QS_18_20_Redridge_Mountains_A.lua"/>
+
+	<Script file="QS_20_21_Darkshore_A.lua"/>	
+	<Script file="QS_21_22_Ashenvale_A.lua"/>
+	<Script file="QS_22_23_Stonetalon_Mountains_A.lua"/>
+	<Script file="QS_23_24_Darkshore_A.lua"/>
+	<Script file="QS_24_24_Ashenvale_A.lua"/>
+	<Script file="QS_24_27_Wetlands_A.lua"/>
+	<Script file="QS_27_28_Redridge_Mountains_A.lua"/>
+	<Script file="QS_28_29_Duskwood_A.lua"/>
+	<Script file="QS_29_30_Ashenvale_A.lua"/>
+
+	<Script file="QS_30_31_Wetlands_A.lua"/>
+	<Script file="QS_31_32_Hillsbrad_Foothills_A.lua"/>
+	<Script file="QS_32_33_Stranglethorn_A.lua"/>
+	<Script file="QS_33_34_Thousand_Needles_A.lua"/>
+	<Script file="QS_34_35_Desolace_A.lua"/>
+	<Script file="QS_36_37_Stranglethorn_A.lua"/>
+	<Script file="QS_37_37_Alterac_Mountains_A.lua"/>	
+	<Script file="QS_37_38_Arathi_Highlands_A.lua"/>
+	<Script file="QS_38_39_Dustwallow_Marsh_A.lua"/>
+	<Script file="QS_39_40_Stranglethorn_A.lua"/>
+
+	<Script file="QS_40_41_Badlands_A.lua"/>
+	<Script file="QS_41_42_Swamp_of_Sorrows_A.lua"/>
+	<Script file="QS_42_43_Stranglethorn_A.lua"/>
+	<Script file="QS_43_43_Desolace_A.lua"/>
+	<Script file="QS_43_44_Tanaris_A.lua"/>
+	<Script file="QS_44_46_Feralas_A.lua"/>
+	<Script file="QS_46_46_Azshara_A.lua"/>
+	<Script file="QS_46_46_Hinterlands_A.lua"/>
+	<Script file="QS_46_47_Stranglethorn_A.lua"/>
+	<Script file="QS_47_48_Searing_Gorge_A.lua"/>
+	<Script file="QS_48_49_Feralas_A.lua"/>
+	<Script file="QS_49_50_Tanaris_A.lua"/>
+	<Script file="QS_50_50_Hinterlands_A.lua"/>
+	
+	<Script file="QS_50_51_Blasted_Lands_A.lua"/>
+	<Script file="QS_51_52_UnGoro_Crater_A.lua"/>
+	<Script file="QS_52_53_Azshara_A.lua"/>
+	<Script file="QS_53_54_Felwood_A.lua"/>
+	<Script file="QS_54_55_Winterspring_A.lua"/>
+	<Script file="QS_55_56_Felwood_A.lua"/>
+	<Script file="QS_55_56_Burning_Steppes_A.lua"/>
+	<Script file="QS_56_57_Western_Plaguelands_A.lua"/>
+	<Script file="QS_57_58_Eastern_Plaguelands_A.lua"/>
+	<Script file="QS_57_58_Western_Plaguelands_A.lua"/>
+	<Script file="QS_58_59_Silithus_A.lua"/>
+	<Script file="QS_59_60_Winterspring_A.lua"/>
+	
+</Ui>

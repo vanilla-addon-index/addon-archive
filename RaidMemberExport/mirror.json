@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/jlabranche/RaidMemberExport",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jlabranche",
+    "repo": "RaidMemberExport",
+    "name": "RaidMemberExport",
+    "url": "https://github.com/jlabranche/RaidMemberExport",
+    "api": "https://api.github.com/repos/jlabranche/RaidMemberExport"
+  },
+  "commit": "3dd211673a47e0e03102f4461318d7477abaab40",
+  "sourceFiles": {
+    "RaidMemberExport.lua": {
+      "sha256": "4cb6f0050e6221209d54ade7d4f3af59761f9ce67cc64c68cc05d69076cc3a0a",
+      "bytes": 1276
+    },
+    "RaidMemberExport.toc": {
+      "sha256": "1521dd9e889bdaa3148a96342858c218723232d91d908b4babadcc373415a784",
+      "bytes": 155
+    },
+    "RaidMembers.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "README.md": {
+      "sha256": "a95d6b7ee3d5339d41dc023d83e96622c04b17e532b44c11d4b1aab32d114516",
+      "bytes": 653
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

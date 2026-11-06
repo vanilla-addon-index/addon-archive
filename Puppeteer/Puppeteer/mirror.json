@@ -1,0 +1,433 @@
+{
+  "upstream": "https://octowow.st/git/OEVG/Puppeteer",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "OEVG",
+    "repo": "Puppeteer",
+    "name": "Puppeteer",
+    "url": "https://octowow.st/git/OEVG/Puppeteer",
+    "api": "https://octowow.st/git/api/v1/repos/OEVG/Puppeteer"
+  },
+  "commit": "ee273a93ef7f6d3f60376b601e27a9ec2f49595f",
+  "sourceFiles": {
+    "assets/textures/arrow.tga": {
+      "sha256": "00f493e8c492a9d5e61dd9ec565e48c465698fdc7049bd2eea15e9790a8fef0d",
+      "bytes": 220404
+    },
+    "assets/textures/bars/Blizzard-Raid-Sideless.tga": {
+      "sha256": "25e3dc9c14dbd244d3b7c2a6e3bee2aa4d7f3bbacd2d05b3c43e308a6cad4c18",
+      "bytes": 667
+    },
+    "assets/textures/bars/Blizzard-Raid.tga": {
+      "sha256": "9176e05ba87ee93ec0cb9aeaae33cc135e1c955f0652e855bc7642e5d9583f8e",
+      "bytes": 935
+    },
+    "assets/textures/bars/Blizzard-Smooth.tga": {
+      "sha256": "09d76e403a36af217b827c392d1b52057af78411d83101f7f5552d29b6d0626f",
+      "bytes": 571
+    },
+    "assets/textures/bars/BlizzardRetailBar.tga": {
+      "sha256": "5d69c69eb6e5df67ea22be08fbebc79366ba6c46bcfbc91a6ee6235446a70bb4",
+      "bytes": 12134
+    },
+    "assets/textures/bars/MODERN-POWER-NOTICES.md": {
+      "sha256": "22df1a92d491b9e23a8d3daaf9671194a15cc54e7756e42f697336421bbaf6c4",
+      "bytes": 7413
+    },
+    "assets/textures/bars/ModernPowerEnergy.tga": {
+      "sha256": "0c33b2d6767efcab83c1d3cd9e228baae0158b137e8c46cfe4cdf7adc4438df9",
+      "bytes": 8236
+    },
+    "assets/textures/bars/ModernPowerEnergyClass.tga": {
+      "sha256": "513f2bcd052cf23fd819db58d36f7b46373143d86bda4a230c7feb36ac05a517",
+      "bytes": 8236
+    },
+    "assets/textures/bars/ModernPowerFocus.tga": {
+      "sha256": "0d36c07922c93ea0689affa3932c13deeb19d83cba8e75d8a07d9f430965ebcb",
+      "bytes": 8236
+    },
+    "assets/textures/bars/ModernPowerManaClass.tga": {
+      "sha256": "4dd34439709470eb991a0775b229babf3f730c2d51cfff33343dff4d3978dad4",
+      "bytes": 8236
+    },
+    "assets/textures/bars/ModernPowerRage.tga": {
+      "sha256": "572609e1b4a35ce09fc8915a7c719304e557d7b35317e1b9ce7db69aae19961c",
+      "bytes": 8236
+    },
+    "assets/textures/bars/Puppeteer-Borderless.tga": {
+      "sha256": "cffd320598c2ff8b6ee56d068abef69028b47365c2c59d5d6d91dec74121c083",
+      "bytes": 3223
+    },
+    "assets/textures/bars/Puppeteer-Flat-Borderless.tga": {
+      "sha256": "7ba1c907eb013d6542caa998a9a28fd74a748c9e04f0aa6b36940f2a943ee617",
+      "bytes": 556
+    },
+    "assets/textures/bars/Puppeteer-Flat.tga": {
+      "sha256": "ec1ac04b41fe62df45a18a8ac0fb9670cc26f54b29031626c0fe749d81cae38d",
+      "bytes": 556
+    },
+    "assets/textures/bars/Puppeteer-Shineless-Borderless.tga": {
+      "sha256": "a87e9701249629371a10d54f1606e7fe0cc0c8617f90016daab973b7c4670c39",
+      "bytes": 795
+    },
+    "assets/textures/bars/Puppeteer-Shineless.tga": {
+      "sha256": "9713751e95bf631f54786ccbe8a394056f85069e385fdad479ffc63ab1957200",
+      "bytes": 795
+    },
+    "assets/textures/bars/Puppeteer.tga": {
+      "sha256": "2dfdf32b7bf8c0b8343305a113fcb2e1ed4f8a050c55fe7fcf2b70d4ac53799b",
+      "bytes": 3223
+    },
+    "assets/textures/roles/Damage.tga": {
+      "sha256": "77dde1c1f3a733c5a8260b63eff9d90c38a80dee51a1209738a56a5c80e35c0e",
+      "bytes": 11976
+    },
+    "assets/textures/roles/Healer.tga": {
+      "sha256": "3635f5555f4458c33944dae825b9d8b04f88700fb133931ecab6ddaf5ed0c7cd",
+      "bytes": 11614
+    },
+    "assets/textures/roles/Tank.tga": {
+      "sha256": "0002273b66c2dfa7c593be86165f0ee9c783e52dbb62b4f6b321fa6504a34d1c",
+      "bytes": 12724
+    },
+    "Bindings.xml": {
+      "sha256": "4f504dcf6d322ce7896a935650aa24585eb9757405c117527b17e9f6ff0818c8",
+      "bytes": 2615
+    },
+    "CHANGELOG.md": {
+      "sha256": "a21f60ce50fca274ed31babe81d8acbdca2592c656480c759c27770ee8ffe201",
+      "bytes": 11805
+    },
+    "core/ActionBindings.lua": {
+      "sha256": "4c410f8758fe2c6504529d29a1ae4874aacc9d989bf692446aee50b821ab8695",
+      "bytes": 4890
+    },
+    "core/Bindings.lua": {
+      "sha256": "c46f7be34d5334058e2fce399f609a759edf9e9abfcbde546e701e0b10b32594",
+      "bytes": 23924
+    },
+    "core/Command.lua": {
+      "sha256": "f56add374df54a4788bbb00f855bbb6383d4fd847e6e2fc3d0587b88a85a09e3",
+      "bytes": 6285
+    },
+    "core/EnemyTracker.lua": {
+      "sha256": "547ac2416aad46a6e27ce0d160e6f5ed95064de4122db316c5bbc1a9c87d27df",
+      "bytes": 3258
+    },
+    "core/EventHandler.lua": {
+      "sha256": "4395be39d0109d9d01b03e475ac7ba12eb7bd59ea959663beaa9876d8710c595",
+      "bytes": 8857
+    },
+    "core/OverrideBindings.lua": {
+      "sha256": "c56855de0f0b0286267bdede84caa5c7d2d1078268bf824c0edac5b36e99b28f",
+      "bytes": 6653
+    },
+    "core/Roles.lua": {
+      "sha256": "0d39c47c82afa31bdfd4afa276cada43ae93e8da426db80070c98d86ef67b4c7",
+      "bytes": 13636
+    },
+    "core/SpellsTooltip.lua": {
+      "sha256": "536013cab2608790927dacf1d3d05dcc90aa080d247bd72f28567ac177550144",
+      "bytes": 13227
+    },
+    "core/UnitTracker.lua": {
+      "sha256": "4235e4c7bd5caf712e8eb4857cf13d5c3ed211f25f6c1a4b43757caaf898e027",
+      "bytes": 5150
+    },
+    "gui/component/BindingOptions.lua": {
+      "sha256": "b6d94d48316efe426a62b0629706c8b4702feb0b3568a619ce2a168e6c482258",
+      "bytes": 9681
+    },
+    "gui/component/BindingScriptEditor.lua": {
+      "sha256": "96a704f9bea85215c2d8a034e5c2f3a1bd1755af08dd9e8c0c39e8747784ec3e",
+      "bytes": 6688
+    },
+    "gui/component/ButtonEditor.lua": {
+      "sha256": "adbf519aedd306397581beba9365d652cc53100dd8cbfee02d39e118651c9fea",
+      "bytes": 13535
+    },
+    "gui/component/InputBlock.lua": {
+      "sha256": "9f4a6f0df283fe51d6c775ff5f0dcf03c28bb436d7d0aa51c96d5fe8a3a5620d",
+      "bytes": 701
+    },
+    "gui/component/LoadScriptEditor.lua": {
+      "sha256": "db0285eaf6218b817c0c67bdf11c52119fb639dd7e1aba93b68fbfbcd5db4d98",
+      "bytes": 1905
+    },
+    "gui/component/MultiEditor.lua": {
+      "sha256": "6d87f2832878168b8748223faa51625615ebbb2729144298fdcc03053d656c38",
+      "bytes": 5847
+    },
+    "gui/component/NewLoadout.lua": {
+      "sha256": "92e59cc065662eabd2a19e75a9df58e266c1ac9947c037601bf149cebbbc4513",
+      "bytes": 3481
+    },
+    "gui/component/SpellBindInterface.lua": {
+      "sha256": "35917ff69f75ddc07712e563d81fc8f1548cb6a1572bd6829225bb7478a25193",
+      "bytes": 4572
+    },
+    "gui/component/SpellLine.lua": {
+      "sha256": "3ee4338d5ffc88da458f566272862b35810719c0764cd596c827b72f97fe768d",
+      "bytes": 16285
+    },
+    "gui/component/uf/Arrow.lua": {
+      "sha256": "7107ac01441a91d4e5b8a3ea68fc43e16800664bcc33ce8f351e4b3a8759d115",
+      "bytes": 1448
+    },
+    "gui/component/uf/CastIcon.lua": {
+      "sha256": "4616683d6fc3acf7e446ceae9aa99ab78f545d8028cf5e7948a7f7d2e83c6956",
+      "bytes": 8767
+    },
+    "gui/component/uf/HighlightBorder.lua": {
+      "sha256": "a1a5fec3cb48909a6b839285c847db58f40bb59c7ba27c72c37de5394254360a",
+      "bytes": 3965
+    },
+    "gui/GuiUtil.lua": {
+      "sha256": "5bdb1bc9b6ed25b4c449bd4a95fcd6a0f14092a6032411d7635f2cff6e6f3256",
+      "bytes": 584
+    },
+    "gui/Settings.lua": {
+      "sha256": "e2d5f5415a76f05192f44062f05a11367755d69493819fa22a7dffa59db835f0",
+      "bytes": 63643
+    },
+    "libs/ace/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "6c4e23e37cf0893782922cdef23057ad180bca18ec85b05c35ea068209e1b167",
+      "bytes": 30892
+    },
+    "libs/ace/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "73ba2bdfaf3e496e1c1d1534110e9498805759accf0d5b9dd4b867d0207697b0",
+      "bytes": 66005
+    },
+    "libs/ace/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "34e4e52df5e10eb6ecf423e5e04768b1daa28562d8ec2206df9647cb2f6c0219",
+      "bytes": 7941
+    },
+    "libs/ace/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "2d212f65a53cf51ae5c5c65e1ad33be6aa3b4f33527dd3d9ccde322811123b60",
+      "bytes": 28825
+    },
+    "libs/ace/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "f204a817475d98cde69576e2051287969b6d7bf66286749531eaf9545eb18f0b",
+      "bytes": 16910
+    },
+    "libs/ace/AceLibrary/AceLibrary.lua": {
+      "sha256": "26fcd4ed3beddcdba2e56ec97e8655883b37ff27354d2969a979812f62eb725a",
+      "bytes": 22854
+    },
+    "libs/ace/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "ab8ae187472f0c72d1101fda11e902f4db9bb83e00d8522914c5b1aabf1ef548",
+      "bytes": 15923
+    },
+    "libs/ace/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "c93ba867693e66941620dec6fd4968b20ccd951a89e1a19bc5a1d04f978c5153",
+      "bytes": 30393
+    },
+    "libs/ace/Banzai-1.0/Banzai-1.0.lua": {
+      "sha256": "b7c114710f4517e5867cb1022093fd75faf76ee71c4c4e3e7beee79fe8796dca",
+      "bytes": 5247
+    },
+    "libs/ace/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "4133b9069be339d5faca66c489e1db028ee400f114b1f437567c5f19a76f21e5",
+      "bytes": 9209
+    },
+    "libs/ace/Deformat-2.0/Deformat-2.0.lua": {
+      "sha256": "3938b7b01de35442d1c0fc7a65dc56bb1b85a5a1754ef40a6b0fb4c517807c1d",
+      "bytes": 9434
+    },
+    "libs/ace/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "1927177be6990043bc63bc8c36168408957c6d1ed86ef971d72415f7dd14d430",
+      "bytes": 7889
+    },
+    "libs/ace/HealComm-1.0/HealComm-1.0.lua": {
+      "sha256": "6876472720818a98c96daf2da7b5fad825da720aaec75ffaadb826b3731f16f8",
+      "bytes": 67300
+    },
+    "libs/ace/ItemBonusLib-1.0/ItemBonusLib-1.0.lua": {
+      "sha256": "aec2a99d9b411eb0989aa03791ab4f74daaa43be22072eeebd2dbd78492bfe3c",
+      "bytes": 12147
+    },
+    "libs/ace/ItemBonusLib-1.0/Locales/enUS.lua": {
+      "sha256": "ae443b3aa907e1174b3cf16f97f0f8d52ade91bba099c2fd8a74ef76dc3d56ce",
+      "bytes": 11295
+    },
+    "libs/ace/RosterLib-2.0/RosterLib-2.0.lua": {
+      "sha256": "53fcf99c3046c2feba59dd186a363fa3ac9885121b6e5c6d426175a80c8446c3",
+      "bytes": 10701
+    },
+    "libs/AuraTracker.lua": {
+      "sha256": "b0403cb4a81501f955c3128910f1c384ca46d7d9d8b2ad23e99a9c6b34a80a24",
+      "bytes": 9135
+    },
+    "libs/gui/abstract/TabComponent.lua": {
+      "sha256": "cd0640dce5c047e798728d482f5418e1f669886252131fefd55f8b7b7da95b67",
+      "bytes": 4246
+    },
+    "libs/gui/component/Button.lua": {
+      "sha256": "8e49295d77520fb6e5d10ebca021d8ffcdae21cba034214120e67024c5e604c6",
+      "bytes": 6140
+    },
+    "libs/gui/component/Checkbox.lua": {
+      "sha256": "d78d847853ae63e4811cfad93662a1f70a8d5e6559475d7e78c798c13030f4ce",
+      "bytes": 1457
+    },
+    "libs/gui/component/ColorSelect.lua": {
+      "sha256": "2a1db2df1c608bf096789c5dc72b7af863b005ae81fa45daa99f171d9c4521b1",
+      "bytes": 2808
+    },
+    "libs/gui/component/Container.lua": {
+      "sha256": "ed0184504a4185c9c917574fadc70294e1043941355a2c81dc10ebb86005a5b0",
+      "bytes": 297
+    },
+    "libs/gui/component/Dropdown.lua": {
+      "sha256": "6b6588782c684b14931976fe8ffc8ef4c2780fe39a488c19da73ac075227541b",
+      "bytes": 11834
+    },
+    "libs/gui/component/EditBox.lua": {
+      "sha256": "b2655f445999dff32c07e760c309da1ea2d781d571eb07750da0cdf97ed6b0f4",
+      "bytes": 977
+    },
+    "libs/gui/component/EditBoxSlider.lua": {
+      "sha256": "eedf6a21c3b894ad40950a7fa24e3dbea873ac709f0c2befe5bee4b041e0bc44",
+      "bytes": 2557
+    },
+    "libs/gui/component/MultiLineEditBox.lua": {
+      "sha256": "97f18184e816b52786d5a645ed0e4b7ec4d96307e2fad8e6d57d078ad06e6a83",
+      "bytes": 2545
+    },
+    "libs/gui/component/ScrollFrame.lua": {
+      "sha256": "30c3a8e00d22bdee76313dea75886905c905fffc9ca62f7a6e536185098969fd",
+      "bytes": 5279
+    },
+    "libs/gui/component/Slider.lua": {
+      "sha256": "4aaab29a68bfe8fa0ccbe6629eb338bca6469024659787708b384fc1a4ddbf1c",
+      "bytes": 1692
+    },
+    "libs/gui/component/TabPanel.lua": {
+      "sha256": "b251ef018c7d75b76b98c84f5747731480e67fe639e422332654a215ac93d9a2",
+      "bytes": 289
+    },
+    "libs/gui/component/Text.lua": {
+      "sha256": "40cc0b554e75cf1d12c24bca1dadbbaa18ac61b159943fd34d9f2c9ec051857a",
+      "bytes": 1737
+    },
+    "libs/gui/component/Title.lua": {
+      "sha256": "38219de62034b380e5e2f23463644f3afce86fece21bcb8d74989aab080f61a5",
+      "bytes": 874
+    },
+    "libs/gui/Component.lua": {
+      "sha256": "67ab27659940ea7ece56761c5b958d0ca5a9205e5a038300eae24f74d6234e47",
+      "bytes": 12424
+    },
+    "libs/gui/frame/SimpleDialog.lua": {
+      "sha256": "96495b2d1ea03ee0874608ccf0efaa46581b663ca5d9416f9ef39ecc35bf7e63",
+      "bytes": 3038
+    },
+    "libs/gui/frame/TabFrame.lua": {
+      "sha256": "643ad2ffaad9845b2ab4865cd895bfe4c6dc7896f82fb779dbc20e1de0c0bf86",
+      "bytes": 833
+    },
+    "libs/gui/PTGuiLib.lua": {
+      "sha256": "85c42e54618f597672f9c3ae372e1bc666a9b4e8bdb51b76f82361f5417b9406",
+      "bytes": 1378
+    },
+    "libs/GuidRoster.lua": {
+      "sha256": "0ffe0b1ca7994d9bbd2622e36a4e9298ac415049215fff049d78df92f2277b9c",
+      "bytes": 2306
+    },
+    "libs/HealPredict.lua": {
+      "sha256": "a96154edcb53b49ccfe445b02ba6bd4e4a598b64716627869b03e905dfc9a7d3",
+      "bytes": 32581
+    },
+    "libs/Pool.lua": {
+      "sha256": "ee627c31ef9c9b06f7a9c2e4ad9c9a4a6327f1b08a5136c0de8192bd1288ac89",
+      "bytes": 3888
+    },
+    "libs/PTUnit.lua": {
+      "sha256": "adb5a9bff907d3d600c01438b91c61898f595be44927436582d73347d4c84d1d",
+      "bytes": 23698
+    },
+    "libs/ShaguUtil.lua": {
+      "sha256": "1739298600cccd24bdcf6178f997a934f26fd3f0e4b282a19976e85c8ab3ac72",
+      "bytes": 11220
+    },
+    "libs/UnitProxy.lua": {
+      "sha256": "b5e0f024a4248809aafc37cf82d6e7247328a0acb6e1ffd3f7969f7f0ec17334",
+      "bytes": 14507
+    },
+    "libs/Util.lua": {
+      "sha256": "14ce964048b5dc7ec05882acacd46a014e35ef14580e48de2211073ee0ab83f0",
+      "bytes": 53587
+    },
+    "locale/deDE.lua": {
+      "sha256": "1686d822013782debc13de008b041212e9a0a2537f8eefbcdc5a37cd946b100e",
+      "bytes": 7878
+    },
+    "locale/esES.lua": {
+      "sha256": "8a5a817ee67dfbf68656c326256be052b2783f1244a16f9799c6768057d93208",
+      "bytes": 8182
+    },
+    "locale/Locale.lua": {
+      "sha256": "5f47198ab45ef07682bf9de81f1a6367d0a7f9829d269fbfb42e68e632158a79",
+      "bytes": 2302
+    },
+    "locale/ptBR.lua": {
+      "sha256": "6e44bc17122057135f108cbb477dc464fbcd692be8d1bbe9932b9db6a18ccbec",
+      "bytes": 8044
+    },
+    "locale/ruRU.lua": {
+      "sha256": "96050ca6dbcd34bf45c281c21d85a04d7af29647b3baee5af2b1fbc4a35206f4",
+      "bytes": 10305
+    },
+    "locale/zhCN.lua": {
+      "sha256": "9829f88009064327fcae644536f76058e1d5d87a15bb754f201e99941d55bfb4",
+      "bytes": 7155
+    },
+    "MODERN-BLIZZARD.txt": {
+      "sha256": "eb9a8acf07ddcd08417bf8821c8b42b5c1cc8c0894134abb61f049f39b383a96",
+      "bytes": 2640
+    },
+    "Profile.lua": {
+      "sha256": "c23451dc749a6abbd9cc92cec628bcab142298ad526b6f599f460198e17b426f",
+      "bytes": 2764
+    },
+    "ProfileManager.lua": {
+      "sha256": "aca29f2dd441d765602794a4fef7c70edbd83b4751ddd6875c7feaf231c56b6f",
+      "bytes": 22963
+    },
+    "PTUnitFrame.lua": {
+      "sha256": "b5c66c8ef7f8c4c442f5448cda7ee79664fef927417c1f9a0876c13d276ab347",
+      "bytes": 74971
+    },
+    "PTUnitFrameGroup.lua": {
+      "sha256": "96c1cef51c51c269fd6713b1fe3159e77c0d9b49e206242c328f695b88ad38a2",
+      "bytes": 28386
+    },
+    "Puppeteer.lua": {
+      "sha256": "c940e226eb803bff1d374a7d409e8971dcd0697ad9ccbc27cead5937ee054e2f",
+      "bytes": 30209
+    },
+    "Puppeteer.toc": {
+      "sha256": "888454aa1d9193ab7fa91feaec2ee83e893d3e997da2e109daa0869801c821ad",
+      "bytes": 2442
+    },
+    "PuppeteerSettings.lua": {
+      "sha256": "8eadff7c00f64f40a000d8472486ecbb239b9a517bd2e3288d796ef5553637c6",
+      "bytes": 25556
+    },
+    "README.md": {
+      "sha256": "3911a89629d48a7679991865b8e55cfc56c0f541ae10a2fb577d3ea2cf83ea8a",
+      "bytes": 12803
+    },
+    "screenshots/party-blizzard-modern.png": {
+      "sha256": "1799fbaaeb8621a2e4ef4896cc7aa1f59bbbd77c72b98342aa9309262711d4ff",
+      "bytes": 40210
+    },
+    "screenshots/raid-blizzard-modern.png": {
+      "sha256": "bddbdf19d295fdd0a07ff5c0f193e0a5fb0683d12e66e5895b402d857b1635ec",
+      "bytes": 170281
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

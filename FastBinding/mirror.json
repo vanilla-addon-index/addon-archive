@@ -1,0 +1,69 @@
+{
+  "upstream": "https://github.com/CDNievas/FastBinding",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "CDNievas",
+    "repo": "FastBinding",
+    "name": "FastBinding",
+    "url": "https://github.com/CDNievas/FastBinding",
+    "api": "https://api.github.com/repos/CDNievas/FastBinding"
+  },
+  "commit": "ee17faa82f4aa2faa1fade7d4219d23eee3520f3",
+  "sourceFiles": {
+    "config.lua": {
+      "sha256": "4e165b5a1c951a1e0cf38bd8b78506f9bc92bf2afc5efa153d400e8df477cfd6",
+      "bytes": 45
+    },
+    "FastBinding.lua": {
+      "sha256": "e6eb561386dbeb2fae507f68ee16e6f6bda95ff54826531b5a48c529edab1e6b",
+      "bytes": 4242
+    },
+    "FastBinding.toc": {
+      "sha256": "97fb22786cd7df492fa2d3aa2281258bcb9ce5d470d316a116577b7f303b521f",
+      "bytes": 259
+    },
+    "print.lua": {
+      "sha256": "e2131b42a261bcce23d1e5b5e3bdc477f0ae8dfbee2d06753da89e57ea48e215",
+      "bytes": 780
+    },
+    "README.md": {
+      "sha256": "9e00947368eb5c0b3188ab6bbb73e805f8428fe5ec1475dee09ea4dd647ffc27",
+      "bytes": 1449
+    },
+    "uiAdapter.lua": {
+      "sha256": "c29ffa62466bc006fc7ed5d3eedafa143d4dfb1241387e44d4601574774085a4",
+      "bytes": 767
+    },
+    "UIAddons/bongos.lua": {
+      "sha256": "3daa34f21f5ac0d7bfcbc1f4a777bda8be469ff0f1c394111f4341f655f2f150",
+      "bytes": 1256
+    },
+    "UIAddons/discord.lua": {
+      "sha256": "b1cdce434df051a97f8ff15705e364a7e6141946382e4b2fc34dc9dc52678f33",
+      "bytes": 599
+    },
+    "UIAddons/vanilla.lua": {
+      "sha256": "2037c7bfb6c175d35bb192c7885df76dc5c0848c90414c5a62981baa1e211f4c",
+      "bytes": 858
+    },
+    "utils.lua": {
+      "sha256": "e788cb01d52e102c1e9269b3e43ee7df9acf7c9b7b361d0fae7d962c708ac254",
+      "bytes": 570
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "255054724": {
+      "tag": "v1.1.1",
+      "folder": "v1.1.1--255054724",
+      "assets": {},
+      "source": {
+        "sha256": "3f1bcc1fa3ea6b7da8f72b44ec796613a44c1649501955469a60c499bbd58429",
+        "bytes": 3498,
+        "path": "releases/v1.1.1--255054724/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/CDNievas/FastBinding/tarball/v1.1.1"
+      }
+    }
+  }
+}

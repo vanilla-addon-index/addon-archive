@@ -1,0 +1,629 @@
+--[[ ShardCap 2.0 -- keep your Soul Shards at a fixed cap.
+     WoW 1.12.1 (Lua 5.0). Based on ShardCap by "The Johnnest of them all" (dogmax),
+     with ideas from ShardCapPlus (akzkak/Paduk) and voxan-dev's fork.
+
+     Optional client-mod support (auto-detected, never required):
+       ClassicAPI  - exact item IDs/stack counts, locale-free soul bag detection,
+                     cursor-free item moves, BAG_UPDATE_DELAYED batching
+       Nampower    - exact item IDs/stack counts via GetBagItem
+]]
+
+local ADDON   = "ShardCap"
+local VERSION = "2.1.1"
+local SHARD_ID = 6265
+
+-- Known soul bags (vanilla): Soul Pouch, Felcloth Bag, Core Felcloth Bag,
+-- Small Soul Pouch, Box of Souls. Anything else is caught by the subtype check
+-- or ClassicAPI; /shardcap soulbag <n> covers whatever slips through.
+local SOULBAG_IDS = { [21340]=true, [21341]=true, [21342]=true, [22243]=true, [22244]=true }
+local SOULBAG_SUBTYPES = { ["Soul Bag"]=true, ["Seelentasche"]=true }
+-- Warlock reagents that WoW 1.18.1 Clients let you keep in a soul bag
+local REAGENT_IDS = { [16583]=true, [5565]=true } -- Demonic Figurine, Infernal Stone
+
+local DEFAULTS = {
+	cap      = 12,     -- shards to keep
+	notify   = false,  -- chat output when something is deleted/moved
+	sort     = true,   -- move shards from normal bags into free soul bag slots
+	combat   = false,  -- also trim while in combat
+	reagents = true,   -- move Demonic Figurines / Infernal Stones into soul bags
+	soulbags = nil,    -- nil = auto-detect, otherwise { [bagID]=true }
+}
+
+local db
+local inCombat = false
+local api = {}
+
+------------------------------------------------------------------------------
+-- Output
+------------------------------------------------------------------------------
+local function Print(msg)
+	DEFAULT_CHAT_FRAME:AddMessage("|cff9482c9ShardCap|r - " .. msg)
+end
+
+local function Notify(msg)
+	if db and db.notify then Print(msg) end
+end
+
+local function Plural(n, word)
+	if n == 1 then return n .. " " .. word end
+	return n .. " " .. word .. "s"
+end
+
+------------------------------------------------------------------------------
+-- Client-mod detection
+------------------------------------------------------------------------------
+local function DetectAPIs()
+	api.classic = type(C_Container) == "table"
+		and type(C_Container.GetContainerItemInfo) == "function"
+	api.classicSwap = api.classic and type(C_Container.SwapItems) == "function"
+	api.classicBagType = api.classic and type(C_Container.GetContainerNumFreeSlots) == "function"
+	api.nampower = (not api.classic) and type(GetBagItem) == "function"
+	api.superwow = SUPERWOW_VERSION ~= nil
+	api.unitxp = type(UnitXP) == "function" and pcall(UnitXP, "nop", "nop") or false
+end
+
+------------------------------------------------------------------------------
+-- Slot reading: returns itemID, stackCount, locked (or nil for empty)
+------------------------------------------------------------------------------
+local function SlotInfoVanilla(bag, slot)
+	local link = GetContainerItemLink(bag, slot)
+	if not link then return nil end
+	-- Exact ID match. The original string.find(link, 6265) also matched any
+	-- item whose link merely contained "6265" (e.g. item 16265) and deleted it.
+	local _, _, id = string.find(link, "item:(%d+)")
+	local _, count, locked = GetContainerItemInfo(bag, slot)
+	return tonumber(id), count or 1, locked
+end
+
+-- Older ClassicAPI builds ignore the third argument and return a fresh table.
+-- Always read the returned table, and never read the buffer for an empty slot.
+local slotBuffer = {}
+local function SlotInfo(bag, slot)
+	if api.classic then
+		local info = C_Container.GetContainerItemInfo(bag, slot, slotBuffer)
+		if not info then return nil end
+		return info.itemID, info.stackCount or 1, info.isLocked
+	elseif api.nampower then
+		local ok, t = pcall(GetBagItem, bag, slot)
+		if not ok then
+			api.nampower = false -- unexpected API shape; fall back for good
+			return SlotInfoVanilla(bag, slot)
+		end
+		if not t then return nil end
+		local _, _, locked = GetContainerItemInfo(bag, slot)
+		return t.itemId, t.stackCount or 1, locked
+	end
+	return SlotInfoVanilla(bag, slot)
+end
+
+------------------------------------------------------------------------------
+-- Soul bag detection
+------------------------------------------------------------------------------
+local function IsBit4Set(n) -- Lua 5.0 has no bit ops in every client
+	return math.mod(math.floor(n / 4), 2) == 1
+end
+
+local function AutoIsSoulBag(bag)
+	if bag == 0 then return false end
+	if api.classicBagType then
+		local _, bagType = C_Container.GetContainerNumFreeSlots(bag)
+		if bagType and bagType > 0 then return IsBit4Set(bagType) end
+	end
+	local link = GetInventoryItemLink("player", ContainerIDToInventoryID(bag))
+	if not link then return false end
+	local _, _, id = string.find(link, "item:(%d+)")
+	id = tonumber(id)
+	if not id then return false end
+	if SOULBAG_IDS[id] then return true end
+	local _, _, _, _, _, subType = GetItemInfo(id)
+	return subType ~= nil and SOULBAG_SUBTYPES[subType] == true
+end
+
+local function IsSoulBag(bag)
+	if db.soulbags then return db.soulbags[bag] == true end
+	return AutoIsSoulBag(bag)
+end
+
+------------------------------------------------------------------------------
+-- Inventory scan
+------------------------------------------------------------------------------
+local function Scan()
+	local stacks, freeSoul, total, reagents, reagentTotals = {}, {}, 0, {}, {}
+	for bag = 0, 4 do
+		local soul = IsSoulBag(bag)
+		for slot = 1, GetContainerNumSlots(bag) do
+			local id, count, locked = SlotInfo(bag, slot)
+			if id == SHARD_ID then
+				table.insert(stacks, { bag = bag, slot = slot, count = count, locked = locked, soul = soul })
+				total = total + count
+			elseif not id and soul then
+				table.insert(freeSoul, { bag = bag, slot = slot })
+			elseif id and REAGENT_IDS[id] then
+				reagentTotals[id] = (reagentTotals[id] or 0) + count
+			end
+			if id and REAGENT_IDS[id] and not soul then
+				table.insert(reagents, { id = id, bag = bag, slot = slot, count = count, locked = locked })
+			end
+		end
+	end
+	return stacks, freeSoul, total, reagents, reagentTotals
+end
+
+-- Deletion order: shards outside soul bags first, backpack first,
+-- and from the end of each bag; soul bag shards go last.
+local function DeleteOrder(a, b)
+	if a.soul ~= b.soul then return not a.soul end
+	if a.bag ~= b.bag then return a.bag < b.bag end
+	return a.slot > b.slot
+end
+
+------------------------------------------------------------------------------
+-- Actions (one per pass; the next pass runs after the server answers)
+------------------------------------------------------------------------------
+local function CursorBusy()
+	return CursorHasItem() or (SpellIsTargeting and SpellIsTargeting())
+end
+
+-- returns true if it did something
+local function TrimStep(stacks, total)
+	local excess = total - db.cap
+	if excess <= 0 then return false end
+	table.sort(stacks, DeleteOrder)
+	for _, s in ipairs(stacks) do
+		if not s.locked then
+			local n = s.count
+			if n > excess then n = excess end
+			if n < s.count then
+				SplitContainerItem(s.bag, s.slot, n) -- delete exactly the excess
+			else
+				PickupContainerItem(s.bag, s.slot)
+			end
+			if CursorHasItem() then
+				DeleteCursorItem()
+				Notify("Deleted " .. Plural(n, "Soul Shard") .. " from bag " .. s.bag
+					.. " slot " .. s.slot .. " (" .. total .. " -> " .. (total - n) .. ", cap " .. db.cap .. ").")
+				return true
+			end
+			return false
+		end
+	end
+	return false
+end
+
+-- Max shards per slot: 3 on WoW 1.18.1 Clients, 1 on Blizzlike servers.
+local function MaxStack()
+	if api.classic and C_Item and type(C_Item.GetItemMaxStackSizeByID) == "function" then
+		local ok, n = pcall(C_Item.GetItemMaxStackSizeByID, SHARD_ID)
+		if ok and type(n) == "number" and n > 0 then return n end
+	end
+	local _, _, _, _, _, _, n = GetItemInfo(SHARD_ID)
+	if type(n) == "number" and n > 0 then return n end
+	return 1
+end
+
+-- Move exactly n shards from src onto dst (dst empty or a partial shard stack).
+local moveRefused = false -- stop this pass when no request was sent
+local function MoveShards(src, dst, n)
+	if api.classic and type(C_Container.MoveItem) == "function" then
+		if C_Container.MoveItem(src.bag, src.slot, dst.bag, dst.slot, n) == false then
+			moveRefused = true
+			return false
+		end
+		return true
+	end
+	if n < src.count then
+		SplitContainerItem(src.bag, src.slot, n)
+	else
+		PickupContainerItem(src.bag, src.slot)
+	end
+	PickupContainerItem(dst.bag, dst.slot)
+	if CursorHasItem() then PickupContainerItem(src.bag, src.slot) end -- put it back
+	return true
+end
+
+-- WoW 1.18.1 Clients: merge partial stacks so shards take as few slots as possible.
+-- Fills the most-preferred partial stack (soul bag first) from the least-preferred one.
+local function MergeStep(stacks, maxStack)
+	if maxStack <= 1 then return false end
+	local partial = {}
+	for _, s in ipairs(stacks) do
+		if s.count < maxStack and not s.locked then table.insert(partial, s) end
+	end
+	if table.getn(partial) < 2 then return false end
+	table.sort(partial, DeleteOrder) -- first = least preferred, last = most preferred
+	local src, dst = partial[1], partial[table.getn(partial)]
+	local n = maxStack - dst.count
+	if n > src.count then n = src.count end
+	if not MoveShards(src, dst, n) then return false end
+	Notify("Requested merge of " .. Plural(n, "Soul Shard") .. " into bag " .. dst.bag .. " slot " .. dst.slot .. ".")
+	return true
+end
+
+local function SortStep(stacks, freeSoul)
+	if not db.sort then return false end
+	if MergeStep(stacks, MaxStack()) then return true end
+	if moveRefused then return false end
+	if table.getn(freeSoul) == 0 then return false end
+	for _, s in ipairs(stacks) do
+		if not s.soul and not s.locked then
+			local dst = freeSoul[1]
+			if api.classicSwap then
+				if C_Container.SwapItems(s.bag, s.slot, dst.bag, dst.slot) == false then
+					moveRefused = true
+					return false
+				end
+			else
+				if not MoveShards(s, dst, s.count) then return false end
+			end
+			Notify("Requested move of " .. Plural(s.count, "Soul Shard") .. " into your soul bag (bag " .. dst.bag .. ").")
+			return true
+		end
+	end
+	return false
+end
+
+------------------------------------------------------------------------------
+-- Warlock reagents -> soul bag (WoW 1.18.1 Clients allow these in soul bags)
+------------------------------------------------------------------------------
+local rejected = {}   -- [itemID] = true: this server won't put it in a soul bag
+local failures = {}   -- [itemID] = moves the server silently refused
+local lastReagentMove -- { id, bag, slot } of the last move we sent
+
+local function ReagentAllowed(id)
+	if rejected[id] then return false end
+	if api.classic and C_Item and type(C_Item.GetItemFamily) == "function" then
+		local ok, fam = pcall(C_Item.GetItemFamily, id)
+		if ok and type(fam) == "number" and fam > 0 then return IsBit4Set(fam) end
+	end
+	-- Only servers where shards stack (WoW 1.18.1 Clients) allow this; on Blizzlike
+	-- servers the client would refuse the move with an error every time.
+	return MaxStack() > 1
+end
+
+local function Reject(id)
+	if rejected[id] then return end
+	rejected[id] = true
+	local name = GetItemInfo(id) or ("item " .. id)
+	Print(name .. " can't go in a soul bag on this server; won't try again this session.")
+end
+
+-- Soul bag slots to keep free for shards: enough to hold the cap,
+-- and never less than the shard stacks still waiting outside.
+local function ShardReserve(stacks)
+	local inSoul, outside = 0, 0
+	for _, s in ipairs(stacks) do
+		if s.soul then inSoul = inSoul + 1 else outside = outside + 1 end
+	end
+	local need = math.ceil(db.cap / MaxStack()) - inSoul
+	if need < outside then need = outside end
+	if need < 0 then need = 0 end
+	return need
+end
+
+local function ReagentStep(stacks, freeSoul, reagents)
+	if not db.reagents then return false end
+	-- did the last move silently fail (server refused, item still where it was)?
+	local last = lastReagentMove
+	lastReagentMove = nil
+	if last then
+		for _, r in ipairs(reagents) do
+			if r.id == last.id and r.bag == last.bag and r.slot == last.slot and not r.locked then
+				failures[r.id] = (failures[r.id] or 0) + 1
+				if failures[r.id] >= 2 then Reject(r.id) end
+			end
+		end
+	end
+	local free = table.getn(freeSoul)
+	if free <= ShardReserve(stacks) then return false end
+	for _, r in ipairs(reagents) do
+		if not r.locked and ReagentAllowed(r.id) then
+			local dst = freeSoul[free] -- fill from the end, leave the front for shards
+			if api.classicSwap then
+				if C_Container.SwapItems(r.bag, r.slot, dst.bag, dst.slot) == false then
+					moveRefused = true
+					return false
+				end
+			else
+				PickupContainerItem(r.bag, r.slot)
+				PickupContainerItem(dst.bag, dst.slot)
+				if CursorHasItem() then -- client refused it: put it back, stop trying
+					PickupContainerItem(r.bag, r.slot)
+					Reject(r.id)
+					return true
+				end
+			end
+			lastReagentMove = { id = r.id, bag = r.bag, slot = r.slot }
+			Notify("Requested move of " .. (GetItemInfo(r.id) or "reagent") .. " into your soul bag (bag " .. dst.bag .. ").")
+			return true
+		end
+	end
+	return false
+end
+
+------------------------------------------------------------------------------
+-- Scheduler (hidden OnUpdate frame: zero cost while idle)
+------------------------------------------------------------------------------
+local frame = CreateFrame("Frame")
+local nextRun, forced, passes = nil, false, 0
+local MAX_PASSES = 60
+
+local function Schedule(delay, force)
+	local t = GetTime() + (delay or 0.3)
+	if not nextRun or t < nextRun then nextRun = t end
+	if force then forced = true end
+	passes = 0
+	frame:Show()
+end
+
+local function Pass()
+	moveRefused = false
+	if not db then return false end
+	local manual = forced
+	if (inCombat or UnitAffectingCombat("player")) and not db.combat and not manual then
+		return false -- PLAYER_REGEN_ENABLED will reschedule
+	end
+	if CursorBusy() then return true end -- try again shortly
+	local stacks, freeSoul, total, reagents = Scan()
+	if TrimStep(stacks, total) then return true end
+	-- don't shuffle bags mid-combat even if combat trimming is on
+	if not (inCombat or UnitAffectingCombat("player")) then
+		if SortStep(stacks, freeSoul) then return true end
+		if moveRefused then return false end
+		if ReagentStep(stacks, freeSoul, reagents) then return true end
+		if moveRefused then return false end
+	end
+	-- retry while stacks are still locked by a pending server transaction
+	for _, s in ipairs(stacks) do if s.locked then return true end end
+	for _, r in ipairs(reagents) do if r.locked then return true end end
+	return lastReagentMove ~= nil -- one more pass to confirm the last move landed
+end
+
+frame:Hide()
+frame:SetScript("OnUpdate", function()
+	if not nextRun or GetTime() < nextRun then return end
+	nextRun = nil
+	passes = passes + 1
+	local again = Pass()
+	if again and passes < MAX_PASSES then
+		nextRun = GetTime() + 0.3
+	else
+		forced = false
+		this:Hide()
+	end
+end)
+
+------------------------------------------------------------------------------
+-- Saved variables & migration
+------------------------------------------------------------------------------
+local function InitDB()
+	if type(ShardCapDB) ~= "table" then
+		ShardCapDB = {}
+		-- migrate settings from ShardCap 1.x
+		if type(SHARDCAP_CAP_VALUE) == "number" then ShardCapDB.cap = SHARDCAP_CAP_VALUE end
+		if SHARDCAP_SPAM == true then ShardCapDB.notify = true end
+	end
+	SHARDCAP_CAP_VALUE, SHARDCAP_SPAM = nil, nil
+	db = ShardCapDB
+	for k, v in pairs(DEFAULTS) do
+		if db[k] == nil then db[k] = v end
+	end
+end
+
+local function WarnDuplicates()
+	if IsAddOnLoaded("ShardCapPlus") then
+		Print("|cffff5555ShardCapPlus is also enabled.|r Disable it - both would delete shards.")
+	end
+end
+
+------------------------------------------------------------------------------
+-- Events
+------------------------------------------------------------------------------
+frame:RegisterEvent("ADDON_LOADED")
+frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+frame:RegisterEvent("PLAYER_REGEN_DISABLED")
+frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+
+frame:SetScript("OnEvent", function()
+	if event == "ADDON_LOADED" then
+		if arg1 ~= ADDON then return end
+		InitDB()
+		DetectAPIs()
+		-- ClassicAPI batches all BAG_UPDATEs of a frame into one event
+		if api.classic then
+			frame:RegisterEvent("BAG_UPDATE_DELAYED")
+		else
+			frame:RegisterEvent("BAG_UPDATE")
+		end
+	elseif event == "PLAYER_ENTERING_WORLD" then
+		inCombat = UnitAffectingCombat("player") and true or false
+		WarnDuplicates()
+		Schedule(2)
+	elseif event == "PLAYER_REGEN_DISABLED" then
+		inCombat = true
+	elseif event == "PLAYER_REGEN_ENABLED" then
+		inCombat = false
+		Schedule(0.5)
+	elseif event == "BAG_UPDATE" or event == "BAG_UPDATE_DELAYED" then
+		if not inCombat or db.combat then Schedule(0.3) end
+	end
+end)
+
+------------------------------------------------------------------------------
+-- Slash commands
+------------------------------------------------------------------------------
+local function OnOff(v) if v then return "|cff55ff55on|r" end return "|cffff5555off|r" end
+
+local function SoulBagList()
+	local list = {}
+	for bag = 1, 4 do if IsSoulBag(bag) then table.insert(list, bag) end end
+	if table.getn(list) == 0 then return "none" end
+	return table.concat(list, ", ")
+end
+
+local function Backend()
+	local parts = {}
+	if api.classic then table.insert(parts, "ClassicAPI")
+	elseif api.nampower then table.insert(parts, "Nampower")
+	else table.insert(parts, "vanilla API") end
+	return table.concat(parts, ", ")
+end
+
+-- Items in the bank (ClassicAPI only: C_Item.GetItemCount reads the bank
+-- without it being open). Returns nil when unknown.
+local function BankCount(id)
+	if not (api.classic and C_Item and type(C_Item.GetItemCount) == "function") then return nil end
+	local ok1, all = pcall(C_Item.GetItemCount, id, true)
+	local ok2, carried = pcall(C_Item.GetItemCount, id, false)
+	if not ok1 or not ok2 or type(all) ~= "number" or type(carried) ~= "number" then return nil end
+	if all > carried then return all - carried end
+	return 0
+end
+
+local function BankSuffix(id)
+	local n = BankCount(id)
+	if n and n > 0 then return " |cffaaaaaa(+" .. n .. " in bank)|r" end
+	return ""
+end
+
+-- Status lines shared by /shardcap and the options panel
+-- Counts only: the display does not need sorting records or free-slot tables.
+local function StatusCounts()
+	local shards, figurines, stones, free = 0, 0, 0, 0
+	for bag = 0, 4 do
+		local soul = IsSoulBag(bag)
+		for slot = 1, GetContainerNumSlots(bag) do
+			local id, count = SlotInfo(bag, slot)
+			if id == SHARD_ID then shards = shards + count
+			elseif id == 16583 then figurines = figurines + count
+			elseif id == 5565 then stones = stones + count
+			elseif not id and soul then free = free + 1 end
+		end
+	end
+	return shards, figurines, stones, free
+end
+
+local function StatusLines()
+	local total, figurines, stones, free = StatusCounts()
+	local color = "|cffffffff"
+	if total > db.cap then color = "|cffff9900" end -- over the cap (e.g. in combat)
+	return "Soul Shards: " .. color .. total .. "/" .. db.cap .. "|r" .. BankSuffix(SHARD_ID),
+		"Demonic Figurines: |cffffffff" .. figurines .. "|r" .. BankSuffix(16583)
+			.. "  Infernal Stones: |cffffffff" .. stones .. "|r" .. BankSuffix(5565),
+		"Soul bags: " .. SoulBagList() .. (db.soulbags and " (manual)" or " (auto)")
+			.. ", " .. free .. " free soul slots"
+end
+
+local function PrintStatus()
+	local shards, reagents, bags = StatusLines()
+	Print(shards .. "  (v" .. VERSION .. ")")
+	Print(reagents)
+	Print(bags)
+	Print("Notify " .. OnOff(db.notify) .. ", sort " .. OnOff(db.sort)
+		.. ", trim in combat " .. OnOff(db.combat) .. ", reagents " .. OnOff(db.reagents)
+		.. "  [" .. Backend() .. "]")
+end
+
+local function PrintHelp()
+	Print("/shardcap |cffffffff<number>|r - set the cap (0-200)")
+	Print("/shardcap |cffffffffstatus|r - show cap, shard count and settings")
+	Print("/shardcap |cffffffffdelete|r - trim to the cap right now (even in combat)")
+	Print("/shardcap |cffffffffspam|r - toggle chat notifications")
+	Print("/shardcap |cffffffffsort|r - toggle moving shards into your soul bag")
+	Print("/shardcap |cffffffffcombat|r - toggle trimming during combat")
+	Print("/shardcap |cffffffffreagents|r - toggle moving Demonic Figurines / Infernal Stones into the soul bag")
+	Print("/shardcap |cffffffffsoulbag auto|1-4|r - auto-detect or toggle a bag as soul bag")
+	Print("/shardcap |cffffffffoptions|r - open the options window (ClassicAPI)")
+	Print("/shardcap |cffffffffreset|r - restore defaults")
+	Print("Trims when you leave combat, deleting shards outside your soul bag first.")
+end
+
+local function SetSoulBag(arg)
+	if arg == "auto" or arg == "" then
+		db.soulbags = nil
+		Print("Soul bag detection: auto (" .. SoulBagList() .. ").")
+		return
+	end
+	local bag = tonumber(arg)
+	if not bag or bag < 1 or bag > 4 or bag ~= math.floor(bag) then
+		Print("Use a bag number 1-4, or 'auto'.")
+		return
+	end
+	if not db.soulbags then
+		db.soulbags = {}
+		for b = 1, 4 do if AutoIsSoulBag(b) then db.soulbags[b] = true end end
+	end
+	if db.soulbags[bag] then db.soulbags[bag] = nil else db.soulbags[bag] = true end
+	Print("Soul bags (manual): " .. SoulBagList() .. ". '/shardcap soulbag auto' to undo.")
+	Schedule(0.3)
+end
+
+SLASH_SHARDCAP1 = "/shardcap"
+SLASH_SHARDCAP2 = "/scap"
+SlashCmdList["SHARDCAP"] = function(msg)
+	if not db then return end
+	msg = string.lower(msg or "")
+	local _, _, cmd, rest = string.find(msg, "^%s*(%S*)%s*(.-)%s*$")
+	cmd, rest = cmd or "", rest or ""
+
+	local n = tonumber(cmd)
+	if n then
+		if n < 0 or n > 200 or n ~= math.floor(n) then
+			Print("The cap must be a whole number from 0 to 200.")
+			return
+		end
+		db.cap = n
+		Print("Cap set to " .. Plural(n, "shard") .. ".")
+		Schedule(0.3)
+	elseif cmd == "" or cmd == "status" then
+		PrintStatus()
+		if cmd == "" then Print("Type |cffffffff/shardcap help|r for commands.") end
+	elseif cmd == "help" or cmd == "info" then
+		PrintHelp()
+	elseif cmd == "delete" or cmd == "trim" then
+		Schedule(0, true)
+	elseif cmd == "spam" or cmd == "notify" then
+		db.notify = not db.notify
+		Print("Notifications " .. OnOff(db.notify) .. ".")
+	elseif cmd == "sort" then
+		db.sort = not db.sort
+		Print("Moving shards into soul bags " .. OnOff(db.sort) .. ".")
+		Schedule(0.3)
+	elseif cmd == "combat" then
+		db.combat = not db.combat
+		Print("Trimming during combat " .. OnOff(db.combat) .. ".")
+	elseif cmd == "reagents" then
+		db.reagents = not db.reagents
+		Print("Moving Demonic Figurines / Infernal Stones into the soul bag " .. OnOff(db.reagents) .. ".")
+		Schedule(0.3)
+	elseif cmd == "soulbag" then
+		SetSoulBag(rest)
+	elseif cmd == "options" or cmd == "config" or cmd == "opt" then
+		if ShardCapAPI.OpenOptions then
+			ShardCapAPI.OpenOptions()
+		else
+			Print("The options window needs ClassicAPI (AddOn Options). Use |cffffffff/shardcap help|r for commands.")
+		end
+	elseif cmd == "reset" then
+		ShardCapDB = nil
+		InitDB()
+		Print("Settings reset. Cap is " .. db.cap .. ".")
+	else
+		PrintHelp()
+	end
+end
+
+------------------------------------------------------------------------------
+-- Internal API for Options.lua (not a stable public interface)
+------------------------------------------------------------------------------
+ShardCapAPI = {
+	VERSION = VERSION,
+	DEFAULTS = DEFAULTS,
+	GetDB = function() return db end,
+	Schedule = Schedule,
+	IsSoulBag = IsSoulBag,
+	AutoIsSoulBag = AutoIsSoulBag,
+	StatusLines = StatusLines,
+	Backend = Backend,
+	Print = Print,
+	OpenOptions = nil, -- set by Options.lua when an options window is available
+}

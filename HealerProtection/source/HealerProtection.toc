@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: HealerProtection
+## Notes: Lightweight healer alerts for Turtle WoW 1.12.1: mana, health, death and aggro.
+## Author: Dusk92
+## Version: 1.1
+## SavedVariablesPerCharacter: HPTABPC
+
+core.lua

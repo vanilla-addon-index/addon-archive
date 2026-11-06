@@ -1,0 +1,136 @@
+{
+  "upstream": "https://github.com/xVitali2/Addons-for-Vanilla-1.12.1/tree/master/BGAssistRU",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "xVitali2",
+    "repo": "Addons-for-Vanilla-1.12.1",
+    "name": "Addons-for-Vanilla-1.12.1",
+    "ref": "master",
+    "subpath": "BGAssistRU",
+    "url": "https://github.com/xVitali2/Addons-for-Vanilla-1.12.1",
+    "api": "https://api.github.com/repos/xVitali2/Addons-for-Vanilla-1.12.1"
+  },
+  "commit": "35cbf9f6d1693cf0edfdb1fd4fa097abae1aa37c",
+  "sourceFiles": {
+    "BGAssistRU.lua": {
+      "sha256": "5f6402d7d67441327da73375b57f9aebe17a78406e25668079aa1f2979e3e792",
+      "bytes": 87208
+    },
+    "BGAssistRU.toc": {
+      "sha256": "dbfa38f99f725ffbf0be520e3ccc14cd509c6de30d1b4daf735f57b6906b6121",
+      "bytes": 211
+    },
+    "BGAssistRU.xml": {
+      "sha256": "1692833fbe8145119a87c87adb9906ab5f4a14b1c0e115b8ebbd4d6f7bb521ec",
+      "bytes": 24785
+    },
+    "Bindings.xml": {
+      "sha256": "e48b79a0acab48662ee6d669ec869c2479b353219fb6e92c2de4445ee2c44df0",
+      "bytes": 115
+    },
+    "Localization.de.lua": {
+      "sha256": "ee88c6164c03ffbdaa57f1d30f0d4a7d27e2af584cbd58b1fafa9bdd8e70170d",
+      "bytes": 4970
+    },
+    "Localization.fr.lua": {
+      "sha256": "03c94e8d8b8489da6c7b9b929fffe2fd5f2859a468e34efa9c9b94bb6a2e8446",
+      "bytes": 4645
+    },
+    "Localization.lua": {
+      "sha256": "ad05ef8940ec20a9cb9abab3cf0ffaf0b1b4fe3648540b45dd17709ae60027ba",
+      "bytes": 5620
+    },
+    "Localization.ru.lua": {
+      "sha256": "69d07345969769298711846239a5849fdea7bcca2b304687623d9ce187abea45",
+      "bytes": 6210
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "213199424": {
+      "tag": "v1.2.7",
+      "folder": "v1.2.7--213199424",
+      "assets": {
+        "247320949": {
+          "sha256": "c8a0f421eca7e1b108451aa6aa137b622f06f6cc0dac30b44481a9752a1ee1b1",
+          "bytes": 1041916,
+          "id": "247320949",
+          "name": "Libs.zip",
+          "url": "https://github.com/xVitali2/Addons-for-Vanilla-1.12.1/releases/download/v1.2.7/Libs.zip",
+          "path": "releases/v1.2.7--213199424/assets/Libs.zip"
+        },
+        "247320981": {
+          "sha256": "f74368faf755a5d0c91c2f03e405e0c83fcfc171f89d0c5f34183838f3cb005b",
+          "bytes": 2180,
+          "id": "247320981",
+          "name": "Better_RaidMarker.zip",
+          "url": "https://github.com/xVitali2/Addons-for-Vanilla-1.12.1/releases/download/v1.2.7/Better_RaidMarker.zip",
+          "path": "releases/v1.2.7--213199424/assets/Better_RaidMarker.zip"
+        },
+        "247320983": {
+          "sha256": "92236dcd9ad59cb7c4cf0ff45af29786417af54bb95d84e9d569eb66545dcd7f",
+          "bytes": 24020,
+          "id": "247320983",
+          "name": "BGAssistRU.zip",
+          "url": "https://github.com/xVitali2/Addons-for-Vanilla-1.12.1/releases/download/v1.2.7/BGAssistRU.zip",
+          "path": "releases/v1.2.7--213199424/assets/BGAssistRU.zip"
+        },
+        "247320991": {
+          "sha256": "0d87e0b17bcf067c1c921937416a80059858e2192095d70e5287fe48e5e2a14e",
+          "bytes": 4793,
+          "id": "247320991",
+          "name": "EasyWho.zip",
+          "url": "https://github.com/xVitali2/Addons-for-Vanilla-1.12.1/releases/download/v1.2.7/EasyWho.zip",
+          "path": "releases/v1.2.7--213199424/assets/EasyWho.zip"
+        },
+        "247320993": {
+          "sha256": "9c05e0c8bd2059cb96756ec5d50eb025dc4a44289e2b1d0cad0116ee3c295f61",
+          "bytes": 145331,
+          "id": "247320993",
+          "name": "EngBags.zip",
+          "url": "https://github.com/xVitali2/Addons-for-Vanilla-1.12.1/releases/download/v1.2.7/EngBags.zip",
+          "path": "releases/v1.2.7--213199424/assets/EngBags.zip"
+        },
+        "247320994": {
+          "sha256": "5734a877537179a59af9cc3d5d97ac0bac73d82783dd58d6dd02ac4b03cef3f6",
+          "bytes": 355965,
+          "id": "247320994",
+          "name": "Informant.zip",
+          "url": "https://github.com/xVitali2/Addons-for-Vanilla-1.12.1/releases/download/v1.2.7/Informant.zip",
+          "path": "releases/v1.2.7--213199424/assets/Informant.zip"
+        },
+        "247320998": {
+          "sha256": "ce04e190d10c99780633f7933d9c45c45ea7bba47e257420c229086c6832c5f2",
+          "bytes": 3665184,
+          "id": "247320998",
+          "name": "RecipeRadar.zip",
+          "url": "https://github.com/xVitali2/Addons-for-Vanilla-1.12.1/releases/download/v1.2.7/RecipeRadar.zip",
+          "path": "releases/v1.2.7--213199424/assets/RecipeRadar.zip"
+        },
+        "247321011": {
+          "sha256": "4d13b6249b64a8181d2be13cd25d96b9409a5b807db1ef78c0eead7b21aa9904",
+          "bytes": 63590,
+          "id": "247321011",
+          "name": "SmartHeal.zip",
+          "url": "https://github.com/xVitali2/Addons-for-Vanilla-1.12.1/releases/download/v1.2.7/SmartHeal.zip",
+          "path": "releases/v1.2.7--213199424/assets/SmartHeal.zip"
+        },
+        "247321014": {
+          "sha256": "cd84bfa71b7730e1a1f2dec28905b80be35be0990151cff298849ef35b1ace0a",
+          "bytes": 275269,
+          "id": "247321014",
+          "name": "unitscan.zip",
+          "url": "https://github.com/xVitali2/Addons-for-Vanilla-1.12.1/releases/download/v1.2.7/unitscan.zip",
+          "path": "releases/v1.2.7--213199424/assets/unitscan.zip"
+        }
+      },
+      "source": {
+        "sha256": "0aa218d604e831a40bf1fbe723443d4065599a771f97d4f197c13fc73ee2cc26",
+        "bytes": 16889021,
+        "path": "releases/v1.2.7--213199424/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/xVitali2/Addons-for-Vanilla-1.12.1/tarball/v1.2.7"
+      }
+    }
+  }
+}

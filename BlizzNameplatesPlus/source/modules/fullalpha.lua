@@ -1,0 +1,1119 @@
+BNP = BNP or {}
+
+local NON_TARGET_ALPHA = 0.55
+local TARGET_RESOLVE_CACHE_TIME = 0.05
+local ALPHA_IDENTITY_HOLD_TIME = 0.20
+local FOREIGN_TAG_SCAN_INTERVAL = 0.10
+-- Target-only textures must be neutral: native border artwork is gold, and
+-- WoW's vertex tint multiplies RGB rather than replacing the gold pixels.
+-- Keep the original gold textures in visualguard for non-target plates.
+local TARGET_BORDER_TEXTURE = "Interface\\AddOns\\BlizzNameplatesPlus\\media\\classic_nameplate_border_tint.tga"
+local TARGET_BORDER_BOLD_TEXTURE = "Interface\\AddOns\\BlizzNameplatesPlus\\media\\classic_nameplate_border_bold_tint.tga"
+
+
+local targetResolveCacheGUID = nil
+local targetResolveCacheAt = -100
+local targetResolveCacheFound = false
+local classicTargetCacheGUID = nil
+local classicTargetCacheAt = -100
+local classicTargetCachePlate = nil
+local classicTargetCacheAvailable = false
+local targetGUIDCacheAt = -100
+local targetGUIDCacheValue = nil
+local TARGET_GUID_CACHE_TIME = 0.02
+-- Visual target indicators (glow/arrows/target-on-top) must resolve to exactly
+-- one plate. Keep this separate from the deliberately conservative alpha
+-- fallback, which may temporarily treat same-name plates as possible targets.
+local strictTargetCacheGUID = nil
+local strictTargetCacheAt = -100
+local strictTargetCachePlate = nil
+
+local function GetPlateGUID(plate)
+  if not plate or not plate.GetName then return nil end
+  local token = plate:GetName(1)
+  if not token then return nil end
+  local exists, guid = UnitExists(token)
+  if exists and guid then return guid end
+  return token
+end
+
+local function GetVerifiedPlateGUID(plate)
+  if not plate or not plate.GetName then return nil end
+  local token = plate:GetName(1)
+  if not token then return nil end
+
+  -- Alpha must only be lowered after SuperWoW has positively resolved the
+  -- projected plate token. While rotating the camera Blizzard can recycle and
+  -- re-show a plate before its token is live again. During that short window
+  -- treating nil/stale identity as "non-target" caused random low-alpha pops.
+  local exists, guid = UnitExists(token)
+  if exists and guid then return guid end
+  return nil
+end
+
+local function GetTargetGUID()
+  -- Many per-frame plate paths ask for the same target GUID. Cache it for a
+  -- tiny window (roughly one rendered frame); PLAYER_TARGET_CHANGED explicitly
+  -- invalidates this cache, so target switches still update immediately.
+  local now = GetTime()
+  if now - targetGUIDCacheAt < TARGET_GUID_CACHE_TIME then
+    return targetGUIDCacheValue
+  end
+
+  local exists, guid = UnitExists("target")
+  if exists and guid then targetGUIDCacheValue = guid else targetGUIDCacheValue = nil end
+  targetGUIDCacheAt = now
+  return targetGUIDCacheValue
+end
+
+local function InvalidateTargetResolution()
+  targetResolveCacheGUID = nil
+  targetResolveCacheAt = -100
+  targetResolveCacheFound = false
+  classicTargetCacheGUID = nil
+  classicTargetCacheAt = -100
+  classicTargetCachePlate = nil
+  classicTargetCacheAvailable = false
+  targetGUIDCacheAt = -100
+  targetGUIDCacheValue = nil
+  strictTargetCacheGUID = nil
+  strictTargetCacheAt = -100
+  strictTargetCachePlate = nil
+end
+
+local function GetClassicAPITargetPlate(targetGUID)
+  local now = GetTime()
+  if classicTargetCacheGUID == targetGUID and
+     now - classicTargetCacheAt < TARGET_RESOLVE_CACHE_TIME then
+    return classicTargetCachePlate, classicTargetCacheAvailable
+  end
+
+  local available = C_NamePlate and
+                    type(C_NamePlate.GetNamePlateForUnit) == "function"
+  local targetPlate = nil
+
+  if available then
+    local ok, plate = pcall(C_NamePlate.GetNamePlateForUnit, "target")
+    if ok then targetPlate = plate end
+  end
+
+  classicTargetCacheGUID = targetGUID
+  classicTargetCacheAt = now
+  classicTargetCachePlate = targetPlate
+  classicTargetCacheAvailable = available and true or false
+  return targetPlate, classicTargetCacheAvailable
+end
+
+local function GetPlateToken(plate)
+  if not plate or not plate.GetName then return nil end
+  return plate:GetName(1)
+end
+
+local function GetRegionText(region)
+  if not region or not region.GetText then return nil end
+  return region:GetText()
+end
+
+local function PlateMatchesTargetVisual(plate)
+  if not UnitName then return false end
+
+  local targetName = UnitName("target")
+  local plateName = GetRegionText(plate and plate.name)
+  if not targetName or not plateName or targetName ~= plateName then
+    return false
+  end
+
+  -- Same-name mobs are common. A known, different level therefore rules the
+  -- plate out. If the level is hidden/"??", keeping another same-name plate at
+  -- full alpha is the safe failure mode; it is preferable to dimming the real
+  -- target because a projected token still carries its previous GUID.
+  if UnitLevel then
+    local targetLevel = UnitLevel("target")
+    local plateLevel = tonumber(GetRegionText(plate and plate.level))
+    if targetLevel and targetLevel > 0 and plateLevel and plateLevel > 0 and
+       targetLevel ~= plateLevel then
+      return false
+    end
+  end
+
+  return true
+end
+
+local function IsPlateCurrentTarget(plate, targetGUID)
+  if not plate or not targetGUID then return false end
+
+  local token = GetPlateToken(plate)
+  if token and UnitIsUnit then
+    local ok, sameUnit = pcall(UnitIsUnit, token, "target")
+    if ok and sameUnit then return true end
+  end
+
+  local plateGUID = GetVerifiedPlateGUID(plate)
+  if plateGUID and plateGUID == targetGUID then return true end
+
+  -- SuperWoW can briefly return the old, but still syntactically valid, GUID
+  -- for a recycled projected nameplate. The displayed Blizzard name/level has
+  -- already switched by then and protects the actual target from being dimmed.
+  return PlateMatchesTargetVisual(plate)
+end
+
+-- Resolve one authoritative target plate for visual target indicators.
+-- Unlike IsPlateCurrentTarget(), this intentionally NEVER falls back to the
+-- displayed name/level because several identical mobs can share those values.
+-- If SuperWoW temporarily exposes the same stale GUID on more than one plate,
+-- the result is treated as ambiguous and no indicator is shown until identity
+-- becomes unique again. This prevents duplicated arrows/glows by construction.
+local function GetStrictTargetPlate(targetGUID)
+  if not targetGUID then return nil end
+
+  local now = GetTime()
+  if strictTargetCacheGUID == targetGUID and
+     now - strictTargetCacheAt < TARGET_RESOLVE_CACHE_TIME then
+    return strictTargetCachePlate
+  end
+
+  local result = nil
+  local classicTargetPlate, classicTargetAvailable =
+    GetClassicAPITargetPlate(targetGUID)
+
+  -- ClassicAPI's exact target frame is authoritative when it maps directly to
+  -- a plate tracked by BNP. This is the normal supported path.
+  if classicTargetAvailable and classicTargetPlate and
+     BNP.plates and BNP.plates[classicTargetPlate] then
+    result = classicTargetPlate
+  else
+    local guidCandidate = nil
+    local guidAmbiguous = false
+    local plate
+
+    -- UnitIsUnit is stricter than visual name/level matching, so prefer it.
+    for plate in pairs(BNP.plates or {}) do
+      if plate and plate.IsShown and plate:IsShown() then
+        local token = GetPlateToken(plate)
+        if token and UnitIsUnit then
+          local ok, sameUnit = pcall(UnitIsUnit, token, "target")
+          if ok and sameUnit then
+            result = plate
+            break
+          end
+        end
+      end
+    end
+
+    -- GUID is the final fallback, but only when exactly one visible plate owns
+    -- it. Recycled projected plates can briefly expose stale valid GUIDs.
+    if not result then
+      for plate in pairs(BNP.plates or {}) do
+        if plate and plate.IsShown and plate:IsShown() then
+          local plateGUID = GetVerifiedPlateGUID(plate)
+          if plateGUID and plateGUID == targetGUID then
+            if guidCandidate and guidCandidate ~= plate then
+              guidAmbiguous = true
+              break
+            end
+            guidCandidate = plate
+          end
+        end
+      end
+      if guidCandidate and not guidAmbiguous then
+        result = guidCandidate
+      end
+    end
+  end
+
+  strictTargetCacheGUID = targetGUID
+  strictTargetCacheAt = now
+  strictTargetCachePlate = result
+  return result
+end
+
+local function HasResolvedVisibleTarget(targetGUID)
+  local now = GetTime()
+  if targetResolveCacheGUID == targetGUID and
+     now - targetResolveCacheAt < TARGET_RESOLVE_CACHE_TIME then
+    return targetResolveCacheFound
+  end
+
+  local found = false
+  local plate
+  for plate in pairs(BNP.plates or {}) do
+    if plate and plate.IsShown and plate:IsShown() and
+       IsPlateCurrentTarget(plate, targetGUID) then
+      found = true
+      break
+    end
+  end
+
+  targetResolveCacheGUID = targetGUID
+  targetResolveCacheAt = now
+  targetResolveCacheFound = found
+  return found
+end
+
+local function IsForeignTagged(plate)
+  if not plate or not plate.GetName then return false end
+  local token = plate:GetName(1)
+  if not token then return false end
+
+  local exists = UnitExists(token)
+  if not exists then return false end
+
+  if UnitCanAttack and not UnitCanAttack("player", token) then
+    return false
+  end
+
+  if not UnitIsTapped or not UnitIsTapped(token) then
+    return false
+  end
+
+  if UnitIsTappedByPlayer and UnitIsTappedByPlayer(token) then
+    return false
+  end
+
+  return true
+end
+
+local function DesiredAlpha(plate, targetGUID)
+  targetGUID = targetGUID or GetTargetGUID()
+
+  -- Target Only is deliberately implemented with alpha instead of Hide()/Show().
+  -- Blizzard owns projected nameplate visibility and recycles these frames as
+  -- units enter/leave the screen. Setting alpha to zero hides only the visual
+  -- while leaving the client free to manage the underlying frame safely.
+  --
+  -- With no selected target, keep every plate visible so the player can still
+  -- click a nameplate to acquire a target. Once a target exists, Target Only
+  -- must be fail-closed: newly projected/recycled plates are hidden unless they
+  -- are positively identified as the current target. Failing open here caused
+  -- every newly shown plate to pop back in while rotating the camera because
+  -- the projected unit token can be unavailable for a few frames.
+  local targetOnly = BNP.IsTargetOnlyNameplatesEnabled and
+                     BNP:IsTargetOnlyNameplatesEnabled()
+  if targetOnly then
+    if not targetGUID then return 1 end
+
+    local strictTargetPlate = GetStrictTargetPlate(targetGUID)
+    if strictTargetPlate then
+      if plate == strictTargetPlate then return 1 end
+      return 0
+    end
+
+    -- Strict resolution can be briefly unavailable while Blizzard recycles a
+    -- projected plate. During that window only accept exact unit/GUID evidence;
+    -- never use the visual name/level fallback because identical mobs could
+    -- otherwise make several plates visible at once.
+    local token = GetPlateToken(plate)
+    if token and UnitIsUnit then
+      local ok, sameUnit = pcall(UnitIsUnit, token, "target")
+      if ok and sameUnit then return 1 end
+    end
+
+    local plateGUID = GetVerifiedPlateGUID(plate)
+    if plateGUID and plateGUID == targetGUID then return 1 end
+
+    return 0
+  end
+
+  -- No selected target: keep all nameplates fully visible.
+  if not targetGUID then return 1 end
+
+  local classicTargetPlate, classicTargetAvailable =
+    GetClassicAPITargetPlate(targetGUID)
+
+  if classicTargetAvailable then
+    -- Exact ClassicAPI frame resolution makes the old transition hold
+    -- unnecessary. More importantly, it lets us keep alpha stable even when a
+    -- crowded projected nameplate token briefly stops resolving. The previous
+    -- code treated an unresolved non-target token as alpha 1 and then faded it
+    -- again on the next tick, which made both the plate and its aura children
+    -- visibly pulse/flash in large stacked raids.
+    if not classicTargetPlate then return 1 end
+
+    -- The exact target frame is authoritative and must always stay opaque,
+    -- even while its SuperWoW token is transiently unavailable.
+    if plate == classicTargetPlate then return 1 end
+
+    -- GUID equality remains as a conservative fallback in case a client build
+    -- returns a wrapper/alias for the target nameplate rather than the exact
+    -- frame object tracked by BNP.
+    local plateGUID = GetVerifiedPlateGUID(plate)
+    if plateGUID and plateGUID == targetGUID then return 1 end
+
+    -- Once ClassicAPI has positively identified the real target frame, every
+    -- other visible plate is safely a non-target. Do not bounce it to alpha 1
+    -- merely because its projected token was nil for one raid-stack tick.
+    if BNP.GetNonTargetAlpha then
+      return BNP:GetNonTargetAlpha()
+    end
+    return 1
+  end
+
+  -- On target changes and recycled OnShow transitions, the projected token can
+  -- temporarily expose its previous valid GUID. Keep the plate neutral until
+  -- Blizzard/SuperWoW have had time to publish the new identity. This is only
+  -- the legacy path used when exact ClassicAPI nameplate resolution is absent.
+  if plate.BNPAlphaIdentityHoldUntil and
+     GetTime() < plate.BNPAlphaIdentityHoldUntil then
+    return 1
+  end
+
+  -- GUID equality is preferred. UnitIsUnit and the displayed Blizzard
+  -- name/level are conservative fallbacks for the stale-valid-GUID window.
+  if IsPlateCurrentTarget(plate, targetGUID) then
+    return 1
+  end
+
+  -- Do not dim anything until the selected target itself can be associated
+  -- with a currently visible plate. Uncertainty must fail to full opacity.
+  if not HasResolvedVisibleTarget(targetGUID) then
+    return 1
+  end
+
+  -- A recycled/reappearing plate can exist for a moment before SuperWoW has
+  -- attached a trustworthy GUID again. Never dim an unidentified plate; doing
+  -- so is what caused the random low-alpha flash when rotating the camera.
+  local plateGUID = GetVerifiedPlateGUID(plate)
+  if not plateGUID then return 1 end
+
+  -- Current target always stays fully visible.
+  if plateGUID == targetGUID then
+    return 1
+  end
+
+  -- Only positively identified non-target plates use the configured alpha.
+  if BNP.GetNonTargetAlpha then
+    return BNP:GetNonTargetAlpha()
+  end
+
+  return 1
+end
+
+local function SetLevelSafe(frame, level)
+  if frame and frame.SetFrameLevel and level then
+    if frame:GetFrameLevel() ~= level then
+      frame:SetFrameLevel(level)
+    end
+  end
+end
+
+local function ApplyTargetFrameLevel(plate)
+  if not plate or not plate:IsShown() then return end
+
+  -- IMPORTANT:
+  -- Never change the FrameStrata of projected Vanilla nameplates.
+  -- Their native client/world layer keeps them behind Blizzard UI frames.
+  -- Permanent target priority is therefore implemented only with FrameLevel.
+
+  if plate.BNPBaseFrameLevel == nil then
+    plate.BNPBaseFrameLevel = plate:GetFrameLevel() or 0
+  end
+
+  local wrapper = plate.BNPScaleWrapper
+  if wrapper and plate.BNPBaseWrapperLevel == nil then
+    plate.BNPBaseWrapperLevel = wrapper:GetFrameLevel() or plate.BNPBaseFrameLevel
+  end
+
+  local healthbar = plate.healthbar
+  if healthbar and plate.BNPBaseHealthbarLevel == nil then
+    plate.BNPBaseHealthbarLevel = healthbar:GetFrameLevel() or 1
+  end
+
+  -- ApplyTargetAlpha runs immediately before this function and publishes the
+  -- exact ClassicAPI/SuperWoW target identity on the plate.
+  local target = plate.BNPIsCurrentTarget and true or false
+
+  local plateLevel = plate.BNPBaseFrameLevel
+  local wrapperLevel = plate.BNPBaseWrapperLevel or plateLevel
+  local healthbarLevel = plate.BNPBaseHealthbarLevel or 1
+
+  if target then
+    -- Raise the target only relative to other nameplates while preserving the
+    -- native projected-nameplate strata beneath the Blizzard interface.
+    plateLevel = plateLevel + 50
+    wrapperLevel = wrapperLevel + 50
+    healthbarLevel = healthbarLevel + 50
+  end
+
+  SetLevelSafe(plate, plateLevel)
+  if wrapper then
+    SetLevelSafe(wrapper, wrapperLevel)
+  end
+  if healthbar then
+    -- The Blizzard border/name are regions of the raised wrapper, but the
+    -- actual StatusBar is its own frame and must be raised explicitly.
+    SetLevelSafe(healthbar, healthbarLevel)
+  end
+
+  -- Keep BNP's castbar above the healthbar (and therefore above the enlarged
+  -- target-glow texture, which belongs to the healthbar). The target plate is
+  -- raised dynamically by +50 levels, so a castbar that was created before a
+  -- target switch must follow that new level too. Otherwise the glow can draw
+  -- over the castbar when Target Glow Size is increased.
+  local castbar = plate.BNPCastbar
+  if castbar then
+    local castbarLevel = healthbarLevel + 1
+    SetLevelSafe(castbar, castbarLevel)
+    if castbar.icon then
+      SetLevelSafe(castbar.icon, castbarLevel + 1)
+    end
+  end
+end
+
+local function ApplyForeignTagVisual(plate, forceScan)
+  if not plate or not plate:IsShown() then return end
+
+  local bar = plate.healthbar
+  if not bar or not bar.SetStatusBarColor then return end
+
+  -- UnitExists/UnitCanAttack/UnitIsTapped are relatively expensive when called
+  -- for every nameplate on every rendered frame. Cache the ownership result for
+  -- 0.10s, but still enforce the already-known grey color every frame so client
+  -- color rewrites cannot reintroduce the old grey/red flicker.
+  local now = GetTime()
+  local foreign = plate.BNPForeignTagCached
+  if forceScan or not plate.BNPForeignTagScanAt or
+     now - plate.BNPForeignTagScanAt >= FOREIGN_TAG_SCAN_INTERVAL then
+    foreign = IsForeignTagged(plate) and true or false
+    plate.BNPForeignTagCached = foreign
+    plate.BNPForeignTagScanAt = now
+  end
+
+  if foreign then
+    if not plate.BNPForeignTagGrey then
+      local r, g, b, a = bar:GetStatusBarColor()
+      plate.BNPForeignTagOldR = r
+      plate.BNPForeignTagOldG = g
+      plate.BNPForeignTagOldB = b
+      plate.BNPForeignTagOldA = a
+      plate.BNPForeignTagGrey = true
+    end
+
+    -- Neutral grey: visually distinct from Target Focus transparency. Only
+    -- rewrite the StatusBar when something actually changed its color.
+    local r, g, b = bar:GetStatusBarColor()
+    if math.abs((r or 0) - 0.45) > 0.01 or
+       math.abs((g or 0) - 0.45) > 0.01 or
+       math.abs((b or 0) - 0.45) > 0.01 then
+      bar:SetStatusBarColor(0.45, 0.45, 0.45, plate.BNPForeignTagOldA or 1)
+    end
+  elseif plate.BNPForeignTagGrey then
+    -- Restore the color that BNP/Shagu/class-color logic had before the mob
+    -- became foreign-tagged. Clear state so future color changes can be learned.
+    bar:SetStatusBarColor(
+      plate.BNPForeignTagOldR or 1,
+      plate.BNPForeignTagOldG or 0,
+      plate.BNPForeignTagOldB or 0,
+      plate.BNPForeignTagOldA or 1
+    )
+    plate.BNPForeignTagGrey = nil
+    plate.BNPForeignTagOldR = nil
+    plate.BNPForeignTagOldG = nil
+    plate.BNPForeignTagOldB = nil
+    plate.BNPForeignTagOldA = nil
+  end
+end
+
+local function GetGlowVisualParent(plate)
+  if not plate then return nil end
+
+  local anchor = plate.healthbar or plate
+  local visualParent = plate.BNPScaleWrapper
+
+  if not visualParent and anchor and anchor.GetParent then
+    visualParent = anchor:GetParent()
+  end
+
+  return visualParent or plate
+end
+
+local function EnsureTargetGlow(plate)
+  if not plate then return nil end
+  if plate.BNPTargetGlow then return plate.BNPTargetGlow end
+
+  local anchor = plate.healthbar or plate
+  if not anchor then return nil end
+
+  -- Keep Blizzard's original healthbar/frame layering completely untouched.
+  -- The glow belongs to the healthbar itself on BACKGROUND, so it stays behind
+  -- the statusbar fill without raising/reparenting the Blizzard healthbar.
+  --
+  -- Direct port of ShaguPlates' target glow geometry:
+  --   nameplate.glow = nameplate:CreateTexture(nil, "BACKGROUND")
+  --   glow anchored to health CENTER
+  --   width  = health width  + 60
+  --   height = health height + 30
+  --
+  -- BNP's only intentional visual change is +3 px on X.
+  local glow = anchor:CreateTexture(nil, "BACKGROUND")
+  glow:SetTexture("Interface\\AddOns\\BlizzNameplatesPlus\\media\\shagu_target_glow.tga")
+  -- BLEND keeps the alpha-mask visible when it is tinted black. Additive
+  -- blending would make a black target glow disappear completely.
+  glow:SetBlendMode("BLEND")
+  glow:SetPoint("CENTER", anchor, "CENTER", 3, 0)
+
+  local width = anchor.GetWidth and anchor:GetWidth() or 120
+  local height = anchor.GetHeight and anchor:GetHeight() or 8
+  local glowSize = BNP.GetTargetGlowSize and BNP:GetTargetGlowSize() or 0
+  glow:SetWidth(width + 60 + (glowSize * 2))
+  glow:SetHeight(height + 30 + (glowSize * 2))
+
+  local r, g, b = 1, 1, 1
+  if BNP.GetTargetGlowColor then
+    r, g, b = BNP:GetTargetGlowColor()
+  end
+  glow:SetVertexColor(r, g, b, 1)
+  glow:Hide()
+
+  plate.BNPTargetGlow = glow
+  return glow
+end
+
+local function ApplyTargetGlow(plate)
+  if not plate or not plate:IsShown() then return end
+
+  local enabled = BNP.IsTargetFocusEnabled and BNP:IsTargetFocusEnabled()
+  local isTarget = plate.BNPIsCurrentTarget and true or false
+
+  -- Do not create one glow texture for every nameplate. Only the actual target
+  -- needs it; previously even disabled/non-target plates allocated and updated
+  -- their own texture every frame.
+  if not enabled or not isTarget then
+    local existing = plate.BNPTargetGlow
+    if existing and existing.IsShown and existing:IsShown() then existing:Hide() end
+    return
+  end
+
+  local glow = EnsureTargetGlow(plate)
+  if not glow then return end
+
+  local anchor = plate.healthbar or plate
+  local width = anchor.GetWidth and anchor:GetWidth() or 120
+  local height = anchor.GetHeight and anchor:GetHeight() or 8
+  local glowSize = BNP.GetTargetGlowSize and BNP:GetTargetGlowSize() or 0
+
+  -- Geometry only changes when the healthbar dimensions or the user setting
+  -- changes. Avoid ClearAllPoints/SetPoint/SetWidth/SetHeight every frame.
+  if glow.BNPLastAnchor ~= anchor or
+     glow.BNPLastWidth ~= width or glow.BNPLastHeight ~= height or
+     glow.BNPLastSize ~= glowSize then
+    glow:ClearAllPoints()
+    glow:SetPoint("CENTER", anchor, "CENTER", 3, 0)
+    glow:SetWidth(width + 60 + (glowSize * 2))
+    glow:SetHeight(height + 30 + (glowSize * 2))
+    glow.BNPLastAnchor = anchor
+    glow.BNPLastWidth = width
+    glow.BNPLastHeight = height
+    glow.BNPLastSize = glowSize
+  end
+
+  local r, g, b = 1, 1, 1
+  if BNP.GetTargetGlowColor then r, g, b = BNP:GetTargetGlowColor() end
+  if glow.BNPLastR ~= r or glow.BNPLastG ~= g or glow.BNPLastB ~= b then
+    glow:SetVertexColor(r, g, b, 1)
+    glow.BNPLastR, glow.BNPLastG, glow.BNPLastB = r, g, b
+  end
+
+  local glowOpacity = BNP.GetTargetGlowOpacity and BNP:GetTargetGlowOpacity() or 1
+  if glow.BNPLastOpacity ~= glowOpacity then
+    glow:SetAlpha(glowOpacity)
+    glow.BNPLastOpacity = glowOpacity
+  end
+
+  if not glow:IsShown() then glow:Show() end
+end
+
+
+local function ApplyTargetBorderColor(plate)
+  if not plate or not plate:IsShown() then return end
+
+  local border = plate.border
+  if not border or not border.SetVertexColor then return end
+
+  -- Hide Border remains authoritative. Never make or recolor a hidden border
+  -- visible just because this plate is the current target.
+  if BNP.IsNameplateBorderHidden and BNP:IsNameplateBorderHidden() then
+    return
+  end
+
+  local enabled = BNP.IsTargetBorderColorEnabled and BNP:IsTargetBorderColorEnabled()
+  local isTarget = plate.BNPIsCurrentTarget and true or false
+
+  if enabled and isTarget then
+    local r, g, b = 1.00, 0.20, 0.20
+    if BNP.GetTargetBorderColor then r, g, b = BNP:GetTargetBorderColor() end
+
+    local boldEnabled = BNP.IsTargetBorderBoldEnabled and BNP:IsTargetBorderBoldEnabled()
+    local wantedTexture = boldEnabled and TARGET_BORDER_BOLD_TEXTURE or TARGET_BORDER_TEXTURE
+    -- A recycled nameplate or visualguard can restore the native gold art
+    -- without clearing our cached path. Check the *real* texture as well.
+    local actualTexture = border.GetTexture and border:GetTexture() or nil
+    if border.SetTexture and (plate.BNPTargetBorderTexture ~= wantedTexture or actualTexture ~= wantedTexture) then
+      border:SetTexture(wantedTexture)
+    end
+    plate.BNPTargetBorderTexture = wantedTexture
+
+    local needsColor = true
+    if border.GetVertexColor then
+      local oldR, oldG, oldB, oldA = border:GetVertexColor()
+      needsColor = math.abs((oldR or 1) - r) > 0.001
+        or math.abs((oldG or 1) - g) > 0.001
+        or math.abs((oldB or 1) - b) > 0.001
+        or math.abs((oldA or 1) - 1) > 0.001
+    end
+    if needsColor then border:SetVertexColor(r, g, b, 1) end
+
+    plate.BNPTargetBorderOverride = true
+    return
+  end
+
+  -- Restore only plates BNP previously tinted as a target.
+  -- ApplyBaseNameplateBorderStyle also restores the normal border texture,
+  -- so Bold Target Border never leaves an extra/alternate frame behind. This avoids doing
+  -- border work on every non-target plate every rendered frame.
+  if plate.BNPTargetBorderOverride then
+    if BNP.ApplyBaseNameplateBorderStyle then
+      BNP:ApplyBaseNameplateBorderStyle(plate)
+    else
+      -- Safe load-order fallback; visualguard normally owns this restore.
+      if BNP.IsDarkNameplateBorderEnabled and BNP:IsDarkNameplateBorderEnabled() then
+        border:SetVertexColor(0.3, 0.3, 0.3, 0.9)
+      else
+        border:SetVertexColor(1, 1, 1, 1)
+      end
+    end
+    plate.BNPTargetBorderOverride = nil
+    plate.BNPTargetBorderTexture = nil
+  end
+end
+
+-- Used after native visual repair to reapply the target-only tint without
+-- walking every visible nameplate (e.g. when Blizzard recycles a frame).
+function BNP:ApplyTargetBorderColorForPlate(plate)
+  ApplyTargetBorderColor(plate)
+end
+
+function BNP:RefreshTargetBorderColor()
+  local plate
+  for plate in pairs(self.plates or {}) do
+    ApplyTargetBorderColor(plate)
+  end
+end
+
+
+local TARGET_ARROW_TEXTURES = {
+  chevron = {
+    thin = "Interface\\AddOns\\BlizzNameplatesPlus\\media\\target_arrow_chevron_thin.tga",
+    thick = "Interface\\AddOns\\BlizzNameplatesPlus\\media\\target_arrow_chevron_thick.tga",
+  },
+  triangle = {
+    thin = "Interface\\AddOns\\BlizzNameplatesPlus\\media\\target_arrow_triangle_thin.tga",
+    thick = "Interface\\AddOns\\BlizzNameplatesPlus\\media\\target_arrow_triangle_thick.tga",
+  },
+  slim_triangle = {
+    thin = "Interface\\AddOns\\BlizzNameplatesPlus\\media\\target_arrow_slim_triangle_thin.tga",
+    thick = "Interface\\AddOns\\BlizzNameplatesPlus\\media\\target_arrow_slim_triangle_thick.tga",
+  },
+  double_chevron = {
+    thin = "Interface\\AddOns\\BlizzNameplatesPlus\\media\\target_arrow_double_chevron_thin.tga",
+    thick = "Interface\\AddOns\\BlizzNameplatesPlus\\media\\target_arrow_double_chevron_thick.tga",
+  },
+  diamond_tip = {
+    thin = "Interface\\AddOns\\BlizzNameplatesPlus\\media\\target_arrow_diamond_tip_thin.tga",
+    thick = "Interface\\AddOns\\BlizzNameplatesPlus\\media\\target_arrow_diamond_tip_thick.tga",
+  },
+}
+
+local function GetTargetArrowTexture(style, thick)
+  local textures = TARGET_ARROW_TEXTURES[style] or TARGET_ARROW_TEXTURES.chevron
+  return thick and textures.thick or textures.thin
+end
+
+local function GetTargetArrowOffsets(style)
+  local leftGap, rightGap, fallbackGap = -5, 2, 5
+  if style == "double_chevron" then
+    leftGap, rightGap, fallbackGap = -7, 4, 7
+  elseif style == "diamond_tip" then
+    leftGap, rightGap, fallbackGap = -6, 3, 6
+  elseif style == "triangle" or style == "slim_triangle" then
+    leftGap, rightGap, fallbackGap = -5, 3, 5
+  end
+  return leftGap, rightGap, fallbackGap
+end
+
+local function GetRightTargetArrowSide(plate)
+  if not plate then return nil end
+  if plate.BNPDirectDragonTestFrame and plate.BNPDirectDragonTestFrame.IsShown and
+     plate.BNPDirectDragonTestFrame:IsShown() then
+    return plate.BNPDirectDragonTestFrame
+  elseif plate.levelicon and plate.levelicon.IsShown and plate.levelicon:IsShown() then
+    return plate.levelicon
+  elseif plate.level and plate.level.IsShown and plate.level:IsShown() then
+    return plate.level
+  end
+  return nil
+end
+
+local function AnchorRightTargetArrow(plate, arrow, style)
+  if not plate or not arrow then return end
+  local anchor = plate.healthbar or plate
+  style = style or (BNP.GetTargetArrowStyle and BNP:GetTargetArrowStyle()) or "chevron"
+  local _, rightGap, fallbackGap = GetTargetArrowOffsets(style)
+  local side = GetRightTargetArrowSide(plate)
+  local anchorKey = side or anchor
+
+  -- The level/elite objects move with the nameplate automatically. Re-anchor
+  -- only when the actual side object or selected style changes.
+  if arrow.BNPLastAnchorKey == anchorKey and arrow.BNPLastAnchorStyle == style then
+    return
+  end
+
+  arrow:ClearAllPoints()
+  if side then
+    arrow:SetPoint("LEFT", side, "RIGHT", rightGap, -1)
+  else
+    arrow:SetPoint("LEFT", anchor, "RIGHT", fallbackGap, -1)
+  end
+  arrow.BNPLastAnchorKey = anchorKey
+  arrow.BNPLastAnchorStyle = style
+end
+
+local function EnsureTargetArrows(plate)
+  if not plate then return nil, nil end
+  if plate.BNPTargetArrowLeft and plate.BNPTargetArrowRight then
+    return plate.BNPTargetArrowLeft, plate.BNPTargetArrowRight
+  end
+
+  local anchor = plate.healthbar or plate
+  if not anchor or not anchor.CreateTexture then return nil, nil end
+
+  local left = anchor:CreateTexture(nil, "OVERLAY")
+  left:SetTexture(GetTargetArrowTexture("chevron", false))
+  left:SetWidth(14)
+  left:SetHeight(14)
+  left:SetTexCoord(0, 1, 0, 1)
+  left:SetPoint("RIGHT", anchor, "LEFT", -5, 0)
+  left.BNPLastAnchorStyle = "chevron"
+  left:Hide()
+
+  local right = anchor:CreateTexture(nil, "OVERLAY")
+  right:SetTexture(GetTargetArrowTexture("chevron", false))
+  right:SetWidth(14)
+  right:SetHeight(14)
+  right:SetTexCoord(1, 0, 0, 1)
+  AnchorRightTargetArrow(plate, right, "chevron")
+  right:Hide()
+
+  plate.BNPTargetArrowLeft = left
+  plate.BNPTargetArrowRight = right
+  return left, right
+end
+
+local function ApplyTargetArrows(plate)
+  if not plate or not plate:IsShown() then return end
+
+  local enabled = BNP.AreTargetArrowsEnabled and BNP:AreTargetArrowsEnabled()
+  local totemIconOnly = plate.BNPTotemLastKey and
+                        BNP.AreTotemIndicatorsEnabled and BNP:AreTotemIndicatorsEnabled()
+  local isTarget = plate.BNPIsCurrentTarget and true or false
+
+  -- As with Target Glow, arrow textures only need to exist on a plate that has
+  -- actually been the target. This avoids two permanent textures per nameplate.
+  if not enabled or totemIconOnly or not isTarget then
+    local oldLeft, oldRight = plate.BNPTargetArrowLeft, plate.BNPTargetArrowRight
+    if oldLeft and oldLeft.IsShown and oldLeft:IsShown() then oldLeft:Hide() end
+    if oldRight and oldRight.IsShown and oldRight:IsShown() then oldRight:Hide() end
+    return
+  end
+
+  local left, right = EnsureTargetArrows(plate)
+  if not left or not right then return end
+
+  local anchor = plate.healthbar or plate
+  local arrowSize = BNP.GetTargetArrowSize and BNP:GetTargetArrowSize() or 14
+  local thick = BNP.AreTargetArrowsThick and BNP:AreTargetArrowsThick()
+  local style = BNP.GetTargetArrowStyle and BNP:GetTargetArrowStyle() or "chevron"
+  local texture = GetTargetArrowTexture(style, thick)
+  local leftGap = GetTargetArrowOffsets(style)
+
+  if left.BNPLastTexture ~= texture then
+    left:SetTexture(texture)
+    right:SetTexture(texture)
+    left.BNPLastTexture = texture
+    right.BNPLastTexture = texture
+  end
+
+  if left.BNPLastSize ~= arrowSize then
+    left:SetWidth(arrowSize)
+    left:SetHeight(arrowSize)
+    right:SetWidth(arrowSize)
+    right:SetHeight(arrowSize)
+    left.BNPLastSize = arrowSize
+    right.BNPLastSize = arrowSize
+  end
+
+  -- TexCoords are constant after creation; only anchors depend on style.
+  if left.BNPLastAnchorStyle ~= style then
+    left:ClearAllPoints()
+    left:SetPoint("RIGHT", anchor, "LEFT", leftGap, 0)
+    left.BNPLastAnchorStyle = style
+  end
+  AnchorRightTargetArrow(plate, right, style)
+
+  local r, g, b = 1, 1, 1
+  if BNP.GetTargetArrowColor then
+    r, g, b = BNP:GetTargetArrowColor()
+  elseif BNP.GetTargetGlowColor then
+    r, g, b = BNP:GetTargetGlowColor()
+  end
+  if left.BNPLastR ~= r or left.BNPLastG ~= g or left.BNPLastB ~= b then
+    left:SetVertexColor(r, g, b, 1)
+    right:SetVertexColor(r, g, b, 1)
+    left.BNPLastR, left.BNPLastG, left.BNPLastB = r, g, b
+    right.BNPLastR, right.BNPLastG, right.BNPLastB = r, g, b
+  end
+
+  if not left:IsShown() then left:Show() end
+  if not right:IsShown() then right:Show() end
+end
+
+
+local function SetDetachedObjectAlpha(object, wantedAlpha)
+  if object and object.SetAlpha and
+     (not object.GetAlpha or object:GetAlpha() ~= wantedAlpha) then
+    object:SetAlpha(wantedAlpha)
+  end
+end
+
+local function ApplyTargetOnlyPresentation(plate, alpha, targetOnly)
+  if not plate then return end
+
+  -- Auras/CC/immunities are sibling frames, so they do not inherit the
+  -- projected plate alpha. Keep them in lockstep with Target Only and restore
+  -- them to full opacity immediately when the option is disabled.
+  local detachedAlpha = targetOnly and alpha or 1
+  SetDetachedObjectAlpha(plate.BNPAuraContainer, detachedAlpha)
+  SetDetachedObjectAlpha(plate.BNPCCContainer, detachedAlpha)
+  SetDetachedObjectAlpha(plate.BNPImmunityContainer, detachedAlpha)
+
+  -- BNP routes nameplate clicks through BNPScaleWrapper. Alpha-0 frames can
+  -- still receive mouse input in the WoW UI, so disable the wrapper hit area
+  -- for hidden non-targets and restore it for visible plates.
+  local wrapper = plate.BNPScaleWrapper
+  if wrapper and wrapper.EnableMouse then
+    local shouldEnableMouse = (not targetOnly) or alpha > 0
+    if wrapper.BNPTargetOnlyMouseEnabled ~= shouldEnableMouse then
+      wrapper:EnableMouse(shouldEnableMouse)
+      wrapper.BNPTargetOnlyMouseEnabled = shouldEnableMouse
+    end
+
+    if not shouldEnableMouse and BNP.BNPMouseoverOwner == wrapper then
+      BNP.BNPMouseoverOwner = nil
+      wrapper.BNPMouseoverUnit = nil
+      if SetMouseoverUnit then pcall(SetMouseoverUnit) end
+      if GameTooltip and GameTooltip.Hide then GameTooltip:Hide() end
+    end
+  end
+end
+
+local function ApplyTargetAlpha(plate)
+  if not plate or not plate:IsShown() then return end
+  local targetGUID = GetTargetGUID()
+  local totemIconOnly = plate.BNPTotemLastKey and
+                        BNP.AreTotemIndicatorsEnabled and BNP:AreTotemIndicatorsEnabled()
+  local targetOnly = BNP.IsTargetOnlyNameplatesEnabled and
+                     BNP:IsTargetOnlyNameplatesEnabled()
+  -- Totem icon replacement normally stays fully opaque, but Target Only must
+  -- apply to every projected nameplate consistently, including totems.
+  local wanted = (totemIconOnly and not targetOnly) and 1 or DesiredAlpha(plate, targetGUID)
+  if plate:GetAlpha() ~= wanted then
+    plate:SetAlpha(wanted)
+  end
+  ApplyTargetOnlyPresentation(plate, wanted, targetOnly)
+
+  -- Publish a STRICT single target identity for detached aura containers and
+  -- target-only visuals. Do not reuse the alpha resolver here: its intentional
+  -- name/level safety fallback can match several identical mobs at once.
+  local strictTargetPlate = GetStrictTargetPlate(targetGUID)
+  plate.BNPIsCurrentTarget = strictTargetPlate == plate and true or false
+
+  -- ClassicAPI returns the underlying target nameplate frame itself. Force the
+  -- strictly resolved target opaque after every alpha application.
+  if strictTargetPlate and strictTargetPlate.GetAlpha and strictTargetPlate.SetAlpha then
+    strictTargetPlate.BNPIsCurrentTarget = true
+    local ok, alpha = pcall(strictTargetPlate.GetAlpha, strictTargetPlate)
+    if not ok or alpha ~= 1 then
+      pcall(strictTargetPlate.SetAlpha, strictTargetPlate, 1)
+    end
+  end
+end
+
+local function InstallAlphaGuard(plate)
+  plate = plate or this
+  if not plate or plate.BNPFullAlphaGuard then return end
+
+  plate.BNPAlphaIdentityHoldUntil = GetTime() + ALPHA_IDENTITY_HOLD_TIME
+
+  local oldOnUpdate = plate:GetScript("OnUpdate")
+  plate:SetScript("OnUpdate", function()
+    if oldOnUpdate then oldOnUpdate() end
+    local current = this or plate
+
+    -- Apply the optional Y-offset after Blizzard has had a chance to update
+    -- the projected nameplate for this frame. This uses the OnUpdate BNP
+    -- already needs for alpha/glow/target-level handling.
+    if BNP.MaintainNameplateYOffset and BNP_DB and
+       BNP_DB.nameplateYOffset and BNP_DB.nameplateYOffset ~= 0 then
+      BNP:MaintainNameplateYOffset(current)
+    end
+
+    -- Alpha / Target Only remains per-frame because projected Vanilla plates
+    -- can be recycled between normal events and Blizzard may rewrite alpha.
+    -- The heavier visual guards below do not need render-rate polling: target
+    -- changes refresh the old/new target immediately through PLAYER_TARGET_CHANGED,
+    -- while a 20 Hz safety pass is more than enough to repair occasional client
+    -- rewrites without doing the same work 60-165 times per second per plate.
+    ApplyTargetAlpha(current)
+    -- Foreign-tag grey is deliberately still enforced every frame. Blizzard can
+    -- rewrite healthbar colors between events and even a short throttle can
+    -- reintroduce a visible grey/red flash on tagged mobs. The expensive owner
+    -- query inside ApplyForeignTagVisual is already cached to 10 Hz.
+    ApplyForeignTagVisual(current)
+
+    -- Native projection can reset the raid icon anchor on any frame. Correct
+    -- visible marks before rendering; the Y-offset loop leaves their anchors
+    -- to raidmarks.lua. This only compares existing geometry, with no unit or
+    -- aura queries, and skips plates whose native raid icon is hidden.
+    if BNP.MaintainRaidMarkPosition then BNP:MaintainRaidMarkPosition(current) end
+
+    current.BNPVisualGuardElapsed = (current.BNPVisualGuardElapsed or 0) + (arg1 or 0)
+    if current.BNPVisualGuardElapsed >= 0.05 then
+      current.BNPVisualGuardElapsed = 0
+
+      if BNP.MaintainTargetScale then BNP:MaintainTargetScale(current) end
+      ApplyTargetGlow(current)
+      ApplyTargetArrows(current)
+      ApplyTargetBorderColor(current)
+      ApplyTargetFrameLevel(current)
+    end
+  end)
+
+  plate.BNPFullAlphaGuard = true
+  ApplyTargetAlpha(plate)
+end
+
+if BNP.libnameplate then
+  table.insert(BNP.libnameplate.OnInit, function(plate)
+    InstallAlphaGuard(plate or this)
+  end)
+
+  table.insert(BNP.libnameplate.OnShow, function(plate)
+    local current = plate or this
+    if not current then return end
+    InvalidateTargetResolution()
+    current.BNPAlphaIdentityHoldUntil = GetTime() + ALPHA_IDENTITY_HOLD_TIME
+
+    -- Do not reset a recycled/newly projected plate to alpha 1 while Target
+    -- Only is active. That one-frame reset was visible as plates popping back
+    -- in when turning the camera. ApplyTargetAlpha below decides immediately
+    -- whether the frame is the target or must stay hidden.
+    local targetOnly = BNP.IsTargetOnlyNameplatesEnabled and
+                       BNP:IsTargetOnlyNameplatesEnabled()
+    if not targetOnly and current.GetAlpha and current.SetAlpha and current:GetAlpha() ~= 1 then
+      current:SetAlpha(1)
+    end
+    InstallAlphaGuard(current)
+    ApplyTargetAlpha(current)
+    if BNP.MaintainTargetScale then BNP:MaintainTargetScale(current) end
+    ApplyTargetGlow(current)
+    ApplyTargetArrows(current)
+    ApplyTargetBorderColor(current)
+    ApplyForeignTagVisual(current, true)
+    ApplyTargetFrameLevel(current)
+  end)
+end
+
+local targetEvents = CreateFrame("Frame")
+targetEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
+targetEvents:SetScript("OnEvent", function()
+  -- Target switches used to synchronously walk every known nameplate here.
+  -- Every visible plate already runs ApplyTargetAlpha/target visuals from its
+  -- normal OnUpdate, so that extra full pass duplicated the same work in one
+  -- event frame and could show up as a short hitch in crowded scenes.
+  --
+  -- Keep the switch responsive by refreshing only the old/new target frames
+  -- immediately. All other plates converge on the very next normal OnUpdate
+  -- without one large target-change CPU spike. Alpha-zero Target Only plates
+  -- remain :IsShown(), so their OnUpdate continues to run as well.
+  local previousTargetPlate = strictTargetCachePlate or classicTargetCachePlate
+
+  InvalidateTargetResolution()
+
+  local targetGUID = GetTargetGUID()
+  local currentTargetPlate, classicTargetAvailable = GetClassicAPITargetPlate(targetGUID)
+  if not currentTargetPlate then
+    currentTargetPlate = GetStrictTargetPlate(targetGUID)
+  end
+
+  local function RefreshImmediateTargetPlate(plate)
+    if not plate or not BNP.plates or not BNP.plates[plate] then return end
+    if not plate.IsShown or not plate:IsShown() then return end
+
+    -- Exact ClassicAPI target identity means no transition hold is needed.
+    -- On the legacy path preserve the old neutral hold for the former target
+    -- while projected SuperWoW identity settles.
+    if classicTargetAvailable or
+       (BNP.IsTargetOnlyNameplatesEnabled and BNP:IsTargetOnlyNameplatesEnabled()) then
+      plate.BNPAlphaIdentityHoldUntil = nil
+    else
+      plate.BNPAlphaIdentityHoldUntil = GetTime() + ALPHA_IDENTITY_HOLD_TIME
+    end
+
+    ApplyTargetAlpha(plate)
+    if BNP.MaintainTargetScale then BNP:MaintainTargetScale(plate) end
+    ApplyTargetGlow(plate)
+    ApplyTargetArrows(plate)
+    ApplyTargetBorderColor(plate)
+    ApplyTargetFrameLevel(plate)
+  end
+
+  RefreshImmediateTargetPlate(previousTargetPlate)
+  if currentTargetPlate ~= previousTargetPlate then
+    RefreshImmediateTargetPlate(currentTargetPlate)
+  end
+
+  -- Aura/CC containers already mirror plate alpha from ApplyTargetAlpha and
+  -- their own renderer refresh. Avoid another synchronous all-plate pass here.
+end)
+
+function BNP:RefreshTargetFocus()
+  InvalidateTargetResolution()
+  local plate
+  for plate in pairs(self.plates or {}) do
+    ApplyTargetAlpha(plate)
+    if BNP.MaintainTargetScale then BNP:MaintainTargetScale(plate) end
+    ApplyTargetGlow(plate)
+    ApplyTargetArrows(plate)
+    ApplyTargetBorderColor(plate)
+    ApplyForeignTagVisual(plate)
+  end
+end
+
+function BNP:RefreshNonTargetAlpha()
+  InvalidateTargetResolution()
+  local plate
+  for plate in pairs(self.plates or {}) do
+    ApplyTargetAlpha(plate)
+  end
+end
+
+function BNP:RefreshTargetOnlyNameplates()
+  InvalidateTargetResolution()
+  local plate
+  for plate in pairs(self.plates or {}) do
+    ApplyTargetAlpha(plate)
+  end
+  -- Aura/CC rows are sibling frames so they do not inherit plate alpha. Make
+  -- them follow Target Only explicitly, then restore them immediately when the
+  -- option is disabled.
+  if self.RefreshAuraPriorityAlpha then self:RefreshAuraPriorityAlpha() end
+end

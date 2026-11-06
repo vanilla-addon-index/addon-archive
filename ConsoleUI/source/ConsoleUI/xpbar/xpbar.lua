@@ -1,0 +1,911 @@
+--[[
+    ConsoleUI - XP/Reputation Bar Module
+    
+    Custom experience and reputation bars similar to pfUI
+    Shows XP/Rep bars below chat frame, fades out after timeout
+]]
+
+-- Create the xpbar module namespace
+if ConsoleUI.xpbar == nil then
+    ConsoleUI.xpbar = {}
+end
+
+local XPBar = ConsoleUI.xpbar
+
+-- ============================================================================
+-- Constants
+-- ============================================================================
+
+XPBar.DEFAULT_TIMEOUT = 5.0  -- Seconds before bar fades out
+XPBar.FADE_SPEED = 0.05      -- Alpha decrease per frame
+XPBar.UPDATE_INTERVAL = 0.01 -- Update interval for fade
+
+-- ============================================================================
+-- Helper Functions
+-- ============================================================================
+
+local function round(num)
+    return math.floor(num + 0.5)
+end
+
+function XPBar.FormatWatchText(prefix, current, maxValue)
+    current = tonumber(current) or 0
+    maxValue = tonumber(maxValue) or 0
+    local perc = 0
+    if maxValue > 0 then
+        perc = round(current / maxValue * 100)
+    end
+    return prefix .. ": " .. current .. "/" .. maxValue .. " (" .. perc .. "%)"
+end
+
+local CLASS_RGB = {
+    WARRIOR = { 0.78, 0.61, 0.43 },
+    PALADIN = { 0.96, 0.55, 0.73 },
+    HUNTER  = { 0.67, 0.83, 0.45 },
+    ROGUE   = { 1.00, 0.96, 0.41 },
+    PRIEST  = { 1.00, 1.00, 1.00 },
+    SHAMAN  = { 0.96, 0.55, 0.73 },
+    MAGE    = { 0.41, 0.80, 0.94 },
+    WARLOCK = { 0.58, 0.51, 0.79 },
+    DRUID   = { 1.00, 0.49, 0.04 },
+}
+
+local function GetPlayerClassColor()
+    local _, class = UnitClass("player")
+    local c = RAID_CLASS_COLORS and class and RAID_CLASS_COLORS[class]
+    if c and c.r then
+        return c.r, c.g, c.b
+    end
+    local rgb = class and CLASS_RGB[class]
+    if rgb then
+        return rgb[1], rgb[2], rgb[3]
+    end
+    return 0.0, 1.0, 0.0
+end
+
+local function GetStringColor(colorString)
+    -- Parse color string like "1.0,1.0,1.0,1.0" or "r,g,b,a"
+    -- Manual split for WoW 1.12 compatibility (strsplit not available)
+    local str = colorString or "1.0,1.0,1.0,1.0"
+    local parts = {}
+    local start = 1
+    local pos = 1
+    
+    while pos <= string.len(str) do
+        local found = string.find(str, ",", pos)
+        if not found then
+            -- Last part
+            table.insert(parts, string.sub(str, start))
+            break
+        else
+            table.insert(parts, string.sub(str, start, found - 1))
+            start = found + 1
+            pos = found + 1
+        end
+    end
+    
+    local r = tonumber(parts[1]) or 1.0
+    local g = tonumber(parts[2]) or 1.0
+    local b = tonumber(parts[3]) or 1.0
+    local a = tonumber(parts[4]) or 1.0
+    
+    return r, g, b, a
+end
+
+local function GetRestColor()
+    local config = ConsoleUI.config
+    local rest_color = "0.0,0.5,1.0,1.0"
+    if config and config.Get then
+        rest_color = config:Get("xpBarRestColor") or rest_color
+    end
+    return GetStringColor(rest_color)
+end
+
+function XPBar:ClearRestedFill(bar)
+    local rested = bar and bar.restedbar
+    if not rested then return end
+    rested:SetValue(0)
+    rested:Hide()
+    if rested.cuiWatchFill then rested.cuiWatchFill:Hide() end
+end
+
+function XPBar:ApplyFillColors(bar)
+    if not bar or not bar.bar then
+        return
+    end
+    if bar.barType == "XP" then
+        local cr, cg, cb = GetPlayerClassColor()
+        bar.bar:SetStatusBarColor(cr, cg, cb, 1.0)
+        if bar.restedbar then
+            local rr, rg, rb, ra = GetRestColor()
+            bar.restedbar:SetStatusBarColor(rr, rg, rb, ra)
+        end
+    end
+    if ConsoleUI.config and ConsoleUI.config.SyncWatchFill then
+        ConsoleUI.config:SyncWatchFill(bar.bar)
+        ConsoleUI.config:SyncWatchFill(bar.restedbar)
+    end
+end
+
+-- 1.12 widget scripts read global `this`. fn(bar) does not set it.
+function XPBar:Fire(bar, ev)
+    if not bar or not bar.GetScript then
+        return
+    end
+    local fn = bar:GetScript("OnEvent")
+    if not fn then
+        return
+    end
+    local prevThis = this
+    local prevEvent = event
+    this = bar
+    event = ev
+    fn()
+    this = prevThis
+    event = prevEvent
+end
+
+function XPBar:PaintChrome(bar)
+    if ConsoleUI.config and ConsoleUI.config.PaintStatusBarChrome then
+        ConsoleUI.config:PaintStatusBarChrome(bar)
+    end
+    self:ApplyFillColors(bar)
+end
+
+local function CreateDataFrame()
+    local data = CreateFrame("Frame", "ConsoleUIXPBarData", UIParent)
+    data:RegisterEvent("CHAT_MSG_COMBAT_FACTION_CHANGE")
+    data:RegisterEvent("PLAYER_ENTERING_WORLD")
+    data:RegisterEvent("PLAYER_LEVEL_UP")
+    
+    -- Parse faction change messages
+    local parse_faction = string.gsub(FACTION_STANDING_INCREASED, "%%s", "(.+)")
+    parse_faction = string.gsub(parse_faction, "%%d", "%%d+")
+    
+    data:SetScript("OnEvent", function()
+        if event == "PLAYER_ENTERING_WORLD" then
+            this.starttime = GetTime()
+            this.startxp = UnitXP("player") or 0
+        elseif event == "PLAYER_LEVEL_UP" then
+            -- Add previously gained experience to the session
+            this.startxp = this.startxp - UnitXPMax("player")
+        elseif event == "CHAT_MSG_COMBAT_FACTION_CHANGE" then
+            local _, _, faction, amount = string.find(arg1, parse_faction)
+            this.faction = faction or this.faction
+        end
+    end)
+    
+    return data
+end
+
+local dataFrame = CreateDataFrame()
+
+-- ============================================================================
+-- Tooltip Functions
+-- ============================================================================
+
+local function OnLeave()
+    local self = this
+    self.tick = GetTime() + 3.0
+    GameTooltip:Hide()
+end
+
+local function OnEnter()
+    local self = this
+    if not self or not self.bar then return end  -- Bar not initialized yet
+    local lines = {}
+    local config = ConsoleUI.config
+    
+    -- Determine display mode
+    local mode = self.display
+    if self.display == "XPFLEX" then
+        mode = UnitLevel("player") < MAX_PLAYER_LEVEL and "XP" or "REP"
+    elseif self.display == "FLEX" then
+        mode = "REP"
+    end
+    
+    self:SetAlpha(1)
+    
+    if mode == "XP" then
+        local xp, xpmax, exh = UnitXP("player"), UnitXPMax("player"), GetXPExhaustion()
+        local xp_perc = round(xp / xpmax * 100)
+        local remaining = xpmax - xp
+        local remaining_perc = round(remaining / xpmax * 100)
+        local exh_perc = GetXPExhaustion() and round(GetXPExhaustion() / xpmax * 100) or 0
+        local xp_persec = ((xp - dataFrame.startxp) / (GetTime() - dataFrame.starttime))
+        local session = UnitXP("player") - dataFrame.startxp
+        local avg_hour = math.floor(((UnitXP("player") - dataFrame.startxp) / (GetTime() - dataFrame.starttime)) * 60 * 60)
+        local time_remaining = xp_persec > 0 and SecondsToTime(remaining / xp_persec) or 0
+        
+        table.insert(lines, { "|cff555555Experience", "" })
+        table.insert(lines, { "XP", "|cffffffff" .. xp .. " / " .. xpmax .. " (" .. xp_perc .. "%)" })
+        table.insert(lines, { "Remaining", "|cffffffff" .. remaining .. " (" .. remaining_perc .. "%)" })
+        if IsResting() then
+            table.insert(lines, { "Status", "|cffffffffResting" })
+        end
+        if GetXPExhaustion() then
+            table.insert(lines, { "Rested", "|cff5555ff+" .. exh .. " (" .. exh_perc .. "%)" })
+        end
+        table.insert(lines, { "" })
+        table.insert(lines, { "This Session", "|cffffffff" .. session })
+        table.insert(lines, { "Average Per Hour", "|cffffffff" .. avg_hour })
+        table.insert(lines, { "Time Remaining", "|cffffffff" .. time_remaining })
+    elseif mode == "PETXP" then
+        local xp, xpmax = GetPetExperience()
+        local xp_perc = round(xp / xpmax * 100)
+        local remaining = xpmax - xp
+        local remaining_perc = round(remaining / xpmax * 100)
+        
+        table.insert(lines, { "|cff555555Experience", "" })
+        table.insert(lines, { "XP", "|cffffffff" .. xp .. " / " .. xpmax .. " (" .. xp_perc .. "%)" })
+        table.insert(lines, { "Remaining", "|cffffffff" .. remaining .. " (" .. remaining_perc .. "%)" })
+    elseif mode == "REP" then
+        for i = 1, 99 do
+            local name, description, standingID, barMin, barMax, barValue, atWarWith, canToggleAtWar, isHeader, isCollapsed, isWatched = GetFactionInfo(i)
+            if (isWatched and not self.faction) or (self.faction and name == self.faction) then
+                barMax = barMax - barMin
+                barValue = barValue - barMin
+                
+                local color = FACTION_BAR_COLORS[standingID]
+                local colorStr = "|cff808080"
+                if color then
+                    local r = math.floor((color.r + 0.3) * 255)
+                    local g = math.floor((color.g + 0.3) * 255)
+                    local b = math.floor((color.b + 0.3) * 255)
+                    colorStr = string.format("|cff%02x%02x%02x", r, g, b)
+                end
+                
+                table.insert(lines, { "|cff555555Reputation", "" })
+                table.insert(lines, { colorStr .. name .. " (" .. GetText("FACTION_STANDING_LABEL" .. standingID, UnitSex("player")) .. ")" })
+                table.insert(lines, { barValue .. " / " .. barMax .. " (" .. round(barValue / barMax * 100) .. "%)" })
+                break
+            end
+        end
+    end
+    
+    -- Draw tooltip
+    GameTooltip:ClearLines()
+    GameTooltip_SetDefaultAnchor(GameTooltip, self)
+    GameTooltip:SetOwner(self, "ANCHOR_CURSOR")
+    
+    for id, data in pairs(lines) do
+        if data[2] then
+            GameTooltip:AddDoubleLine(data[1], data[2])
+        else
+            GameTooltip:AddLine(data[1])
+        end
+    end
+    GameTooltip:Show()
+end
+
+-- ============================================================================
+-- Update Functions
+-- ============================================================================
+
+local function OnUpdate()
+    local self = this
+    if not self or not self.bar then return end  -- Bar not initialized yet
+    local config = ConsoleUI.config
+    
+    -- Show/hide text on mouseover
+    if config.SyncWatchFill then
+        config:SyncWatchFill(self.bar)
+        if self.restedbar then
+            config:SyncWatchFill(self.restedbar)
+        end
+    end
+
+    if config:Get(self.text_mouse_key) == true then
+        if MouseIsOver(self) then
+            self.bar.text:Show()
+        else
+            self.bar.text:Hide()
+        end
+    end
+    
+    -- Always visible mode - skip fade
+    if self.always then return end
+    
+    -- Skip fade if mouseover or already invisible
+    if self:GetAlpha() == 0 or MouseIsOver(self) then return end
+    
+    -- Fade out
+    if (self.tick or 1) > GetTime() then return else self.tick = GetTime() + XPBar.UPDATE_INTERVAL end
+    local wasVisible = self:IsShown() and self:GetAlpha() > 0
+    local newAlpha = self:GetAlpha() - XPBar.FADE_SPEED
+    if newAlpha <= 0 then
+        self:SetAlpha(0)
+        self:Hide()  -- Hide completely when faded out
+        
+        -- Update chat position when bar fades out
+        if wasVisible and ConsoleUI.xpbar then
+            ConsoleUI.xpbar:UpdateAllBars()
+        end
+    else
+        self:SetAlpha(newAlpha)
+    end
+end
+
+-- Decide whether an event represents real progress (show) or only changed
+-- data (refresh).  Refresh events may repaint an already visible bar, but
+-- must never resurrect it or restart its auto-hide timer.
+function XPBar:EventAction(mode, ev, unit)
+    if ev == "PLAYER_ENTERING_WORLD" then
+        return "refresh"
+    end
+    if mode == "XP" then
+        if ev == "PLAYER_XP_UPDATE" or ev == "PLAYER_LEVEL_UP" then
+            return "show"
+        end
+        if ev == "UNIT_LEVEL" and unit == "player" then
+            return "show"
+        end
+        if ev == "UPDATE_EXHAUSTION" then
+            return "refresh"
+        end
+        return nil
+    end
+    if mode == "PETXP" then
+        if ev == "UNIT_PET_EXPERIENCE" then
+            return "show"
+        end
+        if ev == "UNIT_PET" then
+            return "refresh"
+        end
+        return nil
+    end
+    if mode == "REP" then
+        if ev == "CHAT_MSG_COMBAT_FACTION_CHANGE" then
+            return "show"
+        end
+        if ev == "UPDATE_FACTION" then
+            return "refresh"
+        end
+    end
+    return nil
+end
+
+local function OnEvent()
+    local self = this
+    if not self or not self.bar then return end  -- Bar not initialized yet
+    local config = ConsoleUI.config
+    
+    -- Update position when entering world
+    if event == "PLAYER_ENTERING_WORLD" then
+        XPBar:UpdateBarPosition(self)
+        -- If not always visible, don't show bars on world entry - only show on actual data changes
+        if not self.always then
+            return
+        end
+    end
+    
+    -- Determine display mode
+    local mode = self.display
+    if self.display == "XPFLEX" then
+        self.faction = dataFrame.faction or nil
+        mode = UnitLevel("player") < MAX_PLAYER_LEVEL and "XP" or "REP"
+    elseif self.display == "FLEX" then
+        self.faction = dataFrame.faction or nil
+        mode = "REP"
+    end
+    
+    -- Skip events that don't apply to this mode
+    -- Also skip if event is nil (initial call during bar creation) UNLESS always is true
+    if not event then
+        -- If always visible, we still want to populate data on initial load
+        if not self.always then
+            return
+        end
+        -- For always visible bars, use a default event to trigger data population
+        event = "PLAYER_ENTERING_WORLD"
+    end
+    
+    local action = XPBar:EventAction(mode, event, arg1)
+    if not action then
+        return
+    end
+    local passiveRefresh = action == "refresh"
+    local currentlyVisible = self:IsShown() and self:GetAlpha() > 0
+    if passiveRefresh and not self.always and not currentlyVisible then
+        return
+    end
+    
+    -- Set always visible (after checking mode, so we can populate data)
+    if self.always then
+        self:SetAlpha(1)
+        self:Show()
+    end
+    
+    if mode == "XP" then
+        local wasVisible = self:IsShown() and self:GetAlpha() > 0
+        self.enabled = true
+        if not passiveRefresh then
+            self:Show()
+            self:SetAlpha(1)
+        end
+        
+        local xp, xpmax, ex = UnitXP("player"), UnitXPMax("player"), GetXPExhaustion()
+        
+        -- Set bar values
+        self.bar:SetMinMaxValues(0, xpmax)
+        self.bar:SetValue(xp)
+        local cr, cg, cb = GetPlayerClassColor()
+        self.bar:SetStatusBarColor(cr, cg, cb, 1.0)
+        if self.restedbar then self.restedbar:SetMinMaxValues(0, xpmax) end
+        if ex and ex > 0 then
+            if self.restedbar then
+                self.restedbar:Show()
+                self.restedbar:SetValue(xp + ex)
+            end
+        else
+            XPBar:ClearRestedFill(self)
+        end
+        -- Paint only after both values reflect the current level/rested pool.
+        XPBar:ApplyFillColors(self)
+        
+        if self.bar.text then
+            self.bar.text:SetText(XPBar.FormatWatchText("XP", xp, xpmax))
+        end
+        
+        if not passiveRefresh then
+            self.tick = GetTime() + self.timeout
+        end
+        
+        -- Update position immediately when bar becomes visible
+        if not wasVisible and ConsoleUI.xpbar then
+            ConsoleUI.xpbar:UpdateBarPosition(self)
+            ConsoleUI.xpbar:UpdateAllBars()
+        end
+        return
+    elseif mode == "PETXP" then
+        XPBar:ClearRestedFill(self)
+        self.enabled = true
+        if not passiveRefresh then
+            self:Show()
+            self:SetAlpha(1)
+        end
+        
+        local currXP, nextXP = GetPetExperience()
+        self.bar:SetMinMaxValues(math.min(0, currXP), nextXP)
+        self.bar:SetValue(currXP)
+        local cr, cg, cb = GetPlayerClassColor()
+        self.bar:SetStatusBarColor(cr, cg, cb, 1.0)
+        XPBar:ApplyFillColors(self)
+        
+        if self.bar.text then
+            self.bar.text:SetText(XPBar.FormatWatchText("Pet XP", currXP, nextXP))
+        end
+        
+        if not passiveRefresh then
+            self.tick = GetTime() + self.timeout
+        end
+        return
+    elseif mode == "REP" then
+        XPBar:ClearRestedFill(self)
+        
+        for i = 1, 99 do
+            local name, description, standingID, barMin, barMax, barValue, atWarWith, canToggleAtWar, isHeader, isCollapsed, isWatched = GetFactionInfo(i)
+            if (isWatched and not self.faction) or (self.faction and name == self.faction) then
+                local wasVisible = self:IsShown() and self:GetAlpha() > 0
+                self.enabled = true
+                if not passiveRefresh then
+                    self:Show()
+                    self:SetAlpha(1)
+                end
+                
+                barMax = barMax - barMin
+                barValue = barValue - barMin
+                
+                self.bar:SetMinMaxValues(0, barMax)
+                self.bar:SetValue(barValue)
+                
+                local color = FACTION_BAR_COLORS[standingID]
+                if color then
+                    self.bar:SetStatusBarColor((color.r + 0.5) * 0.5, (color.g + 0.5) * 0.5, (color.b + 0.5) * 0.5, 1)
+                else
+                    -- Default to green if no faction color available (matching WoW default UI)
+                    self.bar:SetStatusBarColor(0.0, 1.0, 0.0, 1)
+                end
+                XPBar:ApplyFillColors(self)
+                
+                local standing = GetText("FACTION_STANDING_LABEL" .. standingID, UnitSex("player"))
+                if self.bar.text then
+                    local label = name or "Rep"
+                    if standing then
+                        label = label .. " (" .. standing .. ")"
+                    end
+                    self.bar.text:SetText(XPBar.FormatWatchText(label, barValue, barMax))
+                end
+                
+                if not passiveRefresh then
+                    self.tick = GetTime() + self.timeout
+                end
+                
+                -- Update position immediately when bar becomes visible
+                if not wasVisible and ConsoleUI.xpbar then
+                    ConsoleUI.xpbar:UpdateBarPosition(self)
+                    ConsoleUI.xpbar:UpdateAllBars()
+                end
+                return
+            end
+        end
+    end
+    
+    -- No data to show
+    local wasVisible = self:IsShown() and self:GetAlpha() > 0
+    self.enabled = false
+    if not self.always then
+        self:SetAlpha(0)
+        self:Hide()  -- Hide the bar when there's no data and not always visible
+        
+        -- Update chat position if bar was visible and now hidden
+        if wasVisible and ConsoleUI.xpbar then
+            ConsoleUI.xpbar:UpdateAllBars()
+        end
+    else
+        self.bar:SetStatusBarColor(0.5, 0.5, 0.5, 1)
+        self.bar:SetMinMaxValues(0, 1)
+        self.bar:SetValue(0)
+    end
+    
+end
+
+-- ============================================================================
+-- Bar Creation
+-- ============================================================================
+
+-- bars-plan.html inner track is 16px. Smaller hides the gold ticks.
+XPBar.MIN_HEIGHT = 16
+
+function XPBar:ReloadBarConfig(bar, barType)
+    local config = ConsoleUI.config
+    local prefix = barType == "XP" and "xp" or "rep"
+    
+    bar.width = config:Get(prefix .. "BarWidth") or 400
+    
+    -- Enforce minimum height for border texture
+    local configHeight = config:Get(prefix .. "BarHeight") or 8
+    bar.height = math.max(XPBar.MIN_HEIGHT, configHeight)
+    
+    bar.timeout = config:Get(prefix .. "BarTimeout") or XPBar.DEFAULT_TIMEOUT
+    bar.display = config:Get(prefix .. "BarDisplay") or (barType == "XP" and "XP" or "REP")
+    bar.always = config:Get(prefix .. "BarAlways") or false
+    -- Load text_show from config, default to true if not set
+    -- Need to check for nil explicitly, not use 'or' because false is falsy
+    local textShowConfig = config:Get(prefix .. "BarTextShow")
+    if textShowConfig == nil then
+        bar.text_show = true  -- Default to true if not set
+    else
+        bar.text_show = textShowConfig  -- Use the actual value (can be false)
+    end
+    bar.text_mouse = config:Get(prefix .. "BarTextMouse") or false
+    bar.text_off_y = config:Get(prefix .. "BarTextOffsetY") or 0
+    
+    -- Update text visibility if text exists
+    if bar.bar and bar.bar.text then
+        if bar.text_show then
+            bar.bar.text:Show()
+        else
+            bar.bar.text:Hide()
+        end
+    end
+    
+    -- HTML label is 11px on the 16px track.
+    bar.font_size = math.max(11, math.min(16, math.floor(bar.height * 0.7)))
+    
+    -- Store config keys for updates
+    bar.text_mouse_key = prefix .. "BarTextMouse"
+    bar.width_key = prefix .. "BarWidth"
+    bar.height_key = prefix .. "BarHeight"
+    bar.display_key = prefix .. "BarDisplay"
+    bar.always_key = prefix .. "BarAlways"
+    bar.text_show_key = prefix .. "BarTextShow"
+    bar.text_off_y_key = prefix .. "BarTextOffsetY"
+    bar.barType = barType
+    if bar.bar and config.PaintStatusBarChrome then
+        self:PaintChrome(bar)
+    end
+end
+
+function XPBar:CreateBar(barType)
+    local name = barType == "XP" and "ConsoleUIExperienceBar" or "ConsoleUIReputationBar"
+    local config = ConsoleUI.config
+    
+    local b = _G[name] or CreateFrame("Frame", name, UIParent)
+    
+    -- Store barType before loading config
+    b.barType = barType
+    
+    -- Load config values
+    self:ReloadBarConfig(b, barType)
+    
+    -- Get colors (WoW default colors)
+    local rest_color = config:Get("xpBarRestColor") or "0.0,0.5,1.0,1.0"
+    
+    -- Ensure minimum height
+    b.height = math.max(XPBar.MIN_HEIGHT, b.height)
+    b:SetWidth(b.width)
+    b:SetHeight(b.height)
+    b:SetFrameStrata("BACKGROUND")
+    
+    -- Create status bar
+    b.bar = b.bar or CreateFrame("StatusBar", nil, b)
+    local inset = (config.STATUS_BAR_INSET) or 1
+    b.bar:ClearAllPoints()
+    b.bar:SetPoint("TOPLEFT", b, "TOPLEFT", inset, -inset)
+    b.bar:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", -inset, inset)
+    
+    -- Set bar color based on bar type
+    if barType == "XP" then
+        local cr, cg, cb = GetPlayerClassColor()
+        b.bar:SetStatusBarColor(cr, cg, cb, 1.0)
+    else
+        -- REP bar default color (green, matching WoW default UI)
+        -- Will be overridden dynamically based on faction standing
+        b.bar:SetStatusBarColor(0.0, 1.0, 0.0, 1)
+    end
+    b.bar:SetOrientation("HORIZONTAL")
+    
+    -- Ensure bar is visible and has initial values
+    b.bar:SetMinMaxValues(0, 100)
+    b.bar:SetValue(0)
+    b.bar:Show()
+    
+    -- Create rested bar (for XP only) - uses same texture as main bar
+    if barType == "XP" then
+        b.restedbar = b.restedbar or CreateFrame("StatusBar", nil, b)
+        b.restedbar:ClearAllPoints()
+        b.restedbar:SetPoint("TOPLEFT", b, "TOPLEFT", inset, -inset)
+        b.restedbar:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", -inset, inset)
+        local cr, cg, cb, ca = GetStringColor(rest_color)
+        b.restedbar:SetStatusBarColor(cr, cg, cb, ca)
+        b.restedbar:SetOrientation("HORIZONTAL")
+        b.restedbar:SetMinMaxValues(0, 100)
+        b.restedbar:SetValue(0)
+        b.restedbar:Hide()  -- Hidden by default until rested XP is available
+    end
+    if not b.cuiFillStacked and config.StackAbove then
+        if b.restedbar then
+            config:StackAbove(b.restedbar, b)
+            config:StackAbove(b.bar, b.restedbar)
+        else
+            config:StackAbove(b.bar, b)
+        end
+        b.cuiFillStacked = true
+    end
+    if config.PaintStatusBarChrome then
+        self:PaintChrome(b)
+    end
+
+    -- Text above ticks so a divider never cuts the numbers
+    local textParent = b.cuiText or b
+    if b.bar.text and b.bar.text.GetParent and b.bar.text:GetParent() ~= textParent then
+        b.bar.text:Hide()
+        b.bar.text = nil
+    end
+    b.bar.text = b.bar.text or textParent:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+    b.bar.text:SetFont("Fonts\\FRIZQT__.TTF", b.font_size, "OUTLINE")
+    b.bar.text:SetPoint("CENTER", b, "CENTER", 0, b.text_off_y)
+    b.bar.text:SetJustifyH("CENTER")
+    b.bar.text:SetTextColor(1, 1, 1, 1)
+    
+    if b.text_show then
+        b.bar.text:Show()
+    else
+        b.bar.text:Hide()
+    end
+    
+    -- Enable mouse for tooltip
+    b:EnableMouse(true)
+    
+    -- Register events
+    b:RegisterEvent("CHAT_MSG_COMBAT_FACTION_CHANGE")
+    b:RegisterEvent("UNIT_PET")
+    b:RegisterEvent("UNIT_LEVEL")
+    b:RegisterEvent("UNIT_PET_EXPERIENCE")
+    b:RegisterEvent("PLAYER_ENTERING_WORLD")
+    b:RegisterEvent("UPDATE_EXHAUSTION")
+    b:RegisterEvent("PLAYER_XP_UPDATE")
+    b:RegisterEvent("PLAYER_LEVEL_UP")
+    b:RegisterEvent("UPDATE_FACTION")
+    
+    b:SetScript("OnUpdate", OnUpdate)
+    b:SetScript("OnEvent", OnEvent)
+    b:SetScript("OnEnter", OnEnter)
+    b:SetScript("OnLeave", OnLeave)
+    
+    -- Ensure bar elements are created, but start hidden
+    if b.bar then
+        b.bar:Show()
+    end
+    
+    -- Start bars hidden unless always visible is enabled
+    -- They will be shown by OnEvent when there's actual data
+    if b.always then
+        self:Fire(b, "PLAYER_ENTERING_WORLD")
+        b:SetAlpha(1)
+        b:Show()
+    else
+        b:SetAlpha(0)
+        b:Hide()
+    end
+    
+    return b
+end
+
+-- ============================================================================
+-- Position Update
+-- ============================================================================
+
+function XPBar:BarShown(bar)
+    return bar and bar.IsShown and bar:IsShown() and bar:GetAlpha() > 0
+end
+
+function XPBar:WatchBottom(bar)
+    local config = ConsoleUI.config
+    if bar == self.xpBar then
+        local y = config:HudOffset("xpBarOffsetY", 16)
+        if self:BarShown(self.repBar) then
+            y = y + (self.repBar.height or XPBar.MIN_HEIGHT) + 2
+        end
+        return y
+    end
+    return config:HudOffset("repBarOffsetY", 16)
+end
+
+function XPBar:StackTop()
+    local top = 0
+    if self:BarShown(self.repBar) then
+        top = self:WatchBottom(self.repBar) + (self.repBar.height or XPBar.MIN_HEIGHT)
+    end
+    if self:BarShown(self.xpBar) then
+        local t = self:WatchBottom(self.xpBar) + (self.xpBar.height or XPBar.MIN_HEIGHT)
+        if t > top then
+            top = t
+        end
+    end
+    return top
+end
+
+function XPBar:UpdateBarPosition(bar)
+    if not bar then return end
+    
+    local config = ConsoleUI.config
+    
+    -- Reload config to ensure height is updated and minimum enforced
+    self:ReloadBarConfig(bar, bar.barType)
+    
+    local barWidth = config:Get(bar.width_key) or 400
+    local barHeight = bar.height
+    local ox
+    if bar.barType == "REP" then
+        ox = config:HudOffset("repBarOffsetX", 0)
+    else
+        ox = config:HudOffset("xpBarOffsetX", 0)
+    end
+    
+    bar:ClearAllPoints()
+    bar:SetPoint("BOTTOM", UIParent, "BOTTOM", ox, self:WatchBottom(bar))
+    bar:SetWidth(barWidth)
+    bar:SetHeight(barHeight)
+    
+    -- Update status bar size to match new height
+    local inset = (config.STATUS_BAR_INSET) or 1
+    if bar.bar then
+        bar.bar:ClearAllPoints()
+        bar.bar:SetPoint("TOPLEFT", bar, "TOPLEFT", inset, -inset)
+        bar.bar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -inset, inset)
+    end
+    
+    -- Update rested bar size if it exists
+    if bar.restedbar then
+        bar.restedbar:ClearAllPoints()
+        bar.restedbar:SetPoint("TOPLEFT", bar, "TOPLEFT", inset, -inset)
+        bar.restedbar:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", -inset, inset)
+    end
+    if config.PaintStatusBarChrome then
+        self:PaintChrome(bar)
+    end
+    
+    -- Update text font size to match new height
+    if bar.bar and bar.bar.text then
+        bar.bar.text:SetFont("Fonts\\FRIZQT__.TTF", bar.font_size, "OUTLINE")
+    end
+end
+
+function XPBar:UpdateAllBars()
+    -- Update REP bar first (it's at the bottom)
+    if self.repBar then
+        self:ReloadBarConfig(self.repBar, "REP")
+        self:UpdateBarPosition(self.repBar)
+    end
+    -- Then update XP bar (it's above REP bar)
+    if self.xpBar then
+        self:ReloadBarConfig(self.xpBar, "XP")
+        self:UpdateBarPosition(self.xpBar)
+    end
+    ConsoleUI_Debug("Updating all bars")
+    -- Apply text visibility for both bars (ReloadBarConfig already sets text_show, now apply it)
+    if self.xpBar and self.xpBar.bar and self.xpBar.bar.text then
+        ConsoleUI_Debug("xpBar.text_show: " .. tostring(self.xpBar.text_show))
+        if self.xpBar.text_show then
+            self.xpBar.bar.text:Show()
+        else
+            self.xpBar.bar.text:Hide()
+        end
+    end
+    if self.repBar and self.repBar.bar and self.repBar.bar.text then
+        ConsoleUI_Debug("repBar.text_show: " .. tostring(self.repBar.text_show))
+        if self.repBar.text_show then
+            self.repBar.bar.text:Show()
+        else
+            self.repBar.bar.text:Hide()
+        end
+    end
+    if ConsoleUI.castbar and ConsoleUI.castbar.UpdatePosition then
+        ConsoleUI.castbar:UpdatePosition()
+    end
+    if ConsoleUI.swingbar and ConsoleUI.swingbar.UpdatePosition then
+        ConsoleUI.swingbar:UpdatePosition()
+    end
+    self:RefreshFills()
+end
+
+local function SnapshotTransientState(bar)
+    if not bar or bar.always then
+        return nil
+    end
+    return {
+        shown = bar:IsShown(),
+        alpha = bar:GetAlpha(),
+        tick = bar.tick,
+    }
+end
+
+local function RestoreTransientState(bar, state)
+    if not bar or not state then
+        return
+    end
+    bar.tick = state.tick
+    bar:SetAlpha(state.alpha or 0)
+    if state.shown then
+        bar:Show()
+    else
+        bar:Hide()
+    end
+end
+
+function XPBar:RefreshFills()
+    if self._refreshing then
+        return
+    end
+    -- Synthetic refreshes populate values and repaint fills, but they are not
+    -- gameplay events. Preserve auto-hide state so UpdateAllBars cannot revive
+    -- a bar that just faded out or make it appear during login/config updates.
+    local xpState = SnapshotTransientState(self.xpBar)
+    local repState = SnapshotTransientState(self.repBar)
+    self._refreshing = true
+    self:Fire(self.xpBar, "PLAYER_XP_UPDATE")
+    self:Fire(self.repBar, "UPDATE_FACTION")
+    self._refreshing = nil
+    RestoreTransientState(self.xpBar, xpState)
+    RestoreTransientState(self.repBar, repState)
+end
+
+-- ============================================================================
+-- Initialization
+-- ============================================================================
+
+function XPBar:Initialize()
+    self.xpBar = self:CreateBar("XP")
+    self.repBar = self:CreateBar("REP")
+    self:UpdateAllBars()
+    if self.xpBar and self.xpBar.always then
+        self.xpBar:SetAlpha(1)
+        self.xpBar:Show()
+    end
+    if self.repBar and self.repBar.always then
+        self.repBar:SetAlpha(1)
+        self.repBar:Show()
+    end
+end

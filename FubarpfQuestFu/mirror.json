@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/goldenpipes/pfQuest_Fu",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "goldenpipes",
+    "repo": "pfQuest_Fu",
+    "name": "pfQuest_Fu",
+    "url": "https://github.com/goldenpipes/pfQuest_Fu",
+    "api": "https://api.github.com/repos/goldenpipes/pfQuest_Fu"
+  },
+  "commit": "c37708cd290b6e06c2a3476f3f05f2c72bf48008",
+  "sourceFiles": {
+    "FuBar_pfQuestFu.lua": {
+      "sha256": "4e869d95427958d38a3f457b9f546a7c2573afdda72b75b7f14c476e9d6e8743",
+      "bytes": 1223
+    },
+    "FuBar_pfQuestFu.toc": {
+      "sha256": "9ed256af0743416e5a4ff38204dbb675d7698cd3b4d6d97d97c3f659aca7bc51",
+      "bytes": 417
+    },
+    "README.md": {
+      "sha256": "8601d9ec326efc146b1d1a2645a6ff0580c3d96511924fd67df793a55f6f851f",
+      "bytes": 176
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

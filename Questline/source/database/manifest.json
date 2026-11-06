@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "locale": "enUS",
+  "profile": "octo",
+  "source": "OctoQuestDatabase",
+  "sourceRevision": "sha256:3e3a787de08525f0aa8853212141a9517ddd30b1734b453fc5d1f4011ddeefaf",
+  "repository": "https://github.com/FrancisEgan/OctoQuestDatabase.git",
+  "inputs": [
+    {
+      "file": "LICENSE",
+      "sha256": "0fbf6953ae9e8f8f4fc431620d6261de91c79475802a8430cbcd5ea00e6f8a77"
+    },
+    {
+      "file": "NOTICE.md",
+      "sha256": "44bead30c7dce9cde2a158d8cba26bf6989b32cbb6fbb96f37ce37e6d481d065"
+    },
+    {
+      "file": "source/areatrigger.json",
+      "sha256": "5a6516f3ed0c812a0c14256cf76bbfc18b3f994bc8518e67f115366400b3da0e"
+    },
+    {
+      "file": "source/items.json",
+      "sha256": "c1052422082b5e6510a12281969028721f44aa78deb29e539f58d63c8f556407"
+    },
+    {
+      "file": "source/locales.json",
+      "sha256": "2525e468c79b756ff23faf51a8b5325f2b668a8a198a9e77ab3940dc9b373154"
+    },
+    {
+      "file": "source/meta.json",
+      "sha256": "f4ce1698dbf6f027dc6436ffb44eebfb5f4bc831ec0c1d8dcb0efdc4a3684fd9"
+    },
+    {
+      "file": "source/minimap.json",
+      "sha256": "2e67bca3e9b2fcdcadedbca2a9b3f599a80fdcb38eb7d2d42599eedbe1372851"
+    },
+    {
+      "file": "source/objects.json",
+      "sha256": "a98514f46d2c5fcd36f3b0cd3cd942984e3624971d2e4c5ceb057113ffe230b8"
+    },
+    {
+      "file": "source/quests-itemreq.json",
+      "sha256": "c742678176ba135dffe074048f60e423faa18348426f08e16483701aa6d2dd42"
+    },
+    {
+      "file": "source/quests.json",
+      "sha256": "07d6ffe76228a30bc648413705592c45f675dc0eaa4cfdb53dcf2887424b5bda"
+    },
+    {
+      "file": "source/refloot.json",
+      "sha256": "8f7b59646118ec86e962ed33359803a79aecfcefbd70110438948b5c7d35d784"
+    },
+    {
+      "file": "source/scriptedEncounters.json",
+      "sha256": "942bf332adab1e700745b716574263b4c926cd1599f8f0c5c4a4eb816ae3eec9"
+    },
+    {
+      "file": "source/supplemental.json",
+      "sha256": "3ac8306079e1173c1e95800986b5425cf0adb3b97b25d26d0689f3bc7cb2b9e3"
+    },
+    {
+      "file": "source/units.json",
+      "sha256": "9d7c4d4f6554e832dc2dae745acb673decef04c481a1e9a81c8314050f1f9309"
+    },
+    {
+      "file": "source/zones.json",
+      "sha256": "f28daef1b49a221a7115d03424d55cf6faa93010914ef1e01701e3e805576be5"
+    }
+  ],
+  "outputs": [
+    {
+      "file": "quests.json",
+      "sha256": "ae607ecba53f4adbc417817fa5fdea692ea2b2ad14893a3372c826e614b199a0"
+    },
+    {
+      "file": "units.json",
+      "sha256": "b932d0e6a0a77d17f9291c591660de3a35eef34548e2b5552ca24ecd22595251"
+    },
+    {
+      "file": "objects.json",
+      "sha256": "ba4cf2d2fd6ec04c48f7626876c29512429e8943f2fc66bcb3e77666a8fa8934"
+    },
+    {
+      "file": "items.json",
+      "sha256": "1d66f735454d34123bbc5155f116bd3334cf45a7fdf5eca8f7ed2f1c9a4ed7e5"
+    },
+    {
+      "file": "zones.json",
+      "sha256": "296ce399f48e2c34a5d661161dc29246cbf12c2d2d2e7c2311e85a0c00b7d276"
+    },
+    {
+      "file": "events.json",
+      "sha256": "16ca25961d1ddf99d5f1aca20cb36d2e6b1d739e2cf477f003bc6212293b2340"
+    },
+    {
+      "file": "lootGroups.json",
+      "sha256": "f45e9f31049dc61c15928bb9af90d2402637f008e3cbc0799c3f7604f1b1a44a"
+    },
+    {
+      "file": "itemUses.json",
+      "sha256": "1a5ad81355f7e6d4dd866a167f4c76e02691abc8f9a5196a4b46917851eeb638"
+    },
+    {
+      "file": "scriptedEncounters.json",
+      "sha256": "4f9fbf8cc27040963d5ac435cdd63d24e852293c84dc7b002274acef5246f04f"
+    },
+    {
+      "file": "reference.json",
+      "sha256": "2a20381b31504a392e9c8b7e1bbf9c50525008599318da0dec414d8ca34566f1"
+    }
+  ],
+  "counts": {
+    "quests": 6704,
+    "units": 14139,
+    "objects": 1644,
+    "items": 3641,
+    "zones": 1548,
+    "events": 496,
+    "lootGroups": 124,
+    "itemUses": 193,
+    "scriptedEncounters": 12
+  },
+  "stats": {
+    "coordinatesRead": 147203,
+    "invalidCoordinates": 0,
+    "duplicateCoordinates": 80
+  }
+}

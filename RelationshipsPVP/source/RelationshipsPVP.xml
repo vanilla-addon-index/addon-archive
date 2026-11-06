@@ -1,0 +1,424 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Script file="RelationshipsPVP.lua"/>
+
+  <!-- ============================================================
+       Main Panel
+       ============================================================ -->
+  <Frame name="RelationshipsPVPFrame" parent="UIParent" toplevel="true" movable="true" enableMouse="true" hidden="true" frameStrata="HIGH">
+    <Size>
+      <AbsDimension x="916" y="740"/>
+    </Size>
+    <Anchors>
+      <Anchor point="CENTER"/>
+    </Anchors>
+    <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+      <BackgroundInsets>
+        <AbsInset left="11" right="12" top="12" bottom="11"/>
+      </BackgroundInsets>
+      <TileSize><AbsValue val="32"/></TileSize>
+      <EdgeSize><AbsValue val="32"/></EdgeSize>
+    </Backdrop>
+
+    <Layers>
+      <Layer level="ARTWORK">
+        <Texture name="RelationshipsPVPHeader" file="Interface\DialogFrame\UI-DialogBox-Header">
+          <Size><AbsDimension x="320" y="64"/></Size>
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset><AbsDimension x="0" y="12"/></Offset>
+            </Anchor>
+          </Anchors>
+        </Texture>
+        <FontString name="RelationshipsPVPTitle" inherits="GameFontNormal" text="Relationships PVP">
+          <Anchors>
+            <Anchor point="TOP" relativeTo="RelationshipsPVPHeader">
+              <Offset><AbsDimension x="0" y="-14"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <FontString name="RelationshipsPVPStatsLabel" inherits="GameFontNormal" text="Battleground &amp; Arena Statistics" justifyH="LEFT">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="24" y="-50"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <FontString name="RelationshipsPVPQueueLabel" inherits="GameFontNormal" text="Queue Status" justifyH="LEFT">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="24" y="-350"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <FontString name="RelationshipsPVPActionLabel" inherits="GameFontNormal" text=" Queue Battleground / Arena" justifyH="LEFT">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="24" y="-454"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+
+    <Frames>
+      <Button name="RelationshipsPVPClose" inherits="UIPanelCloseButton">
+        <Anchors>
+          <Anchor point="TOPRIGHT">
+            <Offset><AbsDimension x="-4" y="-4"/></Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+
+      <!-- ================= Stats Panel ================= -->
+      <Frame name="RelationshipsPVPStatsPanel">
+        <Size><AbsDimension x="868" y="266"/></Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="24" y="-72"/></Offset>
+          </Anchor>
+        </Anchors>
+        <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+          <BackgroundInsets><AbsInset left="4" right="4" top="4" bottom="4"/></BackgroundInsets>
+          <TileSize><AbsValue val="16"/></TileSize>
+          <EdgeSize><AbsValue val="16"/></EdgeSize>
+        </Backdrop>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="RPVPHdrBG"    inherits="GameFontNormalSmall" text="Bracket" justifyH="LEFT">
+              <Size><AbsDimension x="140" y="14"/></Size>
+              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="14" y="-10"/></Offset></Anchor></Anchors>
+            </FontString>
+            <FontString name="RPVPHdrGames" inherits="GameFontNormalSmall" text="Games" justifyH="CENTER">
+              <Size><AbsDimension x="46" y="14"/></Size>
+              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="158" y="-10"/></Offset></Anchor></Anchors>
+            </FontString>
+            <FontString name="RPVPHdrWin"   inherits="GameFontNormalSmall" text="Win"   justifyH="CENTER">
+              <Size><AbsDimension x="46" y="14"/></Size>
+              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="208" y="-10"/></Offset></Anchor></Anchors>
+            </FontString>
+            <FontString name="RPVPHdrDraw"  inherits="GameFontNormalSmall" text="Draw"  justifyH="CENTER">
+              <Size><AbsDimension x="46" y="14"/></Size>
+              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="258" y="-10"/></Offset></Anchor></Anchors>
+            </FontString>
+            <FontString name="RPVPHdrLoss"  inherits="GameFontNormalSmall" text="Loss"  justifyH="CENTER">
+              <Size><AbsDimension x="46" y="14"/></Size>
+              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="308" y="-10"/></Offset></Anchor></Anchors>
+            </FontString>
+            <FontString name="RPVPHdrRatio" inherits="GameFontNormalSmall" text="Win%" justifyH="CENTER">
+              <Size><AbsDimension x="46" y="14"/></Size>
+              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="358" y="-10"/></Offset></Anchor></Anchors>
+            </FontString>
+            <FontString name="RPVPHdrKB"    inherits="GameFontNormalSmall" text="KB"    justifyH="CENTER">
+              <Size><AbsDimension x="46" y="14"/></Size>
+              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="408" y="-10"/></Offset></Anchor></Anchors>
+            </FontString>
+            <FontString name="RPVPHdrHK"    inherits="GameFontNormalSmall" text="HK"    justifyH="CENTER">
+              <Size><AbsDimension x="46" y="14"/></Size>
+              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="458" y="-10"/></Offset></Anchor></Anchors>
+            </FontString>
+            <FontString name="RPVPHdrDth"   inherits="GameFontNormalSmall" text="Deaths" justifyH="CENTER">
+              <Size><AbsDimension x="46" y="14"/></Size>
+              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="508" y="-10"/></Offset></Anchor></Anchors>
+            </FontString>
+            <FontString name="RPVPHdrKD"    inherits="GameFontNormalSmall" text="K/D" justifyH="CENTER">
+              <Size><AbsDimension x="50" y="14"/></Size>
+              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="558" y="-10"/></Offset></Anchor></Anchors>
+            </FontString>
+            <FontString name="RPVPHdrMk"    inherits="GameFontNormalSmall" text="Marks" justifyH="CENTER">
+              <Size><AbsDimension x="54" y="14"/></Size>
+              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="612" y="-10"/></Offset></Anchor></Anchors>
+            </FontString>
+            <FontString name="RPVPHdrBonus" inherits="GameFontNormalSmall" text="Bonus Honor" justifyH="CENTER">
+              <Size><AbsDimension x="70" y="14"/></Size>
+              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="668" y="-10"/></Offset></Anchor></Anchors>
+            </FontString>
+            <FontString name="RPVPHdrSpend" inherits="GameFontNormalSmall" text=" Spendable Honor" justifyH="CENTER">
+              <Size><AbsDimension x="100" y="14"/></Size>
+              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="740" y="-10"/></Offset></Anchor></Anchors>
+            </FontString>
+
+            <Texture name="RPVPHdrDivider" file="Interface\Tooltips\UI-Tooltip-Background">
+              <Size><AbsDimension x="846" y="1"/></Size>
+              <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="14" y="-28"/></Offset></Anchor></Anchors>
+              <Color r="0.6" g="0.6" b="0.6" a="0.6"/>
+            </Texture>
+
+            <FontString name="RelationshipsPVPExtrasText" inherits="GameFontHighlightSmall" justifyH="LEFT">
+              <Size><AbsDimension x="640" y="16"/></Size>
+              <Anchors>
+                <Anchor point="BOTTOMLEFT"><Offset><AbsDimension x="14" y="10"/></Offset></Anchor>
+              </Anchors>
+            </FontString>
+
+            <FontString name="RelationshipsPVPNemesisText" inherits="GameFontHighlightSmall" justifyH="CENTER">
+              <Size><AbsDimension x="200" y="16"/></Size>
+              <Anchors>
+                <Anchor point="BOTTOM"><Offset><AbsDimension x="220" y="10"/></Offset></Anchor>
+              </Anchors>
+            </FontString>
+
+            <FontString name="RelationshipsPVPKOSText" inherits="GameFontHighlightSmall" justifyH="RIGHT">
+              <Size><AbsDimension x="80" y="16"/></Size>
+              <Anchors>
+                <Anchor point="BOTTOMRIGHT"><Offset><AbsDimension x="-14" y="10"/></Offset></Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </Frame>
+
+      <!-- ================= Queue Status Panel ================= -->
+      <Frame name="RelationshipsPVPQueuePanel">
+        <Size><AbsDimension x="868" y="84"/></Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="24" y="-368"/></Offset>
+          </Anchor>
+        </Anchors>
+        <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+          <BackgroundInsets><AbsInset left="4" right="4" top="4" bottom="4"/></BackgroundInsets>
+          <TileSize><AbsValue val="16"/></TileSize>
+          <EdgeSize><AbsValue val="16"/></EdgeSize>
+        </Backdrop>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="RelationshipsPVPQueueText" inherits="GameFontHighlightSmall" justifyH="LEFT" justifyV="TOP">
+              <Size><AbsDimension x="846" y="70"/></Size>
+              <Anchors>
+                <Anchor point="TOPLEFT"><Offset><AbsDimension x="14" y="-10"/></Offset></Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </Frame>
+
+      <!-- ================= Action Panel ================= -->
+      <Frame name="RelationshipsPVPActionPanel">
+        <Size><AbsDimension x="868" y="230"/></Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="24" y="-472"/></Offset>
+          </Anchor>
+        </Anchors>
+        <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+          <BackgroundInsets><AbsInset left="4" right="4" top="4" bottom="4"/></BackgroundInsets>
+          <TileSize><AbsValue val="16"/></TileSize>
+          <EdgeSize><AbsValue val="16"/></EdgeSize>
+        </Backdrop>
+
+        <Frames>
+          <!-- Row 1: BG queue buttons -->
+          <Button name="RelationshipsPVPQueueAV" inherits="UIPanelButtonTemplate" text="Alterac Valley">
+            <Size><AbsDimension x="200" y="32"/></Size>
+            <Anchors>
+              <Anchor point="TOPLEFT">
+                <Offset><AbsDimension x="112" y="-18"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts><OnClick>RelationshipsPVP_Queue("AV")</OnClick></Scripts>
+          </Button>
+          <Button name="RelationshipsPVPQueueWSG" inherits="UIPanelButtonTemplate" text="Warsong Gulch">
+            <Size><AbsDimension x="200" y="32"/></Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="RelationshipsPVPQueueAV" relativePoint="RIGHT">
+                <Offset><AbsDimension x="22" y="0"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts><OnClick>RelationshipsPVP_Queue("WSG")</OnClick></Scripts>
+          </Button>
+          <Button name="RelationshipsPVPQueueAB" inherits="UIPanelButtonTemplate" text="Arathi Basin">
+            <Size><AbsDimension x="200" y="32"/></Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="RelationshipsPVPQueueWSG" relativePoint="RIGHT">
+                <Offset><AbsDimension x="22" y="0"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts><OnClick>RelationshipsPVP_Queue("AB")</OnClick></Scripts>
+          </Button>
+
+          <!-- Row 2: Arena queue buttons -->
+          <Button name="RelationshipsPVPQueueA2" inherits="UIPanelButtonTemplate" text="2v2 Rated">
+            <Size><AbsDimension x="149" y="32"/></Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="RelationshipsPVPQueueAV" relativePoint="BOTTOMLEFT">
+                <Offset><AbsDimension x="0" y="-14"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts><OnClick>RelationshipsPVP_QueueArena("A2")</OnClick></Scripts>
+          </Button>
+          <Button name="RelationshipsPVPQueueA3" inherits="UIPanelButtonTemplate" text="3v3 Rated">
+            <Size><AbsDimension x="149" y="32"/></Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="RelationshipsPVPQueueA2" relativePoint="RIGHT">
+                <Offset><AbsDimension x="16" y="0"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts><OnClick>RelationshipsPVP_QueueArena("A3")</OnClick></Scripts>
+          </Button>
+          <Button name="RelationshipsPVPQueueA5" inherits="UIPanelButtonTemplate" text="5v5 Rated">
+            <Size><AbsDimension x="149" y="32"/></Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="RelationshipsPVPQueueA3" relativePoint="RIGHT">
+                <Offset><AbsDimension x="16" y="0"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts><OnClick>RelationshipsPVP_QueueArena("A5")</OnClick></Scripts>
+          </Button>
+          <Button name="RelationshipsPVPQueueSK" inherits="UIPanelButtonTemplate" text="Skirmish">
+            <Size><AbsDimension x="149" y="32"/></Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="RelationshipsPVPQueueA5" relativePoint="RIGHT">
+                <Offset><AbsDimension x="16" y="0"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts><OnClick>RelationshipsPVP_QueueArena("SK")</OnClick></Scripts>
+          </Button>
+
+          <!-- Row 3: Group checkbox -->
+          <CheckButton name="RelationshipsPVPGroupCheck" inherits="UICheckButtonTemplate">
+            <Size><AbsDimension x="32" y="32"/></Size>
+            <Anchors>
+              <Anchor point="TOP" relativeTo="RelationshipsPVPActionPanel" relativePoint="TOP">
+                <Offset><AbsDimension x="-76" y="-124"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnShow>
+                local t = getglobal(this:GetName().."Text")
+                t:SetText("Queue As A Group")
+                t:SetFontObject("GameFontNormalLarge")
+                t:ClearAllPoints()
+                t:SetPoint("LEFT", this, "RIGHT", 2, 0)
+              </OnShow>
+            </Scripts>
+          </CheckButton>
+
+          <!-- Row 4: Utility buttons -->
+          <Button name="RelationshipsPVPLeave" inherits="UIPanelButtonTemplate" text="Leave / Cancel Queue">
+            <Size><AbsDimension x="149" y="30"/></Size>
+            <Anchors>
+              <Anchor point="BOTTOMLEFT">
+                <Offset><AbsDimension x="112" y="20"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts><OnClick>RelationshipsPVP_LeaveAll()</OnClick></Scripts>
+          </Button>
+          <Button name="RelationshipsPVPRefreshBtn" inherits="UIPanelButtonTemplate" text="Refresh">
+            <Size><AbsDimension x="149" y="30"/></Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="RelationshipsPVPLeave" relativePoint="RIGHT">
+                <Offset><AbsDimension x="16" y="0"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts><OnClick>RelationshipsPVP_Refresh()</OnClick></Scripts>
+          </Button>
+          <Button name="RelationshipsPVPQueueAllBtn" inherits="UIPanelButtonTemplate" text="Queue All BGs">
+            <Size><AbsDimension x="149" y="30"/></Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="RelationshipsPVPRefreshBtn" relativePoint="RIGHT">
+                <Offset><AbsDimension x="16" y="0"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts><OnClick>RelationshipsPVP_QueueAllBGs()</OnClick></Scripts>
+          </Button>
+          <Button name="RelationshipsPVPToggleIconBtn" inherits="UIPanelButtonTemplate" text="Toggle Minimap Icon">
+            <Size><AbsDimension x="149" y="30"/></Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="RelationshipsPVPQueueAllBtn" relativePoint="RIGHT">
+                <Offset><AbsDimension x="16" y="0"/></Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts><OnClick>RelationshipsPVP_ToggleMinimapIcon()</OnClick></Scripts>
+          </Button>
+        </Frames>
+      </Frame>
+    </Frames>
+
+    <Scripts>
+      <OnLoad>
+        this:RegisterForDrag("LeftButton")
+        this:SetScript("OnDragStart", function() this:StartMoving() end)
+        this:SetScript("OnDragStop", function() this:StopMovingOrSizing(); RelationshipsPVP_SavePanelPos() end)
+        this:SetBackdropColor(0.04, 0.04, 0.06, 0.96)
+        this:SetBackdropBorderColor(0.7, 0.7, 0.75, 1)
+        RelationshipsPVPStatsPanel:SetBackdropColor(0.08, 0.08, 0.10, 0.95)
+        RelationshipsPVPStatsPanel:SetBackdropBorderColor(0.35, 0.35, 0.4, 1)
+        RelationshipsPVPQueuePanel:SetBackdropColor(0.08, 0.08, 0.10, 0.95)
+        RelationshipsPVPQueuePanel:SetBackdropBorderColor(0.35, 0.35, 0.4, 1)
+        RelationshipsPVPActionPanel:SetBackdropColor(0.08, 0.08, 0.10, 0.95)
+        RelationshipsPVPActionPanel:SetBackdropBorderColor(0.35, 0.35, 0.4, 1)
+        RelationshipsPVP_OnLoad()
+      </OnLoad>
+      <OnEvent>
+        RelationshipsPVP_OnEvent(event)
+      </OnEvent>
+      <OnShow>
+        RelationshipsPVP_Refresh()
+      </OnShow>
+    </Scripts>
+  </Frame>
+
+  <!-- ============================================================
+       Minimap Button
+       ============================================================ -->
+  <Button name="RelationshipsPVPMinimapButton" parent="Minimap" movable="true" enableMouse="true" frameStrata="MEDIUM" toplevel="true">
+    <Size><AbsDimension x="32" y="32"/></Size>
+    <Anchors>
+      <Anchor point="CENTER" relativeTo="Minimap" relativePoint="CENTER">
+        <Offset><AbsDimension x="60" y="-60"/></Offset>
+      </Anchor>
+    </Anchors>
+    <NormalTexture name="RelationshipsPVPMinimapIcon" file="Interface\Icons\INV_Misc_QuestionMark">
+      <Size><AbsDimension x="20" y="20"/></Size>
+      <Anchors>
+        <Anchor point="CENTER"><Offset><AbsDimension x="0" y="0"/></Offset></Anchor>
+      </Anchors>
+    </NormalTexture>
+    <HighlightTexture file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight" alphaMode="ADD"/>
+    <Layers>
+      <Layer level="OVERLAY">
+        <Texture file="Interface\Minimap\MiniMap-TrackingBorder">
+          <Size><AbsDimension x="54" y="54"/></Size>
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="-2" y="2"/></Offset>
+            </Anchor>
+          </Anchors>
+        </Texture>
+      </Layer>
+    </Layers>
+    <Scripts>
+      <OnLoad>
+        this:RegisterForClicks("LeftButtonUp","RightButtonUp")
+        this:RegisterForDrag("LeftButton")
+        this:SetFrameLevel(Minimap:GetFrameLevel() + 8)
+        local icon = getglobal("RelationshipsPVPMinimapIcon")
+        if icon and icon.SetTexCoord then
+          icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+        end
+        this:SetScript("OnDragStart", function() RelationshipsPVP_StartIconDrag() end)
+        this:SetScript("OnDragStop", function() RelationshipsPVP_StopIconDrag() end)
+      </OnLoad>
+      <OnClick>
+        if RelationshipsPVPFrame:IsVisible() then
+          RelationshipsPVPFrame:Hide()
+        else
+          RelationshipsPVPFrame:Show()
+        end
+      </OnClick>
+      <OnEnter>
+        GameTooltip:SetOwner(this, "ANCHOR_LEFT")
+        GameTooltip:AddLine("Relationships PVP")
+        GameTooltip:AddLine("Click to toggle panel", 1, 1, 1)
+        GameTooltip:AddLine("Drag to move", 0.7, 0.7, 0.7)
+        GameTooltip:Show()
+      </OnEnter>
+      <OnLeave>
+        GameTooltip:Hide()
+      </OnLeave>
+    </Scripts>
+  </Button>
+</Ui>

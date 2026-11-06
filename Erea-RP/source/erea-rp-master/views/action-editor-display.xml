@@ -1,0 +1,42 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+  <!-- ======================================================================
+       action-editor-display.xml - Display Cinematic Editor Template
+       ======================================================================
+       PURPOSE: Virtual template for the Display Cinematic method editor
+       PARAMETERS: cinematicId (cinematic_editor)
+       USAGE: CreateFrame("Frame", name, parent, "EreaRpMasterDisplayEditorTemplate")
+       NOTE: All cinematic UI (speaker, dialogue, sides) is created dynamically
+             by EreaRpMasterCinematicComponent in the Lua controller.
+       ====================================================================== -->
+
+  <Frame name="EreaRpMasterDisplayEditorTemplate" virtual="true">
+    <Size>
+      <AbsDimension x="360" y="400"/>
+    </Size>
+    <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+              edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+      <EdgeSize><AbsValue val="10"/></EdgeSize>
+      <TileSize><AbsValue val="16"/></TileSize>
+      <BackgroundInsets><AbsInset left="3" right="3" top="3" bottom="3"/></BackgroundInsets>
+    </Backdrop>
+    <Scripts>
+      <OnLoad>
+        this:SetBackdropColor(0.1, 0.1, 0.1, 0.8)
+        this:SetBackdropBorderColor(0.35, 0.35, 0.45, 1)
+      </OnLoad>
+    </Scripts>
+    <Layers>
+      <Layer level="OVERLAY">
+        <FontString name="$parentTitle" inherits="GameFontNormal">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="5" y="-5"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+  </Frame>
+
+</Ui>

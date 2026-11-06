@@ -1,0 +1,77 @@
+{
+  "upstream": "https://github.com/pepopo978/Rabuffs",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "pepopo978",
+    "repo": "Rabuffs",
+    "name": "Rabuffs",
+    "url": "https://github.com/pepopo978/Rabuffs",
+    "api": "https://api.github.com/repos/pepopo978/Rabuffs"
+  },
+  "commit": "95eed1f4823f34ff7a85fa4bccaf688fb2385045",
+  "sourceFiles": {
+    "bar.tga": {
+      "sha256": "62962f135eb32047647ca5230646c832e9bdcc4fc508254c62cdb142712cfabc",
+      "bytes": 3090
+    },
+    "localization_en.lua": {
+      "sha256": "c3a36f4706447c913176507754dc21b85155a6f848b9c4427e83ea6807bded5d",
+      "bytes": 25708
+    },
+    "RABuffs_buffs.lua": {
+      "sha256": "9f0b4f0343688ade36fbea869b1e4da137e1d86bd23bb15bcf1c0a0ea451c622",
+      "bytes": 55051
+    },
+    "RABuffs_core.lua": {
+      "sha256": "6d90fe44d66c3206e9c7ee83da10a2a2f8df227ee79792fa231df16a83511412",
+      "bytes": 32840
+    },
+    "RABuffs_ctra.lua": {
+      "sha256": "df15493f59112911be7a5252539374d36139ec9a287f732f961fbb0b412fc44e",
+      "bytes": 3241
+    },
+    "RABuffs_net.lua": {
+      "sha256": "ff227152f969ebd22e401d2dcd9fc42ed8148f9fb5aa5230535dd62b6d4b4896",
+      "bytes": 7558
+    },
+    "RABuffs_queries.lua": {
+      "sha256": "8388d1ecf14e119975ffca5ab76bc22cf0320da0607d9c8921e77a12ab9c575a",
+      "bytes": 42738
+    },
+    "RABuffs_strings.lua": {
+      "sha256": "554842cb7f666e67d069c2aa85ad1e3369cc122fb500592c225fec9a84e5a94a",
+      "bytes": 4035
+    },
+    "RABuffs_ui.lua": {
+      "sha256": "7969cdf5f3ea06e996a779a078c69ec77fbdcb3b8d75bb82f6bde444125a952e",
+      "bytes": 22714
+    },
+    "RABuffs_vui.lua": {
+      "sha256": "445a5f47161516a641628db1fe5c0c9df2e13bb9e9c87ba3e14dfec09c00ed3d",
+      "bytes": 53662
+    },
+    "RABuffs.toc": {
+      "sha256": "29d97a9cd1704ecaf591c6a51ac475f31fd5b2138729979413260644db5a239b",
+      "bytes": 463
+    },
+    "RABuffs.xml": {
+      "sha256": "ee0bd5142dd33d2149ed42898cef329d75bb40ebe2ea9bcb52df4ee4b8601870",
+      "bytes": 61611
+    },
+    "README.md": {
+      "sha256": "d74c0a62c00fc13b864c8f9e6c5c7d10615d7ceae4b7089e3bf2f3e95ece7d2f",
+      "bytes": 3383
+    },
+    "ss.png": {
+      "sha256": "8078bd49d9cd183d24457217f27387d3191063cee55c188208abc0b6da0916ba",
+      "bytes": 140116
+    },
+    "ss2.png": {
+      "sha256": "01206238f2e458d084265395126543ff87df915787411c5ba9beef161c4e0058",
+      "bytes": 295020
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

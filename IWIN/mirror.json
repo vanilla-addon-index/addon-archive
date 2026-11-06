@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Atreyyo/IWIN",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Atreyyo",
+    "repo": "IWIN",
+    "name": "IWIN",
+    "url": "https://github.com/Atreyyo/IWIN",
+    "api": "https://api.github.com/repos/Atreyyo/IWIN"
+  },
+  "commit": "ee65d68f44c45c26783f707deb22be965ff71bd3",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "IWin.lua": {
+      "sha256": "ab519211b4be4d8063cbafb741c954bdc101f08f34666fd9e73b2dedd01a3f91",
+      "bytes": 6143
+    },
+    "IWin.toc": {
+      "sha256": "eda8fd7e309525adc0044fd9fe62400d8b61ee2e933de048832c9bcab33bd1e1",
+      "bytes": 108
+    },
+    "README.md": {
+      "sha256": "c63f2e60e27118993166d7b657bef9505f72e7838e5fc7db6907adb576140426",
+      "bytes": 81
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

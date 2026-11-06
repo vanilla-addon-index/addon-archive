@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: FishingVolume
+## Notes: Sets sound volume when fishing. Type /fv to open settings.
+## Author: You
+## Version: 2.3
+## SavedVariables: FishingVolumeDB
+
+FishingVolume.lua
+GUI.lua
+FishingVolume.xml
+MinimapButton.lua

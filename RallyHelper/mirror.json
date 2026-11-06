@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/Weirdpuppy94/RallyHelper",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Weirdpuppy94",
+    "repo": "RallyHelper",
+    "name": "RallyHelper",
+    "url": "https://github.com/Weirdpuppy94/RallyHelper",
+    "api": "https://api.github.com/repos/Weirdpuppy94/RallyHelper"
+  },
+  "commit": "e38cb75f0cbee12bcf413e23787d94b5927e8daa",
+  "sourceFiles": {
+    "CHANGELOG.md": {
+      "sha256": "63ba66dbb1ec43bf32cceb84497d5504cf8544be1b19e4edc3123e55d563a8b6",
+      "bytes": 3302
+    },
+    "LICENSE": {
+      "sha256": "fa4fd2b8b7e6965e6703540f7bf52d11b3d7f1ff5180ed9649c34d6529eac430",
+      "bytes": 1069
+    },
+    "RallyHelper_Core.lua": {
+      "sha256": "24d5a741675e99f661840a781e85531c971fa1ef06683dc039fea48fbf54f2aa",
+      "bytes": 36934
+    },
+    "RallyHelper_UI.lua": {
+      "sha256": "608c10e8daaf161a8c161d4abd826f9e85f3d207883fec93c369ef48a8a6499a",
+      "bytes": 25951
+    },
+    "RallyHelper.toc": {
+      "sha256": "10aa7694b962088a14cf4606017f58f2487b074131a9a98fd6afeeec3b2beb77",
+      "bytes": 323
+    },
+    "README.md": {
+      "sha256": "e09c0e0ae2ba9243a4d322925e23a35291bb4c5597704304c92722f131e6e489",
+      "bytes": 3990
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "307976654": {
+      "tag": "RallyHelperv1.4.7",
+      "folder": "RallyHelperv1.4.7--307976654",
+      "assets": {},
+      "source": {
+        "sha256": "acdec762653314cfdb331241e025ddff73a478c29e2ab09f96e320abda8afa89",
+        "bytes": 18209,
+        "path": "releases/RallyHelperv1.4.7--307976654/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Weirdpuppy94/RallyHelper/tarball/RallyHelperv1.4.7"
+      }
+    }
+  }
+}

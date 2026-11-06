@@ -1,0 +1,69 @@
+{
+  "upstream": "https://github.com/MrToffee/CaramelNotes",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MrToffee",
+    "repo": "CaramelNotes",
+    "name": "CaramelNotes",
+    "url": "https://github.com/MrToffee/CaramelNotes",
+    "api": "https://api.github.com/repos/MrToffee/CaramelNotes"
+  },
+  "commit": "e607ec7c7a3c7d27c7cfcd391f5fb8a715ce4b07",
+  "sourceFiles": {
+    "CaramelNotes-WotLK.toc": {
+      "sha256": "a3d194a59da51be8e4842f1a3ecf26315a960005e52d01d8e38babe13468b4ca",
+      "bytes": 206
+    },
+    "CaramelNotes.lua": {
+      "sha256": "0b9b3ea30d0008fb1a89ae78f1a588da54b17a3d3b5939126198f1dfadc6f509",
+      "bytes": 10090
+    },
+    "CaramelNotes.toc": {
+      "sha256": "eec92e24c9c420d69ca89419cd6da3e044dc7459f610f2020df25bdaef0eb3ac",
+      "bytes": 206
+    },
+    "CreateNoteFrame.lua": {
+      "sha256": "a129a64aceaeccd7b07d5e8098c1bbae6e93b2214649b8c07349c5942f94461d",
+      "bytes": 4484
+    },
+    "EditNoteFrame.lua": {
+      "sha256": "35c8bd00bd1bd385728a4360538cb166b00ddfe74d234c9787a8eb4bcfce440c",
+      "bytes": 2524
+    },
+    "Images/Chat.png": {
+      "sha256": "36ac9402658e8175ba94589049c56896f3a66e04d7452ffe627eb775db88cf95",
+      "bytes": 34763
+    },
+    "Images/EditNote.png": {
+      "sha256": "7ab3b31de585f6e4bb36dec40cf26a1481300d2e6906c063e2d2e3c75055f351",
+      "bytes": 20327
+    },
+    "Images/Notes.png": {
+      "sha256": "a2ef3b159e84f5da3762d46f65793ef454ad4936126128092d387322a925a942",
+      "bytes": 144127
+    },
+    "LICENSE": {
+      "sha256": "d7f1ce048b750cd17e2843bc5ccc478aa949a586cf28c72b0a1db71a7b2b1081",
+      "bytes": 1065
+    },
+    "Main.xml": {
+      "sha256": "c33e29f6b0f27329fb9ab53aed220f8c61e0e7dfe3059f5ef9a60f7ce3c40803",
+      "bytes": 239
+    },
+    "NotesFrame.lua": {
+      "sha256": "c5572be0673f17e47e724dcc229e7994c2dffaa7a9748f9a0805d7bad207bd85",
+      "bytes": 12104
+    },
+    "README.md": {
+      "sha256": "b73eb7389353974b8bf6a71d179d6e70b6d18c6b63754af3e4b07d28d6941a58",
+      "bytes": 954
+    },
+    "SettingsFrame.lua": {
+      "sha256": "b2ce4c043dfacf795e8754c46119c51a72e15b5dead813b95df13ad8382cdf6e",
+      "bytes": 5413
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

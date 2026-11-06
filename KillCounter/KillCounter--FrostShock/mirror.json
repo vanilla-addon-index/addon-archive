@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/FrostShock/KillCounter",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "FrostShock",
+    "repo": "KillCounter",
+    "name": "KillCounter",
+    "url": "https://github.com/FrostShock/KillCounter",
+    "api": "https://api.github.com/repos/FrostShock/KillCounter"
+  },
+  "commit": "1a938c71cca7700acff98b513ab49c8ba0c9dac2",
+  "sourceFiles": {
+    "KillCounter.lua": {
+      "sha256": "42635b54ca4638ae18e82c59648fed07acf622a625f4d71163e1e70629cc7d7a",
+      "bytes": 3028
+    },
+    "KillCounter.toc": {
+      "sha256": "24b047bb0cf234adfec17120e1b4c303102c13fb2f78291dacad62b4d469ba77",
+      "bytes": 127
+    },
+    "README.md": {
+      "sha256": "b39268e2427a24912b9679eac09f8cf913130af415e24ac7186023e153cdf49d",
+      "bytes": 138
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

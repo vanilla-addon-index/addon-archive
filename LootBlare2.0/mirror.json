@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/FSuhas/LootBlare-For-RoolFor",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "FSuhas",
+    "repo": "LootBlare-For-RoolFor",
+    "name": "LootBlare-For-RoolFor",
+    "url": "https://github.com/FSuhas/LootBlare-For-RoolFor",
+    "api": "https://api.github.com/repos/FSuhas/LootBlare-For-RoolFor"
+  },
+  "commit": "3f2a2deec0affc69009b91042436355c36ed4a2e",
+  "sourceFiles": {
+    "Dice.blp": {
+      "sha256": "e4c7bb17bc141747db258ccdb0b2c9c511a6dc5cd69d1aed8750b6dc42b2a9fa",
+      "bytes": 2564
+    },
+    "image.png": {
+      "sha256": "f246116324010b1e32f8c99bab5a479e468975efaf08233e2a1afd3472dbebb0",
+      "bytes": 54812
+    },
+    "LootBlare.lua": {
+      "sha256": "fc3c5cfef2bd4b42754e7efc550da8b2414504e469306256465cf2ed02efbda2",
+      "bytes": 38637
+    },
+    "LootBlare.toc": {
+      "sha256": "93271ddc395e53e7e0a17a45e48bc247c028e47ccddb816ada509ff19170f863",
+      "bytes": 270
+    },
+    "lootblareframe.PNG": {
+      "sha256": "2e9e4df787b47d7af2080dd6455a447f11f25939d0bdcee8ed91883bf34dbe5c",
+      "bytes": 57016
+    },
+    "readme.md": {
+      "sha256": "36965940998e774791d98a5e630df0a29652c233516c0df0501a7de8a6d6c999",
+      "bytes": 3887
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

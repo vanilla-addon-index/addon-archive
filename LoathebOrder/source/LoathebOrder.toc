@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: LoathebOrder
+## Notes: Provides a macro to announce your loatheb heal
+## X-Category: Interface Enhancements
+## X-Date: 2024-05-06
+## X-Website: https://github.com/MarcelineVQ/LoathebOrder
+## Version: 1.0
+## SavedVariablesPerCharacter: next_healer
+
+LoathebOrder.lua

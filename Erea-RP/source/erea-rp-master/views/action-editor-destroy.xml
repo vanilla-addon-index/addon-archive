@@ -1,0 +1,47 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+  <!-- ======================================================================
+       action-editor-destroy.xml - Destroy Object Editor Template
+       ======================================================================
+       PURPOSE: Virtual template for the Destroy Object method editor
+       USAGE: CreateFrame("Frame", name, parent, "EreaRpMasterDestroyEditorTemplate")
+       ====================================================================== -->
+
+  <Frame name="EreaRpMasterDestroyEditorTemplate" virtual="true">
+    <Size>
+      <AbsDimension x="360" y="60"/>
+    </Size>
+    <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+              edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+      <EdgeSize><AbsValue val="10"/></EdgeSize>
+      <TileSize><AbsValue val="16"/></TileSize>
+      <BackgroundInsets><AbsInset left="3" right="3" top="3" bottom="3"/></BackgroundInsets>
+    </Backdrop>
+    <Scripts>
+      <OnLoad>
+        this:SetBackdropColor(0.1, 0.1, 0.1, 0.8)
+        this:SetBackdropBorderColor(0.35, 0.35, 0.45, 1)
+      </OnLoad>
+    </Scripts>
+    <Layers>
+      <Layer level="OVERLAY">
+        <FontString name="$parentTitle" inherits="GameFontNormal">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="5" y="-5"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parentDescription" inherits="GameFontNormalSmall">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="10" y="-30"/></Offset>
+            </Anchor>
+          </Anchors>
+          <Text>|cFF888888(No parameters required)|r</Text>
+        </FontString>
+      </Layer>
+    </Layers>
+  </Frame>
+
+</Ui>

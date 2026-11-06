@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: BossTactics
+## Notes: Posts pre-defined boss tactics to raid warning via slash command.
+
+BossTactics.lua
+BossTactics_data.lua

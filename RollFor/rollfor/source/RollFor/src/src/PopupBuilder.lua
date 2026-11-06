@@ -1,0 +1,219 @@
+RollFor = RollFor or {}
+local m = RollFor
+
+if m.PopupBuilder then return end
+
+local M = {}
+
+local getn = m.getn
+
+---@class Popup : Frame
+---@field resize fun( self: Popup, lines: table )
+---@field scroll_width number? -- see resize: the widest this popup has been for the current list
+---@field scroll_height number? -- and the tallest, for the same reason
+---@field scroll_size_total number? -- the list length both of those were measured against
+---@field scroll_size_max_lines number? -- and the window height they were measured against
+---@field close_button Frame? -- the corner X, when the window asked for one (see ListPopup)
+---@field side_margin number -- the horizontal margin resize() adds to the widest line
+
+---@class PopupBuilder
+---@field name fun( self: PopupBuilder, name: string ): PopupBuilder
+---@field parent fun( self: PopupBuilder, parent: Frame ): PopupBuilder
+---@field height fun( self: PopupBuilder, height: number ): PopupBuilder
+---@field width fun( self: PopupBuilder, width: number ): PopupBuilder
+---@field point fun( self: PopupBuilder, p: table ): PopupBuilder
+---@field sound fun( self: PopupBuilder ): PopupBuilder
+---@field frame_level fun( self: PopupBuilder, frame_level: number ): PopupBuilder
+---@field backdrop_color fun( self: PopupBuilder, r: number, g: number, b: number, a: number ): PopupBuilder
+---@field bg_file fun( self: PopupBuilder, bg_file: string ): PopupBuilder
+---@field esc fun( self: PopupBuilder ): PopupBuilder
+---@field no_border fun( self: PopupBuilder ): PopupBuilder
+---@field gui_elements fun( self: PopupBuilder, gui_elements: table ): PopupBuilder
+---@field frame_style fun( self: PopupBuilder, frame_style: FrameStyle ): PopupBuilder
+---@field on_drag_stop fun( self: PopupBuilder, callback: function ): PopupBuilder
+---@field movable fun( self: PopupBuilder ): PopupBuilder
+---@field border_size fun( self: PopupBuilder, border_size: number ): PopupBuilder
+---@field on_show fun( self: PopupBuilder, on_show: function ): PopupBuilder
+---@field on_hide fun( self: PopupBuilder, on_hide: function ): PopupBuilder
+---@field border_color fun( self: PopupBuilder, r: number, g: number, b: number, a: number ): PopupBuilder
+---@field self_centered_anchor fun( self: PopupBuilder ): PopupBuilder
+---@field anchor_point fun( self: PopupBuilder, point: string ): PopupBuilder
+---@field scale fun( self: PopupBuilder, scale: number ): PopupBuilder
+---@field strata fun( self: PopupBuilder, strata: FrameStrata ): PopupBuilder
+---@field hidden fun( self: PopupBuilder ): PopupBuilder
+---@field scrollable fun( self: PopupBuilder, opts: table ): PopupBuilder
+---@field on_scroll fun( self: PopupBuilder, callback: function ): PopupBuilder
+---@field build fun( self: PopupBuilder ): Popup
+
+---@param frame_builder FrameBuilderFactory
+---@param bottom_margin number?
+---@param bottom_button_margin number?
+---@param side_margin number?
+---@return PopupBuilder
+local function new( frame_builder, bottom_margin, bottom_button_margin, side_margin )
+  local m_button_padding = 10
+  local m_bottom_button_margin = bottom_button_margin or 8
+  local m_bottom_margin = bottom_margin or (30 + m_bottom_button_margin)
+  local m_side_margin = side_margin or 35
+
+  local function align_buttons( popup, lines )
+    if not popup.buttons_frame then
+      local frame = m.api.CreateFrame( "Frame", nil, popup )
+      frame:SetPoint( "BOTTOM", 0, m_bottom_button_margin )
+      popup.buttons_frame = frame
+    end
+
+    local total_width = 0
+    local max_height = 0
+    local last_anchor = nil
+
+    local buttons = m.filter( lines, function( line ) return line.line_type == "button" end )
+
+    for _, button in ipairs( buttons ) do
+      local frame = button.frame
+      local height = frame:GetHeight()
+      local width = frame:GetWidth()
+      local scale = frame:GetScale()
+
+      if height > max_height then max_height = height end
+
+      if not last_anchor then
+        frame:SetPoint( "LEFT", popup.buttons_frame, "LEFT", 0, 0 )
+      else
+        frame:SetPoint( "LEFT", last_anchor, "RIGHT", m_button_padding, 0 )
+        total_width = total_width + (m_button_padding * scale)
+      end
+
+      total_width = total_width + (width * scale)
+      last_anchor = frame
+    end
+
+    popup.buttons_frame:SetWidth( total_width )
+    popup.buttons_frame:SetHeight( max_height )
+  end
+
+  local function get_total_width( buttons )
+    local result = 0
+
+    for _, button in ipairs( buttons ) do
+      local frame = button.frame
+      result = result + frame:GetWidth() * frame:GetScale()
+    end
+
+    return result
+  end
+
+  local function resize( popup, lines )
+    local max_width = 0
+    local height = 0
+
+    for _, line in ipairs( lines ) do
+      if line.line_type ~= "button" and line.line_type ~= "info" then
+        local frame = line.frame
+        local scale = frame.GetScale and frame:GetScale() or 1
+        local width = frame:GetWidth() * scale
+
+        height = height + frame:GetHeight() * scale
+        height = height + line.padding
+        if width > max_width then max_width = width end
+      end
+    end
+
+
+    local buttons = m.filter( lines, function( line ) return line.line_type == "button" end )
+    local button_count = getn( buttons )
+    local button_width = get_total_width( buttons ) + (button_count - 1) * m_button_padding
+
+    if button_width > max_width then max_width = button_width end
+
+    if button_count > 0 then
+      height = height + 23
+    end
+
+    -- With a scroll viewport (FrameBuilder's `scrollable`) only the lines inside the window
+    -- exist, so the popup's own size would change every time the wheel moves. Both dimensions are
+    -- held at the largest they have been for the current list instead, and recomputed only when
+    -- the list changes length, which is what expanding or collapsing something does.
+    --
+    -- Width moves because the widest row is not the same row at every offset. Height moves for a
+    -- subtler reason: a row's padding is decided by its position in the whole list, not in the
+    -- window -- transformers give the first row a wider gap to set it off from what is above it --
+    -- so scrolling that row out of view takes its extra padding with it and the popup shrinks by
+    -- the difference.
+    --
+    -- Held against both numbers that decide how many rows get rendered -- the length of the list
+    -- and the height of the window -- because either one changing is a real change of size and
+    -- must not be held back. Keyed on the list alone, shrinking the window would leave the popup
+    -- stuck at the height of the taller one it used to be.
+    local scroll = popup.get_scroll and popup.get_scroll()
+
+    if scroll and scroll.total > 0 then
+      local same_list = popup.scroll_size_total == scroll.total
+      local same_window = popup.scroll_size_max_lines == scroll.max_lines
+
+      if same_list and same_window then
+        if popup.scroll_width and popup.scroll_width > max_width then max_width = popup.scroll_width end
+        if popup.scroll_height and popup.scroll_height > height then height = popup.scroll_height end
+      end
+
+      popup.scroll_size_total = scroll.total
+      popup.scroll_size_max_lines = scroll.max_lines
+      popup.scroll_width = max_width
+      popup.scroll_height = height
+    end
+
+    popup:SetWidth( max_width + m_side_margin )
+
+
+    popup:SetHeight( height + (button_count > 0 and m_bottom_margin or 23) )
+
+    align_buttons( popup, lines )
+  end
+
+  local decoratee = frame_builder.new()
+  local build = decoratee.build
+
+  decoratee.build = function()
+    ---@class Popup
+    local result = build( decoratee )
+    result.resize = resize
+    -- What resize() adds to the widest line to get the window's width, and therefore what is left
+    -- over on each side of a centred line. Published because a window that lines its rows up on
+    -- the left has to put them where centring would have put the widest of them, and this is the
+    -- only number that says where that is.
+    result.side_margin = m_side_margin
+
+    return result
+  end
+
+  return decoratee --[[@as PopupBuilder]]
+end
+
+---@param frame_builder FrameBuilderFactory
+---@param bottom_margin number?
+---@param bottom_button_margin number?
+---@param side_margin number?
+---@return PopupBuilder
+function M.modern( frame_builder, bottom_margin, bottom_button_margin, side_margin )
+  local builder = new( frame_builder, bottom_margin, bottom_button_margin, side_margin )
+      :frame_style( "Modern" )
+      :backdrop_color( 0, 0, 0, 0.6 )
+
+  return builder
+end
+
+---@param frame_builder FrameBuilderFactory
+---@param bottom_margin number?
+---@param bottom_button_margin number?
+---@param side_margin number?
+---@return PopupBuilder
+function M.classic( frame_builder, bottom_margin, bottom_button_margin, side_margin )
+  local builder = new( frame_builder, bottom_margin, bottom_button_margin, side_margin )
+      :frame_style( "Classic" )
+      :border_size( 25 )
+
+  return builder
+end
+
+m.PopupBuilder = M
+return M

@@ -1,0 +1,377 @@
+{
+  "upstream": "https://github.com/Jslquintero/DialogUI",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Jslquintero",
+    "repo": "DialogUI",
+    "name": "DialogUI",
+    "url": "https://github.com/Jslquintero/DialogUI",
+    "api": "https://api.github.com/repos/Jslquintero/DialogUI"
+  },
+  "commit": "99cb4864753c716bbcdd756d49c64edb35c58dcc",
+  "sourceFiles": {
+    ".vscode/settings.json": {
+      "sha256": "a2bf7b596aadc4785e411793fe1ed483223c73927085905ccc1aff25cceabf58",
+      "bytes": 1778
+    },
+    "Bindings.xml": {
+      "sha256": "fe45ed4378b08b48f0ea11c0a65dd3426904096d2aad62f28a3d4eb28775e8e1",
+      "bytes": 988
+    },
+    "dialogUI.toc": {
+      "sha256": "f058c2b22005695e7f39293943f588ff69092b2b3b59aba57edef4577c39e1a5",
+      "bytes": 817
+    },
+    "LICENSE": {
+      "sha256": "57baa67aae2a64953c5fd3527a7955f5d28d9b6bb6fb400ea92372f14ed41029",
+      "bytes": 1069
+    },
+    "README.md": {
+      "sha256": "6c01525521b6e7e68a147edfdaf170b11c9971456184322688c6b4177f415a78",
+      "bytes": 3005
+    },
+    "src/assets/art/icons/activeQuestIcon.tga": {
+      "sha256": "f15232fbfbf0652bda8feee35c071507ded52501dc0200cf3950c6972477adfd",
+      "bytes": 3363
+    },
+    "src/assets/art/icons/alchemyGossipIcon.tga": {
+      "sha256": "f635d3e250d0dd5bbdaf84c2e7f43b0bb7ae00ad3dfb8e57418afe3cefe1bc02",
+      "bytes": 2883
+    },
+    "src/assets/art/icons/auctionHouseGossipIcon.tga": {
+      "sha256": "84bf81ad1eb0c18413d479fabb686507574393ec634d06941677acfc7fcfcf79",
+      "bytes": 2545
+    },
+    "src/assets/art/icons/availableQuestIcon.tga": {
+      "sha256": "e8ade7ea5d9be9e5e74ac61d0e789cba255b876666701096011e3ad69ec7d686",
+      "bytes": 2230
+    },
+    "src/assets/art/icons/bankerGossipIcon.tga": {
+      "sha256": "60977e232b43b2b866b62aed105218d5d031a7016de45d7f7b94988f7887a917",
+      "bytes": 2590
+    },
+    "src/assets/art/icons/battlemasterGossipIcon.tga": {
+      "sha256": "83cfb1433fe24f385990d92014fd856ddd4b91c292577e7bd65b792300ae3ded",
+      "bytes": 3643
+    },
+    "src/assets/art/icons/binderGossipIcon.tga": {
+      "sha256": "edabadc8dfa344cef0c436ab323b2052c7958588384fd1e52a776729638986f7",
+      "bytes": 2672
+    },
+    "src/assets/art/icons/blacksmithingGossipIcon.tga": {
+      "sha256": "8d2bad23f24ed43988e377465771bf1e75ea25e41ac1328d85f0fc6660e0a4de",
+      "bytes": 3361
+    },
+    "src/assets/art/icons/classTrainerGossipIcon.tga": {
+      "sha256": "424512fb9ae45a434fe5da55668b5854ea42aee371a70fd450474af84a01a542",
+      "bytes": 2675
+    },
+    "src/assets/art/icons/Coin-Copper.tga": {
+      "sha256": "6df58c6d75a3a7b19245af11b1b255bc86b620ee034228683a79463ad12d4629",
+      "bytes": 4114
+    },
+    "src/assets/art/icons/Coin-Gold.tga": {
+      "sha256": "2684ddbe757c828541c6e10422d7ffc9c63d270d5bd758c716e10be213b7b65e",
+      "bytes": 4114
+    },
+    "src/assets/art/icons/Coin-Silver.tga": {
+      "sha256": "d2ec964305bc531bca21552d223aa14c8b4e199bed4d613c37d91c133c3b1e44",
+      "bytes": 4114
+    },
+    "src/assets/art/icons/cookingGossipIcon.tga": {
+      "sha256": "867394a6ff06fd0f11b98c6de6bf41b18538d48f334d1a3607f5b9b68aabeb07",
+      "bytes": 3725
+    },
+    "src/assets/art/icons/deeprunTramGossipIcon.tga": {
+      "sha256": "a1cfd541f6468f80252bc83980314d0b02f52d7d8a14e09b9435e7c8fb91f45c",
+      "bytes": 2698
+    },
+    "src/assets/art/icons/druidGossipIcon.tga": {
+      "sha256": "08da632e5018a9f9fedccf14183d12e9d95f0c7a912a1c624cf7c64db681495f",
+      "bytes": 3712
+    },
+    "src/assets/art/icons/enchantingGossipIcon.tga": {
+      "sha256": "9b0cac9594007b548dd1f2645958f46324264ac7d171eabd7516177f9c81fb49",
+      "bytes": 3832
+    },
+    "src/assets/art/icons/engineeringGossipIcon.tga": {
+      "sha256": "bcbbbf9d0613c43400811cbd313f724d9e93c9eaf63cd5b8ffd9f9be3032c2bf",
+      "bytes": 3877
+    },
+    "src/assets/art/icons/first aidGossipIcon.tga": {
+      "sha256": "7598c76f4e444ee0d1114f1e6f1289a770336b51cd31f375098afc8954a259cb",
+      "bytes": 3863
+    },
+    "src/assets/art/icons/fishingGossipIcon.tga": {
+      "sha256": "81494896b5ecb8cdceb75b579645c2a7c8ddc67122023cb176f0f5445e46f0a3",
+      "bytes": 2573
+    },
+    "src/assets/art/icons/flightGossipIcon.tga": {
+      "sha256": "bed93611dcfe79b1bf3e745452872e35671fbe5f6c8cee82bb6d52c2da3e2f4c",
+      "bytes": 2800
+    },
+    "src/assets/art/icons/gossipGossipIcon.tga": {
+      "sha256": "68956619ee690755fa3ff7ab68849242f7f225602542ba648ca8a880eeb025b7",
+      "bytes": 2454
+    },
+    "src/assets/art/icons/GossipIcons.xcf": {
+      "sha256": "7eea2d47c1e15aec9b4d2bc8877b3b6e69bd1797369c9508cdca5c53cad6c11c",
+      "bytes": 106195
+    },
+    "src/assets/art/icons/guildMasterGossipIcon.tga": {
+      "sha256": "ff26ccf4020c63ef182ef80d3ecb311b38a6b5e4fc8e00c8cdfdf92d7acde793",
+      "bytes": 2754
+    },
+    "src/assets/art/icons/herbalismGossipIcon.tga": {
+      "sha256": "722252000b246c5aa4056cc477a13de085c3a8327d20fd207da3aef9ff2aff3f",
+      "bytes": 2993
+    },
+    "src/assets/art/icons/hunterGossipIcon.tga": {
+      "sha256": "4d920568ecdb8edece768519a48dfcb2595a1a23a630f93ce8f769f4eed474f3",
+      "bytes": 2429
+    },
+    "src/assets/art/icons/innKeeperGossipIcon.tga": {
+      "sha256": "edabadc8dfa344cef0c436ab323b2052c7958588384fd1e52a776729638986f7",
+      "bytes": 2672
+    },
+    "src/assets/art/icons/inscriptionGossipIcon.tga": {
+      "sha256": "c392135291a018eb2519902e8cce8d33d1717db78a496765cc34b242bad46907",
+      "bytes": 3888
+    },
+    "src/assets/art/icons/jewelcraftingGossipIcon.tga": {
+      "sha256": "0e8ef0988f08417d3c0ca820941b048c70a4bc28e0de5625be8d4b5e76cb5f2d",
+      "bytes": 3668
+    },
+    "src/assets/art/icons/leatherworkingGossipIcon.tga": {
+      "sha256": "69d7e89aed72541d3dccacd88190b37bc89b1819cdbb1c13df81b680a3fcffe3",
+      "bytes": 2759
+    },
+    "src/assets/art/icons/mageGossipIcon.tga": {
+      "sha256": "e5822f5e6b1f64f848b7841af2ffd3265c8d6eed73d1ffe2e5dc7488f61555f6",
+      "bytes": 3908
+    },
+    "src/assets/art/icons/mailboxGossipIcon.tga": {
+      "sha256": "be4bd51e444e84c2e6de7e36e7a0c3c257b6278662ebaa915d0689ea3443351f",
+      "bytes": 2404
+    },
+    "src/assets/art/icons/miningGossipIcon.tga": {
+      "sha256": "b3903a80de53a26e900576f47e671337f970ec4b606de3c5986087596a6edde2",
+      "bytes": 3186
+    },
+    "src/assets/art/icons/paladinGossipIcon.tga": {
+      "sha256": "842819eda40f554c2082269a7cd9eff9ec0f854d5cf82e2967c6a48c356362d1",
+      "bytes": 3704
+    },
+    "src/assets/art/icons/PetitionGossipIcon.tga": {
+      "sha256": "8b59dd8c1c1eba2d5c1988c2ee958d06e8b4814c007a199a8bf379b24cea2245",
+      "bytes": 2737
+    },
+    "src/assets/art/icons/petTrainer.tga": {
+      "sha256": "68f913d3f6dcabeefbab124be4d6a6ff2994cdc9549c9eae8a493d284de55566",
+      "bytes": 1988
+    },
+    "src/assets/art/icons/priestGossipIcon.tga": {
+      "sha256": "b285d667c56e162a4290946c7c34bf8bdf5dfab98ec45679c3b1b73ababc9cbd",
+      "bytes": 3178
+    },
+    "src/assets/art/icons/professionTrainerGossipIcon.tga": {
+      "sha256": "1282d52dfb0c0876559d849bbf2986ac543b53988adf4442b02b8b28e4280e5d",
+      "bytes": 2577
+    },
+    "src/assets/art/icons/rogueGossipIcon.tga": {
+      "sha256": "60ab3f5554c06e660f8ffab3920f1f14cbb8c239b57debe2744466d400212da2",
+      "bytes": 3572
+    },
+    "src/assets/art/icons/shamanGossipIcon.tga": {
+      "sha256": "125d489e901ee3bbbeac57cb60b1a71ff2817be5c965f6c23d06408b5d355839",
+      "bytes": 3653
+    },
+    "src/assets/art/icons/skinningGossipIcon.tga": {
+      "sha256": "d2ec4c95d983734958e19b24a77fcc4e51de5cbbbba7f7b694be7341436689ce",
+      "bytes": 3303
+    },
+    "src/assets/art/icons/stablemasterGossipIcon.tga": {
+      "sha256": "33f4bb3df9c8f823be32d6eec890e68bdba9369682322fb258b58bdd85b7641f",
+      "bytes": 3182
+    },
+    "src/assets/art/icons/tailoringGossipIcon.tga": {
+      "sha256": "5d167fe20891408c674addf04fd2a2f28d58bb492d9423b43805f69cecf73389",
+      "bytes": 3890
+    },
+    "src/assets/art/icons/trainerGossipIcon.tga": {
+      "sha256": "5a7cde3fb7aba067ef462ebd1e136e754881faa31defa5faed974ca6a27025aa",
+      "bytes": 2924
+    },
+    "src/assets/art/icons/unlearnGossipIcon.tga": {
+      "sha256": "2956fe0cbf021805c28e63493092fb7438490ff5e5b210c39a9cc0071d5ca63b",
+      "bytes": 2649
+    },
+    "src/assets/art/icons/vendorGossipIcon.tga": {
+      "sha256": "bd77b9add192fa121b43f40d0e758ca9752413cf11c53fcfc7fe61f7350aa069",
+      "bytes": 2680
+    },
+    "src/assets/art/icons/warlockGossipIcon.tga": {
+      "sha256": "202146408692c6c88ced3e74f9481ac3b24e2f707e34bc7b83f5b2a679f1d345",
+      "bytes": 3848
+    },
+    "src/assets/art/icons/warriorGossipIcon.tga": {
+      "sha256": "052497577378fcdd61c1b7823ff1379fef9c30a5ebb19439c1fd59f1c82557de",
+      "bytes": 3735
+    },
+    "src/assets/art/icons/weaponsTrainerGossipIcon.tga": {
+      "sha256": "f6cae739700e5919e72b46b30cfe61ebc6b85f39c7abc787dbb108a5190ceef7",
+      "bytes": 3188
+    },
+    "src/assets/art/keys/esc.tga": {
+      "sha256": "76a9bf2f1fa5674f070a8d4d36861e6941efd25cf46d97c848fd85ecc96c19fb",
+      "bytes": 1470
+    },
+    "src/assets/art/keys/space.tga": {
+      "sha256": "648679abf8263bd711a4d2565b8b345f3d2eac4f78199d0ed32448da55c5d8a8",
+      "bytes": 968
+    },
+    "src/assets/art/parchment/ButtonHighlight-Front.tga": {
+      "sha256": "a465f76400b3df2bbee417e859524441cd78a0ed5472a6f55e6e70eaffaf88f2",
+      "bytes": 420
+    },
+    "src/assets/art/parchment/ButtonHighlight-Gossip.tga": {
+      "sha256": "885901b4092e441fc2dd84b4d03ac97efb52810cf63af93881acf5ee8ce30ed4",
+      "bytes": 16402
+    },
+    "src/assets/art/parchment/OptionBackground-Common.tga": {
+      "sha256": "0576350e7efeb681d73739edecdebab9d94fff6898212029937a747deeae0ab7",
+      "bytes": 65554
+    },
+    "src/assets/art/parchment/OptionBackground-Grey.tga": {
+      "sha256": "eae2952e2a06c166a89676c405ca8c416241a1f26602053a84f36d331c4db680",
+      "bytes": 65554
+    },
+    "src/assets/art/parchment/OptionBackground-Hollow.tga": {
+      "sha256": "cd1d5b58d0406490ac418c3315bc931bac44ec8f5d785bbed2d1ef10e3e5081f",
+      "bytes": 65554
+    },
+    "src/assets/art/parchment/Parchment.tga": {
+      "sha256": "d0d715a0330f8b1bf71d1a0f1daf3bdbc61acab79ec79bcb09956b7363e4fd0c",
+      "bytes": 1048594
+    },
+    "src/assets/art/parchment/ParchmentLayout.xcf": {
+      "sha256": "873dd33d9fee7fa486b5c0796bf9daf284cf46ad21a7c9ec9ca1a2a838437c1f",
+      "bytes": 213623
+    },
+    "src/assets/art/parchment/RewardChoice-Highlight.tga": {
+      "sha256": "870f761a3ba35c0b5662e85a05f9f03e84613f7135e3f59ec87e98645138e31b",
+      "bytes": 65554
+    },
+    "src/assets/art/parchment/RewardChoice-Pending.tga": {
+      "sha256": "a131c7f824544cac23695263522903f40ad0a0c72e72dc9bb8d00797957aed10",
+      "bytes": 65554
+    },
+    "src/assets/art/parchment/UI-ScrollBar-Knob.tga": {
+      "sha256": "36b6c49a827aa81bc80edaaf5beadf06110fc2853b865dc992340c6cc8cbd6dd",
+      "bytes": 2209
+    },
+    "src/assets/font/ARIALN.ttf": {
+      "sha256": "bd31d0cf2e5a1a3a9074e98ebe4964c641121e9e660f31627614c4acb6c89c1c",
+      "bytes": 134188
+    },
+    "src/assets/font/fonts.xml": {
+      "sha256": "88853a355197451955b5ec0c018cd18a525966bbe10ac89527d3dd30d92828ca",
+      "bytes": 1988
+    },
+    "src/assets/font/frizqt___cyr.ttf": {
+      "sha256": "bad4f8cc86e9032638594399432378371ff1fc08076b42543c139c3157cdb36e",
+      "bytes": 96420
+    },
+    "src/assets/font/frizqt__.ttf": {
+      "sha256": "73de74d5d63690f29c7f97a9225edc8bd6f89e5103806af3714e4d7bfb9474e9",
+      "bytes": 37952
+    },
+    "src/bindings.lua": {
+      "sha256": "e0a48686090ab62ee12a37968038559518d25de2b88def3ad023e42a503fd4d3",
+      "bytes": 7770
+    },
+    "src/frames/gossipFrame/gossip.frame.lua": {
+      "sha256": "28c338debd8475b5910be5d2fdb8e4ad116a9b44d0cd770d5bbfc86c2faa9b87",
+      "bytes": 16374
+    },
+    "src/frames/gossipFrame/gossip.frame.xml": {
+      "sha256": "23598069c4b0ed32d0c5232f8866be16ae782818f0e25356d05f02602a94093f",
+      "bytes": 34220
+    },
+    "src/frames/moneyFrame/money.frame.lua": {
+      "sha256": "fd41ef691d7d082e4c0d58e08353e1d52570ccd4a92e6804249e2dcedb1e72f5",
+      "bytes": 9533
+    },
+    "src/frames/moneyFrame/money.frame.xml": {
+      "sha256": "fe913ce3e66ac9f3f0e9e0b9ea86c600634498c8f3a14d7994b193d3e2392fa2",
+      "bytes": 11158
+    },
+    "src/frames/questFrame/quest.frame.lua": {
+      "sha256": "ee0ee19e5141b08b946e6a379958d3705c13bce4dfa3ef90632b43139f6bafd7",
+      "bytes": 29230
+    },
+    "src/frames/questFrame/quest.frame.template.xml": {
+      "sha256": "740ae0372692507054a7870d0af9347ab94f00e057787e948fee0907eb197b6f",
+      "bytes": 6531
+    },
+    "src/frames/questFrame/quest.frame.xml": {
+      "sha256": "48e24a164e3769454cc99020609c632ebe3010d79e39b37bd851cff43858aac3",
+      "bytes": 80787
+    },
+    "src/frames/uiPanelTemplate/ui.panel.template.button.xml": {
+      "sha256": "6e60106fa501752eb28f23ca395af2d79463fb07d70da99ccd839c6e7c28aa40",
+      "bytes": 1514
+    },
+    "src/frames/uiPanelTemplate/ui.panel.template.lua": {
+      "sha256": "37fd3765d96adda24129debc0be4420d64a1d05477378a2fd87677d241860bbc",
+      "bytes": 2987
+    },
+    "src/frames/uiPanelTemplate/ui.panel.template.xml": {
+      "sha256": "995063f0be815b80ee12abe1b83ef9c05a607f6121794a6d1798067a5b2b99ca",
+      "bytes": 8536
+    },
+    "src/preview/issue-1.png": {
+      "sha256": "4afae927c94127c6ab4615ab8720cdc8fd68cebd3f8bd83fffdcc2e3314b9c5a",
+      "bytes": 47213
+    },
+    "src/preview/issue-2.png": {
+      "sha256": "26fefd9dfbe622ea66be59888702607f95df54b09497740aeabc3003c91e1fa6",
+      "bytes": 89989
+    },
+    "src/preview/Screenshot From 2025-06-18 00-34-14.png": {
+      "sha256": "00a302b7dbc2b5e822a76b882fc4f68a81bc7b03f83af3774d6afc5dab56ec03",
+      "bytes": 394445
+    },
+    "src/preview/Screenshot From 2025-06-18 00-34-24.png": {
+      "sha256": "79a394981e32b1933d38d048a15631c46becc59ef287c38686d913fa1b9e251c",
+      "bytes": 389614
+    },
+    "src/preview/Screenshot From 2025-06-18 00-34-35.png": {
+      "sha256": "91b436038dd1738c25919648f5a28009f96133e38b0c8874ac681afa26c15fe5",
+      "bytes": 390828
+    },
+    "src/preview/Screenshot From 2025-06-18 00-35-57.png": {
+      "sha256": "c92e51288fbb8b2ade365ada1bddc47084efc3d2046a606d9d330c8625d9aa3b",
+      "bytes": 376907
+    },
+    "src/preview/Screenshot From 2025-06-18 00-37-32.png": {
+      "sha256": "b28ab9f929d6259fd72d4d1cd9997eaa860e8489848ecb713cc50c01eb032e54",
+      "bytes": 393103
+    },
+    "src/preview/Screenshot From 2025-06-18 00-37-38.png": {
+      "sha256": "d5e0a8e08fe80ec9096e42b4d27f3f8ec1eca0e12f0e0912bcf328530a42fb09",
+      "bytes": 402793
+    },
+    "src/preview/Screenshot From 2025-06-18 00-41-14.png": {
+      "sha256": "ebf858245f602218fa7a011e1e5c00b75ce82b85f65386162790a6ec43160da9",
+      "bytes": 398077
+    },
+    "src/preview/Screenshot From 2025-06-18 00-42-06.png": {
+      "sha256": "6547b737c2cf5ea589e495a25653e577790ec43b054def1781679c8f2c2975fb",
+      "bytes": 381154
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

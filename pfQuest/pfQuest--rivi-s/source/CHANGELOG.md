@@ -1,0 +1,226 @@
+# pfQuest base patch notes
+
+## 8.0.50 — 2026-10-14
+
+- Corrected the optional Feralas introduction: A Threat in Feralas is hidden while The Ogres of Feralas is active or completed, without blocking the main quest.
+- Excluded obsolete Q6221 from available quest offers while retaining its lookup/history data.
+
+## 8.0.49 — 2026-10-10
+
+- Map and minimap appearance settings now refresh existing markers when Save & Close is pressed, including tracking pictures, cut-out circles and spawn colors.
+- Tracker font, opacity, level labels and default objective expansion apply immediately while preserving manually folded quests.
+- Minimum item drop chance changes refresh active quest markers; legacy quest-link enhancement respects its setting.
+
+## 8.0.48 — 2026-10-08
+
+- Restored background zone-map pin preparation in small batches, reducing visible redraw on opening.
+- Fixed tracker Ctrl-click color changes not repainting map and minimap pins.
+
+## 8.0.47 — 2026-10-06
+
+- Fixed long login stalls caused by tracker objective reads during quest-log events; row updates now run together on a later frame.
+- Removed repeated native quest-ID lookups from quest-log button refreshes.
+
+## 8.0.46 — 2026-10-06
+
+- Fixed questgiver marker colors not refreshing after leveling up.
+- Corrected false completed turn-in markers for the three UnGoro pylon discovery quests.
+
+## 8.0.45 — 2026-10-04
+
+- Fixed map and minimap tooltips staying visible after leaving a marker.
+- Added support for the optional repeatable quest display setting supplied by Turtle quest data.
+- Added profession skill-rank checks for quest availability.
+- Added this changelog and one update reminder per installed version.
+
+## 8.0.44 — 2026-10-02
+
+- Redrew minimap objectives and route arrows immediately after quest-log changes while the World Map is closed.
+- Made quest abandonment restore the abandoned quest without removing nearby completed quest markers.
+
+## 8.0.43 — 2026-10-01
+
+- Refreshed quest objectives, map markers, and navigation routes immediately when objective progress changes without requiring the World Map to open.
+
+## 8.0.42 — 2026-09-30
+
+- Recalculated automatic routes immediately after a turned-in quest removes its final map node.
+- Added required-all prerequisite support for convergence quests such as Zanzil's Mixture and a Fool's Stout.
+
+## 8.0.41 — 2026-09-29
+
+- Restored active quest map nodes when an accidentally hidden quest is removed from the Journal, and fixed the Journal remove button flickering before clicks register.
+- Prevented duplicate non-HDB tracker rows when live and database quest titles use visually identical punctuation with different encodings.
+- Refreshed non-HDB minimap and world-map ender icons immediately when an active quest becomes complete.
+
+## 8.0.40 — 2026-09-27
+
+- Fixed manually completed map quests returning after reload when a database provider supplied their quest IDs as text.
+- Made the Quest Log Clean button and database browser Clean Map button clear their selected route arrows.
+- Prevented cleared arrows from being immediately restored from cached objective candidates.
+
+## 8.0.39 — 2026-09-26
+
+- Reorganized the configuration window into five clearer tabs while preserving every existing option.
+- Made new characters open the configuration window at the largest usable size while retaining saved sizing for existing characters.
+- Fixed live updates for map-node transparency, the route-arrow toggle, and the minimap-button toggle and reload prompt.
+- Added generic extension hooks that let database addons register their own tracking categories without exposing addon-specific options to vanilla users.
+
+## 8.0.38 — 2026-09-26
+
+- Added rendering and routing support for pfQuest-turtle's new party quest map pins (recolorable marker, route-arrow support, including while the World Map is closed).
+
+## 8.0.37 — 2026-09-24
+
+- Added an optional Turtle boundary-alias hook so Current Zone Only can suppress quest entities duplicated between custom zones and older base maps.
+
+## 8.0.35 — 2026-09-19
+
+- Fixed a route error that could occur when a route point lacked map coordinates, and cleared the locked auto-target after a zone or map change so it can no longer get stuck on a stale pick.
+
+## 8.0.34 — 2026-09-17
+
+- Restored yellow turn-in markers for report-only quests whose client completion flag remains unset.
+
+## 8.0.33 — 2026-09-15
+
+- Restored distance-based fading for tracked herb, mining, and other custom minimap icons while preserving the optimized minimap refresh path.
+
+## 8.0.32 — 2026-09-15
+
+- Added reversible World Map Level Range filtering with a Red threshold, Higher and Lower modes, a direction indicator, and right-click help.
+- Prevented Level Range from overwriting profession dropdown labels.
+- Restored route-arrow points while the World Map is closed without rebuilding hidden map frames.
+- Updated the in-game version notice to point to the maintained pfQuest repository.
+
+## 8.0.31 — 2026-09-14
+
+- Reduced frame hitches when accepting, completing, or abandoning quests while the World Map is closed.
+- Refreshed tracker completion icons correctly, including quests without objectives.
+- Recorded instant quest turn-ins in quest history when ClassicAPI supplies the completed quest ID.
+
+## 8.0.30 — 2026-09-13
+
+- Kept collapsed Quest Log categories closed when completing quests.
+
+## 8.0.29 — 2026-09-13
+
+- Positioned Level Range directly below All Quests and moved Modern Map Markers controls beneath it when installed.
+- Fixed Level Range rendering with pfUI skins while keeping the selector independent of World Map zoom.
+- Kept Display Low Level Quest Givers effective when an optional Level Range is selected.
+- Renamed the settings action to Save & Close and restored reload prompts for settings that only apply at load time.
+- Resolved quests through their canonical database record when a custom server supplies a different quest-link ID.
+
+## 8.0.28 — 2026-09-13
+
+- Cached ClassicAPI map-area data to eliminate continuous World Map allocation churn.
+
+## 8.0.27 — 2026-09-13
+
+- Kept collapsed Quest Log headers and tracker visibility stable through quest progress and completion updates.
+- Made Level Range optional and restored normal pfQuest filtering when no range is selected.
+- Restored the native Level Range selector appearance on clean clients while retaining pfUI skin support.
+- Kept explicit waypoint-addon arrow targets authoritative instead of switching to unrelated quest objectives.
+
+## 8.0.26 — 2026-09-12
+
+- Renamed the World Map filter to Level Range and made All Levels show every available quest.
+- Kept minimap objectives, quest starters, and quest enders updating while the World Map is open.
+
+## 8.0.25 — 2026-09-12
+
+- Added live nearest-first and reversible level sorting to the quest tracker.
+- Added a World Map filter for available quests by difficulty color.
+- Fixed false completed markers after turning in another quest at the same NPC.
+- Improved case-insensitive searches, outdoor map selection, and Quest Log map targeting.
+- Clarified map controls and allowed pfUI to skin the custom World Map selectors.
+
+## 8.0.24 — 2026-09-11
+
+- Added level-first and nearest-objective sorting controls to the quest tracker.
+- Made Ctrl-hide for minimap nodes react immediately in every refresh mode.
+- Fixed stale world-map filter labels and zone state after browsing another map.
+
+## 8.0.23 — 2026-09-11
+
+- Added `/db version`, which reports the loaded pfQuest base version and Turtle extension version when installed.
+
+## 8.0.22 — 2026-09-11
+
+- Added Smooth, Balanced, and Performance minimap marker refresh modes. Smooth is now the default and preserves the original responsive movement; the other modes reduce work in dense areas.
+- Preserved collapsed Quest Log headers while quest progress updates, so collapsed sections stay closed until the player reopens them.
+
+## 8.0.21 — 2026-09-10
+
+- Reduced map refresh work and fixed active quest pins disappearing after a quest is accepted or availability changes.
+- Reduced same-title quest-chain lookup work; clients with optional ClassicAPI use its direct quest-link information while clean clients retain the compatible fallback.
+- Refined current-zone and unexplored-area filtering, including city visit tracking and city pins on parent outdoor maps.
+- Fixed Blackstone Island continent pin placement and map-pin tooltips.
+- Kept direct exploration checks limited to the map currently open, avoiding a continent-map hitch from scanning every zone.
+- Added Ctrl-click-through interaction for dense continent pin areas, so ordinary map clicks still open the intended zone.
+- Reduced continuous minimap marker work while moving, especially at wide zoom, and kept minimap objective markers visible while browsing another continent.
+
+
+## 8.0.20 — 2026-09-09
+
+- Added Current Zone Only support for subareas and continent maps.
+- Added Hide Quest Pins In Unexplored Areas. Zone-map exploration is cached when a player opens that map; Turtle continent pins use the same cache without changing the viewed map.
+- Fixed checkboxes that could remain visibly checked after being disabled.
+- Fixed the route-arrow toggle so disabling it immediately stops and hides the arrow.
+- Added optional ClassicAPI and HearthDB detection. ClassicAPI clients use direct item-icon lookup and quest lifecycle events.
+
+## 8.0.19 — 2026-09-09
+
+- Kept the configuration layout unchanged while removing full quest resets from ordinary checkbox changes.
+- Coalesced map display refreshes, applied tracker and route settings directly, and deferred quest-giver rebuilds.
+- Replaced the reloading Save & Close action with Close; settings remain saved as they are changed.
+
+## 8.0.18 — 2026-09-09
+
+- Restored automatic quest-tracker visibility after login and reload.
+- Reduced idle quest-log polling from once per second to a one-minute fallback; normal quest events still refresh immediately.
+- Reduced quest-arrow allocation by updating its visual state at the route update rate instead of every rendered frame.
+- Made the Quest Log Translate label blue before a language is selected.
+
+## 8.0.17 — 2026-09-09
+
+- Fixed periodic FPS hitches caused by the collapsed quest-section tracker update.
+- The tracker now refreshes collapsed sections only when the quest log changes.
+
+## 8.0.16 — 2026-09-08
+
+- Quest tracker now hides quests in collapsed quest-log sections and restores them when expanded.
+- Collapsed sections do not remove active quest data or map markers.
+
+## 8.0.15 — 2026-09-08
+
+- Fixed Quest Log controls on clients with incompatible HookScript implementations.
+- Quest browser links now contain the actual quest ID.
+- Unresolved quest links are inserted as plain text instead of invalid Quest 0 links.
+
+## 2026-09-07
+
+- Made Russian quest text selectable on English Turtle clients through pfQuest's existing Quest Log translation menu.
+- Retains only the Russian quest-text table; foreign item and NPC databases remain unloaded to limit memory use.
+
+## 2026-09-07
+
+- Fixed Russian client support: the release now loads the base Russian database before the Turtle Russian overlay.
+
+## 2026-09-07
+
+- Fixed Current Zone Only missing objective pins after quest acceptance; the active quest map data now receives one deferred refresh after Turtle's quest-log updates settle.
+- Added merged-spawn support so creatures sharing an exact quest-item spawn can each resolve the matching tooltip without duplicating map pins.
+
+## 2026-09-06
+
+- Fixed High Elf and Goblin race-specific starter quest markers.
+- Avoided a native quest-log selection path for uniquely named quests, improving compatibility with older hooked clients.
+
+## 2026-09-04
+
+- Fixed a continent/world-map refresh error caused by attempting to index a missing zone map.
+- Fixed tracker entries overlapping after quest-log objective updates.
+- Fixed the tracker title index becoming stale after sorting, which could cause automatic updates to affect the wrong entry.
+
+This is the required base-addon companion for the matching `pfQuest-turtle` release.

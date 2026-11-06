@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/Deffar/FishingVolume",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Deffar",
+    "repo": "FishingVolume",
+    "name": "FishingVolume",
+    "url": "https://github.com/Deffar/FishingVolume",
+    "api": "https://api.github.com/repos/Deffar/FishingVolume"
+  },
+  "commit": "3f7dbd522844a994f945748b5dd1f1f2aef3f3cd",
+  "sourceFiles": {
+    "FishingVolume.lua": {
+      "sha256": "fdc59f2247021521dc6459e759dbd6f9b0a34ae52cfc7330c28e1d925b2063c5",
+      "bytes": 12974
+    },
+    "FishingVolume.toc": {
+      "sha256": "9d666af7e323b447f4d3eae28a93bd7f942b76f36db360f1fcc209ad68c8cf61",
+      "bytes": 242
+    },
+    "FishingVolume.xml": {
+      "sha256": "23dfaf8dd2c4ebfe53ddf28596bf43770ce7f6345537dce0165f1f50c89ee2cd",
+      "bytes": 1265
+    },
+    "GUI.lua": {
+      "sha256": "c5cd62b4668956b45d1435bb202f0c49907f51b383e1dc3ff1292ca948d2dc16",
+      "bytes": 58751
+    },
+    "MinimapButton.lua": {
+      "sha256": "ef9b5e5c952c3bbe8c0d5446e5550e697bfc63a59d9560cbdf4782d9609b87fb",
+      "bytes": 7776
+    },
+    "README.md": {
+      "sha256": "61fb7a0afbe994fb1fc747557a414c8dcf828854e2b0645e0cb9b93fc5c813ee",
+      "bytes": 3148
+    },
+    "Sound/Spells/Tradeskills/FishBite.wav": {
+      "sha256": "554bb97d0a68e23646bea4d681b975cecc5a5f1f6c6f56d3f7f2ab8cb7f18bc9",
+      "bytes": 10444
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

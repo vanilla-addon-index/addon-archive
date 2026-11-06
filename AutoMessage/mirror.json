@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/0ldi/AutoMessage",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "0ldi",
+    "repo": "AutoMessage",
+    "name": "AutoMessage",
+    "url": "https://github.com/0ldi/AutoMessage",
+    "api": "https://api.github.com/repos/0ldi/AutoMessage"
+  },
+  "commit": "c367bb48ae07c4bb1aa7e1d53b11fb0555623d2b",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "AutoMessage/AutoMessage.lua": {
+      "sha256": "c324b715c6321f9863f5eafeee3ad58531ecfb0b4bd58e14f2931f68a9c46144",
+      "bytes": 4743
+    },
+    "AutoMessage/AutoMessage.toc": {
+      "sha256": "1010130f1c4098d16c90e71dd0bdc5cffeb45fc7b6b6af5f4aad29b234fad4df",
+      "bytes": 197
+    },
+    "AutoMessage/AutoMessage.xml": {
+      "sha256": "8db18bedef5820f17d00b9dc9560703fc0d2399ea87fd35b25c39473ef1085a0",
+      "bytes": 9952
+    },
+    "README.md": {
+      "sha256": "4c502bc0d274d42a53fe6d8c30baa6973df9618bcbd7c71a59deaaa78fa68d48",
+      "bytes": 1638
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

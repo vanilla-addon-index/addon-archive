@@ -1,0 +1,78 @@
+{
+  "upstream": "https://octowow.st/git/Relationship/RelationshipsAchievements",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Relationship",
+    "repo": "RelationshipsAchievements",
+    "name": "RelationshipsAchievements",
+    "url": "https://octowow.st/git/Relationship/RelationshipsAchievements",
+    "api": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsAchievements"
+  },
+  "commit": "d0b8fff6f97e95be910f38491210503572bae0f8",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "2179c4cbb85132484a120167ba5a04aae606e4635a12cd136dc3cfaf9f7c1ff9",
+      "bytes": 184
+    },
+    "Core.lua": {
+      "sha256": "4b851ac71a76a8d922f7735bb689ddccae147175cdf2743f5b5d5317fb70a33d",
+      "bytes": 11125
+    },
+    "Database.lua": {
+      "sha256": "ac83571200a8517d1a2db0871b06640eca03579aaa90509184559647dc06e3ba",
+      "bytes": 53743
+    },
+    "Detail.lua": {
+      "sha256": "64bd950886d6de6c62ea7177725af014726bb4ea78cc5408b2d33c75c4e46d63",
+      "bytes": 6028
+    },
+    "Events.lua": {
+      "sha256": "95d01bacbf4dfecb7b36ba86902670a18149f58472170e60aea38a9c7d4ce489",
+      "bytes": 63907
+    },
+    "Minimap.lua": {
+      "sha256": "0517d5a1eab0cd52b53b7241af0f31fbf749cd85c4598ebba5f863cb8a91d384",
+      "bytes": 5251
+    },
+    "README.md": {
+      "sha256": "04fb5d5db485cfc013f91ece3ec81d25f5b48c3f5cc117798b0ada3af1104334",
+      "bytes": 6628
+    },
+    "RelationshipsAchievements.toc": {
+      "sha256": "f6b053c8aaa7ed0a751df6653755bf01a776a671862dfd66cc789e4ab108c90e",
+      "bytes": 389
+    },
+    "Toast.lua": {
+      "sha256": "07e419abae2d390c96f5fd5c7d4935e25f74aa5e13931e8f5255af00afa946ba",
+      "bytes": 3155
+    },
+    "UI.lua": {
+      "sha256": "10a6c9e255793b339e2d8b9bc30f7b6e0384fd4257a9959053768bb25cc422b4",
+      "bytes": 18944
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "57": {
+      "tag": "Aa",
+      "folder": "Aa--57",
+      "assets": {
+        "19": {
+          "sha256": "64372b957d76cf7f66583ac8280e2e557589a6efff15995a63f8deaee79d4b4c",
+          "bytes": 40208,
+          "id": "19",
+          "name": "RelationshipsAchievements.zip",
+          "url": "https://octowow.st/git/Relationship/RelationshipsAchievements/releases/download/Aa/RelationshipsAchievements.zip",
+          "path": "releases/Aa--57/assets/RelationshipsAchievements.zip"
+        }
+      },
+      "source": {
+        "sha256": "698ab0bb8ae2bd6e5b24ddac243ef11959b0d88f4819e3e97babf82cef7b7fd7",
+        "bytes": 32400,
+        "path": "releases/Aa--57/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsAchievements/archive/Aa.tar.gz"
+      }
+    }
+  }
+}

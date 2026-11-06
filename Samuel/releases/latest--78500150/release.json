@@ -1,0 +1,9 @@
+{
+  "id": "78500150",
+  "tag": "latest",
+  "name": "Latest build (unstable)",
+  "body": "## Commits\n- c545bb1: Adds _some_ off-hand support -- I hope (Page) [#12](https://github.com/Terrub/Samuel/pull/12)",
+  "published": "2022-09-28T20:24:45Z",
+  "prerelease": true,
+  "url": "https://github.com/Terrub/Samuel/releases/tag/latest"
+}

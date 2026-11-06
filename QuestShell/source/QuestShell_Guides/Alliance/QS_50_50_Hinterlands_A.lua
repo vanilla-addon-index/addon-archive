@@ -1,0 +1,62 @@
+-- =========================
+-- QS_The_Hinterlands_50_50.lua
+-- Converted from TourGuide format on 2025-08-16 22:16:25
+-- =========================
+
+QuestShellGuides = QuestShellGuides or {}
+
+QuestShellGuides["QS_The_Hinterlands_50_50_A"] = {
+  title    = "The Hinterlands (50-50)",
+  next     = "Blasted Lands (50-51)",
+  nextKey  = "QS_Blasted_Lands_50_51_A",
+  faction  = "Alliance",
+  minLevel = 50,
+  maxLevel = 50,
+  steps = {
+    { type="TRAVEL", coords={ x=27.12, y=77.43 }, note="Travel to The Salty Sailor Tavern (27.12, 77.43)" },
+    { type="ACCEPT", title="Whiskey Slim's Lost Grog", questId=580, coords={ x=27.12, y=77.43 }, npc = { name="Whiskey Slim" }, note="Whiskey Slim in The Salty Sailor Tavern (27.12, 77.43)" },
+    { type="TRAVEL", coords={ x=14.09, y=41.56 }, note="Travel to Wildhammer Keep (14.09, 41.56)" },
+    { type="SET_HEARTH", title="Favored of Elune?", coords={ x=13.52, y=44.76 }, npc = { name="Innkeeper Thulfram" }, note="Speak to Innkeeper Thulfram and set hearth at Wildhammer Keep (13.52, 44.76) (13.46, 43.97) (13.46, 41.66) (13.91, 42.24)" },
+    { type="TURNIN", title="The Newest Member of the Family", questId=3843, coords={ x=14.15, y=43.61 }, npc = { name="Agnar Beastamer" }, note="Agnar Beastamer in Wildhammer Keep (14.15, 43.61)" },
+    { type="ACCEPT", title="Food for Baby", questId=4297, coords={ x=13.81, y=43.28 }, npc = { name="Agnar Beastamer" }, note="Agnar Beastamer in Wildhammer Keep (13.81, 43.28)" },
+    { type="ACCEPT", title="Protecting Aerie Peak", questId=40664, coords={ x=16.4, y=47.6 }, npc = { name="Claira Kindfeather" }, note="Claira Kindfeather in Wildhammer Keep (16.4, 47.6)" },
+    { type="ACCEPT", title="Package to Quel'Danil", questId=80392, coords={ x=14.0, y=44.6 }, note="Take Lieren package to Loania (14.0,44.6)" },
+    { type="TURNIN", title="Package to Quel'Danil", questId=80392, coords={ x=31.1, y=48.5 }, note="Package to Quel 'Danil (31.1,48.5)" },
+    { type="ACCEPT", title="Errand for Quel'Danil", questId=80393, coords={ x=31.1, y=48.5 }, note="Errand for Quel'Danil (31.1,48.5)" },
+    { type="ACCEPT", title="Ritual Secrets of the Witherbark", questId=40607, coords={ x=31.1, y=48.5 }, note="Ritual Secrets of the Witherbark (31.1,48.5)" },
+    { type="TRAVEL", coords={ x=20.0, y=48.33 }, note="Travel to Shindigger's Camp (20.00, 48.33) (26.93, 48.60)" },
+    { type="TURNIN", title="Rhapsody's Kalimdor Kocktail", questId=1452, coords={ x=26.93, y=48.6 }, npc = { name="Rhapsody Shindigger" }, note="Rhapsody Shindigger in Shindigger's Camp (26.93, 48.60)" },
+    { type="TRAVEL", coords={ x=40.05, y=59.89 }, note="Travel to Valorwind Lake (40.05, 59.89)" },
+    { type="NOTE", note="Collect Violet Tragan from the mushroom underwater in the middle of Valorwind Lake (40.05, 59.89)", coords={ x=40.05, y=59.89 } },
+    { type="TRAVEL", coords={ x=48.76, y=68.35 }, note="Travel to The Altar of Zul (48.76, 68.35)" },
+    { type="COMPLETE", title="The Altar of Zul", questId=2989, coords={ x=48.76, y=68.35 }, note="Go up to the top of the stair to search The Altar of Zul (48.76, 68.35)" },
+    { type="TURNIN", title="Find OOX-09/HL!", questId=485, coords={ x=49.35, y=37.68 }, npc = { name="HL" }, note="Homing Robot OOX-09/HL in The Hinterlands (49.35, 37.68)" },
+    { type="ACCEPT", title="Rescue OOX-09/HL!", questId=836, coords={ x=49.35, y=37.68 }, npc = { name="HL" }, note="Homing Robot OOX-09/HL in The Hinterlands (49.35, 37.68)" },
+    { type="COMPLETE", title="Rescue OOX-09/HL!", questId=836, coords={ x=48.27, y=41.23 }, note="Escort Homing Robot OOX-09/HL to the shoreline beyond The Overlook Cliffs. You will be ambushed by 3 level 47 Savage Owlbeast and 3 Trolls, and 1 Wolf on seperate occassions (48.27, 41.23) (48.09, 44.86) (53.37, 44.67) (57.82, 50.14) (61.93, 54.05) (63.18, 56.18) (66.00, 61.13) (72.31, 66.22) (78.99, 61.33)" },
+    { type="TRAVEL", coords={ x=71.88, y=65.44 }, note="Travel to The Overlook Cliffs (71.88, 65.44)" },
+    { type="TURNIN", title="Small Murloc in a Big Pond", questId=40546, coords={ x=79.6, y=62.6 }, npc = { name="Murloc Tadpole" }, note="Murloc Tadpole in The Overlook Cliffs (79.6, 62.6)" },
+    { type="COMPLETE", title="Whiskey Slim's Lost Grog", questId=580, coords={ x=79.1, y=71.61 }, note="Collect 12 Pupellyverbos Port from the ground near the water around The Overlook Cliffs (79.10, 71.61) (79.14, 64.09) (80.79, 58.88) (82.01, 49.85)" },
+    { type="TURNIN", title="Cortello's Riddle", questId=626, coords={ x=80.82, y=46.79 }, npc = { name="Cortello's Treasure" }, note="Cortello's Treasure in The Overlook Cliffs (80.82, 46.79)" },
+    { type="COMPLETE", title="Food for Baby", questId=4297, coords={ x=76.49, y=60.7 }, note="Kill Silvermane Stalker and collect 5 Silvermane Stalker Flank (76.49, 60.70) (69.17, 54.07)" },
+    { type="TRAVEL", coords={ x=14.15, y=43.61 }, note="Travel or Hearthstone to Wildhammer Keep (14.15, 43.61)" },
+    { type="TURNIN", title="Food for Baby", questId=4297, coords={ x=14.15, y=43.61 }, npc = { name="Agnar Beastamer" }, note="Agnar Beastamer in Wildhammer Keep (14.15, 43.61)" },
+    { type="ACCEPT", title="Becoming a Parent", questId=4298, coords={ x=14.15, y=43.61 }, npc = { name="Agnar Beastamer" }, note="Agnar Beastamer in Wildhammer Keep (14.15, 43.61)" },
+    { type="TURNIN", title="Becoming a Parent", questId=4298, coords={ x=14.15, y=43.61 }, npc = { name="Agnar Beastamer" }, note="Agnar Beastamer in Wildhammer Keep (14.15, 43.61)" },
+    { type="TURNIN", title="The Altar of Zul", questId=2989, coords={ x=9.69, y=44.47 }, npc = { name="Gryphon Master Talonaxe" }, note="Gryphon Master Talonaxe in Aerie Peak, on top of Aerie Peak (9.69, 44.47)" },
+    { type="ACCEPT", title="Thadius Grimshade", questId=2990, coords={ x=9.69, y=44.47 }, npc = { name="Gryphon Master Talonaxe" }, note="Gryphon Master Talonaxe in Aerie Peak, on top of Aerie Peak (9.69, 44.47)" },
+    { type="TRAVEL", coords={ x=66.59, y=45.22 }, note="Travel to Theramore Isle (66.59, 45.22)" },
+    { type="SET_HEARTH", title="Volcanic Activity", coords={ x=66.59, y=45.22 }, npc = { name="Innkeeper Janene" }, note="Speak to Innkeeper Janene and set hearth to Theramore Isle (66.59, 45.22)" },
+    { type="TRAVEL", coords={ x=62.54, y=38.5 }, note="Travel to Ratchet (62.54, 38.50)" },
+    { type="COMPLETE", title="The Stone Circle", questId=3444, coords={ x=62.51, y=38.54 }, note="Collect Stone Circle from Marvon's chest in Ratchet (62.51, 38.54)" },
+    { type="ACCEPT", title="Volcanic Activity", questId=4502, coords={ x=62.45, y=38.72 }, npc = { name="Liv Rizzlefix" }, note="Liv Rizzlefix in Ratchet (62.45, 38.72)" },
+    { type="TRAVEL", coords={ x=28.35, y=76.35 }, note="Travel to Booty Bay (28.35, 76.35)" },
+    { type="TURNIN", title="Rescue OOX-09/HL!", questId=836, coords={ x=28.35, y=76.35 }, npc = { name="Gryphon Master Talonaxe" }, note="Gryphon Master Talonaxe in Booty Bay (28.35, 76.35)" },
+    { type="TURNIN", title="Rescue OOX-22/FE!", questId=2767, coords={ x=28.35, y=76.35 }, npc = { name="Oglethorpe Obnoticus" }, note="Oglethorpe Obnoticus in Booty Bay (28.35, 76.35)" },
+    { type="TURNIN", title="Rescue OOX-17/TN!", questId=648, coords={ x=28.36, y=76.35 }, npc = { name="Oglethorpe Obnoticus" }, note="Oglethorpe Obnoticus in Booty Bay (28.36, 76.35)" },
+    { type="TURNIN", title="An OOX of Your Own", questId=3721, coords={ x=28.36, y=76.35 }, npc = { name="Liv Rizzlefix" }, note="Liv Rizzlefix in Booty Bay (28.36, 76.35)" },
+    { type="TURNIN", title="Whiskey Slim's Lost Grog", questId=580, coords={ x=27.13, y=77.45 }, npc = { name="Whiskey Slim" }, note="Whiskey Slim in The Salty Sailor Tavern (27.13, 77.45)" },
+    { type="NOTE", note="Store Stone Circle to the bank (26.57, 76.56)", coords={ x=26.57, y=76.56 } },
+    { type="NOTE", note="Store Violet Tragan to the bank (26.57, 76.56)", coords={ x=26.57, y=76.56 } },
+    { type="NOTE", note="Tick to continue to the next guide" },
+  }
+}

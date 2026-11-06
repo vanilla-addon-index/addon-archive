@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/trashcanhands/ExplorerMap",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "trashcanhands",
+    "repo": "ExplorerMap",
+    "name": "ExplorerMap",
+    "url": "https://github.com/trashcanhands/ExplorerMap",
+    "api": "https://api.github.com/repos/trashcanhands/ExplorerMap"
+  },
+  "commit": "3f943992dafb32fbcf0cff31260dc7806db2277d",
+  "sourceFiles": {
+    ".github/ISSUE_TEMPLATE/bug_report.md": {
+      "sha256": "cc739e6d0eb5274017f8f2c743d6b7831b6a190f9e27b35c31e7e4e0a62be37f",
+      "bytes": 551
+    },
+    "ExplorerMap.lua": {
+      "sha256": "b9f3e80f50ebe469fd94d2e1fda307d43d94951e0629a20708bad45760218dcf",
+      "bytes": 39806
+    },
+    "ExplorerMap.toc": {
+      "sha256": "6f96f9c35b5a04b393f53cf40725a3a1b616a8d4bf834c4f722f29652fa130b8",
+      "bytes": 225
+    },
+    "ExplorerMap.xml": {
+      "sha256": "b07f04e236a51a5ee3edf4be2e30e0f0371e5fb3a751864c19b2dddce80d842c",
+      "bytes": 2059
+    },
+    "icon.tga": {
+      "sha256": "26b567266b611b0652175826a252e676418afd4a955ebbeb79402d1dad3557f5",
+      "bytes": 13166
+    },
+    "LICENSE": {
+      "sha256": "d573fed4a5790ced2895a3c73d07d1e43aad94e011ca05dad7d4b979e525c514",
+      "bytes": 1070
+    },
+    "README.md": {
+      "sha256": "a848fd05da7787625366257134bbdfc6d74b56c28d0a4c69f47ccbf6bde3f0e1",
+      "bytes": 1330
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

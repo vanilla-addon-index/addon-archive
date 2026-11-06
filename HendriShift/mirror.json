@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/CosminPOP/HendriShift",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "CosminPOP",
+    "repo": "HendriShift",
+    "name": "HendriShift",
+    "url": "https://github.com/CosminPOP/HendriShift",
+    "api": "https://api.github.com/repos/CosminPOP/HendriShift"
+  },
+  "commit": "22b05db2ee66e4555cce2263fc8854687a66134f",
+  "sourceFiles": {
+    "HendriShift.lua": {
+      "sha256": "687a6a1a0467110ae155888b94053a20b9e6441c4caf2b05ccbf34c4020cb97e",
+      "bytes": 2144
+    },
+    "HendriShift.toc": {
+      "sha256": "d1422594fc41cc13bc39822b8dd84709167da7e4a259ab53019446ace401ef3c",
+      "bytes": 140
+    },
+    "README.md": {
+      "sha256": "9c62f75c16b7e7ea9254280c1bce71a29d5ec67ae32e518a45e2ddb199320670",
+      "bytes": 305
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

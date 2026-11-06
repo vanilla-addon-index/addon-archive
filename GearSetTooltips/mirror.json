@@ -1,0 +1,29 @@
+{
+  "upstream": "https://octowow.st/git/olzon/GearSetTooltips",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "olzon",
+    "repo": "GearSetTooltips",
+    "name": "GearSetTooltips",
+    "url": "https://octowow.st/git/olzon/GearSetTooltips",
+    "api": "https://octowow.st/git/api/v1/repos/olzon/GearSetTooltips"
+  },
+  "commit": "fd8a8111f16d5869ff56136b424e37a4d8654972",
+  "sourceFiles": {
+    "GearSetTooltips.lua": {
+      "sha256": "7c260c643a95b3859d0fd396197f6e264b7ad463be96db83c3c114ccc97bfe48",
+      "bytes": 25705
+    },
+    "GearSetTooltips.toc": {
+      "sha256": "3027206c6238f915535bbdcb0b3369fda8c6ee53316dfda9f3bdc85817fe62f8",
+      "bytes": 240
+    },
+    "README.md": {
+      "sha256": "7371c49baa2d4c0f70fa6e11a9fcb64f183644c347af577ae55ab9329bf07986",
+      "bytes": 2564
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

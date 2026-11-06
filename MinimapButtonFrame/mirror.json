@@ -1,0 +1,154 @@
+{
+  "upstream": "https://github.com/laytya/MinimapButtonFrame-vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "MinimapButtonFrame-vanilla",
+    "name": "MinimapButtonFrame-vanilla",
+    "url": "https://github.com/laytya/MinimapButtonFrame-vanilla",
+    "api": "https://api.github.com/repos/laytya/MinimapButtonFrame-vanilla"
+  },
+  "commit": "0923f9e4128c6fcdc97df448c7665ca71bca2a18",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    ".gitignore.upstream": {
+      "sha256": "cea207e4ec711cfaa43d397dcf886592239eb5719212833ece2bc588f3d5760d",
+      "bytes": 9
+    },
+    "MinimapButtonFrame/Bindings.xml": {
+      "sha256": "7d54adda1c3f4e7ddc42542a9c7218cc356a9aae5bc9cd1ae6dfa0871a205777",
+      "bytes": 575
+    },
+    "MinimapButtonFrame/CT_Mod_fix.txt": {
+      "sha256": "ff8305902eace70b2e71f0288efb24eeb8d8fa4c78efb939dab5980f4cb8e4d6",
+      "bytes": 471
+    },
+    "MinimapButtonFrame/localization/localization-deDE.lua": {
+      "sha256": "ebd04c7657995c1ff52e868461e6e45146e51edacb945c3cd447666c788c5aab",
+      "bytes": 4543
+    },
+    "MinimapButtonFrame/localization/localization-en.lua": {
+      "sha256": "47acd92be089041e36ebbd7fac56c355fca22cdf11130e8389745991ebccfa5d",
+      "bytes": 3843
+    },
+    "MinimapButtonFrame/localization/localization-esES.lua": {
+      "sha256": "869d8408fda7e90766afd43ee5315bb6e42acd01009623f42df6e223bc6b06b3",
+      "bytes": 4424
+    },
+    "MinimapButtonFrame/localization/localization-frFR.lua": {
+      "sha256": "a593716fb7f6b9aaa0c38394f1b4017433770ae6b0b61b95f4ff3394db69d40a",
+      "bytes": 4411
+    },
+    "MinimapButtonFrame/localization/localization-koKR.lua": {
+      "sha256": "9561e6cddb2821e372d43ec074244ad038f957a1edc735bcc1755d313ec8fd85",
+      "bytes": 3976
+    },
+    "MinimapButtonFrame/localization/localization-ruRU.lua": {
+      "sha256": "2314488262dfb1aa3a924cd9d1de20169bddbfb7f4069645dfc65c796f667323",
+      "bytes": 5135
+    },
+    "MinimapButtonFrame/localization/localization-zhCN.lua": {
+      "sha256": "31f8542f5f665ff059b5f3a95c620fe540206bd2d2fc38aef93789f5ca511d63",
+      "bytes": 3867
+    },
+    "MinimapButtonFrame/localization/localization-zhTW.lua": {
+      "sha256": "0f9750b3294ddeed8f5e54b0e51389067e08a5ed5571bc2dbbb9124786089b1a",
+      "bytes": 3867
+    },
+    "MinimapButtonFrame/MBFTitan.lua": {
+      "sha256": "855da8c2f15b08732c83cf69676bbc4f9de49dc760acb3039880b1de26d9be6e",
+      "bytes": 2080
+    },
+    "MinimapButtonFrame/MBFTitan.xml": {
+      "sha256": "2d4e650813d4be3a9eaa149a5d246f41a9d400a71aafc3656e7f4087b51bce7b",
+      "bytes": 800
+    },
+    "MinimapButtonFrame/MinimapButtonFrame.lua": {
+      "sha256": "ba2217dfda18580756cb93bcd8996596116c51c6151d6d273ae96c9787207c80",
+      "bytes": 49771
+    },
+    "MinimapButtonFrame/MinimapButtonFrame.toc": {
+      "sha256": "45507bc5caf65df266ac39899663ffe73e3b7ebea1cade28cc9b09e93dbed7b6",
+      "bytes": 1420
+    },
+    "MinimapButtonFrame/MinimapButtonFrame.xml": {
+      "sha256": "66b56788f6d15da7bf0b76a168d246c296025d6ec0c45eced2ad6bb27701cb34",
+      "bytes": 25786
+    },
+    "MinimapButtonFrame/Readme.txt": {
+      "sha256": "f85d7589f283e5fdd0951fdf7123f8b9976f807bfcfa7a0e9952c09b647e2d25",
+      "bytes": 8230
+    },
+    "MinimapButtonFrameFu/libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "c1d5c648e8eb49d432d8435cf9d0446ff5d61021598d9b7aa46cf6a36770a3ae",
+      "bytes": 34384
+    },
+    "MinimapButtonFrameFu/libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "aec50568954370b65a14b9d720de2282e6b045feb4415a53578d0d1cae46cca4",
+      "bytes": 46027
+    },
+    "MinimapButtonFrameFu/libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "8222e7a75d0f0fba8030099939611732b50c28cb26b6ce6427f52fd5f2f409d8",
+      "bytes": 29927
+    },
+    "MinimapButtonFrameFu/libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "a421bd39e4cb7bcd54bb79de85c21d6e8c4c56551406972141bba26ae7d0c16d",
+      "bytes": 23871
+    },
+    "MinimapButtonFrameFu/libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "f0b829c007fd8cd897aa9059bd6c9ee27f0b9b71b9c9468b1572c1d3db4397fe",
+      "bytes": 16495
+    },
+    "MinimapButtonFrameFu/libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "6f6b55cbb836ad14dbdb7570ff469e1c689013a5414d06aa78ffa4c6f76e28b2",
+      "bytes": 47956
+    },
+    "MinimapButtonFrameFu/libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "c6a6d3f4bb4c5fb3a92998dd1f11aba137a19ada7e64afe156a895ebfa2e35b1",
+      "bytes": 88568
+    },
+    "MinimapButtonFrameFu/MBFFu.lua": {
+      "sha256": "16b54a469468bcd07a2f085b53ee603d985ec72e56a4153882844a8ddb63a350",
+      "bytes": 1404
+    },
+    "MinimapButtonFrameFu/MBFFuLocale.lua": {
+      "sha256": "f72d10a374bf9ba85b261916e3f30bffd766d2020945d866cc64893f47dea09f",
+      "bytes": 581
+    },
+    "MinimapButtonFrameFu/MinimapButtonFrameFu.toc": {
+      "sha256": "5b173a083f8b851ed5f12c3c818bf712a60c172aa543a203b83f09e4b1c63106",
+      "bytes": 742
+    },
+    "README.md": {
+      "sha256": "33a825934467f8be3f44e1b59439312792669ee72233e83c2ff9d56e35b5b907",
+      "bytes": 3036
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "183508236": {
+      "tag": "1.12",
+      "folder": "1.12--183508236",
+      "assets": {
+        "204185131": {
+          "sha256": "83ce2afe51c44aad3aa07c57fd16fa06f87edc59bc7b63f7df66ca3f69155d43",
+          "bytes": 98326,
+          "id": "204185131",
+          "name": "MinimapButtonFrame-vanilla-v1.12.zip",
+          "url": "https://github.com/laytya/MinimapButtonFrame-vanilla/releases/download/1.12/MinimapButtonFrame-vanilla-v1.12.zip",
+          "path": "releases/1.12--183508236/assets/MinimapButtonFrame-vanilla-v1.12.zip"
+        }
+      },
+      "source": {
+        "sha256": "8278cf536b80c5de354800c0667cba0533c19d181aa5018a55923ee67900531b",
+        "bytes": 86380,
+        "path": "releases/1.12--183508236/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/laytya/MinimapButtonFrame-vanilla/tarball/1.12"
+      }
+    }
+  }
+}

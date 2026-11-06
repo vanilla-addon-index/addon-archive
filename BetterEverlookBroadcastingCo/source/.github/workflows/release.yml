@@ -1,0 +1,46 @@
+name: Create Addon Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 1. Extraction de la version
+      - name: Extract Version
+        id: get_version
+        run: |
+          EXTRACTED_VERSION=$(grep "## Version:" *.toc | head -n 1 | cut -d':' -f2 | tr -d '\r\n' | xargs)
+          echo "VERSION=$EXTRACTED_VERSION" >> $GITHUB_OUTPUT
+
+      # 2. Préparation du package (on crée un dossier au nom de l'addon)
+      - name: Prepare Addon Folder
+        run: |
+          # On crée un dossier temporaire pour le zip
+          mkdir -p BetterEverlookBroadcastingCo
+          # On copie tout sauf le dossier .git et le dossier de build lui-même
+          rsync -rr . BetterEverlookBroadcastingCo --exclude ".git*" --exclude "BetterEverlookBroadcastingCo" --exclude ".claude" --exclude ".planning" --exclude "*.md"
+          # On compresse
+          zip -r BetterEverlookBroadcastingCo-v${{ steps.get_version.outputs.VERSION }}.zip BetterEverlookBroadcastingCo
+
+      # 3. Création de la Release avec le fichier ZIP
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.get_version.outputs.VERSION }}
+          name: Release v${{ steps.get_version.outputs.VERSION }}
+          files: BetterEverlookBroadcastingCo-v${{ steps.get_version.outputs.VERSION }}.zip
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

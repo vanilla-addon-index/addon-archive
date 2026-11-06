@@ -1,0 +1,61 @@
+## Interface: 11200
+## Title: ManaMinder
+## Notes: A tool to help manage mana consumables
+## Author: Grits
+## SavedVariables: ManaMinderDB
+## SavedVariablesPerCharacter: ManaMinderCharDB
+
+lib\AceLibrary\AceLibrary.lua
+lib\AceOO-2.0\AceOO-2.0.lua
+lib\AceAddon-2.0\AceAddon-2.0.lua
+lib\AceEvent-2.0\AceEvent-2.0.lua
+lib\AceDB-2.0\AceDB-2.0.lua
+lib\AceConsole-2.0\AceConsole-2.0.lua
+lib\AceLocale-2.2\AceLocale-2.2.lua
+
+src\ManaMinder.lua
+
+src\locales\enUS.lua
+src\locales\deDE.lua
+src\locales\frFR.lua
+src\locales\koKR.lua
+src\locales\ruRU.lua
+src\locales\zhCN.lua
+src\locales\zhTW.lua
+
+src\data\Consumables.lua
+src\data\Items.lua
+src\data\Sounds.lua
+src\data\Spells.lua
+src\data\Textures.lua
+src\data\Test.lua
+src\options\Defaults.lua
+
+src\util\Chat.lua
+src\util\Func.lua
+src\util\Game.lua
+src\util\Options.lua
+src\alerts\AlertFrame.lua
+src\alerts\AlertFrame.xml
+src\bars\BarFrame.lua
+src\bars\BarManager.lua
+src\bars\MainFrame.lua
+src\bars\MainFrame.xml
+src\StateManager.lua
+
+src\options\AvailableConsumableFrame.lua
+src\options\AvailableConsumableFrame.xml
+src\options\TrackedConsumableFrame.lua
+src\options\TrackedConsumableFrame.xml
+src\options\ColorPickerButton.xml
+src\options\OptionsFrame.lua
+src\options\OptionsFrameTabTemplate.xml
+src\options\OptionsFrame.xml
+src\options\AlertsOptionsFrame.lua
+src\options\AlertsOptionsFrame.xml
+src\options\BarsOptionsFrame.lua
+src\options\BarsOptionsFrame.xml
+src\options\ConsumablesOptionsFrame.lua
+src\options\ConsumablesOptionsFrame.xml
+
+src\MinimapButton.xml

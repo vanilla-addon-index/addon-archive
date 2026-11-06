@@ -1,0 +1,29 @@
+---
+name: "pre-release"
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  pre-release:
+    name: "Pre Release"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          path: "Samuel/*"
+          type: "zip"
+          filename: "Samuel.zip"
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Latest build (unstable)"
+          files: |
+            Samuel.zip

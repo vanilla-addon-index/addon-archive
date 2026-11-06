@@ -1,0 +1,47 @@
+Blizzard Modern customization
+
+Based on OEVG2/Puppeteer commit 502e151f755c99f6f74005f9fd3489ea7519e6a3.
+
+Installation:
+1. Exit WoW completely so the client can discover the new texture.
+2. Back up your existing Interface\AddOns\Puppeteer folder.
+3. Extract the Puppeteer folder in this ZIP into Interface\AddOns,
+   replacing the existing addon files. Keep your WTF saved settings.
+4. Start WoW, type /pt, and open Customize.
+5. Select the style to customize (or the default override).
+6. Set Health Bar Texture to Blizzard Modern.
+7. Set Health Bar Color to Class to use the supplied nine-class palette.
+   Enemy health bars use their separate enemy color setting.
+8. Use the Reload UI button if the changes are not yet visible.
+
+Set Power Bar Texture to Blizzard Modern to use the exact supplied colored
+resource artwork with white tint and an opaque black backing. Puppeteer's
+generic bars use the reference's Player family: mana always uses ManaClass;
+rogue/druid energy uses EnergyClass; rage, focus and other energy use the
+standard Player variants. Actual resource type determines the artwork,
+including shapeshifts. Other power textures use the normal resource colors.
+Names retain their existing colors.
+Health Numbers Color and Power Numbers Color under Customize each offer
+White. Use Style Default restores the original gold
+font color. Select your style and click Reload UI after changing settings.
+These options work with any bar texture. Health hover highlights, debuff
+indicators, missing-health and status messages keep their existing colors.
+Debuff colors, charm indicators and incoming-heal effects retain their priority.
+Choosing another texture restores the existing health class palette, including
+the Vanilla Class Colors preference. Blizzard Modern uses the exact supplied
+palette even when that preference is enabled.
+
+Assets:
+BlizzardRetailBar.tga copied unchanged from the user's supplied reference ZIP.
+Reference source: BetterBlizzFrames by Bodify, media/blizzTex/BlizzardRetailBar.tga
+https://github.com/Bodify/BetterBlizzFrames
+The supplied reference identifies this asset as All Rights Reserved,
+Copyright (c) 2023-2026 Bodify; no new redistribution rights are granted.
+Class palette copied from the supplied ModernClassColors.lua reference.
+Power assets copied byte for byte from Modern-Style-Handoff, frozen source
+commit 2933f2fce1d3ac4aa72bfc6e9b0e24bd673b78ae of
+https://github.com/OEVG2/ShaguTweaks-ClassicAPI
+See assets/textures/bars/MODERN-POWER-NOTICES.md for their attribution.
+
+Validation: Lua syntax and isolated health-color behavior checked locally.
+An in-game visual check is still required.

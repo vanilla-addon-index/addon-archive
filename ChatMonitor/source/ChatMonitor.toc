@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: Chat Monitor
+## Notes: Monitors chat channels for keywords and alerts you when found
+## Version: 1.0.0
+## SavedVariables: ChatMonitorDB
+
+ChatMonitor.lua

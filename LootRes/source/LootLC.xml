@@ -1,0 +1,621 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+    <Script file="LootLC.lua"/>
+
+    <GameTooltip name="LCTooltip" inherits="GameTooltipTemplate" parent="UIParent" hidden="true"/>
+
+    <Frame name="PlayerWantsFrameTemplate" virtual="true">
+        <Size>
+            <AbsDimension x="400" y="38"/>
+        </Size>
+        <Anchors>
+            <Anchor point="TOP">
+                <Offset>
+                    <AbsDimension x="0" y="-90"/>
+                </Offset>
+            </Anchor>
+        </Anchors>
+        <!--        Interface\Tooltips\UI-Tooltip-Background-->
+        <!--        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background"-->
+        <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background"
+                  edgeFile="Interface\Tooltips\UI-Tooltip-Border1"
+                  tile="true">
+            <EdgeSize>
+                <AbsValue val="16"/>
+            </EdgeSize>
+            <TileSize>
+                <AbsValue val="16"/>
+            </TileSize>
+            <BackgroundInsets>
+                <AbsInset left="5" right="5" top="0" bottom="0"/>
+            </BackgroundInsets>
+        </Backdrop>
+        <Layers>
+            <Layer level="OVERLAY">
+                <FontString name="$parentName" inherits="GameFontNormal" text="[Name]" hidden="true">
+                    <Anchors>
+                        <Anchor point="LEFT">
+                            <Offset>
+                                <AbsDimension x="15" y="5"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentGuild" inherits="GameFontNormalSmall" text="[Guild]">
+                    <Anchors>
+                        <Anchor point="LEFT">
+                            <Offset>
+                                <AbsDimension x="15" y="-10"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentItem" inherits="GameFontNormal" text="[Current item]">
+                    <Anchors>
+                        <Anchor point="CENTER">
+                            <Offset>
+                                <AbsDimension x="0" y="0"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parentVotes" inherits="GameFontNormal" text="[0]">
+                    <Anchors>
+                        <Anchor point="RIGHT">
+                            <Offset>
+                                <AbsDimension x="-15" y="0"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+
+            <Button name="$parentVoteButton" inherits="UIPanelButtonTemplate" text="">
+                <NormalTexture inherits=""/>
+                <PushedTexture inherits=""/>
+                <DisabledTexture inherits=""/>
+                <HighlightTexture inherits=""/>
+                <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" tile="true">
+                    <Color r="0" g="0.88" b="0.06" a="1"/>
+                </Backdrop>
+                <Size>
+                    <AbsDimension x="60" y="21"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="RIGHT">
+                        <Offset>
+                            <AbsDimension x="-35" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <Texture name="$parentCheck" file="Interface\Buttons\UI-CheckBox-Check" hidden="true">
+                            <Size>
+                                <AbsDimension x="16" y="16"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="CENTER">
+                                    <Offset>
+                                        <AbsDimension x="0" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </Texture>
+                    </Layer>
+                </Layers>
+
+                <Scripts>
+                    <OnClick>
+                            PlayerVoteButton_OnClick(this:GetID());
+                    </OnClick>
+
+                </Scripts>
+            </Button>
+
+            <Button name="$parentItemLinkButton" inherits="UIPanelButtonTemplate" text="-">
+                <NormalTexture inherits=""/>
+                <PushedTexture inherits=""/>
+                <DisabledTexture inherits=""/>
+                <HighlightTexture inherits=""/>
+                <Size>
+                    <AbsDimension x="220" y="45"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="CENTER">
+                        <Offset>
+                            <AbsDimension x="0" y="5"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                    </OnClick>
+
+                </Scripts>
+            </Button>
+
+            <Frame name="$parentNameContainer" enableMouse="true">
+                <Size>
+                    <AbsDimension x="90" y="40"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT">
+                        <Offset>
+                            <AbsDimension x="0" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Backdrop bgFile="1Interface\DialogFrame\UI-DialogBox-Background"
+                          tile="true">
+                    <EdgeSize>
+                        <AbsValue val="16"/>
+                    </EdgeSize>
+                    <TileSize>
+                        <AbsValue val="16"/>
+                    </TileSize>
+                    <BackgroundInsets>
+                        <AbsInset left="4" right="4" top="4" bottom="4"/>
+                    </BackgroundInsets>
+                </Backdrop>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <FontString name="$parentName" inherits="GameFontNormal" text="new name">
+                            <Anchors>
+                                <Anchor point="LEFT">
+                                    <Offset>
+                                        <AbsDimension x="15" y="5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+                </Frames>
+
+                <Scripts>
+                    <OnEnter>
+                            NameContainer_OnEnter(this:GetID());
+                    </OnEnter>
+                    <OnLeave>
+                            NameContainer_OnLeave();
+                    </OnLeave>
+
+                </Scripts>
+            </Frame>
+        </Frames>
+
+        <Scripts>
+        </Scripts>
+    </Frame>
+
+    <Frame name="LootLCWindow" hidden="true" toplevel="true"
+           parent="UIParent" movable="true" enableMouse="true" resizable="true">
+        <Size>
+            <AbsDimension x="400" y="200"/>
+        </Size>
+        <ResizeBounds>
+            <minResize x="400" y="200"/>
+            <maxResize x="400" y="600"/>
+        </ResizeBounds>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background"
+                  tile="true">
+            <EdgeSize>
+                <AbsValue val="16"/>
+            </EdgeSize>
+            <TileSize>
+                <AbsValue val="16"/>
+            </TileSize>
+            <BackgroundInsets>
+                <AbsInset left="4" right="4" top="4" bottom="4"/>
+            </BackgroundInsets>
+        </Backdrop>
+        <Layers>
+            <Layer level="OVERLAY">
+                <FontString name="TWRaidersFrameTitleText" inherits="GameFontNormal" text="TW Loot Council Vote">
+                    <Anchors>
+                        <Anchor point="TOP">
+                            <Offset>
+                                <AbsDimension x="0" y="-18"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+
+
+            <Button name="LCCloseButton" inherits="UIPanelButtonTemplate" text="x">
+                <NormalTexture inherits=""/>
+                <PushedTexture inherits=""/>
+                <DisabledTexture inherits=""/>
+                <HighlightTexture inherits=""/>
+                <NormalFont inherits="GameFontRed"/>
+                <Size>
+                    <AbsDimension x="21" y="21"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-6" y="-5"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                            hideLCWindow()
+                    </OnClick>
+
+                </Scripts>
+            </Button>
+
+            <Button name="LCResetVoteButton" hidden="true" inherits="UIPanelButtonTemplate" text="Reset Vote">
+                <NormalTexture inherits=""/>
+                <PushedTexture inherits=""/>
+                <DisabledTexture inherits=""/>
+                <HighlightTexture inherits=""/>
+                <NormalFont inherits="GameFontRed"/>
+                <Size>
+                    <AbsDimension x="80" y="21"/>
+                </Size>
+                <Color r="1" g="0" b="1" a="0.5"/>
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset>
+                            <AbsDimension x="3" y="-5"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                            ResetVoteButton_OnClick()
+                    </OnClick>
+
+                </Scripts>
+            </Button>
+
+            <Frame name="VotedItemFrame" hidden="false" toplevel="true">
+                <Size>
+                    <AbsDimension x="400" y="50"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOP">
+                        <Offset>
+                            <AbsDimension x="0" y="-40"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background"
+                          tile="true">
+                    <EdgeSize>
+                        <AbsValue val="16"/>
+                    </EdgeSize>
+                    <TileSize>
+                        <AbsValue val="16"/>
+                    </TileSize>
+                    <BackgroundInsets>
+                        <AbsInset left="4" right="4" top="4" bottom="4"/>
+                    </BackgroundInsets>
+                </Backdrop>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <FontString name="VotedItemText" inherits="GameFontNormal" text="">
+                            <Anchors>
+                                <Anchor point="CENTER">
+                                    <Offset>
+                                        <AbsDimension x="0" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+
+                    <Button name="itemLinkButton" inherits="UIPanelButtonTemplate" text="-">
+                        <NormalTexture inherits=""/>
+                        <PushedTexture inherits=""/>
+                        <DisabledTexture inherits=""/>
+                        <HighlightTexture inherits=""/>
+                        <Size>
+                            <AbsDimension x="400" y="45"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOP">
+                                <Offset>
+                                    <AbsDimension x="0" y="0"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                            </OnClick>
+
+                        </Scripts>
+                    </Button>
+
+                </Frames>
+
+                <Scripts>
+                </Scripts>
+            </Frame>
+
+            <Frame name="PeoplWhoVotedFrame" hidden="false" toplevel="true">
+                <Size>
+                    <AbsDimension x="400" y="40"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="BOTTOM">
+                        <Offset>
+                            <AbsDimension x="0" y="40"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background"
+                          tile="true">
+                    <EdgeSize>
+                        <AbsValue val="16"/>
+                    </EdgeSize>
+                    <TileSize>
+                        <AbsValue val="16"/>
+                    </TileSize>
+                    <BackgroundInsets>
+                        <AbsInset left="4" right="4" top="4" bottom="4"/>
+                    </BackgroundInsets>
+                </Backdrop>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <FontString name="PeopleWhoVotedNamesTitle" inherits="GameFontNormalSmall" text="Voted">
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="5" y="-5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                    <Layer level="OVERLAY">
+                        <FontString name="PeopleWhoVotedNames" inherits="GameFontNormal" text="">
+                            <Anchors>
+                                <Anchor point="TOP">
+                                    <Offset>
+                                        <AbsDimension x="0" y="-8"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+                </Frames>
+
+                <Scripts>
+                </Scripts>
+            </Frame>
+
+            <Frame name="MLToWinnerButtonFrame" hidden="true" toplevel="true">
+                <Size>
+                    <AbsDimension x="400" y="40"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="BOTTOM">
+                        <Offset>
+                            <AbsDimension x="0" y="-35"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background"
+                          tile="true">
+                    <EdgeSize>
+                        <AbsValue val="16"/>
+                    </EdgeSize>
+                    <TileSize>
+                        <AbsValue val="16"/>
+                    </TileSize>
+                    <BackgroundInsets>
+                        <AbsInset left="4" right="4" top="4" bottom="4"/>
+                    </BackgroundInsets>
+                </Backdrop>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <Texture name="LCMLIcon" file="Interface\GroupFrame\UI-Group-MasterLooter">
+                            <Size>
+                                <AbsDimension x="16" y="16"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset>
+                                        <AbsDimension x="10" y="-10"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </Texture>
+                    </Layer>
+                </Layers>
+                <Frames>
+
+                    <Button name="MLToWinnerButton" inherits="UIPanelButtonTemplate"
+                            text="Waiting for votes...">
+                        <NormalTexture inherits=""/>
+                        <PushedTexture inherits=""/>
+                        <DisabledTexture inherits=""/>
+                        <HighlightTexture inherits=""/>
+                        <NormalFont inherits="GameFontWhite"/>
+                        <Size>
+                            <AbsDimension x="400" y="35"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOP">
+                                <Offset>
+                                    <AbsDimension x="0" y="-3"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Scripts>
+                            <OnClick>
+                                    assignBWLLoot()
+                            </OnClick>
+
+                        </Scripts>
+                    </Button>
+
+                </Frames>
+
+                <Scripts>
+                </Scripts>
+            </Frame>
+
+            <Frame name="VotingOpenTimerFrame" hidden="false" toplevel="true">
+                <Size>
+                    <AbsDimension x="400" y="40"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="BOTTOM">
+                        <Offset>
+                            <AbsDimension x="0" y="5"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background"
+                          tile="true">
+                    <EdgeSize>
+                        <AbsValue val="16"/>
+                    </EdgeSize>
+                    <TileSize>
+                        <AbsValue val="16"/>
+                    </TileSize>
+                    <BackgroundInsets>
+                        <AbsInset left="4" right="4" top="4" bottom="4"/>
+                    </BackgroundInsets>
+                </Backdrop>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <FontString name="VotingOpenTimerText" inherits="GameFontNormal" text="-">
+                            <Anchors>
+                                <Anchor point="CENTER">
+                                    <Offset>
+                                        <AbsDimension x="0" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+                </Frames>
+
+                <Scripts>
+                </Scripts>
+            </Frame>
+
+            <Frame name="LootHistoryFrame" toplevel="true" hidden="true">
+                <Size>
+                    <AbsDimension x="200" y="200"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset>
+                            <AbsDimension x="-200" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background"
+                          tile="true">
+                    <EdgeSize>
+                        <AbsValue val="16"/>
+                    </EdgeSize>
+                    <TileSize>
+                        <AbsValue val="16"/>
+                    </TileSize>
+                    <BackgroundInsets>
+                        <AbsInset left="4" right="4" top="4" bottom="4"/>
+                    </BackgroundInsets>
+                </Backdrop>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <FontString name="$parentTitle" inherits="GameFontNormal" text="Xerrbear's Loot History">
+                            <Anchors>
+                                <Anchor point="TOPRIGHT">
+                                    <Offset>
+                                        <AbsDimension x="-15" y="-15"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                        <FontString name="$parentItems" inherits="GameFontNormalSmall" text="items"
+                                    justifyH="RIGHT">
+                            <Anchors>
+                                <Anchor point="TOPRIGHT">
+                                    <Offset>
+                                        <AbsDimension x="-15" y="-30"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+                </Frames>
+
+                <Scripts>
+                </Scripts>
+            </Frame>
+
+            <Button name="LCResizeButton">
+                <NormalTexture file="Interface\AddOns\LootRes\ResizeGrip"/>
+                <HighlightTexture file="Interface\AddOns\LootRes\ResizeGrip" alphaMode="ADD"/>
+                <Size>
+                    <AbsDimension x="16" y="16"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="BOTTOMRIGHT">
+                        <Offset>
+                            <AbsDimension x="0" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnMouseDown>
+                            LootLCWindow:StartSizing("BOTTOMRIGHT")
+                            LootLCWindow:SetUserPlaced(true)
+                    </OnMouseDown>
+                    <OnMouseUp>
+                            LootLCWindow:StopMovingOrSizing()
+                    </OnMouseUp>
+                    <OnClick>
+                    </OnClick>
+
+                </Scripts>
+            </Button>
+
+
+        </Frames>
+
+        <Scripts>
+            <OnLoad>
+                    this:RegisterForDrag("LeftButton");
+                    this:SetMovable(1);
+                    this:SetUserPlaced(true);
+            </OnLoad>
+            <OnDragStart>
+                    this:StartMoving();
+                    this.isMoving = true;
+            </OnDragStart>
+            <OnDragStop>
+                    this:StopMovingOrSizing();
+                    this.isMoving = false;
+                    --                    SaveFramePosition(this)
+            </OnDragStop>
+        </Scripts>
+    </Frame>
+
+
+</Ui>

@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/EgonXY/MassDisenchant",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EgonXY",
+    "repo": "MassDisenchant",
+    "name": "MassDisenchant",
+    "url": "https://github.com/EgonXY/MassDisenchant",
+    "api": "https://api.github.com/repos/EgonXY/MassDisenchant"
+  },
+  "commit": "2eb77ffe8906ac635e35559dde009071c672de4d",
+  "sourceFiles": {
+    "MassDisenchant.lua": {
+      "sha256": "614932070caa994faf7ffff092e90e47bbbeae71ac93328dbe721a0a824823a4",
+      "bytes": 30392
+    },
+    "MassDisenchant.toc": {
+      "sha256": "cf99cdf491dd5a9fc65d1b71bdd9372a2bb738b41ddd8a35b37bd77d2c8cfd4f",
+      "bytes": 215
+    },
+    "README.md": {
+      "sha256": "aaeb51f651514f04bf085fb982ceab2cad5bd27669291f6b257d96adb818bab5",
+      "bytes": 1829
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

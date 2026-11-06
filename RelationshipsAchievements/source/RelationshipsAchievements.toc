@@ -1,0 +1,18 @@
+## Interface: 11200
+## Title: Relationships Achievements
+## Notes: WotLK-style achievement system for OctoWoW
+## Author: Relationship
+## Version: 1.1
+## SavedVariables: RelationshipsAchievementsDB
+## SavedVariablesPerCharacter: RelationshipsAchievementsCharDB
+## DefaultState: Enabled
+## OptionalDeps:
+
+Database.lua
+Core.lua
+Toast.lua
+Detail.lua
+UI.lua
+Minimap.lua
+Events.lua
+Bindings.xml

@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/akzkak/ShardCapPlus",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "akzkak",
+    "repo": "ShardCapPlus",
+    "name": "ShardCapPlus",
+    "url": "https://github.com/akzkak/ShardCapPlus",
+    "api": "https://api.github.com/repos/akzkak/ShardCapPlus"
+  },
+  "commit": "d352a79783f8e6d1a99ac122e7226de4e345b677",
+  "sourceFiles": {
+    "readme.md": {
+      "sha256": "2723544e5f6f326615110b5feb78c11a52de00556be4d47a862d65f0414d3a59",
+      "bytes": 1060
+    },
+    "ShardCapPlus.lua": {
+      "sha256": "685561775a5f367a5747b99c08cf89334eb5ddbec6cb27447fb2865eac4a48ae",
+      "bytes": 5656
+    },
+    "ShardCapPlus.toc": {
+      "sha256": "4bbff8d5f69a67a7bf35086bbc9c9911bfae23af59480d1d1a4483c3469fc785",
+      "bytes": 282
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

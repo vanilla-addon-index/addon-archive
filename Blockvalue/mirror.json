@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/sondli/blockvalue",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "sondli",
+    "repo": "blockvalue",
+    "name": "blockvalue",
+    "url": "https://github.com/sondli/blockvalue",
+    "api": "https://api.github.com/repos/sondli/blockvalue"
+  },
+  "commit": "7f65aed87e78ab0c85640cb909472e78c2a0e245",
+  "sourceFiles": {
+    "blockvalue.lua": {
+      "sha256": "5b42923397097de0c0219b310a51ddc3b87566ebd67cd9b3ce24e9c8727629bf",
+      "bytes": 3689
+    },
+    "blockvalue.toc": {
+      "sha256": "cbc96ad82b50568e71aa4e43148f1fc652a6cbce6a9da29ee8218e0d90962448",
+      "bytes": 124
+    },
+    "README.md": {
+      "sha256": "3f24fbce6b4777da5cf40ced12d6e58dfa76f9809e11b29b21a41a0499c3269f",
+      "bytes": 273
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "183093671": {
+      "tag": "1.0.0",
+      "folder": "1.0.0--183093671",
+      "assets": {},
+      "source": {
+        "sha256": "cca4b45ebae875db505636bccfc4dc31cf7bb02e6eefc92a9f9967a572765749",
+        "bytes": 1605,
+        "path": "releases/1.0.0--183093671/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/sondli/blockvalue/tarball/1.0.0"
+      }
+    }
+  }
+}

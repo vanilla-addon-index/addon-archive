@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/TrangOul/GlobalFriendsList",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "TrangOul",
+    "repo": "GlobalFriendsList",
+    "name": "GlobalFriendsList",
+    "url": "https://github.com/TrangOul/GlobalFriendsList",
+    "api": "https://api.github.com/repos/TrangOul/GlobalFriendsList"
+  },
+  "commit": "00c2d8234097f0c72326820e131190d68491ea27",
+  "sourceFiles": {
+    "GlobalFriendsList.lua": {
+      "sha256": "41f3beed32a5e8ffd5db0240653294ea1f17f19000ab657ecec68f52a9f1076d",
+      "bytes": 5896
+    },
+    "GlobalFriendsList.toc": {
+      "sha256": "45983aa25893b0e7b3a937afb467287ef9c61335cd0d1a10487eb24dd454b89f",
+      "bytes": 425
+    },
+    "README.md": {
+      "sha256": "3a7b67958b27e781269d2179bc0f4918c6c931351830e4691c6164f7f887fdc4",
+      "bytes": 528
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

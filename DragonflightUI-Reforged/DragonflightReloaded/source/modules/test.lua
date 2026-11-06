@@ -1,0 +1,2 @@
+-- ---@diagnostic disable: deprecated, inject-field, undefined-field
+-- setfenv(1, DFRL:GetEnvironment())

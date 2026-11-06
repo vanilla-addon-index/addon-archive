@@ -1,0 +1,20 @@
+package-as: KillTrack
+
+externals:
+    libs/LibStub:
+        url: https://repos.wowace.com/wow/libstub/trunk
+        tag: latest
+    libs/CallbackHandler-1.0:
+        url: https://repos.wowace.com/wow/callbackhandler/trunk/CallbackHandler-1.0
+        tag: latest
+    libs/LibDBIcon-1.0:
+        url: https://repos.wowace.com/wow/libdbicon-1-0/trunk
+        tag: latest
+
+tools-used:
+    - libdatabroker-1-1
+
+license-output: COPYING
+
+enable-toc-creation: yes
+enable-nolib-creation: yes

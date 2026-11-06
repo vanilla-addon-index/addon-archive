@@ -1,0 +1,69 @@
+{
+  "upstream": "https://github.com/Redbu11dev/CoolHealthBar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Redbu11dev",
+    "repo": "CoolHealthBar",
+    "name": "CoolHealthBar",
+    "url": "https://github.com/Redbu11dev/CoolHealthBar",
+    "api": "https://api.github.com/repos/Redbu11dev/CoolHealthBar"
+  },
+  "commit": "f8146269b5b09954b0fa356dbd9c0b4a194844b5",
+  "sourceFiles": {
+    "CoolHealthBar.lua": {
+      "sha256": "53b912edaf832652b27912922161cc2756099e9e2e0b6e45c62e737bff8fbaea",
+      "bytes": 51178
+    },
+    "CoolHealthBar.toc": {
+      "sha256": "0e21a9b89cd6fe889cda006fc316ea6448731e561b573113c2071fc78a36d714",
+      "bytes": 225
+    },
+    "fonts/francois.ttf": {
+      "sha256": "093de20e0a2ac2efe756cbd282e57f1336c119f2a23a56b95376d342f82a5f3b",
+      "bytes": 60580
+    },
+    "img/statusbar/XPerl_StatusBar.blp": {
+      "sha256": "3fc6d13f8b7d7c16f7bd1167e6af005af3361c40ba036adbc7eb9d33097afb8a",
+      "bytes": 12196
+    },
+    "img/statusbar/XPerl_StatusBar2.blp": {
+      "sha256": "f2c8f70a3f8078e1e675591a5c7dfd2956b1b6c0aba9e2364bcc6a0852fca17d",
+      "bytes": 12196
+    },
+    "img/statusbar/XPerl_StatusBar3.blp": {
+      "sha256": "e58de5a60e9c68d1a15bc869ffb77131f7179d02b2cca29a86d7808cc6cabd08",
+      "bytes": 12196
+    },
+    "img/statusbar/XPerl_StatusBar4.blp": {
+      "sha256": "47e519a693cc9064013cd0838af08c42c37c427037fd1b94c6a3d05c0234632b",
+      "bytes": 6660
+    },
+    "img/statusbar/XPerl_StatusBar5.blp": {
+      "sha256": "bdf529786f74a58d26ed3f43f40a7bc1b40ee62e7e577ffe9e9879a28b97826b",
+      "bytes": 44964
+    },
+    "img/statusbar/XPerl_StatusBar6.blp": {
+      "sha256": "393c898b678535602c667c0d821c1417a88f094806b52ae11e4b50c6b628a1c8",
+      "bytes": 12196
+    },
+    "img/statusbar/XPerl_StatusBar7.blp": {
+      "sha256": "db7d7fec8b0df43d8bb87db08736a4529437a2bb6e0f13a68749b91fdd1fa439",
+      "bytes": 44964
+    },
+    "img/statusbar/XPerl_StatusBar8.blp": {
+      "sha256": "9eb3870f5de1c470e6da51c725e3ca9139357ac31949d8c2b5522ff973279e2b",
+      "bytes": 12196
+    },
+    "img/sword_256.tga": {
+      "sha256": "235431f7a17fcbf75c79d4ec535139a70f52a559491b8483ad8e890ce44760d3",
+      "bytes": 262162
+    },
+    "README.md": {
+      "sha256": "040be917163cd48c9034ccc940cfeaf47b1d0035e1cd66d78e79dc1b72c3e0a9",
+      "bytes": 492
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

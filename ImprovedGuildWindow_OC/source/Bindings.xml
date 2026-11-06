@@ -1,0 +1,5 @@
+<Bindings>
+    <Binding name="IMPROVEDGUILDWINDOW_TOGGLE" header="IMPROVEDGUILDWINDOW">
+        ImprovedGuildWindow_Toggle()
+    </Binding>
+</Bindings>

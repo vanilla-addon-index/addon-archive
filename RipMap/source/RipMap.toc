@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: RipMap
+## Author: DaniilSokolyuk
+## Notes: Displays death heatmap on maps with danger indicator
+## Version: 2.0
+
+Data\heatmap.lua
+Data\zone_ids.lua
+DataLoader.lua
+HeatmapRenderer.lua
+DiePlease.lua

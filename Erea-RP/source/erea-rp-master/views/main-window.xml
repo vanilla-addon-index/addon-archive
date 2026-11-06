@@ -1,0 +1,327 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+  <!-- Main window frame for RP Master -->
+  <Frame name="EreaRpMasterMainWindow" parent="UIParent" frameStrata="HIGH" enableMouse="true" movable="true" resizable="true" hidden="true">
+    <Size>
+      <AbsDimension x="700" y="600"/>
+    </Size>
+    <Anchors>
+      <Anchor point="CENTER"/>
+    </Anchors>
+    <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+              edgeFile="Interface\DialogFrame\UI-DialogBox-Border"
+              tile="true">
+      <EdgeSize>
+        <AbsValue val="32"/>
+      </EdgeSize>
+      <TileSize>
+        <AbsValue val="32"/>
+      </TileSize>
+      <BackgroundInsets>
+        <AbsInset left="11" right="12" top="12" bottom="11"/>
+      </BackgroundInsets>
+    </Backdrop>
+
+    <Layers>
+      <Layer level="OVERLAY">
+        <!-- Title -->
+        <FontString name="$parentTitle" inherits="GameFontNormalLarge">
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset>
+                <AbsDimension x="0" y="-20"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+
+    <Frames>
+      <!-- Draggable title bar -->
+      <Frame name="$parentTitleBar" enableMouse="true">
+        <Size>
+          <AbsDimension x="0" y="30"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="10" y="-10"/>
+            </Offset>
+          </Anchor>
+          <Anchor point="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="-30" y="-10"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </Frame>
+
+      <!-- Close button -->
+      <Button name="$parentCloseButton" inherits="UIPanelCloseButton">
+        <Anchors>
+          <Anchor point="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="-5" y="-5"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+
+      <!-- Tab bar container -->
+      <Frame name="$parentTabBar">
+        <Size>
+          <AbsDimension x="0" y="30"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="15" y="-50"/>
+            </Offset>
+          </Anchor>
+          <Anchor point="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="-15" y="-50"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+
+        <Frames>
+          <!-- Items tab -->
+          <Button name="$parentTabItems" enableMouse="true">
+            <Size>
+              <AbsDimension x="100" y="28"/>
+            </Size>
+            <Anchors>
+              <Anchor point="LEFT">
+                <Offset>
+                  <AbsDimension x="0" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                      edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                      tile="true">
+              <EdgeSize>
+                <AbsValue val="12"/>
+              </EdgeSize>
+              <TileSize>
+                <AbsValue val="16"/>
+              </TileSize>
+              <BackgroundInsets>
+                <AbsInset left="3" right="3" top="3" bottom="3"/>
+              </BackgroundInsets>
+            </Backdrop>
+            <Layers>
+              <Layer level="OVERLAY">
+                <FontString name="$parentLabel" inherits="GameFontNormalSmall" text="Items">
+                  <Anchors>
+                    <Anchor point="CENTER"/>
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                this:SetBackdropColor(0.1, 0.1, 0.1, 1)
+                this:SetBackdropBorderColor(0.6, 0.6, 0.6, 1)
+              </OnLoad>
+              <OnClick>
+                EreaRpMaster_SwitchTab("items")
+              </OnClick>
+            </Scripts>
+          </Button>
+
+          <!-- States tab -->
+          <Button name="$parentTabStates" enableMouse="true">
+            <Size>
+              <AbsDimension x="100" y="28"/>
+            </Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="$parentTabItems" relativePoint="RIGHT">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                      edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                      tile="true">
+              <EdgeSize>
+                <AbsValue val="12"/>
+              </EdgeSize>
+              <TileSize>
+                <AbsValue val="16"/>
+              </TileSize>
+              <BackgroundInsets>
+                <AbsInset left="3" right="3" top="3" bottom="3"/>
+              </BackgroundInsets>
+            </Backdrop>
+            <Layers>
+              <Layer level="OVERLAY">
+                <FontString name="$parentLabel" inherits="GameFontNormalSmall" text="States">
+                  <Anchors>
+                    <Anchor point="CENTER"/>
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                this:SetBackdropColor(0.1, 0.1, 0.1, 1)
+                this:SetBackdropBorderColor(0.6, 0.6, 0.6, 1)
+              </OnLoad>
+              <OnClick>
+                EreaRpMaster_SwitchTab("states")
+              </OnClick>
+            </Scripts>
+          </Button>
+
+          <!-- Monitor tab -->
+          <Button name="$parentTabMonitor" enableMouse="true">
+            <Size>
+              <AbsDimension x="100" y="28"/>
+            </Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="$parentTabStates" relativePoint="RIGHT">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                      edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                      tile="true">
+              <EdgeSize>
+                <AbsValue val="12"/>
+              </EdgeSize>
+              <TileSize>
+                <AbsValue val="16"/>
+              </TileSize>
+              <BackgroundInsets>
+                <AbsInset left="3" right="3" top="3" bottom="3"/>
+              </BackgroundInsets>
+            </Backdrop>
+            <Layers>
+              <Layer level="OVERLAY">
+                <FontString name="$parentLabel" inherits="GameFontNormalSmall" text="Monitor">
+                  <Anchors>
+                    <Anchor point="CENTER"/>
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                this:SetBackdropColor(0.1, 0.1, 0.1, 1)
+                this:SetBackdropBorderColor(0.6, 0.6, 0.6, 1)
+              </OnLoad>
+              <OnClick>
+                EreaRpMaster_SwitchTab("monitor")
+              </OnClick>
+            </Scripts>
+          </Button>
+
+          <!-- Scripts tab -->
+          <Button name="$parentTabScripts" enableMouse="true">
+            <Size>
+              <AbsDimension x="100" y="28"/>
+            </Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="$parentTabMonitor" relativePoint="RIGHT">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                      edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                      tile="true">
+              <EdgeSize>
+                <AbsValue val="12"/>
+              </EdgeSize>
+              <TileSize>
+                <AbsValue val="16"/>
+              </TileSize>
+              <BackgroundInsets>
+                <AbsInset left="3" right="3" top="3" bottom="3"/>
+              </BackgroundInsets>
+            </Backdrop>
+            <Layers>
+              <Layer level="OVERLAY">
+                <FontString name="$parentLabel" inherits="GameFontNormalSmall" text="Scripts">
+                  <Anchors>
+                    <Anchor point="CENTER"/>
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                this:SetBackdropColor(0.1, 0.1, 0.1, 1)
+                this:SetBackdropBorderColor(0.6, 0.6, 0.6, 1)
+              </OnLoad>
+              <OnClick>
+                EreaRpMaster_SwitchTab("scripts")
+              </OnClick>
+            </Scripts>
+          </Button>
+        </Frames>
+      </Frame>
+
+      <!-- Content container (active tab content goes here) -->
+      <Frame name="$parentContentFrame">
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="15" y="-85"/>
+            </Offset>
+          </Anchor>
+          <Anchor point="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="-15" y="15"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                  edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+          <EdgeSize><AbsValue val="12"/></EdgeSize>
+          <TileSize><AbsValue val="16"/></TileSize>
+          <BackgroundInsets><AbsInset left="3" right="3" top="3" bottom="3"/></BackgroundInsets>
+        </Backdrop>
+        <Scripts>
+          <OnLoad>
+            this:SetBackdropColor(0.05, 0.05, 0.05, 1)
+            this:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
+          </OnLoad>
+        </Scripts>
+      </Frame>
+
+      <!-- Resize grip (bottom-right corner) -->
+      <Button name="$parentResizeButton" enableMouse="true">
+        <Size>
+          <AbsDimension x="20" y="20"/>
+        </Size>
+        <Anchors>
+          <Anchor point="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="-7" y="7"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <NormalTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Up" alpha="0.3"/>
+        <HighlightTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Highlight"/>
+        <PushedTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Down"/>
+      </Button>
+    </Frames>
+
+    <Scripts>
+      <OnLoad>
+        this:SetBackdropColor(0, 0, 0, 1)
+        this:SetMinResize(500, 400)
+        this:SetMaxResize(1200, 900)
+      </OnLoad>
+    </Scripts>
+  </Frame>
+
+</Ui>

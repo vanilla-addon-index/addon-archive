@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/mijkrofl/MijksRaidAssist",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "mijkrofl",
+    "repo": "MijksRaidAssist",
+    "name": "MijksRaidAssist",
+    "url": "https://github.com/mijkrofl/MijksRaidAssist",
+    "api": "https://api.github.com/repos/mijkrofl/MijksRaidAssist"
+  },
+  "commit": "a556201bada046e4c4d072d08baf1a638d10710e",
+  "sourceFiles": {
+    "MijksRaidAssist.lua": {
+      "sha256": "2440727441c5611d9740460e4f5df91260616b70d840bf24e934f8286f3f704d",
+      "bytes": 26835
+    },
+    "MijksRaidAssist.toc": {
+      "sha256": "b1c0f57f6ebbe4f775629eddc0461cf632874f9c0fb69f07cbd7dab08caa5fed",
+      "bytes": 193
+    },
+    "MijksRaidAssist.zip": {
+      "sha256": "be01cde6b189be6fbc923d9c3a10c6e2cba77690cc9f6345859ff0687a02a1cb",
+      "bytes": 7781
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

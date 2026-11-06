@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: MasterLootByClass |cffc79c6e-Spit-|r
+## Author: Otari98
+## Version: 1.4
+## Notes: Replacement of the default master loot dropdown menu
+MasterLootByClass.lua

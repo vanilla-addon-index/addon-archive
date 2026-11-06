@@ -1,0 +1,3 @@
+QuestieOcto.RuntimeDatabaseSource={["schemaVersion"]=2,["repository"]="https://github.com/FrancisEgan/OctoQuestDatabase.git",["revision"]="sha256:3e3a787de08525f0aa8853212141a9517ddd30b1734b453fc5d1f4011ddeefaf"}
+QuestieOcto.RuntimePFDB={["areatrigger"]={["data"]={}},["items"]={["data"]={},["enUS"]={}},["objects"]={["data"]={},["enUS"]={}},["quests"]={["data"]={},["enUS"]={}},["quests-itemreq"]={["data"]={}},["refloot"]={["data"]={}},["units"]={["data"]={},["enUS"]={}},["zones"]={["data"]={},["enUS"]={}},["professions"]={["enUS"]={}},["meta"]={},["minimap"]={}}
+QuestieOcto.RuntimePFDB["octo-compiled-runtime"]=true

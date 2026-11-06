@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "Lua.runtime.version": "Lua 5.1",
+  "Lua.diagnostics.globals": [
+    "vim",
+    "utf8",
+    "_",
+    "RollForDb",
+    "RollForCharDb",
+    "LibStub"
+  ],
+  "Lua.workspace.checkThirdParty": false,
+  "Lua.workspace.ignoreDir": [],
+  "Lua.hint.enable": true,
+  "Lua.workspace.library": [
+    "../../RollFor/src"
+  ],
+  "Lua.diagnostics.disable": []
+}

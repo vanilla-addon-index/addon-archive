@@ -1,0 +1,85 @@
+{
+  "upstream": "https://github.com/graved/QuestProgressShare",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "graved",
+    "repo": "QuestProgressShare",
+    "name": "QuestProgressShare",
+    "url": "https://github.com/graved/QuestProgressShare",
+    "api": "https://api.github.com/repos/graved/QuestProgressShare"
+  },
+  "commit": "afbc780d394dc68131fb1244fe322f149c3ba356",
+  "sourceFiles": {
+    "ChatMessage.lua": {
+      "sha256": "94549bb23ab7667212a3d1caf8b94a76388c9c4da57afaae14345d4f101f0c89",
+      "bytes": 5288
+    },
+    "Commands.lua": {
+      "sha256": "1963d3ef01a60785984a40c66e249526b7e705a32498126fc900c25b14b8b660",
+      "bytes": 447
+    },
+    "Config.lua": {
+      "sha256": "94fc9a7ec04772fddd26131efc28d874980e3a47710bb57ea28c0bc8ca412302",
+      "bytes": 12909
+    },
+    "Core.lua": {
+      "sha256": "baa9f79e8712c8832590e81b0c4c515b8cfff46456f5068cf06759936cd7b9b4",
+      "bytes": 57309
+    },
+    "img/logo.tga": {
+      "sha256": "63731925a993fc061e2c33a6906ace73c4b44275b7f971d5ee9ad32fcc63582b",
+      "bytes": 4147
+    },
+    "libs/ChatThrottleLib.lua": {
+      "sha256": "4c6437f5a2c7a9c29d98d8be776b801bf51f99e40cb67b4087f5117158ad8637",
+      "bytes": 14914
+    },
+    "libs/StringLib.lua": {
+      "sha256": "f7738b4044bd6f053b627eca0ea45477db1a5ed605034c303e8d585b41b5df4c",
+      "bytes": 13606
+    },
+    "LICENSE": {
+      "sha256": "eed2ce3ab69c9f8750b773de294daa0cabd16f168d60dec748991c0bf81e6388",
+      "bytes": 1083
+    },
+    "Main.lua": {
+      "sha256": "d0f3edceef78ddad7099d40a6900e369cc5c5dc1153aa8361d8275638729000e",
+      "bytes": 293
+    },
+    "Minimap.lua": {
+      "sha256": "59151bb9bfa26e4b82f1c33e783be12a8d0781fd103792f4a79482bf8717981b",
+      "bytes": 2094
+    },
+    "QuestProgressShare.toc": {
+      "sha256": "cc753f1e11d48ea19d0a7b7c76436a453322b9316d6fc91f503a90209278004e",
+      "bytes": 599
+    },
+    "README.md": {
+      "sha256": "9500c88b9c3405679f9ac58f3fde217f2defaf17f3166197b105ba1eb85282af",
+      "bytes": 6364
+    },
+    "Tooltip.lua": {
+      "sha256": "b34c7c551980b04f8ecb1cf218d94918a7262e95a512cc8a7574e67ef66b99e3",
+      "bytes": 47757
+    },
+    "util/QuestStringHelpers.lua": {
+      "sha256": "312bd8fc3e354973072d0fb822c29a86c5a5f79f5695b3cd11b478c893ef9d4c",
+      "bytes": 5296
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "290546328": {
+      "tag": "1.6.0",
+      "folder": "1.6.0--290546328",
+      "assets": {},
+      "source": {
+        "sha256": "691e0572cd0ae3af76c8dbe6ee93d41aece8f2d1c0d7373ee071428db32bd1d8",
+        "bytes": 40656,
+        "path": "releases/1.6.0--290546328/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/graved/QuestProgressShare/tarball/1.6.0"
+      }
+    }
+  }
+}

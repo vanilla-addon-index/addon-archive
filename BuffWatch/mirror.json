@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/shkarlsson/BuffWatch",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shkarlsson",
+    "repo": "BuffWatch",
+    "name": "BuffWatch",
+    "url": "https://github.com/shkarlsson/BuffWatch",
+    "api": "https://api.github.com/repos/shkarlsson/BuffWatch"
+  },
+  "commit": "926f3924e1860f0b7f95458194fb65dc23350e28",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "5a6a8181df05a62f96271521ff473ed9b8cb3a96aab4cd7a5a0c4dbda56d018d",
+      "bytes": 218
+    },
+    "BuffWatch.lua": {
+      "sha256": "06e556ed7bde09111ccde3fc3cef5fe5552785975bd26e7d2b28d2f564c154ee",
+      "bytes": 57466
+    },
+    "BuffWatch.toc": {
+      "sha256": "333595c1a83a3a032229ea35fa7f179bb28a4c0138c61adad670f4ff6555b92f",
+      "bytes": 284
+    },
+    "BuffWatch.xml": {
+      "sha256": "e16398b371c5b2e427bcbdaeb14ea74ed795df69350e3f4da8f94adde4a9f129",
+      "bytes": 23360
+    },
+    "BuffWatchOptions.lua": {
+      "sha256": "79a565dc257c092a135186f81a2408a79edd0ba417ead6f4f4a0c8e9dde22f90",
+      "bytes": 3374
+    },
+    "BuffWatchOptions.xml": {
+      "sha256": "654cbe157d92744c82ad6edc957a275a81283dc8d8c01fad657ee919b420bb4d",
+      "bytes": 26834
+    },
+    "MinimizeButton-Down.tga": {
+      "sha256": "ac295083f3b6d23ba03361794a9c1c58a68abec4267dafdf9995cda2a7756799",
+      "bytes": 4140
+    },
+    "MinimizeButton-Up.tga": {
+      "sha256": "80ca60dd78b8b82c9b9cb4189a6b619f1c26a519b33cfbc5f542cb4d1631f5c0",
+      "bytes": 4140
+    },
+    "README.md": {
+      "sha256": "6e1d92a1c2b160558e20c569d85ad187eb8804419213adf0edc7a07b7ba1ad83",
+      "bytes": 7335
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

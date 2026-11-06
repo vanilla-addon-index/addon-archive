@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/Pokerbhind/RoguePoker",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Pokerbhind",
+    "repo": "RoguePoker",
+    "name": "RoguePoker",
+    "url": "https://github.com/Pokerbhind/RoguePoker",
+    "api": "https://api.github.com/repos/Pokerbhind/RoguePoker"
+  },
+  "commit": "a7786ed09c548d4930d0d64715591a2c6c33ef97",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "README.md": {
+      "sha256": "6d0f2ec0e56dc13cb310ca6a12ff8a3c6aa99db0cda0b4728925d4337b66044b",
+      "bytes": 799
+    },
+    "RoguePoker.lua": {
+      "sha256": "90314db680d764a6ac715de4ba3fdab0baf295d4c9474015ff7eda54b3e74c26",
+      "bytes": 73086
+    },
+    "RoguePoker.toc": {
+      "sha256": "56bfcb9582a4fb0e4ed78fcf8c878728b50dd7304e372af58bb899b909213944",
+      "bytes": 324
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "300293922": {
+      "tag": "v1.2.1",
+      "folder": "v1.2.1--300293922",
+      "assets": {},
+      "source": {
+        "sha256": "3b82cbdd380e3f7ff1e806663897bb77c50890ed1b1a56302e1196d8f306a2f9",
+        "bytes": 28359,
+        "path": "releases/v1.2.1--300293922/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Pokerbhind/RoguePoker/tarball/v1.2.1"
+      }
+    }
+  }
+}

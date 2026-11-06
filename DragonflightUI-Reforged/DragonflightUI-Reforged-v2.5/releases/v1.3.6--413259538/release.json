@@ -1,0 +1,9 @@
+{
+  "id": "413259538",
+  "tag": "v1.3.6",
+  "name": "fruUI v1.3.6 (Stable)",
+  "body": "# fruUI v1.3.6 — Stable\n\nStable edition: **original Dragonflight UI: Reforged appearance**, plus recent functionality improvements.\n\n**Included:** Edit Mode has readable drag labels and stable position handles for Target, Target of Target, buffs, enchant icons and quest frames. Mouseover keybinding mode supports explicit **Save Changes / Cancel**, Escape over a hovered action button clears its binding provisionally, and Escape elsewhere cancels unsaved changes. Left and right mouse buttons are excluded as assignable binds.\n\n**Excluded:** Modern Dark themes, redesigned bars/frames, minimap and cast bar aesthetics. These remain in the [testing branch](https://github.com/papafru/fruUI/tree/testing).\n\n**Addon-manager installation:** Download `DragonflightUI-Reforged-v1.3.6.zip`; its only top-level folder is `DragonflightUI-Reforged`. The TOC should be at `Interface/AddOns/DragonflightUI-Reforged/DragonflightUI-Reforged.toc`.\n\n**Credits:** Guzruul and Stormhand for the original addon.\n",
+  "published": "2026-10-14T23:06:24Z",
+  "prerelease": false,
+  "url": "https://github.com/papafru/DragonflightUI-Reforged-v2.5/releases/tag/v1.3.6"
+}

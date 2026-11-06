@@ -1,0 +1,110 @@
+{
+  "upstream": "https://github.com/moiian/FFXIVCrossHotbar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "moiian",
+    "repo": "FFXIVCrossHotbar",
+    "name": "FFXIVCrossHotbar",
+    "url": "https://github.com/moiian/FFXIVCrossHotbar",
+    "api": "https://api.github.com/repos/moiian/FFXIVCrossHotbar"
+  },
+  "commit": "7408d6b40d78bb28850cfe291d02836bfa95d14e",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "cf89d40e0bd9fbc418fdccfab27ad26f2b97543a6c06f8b184b0a7a8b721b856",
+      "bytes": 2929
+    },
+    "FFXIVConfigPanel.lua": {
+      "sha256": "8b34096e1da9564851bc98df76f5498f26b47cad7a48710db6fd21ad6d1e8e32",
+      "bytes": 24266
+    },
+    "FFXIVCrossHotbar.lua": {
+      "sha256": "9d14311e2b01f23430f4b8e954a6a224d772cbdf8c8879390c1e9765bf718225",
+      "bytes": 36623
+    },
+    "FFXIVCrossHotbar.toc": {
+      "sha256": "00ef005360e505b27cbc5e8fa9c7a2ef076934e264d2a60455265e290a1bfdd1",
+      "bytes": 430
+    },
+    "LICENSE": {
+      "sha256": "78da9809a67d3ab9da3ed44c847a130f32cb1be81d8b43f4026a0bb468116aef",
+      "bytes": 1069
+    },
+    "locales/deDE.lua": {
+      "sha256": "08d7e3716fe9e3c5ebfb4431366a607c715d73bf781f2c1f51433e02713e2d50",
+      "bytes": 3436
+    },
+    "locales/enUS.lua": {
+      "sha256": "7997e0037a4cf5d9507a647d875603d8fb2bea36efa6396c798048e8508d4d9f",
+      "bytes": 3102
+    },
+    "locales/frFR.lua": {
+      "sha256": "0a5e5e95f68f3b565e2cdcbed65d17080267fc475ca1237ad3d9235dd5ccc25f",
+      "bytes": 3610
+    },
+    "locales/ruRU.lua": {
+      "sha256": "2e2ab669ea7e252247e0242092e92af9f07c04fe91a5887a1eb10778218cc8c6",
+      "bytes": 4619
+    },
+    "locales/zhCN.lua": {
+      "sha256": "1f38fc4833cb0047a2c582cfb582fedadee9d5376fc3b059d462cc00020ee33e",
+      "bytes": 3071
+    },
+    "locales/zhTW.lua": {
+      "sha256": "50d9b9022d11ac840545132e5785af20d6b20f072b3db3d524f6abfe379ae5dd",
+      "bytes": 3123
+    },
+    "README.md": {
+      "sha256": "e597b11d66bb4091f057e29f1d346f179d300efd5ce11855e6c411fb83ae3215",
+      "bytes": 3323
+    },
+    "src/assets/bg/bg.tga": {
+      "sha256": "f5cdfbdc70a2b464d8f7395ce437915502d63033231a6aa8de85b944f2c60986",
+      "bytes": 131116
+    },
+    "src/assets/bg/Flat.tga": {
+      "sha256": "6e309fb813fa92c27941d52a821082b84188165692f6c3ac5eddcc490da0a258",
+      "bytes": 812
+    },
+    "src/assets/bg/RB.tga": {
+      "sha256": "5c6fe2f495848ba047dc32d44d63366ac8c543489ba9b2741677ed672b6d052f",
+      "bytes": 8236
+    },
+    "src/assets/main/ffxiv.tga": {
+      "sha256": "72fc14222086acca4d1ddc96a351beb1c8a8243c54d0dc35b414cd493c0e792d",
+      "bytes": 65580
+    },
+    "src/assets/main/gamepad.tga": {
+      "sha256": "bf2c7ca49cf1c9bb0be54487dfbc62e3e96eb500206546cc1a46e0ba60f246bf",
+      "bytes": 524332
+    },
+    "src/assets/main/RB.MP3": {
+      "sha256": "a1f428b433bc78e3bb1488e086c4f2a97f06e1489c936a89dd83cdd5cc01ca4f",
+      "bytes": 4224
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "243655559": {
+      "tag": "FFXIVCrossHotbar_ver1.3",
+      "folder": "FFXIVCrossHotbar_ver1.3--243655559",
+      "assets": {
+        "287862158": {
+          "sha256": "f80f2f62d401fd9b347938c8ba58f86a4a120e0c456882400c904ea0ec376fe5",
+          "bytes": 104879,
+          "id": "287862158",
+          "name": "FFXIVCrossHotbar.zip",
+          "url": "https://github.com/moiian/FFXIVCrossHotbar/releases/download/FFXIVCrossHotbar_ver1.3/FFXIVCrossHotbar.zip",
+          "path": "releases/FFXIVCrossHotbar_ver1.3--243655559/assets/FFXIVCrossHotbar.zip"
+        }
+      },
+      "source": {
+        "sha256": "3b389c416fa7f627c752610eabd18b417a6c6a3c386e4625b80372eb53b15117",
+        "bytes": 100343,
+        "path": "releases/FFXIVCrossHotbar_ver1.3--243655559/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/moiian/FFXIVCrossHotbar/tarball/FFXIVCrossHotbar_ver1.3"
+      }
+    }
+  }
+}

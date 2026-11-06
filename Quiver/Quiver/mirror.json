@@ -1,0 +1,469 @@
+{
+  "upstream": "https://github.com/SabineWren/Quiver",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "SabineWren",
+    "repo": "Quiver",
+    "name": "Quiver",
+    "url": "https://github.com/SabineWren/Quiver",
+    "api": "https://api.github.com/repos/SabineWren/Quiver"
+  },
+  "commit": "5a8ecd852efab6b4b0ef74573e33d855f39d1006",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "bc2846df648238b157155dd3bd13e142d592a87efc5938dd652720332a2e070d",
+      "bytes": 90
+    },
+    ".luarc.json": {
+      "sha256": "dbea69092708547e4fe1ca34fb4b20b54f538660d6b4dcdcc47d7a4e3ae643d5",
+      "bytes": 506
+    },
+    ".vscode/cSpell.json": {
+      "sha256": "ed25cacba4abbf77bf735bfcf086b03647b31c2312d1c22c1a062be7fa8aeadc",
+      "bytes": 371
+    },
+    ".vscode/extensions.json": {
+      "sha256": "19dbd5fb2c0cf7ebcb3e7f0bc3f97a8c074009224a34b844f1ea8dc873b7a97f",
+      "bytes": 115
+    },
+    ".vscode/settings.json": {
+      "sha256": "7605f9dce508a6a98a77790584fdfee50daa5204ccc2f8ff3913fa34ffe74534",
+      "bytes": 579
+    },
+    "Api/Action.wow.lua": {
+      "sha256": "bd3ebc62d0e36366a88b4d9f1e9554f5285a536cfb122c98f17417cbb4495fc8",
+      "bytes": 915
+    },
+    "Api/Aero.wow.lua": {
+      "sha256": "96d0164950ffed9d251564b5fc9ee2da8d875005eb562a32f46300b08d1831ac",
+      "bytes": 374
+    },
+    "Api/Aura.wow.lua": {
+      "sha256": "cb371e0c0f80cc7fe824c22997fa750d9860107b8644bc0baec9406a5118c8e2",
+      "bytes": 2395
+    },
+    "Api/Config.wow.lua": {
+      "sha256": "0cad1cb70ab40450cca2533a8dea6225f4eb6865aea70f322891face9c07c029",
+      "bytes": 729
+    },
+    "Api/Enum.wow.lua": {
+      "sha256": "6dc14e29fb8ef0448ab0919452f65bed2c5f1bfc4ed1f9f235ec84fb71d13bc7",
+      "bytes": 626
+    },
+    "Api/Index.wow.lua": {
+      "sha256": "865ac1863cd3ad3c37aef4f1fa8ea30b93d4920d60b9f54840fc4993f140928c",
+      "bytes": 716
+    },
+    "Api/Pet.wow.lua": {
+      "sha256": "e5660e30540811099e6d636394bc5cd2b13701f36497e9dc5fe90d0ee854009d",
+      "bytes": 439
+    },
+    "Api/Spell.sql": {
+      "sha256": "3996efe8405a6b5e94808d06bdbe71b16b27aa92b3ea92782f1108f46a5b11a3",
+      "bytes": 346
+    },
+    "Api/Spell.wow.lua": {
+      "sha256": "569628523ee03be774025b032f3fd2579dba20828887ed43d30dbc1c05866ed0",
+      "bytes": 4366
+    },
+    "Api/Tooltip.wow.lua": {
+      "sha256": "00ac001eabf98fe2bc4f232e2da813fe5edbbe2d5b470380a4c5bd443850c588",
+      "bytes": 1909
+    },
+    "Assets/Fa6/arrow-right-arrow-left.tga": {
+      "sha256": "36a7de71b6e697198e0494af2cefc63dac8bb0db9951c5052a89456ae40941b9",
+      "bytes": 4140
+    },
+    "Assets/Fa6/arrow-rotate-right.tga": {
+      "sha256": "e665be6957f0391507795c2657f21aa972e2801a0db9cc0e41ca3f9f4c1d5cdd",
+      "bytes": 4140
+    },
+    "Assets/Fa6/caret-down-fill.tga": {
+      "sha256": "dde37339d5403f6040d7c36b54593d0f0affe1b01c8260daf65f2cc5a3889e1d",
+      "bytes": 4140
+    },
+    "Assets/Fa6/lock-open.tga": {
+      "sha256": "45b07a3c1d425b8c382681fd4ae4ed335c272ca3670e7fa119a08acd1eb7d2e3",
+      "bytes": 4140
+    },
+    "Assets/Fa6/lock.tga": {
+      "sha256": "e99f72c414322956df6ef27676170b943bb3c3bc6b76b75ab368ecc8413fb32a",
+      "bytes": 4140
+    },
+    "Assets/Fa6/toggle-off.tga": {
+      "sha256": "6da993208a8c4e9aa4c2377156090a4cd3d45500ad6d523f7f9b9b46cd9e125c",
+      "bytes": 4140
+    },
+    "Assets/Fa6/toggle-on.tga": {
+      "sha256": "99eeafdcd8b9cf5758eebf0d9e7b967b5f7acf715e33a53cb1d3618b4724e271",
+      "bytes": 4140
+    },
+    "Assets/Fa6/xmark.tga": {
+      "sha256": "a93b35a95bb821b095edbe680ac60cc27459f37cf2d6bb2f7137a45d6ed097f5",
+      "bytes": 4140
+    },
+    "Assets/grip-lines.tga": {
+      "sha256": "fc247d12f6ce9e2478d1342f1c0fb22842a439b6f2609f7de36431334b5b3f57",
+      "bytes": 4140
+    },
+    "Assets/README.md": {
+      "sha256": "7687225f8ead58a3718650a13eeba0daba0f1f8a86780da222077a43d862b1a7",
+      "bytes": 448
+    },
+    "Assets/removing_wood_arrow_from_bow_4.wav": {
+      "sha256": "9943f1842c833c979784823ca49a7772b2da97d41691786f3c46b552ef4f8eb1",
+      "bytes": 39720
+    },
+    "Assets/sheathing_a_few_arrows_loosely_into_a_quiver_3.wav": {
+      "sha256": "f6e82d2c04325442f56045efa55741f942105b401e84c1b6ea5eead8d69e9087",
+      "bytes": 62640
+    },
+    "Build/Main.test.ts": {
+      "sha256": "f27f2926987c9efd8becaffe4fc5d0597b2ad5c0d8b450e75fc06b8bb63f9d75",
+      "bytes": 40
+    },
+    "Build/Main.ts": {
+      "sha256": "0f246314c916c691e4b0f71799214134fa3fe6605b16c8bf7efe1b2ac0e7a0bd",
+      "bytes": 5260
+    },
+    "Build/pathResolver.lua": {
+      "sha256": "5e454c0c97de06dbcc13d0610ed5a98fd94435f305a711f91a67114cfd2a03bd",
+      "bytes": 391
+    },
+    "Build/Result.ts": {
+      "sha256": "9e665fedc58233b930b633e4658c62ef6c50e37c4a5992b6096685191e2e6013",
+      "bytes": 611
+    },
+    "Build/Throttle.ts": {
+      "sha256": "b37118df9ac2d711b8ee434b65605e7b05388d80f63e62d610e309b91f98a5cf",
+      "bytes": 1167
+    },
+    "Build/tsconfig.json": {
+      "sha256": "1e2f27da0ce011ec803037a61d58f98b66c10efd01d4d77925da3f82af7e3993",
+      "bytes": 367
+    },
+    "Changelog.md": {
+      "sha256": "ecb39079144d0391a17aa804183ee88833e2021655bc54d8f2b83910e35de9a2",
+      "bytes": 6521
+    },
+    "Component/_Util.wow.lua": {
+      "sha256": "8118770b3f5953cec65b6351ef86e078081c861c0ecae0c61c33e561b9fd6c45",
+      "bytes": 1145
+    },
+    "Component/Button.wow.lua": {
+      "sha256": "ecd57d6975a459d932ece04f0cbc8e6d1601598fd3aae7da928afb166fa2d13d",
+      "bytes": 3272
+    },
+    "Component/ColorSwatch.wow.lua": {
+      "sha256": "a37fe0c0151f63c4c4198d2462da76cfc1ab5036af673a8b6344332bd7c38fc2",
+      "bytes": 2636
+    },
+    "Component/Dialog.wow.lua": {
+      "sha256": "c6a7e92fd1aa0367339f3cba142bbad5cc37facf5828fbe1016a42acd6700821",
+      "bytes": 1169
+    },
+    "Component/EditBox.wow.lua": {
+      "sha256": "d7ccec1bd91cff81f478c047ff7a63ed0ad89d7488148fb18e4614e09c5ea6a2",
+      "bytes": 1652
+    },
+    "Component/IconButton.wow.lua": {
+      "sha256": "ce935f75b395fa7bf424c32a2ad84bc8f601c58b297a1e562978f088ef85da1a",
+      "bytes": 2233
+    },
+    "Component/Select.wow.lua": {
+      "sha256": "48205b8b89d693ec084f2c6355853db27459385e02b3d3a735487a845cc2dfca",
+      "bytes": 5790
+    },
+    "Component/Switch.wow.lua": {
+      "sha256": "395928107f02e3ab1910b22456bf3c61bd2348d4d25abda0ee8481b83bf85205",
+      "bytes": 3721
+    },
+    "Component/TitleBox.wow.lua": {
+      "sha256": "060694515d1f7feaef3a582f21ebe83e7e1933573220719e156cd52c61c299ce",
+      "bytes": 767
+    },
+    "Config/Color.wow.lua": {
+      "sha256": "6fe6c8f5fc94bea4a2875ca3a768217cfeaada34c94a4d85d3920ad8bae061d7",
+      "bytes": 3396
+    },
+    "Config/InputText.wow.lua": {
+      "sha256": "a85ad620711689da260dd0ec37d9b1b73d8525c934e10447f64e6d27cdb45df4",
+      "bytes": 1307
+    },
+    "Config/MainMenu.wow.lua": {
+      "sha256": "d7b47da599e1c6ddc4015226753e20e42e96b79defd6803b46b4497b78e72bd7",
+      "bytes": 9408
+    },
+    "Constants.pure.lua": {
+      "sha256": "219cf596d197f425520ce5ddaea9b513f7c5cff3e241f26633a7231977c5b71f",
+      "bytes": 2274
+    },
+    "Events/FrameLock.wow.lua": {
+      "sha256": "51b09628770cf2a92fc74f92da627504d3180be6f021dc87de294e3ab9a00f94",
+      "bytes": 5355
+    },
+    "Events/Spellcast.wow.lua": {
+      "sha256": "264ac8e1cec50b3ad92cdf086e912480222ce562f632163623be3683c4d1f7f8",
+      "bytes": 4352
+    },
+    "GlobalFunctions.wow.lua": {
+      "sha256": "b776c055ea6369ed3e9ed1e573417625f90252bcf8943b4f27350c976ad06e33",
+      "bytes": 2185
+    },
+    "Lib/Array.pure.lua": {
+      "sha256": "3c224a2c38186a188389afa8827f2469346b00f9f65d0801facb913306a77b44",
+      "bytes": 4752
+    },
+    "Lib/Color.pure.lua": {
+      "sha256": "24e1bdbc318345cc2bdc037bc41100c88f63d7fa5b3c8fac5ca6518ef5c7d2ba",
+      "bytes": 1322
+    },
+    "Lib/Index.pure.lua": {
+      "sha256": "44ac5d63ce3ae46bdcb93559bee03758ed29c633af1da4ee930a61d4def780ec",
+      "bytes": 3770
+    },
+    "Lib/Monoid.pure.lua": {
+      "sha256": "54f2e41539f47b290c7a77e33d35a84d5dc5ff27aebc352209b2576a1804cc73",
+      "bytes": 267
+    },
+    "Lib/Nil.pure.lua": {
+      "sha256": "66e2b3ae7b56f006fdfc023fea341282ae0e98f08cf2828f587e83f7d2967264",
+      "bytes": 1235
+    },
+    "Lib/Semigroup.pure.lua": {
+      "sha256": "80cf94985826c7d0705af4e36ff738effb1727c02b3d7bcd2cebd7adca720fe3",
+      "bytes": 319
+    },
+    "LICENSE": {
+      "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+      "bytes": 34523
+    },
+    "Locale/.gitignore.upstream": {
+      "sha256": "339a6f7b5352a40a17b96dd5966fddf75109a201cb41636e618de92d6aceb297",
+      "bytes": 80
+    },
+    "Locale/enUS/Client.enUS.pure.lua": {
+      "sha256": "df27b2c113ed7fa438a6e6a9eaa94ca6e82c15d993d4f29503df1f40121b94f8",
+      "bytes": 578
+    },
+    "Locale/enUS/Spell.enUS.text": {
+      "sha256": "bd379f74e1bd52a781d813f3965a08287c7201a6ac565e1b72f2f21cdbc08872",
+      "bytes": 21293
+    },
+    "Locale/enUS/Translations.enUS.text": {
+      "sha256": "239a88c92649ee169f5997ec0b4edde70a50c687f7829983d756673051f97955",
+      "bytes": 1025
+    },
+    "Locale/enUS/Zone.enUS.text": {
+      "sha256": "426639940cef5fd57316b4e5c8e7bcfd1ddc51844e877227bc3d2afd1ee01f9d",
+      "bytes": 1671
+    },
+    "Locale/Lang.wow.lua": {
+      "sha256": "f638f981c5b7ef973de350cb206a90ee8ab567b9cba017bbd2d07729b68032a1",
+      "bytes": 541
+    },
+    "Locale/LuaJsInterop.pure.ts": {
+      "sha256": "2ceee6dc5b7310359214ebc6f0cf77870af9674dd68173f81c159abdcbd74135",
+      "bytes": 1584
+    },
+    "Locale/LuaJsInterop.test.ts": {
+      "sha256": "9e60833765e7af73222442bbacadc7f986fa2278400dbe830648f405c9593149",
+      "bytes": 896
+    },
+    "Locale/Script.js": {
+      "sha256": "5653122e20044856baaa1ebc586af1aa620563ee14b6ac9186c5d390f26091ac",
+      "bytes": 1298
+    },
+    "Locale/zhCN/Client.zhCN.pure.lua": {
+      "sha256": "5e38e736563e37875b5f89f811a48dfe4ca4a7c012da372e5ae4140a957bd46b",
+      "bytes": 808
+    },
+    "Locale/zhCN/Spell.zhCN.pure.lua": {
+      "sha256": "081cba07be3074008fcd5c57b4fcf52907680adf0833dd46f6586898c61a1c73",
+      "bytes": 60827
+    },
+    "Locale/zhCN/Translations.zhCN.pure.lua": {
+      "sha256": "52fff68cd24cc01c56f287481ad4f2c9c2969b8e010bea6cf05352fcc1ebc61e",
+      "bytes": 2520
+    },
+    "Locale/zhCN/Zone.zhCN.pure.lua": {
+      "sha256": "6ee8fdf96f976dd0eaff1e5f12210ec6c299dfd1e6ee196709def1a8d93618eb",
+      "bytes": 4575
+    },
+    "Main.wow.lua": {
+      "sha256": "afe2e54dd55710a0d9a36ffa50c8002f9912bdcb04bb928babb937f6d063e505",
+      "bytes": 3473
+    },
+    "Media/Aspect_Cheetah.jpg": {
+      "sha256": "dde02f72c2566624f8e7ac68076daf2d8c2f31fb5c64bb2b857274a4e4ae26e5",
+      "bytes": 16129
+    },
+    "Media/Aspect_None.png": {
+      "sha256": "004529c5520900eda36c626e17d49a2e106d8fa7a3cdba526f5d1126c164412f",
+      "bytes": 16168
+    },
+    "Media/Aspect_Pack.png": {
+      "sha256": "13042cdb093a0f7fb2a6b867ffd07c69b7d293d73d5f1bc4349f578f432b47bd",
+      "bytes": 17530
+    },
+    "Media/Bar_1_Shooting.jpg": {
+      "sha256": "ecfa378cc3475196b4eed81ec65a6879176cd8afcf989837947d972ed13289f3",
+      "bytes": 87591
+    },
+    "Media/Bar_2_Reloading.jpg": {
+      "sha256": "a886c64606d84e0e0b7381daf38d824f167f4246fed3ac9d99a024a049250801",
+      "bytes": 90621
+    },
+    "Media/Bar_3_Casting.jpg": {
+      "sha256": "22695f4863f8c54be2ceec64e08a3f6eab8850f3c3374e536b35c34dd8db4dfb",
+      "bytes": 85781
+    },
+    "Media/Config_UI_0f9e20.jpg": {
+      "sha256": "1bb0cc90f5861e1012e6a5b5e97175a80f24aaabbaef8d7c5f88d773ce6d5d23",
+      "bytes": 125163
+    },
+    "Media/Config_UI_enUS.jpg": {
+      "sha256": "8b63d51fb3468aa63fbc654da3c29a16888c2f5d83d8f1bc0ce37c07b2e1a005",
+      "bytes": 132500
+    },
+    "Media/Config_UI_zhCN.jpg": {
+      "sha256": "228a70f7ce290ead228aaf4b2b05a3385ae93541166fbb6a12984d45800731ec",
+      "bytes": 128464
+    },
+    "Media/Config_UI.5bdddf.jpg": {
+      "sha256": "4e16461e451a33d04fb07c04e38ad890f3edd77c1fd7f758d6c2172731563754",
+      "bytes": 169204
+    },
+    "Media/Range_Indicator_Preview.mp4": {
+      "sha256": "1f853772a3b171bd342535f37cb274a781aab91273168bc33fc5419dce01b667",
+      "bytes": 1753163
+    },
+    "Media/Range_Indicator_Thumbnail.jpg": {
+      "sha256": "735b0ee073b4aa5c9236ce4c8c4549bba60d2883e725f2fc22bf4b604ffe4e82",
+      "bytes": 38286
+    },
+    "Media/Tranq_UI.png": {
+      "sha256": "707171b87c24d86062df741be21575aab1cd2f141cc9126725f41b8e891a8ec0",
+      "bytes": 32668
+    },
+    "Media/Trueshot_Low.png": {
+      "sha256": "51d33ed5f0d10a3fc6b4e2c833bedce9a813c80a9aaa02fa90cc05aa9c769d55",
+      "bytes": 19321
+    },
+    "Media/Trueshot_None.png": {
+      "sha256": "a7c6a4877db546df235448da04a54339722839e4c811972655d1c0d27d94d27d",
+      "bytes": 25020
+    },
+    "Migrations/M001.wow.lua": {
+      "sha256": "a8f6f6b1bd706fb3ff40501aab187b7ebe26046ad3020c49542b2837ffb9b40e",
+      "bytes": 872
+    },
+    "Migrations/M002.wow.lua": {
+      "sha256": "42820393e7691555235fa67dce4797a4db0808affc16fa9fcf6d1e361bbc91e7",
+      "bytes": 375
+    },
+    "Migrations/M003.wow.lua": {
+      "sha256": "5da5ec4a9e8802cbeb5b082ad36e7a10274be8042bc232b71ec64b06c0f05afe",
+      "bytes": 579
+    },
+    "Migrations/Runner.wow.lua": {
+      "sha256": "b9fa3d50cc1c05071940c9b713c9c659125cc334823f02c98dad32accc02bba4",
+      "bytes": 676
+    },
+    "Modules/Aspect_Tracker/AspectTracker.d.lua": {
+      "sha256": "96ccccd9183502866401867f359782cda8664bf96625c14c22eabd8e892886f7",
+      "bytes": 78
+    },
+    "Modules/Aspect_Tracker/AspectTracker.wow.lua": {
+      "sha256": "e2d1f08c05f342b651aefc0e66c1706f846ef95020ca2d66596566738421d1ca",
+      "bytes": 4238
+    },
+    "Modules/Auto_Shot_Timer/AutoShotTimer.d.lua": {
+      "sha256": "f6ad25cb885d0c2c4d089e3c63d9e794ebfde813b9d6b88aa5300d3083043bc3",
+      "bytes": 197
+    },
+    "Modules/Auto_Shot_Timer/AutoShotTimer.wow.lua": {
+      "sha256": "b13d2ee8cfa103c9d848fd3ab25d2e98ccdca656bb2c5dd5a769d00d0268f8d6",
+      "bytes": 15116
+    },
+    "Modules/BorderStyle.state.lua": {
+      "sha256": "5a416b5ca0127fc4925a4f5d3d862b7a7ba01180a09bbdb9e80856935bab0e96",
+      "bytes": 1064
+    },
+    "Modules/Castbar.wow.lua": {
+      "sha256": "010f1141462e631bf7f5f7a8de9cac931902bc5a00e88624e2f37f21b1bfc1cf",
+      "bytes": 5586
+    },
+    "Modules/Module.d.lua": {
+      "sha256": "6185a25f6855ae3f02389e8b193bcc8a19e3c556fc9fb42dad966e7d1fbd2afc",
+      "bytes": 1214
+    },
+    "Modules/RangeIndicator.wow.lua": {
+      "sha256": "2490302c15211981bbe66e1c494e8e0c42064693d32094fe2fb2fed46ddfdaa1",
+      "bytes": 5662
+    },
+    "Modules/Store.d.lua": {
+      "sha256": "f93523c48d6cf26066cb28ffa8ce8edf452ca2e4089832d60451ae4e1cde9665",
+      "bytes": 194
+    },
+    "Modules/TranqAnnouncer.wow.lua": {
+      "sha256": "dec4433bcef439a8387c52a8e644a5e1bb2e9cdb1bf8096bb2c5f5b452eeaee0",
+      "bytes": 9915
+    },
+    "Modules/TrinketSwap.wow.lua": {
+      "sha256": "62eebb3f6496cded0f0c5cbdab95e221a29731e2805034d53a0f11b9abd25217",
+      "bytes": 1614
+    },
+    "Modules/TrueshotAuraAlarm.wow.lua": {
+      "sha256": "9011745bc8dcedba09fc225f3fa8abd247f40d2e0bdebe05adcf2fab187d71e4",
+      "bytes": 4236
+    },
+    "Modules/UpdateNotifier.wow.lua": {
+      "sha256": "6b887946e5477fdf37ecffd973ac21275634ed8deb8faca930f49e35418c3c67",
+      "bytes": 2227
+    },
+    "package-lock.json": {
+      "sha256": "635390f412e0e72d1fbe5a487b4614aae4dfd752f1c0660c1d240f90bc226446",
+      "bytes": 3787
+    },
+    "package.json": {
+      "sha256": "b2829445941a47d67b2b82a09c6bc4a295170a0c55064449c137b083f6967e0d",
+      "bytes": 497
+    },
+    "Quiver.toc": {
+      "sha256": "eb94c9ba8f4f58d304274133517aade839bd86b864d063564e54314515704845",
+      "bytes": 210
+    },
+    "README.md": {
+      "sha256": "5f6a85919862b384807d537e1c94ed6295e67153af42fc79610cd01ea492b669",
+      "bytes": 6754
+    },
+    "Util/Haste.wow.lua": {
+      "sha256": "0658134f05ad3bf3f629835ecada05009b2180febf593e10039344cd261496f1",
+      "bytes": 2986
+    },
+    "Util/Print.wow.lua": {
+      "sha256": "d5857e48621f62716e5f9eec682e6961f5bfb10c0ba691fe2576e740b4f70363",
+      "bytes": 1540
+    },
+    "Util/Version.wow.lua": {
+      "sha256": "5ee6ce2bbde3dde8a6eb5ab18d86bd1b45ea96094e82d1e67f2e5891efc0b1ae",
+      "bytes": 1133
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "371474695": {
+      "tag": "v3.1.5",
+      "folder": "v3.1.5--371474695",
+      "assets": {},
+      "source": {
+        "sha256": "de4d4d5dfae1ceb4ee1beb6e5860b7934adcac093cd135061d62d5bb62caee3f",
+        "bytes": 170284,
+        "path": "releases/v3.1.5--371474695/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/SabineWren/Quiver/tarball/v3.1.5"
+      }
+    }
+  }
+}

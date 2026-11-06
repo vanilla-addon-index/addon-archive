@@ -1,0 +1,50 @@
+{
+  "upstream": "https://github.com/Road-block/AutoProfit",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "AutoProfit",
+    "name": "AutoProfit",
+    "url": "https://github.com/Road-block/AutoProfit",
+    "api": "https://api.github.com/repos/Road-block/AutoProfit"
+  },
+  "commit": "19ae2d47818c8405fd3ded54b2b5bbb74d443039",
+  "sourceFiles": {
+    "AutoProfit.lua": {
+      "sha256": "392639557a7c38846687ed94411bed3747975feb0fe2c3e9e718a883202dd2a9",
+      "bytes": 7572
+    },
+    "AutoProfit.toc": {
+      "sha256": "b7fd298cab8517ccf5678af997ce3a925495355b4625ad287a7ff5df64336279",
+      "bytes": 273
+    },
+    "AutoProfit.xml": {
+      "sha256": "5569b7a6a3b6685f1e7d8483ece69f3eec320c502b488e460d51c6f203dab724",
+      "bytes": 4202
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "2456123": {
+      "tag": "3.11a-11200",
+      "folder": "3.11a-11200--2456123",
+      "assets": {
+        "1226365": {
+          "sha256": "0736894af7751f01fa9e13a0a42a1f747c6bac54829084fbddf384b03eac79c1",
+          "bytes": 4161,
+          "id": "1226365",
+          "name": "AutoProfit-3.11a-11200.zip",
+          "url": "https://github.com/Road-block/AutoProfit/releases/download/3.11a-11200/AutoProfit-3.11a-11200.zip",
+          "path": "releases/3.11a-11200--2456123/assets/AutoProfit-3.11a-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "8f219c9c5fd381a6da77a458a6397de5e781055f62d3cd206f4e31c76e95e9f6",
+        "bytes": 3541,
+        "path": "releases/3.11a-11200--2456123/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/AutoProfit/tarball/3.11a-11200"
+      }
+    }
+  }
+}

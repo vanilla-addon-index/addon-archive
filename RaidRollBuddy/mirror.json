@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Goose404/RaidRollBuddy",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Goose404",
+    "repo": "RaidRollBuddy",
+    "name": "RaidRollBuddy",
+    "url": "https://github.com/Goose404/RaidRollBuddy",
+    "api": "https://api.github.com/repos/Goose404/RaidRollBuddy"
+  },
+  "commit": "4d1c7a6ee4be2bcc00dc57eaeefa60ba60c03cd1",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "RaidRollBuddy.lua": {
+      "sha256": "345ae70169f1cdf6e531246dbf0d3a0c96afe22a2c70ba01ea91e70b42678646",
+      "bytes": 12460
+    },
+    "RaidRollBuddy.png": {
+      "sha256": "86c7f075fe77e1de83dd2268c6f0594c1657f4b36ae5dc36d216b6d4baefe7c5",
+      "bytes": 81558
+    },
+    "RaidRollBuddy.toc": {
+      "sha256": "c09731e49f2ff4ed70874ee18ed209aa3fada9742d1bdbd9744c3865590a224b",
+      "bytes": 204
+    },
+    "readme.md": {
+      "sha256": "90dd0c4dd91312be72288b7b78f1ca6c67710b28700e4415b7137ca69d95316a",
+      "bytes": 737
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

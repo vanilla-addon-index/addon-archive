@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/DBFBlackbull/BitesCookBook",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "DBFBlackbull",
+    "repo": "BitesCookBook",
+    "name": "BitesCookBook",
+    "url": "https://github.com/DBFBlackbull/BitesCookBook",
+    "api": "https://api.github.com/repos/DBFBlackbull/BitesCookBook"
+  },
+  "commit": "cc906e1363daa3e65e04d4939f762793352a84f4",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "1d15bdb66e2d42cd0ecddeb6926d7a97dbf7a82a055067b7b9afc05112ee0437",
+      "bytes": 6
+    },
+    "BitesCookBook.toc": {
+      "sha256": "6aeb68f9f89652ebdd3eca8393c244273fb8f6b9cec086cdd0dad8cac853dd3f",
+      "bytes": 389
+    },
+    "InitializeAddon.lua": {
+      "sha256": "4e8a9934bd33e9ffede9c7c677a54ebdbf397eaf12556e146bd8e1e6cdd79e17",
+      "bytes": 9801
+    },
+    "Lists/CookingRecipes.lua": {
+      "sha256": "dd0f233f911db7b3f5551395e0a309b54e1cfec53f32910f1dbda41b78555cbf",
+      "bytes": 17966
+    },
+    "Localization.lua": {
+      "sha256": "e185ffed0ee4b20e3a876d7723fe218f4fe8f42e3d852a2df86affebd98b5ab2",
+      "bytes": 13433
+    },
+    "Options.lua": {
+      "sha256": "d2422413f9464d82af856da8977472ac8b1b4fd028b7bea5f4c714b45af2675c",
+      "bytes": 17291
+    },
+    "README.md": {
+      "sha256": "144e407fa7da445a3290e864f8e273d47913e23340afff58bdee4259c0befdb4",
+      "bytes": 303
+    },
+    "Tooltips.lua": {
+      "sha256": "a5a2d0fcd0d3ae7d53d63ac146c8092e04613cfcfa64c5ec10a04dda800153a3",
+      "bytes": 9386
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

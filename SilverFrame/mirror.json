@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/jKalfis/SilverFrame",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jKalfis",
+    "repo": "SilverFrame",
+    "name": "SilverFrame",
+    "url": "https://github.com/jKalfis/SilverFrame",
+    "api": "https://api.github.com/repos/jKalfis/SilverFrame"
+  },
+  "commit": "a6ef81019000c8f083a87edd54a0c0af10eaeaec",
+  "sourceFiles": {
+    "Core.lua": {
+      "sha256": "52cb6a073241a6682f1d1d9126a314548c740170cde63e976353fbedf6e98bec",
+      "bytes": 428
+    },
+    "LICENSE": {
+      "sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+      "bytes": 1211
+    },
+    "README.md": {
+      "sha256": "179c083ecfdd9fd1d0e364caa2997fba7d4130a19179747626f813cbbf4bc342",
+      "bytes": 376
+    },
+    "SilverFrame.toc": {
+      "sha256": "6576ff8b1251fb4f54aba4c7507ebece493bf7c956a1b175560311e0c38dd92e",
+      "bytes": 155
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/pseja/RogueTick",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "pseja",
+    "repo": "RogueTick",
+    "name": "RogueTick",
+    "url": "https://github.com/pseja/RogueTick",
+    "api": "https://api.github.com/repos/pseja/RogueTick"
+  },
+  "commit": "586ae638e53a0ffc4e6b685030f6d946e4e47790",
+  "sourceFiles": {
+    "imgs/roguetick.gif": {
+      "sha256": "7839a9e0744728e5466f14316eef4023c9000f7a4607cc546d2af84bd9542056",
+      "bytes": 697273
+    },
+    "LICENSE": {
+      "sha256": "0b338f20b9ef04a8bf98e79f69410b0d712890bb99f5c6b0c86b7646b2646315",
+      "bytes": 1071
+    },
+    "README.md": {
+      "sha256": "d79b9598f34c3dc4a1c1171c9ba3b76f82988972fa22153a487af4670380a124",
+      "bytes": 764
+    },
+    "RogueTick.lua": {
+      "sha256": "ec829788334f19525ae18cbae0691410fe35821092aab206605a31a766796161",
+      "bytes": 1361
+    },
+    "RogueTick.toc": {
+      "sha256": "f41240fcf74915a11049d3ec522eafe901f111d11e1ac020e45a6389b3c90b40",
+      "bytes": 187
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Grymskvll/SafeShift",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Grymskvll",
+    "repo": "SafeShift",
+    "name": "SafeShift",
+    "url": "https://github.com/Grymskvll/SafeShift",
+    "api": "https://api.github.com/repos/Grymskvll/SafeShift"
+  },
+  "commit": "c5b4960c8629a4937e632aad8a36a23271bd93ad",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "9b4b920b0e53d8ce0a8cfaae2640e3ea1b7f40643d0888fb88ff6607a93e51e5",
+      "bytes": 832
+    },
+    "SafeShift.lua": {
+      "sha256": "18b36f737eac263ed35c2df165a9b0efd8eb9c2a2724dbfcf0c8b32653468c4b",
+      "bytes": 4456
+    },
+    "SafeShift.toc": {
+      "sha256": "6801bafc9701d516f7268ced746648cf54faa481350fd5edd4a9a449363d1b12",
+      "bytes": 240
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/wbb1977/CleanPlayerFrame",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "wbb1977",
+    "repo": "CleanPlayerFrame",
+    "name": "CleanPlayerFrame",
+    "url": "https://github.com/wbb1977/CleanPlayerFrame",
+    "api": "https://api.github.com/repos/wbb1977/CleanPlayerFrame"
+  },
+  "commit": "234eb6d89bb24adb956dcececa590d664cc6b558",
+  "sourceFiles": {
+    "CleanPlayerFrame.lua": {
+      "sha256": "363826b0425f6b5894a0242b5d0e51af40f756c9753ce94e4c38d0c1e9c3fcf2",
+      "bytes": 19147
+    },
+    "CleanPlayerFrame.toc": {
+      "sha256": "76817fa85e7a10e2a6210307347a28976868f0c5ce9ef1e4d6957ee02c0f577a",
+      "bytes": 834
+    },
+    "CleanPlayerFrame.xml": {
+      "sha256": "a9195b7b757b219d2562341c14faa40bfcf0865c5034d39f1d84f41699f9efd6",
+      "bytes": 10842
+    },
+    "CleanPlayerFrameOptions.xml": {
+      "sha256": "0fe72bfd37b33a6a391378e0b1b908d5760acd39aa31925ddd8500077b2e4998",
+      "bytes": 16879
+    },
+    "Localization.lua": {
+      "sha256": "a968b0ed3bca0aa9770bec0a43f9db4036af8fe793e098c0fb022d66df7800a4",
+      "bytes": 5829
+    },
+    "README.md": {
+      "sha256": "1677c06376df070793936c018e618d40a0a96e48ea68204fdfb8302073c457e8",
+      "bytes": 3006
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "14714365": {
+      "tag": "11200f",
+      "folder": "11200f--14714365",
+      "assets": {},
+      "source": {
+        "sha256": "9e074a7a78cc519f31674423579cf47134b96532a28e211352200fa357e41e52",
+        "bytes": 9315,
+        "path": "releases/11200f--14714365/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/wbb1977/CleanPlayerFrame/tarball/11200f"
+      }
+    }
+  }
+}

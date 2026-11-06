@@ -1,0 +1,380 @@
+<p align="center">
+  <img src=".github/banner.png" alt="Caw DPS Meter" width="600">
+</p>
+
+<p align="center">
+  Lightweight combat meter for WoW 1.12: damage, healing, utility and aura uptime.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2FNovaElysium%2FCawDPSMeter%2Fmain%2FCawDPSMeter.toc&search=%23%23%20Version%3A%20%28.%2B%29&replace=%241&label=version&color=7fbf4d" alt="Version">
+  <img src="https://img.shields.io/badge/WoW-1.12%20(Vanilla)-1f6feb" alt="WoW 1.12">
+  <img src="https://img.shields.io/badge/license-MIT-3fb950" alt="MIT License">
+  <img src="https://img.shields.io/badge/requires-SuperWoW%20%2B%20SuperAPI-d29922" alt="Requires SuperWoW + SuperAPI">
+</p>
+
+---
+
+## Screenshots
+
+<p align="center">
+  <img src=".github/screenshot-meter.png" alt="Damage / DPS view with per-player rows" width="410">
+  &nbsp;&nbsp;
+  <img src=".github/screenshot-modes.png" alt="Mode selector: Damage, Healing, Damage Taken, Deaths, Interrupts, Crowd Control" width="410">
+</p>
+
+## What it is
+
+Caw DPS Meter is a compact damage/healing/utility meter for the 1.12 client
+(RavenCraft, OctoWoW and other Vanilla private servers). It reads `RAW_COMBATLOG`
+via SuperWoW, so it tracks combat events the default combat log never exposes, and
+it can pull data from other players running the addon to fill in what your client
+did not see. Up to four independent windows share the same combat data.
+
+## Interface
+
+See the [1.1.8 release notes](RELEASE_NOTES_1.1.8.md) for the latest fixes, including
+more reliable DPSLog input alongside other addons.
+
+Left-click a player bar for an ability breakdown with player and segment selection.
+Scroll the player list with the mouse wheel anywhere over the bars or their
+surrounding area. Each meter window keeps its own scroll position.
+In player details, **Targets** groups damage by enemy; **Recipients** groups
+healing or overheal by recipient. Click a name to see the spells used on that
+target, click the same tab to return to the list, or choose **Spells** for the
+full breakdown. Owned pets and totems are included, with their spell rows kept
+separate. Same-name enemies remain separate targets.
+
+Target details require DPSLog recordings. Opening **Targets** or **Recipients**
+asks the selected player's updated Caw client for missing details when combat
+sync is enabled. Replies are paced and limited; complete views need no request,
+and leaving a view open does not create continuous sync. The footer shows how
+much of the full total has a recorded destination.
+
+Only a complete, matching owner snapshot can supplement the view. Observers'
+counts are never added together, and normal damage/healing totals are unchanged.
+Saved fights are matched by enemy GUIDs and relative combat times. **Overall**
+can request details for the individual fights still in the local history;
+unrelated session totals are never mixed. Older clients, unavailable fights or
+incomplete replies leave existing data intact. Overheal percentages always use
+amounts and measured healing coverage from the same observation.
+
+Use **Compare** in that view to compare two players of the same class, including
+their ability shares and the difference between both totals. The comparison
+temporarily replaces the detail window and restores it when closed.
+Use the sliders icon (or **... > Settings** in a narrow window), right-click a player bar, or type `/cawoptions` for
+window scale, size, bar spacing, text, transparency and pfUI docking options.
+Each window has its own appearance. New windows fit five bars; existing layouts
+are kept. Overall contains completed fights and stays selected when combat starts.
+Under **Window > Automatically hide**, each meter can be hidden when solo, in a
+party, in a raid, in a battleground, in combat or out of combat. Matching any
+enabled condition hides the window; battlegrounds use their own group rule.
+Combat rules follow your character's combat state. Recording and sync continue.
+Use `/cawoptions` to adjust the settings while meters are hidden.
+**Top bar** and **Bottom bar** set their own height, font size, colour and opacity;
+the bottom bar can be hidden. Expand **Buttons** on the Top bar page to change
+which buttons appear and on which side. Hidden actions stay available through
+**...**; this compact menu can also be selected for wide windows.
+**Player bars** and **Text** offer textures, upward growth, custom or class colours,
+four built-in fonts, outlines and shadows. Expand **Text position** for alignment
+and spacing. Each colour setting sits beside the element it changes.
+Use **Search settings** to find options across every page, including collapsed
+groups. Hover a control for an explanation. Greyed-out controls explain what
+needs to be enabled first. Recording and sync are under **Combat & sync**;
+warnings are under **Aggro alerts**, and chat/inventory options under **Docking & bags**.
+**Combat & sync** also shows the current local input (DPSLog, combat text,
+waiting for DPSLog, or paused) and a separate Caw Sync status. DPSLog remains
+optional. Sync can supply missing details from compatible peers, but does not
+guarantee complete coverage. These statuses describe recording now, not the
+source of every saved fight. Unrecorded overheal is shown as **Not available**;
+measured zero stays zero. Target views identify missing or partial coverage and
+retained details supplied through Caw Sync. Search for **DPSLog** to find the
+recording controls and status directly.
+For target-sync troubleshooting, `/cawsyncstatus` shows request/reply counters
+and the last result from this session, or the last saved session after reload.
+`CawDPSMeterErrorLog.targetSync` in Caw's account-wide SavedVariables keeps three
+active sessions with at most 24 recent results per session. It records timeouts,
+unsupported peers, incomplete/invalid replies and interruptions without storing
+packet payloads or player names and without sending extra messages. A complete
+reply does not guarantee complete combat coverage. `/cddebug clear` clears these
+diagnostics together with the existing error log.
+Longer pages scroll. Changes are saved automatically. The colour picker previews
+changes immediately; Cancel restores the previous colour. **Reset page** restores
+only that page's defaults. **Copy to all windows** copies the selected window's
+size, number of bars, lock, appearance and display options to every meter.
+Positions, docking and selected views stay independent.
+Meters use near-black pfUI-style surfaces, fine borders and muted gold highlights.
+Dropdown labels use larger, bright text; window transparency remains adjustable.
+Settings use sliders, number fields and checkboxes, with a preview and a window
+selector. Player details keep spells, players and segments in separate lists;
+the statistics on the right follow the selected spell and mode. Report and reset
+are available through their header buttons or the **...** menu in narrow windows.
+**Reset** clears all combat data (Current, Overall and the saved encounter list)
+in every window after confirmation. Window settings are kept.
+Small meters keep just the mode, encounter selector and **...** in the header.
+Encounter menus fit their entries; scrolling controls appear above and below the
+list only when needed. Hover a selector to read the full selected label.
+Finished fights are labelled by their local pull time (`HH:MM:SS`) so repeated
+enemy names are easy to distinguish. Reports use the same time; combat sync
+exchanges fight age, so players in other time zones see their own local time.
+Very narrow player bars show a shortened amount (Threat shows its percentage)
+to preserve player names. Widening the meter restores your rate/share settings.
+Hover or open player details for the full data.
+Footer totals and rates use k/M abbreviations and adapt to the available width.
+Their tooltip keeps the full total and DPS/HPS to one decimal, including when
+the group reaches millions of damage or healing.
+
+Drag the footer or empty window background to move a meter. **Shift-drag a
+player bar** also moves it; an ordinary click still opens player details.
+Locked and pfUI-docked windows cannot be moved this way. The bottom-right grip
+continues to resize the window.
+Whisper reports open an editable recipient field, prefilled from your player target.
+In player details, **Talents** beside the search field switches to talent trees.
+Your own trees come from the client API. Viewing group members' complete trees
+requires this feature on both clients; older clients may supply only point totals.
+The view shows current or last received talents, not the build used in an old fight.
+
+**Settings > Threat** adds optional screen glow and a warning sound for your own
+high threat or newly gained aggro. Both start disabled. Enable either effect,
+adjust the warning threshold (default 90%) and cooldown (default eight seconds),
+then use **Test warning** to preview it. Alerts read existing current-target
+server data and still work when the meter is hidden. They fire on a new warning
+state, rather than repeating continuously, and apply to your character across
+all windows. The updated 1.1.1 download includes these controls; existing 1.1.1
+users can replace the files and `/reload`.
+
+The optional DPSLog backend needs a compatible DLL installed separately. Collection
+and talent sync continue independently of the visible UI. See
+[1.1.1 release notes](RELEASE_NOTES_1.1.1.md) for available statistics and validation.
+
+If you use a bag addon other than Bagshui, enable **Settings > pfUI > Keep Caw
+behind inventory windows** when you want the inventory to stay above Caw. The
+option is off by default so Caw remains fully interactive in the normal layout.
+
+## Features
+
+- **Damage & DPS** and **Healing & HPS**, with per-spell breakdown; pet damage
+  and healing fold into the owner, totem damage is attributed to the caster
+- **Overheal** amounts and percentages, with hover bars, spell details, reports
+  and same-class comparisons. Requires measured DPSLog healing, recorded locally
+  or received through Caw Sync. Percentages use total healing before overheal is
+  subtracted. Only events with recorded overheal are included; older combat
+  records without it cannot be reconstructed.
+- **Damage taken** and **Deaths** with killing-blow detail
+- **Utility modes:** interrupts, crowd control, CC breaks (with the breaking
+  ability and its damage), dispels, buff uptime, debuffs cast, debuffs received
+- **Aura tracking:** group buffs, weapon buffs and poisons across the raid
+- **Segments:** current fight, last fight, overall session, plus a rolling
+  10-fight history (`/cd history`)
+- **Caw Sync:** shares damage and healing snapshots with other users over
+  SuperAPI addon messages, so late joiners and missed events still get full
+  numbers (damage taken and deaths are local to your client)
+- **Chat reports** to Say, Party, Raid, Guild or Whisper from the in-window Report button
+- Up to **4 independent meter windows**, each with its own mode, segment,
+  position, size, scroll offset and lock state
+- **Optional pfUI docking:** right-click a window's lock icon to dock it into the
+  pfUI right chat; multiple docked windows sit edge-to-edge and follow the chat
+  arrow. No pfUI files are modified
+- **Threat view** with live server values on supported servers, independent of
+  TWThreat. The experimental local model runs alongside it for calibration,
+  with automatic peer discovery and talent-rank exchange
+- Compact narrow-window layout with adaptive actor-name truncation to keep values
+  readable
+- Optional **Always show my own bar** (Settings > General): your bar takes the
+  last row, with your real rank, while it is scrolled out of view
+- Persistent window layout, lock state and selected mode
+
+## Requirements
+
+| Component | Notes |
+|-----------|-------|
+| WoW 1.12 client | RavenCraft / OctoWoW / Vanilla private servers |
+| [SuperWoW](https://github.com/balakethelock/SuperWoW) | client mod, provides `RAW_COMBATLOG` |
+| [SuperAPI](https://github.com/balakethelock/SuperAPI) | addon dependency (declared in the `.toc`) |
+
+Without SuperWoW loaded the meter will not receive raw combat data.
+
+## Installation
+
+1. Download the latest **[release](../../releases)** ZIP.
+2. Extract it so the folder is exactly:
+   `<WoW>\Interface\AddOns\CawDPSMeter\`
+   (the folder must be named `CawDPSMeter`, not `CawDPSMeter-main`).
+3. Make sure `SuperAPI` is installed and SuperWoW is active.
+4. Restart the client after updating to 1.1.2 so the new UI and data modules load;
+   `/reload` alone is not enough on the first update. Type `/cd` to show the meter.
+   Existing settings are kept.
+
+> GitHub's green **Code** then **Download ZIP** button produces a wrongly named
+> folder. Use a tagged release, or rename the folder to `CawDPSMeter` after
+> extracting.
+
+## Windows and pfUI
+
+Version 1.1.1 keeps selectors and buttons in a single compact header, gives encounter
+names more space, and keeps totals and Threat status in a reserved footer.
+A persistent watermark sits behind the player bars without intercepting clicks.
+
+Shift-right-click any lock icon to switch visibility modes for all docked windows.
+The default follows chat visibility; alternate mode shows Caw when chat is hidden
+and hides Caw when chat is shown. Window layouts and docking are shared across
+characters, including the number of meters and each one's appearance. Both
+normal hiding and pfUI's alpha-only hiding are supported.
+
+Use the **+** button for additional windows. Each window keeps its own mode, size,
+position and scroll offset, and all windows use matching bar dimensions and scroll
+controls. Closing an extra window with **X** remembers its position, size, mode
+and appearance. **+ / Add window** restores the most recently closed window;
+`/cd show` reopens closed meters together. Closed extra windows stay closed on
+login or reload. Automatic hiding and pfUI chat visibility still apply when
+reopening a window.
+Hidden windows remain saved, including when hidden through `/cd hide` or pfUI's
+chat arrow. Character-specific recording and sync preferences remain independent.
+
+Right-click a window's lock icon to dock or undock it at the pfUI right chat.
+Multiple docked windows sit edge-to-edge side by side inside the right chat area,
+above its status panel, and follow its arrow visibility. Combat recording and sync
+continue while hidden. Free windows remain independent. No pfUI files are
+modified; without pfUI the addon works normally.
+
+## Threat and Caw Sync
+
+Settings > General provides **Enable combat parser** and **Sync damage and
+healing**. Both default to on and are saved per character across all windows.
+Parser off pauses local recording and combat snapshots, saves the current
+fight and displays **Parser paused**. Resuming starts a new segment on the next
+combat event. Sync off alone keeps local recording active. Previously recorded
+or synchronized data is retained. Talent sharing and live server threat remain
+available; paused local data is excluded from calibration recording.
+
+Damage/healing combat snapshots use Caw Sync. Compatible clients also announce
+their presence and capabilities automatically. Threat tooltips distinguish
+detected clients, expired replies and actual current talent data. No reply does
+not prove that someone has no Caw installed.
+
+Threat is calculated locally and remains experimental. All classes exchange talent
+ranks/max ranks by tree and slot. Feral Instinct is currently the only remote
+talent applied by the threat engine; other modifiers and several
+utility/resource/healing rules remain incomplete. Unknown talents stay unknown.
+TWThreat is no longer required for server calibration: Caw can directly query the
+API and show a separately labeled server reference while its local engine
+continues unchanged.
+
+### Talent synchronization
+
+Talent layouts are sampled once per second, sent on change and refreshed every 30
+seconds. Each tree is one bounded packet; packets are spaced by at least 0.2
+seconds. A profile becomes usable only after all trees arrive. Profiles expire
+after 90 seconds and are removed when the player leaves the group. Layouts contain
+ranks and maximum ranks by tree/slot, not localized talent names or inferred
+threat formulas. Up to 200 distinct received actor/layout combinations per
+calibration session are retained. Talent data is exchanged only with the current
+party/raid; nothing is uploaded automatically.
+
+The optional talent viewer also requests names, icons and tree positions from
+the selected group member. These separate messages run only on demand, at most
+ten packets per second, and stay within 240 bytes. A complete response replaces
+the previous displayed tree atomically. Only the most recently viewed remote
+tree is cached in memory; the normal calibration packet format is unchanged.
+Tooltips currently show the talent name and rank. Prerequisite connections and
+full talent descriptions are not included yet.
+
+### Standalone server reference
+
+Caw queries supported servers for hostile NPC combat targets while in a
+party/raid. TWThreat is not required, and live display also works when calibration
+recording is disabled. The current Threat view shows recent server rows for the
+selected target; it does not substitute local estimates when a reply is missing.
+The footer shows the target, a waiting state or no server response. History and
+Overall remain local. The local model continues independently for comparison.
+
+Requests use `limit=4`, matching the tested TWThreat default request, and recent
+snapshots expire after 1.25 seconds. The returned rows are not a guaranteed full
+raid table. TWTv4 has no response target/request ID, so target attribution remains
+provisional. Timeouts trigger bounded retries; uncertain recordings are marked
+accordingly. With TWThreat loaded, Caw pauses its own requests and observes that
+addon's replies, displaying them only when a recent observed request matches the
+current target context.
+
+## Local calibration recordings
+
+This release records calibration data automatically unless the character has
+disabled it. `/cdthreatcal off` disables recording and its automatic startup;
+`/cdthreatcal on` enables it again. A startup message confirms active recording.
+No files are uploaded automatically. With TWThreat loaded, Caw passively records
+its replies; standalone calibration can query eligible combat targets.
+Missing server replies do not print chat warnings. Retries slow down progressively
+to a maximum 30-second pause for that target and resume normally after a matching
+fresh reply. New targets are queried promptly without inheriting another mob's
+delay. Any outstanding request and its short reply guard finish first. Returning
+to a recently failed target preserves its delay; fast target switching cannot
+bypass the shared request limit.
+
+The latest 3 sessions are kept, each limited to 2,000 model events, 1,500 casts,
+800 snapshots, 300 actor contexts and bounded supporting traces. These caps were lowered after a live account file reached ~30 MB; a truncated
+write of a file that large corrupts every SavedVariables table sharing the
+file, not just the calibration log. Existing oversized data is trimmed to the
+new caps on first login after updating. Save by reloading or logging out normally. To report a discrepancy, include version,
+target, ability and relevant saved calibration data. Recordings can contain player
+names and GUIDs; review them before sharing publicly.
+
+## Commands
+
+`/cawdps` or `/cd`
+
+| Command | Action |
+|---------|--------|
+| `/cd` | toggle the window |
+| `/cd show` / `/cd hide` | show / hide |
+| `/cd lock` / `/cd unlock` | lock / unlock the frame |
+| `/cd reset` | clear all combat data, keeping window settings |
+| `/cd resetoverall` | clear the overall segment |
+| `/cd resetpos` | move the window back to the default position |
+| `/cd current` / `/cd last` / `/cd overall` | switch segment |
+| `/cd history` | print the last fights to chat |
+| `/cd damage` \| `healing` \| `damageTaken` \| `deaths` \| `interrupts` \| `cc` \| `ccBreaks` \| `dispels` \| `buffs` \| `debuffsCast` \| `debuffsReceived` | switch mode |
+| `/cdthreatcal on` / `/cdthreatcal off` / `/cdthreatcal status` | calibration recording and direct server queries |
+
+Chat reports (Say / Party / Raid / Guild / Whisper) go through the **Report** button in the
+window, not a slash command. Window menus also select modes and history.
+
+Window settings persist. Current/overall combat data and fight history do not
+survive reload/logout. All group clients should update to exchange compatible
+data.
+
+## Reporting a bug
+
+For a fight that ends late, merges with another, or shows wrong numbers:
+
+1. `/cdlog on`
+2. Reproduce it (a few pulls).
+3. `/cdlog save`, then `/reload`.
+4. Open an [issue](../../issues) and attach the `CawDPSMeter.lua` from your
+   `WTF\Account\<name>\SavedVariables\` folder.
+
+The log records only the combat-end lifecycle and is off unless you turn it on.
+
+See [CHANGELOG.md](CHANGELOG.md) and the [1.1.2 release notes](RELEASE_NOTES_1.1.2.md)
+for the full change list and known limits. The regression suite uses mocked WoW
+APIs; a live client is still needed for visual and multiplayer verification.
+
+## Support
+
+Caw DPS Meter is free. If it is useful to you and you want to chip in, there is a
+Sponsor button at the top of this repository, or:
+
+[![Support on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/huginnandmuginn)
+
+## Contributing
+
+Issues and pull requests are welcome. Keep changes Lua 5.0 compatible (no `#`
+length operator, no `%s` gsub tricks that 5.0 lacks) and test against the 1.12
+client before opening a PR.
+
+## Credits
+
+Built by **Huginn &amp; Muninn**: [NovaElysium](https://github.com/NovaElysium) and [CawDPSMeter](https://github.com/CawDPSMeter).
+
+## License
+
+[MIT](LICENSE) &copy; 2026 Huginn &amp; Muninn

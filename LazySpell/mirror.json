@@ -1,0 +1,161 @@
+{
+  "upstream": "https://github.com/laytya/Lazyspell",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "Lazyspell",
+    "name": "Lazyspell",
+    "url": "https://github.com/laytya/Lazyspell",
+    "api": "https://api.github.com/repos/laytya/Lazyspell"
+  },
+  "commit": "1af9fc538bf010116290b3399ca67b9b2b95043f",
+  "sourceFiles": {
+    "_LazySpell/_LazySpell.toc": {
+      "sha256": "b180b6b689e766a32228687c97ede6f21c92b6e2c16af8788c327751881faa4e",
+      "bytes": 1158
+    },
+    "_LazySpell/Icon.tga": {
+      "sha256": "b30b371e26d53a756e7c76de01e8baff4bd976b998e08f3b092d1ab80fe2030d",
+      "bytes": 16428
+    },
+    "_LazySpell/LazySpell.lua": {
+      "sha256": "8939fdd9347a821428786f01baddf6754c7378b9e58dffc9e52131e05fb1c624",
+      "bytes": 17825
+    },
+    "_LazySpell/libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "d50be33b0ff53a82f2845115ff165b279ab4268ac38325891fec7decb4540979",
+      "bytes": 34388
+    },
+    "_LazySpell/libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "ab8c61a5174d468bee9c7f7264a7ef8adaead087b7db42ca48da23cfd3d6637d",
+      "bytes": 68842
+    },
+    "_LazySpell/libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "aec50568954370b65a14b9d720de2282e6b045feb4415a53578d0d1cae46cca4",
+      "bytes": 46027
+    },
+    "_LazySpell/libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "a1faaffb4f5b669571e274656e4d42d6ddc557d03ae20bbce042c4f55d15f630",
+      "bytes": 8185
+    },
+    "_LazySpell/libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "8222e7a75d0f0fba8030099939611732b50c28cb26b6ce6427f52fd5f2f409d8",
+      "bytes": 29927
+    },
+    "_LazySpell/libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "595bceffddb7f20c84c9649a64ea28dddaad695b9681e36acc8141539a74512b",
+      "bytes": 17515
+    },
+    "_LazySpell/libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "73ff05b35a2fd4430fb65e485b8ae9366fcc919f20f9877fa30ae417cabb9065",
+      "bytes": 23806
+    },
+    "_LazySpell/libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "f0b829c007fd8cd897aa9059bd6c9ee27f0b9b71b9c9468b1572c1d3db4397fe",
+      "bytes": 16495
+    },
+    "_LazySpell/libs/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "d3272f2379883ea33e122ae9309e060d92e01ccd0263a2014839bd202ad8bd6a",
+      "bytes": 14443
+    },
+    "_LazySpell/libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "03e71bcf0ba8ce7c806c5ffe966991cb997c12c25b351198c918fe32e469bdaf",
+      "bytes": 31435
+    },
+    "_LazySpell/libs/Babble-Spell-2.2/Babble-Spell-2.2.lua": {
+      "sha256": "e1a7abbcd426563b4ecdec7cf564cd088926b22488d848f2258f2181d5235b1a",
+      "bytes": 468464
+    },
+    "_LazySpell/libs/Deformat-2.0/Deformat-2.0.lua": {
+      "sha256": "843f4e0d82213521bfcc6ec1cd0b78eeac6d74bf98eb65029abdedc6ed9cef11",
+      "bytes": 9781
+    },
+    "_LazySpell/libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "ec58691887ceca2312d78a80e1b9d3ec5a0fb86ae4b495b79366637b2cd9ff47",
+      "bytes": 88583
+    },
+    "_LazySpell/libs/FAIAP.lua": {
+      "sha256": "7e7465b46056147bb45fd5fdd37f3f7ba316688e4eaebec926c89d16a5a6410b",
+      "bytes": 34455
+    },
+    "_LazySpell/libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "c6f049d53b109c4e66ac4bee77fd62ba66a8adc20ea66383badcda253d285e5c",
+      "bytes": 59139
+    },
+    "_LazySpell/libs/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "0e551ad3aa9619cf7287d1a7cfff6588324a47be14ac357426be785041e40a69",
+      "bytes": 8109
+    },
+    "_LazySpell/libs/HealComm-1.0/HealComm-1.0.lua": {
+      "sha256": "70b5f923199700f07303a5e78e0488e1c8c20d321040ec3a61f69351c8d383c0",
+      "bytes": 67178
+    },
+    "_LazySpell/libs/ItemBonusLib-1.0/ItemBonusLib-1.0.lua": {
+      "sha256": "369231e4fc912e91e99081e6be6ee779ea7fed5379f6f9d81c68e39fb50f3f17",
+      "bytes": 12644
+    },
+    "_LazySpell/libs/ItemBonusLib-1.0/ItemBonusLib-1.0.xml": {
+      "sha256": "417d28865b9022dd60bdc98ba1126d649fcc42f80a944c4f65b5699e73fac9ae",
+      "bytes": 258
+    },
+    "_LazySpell/libs/ItemBonusLib-1.0/Locales/deDE.lua": {
+      "sha256": "1207540ad02316c097eb50eb521fb6b6c24467968e57aa4816dfc0f677b7d223",
+      "bytes": 7918
+    },
+    "_LazySpell/libs/ItemBonusLib-1.0/Locales/enUS.lua": {
+      "sha256": "19bf9703f0c310db47bfe60494493ab8ded20649727b7c8692ad96ab6f6a9069",
+      "bytes": 11228
+    },
+    "_LazySpell/libs/ItemBonusLib-1.0/Locales/frFR.lua": {
+      "sha256": "780bf9b64536fdeb151d4517e051bb3cfdd7ec9e78533c7ba01254c7b22070d2",
+      "bytes": 11600
+    },
+    "_LazySpell/libs/ItemBonusLib-1.0/Locales/Locales.xml": {
+      "sha256": "780f9c1f6034e96469c8b47c6efe7f8cf4d4d1f940e64b8ab4890b32f377a0d1",
+      "bytes": 290
+    },
+    "_LazySpell/libs/ItemBonusLib-1.0/Locales/ruRU.lua": {
+      "sha256": "df039509f0cfd8e3e152f8d77dff1f4972d87cd0795cff890f9f392582fd05cb",
+      "bytes": 17075
+    },
+    "_LazySpell/libs/RosterLib-2.0/RosterLib-2.0.lua": {
+      "sha256": "58a98cdf47fcf4177427b40cad65b45c95dcc0271d63456ae91206f411910414",
+      "bytes": 11105
+    },
+    "_LazySpell/libs/SpellCache-1.0/SpellCache-1.0.lua": {
+      "sha256": "ad9aed216395f9b2b1359de9e6ed24b89e8087105b030dfc894c260a92c710c9",
+      "bytes": 10270
+    },
+    "_LazySpell/libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "52a0890a5f768c19257b7c25de9f095f8bc35103095a4b7da810f4b29f7d19b1",
+      "bytes": 90983
+    },
+    "_LazySpell/libs/Waterfall-1.0/Waterfall-1.0.lua": {
+      "sha256": "8d270946fd501ba3741fa03b2cff0c08a3dc6f56446809748206c3ff8db4154d",
+      "bytes": 140215
+    },
+    "_LazySpell/locals_enUS.lua": {
+      "sha256": "1a039d71a91505abd0bb2c863d5916dbdd13baa47248c73308807fd16cac6336",
+      "bytes": 1756
+    },
+    "_LazySpell/locals_ruRU.lua": {
+      "sha256": "f0f9be4c4795c25800e4418e2c58c167d628f05185981a88cbdb7072a946766a",
+      "bytes": 4496
+    },
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    ".gitignore.upstream": {
+      "sha256": "e04e8e8ef7c36b66ee3e793f9e78b3f1e2cbd9a064fbf2810b5d7df009950e37",
+      "bytes": 747
+    },
+    "Readme.md": {
+      "sha256": "e89d18713fabdf9cdac157ccfca3cf717aff2bd8182debc7a545816b66281212",
+      "bytes": 2824
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

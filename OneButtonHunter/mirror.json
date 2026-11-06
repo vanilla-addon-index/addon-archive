@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/Geigerkind/OneButtonHunter",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Geigerkind",
+    "repo": "OneButtonHunter",
+    "name": "OneButtonHunter",
+    "url": "https://github.com/Geigerkind/OneButtonHunter",
+    "api": "https://api.github.com/repos/Geigerkind/OneButtonHunter"
+  },
+  "commit": "f1f5b440014059df63042df8584abc3bac809bfe",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+      "bytes": 35141
+    },
+    "OneButtonHunter.lua": {
+      "sha256": "7884bba64f9d72cb5d61c54a4cffd44e1a841cdcfe4f86c1009d4a3cbf92c0c3",
+      "bytes": 2753
+    },
+    "OneButtonHunter.toc": {
+      "sha256": "6ffdce10a24fd47c4c0eea9d569dd26a2d98c59d59b3e2e56907d0f83e20e519",
+      "bytes": 176
+    },
+    "README.md": {
+      "sha256": "5509a6eed15567b875c7bf3969989db7af85ffbea5c72bd463d95db625add519",
+      "bytes": 385
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "4819255": {
+      "tag": "b1",
+      "folder": "b1--4819255",
+      "assets": {},
+      "source": {
+        "sha256": "aac0de40724b98a0f68013c0816a04f2ac8388093ad12d4e1f7ecd03393b5dcd",
+        "bytes": 1649,
+        "path": "releases/b1--4819255/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/tdymel/OneButtonHunter/tarball/b1"
+      }
+    }
+  }
+}

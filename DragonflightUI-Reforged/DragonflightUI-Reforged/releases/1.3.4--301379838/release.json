@@ -1,0 +1,9 @@
+{
+  "id": "301379838",
+  "tag": "1.3.4",
+  "name": "DragonflightUI-Reforged v1.3.4",
+  "body": "• Fixed a Lua error that was being displayed in the chat\r\n(replace: DragonFlightReforged\\modules\\ui\\ui.lua)\r\n\r\n• Minor update to ensure the radio is drawn over the bags\r\n\r\n• Updated the Options interface to match TWoW 1.18.1\r\n(file: DragonFlightReforged\\modules\\menu\\menu.lua)",
+  "published": "2026-03-25T18:51:04Z",
+  "prerelease": false,
+  "url": "https://github.com/Stormhand-dev/DragonflightUI-Reforged/releases/tag/1.3.4"
+}

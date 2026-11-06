@@ -1,0 +1,193 @@
+{
+  "upstream": "https://github.com/laytya/CustomNameplates",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "CustomNameplates",
+    "name": "CustomNameplates",
+    "url": "https://github.com/laytya/CustomNameplates",
+    "api": "https://api.github.com/repos/laytya/CustomNameplates"
+  },
+  "commit": "5088926b4900cedcf90b34853b974112352b395f",
+  "sourceFiles": {
+    "CustomNameplates/Backdrop/PlainBackdrop.tga": {
+      "sha256": "61f41c08e649545b14cdc226c9e26bc4f4f061f357150cf7e7ac1250dc2c5c7f",
+      "bytes": 1068
+    },
+    "CustomNameplates/barSmall.tga": {
+      "sha256": "ccac87b4d6aecf02d3ba39d8dd206d59d292f994734a47e279192b71a0f0e290",
+      "bytes": 10863
+    },
+    "CustomNameplates/border/roth.tga": {
+      "sha256": "2da93e6ac80da8b7af11dca8fdff6f51b6ef8629c73e9206eb122a13672e4ae8",
+      "bytes": 1178
+    },
+    "CustomNameplates/Class/ClassIcon_Druid.tga": {
+      "sha256": "112f464bd47d2e1ed058aa0e307de64960c61625e965f5ad94b614257c560d10",
+      "bytes": 16428
+    },
+    "CustomNameplates/Class/ClassIcon_Hunter.tga": {
+      "sha256": "f3adf8c7ee28e0330fb1bb5d27d902dd91cc33d4835e5fa8d0117fd15600711e",
+      "bytes": 16428
+    },
+    "CustomNameplates/Class/ClassIcon_Mage.tga": {
+      "sha256": "7ef00742daf5fe1d1a4415383be32a95ca33c6695b744eaf3c2ec75c3c378e60",
+      "bytes": 16428
+    },
+    "CustomNameplates/Class/ClassIcon_Paladin.tga": {
+      "sha256": "6110cb045eaa66c442a401d2b0c0e77014e6a1d276dac003c7364e6ed4de20ec",
+      "bytes": 16428
+    },
+    "CustomNameplates/Class/ClassIcon_Priest.tga": {
+      "sha256": "db8210e2100c984ce1be17d7616a89d19189d64ba369a2c4e1c9de9ea297380b",
+      "bytes": 16428
+    },
+    "CustomNameplates/Class/ClassIcon_Rogue.tga": {
+      "sha256": "33ee00e72825006187f3b5c2b2060a2d22c9e3d35a9990a0cc73625c44a5832e",
+      "bytes": 16428
+    },
+    "CustomNameplates/Class/ClassIcon_Shaman.tga": {
+      "sha256": "f9fef2ba20cd7525d159e9f492189fca6989337b064e2b764e1a745fae57da33",
+      "bytes": 16428
+    },
+    "CustomNameplates/Class/ClassIcon_Warlock.tga": {
+      "sha256": "f42eae88f628090c9d44704ebbb4000b019ee356e7c72f806dadbfc4ab13d1a2",
+      "bytes": 16428
+    },
+    "CustomNameplates/Class/ClassIcon_Warrior.tga": {
+      "sha256": "84d2beccc0aec9b62d8d7394d93fb7be46280d432f05ed583558f0bebc4dcf13",
+      "bytes": 16428
+    },
+    "CustomNameplates/CustomNameplates-Locale.lua": {
+      "sha256": "dea3798256d2d632141da84905c7d09fd2ecd5e8b77f9ff2aa3978c4dc8b025c",
+      "bytes": 6835
+    },
+    "CustomNameplates/CustomNameplates.lua": {
+      "sha256": "3eb4110cc922986bca22d8ab3442212c05f4c49c56854a911d10f30fd33e78aa",
+      "bytes": 29908
+    },
+    "CustomNameplates/CustomNameplates.toc": {
+      "sha256": "1358762fb648f2cdc63ae5c3477709f1f7f81a2d0e9abe183a8786c98a7fc1c5",
+      "bytes": 776
+    },
+    "CustomNameplates/Data/table.lua": {
+      "sha256": "f6b21873d1ce0106f3b097d4e857a9b1b12cea5334c7baa7ec760d93dbb78074",
+      "bytes": 25233
+    },
+    "CustomNameplates/Fonts/Helvetica_Neue_LT_Com_77_Bold_Condensed.ttf": {
+      "sha256": "13b685f8aac53fa46f76a3781d7acd5d8df634f76e1aa1b23489b084ad13044b",
+      "bytes": 142964
+    },
+    "CustomNameplates/Fonts/PFDinDisplayPro-Med.ttf": {
+      "sha256": "f4209d49841229caa6c2995557c082a301976f60e49ceda1bb0c4c5b5a0bf97d",
+      "bytes": 424136
+    },
+    "CustomNameplates/Fonts/Ubuntu-C.ttf": {
+      "sha256": "335173652aa12d172b97d21aa7d1a31b039eebc00d333ea49d624aa0b2d82736",
+      "bytes": 350420
+    },
+    "CustomNameplates/Fonts/YanoneKaffeesatzRegular.ttf": {
+      "sha256": "19b5a6a25bd3a7bc94a2940637d9e1b6cf911ecac5ac5e6379141de6f1d3f01d",
+      "bytes": 59940
+    },
+    "CustomNameplates/libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "09cfc0b69a0feb644fa1a9e5fc6715a4e76e0b2f6c7c04a3a0ea693d633770cd",
+      "bytes": 23114
+    },
+    "CustomNameplates/libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "31bc9cfda434c890574d1bbfc48c9e1d068f45ff73e1023ca452dedab0bdef41",
+      "bytes": 15957
+    },
+    "CustomNameplates/libs/Babble-Spell-2.3/Babble-Spell-2.3.lua": {
+      "sha256": "250764ee2c32492e646d0530dcdf423dc19e2ac54e4a4630bb585cf1d6e9d232",
+      "bytes": 458707
+    },
+    "CustomNameplates/libs/ParserLib/FixGlobalString.lua": {
+      "sha256": "8cac6f5edf29e5720695d9193cbe97f110a8ff06b63b46681b7ee0da65d9b25e",
+      "bytes": 1181
+    },
+    "CustomNameplates/libs/ParserLib/optimizer-enUS.lua": {
+      "sha256": "f71761fab1cdb6b09322adda57dac39be83ceeb72aab0ea4a51a20e25556b3f8",
+      "bytes": 7467
+    },
+    "CustomNameplates/libs/ParserLib/optimizer-koKR.lua": {
+      "sha256": "efb28068019c0482767a74febcf6f90db91d18e01dae6c39c09a2b6c4289bba4",
+      "bytes": 12051
+    },
+    "CustomNameplates/libs/ParserLib/optimizer-ruRU.lua": {
+      "sha256": "9a84ebea2761f4e376394fd3a3cfafb5f1f0d1beb89f83d3c2a2c3aebeeba5e4",
+      "bytes": 10369
+    },
+    "CustomNameplates/libs/ParserLib/optimizer-zhTW.lua": {
+      "sha256": "5e26888c7e362ad1dc1846d7493b23e2523c88618fdc49b0eb48672616a8ee0f",
+      "bytes": 8008
+    },
+    "CustomNameplates/libs/ParserLib/ParserLib.lua": {
+      "sha256": "0e9b57962a76193cd1685c8e15dec2c6fda24bf1daa81a39d8f0866d2480abda",
+      "bytes": 88846
+    },
+    "CustomNameplates/libs/ParserLib/readme.txt": {
+      "sha256": "762a52185e9eeeff3d6c5f9905b63222dc823642be922a0b03c04979867b90aa",
+      "bytes": 82
+    },
+    "CustomNameplates/options.lua": {
+      "sha256": "af06313ac323b874bc88620a507a8a9f313a49b1c08492ec6ba97ece68a76335",
+      "bytes": 28659
+    },
+    "CustomNameplates/Reticule.tga": {
+      "sha256": "b53120d90cc4d975143675abcb86440b6ce95f4b0481ae1ebe5905fae6046b68",
+      "bytes": 7798
+    },
+    "CustomNameplates/settings.lua": {
+      "sha256": "56136c38af8bcc9f5947c28c1fb869a1f7680dc77786fe33fd5df904496ab3b8",
+      "bytes": 4736
+    },
+    "CustomNameplates/textures/BantoBar.tga": {
+      "sha256": "5a5deac548c4639de44db55ed79a6784bba95fc8286e7a4e7235ea7da24e19c3",
+      "bytes": 32812
+    },
+    "CustomNameplates/textures/glaze.tga": {
+      "sha256": "83934fd9dfe412ea578aaff39607d00345b72f33115e3244e55e6587e69f6715",
+      "bytes": 274
+    },
+    "CustomNameplates/textures/oCB.tga": {
+      "sha256": "e300a87224e7c1a044574ec915a1f9c0de49c3e26f854ecd3e1ea8ed920aaba9",
+      "bytes": 32812
+    },
+    "CustomNameplates/textures/perl.tga": {
+      "sha256": "e0fd78c10c65cc4ef4cd455ecf97e0b1f0d0e8808d0822eb94f4f2f9dae98596",
+      "bytes": 2037
+    },
+    "CustomNameplates/textures/smooth.tga": {
+      "sha256": "00e8084e83bf25b941464e2619b59e993b6ac7ae0bd8a6f37b12872e686ded6d",
+      "bytes": 32812
+    },
+    "CustomNameplates/textures/striped.tga": {
+      "sha256": "9c02969479e5dcbce2bcbb4f48bf2f0b2b00c44fa7556140fc8958ba0e9ad09d",
+      "bytes": 32812
+    },
+    "CustomNameplates/unitcasting.lua": {
+      "sha256": "ebd4531214f391b1531d2ee38be8749d8e6ab98fe38dd3dfbd5edffaa6cd3550",
+      "bytes": 16462
+    },
+    "README.md": {
+      "sha256": "dbafaafa08b351972dcc35b10eee6f41353fa6b2ae5349cd94e562ad809e4e1a",
+      "bytes": 1014
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "5662236": {
+      "tag": "1.70b",
+      "folder": "1.70b--5662236",
+      "assets": {},
+      "source": {
+        "sha256": "631f0207d21a711f22988937adba2f67ed6a121079fd814ce97a5e9f5a5c67c5",
+        "bytes": 660162,
+        "path": "releases/1.70b--5662236/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/laytya/CustomNameplates/tarball/1.70b"
+      }
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "upstream": "https://github.com/celguar/CharacterProfiler",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "celguar",
+    "repo": "CharacterProfiler",
+    "name": "CharacterProfiler",
+    "url": "https://github.com/celguar/CharacterProfiler",
+    "api": "https://api.github.com/repos/celguar/CharacterProfiler"
+  },
+  "commit": "8501d6991302d177776ace5f5843cd24b6308974",
+  "sourceFiles": {
+    "CharacterImportGenerator/main.py": {
+      "sha256": "c0e7b73336a1d99ec7fab50df46d3ba6f56f7d7a5793aa2c32e346cb5d1e2365",
+      "bytes": 1375
+    },
+    "CharacterImportGenerator/src/constants.py": {
+      "sha256": "a8f2e67d4e44acd9468a548a36f35a46598a20d2527c6a9baf8fba8aceb2e843",
+      "bytes": 330511
+    },
+    "CharacterImportGenerator/src/parser.py": {
+      "sha256": "622512f778caaf76627ac7dfc4ae907ee0b5e51f9176a6982b63708131c97124",
+      "bytes": 77172
+    },
+    "CharacterProfiler/CharacterProfiler.lua": {
+      "sha256": "833cf7fdf8544c123254220aa60ca908e9f512bc8ac8fdff18c9c027ff37a7e4",
+      "bytes": 80150
+    },
+    "CharacterProfiler/CharacterProfiler.toc": {
+      "sha256": "9943c3fb2022dbd8331e07280269eb7372670ad408cb52902d9bd73ce0943f81",
+      "bytes": 417
+    },
+    "CharacterProfiler/CharacterProfiler.xml": {
+      "sha256": "b77a4958274ccf6f406823cdf6ba89645843d91d9dada089fc2f79d31fc37c2d",
+      "bytes": 2059
+    },
+    "CharacterProfiler/localization.lua": {
+      "sha256": "a43dd6edf2497c387c6e381361e747fe54cec47760d05dac6665d1be2ff89df5",
+      "bytes": 326
+    },
+    "CharacterProfiler/readme.txt": {
+      "sha256": "377063ea97bdc17e55c91247abae2116c8f2773e738752994ea5b2c3e538708a",
+      "bytes": 2992
+    },
+    "CharacterProfileViewer/character_profile_viewer.py": {
+      "sha256": "ac09caacc2d1ed6b1633923f07878c2bfc33d2cbe7bdb681266ff32e0a729ef2",
+      "bytes": 31022
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "317419807": {
+      "tag": "1.0",
+      "folder": "1.0--317419807",
+      "assets": {
+        "412108397": {
+          "sha256": "6556be639b9abd9ad279fd319d209b89cb6430fe1f3e92010422f7d124497a4d",
+          "bytes": 17054255,
+          "id": "412108397",
+          "name": "assets.zip",
+          "url": "https://github.com/celguar/CharacterProfiler/releases/download/1.0/assets.zip",
+          "path": "releases/1.0--317419807/assets/assets.zip"
+        },
+        "419360396": {
+          "sha256": "94f8adc7a951c7c408d34997874a8758fefc05807429b2d232935f90bad726e5",
+          "bytes": 7919545,
+          "id": "419360396",
+          "name": "Character_Profile_Viewer.exe",
+          "url": "https://github.com/celguar/CharacterProfiler/releases/download/1.0/Character_Profile_Viewer.exe",
+          "path": "releases/1.0--317419807/assets/Character_Profile_Viewer.exe"
+        },
+        "430310893": {
+          "sha256": "d34de44cca3ac1c91db620afe7bb3a39fceb02c8ff5514d352bd8e97a4b81f3d",
+          "bytes": 8056911,
+          "id": "430310893",
+          "name": "Character_Import_Generator_1.17.1.exe",
+          "url": "https://github.com/celguar/CharacterProfiler/releases/download/1.0/Character_Import_Generator_1.17.1.exe",
+          "path": "releases/1.0--317419807/assets/Character_Import_Generator_1.17.1.exe"
+        },
+        "430310934": {
+          "sha256": "6feddbe73e1f7363c3a587094e3cd92036096d774681191627f714842fba4d15",
+          "bytes": 8057402,
+          "id": "430310934",
+          "name": "Character_Import_Generator_1.18.1.exe",
+          "url": "https://github.com/celguar/CharacterProfiler/releases/download/1.0/Character_Import_Generator_1.18.1.exe",
+          "path": "releases/1.0--317419807/assets/Character_Import_Generator_1.18.1.exe"
+        },
+        "438642824": {
+          "sha256": "484423462fa121463b2f2195eac5f980489ce6b4dfd49de3515a1e72723c4189",
+          "bytes": 8057327,
+          "id": "438642824",
+          "name": "Character_Import_Generator_1.18.1_Repack.exe",
+          "url": "https://github.com/celguar/CharacterProfiler/releases/download/1.0/Character_Import_Generator_1.18.1_Repack.exe",
+          "path": "releases/1.0--317419807/assets/Character_Import_Generator_1.18.1_Repack.exe"
+        },
+        "482277312": {
+          "sha256": "8748563aa2c59f7497338585e4f9bc4d6142969af040fbdc83ceb604da78482d",
+          "bytes": 8056600,
+          "id": "482277312",
+          "name": "Character_Import_Generator_1.18.1_SIGGZ.exe",
+          "url": "https://github.com/celguar/CharacterProfiler/releases/download/1.0/Character_Import_Generator_1.18.1_SIGGZ.exe",
+          "path": "releases/1.0--317419807/assets/Character_Import_Generator_1.18.1_SIGGZ.exe"
+        }
+      },
+      "source": {
+        "sha256": "7c54f468ba539ed4be17dd2d4e5487478a7b4c2029a74638edd4b379407d236c",
+        "bytes": 25524,
+        "path": "releases/1.0--317419807/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/celguar/CharacterProfiler/tarball/1.0"
+      }
+    }
+  }
+}

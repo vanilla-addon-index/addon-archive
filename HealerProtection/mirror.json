@@ -1,0 +1,29 @@
+{
+  "upstream": "https://octowow.st/git/Dusk/HealerProtection",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Dusk",
+    "repo": "HealerProtection",
+    "name": "HealerProtection",
+    "url": "https://octowow.st/git/Dusk/HealerProtection",
+    "api": "https://octowow.st/git/api/v1/repos/Dusk/HealerProtection"
+  },
+  "commit": "cc8d020ef978344348817999839d275f490c9b7f",
+  "sourceFiles": {
+    "core.lua": {
+      "sha256": "88855f410e1035450b12bf0381ab0d29eeb9a099446868314673503bdc06d9e2",
+      "bytes": 22438
+    },
+    "HealerProtection.toc": {
+      "sha256": "f6c4640d7d8f8edc2ee0c0ecfe15f40fa404bd0b5ee71727475a2f7e5685d0fd",
+      "bytes": 220
+    },
+    "README.md": {
+      "sha256": "6db078f1d7c7361ca5a89d1e37b702face945664d3ac9d7a51a12dd173eb92ba",
+      "bytes": 5054
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

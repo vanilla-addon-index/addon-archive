@@ -1,0 +1,125 @@
+<p align="center">
+  <a href="https://chronicleclassic.com/?utm_source=github&amp;utm_medium=referral&amp;utm_campaign=readme&amp;utm_id=chronicle_companion&amp;utm_content=logo">
+    <img src="assets/ChronicleLogoCenter.svg" alt="ChronicleClassic.com" width="400" />
+  </a>
+</p>
+
+# ChronicleCompanion
+
+> _Every raid tells a story. Chronicle helps you read it._
+
+The official companion addon for **[ChronicleClassic.com](https://chronicleclassic.com/?utm_source=github&utm_medium=referral&utm_campaign=readme&utm_id=chronicle_companion&utm_content=intro)** — created and maintained by the Chronicle team. ChronicleCompanion enriches your combat logs with extended unit metadata so Chronicle can transform them into clear, actionable insights for raid leaders.
+
+⚙️ **Built for WoW 1.12 clients** (Vanilla)
+
+Upload your logs at **[chronicleclassic.com](https://chronicleclassic.com/?utm_source=github&utm_medium=referral&utm_campaign=readme&utm_id=chronicle_companion&utm_content=upload_intro)**.
+
+## Features
+
+- **Extended Unit Tracking** — Automatically logs unit GUIDs, names, levels, owners (for pets/minions), and buff information to your combat log
+- **Challenge Mode Detection** — Detects and logs player challenge modes (Hardcore, Level One Lunatic, Exhaustion, etc.)
+
+## Requirements
+
+- **World of Warcraft 1.12 client**
+- [Nampower](https://gitea.com/avitasia/nampower)
+
+## Installation
+
+1. Download the latest release
+2. Extract to your `Interface/AddOns/` folder
+3. Ensure the folder is named `ChronicleCompanion`
+4. Restart WoW
+
+## Usage
+
+### On Raid Night
+
+**Optional:** Configure the addon with `/chronicle config`
+
+#### 1. Prepare the logs
+
+Type `/chron delete` to delete any existing logs.
+
+#### 2. Do your raid
+
+#### 3. Save your logs
+
+Type `/chron save` to save the logs to disk.
+
+#### 4. Upload the file
+
+Upload `<VanillaWoWFolder>/CustomData/Chronicle_<character_name>.txt` to **[ChronicleClassic.com](https://chronicleclassic.com/?utm_source=github&utm_medium=referral&utm_campaign=readme&utm_id=chronicle_companion&utm_content=upload_instructions)**.
+
+### Chronicle Sidekick (addon integration)
+
+The configuration window includes **Archive and upload...** and a collapsible
+**Sidekick** status tray, sharing the right side with **Extra Events**. Uploading
+archives the current log, starts a fresh log session, and queues the immutable
+archive for a compatible [Chronicle Sidekick](https://github.com/Emyrk/chronicle-sidekick).
+The tray shows request-level processing status, retries, and copyable links to
+all instances found in a log. Select Say, Yell, Guild, Party, or Raid in the tray,
+then use **Announce** on an instance to share its name and URL.
+Stock Vanilla chat does not make web URLs clickable; recipients need a URL-handling
+addon for that. Use `/chronicle upload` to open the upload confirmation without
+opening settings.
+A live, ready Sidekick is required for the upload button.
+
+This addon uses [Chronicle local RPC v1](SIDEKICK_PROTOCOL.md):
+`ChronicleRPC.requests`, `ChronicleRPC.status`, and `combat_log.upload`. A Sidekick
+build implementing that contract is required; the earlier `ChronicleSidekick.*`
+wire format is not supported. Sidekick owns managed archive retention and can
+retry either upload or Chronicle processing without a new log boundary. Future
+RPC/cache ideas are tracked in [Sidekick #32](https://github.com/Emyrk/chronicle-sidekick/issues/32),
+not implemented v1 features.
+
+### Slash Commands
+
+| Command             | Description                 |
+| ------------------- | --------------------------- |
+| `/chronicle help`   | Show all available commands |
+| `/chronicle config` | Open the options panel      |
+| `/chron delete`     | Delete existing logs        |
+| `/chron save`       | Save logs to disk           |
+| `/chronicle upload` | Confirm archive and upload via Sidekick |
+
+You can also use `/chron` as a shorthand for `/chronicle`.
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+### Development checks
+
+Install Node.js, then run the static `WriteN` arity checks:
+
+```sh
+npm ci --prefix tools/write-arity
+npm test --prefix tools/write-arity
+npm run check --prefix tools/write-arity
+```
+
+The Lua tests require Lua 5.0.3 because the baseline `Write` implementation uses Lua 5.0 vararg semantics:
+
+```sh
+tools/install_lua_5_0_3.sh .cache/lua-5.0.3
+.cache/lua-5.0.3/bin/lua tests/raid_composition_test.lua
+.cache/lua-5.0.3/bin/lua tests/ursol_client_test.lua
+.cache/lua-5.0.3/bin/lua tests/write_correctness_test.lua
+.cache/lua-5.0.3/bin/lua tests/talent_invalidation_test.lua
+.cache/lua-5.0.3/bin/lua tests/sidekick_test.lua
+.cache/lua-5.0.3/bin/lua tests/sidekick_ui_test.lua
+.cache/lua-5.0.3/bin/lua tests/options_refresh_test.lua
+```
+
+## License
+
+[MIT](LICENSE)
+
+## Author
+
+**Emyrk** · Creator of [ChronicleClassic.com](https://chronicleclassic.com/?utm_source=github&utm_medium=referral&utm_campaign=readme&utm_id=chronicle_companion&utm_content=creator_credit)
+
+---
+
+_ChronicleCompanion is the official addon for [ChronicleClassic.com](https://chronicleclassic.com/?utm_source=github&utm_medium=referral&utm_campaign=readme&utm_id=chronicle_companion&utm_content=footer) — every raid tells a story._ 📜

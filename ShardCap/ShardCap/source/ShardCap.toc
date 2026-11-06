@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: ShardCap |cff9482c92.1.1|r
+## Notes: Keeps your Soul Shards at a cap. Stack-aware for WoW 1.18.1 Clients, soul bag aware. Type /shardcap
+## Author: The Johnnest of them all; stacking from ShardCapPlus (Paduk); 2.0 rework
+## Version: 2.1.1
+## SavedVariablesPerCharacter: ShardCapDB, SHARDCAP_CAP_VALUE, SHARDCAP_SPAM
+ShardCap.lua
+Options.lua

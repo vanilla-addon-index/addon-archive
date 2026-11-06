@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/KameleonUK/LootCrestReminder",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "KameleonUK",
+    "repo": "LootCrestReminder",
+    "name": "LootCrestReminder",
+    "url": "https://github.com/KameleonUK/LootCrestReminder",
+    "api": "https://api.github.com/repos/KameleonUK/LootCrestReminder"
+  },
+  "commit": "927f1a414bba42a817dd3900632e8ea2947bc959",
+  "sourceFiles": {
+    "LootCrestReminder.lua": {
+      "sha256": "04809e57dbf184dbd5d6d93524443fe21fa20d4c8d400618eba9e91cd87cda7c",
+      "bytes": 11121
+    },
+    "LootCrestReminder.toc": {
+      "sha256": "dfb4d53dd3e77ebd8615ee2521ad2a72864d3161af281d111610d9c2946988da",
+      "bytes": 159
+    },
+    "media/Bounce.mp3": {
+      "sha256": "89e000248896bc5e89f8ac2d00b9c73dfa6e8e8ea4e41ead79cebe667eab9bb4",
+      "bytes": 23040
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

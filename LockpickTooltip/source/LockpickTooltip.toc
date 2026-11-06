@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: LockpickTooltip
+## Notes: Shows required lockpicking skill on item/object tooltips
+## Author: Olzon
+## Version: 1.2.0
+## SavedVariables: LockpickTooltipDB
+
+LockpickTooltip.lua

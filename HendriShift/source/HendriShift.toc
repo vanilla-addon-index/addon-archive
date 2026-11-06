@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: |cffff7d0aHendriShift
+## Author: Xerron/Er
+## Version: 1.0.0
+## Notes: Consumableshift helper
+HendriShift.lua

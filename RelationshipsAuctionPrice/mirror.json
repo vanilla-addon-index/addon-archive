@@ -1,0 +1,54 @@
+{
+  "upstream": "https://octowow.st/git/Relationship/RelationshipsAuctionPrice",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Relationship",
+    "repo": "RelationshipsAuctionPrice",
+    "name": "RelationshipsAuctionPrice",
+    "url": "https://octowow.st/git/Relationship/RelationshipsAuctionPrice",
+    "api": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsAuctionPrice"
+  },
+  "commit": "faa214d7119cbcbb5d02d656fa4d7cc15ae7745a",
+  "sourceFiles": {
+    "PriceData.lua": {
+      "sha256": "8a98896bee5b89a3630778fed9e778cbc5f1404aa45e11f63fbcaed2b751a0ac",
+      "bytes": 2913682
+    },
+    "README.md": {
+      "sha256": "91b85b9efa0e115bb84f1e2e28a2aa30ce49fe101b34057cb5046482c789efb3",
+      "bytes": 6362
+    },
+    "RelationshipsAuctionPrice.lua": {
+      "sha256": "a1f35436498327b804aa79ce0acd4a9b192a5e2193b5b3b180d7bccb76beadbb",
+      "bytes": 35512
+    },
+    "RelationshipsAuctionPrice.toc": {
+      "sha256": "0f8699577556175e78b8a37279a2fd5d7d586496b718e82710f1ba3e40c84e42",
+      "bytes": 332
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "24": {
+      "tag": "a",
+      "folder": "a--24",
+      "assets": {
+        "21": {
+          "sha256": "4566373d752a2bffc27fabc68b68eb6ca6112e98122d3a4ace4ccd9ccfd8ef5f",
+          "bytes": 200118,
+          "id": "21",
+          "name": "RelationshipsAuctionPrice.zip",
+          "url": "https://octowow.st/git/Relationship/RelationshipsAuctionPrice/releases/download/a/RelationshipsAuctionPrice.zip",
+          "path": "releases/a--24/assets/RelationshipsAuctionPrice.zip"
+        }
+      },
+      "source": {
+        "sha256": "ccac208878e4adceaad1596919628db5a07634fc6828185297038bba502f550d",
+        "bytes": 216045,
+        "path": "releases/a--24/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsAuctionPrice/archive/a.tar.gz"
+      }
+    }
+  }
+}

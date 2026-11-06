@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: QuestShell
+## Notes: Leveling/quest helper with auto-accept/turn-in and progress tracker
+## Author: Valiusha
+## Version: 0.3
+## SavedVariables: QuestShellDB
+
+AllianceGuides.xml

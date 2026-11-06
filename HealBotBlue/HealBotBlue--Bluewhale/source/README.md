@@ -1,0 +1,242 @@
+**HealBotBlue**
+By Bluewhale.
+
+> **NOTE:** For HealBot to work correctly, the **Selfcast** feature in WoW options needs to be disabled.
+
+Original HealBot, while being a staple healing addon in Wrath and later expansions, was in its infancy during Vanilla WoW. It was a memory and CPU hog that ate up resources, featured a clunky UI, and offered limited functions. To fix all of the above while still using it as a base framework, I refactored the entire codebase. The monolithic code structure was split to follow a more modern approach (MVC design pattern), making it more stable and easily editable. Additionally, the inefficient AURA scanning was replaced with lightweight (Observer Pattern) reactive programming. It now updates only what is necessary when a trigger fires, rather than performing clumsy, continuous scans of a 40-man raid. By doing so, I managed to throttle down CPU and memory usage significantly, placing it on par with modern addons. Additional functionalities are being added over time to provide a holistic, healer-centered raid frame.
+
+> **Performance First:** The raidframe is not library reliant - unlike popular raidframe replacement addons it doesn't rely at all on external frameworks. While this makes my work a bit harder this allows complete control over garbage collection and CPU use which makes it multiple times more stable and lightweight.
+
+### Development version
+There is dev branch available, it might be slightly more unstabl but most of time it does have more features present. It's only merged into main when major feature set is implemented and stabilised.
+
+### Reporting Errors
+Major errors will pop up a frame with error information. Take a screenshot and post comments.
+
+### Installation
+Unpack the zipped file and place the `HealBotBlue` folder under `Interface/AddOns` in your World of Warcraft directory. 
+Default installation path: `C:\Program Files\World of Warcraft\Interface\AddOns\HealBotBlue`
+
+### Chat Commands
+* `/hb` - Toggles the main HealBot panel on and off
+* `/hb options` - Toggles the HealBot options panel on and off
+* `/hb reset` - Resets the contents of the main HealBot panel
+* `/hb debug` - Toggles in-game debug message output to the main chat frame
+
+### Key Features & Current Functionality
+* **MVC & Observer Architecture:** High-performance, reactive engine that updates frames dynamically on state changes, drastically reducing CPU and memory overhead. Features memory recycling pool and event loop decoupling for zero-stutter combat.
+* **Native Hovercasting (Mouseover):** Cast configured spells on hovered unit frames using keybinds directly from your action bars, without losing your current target. (Toggleable in Options -> General).
+* **Macro, Item, & Script Bindings:** Bind named macros, inventory items, and scripts directly to mouse clicks. Supports implicit `@mouseover` targeting natively.
+* **Zero-Latency Self-Heals:** Incoming heals for the local player process instantly with zero latency, independent of network lag.
+* **Talent-Based Calculations & Equipment Bonus:** Dynamic spell healing calculations for Druid, Priest, and Paladin based on talents, and automatically scans equipped gear to scale healing predictions.
+* **Modifier-Aware Tooltips:** Tooltips dynamically update to show exact bound actions (Shift/Ctrl/Alt) and required mana costs (turns red if insufficient mana).
+* **Blizzard Party Frame Toggle:** Toggle to automatically hide Blizzard's default party frames when in a group in favor of HealBot's layouts.
+* **HoT & Buff Tracking:** Intelligently track active HoTs and buffs directly on the grid frames with custom icons (e.g., Renew, Rejuvenation, Regrowth, Fear Ward). Optional extended HoT timer tracker togglable below frames. 
+* **Mana Bars for Healers:** Enable and position mini-mana status bars next to unit frames, toggleable to display for healer classes only or all classes.
+* **Curse & Debuff Warning (CDC):** Dynamic visual and audio alerts for cleanable debuffs. Customizable colors based on debuff type (Curse, Poison, Disease, Magic).
+* **Pet & Familiar Frames:** Dedicated, toggleable frames for tracking and healing player pets.
+* **Customizable Health Text:** Dynamic unit health display (Name Only, Percentage, Real Health, or Health Deficit).
+* **Non-Mana Resource Tracking:** Track Rage, Energy, and Focus for non-mana classes.
+* **Highly Customizable Skins:** Fully configure dimensions (width, height), row spacing, column layouts, custom textures, opacity, class-colored frames, and outline of fonts.
+* **Additional Mods Integration:** Navigate to 'Extras' tab in Options to optionally enable integrations with `UnitXP_SP3` (for ultra-precise 3D range and Line of Sight checks), `nampower` (for accurate real-time heal/buff tracking), `SuperWoW` (for robust GUID-based state tracking), and `ClassicAPI` (for native +Healing bonuses and fast 3D distance checks).
+
+### To be implemented
+- **Strategy Pattern / Code Tree Splits:** Migrate heavy mod integrations (like Nampower aura tracking and SuperWoW UI rendering) into isolated code trees (e.g., `HealBot_Model_SuperWoW.lua`). This will allow dynamic overwriting of global functions at startup, eliminating the CPU overhead of running `if integration then` branch checks inside high-frequency update loops on Vanilla clients.
+
+### Known issues
+
+* **New spell rank bug** you may experience lua error spaming your chat frame after learning new healing spells. /reload will clear the issue.
+
+
+### Change Log
+
+**v1.7.6**
+* **Feature - All-Class Support & Raid Frame Replacement:** Removed legacy restriction that disabled HealBot event listeners and UI frames for classes without native healing spells. HealBot now initializes and functions as a full party/raid frame replacement for all classes (Warrior, Mage, Rogue, Hunter, Warlock).
+* **Targeting & Binding Defaults:** Added default `Left` click `"Target"` binding for non-healer classes, recognized `"target"` in spell resolution, and prevented non-healer buttons from disabling on full-health allies.
+* **Mage Decurse Support:** Integrated `Remove Lesser Curse` into Mage debuff tables and Cure/Dispel (CDC) options.
+* **Bug Fix - Spellbook Scan Lua Error:** Initialized `RealHealing` in spell scanner, resolving `attempt to concatenate global 'RealHealing' (a nil value)` when opening the spellbook on non-healer classes.
+* **UI Fix - Cure Dropdown Stale Text:** Unconditionally added "None" entry and disabled curing button dropdowns for classes without decurse/cleanse abilities, fixing stale dropdown text ("Melee") displaying on Warrior and other non-dispelling classes.
+* **Feature - Class Buff Tracking:** Added buff tracking lists, bidirectional group/rank equivalents (Greater Blessings, armors, etc.), and self-only auto-filtering for all classes. Added Water Shield for Shaman and refreshed buff dropdown labels to eliminate stale UI cache text.
+
+**v1.7.5**
+* **Feature - Test Bars** - Implemented a "Test Bars" button and slider in the Skins options tab, allowing you to spawn and adjust a dummy raid group of up to 40 members without being in a real raid. This allows for easy layout and appearance customization out of combat.
+* **UI - Skins Options & Custom Health Gradients** - Added configurable Max HP and Min HP colour pickers with descriptive labels for custom gradient support. Fixed colour picker button click interceptors and hooked ColorPickerFrame callbacks. Integrated global font selector across raid frame text, headers, Options button, and preview bars. Reorganized Skins tab layout to anchor Test Bars cleanly in Column 2.
+* **UI - Cleanup** - While adding new funcionalities the way menus look was ignored, new functions were added to each tab where there was free space, so attempt was made to clean up this convoluted mess I made. Menu Tabs are now aligned and grouped in a manner that makes more sense.
+* **UI - Options Tabs Relative Anchoring Fix** - Fixed layout skewing and margin drift across Spells, Buffs, Chat, Extras (Integrations), and Auto options tabs. Replaced arbitrary hardcoded coordinate shifts with clean relative-anchoring hierarchies centered across the dialog width.
+* **Performance Fix - Table Pooling & GC Leaks** - Resolved critical table leaks in emergency heals where pooled tables (`order` and `units`) failed to release when pet heals were disabled, un-nested pet healing from emergency heals, eliminated high-frequency (4 Hz) anonymous closure allocations in `HealBot_Action_UpdatePlayerHoTs`, and implemented in-place key recycling for equipment scanning and grid button tables.
+
+**v1.7.4**
+* **Performance Fix - CPU Spikes** - Fixed massive FPS drops during raid combat. The `HealBot_CheckBuffs` function previously forced the client to generate hidden UI tooltips for up to 32 buffs per player on every single `UNIT_AURA` event. Tooltip parsing is now cached per texture, bypassing thousands of redundant API calls per second.
+* **Performance Fix - Frame Rendering** - Eliminated redundant UI layout recalculations in `HealBot_Action_EnableButton`. The UI no longer forces `SetFont`, `SetWidth`, `SetHeight`, and `GetGlobal` lookups on every single combat tick (which previously caused 4,000+ layout updates per second in 40-man raids).
+* **Performance Fix - Range Checking** - Greatly reduced CPU stutter caused by range calculations. `HealBot_Range_Check` now caches map positioning math and API calls per-frame, preventing the addon from calculating the exact same `math.sqrt` distance up to 5 times per unit during heavy combat.
+* **Performance Fix - Unit ID Lookup** - Optimized `HealBot_FindUnitID` by pre-allocating raid unit tokens, preventing massive string concatenation and garbage collection spam during high-frequency combat events like `CHAT_MSG_ADDON` (HealComm).
+* **Performance Fix - String GC Leak** - Fixed garbage collection hitches caused by `string.gfind` closures in the HealComm parsing loop by rewriting it to use closure-free `string.find` native loops.
+* **Debug Output Command** - Added `/hb debug` (or `/hb dbg`) slash command to toggle real-time debug message printing directly into the standard chat frame without requiring custom chat channels.
+* **Performance Fix - Spell Lookup** - Fixed a massive CPU drain and garbage generation issue where the entire spellbook was linearly scanned every frame per unit. Spell IDs are now cached via O(1) dictionary lookup on login and talent/spell changes.
+* **Performance Fix - Unit Hash Lookup** - Eliminated heavy C-API calls to `UnitName()` during incoming heals by caching raid and party unit tokens in a fast O(1) hash table that updates on roster changes.
+* **Performance Fix - Range Cache GC Leak** - Fixed a continuous memory leak in the range checker caused by string concatenation (`unit .. "_" .. range`) running every frame. Range states are now stored in a nested numeric table cache.
+* **Performance Fix - Talent Rank Scan** - Fixed severe CPU stutter when gaining or losing auras that affect stats. Previously, inventory updates forced a full equipment and spell recalculation which linearly scanned the entire talent tree multiple times per rank. Talent ranks are now cached natively.
+* **Feature - HoT Tracking** - Added an option in the Integrations tab to track Player-cast HoT timers in a dedicated list below the main HealBot frame. Requires Nampower to fetch exact durations. Added support for tracking Power Word: Shield. Implemented with a pre-allocated static cache array for zero GC leaks, and precise GUID trapping for instant name resolution on self and non-party members.
+
+
+**v1.7.3**
+* **Performance Fix - Table Pooling Part 2** - Fixed remaining un-pooled table allocations in layout updates, macro parsing, nampower integration, and aura tracking by utilizing HealBot_GetTable().
+* **Performance Fix - HealComm Networking** - Fixed issue where incoming `HealComm` messages triggered synchronous UI redraws, causing massive lag in 40-man raids during combat. `HealBot_RecalcHeals` is now decoupled and deferred through the `HealBot_OnUpdate` dirty queue, allowing multiple network events to collapse into a single frame redraw.
+
+**v1.7.2**
+* **Performance Fix - Table Pooling** - Fixed massive Vanilla Lua 5.0 garbage collection memory leaks caused by unbounded table allocations in high-frequency update loops (e.g., `OnUpdate` and `PreserveStateByGUID`). Moved tables to file-local scope and implemented inline clearing.
+* **Performance Fix - OOC Cleanup** - Added an out-of-combat garbage collection hook (`PLAYER_REGEN_ENABLED`) to purge disconnected senders from the `HealBot_IncomingHealers` global table, preventing memory bloat during prolonged play sessions.
+* **Bug Fix - Incoming Heals Comms** - Fixed a regex string parsing bug that caused incoming heals from other HealBot instances to drop if a unit's name contained non-alphabetic characters (e.g. dashes or spaces in pet names).
+* **Feature - Standard HealComm Sync** - Implemented lightweight parsing of the standard `HealComm` addon channel. HealBot now perfectly syncs incoming heals with modern raid frames like Luna, Grid, and pfUI, while retaining backwards compatibility with older versions of HealBot.
+* **UI Update - Raid Marks** - Anchored raid target icons to top of unit frames instead of center.
+* **Bug Fix** - Fixed an issue where the debuff warning sound and UI message would spam repeatedly on every aura update. The warning now only plays once per unique dispellable debuff type applied to a unit. Increased warning trigger range to 40 yards.
+
+**v1.7.1**
+* **Bug Fix - Shapeshift Auto-Unshift** - Fixed an issue where the shapeshift spell queue would incorrectly pull druids out of Tree of Life form .
+* **Cleanup** - Removed deprecated `UPDATE_SHAPESHIFT_FORM` event listeners and `HealBot_UpdateShapeshiftForm` function to save CPU cycles.
+
+**v1.7.0**
+* **Feature - Raid Marks** - Added tracking and display of raid marks on unit frames.
+* **External Addon Integrations** - Added a new 'Extras' tab in Options to optionally enable integrations with `UnitXP_SP3` (for ultra-precise 3D range and Line of Sight checks), `nampower` (for accurate real-time heal/buff tracking), `SuperWoW` (for robust GUID-based state tracking), and `ClassicAPI` (for native +Healing bonuses and fast 3D distance checks).
+* **UI Layout** - Widened the Options UI and neatly centered elements to accommodate the new integrations tab.
+* **Bug Fix - Rendering Crash** - Fixed a critical UI issue where unrecognized debuff types would crash the rendering loop, causing unit frames to disappear.
+* **Bug Fix - Missing Group Frames** - Fixed a layout initialization bug where the group unit array was accidentally cleared, causing the panel to draw 0 bars and shrink to a floating "Options" button.
+* **Bug Fix - Target State Aliasing** - Fixed a bug in `PreserveStateByGUID` where targeting a party member caused their frame to alias the target's state table in memory. This previously caused party frames to adopt enemy mob names and lose their class colors when changing targets.
+* **Bug Fix - Group Aliasing** - Fixed a bug where roster updates caused frames to share memory references, causing the UI to display the same player across multiple group slots.
+* **Bug Fix - Slow Client Init** - Fixed missing class colors after `/reload` by adding lazy-load identity fetches directly into the render pipeline for when `UnitClass` data is delayed by the server.
+* **Bug Fix - Debuff Tracking** - HealBot now automatically tracks all curable debuffs for the player's class out of the box. Previously, users had to manually assign a cure spell to a click binding to enable CDC debuff tracking.
+* **Bug Fix - CDC Filter** - Fixed an issue where the CDC module displayed all debuffs instead of filtering for dispellable ones, restoring proper health bar coloring.
+* **Bug Fix - UnitClass Localization** - Added a fallback mapping for the Vanilla `UnitClass` API to always return the uppercase English class string. This fixes a bug where default options (like Debuff tracking) failed to initialize.
+* **Feature - Shapeshift Spell Queue** - Built a native spell queue system for Druid auto-unshifting. Bypasses the "Cannot cast while shapeshifted" error and server lag when AutoUnshift is enabled, firing the heal seamlessly the exact millisecond the form is dropped. Now completely unified to use the standard casting API for maximum reliability across all client setups.
+* **Bug Fix - CDC Config List** - Fixed an uninitialized dropdown list array that prevented the CDC class monitor configuration from saving correctly.
+* **Bug Fix - Color Picker Accuracy** - Removed an undocumented multiplier hack on default textures that was artificially brightening debuff bar colors and overriding the user's selected colors from the color picker.
+* **Bug Fix - Raid Self-Range & Transparency** - Fixed player health bar appearing transparent in raid instances by checking `UnitIsUnit(unit, "player")` in range detection, preventing false out-of-range failures when player is represented by a `raidX` token.
+* **Bug Fix - Raid Class Coloring & Identity Cache** - Fixed missing and delayed raid class colors by querying authoritative server data (`GetRaidRosterInfo`) for raid members, preventing model identity cache wipes, adding a throttled resolution retry in `OnUpdate`, and providing on-demand class color fallbacks in `HealBot_HealthColor`.
+
+**v1.6.5**
+* **Performance Update - Mana Tracking** - Added a fast-path redraw pipeline for unit power changes. This optimization prevents full frame redraws when players naturally regenerate or consume mana, resolving severe FPS drops in 40-man raids while tracking mana.
+
+**v1.6.4**
+* **Bug Fix - UI Opacity** - Fixed a rendering layering bug where incoming heals drew on top of actual health, causing the semi-transparent incoming heal bar to wash out the solid health bar.
+* **Bug Fix - CDC Colors** - Fixed health bar debuff coloring (CDC) by stopping `HealBot_HealthColor` from incorrectly querying debuffs directly, relying instead on cached debuff types.
+
+
+**v1.6.3** 
+* **Hotfix string splitter** - added  falback for string splitter if the the string is empty or nil.
+* **UI Update - Icon Limit** - Increased maximum tracked buffs/debuffs per unit from 5 to 10.
+* **UI Update - Customizable icon size** - Added an option to change size of HoT icons (default to 12px).
+* **Cleanup** - Removed dead code `HealBot_Groups` table.
+* **Bug Fix - Buff Watch Self** - Fixed an issue where the "Self Only" toggle for watched buffs failed to load visually across sessions.
+* **Bug Fix - Pet Coloring** - Fixed an issue where custom server integrations giving pets a class could override the mint pet color when class color override is toggled.
+
+**v1.6.2**
+* **Hotfix - raid and party frames** - if getNumRaidMembers() > 0 wrapper around extra bars stopped from displaying all frames blocked from displaying Extras\Raid.
+* **UI Update - Raid & Pets Split** - Split the "Raid / Extra" toggle into separate "Raid" and "Pets" toggles. Simplified the raid bars filter dropdown to core options (All, Melee, Ranged, Heals, Custom).
+
+**v1.6.1**
+* **Feature - CDC Module** - Added a new toggle in the CDC options to track all debuffs. When enabled, non-dispellable debuff icons will appear on the unit frame. Bar coloring continues to only highlight dispellable debuffs to prevent visual clutter.
+* **Hotfix - XML Layering** - Reverted `bar` and `bar2` element order in `HealBot_Action.xml`. The incoming heals bar was rendering on top of the health bar, causing debuff colors to be obscured and creating visual opacity issues.
+* **Hotfix - Debuff Bar Coloring** - Restored the `showDispellable` parameter to `UnitDebuff` in the aura scanning loop so the Vanilla client correctly returns the debuff type string required for bar coloring.
+* **Hotfix - Shapeshift / ShaguTweaks Interaction** - Fixed a Lua error (`attempt to compare number with nil`) in `HealBot_Process_HealValue` caused by missing `CastTime` values when external addons like ShaguTweaks trigger auto-unshift or intercept casts.
+* **Hotfix - pet frames** - With class colours toggled extra frames for player pets were given some classy mint colour.
+* **Hotfi - raidframes in combat** - Modfied how frames behave when player leaves during combat.
+
+**v1.6**
+* **Event Loop Decoupling:** Ripped out redundant synchronous UI redraws that were bypassed by the new MVC architecture. High-frequency events (mana regen, health ticks) now fully rely on the `HealBot_OnUpdate` dirty queue, severely reducing CPU bottlenecks.
+* **Combat UI Optimizations:** Removed unnecessary full spell recalculations when dropping combat, preventing client stutter after every mob kill.
+* **Memory Optimization:** Fixed severe Lua garbage collection spikes during UI reloads by preventing full party layout rebuilds on `PLAYER_TARGET_CHANGED`, and cached dynamic string concatenations directly to unit frames to eliminate memory leakage on high frequency UI refreshes.
+* **Mana Validation Fix:** Removed artificial spell mana gating, fixing an issue where low-mana spells disappeared from tooltips and couldn't be cast. WoW's native mana validation now correctly processes 0-cost buffs (e.g. Clearcasting, Inner Focus) while turning low-mana tooltip spells red.
+* **Self-Buff Tracking:** Fixed a bug where "Self Only" buff tracking incorrectly excluded the player when represented by party or raid frames instead of the standard "player" unit ID.
+* **Settings Persistence Fix:** Changed `SavedVariables` to `SavedVariablesPerCharacter` in TOC so configurations correctly load unique per character instead of account-wide.
+* **CPU Optimization:** Added early exit logic to resource tracking events (Mana, Rage, Energy) to stop background polling on party/raid members when "Show Mana Bars" is toggled off. Also removed excessive triggers (`BAG_UPDATE`, `PET_BAR_SHOWGRID`) and filtered `UNIT_INVENTORY_CHANGED` to only process the player, eliminating massive CPU spikes and unnecessary UI layout rebuilds during looting, item cooldowns, or when other players change gear.
+* **OnUpdate GC Spike Fix:** Rewrote the modifier polling logic inside `HealBot_OnUpdate` to use boolean state tracking instead of dynamic string concatenation, eliminating a major source of garbage collection bloat while hovering over unit frames.
+* **Aura Scanning Optimization:** Refactored Debuff tracking (`HealBot_DebuffWatch`) to use native boolean values (`true`/`false`) instead of string comparisons (`"YES"`/`"NO"`). This improves performance inside the continuous aura scanning loops.
+
+**v1.5**
+* **Macro, Item, and Script Bindings:** Support for binding named macros, inventory items, and inline scripts (e.g. `/target`) directly to mouse clicks in the Spells tab. All of these now natively support implicit `@mouseover` targeting on the unit frame you click, without losing your current target.
+* **Modifier-Aware Tooltips & Resource Costs:** The tooltip dynamically updates to show exactly what action is bound when holding down Shift, Ctrl, or Alt over a frame. Spells also show their required mana cost, turning red if you do not have enough mana to cast them.
+* **Memory Recycling Pool:** Added a local table recycling pool in the data layer to greatly reduce Lua garbage collection (GC) spikes, improving overall client frame rates during intense combat.
+
+**v1.4.2**
+* **Memory Optimization:** Fixed a significant memory leak where tracking tables were being repeatedly allocated every tick during aura scanning, and replaced `table.foreach` with pairs loops to avoid GC spikes during combat.
+
+**v1.4.1**
+* **Frame Disappearing Fix:** Fixed a layout rendering bug where frames would flash for a split second and disappear on login due to improper table clearing of unit buttons, leaving empty arrays that incorrectly failed the layout check.
+* **Ranked Spell Parsing Fix:** Fixed a Lua crash during addon initialization when discovering ranked spells without an explicit target property. Ranked spells now dynamically inherit the target table from their base spells.
+* **Talent-based Healing Calculations:** Implemented dynamic spell healing calculations for Druid, Priest, and Paladin classes based on talents.
+* **Modifier Key Polling:** Replaced MODIFIER_STATE_CHANGED event with polling in HealBot_OnUpdate to track modifier keys reliably.
+* **Incoming Heals Fix:** Fixed a bug where incoming heals failed to broadcast or show on the UI due to synchronous GCD fails and `CheckInteractDistance` limitations in the 1.12 API.
+* **Hovercast Incoming Heals:** Added full support for processing and displaying incoming heals when using action bar hovercasting.
+* **Zero-latency Self-Heals:** Incoming heals for the local player now process instantly with zero latency and no network reliance, ensuring they function even when playing solo.
+
+**v1.4** 
+* **Extra Frame support for pets and familiars added:** Togglable from healing tab - Extra frames option selected & pets selected from dropdown.
+* **Customizable Health Text:** Added a new dropdown in the Healing Options tab that allows users to choose how health text is displayed on unit frames (`Name Only`, `Health Percentage`, `Real Health`, or `Health Deficit`). Includes a smart truncation algorithm to preserve critical health numbers even if the unit name is too long.
+* **Non-Mana Resource Tracking:** Added a new toggle in the General Options tab to track secondary resources (Energy, Rage, Focus) for non-mana classes. Bars are dynamically color-coded based on the resource type.
+* **Dropdown UI Initialization Fix:** Resolved a Vanilla API bug where dropdown menus sharing an ID (like the new Health Text dropdown) would temporarily inherit text from previously loaded dropdowns (e.g., "Modern Flat").
+* **Dynamic Modifier Tooltips:** Fixed a bug where the spell tooltip would not dynamically update its spells when pressing modifier keys (Shift/Ctrl/Alt) while hovering over a unit frame. Registered the `MODIFIER_STATE_CHANGED` event to instantly refresh the tooltip.
+* **Global Variable Namespace Refactoring:** Executed a codebase-wide refactoring to encapsulate all floating global variables inside the `HealBot_` or `HEALBOT_` namespace. This prevents HealBot from silently shadowing other addons or the native WoW API, ensuring strict adherence to Vanilla Lua best practices. (Also resolved a namespace collision with `InitSpells`).
+* **Chat Announcements & Mouseover Casts:** Chat announcements are now correctly fired when using native Hovercasting (Mouseover). Additionally, added safety checks to prevent spamming chat announcements when accidentally clicking on a dead player (unless casting a resurrection spell).
+* **New Priest Buff (Enlighten):** Added the custom "Enlighten" buff to Priest trackable buffs, complete with the `btnholyscriptures` icon on unit frames.
+
+**1.3.3**
+* **Chat Panel Refactor:** Completely replaced the spell selection dropdowns in the Chat tab with manual text input boxes, allowing users to type exact spell names (with or without ranks) directly, matching the behavior of the key-bindings configuration. Fixed a string matching bug caused by Vanilla WoW's hidden trailing spaces when comparing spell names, ensuring that both rankless (e.g. `Flash Heal`) and ranked inputs trigger correctly. 
+* **Chat Layout Stack:** Restructured the Chat Options XML layout to correctly stack the inputs into neat rows, preventing horizontal overlap and providing more space for typing long announce messages.
+* **UI Persistence Bug Fixes:** Fixed a Vanilla WoW API quirk where unchecking the "Show Headers" or "Self Only" (Buffs) checkboxes caused the UI to either visually re-check itself or overwrite the setting with defaults upon a `/reload`.
+
+**1.3.2**
+* **UIDropDownMenu Fixes:** Resolved native client crash (`UIDROPDOWNMENU_OPEN_MENU` nil concatenation) when setting values on closed dropdowns.
+
+**1.3.1**
+* **Hotfix: missing helper function restored** Fixed issue with lua error for druids. 
+
+**v1.3**
+* **General Options Layout & Renaming:** Relabeled "Healing panel options" to "Mana bar options:", moved the "For Healers Only" checkbox side-by-side with "Show Mana Bars", and renamed "Enable mouse over action bar" to "Hovercasting".
+* **OnShow Empty Panel Bug Fix:** Solved the rendering issue where the options panel would load empty initially until another tab was clicked.
+* **Backdrop Alpha Reset Bug Fix:** Resolved a WoW API client quirk where showing the HealBot frame would reset the background color and alpha channel back to default white/transparent by calling `SetBackdropColor` after `SetBackdrop`.
+* **Default Party Frame Toggle:** Added a "Hide Default Party Frames" toggle option (fully localized in English, German, French, and Korean) to hide Blizzard's default party frames. Integrated immediate toggling on joining/leaving groups.
+* **Safety Guards & Crash Prevention:** Added safety guards to `HidePartyFrame` and `ShowPartyFrame` calls to prevent nil-value crashes when solo.
+* **Checkbox State Initialization Fixes:** Fixed options menu bugs where "Hide when Solo", "Show Mana Bars", and "For Healers Only" checkboxes failed to reflect their saved configuration value when opening the menu.
+* **CurrentPanel Nil Comparison Fix:** Fixed a startup Lua comparison crash by initializing `HealBot_Options_CurrentPanel` at the top of the main options file.
+* **Monolithic Code Modularization (Options):** Split the massive, single-file options system (`HealBot_Options.xml`/`HealBot_Options.lua`) into 7 dedicated, content-named panel subfiles (`General`, `Spells`, `Healing`, `CDC`, `Skins`, `Buffs`, and `Chat`) to improve codebase modularity and stability.
+* **Core Code Decoupling (MVC & Observer Pattern):** Modularized `HealBot.lua` and `HealBot_Action.lua` by decoupling them into dedicated service files: `Range`, `Comms`, `Aura`, `Spells`, `Events` controllers, and `Layout`, `Tooltip` views.
+* **Scope Resolution Fix:** Promoted `HealBot_Options_ComboButtons_Button` to global scope in the base options file to resolve a `nil` comparison error when loading spell settings.
+* **Global Scoping & Variable Promotion:** Promoted `CalcEquipBonus`, `HealBot_EquipChangeTimer`, `HealValue`, `InitSpells`, and `Delay_RecalcParty` to global scope in `HealBot.lua` to ensure cross-module visibility.
+* **CTRA Resurrection Cancel Bug Fix:** Fixed a nil table indexing crash in the CTRA `RESNO` message handler in `HealBot_Controller_Comms.lua`.
+* **Core Options Layout Correction:** Relocated the "Defaults" and "Close" buttons back into the parent options frame's container, ensuring they display consistently at the bottom of all configuration tabs.
+* **UI Layout & Skins Alignment:** Reorganized all 13 opacity sliders on the Skins panel into a clean, uniform 2-column grid with explicit width/height sizes (`123 x 17`) to resolve layout overlaps. Realigned Chat tab buttons to stay within window bounds and corrected Color Picker anchors.
+* **Startup Refresh Optimization:** Resolved initial loading lag where action bars would be missing by forcing an immediate UI refresh (`HealBot_RecalcSpells()`) once spell data loads.
+* **Menu Cleanup:** Fixed Options panel checkboxes overlapping due to incorrect vertical spacing offsets.
+* **Target Restoration Fix:** Fixed spell interruptions and "You don't have a target" errors when healing by implementing a 0.1-second delayed target restoration using `TargetLastEnemy` and `TargetLastTarget`.
+* **Buff Watch Initialization & Options Fix:** Fixed a bug where buff watch failed to display missing buffs on login/UI reload when the player had no active buffs. Enabled immediate buff/aura rescanning when modifying options in the Buff watch configuration tab.
+
+**v1.2.2**
+* **White background fix** Fixed issue where white background would persist while alpha channel got changes.
+* **Alpha slider** Fixed bug where alpha slider wouldn't apply changes instantly.
+
+**v1.2.1**
+* **Initialization bug** Fixed issue where Action module would get stuck on infinite loop causing stack overflow.
+
+**v1.2**
+* **Class Colors & Dimming:** Frame text now inherits class colors with black outline for better visibility. Missing buffs intelligently dim the class color and turn the text yellow.
+* **Modern Skin Updates:** Fixed white background bugs in modern skins and brightened debuff indicators.
+* **Bug Fix (Buff Application):** Fixed a Vanilla WoW API bug where applying buffs to a target without having them explicitly selected would trigger auto-self-cast instead.
+* **Bug Fix (Health Block):** Fixed a bug where the "Always Heal" option (preventing heals on full HP targets) completely blocked the ability to click frames to apply missing buffs.
+
+**v1.1**
+* **Native Hovercasting:** Added a native Action Bar Hovercasting (Mouseover) engine. You can now cast spells on hovered targets using action bar keybinds without losing your current target. Togglable in Options -> General.
+* **Fear Ward Tracking:** Added Fear Ward to the global HoT tracker, which will display the icon directly on the unit frame.
+* **Bug Fix:** Fixed Shaman weapon buff tracking (e.g., Rockbiter) failing due to spell ranks in tooltips.
+* **Bug Fix:** Fixed missing health bar skin textures by ensuring `.tga` paths are explicitly resolved.
+* **Bug Fix:** Fixed division-by-zero math errors during UI scaling that caused the addon to crash.
+
+**v1.0**
+* **Buff tracking:** Added a submenu for tracking buffs on elements.
+* **HoT tracking with icons:** HoTs and DoTs display on player bars.
+* **Incoming heals:** Now using a newer protocol.
+* **Chat functionalities:** Modified chat functionalities for spellcast announcements.
+* **Mana Bars:** Mana bars for healers in the grid added, toggleable from the options menu.
+
+
+
+

@@ -1,0 +1,640 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+  <!-- Item Editor Dialog -->
+  <Frame name="EreaRpMasterItemEditorFrame" parent="UIParent" frameStrata="DIALOG" toplevel="true" enableMouse="true" movable="true" hidden="true">
+    <Size>
+      <AbsDimension x="700" y="700"/>
+    </Size>
+    <Anchors>
+      <Anchor point="CENTER"/>
+    </Anchors>
+    <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+              edgeFile="Interface\DialogFrame\UI-DialogBox-Border"
+              tile="true">
+      <EdgeSize>
+        <AbsValue val="32"/>
+      </EdgeSize>
+      <TileSize>
+        <AbsValue val="32"/>
+      </TileSize>
+      <BackgroundInsets>
+        <AbsInset left="11" right="12" top="12" bottom="11"/>
+      </BackgroundInsets>
+    </Backdrop>
+
+    <Layers>
+      <Layer level="OVERLAY">
+        <!-- Title -->
+        <FontString name="$parentTitle" inherits="GameFontNormalLarge" text="Edit RP Item">
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset>
+                <AbsDimension x="0" y="-20"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <!-- Labels -->
+        <FontString name="$parentNameLabel" inherits="GameFontNormalSmall" text="Name">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="70" y="-50"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <FontString name="$parentTooltipLabel" inherits="GameFontNormal" text="Tooltip">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="20" y="-100"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <FontString name="$parentHandoutLabel" inherits="GameFontNormal" text="Handout text">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="20" y="-180"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <FontString name="$parentCounterLabel" inherits="GameFontNormal" text="Counter">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="20" y="-230"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <FontString name="$parentActionsLabel" inherits="GameFontNormal" text="Actions">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="20" y="-280"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <!-- Action count shown next to the Edit Actions button -->
+        <FontString name="$parentActionCountLabel" inherits="GameFontNormalSmall" text="0 action(s)">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="130" y="-300"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <FontString name="$parentContentLabel" inherits="GameFontNormal" text="Content">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="20" y="-325"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <FontString name="$parentDefaultContentLabel" inherits="GameFontNormalSmall" text="Default content">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="20" y="-345"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+
+        <FontString name="$parentTemplateContentLabel" inherits="GameFontNormalSmall" text="Template {custom-text}">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset>
+                <AbsDimension x="380" y="-345"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+
+    <Frames>
+      <!-- Draggable title bar -->
+      <Frame name="$parentTitleBar" enableMouse="true">
+        <Size>
+          <AbsDimension x="0" y="30"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="10" y="-10"/>
+            </Offset>
+          </Anchor>
+          <Anchor point="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="-30" y="-10"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </Frame>
+
+      <!-- Close button -->
+      <Button name="$parentCloseButton" inherits="UIPanelCloseButton">
+        <Anchors>
+          <Anchor point="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="-5" y="-5"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+
+      <!-- Icon button (40x40) -->
+      <Button name="$parentIconButton" enableMouse="true">
+        <Size>
+          <AbsDimension x="40" y="40"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="20" y="-52"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="BACKGROUND">
+            <Texture name="$parentSlotBg" file="Interface\Buttons\UI-Quickslot2">
+              <Size>
+                <AbsDimension x="56" y="56"/>
+              </Size>
+              <Anchors>
+                <Anchor point="CENTER"/>
+              </Anchors>
+            </Texture>
+          </Layer>
+          <Layer level="ARTWORK">
+            <Texture name="$parentIconTexture">
+              <Size>
+                <AbsDimension x="36" y="36"/>
+              </Size>
+              <Anchors>
+                <Anchor point="CENTER"/>
+              </Anchors>
+            </Texture>
+          </Layer>
+        </Layers>
+        <HighlightTexture file="Interface\Buttons\ButtonHilight-Square" alphaMode="ADD"/>
+      </Button>
+
+      <!-- Name EditBox -->
+      <EditBox name="$parentNameEditBox" autoFocus="false">
+        <Size>
+          <AbsDimension x="610" y="24"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="70" y="-60"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="BACKGROUND">
+            <FontString inherits="ChatFontNormal" setAllPoints="true"/>
+          </Layer>
+        </Layers>
+        <FontString inherits="ChatFontNormal"/>
+        <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                  edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                  tile="true">
+          <EdgeSize>
+            <AbsValue val="10"/>
+          </EdgeSize>
+          <TileSize>
+            <AbsValue val="16"/>
+          </TileSize>
+          <BackgroundInsets>
+            <AbsInset left="3" right="3" top="3" bottom="3"/>
+          </BackgroundInsets>
+        </Backdrop>
+        <Scripts>
+          <OnLoad>
+            this:SetBackdropColor(0.1, 0.1, 0.1, 1)
+            this:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
+            this:SetTextInsets(5, 5, 0, 0)
+            this:SetMaxLetters(50)
+          </OnLoad>
+          <OnEscapePressed>
+            this:ClearFocus()
+          </OnEscapePressed>
+          <OnTabPressed>
+            this:ClearFocus()
+            EreaRpMasterItemEditorFrameTooltipContainerEditBox:SetFocus()
+          </OnTabPressed>
+        </Scripts>
+      </EditBox>
+
+      <!-- Tooltip container (multiline) -->
+      <Frame name="$parentTooltipContainer">
+        <Size>
+          <AbsDimension x="660" y="60"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="20" y="-115"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                  edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                  tile="true">
+          <EdgeSize>
+            <AbsValue val="10"/>
+          </EdgeSize>
+          <TileSize>
+            <AbsValue val="16"/>
+          </TileSize>
+          <BackgroundInsets>
+            <AbsInset left="3" right="3" top="3" bottom="3"/>
+          </BackgroundInsets>
+        </Backdrop>
+        <Scripts>
+          <OnLoad>
+            this:SetBackdropColor(0.1, 0.1, 0.1, 1)
+            this:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
+          </OnLoad>
+        </Scripts>
+        <Frames>
+          <EditBox name="$parentEditBox" multiLine="true" autoFocus="false">
+            <Size>
+              <AbsDimension x="600" y="50"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT">
+                <Offset>
+                  <AbsDimension x="5" y="-5"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <FontString inherits="ChatFontNormal"/>
+            <Scripts>
+              <OnLoad>
+                this:SetTextInsets(5, 5, 5, 5)
+                this:SetMaxLetters(120)
+              </OnLoad>
+              <OnEscapePressed>
+                this:ClearFocus()
+              </OnEscapePressed>
+            </Scripts>
+          </EditBox>
+        </Frames>
+      </Frame>
+
+      <!-- Handout text EditBox -->
+      <EditBox name="$parentHandoutEditBox" autoFocus="false">
+        <Size>
+          <AbsDimension x="660" y="24"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="20" y="-197"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="BACKGROUND">
+            <FontString inherits="ChatFontNormal" setAllPoints="true"/>
+          </Layer>
+        </Layers>
+        <FontString inherits="ChatFontNormal"/>
+        <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                  edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                  tile="true">
+          <EdgeSize>
+            <AbsValue val="10"/>
+          </EdgeSize>
+          <TileSize>
+            <AbsValue val="16"/>
+          </TileSize>
+          <BackgroundInsets>
+            <AbsInset left="3" right="3" top="3" bottom="3"/>
+          </BackgroundInsets>
+        </Backdrop>
+        <Scripts>
+          <OnLoad>
+            this:SetBackdropColor(0.1, 0.1, 0.1, 1)
+            this:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
+            this:SetTextInsets(5, 5, 0, 0)
+            this:SetMaxLetters(255)
+          </OnLoad>
+          <OnEscapePressed>
+            this:ClearFocus()
+          </OnEscapePressed>
+          <OnTabPressed>
+            this:ClearFocus()
+            EreaRpMasterItemEditorFrameCounterEditBox:SetFocus()
+          </OnTabPressed>
+        </Scripts>
+      </EditBox>
+
+      <!-- Counter EditBox (numeric, narrow) -->
+      <EditBox name="$parentCounterEditBox" autoFocus="false" numeric="true">
+        <Size>
+          <AbsDimension x="60" y="24"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="20" y="-247"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="BACKGROUND">
+            <FontString inherits="ChatFontNormal" setAllPoints="true"/>
+          </Layer>
+        </Layers>
+        <FontString inherits="ChatFontNormal"/>
+        <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                  edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                  tile="true">
+          <EdgeSize>
+            <AbsValue val="10"/>
+          </EdgeSize>
+          <TileSize>
+            <AbsValue val="16"/>
+          </TileSize>
+          <BackgroundInsets>
+            <AbsInset left="3" right="3" top="3" bottom="3"/>
+          </BackgroundInsets>
+        </Backdrop>
+        <Scripts>
+          <OnLoad>
+            this:SetBackdropColor(0.1, 0.1, 0.1, 1)
+            this:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
+            this:SetTextInsets(5, 5, 0, 0)
+            this:SetMaxLetters(5)
+          </OnLoad>
+          <OnEscapePressed>
+            this:ClearFocus()
+          </OnEscapePressed>
+          <OnEnterPressed>
+            this:ClearFocus()
+          </OnEnterPressed>
+        </Scripts>
+      </EditBox>
+
+      <!-- Edit Actions button -->
+      <Button name="$parentEditActionsButton" inherits="UIPanelButtonTemplate" text="Edit Actions">
+        <Size>
+          <AbsDimension x="100" y="22"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="20" y="-295"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+
+      <!-- Default content (left column): backdrop container + ScrollFrame + EditBox -->
+      <Frame name="$parentDefaultContentContainer">
+        <Size>
+          <AbsDimension x="280" y="230"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="20" y="-360"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                  edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                  tile="true">
+          <EdgeSize>
+            <AbsValue val="10"/>
+          </EdgeSize>
+          <TileSize>
+            <AbsValue val="16"/>
+          </TileSize>
+          <BackgroundInsets>
+            <AbsInset left="3" right="3" top="3" bottom="3"/>
+          </BackgroundInsets>
+        </Backdrop>
+        <Scripts>
+          <OnLoad>
+            this:SetBackdropColor(0.1, 0.1, 0.1, 1)
+            this:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
+          </OnLoad>
+        </Scripts>
+        <Frames>
+          <ScrollFrame name="EreaRpMasterItemEditorDefaultContentScroll" inherits="UIPanelScrollFrameTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT">
+                <Offset>
+                  <AbsDimension x="6" y="-6"/>
+                </Offset>
+              </Anchor>
+              <Anchor point="BOTTOMRIGHT">
+                <Offset>
+                  <AbsDimension x="-2" y="6"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Frames>
+              <EditBox name="EreaRpMasterItemEditorDefaultContentEditBox" multiLine="true" autoFocus="false">
+                <Size>
+                  <AbsDimension x="225" y="1"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="TOPLEFT"/>
+                  <Anchor point="TOPRIGHT"/>
+                </Anchors>
+                <FontString inherits="ChatFontNormal"/>
+                <Scripts>
+                  <OnLoad>
+                    this:SetTextInsets(5, 5, 5, 5)
+                    this:SetMaxLetters(0)
+                  </OnLoad>
+                  <OnTextChanged>
+                    EreaRpMasterItemEditorDefaultContentScroll:UpdateScrollChildRect()
+                  </OnTextChanged>
+                  <OnCursorChanged>
+                    ScrollingEdit_OnCursorChanged(arg1, arg2, arg3, arg4)
+                  </OnCursorChanged>
+                  <OnEscapePressed>
+                    this:ClearFocus()
+                  </OnEscapePressed>
+                </Scripts>
+              </EditBox>
+            </Frames>
+            <Scripts>
+              <OnLoad>
+                this:SetScrollChild(EreaRpMasterItemEditorDefaultContentEditBox)
+              </OnLoad>
+            </Scripts>
+          </ScrollFrame>
+        </Frames>
+      </Frame>
+
+      <!-- Copy right arrow button (default -> template) -->
+      <Button name="$parentCopyRightButton" inherits="UIPanelButtonTemplate" text="->">
+        <Size>
+          <AbsDimension x="40" y="22"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOP">
+            <Offset>
+              <AbsDimension x="0" y="-445"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+
+      <!-- Copy left arrow button (template -> default) -->
+      <Button name="$parentCopyLeftButton" inherits="UIPanelButtonTemplate" text="&lt;-">
+        <Size>
+          <AbsDimension x="40" y="22"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOP">
+            <Offset>
+              <AbsDimension x="0" y="-473"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+
+      <!-- Template content (right column): backdrop container + ScrollFrame + EditBox -->
+      <Frame name="$parentTemplateContentContainer">
+        <Size>
+          <AbsDimension x="280" y="230"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="380" y="-360"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                  edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                  tile="true">
+          <EdgeSize>
+            <AbsValue val="10"/>
+          </EdgeSize>
+          <TileSize>
+            <AbsValue val="16"/>
+          </TileSize>
+          <BackgroundInsets>
+            <AbsInset left="3" right="3" top="3" bottom="3"/>
+          </BackgroundInsets>
+        </Backdrop>
+        <Scripts>
+          <OnLoad>
+            this:SetBackdropColor(0.1, 0.1, 0.1, 1)
+            this:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
+          </OnLoad>
+        </Scripts>
+        <Frames>
+          <ScrollFrame name="EreaRpMasterItemEditorTemplateContentScroll" inherits="UIPanelScrollFrameTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT">
+                <Offset>
+                  <AbsDimension x="6" y="-6"/>
+                </Offset>
+              </Anchor>
+              <Anchor point="BOTTOMRIGHT">
+                <Offset>
+                  <AbsDimension x="-2" y="6"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Frames>
+              <EditBox name="EreaRpMasterItemEditorTemplateContentEditBox" multiLine="true" autoFocus="false">
+                <Size>
+                  <AbsDimension x="225" y="1"/>
+                </Size>
+                <Anchors>
+                  <Anchor point="TOPLEFT"/>
+                  <Anchor point="TOPRIGHT"/>
+                </Anchors>
+                <FontString inherits="ChatFontNormal"/>
+                <Scripts>
+                  <OnLoad>
+                    this:SetTextInsets(5, 5, 5, 5)
+                    this:SetMaxLetters(0)
+                  </OnLoad>
+                  <OnTextChanged>
+                    EreaRpMasterItemEditorTemplateContentScroll:UpdateScrollChildRect()
+                  </OnTextChanged>
+                  <OnCursorChanged>
+                    ScrollingEdit_OnCursorChanged(arg1, arg2, arg3, arg4)
+                  </OnCursorChanged>
+                  <OnEscapePressed>
+                    this:ClearFocus()
+                  </OnEscapePressed>
+                </Scripts>
+              </EditBox>
+            </Frames>
+            <Scripts>
+              <OnLoad>
+                this:SetScrollChild(EreaRpMasterItemEditorTemplateContentEditBox)
+              </OnLoad>
+            </Scripts>
+          </ScrollFrame>
+        </Frames>
+      </Frame>
+
+      <!-- Save button -->
+      <Button name="$parentSaveButton" inherits="UIPanelButtonTemplate" text="Save">
+        <Size>
+          <AbsDimension x="80" y="24"/>
+        </Size>
+        <Anchors>
+          <Anchor point="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="-110" y="20"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+
+      <!-- Cancel button -->
+      <Button name="$parentCancelButton" inherits="UIPanelButtonTemplate" text="Cancel">
+        <Size>
+          <AbsDimension x="80" y="24"/>
+        </Size>
+        <Anchors>
+          <Anchor point="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="-20" y="20"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+    </Frames>
+
+    <Scripts>
+      <OnLoad>
+        this:SetBackdropColor(0, 0, 0, 1)
+      </OnLoad>
+    </Scripts>
+  </Frame>
+
+</Ui>

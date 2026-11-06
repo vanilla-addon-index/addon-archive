@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/lightbladeninja/CleanRolls",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "lightbladeninja",
+    "repo": "CleanRolls",
+    "name": "CleanRolls",
+    "url": "https://github.com/lightbladeninja/CleanRolls",
+    "api": "https://api.github.com/repos/lightbladeninja/CleanRolls"
+  },
+  "commit": "b61907d3c1554200af7d54f4e56bc6f57d0824e7",
+  "sourceFiles": {
+    "CleanRolls.lua": {
+      "sha256": "1792122a03ddf5c54bbca23e221d754210d8000b161321a0ce6791454671b28e",
+      "bytes": 106336
+    },
+    "CleanRolls.toc": {
+      "sha256": "9bcd6210a7b5a670acad470a3d6bcc164b8103d5166f432dcbfcccb25e689765",
+      "bytes": 401
+    },
+    "fonts/Expressway.ttf": {
+      "sha256": "06a2106170c2b5b736955cc749ed755f3757d103230645158f0bd5b5b91c386b",
+      "bytes": 99820
+    },
+    "img/bar.tga": {
+      "sha256": "be38c30d46b0872762f6b8b785004a7b641170e0036100765c4643d6945bccaa",
+      "bytes": 247
+    },
+    "img/glow2.tga": {
+      "sha256": "3d80b172ee7ee007834edbc5329543a8982a18c67a103f54fc64317691bc78fc",
+      "bytes": 5366
+    },
+    "README.md": {
+      "sha256": "21e630a7db8fa3abb58b4ceeb0850e9a60e93df89bcd72035b72d981c207a9f9",
+      "bytes": 6772
+    },
+    "screenshots/main-window.png": {
+      "sha256": "43f61ebcdb4fc49c46b9e95ba7dd47e24448f2dce2981ca46b94c27fe4bdb90a",
+      "bytes": 171794
+    },
+    "screenshots/rollfor.png": {
+      "sha256": "237efa525ffbfe35d696cfa0f24f4a8d9ad2f3391e2fce2f5a205a51d6f2a495",
+      "bytes": 273009
+    },
+    "screenshots/winner-flash.png": {
+      "sha256": "35b217f6222af56100fbc30b6ca725bb1f224b58000b6c156424b5caa6081200",
+      "bytes": 380509
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

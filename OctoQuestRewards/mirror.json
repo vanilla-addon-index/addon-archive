@@ -1,0 +1,78 @@
+{
+  "upstream": "https://octowow.st/git/John-The-Baptist/OctoQuestRewards",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "John-The-Baptist",
+    "repo": "OctoQuestRewards",
+    "name": "OctoQuestRewards",
+    "url": "https://octowow.st/git/John-The-Baptist/OctoQuestRewards",
+    "api": "https://octowow.st/git/api/v1/repos/John-The-Baptist/OctoQuestRewards"
+  },
+  "commit": "a5e9d645f33873aead32afe4d2dbe0546716d8e0",
+  "sourceFiles": {
+    "Core.lua": {
+      "sha256": "13ea9c066e26f7dfdd420f9cf4b0378eef2be88d26361a2829b987287309f184",
+      "bytes": 8041
+    },
+    "LICENSE": {
+      "sha256": "78d1e551b42f45b9381a19cf175934e6a924a1896a057ddf8bb666b746480170",
+      "bytes": 1378
+    },
+    "OctoQuestRewards.toc": {
+      "sha256": "7e32cbbebb600959410df00e1a2561ca839f8e04a0905f689cb0ca2c0924e01c",
+      "bytes": 352
+    },
+    "QuestData.lua": {
+      "sha256": "03dc2ba33c67e9040d63ed7308630901efcfc3167dcc4ee735fbd7c98898257c",
+      "bytes": 7799
+    },
+    "README.md": {
+      "sha256": "4b202578d47dc92292b97d03f91b2eefb23c323b3dfad34414f2485648d84155",
+      "bytes": 1803
+    },
+    "screenshots/quest-log.png": {
+      "sha256": "34f19798701ad360ba86434a1c8c30fca84c59e482348b7373de05af67063bb0",
+      "bytes": 2466677
+    },
+    "screenshots/quest-offer.png": {
+      "sha256": "3427ccbd50d038ca95b5fd389fbb3b550702a3c0b2f66636ba7784be9b6b701f",
+      "bytes": 2441538
+    },
+    "screenshots/quest-turn-in.png": {
+      "sha256": "4f44cc4625ca1208a518483785dbd35c556f5ef35b86c12522dcb729f9f2aa86",
+      "bytes": 2043756
+    },
+    "UI.lua": {
+      "sha256": "3843ccb361aed7eaecfb7fbe04d3881a38d52a0cdc6b3b76afd679712d271dd8",
+      "bytes": 5892
+    },
+    "VanillaXP.lua": {
+      "sha256": "b94133032d22a0edaa19a4a2320d1e258afc51ab5dbc1008a3a931bc7b9ed273",
+      "bytes": 71986
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "295": {
+      "tag": "v1.0.0",
+      "folder": "v1.0.0--295",
+      "assets": {
+        "81": {
+          "sha256": "df85a7a887d48f83248167f0b2cb9eadffb4e01959ae736d4155b6f62dc9e76b",
+          "bytes": 24725,
+          "id": "81",
+          "name": "OctoQuestRewards-1.0.0.zip",
+          "url": "https://octowow.st/git/John-The-Baptist/OctoQuestRewards/releases/download/v1.0.0/OctoQuestRewards-1.0.0.zip",
+          "path": "releases/v1.0.0--295/assets/OctoQuestRewards-1.0.0.zip"
+        }
+      },
+      "source": {
+        "sha256": "278f6a8e1393d3d3ca4ee624d2eeab69c9b5dc0434dade2f2d47dcb320c93149",
+        "bytes": 6929825,
+        "path": "releases/v1.0.0--295/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/John-The-Baptist/OctoQuestRewards/archive/v1.0.0.tar.gz"
+      }
+    }
+  }
+}

@@ -1,0 +1,155 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+  <!-- ======================================================================
+       action-editor-create.xml - Create Object Editor Template
+       ======================================================================
+       PURPOSE: Virtual template for the Create Object method editor
+       PARAMETERS:
+         - objectGuid: object_dropdown (required)
+         - customText: text_with_placeholder (optional)
+         - additionalText: text_with_placeholder (optional)
+         - customNumber: number (optional)
+       USAGE: CreateFrame("Frame", name, parent, "EreaRpMasterCreateEditorTemplate")
+       ====================================================================== -->
+
+  <Frame name="EreaRpMasterCreateEditorTemplate" virtual="true">
+    <Size>
+      <AbsDimension x="360" y="290"/>
+    </Size>
+    <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+              edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+      <EdgeSize><AbsValue val="10"/></EdgeSize>
+      <TileSize><AbsValue val="16"/></TileSize>
+      <BackgroundInsets><AbsInset left="3" right="3" top="3" bottom="3"/></BackgroundInsets>
+    </Backdrop>
+    <Scripts>
+      <OnLoad>
+        this:SetBackdropColor(0.1, 0.1, 0.1, 0.8)
+        this:SetBackdropBorderColor(0.35, 0.35, 0.45, 1)
+      </OnLoad>
+    </Scripts>
+    <Layers>
+      <Layer level="OVERLAY">
+        <FontString name="$parentTitle" inherits="GameFontNormal">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="5" y="-5"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parentObjectLabel" inherits="GameFontNormalSmall">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="10" y="-30"/></Offset>
+            </Anchor>
+          </Anchors>
+          <Text>Object to create:</Text>
+        </FontString>
+        <FontString name="$parentCustomTextLabel" inherits="GameFontNormalSmall">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="10" y="-90"/></Offset>
+            </Anchor>
+          </Anchors>
+          <Text>Custom text for new object:</Text>
+        </FontString>
+        <FontString name="$parentCustomTextHint" inherits="GameFontNormalSmall">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="10" y="-138"/></Offset>
+            </Anchor>
+          </Anchors>
+          <Text>|cFF888888(Use {custom-text} to copy source item's text)|r</Text>
+        </FontString>
+        <FontString name="$parentAdditionalTextLabel" inherits="GameFontNormalSmall">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="10" y="-158"/></Offset>
+            </Anchor>
+          </Anchors>
+          <Text>Additional text for new object:</Text>
+        </FontString>
+        <FontString name="$parentAdditionalTextHint" inherits="GameFontNormalSmall">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="10" y="-200"/></Offset>
+            </Anchor>
+          </Anchors>
+          <Text>|cFF888888(Use {additional-text} to copy source item's additional text)|r</Text>
+        </FontString>
+        <FontString name="$parentCustomNumberLabel" inherits="GameFontNormalSmall">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="10" y="-220"/></Offset>
+            </Anchor>
+          </Anchors>
+          <Text>Counter for new object:</Text>
+        </FontString>
+        <FontString name="$parentCustomNumberHint" inherits="GameFontNormalSmall">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="10" y="-268"/></Offset>
+            </Anchor>
+          </Anchors>
+          <Text>|cFF888888(Use {item-counter} to copy source item's counter)|r</Text>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <!-- Object GUID dropdown (placeholder; initialized in Lua) -->
+      <Frame name="$parentObjectDropdown" inherits="UIDropDownMenuTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="0" y="-48"/></Offset>
+          </Anchor>
+        </Anchors>
+      </Frame>
+      <EditBox name="$parentCustomTextEdit" inherits="InputBoxTemplate" autoFocus="false">
+        <Size>
+          <AbsDimension x="340" y="25"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="10" y="-108"/></Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnEscapePressed>
+            this:ClearFocus()
+          </OnEscapePressed>
+        </Scripts>
+      </EditBox>
+      <EditBox name="$parentAdditionalTextEdit" inherits="InputBoxTemplate" autoFocus="false">
+        <Size>
+          <AbsDimension x="340" y="25"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="10" y="-176"/></Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnEscapePressed>
+            this:ClearFocus()
+          </OnEscapePressed>
+        </Scripts>
+      </EditBox>
+      <EditBox name="$parentCustomNumberEdit" inherits="InputBoxTemplate" autoFocus="false">
+        <Size>
+          <AbsDimension x="100" y="25"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="10" y="-238"/></Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnEscapePressed>
+            this:ClearFocus()
+          </OnEscapePressed>
+        </Scripts>
+      </EditBox>
+    </Frames>
+  </Frame>
+
+</Ui>

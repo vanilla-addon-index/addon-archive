@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/dogmax/ShardCap",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "dogmax",
+    "repo": "ShardCap",
+    "name": "ShardCap",
+    "url": "https://github.com/dogmax/ShardCap",
+    "api": "https://api.github.com/repos/dogmax/ShardCap"
+  },
+  "commit": "20dd94969c42f3baa4bd5133ca841e8cc58ed932",
+  "sourceFiles": {
+    "readme.md": {
+      "sha256": "b95607df4b16ec123abc627a3f1bbd5b270fdd212329bf6aa7be8d48e3d19632",
+      "bytes": 805
+    },
+    "ShardCap.lua": {
+      "sha256": "26aefd460d047c2381abbda397f002d0531acd5999d82850167e4bc55450aa03",
+      "bytes": 4417
+    },
+    "ShardCap.toc": {
+      "sha256": "e7c290cd33c5d297f75e16d641c3ca48b20a2b4f315386a3503edc7f9de6301d",
+      "bytes": 241
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

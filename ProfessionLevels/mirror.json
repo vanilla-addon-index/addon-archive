@@ -1,0 +1,50 @@
+{
+  "upstream": "https://github.com/gregdeichler/ProfessionLevels.git",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "gregdeichler",
+    "repo": "ProfessionLevels",
+    "name": "ProfessionLevels",
+    "url": "https://github.com/gregdeichler/ProfessionLevels",
+    "api": "https://api.github.com/repos/gregdeichler/ProfessionLevels"
+  },
+  "commit": "5b97d211a8096d42b1c8bc76cf2bdbff0f405c65",
+  "sourceFiles": {
+    "ProfessionLevels.lua": {
+      "sha256": "bb1d5978236818623139d7eca44f1f892bdb10d14d8fd573f5558d5698dc9730",
+      "bytes": 33613
+    },
+    "ProfessionLevels.toc": {
+      "sha256": "d87255e1ae39db24da4870874f3849ef19ca0886770d62495c7c5542e994131b",
+      "bytes": 282
+    },
+    "README.md": {
+      "sha256": "2b6371975d0375393ed6e9f80bd8643334eb6a7a6ef50122633bd4e37a3bf920",
+      "bytes": 4260
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "305737757": {
+      "tag": "Release2.8",
+      "folder": "Release2.8--305737757",
+      "assets": {
+        "390159862": {
+          "sha256": "abea122fe06b5c49d83837ce69af9482a7fcb8ea9854aa95047a5487848a41a6",
+          "bytes": 9561,
+          "id": "390159862",
+          "name": "ProfessionLevels.2.8.zip",
+          "url": "https://github.com/gregdeichler/ProfessionLevels/releases/download/Release2.8/ProfessionLevels.2.8.zip",
+          "path": "releases/Release2.8--305737757/assets/ProfessionLevels.2.8.zip"
+        }
+      },
+      "source": {
+        "sha256": "b39722192e798170633cb9ed460c751d0aa21ed6574cf65d6470665f6dc168e6",
+        "bytes": 9135,
+        "path": "releases/Release2.8--305737757/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/gregdeichler/ProfessionLevels/tarball/Release2.8"
+      }
+    }
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "upstream": "https://octowow.st/git/OEVG/Outfitter",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "OEVG",
+    "repo": "Outfitter",
+    "name": "Outfitter",
+    "url": "https://octowow.st/git/OEVG/Outfitter",
+    "api": "https://octowow.st/git/api/v1/repos/OEVG/Outfitter"
+  },
+  "commit": "b740289e9dd9f6ce258722734ac9ff2d7286d07b",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "64a0bb5f16303f254267f2f13341ee5db41569b64baf24f7b0b56fc732398eeb",
+      "bytes": 850
+    },
+    "BossTrash.lua": {
+      "sha256": "02ea59fa7c180fb1ea293210e582379c0c16c13f1404e6aab89fa8ddcef39f95",
+      "bytes": 783
+    },
+    "Documentation/FutureFeatures.txt": {
+      "sha256": "732ae29479d0ae66693bd7025d60c8827eccc06add65dcd3293b52eacc14ad01",
+      "bytes": 786
+    },
+    "Documentation/Images/Background.jpg": {
+      "sha256": "ebdb6102fc16d366ae65e2769c1ce9365d03738d318906d489e782e238d278a7",
+      "bytes": 26832
+    },
+    "Documentation/Images/Minimap.jpg": {
+      "sha256": "a695dd24930cf74228b1c51a4e633bfce2c99f0fa5b591983f62f950e3942d91",
+      "bytes": 52505
+    },
+    "Documentation/Images/NewOutfit.jpg": {
+      "sha256": "870d785c9a87006629af4e56bdbe3f4f7b53a60bd2cee0dc9581ee4658eba655",
+      "bytes": 94793
+    },
+    "Documentation/Images/OutfitterIcon.jpg": {
+      "sha256": "59816f95511309dc32dbfcd303422aacc4302e063a39949ef09729f79c395379",
+      "bytes": 25233
+    },
+    "Documentation/Images/OutfitterUI.jpg": {
+      "sha256": "75a6f9d1aa92dc865bf45479f7aff8434119d369ad1a20c6b139afef652a1925",
+      "bytes": 136164
+    },
+    "Documentation/Images/QuickSlots.jpg": {
+      "sha256": "179cd383c35c3493ba23defa3a034b774861fd60affbf1510a1271cca392da6d",
+      "bytes": 53186
+    },
+    "Documentation/RevisionHistory.txt": {
+      "sha256": "bb2db492b09c22f2d19683c321a582e4fb33eec06f0944b588b1b12689516034",
+      "bytes": 20633
+    },
+    "Documentation/UsersManual.html": {
+      "sha256": "aac656a0a5741b6e07a2846527ffc8bc11e9f3060e42a3698e9b165dd9175ad0",
+      "bytes": 11758
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "09cfc0b69a0feb644fa1a9e5fc6715a4e76e0b2f6c7c04a3a0ea693d633770cd",
+      "bytes": 23114
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "7483e3a0e8afe0387673777963982e44742131d534fc91bdbe862584d294c9a2",
+      "bytes": 30431
+    },
+    "Outfitter.lua": {
+      "sha256": "04273640581add4fd0e4f64a83d0c0187799aa8b8b37b85bf665475dd7ec87f3",
+      "bytes": 214454
+    },
+    "Outfitter.toc": {
+      "sha256": "8251e2efd14f5356b055bff6c6ac681d16405449f55ca48666fd5fd6724059d0",
+      "bytes": 603
+    },
+    "Outfitter.xml": {
+      "sha256": "3d3cf07ba9ae114a4157683bb9efd80d47596f4ec332e69459e71e0d5ce4f62d",
+      "bytes": 59825
+    },
+    "OutfitterClientMods.lua": {
+      "sha256": "1cf0fabb6c4f1ba35f3311aa1355c9c5fe43e8c68fd990b7f52ef6acb1a664b8",
+      "bytes": 4800
+    },
+    "OutfitterStrings_cn.lua": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "OutfitterStrings_de.lua": {
+      "sha256": "6e7c20313a81e0911eb475bacf07b92482405a039f94d99c087509a3a59821de",
+      "bytes": 18349
+    },
+    "OutfitterStrings_fr.lua": {
+      "sha256": "2679b6833a4c15f8d3a158eecb99132d0dbf45c674d1a314ea90e315eaa10159",
+      "bytes": 20865
+    },
+    "OutfitterStrings_kr.lua": {
+      "sha256": "f809aa623c2fc9923c3fbb63f49f268c447d5940d8793d4c6982171ba40cf3ff",
+      "bytes": 19567
+    },
+    "OutfitterStrings_tw.lua": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "OutfitterStrings.lua": {
+      "sha256": "b441b97d90de8baca2c05a2312b924d4c4aeb1aef602ceb3e84dc3fc4fb05289",
+      "bytes": 21054
+    },
+    "README.md": {
+      "sha256": "0211c53753cf512838ad5f4a9294afbf653c0091e6eae32ffd3d2044a740c022",
+      "bytes": 2779
+    },
+    "Textures/ButtonBarBackground.blp": {
+      "sha256": "87c88b7702d82c1554287e92bbd6e933e2f4d2a7c4304e2089a93d72d972e2ac",
+      "bytes": 6684
+    },
+    "Textures/CheckboxUnknown.blp": {
+      "sha256": "d0326df3ceb64e4d64ac2fd5e521b743f9310506897230e06675c2e99e3d1aef",
+      "bytes": 2564
+    },
+    "Textures/DialogBox-Background.blp": {
+      "sha256": "b55fdad07fffff17f9437ce3a9e86c7ba6d4984f207bcfdf9f287b62f3551428",
+      "bytes": 6660
+    },
+    "Textures/GuildLogo.blp": {
+      "sha256": "75ada0b1aceca68cdf0b4ef1e30df0c12401ed4f4e8b3659293e3b06426e08fd",
+      "bytes": 88580
+    },
+    "Textures/GuildLogo2.blp": {
+      "sha256": "96cfebb40920c9c5cf9ee2d26a071cad5ec7c98972a1f7382fffcf14c2ac6af4",
+      "bytes": 88580
+    },
+    "Textures/Icon.blp": {
+      "sha256": "4a6f12e988e7110aed16e3c59448b8dac34863a76857848b38a4330dba079fdc",
+      "bytes": 6660
+    },
+    "Textures/MinimapButton.blp": {
+      "sha256": "bc5ee8957431814052f28940007a72b022a2333e8f6fc3b0de6a533c5a70b4f6",
+      "bytes": 2564
+    },
+    "Textures/Outfitter-Button-pfUI.blp": {
+      "sha256": "fa4ae5b165673b25cbd5027927dc010400c88ac7bfd596a1b642bad355ab53ad",
+      "bytes": 6676
+    },
+    "Textures/Outfitter-Button.blp": {
+      "sha256": "34ce2e690856bebb820c5a3ab10e9b190a1e7f32814b2de653d15ade956bd422",
+      "bytes": 6660
+    },
+    "Textures/OutfitterFrame-Bottom.blp": {
+      "sha256": "8b610c4165031dc651dea78ea6b3a938feb3c41ab0cfe459c2680d5e79426fa8",
+      "bytes": 44900
+    },
+    "Textures/OutfitterFrame-Top.blp": {
+      "sha256": "805c59ddb6c01b22d30d7b2835953d4b0fbd871484da7651bd236b7d5127fbee",
+      "bytes": 88580
+    },
+    "Textures/QuickSlotsBackground.blp": {
+      "sha256": "51b4b6265d8a3809ce4f2681cb9578e5f3fce892da8f711306d9f1d0a6aa3415",
+      "bytes": 12132
+    },
+    "Textures/RepairBags.blp": {
+      "sha256": "4947ccf5f14c8de5c0894019379f92deb04c214d2c70de4fef0eacc15d34cc36",
+      "bytes": 3916
+    },
+    "Textures/ScrollbarTrench.blp": {
+      "sha256": "bb747b8ad751194cf73b5f28c9801977cb29cf23129cf9c1af865e0f53ba4bd7",
+      "bytes": 6684
+    },
+    "UI.xsd": {
+      "sha256": "e3985c4047d131cce5408bce809d1e075cc216719ecde8b18ecc2dd3bfd4d0f9",
+      "bytes": 26197
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

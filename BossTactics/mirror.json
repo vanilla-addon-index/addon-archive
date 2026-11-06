@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/jrc13245/BossTactics",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jrc13245",
+    "repo": "BossTactics",
+    "name": "BossTactics",
+    "url": "https://github.com/jrc13245/BossTactics",
+    "api": "https://api.github.com/repos/jrc13245/BossTactics"
+  },
+  "commit": "e21c19dee734cf3f647f8298ad6c37ba253b15b9",
+  "sourceFiles": {
+    "BossTactics_data.lua": {
+      "sha256": "0e3471a2a96b92a344af0a4e0142edef470da757c84d9522ae9790eb12a67e08",
+      "bytes": 5462
+    },
+    "BossTactics.lua": {
+      "sha256": "526a14940ca72387d73cf64d338fc8e6dfcdb3d4cd3c28e39a0951556e471418",
+      "bytes": 3665
+    },
+    "BossTactics.toc": {
+      "sha256": "b23e92b0d2f7b6a70462ec410fc5bd093df609dbdb71a4376d0a3007f9f2fba7",
+      "bytes": 156
+    },
+    "README.md": {
+      "sha256": "edeb1993339d785469d43d497cb2a89e662256135a491d16f9e82a2f30c85467",
+      "bytes": 1900
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

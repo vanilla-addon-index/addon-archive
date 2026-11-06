@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Cernie/CerniesWonderfulFunctions",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Cernie",
+    "repo": "CerniesWonderfulFunctions",
+    "name": "CerniesWonderfulFunctions",
+    "url": "https://github.com/Cernie/CerniesWonderfulFunctions",
+    "api": "https://api.github.com/repos/Cernie/CerniesWonderfulFunctions"
+  },
+  "commit": "c89ecbe4789323ee6396a60fee15447708f22759",
+  "sourceFiles": {
+    "cerniesWonderfulFunctions.lua": {
+      "sha256": "f4b2f2082ce6045f88af56936e07115982a14a2174cb78414602a8bb5a49caf9",
+      "bytes": 21437
+    },
+    "cerniesWonderfulFunctions.toc": {
+      "sha256": "49a98fc30c3b3d31408f21b91cbc8120f810e480251a8ae341bb8545342866e7",
+      "bytes": 232
+    },
+    "cerniesWonderfulFunctions.xml": {
+      "sha256": "d63a3cbe845d5765680484da0dc0c9dad382955776d7ebe24e42c4809890565b",
+      "bytes": 477
+    },
+    "README.md": {
+      "sha256": "e2a594e2dd806c5dfccf52206c04c42cc211a3fa6febb805754df357b8a431c0",
+      "bytes": 13913
+    },
+    "readme.txt": {
+      "sha256": "2ee112c5e8baa5c57d2e663e047dc967d9ce6be7ae840dde366b3a3720d56355",
+      "bytes": 13883
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

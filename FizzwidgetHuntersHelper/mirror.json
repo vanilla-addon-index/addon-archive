@@ -1,0 +1,77 @@
+{
+  "upstream": "https://github.com/McPewPew/GFW_HuntersHelper",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "McPewPew",
+    "repo": "GFW_HuntersHelper",
+    "name": "GFW_HuntersHelper",
+    "url": "https://github.com/McPewPew/GFW_HuntersHelper",
+    "api": "https://api.github.com/repos/McPewPew/GFW_HuntersHelper"
+  },
+  "commit": "306a625f1b97e80013aae9887de8ba8d278e96ae",
+  "sourceFiles": {
+    "GFW_HuntersHelper.toc": {
+      "sha256": "683bad9144bbda6f20998a83680e013be7f4ed57c3aaed4597773a923c76b1f5",
+      "bytes": 251
+    },
+    "GFWTable.lua": {
+      "sha256": "34cd02b2e318710447ea1deef3fbfa5d9401b225b07aa2238817baf4438eeca1",
+      "bytes": 4962
+    },
+    "GFWUtils.lua": {
+      "sha256": "fb39c6e5bdb83617af5654e935b4a1604c04e591cf0576f9352b6d297c7e0176",
+      "bytes": 6235
+    },
+    "GFWZones.lua": {
+      "sha256": "d454faed362034fb2d41f3f0de04210afe01e2e90f2245a51017336ceff15bed",
+      "bytes": 23009
+    },
+    "HuntersHelper_BeastInfo.lua": {
+      "sha256": "f6f6b35c3023e87e0edb9a116770a2f79b6cbde846b0c84ea2e1a64d45c61a98",
+      "bytes": 12408
+    },
+    "HuntersHelper_BeastLevels.lua": {
+      "sha256": "f0101201b933c0fa9753a6186835628cf336969c5f555caee6d3992c612e8b9a",
+      "bytes": 14195
+    },
+    "HuntersHelper_SpellInfo.lua": {
+      "sha256": "b85291060a3afa2fb215644011f443b03245b5df0a0a3f688ee5c38d65a00f06",
+      "bytes": 19939
+    },
+    "HuntersHelper_Tests.lua": {
+      "sha256": "0cbc54b2483785fd13d6b9bd90b41f411ccd25cc2e5d0e3ce7ca64d64956f6f5",
+      "bytes": 9655
+    },
+    "HuntersHelper.lua": {
+      "sha256": "08564d430c3f003842f6e2fd9ceb36c3ccb303d63b2f0636a4993c6ee77de0b1",
+      "bytes": 38189
+    },
+    "HuntersHelper.xml": {
+      "sha256": "f22803be0dfb8555585424e3a23b00da333e14851d7bba1ba33d32b807b3ea4a",
+      "bytes": 789
+    },
+    "localization_BeastNames.lua": {
+      "sha256": "03af91b9f829a66842602bf9861ba2dca5d05dbfefd8504d0d19f06aa13e2e2e",
+      "bytes": 58300
+    },
+    "localization.lua": {
+      "sha256": "8b93a9213bab568b259764ce3bcbe71f5c5ee34380278c8f5d526edf4044efa3",
+      "bytes": 7609
+    },
+    "README.md": {
+      "sha256": "9364c7496d31a4614ae8d939c09a5eff8c90fff3390e4ae410ac56ef2e2423cb",
+      "bytes": 2957
+    },
+    "readme.txt": {
+      "sha256": "4eb5f96153e864c2fa726037d011f40f94bd738ecebcf61a8752b05847e3a5eb",
+      "bytes": 5977
+    },
+    "UpdateUI.xml": {
+      "sha256": "e82e96662d1ef73b6af3798271367f5988de762d734879f08d9e760357d06701",
+      "bytes": 327
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: BMLoot
+## Author: McPewPew
+## Notes: Black Morass Corrupted Sand BoP Accept
+## Version: 0.0001
+
+BMLoot.lua

@@ -1,0 +1,6 @@
+BINDING_HEADER_RETHERZTARGETTRACKER = "Retherz Target Tracker";
+--GLOBALS
+RTT_PREFIX_SPELL = "RRTs";
+RTT_PREFIX_TARGET = "RRTt";
+RTT_TrackedDebuffs = {
+}

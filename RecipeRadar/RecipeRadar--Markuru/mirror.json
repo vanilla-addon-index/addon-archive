@@ -1,0 +1,497 @@
+{
+  "upstream": "https://octowow.st/git/Markuru/RecipeRadar",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Markuru",
+    "repo": "RecipeRadar",
+    "name": "RecipeRadar",
+    "url": "https://octowow.st/git/Markuru/RecipeRadar",
+    "api": "https://octowow.st/git/api/v1/repos/Markuru/RecipeRadar"
+  },
+  "commit": "a5344a0ecb27af027eba0b2b2aebd5e96aa99be8",
+  "sourceFiles": {
+    "Availability.lua": {
+      "sha256": "eba7c240c7f75ceca956222b5052610be12e44d6859f7abbdedae954838ac813",
+      "bytes": 14845
+    },
+    "AvailabilityTooltip.lua": {
+      "sha256": "241ce90d473b1d9519ecce04dc24dd90d935070768026031199076400df57bdd",
+      "bytes": 2905
+    },
+    "AvailabilityTooltip.xml": {
+      "sha256": "d7ec1d9466eb34fb4cb3aef915963e79590247ec08bb9efe7d85d360c2d88d0f",
+      "bytes": 7398
+    },
+    "Bindings.xml": {
+      "sha256": "5ec9f898805457f96803ebecf41da031ede1860b0404bf422b2381b786b81bd9",
+      "bytes": 172
+    },
+    "DropDowns.lua": {
+      "sha256": "3ae2b91bfadb4a1379f445c4f882f7261e5d5af61f4c24d999b801b36e5bf299",
+      "bytes": 16112
+    },
+    "FrameTemplates.xml": {
+      "sha256": "b96781ce19894748c46bc16d2311f9c6bfad6af07189db1e4a784e11686850e0",
+      "bytes": 10307
+    },
+    "Globals.lua": {
+      "sha256": "4eb7b6b4415dbce3e78eef4f2daa2bebcc2bf4a2e34d46fe2e8d7ee34f805446",
+      "bytes": 8898
+    },
+    "Images/Frame/FrameBottomLeft.blp": {
+      "sha256": "55cfd16091d868f66d0786e2778e412b700310cd3196734ff81023af1523991c",
+      "bytes": 175972
+    },
+    "Images/Frame/FrameBottomRight.blp": {
+      "sha256": "97b33f6a40235e1bec349b974aaa70671834dfd2f0fa105352f5a251fd5592bd",
+      "bytes": 175972
+    },
+    "Images/Frame/FrameTopLeft.blp": {
+      "sha256": "d04d1f830305cb21619947dd3d2eea4b4117027b4a6ffe4d6d08b298282f9895",
+      "bytes": 88580
+    },
+    "Images/Frame/FrameTopRight.blp": {
+      "sha256": "bc75dd5b5c1dafc255d6db79019ccb5bb520e122bd96150f12912f27d61641dd",
+      "bytes": 33940
+    },
+    "Images/Frame/HorizontalBarLeft.blp": {
+      "sha256": "71c23216217ef9320739a35d13dea45ef99115ed1f79738c08a3b0f90ab3633a",
+      "bytes": 6820
+    },
+    "Images/Frame/HorizontalBarRight.blp": {
+      "sha256": "1ecb3697d326ada1e3c6368bf278405e2cfba3da01b7e2ace25ab7b64292ac03",
+      "bytes": 6820
+    },
+    "Images/Frame/LockButton-Locked-Down.blp": {
+      "sha256": "6e96d3e9572170d784b9686bd2d0d8a843ca1d0d2243ef941324935b325808d7",
+      "bytes": 2564
+    },
+    "Images/Frame/LockButton-Locked-Up.blp": {
+      "sha256": "ce20bccd510f5e77fa3065c50e0e933881c1924fda45662cb2f9dfd6a67160b8",
+      "bytes": 2564
+    },
+    "Images/Frame/LockButton-Unlocked-Down.blp": {
+      "sha256": "a60f474b3d418f592a838966a5ee080fd68141d1c8111d6bd7c1f06a643e03d5",
+      "bytes": 2564
+    },
+    "Images/Frame/LockButton-Unlocked-Up.blp": {
+      "sha256": "4a51373edc1deee19c97496f417ad7b6283d781cecd089d3fdec1da26add19e6",
+      "bytes": 2564
+    },
+    "Images/Frame/Tab-Right.blp": {
+      "sha256": "38c8400a33823053f9260afd4c0c9e104ecb121fa2f894d3e3f8b5df8ee3da4f",
+      "bytes": 1572
+    },
+    "Images/Icons/Alchemy.blp": {
+      "sha256": "a35da71e69cad2a08b2dc06201a7d1d7dea0a3a16259838dba44a8e0ec1c3f27",
+      "bytes": 1540
+    },
+    "Images/Icons/Blacksmithing.blp": {
+      "sha256": "c1c13b436d3e507aa5adee00363971439fe6d0e5c23ee38f8e101eb0173448fc",
+      "bytes": 1540
+    },
+    "Images/Icons/Cooking.blp": {
+      "sha256": "3252a1bba416c4d9fe6982a168ec2870c75975c25d8fc0c862812ac35a0ff397",
+      "bytes": 1540
+    },
+    "Images/Icons/Disguise.blp": {
+      "sha256": "f75f4ba21e17bf177aa78db115a7641ada3764257ea8097c26905fbf70b63e0f",
+      "bytes": 1428
+    },
+    "Images/Icons/Enchanting.blp": {
+      "sha256": "24cdc3c212670c580991829ed92f66a09cbd2be21ac88fcd347284c70f9be427",
+      "bytes": 1540
+    },
+    "Images/Icons/Engineering.blp": {
+      "sha256": "bbafc77d7684c3db965393e81f024a2355bd42a11ce6eeec242ab3bf2567f037",
+      "bytes": 1540
+    },
+    "Images/Icons/First-Aid.blp": {
+      "sha256": "5c04613d39839d585c7f5c79f1981313d10eb8fb6fc2ec86a0f9f4daaf17c8c2",
+      "bytes": 1540
+    },
+    "Images/Icons/Fishing.blp": {
+      "sha256": "ab6f6726e60c8de58b99dbb522ee1716f1ea987fd866ca0d2fc7df4d15e13c7f",
+      "bytes": 1540
+    },
+    "Images/Icons/Highlight.blp": {
+      "sha256": "baf357cf379d806ceb0a5d73b8fe81ec5108d6312af34e25c89a6901596f9784",
+      "bytes": 1540
+    },
+    "Images/Icons/Jewelcrafting.blp": {
+      "sha256": "65f09b1d4691203eee9dd83354a95076f2ab888c9820256c769363ce91381751",
+      "bytes": 1428
+    },
+    "Images/Icons/Leatherworking.blp": {
+      "sha256": "024a5d8e28caefb14c61904e2e9cf280b5d0023e4603b395d58c1688d5cff499",
+      "bytes": 1540
+    },
+    "Images/Icons/Tailoring.blp": {
+      "sha256": "baa07ecb19afdb4208c296cdab1821adcca2fd647e3c6c6db7188c99b038b8ae",
+      "bytes": 1540
+    },
+    "Images/Misc/Flag.blp": {
+      "sha256": "3a94bf4e0565a1db47bb552413baf21be7e0e2933a57c2c7d4cdec81d251ab02",
+      "bytes": 1540
+    },
+    "Images/Misc/IconHighlight.blp": {
+      "sha256": "450d32d3e4e754707083b12e8020f7276a503d0ad8d5a75b37481ac07769924a",
+      "bytes": 1540
+    },
+    "Images/Misc/MinimapButtonDown.blp": {
+      "sha256": "9da042c308070645396c32792efb81cf918f19d01846024277ad9c5ffa230f89",
+      "bytes": 2564
+    },
+    "Images/Misc/MinimapButtonUp.blp": {
+      "sha256": "6f5388ba3e3e6acf08c00226b74d4f9ea6e4d9009526eedf36a0dd76d41b9f45",
+      "bytes": 2564
+    },
+    "Images/Misc/QuestionMark.blp": {
+      "sha256": "294097a0b2cde0e08fda4609cd397d2f2e6d93d4ec16908bff72a8afbb4a9d72",
+      "bytes": 3916
+    },
+    "Images/Misc/Radar.blp": {
+      "sha256": "e361db85882fdd74fe566870b0edf2a4cc816275330d332087a699ff7ec3b5fb",
+      "bytes": 1540
+    },
+    "Images/Misc/RecipeHighlight.blp": {
+      "sha256": "0d47351a856b5b9d97f0c4514acc8ced8cf03df0a6f3b3a1aaf85448c71dc85d",
+      "bytes": 6820
+    },
+    "Images/Misc/Scroll.blp": {
+      "sha256": "7e4807542a1b595dafd51c252e362ab7b24a2f1558c4a323202f531e0ad099d1",
+      "bytes": 1540
+    },
+    "Images/Regions/Alah-Thalas.blp": {
+      "sha256": "fd198bf052fc4f36cadac50cba197c66385a8a76504c0fd263ac5a034c38921b",
+      "bytes": 132244
+    },
+    "Images/Regions/Alterac-Mountains.blp": {
+      "sha256": "377617eff3edb32b98ed0de9a1ac5de4742de8a6bf825be71d8c8b93670f88e0",
+      "bytes": 132244
+    },
+    "Images/Regions/Arathi-Highlands.blp": {
+      "sha256": "ec94c47a5433dfe1d47de241aec7792665978c729f9dc11ebe2e487aab202bb1",
+      "bytes": 132244
+    },
+    "Images/Regions/Ashenvale.blp": {
+      "sha256": "7e62529027f196c2381648887d2ae645c6e49a903d38b877b69d3733663e2a31",
+      "bytes": 132244
+    },
+    "Images/Regions/Azshara.blp": {
+      "sha256": "93aeadb21c567fb1d6ea2bf5deaf4d28e7cc2e2308bd6a2ffb0f254309c1f381",
+      "bytes": 132244
+    },
+    "Images/Regions/Badlands.blp": {
+      "sha256": "78f741d6fd76d3c11be1b23fb69f8da1ab4119d1999395043fa432895d26490f",
+      "bytes": 132244
+    },
+    "Images/Regions/Balor.blp": {
+      "sha256": "2eebfbad50ddad80e2a4b2210c2ba4ad4aaed9fa21d6be732c766d6c966a3538",
+      "bytes": 132244
+    },
+    "Images/Regions/Blackrock-Depths.blp": {
+      "sha256": "74613fe9d7e24794e623b3e72a96c7fedb07b2cb53df630d8d3d7b839c22a285",
+      "bytes": 132244
+    },
+    "Images/Regions/Blackstone-Island.blp": {
+      "sha256": "3e4e65b66e30cc3ea2d1e6ee975eca44894672f0d5bdeaca5dda61e71f35fda4",
+      "bytes": 132244
+    },
+    "Images/Regions/Blasted-Lands.blp": {
+      "sha256": "87dbab1e7971530b49fe2bcf558b855b04dd088db3bfccf1c7a64bdf82df4056",
+      "bytes": 132244
+    },
+    "Images/Regions/Burning-Steppes.blp": {
+      "sha256": "53b5942d4cff320d2e93ba34b9ff54700f10fd1c7de248449e46d0e8943926fa",
+      "bytes": 132244
+    },
+    "Images/Regions/Darkshore.blp": {
+      "sha256": "08785537e23ebd3527168e0ab5c534fd5bd056a2bc26d6cf5276942d29481a21",
+      "bytes": 132244
+    },
+    "Images/Regions/Darnassus.blp": {
+      "sha256": "2b367832e8df3a859d15da310e9cc6c72323262c8a048004c2bfd0203c83f84d",
+      "bytes": 132244
+    },
+    "Images/Regions/Deadwind-Pass.blp": {
+      "sha256": "49f59b425edec8ac798648f1043ef077d042956fe85bc9e861184f18da86b093",
+      "bytes": 132244
+    },
+    "Images/Regions/Desolace.blp": {
+      "sha256": "f65f05710eb745783a96d3dbad5d11500b74561df050a23f9baf406a3275d01c",
+      "bytes": 132244
+    },
+    "Images/Regions/Dire-Maul.blp": {
+      "sha256": "9b343757941dd96038ec48de74d9ecba1eea596a3ac26f1891e63aa5f89913ca",
+      "bytes": 132244
+    },
+    "Images/Regions/Dun-Morogh.blp": {
+      "sha256": "4ac87685f0f749bf52e58fd6534b000a70d6ebc161a6ee496a524484ffe6f865",
+      "bytes": 132244
+    },
+    "Images/Regions/Durotar.blp": {
+      "sha256": "b8611acfffd0d05758df8680c2df91aabf17d0ef4812066c078f5cdd826d7140",
+      "bytes": 132244
+    },
+    "Images/Regions/Duskwood.blp": {
+      "sha256": "3330f54161be4c416c73de4c47148e775baf31a221a60d3f38734c6447b6a7c4",
+      "bytes": 132244
+    },
+    "Images/Regions/Dustwallow-Marsh.blp": {
+      "sha256": "ea07fc900ff218f6cce02091fed590df1595281a081f497f74ae600cd33b6e5d",
+      "bytes": 132244
+    },
+    "Images/Regions/Eastern-Plaguelands.blp": {
+      "sha256": "cae09d448bdb978dd8e95b94bb49b69404ba80fa36d64c931c11fcf744b28509",
+      "bytes": 132244
+    },
+    "Images/Regions/Elwynn-Forest.blp": {
+      "sha256": "3fc4d4733a535681933b599d90b4e921307c330802c44e0f0eac9847f78f42c4",
+      "bytes": 132244
+    },
+    "Images/Regions/Felwood.blp": {
+      "sha256": "b1d9efcdb5d45281b3d6904f76e1fa519472d642a7149e5c5650fb69d358b334",
+      "bytes": 132244
+    },
+    "Images/Regions/Feralas.blp": {
+      "sha256": "7f43f1b011ed5b4a9587a495c10df0ec691e1b409d0e947193c79f4f21fe031f",
+      "bytes": 132244
+    },
+    "Images/Regions/Gillijim.blp": {
+      "sha256": "06680e0991febd1ada95e31ed690b929dc0101b0cd265f5aef3c2ba2ea8df79c",
+      "bytes": 132244
+    },
+    "Images/Regions/Gilneas.blp": {
+      "sha256": "09eee68d10e78594584443a198122174572ea8d22787628d58ac884fe914cd02",
+      "bytes": 132244
+    },
+    "Images/Regions/Gnomeregan.blp": {
+      "sha256": "016ca2da0b48f0014a6e69559885981ba5bf2886cba2501bdf19834ef64f7961",
+      "bytes": 132244
+    },
+    "Images/Regions/Grim-Reaches.blp": {
+      "sha256": "9c1c9cff0aa8ce1bbfda6f53a08ce48665f264ba6cd2f6298b8a970de5449912",
+      "bytes": 132244
+    },
+    "Images/Regions/Hillsbrad-Foothills.blp": {
+      "sha256": "d70a712e0b3f5d970334ebcc3a4d5e979b7237c5dc1c8f781d992dee7d1c7e00",
+      "bytes": 132244
+    },
+    "Images/Regions/Hyjal.blp": {
+      "sha256": "aa36fff2314efa49df2fb850d415f385903b0cb5a3c56827f78eeb3cf09afad6",
+      "bytes": 132244
+    },
+    "Images/Regions/Ironforge.blp": {
+      "sha256": "55088721c02732dacf22be132409f76041ded07e29924ff5323becf4be4a5f93",
+      "bytes": 132244
+    },
+    "Images/Regions/Loch-Modan.blp": {
+      "sha256": "be4594890d59e030409c0dd4f6f3845d5f6e5585be00eea730fb2774b9441296",
+      "bytes": 132244
+    },
+    "Images/Regions/Moonglade.blp": {
+      "sha256": "e517f06d6d8bb1e914ff8efd30e40a8a59a2c83547f8f00a3e5cc6609bef6605",
+      "bytes": 132244
+    },
+    "Images/Regions/Moonwhisper.blp": {
+      "sha256": "c3bb53a6ae31a770b1aace213cd87e6438147067c9dfe1be306b76f4dfddcb20",
+      "bytes": 132244
+    },
+    "Images/Regions/Mulgore.blp": {
+      "sha256": "a185d044634ccd903dcb54ced1f284c86a6a07367e4095b8d5123b9b997af9f9",
+      "bytes": 132244
+    },
+    "Images/Regions/Northwind.blp": {
+      "sha256": "60254c2376dfe0cc9d87f74f3405a42d0610cec60293baeaf35429e935d19462",
+      "bytes": 132244
+    },
+    "Images/Regions/Orgrimmar.blp": {
+      "sha256": "ce5ae0ee4a4327d1ddbfb92d4dda92d03a488e3e9cab3e77f43453bc25a0a053",
+      "bytes": 132244
+    },
+    "Images/Regions/Redridge-Mountains.blp": {
+      "sha256": "4755d370fdf3b8952b84229200bd1631b603288242e355de43fffff1f2f5abb2",
+      "bytes": 132244
+    },
+    "Images/Regions/Ruins-of-Ahn-Qiraj.blp": {
+      "sha256": "05f0ce4ee2b1daee6a4519be889dfe609a3cb1b1df36cba67730bd0f0cb2c2b2",
+      "bytes": 132244
+    },
+    "Images/Regions/Scarlet-Enclave.blp": {
+      "sha256": "5f42b32437fc6ed9efb03af1f987b50cbc33ac0ab1a1869323f8a036bdeadbb8",
+      "bytes": 132244
+    },
+    "Images/Regions/Searing-Gorge.blp": {
+      "sha256": "a933f165166ffb83873373b949164e71da65a2ad51b17f29c46217bf3948d329",
+      "bytes": 132244
+    },
+    "Images/Regions/Silithus.blp": {
+      "sha256": "97bfee39d4d584c4fae357ef90e75db49cff201fa5ed3d06b5d901f65f087eb9",
+      "bytes": 132244
+    },
+    "Images/Regions/Silverpine-Forest.blp": {
+      "sha256": "f870f129dadff38af08915f8980f3c5ca414503eb89075a3362788fe2c12c02f",
+      "bytes": 132244
+    },
+    "Images/Regions/Stonetalon-Mountains.blp": {
+      "sha256": "7dbcd39ee3d38fd3b64da4a256d7529ca2bd95e5850a86dee022a61899f590d6",
+      "bytes": 132244
+    },
+    "Images/Regions/Stormwind-City.blp": {
+      "sha256": "fda60760e81273226d5be3100e57b138b6e9b70497e76b73b15b2b469039a026",
+      "bytes": 132244
+    },
+    "Images/Regions/Stranglethorn-Vale.blp": {
+      "sha256": "f7c4aeb8b318eeb368fade6629dac83cb5d287250fd3c4cbe37d79534c2087f8",
+      "bytes": 132244
+    },
+    "Images/Regions/Swamp-of-Sorrows.blp": {
+      "sha256": "7ca5c48896baaec4c06001b589b7783deab94025bf117a280b365f74aa2cdc4c",
+      "bytes": 132244
+    },
+    "Images/Regions/Tanaris.blp": {
+      "sha256": "4092bb71b25e5763574dcca6b575e2ecb0d5c9927d28d93ef66809b2fbd537d5",
+      "bytes": 132244
+    },
+    "Images/Regions/Tel-Abim.blp": {
+      "sha256": "81014abdaf3553cd18add54bc56640aa70b3ab592878f7f4e19bc2f2ccbc85f4",
+      "bytes": 132244
+    },
+    "Images/Regions/Teldrassil.blp": {
+      "sha256": "6f93f3cf1590bca3cc109fadc936272ff8bdc91b52df0a8e0d5228051ac064df",
+      "bytes": 132244
+    },
+    "Images/Regions/Thalassian-Highlands.blp": {
+      "sha256": "03caba2f93ff477b011639e5ed2acf3e89d433b22fecd82839a9683783022669",
+      "bytes": 132244
+    },
+    "Images/Regions/The-Barrens.blp": {
+      "sha256": "db78349cc5be518c9f6b89dd51059e28e00bb28cf67cbe95ec254851a1d0fa5a",
+      "bytes": 132244
+    },
+    "Images/Regions/The-Hinterlands.blp": {
+      "sha256": "a8d5b14e5c3c868d08a8c863b6db76cb9400970fdffe776a02c81cee3b3a1cb0",
+      "bytes": 132244
+    },
+    "Images/Regions/Thousand-Needles.blp": {
+      "sha256": "25723c0411d725bd3e75076bb0f725b82f0463736ca1623e776dc55efa091283",
+      "bytes": 132244
+    },
+    "Images/Regions/Thunder-Bluff.blp": {
+      "sha256": "0dcf92e8aba63906afd922271d3c381fb01553ab7947c26b7d6b4796220323f0",
+      "bytes": 132244
+    },
+    "Images/Regions/Tirisfal-Glades.blp": {
+      "sha256": "0f94899b226371fdd14707b28163c223843546f238970daffe74b309627c5b41",
+      "bytes": 132244
+    },
+    "Images/Regions/Un-Goro-Crater.blp": {
+      "sha256": "7977403a03f1c5467c166c5811c1b3a11fd5467b9820d669425e3cdb96e81a9b",
+      "bytes": 132244
+    },
+    "Images/Regions/Undercity.blp": {
+      "sha256": "34f3889543d4a0aba9aec7f54f8703942264d85bc3324643e19be535513e18ca",
+      "bytes": 132244
+    },
+    "Images/Regions/Western-Plaguelands.blp": {
+      "sha256": "1d80ba40a4e329d16cbcd0358b4ae7bd9ec29319756d8f1bcc71a9fa30b376ba",
+      "bytes": 132244
+    },
+    "Images/Regions/Westfall.blp": {
+      "sha256": "71b18c29909fb5e1ceb77db8b2ba56a35ce06b27513c0563bac4ee89abc07e24",
+      "bytes": 132244
+    },
+    "Images/Regions/Wetlands.blp": {
+      "sha256": "3b1242f88b50a7da4d4407dc2ea396617d776b0bc0278e7f2fb102c65cf467ef",
+      "bytes": 132244
+    },
+    "Images/Regions/Winterspring.blp": {
+      "sha256": "104fb0a2fdb64ef700006610251f6a9645f5972cec3e9be352810eeb9514ca02",
+      "bytes": 132244
+    },
+    "Localization.lua": {
+      "sha256": "3dc0863d23fa68d1968ff52531177d87e3f3a4e9ef4ea4a1a8ec7d1b4e9c2f7c",
+      "bytes": 109920
+    },
+    "MainFrame.lua": {
+      "sha256": "39df627e418d25cc3b01a918c58151450e14e966be4d27c548bc1e5ed7d5f5cd",
+      "bytes": 10868
+    },
+    "Maps.lua": {
+      "sha256": "ff471e86d7018a2780b7e2ff24b128e47b01c46295c53a8c44c4a36611b84e2d",
+      "bytes": 6005
+    },
+    "Maps.xml": {
+      "sha256": "5d75c04c68517e778e4565d72977e59903dfa594daad348c162d47db8156aa78",
+      "bytes": 6144
+    },
+    "Minimap.lua": {
+      "sha256": "4e6cba7154426bbe948e6c80e0b91f4b82f547bebda96b111e8dd86a774bf0de",
+      "bytes": 6312
+    },
+    "MinimapButton.lua": {
+      "sha256": "fcc4b57d4145fdc4cef0f6d16f66242e9fe9b2214d9f630d476eb1ed33860e49",
+      "bytes": 2810
+    },
+    "MinimapButton.xml": {
+      "sha256": "410c51976cd02077908cbcc9ea36b1d112fd6c75d0d00221ca7ab633bf5ac464",
+      "bytes": 1736
+    },
+    "NameMap.lua": {
+      "sha256": "64e01024ffd141cfb69d6198d6302f7d16ddb23778b4465f25c8e0b7c3334f0e",
+      "bytes": 5834
+    },
+    "OptionsFrame.lua": {
+      "sha256": "a3945562a5eca8e407ebb7f31fda97a5cdacdffce57095adbb14c1becf0431bd",
+      "bytes": 5894
+    },
+    "OptionsFrame.xml": {
+      "sha256": "611b72d06c01a99df7c85669d42ca35a16656510428100a085e3771c46897c44",
+      "bytes": 9378
+    },
+    "RadarTab.lua": {
+      "sha256": "63aa1ef24e10295024341527fad65589bb3e001acaa3f535ed64ce37d54582ca",
+      "bytes": 16540
+    },
+    "README.md": {
+      "sha256": "22e513bce8108c376fec50d826b910d1514254c950738585c8a2c6f86c12d82e",
+      "bytes": 1424
+    },
+    "RecipeData.lua": {
+      "sha256": "71491c84635fc49336f2dab52fd8e10f1a249653b23397b18a40bee6f7c94f9c",
+      "bytes": 148191
+    },
+    "RecipeRadar.lua": {
+      "sha256": "c8eb0e5e9f473a1f5490d6985c631642df7f1179e1697cd705e31e3385f68098",
+      "bytes": 17615
+    },
+    "RecipeRadar.toc": {
+      "sha256": "c7856fef0a1c6a568fc8a54e71e1fb124ccf00f987b538f777254f7cd6eea776",
+      "bytes": 908
+    },
+    "RecipeRadar.xml": {
+      "sha256": "45ee7d206680c2dc09e365b02e14a8b818b57d11030d5f0d1d13e96855683720",
+      "bytes": 29780
+    },
+    "RecipesTab.lua": {
+      "sha256": "5ac7132b77150d388eb9e94d2420ee0f93ad2e232fa28c821dce87db1c98e48a",
+      "bytes": 16493
+    },
+    "RegionData.lua": {
+      "sha256": "d840787839e03487bddc19a4f10443bc545f797e310164388ae22fe9b0aaa360",
+      "bytes": 146442
+    },
+    "SkillDB.lua": {
+      "sha256": "40b9930a59adc12516bd8709ecc49916b305e2a474fcc1ad219272cdc7ccf8ab",
+      "bytes": 14044
+    },
+    "Worldmap.lua": {
+      "sha256": "261249687c75ab972194b9d10457646ebf8a119ed7dd00b9dc267c2497143264",
+      "bytes": 3318
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

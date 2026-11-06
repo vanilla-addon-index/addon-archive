@@ -1,0 +1,52 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<Script file="QS_01_12_TirisfalGlades.lua"/>
+	<Script file="QS_01_12_Mulgore.lua"/>
+	<Script file="QS_01_12_Durotar.lua"/>
+	<Script file="QS_12_20_Barrens.lua"/>
+	<Script file="QS_12_20_Silverpine_Forest.lua"/>
+
+	<Script file="QS_20_22_Stonetalon_Mountains.lua"/>
+	<Script file="QS_22_23_Southern_Barrens.lua"/>
+	<Script file="QS_23_25_Stonetalon_Mountains.lua"/>
+	<Script file="QS_25_25_Southern_Barrens.lua"/>
+	<Script file="QS_25_26_Thousand_Needles.lua"/>
+	<Script file="QS_26_27_Ashenvale.lua"/>
+	<Script file="QS_27_27_StonetalonMountains.lua"/>
+	<Script file="QS_27_29_ThousandNeedles.lua"/>
+	<Script file="QS_29_30_HillsbradFoothills.lua"/>
+
+	<Script file="QS_30_30_ArathiHighlands.lua"/>
+	<Script file="QS_30_31_StranglethornVale.lua"/>
+	<Script file="QS_31_32_ThousandNeedles.lua"/>
+	<Script file="QS_32_34_Desolace.lua"/>
+	<Script file="QS_34_36_StranglethornVale.lua"/>
+	<Script file="QS_36_37_Alterac_Mountains.lua"/>
+	<Script file="QS_37_38_Arathi_Highlands.lua"/>
+	<Script file="QS_37_38_Thousand_Needles.lua"/>
+	<Script file="QS_38_38_Dustwallow_Marsh.lua"/>
+	<Script file="QS_38_40_Stranglethorn_Vale.lua"/>
+
+	<Script file="QS_40_41_Badlands.lua"/>
+	<Script file="QS_41_42_Swamp_of_Sorrows.lua"/>
+	<Script file="QS_42_43_Gilneas_Horde.lua"/>
+	<Script file="QS_42_43_Stranglethorn_Vale.lua"/>
+	<Script file="QS_43_44_Dustwallow_Marsh.lua"/>
+	<Script file="QS_44_44_Desolace.lua"/>	
+	<Script file="QS_44_45_Tanaris.lua"/>
+	<Script file="QS_45_46_Feralas.lua"/>
+	<Script file="QS_46_47_Azshara.lua"/>
+	<Script file="QS_47_47_Hinterlands.lua"/>
+	<Script file="QS_47_47_StranglethornVale.lua"/>
+	<Script file="QS_47_48_Searing_Gorge.lua"/>
+	<Script file="QS_48_49_Swamp_of_Sorrows.lua"/>
+	<Script file="QS_49_49_Dustwallow_Marsh.lua"/>
+	<Script file="QS_49_50_Feralas.lua"/>
+	<Script file="QS_49_50_Tanaris.lua"/>
+
+	<Script file="QS_50_50_Azshara.lua"/>
+	<Script file="QS_58_59_Silithus.lua"/>
+	<Script file="QS_59_60_Winterspring.lua"/>
+	
+</Ui>
+

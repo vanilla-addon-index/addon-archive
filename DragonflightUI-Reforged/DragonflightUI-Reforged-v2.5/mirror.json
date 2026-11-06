@@ -1,0 +1,814 @@
+{
+  "upstream": "https://github.com/papafru/DragonflightUI-Reforged-v2.5",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "papafru",
+    "repo": "DragonflightUI-Reforged-v2.5",
+    "name": "DragonflightUI-Reforged-v2.5",
+    "url": "https://github.com/papafru/DragonflightUI-Reforged-v2.5",
+    "api": "https://api.github.com/repos/papafru/DragonflightUI-Reforged-v2.5"
+  },
+  "commit": "e7815fbf1d512924df58d4fcc3ac1de817d26962",
+  "sourceFiles": {
+    "art/20250626_0017_Golden Dragon Frame_remix_01jymjgvt0ew5tv0rcdh1zwt9k.png": {
+      "sha256": "96cd022a30dcdb2f2449aac1f207d476ded0b47e0d487f05c5cc5826d9bef6fe",
+      "bytes": 2423864
+    },
+    "art/ab_prev.png": {
+      "sha256": "ef2d67e4c2675ab8bea3554568f50a4fdbb6564c4d2a779e7628644600ea2755",
+      "bytes": 867087
+    },
+    "art/altEagle.png": {
+      "sha256": "b76283bad0167cbcea08f18d11bf0d7b020368c2838c67e8b027bd84ecbbbde4",
+      "bytes": 2423994
+    },
+    "art/altWyv.png": {
+      "sha256": "612d98d4d6ea903cbb5561dc047f16aecb1951f651310fa1ed16c79d74647b0b",
+      "bytes": 2412016
+    },
+    "art/char_prev.png": {
+      "sha256": "c4a6da07580f3f37018dccdcc2c998eb0f74c3b83baf53878ca247bc88e46f99",
+      "bytes": 393266
+    },
+    "art/dfrl_logo.png": {
+      "sha256": "e12b1d84fc36aa58f2125122cf4e73fdb8cff87ced08f55b16e9e14572a15c3c",
+      "bytes": 73934
+    },
+    "art/logo.png": {
+      "sha256": "4941dc0247ccc8b1ffe9304a581cd0f173844bf659939ed146d35cb4203dc835",
+      "bytes": 77122
+    },
+    "art/map_prev.png": {
+      "sha256": "ab392b6501a4951b28f3f668338b9995444db8a0bb9c8af79134be2652ddb0c2",
+      "bytes": 281941
+    },
+    "art/micro_prev.png": {
+      "sha256": "1715818e21d6e1cb8287245cceef1e6348d4bd856f77cca4388056c5ae2adea1",
+      "bytes": 219385
+    },
+    "art/paperdolltemplate.PNG": {
+      "sha256": "6f3e1a5dae560fd56111e9fc8e43819c9f9a5b74318cb8cdd1cb0e1e1592f23c",
+      "bytes": 307974
+    },
+    "core/compat.lua": {
+      "sha256": "252e0e8b776e5a8927010f5521842f159ed610fdcaa5e5bc0cc329584a3f3c69",
+      "bytes": 10173
+    },
+    "core/core.lua": {
+      "sha256": "9f818f96521ceee88930ce6213f3aed29cc7692eb131012ee8249b48dfaf4438",
+      "bytes": 11004
+    },
+    "core/error.lua": {
+      "sha256": "51ea2484780006fb334eb73d9196f18569dd8574afc214e6be67987166f1ffe0",
+      "bytes": 1473
+    },
+    "core/first.lua": {
+      "sha256": "d495b59fcff8397c0e99233f2be5afb7f9766068b4f817d89f9e3b14a0a0dc51",
+      "bytes": 8148
+    },
+    "core/statusbar.lua": {
+      "sha256": "428bbf0e6be8ad67c2e8ad7b32c9f872a4f0d91d99b4592b14635687e46c40eb",
+      "bytes": 10706
+    },
+    "core/tools.lua": {
+      "sha256": "cf393a3611a63a8f562d7b6efec72553d8a123ccb8efec3d8b935bd2bbd85f4b",
+      "bytes": 4386
+    },
+    "data/tables.lua": {
+      "sha256": "065076282ee53edebc57cd6e5ff2817afbbcabb5e04716fd4c859539527c6933",
+      "bytes": 20913
+    },
+    "DragonflightUI-Reforged-v2.5.toc": {
+      "sha256": "5eda3ea4cdc2ab3047093b192a4d509f287f196a638789ca8a6bccca7561d952",
+      "bytes": 1253
+    },
+    "DragonflightUI-Reforged.toc": {
+      "sha256": "5eda3ea4cdc2ab3047093b192a4d509f287f196a638789ca8a6bccca7561d952",
+      "bytes": 1253
+    },
+    "media/fnt/BigNoodleTitling.ttf": {
+      "sha256": "99fcb8e6f65d2d4e443091d856eb4eabec079f08245d31d02695aea860d7ddf1",
+      "bytes": 75156
+    },
+    "media/fnt/Continuum.ttf": {
+      "sha256": "28e295353b910b9ca7bf3d2b437bb5873ce49d5db1df661f8c97efeb9399d8b9",
+      "bytes": 92656
+    },
+    "media/fnt/DieDieDie.ttf": {
+      "sha256": "83a4de712fe501c0026b32955265da787993cc3ca224a918e179ffdef982ee21",
+      "bytes": 384412
+    },
+    "media/fnt/Expressway.ttf": {
+      "sha256": "06a2106170c2b5b736955cc749ed755f3757d103230645158f0bd5b5b91c386b",
+      "bytes": 99820
+    },
+    "media/fnt/Homespun.ttf": {
+      "sha256": "00987661c58306d4166af5c94d69b2becb21548097658e4627ef4dfdfb6b3f90",
+      "bytes": 21196
+    },
+    "media/fnt/Hooge.ttf": {
+      "sha256": "0570ff71826c135d343bce9a707ea49d56ad37c229a3adc6a53f443580943cdc",
+      "bytes": 70016
+    },
+    "media/fnt/Myriad-Pro.ttf": {
+      "sha256": "a4eefdaeccae42faeaf989b6b642f2e39386fd33a7e11c39e7c08d3bfc4eb18a",
+      "bytes": 209700
+    },
+    "media/fnt/Prototype.ttf": {
+      "sha256": "01c1d8449939da23ffdc266af77e8161135af47f6000a7b986bcbfb8429fe984",
+      "bytes": 42456
+    },
+    "media/fnt/PT-Sans-Narrow-Bold.ttf": {
+      "sha256": "e69d83bcf5bd647892b4e2b22f5098dabd55c989413513197722fc156fb9f00e",
+      "bytes": 487720
+    },
+    "media/fnt/PT-Sans-Narrow-Regular.ttf": {
+      "sha256": "4102edda03059163771869d258df54ac8563c408fa6e9ef75b2ddc85eabea6f4",
+      "bytes": 396212
+    },
+    "media/fnt/RobotoMono.ttf": {
+      "sha256": "c570ac128b984104aeeffda5d69eea9496d676b25bdf0425585c4c934618c450",
+      "bytes": 118976
+    },
+    "media/tex/actionbars/altGyph.tga": {
+      "sha256": "f62f24e603ea53ed5a3ac45ed0dc6be326a19206c63bcc7e3f4dafe19b10dc12",
+      "bytes": 1048620
+    },
+    "media/tex/actionbars/altWyv.tga": {
+      "sha256": "73f4e20f6bc4e36412879a346beb43652f8b68eb067ce068f71c772011e46361",
+      "bytes": 1048620
+    },
+    "media/tex/actionbars/border.blp": {
+      "sha256": "d619895f8f69964cdd0dd82a59c6efff5cd8b86076b4e219a60993100d0070f9",
+      "bytes": 23060
+    },
+    "media/tex/actionbars/GryphonNew.tga": {
+      "sha256": "40f911a12e5f26f2ab2a607225528ab2e3804ab9c0d911b1a1d4def39bb01abc",
+      "bytes": 1048620
+    },
+    "media/tex/actionbars/HDActionBar.tga": {
+      "sha256": "94e892425bd9010fb3813a6e6b87323d6ec86ccfe52c1cf06c8ec9935e1096f3",
+      "bytes": 262188
+    },
+    "media/tex/actionbars/HDActionBarBtn.tga": {
+      "sha256": "b0da99aba86e994dff6ec04d85d622d804338ceb99fc6b023a2e33b344ad115e",
+      "bytes": 16428
+    },
+    "media/tex/actionbars/indicator_.tga": {
+      "sha256": "b60cabfe873487508277ec4ac658d8346a1d113e9697692a1a9d08946cc761f7",
+      "bytes": 16428
+    },
+    "media/tex/actionbars/page_down_highlight.tga": {
+      "sha256": "83bad8b2c86325ee4524bbe22b0dfaf8cc166caad85f0f0e893a688d84adf34a",
+      "bytes": 1068
+    },
+    "media/tex/actionbars/page_down_normal.tga": {
+      "sha256": "3fe94798ec93913995cdaeda13ca4b5e9c4849fdcde862b540b053f807d1c624",
+      "bytes": 1068
+    },
+    "media/tex/actionbars/page_down_pushed.tga": {
+      "sha256": "2aafddf9cc5023a530447590721daea0ce9280f45553cbcd99fef8f756984332",
+      "bytes": 1068
+    },
+    "media/tex/actionbars/page_up_highlight.tga": {
+      "sha256": "41b649c4e384be54fd89801cdd67c2c2150a7f344379b5e7cdefd87f3344be7e",
+      "bytes": 1068
+    },
+    "media/tex/actionbars/page_up_normal.tga": {
+      "sha256": "a685f29479086c30959282f653b8edb57f5a2e292871e440169e1d6c8485cfdc",
+      "bytes": 1068
+    },
+    "media/tex/actionbars/page_up_pushed.tga": {
+      "sha256": "62f76b689c1bdc44572a020bda0eef15ac303c86855f33aa543bafc3aebbfa93",
+      "bytes": 1068
+    },
+    "media/tex/actionbars/uiactionbariconframehighlight.tga": {
+      "sha256": "a81770753c4c0dc699dd8013ef7f6e9adcf27b13369767a2d76b62899377836e",
+      "bytes": 16923
+    },
+    "media/tex/actionbars/WyvernNew.tga": {
+      "sha256": "5f2bb04bb35b3291ef7265cb172bacb5375b886c392b418a65a5e95f42688b87",
+      "bytes": 1048620
+    },
+    "media/tex/bags/bagbg2.tga": {
+      "sha256": "3d57cce18f0442bf1947f9c22df3f19515ca814e760076d83bd93acaaab53a24",
+      "bytes": 65580
+    },
+    "media/tex/bags/baghighlight2.blp": {
+      "sha256": "2981c5564a171dadc1f1215406b4c98b858ee139f415ffc7f850e404c0e5d8fc",
+      "bytes": 6676
+    },
+    "media/tex/bags/bagslotCutout.blp": {
+      "sha256": "8db2bf51dd735b39770dcf284e74d880e5081acdfd710a00e7472954f10f9af7",
+      "bytes": 23060
+    },
+    "media/tex/bags/bagslots2x.blp": {
+      "sha256": "d8161b7d2b3f2a0968db66e964ba70e1ee78ec76a5532cf356830b70ce5f0e4f",
+      "bytes": 263316
+    },
+    "media/tex/bags/bigbag.blp": {
+      "sha256": "42496487fa77faaa665d5e4edc211c1d4c1f1b603c33ab0e99d51fc8f9743e90",
+      "bytes": 23060
+    },
+    "media/tex/bags/bigbagHighlight.blp": {
+      "sha256": "10f58bf1b020c9af7ab4e7a4f9be2e50d3cc8713bbf323a93511aec7f801a389",
+      "bytes": 23060
+    },
+    "media/tex/bags/expand.tga": {
+      "sha256": "c9004ea1b27e96f4be6a3fd3dd30e7e4e1af9f518b6f5e9241909fa7d6421d85",
+      "bytes": 4140
+    },
+    "media/tex/bags/KeyRing-Bag-Icon.blp": {
+      "sha256": "d4fd2e7a688fbaaef4a32fe2de4f9ed6531496490a41820d2e5b0f1002fbf6e3",
+      "bytes": 6676
+    },
+    "media/tex/castbar/CastingBarBackground.blp": {
+      "sha256": "7a8559e94f2f938f2de73a72948343c57a656c6d20a0986caad42c73b4ce6913",
+      "bytes": 23156
+    },
+    "media/tex/castbar/CastingBarFrame.blp": {
+      "sha256": "b8dd6c978ccb50a058db2b59dc5f8901e46473bc88deef9d31cbe3b0883e11dd",
+      "bytes": 23156
+    },
+    "media/tex/castbar/CastingBarFrameDropShadow.blp": {
+      "sha256": "fe79c490373e3d215cb091d35668e24bcc1cc1a41b20294fdf855115b76009cd",
+      "bytes": 44916
+    },
+    "media/tex/castbar/CastingBarFrameFlash.tga": {
+      "sha256": "f063bc7fdda3eb20d72298d1116e4a1e37cd5d70aab65932ef5eb0bab1af2d30",
+      "bytes": 131116
+    },
+    "media/tex/castbar/CastingBarSpark.blp": {
+      "sha256": "7d651979a15eb00b35442a284c18e8169fcd9806c5b0baa55c5a65e5df263645",
+      "bytes": 2580
+    },
+    "media/tex/castbar/CastingBarStandard3.tga": {
+      "sha256": "d0d85e8cb6814cc386964e64d3f4253b244095904d1dd36abb63b96a261e06a9",
+      "bytes": 20895
+    },
+    "media/tex/chat/chat_down_full.tga": {
+      "sha256": "1decb4081478cd8ca24d6a79190172200391bfcd74ffb49ec8434d562feaa5cd",
+      "bytes": 4140
+    },
+    "media/tex/chat/chat_down.tga": {
+      "sha256": "299e637fa3cfa352e0725cae8935a62d1d66c721366339820adc489957a7b72f",
+      "bytes": 4140
+    },
+    "media/tex/chat/chat_menu.tga": {
+      "sha256": "1ff34ccfb3f2f999ea380b6646c37e02213670f10cf1a0588a75390cc26196cc",
+      "bytes": 4140
+    },
+    "media/tex/chat/chat_up.tga": {
+      "sha256": "ac8df1b705572bde2a663be87f06f1165d590d3b2ab8db317d8de87c2b769db0",
+      "bytes": 4140
+    },
+    "media/tex/gui/dfrl_logo.tga": {
+      "sha256": "cb16cd2bd5d6e63233899a620ee4783d2e85bfec477958de0e4299f0eae2df56",
+      "bytes": 262188
+    },
+    "media/tex/micromenu/color_micro/book-faded.tga": {
+      "sha256": "0bceb3fde633a73aca444280d2e0b5a9fb647e0d9ea4caea6804dfcf2971882d",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/book-highlight.tga": {
+      "sha256": "c1a2155c49fd10a6b7dedb099435d74a3dc1017d565bab542b1fba723a71b42a",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/book-regular.tga": {
+      "sha256": "53c468943c495ca78d7c5bbdb7d828216f009258d66bef967cefa7616e6556eb",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/eye-faded.tga": {
+      "sha256": "42e10d6a12fe198a7c2bebd316d26fdb0a1742ef822a348c2ed136d15a269d4d",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/eye-highlight.tga": {
+      "sha256": "7dda2da48a7e2ce58b86c315898f08162d23f6367fcaaa1d60225b394ed32368",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/eye-regular.tga": {
+      "sha256": "eb5778fc9a115d3f7142175d94231a357e2530fc6e5dff8712b6723922691b3d",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/horseshoe-faded.tga": {
+      "sha256": "34c094ff441916c0444d5bcb80b45ba7323f123581756fb24957ea59dc5ba92d",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/horseshoe-highlight.tga": {
+      "sha256": "94476699036216b38de20ae5d1630339f999c28dae737250791dee10024fc54e",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/horseshoe-regular.tga": {
+      "sha256": "78a6a9db61076ab924e8bc2f951210f74c23fcfb2da4d09eca3ca3c8d2633bf9",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/quest-faded.tga": {
+      "sha256": "65b188098152c2e439dee47ef2c55e824004bd21380a1c480de6e2e4c71e9223",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/quest-highlight.tga": {
+      "sha256": "3eb0744d2a62e69141ca9bbe4ed4d69e667fae681a0011196d2d9ce2cceb3717",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/quest-regular.tga": {
+      "sha256": "2a908f1e4121c4b625aeac3e61535091f69b72ff88a3756fb7242df9dc2f523b",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/question-faded.tga": {
+      "sha256": "0112ca8a5c6c1408dbe05c9f6dd0fd40c17d66fd2138ce9677d762a6a1de242d",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/question-highlight.tga": {
+      "sha256": "2fc3ac6d0427421299065f40b9feaef6b49691a3dd62e3e944b71c6cc88680a5",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/question-regular.tga": {
+      "sha256": "4c000fcfc3fd3de35adc994fca2a771d732338a000ee8b5b326d4d8ec03b5c49",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/shield-faded.tga": {
+      "sha256": "4e068c71564551a635be2d129e9af633e294b681e746242af09ef417c9d0a86d",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/shield-highlight.tga": {
+      "sha256": "960172ce5014c294c3662ac30c3796d6710a0a09ca95147c4fea22cd206231e6",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/shield-regular.tga": {
+      "sha256": "b2ec8ac5db32b0c7e9e6fcf3680c38ad994717f95331b7afb7091db64a3b7e2a",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/spellbook-faded.tga": {
+      "sha256": "76a829293f1cce28d5278339578174578cc32ec99facafc3c2413f0ee4d0c6c0",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/spellbook-highlight.tga": {
+      "sha256": "3f8de4a1f7f829c1242911edd44ac93c825dcdfac21140a8e704f1cf27fead3f",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/spellbook-regular.tga": {
+      "sha256": "2f328ef03554aea2918b613cc275b7dc614fc52d8bf6693388a527503c45c8df",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/tabard-faded.tga": {
+      "sha256": "fa5c28e973815d95a4c06ba061f0e44975a334ab1a4eafcb70178132e4fc132b",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/tabard-highlight.tga": {
+      "sha256": "3a985c4e980c988decb1cf2d25693f1106baa1df7bdcc038411be03ceae147ea",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/tabard-regular.tga": {
+      "sha256": "0df083d1fc29850f38a342e752d8bd85b02bda9ed777b152a293a918cc53ab88",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/talents-disabled.tga": {
+      "sha256": "05ef2bb9c257548a4c4d8fd920bacae81a8da58e9734e507f652b355e6f84711",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/talents-faded.tga": {
+      "sha256": "86b0ead83c8cbc6b0239ae5471c637a9fa4f714b61b8f4b65aac7e515d9cd335",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/talents-highlight.tga": {
+      "sha256": "52d35e282ea0237491afb0fe8bda32af80a837223c76dcd87f8b3f49355b9109",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/talents-regular.tga": {
+      "sha256": "377d84e2f67a4699abcbf8ae5d34917797c54f11b1835333f6a6a2a04a1f2e09",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/wow-faded.tga": {
+      "sha256": "50dfb9138d2329b9acd718a98aef0a6e4d433ddd6d3b3eba4c5a1ee6511d9833",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/wow-highlight.tga": {
+      "sha256": "1b5ad6b5e93c51498dacecb63638255f61977c7c1de22ebf8b2db42ccfd34b04",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/color_micro/wow-regular.tga": {
+      "sha256": "f1f08cbec91f9e5fc5d39fb2351d0d195545b4dc60e55164dd606b7d476f2ee5",
+      "bytes": 65580
+    },
+    "media/tex/micromenu/LatencyGreen.tga": {
+      "sha256": "97fe31cef96ddb6e304e54fa610db44ca7af36941fb5f49ed10a81214e2500aa",
+      "bytes": 2092
+    },
+    "media/tex/micromenu/LatencyRed.tga": {
+      "sha256": "172d2695afb328c5199d16f296ba6e197fdb94a75287023a4d54a17a32327f43",
+      "bytes": 2092
+    },
+    "media/tex/micromenu/LatencyYellow.tga": {
+      "sha256": "4a2ee6d9055afe8b9561e246a259780e5378d1e6c87d17cf395f2e9cab7eac62",
+      "bytes": 2092
+    },
+    "media/tex/micromenu/uimicromenu2x.tga": {
+      "sha256": "196673b186afdc6c14c0e6716e7ffed129dfd0031f423ac8347a84dc27bdceee",
+      "bytes": 524332
+    },
+    "media/tex/minimap/dfrl_collector_toggle.tga": {
+      "sha256": "64cf0ffc22d1775dcd9846142a3a6dbf481fc5ef612994a5076bda77812cd802",
+      "bytes": 4140
+    },
+    "media/tex/minimap/mail.tga": {
+      "sha256": "217b8284014e082a7c32e77c7da9c12714c3a98b494cec0a4fc5d99ea9f228c4",
+      "bytes": 16428
+    },
+    "media/tex/minimap/map_dragonflight_square_shadow.tga": {
+      "sha256": "5818a12f6b7c2bbf0e89b82e2f65daed3bc8e9afaa61197c1d22aa4de23bb36f",
+      "bytes": 1048620
+    },
+    "media/tex/minimap/map_dragonflight_square2.tga": {
+      "sha256": "f48c547c3b3efa693e479f884b9b547669d1240e89f825171a84a5a521b537b5",
+      "bytes": 1048620
+    },
+    "media/tex/minimap/uiminimap_toppanel.tga": {
+      "sha256": "63ac5dfb67dfc6e9ca482a9be46d2cbbc6a0ec533bd9358d63edc7bde9f47421",
+      "bytes": 65554
+    },
+    "media/tex/minimap/uiminimapborder.tga": {
+      "sha256": "0a32d5625fa3cd1dbb31ac68214f3f8154f016d63d9a3d92c65fe450075b9fc3",
+      "bytes": 1048620
+    },
+    "media/tex/minimap/uiminimapshadow.tga": {
+      "sha256": "54862e2d236020031206618e04d2ead02d15bc3845a562efc1e1f50a4c7f85bb",
+      "bytes": 1048620
+    },
+    "media/tex/minimap/ZoomIn32-disabled.tga": {
+      "sha256": "dfbda7265d678a15a735be733a6d7c6f8b9872855b02c7db6412dc3f3fe935a0",
+      "bytes": 4140
+    },
+    "media/tex/minimap/ZoomIn32-over.tga": {
+      "sha256": "4e8d24f924f9ec1f52c2d3c9f82d2d0687e000b30ace02a014fb919a7423e7d2",
+      "bytes": 4140
+    },
+    "media/tex/minimap/ZoomIn32-push.tga": {
+      "sha256": "efb8b573ed1fad50e04506aac64a78cc87ae11a7f9ac02a1524f19622e9954fb",
+      "bytes": 4140
+    },
+    "media/tex/minimap/ZoomIn32.tga": {
+      "sha256": "327dca41ead3d138c533351b2527b960bfcbc09727caa2f04ca05a5762d2f311",
+      "bytes": 4140
+    },
+    "media/tex/minimap/ZoomOut32-disabled.tga": {
+      "sha256": "a0260ce7fcde435e2cdd66b4ee80fef17e031cdec6294305721f8b96639441c4",
+      "bytes": 4140
+    },
+    "media/tex/minimap/ZoomOut32-over.tga": {
+      "sha256": "7d48b44516c93dabc4c5954f2358a75d7f9e19ef053b0aeb6c0620eecee2a3aa",
+      "bytes": 4140
+    },
+    "media/tex/minimap/ZoomOut32-push.tga": {
+      "sha256": "bd0277efc99a7f8ee61c558cf8a6e572474e0c6b768de508566373aea3a00a3f",
+      "bytes": 4140
+    },
+    "media/tex/minimap/ZoomOut32.tga": {
+      "sha256": "6918a35060e2d093f7bfca15393a319ad14de00e45b755f1eb2e7229a27ec137",
+      "bytes": 4140
+    },
+    "media/tex/ui/close_normal.tga": {
+      "sha256": "b5c3dcb51ff6996055befb960f7db7f349e947ab01b47f9691651c5d752cf88a",
+      "bytes": 4552
+    },
+    "media/tex/ui/close_pushed.tga": {
+      "sha256": "b3ee6e9c3da59fdf45cbfed4427e03ea0a7b061dbfe48ad97c4002992eb373a2",
+      "bytes": 4165
+    },
+    "media/tex/ui/paperdoll_bot_left.tga": {
+      "sha256": "d33efc9cdf62fd5cee21d5d004587744ee5e8ef88d0120afb362deba573bd135",
+      "bytes": 262188
+    },
+    "media/tex/ui/paperdoll_bot_right.tga": {
+      "sha256": "d8d0ee6cda7c24db87903080b8834fd49f8c6998328b75ebddd013f20012b9cd",
+      "bytes": 131116
+    },
+    "media/tex/ui/paperdoll_top_left.tga": {
+      "sha256": "42ea90e87144ea3aca8b08843a2eb5ece0390b6e0d135e396be49cba04090603",
+      "bytes": 262188
+    },
+    "media/tex/ui/paperdoll_top_right.tga": {
+      "sha256": "bec5f208ba3e637c7aa5ef2a04208fe453e41223f46cc809008e43a5a421280e",
+      "bytes": 131116
+    },
+    "media/tex/ui/questlog_left.tga": {
+      "sha256": "8ded2cd4339db99608a6040c247aba8e79863b0843fa7c17193447ed40682620",
+      "bytes": 1048620
+    },
+    "media/tex/ui/questlog_right.tga": {
+      "sha256": "1f41320b68f782ec8e3cf23b8648aba6c2ec83612618685c8ce5e2597ddafa96",
+      "bytes": 524332
+    },
+    "media/tex/ui/spell_bg.tga": {
+      "sha256": "dbd87b742e734a0b55ed7d39d1c8afbf7bbfbcd73d9f97ef316500d72be9e9dd",
+      "bytes": 12332
+    },
+    "media/tex/ui/top_ui_header_left.tga": {
+      "sha256": "3cc6697fb006a146e53aa4f3ccf86aa1a4d22867ae78cc7a7859b79b812737da",
+      "bytes": 16428
+    },
+    "media/tex/ui/top_ui_header_right.tga": {
+      "sha256": "9fd3b43fe1a04da14238d0519ed1baf8e7d4a742dcea8c60a448210efa96f2b7",
+      "bytes": 16428
+    },
+    "media/tex/ui/top_ui_header.tga": {
+      "sha256": "e38fd2506aafa162cb446fc75c69d2ceb014bce459da677a8814686347aa1221",
+      "bytes": 65580
+    },
+    "media/tex/ui/UI-Classes-Circles.tga": {
+      "sha256": "db3156452777d480199e565eac751c0b63ef6b3e1c15e7ff8a1388abf246f8a3",
+      "bytes": 86097
+    },
+    "media/tex/unitframes/3d_border.tga": {
+      "sha256": "3257588bdf83e6c4767b459067ea6e359147487e94ad335e71ad61a5d136f42e",
+      "bytes": 16428
+    },
+    "media/tex/unitframes/guzruul_evolved_v1 - old.tga": {
+      "sha256": "0e9961a78e90af4741fe81d0eeb81c51f6ab16cc5974a421a4e29d04f99eea5d",
+      "bytes": 524332
+    },
+    "media/tex/unitframes/guzruul_evolved_v1.tga": {
+      "sha256": "aec3a056942aaa2f818783d86e8106745bf7242539b31447e076c49fc00348ef",
+      "bytes": 524332
+    },
+    "media/tex/unitframes/guzruul_evolved_v2.tga": {
+      "sha256": "90dcbe15ec3929f190d2a41c3148173d4380e5d362a9550ef023890430aa1627",
+      "bytes": 524332
+    },
+    "media/tex/unitframes/guzruul_nebula_v1.tga": {
+      "sha256": "3851228c12881a4d286ec874d87091ebb8969471922ed716c78e1875f134a228",
+      "bytes": 524332
+    },
+    "media/tex/unitframes/healthDF2.tga": {
+      "sha256": "b9d24f9ef9997a985da1df0e1532baecd88391334a046cb3344f338b831119e0",
+      "bytes": 16428
+    },
+    "media/tex/unitframes/pet.blp": {
+      "sha256": "9661261bc8ab48225678e38154dd8c788d27b9f4259b0c3c73fa26b76e3f668a",
+      "bytes": 12132
+    },
+    "media/tex/unitframes/UI-HUD-UnitFrame-Player-PortraitOn-Bar-Mana-Status.tga": {
+      "sha256": "154d8eefc619e4f81253d459d4524fd8a938ac2f72cccf37f53fcfcef62df544",
+      "bytes": 6162
+    },
+    "media/tex/unitframes/UI-HUD-UnitFrame-Target-MinusMob-PortraitOn-Bar-Health-Status.tga": {
+      "sha256": "d30b4c4c640bd47b6e57f0be0ae3c26313b895b0a87bc8756567ab367dad8303",
+      "bytes": 6162
+    },
+    "media/tex/unitframes/UI-HUD-UnitFrame-Target-PortraitOn-Bar-Mana-Status.blp": {
+      "sha256": "aca8e626a7dce8b84a66b2a3d1afc32d8cf047514171d67fb3b8d8413a524f7e",
+      "bytes": 3972
+    },
+    "media/tex/unitframes/UI-HUD-UnitFrame-TargetofTarget-PortraitOn-Bar-Focus.blp": {
+      "sha256": "30a1822f03e9e33d15bdcd65882de627b55b180e81ba1f40e79870ab42618765",
+      "bytes": 3972
+    },
+    "media/tex/unitframes/UI-HUD-UnitFrame-TargetofTarget-PortraitOn-Bar-Health.blp": {
+      "sha256": "70872731766859f741fca5f1ec2d8ceb5f6648734264ae650ee4dee647d460a3",
+      "bytes": 3972
+    },
+    "media/tex/unitframes/UI-HUD-UnitFrame-TargetofTarget-PortraitOn-Bar-Health.tga": {
+      "sha256": "cdf4d11b1b30e9c457ac20415eaf629702b773ba26b92318cd65d8d85042bcba",
+      "bytes": 6188
+    },
+    "media/tex/unitframes/UI-HUD-UnitFrame-TargetofTarget-PortraitOn-Bar-Mana.blp": {
+      "sha256": "8a4f6c8220f81809884cb0604453b0a633d1e79bff494a5d1c633b37b4535378",
+      "bytes": 3972
+    },
+    "media/tex/unitframes/UI-HUD-UnitFrame-TargetofTarget-PortraitOn-Bar-Rage.blp": {
+      "sha256": "ae67c8ce26e58431bcea3c58939898a224f3c8e4556b3bdc646cceae5803be4b",
+      "bytes": 3972
+    },
+    "media/tex/unitframes/UI-Player-Status_3d.tga": {
+      "sha256": "93e6fbbe45377bfd3049c90c6201180425294f157a11309be9fe526661dd2eeb",
+      "bytes": 98348
+    },
+    "media/tex/unitframes/UI-Player-Status.blp": {
+      "sha256": "db159c35334f2b3ee1a6cdb9dca1a74148d35880f0f502771d721c4f10e23793",
+      "bytes": 44900
+    },
+    "media/tex/unitframes/UI-PVP-Alliance.blp": {
+      "sha256": "2c613dbc9318d105761ef35cfe33229c6ec53670b0be819e599f526ce2a9fb36",
+      "bytes": 6676
+    },
+    "media/tex/unitframes/UI-PVP-Horde.blp": {
+      "sha256": "281c989500e2877c7fb118d460113b0717b81510e8ef490fb2a97b588bc2ebe5",
+      "bytes": 6676
+    },
+    "media/tex/unitframes/UI-TargetingFrame-Boss.blp": {
+      "sha256": "6eaa3cb51d9a61350cbca0b8efd78ae067e403f8c07d57dc07202475b49ec1fe",
+      "bytes": 175936
+    },
+    "media/tex/unitframes/UI-TargetingFrame-Elite.blp": {
+      "sha256": "3fc02e8be04bcd87872bd30b1509ad571feb86b55152719b1add929a5d41292e",
+      "bytes": 175936
+    },
+    "media/tex/unitframes/UI-TargetingFrame-Rare.blp": {
+      "sha256": "68c1c3e9ba41256b1c6668cee32ac681ec23b10e0b3920953b2a4715e4259fca",
+      "bytes": 175936
+    },
+    "media/tex/unitframes/UI-TargetingFrame-RareElite.blp": {
+      "sha256": "f48cb91e86a45b2fdd429953161ef72cd40e8dc0626a737951a0f387f69dcded",
+      "bytes": 175936
+    },
+    "media/tex/unitframes/UI-TargetingFrameDF-Background.blp": {
+      "sha256": "226b9fe1f0b6dae5f99b326e124903d2fe99ac718b585f92282844c99f53c24f",
+      "bytes": 175936
+    },
+    "media/tex/unitframes/UI-TargetingFrameDF.blp": {
+      "sha256": "6426836f8cb030a747fdb7156fc77dad8d5f639fcbea2ad9f3fc1236aa55ae1c",
+      "bytes": 175936
+    },
+    "media/tex/unitframes/UI-TargetingFrameDF1_HC.blp": {
+      "sha256": "f7098ff107fbab328d2beffa33d184b6b6c854c6d8d1fa4181d49659edbcd2cc",
+      "bytes": 44900
+    },
+    "media/tex/unitframes/UI-TargetingFrameDF1-Background.blp": {
+      "sha256": "352c852a861c27f08a31bb84e7f0e0d70524b385cf0b37f3c803a0f61add8a81",
+      "bytes": 175936
+    },
+    "media/tex/unitframes/UI-TargetingFrameDF1.blp": {
+      "sha256": "85d776afc1cbad906f14c1af7bc5919b305d30e40eea4121acdb4d845ebcb8ec",
+      "bytes": 175936
+    },
+    "media/tex/xprep/border_half.png": {
+      "sha256": "dcdf6ef146df438996f57a568425d268a4d9d5af63f8a393d52608d37804e9f2",
+      "bytes": 3537
+    },
+    "media/tex/xprep/border_half.tga": {
+      "sha256": "2fa787c08d32e541b5d46bdd3f5d4243f78e0bea7cbd13d7d3be2aecdad248f1",
+      "bytes": 65580
+    },
+    "media/tex/xprep/main.tga": {
+      "sha256": "9d22aa09accb08b93b2033c08dbc81cb0657cc722d2eed4af71286b5fceb9c72",
+      "bytes": 32812
+    },
+    "modules/bags/bags.lua": {
+      "sha256": "3fb9e58aa26fb8961fab8e379d130a124463ac68fb6f904ffdc8dee405b877cd",
+      "bytes": 25802
+    },
+    "modules/bars/bars.lua": {
+      "sha256": "6125cc5c91e2d23e460d1b04fb0033bbebce434dea5c298ecb5ef400b8454cdb",
+      "bytes": 59491
+    },
+    "modules/bars/hoverbind.lua": {
+      "sha256": "8509bfd09e4479502772039383117d933b2b00e766056954186a175b3ebd311a",
+      "bytes": 18512
+    },
+    "modules/bars/range.lua": {
+      "sha256": "cc580305e5e5546aace7a02b5620b1ad65b3a14b9144528be162260bc9c6fb7f",
+      "bytes": 8484
+    },
+    "modules/cast/cast.lua": {
+      "sha256": "8f707b43ff1bd34a104d668f46ca3c6473878ae5e15c3d08ee29b6b6917b620a",
+      "bytes": 27036
+    },
+    "modules/cast/target.lua": {
+      "sha256": "6248837d739b806f20c3ea84f95a73a8d87ed3262c6d631192d0dd8c459a423e",
+      "bytes": 19624
+    },
+    "modules/chat/chat.lua": {
+      "sha256": "f8730bfcb09f3854d3f92c5ebe0aa33b4b6ba80799d0959e6d9c3c5fa65dbf8b",
+      "bytes": 11834
+    },
+    "modules/fonts/fonts.lua": {
+      "sha256": "31b66189b84b48c66bdb80e74d4a9ba05508f4a35a2d6da0517dad0247074dff",
+      "bytes": 9374
+    },
+    "modules/frames/frames.lua": {
+      "sha256": "acb137a52e42c2a3cabd25aa64e4704e07e23d1a7342931935d3d647c26eb937",
+      "bytes": 19628
+    },
+    "modules/gui/base.lua": {
+      "sha256": "d58b8ed9dbf2734a98d3ba184cc6e3b6c2d403f109a96730271c484e4aaa672f",
+      "bytes": 22683
+    },
+    "modules/gui/elem.lua": {
+      "sha256": "c7e195f41e9930b9f706ed9896d63009d4e70bfc75ae237b0059062d9ff4a7e4",
+      "bytes": 41496
+    },
+    "modules/gui/home.lua": {
+      "sha256": "e3c75ec20895dd52766836162a744fd6edb9a73bae8209e63dd8f4d367f5ec98",
+      "bytes": 7159
+    },
+    "modules/gui/homeb.lua": {
+      "sha256": "380964436b20a2e69e6d3857e73a2fe5025415465a67ce6b40bc777ecd1e77a8",
+      "bytes": 15681
+    },
+    "modules/gui/info.lua": {
+      "sha256": "3bda0badc6253f15c9a63a7c8d1b8a8bf84a18178aa2905d238bc4e0985576b9",
+      "bytes": 15800
+    },
+    "modules/gui/mods.lua": {
+      "sha256": "4df7853dd62e67449847a74de24772d83818cfd5a68068f48483d10d15574812",
+      "bytes": 2580
+    },
+    "modules/gui/prof.lua": {
+      "sha256": "2a285dd0e9047648993fc53b5070695838c42efaac65d8bfced61f1870787d07",
+      "bytes": 13714
+    },
+    "modules/gui/shag.lua": {
+      "sha256": "18da2078b7de712eeecd9fa531a42dc6cef70a67138bc8620021b88c03f2535c",
+      "bytes": 9214
+    },
+    "modules/gui/tools.lua": {
+      "sha256": "678ee4e0a029dffbd8e43ad7983a222c2a188f1573d1b10753e2f3ecf590b668",
+      "bytes": 30475
+    },
+    "modules/map/collect.lua": {
+      "sha256": "b84b5a8ee9395b89da5e64b2d5b0b1c8a87c4ac8de69bdcea869e737fdeb8899",
+      "bytes": 20827
+    },
+    "modules/map/map.lua": {
+      "sha256": "5d6906347dc09c54368b9ce75de49c471d36d7c73eda5d6ebbf899b05363e0eb",
+      "bytes": 38350
+    },
+    "modules/menu/addons.lua": {
+      "sha256": "093fa784a5c08db5f1ee1aad9aea1e3a82c69c635ec6f391747b08cd3b735517",
+      "bytes": 9712
+    },
+    "modules/menu/editmode.lua": {
+      "sha256": "ec8b3a7506dacac5e9b9478432c689f753777fd6b687664717ea0a6e150e0f8a",
+      "bytes": 7519
+    },
+    "modules/menu/menu.lua": {
+      "sha256": "db3278725c0ea79cf86cf00b22395b05a898ddb12d23c874e94ee4cf7f67c89b",
+      "bytes": 11377
+    },
+    "modules/menu/sounds.lua": {
+      "sha256": "1f733ae2161d7a1e0d45a60192dfc6185dd10136a928331659215851d60cc8eb",
+      "bytes": 1048
+    },
+    "modules/micro/micro.lua": {
+      "sha256": "288c6a5634329093dc46081352d9d292a4fe3167f5e0cee2b6f7100491c24f12",
+      "bytes": 34557
+    },
+    "modules/track/track.lua": {
+      "sha256": "6e4434f00d91a3007ec264d6ad1e8ffe5a8bfae3383a0ad3e7536e86b6cd1756",
+      "bytes": 4208
+    },
+    "modules/ui/errorHandler.lua": {
+      "sha256": "c3a87088880b459903e5be6c095efcfa032ba16b0d8fae3701c8f2dbe90a36d0",
+      "bytes": 494
+    },
+    "modules/ui/talents.lua": {
+      "sha256": "bd79a8b1156be21f53e259c57a23f0a2578deec3b87f05208b6393252173a016",
+      "bytes": 25070
+    },
+    "modules/ui/tooltip.lua": {
+      "sha256": "8d47751c73486c6c9716aec41f39418408969de8d867e7b5c89562f79fb35e72",
+      "bytes": 1367
+    },
+    "modules/ui/ui.lua": {
+      "sha256": "7087bf0eb77f640f5fe295b678cbc3b0e18508ca99fbb51a542a32203b4cb5b9",
+      "bytes": 26250
+    },
+    "modules/unit/mini.lua": {
+      "sha256": "75fef511d42911cc069dd8ee3e0340fb05870996b3dcfc5bea598ff712c0d7dc",
+      "bytes": 51745
+    },
+    "modules/unit/player.lua": {
+      "sha256": "4257b9798b2a57ddfec08c7419a4882c1708c15254592190fea999fb5b8838dc",
+      "bytes": 45440
+    },
+    "modules/unit/pvp.lua": {
+      "sha256": "662838985e981569db4c0fe1fc237d8346b79ae95867132f23d3d96306964dc1",
+      "bytes": 2266
+    },
+    "modules/unit/target.lua": {
+      "sha256": "3c8792b84796ea15a414ad689c172ae4d32d63f34b9fc5b124fb6c29ece2be49",
+      "bytes": 32370
+    },
+    "modules/unit/unitname_translate.lua": {
+      "sha256": "eee8086b44ae8a4b41842fa02b017b32512e50e176a27e0926cf8d9ecc2790dd",
+      "bytes": 10113
+    },
+    "modules/xprep/xprep.lua": {
+      "sha256": "63f649a07319da73177031103f63a3eef1a4f501bc3bea26cc2b7ac7bc8cf0f9",
+      "bytes": 26654
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "413259538": {
+      "tag": "v1.3.6",
+      "folder": "v1.3.6--413259538",
+      "assets": {
+        "641960352": {
+          "sha256": "9ffed6bf83b7b742a6b331e3441049441f850a48a8d7f4f57b9a03305e7fbac1",
+          "bytes": 13318044,
+          "id": "641960352",
+          "name": "DragonflightUI-Reforged-v1.3.6.zip",
+          "url": "https://github.com/papafru/DragonflightUI-Reforged-v2.5/releases/download/v1.3.6/DragonflightUI-Reforged-v1.3.6.zip",
+          "path": "releases/v1.3.6--413259538/assets/DragonflightUI-Reforged-v1.3.6.zip"
+        }
+      },
+      "source": {
+        "sha256": "3654f19188a423d9b70c31e5249b3a3a4002d6cce90558d65f011705d08c270a",
+        "bytes": 13297141,
+        "path": "releases/v1.3.6--413259538/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/papafru/DragonflightUI-Reforged-v2.5/tarball/v1.3.6"
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e  source/.gitattributes.upstream
+433257cd249c557f5665d151ac951939e65d2e8564e0eebb32d4e5039d36f5ee  source/changelog-r15902.txt
+54d9440f335ad0442045247ad53138d699a9270141804537cb765de56185204b  source/Lern2Spell.lua
+2496a3332fec6085ea385a646fd98e7b7e26b04ac4d483831a57876ea960a58d  source/Lern2Spell.toc
+7b04142f00d5a887a32722c55bb64798e593f3504929f656aa440c298c63b529  source/Libs/AceAddon-2.0/AceAddon-2.0.lua
+f24029b2b68114216eaa16e9c60b750f9be5ef16ac5eb81d76890c675dd71d31  source/Libs/AceConsole-2.0/AceConsole-2.0.lua
+857c997b45898d8e9b0cfcf0e788bfe3ac845b94c65a5d952a7c370c8179f234  source/Libs/AceDB-2.0/AceDB-2.0.lua
+bc38baf8fd2ed76b24b1babf9ff50a726d14e9fe6e25f77a21679f86a54d5e3b  source/Libs/AceDebug-2.0/AceDebug-2.0.lua
+9024eb7de5aa86ff376e3f0d4e3502e6b07c8498609e51001e574d41729b7f0b  source/Libs/AceEvent-2.0/AceEvent-2.0.lua
+c2aea5c71e1a83e5018d050336b367aa33eb44007d0a9965fbeaf4191d248ffa  source/Libs/AceLibrary/AceLibrary.lua
+64b6a9a20828dee3dcda9287bc0d8c85f564c55273b50bf0b92f4ef3ffb14efb  source/Libs/AceLocale-2.2/AceLocale-2.2.lua
+71d5f6485c4fc89bd29d50a38b03b2cb2885d68833590b131a6801628a799d4a  source/Libs/AceOO-2.0/AceOO-2.0.lua
+cbb8577f5a891481cfe0b61f3b3f84cc9c10bed5dcb1137d6f2672d5772df277  source/Libs/Compost-2.0/Compost-2.0.lua
+843f4e0d82213521bfcc6ec1cd0b78eeac6d74bf98eb65029abdedc6ed9cef11  source/Libs/Deformat-2.0/Deformat-2.0.lua
+0e551ad3aa9619cf7287d1a7cfff6588324a47be14ac357426be785041e40a69  source/Libs/Gratuity-2.0/Gratuity-2.0.lua
+eac18dd6d45dfc5d4e9f042a77fb2f47399c81fa7da618c9dc33f553b19013a3  source/Libs/SpecialEvents-LearnSpell-2.0/SpecialEvents-LearnSpell-2.0.lua
+0444c86fabcc752c8dbad00741ee91c70d37e6fbfd5f5492707c81ddc59f1c57  source/LICENSE

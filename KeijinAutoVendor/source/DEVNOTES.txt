@@ -1,0 +1,95 @@
+# KeijinAutoVendor – Dev Notes (v0.1.4)
+
+Modular addon for Turtle WoW (Classic 1.12) – automatically sells gray items and repairs gear when visiting a vendor.
+
+---
+
+## 📁 Core structure (EN)
+
+- `core.lua` – Entry and command handling, triggers repair and sell logic
+- `auto_vendor_sell.lua` – Gray item queue and sale logic (based on GrayAutoSell)
+- `auto_vendor_repair.lua` – Standalone repair logic, safe and Classic-compatible
+- `KeijinAutoVendor.toc` – Interface declaration for v0.1.4
+
+---
+
+## 🧠 Technical insights (EN)
+
+1. Direct for-loop selling (`UseContainerItem`) fails due to early bag cache unavailability.
+2. Item rarity must be determined via `itemLink` and `GetItemInfo(itemID)`, **not** via `GetContainerItemInfo`.
+3. Selling must be delayed using `Frame:SetScript("OnUpdate")` (minimum 0.2s).
+4. `GetCoinTextureString()` is unavailable in Classic 1.12 – fallback method (`SafeCoinString`) is used.
+
+---
+
+## 🛠 Debug mode (EN)
+
+- Activated via `/kav debug`
+- Outputs:
+  - Vendor open (`MERCHANT_SHOW`)
+  - Item queueing and sale processing
+
+---
+
+## 🧪 Stability (EN)
+
+- No Lua errors during vendor interactions, even with empty bags or low-level characters
+- Works without issue on level 1 characters and characters without gear
+- Debug and normal operation fully isolated
+- Start message shows as expected on login
+
+---
+
+## 🇩🇪 Struktur (DE)
+
+- `core.lua` – Einstiegspunkt, Slash-Befehle, Aufruf von Verkauf und Reparatur
+- `auto_vendor_sell.lua` – Verkaufsgesteuerte Queue-Logik über OnUpdate-Frame
+- `auto_vendor_repair.lua` – Reparaturfunktion, Classic-kompatibel ohne CoinString-Fehler
+- `KeijinAutoVendor.toc` – Strukturdatei für Turtle WoW 1.12
+
+---
+
+## 🧠 Technische Erkenntnisse (DE)
+
+1. Direktverkauf mit Schleife (`UseContainerItem`) führt zu Fehlern – Bag-Daten sind bei MERCHANT_SHOW oft zu früh abgefragt.
+2. Qualität (Rarity) muss über `GetItemInfo(itemID)` + `itemLink` geprüft werden – Containerdaten sind unzuverlässig.
+3. Verkauf muss über `Frame:SetScript("OnUpdate")` verzögert werden – empfohlene Delay-Zeit: **0.2 Sekunden**.
+4. `GetCoinTextureString()` ist in WoW 1.12 nicht vorhanden – Fallback-Methode (`SafeCoinString`) wird verwendet.
+
+---
+
+## 🛠 Debugmodus (DE)
+
+- Aktivierung per `/kav debug`
+- Ausgaben bei:
+  - Händleröffnung
+  - Reparaturprüfung und -kosten (nicht funktional)
+  - Verkaufsvorgang pro Item
+
+---
+
+## 🧪 Stabilität (DE)
+
+- Kein Lua-Fehler bei leerem Inventar oder fehlender Reparaturmöglichkeit
+- Kompatibel mit Level-1-Chars ohne Ausrüstung
+- Debug-Ausgaben nur bei aktivem Modus
+- Startnachricht erscheint beim Login wie vorgesehen
+
+---
+
+## 📌 Geplante Features v0.2.0
+
+- [ ] UI-Button oder zusätzlicher Befehl zum manuellen Auslösen
+- [ ] Whitelist / Blacklist für Itemfilter
+- [ ] Lokalisierungssystem (EN/DE)
+- [ ] SavedVariable für dauerhaften Debug-Zustand
+
+---
+
+## 📄 Lizenz / License
+
+- Verkaufslogik basiert auf: **GrayAutoSell v0.1.4**  
+- Autor: Thomas T. Cremers  
+- Lizenz: **GNU GPL v2 oder später**  
+- Quelle: https://github.com/ttcremers/GrayAutoSell
+

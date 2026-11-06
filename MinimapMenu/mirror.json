@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/FrancisEgan/MinimapMenu",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "FrancisEgan",
+    "repo": "MinimapMenu",
+    "name": "MinimapMenu",
+    "url": "https://github.com/FrancisEgan/MinimapMenu",
+    "api": "https://api.github.com/repos/FrancisEgan/MinimapMenu"
+  },
+  "commit": "316f3b43a6f7d677151f993cd2fd9a541703ae85",
+  "sourceFiles": {
+    "MinimapMenu.lua": {
+      "sha256": "3ec6dd47392699821eb2ad9bab4ae1e8a2614b4933b571c03bf00cc6c7057ac9",
+      "bytes": 16153
+    },
+    "MinimapMenu.toc": {
+      "sha256": "2488643585c9d95cf66cfc0c72aaf475b09b3fd2ced029ef88fff8c92872d6bf",
+      "bytes": 212
+    },
+    "README.md": {
+      "sha256": "7dc69a43a6a7ada37131e832affd376ff4ceed0cf90bb8d58068d5433200f9f5",
+      "bytes": 1599
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

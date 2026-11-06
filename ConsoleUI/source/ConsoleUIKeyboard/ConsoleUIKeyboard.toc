@@ -1,0 +1,20 @@
+## Interface: 11200
+## Title: |cfff1f2f4Console|r|cffffd12eUI Keyboard|r |cff8b8f98by HouseLegend|r
+## Notes: Radial on-screen keyboard for ConsoleUI
+## Author: HouseLegend
+## Version: 1.0.2
+## RequiredDeps: ConsoleUI
+## DefaultState: Enabled
+## SavedVariables: ConsoleUIKeyboardLayout, ConsoleUIKeyboardDictionary, ConsoleUIKeyboardDB
+
+Core\Init.lua
+Languages\Languages.xml
+Core\Util.lua
+Core\Keyboard.lua
+Core\Charset.lua
+Core\Dictionary.lua
+Core\AutoComplete.lua
+Core\Mime.lua
+Core\Update.lua
+Core\Config.lua
+Core\SelfCheck.lua

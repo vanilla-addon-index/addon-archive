@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/yutsuku/BetterBabelFish",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "yutsuku",
+    "repo": "BetterBabelFish",
+    "name": "BetterBabelFish",
+    "url": "https://github.com/yutsuku/BetterBabelFish",
+    "api": "https://api.github.com/repos/yutsuku/BetterBabelFish"
+  },
+  "commit": "5fb2a05e826edd8895505317595bb86843a025c6",
+  "sourceFiles": {
+    "BetterBabelFish.lua": {
+      "sha256": "1cdad3a7ede0561cbe54594d3174a1c609c6ae9f785d923ab325cd53e2403cba",
+      "bytes": 19442
+    },
+    "BetterBabelFish.toc": {
+      "sha256": "9d69058e2a01ce2793430925bb0c53feae989586c571d09500f771f6f1ce8346",
+      "bytes": 317
+    },
+    "BetterBabelFish.xml": {
+      "sha256": "24191cbf8de91bddfbdea5154f4d4d427b4d890086a7f5fa1f2acf86b157106c",
+      "bytes": 729
+    },
+    "docs/preview.jpg": {
+      "sha256": "6f1fb330958e77300799da88cbe8d7d538d3160a8e21f3ce7bf9488613142c51",
+      "bytes": 396091
+    },
+    "README.md": {
+      "sha256": "1299b4e080a501ab926a9d3eeb71fe3903be090ff2027d935db926ab19a9fc08",
+      "bytes": 3870
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

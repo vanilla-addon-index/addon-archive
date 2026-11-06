@@ -1,0 +1,105 @@
+{
+  "upstream": "https://github.com/McPewPew/Fizzle",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "McPewPew",
+    "repo": "Fizzle",
+    "name": "Fizzle",
+    "url": "https://github.com/McPewPew/Fizzle",
+    "api": "https://api.github.com/repos/McPewPew/Fizzle"
+  },
+  "commit": "90ae4215bcde84cc8347f274de55d9d012063f42",
+  "sourceFiles": {
+    "changelog-r18261.txt": {
+      "sha256": "43dbf68440894c297f073509533a354538070de6c5238343d190934c37738704",
+      "bytes": 14514
+    },
+    "Core.lua": {
+      "sha256": "77e658421146ac16fef07ddc8eaac612730dcdecd0699d5373ca95a21ac7f5f9",
+      "bytes": 9580
+    },
+    "Fizzle.toc": {
+      "sha256": "55b952326d685eb8643af3fa1bdf9e83ccdd09ba547ba6f82d72e410551b3e7a",
+      "bytes": 1135
+    },
+    "FizzleLocale-enUS.lua": {
+      "sha256": "483070eb0f1bb39261d8aefffe34ff69a949c8c5f2a9a8c42367b1c9c3bbbda1",
+      "bytes": 729
+    },
+    "FizzleLocale-koKR.lua": {
+      "sha256": "37241a42063883ea8746d40c606a59884a7f4bccc0f615740212d07c769ffa70",
+      "bytes": 1090
+    },
+    "FizzleLocale-zhCN.lua": {
+      "sha256": "d422ccc82fbf24ec0a76eb7da5bbb5f40975c5e920248b4a1ba6960b811c64cb",
+      "bytes": 900
+    },
+    "FizzleLocale-zhTW.lua": {
+      "sha256": "d75e9f0c9492109f753d6f35453ce824371d70eadafeb9f5c7c06bdc5878ad1d",
+      "bytes": 802
+    },
+    "Libs/Abacus-2.0/Abacus-2.0.lua": {
+      "sha256": "b0f7b1c5e3c6462a48a1aace018ece98f22ea970545449a29d1d3fdf29f05a09",
+      "bytes": 18156
+    },
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "e977ae5a93e6e0120481cd44f96e6050949d3ade56d6168577a4c829df1b1c67",
+      "bytes": 32120
+    },
+    "Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "6bcd5625a8c14866bec07d52f3b8fbbe1e00291bab5afe75548547dd69510fa3",
+      "bytes": 67903
+    },
+    "Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "d94da32d564024e176da8fe6cc4f31c2f0cf680ad756dce490d01688a9b657d3",
+      "bytes": 44956
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "8222e7a75d0f0fba8030099939611732b50c28cb26b6ce6427f52fd5f2f409d8",
+      "bytes": 29927
+    },
+    "Libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "e5defd2a1efe661ce7970891762d76a27ce539e65dd1a7894c8391ebd941be80",
+      "bytes": 17515
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "a421bd39e4cb7bcd54bb79de85c21d6e8c4c56551406972141bba26ae7d0c16d",
+      "bytes": 23871
+    },
+    "Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "6646e83c71c5ef9ffdeb2d0cb0b31d346a21df5322e4c5b10bc3bcf360b9eb14",
+      "bytes": 16487
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "03e71bcf0ba8ce7c806c5ffe966991cb997c12c25b351198c918fe32e469bdaf",
+      "bytes": 31435
+    },
+    "Libs/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "1a4e7cb0a1a668f9b5b1a0bb36759542093a3e497b2a590fa8bfbe66d67b7cd2",
+      "bytes": 11401
+    },
+    "Libs/Crayon-2.0/Crayon-2.0.lua": {
+      "sha256": "ba71ca2ba1d6369ff383060bc0d5c314cb487f7a8fc88d8b89d905ee4e1c6c3e",
+      "bytes": 5466
+    },
+    "Libs/Deformat-2.0/Deformat-2.0.lua": {
+      "sha256": "843f4e0d82213521bfcc6ec1cd0b78eeac6d74bf98eb65029abdedc6ed9cef11",
+      "bytes": 9781
+    },
+    "Libs/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "0e551ad3aa9619cf7287d1a7cfff6588324a47be14ac357426be785041e40a69",
+      "bytes": 8109
+    },
+    "Libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "710453ded12f6094eafde0f8f5ef207989f1d92f206bcbe287de318d92e1b7a8",
+      "bytes": 81207
+    },
+    "README.md": {
+      "sha256": "81e9e45c4af70c354028e2cf54d51191413e3c45bfba242e7aeed65bf174183d",
+      "bytes": 792
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,265 @@
+{
+  "upstream": "https://github.com/refaim/MissingTradeSkillsList/",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "refaim",
+    "repo": "MissingTradeSkillsList",
+    "name": "MissingTradeSkillsList",
+    "url": "https://github.com/refaim/MissingTradeSkillsList",
+    "api": "https://api.github.com/repos/refaim/MissingTradeSkillsList"
+  },
+  "commit": "807469745ce1ad1133073d814e2bb513666300ac",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "a9d8c34a5be0dd1dd7ec8e934347e57d52eb901618e659218151f4d6c2dc4958",
+      "bytes": 86
+    },
+    "images/alliance.blp": {
+      "sha256": "55aaec3c3eac71121950f47f979abd49ab1d708816da59da0f760b3e50c035fe",
+      "bytes": 350740
+    },
+    "images/horde.blp": {
+      "sha256": "921ac0ffabb2cfdca88037d679e6b00ff1d887985bdfaf4fe24fb8ba5eb09414",
+      "bytes": 350740
+    },
+    "images/minimap.blp": {
+      "sha256": "dbd4e1a5b03a739cfd971fa8c6280857a346fae81813a1e16487478c61cba89b",
+      "bytes": 23060
+    },
+    "images/neutral.blp": {
+      "sha256": "db98298c53b5e3c1f3a81bee4a3c2062bf5c9dfa95bcd3513c4cd46c84abdf69",
+      "bytes": 350740
+    },
+    "logic/faction_reputation.lua": {
+      "sha256": "39151fb6f95191dd4c425764199e185bd8610273a051e3587ee8b55b7e331e19",
+      "bytes": 4584
+    },
+    "logic/item_object.lua": {
+      "sha256": "fafaaa1b26e80fce1bce1aece4df38ffd2e8a7aa10d8c6b21fab28a41b7aac91",
+      "bytes": 3925
+    },
+    "logic/player_npc.lua": {
+      "sha256": "91fe281d3b1e6b37657b14c6817ebabdfe720e96314253a7cd8d724b42473fc5",
+      "bytes": 40589
+    },
+    "logic/profession.lua": {
+      "sha256": "6fa35889932173b6bfc6af0f7d8e600433602cbd647537048c64c4c9d2aa246c",
+      "bytes": 22286
+    },
+    "logic/quest.lua": {
+      "sha256": "b2122fb4c8f13e2acc51d05de6235a6cc6d6a9a79726f223163802440eba5b63",
+      "bytes": 3117
+    },
+    "logic/saved_variables.lua": {
+      "sha256": "c4a9316dd408eb2792cf517751b0e50310b31a977a21e09a8a0ef684cc7982dc",
+      "bytes": 2288
+    },
+    "logic/skill.lua": {
+      "sha256": "078280a54eef201b8f7d91843684d42d66262931ce3155cd63ea2df6093849a3",
+      "bytes": 27770
+    },
+    "logic/tools.lua": {
+      "sha256": "d773135c3f064f2fbb7bbecdfdc37920e649f61a79a543ef18438fbab8f1808b",
+      "bytes": 18000
+    },
+    "logic/tooltip.lua": {
+      "sha256": "9b27e217066e2f46a758fe108bdc02dcdcf899946ccc4c20231f306972ee469e",
+      "bytes": 2239
+    },
+    "logic/world.lua": {
+      "sha256": "310b4a3e730ca66058f9b55a84eff99b5932423778c2fd6c6afcecf8e05765eb",
+      "bytes": 3127
+    },
+    "MissingTradeSkillsList.lua": {
+      "sha256": "a943e77945939f8050fa98ba2af2b1c740e00df1bec7b466f5e00e600f2ee3d4",
+      "bytes": 819
+    },
+    "MissingTradeSkillsList.toc": {
+      "sha256": "95cbc35f22587a7d10cc726920fbfbbc0c8bda2b37186a500d81fa4bed01f3c3",
+      "bytes": 1695
+    },
+    "README.md": {
+      "sha256": "482bc7ca6cf771a914805ec5f6a1c0a33cafb4fc92616772debacaf55795a0ed",
+      "bytes": 3156
+    },
+    "screenshots/account_explorer_horz.jpg": {
+      "sha256": "31c87e198d551046cc8df32d4e3a57d130c7f340c4656e467724b3f29775be14",
+      "bytes": 95561
+    },
+    "screenshots/account_explorer_vert.jpg": {
+      "sha256": "bfddbabe38faaf62f0fc99b042b92ecd6dc262cff6ec87db86be5bc2aefbc927",
+      "bytes": 88886
+    },
+    "screenshots/character_explorer.jpg": {
+      "sha256": "1a0dd54eb192d20fe12ada03a732fc34b0135ea711f2f3cad57ede52dfcc6554",
+      "bytes": 134589
+    },
+    "screenshots/database_explorer_horz.jpg": {
+      "sha256": "60c5aa3f07d85926cf2042d2dd8742d89bd65c34a34025b2d7ea347422319605",
+      "bytes": 88790
+    },
+    "screenshots/database_explorer_vert.jpg": {
+      "sha256": "e438bcc341ade3788d0a434ae7df39e280d1333341ef05cdf1259708ac422864",
+      "bytes": 110095
+    },
+    "screenshots/main_horz.jpg": {
+      "sha256": "127a7fb74f27e399ebaffe5a42803b7718f27dc09c221aee2bd3e02495c7517c",
+      "bytes": 118782
+    },
+    "screenshots/main_vert.jpg": {
+      "sha256": "86aca7c94708d3cc8106872dbcdb7deb58c6d1ead38531f9d8569ebd7cf0e1f2",
+      "bytes": 112976
+    },
+    "screenshots/minimap_tooltips.jpg": {
+      "sha256": "f4f25770ffb9f27a5c4009cb09aed96a7a93de513dd102a1c59f92a052207413",
+      "bytes": 197147
+    },
+    "screenshots/npc_explorer_horz.jpg": {
+      "sha256": "360ed081d4a2e44854eb2760ddc99d2459103c8ddcbcbb03cff47406060e98ad",
+      "bytes": 100074
+    },
+    "screenshots/npc_explorer_vert.jpg": {
+      "sha256": "e37171112dea0a099c1e8b6501d65a75907b3c512e454c55f31119829a7b0569",
+      "bytes": 152870
+    },
+    "screenshots/options.jpg": {
+      "sha256": "4ff632e945101ce57e5492bb029ae8489e44f2ad9af5d28061efbbea7936669b",
+      "bytes": 293609
+    },
+    "ui/common/base_frame.lua": {
+      "sha256": "50459a797e4709bc844c6d2333775c536f6ed84e4b8b93e97bf70a49e9e6fd74",
+      "bytes": 1988
+    },
+    "ui/common/filter_frame.lua": {
+      "sha256": "a138d0a2fd30f5eb19b50f3560d18dae5b8d618ce4309de24473b734ca5b6f4b",
+      "bytes": 24230
+    },
+    "ui/common/list_frame.lua": {
+      "sha256": "09030c39493b776773e06398b11e30e6471e7b21704ad196237da7e0f5fe519a",
+      "bytes": 13513
+    },
+    "ui/common/list_item.lua": {
+      "sha256": "59ca72124f04b4ae45b30db263af10c509c28714affeb900fc8166be97661913",
+      "bytes": 2893
+    },
+    "ui/common/npc_filter_frame.lua": {
+      "sha256": "804aaa0de016358cf7689681354e07758fcf5b5df4b37433c33f83031bd04c03",
+      "bytes": 22272
+    },
+    "ui/common/npc_list_frame.lua": {
+      "sha256": "90a33b8123ffd4f68504af638dce5dff0bff0af83a7b9353051dc417dfdb0848",
+      "bytes": 26104
+    },
+    "ui/common/npc_skill_list_frame.lua": {
+      "sha256": "0220c89e4719733fa1415dfca560dc3ea1e5a770416e228c520356990831d05b",
+      "bytes": 10860
+    },
+    "ui/common/player_filter_frame.lua": {
+      "sha256": "f3f4c70bf89a32290bd0778d47e4c68d790676e9b7528e2a8e40d4d312dda159",
+      "bytes": 6743
+    },
+    "ui/common/player_list_frame.lua": {
+      "sha256": "e263629e89d9b972faf997fbeb12a597e9e1d73f8bcf251072236cdad0d2a6a6",
+      "bytes": 14913
+    },
+    "ui/common/profession_list_frame.lua": {
+      "sha256": "4eaaf33ed182478e4d0fefb9c306c37357a765bc7bfdd4beb8dc60c4a65542a0",
+      "bytes": 9224
+    },
+    "ui/common/progressbar.lua": {
+      "sha256": "e15eaf333f4944f9625acb7861ddae6be431249ab9ea0e2b9da40308bcbcdb53",
+      "bytes": 3317
+    },
+    "ui/common/skill_detail_frame.lua": {
+      "sha256": "beb97f3e440f3ed1b3633f58f43a49d164b0b6d575f3f35368dff50f2f9095c7",
+      "bytes": 52333
+    },
+    "ui/common/title_frame.lua": {
+      "sha256": "0fd1a752b1de33cd1e2ef068cdb5b4c8ef81ff3ae8020a8dcbcdd977ae6e8b98",
+      "bytes": 1840
+    },
+    "ui/common/vertical_slider.lua": {
+      "sha256": "fdb775e857fbc18d0448a4bba6e4c62952061d1dc88341ae371ac1d22b56cbbc",
+      "bytes": 4249
+    },
+    "ui/event_handler.lua": {
+      "sha256": "1e92d084b0d558179560284a6d3374c972fb9bfe78892fbac729ce63fba75ab4",
+      "bytes": 16258
+    },
+    "ui/fonts.lua": {
+      "sha256": "d1b7ab1dcc3046fc9c9f615d5c837682c92db854ade1630d1ec824072b8c0826",
+      "bytes": 5235
+    },
+    "ui/global_variables.lua": {
+      "sha256": "83d366589a7a101118771915acddb9e73e08db6e64ec7ed6ec917c3a463b7723",
+      "bytes": 1161
+    },
+    "ui/locales.lua": {
+      "sha256": "71e99baae5e8c7d6237e500024a2add185db81e248f10eb9e88d968e05b4a486",
+      "bytes": 45150
+    },
+    "ui/mainframes/account_explorer_frame.lua": {
+      "sha256": "aa0f8a3112698c675ad70a5d1d196a5f9a411aeb35dec6afe60547c7929beb73",
+      "bytes": 6874
+    },
+    "ui/mainframes/character_explorer_frame.lua": {
+      "sha256": "b6ea6be68c656c0422665c53595336d4f2be634ec89338d7370a2d9e0878ebc1",
+      "bytes": 10354
+    },
+    "ui/mainframes/database_explorer_frame.lua": {
+      "sha256": "ac3dba7709da2d5c45b7d0fd118858f8c888953b2ac90a7474ca166ead8aaa13",
+      "bytes": 7592
+    },
+    "ui/mainframes/missing_tradeskills_frame.lua": {
+      "sha256": "10407ff91a712a6febd481036985c89dd66c199defb9848a50ce2da9e4f7f63d",
+      "bytes": 7580
+    },
+    "ui/mainframes/npc_explorer_frame.lua": {
+      "sha256": "450ed8b8b4f3b97b81693239d55f56acfe88555cc99c30ca1ee6d88b3616028a",
+      "bytes": 6418
+    },
+    "ui/mainframes/options_menu_frame.lua": {
+      "sha256": "45fec1c8134b1ebd4732f0aed27a7852c006a1ec6404681832582ecfdd89e314",
+      "bytes": 1734
+    },
+    "ui/mainframes/toggle_button.lua": {
+      "sha256": "724b79b33a9b0eb0a7d56f23cf7a532f35b10e1c8fbc2b76dc4da912cfcc2887",
+      "bytes": 2970
+    },
+    "ui/minimap_button.lua": {
+      "sha256": "1e0a3132115885b94521ea9e7674573e2192fd42e4367e71cea8fed2a078005b",
+      "bytes": 7765
+    },
+    "ui/options/config_frame.lua": {
+      "sha256": "0ee43b755b5715536656da87ad2fa3e97209ff628af80df07a2caabbd9a28f4b",
+      "bytes": 37587
+    },
+    "ui/options/reset_frame.lua": {
+      "sha256": "b1afa6f95dcc82eff635eee5279cdd92970f6c74e6a5118f01c18f673577c4d2",
+      "bytes": 8540
+    },
+    "ui/options/save_frame.lua": {
+      "sha256": "93b7aed166de31794e452713e9b4d669e0539dc1085b29777104040104951d28",
+      "bytes": 2427
+    },
+    "ui/saved_variables.lua": {
+      "sha256": "246d82d4872519206734a431e4079992db54e59dd70b9cd1069f772fb4f4a69c",
+      "bytes": 37044
+    },
+    "ui/tools.lua": {
+      "sha256": "1e9bdd2b234fbd5f47ed48cd4cdd082355699fe9c6b0df1ca55ddc6186c7936b",
+      "bytes": 18566
+    },
+    "ui/tooltip.lua": {
+      "sha256": "4d8118ab43eae3eaee82b5f7bb8c7c724123a23ca47dfb74b160f664046bbb72",
+      "bytes": 5589
+    },
+    "VERSION_HISTORY.md": {
+      "sha256": "5d52b21ad6b41755d6c66a415095797297d0bd1af669ef5a8d15ede23f21501e",
+      "bytes": 26169
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

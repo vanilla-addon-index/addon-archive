@@ -1,0 +1,130 @@
+{
+  "upstream": "https://github.com/rivi-s/Bubble",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "rivi-s",
+    "repo": "Bubble",
+    "name": "Bubble",
+    "url": "https://github.com/rivi-s/Bubble",
+    "api": "https://api.github.com/repos/rivi-s/Bubble"
+  },
+  "commit": "67eae86e729383b0ba9dbcf280b6eb67c1d45029",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "cf237c7aff44efbe6e502e645c3e06da03a69d7bdeb43392108ef3348143417e",
+      "bytes": 10
+    },
+    "Bubble.toc": {
+      "sha256": "258f79e1f3fa424ca9402a612b7702f3047b5d8b44ccc90713e934bd0082cd4f",
+      "bytes": 305
+    },
+    "core/channel.lua": {
+      "sha256": "85fc627907f50f8b6eb6f42be25f6e83e2c6c73ec7238dd76505234ca035157e",
+      "bytes": 7049
+    },
+    "core/chat.lua": {
+      "sha256": "f706afec62486d9164b19e2b535d33356c2c229afc1805d215a785727b8dacb7",
+      "bytes": 7384
+    },
+    "core/config.lua": {
+      "sha256": "ebaf82d6036477dd999ed50c9de392655ea61d2617f37e7dcf6e43259e5cbf38",
+      "bytes": 1994
+    },
+    "core/hover.lua": {
+      "sha256": "8bfd1bafca435e15a5973bebfc9349fee3782496654b9b4f152279bd710e02e4",
+      "bytes": 4005
+    },
+    "core/identity.lua": {
+      "sha256": "fb103f7d773336bf3126f035b42efbc75130fbf6b9e85b6c12c6ec0064ad775f",
+      "bytes": 6201
+    },
+    "core/init.lua": {
+      "sha256": "aeeb8eef4ca1043813baaaa3f4ece48474ab2e7364cfa7334165104e0a31cfd4",
+      "bytes": 1828
+    },
+    "core/overlay.lua": {
+      "sha256": "e51a14a252d0b674fec485856d552fda53b8dff5a379cb84b4ef916a0cd138fa",
+      "bytes": 3977
+    },
+    "core/picker.lua": {
+      "sha256": "24f9f4076ce6d8cb29c493936b3c7688248e2d18aad2c1653d27ea5a713d0fa8",
+      "bytes": 5799
+    },
+    "core/reactions.lua": {
+      "sha256": "3939d4fa823530b0aa73420813689be728a26f273987f7e5c627c071c1cfa799",
+      "bytes": 12017
+    },
+    "DEVELOPING.md": {
+      "sha256": "1d7dc6c677d1e2d487e2d2bbefbdcf5a24a767f678a7d67b432f9aeeefb1bbc2",
+      "bytes": 19155
+    },
+    "LICENSE": {
+      "sha256": "6070719d7d21919afe3ebc9e17c8f4425ad701dd98522944a0b0d34c8d83bf85",
+      "bytes": 1063
+    },
+    "README.md": {
+      "sha256": "618a9dd4847298f736c5adefe0d579453146d10343b9a25912e7e2944f937a99",
+      "bytes": 6742
+    },
+    "ROADMAP.md": {
+      "sha256": "5a345e5318d5bc4b6cc67d0321c51a79b4382c45ecb9135e8d5b9d22c5587d85",
+      "bytes": 50252
+    },
+    "textures/add.tga": {
+      "sha256": "12755ef2206359e435ee398b7def6ab4b4ba25c3f795da0a35471256a289220d",
+      "bytes": 4114
+    },
+    "textures/heart.tga": {
+      "sha256": "c0e0b05def1d14f40499a1b8bcf16eb0ad8bc4ee46fafdc3bda2ae8c1ded366f",
+      "bytes": 4114
+    },
+    "textures/laugh.tga": {
+      "sha256": "f68c0617ee034408558c63c4c2e02acb02d5ea64f59acb7a75b90cb0db59e413",
+      "bytes": 4114
+    },
+    "textures/sad.tga": {
+      "sha256": "0a2ce75144fa429f0a49b03b39b214935e2992b1d0acae937238e7e12ccae4bd",
+      "bytes": 4114
+    },
+    "textures/thumbsup.tga": {
+      "sha256": "ba0304500b905a5f8184d37decdcc06e2ec29bbdc2e513f92ef236dbbc602890",
+      "bytes": 4114
+    },
+    "textures/wow.tga": {
+      "sha256": "e975010cf404155edc7373d2b2a5f65deaf931815398a58b9e907baf770f2f7c",
+      "bytes": 4114
+    },
+    "tools/README.md": {
+      "sha256": "c050a985723bc890ccb5e9cee6a0d3322d567e7c51212b328ccfb7ad13556218",
+      "bytes": 2361
+    },
+    "tools/svg2tga.sh": {
+      "sha256": "53a1eb798ba1e83b9f30528f7ab14ef94a4ff36b0f0bab55ca5e4c4281aad091",
+      "bytes": 1572
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "403213258": {
+      "tag": "v0.1.2",
+      "folder": "v0.1.2--403213258",
+      "assets": {
+        "610695731": {
+          "sha256": "7205f5e877551ad0dde18d9cbd518adf29c80833e7eebb4a69ba7d2572856704",
+          "bytes": 33987,
+          "id": "610695731",
+          "name": "Bubble-v0.1.2.zip",
+          "url": "https://github.com/rivi-s/Bubble/releases/download/v0.1.2/Bubble-v0.1.2.zip",
+          "path": "releases/v0.1.2--403213258/assets/Bubble-v0.1.2.zip"
+        }
+      },
+      "source": {
+        "sha256": "7818498202c70ea6ea53ef6803213e35ef6e9fa73bea9d60d4516279fdaf6b5a",
+        "bytes": 54614,
+        "path": "releases/v0.1.2--403213258/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/rivi-s/Bubble/tarball/v0.1.2"
+      }
+    }
+  }
+}

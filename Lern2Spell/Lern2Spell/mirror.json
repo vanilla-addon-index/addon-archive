@@ -1,0 +1,85 @@
+{
+  "upstream": "https://github.com/mr-rosh/Lern2Spell",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "mr-rosh",
+    "repo": "Lern2Spell",
+    "name": "Lern2Spell",
+    "url": "https://github.com/mr-rosh/Lern2Spell",
+    "api": "https://api.github.com/repos/mr-rosh/Lern2Spell"
+  },
+  "commit": "eb66f354a363b29c7140edd857ea4cbd01b3d8f5",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "changelog-r15902.txt": {
+      "sha256": "433257cd249c557f5665d151ac951939e65d2e8564e0eebb32d4e5039d36f5ee",
+      "bytes": 3960
+    },
+    "Lern2Spell.lua": {
+      "sha256": "54d9440f335ad0442045247ad53138d699a9270141804537cb765de56185204b",
+      "bytes": 1966
+    },
+    "Lern2Spell.toc": {
+      "sha256": "2496a3332fec6085ea385a646fd98e7b7e26b04ac4d483831a57876ea960a58d",
+      "bytes": 965
+    },
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "7b04142f00d5a887a32722c55bb64798e593f3504929f656aa440c298c63b529",
+      "bytes": 31075
+    },
+    "Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "f24029b2b68114216eaa16e9c60b750f9be5ef16ac5eb81d76890c675dd71d31",
+      "bytes": 65848
+    },
+    "Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "857c997b45898d8e9b0cfcf0e788bfe3ac845b94c65a5d952a7c370c8179f234",
+      "bytes": 44137
+    },
+    "Libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "bc38baf8fd2ed76b24b1babf9ff50a726d14e9fe6e25f77a21679f86a54d5e3b",
+      "bytes": 7906
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "9024eb7de5aa86ff376e3f0d4e3502e6b07c8498609e51001e574d41729b7f0b",
+      "bytes": 29477
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "c2aea5c71e1a83e5018d050336b367aa33eb44007d0a9965fbeaf4191d248ffa",
+      "bytes": 23476
+    },
+    "Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "64b6a9a20828dee3dcda9287bc0d8c85f564c55273b50bf0b92f4ef3ffb14efb",
+      "bytes": 16360
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "71d5f6485c4fc89bd29d50a38b03b2cb2885d68833590b131a6801628a799d4a",
+      "bytes": 31308
+    },
+    "Libs/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "cbb8577f5a891481cfe0b61f3b3f84cc9c10bed5dcb1137d6f2672d5772df277",
+      "bytes": 9486
+    },
+    "Libs/Deformat-2.0/Deformat-2.0.lua": {
+      "sha256": "843f4e0d82213521bfcc6ec1cd0b78eeac6d74bf98eb65029abdedc6ed9cef11",
+      "bytes": 9781
+    },
+    "Libs/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "0e551ad3aa9619cf7287d1a7cfff6588324a47be14ac357426be785041e40a69",
+      "bytes": 8109
+    },
+    "Libs/SpecialEvents-LearnSpell-2.0/SpecialEvents-LearnSpell-2.0.lua": {
+      "sha256": "eac18dd6d45dfc5d4e9f042a77fb2f47399c81fa7da618c9dc33f553b19013a3",
+      "bytes": 2298
+    },
+    "LICENSE": {
+      "sha256": "0444c86fabcc752c8dbad00741ee91c70d37e6fbfd5f5492707c81ddc59f1c57",
+      "bytes": 1085
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

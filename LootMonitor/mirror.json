@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Wiggen94/lootmonitor",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Wiggen94",
+    "repo": "lootmonitor",
+    "name": "lootmonitor",
+    "url": "https://github.com/Wiggen94/lootmonitor",
+    "api": "https://api.github.com/repos/Wiggen94/lootmonitor"
+  },
+  "commit": "551ec4b89c747b1a87e85b818021867c57fef358",
+  "sourceFiles": {
+    "images/image.png": {
+      "sha256": "3434f92c1e3ef15d2d19af428e86df3bbfed6d6013ff398cb5fab824b6980a98",
+      "bytes": 89964
+    },
+    "LICENSE": {
+      "sha256": "289386b3cad8a89d97b60e44832e181cfb83c8e67f4bf2dc8f7673bd398c1ce3",
+      "bytes": 1072
+    },
+    "LootMonitor.lua": {
+      "sha256": "2fa6fd0324360d1a058b2dcd088ebce74d623df8a4c35b2c61d31bd7b5cd1627",
+      "bytes": 75881
+    },
+    "LootMonitor.toc": {
+      "sha256": "88dae2161a1c2dce75f01b77562ffd812f450f7330bfac6e2064727a2f43089c",
+      "bytes": 250
+    },
+    "README.md": {
+      "sha256": "39b98efc6ddce9218ebe287ae72759feb253d68692b2478b023b1b9a533bc0ca",
+      "bytes": 5786
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

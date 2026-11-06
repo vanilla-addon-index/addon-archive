@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: BetterHelp
+## Notes: Enhanced /help command that lists all available slash commands
+## Author: neolectron
+## Version: 1.0.0
+
+BetterHelp.lua

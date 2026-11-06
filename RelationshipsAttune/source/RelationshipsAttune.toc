@@ -1,0 +1,15 @@
+## Interface: 11200
+## Title: Relationships Attune
+## Notes: Track Vanilla and Turtle/Octo WoW attunement progress
+## Author: Relationship
+## Version: 1.9
+## X-Category: Quest
+## SavedVariables: RelationshipsAttuneDB
+## SavedVariablesPerCharacter: RelationshipsAttuneCharDB
+
+Locales.lua
+Data.lua
+Core.lua
+Comm.lua
+Minimap.lua
+UI.lua

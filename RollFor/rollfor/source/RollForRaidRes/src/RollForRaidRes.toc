@@ -1,0 +1,14 @@
+## Interface: 20506
+## Title: RollFor - SR Provider (raidres.top)
+## Author: Obszczymucha
+## Version: 1.0.0
+## Notes: raidres.top import format for RollFor's SoftRes addon.
+## Dependencies: RollFor, RollForSoftRes
+## Group: RollFor
+## IconTexture: Interface\AddOns\RollFor\assets\icon-white
+## X-RollFor-Extension: raidres
+
+src\Decoder.lua
+src\OptionsPage.lua
+
+RollForRaidRes.lua

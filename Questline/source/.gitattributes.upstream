@@ -1,0 +1,5 @@
+* text=auto
+# Generated snapshot hashes and build inputs must survive Windows/Linux checkouts.
+database/*.json text eol=lf
+Data/*.lua text eol=lf
+tools/*.js text eol=lf

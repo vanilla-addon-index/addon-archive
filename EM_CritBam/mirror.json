@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Rumchiller/EM_CritBam",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Rumchiller",
+    "repo": "EM_CritBam",
+    "name": "EM_CritBam",
+    "url": "https://github.com/Rumchiller/EM_CritBam",
+    "api": "https://api.github.com/repos/Rumchiller/EM_CritBam"
+  },
+  "commit": "01c93b5ed63af6bf3d2140317a51e81ceb2bd1b6",
+  "sourceFiles": {
+    "bam.ogg": {
+      "sha256": "0812403ce0379839fbaffc54f534f83022b95653f70f90305601d77fdc03d066",
+      "bytes": 23667
+    },
+    "EM_CritBam.lua": {
+      "sha256": "7b90d4dd71e67faee117a6e6c09c1801e173c78d6a5dbf273162e89249aea76c",
+      "bytes": 1905
+    },
+    "EM_CritBam.toc": {
+      "sha256": "685310e1ff35c4758d81480d79e1f6f5f42ba19ac3683b41b268bd416725b513",
+      "bytes": 176
+    },
+    "LICENSE": {
+      "sha256": "e66e168c58979f454ee671ba52c7f973478f37cf183abad7ff02af25f6e42fea",
+      "bytes": 1063
+    },
+    "README.md": {
+      "sha256": "025334cc57e3975a8fc8a266aefc69c189bbe8ffa0c5173375ca000200e022cb",
+      "bytes": 58
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,224 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Include file="Libs\AceAddon-3.0\AceAddon-3.0.xml" />
+	<Include file="Libs\AceComm-3.0\AceComm-3.0.xml" />
+
+	<Button name="LockAssignmentMinimapButton" parent="Minimap" enableMouse="true" hidden="true" movable="true" toplevel="true">
+		<Size>
+			<AbsDimension x="33" y="33"/>
+		</Size>
+		<Anchors>
+			<Anchor point="BOTTOM" relativeTo="Minimap">
+				<Offset>
+					<AbsDimension x="0" y="-30"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="LockAssignmentMinimapButtonIcon" file="Interface\Icons\Spell_Shadow_ChillTouch">
+					<Size>
+						<AbsDimension x="18" y="18"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="7" y="-6"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="LockAssignmentMinimapButtonBorder" file="Interface\Minimap\MiniMap-TrackingBorder.tga">
+					<Size>
+						<AbsDimension x="52" y="52"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnClick>
+				if ( LockAssignmentFrame:IsVisible() ) then
+				HideUIPanel(LockAssignmentFrame);
+				else
+				ShowUIPanel(LockAssignmentFrame);
+				end
+			</OnClick>
+			<OnEnter>
+				GameTooltip:SetOwner(this, "ANCHOR_BOTTOMLEFT");
+				GameTooltip:SetText("Open LockAssignment");
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide();
+			</OnLeave>
+			<OnDragStart>
+				this:StartMoving();
+				this.isMoving = true;
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+				this.isMoving = false;
+			</OnDragStop>
+		</Scripts>
+		<HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight"/>
+	</Button>
+
+
+	<Button name="AssignmentPersonalMonitorFrame" movable="true" enableMouse="true" parent="UIParent" hidden="true">
+		<Size>
+			<AbsDimension x="66" y="34" />
+		</Size>
+
+		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnDragStart>
+				this:StartMoving()
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing()
+				local _, _, _, xOfs, yOfs = this:GetPoint()
+				PersonalFramedXOfs = xOfs
+				PersonalFramedYOfs = yOfs
+			</OnDragStop>
+			<OnUpdate>
+				if (AssignmentPersonalMonitorFrame:IsVisible()) then
+					LockAssignmentPersonalFrame_OnUpdate(this, arg1);
+				end
+			</OnUpdate>
+		</Scripts>
+	</Button>
+
+	<Frame name="LockAssignmentFrame" movable="true" enableMouse="true" parent="UIParent" hidden="false">
+		<Size>
+			<AbsDimension x="500" y="563" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" relativeTo="UIParent">
+				<Offset>
+					<AbsDimension x="0" y="0" />
+				</Offset>
+			</Anchor>
+		</Anchors>
+
+		<!--	<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background"
+           edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32"/>
+			</EdgeSize>
+		</Backdrop>
+-->
+		<Layers>
+			<Layer>
+				<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="180" y="32" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="3.5" y="5" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.2" right="0.8" top="0" bottom="0.6" />
+				</Texture>
+				<FontString inherits="GameFontNormal" text="Lock Assignment">
+					<Size>
+						<AbsDimension x="140" y="0" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="3.85" y="-6" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<FontHeight>
+						<AbsValue val="14" />
+					</FontHeight>
+					<Color r="1" g="1" b="1" />
+				</FontString>
+			</Layer>
+		</Layers>
+
+		<Frames>
+			<Button name="LACancel_Button" inherits="GameMenuButtonTemplate" text="Close">
+				<Size>
+					<AbsDimension x="90" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="LockAssignmentFrame" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-10" y="16" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						LA.LockAssignment_HideFrame()
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="LACommit_Button" inherits="GameMenuButtonTemplate" text="Send Changes">
+				<Size>
+					<AbsDimension x="115" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="LACancel_Button" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="-5" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						LA.LockAssignment_Commit()
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Frame name="NLAnnouncerContainer">
+				<Size>
+					<AbsDimension x="115" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="LACommit_Button" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="-5" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				LA.LockAssignmentInit()
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnShow>	
+				LA.LockAssignment_OnShowFrame()
+			</OnShow>
+			<OnDragStart>
+				this:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+			</OnDragStop>
+			<OnUpdate>LockAssignmentFrame_OnUpdate(this, arg1);</OnUpdate>
+		</Scripts>
+	</Frame>
+
+</Ui>

@@ -1,0 +1,1098 @@
+-- DBB2 Categories API
+-- Core category management functions for message filtering
+--
+-- NOTE: Default category data and initialization is in modules/categories.lua
+-- This file provides the API functions that operate on category data.
+--
+-- Includes:
+-- - Category collapse state (UI)
+-- - Category management (get, update, select)
+-- - Tag parsing utilities
+-- - Filter tags (AND-condition filtering for groups/professions)
+-- - Level range filtering (dungeon/raid level appropriateness)
+-- - Message matching and categorization
+--
+-- Related files:
+-- - env/tag_exclusions.lua: Tag false positive exclusion rules (DBB2.env.IsTagExcluded)
+
+-- Localize frequently used globals for performance
+local string_lower = string.lower
+local string_find = string.find
+local string_sub = string.sub
+local string_len = string.len
+local string_gfind = string.gfind
+local string_gsub = string.gsub
+local table_insert = table.insert
+local table_concat = table.concat
+local table_getn = table.getn
+local ipairs = ipairs
+local pairs = pairs
+local math_abs = math.abs
+
+-- =====================================================
+-- PERFORMANCE CACHES
+-- =====================================================
+-- CategorizeMessage is the hottest function in the addon: it is called for
+-- every incoming chat line (several times), by the chat-frame hook (once per
+-- chat window the line is rendered in) and for EVERY stored message on EVERY
+-- GUI redraw. Its result only depends on the message text, the two flags and
+-- the category/filter-tag configuration, so we memoize it.
+--
+-- The cache is invalidated (generation bump) by every API that mutates the
+-- category configuration, and additionally whenever the underlying config
+-- tables are replaced (e.g. ResetCategoriesToDefaults assigns new tables).
+local catCache = {}          -- [flagsKey][message] = result
+local catCacheSize = 0
+local CAT_CACHE_MAX = 600    -- ~100 stored messages + recent chat; cleared when exceeded
+local catCacheRefs = {}      -- identity of config tables the cache was built against
+
+local function ResetCategorizeCache()
+  if DBB2.api.InvalidateChatDecisionCache then DBB2.api.InvalidateChatDecisionCache() end
+  catCache = {}
+  catCacheSize = 0
+end
+
+-- Public: call after any direct modification of DBB2_Config.categories / filterTags
+function DBB2.api.InvalidateCategoryCache()
+  ResetCategorizeCache()
+  -- Force tag precomputation to refresh as well
+  if DBB2_Config and DBB2_Config.categories then
+    for _, list in pairs(DBB2_Config.categories) do
+      if type(list) == "table" then
+        for _, cat in ipairs(list) do
+          cat._tagsLower = nil
+          cat._tagsLen = nil
+          cat._tagsWild = nil
+        end
+      end
+    end
+  end
+end
+
+-- Detects wholesale replacement of config tables (resets, profile loads).
+local function CheckCacheRefs()
+  local cats = DBB2_Config.categories
+  local ft = DBB2_Config.filterTags
+  local g, p, h = cats and cats.groups, cats and cats.professions, cats and cats.hardcore
+  local fg = ft and ft.groups
+  local fp = ft and ft.professions
+  if catCacheRefs.cats ~= cats or catCacheRefs.g ~= g or catCacheRefs.p ~= p or catCacheRefs.h ~= h
+     or catCacheRefs.fg ~= fg or catCacheRefs.fp ~= fp
+     or catCacheRefs.fgt ~= (fg and fg.tags) or catCacheRefs.fpt ~= (fp and fp.tags) then
+    catCacheRefs.cats, catCacheRefs.g, catCacheRefs.p, catCacheRefs.h = cats, g, p, h
+    catCacheRefs.fg, catCacheRefs.fp = fg, fp
+    catCacheRefs.fgt, catCacheRefs.fpt = fg and fg.tags, fp and fp.tags
+    ResetCategorizeCache()
+  end
+end
+
+-- One-entry memo for lowercasing: the same message is lowercased once per
+-- category (~55 categories) during a scan otherwise.
+local lastLowerIn, lastLowerOut = nil, nil
+local function LowerMsg(message)
+  if message ~= lastLowerIn then
+    lastLowerIn = message
+    lastLowerOut = string_lower(message)
+  end
+  return lastLowerOut
+end
+
+-- Precomputed info for filter tag strings (lowercase, length, wildcard flag).
+local filterTagInfo = {}
+local function GetFilterTagInfo(tag)
+  local info = filterTagInfo[tag]
+  if not info then
+    local lower = string_lower(tag)
+    info = { lower = lower, len = string_len(lower), wild = string_find(lower, "[%*%?%[%]%{%}\\]") and true or false }
+    filterTagInfo[tag] = info
+  end
+  return info
+end
+
+-- =====================================================
+-- CATEGORY COLLAPSE STATE API
+-- =====================================================
+-- Functions for managing the collapsed/expanded state of categories in the UI.
+-- Collapsed categories show only the header, hiding their messages.
+
+-- [ IsCategoryCollapsed ]
+-- Checks whether a category is currently collapsed in the UI.
+-- Collapsed categories show only the header row, hiding their messages.
+--
+-- @param categoryType  [string]  Category type: "groups", "professions", or "hardcore"
+-- @param categoryName  [string]  The display name of the category
+-- @return              [boolean] true if collapsed, false if expanded or not found
+function DBB2.api.IsCategoryCollapsed(categoryType, categoryName)
+  if not categoryType or not categoryName then return false end
+  if not DBB2_Config.categoryCollapsed then return false end
+  if not DBB2_Config.categoryCollapsed[categoryType] then return false end
+  return DBB2_Config.categoryCollapsed[categoryType][categoryName] or false
+end
+
+-- [ SetCategoryCollapsed ]
+-- Sets the collapsed/expanded state of a category in the UI.
+-- Creates the necessary config tables if they don't exist.
+--
+-- @param categoryType  [string]  Category type: "groups", "professions", or "hardcore"
+-- @param categoryName  [string]  The display name of the category
+-- @param collapsed     [boolean] true to collapse, false to expand
+-- @return              [boolean] true if set successfully, false if invalid params
+function DBB2.api.SetCategoryCollapsed(categoryType, categoryName, collapsed)
+  if not categoryType or not categoryName then return false end
+  if not DBB2_Config.categoryCollapsed then
+    DBB2_Config.categoryCollapsed = {}
+  end
+  if not DBB2_Config.categoryCollapsed[categoryType] then
+    DBB2_Config.categoryCollapsed[categoryType] = {}
+  end
+  DBB2_Config.categoryCollapsed[categoryType][categoryName] = collapsed
+  return true
+end
+
+-- [ ToggleCategoryCollapsed ]
+-- Toggles the collapsed/expanded state of a category.
+-- If collapsed, expands it; if expanded, collapses it.
+--
+-- @param categoryType  [string]  Category type: "groups", "professions", or "hardcore"
+-- @param categoryName  [string]  The display name of the category
+-- @return              [boolean] The new collapsed state (true = now collapsed)
+function DBB2.api.ToggleCategoryCollapsed(categoryType, categoryName)
+  local isCollapsed = DBB2.api.IsCategoryCollapsed(categoryType, categoryName)
+  DBB2.api.SetCategoryCollapsed(categoryType, categoryName, not isCollapsed)
+  return not isCollapsed
+end
+
+-- =====================================================
+-- CATEGORY MANAGEMENT API
+-- =====================================================
+-- Functions for retrieving and modifying category definitions.
+-- Categories contain tags used to match messages to dungeon/raid groups,
+-- profession services, or hardcore-specific content.
+
+-- [ GetCategories ]
+-- Returns all categories for a given type from the saved config.
+--
+-- @param categoryType  [string] Category type: "groups", "professions", or "hardcore"
+-- @return              [table]  Array of category objects, or empty table if not found
+--                               Each category: { name, selected, tags, _tagsLower, _tagsLen }
+function DBB2.api.GetCategories(categoryType)
+  if not categoryType then return {} end
+  if not DBB2_Config.categories then return {} end
+  return DBB2_Config.categories[categoryType] or {}
+end
+
+-- [ GetCategoryByName ]
+-- Finds and returns a specific category by its display name.
+--
+-- @param categoryType  [string]  Category type: "groups", "professions", or "hardcore"
+-- @param name          [string]  The exact display name of the category
+-- @return              [table]   The category object if found, or nil
+-- @return              [number]  The index in the categories array, or nil
+function DBB2.api.GetCategoryByName(categoryType, name)
+  if not categoryType or not name then return nil end
+  local cats = DBB2.api.GetCategories(categoryType)
+  for i, cat in ipairs(cats) do
+    if cat.name == name then
+      return cat, i
+    end
+  end
+  return nil
+end
+
+
+-- [ UpdateCategoryTags ]
+-- Updates the search tags for a category.
+-- Also pre-computes lowercase versions and lengths for faster matching.
+--
+-- @param categoryType  [string]  Category type: "groups", "professions", or "hardcore"
+-- @param categoryName  [string]  The display name of the category to update
+-- @param newTags       [table]   Array of tag strings (e.g., {"mc", "molten core", "molten"})
+-- @return              [boolean] true if updated successfully, false if category not found
+function DBB2.api.UpdateCategoryTags(categoryType, categoryName, newTags)
+  local cat = DBB2.api.GetCategoryByName(categoryType, categoryName)
+  if cat then
+    cat.tags = newTags or {}
+    -- Pre-compute lowercase tags and their lengths for faster matching
+    cat._tagsLower = nil  -- recomputed lazily by EnsureTagsPrecomputed
+    cat._tagsLen = nil
+    cat._tagsWild = nil
+    ResetCategorizeCache()
+    DBB2.api.DebugUITransition("category-tags-changed", "type=" .. categoryType .. " category=" .. categoryName .. " tags=" .. table_concat(cat.tags, ","))
+    return true
+  end
+  return false
+end
+
+-- Category exclusions are saved alongside tags and apply to every matching path.
+function DBB2.api.UpdateCategoryExcludeTags(categoryType, categoryName, tags)
+  local cat = DBB2.api.GetCategoryByName(categoryType, categoryName)
+  if not cat then return false end
+  tags = tags or {}
+  local previous = cat.excludeTags or {}
+  local changed = table_getn(previous) ~= table_getn(tags)
+  for i, tag in ipairs(tags) do
+    if previous[i] ~= tag then changed = true break end
+  end
+  if not changed then return true end
+  cat.excludeTags = tags
+  ResetCategorizeCache()
+  DBB2.api.DebugUITransition("category-blacklist-changed", "type=" .. categoryType .. " category=" .. categoryName .. " blacklistTags=[" .. table_concat(tags, ",") .. "]")
+  return true
+end
+
+-- [ EnsureTagsPrecomputed ]
+-- Ensures a category has pre-computed lowercase tags
+-- Called internally before matching
+local function BuildTagCache(category)
+  local tagsLower, tagsLen, tagsWild = {}, {}, {}
+  local n = 0
+  for i, tag in ipairs(category.tags or {}) do
+    local lower = string_lower(tag)
+    tagsLower[i] = lower
+    tagsLen[i] = string_len(lower)
+    tagsWild[i] = string_find(lower, "[%*%?%[%]%{%}\\]") and true or false
+    n = i
+  end
+  category._tagsLower = tagsLower
+  category._tagsLen = tagsLen
+  category._tagsWild = tagsWild
+  category._tagsSrc = category.tags
+  category._tagsN = n
+end
+
+local function EnsureTagsPrecomputed(category)
+  -- Rebuild if missing, if the tags table was replaced, or if its size changed.
+  if not category._tagsLower or not category._tagsWild or category._tagsSrc ~= category.tags then
+    BuildTagCache(category)
+    return
+  end
+  local tags = category.tags
+  local n = category._tagsN
+  if (n > 0 and tags[n] == nil) or tags[n + 1] ~= nil then
+    BuildTagCache(category)
+  end
+end
+
+-- [ SetCategorySelected ]
+-- Enables or disables a category for message matching.
+-- Disabled categories will not match any messages (unless ignoreSelected is used).
+--
+-- @param categoryType  [string]  Category type: "groups", "professions", or "hardcore"
+-- @param categoryName  [string]  The display name of the category
+-- @param selected      [boolean] true to enable, false to disable
+-- @return              [boolean] true if updated successfully, false if category not found
+function DBB2.api.SetCategorySelected(categoryType, categoryName, selected)
+  local cat = DBB2.api.GetCategoryByName(categoryType, categoryName)
+  if cat then
+    cat.selected = selected and true or false
+    ResetCategorizeCache()
+    DBB2.api.DebugUITransition("category-selection-changed", "type=" .. categoryType .. " category=" .. categoryName .. " selected=" .. tostring(cat.selected))
+    return true
+  end
+  return false
+end
+
+-- =====================================================
+-- TAG PARSING UTILITIES
+-- =====================================================
+-- Functions for converting between tag string formats.
+
+-- [ ParseTagsString ]
+-- Converts a comma-separated string into an array of tags.
+-- Trims whitespace and converts to lowercase.
+--
+-- Example: "MC, BWL, Ony" -> {"mc", "bwl", "ony"}
+--
+-- @param str     [string] Comma-separated tags string
+-- @return        [table]  Array of lowercase tag strings
+function DBB2.api.ParseTagsString(str)
+  local tags = {}
+  if not str or str == "" then return tags end
+  
+  for tag in string_gfind(str, "([^,]+)") do
+    -- Trim whitespace
+    tag = string_gsub(tag, "^%s*(.-)%s*$", "%1")
+    tag = string_lower(tag)
+    if tag ~= "" then
+      table_insert(tags, tag)
+    end
+  end
+  return tags
+end
+
+-- [ TagsToString ]
+-- Converts an array of tags into a comma-separated string.
+-- Uses table.concat for efficiency.
+--
+-- Example: {"mc", "bwl", "ony"} -> "mc, bwl, ony"
+--
+-- @param tags    [table]  Array of tag strings
+-- @return        [string] Comma-separated string, or empty string if no tags
+function DBB2.api.TagsToString(tags)
+  if not tags then return "" end
+  if table_getn(tags) == 0 then return "" end
+  
+  -- table.concat is more efficient than manual concatenation
+  return table_concat(tags, ", ")
+end
+
+
+-- =====================================================
+-- FILTER TAGS API
+-- =====================================================
+-- Filter tags are additional tags that must ALSO match (AND condition)
+-- when enabled, allowing filtering for specific message types like LFG/LFM
+-- for groups or LFW/WTB/WTS for professions.
+
+-- [ GetFilterTags ]
+-- Returns the filter tags configuration for a category type.
+-- Filter tags are additional tags that must ALSO match (AND condition)
+-- when enabled, allowing filtering for specific message types.
+--
+-- @param categoryType  [string] Category type: "groups" or "professions"
+-- @return              [table]  Config table { enabled = boolean, tags = {string...} }, or nil if not found
+function DBB2.api.GetFilterTags(categoryType)
+  if not categoryType then return nil end
+  if not DBB2_Config.filterTags then return nil end
+  return DBB2_Config.filterTags[categoryType]
+end
+
+-- [ IsFilterTagsEnabled ]
+-- Checks whether filter tags are currently enabled for a category type.
+-- When enabled, messages must match both category tags AND filter tags.
+--
+-- @param categoryType  [string]  Category type: "groups" or "professions"
+-- @return              [boolean] true if filter tags are enabled, false otherwise
+function DBB2.api.IsFilterTagsEnabled(categoryType)
+  local filter = DBB2.api.GetFilterTags(categoryType)
+  if not filter then return false end
+  return filter.enabled or false
+end
+
+-- [ SetFilterTagsEnabled ]
+-- Enables or disables filter tags for a category type.
+-- Creates the necessary config tables if they don't exist.
+--
+-- @param categoryType  [string]  Category type: "groups" or "professions"
+-- @param enabled       [boolean] true to enable filter tags, false to disable
+-- @return              [boolean] true if set successfully, false if invalid params
+function DBB2.api.SetFilterTagsEnabled(categoryType, enabled)
+  if not categoryType then return false end
+  if not DBB2_Config.filterTags then
+    DBB2_Config.filterTags = {}
+  end
+  if not DBB2_Config.filterTags[categoryType] then
+    DBB2_Config.filterTags[categoryType] = { enabled = false, tags = {} }
+  end
+  DBB2_Config.filterTags[categoryType].enabled = enabled and true or false
+  ResetCategorizeCache()
+  DBB2.api.DebugUITransition("filter-tags-enabled-changed", "type=" .. categoryType .. " enabled=" .. tostring(enabled and true or false))
+  return true
+end
+
+-- [ UpdateFilterTags ]
+-- Updates the filter tags array for a category type.
+-- Creates the necessary config tables if they don't exist.
+--
+-- @param categoryType  [string] Category type: "groups" or "professions"
+-- @param newTags       [table]  Array of tag strings (e.g., {"lfg", "lfm", "lf1m"})
+-- @return              [boolean] true if updated successfully, false if invalid params
+function DBB2.api.UpdateFilterTags(categoryType, newTags)
+  if not categoryType then return false end
+  if not DBB2_Config.filterTags then
+    DBB2_Config.filterTags = {}
+  end
+  if not DBB2_Config.filterTags[categoryType] then
+    DBB2_Config.filterTags[categoryType] = { enabled = false, tags = {} }
+  end
+  DBB2_Config.filterTags[categoryType].tags = newTags or {}
+  ResetCategorizeCache()
+  DBB2.api.DebugUITransition("filter-tags-changed", "type=" .. categoryType .. " tags=" .. table_concat(DBB2_Config.filterTags[categoryType].tags, ","))
+  return true
+end
+
+-- Strictly checks a message against a filter tag list. Unlike MatchFilterTags,
+-- an absent or empty list is not a pass-through match. This is shared by the
+-- normal optional category gate and Logs-only unsorted message detection.
+local function MatchFilterTagList(message, tags, evidence)
+  if not tags or not tags[1] then
+    return false
+  end
+
+  local lowerMsg = LowerMsg(message or "")
+  if lowerMsg == "" then return false end
+
+  local msgLen = string_len(lowerMsg)
+
+  for _, tag in ipairs(tags) do
+    local info = GetFilterTagInfo(tag)
+    local lowerTag = info.lower
+    local tagLen = info.len
+
+    local isWildcard = info.wild
+
+    if isWildcard then
+      if DBB2.api.MatchWildcard(lowerMsg, lowerTag) then
+        if evidence then table_insert(evidence, { tag = tag, kind = "filter-tag wildcard" }) end
+        return true
+      end
+    else
+      local startPos = 1
+      while true do
+        local foundPos = string_find(lowerMsg, lowerTag, startPos, true)
+        if not foundPos then break end
+
+        local charBefore = ""
+        if foundPos > 1 then
+          charBefore = string_sub(lowerMsg, foundPos - 1, foundPos - 1)
+        end
+
+        local afterPos = foundPos + tagLen
+        local charAfter = ""
+        if afterPos <= msgLen then
+          charAfter = string_sub(lowerMsg, afterPos, afterPos)
+        end
+
+        local validBefore = (foundPos == 1) or not string_find(charBefore, "[%w]")
+        local validAfter = (afterPos > msgLen) or not string_find(charAfter, "[%w]")
+
+        -- Also allow digits after (like LF1M, LF2M).
+        if not validAfter and string_find(charAfter, "%d") then
+          local digitEndPos = afterPos
+          while digitEndPos <= msgLen and string_find(string_sub(lowerMsg, digitEndPos, digitEndPos), "%d") do
+            digitEndPos = digitEndPos + 1
+          end
+          if digitEndPos <= msgLen then
+            local afterDigits = string_sub(lowerMsg, digitEndPos, digitEndPos)
+            if string_lower(afterDigits) == "m" then
+              digitEndPos = digitEndPos + 1
+            end
+          end
+          if digitEndPos > msgLen or not string_find(string_sub(lowerMsg, digitEndPos, digitEndPos), "[%w]") then
+            validAfter = true
+          end
+        end
+
+        if validBefore and validAfter then
+          if evidence then table_insert(evidence, { tag = tag, kind = "filter-tag" }) end
+          return true
+        end
+
+        startPos = foundPos + 1
+      end
+    end
+  end
+
+  return false
+end
+
+-- [ MatchFilterTags ]
+-- Checks if a message matches any of the filter tags for a category type.
+-- Uses word boundary matching for plain tags and wildcard matching for patterns.
+-- Returns true if filter is disabled (pass-through behavior).
+--
+-- Supports wildcard patterns: * (any chars), ? (one char), [abc], [a-z], {a,b,c}
+-- Also matches tags followed by digits (e.g., "lf1m", "lf2m" for "lf" tag).
+--
+-- @param message       [string]  The message text to check
+-- @param categoryType  [string]  Category type: "groups" or "professions"
+-- @return              [boolean] true if matches any filter tag, or if filter is disabled
+function DBB2.api.MatchFilterTags(message, categoryType, evidence)
+  -- If filter is disabled, always return true (no filtering)
+  if not DBB2.api.IsFilterTagsEnabled(categoryType) then
+    return true
+  end
+
+  local filter = DBB2.api.GetFilterTags(categoryType)
+  if not filter or not filter.tags or not filter.tags[1] then
+    return true  -- No tags, pass through
+  end
+
+  return MatchFilterTagList(message, filter.tags, evidence)
+end
+
+-- Strictly matches the configured list regardless of its enabled state. This
+-- lets features such as Filtered chat hiding use the user's tag vocabulary
+-- without changing whether normal bulletin-board categorization is filtered.
+function DBB2.api.MatchConfiguredFilterTags(message, categoryType, evidence)
+  local filter = DBB2.api.GetFilterTags(categoryType)
+  if not filter then return false end
+  return MatchFilterTagList(message, filter.tags, evidence)
+end
+
+-- [ MatchUnsortedFilterTags ]
+-- Matches the configured Group and Profession Filter Tag lists regardless of
+-- their enabled state. Returns a marker suitable for Logs-only entries.
+function DBB2.api.MatchUnsortedFilterTags(message)
+  if DBB2.api.MatchConfiguredFilterTags(message, "groups") then
+    return "group"
+  end
+
+  if DBB2.api.MatchConfiguredFilterTags(message, "professions") then
+    return "trade"
+  end
+
+  return nil
+end
+
+-- =====================================================
+-- LEVEL RANGE API
+-- =====================================================
+-- Functions for level-based category filtering.
+-- Level ranges define the appropriate player level for dungeon/raid content.
+-- Level ranges are populated by modules/categories.lua during initialization
+-- and stored in DBB2.categoryLevelRanges lookup table.
+
+-- [ GetCategoryLevelRange ]
+-- Returns the level range for a category (used for level filtering).
+-- Level ranges define the appropriate player level for dungeon/raid content.
+--
+-- @param categoryName  [string] The display name of the category
+-- @return              [table]  Level range table { minLevel = number, maxLevel = number }, or nil if not found
+function DBB2.api.GetCategoryLevelRange(categoryName)
+  if DBB2.categoryLevelRanges and DBB2.categoryLevelRanges[categoryName] then
+    return DBB2.categoryLevelRanges[categoryName]
+  end
+  return nil
+end
+
+-- [ GetCategoryLevelRangeText ]
+-- Returns a compact display string for a category level range.
+-- Used by the Groups tab to show subtle recommended level info.
+--
+-- @param categoryName  [string] The display name of the category
+-- @return              [string] Compact range string (e.g. "[16-24]" or "[60]"), or nil if not found/hidden
+function DBB2.api.GetCategoryLevelRangeText(categoryName)
+  if not categoryName or categoryName == "Custom Category" then
+    return nil
+  end
+
+  local levelRange = DBB2.api.GetCategoryLevelRange(categoryName)
+  if not levelRange then
+    return nil
+  end
+
+  if levelRange.minLevel == levelRange.maxLevel then
+    return "[" .. levelRange.minLevel .. "]"
+  end
+
+  return "[" .. levelRange.minLevel .. "-" .. levelRange.maxLevel .. "]"
+end
+
+-- [ IsLevelAppropriate ]
+-- Checks if a category is appropriate for the given player level.
+-- Used to filter out content that is too high or too low level.
+-- Categories without defined level ranges are considered appropriate for all levels.
+--
+-- @param categoryName  [string] The display name of the category
+-- @param playerLevel   [number] Player's level (optional, defaults to UnitLevel("player"))
+-- @return              [boolean] true if player level is within category's range, or if no range defined
+function DBB2.api.IsLevelAppropriate(categoryName, playerLevel)
+  playerLevel = playerLevel or UnitLevel("player")
+  local levelRange = DBB2.api.GetCategoryLevelRange(categoryName)
+  if levelRange then
+    return playerLevel >= levelRange.minLevel and playerLevel <= levelRange.maxLevel
+  end
+  -- If no level range defined, assume it's appropriate for all levels
+  return true
+end
+
+-- =====================================================
+-- MESSAGE MATCHING API
+-- =====================================================
+-- Functions for matching messages to categories based on tags.
+
+-- [ MatchMessageToCategory ]
+-- Checks if a message matches any tag in a category.
+-- Uses word boundary matching to avoid partial matches (e.g., "dm" won't match "admin").
+--
+-- Features:
+-- - Supports wildcard patterns: * (any chars), ? (one char), [abc], [a-z], [!abc], {a,b,c}
+-- - Matches tags followed by 1-2 digits or "x" + digits (e.g., "zg15", "ony12", "bmx2")
+-- - Special handling for "aq" tag to distinguish Temple (40) from Ruins (20)
+-- - Special handling for "kara" tag to distinguish Upper (40) from Lower (10)
+-- - Applies tag exclusion rules to prevent false positives (e.g., "ST" for server time)
+-- - If filter tags are enabled, message must match BOTH category tags AND filter tags
+--
+-- @param message        [string]  The message text to check
+-- @param category       [table]   Category object with .selected, .tags, ._tagsLower, ._tagsLen
+-- @param ignoreSelected [boolean] If true, skip the .selected check (for mode 2 filtering)
+-- @param categoryType   [string]  Optional: "groups", "professions", or "hardcore" for filter tag checking
+-- @param ignoreFilterTags [boolean] Optional: if true, skip the extra filter tag gate
+-- @return               [boolean] true if message matches the category
+function DBB2.api.MatchMessageToCategory(message, category, ignoreSelected, categoryType, ignoreFilterTags, evidence)
+  if not category then
+    return false
+  end
+  if not ignoreSelected and not category.selected then
+    return false
+  end
+  if not category.tags then
+    return false
+  end
+  
+  -- Quick check: any tags at all?
+  if category.tags[1] == nil then
+    return false
+  end
+  
+  local lowerMsg = LowerMsg(message or "")
+  if lowerMsg == "" then return false end
+  
+  local exclusionEvidence = evidence and {} or nil
+  local excluded = MatchFilterTagList(message, category.excludeTags, exclusionEvidence)
+  if excluded and not evidence then return false end
+  -- Diagnostic scans continue through positive tags so they can explain both
+  -- what would have matched and exactly which blacklist tag vetoed it.
+
+  -- Check filter tags first (if enabled for this category type)
+  -- This is an AND condition - message must match BOTH filter tags AND category tags
+  if not ignoreFilterTags and categoryType and (categoryType == "groups" or categoryType == "professions") then
+    local filterEvidence = evidence and {} or nil
+    if not DBB2.api.MatchFilterTags(message, categoryType, filterEvidence) then
+      if evidence then evidence.filterRejected = true end
+      return false
+    end
+    if evidence then evidence.filterTags = filterEvidence end
+  end
+  
+  -- Ensure pre-computed lowercase tags exist
+  EnsureTagsPrecomputed(category)
+  
+  local msgLen = string_len(lowerMsg)
+  local tagsLower = category._tagsLower
+  local tagsLen = category._tagsLen
+  local tagsWild = category._tagsWild
+  local matched = false
+  
+  -- Use ipairs instead of table.getn for Lua 5.0 compatibility
+  for i, lowerTag in ipairs(tagsLower) do
+    local tagLen = tagsLen[i]
+
+    -- Wildcard flag is precomputed per tag
+    local isWildcard = tagsWild[i]
+
+    if isWildcard then
+      -- Use wildcard matching for patterns
+      if DBB2.api.MatchWildcard(lowerMsg, lowerTag) then
+        if evidence then table_insert(evidence.tags, { tag = category.tags[i], kind = "wildcard" }) end
+        if not evidence then return true end
+        matched = true
+      end
+    else
+      -- Plain text matching with word boundaries
+      local startPos = 1
+
+      while true do
+        local foundPos = string_find(lowerMsg, lowerTag, startPos, true)
+        if not foundPos then
+          break
+        end
+
+        -- Check character before the match (must be start or non-alphanumeric)
+        local charBefore = ""
+        if foundPos > 1 then
+          charBefore = string_sub(lowerMsg, foundPos - 1, foundPos - 1)
+        end
+
+        -- Check character after the match
+        local afterPos = foundPos + tagLen
+        local charAfter = ""
+        if afterPos <= msgLen then
+          charAfter = string_sub(lowerMsg, afterPos, afterPos)
+        end
+
+        -- Check if boundaries are word boundaries (not letters or numbers)
+        local validBefore = (foundPos == 1) or not string_find(charBefore, "[%w]")
+
+        -- For validAfter, we allow 1-2 trailing digits (raid group sizes like
+        -- "zg15", "ony12") and also "x" + digits for run-count shorthand like "bmx2".
+        -- Special case: "aq" tag should only use direct numeric suffixes to
+        -- distinguish Temple (40) from Ruins (20).
+        local validAfter = false
+        local matchKind = "plain tag"
+        if afterPos > msgLen then
+          -- End of message - valid
+          validAfter = true
+        elseif not string_find(charAfter, "[%w]") then
+          -- Non-alphanumeric after - valid word boundary
+          validAfter = true
+        elseif string_find(charAfter, "%d") then
+          matchKind = "numeric suffix"
+          -- Digit after tag - check for raid group size pattern (1-2 digits)
+          local digit1 = charAfter
+          local digit2 = ""
+          local charAfterDigits = ""
+          local digitEndPos = afterPos + 1
+
+          -- Check for second digit
+          if digitEndPos <= msgLen then
+            local nextChar = string_sub(lowerMsg, digitEndPos, digitEndPos)
+            if string_find(nextChar, "%d") then
+              digit2 = nextChar
+              digitEndPos = digitEndPos + 1
+            end
+          end
+
+          -- Check character after the digits
+          if digitEndPos <= msgLen then
+            charAfterDigits = string_sub(lowerMsg, digitEndPos, digitEndPos)
+          end
+
+          -- Valid if digits are followed by word boundary
+          local digitsFollowedByBoundary = (digitEndPos > msgLen) or not string_find(charAfterDigits, "[%w]")
+
+          if digitsFollowedByBoundary then
+            -- Special handling for "aq" tag to distinguish Temple (40-man) from Ruins (20-man)
+            -- "aq40" -> Temple of Ahn'Qiraj only
+            -- "aq" + any other number (aq13, aq15, aq20, etc.) -> Ruins of Ahn'Qiraj
+            if lowerTag == "aq" then
+              local digitSuffix = digit1 .. digit2
+              -- Check which category we're matching against by looking at category name
+              local catNameLower = string_lower(category.name or "")
+              if string_find(catNameLower, "temple") or string_find(catNameLower, "aq40") then
+                -- Temple of Ahn'Qiraj - only match "aq40"
+                if digitSuffix == "40" then
+                  validAfter = true
+                end
+              elseif string_find(catNameLower, "ruins") or string_find(catNameLower, "aq20") then
+                -- Ruins of Ahn'Qiraj - match any number except "40"
+                if digitSuffix ~= "40" then
+                  validAfter = true
+                end
+              end
+            -- Special handling for "kara" tag to distinguish Upper (40-man) from Lower (10-man)
+            -- "kara40" -> Upper Karazhan Halls only
+            -- "kara" + any other number (kara10, kara15, etc.) -> Lower Karazhan Halls
+            elseif lowerTag == "kara" then
+              local digitSuffix = digit1 .. digit2
+              local catNameLower = string_lower(category.name or "")
+              if string_find(catNameLower, "upper") or string_find(catNameLower, "ukh") then
+                -- Upper Karazhan Halls - only match "kara40"
+                if digitSuffix == "40" then
+                  validAfter = true
+                end
+              elseif string_find(catNameLower, "lower") or string_find(catNameLower, "lkh") then
+                -- Lower Karazhan Halls - match any number except "40"
+                if digitSuffix ~= "40" then
+                  validAfter = true
+                end
+              end
+            else
+              -- For all other tags, allow any 1-2 digit suffix
+              validAfter = true
+            end
+          end
+        elseif charAfter == "x" then
+          matchKind = "numeric suffix"
+          -- Support shorthand like "bmx2" or "mcx3" where the tag is followed by
+          -- a run-count marker instead of a direct size suffix.
+          local digitPos = afterPos + 1
+          local digit1 = ""
+          local digit2 = ""
+          local charAfterDigits = ""
+          
+          if digitPos <= msgLen then
+            digit1 = string_sub(lowerMsg, digitPos, digitPos)
+          end
+          
+          if string_find(digit1, "%d") then
+            digitPos = digitPos + 1
+            
+            if digitPos <= msgLen then
+              local nextChar = string_sub(lowerMsg, digitPos, digitPos)
+              if string_find(nextChar, "%d") then
+                digit2 = nextChar
+                digitPos = digitPos + 1
+              end
+            end
+            
+            if digitPos <= msgLen then
+              charAfterDigits = string_sub(lowerMsg, digitPos, digitPos)
+            end
+            
+            if digitPos > msgLen or not string_find(charAfterDigits, "[%w]") then
+              validAfter = true
+            end
+          end
+        end
+
+        if validBefore and validAfter then
+          -- Check tag exclusions for false positives (uses DBB2.env.IsTagExcluded)
+          local excluded, exclusionReason = DBB2.env.IsTagExcluded(lowerTag, lowerMsg, foundPos, tagLen, category)
+          if not excluded then
+            if evidence then table_insert(evidence.tags, { tag = category.tags[i], kind = matchKind }) end
+            if not evidence then return true end
+            matched = true
+          elseif evidence then
+            table_insert(evidence.rejected, { tag = category.tags[i], kind = exclusionReason == "hyperlink" and "excluded hyperlink match" or "rejected by tag-exclusion rule" })
+          end
+        end
+
+        -- Continue searching from next position
+        startPos = foundPos + 1
+      end
+    end  -- end else (plain text matching)
+  end
+  if matched and excluded then
+    for _, item in ipairs(exclusionEvidence) do
+      table_insert(evidence.rejected, {
+        tag = item.tag,
+        kind = item.kind == "filter-tag wildcard" and "category blacklist wildcard" or "category blacklist tag"
+      })
+    end
+    evidence.blacklistRejected = true
+    return false
+  end
+  return matched
+end
+
+-- Returns all match evidence for one category without changing normal matching.
+-- This is intentionally used only by diagnostics: regular category scans still
+-- stop at the first valid tag for performance.
+function DBB2.api.GetCategoryMatchEvidence(message, category, ignoreSelected, categoryType, ignoreFilterTags)
+  local evidence = { tags = {}, rejected = {}, filterTags = {} }
+  local matched = DBB2.api.MatchMessageToCategory(message, category, ignoreSelected, categoryType, ignoreFilterTags, evidence)
+  evidence.matched = matched
+  return evidence
+end
+
+-- Diagnostic-only complete scan. Unlike CategorizeMessage, this retains a
+-- category that did not match when one of its tags was explicitly rejected.
+function DBB2.api.GetMessageCategoryEvidence(message, ignoreSelected, ignoreFilterTags)
+  local result = { groups = {}, professions = {}, hardcore = {} }
+  if not DBB2_Config.categories then return result end
+
+  local function Scan(categoryType)
+    for _, category in ipairs(DBB2_Config.categories[categoryType] or {}) do
+      local evidence = DBB2.api.GetCategoryMatchEvidence(message, category, ignoreSelected, categoryType, ignoreFilterTags)
+      if evidence.matched or evidence.filterRejected or evidence.rejected[1] then
+        table_insert(result[categoryType], { name = category.name, evidence = evidence })
+      end
+    end
+  end
+
+  Scan("groups")
+  Scan("professions")
+  Scan("hardcore")
+  return result
+end
+
+-- Resolves a shared abbreviation when another matched category has all of the
+-- same evidence plus a more specific tag. Example: "DM ... Deadmines" matches
+-- the shared "dm" tag for both Dire Maul and The Deadmines, but the explicit
+-- "deadmines" tag makes The Deadmines the unambiguous result. Distinct evidence
+-- on both sides is preserved for genuine multi-category messages.
+local function ResolveCategoryOverlaps(message, categoryType, matchedNames, ignoreSelected, ignoreFilterTags)
+  if not matchedNames or not matchedNames[2] then return matchedNames end
+
+  local matchedLookup = {}
+  for _, name in ipairs(matchedNames) do matchedLookup[name] = true end
+
+  local evidenceByName = {}
+  for _, category in ipairs(DBB2_Config.categories[categoryType] or {}) do
+    if matchedLookup[category.name] then
+      local evidence = DBB2.api.GetCategoryMatchEvidence(message, category, ignoreSelected, categoryType, ignoreFilterTags)
+      local tagSet = {}
+      local longestTag = 0
+      for _, item in ipairs(evidence.tags or {}) do
+        local tag = string_lower(item.tag or "")
+        tagSet[tag] = true
+        if string_len(tag) > longestTag then longestTag = string_len(tag) end
+      end
+      evidenceByName[category.name] = { tags = tagSet, longestTag = longestTag }
+    end
+  end
+
+  local resolved = {}
+  for _, name in ipairs(matchedNames) do
+    local current = evidenceByName[name]
+    local overshadowed = false
+    if current and current.longestTag > 0 then
+      for _, otherName in ipairs(matchedNames) do
+        local other = evidenceByName[otherName]
+        if otherName ~= name and other and other.longestTag > current.longestTag then
+          local allEvidenceShared = true
+          for tag, _ in pairs(current.tags) do
+            if not other.tags[tag] then allEvidenceShared = false break end
+          end
+          if allEvidenceShared then overshadowed = true break end
+        end
+      end
+    end
+    if not overshadowed then table_insert(resolved, name) end
+  end
+  return resolved
+end
+
+
+-- [ CategorizeMessage ]
+-- Determines which categories a message belongs to across all category types.
+-- Checks groups, professions, and hardcore categories.
+--
+-- @param message          [string]  The message text to categorize
+-- @param ignoreSelected   [boolean] If true, match against all categories regardless of enabled state
+-- @param ignoreFilterTags [boolean] If true, skip group/profession filter tag checks
+-- @return               [table]   Result table with structure:
+--                                 {
+--                                   groups = {string...},      -- Array of matched group category names
+--                                   professions = {string...}, -- Array of matched profession category names
+--                                   hardcore = {string...},    -- Array of matched hardcore category names
+--                                   isHardcore = boolean       -- true if any hardcore category matched
+--                                 }
+-- NOTE: results are memoized and SHARED between callers. Treat the returned
+-- table as read-only (all callers in the addon only read it).
+local CategorizeMessageUncached
+
+function DBB2.api.CategorizeMessage(message, ignoreSelected, ignoreFilterTags, matchEvidence)
+  if matchEvidence or not message or not DBB2_Config.categories then
+    return CategorizeMessageUncached(message, ignoreSelected, ignoreFilterTags, matchEvidence)
+  end
+  CheckCacheRefs()
+  local flags = (ignoreSelected and 2 or 0) + (ignoreFilterTags and 1 or 0)
+  local bucket = catCache[flags]
+  if not bucket then
+    bucket = {}
+    catCache[flags] = bucket
+  end
+  local result = bucket[message]
+  if result then return result end
+  result = CategorizeMessageUncached(message, ignoreSelected, ignoreFilterTags)
+  if catCacheSize >= CAT_CACHE_MAX then
+    ResetCategorizeCache()
+    bucket = {}
+    catCache[flags] = bucket
+  end
+  bucket[message] = result
+  catCacheSize = catCacheSize + 1
+  return result
+end
+
+CategorizeMessageUncached = function(message, ignoreSelected, ignoreFilterTags, matchEvidence)
+  -- Create fresh result table each call (safer than pooling)
+  local result = {
+    groups = {},
+    professions = {},
+    hardcore = {},
+    isHardcore = false
+  }
+  
+  if not message then return result end
+  if not DBB2_Config.categories then return result end
+  
+  -- Check groups (pass categoryType for filter tag checking)
+  for _, cat in ipairs(DBB2_Config.categories.groups or {}) do
+    if DBB2.api.MatchMessageToCategory(message, cat, ignoreSelected, "groups", ignoreFilterTags) then
+      table_insert(result.groups, cat.name)
+      if matchEvidence then matchEvidence.groups = matchEvidence.groups or {}; matchEvidence.groups[cat.name] = DBB2.api.GetCategoryMatchEvidence(message, cat, ignoreSelected, "groups", ignoreFilterTags) end
+    end
+  end
+  
+  -- Check professions (pass categoryType for filter tag checking)
+  for _, cat in ipairs(DBB2_Config.categories.professions or {}) do
+    if DBB2.api.MatchMessageToCategory(message, cat, ignoreSelected, "professions", ignoreFilterTags) then
+      table_insert(result.professions, cat.name)
+      if matchEvidence then matchEvidence.professions = matchEvidence.professions or {}; matchEvidence.professions[cat.name] = DBB2.api.GetCategoryMatchEvidence(message, cat, ignoreSelected, "professions", ignoreFilterTags) end
+    end
+  end
+  
+  -- Check hardcore (no filter tags for hardcore)
+  for _, cat in ipairs(DBB2_Config.categories.hardcore or {}) do
+    if DBB2.api.MatchMessageToCategory(message, cat, ignoreSelected, "hardcore", ignoreFilterTags) then
+      table_insert(result.hardcore, cat.name)
+      if matchEvidence then matchEvidence.hardcore = matchEvidence.hardcore or {}; matchEvidence.hardcore[cat.name] = DBB2.api.GetCategoryMatchEvidence(message, cat, ignoreSelected, "hardcore", ignoreFilterTags) end
+      result.isHardcore = true
+    end
+  end
+
+  result.groups = ResolveCategoryOverlaps(message, "groups", result.groups, ignoreSelected, ignoreFilterTags)
+  result.professions = ResolveCategoryOverlaps(message, "professions", result.professions, ignoreSelected, ignoreFilterTags)
+  result.hardcore = ResolveCategoryOverlaps(message, "hardcore", result.hardcore, ignoreSelected, ignoreFilterTags)
+  result.isHardcore = table_getn(result.hardcore) > 0
+  
+  return result
+end
+
+-- [ GetCategorizedMessages ]
+-- Returns all messages organized by category for a given type.
+-- Only includes messages for selected (enabled) categories.
+-- Applies duplicate filtering per category (same sender + message within spam window).
+-- Hardcore messages are excluded from groups/professions tabs and vice versa.
+--
+-- @param categoryType  [string] Category type: "groups", "professions", or "hardcore"
+-- @return              [table]  Table mapping category names to message arrays:
+--                               { ["Molten Core"] = {msg1, msg2, ...}, ["BWL"] = {...}, ... }
+--                               Each message has: sender, message, time, channel, etc.
+function DBB2.api.GetCategorizedMessages(categoryType)
+  local categorized = {}
+  
+  if not categoryType then return categorized end
+  
+  local categories = DBB2.api.GetCategories(categoryType)
+  local spamSeconds = DBB2_Config.spamFilterSeconds or 150
+  
+  -- Initialize empty arrays for each selected category
+  for _, cat in ipairs(categories) do
+    if cat.selected then
+      categorized[cat.name] = {}
+    end
+  end
+  
+  -- Guard against nil messages table
+  if not DBB2.messages then return categorized end
+  
+  -- Helper to check if message is duplicate within a category's message list
+  local function isDuplicateInCategory(catMessages, msg)
+    local duplicateMode = DBB2_Config.duplicateFilterMode
+    if duplicateMode == nil then duplicateMode = 1 end
+    if duplicateMode == 0 or duplicateMode == false then return false end
+    if spamSeconds <= 0 then return false end
+    
+    local lowerMsg, lowerSender = DBB2.api.GetMessageKeys(msg)
+    local msgTime = msg.time or 0
+    
+    for _, existing in ipairs(catMessages) do
+      local timeDiff = math_abs(msgTime - (existing.time or 0))
+      if timeDiff <= spamSeconds then
+        local existingMsg, existingSender = DBB2.api.GetMessageKeys(existing)
+        if existingSender == lowerSender and existingMsg == lowerMsg then
+          return true
+        end
+      end
+    end
+    return false
+  end
+  
+  -- Categorize each message
+  for _, msg in ipairs(DBB2.messages) do
+    -- Unsorted entries remain Logs-only even if category tags are edited later.
+    if not msg.isUnsorted then
+      local msgCategories = DBB2.api.CategorizeMessage(msg.message)
+    
+      if categoryType == "hardcore" then
+        -- Only show hardcore messages in hardcore tab
+        for _, catName in ipairs(msgCategories.hardcore) do
+          if categorized[catName] then
+            if not isDuplicateInCategory(categorized[catName], msg) then
+              table_insert(categorized[catName], msg)
+            end
+          end
+        end
+      else
+        -- Skip hardcore messages in other tabs
+        if not msgCategories.isHardcore then
+          local matchedCats = msgCategories[categoryType] or {}
+          for _, catName in ipairs(matchedCats) do
+            if categorized[catName] then
+              if not isDuplicateInCategory(categorized[catName], msg) then
+                table_insert(categorized[catName], msg)
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  
+  return categorized
+end

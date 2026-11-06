@@ -1,0 +1,9 @@
+{
+  "id": "57",
+  "tag": "Aa",
+  "name": "V1.1",
+  "body": "V1.1\r\n\r\n🐛 Bug fixes\r\n\r\nQuest category achievements now update from `/played`\r\n\r\nNon-combat pet achievements now detect Turtle/Octo companions\r\n\r\nMount achievements now detect Turtle/Octo mounts\r\n\r\n✨ New features\r\n\r\nMovable / hideable minimap button (`Minimap.lua`)\r\n- Left-click opens the achievements panel, right-click hides the button.\r\n- Drag to rotate around the minimap ring; Shift+drag to free-place the button anywhere on screen.\r\n- Tooltip shows current point total and control hints.\r\n\r\nMiniMapButtonBag / MBB compatibility\r\n\r\nMBB and MinimapButtonBag scanning\r\n\r\nNew slash commands\r\n- `/rach minimap` — toggle the minimap button\r\n- `/rach minimap show | hide | reset` — direct control / restore default position\r\n- `/rach played` — sync quest count from `/played`",
+  "published": "2026-07-23T12:05:51Z",
+  "prerelease": false,
+  "url": "https://octowow.st/git/Relationship/RelationshipsAchievements/releases/tag/Aa"
+}

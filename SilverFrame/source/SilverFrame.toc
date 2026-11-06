@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: SilverFrame
+## Notes: Adds the Silver Dragon frame to the PlayerFrame.
+## Author: jKalfis
+## Version: 1.0.0
+
+Core.lua

@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Otari98/MasterLootByClass",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Otari98",
+    "repo": "MasterLootByClass",
+    "name": "MasterLootByClass",
+    "url": "https://github.com/Otari98/MasterLootByClass",
+    "api": "https://api.github.com/repos/Otari98/MasterLootByClass"
+  },
+  "commit": "3981dbf0f3c108f7ed7d6c4b58a05585cfb90105",
+  "sourceFiles": {
+    "MasterLootByClass.lua": {
+      "sha256": "027e7ba1eb20325d6aaaf7990fe2789d54ec4f2af44dd38df73b362233d3431b",
+      "bytes": 10670
+    },
+    "MasterLootByClass.toc": {
+      "sha256": "8a9f96b0756c937a21feab8c9d419d8f633dad9c72aa7f22a53694a6090e199b",
+      "bytes": 186
+    },
+    "README.md": {
+      "sha256": "985a320d74f8e85a697d13cc074dd02dd488c276c90f64b0e7c7e5e5d82c1d03",
+      "bytes": 269
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

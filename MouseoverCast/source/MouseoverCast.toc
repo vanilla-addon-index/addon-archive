@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: MouseoverCast
+## Notes: Macro-free healing, offensive casting and pet attack mouseover support for Vanilla 1.12 with SuperWoW + ClassicAPI.
+## Author: Wurmschwanz
+## Version: 1.0.15-beta5
+## SavedVariables: MouseoverCastDB
+
+MouseoverCast.lua

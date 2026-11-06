@@ -1,0 +1,9 @@
+{
+  "id": "305737757",
+  "tag": "Release2.8",
+  "name": "Version 2.8",
+  "body": "New Features\n\n- Updated the addon to Version 2.8.\n\nImprovements\n\n- Fixed profession name clipping in compact mode for longer labels like Leatherworking.\n- Widened the compact layout and constrained row text so labels no longer collide with skill values.\n\nHow to Use\n\nReplace your existing ProfessionLevels addon folder with the files from the attached zip, then reload the UI in game.",
+  "published": "2026-04-06T16:51:06Z",
+  "prerelease": false,
+  "url": "https://github.com/gregdeichler/ProfessionLevels/releases/tag/Release2.8"
+}

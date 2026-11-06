@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: ShardCapPlus
+## Notes: www.github.com/akzkak/ShardCapPlus | Never carry too many shards. Type /shardcapplus
+## Author: The Johnnest of them all, Modified by Paduk
+## SavedVariablesPerCharacter: SHARDCAPPLUS_CAP_VALUE, SHARDCAPPLUS_SPAM
+ShardCapPlus.lua

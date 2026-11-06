@@ -1,0 +1,7 @@
+## Interface: 11200
+## Version: 4.43
+## Title: CastTimer
+## Notes: Scrolls battle information around the character model.
+
+CastTimer.lua
+CastTimer.xml

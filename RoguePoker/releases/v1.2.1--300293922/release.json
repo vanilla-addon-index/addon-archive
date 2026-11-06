@@ -1,0 +1,9 @@
+{
+  "id": "300293922",
+  "tag": "v1.2.1",
+  "name": "Floating cp builder bar",
+  "body": "**v1.2.1**\r\n\r\n- **Feature:** Added Floating builder bar — This allows for the cp builder to be selected and changed on the fly without needed to re-open the configuration.\r\n- **Feature:** Reactive item use — automatically uses a bag item when a specific debuff texture is detected on the player. Fires every time the debuff is present and the item is off cooldown. Hourglass Sand is pre-configured to respond to the Bronze Dragon debuff (`INV_Misc_Head_Dragon_Bronze`). Additional item/debuff pairs can be added to `RoguePoker.reactiveItems`.",
+  "published": "2026-03-23T16:16:26Z",
+  "prerelease": false,
+  "url": "https://github.com/Pokerbhind/RoguePoker/releases/tag/v1.2.1"
+}

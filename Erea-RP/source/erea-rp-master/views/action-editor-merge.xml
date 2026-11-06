@@ -1,0 +1,80 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+  <!-- ======================================================================
+       action-editor-merge.xml - Merge Cinematic Editor Template
+       ======================================================================
+       PURPOSE: Virtual template for the Merge Cinematic method editor
+       PARAMETERS: mergeGroup (merge_group_dropdown)
+       USAGE: CreateFrame("Frame", name, parent, "EreaRpMasterMergeEditorTemplate")
+       NOTE: Cinematic UI (speaker, dialogue, sides) is created dynamically
+             by EreaRpMasterCinematicComponent. Dropdowns are created in Lua.
+       ====================================================================== -->
+
+  <Frame name="EreaRpMasterMergeEditorTemplate" virtual="true">
+    <Size>
+      <AbsDimension x="360" y="550"/>
+    </Size>
+    <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+              edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+      <EdgeSize><AbsValue val="10"/></EdgeSize>
+      <TileSize><AbsValue val="16"/></TileSize>
+      <BackgroundInsets><AbsInset left="3" right="3" top="3" bottom="3"/></BackgroundInsets>
+    </Backdrop>
+    <Scripts>
+      <OnLoad>
+        this:SetBackdropColor(0.1, 0.1, 0.1, 0.8)
+        this:SetBackdropBorderColor(0.35, 0.35, 0.45, 1)
+      </OnLoad>
+    </Scripts>
+    <Layers>
+      <Layer level="OVERLAY">
+        <FontString name="$parentTitle" inherits="GameFontNormal">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="5" y="-5"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parentGroupLabel" inherits="GameFontNormalSmall">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="10" y="-30"/></Offset>
+            </Anchor>
+          </Anchors>
+          <Text>Merge Group:</Text>
+        </FontString>
+        <FontString name="$parentIdLabel" inherits="GameFontNormalSmall">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="20" y="-80"/></Offset>
+            </Anchor>
+          </Anchors>
+          <Text>Group ID:</Text>
+        </FontString>
+        <!-- Amount and Description labels are positioned dynamically in Lua
+             since they follow the cinematic component which has variable height -->
+      </Layer>
+    </Layers>
+    <Frames>
+      <!-- Group selection dropdown created in Lua -->
+      <EditBox name="$parentIdEdit" inherits="InputBoxTemplate" autoFocus="false">
+        <Size>
+          <AbsDimension x="320" y="25"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="20" y="-98"/></Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnEscapePressed>
+            this:ClearFocus()
+          </OnEscapePressed>
+        </Scripts>
+      </EditBox>
+      <!-- Cinematic component, amount, description, and save button
+           are all created dynamically in Lua -->
+    </Frames>
+  </Frame>
+
+</Ui>

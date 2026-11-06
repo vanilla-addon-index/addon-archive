@@ -1,0 +1,165 @@
+{
+  "upstream": "https://github.com/vaaslite/TurtleRoleplayingHelper",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "vaaslite",
+    "repo": "TurtleRoleplayingHelper",
+    "name": "TurtleRoleplayingHelper",
+    "url": "https://github.com/vaaslite/TurtleRoleplayingHelper",
+    "api": "https://api.github.com/repos/vaaslite/TurtleRoleplayingHelper"
+  },
+  "commit": "07ae5a6de1a0426c2efb085cd45044f910e4067f",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "e7b00b1aee8efac3c631960c5fab9e4be8508982cee00fd933daf023d73bce8d",
+      "bytes": 196
+    },
+    "credit.txt": {
+      "sha256": "9783b50a67c0db596313e8d82225b77bed2788c6a0fed9d348129aaf204a90d9",
+      "bytes": 6356
+    },
+    "Customization (Cut n Paste).txt": {
+      "sha256": "120604f70de39a6223c953f5bf6230c4456497d9e91b3e9fad8f2e136ef770eb",
+      "bytes": 607
+    },
+    "English/ANY.lua": {
+      "sha256": "27a21063a9fccb7138af97ebc0c2bd8e676d8ebe2d4a8c7b17b2392bbf9bb3b2",
+      "bytes": 22602
+    },
+    "English/DRUID.lua": {
+      "sha256": "cfcf3ffa1ca6449fa7ff493e1575b218f579a8bdcff35ca4bb335f28b687b078",
+      "bytes": 23705
+    },
+    "English/DWARF.lua": {
+      "sha256": "3a11fb9d0ba0589f658809fc918f39b4440d1a3681b5a7f8e44a0c37856af051",
+      "bytes": 12920
+    },
+    "English/GNOME.lua": {
+      "sha256": "4e659b8e804b251a824d46acc01c1b3987709ac8e601e8eacf14181f18a4c7f0",
+      "bytes": 12590
+    },
+    "English/GOBLIN.lua": {
+      "sha256": "710d9827f430b1f40d02a705e106d5e4cdecd63bce9dbf07c28d65664a94ea40",
+      "bytes": 12592
+    },
+    "English/HIGHELF.lua": {
+      "sha256": "9cfbe071b71654879e92aa96cee280fc54d026227462e688d4f0ef5bac81f7ef",
+      "bytes": 12852
+    },
+    "English/HUMAN.lua": {
+      "sha256": "a489147faadc572546f099d232336a2a9b4e46226f3ffab122921855f5953bf6",
+      "bytes": 12106
+    },
+    "English/HUNTER.lua": {
+      "sha256": "f4389ad7a47ff860974f9e69a9e37453b87b6c3e4b7ef0d9c71ad44460e630ba",
+      "bytes": 19533
+    },
+    "English/MAGE.lua": {
+      "sha256": "c2b4d4e196ee981e8e6a759796279f7c4a9e90eb83312d5d8fb80e1c9aad69d4",
+      "bytes": 22989
+    },
+    "English/NIGHTELF.lua": {
+      "sha256": "9bbe3b781ac38633eff993cf19298b763ec7d6e1b29e3c0ac38ee6b1b43f95a3",
+      "bytes": 13078
+    },
+    "English/ORC.lua": {
+      "sha256": "14b3d0b326d732a20bead744853ef14920a63457f32be8cffb67ef3afa68e2a4",
+      "bytes": 17147
+    },
+    "English/PALADIN.lua": {
+      "sha256": "3a1085c1b02804364f6ba85d7cf0668ef557556048e5c64d83067ded73a55c84",
+      "bytes": 25517
+    },
+    "English/PRIEST.lua": {
+      "sha256": "fc89ac09ad623a1f2b5d7527229111a17c60549803b8ebfe8d1b1fed748dbbda",
+      "bytes": 18026
+    },
+    "English/REmote.lua": {
+      "sha256": "30e2e42c7e201c83f89d1d8b3583361f3a5bc543edcf9ac21d2804f6e2a07e78",
+      "bytes": 2909
+    },
+    "English/RInsult.lua": {
+      "sha256": "66f6fd5872228755edd168ba278e640bd19936c5bb5148a73a4f713488205428",
+      "bytes": 10180
+    },
+    "English/ROGUE.lua": {
+      "sha256": "d5136b621bf1fd453d9e01d9cfbbcfa924847753446759fbec4d379620bbe14a",
+      "bytes": 20219
+    },
+    "English/SHAMAN.lua": {
+      "sha256": "cf79a7ee4a48d17702407b88cf1d4c1f64a015604ce1f8f1a118cafb7c83b014",
+      "bytes": 21258
+    },
+    "English/TAUREN.lua": {
+      "sha256": "cf7a9f1c75d57b4951c007d5bc30525defe8643a716d35c0dea7e128bdd3c604",
+      "bytes": 14918
+    },
+    "English/TROLL.lua": {
+      "sha256": "b88136aef966fa7fe3e4bb9a2d89bc117828e9ff4298ff5e96565dccca978a5e",
+      "bytes": 14265
+    },
+    "English/UNDEAD.lua": {
+      "sha256": "9af6e72c8f4dfcaf368935037124b73e5450820e025c0fcd0abe2de35374a492",
+      "bytes": 18186
+    },
+    "English/WARLOCK.lua": {
+      "sha256": "207aea953ea3c2503da24f9fdbf009b1e2da8f45568362841429329447a32a81",
+      "bytes": 31464
+    },
+    "English/WARRIOR.lua": {
+      "sha256": "e0e7e834190c7454bfa8874d80f2bc2bddd0fa150079177c42d99d81ad0fc263",
+      "bytes": 25913
+    },
+    "How to Customize.txt": {
+      "sha256": "350508aeb824175f5332c4d14ee8a020c7faa7a9311fb4a2e46abe28f7290200",
+      "bytes": 8559
+    },
+    "localization.lua": {
+      "sha256": "c401463565bb364e512da807faffc2cff034ce19776cc68bf2ba31f9d02e2788",
+      "bytes": 42090
+    },
+    "README.md": {
+      "sha256": "90a6a9abad85a0812c82e0e3c6bfacd037c0e591b307e79de6213867d32a6df9",
+      "bytes": 1727
+    },
+    "RoleplayingHelper_Emotes.lua": {
+      "sha256": "4d87ddc1fc10ba21c3204fb6d82f20326c190fa35734dfb435a0f9d62b683cf4",
+      "bytes": 36891
+    },
+    "RoleplayingHelper_Menu.lua": {
+      "sha256": "3a0cb8b4bb0f38b87cf2ec03c1e04741f22121a71847d5acb1fb5c03e97c0c7d",
+      "bytes": 36498
+    },
+    "RoleplayingHelper_Other.lua": {
+      "sha256": "dbbe5bf8214e1d8925a53baf292d3af1ce8bff4a445ddeaf72ef2cc6cbebeca5",
+      "bytes": 4260
+    },
+    "RoleplayingHelper_ReplaceKeywords.lua": {
+      "sha256": "0ec97fc9692ba421aa84d0197d7f1003b5d0a39d0912bbdcb34873c0dbd7bc76",
+      "bytes": 15074
+    },
+    "RoleplayingHelper_SlashCommands.lua": {
+      "sha256": "0aae25c9dcd7d6ab274bc0ddf503780716399252e6e258cd4dd1a27739ece344",
+      "bytes": 17623
+    },
+    "RoleplayingHelper.lua": {
+      "sha256": "e90d4c957eaaf802d08b6340743a8d7ae0ed03eb793c1350f06e97c7495c27d9",
+      "bytes": 77778
+    },
+    "RoleplayingHelper.toc": {
+      "sha256": "f18e7f808c71d88991b83c7be64d2b9a087baa06a5ee84a843baf2862d9b2a14",
+      "bytes": 197
+    },
+    "RoleplayingHelper.xml": {
+      "sha256": "f9031cbbb2ab37436ea54800788ae27f0312c28ef3b49092775a6152203a0a8e",
+      "bytes": 80078
+    },
+    "Version.txt": {
+      "sha256": "3989b5ca75baf9271b676088282862bdded4a663043ebbe93b7aa16865952244",
+      "bytes": 18722
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

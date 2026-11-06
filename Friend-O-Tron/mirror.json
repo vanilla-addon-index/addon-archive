@@ -1,0 +1,93 @@
+{
+  "upstream": "https://github.com/refaim/Friend-O-Tron",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "refaim",
+    "repo": "Friend-O-Tron",
+    "name": "Friend-O-Tron",
+    "url": "https://github.com/refaim/Friend-O-Tron",
+    "api": "https://api.github.com/repos/refaim/Friend-O-Tron"
+  },
+  "commit": "70b9e118d59bb25224b3b386e2e03c7665d07089",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "b770cd4335babdb56d1cc82e2c988e673b3b29c8757e3dea982586861c6fb7c6",
+      "bytes": 8
+    },
+    "CLAUDE.md": {
+      "sha256": "26e4eb9020884525515f2d8f10c8e572bea8aeb30f94629f2fb56c8b29b6f0a0",
+      "bytes": 5318
+    },
+    "Friend-O-Tron.toc": {
+      "sha256": "c3388aac6458f8bd3ca93808bd2245f8599036ae0192b3928c53929c6389f957",
+      "bytes": 1569
+    },
+    "LICENSE": {
+      "sha256": "c0dc3dc30fad19c10f1202195dc27f5e0f90c0cf518f84e4ac413b901c7d8fc9",
+      "bytes": 1073
+    },
+    "README.md": {
+      "sha256": "c9dae986d0d4fff7a21000ecd7d9fc8857513b4987a3a91133df6ea769cb1e49",
+      "bytes": 1979
+    },
+    "src/Addon.lua": {
+      "sha256": "b65270ec3aa084bb32980b5290a31af378f3debde7676cb32b1d002d64c05242",
+      "bytes": 4877
+    },
+    "src/Database.lua": {
+      "sha256": "d36ed018c1709e14356f362ee4336c68be9fc2fbaa6bd695105a1ee035a103c7",
+      "bytes": 4402
+    },
+    "src/Environment.lua": {
+      "sha256": "4468cd797d4e4799d6f44d4e3a28fce8ba3f389936566a3f5722e2788369340e",
+      "bytes": 1785
+    },
+    "src/LibFriendship.lua": {
+      "sha256": "f71acdf4bc40145cb66e3c8f7ac19646915aa0312d617a1e34e332268fef662c",
+      "bytes": 9114
+    },
+    "src/locale/deDE.lua": {
+      "sha256": "72de7f2548df965a2a500863c14713d429d69041c2e0fe7d22ab57dd0d4cb486",
+      "bytes": 3054
+    },
+    "src/locale/enUS.lua": {
+      "sha256": "2d9d6831f0fbb4bf5d6108e5e6ff42aa4009d7fdb05fbc5bb2ec9242ab34a59e",
+      "bytes": 3964
+    },
+    "src/locale/esES.lua": {
+      "sha256": "ffec24372fe3139285d9af7b5582345d60070f926bef420f1eb17349d491396d",
+      "bytes": 3176
+    },
+    "src/locale/frFR.lua": {
+      "sha256": "d78cd0927de6c63265c85d8d1ef8b68b1da98836ba03b70f34e5e87a4a4c0409",
+      "bytes": 3188
+    },
+    "src/locale/koKR.lua": {
+      "sha256": "759177553f5335cd505ec7829d6fbe29c62f5ebbb6140d29b46da8957b9b0b87",
+      "bytes": 3121
+    },
+    "src/locale/ptBR.lua": {
+      "sha256": "1da277bcc6279997f6fca9e5a046d1901be189b5a2e6a6edd5f3d6baeead9977",
+      "bytes": 3107
+    },
+    "src/locale/ruRU.lua": {
+      "sha256": "01d10d593bc04eec20d09ff9d2fcacbf33320314e0575f0a0dd69146e39caebf",
+      "bytes": 4574
+    },
+    "src/locale/zhCN.lua": {
+      "sha256": "7c7c737cb899b0599236fbb7dd38174d49a5e89546cb100594de9dcb245a5e8a",
+      "bytes": 2705
+    },
+    "src/locale/zhTW.lua": {
+      "sha256": "334ce3ab78aea8ec6afa19d0718ba3c58bf2bd9296bb6e6eb9be7a0b3f40a64f",
+      "bytes": 2705
+    },
+    "src/Selector.lua": {
+      "sha256": "c3715ec6d59f883534fcf3a17ba88ce737c9132a3a53e021c94530adcb6d2f7d",
+      "bytes": 2096
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

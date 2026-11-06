@@ -4,6 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| AutoMessage | https://github.com/0ldi/AutoMessage | new |
+| AutoMessage | https://github.com/0ldi/AutoMessage | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

@@ -1,0 +1,113 @@
+{
+  "upstream": "https://gitlab.com/Artur91425/Caterer",
+  "source": {
+    "kind": "repository",
+    "host": "gitlab.com",
+    "owner": "Artur91425",
+    "repo": "Caterer",
+    "name": "Caterer",
+    "url": "https://gitlab.com/Artur91425/Caterer",
+    "api": "https://gitlab.com/api/v4/projects/Artur91425%2FCaterer"
+  },
+  "commit": "6880f21fd8c94830de87a8ae877cd9f8dd2ca35e",
+  "sourceFiles": {
+    "Caterer.toc": {
+      "sha256": "6be71410c97f5ca8252cffd8685f0f6a2e6089bdda86a9e4a27ab9b132e6673b",
+      "bytes": 627
+    },
+    "compatibility/luaAPI.lua": {
+      "sha256": "0d6b5ef0232b07135618960ade4fb54ead41721a52c549582b1b50ef86aa1277",
+      "bytes": 3981
+    },
+    "compatibility/wowAPI.lua": {
+      "sha256": "c22fe3f93d94c9d6f0906532857c837e92ecdedb7ff4951f0d37c5b53d543b12",
+      "bytes": 2187
+    },
+    "core.lua": {
+      "sha256": "b8d35fa3555ab19c0da94c5242bafd50f6edb74ccc6110ebe457d182a37945fe",
+      "bytes": 13438
+    },
+    "embeds.xml": {
+      "sha256": "e16cec1acc5c36a5ddda623515a8ed6f3546cb441106e92b21b9132f60e10a87",
+      "bytes": 584
+    },
+    "Libs/AceLocale-3.0/AceLocale-3.0.lua": {
+      "sha256": "46d305fbdc569d63a60fe249878798c07173c10a753a4b109edfadfba1ae9a7b",
+      "bytes": 5637
+    },
+    "Libs/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "422f62e4658bd12eeefd8234240982471ee4931cd74ef0cc43f859744fa4361b",
+      "bytes": 8201
+    },
+    "Libs/LibBabble-Class-3.0/lib.xml": {
+      "sha256": "729eb04d232b1bd5e8130e75ebc508ee4fe8477adeac05b9ba566d6edaffe967",
+      "bytes": 261
+    },
+    "Libs/LibBabble-Class-3.0/LibBabble-3.0.lua": {
+      "sha256": "baae04b82b129ec13f53f6f695b3cbe95554cb82ea63468ad23405c8fa7b0e3a",
+      "bytes": 7939
+    },
+    "Libs/LibBabble-Class-3.0/LibBabble-Class-3.0.lua": {
+      "sha256": "54e4a82d70bfa230daa05bb7df8069d53359175808946561ba2574cd85caa4d5",
+      "bytes": 5393
+    },
+    "Libs/LibDataBroker-1.1/LibDataBroker-1.1.lua": {
+      "sha256": "f3d4758f2060215492c9764b1d7dc2a336826d4cd253cd54ff9ff7c6d78f04e2",
+      "bytes": 3139
+    },
+    "Libs/LibDBIcon-1.0/LibDBIcon-1.0.lua": {
+      "sha256": "a1cec6e26622dcdd5274abaccb602c26fd862bb562844565e409104c7e6695c8",
+      "bytes": 10866
+    },
+    "Libs/LibQTip-1.0/LibQTip-1.0.lua": {
+      "sha256": "e0970c47ef86e7b34186e7874c181ec1b8065f51a6b117b6ed049be35165cd4a",
+      "bytes": 42877
+    },
+    "Libs/LibStub/LibStub.lua": {
+      "sha256": "7c844505c9ec3c82d069fe73046877b3c10e7fd026f0b654d4015032805088e5",
+      "bytes": 2243
+    },
+    "LICENSE": {
+      "sha256": "80093bdce3500803b58fe37add7011ef5d0edc66bbeecc8ccf3679a0d126b57f",
+      "bytes": 1083
+    },
+    "Locale/enUS.lua": {
+      "sha256": "73332f7b519f9ccf7b2ce2a0ee6d0ccb07e451a96431653c580e0ff495d60978",
+      "bytes": 2062
+    },
+    "Locale/ruRU.lua": {
+      "sha256": "084839dfa54282dd511f4b0edecfee436a0372ee45b12e7ad1c71a852380dbd5",
+      "bytes": 4265
+    },
+    "Options.lua": {
+      "sha256": "a0050318977d1d38509b9fb1f9f1d16172f715fe35c87b8da38c40103717b7b1",
+      "bytes": 37061
+    },
+    "README.md": {
+      "sha256": "47867d949b74a9dcc1149ea381f8c5bbd51772445df9005bcd26a1dc91524bcc",
+      "bytes": 3245
+    },
+    "template.xml": {
+      "sha256": "834e7503ca574b6f951b15490885de683c19fc242ba2fbaaa88e15d3819a537c",
+      "bytes": 3834
+    },
+    "textures/ReadyCheck-NotReady.blp": {
+      "sha256": "cdfc33f6e9dd11c1f9dd587ef0f5005bf27e6d9e85b618c2ec495e51206d38d0",
+      "bytes": 6660
+    },
+    "textures/UI-OptionsFrame-ActiveTab.blp": {
+      "sha256": "f49c9939013cb5318c68e6ff53d773962feaddd4f98202aff09a0e5049aee2b9",
+      "bytes": 6676
+    },
+    "textures/UI-OptionsFrame-InactiveTab.blp": {
+      "sha256": "9ff6cdd92d9b222aecbb1ebd70be8e22f4893d471965a0cc476e7f487af0f5be",
+      "bytes": 6676
+    },
+    "textures/UI-OptionsFrame-Spacer.blp": {
+      "sha256": "573a57e2150e25acfa19cb40b43de641bf08b24526add3d4e749aef4ad9fc96c",
+      "bytes": 1540
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,20 @@
+## Interface: 11200
+## Title: ModernFocusFrame
+## Notes: Vanilla FocusFrame - Requires SuperWoW.
+## Author: Abstractz
+## Version: 1.0
+## SavedVariables: ModernFocusFrameDB
+
+libs\AceLibrary\AceLibrary.lua
+libs\AceOO-2.0\AceOO-2.0.lua
+libs\AceAddon-2.0\AceAddon-2.0.lua
+libs\AceDB-2.0\AceDB-2.0.lua
+libs\AceEvent-2.0\AceEvent-2.0.lua
+
+Core.lua
+MainFrame.lua
+CastBar.lua
+Utils.lua
+Events.lua
+BuffsModule.lua
+SlashCommands.lua

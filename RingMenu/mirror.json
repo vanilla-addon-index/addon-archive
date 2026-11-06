@@ -1,0 +1,92 @@
+{
+  "upstream": "https://github.com/jsb/RingMenu/tree/vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jsb",
+    "repo": "RingMenu",
+    "name": "RingMenu",
+    "ref": "vanilla",
+    "subpath": "",
+    "url": "https://github.com/jsb/RingMenu",
+    "api": "https://api.github.com/repos/jsb/RingMenu"
+  },
+  "commit": "14a8d47bcaa9814f28289ae75b77ff8545114405",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "cf237c7aff44efbe6e502e645c3e06da03a69d7bdeb43392108ef3348143417e",
+      "bytes": 10
+    },
+    "Bindings.xml": {
+      "sha256": "4f9b5f9fc9e66679a6f36f8fd305843c2a0f7c054ca17a674ccecb9d6b0fdea6",
+      "bytes": 107
+    },
+    "cyCircledPlugin/README.md": {
+      "sha256": "19f33a164897bf9575f2434fe53a0f95fcb62e946e39e27db9d251353fdf65d9",
+      "bytes": 983
+    },
+    "cyCircledPlugin/RingMenu.lua": {
+      "sha256": "16658ce480a9ce151068eeb83b2411e38ab9282416244dcee73c0a246963f75d",
+      "bytes": 670
+    },
+    "README.md": {
+      "sha256": "c665e5b81b8e83f6b2d7218fa830c840043bfa58f350c81bdeefcf69090a44c5",
+      "bytes": 1560
+    },
+    "RingMenu.lua": {
+      "sha256": "c0f6d687f920bd27a5235a625c0506f313734bfc13bb0c0c985fd57ef4056da8",
+      "bytes": 7842
+    },
+    "RingMenu.toc": {
+      "sha256": "c8c744113cd6ee31791c53134a434b6a473945e56d1e0dc4387a2677b50307c7",
+      "bytes": 210
+    },
+    "RingMenu.xml": {
+      "sha256": "0fdbdf681b49d7d3ae4633e9274336436bcf032aea5eeb03fb559e0e65e08d88",
+      "bytes": 1173
+    },
+    "RingMenuBackdrop.png": {
+      "sha256": "7e305cd28451a02a97ce06b18e9a486d7e4e70d86cf8118b3091ad4e9d83f35a",
+      "bytes": 68451
+    },
+    "RingMenuBackdrop.tga": {
+      "sha256": "a2135541a6b5fc715421cdc9e20ea5720f2cdff0d24f50a0c9f895d96ab9591f",
+      "bytes": 678337
+    },
+    "RingMenuSettings.lua": {
+      "sha256": "8482147ccd31186d805fc38f58a7f768af718c7bd379904dc7ca5167d66b6cf6",
+      "bytes": 13172
+    },
+    "RingMenuSettingsTemplates.xml": {
+      "sha256": "92cd1024d5d25ca1639e760b80dfa534bbb3172475afe54ed6623f98936152dc",
+      "bytes": 1550
+    },
+    "Strings.lua": {
+      "sha256": "4b5d5514e34c737161d050c39bf091b2c29d94b8114c7d467388316c6cdb7063",
+      "bytes": 92
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "20499499": {
+      "tag": "v2.2.1",
+      "folder": "v2.2.1--20499499",
+      "assets": {
+        "15320441": {
+          "sha256": "30e3c46d7aa4654e67aec40b020de59279d2c5fa0086e267c3f59ca58b43efcf",
+          "bytes": 189187,
+          "id": "15320441",
+          "name": "RingMenu-2.2.1.zip",
+          "url": "https://github.com/jsb/RingMenu/releases/download/v2.2.1/RingMenu-2.2.1.zip",
+          "path": "releases/v2.2.1--20499499/assets/RingMenu-2.2.1.zip"
+        }
+      },
+      "source": {
+        "sha256": "d8df7fff592afe8159b95d6feafaca828cf53cbab6e65d863988bdfb87ca4c2b",
+        "bytes": 213159,
+        "path": "releases/v2.2.1--20499499/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/jsb/RingMenu/tarball/v2.2.1"
+      }
+    }
+  }
+}

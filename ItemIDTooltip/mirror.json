@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/cyaohiri/ItemIDTooltip",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "cyaohiri",
+    "repo": "ItemIDTooltip",
+    "name": "ItemIDTooltip",
+    "url": "https://github.com/cyaohiri/ItemIDTooltip",
+    "api": "https://api.github.com/repos/cyaohiri/ItemIDTooltip"
+  },
+  "commit": "f25c97e799ebd66d3e5e4318f4b513f3561c385d",
+  "sourceFiles": {
+    "ItemIDTooltip.lua": {
+      "sha256": "b8514f8c49e729596c7ff31e6069f1f41377e4b3dedc1a87fb424268b02f5315",
+      "bytes": 391
+    },
+    "ItemIDTooltip.toc": {
+      "sha256": "06d715841136349527d6beeb705b4adf42fab750b2f9342727819e748a84c1e7",
+      "bytes": 144
+    },
+    "README.md": {
+      "sha256": "ab70ab588e3887ba00097583265ac691da0201ed4ac20bd5630289ae8a928221",
+      "bytes": 123
+    },
+    "screenshot.jpg": {
+      "sha256": "d9a9d1a895eb8c7156e0a69fb4ff292ab93393a6f33a21227973ec3aefa24312",
+      "bytes": 23440
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

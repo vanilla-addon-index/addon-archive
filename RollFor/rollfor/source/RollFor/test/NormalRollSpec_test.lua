@@ -1,0 +1,1924 @@
+package.path = "./?.lua;" .. package.path .. ";../src/?.lua;../../?.lua"
+
+require( "src/compat" )
+local u = require( "RollFor/test/utils" )
+local lu = u.luaunit()
+local builder = require( "RollFor/test/IntegrationTestBuilder" )
+local mock_loot_facade, mock_chat, new_roll_for = builder.mock_loot_facade, builder.mock_chat, builder.new_roll_for
+local i, p = builder.i, builder.p
+local gui = require( "test/common/gui_helpers" )
+local item_link, text, buttons, empty_line = gui.item_link, gui.text, gui.buttons, gui.empty_line
+local enabled_item, disabled_item, selected_item = gui.enabled_item, gui.disabled_item, gui.selected_item
+local mainspec_roll, offspec_roll, roll_placeholder = gui.mainspec_roll, gui.offspec_roll, gui.roll_placeholder
+local individual_award_button = gui.individual_award_button
+
+NoOneRollsSpec = {}
+
+function NoOneRollsSpec:should_display_roll_button_that_rolls()
+  -- Given
+  local loot_facade, chat = mock_loot_facade(), mock_chat()
+  local item, item2, p1, p2 = i( "Hearthstone", 123 ), i( "Bag", 69 ), p( "Psikutas" ), p( "Obszczymucha" )
+  local rf = new_roll_for()
+      :loot_facade( loot_facade )
+      :raid_roster( p1, p2 )
+      :chat( chat )
+      :build()
+  u.mock( "GiveMasterLoot", function( slot ) loot_facade.notify( "LootSlotCleared", slot ) end )
+
+  -- Then
+  rf.loot_frame.should_be_hidden()
+
+  -- When
+  loot_facade.notify( "LootOpened", item, item2 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Hearthstone" )
+  )
+  chat.raid( "Princess Kenny dropped 2 items:" )
+  chat.raid( "1. [Bag]" )
+  chat.raid( "2. [Hearthstone]" )
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.loot_frame.click( 1 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Bag" ),
+    disabled_item( 2, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Roll" )
+
+  -- Then
+  chat.raid_warning( "Roll for [Bag]: /roll (MS) or /roll 99 (OS)" )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 7 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick( 4 )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 3 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "Stopping rolls in 3" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 2 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "2" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 1 second.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "1" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  chat.console( "RollFor: No one rolled for [Bag]." )
+  chat.raid( "No one rolled for [Bag]." )
+  chat.console( "RollFor: Rolling for [Bag] finished." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling finished. No one rolled.", 11 ),
+    buttons( "RaidRoll", "AwardOther", "Close" )
+  )
+end
+
+function NoOneRollsSpec:should_display_cancel_button_that_cancels()
+  -- Given
+  local loot_facade, chat = mock_loot_facade(), mock_chat()
+  local item, item2, p1, p2 = i( "Hearthstone", 123 ), i( "Bag", 69 ), p( "Psikutas" ), p( "Obszczymucha" )
+  local rf = new_roll_for()
+      :loot_facade( loot_facade )
+      :raid_roster( p1, p2 )
+      :chat( chat )
+      :build()
+  u.mock( "GiveMasterLoot", function( slot ) loot_facade.notify( "LootSlotCleared", slot ) end )
+
+  -- Then
+  rf.loot_frame.should_be_hidden()
+
+  -- When
+  loot_facade.notify( "LootOpened", item, item2 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Hearthstone" )
+  )
+  chat.raid( "Princess Kenny dropped 2 items:" )
+  chat.raid( "1. [Bag]" )
+  chat.raid( "2. [Hearthstone]" )
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.loot_frame.click( 1 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Bag" ),
+    disabled_item( 2, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Roll" )
+
+  -- Then
+  chat.raid_warning( "Roll for [Bag]: /roll (MS) or /roll 99 (OS)" )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 7 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick( 4 )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 3 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "Stopping rolls in 3" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 2 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "2" )
+
+  -- When
+  rf.rolling_popup.click( "Cancel" )
+
+  -- Then
+  chat.console( "RollFor: Rolling for [Bag] was canceled." )
+  chat.raid( "Rolling for [Bag] was canceled." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling was canceled.", 11 ),
+    buttons( "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Close" )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+end
+
+function NoOneRollsSpec:should_display_finish_early_button_that_finishes_early()
+  -- Given
+  local loot_facade, chat = mock_loot_facade(), mock_chat()
+  local item, item2, p1, p2 = i( "Hearthstone", 123 ), i( "Bag", 69 ), p( "Psikutas" ), p( "Obszczymucha" )
+  local rf = new_roll_for()
+      :loot_facade( loot_facade )
+      :raid_roster( p1, p2 )
+      :chat( chat )
+      :build()
+  u.mock( "GiveMasterLoot", function( slot ) loot_facade.notify( "LootSlotCleared", slot ) end )
+
+  -- Then
+  rf.loot_frame.should_be_hidden()
+
+  -- When
+  loot_facade.notify( "LootOpened", item, item2 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Hearthstone" )
+  )
+  chat.raid( "Princess Kenny dropped 2 items:" )
+  chat.raid( "1. [Bag]" )
+  chat.raid( "2. [Hearthstone]" )
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.loot_frame.click( 1 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Bag" ),
+    disabled_item( 2, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Roll" )
+
+  -- Then
+  chat.raid_warning( "Roll for [Bag]: /roll (MS) or /roll 99 (OS)" )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 7 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick( 4 )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 3 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "Stopping rolls in 3" )
+
+  -- When
+  rf.roll( p2, 96, 1, 99 )
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    offspec_roll( p2, 96, 11 ),
+    text( "Rolling ends in 2 seconds.", 11 ),
+    buttons( "FinishEarly", "Cancel" )
+  )
+  chat.raid( "2" )
+
+  -- When
+  rf.rolling_popup.click( "FinishEarly" )
+
+  -- Then
+  chat.console( "RollFor: Obszczymucha rolled the highest (96) for [Bag] (OS)." )
+  chat.raid( "Obszczymucha rolled the highest (96) for [Bag] (OS)." )
+  chat.console( "RollFor: Rolling for [Bag] finished." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    offspec_roll( p2, 96, 11 ),
+    text( "Obszczymucha wins the off-spec roll with 96.", 11 ),
+    buttons( "AwardWinner", "RaidRoll", "AwardOther", "Close" )
+  )
+end
+
+function NoOneRollsSpec:should_not_display_finish_early_button_if_no_one_rolled()
+  -- Given
+  local loot_facade, chat = mock_loot_facade(), mock_chat()
+  local item, item2, p1, p2 = i( "Hearthstone", 123 ), i( "Bag", 69 ), p( "Psikutas" ), p( "Obszczymucha" )
+  local rf = new_roll_for()
+      :loot_facade( loot_facade )
+      :raid_roster( p1, p2 )
+      :chat( chat )
+      :build()
+  u.mock( "GiveMasterLoot", function( slot ) loot_facade.notify( "LootSlotCleared", slot ) end )
+
+  -- Then
+  rf.loot_frame.should_be_hidden()
+
+  -- When
+  loot_facade.notify( "LootOpened", item, item2 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Hearthstone" )
+  )
+  chat.raid( "Princess Kenny dropped 2 items:" )
+  chat.raid( "1. [Bag]" )
+  chat.raid( "2. [Hearthstone]" )
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.loot_frame.click( 1 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Bag" ),
+    disabled_item( 2, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Roll" )
+
+  -- Then
+  chat.raid_warning( "Roll for [Bag]: /roll (MS) or /roll 99 (OS)" )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 7 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick( 4 )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 3 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "Stopping rolls in 3" )
+
+  -- When
+  rf.ace_timer.repeating_tick( 3 )
+
+  -- Then
+  chat.raid( "2" )
+  chat.raid( "1" )
+  chat.console( "RollFor: No one rolled for [Bag]." )
+  chat.raid( "No one rolled for [Bag]." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling finished. No one rolled.", 11 ),
+    buttons( "RaidRoll", "AwardOther", "Close" )
+  )
+end
+
+function NoOneRollsSpec:should_display_close_button_that_closes_the_popup()
+  -- Given
+  local loot_facade, chat = mock_loot_facade(), mock_chat()
+  local item, item2, p1, p2 = i( "Hearthstone", 123 ), i( "Bag", 69 ), p( "Psikutas" ), p( "Obszczymucha" )
+  local rf = new_roll_for()
+      :loot_facade( loot_facade )
+      :raid_roster( p1, p2 )
+      :chat( chat )
+      :build()
+  u.mock( "GiveMasterLoot", function( slot ) loot_facade.notify( "LootSlotCleared", slot ) end )
+
+  -- Then
+  rf.loot_frame.should_be_hidden()
+
+  -- When
+  loot_facade.notify( "LootOpened", item, item2 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Hearthstone" )
+  )
+  chat.raid( "Princess Kenny dropped 2 items:" )
+  chat.raid( "1. [Bag]" )
+  chat.raid( "2. [Hearthstone]" )
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.loot_frame.click( 1 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Bag" ),
+    disabled_item( 2, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Roll" )
+
+  -- Then
+  chat.raid_warning( "Roll for [Bag]: /roll (MS) or /roll 99 (OS)" )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 7 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick( 4 )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 3 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "Stopping rolls in 3" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 2 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "2" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 1 second.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "1" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  chat.console( "RollFor: No one rolled for [Bag]." )
+  chat.raid( "No one rolled for [Bag]." )
+  chat.console( "RollFor: Rolling for [Bag] finished." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling finished. No one rolled.", 11 ),
+    buttons( "RaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Close" )
+
+  -- Then
+  rf.rolling_popup.should_be_hidden()
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Hearthstone" )
+  )
+
+  -- When
+  loot_facade.notify( "LootClosed" )
+  loot_facade.notify( "LootOpened", item, item2 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Hearthstone" )
+  )
+
+  -- When
+  rf.loot_frame.click( 2 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    disabled_item( 1, "Bag" ),
+    selected_item( 2, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item, 1 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+end
+
+function NoOneRollsSpec:should_auto_raid_roll_when_enabled_and_there_are_no_winners()
+  -- Given
+  local loot_facade, chat = mock_loot_facade(), mock_chat()
+  local item, item2, p1, p2 = i( "Hearthstone", 123 ), i( "Bag", 69 ), p( "Psikutas" ), p( "Obszczymucha" )
+  local rf = new_roll_for()
+      :loot_facade( loot_facade )
+      :raid_roster( p1, p2 )
+      :chat( chat )
+      :config( { auto_raid_roll = true } )
+      :build()
+  u.mock( "GiveMasterLoot", function( slot ) loot_facade.notify( "LootSlotCleared", slot ) end )
+
+  -- Then
+  rf.loot_frame.should_be_hidden()
+
+  -- When
+  loot_facade.notify( "LootOpened", item, item2 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Hearthstone" )
+  )
+  chat.raid( "Princess Kenny dropped 2 items:" )
+  chat.raid( "1. [Bag]" )
+  chat.raid( "2. [Hearthstone]" )
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.loot_frame.click( 1 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Bag" ),
+    disabled_item( 2, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Roll" )
+
+  -- Then
+  chat.raid_warning( "Roll for [Bag]: /roll (MS) or /roll 99 (OS)" )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 7 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick( 4 )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 3 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "Stopping rolls in 3" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 2 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "2" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 1 second.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "1" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  chat.console( "RollFor: No one rolled for [Bag]." )
+  chat.raid( "No one rolled for [Bag]." )
+  chat.raid( "Raid rolling [Bag]..." )
+end
+
+function NoOneRollsSpec:should_display_raid_roll_button_that_raid_rolls()
+  -- Given
+  local loot_facade, chat = mock_loot_facade(), mock_chat()
+  local item, item2, p1, p2 = i( "Hearthstone", 123 ), i( "Bag", 69 ), p( "Psikutas" ), p( "Obszczymucha" )
+  local rf = new_roll_for()
+      :loot_facade( loot_facade )
+      :raid_roster( p1, p2 )
+      :chat( chat )
+      :build()
+  u.mock( "GiveMasterLoot", function( slot ) loot_facade.notify( "LootSlotCleared", slot ) end )
+
+  -- Then
+  rf.loot_frame.should_be_hidden()
+
+  -- When
+  loot_facade.notify( "LootOpened", item, item2 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Hearthstone" )
+  )
+  chat.raid( "Princess Kenny dropped 2 items:" )
+  chat.raid( "1. [Bag]" )
+  chat.raid( "2. [Hearthstone]" )
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.loot_frame.click( 1 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Bag" ),
+    disabled_item( 2, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Roll" )
+
+  -- Then
+  chat.raid_warning( "Roll for [Bag]: /roll (MS) or /roll 99 (OS)" )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 7 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick( 4 )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 3 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "Stopping rolls in 3" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 2 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "2" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 1 second.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid( "1" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  chat.console( "RollFor: No one rolled for [Bag]." )
+  chat.raid( "No one rolled for [Bag]." )
+  chat.console( "RollFor: Rolling for [Bag] finished." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling finished. No one rolled.", 11 ),
+    buttons( "RaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "RaidRoll" )
+
+  -- Then
+  chat.raid( "Raid rolling [Bag]..." )
+end
+
+SomeoneRolledSpec = {}
+
+function SomeoneRolledSpec:should_display_roll_button_that_rolls()
+  -- Given
+  local loot_facade, chat = mock_loot_facade(), mock_chat()
+  local item, item2, p1, p2 = i( "Hearthstone", 123 ), i( "Bag", 69 ), p( "Psikutas" ), p( "Obszczymucha" )
+  local rf = new_roll_for()
+      :loot_facade( loot_facade )
+      :raid_roster( p1, p2 )
+      :chat( chat )
+      :build()
+  u.mock( "GiveMasterLoot", function( slot ) loot_facade.notify( "LootSlotCleared", slot ) end )
+
+  -- Then
+  rf.loot_frame.should_be_hidden()
+
+  -- When
+  loot_facade.notify( "LootOpened", item, item2 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Hearthstone" )
+  )
+  chat.raid( "Princess Kenny dropped 2 items:" )
+  chat.raid( "1. [Bag]" )
+  chat.raid( "2. [Hearthstone]" )
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.loot_frame.click( 1 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Bag" ),
+    disabled_item( 2, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Roll" )
+
+  -- Then
+  chat.raid_warning( "Roll for [Bag]: /roll (MS) or /roll 99 (OS)" )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 7 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.roll( p2, 96, 1, 99 )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    offspec_roll( p2, 96, 11 ),
+    text( "Rolling ends in 7 seconds.", 11 ),
+    buttons( "FinishEarly", "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick( 4 )
+
+  chat.raid( "Stopping rolls in 3" )
+
+  -- When
+  rf.roll( p1, 69, 1, 100 )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    mainspec_roll( p1, 69, 11 ),
+    offspec_roll( p2, 96 ),
+    text( "Rolling ends in 3 seconds.", 11 ),
+    buttons( "FinishEarly", "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    mainspec_roll( p1, 69, 11 ),
+    offspec_roll( p2, 96 ),
+    text( "Rolling ends in 2 seconds.", 11 ),
+    buttons( "FinishEarly", "Cancel" )
+  )
+  chat.raid( "2" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    mainspec_roll( p1, 69, 11 ),
+    offspec_roll( p2, 96 ),
+    text( "Rolling ends in 1 second.", 11 ),
+    buttons( "FinishEarly", "Cancel" )
+  )
+  chat.raid( "1" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  chat.console( "RollFor: Psikutas rolled the highest (69) for [Bag]." )
+  chat.raid( "Psikutas rolled the highest (69) for [Bag]." )
+  chat.console( "RollFor: Rolling for [Bag] finished." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    mainspec_roll( p1, 69, 11 ),
+    offspec_roll( p2, 96 ),
+    text( "Psikutas wins the main-spec roll with 69.", 11 ),
+    buttons( "AwardWinner", "RaidRoll", "AwardOther", "Close" )
+  )
+  rf.confirmation_popup.should_be_hidden()
+
+  -- When
+  rf.rolling_popup.click( "AwardWinner" )
+
+  -- Then
+  rf.rolling_popup.should_be_hidden()
+  rf.confirmation_popup.should_be_visible()
+
+  -- When
+  rf.confirmation_popup.confirm()
+
+  -- Then
+  chat.console( "RollFor: Psikutas received [Bag]." )
+  rf.confirmation_popup.should_be_hidden()
+  rf.rolling_popup.should_be_hidden()
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Hearthstone" )
+  )
+
+  -- When
+  rf.loot_frame.click( 1 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item, 1 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+end
+
+function SomeoneRolledSpec:should_display_roll_button_that_rolls_for_multiple_items()
+  -- Given
+  local loot_facade, chat = mock_loot_facade(), mock_chat()
+  local item, item2, p1, p2, p3 = i( "Hearthstone", 123 ), i( "Bag", 69 ), p( "Psikutas" ), p( "Obszczymucha" ), p( "Johnny" )
+  local rf = new_roll_for()
+      :loot_facade( loot_facade )
+      :raid_roster( p1, p2, p3 )
+      :chat( chat )
+      :build()
+  u.mock( "GiveMasterLoot", function( slot ) loot_facade.notify( "LootSlotCleared", slot ) end )
+
+  -- Then
+  rf.loot_frame.should_be_hidden()
+
+  -- When
+  loot_facade.notify( "LootOpened", item, item2, item2 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Bag" ),
+    enabled_item( 3, "Hearthstone" )
+  )
+  chat.raid( "Princess Kenny dropped 3 items:" )
+  chat.raid( "1. 2x[Bag]" )
+  chat.raid( "2. [Hearthstone]" )
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.loot_frame.click( 1 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Bag" ),
+    selected_item( 2, "Bag" ),
+    disabled_item( 3, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item2, 2 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Roll" )
+
+  -- Then
+  chat.raid_warning( "Roll for 2x[Bag]: /roll (MS) or /roll 99 (OS). 2 top rolls win." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 2 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 2 ),
+    text( "Rolling ends in 7 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.roll( p2, 96, 1, 99 )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 2 ),
+    offspec_roll( p2, 96, 11 ),
+    text( "Rolling ends in 7 seconds.", 11 ),
+    buttons( "FinishEarly", "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick( 4 )
+
+  chat.raid( "Stopping rolls in 3" )
+
+  -- When
+  rf.roll( p1, 69, 1, 100 )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 2 ),
+    mainspec_roll( p1, 69, 11 ),
+    offspec_roll( p2, 96 ),
+    text( "Rolling ends in 3 seconds.", 11 ),
+    buttons( "FinishEarly", "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 2 ),
+    mainspec_roll( p1, 69, 11 ),
+    offspec_roll( p2, 96 ),
+    text( "Rolling ends in 2 seconds.", 11 ),
+    buttons( "FinishEarly", "Cancel" )
+  )
+  chat.raid( "2" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 2 ),
+    mainspec_roll( p1, 69, 11 ),
+    offspec_roll( p2, 96 ),
+    text( "Rolling ends in 1 second.", 11 ),
+    buttons( "FinishEarly", "Cancel" )
+  )
+  chat.raid( "1" )
+
+  -- When
+  rf.ace_timer.repeating_tick()
+
+  -- Then
+  chat.console( "RollFor: Psikutas rolled the highest (69) for [Bag]." )
+  chat.raid( "Psikutas rolled the highest (69) for [Bag]." )
+  chat.console( "RollFor: Obszczymucha rolled the next highest (96) for [Bag] (OS)." )
+  chat.raid( "Obszczymucha rolled the next highest (96) for [Bag] (OS)." )
+  chat.console( "RollFor: Rolling for [Bag] finished." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 2 ),
+    mainspec_roll( p1, 69, 11 ),
+    offspec_roll( p2, 96 ),
+    text( "Psikutas wins the main-spec roll with 69.", 11 ),
+    individual_award_button,
+    text( "Obszczymucha wins the off-spec roll with 96.", 8 ),
+    individual_award_button,
+    buttons( "RaidRoll", "AwardOther", "Close" )
+  )
+  rf.confirmation_popup.should_be_hidden()
+
+  -- When
+  rf.rolling_popup.award( "Obszczymucha" )
+
+  -- Then
+  rf.rolling_popup.should_be_hidden()
+  rf.confirmation_popup.should_be_visible()
+
+  -- When
+  rf.confirmation_popup.confirm()
+
+  -- Then
+  rf.confirmation_popup.should_be_hidden()
+  chat.console( "RollFor: Obszczymucha received [Bag]." )
+  rf.loot_frame.should_display(
+    selected_item( 1, "Bag" ),
+    disabled_item( 2, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    mainspec_roll( p1, 69, 11 ),
+    offspec_roll( p2, 96 ),
+    text( "Psikutas wins the main-spec roll with 69.", 11 ),
+    buttons( "AwardWinner", "RaidRoll", "AwardOther", "Close" )
+  )
+  rf.confirmation_popup.should_be_hidden()
+
+  -- When
+  rf.rolling_popup.click( "AwardWinner" )
+
+  -- Then
+  rf.rolling_popup.should_be_hidden()
+  rf.confirmation_popup.should_be_visible()
+
+  -- When
+  rf.confirmation_popup.confirm()
+
+  -- Then
+  rf.confirmation_popup.should_be_hidden()
+  chat.console( "RollFor: Psikutas received [Bag]." )
+
+  -- Then
+  rf.rolling_popup.should_be_hidden()
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Hearthstone" )
+  )
+end
+
+function SomeoneRolledSpec:should_display_close_button_that_closes_the_popup_and_remember_the_winner()
+  -- Given
+  local loot_facade, chat = mock_loot_facade(), mock_chat()
+  local item, item2, p1, p2 = i( "Hearthstone", 123 ), i( "Bag", 69 ), p( "Psikutas" ), p( "Obszczymucha" )
+  local rf = new_roll_for()
+      :loot_facade( loot_facade )
+      :raid_roster( p1, p2 )
+      :chat( chat )
+      :build()
+  u.mock( "GiveMasterLoot", function( slot ) loot_facade.notify( "LootSlotCleared", slot ) end )
+
+  -- Then
+  rf.loot_frame.should_be_hidden()
+
+  -- When
+  loot_facade.notify( "LootOpened", item, item2 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Hearthstone" )
+  )
+  chat.raid( "Princess Kenny dropped 2 items:" )
+  chat.raid( "1. [Bag]" )
+  chat.raid( "2. [Hearthstone]" )
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.loot_frame.click( 1 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Bag" ),
+    disabled_item( 2, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Roll" )
+
+  -- Then
+  chat.raid_warning( "Roll for [Bag]: /roll (MS) or /roll 99 (OS)" )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.roll( p1, 69, 1, 99 )
+
+  -- When
+  rf.ace_timer.repeating_tick( 8 )
+
+  -- Then
+  chat.raid( "Stopping rolls in 3" )
+  chat.raid( "2" )
+  chat.raid( "1" )
+  chat.console( "RollFor: Psikutas rolled the highest (69) for [Bag] (OS)." )
+  chat.raid( "Psikutas rolled the highest (69) for [Bag] (OS)." )
+  chat.console( "RollFor: Rolling for [Bag] finished." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    offspec_roll( p1, 69, 11 ),
+    text( "Psikutas wins the off-spec roll with 69.", 11 ),
+    buttons( "AwardWinner", "RaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Close" )
+
+  -- Then
+  rf.rolling_popup.should_be_hidden()
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Hearthstone" )
+  )
+
+  -- When
+  loot_facade.notify( "LootClosed" )
+  loot_facade.notify( "LootOpened", item, item2 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Hearthstone" )
+  )
+
+  -- When
+  rf.loot_frame.click( 1 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Bag" ),
+    disabled_item( 2, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    offspec_roll( p1, 69, 11 ),
+    text( "Psikutas wins the off-spec roll with 69.", 11 ),
+    buttons( "AwardWinner", "RaidRoll", "AwardOther", "Close" )
+  )
+end
+
+NormalTieRollSpec = {}
+
+function NormalTieRollSpec:should_display_tie_rolls()
+  -- Given
+  local loot_facade, chat = mock_loot_facade(), mock_chat()
+  local item, item2, p1, p2 = i( "Hearthstone", 123 ), i( "Bag", 69 ), p( "Psikutas" ), p( "Obszczymucha" )
+  local rf = new_roll_for()
+      :loot_facade( loot_facade )
+      :raid_roster( p1, p2 )
+      :chat( chat )
+      :build()
+  u.mock( "GiveMasterLoot", function( slot ) loot_facade.notify( "LootSlotCleared", slot ) end )
+
+  -- Then
+  rf.loot_frame.should_be_hidden()
+
+  -- When
+  loot_facade.notify( "LootOpened", item, item2 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Hearthstone" )
+  )
+  chat.raid( "Princess Kenny dropped 2 items:" )
+  chat.raid( "1. [Bag]" )
+  chat.raid( "2. [Hearthstone]" )
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.loot_frame.click( 1 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Bag" ),
+    disabled_item( 2, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Roll" )
+
+  -- Then
+  chat.raid_warning( "Roll for [Bag]: /roll (MS) or /roll 99 (OS)" )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.roll( p2, 69, 1, 100 )
+  rf.roll( p1, 69, 1, 100 )
+
+  -- Then
+  chat.console( "RollFor: Obszczymucha and Psikutas rolled the highest (69) for [Bag]." )
+  chat.raid( "Obszczymucha and Psikutas rolled the highest (69) for [Bag]." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    mainspec_roll( p2, 69, 11 ),
+    mainspec_roll( p1, 69 ),
+    text( "There was a tie (69):", 11 ),
+    roll_placeholder( p2, "MainSpec", 11 ),
+    roll_placeholder( p1, "MainSpec" ),
+    empty_line( 10 )
+  )
+
+  -- When
+  rf.ace_timer.tick()
+
+  -- Then
+  chat.raid( "Obszczymucha and Psikutas /roll for [Bag] now." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    mainspec_roll( p2, 69, 11 ),
+    mainspec_roll( p1, 69 ),
+    text( "There was a tie (69):", 11 ),
+    roll_placeholder( p2, "MainSpec", 11 ),
+    roll_placeholder( p1, "MainSpec" ),
+    text( "Waiting for remaining rolls...", 11 ),
+    buttons( "FinishEarly", "Cancel" )
+  )
+
+  -- When
+  rf.roll( p2, 42, 1, 100 )
+  rf.roll( p1, 42, 1, 100 )
+
+  -- Then
+  chat.console( "RollFor: Obszczymucha and Psikutas re-rolled the highest (42) for [Bag]." )
+  chat.raid( "Obszczymucha and Psikutas re-rolled the highest (42) for [Bag]." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    mainspec_roll( p2, 69, 11 ),
+    mainspec_roll( p1, 69 ),
+    text( "There was a tie (69):", 11 ),
+    mainspec_roll( p2, 42, 11 ),
+    mainspec_roll( p1, 42 ),
+    text( "There was a tie (42):", 11 ),
+    roll_placeholder( p2, "MainSpec", 11 ),
+    roll_placeholder( p1, "MainSpec" ),
+    empty_line( 10 )
+  )
+
+  -- When
+  rf.ace_timer.tick()
+
+  -- Then
+  chat.raid( "Obszczymucha and Psikutas /roll for [Bag] now." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    mainspec_roll( p2, 69, 11 ),
+    mainspec_roll( p1, 69 ),
+    text( "There was a tie (69):", 11 ),
+    mainspec_roll( p2, 42, 11 ),
+    mainspec_roll( p1, 42 ),
+    text( "There was a tie (42):", 11 ),
+    roll_placeholder( p2, "MainSpec", 11 ),
+    roll_placeholder( p1, "MainSpec" ),
+    text( "Waiting for remaining rolls...", 11 ),
+    buttons( "FinishEarly", "Cancel" )
+  )
+
+  -- When
+  rf.roll( p2, 1, 1, 100 )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    mainspec_roll( p2, 69, 11 ),
+    mainspec_roll( p1, 69 ),
+    text( "There was a tie (69):", 11 ),
+    mainspec_roll( p2, 42, 11 ),
+    mainspec_roll( p1, 42 ),
+    text( "There was a tie (42):", 11 ),
+    mainspec_roll( p2, 1, 11 ),
+    roll_placeholder( p1, "MainSpec" ),
+    text( "Waiting for remaining rolls...", 11 ),
+    buttons( "FinishEarly", "Cancel" )
+  )
+
+  rf.roll( p1, 2, 1, 100 )
+
+  -- Then
+  chat.console( "RollFor: Psikutas re-rolled the highest (2) for [Bag]." )
+  chat.raid( "Psikutas re-rolled the highest (2) for [Bag]." )
+  chat.console( "RollFor: Rolling for [Bag] finished." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    mainspec_roll( p2, 69, 11 ),
+    mainspec_roll( p1, 69 ),
+    text( "There was a tie (69):", 11 ),
+    mainspec_roll( p2, 42, 11 ),
+    mainspec_roll( p1, 42 ),
+    text( "There was a tie (42):", 11 ),
+    mainspec_roll( p1, 2, 11 ),
+    mainspec_roll( p2, 1 ),
+    text( "Psikutas wins the main-spec roll with 2.", 11 ),
+    buttons( "AwardWinner", "RaidRoll", "AwardOther", "Close" )
+  )
+  rf.confirmation_popup.should_be_hidden()
+
+  -- When
+  rf.rolling_popup.click( "AwardWinner" )
+
+  -- Then
+  rf.confirmation_popup.should_be_visible()
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.confirmation_popup.abort()
+
+  -- Then
+  rf.confirmation_popup.should_be_hidden()
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    mainspec_roll( p2, 69, 11 ),
+    mainspec_roll( p1, 69 ),
+    text( "There was a tie (69):", 11 ),
+    mainspec_roll( p2, 42, 11 ),
+    mainspec_roll( p1, 42 ),
+    text( "There was a tie (42):", 11 ),
+    mainspec_roll( p1, 2, 11 ),
+    mainspec_roll( p2, 1 ),
+    text( "Psikutas wins the main-spec roll with 2.", 11 ),
+    buttons( "AwardWinner", "RaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "AwardWinner" )
+
+  -- Then
+  rf.confirmation_popup.should_be_visible()
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.confirmation_popup.confirm()
+
+  -- Then
+  rf.confirmation_popup.should_be_hidden()
+  chat.console( "RollFor: Psikutas received [Bag]." )
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Hearthstone" )
+  )
+end
+
+function NormalTieRollSpec:should_not_consider_ms_and_tm_rolls_tie()
+  -- Given
+  local loot_facade, chat = mock_loot_facade(), mock_chat()
+  local item, item2, p1, p2 = i( "Hearthstone", 123 ), i( "Bag", 69 ), p( "Psikutas" ), p( "Obszczymucha" )
+  local rf = new_roll_for()
+      :loot_facade( loot_facade )
+      :raid_roster( p1, p2 )
+      :chat( chat )
+      :build()
+  u.mock( "GiveMasterLoot", function( slot ) loot_facade.notify( "LootSlotCleared", slot ) end )
+
+  -- Then
+  rf.loot_frame.should_be_hidden()
+
+  -- When
+  loot_facade.notify( "LootOpened", item, item2 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Bag" ),
+    enabled_item( 2, "Hearthstone" )
+  )
+  chat.raid( "Princess Kenny dropped 2 items:" )
+  chat.raid( "1. [Bag]" )
+  chat.raid( "2. [Hearthstone]" )
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.loot_frame.click( 1 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Bag" ),
+    disabled_item( 2, "Hearthstone" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Roll" )
+
+  -- Then
+  chat.raid_warning( "Roll for [Bag]: /roll (MS) or /roll 99 (OS)" )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.roll( p1, 42, 1, 100 )
+  rf.roll( p2, 42, 1, 99 )
+  rf.ace_timer.repeating_tick( 7 )
+
+  -- Then
+  chat.raid( "Stopping rolls in 3" )
+  chat.raid( "2" )
+  chat.raid( "1" )
+
+  -- When
+  rf.ace_timer.repeating_tick( 1 )
+
+  -- Then
+  chat.console( "RollFor: Psikutas rolled the highest (42) for [Bag]." )
+  chat.raid( "Psikutas rolled the highest (42) for [Bag]." )
+  chat.console( "RollFor: Rolling for [Bag] finished." )
+  rf.rolling_popup.should_display(
+    item_link( item2, 1 ),
+    mainspec_roll( p1, 42, 11 ),
+    offspec_roll( p2, 42 ),
+    text( "Psikutas wins the main-spec roll with 42.", 11 ),
+    buttons( "AwardWinner", "RaidRoll", "AwardOther", "Close" )
+  )
+  rf.confirmation_popup.should_be_hidden()
+
+  -- When
+  rf.rolling_popup.click( "AwardWinner" )
+
+  -- Then
+  rf.confirmation_popup.should_be_visible()
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.confirmation_popup.confirm()
+
+  -- Then
+  rf.confirmation_popup.should_be_hidden()
+  chat.console( "RollFor: Psikutas received [Bag]." )
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Hearthstone" )
+  )
+end
+
+function NoOneRollsSpec:should_show_award_button_when_looting_the_corpse_again_if_the_looting_was_closed_during_the_roll()
+  -- Given
+  local loot_facade, chat = mock_loot_facade(), mock_chat()
+  local item, p1, p2 = i( "Essence Gatherer", 123 ), p( "Cosmicshadow" ), p( "Jogobobek" )
+  local rf = new_roll_for()
+      :loot_facade( loot_facade )
+      :raid_roster( p1, p2 )
+      :chat( chat )
+      :build()
+  u.mock( "GiveMasterLoot", function( slot ) loot_facade.notify( "LootSlotCleared", slot ) end )
+
+  -- Then
+  rf.loot_frame.should_be_hidden()
+
+  -- When
+  loot_facade.notify( "LootOpened", item )
+
+  -- Then
+  rf.loot_frame.should_display(
+    enabled_item( 1, "Essence Gatherer" )
+  )
+  chat.raid( "Princess Kenny dropped 1 item:" )
+  chat.raid( "1. [Essence Gatherer]" )
+  rf.rolling_popup.should_be_hidden()
+
+  -- When
+  rf.loot_frame.click( 1 )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Essence Gatherer" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item, 1 ),
+    buttons( "Roll", "InstaRaidRoll", "AwardOther", "Close" )
+  )
+
+  -- When
+  rf.rolling_popup.click( "Roll" )
+
+  -- Then
+  chat.raid_warning( "Roll for [Essence Gatherer]: /roll (MS) or /roll 99 (OS)" )
+  rf.rolling_popup.should_display(
+    item_link( item, 1 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick( 2 )
+  loot_facade.notify( "LootClosed" )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item, 1 ),
+    text( "Rolling ends in 6 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick( 4 )
+  rf.roll( p1, 24, 1, 100 )
+
+  -- Then
+  chat.raid( "Stopping rolls in 3" )
+  rf.rolling_popup.should_display(
+    item_link( item, 1 ),
+    mainspec_roll( p1, 24, 11 ),
+    text( "Rolling ends in 2 seconds.", 11 ),
+    buttons( "FinishEarly", "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick( 2 )
+
+  -- Then
+  chat.raid( "2" )
+  chat.raid( "1" )
+  chat.console( "RollFor: Cosmicshadow rolled the highest (24) for [Essence Gatherer]." )
+  chat.raid( "Cosmicshadow rolled the highest (24) for [Essence Gatherer]." )
+  chat.console( "RollFor: Rolling for [Essence Gatherer] finished." )
+  rf.rolling_popup.should_display(
+    item_link( item, 1 ),
+    mainspec_roll( p1, 24, 11 ),
+    text( "Cosmicshadow wins the main-spec roll with 24.", 11 ),
+    buttons( "RaidRoll", "Close" )
+  )
+
+  -- When
+  loot_facade.notify( "LootOpened", item )
+
+  -- Then
+  rf.loot_frame.should_display(
+    selected_item( 1, "Essence Gatherer" )
+  )
+  rf.rolling_popup.should_display(
+    item_link( item, 1 ),
+    mainspec_roll( p1, 24, 11 ),
+    text( "Cosmicshadow wins the main-spec roll with 24.", 11 ),
+    buttons( "AwardWinner", "RaidRoll", "AwardOther", "Close" )
+  )
+end
+
+MultiRollSpec = {}
+
+function MultiRollSpec:should_display_all_winners()
+  -- Given
+  local loot_facade, chat = mock_loot_facade(), mock_chat()
+  local item = i( "Void Crystal", 22450 )
+  local superclassic, hakaishin, mifo, boulderdash = p( "Superclassic" ), p( "Hakaishin" ), p( "Mifo" ), p( "Boulderdash" )
+  local zagtul, cakeshake, antiparty, goldblood = p( "Zagtul" ), p( "Cakeshake" ), p( "Antiparty" ), p( "Goldblood" )
+  local sigas, leftuppercut, preyah, psykobear = p( "Sigas" ), p( "Leftuppercut" ), p( "Preyah" ), p( "Psykobear" )
+  local gotchi, ablakfoso, kopanara, maazh = p( "Gotchi" ), p( "Ablakfoso" ), p( "Kopanara" ), p( "Maazh" )
+  local kekdzzt, tachikoma = p( "Kekdzzt" ), p( "Tachikoma" )
+  local rf = new_roll_for()
+      :loot_facade( loot_facade )
+      :raid_roster(
+        superclassic, hakaishin, mifo, boulderdash, zagtul, cakeshake,
+        antiparty, goldblood, sigas, leftuppercut, preyah, psykobear,
+        gotchi, ablakfoso, kopanara, maazh, kekdzzt, tachikoma
+      )
+      :chat( chat )
+      :build()
+
+  -- When (simulating /rf 6x[Void Crystal])
+  rf.roll_controller.start( "SoftResRoll", item, 6, 1, 8 )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item, 6 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid_warning( "Roll for 6x[Void Crystal]: /roll (MS) or /roll 99 (OS). 6 top rolls win." )
+
+  -- When (Tachikoma does not roll)
+  rf.roll( superclassic, 37, 1, 100 )
+  rf.roll( hakaishin, 11, 1, 100 )
+  rf.roll( mifo, 20, 1, 100 )
+  rf.roll( boulderdash, 81, 1, 100 )
+  rf.roll( zagtul, 80, 1, 100 )
+  rf.roll( cakeshake, 63, 1, 100 )
+  rf.roll( antiparty, 73, 1, 100 )
+  rf.roll( goldblood, 2, 1, 100 )
+  rf.roll( sigas, 24, 1, 100 )
+  rf.roll( leftuppercut, 75, 1, 100 )
+  rf.roll( preyah, 47, 1, 100 )
+  rf.roll( psykobear, 89, 1, 100 )
+  rf.roll( gotchi, 75, 1, 100 )
+  rf.roll( ablakfoso, 84, 1, 100 )
+  rf.roll( kopanara, 12, 1, 100 )
+  rf.roll( maazh, 77, 1, 100 )
+  rf.roll( kekdzzt, 7, 1, 100 )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item, 6 ),
+    mainspec_roll( psykobear, 89, 11 ),
+    mainspec_roll( ablakfoso, 84 ),
+    mainspec_roll( boulderdash, 81 ),
+    mainspec_roll( zagtul, 80 ),
+    mainspec_roll( maazh, 77 ),
+    mainspec_roll( gotchi, 75 ),
+    mainspec_roll( leftuppercut, 75 ),
+    mainspec_roll( antiparty, 73 ),
+    mainspec_roll( cakeshake, 63 ),
+    mainspec_roll( preyah, 47 ),
+    mainspec_roll( superclassic, 37 ),
+    mainspec_roll( sigas, 24 ),
+    mainspec_roll( mifo, 20 ),
+    mainspec_roll( kopanara, 12 ),
+    mainspec_roll( hakaishin, 11 ),
+    mainspec_roll( kekdzzt, 7 ),
+    mainspec_roll( goldblood, 2 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "FinishEarly", "Cancel" )
+  )
+
+  -- When
+  rf.ace_timer.repeating_tick( 8 )
+
+  -- Then
+  chat.raid( "Stopping rolls in 3" )
+  chat.raid( "2" )
+  chat.raid( "1" )
+  chat.console( "RollFor: Psykobear rolled the highest (89) for [Void Crystal]." )
+  chat.raid( "Psykobear rolled the highest (89) for [Void Crystal]." )
+  chat.console( "RollFor: Ablakfoso rolled the next highest (84) for [Void Crystal]." )
+  chat.raid( "Ablakfoso rolled the next highest (84) for [Void Crystal]." )
+  chat.console( "RollFor: Boulderdash rolled the next highest (81) for [Void Crystal]." )
+  chat.raid( "Boulderdash rolled the next highest (81) for [Void Crystal]." )
+  chat.console( "RollFor: Zagtul rolled the next highest (80) for [Void Crystal]." )
+  chat.raid( "Zagtul rolled the next highest (80) for [Void Crystal]." )
+  chat.console( "RollFor: Maazh rolled the next highest (77) for [Void Crystal]." )
+  chat.raid( "Maazh rolled the next highest (77) for [Void Crystal]." )
+  chat.console( "RollFor: Gotchi and Leftuppercut rolled the next highest (75) for [Void Crystal]." )
+  chat.raid( "Gotchi and Leftuppercut rolled the next highest (75) for [Void Crystal]." )
+  rf.rolling_popup.should_display(
+    item_link( item, 6 ),
+    mainspec_roll( psykobear, 89, 11 ),
+    mainspec_roll( ablakfoso, 84 ),
+    mainspec_roll( boulderdash, 81 ),
+    mainspec_roll( zagtul, 80 ),
+    mainspec_roll( maazh, 77 ),
+    mainspec_roll( gotchi, 75 ),
+    mainspec_roll( leftuppercut, 75 ),
+    mainspec_roll( antiparty, 73 ),
+    mainspec_roll( cakeshake, 63 ),
+    mainspec_roll( preyah, 47 ),
+    mainspec_roll( superclassic, 37 ),
+    mainspec_roll( sigas, 24 ),
+    mainspec_roll( mifo, 20 ),
+    mainspec_roll( kopanara, 12 ),
+    mainspec_roll( hakaishin, 11 ),
+    mainspec_roll( kekdzzt, 7 ),
+    mainspec_roll( goldblood, 2 ),
+    text( "There was a tie (75):", 11 ),
+    roll_placeholder( gotchi, "MainSpec", 11 ),
+    roll_placeholder( leftuppercut, "MainSpec" ),
+    empty_line( 10 )
+  )
+
+  -- When
+  rf.ace_timer.tick()
+
+  -- Then
+  chat.raid( "Gotchi and Leftuppercut /roll for [Void Crystal] now." )
+  rf.rolling_popup.should_display(
+    item_link( item, 6 ),
+    mainspec_roll( psykobear, 89, 11 ),
+    mainspec_roll( ablakfoso, 84 ),
+    mainspec_roll( boulderdash, 81 ),
+    mainspec_roll( zagtul, 80 ),
+    mainspec_roll( maazh, 77 ),
+    mainspec_roll( gotchi, 75 ),
+    mainspec_roll( leftuppercut, 75 ),
+    mainspec_roll( antiparty, 73 ),
+    mainspec_roll( cakeshake, 63 ),
+    mainspec_roll( preyah, 47 ),
+    mainspec_roll( superclassic, 37 ),
+    mainspec_roll( sigas, 24 ),
+    mainspec_roll( mifo, 20 ),
+    mainspec_roll( kopanara, 12 ),
+    mainspec_roll( hakaishin, 11 ),
+    mainspec_roll( kekdzzt, 7 ),
+    mainspec_roll( goldblood, 2 ),
+    text( "There was a tie (75):", 11 ),
+    roll_placeholder( gotchi, "MainSpec", 11 ),
+    roll_placeholder( leftuppercut, "MainSpec" ),
+    text( "Waiting for remaining rolls...", 11 ),
+    buttons( "FinishEarly", "Cancel" )
+  )
+
+  -- When
+  rf.roll( gotchi, 50, 1, 100 )
+  rf.roll( leftuppercut, 30, 1, 100 )
+
+  -- Then
+  chat.console( "RollFor: Gotchi re-rolled the highest (50) for [Void Crystal]." )
+  chat.raid( "Gotchi re-rolled the highest (50) for [Void Crystal]." )
+  chat.console( "RollFor: Rolling for [Void Crystal] finished." )
+  rf.rolling_popup.should_display(
+    item_link( item, 6 ),
+    mainspec_roll( psykobear, 89, 11 ),
+    mainspec_roll( ablakfoso, 84 ),
+    mainspec_roll( boulderdash, 81 ),
+    mainspec_roll( zagtul, 80 ),
+    mainspec_roll( maazh, 77 ),
+    mainspec_roll( gotchi, 75 ),
+    mainspec_roll( leftuppercut, 75 ),
+    mainspec_roll( antiparty, 73 ),
+    mainspec_roll( cakeshake, 63 ),
+    mainspec_roll( preyah, 47 ),
+    mainspec_roll( superclassic, 37 ),
+    mainspec_roll( sigas, 24 ),
+    mainspec_roll( mifo, 20 ),
+    mainspec_roll( kopanara, 12 ),
+    mainspec_roll( hakaishin, 11 ),
+    mainspec_roll( kekdzzt, 7 ),
+    mainspec_roll( goldblood, 2 ),
+    text( "There was a tie (75):", 11 ),
+    mainspec_roll( gotchi, 50, 11 ),
+    mainspec_roll( leftuppercut, 30 ),
+    text( "Psykobear wins the main-spec roll with 89.", 11 ),
+    text( "Ablakfoso wins the main-spec roll with 84.", 2 ),
+    text( "Boulderdash wins the main-spec roll with 81.", 2 ),
+    text( "Zagtul wins the main-spec roll with 80.", 2 ),
+    text( "Maazh wins the main-spec roll with 77.", 2 ),
+    text( "Gotchi wins the main-spec roll with 50.", 2 ),
+    buttons( "RaidRoll", "Close" )
+  )
+end
+
+function MultiRollSpec:should_not_tie_roll_when_the_tie_does_not_cross_the_item_count()
+  -- Given
+  local loot_facade, chat = mock_loot_facade(), mock_chat()
+  local item = i( "Void Crystal", 22450 )
+  local superclassic, hakaishin, mifo, boulderdash = p( "Superclassic" ), p( "Hakaishin" ), p( "Mifo" ), p( "Boulderdash" )
+  local zagtul, cakeshake, antiparty, goldblood = p( "Zagtul" ), p( "Cakeshake" ), p( "Antiparty" ), p( "Goldblood" )
+  local sigas, leftuppercut, preyah, psykobear = p( "Sigas" ), p( "Leftuppercut" ), p( "Preyah" ), p( "Psykobear" )
+  local gotchi, ablakfoso, kopanara, maazh = p( "Gotchi" ), p( "Ablakfoso" ), p( "Kopanara" ), p( "Maazh" )
+  local kekdzzt, tachikoma = p( "Kekdzzt" ), p( "Tachikoma" )
+  local rf = new_roll_for()
+      :loot_facade( loot_facade )
+      :raid_roster(
+        superclassic, hakaishin, mifo, boulderdash, zagtul, cakeshake,
+        antiparty, goldblood, sigas, leftuppercut, preyah, psykobear,
+        gotchi, ablakfoso, kopanara, maazh, kekdzzt, tachikoma
+      )
+      :chat( chat )
+      :build()
+
+  -- When (simulating /rf 6x[Void Crystal])
+  rf.roll_controller.start( "SoftResRoll", item, 6, 1, 8 )
+
+  -- Then
+  rf.rolling_popup.should_display(
+    item_link( item, 6 ),
+    text( "Rolling ends in 8 seconds.", 11 ),
+    buttons( "Cancel" )
+  )
+  chat.raid_warning( "Roll for 6x[Void Crystal]: /roll (MS) or /roll 99 (OS). 6 top rolls win." )
+
+  -- When (Gotchi and Maazh tie at 77 for the 5th and 6th item and Tachikoma does not roll)
+  rf.roll( superclassic, 37, 1, 100 )
+  rf.roll( hakaishin, 11, 1, 100 )
+  rf.roll( mifo, 20, 1, 100 )
+  rf.roll( boulderdash, 81, 1, 100 )
+  rf.roll( zagtul, 80, 1, 100 )
+  rf.roll( cakeshake, 63, 1, 100 )
+  rf.roll( antiparty, 73, 1, 100 )
+  rf.roll( goldblood, 2, 1, 100 )
+  rf.roll( sigas, 24, 1, 100 )
+  rf.roll( leftuppercut, 75, 1, 100 )
+  rf.roll( preyah, 47, 1, 100 )
+  rf.roll( psykobear, 89, 1, 100 )
+  rf.roll( gotchi, 77, 1, 100 )
+  rf.roll( ablakfoso, 84, 1, 100 )
+  rf.roll( kopanara, 12, 1, 100 )
+  rf.roll( maazh, 77, 1, 100 )
+  rf.roll( kekdzzt, 7, 1, 100 )
+
+  -- When
+  rf.ace_timer.repeating_tick( 8 )
+
+  -- Then
+  chat.raid( "Stopping rolls in 3" )
+  chat.raid( "2" )
+  chat.raid( "1" )
+  chat.console( "RollFor: Psykobear rolled the highest (89) for [Void Crystal]." )
+  chat.raid( "Psykobear rolled the highest (89) for [Void Crystal]." )
+  chat.console( "RollFor: Ablakfoso rolled the next highest (84) for [Void Crystal]." )
+  chat.raid( "Ablakfoso rolled the next highest (84) for [Void Crystal]." )
+  chat.console( "RollFor: Boulderdash rolled the next highest (81) for [Void Crystal]." )
+  chat.raid( "Boulderdash rolled the next highest (81) for [Void Crystal]." )
+  chat.console( "RollFor: Zagtul rolled the next highest (80) for [Void Crystal]." )
+  chat.raid( "Zagtul rolled the next highest (80) for [Void Crystal]." )
+  chat.console( "RollFor: Gotchi and Maazh rolled the next highest (77) for [Void Crystal]." )
+  chat.raid( "Gotchi and Maazh rolled the next highest (77) for [Void Crystal]." )
+  chat.console( "RollFor: Rolling for [Void Crystal] finished." )
+  rf.rolling_popup.should_display(
+    item_link( item, 6 ),
+    mainspec_roll( psykobear, 89, 11 ),
+    mainspec_roll( ablakfoso, 84 ),
+    mainspec_roll( boulderdash, 81 ),
+    mainspec_roll( zagtul, 80 ),
+    mainspec_roll( gotchi, 77 ),
+    mainspec_roll( maazh, 77 ),
+    mainspec_roll( leftuppercut, 75 ),
+    mainspec_roll( antiparty, 73 ),
+    mainspec_roll( cakeshake, 63 ),
+    mainspec_roll( preyah, 47 ),
+    mainspec_roll( superclassic, 37 ),
+    mainspec_roll( sigas, 24 ),
+    mainspec_roll( mifo, 20 ),
+    mainspec_roll( kopanara, 12 ),
+    mainspec_roll( hakaishin, 11 ),
+    mainspec_roll( kekdzzt, 7 ),
+    mainspec_roll( goldblood, 2 ),
+    text( "Psykobear wins the main-spec roll with 89.", 11 ),
+    text( "Ablakfoso wins the main-spec roll with 84.", 2 ),
+    text( "Boulderdash wins the main-spec roll with 81.", 2 ),
+    text( "Zagtul wins the main-spec roll with 80.", 2 ),
+    text( "Gotchi wins the main-spec roll with 77.", 2 ),
+    text( "Maazh wins the main-spec roll with 77.", 2 ),
+    buttons( "RaidRoll", "Close" )
+  )
+end
+
+os.exit( lu.LuaUnit.run() )

@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/zirtox1992/Combat",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "zirtox1992",
+    "repo": "Combat",
+    "name": "Combat",
+    "url": "https://github.com/zirtox1992/Combat",
+    "api": "https://api.github.com/repos/zirtox1992/Combat"
+  },
+  "commit": "d118c5b259fc925e086c00f5f4db5a77273e6894",
+  "sourceFiles": {
+    "Combat/combat.lua": {
+      "sha256": "501920c6a1ca2d5c67c62806c638dc1536714ecb9da702291f5d67586cae2152",
+      "bytes": 457
+    },
+    "Combat/combat.toc": {
+      "sha256": "3656a5c91508ffc042fad650d3df39ce9288a0168f9045368a2a5a25dcd3e781",
+      "bytes": 114
+    },
+    "Icons/Ability_DualWield.blp": {
+      "sha256": "4d7b70089f843634d1f8ec6f36a53aa09d94c577312aa139a20ca0d9c41f0acf",
+      "bytes": 6660
+    },
+    "README.md": {
+      "sha256": "4ddbf2e01e188475622e0ae57aa2c348354c3460e4d6516d45c788a86fff6b73",
+      "bytes": 202
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

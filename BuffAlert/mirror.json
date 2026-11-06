@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/brunt/BuffAlert",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "brunt",
+    "repo": "BuffAlert",
+    "name": "BuffAlert",
+    "url": "https://github.com/brunt/BuffAlert",
+    "api": "https://api.github.com/repos/brunt/BuffAlert"
+  },
+  "commit": "7bb6f3526f9d39aa6a35eec4bfc2c4b08465f7b7",
+  "sourceFiles": {
+    "BuffAlert.lua": {
+      "sha256": "a12af53794b33a6a69fd23afcfd86dacfc174731d56c494f528eb18f7360cf87",
+      "bytes": 279
+    },
+    "BuffAlert.toc": {
+      "sha256": "1477f5a6e138f6494df955ff51d644e38fa3101f0ec44c8e3dfe7c5ac833f764",
+      "bytes": 134
+    },
+    "LICENSE": {
+      "sha256": "9d0bf01c643fcc080870901decce7a9f6add51bec47b2c9dd064f65ed0106556",
+      "bytes": 1069
+    },
+    "README.md": {
+      "sha256": "ce41101b1d8fda3b27d120324b2ced0d5cecad31fcd4f89b440670f801b9b05e",
+      "bytes": 390
+    },
+    "sound.ogg": {
+      "sha256": "925cf7cd205ca9ff2f8795a68fc639a75029d20469417a426e6e303e50befee1",
+      "bytes": 20519
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

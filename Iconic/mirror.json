@@ -1,0 +1,58 @@
+{
+  "upstream": "https://github.com/alchem1ster/Vanilla-Iconic",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "alchem1ster",
+    "repo": "Vanilla-Iconic",
+    "name": "Vanilla-Iconic",
+    "url": "https://github.com/alchem1ster/Vanilla-Iconic",
+    "api": "https://api.github.com/repos/alchem1ster/Vanilla-Iconic"
+  },
+  "commit": "7d742251f2f42b91689ba40da4e8ad4fa0e7c630",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "Iconic/Iconic.lua": {
+      "sha256": "03b631f30495fe69371b86ae4a2002af0073be6438c652085c599cc8456d5e4a",
+      "bytes": 6153
+    },
+    "Iconic/Iconic.toc": {
+      "sha256": "fa205a7275ff6a4417f5ba1a9b6b239c955760510b86195a5a2a2e93553e0aa0",
+      "bytes": 271
+    },
+    "Iconic/Iconic.xml": {
+      "sha256": "79da0f35cf22c63cce5d9dd6640adffeda22810bc26567dcdaed50c0a1c0f661",
+      "bytes": 1911
+    },
+    "README.md": {
+      "sha256": "6c04553940ad68f6cdf5f754c856bca47f75e946113227058595b758bd514a01",
+      "bytes": 775
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "168552993": {
+      "tag": "1.1_Vanilla",
+      "folder": "1.1_Vanilla--168552993",
+      "assets": {
+        "183658098": {
+          "sha256": "98577be41390617c4586891f20523d5fdbfa7beb71060f1b8ac9905e59f8fe03",
+          "bytes": 2718,
+          "id": "183658098",
+          "name": "Iconic.zip",
+          "url": "https://github.com/alchem1ster/Vanilla-Iconic/releases/download/1.1_Vanilla/Iconic.zip",
+          "path": "releases/1.1_Vanilla--168552993/assets/Iconic.zip"
+        }
+      },
+      "source": {
+        "sha256": "4a7cc2b4fe0300c84dcf3111fed791c292236f851fcf6058fa2d3ec1afc17d96",
+        "bytes": 3040,
+        "path": "releases/1.1_Vanilla--168552993/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/alchem1ster/Vanilla-Iconic/tarball/1.1_Vanilla"
+      }
+    }
+  }
+}

@@ -1,0 +1,262 @@
+-- HealBot Options panel file: HealBot_Options_Skins.lua
+-- Split from original HealBot_Options.lua
+
+HealBot_Font_List = {
+  { text = "Friz Quadrata", file = "Fonts\\FRIZQT__.TTF" },
+  { text = "Arial Narrow",  file = "Fonts\\ARIALN.TTF" },
+  { text = "Skurri",        file = "Fonts\\skurri.ttf" },
+  { text = "Morpheus",      file = "Fonts\\MORPHEUS.ttf" },
+}
+
+function HealBot_Options_FontDD_OnLoad(this)
+  UIDropDownMenu_Initialize(this, HealBot_Options_FontDD_Initialize)
+  UIDropDownMenu_SetWidth(110, this)
+end
+
+function HealBot_Options_FontDD_Initialize()
+  local currentFont = (HealBot_Config.bfont and HealBot_Config.bfont[HealBot_Config.Current_Skin]) or "Fonts\\FRIZQT__.TTF"
+  for i = 1, getn(HealBot_Font_List) do
+    local fontItem = HealBot_Font_List[i]
+    local info = {}
+    info.text = fontItem.text
+    info.func = HealBot_Options_FontDD_OnClick
+    info.value = fontItem.file
+    info.checked = (currentFont == fontItem.file)
+    UIDropDownMenu_AddButton(info)
+  end
+end
+
+function HealBot_Options_FontDD_OnClick()
+  UIDropDownMenu_SetSelectedID(HealBot_Options_Font_Dropdown, this:GetID())
+  if HealBot_Options_Font_DropdownText then
+    HealBot_Options_Font_DropdownText:SetText(this:GetText())
+  end
+  if not HealBot_Config.bfont then HealBot_Config.bfont = {} end
+  HealBot_Config.bfont[HealBot_Config.Current_Skin] = this.value
+  HealBot_Action_ResetSkin()
+end
+
+-- HealBot_Options_BarMaxRowsS_OnValueChanged: UI handler for OnValueChanged options panel.
+function HealBot_Options_BarMaxRowsS_OnValueChanged(this)
+  if not HealBot_Config.bmaxrows then HealBot_Config.bmaxrows = {} end
+  HealBot_Config.bmaxrows[HealBot_Config.Current_Skin] = this:GetValue()
+  HealBot_Action_PartyChanged()
+end
+
+function HealBot_Options_GridOrientationDD_OnLoad(this)
+  UIDropDownMenu_Initialize(this, HealBot_Options_GridOrientationDD_Initialize);
+  UIDropDownMenu_SetWidth(110, this);
+end
+
+function HealBot_Options_GridOrientationDD_Initialize()
+  local orient = HealBot_Config.GridOrientation and HealBot_Config.GridOrientation[HealBot_Config.Current_Skin] or 1;
+  local info = {};
+  info.text = "Vertical (Columns)";
+  info.func = HealBot_Options_GridOrientationDD_OnClick;
+  info.value = 1;
+  info.checked = (orient == 1);
+  UIDropDownMenu_AddButton(info);
+
+  info = {};
+  info.text = "Horizontal (Rows)";
+  info.func = HealBot_Options_GridOrientationDD_OnClick;
+  info.value = 2;
+  info.checked = (orient == 2);
+  UIDropDownMenu_AddButton(info);
+end
+
+function HealBot_Options_GridOrientationDD_OnClick()
+  UIDropDownMenu_SetSelectedID(HealBot_Options_GridOrientation_Dropdown, this:GetID());
+  if not HealBot_Config.GridOrientation then HealBot_Config.GridOrientation = {} end
+  HealBot_Config.GridOrientation[HealBot_Config.Current_Skin] = this.value;
+  HealBot_Action_PartyChanged()
+  
+  if (this.value == 2) then
+    HealBot_Options_BarMaxRowsS:Hide();
+    HealBot_Options_BarNumColsS:Show();
+  else
+    HealBot_Options_BarMaxRowsS:Show();
+    HealBot_Options_BarNumColsS:Hide();
+  end
+end
+
+-- HealBot_Options_NewSkin_OnTextChanged: UI handler for OnTextChanged options panel.
+function HealBot_Options_NewSkin_OnTextChanged(this)
+  local text= this:GetText()
+  if string.len(text)>0 then
+    HealBot_Options_NewSkinb:Enable();
+  else
+    HealBot_Options_NewSkinb:Disable();
+  end
+end
+-- HealBot_Options_NewSkinb_OnClick: UI handler for OnClick options panel.
+function HealBot_Options_NewSkinb_OnClick(this)
+  HealBot_Config.numcols[HealBot_Options_NewSkin:GetText()] = HealBot_Config.numcols[HealBot_Config.Current_Skin]
+  if not HealBot_Config.bmaxrows then HealBot_Config.bmaxrows = {} end
+  if not HealBot_Config.GridOrientation then HealBot_Config.GridOrientation = {} end
+  HealBot_Config.bmaxrows[HealBot_Options_NewSkin:GetText()] = HealBot_Config.bmaxrows[HealBot_Config.Current_Skin] or 0
+  HealBot_Config.GridOrientation[HealBot_Options_NewSkin:GetText()] = HealBot_Config.GridOrientation[HealBot_Config.Current_Skin] or 1
+  HealBot_Config.btexture[HealBot_Options_NewSkin:GetText()] = HealBot_Config.btexture[HealBot_Config.Current_Skin]
+  HealBot_Config.bcspace[HealBot_Options_NewSkin:GetText()] = HealBot_Config.bcspace[HealBot_Config.Current_Skin]
+  HealBot_Config.brspace[HealBot_Options_NewSkin:GetText()] = HealBot_Config.brspace[HealBot_Config.Current_Skin]
+  HealBot_Config.bwidth[HealBot_Options_NewSkin:GetText()] = HealBot_Config.bwidth[HealBot_Config.Current_Skin]
+  HealBot_Config.bheight[HealBot_Options_NewSkin:GetText()] = HealBot_Config.bheight[HealBot_Config.Current_Skin]
+  HealBot_Config.btextenabledcolr[HealBot_Options_NewSkin:GetText()] = HealBot_Config.btextenabledcolr[HealBot_Config.Current_Skin]
+  HealBot_Config.btextenabledcolg[HealBot_Options_NewSkin:GetText()] = HealBot_Config.btextenabledcolg[HealBot_Config.Current_Skin]
+  HealBot_Config.btextenabledcolb[HealBot_Options_NewSkin:GetText()] = HealBot_Config.btextenabledcolb[HealBot_Config.Current_Skin]
+  HealBot_Config.btextenabledcola[HealBot_Options_NewSkin:GetText()] = HealBot_Config.btextenabledcola[HealBot_Config.Current_Skin]
+  HealBot_Config.btextdisbledcolr[HealBot_Options_NewSkin:GetText()] = HealBot_Config.btextdisbledcolr[HealBot_Config.Current_Skin]
+  HealBot_Config.btextdisbledcolg[HealBot_Options_NewSkin:GetText()] = HealBot_Config.btextdisbledcolg[HealBot_Config.Current_Skin]
+  HealBot_Config.btextdisbledcolb[HealBot_Options_NewSkin:GetText()] = HealBot_Config.btextdisbledcolb[HealBot_Config.Current_Skin]
+  HealBot_Config.btextdisbledcola[HealBot_Options_NewSkin:GetText()] = HealBot_Config.btextdisbledcola[HealBot_Config.Current_Skin]
+  HealBot_Config.btextcursecolr[HealBot_Options_NewSkin:GetText()] = HealBot_Config.btextcursecolr[HealBot_Config.Current_Skin]
+  HealBot_Config.btextcursecolg[HealBot_Options_NewSkin:GetText()] = HealBot_Config.btextcursecolg[HealBot_Config.Current_Skin]
+  HealBot_Config.btextcursecolb[HealBot_Options_NewSkin:GetText()] = HealBot_Config.btextcursecolb[HealBot_Config.Current_Skin]
+  HealBot_Config.btextcursecola[HealBot_Options_NewSkin:GetText()] = HealBot_Config.btextcursecola[HealBot_Config.Current_Skin]
+  HealBot_Config.backcola[HealBot_Options_NewSkin:GetText()] = HealBot_Config.backcola[HealBot_Config.Current_Skin]
+  HealBot_Config.Barcola[HealBot_Options_NewSkin:GetText()] = HealBot_Config.Barcola[HealBot_Config.Current_Skin]
+  HealBot_Config.BarcolaInHeal[HealBot_Options_NewSkin:GetText()] = HealBot_Config.BarcolaInHeal[HealBot_Config.Current_Skin]
+  HealBot_Config.backcolr[HealBot_Options_NewSkin:GetText()] = HealBot_Config.backcolr[HealBot_Config.Current_Skin]
+  HealBot_Config.backcolg[HealBot_Options_NewSkin:GetText()] = HealBot_Config.backcolg[HealBot_Config.Current_Skin]
+  HealBot_Config.backcolb[HealBot_Options_NewSkin:GetText()] = HealBot_Config.backcolb[HealBot_Config.Current_Skin]
+  HealBot_Config.borcolr[HealBot_Options_NewSkin:GetText()] = HealBot_Config.borcolr[HealBot_Config.Current_Skin]
+  HealBot_Config.borcolg[HealBot_Options_NewSkin:GetText()] = HealBot_Config.borcolg[HealBot_Config.Current_Skin]
+  HealBot_Config.borcolb[HealBot_Options_NewSkin:GetText()] = HealBot_Config.borcolb[HealBot_Config.Current_Skin]
+  HealBot_Config.borcola[HealBot_Options_NewSkin:GetText()] = HealBot_Config.borcola[HealBot_Config.Current_Skin]
+  HealBot_Config.btextheight[HealBot_Options_NewSkin:GetText()] = HealBot_Config.btextheight[HealBot_Config.Current_Skin]
+  HealBot_Config.bardisa[HealBot_Options_NewSkin:GetText()] = HealBot_Config.bardisa[HealBot_Config.Current_Skin]
+  HealBot_Config.abortsize[HealBot_Options_NewSkin:GetText()] = HealBot_Config.abortsize[HealBot_Config.Current_Skin]
+  HealBot_Config.babortcolr[HealBot_Options_NewSkin:GetText()] = HealBot_Config.babortcolr[HealBot_Config.Current_Skin]
+  HealBot_Config.babortcolg[HealBot_Options_NewSkin:GetText()] = HealBot_Config.babortcolg[HealBot_Config.Current_Skin]
+  HealBot_Config.babortcolb[HealBot_Options_NewSkin:GetText()] = HealBot_Config.babortcolb[HealBot_Config.Current_Skin]
+  HealBot_Config.babortcola[HealBot_Options_NewSkin:GetText()] = HealBot_Config.babortcola[HealBot_Config.Current_Skin]
+  HealBot_Config.ShowHeader[HealBot_Options_NewSkin:GetText()] = HealBot_Config.ShowHeader[HealBot_Config.Current_Skin]
+
+  if not HealBot_Config.bcolormaxr then HealBot_Config.bcolormaxr = {} end
+  if not HealBot_Config.bcolormaxg then HealBot_Config.bcolormaxg = {} end
+  if not HealBot_Config.bcolormaxb then HealBot_Config.bcolormaxb = {} end
+  if not HealBot_Config.bcolorminr then HealBot_Config.bcolorminr = {} end
+  if not HealBot_Config.bcolorming then HealBot_Config.bcolorming = {} end
+  if not HealBot_Config.bcolorminb then HealBot_Config.bcolorminb = {} end
+  if not HealBot_Config.bfont then HealBot_Config.bfont = {} end
+
+  local curSkin = HealBot_Config.Current_Skin
+  local newSkin = HealBot_Options_NewSkin:GetText()
+  HealBot_Config.bcolormaxr[newSkin] = HealBot_Config.bcolormaxr[curSkin] or 0
+  HealBot_Config.bcolormaxg[newSkin] = HealBot_Config.bcolormaxg[curSkin] or 1
+  HealBot_Config.bcolormaxb[newSkin] = HealBot_Config.bcolormaxb[curSkin] or 0
+  HealBot_Config.bcolorminr[newSkin] = HealBot_Config.bcolorminr[curSkin] or 1
+  HealBot_Config.bcolorming[newSkin] = HealBot_Config.bcolorming[curSkin] or 0
+  HealBot_Config.bcolorminb[newSkin] = HealBot_Config.bcolorminb[curSkin] or 0
+  HealBot_Config.bfont[newSkin] = HealBot_Config.bfont[curSkin] or "Fonts\\FRIZQT__.TTF"
+
+  table.insert(HealBot_Skins,2,HealBot_Options_NewSkin:GetText())
+  HealBot_Config.Skin_ID = 2;
+  HealBot_Config.Skins = HealBot_Skins;  HealBot_Config.Current_Skin = HealBot_Options_NewSkin:GetText();
+  HealBot_Options_SetSkins()
+  HealBot_Options_NewSkin:SetText("")
+end
+-- HealBot_Options_DeleteSkin_OnClick: UI handler for OnClick options panel.
+function HealBot_Options_DeleteSkin_OnClick(this)
+  if HealBot_Config.Current_Skin~=HEALBOT_SKINS_STD then
+    HealBot_Config.numcols[HealBot_Options_SkinsText:GetText()] = nil
+    if HealBot_Config.bmaxrows then HealBot_Config.bmaxrows[HealBot_Options_SkinsText:GetText()] = nil end
+    if HealBot_Config.GridOrientation then HealBot_Config.GridOrientation[HealBot_Options_SkinsText:GetText()] = nil end
+    HealBot_Config.btexture[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.bcspace[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.brspace[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.bwidth[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.bheight[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.btextenabledcolr[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.btextenabledcolg[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.btextenabledcolb[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.btextenabledcola[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.btextdisbledcolr[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.btextdisbledcolg[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.btextdisbledcolb[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.btextdisbledcola[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.btextcursecolr[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.btextcursecolg[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.btextcursecolb[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.btextcursecola[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.backcola[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.Barcola[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.BarcolaInHeal[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.backcolr[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.backcolg[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.backcolb[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.borcolr[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.borcolg[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.borcolb[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.borcola[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.btextheight[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.bardisa[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.abortsize[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.babortcolr[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.babortcolg[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.babortcolb[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.babortcola[HealBot_Options_SkinsText:GetText()] = nil
+    HealBot_Config.ShowHeader[HealBot_Options_SkinsText:GetText()] = nil
+    if HealBot_Config.bcolormaxr then HealBot_Config.bcolormaxr[HealBot_Options_SkinsText:GetText()] = nil end
+    if HealBot_Config.bcolormaxg then HealBot_Config.bcolormaxg[HealBot_Options_SkinsText:GetText()] = nil end
+    if HealBot_Config.bcolormaxb then HealBot_Config.bcolormaxb[HealBot_Options_SkinsText:GetText()] = nil end
+    if HealBot_Config.bcolorminr then HealBot_Config.bcolorminr[HealBot_Options_SkinsText:GetText()] = nil end
+    if HealBot_Config.bcolorming then HealBot_Config.bcolorming[HealBot_Options_SkinsText:GetText()] = nil end
+    if HealBot_Config.bcolorminb then HealBot_Config.bcolorminb[HealBot_Options_SkinsText:GetText()] = nil end
+    if HealBot_Config.bfont then HealBot_Config.bfont[HealBot_Options_SkinsText:GetText()] = nil end
+    table.remove(HealBot_Skins,HealBot_Config.Skin_ID)
+    HealBot_Config.Skin_ID = 1;
+    HealBot_Config.Skins = HealBot_Skins;  
+    HealBot_Config.Current_Skin = HEALBOT_SKINS_STD;
+    HealBot_Options_SetSkins()
+  end
+end
+-- HealBot_Options_Skins_DropDown: UI handler for DropDown options panel.
+function HealBot_Options_Skins_DropDown()
+  for i=1, getn(HealBot_Skins), 1 do
+    local info = {};
+    info.text = HealBot_Skins[i];
+    info.func = HealBot_Options_Skins_OnSelect;
+    UIDropDownMenu_AddButton(info);
+  end
+end
+-- HealBot_Options_Skins_Initialize: UI handler for Initialize options panel.
+function HealBot_Options_Skins_Initialize()
+  UIDropDownMenu_Initialize(HealBot_Options_Skins,HealBot_Options_Skins_DropDown)
+end
+-- HealBot_Options_Skins_Refresh: UI handler for Refresh options panel.
+function HealBot_Options_Skins_Refresh(onselect)
+  if not HealBot_Config.Skin_ID then return end
+  if not onselect then HealBot_Options_Skins_Initialize() end  -- or wrong menu may be used !
+  HealBot_UIDropDownMenu_SetSelectedID(HealBot_Options_Skins,HealBot_Config.Skin_ID)
+end
+-- HealBot_Options_Skins_OnLoad: UI handler for OnLoad options panel.
+function HealBot_Options_Skins_OnLoad()
+  UIDropDownMenu_Initialize(this, HealBot_Options_Skins_DropDown)
+  UIDropDownMenu_SetWidth(100, this)
+end
+-- HealBot_Options_Skins_OnSelect: UI handler for OnSelect options panel.
+function HealBot_Options_Skins_OnSelect()
+  HealBot_Config.Skin_ID = this:GetID()
+  HealBot_Options_Skins_Refresh(true)
+  if this:GetID()>=1 then
+    HealBot_Config.Current_Skin = this:GetText()
+    HealBot_Options_SetSkins()
+  end
+end
+
+function HealBot_Options_TestBarsButton_OnClick(this)
+  if HealBot_Config.TestBarsOn then
+    HealBot_Config.TestBarsOn = false
+    this:SetText(HEALBOT_OPTIONS_TESTBARS.." OFF")
+  else
+    HealBot_Config.TestBarsOn = true
+    this:SetText(HEALBOT_OPTIONS_TESTBARS.." ON")
+  end
+  HealBot_Action_PartyChanged()
+end
+
+function HealBot_Options_NumTestBars_OnValueChanged(this)
+  HealBot_Config.numTestBars = this:GetValue()
+  if HealBot_Config.TestBarsOn then HealBot_Action_PartyChanged() end
+end

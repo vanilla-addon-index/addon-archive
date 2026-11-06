@@ -1,0 +1,18 @@
+{
+  "name": "questline",
+  "version": "0.1.77",
+  "private": true,
+  "description": "Questline offline database and validation tools; Node is not required in game.",
+  "scripts": {
+    "import": "node tools/import-database.js",
+    "import:questie": "node tools/import-database.js",
+    "build": "node tools/build.js && node tools/assets.js",
+    "test": "node tests/run.js",
+    "preview": "node tools/preview.js",
+    "import:database": "node tools/import-database.js"
+  },
+  "devDependencies": {
+    "fengari": "0.1.5",
+    "luaparse": "0.3.1"
+  }
+}

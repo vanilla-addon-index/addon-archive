@@ -1,0 +1,330 @@
+{
+  "upstream": "https://github.com/KeijinDE/KeijinAchievementMonitor",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "KeijinDE",
+    "repo": "KeijinAchievementMonitor",
+    "name": "KeijinAchievementMonitor",
+    "url": "https://github.com/KeijinDE/KeijinAchievementMonitor",
+    "api": "https://api.github.com/repos/KeijinDE/KeijinAchievementMonitor"
+  },
+  "commit": "b7d4f1d3bad50446ffacfe460c7dcbb9f22d6381",
+  "sourceFiles": {
+    "achievements/achievements_char.lua": {
+      "sha256": "3ce98d2ae324f69775d60ed3c09dbf6f794b07c84d1a4bf530892a92a8ae0a2c",
+      "bytes": 11682
+    },
+    "achievements/achievements_legacy.lua": {
+      "sha256": "6bf687845b38bcf033a3480689ad9f159f1d9e9162bc8c15ca1f48d5c04a610a",
+      "bytes": 1847
+    },
+    "achievements/achievements_meta_char.lua": {
+      "sha256": "ab3f44fe4922bb42e2d56ba7760abc1c24ca8550e917d10eb224ad559f023147",
+      "bytes": 2643
+    },
+    "achievements/achievements_meta.lua": {
+      "sha256": "51677ed67bc224a3c4c8a27d9f0ead4aa561d92b667e7dcc5f123fb7ce4f7356",
+      "bytes": 9252
+    },
+    "achievements/achievements_misc.lua": {
+      "sha256": "65136ec92d8f69383bb5acff5e00d161f506d5118a33b10936fc2ee49238f515",
+      "bytes": 885
+    },
+    "achievements/achievements_reputation.lua": {
+      "sha256": "f70daeeb6bd1c5cc1b3663239bd4446df0f5bbc2d6c68dbf32bc2173d576f9c7",
+      "bytes": 25698
+    },
+    "achievements/exploration/achievements_exploration_capitals.lua": {
+      "sha256": "6921e1338ace4448a2afbadf2947f2e67f7bd005fe22e0e9b770b5ecc4b54461",
+      "bytes": 2514
+    },
+    "achievements/exploration/achievements_exploration_easternkingdoms.lua": {
+      "sha256": "a342514d825d6ba58c518eff1fc32e7d1e50933fbf56fcabaa48b528635cc328",
+      "bytes": 108136
+    },
+    "achievements/exploration/achievements_exploration_kalimdor.lua": {
+      "sha256": "a2d62a818cbbc86630ba01e05094a28bb1ae76db52b8aed0c351d72cb2f392b9",
+      "bytes": 81021
+    },
+    "achievements/exploration/achievements_exploration_metas.lua": {
+      "sha256": "7d4cf01c1c37160be87ecfbb5d132531abde349360d6ca2a698141c8888834f5",
+      "bytes": 32141
+    },
+    "achievements/exploration/achievements_exploration_startingzones.lua": {
+      "sha256": "50ea10b76255349ef1f29b9d017888fff22996d0dbad5d7b777b1f0e9b7b39ba",
+      "bytes": 42555
+    },
+    "achievements/exploration/achievements_exploration_turtle_meta.lua": {
+      "sha256": "4b3ce44488a31f6d8509320806ecf98f576dcf897f85916046292d07e3ffd66c",
+      "bytes": 11181
+    },
+    "achievements/exploration/achievements_exploration_turtle.lua": {
+      "sha256": "0795cca99a9d07afd7b9b510f8e16bb1a41d8957c38137634ff7c241b19195d1",
+      "bytes": 64501
+    },
+    "achievements/hardcore/achievements_hardcore_char.lua": {
+      "sha256": "39a7ae30ed90d3411310a901a503a29ca2fb7ab498b0981a5d0bd4757ee52e2e",
+      "bytes": 2847
+    },
+    "achievements/hardcore/achievements_hardcore_kill.lua": {
+      "sha256": "7971b6ff6423121f33b461dbe92411f3274184bd86bac7b447911fd8c2c20569",
+      "bytes": 3067
+    },
+    "achievements/hardcore/achievements_hardcore_quest.lua": {
+      "sha256": "903f014feb72d2350ba44b763c0bffcb0f4f14d5d04d698b7ebd5b66171c14b2",
+      "bytes": 1560
+    },
+    "achievements/hardcore/achievements_hardcore_rep.lua": {
+      "sha256": "9e054d2e9e2082ced5074dc298253a174316c3d9049e752786f56ef013535236",
+      "bytes": 11652
+    },
+    "achievements/kills/achievements_kill_elite.lua": {
+      "sha256": "d58a383d48a873e9181b60e596787910932ce28f5e855ec34faba30954a3b3d3",
+      "bytes": 5305
+    },
+    "achievements/kills/achievements_killgroup.lua": {
+      "sha256": "235dee58c2a61f275422c50273a18aa585acd03b4482d22d6197c1a162f5bab6",
+      "bytes": 63451
+    },
+    "achievements/kills/achievements_killnamed.lua": {
+      "sha256": "50db11fe0a65b8df09239e780a74e746f7563a70cfa2ea4e4a6f2ef32e0c08a1",
+      "bytes": 6964
+    },
+    "achievements/kills/achievements_kills.lua": {
+      "sha256": "0eba4522ca4ce80b12cc109faf5a5703a4b3f5bfde09ec512c4038568ded36d8",
+      "bytes": 2582
+    },
+    "achievements/quests/achievements_quests_generic.lua": {
+      "sha256": "e9408b06d4f6d4154446b10635178d9179e7b99098573fbf714d6617bd90f7ac",
+      "bytes": 5602
+    },
+    "achievements/quests/achievements_quests_named_city.lua": {
+      "sha256": "9f960b42574d5a170a949a4a362abd4224247b15f6aad5647588bc51cb384f7e",
+      "bytes": 9603
+    },
+    "achievements/quests/achievements_quests_named_classes.lua": {
+      "sha256": "e28f5a509886dc2640179b1736c00c85b6f02de4143b1e1494f466e57d4be5ed",
+      "bytes": 41797
+    },
+    "achievements/quests/achievements_quests_named_profession.lua": {
+      "sha256": "67e9026084c663308c9109e92dbf97b7cf658a64f0f183c8a8bcc24aaea04c42",
+      "bytes": 20560
+    },
+    "achievements/quests/achievements_quests_named.lua": {
+      "sha256": "e168da671224d31eac9c91817ca313105cc4015afb5285e2c1e0e8f0bbb25da5",
+      "bytes": 30485
+    },
+    "achievements/skills/achievements_skills_profession.lua": {
+      "sha256": "c9878508a421e775f42cb501dc0cbc1a2e0f6688f890d5d90f27c0a60a3e4aab",
+      "bytes": 1468
+    },
+    "achievements/skills/achievements_skills_weapon.lua": {
+      "sha256": "b16ddd0f1dfdebdc646ac2cfed527f7e39b87f7f3534bd34245eb101962e9ee4",
+      "bytes": 1613
+    },
+    "Changelog.md": {
+      "sha256": "556ffeea1c4d7b39cc3f4fb6161b77877cd4d982a7b1cd11e5a1a932085e0d69",
+      "bytes": 39912
+    },
+    "data/core.lua": {
+      "sha256": "4791ef6d20246c519c9dca1cae133539da3f7b0bbcaa2871f61d5575ac25f23e",
+      "bytes": 8938
+    },
+    "data/labels.lua": {
+      "sha256": "66481678cb7b73c6de6cfb0ce6212553277b68042f535d03c487440b0fa66008",
+      "bytes": 7048
+    },
+    "data/trigger.lua": {
+      "sha256": "b47dcd44b3ede0fe42499c7eafc44f94572524af8ce0cafec27e2070be9bcb40",
+      "bytes": 5034
+    },
+    "debug/debug_namedquests.lua": {
+      "sha256": "3adf82f6eff3ef69ecdd9e007e7f311192695a63c262a8168664a6d4dbfea58d",
+      "bytes": 2327
+    },
+    "debug/grant.lua": {
+      "sha256": "0276fdb69fde36a56b683ce0dd277f4337a5645ec40bd2290275978e98e0b098",
+      "bytes": 5896
+    },
+    "events/events_char.lua": {
+      "sha256": "425a38688dd9e3091b1d1a4d8741225ed13a13dbd5e008b8ab94f16b68075a10",
+      "bytes": 5064
+    },
+    "events/events_hardcore.lua": {
+      "sha256": "4348613e474ab724b940c601dbd4c6b336893f5417163fe618921e79e95ed74a",
+      "bytes": 2936
+    },
+    "events/events_identity.lua": {
+      "sha256": "5438595a66aabcdaf2629fcd4ba44c5b699582463b5be8ec14fa231ca39ffa97",
+      "bytes": 3596
+    },
+    "events/events_kill.lua": {
+      "sha256": "ad7e8fa34246d9d084422df8a259c77985c6155bb98b4be6582ff6e9d478ec50",
+      "bytes": 5919
+    },
+    "events/events_meta.lua": {
+      "sha256": "295b10461f21d15c1c759c09ebf7018b275e8ca72c4bd43c8e689426095e486e",
+      "bytes": 1558
+    },
+    "events/events_misc.lua": {
+      "sha256": "f2cd68aa6dc6638931910273ac7b8bb1e5c2406be89696634f05114cfcca8744",
+      "bytes": 957
+    },
+    "events/events_quest.lua": {
+      "sha256": "4a355d91f4f2ffb0e3b0867c21f7515cbc7d8a363f13d4d8b74f38a7be005c9a",
+      "bytes": 6393
+    },
+    "events/events_reputation.lua": {
+      "sha256": "55726eb440141ff288aa4f44b2a845156443d1b6b60f4529dc1e85405ef1389f",
+      "bytes": 2240
+    },
+    "events/events_skill.lua": {
+      "sha256": "ed080d0e49266e964de531feaa041f6c4a47a9c6ac8ac053390550f28df30865",
+      "bytes": 3671
+    },
+    "events/events_zone.lua": {
+      "sha256": "9a7e49ae2132a1bccd9e71a1f896927cf9c7ad66e563e14b23991ba188f0cbb9",
+      "bytes": 915
+    },
+    "events/events.lua": {
+      "sha256": "7b8b5b0b384e83cd0b0420aa66ae419623a4fcbcbeb68a2af31ae2b8b6aebd07",
+      "bytes": 4024
+    },
+    "KeijinAchievementMonitor.toc": {
+      "sha256": "77363cdde6a1f11fbef45690b3979d76ec4b9b22c3558e24b984359af27eb4e7",
+      "bytes": 2559
+    },
+    "logic/logic_filtering.lua": {
+      "sha256": "ce1c3ed4d6a5e64b8a8407e18429c2b71931d5aab27c9846e6beea11ea32c94c",
+      "bytes": 2337
+    },
+    "logic/logic_grouping.lua": {
+      "sha256": "1f1deb100c67148d52b1a65cc9b8771a1400bf63f45a115bdbecb35ee9d1d9a5",
+      "bytes": 2854
+    },
+    "logic/logic_resultbuilder.lua": {
+      "sha256": "595016797b5f3ee413e6fe36bc9aca4f7c9816699b578310f3718d8dea0e64f8",
+      "bytes": 13026
+    },
+    "logic/logic_scroll.lua": {
+      "sha256": "64ea4aea48fa360dc5406a761118150c0fc08c946264c45fc3ec5f69a5c0e259",
+      "bytes": 8000
+    },
+    "logic/ui_scrolllogic.lua": {
+      "sha256": "9d7464b210bbf1f0feafe8e6ce8a9bd618db38b8274ee5e6ec7cee0f3475da6f",
+      "bytes": 784
+    },
+    "media/kambanner.png": {
+      "sha256": "a31a022eec276df4e7318d8ad2821b3f4eca35199347a3cf4b972c0260339745",
+      "bytes": 204146
+    },
+    "media/kamcharacter.png": {
+      "sha256": "ad63e447e626afe44031fd23a5fb0c62c56695d54d8e4ed54027fc5535c0cbcf",
+      "bytes": 235285
+    },
+    "media/kamcombat.png": {
+      "sha256": "91339c9419f6d291fa5705696f036c6c189b66d9d37cdb348c88f1598f49851c",
+      "bytes": 222395
+    },
+    "media/kamforum.png": {
+      "sha256": "0422319d0ae6613e44a58c51c596156f4f8844f82d4958d6d2e001fc86b6308c",
+      "bytes": 159731
+    },
+    "media/kammisc.png": {
+      "sha256": "5065a026aa9ac8cb1aa87f1009cb30fdf596ed774402bbf929fd07a6158ea1ba",
+      "bytes": 202180
+    },
+    "media/kamsetting.png": {
+      "sha256": "dea53a8eaf267556b2854b9d2c27ba3a957e43a67a4b3a038288de75fec16009",
+      "bytes": 167910
+    },
+    "media/kamsummary.png": {
+      "sha256": "e5d5be126691ff2748f4c9cfa5a7601201c32ebcffdc2494cf23cbb3e8327276",
+      "bytes": 79965
+    },
+    "media/notify.wav": {
+      "sha256": "1f15af04bfabab7acd59483e7858f391219c537713c93831575d2efde6336087",
+      "bytes": 269612
+    },
+    "README.md": {
+      "sha256": "18203fae9b5e82c3f37503ee771df17e466f360f6ebf04f17e073b6432cd2383",
+      "bytes": 4250
+    },
+    "storage/storage_mode.lua": {
+      "sha256": "e2f62a78e0a1c2364f1b343a306c728f561ec42d62a1256ac190baff9ae116e6",
+      "bytes": 3096
+    },
+    "storage/storage.lua": {
+      "sha256": "3475950db06a2caa656113ae8248923ee74d72992a598727dc09f7a4e2ea2914",
+      "bytes": 8287
+    },
+    "ui/clickhandlers.lua": {
+      "sha256": "c752ccdc3bb27f83ae1c35f58325394a69744e8d680161923cdce7ff2e3fea3a",
+      "bytes": 5359
+    },
+    "ui/minimap.lua": {
+      "sha256": "74df5c292b1fc35c7a997c54f9329eb0fbae0e02d651e24652a91c67c38a605c",
+      "bytes": 2574
+    },
+    "ui/tooltip.lua": {
+      "sha256": "f4434702d1d631477e2eee1ae96975db855dd56b53656bc5353ac0423fbde756",
+      "bytes": 3439
+    },
+    "ui/ui_config.lua": {
+      "sha256": "a7e8946899e4136a9672f98a1656a62559a57349609796c1fac464b96724611d",
+      "bytes": 15866
+    },
+    "ui/ui_dropdown.lua": {
+      "sha256": "bc00ed73adc55378dfb88d6756ad2d3fde30d6898e1ccd3489635617f1d3ce45",
+      "bytes": 4601
+    },
+    "ui/ui_main.lua": {
+      "sha256": "dcf894be3922150f45f2f4e688ea21ff755a2fe680fae49e7ca83177a170cbe2",
+      "bytes": 21562
+    },
+    "ui/ui_metahelper.lua": {
+      "sha256": "26d972808665944c71370814fc7eb18542758c89f594bf4a6ce3a5c7afab0bb9",
+      "bytes": 10217
+    },
+    "ui/ui_notify.lua": {
+      "sha256": "c708b9e6996d9246a4256e35cd8b1c10ca6c55d348328dbf4e7dddf50cdaf8fd",
+      "bytes": 8415
+    },
+    "ui/ui_pagination.lua": {
+      "sha256": "55592627758a43959e559d86e1dd7ed58d729de81dc55432d625f4c5fe49d2cb",
+      "bytes": 4430
+    },
+    "ui/ui_summary.lua": {
+      "sha256": "3bfeee3ff0ed7563b3623b910313818bfa2d2f9053e06e3a90cac438fba635e1",
+      "bytes": 14165
+    },
+    "ui/updateui.lua": {
+      "sha256": "ff5c734b2ad008d37fb197fb7d0132ccd401b433f1d9dc0f55c6f5ab626d803e",
+      "bytes": 11729
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "244472700": {
+      "tag": "v1.0.0",
+      "folder": "v1.0.0--244472700",
+      "assets": {
+        "289237678": {
+          "sha256": "a8d09e7afcaad81ff43edf8edc9566926f9a17dfba72416a84401f5dc1fda00b",
+          "bytes": 1650221,
+          "id": "289237678",
+          "name": "KeijinAchievementMonitor-main.zip",
+          "url": "https://github.com/KeijinDE/KeijinAchievementMonitor/releases/download/v1.0.0/KeijinAchievementMonitor-main.zip",
+          "path": "releases/v1.0.0--244472700/assets/KeijinAchievementMonitor-main.zip"
+        }
+      },
+      "source": {
+        "sha256": "7e3536531637ed51737d119789acf3469abe961d5e87f00b711b6a99fafa5a45",
+        "bytes": 1619866,
+        "path": "releases/v1.0.0--244472700/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/KeijinDE/KeijinAchievementMonitor/tarball/v1.0.0"
+      }
+    }
+  }
+}

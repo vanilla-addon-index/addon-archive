@@ -1,0 +1,5 @@
+## Interface: 11200
+## Title: blockvalue
+## Notes: Lightweight addon to show your block value
+blockvalue.lua
+blockvalue.xml

@@ -1,0 +1,65 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+  <!-- ======================================================================
+       action-editor-add-text.xml - Add Text Editor Template
+       ======================================================================
+       PURPOSE: Virtual template for the Add Text (Set Custom Text) method editor
+       PARAMETERS: instruction (text)
+       USAGE: CreateFrame("Frame", name, parent, "EreaRpMasterAddTextEditorTemplate")
+       ====================================================================== -->
+
+  <Frame name="EreaRpMasterAddTextEditorTemplate" virtual="true">
+    <Size>
+      <AbsDimension x="360" y="80"/>
+    </Size>
+    <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+              edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+      <EdgeSize><AbsValue val="10"/></EdgeSize>
+      <TileSize><AbsValue val="16"/></TileSize>
+      <BackgroundInsets><AbsInset left="3" right="3" top="3" bottom="3"/></BackgroundInsets>
+    </Backdrop>
+    <Scripts>
+      <OnLoad>
+        this:SetBackdropColor(0.1, 0.1, 0.1, 0.8)
+        this:SetBackdropBorderColor(0.35, 0.35, 0.45, 1)
+      </OnLoad>
+    </Scripts>
+    <Layers>
+      <Layer level="OVERLAY">
+        <FontString name="$parentTitle" inherits="GameFontNormal">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="5" y="-5"/></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parentInstructionLabel" inherits="GameFontNormalSmall">
+          <Anchors>
+            <Anchor point="TOPLEFT">
+              <Offset><AbsDimension x="10" y="-30"/></Offset>
+            </Anchor>
+          </Anchors>
+          <Text>Instruction text:</Text>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <EditBox name="$parentInstructionEdit" inherits="InputBoxTemplate" autoFocus="false">
+        <Size>
+          <AbsDimension x="340" y="25"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset><AbsDimension x="10" y="-50"/></Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnEscapePressed>
+            this:ClearFocus()
+          </OnEscapePressed>
+        </Scripts>
+      </EditBox>
+    </Frames>
+  </Frame>
+
+</Ui>

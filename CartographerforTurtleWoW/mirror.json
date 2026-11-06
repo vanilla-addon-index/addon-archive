@@ -1,0 +1,313 @@
+{
+  "upstream": "https://github.com/Redbu11dev/Cartographer",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Redbu11dev",
+    "repo": "Cartographer",
+    "name": "Cartographer",
+    "url": "https://github.com/Redbu11dev/Cartographer",
+    "api": "https://api.github.com/repos/Redbu11dev/Cartographer"
+  },
+  "commit": "f90b5b4db54a3ad65846454a93ca98e5a8d90ed6",
+  "sourceFiles": {
+    ".vscode/settings.json": {
+      "sha256": "1e0a452a7db4295136545c7b6b339675556e0e26fde8266acbf7653a44724536",
+      "bytes": 35
+    },
+    "Bindings.xml": {
+      "sha256": "2e889c1d5d84f2b96f3526c94a8194d24f1bae18b32961cc77b03680f8fb05c0",
+      "bytes": 185
+    },
+    "Cartographer.lua": {
+      "sha256": "cabd1431d03c15238a9ff75b0971ce8aa6bf555e5e5e470deccfd3bb270f3012",
+      "bytes": 10350
+    },
+    "Cartographer.toc": {
+      "sha256": "fdf0b40b9514a874f7d7311544b1ca326440ac97eb8156b6f982170546fa1f59",
+      "bytes": 1258
+    },
+    "GroupColorsArtwork/Group1.tga": {
+      "sha256": "09e425625616f57223f661fed58aec1b2659dbf83a59fb20f5fe162aa4f8d9db",
+      "bytes": 779
+    },
+    "GroupColorsArtwork/Group2.tga": {
+      "sha256": "c6c2a661e99dac7d5c694f925c6c89c2af02fd80decca0673f2ba018d47cf1ef",
+      "bytes": 814
+    },
+    "GroupColorsArtwork/Group3.tga": {
+      "sha256": "7781582c3fb04bc3c0ddbcc26ad89dbde5bd05e7401864cbe6114b6c6aaabe95",
+      "bytes": 834
+    },
+    "GroupColorsArtwork/Group4.tga": {
+      "sha256": "40e05f40012c00315da016d04f3fc54eec95cae23edf91fc2b9fe425eb76d82c",
+      "bytes": 812
+    },
+    "GroupColorsArtwork/Group5.tga": {
+      "sha256": "2f5e06a1791687f76d36bb1f5ffd73e5cccf8b9db606173d2160605bfd81bc18",
+      "bytes": 814
+    },
+    "GroupColorsArtwork/Group6.tga": {
+      "sha256": "c5c24f6749ad7ce058a5b8331ea1f8c2a9e99a309977f24907a1c41ba3ce4107",
+      "bytes": 856
+    },
+    "GroupColorsArtwork/Group7.tga": {
+      "sha256": "6515c0ce31c9ddf740a351446b0f4de1b2960c99f16de22f7c6ba1777d87b179",
+      "bytes": 804
+    },
+    "GroupColorsArtwork/Group8.tga": {
+      "sha256": "8fbe1334b26b7d1d81ad4a798967c5e982887d5c00bd827ba37df8a74d881ce5",
+      "bytes": 864
+    },
+    "GroupColorsArtwork/Normal.tga": {
+      "sha256": "ad1ee3d13af17b6af79590f39d8905c0d75113869ccaf14b348fc1f6b6cb0734",
+      "bytes": 820
+    },
+    "Instances/BlackfathomDeeps.blp": {
+      "sha256": "afdfc6aafbf04ff43cf7a2fdf5e7da49b6f2a27aee3dfac3f9f0b77dbe02b49a",
+      "bytes": 350724
+    },
+    "Instances/BlackrockDepths.blp": {
+      "sha256": "dc120b502c7944f296060fd3850e2c7f33c3d38c666b23cee9accd55f3793715",
+      "bytes": 350724
+    },
+    "Instances/BlackrockSpireLower.blp": {
+      "sha256": "905d97ef53b6e3af51b9274aa652a40aa92f23205c44ae7ff7f9653a795d03c1",
+      "bytes": 350692
+    },
+    "Instances/BlackrockSpireUpper.blp": {
+      "sha256": "e331bfac71d328d4dba2f4080c39c036e6c5dc43df20a3f1b30ada81e69d3910",
+      "bytes": 350724
+    },
+    "Instances/BlackwingLair.blp": {
+      "sha256": "0063125f6aad8ec48d82b08c6f443907630a16d47b18b433052648b25b703e8f",
+      "bytes": 350724
+    },
+    "Instances/DireMaul.blp": {
+      "sha256": "9f0eff254f8b0bd5ae91055980e624c2298b38e1b9caf4373d492d4b76a87d5c",
+      "bytes": 350692
+    },
+    "Instances/DireMaulEast.blp": {
+      "sha256": "aaa584897a2d6c45fa28b87fe183569a11d18d4ab97d2d5638dc38c314bdedce",
+      "bytes": 350692
+    },
+    "Instances/DireMaulNorth.blp": {
+      "sha256": "310b3fa464127e306dada994e04a846d11db945db9a002055f977eb961c53002",
+      "bytes": 350692
+    },
+    "Instances/DireMaulWest.blp": {
+      "sha256": "35b8602892d4a3bc071192982bab8eac1e051c8efb53fc2831c7226a6a4d7dd4",
+      "bytes": 350692
+    },
+    "Instances/Gnomeregan.blp": {
+      "sha256": "b6f258cb8d543c298ea188384d36a80a079dee17e72b5d8722d63e12e9d54968",
+      "bytes": 350692
+    },
+    "Instances/Maraudon.blp": {
+      "sha256": "90ded7365643fd3b49d7d7cf77479ff283bdec03e58c92f7e5c622369c8df8c6",
+      "bytes": 350724
+    },
+    "Instances/MoltenCore.blp": {
+      "sha256": "1c7c4e65dc77ed3cf58c6cde904b62309a392fc0efdf0a958d2e871ceac3dae9",
+      "bytes": 350724
+    },
+    "Instances/Naxxramas.blp": {
+      "sha256": "791dec12e7cd8ba5f383bbbb759ce7ce612ebe3c75f5cc2d95af03c856c8eb74",
+      "bytes": 350724
+    },
+    "Instances/OnyxiasLair.blp": {
+      "sha256": "2d35a8a4979676d26b07c4b498df9558ac3aad369f388773b2efddf3b85176d0",
+      "bytes": 350724
+    },
+    "Instances/RagefireChasm.blp": {
+      "sha256": "99b2a4ea763ad6e2aba8b723a676acdad61b3b9c41ef7f8399375f256c2d8ee6",
+      "bytes": 350724
+    },
+    "Instances/RazorfenDowns.blp": {
+      "sha256": "0456ea267ab333f29cdbc63ac3e08b90cc802e282afb696ef788735c5903cf1e",
+      "bytes": 350724
+    },
+    "Instances/RazorfenKraul.blp": {
+      "sha256": "50a082cc44ff6d6fc530244ad73f5a07c12cad82b130d926c9fafd9597e4f168",
+      "bytes": 350724
+    },
+    "Instances/RuinsofAhnQiraj.blp": {
+      "sha256": "f3b5598f2880762893a077286db81783f615d5f6c2f31d3b553d103ea53147d2",
+      "bytes": 350724
+    },
+    "Instances/ScarletMonastery.blp": {
+      "sha256": "9c7df269c348a24d07d3c938a4c9cc68841e9156cf941f3cc2a43bb81e656991",
+      "bytes": 350724
+    },
+    "Instances/Scholomance.blp": {
+      "sha256": "7f24384c05e125f35089cd7bc87bccdfaecd508d3db4293d4f3809e7a7b96de7",
+      "bytes": 350724
+    },
+    "Instances/ShadowfangKeep.blp": {
+      "sha256": "f8909a4598c0554e018e5aec5e670f259776cce40faf60d25f54d9dd618136de",
+      "bytes": 350724
+    },
+    "Instances/Stratholme.blp": {
+      "sha256": "bb90f1c0ada8280615cfa4a21984189fc580855dd703124f4de44ec120a91927",
+      "bytes": 350724
+    },
+    "Instances/TempleofAhnQiraj.blp": {
+      "sha256": "07bcfdb84278973f191553ae6d1db34d434def08940a0a9f41013c04940ae93a",
+      "bytes": 350724
+    },
+    "Instances/TheDeadmines.blp": {
+      "sha256": "11d09990ab247e7d3f949da46c59dc6e083014fa3d9b6bde45fd010aedff4c7b",
+      "bytes": 350724
+    },
+    "Instances/TheStockades.blp": {
+      "sha256": "153427604fa5229bc1397cd4a6308554efa9ef82088474eb73eaf12ad17c8208",
+      "bytes": 350724
+    },
+    "Instances/TheSunkenTemple.blp": {
+      "sha256": "18d032d7a34cb6c5104e69273dc0736d4a6edb50dbbeafbf12b75210edbea53c",
+      "bytes": 350724
+    },
+    "Instances/Uldaman.blp": {
+      "sha256": "83a381d5cb9fc4ce82c78d53399edeb320cdb42206fa36ee392f1713efc01895",
+      "bytes": 350724
+    },
+    "Instances/WailingCaverns.blp": {
+      "sha256": "419df14b887abcff7fab91b5d16126b3c1c777d1e82df817a38990161b7fc043",
+      "bytes": 350724
+    },
+    "Instances/ZulFarrak.blp": {
+      "sha256": "f8f8672a51d88872fe3221f6d042ebd13af5dd6161bb840673082257a6820e4a",
+      "bytes": 350724
+    },
+    "Instances/ZulGurub.blp": {
+      "sha256": "9741f2e9456fcda5ee60f8c8c2f5270a268628bdbe075e31d766b9690b3f99c5",
+      "bytes": 350724
+    },
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "748acd8e3dd95faac684a9b7cf613cbd254958357561ef2b4d0c98f14ae0be08",
+      "bytes": 32076
+    },
+    "Libs/AceComm-2.0/AceComm-2.0.lua": {
+      "sha256": "ec3c6dc3d9e5d6e117d536644fa839990bc0ead20061ee931f7bccc2e3dcabc5",
+      "bytes": 81579
+    },
+    "Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "45e46a9f2c6f832822002a4cad7d8ff5b5a721ae9ba66041d0009ce54134486c",
+      "bytes": 67017
+    },
+    "Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "a4f108012227bd4e6fe80f3a6705bf5be576d2741538ea5ab5cbe2fa4ac53e61",
+      "bytes": 44484
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "96d649dde1e06c4e75bc8b3a6c0da58a74f996f7c63b4092cb70a0adcd378abc",
+      "bytes": 28909
+    },
+    "Libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "7b0d2d27db07b113fb52e5b1816251041fd6850294b03422cdadb2252a414eba",
+      "bytes": 16896
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "503b761427ac3fbbe18e197df96493bc452409cd248dcc423ed8fed565ab35a5",
+      "bytes": 23082
+    },
+    "Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "b0f6e98edf9c4ee9f01c4d6d9e8fd3d2a44b4f057fdae2c779cf251617288938",
+      "bytes": 15953
+    },
+    "Libs/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "8fd64c405a68edcbfbf0a9ad05d6ceb5f5fadf80c5bd294c422c3d70b177736c",
+      "bytes": 15029
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "384c50f3a7882f0c540bd73bcb1dd0714d216a6cd8580a504a4c8ea696a78ba8",
+      "bytes": 30348
+    },
+    "Libs/Babble-Boss-2.2/Babble-Boss-2.2.lua": {
+      "sha256": "1b8f24cb23b770a5fdd145e187b585c5ad11d7b9c68720815d484195208b8d6f",
+      "bytes": 77255
+    },
+    "Libs/Babble-Spell-2.2/Babble-Spell-2.2.lua": {
+      "sha256": "5d185d1cb835f1f6e7ffd06f37bc6dbef003f012e2b8a2849793533e08ad8d38",
+      "bytes": 458714
+    },
+    "Libs/Babble-Zone-2.2/Babble-Zone-2.2.lua": {
+      "sha256": "46bfb9351cb013aa7b85c399f4fd5ff874418de6c39886655ae383ff5a25b601",
+      "bytes": 42484
+    },
+    "Libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "e01f935aa7ad169aae62af57014be543ea5110002531990071ac94ec41c4d51c",
+      "bytes": 86594
+    },
+    "Libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "0a4783ec658c28eb0a3e5a17fb9b129147b0ab0cb965cc035b9221ebecd664f1",
+      "bytes": 86783
+    },
+    "Libs/Tourist-2.0/Tourist-2.0.lua": {
+      "sha256": "644031ae96ff851063903d990ea02a1ce89dbb4b99d74077796eab5df55a305f",
+      "bytes": 51476
+    },
+    "Modules/Battlegrounds.lua": {
+      "sha256": "97af6312d89ae72bf17ccf8fe1e0d57d1b3c822c17f3117f228b812abd30a2fb",
+      "bytes": 4522
+    },
+    "Modules/Coordinates.lua": {
+      "sha256": "9eba765a7dbafdb6c769cee7f07c5fe7b6b4aa4a4315f9ee4a2188b6a2c5615e",
+      "bytes": 4163
+    },
+    "Modules/Foglight.lua": {
+      "sha256": "08c69e00900ad3ee0d152d12208d34dd6ddf24590fe3a101d02665ae1bc5ce6a",
+      "bytes": 56363
+    },
+    "Modules/GroupColors.lua": {
+      "sha256": "af41923ebe17672b9bf1c62f8d44df2370104ccf0f54034f6c284f6af0f597be",
+      "bytes": 5213
+    },
+    "Modules/InstanceMaps.lua": {
+      "sha256": "1488036cae07c18fd790ebdd2e30f183326c347f0dc6cd06b0d1323f2361159d",
+      "bytes": 10754
+    },
+    "Modules/InstanceNotes/enUS.lua": {
+      "sha256": "f1eaf8ff8d649c4a78801874fb664057ddef0e9b2a6c0458b50fcc7726adac51",
+      "bytes": 7693
+    },
+    "Modules/InstanceNotes/koKR.lua": {
+      "sha256": "eb7e3ed9d00cb1090371203134382403edc6661f83b33523c0787f557a8e3969",
+      "bytes": 12743
+    },
+    "Modules/InstanceNotes/module.lua": {
+      "sha256": "e45a16eff7e428e847f2013baa1cb1b65ab391bab16f26b4aabdb4f9a8c85165",
+      "bytes": 1554
+    },
+    "Modules/InstanceNotes/notes.lua": {
+      "sha256": "841e87e861285b635683482e9106b966700312a21fd8133166c8cc5a504a0be9",
+      "bytes": 76745
+    },
+    "Modules/InstanceNotes/ruRU.lua": {
+      "sha256": "3dc19cda609159703942d6898f2f22a424e54447e87245b6fe3a12e7006284f2",
+      "bytes": 16533
+    },
+    "Modules/LookNFeel.lua": {
+      "sha256": "d44326436b1cc3e01878a294f27b84a8478d5551d1c10f63843b46e0b6203ef7",
+      "bytes": 27103
+    },
+    "Modules/Notes.lua": {
+      "sha256": "1267e4eba3c14c2054497f5a9b6e5797162ab2490eae4469829f63227780a39f",
+      "bytes": 67347
+    },
+    "Modules/Professions.lua": {
+      "sha256": "7f998f0605f1f4924294eefecd25d060dadc3408f4d8e28b0df293a60741d367",
+      "bytes": 3523
+    },
+    "Modules/ZoneInfo.lua": {
+      "sha256": "57a58f0e39d2f1d59def5cdd2b2bc331ddaa733647a9ee67b590abbc9fe01f28",
+      "bytes": 7198
+    },
+    "README.md": {
+      "sha256": "89f20915c17f502c0d4ab19f9cbb62db9d6832519bb43e723a809af33d1b958a",
+      "bytes": 648
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

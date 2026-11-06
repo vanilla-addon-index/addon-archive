@@ -1,0 +1,53 @@
+{
+  "upstream": "https://octowow.st/git/Mquadrat/FBHealBox",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Mquadrat",
+    "repo": "FBHealBox",
+    "name": "FBHealBox",
+    "url": "https://octowow.st/git/Mquadrat/FBHealBox",
+    "api": "https://octowow.st/git/api/v1/repos/Mquadrat/FBHealBox"
+  },
+  "commit": "84f5f548b846f267c3f7d69393d48397602db39f",
+  "sourceFiles": {
+    "CHANGELOG.md": {
+      "sha256": "2236d6dd3d133f2f13d29bf7912f16391c7be3ef83a098f89c5f1ea6d3a007d2",
+      "bytes": 127831
+    },
+    "FBHealBox_Damage.lua": {
+      "sha256": "734a7d72ec9cb4a3f3009adf7310f60ce1e2a486dc335c8275302d9bc43f1e74",
+      "bytes": 41689
+    },
+    "FBHealBox_Raid.lua": {
+      "sha256": "6e1c856b79f2f219e971bfb02810f327cde28f9b75fbced2f61e1686f67994ec",
+      "bytes": 80189
+    },
+    "FBHealBox_Ticker.lua": {
+      "sha256": "e297ea8447ab2cb51e73bbce8bc8f4cfcab5a55fadad11d5c1a933595d35f6f2",
+      "bytes": 28630
+    },
+    "FBHealBox.lua": {
+      "sha256": "aa5ed71b53b43115bab08a9a76a7c741187607ac257af5aa0587c87fe56818b1",
+      "bytes": 392924
+    },
+    "FBHealBox.toc": {
+      "sha256": "cb9c1cf706978b7b860cdce351f3f3c2d043e3e91217eb3e72171e34a90e6ae7",
+      "bytes": 660
+    },
+    "FBHealBox.xml": {
+      "sha256": "65f291c6920f9c6ba86e3d2b5070c917e0f6c923df66ec915b0b7a34299a43c0",
+      "bytes": 800
+    },
+    "LICENSE": {
+      "sha256": "0ff4fef8fd346597f9b285143fa44ef84155146f24e267095dd8e731e03d2b45",
+      "bytes": 1064
+    },
+    "README.md": {
+      "sha256": "293d46545fa606cf2a8945fc400f53d21cd9fab88542470e102bbce90e134c3d",
+      "bytes": 174924
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

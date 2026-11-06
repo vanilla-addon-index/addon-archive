@@ -1,0 +1,153 @@
+{
+  "upstream": "https://github.com/acid9000/PizzaWorldBuffs",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "acid9000",
+    "repo": "PizzaWorldBuffs",
+    "name": "PizzaWorldBuffs",
+    "url": "https://github.com/acid9000/PizzaWorldBuffs",
+    "api": "https://api.github.com/repos/acid9000/PizzaWorldBuffs"
+  },
+  "commit": "72d6861926c1a2106c8773e8e251da27ab617471",
+  "sourceFiles": {
+    "img/frame.png": {
+      "sha256": "4973590104d498ca62be87872475445e5e98a534fdd6bbfc1934de1aea4f262f",
+      "bytes": 255653
+    },
+    "img/N1.tga": {
+      "sha256": "c9cab1f8475981c9ebde5298b8b3f4fa57a160411dba4863723255601afbb815",
+      "bytes": 16217
+    },
+    "img/N2.tga": {
+      "sha256": "526e19ddd62f85f6dcff60d816a7b9f5f128de9657345a9b0767942d3bc5a990",
+      "bytes": 16217
+    },
+    "img/N3.tga": {
+      "sha256": "6b24fe2b4be5b1954da09fd314ebe85dd5194684d610c788141166fb1718e870",
+      "bytes": 25501
+    },
+    "img/O1.tga": {
+      "sha256": "ec1fc52a9f24c1ef136ffb837fbd64c8ff27ae602916355063dd84cd8bfdb568",
+      "bytes": 16879
+    },
+    "img/O2.tga": {
+      "sha256": "f558a0e2605bc11d26c065f4f6013d931d90078d77172d4b62c474f30c347572",
+      "bytes": 16879
+    },
+    "img/O3.tga": {
+      "sha256": "ec0966e883529abea2668b456f847b5c7bc24eb63d926f49f1b495334799bd29",
+      "bytes": 23546
+    },
+    "img/tent.png": {
+      "sha256": "985d1a1388a53b739e6e58803c0d8e298d6fc77a17faac8bc234980afc02cec8",
+      "bytes": 1245969
+    },
+    "img/tent1.tga": {
+      "sha256": "9203dec0dad87fe436283c780f08bf7ba87070ba4ad8d0f06eb541bee7b4b7c9",
+      "bytes": 32630
+    },
+    "img/tent1337.tga": {
+      "sha256": "77bcc5680b4bc69f6523c7b9ff5f0b8e66bec98bd19c33cc778937c3e2bd6418",
+      "bytes": 144444
+    },
+    "img/tent2.tga": {
+      "sha256": "373b291e37ba7a3fc9bde01cd9c85667021d7eefec344393b15acdd53dd3a79b",
+      "bytes": 15619
+    },
+    "img/tent3.tga": {
+      "sha256": "a2debc7fd6d4624c9e48fb1ae124f4936951542cc764633e43d63b797d341d03",
+      "bytes": 50679
+    },
+    "img/tent4.tga": {
+      "sha256": "1bdb2a0eb22dfdb552cf3a6e1f28bb853f8792cb180defec7139415c1ff901d0",
+      "bytes": 28009
+    },
+    "img/tent5.tga": {
+      "sha256": "fc72e04ae391499f279e512bad510b8c171f44c2be32d4d8159a5b26221e032c",
+      "bytes": 51037
+    },
+    "img/tent6.tga": {
+      "sha256": "8d7226cf71cd17a233ac18e9fa156fbbc4131b819fa8d0577ddf3653d9b87589",
+      "bytes": 39242
+    },
+    "img/tent7.tga": {
+      "sha256": "5806f98b0ce6afa4909d9c66c44ba50f64a22fbc3b5452d3d41b7ed1e7007736",
+      "bytes": 40411
+    },
+    "img/timer_report.png": {
+      "sha256": "d16765fe1e854236cb730f6457b303b35dbafcdaa2c2d875a611850874deb284",
+      "bytes": 16055
+    },
+    "LICENSE": {
+      "sha256": "e41bb2b9bec788b14a9f85604a4f58f47560c4e17896df304e89f17aa939b780",
+      "bytes": 1095
+    },
+    "PizzaWorldBuffs.toc": {
+      "sha256": "811f8e1402188b764f4a69da89dab8a85228f012573d8810453dc217c56fc2b8",
+      "bytes": 561
+    },
+    "README.md": {
+      "sha256": "2c21f83acb23a2eeea2885471e17ec54b715bb1c3c095f18169abff5fda40931",
+      "bytes": 10449
+    },
+    "src/channel.lua": {
+      "sha256": "b1a0722c776a4791ab2ef2f1d694584b283732ded3bf96738859018355462a3c",
+      "bytes": 865
+    },
+    "src/config.lua": {
+      "sha256": "3b5651709beaa977f4cf6b4f556189afeab9586e117c86267a9890b1dc5c9bed",
+      "bytes": 774
+    },
+    "src/core.lua": {
+      "sha256": "172cd83148d9c45869634293e6dfb5035cc08334bcd6e5944c7a1c696242b4f9",
+      "bytes": 13471
+    },
+    "src/frame.lua": {
+      "sha256": "fad71e14aa2602c89460e4db79841d642a8310c6563530c6c2f00b18472e2eaf",
+      "bytes": 9268
+    },
+    "src/logoutframe.lua": {
+      "sha256": "405425ef0344870fe45576cf8462487aa990508b1311fc65f8eca4fd03e2e5b2",
+      "bytes": 2288
+    },
+    "src/main.lua": {
+      "sha256": "6b406d7accd5ba5b8692c9d164761b8ed7fb605ab53fe89b3255430c3adb3846",
+      "bytes": 12725
+    },
+    "src/map.lua": {
+      "sha256": "c55e58088d9e49015df02cce331bcb789afa9c7a7ed405b824870617440f4f96",
+      "bytes": 4227
+    },
+    "src/share.lua": {
+      "sha256": "04117f385407159cff63d05e57a78336c7264fe9c218344d4a61784fbc2b76ec",
+      "bytes": 2490
+    },
+    "src/slashcommands.lua": {
+      "sha256": "9dcbecd097dff41134bdbfb9681017d8be0bd0ee478a03af2f6b22070b7caf5b",
+      "bytes": 12997
+    },
+    "src/tents.lua": {
+      "sha256": "a2d2e894ac4d208959dc3ac3db9d30d16bbf129c2cd5833ab4ea97664bad1ec6",
+      "bytes": 15730
+    },
+    "src/utils.lua": {
+      "sha256": "3296d6761b348ae5843e25d2e93a8108433d0dfa4cd814a10c0303c6e7b371f2",
+      "bytes": 9072
+    },
+    "translations/enUS.lua": {
+      "sha256": "1a3869b722221e5e87885320094719ccab5ebaa8ccd8ea6119dffc3df887478d",
+      "bytes": 2482
+    },
+    "translations/esES.lua": {
+      "sha256": "c25484dc7789d9bea593c7dc65373d5bfc3fb951f19ab9a6df3d394546d0c210",
+      "bytes": 4730
+    },
+    "translations/zhCN.lua": {
+      "sha256": "7fc2af6c85b5a1d055319d767743bef8ac158887048f005a4b112b4d8e023df0",
+      "bytes": 3990
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

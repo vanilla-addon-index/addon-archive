@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: |cff33ffccpf|cffffffffUI |cff8888ccOcto|r |cffff6060(rename this folder to pfUI)
+## Author: Shagu, Octo edition by bdot89
+## Notes: This folder must be called pfUI. Close the game and rename it to pfUI - see the message in game.
+## X-Octo-Version: 1.0.0
+
+# Only loads in a folder with this wrong name (GitHub's Download ZIP, a clone
+# under another name): the real addon is pfUI.toc. See wrongfolder.lua.
+wrongfolder.lua

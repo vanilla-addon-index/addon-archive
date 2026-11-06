@@ -1,0 +1,369 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+    ..\..\..\FrameXML\UI.xsd">
+
+  <Frame name="ManaMinder_Options_Alerts" parent="ManaMinder_Options" hidden="true" id="3">
+    <Size>
+      <AbsDimension x="566" y="383"/>
+    </Size>
+    <Anchors>
+      <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options" relativePoint="TOPLEFT">
+        <Offset>
+          <AbsDimension x="12" y="-38"/>
+        </Offset>
+      </Anchor>
+    </Anchors>
+    <Frames>
+
+      <Frame name="$parent_Display_Section" inherits="OptionFrameBoxTemplate">
+        <Size>
+          <AbsDimension x="281" y="368"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" />
+        </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="$parentText" inherits="GameFontHighlight" text="Display">
+              <Anchors>
+                <Anchor point="TOPLEFT">
+                  <Offset>
+                    <AbsDimension x="6" y="12"/>
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Frames>
+
+          <CheckButton name="ManaMinder_Options_Alerts_Enabled_Check" inherits="OptionsCheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+                <Offset>
+                  <AbsDimension x="8" y="-6"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.alertsFrame:OnEnabledLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.alertsFrame:OnEnabledChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="ManaMinder_Options_Alerts_Enabled_When_Hidden_Check" inherits="OptionsCheckButtonTemplate">
+            <Size>
+              <AbsDimension x="24" y="24"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Enabled_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="8" y="2"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.alertsFrame:OnEnabledWhenHiddenLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.alertsFrame:OnEnabledWhenHiddenChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <CheckButton name="ManaMinder_Options_Alerts_Locked_Check" inherits="OptionsCheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Enabled_When_Hidden_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="-8" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.alertsFrame:OnLockedLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.alertsFrame:OnLockedChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <EditBox name="ManaMinder_Options_Alerts_Text" autoFocus="false" inherits="InputBoxTemplate">
+            <Size x="255" y="20" />
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Locked_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="6" y="-22"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Layers>
+              <Layer level="OVERLAY">
+                <FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT">
+                  <Size x="156" y="15" />
+                  <Anchors>
+                    <Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT" />
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.alertsFrame:OnTextLoad()
+              </OnLoad>
+              <OnEnterPressed>
+                this:ClearFocus()
+                ManaMinder.optionsFrame.alertsFrame:OnTextChange(this:GetText())
+              </OnEnterPressed>
+              <OnEscapePressed>
+                this:ClearFocus()
+              </OnEscapePressed>
+              <OnEnter>
+                  if this.tooltipText then
+                    GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                    GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+                  end
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide()
+              </OnLeave>
+            </Scripts>
+          </EditBox>
+
+          <Slider name="ManaMinder_Options_Alerts_Duration_Slider" inherits="OptionsSliderTemplate">
+            <Size>
+              <AbsDimension x="260" y="17"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Text" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="-5" y="-20" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnValueChanged>
+                ManaMinder.optionsFrame.alertsFrame:OnDurationChange(this:GetValue())
+              </OnValueChanged>
+              <OnLoad>
+                  ManaMinder.optionsFrame.alertsFrame:OnDurationLoad()
+              </OnLoad>
+            </Scripts>
+          </Slider>
+
+          <Slider name="ManaMinder_Options_Alerts_Animation_Duration_Slider" inherits="OptionsSliderTemplate">
+            <Size>
+              <AbsDimension x="260" y="17"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Duration_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="-22" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnValueChanged>
+                  ManaMinder.optionsFrame.alertsFrame:OnAnimationDurationChange(this:GetValue())
+              </OnValueChanged>
+              <OnLoad>
+                  ManaMinder.optionsFrame.alertsFrame:OnAnimationDurationLoad()
+              </OnLoad>
+            </Scripts>
+          </Slider>
+
+          <Slider name="ManaMinder_Options_Alerts_Icon_Size_Slider" inherits="OptionsSliderTemplate">
+            <Size>
+              <AbsDimension x="260" y="17"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Animation_Duration_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="-22" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnValueChanged>
+                  ManaMinder.optionsFrame.alertsFrame:OnIconSizeChange(this:GetValue())
+              </OnValueChanged>
+              <OnLoad>
+                  ManaMinder.optionsFrame.alertsFrame:OnIconSizeLoad()
+              </OnLoad>
+            </Scripts>
+          </Slider>
+
+          <Slider name="ManaMinder_Options_Alerts_Font_Size_Slider" inherits="OptionsSliderTemplate">
+            <Size>
+              <AbsDimension x="260" y="17"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Icon_Size_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="-22" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnValueChanged>
+                  ManaMinder.optionsFrame.alertsFrame:OnFontSizeChange(this:GetValue())
+              </OnValueChanged>
+              <OnLoad>
+                  ManaMinder.optionsFrame.alertsFrame:OnFontSizeLoad()
+              </OnLoad>
+            </Scripts>
+          </Slider>
+
+          <Slider name="ManaMinder_Options_Alerts_Repeat_Delay_Slider" inherits="OptionsSliderTemplate">
+            <Size>
+              <AbsDimension x="260" y="17"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Font_Size_Slider" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="0" y="-22" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnValueChanged>
+                ManaMinder.optionsFrame.alertsFrame:OnRepeatDelayChange(this:GetValue())
+              </OnValueChanged>
+              <OnLoad>
+                  ManaMinder.optionsFrame.alertsFrame:OnRepeatDelayLoad()
+              </OnLoad>
+            </Scripts>
+          </Slider>
+
+        </Frames>
+        <Scripts>
+          <OnLoad>
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+          </OnLoad>
+        </Scripts>
+      </Frame>
+
+      <Frame name="$parent_Sounds_Section" inherits="OptionFrameBoxTemplate">
+        <Size>
+          <AbsDimension x="281" y="368"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_Display_Section" relativePoint="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="4" y="0" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="$parentText" inherits="GameFontHighlight" text="Sound">
+              <Anchors>
+                <Anchor point="TOPLEFT">
+                  <Offset>
+                    <AbsDimension x="6" y="12"/>
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Frames>
+
+          <CheckButton name="ManaMinder_Options_Alerts_Sounds_Enabled_Check" inherits="OptionsCheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+                <Offset>
+                  <AbsDimension x="8" y="-6"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.alertsFrame:OnSoundsEnabledLoad()
+              </OnLoad>
+              <OnClick>
+                  ManaMinder:OnCheckBoxClick()
+                  ManaMinder.optionsFrame.alertsFrame:OnSoundsEnabledChange(this:GetChecked())
+              </OnClick>
+            </Scripts>
+          </CheckButton>
+
+          <Frame name="ManaMinder_Options_Alerts_Sound_DropDown" inherits="UIDropDownMenuTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Sounds_Enabled_Check" relativePoint="BOTTOMLEFT">
+                <Offset>
+                  <AbsDimension x="-13" y="-12"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Layers>
+              <Layer level="ARTWORK">
+                <FontString name="$parent_Text" inherits="GameFontNormalSmall" justifyH="LEFT" text="Sound">
+                  <Anchors>
+                    <Anchor point="TOPLEFT">
+                      <Offset x="21" y="9" />
+                    </Anchor>
+                    <Anchor pont="BOTTOMRIGHT">
+                      <Offset x="0" y="0" />
+                    </Anchor>
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Scripts>
+              <OnLoad>
+                  ManaMinder.optionsFrame.alertsFrame:OnSoundDropDownLoad()
+              </OnLoad>
+              <OnEnter>
+                  GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                  GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+              </OnEnter>
+              <OnLeave>
+                  GameTooltip:Hide();
+              </OnLeave>
+            </Scripts>
+          </Frame>
+
+          <Button name="ManaMinder_Options_Alerts_Sound_Test">
+            <Size>
+              <AbsDimension x="28" y="28"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="ManaMinder_Options_Alerts_Sound_DropDown" relativePoint="TOPRIGHT">
+                <Offset>
+                  <AbsDimension x="-12" y="0" />
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <NormalTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Up" />
+            <PushedTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Down" />
+            <HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD" />
+            <Scripts>
+              <OnClick>
+                  ManaMinder.optionsFrame.alertsFrame:OnSoundTestClick()
+              </OnClick>
+            </Scripts>
+          </Button>
+
+        </Frames>
+        <Scripts>
+          <OnLoad>
+              ManaMinder.optionsFrame:OnOptionsFrameBoxLoad(this)
+          </OnLoad>
+        </Scripts>
+      </Frame>
+
+    </Frames>
+  </Frame>
+
+</Ui>

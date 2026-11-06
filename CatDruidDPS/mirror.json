@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Cernie/CatDruidDPS",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Cernie",
+    "repo": "CatDruidDPS",
+    "name": "CatDruidDPS",
+    "url": "https://github.com/Cernie/CatDruidDPS",
+    "api": "https://api.github.com/repos/Cernie/CatDruidDPS"
+  },
+  "commit": "3eeecbad23a584f265a17f559b7319d54d089d57",
+  "sourceFiles": {
+    "catDruidDPS.lua": {
+      "sha256": "dc0f5d16c9c2eb98de2c5415ab2fb101f57cc41d0c5aee7d320600225894fb3e",
+      "bytes": 17244
+    },
+    "catDruidDPS.toc": {
+      "sha256": "42d4ba94082aff536ea3b975c33e837e9280bb442dc98965f7c3b2b04a908df3",
+      "bytes": 164
+    },
+    "catDruidDPS.xml": {
+      "sha256": "8ea806793e9e6867e8dd16b033ad64c0034e6f93c7cd0e316ec179474f0e0094",
+      "bytes": 355
+    },
+    "README.md": {
+      "sha256": "05f409caa554e4571fed0989bba87fa7aeb6ddbb9e2a763f2097d7e4517856db",
+      "bytes": 2722
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

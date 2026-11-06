@@ -1,0 +1,997 @@
+{
+  "upstream": "https://github.com/zanthor/OG-RaidHelper",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "zanthor",
+    "repo": "OG-RaidHelper",
+    "name": "OG-RaidHelper",
+    "url": "https://github.com/zanthor/OG-RaidHelper",
+    "api": "https://api.github.com/repos/zanthor/OG-RaidHelper"
+  },
+  "commit": "bfed882bfc7714df6d5086fc60e8a1ced6373278",
+  "sourceFiles": {
+    "_Administration/AddonAudit.lua": {
+      "sha256": "58e6e6f5343ed9cbb6f6fdbc18fdbdaa86a5e94008cecb7644014d0db0cbfeb2",
+      "bytes": 22950
+    },
+    "_Administration/AdminSelection.lua": {
+      "sha256": "b6435126accd948fea82f2326a9899d407a07028ea6168f295d8b12242cdffb9",
+      "bytes": 38887
+    },
+    "_Administration/PendingSegments.lua": {
+      "sha256": "4761fa10270fdfbb9e3f7c2673ccdba45ff862fd931ff7542b8f37fdfa4cff83",
+      "bytes": 20888
+    },
+    "_Administration/Recruitment.lua": {
+      "sha256": "04448a3cda6bd5d22056d6c019fff3c5f8a3ca40958724c5b6c8d610afc465c8",
+      "bytes": 51934
+    },
+    "_Administration/Roster.lua": {
+      "sha256": "737458aff0301cdd1ba4ce221519d8b7385c0d50c78ccc2c59b185e01bdfdd5e",
+      "bytes": 102562
+    },
+    "_Administration/SRValidation.lua": {
+      "sha256": "d0d695bfed88b802b54430b838a35c38fc6d0608d06b456574216ceb88a2ce2f",
+      "bytes": 51132
+    },
+    "_Configuration/Consumables.csv": {
+      "sha256": "b049ff7aa775cf2ee9266d2ed5d619f62a39fcfc4d4047680759b5636db1ebc9",
+      "bytes": 1385
+    },
+    "_Configuration/Consumes.lua": {
+      "sha256": "4345b5ae9a77f20682e8371d3e2df07cd450c06dda0b1979856178d60843cfe3",
+      "bytes": 32684
+    },
+    "_Configuration/ConsumesTracking.lua": {
+      "sha256": "51868f905edbbd5d0802affc9e1daaffcd4bf563d932b90f0b0f0fb6c30d7552",
+      "bytes": 104247
+    },
+    "_Configuration/Invites_Test.lua": {
+      "sha256": "c41dba33cdf3ee0a6de56616cb044044b639a601f267eb41c3a3c8501f8383b0",
+      "bytes": 9452
+    },
+    "_Configuration/Invites.lua": {
+      "sha256": "5b03bc02be0dcb66788b28e114027fb66d164d8b2d51c0c9ca8eabd72195ec34",
+      "bytes": 118048
+    },
+    "_Configuration/Promotes.lua": {
+      "sha256": "9b48e3875deccafdb335734fa52d7237568259b1da1ae8cd16aa373b5e63a5a3",
+      "bytes": 23209
+    },
+    "_Core/Backport.lua": {
+      "sha256": "b19eec214eaacff533823f3899b72280920522ea0aa7d353c4206a295053b42c",
+      "bytes": 686
+    },
+    "_Core/ChatWindow.lua": {
+      "sha256": "4df16470823153d67e9117e7afc9e30e65621d627fbff8dc942d845874a6041f",
+      "bytes": 1931
+    },
+    "_Core/ConTrack_Defaults.lua": {
+      "sha256": "b26c2508cfa6c8402eeb8185216694d4742d60f05cd001bdafabf50319845a4f",
+      "bytes": 11084
+    },
+    "_Core/Core.lua": {
+      "sha256": "08dbbc432df885119bdbd9ff758226852b07102280cc0216a904b814445333cd",
+      "bytes": 179155
+    },
+    "_Core/Defaults.lua": {
+      "sha256": "7a021fcc9edc7a8541020e3e2994911e52d59e8e6fc083e01fdb660b4016c3e8",
+      "bytes": 88612
+    },
+    "_Core/SavedVariablesManager.lua": {
+      "sha256": "8510d0863e69249b7aabb04db2d1cb256dde2d548a1b0c1c7523316a9e18e677",
+      "bytes": 32656
+    },
+    "_Core/Utilities.lua": {
+      "sha256": "2a6d459ec9086f2db4477ba654ff517566034fe941c5fc79a7816f955a7f97a5",
+      "bytes": 1242
+    },
+    "_Infrastructure/DataManagement.lua": {
+      "sha256": "464395a561088ba02dcc44e4558d9112eaf5ab4427fcb58b8c1cafa96d0aa0c6",
+      "bytes": 33320
+    },
+    "_Infrastructure/MessageRouter.lua": {
+      "sha256": "30bb8d4438202d91d3719ba30b7b9f52178449aa64e0a13903db5ad03fedb1dd",
+      "bytes": 35179
+    },
+    "_Infrastructure/MessageTypes.lua": {
+      "sha256": "be7710fb554aab62032b1a0e712edfb0fdcb0d6d4554c4108238e56fbe47ba27",
+      "bytes": 11202
+    },
+    "_Infrastructure/Migration.lua": {
+      "sha256": "cc8c1e3c7ac3c0925a62e553a2054f7dd9239d51e3c273ee071971efbbf744d0",
+      "bytes": 105143
+    },
+    "_Infrastructure/MigrationMap.lua": {
+      "sha256": "d3516d860475e1ee56f84988ea97b49577a3b969d8e9ae4e6e02bab1fcbe586a",
+      "bytes": 71819
+    },
+    "_Infrastructure/Permissions.lua": {
+      "sha256": "ddfba4bd1fc2e47b7bde6753e60933f0851b8393766ef3ae49abddcf13b491bf",
+      "bytes": 16414
+    },
+    "_Infrastructure/SyncChecksum.lua": {
+      "sha256": "6c3182aac76b4516e016b9699aaf5d3cfb918d1b1191f5f94d60fb52b3b7b85d",
+      "bytes": 45714
+    },
+    "_Infrastructure/SyncGranular.lua": {
+      "sha256": "f26aead0984e6961baf6eb6ac3b505b0afa702f7a17fca5c05dd3c6864c87984",
+      "bytes": 48833
+    },
+    "_Infrastructure/SyncIntegrity.lua": {
+      "sha256": "a8ab8291ffc70829574b4b46ee25a789c9216685635f3d0c451c547ee2621039",
+      "bytes": 51457
+    },
+    "_Infrastructure/SyncMode.lua": {
+      "sha256": "8e494db98811a40c4b63ec12ab55f16202e31622af6fd242b51ab0324e9a3ad5",
+      "bytes": 13589
+    },
+    "_Infrastructure/SyncRepair.lua": {
+      "sha256": "f3e6dc7f5ec9f21139e93757557e5b71f28015ef104e35de136aaad783501ea2",
+      "bytes": 31691
+    },
+    "_Infrastructure/SyncRepairHandlers.lua": {
+      "sha256": "d0872b35ef5ef25624064be554c3af45a663d4f8aea81ca2338e3fdf0c371463",
+      "bytes": 40455
+    },
+    "_Infrastructure/SyncRepairUI.lua": {
+      "sha256": "ac269c7d4285af0038f6b732c42166d71313478ac30c84049720f48f277148cf",
+      "bytes": 39808
+    },
+    "_Infrastructure/SyncRouter.lua": {
+      "sha256": "f512fe80f62e0d54056800ddfd1ec6a8074ee6eb72c9b6a951103c76661ce7e0",
+      "bytes": 7285
+    },
+    "_Infrastructure/SyncSession.lua": {
+      "sha256": "40e8e7c5e93202394740d37d828af14303d49544a8260f302ef9bc9d1fc1d89c",
+      "bytes": 16623
+    },
+    "_Modules/cthun.lua": {
+      "sha256": "549f436cc88f20ce704247d016a6dd4e3a4150cb660434cb6a49bd441a22fd14",
+      "bytes": 1728
+    },
+    "_Modules/OGRH-ConsumeHelper.lua": {
+      "sha256": "cd01f55d6c4bbd18232a6406b6aeae7238eb42b4be98efe71007cd2b776321e1",
+      "bytes": 100624
+    },
+    "_Modules/OGRH-ConsumeHelperDefaults.lua": {
+      "sha256": "9c87a824557589a64cd591f82b624264998ea07bb1e697d0691dbcd9a96492ee",
+      "bytes": 4207
+    },
+    "_Raid/AdvancedSettings.lua": {
+      "sha256": "4602c66c068feab498951d26014f91787582743be90b95d28ee535ca872c772c",
+      "bytes": 45173
+    },
+    "_Raid/Announce.lua": {
+      "sha256": "8f335039fdfd624a7ea9196cbf1e5e7b1605d2470aaea75e85102baa8a0a4f3b",
+      "bytes": 36783
+    },
+    "_Raid/BigWigs.lua": {
+      "sha256": "eb185def802118ad2c0027612a8ef2bd5f6c5f58c1e110d5972cd1405be04484",
+      "bytes": 11060
+    },
+    "_Raid/BuffManager.lua": {
+      "sha256": "888d6c803515c0aaecc45dc5553e25daf0db2606776e9d4b98189be607cfb377",
+      "bytes": 106666
+    },
+    "_Raid/BuffManagerPP.lua": {
+      "sha256": "a66cc7f118b206facd7adcd8defa048f871dc7093200ba99126afb60e9ba5f64",
+      "bytes": 37014
+    },
+    "_Raid/BuffManagerPP.lua.bak": {
+      "sha256": "e6ff7e1ba42aceffe0a614e88719069f67c2073ab9dab2d5023380a277d338e1",
+      "bytes": 41561
+    },
+    "_Raid/ClassPriority.lua": {
+      "sha256": "8ca01360bfc0d786d4c5b77d3a1b160b533b69c7736d62cfc0d551d840407829",
+      "bytes": 15529
+    },
+    "_Raid/copypasta.lua": {
+      "sha256": "a4370192dec0b00e61b873896123e98bc6404c0cdf1f3549ebde23eaa7e785da",
+      "bytes": 21541
+    },
+    "_Raid/EncounterAdmin.lua": {
+      "sha256": "a70983c12561535ce919928494d1e4fbdd93ce3edbbda1d0c3c29d21d9af1387",
+      "bytes": 30153
+    },
+    "_Raid/EncounterMgmt.lua": {
+      "sha256": "40d72b02ecce1d0285fe8adc2a4139499b89cc90fbb6b0e0d2b3d9608821566e",
+      "bytes": 214117
+    },
+    "_Raid/EncounterSetup.lua": {
+      "sha256": "353b550737ec114603273e05a5b21cd08cc70015dc201d50b682e8929e984ca7",
+      "bytes": 107795
+    },
+    "_Raid/LinkRole.lua": {
+      "sha256": "029a1a9ca8dbe8de166105b43cc928c8cf4d3c6a2d95325f448880209e860db6",
+      "bytes": 11165
+    },
+    "_Raid/ReadynessDashboard.lua": {
+      "sha256": "b8fde054ee9514340c6df951993af00af8f179f332b60c74d696d6d9da0c4521",
+      "bytes": 112090
+    },
+    "_Raid/ReadynessDashboardUI.lua": {
+      "sha256": "ad2adaa04ce4aaa25c0f0643e528fb3c1e5799169706682710b9a849479ba7e8",
+      "bytes": 26204
+    },
+    "_Raid/RebirthCaller.lua": {
+      "sha256": "837c3c5ed56d13d5fdc16bf5a4047c72f6dcba266183350abe8636f8261131a5",
+      "bytes": 22016
+    },
+    "_Raid/RebirthCallerUI.lua": {
+      "sha256": "5fece8edfa27feaaf563e87e3d1d8210abac11c7b61204f8bfb8306a5ee650fc",
+      "bytes": 32556
+    },
+    "_Raid/RolesPoll.lua": {
+      "sha256": "cc3f006c0a1fac56cc0545722b74f60bb7c5aa8f55e232fae6aed39c6b0e506f",
+      "bytes": 12113
+    },
+    "_Raid/RolesUI.lua": {
+      "sha256": "1da5266f072aff5bb2c8c87dd202f1ac84f983575c685b08ced82be2d361074b",
+      "bytes": 37418
+    },
+    "_Raid/Trade.lua": {
+      "sha256": "8c741aa0206a67731310b1bcf098457e21e68d7b07598a855a81453ffd4b8aaf",
+      "bytes": 34353
+    },
+    "_Tests/test_hierarchical_checksums.lua": {
+      "sha256": "29a88332afddb44fa207fb49e1ee534d26a46e489e4b52a6e98bf92eca236796",
+      "bytes": 12300
+    },
+    "_Tests/test_phase1.lua": {
+      "sha256": "dfec9339d1b3b0e635e7504892a7776b504f70f870bc4ca433335a92cc3cda53",
+      "bytes": 18700
+    },
+    "_Tests/test_svm.lua": {
+      "sha256": "2c6aed9ddadd671827e7bd6df154dca90d66130d156c7ef26e2242b109aa449c",
+      "bytes": 13260
+    },
+    "_UI/MainUI.lua": {
+      "sha256": "f4002a7cc500823c456a153222a0d94f1a3e02d467cde780861d266168c1f025",
+      "bytes": 42525
+    },
+    "_UI/RosterPanel.lua": {
+      "sha256": "a7ab6d777d87748554c6e3b280c4801ab3661e1e12f073a173bfa2dcdf6d8b35",
+      "bytes": 26216
+    },
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    ".gitignore.upstream": {
+      "sha256": "bd79a77b9a6138016fbaea0f5c993cf24a19b4162befece6e27063d18414f3e4",
+      "bytes": 498
+    },
+    "Documentation/! Pre-Deployment Instructions.md": {
+      "sha256": "a0fc4075348b428ed02d2dace26160a694a16d55e8f0416b5959e0a4152b2487",
+      "bytes": 14119
+    },
+    "Documentation/2.0/v2.0.100 Changes.md": {
+      "sha256": "e9d4764473b116649dd50c879107c070217f0b9ffc4db9a9403f91931b67bc53",
+      "bytes": 2919
+    },
+    "Documentation/2.0/v2.0.101 Changes": {
+      "sha256": "a2cc9f307f3ead4458e5577a63d230736088142af7afd157eac9bd265d5158f0",
+      "bytes": 223
+    },
+    "Documentation/2.0/v2.0.96 Changes.md": {
+      "sha256": "b0f9d9e563b526851676d89e71c8601d96fc79793b21c97e8fe11a56d8b696f9",
+      "bytes": 3129
+    },
+    "Documentation/2.0/v2.0.97 Changes.md": {
+      "sha256": "5a708a2c045e294f6869229d636b8113fbab3290c81d36c4a7c3dd2bd2588fb9",
+      "bytes": 1216
+    },
+    "Documentation/2.0/v2.0.98 Changes.md": {
+      "sha256": "6053d00263209a18c4d271f76980168bd6e0df494630eb1ad118b48beeb389cb",
+      "bytes": 25
+    },
+    "Documentation/2.0/v2.0.99 Changes.md": {
+      "sha256": "5dc231113dcf173f4eaa3809590e280285b0cccbd3029644ed993c6bf103ae5c",
+      "bytes": 1447
+    },
+    "Documentation/2.1/BuffManager.md": {
+      "sha256": "d8a537f2f572b6ae7c281d67fe51075b462f03aff4ce31878c242e617c345eb4",
+      "bytes": 57259
+    },
+    "Documentation/2.1/EncounterAdmin.md": {
+      "sha256": "600fa3216bab59925476c8afbd2695a2633ade0d944f468d295e802350cb9cf5",
+      "bytes": 24441
+    },
+    "Documentation/2.1/EndUser.md": {
+      "sha256": "7c7acd60324c9090914794b619651a0c97258abc0b91ee09bfc10b693f420a1d",
+      "bytes": 13132
+    },
+    "Documentation/2.1/InfrastructureCleanup.md": {
+      "sha256": "976abca993699c3cebc69ea818004900617cc948e3d35bf144f7ea618e24cb7b",
+      "bytes": 27070
+    },
+    "Documentation/2.1/Readyness Dashboard.md": {
+      "sha256": "7ae645a0f5feb410abf086d1648449b82874cba355b7f1a2c36c8b89362df981",
+      "bytes": 70785
+    },
+    "Documentation/2.1/RebirthCaller.md": {
+      "sha256": "4ca55a2bd1b59e72cb4ae4fd526d8235e84e56beb65a1a6e42cbf47a3b41c1eb",
+      "bytes": 27426
+    },
+    "Documentation/2.1/UnitXP Notes for DruidFinder.md": {
+      "sha256": "7ab3ecb52d2b544b42f1ea1cab4015d1a9545718464f07e88f92aeb178053080",
+      "bytes": 6579
+    },
+    "Documentation/2.1/v2.1.14 Changes.md": {
+      "sha256": "c9bcc0f484f9a0140658a5fa43fddaa7b1b79ccbe9cbc4ddd3673a9f78bc3215",
+      "bytes": 3067
+    },
+    "Documentation/2.1/v2.1.15 Changes.md": {
+      "sha256": "fbfb3fcf84da120544e74c99cb3c4b3d3a2b0115b4df3220eae3a3390de50340",
+      "bytes": 2608
+    },
+    "Documentation/2.2/BaT Loot Rules.md": {
+      "sha256": "bc15adf90dbfd85b12b619b202cff669ceb19b23a68ab00b4696f58218823e9e",
+      "bytes": 1870
+    },
+    "Documentation/2.2/LootMan.md": {
+      "sha256": "694550465a2fbeb4a587a8186f7b9537dd809e1e1c88b01c3a1abd523e27fa7b",
+      "bytes": 75883
+    },
+    "Documentation/2.2/PrompterRole.md": {
+      "sha256": "a230622c4c30bfbad350d7b66cc197b6f45e9ea396cbe6027d9b7bace071bbf3",
+      "bytes": 24256
+    },
+    "Documentation/2.2/SR+ Master Loot & Validation Design.md": {
+      "sha256": "aa4227c31921df8a99d4ec710665f9dbe1278be6a3a211c5c7124dad2118f7bb",
+      "bytes": 48682
+    },
+    "Documentation/2.2/SR+ Validation.md": {
+      "sha256": "8f84c8f2dafb2c83470272b8cb523b140f74dc2ec2aeadac88d5a327291e2b74",
+      "bytes": 42410
+    },
+    "Documentation/Archive/! Phase-1-Testing-Guide.md": {
+      "sha256": "55e9c84ef20c61295fcd821e9948d620bd39a439373bb5cc245019809c1d8a26",
+      "bytes": 5664
+    },
+    "Documentation/Archive/ADDON_AUDIT_README.md": {
+      "sha256": "84297fad6a8c634f7e15d12854ebd0004b8ffebc73adce3ef72cad74e3674d40",
+      "bytes": 2028
+    },
+    "Documentation/Archive/Advanced Encounter Settings Design.md": {
+      "sha256": "4ca77eef3ccbe67ac7d41ff49c66ed4801943dfecb2be6a4e8f7b4e945dedc45",
+      "bytes": 61181
+    },
+    "Documentation/Archive/AUTO_ASSIGN_LOGIC.md": {
+      "sha256": "5cd21d9771e962d0b8cec7cd7cca879b6bfbe837039b0b6113c5929386e036dd",
+      "bytes": 6835
+    },
+    "Documentation/Archive/BigWigs Menu Debug Session.md": {
+      "sha256": "1e2c069711ef527242e4a4d9ed2700b58cb594b80323540febe36432257eee55",
+      "bytes": 3945
+    },
+    "Documentation/Archive/CHATWINDOW_MIGRATION.md": {
+      "sha256": "04877d25c1a77b0bf0bfea0c6238022415bedab6bbf7e822d70861eded404069",
+      "bytes": 7382
+    },
+    "Documentation/Archive/Data-Migration-Cleanup.md": {
+      "sha256": "c690db3cd555c3438bb691c2a05c5f48af862debe3b98e2bea102bb08e3f8d11",
+      "bytes": 7874
+    },
+    "Documentation/Archive/DEPRECATED_RGO.md": {
+      "sha256": "d53955ac6d7901ba7eb3aaaea26c6b029271fc954a72421c4552819646deea42",
+      "bytes": 8084
+    },
+    "Documentation/Archive/DESIGN_ConsumesTrackingHistory.md": {
+      "sha256": "40262f5c550de111bcef9d52271634cf3180862e3f27e029996cd42317520748",
+      "bytes": 24966
+    },
+    "Documentation/Archive/OGRH_Invites_Redesign_Spec.md": {
+      "sha256": "37e1fac96f729cc73bb35799c24122639a0c49d9d7c3912f9702c8fe892b7412",
+      "bytes": 38422
+    },
+    "Documentation/Archive/Phase-1-Completion-Summary.md": {
+      "sha256": "ab6776d7db1ff752dd56e5376146815c2bd1cf316118c5adf1086fcf32b71913",
+      "bytes": 9067
+    },
+    "Documentation/Archive/Phase-2-Schema-Redesign-Status.md": {
+      "sha256": "45d80c4b530ab62fee003f0d87038786214dbae7bee082b438846891a53c30ed",
+      "bytes": 11650
+    },
+    "Documentation/Archive/Phase-2-Write-Migration-Tracker.md": {
+      "sha256": "4bb410584c64a3ec0b7b9062a6bbfd8ea57d6602bfbc31e595bce8220bdd6f15",
+      "bytes": 21003
+    },
+    "Documentation/Archive/PHASE2_TESTING.md": {
+      "sha256": "3a293d491a83ed995c782f6989eb044e0e1f644abc0c2a3a97a5c619dd7aecc6",
+      "bytes": 10768
+    },
+    "Documentation/Archive/PHASE3A_IMPLEMENTATION.md": {
+      "sha256": "059d8694f98c40eb712795eed508c23808ff3a402b24caeef53eec052ea54ff6",
+      "bytes": 7770
+    },
+    "Documentation/Archive/PHASE3B_CORE_AUDIT.md": {
+      "sha256": "cd0a346526eb1d58940573ec13b2d5e13a7939bab6b4ae4f2910576936a00e2f",
+      "bytes": 21666
+    },
+    "Documentation/Archive/PHASE3B_ITEM6_ARCHITECTURE.md": {
+      "sha256": "81eb6c82b7a1f7a4f439e956b3653c121c3cd578563c9eeb42b90894517c245f",
+      "bytes": 9236
+    },
+    "Documentation/Archive/PHASE3B_ITEM6_TESTING.md": {
+      "sha256": "9e743517054a12996b573d218a8f121958ebe9fc9bded97a892381a1d58dd54b",
+      "bytes": 10497
+    },
+    "Documentation/Archive/PHASE3B_ITEM6_TROUBLESHOOTING.md": {
+      "sha256": "89e1b6123bfcc42183e1feb9e00cc04b6bc66afde25af12ea93f63ec05cd401e",
+      "bytes": 8353
+    },
+    "Documentation/Archive/PHASE3B_ITEM8_UNIFIED_POLLING.md": {
+      "sha256": "c9d29586791bf8b4bdeb36a7fad3a66727d334df1c9a1f36ae8415867b7c2547",
+      "bytes": 4741
+    },
+    "Documentation/Archive/PHASE3C_RAIDLEAD_MIGRATION.md": {
+      "sha256": "49feb4a3df455517c6a82da77c6cf3570da082247b51af6382e0632e058de153",
+      "bytes": 19598
+    },
+    "Documentation/Archive/PHASE6_1_IMPLEMENTATION.md": {
+      "sha256": "b76aaeed806a7e5adcf04e3cae097a04a50db57e17c2b696574dc3f0c46385dc",
+      "bytes": 9180
+    },
+    "Documentation/Archive/PHASE6_TRACKING.md": {
+      "sha256": "e76ac54180fa77b227ad9fd1b02d5c6a59149b2262385fb17f58e30be944083a",
+      "bytes": 37102
+    },
+    "Documentation/Archive/PLAN_RGO_Deprecation_Roster_Rename.md": {
+      "sha256": "c6c9c6f3e5756aeaad386622b9a8d651149acb39c3576430a5fc247c1081c444",
+      "bytes": 19587
+    },
+    "Documentation/Archive/SCHEDULEFUNC_ANALYSIS.md": {
+      "sha256": "e673b22d4af1fc2658a36c136d0a93de7ae5e336ebaeb23d12e103dc3e8c154e",
+      "bytes": 12663
+    },
+    "Documentation/Archive/SERIALIZATION_ANALYSIS.md": {
+      "sha256": "09b5c13bc23b442299c5b2724c74ceb25bd0382d2a1786881658e309bf54ea74",
+      "bytes": 16325
+    },
+    "Documentation/Archive/SERIALIZATION_IMPLEMENTATION.md": {
+      "sha256": "f2a03ea11239ee80ee4bc180491d1513f21dc7d63f1fab174207e85a080e937e",
+      "bytes": 9172
+    },
+    "Documentation/Archive/SESSION_ADMIN_CHANGES.md": {
+      "sha256": "8bebfe3585c0d41995833e3911bafdd6f2182c1dc5ef7b373ad512b73004bfe2",
+      "bytes": 6246
+    },
+    "Documentation/Archive/SESSION_ADMIN_TESTING.md": {
+      "sha256": "2cd937fdfdabf4a1a5102d3557a43d3316260b2314de7778dc3315af2697bbdd",
+      "bytes": 4780
+    },
+    "Documentation/Archive/SYNC_SYSTEM_DOCUMENTATION.md": {
+      "sha256": "a76cfc99ccd9f893e9100ec274b24f16d08c04d0094be81463225d2a2386781d",
+      "bytes": 18594
+    },
+    "Documentation/Archive/TurtleWoW_Addon_Development_Prompt.md": {
+      "sha256": "d28ab0f8988e4cb6582d89e27eaa8a122b7026a0d8f60c8033f4d10f3b6ca3b7",
+      "bytes": 18007
+    },
+    "Documentation/Archive/v1-to-v2-deep-migration-map - Copy (2).csv": {
+      "sha256": "1307536b9238af3b3b0fbab6bfeee7d765aa48051016600e76aeac8d3c01bd01",
+      "bytes": 28831
+    },
+    "Documentation/Archive/v1-to-v2-deep-migration-map - Copy (3).csv": {
+      "sha256": "fd97995c14a440d6b5b566faf73de71be0ebcd309a6f367b621e7030f0257ec0",
+      "bytes": 32790
+    },
+    "Documentation/Archive/v1-to-v2-deep-migration-map - Copy.csv": {
+      "sha256": "675bfe69372a2877b7552ba292a2b4dd8d42687e5424cf5e5edb427b3c058aa6",
+      "bytes": 24516
+    },
+    "Documentation/Nampower SCRIPTS.md": {
+      "sha256": "517ccd054047af2f7dcbb77098809f2a47563ba187873e8ecda1c1f12379b6b2",
+      "bytes": 44340
+    },
+    "Documentation/Spec Docs/! OG-RaidHelper API.md": {
+      "sha256": "02801107bd0bb471132d0c52cce0ed1bc3b206c9ba9d06bd54656ebebf19dae4",
+      "bytes": 171369
+    },
+    "Documentation/Spec Docs/! OG-RaidHelper Design Philososphy.md": {
+      "sha256": "5585a9f241be56718da7c7040ca9820703d63363ab86ebd9f1dff9d296ebae91",
+      "bytes": 33473
+    },
+    "Documentation/Spec Docs/! SVM-API-Documentation.md": {
+      "sha256": "6f9eded2d479e06b3d06e48b30d42e11262b58341888be1fbab21281f32ad36f",
+      "bytes": 20865
+    },
+    "Documentation/Spec Docs/! SVM-Quick-Reference.md": {
+      "sha256": "e820f73c9639392e95e88cec90d3165b5972a2f3f7d80fd77f56dd41b227cf7b",
+      "bytes": 4366
+    },
+    "Documentation/Spec Docs/! V2 Schema Specification.md": {
+      "sha256": "54da53492b7ba3edcee24a15fc8eddfa33a51f7c8bc275405147622bef486a61",
+      "bytes": 37387
+    },
+    "Documentation/Spec Docs/! WoW-1.12-Testing-Correct-Approach.md": {
+      "sha256": "1dac04edae55242fbbe61b8c1c7d4e90789d2a290248114b4b395ff3b65fd408",
+      "bytes": 4144
+    },
+    "Documentation/Temp/gnuzench.md": {
+      "sha256": "7cc46f1b1a1fd4353a29a9a9aee3fc3ab67e35ee67b321c395075cbaa428729a",
+      "bytes": 2196
+    },
+    "Documentation/Temp/gnuzmas.md": {
+      "sha256": "fc0389a6ba6c4b3c0f676d210fe61686e7fd932045610f64530453e2e32ca504",
+      "bytes": 3385
+    },
+    "Documentation/Temp/tankmedady.md": {
+      "sha256": "f00886eeef9e641738b3e644dfc5f9bb6ecbeca42c9366d4c97c6b848687c579",
+      "bytes": 42295
+    },
+    "Documentation/TODO.md": {
+      "sha256": "6906894b0072a2831af8406b041d1d23694ccee2a4fa53c83da8fbb5a335c875",
+      "bytes": 2466
+    },
+    "Documentation/User Documentation/ANNOUNCEMENT_TAGS.md": {
+      "sha256": "e65387f8a646590ea117597bedea3581f819dcbc0718c3d9cc5d80ed6ffb4af4",
+      "bytes": 8532
+    },
+    "Images/EncounterMgmt.jpg": {
+      "sha256": "139db6dd595bcbf9b64c8fcb8c6b7a9b626759d6cc31167cf688248dc43fa448",
+      "bytes": 156499
+    },
+    "Images/EncounterSetup.jpg": {
+      "sha256": "5026304f3f6ed659378379b81d90faf50125a47f68dc7c46ef4430fd118d20e5",
+      "bytes": 88416
+    },
+    "Images/mainui.jpg": {
+      "sha256": "9de787d8b82576327abbf7f5227139525a539bf6a36f48b45824a18dbb478a5f",
+      "bytes": 7245
+    },
+    "Images/RaidInvites.jpg": {
+      "sha256": "326d29ecee49f5485b4cb5cb3d3f2a4eae1c6bb53eac07b9f59b976de660e618",
+      "bytes": 98279
+    },
+    "Images/RolesUI.jpg": {
+      "sha256": "a1d889950d1d04fea18017fe540ff08d160f5320862ed6d1797f97459158db95",
+      "bytes": 130450
+    },
+    "Images/select-activeraid.jpg": {
+      "sha256": "49d29310fb286e16eb48c2be787349d379ee88e81ed2541a99031f40c6847c00",
+      "bytes": 55017
+    },
+    "Images/select-roster.jpg": {
+      "sha256": "f8f838308e911b9306940950d78e4a56804d064f45286eee7a93717fa0042adc",
+      "bytes": 205210
+    },
+    "Images/SRValidation.jpg": {
+      "sha256": "d8064e451beb51cc5078cad2711b8539477518043a3d4a0e3d797da2f6af41aa",
+      "bytes": 97227
+    },
+    "Libs/AceCore-3.0/AceCore-3.0.lua": {
+      "sha256": "2ead5751ab4e4d0eda5d2aa95512d7b6155df66ceb58c1d2f9c4f4b8a8a3c74b",
+      "bytes": 6146
+    },
+    "Libs/AceCore-3.0/AceCore-3.0.xml": {
+      "sha256": "cebf9f06f52b3a1e76bcf40d69814fa702889efed5642d9b5677cf90760dad89",
+      "bytes": 213
+    },
+    "Libs/AceTimer-3.0/AceTimer-3.0.lua": {
+      "sha256": "5e48d83a2dbf5e3a9737b14af1b3c8c3290cb9f94cbc8410e0215a8e743d1800",
+      "bytes": 13068
+    },
+    "Libs/AceTimer-3.0/AceTimer-3.0.xml": {
+      "sha256": "0d7db07cae9dcae62cb79d2071dd31460b561b3915c0187989ec6d2f40c2b60a",
+      "bytes": 214
+    },
+    "Libs/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "706d98abfcfb207a4af207f650e873da69e92bc05b70a281c3d81d400c301eee",
+      "bytes": 10022
+    },
+    "Libs/CallbackHandler-1.0/CallbackHandler-1.0.xml": {
+      "sha256": "5fc06440452a82be9554fc9650fa7de0b6df786c6d188d05d7d0ec4aa3e002fd",
+      "bytes": 221
+    },
+    "Libs/json.lua": {
+      "sha256": "dd36d66b0b2fac5e0ba1e6306d1786fd8aef117f69fae415dabfa12229b28967",
+      "bytes": 11099
+    },
+    "Libs/Libs.xml": {
+      "sha256": "57efe6e4445ed9aedd6031a075fe7ca441e858e803d835f7f5c700a281f1b1ed",
+      "bytes": 388
+    },
+    "Libs/LibStub/LibStub.lua": {
+      "sha256": "6156f11f315b3de4ac75cffdf21ab8970c0293b769ec9d55646dda68b011830e",
+      "bytes": 1569
+    },
+    "Libs/OGAALogger/_OGAALogger.toc": {
+      "sha256": "3424a6747ff2ad7a764b573ccd82aeb7cadc9b303523adc32f951823a0c22f1e",
+      "bytes": 244
+    },
+    "Libs/OGAALogger/API.lua": {
+      "sha256": "1ee0f63bf3fd2b57c01606fb215c766ac2369deafb36d62a588bf0ef1615499f",
+      "bytes": 3396
+    },
+    "Libs/OGAALogger/Commands.lua": {
+      "sha256": "1c56dc5467df99591bff3a37e0b383708ed4f12a6c62fcfbb9a8674bfe458945",
+      "bytes": 4284
+    },
+    "Libs/OGAALogger/Core.lua": {
+      "sha256": "428cfde7edb145fc30551e7c9490bfca1d01c93a9b3697db6507dca71f1fc4ea",
+      "bytes": 8278
+    },
+    "Libs/OGAALogger/PrefixColors.md": {
+      "sha256": "93a8d01b7293e9f44483aae26ae2208298f9769bcbeedda56ae584d66c9a8037",
+      "bytes": 2245
+    },
+    "Libs/OGAALogger/README.md": {
+      "sha256": "b03e241d31f84f260143c9e3ac49f5040de09bab84c8c810a70357472ac276d3",
+      "bytes": 4954
+    },
+    "Libs/OGAALogger/UI.lua": {
+      "sha256": "8b63020ce7eb6f0166becec474df48adda62fa1a05e7c8f87fb011086bb9c6be",
+      "bytes": 10296
+    },
+    "Libs/OGAddonMsg/API.lua": {
+      "sha256": "115d235408409e36e0968f87219179bfdd4582287b6093c65a44f31c5e3739d2",
+      "bytes": 6035
+    },
+    "Libs/OGAddonMsg/Chunker.lua": {
+      "sha256": "d012505e9a36876a3752d3dc0be6ca589a245f17e4d74d822022f786751b82e7",
+      "bytes": 11386
+    },
+    "Libs/OGAddonMsg/Commands.lua": {
+      "sha256": "66e37a148c88b09d8b0a5d3e3d2e15851be6598d473970836b4d3a0be05fea77",
+      "bytes": 18096
+    },
+    "Libs/OGAddonMsg/Config.lua": {
+      "sha256": "2287ad6c3fde16f4246f2ccd09fe0ff9a4b54c8c61ae3dd9a89781cd245b5160",
+      "bytes": 3508
+    },
+    "Libs/OGAddonMsg/Core.lua": {
+      "sha256": "02d7ab0a4abf4bf3d007131a0f7d0c4ce146f4b5e676213692cd82a9796e3526",
+      "bytes": 4167
+    },
+    "Libs/OGAddonMsg/Documentation/ChatThrottleLib/Changelog-ChatThrottleLib-v22.txt": {
+      "sha256": "5f7f735b5cffd84a76366ab60fedd38c89363b429e4af858b5cb271da4e08ddb",
+      "bytes": 642
+    },
+    "Libs/OGAddonMsg/Documentation/ChatThrottleLib/ChatThrottleLib.lua": {
+      "sha256": "58b6b7d4fd5a9345a0038083a0219698c7554feff1c8adb5f7f1243fed9b16dc",
+      "bytes": 15126
+    },
+    "Libs/OGAddonMsg/Documentation/ChatThrottleLib/ChatThrottleLib.toc": {
+      "sha256": "339c2f66368bea4f5663f46687b0fcda0db0207abc070464fdbab134903a72e1",
+      "bytes": 544
+    },
+    "Libs/OGAddonMsg/Documentation/ChatThrottleLib/ChatThrottleLib.xml": {
+      "sha256": "d9f96b753e763ac77957520ec46563d68478155202da3eca35bdf45e47758fa7",
+      "bytes": 350
+    },
+    "Libs/OGAddonMsg/Documentation/ChatThrottleLib/ChatThrottleStats.lua": {
+      "sha256": "5edd82873da0c8bcd59c2c3f18123375f46b6a409cd15336a0f4409cf697ef51",
+      "bytes": 1180
+    },
+    "Libs/OGAddonMsg/Documentation/ChatThrottleLib/README.txt": {
+      "sha256": "970b2739bbf0c38da94136f349ea6a60d76ece2aa1574c130afda1e698180aa4",
+      "bytes": 2625
+    },
+    "Libs/OGAddonMsg/Documentation/OGAddonMsg-Specification.md": {
+      "sha256": "baa83b1eb40c61f00d7cacdca640c2027b7374ed36b1a575d8ada7c9d05a0537",
+      "bytes": 39790
+    },
+    "Libs/OGAddonMsg/Handlers.lua": {
+      "sha256": "59cfbe936dd3f747a6314c69a55dd03ca620b8277f2e141f72bb8a809e4ee9d1",
+      "bytes": 4280
+    },
+    "Libs/OGAddonMsg/libs/ChatThrottleLib.lua": {
+      "sha256": "929405d5c3c8e0468fcdab1d1c6a68a614ad17d84404a1ee80ca320b67a22e43",
+      "bytes": 15416
+    },
+    "Libs/OGAddonMsg/MessageRouter.lua": {
+      "sha256": "8130c6d85f32390da2a2d27530379c623671e460ca3b92a5b80df0df462c4cae",
+      "bytes": 1014
+    },
+    "Libs/OGAddonMsg/Queue.lua": {
+      "sha256": "7429fcdae7c82266e8463652fcf2653267790479dac00b6e0cf59b482f7d903b",
+      "bytes": 6691
+    },
+    "Libs/OGAddonMsg/README.md": {
+      "sha256": "3f5c711b902e0a4c3b7d98741356026445aa817c2f548e762e901e3fd3c77765",
+      "bytes": 3618
+    },
+    "Libs/OGAddonMsg/Retry.lua": {
+      "sha256": "e778d84effd5aefb84514b46f0db8dac0ebaaec8f4912ad5bc56a7fca1f8bedc",
+      "bytes": 8997
+    },
+    "Libs/OGAddonMsg/Serialization.lua": {
+      "sha256": "0224ca02281b1fc76e20450be3423531cbead7735080559c6d44a97dd56c69e7",
+      "bytes": 3790
+    },
+    "Libs/OGAddonMsg/StatsPanel.lua": {
+      "sha256": "8df8b7c2eace3cdbb7d2ae2039f199d8709e59896507339c8c4484e469d0a470",
+      "bytes": 9773
+    },
+    "Libs/OGST/img/UI-ChatIM-SizeGrabber-Down.tga": {
+      "sha256": "099102522b5f45ba28df0abf2f54ec5574a29b258c25330360780fdc2553159b",
+      "bytes": 824
+    },
+    "Libs/OGST/img/UI-ChatIM-SizeGrabber-Highlight.tga": {
+      "sha256": "5829b57218b92b8c979e9e54d1daab948a096f987e0f536f175f7b102f6c24ac",
+      "bytes": 862
+    },
+    "Libs/OGST/img/UI-ChatIM-SizeGrabber-Up.tga": {
+      "sha256": "9b35b6497bc801b7bcaf4e4313ed58e06022e7908f1805c9d14a1ed140aa42c3",
+      "bytes": 795
+    },
+    "Libs/OGST/LICENSE": {
+      "sha256": "8b0261686782f4c31e385c93acf70a0c55831750418511b8a38880091b12c29a",
+      "bytes": 1085
+    },
+    "Libs/OGST/MessageRouter.lua": {
+      "sha256": "3d68ffa7c4c85b409f9959b95464ee742f1e4af71eb96b1a9e291db31742dca4",
+      "bytes": 974
+    },
+    "Libs/OGST/OGST_Sample.lua": {
+      "sha256": "49d2516f77b49c4ba56b635cb6b0bd41d927095746e12d5a9285b24ae520006e",
+      "bytes": 27120
+    },
+    "Libs/OGST/OGST_Test.lua": {
+      "sha256": "9cced3aed2136ec817c6579c8623e04d9d3316ab2354df79cc5268648de0bcf4",
+      "bytes": 5691
+    },
+    "Libs/OGST/OGST.lua": {
+      "sha256": "460189e5825bdff22c7538e2ad22ab4fda929a92b5893c2bdef2d57ccd7e968f",
+      "bytes": 128890
+    },
+    "Libs/OGST/README.md": {
+      "sha256": "70a646589a509ca72da451d4b1a788c9ea09268214404d25d54b6ce52dc8d483",
+      "bytes": 26407
+    },
+    "Libs/OGST/TODO.md": {
+      "sha256": "66e6107a56d95215cd8f5f3099ba0183ae4291af53acca07373e65056f4868c6",
+      "bytes": 3535
+    },
+    "LICENSE": {
+      "sha256": "d75a74a1ca4d8e0341d82ec856f3ce558d6b3c0ddfe5124172c6533772552c28",
+      "bytes": 1085
+    },
+    "OG-RaidHelper.toc": {
+      "sha256": "fbc72d24efec6cf347f2f375f1382984a90a962e248f8b1b5ccd3a7820089e8d",
+      "bytes": 4480
+    },
+    "README-Old.md": {
+      "sha256": "00a545f8602604f6cc97cb467f82e53a77dcb931a374d32212be0b14a115cdda",
+      "bytes": 35665
+    },
+    "README.md": {
+      "sha256": "e2fb3e02886b5331ccad7a934096ecddcdf42a87edd98a5fc26f68acb838aa42",
+      "bytes": 25515
+    },
+    "Scripts/__pycache__/parse_consume_log.cpython-314.pyc": {
+      "sha256": "25e7479816708fc2971e1afbbf9793997aad2a1c0fae653223fb1f06f3d44394",
+      "bytes": 31453
+    },
+    "Scripts/backup_savedvars.bat": {
+      "sha256": "2d1cc7550d0ce2dab123c387e8a3db50063ce334723405af2b32bc900bb8f9b9",
+      "bytes": 2375
+    },
+    "Scripts/CHANGES.md": {
+      "sha256": "aa25a424d7da92b0e38977045db1cd43915bf67822499e1819907f5424c4efb1",
+      "bytes": 2989
+    },
+    "Scripts/extract_segments.bat": {
+      "sha256": "e892d9986cf354b565bae70bf52d38dcd5b97689b36062a9d38ff954809ac757",
+      "bytes": 2279
+    },
+    "Scripts/extract_segments.py": {
+      "sha256": "a7e78d2e0bab4ca1592d1acab7cf42e062f30a943851eb6119b9b4ddd2a7b058",
+      "bytes": 6707
+    },
+    "Scripts/IMPLEMENTATION_SUMMARY.md": {
+      "sha256": "cacd926a0183abe4d04a825c9160433f3afc063c595a8bc410db24b0f1df55d1",
+      "bytes": 7871
+    },
+    "Scripts/parse_consume_log.bat": {
+      "sha256": "5e129be0d0746be1df30cc2bffbf101d0ea1d2b638f750e90a90c74c2fa350ea",
+      "bytes": 959
+    },
+    "Scripts/parse_consume_log.py": {
+      "sha256": "84476c5b6f6e610678f500637c4b9373f03c426678444d87c961ed5c803eb3df",
+      "bytes": 24444
+    },
+    "Scripts/QUICK_START.md": {
+      "sha256": "e7afb308af6c213bec476ff08ac9a22a5a0de8ea30f42076ad421648e28bc8aa",
+      "bytes": 2164
+    },
+    "Scripts/README_CONSUME_LOG.md": {
+      "sha256": "e5bb0b9fc96d1beffd2c1e81617a038ce1c1239ccd168d4c0b7999ffd81a2715",
+      "bytes": 7034
+    },
+    "Scripts/README_consume_tracker.md": {
+      "sha256": "ff5fc3184a38084fa9858f1566ea0db398e266c888d3799a25166d507e12ebaa",
+      "bytes": 3969
+    },
+    "Scripts/README_SegmentRecovery.md": {
+      "sha256": "a026f88f722be1a2252b86a37dcf0a092f68d4a04dfe0c18930c2700b8f67bae",
+      "bytes": 6201
+    },
+    "Scripts/TestCombatLog.txt": {
+      "sha256": "4da4e919aa29c8f4ab33e8a4e3dff0de5d0e9f2e73d1156ecae177718d9c37df",
+      "bytes": 1095
+    },
+    "Scripts/WoWCombatLog.txt": {
+      "sha256": "e11f5e220d22eb15e65b2d17f38089e5fd222f6a20b5c68a86ada450f6978595",
+      "bytes": 86249421
+    },
+    "textures/copy.tga": {
+      "sha256": "48e7d57ea96dbe7bedde3a4300223642321bee80f22062c12872dee2690c0456",
+      "bytes": 4140
+    },
+    "textures/cthunmaptexture-ogrh.tga": {
+      "sha256": "a0a5fe18ef199ed539d99e11b30d1f3490f133df7db36edefc595ebd4c585947",
+      "bytes": 1048620
+    },
+    "textures/Duplicate.blp": {
+      "sha256": "fc017b50b4913dca7d0423b43045b906b93630ecc81e44e37b3bc3fac4c5a8a8",
+      "bytes": 6676
+    },
+    "textures/icon-config.tga": {
+      "sha256": "d88685bc72aafc546868a69a6c2c782a376bfb0ca7292087a2d04ea78caab47e",
+      "bytes": 4140
+    },
+    "textures/icon-copy.tga": {
+      "sha256": "77ea5af881459403f7e47cb9a5d53fa7fb0eae2c36969b399854195f710a16af",
+      "bytes": 4140
+    },
+    "textures/PPIcons/Ability_ThunderBolt.tga": {
+      "sha256": "aadc1fc356ec0b21f4c8b717b78c3b31043ed553b1bc62a8ddb90051fd97ee8a",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Ability_Warrior_InnerRage.tga": {
+      "sha256": "969462f695636a39398cc72390015962ff73ac276698088b540ca1830c915325",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Class-Druid.tga": {
+      "sha256": "7e379e2e6b7188cc26cc49e559e0f871d296ffe063d88e583b10f6799658ed34",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Class-Hunter.tga": {
+      "sha256": "670e0c0db1a94e5bb1ead6db3c1152bc9ef44f562e0fc3566e9cf3c0f8aa84ef",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Class-Mage.tga": {
+      "sha256": "4eb3e12cbb16561678b031a388261f9fd21a4d785407e329ac9ffb37901535c3",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Class-Paladin.tga": {
+      "sha256": "762e8738a350d122474c72ae21dcbea6e0c1d9bf636e3f52375bf903aaa76902",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Class-Pet.tga": {
+      "sha256": "59bb11314b7e2c545b762452756c7880f3cd35fd2f0349aadfd86b838c8ce4be",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Class-Priest.tga": {
+      "sha256": "ae78129843a0e7add35d16cc58da67de51c3818a664a7fdd85b8c17808ea593b",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Class-Rogue.tga": {
+      "sha256": "bd010164f3c1c796a72a5e16d57d6de0a4feb033a0f041b8765632c89bff6d3e",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Class-Shaman.tga": {
+      "sha256": "6c1c297f9d6f3f78a056a3a398ad67b17826ba3921ba7a5ff985c0055b2a3ea9",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Class-Warlock.tga": {
+      "sha256": "c842951e76a3610563e01a07e8b21563b20f77f42f3b8b85e4b055101714e54d",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Class-Warrior.tga": {
+      "sha256": "ec37241f95b9646a36887b32d9f60be1eae94b3c1b706c32057516bde81f04ba",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Fire_SealOfFire.tga": {
+      "sha256": "290dc0f2753ba772649f261ff3ec082764b74ecb3b4077a56aa329c6f19a16d4",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Frost_WizardMark.tga": {
+      "sha256": "a71ea5712e353e10da89604a7d4c7c8fdc83fb34797ceff672155aacd03ba1b6",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_AuraMastery.tga": {
+      "sha256": "644a556d5cc119e509c73c160c79bd64f1e76c7e0750441d1b14a8b6599ccd1b",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_AuraOfLight.tga": {
+      "sha256": "8e2d073d08b29bd3d983e762745e15829149642c2f35a0eba99f33dbc33e7dd7",
+      "bytes": 65580
+    },
+    "textures/PPIcons/SPELL_HOLY_DEVOTIONAURA.tga": {
+      "sha256": "1800fa4201e44c91f7e0e412c923294a441de505d8fb98a8abe86f1dd0229c5b",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_FistOfJustice.tga": {
+      "sha256": "d7c274183ba7ad1b140c3a2d12c94503b3cd8d37c181c423fdb1f8b0de3edd6f",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_GreaterBlessingofKings.tga": {
+      "sha256": "e092ab48710c76074e04a430b0aea5324bb2cd626cc34fafde59c29a17d2c085",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_GreaterBlessingofLight.tga": {
+      "sha256": "1ca4cd7e8cbcdc2e300612166e0f1e496bb61e2652e514ae85d0ef1c4475f55f",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_GreaterBlessingofSalvation.tga": {
+      "sha256": "b8d8116306954ed5b21676e1b6b54bd69bf49c1d14a8914fa1ea13813ef0ce3c",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_GreaterBlessingofSanctuary.tga": {
+      "sha256": "9aa375b2d81225b9bebf2651ed72f9c70913eb62075f9f20d63da8af5553c88d",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_GreaterBlessingofWisdom.tga": {
+      "sha256": "97806e8cd5f85740dfa2b603d7a468ee6f799e2e57e81904d7218f6680febaa4",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_HealingAura.tga": {
+      "sha256": "03bfc6abf03a75595cc04596fcb45dee0e244d17580abf0c48da5b420139cfe8",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_HolySmite.tga": {
+      "sha256": "f31b7c1019b5849705b030df29ca215b690b1cde1ddf297021c07cbaa55a97d0",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_MindSooth.tga": {
+      "sha256": "ba06158fc7ba63da28e4ea903d085e14761e2d3ef7e3e8dfcde104de01afac18",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_MindVision.tga": {
+      "sha256": "a7de610dd67c12d9a03fc25b06ec17fbef422042f23a7e5dd272dc8fc97e551b",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_PrayerOfHealing02.tga": {
+      "sha256": "137f1a3572c7e0f31a6e69261129b2d85fc4c6eee7f748701d0aa337becd1456",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_RighteousnessAura.tga": {
+      "sha256": "0efc93a6539a6a6e968641bab41efdab0d4f6a3fe31e84283881d4e7da3548ab",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_SealOfFury.tga": {
+      "sha256": "b532f4fabe509a718929de54ffb553aa60950d5c24ed6b876916e3f9ac977b3e",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_SealOfSalvation.tga": {
+      "sha256": "8de80c0f027fcb60ac68bbaa9d6fa932b56b20a9170d7c77640c04d2925dcf79",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_SealOfWisdom.tga": {
+      "sha256": "6a5ae49601a58c1ce12d9ff23e88b772dcbdb4bfd75a4b748eb26976402bc15f",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Holy_SealOfWrath.tga": {
+      "sha256": "96118f752645c303e3e3db3fbee30ccdee06b9c13eadcff723029d101c31e6aa",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Magic_GreaterBlessingofKings.tga": {
+      "sha256": "e7fbd96475bae648075f9bff19d22070fe5379606c0a700b942b016a5b751132",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Magic_MageArmor.tga": {
+      "sha256": "7246940f9575b01074867b4bed9b7f617f70f5410d51bf439cb0c0c3c35e6cd4",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Nature_LightningShield.tga": {
+      "sha256": "4913d4a0beb03403918a040a561442e23c0c3f8829652508515e44742d8b1e11",
+      "bytes": 65580
+    },
+    "textures/PPIcons/Spell_Shadow_SealOfKings.tga": {
+      "sha256": "1735ed9b7bb6aed4637c2d304a26b3947e0331a5cbbd9620de32cf4a1d8d6424",
+      "bytes": 65580
+    },
+    "TODO.md": {
+      "sha256": "3878ee794a297dabafa80bc15cf3d83c9ece7766fdfcf2aba311d20078324bd5",
+      "bytes": 3735
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

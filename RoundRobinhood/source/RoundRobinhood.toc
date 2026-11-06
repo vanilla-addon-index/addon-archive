@@ -1,0 +1,18 @@
+## Interface: 11200
+## Title: RoundRobinhood
+## Notes: An addon for managing loot distribution.
+## Author: Croc
+## SavedVariablesPerCharacter: RR_RECORDS_ITEMS_V1, RR_AUTO_ITEMS_V1, RR_SETTINGS_V1 
+## Version: 1.0
+
+localization_en.lua
+RoundRobinhood_UI.lua
+RoundRobinhood.lua
+TabRR.lua
+TabAuto.lua
+TabGeneral.lua
+TabAbout.lua
+RoundRobinhood_Minimap.lua
+
+RoundRobinhood_UI.xml
+RoundRobinhood_Minimap.xml

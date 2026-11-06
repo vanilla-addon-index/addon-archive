@@ -1,0 +1,25 @@
+{
+  "upstream": "https://github.com/jKalfis/FriendTracker",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jKalfis",
+    "repo": "FriendTracker",
+    "name": "FriendTracker",
+    "url": "https://github.com/jKalfis/FriendTracker",
+    "api": "https://api.github.com/repos/jKalfis/FriendTracker"
+  },
+  "commit": "b770e7a096a30a4356bdab2a90d66ac2e281e713",
+  "sourceFiles": {
+    "FriendTracker.lua": {
+      "sha256": "67d34feae97fb6e97ad68de903792af62e7b21cde208c2189fd71a4c4bf5771d",
+      "bytes": 12659
+    },
+    "FriendTracker.toc": {
+      "sha256": "fdcf082c101748e30d9a65de0d26da1d115a213648bce1c9dd3c467bcb90b945",
+      "bytes": 194
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,9 @@
+{
+  "id": "13960154",
+  "tag": "v1.1",
+  "name": "v1.1",
+  "body": "# HunterSwissKnife v1.1\r\n\r\nList of features:\r\n\r\n- **Aspects override**\r\n  - The aspects are not canceled when double pressed.\r\n- **Antidaze**\r\n  - `Aspect of the Cheetah` is canceled if the player is dazed.\r\n  - `Aspect of the Pack` is canceled if the player or party/raid members are dazed.\r\n- **Aimed Shot castbar**\r\n  - Shows a castbar for `Aimed Shot`.\r\n- **Auto Shot castbar**\r\n  - Shows a castbar for `Auto Shot`. It is split into two phases: aiming (yellow) and reloading (red).\r\n- **Auto Shot override**\r\n  - `Auto Shot` is not canceled when double pressed.\r\n  - `Auto Shot` starts attacking with a ranged weapon if used in ranged distance.\r\n  - `Auto Shot` starts attacking with a melee weapon if used in melee distance.\r\n- **Call Pet override**\r\n  - `Call Pet` calls a pet if the pet is not summoned.\r\n  - `Call Pet` commands the pet to attack the player's target if the player's and pet's targets are different.\r\n  - `Call Pet` commnads the pet to follow the player if the player's and pet's targets are the same.\r\n\r\nAll changes are optional and can be switched off in configuration menu `/hsk`.",
+  "published": "2018-11-12T19:31:35Z",
+  "prerelease": false,
+  "url": "https://github.com/enn-wow-addons/HunterSwissKnife/releases/tag/v1.1"
+}

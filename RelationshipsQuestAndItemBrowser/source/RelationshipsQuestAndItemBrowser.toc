@@ -1,0 +1,14 @@
+## Interface: 11200
+## Title: Relationships Quest And Item Browser
+## Notes: Click quest and item links in chat, browse and search the full quest and item database.
+## Author: Relationship
+## Version: 1.1
+## SavedVariables: RelationshipsQuestAndItemBrowserDB
+RelationshipsQuestAndItemBrowser.xml
+RelationshipsQuestAndItemBrowserData_Init.lua
+RelationshipsQuestAndItemBrowserData_Quests.lua
+RelationshipsQuestAndItemBrowserData_Units.lua
+RelationshipsQuestAndItemBrowserData_Objects.lua
+RelationshipsQuestAndItemBrowserData_Items.lua
+RelationshipsQuestAndItemBrowserData_Zones.lua
+RelationshipsQuestAndItemBrowser.lua

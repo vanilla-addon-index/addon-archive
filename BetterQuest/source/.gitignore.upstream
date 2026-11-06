@@ -1,0 +1,8 @@
+*__pycache__
+*venv
+pretrain*
+checkpoint*
+.vscode
+sounds/*
+samples/*
+assets*

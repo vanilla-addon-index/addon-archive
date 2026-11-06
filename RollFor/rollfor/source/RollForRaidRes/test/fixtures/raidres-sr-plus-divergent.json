@@ -1,0 +1,55 @@
+{
+  "metadata": {
+    "id": "UMMMKB",
+    "instance": 209,
+    "instances": [
+      "Black Temple"
+    ],
+    "origin": "raidres"
+  },
+  "softreserves": [
+    {
+      "name": "Boulderdash",
+      "role": "WarriorProtection",
+      "items": [
+        {
+          "id": 32242,
+          "quality": 4,
+          "sr_plus": 5
+        },
+        {
+          "id": 32232,
+          "quality": 4,
+          "sr_plus": 7
+        },
+        {
+          "id": 32232,
+          "quality": 4,
+          "sr_plus": 9
+        }
+      ]
+    },
+    {
+      "name": "Tachikoma",
+      "role": "DruidRestoration",
+      "items": [
+        {
+          "id": 32242,
+          "quality": 4,
+          "sr_plus": 1
+        },
+        {
+          "id": 32234,
+          "quality": 4,
+          "sr_plus": 4
+        },
+        {
+          "id": 32234,
+          "quality": 4,
+          "sr_plus": 3
+        }
+      ]
+    }
+  ],
+  "hardreserves": []
+}

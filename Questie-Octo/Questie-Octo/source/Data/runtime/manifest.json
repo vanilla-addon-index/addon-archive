@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 2,
+  "source": "OctoQuestDatabase",
+  "repository": "https://github.com/FrancisEgan/OctoQuestDatabase.git",
+  "revision": "sha256:3e3a787de08525f0aa8853212141a9517ddd30b1734b453fc5d1f4011ddeefaf",
+  "inputs": [
+    {
+      "file": "LICENSE",
+      "sha256": "0fbf6953ae9e8f8f4fc431620d6261de91c79475802a8430cbcd5ea00e6f8a77"
+    },
+    {
+      "file": "NOTICE.md",
+      "sha256": "44bead30c7dce9cde2a158d8cba26bf6989b32cbb6fbb96f37ce37e6d481d065"
+    },
+    {
+      "file": "source/areatrigger.json",
+      "sha256": "5a6516f3ed0c812a0c14256cf76bbfc18b3f994bc8518e67f115366400b3da0e"
+    },
+    {
+      "file": "source/items.json",
+      "sha256": "c1052422082b5e6510a12281969028721f44aa78deb29e539f58d63c8f556407"
+    },
+    {
+      "file": "source/locales.json",
+      "sha256": "2525e468c79b756ff23faf51a8b5325f2b668a8a198a9e77ab3940dc9b373154"
+    },
+    {
+      "file": "source/meta.json",
+      "sha256": "f4ce1698dbf6f027dc6436ffb44eebfb5f4bc831ec0c1d8dcb0efdc4a3684fd9"
+    },
+    {
+      "file": "source/minimap.json",
+      "sha256": "2e67bca3e9b2fcdcadedbca2a9b3f599a80fdcb38eb7d2d42599eedbe1372851"
+    },
+    {
+      "file": "source/objects.json",
+      "sha256": "a98514f46d2c5fcd36f3b0cd3cd942984e3624971d2e4c5ceb057113ffe230b8"
+    },
+    {
+      "file": "source/quests-itemreq.json",
+      "sha256": "c742678176ba135dffe074048f60e423faa18348426f08e16483701aa6d2dd42"
+    },
+    {
+      "file": "source/quests.json",
+      "sha256": "07d6ffe76228a30bc648413705592c45f675dc0eaa4cfdb53dcf2887424b5bda"
+    },
+    {
+      "file": "source/refloot.json",
+      "sha256": "8f7b59646118ec86e962ed33359803a79aecfcefbd70110438948b5c7d35d784"
+    },
+    {
+      "file": "source/scriptedEncounters.json",
+      "sha256": "942bf332adab1e700745b716574263b4c926cd1599f8f0c5c4a4eb816ae3eec9"
+    },
+    {
+      "file": "source/supplemental.json",
+      "sha256": "3ac8306079e1173c1e95800986b5425cf0adb3b97b25d26d0689f3bc7cb2b9e3"
+    },
+    {
+      "file": "source/units.json",
+      "sha256": "9d7c4d4f6554e832dc2dae745acb673decef04c481a1e9a81c8314050f1f9309"
+    },
+    {
+      "file": "source/zones.json",
+      "sha256": "f28daef1b49a221a7115d03424d55cf6faa93010914ef1e01701e3e805576be5"
+    }
+  ],
+  "outputs": [
+    {
+      "file": "Data/runtime/init.lua",
+      "sha256": "d30707cd9a1621280aafdf5f7598a856c4bff3739732c14985259a311198b9ee"
+    },
+    {
+      "file": "Data/runtime/quests.lua",
+      "sha256": "36fdc9bf9ddc8d86e843b540aa793f51228c55e388f5b86daf641b3350f891ee"
+    },
+    {
+      "file": "Data/runtime/items.lua",
+      "sha256": "e3a30f1ed3bddb9470c5885bd3990706b1e23ed97d5f6ad52d02654dfae2ba6c"
+    },
+    {
+      "file": "Data/runtime/units.lua",
+      "sha256": "a247db901883f67c5ace829521b8f56d3c80efee226c41e1727119a393970147"
+    },
+    {
+      "file": "Data/runtime/objects.lua",
+      "sha256": "100eb9f46aa6796f1a4ddb2e5554e762353b5f3c695d145ff20d6dfa404c058d"
+    },
+    {
+      "file": "Data/runtime/refloot.lua",
+      "sha256": "10978c5e6c5d0e5bc0733a59c9dc1a37f6768bfb5723215d604548bfadc2def9"
+    },
+    {
+      "file": "Data/runtime/quests-itemreq.lua",
+      "sha256": "3400627b1b18f2525f28c6a6cc048e0c024cedbc1afe26b020b5eb9d502eaa8b"
+    },
+    {
+      "file": "Data/runtime/zones.lua",
+      "sha256": "5eb7590af419614ff52f63302f3971d1dede05ab50cb7637700d4b3d10ba9ac9"
+    },
+    {
+      "file": "Data/runtime/areatrigger.lua",
+      "sha256": "25c0b482ada6843a155859870ec14d3153566d73440d05cdae00c89270808059"
+    },
+    {
+      "file": "Data/runtime/minimap.lua",
+      "sha256": "75431f0f30d9a62800abb8a2032f0bf4632233a1aab6ded46fabf41ab5f8cd44"
+    },
+    {
+      "file": "Data/runtime/meta.lua",
+      "sha256": "aa2ac644556c299a20e0cc6a1c98572c19d81e75a1c74510de4cca3a31e28811"
+    },
+    {
+      "file": "Data/runtime/enUS.lua",
+      "sha256": "e439c2134a07658121d8dc5fd2fe3a121fb6f898bbd3493b6583bfc72a2aeb37"
+    },
+    {
+      "file": "Data/runtime/scripted-encounters.lua",
+      "sha256": "3e739c1d75ea95d32678c92661799d5cbc3236d8bd11b5ad880394ba39f749ff"
+    },
+    {
+      "file": "Data/runtime/quest-ids.lua",
+      "sha256": "bc9da5c594c180300fbae800a96d2a87b6b2c82d8bbf6b01eef189cc65565656"
+    },
+    {
+      "file": "Data/runtime/map-candidates.lua",
+      "sha256": "9788f5816fd2f426d7bb9d573dc4e8945c5bd05f61315df2047f31763901b516"
+    },
+    {
+      "file": "Data/runtime/runtime-stats.lua",
+      "sha256": "2b269b87ee9e0b5e09f3e5e7a1204b74db2a8c2c862bc159fb3240d84b458701"
+    },
+    {
+      "file": "Data/runtime/finalize.lua",
+      "sha256": "759ad43ef8ee8b5ba651a1a27b374e632bb941bdd28b93e00df77e8a7acf480a"
+    },
+    {
+      "file": "Data/EventSchedule.lua",
+      "sha256": "2bd4c29fdfca5562a933e446419438c8897b43faea577b091e27c6a8a5137179"
+    },
+    {
+      "file": "Data/CalendarEventRules.lua",
+      "sha256": "881e9e4bd092d8999e770ac65a69379cd77e63bab3221f07bb130e8b7064f15b"
+    },
+    {
+      "file": "Data/QuestRewards.lua",
+      "sha256": "25d51a77f5031a73c5cde5a41ce670e6f12f462bbce6b5ec2f2521e3c9575a76"
+    },
+    {
+      "file": "Data/QuestObjectiveRequirements.lua",
+      "sha256": "986d30b786c85593a7be9f586555f2c9747031d846039abfb48f81455b2a695c"
+    },
+    {
+      "file": "Data/ScriptedEncounters.lua",
+      "sha256": "9351d5e53121efad352ea7928db728d6b18eab0bbbf275b5f252523a54515017"
+    },
+    {
+      "file": "Data/QuestProgression.lua",
+      "sha256": "b5bb1a006795a9e39a5c3e4962fa287d7346bf21a7c4f11bd5fc82d0de76e2fa"
+    },
+    {
+      "file": "Data/QuestDirectProgression.lua",
+      "sha256": "22088ff21aed6aad5599f7e2e3042c80d9ae46fa9de696e48612ce06ea8307a2"
+    },
+    {
+      "file": "Data/QuestChainAvailability.lua",
+      "sha256": "09141bd1b79868e454e03746c36e29779a81f0b4d1f4b572611b446a6ca65484"
+    },
+    {
+      "file": "Data/PvPQuestTypes.lua",
+      "sha256": "b87277bf63e3ef4932392dee0026715d385536fd521680af1db265870422e77d"
+    },
+    {
+      "file": "Data/EliteQuestTypes.lua",
+      "sha256": "05c4d16120484a88cae37966bb70b5ca962ddb272e92f05354643da1b329f183"
+    }
+  ],
+  "stats": {
+    "quests": 6704,
+    "maps": 108,
+    "links": 8626,
+    "items": 3641,
+    "units": 14139,
+    "objects": 1644,
+    "refloot": 124,
+    "itemreq": 193,
+    "itemNames": 6401,
+    "unitNames": 14136,
+    "objectNames": 1643,
+    "pruned": true
+  }
+}

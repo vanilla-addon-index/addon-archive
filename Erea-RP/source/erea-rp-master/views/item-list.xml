@@ -1,0 +1,192 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+  <!-- Item List Frame - content for the Items tab -->
+  <Frame name="EreaRpMasterItemListFrame" parent="EreaRpMasterMainWindowContentFrame" hidden="true">
+    <Anchors>
+      <Anchor point="TOPLEFT"/>
+      <Anchor point="BOTTOMRIGHT"/>
+    </Anchors>
+
+    <Frames>
+      <!-- Scroll frame (middle area) -->
+      <ScrollFrame name="EreaRpMasterItemListScrollFrame" inherits="UIPanelScrollFrameTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT"/>
+          <Anchor point="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="-22" y="54"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+
+        <Frames>
+          <!-- Scroll child (rows created by presenter) -->
+          <Frame name="$parentScrollChild">
+            <Size>
+              <AbsDimension x="0" y="1"/>
+            </Size>
+            <Anchors>
+              <Anchor point="TOPLEFT"/>
+              <Anchor point="TOPRIGHT"/>
+            </Anchors>
+          </Frame>
+        </Frames>
+
+        <Scripts>
+          <OnLoad>
+            this:SetScrollChild(EreaRpMasterItemListScrollFrameScrollChild)
+          </OnLoad>
+        </Scripts>
+      </ScrollFrame>
+
+      <!-- Bottom bar (50px, database controls) -->
+      <Frame name="$parentBottomBar">
+        <Size>
+          <AbsDimension x="0" y="50"/>
+        </Size>
+        <Anchors>
+          <Anchor point="BOTTOMLEFT"/>
+          <Anchor point="BOTTOMRIGHT"/>
+        </Anchors>
+        <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                  edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                  tile="true">
+          <EdgeSize>
+            <AbsValue val="12"/>
+          </EdgeSize>
+          <TileSize>
+            <AbsValue val="16"/>
+          </TileSize>
+          <BackgroundInsets>
+            <AbsInset left="3" right="3" top="3" bottom="3"/>
+          </BackgroundInsets>
+        </Backdrop>
+
+        <Scripts>
+          <OnLoad>
+            this:SetBackdropColor(0.05, 0.05, 0.05, 1)
+            this:SetBackdropBorderColor(0.6, 0.6, 0.6, 1)
+          </OnLoad>
+        </Scripts>
+
+        <Layers>
+          <Layer level="OVERLAY">
+            <!-- Database label -->
+            <FontString name="$parentDbNameLabel" inherits="GameFontNormalSmall" text="Database:">
+              <Anchors>
+                <Anchor point="LEFT">
+                  <Offset>
+                    <AbsDimension x="8" y="0"/>
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+
+            <!-- Status text (right-aligned) -->
+            <FontString name="$parentStatusText" inherits="GameFontNormalSmall">
+              <Anchors>
+                <Anchor point="RIGHT">
+                  <Offset>
+                    <AbsDimension x="-8" y="0"/>
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+
+        <Frames>
+          <!-- Database name EditBox -->
+          <EditBox name="$parentDbNameEditBox" autoFocus="false">
+            <Size>
+              <AbsDimension x="180" y="20"/>
+            </Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="$parentDbNameLabel" relativePoint="RIGHT">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+            <Layers>
+              <Layer level="BACKGROUND">
+                <FontString inherits="ChatFontNormal" setAllPoints="true"/>
+              </Layer>
+            </Layers>
+            <FontString inherits="ChatFontNormal"/>
+            <Backdrop bgFile="Interface\ChatFrame\ChatFrameBackground"
+                      edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+                      tile="true">
+              <EdgeSize>
+                <AbsValue val="10"/>
+              </EdgeSize>
+              <TileSize>
+                <AbsValue val="16"/>
+              </TileSize>
+              <BackgroundInsets>
+                <AbsInset left="3" right="3" top="3" bottom="3"/>
+              </BackgroundInsets>
+            </Backdrop>
+            <Scripts>
+              <OnLoad>
+                this:SetBackdropColor(0.1, 0.1, 0.1, 1)
+                this:SetBackdropBorderColor(0.4, 0.4, 0.4, 1)
+                this:SetTextInsets(5, 5, 0, 0)
+                this:SetMaxLetters(100)
+              </OnLoad>
+              <OnEscapePressed>
+                this:ClearFocus()
+              </OnEscapePressed>
+              <OnEnterPressed>
+                this:ClearFocus()
+              </OnEnterPressed>
+            </Scripts>
+          </EditBox>
+
+          <!-- New button -->
+          <Button name="$parentNewButton" inherits="UIPanelButtonTemplate" text="New">
+            <Size>
+              <AbsDimension x="70" y="22"/>
+            </Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="$parentDbNameEditBox" relativePoint="RIGHT">
+                <Offset>
+                  <AbsDimension x="6" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+
+          <!-- Commit button -->
+          <Button name="$parentCommitButton" inherits="UIPanelButtonTemplate" text="Commit">
+            <Size>
+              <AbsDimension x="70" y="22"/>
+            </Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="$parentNewButton" relativePoint="RIGHT">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+
+          <!-- Sync button -->
+          <Button name="$parentSyncButton" inherits="UIPanelButtonTemplate" text="Sync">
+            <Size>
+              <AbsDimension x="70" y="22"/>
+            </Size>
+            <Anchors>
+              <Anchor point="LEFT" relativeTo="$parentCommitButton" relativePoint="RIGHT">
+                <Offset>
+                  <AbsDimension x="4" y="0"/>
+                </Offset>
+              </Anchor>
+            </Anchors>
+          </Button>
+        </Frames>
+      </Frame>
+    </Frames>
+  </Frame>
+
+</Ui>

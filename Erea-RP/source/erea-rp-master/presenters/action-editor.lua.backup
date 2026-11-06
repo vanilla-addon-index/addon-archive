@@ -1,0 +1,1778 @@
+-- ============================================================================
+-- action-editor.lua - EreaRpMasterActionEditorFrame Controller
+-- ============================================================================
+-- UI Structure: views/action-editor-frame.xml
+-- Frame: EreaRpMasterActionEditorFrame (defined in XML)
+--
+-- PURPOSE: Combined list+detail dialog for editing all actions on an item.
+--          Left panel shows action list, right panel shows selected action's
+--          label, conditions, and schema-driven method editors.
+--
+-- METHODS:
+--   EreaRpMasterActionEditorFrame:Initialize()          - Setup refs, handlers
+--   EreaRpMasterActionEditorFrame:Open(actions, onSave) - Open with actions array
+--   EreaRpMasterActionEditorFrame:Close()               - Hide and clear state"
+--   EreaRpMasterActionEditorFrame:Save()                - Validate and callback
+--
+-- DEPENDENCIES:
+--   - EreaRpLibraries:RPActions() (method registry, validation)
+-- ============================================================================
+
+-- ============================================================================
+-- IMPORTS
+-- ============================================================================
+local rpActions = EreaRpLibraries:RPActions()
+local cinematicAnims = EreaRpLibraries:CinematicAnimations()
+local videoPlayerLib = EreaRpLibraries:VideoPlayer()
+
+-- Counter for unique dropdown names (WoW 1.12 requires global names)
+local dropdownCounter = 0
+
+-- ============================================================================
+-- PARAMETER EDITOR BUILDERS (local)
+-- ============================================================================
+
+local function CreateTextParameterEditor(parent, paramDef, yOffset)
+    local label = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    label:SetPoint("TOPLEFT", 10, yOffset)
+    label:SetText(paramDef.label .. ":")
+
+    local editBox = CreateFrame("EditBox", nil, parent, "InputBoxTemplate")
+    editBox:SetPoint("TOPLEFT", 10, yOffset - 20)
+    editBox:SetWidth(340)
+    editBox:SetHeight(25)
+    editBox:SetAutoFocus(false)
+    editBox.paramKey = paramDef.key
+
+    return editBox, 50
+end
+
+local function CreateTextWithPlaceholderEditor(parent, paramDef, yOffset)
+    local label = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    label:SetPoint("TOPLEFT", 10, yOffset)
+    label:SetText(paramDef.label .. ":")
+
+    local editBox = CreateFrame("EditBox", nil, parent, "InputBoxTemplate")
+    editBox:SetPoint("TOPLEFT", 10, yOffset - 20)
+    editBox:SetWidth(340)
+    editBox:SetHeight(25)
+    editBox:SetAutoFocus(false)
+    editBox.paramKey = paramDef.key
+
+    if paramDef.placeholder then
+        local hint = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+        hint:SetPoint("TOPLEFT", 10, yOffset - 48)
+        hint:SetText("|cFF888888(Use " .. paramDef.placeholder .. ")|r")
+    end
+
+    return editBox, 55
+end
+
+local function CreateNumberParameterEditor(parent, paramDef, yOffset)
+    local label = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    label:SetPoint("TOPLEFT", 10, yOffset)
+    label:SetText(paramDef.label .. ":")
+
+    local editBox = CreateFrame("EditBox", nil, parent, "InputBoxTemplate")
+    editBox:SetPoint("TOPLEFT", 10, yOffset - 20)
+    editBox:SetWidth(100)
+    editBox:SetHeight(25)
+    editBox:SetAutoFocus(false)
+    editBox:SetNumeric(true)
+    editBox.paramKey = paramDef.key
+
+    return editBox, 50
+end
+
+local function CreateObjectDropdownEditor(parent, paramDef, yOffset)
+    local label = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    label:SetPoint("TOPLEFT", 10, yOffset)
+    label:SetText(paramDef.label .. ":")
+
+    dropdownCounter = dropdownCounter + 1
+    local dropdownName = "EreaRpMasterActionEditorDropdown" .. dropdownCounter
+    local dropdown = CreateFrame("Frame", dropdownName, parent, "UIDropDownMenuTemplate")
+    dropdown:SetPoint("TOPLEFT", 0, yOffset - 20)
+    UIDropDownMenu_SetWidth(320, dropdown)
+    dropdown.paramKey = paramDef.key
+
+    UIDropDownMenu_Initialize(dropdown, function()
+        if EreaRpMasterDB and EreaRpMasterDB.itemLibrary then
+            for id, obj in pairs(EreaRpMasterDB.itemLibrary) do
+                local info = {}
+                info.text = obj.name
+                info.value = obj.guid
+                info.tooltipTitle = obj.name
+                info.tooltipText = "GUID: " .. obj.guid
+                do
+                    local selectedGuid = obj.guid
+                    local selectedName = obj.name
+                    info.func = function()
+                        UIDropDownMenu_SetSelectedValue(dropdown, selectedGuid)
+                        UIDropDownMenu_SetText(selectedName, dropdown)
+                    end
+                end
+                UIDropDownMenu_AddButton(info)
+            end
+        end
+    end)
+
+    UIDropDownMenu_SetText("Select object...", dropdown)
+
+    return dropdown, 60
+end
+
+-- Counter for unique animation preview frame names
+local animPreviewCounter = 0
+
+local function CreateAnimationDropdownEditor(parent, paramDef, yOffset)
+    local label = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    label:SetPoint("TOPLEFT", 10, yOffset)
+    label:SetText(paramDef.label .. ":")
+
+    dropdownCounter = dropdownCounter + 1
+    local dropdownName = "EreaRpMasterActionEditorDropdown" .. dropdownCounter
+    local dropdown = CreateFrame("Frame", dropdownName, parent, "UIDropDownMenuTemplate")
+    dropdown:SetPoint("TOPLEFT", 0, yOffset - 20)
+    UIDropDownMenu_SetWidth(240, dropdown)
+    dropdown.paramKey = paramDef.key
+
+    -- Live preview: wrapper frame + texture (64x64, to the right of the dropdown)
+    animPreviewCounter = animPreviewCounter + 1
+    local previewFrameName = "EreaRpMasterAnimPreview" .. animPreviewCounter
+    local previewFrame = CreateFrame("Frame", previewFrameName, parent)
+    previewFrame:SetWidth(64)
+    previewFrame:SetHeight(64)
+    previewFrame:SetPoint("LEFT", dropdown, "RIGHT", 10, 0)
+    previewFrame:Hide()
+
+    local previewTexture = previewFrame:CreateTexture(nil, "ARTWORK")
+    previewTexture:SetAllPoints(previewFrame)
+
+    -- Use VideoPlayer for live preview
+    local previewPlayer = videoPlayerLib.New(previewTexture)
+
+    -- Helper to start/stop preview
+    local function SetPreviewAnimation(animKey)
+        previewPlayer:Stop()
+
+        if animKey and animKey ~= "" then
+            previewPlayer:Play(animKey)
+            if previewPlayer:IsPlaying() then
+                previewFrame:Show()
+            else
+                previewFrame:Hide()
+            end
+        else
+            previewFrame:Hide()
+        end
+    end
+
+    -- Store SetPreviewAnimation on the dropdown so we can call it during pre-populate
+    dropdown.SetPreviewAnimation = SetPreviewAnimation
+
+    UIDropDownMenu_Initialize(dropdown, function()
+        -- "(None)" option
+        local noneInfo = {}
+        noneInfo.text = "(None)"
+        noneInfo.value = ""
+        noneInfo.func = function()
+            UIDropDownMenu_SetSelectedValue(dropdown, "")
+            UIDropDownMenu_SetText("(None)", dropdown)
+            SetPreviewAnimation(nil)
+        end
+        UIDropDownMenu_AddButton(noneInfo)
+
+        -- Populate from animation registry
+        local animList = cinematicAnims.GetAnimationList()
+        for i = 1, table.getn(animList) do  -- Lua 5.0: no # operator
+            local entry = animList[i]
+            local info = {}
+            info.text = entry.label
+            info.value = entry.key
+            do
+                local selectedKey = entry.key
+                local selectedLabel = entry.label
+                info.func = function()
+                    UIDropDownMenu_SetSelectedValue(dropdown, selectedKey)
+                    UIDropDownMenu_SetText(selectedLabel, dropdown)
+                    SetPreviewAnimation(selectedKey)
+                end
+            end
+            UIDropDownMenu_AddButton(info)
+        end
+    end)
+
+    UIDropDownMenu_SetText("(None)", dropdown)
+
+    return dropdown, 60
+end
+
+-- Counter for unique cinematic editor IDs
+local cinematicEditorCounter = 0
+
+local function GenerateCinematicGuid()
+    local chars = "abcdef0123456789"
+    local result = "cin_"
+    for i = 1, 8 do
+        local idx = math.floor(math.random() * 16) + 1
+        result = result .. string.sub(chars, idx, idx)
+    end
+    result = result .. "_" .. math.floor(GetTime())
+    return result
+end
+
+-- Helper function to extract script references from text
+local function GetScriptReferencesFromText(text)
+    local scriptNames = {}
+    if not text or text == "" then return scriptNames end
+    
+    -- Extract {script:XXX} placeholders (Lua 5.0 compatible)
+    local i = 1
+    while i <= string.len(text) do
+        local start_script, end_script = string.find(text, "{script:", i, true)
+        if start_script then
+            local start_name = end_script + 1
+            local end_name = string.find(text, "}", start_name, true)
+            if end_name then
+                local scriptName = string.sub(text, start_name, end_name - 1)
+                table.insert(scriptNames, scriptName)
+                i = end_name + 1
+            else
+                break
+            end
+        else
+            break
+        end
+    end
+    
+    return scriptNames
+end
+
+-- ============================================================================
+-- CreateSideEditor - Create type/portrait/animation dropdowns for one side
+-- ============================================================================
+-- @param parent: Parent frame
+-- @param sideLabel: "Left" or "Right"
+-- @param yOffset: Y offset within parent
+-- @returns: sideEditor table, totalHeight consumed
+-- ============================================================================
+local function CreateSideEditor(parent, sideLabel, yOffset)
+    local side = {}
+
+    -- Section header
+    local header = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    header:SetPoint("TOPLEFT", 10, yOffset)
+    header:SetText("|cFFFFD700" .. sideLabel .. " side:|r")
+
+    -- Type dropdown: [None, Portrait, Animation]
+    cinematicEditorCounter = cinematicEditorCounter + 1
+    dropdownCounter = dropdownCounter + 1
+    local typeDropdownName = "EreaRpMasterCinematic" .. sideLabel .. "TypeDropdown" .. cinematicEditorCounter
+    local typeDropdown = CreateFrame("Frame", typeDropdownName, parent, "UIDropDownMenuTemplate")
+    typeDropdown:SetPoint("TOPLEFT", 0, yOffset - 18)
+    UIDropDownMenu_SetWidth(140, typeDropdown)
+    side.typeDropdown = typeDropdown
+
+    -- Portrait unit dropdown: [Player (sender), Target (sender's target)]
+    dropdownCounter = dropdownCounter + 1
+    local unitDropdownName = "EreaRpMasterCinematic" .. sideLabel .. "UnitDropdown" .. cinematicEditorCounter
+    local unitDropdown = CreateFrame("Frame", unitDropdownName, parent, "UIDropDownMenuTemplate")
+    unitDropdown:SetPoint("TOPLEFT", 0, yOffset - 58)
+    UIDropDownMenu_SetWidth(200, unitDropdown)
+    unitDropdown:Hide()
+    side.unitDropdown = unitDropdown
+
+    local unitLabel = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    unitLabel:SetPoint("TOPLEFT", 10, yOffset - 42)
+    unitLabel:SetText("Portrait unit:")
+    unitLabel:Hide()
+    side.unitLabel = unitLabel
+
+    -- Animation dropdown
+    dropdownCounter = dropdownCounter + 1
+    local animDropdownName = "EreaRpMasterCinematic" .. sideLabel .. "AnimDropdown" .. cinematicEditorCounter
+    local animDropdown = CreateFrame("Frame", animDropdownName, parent, "UIDropDownMenuTemplate")
+    animDropdown:SetPoint("TOPLEFT", 0, yOffset - 58)
+    UIDropDownMenu_SetWidth(200, animDropdown)
+    animDropdown:Hide()
+    side.animDropdown = animDropdown
+
+    local animLabel = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    animLabel:SetPoint("TOPLEFT", 10, yOffset - 42)
+    animLabel:SetText("Animation:")
+    animLabel:Hide()
+    side.animLabel = animLabel
+
+    -- Helper: show/hide sub-fields based on type
+    local function UpdateSubFields(selectedType)
+        if selectedType == "portrait" then
+            unitDropdown:Show()
+            unitLabel:Show()
+            animDropdown:Hide()
+            animLabel:Hide()
+        elseif selectedType == "animation" then
+            unitDropdown:Hide()
+            unitLabel:Hide()
+            animDropdown:Show()
+            animLabel:Show()
+        else
+            unitDropdown:Hide()
+            unitLabel:Hide()
+            animDropdown:Hide()
+            animLabel:Hide()
+        end
+    end
+    side.UpdateSubFields = UpdateSubFields
+
+    -- Initialize type dropdown
+    UIDropDownMenu_Initialize(typeDropdown, function()
+        local types = {
+            { text = "None", value = "none" },
+            { text = "Portrait", value = "portrait" },
+            { text = "Animation", value = "animation" }
+        }
+        for i = 1, table.getn(types) do -- Lua 5.0: table.getn
+            local t = types[i]
+            local info = {}
+            info.text = t.text
+            info.value = t.value
+            do
+                local val = t.value
+                local txt = t.text
+                info.func = function()
+                    UIDropDownMenu_SetSelectedValue(typeDropdown, val)
+                    UIDropDownMenu_SetText(txt, typeDropdown)
+                    UpdateSubFields(val)
+                end
+            end
+            UIDropDownMenu_AddButton(info)
+        end
+    end)
+    UIDropDownMenu_SetSelectedValue(typeDropdown, "none")
+    UIDropDownMenu_SetText("None", typeDropdown)
+
+    -- Initialize unit dropdown
+    UIDropDownMenu_Initialize(unitDropdown, function()
+        local units = {
+            { text = "Player (sender)", value = "player" },
+            { text = "Target (sender's target)", value = "target" }
+        }
+        for i = 1, table.getn(units) do -- Lua 5.0: table.getn
+            local u = units[i]
+            local info = {}
+            info.text = u.text
+            info.value = u.value
+            do
+                local val = u.value
+                local txt = u.text
+                info.func = function()
+                    UIDropDownMenu_SetSelectedValue(unitDropdown, val)
+                    UIDropDownMenu_SetText(txt, unitDropdown)
+                end
+            end
+            UIDropDownMenu_AddButton(info)
+        end
+    end)
+    UIDropDownMenu_SetSelectedValue(unitDropdown, "player")
+    UIDropDownMenu_SetText("Player (sender)", unitDropdown)
+
+    -- Initialize animation dropdown
+    UIDropDownMenu_Initialize(animDropdown, function()
+        local noneInfo = {}
+        noneInfo.text = "(None)"
+        noneInfo.value = ""
+        noneInfo.func = function()
+            UIDropDownMenu_SetSelectedValue(animDropdown, "")
+            UIDropDownMenu_SetText("(None)", animDropdown)
+        end
+        UIDropDownMenu_AddButton(noneInfo)
+
+        local animList = cinematicAnims.GetAnimationList()
+        for i = 1, table.getn(animList) do -- Lua 5.0: table.getn
+            local entry = animList[i]
+            local info = {}
+            info.text = entry.label
+            info.value = entry.key
+            do
+                local selectedKey = entry.key
+                local selectedLabel = entry.label
+                info.func = function()
+                    UIDropDownMenu_SetSelectedValue(animDropdown, selectedKey)
+                    UIDropDownMenu_SetText(selectedLabel, animDropdown)
+                end
+            end
+            UIDropDownMenu_AddButton(info)
+        end
+    end)
+    UIDropDownMenu_SetText("(None)", animDropdown)
+
+    -- Getters/setters for external use
+    function side:GetType()
+        return UIDropDownMenu_GetSelectedValue(typeDropdown) or "none"
+    end
+
+    function side:GetPortraitUnit()
+        return UIDropDownMenu_GetSelectedValue(unitDropdown) or "player"
+    end
+
+    function side:GetAnimationKey()
+        return UIDropDownMenu_GetSelectedValue(animDropdown) or ""
+    end
+
+    function side:SetType(val)
+        UIDropDownMenu_SetSelectedValue(typeDropdown, val or "none")
+        if val == "portrait" then
+            UIDropDownMenu_SetText("Portrait", typeDropdown)
+        elseif val == "animation" then
+            UIDropDownMenu_SetText("Animation", typeDropdown)
+        else
+            UIDropDownMenu_SetText("None", typeDropdown)
+        end
+        UpdateSubFields(val or "none")
+    end
+
+    function side:SetPortraitUnit(val)
+        UIDropDownMenu_SetSelectedValue(unitDropdown, val or "player")
+        if val == "target" then
+            UIDropDownMenu_SetText("Target (sender's target)", unitDropdown)
+        else
+            UIDropDownMenu_SetText("Player (sender)", unitDropdown)
+        end
+    end
+
+    function side:SetAnimationKey(val)
+        UIDropDownMenu_SetSelectedValue(animDropdown, val or "")
+        if val and val ~= "" then
+            UIDropDownMenu_SetText(val, animDropdown)
+        else
+            UIDropDownMenu_SetText("(None)", animDropdown)
+        end
+    end
+
+    -- Total height consumed: header (18) + type dropdown (40) + sub-field (40) + spacing
+    return side, 100
+end
+
+local function CreateCinematicEditor(parent, paramDef, yOffset)
+    -- Container frame that acts as the "editor" returned to the method frame
+    local container = CreateFrame("Frame", nil, parent)
+    container:SetWidth(360)
+    container:SetHeight(380)
+    container:SetPoint("TOPLEFT", 0, yOffset)
+    container.paramKey = paramDef.key
+
+    -- Hidden cinematic ID (auto-generated for new, loaded for existing)
+    container.cinematicId = nil
+
+    local formTop = -5
+
+    -- Speaker name
+    local spkLabel = container:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    spkLabel:SetPoint("TOPLEFT", 10, formTop)
+    spkLabel:SetText("Speaker name:")
+
+    local spkBox = CreateFrame("EditBox", nil, container, "InputBoxTemplate")
+    spkBox:SetPoint("TOPLEFT", 10, formTop - 18)
+    spkBox:SetWidth(340)
+    spkBox:SetHeight(25)
+    spkBox:SetAutoFocus(false)
+
+    -- Message template
+    local msgLabel = container:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    msgLabel:SetPoint("TOPLEFT", 10, formTop - 48)
+    msgLabel:SetText("Dialogue text:")
+
+    local msgBox = CreateFrame("EditBox", nil, container, "InputBoxTemplate")
+    msgBox:SetPoint("TOPLEFT", 10, formTop - 66)
+    msgBox:SetWidth(340)
+    msgBox:SetHeight(25)
+    msgBox:SetAutoFocus(false)
+
+    local msgHint = container:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    msgHint:SetPoint("TOPLEFT", 10, formTop - 92)
+    msgHint:SetText("|cFF888888(Use {playerName} or {customText})|r")
+
+    -- Script references (readonly, inferred from message template and speaker name)
+    local scriptRefLabel = container:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    scriptRefLabel:SetPoint("TOPLEFT", 10, formTop - 115)
+    scriptRefLabel:SetText("Script references (inferred):")
+
+    local scriptRefDisplay = container:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    scriptRefDisplay:SetPoint("TOPLEFT", 10, formTop - 135)
+    scriptRefDisplay:SetPoint("RIGHT", container, "RIGHT", -10, 0)
+    scriptRefDisplay:SetJustifyH("LEFT")
+    scriptRefDisplay:SetTextColor(0.5, 0.8, 0.5)  -- Greenish for info
+    scriptRefDisplay:SetText("(No scripts found)")
+    container.scriptRefDisplay = scriptRefDisplay
+
+    -- Left side editor
+    local leftSide, leftHeight = CreateSideEditor(container, "Left", formTop - 115)
+    container.leftSide = leftSide
+
+    -- Right side editor
+    local rightSide, rightHeight = CreateSideEditor(container, "Right", formTop - 115 - leftHeight - 10)
+    container.rightSide = rightSide
+
+    -- Store sub-editors for external access
+    container.spkBox = spkBox
+    container.msgBox = msgBox
+
+    -- GetText returns the cinematicId (auto-generates if needed)
+    function container:GetText()
+        return self.cinematicId
+    end
+
+    -- LoadCinematic: populate fields from library
+    function container:LoadCinematic(cinematicId)
+        self.cinematicId = cinematicId
+        if not cinematicId or cinematicId == "" then return end
+
+        local entry = EreaRpMasterDB.cinematicLibrary[cinematicId]
+        if not entry then return end
+
+        spkBox:SetText(entry.speakerName or "")
+        msgBox:SetText(entry.messageTemplate or "")
+
+        -- Load side configs (new fields) or fall back to legacy
+        if entry.leftType then
+            leftSide:SetType(entry.leftType)
+            leftSide:SetPortraitUnit(entry.leftPortraitUnit or "player")
+            leftSide:SetAnimationKey(entry.leftAnimationKey or "")
+            rightSide:SetType(entry.rightType or "none")
+            rightSide:SetPortraitUnit(entry.rightPortraitUnit or "player")
+            rightSide:SetAnimationKey(entry.rightAnimationKey or "")
+        else
+            -- Legacy: portrait on left, animation on right if animationKey exists
+            leftSide:SetType("portrait")
+            leftSide:SetPortraitUnit("player")
+            local animKey = entry.animationKey or ""
+            if animKey ~= "" then
+                rightSide:SetType("animation")
+                rightSide:SetAnimationKey(animKey)
+            else
+                rightSide:SetType("none")
+            end
+        end
+        
+        -- Update script references display
+        self:UpdateScriptReferences()
+    end
+
+    -- SaveToLibrary: persist current field values to cinematicLibrary
+    function container:SaveToLibrary()
+        if not self.cinematicId or self.cinematicId == "" then
+            self.cinematicId = GenerateCinematicGuid()
+        end
+
+        if not EreaRpMasterDB.cinematicLibrary then
+            EreaRpMasterDB.cinematicLibrary = {}
+        end
+
+        -- Build legacy animationKey from right side if it's an animation
+        local legacyAnimKey = ""
+        if rightSide:GetType() == "animation" then
+            legacyAnimKey = rightSide:GetAnimationKey()
+        elseif leftSide:GetType() == "animation" then
+            legacyAnimKey = leftSide:GetAnimationKey()
+        end
+
+        -- Build script references list from message template
+        local scriptRefs = self:GetScriptReferences()
+        local scriptRefsStr = ""
+        if table.getn(scriptRefs) > 0 then
+            scriptRefsStr = table.concat(scriptRefs, ",")
+        end
+
+        EreaRpMasterDB.cinematicLibrary[self.cinematicId] = {
+            speakerName = spkBox:GetText() or "",
+            messageTemplate = msgBox:GetText() or "",
+            animationKey = legacyAnimKey,
+            leftType = leftSide:GetType(),
+            leftPortraitUnit = leftSide:GetPortraitUnit(),
+            leftAnimationKey = leftSide:GetAnimationKey(),
+            rightType = rightSide:GetType(),
+            rightPortraitUnit = rightSide:GetPortraitUnit(),
+            rightAnimationKey = rightSide:GetAnimationKey(),
+            scriptReferences = scriptRefsStr
+        }
+    end
+
+    -- GetScriptReferences: extract script references from speaker and message
+    function container:GetScriptReferences()
+        local scriptNames = {}
+
+        -- Check speaker name
+        local spkText = self.spkBox:GetText() or ""
+        for _, name in ipairs(GetScriptReferencesFromText(spkText)) do
+            table.insert(scriptNames, name)
+        end
+
+        -- Check message template
+        local msgText = self.msgBox:GetText() or ""
+        for _, name in ipairs(GetScriptReferencesFromText(msgText)) do
+            table.insert(scriptNames, name)
+        end
+
+        -- Remove duplicates
+        local uniqueNames = {}
+        local seen = {}
+        for _, name in ipairs(scriptNames) do
+            if not seen[name] then
+                table.insert(uniqueNames, name)
+                seen[name] = true
+            end
+        end
+
+        return uniqueNames
+    end
+
+    -- UpdateScriptReferences: extract and display script references from speaker and message
+    function container:UpdateScriptReferences()
+        local uniqueNames = self:GetScriptReferences()
+
+        -- Update display
+        if table.getn(uniqueNames) > 0 then
+            self.scriptRefDisplay:SetText(table.concat(uniqueNames, ", "))
+        else
+            self.scriptRefDisplay:SetText("(No scripts found)")
+        end
+    end
+
+    -- Wire up event handlers for real-time updates
+    spkBox:SetScript("OnTextChanged", function() container:UpdateScriptReferences() end)
+    msgBox:SetScript("OnTextChanged", function() container:UpdateScriptReferences() end)
+
+    -- GetPreviewData: return current field values for preview button
+    function container:GetPreviewData()
+        return {
+            speakerName = spkBox:GetText() or "",
+            messageTemplate = msgBox:GetText() or "",
+            leftType = leftSide:GetType(),
+            leftPortraitUnit = leftSide:GetPortraitUnit(),
+            leftAnimationKey = leftSide:GetAnimationKey(),
+            rightType = rightSide:GetType(),
+            rightPortraitUnit = rightSide:GetPortraitUnit(),
+            rightAnimationKey = rightSide:GetAnimationKey()
+        }
+    end
+
+    -- Total height: speaker(48) + msg(48) + hint(20) + leftSide(100) + rightSide(100) + spacing
+    return container, 380
+end
+
+local function CreateMergeGroupDropdownEditor(parent, paramDef, yOffset)
+    -- ---- Merge group selection dropdown ----
+    local label = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    label:SetPoint("TOPLEFT", 10, yOffset)
+    label:SetText(paramDef.label .. ":")
+
+    dropdownCounter = dropdownCounter + 1
+    local dropdownName = "EreaRpMasterActionEditorDropdown" .. dropdownCounter
+    local dropdown = CreateFrame("Frame", dropdownName, parent, "UIDropDownMenuTemplate")
+    dropdown:SetPoint("TOPLEFT", 0, yOffset - 20)
+    UIDropDownMenu_SetWidth(320, dropdown)
+    dropdown.paramKey = paramDef.key
+
+    -- ---- Inline form for merge group details ----
+    local formTop = yOffset - 80
+
+    local idLabel = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    idLabel:SetPoint("TOPLEFT", 20, formTop)
+    idLabel:SetText("Group ID:")
+
+    local idBox = CreateFrame("EditBox", nil, parent, "InputBoxTemplate")
+    idBox:SetPoint("TOPLEFT", 20, formTop - 18)
+    idBox:SetWidth(320)
+    idBox:SetHeight(25)
+    idBox:SetAutoFocus(false)
+
+    local spkLabel = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    spkLabel:SetPoint("TOPLEFT", 20, formTop - 48)
+    spkLabel:SetText("Merged speaker name:")
+
+    local spkBox = CreateFrame("EditBox", nil, parent, "InputBoxTemplate")
+    spkBox:SetPoint("TOPLEFT", 20, formTop - 66)
+    spkBox:SetWidth(320)
+    spkBox:SetHeight(25)
+    spkBox:SetAutoFocus(false)
+
+    local msgLabel = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    msgLabel:SetPoint("TOPLEFT", 20, formTop - 96)
+    msgLabel:SetText("Merged dialogue text:")
+
+    local msgBox = CreateFrame("EditBox", nil, parent, "InputBoxTemplate")
+    msgBox:SetPoint("TOPLEFT", 20, formTop - 114)
+    msgBox:SetWidth(320)
+    msgBox:SetHeight(25)
+    msgBox:SetAutoFocus(false)
+
+    local msgHint = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    msgHint:SetPoint("TOPLEFT", 20, formTop - 140)
+    msgHint:SetText("|cFF888888(Use {playerName} for combined player names)|r")
+
+    -- Animation dropdown for merged result
+    local animLabel = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    animLabel:SetPoint("TOPLEFT", 20, formTop - 158)
+    animLabel:SetText("Merged animation:")
+
+    dropdownCounter = dropdownCounter + 1
+    local animDropdownName = "EreaRpMasterActionEditorDropdown" .. dropdownCounter
+    local animDropdown = CreateFrame("Frame", animDropdownName, parent, "UIDropDownMenuTemplate")
+    animDropdown:SetPoint("TOPLEFT", 10, formTop - 176)
+    UIDropDownMenu_SetWidth(240, animDropdown)
+
+    UIDropDownMenu_Initialize(animDropdown, function()
+        local noneInfo = {}
+        noneInfo.text = "(None)"
+        noneInfo.value = ""
+        noneInfo.func = function()
+            UIDropDownMenu_SetSelectedValue(animDropdown, "")
+            UIDropDownMenu_SetText("(None)", animDropdown)
+        end
+        UIDropDownMenu_AddButton(noneInfo)
+
+        local animList = cinematicAnims.GetAnimationList()
+        for i = 1, table.getn(animList) do -- Lua 5.0: table.getn
+            local entry = animList[i]
+            local info = {}
+            info.text = entry.label
+            info.value = entry.key
+            do
+                local selectedKey = entry.key
+                local selectedLabel = entry.label
+                info.func = function()
+                    UIDropDownMenu_SetSelectedValue(animDropdown, selectedKey)
+                    UIDropDownMenu_SetText(selectedLabel, animDropdown)
+                end
+            end
+            UIDropDownMenu_AddButton(info)
+        end
+    end)
+    UIDropDownMenu_SetText("(None)", animDropdown)
+
+    -- Amount field
+    local amtLabel = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    amtLabel:SetPoint("TOPLEFT", 20, formTop - 236)
+    amtLabel:SetText("Total triggers needed:")
+
+    local amtBox = CreateFrame("EditBox", nil, parent, "InputBoxTemplate")
+    amtBox:SetPoint("TOPLEFT", 20, formTop - 254)
+    amtBox:SetWidth(60)
+    amtBox:SetHeight(25)
+    amtBox:SetAutoFocus(false)
+    amtBox:SetNumeric(true)
+    amtBox:SetText("2")
+
+    local amtHint = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    amtHint:SetPoint("LEFT", amtBox, "RIGHT", 10, 0)
+    amtHint:SetText("|cFF888888(How many item uses within 5s to trigger merge)|r")
+
+    -- Description field
+    local descLabel = parent:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    descLabel:SetPoint("TOPLEFT", 20, formTop - 284)
+    descLabel:SetText("Description (for your reference):")
+
+    local descBox = CreateFrame("EditBox", nil, parent, "InputBoxTemplate")
+    descBox:SetPoint("TOPLEFT", 20, formTop - 302)
+    descBox:SetWidth(320)
+    descBox:SetHeight(25)
+    descBox:SetAutoFocus(false)
+
+    -- Save merge group button
+    local saveBtn = CreateFrame("Button", nil, parent, "UIPanelButtonTemplate")
+    saveBtn:SetPoint("TOPLEFT", 20, formTop - 335)
+    saveBtn:SetWidth(140)
+    saveBtn:SetHeight(22)
+    saveBtn:SetText("Save Merge Group")
+
+    -- ---- Helper functions ----
+
+    local function LoadMergeGroup(groupId)
+        local entry = EreaRpMasterDB.mergeLibrary[groupId]
+        if not entry then return end
+        idBox:SetText(groupId)
+        idBox:EnableKeyboard(false)  -- Cannot change ID of existing group
+        spkBox:SetText(entry.speakerName or "")
+        msgBox:SetText(entry.messageTemplate or "")
+        amtBox:SetText(tostring(entry.amount or 2))
+        descBox:SetText(entry.description or "")
+
+        local animKey = entry.animationKey or ""
+        UIDropDownMenu_SetSelectedValue(animDropdown, animKey)
+        if animKey ~= "" then
+            UIDropDownMenu_SetText(animKey, animDropdown)
+        else
+            UIDropDownMenu_SetText("(None)", animDropdown)
+        end
+    end
+
+    local function ClearForm()
+        idBox:SetText("")
+        idBox:EnableKeyboard(true)
+        spkBox:SetText("")
+        msgBox:SetText("")
+        amtBox:SetText("2")
+        descBox:SetText("")
+        UIDropDownMenu_SetSelectedValue(animDropdown, "")
+        UIDropDownMenu_SetText("(None)", animDropdown)
+    end
+
+    -- ---- Dropdown initialization ----
+
+    UIDropDownMenu_Initialize(dropdown, function()
+        -- "(New) Create new merge group"
+        local newInfo = {}
+        newInfo.text = "(New) Create new merge group"
+        newInfo.value = "_NEW_"
+        newInfo.func = function()
+            UIDropDownMenu_SetSelectedValue(dropdown, "_NEW_")
+            UIDropDownMenu_SetText("(New) Create new merge group", dropdown)
+            ClearForm()
+        end
+        UIDropDownMenu_AddButton(newInfo)
+
+        -- Existing merge groups
+        if EreaRpMasterDB and EreaRpMasterDB.mergeLibrary then
+            for groupId, entry in pairs(EreaRpMasterDB.mergeLibrary) do
+                local info = {}
+                info.text = groupId .. ": " .. (entry.description or "")
+                info.value = groupId
+                do
+                    local gid = groupId
+                    info.func = function()
+                        UIDropDownMenu_SetSelectedValue(dropdown, gid)
+                        UIDropDownMenu_SetText(gid, dropdown)
+                        LoadMergeGroup(gid)
+                    end
+                end
+                UIDropDownMenu_AddButton(info)
+            end
+        end
+    end)
+
+    UIDropDownMenu_SetText("Select merge group...", dropdown)
+
+    -- ---- Save button handler ----
+
+    saveBtn:SetScript("OnClick", function()
+        local groupId = idBox:GetText() or ""
+        local speakerName = spkBox:GetText() or ""
+        local messageTemplate = msgBox:GetText() or ""
+        local animKey = UIDropDownMenu_GetSelectedValue(animDropdown) or ""
+        local amount = tonumber(amtBox:GetText()) or 2
+        local description = descBox:GetText() or ""
+
+        -- Validate
+        if groupId == "" then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[RP Master]|r Group ID is required", 1, 0, 0)
+            return
+        end
+        if not string.find(groupId, "^[%w_]+$") then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[RP Master]|r Group ID can only contain letters, numbers, and underscores", 1, 0, 0)
+            return
+        end
+        if speakerName == "" then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[RP Master]|r Speaker name is required", 1, 0, 0)
+            return
+        end
+        if messageTemplate == "" then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[RP Master]|r Dialogue text is required", 1, 0, 0)
+            return
+        end
+        if amount < 1 then amount = 1 end
+
+        -- Save to library
+        EreaRpMasterDB.mergeLibrary[groupId] = {
+            speakerName = speakerName,
+            messageTemplate = messageTemplate,
+            animationKey = animKey,
+            amount = amount,
+            description = description
+        }
+
+        -- Select the saved group in the dropdown
+        UIDropDownMenu_SetSelectedValue(dropdown, groupId)
+        UIDropDownMenu_SetText(groupId, dropdown)
+        idBox:Disable()
+
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[RP Master]|r Saved merge group: " .. groupId, 0, 1, 0)
+    end)
+
+    -- Store LoadMergeGroup on the dropdown so pre-populate can call it
+    dropdown.LoadMergeGroup = LoadMergeGroup
+
+    -- Total height: dropdown (60) + form fields (~340)
+    return dropdown, 400
+end
+
+local function CreateParameterEditor(parent, paramDef, yOffset)
+    if paramDef.type == "text" then
+        return CreateTextParameterEditor(parent, paramDef, yOffset)
+    elseif paramDef.type == "text_with_placeholder" then
+        return CreateTextWithPlaceholderEditor(parent, paramDef, yOffset)
+    elseif paramDef.type == "number" then
+        return CreateNumberParameterEditor(parent, paramDef, yOffset)
+    elseif paramDef.type == "object_dropdown" then
+        return CreateObjectDropdownEditor(parent, paramDef, yOffset)
+    elseif paramDef.type == "animation_dropdown" then
+        return CreateAnimationDropdownEditor(parent, paramDef, yOffset)
+    elseif paramDef.type == "cinematic_editor" then
+        return CreateCinematicEditor(parent, paramDef, yOffset)
+    elseif paramDef.type == "merge_group_dropdown" then
+        return CreateMergeGroupDropdownEditor(parent, paramDef, yOffset)
+    else
+        return CreateTextParameterEditor(parent, paramDef, yOffset)
+    end
+end
+
+-- ============================================================================
+-- METHOD FRAME BUILDER (local)
+-- ============================================================================
+
+local function CreateMethodFrame(parent, currentMethods, methodIndex)
+    local method = currentMethods[methodIndex]
+    local methodDef = rpActions.GetMethodRegistry()[method.type]
+
+    if not methodDef then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[RP Master]|r Unknown method type: " .. tostring(method.type), 1, 0, 0)
+        return nil
+    end
+
+    local methodFrame = CreateFrame("Frame", nil, parent)
+    methodFrame:SetWidth(parent:GetWidth() - 10)
+    methodFrame.methodIndex = methodIndex
+
+    -- Dark background
+    local bg = methodFrame:CreateTexture(nil, "BACKGROUND")
+    bg:SetAllPoints(methodFrame)
+    bg:SetTexture(0.1, 0.1, 0.1, 0.8)
+
+    -- Method type label
+    local nameLabel = methodFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    nameLabel:SetPoint("TOPLEFT", 5, -5)
+    nameLabel:SetText("|cFFFFD700Method " .. methodIndex .. ":|r " .. methodDef.name)
+
+    -- Remove method button
+    local removeBtn = CreateFrame("Button", nil, methodFrame, "UIPanelButtonTemplate")
+    removeBtn:SetPoint("TOPRIGHT", -5, -2)
+    removeBtn:SetWidth(60)
+    removeBtn:SetHeight(20)
+    removeBtn:SetText("Remove")
+    do
+        local idx = methodIndex
+        removeBtn:SetScript("OnClick", function()
+            EreaRpMasterActionEditorFrame:RemoveMethod(idx)
+        end)
+    end
+
+    -- Preview button for DisplayCinematic methods
+    if method.type == "DisplayCinematic" then
+        local previewBtn = CreateFrame("Button", nil, methodFrame, "UIPanelButtonTemplate")
+        previewBtn:SetPoint("RIGHT", removeBtn, "LEFT", -5, 0)
+        previewBtn:SetWidth(60)
+        previewBtn:SetHeight(20)
+        previewBtn:SetText("Preview")
+        -- Store reference so we can read param editors after they're created
+        methodFrame.previewBtn = previewBtn
+    end
+
+    -- Build parameter editors from schema
+    local yOffset = -30
+    local paramEditors = {}
+
+    -- Lua 5.0: table.getn instead of #
+    if methodDef.paramSchema and table.getn(methodDef.paramSchema) > 0 then
+        for i = 1, table.getn(methodDef.paramSchema) do
+            local paramDef = methodDef.paramSchema[i]
+            local editor, height = CreateParameterEditor(methodFrame, paramDef, yOffset)
+
+            if editor then
+                -- Pre-populate with existing value
+                if method.params and method.params[paramDef.key] then
+                    if paramDef.type == "cinematic_editor" then
+                        -- Cinematic editor: load from library by ID
+                        if editor.LoadCinematic then
+                            editor:LoadCinematic(method.params[paramDef.key])
+                        end
+                    elseif editor.GetText then
+                        editor:SetText(method.params[paramDef.key])
+                    elseif paramDef.type == "animation_dropdown" then
+                        -- Animation dropdown: set key as both value and display text
+                        local animKey = method.params[paramDef.key]
+                        UIDropDownMenu_SetSelectedValue(editor, animKey)
+                        if animKey ~= "" then
+                            UIDropDownMenu_SetText(animKey, editor)
+                        else
+                            UIDropDownMenu_SetText("(None)", editor)
+                        end
+                        -- Start live preview if animation key is set
+                        if editor.SetPreviewAnimation then
+                            editor.SetPreviewAnimation(animKey)
+                        end
+                    elseif paramDef.type == "merge_group_dropdown" then
+                        -- Merge group dropdown: set selected value and load form
+                        local groupId = method.params[paramDef.key]
+                        UIDropDownMenu_SetSelectedValue(editor, groupId)
+                        UIDropDownMenu_SetText(groupId, editor)
+                        if editor.LoadMergeGroup then
+                            editor.LoadMergeGroup(groupId)
+                        end
+                    else
+                        -- Object dropdown: set selected value and find display name
+                        UIDropDownMenu_SetSelectedValue(editor, method.params[paramDef.key])
+                        if EreaRpMasterDB and EreaRpMasterDB.itemLibrary then
+                            for id, obj in pairs(EreaRpMasterDB.itemLibrary) do
+                                if obj.guid == method.params[paramDef.key] then
+                                    UIDropDownMenu_SetText(obj.name, editor)
+                                    break
+                                end
+                            end
+                        end
+                    end
+                end
+
+                table.insert(paramEditors, editor)
+                yOffset = yOffset - height
+            end
+        end
+    else
+        local noParamsLabel = methodFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+        noParamsLabel:SetPoint("TOPLEFT", 10, -30)
+        noParamsLabel:SetText("|cFF888888(No parameters required)|r")
+        yOffset = yOffset - 25
+    end
+
+    methodFrame:SetHeight(math.abs(yOffset) + 10)
+    methodFrame.paramEditors = paramEditors
+
+    -- Wire up Preview button now that param editors exist
+    if methodFrame.previewBtn and method.type == "DisplayCinematic" then
+        methodFrame.previewBtn:SetScript("OnClick", function()
+            -- Find the cinematic editor and read preview data from it
+            local previewData = nil
+
+            for j = 1, table.getn(paramEditors) do  -- Lua 5.0: no # operator
+                local editor = paramEditors[j]
+                if editor.GetPreviewData then
+                    previewData = editor:GetPreviewData()
+                end
+            end
+
+            if not previewData then return end
+
+            local speakerName = previewData.speakerName or ""
+            local dialogueText = previewData.messageTemplate or ""
+
+            -- Resolve placeholders for preview
+            local playerName = UnitName("player")
+            dialogueText = string.gsub(dialogueText, "{playerName}", playerName)
+            dialogueText = string.gsub(dialogueText, "{customText}", "(preview)")
+
+            -- Build config objects from preview data
+            local leftConfig = { type = previewData.leftType or "none", portraitUnit = previewData.leftPortraitUnit or "player", animationKey = previewData.leftAnimationKey or "" }
+            local rightConfig = { type = previewData.rightType or "none", portraitUnit = previewData.rightPortraitUnit or "player", animationKey = previewData.rightAnimationKey or "" }
+
+            -- Show cinematic using the shared frame with config objects
+            EreaRpCinematicFrame:ShowDialogue(playerName, speakerName, dialogueText, leftConfig, rightConfig)
+        end)
+    end
+
+    return methodFrame
+end
+
+-- ============================================================================
+-- DEEP COPY HELPERS (local)
+-- ============================================================================
+
+local function DeepCopyMethod(method)
+    local copy = { type = method.type, params = {} }
+    if method.params then
+        for key, value in pairs(method.params) do
+            copy.params[key] = value
+        end
+    end
+    return copy
+end
+
+local function DeepCopyAction(action)
+    local copy = {
+        id = action.id,
+        label = action.label,
+        sendStatus = action.sendStatus or false,
+        methods = {},
+        conditions = {}
+    }
+    if action.conditions then
+        copy.conditions.customTextEmpty = action.conditions.customTextEmpty
+        copy.conditions.counterGreaterThanZero = action.conditions.counterGreaterThanZero
+    end
+    if action.methods then
+        for i = 1, table.getn(action.methods) do -- Lua 5.0: no # operator
+            table.insert(copy.methods, DeepCopyMethod(action.methods[i]))
+        end
+    end
+    return copy
+end
+
+local function DeepCopyActions(actions)
+    local copy = {}
+    if actions then
+        for i = 1, table.getn(actions) do -- Lua 5.0: no # operator
+            table.insert(copy, DeepCopyAction(actions[i]))
+        end
+    end
+    return copy
+end
+
+-- ============================================================================
+-- Initialize
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:Initialize()
+    local self = EreaRpMasterActionEditorFrame
+
+    -- Store frame references
+    self.titleBar = EreaRpMasterActionEditorFrameTitleBar
+    self.closeButton = EreaRpMasterActionEditorFrameCloseButton
+    self.noSelectionHint = EreaRpMasterActionEditorFrameNoSelectionHint
+
+    -- Left panel
+    self.actionListScroll = EreaRpMasterActionEditorFrameActionListScroll
+    self.actionListScrollChild = EreaRpMasterActionEditorFrameActionListScrollChild
+    self.actionListSlider = EreaRpMasterActionEditorFrameActionListSlider
+    self.addActionButton = EreaRpMasterActionEditorFrameAddActionButton
+    self.removeActionButton = EreaRpMasterActionEditorFrameRemoveActionButton
+
+    -- Right panel
+    self.labelEdit = EreaRpMasterActionEditorFrameLabelEdit
+    self.customTextCheck = EreaRpMasterActionEditorFrameCustomTextCheck
+    self.counterCheck = EreaRpMasterActionEditorFrameCounterCheck
+    self.methodsScroll = EreaRpMasterActionEditorFrameMethodsScroll
+    self.methodsScrollChild = EreaRpMasterActionEditorFrameMethodsScrollChild
+    self.methodsSlider = EreaRpMasterActionEditorFrameMethodsSlider
+    self.addMethodButton = EreaRpMasterActionEditorFrameAddMethodButton
+
+    -- Bottom buttons
+    self.saveButton = EreaRpMasterActionEditorFrameSaveButton
+    self.cancelButton = EreaRpMasterActionEditorFrameCancelButton
+
+    -- Send Status checkbox
+    self.sendStatusCheck = EreaRpMasterActionEditorFrameSendStatusCheck
+    self.sendStatusLabel = EreaRpMasterActionEditorFrameSendStatusLabel
+
+    -- Right panel label refs for show/hide
+    self.labelLabel = EreaRpMasterActionEditorFrameLabelLabel
+    self.conditionsLabel = EreaRpMasterActionEditorFrameConditionsLabel
+    self.customTextLabel = EreaRpMasterActionEditorFrameCustomTextLabel
+    self.counterLabel = EreaRpMasterActionEditorFrameCounterLabel
+    self.methodsLabel = EreaRpMasterActionEditorFrameMethodsLabel
+
+    -- State
+    self.actions = {}           -- Working copy of all actions
+    self.selectedIndex = nil    -- Currently selected action index
+    self.onSaveCallback = nil
+    self.methodFrames = {}      -- Dynamic method UI frames
+    self.actionRowButtons = {}  -- Action list row buttons
+
+    -- Resize button
+    self.resizeButton = EreaRpMasterActionEditorFrameResizeButton
+    self.resizeButton:SetFrameStrata("DIALOG")
+    self.resizeButton:SetFrameLevel(self:GetFrameLevel() + 10)
+    self.resizeButton:SetScript("OnMouseDown", function()
+        EreaRpMasterActionEditorFrame:StartSizing("BOTTOMRIGHT")
+    end)
+    self.resizeButton:SetScript("OnMouseUp", function()
+        EreaRpMasterActionEditorFrame:StopMovingOrSizing()
+    end)
+
+    -- Handle resize: update right panel widths
+    self:SetScript("OnSizeChanged", function()
+        EreaRpMasterActionEditorFrame:OnFrameResized()
+    end)
+
+    -- Dragging
+    self.titleBar:SetScript("OnMouseDown", function()
+        EreaRpMasterActionEditorFrame:StartMoving()
+    end)
+    self.titleBar:SetScript("OnMouseUp", function()
+        EreaRpMasterActionEditorFrame:StopMovingOrSizing()
+    end)
+
+    -- Close button
+    self.closeButton:SetScript("OnClick", function()
+        EreaRpMasterActionEditorFrame:Close()
+    end)
+
+    -- Cancel button
+    self.cancelButton:SetScript("OnClick", function()
+        EreaRpMasterActionEditorFrame:Close()
+    end)
+
+    -- Save button
+    self.saveButton:SetScript("OnClick", function()
+        EreaRpMasterActionEditorFrame:Save()
+    end)
+
+    -- Add action button
+    self.addActionButton:SetScript("OnClick", function()
+        EreaRpMasterActionEditorFrame:AddAction()
+    end)
+
+    -- Remove action button
+    self.removeActionButton:SetScript("OnClick", function()
+        EreaRpMasterActionEditorFrame:RemoveAction()
+    end)
+
+    -- Add method button
+    self.addMethodButton:SetScript("OnClick", function()
+        EreaRpMasterActionEditorFrame:AddMethod()
+    end)
+
+    -- Setup scrolling for both scroll frames
+    self:SetupActionListScrolling()
+    self:SetupMethodsScrolling()
+end
+
+-- ============================================================================
+-- OnFrameResized - Update right panel widths when frame is resized
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:OnFrameResized()
+    local self = EreaRpMasterActionEditorFrame
+
+    -- Update methods scroll child width (frame width - left panel - margins)
+    local frameWidth = self:GetWidth()
+    local scrollChildWidth = frameWidth - 280
+
+    if self.methodsScrollChild then
+        self.methodsScrollChild:SetWidth(scrollChildWidth)
+    end
+
+    -- Update existing method frame widths
+    if not self.methodFrames then return end
+    for i = 1, table.getn(self.methodFrames) do -- Lua 5.0: no # operator
+        local methodFrame = self.methodFrames[i]
+        if methodFrame then
+            methodFrame:SetWidth(scrollChildWidth - 10)
+        end
+    end
+
+    -- Update scroll range
+    if self.methodsScroll then
+        self.methodsScroll:UpdateScrollChildRect()
+        local viewHeight = self.methodsScroll:GetHeight() or 0
+        local contentHeight = self.methodsScrollChild:GetHeight() or 0
+        local maxScroll = contentHeight - viewHeight
+        if maxScroll < 0 then maxScroll = 0 end
+        self.methodsSlider:SetMinMaxValues(0, maxScroll)
+    end
+end
+
+-- ============================================================================
+-- SetupActionListScrolling
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:SetupActionListScrolling()
+    local self = EreaRpMasterActionEditorFrame
+    if not self.actionListScroll or not self.actionListSlider then return end
+
+    self.actionListScroll:EnableMouseWheel(true)
+    self.actionListScroll:SetScrollChild(self.actionListScrollChild)
+
+    self.actionListSlider:SetMinMaxValues(0, 1)
+    self.actionListSlider:SetValueStep(1)
+
+    -- Lua 5.0: event params are globals
+    -- Set OnValueChanged BEFORE SetValue so the template default is overridden
+    self.actionListSlider:SetScript("OnValueChanged", function()
+        EreaRpMasterActionEditorFrame.actionListScroll:SetVerticalScroll(arg1)
+    end)
+    self.actionListSlider:SetValue(0)
+
+    self.actionListScroll:SetScript("OnMouseWheel", function()
+        local current = EreaRpMasterActionEditorFrame.actionListSlider:GetValue()
+        local minVal, maxVal = EreaRpMasterActionEditorFrame.actionListSlider:GetMinMaxValues()
+        if arg1 > 0 then
+            EreaRpMasterActionEditorFrame.actionListSlider:SetValue(math.max(minVal, current - 20))
+        else
+            EreaRpMasterActionEditorFrame.actionListSlider:SetValue(math.min(maxVal, current + 20))
+        end
+    end)
+end
+
+-- ============================================================================
+-- SetupMethodsScrolling
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:SetupMethodsScrolling()
+    local self = EreaRpMasterActionEditorFrame
+    if not self.methodsScroll or not self.methodsSlider then return end
+
+    self.methodsScroll:EnableMouseWheel(true)
+    self.methodsScroll:SetScrollChild(self.methodsScrollChild)
+
+    self.methodsSlider:SetMinMaxValues(0, 1)
+    self.methodsSlider:SetValueStep(1)
+
+    -- Lua 5.0: event params are globals
+    -- Set OnValueChanged BEFORE SetValue so the template default is overridden
+    self.methodsSlider:SetScript("OnValueChanged", function()
+        EreaRpMasterActionEditorFrame.methodsScroll:SetVerticalScroll(arg1)
+    end)
+    self.methodsSlider:SetValue(0)
+
+    self.methodsScroll:SetScript("OnVerticalScroll", function()
+        EreaRpMasterActionEditorFrame.methodsSlider:SetValue(arg1)
+    end)
+
+    self.methodsScroll:SetScript("OnMouseWheel", function()
+        local current = EreaRpMasterActionEditorFrame.methodsSlider:GetValue()
+        local minVal, maxVal = EreaRpMasterActionEditorFrame.methodsSlider:GetMinMaxValues()
+        if arg1 > 0 then
+            EreaRpMasterActionEditorFrame.methodsSlider:SetValue(math.max(minVal, current - 20))
+        else
+            EreaRpMasterActionEditorFrame.methodsSlider:SetValue(math.min(maxVal, current + 20))
+        end
+    end)
+end
+
+-- ============================================================================
+-- Open - Show editor with actions array and callback
+-- ============================================================================
+-- @param actions: Array of action tables (deep-copied internally)
+-- @param onSaveCallback: function(actions) called on Save
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:Open(actions, onSaveCallback)
+    local self = EreaRpMasterActionEditorFrame
+
+    self.actions = DeepCopyActions(actions or {})
+    self.onSaveCallback = onSaveCallback
+    self.selectedIndex = nil
+
+    self:RefreshActionList()
+    self:ShowDetailPanel(false)
+
+    -- Auto-select first action if any exist
+    if table.getn(self.actions) > 0 then -- Lua 5.0: no # operator
+        self:SelectAction(1)
+    end
+
+    self:Show()
+    self:Raise()
+end
+
+-- ============================================================================
+-- Close - Hide and clear state
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:Close()
+    local self = EreaRpMasterActionEditorFrame
+
+    self:Hide()
+    self.actions = {}
+    self.selectedIndex = nil
+    self.onSaveCallback = nil
+end
+
+-- ============================================================================
+-- Save - Validate all actions and invoke callback
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:Save()
+    local self = EreaRpMasterActionEditorFrame
+
+    -- Save currently selected action's UI state first
+    self:SaveCurrentAction()
+
+    -- Validate all actions
+    for i = 1, table.getn(self.actions) do -- Lua 5.0: no # operator
+        local action = self.actions[i]
+        local valid, errorMsg = rpActions.ValidateAction(action)
+        if not valid then
+            DEFAULT_CHAT_FRAME:AddMessage(
+                "|cFFFF0000[RP Master]|r Action '" .. (action.label or "#" .. i) .. "': " .. errorMsg, 1, 0, 0
+            )
+            return
+        end
+    end
+
+    -- Call callback with modified actions
+    if self.onSaveCallback then
+        self.onSaveCallback(self.actions)
+    end
+
+    self:Close()
+end
+
+-- ============================================================================
+-- ShowDetailPanel - Toggle visibility of right panel elements
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:ShowDetailPanel(visible)
+    local self = EreaRpMasterActionEditorFrame
+
+    local method = visible and "Show" or "Hide"
+
+    self.labelEdit[method](self.labelEdit)
+    self.customTextCheck[method](self.customTextCheck)
+    self.counterCheck[method](self.counterCheck)
+    self.sendStatusCheck[method](self.sendStatusCheck)
+    self.methodsScroll[method](self.methodsScroll)
+    self.methodsSlider[method](self.methodsSlider)
+    self.addMethodButton[method](self.addMethodButton)
+
+    -- Labels
+    if self.labelLabel then self.labelLabel[method](self.labelLabel) end
+    if self.conditionsLabel then self.conditionsLabel[method](self.conditionsLabel) end
+    if self.customTextLabel then self.customTextLabel[method](self.customTextLabel) end
+    if self.counterLabel then self.counterLabel[method](self.counterLabel) end
+    if self.sendStatusLabel then self.sendStatusLabel[method](self.sendStatusLabel) end
+    if self.methodsLabel then self.methodsLabel[method](self.methodsLabel) end
+
+    -- Hint text
+    if self.noSelectionHint then
+        if visible then
+            self.noSelectionHint:Hide()
+        else
+            self.noSelectionHint:Show()
+        end
+    end
+
+    -- Remove button enable state
+    if self.removeActionButton then
+        if visible then
+            self.removeActionButton:Enable()
+        else
+            self.removeActionButton:Disable()
+        end
+    end
+end
+
+-- ============================================================================
+-- RefreshActionList - Rebuild action row buttons in left panel
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:RefreshActionList()
+    local self = EreaRpMasterActionEditorFrame
+
+    -- Hide and clear existing row buttons
+    for i = 1, table.getn(self.actionRowButtons) do -- Lua 5.0: no # operator
+        self.actionRowButtons[i]:Hide()
+    end
+    self.actionRowButtons = {}
+
+    -- Create a button for each action
+    local yOffset = -5
+    for i = 1, table.getn(self.actions) do -- Lua 5.0: no # operator
+        local action = self.actions[i]
+        local btn = CreateFrame("Button", nil, self.actionListScrollChild)
+        btn:SetWidth(155)
+        btn:SetHeight(22)
+        btn:SetPoint("TOPLEFT", 3, yOffset)
+
+        -- Background highlight
+        local highlight = btn:CreateTexture(nil, "BACKGROUND")
+        highlight:SetAllPoints(btn)
+        highlight:SetTexture(1, 1, 1, 0.1)
+        highlight:Hide()
+        btn.highlight = highlight
+
+        -- Selected highlight
+        local selected = btn:CreateTexture(nil, "BACKGROUND")
+        selected:SetAllPoints(btn)
+        selected:SetTexture(0.2, 0.4, 0.8, 0.5)
+        selected:Hide()
+        btn.selected = selected
+
+        -- Label text
+        local text = btn:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+        text:SetPoint("LEFT", 5, 0)
+        text:SetPoint("RIGHT", -5, 0)
+        text:SetJustifyH("LEFT")
+        text:SetText(action.label or "(unnamed)")
+        btn.labelText = text
+
+        -- Hover highlight
+        btn:SetScript("OnEnter", function()
+            if not this.isSelected then
+                this.highlight:Show()
+            end
+        end)
+        btn:SetScript("OnLeave", function()
+            this.highlight:Hide()
+        end)
+
+        -- Click handler
+        do
+            local idx = i
+            btn:SetScript("OnClick", function()
+                EreaRpMasterActionEditorFrame:SelectAction(idx)
+            end)
+        end
+
+        -- Mark as selected if current
+        if self.selectedIndex == i then
+            btn.isSelected = true
+            selected:Show()
+        end
+
+        table.insert(self.actionRowButtons, btn)
+        yOffset = yOffset - 22
+    end
+
+    -- Update scroll child height
+    local totalHeight = math.abs(yOffset) + 10
+    self.actionListScrollChild:SetHeight(math.max(totalHeight, self.actionListScroll:GetHeight()))
+
+    -- Update scroll range
+    self.actionListScroll:UpdateScrollChildRect()
+    local viewHeight = self.actionListScroll:GetHeight() or 0
+    local contentHeight = self.actionListScrollChild:GetHeight() or 0
+    local maxScroll = contentHeight - viewHeight
+    if maxScroll < 0 then maxScroll = 0 end
+    self.actionListSlider:SetMinMaxValues(0, maxScroll)
+end
+
+-- ============================================================================
+-- SelectAction - Select action by index, populate right panel
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:SelectAction(index)
+    local self = EreaRpMasterActionEditorFrame
+
+    -- Save previous action's state before switching
+    self:SaveCurrentAction()
+
+    self.selectedIndex = index
+    local action = self.actions[index]
+
+    if not action then
+        self:ShowDetailPanel(false)
+        self:RefreshActionList()
+        return
+    end
+
+    -- Show detail panel
+    self:ShowDetailPanel(true)
+
+    -- Populate fields
+    self.labelEdit:SetText(action.label or "")
+    self.customTextCheck:SetChecked(action.conditions and action.conditions.customTextEmpty or false)
+    self.counterCheck:SetChecked(action.conditions and action.conditions.counterGreaterThanZero or false)
+    self.sendStatusCheck:SetChecked(action.sendStatus or false)
+
+    -- Refresh methods list
+    self:RefreshMethodsList()
+
+    -- Update selection highlight in list
+    self:RefreshActionList()
+end
+
+-- ============================================================================
+-- SaveCurrentAction - Extract UI state back to the selected action
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:SaveCurrentAction()
+    local self = EreaRpMasterActionEditorFrame
+
+    if not self.selectedIndex then return end
+    local action = self.actions[self.selectedIndex]
+    if not action then return end
+
+    -- Save label
+    action.label = self.labelEdit:GetText() or ""
+
+    -- Generate or preserve ID
+    if not action.id or action.id == "" then
+        local id = string.lower(action.label)
+        id = string.gsub(id, "%s+", "_")
+        id = string.gsub(id, "[^%w_]", "")
+        if id == "" then id = "action_" .. self.selectedIndex end
+        action.id = id
+    end
+
+    -- Save conditions
+    action.conditions = {
+        customTextEmpty = self.customTextCheck:GetChecked() or false,
+        counterGreaterThanZero = self.counterCheck:GetChecked() or false
+    }
+
+    -- Save send status flag
+    action.sendStatus = self.sendStatusCheck:GetChecked() or false
+
+    -- Extract method parameter values from UI
+    for i = 1, table.getn(self.methodFrames) do -- Lua 5.0: no # operator
+        local methodFrame = self.methodFrames[i]
+        local method = action.methods[i]
+
+        if methodFrame and method and methodFrame.paramEditors then
+            method.params = {}
+            for j = 1, table.getn(methodFrame.paramEditors) do -- Lua 5.0: no # operator
+                local editor = methodFrame.paramEditors[j]
+                local paramKey = editor.paramKey
+                -- Save cinematic/merge editors to their libraries first
+                if editor.SaveToLibrary then
+                    editor:SaveToLibrary()
+                end
+                if editor.GetText then
+                    method.params[paramKey] = editor:GetText()
+                else
+                    method.params[paramKey] = UIDropDownMenu_GetSelectedValue(editor) or ""
+                end
+            end
+        end
+    end
+
+    -- Update the row label in the list
+    for i = 1, table.getn(self.actionRowButtons) do -- Lua 5.0: no # operator
+        if i == self.selectedIndex and self.actionRowButtons[i].labelText then
+            self.actionRowButtons[i].labelText:SetText(action.label ~= "" and action.label or "(unnamed)")
+        end
+    end
+end
+
+-- ============================================================================
+-- AddAction - Add a new blank action and select it
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:AddAction()
+    local self = EreaRpMasterActionEditorFrame
+
+    -- Save current action state first
+    self:SaveCurrentAction()
+
+    local newAction = {
+        id = "",
+        label = "New Action",
+        sendStatus = false,
+        methods = {},
+        conditions = {
+            customTextEmpty = false,
+            counterGreaterThanZero = false
+        }
+    }
+
+    table.insert(self.actions, newAction)
+    local newIndex = table.getn(self.actions) -- Lua 5.0: no # operator
+    self:RefreshActionList()
+    self:SelectAction(newIndex)
+end
+
+-- ============================================================================
+-- RemoveAction - Remove currently selected action
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:RemoveAction()
+    local self = EreaRpMasterActionEditorFrame
+
+    if not self.selectedIndex then return end
+
+    table.remove(self.actions, self.selectedIndex)
+
+    local count = table.getn(self.actions) -- Lua 5.0: no # operator
+    if count == 0 then
+        self.selectedIndex = nil
+        self:ShowDetailPanel(false)
+    elseif self.selectedIndex > count then
+        self.selectedIndex = count
+    end
+
+    self:RefreshActionList()
+
+    if self.selectedIndex then
+        self:SelectAction(self.selectedIndex)
+    end
+end
+
+-- ============================================================================
+-- RefreshMethodsList - Rebuild dynamic method frames in right panel
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:RefreshMethodsList()
+    local self = EreaRpMasterActionEditorFrame
+
+    -- Clear existing method frames
+    for i = 1, table.getn(self.methodFrames) do -- Lua 5.0: no # operator
+        if self.methodFrames[i] then
+            self.methodFrames[i]:Hide()
+            self.methodFrames[i]:SetParent(nil)
+            self.methodFrames[i] = nil
+        end
+    end
+    self.methodFrames = {}
+
+    if not self.selectedIndex then return end
+    local action = self.actions[self.selectedIndex]
+    if not action or not action.methods then return end
+
+    -- Create new method frames
+    local yOffset = -5
+    for i = 1, table.getn(action.methods) do -- Lua 5.0: no # operator
+        local methodFrame = CreateMethodFrame(self.methodsScrollChild, action.methods, i)
+        if methodFrame then
+            methodFrame:SetPoint("TOPLEFT", 5, yOffset)
+            yOffset = yOffset - methodFrame:GetHeight() - 5
+            table.insert(self.methodFrames, methodFrame)
+        end
+    end
+
+    -- Update scroll child height
+    local totalHeight = math.abs(yOffset) + 100
+    self.methodsScrollChild:SetHeight(math.max(totalHeight, self.methodsScroll:GetHeight()))
+
+    -- Update scroll range
+    self.methodsScroll:UpdateScrollChildRect()
+    local viewHeight = self.methodsScroll:GetHeight() or 0
+    local contentHeight = self.methodsScrollChild:GetHeight() or 0
+    local maxScroll = contentHeight - viewHeight
+    if maxScroll < 0 then maxScroll = 0 end
+    self.methodsSlider:SetMinMaxValues(0, maxScroll)
+end
+
+-- ============================================================================
+-- AddMethod - Show dropdown of available methods, add selected
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:AddMethod()
+    local self = EreaRpMasterActionEditorFrame
+
+    if not self.selectedIndex then return end
+
+    local availableMethods = rpActions.GetAvailableMethods()
+    local menuFrame = CreateFrame("Frame", "EreaRpMasterActionEditorMethodMenu", UIParent, "UIDropDownMenuTemplate")
+
+    local function MenuInit()
+        for i = 1, table.getn(availableMethods) do -- Lua 5.0: no # operator
+            local methodInfo = availableMethods[i]
+            local info = {}
+            info.text = methodInfo.name
+            info.tooltipTitle = methodInfo.name
+            info.tooltipText = methodInfo.description
+            info.notCheckable = true
+            do
+                local methodType = methodInfo.type
+                info.func = function()
+                    -- Save current state before modifying
+                    EreaRpMasterActionEditorFrame:SaveCurrentAction()
+                    local action = EreaRpMasterActionEditorFrame.actions[EreaRpMasterActionEditorFrame.selectedIndex]
+                    if action then
+                        table.insert(action.methods, {
+                            type = methodType,
+                            params = {}
+                        })
+                        EreaRpMasterActionEditorFrame:RefreshMethodsList()
+                    end
+                end
+            end
+            UIDropDownMenu_AddButton(info)
+        end
+    end
+
+    UIDropDownMenu_Initialize(menuFrame, MenuInit)
+    ToggleDropDownMenu(1, nil, menuFrame, "cursor", 0, 0)
+end
+
+-- ============================================================================
+-- RemoveMethod - Remove method by index from selected action
+-- ============================================================================
+function EreaRpMasterActionEditorFrame:RemoveMethod(methodIndex)
+    local self = EreaRpMasterActionEditorFrame
+
+    if not self.selectedIndex then return end
+
+    -- Save current param values before removing
+    self:SaveCurrentAction()
+
+    local action = self.actions[self.selectedIndex]
+    if action and action.methods then
+        table.remove(action.methods, methodIndex)
+        self:RefreshMethodsList()
+    end
+end

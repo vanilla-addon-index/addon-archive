@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/YamaYAML/BossMechanicsHelper",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "YamaYAML",
+    "repo": "BossMechanicsHelper",
+    "name": "BossMechanicsHelper",
+    "url": "https://github.com/YamaYAML/BossMechanicsHelper",
+    "api": "https://api.github.com/repos/YamaYAML/BossMechanicsHelper"
+  },
+  "commit": "11c79323862865d6a110dbb3c40016a1714b84cd",
+  "sourceFiles": {
+    "BossMechanicHelper.lua": {
+      "sha256": "a7ffb15da02cb234b7f3cdeac023ad507ede3ed19c7b21a6d508f4c3b07ad499",
+      "bytes": 2378
+    },
+    "BossMechanicHelper.toc": {
+      "sha256": "b62dc0e56421a66173a8ce7846ff4c39f55b8103f28f799b2b1593ff41c4345d",
+      "bytes": 281
+    },
+    "BossMechanicHelper.xml": {
+      "sha256": "eb7c086c7976a2f2262a99b6b8279032ca9c4591129aebd7dff3ac0b76cd1db1",
+      "bytes": 887
+    },
+    "BossMechanicHelperConfig.lua": {
+      "sha256": "8b00156673e34a4c34bf63b2f893518853ecb554389e2f6a99a9c264f31a5f4a",
+      "bytes": 2682
+    },
+    "BossMechanicHelperDefaultMechanics.lua": {
+      "sha256": "ec093af9533b82f3d5080819182e9aa22e72d3ddbc48de0adda5d15b3310709c",
+      "bytes": 3385
+    },
+    "README.md": {
+      "sha256": "cd13227abc33f46e761b36940c9f976cadb2eb9dda7d70ee73d993255858daaa",
+      "bytes": 1079
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

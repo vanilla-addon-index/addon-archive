@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/LootBlare",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "LootBlare",
+    "name": "LootBlare",
+    "url": "https://github.com/MarcelineVQ/LootBlare",
+    "api": "https://api.github.com/repos/MarcelineVQ/LootBlare"
+  },
+  "commit": "eccea47172a2d600aa73001008cc3c1f34b221da",
+  "sourceFiles": {
+    "LootBlare.lua": {
+      "sha256": "f9c893d49bf0251412d22d38f0678e1e885218aabee06c2cb4c659cc76c46f9f",
+      "bytes": 19577
+    },
+    "LootBlare.toc": {
+      "sha256": "c017626295c9524ccaa8f50f422d0d151e818ce6d9a0961e25157f4fc6b9762c",
+      "bytes": 233
+    },
+    "lootblareframe.png": {
+      "sha256": "93dae9643e55ac8090c970a1d35c8b31e32c717835101c8749cd7ff597ae4838",
+      "bytes": 233096
+    },
+    "lootblareframe2.png": {
+      "sha256": "11352537214ff0876d7fbbca2a12534de8a2a8db74be3cae0b0145a634227a4e",
+      "bytes": 65023
+    },
+    "MonaspaceNeonFrozen-Regular.ttf": {
+      "sha256": "c2419448f4425eb9d205880da00ff039ecbfc704b74a27f5dda1d47c0d95e0bd",
+      "bytes": 292300
+    },
+    "readme.md": {
+      "sha256": "52a1b91f7a715ef71cee4e68e3f0c12cfe54c6400e6a7b0c7f44f9fb5d887c38",
+      "bytes": 4032
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

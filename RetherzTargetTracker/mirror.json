@@ -1,0 +1,85 @@
+{
+  "upstream": "https://github.com/Retherz/RetherzTargetTracker",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Retherz",
+    "repo": "RetherzTargetTracker",
+    "name": "RetherzTargetTracker",
+    "url": "https://github.com/Retherz/RetherzTargetTracker",
+    "api": "https://api.github.com/repos/Retherz/RetherzTargetTracker"
+  },
+  "commit": "4f9d4c7851e5bb92d51c7201a3c2d97b6f1fee7a",
+  "sourceFiles": {
+    "AddOn/Events/EventHandler.lua": {
+      "sha256": "4294ec3d1b84c9b88d6833817e82768df23656637b7f9fa71897ef9bc3107f30",
+      "bytes": 1806
+    },
+    "AddOn/RetherzTargetTracker.lua": {
+      "sha256": "dd75bd90db7f5228e52f6649fe7683e86cb0bc5aa5e5cfac787d659a01e08ea9",
+      "bytes": 160
+    },
+    "AddOn/Spells/DebuffTracker.lua": {
+      "sha256": "3a20c6b2eedb8d3a3469b6ce85d24677550bf1d88d0084ece04119a904fc1ce9",
+      "bytes": 2536
+    },
+    "AddOn/Spells/GCDTracker.lua": {
+      "sha256": "eac1170b2fa2875aa4650ace35d80804c182e0164425837b1724d2ee58469e2f",
+      "bytes": 2162
+    },
+    "AddOn/Spells/SpellData.lua": {
+      "sha256": "40cdf3a9429be25fe4297ebc7927dc5a31ba061fb02d781714356fbfc0b7e28f",
+      "bytes": 2124
+    },
+    "AddOn/UI/BarData.lua": {
+      "sha256": "42eecd0b16afb56a2a639d9644b596494df548b151bd71a03e29c201709eae47",
+      "bytes": 245
+    },
+    "AddOn/UI/Bars.lua": {
+      "sha256": "4dc77241af4830c8e86d242158d7083123775c5e2652bf486e99f3b546f6d83d",
+      "bytes": 4853
+    },
+    "AddOn/UI/Bartender.lua": {
+      "sha256": "b1c06d65a7c88ba346067ed8ff90dd85c47049cf32f7373a0433378495472d09",
+      "bytes": 3511
+    },
+    "AddOn/UI/ConfigGUI.lua": {
+      "sha256": "b67a6fb43579847f24c2feb109645f6d595958bafe1d4aad2cb7e61145869e10",
+      "bytes": 10684
+    },
+    "AddOn/UI/ConfigHandler.lua": {
+      "sha256": "92cfcf9757f77aad282492395fcd15e53f2aa0eeb9b36cfc9935547c3b0bfc63",
+      "bytes": 2039
+    },
+    "AddOn/Utility/Communication.lua": {
+      "sha256": "5383bb368b2f09c35e362c25788242b7e08893800028d1debc6823a8c3e93666",
+      "bytes": 3582
+    },
+    "AddOn/Utility/RTTUtility.lua": {
+      "sha256": "66927701fee96a99efcdd1aed38b166bcd30006dc85c12a90ae7706c35d08746",
+      "bytes": 901
+    },
+    "AddOn/Utility/TargetCommands.lua": {
+      "sha256": "c2c9e4637ce7b7dbbaf898f6dfe42dcfe9ee4a5e655504a4e2aa9e6f0e2fdf7e",
+      "bytes": 2811
+    },
+    "AddOn/Utility/Targeting.lua": {
+      "sha256": "ff7cbbd22d420ae89462a9b82bae65ee8f63de4db7339b3b6b09d93887653a07",
+      "bytes": 3700
+    },
+    "Bindings.xml": {
+      "sha256": "299dc797cf2f1d92af9d0a5ca8fd8e7fd22ae61cef7fa138e55d2ac59a7bd210",
+      "bytes": 1303
+    },
+    "README.md": {
+      "sha256": "c61808c1fca7af178c6afb757946cd1d8d5584291eeffdfe9c9d3586625a2044",
+      "bytes": 1550
+    },
+    "RetherzTargetTracker.toc": {
+      "sha256": "426c1416c04b65ee2214cdf6ea1867440703153e87a42250a729a7452e521069",
+      "bytes": 648
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

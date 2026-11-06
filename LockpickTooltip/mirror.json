@@ -1,0 +1,29 @@
+{
+  "upstream": "https://octowow.st/git/olzon/LockpickTooltip",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "olzon",
+    "repo": "LockpickTooltip",
+    "name": "LockpickTooltip",
+    "url": "https://octowow.st/git/olzon/LockpickTooltip",
+    "api": "https://octowow.st/git/api/v1/repos/olzon/LockpickTooltip"
+  },
+  "commit": "5d93c708b2f68be8fefe99927582e983b5e59475",
+  "sourceFiles": {
+    "LockpickTooltip.lua": {
+      "sha256": "7122a012834265976a92afe7133384f0b6c2f9894379b59833b4b8c2a31a41b3",
+      "bytes": 23849
+    },
+    "LockpickTooltip.toc": {
+      "sha256": "037edc5c5b241819c416546a548931ed9bda2f43f0e7ffdbbde9f491cc33b5cd",
+      "bytes": 206
+    },
+    "README.md": {
+      "sha256": "09087ce057aa7a4b9969a8935519195a1cc947c83102b6130bfffb8d310c54e2",
+      "bytes": 3293
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

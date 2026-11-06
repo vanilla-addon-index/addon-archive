@@ -1,0 +1,717 @@
+{
+  "policy": "OctoQuestDatabase is the sole database authority. This adapter consumes the pinned effective source tables. Coordinates are validated and deduplicated; zone IDs are preserved. No local overrides or fallback database are applied.",
+  "issues": [
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Zul'Gurub",
+      "ids": [
+        1977,
+        19
+      ],
+      "preferred": 1977
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Blackrock Mountain",
+      "ids": [
+        25,
+        254,
+        1445
+      ],
+      "preferred": 25
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Westfall",
+      "ids": [
+        40,
+        206
+      ],
+      "preferred": 40
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "***On Map Dungeon***",
+      "ids": [
+        66,
+        67,
+        210,
+        2817
+      ],
+      "preferred": 66
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Gnomeregan",
+      "ids": [
+        721,
+        133,
+        5134,
+        5152,
+        5162
+      ],
+      "preferred": 721
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Bulwark",
+      "ids": [
+        152,
+        813
+      ],
+      "preferred": 152
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Lordamere Lake",
+      "ids": [
+        170,
+        1338,
+        1339
+      ],
+      "preferred": 170
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Great Sea",
+      "ids": [
+        207,
+        214,
+        332,
+        2318,
+        2319,
+        2320,
+        2321,
+        2339,
+        2364,
+        2365,
+        2397,
+        2398,
+        2399
+      ],
+      "preferred": 207
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Shadowfang Keep",
+      "ids": [
+        209,
+        236
+      ],
+      "preferred": 209
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Greymane Wall",
+      "ids": [
+        230,
+        5203
+      ],
+      "preferred": 230
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Altar of Storms",
+      "ids": [
+        255,
+        1441
+      ],
+      "preferred": 255
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Dun Algaz",
+      "ids": [
+        269,
+        836,
+        837
+      ],
+      "preferred": 269
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Southshore",
+      "ids": [
+        271,
+        2369
+      ],
+      "preferred": 271
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Tarren Mill",
+      "ids": [
+        272,
+        2368
+      ],
+      "preferred": 272
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Durnholde Keep",
+      "ids": [
+        275,
+        2370
+      ],
+      "preferred": 275
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Southpoint Tower",
+      "ids": [
+        285,
+        2376
+      ],
+      "preferred": 285
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Hillsbrad Fields",
+      "ids": [
+        286,
+        2372
+      ],
+      "preferred": 286
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Azurelode Mine",
+      "ids": [
+        288,
+        2379
+      ],
+      "preferred": 288
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Nethander Stead",
+      "ids": [
+        289,
+        2374
+      ],
+      "preferred": 289
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Dun Garok",
+      "ids": [
+        290,
+        2371
+      ],
+      "preferred": 290
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Thoradin's Wall",
+      "ids": [
+        293,
+        1057,
+        1857,
+        2377
+      ],
+      "preferred": 293
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Eastern Strand",
+      "ids": [
+        294,
+        2373
+      ],
+      "preferred": 294
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Western Strand",
+      "ids": [
+        295,
+        2378
+      ],
+      "preferred": 295
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "South Seas",
+      "ids": [
+        296,
+        2317,
+        2338
+      ],
+      "preferred": 296
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Forbidding Sea",
+      "ids": [
+        308,
+        2400,
+        2401,
+        2402,
+        2403
+      ],
+      "preferred": 308
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Thandol Span",
+      "ids": [
+        330,
+        880,
+        881
+      ],
+      "preferred": 330
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Southfury River",
+      "ids": [
+        377,
+        814,
+        815,
+        878,
+        879
+      ],
+      "preferred": 377
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Veiled Sea",
+      "ids": [
+        457,
+        2322,
+        2323,
+        2324,
+        2325,
+        2326,
+        2477,
+        3479
+      ],
+      "preferred": 457
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Great Lift",
+      "ids": [
+        485,
+        1718
+      ],
+      "preferred": 485
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Razorfen Kraul",
+      "ids": [
+        491,
+        1717
+      ],
+      "preferred": 491
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Blackfathom Deeps",
+      "ids": [
+        719,
+        2797
+      ],
+      "preferred": 719
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Razorfen Downs",
+      "ids": [
+        722,
+        1316
+      ],
+      "preferred": 722
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "South Gate Pass",
+      "ids": [
+        805,
+        839
+      ],
+      "preferred": 805
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "North Gate Pass",
+      "ids": [
+        807,
+        838
+      ],
+      "preferred": 807
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Zul'Farrak",
+      "ids": [
+        1176,
+        978
+      ],
+      "preferred": 1176
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Green Belt",
+      "ids": [
+        1019,
+        1025
+      ],
+      "preferred": 1019
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Darrow Hill",
+      "ids": [
+        1056,
+        2375
+      ],
+      "preferred": 1056
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Timbermaw Hold",
+      "ids": [
+        5640,
+        1216,
+        1769,
+        5643
+      ],
+      "preferred": 5640
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Talondeep Path",
+      "ids": [
+        1276,
+        1277
+      ],
+      "preferred": 1276
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Uldaman",
+      "ids": [
+        1337,
+        1517
+      ],
+      "preferred": 1337
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Temple of Atal'Hakkar",
+      "ids": [
+        1477,
+        5137,
+        5154
+      ],
+      "preferred": 1477
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Blackrock Spire",
+      "ids": [
+        1583,
+        5174
+      ],
+      "preferred": 1583
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Caverns of Time",
+      "ids": [
+        1941,
+        2300
+      ],
+      "preferred": 1941
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Stratholme",
+      "ids": [
+        2017,
+        2279
+      ],
+      "preferred": 2017
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Scholomance",
+      "ids": [
+        2057,
+        5142,
+        5156,
+        5165
+      ],
+      "preferred": 2057
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Hidden Grove",
+      "ids": [
+        2242,
+        5025
+      ],
+      "preferred": 2242
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Deeprun Tram",
+      "ids": [
+        5144,
+        2257
+      ],
+      "preferred": 5144
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Tyr's Hand",
+      "ids": [
+        2266,
+        4358
+      ],
+      "preferred": 2266
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Darrowmere Lake",
+      "ids": [
+        2297,
+        2299
+      ],
+      "preferred": 2297
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Black Morass",
+      "ids": [
+        5204,
+        2366
+      ],
+      "preferred": 5204
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Dire Maul",
+      "ids": [
+        2557,
+        2577,
+        5145,
+        5157,
+        5166,
+        5171,
+        5175
+      ],
+      "preferred": 2557
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Alterac Valley",
+      "ids": [
+        2597,
+        2839
+      ],
+      "preferred": 2597
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Thondroril River",
+      "ids": [
+        2619,
+        2620
+      ],
+      "preferred": 2619
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Blackwing Lair",
+      "ids": [
+        2677,
+        5146,
+        5158,
+        5167
+      ],
+      "preferred": 2677
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Ahn'Qiraj",
+      "ids": [
+        5147,
+        3428
+      ],
+      "preferred": 5147
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Ruins of Ahn'Qiraj",
+      "ids": [
+        3429,
+        3454
+      ],
+      "preferred": 3429
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Scarab Terrace",
+      "ids": [
+        3434,
+        3440,
+        3448
+      ],
+      "preferred": 3434
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "General's Terrace",
+      "ids": [
+        3435,
+        3441,
+        3449
+      ],
+      "preferred": 3435
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Reservoir",
+      "ids": [
+        3436,
+        3442,
+        3450
+      ],
+      "preferred": 3436
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Hatchery",
+      "ids": [
+        3437,
+        3443,
+        3451
+      ],
+      "preferred": 3437
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Comb",
+      "ids": [
+        3438,
+        3444,
+        3452
+      ],
+      "preferred": 3438
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Watchers' Terrace",
+      "ids": [
+        3439,
+        3445,
+        3453
+      ],
+      "preferred": 3439
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Lake Elrendar",
+      "ids": [
+        3473,
+        3513
+      ],
+      "preferred": 3473
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Dead Scar",
+      "ids": [
+        3482,
+        3514
+      ],
+      "preferred": 3482
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Gilneas City",
+      "ids": [
+        5208,
+        5180
+      ],
+      "preferred": 5208
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "The Rock of Desolation",
+      "ids": [
+        5557,
+        5558
+      ],
+      "preferred": 5557
+    },
+    {
+      "issue": "duplicate-zone-name",
+      "name": "Frostmane Hollow",
+      "ids": [
+        5734,
+        5735
+      ],
+      "preferred": 5734
+    },
+    {
+      "issue": "missing-reference",
+      "quest": 934,
+      "target": {
+        "kind": "use",
+        "id": 5623
+      }
+    },
+    {
+      "issue": "missing-reference",
+      "quest": 7521,
+      "target": {
+        "kind": "item",
+        "id": 18566
+      }
+    },
+    {
+      "issue": "missing-reference",
+      "quest": 9422,
+      "target": {
+        "kind": "unit",
+        "id": 18199
+      }
+    },
+    {
+      "issue": "missing-reference",
+      "quest": 41944,
+      "target": {
+        "kind": "unit",
+        "id": 62861
+      }
+    },
+    {
+      "issue": "missing-reference",
+      "quest": 41947,
+      "target": {
+        "kind": "unit",
+        "id": 63047
+      }
+    },
+    {
+      "issue": "missing-reference",
+      "quest": 42068,
+      "target": {
+        "kind": "unit",
+        "id": 60089
+      }
+    },
+    {
+      "issue": "missing-reference",
+      "quest": 42073,
+      "target": {
+        "kind": "unit",
+        "id": 60090
+      }
+    }
+  ]
+}

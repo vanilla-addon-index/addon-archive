@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: RogueTicker
+## Notes: Energy, tick prediction and combo point tracker for rogues
+## Author: RogueTicker
+## Version: 1.0
+## SavedVariables: RogueTickerDB
+
+RogueTicker.lua

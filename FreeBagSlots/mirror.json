@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/anzz1/FreeBagSlots",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "anzz1",
+    "repo": "FreeBagSlots",
+    "name": "FreeBagSlots",
+    "url": "https://github.com/anzz1/FreeBagSlots",
+    "api": "https://api.github.com/repos/anzz1/FreeBagSlots"
+  },
+  "commit": "4833907cba903a48442ae7c246ccc2d9036a76e4",
+  "sourceFiles": {
+    "FreeBagSlots.lua": {
+      "sha256": "964ff94d7fa48c100af6580742834f3fb790c54a147e07dc64186869fcc90eaa",
+      "bytes": 2073
+    },
+    "FreeBagSlots.toc": {
+      "sha256": "61d00d2c42d44d4155cf52976795c5ae1030d55c72ac90abf5b49f21d2bd4d2f",
+      "bytes": 146
+    },
+    "README.md": {
+      "sha256": "63768983db34d2ae557dd037e98adb2ef744704dca05cd739de7f6d1ac27727b",
+      "bytes": 252
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

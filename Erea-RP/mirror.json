@@ -1,0 +1,381 @@
+{
+  "upstream": "https://github.com/erea-turtle-addons/erea-rp-addons",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "erea-turtle-addons",
+    "repo": "erea-rp-addons",
+    "name": "erea-rp-addons",
+    "url": "https://github.com/erea-turtle-addons/erea-rp-addons",
+    "api": "https://api.github.com/repos/erea-turtle-addons/erea-rp-addons"
+  },
+  "commit": "36a58f2899b16163b487343c3c39725d350ceb6e",
+  "sourceFiles": {
+    "erea-rp-common/blp-videos/Alchemical_explosion.blp": {
+      "sha256": "19bf1b48b8d0cd85f510f5d65d4d7de39470e43b3c73686a6f8d22a3ec7deb41",
+      "bytes": 350697
+    },
+    "erea-rp-common/blp-videos/animation-registry.lua": {
+      "sha256": "042c027da7fb6bf50c531f118fec8bba6660e679f250a7e4eafb0a911930d18c",
+      "bytes": 2791
+    },
+    "erea-rp-common/blp-videos/BOOM_flag.blp": {
+      "sha256": "8c5667d16680da304905f4ab2dc4f8013eef42aac9139f8ba8cee22e15659137",
+      "bytes": 350697
+    },
+    "erea-rp-common/blp-videos/Campfire.blp": {
+      "sha256": "9fd1dda51272b1711bf38773c62b05219861d0d3c3a275680913380292398f83",
+      "bytes": 350697
+    },
+    "erea-rp-common/blp-videos/Candle_dying.blp": {
+      "sha256": "0be42ebca01ece963cbb498ba945c4583e37b8574cca312a950976f219211639",
+      "bytes": 350697
+    },
+    "erea-rp-common/blp-videos/Confetti_cannon.blp": {
+      "sha256": "bc3f7bb1acd3e924580c5a6a1c6505aab44842f7f3a4c3dd3b6eef29ff96b020",
+      "bytes": 350697
+    },
+    "erea-rp-common/blp-videos/Fel_flame.blp": {
+      "sha256": "845df5b75e238e52b0269d1763e29a98d4edc3aebaaa07c355b0aea9cf3c7aba",
+      "bytes": 350697
+    },
+    "erea-rp-common/blp-videos/Fireworks_burst.blp": {
+      "sha256": "d7973ca0fb788777fb28ca962d7e993f0889efe1685abfb035f5e962b7eaa3d7",
+      "bytes": 350697
+    },
+    "erea-rp-common/blp-videos/Flower_blooming.blp": {
+      "sha256": "ae566fd819e97cbf6318008396dcc567acc97af287271141e1388a7a7329c677",
+      "bytes": 350697
+    },
+    "erea-rp-common/blp-videos/Fog_rolling.blp": {
+      "sha256": "17b2583851b029759382b07a6271851abf0e6700ddab5a0886abd2526c6ee1c8",
+      "bytes": 350697
+    },
+    "erea-rp-common/blp-videos/Ice_forming.blp": {
+      "sha256": "9ca3376d0c0f49684b76c98519462546db93fed889d1e13394071379af7c448d",
+      "bytes": 350697
+    },
+    "erea-rp-common/blp-videos/Leaf_vortex.blp": {
+      "sha256": "d300d629753ac7b1645e8abcf2d5703cd19ffe6fddfc58d46840dbd750336f38",
+      "bytes": 350697
+    },
+    "erea-rp-common/blp-videos/Lit_candle.blp": {
+      "sha256": "25a1b993130b7819a1e4a4fe6053c75d189a9ce1a575875aa373eb977b27e46c",
+      "bytes": 350697
+    },
+    "erea-rp-common/blp-videos/Moonstone_compass.blp": {
+      "sha256": "22c6f50a3f5367abc46d9c2de45de9513e76b675022f9de92aab9a0c2af5891f",
+      "bytes": 350697
+    },
+    "erea-rp-common/blp-videos/Pie_splat.blp": {
+      "sha256": "f9a3de7962acb16ee0f04495364de27904f68a66164e2bf73f1f9ab9096db6d2",
+      "bytes": 350697
+    },
+    "erea-rp-common/blp-videos/Sunfire_beacon.blp": {
+      "sha256": "949d2aa59809c1b0a6287e57ba7473cbe557cf2788e5442035429026d5d8ab2f",
+      "bytes": 350697
+    },
+    "erea-rp-common/blp-videos/Water_droplet.blp": {
+      "sha256": "a62de774b24ec072568dd706fcad60c003ec65d5f794811d358d3f6598645e75",
+      "bytes": 350697
+    },
+    "erea-rp-common/erea-rp-common.toc": {
+      "sha256": "21df6565fa6e1ebe649f7a36e036e0ed9f38348034cd11c598be6cdc784a58f6",
+      "bytes": 808
+    },
+    "erea-rp-common/libraries/cinematic-animations.lua": {
+      "sha256": "ef3152cbb735671cef459ecc09f1a0d4ad88c8519309fdec4239b6e1a61e87a5",
+      "bytes": 7493
+    },
+    "erea-rp-common/libraries/core.lua": {
+      "sha256": "776eeda3cdbf163992e35b47126d3a73bc11fc516afde7f294412c0062fd821d",
+      "bytes": 1146
+    },
+    "erea-rp-common/libraries/encoding.lua": {
+      "sha256": "99d03cad1b6df24ded9f6b532bde86aeefe02e5147eada32e0a595cf1cee06d5",
+      "bytes": 5677
+    },
+    "erea-rp-common/libraries/inventory.lua": {
+      "sha256": "8901a9fe8d65b38cdd93cec5d5812b713ee40dbb03394b4c9b9553f8ea385d31",
+      "bytes": 10879
+    },
+    "erea-rp-common/libraries/logging.lua": {
+      "sha256": "cf8476ffc36555c0e75009c8cb7649cd5152c54ad6e583e36b000b8bf8dc5e09",
+      "bytes": 2894
+    },
+    "erea-rp-common/libraries/merge-manager.lua": {
+      "sha256": "4318842f21f2139973097770d1a1a9e12c38cd1d3620e4f6c06daba4f85b3b1d",
+      "bytes": 10116
+    },
+    "erea-rp-common/libraries/messaging.lua": {
+      "sha256": "e1d139eea3dc679ea4d25ac9dec9f2552e5558c9135b70a06920a33ae7d8e627",
+      "bytes": 29105
+    },
+    "erea-rp-common/libraries/object-database.lua": {
+      "sha256": "44caa4a0c8b00790c08b911b97b546dd837e8fabca3fd0e873fca8a1876ea693",
+      "bytes": 54956
+    },
+    "erea-rp-common/libraries/rp-actions.lua": {
+      "sha256": "b7ff1aebbe7fefcbd0077844ba0485ac6c6bf78aae8bf2244a4bcdf594051595",
+      "bytes": 20561
+    },
+    "erea-rp-common/libraries/rp-business.lua": {
+      "sha256": "76258480b93567f1ae91c45ac1970510525b2beca1691f09875348c308b5a274",
+      "bytes": 6330
+    },
+    "erea-rp-common/libraries/unit-utils.lua": {
+      "sha256": "d89bc27accd8bd85cc710cf3be649648ecb013a65e1ec1a4231fd6a7b56576dd",
+      "bytes": 4771
+    },
+    "erea-rp-common/libraries/video-player.lua": {
+      "sha256": "9b7301892301abc13dd33da5a8aba29c1dedb174e87b78642263c47bb023179e",
+      "bytes": 3671
+    },
+    "erea-rp-common/presenters/cinematic-frame.lua": {
+      "sha256": "4c59a5b808b10cc284e8104ea6892f7577509236f7c5b82cb08cdd09f3c57806",
+      "bytes": 12548
+    },
+    "erea-rp-common/presenters/log-viewer.lua": {
+      "sha256": "30071d494f6de0d204a13765bdf1ea02d41ade872feb20f20a557b799253c428",
+      "bytes": 4569
+    },
+    "erea-rp-common/version.lua": {
+      "sha256": "c6153a7f29496e2cc8f3cf45f9f1bb17af46e80692c5cc9574c01073f54c1b93",
+      "bytes": 779
+    },
+    "erea-rp-common/views/cinematic-frame.xml": {
+      "sha256": "55ec75b3765493d7c7867eb9b79ffc1de6ecb8299c868c9ecf57410b1346eeb1",
+      "bytes": 6742
+    },
+    "erea-rp-common/views/log-viewer.xml": {
+      "sha256": "71945720873bb434968ffcf70b7f8df472a182057c6fce86c33b6d6cbfe29bc1",
+      "bytes": 4160
+    },
+    "erea-rp-master/data/icon-list.lua": {
+      "sha256": "adc2301ef88bae810a20a30be6a9c4111382d00c52c9126bc8dfcb6d19c1452e",
+      "bytes": 60304
+    },
+    "erea-rp-master/erea-rp-master.toc": {
+      "sha256": "12238b5fbfc873e3cc85f6c5f209e30bf13b51f946d0efc50a63f1f420c82302",
+      "bytes": 1522
+    },
+    "erea-rp-master/minimap-button.lua": {
+      "sha256": "bc6407f9ed55f7be03d094764ff454ec1b26430b62cb6fc1468bb30c37531775",
+      "bytes": 6987
+    },
+    "erea-rp-master/presenters/action-editor-add-text.lua": {
+      "sha256": "b41e9a1d032f540114ebe5407cb668578c2e1bfce29e98e04fce958e7924bdcc",
+      "bytes": 2080
+    },
+    "erea-rp-master/presenters/action-editor-cinematic.lua": {
+      "sha256": "39f252fb3c32b8620c071c9f0a08cee7d6342463c723f2d5b12aa7730ac3731f",
+      "bytes": 13883
+    },
+    "erea-rp-master/presenters/action-editor-consume.lua": {
+      "sha256": "c1090653bb2a05087e47f048b91193001646c94cfdad85aba0601bf704bdd781",
+      "bytes": 1714
+    },
+    "erea-rp-master/presenters/action-editor-create.lua": {
+      "sha256": "5980f86253d62b95e10e1b4df612c0b0cc8c2de9d7d3846edfbaf13fdcf69310",
+      "bytes": 4618
+    },
+    "erea-rp-master/presenters/action-editor-destroy.lua": {
+      "sha256": "5f586cd38e22815a7776992ada1bc8a63eb7e0d6a70a95754b56e5d762485f88",
+      "bytes": 1714
+    },
+    "erea-rp-master/presenters/action-editor-display.lua": {
+      "sha256": "479d34bd35f8e1a49c9ba057114464f254f467c8f1b00b82872d2d0b3a7c5657",
+      "bytes": 4073
+    },
+    "erea-rp-master/presenters/action-editor-merge.lua": {
+      "sha256": "4007fe899bb72d687bf6b044111d57e039dcc6ac8a42af82c2c42bcd10920af1",
+      "bytes": 9499
+    },
+    "erea-rp-master/presenters/action-editor-side.lua": {
+      "sha256": "9403cbf138ae4a537c2aa2001ca4f395b02ac461a9e44f48f585cf4fcc3e35dc",
+      "bytes": 15092
+    },
+    "erea-rp-master/presenters/action-editor.lua": {
+      "sha256": "46402ed4bcd537c79c4c7f82895d44a3b0af2560c8b4bad173bf2d7ef368949c",
+      "bytes": 33012
+    },
+    "erea-rp-master/presenters/action-editor.lua.backup": {
+      "sha256": "3f9cc86a06b4ff3b31b508799ad5145419d49c5501210b6aa013a50898728a29",
+      "bytes": 68638
+    },
+    "erea-rp-master/presenters/give-item.lua": {
+      "sha256": "7a1c08fb3dfea38980d72106b1a8f7ae32569f5493be30994430b953345b6514",
+      "bytes": 7998
+    },
+    "erea-rp-master/presenters/icon-picker.lua": {
+      "sha256": "fafd2302d8f339e6c6dab85e957ac21ebdfe45c2eea8373fcce9257752c9fca4",
+      "bytes": 12297
+    },
+    "erea-rp-master/presenters/item-editor.lua": {
+      "sha256": "1dd1f60516b512e6bdb68866e58f552b00f89fed5b8c765a9e60e60af5dc4ce3",
+      "bytes": 11250
+    },
+    "erea-rp-master/presenters/item-list.lua": {
+      "sha256": "07f46085d36bd37920f56406f5c949e10d9e0a95984b87d877e5e0cbda491ca4",
+      "bytes": 17001
+    },
+    "erea-rp-master/presenters/main-window.lua": {
+      "sha256": "78c9b4d55f6faaa6d71fa69543768479f9ebdcece019ba09b3ef0ff031e39ab9",
+      "bytes": 6274
+    },
+    "erea-rp-master/presenters/player-monitor.lua": {
+      "sha256": "652d95b417ed8ee5022cbc95e0a7cd0fc01b32931ea8e41bf5c9495a5457a947",
+      "bytes": 27964
+    },
+    "erea-rp-master/presenters/script-list.lua": {
+      "sha256": "54ab5d0d644be656c11698d78dc824f293d0e7560980d15e6f469f6805b2786b",
+      "bytes": 12518
+    },
+    "erea-rp-master/rp-master.lua": {
+      "sha256": "586941d668c74aa87f9c0ea071144bd10e36e1bc4adba3189f5c72f662ed2223",
+      "bytes": 7915
+    },
+    "erea-rp-master/services/event-handler.lua": {
+      "sha256": "0337f93766b960e691fc082dd0f33482c15c64ce52be81d95be8a9bc184ff675",
+      "bytes": 9753
+    },
+    "erea-rp-master/services/item-library.lua": {
+      "sha256": "3b07edf888b70654ea23a891451b95bd34dd50eaad351ada075e7330c32de9cc",
+      "bytes": 14524
+    },
+    "erea-rp-master/services/master-actions.lua": {
+      "sha256": "6c425ca83d7b17036fd5aa261aa95f58b99a879356220b3c65507935f82adcbd",
+      "bytes": 2833
+    },
+    "erea-rp-master/services/script-library.lua": {
+      "sha256": "144aa0bcce49b5dfc326d8a0150383c7187511b33102a48aca0ad7275053c9e0",
+      "bytes": 10656
+    },
+    "erea-rp-master/version.lua": {
+      "sha256": "c6153a7f29496e2cc8f3cf45f9f1bb17af46e80692c5cc9574c01073f54c1b93",
+      "bytes": 779
+    },
+    "erea-rp-master/views/action-editor-add-text.xml": {
+      "sha256": "29f68b3c27c7cb85d59e0c4e9979b6d812200d0fdd0f041e635a1e05fef96ba8",
+      "bytes": 2445
+    },
+    "erea-rp-master/views/action-editor-consume.xml": {
+      "sha256": "1fcebe311fb4eb9b69b1d43d2c7fdd9b3ab4f3a34500ea4b9402995e9a3cf09d",
+      "bytes": 1930
+    },
+    "erea-rp-master/views/action-editor-create.xml": {
+      "sha256": "6e7542d8f05cc28620240fd3ed8f6f448c0fe78369f1fd5cc0a79f83364936fb",
+      "bytes": 5880
+    },
+    "erea-rp-master/views/action-editor-destroy.xml": {
+      "sha256": "0fab9848d1a58c07ba68367c0e91b7e5cdfaf920fc65b0477e24d0e49a9763ab",
+      "bytes": 1930
+    },
+    "erea-rp-master/views/action-editor-display.xml": {
+      "sha256": "bcfaa32fa59f932e14c440375a7928b385426c55d9e73f3bda06095160c72fa0",
+      "bytes": 1815
+    },
+    "erea-rp-master/views/action-editor-frame.xml": {
+      "sha256": "cf229da017713e9cf1b8a7716bbafa9e35c9ed3f18df7752d12fe8eb5df243e2",
+      "bytes": 16349
+    },
+    "erea-rp-master/views/action-editor-frame.xml.backup": {
+      "sha256": "62c7dcad6d28455babd98481edc948b41e5c7e0784983b0776bbfd50a22b9a66",
+      "bytes": 13240
+    },
+    "erea-rp-master/views/action-editor-merge.xml": {
+      "sha256": "33945c3a3985a7a1bc551d059f8ceafaabe83c35f490bd87010e83f7d5a4c3c0",
+      "bytes": 3211
+    },
+    "erea-rp-master/views/give-item.xml": {
+      "sha256": "da3a56d226157654a8aa904518a33e9165d61f6ec37aae1d90c49cfab039f194",
+      "bytes": 12056
+    },
+    "erea-rp-master/views/icon-picker.xml": {
+      "sha256": "daf52a05b8023e84f1787ca337dfcbe0915b42c61ba2eee73f0c60f90a2676f4",
+      "bytes": 6862
+    },
+    "erea-rp-master/views/item-editor.xml": {
+      "sha256": "8ef8716a03c2d77677ec69291ae2da56cb44a1f53e880adb82528113365ea0d3",
+      "bytes": 20331
+    },
+    "erea-rp-master/views/item-list.xml": {
+      "sha256": "6684275a7e7483f823c0bfef1229018de47fd437d0debf0fbe223b61c9763aee",
+      "bytes": 6335
+    },
+    "erea-rp-master/views/main-window.xml": {
+      "sha256": "16b9f1079c11004f17f0099bd491a3498f9cca1e45f9e2e6c433f88867ba259a",
+      "bytes": 10787
+    },
+    "erea-rp-master/views/player-monitor.xml": {
+      "sha256": "10596688f97e78cec434b9ba2f820a9c8d29917cf9c563a219707215503a7548",
+      "bytes": 4244
+    },
+    "erea-rp-master/views/script-list.xml": {
+      "sha256": "537b49d99359559f8a60c4c3cc613f3a97e937b2cdda821925d912beccde6ea6",
+      "bytes": 27291
+    },
+    "erea-rp-player/erea-rp-player.toc": {
+      "sha256": "7e708256db4bb99d19955656af50c9ae3354457e4150728b9cac8103aee0a5f6",
+      "bytes": 743
+    },
+    "erea-rp-player/minimap-button.lua": {
+      "sha256": "a9f9a0d9a3ec6123d3e30f0b58bbcc3e63b5eb90feba87629a0d46f0bef517b5",
+      "bytes": 8390
+    },
+    "erea-rp-player/presenters/bag-frame.lua": {
+      "sha256": "866e982a1995331ae802e175d5f005ad762d47de56dc090cc757d5fcb0ebfec5",
+      "bytes": 7119
+    },
+    "erea-rp-player/presenters/read-frame.lua": {
+      "sha256": "01aa64fd1a7e009d156c8898fc5624303e388410fd59e9da54d391f72387bb8b",
+      "bytes": 6327
+    },
+    "erea-rp-player/README.md": {
+      "sha256": "faf44286f491a4ff8ebb05f7412c87773f38e04a94a24cc2e69eecd17bdf34d7",
+      "bytes": 1761
+    },
+    "erea-rp-player/rp-player.lua": {
+      "sha256": "f36ea494c814af71c72926e92787bfd5a84d655e015f25529599dcdbb722cd9c",
+      "bytes": 20629
+    },
+    "erea-rp-player/services/dialogs.lua": {
+      "sha256": "1752ad83e9ba33a39d61120a4607612ec22f7673e9dfa5d180941f39fd5b7a03",
+      "bytes": 11407
+    },
+    "erea-rp-player/services/drag-drop.lua": {
+      "sha256": "0b4a9a8188784beb565fc449f2805381290c66321a9ab4e1bc95cfbef345236e",
+      "bytes": 7296
+    },
+    "erea-rp-player/services/event-handler.lua": {
+      "sha256": "203f88a2c9f20709940d56d290121d1cfe76498b411782dbd1ef382574128b44",
+      "bytes": 43457
+    },
+    "erea-rp-player/services/inventory.lua": {
+      "sha256": "eef96309c521526527b4fed4bc13c3dae497b91233d772c5cba4b0f6e71c927d",
+      "bytes": 26228
+    },
+    "erea-rp-player/services/player-actions.lua": {
+      "sha256": "34d207c84fe8316bfb16f97412c75e96c8744e2c3f5f1bc11c0a40f2ca14b8ec",
+      "bytes": 13609
+    },
+    "erea-rp-player/version.lua": {
+      "sha256": "c6153a7f29496e2cc8f3cf45f9f1bb17af46e80692c5cc9574c01073f54c1b93",
+      "bytes": 779
+    },
+    "erea-rp-player/views/bag-frame.xml": {
+      "sha256": "c421afd7563e6ad95fde647aad4e3a551dcb7e91ca68c6a81f188d62445ed253",
+      "bytes": 3389
+    },
+    "erea-rp-player/views/read-frame.xml": {
+      "sha256": "93d396497369e137fa1bc0971b3837b1b7ecadf647df714c2f7d2056d1d0b633",
+      "bytes": 7215
+    },
+    "README.md": {
+      "sha256": "1ef625ac4e4549207185f14a588f39838581c4e25038a750b091e5cf749ecf7c",
+      "bytes": 1608
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

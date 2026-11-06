@@ -1,0 +1,281 @@
+{
+  "upstream": "https://github.com/Kirchlive/cursive-raid",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Kirchlive",
+    "repo": "cursive-raid",
+    "name": "cursive-raid",
+    "url": "https://github.com/Kirchlive/cursive-raid",
+    "api": "https://api.github.com/repos/Kirchlive/cursive-raid"
+  },
+  "commit": "3abd16a5a6c3984be2affeac44c7366dd19e2bce",
+  "sourceFiles": {
+    ".DS_Store": {
+      "sha256": "1b37292ec76338ac155fa88941ac31679df792f7e117af6e87be4f4dde8445dd",
+      "bytes": 6148
+    },
+    ".gitignore.upstream": {
+      "sha256": "b7c424ecf8eb4289f22f32d5e77d36ab70b19cd1bf7bee0b97f136e782c4d5e9",
+      "bytes": 81
+    },
+    "CHANGELOG.md": {
+      "sha256": "4db45b2570df48ba9f588468cd67cb261c6f903f6992bac49ac397299e3d7b79",
+      "bytes": 30059
+    },
+    "commands.lua": {
+      "sha256": "3cc0fe7bd50477aafcbf2043a27979bd82d8a82947e20249fd01c13c65c87fc2",
+      "bytes": 24773
+    },
+    "core.lua": {
+      "sha256": "e44752d06f2f22a65be22e916a4f80b852d3f69ba3715bb4b0276bf6beda8fed",
+      "bytes": 6282
+    },
+    "curses.lua": {
+      "sha256": "0899f8d56151b2b84fb844595d8fb375752ee2e7e09b97a99791d790bfa1127a",
+      "bytes": 63987
+    },
+    "Cursive-Raid.toc": {
+      "sha256": "ff25c5dd1355c055b7cc1529e32abdff6fd55fbab911c75cadb874ab0012d8f2",
+      "bytes": 1262
+    },
+    "CursiveOptions.xml": {
+      "sha256": "8ac7eb10c52dd610b07cb0933f4c64d875d7fcf9c0cdbe8db369b64e53dca0c8",
+      "bytes": 44175
+    },
+    "CursiveOptionsUI.lua": {
+      "sha256": "23c27b83c65726f48c766ec4e776ed83dc4443d39b35527969b5fb25eb23b028",
+      "bytes": 147436
+    },
+    "CursiveTemplates.xml": {
+      "sha256": "8eaa75d87e52303a3f0d5c440e32de647686ac6ddcfdd085e09e6331bd070b9c",
+      "bytes": 5674
+    },
+    "CursiveTestFramework.lua": {
+      "sha256": "80a10a6d8f0419d2cd9a351d0126579e8ea54fd0507e3ee7df6ef647f15a4395",
+      "bytes": 23500
+    },
+    "CursiveTestOverlay.lua": {
+      "sha256": "6680ec1f1ee5b429dd1d9c57ac9aa0a8f041a26a1cb88878d4e990207cd4e1d6",
+      "bytes": 19484
+    },
+    "defaultProfiles.lua": {
+      "sha256": "0a7d2937bc079c9055e02d164e971dd6c826ef99f02bf7299dd1b62efc758b3c",
+      "bytes": 27339
+    },
+    "docs/AGENTS_WoW_Vanilla_1.12_EN.md": {
+      "sha256": "c695477ed6f3bd0a173b38c8b08bbdc8be811610da725207e4aca51e1f1202b3",
+      "bytes": 47283
+    },
+    "docs/cursive-roadmap.md": {
+      "sha256": "da030f6b4516da077bb351262634bded9a06633ba0aa1a1c75de9e43e7513785",
+      "bytes": 5184
+    },
+    "docs/DEBUFF-TRACKING.md": {
+      "sha256": "c24fbf29856982647c9efe21f356dfb257a74231ce4383b69d16828a1f2b9fec",
+      "bytes": 4822
+    },
+    "docs/FINAL-SPELL-IDS.md": {
+      "sha256": "78b795acbbec55f4fadd555a8da3d8d613b6966611ed26ee3740c70b66b13b34",
+      "bytes": 10055
+    },
+    "docs/IMPLEMENTATION.md": {
+      "sha256": "fa9a57ba76fcf1d6a07df222c1f2295abe1eea7637e9e389abc0b63f0a57e2e5",
+      "bytes": 15556
+    },
+    "docs/spell-id-verification-turtlewow.md": {
+      "sha256": "7dea7549bc3563e73a60a911cb51947101460f3af1bc9eda8f31b49759087bfb",
+      "bytes": 12935
+    },
+    "docs/spell-id-verification.md": {
+      "sha256": "c693ae08e5fe6f5188336e2a6dfdca9279e566247c195add44ff44590b68a0d2",
+      "bytes": 17859
+    },
+    "docs/SUPERWOW-API.md": {
+      "sha256": "f3ce8a591e13fe0216188153c9687db54fce06fa1fead081039cb5832f9ae031",
+      "bytes": 2281
+    },
+    "docs/TEST-OVERLAY.md": {
+      "sha256": "aaceb5df8197e7097fa3a301972f411d782cda411f709d65400d249d15c71b19",
+      "bytes": 2450
+    },
+    "docs/v31-update-notes.md": {
+      "sha256": "8995dd6a8af15aee52b5633193dc90102a4fd79ac10d821d98b7c5a3ff80ba7c",
+      "bytes": 10053
+    },
+    "docs/v32-shared-debuffs.md": {
+      "sha256": "98032daf738ec0b1430f6a6498daba05b1df5d5c07b9cfbf78d6c17e640b67d2",
+      "bytes": 8561
+    },
+    "filter.lua": {
+      "sha256": "21ce474b466150706dcbab56f6f6384dfafe03b835f29d1fb355bb163ed4af78",
+      "bytes": 11726
+    },
+    "global.lua": {
+      "sha256": "318d85b53dd7f151931cbd28818b7159929d04dffc17d3b61ac91ba575dc07f5",
+      "bytes": 5453
+    },
+    "img/config.tga": {
+      "sha256": "fd50bea5db5613b8608c75236822fbf2273b41ebb4d27be144eee11dad79f8fa",
+      "bytes": 1506
+    },
+    "img/Debuffordernew.png": {
+      "sha256": "af291b32a593e4bc39052e8a077a7ce2045def322b60c23c35b6715e30ef1a02",
+      "bytes": 197117
+    },
+    "img/framescreenshot.png": {
+      "sha256": "b7f2fb9b22fb09bd7421b87d247e70a6597fb3415dad55a975f8cc719acea28c",
+      "bytes": 75095
+    },
+    "img/iconmenu.png": {
+      "sha256": "f116eb4fa5d0d76df65821f1d80052e40577d18438291f7f93dc8ca8d8638ae7",
+      "bytes": 336915
+    },
+    "img/target-left.tga": {
+      "sha256": "5cad65733ff5333644d7d84c6d0d5ec0aff19197bb9abba669d86db7d41f396b",
+      "bytes": 754
+    },
+    "img/target-right.tga": {
+      "sha256": "78be02c108303862479aee96c6d8d59e1ac79a85e8d48e7a95181cbcf16589d6",
+      "bytes": 754
+    },
+    "libs/.DS_Store": {
+      "sha256": "9d584fb25ea7bed1b3bace45ba53a8df0bfb7e505edca1f42874322b841e48c1",
+      "bytes": 10244
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "6561a1a96465f5276c784989a2c989e21b1b8f666391fccf4b64ab87a0a63d54",
+      "bytes": 34783
+    },
+    "libs/AceConsole/AceConsole-2.0.lua": {
+      "sha256": "e498c182436c51671590512e02ebcec98e85fe454b5f5b1f00cf1a62b21a13c6",
+      "bytes": 63951
+    },
+    "libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "a57404bbff9dab8d53ff5e1752219a8c8e7042c0ebcb2edd6b5a7eaf8b9d39c8",
+      "bytes": 45257
+    },
+    "libs/AceDebug/AceDebug-2.0.lua": {
+      "sha256": "394521bbd40660d05c178fce092bb3c4904405efee2b43c7a4d0d98bf1d8892f",
+      "bytes": 7668
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "09cfc0b69a0feb644fa1a9e5fc6715a4e76e0b2f6c7c04a3a0ea693d633770cd",
+      "bytes": 23114
+    },
+    "libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "f751df94f961870d2e35818a6f5774f7441786958ee6fd8adf227479f896a385",
+      "bytes": 15957
+    },
+    "libs/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "a3de67878b122a9f6c937462b9641f7a029b55605107f2db03953fe7a1d412ff",
+      "bytes": 13981
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "0447ac520cae9b5f9544f9619c23a89c0e192bc7891763e2a0269a5d664f79df",
+      "bytes": 30469
+    },
+    "libs/Dewdrop/Dewdrop-2.0.lua": {
+      "sha256": "c51aa331b91d1bc7f8023f8c02814a0556e39a39d392f5029b06bf0aee266664",
+      "bytes": 82495
+    },
+    "libs/FuBarPlugin/FuBarPlugin-2.0.lua": {
+      "sha256": "9102d327901e72e0523f7d21c989c32cd698a7b6d66e5cb0bf5cdff3eef5f73b",
+      "bytes": 44995
+    },
+    "libs/Tablet/Tablet-2.0.lua": {
+      "sha256": "2456e593be577cdd8340cd0edc1fce94926a1f9e7dee7f26798bf8b3128dbf06",
+      "bytes": 83748
+    },
+    "LICENSE": {
+      "sha256": "3def8121bde2dc90aa70bebf04030d96e62973c4bec610a3426d9f29ef7faf33",
+      "bytes": 1086
+    },
+    "Localization.lua": {
+      "sha256": "396bac59a0430587d2f1a2255f6d0b08d1b4256823e2396c071576a6e3d43d2e",
+      "bytes": 30470
+    },
+    "profiles.lua": {
+      "sha256": "c036b2d34d14e0b598f4bb13561aea9c567b311edfea9d109a2347f9b31085af",
+      "bytes": 13132
+    },
+    "profilesUI.lua": {
+      "sha256": "482251fc6c79b7170ad9de67f00a0b327dffbcfd84b731b460bdddec93ae56f7",
+      "bytes": 31740
+    },
+    "README.md": {
+      "sha256": "2299bf61d5f741dd1728a62639de6d433a8c7c9ccce1d894edca04fd4d3ea512",
+      "bytes": 26260
+    },
+    "settings.lua": {
+      "sha256": "1c281e8f03c9c9ce74bf8b8a3ebed3299bc29791bc0326a2e93c53c55d62ffbf",
+      "bytes": 36338
+    },
+    "sounds/expiring.mp3": {
+      "sha256": "86f8ce302d826b04fb0db317749322957c5b2cf71ab9e29cbb1460dec39dc7b3",
+      "bytes": 5318
+    },
+    "sounds/resist.mp3": {
+      "sha256": "c87a242298b0b9a3777818a5e39835a93d5e9df2e859477e2f8669bc37dce8aa",
+      "bytes": 42363
+    },
+    "spells/druid.lua": {
+      "sha256": "6189b38120ee5a9205c30aa79ff845baf3b19245638d0490e1a0c2b06c05e568",
+      "bytes": 5339
+    },
+    "spells/hunter.lua": {
+      "sha256": "247ae379225cafab1c898be54cf4ecf89b24d34512319f263e2ee1579111945d",
+      "bytes": 2116
+    },
+    "spells/mage.lua": {
+      "sha256": "99c3905d320093da552de81cbbac0c69d939e2e120594fe4fec8a824d0186c4c",
+      "bytes": 559
+    },
+    "spells/priest.lua": {
+      "sha256": "e63f2921a6d0dc3c4ad90d7fcb3ac66272304d65f95b48561d011e5ee65a3d6d",
+      "bytes": 2930
+    },
+    "spells/rogue.lua": {
+      "sha256": "b224483325257eae12424e96cf11637b76694587e769b8b354117791a590ce5e",
+      "bytes": 3503
+    },
+    "spells/shaman.lua": {
+      "sha256": "c7e50f737e7386ad0d9bd358190607ef4a760d10489bb29a304d6ac8a4840b65",
+      "bytes": 640
+    },
+    "spells/shared_debuffs.lua": {
+      "sha256": "ed43e718fbc721ef5b2664bb2d7a5a4edeac6902a58f4556244375743a2e3413",
+      "bytes": 21286
+    },
+    "spells/warlock.lua": {
+      "sha256": "a35a16cd821caf1ac134802604e2d30f6c91fb425b189af718b8088442657e20",
+      "bytes": 5068
+    },
+    "spells/warrior.lua": {
+      "sha256": "22554104519f15f13ae0da6663acfe9a23099be01ed2a2c65ea13e257f49688f",
+      "bytes": 505
+    },
+    "Textures/diagonal_stripes_rev.tga": {
+      "sha256": "1dae02abc7477cd7d59dd43c280385cd42cb1573171366b3f1209cec2b48d1f9",
+      "bytes": 4114
+    },
+    "ui.lua": {
+      "sha256": "7680a670411e94cd6352f8431a05fecb7cc5eb839a9a4a88254bcf7d31fc91fe",
+      "bytes": 76988
+    },
+    "utils.lua": {
+      "sha256": "84156b81474d591ab926302d653f1fb9c7b85a3a6ce10056d70c55e6411611bf",
+      "bytes": 5328
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/TrangOul/Lookup",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "TrangOul",
+    "repo": "Lookup",
+    "name": "Lookup",
+    "url": "https://github.com/TrangOul/Lookup",
+    "api": "https://api.github.com/repos/TrangOul/Lookup"
+  },
+  "commit": "4584b55e864f419f6774a52a8620aa86e9ad98f0",
+  "sourceFiles": {
+    "assets/Clear.tga": {
+      "sha256": "d26adaf003220d7e4bf31fa2bbaef9f8e8512aa4fabe204d42ccb669516ce012",
+      "bytes": 989
+    },
+    "assets/Search.tga": {
+      "sha256": "b7afef07385365e81f5521202a20c60dc2cb96904b31f472bfeb031e403fe4cf",
+      "bytes": 982
+    },
+    "container.lua": {
+      "sha256": "5608647951d4f45b1993d1ae63e5e21700bc747e1e2cae6553ec127342c9a0a0",
+      "bytes": 2457
+    },
+    "LICENSE": {
+      "sha256": "fd3ec27ef65db47cfdcef6e1602ac8d06d62110451ccf6bc53f1e516422a3e9e",
+      "bytes": 1073
+    },
+    "Lookup.toc": {
+      "sha256": "6c21c40b0a5b4dcbc015622ca6bbeb4dd83061b0a7033e32dffbe4415848fb28",
+      "bytes": 254
+    },
+    "README.md": {
+      "sha256": "089ed0c81bd01d71d5865c4ed0a2b691f381364bed6706030d1ce57c1d93f30a",
+      "bytes": 878
+    },
+    "screenshot.png": {
+      "sha256": "644e466d0ce263f8ae453a74bea51caccfbce5b2ec2ccb512fde02eadbfde555",
+      "bytes": 131274
+    },
+    "spellbook.lua": {
+      "sha256": "8e4ad0aefeb382b18b8573baec4b45bb9003b770be02c0073ffab6d6ea946597",
+      "bytes": 1512
+    },
+    "Templates.xml": {
+      "sha256": "61fe86f287f3e36c7853a6c46013667d0d2932d7f7f60dc164f330b977187c72",
+      "bytes": 2592
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

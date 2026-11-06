@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: |cff00ff00Lat|cfffffffferal
+## Author: Ahmera
+## Notes: Tracks Rogue skills, proccs, trinkets
+## SavedVariables: LateralDB
+## Version: 1.4
+
+Lateral.lua

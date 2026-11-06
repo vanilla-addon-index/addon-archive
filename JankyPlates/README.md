@@ -4,6 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| JankyPlates | https://github.com/Ageous27/JankyPlates | new |
+| JankyPlates | https://github.com/Ageous27/JankyPlates | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

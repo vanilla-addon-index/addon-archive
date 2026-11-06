@@ -1,0 +1,28 @@
+## Interface: 11200
+## Title: ChronicleCompanion
+## Notes: Use with the website Chronicle
+## Version: 1.1
+## DefaultState: enabled
+## Author: Emyrk
+## SavedVariables: ChronicleCompanionDB
+## SavedVariablesPerCharacter: ChronicleCompanionCharDB
+## OptionalDeps:  Chronometer, Chronometer-TWoW
+
+
+util.lua
+file.lua
+minimap.lua
+
+advancedlogging\core.lua
+advancedlogging\units.lua
+advancedlogging\combatant.lua
+advancedlogging\talents.lua
+advancedlogging\config.lua
+advancedlogging\ursol.lua
+sidekick.lua
+advancedlogging\sidekick_ui.lua
+
+core.lua
+debug.lua
+slash.lua
+init.lua

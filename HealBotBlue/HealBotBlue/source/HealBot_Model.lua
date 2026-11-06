@@ -1,0 +1,479 @@
+-- HealBot_Model.lua
+-- Centralized Data Store and Observer System for HealBotBlue
+
+local pool_oldGUIDs = {}
+local pool_newUnitForGUID = {}
+local pool_stateSwaps = {}
+local pool_iconSwaps = {}
+local pool_missingBuffSwaps = {}
+local pool_debuffSwaps = {}
+
+-- Safe local wrappers to prevent native UIDropDownMenu concatenation crashes
+-- when setting selected values on closed dropdowns during initialization.
+function HealBot_UIDropDownMenu_SetSelectedID(frame, id, useValue)
+    local wasNil = false
+    if not UIDROPDOWNMENU_OPEN_MENU then
+        UIDROPDOWNMENU_OPEN_MENU = "DropDownList1"
+        wasNil = true
+    end
+    UIDropDownMenu_SetSelectedID(frame, id, useValue)
+    if wasNil then
+        UIDROPDOWNMENU_OPEN_MENU = nil
+    end
+end
+
+-- HealBot_UIDropDownMenu_SetSelectedValue: Internal utility: HealBot_UIDropDownMenu_SetSelectedValue
+function HealBot_UIDropDownMenu_SetSelectedValue(frame, value, useValue)
+    local wasNil = false
+    if not UIDROPDOWNMENU_OPEN_MENU then
+        UIDROPDOWNMENU_OPEN_MENU = "DropDownList1"
+        wasNil = true
+    end
+    UIDropDownMenu_SetSelectedValue(frame, value, useValue)
+    if wasNil then
+        UIDROPDOWNMENU_OPEN_MENU = nil
+    end
+end
+
+HealBot_Model = {
+    observers = {},
+    units = {},
+    
+    -- Expose common lists for iteration
+    partyMembers = {},
+    raidMembers = {},
+    playerPet = nil,
+    target = nil,
+    
+    -- Integration maps
+    unitGUIDs = {}, -- unit -> GUID
+    guidUnits = {},  -- GUID -> unit
+
+    -- Delayed resolution queue
+    unresolvedUnits = {}
+}
+
+--------------------------------------------------------------------------------
+-- Observer Pattern Implementation
+--------------------------------------------------------------------------------
+
+-- Supported Events:
+-- "UNIT_HEALTH_CHANGED"
+-- "UNIT_POWER_CHANGED"
+-- "UNIT_AURA_CHANGED"
+-- "UNIT_STATUS_CHANGED" (dead/ghost/offline)
+-- "ROSTER_CHANGED"
+-- "EQUIPMENT_CHANGED"
+-- "INCOMING_HEAL_CHANGED"
+
+-- HealBot_Model:RegisterObserver: Registers an observer callback for an event.
+function HealBot_Model:RegisterObserver(event, callback)
+    if not self.observers[event] then
+        self.observers[event] = {}
+    end
+    table.insert(self.observers[event], callback)
+end
+
+-- HealBot_Model:NotifyObservers: Fires all registered callbacks for an event.
+function HealBot_Model:NotifyObservers(event, unitID, arg1, arg2)
+    if self.observers[event] then
+        local len = table.getn(self.observers[event])
+        for i = 1, len do
+            self.observers[event][i](unitID, arg1, arg2)
+        end
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Model Initialization
+--------------------------------------------------------------------------------
+
+-- HealBot_Model:Initialize: Pre-allocates the unit state dictionary.
+function HealBot_Model:Initialize()
+    for k in pairs(self.unresolvedUnits) do self.unresolvedUnits[k] = nil end
+    self:InitUnitState("player")
+    self:InitUnitState("target")
+    self:InitUnitState("pet")
+    
+    for i = 1, 4 do
+        self:InitUnitState("party"..i)
+        self:InitUnitState("partypet"..i)
+        table.insert(self.partyMembers, "party"..i)
+    end
+    
+    for i = 1, 40 do
+        self:InitUnitState("raid"..i)
+        self:InitUnitState("raidpet"..i)
+        table.insert(self.raidMembers, "raid"..i)
+    end
+end
+
+-- HealBot_Model:InitUnitState: Internal utility: HealBot_Model:InitUnitState
+function HealBot_Model:InitUnitState(unit)
+    if not self.units[unit] then
+        self.units[unit] = {
+            -- Base properties
+            name = nil,
+            class = nil,
+            englishClass = nil,
+            
+            -- State tracking
+            health = 0,
+            maxHealth = 0,
+            mana = 0,
+            maxMana = 0,
+            powerType = 0,
+            
+            -- Status tracking
+            isDead = false,
+            isGhost = false,
+            isConnected = true,
+            inRange = false,
+            
+            -- Buffs/Debuffs (Auras)
+            debuffType = nil,
+            debuffTexture = nil,
+            missingBuff = false,
+            icons = {},
+            
+            -- Integration
+            incomingHeal = 0
+        }
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Model Updaters (Called by Controller)
+--------------------------------------------------------------------------------
+
+-- Updates base unit info (Name, Class)
+function HealBot_Model:UpdateUnitIdentity(unit)
+    if not self.units[unit] or string.find(unit, "^Test") then return false end
+    
+    local oldName = self.units[unit].name
+    local oldEnglishClass = self.units[unit].englishClass
+    local name = UnitName(unit)
+    
+    -- If UnitName is not ready, attempt raid roster fallback for raid units
+    if not name or name == "Unknown" then
+        local _, _, raidIdx = string.find(unit, "^raid(%d+)$")
+        if raidIdx and GetNumRaidMembers() > 0 then
+            local rName = GetRaidRosterInfo(tonumber(raidIdx))
+            if rName and rName ~= "" and rName ~= "Unknown" then
+                name = rName
+            end
+        end
+    end
+
+    -- If name is still nil, retain oldName if unit exists
+    if not name and oldName and UnitExists(unit) then
+        name = oldName
+    end
+
+    local englishClass = HealBot_UnitClass(unit)
+
+    -- If name is identical, do NOT overwrite an existing valid englishClass with nil
+    if oldName and name == oldName and not englishClass and oldEnglishClass then
+        englishClass = oldEnglishClass
+    end
+
+    -- Track unresolved units (unit exists with a name, but missing englishClass)
+    if name and not englishClass then
+        self.unresolvedUnits[unit] = true
+    else
+        self.unresolvedUnits[unit] = nil
+    end
+    
+    if oldName ~= name or oldEnglishClass ~= englishClass then
+        self.units[unit].name = name
+        self.units[unit].englishClass = englishClass
+        self.units[unit].class = UnitClass(unit)
+        
+        if (HealBot_Integrations_SuperWoW_Active or HealBot_Integrations_ClassicAPI_Active or HealBot_Integrations_Nampower_Active) and HealBot_GetUnitGUID then
+            local guid = HealBot_GetUnitGUID(unit)
+            if guid and guid ~= "0" and guid ~= "0x0000000000000000" then
+                self.unitGUIDs[unit] = guid
+                if unit ~= "target" then
+                    self.guidUnits[guid] = unit
+                end
+            end
+        end
+        return true -- Identity changed
+    end
+    return false
+end
+
+-- HealBot_Model:PopulateAllGUIDs: Refreshes unit-to-GUID and GUID-to-unit mappings for all current roster units.
+function HealBot_Model:PopulateAllGUIDs()
+    if not (HealBot_Integrations_SuperWoW_Active or HealBot_Integrations_ClassicAPI_Active or HealBot_Integrations_Nampower_Active) or not HealBot_GetUnitGUID then return end
+    
+    local playerGuid = HealBot_GetUnitGUID("player")
+    if playerGuid and playerGuid ~= "0" and playerGuid ~= "0x0000000000000000" then
+        self.unitGUIDs["player"] = playerGuid
+        self.guidUnits[playerGuid] = "player"
+        HealBot_PlayerGUID = playerGuid
+    end
+    
+    for _, unit in ipairs(self.partyMembers) do
+        local guid = HealBot_GetUnitGUID(unit)
+        if guid and guid ~= "0" and guid ~= "0x0000000000000000" then
+            self.unitGUIDs[unit] = guid
+            self.guidUnits[guid] = unit
+        end
+    end
+    
+    for _, unit in ipairs(self.raidMembers) do
+        local guid = HealBot_GetUnitGUID(unit)
+        if guid and guid ~= "0" and guid ~= "0x0000000000000000" then
+            self.unitGUIDs[unit] = guid
+            self.guidUnits[guid] = unit
+        end
+    end
+end
+
+-- HealBot_Model:GetUnitByGUID: Internal utility: HealBot_Model:GetUnitByGUID
+function HealBot_Model:GetUnitByGUID(guid)
+    if not guid then return nil end
+    local unit = self.guidUnits[guid]
+    if unit and UnitExists(unit) then return unit end
+    
+    local lowerGuid = string.lower(guid)
+    if HealBot_PlayerGUID and string.lower(HealBot_PlayerGUID) == lowerGuid then
+        self.guidUnits[guid] = "player"
+        return "player"
+    end
+    if HealBot_GetUnitGUID then
+        local pGuid = HealBot_GetUnitGUID("player")
+        if pGuid and string.lower(pGuid) == lowerGuid then
+            self.guidUnits[guid] = "player"
+            HealBot_PlayerGUID = pGuid
+            return "player"
+        end
+        for i = 1, 40 do
+            local u = "raid" .. i
+            if UnitExists(u) then
+                local uGuid = HealBot_GetUnitGUID(u)
+                if uGuid and string.lower(uGuid) == lowerGuid then
+                    self.guidUnits[guid] = u
+                    return u
+                end
+            end
+        end
+        for i = 1, 4 do
+            local u = "party" .. i
+            if UnitExists(u) then
+                local uGuid = HealBot_GetUnitGUID(u)
+                if uGuid and string.lower(uGuid) == lowerGuid then
+                    self.guidUnits[guid] = u
+                    return u
+                end
+            end
+        end
+    end
+    return nil
+end
+
+-- HealBot_Model:GetUnitIDByName: Looks up a group unit token by player name.
+function HealBot_Model:GetUnitIDByName(name)
+    if not name then return nil end
+    for unit, data in pairs(self.units) do
+        if data.name == name then return unit end
+    end
+    return nil
+end
+
+-- HealBot_Model:PreserveStateByGUID: Preserves icon and debuff state when group indices shift during combat.
+function HealBot_Model:PreserveStateByGUID()
+    if not (HealBot_Integrations_SuperWoW_Active or HealBot_Integrations_ClassicAPI_Active or HealBot_Integrations_Nampower_Active) or not HealBot_GetUnitGUID then return end
+    
+    for k in pairs(pool_oldGUIDs) do pool_oldGUIDs[k] = nil end
+    local oldGUIDs = pool_oldGUIDs
+    for unit, guid in pairs(self.unitGUIDs) do
+        if string.find(unit, "^party") or string.find(unit, "^raid") or unit == "player" or unit == "pet" then
+            oldGUIDs[unit] = guid
+        end
+    end
+    
+    for k in pairs(pool_newUnitForGUID) do pool_newUnitForGUID[k] = nil end
+    local newUnitForGUID = pool_newUnitForGUID
+    -- Scan the new roster
+    for _, unit in ipairs(self.partyMembers) do
+        local guid = HealBot_GetUnitGUID(unit)
+        if guid and guid ~= "0" and guid ~= "0x0000000000000000" then 
+            newUnitForGUID[guid] = unit 
+            self.unitGUIDs[unit] = guid
+            self.guidUnits[guid] = unit
+        end
+    end
+    for _, unit in ipairs(self.raidMembers) do
+        local guid = HealBot_GetUnitGUID(unit)
+        if guid and guid ~= "0" and guid ~= "0x0000000000000000" then 
+            newUnitForGUID[guid] = unit 
+            self.unitGUIDs[unit] = guid
+            self.guidUnits[guid] = unit
+        end
+    end
+    
+    for k in pairs(pool_stateSwaps) do pool_stateSwaps[k] = nil end
+    local stateSwaps = pool_stateSwaps
+    for k in pairs(pool_iconSwaps) do pool_iconSwaps[k] = nil end
+    local iconSwaps = pool_iconSwaps
+    for k in pairs(pool_missingBuffSwaps) do pool_missingBuffSwaps[k] = nil end
+    local missingBuffSwaps = pool_missingBuffSwaps
+    for k in pairs(pool_debuffSwaps) do pool_debuffSwaps[k] = nil end
+    local debuffSwaps = pool_debuffSwaps
+    
+    for oldUnit, guid in pairs(oldGUIDs) do
+        local newUnit = newUnitForGUID[guid]
+        if newUnit and newUnit ~= oldUnit then
+            stateSwaps[newUnit] = self.units[oldUnit]
+            
+            -- Preserve external global tables if they exist
+            if HealBot_UnitIcons and HealBot_UnitIcons[oldUnit] then
+                iconSwaps[newUnit] = HealBot_UnitIcons[oldUnit]
+            end
+            if HealBot_MissingBuffs and HealBot_MissingBuffs[oldUnit] ~= nil then
+                missingBuffSwaps[newUnit] = HealBot_MissingBuffs[oldUnit]
+            end
+            if HealBot_UnitDebuff and HealBot_UnitDebuff[oldUnit] ~= nil then
+                debuffSwaps[newUnit] = HealBot_UnitDebuff[oldUnit]
+            end
+        end
+    end
+    
+    for targetUnit, stateData in pairs(stateSwaps) do
+        -- Deep copy to prevent memory aliasing
+        if not self.units[targetUnit] then 
+            self.units[targetUnit] = HealBot_GetTable()
+            self.units[targetUnit].icons = HealBot_GetTable()
+        end
+        
+        local targetIcons = self.units[targetUnit].icons
+        if not targetIcons then targetIcons = HealBot_GetTable() end
+        for k in pairs(targetIcons) do targetIcons[k] = nil end
+        
+        for k in pairs(self.units[targetUnit]) do self.units[targetUnit][k] = nil end
+        
+        for k, v in pairs(stateData) do
+            if k ~= "icons" then
+                self.units[targetUnit][k] = v
+            end
+        end
+        self.units[targetUnit].icons = targetIcons
+
+        if HealBot_UnitIcons and iconSwaps[targetUnit] then
+            if not HealBot_UnitIcons[targetUnit] then HealBot_UnitIcons[targetUnit] = HealBot_GetTable() end
+            for j=1, 10 do
+                HealBot_UnitIcons[targetUnit][j] = iconSwaps[targetUnit][j]
+            end
+        end
+        if HealBot_MissingBuffs then
+            HealBot_MissingBuffs[targetUnit] = missingBuffSwaps[targetUnit]
+        end
+        if HealBot_UnitDebuff then
+            HealBot_UnitDebuff[targetUnit] = debuffSwaps[targetUnit]
+        end
+    end
+end
+
+-- Updates health/maxHealth values. Returns true if changed.
+function HealBot_Model:UpdateUnitHealth(unit)
+    if not self.units[unit] then return false end
+    
+    local oldHealth = self.units[unit].health
+    local oldMax = self.units[unit].maxHealth
+    
+    local currentHealth = UnitHealth(unit)
+    local maxHealth = UnitHealthMax(unit)
+    
+    if oldHealth ~= currentHealth or oldMax ~= maxHealth then
+        self.units[unit].health = currentHealth
+        self.units[unit].maxHealth = maxHealth
+        return true -- Value changed
+    end
+    
+    return false
+end
+
+-- Updates power values (mana, rage, energy). Returns true if changed.
+function HealBot_Model:UpdateUnitPower(unit)
+    if not self.units[unit] then return false end
+    
+    local oldMana = self.units[unit].mana
+    local oldMax = self.units[unit].maxMana
+    local oldType = self.units[unit].powerType
+    
+    local currentMana = UnitMana(unit)
+    local maxMana = UnitManaMax(unit)
+    local powerType = UnitPowerType(unit)
+    
+    if oldMana ~= currentMana or oldMax ~= maxMana or oldType ~= powerType then
+        self.units[unit].mana = currentMana
+        self.units[unit].maxMana = maxMana
+        self.units[unit].powerType = powerType
+        return true -- Value changed
+    end
+    
+    return false
+end
+
+-- Updates status flags (Dead, Ghost, Offline). Returns true if changed.
+function HealBot_Model:UpdateUnitStatus(unit)
+    if not self.units[unit] then return false end
+    
+    local oldDead = self.units[unit].isDead
+    local oldGhost = self.units[unit].isGhost
+    local oldConn = self.units[unit].isConnected
+    
+    local isDead = UnitIsDead(unit)
+    local isGhost = UnitIsGhost(unit)
+    local isConnected = UnitIsConnected(unit)
+    
+    -- Note: Vanilla API for UnitIsConnected sometimes returns nil instead of false
+    if isConnected == nil then isConnected = false end
+    if isDead == nil then isDead = false end
+    if isGhost == nil then isGhost = false end
+    
+    if oldDead ~= isDead or oldGhost ~= isGhost or oldConn ~= isConnected then
+        self.units[unit].isDead = isDead
+        self.units[unit].isGhost = isGhost
+        self.units[unit].isConnected = isConnected
+        return true -- Value changed
+    end
+    
+    return false
+end
+
+-- Updates incoming heals. Returns true if changed.
+function HealBot_Model:UpdateIncomingHeal(unit, amount)
+    if not self.units[unit] then return false end
+    
+    if self.units[unit].incomingHeal ~= amount then
+        self.units[unit].incomingHeal = amount
+        return true
+    end
+    return false
+end
+
+-- Manually mark auras as changed. 
+function HealBot_Model:MarkAuraChanged(unit)
+    -- We don't cache all auras in the model natively because it's too expensive
+    -- to poll every buff/debuff. The controller tells the model an aura changed,
+    -- and the view will resolve it if the unit is rendered.
+    return true
+end
+
+-- Force a full refresh of a unit's API data
+function HealBot_Model:RefreshUnit(unit)
+    self:UpdateUnitIdentity(unit)
+    self:UpdateUnitHealth(unit)
+    self:UpdateUnitPower(unit)
+    self:UpdateUnitStatus(unit)
+    
+    -- Force observers to render the initial state
+    self:NotifyObservers("UNIT_HEALTH_CHANGED", unit)
+    self:NotifyObservers("UNIT_POWER_CHANGED", unit)
+end
+
+-- Initialize the model state
+HealBot_Model:Initialize()

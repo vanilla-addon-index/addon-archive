@@ -1,0 +1,33 @@
+{
+  "upstream": "https://octowow.st/git/olzon/ImprovedGuildWindow_OC",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "olzon",
+    "repo": "ImprovedGuildWindow_OC",
+    "name": "ImprovedGuildWindow_OC",
+    "url": "https://octowow.st/git/olzon/ImprovedGuildWindow_OC",
+    "api": "https://octowow.st/git/api/v1/repos/olzon/ImprovedGuildWindow_OC"
+  },
+  "commit": "feb5af85cdb7b6e074fa53cf7a0a24bbdafe0a28",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "d8d7e5b7b035286a4df85f53dd55e63058f2102e7ce4de899290218070732a00",
+      "bytes": 152
+    },
+    "ImprovedGuildWindow_OC.lua": {
+      "sha256": "02acc5c3ce7ee308a11a12c04fdc1d7a5f22d5205db9d30288cfc7465fecd014",
+      "bytes": 176660
+    },
+    "ImprovedGuildWindow_OC.toc": {
+      "sha256": "e286fa8e1b1a982cee19add8847d133eb80b7e1969b4465523ad765cc497cb50",
+      "bytes": 239
+    },
+    "README.md": {
+      "sha256": "2c6bc1f97372aebe980cb309cb5d08718d5f1dca8f3f49b402779cf7030e2f78",
+      "bytes": 12419
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

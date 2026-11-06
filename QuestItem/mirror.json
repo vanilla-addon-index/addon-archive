@@ -1,0 +1,73 @@
+{
+  "upstream": "https://github.com/wow-vanilla-addons/QuestItem",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "wow-vanilla-addons",
+    "repo": "QuestItem",
+    "name": "QuestItem",
+    "url": "https://github.com/wow-vanilla-addons/QuestItem",
+    "api": "https://api.github.com/repos/wow-vanilla-addons/QuestItem"
+  },
+  "commit": "ab56cb7d6994dab0ce8e591802fefa6849ca5808",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "b6a4bf157b1558e39f55a86de17ce721323e7f9fe4d3a3dc2054733f79f3bfa0",
+      "bytes": 994
+    },
+    "ChangeLog.txt": {
+      "sha256": "03dc31e49ddd45d6ace34e438f9ad9d4e9f9b9fef5d4ab688ab4711e5da8b7c8",
+      "bytes": 2732
+    },
+    "localization.de.lua": {
+      "sha256": "857a4208dcf112d1a63f10093693ee380c81cac0276b9f3a968c50165e90ba27",
+      "bytes": 3113
+    },
+    "localization.fr.lua": {
+      "sha256": "0506568d40d860444b3e34b87d8135698ecc2123733af9481466e2d2500b5c53",
+      "bytes": 3210
+    },
+    "localization.lua": {
+      "sha256": "cdd26c7d96cb10ee6ac2ba33a7fc2e4745ce6877c4e32100ba11abbbb3bb46d6",
+      "bytes": 2687
+    },
+    "localization.ru.lua": {
+      "sha256": "48f9b203b9d99fd77962799a3d64bbef6f5032abda5776e6cbbcd16b3fc4e2df",
+      "bytes": 3933
+    },
+    "QuestItem.lua": {
+      "sha256": "4df2865790ab2259b7362889ef24abab32bddd697f007eee2e4caa4610fca157",
+      "bytes": 19109
+    },
+    "QuestItem.toc": {
+      "sha256": "4556c840cd7dacc63f29a909d1c2332297834ba45256a170befbcc9fe34e3f08",
+      "bytes": 752
+    },
+    "QuestItem.xml": {
+      "sha256": "4b06b24ae1765b0851f670092bcafacb711dff235a4ede5fd6218c5c9144c971",
+      "bytes": 708
+    },
+    "QuestItemConfig.lua": {
+      "sha256": "42e4f0199fff1af44947d4303e3cfbecfb9649d326911bc234cf26d27a690704",
+      "bytes": 9999
+    },
+    "QuestItemConfig.xml": {
+      "sha256": "c9499094e9ddcbea2b8c771aca2fcb855a79f05926cfdc31093780f1705d2b67",
+      "bytes": 15305
+    },
+    "QuestItemTemplates.xml": {
+      "sha256": "2a8704a26afa9df27a086754d9777358a4b8a07fec09a72d34bde508a251304c",
+      "bytes": 5742
+    },
+    "QuestItemTooltip.lua": {
+      "sha256": "6c9a9d500ae4eb058746d9a20c2a11af9d945b2743765f93d75d3ea046569b5e",
+      "bytes": 14107
+    },
+    "README.md": {
+      "sha256": "dd9209f462aed04ba24f7826b3ceeb6c2866152460639930e90bed1f3a26564b",
+      "bytes": 1333
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

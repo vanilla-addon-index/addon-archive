@@ -1,0 +1,281 @@
+{
+  "upstream": "https://github.com/Wurmschwanz/BlizzNameplatesPlus",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Wurmschwanz",
+    "repo": "BlizzNameplatesPlus",
+    "name": "BlizzNameplatesPlus",
+    "url": "https://github.com/Wurmschwanz/BlizzNameplatesPlus",
+    "api": "https://api.github.com/repos/Wurmschwanz/BlizzNameplatesPlus"
+  },
+  "commit": "69a39b5709a08414276168d8d3fbbdbd7357e3b0",
+  "sourceFiles": {
+    "BlizzNameplatesPlus.toc": {
+      "sha256": "45e7f67970c34150d95ed668afda1f4066ac855b74ff794d03aecf75dc2e12d9",
+      "bytes": 1182
+    },
+    "core/bridge.lua": {
+      "sha256": "af6cc992a1aca17e739084c79a2036498e647aaeb6bbcd907ed6d4da518786d2",
+      "bytes": 211
+    },
+    "core/compat_shagutweaks.lua": {
+      "sha256": "5199ab2f9ec86083ab2ec5f453fd162c904bc798725620eda51fa7ac86626bb4",
+      "bytes": 2549
+    },
+    "core/config.lua": {
+      "sha256": "4c9bd28f02a50f44266f0dcdc8bbd4d0b8dcd021ef98b5bc2a10f80813c3ea26",
+      "bytes": 36835
+    },
+    "core/core.lua": {
+      "sha256": "7d3284921374964e7fbed56a8da4fcf447be7e0475c7e0d51b9e4a490534654a",
+      "bytes": 2047
+    },
+    "core/libnameplate.lua": {
+      "sha256": "ec23aeb63e75539720b535feaa3b9139fa3a51f341b271fca878ba84bdb99de0",
+      "bytes": 5285
+    },
+    "core/options.lua": {
+      "sha256": "e52295e211bb63a6c6da0ab6e52e974c736db14185ff8b35dda010e3933cbc93",
+      "bytes": 158761
+    },
+    "core/ui.lua": {
+      "sha256": "86e858d5cfbc4e33446a9d02a4cc7333e775ab5f2a4084dfcec65d3b427a75c1",
+      "bytes": 396
+    },
+    "LICENSE-QuestPlatesOcto.txt": {
+      "sha256": "12e30d164b795a39e876d017ddd9c7c067cd4c097e5baa9056347394e0347cc0",
+      "bytes": 1075
+    },
+    "media/classic_nameplate_border_bold_tint.tga": {
+      "sha256": "4ba0c62e21d89d9597be49be79afc0230959c2dc8f2d91cf50019f3df7e43600",
+      "bytes": 16428
+    },
+    "media/classic_nameplate_border_bold.tga": {
+      "sha256": "d377f71231e51c198159f35e882ceb6a1ee289b3026cd62c170b031f7c0beef5",
+      "bytes": 16428
+    },
+    "media/classic_nameplate_border_tint.tga": {
+      "sha256": "8a6cf9bd2b222fcd31da07a380fa6594f0cf04c12a7b660f73f73cfedbbc1e71",
+      "bytes": 16428
+    },
+    "media/classic_nameplate_border.tga": {
+      "sha256": "2cff97f818abd71ef9a8ebbd1a67260c949d138597ae7e848ebf330e9d463043",
+      "bytes": 16402
+    },
+    "media/classic_nameplate_glow.tga": {
+      "sha256": "f15897012f50e0fa8c26d4e7992680964de1e0dd9b3cdb6df13b17cce998cc2c",
+      "bytes": 16402
+    },
+    "media/combo_point_orb.tga": {
+      "sha256": "a86b7c2bbbab401d89c2038639bc6a3126c9ef0346b07a008d9ffe59ec140dba",
+      "bytes": 32812
+    },
+    "media/quest_item.tga": {
+      "sha256": "61282628766e108d0e05c1f880bf83f28cd716e8fa94fadd9c188d0331914229",
+      "bytes": 4140
+    },
+    "media/quest_kill.tga": {
+      "sha256": "5dfeee1392ad772c0ea7c22210b125f53f19464319cfb01290a26bf5333681f6",
+      "bytes": 7244
+    },
+    "media/shagu_target_glow.tga": {
+      "sha256": "0d09b1317fc964b83c786c932054976690d9e3df0f2b70680503d3edcebf8971",
+      "bytes": 824
+    },
+    "media/target_arrow_chevron_thick.tga": {
+      "sha256": "484a8613717cf8f19e0d912f9858e9f718099b18e2cc629d34318d62aaed7367",
+      "bytes": 16428
+    },
+    "media/target_arrow_chevron_thin.tga": {
+      "sha256": "dee6632339ac99f908c2c54f56478c6cd231c909ff92779b45ffcd117cfc113b",
+      "bytes": 16428
+    },
+    "media/target_arrow_diamond_tip_thick.tga": {
+      "sha256": "0d2edce2d74f0bdb01a0e1c5d14d25b73eac643a3066ea9aa630bebd3ce4f351",
+      "bytes": 16428
+    },
+    "media/target_arrow_diamond_tip_thin.tga": {
+      "sha256": "0b71f640b03f02054648ef5e46083f121136001b5879b43c6feb227fc978c012",
+      "bytes": 16428
+    },
+    "media/target_arrow_double_chevron_thick.tga": {
+      "sha256": "e188767486bbba1a40717ed88bc36208e963f819f8765e9024785313a9bebd0d",
+      "bytes": 16428
+    },
+    "media/target_arrow_double_chevron_thin.tga": {
+      "sha256": "03d68d7a06a9243f609d596cdcf361886946640051bb86ef145e37ed41b885cc",
+      "bytes": 16428
+    },
+    "media/target_arrow_slim_triangle_thick.tga": {
+      "sha256": "56608bbb67fd302ca934ea3b562ed6d70516928b8f9c1d462440b804d8a75a8d",
+      "bytes": 16428
+    },
+    "media/target_arrow_slim_triangle_thin.tga": {
+      "sha256": "42c677b97db1eef1f3e634ee25c6f9ef17104ccb7c19e98f9722099ae6744144",
+      "bytes": 16428
+    },
+    "media/target_arrow_thick.tga": {
+      "sha256": "356e4083acbe7784ebf29ec9e3717ea3faa0caff19b27a94231d74d35018656e",
+      "bytes": 16428
+    },
+    "media/target_arrow_thin.tga": {
+      "sha256": "c49444162aa7b987a69c32f66f3a416dc3da78530e14137e21d460f5bcbdb662",
+      "bytes": 16428
+    },
+    "media/target_arrow_triangle_thick.tga": {
+      "sha256": "13f64eaa013d5794c6b5c4b18b0aeb903e016bbcb7820af6e780f2f908c2414e",
+      "bytes": 16428
+    },
+    "media/target_arrow_triangle_thin.tga": {
+      "sha256": "7f0721d33b916b70f922c06c390d051ed193acc5b2c9ff384d1ac626920247d7",
+      "bytes": 16428
+    },
+    "modules/aurarecorder.lua": {
+      "sha256": "f219b2a3fd224c4b401258a7e9fa7696fec69bbc88e0e0506d40b88c8c2957e3",
+      "bytes": 42041
+    },
+    "modules/auras.lua": {
+      "sha256": "92869c31044efb2ca2a0be0fc2aee9d5efb4c926bd53d6fdde0e91ffc6225bf8",
+      "bytes": 170367
+    },
+    "modules/auras.lua.bak_carnage": {
+      "sha256": "3c0fba2576a219e1992d0d91c31f3f5b7c57eafea3df37d1944e539c20b1dd51",
+      "bytes": 161884
+    },
+    "modules/castbar.lua": {
+      "sha256": "3fc64e958648241d2e21fdbd8ccba240768e6e130525e4d88977b89a4a9bd443",
+      "bytes": 30763
+    },
+    "modules/classcolors.lua": {
+      "sha256": "24391f6db2efc8a799ba4164b54cb79518f2acd53d8d0d494e269957cf0376c1",
+      "bytes": 7788
+    },
+    "modules/combopoints.lua": {
+      "sha256": "7c7b5fcfeae0cf30bde30900ab984ebc2ce4586768408292be65a159eba1054d",
+      "bytes": 15743
+    },
+    "modules/commands.lua": {
+      "sha256": "92fad24407a833033f0c3875d4de8c47df5c05da605ccba243c4c74819a3849d",
+      "bytes": 23219
+    },
+    "modules/debug.lua": {
+      "sha256": "6e3a5f7376a2f3a5d0df07d47846ae8c27e2e5f03268c8169d39226916453857",
+      "bytes": 1704
+    },
+    "modules/fullalpha.lua": {
+      "sha256": "1658539e19bca4c5f3a1ba5c6ff5422abe5a5ebe92c39b3ebe433bdbfa6e843f",
+      "bytes": 42459
+    },
+    "modules/guiddebug.lua": {
+      "sha256": "57132f65a5fe7037ff6962f7ab8b58d8ea8a094e52e6d32184b0622a5499b4d8",
+      "bytes": 2526
+    },
+    "modules/healthpercent.lua": {
+      "sha256": "b2cfda4c229ccf08782d5403386ae2184c3312fae999859a494e16b4bc03498c",
+      "bytes": 7825
+    },
+    "modules/immunities.lua": {
+      "sha256": "e00d9eae0d5173e2ec6a165850a0925220fc2f24eff79dcf28cea6f6e4cf5a1f",
+      "bytes": 37699
+    },
+    "modules/names.lua": {
+      "sha256": "02ff6e0add6be084bb56ca88e21f31aaf0abee1d76a2012305f905375f937273",
+      "bytes": 11081
+    },
+    "modules/otherdebuffs.lua": {
+      "sha256": "03a7526b64839523848472a2818c2fb5aa8b955fddfd5dd33cf761962085dac9",
+      "bytes": 5208
+    },
+    "modules/personalnameplate.lua": {
+      "sha256": "74d43b321ff8a4a16f8d1f3e4dc78cc6eeddb49d9db07a3038d922d4a4a44fb8",
+      "bytes": 34731
+    },
+    "modules/questplates.lua": {
+      "sha256": "eb2ab86f93d751fd6cc9f967591aee002d9f4cbba088e064ef0435df94e9565a",
+      "bytes": 21552
+    },
+    "modules/raidmarks.lua": {
+      "sha256": "7ce3dde641e9d92d116cfcecafc6657ac894253d95dd2be90bfc22bbff431082",
+      "bytes": 3754
+    },
+    "modules/scale.lua": {
+      "sha256": "c6ff6fa3424f00ff299b45313d5bc022c2e71404f9c908fdba5eab7fb7d2ad73",
+      "bytes": 21685
+    },
+    "modules/shagu_darkmode.lua": {
+      "sha256": "3ee7fac62da472804fa7af68d13faa7243f3d72195381ec227af062f4d3098ef",
+      "bytes": 2407
+    },
+    "modules/spellprobe.lua": {
+      "sha256": "91bf0d4ab23a7275fccccca9c6d3949cb15ce919178c820690b86654ef5e4e0e",
+      "bytes": 6514
+    },
+    "modules/tankmode.lua": {
+      "sha256": "44560125d455ab39d5e7633b910c952cc8ee3a2fde7412e3f7a2ecd12e99f7eb",
+      "bytes": 15953
+    },
+    "modules/totems.lua": {
+      "sha256": "7a03b893fcfa32ad792c2b61a4e4ed72517231afd31ad26fd2e8463c6c608ee2",
+      "bytes": 17417
+    },
+    "modules/unknown.lua": {
+      "sha256": "8683e515b4b579e8708da57c6c078c28c4d5322879aa5bd012849e36eaecf6b1",
+      "bytes": 14818
+    },
+    "modules/visualguard.lua": {
+      "sha256": "f99413142ae6f0e92c1afa257d5b56b977430332af1eea3178a67d1ca58f3e7e",
+      "bytes": 8275
+    },
+    "README.md": {
+      "sha256": "f882c2d80787e5d4c0e077ef63c8c304067773e792c6cc6efcd0d48305620cc0",
+      "bytes": 6458
+    },
+    "spells/druid.lua": {
+      "sha256": "28117dff6612adbd98383f4af4a6450e0afcfde4d6ad2ae60b5a39c62287d496",
+      "bytes": 1685
+    },
+    "spells/hunter.lua": {
+      "sha256": "b2c849eab7108d19e3fb63153bd51a2a42d06c572a7e52074f4a94e95c1c11bb",
+      "bytes": 1972
+    },
+    "spells/mage.lua": {
+      "sha256": "322362860307f5f201084ba150e45d61069409df333dc303b6d6b0f467b23685",
+      "bytes": 1173
+    },
+    "spells/other_debuffs.lua": {
+      "sha256": "9f2f8f6660aa0d7a7ad9962a26bd5015d5a7e03a5b9dad9b2d742c0cfd740d07",
+      "bytes": 7523
+    },
+    "spells/paladin.lua": {
+      "sha256": "8aed3d67949bc5672442de8abc4e0c81d9f559f9883c9ad571ad670b44143c17",
+      "bytes": 1328
+    },
+    "spells/priest.lua": {
+      "sha256": "ef5f7918e1237f29c6c0b5ddd832621a8290272573fd27443c5c50b5060cbccb",
+      "bytes": 1408
+    },
+    "spells/registry_shadow.lua": {
+      "sha256": "7510a754b5eac2c057489250c20550498dd35cee3006d657670c8137383bfd67",
+      "bytes": 3832
+    },
+    "spells/rogue.lua": {
+      "sha256": "4bfae3a6e4e6bf65be9d0d8c6559912396571ffd0a67263d7e314d930cc80240",
+      "bytes": 1321
+    },
+    "spells/shaman.lua": {
+      "sha256": "041137c073e619e46339ce53e613ecb6f7ee9104e3f061477b970b6e76b39f51",
+      "bytes": 678
+    },
+    "spells/warlock.lua": {
+      "sha256": "56d2d7d597cd44ad6d86a7915f4f0a6248166be0bdafdce3aa586932ff885bd1",
+      "bytes": 5700
+    },
+    "spells/warrior.lua": {
+      "sha256": "8fc7802c893cc8c02137b4194d33d7779756c6f1cdf5cf8f68b1431e3227d15a",
+      "bytes": 2247
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

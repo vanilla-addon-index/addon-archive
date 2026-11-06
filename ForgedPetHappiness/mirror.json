@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/nemanuel/Forged_PetHappiness",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "nemanuel",
+    "repo": "Forged_PetHappiness",
+    "name": "Forged_PetHappiness",
+    "url": "https://github.com/nemanuel/Forged_PetHappiness",
+    "api": "https://api.github.com/repos/nemanuel/Forged_PetHappiness"
+  },
+  "commit": "989cfebeb5a938e1dc49f7ff1b615063b7c5e53d",
+  "sourceFiles": {
+    "core.lua": {
+      "sha256": "c9a64e170a663d501363089b7b0f3b0cb639ea39d18c3e47e572bf2c6ff2af44",
+      "bytes": 36421
+    },
+    "diet.lua": {
+      "sha256": "c1aa8e95fc3178ea490dbf4d51ad4664ef8ec5468e07ccdd084d310d630b6f7a",
+      "bytes": 1940
+    },
+    "Forged_PetHappiness.toc": {
+      "sha256": "07557108cf9a9242e38bea404bc4d22189ccbb85fa5c1aa767068fa7aba7a2d1",
+      "bytes": 322
+    },
+    "README.md": {
+      "sha256": "869f634f570af8b019f567b35144b3556ce0c5bc7ce4bd41841aee284a8162a5",
+      "bytes": 1688
+    },
+    "utils.lua": {
+      "sha256": "165b9314a5345ba204308f31e53653a947534d1c55e44fa042b44986ad4ae93e",
+      "bytes": 401
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

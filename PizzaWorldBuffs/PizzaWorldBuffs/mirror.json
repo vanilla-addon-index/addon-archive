@@ -1,0 +1,142 @@
+{
+  "upstream": "https://codeberg.org/Pizzahawaii/PizzaWorldBuffs",
+  "source": {
+    "kind": "repository",
+    "host": "codeberg.org",
+    "owner": "Pizzahawaii",
+    "repo": "PizzaWorldBuffs",
+    "name": "PizzaWorldBuffs",
+    "url": "https://codeberg.org/Pizzahawaii/PizzaWorldBuffs",
+    "api": "https://codeberg.org/api/v1/repos/Pizzahawaii/PizzaWorldBuffs"
+  },
+  "commit": "a06b17d020be44902525132816b5609bb4a42c1f",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "a04ff63af4031ff550c6bb53ac88245bfd162befb6118c8b5a2c16279e4d0c5f",
+      "bytes": 34
+    },
+    ".gitignore.upstream": {
+      "sha256": "c9cdc285a929705934aa9f9d4b751287dce0e5df699e96c5b33c2c6fde5915c8",
+      "bytes": 37
+    },
+    "img/frame.png": {
+      "sha256": "4973590104d498ca62be87872475445e5e98a534fdd6bbfc1934de1aea4f262f",
+      "bytes": 255653
+    },
+    "img/N1.tga": {
+      "sha256": "c9cab1f8475981c9ebde5298b8b3f4fa57a160411dba4863723255601afbb815",
+      "bytes": 16217
+    },
+    "img/N2.tga": {
+      "sha256": "526e19ddd62f85f6dcff60d816a7b9f5f128de9657345a9b0767942d3bc5a990",
+      "bytes": 16217
+    },
+    "img/N3.tga": {
+      "sha256": "6b24fe2b4be5b1954da09fd314ebe85dd5194684d610c788141166fb1718e870",
+      "bytes": 25501
+    },
+    "img/O1.tga": {
+      "sha256": "ec1fc52a9f24c1ef136ffb837fbd64c8ff27ae602916355063dd84cd8bfdb568",
+      "bytes": 16879
+    },
+    "img/O2.tga": {
+      "sha256": "f558a0e2605bc11d26c065f4f6013d931d90078d77172d4b62c474f30c347572",
+      "bytes": 16879
+    },
+    "img/O3.tga": {
+      "sha256": "ec0966e883529abea2668b456f847b5c7bc24eb63d926f49f1b495334799bd29",
+      "bytes": 23546
+    },
+    "img/timer_report.png": {
+      "sha256": "d16765fe1e854236cb730f6457b303b35dbafcdaa2c2d875a611850874deb284",
+      "bytes": 16055
+    },
+    "LICENSE": {
+      "sha256": "f9b367d2f9e77bff0030be5881ad35ea8f909fb2091ba1947849937763ce15c5",
+      "bytes": 1073
+    },
+    "PizzaWorldBuffs.toc": {
+      "sha256": "e7df9b052c0355821b44fb90f6b3589cd06fee8f00c391ea4b826a7820bcb9aa",
+      "bytes": 986
+    },
+    "README.md": {
+      "sha256": "969fd2294cb3787506d5a4a0493b08d4ce985219847c61d1505aaa3039f4efa4",
+      "bytes": 8520
+    },
+    "src/channel.lua": {
+      "sha256": "a6eb58ba2d4710406172faf700ceb8d3dee83feb55663b463cd494dc222abbef",
+      "bytes": 842
+    },
+    "src/config.lua": {
+      "sha256": "317edd9e6695e49508b0b9add298edc24dc4f0c92d794aff7a5befc3ab31b734",
+      "bytes": 680
+    },
+    "src/core.lua": {
+      "sha256": "16d7b4a0cf6700c232143ae2a6bea9ac0c8382c3ecdc9e4a2fd3c386c6cb1335",
+      "bytes": 10123
+    },
+    "src/frame.lua": {
+      "sha256": "07e140906c8b563910c8e10d2c0c1ee3c2ab8c2afdd478940de4f754b6dc4014",
+      "bytes": 7755
+    },
+    "src/logoutframe.lua": {
+      "sha256": "405425ef0344870fe45576cf8462487aa990508b1311fc65f8eca4fd03e2e5b2",
+      "bytes": 2288
+    },
+    "src/main.lua": {
+      "sha256": "2ede08650b93d4bc98b01b56efb9230d9e61f294c426877adcecab4cc0838f56",
+      "bytes": 8195
+    },
+    "src/map.lua": {
+      "sha256": "c55e58088d9e49015df02cce331bcb789afa9c7a7ed405b824870617440f4f96",
+      "bytes": 4227
+    },
+    "src/share.lua": {
+      "sha256": "80c13d4e34987f60e6fcbb9b521c4fe7c77aeff191a10f47999f05e48f3b1591",
+      "bytes": 2471
+    },
+    "src/slashcommands.lua": {
+      "sha256": "435eb1765fe7ba05a0fc34186f08a16c9c3d5884911a8656f946c195ac277b3c",
+      "bytes": 9316
+    },
+    "src/utils.lua": {
+      "sha256": "fef8be4b65e8c9b26975c2728e3a001b3d96dc9f657f4ef5ac0a0987ac16a10c",
+      "bytes": 4894
+    },
+    "translations/enUS.lua": {
+      "sha256": "dabb35134d49dfedfb648a7c9c0a3d634e9d2ff53619d2d43e6d917416ed8523",
+      "bytes": 2349
+    },
+    "translations/esES.lua": {
+      "sha256": "66863ad592bd1fa548d57e7aed6dd54cafe4d7689cded50023a420168303d311",
+      "bytes": 4514
+    },
+    "translations/zhCN.lua": {
+      "sha256": "a649f63ca96ec7916670569f98234cf3635033981cba5161068505511944d4b6",
+      "bytes": 3788
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "12408811": {
+      "tag": "v1.7.2",
+      "folder": "v1.7.2--12408811",
+      "assets": {
+        "1944097": {
+          "sha256": "4123b54b5b64540ba40d79078b9682733d9dca5275c4b643283f6551ed9f871a",
+          "bytes": 336394,
+          "id": "1944097",
+          "name": "PizzaWorldBuffs-1.7.2.zip",
+          "url": "https://codeberg.org/Pizzahawaii/PizzaWorldBuffs/releases/download/v1.7.2/PizzaWorldBuffs-1.7.2.zip",
+          "path": "releases/v1.7.2--12408811/assets/PizzaWorldBuffs-1.7.2.zip"
+        }
+      },
+      "source": {
+        "sha256": "d4a96da2afbca55c84e91b563cc7a52e1f3a2c493059dd1d5b9fb32f319dccb3",
+        "bytes": 316852,
+        "path": "releases/v1.7.2--12408811/upstream-source.tar.gz",
+        "url": "https://codeberg.org/api/v1/repos/Pizzahawaii/PizzaWorldBuffs/archive/v1.7.2.tar.gz"
+      }
+    }
+  }
+}

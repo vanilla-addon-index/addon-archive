@@ -1,0 +1,63 @@
+-- =========================
+-- QS_Swamp_of_Sorrows_41_42.lua
+-- Converted from TourGuide format on 2025-08-17 18:59:06
+-- =========================
+
+QuestShellGuides = QuestShellGuides or {}
+
+QuestShellGuides["QS_Swamp_of_Sorrows_41_42"] = {
+  title    = "Swamp of Sorrows (41-42)",
+  next     = "Stranglethorn (42-43)",
+  nextKey  = "QS_Stranglethorn_42_43",
+  faction  = "Horde",
+  minLevel = 41,
+  maxLevel = 42,
+  steps = {
+    { type="TURNIN", title="The Rumormonger", questId=1115, coords={ x=26.95, y=77.22 }, npc = { name="Krazek" }, note="Krazek in The Salty Sailor Tavern (26.95, 77.22)" },
+    { type="ACCEPT", title="Dream Dust in the Swamp", questId=1116, coords={ x=26.95, y=77.22 }, npc = { name="Krazek" }, note="Krazek in The Salty Sailor Tavern (26.95, 77.22)" },
+    { type="TRAVEL", coords={ x=41.7, y=0.3 }, note="Travel north to Duskwood (41.7, 0.3)" },
+    { type="ACCEPT", title="Nothing But The Truth", questId=1372, coords={ x=87.7, y=35.7 }, npc = { name="Deathstalker Zraedus" }, note="Deathstalker Zraedus in Beggar's Haunt (87.7, 35.7)" },
+    { type="TURNIN", title="Nothing But The Truth", questId=1372, coords={ x=87.5, y=35.4 }, npc = { name="Apothecary Faustin" }, note="Apothecary Faustin in Beggar's Haunt (87.5, 35.4)" },
+    { type="TRAVEL", coords={ x=63.8, y=40.7 }, note="Travel east through Deadwind Pass to Swamp of Sorrows (63.8, 40.7)" },
+    { type="TRAVEL", coords={ x=25.99, y=31.44 }, note="Travel to The Harborage (25.99, 31.44)" },
+    { type="ACCEPT", title="Draenethyst Crystals", questId=1389, coords={ x=25.99, y=31.44 }, npc = { name="Magtoor" }, note="Magtoor in The Harborage (25.99, 31.44)" },
+    { type="TRAVEL", coords={ x=46.0, y=54.7 }, note="Travel to Stonard (46, 54.7)" },
+    { type="FLIGHTPATH", npc = { name="Breyk" }, coords={ x=46.0, y=54.7 }, note="Speak to Breyk and grab flight path for Stonard (46, 54.7)" },
+    { type="SET_HEARTH", title="Stonard", coords={ x=45.1, y=56.5 }, npc = { name="Innkeeper Karakul" }, note="Speak to Innkeeper Karakul set hearth in Stonard (45.1, 56.5)" },
+    { type="ACCEPT", title="Lack of Surplus", questId=698, coords={ x=44.8, y=57.0 }, npc = { name="Dar" }, note="Dar in Stonard (44.8, 57.0)" },
+    { type="TURNIN", title="Report to Helgrum", questId=1420, coords={ x=47.9, y=55.1 }, npc = { name="Helgrum" }, note="Helgrum the Swift in Stonard (47.9, 55.1)" },
+    { type="ACCEPT", title="Pool of Tears", questId=1424, coords={ x=47.9, y=54.9 }, npc = { name="Fel'zerul" }, note="Fel'zerul in Stonard (47.9, 54.9)" },
+    { type="COMPLETE", title="Lack of Surplus", questId=698, coords={ x=51.42, y=58.24 }, note="Kill Sawtooth Crocolisk for 8 Unprepared Sawtooth Flank (51.42, 58.24) (57.70, 54.35) (57.32, 46.45) (53.54, 41.79) (47.71, 35.45)" },
+    { type="TRAVEL", coords={ x=66.47, y=59.14 }, note="Travel to Pool of Tears (66.47, 59.14)" },
+    { type="COMPLETE", title="Pool of Tears", questId=1424, coords={ x=66.47, y=59.14 }, note="Collect 10 Atal'ai Artifact in and around Pool of Tears, quite hard to spot look for objects like plate, urn, sack in each waypoint (66.47, 59.14) (65.40, 55.41) (65.89, 47.04) (68.27, 43.12) (73.76, 42.29) (75.51, 60.15) (74.21, 61.62)(73.58, 64.66) (71.52, 59.42)" },
+    { type="TRAVEL", coords={ x=81.4, y=80.9 }, note="Travel to Misty Reed Post (81.4, 80.9)" },
+    { type="TURNIN", title="Lack of Surplus", questId=698, coords={ x=81.4, y=80.9 }, npc = { name="Tok'Kar" }, note="Tok'Kar in Misty Reed Post (81.4, 80.9)" },
+    { type="ACCEPT", title="Lack of Surplus", questId=699, coords={ x=81.4, y=80.9 }, npc = { name="Tok'Kar" }, note="Tok'Kar in Misty Reed Post (81.4, 80.9)" },
+    { type="COMPLETE", title="Lack of Surplus", questId=699, coords={ x=82.21, y=99.3 }, note="Kill Sawtooth Snapper and collect 6 Sawtooth Snapper Claw in The Forbidding Sea (82.21, 99.30)" },
+    { type="TURNIN", title="Lack of Surplus", questId=699, coords={ x=81.4, y=80.9 }, npc = { name="Tok'Kar" }, note="Tok'Kar in Misty Reed Post (81.4, 80.9)" },
+    { type="ACCEPT", title="Threat From the Sea", questId=1422, coords={ x=81.4, y=80.9 }, npc = { name="Tok'Kar" }, note="Tok'Kar in Misty Reed Post (81.4, 80.9)" },
+    { type="TURNIN", title="Threat From the Sea", questId=1422, coords={ x=83.7, y=80.5 }, npc = { name="Katar" }, note="Katar in Misty Reed Post (83.7, 80.5)" },
+    { type="ACCEPT", title="Threat From the Sea", questId=1426, coords={ x=83.7, y=80.5 }, npc = { name="Katar" }, note="Katar in Misty Reed Post (83.7, 80.5)" },
+    { type="COMPLETE", title="Threat From the Sea", questId=1426, coords={ x=84.0, y=87.3 }, note="Kill 10 Marsh Murloc, 10 Marsh Inkspewer and 10 Marsh Flesheater found along the East coast (84, 87.3) (90, 73) (94, 57)" },
+    { type="TURNIN", title="Threat From the Sea", questId=1426, coords={ x=83.7, y=80.5 }, npc = { name="Katar" }, note="Katar in Misty Reed Post (83.7, 80.5)" },
+    { type="ACCEPT", title="Threat From the Sea", questId=1427, coords={ x=83.7, y=80.5 }, npc = { name="Katar" }, note="Katar in Misty Reed Post (83.7, 80.5)" },
+    { type="TURNIN", title="Threat From the Sea", questId=1427, coords={ x=81.4, y=80.9 }, npc = { name="Tok'Kar" }, note="Tok'Kar in Misty Reed Post (81.4, 80.9)" },
+    { type="TRAVEL", coords={ x=65.4, y=18.29 }, note="Travel Fallow Sanctuary (65.40, 18.29)" },
+    { type="ACCEPT", title="Galen's Escape", questId=1393, coords={ x=65.4, y=18.29 }, npc = { name="Galen Goodward" }, note="Galen Goodward in Fallow Sanctuary. Clear the area then accept the quest (65.40, 18.29)" },
+    { type="NOTE", note="Collect 6 Draenethyst Crystal in Fallow Sanctuary, it is a large blue crystal on the ground" },
+    { type="COMPLETE", title="Galen's Escape", questId=1393, coords={ x=64.69, y=25.17 }, note="Escort Galen Goodward until quest is complete (64.69, 25.17) (52.62, 29.83)" },
+    { type="TRAVEL", coords={ x=62.0, y=24.0 }, note="Travel to Fallow Sanctuary (62, 24)" },
+    { type="COMPLETE", title="Draenethyst Crystals", questId=1389, coords={ x=62.0, y=24.0 }, note="Loot 6 Draenethyst Crystal which are scattered around the Fallow Sanctuary (62, 24)" },
+    { type="TURNIN", title="Galen's Escape", questId=1393, coords={ x=47.86, y=39.79 }, npc = { name="Galen's Strongbox" }, note="Galen's Strongbox in The Shifting Mire (47.86, 39.79)" },
+    { type="COMPLETE", title="Noboru the Cudgel", questId=1392, coords={ x=46.76, y=38.63 }, note="Kill Noboru the Cudgel and collect Noboru's Cudgel, he patrols around in The Shifting Mire (46.76, 38.63)" },
+    { type="ACCEPT", title="Noboru the Cudgel", questId=1392, note="Use Noboru's Cudgel to begin the quest" },
+    { type="TRAVEL", coords={ x=25.99, y=31.44 }, note="Travel to The Harborage (25.99, 31.44)" },
+    { type="TURNIN", title="Noboru the Cudgel", questId=1392, coords={ x=25.99, y=31.44 }, npc = { name="Magtoor" }, note="Magtoor in The Harborage (25.99, 31.44)" },
+    { type="TURNIN", title="Draenethyst Crystals", questId=1389, coords={ x=25.99, y=31.44 }, npc = { name="Magtoor" }, note="Magtoor in The Harborage (25.99, 31.44)" },
+    { type="COMPLETE", title="Dream Dust in the Swamp", questId=1116, coords={ x=12.67, y=67.1 }, note="Kill Dreaming Whelp and Adolescent Whelp and collect 10 Speck of Dream Dust near Itharius's Cave (12.67, 67.10)" },
+    { type="TRAVEL", coords={ x=47.9, y=54.9 }, note="Travel or Hearthstone to Stonard (47.9, 54.9)" },
+    { type="TURNIN", title="Pool of Tears", questId=1424, coords={ x=47.9, y=54.9 }, npc = { name="Fel'zerul" }, note="Fel'zerul in Stonard (47.9, 54.9)" },
+    { type="ACCEPT", title="The Atal'ai Exile", questId=1429, coords={ x=47.9, y=54.9 }, npc = { name="Fel'zerul" }, note="Fel'zerul in Stonard (47.9, 54.9)" },
+    { type="NOTE", note="Tick to continue to the next guide" },
+  }
+}

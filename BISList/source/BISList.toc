@@ -1,0 +1,13 @@
+## Interface: 11200
+## Title: BISList
+## Notes: Track your Best-in-Slot items with acquisition methods and auto-detection
+## Author: YourName
+## Version: 1.1
+## SavedVariables: BISListDB
+
+ItemDatabase.lua
+SourceMap.lua
+Core.lua
+UI.lua
+ContextMenu.lua
+MinimapButton.lua

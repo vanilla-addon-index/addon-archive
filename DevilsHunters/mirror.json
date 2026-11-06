@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/jejkas/DevilsHunters",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jejkas",
+    "repo": "DevilsHunters",
+    "name": "DevilsHunters",
+    "url": "https://github.com/jejkas/DevilsHunters",
+    "api": "https://api.github.com/repos/jejkas/DevilsHunters"
+  },
+  "commit": "2b76f0d2647fc8d53adedde1532b74ac652d1e98",
+  "sourceFiles": {
+    "DevilsHunters.lua": {
+      "sha256": "b014e40b9789df6ab44c4198ea06c2cb6304d2ef633251f089c4d6cf0f15b595",
+      "bytes": 7585
+    },
+    "DevilsHunters.toc": {
+      "sha256": "a9cb4a0253b9e736886093ffd9115550997dffbf0c9e31565ff1342bf4e1cf58",
+      "bytes": 189
+    },
+    "README.md": {
+      "sha256": "70d2a044ded199c518689786db57c2d11e5ebef293bf7e5946f9cb17f6a3a2a8",
+      "bytes": 236
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

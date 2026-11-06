@@ -1,0 +1,7 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Include file="CaramelNotes.lua"/>
+  <Include file="CreateNoteFrame.lua"/>
+  <Include file="EditNoteFrame.lua"/>
+  <Include file="NotesFrame.lua"/>
+  <Include file="SettingsFrame.lua"/>
+</Ui>

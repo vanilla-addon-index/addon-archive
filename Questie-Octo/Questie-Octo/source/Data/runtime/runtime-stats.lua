@@ -1,0 +1,14 @@
+QuestieOcto.RuntimeDatabaseStats={
+["quests"]=6704,
+["maps"]=108,
+["links"]=8626,
+["items"]=3641,
+["units"]=14139,
+["objects"]=1644,
+["refloot"]=124,
+["itemreq"]=193,
+["itemNames"]=6401,
+["unitNames"]=14136,
+["objectNames"]=1643,
+["pruned"]=true
+}

@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/akzkak/RogueTicker",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "akzkak",
+    "repo": "RogueTicker",
+    "name": "RogueTicker",
+    "url": "https://github.com/akzkak/RogueTicker",
+    "api": "https://api.github.com/repos/akzkak/RogueTicker"
+  },
+  "commit": "5110f54d89e043fc41fea8343a7e481ca4122d1f",
+  "sourceFiles": {
+    "img/bar_gradient.tga": {
+      "sha256": "15fc5bc47f07b1937297f69d50cad18436d7685c497cccf24a94490d5b992549",
+      "bytes": 24202
+    },
+    "img/SizeGrabber-Down.tga": {
+      "sha256": "099102522b5f45ba28df0abf2f54ec5574a29b258c25330360780fdc2553159b",
+      "bytes": 824
+    },
+    "img/SizeGrabber-Highlight.tga": {
+      "sha256": "5829b57218b92b8c979e9e54d1daab948a096f987e0f536f175f7b102f6c24ac",
+      "bytes": 862
+    },
+    "img/SizeGrabber-Up.tga": {
+      "sha256": "9b35b6497bc801b7bcaf4e4313ed58e06022e7908f1805c9d14a1ed140aa42c3",
+      "bytes": 795
+    },
+    "README.md": {
+      "sha256": "4dcb1cbc26df366d2b090e55ee44a53594edca4b667c4cff516d854d94a214e8",
+      "bytes": 263
+    },
+    "RogueTicker.lua": {
+      "sha256": "f825a642bbf6165bfb43401ea74af09aab6445f4501a13e195109008d77649a9",
+      "bytes": 31849
+    },
+    "RogueTicker.toc": {
+      "sha256": "06498bd8e8bd0b5b979e1d94bf6655943787aa86a20ac236cd3445f62c94b101",
+      "bytes": 199
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

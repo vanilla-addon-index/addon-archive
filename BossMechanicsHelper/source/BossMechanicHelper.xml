@@ -1,0 +1,25 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Frame name="BossMechanicHelperConfigFrame" parent="UIParent" hidden="true">
+        <Size x="400" y="300"/>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
+        <Scripts>
+            <OnLoad>
+                BossMechanicHelperConfigFrame_OnLoad(self)
+            </OnLoad>
+            <OnEvent>
+                BossMechanicHelperConfigFrame_OnEvent(self, event, ...)
+            </OnEvent>
+        </Scripts>
+        <!-- More UI elements here... -->
+    </Frame>
+    <Button name="BossMechanicHelperButton" parent="Minimap" inherits="MiniMapTrackingButtonTemplate">
+        <Scripts>
+            <OnClick>
+                SlashCmdList["BMH"]("")
+            </OnClick>
+        </Scripts>
+    </Button>
+    <Frame name="BossMechanicHelperDropdown" parent="UIParent" inherits="UIDropDownMenuTemplate"/>
+</Ui>

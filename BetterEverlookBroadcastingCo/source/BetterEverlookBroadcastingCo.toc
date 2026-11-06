@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: |cff6f8213Better Everlook Broadcasting Co
+## Author: |cffbe5effGrommey
+## Notes: Better Everlook Broadcasting Co
+## Version: 1.1.0
+## SavedVariables: BetterEBC_Settings
+localization.en.lua
+localization.cn.lua
+BetterEverlookBroadcastingCo.xml
+

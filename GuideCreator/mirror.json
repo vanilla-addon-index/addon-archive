@@ -1,0 +1,47 @@
+{
+  "upstream": "https://github.com/Zarant/GuideCreator/tree/classic",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Zarant",
+    "repo": "GuideCreator",
+    "name": "GuideCreator",
+    "ref": "classic",
+    "subpath": "",
+    "url": "https://github.com/Zarant/GuideCreator",
+    "api": "https://api.github.com/repos/Zarant/GuideCreator"
+  },
+  "commit": "315c1f679e11772570130abf289326af07f5eacf",
+  "sourceFiles": {
+    "fonts/COPYRIGHT.TXT": {
+      "sha256": "3361d054759a2fc686a2c058be82deaf9c2e6fe549be9004d7935a6c1736315d",
+      "bytes": 5954
+    },
+    "fonts/VeraMono.ttf": {
+      "sha256": "da4281dc7db17a3dfce64a62ced92875c5895340055ec8ba24a3914eb97b349d",
+      "bytes": 49224
+    },
+    "GuideCreator.lua": {
+      "sha256": "3e99fb2411cfc6b249f8b363272fa3cfe4b5b697dc3e3f5dfff1fad28c0a513c",
+      "bytes": 31693
+    },
+    "GuideCreator.toc": {
+      "sha256": "49d4823dd28318f9f3ed75ff6ddef52f296758167bed00f7e10b0e1b8d470b40",
+      "bytes": 266
+    },
+    "Guidelime_CreaturesDB.lua": {
+      "sha256": "3db0811c3aca8d28bf772eb23df30219f46d9b30989bd14afd0f32e30df3071b",
+      "bytes": 228596
+    },
+    "Guidelime_QuestsDB.lua": {
+      "sha256": "80751b47276b77dbb573cc2a706c2fef5a5a528e02ea5b00adc6f0f08a5bbb6b",
+      "bytes": 1619709
+    },
+    "readme.md": {
+      "sha256": "cd26e01371a727f4615a14dfe3958d2f078648003c2e4e060542b2705b78e59d",
+      "bytes": 1142
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

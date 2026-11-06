@@ -1,0 +1,69 @@
+{
+  "upstream": "https://github.com/gabcinder2004/BISList",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "gabcinder2004",
+    "repo": "BISList",
+    "name": "BISList",
+    "url": "https://github.com/gabcinder2004/BISList",
+    "api": "https://api.github.com/repos/gabcinder2004/BISList"
+  },
+  "commit": "cbfa05df370d78047fbc34c2a55e15d9ba0eee78",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "30144fdc56e48ad1a84b12ea4bf2015316e6d8529bdd520ed7cc9d4967a87382",
+      "bytes": 142
+    },
+    "bislist.png": {
+      "sha256": "e4a7d8081232de65a666744c04a6c336c204c0bcd0fba35f4459000566cfdfac",
+      "bytes": 492114
+    },
+    "BISList.toc": {
+      "sha256": "ffaf3778f2cf416b8cf115416397f511e97dbce6d9594dbf47841c6b5e91908c",
+      "bytes": 269
+    },
+    "ContextMenu.lua": {
+      "sha256": "955af57647b381263593cf1b89aef16b7221c187e087c3c7c6ebe876905a8529",
+      "bytes": 28385
+    },
+    "Core.lua": {
+      "sha256": "b8d2bcb6e397019499411946ebd98402e63630a90981410b5b88a473a6a9cea2",
+      "bytes": 14148
+    },
+    "ItemDatabase.lua": {
+      "sha256": "797d64c0de4d73e60401bf9ac7f12f7c6d03a157e5956101b894b2c80d6013ab",
+      "bytes": 104032
+    },
+    "MinimapButton.lua": {
+      "sha256": "fc231d49f3411974cc865047eafdfd4e8ac73197ecbb7c92dbaf73075eac467b",
+      "bytes": 3262
+    },
+    "README.md": {
+      "sha256": "b98c388dae0d4726c1d236ee9a7b82d8a17a5d594af219e982cf20801cfccee5",
+      "bytes": 2592
+    },
+    "SourceMap.lua": {
+      "sha256": "3908740fe382a0cf77a4aa12ad648d514b97d607ca4ff3288592307a8054569d",
+      "bytes": 28321
+    },
+    "UI.lua": {
+      "sha256": "9a76b84c5f7e0c502dbec9bceb38f1958b07431e55472b3b52c670f840a63df5",
+      "bytes": 52984
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "266510542": {
+      "tag": "v1.1",
+      "folder": "v1.1--266510542",
+      "assets": {},
+      "source": {
+        "sha256": "43164d0c8e91351b307e8bf9127e3a69476fcd2c5556d401fad3a43ba21f2a28",
+        "bytes": 536874,
+        "path": "releases/v1.1--266510542/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/gabcinder2004/BISList/tarball/v1.1"
+      }
+    }
+  }
+}

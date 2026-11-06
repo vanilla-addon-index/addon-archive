@@ -1,0 +1,9 @@
+{
+  "id": "403213258",
+  "tag": "v0.1.2",
+  "name": "Bubble v0.1.2",
+  "body": "Fixes:\n- The + marker no longer lands alone at the start of a wrapped chat line; it now wraps with the last word.\n- The reaction picker opens next to your cursor and stays on screen, including near the right and bottom edges.\n- The picker no longer blocks typing or clicking elsewhere. It closes on its own after 10 seconds without the mouse over it, on Escape, or when you pick an icon.\n\n**Install:** unzip so you have `Interface/AddOns/Bubble/Bubble.toc`, then restart the client. See the README for features.\n",
+  "published": "2026-10-04T21:18:11Z",
+  "prerelease": false,
+  "url": "https://github.com/rivi-s/Bubble/releases/tag/v0.1.2"
+}

@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: |cff88ff88Keijin|rAutoVendor
+## Notes: Automatically sells gray items and repairs gear
+## Version: 0.1.5
+core.lua
+auto_vendor_sell.lua
+auto_vendor_repair.lua
+ 

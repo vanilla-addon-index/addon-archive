@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: SexyMap - OctoWoW
+## Notes: OctoWoW-compatible backport of SexyMap with custom borders and shapes
+## Author: Packaged By Relationship
+## Version: 1.8
+## SavedVariables: SexyMap2DB
+## X-Website: https://github.com/Relationship-OctoWoW/SexyMap
+## X-GitHub: https://github.com/Relationship-OctoWoW/SexyMap
+
+CMap.xml
+COptions.xml

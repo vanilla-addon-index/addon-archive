@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/pepopo978/CastTimer",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "pepopo978",
+    "repo": "CastTimer",
+    "name": "CastTimer",
+    "url": "https://github.com/pepopo978/CastTimer",
+    "api": "https://api.github.com/repos/pepopo978/CastTimer"
+  },
+  "commit": "774a06f750f468c70dabea2d0b3378c866580b89",
+  "sourceFiles": {
+    "CastTimer.lua": {
+      "sha256": "ab7c653d6bb1248a348d9ad987504827edef232603fee43e4e0f34a92db21fdd",
+      "bytes": 5530
+    },
+    "CastTimer.toc": {
+      "sha256": "c8ac2a849bb0b6fe7139d1495cc1c1030306ade567a1db7c8a9759842c42a317",
+      "bytes": 151
+    },
+    "CastTimer.xml": {
+      "sha256": "6b5d9ee22d7b541b41e3a781468573be8599ef98f7deacfb8ad9fdbba9b1c8af",
+      "bytes": 433
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/qrospars/HolyShiftMiio",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "qrospars",
+    "repo": "HolyShiftMiio",
+    "name": "HolyShiftMiio",
+    "url": "https://github.com/qrospars/HolyShiftMiio",
+    "api": "https://api.github.com/repos/qrospars/HolyShiftMiio"
+  },
+  "commit": "9cb60822a0cf6391dd34828802b0c0965b752016",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "efd712b9e8c58b2d2426a4648b65b9a14b9eeb2871e7fd30d7c05331e013363d",
+      "bytes": 63
+    },
+    "HolyShift.toc": {
+      "sha256": "b0f51996f7f5f1f9b91a8339d59100e7ea0a46ac629e0421512bbdec8dbc418e",
+      "bytes": 440
+    },
+    "HolyShift.xml": {
+      "sha256": "f2caf2f9024321dee89db25e582c3a0eb6842d0ef7c1b8c0d5941adad3837fc7",
+      "bytes": 612
+    },
+    "HolyShiftCore.lua": {
+      "sha256": "3abb7b1c57d8ebee29d5ba9cb7f398b0e2ae26a7c4c06cdeaaf5d6f3ea129572",
+      "bytes": 66611
+    },
+    "Localization.lua": {
+      "sha256": "0136561021abaf05bc18adccea13d34d089f0acfba6c34c584f439235a65a4e8",
+      "bytes": 127
+    },
+    "README.md": {
+      "sha256": "0836373bcbaea99c37384d51f7872267efa2443b65400805da3da14fcafaf3bd",
+      "bytes": 3670
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

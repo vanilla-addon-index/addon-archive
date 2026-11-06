@@ -1,0 +1,42 @@
+## Interface: 11200
+## Title: Lock Assignments
+## Notes: Allows the user to see and share warlock assignments.
+## Author: Zedorff
+## SavedVariables: PersonalFramedXOfs, PersonalFramedYOfs
+
+Libs\LibStub\LibStub.lua
+Libs\AceCore-3.0\AceCore-3.0.lua
+Libs\AceAddon-3.0\AceAddon-3.0.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Libs\AceComm-3.0\ChatThrottleLib.lua
+Libs\AceComm-3.0\AceComm-3.0.lua
+Libs\AceGUI-3.0\AceGUI-3.0.lua
+Libs\AceConfig-3.0\AceConfigRegistry-3.0\AceConfigRegistry-3.0.lua
+Libs\AceConfig-3.0\AceConfigDialog-3.0\AceConfigDialog-3.0.lua
+Libs\AceConsole-3.0\AceConsole-3.0.lua
+LockAssignmentGlobalData.lua
+Utils\Table.lua
+Models\SoulstoneTarget.lua
+Models\Warlock.lua
+Models\WarlockAssignment.lua
+Models\WarlockRow.lua
+Models\AnnouncementLine.lua
+Models\CommMessage.lua
+Core\RosterData.lua
+Core\AssignmentOptions.lua
+Core\AssignmentCommit.lua
+Core\Cooldown.lua
+Core\Macro.lua
+Core\Announcement.lua
+UI\Graphics.lua
+UI\Dropdowns.lua
+UI\WarlockRow.lua
+UI\ScrollArea.lua
+UI\AssignCheckFrame.lua
+UI\PersonalMonitor.lua
+UI\Announcer.lua
+LockAssignmentUI.lua
+AssignmentBinding.lua
+Comms\Comms.lua
+LockAssignment.lua
+LockAssignment.xml

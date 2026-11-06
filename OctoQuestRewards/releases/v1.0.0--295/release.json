@@ -1,0 +1,9 @@
+{
+  "id": "295",
+  "tag": "v1.0.0",
+  "name": "OctoQuestRewards 1.0.0",
+  "body": "Made by John The Baptist.\r\n\r\nEstimated quest XP before accepting, in the Quest Log, and at turn-in, using the original quest UI font.\r\n\r\nDownload **OctoQuestRewards-1.0.0.zip** below, extract into `Interface/AddOns`, restart WoW and enable the addon. Use with pfQuest + pfQuest-turtle. XP remains an estimate; custom quests and server bonuses can differ.\r\n\r\nThe repository includes readable source code and screenshots.\r\n\r\n*It's not much, but it's honest work.*",
+  "published": "2026-10-07T18:47:57Z",
+  "prerelease": false,
+  "url": "https://octowow.st/git/John-The-Baptist/OctoQuestRewards/releases/tag/v1.0.0"
+}

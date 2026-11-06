@@ -1,0 +1,9 @@
+{
+  "id": "266510542",
+  "tag": "v1.1",
+  "name": "v1.1",
+  "body": "## Changes in v1.1\n\n- Fix shift-click item linking to properly format hyperlinks in chat\n- Fix item ID extraction for AtlasLoot set items with 's' prefix\n- Add One-Hand weapon slot for INVTYPE_WEAPON items\n- Add support for AtlasLoot Tier Sets and container items\n- Fix Lua 5.0 compatibility issue with string.match\n- Integrate minimap with pfUI and add empty state UI",
+  "published": "2025-12-01T19:55:02Z",
+  "prerelease": false,
+  "url": "https://github.com/gabcinder2004/BISList/releases/tag/v1.1"
+}

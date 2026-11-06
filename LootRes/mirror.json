@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/CosminPOP/LootRes",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "CosminPOP",
+    "repo": "LootRes",
+    "name": "LootRes",
+    "url": "https://github.com/CosminPOP/LootRes",
+    "api": "https://api.github.com/repos/CosminPOP/LootRes"
+  },
+  "commit": "f757716d8cebc6f75ff8a4de33d91b3207e07191",
+  "sourceFiles": {
+    "ChatThrottleLib/ChatThrottleLib.lua": {
+      "sha256": "78ab7b9325c49c3d8ad71cd297bac12cd6a951531d021dc1860e46976ede8f4e",
+      "bytes": 13029
+    },
+    "LootLC.lua": {
+      "sha256": "e8fb6ace131c9c80af3120d3352736ce22a922b2919491cb7746e9a416fdd869",
+      "bytes": 49965
+    },
+    "LootLC.xml": {
+      "sha256": "64f92ab0fb344af6ad27d57766191a0c12d6aa917eb7bd0742a5b437f2d867f2",
+      "bytes": 23810
+    },
+    "LootRes.lua": {
+      "sha256": "a98b71aa28ded32ad8f4e60307e68cf973838a59ac20a1577a3d1a0fa86baf8a",
+      "bytes": 26711
+    },
+    "LootRes.toc": {
+      "sha256": "dc833c24a8bf49cd34793b1975a0b5af1223dcff2da09c807ee3f7dfa5276f36",
+      "bytes": 289
+    },
+    "LootRes.xml": {
+      "sha256": "ec1ed0938123699653e2233b647ef472504c1457ff88e8542b5fdc16058d998d",
+      "bytes": 7664
+    },
+    "res.php": {
+      "sha256": "938b162297e1f67a180d64d23b74c91b0f53e0e76e42237db76cf0e478276dc3",
+      "bytes": 619
+    },
+    "ResizeGrip.tga": {
+      "sha256": "f17e6620869ab39c230f860d13e5e9cda42b03938b27b922c99a6e4109bcf5cf",
+      "bytes": 2085
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

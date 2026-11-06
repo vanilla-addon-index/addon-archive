@@ -1,0 +1,104 @@
+{
+  "upstream": "https://github.com/rgd87/NugEnergy/tree/vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "rgd87",
+    "repo": "NugEnergy",
+    "name": "NugEnergy",
+    "ref": "vanilla",
+    "subpath": "",
+    "url": "https://github.com/rgd87/NugEnergy",
+    "api": "https://api.github.com/repos/rgd87/NugEnergy"
+  },
+  "commit": "e262c3635d1c19cb0d741a81809d92cb602ef9da",
+  "sourceFiles": {
+    "border_statusbar.tga": {
+      "sha256": "7eacc74dab83729923ac98d1722f472d08225049d906be7e46136b434f65a0e1",
+      "bytes": 2092
+    },
+    "Emblem.ttf": {
+      "sha256": "f7aba56028f0376ad6ad8f157f33f9ed26b33f512f1b5786754f45e8b6d3ff96",
+      "bytes": 33204
+    },
+    "Libs/AceCore-3.0/AceCore-3.0.lua": {
+      "sha256": "94119d72f612da9cb6c01d391d17e8e8a3e62d5c52d7ed9263bd5c42424e34f2",
+      "bytes": 5863
+    },
+    "Libs/AceCore-3.0/AceCore-3.0.xml": {
+      "sha256": "419199448cc39d247d0d2edbeb62c47383344e65a26fb001d6571c5eed0db5e4",
+      "bytes": 210
+    },
+    "Libs/AceDB-3.0/AceDB-3.0.lua": {
+      "sha256": "10784e84501568dad86747b00a321b40de3ccbcf78b97b82c4be0d4b97689f44",
+      "bytes": 24896
+    },
+    "Libs/AceDB-3.0/AceDB-3.0.xml": {
+      "sha256": "5b3873c68d76a76fb52bbb9232d4d63b13f99cda5b3f95c86205d8022786d184",
+      "bytes": 208
+    },
+    "Libs/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "75cc380a1b0035a2d3de506ed269fbec951be6219e994d702067ed3bc95dcd64",
+      "bytes": 9742
+    },
+    "Libs/LibStub/LibStub.lua": {
+      "sha256": "d024dc95604e228e94a4406c2582a0ae571d829be78cd81658dcd5d44ad0eaef",
+      "bytes": 1462
+    },
+    "mark.tga": {
+      "sha256": "fe811d05291fb913145eb1574e06444c813fb15b78bc5d9fd52e2a62c89d72b9",
+      "bytes": 812
+    },
+    "NugEnergy.lua": {
+      "sha256": "4398669ded980e8b23a0e6ce94bba5018a96b4f25d248b3f5b675b5f3776f469",
+      "bytes": 32825
+    },
+    "NugEnergy.toc": {
+      "sha256": "01ac00e17b35114e9163e19a4c429f70e4c9d680a6e19318c6427e830b978c34",
+      "bytes": 262
+    },
+    "OpenSans-Bold.ttf": {
+      "sha256": "f7916a37377e38527d4306303cfe89b653b49b0a6b0b05c6b7593f7ab0248da8",
+      "bytes": 104120
+    },
+    "README.md": {
+      "sha256": "314b46de94bf75e1d9d29039bdf20ecf5f51c2c941b8278aec0fd55a29ebc0c4",
+      "bytes": 165
+    },
+    "statusbar.tga": {
+      "sha256": "eae335c45840dabaf4412fa285b759da7982172335a987cbea689a291366c0ab",
+      "bytes": 65580
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "434755312": {
+      "tag": "12.1.1",
+      "folder": "12.1.1--434755312",
+      "assets": {
+        "711938997": {
+          "sha256": "96be900bf6ff5ad3e6c501a4ce45c6c0db9c39f26fe5e35f1129f3ed17c26768",
+          "bytes": 270075,
+          "id": "711938997",
+          "name": "NugEnergy-12.1.1.zip",
+          "url": "https://github.com/rgd87/NugEnergy/releases/download/12.1.1/NugEnergy-12.1.1.zip",
+          "path": "releases/12.1.1--434755312/assets/NugEnergy-12.1.1.zip"
+        },
+        "711939025": {
+          "sha256": "00f8beb1b3db71bb03baaaedb9af026877e403d476eafcff9d2e1d3b2533463f",
+          "bytes": 196,
+          "id": "711939025",
+          "name": "release.json",
+          "url": "https://github.com/rgd87/NugEnergy/releases/download/12.1.1/release.json",
+          "path": "releases/12.1.1--434755312/assets/release.json"
+        }
+      },
+      "source": {
+        "sha256": "9bec8221d16cf0b29c82420766b0d3749219437a3b82c437f9ae7da16e094d90",
+        "bytes": 148858,
+        "path": "releases/12.1.1--434755312/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/rgd87/NugEnergy/tarball/12.1.1"
+      }
+    }
+  }
+}

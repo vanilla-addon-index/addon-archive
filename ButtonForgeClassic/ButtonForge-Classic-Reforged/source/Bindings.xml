@@ -1,0 +1,146 @@
+<Bindings>
+    <Binding name="BFC_BUTTON_1" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(1);
+    </Binding>
+    <Binding name="BFC_BUTTON_2" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(2);
+    </Binding>
+    <Binding name="BFC_BUTTON_3" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(3);
+    </Binding>
+    <Binding name="BFC_BUTTON_4" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(4);
+    </Binding>
+    <Binding name="BFC_BUTTON_5" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(5);
+    </Binding>
+    <Binding name="BFC_BUTTON_6" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(6);
+    </Binding>
+    <Binding name="BFC_BUTTON_7" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(7);
+    </Binding>
+    <Binding name="BFC_BUTTON_8" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(8);
+    </Binding>
+    <Binding name="BFC_BUTTON_9" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(9);
+    </Binding>
+    <Binding name="BFC_BUTTON_10" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(10);
+    </Binding>
+    <Binding name="BFC_BUTTON_11" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(11);
+    </Binding>
+    <Binding name="BFC_BUTTON_12" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(12);
+    </Binding>
+    <Binding name="BFC_BUTTON_13" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(13);
+    </Binding>
+    <Binding name="BFC_BUTTON_14" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(14);
+    </Binding>
+    <Binding name="BFC_BUTTON_15" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(15);
+    </Binding>
+    <Binding name="BFC_BUTTON_16" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(16);
+    </Binding>
+    <Binding name="BFC_BUTTON_17" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(17);
+    </Binding>
+    <Binding name="BFC_BUTTON_18" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(18);
+    </Binding>
+    <Binding name="BFC_BUTTON_19" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(19);
+    </Binding>
+    <Binding name="BFC_BUTTON_20" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(20);
+    </Binding>
+    <Binding name="BFC_BUTTON_21" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(21);
+    </Binding>
+    <Binding name="BFC_BUTTON_22" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(22);
+    </Binding>
+    <Binding name="BFC_BUTTON_23" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(23);
+    </Binding>
+    <Binding name="BFC_BUTTON_24" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(24);
+    </Binding>
+    <Binding name="BFC_BUTTON_25" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(25);
+    </Binding>
+    <Binding name="BFC_BUTTON_26" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(26);
+    </Binding>
+    <Binding name="BFC_BUTTON_27" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(27);
+    </Binding>
+    <Binding name="BFC_BUTTON_28" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(28);
+    </Binding>
+    <Binding name="BFC_BUTTON_29" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(29);
+    </Binding>
+    <Binding name="BFC_BUTTON_30" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(30);
+    </Binding>
+    <Binding name="BFC_BUTTON_31" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(31);
+    </Binding>
+    <Binding name="BFC_BUTTON_32" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(32);
+    </Binding>
+    <Binding name="BFC_BUTTON_33" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(33);
+    </Binding>
+    <Binding name="BFC_BUTTON_34" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(34);
+    </Binding>
+    <Binding name="BFC_BUTTON_35" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(35);
+    </Binding>
+    <Binding name="BFC_BUTTON_36" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(36);
+    </Binding>
+    <Binding name="BFC_BUTTON_37" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(37);
+    </Binding>
+    <Binding name="BFC_BUTTON_38" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(38);
+    </Binding>
+    <Binding name="BFC_BUTTON_39" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(39);
+    </Binding>
+    <Binding name="BFC_BUTTON_40" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(40);
+    </Binding>
+    <Binding name="BFC_BUTTON_41" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(41);
+    </Binding>
+    <Binding name="BFC_BUTTON_42" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(42);
+    </Binding>
+    <Binding name="BFC_BUTTON_43" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(43);
+    </Binding>
+    <Binding name="BFC_BUTTON_44" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(44);
+    </Binding>
+    <Binding name="BFC_BUTTON_45" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(45);
+    </Binding>
+    <Binding name="BFC_BUTTON_46" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(46);
+    </Binding>
+    <Binding name="BFC_BUTTON_47" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(47);
+    </Binding>
+    <Binding name="BFC_BUTTON_48" header="BUTTONFORGECLASSIC">
+        BFC_ButtonBinding(48);
+    </Binding>
+</Bindings>

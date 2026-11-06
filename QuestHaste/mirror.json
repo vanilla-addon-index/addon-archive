@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/HeartNotSmart/QuestHaste",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "HeartNotSmart",
+    "repo": "QuestHaste",
+    "name": "QuestHaste",
+    "url": "https://github.com/HeartNotSmart/QuestHaste",
+    "api": "https://api.github.com/repos/HeartNotSmart/QuestHaste"
+  },
+  "commit": "3e4c0e4076df1a54866613739bb4004f20ca5823",
+  "sourceFiles": {
+    "QuestHaste.lua": {
+      "sha256": "c4738d14b876eaa4cc56c8ecc09a38ae8d79628d95727315fc1071ca37afc3f9",
+      "bytes": 5695
+    },
+    "QuestHaste.toc": {
+      "sha256": "a4612c24c262cc235100a33a849d2835965e5ad18d539b25e12adce57fa2e4c4",
+      "bytes": 128
+    },
+    "README.md": {
+      "sha256": "63b933661cd752434b7d7efcf44be945ed5c257e58ade9345c0d2675943bdee4",
+      "bytes": 1253
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

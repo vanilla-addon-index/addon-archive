@@ -1,0 +1,109 @@
+{
+  "upstream": "https://github.com/refaim/ClassIcons",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "refaim",
+    "repo": "ClassIcons",
+    "name": "ClassIcons",
+    "url": "https://github.com/refaim/ClassIcons",
+    "api": "https://api.github.com/repos/refaim/ClassIcons"
+  },
+  "commit": "8c8f26181ba8eddbd2f5b14e2b2932a7f9d01e6c",
+  "sourceFiles": {
+    "ClassIcons.lua": {
+      "sha256": "ee2aff53d0ecc2592a9cd7694aa4d2b00426210214b1dc32821b803be0bfc764",
+      "bytes": 8059
+    },
+    "ClassIcons.toc": {
+      "sha256": "78d99625fb69447ae9dd62be9db20bd2ca3f2200ea0c8fd6abe8a4617873b0f9",
+      "bytes": 241
+    },
+    "ClassIcons.xml": {
+      "sha256": "2d55872ee0b25eb5f019cfe69ef41e2830fe795f334ec275e01b04615306c004",
+      "bytes": 2394
+    },
+    "Icons/BEAST.tga": {
+      "sha256": "4901c3885ce3795ecad3cad4bad2d107d0e9bfe73cca4c652784e92888cf92ae",
+      "bytes": 12179
+    },
+    "Icons/CRITTER.tga": {
+      "sha256": "53671f07c1fbb4142abb66642624995eabcc5a3ff8ff1680f16b29b241810647",
+      "bytes": 12259
+    },
+    "Icons/DEMON.tga": {
+      "sha256": "51a0402bfc23afce3132f165197ff83497650b276503d2ebe1c12e6990a62247",
+      "bytes": 12237
+    },
+    "Icons/DRAGONKIN.tga": {
+      "sha256": "dbecd0b6c4c59558cd91f5970defa33366a73d4060d0d52f590b5f0187ea29cb",
+      "bytes": 12249
+    },
+    "Icons/DRUID.tga": {
+      "sha256": "93e140009adc6f313da40f5fc55e2a1f65d2a325dbe6070c50b3b2b01f3b2905",
+      "bytes": 12027
+    },
+    "Icons/ELEMENTAL.tga": {
+      "sha256": "9d29b07b1bd73e99ee93dae545f3ef23d9239d065fd40a9f9bfa93a63d400c7a",
+      "bytes": 12149
+    },
+    "Icons/GIANT.tga": {
+      "sha256": "142d72e9c6290bcf20c499f29c632c6eeb793640f15c034c171fbf7b5a634f6b",
+      "bytes": 12209
+    },
+    "Icons/HUMANOID.tga": {
+      "sha256": "a8ba896b56e1c6e08f7c83ab1707dba12755c50a2c251c2c1350a6872b3ca6ef",
+      "bytes": 12225
+    },
+    "Icons/HUNTER.tga": {
+      "sha256": "a9393e1bd9a633cab6ee9d83054f0cddd5aeceeaf3f6a2641236acf47f4e49c3",
+      "bytes": 10929
+    },
+    "Icons/MAGE.tga": {
+      "sha256": "ab2f63435524bc898d789913d09fec985bf7c8dde24f1ee8dc6c9933ecfeaae4",
+      "bytes": 11971
+    },
+    "Icons/MECHANICAL.tga": {
+      "sha256": "6fce6a8f620a4a001df907d6ee6fc4d2cc47ed54dd31cfbb6b83daeec26166d7",
+      "bytes": 12169
+    },
+    "Icons/PALADIN.tga": {
+      "sha256": "782acefd0ce66ea5a1f4e709fb4ab1f292c27e260747fff31e2e44784e91889c",
+      "bytes": 12125
+    },
+    "Icons/PRIEST.tga": {
+      "sha256": "ca39fca5a1b2da73b48013021765e0592be447c8409e393741d03a5e0903a2f6",
+      "bytes": 11465
+    },
+    "Icons/ROGUE.tga": {
+      "sha256": "90c8b66c494b560e82672f2a4d2357a24d2ccaaf5bfc7234a8cf746d6c90cf42",
+      "bytes": 11852
+    },
+    "Icons/SHAMAN.tga": {
+      "sha256": "7dfea5891d76bdfd173df3f024fa60a9b34551ed9bea4080c2be926f7500998c",
+      "bytes": 12203
+    },
+    "Icons/UNDEAD.tga": {
+      "sha256": "a1c8e29ecffb872662361ed81196095f320717b9f4c25a52f7dfacbbf9b52a94",
+      "bytes": 12058
+    },
+    "Icons/UNKNOWN.tga": {
+      "sha256": "1873a650f8a9d836b2e989312735ee24f9d011a87281252b933c9b6f5d4d90b2",
+      "bytes": 10729
+    },
+    "Icons/WARLOCK.tga": {
+      "sha256": "8b908ffd2d1c93637d6951dcb2c447711c6df9f49f97af59064b73d0e5d1af55",
+      "bytes": 12049
+    },
+    "Icons/WARRIOR.tga": {
+      "sha256": "f0f72475f78e77b216f41601a92a243b653ae0b10c590fcb51fd49720fc9d3a7",
+      "bytes": 12125
+    },
+    "readme.txt": {
+      "sha256": "89fe0de2e597d1f1413efe86ff81acc720bbdd6ab867d338df42a280ec6a15e9",
+      "bytes": 143
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

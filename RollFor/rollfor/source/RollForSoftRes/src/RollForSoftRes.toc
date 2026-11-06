@@ -1,0 +1,31 @@
+## Interface: 20506
+## Title: RollFor - SoftRes
+## Author: Obszczymucha
+## Version: 1.0.3
+## Notes: Core soft-res functionality for RollFor. Requires a provider addon to import.
+## Dependencies: RollFor
+## Group: RollFor
+## IconTexture: Interface\AddOns\RollFor\assets\icon-white
+## X-RollFor-Extension: softres
+
+src\SoftResDataTransformer.lua
+src\SoftResStore.lua
+src\SoftResAwardedLootDecorator.lua
+src\SoftResPresentPlayersDecorator.lua
+src\SoftResAbsentPlayersDecorator.lua
+src\SoftResMatchedNameDecorator.lua
+src\SoftResDisabledEntries.lua
+src\SoftResDisabledEntriesDecorator.lua
+src\NameAutoMatcher.lua
+src\NameManualMatcher.lua
+src\NameMatchReport.lua
+src\SoftResCheck.lua
+src\SoftResGui.lua
+src\SoftResListContentTransformer.lua
+src\SoftResListWidgets.lua
+src\SoftResListFrame.lua
+src\Simulation.lua
+src\Minimap.lua
+src\OptionsPage.lua
+
+RollForSoftRes.lua

@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: Relationships PVP
+## Notes: PvP panel with per-battleground and per-arena stats, marks, kills/deaths, honor, K/D, and queue controls. Supports the Battleground Finder and Arena on OctoWoW.
+## Author: Relationship
+## Version: 1.4
+## SavedVariablesPerCharacter: RelationshipsPVPCharDB
+
+RelationshipsPVP.xml
+RelationshipsPVP.lua

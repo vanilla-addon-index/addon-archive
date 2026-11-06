@@ -1,0 +1,209 @@
+{
+  "upstream": "https://github.com/Hippoom/ModernFocusFrame",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Hippoom",
+    "repo": "ModernFocusFrame",
+    "name": "ModernFocusFrame",
+    "url": "https://github.com/Hippoom/ModernFocusFrame",
+    "api": "https://api.github.com/repos/Hippoom/ModernFocusFrame"
+  },
+  "commit": "6a2288ff7133c3d69be0259af380bb884abf47e8",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "cf237c7aff44efbe6e502e645c3e06da03a69d7bdeb43392108ef3348143417e",
+      "bytes": 10
+    },
+    "BuffsModule.lua": {
+      "sha256": "2915d9289906af7cc991cea25f34bec738c4f0fe90ef58a99f58422c7f2534ce",
+      "bytes": 11817
+    },
+    "CastBar.lua": {
+      "sha256": "36e5f87acda7c7eaf69f5bfe7773517bbc3ee5d583bbb9f8558a10affadf63e0",
+      "bytes": 6894
+    },
+    "Core.lua": {
+      "sha256": "ad896413822a2e8b1acd070b91e6c936785064a8bc8d6fbaa62665c419ce6b65",
+      "bytes": 1899
+    },
+    "Events.lua": {
+      "sha256": "1f8740c2c13a5a2fa222386e5124a5ec60a05a205308aff08425194418822d5f",
+      "bytes": 3432
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "6561a1a96465f5276c784989a2c989e21b1b8f666391fccf4b64ab87a0a63d54",
+      "bytes": 34783
+    },
+    "libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "a57404bbff9dab8d53ff5e1752219a8c8e7042c0ebcb2edd6b5a7eaf8b9d39c8",
+      "bytes": 45257
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "09cfc0b69a0feb644fa1a9e5fc6715a4e76e0b2f6c7c04a3a0ea693d633770cd",
+      "bytes": 23114
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "0447ac520cae9b5f9544f9619c23a89c0e192bc7891763e2a0269a5d664f79df",
+      "bytes": 30469
+    },
+    "libs/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "b0d5c95e64c0319042565b389f32e33702a48ba8b3d09e41b86ca5dbb840f011",
+      "bytes": 7906
+    },
+    "libs/SpecialEvents-Aura-2.0/SpecialEvents-Aura-2.0.lua": {
+      "sha256": "b437355879508a9236a5b866f53cc71651ca34d9e363edb725a5560d76608927",
+      "bytes": 9785
+    },
+    "MainFrame.lua": {
+      "sha256": "9304c8165fb5d299cd1d6d0ed5f87562d7679baf1334b921acff0d48482525bf",
+      "bytes": 11939
+    },
+    "ModernFocusFrame.toc": {
+      "sha256": "4199ad0e32d2299bb87b8145503d4126919f4cdbc44d33c456632b2658735ca1",
+      "bytes": 422
+    },
+    "README.md": {
+      "sha256": "50ab8b208e2b0d3ff4c23c53464bfb7c25c1de0baa88a602a7f2f9c4f1525461",
+      "bytes": 2114
+    },
+    "SlashCommands.lua": {
+      "sha256": "32c0f2ad25f4161921a2b40bf9808115a7360b00f603c1ef85e367dd22e64a61",
+      "bytes": 4768
+    },
+    "textures/dragonflight/castbar/CastingBarBackground.blp": {
+      "sha256": "7a8559e94f2f938f2de73a72948343c57a656c6d20a0986caad42c73b4ce6913",
+      "bytes": 23156
+    },
+    "textures/dragonflight/castbar/CastingBarFrame.blp": {
+      "sha256": "b8dd6c978ccb50a058db2b59dc5f8901e46473bc88deef9d31cbe3b0883e11dd",
+      "bytes": 23156
+    },
+    "textures/dragonflight/castbar/CastingBarFrameDropShadow.blp": {
+      "sha256": "fe79c490373e3d215cb091d35668e24bcc1cc1a41b20294fdf855115b76009cd",
+      "bytes": 44916
+    },
+    "textures/dragonflight/castbar/CastingBarStandard3.tga": {
+      "sha256": "d0d85e8cb6814cc386964e64d3f4253b244095904d1dd36abb63b96a261e06a9",
+      "bytes": 20895
+    },
+    "textures/dragonflight/unitframes/healthDF2.tga": {
+      "sha256": "b9d24f9ef9997a985da1df0e1532baecd88391334a046cb3344f338b831119e0",
+      "bytes": 16428
+    },
+    "textures/dragonflight/unitframes/pet.blp": {
+      "sha256": "9661261bc8ab48225678e38154dd8c788d27b9f4259b0c3c73fa26b76e3f668a",
+      "bytes": 12132
+    },
+    "textures/dragonflight/unitframes/UI-HUD-UnitFrame-Target-PortraitOn-Bar-Mana-Status.blp": {
+      "sha256": "aca8e626a7dce8b84a66b2a3d1afc32d8cf047514171d67fb3b8d8413a524f7e",
+      "bytes": 3972
+    },
+    "textures/dragonflight/unitframes/UI-TargetingFrameDF1-Background.blp": {
+      "sha256": "352c852a861c27f08a31bb84e7f0e0d70524b385cf0b37f3c803a0f61add8a81",
+      "bytes": 175936
+    },
+    "textures/dragonflight/unitframes/UI-TargetingFrameDF1.blp": {
+      "sha256": "85d776afc1cbad906f14c1af7bc5919b305d30e40eea4121acdb4d845ebcb8ec",
+      "bytes": 175936
+    },
+    "textures/png mirrors/UI-SmallTargetingFramex-NoMana-Light.png": {
+      "sha256": "27fd10ece72a948868215ea60ea56a8e533950c536863dde4af0cbd6d9fbaef5",
+      "bytes": 3177
+    },
+    "textures/png mirrors/UI-TargetingFrame-Elite-Light.png": {
+      "sha256": "35b9ab3eae51ab3f54f11995a1e510d660996fc6ec949b9505028d91cdd4c2cd",
+      "bytes": 13812
+    },
+    "textures/png mirrors/UI-TargetingFrame-Light.png": {
+      "sha256": "69c2419633b44b35ac46a6f43d4adac9a9d64c9c85d168c0aaf2389202a198b0",
+      "bytes": 6707
+    },
+    "textures/png mirrors/UI-TargetingFrame-Minus-Light.png": {
+      "sha256": "69c2419633b44b35ac46a6f43d4adac9a9d64c9c85d168c0aaf2389202a198b0",
+      "bytes": 6707
+    },
+    "textures/png mirrors/UI-TargetingFrame-Minus.png": {
+      "sha256": "5bfad054dce1c0840479d8b97fa45ea5eb30657c0363cfc743f3a1cf6762df0d",
+      "bytes": 5921
+    },
+    "textures/png mirrors/UI-TargetingFrame-Rare-Elite-Light.png": {
+      "sha256": "e13dd3d6ac972dc2bfe9b5bcfa711648fda6eb9eaca2e6d58f3ba6df0da27fc2",
+      "bytes": 12964
+    },
+    "textures/png mirrors/UI-TargetingFrame-Rare-Elite.png": {
+      "sha256": "63b223e41b1bdc96ef57c23a1b50cae73edb5b54f4cb1ee504f4a609e27fd856",
+      "bytes": 9956
+    },
+    "textures/png mirrors/UI-TargetingFrame-Rare-Light.png": {
+      "sha256": "5a91b16a35990992a4367f1a39c78850c1ad9c9cf042b7a4471de6bfe990b802",
+      "bytes": 12121
+    },
+    "textures/png mirrors/UI-TargetingFrame-Rare.png": {
+      "sha256": "95a3e0d07ddf2a1da70920c6bc126d076866086b5958bc3577a83c1f35417041",
+      "bytes": 9343
+    },
+    "textures/png mirrors/UI-TargetingFrame.png": {
+      "sha256": "5bfad054dce1c0840479d8b97fa45ea5eb30657c0363cfc743f3a1cf6762df0d",
+      "bytes": 5921
+    },
+    "textures/Smooth.blp": {
+      "sha256": "b482f20979a6dcf08ad143edab4439525e0348309f592d9a0f4064e40a590399",
+      "bytes": 6684
+    },
+    "textures/UI-SmallTargetingFramex-NoMana-Light.blp": {
+      "sha256": "30ae4735253a71438630cfd8168028d647e5e8f034d1a9083c6e083e54b58af7",
+      "bytes": 12132
+    },
+    "textures/UI-TargetingFrame-Elite-Light.blp": {
+      "sha256": "60a1df726caf2c95dac86ae72d957ad63b237207246c62151e76f8c4cf7a58a7",
+      "bytes": 44884
+    },
+    "textures/UI-TargetingFrame-Elite.blp": {
+      "sha256": "3eae934f87a092b36cd3d9381481e03a2ea2582ce179870018096c9fdc58d0ea",
+      "bytes": 88552
+    },
+    "textures/UI-TargetingFrame-Light.blp": {
+      "sha256": "f21e1341dc55bfeed40de37e1cda07fbe300820cac8e1187842f764eda7f0649",
+      "bytes": 44884
+    },
+    "textures/UI-TargetingFrame-Minus-Light.blp": {
+      "sha256": "c95b5ac8a0acccccd9c15fba1383a37d46447b99b16550eedeadc3b2046dacb5",
+      "bytes": 44884
+    },
+    "textures/UI-TargetingFrame-Minus.blp": {
+      "sha256": "2d4fb8557a0769167adcb47c12544598aa9d48caea0a89fc0a7a72165a15f8a9",
+      "bytes": 88552
+    },
+    "textures/UI-TargetingFrame-Rare-Elite-Light.blp": {
+      "sha256": "d9d8aa6a69ea62c0025ef0a836e8b709f01f78b6fa54e970272ab4a570086e7b",
+      "bytes": 44884
+    },
+    "textures/UI-TargetingFrame-Rare-Elite.blp": {
+      "sha256": "a1b886c96724e9b2741c47f5b31cba7dbdc0fea275b47311bc514865e6ec4ef0",
+      "bytes": 88552
+    },
+    "textures/UI-TargetingFrame-Rare-Light.blp": {
+      "sha256": "e1d80d400c8e05a648fb841a6021587bcbe155c2583fe79ac7d51529043112f9",
+      "bytes": 44884
+    },
+    "textures/UI-TargetingFrame-Rare.blp": {
+      "sha256": "1f0b2af73045b507eec69ae6957cc2898eb8bdc8049ef0d493f5ef620ad6ef1d",
+      "bytes": 88552
+    },
+    "textures/UI-TargetingFrame.blp": {
+      "sha256": "2d4fb8557a0769167adcb47c12544598aa9d48caea0a89fc0a7a72165a15f8a9",
+      "bytes": 88552
+    },
+    "Utils.lua": {
+      "sha256": "1f88644bec5fb557a4aaea870e35d4bbd6061a75f51aae376611b921ee6a1277",
+      "bytes": 9029
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

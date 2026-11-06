@@ -1,0 +1,9 @@
+-- UI layer: frame creation, layout, dropdowns, and set-texture/set-text APIs. No direct read of LA.LockAssignmentsData for business logic.
+-- Code has been split into UI/*.lua modules (loaded via TOC before this file):
+--   UI/Graphics.lua   - SetAssignmentGraphic, UpdateCurse/UpdateBanish/UpdateDropDownSideGraphic, Get*FromDropDownList
+--   UI/Dropdowns.lua   - CreateDropDownMenu, UpdateDropDownMenuWithNewOptions, CreateSoulstoneDropDownMenu, BuildClassMap, UpdateSoulstoneDropDownMenuWithNewOptions
+--   UI/WarlockRow.lua  - CreateAssignmentFrame, CreateAssignmentContainer, portrait, nameplate, curse/banish/SS menus, AddTextToFrame, ack/warning frames
+--   UI/ScrollArea.lua  - InitLockAssignmentFrameScrollArea, modf, GetMaxValueForScrollBar
+--   UI/AssignCheckFrame.lua - InitLockAssignmentCheckFrame, SetLockAssignmentCheckFrame, accept/reject handlers, UpdateSoulStoneAssignment, UpdateAssignedCurseGraphic
+--   UI/PersonalMonitor.lua - InitPersonalMonitorFrame, UpdatePersonalSSAssignment, UpdatePersonalMonitorFrame, UpdatePersonalMonitorSize
+--   UI/Announcer.lua   - InitAnnouncerOptionFrame, SetExtraChats

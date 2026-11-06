@@ -1,0 +1,1 @@
+QuestlineDB={schemaVersion=2,runEncoding="base64-pairs",profile="octo",locale="enUS",sourceRevision="sha256:3e3a787de08525f0aa8853212141a9517ddd30b1734b453fc5d1f4011ddeefaf",build="d5ab1aa04c0a81f3",grid=1280,quests={},locations={},zones={},zoneQuests={},mobObjectives={},objectObjectives={},vendorObjectives={},mobDropRates={},npcQuests={},givers={},zoneGivers={}}

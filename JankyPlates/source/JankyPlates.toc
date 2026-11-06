@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: JankyPlates
+## Notes: Colors pfUI/ShaguPlates nameplates by threat and aggro state using TWThreat data. /jplates for options.
+## Author: Ageous
+## Version: 1.0.40
+## OptionalDeps: pfUI, ShaguPlates, TWThreat
+## SavedVariables: JankyPlatesConfig, JankyPlatesTraceLog
+
+JankyPlates.lua

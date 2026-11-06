@@ -1,0 +1,16 @@
+## Interface: 11200
+## Title: Bites
+## Notes: Shows which items are used in cooking and what they are used for.
+## Version: 1.0
+## Description: Shows which items are used in cooking and what they are used for.
+## DefaultState: enabled
+
+## SavedVariablesPerCharacter: BitesCookBook_SavedVariables
+
+Lists\CookingRecipes.lua
+
+InitializeAddon.lua
+Localization.lua
+## Options.lua
+
+Tooltips.lua
