@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: Map|cff60ff00Target|r
+## Notes: Minimap tracking improvements for hunters.
+## Author: EinBaum https://github.com/EinBaum
+## Version: 2.1
+
+MapTarget.lua

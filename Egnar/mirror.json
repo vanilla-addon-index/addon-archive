@@ -1,0 +1,62 @@
+{
+  "upstream": "https://github.com/Medeah/Egnar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Medeah",
+    "repo": "Egnar",
+    "name": "Egnar",
+    "url": "https://github.com/Medeah/Egnar",
+    "api": "https://api.github.com/repos/Medeah/Egnar"
+  },
+  "commit": "23a6b3ea9efe8eacce395e97a16a011958a0560f",
+  "sourceFiles": {
+    "Egnar.lua": {
+      "sha256": "57aeb49846c5fb0295ac518dd32d92fee2d48149600540932573113516487916",
+      "bytes": 1723
+    },
+    "Egnar.toc": {
+      "sha256": "c95fbc214f1abd03415dfac06c5f9300fa261bc3c5ed088b995e26e00634edbb",
+      "bytes": 134
+    },
+    "Egnar.xml": {
+      "sha256": "3e33a496472d3474bdfeac7ee83c930dca8feb508df945fb8ba69bb2729e3cda",
+      "bytes": 1121
+    },
+    "LICENSE": {
+      "sha256": "a6615ccac47cd340da3354df3d39727c09177e7345c90a39cea7e1d74e9bf639",
+      "bytes": 1084
+    },
+    "README.md": {
+      "sha256": "76e40c7f72331741e11bf023c74f0fa686f25528970e17bede050aa4e5e273b4",
+      "bytes": 486
+    },
+    "screenshot.png": {
+      "sha256": "7f1204ce4f40bc6dde40cfa669331b3f96b3178e0d406190673605c710e31c03",
+      "bytes": 40685
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "2524569": {
+      "tag": "0.1",
+      "folder": "0.1--2524569",
+      "assets": {
+        "1262376": {
+          "sha256": "dc2350e4754a7cf6c50654c75081e7ba2eea46c0300b14c6d85ebe6cfe25709f",
+          "bytes": 2841,
+          "id": "1262376",
+          "name": "Egnar.zip",
+          "url": "https://github.com/Medeah/Egnar/releases/download/0.1/Egnar.zip",
+          "path": "releases/0.1--2524569/assets/Egnar.zip"
+        }
+      },
+      "source": {
+        "sha256": "327f2addbe8cd76862c2a38f308f9d6cd7e990c87e7fb487ef1063de2bfaefd1",
+        "bytes": 43513,
+        "path": "releases/0.1--2524569/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Medeah/Egnar/tarball/0.1"
+      }
+    }
+  }
+}

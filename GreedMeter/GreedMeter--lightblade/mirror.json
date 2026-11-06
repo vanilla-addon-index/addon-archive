@@ -1,0 +1,105 @@
+{
+  "upstream": "https://octowow.st/git/lightblade/GreedMeter",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "lightblade",
+    "repo": "GreedMeter",
+    "name": "GreedMeter",
+    "url": "https://octowow.st/git/lightblade/GreedMeter",
+    "api": "https://octowow.st/git/api/v1/repos/lightblade/GreedMeter"
+  },
+  "commit": "f21e96ba1118f6ebba1b1d7fdc1ac6bab261373b",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "1a1dbe176bc233b499d35a57db7513f2941c99ab9759f177830c9149be99005b",
+      "bytes": 66
+    },
+    "Core/Commands.lua": {
+      "sha256": "63ead94677ba6ab8cab1b31b74c195e11402d8692e6ba5e3ab122e250f5ef9bb",
+      "bytes": 17998
+    },
+    "Core/Init.lua": {
+      "sha256": "7d041d57c5522db369ab8ac98df81a3ded60afe4b1e9f9bd869464876fc45c06",
+      "bytes": 8405
+    },
+    "Core/Roster.lua": {
+      "sha256": "05148b57d97ef9aabefc223cba287ea0a758b2088683f6db0a8f0f1bc7f9dd40",
+      "bytes": 9273
+    },
+    "Core/Settings.lua": {
+      "sha256": "914688a604bc9b01a16c6c581743a89f1c67a601f8b31248ae397d55c50f0ea2",
+      "bytes": 12210
+    },
+    "GreedMeter.toc": {
+      "sha256": "82b290b28eff0aa5d9c85db3261e06ec80045db76f525d59f6ab65b058808986",
+      "bytes": 555
+    },
+    "LICENSE": {
+      "sha256": "8a4415677bf1ea1574f05e3ddf400a28f6c5aa181d81754fc41c1da9fb6a9ec5",
+      "bytes": 1063
+    },
+    "Parser/API.lua": {
+      "sha256": "99738603f28f8b7b8256f10ae4a1b678b8c91ee806946daaaf3dad3b22a637c2",
+      "bytes": 65217
+    },
+    "Parser/Backend_Chat.lua": {
+      "sha256": "60d998247d3a95ea74f8058415a34f6e42c3551abd1062f99621ee01e2731360",
+      "bytes": 105222
+    },
+    "Parser/Backend_Nampower.lua": {
+      "sha256": "8d795144fd479a8f35591cb3fa744cdf6c8d71e7cd93b982aaa2cca432028b4c",
+      "bytes": 31057
+    },
+    "Parser/Init.lua": {
+      "sha256": "e63851a42504c2516815811007b5553f48a546487b328052ddde4c0f998ee287",
+      "bytes": 972
+    },
+    "Parser/Main.lua": {
+      "sha256": "93d514070344808a6951649a73bfa51f79af612fae8ed9556b6003957e3ab5d2",
+      "bytes": 3328
+    },
+    "README.md": {
+      "sha256": "a7f5a4b3fc79eb723ca3e653f420796f30c2256342854e5f218b32a6f8c7a479",
+      "bytes": 2616
+    },
+    "ScreenShots/GreedMeterCustom.png": {
+      "sha256": "fad7c2395afc9effa6b380cdfdc1eefd7e602d66548bb1b1da9a18629457038c",
+      "bytes": 497108
+    },
+    "ScreenShots/GreedMeterSettings.png": {
+      "sha256": "3143a867a12fc2b52016c639be018fc44ed58b64387cb6ad3b9cd68744321e01",
+      "bytes": 225871
+    },
+    "ScreenShots/GreedMeterThreat.png": {
+      "sha256": "7da2071beb2e7fefa77edb3c0382283c454c662217aa0ddd47b4570905335011",
+      "bytes": 149603
+    },
+    "ScreenShots/GreedMeterWindows.png": {
+      "sha256": "2621502cb652e8b902b3d56a08be10b7ff36d1b2ef156f41e7889c32c9b9f9d8",
+      "bytes": 272257
+    },
+    "Threat.lua": {
+      "sha256": "d31e15bc50dc9dff920e7b0d93c00406c09c66b8327f317c4d7e4df05e21554c",
+      "bytes": 126744
+    },
+    "UI/Detail.lua": {
+      "sha256": "7133e6e5d61e7796d041c0fd72f6f739ba7174e744238c5f8441187c02dbf2f1",
+      "bytes": 25435
+    },
+    "UI/Frames.lua": {
+      "sha256": "c965adc4f8ee202c1e6e50ad638809a3b4ee3d41007fb55e625233226826d702",
+      "bytes": 76122
+    },
+    "UI/Init.lua": {
+      "sha256": "31d1b5f137036f2396d3c3924a27882f5a92e352f1fee772fadcc5006d4e4f8d",
+      "bytes": 42983
+    },
+    "UI/Settings.lua": {
+      "sha256": "cbc94743bd77b509d8c2d24a6dfeda2a79d8ecd199047b5a538e8fb511ef2d4d",
+      "bytes": 109247
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

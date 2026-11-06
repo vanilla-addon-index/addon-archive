@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: |CFFB700B7Li|CFFFF00FFfe|CFFFF50FFSa|CFFFF99FFf|CFFFFC4FFe|CFFFFFFFFr|CFFFFC4FFLO|CFFFF99FFw|CFFFF50FFHea|CFFFF00FFlth |CFFB700B7Wa|CFFFFFFFFrn|CFF7FFF7Fing|r 🦇🦇
+## Author: |CFF9482C9Silent|r ported and merged by tamara09🦇🦇
+## Version: 0.7a
+## Notes: Enables a flashing red effect when you are low on life, and a flasing blue effect when you're low on mana. This warning system was implemented by Blizzard but is not in use.|r
+## SavedVariablesPerCharacter: LifeSafer_LowHealth_Thresholds, LifeSafer_LowHealth_Enabled, LifeSafer_LowHealth_SoundCombatOnly, LifeSafer_LowHealth_HealthCombatOnly, LifeSafer_LowHealth_ManaCombatOnly, LifeSafer_LowHealth_SoundEnabled, LifeSafer_LowHealth_HealthEnabled, LifeSafer_LowHealth_ManaEnabled, LifeSafer_LowHealth_HealthSync, LifeSafer_LowHealth_ManaSync, LifeSafer_LowHealth_HealthEmote, LifeSafer_LowHealth_ManaEmote, LifeSafer_LowHealth_UseAltTextures, LifeSafer_Nightfall_Enabled, LifeSafer_Nightfall_ShardEnabled, LifeSafer_Nightfall_UseLargeEffect,
+LowHealth.xml
+LowHealthSettings.xml
+LifeSafer_Nightfall_SoundEffects
+Nightfall.xml
+NightfallSettings.xml

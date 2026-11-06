@@ -1,0 +1,25 @@
+{
+  "upstream": "https://github.com/Road-block/LanguageFilter",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "LanguageFilter",
+    "name": "LanguageFilter",
+    "url": "https://github.com/Road-block/LanguageFilter",
+    "api": "https://api.github.com/repos/Road-block/LanguageFilter"
+  },
+  "commit": "a64db8572ec0912e31b446bb6fd8168a1539f60e",
+  "sourceFiles": {
+    "core.lua": {
+      "sha256": "57ef130d04674c6dbbe569da4cbdaa047118b93a0d7a23e31e34a749b99ef022",
+      "bytes": 4241
+    },
+    "LanguageFilter.toc": {
+      "sha256": "3c9bc91a3906f5f5d1fdfa6f538d11e2ca84d8c43fdfc2f554273b2992bf410e",
+      "bytes": 212
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

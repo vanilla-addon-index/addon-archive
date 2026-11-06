@@ -1,0 +1,57 @@
+{
+  "upstream": "https://github.com/Einherjarn/CT_MailMod",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Einherjarn",
+    "repo": "CT_MailMod",
+    "name": "CT_MailMod",
+    "url": "https://github.com/Einherjarn/CT_MailMod",
+    "api": "https://api.github.com/repos/Einherjarn/CT_MailMod"
+  },
+  "commit": "4b51c285a48dd9a64f2a962781e4a45a98f22b0e",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "CT_MailMod.lua": {
+      "sha256": "0094ad004105f4627898d4737b996315c8705b418853e6b9b3032069e0790be8",
+      "bytes": 16176
+    },
+    "CT_MailMod.toc": {
+      "sha256": "d99bf482f37c01ef664a783fa1edaf797f288be0ea5f878657297544fdb32da5",
+      "bytes": 269
+    },
+    "CT_MailMod.xml": {
+      "sha256": "4974fe6682a8dc2ba4b0fc4fcc3c2570076fd706f41e2383e688055a7ad7fa85",
+      "bytes": 23302
+    },
+    "CT_MMInbox.lua": {
+      "sha256": "06a531a3d873c2578d4b66d655957a8f5658edd512f758a2479cdad2d34edd9d",
+      "bytes": 17467
+    },
+    "CT_MMInbox.xml": {
+      "sha256": "c99321e44085a378dd32df8fdff058e6143e6d9150797fea3553576019ac03cd",
+      "bytes": 7135
+    },
+    "localization.fr.lua": {
+      "sha256": "6aa0b151484199a108b6048219d0843c91a703fda73689c7ad1c06b1a5c2c320",
+      "bytes": 1742
+    },
+    "localization.ge.lua": {
+      "sha256": "8b546916728fa976c0c5557b443860b971982082c1013bddbe65d88d5ca285f6",
+      "bytes": 1301
+    },
+    "localization.lua": {
+      "sha256": "9d58943d9058d0107b2a6c89ceaa56dc38ed431f41a027556dc7b62d73f6fa49",
+      "bytes": 1339
+    },
+    "Readme.txt": {
+      "sha256": "6b10cebfa69e143f579b89e189d89f3ca3f03377e3fbcfc0c2fd54ec86f915ec",
+      "bytes": 1096
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

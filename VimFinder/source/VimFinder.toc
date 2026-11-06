@@ -1,0 +1,15 @@
+## Interface: 11200
+## Title: VimFinder |cff808080by Lupo|r
+## Notes: Search your spells, tracking, recipes, bag items and windows by name, and use them by keyboard.
+## Author: Lupo
+# ## Version: 0.1.10
+# ## Version: 0.1.11
+# ## Version: 0.1.12
+# ## Version: 0.1.13
+# ## Version: 0.1.14
+# ## Version: 0.1.15
+## Version: 0.1.18
+## SavedVariables: VimFinderDB
+## Dependencies: VimWowSettings
+
+finder.lua

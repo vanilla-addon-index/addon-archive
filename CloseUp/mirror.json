@@ -1,0 +1,46 @@
+{
+  "upstream": "https://github.com/Road-block/CloseUp",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "CloseUp",
+    "name": "CloseUp",
+    "url": "https://github.com/Road-block/CloseUp",
+    "api": "https://api.github.com/repos/Road-block/CloseUp"
+  },
+  "commit": "01c0c296b0840b5732690716156c9958744248c0",
+  "sourceFiles": {
+    "CloseUp.toc": {
+      "sha256": "1d5439f7b94b04b2027ee25f3083e967773e9aee44857cbca285df90a46b6fc4",
+      "bytes": 200
+    },
+    "core.lua": {
+      "sha256": "62c309cbd698511a6c0e3a3dd3f5ef5a56ecc410b44fac43e3d3dd513813c9df",
+      "bytes": 6032
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "5918274": {
+      "tag": "11200",
+      "folder": "11200--5918274",
+      "assets": {
+        "3521725": {
+          "sha256": "3e2c23c8cefae01807e5823fd5a24701b526eb81969830a5232d47dc4939eb78",
+          "bytes": 2570,
+          "id": "3521725",
+          "name": "CloseUp-11200.zip",
+          "url": "https://github.com/Road-block/CloseUp/releases/download/11200/CloseUp-11200.zip",
+          "path": "releases/11200--5918274/assets/CloseUp-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "461c04b8610689d6e9f924ae88a4f24ecf97656bf2c21c4d261400cdfc031edd",
+        "bytes": 2377,
+        "path": "releases/11200--5918274/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/CloseUp/tarball/11200"
+      }
+    }
+  }
+}

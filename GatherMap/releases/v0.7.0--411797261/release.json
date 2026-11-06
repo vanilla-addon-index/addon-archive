@@ -1,0 +1,9 @@
+{
+  "id": "411797261",
+  "tag": "v0.7.0",
+  "name": "GatherMap v0.7.0 — Dark GUI",
+  "body": "## GatherMap v0.7.0 — Dark GUI\n\n- Completely redesigned the settings interface with deep charcoal/arcane-blue panels, muted gold text and bronze borders.\n- Replaced red Blizzard buttons with custom dark buttons and subtle hover feedback.\n- Redesigned all three tabs: General, Node Tracking, Import / Export.\n- Added compact dark checkboxes with green enabled indicators, cohesive input fields and scrollable lists.\n- Improved General layout with two columns and better spacing.\n- No change to resource recording, saved locations, pfQuest presets, icon-size controls or import/export functionality.\n- Existing SavedVariables are preserved.\n\nCompatible with Turtle WoW 1.18 (Vanilla 1.12 API).\n\nInstall: Extract the ZIP into Interface/AddOns, leaving a GatherMap folder. Back up your current folder and SavedVariables first.\n",
+  "published": "2026-10-13T14:55:26Z",
+  "prerelease": false,
+  "url": "https://github.com/papafru/GatherMap/releases/tag/v0.7.0"
+}

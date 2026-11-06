@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/wardz/FocusFrame_TargetCastbar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "wardz",
+    "repo": "FocusFrame_TargetCastbar",
+    "name": "FocusFrame_TargetCastbar",
+    "url": "https://github.com/wardz/FocusFrame_TargetCastbar",
+    "api": "https://api.github.com/repos/wardz/FocusFrame_TargetCastbar"
+  },
+  "commit": "44fa7fb810aacf17a8cc0f05b8bd6de3bf5f8c4e",
+  "sourceFiles": {
+    "FocusFrame_TargetCastbar.toc": {
+      "sha256": "25e01d2c0f166fb55afa968f3ad8209caea1fe5c81c2f39f45ca1c6d99953dd2",
+      "bytes": 230
+    },
+    "Frames.lua": {
+      "sha256": "9bb7a5a76f576d780adbdf71a65db7b8edc5a0b328e0648c43dec94ed6a47b2c",
+      "bytes": 2132
+    },
+    "README.md": {
+      "sha256": "efac76754024c8068c99c6121ec76d99a245a10c3d901ae1e4d05168df228e6c",
+      "bytes": 860
+    },
+    "TargetCastbar.lua": {
+      "sha256": "ba3cb8c028ae6922e5e7e1d8cc9b5aff4d65960104d3dcc06cad660191a5eac0",
+      "bytes": 1568
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "8418845": {
+      "tag": "v1.0.0",
+      "folder": "v1.0.0--8418845",
+      "assets": {},
+      "source": {
+        "sha256": "afe3cbd40960c97223fd9698f557200a9b22aadfe9001beb74bdf53e964da341",
+        "bytes": 2162,
+        "path": "releases/v1.0.0--8418845/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/wardz/FocusFrame_TargetCastbar/tarball/v1.0.0"
+      }
+    }
+  }
+}

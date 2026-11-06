@@ -1,0 +1,61 @@
+{
+  "upstream": "https://github.com/yutsuku/DPEPGP",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "yutsuku",
+    "repo": "DPEPGP",
+    "name": "DPEPGP",
+    "url": "https://github.com/yutsuku/DPEPGP",
+    "api": "https://api.github.com/repos/yutsuku/DPEPGP"
+  },
+  "commit": "aadc9f40cc0d567922df8d6a9deebe5decdf8dc4",
+  "sourceFiles": {
+    "DPEPGP.lua": {
+      "sha256": "3726613d7360e14acc74bd0dd17b3a7273a878ba19d505e9c871dd0b6dffcc8a",
+      "bytes": 4518
+    },
+    "DPEPGP.toc": {
+      "sha256": "7305e09e2072a27b394191a3314b97ba694983b86a1337cc8da87019dd6abd48",
+      "bytes": 301
+    },
+    "DPEPGP.xml": {
+      "sha256": "dcf74093bfd08afd0a149dc616f6567c94b34bd622315ddb9e0f8a33231ed0f7",
+      "bytes": 2118
+    },
+    "DPEPGPDecay.lua": {
+      "sha256": "f3e1b32a8ecaa41d799a80422b678902f69f7509052c3a407ddaf06091d38376",
+      "bytes": 7052
+    },
+    "DPEPGPDecay.xml": {
+      "sha256": "b31b5d83209d237f49ab9aff76037c257ac567103cd3ab1617264e453c9fac3e",
+      "bytes": 8174
+    },
+    "DPEPGPFunctions.lua": {
+      "sha256": "44f283e95e7227ddcb77727d0ef22a707ddb2f70db6abf0e47e975569e040e3e",
+      "bytes": 7912
+    },
+    "DPEPGPLoot.lua": {
+      "sha256": "783cf1261d0192399dea93290eb6ee46fd1fb1f2ba61abccd4504ef168d526fc",
+      "bytes": 11639
+    },
+    "DPEPGPLoot.xml": {
+      "sha256": "f793030417da150fd82c39f8ca498bad29e07f7f7a7bc58ad67da729ad4a085a",
+      "bytes": 8608
+    },
+    "DPEPGPRaid.lua": {
+      "sha256": "24ae0da31e440e345651ef196540faf528e0dd1bd6cc192d2ddae6b195ed042c",
+      "bytes": 5964
+    },
+    "DPEPGPRaid.xml": {
+      "sha256": "4267610594908d293b2c2938baf0f3cca09bb2141369e60ab2a5ba30b1b56caa",
+      "bytes": 10410
+    },
+    "README.md": {
+      "sha256": "b3a2f81b2c3c4296aa85370445aebf919bf240cbb200503bc7abe33a81d755cc",
+      "bytes": 787
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

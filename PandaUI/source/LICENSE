@@ -1,0 +1,86 @@
+MIT License
+
+Copyright (c) 2026 pandaUI
+Copyright (c) 2026 unrealUI (the project pandaUI is ported from)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+================================================================================
+SHAGUTWEAKS-INSPIRED CHAT FEATURES
+================================================================================
+
+The chat quality-of-life logic in modules/chat.lua includes code adapted from
+ShaguTweaks and ShaguTweaks Extras, including URL patterns and NPC spam rules.
+
+Copyright (c) 2021 Eric Mauser (Shagu)
+Copyright (c) 2022 GryllsAddons
+
+These portions are distributed under the MIT License above.
+
+
+================================================================================
+BUNDLED PANDAQUEST QUEST-MARK ARTWORK
+================================================================================
+
+media/Textures/quest-starter.tga is copied unchanged from PandaQuest's
+available-quest map marker.
+
+Copyright (c) 2026 PandaQuest contributors
+
+PandaQuest distributes this addon-owned artwork under the MIT License above.
+See media/Textures/ATTRIBUTION.md.
+
+
+================================================================================
+BUNDLED EXTENDED QUEST LOG ARTWORK
+================================================================================
+
+The parchment textures under media/Textures/classic-wow/questLog/ originate from Extended
+QuestLog 3.6.1.
+
+Copyright (c) 2006 Daniel Rehn
+
+The supplied EQL3 package did not include a separate license text. These files
+retain their original copyright and are not represented as original unrealUI
+artwork by the MIT license above. See media/Textures/classic-wow/questLog/ATTRIBUTION.md.
+
+
+================================================================================
+BUNDLED FLAT CLASS-ICON ARTWORK
+================================================================================
+
+The flat-*.tga class-icon sheets under media/Textures/class-icons/ come from the
+third-party FLATPLAYERICONS pack (a UI-Classes-Circles replacement). The pack
+names no author and includes no license text. These files retain their original
+ownership and are not represented as original pandaUI artwork by the MIT
+license above. See media/Textures/class-icons/ATTRIBUTION.md.
+
+
+================================================================================
+BUNDLED DRAGONFLIGHTUI SQUARE MINIMAP ARTWORK
+================================================================================
+
+media/Textures/modern-wow/minimap/square-frame.tga is converted losslessly
+from WoW-DragonflightUI's Textures/MinimapSquareJag.png.
+
+Copyright (c) 2022 Karl-HeinzSchneider
+
+This file is distributed under the MIT License above. See
+media/Textures/modern-wow/ATTRIBUTION.md.

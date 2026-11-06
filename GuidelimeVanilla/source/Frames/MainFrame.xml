@@ -1,0 +1,249 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+    <Frame name="GLV_Main" parent="UIParent" toplevel="true" movable="true" resizable="false" frameStrata="DIALOG" enableMouse="true" hidden="false">
+
+        <Size>
+            <AbsDimension x="320" y="400"/>
+        </Size>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
+
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+            <EdgeSize>
+                <AbsValue val="16"/>
+            </EdgeSize>
+            <TileSize>
+                <AbsValue val="32"/>
+            </TileSize>
+            <BackgroundInsets>
+                <AbsInset left="5" right="5" top="5" bottom="5"/>
+            </BackgroundInsets>
+        </Backdrop>
+
+        <Scripts>
+            <OnLoad>
+                this:RegisterForDrag("LeftButton");
+            </OnLoad>
+            <OnDragStart>
+                this:StartMoving();
+            </OnDragStart>
+            <OnDragStop>
+                this:StopMovingOrSizing();
+                if GLV and GLV.Settings then
+                    local left = this:GetLeft()
+                    local top = this:GetTop()
+                    
+                    if left and top then
+                        -- Calcul des coordonnées relatives au coin supérieur gauche
+                        local screenHeight = GetScreenHeight()
+                        local relativeY = top - screenHeight
+                        
+                        GLV.Settings:SetOption(left, {"UI", "PositionX"})
+                        GLV.Settings:SetOption(relativeY, {"UI", "PositionY"})
+                    end
+                end
+            </OnDragStop>
+        </Scripts>        
+
+        <Layers>
+            <Layer level="OVERLAY">
+                <FontString name="$parentTitle" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOP">
+                            <Offset x="0" y="-14"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="0.396" g="0.42" b="0.737"/>
+                     <Shadow>
+                        <Offset>
+                            <AbsDimension x="2" y="2" />
+                        </Offset>
+                        <Color r="0" g="0" b="0" />
+                    </Shadow>
+                </FontString>
+            </Layer>
+        </Layers>
+
+        <Frames>
+
+            <Button name="$parentClose" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="24" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset x="-10" y="-8"/>
+                    </Anchor>
+                </Anchors>
+                <NormalTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Up"/>
+                <PushedTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Down"/>
+                <Scripts>
+                    <OnClick>GLV_HideGuideFrame()</OnClick>
+                </Scripts>
+            </Button>
+
+            <Button name="$parentLock" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="24" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset x="10" y="-8"/>
+                    </Anchor>
+                </Anchors>
+                <NormalTexture file="Interface\AddOns\GuidelimeVanilla\Textures\closed_lock"/>
+                <PushedTexture file="Interface\AddOns\GuidelimeVanilla\Textures\closed_lock_down"/>
+                <Scripts>
+                    <OnLoad>GLV_MainLock_OnLoad()</OnLoad>
+                    <OnClick>GLV_MainLock_OnClick()</OnClick>
+                </Scripts>
+            </Button>
+
+            <Frame name="$parentLoadedGuide" hidden="false">
+
+                <Size>
+                    <AbsDimension x="300" y="30"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOP" RelativeTo="$parentTitle" RelativePoint="BOTTOM">
+                        <Offset x="0" y="-5"/>
+                    </Anchor>
+                </Anchors>
+
+                <Frames>
+                    <Frame name="$parentClassIcon">
+                        <Size>
+                            <AbsDimension x="20" y="20"/>
+                        </Size>
+                    </Frame>
+                </Frames>
+
+                <Layers>
+                    <Layer>
+                        <FontString name="$parentTitle" inherits="GameFontNormalSmall" font="Fonts\FRIZQT__.TTF" JustifyV="MIDDLE" JustifyH="LEFT">
+                            <FontHeight>
+                                <AbsValue val="12"/>
+                            </FontHeight>
+                        </FontString>
+                    </Layer>
+                    <Layer>
+                        <FontString name="$parentCounter" inherits="GameFontNormalSmall" font="Fonts\FRIZQT__.TTF" JustifyV="MIDDLE" JustifyH="RIGHT">
+                            <FontHeight>
+                                <AbsValue val="12"/>
+                            </FontHeight>
+                        </FontString>
+                    </Layer>
+                </Layers>
+
+            </Frame>
+
+            <!-- Pinned Ongoing Steps Section -->
+            <Frame name="$parentPinnedSteps" hidden="true">
+                <Size>
+                    <AbsDimension x="275" y="1"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset x="15" y="-65"/>
+                    </Anchor>
+                </Anchors>
+                <Frames>
+                    <Frame name="$parentChild">
+                        <Size>
+                            <AbsDimension x="275" y="1"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT"/>
+                        </Anchors>
+                    </Frame>
+                </Frames>
+            </Frame>
+
+            <ScrollFrame name="$parentScrollFrame" inherits="UIPanelScrollFrameTemplate">
+                <Size>
+                    <AbsDimension x="275" y="285"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset x="15" y="-65"/>
+                    </Anchor>
+                </Anchors>
+
+                <ScrollChild>
+                    <Frame name="$parentScrollChild">
+                        <Size>
+                            <AbsDimension x="175" y="1"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT"/>
+                        </Anchors>
+                    </Frame>
+                </ScrollChild>
+            </ScrollFrame>
+
+            <Frame name="$parentDropdown" inherits="UIDropDownMenuTemplate">
+                <Anchors>
+                    <Anchor point="BOTTOMLEFT">
+                        <Offset x="0" y="7"/>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+                        UIDropDownMenu_SetWidth(200, GLV_MainDropdown)
+                        UIDropDownMenu_SetButtonWidth(200, GLV_MainDropdown)
+                    </OnLoad>
+                </Scripts>
+            </Frame>
+
+            <Button name="$parentEditor" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="16" y="16"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="BOTTOMRIGHT">
+                        <Offset x="-35" y="17"/>
+                    </Anchor>
+                </Anchors>
+                <NormalTexture file="Interface\Icons\INV_Misc_Note_01"/>
+                <PushedTexture file="Interface\Icons\INV_Misc_Note_01"/>
+                <Scripts>
+                    <OnClick>
+                        if GLV and GLV.GuideEditor then
+                            GLV.GuideEditor:Toggle()
+                        end
+                    </OnClick>
+                    <OnEnter>
+                        GameTooltip:SetOwner(this, "ANCHOR_TOP")
+                        GameTooltip:AddLine("Guide Editor", 0.42, 0.55, 0.83)
+                        GameTooltip:Show()
+                    </OnEnter>
+                    <OnLeave>
+                        GameTooltip:Hide()
+                    </OnLeave>
+                </Scripts>
+            </Button>
+
+            <Button name="$parentSettings" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="16" y="16"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="BOTTOMRIGHT">
+                        <Offset x="-15" y="17"/>
+                    </Anchor>
+                </Anchors>
+                <NormalTexture file="Interface\AddOns\GuidelimeVanilla\Textures\Settings"/>
+                <PushedTexture file="Interface\AddOns\GuidelimeVanilla\Textures\Settings"/>
+                <Scripts>
+                    <OnClick>GLV_ToggleSettings()</OnClick>
+                </Scripts>
+            </Button>
+
+        </Frames>
+
+    </Frame>
+
+</Ui>

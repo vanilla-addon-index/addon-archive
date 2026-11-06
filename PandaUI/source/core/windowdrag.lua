@@ -1,0 +1,739 @@
+-- pandaUI :: core/windowdrag.lua
+--
+-- Adds a drag handle to native stock window headers so windows with no
+-- Vanilla title-bar (Quest Log, Spellbook, Character, World Map, ...) can be
+-- repositioned by the user, independent of pandaUI's edit/mover mode.
+--
+-- Reuses the Button-handle drag recipe verified in core/mover.lua (knowledge.
+-- json / frames.movable_drag_requires_button_handle): a Button parented to the
+-- frame it moves, SetMovable immediately before each drag, a throwaway
+-- StartMoving/StopMovingOrSizing pair before the real StartMoving, and
+-- SetFrameLevel to raise the handle above the frame's own content. Unlike
+-- mover.lua this handle only spans the header strip -- not the whole frame --
+-- so window content and buttons underneath it stay clickable, and it is
+-- always active rather than gated behind edit mode.
+
+local U = PandaUI
+
+-- Twice the former 24px strip: large enough to grab comfortably without
+-- covering an excessive amount of the interactive content below the header.
+-- Callers can override this per interface when its layout needs another size.
+local HEADER_HEIGHT = 48
+local HEADER_INSET = 26
+local WINDOW_GAP = 10
+local SCREEN_MARGIN = 10
+-- Keep the drag surface just above the window background while allowing the
+-- window's normal child controls to remain above it and receive mouse input.
+-- The offset stays relative to the parent so background windows cannot jump
+-- ahead merely because their drag handles were created later.
+local HANDLE_LEVEL_OFFSET = 1
+local dragCount = 0
+local windowStates = {}
+local frameStates = {}
+local CapturePosition
+
+local function ReadCursorPoint()
+  local cursor = U.G("GetCursorPosition")
+  if type(cursor) ~= "function" then return nil end
+
+  local cursorOk, x, y = pcall(cursor)
+  local scaleOk, scale = pcall(UIParent.GetEffectiveScale, UIParent)
+  x, y, scale = tonumber(x), tonumber(y), tonumber(scale)
+  if not cursorOk or not scaleOk or not x or not y or
+     not scale or scale <= 0 then return nil end
+  return x / scale, y / scale
+end
+
+local function IsShown(state)
+  if not state or not state.frame or not state.frame.IsShown then return false end
+  local ok, shown = pcall(state.frame.IsShown, state.frame)
+  return ok and shown and true or false
+end
+
+local function PointFactor(point, low, high)
+  if type(point) ~= "string" then return 0.5 end
+  if string.find(point, low, 1, true) then return 0 end
+  if string.find(point, high, 1, true) then return 1 end
+  return 0.5
+end
+
+-- Positions come from the window's measured edges (U.GetFramePlacement,
+-- core/screenguard.lua), in the window's own units as SetPoint takes them. The
+-- overlap maths below works in UIParent units, converted with
+-- U.FrameUIRatio: on 1.12 a window the screen guard has scaled down reports
+-- its size and offsets in its own, larger units.
+local function CurrentPosition(state)
+  return U.GetFramePlacement(state.frame)
+end
+
+local function WindowBounds(state, position)
+  if not state or type(position) ~= "table" then return nil end
+
+  local widthOk, width = pcall(state.frame.GetWidth, state.frame)
+  local heightOk, height = pcall(state.frame.GetHeight, state.frame)
+  width, height = tonumber(width), tonumber(height)
+  if not widthOk or not heightOk or not width or not height or
+     width <= 0 or height <= 0 then return nil end
+
+  local ratio = U.FrameUIRatio(state.frame)
+  local x = tonumber(position.x) or 0
+  local y = tonumber(position.y) or 0
+  local relativePoint = position.relativePoint or position.point
+  local left = U.UIWidth() * PointFactor(relativePoint, "LEFT", "RIGHT") +
+               (x - width * PointFactor(position.point, "LEFT", "RIGHT")) * ratio
+  local bottom = U.UIHeight() * PointFactor(relativePoint, "BOTTOM", "TOP") +
+                 (y - height * PointFactor(position.point, "BOTTOM", "TOP")) * ratio
+  width, height = width * ratio, height * ratio
+  return {
+    left = left,
+    right = left + width,
+    bottom = bottom,
+    top = bottom + height,
+    width = width,
+    height = height,
+  }
+end
+
+local function Overlaps(a, b)
+  return a and b and a.left < b.right and a.right > b.left and
+         a.bottom < b.top and a.top > b.bottom
+end
+
+local function ClampCandidate(left, bottom, width, height)
+  local minLeft, minBottom = SCREEN_MARGIN, SCREEN_MARGIN
+  local maxLeft = U.UIWidth() - SCREEN_MARGIN - width
+  local maxBottom = U.UIHeight() - SCREEN_MARGIN - height
+
+  if maxLeft < minLeft then
+    left = (U.UIWidth() - width) / 2
+  else
+    left = math.max(minLeft, math.min(maxLeft, left))
+  end
+  if maxBottom < minBottom then
+    bottom = (U.UIHeight() - height) / 2
+  else
+    bottom = math.max(minBottom, math.min(maxBottom, bottom))
+  end
+  return left, bottom
+end
+
+local function CandidateIsClear(candidate, blockers)
+  local i
+  for i = 1, table.getn(blockers) do
+    if Overlaps(candidate, blockers[i]) then return false end
+  end
+  return true
+end
+
+local function AddCandidate(candidates, original, blockers, left, bottom)
+  left, bottom = ClampCandidate(left, bottom, original.width, original.height)
+  local candidate = {
+    left = left,
+    right = left + original.width,
+    bottom = bottom,
+    top = bottom + original.height,
+    width = original.width,
+    height = original.height,
+  }
+  if not CandidateIsClear(candidate, blockers) then return end
+
+  candidate.distance = math.abs(left - original.left) +
+                       math.abs(bottom - original.bottom)
+  table.insert(candidates, candidate)
+end
+
+-- left/bottom in UIParent units; SetPoint takes the window's own.
+local function ApplyBottomLeft(state, left, bottom)
+  local ratio = U.FrameUIRatio(state.frame)
+  return U.ApplyFramePoint(state.frame, {
+    point = "BOTTOMLEFT",
+    relativePoint = "BOTTOMLEFT",
+    x = left / ratio,
+    y = bottom / ratio,
+  })
+end
+
+-- If neither side of a centred first window has enough room, moving only the
+-- second window cannot solve the collision even when both windows fit on the
+-- screen together. Reflow the pair as a unit in that case. This fallback is
+-- intentionally limited to one blocker: the requested two-window guarantee is
+-- deterministic, while packing an arbitrary number of large stock windows is
+-- not always geometrically possible.
+local function ReflowPair(state, original, blocker)
+  local other = blocker and blocker.state
+  if not other then return false end
+
+  local layouts = {}
+  local availableWidth = U.UIWidth() - SCREEN_MARGIN * 2
+  local availableHeight = U.UIHeight() - SCREEN_MARGIN * 2
+
+  if original.width + WINDOW_GAP + blocker.width <= availableWidth then
+    local totalWidth = original.width + WINDOW_GAP + blocker.width
+    local maxGroupLeft = U.UIWidth() - SCREEN_MARGIN - totalWidth
+
+    local groupLeft = (original.left +
+      (blocker.left - original.width - WINDOW_GAP)) / 2
+    groupLeft = math.max(SCREEN_MARGIN, math.min(maxGroupLeft, groupLeft))
+    local _, movingBottom = ClampCandidate(groupLeft, original.bottom,
+                                            original.width, original.height)
+    local _, otherBottom = ClampCandidate(groupLeft + original.width + WINDOW_GAP,
+                                           blocker.bottom,
+                                           blocker.width, blocker.height)
+    table.insert(layouts, {
+      movingLeft = groupLeft,
+      movingBottom = movingBottom,
+      otherLeft = groupLeft + original.width + WINDOW_GAP,
+      otherBottom = otherBottom,
+    })
+
+    groupLeft = (blocker.left +
+      (original.left - blocker.width - WINDOW_GAP)) / 2
+    groupLeft = math.max(SCREEN_MARGIN, math.min(maxGroupLeft, groupLeft))
+    _, otherBottom = ClampCandidate(groupLeft, blocker.bottom,
+                                     blocker.width, blocker.height)
+    _, movingBottom = ClampCandidate(groupLeft + blocker.width + WINDOW_GAP,
+                                      original.bottom,
+                                      original.width, original.height)
+    table.insert(layouts, {
+      movingLeft = groupLeft + blocker.width + WINDOW_GAP,
+      movingBottom = movingBottom,
+      otherLeft = groupLeft,
+      otherBottom = otherBottom,
+    })
+  end
+
+  if original.height + WINDOW_GAP + blocker.height <= availableHeight then
+    local totalHeight = original.height + WINDOW_GAP + blocker.height
+    local maxGroupBottom = U.UIHeight() - SCREEN_MARGIN - totalHeight
+
+    local groupBottom = (original.bottom +
+      (blocker.bottom - original.height - WINDOW_GAP)) / 2
+    groupBottom = math.max(SCREEN_MARGIN, math.min(maxGroupBottom, groupBottom))
+    local movingLeft = ClampCandidate(original.left, groupBottom,
+                                      original.width, original.height)
+    local otherLeft = ClampCandidate(blocker.left,
+                                     groupBottom + original.height + WINDOW_GAP,
+                                     blocker.width, blocker.height)
+    table.insert(layouts, {
+      movingLeft = movingLeft,
+      movingBottom = groupBottom,
+      otherLeft = otherLeft,
+      otherBottom = groupBottom + original.height + WINDOW_GAP,
+    })
+
+    groupBottom = (blocker.bottom +
+      (original.bottom - blocker.height - WINDOW_GAP)) / 2
+    groupBottom = math.max(SCREEN_MARGIN, math.min(maxGroupBottom, groupBottom))
+    otherLeft = ClampCandidate(blocker.left, groupBottom,
+                               blocker.width, blocker.height)
+    movingLeft = ClampCandidate(original.left,
+                                groupBottom + blocker.height + WINDOW_GAP,
+                                original.width, original.height)
+    table.insert(layouts, {
+      movingLeft = movingLeft,
+      movingBottom = groupBottom + blocker.height + WINDOW_GAP,
+      otherLeft = otherLeft,
+      otherBottom = groupBottom,
+    })
+  end
+
+  if table.getn(layouts) == 0 then return false end
+
+  local best, i = nil, nil
+  for i = 1, table.getn(layouts) do
+    local layout = layouts[i]
+    layout.distance = math.abs(layout.movingLeft - original.left) +
+                      math.abs(layout.movingBottom - original.bottom) +
+                      math.abs(layout.otherLeft - blocker.left) +
+                      math.abs(layout.otherBottom - blocker.bottom)
+    if not best or layout.distance < best.distance then best = layout end
+  end
+
+  -- The other window was already open and did not ask to move. Its position
+  -- before the first reflow is kept and restored when the window that pushed
+  -- it closes. Without that, every reopen reflowed from the previous reflow's
+  -- result, so the pair crept across the screen on each open (user report,
+  -- 2026-09-16: Talents open, Spellbook opened and closed repeatedly).
+  if not other.displacedBy then
+    other.home = CurrentPosition(other)
+  end
+  local otherApplied = ApplyBottomLeft(other, best.otherLeft, best.otherBottom)
+  if other.home then other.displacedBy = state end
+  local movingApplied = ApplyBottomLeft(state, best.movingLeft, best.movingBottom)
+  return otherApplied and movingApplied
+end
+
+-- Puts back every open window `state` pushed aside in ReflowPair.
+local function RestoreDisplaced(state)
+  local i
+  for i = 1, table.getn(windowStates) do
+    local other = windowStates[i]
+    if other.displacedBy == state then
+      other.displacedBy = nil
+      if IsShown(other) and other.home then
+        U.ApplyFramePoint(other.frame, other.home)
+      end
+      other.home = nil
+    end
+  end
+end
+
+-- Moves only the window that was just opened or dropped. Saved user positions
+-- remain the preferred single-window layout; the temporary side-by-side
+-- placement is recalculated whenever another registered interface opens.
+local function AvoidOverlap(state)
+  if not state.avoidOverlap or not IsShown(state) then return false end
+
+  local position = CurrentPosition(state)
+  local original = WindowBounds(state, position)
+  if not original then return false end
+
+  local blockers = {}
+  local overlaps = false
+  local i
+  for i = 1, table.getn(windowStates) do
+    local other = windowStates[i]
+    -- A window of the same group replaces this one in place rather than
+    -- sitting beside it, so it is never a blocker.
+    local sameGroup = state.group and other.group == state.group
+    if other ~= state and other.avoidOverlap and not sameGroup and
+       IsShown(other) then
+      local bounds = WindowBounds(other, CurrentPosition(other))
+      if bounds then
+        bounds.state = other
+        table.insert(blockers, bounds)
+        if Overlaps(original, bounds) then overlaps = true end
+      end
+    end
+  end
+  if not overlaps then return false end
+
+  -- Where this opening started, restored when the window closes. A window
+  -- with a saved position (Character) is put back on it by OnShow anyway; one
+  -- without (Spellbook) kept the previous opening's adjusted anchor, so every
+  -- reopen resolved from the last result and the window crept on each open
+  -- beside Talents (user report, 2026-09-16; SavedVariables had
+  -- window.character but no window.spellbook).
+  if not state.openHome then state.openHome = position end
+
+  local candidates = {}
+  for i = 1, table.getn(blockers) do
+    local blocker = blockers[i]
+    AddCandidate(candidates, original, blockers,
+                 blocker.right + WINDOW_GAP, original.bottom)
+    AddCandidate(candidates, original, blockers,
+                 blocker.left - original.width - WINDOW_GAP, original.bottom)
+    AddCandidate(candidates, original, blockers,
+                 original.left, blocker.bottom - original.height - WINDOW_GAP)
+    AddCandidate(candidates, original, blockers,
+                 original.left, blocker.top + WINDOW_GAP)
+  end
+  if table.getn(candidates) == 0 then
+    if table.getn(blockers) == 1 and ReflowPair(state, original, blockers[1]) then
+      return true
+    end
+    U.Debug("windowdrag " .. state.id ..
+            ": no non-overlapping screen position is large enough")
+    return false
+  end
+
+  local best = candidates[1]
+  for i = 2, table.getn(candidates) do
+    if candidates[i].distance < best.distance then best = candidates[i] end
+  end
+
+  return ApplyBottomLeft(state, best.left, best.bottom)
+end
+
+local function ScheduleOverlapCheck(state, saveAdjustedPosition)
+  if not state.avoidOverlap then return end
+  U.DeferOnce("windowdrag.overlap." .. state.id, function()
+    if AvoidOverlap(state) and saveAdjustedPosition then
+      CapturePosition(state)
+    end
+  end)
+end
+
+-- Re-check a registered window after one of its own controls changes its
+-- dimensions. Most stock windows are fixed-size; Quest Log's detail toggle is
+-- the current caller.
+function U.RefreshWindowOverlap(frame)
+  local state = frameStates[frame]
+  if not state then return false end
+  ScheduleOverlapCheck(state, false)
+  return true
+end
+
+local function ReadDragPosition(frame)
+  return U.GetFramePlacement(frame)
+end
+
+local function PositionChanged(before, after)
+  if not before or not after then return true end
+  return before.point ~= after.point or
+         before.relativePoint ~= after.relativePoint or
+         before.x ~= after.x or before.y ~= after.y
+end
+
+-- A complex client-owned subtree must never itself enter StartMoving on this
+-- client.  The independent drag input keeps that native gesture alive while
+-- the visible window follows the cursor through ordinary point updates -- the
+-- same separation used by the proven Edit Mode mover path.
+local function ApplyProxyDragPosition(state)
+  local origin = state and state.dragStartPosition
+  local cursorX, cursorY = ReadCursorPoint()
+  if not origin or not cursorX or not cursorY or
+     not state.dragCursorX or not state.dragCursorY then return false end
+
+  local ratio = tonumber(U.FrameUIRatio(state.frame)) or 1
+  if ratio <= 0 then ratio = 1 end
+  return U.ApplyFramePoint(state.frame, {
+    point = origin.point,
+    relativePoint = origin.relativePoint,
+    x = (tonumber(origin.x) or 0) + (cursorX - state.dragCursorX) / ratio,
+    y = (tonumber(origin.y) or 0) + (cursorY - state.dragCursorY) / ratio,
+  })
+end
+
+local function StartDrag(state)
+  -- Start immediately from OnMouseDown. If the client later delivers its
+  -- threshold-based OnDragStart too, do not restart an already active move.
+  if state.dragging then return true end
+
+  local frame = state.frame
+  local moving = state.proxyMove and state.dragInput or frame
+  if not moving then return false end
+
+  if state.proxyMove then
+    local widthOk, width = pcall(moving.GetWidth, moving)
+    local heightOk, height = pcall(moving.GetHeight, moving)
+    local centreOk, centreX, centreY = pcall(moving.GetCenter, moving)
+    width, height = tonumber(width), tonumber(height)
+    centreX, centreY = tonumber(centreX), tonumber(centreY)
+    if not widthOk or not heightOk or not centreOk or not width or not height or
+       not centreX or not centreY or width <= 0 or height <= 0 then
+      U.Error("windowdrag " .. state.id .. ": deferred input has no usable rect")
+      return false
+    end
+    moving:ClearAllPoints()
+    moving:SetWidth(width)
+    moving:SetHeight(height)
+    moving:SetPoint("CENTER", UIParent, "BOTTOMLEFT", centreX, centreY)
+  end
+
+  if not pcall(moving.SetMovable, moving, true) then
+    U.Error("windowdrag " .. state.id .. ": SetMovable failed")
+    if state.proxyMove then
+      moving:ClearAllPoints()
+      moving:SetAllPoints(state.handle)
+    end
+    return false
+  end
+
+  if pcall(moving.StartMoving, moving) then
+    pcall(moving.StopMovingOrSizing, moving)
+  end
+
+  if not pcall(moving.StartMoving, moving) then
+    U.Error("windowdrag " .. state.id .. ": StartMoving failed")
+    if state.proxyMove then
+      moving:ClearAllPoints()
+      moving:SetAllPoints(state.handle)
+    end
+    return false
+  end
+
+  state.dragging = true
+  state.dragStartPosition = ReadDragPosition(frame)
+  if state.proxyMove then
+    state.dragCursorX, state.dragCursorY = ReadCursorPoint()
+    local updateId = "windowdrag.proxy." .. state.id
+    state.dragUpdateId = updateId
+    U.RegisterUpdate(updateId, 0, function()
+      if not state.dragging then
+        U.UnregisterUpdate(updateId)
+        return
+      end
+      ApplyProxyDragPosition(state)
+    end)
+  end
+  return true
+end
+
+CapturePosition = function(state)
+  local position = U.GetFramePlacement(state.frame)
+  if not position then
+    U.Debug("windowdrag " .. state.id .. ": no readable position after drag")
+    return false
+  end
+  return U.SavePosition(state.id, position.point, position.relativePoint,
+                        position.x, position.y)
+end
+
+local function StopDrag(state)
+  if not state.dragging then return false end
+  state.dragging = false
+  if state.dragUpdateId then
+    U.UnregisterUpdate(state.dragUpdateId)
+    state.dragUpdateId = nil
+  end
+  -- A window the player moves by hand is no longer waiting to go back.
+  state.displacedBy = nil
+  state.home = nil
+  state.openHome = nil
+  local moving = state.proxyMove and state.dragInput or state.frame
+  pcall(moving.StopMovingOrSizing, moving)
+
+  if state.proxyMove then
+    -- Commit the release position even when it lands between shared updates.
+    ApplyProxyDragPosition(state)
+    state.dragCursorX, state.dragCursorY = nil, nil
+    pcall(moving.ClearAllPoints, moving)
+    pcall(moving.SetAllPoints, moving, state.handle)
+  end
+  U.CheckOnScreen(state.frame)
+  local before = state.dragStartPosition
+  state.dragStartPosition = nil
+  if not PositionChanged(before, ReadDragPosition(state.frame)) then
+    return true
+  end
+  local captured = CapturePosition(state)
+  ScheduleOverlapCheck(state, true)
+  return captured
+end
+
+local function ApplyStoredPosition(state)
+  local saved = U.GetPosition(state.id)
+  if not saved then return false end
+  return U.ApplyFramePoint(state.frame, saved)
+end
+
+-- A grouped window opening while another of its group is still on screen
+-- takes that window's exact placement: the client swaps GossipFrame for
+-- QuestFrame when a quest is picked, and the two are one conversation.
+local function ApplyGroupPosition(state)
+  if not state.group then return false end
+  local i
+  for i = 1, table.getn(windowStates) do
+    local other = windowStates[i]
+    if other ~= state and other.group == state.group and IsShown(other) then
+      local position = CurrentPosition(other)
+      if position then return U.ApplyFramePoint(state.frame, position) end
+    end
+  end
+  return false
+end
+
+local function RaiseHandle(state)
+  if not state or not state.handle then return false end
+  local levelOk, level = pcall(state.frame.GetFrameLevel, state.frame)
+  if not levelOk or not tonumber(level) then return false end
+  local handleLevel = level + state.handleLevelOffset
+  if not pcall(state.handle.SetFrameLevel, state.handle, handleLevel) then
+    return false
+  end
+
+  if state.dragInput then
+    local strataOk, strata = pcall(state.frame.GetFrameStrata, state.frame)
+    if strataOk and strata then
+      pcall(state.dragInput.SetFrameStrata, state.dragInput, strata)
+    end
+    pcall(state.dragInput.SetFrameLevel, state.dragInput, handleLevel + 1)
+  end
+
+  local controls = state.interactiveFrames
+  if type(controls) == "table" then
+    local i
+    for i = 1, table.getn(controls) do
+      local control = controls[i]
+      if control and control.SetFrameLevel then
+        local offset = state.interactiveFrameOffsets and
+                       tonumber(state.interactiveFrameOffsets[control]) or 1
+        pcall(control.SetFrameLevel, control, handleLevel + offset)
+      end
+    end
+  end
+  return true
+end
+
+local function IsLeftMouseButton(a, b)
+  local button
+  if type(a) == "string" then
+    button = a
+  elseif type(b) == "string" then
+    button = b
+  else
+    button = U.G("arg1")
+  end
+  return button == nil or button == "LeftButton"
+end
+
+-- id       stable string key; stored under "window."..id so it cannot collide
+--          with core/mover.lua's own position ids.
+-- frame    the native frame to move.
+-- options  { headerHeight, headerInset, headerLevelOffset, interactiveFrames,
+--            interactiveFrameOffsets, avoidOverlap, group, preserveHeight,
+--            proxyMove }
+--          headerInset reserves space on the right edge for a close button.
+--          interactiveFrames are kept one frame level above the drag handle
+--          unless their frame-keyed offset table says otherwise. avoidOverlap
+--          defaults to true; modal child windows can opt out explicitly.
+--          group names windows that replace each other in place (the quest
+--          giver's gossip and quest windows): they never push each other
+--          aside, and one opening while another is shown takes its position.
+--          Such windows should also share one `id`, so a drag moves them all.
+--          preserveHeight keeps the height measured here through later native
+--          panel-manager updates. It defaults on for the flat Modern theme;
+--          Modern WoW's owning modules already enforce their authored sizes.
+--          proxyMove gives native StartMoving to a UIParent-owned input while
+--          the real window follows cursor deltas through ApplyFramePoint. Use
+--          it for client-owned trees the 1.12 engine cannot move natively.
+function U.MakeWindowDraggable(id, frame, options)
+  if type(id) ~= "string" or not frame then
+    U.Error("MakeWindowDraggable requires an id and a frame")
+    return nil
+  end
+
+  options = options or {}
+  if frameStates[frame] then return frameStates[frame] end
+
+  local preserveHeight = options.preserveHeight
+  if preserveHeight == nil then
+    preserveHeight = type(U.GetActiveThemeStyle) == "function" and
+                     U.GetActiveThemeStyle() == "modern"
+  end
+  local fixedHeight
+  if preserveHeight and frame.GetHeight then
+    -- GetHeight is already in the frame's own units on 1.12.
+    local heightOk, height = pcall(frame.GetHeight, frame)
+    height = heightOk and tonumber(height) or nil
+    if height and height > 0 then fixedHeight = height end
+  end
+
+  local state = {
+    id = "window." .. id,
+    frame = frame,
+    dragging = false,
+    avoidOverlap = options.avoidOverlap ~= false,
+    group = options.group,
+    proxyMove = options.proxyMove and true or false,
+    fixedHeight = fixedHeight,
+    handleLevelOffset = tonumber(options.headerLevelOffset) or HANDLE_LEVEL_OFFSET,
+    interactiveFrames = options.interactiveFrames,
+    interactiveFrameOffsets = options.interactiveFrameOffsets,
+  }
+  table.insert(windowStates, state)
+  frameStates[frame] = state
+
+  dragCount = dragCount + 1
+  local handle = CreateFrame("Button", "PandaUIWindowDrag" .. dragCount, frame)
+  handle:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+  handle:SetPoint("TOPRIGHT", frame, "TOPRIGHT",
+                  -(options.headerInset or HEADER_INSET), 0)
+  handle:SetHeight(options.headerHeight or HEADER_HEIGHT)
+  state.handle = handle
+
+  local input = handle
+  if state.proxyMove then
+    -- The settings window reparents native OptionsFrame controls into itself.
+    -- Moving that live tree through StartMoving produced an OctoWoW access
+    -- violation (2026-10-15, PandaUIWindowDrag9).  A UIParent-owned Button owns
+    -- the native drag lifecycle instead; shared cursor updates move the real
+    -- window without ever putting its native subtree into StartMoving.
+    input = CreateFrame("Button", "PandaUIWindowDragInput" .. dragCount, UIParent)
+    input:SetAllPoints(handle)
+    pcall(handle.EnableMouse, handle, false)
+    state.dragInput = input
+  end
+
+  input:RegisterForDrag("LeftButton")
+  pcall(input.EnableMouse, input, true)
+  input:SetScript("OnMouseDown", function(a, b)
+    if IsLeftMouseButton(a, b) then StartDrag(state) end
+  end)
+  input:SetScript("OnMouseUp", function(a, b)
+    if IsLeftMouseButton(a, b) then StopDrag(state) end
+  end)
+  -- Keep the native drag route as a fallback for any mouse path that does not
+  -- expose press/release scripts. Both handlers are safe to receive twice.
+  input:SetScript("OnDragStart", function() StartDrag(state) end)
+  input:SetScript("OnDragStop", function() StopDrag(state) end)
+
+  RaiseHandle(state)
+  if not state.proxyMove then pcall(frame.SetMovable, frame, true) end
+  U.PostHookScript(frame, "OnShow", function()
+    -- Native panel management may change the frame level between openings.
+    -- Reassert the window's configured handle/control ordering before it
+    -- receives the next mouse press.
+    RaiseHandle(state)
+    if state.dragInput then pcall(state.dragInput.Show, state.dragInput) end
+    ApplyStoredPosition(state)
+    ApplyGroupPosition(state)
+    -- Fits and clamps before the overlap check measures it. A saved position
+    -- that ended up off screen (resolution or UI-scale change) is corrected
+    -- and re-saved by core/screenguard.lua.
+    U.CheckOnScreen(frame)
+    -- Some native Show functions keep changing anchors after OnShow returns
+    -- (QuestLog_OnShow is one known example). Resolve on the next shared-driver
+    -- tick, after that call chain has settled and before the next layout sticks.
+    ScheduleOverlapCheck(state, false)
+  end)
+  U.PostHookScript(frame, "OnHide", function()
+    if state.dragging then StopDrag(state) end
+    if state.dragInput then pcall(state.dragInput.Hide, state.dragInput) end
+    -- Its own OnShow re-applies the stored position next time.
+    state.displacedBy = nil
+    state.home = nil
+    if state.openHome then
+      U.ApplyFramePoint(frame, state.openHome)
+      state.openHome = nil
+    end
+    -- Deferred like the overlap check, after the native close has settled.
+    U.DeferOnce("windowdrag.restore." .. state.id, function()
+      RestoreDisplaced(state)
+    end)
+  end)
+  ApplyStoredPosition(state)
+  -- Every registered window, any theme: fitted and kept inside the screen on
+  -- open, on drop and on the guard's sweep (core/screenguard.lua).
+  U.GuardOnScreen(frame, {
+    id = state.id,
+    fixedHeight = state.fixedHeight,
+    suspended = function() return state.dragging end,
+  })
+  if IsShown(state) then
+    RaiseHandle(state)
+    U.CheckOnScreen(frame)
+    ScheduleOverlapCheck(state, false)
+  end
+
+  return state
+end
+
+-- Some controls are created after their window (Spellbook's feature toggles
+-- are current examples). Register them when they become available so they are
+-- raised immediately and included in every later OnShow reassertion.
+function U.AddWindowDragInteractiveFrame(frame, control, levelOffset)
+  local state = frameStates[frame]
+  if not state or not control then return false end
+
+  if type(state.interactiveFrames) ~= "table" then
+    state.interactiveFrames = {}
+  end
+
+  local found = false
+  local i
+  for i = 1, table.getn(state.interactiveFrames) do
+    if state.interactiveFrames[i] == control then
+      found = true
+      break
+    end
+  end
+  if not found then table.insert(state.interactiveFrames, control) end
+
+  if tonumber(levelOffset) then
+    state.interactiveFrameOffsets = state.interactiveFrameOffsets or {}
+    state.interactiveFrameOffsets[control] = tonumber(levelOffset)
+  end
+  return RaiseHandle(state)
+end

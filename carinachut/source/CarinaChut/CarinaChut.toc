@@ -1,0 +1,10 @@
+## Interface: 11000
+## Title: Carina Chut
+## Notes: Addon Carina
+## Author: Alizia
+## Version: 0.0.5 (Beta)
+## SavedVariables: CChut_DebugLog
+
+CarinaChut.lua
+CarinaChutFilterList.lua
+CarinaChut.xml

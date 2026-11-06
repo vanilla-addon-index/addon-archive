@@ -1,0 +1,294 @@
+--[[
+PandaQuest / Quest/QuestLogRewards.lua
+
+Experience and reputation rows at the tail of a quest's reward section, on all
+three surfaces that state a quest's rewards: the Quest Log, the quest-giver's
+offer window ("Accept"), and its completion window ("Complete Quest").
+
+On the Quest Log only, the reward money is redrawn too: the native coin frame
+is hidden and the addon's own coin row takes its place directly under "You
+will receive:" (see Client.SetQuestLogRewardMoney).
+
+The client's own Quest surface reports the item and money rewards and nothing
+else -- there is no call anywhere in the compatibility database that returns a
+quest's experience or its reputation deltas. Both therefore come from the
+bundled world data (Database/quests.lua carries "xp" and a flat "rep" list;
+see docs/WORLD-DATA-NOTES.md), which has two consequences worth stating:
+
+  1. The quest has to be MATCHED first, by title, exactly like every other
+     database-backed presentation in this addon. An unmatched or ambiguous row
+     shows no reward rows at all rather than a guess, and a server-edited quest
+     is expected to be one of those.
+  2. The experience shown is the quest's recorded base value, not a prediction
+     of what this character is granted -- the client scales the award by level
+     and the data cannot know that. It is the quest's listed reward.
+
+Reputation values may be negative: quest 1 rewards +75 with one faction and
+-500 with another, so the sign is always drawn and losses are tinted red.
+
+## Faction names
+
+Reputation is recorded as a faction ID, and nothing available here can name it.
+The client's whole Faction surface is indexed off the player's own reputation
+pane (GetFactionInfo(index) walks the factions THAT character has met and never
+reports an id), and no faction table ships in Database/. Database:GetFactionName
+reads an optional Database/factions.lua when one is present; until it is, the
+row renders the amount alone rather than inventing a label. That is deliberate:
+a wrong faction name is worse than no faction name.
+
+## Two ways in, because the giver panels have no quest log row
+
+The Quest Log resolves through the addon's own quest model, by the selected
+row's title. The giver panels cannot: an OFFERED quest is not in the log yet,
+so there is no row and no index. All they have is the packet -- its title, its
+story text and its objectives blurb -- so they ask
+QuestMatch:ResolveGiverQuestId, which is also what the language flags on this
+same window ask. See Data/QuestMatch.lua for how a title four quests share gets
+broken, and why one that stays tied shows nothing at all.
+
+## Placement
+
+Client.SetQuestRewardSummary owns it -- the rows are anchored below the last
+shown member of the stock reward chain, re-placed on every poll because the
+native detail refresh rewrites that chain on every selection. See the note
+above it in Compatibility/ClientAPI.lua.
+
+Polled on the shared driver, like Quest/QuestLogButtons.lua and for the same
+reason: this client has no quest-log-selection-changed event this addon trusts.
+]]
+
+local PQ = PandaQuest
+local Client = PQ.Client
+local QuestLogRewards = PQ:NewModule("QuestLogRewards")
+
+local POLL_INTERVAL = 0.3
+local LOG_FRAME_NAME = "QuestLogFrame"
+local GIVER_SURFACES = { "detail", "complete" }
+
+-- The stock "you gain" gold and a muted red for a reputation loss.
+local XP_COLOR = { r = 1.00, g = 0.82, b = 0.00 }
+local REP_GAIN_COLOR = { r = 0.60, g = 0.85, b = 0.60 }
+local REP_LOSS_COLOR = { r = 0.90, g = 0.40, b = 0.40 }
+
+local function Config()
+    return PQ:GetModule("Config")
+end
+
+local function Database()
+    return PQ:GetModule("Database")
+end
+
+local function QuestState()
+    return PQ:GetModule("QuestState")
+end
+
+local function QuestLanguage(questId)
+    local translation = PQ:GetModule("QuestLogTranslation")
+    if translation and type(translation.GetQuestLanguage) == "function" then
+        return translation:GetQuestLanguage({ questId = questId })
+    end
+    return PQ.GetLanguage and PQ.GetLanguage() or Client.GetLocale()
+end
+
+-- Neither quest log surface hands over a quest id; the selected row's title is
+-- the only stable join, exactly as Quest/QuestLogButtons.lua resolves it.
+local function ResolveSelectedQuestId()
+    local index = Client.GetQuestLogSelection()
+    if not index then
+        return nil
+    end
+    local title, _, _, isHeader = Client.GetQuestLogEntry(index)
+    if not title or isHeader then
+        return nil
+    end
+    local questState = QuestState()
+    local quest = questState and questState:GetQuestByTitle(title)
+    if not quest then
+        return nil
+    end
+    return quest.questId
+end
+
+-- The offered/completed quest. Resolving it is QuestMatch's job -- see
+-- Match:ResolveGiverQuestId, which Quest/QuestGiverTranslation.lua asks the
+-- same question of, so the reward rows and the language flags on that one
+-- window can never disagree about which quest is on screen.
+local function ResolveGiverQuestId()
+    local match = PQ:GetModule("QuestMatch")
+    return match and match:ResolveGiverQuestId() or nil
+end
+
+-- The colour escape that draws a reward line's amount in white (valueText).
+local WHITE_VALUE = "|cffffffff"
+
+local function AddExperienceLine(lines, database, questId, language)
+    local xp = database:GetQuestRewardXP(questId)
+    if not xp then
+        return
+    end
+    table.insert(lines, {
+        text = PQ.LForLanguage(language, "QUESTLOG_REWARD_XP", tostring(xp)),
+        -- The same line with only the amount in white, for a surface that
+        -- draws its label dimmer (the Minimal dialogue's reward line).
+        valueText = PQ.LForLanguage(language, "QUESTLOG_REWARD_XP",
+            WHITE_VALUE .. tostring(xp) .. "|r"),
+        r = XP_COLOR.r, g = XP_COLOR.g, b = XP_COLOR.b,
+    })
+end
+
+local function AddReputationLines(lines, database, questId, language)
+    local rewards = database:GetQuestRewardReputation(questId)
+    if not rewards then
+        return
+    end
+    local index = 1
+    local count = table.getn(rewards)
+    while index <= count do
+        local reward = rewards[index]
+        local amount = reward.value
+        local signed = amount > 0 and ("+" .. tostring(amount)) or tostring(amount)
+        local name = database:GetFactionName(reward.faction)
+        local text, valueText
+        local white = WHITE_VALUE .. signed .. "|r"
+        if name then
+            text = PQ.LForLanguage(language,
+                "QUESTLOG_REWARD_REPUTATION", name, signed)
+            valueText = PQ.LForLanguage(language,
+                "QUESTLOG_REWARD_REPUTATION", name, white)
+        else
+            -- No faction table on this install; the amount stands alone rather
+            -- than being labelled with an id the player cannot read.
+            text = PQ.LForLanguage(language,
+                "QUESTLOG_REWARD_REPUTATION_UNNAMED", signed)
+            valueText = PQ.LForLanguage(language,
+                "QUESTLOG_REWARD_REPUTATION_UNNAMED", white)
+        end
+        local color = amount > 0 and REP_GAIN_COLOR or REP_LOSS_COLOR
+        table.insert(lines, { text = text, valueText = valueText,
+            r = color.r, g = color.g, b = color.b })
+        index = index + 1
+    end
+end
+
+-- Every theme but pandaUI's flat `modern` one, and a UI with no pandaUI at
+-- all: every reward row is #5A1F1F ink with no drop shadow, gains and losses
+-- alike (by request).
+local PARCHMENT_COLOR = { r = 90 / 255, g = 31 / 255, b = 31 / 255 }
+
+local function ApplyParchmentStyle(lines)
+    local index = 1
+    while index <= table.getn(lines) do
+        local line = lines[index]
+        line.r, line.g, line.b = PARCHMENT_COLOR.r, PARCHMENT_COLOR.g, PARCHMENT_COLOR.b
+        line.noShadow = true
+        index = index + 1
+    end
+end
+
+-- nil when the quest is unmatched, or matched but records no reward.
+local function BuildLines(database, questId, parchment)
+    if not database or not questId then
+        return nil
+    end
+    local lines = {}
+    local language = QuestLanguage(questId)
+    AddExperienceLine(lines, database, questId, language)
+    AddReputationLines(lines, database, questId, language)
+    if table.getn(lines) == 0 then
+        return nil
+    end
+    if parchment then
+        ApplyParchmentStyle(lines)
+    end
+    return lines
+end
+
+function QuestLogRewards:GetGiverLines()
+    local config = Config()
+    if config and config:Get("questLogRewards") == false then return nil end
+    return BuildLines(Database(), ResolveGiverQuestId(), true)
+end
+
+local function ClearAll()
+    Client.SetQuestLogRewardMoney(false)
+    Client.SetQuestRewardSummary("log", nil)
+    local index = 1
+    while index <= table.getn(GIVER_SURFACES) do
+        Client.SetQuestRewardSummary(GIVER_SURFACES[index], nil)
+        index = index + 1
+    end
+end
+
+function QuestLogRewards:Refresh()
+    local config = Config()
+    if config and config:Get("questLogRewards") == false then
+        ClearAll()
+        return
+    end
+    local database = Database()
+    if not database then
+        ClearAll()
+        return
+    end
+
+    -- Quest log: only while its window is up, and only for the selected row.
+    -- The coin row goes first: the experience and reputation rows measure the
+    -- reward block's bottom, and the coin row pushes the items down. Unlike
+    -- them it needs no quest match -- the amount is the client's own.
+    local parchment = not Client.IsPandaUIFlatModernTheme()
+    local logFrame = Client.GetNamedObject(LOG_FRAME_NAME)
+    local logLines = nil
+    local copper = nil
+    if logFrame and Client.IsObjectShown(logFrame) then
+        logLines = BuildLines(database, ResolveSelectedQuestId(), parchment)
+        copper = Client.GetQuestLogMoneyAmounts()
+    end
+    Client.SetQuestLogRewardMoney(true, copper)
+    Client.SetQuestRewardSummary("log", logLines)
+
+    -- Offer and completion windows. Both are asked on every pass and the one
+    -- that is not on screen clears itself inside SetQuestRewardSummary, so a
+    -- swap between them cannot leave the other holding a stale line.
+    local giverLines = BuildLines(database, ResolveGiverQuestId(), parchment)
+    local index = 1
+    while index <= table.getn(GIVER_SURFACES) do
+        Client.SetQuestRewardSummary(GIVER_SURFACES[index], giverLines)
+        index = index + 1
+    end
+end
+
+function QuestLogRewards:OnInit()
+    local database = Database()
+    local hasData = database and type(database.HasQuestRewardData) == "function"
+        and database:HasQuestRewardData()
+    if hasData then
+        PQ:DeclareCapability("questLogRewards", "detected",
+            "Database/quests.lua carries the xp and rep reward fields; the client itself "
+            .. "exposes no quest experience or reputation call in the compatibility database, "
+            .. "so both values are read from the bundled world data after a title match. "
+            .. "Quest Log placement rests on the same BEHAVIOR_VERIFIED QuestLogFrame walk the "
+            .. "other quest log modules use. The giver offer/completion panels rest on "
+            .. "quest_dialog.detail_reward_text_globals (USER_CONFIRMED_INGAME, 2026-08-20) "
+            .. "for their Detail/Reward-prefixed heading names, plus GetTitleText, "
+            .. "GetNumQuestChoices and GetNumQuestRewards, all three DOCUMENTED and NOT "
+            .. "runtime-probed; a title shared by several quests is broken by "
+            .. "GetQuestText and GetObjectiveText, DOCUMENTED and NOT runtime-probed "
+            .. "likewise, each accepted only when one candidate is uniquely compatible; "
+            .. "their item and money frame names are resolved by name and "
+            .. "fall through when absent")
+    else
+        PQ:DeclareCapability("questLogRewards", "missing",
+            "Database/quests.lua on this install has no xp/rep reward fields; the reward "
+            .. "rows stay hidden until the bundled data is synced with them")
+    end
+end
+
+function QuestLogRewards:OnEnable()
+    local driver = PQ:GetModule("Driver")
+    if not driver then
+        return
+    end
+    driver:Schedule("questlog.rewards", POLL_INTERVAL, function()
+        QuestLogRewards:Refresh()
+    end)
+end

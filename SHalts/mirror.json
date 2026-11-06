@@ -1,0 +1,105 @@
+{
+  "upstream": "https://octowow.st/git/Fayz/SHalts",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Fayz",
+    "repo": "SHalts",
+    "name": "SHalts",
+    "url": "https://octowow.st/git/Fayz/SHalts",
+    "api": "https://octowow.st/git/api/v1/repos/Fayz/SHalts"
+  },
+  "commit": "a82ccba5e442e686bfbc2a6fa6ba4608e5de7f11",
+  "sourceFiles": {
+    ".github/workflows/mirror-sync.yml": {
+      "sha256": "857004aba2c31b05f716ec1244fa8bcca61e3135b4aa6128a8228dd7bc098711",
+      "bytes": 350
+    },
+    "Alert.lua": {
+      "sha256": "69af0b3a39e69ee1f8d4108155506f29c2d52af46a207de9e27214deab5e4591",
+      "bytes": 8237
+    },
+    "Core.lua": {
+      "sha256": "807d570f0adc3a5841915a62c027040dbf7b5ad72c98c77771a517d94f3b5818",
+      "bytes": 8857
+    },
+    "Data.lua": {
+      "sha256": "a871cc63341dade857a3551166a6fc1b650f75eecf5b4989fe26fba1f72c6acb",
+      "bytes": 25908
+    },
+    "Logo.tga": {
+      "sha256": "21f62518b9803901dbe544adfbcb6536c24a1665bbb8263e9a0093e9aeca399b",
+      "bytes": 65580
+    },
+    "LogoRing.tga": {
+      "sha256": "5f7d49f883166ecf63c4e12d689c38157f91861d092a9d847a709dd9498cefa5",
+      "bytes": 65580
+    },
+    "Minimap.lua": {
+      "sha256": "fd1ad3e74391975f68aa541b11b423cbf25720c6004c4972a5ef910acdb8ca8e",
+      "bytes": 5168
+    },
+    "Raids.lua": {
+      "sha256": "56725a2ebf9b4fcc44007ee1356d493ac073adba5ae3998a6723598271ac1bbe",
+      "bytes": 4114
+    },
+    "README.md": {
+      "sha256": "a057a0914dba09a7559663303f1e7cb16effdf0d62caa967f0635286e17c0f85",
+      "bytes": 9738
+    },
+    "Resets.lua": {
+      "sha256": "7db6d08afec5814bf143ea2e021436362ed24dbaf0d8cd6ee8fd728b232af338",
+      "bytes": 14360
+    },
+    "Scan.lua": {
+      "sha256": "c3a297b83a296f1f0f456bfba758e08411847cc9c1dcea081b52c1f9ee34d689",
+      "bytes": 20363
+    },
+    "SHAlts.toc": {
+      "sha256": "b33353b867c99cb4cbc5f39605354907a57e14622bd4569ca83de4f8e84d093c",
+      "bytes": 310
+    },
+    "Star.lua": {
+      "sha256": "e26a37318659ec2060ece42fc78f18c71737d744d84be9519d2c63c708a64d26",
+      "bytes": 7270
+    },
+    "Sync.lua": {
+      "sha256": "003c07342167fc74d5f98186095a3b79688294c2c4b56103d320b45a63e64f49",
+      "bytes": 16753
+    },
+    "Textures/Logo.tga": {
+      "sha256": "21f62518b9803901dbe544adfbcb6536c24a1665bbb8263e9a0093e9aeca399b",
+      "bytes": 65580
+    },
+    "Textures/LogoRing.tga": {
+      "sha256": "5f7d49f883166ecf63c4e12d689c38157f91861d092a9d847a709dd9498cefa5",
+      "bytes": 65580
+    },
+    "Textures/Portrait.tga": {
+      "sha256": "21f62518b9803901dbe544adfbcb6536c24a1665bbb8263e9a0093e9aeca399b",
+      "bytes": 65580
+    },
+    "Textures/PortraitRing.tga": {
+      "sha256": "5f7d49f883166ecf63c4e12d689c38157f91861d092a9d847a709dd9498cefa5",
+      "bytes": 65580
+    },
+    "Textures/SizeGrabber-Down.tga": {
+      "sha256": "8ad47ceb56ded219ac3d013efe8ed7f6f2550fde84314cbe78eba0a02dfca43e",
+      "bytes": 1042
+    },
+    "Textures/SizeGrabber-Highlight.tga": {
+      "sha256": "7f7a4f115a5fcb087ae976d76237d865a81cb25c86b43436220bd4a00daa84ca",
+      "bytes": 1042
+    },
+    "Textures/SizeGrabber-Up.tga": {
+      "sha256": "2b24dc4cf9fc841cc492a9dc20d713495c92edc5ee5103dcb318065f9d2e557c",
+      "bytes": 1042
+    },
+    "UI.lua": {
+      "sha256": "c208d98d57279a23e77881101b7690f161e01f92bc161fad0e659ba2869a1b45",
+      "bytes": 31924
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

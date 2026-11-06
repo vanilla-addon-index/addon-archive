@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/Geigerkind/ExpandAssist",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Geigerkind",
+    "repo": "ExpandAssist",
+    "name": "ExpandAssist",
+    "url": "https://github.com/Geigerkind/ExpandAssist",
+    "api": "https://api.github.com/repos/Geigerkind/ExpandAssist"
+  },
+  "commit": "c002b9b1bf403d4ecb8045a1283baa02ec0ebb69",
+  "sourceFiles": {
+    "ExpandAssist.lua": {
+      "sha256": "898638661a64ff438b8ec644bd6f89251c2403bff56a62605cea2d56f8ec3f1b",
+      "bytes": 103
+    },
+    "ExpandAssist.toc": {
+      "sha256": "fc9162d1dbebe9f173938cd93c58ea439acaae51dba57449e94729a2a0b4364e",
+      "bytes": 195
+    },
+    "LICENSE": {
+      "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+      "bytes": 35141
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "4819259": {
+      "tag": "b1",
+      "folder": "b1--4819259",
+      "assets": {},
+      "source": {
+        "sha256": "bfcd1b9b7013c3bead6af835dd1e197a83e6624ad29dd370f91f1dfa99d9e066",
+        "bytes": 460,
+        "path": "releases/b1--4819259/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/tdymel/ExpandAssist/tarball/b1"
+      }
+    }
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "upstream": "https://octowow.st/git/Freewood/Freewood-OctoWoW-ForeverData",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Freewood",
+    "repo": "Freewood-OctoWoW-ForeverData",
+    "name": "Freewood-OctoWoW-ForeverData",
+    "url": "https://octowow.st/git/Freewood/Freewood-OctoWoW-ForeverData",
+    "api": "https://octowow.st/git/api/v1/repos/Freewood/Freewood-OctoWoW-ForeverData"
+  },
+  "commit": "cd2338ae8bf2cc3e9af1d8179e93db1d92974074",
+  "sourceFiles": {
+    "Data.lua": {
+      "sha256": "f6cfaa5bf15a7ff0cadaefec61c773f31a7195eb8d436a04664df62d37d5bb94",
+      "bytes": 431
+    },
+    "Data1.lua": {
+      "sha256": "61a1ae9c620a3355f44b0d138b77ea69e45e0e507e7aeec9f26b4451fe00df82",
+      "bytes": 115479
+    },
+    "Data10.lua": {
+      "sha256": "da45cd303184b19c42a4c138fb270662a878d675f6be779d675950b9dcad6b3c",
+      "bytes": 335088
+    },
+    "Data11.lua": {
+      "sha256": "7655d612d9c005bd2635ed9d14f8aae8c781ad8b86fefe2f17601df05ec6771d",
+      "bytes": 351218
+    },
+    "Data12.lua": {
+      "sha256": "5df5f720b62068e9108262207cded60f4f8c041d47a6247426bc987700b7db63",
+      "bytes": 401099
+    },
+    "Data13.lua": {
+      "sha256": "5366dafa57e6e5ab9960fba776a58c55b276edc556bff5adbe8b9abef02a722f",
+      "bytes": 330929
+    },
+    "Data14.lua": {
+      "sha256": "00a2901e93c442ea36eca19fea6efbc99926f343c933c4c12b909ccc3570f2ae",
+      "bytes": 308963
+    },
+    "Data15.lua": {
+      "sha256": "8818c062c82219b02acc5ae67bab4e5107007fb105adc86afb55e246088a9c45",
+      "bytes": 263591
+    },
+    "Data16.lua": {
+      "sha256": "53c18533d8790c8486184e0693ec7573cc586eca12b04cc58f41d8e6667dac9f",
+      "bytes": 234467
+    },
+    "Data17.lua": {
+      "sha256": "370adbe4455f82ca7bf10ecadc6f9144617440df2bf6b5499910f4d68c8852c7",
+      "bytes": 257663
+    },
+    "Data18.lua": {
+      "sha256": "92df1cb294006952273a4f4317684dcda4271e23660c05acbccebe929fd89ffa",
+      "bytes": 255382
+    },
+    "Data19.lua": {
+      "sha256": "ce46ba233bc748caed701f0480102f6ab5de59b6d1b51284690fbbcd32f307ca",
+      "bytes": 226730
+    },
+    "Data2.lua": {
+      "sha256": "df4c00bccadeeb301dfdbedadb07a204cc725b222ef5f877e8637d480013c498",
+      "bytes": 106548
+    },
+    "Data20.lua": {
+      "sha256": "f6528637b0d2638894e1ac34d802cb56a8b2102062aa15370312f3d328a52c23",
+      "bytes": 211524
+    },
+    "Data21.lua": {
+      "sha256": "6dcc8b93f38fa0e43d91eb2ef60a905444cbe20331eeaffeaae0ef45cd990aa4",
+      "bytes": 190099
+    },
+    "Data22.lua": {
+      "sha256": "e9a0cc7c910cbb1b88b6f92d903e44f7a1432da0270938fdf3a4d42b262eac15",
+      "bytes": 200912
+    },
+    "Data23.lua": {
+      "sha256": "68d3a075869fd812818d67039a2cbdc36ee98f49b96c001c9c10669a48ffc938",
+      "bytes": 63667
+    },
+    "Data3.lua": {
+      "sha256": "7aa2075d4033e58d3188a3af9dd90cf3bda543368b27f213c62460df01958c54",
+      "bytes": 116170
+    },
+    "Data4.lua": {
+      "sha256": "6a213e510d3c95225c7e63c5703b4bd17f96799353dcaff61566e8906d29b5bf",
+      "bytes": 110565
+    },
+    "Data5.lua": {
+      "sha256": "c66e141bf99093e8076c68bf82bc732fa903997e7c2bc245bbf995250d2adc44",
+      "bytes": 111733
+    },
+    "Data6.lua": {
+      "sha256": "cb833076f3b9592abf59d77f8c78ca0bed841fced763a27dd2293e3c07b665dd",
+      "bytes": 158965
+    },
+    "Data7.lua": {
+      "sha256": "d26bc7143c486254f48d27f172b3499e9c9a305673f58e8c31359d7eb6f59378",
+      "bytes": 201374
+    },
+    "Data8.lua": {
+      "sha256": "0e59d8e3d300148e32dacbb8165c42898d22942dd18a364b98fc968c6d58189d",
+      "bytes": 223882
+    },
+    "Data9.lua": {
+      "sha256": "b459979622b7361781ab5a50c851c38cb1abc487fed5e9656a79989ed984c93a",
+      "bytes": 270446
+    },
+    "Details1.lua": {
+      "sha256": "8679302cbb53fa43362befbca9632b17aca050bdd18c08f9e8a127d957943ca4",
+      "bytes": 1294707
+    },
+    "Details2.lua": {
+      "sha256": "7852a57e37e4bdf48b439e1b36350503fb921351684aea9260ac7d9a82bbb5fa",
+      "bytes": 1384402
+    },
+    "Details3.lua": {
+      "sha256": "41211d8a9e48f4d8bbb62f82632b6160bd656d96e760228fe0ae3bbfccd051e5",
+      "bytes": 551678
+    },
+    "Extra.lua": {
+      "sha256": "850eb593f1ec7a01bfea80fb5cb3ac81e01e8ddd9eb2fa8ac1f0fba8a620bb5f",
+      "bytes": 220429
+    },
+    "Freewood-OctoWoW-ForeverData.toc": {
+      "sha256": "add21b53af2afaa0e0521ce1e6828ab6845667c5207cbe121f3b74fb5ca869f8",
+      "bytes": 599
+    },
+    "ItemCat.lua": {
+      "sha256": "1a6e97da82a8932d5d0749ec4e8f19b296c42c87703f75d82d0cbf27056a8a0c",
+      "bytes": 207027
+    },
+    "Items.lua": {
+      "sha256": "ba594a954fe1382dd38e7777743cdacc30e8602c43cf61d13707bfcbbc3f8ad8",
+      "bytes": 113759
+    },
+    "ItemsExtra.lua": {
+      "sha256": "693318af63038347fb72aeba3d5e1a48459a067f6e0a848d2ba50ffe51a7d6a6",
+      "bytes": 1122522
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "LICENSE-pfQuest.txt": {
+      "sha256": "b0b14d784b7c9961edee033cabc16bb84345296b3d65a7797992092f3b95e5eb",
+      "bytes": 1229
+    },
+    "Own.lua": {
+      "sha256": "519190c6146ba834a61f2bb799d630eba12b55d6c28c4e1f2f90b1e602eb7358",
+      "bytes": 486949
+    },
+    "README.md": {
+      "sha256": "e62a2fcd95095a373b1ca54f5f6e8c3fc181b1adec32d829557217225b3f8652",
+      "bytes": 60
+    },
+    "Ready.lua": {
+      "sha256": "387da49f6f4da338d753c0e6d7593af63a472403fe207c611d0ca1f24f2da630",
+      "bytes": 33
+    },
+    "Scan.lua": {
+      "sha256": "cfae0c305b51f70bf2ca0899d6cec9a5f5ffc0f57bd6dd0701fdcc836e1f90d7",
+      "bytes": 120917
+    },
+    "Sources.lua": {
+      "sha256": "389233f0f267821033adb88463d73e5e6f8455504fe34d8cc293ac5f6d21f232",
+      "bytes": 651441
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

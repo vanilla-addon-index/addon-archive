@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: EPGPexport
+## Notes: Effort Points/Gear Points Loot System export tool
+## Author: Luise
+## SavedVariables: EPGPexportData
+
+EPGPexport.xml

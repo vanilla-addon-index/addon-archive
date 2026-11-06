@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: LootAtMouse
+## Author: Mitja Felicijan (m@mitjafelicijan.com)
+## Notes: Open loot window at mouse cursor.
+## Version: 1.0
+
+LootAtMouse.lua

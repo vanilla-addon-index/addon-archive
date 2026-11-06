@@ -1,0 +1,9 @@
+{
+  "id": "386865517",
+  "tag": "v1.3.0",
+  "name": "v1.3.0",
+  "body": "OctoWoW port of [Armor DR Compare](https://www.curseforge.com/wow/addons/armor-dr-compare) by alikara.\n\n## What's included\n\n- Displays armor DR% delta in item comparison tooltips on OctoWoW (vanilla 1.12.1 / interface 11200)\n- Reads absolute armor values from both tooltips and computes the delta itself (vanilla shows `145 Armor`, not `+25 Armor`)\n- Two display modes: `+-X Armor (+Y% DR)` or DR% only — toggle with `/adrc mode`\n- Positive delta shown in green, negative in red\n- DR info added as a **new line** in the tooltip; the original armor line is untouched\n- Druid form armor multipliers (Bear / Dire Bear / Moonkin / Thick Hide) accounted for\n- SavedVariables persist the display mode across sessions\n- Compatible with ShaguTweaks equip-compare\n\n## Commands\n\n| Command | Action |\n|---------|--------|\n| `/adrc` | Current armor and DR% |\n| `/adrc mode` | Toggle between full and DR-only display |\n| `/adrc status` | Addon info and hook status |\n| `/adrc dump` | Print all tooltip lines (debug) |\n\n## Install\n\nExtract into `Interface\\AddOns\\ArmorDRCompare-Octo\\` and reload.",
+  "published": "2026-09-11T07:53:26Z",
+  "prerelease": false,
+  "url": "https://github.com/BigPaperBear/ArmorDRCompare-Octo/releases/tag/v1.3.0"
+}

@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: |cFFFF8080Movement|cffffffffTracker
+## Author: tilr
+## Notes: Tracks time and distance spent running on foot and while mounted.
+## Version: 1.0
+## SavedVariablesPerCharacter: MovementTracker_DB
+
+Zones.lua
+MovementTracker.lua

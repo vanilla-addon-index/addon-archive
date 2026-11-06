@@ -1,0 +1,57 @@
+name: Publish WorldChatFilter v1.0.1
+
+# One-shot release: adding this workflow on main publishes v1.0.1.
+# Subsequent normal pushes do not retrigger it.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/release-v1.0.1.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate version and installable files
+        run: |
+          grep -Fq 'WCF.VERSION = "1.0.1"' Core.lua
+          grep -Fq '## Version: 1.0.1' WorldChatFilter.toc
+          for file in Core.lua Color.lua Statistics.lua Classifier.lua Filter.lua UI.lua; do
+            test -s "$file"
+          done
+          test -s Media/WorldChatFilterOrb.tga
+
+      - name: Run full Lua 5.1 regression suite
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y lua5.1
+          python3 tests/run_tests.py lua5.1
+
+      - name: Build and validate installation ZIP
+        run: |
+          mkdir -p dist/WorldChatFilter/Media
+          cp WorldChatFilter.toc Core.lua Color.lua Statistics.lua Classifier.lua Filter.lua UI.lua README.md LICENSE dist/WorldChatFilter/
+          cp Media/WorldChatFilterOrb.tga dist/WorldChatFilter/Media/
+          (cd dist && zip -qr ../WorldChatFilter-v1.0.1.zip WorldChatFilter)
+          unzip -t WorldChatFilter-v1.0.1.zip
+          unzip -l WorldChatFilter-v1.0.1.zip
+          test -s WorldChatFilter-v1.0.1.zip
+
+      - name: Create GitHub v1.0.1 release and upload asset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh release view v1.0.1 >/dev/null 2>&1; then
+            echo "::error::Release v1.0.1 already exists, refusing to overwrite"
+            exit 1
+          fi
+          gh release create v1.0.1 WorldChatFilter-v1.0.1.zip \
+            --target "$GITHUB_SHA" \
+            --title "World Chat Filter v1.0.1" \
+            --notes-file RELEASE_NOTES.md \
+            --latest

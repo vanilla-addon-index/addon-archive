@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/rfelleto/Mlooklock",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "rfelleto",
+    "repo": "Mlooklock",
+    "name": "Mlooklock",
+    "url": "https://github.com/rfelleto/Mlooklock",
+    "api": "https://api.github.com/repos/rfelleto/Mlooklock"
+  },
+  "commit": "c47a7598c4139cef7420b99da1ad063073f08e73",
+  "sourceFiles": {
+    "Bindings.XML": {
+      "sha256": "df65c325c0c404cc72467c680b7192ea9f6ee28ccca38dbac4309e7acecdeaeb",
+      "bytes": 485
+    },
+    "crosshair.tga": {
+      "sha256": "81d846d8b6254fe4a601128321e5bc2dca50b0a4f224f8c9801e8999416595a9",
+      "bytes": 4114
+    },
+    "MLookLock.lua": {
+      "sha256": "0c2d89b7388f20a8675b80de5cecb85b8c53a9262e352ebff5aa944c0070f80c",
+      "bytes": 6630
+    },
+    "MLookLock.toc": {
+      "sha256": "a3da32d1e0e6013de693aef0565b07fe7e95b88780fd3817d25836750de88b9f",
+      "bytes": 183
+    },
+    "README.md": {
+      "sha256": "4b94ff48c2db11622e9cd8930676afabdc13c189f93fffc20ff70690e67fa55e",
+      "bytes": 748
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

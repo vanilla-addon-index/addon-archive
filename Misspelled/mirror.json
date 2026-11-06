@@ -1,0 +1,241 @@
+{
+  "upstream": "https://octowow.st/git/Mr_Rosh/Misspelled",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Mr_Rosh",
+    "repo": "Misspelled",
+    "name": "Misspelled",
+    "url": "https://octowow.st/git/Mr_Rosh/Misspelled",
+    "api": "https://octowow.st/git/api/v1/repos/Mr_Rosh/Misspelled"
+  },
+  "commit": "1bb5cf3b13442a241d231e486d952619546bca25",
+  "sourceFiles": {
+    "CHANGELOG.md": {
+      "sha256": "50677924702048e05919778c4b18a9197e3969c27c4ac41764cbefb7373f6ac2",
+      "bytes": 317
+    },
+    "Dict/Dic_deDE.lua": {
+      "sha256": "c03f6a57a78d9ed5d7967eca10912f72a6ca863d367b996c3e2f8b38db00dfce",
+      "bytes": 2363787
+    },
+    "Dict/Dic_enGB.lua": {
+      "sha256": "30c2744ed84dbf41dc5a2aa0227a398d9d0b20b2214cd03123aab7c7309099e0",
+      "bytes": 964825
+    },
+    "Dict/Dic_enUS.lua": {
+      "sha256": "11333715b891410ebe721615315de4b9b0d7374d3480d5c538f5f377458f854d",
+      "bytes": 1243726
+    },
+    "Dict/Dic_esES.lua": {
+      "sha256": "90f979fe51f75563d7f6abc542a4d26c9b72774615d5eae10d8dad441e158c7b",
+      "bytes": 1238452
+    },
+    "Dict/Dic_frFR.lua": {
+      "sha256": "0de70a3ec6bc9e33d5c01ec11c4c39c2585e0f2260a1bd93e4b90df2e898277d",
+      "bytes": 1507836
+    },
+    "Dict/DIC_itIT.lua": {
+      "sha256": "9eb7efc2707cd4ed2b44c5e0b765cb30a97c2f6c0c503c8ce3d34b774ae3d8bf",
+      "bytes": 1673889
+    },
+    "Dict/Dic_ruRU.lua": {
+      "sha256": "148b4e019dea92b5e42ecf1c166a4c4f8802cb6b1b2ff06b21ad48461a3e66c2",
+      "bytes": 3483348
+    },
+    "embeds.xml": {
+      "sha256": "2db69055380e6cffd0e7a80ed91aa084f2a7c883994d978e388139190098b0b1",
+      "bytes": 513
+    },
+    "Libs/AceAddon-3.0/AceAddon-3.0.lua": {
+      "sha256": "9aaec858b04820b597155b040dd76ef0d6e8e4f0707e54630001bcfe68497307",
+      "bytes": 25090
+    },
+    "Libs/AceAddon-3.0/AceAddon-3.0.xml": {
+      "sha256": "b9820071648e42f9167882ef2a08602644a301cefd5d7e57c82aa36ca1439259",
+      "bytes": 211
+    },
+    "Libs/AceEvent-3.0/AceEvent-3.0.lua": {
+      "sha256": "928729c0edae955407778463d345baa0e59fc8f6f6ad53877b6243e0f225da4e",
+      "bytes": 4757
+    },
+    "Libs/AceEvent-3.0/AceEvent-3.0.xml": {
+      "sha256": "9a9c0b14a8eda4509d45422cb1ac065ba9165879ef291816f1689bf6be3bcbc4",
+      "bytes": 211
+    },
+    "Libs/AceGUI-3.0/AceGUI-3.0.lua": {
+      "sha256": "bcfcef55d727f8434606bdba2375929123422e051c27fd1bfcbd95e7ab723ed7",
+      "bytes": 30966
+    },
+    "Libs/AceGUI-3.0/AceGUI-3.0.xml": {
+      "sha256": "e54bd15393700719dbec2b1b433e570a3f364fa5e927f9227f63037eb16ad522",
+      "bytes": 1451
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIContainer-BlizOptionsGroup.lua": {
+      "sha256": "566551ddd7c8c434d6bb6f4a4c9a67479e6e8a719fcc3a504b18eec4f11e6586",
+      "bytes": 3754
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIContainer-DropDownGroup.lua": {
+      "sha256": "ecf7743bd5fb9059d4226e35cd2374aa13282eca720938498f85d7f328f8c070",
+      "bytes": 4534
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIContainer-Frame.lua": {
+      "sha256": "fb3f9f3b3414bd3b27e1281c2b8836749e38906458df6b69e9f385fbe041df91",
+      "bytes": 9474
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIContainer-InlineGroup.lua": {
+      "sha256": "e9458bd6378d017994408618cbc6921ef7e6bbe152e9bbded199255c399468a5",
+      "bytes": 2986
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIContainer-ScrollFrame.lua": {
+      "sha256": "fef3da3ce311b861d669bc503906cdd0780a372fbea039c1e2d3f75ac6e68709",
+      "bytes": 6911
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIContainer-SimpleGroup.lua": {
+      "sha256": "d65968489c0fa5749d2e35be69c60d0dd7969189aa14a9031f0654715625d214",
+      "bytes": 1890
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIContainer-TabGroup.lua": {
+      "sha256": "ad73ed3b619cba61778ec39b73206daac423bd1f539241f4a58ff623b0b0b687",
+      "bytes": 16475
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIContainer-TreeGroup.lua": {
+      "sha256": "faf9f1eb9bec0af6d3493c8e264fbf6aef244c364ed72c85069578d69115682d",
+      "bytes": 20335
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIContainer-Window.lua": {
+      "sha256": "d57f41b781d8c021fb69a94e084efadbb891d3a353738e6ca68853da21f94645",
+      "bytes": 9806
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIWidget-Button.lua": {
+      "sha256": "1bcc3592c6315d1369f448316f4bc990c812a37d2a7b5c31fd2324daf6ad7e87",
+      "bytes": 2746
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIWidget-CheckBox.lua": {
+      "sha256": "94b91838f23aaa412e959f5b874e5e960459906d2ac07b48f41bc8a45a1a1206",
+      "bytes": 7870
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIWidget-ColorPicker.lua": {
+      "sha256": "d69b7e600acf2e6f9d0e222d40952f4f25115eb6a48c039bfa71d2807668e5ef",
+      "bytes": 6538
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIWidget-DropDown-Items.lua": {
+      "sha256": "aa7d0bd54525e63b9549ec0a41ff3b3595267a377e0ae65da42577856cf03f4b",
+      "bytes": 10586
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIWidget-DropDown.lua": {
+      "sha256": "42e2a9d9c41bc4f481af1721b6cc45988e2bc5573fd0282499e9bf3af8e8ec20",
+      "bytes": 18521
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIWidget-EditBox.lua": {
+      "sha256": "24a7570e949647c67a0364a8b21d8904c7df812ce0a3d58a74413e473cd023e2",
+      "bytes": 7236
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIWidget-Heading.lua": {
+      "sha256": "ebf0271a8e6f7bce8947cbd339a6a08a6c856bf45e35ae9156c79320521dfa51",
+      "bytes": 2232
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIWidget-Icon.lua": {
+      "sha256": "62df520dba9234f704ac956141e95e9716896b006210f4ae67a9afbff3b93a50",
+      "bytes": 3805
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIWidget-InteractiveLabel.lua": {
+      "sha256": "e47543663cc5c4272ef6fb6d356fb63a49f6b101d3cc0501e769ac6615442cce",
+      "bytes": 2577
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIWidget-Keybinding.lua": {
+      "sha256": "5d372eb175c2768e0e13f46f77b5d5ec4a1ca74636b2ad940725040496a6ba7e",
+      "bytes": 6912
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIWidget-Label.lua": {
+      "sha256": "7d953f5fd4cb6ba8fb25c0c732e6dd61564684c57bc5175f4d734d646b99842d",
+      "bytes": 4767
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIWidget-MultiLineEditBox.lua": {
+      "sha256": "ac67fd32a7a5642c0bebc5104ee4ac57088fb04e44b15cee64513b78e532e7cd",
+      "bytes": 11062
+    },
+    "Libs/AceGUI-3.0/widgets/AceGUIWidget-Slider.lua": {
+      "sha256": "59b3ee4b813c8e20c4463e9fb1c167bfb8552e1ad6ec512dccfce24c9e4049ca",
+      "bytes": 8070
+    },
+    "Libs/AceHook-3.0/AceHook-3.0.lua": {
+      "sha256": "b38a65c65ade3b28539f9f8a1d5603683db24a9fc571004669416c5ae4a6ab87",
+      "bytes": 19016
+    },
+    "Libs/AceHook-3.0/AceHook-3.0.xml": {
+      "sha256": "85bcbb10046c613cd86cbd99b8e3cb645cbb05982480af7e3a667a101a56bc04",
+      "bytes": 210
+    },
+    "Libs/AceLocale-3.0/AceLocale-3.0.lua": {
+      "sha256": "584b30b5cd9da71408cdd83a49469aa4348941e185a42cbd218d964678d88e57",
+      "bytes": 5474
+    },
+    "Libs/AceLocale-3.0/AceLocale-3.0.xml": {
+      "sha256": "ad70df709b297effd04410ddf242188fd3811793ae55814a482ac41f5895eaef",
+      "bytes": 212
+    },
+    "Libs/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "9c6dbfb0908d5e6640000ec311ec16ced994abc7bb18e38b428e7a6c2e25fd76",
+      "bytes": 8037
+    },
+    "Libs/CallbackHandler-1.0/CallbackHandler-1.0.xml": {
+      "sha256": "9310765c5310a395652e60a04f378e836785deb6f0b7181a448c74751d6f0185",
+      "bytes": 218
+    },
+    "Libs/LibStub/LibStub.lua": {
+      "sha256": "a59b4c745c1fdb1b5ad22a86394814afecf8549516c18f6a16353960646b47f8",
+      "bytes": 1367
+    },
+    "Libs/LibStub/LibStub.toc": {
+      "sha256": "32c12c46b12e86855cbf75fe6d06b3b7e0ca5dd27a7d12cbcb21652d6e05f493",
+      "bytes": 253
+    },
+    "Localization/enUS.lua": {
+      "sha256": "9ec06a454f14cff40813137208b041c89c8c6325a18dd60275395010132def0b",
+      "bytes": 749
+    },
+    "Localization/Includes.xml": {
+      "sha256": "e295cc61b7b49124fde2b8536d85a21d35811ddc40e8c4389cd6ec2ff544af80",
+      "bytes": 208
+    },
+    "misspelled-demo.jpg": {
+      "sha256": "ef437a889da231d9374141d8fd7218561fe559c629d8c2e72ef450b4c3441b77",
+      "bytes": 18114
+    },
+    "Misspelled.lua": {
+      "sha256": "f06c225cdc9b09564af4b7bece2c8c7fb3fe0a99e1770aa07bbc3e7a432f92f4",
+      "bytes": 69866
+    },
+    "Misspelled.toc": {
+      "sha256": "026616e0743a780ed84480750f6b138a98009120ccf16f76b7aa9bf109f278db",
+      "bytes": 990
+    },
+    "Misspelled.xml": {
+      "sha256": "d6dd571d3a0970a4eb4660f76509fbf7290604e1491db6863fbc10497d3ab8df",
+      "bytes": 380
+    },
+    "Notes.md": {
+      "sha256": "fdace3b0e61c949c35336c2f398aecd65a3084a48b3535936afe5677c4349ab3",
+      "bytes": 764
+    },
+    "README.md": {
+      "sha256": "ff44e3932c7cb2fea79bb2d3116a1f006fba78be8fc2920706e3fc456fb15cb8",
+      "bytes": 1280
+    },
+    "UTF8/utf8.lua": {
+      "sha256": "96bacffe358c9cecff57670f84485a072b8f486dd0f1e6b1fe4145cd4b2bc78b",
+      "bytes": 10090
+    },
+    "UTF8/utf8data.lua": {
+      "sha256": "0c1c8c4c294c661c385c620666f4488e3cdbca40de70eedc931814b82c5f7cb8",
+      "bytes": 31622
+    },
+    "WordDict.lua": {
+      "sha256": "7a599597354643d9b0a704510da9f79a6aaa2b166091c0f3602b9bc8d8c109b4",
+      "bytes": 60136
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

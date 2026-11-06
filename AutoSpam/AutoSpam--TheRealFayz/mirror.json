@@ -1,0 +1,81 @@
+{
+  "upstream": "https://github.com/TheRealFayz/AutoSpam",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "TheRealFayz",
+    "repo": "AutoSpam",
+    "name": "AutoSpam",
+    "url": "https://github.com/TheRealFayz/AutoSpam",
+    "api": "https://api.github.com/repos/TheRealFayz/AutoSpam"
+  },
+  "commit": "e7e7d2a1508b30b71ee06e4486b3381f2aec69b7",
+  "sourceFiles": {
+    ".github/workflows/mirror-sync.yml": {
+      "sha256": "9db0a0ca57721195469332a340c58877dec087ce9b43c84eff6b31ae0283809e",
+      "bytes": 352
+    },
+    "AutoSpam_Editor.png": {
+      "sha256": "144494dc1d3dcf30eb9f00855309d31d222cf539a51400fac21f3a4f62a357ed",
+      "bytes": 127697
+    },
+    "AutoSpam.lua": {
+      "sha256": "bf38f60e97ec55e788b8992b55f4584e128f19adf35ee6037dac02d3b1952398",
+      "bytes": 55068
+    },
+    "AutoSpam.toc": {
+      "sha256": "e2e6e801f91e53683886d0412b39048e811d71b59df3da38a264fae46cea9777",
+      "bytes": 189
+    },
+    "AutoSpamUI.lua": {
+      "sha256": "84939368d931fddce9ab9c4329c51ff507afeef8fc5b07fd0f580b090275351e",
+      "bytes": 73545
+    },
+    "Images/AutoSpam_Editor.png": {
+      "sha256": "144494dc1d3dcf30eb9f00855309d31d222cf539a51400fac21f3a4f62a357ed",
+      "bytes": 127697
+    },
+    "Images/AutoSpam_Help.png": {
+      "sha256": "156c5352c96e4a0fed408c3360d961b576229932adf0640d6e8c6c3172c57d0b",
+      "bytes": 802584
+    },
+    "Images/AutoSpam_Messages.png": {
+      "sha256": "827d54c1af6f76e8a490ace0da1f3ee760c6a7faa034f571784c45643305e113",
+      "bytes": 478958
+    },
+    "Images/AutoSpam_Receive.png": {
+      "sha256": "835a05f4741666b241144ea7d90ffd09f02cf690f4116d6a5ef54a0a7cd30720",
+      "bytes": 155052
+    },
+    "Images/AutoSpam_Settings.png": {
+      "sha256": "254d699df7f4f32ecf34ee0d2bb3f9b4049a4639834a8f91ef95d2d3a7f50cef",
+      "bytes": 265366
+    },
+    "Images/AutoSpam_Share.png": {
+      "sha256": "edfbafbf6cdbcd4cdae44890b2151d398f9d13ba7724da770080d2f0f87cbdee",
+      "bytes": 130806
+    },
+    "README.md": {
+      "sha256": "bf13f196393d2996404ef3a035a815c56d3fcb7f012771321dac8468cb55a6d0",
+      "bytes": 9511
+    },
+    "Textures/Hourglass.tga": {
+      "sha256": "0ccb6e5c7e2f9adb750c8382299535abf27fb91fb500003f916a38b9ff7f1fd7",
+      "bytes": 1048594
+    },
+    "Textures/SizeGrabber-Down.tga": {
+      "sha256": "8ad47ceb56ded219ac3d013efe8ed7f6f2550fde84314cbe78eba0a02dfca43e",
+      "bytes": 1042
+    },
+    "Textures/SizeGrabber-Highlight.tga": {
+      "sha256": "7f7a4f115a5fcb087ae976d76237d865a81cb25c86b43436220bd4a00daa84ca",
+      "bytes": 1042
+    },
+    "Textures/SizeGrabber-Up.tga": {
+      "sha256": "2b24dc4cf9fc841cc492a9dc20d713495c92edc5ee5103dcb318065f9d2e557c",
+      "bytes": 1042
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

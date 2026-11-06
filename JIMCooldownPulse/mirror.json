@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/pushxd/JIM_CooldownPulse",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "pushxd",
+    "repo": "JIM_CooldownPulse",
+    "name": "JIM_CooldownPulse",
+    "url": "https://github.com/pushxd/JIM_CooldownPulse",
+    "api": "https://api.github.com/repos/pushxd/JIM_CooldownPulse"
+  },
+  "commit": "bacb53bdee96dec5054193f5a69d22cb3e920c15",
+  "sourceFiles": {
+    "bindings.xml": {
+      "sha256": "f67b6f0cb75785199b46da059119872f323d71833485e9301251dabf22979cb3",
+      "bytes": 268
+    },
+    "CDPIcon128.blp": {
+      "sha256": "99de9e1da0f1fc8d590afaafb6021b6d421f044702ceb1415ce9b578536abd2c",
+      "bytes": 23044
+    },
+    "CDPIcon32.blp": {
+      "sha256": "0b92838a2f60b83c90131d5aad2f94a7c834c6240df0644e145c57c647bae8a3",
+      "bytes": 2564
+    },
+    "History.htm": {
+      "sha256": "b7c2eabd4cc989d9b6c96ecd1a4900e127cba864d3217ef76a63bf9a2f6d98d5",
+      "bytes": 17884
+    },
+    "JIM_CooldownPulse.lua": {
+      "sha256": "0dc95e1ba931b47030e2d0929c58e183af717a441037136fc1dcbd0158e837d7",
+      "bytes": 14028
+    },
+    "JIM_CooldownPulse.toc": {
+      "sha256": "c75d41906d14e137e397eb91cfdac5265150c55cb89387c5dbc278f6df6fd8b1",
+      "bytes": 1282
+    },
+    "JIM_CooldownPulse.xml": {
+      "sha256": "d9f27be6d37cd32cbbd11498a4be5720176490b3734a04b915762a45431f6e5d",
+      "bytes": 3636
+    },
+    "lubdub.wav": {
+      "sha256": "8a070d21e69176761466b0eee42c57529ba29ace6141f4bb47cbb97854337d64",
+      "bytes": 3418
+    },
+    "README.md": {
+      "sha256": "ea639bcce446b94a9f19d3dbcf8d56b10adb2c52294d07cea713abe27ba4f395",
+      "bytes": 116
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

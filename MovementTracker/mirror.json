@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/tilare/MovementTracker",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "tilare",
+    "repo": "MovementTracker",
+    "name": "MovementTracker",
+    "url": "https://github.com/tilare/MovementTracker",
+    "api": "https://api.github.com/repos/tilare/MovementTracker"
+  },
+  "commit": "fb0ac54c3e9a615b766ddcc3cc805ce14b8fb305",
+  "sourceFiles": {
+    "boot.tga": {
+      "sha256": "c9bf2770402a07b9b55ca32e71ed39fa3721161215a3f48401c665f0e2ddfcfb",
+      "bytes": 9412
+    },
+    "horseshoe.tga": {
+      "sha256": "741316935d9df66317b687a79c6752619e725c6fd8a0f0ebdd6683ff04b4c4d0",
+      "bytes": 8640
+    },
+    "MovementTracker.lua": {
+      "sha256": "2edaf64c29e7ebdbaa993f8eeb551494a19d2112a298f3b526e5da071cb42eb0",
+      "bytes": 16100
+    },
+    "MovementTracker.toc": {
+      "sha256": "9fb97913be78a5e2287c7fb7d5934982b92dab13d6a7a84fb5e70b15aa655c7c",
+      "bytes": 264
+    },
+    "README.md": {
+      "sha256": "55506904dc33e635e8091a7b64d569cb1d86becaad674add481cd153e20b82fa",
+      "bytes": 261
+    },
+    "Zones.lua": {
+      "sha256": "ba18dccc4b1996fc1077fb7596c9ed03fb4d0a8796b44b7df772018643bc69bc",
+      "bytes": 10749
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

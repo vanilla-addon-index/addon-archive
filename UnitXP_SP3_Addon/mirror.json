@@ -1,0 +1,65 @@
+{
+  "upstream": "https://octowow.st/git/shaga/UnitXP_SP3_Addon",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "shaga",
+    "repo": "UnitXP_SP3_Addon",
+    "name": "UnitXP_SP3_Addon",
+    "url": "https://octowow.st/git/shaga/UnitXP_SP3_Addon",
+    "api": "https://octowow.st/git/api/v1/repos/shaga/UnitXP_SP3_Addon"
+  },
+  "commit": "c6dfd6d6bee6d6853e49402f728554efc13e3e68",
+  "sourceFiles": {
+    ".github/workflows/release.yml": {
+      "sha256": "df629e084a6fbef7a177e334f4e4aaf2fce69bd959853298a741b056a2b1efdb",
+      "bytes": 382
+    },
+    "Bindings.xml": {
+      "sha256": "9495dfdc20797355d9edaa6299a6acb0531d344c3f9726150459ddb846bd675a",
+      "bytes": 1732
+    },
+    "libs/AceCore-3.0.lua": {
+      "sha256": "9763f58f27029b3e0f74a9f170a26252c65856bf4c8d364d773a1df2e8fed36a",
+      "bytes": 5937
+    },
+    "libs/AceHook-3.0.lua": {
+      "sha256": "1ec5bedbef9519a7fd126abd07e49e1e4ef6268fbf7601ea8a4664bf8417b203",
+      "bytes": 20120
+    },
+    "libs/CallbackHandler-1.0.lua": {
+      "sha256": "75cc380a1b0035a2d3de506ed269fbec951be6219e994d702067ed3bc95dcd64",
+      "bytes": 9742
+    },
+    "libs/LibDataBroker-1.1.lua": {
+      "sha256": "f3d4758f2060215492c9764b1d7dc2a336826d4cd253cd54ff9ff7c6d78f04e2",
+      "bytes": 3139
+    },
+    "libs/LibDBIcon-1.0.lua": {
+      "sha256": "bedf722ab33d0d480adb5759a87c8c633a5644564bdd57adf248dd41aacff6f8",
+      "bytes": 13861
+    },
+    "libs/LibStub.lua": {
+      "sha256": "d024dc95604e228e94a4406c2582a0ae571d829be78cd81658dcd5d44ad0eaef",
+      "bytes": 1462
+    },
+    "README.md": {
+      "sha256": "1c08f77800be39d53184173fdabd8b902128217eadf9779a4842548a7ca7ba9c",
+      "bytes": 116
+    },
+    "UnitXP_SP3_Addon.lua": {
+      "sha256": "727de077c4afce96565851ad2137f89d38c6062cee35bb2ea8e92e5c8932cd24",
+      "bytes": 41545
+    },
+    "UnitXP_SP3_Addon.toc": {
+      "sha256": "174cbdf38a2fa05948bf78fd4516103481be4d2fdb78c878172e5107bd699116",
+      "bytes": 392
+    },
+    "UnitXP_SP3_Addon.xml": {
+      "sha256": "4077e5714dba8d32862f89e455c07bfa75b9eec87bcd9b0539ba6218315561ad",
+      "bytes": 26640
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,61 @@
+{
+  "upstream": "https://github.com/0ldi/ChatLog",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "0ldi",
+    "repo": "ChatLog",
+    "name": "ChatLog",
+    "url": "https://github.com/0ldi/ChatLog",
+    "api": "https://api.github.com/repos/0ldi/ChatLog"
+  },
+  "commit": "6a0d97db6225e2fcae0444bf578b33efbc09c7bd",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "ChatLog/Bindings.xml": {
+      "sha256": "d4bd65b27f3e932af2314900bc1c694ce747f95fc0e889cc4c6552659eae51b0",
+      "bytes": 120
+    },
+    "ChatLog/ChatLog.Conf.lua": {
+      "sha256": "613a6d683fdccdd9b2aec1b54788b9f8a8bf9210b8229908aaa65560587be365",
+      "bytes": 2635
+    },
+    "ChatLog/ChatLog.lua": {
+      "sha256": "41548965e00b58fe072d9e84b655f939948502fe036bdd3e55ecdad4b3773368",
+      "bytes": 41919
+    },
+    "ChatLog/ChatLog.toc": {
+      "sha256": "d97eb528dc51f3302823125c81229e6d1b067828ef147474890fcd956f834607",
+      "bytes": 495
+    },
+    "ChatLog/ChatLog.xml": {
+      "sha256": "385368a1f45835e31f21c290adff4913b62ccaed06a277907e405ef97af956f3",
+      "bytes": 24624
+    },
+    "ChatLog/localization.cn.lua": {
+      "sha256": "f39910a02ca571073840ba5bceef415866e9f91af3bf7c0159a0998895b28f21",
+      "bytes": 5282
+    },
+    "ChatLog/localization.de.lua": {
+      "sha256": "43a0dc53f97d1db9c91ae1b62163877603880f5904702e414b6f4a5321417a1d",
+      "bytes": 5582
+    },
+    "ChatLog/localization.en.lua": {
+      "sha256": "efaf6856437473bb98dde1da134c286f2d7f2c3a41d0652014e308b94cf17129",
+      "bytes": 5106
+    },
+    "ChatLog/localization.fr.lua": {
+      "sha256": "e2828dd83087f78aac1ba11e14cfead0f93ffc59453215f3da27b9889577985e",
+      "bytes": 5379
+    },
+    "README.md": {
+      "sha256": "9abef12422fe2eec3365932647d90f9dcd0982876ca3efc5e6ea6f677982b071",
+      "bytes": 1084
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

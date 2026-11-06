@@ -1,0 +1,29 @@
+{
+  "upstream": "https://octowow.st/git/Monster/InviteOnWhisper",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Monster",
+    "repo": "InviteOnWhisper",
+    "name": "InviteOnWhisper",
+    "url": "https://octowow.st/git/Monster/InviteOnWhisper",
+    "api": "https://octowow.st/git/api/v1/repos/Monster/InviteOnWhisper"
+  },
+  "commit": "ce06aed0ed468181953d137d5c377176daa2ffaa",
+  "sourceFiles": {
+    "InviteOnWhisper.lua": {
+      "sha256": "db21cc6b6ed334960eabe012b1fbe688e05e58fe769ec2c0aa593df4fd854bbb",
+      "bytes": 8233
+    },
+    "InviteOnWhisper.toc": {
+      "sha256": "625e2191d0d59719492fb2b0496dc86718992b71ee9635efb081c77e7ab0a61b",
+      "bytes": 202
+    },
+    "Readme": {
+      "sha256": "7bfd6fd4691b1576a0543acfe1eac01c3cf568f735b47146a5be6a99ed540d90",
+      "bytes": 1137
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

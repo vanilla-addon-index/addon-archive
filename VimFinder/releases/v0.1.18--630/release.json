@@ -1,0 +1,9 @@
+{
+  "id": "630",
+  "tag": "v0.1.18",
+  "name": "VimFinder v0.1.18",
+  "body": "## Download\r\n**Download `VimFinder-0.1.18.zip` below** (under Assets), not the \"Source code\" ZIPs.\r\n\r\nIt holds both addons you need, already named right:\r\n- `VimFinder` 0.1.18\r\n- `VimWowSettings` 0.1.5\r\n\r\n## Install\r\n1. Unzip it into `Interface/AddOns/`.\r\n2. At character select, under AddOns, tick **VimFinder** and **VimWowSettings**.\r\n3. In game, press **Alt+Space**.\r\n\r\nNo DLL needed. The full guide is in the [README](https://octowow.st/git/Lupo/VimFinder#readme).\r\n\r\nSHA256: `a88cfb367f96c3fb8a452da84e282564f715ad57d6e9c41930a612211854cab4`\r\n\r\nIn the forum and Discord posts, point the download at this asset instead of the two source ZIPs. Once it's uploaded, its link will be https://octowow.st/git/Lupo/VimFinder/releases/download/v0.1.18/VimFinder-0.1.18.zip. Then the install steps lose the rename step and become: download one ZIP, unzip it into Interface/AddOns/.",
+  "published": "2026-10-25T14:40:28Z",
+  "prerelease": false,
+  "url": "https://octowow.st/git/Lupo/VimFinder/releases/tag/v0.1.18"
+}

@@ -1,0 +1,37 @@
+{
+  "upstream": "https://octowow.st/git/Markuru/IWantItAll",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Markuru",
+    "repo": "IWantItAll",
+    "name": "IWantItAll",
+    "url": "https://octowow.st/git/Markuru/IWantItAll",
+    "api": "https://octowow.st/git/api/v1/repos/Markuru/IWantItAll"
+  },
+  "commit": "75097a19361064b83e4ef23868684911af6af05d",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "105204e4088a48ef98e5097ea6d8b49af449339f11158434e9643f63026819f3",
+      "bytes": 103
+    },
+    "IWantItAll.lua": {
+      "sha256": "9b57478f2c24cfd71da75d398bf7dd8490713fed70089465bf0174ad32c3b884",
+      "bytes": 3367
+    },
+    "IWantItAll.toc": {
+      "sha256": "b2f2fa2028ddb9339e5ec617edc1f1b637c3962a7add2b55dcf8dd2040fbbf2a",
+      "bytes": 200
+    },
+    "IWantItAll.xml": {
+      "sha256": "697fccb24385800f0aa2be96f5e887c6d431ff2dcce8e3b249d0b624896eeed9",
+      "bytes": 631
+    },
+    "README.md": {
+      "sha256": "5761297df6e6be555a969f58dedfe189dcc0fc2bc171f5b118f0cdfd3f8acb76",
+      "bytes": 919
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,254 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+    <Frame name="LFGHelperFrame" parent="UIParent" hidden="true" movable="true" resizable="true" enableMouse="true" clampedToScreen="true">
+        <FrameStrata>MEDIUM</FrameStrata>
+        <Size>
+            <AbsDimension x="620" y="400" />
+        </Size>
+        <Anchors>
+            <Anchor point="CENTER" />
+        </Anchors>
+
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background"
+                  edgeFile="Interface\DialogFrame\UI-DialogBox-Border"
+                  tile="true" tileSize="32" edgeSize="32">
+            <BackgroundInsets>
+                <AbsInset left="11" right="12" top="12" bottom="11" />
+            </BackgroundInsets>
+        </Backdrop>
+
+        <Scripts>
+            <OnLoad>
+                this:RegisterForDrag("LeftButton")
+                this:SetResizable(true)
+                this:SetMinResize(500, 400)
+            </OnLoad>
+            <OnMouseDown>
+                if arg1 == "LeftButton" then
+                    this:StartMoving()
+                elseif arg1 == "RightButton" then
+                    this:StartSizing("BOTTOMRIGHT")
+                end
+            </OnMouseDown>
+            <OnMouseUp>
+                this:StopMovingOrSizing()
+            </OnMouseUp>
+            <OnShow>
+                LFGHelper_OnLoad()
+                InitializeVisibleInstance()
+                UpdateMainFrame()
+            </OnShow>
+        </Scripts>
+
+        <Layers>
+            <Layer level="OVERLAY">
+                <FontString inherits="GameFontNormal" text="LFG Helper">
+                    <Anchors>
+                        <Anchor point="TOP">
+                            <Offset><AbsDimension x="0" y="-20"/></Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+
+        <Frames>
+
+            <!-- FILTER BUTTON -->
+            <Button name="LFGHelperFilterButton" inherits="UIPanelButtonTemplate" text="Filters...">
+                <Size><AbsDimension x="100" y="22"/></Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset><AbsDimension x="20" y="-50"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        if LFGHelperFilterFrame:IsVisible() then
+                            LFGHelperFilterFrame:Hide();
+                        else
+                            LFGHelperFilterFrame:Show();
+                            LFGHelperFilterFrame:Raise();
+                        end
+                    </OnClick>
+                </Scripts>
+            </Button>
+
+            <!-- OPTION BUTTON -->
+            <Button name="LFGHelperOptionButton" inherits="UIPanelButtonTemplate" text="Options...">
+                <Size><AbsDimension x="100" y="22"/></Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="LFGHelperFilterButton" relativePoint="RIGHT">
+                        <Offset><AbsDimension x="10" y="0"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        if LFGHelperOptionFrame:IsVisible() then
+                            LFGHelperOptionFrame:Hide();
+                        else
+                            LFGHelperOptionFrame:Show();
+                            LFGHelperOptionFrame:Raise();
+                        end
+                    </OnClick>
+                </Scripts>
+            </Button>
+
+            <!-- CLOSE BUTTON -->
+            <Button name="LFGHelperCloseButton" inherits="UIPanelCloseButton">
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset><AbsDimension x="-15" y="-15"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        this:GetParent():Hide();
+                    </OnClick>
+                </Scripts>
+            </Button>
+
+            <!-- Scrollable Text Block -->
+            <ScrollFrame name="LFGHelperScroll" inherits="UIPanelScrollFrameTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent">
+                        <Offset><AbsDimension x="20" y="-80"/></Offset>
+                    </Anchor>
+                    <Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+                        <Offset><AbsDimension x="-45" y="20"/></Offset> <!-- Make this more negative -->
+                    </Anchor>
+                </Anchors>
+                <ScrollChild>
+                    <Frame name="LFGHelperScrollContent">
+                        <Size><AbsDimension x="1" y="1"/></Size>  <!-- Removing the width hard limit of 440 -->
+                    </Frame>
+                </ScrollChild>
+            </ScrollFrame>
+
+        </Frames>
+
+    </Frame>
+
+    <!-- FILTER FRAME -->
+    <Frame name="LFGHelperFilterFrame" parent="UIParent" hidden="true" enableMouse="true" movable="true">
+        <FrameStrata>HIGH</FrameStrata>
+        <Size><AbsDimension x="575" y="475"/></Size>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background"
+                  edgeFile="Interface\DialogFrame\UI-DialogBox-Border"
+                  tile="true" tileSize="32" edgeSize="32">
+            <BackgroundInsets>
+                <AbsInset left="11" right="12" top="12" bottom="11"/>
+            </BackgroundInsets>
+        </Backdrop>
+        <Scripts>
+            <OnLoad>
+                this:RegisterForDrag("LeftButton")
+                this:SetWidth(575)
+                this:SetHeight(475)
+            </OnLoad>
+            <OnMouseDown>
+                if arg1 == "LeftButton" then
+                    this:StartMoving()
+                end
+            </OnMouseDown>
+            <OnMouseUp>
+                this:StopMovingOrSizing()
+            </OnMouseUp>
+            <OnShow>
+                RefreshInstanceCheckboxes()
+            </OnShow>
+        </Scripts>
+        <Layers>
+            <Layer level="OVERLAY">
+                <FontString inherits="GameFontNormal" text="Instances Filters">
+                    <Anchors>
+                        <Anchor point="TOP">
+                            <Offset><AbsDimension x="0" y="-20"/></Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+        <!-- CLOSE BUTTON -->
+            <Button name="LFGHelperCloseButton" inherits="UIPanelCloseButton">
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset><AbsDimension x="-15" y="-15"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        this:GetParent():Hide();
+                    </OnClick>
+                </Scripts>
+            </Button>
+        </Frames>
+    </Frame>
+
+     <!-- OPTION FRAME -->
+    <Frame name="LFGHelperOptionFrame" parent="UIParent" hidden="true" enableMouse="true" movable="true">
+        <FrameStrata>HIGH</FrameStrata>
+        <Size><AbsDimension x="600" y="400"/></Size>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background"
+                  edgeFile="Interface\DialogFrame\UI-DialogBox-Border"
+                  tile="true" tileSize="32" edgeSize="32">
+            <BackgroundInsets>
+                <AbsInset left="11" right="12" top="12" bottom="11"/>
+            </BackgroundInsets>
+        </Backdrop>
+        <Scripts>
+            <OnLoad>
+                this:RegisterForDrag("LeftButton")
+                this:SetWidth(550)
+                this:SetHeight(450)
+            </OnLoad>
+            <OnMouseDown>
+                if arg1 == "LeftButton" then
+                    this:StartMoving()
+                end
+            </OnMouseDown>
+            <OnMouseUp>
+                this:StopMovingOrSizing()
+            </OnMouseUp>
+            <OnShow>
+                LoadLFGHelperOptions()
+            </OnShow>
+        </Scripts>
+        <Layers>
+            <Layer level="OVERLAY">
+                <FontString inherits="GameFontNormal" text="Addon options">
+                    <Anchors>
+                        <Anchor point="TOP">
+                            <Offset><AbsDimension x="0" y="-20"/></Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+        <!-- CLOSE BUTTON -->
+            <Button name="LFGHelperCloseButton" inherits="UIPanelCloseButton">
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset><AbsDimension x="-15" y="-15"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        this:GetParent():Hide();
+                    </OnClick>
+                </Scripts>
+            </Button>
+        </Frames>
+    </Frame>
+
+</Ui>

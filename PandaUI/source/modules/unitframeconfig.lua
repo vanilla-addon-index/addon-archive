@@ -1,0 +1,1021 @@
+-- pandaUI :: modules/unitframeconfig.lua
+--
+-- The contextual settings panels for the player, target, target-of-target and
+-- party unit frame movers.
+--
+-- Selecting one of those handles in edit mode puts its own settings beside it,
+-- the way selecting an action bar does (modules/actionbarconfig.lua). Only the
+-- settings that are about the frame just clicked are on its panel: the player
+-- gets the power tick that rides its power bar, the incoming-heal fill on its
+-- health bar and the aura rows it carries; the target gets the exact creature
+-- health its readout prints, the same incoming-heal fill on its own bar, and
+-- its own aura rows. Both carry the combo-point anchor, because that setting is
+-- the choice of which of the two frames draws the points. Everything else about
+-- those frames stays on the Unit Frames pages. The party panel carries its two
+-- layout switches and the HoT controls drawn on its member rows. Every panel is
+-- a second view of the settings page, never a second configuration -- they read
+-- and write through the same accessors.
+--
+-- The window, its placement beside the handle and its lifecycle belong to
+-- core/moverpanel.lua. This file is in its own module rather than inside
+-- modules/unitframes.lua because that file is close to Lua's 200 top-level
+-- local limit (rules/pandaui.md, "Lua local budget").
+
+local U = PandaUI
+local M = U.media
+
+local UFC = U.RegisterModule("unitframeconfig")
+
+-- The movers modules/unitframes.lua registers for these frames. The values
+-- shown here are also on the Unit Frames pages; U.RefreshUnitFrameSettingsViews
+-- (modules/unitframes.lua) keeps the views in step.
+local PLAYER_MOVER_ID = "unitframes.player"
+local TARGET_MOVER_ID = "unitframes.target"
+local TARGET_TARGET_MOVER_ID = "unitframes.targettarget"
+local PET_MOVER_ID = "unitframes.pet"
+local PARTY_MOVER_ID = "unitframes.party"
+
+-- Two columns, the same shape the settings pages use, kept narrow enough to sit
+-- beside the frame at its default position instead of being pushed above it.
+-- Every label here is a short one for that reason: the long descriptive wording
+-- stays on the settings page, where there is room for it in every locale.
+-- LABEL_WIDTH leaves the checkbox square and its 6-unit gap inside the column,
+-- so the widest translation of a caption cannot run into the column beside it.
+local COLUMN_X = 164
+local CONTENT_WIDTH = COLUMN_X * 2
+local ROW_PITCH = 22
+local LABEL_WIDTH = COLUMN_X - 20
+-- The combo dropdown sits in the left column only; it needs no second column
+-- and a full-width selector would read as the panel's own control rather than
+-- the section's.
+local DROPDOWN_WIDTH = 200
+local HEALTH_DROPDOWN_WIDTH = COLUMN_X - 8
+local HEALTH_SECTION_HEIGHT = 204 -- health, power and size blocks
+
+local function ModernPortraits()
+  return type(U.GetActiveThemeStyle) == "function" and
+         U.GetActiveThemeStyle() == "modern"
+end
+
+local function SpecRow(spec)
+  if ModernPortraits() and spec.modernRow then return spec.modernRow end
+  return spec.row
+end
+
+-- The party panel carries the two layout switches and the complete HoT section
+-- from the Party Frames page. Its slider columns reuse the action-bar mover
+-- panel's compact proportions so the window remains narrow enough to sit next
+-- to the party block at its default left-edge position.
+-- Portrait controls occupy one row normally and two under Modern, where
+-- visibility and 2D/3D are independent.
+local PARTY_LAYOUT = {
+  hotCaption = 80,
+  hotEnabled = 102,
+  cornerLabel = 132,
+  corner = 148,
+  sliders = 204,
+  sliderWidth = 150,
+  sliderColumn = 168,
+  height = 292,
+}
+
+-- The party aura icon-size slider sits between the switches and the HoT
+-- section, which moves down by this much.
+local PARTY_ICON_SLIDER_HEIGHT = 64
+
+-- No HoT size slider: the icon-size slider above sizes the HoTs too.
+local PARTY_HOT_SLIDERS = {
+  { key = "spacing", textKey = "HOTS_SPACING", column = 0 },
+}
+
+-- A caption sits 30 below the last row of the group above it and 22 above its
+-- own first row, which is the spacing the settings pages use between a heading
+-- and its controls.
+local CAPTION_GAP = 30
+local CAPTION_TO_ROW = 22
+
+-- Combo points are drawn for the two classes that have them. The player's class
+-- cannot change inside a session, so the section is built or left out once,
+-- rather than being shown and hidden on every refresh.
+local function ComboClass()
+  local class = type(U.PlayerClassToken) == "function" and U.PlayerClassToken()
+  return class == "DRUID" or class == "ROGUE"
+end
+
+-- How many rows a group fills, taken from the rows its own specs claim.
+local function RowCount(specs)
+  local rows, i = 0, nil
+  for i = 1, table.getn(specs) do
+    local row = SpecRow(specs[i])
+    if row + 1 > rows then rows = row + 1 end
+  end
+  return rows
+end
+
+-- Rows below the shared content top, for one panel. The groups stay separate
+-- blocks: what the frame itself draws first, then the aura rows it carries
+-- under their own caption, then the combo section for the classes that have
+-- one. Each value is the top of the row it names, so a group's own last row is
+-- what the caption below it measures from.
+local function Layout(def)
+  if def.layout then return def.layout end
+  local layout = {}
+  layout.frameBottom = (RowCount(def.toggles) - 1) * ROW_PITCH
+  layout.auraCaption = layout.frameBottom + CAPTION_GAP
+  layout.auraRow = layout.auraCaption + CAPTION_TO_ROW
+  layout.auraBottom = layout.auraRow + (RowCount(def.auras) - 1) * ROW_PITCH
+  layout.comboCaption = layout.auraBottom + CAPTION_GAP
+  layout.comboRow = layout.comboCaption + CAPTION_TO_ROW
+  def.layout = layout
+  return layout
+end
+
+-- How far the content reaches below the content top, plus the panel's own
+-- inset: the last checkbox is 14 high, the combo dropdown 24.
+local function PanelHeight(def)
+  local layout = Layout(def)
+  local bottom = layout.auraBottom + 14
+  if ComboClass() then bottom = layout.comboRow + 24 end
+  return -U.MoverPanelContentTop() + HEALTH_SECTION_HEIGHT + bottom + 12
+end
+
+-- Places one checkbox in the two-column grid: column 0 or 1, row counted from
+-- the group's own first row.
+local function PlaceToggle(toggle, frame, pad, contentTop, groupY, column, row)
+  toggle.SetPoint("TOPLEFT", frame, "TOPLEFT", pad + column * COLUMN_X,
+                  contentTop - groupY - row * ROW_PITCH)
+end
+
+-- The short accent caption a group in this panel gets instead of a ruled
+-- section header: a heading with rules leaves no room for the longer
+-- translations at this width. Same treatment the colour page gives its
+-- power-bar swatches.
+local function AddCaption(frame, widgets, pad, y, text, width)
+  local caption = U.CreateSettingsLabel(frame, {
+    size = M.fontSize.small,
+    color = M.color.accent,
+    inherits = "GameFontNormalSmall",
+    justify = "LEFT",
+    width = width,
+  })
+  if not caption then return nil end
+  caption:SetPoint("TOPLEFT", frame, "TOPLEFT", pad, y)
+  caption:SetText(text)
+  table.insert(widgets, caption)
+  return caption
+end
+
+-- The global health readout appears in the integrated settings page and beside
+-- every mover whose frame actually carries a health value. These controls use
+-- the same accessors as that page, so changing either view updates all frames.
+local function BuildHealthTextControls(frame, pad, contentTop, widgets,
+                                       controls, namePrefix, sizeGroup)
+  controls.sizeGroup = sizeGroup
+  AddCaption(frame, widgets, pad, contentTop, U.L("UF_HEALTH_TEXT_HEADER"),
+             CONTENT_WIDTH)
+
+  local leftLabel = U.CreateSettingsLabel(frame, {
+    size = M.fontSize.small,
+    color = M.color.accent,
+    inherits = "GameFontNormalSmall",
+    justify = "LEFT",
+    width = HEALTH_DROPDOWN_WIDTH,
+  })
+  if leftLabel then
+    leftLabel:SetPoint("TOPLEFT", frame, "TOPLEFT", pad, contentTop - 22)
+    leftLabel:SetText(U.L("UF_HEALTH_TEXT_LEFT"))
+    table.insert(widgets, leftLabel)
+  end
+
+  local sideLabel = U.CreateSettingsLabel(frame, {
+    size = M.fontSize.small,
+    color = M.color.accent,
+    inherits = "GameFontNormalSmall",
+    justify = "LEFT",
+    width = HEALTH_DROPDOWN_WIDTH,
+  })
+  if sideLabel then
+    sideLabel:SetPoint("TOPLEFT", frame, "TOPLEFT", pad + COLUMN_X,
+                       contentTop - 22)
+    sideLabel:SetText(U.L("UF_HEALTH_TEXT_RIGHT"))
+    table.insert(widgets, sideLabel)
+  end
+
+  local left = U.CreateDropdown(frame, {
+    name = namePrefix .. "HealthTextLeft",
+    width = HEALTH_DROPDOWN_WIDTH,
+    height = 24,
+    rowHeight = 20,
+    value = U.GetUnitFrameHealthTextSetting("left"),
+    items = {
+      { value = "hidden", text = U.L("UF_HEALTH_TEXT_HIDDEN") },
+      { value = "percent", text = U.L("UF_HEALTH_TEXT_PERCENT") },
+      { value = "number", text = U.L("UF_HEALTH_TEXT_VALUE") },
+    },
+    onChange = function(value)
+      U.SetUnitFrameHealthTextSetting("left", value)
+    end,
+  })
+  left.SetPoint("TOPLEFT", frame, "TOPLEFT", pad, contentTop - 38)
+  controls.healthLeft = left
+  table.insert(widgets, left)
+
+  local right = U.CreateDropdown(frame, {
+    name = namePrefix .. "HealthTextRight",
+    width = HEALTH_DROPDOWN_WIDTH,
+    height = 24,
+    rowHeight = 20,
+    value = U.GetUnitFrameHealthTextSetting("right"),
+    items = {
+      { value = "hidden", text = U.L("UF_HEALTH_TEXT_HIDDEN") },
+      { value = "percent", text = U.L("UF_HEALTH_TEXT_PERCENT") },
+      { value = "number", text = U.L("UF_HEALTH_TEXT_VALUE") },
+    },
+    onChange = function(value)
+      U.SetUnitFrameHealthTextSetting("right", value)
+    end,
+  })
+  right.SetPoint("TOPLEFT", frame, "TOPLEFT", pad + COLUMN_X,
+                 contentTop - 38)
+  controls.healthRight = right
+  table.insert(widgets, right)
+
+  -- Power text: the same two selectors, one block below.
+  local top = contentTop - 68
+  AddCaption(frame, widgets, pad, top, U.L("UF_POWER_TEXT_HEADER"),
+             CONTENT_WIDTH)
+  local sides = {
+    { key = "left", caption = "UF_HEALTH_TEXT_LEFT", x = pad,
+      field = "powerLeft", name = "PowerTextLeft" },
+    { key = "right", caption = "UF_HEALTH_TEXT_RIGHT", x = pad + COLUMN_X,
+      field = "powerRight", name = "PowerTextRight" },
+  }
+  local i
+  for i = 1, 2 do
+    local side = sides[i]
+    local label = U.CreateSettingsLabel(frame, {
+      size = M.fontSize.small,
+      color = M.color.accent,
+      inherits = "GameFontNormalSmall",
+      justify = "LEFT",
+      width = HEALTH_DROPDOWN_WIDTH,
+    })
+    if label then
+      label:SetPoint("TOPLEFT", frame, "TOPLEFT", side.x, top - 22)
+      label:SetText(U.L(side.caption))
+      table.insert(widgets, label)
+    end
+    local dropdown = U.CreateDropdown(frame, {
+      name = namePrefix .. side.name,
+      width = HEALTH_DROPDOWN_WIDTH,
+      height = 24,
+      rowHeight = 20,
+      value = U.GetUnitFramePowerTextSetting(side.key),
+      items = {
+        { value = "default", text = U.L("UF_POWER_TEXT_DEFAULT") },
+        { value = "hidden", text = U.L("UF_HEALTH_TEXT_HIDDEN") },
+        { value = "percent", text = U.L("UF_HEALTH_TEXT_PERCENT") },
+        { value = "number", text = U.L("UF_POWER_TEXT_VALUE") },
+      },
+      onChange = function(value)
+        U.SetUnitFramePowerTextSetting(side.key, value)
+      end,
+    })
+    dropdown.SetPoint("TOPLEFT", frame, "TOPLEFT", side.x, top - 38)
+    controls[side.field] = dropdown
+    table.insert(widgets, dropdown)
+  end
+
+  -- Text size: one selector per bar, one more block below.
+  top = contentTop - 136
+  AddCaption(frame, widgets, pad, top, U.L("UF_TEXT_SIZE_HEADER"),
+             CONTENT_WIDTH)
+  local sizes = {
+    { kind = "health", caption = "UF_TEXT_SIZE_HEALTH", x = pad,
+      field = "healthSize", name = "HealthTextSize" },
+    { kind = "power", caption = "UF_TEXT_SIZE_POWER", x = pad + COLUMN_X,
+      field = "powerSize", name = "PowerTextSize" },
+  }
+  for i = 1, 2 do
+    local side = sizes[i]
+    local label = U.CreateSettingsLabel(frame, {
+      size = M.fontSize.small,
+      color = M.color.accent,
+      inherits = "GameFontNormalSmall",
+      justify = "LEFT",
+      width = HEALTH_DROPDOWN_WIDTH,
+    })
+    if label then
+      label:SetPoint("TOPLEFT", frame, "TOPLEFT", side.x, top - 22)
+      label:SetText(U.L(side.caption))
+      table.insert(widgets, label)
+    end
+    local dropdown = U.CreateDropdown(frame, {
+      name = namePrefix .. side.name,
+      width = HEALTH_DROPDOWN_WIDTH,
+      height = 24,
+      rowHeight = 20,
+      value = U.GetUnitFrameTextSize(side.kind, sizeGroup),
+      items = {
+        { value = 0, text = U.L("UF_POWER_TEXT_DEFAULT") },
+        { value = 6, text = "6" },
+        { value = 7, text = "7" },
+        { value = 8, text = "8" },
+        { value = 9, text = "9" },
+        { value = 10, text = "10" },
+        { value = 11, text = "11" },
+        { value = 12, text = "12" },
+        { value = 13, text = "13" },
+        { value = 14, text = "14" },
+        { value = 16, text = "16" },
+      },
+      onChange = function(value)
+        U.SetUnitFrameTextSize(side.kind, value, sizeGroup)
+      end,
+    })
+    dropdown.SetPoint("TOPLEFT", frame, "TOPLEFT", side.x, top - 38)
+    controls[side.field] = dropdown
+    table.insert(widgets, dropdown)
+  end
+end
+
+local function RefreshHealthTextControls(controls)
+  controls.healthLeft.SetValue(U.GetUnitFrameHealthTextSetting("left"))
+  controls.healthRight.SetValue(U.GetUnitFrameHealthTextSetting("right"))
+  controls.powerLeft.SetValue(U.GetUnitFramePowerTextSetting("left"))
+  controls.powerRight.SetValue(U.GetUnitFramePowerTextSetting("right"))
+  controls.healthSize.SetValue(U.GetUnitFrameTextSize("health",
+                                                      controls.sizeGroup))
+  controls.powerSize.SetValue(U.GetUnitFrameTextSize("power",
+                                                     controls.sizeGroup))
+end
+
+-- The player frame's own group, filling its columns left to right. A spec
+-- carries its own accessors because the values come from three modules: the
+-- power tick and combo anchor from modules/unitframes.lua, the incoming-heal
+-- fill from modules/healpredict.lua and the aura rows from modules/auras.lua.
+-- Every one of them is the same accessor the settings pages write through.
+local PLAYER_TOGGLES = {
+  { key = "manaTick", textKey = "UF_MANA_TICK", column = 0, row = 0,
+    get = function() return U.GetUnitFramePowerTick("manaTick") end,
+    set = function(value) U.SetUnitFramePowerTick("manaTick", value) end },
+  { key = "energyTick", textKey = "UF_ENERGY_TICK", column = 1, row = 0,
+    get = function() return U.GetUnitFramePowerTick("energyTick") end,
+    set = function(value) U.SetUnitFramePowerTick("energyTick", value) end },
+  { key = "healPredict", textKey = "UF_MOVER_INCOMING_HEALS", column = 0, row = 1,
+    get = function()
+      return type(U.GetHealPredictSetting) == "function" and
+             U.GetHealPredictSetting("enabled")
+    end,
+    set = function(value)
+      if type(U.SetHealPredictSetting) == "function" then
+        U.SetHealPredictSetting("enabled", value)
+      end
+    end },
+  { key = "portrait", textKey = "UF_MOVER_PORTRAIT", column = 0, row = 2,
+    modernOnly = true,
+    get = function()
+      return type(U.GetPortraitEnabled) == "function" and
+             U.GetPortraitEnabled("player")
+    end,
+    set = function(value)
+      if type(U.SetPortraitEnabled) == "function" then
+        U.SetPortraitEnabled("player", value)
+      end
+    end },
+  { key = "portrait3d", textKey = "UF_MOVER_PORTRAIT_3D", column = 1, row = 1,
+    modernRow = 2,
+    get = function()
+      return type(U.GetPortrait3D) == "function" and
+             U.GetPortrait3D("player")
+    end,
+    set = function(value)
+      if type(U.SetPortrait3D) == "function" then
+        U.SetPortrait3D("player", value)
+      end
+    end },
+}
+
+-- The target frame's own group. Exact creature health is the setting that is
+-- only about this frame: this client reports a non-group unit's health as a
+-- percentage, and the readout that replaces it is drawn here
+-- (core/unitvitals.lua). The incoming-heal fill is one shared toggle that
+-- paints the target's health bar as well, which is why it is on both panels.
+local TARGET_TOGGLES = {
+  { key = "exactVitals", textKey = "UF_MOVER_EXACT_VITALS", column = 0, row = 0,
+    get = function()
+      return type(U.GetExactVitals) == "function" and U.GetExactVitals()
+    end,
+    set = function(value)
+      if type(U.SetExactVitals) == "function" then U.SetExactVitals(value) end
+    end },
+  { key = "healPredict", textKey = "UF_MOVER_INCOMING_HEALS", column = 1, row = 0,
+    get = function()
+      return type(U.GetHealPredictSetting) == "function" and
+             U.GetHealPredictSetting("enabled")
+    end,
+    set = function(value)
+      if type(U.SetHealPredictSetting) == "function" then
+        U.SetHealPredictSetting("enabled", value)
+      end
+    end },
+  { key = "portrait", textKey = "UF_MOVER_PORTRAIT", column = 0, row = 1,
+    modernOnly = true,
+    get = function()
+      return type(U.GetPortraitEnabled) == "function" and
+             U.GetPortraitEnabled("target")
+    end,
+    set = function(value)
+      if type(U.SetPortraitEnabled) == "function" then
+        U.SetPortraitEnabled("target", value)
+      end
+    end },
+  { key = "portrait3d", textKey = "UF_MOVER_PORTRAIT_3D", column = 1, row = 1,
+    get = function()
+      return type(U.GetPortrait3D) == "function" and
+             U.GetPortrait3D("target")
+    end,
+    set = function(value)
+      if type(U.SetPortrait3D) == "function" then
+        U.SetPortrait3D("target", value)
+      end
+    end },
+}
+
+-- Kept as their own block rather than filling the gaps in the group above: the
+-- aura rows are a separate feature with a separate settings page, and reading
+-- them as one section is what says which caption they belong to. A spec with no
+-- getter of its own is one of modules/auras.lua's keys.
+--
+-- showOnPlayerFrame is the one that is only about the player frame; the timers
+-- and the above/below side are the module's shared settings, and the Auras page
+-- keeps the longer wording that says so. The target's group below is the same
+-- three toggles with its own location switch in front.
+local PLAYER_AURA_TOGGLES = {
+  { key = "showOnPlayerFrame", textKey = "UF_MOVER_AURAS_ENABLED",
+    column = 0, row = 0 },
+  { key = "showTimers", textKey = "UF_MOVER_AURAS_TIMERS",
+    column = 1, row = 0 },
+  { key = "belowFrame", textKey = "UF_MOVER_AURAS_BELOW",
+    column = 0, row = 1 },
+}
+
+-- The same three, one frame over: showOnTargetFrame is the target's own
+-- location switch, and it gates that frame's debuff and buff rows as a unit the
+-- way showOnPlayerFrame gates the player's. Which of the two rows is drawn
+-- stays on the Auras page, where each has its own checkbox under this switch --
+-- the panel carries the one simple option, not the pair.
+local TARGET_AURA_TOGGLES = {
+  { key = "showOnTargetFrame", textKey = "UF_MOVER_AURAS_ENABLED",
+    column = 0, row = 0 },
+  { key = "showTimers", textKey = "UF_MOVER_AURAS_TIMERS",
+    column = 1, row = 0 },
+  { key = "belowFrame", textKey = "UF_MOVER_AURAS_BELOW",
+    column = 0, row = 1 },
+}
+
+local function AuraValue(key)
+  return type(U.GetAuraSetting) == "function" and
+         U.GetAuraSetting(key) and true or false
+end
+
+local function SetAuraValue(key, value)
+  if type(U.SetAuraSetting) == "function" then
+    U.SetAuraSetting(key, value and true or false)
+  end
+end
+
+-- A spec either brings its own getter or is one of the aura keys. Written as a
+-- branch rather than an `or` chain so a spec whose own getter answers false is
+-- not asked the aura store for a key it does not own.
+local function SpecValue(spec)
+  if spec.get then return spec.get() and true or false end
+  return AuraValue(spec.key)
+end
+
+-- Builds one group into the shared column grid. get/set come from the spec for
+-- a frame group; an aura group shares one pair of accessors keyed by name. The
+-- widget name carries the panel's own prefix, since the two panels hold toggles
+-- for the same key and a widget name is global.
+local function BuildGroup(frame, pad, contentTop, groupY, specs, widgets,
+                          controls, namePrefix)
+  local i
+  for i = 1, table.getn(specs) do
+    local spec = specs[i]
+    if not spec.modernOnly or ModernPortraits() then
+      local key = spec.key
+      local toggle = U.CreateCheckbox(frame, {
+        name = namePrefix .. key,
+        text = U.L(spec.textKey),
+        textWidth = LABEL_WIDTH,
+        value = SpecValue(spec),
+        onChange = function(value)
+          if spec.set then spec.set(value) else SetAuraValue(key, value) end
+        end,
+      })
+      PlaceToggle(toggle, frame, pad, contentTop, groupY, spec.column,
+                  SpecRow(spec))
+      controls[key] = toggle
+      table.insert(widgets, toggle)
+    end
+  end
+end
+
+local function RefreshGroup(specs, controls)
+  local i
+  for i = 1, table.getn(specs) do
+    local spec = specs[i]
+    local control = controls[spec.key]
+    if control then control.SetValue(SpecValue(spec)) end
+  end
+end
+
+-- One panel's builder, in the shape core/moverpanel.lua asks for. def is a
+-- panel definition below; the two panels differ only in the specs they carry
+-- and what their widgets are named.
+local function BuildPanel(def, frame, contentTop, contentWidth)
+  local pad = U.MoverPanelPad()
+  local layout = Layout(def)
+  local widgets = {}
+  local controls = {}
+
+  BuildHealthTextControls(frame, pad, contentTop, widgets, controls,
+                          def.namePrefix, def.portraitFamily)
+
+  BuildGroup(frame, pad, contentTop, HEALTH_SECTION_HEIGHT, def.toggles,
+             widgets, controls,
+             def.namePrefix)
+
+  -- The aura rows this frame carries (modules/auras.lua).
+  AddCaption(frame, widgets, pad,
+             contentTop - HEALTH_SECTION_HEIGHT - layout.auraCaption,
+             U.L("UF_TAB_AURAS"), contentWidth)
+  BuildGroup(frame, pad, contentTop,
+             HEALTH_SECTION_HEIGHT + layout.auraRow, def.auras,
+             widgets, controls, def.namePrefix)
+
+  -- Which of the two frames draws the points. It is one stored value, so both
+  -- panels show it and either one may write it.
+  if ComboClass() then
+    AddCaption(frame, widgets, pad,
+               contentTop - HEALTH_SECTION_HEIGHT - layout.comboCaption,
+               U.L("UF_COMBO_POINTS_HEADER"), contentWidth)
+
+    local anchor = U.CreateDropdown(frame, {
+      name = def.namePrefix .. "ComboAnchor",
+      width = DROPDOWN_WIDTH,
+      height = 24,
+      rowHeight = 20,
+      value = U.GetComboPointAnchor(),
+      items = {
+        { value = "player", text = U.L("UF_COMBO_POINTS_PLAYER_FRAME") },
+        { value = "target", text = U.L("UF_COMBO_POINTS_TARGET_FRAME") },
+      },
+      onChange = function(value)
+        U.SetComboPointAnchor(value)
+      end,
+    })
+    anchor.SetPoint("TOPLEFT", frame, "TOPLEFT", pad,
+                    contentTop - HEALTH_SECTION_HEIGHT - layout.comboRow)
+    controls.comboAnchor = anchor
+    table.insert(widgets, anchor)
+  end
+
+  -- Called on every show, and again whenever a settings page or the other panel
+  -- writes one of these values while this one is up.
+  local function Refresh()
+    RefreshHealthTextControls(controls)
+    RefreshGroup(def.toggles, controls)
+    if controls.portrait3d and def.portraitFamily then
+      controls.portrait3d.SetEnabled(not ModernPortraits() or
+        U.GetPortraitEnabled(def.portraitFamily))
+    end
+    RefreshGroup(def.auras, controls)
+    if controls.comboAnchor then
+      controls.comboAnchor.SetValue(U.GetComboPointAnchor())
+    end
+  end
+
+  return widgets, Refresh
+end
+
+-- The party block's own contextual panel. The title already names the selected
+-- Party mover, so the two frame-layout switches begin immediately below it;
+-- the HoT controls keep their own accent caption because they are a distinct
+-- feature drawn on those frames. Every callback uses the same accessors as the
+-- Party Frames settings page.
+local function BuildPartyPanel(frame, contentTop, contentWidth)
+  local pad = U.MoverPanelPad()
+  local widgets = {}
+  local controls = {}
+  -- One extra row: Modern's portrait switch, or the raid-style switch under
+  -- classic-wow / modern-wow (U.PartyRaidStyleAvailable).
+  local raidStyle = type(U.PartyRaidStyleAvailable) == "function" and
+                    U.PartyRaidStyleAvailable()
+  local portraitOffset = (ModernPortraits() or raidStyle) and ROW_PITCH or 0
+
+  BuildHealthTextControls(frame, pad, contentTop, widgets, controls,
+                          "PandaUIPartyFrameMover", "party")
+  contentTop = contentTop - HEALTH_SECTION_HEIGHT
+
+  local function BeginLiveEdit()
+    if type(U.FreezeMoverPanel) == "function" then U.FreezeMoverPanel() end
+  end
+
+  local player = U.CreateCheckbox(frame, {
+    name = "PandaUIPartyFrameMoverPlayer",
+    text = U.L("UF_PARTY_PLAYER"),
+    textWidth = contentWidth - 20,
+    value = U.GetUnitFramePartySetting("partyPlayer"),
+    onChange = function(value)
+      U.SetUnitFramePartySetting("partyPlayer", value)
+    end,
+  })
+  player.SetPoint("TOPLEFT", frame, "TOPLEFT", pad, contentTop)
+  controls.partyPlayer = player
+  table.insert(widgets, player)
+
+  local pets = U.CreateCheckbox(frame, {
+    name = "PandaUIPartyFrameMoverPets",
+    text = U.L("UF_PARTY_PETS"),
+    textWidth = contentWidth - 20,
+    value = U.GetUnitFramePartySetting("partyPets"),
+    onChange = function(value)
+      U.SetUnitFramePartySetting("partyPets", value)
+    end,
+  })
+  pets.SetPoint("TOPLEFT", frame, "TOPLEFT", pad, contentTop - ROW_PITCH)
+  controls.partyPets = pets
+  table.insert(widgets, pets)
+
+  if ModernPortraits() then
+    local portrait = U.CreateCheckbox(frame, {
+      name = "PandaUIPartyFrameMoverPortrait",
+      text = U.L("UF_MOVER_PORTRAIT"),
+      textWidth = contentWidth - 20,
+      value = U.GetPortraitEnabled("party"),
+      onChange = function(value)
+        U.SetPortraitEnabled("party", value)
+      end,
+    })
+    portrait.SetPoint("TOPLEFT", frame, "TOPLEFT", pad,
+                      contentTop - 2 * ROW_PITCH)
+    controls.portrait = portrait
+    table.insert(widgets, portrait)
+  end
+
+  local portrait3d = U.CreateCheckbox(frame, {
+    name = "PandaUIPartyFrameMoverPortrait3D",
+    text = U.L("UF_MOVER_PORTRAIT_3D"),
+    textWidth = contentWidth - 20,
+    value = type(U.GetPortrait3D) == "function" and
+            U.GetPortrait3D("party") or false,
+    onChange = function(value)
+      if type(U.SetPortrait3D) == "function" then
+        U.SetPortrait3D("party", value)
+      end
+    end,
+  })
+  portrait3d.SetPoint("TOPLEFT", frame, "TOPLEFT", pad,
+                      contentTop - 2 * ROW_PITCH -
+                      (ModernPortraits() and ROW_PITCH or 0))
+  controls.portrait3d = portrait3d
+  table.insert(widgets, portrait3d)
+
+  if raidStyle and not ModernPortraits() then
+    local raid = U.CreateCheckbox(frame, {
+      name = "PandaUIPartyFrameMoverRaidStyle",
+      text = U.L("UF_MOVER_PARTY_RAID_STYLE"),
+      textWidth = contentWidth - 20,
+      value = U.GetUnitFramePartySetting("partyRaidStyle"),
+      onChange = function(value)
+        U.SetUnitFramePartySetting("partyRaidStyle", value)
+      end,
+    })
+    raid.SetPoint("TOPLEFT", frame, "TOPLEFT", pad, contentTop - 3 * ROW_PITCH)
+    controls.partyRaidStyle = raid
+    table.insert(widgets, raid)
+  end
+
+  if type(U.AuraPartyIconSizeLimits) == "function" then
+    local min, max, step = U.AuraPartyIconSizeLimits()
+    local iconSize = U.CreateSlider(frame, {
+      name = "PandaUIPartyFrameMoverIconSize",
+      text = U.L("UF_MOVER_PARTY_ICON_SIZE"),
+      width = PARTY_LAYOUT.sliderWidth,
+      boxWidth = 60,
+      min = min,
+      max = max,
+      step = step,
+      value = U.GetAuraSetting("partyIconSize"),
+      onChange = function(value) U.SetAuraSetting("partyIconSize", value) end,
+    })
+    iconSize.SetPoint("TOPLEFT", frame, "TOPLEFT", pad,
+                      contentTop - PARTY_LAYOUT.hotCaption - portraitOffset -
+                      10)
+    controls.partyIconSize = iconSize
+    table.insert(widgets, iconSize)
+  end
+  portraitOffset = portraitOffset + PARTY_ICON_SLIDER_HEIGHT
+
+  AddCaption(frame, widgets, pad,
+             contentTop - PARTY_LAYOUT.hotCaption - portraitOffset,
+             U.L("HOTS_HEADER"), contentWidth)
+
+  local enabled = U.CreateCheckbox(frame, {
+    name = "PandaUIPartyFrameMoverHotsEnabled",
+    text = U.L("HOTS_ENABLED"),
+    textWidth = contentWidth - 20,
+    value = U.GetHotSetting("enabled"),
+    onChange = function(value) U.SetHotSetting("enabled", value) end,
+  })
+  enabled.SetPoint("TOPLEFT", frame, "TOPLEFT", pad,
+                   contentTop - PARTY_LAYOUT.hotEnabled - portraitOffset)
+  controls.enabled = enabled
+  table.insert(widgets, enabled)
+
+  local cornerLabel = U.CreateSettingsLabel(frame, {
+    size = M.fontSize.small,
+    color = M.color.accent,
+    inherits = "GameFontNormalSmall",
+    justify = "LEFT",
+    width = DROPDOWN_WIDTH,
+    height = 14,
+  })
+  if cornerLabel then
+    cornerLabel:SetPoint("TOPLEFT", frame, "TOPLEFT", pad,
+                         contentTop - PARTY_LAYOUT.cornerLabel - portraitOffset)
+    cornerLabel:SetText(U.L("HOTS_CORNER"))
+    table.insert(widgets, cornerLabel)
+  end
+
+  local items = {}
+  local corners = U.HotCorners()
+  local i
+  for i = 1, table.getn(corners) do
+    table.insert(items, {
+      value = corners[i].value,
+      text = U.L(corners[i].textKey),
+    })
+  end
+
+  local corner = U.CreateDropdown(frame, {
+    name = "PandaUIPartyFrameMoverHotsCorner",
+    width = DROPDOWN_WIDTH,
+    height = 24,
+    rowHeight = 20,
+    value = U.GetHotSetting("corner"),
+    items = items,
+    onChange = function(value) U.SetHotSetting("corner", value) end,
+  })
+  corner.SetPoint("TOPLEFT", frame, "TOPLEFT", pad,
+                  contentTop - PARTY_LAYOUT.corner - portraitOffset)
+  controls.corner = corner
+  table.insert(widgets, corner)
+
+  for i = 1, table.getn(PARTY_HOT_SLIDERS) do
+    local spec = PARTY_HOT_SLIDERS[i]
+    local min, max, step = U.HotLimits(spec.key)
+    local slider = U.CreateSlider(frame, {
+      name = "PandaUIPartyFrameMoverHots" .. spec.key,
+      text = U.L(spec.textKey),
+      width = PARTY_LAYOUT.sliderWidth,
+      boxWidth = 60,
+      min = min,
+      max = max,
+      step = step,
+      value = U.GetHotSetting(spec.key),
+      onInputStart = BeginLiveEdit,
+      onInput = function(value)
+        if type(U.PreviewHotSetting) == "function" then
+          U.PreviewHotSetting(spec.key, value)
+        end
+      end,
+      onInputEnd = function()
+        if type(U.EndHotSettingPreview) == "function" then
+          U.EndHotSettingPreview(spec.key)
+        end
+      end,
+      onChange = function(value) U.SetHotSetting(spec.key, value) end,
+    })
+    slider.SetPoint("TOPLEFT", frame, "TOPLEFT",
+                    pad + spec.column * PARTY_LAYOUT.sliderColumn,
+                    contentTop - PARTY_LAYOUT.sliders - portraitOffset)
+    controls[spec.key] = slider
+    table.insert(widgets, slider)
+  end
+
+  local function Refresh()
+    RefreshHealthTextControls(controls)
+    controls.partyPlayer.SetValue(U.GetUnitFramePartySetting("partyPlayer"))
+    controls.partyPets.SetValue(U.GetUnitFramePartySetting("partyPets"))
+    if controls.partyIconSize then
+      controls.partyIconSize.SetValue(U.GetAuraSetting("partyIconSize"))
+    end
+    if controls.partyRaidStyle then
+      controls.partyRaidStyle.SetValue(
+        U.GetUnitFramePartySetting("partyRaidStyle"))
+    end
+    if controls.portrait then
+      controls.portrait.SetValue(U.GetPortraitEnabled("party"))
+      controls.portrait3d.SetEnabled(U.GetPortraitEnabled("party"))
+    end
+    controls.portrait3d.SetValue(type(U.GetPortrait3D) == "function" and
+                                 U.GetPortrait3D("party") or false)
+    controls.enabled.SetValue(U.GetHotSetting("enabled"))
+    controls.corner.SetValue(U.GetHotSetting("corner"))
+    local n
+    for n = 1, table.getn(PARTY_HOT_SLIDERS) do
+      local key = PARTY_HOT_SLIDERS[n].key
+      controls[key].SetValue(U.GetHotSetting(key))
+    end
+  end
+
+  return widgets, Refresh
+end
+
+-- The pet mover carries the shared health readout, which changes its health
+-- bar too, and the pet's own 2D/3D portrait switch. Under Modern the pet's
+-- portrait is shown with the player's, so the switch follows that visibility.
+local function BuildPetPanel(frame, contentTop, contentWidth)
+  local pad = U.MoverPanelPad()
+  local widgets = {}
+  local controls = {}
+  BuildHealthTextControls(frame, pad, contentTop, widgets,
+                          controls, "PandaUIPetFrameMover", "pet")
+
+  local portrait3d = U.CreateCheckbox(frame, {
+    name = "PandaUIPetFrameMoverPortrait3D",
+    text = U.L("UF_MOVER_PORTRAIT_3D"),
+    textWidth = contentWidth - 20,
+    value = U.GetPortrait3D("pet"),
+    onChange = function(value)
+      U.SetPortrait3D("pet", value)
+    end,
+  })
+  portrait3d.SetPoint("TOPLEFT", frame, "TOPLEFT", pad,
+                      contentTop - HEALTH_SECTION_HEIGHT)
+  table.insert(widgets, portrait3d)
+
+  local function Refresh()
+    RefreshHealthTextControls(controls)
+    if ModernPortraits() then
+      portrait3d.SetEnabled(U.GetPortraitEnabled("pet"))
+    end
+    portrait3d.SetValue(U.GetPortrait3D("pet"))
+  end
+
+  return widgets, Refresh
+end
+
+-- Target-of-target has no aura, vitals or combo-point settings of its own. Its
+-- compact contextual panel therefore contains only the portrait switch rather
+-- than borrowing the larger target panel and exposing unrelated controls.
+local function BuildTargetTargetPanel(frame, contentTop, contentWidth)
+  local pad = U.MoverPanelPad()
+  local widgets = {}
+  local portrait
+
+  if ModernPortraits() then
+    portrait = U.CreateCheckbox(frame, {
+      name = "PandaUITargetTargetFrameMoverPortrait",
+      text = U.L("UF_MOVER_PORTRAIT"),
+      textWidth = LABEL_WIDTH,
+      value = U.GetPortraitEnabled("targettarget"),
+      onChange = function(value)
+        U.SetPortraitEnabled("targettarget", value)
+      end,
+    })
+    portrait.SetPoint("TOPLEFT", frame, "TOPLEFT", pad, contentTop)
+    table.insert(widgets, portrait)
+  end
+
+  local portrait3d = U.CreateCheckbox(frame, {
+    name = "PandaUITargetTargetFrameMoverPortrait3D",
+    text = U.L("UF_MOVER_PORTRAIT_3D"),
+    textWidth = contentWidth - 20,
+    value = type(U.GetPortrait3D) == "function" and
+            U.GetPortrait3D("targettarget") or false,
+    onChange = function(value)
+      if type(U.SetPortrait3D) == "function" then
+        U.SetPortrait3D("targettarget", value)
+      end
+    end,
+  })
+  portrait3d.SetPoint("TOPLEFT", frame, "TOPLEFT",
+                      pad + (portrait and COLUMN_X or 0), contentTop)
+  table.insert(widgets, portrait3d)
+
+  local enabled = U.CreateCheckbox(frame, {
+    name = "PandaUITargetTargetFrameMoverEnabled",
+    text = U.L("UF_MOVER_TARGET_TARGET_ENABLED"),
+    textWidth = contentWidth - 20,
+    value = U.GetTargetTargetEnabled(),
+    onChange = function(value)
+      U.SetTargetTargetEnabled(value)
+    end,
+  })
+  enabled.SetPoint("TOPLEFT", frame, "TOPLEFT", pad, contentTop - ROW_PITCH)
+  table.insert(widgets, enabled)
+
+  local function Refresh()
+    enabled.SetValue(U.GetTargetTargetEnabled())
+    if portrait then
+      portrait.SetValue(U.GetPortraitEnabled("targettarget"))
+      portrait3d.SetEnabled(U.GetPortraitEnabled("targettarget"))
+    end
+    portrait3d.SetValue(type(U.GetPortrait3D) == "function" and
+                        U.GetPortrait3D("targettarget") or false)
+  end
+
+  return widgets, Refresh
+end
+
+-- The two panels. Each is registered against its own mover id and gets its own
+-- frame; they share this file's grid, captions and accessors rather than being
+-- two lookalikes (rules/pandaui-design.md, "Do not build local variants").
+local PANELS = {
+  { moverId = PLAYER_MOVER_ID,
+    name = "PandaUIUnitFrameMoverSettings",
+    namePrefix = "PandaUIUnitFrameMover",
+    titleKey = "MOVER_LABEL_PLAYER",
+    portraitFamily = "player",
+    toggles = PLAYER_TOGGLES,
+    auras = PLAYER_AURA_TOGGLES },
+  { moverId = TARGET_MOVER_ID,
+    name = "PandaUITargetFrameMoverSettings",
+    namePrefix = "PandaUITargetFrameMover",
+    titleKey = "MOVER_LABEL_TARGET",
+    portraitFamily = "target",
+    toggles = TARGET_TOGGLES,
+    auras = TARGET_AURA_TOGGLES },
+}
+
+function UFC:OnInit()
+  if type(U.RegisterMoverPanel) ~= "function" then return end
+
+  local i
+  for i = 1, table.getn(PANELS) do
+    local def = PANELS[i]
+    U.RegisterMoverPanel(def.moverId, {
+      name = def.name,
+      width = CONTENT_WIDTH + U.MoverPanelPad() * 2,
+      height = function() return PanelHeight(def) end,
+      build = function(frame, contentTop, contentWidth)
+        return BuildPanel(def, frame, contentTop, contentWidth)
+      end,
+      title = function() return U.L(def.titleKey) end,
+      -- Nothing to configure while the module that owns these settings is not
+      -- there to apply them.
+      available = function()
+        return type(U.GetUnitFramePowerTick) == "function"
+      end,
+    })
+  end
+
+  U.RegisterMoverPanel(TARGET_TARGET_MOVER_ID, {
+    name = "PandaUITargetTargetFrameMoverSettings",
+    width = CONTENT_WIDTH + U.MoverPanelPad() * 2,
+    height = -U.MoverPanelContentTop() + 26 + ROW_PITCH,
+    build = BuildTargetTargetPanel,
+    title = function() return U.L("MOVER_LABEL_TARGET_TARGET") end,
+    available = function()
+      return type(U.GetPortrait3D) == "function" and
+             type(U.SetPortrait3D) == "function" and
+             type(U.GetTargetTargetEnabled) == "function"
+    end,
+  })
+
+  U.RegisterMoverPanel(PET_MOVER_ID, {
+    name = "PandaUIPetFrameMoverSettings",
+    width = CONTENT_WIDTH + U.MoverPanelPad() * 2,
+    height = -U.MoverPanelContentTop() + HEALTH_SECTION_HEIGHT + 14 + 12,
+    build = BuildPetPanel,
+    title = function() return U.L("MOVER_LABEL_PET") end,
+    available = function()
+      return type(U.GetUnitFrameHealthTextSetting) == "function" and
+             type(U.GetUnitFramePowerTextSetting) == "function" and
+             type(U.GetUnitFrameTextSize) == "function" and
+             type(U.GetPortrait3D) == "function" and
+             type(U.SetPortrait3D) == "function"
+    end,
+  })
+
+  U.RegisterMoverPanel(PARTY_MOVER_ID, {
+    name = "PandaUIPartyFrameMoverSettings",
+    width = CONTENT_WIDTH + U.MoverPanelPad() * 2,
+    height = function()
+      local raidStyle = type(U.PartyRaidStyleAvailable) == "function" and
+                        U.PartyRaidStyleAvailable()
+      return PARTY_LAYOUT.height + HEALTH_SECTION_HEIGHT +
+             PARTY_ICON_SLIDER_HEIGHT +
+             ((ModernPortraits() or raidStyle) and ROW_PITCH or 0)
+    end,
+    build = BuildPartyPanel,
+    title = function() return U.L("MOVER_LABEL_PARTY") end,
+    available = function()
+      return type(U.GetUnitFramePartySetting) == "function" and
+             type(U.GetHotSetting) == "function"
+    end,
+  })
+end

@@ -1,0 +1,353 @@
+{
+  "upstream": "https://octowow.st/git/grom/gromissingcrafts",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "grom",
+    "repo": "gromissingcrafts",
+    "name": "gromissingcrafts",
+    "url": "https://octowow.st/git/grom/gromissingcrafts",
+    "api": "https://octowow.st/git/api/v1/repos/grom/gromissingcrafts"
+  },
+  "commit": "e48c0c1f3867d4ef6ddd2ee86a828808f5b4b835",
+  "sourceFiles": {
+    "Gromissingcrafts/CHANGES.md": {
+      "sha256": "899f8d70b75b92ae622d7f005578e2226a8a8f063a29ce437ec16dd331076d7e",
+      "bytes": 3082
+    },
+    "Gromissingcrafts/CLAUDE.md": {
+      "sha256": "4694db7b1af2fb79953b5b2291a1c22fab026243ddc1736e09c9b4f4061d2ad7",
+      "bytes": 9680
+    },
+    "Gromissingcrafts/Gromissingcrafts.toc": {
+      "sha256": "b410bd740d903d61088fbb4c38ccc1015300d564cd80b01f39295336bc915bb4",
+      "bytes": 1274
+    },
+    "Gromissingcrafts/lib/LibCraftingProfessions-1.0/LibCraftingProfessions-1.0.lua": {
+      "sha256": "aa1cf78a4aa786f08f07de10f7ae489fac932bbc4ad8203a199573f72fa3b48e",
+      "bytes": 30132
+    },
+    "Gromissingcrafts/lib/LibCraftingProfessions-1.0/LibCraftingProfessions-1.0.xml": {
+      "sha256": "5c8b1701dee08ffaab6726e2a74269c59fd58e0d828285772a3ca9ef6bd264d7",
+      "bytes": 264
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/CHANGES.md": {
+      "sha256": "090f05cab81e8834f74ce8c1c92ee59b837ce28648f91a083f87fbc25f8cdd44",
+      "bytes": 1907
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/LibCrafts-1.0.lua": {
+      "sha256": "fb26958901773d109a9e13265e935a5f50872c37506b419f1ed4e6753e702ff4",
+      "bytes": 14139
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/LibCrafts-1.0.xml": {
+      "sha256": "f17d8255405e3c8d26ff8ae3c6936b844c62a24828c4dc4d98ece45f7b9ee7c7",
+      "bytes": 349
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/LibStub.lua": {
+      "sha256": "d024dc95604e228e94a4406c2582a0ae571d829be78cd81658dcd5d44ad0eaef",
+      "bytes": 1462
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/LICENSE": {
+      "sha256": "ef09d8b963f5257ce111d8c8a4551a97449bc6662708cc57552d3f46b8b12538",
+      "bytes": 1073
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/deDE-Professions.lua": {
+      "sha256": "94a8dc3811768ee12c97e1a13d2c2c6efea82d0edad2a3498549dcfa574d15c3",
+      "bytes": 697
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/deDE-Spells.lua": {
+      "sha256": "d37d2cfa44f6a399e47350a259225f9dc5f64fd5f6a23559748be5ad0521b879",
+      "bytes": 94079
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/enUS-Professions.lua": {
+      "sha256": "a13cd16284f6441a1d408c779d60ceeefe5e6abc670f5c52303b56200bcab26f",
+      "bytes": 611
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/enUS-Spells.lua": {
+      "sha256": "6208f8703fbcd0bdeab91877d2f5e7ba9e672626f04f44e811047ef368a5b9da",
+      "bytes": 59956
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/esES-Professions.lua": {
+      "sha256": "7be6f71ac14e85ab87a90a56990008452c92e16d0ad05c57ffd7bf7498399deb",
+      "bytes": 972
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/esES-Spells.lua": {
+      "sha256": "6ffc20feed2dd165b53b45fba3fd535f459ea61c3131400958c835b2a97c2607",
+      "bytes": 169741
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/esMX-Professions.lua": {
+      "sha256": "b2848a370a5f7f0c31a758f9afd9c2b6f80a9815b4173a746c25127d4ed79d22",
+      "bytes": 677
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/esMX-Spells.lua": {
+      "sha256": "e7a82b0c52cf49107b84977121cf64393153f0f338f65ca92993a9ba2b8a55cb",
+      "bytes": 88073
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/frFR-Professions.lua": {
+      "sha256": "228d919908949b81d7f2c62ab8c4b797a3a3fa9bb2f886522244de869f911b31",
+      "bytes": 674
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/frFR-Spells.lua": {
+      "sha256": "abb6d5692306dfe48cd03fb463dec88d954bd96347e1e8efc49da1c722a7d5b4",
+      "bytes": 88927
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/koKR-Professions.lua": {
+      "sha256": "2afd5ba84606e5be2139f813b36fe1f95edc008d56c9d34c8073f7e31b544c8d",
+      "bytes": 682
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/koKR-Spells.lua": {
+      "sha256": "9a5d36f44ced08f29a2067fcbcc66ea01f447ac01377a0bd745ce50451a36868",
+      "bytes": 87960
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/Locales.xml": {
+      "sha256": "7e4c8d158c8710e7faa99af1e08cb7890ab85da7e64e29d4da51a002d533970c",
+      "bytes": 1009
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/ptBR-Professions.lua": {
+      "sha256": "830bb74ca79e3338a7d491db0ec40c6a71f498604e03be3fc2b3701e15361167",
+      "bytes": 681
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/ptBR-Spells.lua": {
+      "sha256": "5b9547f2ba2521c5f3ace5a568655cd845ae829697e2664679df22c8cb7c40a3",
+      "bytes": 102891
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/ruRU-Professions.lua": {
+      "sha256": "946ed35481513f472b003183dea6f070f993b612a656a68566dc7f850dd5ac0f",
+      "bytes": 828
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/ruRU-Spells.lua": {
+      "sha256": "6f63e6374d1bc32d9630968660f3e1bddbed52d0d1221153140e2d6a7bc9d1a3",
+      "bytes": 114319
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/zhCN-Professions.lua": {
+      "sha256": "c8b49628565e9e05ac358ce28d39fbc57813d14484b03deb9fe2b896d8df57a2",
+      "bytes": 648
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/zhCN-Spells.lua": {
+      "sha256": "d15cbdf2744393b332ff46b32ebee282cc21650a71919e0ec6a7f11d720f6db8",
+      "bytes": 83953
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/zhTW-Professions.lua": {
+      "sha256": "0bd82c1a62ae9eabc1ea23c6c8dfab20eac02aeae0fd780722edb42e5885317f",
+      "bytes": 648
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Locales/zhTW-Spells.lua": {
+      "sha256": "4474cdfb830fd19416b0bb42e9d0cfeaf0b34bee1d1027d8f357484ab654bc83",
+      "bytes": 78067
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Professions/Alchemy.lua": {
+      "sha256": "838c7ecb3df487973deaeb73d55ce05c1528fd835f63944cc61f91c71ec2fb7d",
+      "bytes": 37669
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Professions/Blacksmithing.lua": {
+      "sha256": "30a4346e543d886bb9ca774b4cbb57f7e3db88d9b05b986e6eded1a744a7749b",
+      "bytes": 103529
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Professions/Cooking.lua": {
+      "sha256": "cc02f337476524c58419dc36565f83ca128c91833b2381d70ba751c2ed446ae7",
+      "bytes": 23431
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Professions/Enchanting.lua": {
+      "sha256": "722517b0d77fa50b38e9eaec42b79872220d9d76c59bf0a5604f669bf9f511da",
+      "bytes": 42356
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Professions/Engineering.lua": {
+      "sha256": "e467c83d883385a76cbd23008a2fad042a23fac3858fbb85a628ce26e047a897",
+      "bytes": 53820
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Professions/FirstAid.lua": {
+      "sha256": "880219f763f821607ce39601d0d32732b7f86b333d2651f990483a067e578ef3",
+      "bytes": 2881
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Professions/Leatherworking.lua": {
+      "sha256": "9b81b015d171709cffa6f875021811c8df386b6b34a38dd6b01edead7950989d",
+      "bytes": 90597
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Professions/Mining.lua": {
+      "sha256": "e7031dae6c02875a4ae86def48a606696d44e19547a5ce4d635c51f2c655f08a",
+      "bytes": 2661
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Professions/Poisons.lua": {
+      "sha256": "848fa25dd1f5efe35151b7da8cd9d114acf189e480c6d38642de7f24241ca4db",
+      "bytes": 6140
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Professions/Professions.xml": {
+      "sha256": "92240654ccd850be4c2dbe3f321610cfc702a541ec9b0f143ebe7dca12884ca0",
+      "bytes": 597
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Professions/Tailoring.lua": {
+      "sha256": "570fa1ea685f2ef1ae7bf7de3435282df9839169368added7dde33000dac7d02",
+      "bytes": 84511
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Professions/Turtle/Disguise.lua": {
+      "sha256": "549f373825a360b9ab7e0d4f2c8106144bb513794d58d0556a1197aeba31aeec",
+      "bytes": 2421
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Professions/Turtle/Jewelcrafting.lua": {
+      "sha256": "68dd1ebeabe2e90ea2e6a6fe50b3f47731e123ada3931f08179e6864667b275d",
+      "bytes": 75294
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Professions/Turtle/Professions.xml": {
+      "sha256": "8bdbfba2f7f43876ec3cb7bcd7c22281b76ea84c2c1535ac041f0f746fd2163f",
+      "bytes": 292
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/Professions/Turtle/Survival.lua": {
+      "sha256": "8d3918fa679a6f2b74a59a7683bffa1643a4a77d217811176d7180ec7d4df65d",
+      "bytes": 12107
+    },
+    "Gromissingcrafts/lib/LibCrafts-1.0/README.md": {
+      "sha256": "71f8673b14467a98f94089ee583abe7a19600a0167abd57a2eb2f9fa721ba69d",
+      "bytes": 2117
+    },
+    "Gromissingcrafts/lib/LibItemTooltip-1.0/LibItemTooltip-1.0.lua": {
+      "sha256": "7b9fd9881ec32245aab93d30afc8b281863f7a78dc6eb57ba688b44e9e7344a2",
+      "bytes": 6809
+    },
+    "Gromissingcrafts/lib/LibItemTooltip-1.0/LibItemTooltip-1.0.xml": {
+      "sha256": "aa0eb2c79fe8c17c386704e8af08b0cbd97b7f5949fa5f781e2dc398107dd506",
+      "bytes": 256
+    },
+    "Gromissingcrafts/lib/LibItemTooltip-1.0/LibStub.lua": {
+      "sha256": "d024dc95604e228e94a4406c2582a0ae571d829be78cd81658dcd5d44ad0eaef",
+      "bytes": 1462
+    },
+    "Gromissingcrafts/lib/LibItemTooltip-1.0/LICENSE": {
+      "sha256": "ef09d8b963f5257ce111d8c8a4551a97449bc6662708cc57552d3f46b8b12538",
+      "bytes": 1073
+    },
+    "Gromissingcrafts/lib/LibStub/LibStub.lua": {
+      "sha256": "d024dc95604e228e94a4406c2582a0ae571d829be78cd81658dcd5d44ad0eaef",
+      "bytes": 1462
+    },
+    "Gromissingcrafts/LICENSE": {
+      "sha256": "ebb7adb630c1d83c0e7dd4c35b1be0e4eb357855c56eecf7d40d64338aebcc26",
+      "bytes": 1364
+    },
+    "Gromissingcrafts/README.md": {
+      "sha256": "97d3636c5911195c00bfbf29a3cada5961d7cf5a28d2fab6742a643048580d1b",
+      "bytes": 5085
+    },
+    "Gromissingcrafts/src/Compatibility.lua": {
+      "sha256": "ac4962fd8229954b70961c9bbcaf8a5e4a41194754329b056937e710a92990b9",
+      "bytes": 634
+    },
+    "Gromissingcrafts/src/db/Character.lua": {
+      "sha256": "a270b1ae290081605149794c1a9c8e2042488dde4dab7179328acf043ad44290",
+      "bytes": 2138
+    },
+    "Gromissingcrafts/src/db/CharacterRepository.lua": {
+      "sha256": "d07eab94bc6bf125ca75c90c93cb1420524f9f1904b2fd73f59e5940a6fe7153",
+      "bytes": 933
+    },
+    "Gromissingcrafts/src/db/CraftRepository.lua": {
+      "sha256": "133ba9b4c0b7bbe8d01072ba7e5b70ed055b72b1b8c9a205c506ad71f4562ddd",
+      "bytes": 6564
+    },
+    "Gromissingcrafts/src/db/Database.lua": {
+      "sha256": "68b4cc2010a91261f55a7f509a021a6ea6dce1d68dd67285da8a1bb68821ac89",
+      "bytes": 4440
+    },
+    "Gromissingcrafts/src/DevTools.lua": {
+      "sha256": "2f0562f26ded3111324d4fab02850643e97b5e45455b6737cd6400d89dbf4858",
+      "bytes": 6547
+    },
+    "Gromissingcrafts/src/Environment.lua": {
+      "sha256": "3754016b85b2104948b4e862067b5e2f91fd1258e6c8b4e0087df7da35ddd059",
+      "bytes": 1433
+    },
+    "Gromissingcrafts/src/Gromissingcrafts.lua": {
+      "sha256": "a0400d59656c113f8c3150f4794660e08d52655c8ccf1837d24968bdf016e846",
+      "bytes": 2940
+    },
+    "Gromissingcrafts/src/locale/deDE.lua": {
+      "sha256": "afd1c80d5f1b70fd45f8b2eeb93f2d9d67e13fe8a29adc8e43b7b41ff69c04f4",
+      "bytes": 721
+    },
+    "Gromissingcrafts/src/locale/enUS.lua": {
+      "sha256": "ee810eb6662d7bd627c0623e6fea44ed13b44084fed9c764fba58f7cd61824f0",
+      "bytes": 713
+    },
+    "Gromissingcrafts/src/locale/esES.lua": {
+      "sha256": "a3fc6c79aee906d5743876b0d1cc61aa0360a2b6735439ecf4c8d9de4f63fed9",
+      "bytes": 716
+    },
+    "Gromissingcrafts/src/locale/frFR.lua": {
+      "sha256": "cad2ceb9859b1ce5fd709c4cc79a0aea9c70a89af95d37434c61a0a642914ad8",
+      "bytes": 733
+    },
+    "Gromissingcrafts/src/locale/koKR.lua": {
+      "sha256": "d46a8f1854ae721b92e5f7a4ece51d45322341efb218ad01a5b068e155f1b888",
+      "bytes": 746
+    },
+    "Gromissingcrafts/src/locale/ptBR.lua": {
+      "sha256": "4df440aa840fa95fe0150082dc2a1fe62f24f5d9058d3a06b3853bcdf4e7af9a",
+      "bytes": 707
+    },
+    "Gromissingcrafts/src/locale/ruRU.lua": {
+      "sha256": "8b0fb2ca9280b305af5dd251c0343ad0e3d9a4787b0d627f8df3c86b35fdeba4",
+      "bytes": 825
+    },
+    "Gromissingcrafts/src/locale/Tools.lua": {
+      "sha256": "b182c7ab6cde7aa5772ccdab66ee47ecb1f42a6bd1a415d7e2c8989e386869a0",
+      "bytes": 1492
+    },
+    "Gromissingcrafts/src/locale/zhCN.lua": {
+      "sha256": "70975711eb00cda392bcd654e927fc8779eec4cb1d2aec6b34b96ccb2363d78c",
+      "bytes": 694
+    },
+    "Gromissingcrafts/src/locale/zhTW.lua": {
+      "sha256": "ce37c9bcde4c758e03172f6ce22cc93a02dfcd094206699018f16e5b0a4259df",
+      "bytes": 694
+    },
+    "Gromissingcrafts/src/ui/DataStateManager.lua": {
+      "sha256": "d2cd7e59e46a53b321b39d287116b11a6ccc1cfbcf148d7e07053dac0fe8bef5",
+      "bytes": 1724
+    },
+    "Gromissingcrafts/src/ui/filters/FiltersPanel.lua": {
+      "sha256": "cc1f71d538d84e06eee662952344abcb56cbf0e0aa583983886b17a99093b58d",
+      "bytes": 1881
+    },
+    "Gromissingcrafts/src/ui/filters/SearchField.lua": {
+      "sha256": "ef757a252d1c02e5473fd6106562091b4bd08a808b025202937e2e9ac7fabd86",
+      "bytes": 1983
+    },
+    "Gromissingcrafts/src/ui/list/CraftsList.lua": {
+      "sha256": "76b5a41eb00f1195d33dd446ffc5b813c2bc0f954a77ce3c86a03c59ff73a13c",
+      "bytes": 8993
+    },
+    "Gromissingcrafts/src/ui/list/CraftsListItem.lua": {
+      "sha256": "e84ee37637a5bd8e11085be49557d89b7dfac7644b74fa3b8586abdbbce5b4fa",
+      "bytes": 4929
+    },
+    "Gromissingcrafts/src/ui/Tools.lua": {
+      "sha256": "a57312610d11416a5f4d3a7dea8e702a3ffa0883eb09541ed6c186637460ad21",
+      "bytes": 2753
+    },
+    "Gromissingcrafts/src/ui/TooltipEnhancer.lua": {
+      "sha256": "f6733131a0bf4b808e90a28d43352c7429ce8e46089cdf689ccbfd905a5b785d",
+      "bytes": 4588
+    },
+    "Gromissingcrafts/src/ui/UIManager.lua": {
+      "sha256": "81a79e0c6fa6c23a294f8de78527b950552a43c3a09c35eb1c0ad158705f34a3",
+      "bytes": 6087
+    },
+    "Gromissingcrafts/src/ui/VanillaFramePool.lua": {
+      "sha256": "f92fd5bbcbd91fcaeb1c8e1f61b6ba736b8f2d7c5c4d405a5cd3e69cb68cafe1",
+      "bytes": 1644
+    },
+    "Gromissingcrafts/src/ui/window/OpenButton.lua": {
+      "sha256": "9cb5aed5fc0750b85721314ff66b8b8c308c23c8ac185a5f2190a1b655a7d167",
+      "bytes": 1823
+    },
+    "Gromissingcrafts/src/ui/window/PlacementPolicy.lua": {
+      "sha256": "fd96f15864c68728b8b7c7e59d5d9628dee8fa43d16015fc847a053084eba5cf",
+      "bytes": 3528
+    },
+    "Gromissingcrafts/src/ui/window/Window.lua": {
+      "sha256": "a0a4d4dd812b35d7727ad3356b5aa4a6004c92c9772fbf17176545e9bcf3a285",
+      "bytes": 4045
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

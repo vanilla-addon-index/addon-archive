@@ -1,0 +1,16 @@
+# BigTimer
+
+![BigTimer](https://github.com/TheRealFayz/BigTimer/blob/main/Images/BigTimer.png?raw=true)
+![BigTimer](https://github.com/TheRealFayz/BigTimer/blob/main/Images/BigTimer2.png?raw=true)
+
+A quick-access pull timer toolbar for **World of Warcraft 1.12**.  
+Requires the **BigWigs** addon with its Pulltimer plugin enabled.
+
+## Requirements
+| **BigWigs** | Must be loaded and enabled |
+
+| **BigWigs Pulltimer plugin** | Must be enabled within BigWigs options |
+
+## Usage
+The bar appears automatically when you are **in a raid group with lead or assist**.  
+It hides itself when you are not in a raid, or do not have lead/assist.

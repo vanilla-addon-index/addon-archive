@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: Shaman Weapon Imbue Warning
+## Notes: Shows a combat warning when a Shaman's main-hand weapon has no temporary enchant.
+## Version: 1.0.0
+## Dependencies: !!!ClassicAPI
+
+ShamanWeaponImbueWarning.lua

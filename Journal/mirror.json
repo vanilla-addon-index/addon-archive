@@ -1,0 +1,85 @@
+{
+  "upstream": "https://github.com/GitStrom/Turtle-Journal",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "GitStrom",
+    "repo": "Turtle-Journal",
+    "name": "Turtle-Journal",
+    "url": "https://github.com/GitStrom/Turtle-Journal",
+    "api": "https://api.github.com/repos/GitStrom/Turtle-Journal"
+  },
+  "commit": "18200cfd061d7b180cae7cc92fd7783379c9d9a2",
+  "sourceFiles": {
+    "TurtleJournal/debug.lua": {
+      "sha256": "62ee3eb34cea5a2b1ff39fdf064cc7e8b48025cd13c70639f5e7a1685d69500d",
+      "bytes": 9090
+    },
+    "TurtleJournal/functions.lua": {
+      "sha256": "eaf03bf08e36e251919645ae19d6206eec593fe0dafa30003fca3a92aa1d634b",
+      "bytes": 19296
+    },
+    "TurtleJournal/gui.lua": {
+      "sha256": "f2921b0eef04e1ae88caef9868ddaf952bd3b2dbe9ae5df452ff45dd2b3231e4",
+      "bytes": 36689
+    },
+    "TurtleJournal/init.lua": {
+      "sha256": "99f5c751060f5a13f07e43baf946b5da3cfe4a174e86040289fcc5bab72b7117",
+      "bytes": 5619
+    },
+    "TurtleJournal/media/GreatVibes-Regular.ttf": {
+      "sha256": "f61866de92053395112c959f87459f6be835e3214a02578424b3cf001c2b0d30",
+      "bytes": 105980
+    },
+    "TurtleJournal/media/QLgadgetframe.tga": {
+      "sha256": "7c1af41d79a4f8b04accea2421889e78ab67341c54e27ca141d85d473edee70a",
+      "bytes": 65580
+    },
+    "TurtleJournal/media/QLmainframe2.tga": {
+      "sha256": "153dd4490c52a03a91f39b74532e95f07ee5b29e69414295306f811de386bc7c",
+      "bytes": 1048620
+    },
+    "TurtleJournal/media/QLsideframe.tga": {
+      "sha256": "f11f0bfc5a4b845d37d51525b2e0a84c3dc7060698b467db84ed6f523ef2bc0f",
+      "bytes": 1048620
+    },
+    "TurtleJournal/media/swoosh-sound-effect-for-fight-scenes-or-transitions-2-149890.mp3": {
+      "sha256": "d2a6e6eb3191c0498637b24897b420717bcae71c4b73f1ab5237db9c47a802f6",
+      "bytes": 11520
+    },
+    "TurtleJournal/media/swoosh-sound-effect-for-fight-scenes-or-transitions-4-149887.mp3": {
+      "sha256": "1e11adc9ed36a3707f103394b95383ea12d0cb1f7a757cfc3d781ce35c1a0138",
+      "bytes": 9216
+    },
+    "TurtleJournal/media/tj_skin1.tga": {
+      "sha256": "4b6baf023c02a14f9bff51389b350aad972e14478985fd4047d4248c6df85afc",
+      "bytes": 1048620
+    },
+    "TurtleJournal/media/writing-on-notebook-dan-barracuda-1-00-25-2.mp3": {
+      "sha256": "7f80c845e021b4a2c5005fadbcbdf42d74ff7803c63ac4ecf67cd6caac060e27",
+      "bytes": 104611
+    },
+    "TurtleJournal/media/writing-on-notebook-dan-barracuda-1-00-25-3.mp3": {
+      "sha256": "050c003dd6d8779ad0f5838f0b38462da31cd7fd464c945a2cb715e480df1d6a",
+      "bytes": 91028
+    },
+    "TurtleJournal/media/writing-on-notebook-dan-barracuda-1-00-25.mp3": {
+      "sha256": "89d4c4473c062452a95def787d1eb33a17e59ea7e63615f57cc7e10cd1a6b103",
+      "bytes": 91028
+    },
+    "TurtleJournal/profiles.lua": {
+      "sha256": "c74d559b21106ca76480d6e0c0fea33526da9fdc4ae8f4e7a1d48aa0ecb74f59",
+      "bytes": 121
+    },
+    "TurtleJournal/test.lua": {
+      "sha256": "5bf2e357d215ac6f2d6a513ea47b28882fa793d5b2fafb13af1ed73d77fb66ed",
+      "bytes": 122
+    },
+    "TurtleJournal/TurtleJournal.toc": {
+      "sha256": "d70a0401b4e28d1873dfa75229ab46873a0771f82aa575bb8b02c19262251bff",
+      "bytes": 431
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

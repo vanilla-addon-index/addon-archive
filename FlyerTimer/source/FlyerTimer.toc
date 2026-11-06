@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: Flyer Timer
+## Author: |c013220ffTrumpetX|r
+## Version: 1.0.0
+## Notes: https://github.com/trumpetx/FlyerTimer
+## SavedVariables: 
+## Dependencies: BigWigs
+
+FlyerTimer.lua

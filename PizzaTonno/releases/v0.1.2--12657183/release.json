@@ -1,0 +1,9 @@
+{
+  "id": "12657183",
+  "tag": "v0.1.2",
+  "name": "v0.1.2",
+  "body": "- fix: with a fishing pole equipped, right-clicking a world object (portable wormhole portal, goblin brainwashing device, ...) no longer casts, it uses the object",
+  "published": "2026-10-02T16:45:06+02:00",
+  "prerelease": false,
+  "url": "https://codeberg.org/Pizzahawaii/PizzaTonno/releases/tag/v0.1.2"
+}

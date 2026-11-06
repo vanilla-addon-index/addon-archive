@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: AutoSpam
+## Notes: Automatically post weighted messages to chat channels on a timer
+## Author: Fayz
+## SavedVariables: AutoSpamDB
+
+AutoSpam.lua
+AutoSpamUI.lua

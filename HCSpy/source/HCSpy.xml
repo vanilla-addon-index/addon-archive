@@ -1,0 +1,63 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+
+<Script file="HCSpy.lua"/>
+
+<FontString name="HCSpyUiWindowListNameFontstring" frameStrata="DIALOG" inherits="GameFontNormalSmall" text="Player Name" justifyH="LEFT" justifyV="MIDDLE" virtual="true">
+         <Color r="1" g="1" b="1" a="1"/>
+         <FontHeight val="10"/>
+         <Anchors>
+         <Anchor point="TOPLEFT" relativeTo="$parent" x="5" y="-5" />
+         </Anchors>
+</FontString>
+
+<!-- HCSpy Main Frame -->
+  <Frame name="HCSpy" hidden="true">
+    <Scripts>
+      <OnLoad function="HCSpy_OnLoad"/>
+      <OnEvent function="HCSpy_OnEvent"/>
+    </Scripts>
+  </Frame>
+
+<!-- HCSpy UI Window -->
+  <Frame name="HCSpyUiWindow" frameStrata="DIALOG" parent="UIParent" hidden="true" movable="true" enableMouse="true" inherits="BackdropTemplate">
+		<KeyValues>
+			<KeyValue key="backdropInfo" value="HCSpy_BACKDROP" type="global" />
+			<KeyValue key="backdropColor" value="HCSpy_BLACK" type="global" />
+		</KeyValues>
+    <Size><AbsDimension x="100" y="10"/></Size>
+    <Anchors> <Anchor point="CENTER" /></Anchors>
+    <Scripts>
+      <OnLoad inherit="prepend">
+        self:RegisterForDrag("LeftButton");
+      </OnLoad>
+      <OnDragStart>
+        self:StartMoving();
+      </OnDragStart>
+      <OnDragStop>
+        self:StopMovingOrSizing();
+      </OnDragStop>
+    </Scripts>
+    <Frames>
+      <!-- Test Button -->
+      <Button name="HCSpy_TestTestButton" inherits="UIPanelButtonTemplate" text="Test" hidden="true">
+        <Size><AbsDimension x="90" y="25"/></Size>
+        <Anchors>
+          <Anchor point="CENTER" relativePoint="CENTER">
+            <Offset>
+              <AbsDimension x="280" y="-186"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+          </OnLoad>
+          <OnClick>
+            HCSpy_TestButton()
+          </OnClick>
+        </Scripts>
+      </Button>
+    </Frames>
+  </Frame>
+</Ui>
+
+

@@ -1,0 +1,441 @@
+{
+  "upstream": "https://github.com/0ldi/ExoRaidSetup",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "0ldi",
+    "repo": "ExoRaidSetup",
+    "name": "ExoRaidSetup",
+    "url": "https://github.com/0ldi/ExoRaidSetup",
+    "api": "https://api.github.com/repos/0ldi/ExoRaidSetup"
+  },
+  "commit": "bb2447fad6623620bf575245f090d268e37f9307",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "ExoRaidSetup/ERSart/ERA1.TGA": {
+      "sha256": "3abe1ba3c74c26240296e1fa1a292446303fa151c7b57716e3dbd56024ee298b",
+      "bytes": 564
+    },
+    "ExoRaidSetup/ERSart/ERA2.TGA": {
+      "sha256": "0852b1a880993ea6cbb5b1e95fc0b9157f769a6f636c844e0064865c71349754",
+      "bytes": 1222
+    },
+    "ExoRaidSetup/ERSart/ERA3.TGA": {
+      "sha256": "2aa1a21a3961088dfa7367d3089532abae73099e21c0b0634aa4d83cd5ea7cc6",
+      "bytes": 394
+    },
+    "ExoRaidSetup/ERSart/ERA4.TGA": {
+      "sha256": "95eee60151ed5cc211b7ea47cafabb9f983928e74f06f4b30e5255d8d39b83eb",
+      "bytes": 1267
+    },
+    "ExoRaidSetup/ERSart/ERA5.TGA": {
+      "sha256": "0f6784382238d405fbfeee9f5aa965d7f1beca2147d220504dd84949e407842a",
+      "bytes": 564
+    },
+    "ExoRaidSetup/ERSart/ERA6.TGA": {
+      "sha256": "d1c2255810ab665a23d9be3dc06be236d4a2483c0af421dfe14bfe58492aa005",
+      "bytes": 1162
+    },
+    "ExoRaidSetup/ERSart/ERA7.TGA": {
+      "sha256": "be1107eda1feb8018b695738f71b1b6ade1aca8c9aa021f32feddf76a993f6ce",
+      "bytes": 394
+    },
+    "ExoRaidSetup/ERSart/ERA8.TGA": {
+      "sha256": "990984d5817413abd66dfa330927594785a57bedb0a6f3b8fa3e7e4533d2ca82",
+      "bytes": 1227
+    },
+    "ExoRaidSetup/ERSart/ERB1.blp": {
+      "sha256": "534f5edfe668044b0799580246ab7d9788a0147a452b41a6830428ef4d8c8bdb",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB10.blp": {
+      "sha256": "a5745fd13f61885041715f6e70036edd67108fcee2cc44e864db63b03579df38",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB11.blp": {
+      "sha256": "97c55faaa25c6dd9e2788af3fc378555f430d4aa0956f22cc128f990c0a198b7",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB12.blp": {
+      "sha256": "c11fb7ced6b7592bb30177fd53b3acd8e93dcbc20f0412d448929678fb935839",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB13.blp": {
+      "sha256": "a03e1547819bb9b68adf408f9888a76b3dfc458781d901eb7695b49cb844ae4a",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB14.blp": {
+      "sha256": "105d213da2eafd731bf0f14f98d2cc37656d337af121d4b4f1ed140eb1c34fae",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB15.blp": {
+      "sha256": "535c17db467e3d810c2fc29108b1874cd1114b29c2bb5e540b7cc259d4879163",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB16.blp": {
+      "sha256": "ae9b21c19b4e66e10dcef0fc855b8fbd306c96af5b8162c653a8d076ac950580",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB17.blp": {
+      "sha256": "6893f2001608d3628602230ed01893de6bf601327e0561f8db8c6c629699a580",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB18.blp": {
+      "sha256": "3ea1b412b846eeb105716505ebcf85c31c815cbeb977d00b6b356fd6ae3584fe",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB19.blp": {
+      "sha256": "9598e361e02e6142d15333824b0b0775fe2b035ea6b6d0b50b9ff68f95098a40",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB2.blp": {
+      "sha256": "de5047588732398b4be4056e78e24a071f2a1a916e1719817f5d6eea3f01ef2e",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB20.blp": {
+      "sha256": "98873b88d8fe2bfdc4b2a20e4d7c1c1e58105c83bd88e48fc76d2953eb472836",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB21.blp": {
+      "sha256": "05a247391f5d3e0e9a1a1be1945eb3f97f03e9b078fa8c87bc2e86dc149534fa",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB22.blp": {
+      "sha256": "4952fd4d319259741e17d5dcc53609f4da274a93b453ba640f0976621e075534",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB23.blp": {
+      "sha256": "61becc88622ff3ba4f94773d6a94db2dfb4ff63173fcff3dac446f9c494e475a",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB24.blp": {
+      "sha256": "bd1d8bf077e928b8f3270f1d90e08babb2aba0a8ccd7efe8c35fe31fd5c55387",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB25.blp": {
+      "sha256": "fc7d9b4187d223746bbd0b964a5f165f73289a0eaecb54fed82cda11dac4f011",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB26.blp": {
+      "sha256": "3cea29398c9dd1e9f018fb9ec231476984135a3af56af58654a00a19979c0772",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB27.blp": {
+      "sha256": "d2ce81ba31691bd23b076445b21bfdb7dfe4b923dee0fa146b56600b5857f4db",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB28.blp": {
+      "sha256": "78f97e5c470afac045bbd16ca518efe1292b0e0c573fe46d3ad7edc198388d9f",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB29.blp": {
+      "sha256": "df15e876ea089a421903cc9d21ddbb72369227f5350dbbd2b443022220f121e4",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB3.blp": {
+      "sha256": "02f49c98a69b2dfb08f78c7bf6027727c114caff5e9cfff9dbeabd890e71ae5c",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB30.blp": {
+      "sha256": "f2aaecaf306f3425f015bf313c7d7c911b6d3e3fd0af02bf91cce73e901e25e2",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB31.blp": {
+      "sha256": "a401fbddb4a382e257917298119adc16ebfd8223a2f741d856a9a317d2056802",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB32.blp": {
+      "sha256": "cb2d46d8768bb84fed61e7b8bce6a9eb3d9149270ebb86dcd257ed9a865096fd",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB33.blp": {
+      "sha256": "7ab287c8a185cd0da87a7cd2d97eaf9c6f5b3f6a85499968a3b3e8b6e5f7edd0",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB34.blp": {
+      "sha256": "df55f45b99e5d4c5c0de6f47ef2f756b23a5eb1522d77cb8a6469a175dc1aec8",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB35.blp": {
+      "sha256": "df55f45b99e5d4c5c0de6f47ef2f756b23a5eb1522d77cb8a6469a175dc1aec8",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB36.blp": {
+      "sha256": "98c669c6cdb855ef3747811334f1e22512c8bbf1392fcbe0d0ca5a6c2d047870",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB37.blp": {
+      "sha256": "98c669c6cdb855ef3747811334f1e22512c8bbf1392fcbe0d0ca5a6c2d047870",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB38.blp": {
+      "sha256": "64edd2d42e389e495823f2b59d17621ad1ee78e459485275822173d101aafd65",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB39.blp": {
+      "sha256": "d6a9f08e442883f098af9e95fd18d01fd981c5a7028749c595b32e9b39df498d",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB4.blp": {
+      "sha256": "6045dca06bda919950edcacdd838fdb48e321ea79540370bb6a522a7b4281815",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB40.blp": {
+      "sha256": "1724cae716b8169ae204113e319346ba98d569c1bfcbd628847ae9f3dbd63878",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB41.blp": {
+      "sha256": "ca772aec09709b15e4ba049afbe11521524203877c7f80117a2d7b263dfdde99",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB42.blp": {
+      "sha256": "6d5f6599597e00df26045a2063e7c64c154a4cc1d6563c18ea50fb1e3e5f3c79",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB43.blp": {
+      "sha256": "8d14c0a6649ba257c51f671d3c705e3702e27b77b794e020f73cfa1a47059b00",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB44.blp": {
+      "sha256": "433c9391d0a87d6a737532cc257c6b4b0f9116ebaa2f35d1791126028d64512f",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB45.blp": {
+      "sha256": "433c9391d0a87d6a737532cc257c6b4b0f9116ebaa2f35d1791126028d64512f",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB46.blp": {
+      "sha256": "10961b07fdec3f591e3e937cdc68f9cfb68fd540d21829589e6b1e528efc107a",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB47.blp": {
+      "sha256": "727d50171255e99bfb6b02c6279b6aad7450fa43ee9dd2f2c082217fa55df5e9",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB48.blp": {
+      "sha256": "2b35dd9c9c909a74aad58c96ade9d674c2d5b15b26d4fb1a35796d500d1f0b48",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB49.blp": {
+      "sha256": "ff94fbbe97adfcc8276eb1c8335edf3d59f2e7305978218d11fe4a3bfc12b4c3",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB5.blp": {
+      "sha256": "0ea651f0cfb5b6fa57c2d80db2b4a2d1cdb837d48fe603108b79aba2f3d718ca",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB50.blp": {
+      "sha256": "a87cecc380daef3ab473388527c468f4644c7c5d0fcf209b5fce2f6937b14752",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB51.blp": {
+      "sha256": "23c412105ce3463941843d27f5d41e1712a6e3d5369413659e7634daa24c1348",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB52.blp": {
+      "sha256": "51c14ec5279086bc9d0d8d025c3008f6fe0ab349bb6b96a0346088dae07ffc31",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB53.blp": {
+      "sha256": "0f6f628415108ebfe55b8ef106e97ac79b73581a5821faa3a7af54ce41613a55",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB54.blp": {
+      "sha256": "f37faac28b25e2b9a895218f3a2c2d47bca5f8f33fe93d089873e715bacf5191",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB55.blp": {
+      "sha256": "05535f2e51cde33bed3bb5368c88f1bb15a4dffb4f8297112c04cd03f7ef53f1",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB56.blp": {
+      "sha256": "9e91bac7207d002298bc64d5a983aecd128bbed08c2ace63b886e344468a008a",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB57.blp": {
+      "sha256": "3fd31f7304aa8836c9adc10945dcc0314a1023a2daf5995b0f325aca545b08f9",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB58.blp": {
+      "sha256": "d101ea90ccd7692317c2614d67b420e7cc66809a953abd6993e367c715672411",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB59.blp": {
+      "sha256": "5519ec11f6bb6564f7ac7a54ab51c1ef9fd45551d571a4a295c67cd6246e0ec3",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB6.blp": {
+      "sha256": "4fc68057f61ad458b4552db64bb2f133fc0b429d4dd522ded668056b419d5d08",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB60.blp": {
+      "sha256": "8f067900e1618be71d823f02a97790e6a619535ef989a6bc3ad9bb7b726e2818",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB61.blp": {
+      "sha256": "7c7aee45f089db6fc0c4ccddbf29ac38a36e2aea2d3df29295e9ed864e7fa7bd",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB62.blp": {
+      "sha256": "4615bc7385a8d2227f12a7478a8f9638f63757639d89e8f843057210321a6034",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB63.blp": {
+      "sha256": "58f503450d10327e14800cbac2e3a1cf508fc64170ac6d13a1e3b405a798460b",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB64.blp": {
+      "sha256": "91d3497b8770486595674829d786372938d60b646b5cc46874a0925970b035b9",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB65.blp": {
+      "sha256": "f022971ed935ca2a083a801dfe0c122fc76007f1a0364de275bbd563ba2d9645",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB66.blp": {
+      "sha256": "ec0f2db6f8c6bbcfc0ae8cad7796348a6f475f9f2128866d26fdaa2d2fd42e7d",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB67.blp": {
+      "sha256": "813abe2aded47fa4724af7da45246e1178208984282c5580c11bc07a630470f7",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB68.blp": {
+      "sha256": "494cc43402cbc23d97a9088c8acdd205b12edac82924c70f9040d3e7505de186",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB69.blp": {
+      "sha256": "0b86891c203a4e16a5897872691542131dffbace419b7981d48daadf44239e48",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB7.blp": {
+      "sha256": "141b434289a0bc799287d22002f29d033cd28c7717a974d0b486d80775a52e9f",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB70.blp": {
+      "sha256": "2fe70175f622800d3c5bb617bcc6d7028c64964204d350500652581616cfac1a",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB71.blp": {
+      "sha256": "db44fbe5242cfe3585a75255720b5ea2aaea07699347b8e6d495e0d4d0470899",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB72.blp": {
+      "sha256": "bc858dc46034199d46a62b89a8b5073788736ef496632b916f5cd7c349b932f9",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB73.blp": {
+      "sha256": "dcfad2a6762dbf29dc85ffa39e1d4475a071c035f8b2c2805b0d73284eb81f8d",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB74.blp": {
+      "sha256": "139823299a2780920320febf98c409a2f337ed8372a3503387d3a27a60e1f2ec",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB75.blp": {
+      "sha256": "15fc6ec79cc8bc57e902617a1325aa3b7877b1ae735c48b12bb14093224abcfc",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB76.blp": {
+      "sha256": "a06e90eed77d9e5893f74fd0149f1f763c73a2fc3b575868c8f7ca8dca48eb5f",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB77.blp": {
+      "sha256": "d7a740574f8a8e4df8a229962005b701425f0713b9ad1214d4b6548c28cd3ca5",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB78.blp": {
+      "sha256": "54544a964a3b600fa93f8a20ada4a2d202be1ce73881d0ae3eac40cccc345f38",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB79.blp": {
+      "sha256": "9d621047bee0e43272eeb919b35d97d4d519a494eb8c4bc90e822cc96d51b357",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB8.blp": {
+      "sha256": "29d6f6094a031df22b4eb2acd1d403642fe5bd0b05639b188c8c05694c698b38",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERB9.blp": {
+      "sha256": "a091b872bb27512742d72bdcef0b0e3b4204e723a16abba0f408571eecbc084b",
+      "bytes": 88596
+    },
+    "ExoRaidSetup/ERSart/ERS1.TGA": {
+      "sha256": "4d1849a78b498e72fd358c8a91be91bfd995c52f12f6671058734c3886aefc98",
+      "bytes": 1802
+    },
+    "ExoRaidSetup/ERSart/ERS10.TGA": {
+      "sha256": "19eade361d708dd7031b9e19d730f704a1a269c78f24f9a919f83afbd304b3f6",
+      "bytes": 2533
+    },
+    "ExoRaidSetup/ERSart/ERS2.TGA": {
+      "sha256": "73b236987aecbf8491202e9e54b51ef4c76f6f1e22cf582863cfa6910d716b37",
+      "bytes": 2874
+    },
+    "ExoRaidSetup/ERSart/ERS3.TGA": {
+      "sha256": "80e343336862bf5512027047b7757083000abe7fe160481cf7b179146a6ecc82",
+      "bytes": 2013
+    },
+    "ExoRaidSetup/ERSart/ERS4.TGA": {
+      "sha256": "281b915fd1b467e51d9949554e3519594666969a765bb3bf98ec9e815e0b1943",
+      "bytes": 1823
+    },
+    "ExoRaidSetup/ERSart/ERS5.TGA": {
+      "sha256": "36383a35468ddb5cf090df095ce1c0e90ff087fa9c0997b101e4b27884b2f6fc",
+      "bytes": 2285
+    },
+    "ExoRaidSetup/ERSart/ERS6.TGA": {
+      "sha256": "3296ca5df12a87c26beb59c6e74fa5d96d576c9e231c9b92499b0d9538f57c68",
+      "bytes": 3370
+    },
+    "ExoRaidSetup/ERSart/ERS7.TGA": {
+      "sha256": "7fc9e5ee04d5ba526b5fb7131d08c625977a92c03a993fe38c389e3338f78c42",
+      "bytes": 2725
+    },
+    "ExoRaidSetup/ERSart/ERS8.TGA": {
+      "sha256": "b603a08aef32edca106c91cda2722c4075bf075b4c99b9a2c96c90b140054249",
+      "bytes": 3105
+    },
+    "ExoRaidSetup/ERSart/ERS9.TGA": {
+      "sha256": "f565637d97398895fa39eb860e36c8af308cee8958f49933ab926ab3a72323cc",
+      "bytes": 3400
+    },
+    "ExoRaidSetup/ERSart/ERSHELP.TGA": {
+      "sha256": "bf2f3757639ae9a638bf3023c0e74f20ba3992d5c3c795be256389c2bea56007",
+      "bytes": 182541
+    },
+    "ExoRaidSetup/ERSart/mmBackground.tga": {
+      "sha256": "eed8c32a1743671aeff5b57cf71616bad5e041216cfeb3f20905c2813e57c228",
+      "bytes": 11369
+    },
+    "ExoRaidSetup/ERSart/mmMask.tga": {
+      "sha256": "b67f65a5dcabc822c163c1d079cbd7ddecb8b9388cbde1951fc5f2e2765bbbdd",
+      "bytes": 274
+    },
+    "ExoRaidSetup/ExoRaidSetup.lua": {
+      "sha256": "5a6c8302e32bf51812d43c90910278795f5e7780d7cc8118106f1696e71ec5aa",
+      "bytes": 54252
+    },
+    "ExoRaidSetup/ExoRaidSetup.toc": {
+      "sha256": "9fe40ba6efd594bda3837bdab863e1bcb37162e9cdca7aeee61d414c4128b53e",
+      "bytes": 180
+    },
+    "ExoRaidSetup/ExoRaidSetup.xml": {
+      "sha256": "9b5f36ed6e129fba50f0a5e4acdca21de7c786d969e787cec538368aed797e44",
+      "bytes": 17861
+    },
+    "ExoRaidSetup/Readme": {
+      "sha256": "24aa8c12be2e97e2ad164f618b945deb43ecd2aac7159cfdfd41eb8b62f65305",
+      "bytes": 2499
+    },
+    "README.md": {
+      "sha256": "cd09db475bc228d4882ce9c4a004dd9816632841160445dcf08da9f12244148f",
+      "bytes": 3001
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

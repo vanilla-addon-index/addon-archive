@@ -1,0 +1,9 @@
+{
+  "id": "391703440",
+  "tag": "v1.2.0",
+  "name": "GroupBuffToggle 1.2.0",
+  "body": "Provider-neutral release of GroupBuffToggle. Add-on, UI, saved-variable, command and installation names are consistent; client compatibility and gameplay behavior are preserved.\r\n\r\nDownload GroupBuffToggle.zip and extract the GroupBuffToggle folder into Interface/AddOns.\r\n\r\nIf upgrading from a previous add-on folder name, fully close the game and follow the README upgrade instructions before playing. The included Upgrade-SavedData.ps1 helper copies existing settings and records, keeps originals and backups, and refuses to overwrite existing destination data. Disable the previous add-on after migration.\r\n\r\nValidation: source and packaged Lua syntax, TOC file references and branding scan passed. Saved-data migration tests passed for values, Unicode, originals, backups, overwrite protection and invalid paths. Existing applicable regression tests passed. Live in-game verification remains recommended.",
+  "published": "2026-09-18T18:46:00Z",
+  "prerelease": false,
+  "url": "https://github.com/babunidev/GroupBuffToggle/releases/tag/v1.2.0"
+}

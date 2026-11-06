@@ -1,0 +1,14 @@
+## Interface: 11200
+## Title: Microchip-chat
+## Notes: Detachable chat windows, wheel-scrolling, configurable fading, tabs, combat-log mini views, integrated per-tab World filtering
+## Version: 0.9.0
+## Author: Community example
+## SavedVariablesPerCharacter: OctoStreamChatDB
+Microchip-chat.xml
+MicrochipWorldFilter.lua
+MicrochipClassColors.lua
+MicrochipURLs.lua
+MicrochipHistory.lua
+MicrochipWindows.lua
+Microchip-chat.lua
+Bindings.xml

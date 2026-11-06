@@ -1,0 +1,40 @@
+## Interface: 11200
+## Title: Freewood ForeverData (Startdaten pfQuest/Octo)
+## Notes: Startdaten fuer den Freewood-OctoWoW-Codex, erzeugt aus pfQuest und pfQuest-octo (MIT). Abschalten: /fwforever aus
+## Version: 0.2.0
+
+Data.lua
+Data1.lua
+Data2.lua
+Data3.lua
+Data4.lua
+Data5.lua
+Data6.lua
+Data7.lua
+Data8.lua
+Data9.lua
+Data10.lua
+Data11.lua
+Data12.lua
+Data13.lua
+Data14.lua
+Data15.lua
+Data16.lua
+Data17.lua
+Data18.lua
+Data19.lua
+Data20.lua
+Data21.lua
+Data22.lua
+Data23.lua
+Extra.lua
+ItemCat.lua
+Own.lua
+Details1.lua
+Details2.lua
+Details3.lua
+Scan.lua
+Items.lua
+ItemsExtra.lua
+Sources.lua
+Ready.lua

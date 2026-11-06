@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/akzkak/pfQuest-Router",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "akzkak",
+    "repo": "pfQuest-Router",
+    "name": "pfQuest-Router",
+    "url": "https://github.com/akzkak/pfQuest-Router",
+    "api": "https://api.github.com/repos/akzkak/pfQuest-Router"
+  },
+  "commit": "bab4f63d8a62a0e993a547269a9e60c919d71e4f",
+  "sourceFiles": {
+    "gui.lua": {
+      "sha256": "b1e329fb0bae24c42f061a4f41fdf59f128686b75c9c4d62833037aecc2e21cf",
+      "bytes": 8679
+    },
+    "pfQuest-Router.toc": {
+      "sha256": "e4d31892fb4f103c3b5130698910b6b757f712c4ae3c2a1c71038f9a1ac436f5",
+      "bytes": 373
+    },
+    "README.md": {
+      "sha256": "52c61ebedcf4965eb81b61846c1272a27f30b7e5763f4226a20744c0abed00cf",
+      "bytes": 5248
+    },
+    "router.lua": {
+      "sha256": "03d3511d2f0d62ce42c8079973baa320e68693011c3c0055b4086234aba94eb5",
+      "bytes": 29612
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

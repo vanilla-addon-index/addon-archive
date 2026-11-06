@@ -1,0 +1,9 @@
+{
+  "id": "291087919",
+  "tag": "v0.12.7",
+  "name": "Release v0.12.7",
+  "body": "## What's Changed\n* Quest completion & history sync (pfQuest-friendly, guide-load only) by @justinvetter in https://github.com/JeromeM/GuidelimeVanilla/pull/56\n\n## New Contributors\n* @justinvetter made their first contribution in https://github.com/JeromeM/GuidelimeVanilla/pull/56\n\n**Full Changelog**: https://github.com/JeromeM/GuidelimeVanilla/compare/v0.12.6...v0.12.7",
+  "published": "2026-02-26T20:12:37Z",
+  "prerelease": false,
+  "url": "https://github.com/JeromeM/GuidelimeVanilla/releases/tag/v0.12.7"
+}

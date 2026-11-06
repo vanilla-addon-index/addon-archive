@@ -1,0 +1,65 @@
+{
+  "upstream": "https://octowow.st/git/stealthzi/PokeHuntLog",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "stealthzi",
+    "repo": "PokeHuntLog",
+    "name": "PokeHuntLog",
+    "url": "https://octowow.st/git/stealthzi/PokeHuntLog",
+    "api": "https://octowow.st/git/api/v1/repos/stealthzi/PokeHuntLog"
+  },
+  "commit": "79346506d941327faf1c3d2cda8f9945833a1b20",
+  "sourceFiles": {
+    "Collection.lua": {
+      "sha256": "185bff87d2e4023f923c283ba08e9fe73c2a132d4e9cd5fa80c3a2b927b05a1e",
+      "bytes": 14429
+    },
+    "Core.lua": {
+      "sha256": "5c9b0090fdac97d2c77eab7d15372557b34e121c4aa4ebd8eabb4329b085ac84",
+      "bytes": 11936
+    },
+    "Data/Abilities.lua": {
+      "sha256": "bda00dedb8817683fe4a9429f2722d72bb21f27fdb23be1e1cc7edc4e7b613b7",
+      "bytes": 2475
+    },
+    "Data/Families.lua": {
+      "sha256": "3808eb516dc645d29549ec98ab20e17a3f7fc5a1ef2fc67f5577ce0d2d5d5c6e",
+      "bytes": 5988
+    },
+    "Data/Skins.lua": {
+      "sha256": "90f9808a5de1ce987d95be792b72a37b461592d7e4a878ad15e7a533d7aad426",
+      "bytes": 49497
+    },
+    "Help.lua": {
+      "sha256": "6ea51eba5ae14d05e17964cc4216e7f205a38a435d7c0a93fa6b122b51a79493",
+      "bytes": 5885
+    },
+    "Minimap.lua": {
+      "sha256": "0862309eb64b6ae809e81e8b0a899db6ed6223f42f299dbf201fab72b8f3dc1b",
+      "bytes": 3174
+    },
+    "PokeHuntLog.toc": {
+      "sha256": "be55398ea0c838e82de0e879928a588e026aa4f898fe92ba2e2310663bfcf347",
+      "bytes": 375
+    },
+    "Tooltip.lua": {
+      "sha256": "952f33b2bbcc9b03ea4cb02fb68a01fb1f54370978284945c694ced155af0752",
+      "bytes": 1430
+    },
+    "Tracker.lua": {
+      "sha256": "eef95a5ec6bb5e0ca64fb2055139a2feb90c12a115e8adde8bc7dfa3296d9308",
+      "bytes": 19337
+    },
+    "Training.lua": {
+      "sha256": "4afe6c0ef0608a9d485f5e7b97036e500b3c44bb25ba7da354b813da4e057f83",
+      "bytes": 17376
+    },
+    "UI.lua": {
+      "sha256": "64d6571c93abf816cc75667ae71cd4ecfffa6c018414e75e2c7bbd15fc411b58",
+      "bytes": 39385
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

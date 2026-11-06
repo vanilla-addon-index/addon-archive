@@ -1,0 +1,25 @@
+{
+  "upstream": "https://github.com/WobLight/MacroTextStop",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "WobLight",
+    "repo": "MacroTextStop",
+    "name": "MacroTextStop",
+    "url": "https://github.com/WobLight/MacroTextStop",
+    "api": "https://api.github.com/repos/WobLight/MacroTextStop"
+  },
+  "commit": "13e32571bce73afebfc505f81ccaaacde4ebfdd7",
+  "sourceFiles": {
+    "MacroTextStop.lua": {
+      "sha256": "5e06b9373b6616701bf14dadaac6933bb20eab8df733c4d11133dd7198f55779",
+      "bytes": 300
+    },
+    "MacroTextStop.toc": {
+      "sha256": "0b93e5901ccaa506746c9f2bb905827ee65b5c783c4ebcd12b6d39345c7e9a49",
+      "bytes": 145
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

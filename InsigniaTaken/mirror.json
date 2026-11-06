@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Bergador/InsigniaTaken",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Bergador",
+    "repo": "InsigniaTaken",
+    "name": "InsigniaTaken",
+    "url": "https://github.com/Bergador/InsigniaTaken",
+    "api": "https://api.github.com/repos/Bergador/InsigniaTaken"
+  },
+  "commit": "d0958f91a5246cc970cd350e40b62d380962db51",
+  "sourceFiles": {
+    "InsigniaTaken.lua": {
+      "sha256": "24665991289376c00055a12bcf591b6e6ad9bfd4c2319f670d89c2585d060937",
+      "bytes": 26
+    },
+    "InsigniaTaken.toc": {
+      "sha256": "c36c415e742188dcddfd7abfb06634be5f17a79117a55db3e180a43e3a44273c",
+      "bytes": 185
+    },
+    "README.md": {
+      "sha256": "12d36f97c65e6c6e557f25d672cd0d80fffe3a27b2484938166477b11c91fa17",
+      "bytes": 193
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

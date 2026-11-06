@@ -1,0 +1,275 @@
+## Interface: 11200
+## Title: |cffffffffPanda |cfff5ae0aUI
+## Notes: UI addon for the OctoWoW client (1.12.1, Lua 5.0), ported from UnrealUI.
+## Author: Thomas
+## Version: 0.13.4
+## X-Ported-From: UnrealUI 0.10.2
+## X-License: MIT
+## SavedVariables: PandaUIDB, PandaUIProfiles, PandaUIDiagDB, PandaUIPriceDB
+## SavedVariablesPerCharacter: PandaUIProfileDB, PandaUIFavoriteDB, PandaUIBankCountDB, PandaUIBankCacheDB, PandaUIEquipmentSetDB
+
+core\init.lua
+
+# Translation layer. locale.lua only needs the PandaUI table, and every
+# locales\ file only needs U.RegisterLocale, so both load before anything that
+# might want a string. The language itself is not selected here: U.LoadLanguage
+# runs from core/init.lua once SavedVariables are readable.
+core\locale.lua
+locales\enUS.lua
+locales\zhCN.lua
+locales\ruRU.lua
+locales\frFR.lua
+
+core\perf.lua
+core\media.lua
+core\theme.lua
+themes\modern-wow.lua
+themes\modern.lua
+themes\classic-wow.lua
+
+# Unit-frame styles. A theme decides which interface is drawn; a unit-frame
+# style decides how PandaUI's own frames look once it draws them. Registered
+# after the themes because the selector only applies under the Modern theme.
+core\unitframestyle.lua
+core\auradata.lua
+core\hotdata.lua
+core\pricedata.lua
+
+# Bundled offline world data. The creature tables come from VMaNGOS; item sort
+# and NPC cast data include Turtle WoW custom templates. The tables hang off
+# the addon table the way core\pricedata.lua does, so pandaUI owns them outright.
+#
+# The three name files are alternatives, not additions: each one returns at its
+# first line unless GetLocale names it, so exactly one builds a table and the
+# order they are listed in here does not decide which. The creature names have
+# to follow the client's locale because they are matched against UnitName.
+Database\unit_vitals.lua
+Database\unit_names.lua
+Database\unit_names_ruRU.lua
+Database\unit_names_zhCN.lua
+Database\cast_spells.lua
+Database\item_sort.lua
+Database\talent_advisor.lua
+core\unitvitals.lua
+# Player name -> class and guild, for the nameplates' class colours and
+# guild line (session-only, no SavedVariables).
+core\playercache.lua
+
+core\compat.lua
+core\weapons.lua
+core\config.lua
+core\style.lua
+core\easing.lua
+core\statusbarfx.lua
+core\itemslot.lua
+core\itemsortdata.lua
+core\itemcategory.lua
+core\itemsort.lua
+core\itemstack.lua
+core\widgets.lua
+# The addon's one search field (game settings, bags, banks).
+core\searchbox.lua
+core\stockui.lua
+# The one Modern WoW scrollbar (MinimalScrollBar art over a stock Slider),
+# used by every Modern WoW surface that draws one. Needs core\stockui.lua.
+core\modernwowscrollbar.lua
+# Talent-tree client data and the prerequisite-branch node walk, shared by
+# every theme's talent drawing path. No drawing of its own.
+core\talentgrid.lua
+core\dropdown.lua
+core\screenguard.lua
+core\mover.lua
+
+# The contextual settings panel that follows the selected mover in edit mode.
+# A module registers what goes in it for its own mover id; this file owns the
+# window, its placement beside the handle and its show/hide lifecycle.
+core\moverpanel.lua
+
+# Placeholder content for anchors that are empty while edit mode is open (an
+# unsummoned pet bar, the tooltip guide, undamaged armour, an aura row with no
+# auras). Loaded after core\mover.lua because it is driven from the handle
+# show/hide path, and before any module that registers a sample.
+core\moversample.lua
+core\windowdrag.lua
+core\commands.lua
+
+modules\settings.lua
+modules\screenalerts.lua
+# Settings > Performance: per-addon Lua CPU share and memory allocation from
+# one debug.sethook count-hook sampler. Only runs while recording.
+modules\performance.lua
+# The page's "Measure memory": estimated Lua memory held per addon, walked a
+# few thousand entries per frame. Needs U.PerfSourceOwner from the line above.
+modules\performancememory.lua
+modules\autoattack.lua
+modules\swingbar.lua
+modules\gamemenu.lua
+# The client's own Video/Sound/Interface/Key Bindings panels gathered into one
+# window, on WoW Forever's canvas-category structure. It also hosts the pages
+# registered by modules\settings.lua under its Panda UI category. After
+# modules\gamemenu.lua because it reroutes the native menu rows that module has
+# already dressed.
+modules\gamesettings.lua
+# Rebuilds a hosted settings page as Forever's settings list; needs
+# U.gameSettings from the line above.
+modules\gamesettingslist.lua
+modules\logout.lua
+modules\minimap.lua
+modules\durabilityframe.lua
+modules\worldmap.lua
+modules\playerarrow.lua
+# After playerarrow: its world-map arrow park is read by the zoom.
+modules\worldmapzoom.lua
+modules\microbar.lua
+modules\xpbar.lua
+modules\breathbar.lua
+modules\chat.lua
+modules\unitframes.lua
+modules\unitframeconfig.lua
+modules\auras.lua
+modules\hots.lua
+modules\healpredict.lua
+# /pui party test: fake party data for the three modules above.
+modules\partytest.lua
+# Modern WoW raid frames; read U.HotLiveOn and U.UnitIncomingHeal above.
+modules\raidframes.lua
+# The Raid Frames settings group; state and behaviour stay in the line above.
+modules\raidframesettings.lua
+modules\nameplates.lua
+# The Nameplates settings group; state and behaviour stay in the line above.
+modules\nameplatesettings.lua
+modules\tooltip.lua
+modules\itemprice.lua
+modules\loot.lua
+modules\lootdesign.lua
+modules\castbarclassic.lua
+modules\castbar.lua
+# Exactly one target-cast backend registers: stock combat text without
+# Nampower, or Nampower events plus that same combat-text fallback with it.
+modules\castbartargetstock.lua
+modules\castbartargetnampower.lua
+modules\actionbarpress.lua
+modules\actionbar.lua
+modules\actionbarconfig.lua
+modules\quickbind.lua
+modules\petbarcustom.lua
+modules\petbar.lua
+modules\buffframe.lua
+modules\stancebar.lua
+modules\rogue.lua
+modules\bagfavorites.lua
+modules\bagdesign.lua
+# The category view shared by the bag and bank windows; loaded before both.
+modules\bagcategoryview.lua
+# The player's own categories, read by the category view.
+modules\bagcustomcategories.lua
+modules\bags.lua
+# Moves newly arrived items into a matching specialty bag (category view).
+modules\bagroute.lua
+
+# The HUD bag bar. Loaded after modules\bags.lua because it stands in for
+# it: it builds nothing at all unless that module is switched off, and it
+# reads the same persisted flag to decide.
+modules\bagbar.lua
+modules\bankcount.lua
+modules\bank.lua
+modules\bankview.lua
+modules\status.lua
+# Retail-style timed player buff bars. The module owns the flat Modern and
+# Classic paths and selects the Modern WoW atlas through its registered surface.
+modules\trackedbars.lua
+
+# The Quest Log's Dragonflight design, as its own module: the page art's two
+# panes, the action-button beds, the native scroll bars in their channels, the
+# count boxes, the parchment ink and the scrolling reward-money row. Entry
+# points only -- modules\questlog.lua binds the window and calls them, for the
+# full Modern WoW theme or Classic's explicit Quest Log selection, so both
+# themes draw this one file. Loaded before that module for the same reason
+# modules\bagdesign.lua precedes modules\bags.lua.
+modules\questlogdesign.lua
+modules\questlog.lua
+
+# The Classic WoW theme's two-page parchment Quest Log (classic-wow layout).
+# Loaded right after modules\questlog.lua because the two are the same
+# surface under different themes: that module builds nothing under native
+# chrome, this one builds nothing under anything else. Before
+# modules\windowmove.lua so the window is already at its extended size
+# when the drag header is measured.
+modules\questlogextended.lua
+modules\spellbook.lua
+
+# The Spellbook's modern-wow drawing path. Defines entry points only;
+# modules\spellbook.lua decides in its own OnEnable whether to call them, for
+# the full Modern WoW theme or Classic's explicit Spellbook selection.
+modules\spellbookmodernwow.lua
+# Shared Professions-tab behavior and data for each Spellbook drawing path.
+modules\spellbookprofessions.lua
+# The same page under the flat Modern theme: shared behavior, modern tabs and
+# reversible placement of the native profession spell buttons.
+modules\spellbookmodernprof.lua
+# The classic-wow Spellbook's "Not on action bars" glow. Entry point only;
+# modules\spellbook.lua calls it when the modern-wow book is not drawn.
+modules\spellbookclassicglow.lua
+# The classic-wow native Spellbook's Spellbook / Professions tabs and the host
+# for the Professions page above. Entry point only; modules\spellbook.lua
+# builds it on classic-wow's native chrome path.
+modules\spellbookclassicprof.lua
+
+# The optional talent build drawer, shared by every path below and named by
+# whichever one builds: it binds a highlight to every talent button as that
+# button is created, so it has to load first. Entry points only.
+modules\talentadvisor.lua
+
+# The Talent window's three complete drawing paths: DF-main's three-panel
+# frame for modern-wow, the same three-tree interface in the modern theme's
+# own flat language, and the same interface again in the client's own chrome
+# for classic-wow. Entry points only; modules\talents.lua picks one.
+modules\talentsmodernwow.lua
+modules\talentsmodern.lua
+modules\talentsclassic.lua
+modules\talents.lua
+
+# The profession (TradeSkill / Craft) window's two complete drawing paths:
+# PandaUI's flat interface for modern, then DF-main's profession frame for
+# modern-wow (also used by Classic's explicit Crafting selection). After
+# spellbookprofessions.lua and talentsmodernwow.lua, whose shared profession
+# lookup and panel rim it calls, and before modules\modernwow.lua, which
+# checks that it built.
+modules\professionsmodern.lua
+modules\professions.lua
+# The tracked-recipe HUD the profession window's "Track this recipe" box
+# feeds. Theme-independent; professions.lua only calls its U.* entry points.
+modules\crafttracker.lua
+modules\character.lua
+# The Character window's stats side panel: the readout (data only), then the
+# shared behavior with complete flat-Modern and Modern-WoW drawing paths.
+modules\characterstats.lua
+modules\characterstatspanel.lua
+modules\charactersidebar.lua
+# The Equipment Manager behind the sidebar's third tab: the set store and
+# swap engine (data only), the gear-slot arrows and their item flyout, then
+# the pane itself. Entry points only; the stats panel activates the pane.
+modules\equipmentsets.lua
+modules\characterflyout.lua
+modules\characterequipment.lua
+# The Reputation page's Retail list and detail window (Modern WoW only; entry
+# point called by character.lua's reputation restyle).
+modules\characterreputation.lua
+modules\inspect.lua
+modules\friends.lua
+modules\merchant.lua
+modules\trainer.lua
+modules\mail.lua
+# The quest giver's Modern WoW design for QuestFrame and GossipFrame (the
+# `questdialog` surface): entry points only, bound and called by
+# modules\gossip.lua and modules\quest.lua.
+modules\questdesign.lua
+modules\gossip.lua
+modules\quest.lua
+modules\windowmove.lua
+
+# The modern-wow theme's own drawing path. Last on purpose: it dresses
+# frames the modules above own, so every one of them has already been
+# built by the time its OnEnable runs. Classic can route only its selected
+# modules through the same complete drawing paths.
+modules\modernwow.lua

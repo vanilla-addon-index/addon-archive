@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/goamania/MouseHighlightCircle",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "goamania",
+    "repo": "MouseHighlightCircle",
+    "name": "MouseHighlightCircle",
+    "url": "https://github.com/goamania/MouseHighlightCircle",
+    "api": "https://api.github.com/repos/goamania/MouseHighlightCircle"
+  },
+  "commit": "dced58f6a87b7a7ae7b15cfe098acb951f7b1a0e",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "9a1d0332f2080109c6da179267cb3a96baa0ff0812dbefc17a9af40c9183a223",
+      "bytes": 1065
+    },
+    "MouseHighlightCircle.lua": {
+      "sha256": "697a49db01b420f3c54569f0b31dd75d797d382aaaca23575251921efbef2c6f",
+      "bytes": 8020
+    },
+    "MouseHighlightCircle.toc": {
+      "sha256": "a3bf45131cbaef083f40c357e39f0d6754555e4836f8863b89ac1fd785317b67",
+      "bytes": 232
+    },
+    "README.md": {
+      "sha256": "2db39701bb969622b992239ee54c868c36a9c67009ed42a4a5ef303fb29756e5",
+      "bytes": 2432
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

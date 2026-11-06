@@ -1,0 +1,19 @@
+## Interface: 11200
+## Title: |cff33ffccClassic|cffffffffDB oooVersionooo
+## Author: Eric (Shagu) Mauser, 2015-2016 | Muehe, 2016-2017
+## Notes: A Quest-, Item-, Vendor- and Spawn-database. Notes are shown via Cartographer.
+## Version: oooVersionooo-oooLocaleooo
+## RequiredDeps: Cartographer
+## SavedVariables:
+## SavedVariablesPerCharacter: CdbFavourites CdbSettings CdbFinishedQuests CdbMinimapPosition CdbMinimapEnabled
+
+# database
+db\zoneDB.lua
+db\itemDB.lua
+db\spawnDB.lua
+db\questDB.lua
+db\objectDB.lua
+
+# addon
+ClassicDB.lua
+ClassicDB_GUI.lua

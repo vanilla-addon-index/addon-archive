@@ -1,0 +1,9 @@
+﻿<Bindings>
+	<Binding name="BGREPORT1" header="BGREPORT" runOnUp="true">
+		if ( keystate == "down" ) then
+			BGReport_API:OnMarkingStart( IsAltKeyDown() or false, IsControlKeyDown() or false, IsShiftKeyDown() or false );
+		else
+			BGReport_API:OnMarkingEnd();
+		end
+	</Binding>
+</Bindings>

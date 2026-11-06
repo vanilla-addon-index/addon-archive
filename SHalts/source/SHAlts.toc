@@ -1,0 +1,16 @@
+## Interface: 11200
+## Title: SHAlts
+## Notes: Alt manager: inventory, bank, gear, professions, recipes and cooldowns for every character, across accounts with SuperWoW.
+## Author: Fayz
+## SavedVariables: SHAltsDB
+
+Core.lua
+Scan.lua
+Data.lua
+Sync.lua
+UI.lua
+Minimap.lua
+Star.lua
+Alert.lua
+Resets.lua
+Raids.lua

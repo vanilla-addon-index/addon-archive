@@ -1,0 +1,50 @@
+{
+  "upstream": "https://github.com/Warlockbugs/impulse-booster",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Warlockbugs",
+    "repo": "impulse-booster",
+    "name": "impulse-booster",
+    "url": "https://github.com/Warlockbugs/impulse-booster",
+    "api": "https://api.github.com/repos/Warlockbugs/impulse-booster"
+  },
+  "commit": "79eb07d55179526a842d300300ffa20b40390e3a",
+  "sourceFiles": {
+    "!!!ImpulseBooster/!!!ImpulseBooster.toc": {
+      "sha256": "45c1528fcc83aa18926bfd375a0666b36d6b7e128603fb7ae6408953b96eb5c6",
+      "bytes": 328
+    },
+    "!!!ImpulseBooster/ImpulseBooster.lua": {
+      "sha256": "0646898b92f3ffbf8cc653cad59d1865bf32f17e6eec3682bab581c9b9e591cd",
+      "bytes": 13082
+    },
+    "!!!ImpulseBooster/README": {
+      "sha256": "d72ef014d49a1466a75b43b17959f10ebfdb3e9d6dfab7cdbec67b2257f1bccb",
+      "bytes": 2137
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "5579672": {
+      "tag": "v3.1-final",
+      "folder": "v3.1-final--5579672",
+      "assets": {
+        "3281598": {
+          "sha256": "8e5daec0048fa178f569e45e87b43804dff69eef370972e58ce4d696689440e0",
+          "bytes": 6138,
+          "id": "3281598",
+          "name": "ImpulseBooster-v3.1.zip",
+          "url": "https://github.com/Warlockbugs/impulse-booster/releases/download/v3.1-final/ImpulseBooster-v3.1.zip",
+          "path": "releases/v3.1-final--5579672/assets/ImpulseBooster-v3.1.zip"
+        }
+      },
+      "source": {
+        "sha256": "ea1fecd51302dc2f4cfc68b300eadc0e85ac07a5ebccc0003531490534a9808a",
+        "bytes": 5620,
+        "path": "releases/v3.1-final--5579672/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Warlockbugs/impulse-booster/tarball/v3.1-final"
+      }
+    }
+  }
+}

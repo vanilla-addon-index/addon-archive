@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: Freewood |cffc89b3cLoot|r
+## Notes: Blacklist for loot: picks up listed items and deletes them with your next click in the world.
+## Notes-deDE: Blacklist für Beute: nimmt gelistete Items mit und löscht sie mit deinem nächsten Klick in der Spielwelt.
+## Author: Lacustat
+## Version: 0.1.241
+## Dependencies: Freewood-OctoWoW-Core
+
+Locales.lua
+Loot.lua
+LootUI.lua

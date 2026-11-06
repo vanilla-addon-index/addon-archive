@@ -1,0 +1,7 @@
+toolbox/pfQuest
+toolbox/pfQuest-fork
+.DS_Store
+tools/
+
+# Generated databases belong to install bundles, not source history.
+provider/data/*.sqlite

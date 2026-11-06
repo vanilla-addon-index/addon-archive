@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/Hodareh/HardcoreDeath",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Hodareh",
+    "repo": "HardcoreDeath",
+    "name": "HardcoreDeath",
+    "url": "https://github.com/Hodareh/HardcoreDeath",
+    "api": "https://api.github.com/repos/Hodareh/HardcoreDeath"
+  },
+  "commit": "3ee5511f6859e50b8aa8b8373b7d4b9e42e0bde9",
+  "sourceFiles": {
+    "DeathLog.png": {
+      "sha256": "187fb2ab49259779cd7142e7de73c44daf96526b25d4fcef3efb42b2c611b77c",
+      "bytes": 480663
+    },
+    "DeathMessage.png": {
+      "sha256": "93ad84a2a7dfe6dc08df1f95313195f83dac57150c3e4ffa32d94f44f2f7f476",
+      "bytes": 10337
+    },
+    "HardcoreDeath.lua": {
+      "sha256": "8419fba3b2ac06a501b35292d4ff86b07370c26cfcb6b8aa6de0d4279948af53",
+      "bytes": 30005
+    },
+    "HardcoreDeath.toc": {
+      "sha256": "37c6d15ad71283645d6193a172d87bb397073f8965fb8084653bdd447d4756eb",
+      "bytes": 327
+    },
+    "Preview.png": {
+      "sha256": "7323ec214b64100b9163c509665de2b1e68240dfdb8f6090fb357daffd747548",
+      "bytes": 10589
+    },
+    "README.md": {
+      "sha256": "070e9a580d4f2ce3d5027ae8cdb46673a32aa70ef7ee0598fcac46acc78147dd",
+      "bytes": 761
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

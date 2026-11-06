@@ -1,0 +1,928 @@
+--[[
+PandaQuest / Core/Config.lua
+
+SavedVariables access.
+
+Persistence constraints established for this client:
+  * The SavedVariables writer does not escape backslashes safely, so stored
+    asset paths can lose separators or turn into control characters after a
+    reload. PandaQuest therefore never persists a media path. Anything that
+    needs one stores a stable key and rebuilds the path at runtime, and
+    Sanitize rejects any string containing a backslash on the way in and out.
+  * Nested tables themselves round-trip through the client writer correctly.
+    The store is still deliberately shallow (profile -> section -> scalar or a
+    keyed set of scalars), so that the saved file cannot grow into an arbitrary
+    object graph and so a corrupted branch can be dropped without losing the
+    rest of the file.
+
+TWO STORES, AND THE LINE BETWEEN THEM.
+
+  * `PandaQuestDB` (`## SavedVariables`) is per ACCOUNT and holds settings.
+    A player who sets a tracker width or picks an objective style means it for
+    the whole account, and having to set it again on every alt would be a bug.
+  * `PandaQuestCharDB` (`## SavedVariablesPerCharacter`) is per CHARACTER and
+    holds what a character DID: the quest-completion record. A completion is a fact about one
+    character; sharing it across an account marks quests done on a level-1 alt
+    that has never left its starting zone.
+
+`CHARACTER_SECTIONS` below is the whole of that split -- naming a section there
+is what moves it, and every caller keeps using GetSection/SetSectionEntry
+unchanged. The per-character file layout is established from disk (see the
+`savedvariables.per_addon_files_and_foreign_globals` knowledge record): this
+client writes `## SavedVariablesPerCharacter` globals to
+`Saved/Account/<account>/<realm>/<character>/SavedVariables/<AddonName>.lua`,
+which is how pfQuest's own per-character history is stored.
+]]
+
+local PQ = PandaQuest
+local Client = PQ.Client
+local Config = PQ:NewModule("Config")
+
+local SCHEMA = 1
+local MAX_SET_ENTRIES = 250
+
+-- Per-section overrides of MAX_SET_ENTRIES.
+--
+-- 250 is the right ceiling for a section that holds a working set -- the
+-- quests the player is tracking, hiding or folding right now. It is the wrong
+-- ceiling for the quest-history sections, which hold one entry per quest the
+-- character has ever finished and grow monotonically: 250 is reached by a
+-- character who is nowhere near done, and everything past it is silently
+-- refused. The server query (Quest/ServerQuestQuery.lua) hits that wall
+-- immediately, since it arrives as a whole career at once.
+--
+-- The bound is the bundled data itself: Database/quests.lua carries 4433
+-- Vanilla quests, so a history can never legitimately name more than that.
+-- 6000 leaves headroom for IDs the data does not know without being an open
+-- door -- these sections stay bounded, they are just bounded by the world
+-- rather than by a working-set number that never applied to them.
+local SECTION_LIMITS = {
+    questHistory = 6000,
+    questHistoryManual = 6000,
+    questHistoryImported = 6000,
+    -- One counter per alert-worthy creature. The current bundled alert set is
+    -- much smaller, but the bound leaves room for future world-data updates
+    -- while keeping a damaged SavedVariables branch finite.
+    rareKillCounts = 2000,
+    -- Temporary review collection: one "unitId:areaId" entry for each
+    -- Rare/Elite/Boss pin the player explicitly removes from a dungeon
+    -- approach. Kept account-wide so every character contributes to one list.
+    rareApproachIgnores = 2000,
+}
+
+local function SectionLimit(name)
+    return SECTION_LIMITS[name] or MAX_SET_ENTRIES
+end
+
+-- Sections that live in the per-character store rather than the account one.
+-- See the header: this table is the entire account/character split.
+local CHARACTER_SECTIONS = {
+    questHistory = true,
+    questHistoryManual = true,
+    questHistoryImported = true,
+    -- A kill is something this character did, exactly like completing a
+    -- quest; sharing the count account-wide would attribute one alt's kills
+    -- to every other character.
+    rareKillCounts = true,
+    -- Quest title -> palette slot (Core/Namespace.lua). A quest log is a
+    -- character's own, so the colours drawn for it are too: sharing the map
+    -- account-wide would have one alt's quests hold slots the alt actually
+    -- looking at the map never sees, and its own quests pushed into whatever
+    -- the palette had left.
+    questColorSlots = true,
+}
+
+local defaults = {
+    debug = false,
+    pollInterval = 0.5,
+
+    -- Interface language, as one of the four-letter codes Core/Locale.lua
+    -- registers. Account-wide like every other setting here: a language is a
+    -- reading preference, not an alt's layout.
+    --
+    -- Only ever read when pandaUI is NOT installed. With pandaUI present the
+    -- language is whatever is set there and this value is left untouched, so
+    -- uninstalling pandaUI later returns the player to their own last choice
+    -- rather than to English.
+    --
+    -- Deliberately NO default here. The fill loop in OnInit would write it
+    -- before Core/Locale.lua runs, and a stored value always wins, so the
+    -- client-locale first-run default (zhCN -> Chinese, ruRU -> Russian,
+    -- anything else -> English) could never apply. Core/Locale.lua seeds the
+    -- value itself and marks it with `languageSeeded`.
+
+    -- Uses the addon's selected language for quest titles and for the native
+    -- Quest Log's objective summary/description when that exact translation
+    -- exists in the bundled database. The historical key name is retained so
+    -- an existing opt-out remains respected. Live client text is always the
+    -- fallback; identity, progress counters and game state are never changed.
+    translateQuestTitles = true,
+
+    -- Replaces the stock gossip and quest-giver windows with PandaQuest's
+    -- parchment dialogue, while preserving a live opt-out that restores the
+    -- stock root during the current interaction.
+    immersiveDialogue = true,
+    -- Off: the dialogue takes only quest givers (a quest page, or a gossip
+    -- list offering a quest); every other NPC keeps the stock gossip window.
+    immersiveDialogueAllNpcs = false,
+    -- The dialogue card's look (Client.QUEST_DIALOGUE_LAYOUTS). Minimal for a
+    -- new profile (user request, 2026-10-12); OnInit writes only a missing
+    -- key, so a profile that already saved a theme keeps it.
+    dialogueTheme = "minimal",
+    -- Hides the HUD (unit frames, bars, minimap, chat, the tracker, the world
+    -- tooltip) while the dialogue is up.
+    dialogueHideInterface = true,
+    -- Space continues or accepts and Esc closes while the dialogue is up;
+    -- every other key waits until it closes (this client cannot pass keys on).
+    dialogueKeyboard = true,
+    -- Not an option: the command Space was bound to while the dialogue has
+    -- it unbound (Quest/Dialogue.lua SyncKeyboard), false when nothing is
+    -- held. Kept so a session that ended mid-dialogue gives it back on load.
+    dialogueSpaceBinding = false,
+    -- Accepts offered quests, hands in completable ones and takes the reward,
+    -- except a reward the player must choose from.
+    dialogueAutoQuest = false,
+
+    -- Shows the fixed respawn duration recorded by the bundled world data on
+    -- creature and game-object tooltips. A zero or absent duration is unknown
+    -- and stays hidden rather than being presented as an instant respawn.
+    tooltipRespawnTimers = true,
+
+    -- Experience and reputation rows at the tail of the Quest Log reward
+    -- section. Both values come from the bundled world data after a title
+    -- match, because the client reports neither.
+    questLogRewards = true,
+
+    -- Paints each reward name on the quest-giver's completion window in its
+    -- item quality colour, so a choice between two rewards says which is the
+    -- rarer one. Off restores whatever colour the buttons carried.
+    questRewardItemColors = true,
+
+    -- Arrows over the choose-one rewards on the completion window (best and
+    -- second-best upgrade, or worse than what is worn) and a coin on the one
+    -- that sells for the most. See Quest/GearAdvisor.lua.
+    questRewardGearAdvisor = true,
+
+    restoreTracking = true,
+    -- Seasonal quests are hidden by default: the client cannot report which
+    -- world events are running, so they would otherwise show all year.
+    showEventQuests = false,
+    -- Grey/trivial available quests are hidden like the native presentation.
+    -- Opting in adds them to both maps with their own subdued giver icon.
+    showLowLevelQuests = false,
+    -- Profession quests (the data's `skill` field) are hidden for a character
+    -- whose Skills pane does not list that profession. Anything the pane
+    -- cannot answer -- a collapsed header, an unreadable list -- shows them.
+    hideUnlearnedProfessionQuests = true,
+    -- A quest that is ready to hand in always gets its turn-in "?" marker.
+    -- This adds the dimmed "?" for quests still in progress, which is where a
+    -- quest the player is carrying will eventually be handed in. On by
+    -- default: "where do I turn this in" is a question worth answering before
+    -- the last objective ticks over, and the dim tint keeps it from reading as
+    -- an available hand-in.
+    showInProgressTurnIns = true,
+
+    -- How the world map draws quest objectives: two independent switches, so
+    -- either, both or neither can be on, and both are on by default. Dots are
+    -- one dot per spawn point, in the same style the minimap uses -- exact
+    -- positions. Areas are the blue contour around the spawn cloud with the
+    -- numbered POI circles, which says "somewhere in here" instead. Both are
+    -- drawn by Map/WorldMapPins.lua in one pass. Until 0.3.5 these were one
+    -- boolean (mapObjectiveDots false meant areas); the migration below
+    -- carries that choice over.
+    mapObjectiveDots = true,
+    mapObjectiveAreas = true,
+
+    -- Areas presentation only. false (the default) keeps just the followed
+    -- quest's area on the map and shows any other quest's area while its
+    -- numbered marker is hovered; true keeps every in-progress area drawn.
+    mapShowAllAreas = false,
+
+    -- Percentage of the 9px world-map objective dot. 100 is 10% smaller than
+    -- the former 10px default; the settings slider allows 50-150.
+    mapObjectiveDotScale = 100,
+
+    -- Markers whose icons collide on the world map cannot be hovered apart,
+    -- so hovering any of them describes all of them in one tooltip. On by
+    -- default: without it, whichever pin the pool happened to place last
+    -- answers for the whole spot and the others are simply unreachable.
+    -- false restores the strict one-marker-one-tooltip behaviour, at the cost
+    -- of the markers underneath. See Map/WorldMapPins.lua.
+    mapClusterTooltips = true,
+
+    -- The same quest scene as the world map, drawn around the player on the
+    -- minimap: one dot per raw quest-creature spawn plus the "!" and "?" markers,
+    -- creature positions are shown only while actually in view; distant
+    -- giver and turn-in markers remain clamped to the minimap edge. On by
+    -- default -- it is the only layer on this client that can say "that way"
+    -- while the player is standing still, since there is no readable facing
+    -- for a HUD arrow. See Map/MinimapPins.lua for the two structural limits:
+    -- zoom steps other than 0 use unverified Vanilla constants, and indoors
+    -- cannot be detected at all.
+    minimapPins = true,
+
+    -- Off-view giver "!" and turn-in "?" pins default to CLAMPED at the
+    -- minimap edge (faded), pointing "that way, further than this". false
+    -- hides them instead once they leave the view, matching how objective
+    -- dots already behave, for a less crowded minimap. Creature objective
+    -- dots are never clamped either way -- this only affects the two icon
+    -- pools. See Map/MinimapPins.lua.
+    minimapPinsClampEdge = true,
+    -- Keeps the game's own player arrow readable at the centre of the
+    -- minimap. Every pin is created in the measured level-120 band, which is
+    -- far above the arrow, so a dot standing on the player used to bury it.
+    -- With this on the arrow is raised where the client gives a handle on it,
+    -- and otherwise the pins drop to just above the minimap's own level so the
+    -- arrow comes out on top. No pin is ever hidden either way, and "/pq
+    -- minimap" reports which of the two happened. See Map/MinimapPins.lua.
+    minimapPinsBelowArrow = true,
+    -- Deliberately not on the options page: the page is at its height budget,
+    -- and this is an escape hatch rather than a preference -- "/pq minimap
+    -- indoors on|off" -- for the case where the interior test misfires.
+    minimapPinsHideIndoors = true,
+
+    -- Vendor points for quest items that are bought rather than killed for or
+    -- looted -- see Map/QuestVendorPins.lua. On by default: without them the
+    -- map has nothing at all to say about such a quest, and the points come
+    -- and go with the objective instead of standing there permanently.
+    questVendorPins = true,
+
+    -- Percentage of the 10.8px minimap objective dot. 100 is 10% smaller than
+    -- the former 12px default; the settings slider allows 50-150.
+    minimapObjectiveDotScale = 100,
+
+    -- Nearby service NPCs ---------------------------------------------------
+    --
+    -- The movable HUD button opens a compact multi-select menu. Categories
+    -- start disabled so installing the addon does not add a second map scene
+    -- until the player asks for one. The selection and button position both
+    -- survive a reload.
+    npcCategoryAuctioneer = false,
+    npcCategoryBanker = false,
+    npcCategoryBattlemaster = false,
+    npcCategoryFlight = false,
+    npcCategoryInnkeeper = false,
+    npcCategoryMailbox = false,
+    npcCategoryMeetingstone = false,
+    npcCategoryRepair = false,
+    npcCategorySpirithealer = false,
+    npcCategoryStablemaster = false,
+    npcCategoryVendor = false,
+    npcCategoryTrainer = false,
+
+    -- Map locations, kept below the service rows in the same menu. Instance
+    -- entrances come from Database/instances.lua; world nodes read the bundled
+    -- meta relations chests/fish/herbs/mines/rares. A single zone can hold
+    -- hundreds of nodes, so those are only gathered while their row is checked.
+    npcCategoryInstances = true,
+    npcCategoryChests = false,
+    npcCategoryHerbs = false,
+    npcCategoryMines = false,
+    npcCategoryFish = false,
+    npcCategoryRares = false,
+
+    -- No default point/x/y here on purpose: until the player drags the
+    -- button, NpcPins:OnInit re-anchors it live beside wherever the settings
+    -- icon actually lands (Client.AnchorHudButtonBesideSettingsIcon), which a
+    -- fixed default here would fight with. A drag persists real values
+    -- through Config:Set, same as the tracker window.
+
+    -- Raid target marks over quest creatures -------------------------------
+    --
+    -- The only way left to draw anything over one specific creature in the 3D
+    -- world on this client: no unit position, no player facing, and no
+    -- nameplate widget exists (docs/CLIENT-COMPATIBILITY.md item 12). The
+    -- engine draws a raid mark over the unit itself, so the addon only has to
+    -- name the unit.
+    questMarks = true,
+
+    -- Which of the eight marks. 1 star, 2 circle, 3 diamond, 4 triangle,
+    -- 5 moon, 6 square, 7 cross, 8 skull.
+    questMarkIndex = 1,
+    questMarkTurnInIndex = 3,
+
+    -- A raid mark is SHARED state: every group member sees it and setting one
+    -- overwrites whatever they had put there. The realm ignores SetRaidTarget
+    -- while solo, so group leader / assistant is the only remaining route and
+    -- it stays opt-in rather than changing shared group marks silently.
+    questMarksInGroup = false,
+
+    -- Retail's quest shield on the target portrait (World/TargetQuestIcon.lua).
+    targetQuestIcon = true,
+
+    -- The quest number beside a wanted creature's nameplate
+    -- (World/NameplateQuestIcon.lua).
+    nameplateQuestIcon = true,
+
+    -- Rare / elite proximity alert -------------------------------------------
+    --
+    -- See World/RareAlert.lua. This is a PROXIMITY alert over the bundled
+    -- spawn data, not a sighting: this client has no way to enumerate the
+    -- creatures around the player, so "in range" means "within rareAlertRange
+    -- yards of a spawn point recorded for this creature".
+    -- One key per rank the alert can raise, because which of them is worth
+    -- being interrupted for is a different answer for every player: the
+    -- curated rank-4 rares, the curated rank-2 rare elites, and the rank-3
+    -- open-world bosses.
+    --
+    -- There is deliberately no fourth key. Rank 1 is 816 ordinary elites --
+    -- every elite camp in the game plus a tail of parked NPCs -- and
+    -- Database:IsAlertWorthy never admits one, so a switch for it would be
+    -- wired to nothing. They stay map-only whatever these three say.
+    --
+    -- All three off IS the alert turned off, and that is what "/pq rare off"
+    -- writes. There is no master switch above them: the options page shows
+    -- exactly these three, so it can never show a rank as tracked while a
+    -- hidden switch silences it.
+    rareAlertRares = true,
+    rareAlertElites = true,
+    rareAlertBosses = true,
+
+    -- Yards. The settings slider and World/RareAlert.lua both use 20-500.
+    -- 120 warns early without reaching as far into neighbouring city blocks.
+    rareAlertRange = 120,
+
+    -- Seconds the card stays up on its own. Clamped to 3-60.
+    rareAlertSeconds = 12,
+
+    -- A SoundEntries KIT NAME, never a file path. This client documents
+    -- PlaySound only -- there is no PlaySoundFile among its globals -- and it
+    -- is silent for a kit name it does not know, with no error and no return
+    -- value. So nothing in the addon can verify that this name makes a noise;
+    -- "/pq rare sound <kit>" is how the player's ears settle it.
+    rareAlertSound = "RaidWarning",
+
+    -- Where the card sits. It is dragged by anywhere on it, so this is a saved
+    -- position and not a constant: same rule as the tracker window below --
+    -- an anchor point name and two numbers, always UIParent-relative, captured
+    -- through Client.GetFrameAnchor, which undoes this client's inverted
+    -- GetPoint Y. The default is centred under the top edge, clear of the
+    -- default minimap and of the native error text.
+    rareAlertPoint = "TOP",
+    rareAlertRelativePoint = "TOP",
+    rareAlertX = 0,
+    rareAlertY = -160,
+
+    -- Objective progress in party chat ---------------------------------------
+    --
+    -- Repeats each objective step the player makes -- "Kobold Vermin slain:
+    -- 4/10" -- into the group's own chat channel, so a party farming the same
+    -- quest can see each other's counters move. See Quest/ObjectiveAnnounce.lua.
+    --
+    -- ON by default: a party questing together wants to see each other's
+    -- counters move, and that is the point of the feature. It writes in a
+    -- shared channel under the player's own name, so the setting is the first
+    -- thing they can turn off. It is silent while solo, because there is no
+    -- group channel to write to.
+    announceObjectivesParty = true,
+    -- With party reports enabled, send only when each objective finishes.
+    -- Keep the stored key so existing selections survive the corrected label.
+    announceCompletedQuestsOnly = false,
+
+    -- Quest tracker window ---------------------------------------------------
+    --
+    -- The addon's own movable tracker, which lists every quest in the log
+    -- rather than the five the client's watch list can hold. See
+    -- docs/QUEST-TRACKER.md.
+    trackerEnabled = true,
+    trackerWidth = 130,
+
+    -- Percentage opacity of the tracker window's near-black background.
+    -- Kept as 0-100 because that is the value the settings slider displays;
+    -- TrackerFrame converts it to the texture's 0-1 alpha at the view edge.
+    trackerBackgroundOpacity = 55,
+
+    -- A maximum window height in pixels, or 0 for no ceiling. The corner grip
+    -- writes a real height on its first drag, /pq tracker height sets it
+    -- directly, and /pq tracker reset returns it to 0. Rows below a shorter
+    -- ceiling are not drawn; enlarging the window reveals them again. At or
+    -- past half the screen height the window pages instead (TrackerFrame).
+    trackerHeight = 0,
+
+    -- "all", "tracked" or "none". "tracked" shows objectives only under the
+    -- quests in the client's own watch list (plus any quest ready to hand in),
+    -- which turns the window into a compact index of the whole log.
+    trackerShowObjectives = "all",
+
+    trackerGroupByZone = true,
+    trackerCollapsed = false,
+
+    -- Restricts the window to the quests filed under the player's current zone
+    -- in the quest log, so a full log reads as "what can I do here" instead of
+    -- a career summary. On by default: the tracker is a fixed, unscrolled box
+    -- and a 20-quest log overflows it long before the ceiling is reached.
+    --
+    -- The comparison is between two localized strings -- the quest log's own
+    -- zone header and the client's zone name -- and everything that is NOT a
+    -- confirmed other zone stays visible: a quest with no header, a header the
+    -- bundled zone table does not know as an area (class and profession
+    -- groupings), and every quest at all when the client will not name the
+    -- current zone. See Quest/TrackerFrame.lua.
+    trackerCurrentZoneOnly = true,
+
+    -- Automatically folds a quest's objectives while every readable counter
+    -- is still 0/N. The historical key is retained so existing preferences
+    -- survive this behaviour change. On by default so a newly accepted quest
+    -- takes one title row until its first measurable progress; counterless
+    -- objectives remain expanded because the client gives the addon no progress
+    -- number to judge them by.
+    trackerHideUnstartedQuests = true,
+
+    -- Draws a filled bar under an objective row whose text carries a
+    -- have/need counter, alongside the numeric text. On by default.
+    trackerProgressBar = true,
+
+    -- Lifts a quest to the top of the window the moment one of its objectives
+    -- moves, most recently advanced first, so the kill or the loot that just
+    -- happened is reported at the top instead of wherever the quest log files
+    -- it. Session-scoped: the lift is forgotten on logout, and complete quests
+    -- still sink below every quest still in progress. On by default.
+    trackerRecentFirst = true,
+
+    -- The native five-quest panel is redundant while this window is up, and is
+    -- restored the moment either this setting or trackerEnabled is turned off.
+    trackerHideNativeWatch = true,
+
+    -- Captured through Client.GetFrameAnchor, which undoes this client's
+    -- inverted GetPoint Y. Always UIParent-relative: a relative frame is a
+    -- live object and cannot be persisted.
+    trackerPoint = "TOPRIGHT",
+    trackerRelativePoint = "TOPRIGHT",
+    trackerX = -20,
+    trackerY = -240,
+
+    -- The world map's own tracker copy: its TOPRIGHT offset from
+    -- WorldMapFrame's TOPRIGHT, in the map frame's units, set by dragging its
+    -- header. Always map-relative, so it follows the map wherever it opens.
+    mapTrackerX = -25,
+    mapTrackerY = -82,
+
+    -- Settings window ---------------------------------------------------------
+    --
+    -- Only ever used by PandaQuest's OWN options window, which is only built
+    -- when pandaUI is not installed -- when it is, the page is drawn inside
+    -- pandaUI's settings panel and that window owns its own position. Same
+    -- persistence rule as the tracker: an anchor point name and two numbers,
+    -- always UIParent-relative, never a live frame.
+    -- The settings button beside the minimap. Also pandaUI-absent only: when
+    -- pandaUI is installed its own button is already in that spot and opens
+    -- the window that now holds PandaQuest's page, so a second one would be
+    -- two buttons for one destination.
+    minimapButton = true,
+
+    settingsPoint = "CENTER",
+    settingsRelativePoint = "CENTER",
+    settingsX = 0,
+    settingsY = 0,
+
+    -- Main quest and the HUD waypoint marker ---------------------------------
+
+    -- Which gesture on a quest log row or a tracker line makes that quest the
+    -- main quest. "none" is a plain left click, which is the requested
+    -- default; the trade-off is that browsing the quest log re-points the
+    -- waypoint on every row read. "shift", "ctrl" or "alt" turn it into a
+    -- held-modifier gesture and leave plain clicks alone.
+    mainQuestClickModifier = "none",
+
+    -- Whether selecting a main quest also adds it to PandaQuest's tracked
+    -- set. Off by default and deliberately so: with plain-click selection
+    -- this would track every quest merely browsed in the log. Following a
+    -- quest and tracking it are separate ideas.
+    mainQuestAutoTrack = false,
+
+    -- Seeded in OnInit when the dormant HUD feature is enabled.
+    waypointEnabled = false,
+
+    -- 20Hz for distance, label and yaw-fallback state. PandaTool camera
+    -- projection runs every rendered frame from the cached state.
+    waypointInterval = 0.05,
+
+    -- Horizontal field of view, in degrees, used to turn a bearing offset into
+    -- a screen position. This is a setting rather than a measurement because
+    -- the client publishes no camera FOV -- see the cameraProjection
+    -- capability. Lower it if the marker consistently leads its target,
+    -- raise it if it lags.
+    waypointFov = 100,
+
+    -- Where the marker sits vertically, as a fraction of screen height above
+    -- centre. There is no vertical projection available (that needs camera
+    -- pitch and target elevation, neither of which this client exposes), so
+    -- the marker rides a fixed horizon band.
+    waypointHeight = 0.18,
+
+    -- The navigator: the arc-and-arrow direction display that replaced the
+    -- projected world marker. See docs/HUD-NAVIGATOR.md.
+    navigatorEnabled = true,
+
+    -- 20Hz, the same reasoning as waypointInterval: at this rate the arrow
+    -- sweeps as the player turns instead of stepping between positions.
+    navigatorInterval = 0.05,
+
+    -- User multiplier on the navigator's half-size base presentation. The arc
+    -- and arrow scale together so their proportions stay fixed.
+    navigatorScale = 1,
+
+    -- UIParent-relative anchor captured after dragging. GetFrameAnchor undoes
+    -- this client's inverted GetPoint Y before these scalars are persisted.
+    -- The default puts the navigation dial just above centre. Y is measured to
+    -- the frame's top, which is the arc's top since the frame was cut to what
+    -- it draws (Client.NavigatorLegacyOffsetShift): 58 is the old 150 less the
+    -- 92 units of headroom that frame no longer has, so the spot is unchanged.
+    navigatorPoint = "TOP",
+    navigatorRelativePoint = "CENTER",
+    navigatorX = 0,
+    navigatorY = 58,
+
+    -- Whether the decorative arc is drawn behind the arrow. It is a reference
+    -- frame, not information -- the arrow alone is still correct without it.
+    navigatorShowArc = true,
+
+    -- The mob navigator: a second, independent arc-and-arrow that aims at the
+    -- nearest recorded spawn of a creature tracked from the options page's Mob
+    -- tracking tab. Separate keys throughout rather than a mode on the quest
+    -- navigator, because the point of it is that both can be on screen at once
+    -- and be dragged apart. See docs/HUD-NAVIGATOR.md.
+    mobNavigatorEnabled = true,
+    mobNavigatorInterval = 0.05,
+    mobNavigatorScale = 1,
+
+    -- Offset left of the quest navigator's default so a player who tracks a
+    -- mob for the first time sees two dials rather than one dial with a second
+    -- hidden exactly behind it.
+    -- 76: the old 150 less the 74 units of headroom left above its caption.
+    mobNavigatorPoint = "TOP",
+    mobNavigatorRelativePoint = "CENTER",
+    mobNavigatorX = -170,
+    mobNavigatorY = 76,
+    mobNavigatorShowArc = true,
+}
+
+local function IsSafeString(value)
+    if type(value) ~= "string" then
+        return false
+    end
+    if string.find(value, "\\", 1, true) then
+        return false
+    end
+    return true
+end
+
+local function IsSafeScalar(value)
+    local kind = type(value)
+    if kind == "number" or kind == "boolean" then
+        return true
+    end
+    if kind == "string" then
+        return IsSafeString(value)
+    end
+    return false
+end
+
+-- One level of nesting is allowed and its contents must be scalars. Keys of a
+-- nested set are game data (quest titles), which is exactly the class of string
+-- the backslash hazard applies to, so keys are validated as well as values.
+local function SanitizeSection(section, limit)
+    local clean = {}
+    local count = 0
+    for key, value in pairs(section) do
+        if count >= limit then
+            break
+        end
+        local keyOk = type(key) == "number" or IsSafeString(key)
+        if keyOk and IsSafeScalar(value) then
+            clean[key] = value
+            count = count + 1
+        end
+    end
+    return clean
+end
+
+local function Sanitize(store)
+    local clean = {}
+    for key, value in pairs(store) do
+        if IsSafeString(key) then
+            if IsSafeScalar(value) then
+                clean[key] = value
+            elseif type(value) == "table" then
+                clean[key] = SanitizeSection(value, SectionLimit(key))
+            end
+        end
+    end
+    return clean
+end
+
+-- The three history sections used to live in the account store, because that
+-- is the only store there was. Every character that logs in after this update
+-- inherits that record ONCE and then keeps its own; from there the two never
+-- meet again.
+--
+-- The account copy is deliberately NOT deleted. It was built by whichever
+-- characters played, there is no way to know which of them have logged in
+-- since the update, and deleting it would silently strip the record from every
+-- character that has not. It is a legacy seed that goes unread once a
+-- character is migrated, and costs one flag to ignore.
+local function MigrateHistoryToCharacter(account, character)
+    if character.historyMigrated then
+        return
+    end
+    character.historyMigrated = true
+    for name in pairs(CHARACTER_SECTIONS) do
+        local legacy = account[name]
+        if type(legacy) == "table" and type(character[name]) ~= "table" then
+            local copy = {}
+            local key, value
+            for key, value in pairs(legacy) do
+                copy[key] = value
+            end
+            character[name] = copy
+        end
+    end
+end
+
+function Config:OnInit()
+    if type(PandaQuestDB) ~= "table" then
+        PandaQuestDB = {}
+    end
+    if type(PandaQuestCharDB) ~= "table" then
+        PandaQuestCharDB = {}
+    end
+
+    if PandaQuestDB.schema and PandaQuestDB.schema ~= SCHEMA then
+        -- No migration path exists yet. Rather than reading a shape this build
+        -- does not understand, start clean and say so.
+        -- One of the few lines in this addon that can print before
+        -- Core/Locale.lua has resolved the language, because it runs inside
+        -- Config's own OnInit -- the phase the language is read FROM. It goes
+        -- through the catalog anyway, and simply answers in English when it
+        -- lands that early.
+        PQ:Warn(PQ.L("CONFIG_SCHEMA_RESET", tostring(PandaQuestDB.schema),
+            tostring(SCHEMA)))
+        PandaQuestDB = {}
+    end
+
+    PandaQuestDB = Sanitize(PandaQuestDB)
+    PandaQuestDB.schema = SCHEMA
+    PandaQuestDB.version = PQ.version
+
+    PandaQuestCharDB = Sanitize(PandaQuestCharDB)
+    PandaQuestCharDB.schema = SCHEMA
+    MigrateHistoryToCharacter(PandaQuestDB, PandaQuestCharDB)
+
+    for key, value in pairs(defaults) do
+        if PandaQuestDB[key] == nil then
+            PandaQuestDB[key] = value
+        end
+    end
+
+    if PQ:IsFeatureEnabled("hudWorldMarker") then
+        -- Seed the option from ClassicAPI once. If the DLL is installed later,
+        -- enable it on that first detected launch, then preserve the choice.
+        local classicAPIDetected = Client.GetClassicAPIStatus()
+        if type(PandaQuestDB.hudMarkerDefaultVersion) ~= "number"
+            or PandaQuestDB.hudMarkerDefaultVersion < 1 then
+            PandaQuestDB.waypointEnabled = classicAPIDetected and true or false
+            PandaQuestDB.hudMarkerClassicAPISeen = classicAPIDetected and true or false
+            PandaQuestDB.hudMarkerDefaultVersion = 1
+        elseif classicAPIDetected and PandaQuestDB.hudMarkerClassicAPISeen ~= true then
+            PandaQuestDB.waypointEnabled = true
+            PandaQuestDB.hudMarkerClassicAPISeen = true
+        end
+    end
+
+    -- PandaTool opens the projected marker: switch it on the first launch it
+    -- is detected, then keep the player's choice.
+    if Client.HasCameraProjection() and PandaQuestDB.hudMarkerPandaToolSeen ~= true then
+        PandaQuestDB.waypointEnabled = true
+        PandaQuestDB.hudMarkerPandaToolSeen = true
+    end
+
+    -- trackerWidth's default has moved four times across sessions (260 -> 156
+    -- -> 130 -> 170 -> 130). The 170 was a deliberate +30% widen that was
+    -- reverted once the corner resize grip landed: the grip is now the way to
+    -- get a wider window, so the shipped default stays at the compact 130. The fill loop above
+    -- only writes a MISSING key, so a value an earlier version already wrote
+    -- as ITS default stays stuck at that number even after the default changes
+    -- underneath it. This forces the correction exactly once per change, gated
+    -- by its own version counter rather than SCHEMA (so it does not force a
+    -- full settings reset), and only touches a value still equal to a KNOWN
+    -- prior default -- never a width the player set deliberately through
+    -- /pq tracker width or by dragging the grip.
+    local TRACKER_WIDTH_DEFAULT_VERSION = 5
+    if type(PandaQuestDB.trackerWidthDefaultVersion) ~= "number"
+        or PandaQuestDB.trackerWidthDefaultVersion < TRACKER_WIDTH_DEFAULT_VERSION then
+        local width = PandaQuestDB.trackerWidth
+        if width == 260 or width == 156 or width == 170 then
+            PandaQuestDB.trackerWidth = defaults.trackerWidth
+        end
+        PandaQuestDB.trackerWidthDefaultVersion = TRACKER_WIDTH_DEFAULT_VERSION
+    end
+
+    -- The dialogue themes' keys now match their names in the options. This
+    -- carries a saved choice over exactly once, gated by its own counter: the
+    -- old "alliance" meant Alliance light and the new one means Alliance, so
+    -- running it twice would send a player to the wrong theme. A single table
+    -- lookup, never a chain, so no value is renamed twice.
+    local DIALOGUE_THEME_RENAMES = {
+        classic = "parchment",
+        cinematic = "horde-light",
+        alliance = "alliance-light",
+        ["alliance-v2"] = "alliance",
+        ["horde-v2"] = "horde",
+    }
+    if type(PandaQuestDB.dialogueThemeKeyVersion) ~= "number"
+        or PandaQuestDB.dialogueThemeKeyVersion < 1 then
+        local renamed = DIALOGUE_THEME_RENAMES[PandaQuestDB.dialogueTheme]
+        if renamed then
+            PandaQuestDB.dialogueTheme = renamed
+        end
+        PandaQuestDB.dialogueThemeKeyVersion = 1
+    end
+
+    -- Dots and areas became two switches. Before, mapObjectiveDots == false
+    -- WAS the areas choice. Areas now default on anyway, but the choice is
+    -- still carried over explicitly, exactly once, gated by its own counter
+    -- so a later choice is never undone.
+    if type(PandaQuestDB.mapObjectiveStyleVersion) ~= "number"
+        or PandaQuestDB.mapObjectiveStyleVersion < 1 then
+        if PandaQuestDB.mapObjectiveDots == false then
+            PandaQuestDB.mapObjectiveAreas = true
+        end
+        PandaQuestDB.mapObjectiveStyleVersion = 1
+    end
+
+    -- The alert's single on/off switch became one key per rank. A player who
+    -- had turned the whole alert off keeps it off: the three rank keys the
+    -- loop above has just defaulted to true inherit that answer instead. The
+    -- retired key is consumed rather than left in place, so this cannot run a
+    -- second time and undo a choice made on the options page since.
+    if PandaQuestDB.rareAlert ~= nil then
+        if PandaQuestDB.rareAlert == false then
+            PandaQuestDB.rareAlertRares = false
+            PandaQuestDB.rareAlertElites = false
+            PandaQuestDB.rareAlertBosses = false
+        end
+        PandaQuestDB.rareAlert = nil
+    end
+
+    -- Warleader Krazzilak's outdoor Tanaris spawn was mistakenly collected as
+    -- a dungeon approach. Retire that reviewed pair once, including the saved
+    -- manual hide that originally fed the bundled list. The version guard lets
+    -- a later deliberate hide survive subsequent loads.
+    local RANKED_IGNORE_REVIEW_VERSION = 1
+    if type(PandaQuestDB.rankedIgnoreReviewVersion) ~= "number"
+        or PandaQuestDB.rankedIgnoreReviewVersion < RANKED_IGNORE_REVIEW_VERSION then
+        local ignores = PandaQuestDB.rareApproachIgnores
+        if type(ignores) == "table" then
+            ignores["8199:440"] = nil
+        end
+        PandaQuestDB.rankedIgnoreReviewVersion = RANKED_IGNORE_REVIEW_VERSION
+    end
+
+    self.store = PandaQuestDB
+    self.characterStore = PandaQuestCharDB
+    PQ.debug = PandaQuestDB.debug and true or false
+end
+
+-- Which store a section belongs to. Everything else about a section -- the
+-- entry limit, the sanitizer, the scalar-only rule -- is identical either way,
+-- so this is the only place that has to know.
+function Config:StoreFor(name)
+    if CHARACTER_SECTIONS[name] then
+        return self.characterStore
+    end
+    return self.store
+end
+
+-- Per-character scalars, for state that belongs to one character but is not a
+-- keyed set: the server query's freshness record. Same safety rules as
+-- Config:Set.
+function Config:GetCharacter(key)
+    if not self.characterStore then
+        return nil
+    end
+    return self.characterStore[key]
+end
+
+function Config:SetCharacter(key, value)
+    if not self.characterStore then
+        return false
+    end
+    if value == nil then
+        self.characterStore[key] = nil
+        return true
+    end
+    if not IsSafeScalar(value) then
+        PQ:Warn(PQ.L("CONFIG_UNSUPPORTED_VALUE", tostring(key)))
+        return false
+    end
+    self.characterStore[key] = value
+    return true
+end
+
+function Config:Get(key)
+    if not self.store then
+        return defaults[key]
+    end
+    local value = self.store[key]
+    if value == nil then
+        return defaults[key]
+    end
+    return value
+end
+
+-- The saved value alone, nil when the key only has its default. For one-time
+-- migrations that must convert what a player saved and leave defaults alone.
+function Config:GetStored(key)
+    return self.store and self.store[key]
+end
+
+function Config:Set(key, value)
+    if not self.store then
+        return false
+    end
+    if not IsSafeScalar(value) then
+        PQ:Warn(PQ.L("CONFIG_UNSUPPORTED_VALUE", tostring(key)))
+        return false
+    end
+    self.store[key] = value
+    return true
+end
+
+-- Named set of scalars, e.g. remembered tracked quest titles. Which of the two
+-- stores it comes from is decided by CHARACTER_SECTIONS, not by the caller.
+function Config:GetSection(name)
+    local store = self:StoreFor(name)
+    if not store then
+        return nil
+    end
+    if type(store[name]) ~= "table" then
+        store[name] = {}
+    end
+    return store[name]
+end
+
+function Config:SetSectionEntry(name, key, value)
+    local section = self:GetSection(name)
+    if not section then
+        return false
+    end
+    if value == nil then
+        section[key] = nil
+        return true
+    end
+    if not IsSafeString(key) and type(key) ~= "number" then
+        return false
+    end
+    if not IsSafeScalar(value) then
+        return false
+    end
+    local count = 0
+    for _ in pairs(section) do
+        count = count + 1
+    end
+    if section[key] == nil and count >= SectionLimit(name) then
+        PQ:Warn(PQ.L("CONFIG_SECTION_FULL", tostring(name)))
+        return false
+    end
+    section[key] = value
+    return true
+end
+
+function Config:ClearSection(name)
+    local store = self:StoreFor(name)
+    if not store then
+        return
+    end
+    store[name] = {}
+end
+
+-- Replaces a whole section in one assignment after validating it. Server
+-- history uses this so an interrupted multi-tick query leaves the previous
+-- completion set intact instead of saving a half-applied response.
+function Config:ReplaceSection(name, source)
+    local store = self:StoreFor(name)
+    if not store or type(source) ~= "table" then
+        return false
+    end
+    local replacement = {}
+    local count = 0
+    local limit = SectionLimit(name)
+    local key, value
+    for key, value in pairs(source) do
+        if count >= limit then
+            PQ:Warn(PQ.L("CONFIG_SECTION_FULL", tostring(name)))
+            return false
+        end
+        if (type(key) == "number" or IsSafeString(key)) and IsSafeScalar(value) then
+            replacement[key] = value
+            count = count + 1
+        else
+            return false
+        end
+    end
+    store[name] = replacement
+    return true
+end
+
+Config.IsSafeScalar = IsSafeScalar
+Config.defaults = defaults

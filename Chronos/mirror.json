@@ -1,0 +1,41 @@
+{
+  "upstream": "https://octowow.st/git/shaga/Chronos",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "shaga",
+    "repo": "Chronos",
+    "name": "Chronos",
+    "url": "https://octowow.st/git/shaga/Chronos",
+    "api": "https://octowow.st/git/api/v1/repos/shaga/Chronos"
+  },
+  "commit": "d93e66ce5f317e59988cafbd18150016efa31ee6",
+  "sourceFiles": {
+    "Chronos.lua": {
+      "sha256": "9a76eea594227a410b64dd764f8083af3195c0d16a388e4e860e25e4a2b3706e",
+      "bytes": 25490
+    },
+    "Chronos.toc": {
+      "sha256": "25be0e96aae2d2c32631793c3c44199583c15a7ce778ff3eafb540c80e1c460f",
+      "bytes": 272
+    },
+    "Chronos.xml": {
+      "sha256": "203bf018c7151a71cf7b61e87b7f6a5246fe92bbd60f0a19add14bc7bb9390de",
+      "bytes": 413
+    },
+    "localization.de.lua": {
+      "sha256": "d11165fc10552e683fa250363ffe8c713191ef6c24f4b6cfca3c597385b82c26",
+      "bytes": 507
+    },
+    "localization.en.lua": {
+      "sha256": "15bc6800e482ca8412dc059ab5a38ad7236cf11707e6571f9c12c25b89a25ba4",
+      "bytes": 409
+    },
+    "localization.fr.lua": {
+      "sha256": "47b003b4af08a9fa999748521b0d1acd5254f488899b0f886e14c27c5815366e",
+      "bytes": 414
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

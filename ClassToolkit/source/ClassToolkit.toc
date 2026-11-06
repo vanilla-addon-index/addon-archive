@@ -1,0 +1,29 @@
+## Interface: 11200
+## Title: Class Toolkit
+## Notes: Swing timer, range icon, buff and reagent reminders, spell ready icons, interrupt and runner alerts, tick bar, eat and drink reminder, sell all at vendors; aggro meter, trap timer and pet helpers for hunters. /ctk
+## Author: stealthzi
+## Version: 1.7.5
+## SavedVariables: ClassToolkitDB
+## SavedVariablesPerCharacter: ClassToolkitCharDB
+
+Core.lua
+Widgets.lua
+Spells.lua
+Dots.lua
+Swing.lua
+Ready.lua
+Pulse.lua
+Buffs.lua
+Reagents.lua
+Range.lua
+Aggro.lua
+Hunter.lua
+Interrupt.lua
+Runner.lua
+Tick.lua
+Trap.lua
+PetHealth.lua
+EatDrink.lua
+Sell.lua
+Options.lua
+Help.lua

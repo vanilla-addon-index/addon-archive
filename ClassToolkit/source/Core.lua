@@ -1,0 +1,458 @@
+-- Class Toolkit: shared namespace, settings and slash commands.
+-- Target client is WoW 1.12.1 (Lua 5.0): no '#', no '%', no string.match, varargs via 'arg'.
+--
+-- Settings are per character (ClassToolkitCharDB), because what a Paladin wants on screen is not what a
+-- Hunter wants. Icon positions are shared by the whole account (ClassToolkitDB).
+
+ClassToolkit = {}
+local CTK = ClassToolkit
+
+CTK.VERSION = "1.7.5"
+CTK.movingIcons = false
+CTK.modules = {}   -- each module registers { update = function() } so settings changes reach it
+
+------------------------------------------------------------------------------------------------
+-- Chat
+------------------------------------------------------------------------------------------------
+
+function CTK.Print(msg)
+  DEFAULT_CHAT_FRAME:AddMessage("|cffabd473Class Toolkit|r: " .. tostring(msg))
+end
+
+function CTK.Debug(msg)
+  if CTK.char and CTK.char.debug then
+    DEFAULT_CHAT_FRAME:AddMessage("|cff888888[Class Toolkit debug]|r " .. tostring(msg))
+  end
+end
+
+------------------------------------------------------------------------------------------------
+-- Helpers
+------------------------------------------------------------------------------------------------
+
+-- "HUNTER", "PALADIN" and so on, or nil if the game hasn't said yet.
+function CTK.Class()
+  local _, class = UnitClass("player")
+  return class
+end
+
+function CTK.IsClass(class)
+  return CTK.Class() == class
+end
+
+function CTK.UnitGuid(unit)
+  if not SUPERWOW_VERSION then return nil end
+  local exists, guid = UnitExists(unit)
+  if exists and type(guid) == "string" then return guid end
+  return nil
+end
+
+function CTK.HasAttackableTarget()
+  return UnitExists("target") and not UnitIsDead("target") and UnitCanAttack("player", "target")
+end
+
+-- Run func once after 'seconds'. Uses one shared frame whose OnUpdate is removed when idle.
+local timers = {}
+local timerFrame = CreateFrame("Frame")
+local function TimerUpdate()
+  local now = GetTime()
+  local i = 1
+  while i <= table.getn(timers) do
+    local t = timers[i]
+    if now >= t.at then
+      table.remove(timers, i)
+      local ok, err = pcall(t.func)
+      if not ok then CTK.Print("error: " .. tostring(err)) end
+    else
+      i = i + 1
+    end
+  end
+  if table.getn(timers) == 0 then
+    timerFrame:SetScript("OnUpdate", nil)
+  end
+end
+
+function CTK.After(seconds, func)
+  table.insert(timers, { at = GetTime() + seconds, func = func })
+  timerFrame:SetScript("OnUpdate", TimerUpdate)
+end
+
+------------------------------------------------------------------------------------------------
+-- Settings
+------------------------------------------------------------------------------------------------
+
+local CASTERS = { PRIEST = true, MAGE = true, WARLOCK = true }
+
+-- What starts switched on for a class. Nothing here is forced: every module can be turned off.
+local function ClassDefaults(class)
+  local hunter = class == "HUNTER"
+  return {
+    swingMelee = not CASTERS[class],
+    swingRanged = hunter or CASTERS[class] or false,  -- Auto Shot, or a wand's Shoot
+    ready = true,
+    pulse = true,         -- a 5-to-1 countdown on a spell's icon mid-screen before its cooldown ends
+    readyOne = false,   -- one icon showing the next spell ready, instead of one icon each
+    watched = hunter and { "Arcane Shot" } or {},
+    bigReady = true,      -- a big READY icon you can move, for the spells you pick, until you use them
+    bigWatched = hunter and { "Kill Command" } or {},
+    dotTimes = {},      -- [spell] = seconds you set with /ctk dot; 0 switches a DoT timer off
+    buffs = true,
+    buffWarnSeconds = 60,
+    reagents = true,
+    range = true,
+    rangeSpell = false,   -- false: the class's main attack (see Range.lua); a name: that spell
+    feed = hunter,
+    eatWarn = hunter,     -- the "pet is eating: don't attack" icon
+    aggro = hunter,       -- the aggro meter: your threat against your pet's on the mob you target
+    aggroGrowl = false,   -- false: Growl's threat by its rank; a number: what you set with /ctk aggro growl
+    aggroScale = 1,       -- how much more (or less) the pet's threat is worth than counted, learned from fights
+    ammoBox = hunter,
+    ammoBoxShots = 100,
+    feedWhen = "content",
+    feedSound = true,
+    interrupt = true,     -- "CASTING" alert when your target starts a cast, with your interrupt or stun
+    tick = class ~= "WARRIOR",   -- mana / energy tick bar; rage doesn't tick
+    trap = hunter,        -- Freezing Trap countdown
+    runner = true,        -- "RUNNER!" when a mob you fight runs away in fear
+    petHealth = hunter or class == "WARLOCK",
+    petHealthPct = 35,
+    drink = true,         -- eat / drink icons after a fight
+    drinkPct = 40,
+    sellAll = true,       -- Ctrl+Right-click a bag item at a vendor: sell every stack of it
+    debug = false,
+  }
+end
+
+-- Fill in anything missing. Class info isn't always ready when the addon loads, so this runs again at
+-- PLAYER_ENTERING_WORLD; a setting already chosen is never overwritten.
+function CTK.ApplyDefaults()
+  local class = CTK.Class()
+  if not class then return false end
+  local defaults = ClassDefaults(class)
+  for k, v in pairs(defaults) do
+    if CTK.char[k] == nil then CTK.char[k] = v end
+  end
+  -- Up to 1.2 the range icon was for hunters only, so other classes have it saved as off. Once.
+  if not CTK.char.rangeForAll then
+    CTK.char.rangeForAll = true
+    CTK.char.range = true
+  end
+  CTK.char.class = class
+  return true
+end
+
+function CTK.Position(key)
+  return CTK.db.positions[key]
+end
+
+function CTK.SavePosition(key, point, relPoint, x, y)
+  CTK.db.positions[key] = { point = point, relPoint = relPoint, x = x, y = y }
+end
+
+-- Tell every module something changed: a setting, the icon lock, or the character logging in.
+function CTK.UpdateAll()
+  for i = 1, table.getn(CTK.modules) do
+    local ok, err = pcall(CTK.modules[i].update)
+    if not ok then CTK.Debug("update failed: " .. tostring(err)) end
+  end
+  if CTK.RefreshOptions then CTK.RefreshOptions() end
+end
+
+function CTK.RegisterModule(module)
+  table.insert(CTK.modules, module)
+end
+
+-- On/off switches, with the words used for them in chat and the options window.
+CTK.TOGGLES = {
+  { key = "swingMelee", command = "swing", label = "Melee swing timer" },
+  { key = "swingRanged", command = "ranged", label = "Auto Shot / wand timer" },
+  { key = "ready", command = "ready", label = "Spell ready icons" },
+  { key = "readyOne", command = "one", label = "Ready icons: just the next one" },
+  { key = "pulse", command = "pulse", label = "Cooldown countdown" },
+  { key = "bigReady", command = "big", label = "Big READY alert" },
+  { key = "buffs", command = "buffs", label = "Buff reminder" },
+  { key = "reagents", command = "reagents", label = "Reagent and ammo warnings" },
+  { key = "range", command = "range", label = "Range icon" },
+  { key = "aggro", command = "aggro", label = "Aggro meter", class = "HUNTER" },
+  { key = "feed", command = "feed", label = "Pet feed reminder", class = "HUNTER" },
+  { key = "eatWarn", command = "eating", label = "Pet eating warning", class = "HUNTER" },
+  { key = "ammoBox", command = "ammo", label = "Low ammo box", class = "HUNTER" },
+  { key = "interrupt", command = "interrupt", label = "Interrupt alert" },
+  { key = "runner", command = "runner", label = "Runner alert" },
+  { key = "tick", command = "tick", label = "Mana / energy tick bar",
+    classes = { HUNTER = true, ROGUE = true, DRUID = true, PRIEST = true, MAGE = true, WARLOCK = true,
+      SHAMAN = true, PALADIN = true }, who = "not warriors" },
+  { key = "drink", command = "drink", label = "Eat / drink reminder" },
+  { key = "trap", command = "trap", label = "Freezing Trap timer", class = "HUNTER" },
+  { key = "petHealth", command = "pethealth", label = "Pet low health flash",
+    classes = { HUNTER = true, WARLOCK = true }, who = "hunters, warlocks" },
+  { key = "sellAll", command = "sell", label = "Ctrl+Right-click: sell all" },
+}
+
+-- Does this switch apply to this class? Some are for one class, some for a few.
+function CTK.ToggleFits(t, class)
+  if t.classes then return t.classes[class or ""] and true or false end
+  if t.class then return t.class == class end
+  return true
+end
+
+function CTK.Toggle(key)
+  CTK.char[key] = not CTK.char[key]
+  for i = 1, table.getn(CTK.TOGGLES) do
+    local t = CTK.TOGGLES[i]
+    if t.key == key then
+      CTK.Print(t.label .. " " .. (CTK.char[key] and "on" or "off") .. ".")
+    end
+  end
+  CTK.UpdateAll()
+end
+
+function CTK.ToggleMoveIcons()
+  CTK.movingIcons = not CTK.movingIcons
+  if CTK.movingIcons then
+    CTK.Print("icons unlocked: drag them where you want, then type /ctk move or press Lock icons.")
+  else
+    CTK.Print("icons locked.")
+  end
+  CTK.UpdateAll()
+end
+
+------------------------------------------------------------------------------------------------
+-- Watched spells (spell ready icons)
+------------------------------------------------------------------------------------------------
+
+-- 'key' picks the list: "watched" (the spell ready icons, the default) or "bigWatched" (the big READY alert).
+local LIST_NAMES = { watched = "the spell ready icons", bigWatched = "the big READY alert" }
+
+function CTK.Watch(name, key)
+  key = key or "watched"
+  if not name or name == "" then
+    CTK.Print("type the spell's name, for example " ..
+      (key == "bigWatched" and "/ctk bigadd Kill Command" or "/ctk watch Arcane Shot"))
+    return
+  end
+  local watched = CTK.char[key]
+  for i = 1, table.getn(watched) do
+    if string.lower(watched[i]) == string.lower(name) then
+      CTK.Print(watched[i] .. " is already in " .. LIST_NAMES[key] .. ".")
+      return
+    end
+  end
+  local proper = CTK.SpellIndex and CTK.KnownSpellName(name)
+  if not proper then
+    CTK.Print("you don't know a spell called '" .. name .. "'. Check the spelling in your spellbook.")
+    return
+  end
+  table.insert(watched, proper)
+  CTK.Print("added " .. proper .. " to " .. LIST_NAMES[key] .. ".")
+  CTK.UpdateAll()
+end
+
+function CTK.Unwatch(name, key)
+  key = key or "watched"
+  local watched = CTK.char[key]
+  for i = 1, table.getn(watched) do
+    if string.lower(watched[i]) == string.lower(name or "") then
+      CTK.Print("took " .. watched[i] .. " off " .. LIST_NAMES[key] .. ".")
+      table.remove(watched, i)
+      CTK.UpdateAll()
+      return
+    end
+  end
+  CTK.Print("'" .. tostring(name) .. "' isn't in " .. LIST_NAMES[key] .. ".")
+end
+
+------------------------------------------------------------------------------------------------
+-- Slash commands
+------------------------------------------------------------------------------------------------
+
+local function ChatHelp()
+  CTK.Print("v" .. CTK.VERSION .. " commands:")
+  CTK.Print("/ctk - options window")
+  CTK.Print("/ctk help - how to use")
+  CTK.Print("/ctk move - unlock or lock the icons for dragging")
+  for i = 1, table.getn(CTK.TOGGLES) do
+    local t = CTK.TOGGLES[i]
+    local who = t.who or (t.class and "hunters")
+    CTK.Print("/ctk " .. t.command .. " - " .. string.lower(t.label) .. " on or off" ..
+      (who and (" (" .. who .. ")") or ""))
+  end
+  CTK.Print("/ctk range <spell> - spell the range icon watches")
+  CTK.Print("/ctk watch <spell> - add a spell ready icon")
+  CTK.Print("/ctk unwatch <spell> - remove one")
+  CTK.Print("/ctk bigadd <spell> - add a spell to the big READY alert")
+  CTK.Print("/ctk bigremove <spell> - take one off")
+  CTK.Print("/ctk ready all | one - every watched spell, or just the next one")
+  CTK.Print("/ctk dot - list the DoT lengths")
+  CTK.Print("/ctk dot <spell> <seconds> | off | auto - fix one")
+  CTK.Print("/ctk aggro growl <threat> | auto - set what Growl is worth")
+  CTK.Print("/ctk aggro reset - forget what it learned")
+  CTK.Print("/ctk feed content | unhappy - when the feed reminder shows")
+  CTK.Print("/ctk feed sound - feed reminder sound on or off")
+  CTK.Print("/ctk ammo <shots> - low ammo box level (100 to start)")
+  CTK.Print("/ctk ammodebug - what the game says about your ammo slot")
+  CTK.Print("/ctk pethealth <percent> - pet low health flash level (35 to start)")
+  CTK.Print("/ctk drink <percent> - eat / drink reminder level (40 to start)")
+  CTK.Print("/ctk buffs reset - bring back hidden buff reminders")
+  CTK.Print("/ctk counts - list your reagents and ammo")
+  CTK.Print("/ctk version - show your version")
+  CTK.Print("/ctk debug on | off - show what the addon notices, for bug reports")
+  CTK.Print("/ctk reset - this character's settings and all icon positions back to default")
+end
+
+local function SlashHandler(msg)
+  if not CTK.char then return end
+  local _, _, cmd, rest = string.find(msg or "", "^%s*(%S*)%s*(.-)%s*$")
+  cmd = string.lower(cmd or "")
+
+  if cmd == "" or cmd == "options" then
+    CTK.ToggleOptions()
+    return
+  elseif cmd == "help" then
+    CTK.ToggleHelp()
+    return
+  elseif cmd == "commands" then
+    ChatHelp()
+    return
+  elseif cmd == "ammodebug" then
+    if CTK.AmmoDebug then CTK.AmmoDebug() end
+    return
+  elseif cmd == "ammo" and tonumber(rest) then
+    local shots = math.max(1, math.floor(tonumber(rest)))
+    CTK.char.ammoBoxShots = shots
+    CTK.char.ammoBox = true
+    CTK.Print("the low ammo box shows when the ammo you have equipped is down to " .. shots .. " shots.")
+    CTK.UpdateAll()
+    return
+  elseif cmd == "pethealth" and tonumber(rest) then
+    local pct = math.max(5, math.min(95, math.floor(tonumber(rest))))
+    CTK.char.petHealthPct = pct
+    CTK.char.petHealth = true
+    CTK.Print("the pet low health flash shows when your pet is under " .. pct .. "% health.")
+    CTK.UpdateAll()
+    return
+  elseif cmd == "drink" and tonumber(rest) then
+    local pct = math.max(5, math.min(89, math.floor(tonumber(rest))))
+    CTK.char.drinkPct = pct
+    CTK.char.drink = true
+    CTK.Print("after a fight, the eat / drink icons show under " .. pct .. "% health or mana.")
+    CTK.UpdateAll()
+    return
+  elseif cmd == "ready" and (rest == "one" or rest == "all") then
+    CTK.char.readyOne = (rest == "one")
+    CTK.char.ready = true
+    if CTK.char.readyOne then
+      CTK.Print("one ready icon, showing whichever watched spell is ready first.")
+    else
+      CTK.Print("a ready icon for every watched spell.")
+    end
+    CTK.UpdateAll()
+    return
+  elseif cmd == "move" or cmd == "unlock" or cmd == "lock" then
+    CTK.ToggleMoveIcons()
+    return
+  elseif cmd == "range" and rest ~= "" and rest ~= "on" and rest ~= "off" then
+    if CTK.SetRangeSpell then CTK.SetRangeSpell(rest) end
+    return
+  elseif cmd == "aggro" and rest ~= "" and rest ~= "on" and rest ~= "off" then
+    if CTK.SetAggro then CTK.SetAggro(rest) end
+    return
+  elseif cmd == "dot" or cmd == "dots" then
+    if CTK.SetDot then CTK.SetDot(rest) end
+    return
+  elseif cmd == "watch" then
+    CTK.Watch(rest)
+    return
+  elseif cmd == "unwatch" then
+    CTK.Unwatch(rest)
+    return
+  elseif cmd == "bigadd" then
+    CTK.Watch(rest, "bigWatched")
+    return
+  elseif cmd == "bigremove" then
+    CTK.Unwatch(rest, "bigWatched")
+    return
+  elseif cmd == "feed" and (rest == "content" or rest == "unhappy") then
+    CTK.char.feedWhen = rest
+    CTK.char.feed = true
+    CTK.Print("feed reminder on, when your pet is " .. rest .. " or worse.")
+    CTK.UpdateAll()
+    return
+  elseif cmd == "feed" and rest == "sound" then
+    CTK.char.feedSound = not CTK.char.feedSound
+    CTK.Print("feed reminder sound " .. (CTK.char.feedSound and "on" or "off") .. ".")
+    return
+  elseif cmd == "buffs" and rest == "reset" then
+    if CTK.ResetIgnoredBuffs then CTK.ResetIgnoredBuffs() end
+    return
+  elseif cmd == "counts" then
+    if CTK.PrintCounts then CTK.PrintCounts() end
+    return
+  elseif cmd == "version" then
+    CTK.Print("version " .. CTK.VERSION .. ".")
+    return
+  elseif cmd == "debug" then
+    CTK.char.debug = (rest == "on") or (rest ~= "off" and not CTK.char.debug)
+    CTK.Print("debug messages " .. (CTK.char.debug and "on" or "off") .. ", SuperWoW: " ..
+      tostring(SUPERWOW_VERSION or "no") .. ".")
+    return
+  elseif cmd == "reset" then
+    ClassToolkitCharDB = {}
+    CTK.char = ClassToolkitCharDB
+    CTK.db.positions = {}
+    CTK.ApplyDefaults()
+    CTK.Print("settings for this character and all icon positions are back to default. /reload to move the icons back.")
+    CTK.UpdateAll()
+    return
+  end
+
+  for i = 1, table.getn(CTK.TOGGLES) do
+    if CTK.TOGGLES[i].command == cmd then
+      CTK.Toggle(CTK.TOGGLES[i].key)
+      return
+    end
+  end
+  ChatHelp()
+end
+
+------------------------------------------------------------------------------------------------
+-- Loading
+------------------------------------------------------------------------------------------------
+
+local loader = CreateFrame("Frame")
+loader:RegisterEvent("ADDON_LOADED")
+loader:RegisterEvent("PLAYER_ENTERING_WORLD")
+loader:SetScript("OnEvent", function()
+  if event == "ADDON_LOADED" and arg1 == "ClassToolkit" then
+    if type(ClassToolkitDB) ~= "table" then ClassToolkitDB = {} end
+    if type(ClassToolkitDB.positions) ~= "table" then ClassToolkitDB.positions = {} end
+    if type(ClassToolkitCharDB) ~= "table" then ClassToolkitCharDB = {} end
+    CTK.db = ClassToolkitDB
+    CTK.char = ClassToolkitCharDB
+    if type(CTK.char.watched) ~= "table" then CTK.char.watched = nil end
+    if type(CTK.char.bigWatched) ~= "table" then CTK.char.bigWatched = nil end
+    CTK.ApplyDefaults()
+
+    SLASH_CLASSTOOLKIT1 = "/ctk"
+    SLASH_CLASSTOOLKIT2 = "/classtoolkit"
+    SlashCmdList["CLASSTOOLKIT"] = SlashHandler
+
+    -- Modules build their frames now; they stay hidden until the character is in the world.
+    if CTK.InitWidgets then CTK.InitWidgets() end
+    local inits = { "InitSpells", "InitDots", "InitSwing", "InitReady", "InitPulse", "InitBuffs", "InitReagents", "InitRange", "InitAggro", "InitHunter",
+      "InitInterrupt", "InitRunner", "InitTick", "InitTrap", "InitPetHealth", "InitEatDrink", "InitSell" }
+    for i = 1, table.getn(inits) do
+      local init = CTK[inits[i]]
+      if init then
+        local ok, err = pcall(init)
+        if not ok then CTK.Print("couldn't start " .. inits[i] .. ": " .. tostring(err)) end
+      end
+    end
+  elseif event == "PLAYER_ENTERING_WORLD" and CTK.char then
+    CTK.ApplyDefaults()
+    if not CTK.char.welcomed and CTK.char.class then
+      CTK.char.welcomed = true
+      CTK.Print("v" .. CTK.VERSION .. " loaded. /ctk: options. /ctk help: how to use.")
+    end
+    CTK.After(1, CTK.UpdateAll)
+  end
+end)

@@ -1,0 +1,73 @@
+{
+  "upstream": "https://octowow.st/git/Microchip/Microchip-chat",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Microchip",
+    "repo": "Microchip-chat",
+    "name": "Microchip-chat",
+    "url": "https://octowow.st/git/Microchip/Microchip-chat",
+    "api": "https://octowow.st/git/api/v1/repos/Microchip/Microchip-chat"
+  },
+  "commit": "825b1edc09ec1645802fe8c12c6ca8ea0c024a6f",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "639f4ea2c0c0e9a3e191fc88d8f054a228b2e4a16e5e5a3a178b787b1008239e",
+      "bytes": 236
+    },
+    "CHANGELOG.md": {
+      "sha256": "d8181a16b7b161cf6d94484d6594021d12786fa8efbbb9286f0a3bffac9568f0",
+      "bytes": 4996
+    },
+    "Microchip-chat.lua": {
+      "sha256": "e0c3b0f54d335e929a368ebdc5d92ae24754fb6cb057e14f0a9748608fa87084",
+      "bytes": 123936
+    },
+    "Microchip-chat.toc": {
+      "sha256": "55324bd0faf63eb599b24cbf2b9da95b287240c750bbdaec4f51cedb58a7ff60",
+      "bytes": 438
+    },
+    "Microchip-chat.xml": {
+      "sha256": "8c5be6144fa58f367b235604d5f70bdb8b15eedf19cd622f1387a4063153db66",
+      "bytes": 606
+    },
+    "MicrochipClassColors.lua": {
+      "sha256": "5fae7db2ba67af59edba2ecbaa0e2b7df72f731522a630ca7868d6083d7be0b8",
+      "bytes": 6206
+    },
+    "MicrochipHistory.lua": {
+      "sha256": "28d8ecaf1572d46be0c659fdcfd38bf584b80eb44c7184c4f8e765a8dc5cc960",
+      "bytes": 10397
+    },
+    "MicrochipURLs.lua": {
+      "sha256": "4829224a05b146b72dd7b6ee77060ad92c49609a4d137c7ce4c1346360d29d50",
+      "bytes": 6541
+    },
+    "MicrochipWindows.lua": {
+      "sha256": "a29e1d24e7e7ac48e8d5e72ae92a53b19055d37cbaecf472ab1c7ca30daeda1c",
+      "bytes": 18708
+    },
+    "MicrochipWorldFilter.lua": {
+      "sha256": "b96e0b827468e1b755c933e90d6db0b2350b2ed601bb34cc404160f77eadcba3",
+      "bytes": 5430
+    },
+    "README.md": {
+      "sha256": "1431009892905111d00e05299da4e3710834ba82e45cc760490b3fafa23e44d2",
+      "bytes": 2497
+    },
+    "screenshots/chat1.png": {
+      "sha256": "99c2bb0da239008d4a2c3d73def41a86d1ec281adfc653337e11b309534e191b",
+      "bytes": 100771
+    },
+    "screenshots/chat2.png": {
+      "sha256": "090ea0cc423eaea38e634cdfb732e048dc91becf44446a1d2256aea4d36d4d3b",
+      "bytes": 367659
+    },
+    "WORLDFILTER_LICENSE.txt": {
+      "sha256": "455dad6987c244d78da575ebffb3ed93c823e226654c671b148bcce381d38309",
+      "bytes": 1317
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,25 @@
+{
+  "upstream": "https://github.com/shirsig/mouseover",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "mouseover",
+    "name": "mouseover",
+    "url": "https://github.com/shirsig/mouseover",
+    "api": "https://api.github.com/repos/shirsig/mouseover"
+  },
+  "commit": "f93b536ad1036f4dced21aa7c1b600e52b58f7ff",
+  "sourceFiles": {
+    "!mouseover.toc": {
+      "sha256": "e9af54fb0e9d9b5d25ed717cdbde2c864cf4d685aba818a06b042374faf2b6bb",
+      "bytes": 122
+    },
+    "mouseover.lua": {
+      "sha256": "b655c6e5a894222af0b789cd43cdfb4087a0eec9890acb6747c4da53b1e612f8",
+      "bytes": 1023
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

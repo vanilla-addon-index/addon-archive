@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Bergador/CharacterMap",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Bergador",
+    "repo": "CharacterMap",
+    "name": "CharacterMap",
+    "url": "https://github.com/Bergador/CharacterMap",
+    "api": "https://api.github.com/repos/Bergador/CharacterMap"
+  },
+  "commit": "3f4194d5b438cee3ea48bf6fe84871951fb6ca31",
+  "sourceFiles": {
+    "CharacterMap.lua": {
+      "sha256": "3f872add090cfd22ae436a6b2b4bdaf06d7cdc3f8037045110078e047a1ee32a",
+      "bytes": 15122
+    },
+    "CharacterMap.toc": {
+      "sha256": "f36d47a97fe3c8282c427ac7e90a98bc58322b048b2bd18b3ffdd32c35624b4b",
+      "bytes": 310
+    },
+    "CharacterMap.xml": {
+      "sha256": "24ddc6179f4777a107676efe6f6e6901005873040d6b21d3e4a678dd8e052388",
+      "bytes": 729
+    },
+    "README.md": {
+      "sha256": "285c22ddf527376d249585eb8ec6ce52dc22911340bcff31bec48d855bbfd329",
+      "bytes": 478
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

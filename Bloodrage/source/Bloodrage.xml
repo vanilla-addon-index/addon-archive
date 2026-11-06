@@ -1,0 +1,23 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"  
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.blizzard.com/wow/ui/ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
+  <!-- $Id$ -->
+  
+  <!-- Localization -->
+  <Script file="Localization.lua"/>
+  
+  <!-- My Script -->
+  <Script file="Bloodrage.lua"/>
+
+  <!-- My AddOn Frames -->
+  <Frame name="BloodrageFrame" parent="UIParent">
+    <Scripts>
+      <OnLoad>
+        Bloodrage_OnLoad();
+      </OnLoad>
+      <OnEvent>
+        Bloodrage_OnEvent(event);
+      </OnEvent>
+    </Scripts>
+  </Frame>
+</Ui>

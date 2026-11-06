@@ -1,0 +1,101 @@
+{
+  "upstream": "https://github.com/turinpt/CMap",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "turinpt",
+    "repo": "CMap",
+    "name": "CMap",
+    "url": "https://github.com/turinpt/CMap",
+    "api": "https://api.github.com/repos/turinpt/CMap"
+  },
+  "commit": "3849500c58db047a5455c8e7fa48ce48e80e221b",
+  "sourceFiles": {
+    "CMap/borders.lua": {
+      "sha256": "e552407ac2a6d8e3e1a3427f7b7dbe025d26b7ed2299070833e450aa7b7a1038",
+      "bytes": 2725
+    },
+    "CMap/CMap.lua": {
+      "sha256": "b967eacb57001267477c1432a6c0d57cf59c2cf23979f92f296322ceb02c2150",
+      "bytes": 3966
+    },
+    "CMap/CMap.toc": {
+      "sha256": "44f4e4542998003f7108c5d9b81cc86e7cb6ea4dc83a8660735ad67cdbe37477",
+      "bytes": 154
+    },
+    "CMap/CMap.xml": {
+      "sha256": "4299d457fd09af6ce2b3989a4ae6f6ed59f15c6296c65bb09ec0516bdcc23f55",
+      "bytes": 420
+    },
+    "CMap/COptions.lua": {
+      "sha256": "056884dcda89c4fb790812a8b1f82654da4c67bc6e3a0660138897468f19bc7d",
+      "bytes": 6271
+    },
+    "CMap/COptions.xml": {
+      "sha256": "186112530994c68071743579e0bdf78fa0ba9635aee84cb473822597ca7d4338",
+      "bytes": 13783
+    },
+    "CMap/presets.lua": {
+      "sha256": "928b2dbaabdd5e0143755b6d8cfe432fd1a26ad98b404c28981061ff18de01e6",
+      "bytes": 12201
+    },
+    "CMap/README": {
+      "sha256": "1b36daec99a570823a2bbebb4e9c7f695932c34f5cd5790db13fc52687a3a12a",
+      "bytes": 826
+    },
+    "CMap/shapes/BLP2PNG.exe": {
+      "sha256": "3efc3db4ca1af6baf1cbd56141b1447bb14f25bb9ae02d8f0fbb6e5e1acaa18e",
+      "bytes": 338944
+    },
+    "CMap/shapes/bottomleft.blp": {
+      "sha256": "10c07d56f37476c4f36b40cfb37ecc774a3bfcb4b78aec03a337573b1d8c698a",
+      "bytes": 23044
+    },
+    "CMap/shapes/bottomright.blp": {
+      "sha256": "373f2959ddb42c73d7d5d15838c36cba28c1a8601c332024a9142814ee4bc1f2",
+      "bytes": 23044
+    },
+    "CMap/shapes/diamond.blp": {
+      "sha256": "47ba0b8d84ecc5b777672deb442e19bdd376d6e12337c4de9de9c0d19f00f7aa",
+      "bytes": 23044
+    },
+    "CMap/shapes/heart.blp": {
+      "sha256": "0f90a43c5fbad608f33d15dff6e89e8ceb420906e6347e10bd74d57e0048ffa6",
+      "bytes": 23044
+    },
+    "CMap/shapes/hexagon.blp": {
+      "sha256": "1d65942be71d976e06706d314273690557bfbe6fc5141b682b8599362028957d",
+      "bytes": 23044
+    },
+    "CMap/shapes/largecircle.blp": {
+      "sha256": "16aca3c9d115bce89655394300772d033df0aed541a47e1f9c7ba5e1b007530b",
+      "bytes": 23044
+    },
+    "CMap/shapes/octagon.blp": {
+      "sha256": "d430213ecf84b8568fe548bcb133fc99c4e52e61b27c8f28b79ba7158b968ba9",
+      "bytes": 23044
+    },
+    "CMap/shapes/route66.blp": {
+      "sha256": "81c3e724d125f44e4dd18103b062e171b3153d89fa76077a30d3bbdf395202c1",
+      "bytes": 23044
+    },
+    "CMap/shapes/snowflake.blp": {
+      "sha256": "3a9ea9d5cf4124760b61a51611ce5e974475afd234e4ca2324a47320981d65ff",
+      "bytes": 23044
+    },
+    "CMap/shapes/topleft.blp": {
+      "sha256": "02ddaf27226f84c5b8201693ebc2a473a9de97d906aaa6502fbac993da4629d3",
+      "bytes": 23044
+    },
+    "CMap/shapes/topright.blp": {
+      "sha256": "0a597e5115ac2ee67178c9f0f28f5e90197db398cbf2db2f70934201ae42d8b2",
+      "bytes": 23044
+    },
+    "CMap/shapes.lua": {
+      "sha256": "7c6f8881f3072eb3004e956079ad759bf812c33de9613a325adda86c9f5d78d1",
+      "bytes": 786
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

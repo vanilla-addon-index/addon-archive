@@ -1,0 +1,137 @@
+{
+  "upstream": "https://github.com/0ldi/ChatBar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "0ldi",
+    "repo": "ChatBar",
+    "name": "ChatBar",
+    "url": "https://github.com/0ldi/ChatBar",
+    "api": "https://api.github.com/repos/0ldi/ChatBar"
+  },
+  "commit": "ab3106bdfbd33bb871ceac1848e70f2d71e73f32",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "ChatBar/ChatBar.lua": {
+      "sha256": "96d35f39110be93cf1992fe9cd0e062b6b3d3e51e807297e40174d8f3d31372a",
+      "bytes": 43111
+    },
+    "ChatBar/ChatBar.toc": {
+      "sha256": "540049c4a8d9e9a604b8760da325bb2d409de6dcd80fa0ba67a39ef88009ccb8",
+      "bytes": 980
+    },
+    "ChatBar/ChatBar.xml": {
+      "sha256": "a29c499af975daf3ead08c6b072a6c9857dc5f9e3435cf772d610d5a9215a2e0",
+      "bytes": 8114
+    },
+    "ChatBar/localization.cn.lua": {
+      "sha256": "c0f2cad437a4432652c74e6fb71e4b9efd946a272224b242e9e5d88f22ab9902",
+      "bytes": 2613
+    },
+    "ChatBar/localization.de.lua": {
+      "sha256": "f5cd0300c32ac6367d273aa253fac4bfcb10543b81a72b07fe88dc57b3e6df50",
+      "bytes": 2612
+    },
+    "ChatBar/localization.en.lua": {
+      "sha256": "6ef3d32177c5aed02062d0f52e2be34e5158298c4a0164d778544db50bdd7ecb",
+      "bytes": 2454
+    },
+    "ChatBar/localization.es.lua": {
+      "sha256": "013e2ffe35ba9982b00f962829a8056ae36a24dfbba7d2156f1bae718e86d28c",
+      "bytes": 2497
+    },
+    "ChatBar/localization.fr.lua": {
+      "sha256": "12860f275968368a2bf2e910e79707f0683d6972655845dd75a640521043b9c6",
+      "bytes": 2659
+    },
+    "ChatBar/Localization.ru.lua": {
+      "sha256": "d215476b431442723108fc4cf15df5ebe788538dc9b5fc45fad0968c32aaec18",
+      "bytes": 3130
+    },
+    "ChatBar/localization.tw.lua": {
+      "sha256": "a145177a4d7acac152fd867b0d2c9ead7c18bf5def2cb636c0c79f4b7a9073ec",
+      "bytes": 3301
+    },
+    "ChatBar/SkinSolid/BlackBg.tga": {
+      "sha256": "bd109ea738f7956f53c671463c92b6d7c4a8b03d9c11f34832d67df9db089dd5",
+      "bytes": 204
+    },
+    "ChatBar/SkinSolid/ChanButton_BG.tga": {
+      "sha256": "c7517bae1269c5805c2e04b53ea4581f1bf679c827c8d94dc1963556f0e7df27",
+      "bytes": 1068
+    },
+    "ChatBar/SkinSolid/ChanButton_Center.tga": {
+      "sha256": "e374e1d545e8e6a9354d0d971b22a012c8e4f6d2f08bfe41d1a9bc5dd39c0e0c",
+      "bytes": 1068
+    },
+    "ChatBar/SkinSolid/ChanButton_Down_Shad.tga": {
+      "sha256": "73b0be5d2ec2d6acd15e1893873bdeb404597f18ff28648dc2c1c6c295ef29ec",
+      "bytes": 1068
+    },
+    "ChatBar/SkinSolid/ChanButton_Down_Spec.tga": {
+      "sha256": "cde150ab6e6ffdde0c80a10b16ebdf2c35a7716cac6b0b43b6440dde647de030",
+      "bytes": 1068
+    },
+    "ChatBar/SkinSolid/ChanButton_Glow_Alpha.tga": {
+      "sha256": "e24aefc4d9e89616403919a14d195f81c2ee2de86582231665bca124b20815a3",
+      "bytes": 1068
+    },
+    "ChatBar/SkinSolid/ChanButton_Up_Shad.tga": {
+      "sha256": "36fa0c6a23c7474f1c3ebb25ca13655cfc4e1db46b24ff8a700c530c2bac67f6",
+      "bytes": 1068
+    },
+    "ChatBar/SkinSolid/ChanButton_Up_Spec.tga": {
+      "sha256": "44d627b71a50f35d10ab7e2a054f176755f3c1983783ca9d3fd51581710616f7",
+      "bytes": 1068
+    },
+    "ChatBar/SkinSolid/ChatBarBorder.tga": {
+      "sha256": "4c6fbdee5d5e83e1c1496656e807ed88ff8e6c898d9862a379867fe485e22f8b",
+      "bytes": 2092
+    },
+    "ChatBar/SkinSquares/BlackBg.tga": {
+      "sha256": "11902ad81bc906fee9886160ace564c2833962ef9e48092ae806a7cfac2890ec",
+      "bytes": 4140
+    },
+    "ChatBar/SkinSquares/ChanButton_BG.tga": {
+      "sha256": "eb85b2a7e0d4e8f0344ffa3ccce482b17b8924f4b602cf1bd3b29446baaa6164",
+      "bytes": 1068
+    },
+    "ChatBar/SkinSquares/ChanButton_Center.tga": {
+      "sha256": "6bf63ee60cbe4ac834adc7469301f4e06f78569975becb049374b67dd36813d9",
+      "bytes": 1068
+    },
+    "ChatBar/SkinSquares/ChanButton_Down_Shad.tga": {
+      "sha256": "dd8b8e19fa864538f62842ac6370f2cfb24e2f103391bbb5d5ce2b8ef0976f44",
+      "bytes": 1068
+    },
+    "ChatBar/SkinSquares/ChanButton_Down_Spec.tga": {
+      "sha256": "4faa36b0fbad67da634ffbbed71c747c05a3ecbf84e244372370659b2ae51e04",
+      "bytes": 1068
+    },
+    "ChatBar/SkinSquares/ChanButton_Glow_Alpha.tga": {
+      "sha256": "86c52646920037c1453c3af7d64ad24007dd8923786a006d17b0a1c64794805e",
+      "bytes": 1068
+    },
+    "ChatBar/SkinSquares/ChanButton_Up_Shad.tga": {
+      "sha256": "4642905a3fc4fd4f73fe79ef2c4fc65027dbee97225800565cf96847c4dd6615",
+      "bytes": 1068
+    },
+    "ChatBar/SkinSquares/ChanButton_Up_Spec.tga": {
+      "sha256": "25896b64d6f355e96dd34fe6ce7ef26c16d6c8c29d855a4338c693157f4b9424",
+      "bytes": 1068
+    },
+    "ChatBar/SkinSquares/ChatBarBorder.tga": {
+      "sha256": "699557a14961a4bb27e1c14195e981ac39ff913ca7a0e6aab81a7cc46e877323",
+      "bytes": 2092
+    },
+    "README.md": {
+      "sha256": "b5722d33e1d20877e245efde045f8572a24b436605b4dc9470e371651c769078",
+      "bytes": 3156
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

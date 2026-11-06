@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: Freewood |cffc89b3cVendor|r
+## Notes: Never-sell and always-sell lists for vendors, plus one button that sells everything marked and all gray items.
+## Notes-deDE: Listen "Nie verkaufen" und "Immer verkaufen" für Händler, dazu ein Knopf, der alles Markierte und alle grauen Items verkauft.
+## Author: Lacustat
+## Version: 0.1.241
+## Dependencies: Freewood-OctoWoW-Core
+
+Locales.lua
+Vendor.lua
+VendorUI.lua

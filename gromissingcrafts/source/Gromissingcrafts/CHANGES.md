@@ -1,0 +1,16 @@
+### v1.0 (2026/08/06)
+- Initial release: from-scratch rebuild of MissingCrafts v1.4.1 with no Ace3 dependency (AceAddon/AceDB/AceGUI/AceHook/AceLocale all replaced with native vanilla frames and a small local helper layer) to avoid the cross-addon conflicts Ace3 causes on OctoWoW/Turtle WoW
+- Add support for Turtle WoW's Survival profession (starter recipe data set — see README's "Survival profession data" section)
+- Add `/gmc dump` developer command to help complete the Survival (and any other profession's) recipe data from the live client
+- Keep pfUI window placement support
+- Rebuild every interactive widget without Blizzard UI templates and with explicit frame strata, after pfUI's skinning repeatedly broke click handling on templated widgets
+- Rebuild the recipe list on a fixed-size row pool with a custom scrollbar (drag, click, and mouse wheel) instead of a native ScrollFrame, which wasn't clipping its content reliably on this client
+- The window now anchors directly to the profession frame it's attached to and moves with it automatically, instead of being independently draggable
+- Remove the profession/character filter dropdowns — the window is already scoped to whichever profession frame it's open from, and always your current character; search by recipe name instead
+- Fix `/gmc` slash command never registering (it was writing SLASH_* into the addon's isolated environment instead of the real global namespace the client actually scans)
+- Expand the Survival starter recipe set to 7 confirmed recipes (Dim Torch, Survivalist's Skinning Knife, Driftwood Fishing Pole, Traveler's Tent, Fishing Boat, Murloc's Flippers, Repaired Electro-Lantern) using a full player-provided skill-up table cross-checked against octowow.st's database; corrected two skill levels that earlier web research had gotten wrong (Traveler's Tent 50→80, Fishing Boat 125→115)
+- Add `/gmc dump` support for the trainer window (lists every recipe on offer, not just ones already known)
+- Expand Survival to 44 recipes (skill 1-150) using real names/skill levels/result item ids from a player-provided `/gmc dump`; recipes without a confirmed real spell id use a safe placeholder instead (see README's "Survival profession data" section) — also corrected Traveler's Tent's result item (51283, not 50234, which turned out to be an unrelated "outline" item)
+- Fix `/gmc dump` not detecting the trainer window on this client (it's `ClassTrainerFrame`, not the vanilla-standard `TrainerFrame`) — the command now also self-diagnoses (reports what it did/didn't find) when nothing matches, instead of just failing silently
+- Expand Survival to the full 87-recipe list (skill 1-300), using a trainer-service-list `/gmc dump` to confirm every remaining recipe's name and skill level
+- Fill in real result item ids for all 87 Survival recipes (previously 44 had one), sourced by hand from octowow.st's database; also corrected Iron Lantern's item (2714, not 81187, which turned out to be an unrelated "outline" item — same category of mistake as the earlier Traveler's Tent fix)

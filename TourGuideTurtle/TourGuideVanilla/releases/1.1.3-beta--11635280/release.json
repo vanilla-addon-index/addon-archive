@@ -1,0 +1,9 @@
+{
+  "id": "11635280",
+  "tag": "1.1.3-beta",
+  "name": "1.1.3-beta",
+  "body": "* Fix several uses of `self`\r\n\r\n**INSTALLATION: Ensure that you rename the downloaded folder to `TourGuideVanilla`. Thus, your filepath should resemble `World of Warcraft\\Interface\\AddOns\\TourGuideVanilla`.**",
+  "published": "2018-06-25T15:12:55Z",
+  "prerelease": false,
+  "url": "https://github.com/cralor/TourGuideVanilla/releases/tag/1.1.3-beta"
+}

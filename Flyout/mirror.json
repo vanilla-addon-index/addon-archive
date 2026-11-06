@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/lookino/Flyout",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "lookino",
+    "repo": "Flyout",
+    "name": "Flyout",
+    "url": "https://github.com/lookino/Flyout",
+    "api": "https://api.github.com/repos/lookino/Flyout"
+  },
+  "commit": "f13633a7adc6169e9b5112b68322252b1e623740",
+  "sourceFiles": {
+    "assets/FlyoutButton.tga": {
+      "sha256": "41d2118acde74f47eae082dd5e3ebe2827ba8f28113b54c6937bbfbb78d7cbf0",
+      "bytes": 2210
+    },
+    "compat.lua": {
+      "sha256": "ba731b58480c519e9b416f5059ba2964af50f1a209afcbccd44f889be45f9fa2",
+      "bytes": 2624
+    },
+    "Flyout.toc": {
+      "sha256": "1ea97e3dfa9195839b9a7729093eff917675539a125971b318d9f2c634b2b09b",
+      "bytes": 282
+    },
+    "LICENSE": {
+      "sha256": "df760a0eb9f97d7ecf1a3ee21888b660840e8aaebf311c9dec49a956282b387d",
+      "bytes": 1064
+    },
+    "main.lua": {
+      "sha256": "9ff8acc4fe54297b9cef9b29d714ad9d2da77f6f83d3a87c1f19b696bf149556",
+      "bytes": 18018
+    },
+    "options.lua": {
+      "sha256": "59b23a9e6b4cc89471da6c95696e94753d49882e73adfef24c67e65bef09bc93",
+      "bytes": 2803
+    },
+    "README.md": {
+      "sha256": "97a0c07032f7bd23bcf171c49c30de12732bd230af4de0c0e30932a70f34925c",
+      "bytes": 1523
+    },
+    "Templates.xml": {
+      "sha256": "031407eeb1a4604612324fb31b17698fa86d28526433a26d443e6f32350c4028",
+      "bytes": 4209
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

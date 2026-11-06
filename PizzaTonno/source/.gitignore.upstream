@@ -1,0 +1,3 @@
+# personal data that stays on this machine
+*.local.lua
+/local/

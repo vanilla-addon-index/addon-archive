@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/shirsig/ETL",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "ETL",
+    "name": "ETL",
+    "url": "https://github.com/shirsig/ETL",
+    "api": "https://api.github.com/repos/shirsig/ETL"
+  },
+  "commit": "a50f6a9e4b25a0e3fb8ace1e11cf6ed5b7595b57",
+  "sourceFiles": {
+    "etl.lua": {
+      "sha256": "5eed9fdc931d68d8bf471a4ad2a4f9ce84a78192403c85b2eb90bd1decdf8cd8",
+      "bytes": 1378
+    },
+    "ETL.toc": {
+      "sha256": "cc7634928b81c04ae528aa19d150a2bda4e05526185b9be5d3b1fdc5b1f2d4cc",
+      "bytes": 110
+    },
+    "etl.xml": {
+      "sha256": "9b23949776d0d0e348281499a474d5e35e3fc85eac930b96f19f3016daeb7196",
+      "bytes": 1577
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

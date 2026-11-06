@@ -1,0 +1,50 @@
+{
+  "upstream": "https://github.com/UndercityAddons-Vanilla/MacroTT-V",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "UndercityAddons-Vanilla",
+    "repo": "MacroTT-V",
+    "name": "MacroTT-V",
+    "url": "https://github.com/UndercityAddons-Vanilla/MacroTT-V",
+    "api": "https://api.github.com/repos/UndercityAddons-Vanilla/MacroTT-V"
+  },
+  "commit": "d9d173bda041771f17566353a012c67180331702",
+  "sourceFiles": {
+    "MacroTT-V.toc": {
+      "sha256": "961a59a231ce8c4bef6e07e56b20c4111782ae27dce7e988a776869310d232ff",
+      "bytes": 226
+    },
+    "main.lua": {
+      "sha256": "6a1c7a49fc06680f2dedea0ce31d4655989e0ef2d0bcf7d291517e2ccf00592d",
+      "bytes": 6484
+    },
+    "README.md": {
+      "sha256": "c9621b01a449bc4da41c870858b4673009d0051dea7ccb812cfac0f583564e71",
+      "bytes": 1266
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "10444121": {
+      "tag": "v1.1.0",
+      "folder": "v1.1.0--10444121",
+      "assets": {
+        "6772062": {
+          "sha256": "537ebc08c6f830b2f1e60c1ec009416801a0382821113b0447d87c50f63c3cb3",
+          "bytes": 3613,
+          "id": "6772062",
+          "name": "MacroTT-V.v1.1.0.zip",
+          "url": "https://github.com/UndercityAddons-Vanilla/MacroTT-V/releases/download/v1.1.0/MacroTT-V.v1.1.0.zip",
+          "path": "releases/v1.1.0--10444121/assets/MacroTT-V.v1.1.0.zip"
+        }
+      },
+      "source": {
+        "sha256": "41e107574ad830301b74f585c0b0d60058ab180c75eddefccb8b15753de3af93",
+        "bytes": 3046,
+        "path": "releases/v1.1.0--10444121/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/UndercityAddons-Vanilla/MacroTT-V/tarball/v1.1.0"
+      }
+    }
+  }
+}

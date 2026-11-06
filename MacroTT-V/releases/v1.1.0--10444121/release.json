@@ -1,0 +1,9 @@
+{
+  "id": "10444121",
+  "tag": "v1.1.0",
+  "name": "MacroTT-V 1.1.0 - Discord Action Bar support",
+  "body": "**Support for Discord Action Bars added**\r\n\r\nA bit of Discord Action Bars code has been added into MacroTT, and the DAB_ActionButton_OnEnter() will be wrapped if DAB is active. DAB features supported:\r\n\r\n- _Modify Tooltip_ global option works\r\n- _Disable Tooltip_ on a specific action bar works\r\n- DAB _on event_ scripts should work (needs more testing to confirm)\r\n\r\n**Other fixes**\r\n\r\nIf a spell has no ranks, the spell rank line at the bottom of the tooltip would show as an empty set of parenthesis '()'. This line is now removed for spells that have no ranks (e.g., Priest _Abolish Disease_).\r\n\r\n**Installation**\r\n\r\nDownload zip file attached to this release and extract into your _Interface/AddOns_ folder. See README for instructions on how to use.\r\n",
+  "published": "2018-04-08T10:54:43Z",
+  "prerelease": false,
+  "url": "https://github.com/UndercityAddons-Vanilla/MacroTT-V/releases/tag/v1.1.0"
+}

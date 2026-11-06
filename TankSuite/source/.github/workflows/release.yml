@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tag matches the .toc version
+        run: |
+          toc=$(grep -m1 '^## Version:' TankSuite.toc | sed 's/^## Version:[[:space:]]*//' | tr -d '\r')
+          [ "v$toc" = "${GITHUB_REF_NAME}" ] || { echo "::error::tag ${GITHUB_REF_NAME} does not match TankSuite.toc version v$toc"; exit 1; }
+          echo "VERSION=$toc" >> "$GITHUB_ENV"
+
+      - name: Build the addon zip
+        run: |
+          mkdir -p dist/TankSuite
+          cp *.lua TankSuite.toc LICENSE README.md CHANGELOG.md dist/TankSuite/
+          (cd dist && zip -r "TankSuite-${VERSION}.zip" TankSuite)
+
+      - name: Extract release notes from CHANGELOG.md
+        run: |
+          awk -v v="$VERSION" '
+            $0 ~ "^## \\["v"\\]" {p=1; next}
+            p && /^## \[/ {exit}
+            p {print}
+          ' CHANGELOG.md > notes.md
+          [ -s notes.md ] || echo "Release ${VERSION}" > notes.md
+
+      - name: Publish the release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/TankSuite-${{ env.VERSION }}.zip
+          body_path: notes.md

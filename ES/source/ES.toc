@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: ES
+## Author: Smirgeli
+## Version: 1.0
+## Notes: Completely replaces Warrior's Execute sound with old clank sound.
+
+Main.lua

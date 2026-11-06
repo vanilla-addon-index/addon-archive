@@ -1,0 +1,489 @@
+{
+  "upstream": "https://github.com/Johnmichael/LagCast",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Johnmichael",
+    "repo": "LagCast",
+    "name": "LagCast",
+    "url": "https://github.com/Johnmichael/LagCast",
+    "api": "https://api.github.com/repos/Johnmichael/LagCast"
+  },
+  "commit": "fccc0a815853d7add7994a2c6b31728fb1579384",
+  "sourceFiles": {
+    "CastBars/CastTexture (1).tga": {
+      "sha256": "dfb8508485a3dbf5dc3c479d3f6b4555fbaeb47118c9ef58cb1adaeac114d757",
+      "bytes": 65580
+    },
+    "CastBars/CastTexture (10).tga": {
+      "sha256": "4012a5980c6570ce1e6f39a000bdccd8243ebab5fa645e6e901fb9a54a2584ee",
+      "bytes": 274
+    },
+    "CastBars/CastTexture (100).tga": {
+      "sha256": "3f4380421045a1c3ca0672ecce1ba44b0f0d3b4f53cf351d3f6b5827f2cd8aa8",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (101).tga": {
+      "sha256": "a5c40e0e82e76f6002a3ffaaaf5defcc7a2c6576406d7f1d5eadf5c2bbc9bce1",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (102).tga": {
+      "sha256": "9aee6cd66bbed869170cf34188792efea5f9e612e1b16c22b5c4e907f8dd73ad",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (103).tga": {
+      "sha256": "61f41c08e649545b14cdc226c9e26bc4f4f061f357150cf7e7ac1250dc2c5c7f",
+      "bytes": 1068
+    },
+    "CastBars/CastTexture (104).tga": {
+      "sha256": "2119b7af4290220357015bd5f22d1c60324b82f21c2f6ef0b12acc8acdf29bd5",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (105).tga": {
+      "sha256": "f51d3556b666ae2c7c1ab4edd0e2d10f8f55be80eb315dafc4f86a0d0375cff3",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (106).tga": {
+      "sha256": "9c02969479e5dcbce2bcbb4f48bf2f0b2b00c44fa7556140fc8958ba0e9ad09d",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (107).tga": {
+      "sha256": "8e96b7d24921765a905f9aa4c2e83a97b2651c7a246d58d3e9e48b6589c7e54b",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (108).tga": {
+      "sha256": "5a5deac548c4639de44db55ed79a6784bba95fc8286e7a4e7235ea7da24e19c3",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (11).tga": {
+      "sha256": "486b6a8654a7a212559289aa09aaf0cddfbbd0afe9a56c7a2e5af2cc428fdeae",
+      "bytes": 3480
+    },
+    "CastBars/CastTexture (12).tga": {
+      "sha256": "7bda9d9770a1715161a26df66e95fddd90a7036c49c5275b3ac3a7b41c99d436",
+      "bytes": 3736
+    },
+    "CastBars/CastTexture (13).tga": {
+      "sha256": "d51b3dff7a61b1c99f9114e3bd03f638d0eb6b5d850176a69036887239bc7628",
+      "bytes": 3736
+    },
+    "CastBars/CastTexture (14).tga": {
+      "sha256": "61ddba9deb13b992fc9e1b11b9b56cab4542ab89a26b07068dbf3984bb726836",
+      "bytes": 2029
+    },
+    "CastBars/CastTexture (15).tga": {
+      "sha256": "70796c88aac467ec1abcdcd0fc80fb8caf70cb553543ceab01ed95bf30753ffa",
+      "bytes": 2063
+    },
+    "CastBars/CastTexture (16).tga": {
+      "sha256": "5e4acbfe46fb550aac580f927bc228442f405d2a816ea2c3f476d797954c75ac",
+      "bytes": 2063
+    },
+    "CastBars/CastTexture (17).tga": {
+      "sha256": "332566f126a8a9f473e8f588bb6720004a54d24599a851ca47f5671006456d46",
+      "bytes": 6552
+    },
+    "CastBars/CastTexture (18).tga": {
+      "sha256": "65dfa86ce59b0611f02e8e80c9c3490de579e904fba310ad2f8aa92fa91de14b",
+      "bytes": 478
+    },
+    "CastBars/CastTexture (19).tga": {
+      "sha256": "53a251104e809b334fca7b8c1f6306ac97cd0126ca9da3ccc17fe8ff33b88c9f",
+      "bytes": 434
+    },
+    "CastBars/CastTexture (2).tga": {
+      "sha256": "5ba70bdeecce2985d6f8f52fb5a74b85542ea51e770cbe5a613e8e7ac13e6dff",
+      "bytes": 65580
+    },
+    "CastBars/CastTexture (20).tga": {
+      "sha256": "db849678b07f9c04c4e7c12a4c0b4542eca3f981d03d6d7b2f433b8720d676b3",
+      "bytes": 4023
+    },
+    "CastBars/CastTexture (21).tga": {
+      "sha256": "12d2946776bb52f91f68b7205dbb2785ca2c638a4cc1ce43ff41f19c98d6239a",
+      "bytes": 6292
+    },
+    "CastBars/CastTexture (22).tga": {
+      "sha256": "d2d805a433234fa71a03b0ed3114f72d81553cd2306dd81f0f393c25b5d5803d",
+      "bytes": 9435
+    },
+    "CastBars/CastTexture (23).tga": {
+      "sha256": "dd0def9d6dadaa17d0ee9d74bfc37210a2492040dabacdabc0171bcd354f54ec",
+      "bytes": 13323
+    },
+    "CastBars/CastTexture (24).tga": {
+      "sha256": "3ab39e704dd6a5a8b75cce4fd3b88053021b2836189629caae38de255ea71578",
+      "bytes": 8906
+    },
+    "CastBars/CastTexture (25).tga": {
+      "sha256": "d59a752c7b9a184b492292957d818a7578b142b0954febcf5aeb6c756b48ebb7",
+      "bytes": 23617
+    },
+    "CastBars/CastTexture (26).tga": {
+      "sha256": "a1410b3293965b1b4aae6fb92e20fb517466ecce1b4967589aa3a0ee01627376",
+      "bytes": 274
+    },
+    "CastBars/CastTexture (27).tga": {
+      "sha256": "8bce47c7a1589a8c12997b59e1b182f4c74937b111f38fb86ca50b3bb81c28e6",
+      "bytes": 5144
+    },
+    "CastBars/CastTexture (28).tga": {
+      "sha256": "5115089a9b078993c47c144bdff269ad5c208910798fa5f485a83c5a7d2f9847",
+      "bytes": 274
+    },
+    "CastBars/CastTexture (29).tga": {
+      "sha256": "555f7d567a2a5bde1cf135b5e0962df3f4c88550ec045fc61eb678633625b73c",
+      "bytes": 1114
+    },
+    "CastBars/CastTexture (3).tga": {
+      "sha256": "5833846fb87260f79ddbe4039ae4d29f687e2c68d0590858c7111ea9557ad465",
+      "bytes": 2676
+    },
+    "CastBars/CastTexture (30).tga": {
+      "sha256": "929ee63b670eb403f623a3aa465c1b740887ae378cd313fd534e94cdd6a92d9e",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (31).tga": {
+      "sha256": "9e491e7fbe8630721abebb8b8626144a3c40de0e740857c25d8af157a9b33ca2",
+      "bytes": 13865
+    },
+    "CastBars/CastTexture (32).tga": {
+      "sha256": "ed46ef66eb0d777c2ae1156041777205c743251bac8365fb3e0efa4c1c256e62",
+      "bytes": 10770
+    },
+    "CastBars/CastTexture (33).tga": {
+      "sha256": "5d1d4ebd8f3514ce411fbac2cdde0ac04e38c330dcb5369e1b5ac9084c90e6f5",
+      "bytes": 9240
+    },
+    "CastBars/CastTexture (34).tga": {
+      "sha256": "7b6982815580f504c120a44d540bcaeac8abf093eb3144223759549d9bcf320b",
+      "bytes": 15334
+    },
+    "CastBars/CastTexture (35).tga": {
+      "sha256": "43729b2627a2d67cccada134afbac0657cc51f73d4e13465dfff237981974799",
+      "bytes": 21242
+    },
+    "CastBars/CastTexture (36).tga": {
+      "sha256": "a6a1d220a0956b554298757fa27ac5266c6543f153fab4b4fe25d42b2546129b",
+      "bytes": 2762
+    },
+    "CastBars/CastTexture (37).tga": {
+      "sha256": "f638fd9468fbebdfc8e216ea4b0b7400e96417eba5610cb80969eb26b56883f4",
+      "bytes": 530
+    },
+    "CastBars/CastTexture (38).tga": {
+      "sha256": "f417fbe3c42d803bb3177b509c8ecd0d2dafddf096d41764aec6745d490afa02",
+      "bytes": 788
+    },
+    "CastBars/CastTexture (39).tga": {
+      "sha256": "d7d3a646b736e290ac90d1cc0937317a20a42d3cd9408268dd0a5e86e0274eee",
+      "bytes": 338
+    },
+    "CastBars/CastTexture (4).tga": {
+      "sha256": "de2b511ea3a8e7d1415df77da03dfd6899c108ac2653ff288ff986af4a2b8a02",
+      "bytes": 274
+    },
+    "CastBars/CastTexture (40).tga": {
+      "sha256": "09be41c173472af35f7dde8253f7b42ce36821d8b95c593ced46bd0ef9cc03f6",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (41).tga": {
+      "sha256": "5bd704e0c4d1c3553823a48905d107694aba5f40e0ad985404ef02d8c618081b",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (42).tga": {
+      "sha256": "20f70840ccfd8c7a94ccdc57a95810a56d495e1de62ac90e4f051e44c8215205",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (43).tga": {
+      "sha256": "4d27d7de50d2e3b1c895f393a74057ed7383b96a786ca456475dc40717363785",
+      "bytes": 16428
+    },
+    "CastBars/CastTexture (44).tga": {
+      "sha256": "9b3cdfeba85c0fed3e9089dc4f8c21ac0e079eeac018b1e2c518af4295f832a6",
+      "bytes": 24594
+    },
+    "CastBars/CastTexture (45).tga": {
+      "sha256": "9bd025e9217a88cda7ef3bd185976ded94a647468c6126d42c55df4a88f3a7c2",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (46).tga": {
+      "sha256": "79fedde3542cbe7d9e3275a32584f071d1c228cc627ba1324c769d9ae80833e7",
+      "bytes": 16428
+    },
+    "CastBars/CastTexture (47).tga": {
+      "sha256": "97976977031766d707a34121ac13c5ab6b7e9d204be2efaa395c717aeb1dc7ab",
+      "bytes": 1304
+    },
+    "CastBars/CastTexture (48).tga": {
+      "sha256": "e300a87224e7c1a044574ec915a1f9c0de49c3e26f854ecd3e1ea8ed920aaba9",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (49).tga": {
+      "sha256": "e0fd78c10c65cc4ef4cd455ecf97e0b1f0d0e8808d0822eb94f4f2f9dae98596",
+      "bytes": 2037
+    },
+    "CastBars/CastTexture (5).tga": {
+      "sha256": "f033d9a12348f3de6e40873ce615322b5704026df73ff4d318990a7857d628c1",
+      "bytes": 10986
+    },
+    "CastBars/CastTexture (50).tga": {
+      "sha256": "fce662672a63a5c9fe3f0a4b23609231a364756bea68ae423bc20344c74f7135",
+      "bytes": 32689
+    },
+    "CastBars/CastTexture (51).tga": {
+      "sha256": "eaa7f99a4624a9e559a1aba79d72751676b8807809f0a9764589d772e54f7e33",
+      "bytes": 21618
+    },
+    "CastBars/CastTexture (52).tga": {
+      "sha256": "3f0b1c5abaa1a17796def0fb09e4336a4bacace2de1b895b15d7cb3685ce1d88",
+      "bytes": 19337
+    },
+    "CastBars/CastTexture (53).tga": {
+      "sha256": "09fc8c706174cd6eda019845d7e9345f294e853b3fc2e7924eea026171b108bd",
+      "bytes": 8620
+    },
+    "CastBars/CastTexture (54).tga": {
+      "sha256": "6555603b963016c3ed40015d17d50ed8e0e50d69b09c90bd9b3c59473ab59044",
+      "bytes": 6489
+    },
+    "CastBars/CastTexture (55).tga": {
+      "sha256": "627f7de367fad32342660e271cb788ff02e51b13ce0b7110840d54b68ed5a197",
+      "bytes": 4417
+    },
+    "CastBars/CastTexture (56).tga": {
+      "sha256": "f4557c81b01e8d5c463ed1cde19657fcb0ad454950cb9765d52346ee665553d5",
+      "bytes": 5696
+    },
+    "CastBars/CastTexture (57).tga": {
+      "sha256": "a2deca7e05fe008218a330ab3dcc721152e14a6eb4eb2468dfdf00809f543df5",
+      "bytes": 11173
+    },
+    "CastBars/CastTexture (58).tga": {
+      "sha256": "f7035d0221755fb0c6babd5129795f414d4a2156c51a721371d883be5fe51127",
+      "bytes": 47206
+    },
+    "CastBars/CastTexture (59).tga": {
+      "sha256": "6f15669586916c51d1d91631a8ae617461fcb6f8b27381ae6d14a4d558a3eeb0",
+      "bytes": 19109
+    },
+    "CastBars/CastTexture (6).tga": {
+      "sha256": "9ceeeb86b54cbb3bc26424d505a81a06ddea436eb65cb08fc28930853c97bf1e",
+      "bytes": 274
+    },
+    "CastBars/CastTexture (60).tga": {
+      "sha256": "fd02b470a6f72be445e0e1bdea999798a103536ed3d8fbca6527e1b01d58c833",
+      "bytes": 30606
+    },
+    "CastBars/CastTexture (61).tga": {
+      "sha256": "688bb58de589ae504273cf376ce967387e2145419850af10c4ac079b2eb8b520",
+      "bytes": 22700
+    },
+    "CastBars/CastTexture (62).tga": {
+      "sha256": "dae15209aab65e26a98140f0a09aafbd31022cb5609b87ddbdc3cc4f1b94f17c",
+      "bytes": 17710
+    },
+    "CastBars/CastTexture (63).tga": {
+      "sha256": "07fcf9d04893627a799b5043797a66e58b989b83fddf56ff4e4571c82efad59b",
+      "bytes": 11290
+    },
+    "CastBars/CastTexture (64).tga": {
+      "sha256": "304f69ebff725281fe286f7e7ce5ec035102ad5f0cc6101178c4585b10a46a69",
+      "bytes": 28712
+    },
+    "CastBars/CastTexture (65).tga": {
+      "sha256": "40ac801de0196e6780a3f03f480236bfef559eb6d485f909cabe0d155bfd5107",
+      "bytes": 30470
+    },
+    "CastBars/CastTexture (66).tga": {
+      "sha256": "370ae2ddca6195444e4ff35991fc0687bd36b2dc4f0233a74be4de34557572bb",
+      "bytes": 11064
+    },
+    "CastBars/CastTexture (67).tga": {
+      "sha256": "b2c97073ac6b0e8b41b7918f3e38fa4e312a64d1da9bde5100326a2ce3240175",
+      "bytes": 30485
+    },
+    "CastBars/CastTexture (68).tga": {
+      "sha256": "929a1f7c11422c8ed04a9288bc9078d95e9857b30cdf5edfa9beee044b51d04f",
+      "bytes": 15190
+    },
+    "CastBars/CastTexture (69).tga": {
+      "sha256": "afea4fd4e3f4d8ddfd82f9beb658cd82f9cb75ea020cf21eb4997485de145639",
+      "bytes": 8561
+    },
+    "CastBars/CastTexture (7).tga": {
+      "sha256": "e354cebf6277e89ac8b42e008edfdc925d64acf29ceadb7ae7f54640ecefa255",
+      "bytes": 22094
+    },
+    "CastBars/CastTexture (70).tga": {
+      "sha256": "1d8a90f750a1e2b1e04480c98bd10eebcd926295ffbcbff748198d37e0fa8345",
+      "bytes": 7650
+    },
+    "CastBars/CastTexture (71).tga": {
+      "sha256": "cffc2753e5d0d3d71e219961fb1e4b2b7fc504672f5a73d22d64c1e081be8c44",
+      "bytes": 9853
+    },
+    "CastBars/CastTexture (72).tga": {
+      "sha256": "19902f5ecf5b86f6e5dccfbcfd500798cc96da51af4aee2042c444ce0778505c",
+      "bytes": 6823
+    },
+    "CastBars/CastTexture (73).tga": {
+      "sha256": "7fb6fc1b6ff73d989a6e2ead8e918f44eafe417f66be14c25cd57be2fe704ba6",
+      "bytes": 31999
+    },
+    "CastBars/CastTexture (74).tga": {
+      "sha256": "500b74637f1d0fa7a75b965152de3e9c1814cad3706526938ea251f683da8e7e",
+      "bytes": 14690
+    },
+    "CastBars/CastTexture (75).tga": {
+      "sha256": "89a44b6c93ec53a20aaf0b178a08be7e6f99521f46ec84dfa330f784a805e62f",
+      "bytes": 6143
+    },
+    "CastBars/CastTexture (76).tga": {
+      "sha256": "afea4fd4e3f4d8ddfd82f9beb658cd82f9cb75ea020cf21eb4997485de145639",
+      "bytes": 8561
+    },
+    "CastBars/CastTexture (77).tga": {
+      "sha256": "551caefee68b517328f60e319e209c2befc2956a08d3d0a2e1d1462e6c6bb111",
+      "bytes": 19623
+    },
+    "CastBars/CastTexture (78).tga": {
+      "sha256": "1700a9f0737ff4eaf3f11acb425ef81756ef081aa587065c7a082315d23c0cd7",
+      "bytes": 32216
+    },
+    "CastBars/CastTexture (79).tga": {
+      "sha256": "59e68e0b54522456fc78bc6b1e57c19cb30c67d2313371724caadc9d2e6bd1f5",
+      "bytes": 15677
+    },
+    "CastBars/CastTexture (8).tga": {
+      "sha256": "401e056ad86e3690642e68fb58a871cb29d206084d9d1ce34f6d9faad44e5481",
+      "bytes": 17402
+    },
+    "CastBars/CastTexture (80).tga": {
+      "sha256": "8bdaf0a55cd7c2e8f734862ed1af0e2f7d701fd166c140ae7ce4f751eeda3935",
+      "bytes": 29339
+    },
+    "CastBars/CastTexture (81).tga": {
+      "sha256": "75bd028d69619f510bec4e8ec0fc83be607eb3fb47901e20599304f17cb039e6",
+      "bytes": 28116
+    },
+    "CastBars/CastTexture (82).tga": {
+      "sha256": "d5ffb3801a03ce2c05d2e8f59a120691442ef8806e76fcdd2413645567c4a4e4",
+      "bytes": 31044
+    },
+    "CastBars/CastTexture (83).tga": {
+      "sha256": "45a2d99c7cebe5503a0f0b53f27b6214587d6337b754700a31b4cb6b1133c936",
+      "bytes": 16869
+    },
+    "CastBars/CastTexture (84).tga": {
+      "sha256": "0ebaf4f72d0d6df604ac8f5900ceb5c10bab50a93b326a2d950940f6ea938ad8",
+      "bytes": 21533
+    },
+    "CastBars/CastTexture (85).tga": {
+      "sha256": "3a4a6f58977c7d75881fd8d4303825656f4b2e203502365c21c133e711aa1af7",
+      "bytes": 8066
+    },
+    "CastBars/CastTexture (86).tga": {
+      "sha256": "853b5002446055f3ad9129c4df2ee3e23681d9e99707c07452f5165719a95639",
+      "bytes": 65580
+    },
+    "CastBars/CastTexture (87).tga": {
+      "sha256": "8a00c358df3333505e7b312c949cc471f7767f8441b8002a28558d0c4af0ae08",
+      "bytes": 65580
+    },
+    "CastBars/CastTexture (88).tga": {
+      "sha256": "567064accd6faec20538e64998349eef69e1fca1b2e3f21627c329bb41a64073",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (89).tga": {
+      "sha256": "493785519a2c5d75f4960f595d7cc5a3826d8d5c6f069379a420d852581f6939",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (9).tga": {
+      "sha256": "39ee10e105ea4724b1b6c33ce5d2890c81c61a3124a96439c1089a6109441ac7",
+      "bytes": 274
+    },
+    "CastBars/CastTexture (90).tga": {
+      "sha256": "ecd1585bbef18ff68859e61a8fe9373529f0f4a05288a1598f37ff4601e2e82c",
+      "bytes": 65580
+    },
+    "CastBars/CastTexture (91).tga": {
+      "sha256": "2ff8abcdbcd720a82f7f419004fd996a1ff8214a8ea1817af5275f2d6d5a2a98",
+      "bytes": 65580
+    },
+    "CastBars/CastTexture (92).tga": {
+      "sha256": "40c7ad49c2ea95a381e7ce997507613d3b340699375e8f0ca70af8eb1f9e9859",
+      "bytes": 65580
+    },
+    "CastBars/CastTexture (93).tga": {
+      "sha256": "602ffcda085e4926b98d53c4fdee251d2268271462afc4dc39ab890443833ef4",
+      "bytes": 65580
+    },
+    "CastBars/CastTexture (94).tga": {
+      "sha256": "85218603278f126938be88d2a6e4ddb635669e44dad11e0c1dd99e516dc76a3a",
+      "bytes": 65580
+    },
+    "CastBars/CastTexture (95).tga": {
+      "sha256": "e19eadfc227a52530675ce3866d61b90554cabca87e38cbc9dd2724f939678d6",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (96).tga": {
+      "sha256": "011c7fa2a4699f81f263fd40f8511122db84c78ff554fd9266e6530f3e96715d",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (97).tga": {
+      "sha256": "2fafb10ef90bc283dae1aab4d4181f6883118a240dbad28754baa487845d0e16",
+      "bytes": 16428
+    },
+    "CastBars/CastTexture (98).tga": {
+      "sha256": "b9099bcd37d7b82b61b394b26ab0050dfcbce41bbdd64c29d7c0c79bad73304f",
+      "bytes": 32812
+    },
+    "CastBars/CastTexture (99).tga": {
+      "sha256": "e0b1cf805a4bd9783a45d001ddaf2aec272165f44ea8504949495d9dbc4ed2f2",
+      "bytes": 32812
+    },
+    "LagCast.toc": {
+      "sha256": "5095f2ef0ba42296ed5e5025a7352a0a72977b3919f8cb6aefcce05636b705ec",
+      "bytes": 407
+    },
+    "LagCastFrame.lua": {
+      "sha256": "260fb36ee5d0a549913e7767bb877f3aa1f0f92449d99546b7334860ae86db42",
+      "bytes": 29169
+    },
+    "LagCastFrame.xml": {
+      "sha256": "3e8410adb7602e629900d3d58355396a9fd4c33e1c045c8dd2c435a0af734366",
+      "bytes": 1865
+    },
+    "LagCastOptions.lua": {
+      "sha256": "a4e5d4a666044bc6b24edaa292d0ec1ad5ecd98c2127f1f904021e56b8020097",
+      "bytes": 11298
+    },
+    "LagCastOptions.xml": {
+      "sha256": "b0427201e2662d657efce996f300397fcaaba818c568bbaf4844c6f6b747b7c0",
+      "bytes": 14225
+    },
+    "LagCastTemplates.xml": {
+      "sha256": "532d96f5d48d58598d2c90212d5dd3034b0e46b1a6421a256ad51b34ef30027d",
+      "bytes": 5535
+    },
+    "MACROS.txt": {
+      "sha256": "6dbd88233aed7051eadf6ff14a5e7c91b21f5183ccde6d27d84d11944b9cb7f4",
+      "bytes": 1791
+    },
+    "README - OLD.md": {
+      "sha256": "5c429efb570b1ab9994a8aa03724b212603856e066f11399182b6e8b08ba0f1d",
+      "bytes": 4989
+    },
+    "README.md": {
+      "sha256": "e90eb115942441592e4d52a8be7d23bc6d275f9becff20e488f620a3b5f29017",
+      "bytes": 4740
+    },
+    "TODO.md": {
+      "sha256": "7de13a0a80f38c08d8f1527ba97988f9c42ea911033f1b19bcdf98c5baec5fe0",
+      "bytes": 380
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

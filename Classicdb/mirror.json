@@ -1,0 +1,930 @@
+{
+  "upstream": "https://github.com/Muehe/classicdb",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Muehe",
+    "repo": "classicdb",
+    "name": "classicdb",
+    "url": "https://github.com/Muehe/classicdb",
+    "api": "https://api.github.com/repos/Muehe/classicdb"
+  },
+  "commit": "e7ecc0f18fd764694b3acc5c3a31d297b1c4eb3e",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "be53c8595dc58ab924097f19c76afefa646bd808eb6f2f3719dc4520be97b63e",
+      "bytes": 22
+    },
+    "CHANGELOG.md": {
+      "sha256": "a78489b2cc4ca61b3b9a471c13575f59e824aaba7abe63ba039713b64802abb3",
+      "bytes": 8524
+    },
+    "ClassicDB_GUI.lua": {
+      "sha256": "e94b69576aa463be3dbe061c7f11ec33d6f7355e06740b0ea6d4c9d02710a9c0",
+      "bytes": 60768
+    },
+    "ClassicDB.lua": {
+      "sha256": "9eead8781c7d32ea35441fba1ea5a6077a789aedc5116f9d27c4db08085fb523",
+      "bytes": 89005
+    },
+    "ClassicDB.toc": {
+      "sha256": "3fe738080db2f1d02c0ad928778dcc719ca4489e8e10068e83b666eb27d827c5",
+      "bytes": 551
+    },
+    "database/aowow.sql": {
+      "sha256": "723accda63f09603029ab62162b161946c99bf1e282f7c0c2e58b6a5e68003f4",
+      "bytes": 6989363
+    },
+    "database/itemDB.php": {
+      "sha256": "77a1f87755ecda7c953a9facdc11c40442d205150fadc57f4fe51586a54b6c2e",
+      "bytes": 3195
+    },
+    "database/maps/0.png": {
+      "sha256": "8dbb9e8fc1ee4cf7eb01827c30dc3b823ed1f11e34445968a01e20fdcca5ab52",
+      "bytes": 579
+    },
+    "database/maps/1.png": {
+      "sha256": "ad71617555c303589ba39aad8fff14abe593df4f06d546fd75a6a82cdc70af38",
+      "bytes": 3920
+    },
+    "database/maps/10.png": {
+      "sha256": "878fa362f44e1098b6f79fc6e984ff4e745184e5621e7387ee7d849d9b30e886",
+      "bytes": 4002
+    },
+    "database/maps/11.png": {
+      "sha256": "a5300443945926fd1d1d1db255ee76042bcd9d221421736f8a6a42e8e9300b48",
+      "bytes": 3642
+    },
+    "database/maps/1176.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/12.png": {
+      "sha256": "c39e051b0fb97b132bfc57f3b7b7d0ba24d37a75f7f96d341d36f09c9394bacf",
+      "bytes": 3542
+    },
+    "database/maps/130.png": {
+      "sha256": "1a7d15dfb7d2bd30f1fc2c5375731935ba9f5ea760c938901c0d671ebc951522",
+      "bytes": 3010
+    },
+    "database/maps/1337.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/1377.png": {
+      "sha256": "8b21306446706b48c5da50ec4bcea7364c25a47a7e2655b5302a2cc07211c397",
+      "bytes": 3014
+    },
+    "database/maps/139.png": {
+      "sha256": "e23698c61a9af3d52268106c42f5ac4c942494261036f8480a39a8fb7f7bf6d3",
+      "bytes": 4043
+    },
+    "database/maps/14.png": {
+      "sha256": "c46e461b0aaefa7ab0d577545269ee78fc61fecb1592607fe5c6c91d709da125",
+      "bytes": 1977
+    },
+    "database/maps/141.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/1417.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/148.png": {
+      "sha256": "721ba600963f4a292077a4324128fde592875313074b816bfe45237fce9a1128",
+      "bytes": 2299
+    },
+    "database/maps/1497.png": {
+      "sha256": "457888aeb37801624e17ad5920805ae52f82372d73b8f9b9071ab9412115ebcb",
+      "bytes": 4089
+    },
+    "database/maps/15.png": {
+      "sha256": "d4cf59cc53904e520ee7a6d110ec41ba87b10278b2142e58115d74dff9bab44a",
+      "bytes": 2059
+    },
+    "database/maps/1519.png": {
+      "sha256": "dfdbd54c3dc3f36c928645eb776dc34a9d99902f6cb014627188974a7f9950db",
+      "bytes": 3588
+    },
+    "database/maps/1537.png": {
+      "sha256": "493b1fb1458de6af7b6b31c65cdcf2d73a4116c876b72edff70393bcad252671",
+      "bytes": 4990
+    },
+    "database/maps/1581.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/1584.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/16.png": {
+      "sha256": "74733b99a1c05d05bf32903e4190b4405185e45d96c4007b32cdc00a881bb859",
+      "bytes": 3856
+    },
+    "database/maps/1637.png": {
+      "sha256": "d2d0642f2aceb3df48c76684f56aba48ae5564a39ebb15a7b7030476b7db4120",
+      "bytes": 3477
+    },
+    "database/maps/1638.png": {
+      "sha256": "a531548186ef037db8fdcf316cc2d3325ef52bf53ab5f306dd5bb7a1ddf36867",
+      "bytes": 5229
+    },
+    "database/maps/17.png": {
+      "sha256": "570a1022b2b27e39727fd46ba232fd33ec0f0e0da8999c4e00d287606e885fa7",
+      "bytes": 2149
+    },
+    "database/maps/2017.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/2057.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/209.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/210.png": {
+      "sha256": "4871845399098c76925058825573811f6231e58168643ae7cdc43b18bb75fe22",
+      "bytes": 7409
+    },
+    "database/maps/2100.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/215.png": {
+      "sha256": "dce968262ddd4313b5ebf9db7afb622cc023159db122fe190adcc8148f2f4db5",
+      "bytes": 3164
+    },
+    "database/maps/2437.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/2557.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/2597.png": {
+      "sha256": "3139ed2b367dbf5b2222efe870d6f49357e929a6b87beb57ba6819dd021900f5",
+      "bytes": 1116
+    },
+    "database/maps/267.png": {
+      "sha256": "ce7d823a8675fdc3b84221badc7e76f282d30eb43745ef5c851e74e65081d344",
+      "bytes": 2717
+    },
+    "database/maps/28.png": {
+      "sha256": "f8738a22177517c207bec623825a3f238d8b17b1a890a9d751d25c99b0162b64",
+      "bytes": 4188
+    },
+    "database/maps/2817.png": {
+      "sha256": "f7e2525d2d6f4991da2c85d0e5fc8cd158364144f73f923492f04abd9626d0f2",
+      "bytes": 8876
+    },
+    "database/maps/3.png": {
+      "sha256": "d7c740a30cbf7e1db66c96d2d80a0e0c3acc3d80ee9dc77f8b4f895a18752d1f",
+      "bytes": 3857
+    },
+    "database/maps/33.png": {
+      "sha256": "8892bd6381335a4624d57a6447cd2f3bf629365dad838528b2e082fa1e6f1999",
+      "bytes": 2240
+    },
+    "database/maps/331.png": {
+      "sha256": "499db17039486e7f6ce08286617d7a79a4e19367aa92a243e53dccf79f0213b2",
+      "bytes": 4499
+    },
+    "database/maps/3430.png": {
+      "sha256": "71ad7d3cdba4a28ecf74b7a05cd3301580ba3366766b8b4ef0007d331dc4829d",
+      "bytes": 1257
+    },
+    "database/maps/3433.png": {
+      "sha256": "f6a6f9b1b30d973fc6f53cb031e0c1b5b411f2286b6e59d912fdc7fb231e912f",
+      "bytes": 1125
+    },
+    "database/maps/3483.png": {
+      "sha256": "907a6eb254a6f0c938500276f95f206a2789be0121fee0ba84356b68b92bedcb",
+      "bytes": 1633
+    },
+    "database/maps/3518.png": {
+      "sha256": "edadf84f91c4a0f32a853c5aa01d68ca2aeba83161b5d0dcd4fe93b25bc33b38",
+      "bytes": 3887
+    },
+    "database/maps/3519.png": {
+      "sha256": "fdacda9f96ef578673001a458b9f01afba428a6d128e0e12f1717c8271967626",
+      "bytes": 5058
+    },
+    "database/maps/3520.png": {
+      "sha256": "efa4a621007ff4d2685049d57da18d9b348c6fddf869c846b94e9adea12111a8",
+      "bytes": 1366
+    },
+    "database/maps/3521.png": {
+      "sha256": "f9b7d603576137807a1d62158e4a3c2c7e1823a11dca06515fe9fd3eb6592782",
+      "bytes": 3162
+    },
+    "database/maps/3522.png": {
+      "sha256": "f5384698ea2264a930932bc1574cde53665fa3e3bbe45dc7a621e4cfc758a3e2",
+      "bytes": 1842
+    },
+    "database/maps/3523.png": {
+      "sha256": "774f293435b874e4a018d3ba55ef9e7299ee4dbef96401d8ae74012be5851b83",
+      "bytes": 1033
+    },
+    "database/maps/3524.png": {
+      "sha256": "9e60601e633615e312e5ad40ba918e544d5bf89500868d2e73cbfcb145becd2a",
+      "bytes": 993
+    },
+    "database/maps/3525.png": {
+      "sha256": "77f90b54cb11b2d04ef26b2c3b35435684c417f2e4a80e0546dac40c804acc9a",
+      "bytes": 273
+    },
+    "database/maps/3537.png": {
+      "sha256": "1c0ee6b76fcbd71ae34a8349f116267f01de822e1bb88b66684f4642cbebd619",
+      "bytes": 5787
+    },
+    "database/maps/3557.png": {
+      "sha256": "94ea53c40558289d1762bd08580544f8205ed223b799bb8bb758f17d1e551a52",
+      "bytes": 2684
+    },
+    "database/maps/357.png": {
+      "sha256": "d0e0a81cb4b51a033533e2fda380bfd96dcd046cefe3b0c0b0b30d238179797d",
+      "bytes": 2453
+    },
+    "database/maps/36.png": {
+      "sha256": "bcf7e2f5cb0e4b21523bb54ea79516caca9f8aeddd2c794e4720e66847cbd4c5",
+      "bytes": 3805
+    },
+    "database/maps/361.png": {
+      "sha256": "4aaf7b206149ecaa1826fdf6368c6f647410d9d3fe09ec69a7330387eaafb935",
+      "bytes": 3978
+    },
+    "database/maps/3703.png": {
+      "sha256": "1d181c6f370434c01a77bd5749096a4e5d220293efc944a6e80f74bbcd8ef468",
+      "bytes": 3946
+    },
+    "database/maps/3711.png": {
+      "sha256": "44bfc5edd0c923159033f9c0cec6abd3325ff50bf3057629e429183cd07f798c",
+      "bytes": 7367
+    },
+    "database/maps/38.png": {
+      "sha256": "108d0e8eabf11f08dd09f0bc0db6af069f99610499c2ba11caff8633e4e9065b",
+      "bytes": 3647
+    },
+    "database/maps/394.png": {
+      "sha256": "43111d815f6a3911664cfa08f9b1a12d20619e911b9c67d50615c8b26c419578",
+      "bytes": 7021
+    },
+    "database/maps/4.png": {
+      "sha256": "651453ac0208b7304d9acc981e2689a09141418807fa9fd619d79cf283343a33",
+      "bytes": 3038
+    },
+    "database/maps/40.png": {
+      "sha256": "8bd030b55f73d4409a0030d801f0883c941b008e995297e1b8bbc37460350692",
+      "bytes": 2311
+    },
+    "database/maps/400.png": {
+      "sha256": "90506c9665b02e9eca729cc68c31aa3f7cea142e2a88ac0a25776664b8a1b79c",
+      "bytes": 4263
+    },
+    "database/maps/405.png": {
+      "sha256": "d9122388ad00d242c010c76d26766bdaa2eb86313969f449b6716cc3affa6565",
+      "bytes": 1807
+    },
+    "database/maps/406.png": {
+      "sha256": "c3eb6a619d651804f9b22ee9af68c7e3ddd29818e34cf72d9b9af02a4e9c8fdd",
+      "bytes": 3278
+    },
+    "database/maps/4080.png": {
+      "sha256": "77f90b54cb11b2d04ef26b2c3b35435684c417f2e4a80e0546dac40c804acc9a",
+      "bytes": 273
+    },
+    "database/maps/41.png": {
+      "sha256": "9f5928ed17c0993186d72375fc2a8e102bd4104df0683239f0ad298875698c53",
+      "bytes": 2812
+    },
+    "database/maps/4197.png": {
+      "sha256": "93af825f9348e418188ca8704fb633c88a444e820dbb03b23d407aa16162d687",
+      "bytes": 7793
+    },
+    "database/maps/4265.png": {
+      "sha256": "77f90b54cb11b2d04ef26b2c3b35435684c417f2e4a80e0546dac40c804acc9a",
+      "bytes": 273
+    },
+    "database/maps/4298.png": {
+      "sha256": "77f90b54cb11b2d04ef26b2c3b35435684c417f2e4a80e0546dac40c804acc9a",
+      "bytes": 273
+    },
+    "database/maps/4384.png": {
+      "sha256": "77f90b54cb11b2d04ef26b2c3b35435684c417f2e4a80e0546dac40c804acc9a",
+      "bytes": 273
+    },
+    "database/maps/4395.png": {
+      "sha256": "77f90b54cb11b2d04ef26b2c3b35435684c417f2e4a80e0546dac40c804acc9a",
+      "bytes": 273
+    },
+    "database/maps/44.png": {
+      "sha256": "4fe10fb0774f8fde384f84902c69cf0ba3d0319eed4eb5905dd0cd324503162f",
+      "bytes": 3056
+    },
+    "database/maps/440.png": {
+      "sha256": "e47e7b60549aa88fb782277ec6a01db4d9d282d26ad733099ae1dffeec044ee8",
+      "bytes": 2476
+    },
+    "database/maps/45.png": {
+      "sha256": "815de77ae75496fb9e34146c90bd73f4989ec1865ca9f1399e1af0a9891e287e",
+      "bytes": 4204
+    },
+    "database/maps/457.png": {
+      "sha256": "8dbb9e8fc1ee4cf7eb01827c30dc3b823ed1f11e34445968a01e20fdcca5ab52",
+      "bytes": 579
+    },
+    "database/maps/46.png": {
+      "sha256": "208fa5a6b69ef1464caf85f056ca67860d497342ad1f1ed92e6a05f3a392a9eb",
+      "bytes": 3299
+    },
+    "database/maps/47.png": {
+      "sha256": "f3ef5d6139276fcdf6574ff4769bb5fcf30f7b217d14c0598828a4c60f359795",
+      "bytes": 4092
+    },
+    "database/maps/490.png": {
+      "sha256": "890f370d3a31304b1b0e0935d10588dba138fb9e990529e5270630ae12e5ce6b",
+      "bytes": 3312
+    },
+    "database/maps/491.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/493.png": {
+      "sha256": "23928dd011a8f827681342d9654950fcdb22575fb7c71c64473f91650f88504b",
+      "bytes": 2147
+    },
+    "database/maps/495.png": {
+      "sha256": "4613c1d9fc4726d4567ee4dc5afb1c98d7b055459ffd8732633dcccbf8b97632",
+      "bytes": 5819
+    },
+    "database/maps/51.png": {
+      "sha256": "7822de311c9dde1214ab4cdc62e4e0a0a18e65a867b9d29fc5ca4eee2f32b21d",
+      "bytes": 3587
+    },
+    "database/maps/618.png": {
+      "sha256": "9c04371d7328ce664bdf6bf50020afef55224d337ee1e6031b07284c6f1dd745",
+      "bytes": 3291
+    },
+    "database/maps/65.png": {
+      "sha256": "a51f92787e2b8ab075f03682afddabf3af6c6ba4d2b2721eb9b1c3ed6bd7d0ae",
+      "bytes": 6968
+    },
+    "database/maps/66.png": {
+      "sha256": "b6e1c9e2940e78261dd8b7b3c80ea4ea3f82718bac2e6aac951d79bd853673bb",
+      "bytes": 8215
+    },
+    "database/maps/67.png": {
+      "sha256": "cd0f843367edefff87af23efd405dc4eefec0a6a17775955d0958ecfb126d898",
+      "bytes": 7319
+    },
+    "database/maps/717.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/718.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/719.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/721.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/722.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/796.png": {
+      "sha256": "fff722be8cbbfbb8ba9b92a744defaaf8f4237d19f7f4dbca498124b3ba45e79",
+      "bytes": 1103
+    },
+    "database/maps/8.png": {
+      "sha256": "2616c5ce323e8c9a97263e7f0754538e3ce71069cdaaf032854cec8ebafcce2c",
+      "bytes": 4088
+    },
+    "database/maps/85.png": {
+      "sha256": "64e563776ea39aaf680d8c377ce432ec89449c8ef2a22f47160e9d3775487c8d",
+      "bytes": 2764
+    },
+    "database/questDB.php": {
+      "sha256": "1240ada54b7e761b3ed18e82b9fef47b323d3994512e3ee2eccda89679358418",
+      "bytes": 4191
+    },
+    "database/README": {
+      "sha256": "3a699d10e563262431bd5e1484bb49ccd25387075609756b9e6fe8aa4ce1760d",
+      "bytes": 1253
+    },
+    "database/spawnDB.php": {
+      "sha256": "9f5ba8dda38108d56f5e6a6cbf88e50d987df5330013c59743b26affe8bf41eb",
+      "bytes": 6319
+    },
+    "database/vendorDB.php": {
+      "sha256": "73eaddd78340555b1f7b250eafe2154c27c99831753429543193d260587e8775",
+      "bytes": 2287
+    },
+    "Makefile": {
+      "sha256": "c73b6c1e028b2e95284413d206ccd3155031bda5ad2cb53a8b6a2970f064c20b",
+      "bytes": 3713
+    },
+    "README.md": {
+      "sha256": "f6b3a5ce9144703839a3325e7d0494141f41ef8c1df3e9f460e0e9ce0f689619",
+      "bytes": 2913
+    },
+    "release.ini": {
+      "sha256": "5709853857316c7097842cdf21272015b2c6feebad808b4d0d2f0ff63207fd20",
+      "bytes": 317
+    },
+    "release.py": {
+      "sha256": "eac9989892966c5de7ef5536b814448d116578e5150168b976ec8a839a9a0c95",
+      "bytes": 3859
+    },
+    "resources/Cartographer/Bindings.xml": {
+      "sha256": "b3ad0d4b36c875262c3e698c704be05b840344534dd177e30bc3b1b1ea4a077d",
+      "bytes": 193
+    },
+    "resources/Cartographer/Cartographer.lua": {
+      "sha256": "fd40a14086eb6a01f0a030a67045d691e7946302ab5bb9e17feccf65bd3b1d6e",
+      "bytes": 10840
+    },
+    "resources/Cartographer/Cartographer.toc": {
+      "sha256": "e0d7acb4ca7725cf763c3cd8959c8543840a86008473b2c4449ac30b2e144fb4",
+      "bytes": 1458
+    },
+    "resources/Cartographer/GroupColorsArtwork/Group1.tga": {
+      "sha256": "09e425625616f57223f661fed58aec1b2659dbf83a59fb20f5fe162aa4f8d9db",
+      "bytes": 779
+    },
+    "resources/Cartographer/GroupColorsArtwork/Group2.tga": {
+      "sha256": "c6c2a661e99dac7d5c694f925c6c89c2af02fd80decca0673f2ba018d47cf1ef",
+      "bytes": 814
+    },
+    "resources/Cartographer/GroupColorsArtwork/Group3.tga": {
+      "sha256": "7781582c3fb04bc3c0ddbcc26ad89dbde5bd05e7401864cbe6114b6c6aaabe95",
+      "bytes": 834
+    },
+    "resources/Cartographer/GroupColorsArtwork/Group4.tga": {
+      "sha256": "40e05f40012c00315da016d04f3fc54eec95cae23edf91fc2b9fe425eb76d82c",
+      "bytes": 812
+    },
+    "resources/Cartographer/GroupColorsArtwork/Group5.tga": {
+      "sha256": "2f5e06a1791687f76d36bb1f5ffd73e5cccf8b9db606173d2160605bfd81bc18",
+      "bytes": 814
+    },
+    "resources/Cartographer/GroupColorsArtwork/Group6.tga": {
+      "sha256": "c5c24f6749ad7ce058a5b8331ea1f8c2a9e99a309977f24907a1c41ba3ce4107",
+      "bytes": 856
+    },
+    "resources/Cartographer/GroupColorsArtwork/Group7.tga": {
+      "sha256": "6515c0ce31c9ddf740a351446b0f4de1b2960c99f16de22f7c6ba1777d87b179",
+      "bytes": 804
+    },
+    "resources/Cartographer/GroupColorsArtwork/Group8.tga": {
+      "sha256": "8fbe1334b26b7d1d81ad4a798967c5e982887d5c00bd827ba37df8a74d881ce5",
+      "bytes": 864
+    },
+    "resources/Cartographer/GroupColorsArtwork/Normal.tga": {
+      "sha256": "ad1ee3d13af17b6af79590f39d8905c0d75113869ccaf14b348fc1f6b6cb0734",
+      "bytes": 820
+    },
+    "resources/Cartographer/Instances/BlackfathomDeeps.blp": {
+      "sha256": "afdfc6aafbf04ff43cf7a2fdf5e7da49b6f2a27aee3dfac3f9f0b77dbe02b49a",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/BlackrockDepths.blp": {
+      "sha256": "dc120b502c7944f296060fd3850e2c7f33c3d38c666b23cee9accd55f3793715",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/BlackrockSpireLower.blp": {
+      "sha256": "905d97ef53b6e3af51b9274aa652a40aa92f23205c44ae7ff7f9653a795d03c1",
+      "bytes": 350692
+    },
+    "resources/Cartographer/Instances/BlackrockSpireUpper.blp": {
+      "sha256": "e331bfac71d328d4dba2f4080c39c036e6c5dc43df20a3f1b30ada81e69d3910",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/BlackwingLair.blp": {
+      "sha256": "0063125f6aad8ec48d82b08c6f443907630a16d47b18b433052648b25b703e8f",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/DireMaul.blp": {
+      "sha256": "9f0eff254f8b0bd5ae91055980e624c2298b38e1b9caf4373d492d4b76a87d5c",
+      "bytes": 350692
+    },
+    "resources/Cartographer/Instances/DireMaulEast.blp": {
+      "sha256": "aaa584897a2d6c45fa28b87fe183569a11d18d4ab97d2d5638dc38c314bdedce",
+      "bytes": 350692
+    },
+    "resources/Cartographer/Instances/DireMaulNorth.blp": {
+      "sha256": "310b3fa464127e306dada994e04a846d11db945db9a002055f977eb961c53002",
+      "bytes": 350692
+    },
+    "resources/Cartographer/Instances/DireMaulWest.blp": {
+      "sha256": "35b8602892d4a3bc071192982bab8eac1e051c8efb53fc2831c7226a6a4d7dd4",
+      "bytes": 350692
+    },
+    "resources/Cartographer/Instances/Gnomeregan.blp": {
+      "sha256": "b6f258cb8d543c298ea188384d36a80a079dee17e72b5d8722d63e12e9d54968",
+      "bytes": 350692
+    },
+    "resources/Cartographer/Instances/Maraudon.blp": {
+      "sha256": "90ded7365643fd3b49d7d7cf77479ff283bdec03e58c92f7e5c622369c8df8c6",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/MoltenCore.blp": {
+      "sha256": "1c7c4e65dc77ed3cf58c6cde904b62309a392fc0efdf0a958d2e871ceac3dae9",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/Naxxramas.blp": {
+      "sha256": "791dec12e7cd8ba5f383bbbb759ce7ce612ebe3c75f5cc2d95af03c856c8eb74",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/OnyxiasLair.blp": {
+      "sha256": "2d35a8a4979676d26b07c4b498df9558ac3aad369f388773b2efddf3b85176d0",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/RagefireChasm.blp": {
+      "sha256": "99b2a4ea763ad6e2aba8b723a676acdad61b3b9c41ef7f8399375f256c2d8ee6",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/RazorfenDowns.blp": {
+      "sha256": "0456ea267ab333f29cdbc63ac3e08b90cc802e282afb696ef788735c5903cf1e",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/RazorfenKraul.blp": {
+      "sha256": "50a082cc44ff6d6fc530244ad73f5a07c12cad82b130d926c9fafd9597e4f168",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/RuinsofAhnQiraj.blp": {
+      "sha256": "f3b5598f2880762893a077286db81783f615d5f6c2f31d3b553d103ea53147d2",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/ScarletMonastery.blp": {
+      "sha256": "9c7df269c348a24d07d3c938a4c9cc68841e9156cf941f3cc2a43bb81e656991",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/Scholomance.blp": {
+      "sha256": "7f24384c05e125f35089cd7bc87bccdfaecd508d3db4293d4f3809e7a7b96de7",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/ShadowfangKeep.blp": {
+      "sha256": "f8909a4598c0554e018e5aec5e670f259776cce40faf60d25f54d9dd618136de",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/Stratholme.blp": {
+      "sha256": "bb90f1c0ada8280615cfa4a21984189fc580855dd703124f4de44ec120a91927",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/TempleofAhnQiraj.blp": {
+      "sha256": "07bcfdb84278973f191553ae6d1db34d434def08940a0a9f41013c04940ae93a",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/TheDeadmines.blp": {
+      "sha256": "11d09990ab247e7d3f949da46c59dc6e083014fa3d9b6bde45fd010aedff4c7b",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/TheStockades.blp": {
+      "sha256": "153427604fa5229bc1397cd4a6308554efa9ef82088474eb73eaf12ad17c8208",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/TheSunkenTemple.blp": {
+      "sha256": "18d032d7a34cb6c5104e69273dc0736d4a6edb50dbbeafbf12b75210edbea53c",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/Uldaman.blp": {
+      "sha256": "83a381d5cb9fc4ce82c78d53399edeb320cdb42206fa36ee392f1713efc01895",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/WailingCaverns.blp": {
+      "sha256": "419df14b887abcff7fab91b5d16126b3c1c777d1e82df817a38990161b7fc043",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/ZulFarrak.blp": {
+      "sha256": "f8f8672a51d88872fe3221f6d042ebd13af5dd6161bb840673082257a6820e4a",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Instances/ZulGurub.blp": {
+      "sha256": "9741f2e9456fcda5ee60f8c8c2f5270a268628bdbe075e31d766b9690b3f99c5",
+      "bytes": 350724
+    },
+    "resources/Cartographer/Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "7b04142f00d5a887a32722c55bb64798e593f3504929f656aa440c298c63b529",
+      "bytes": 31075
+    },
+    "resources/Cartographer/Libs/AceComm-2.0/AceComm-2.0.lua": {
+      "sha256": "015b587da601f3be65092cd3de011a896eb647d60b7a38c87b7107e03da41d83",
+      "bytes": 84219
+    },
+    "resources/Cartographer/Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "f24029b2b68114216eaa16e9c60b750f9be5ef16ac5eb81d76890c675dd71d31",
+      "bytes": 65848
+    },
+    "resources/Cartographer/Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "857c997b45898d8e9b0cfcf0e788bfe3ac845b94c65a5d952a7c370c8179f234",
+      "bytes": 44137
+    },
+    "resources/Cartographer/Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "9024eb7de5aa86ff376e3f0d4e3502e6b07c8498609e51001e574d41729b7f0b",
+      "bytes": 29477
+    },
+    "resources/Cartographer/Libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "fe376e949ec8294d88e6a0d7d2d2c95186da7d735252ef652add469656db30c0",
+      "bytes": 17348
+    },
+    "resources/Cartographer/Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "c2aea5c71e1a83e5018d050336b367aa33eb44007d0a9965fbeaf4191d248ffa",
+      "bytes": 23476
+    },
+    "resources/Cartographer/Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "64b6a9a20828dee3dcda9287bc0d8c85f564c55273b50bf0b92f4ef3ffb14efb",
+      "bytes": 16360
+    },
+    "resources/Cartographer/Libs/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "adf608781a4b112e21df58b11aba09ad636e03b7ae74d61e26b01f3ef19b47c7",
+      "bytes": 12251
+    },
+    "resources/Cartographer/Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "71d5f6485c4fc89bd29d50a38b03b2cb2885d68833590b131a6801628a799d4a",
+      "bytes": 31308
+    },
+    "resources/Cartographer/Libs/Babble-Boss-2.2/Babble-Boss-2.2.lua": {
+      "sha256": "c3d45d7ab7eb64bc0098fed1e24b76c6f6b540af5281ba311606bfbf690a90d9",
+      "bytes": 66469
+    },
+    "resources/Cartographer/Libs/Babble-Spell-2.2/Babble-Spell-2.2.lua": {
+      "sha256": "30d71d7f6842cb2369410929f337c5643b409bd034a71f905a700c3e52f9b6eb",
+      "bytes": 309082
+    },
+    "resources/Cartographer/Libs/Babble-Zone-2.2/Babble-Zone-2.2.lua": {
+      "sha256": "9eb9011f430eae39561f6e6d674c1a2bbf6c04079b4fc58bef9c4c6096ad4446",
+      "bytes": 34659
+    },
+    "resources/Cartographer/Libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "412c5baf1eb5a9151664fb34def8597117da77c8ea799a6fa0ef5a072dd074f7",
+      "bytes": 85097
+    },
+    "resources/Cartographer/Libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "7aea656091cfdea3de314f8f5db97fa70827128d6d5f2c50822545d12e4aa8a6",
+      "bytes": 86532
+    },
+    "resources/Cartographer/Libs/Tourist-2.0/Tourist-2.0.lua": {
+      "sha256": "c352ba873d168c8d7ec363875cb7c4371ae62a9c1c4b50e82ef27737961cad45",
+      "bytes": 53652
+    },
+    "resources/Cartographer/Modules/Battlegrounds.lua": {
+      "sha256": "85e5468b0f933f8a1210c236aa0ebc749a774c43b2b54e1b17f36e94211cc072",
+      "bytes": 4952
+    },
+    "resources/Cartographer/Modules/Coordinates.lua": {
+      "sha256": "ae95c7276b497ab7d575834f5dd010824550883bca16d1ef973c26edfa24e8ae",
+      "bytes": 4065
+    },
+    "resources/Cartographer/Modules/Foglight.lua": {
+      "sha256": "bb331d54cac142284017d234111faa8983081796a151acaafd74c6b0ef7759af",
+      "bytes": 48239
+    },
+    "resources/Cartographer/Modules/GroupColors.lua": {
+      "sha256": "6f994e37ad4d541d9f706c67a81658b669dedf00e4a1e9f8442a92e540f9bad5",
+      "bytes": 5234
+    },
+    "resources/Cartographer/Modules/InstanceMaps.lua": {
+      "sha256": "3142c8d4cc100a2f1288f5a8f218c32255dbfd304da09855f1daac6f12ad8574",
+      "bytes": 11650
+    },
+    "resources/Cartographer/Modules/InstanceNotes/enUS.lua": {
+      "sha256": "cd9be54f963683134082195827678ee3e1aa2f6fb4d18638553260ea147de819",
+      "bytes": 10761
+    },
+    "resources/Cartographer/Modules/InstanceNotes/koKR.lua": {
+      "sha256": "44a5acc4224d89d77eab4682714abe81eb03fde307880b66e767adca4ec711ad",
+      "bytes": 17402
+    },
+    "resources/Cartographer/Modules/InstanceNotes/module.lua": {
+      "sha256": "69c351d4e86602e3467b7cf6039de8e264f6e0d98fc5e563a8a5320f5c36f896",
+      "bytes": 1598
+    },
+    "resources/Cartographer/Modules/InstanceNotes/notes.lua": {
+      "sha256": "c73a056e79b9fbd0a67e4b9f4e8ef658316fe0d262dd08197346a46e597a835a",
+      "bytes": 80088
+    },
+    "resources/Cartographer/Modules/LookNFeel.lua": {
+      "sha256": "09fd2609c6e7f6c7e3d94aee72f9b1e4166c0513d99262617c3912eb136f9b8f",
+      "bytes": 37992
+    },
+    "resources/Cartographer/Modules/Notes.lua": {
+      "sha256": "933efa44aca8f71691523d54ba89b4fd53146f8fa65f2eeda69ac2e23fb20cd0",
+      "bytes": 81517
+    },
+    "resources/Cartographer/Modules/Professions.lua": {
+      "sha256": "ef20fe06acb4b948d4fef03ba79015bd47f8a5af1e997b5f1e5225cda8a5037e",
+      "bytes": 3621
+    },
+    "resources/Cartographer/Modules/ZoneInfo.lua": {
+      "sha256": "70cd6acc6507c28aeb548de1b12059984666d813603cb54ca543169ed8a19bc9",
+      "bytes": 7614
+    },
+    "resources/Cartographer_deDE.patch": {
+      "sha256": "94dfde741a884398c3fdc07592f5688e2a7a0e9980f918db9db3264125f188b3",
+      "bytes": 2431
+    },
+    "resources/img/background.tga": {
+      "sha256": "2fb5dbe30b8728c0010bf53e6b9dc13b83110a08e1ac43ee1db34dd195397903",
+      "bytes": 76
+    },
+    "resources/img/border.tga": {
+      "sha256": "3135735ddffe79502b2565efea2ad3ae868dbc95de13bc1e059164ce5c0ed40d",
+      "bytes": 2092
+    },
+    "resources/img/fav.tga": {
+      "sha256": "6a2d668c07b1f5e085d74a48fd00ad4018a96c809a8f90a7d53ee5e9f8822686",
+      "bytes": 434
+    },
+    "resources/itemDB.lua_deDE": {
+      "sha256": "e53b17bdbc08885068506f4e66783b565bec96a988e6de7298c35eb2d7aea63f",
+      "bytes": 23293217
+    },
+    "resources/itemDB.lua_enGB": {
+      "sha256": "2254e6753a882b93eda516e300e94daaa032d9a29f812c4c891a8d17140350bf",
+      "bytes": 23221969
+    },
+    "resources/objectDB.lua_deDE": {
+      "sha256": "e7d4a4ffd3e2afb014cf34854776471ac347b3c13a26c6ae50f7fb70b776f7d7",
+      "bytes": 870290
+    },
+    "resources/objectDB.lua_enGB": {
+      "sha256": "01c8c4c7975bdce7043c1fae772a19edced3812ed1009b415604c5b57813c434",
+      "bytes": 859059
+    },
+    "resources/questDB.lua_deDE": {
+      "sha256": "ebf7882ab446e5b10ee1dc9be98978301754edce7561e67d6066c7e703388a4e",
+      "bytes": 769750
+    },
+    "resources/questDB.lua_enGB": {
+      "sha256": "382a982b6fa54f142fb8df5eb38c1a9b0ce999c11bf59024a2e906509c495ad4",
+      "bytes": 751593
+    },
+    "resources/spawnDB.lua_deDE": {
+      "sha256": "1f47ca02a9b2d85490da75798eb6dc95ca0b43cf6c66020cbc6a5209cedc299a",
+      "bytes": 2531204
+    },
+    "resources/spawnDB.lua_enGB": {
+      "sha256": "f9793d273666dbc51a2b3513490ecfd6233b27ef2fdaa0a74aecb56c5adfb5c4",
+      "bytes": 2513791
+    },
+    "resources/symbols/Arrows.tga": {
+      "sha256": "2a0541c333e542e76d6f3a9324b494c9fbd7c953a670199b06753cfc3fd247e6",
+      "bytes": 9242
+    },
+    "resources/symbols/available.tga": {
+      "sha256": "a5b5399e4b9d89e8cb4577afedc9aca0ee7ad086281872a9712e7262147e26ec",
+      "bytes": 4140
+    },
+    "resources/symbols/complete.tga": {
+      "sha256": "58dd93a7257f0a922c3ea952ce1f23b7c7e91e1ea62fc18ddb5a888be91c4ac8",
+      "bytes": 4140
+    },
+    "resources/symbols/event.tga": {
+      "sha256": "9e5994ebf2c1f80cce099807cb25f3e18ede2d7a1d9498f4ecef60cb57cc065c",
+      "bytes": 4140
+    },
+    "resources/symbols/fav.tga": {
+      "sha256": "3b8b92ed5194f3e4abccba6b9278ba9c7e4086e7c0cdce77d049b30e825aef52",
+      "bytes": 16428
+    },
+    "resources/symbols/Glass.tga": {
+      "sha256": "cd1440bdc90f2b76cc3bdd9a333665603433a52145e069198a407f301f813350",
+      "bytes": 5907
+    },
+    "resources/symbols/icon_alliance.tga": {
+      "sha256": "a16069c1c865c9596f98a180f57df40a7caa09ce742f038da1eb2095149b313f",
+      "bytes": 4140
+    },
+    "resources/symbols/icon_horde.tga": {
+      "sha256": "bacd0a3f3f5d81f1480998b2fd11732ae995b49b8404b5906e10d17941426232",
+      "bytes": 4140
+    },
+    "resources/symbols/icon_npc.tga": {
+      "sha256": "fed886ce6fccd633cf763cb6e7f9748c2bea323bfedd20daddf0169fd727efe3",
+      "bytes": 4140
+    },
+    "resources/symbols/icon_object.tga": {
+      "sha256": "f8691f4b2222ebfab854cb8d912c7ec96fc7a5c57b8302eb289dca7c2bb6fac4",
+      "bytes": 4140
+    },
+    "resources/symbols/icon_vendor.tga": {
+      "sha256": "61282628766e108d0e05c1f880bf83f28cd716e8fa94fadd9c188d0331914229",
+      "bytes": 4140
+    },
+    "resources/symbols/Map.tga": {
+      "sha256": "6fefb9d8f21fe713e39cb839055b684bc1e6f778a18a2abe58c8bc73c79d2a22",
+      "bytes": 12580
+    },
+    "resources/symbols/MapCycle.tga": {
+      "sha256": "9b6990cd12508f7d658e38da7df1baeff0138262a2d2cf147baf1a0cb5273ac1",
+      "bytes": 12084
+    },
+    "resources/symbols/MapMarkAll.tga": {
+      "sha256": "f46e3737031234a4d862f40dd978a0ab2e7784f6ace77cab420b650626cf8eee",
+      "bytes": 12606
+    },
+    "resources/symbols/MapMarkOne.tga": {
+      "sha256": "f456279e6b7f6d351aef367c1916fa0f0c9c607f2087cd64f626c015fef78c59",
+      "bytes": 12576
+    },
+    "resources/symbols/mk1.tga": {
+      "sha256": "842ec18a2f0fb43bcd25d77978fedd25aac90a0700cb8ad43d9389a0aefa05af",
+      "bytes": 1388
+    },
+    "resources/symbols/mk2.tga": {
+      "sha256": "1a9381595ad5944af8e3a1b21ac81c45e3c9094c259df1c568bec9ff7ee183e1",
+      "bytes": 1388
+    },
+    "resources/symbols/mk3.tga": {
+      "sha256": "0026704defb0ed64eb3d3e89c94054d4463b76afb861126793ef40140b5b462d",
+      "bytes": 1388
+    },
+    "resources/symbols/mk4.tga": {
+      "sha256": "7c444c8567c36f0ff98ea123809df4935fa26a48de4aac50da61b44813d39a5d",
+      "bytes": 1388
+    },
+    "resources/symbols/mk5.tga": {
+      "sha256": "e98c437888754bf9cdb0ee1e42028bca63c846defe0e25640c403fdd909c3c75",
+      "bytes": 1388
+    },
+    "resources/symbols/mk6.tga": {
+      "sha256": "bb98070d0de7d85adc4ec910c89f860fda2fc5b93eb743edf74b2889b46a0242",
+      "bytes": 1388
+    },
+    "resources/symbols/mk7.tga": {
+      "sha256": "32e1893f4f59f04130f2a465bd6226c74d1f5d1084b52d39707c94e416d3d14c",
+      "bytes": 1388
+    },
+    "resources/symbols/mk8.tga": {
+      "sha256": "7c3f5c5b0a2fce05ac059dc05230e49bdc381f70eb5c5833a03def734e2d05df",
+      "bytes": 1388
+    },
+    "resources/symbols/OnOff.tga": {
+      "sha256": "f0a8b18b879ea500ea877959e9a6ddf1a57a8e18e39da53abe310f7eee6d13d1",
+      "bytes": 3426
+    },
+    "resources/symbols/quest.tga": {
+      "sha256": "747136c92aa76c452ada60b11ac23900b0a07e5c56b1ac79f54ea3f140d7d5db",
+      "bytes": 2634
+    },
+    "resources/symbols/sq.tga": {
+      "sha256": "545231142d3e23036288f1167174ddaa3358ff8a1dab0572ece03f4d9c553b04",
+      "bytes": 4140
+    },
+    "resources/symbols/vendor.tga": {
+      "sha256": "61282628766e108d0e05c1f880bf83f28cd716e8fa94fadd9c188d0331914229",
+      "bytes": 4140
+    },
+    "resources/zoneDB.lua_deDE": {
+      "sha256": "379e9538d759158a2140e9ab616d451ad5dfc2136c690223bde9d529cb27812e",
+      "bytes": 3309
+    },
+    "resources/zoneDB.lua_enGB": {
+      "sha256": "fee84810e8c25736eb036af60b705b1c836a90ece6435cf9ad8003098b9015b6",
+      "bytes": 3236
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "6453509": {
+      "tag": "1.0-beta.2",
+      "folder": "1.0-beta.2--6453509",
+      "assets": {
+        "3923919": {
+          "sha256": "5360017481a55c60d7ddaddf8974215b97721c83c4137cda49391ec2fcbb3b9c",
+          "bytes": 6284924,
+          "id": "3923919",
+          "name": "ClassicDB-1.0-beta.2-enGB.zip",
+          "url": "https://github.com/Muehe/classicdb/releases/download/1.0-beta.2/ClassicDB-1.0-beta.2-enGB.zip",
+          "path": "releases/1.0-beta.2--6453509/assets/ClassicDB-1.0-beta.2-enGB.zip"
+        },
+        "3923920": {
+          "sha256": "605461b7bdd62d11a13bd9379697160c6a4a695932265902d79aede75eec56a5",
+          "bytes": 6321502,
+          "id": "3923920",
+          "name": "ClassicDB-1.0-beta.2-deDE.zip",
+          "url": "https://github.com/Muehe/classicdb/releases/download/1.0-beta.2/ClassicDB-1.0-beta.2-deDE.zip",
+          "path": "releases/1.0-beta.2--6453509/assets/ClassicDB-1.0-beta.2-deDE.zip"
+        }
+      },
+      "source": {
+        "sha256": "6162c491fa329cf94fd4a71b7d3ae32308e13333c24a14f9add358ee3f3edec8",
+        "bytes": 11021475,
+        "path": "releases/1.0-beta.2--6453509/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Muehe/classicdb/tarball/1.0-beta.2"
+      }
+    }
+  }
+}

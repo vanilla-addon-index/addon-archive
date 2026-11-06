@@ -1,0 +1,113 @@
+{
+  "upstream": "https://octowow.st/git/OEVG/VCB",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "OEVG",
+    "repo": "VCB",
+    "name": "VCB",
+    "url": "https://octowow.st/git/OEVG/VCB",
+    "api": "https://octowow.st/git/api/v1/repos/OEVG/VCB"
+  },
+  "commit": "00cfc2be99c61d2b3f0bef5855932c130ccb8534",
+  "sourceFiles": {
+    "Fonts/DUF_Font1.ttf": {
+      "sha256": "f103d31608ff1fa1b861ff297b16a49a74441dae98ce12c506a7085c01de9a11",
+      "bytes": 135984
+    },
+    "Fonts/DUF_Font2.ttf": {
+      "sha256": "0081bb4271b791ae923afe397427742d85d502edea3636bafb5476511b9fd4f9",
+      "bytes": 68044
+    },
+    "Fonts/DUF_Font3.ttf": {
+      "sha256": "b82c53776058f291382ff7e008d4675839d2dc21eb295c66391f6fb0655d8fc0",
+      "bytes": 126364
+    },
+    "Fonts/DUF_Font4.ttf": {
+      "sha256": "1bc2089e9c6c5255a0c92415dbe1b49b58e1d4edcef7a8ed8fc07b8e93ce080d",
+      "bytes": 63844
+    },
+    "Fonts/DUF_Font5.ttf": {
+      "sha256": "bd31d0cf2e5a1a3a9074e98ebe4964c641121e9e660f31627614c4acb6c89c1c",
+      "bytes": 134188
+    },
+    "Fonts/FUTURABC.TTF": {
+      "sha256": "8c36e48aef001d0734747f17ece1600b75e645de1595ff871115b5c82864f135",
+      "bytes": 37876
+    },
+    "Fonts/FUTUXKCI.TTF": {
+      "sha256": "1df4f134bad787cc9037b5180ffe20eb6151f45f579196fd0f776c7894b41134",
+      "bytes": 39200
+    },
+    "Fonts/IX_Font_Bold_Italic.ttf": {
+      "sha256": "44053f1e07c7903a4624d0e43777198a693011daf6de5d4122442dce7454d887",
+      "bytes": 68044
+    },
+    "Fonts/IX_Font_Bold.ttf": {
+      "sha256": "68e622267253dddae00832e0ca12509f392ca0d47127280ff1531133e5fac848",
+      "bytes": 67140
+    },
+    "Fonts/Montreal_Bold.ttf": {
+      "sha256": "f681f2a494a7b944896e6d9d35830b2f9ffa7e24e81edb1a8cbb2ce92819980f",
+      "bytes": 35872
+    },
+    "Fonts/Montreal_Heavy_Bold.ttf": {
+      "sha256": "714351827092d0ed290a8625a75780636b66c66fcc91d575bb80a633ae0c4329",
+      "bytes": 35308
+    },
+    "images/dummy.tga": {
+      "sha256": "02929d21f8463c6896e12c68198548b1a6982f013d0813c493b61574b68a6be9",
+      "bytes": 16428
+    },
+    "images/icon_hover.tga": {
+      "sha256": "ccb10545e625824c3d645825cbacacbec9b8586137770012aa46d8843c3f19cc",
+      "bytes": 4140
+    },
+    "images/icon.tga": {
+      "sha256": "84408720021cf0d0bb77eab5cce2ca4b94bee0a036ff6e209395d82f0d956c9e",
+      "bytes": 4140
+    },
+    "LICENSE": {
+      "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+      "bytes": 35141
+    },
+    "localization/deDE.lua": {
+      "sha256": "6dab8bf80cfbc301694ab4bb861fca4344690b8b56f0c614d04aec55a44c60bf",
+      "bytes": 14797
+    },
+    "localization/enUS.lua": {
+      "sha256": "9b42f9ce00dbc052eddcab41aded3b1e942f157fda8f60eeb3d88ababfcaef02",
+      "bytes": 13995
+    },
+    "localization/koKR.lua": {
+      "sha256": "e5faff3483eadcaaf24f1c9c09eded11425f4eaad3078773df6e20d3708ac3d6",
+      "bytes": 16231
+    },
+    "README.md": {
+      "sha256": "569bb5633b3eb40df27cdc7e6e09d2e258a354f8fa8943d92180950a2b998e1a",
+      "bytes": 18255
+    },
+    "VCB_Buffframe.lua": {
+      "sha256": "81217d7f9d4ed2607ef16bcae8fea4e49b8c9453b24747359a3f46fd1a559223",
+      "bytes": 57143
+    },
+    "VCB_Buffframe.xml": {
+      "sha256": "38dffc2ce14adcdb8ef6956cbc2c84459752e59167715773b381fcdf1b49d23c",
+      "bytes": 11128
+    },
+    "VCB.lua": {
+      "sha256": "6c85466e6fb94f544e468cea86558d6bf984b94aac7e18fb8054e563dc8f0c3a",
+      "bytes": 193233
+    },
+    "VCB.toc": {
+      "sha256": "4474255a9d564863bbaf7699019c17704f03e336fd74a5137530b395bc3e3f41",
+      "bytes": 1288
+    },
+    "VCB.xml": {
+      "sha256": "667bfdb5c2e6ef94f51e355467741c101098855c23ee4aa97002faa5ffc740b1",
+      "bytes": 296096
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

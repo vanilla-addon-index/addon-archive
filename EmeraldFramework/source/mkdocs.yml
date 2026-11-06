@@ -1,0 +1,25 @@
+site_name: EmeraldFramework Documentation
+site_url: https://woblight.gitlab.io/EmeraldFramework
+repo_url: https://gitlab.com/woblight/EmeraldFramework
+site_description: "Documentation of EmeraldFramework for World of Warcraft (retail/classic)"
+site_author: WobLight
+theme: windmill
+ 
+nav:
+  - Home: index.md
+  - Examples:
+    - Basic Examples: Examples/basics.md
+  - API:
+    - Global Functions: API/Globals.md
+    - Classes:
+      - Core:
+        - Connection: API/Connection.md
+        - Object: API/Object.md
+        - Property: API/Property.md
+        - Signal: API/Signal.md
+      - UI:
+        - Basic:
+          - Item: API/Item.md
+          - Rectangle: API/Rectangle.md
+          - Image: API/Image.md
+          - Label: API/Label.md

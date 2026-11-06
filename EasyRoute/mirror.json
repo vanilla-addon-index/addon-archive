@@ -1,0 +1,153 @@
+{
+  "upstream": "https://octowow.st/git/stealthzi/EasyRoute",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "stealthzi",
+    "repo": "EasyRoute",
+    "name": "EasyRoute",
+    "url": "https://octowow.st/git/stealthzi/EasyRoute",
+    "api": "https://octowow.st/git/api/v1/repos/stealthzi/EasyRoute"
+  },
+  "commit": "e6e0c7069b67c9bb27b88acf409fb9100366c830",
+  "sourceFiles": {
+    "Adapt.lua": {
+      "sha256": "edc63a9242f17f59a1b40cffdc495ee1df2cecb07347b9a56715e9081eab0030",
+      "bytes": 36645
+    },
+    "Arrow.lua": {
+      "sha256": "3f79b2a4e2fc04a9a0890c92bcf54948dc559947a62bdd84289f93b3e06fa631",
+      "bytes": 10129
+    },
+    "Auto.lua": {
+      "sha256": "7b520b95e28ee2dbd01e9069b6418b04ff0759491ce6b4ed6f1c37bb861422f6",
+      "bytes": 46610
+    },
+    "Core.lua": {
+      "sha256": "41f421e9e564b3d417590c08c324925b0d600a63f49460a33843f42ba5c8bb83",
+      "bytes": 29550
+    },
+    "Data/Chains.lua": {
+      "sha256": "5b6469f9fb1128651ae923bf9f6adc9e5e443ebd7c8d0fc36e75602798d616bd",
+      "bytes": 26579
+    },
+    "Data/Guides.lua": {
+      "sha256": "e3e53e611c901197c9a677a3d401fe26b9be5bdf79f98b7689a14519a43b8427",
+      "bytes": 2370935
+    },
+    "Data/Mobs.lua": {
+      "sha256": "bc0d9807688c26eac6edfb003cf7a94233659ee10da47c9ae43c644e47d38105",
+      "bytes": 367371
+    },
+    "Data/Prices.lua": {
+      "sha256": "557922209a746cc6e74cd92decc4e991509945901b1edeb480cd65e4d8bff7dc",
+      "bytes": 20459
+    },
+    "Data/Quests.lua": {
+      "sha256": "5dfe67e4e4c7433784d48a7bfe23c95c2e65261a3c7caebc15e1d05f435e03e2",
+      "bytes": 524494
+    },
+    "Data/Ratings.lua": {
+      "sha256": "785329c7c6d7b693eed3449ea5eef7ede993a62fc070e6e3ac7f2ac525288ad8",
+      "bytes": 4357
+    },
+    "Data/Route.lua": {
+      "sha256": "1e4744dbaa63a23cc2b706ca8261dba2e889f58457566f89ff0deef0e733fde3",
+      "bytes": 191681
+    },
+    "Data/Survival.lua": {
+      "sha256": "9653c4716adb6542745ee8b86b9a4717815e97fc6134ce7c735cc63fc7a67ded",
+      "bytes": 42333
+    },
+    "Data/Zones.lua": {
+      "sha256": "f05ddae83ce3b7a8081439d6fc67cd667157a6f4b4bbe61ce9fabe9943ec3ac6",
+      "bytes": 787592
+    },
+    "Data/ZoneSizes.lua": {
+      "sha256": "6b7adc444a2d447559631d4cfffa733117f10afd0aa7357b0be65e03b1253698",
+      "bytes": 7303
+    },
+    "Director.lua": {
+      "sha256": "3933d7d8eda15b00ced1cbbe859f0d4fc617b8f88483cebb2b591f458949b0cb",
+      "bytes": 22769
+    },
+    "EasyRoute.toc": {
+      "sha256": "d5aaa1cce5bb8507a8105e06072854a191246bd8d579e9e639fb6638f53aabce",
+      "bytes": 669
+    },
+    "Grind.lua": {
+      "sha256": "390d849c7c756de38b465ca25c0c7f29319222110a4a5e6d590630eca296de5d",
+      "bytes": 37420
+    },
+    "Help.lua": {
+      "sha256": "3e897208f13b879b51345b9faf19d73d2643ca09520e1148d7c16062e8d5abc1",
+      "bytes": 12044
+    },
+    "Media/Arrow.tga": {
+      "sha256": "e0c3cf380522706fda980a9ee7346ebf3d4b0dea603e45521edc9b7e3304d948",
+      "bytes": 1048594
+    },
+    "Minimap.lua": {
+      "sha256": "01ae2242654a980fad5276b6fedd0e7ed69fc1c46961c57caf1af83940843dca",
+      "bytes": 2793
+    },
+    "Plates.lua": {
+      "sha256": "0cc2e1eb642386ea0dc697a2aa035c265b10f4c18a9eb697ef121a11a651d544",
+      "bytes": 5891
+    },
+    "QuestLog.lua": {
+      "sha256": "17ef5d054762b1365e0094df249f30cc92aab9d31ef11117402ca9d5eda35f39",
+      "bytes": 10009
+    },
+    "Rate.lua": {
+      "sha256": "bcc1398ba701ac5fbcf2e56fd8df0b2777b873f2f5ced521ca28b7453158ba81",
+      "bytes": 15953
+    },
+    "Recorder.lua": {
+      "sha256": "862ed17d616db71e46f4c6d6ae7cfbc37b2685322d65569570a0c5da6c7f2926",
+      "bytes": 38141
+    },
+    "RouteReader.lua": {
+      "sha256": "b224ea4f7ab7192b79a1bd91e4aa336da0ddcf2973b9acf3c1f2c4eb52f6dda6",
+      "bytes": 7121
+    },
+    "RouteRun.lua": {
+      "sha256": "926714c55eee180ced4411b011c554097410b4c9c1dfdb2f5c7e5658d37bd6e4",
+      "bytes": 54309
+    },
+    "Selftest.lua": {
+      "sha256": "354ea67f7cda3952422991e7ac4b5e42f234883c9e7e4d830c911fe0d7ef4c0e",
+      "bytes": 5779
+    },
+    "Settings.lua": {
+      "sha256": "83fcea059d1de8fde0276e21d586683ff53fc0c48d872ff23b35a8e6bfaa8b0a",
+      "bytes": 18019
+    },
+    "Share.lua": {
+      "sha256": "cfdf11f90986d48ef88dbb97c55de470cc2b28740b27e3cf86948bfa42270e0a",
+      "bytes": 11698
+    },
+    "Simple.lua": {
+      "sha256": "37dc1800fb68b2f8f4f9847e8826844006c5b63db6e2441284c72566662c3dcf",
+      "bytes": 22916
+    },
+    "Steps.lua": {
+      "sha256": "edfb4a3158de0889555150c43c2cc95333270e93739fd93ac68257907ee243af",
+      "bytes": 81058
+    },
+    "Tracker.lua": {
+      "sha256": "1d66ff957d22dee7a701c76571fbbc93f1ad46f832522695aa00a345a0f6f830",
+      "bytes": 31220
+    },
+    "UI.lua": {
+      "sha256": "3463cd5d388b1eabff9fce4e200cd67accf1d20dacc37659113ad3a086a08707",
+      "bytes": 16140
+    },
+    "Wizard.lua": {
+      "sha256": "bd26ed097bf04e2e250e3dc07ab4e3048b2b21d3d0f50f6243161923ccad1458",
+      "bytes": 10219
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

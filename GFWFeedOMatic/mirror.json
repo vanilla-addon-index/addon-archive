@@ -1,0 +1,65 @@
+{
+  "upstream": "https://github.com/Monteo/GFW_FeedOMatic",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Monteo",
+    "repo": "GFW_FeedOMatic",
+    "name": "GFW_FeedOMatic",
+    "url": "https://github.com/Monteo/GFW_FeedOMatic",
+    "api": "https://api.github.com/repos/Monteo/GFW_FeedOMatic"
+  },
+  "commit": "2f0586f2fc0efb14ef9d2990056e5822acd97cf8",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "7f545c6563558dacd888c131669c25934ed6b15e221479b581e61f8f07b7e182",
+      "bytes": 97
+    },
+    "FeedOMatic_Emotes.lua": {
+      "sha256": "4c8ecbea83be56e5bfb00e849afccf9e3046bdbc6d727fcfab49f73d376c1a72",
+      "bytes": 747
+    },
+    "FeedOMatic_Foods.lua": {
+      "sha256": "09ef80b6985fcce0f844c948ce00fee44c18a15d5b1eafbb6e349487bdd86a8c",
+      "bytes": 7223
+    },
+    "FeedOMatic.lua": {
+      "sha256": "1ceaf6b6ee101ac6021dc572cffd3bd2dc7862080fc4fdeea7180a661aa7389b",
+      "bytes": 57907
+    },
+    "FeedOMatic.xml": {
+      "sha256": "20044bfe7a1bf000508169e8c17895d8e629f2745dc151657fb1e50e97ac629f",
+      "bytes": 16344
+    },
+    "GFW_FeedOMatic.toc": {
+      "sha256": "1021478e666843ee31442cd16786247f0c6942e9a88ab96cb6682f4dedb4f93a",
+      "bytes": 453
+    },
+    "GFWTable.lua": {
+      "sha256": "84b0d1df761fbeee9bdc5e5f2a0741e8f7c05f97062ff46a1f58828cc4fa232b",
+      "bytes": 4976
+    },
+    "GFWTooltip.lua": {
+      "sha256": "06d9199ca36650c61004aa43321c4c6ed6593b2f592840bd13cf819387604133",
+      "bytes": 15324
+    },
+    "GFWUtils.lua": {
+      "sha256": "fb39c6e5bdb83617af5654e935b4a1604c04e591cf0576f9352b6d297c7e0176",
+      "bytes": 6235
+    },
+    "localization.lua": {
+      "sha256": "80fcee16d77d2cb4a31a7623c0744078f59ed841ca44cadbc5984ed9f539c5a1",
+      "bytes": 14781
+    },
+    "readme.txt": {
+      "sha256": "0b3276562d31ae76a3ba854b7244c6adf3aaf37d666140f1fc9a0b501e324ac5",
+      "bytes": 10365
+    },
+    "UpdateUI.xml": {
+      "sha256": "82cd1811c81e486925031dd8a168882bb8348139f5ee31623de96902bc4e3d6f",
+      "bytes": 352
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

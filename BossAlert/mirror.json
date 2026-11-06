@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/turinpt/BossAlert",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "turinpt",
+    "repo": "BossAlert",
+    "name": "BossAlert",
+    "url": "https://github.com/turinpt/BossAlert",
+    "api": "https://api.github.com/repos/turinpt/BossAlert"
+  },
+  "commit": "aead2112b0ef4792975124c384196149e8baeec7",
+  "sourceFiles": {
+    "BossAlert/BossAlert.lua": {
+      "sha256": "71ab80cca16212dc2a42f1ca3b1e27e7dd152b68a0b61f0cd6b4809c8fbdd8d2",
+      "bytes": 1729
+    },
+    "BossAlert/BossAlert.toc": {
+      "sha256": "c781fc120181a050062e9ec972a17520d47b3366ed89a93b761fa539ee956d29",
+      "bytes": 89
+    },
+    "BossAlert/BossAlert.xml": {
+      "sha256": "fb0aaee2c3c72c3d3c502d9c645c86c612920e79f60d2c6884007fbf1340fa3b",
+      "bytes": 372
+    },
+    "BossAlert/CHARGE.mp3": {
+      "sha256": "6b52e228b0d7fb7e5b6a934344ac1b0ba0bd48bf2e53151096b3ea21d0de8177",
+      "bytes": 10918
+    },
+    "BossAlert/readme.txt": {
+      "sha256": "8a66724a5d31dd8e6fe308e0432b06f540fb1b143d54382fc1938e19bff808bc",
+      "bytes": 394
+    },
+    "readme.txt": {
+      "sha256": "8a66724a5d31dd8e6fe308e0432b06f540fb1b143d54382fc1938e19bff808bc",
+      "bytes": 394
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,1233 @@
+{
+  "upstream": "https://octowow.st/git/lightblade/wow-voiceover",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "lightblade",
+    "repo": "wow-voiceover",
+    "name": "wow-voiceover",
+    "url": "https://octowow.st/git/lightblade/wow-voiceover",
+    "api": "https://octowow.st/git/api/v1/repos/lightblade/wow-voiceover"
+  },
+  "commit": "7263a5b48c105a548539312c2a948cf77629b9eb",
+  "sourceFiles": {
+    ".env.example": {
+      "sha256": "337bd7646c48e167bae0d7163dd092ba583853eee1fff3f14fc9bc69d2d21b8e",
+      "bytes": 125
+    },
+    ".gitattributes.upstream": {
+      "sha256": "4366c292a34150cb2c8567955d245b466a45fe05a6a124f92df489ce377b0c5d",
+      "bytes": 84
+    },
+    ".github/FUNDING.yml": {
+      "sha256": "965b4420125f0b4d7f1c8479264cd0b44606621116b9496e43de8459fe9b890f",
+      "bytes": 814
+    },
+    ".github/release-template.md": {
+      "sha256": "1efac5edea488389c0105a6faf074e9b2e36782a0022e3bdcca578fbf4345e13",
+      "bytes": 1663
+    },
+    ".github/release.yml": {
+      "sha256": "0edd5b81ac9a3312f72daebc115fd8bff6f8e34747a07fe250272187c19d4cdf",
+      "bytes": 31
+    },
+    ".github/workflows/release-manual.yml": {
+      "sha256": "10378a8ae2a9c0853c7505ca89de6c37c850e1da5bcc7b0f1f9ada72f84e92d6",
+      "bytes": 5785
+    },
+    ".github/workflows/release-player.yaml": {
+      "sha256": "5e68ffe2fe9c4f51f8ebd67cf6d9f75fff25f5bc51802185b7872ed509cc7a4d",
+      "bytes": 3567
+    },
+    ".gitignore.upstream": {
+      "sha256": "bac76c085535dab609fd880522b0cf8ca15a27941741a362073dd34e1a549cbc",
+      "bytes": 151
+    },
+    ".vscode/extensions.json": {
+      "sha256": "2f4a8eff660872c91b4c03d7cd09e88915b1002407e928d9c8c7214c65b4ff62",
+      "bytes": 109
+    },
+    ".vscode/launch.json": {
+      "sha256": "a0d4111f94475be148c6fe7ffc4011418abfa3f4998de6fbd67aee1beaf8597d",
+      "bytes": 519
+    },
+    "AI_VoiceOver/1.12/embeds.xml": {
+      "sha256": "6aad17ea347c71d6474b3daeac0299ad92be14c1c932fa49b9f867df15f6f713",
+      "bytes": 842
+    },
+    "AI_VoiceOver/1.12/Libs/AceAddon-3.0/AceAddon-3.0.lua": {
+      "sha256": "cd77041d76d470ce2f5acd0f7d174b85dc68d1ebd80ad14deb880d701c254199",
+      "bytes": 25876
+    },
+    "AI_VoiceOver/1.12/Libs/AceAddon-3.0/AceAddon-3.0.xml": {
+      "sha256": "b9820071648e42f9167882ef2a08602644a301cefd5d7e57c82aa36ca1439259",
+      "bytes": 211
+    },
+    "AI_VoiceOver/1.12/Libs/AceConfig-3.0/AceConfig-3.0.lua": {
+      "sha256": "8bcd61cf6a8f58f5933bf0bb12dbdf815b23ec6ce6116b196c335396d58fdc63",
+      "bytes": 2543
+    },
+    "AI_VoiceOver/1.12/Libs/AceConfig-3.0/AceConfig-3.0.xml": {
+      "sha256": "72e34a78a8f8d0377d4e62cc33d8bacff42f4871d4f04f58ebc169b92c0ae347",
+      "bytes": 473
+    },
+    "AI_VoiceOver/1.12/Libs/AceConfig-3.0/AceConfigCmd-3.0/AceConfigCmd-3.0.lua": {
+      "sha256": "e8d46471c4e7c99f13759d6c946b2c11ed0926afab3eaa9cbb1eed79f5bc04ff",
+      "bytes": 25683
+    },
+    "AI_VoiceOver/1.12/Libs/AceConfig-3.0/AceConfigCmd-3.0/AceConfigCmd-3.0.xml": {
+      "sha256": "db2f8281fbed72fe1ac5f65a4e063011f45aff4d4841b8dd2aad0d50a0813164",
+      "bytes": 215
+    },
+    "AI_VoiceOver/1.12/Libs/AceConfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua": {
+      "sha256": "4e750793e5171b315407ba8b10d24cdfe12f1eda643bccdacf777dc608980885",
+      "bytes": 60385
+    },
+    "AI_VoiceOver/1.12/Libs/AceConfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.xml": {
+      "sha256": "c10388710651ef39d7c8e5920e9ef232b8bb9abcc3eb8fbf179ba9ac1c77e413",
+      "bytes": 218
+    },
+    "AI_VoiceOver/1.12/Libs/AceConfig-3.0/AceConfigRegistry-3.0/AceConfigRegistry-3.0.lua": {
+      "sha256": "8cb0c30655f0031da161bb48c08c5ac1c3ffc8575c25cbc52d70e7fb2f045e34",
+      "bytes": 12502
+    },
+    "AI_VoiceOver/1.12/Libs/AceConfig-3.0/AceConfigRegistry-3.0/AceConfigRegistry-3.0.xml": {
+      "sha256": "9ef73f2e0598eb51564f53b71d66179768a950cce0d6602746070556e3a25fed",
+      "bytes": 220
+    },
+    "AI_VoiceOver/1.12/Libs/AceConsole-3.0/AceConsole-3.0.lua": {
+      "sha256": "e9610685c7c1dfd34bfbc3e5dda113f688b59955dc4016b4db88b91a34233ba0",
+      "bytes": 9276
+    },
+    "AI_VoiceOver/1.12/Libs/AceConsole-3.0/AceConsole-3.0.xml": {
+      "sha256": "19b0494a1f16f9d7147cf0e0f601aa4e0fbaa61490037af0e8969fabcc2f185b",
+      "bytes": 213
+    },
+    "AI_VoiceOver/1.12/Libs/AceCore-3.0/AceCore-3.0.lua": {
+      "sha256": "9763f58f27029b3e0f74a9f170a26252c65856bf4c8d364d773a1df2e8fed36a",
+      "bytes": 5937
+    },
+    "AI_VoiceOver/1.12/Libs/AceCore-3.0/AceCore-3.0.xml": {
+      "sha256": "419199448cc39d247d0d2edbeb62c47383344e65a26fb001d6571c5eed0db5e4",
+      "bytes": 210
+    },
+    "AI_VoiceOver/1.12/Libs/AceDB-3.0/AceDB-3.0.lua": {
+      "sha256": "10784e84501568dad86747b00a321b40de3ccbcf78b97b82c4be0d4b97689f44",
+      "bytes": 24896
+    },
+    "AI_VoiceOver/1.12/Libs/AceDB-3.0/AceDB-3.0.xml": {
+      "sha256": "5b3873c68d76a76fb52bbb9232d4d63b13f99cda5b3f95c86205d8022786d184",
+      "bytes": 208
+    },
+    "AI_VoiceOver/1.12/Libs/AceDBOptions-3.0/AceDBOptions-3.0.lua": {
+      "sha256": "fe014783ce3e6c2e1452f9c9a50a231e7e767ebbf2c45a58422a87610b7d0956",
+      "bytes": 21195
+    },
+    "AI_VoiceOver/1.12/Libs/AceDBOptions-3.0/AceDBOptions-3.0.xml": {
+      "sha256": "37caa69558e131e0f13fad3a8cc05c10c3927446e35cf251ff255349b1bcf060",
+      "bytes": 215
+    },
+    "AI_VoiceOver/1.12/Libs/AceEvent-3.0/AceEvent-3.0.lua": {
+      "sha256": "a0f854235f93d47582e5aa30a962018fedcd7f6ff5ee0c917854924a0676fed4",
+      "bytes": 4921
+    },
+    "AI_VoiceOver/1.12/Libs/AceEvent-3.0/AceEvent-3.0.xml": {
+      "sha256": "9a9c0b14a8eda4509d45422cb1ac065ba9165879ef291816f1689bf6be3bcbc4",
+      "bytes": 211
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/AceGUI-3.0.lua": {
+      "sha256": "85957e83cf422c0c1f772082207a385cb3feaaa33c6a187b0c7dce5bf3a6b360",
+      "bytes": 23502
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/AceGUI-3.0.xml": {
+      "sha256": "46a31ada5eee3425efcfc9fd06a84fba9ffb080e76710400342b51b8796921cb",
+      "bytes": 249
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIContainer-BlizOptionsGroup.lua": {
+      "sha256": "d1106ed9a540befa386270e835df5a5f1d7b59fea59918a2932868c1fa2a2e27",
+      "bytes": 3572
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIContainer-DropDownGroup.lua": {
+      "sha256": "db42875db6aaad9485139db4106b9ef6f1dc4dcddd9c4975f30e4c9b52d359a6",
+      "bytes": 4523
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIContainer-Frame.lua": {
+      "sha256": "2823affb1a044b181f945796a2a74d7d384b5136505da47396fd03659192e66b",
+      "bytes": 8827
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIContainer-InlineGroup.lua": {
+      "sha256": "227c929c04640e8fc805128b7d7ed76ab3544c8e43657afedd3c3b08dc65e7d8",
+      "bytes": 2966
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIContainer-ScrollFrame.lua": {
+      "sha256": "d0b4b2ade60dc1c2dfce0ce699b8114deae9a4a3a72118bdf24cfa8a47e086a0",
+      "bytes": 6688
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIContainer-SimpleGroup.lua": {
+      "sha256": "5d2eae24f6c920048803344b9f6071237a95a31cad8e4b4e6e96491553718dec",
+      "bytes": 1898
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIContainer-TabGroup.lua": {
+      "sha256": "75c069824efdeaaf12c5db704eb27d170a2538f5b18f5f75f9d4ece1959d66db",
+      "bytes": 11276
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIContainer-TreeGroup.lua": {
+      "sha256": "6bf7212e5f1d3074dc3c07223d8a727b90ab91bd4e8cd238858843cf8ef7bd0b",
+      "bytes": 21606
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIContainer-Window.lua": {
+      "sha256": "645a3782c4950852a99a852326312d1a4a1fbbddb88f73c659afb34be526c509",
+      "bytes": 9690
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIWidget-Button.lua": {
+      "sha256": "8d76121d8ee1e3c908616f738c66fa760e4adefcc5e9945daab4634a6019fb34",
+      "bytes": 2801
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIWidget-CheckBox.lua": {
+      "sha256": "158bdb67d89e9f83e58c03bb4fe1d54bc891fb10b8a105ace6794a94be4d9493",
+      "bytes": 7913
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIWidget-ColorPicker.lua": {
+      "sha256": "5b1d2d19e9b4445f8cefc22bb7c8773e44c084c9dfc577112f716bee847fda7a",
+      "bytes": 5367
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIWidget-DropDown-Items.lua": {
+      "sha256": "8e0e613e59ed23212a4f04c61534dce88b57e3e5112141acdd4a5bd444820e32",
+      "bytes": 10159
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIWidget-DropDown.lua": {
+      "sha256": "52f63f301861a1c8c26ad6a9a2450aa426fdefe533139fa1f5bb0844c7b12340",
+      "bytes": 18293
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIWidget-EditBox.lua": {
+      "sha256": "cef72990394b273eebe5d755637b84048b5765f0ee9d6981a2f429eeb3c5bb89",
+      "bytes": 10792
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIWidget-Heading.lua": {
+      "sha256": "4d434b42a09c600c36cd0d2a92342a650b02d2146e7aa12d6fa4b5bdb30709fa",
+      "bytes": 2224
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIWidget-Icon.lua": {
+      "sha256": "2013171ca135bd46aa0b556a12989bb15cef5e9db976090337f5e93339d1568c",
+      "bytes": 3819
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIWidget-InteractiveLabel.lua": {
+      "sha256": "fef392a477e42f455f61277dfbd19a01eb7250449e5e75f8a4ce4eb6e54590ae",
+      "bytes": 2837
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIWidget-Keybinding.lua": {
+      "sha256": "6a3b0ba2465ea666d3fa02c300c27bee3d8c6378f9b7b756fd4196a1b08acbf5",
+      "bytes": 7356
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIWidget-Label.lua": {
+      "sha256": "72b5e2440993abe8e5ae7ce7bbf934480cba2305b175293cfa9434a9a4011efb",
+      "bytes": 4443
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIWidget-MultiLineEditBox.lua": {
+      "sha256": "d269e922f352724ec55d04c2403037fc6ab2aaff5ae0fa7b4472214a1b516e79",
+      "bytes": 14069
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/AceGUIWidget-Slider.lua": {
+      "sha256": "e60a6758813c7e848122ca888eeb875fb5d9a0c508794c25f3080feea96a16bd",
+      "bytes": 8126
+    },
+    "AI_VoiceOver/1.12/Libs/AceGUI-3.0/widgets/widgets.xml": {
+      "sha256": "bebbe2b2ca5b35e701307b498a8d717e6e4c822a1316e8c720784c6e974f2575",
+      "bytes": 1242
+    },
+    "AI_VoiceOver/1.12/Libs/AceTimer-3.0/AceTimer-3.0.lua": {
+      "sha256": "167138bfb8fb98375ba850b2995112775856fdb9052f7c84c7e8228a2bb5cf7b",
+      "bytes": 12690
+    },
+    "AI_VoiceOver/1.12/Libs/AceTimer-3.0/AceTimer-3.0.xml": {
+      "sha256": "c6f5ceece38bd9705e0371443ee16568c547b49a71ac2008ad648c079d4f3446",
+      "bytes": 211
+    },
+    "AI_VoiceOver/1.12/Libs/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "75cc380a1b0035a2d3de506ed269fbec951be6219e994d702067ed3bc95dcd64",
+      "bytes": 9742
+    },
+    "AI_VoiceOver/1.12/Libs/CallbackHandler-1.0/CallbackHandler-1.0.xml": {
+      "sha256": "9310765c5310a395652e60a04f378e836785deb6f0b7181a448c74751d6f0185",
+      "bytes": 218
+    },
+    "AI_VoiceOver/1.12/Libs/LibDataBroker-1.1/LibDataBroker-1.1.lua": {
+      "sha256": "f3d4758f2060215492c9764b1d7dc2a336826d4cd253cd54ff9ff7c6d78f04e2",
+      "bytes": 3139
+    },
+    "AI_VoiceOver/1.12/Libs/LibDataBroker-1.1/README.textile": {
+      "sha256": "1824b7091f7535e822d3fc0138013e0370eb894efcf7cc2ef1babb81f7997fcf",
+      "bytes": 1037
+    },
+    "AI_VoiceOver/1.12/Libs/LibDBIcon-1.0/LibDBIcon-1.0.lua": {
+      "sha256": "8f45e2c8b4e4e3c9f66fbc8d4bde52728b73a431d30b0d10f826d5232158fb3d",
+      "bytes": 16276
+    },
+    "AI_VoiceOver/1.12/Libs/LibDBIcon-1.0/UI-Minimap-Background.blp": {
+      "sha256": "1d5cbc48f403d9a847f96d68ba039dde7a74927d199c50f16c7ad1f4c9e3cbe6",
+      "bytes": 2564
+    },
+    "AI_VoiceOver/1.12/Libs/LibStub/LibStub.lua": {
+      "sha256": "d024dc95604e228e94a4406c2582a0ae571d829be78cd81658dcd5d44ad0eaef",
+      "bytes": 1462
+    },
+    "AI_VoiceOver/2.4.3/embeds.xml": {
+      "sha256": "0ae3ab2815083439331742e21165bf485038186c1ea84cf99f2d8883e6817b05",
+      "bytes": 784
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceAddon-3.0/AceAddon-3.0.lua": {
+      "sha256": "d9fb088bf8155aae2f5cbf1a958e3308cd63926a8b30df1ef2b171b05cdc3fbd",
+      "bytes": 25710
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceAddon-3.0/AceAddon-3.0.xml": {
+      "sha256": "b9820071648e42f9167882ef2a08602644a301cefd5d7e57c82aa36ca1439259",
+      "bytes": 211
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceConfig-3.0/AceConfig-3.0.lua": {
+      "sha256": "7d78af857881db77167a644d2978b99b3ca83b2a23403dca2bae175089aa09d4",
+      "bytes": 2094
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceConfig-3.0/AceConfig-3.0.xml": {
+      "sha256": "72e34a78a8f8d0377d4e62cc33d8bacff42f4871d4f04f58ebc169b92c0ae347",
+      "bytes": 473
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceConfig-3.0/AceConfigCmd-3.0/AceConfigCmd-3.0.lua": {
+      "sha256": "c38fd096b19305c3d1f83e95b6c583d5a6526e7a7c3fa206096cf0b855817021",
+      "bytes": 23282
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceConfig-3.0/AceConfigCmd-3.0/AceConfigCmd-3.0.xml": {
+      "sha256": "db2f8281fbed72fe1ac5f65a4e063011f45aff4d4841b8dd2aad0d50a0813164",
+      "bytes": 215
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceConfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua": {
+      "sha256": "3b0e79d9de3360a19da0bd7c9c24ffdcfe561f55a6fc2b9364c26a84f67aca00",
+      "bytes": 55182
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceConfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.xml": {
+      "sha256": "c10388710651ef39d7c8e5920e9ef232b8bb9abcc3eb8fbf179ba9ac1c77e413",
+      "bytes": 218
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceConfig-3.0/AceConfigRegistry-3.0/AceConfigRegistry-3.0.lua": {
+      "sha256": "c76d4d3559622764481975504aeed1396981f84ba4088f8ed8a7ae32b7d2e62a",
+      "bytes": 11907
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceConfig-3.0/AceConfigRegistry-3.0/AceConfigRegistry-3.0.xml": {
+      "sha256": "9ef73f2e0598eb51564f53b71d66179768a950cce0d6602746070556e3a25fed",
+      "bytes": 220
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceConsole-3.0/AceConsole-3.0.lua": {
+      "sha256": "5e5f3df1e23a43a632f232f375a5746062de6b4465e2d7281ade61a536b2fa83",
+      "bytes": 8339
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceConsole-3.0/AceConsole-3.0.xml": {
+      "sha256": "19b0494a1f16f9d7147cf0e0f601aa4e0fbaa61490037af0e8969fabcc2f185b",
+      "bytes": 213
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceDB-3.0/AceDB-3.0.lua": {
+      "sha256": "5f002bd3a03f6eacbb9dd99209dd78f7ea62a087b182bc2eb8447e5f22aa3851",
+      "bytes": 24582
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceDB-3.0/AceDB-3.0.xml": {
+      "sha256": "5b3873c68d76a76fb52bbb9232d4d63b13f99cda5b3f95c86205d8022786d184",
+      "bytes": 208
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceDBOptions-3.0/AceDBOptions-3.0.lua": {
+      "sha256": "8f545cefb70ce63e3b999a778ab33af0f4dab47ceb597323c0752bfe85d6e697",
+      "bytes": 20763
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceDBOptions-3.0/AceDBOptions-3.0.xml": {
+      "sha256": "37caa69558e131e0f13fad3a8cc05c10c3927446e35cf251ff255349b1bcf060",
+      "bytes": 215
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceEvent-3.0/AceEvent-3.0.lua": {
+      "sha256": "ffddeb6f1d82ce271eb316dff0b0308037325d6c75e7eee95f681bfdbc94b580",
+      "bytes": 4767
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceEvent-3.0/AceEvent-3.0.xml": {
+      "sha256": "9a9c0b14a8eda4509d45422cb1ac065ba9165879ef291816f1689bf6be3bcbc4",
+      "bytes": 211
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/AceGUI-3.0.lua": {
+      "sha256": "bae4b4f5801a0fdd5f706d99172d20232d4895ebe3c846c9061a60fe0f7e5bb5",
+      "bytes": 23482
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/AceGUI-3.0.xml": {
+      "sha256": "e54bd15393700719dbec2b1b433e570a3f364fa5e927f9227f63037eb16ad522",
+      "bytes": 1451
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIContainer-BlizOptionsGroup.lua": {
+      "sha256": "140a2d986173e93d563265c89822c99f4d3916da0154811591e4b66498ea1ffa",
+      "bytes": 3574
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIContainer-DropDownGroup.lua": {
+      "sha256": "1084e44f3e6750c9d68e5800f2e0c918ae8a6d5bf863c9aa18357abf193dd6e1",
+      "bytes": 4514
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIContainer-Frame.lua": {
+      "sha256": "0a89e84f9f9857d24d3c039b0db7fd9ae26bec2cf1fb7d53ffa30baf4e290ddf",
+      "bytes": 9377
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIContainer-InlineGroup.lua": {
+      "sha256": "227c929c04640e8fc805128b7d7ed76ab3544c8e43657afedd3c3b08dc65e7d8",
+      "bytes": 2966
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIContainer-ScrollFrame.lua": {
+      "sha256": "09f64c9480ab255816ef8b8d1ccfa1821da2e7e8e8de04cdd77f1f4a0246aad6",
+      "bytes": 6908
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIContainer-SimpleGroup.lua": {
+      "sha256": "d65968489c0fa5749d2e35be69c60d0dd7969189aa14a9031f0654715625d214",
+      "bytes": 1890
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIContainer-TabGroup.lua": {
+      "sha256": "162612eaa5505c42b9dcc6c6f5bdcdb1a07f26b58bdc5262dd6cb128ad097df5",
+      "bytes": 10275
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIContainer-TreeGroup.lua": {
+      "sha256": "a65c391af043a8b5164e7636ee4e18fb544f3716ce47b0e19a48d9257e2def63",
+      "bytes": 19633
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIContainer-Window.lua": {
+      "sha256": "3f18cdda8b17c1eaabf0875df2911bdcf8d691c8838ad8582c283fe46b916d55",
+      "bytes": 9771
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIWidget-Button.lua": {
+      "sha256": "8cc23553d8d16b74a110cf0f1494b9e7fb0aefbd9fc958b0f81117c413682a6c",
+      "bytes": 2730
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIWidget-CheckBox.lua": {
+      "sha256": "44e05788be450eb29ac6076608f429e5241c7c7dfb316f2f2ab712ad0c75564a",
+      "bytes": 7913
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIWidget-ColorPicker.lua": {
+      "sha256": "66145eac631cae180672de0a06187563e9cc9b2662c50782c08abcba0e08184e",
+      "bytes": 5929
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIWidget-DropDown-Items.lua": {
+      "sha256": "fa591325ece5f2fdc990fdc058ddba25c2f2c267cd28fa40d8351d56acbb5c31",
+      "bytes": 10510
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIWidget-DropDown.lua": {
+      "sha256": "68fc284a38953da4f2cf457c47feb76c868d394c71789cce0cd17b41afcbc47f",
+      "bytes": 19360
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIWidget-EditBox.lua": {
+      "sha256": "85301a82c524b9cde6461739a5fcdc8ba7703360c379eaa6fc03068dd6bc962f",
+      "bytes": 7255
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIWidget-Heading.lua": {
+      "sha256": "4a75e4316320b15903682c058d77250636e6e19d7a2d6c43ef7d79e3c35446b1",
+      "bytes": 2216
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIWidget-Icon.lua": {
+      "sha256": "ddbdaab96777118d24bc564ae31d5d4d5aa8be9f0d31e334b40af656d42b0453",
+      "bytes": 3698
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIWidget-InteractiveLabel.lua": {
+      "sha256": "e47543663cc5c4272ef6fb6d356fb63a49f6b101d3cc0501e769ac6615442cce",
+      "bytes": 2577
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIWidget-Keybinding.lua": {
+      "sha256": "9c3dcdfd50a4d0f3b367c3350df557a6b360faae4097b5fabe1f0c8a1510f7a7",
+      "bytes": 6807
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIWidget-Label.lua": {
+      "sha256": "4b07ac6de4881a061cefe07928423413e5f4a607264b130b1120f2f4958c6d24",
+      "bytes": 4748
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIWidget-MultiLineEditBox.lua": {
+      "sha256": "8ae182c586e01557a42b299a5e1596f81c67479285870370570547554fc8f96e",
+      "bytes": 10787
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceGUI-3.0/widgets/AceGUIWidget-Slider.lua": {
+      "sha256": "b21f50352ce6a894896baa36d47c052b2c29e6c0b40254953c1e432118613dc4",
+      "bytes": 8074
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceTimer-3.0/AceTimer-3.0.lua": {
+      "sha256": "28674b67c5d8a3ffc1c3585345a769f84af2500434b7c2723d16ba508ee28d6b",
+      "bytes": 17559
+    },
+    "AI_VoiceOver/2.4.3/Libs/AceTimer-3.0/AceTimer-3.0.xml": {
+      "sha256": "c6f5ceece38bd9705e0371443ee16568c547b49a71ac2008ad648c079d4f3446",
+      "bytes": 211
+    },
+    "AI_VoiceOver/2.4.3/Libs/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "9bfc967cb5cdea017c34cb80f1300a3fe8a6156ecf2483ef1c6718af6ae1e568",
+      "bytes": 8961
+    },
+    "AI_VoiceOver/2.4.3/Libs/CallbackHandler-1.0/CallbackHandler-1.0.xml": {
+      "sha256": "9310765c5310a395652e60a04f378e836785deb6f0b7181a448c74751d6f0185",
+      "bytes": 218
+    },
+    "AI_VoiceOver/2.4.3/Libs/LibDataBroker-1.1/LibDataBroker-1.1.lua": {
+      "sha256": "f3d4758f2060215492c9764b1d7dc2a336826d4cd253cd54ff9ff7c6d78f04e2",
+      "bytes": 3139
+    },
+    "AI_VoiceOver/2.4.3/Libs/LibDataBroker-1.1/README.textile": {
+      "sha256": "1824b7091f7535e822d3fc0138013e0370eb894efcf7cc2ef1babb81f7997fcf",
+      "bytes": 1037
+    },
+    "AI_VoiceOver/2.4.3/Libs/LibDBIcon-1.0/LibDBIcon-1.0.lua": {
+      "sha256": "3e42f2261a0e9bbd30958ff771943615bc1fe652baedc0460c013bd295f10bb2",
+      "bytes": 15790
+    },
+    "AI_VoiceOver/2.4.3/Libs/LibStub/LibStub.lua": {
+      "sha256": "a59b4c745c1fdb1b5ad22a86394814afecf8549516c18f6a16353960646b47f8",
+      "bytes": 1367
+    },
+    "AI_VoiceOver/3.3.5/embeds.xml": {
+      "sha256": "0ae3ab2815083439331742e21165bf485038186c1ea84cf99f2d8883e6817b05",
+      "bytes": 784
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceAddon-3.0/AceAddon-3.0.lua": {
+      "sha256": "ac4ad38324cc6f55fa98a9e9af70417ceca7aae705f7d7e5fd4c3682300c8254",
+      "bytes": 24779
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceAddon-3.0/AceAddon-3.0.xml": {
+      "sha256": "b9820071648e42f9167882ef2a08602644a301cefd5d7e57c82aa36ca1439259",
+      "bytes": 211
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceConfig-3.0/AceConfig-3.0.lua": {
+      "sha256": "dc1339aac5beab45c8309e791c0d30f1630af6f667bb238647d4574c343921ec",
+      "bytes": 2188
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceConfig-3.0/AceConfig-3.0.xml": {
+      "sha256": "72e34a78a8f8d0377d4e62cc33d8bacff42f4871d4f04f58ebc169b92c0ae347",
+      "bytes": 473
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceConfig-3.0/AceConfigCmd-3.0/AceConfigCmd-3.0.lua": {
+      "sha256": "58b6c7ecd397abe2f8d7f40979f2f41c44e636fe1b6961ed54f4698a283c73cb",
+      "bytes": 23382
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceConfig-3.0/AceConfigCmd-3.0/AceConfigCmd-3.0.xml": {
+      "sha256": "db2f8281fbed72fe1ac5f65a4e063011f45aff4d4841b8dd2aad0d50a0813164",
+      "bytes": 215
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceConfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua": {
+      "sha256": "d15e6786965398993ffce1e22b3b18e3419f847fe665809e7e3b538d63448184",
+      "bytes": 58091
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceConfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.xml": {
+      "sha256": "c10388710651ef39d7c8e5920e9ef232b8bb9abcc3eb8fbf179ba9ac1c77e413",
+      "bytes": 218
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceConfig-3.0/AceConfigRegistry-3.0/AceConfigRegistry-3.0.lua": {
+      "sha256": "b3518ac98db6b391bb203695c4eeba1093c7c3eeb821c81f6c6a06c40f188cb2",
+      "bytes": 12722
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceConfig-3.0/AceConfigRegistry-3.0/AceConfigRegistry-3.0.xml": {
+      "sha256": "9ef73f2e0598eb51564f53b71d66179768a950cce0d6602746070556e3a25fed",
+      "bytes": 220
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceConsole-3.0/AceConsole-3.0.lua": {
+      "sha256": "6a205ae4b28a69438c38e3f79f1fa9b0846ee83125b09ebb9a80b4125113fd08",
+      "bytes": 8249
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceConsole-3.0/AceConsole-3.0.xml": {
+      "sha256": "19b0494a1f16f9d7147cf0e0f601aa4e0fbaa61490037af0e8969fabcc2f185b",
+      "bytes": 213
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceDB-3.0/AceDB-3.0.lua": {
+      "sha256": "a166c49eaca36ed7b6eb54575f91059a79a3b488ef1197449019b82555ee2b64",
+      "bytes": 24116
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceDB-3.0/AceDB-3.0.xml": {
+      "sha256": "5b3873c68d76a76fb52bbb9232d4d63b13f99cda5b3f95c86205d8022786d184",
+      "bytes": 208
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceDBOptions-3.0/AceDBOptions-3.0.lua": {
+      "sha256": "821f7cdae33b8560b48f70341db4f983c795566003e69116ad0e2df5ff5bc4bb",
+      "bytes": 18501
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceDBOptions-3.0/AceDBOptions-3.0.xml": {
+      "sha256": "37caa69558e131e0f13fad3a8cc05c10c3927446e35cf251ff255349b1bcf060",
+      "bytes": 215
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceEvent-3.0/AceEvent-3.0.lua": {
+      "sha256": "3b67a95becba4a4e2ff9763aed2751a25ee03c5293d19f4e8394fbf111339806",
+      "bytes": 4701
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceEvent-3.0/AceEvent-3.0.xml": {
+      "sha256": "9a9c0b14a8eda4509d45422cb1ac065ba9165879ef291816f1689bf6be3bcbc4",
+      "bytes": 211
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/AceGUI-3.0.lua": {
+      "sha256": "90514c24d80ca68c5baf53e61092853926af76efb1247bf716ee07739954a49b",
+      "bytes": 31006
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/AceGUI-3.0.xml": {
+      "sha256": "e54bd15393700719dbec2b1b433e570a3f364fa5e927f9227f63037eb16ad522",
+      "bytes": 1451
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIContainer-BlizOptionsGroup.lua": {
+      "sha256": "140a2d986173e93d563265c89822c99f4d3916da0154811591e4b66498ea1ffa",
+      "bytes": 3574
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIContainer-DropDownGroup.lua": {
+      "sha256": "1084e44f3e6750c9d68e5800f2e0c918ae8a6d5bf863c9aa18357abf193dd6e1",
+      "bytes": 4514
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIContainer-Frame.lua": {
+      "sha256": "87898aa2a67e099539818e4d1fe9ce3d15daa7b5b0c0136560e8515134212810",
+      "bytes": 9325
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIContainer-InlineGroup.lua": {
+      "sha256": "227c929c04640e8fc805128b7d7ed76ab3544c8e43657afedd3c3b08dc65e7d8",
+      "bytes": 2966
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIContainer-ScrollFrame.lua": {
+      "sha256": "90aa1a921ceb1d6cbd2febdcd6e6e6b79f997caf9bda72644143147f0af9da49",
+      "bytes": 6906
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIContainer-SimpleGroup.lua": {
+      "sha256": "d65968489c0fa5749d2e35be69c60d0dd7969189aa14a9031f0654715625d214",
+      "bytes": 1890
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIContainer-TabGroup.lua": {
+      "sha256": "f2fe9b06a0af98e79287c346d65c19fe149456f5c260746ff3455b35a404a91f",
+      "bytes": 10211
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIContainer-TreeGroup.lua": {
+      "sha256": "e0fa75158fcbd0a0801a408d61ecc258bf1664ce68159d9335a5a0266abd128d",
+      "bytes": 19691
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIContainer-Window.lua": {
+      "sha256": "3f18cdda8b17c1eaabf0875df2911bdcf8d691c8838ad8582c283fe46b916d55",
+      "bytes": 9771
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIWidget-Button.lua": {
+      "sha256": "c7814b5e1bf4a624df69619703a9750347f9242ae2b6d9885ffdd0e5244f5bb9",
+      "bytes": 2731
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIWidget-CheckBox.lua": {
+      "sha256": "a088026c8baefe403e595a1270d692b4e48efaaff1f84a935809c382443f83c4",
+      "bytes": 7970
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIWidget-ColorPicker.lua": {
+      "sha256": "1734ca29618c24239cc122feef569128389e3d16a40bc34d7fb00a3e49ae7057",
+      "bytes": 5461
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIWidget-DropDown-Items.lua": {
+      "sha256": "04d62c0e43cf5df33e2d67402b172b61bb0097f43efba296898c4e4d912a7b14",
+      "bytes": 10440
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIWidget-DropDown.lua": {
+      "sha256": "116d45dd918a932aa4f1d7eb9f4933746747fde14fe4d2473dc30306b5097488",
+      "bytes": 18847
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIWidget-EditBox.lua": {
+      "sha256": "c2917cf26dd26536f063374ff3766c065901c4c30763bb008389934190e6ce8d",
+      "bytes": 7144
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIWidget-Heading.lua": {
+      "sha256": "4a75e4316320b15903682c058d77250636e6e19d7a2d6c43ef7d79e3c35446b1",
+      "bytes": 2216
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIWidget-Icon.lua": {
+      "sha256": "ddbdaab96777118d24bc564ae31d5d4d5aa8be9f0d31e334b40af656d42b0453",
+      "bytes": 3698
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIWidget-InteractiveLabel.lua": {
+      "sha256": "e47543663cc5c4272ef6fb6d356fb63a49f6b101d3cc0501e769ac6615442cce",
+      "bytes": 2577
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIWidget-Keybinding.lua": {
+      "sha256": "9c3dcdfd50a4d0f3b367c3350df557a6b360faae4097b5fabe1f0c8a1510f7a7",
+      "bytes": 6807
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIWidget-Label.lua": {
+      "sha256": "4b07ac6de4881a061cefe07928423413e5f4a607264b130b1120f2f4958c6d24",
+      "bytes": 4748
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIWidget-MultiLineEditBox.lua": {
+      "sha256": "fad0b5c6d82c01c79c80fda7505c1491c84a5fde2f9472d5440d4a69166c63b9",
+      "bytes": 10675
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceGUI-3.0/widgets/AceGUIWidget-Slider.lua": {
+      "sha256": "8925b5b230f85766b4be45ca5e260b99da15c6935e4712a15a676fc9e65fe025",
+      "bytes": 7947
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceTimer-3.0/AceTimer-3.0.lua": {
+      "sha256": "6f6b8cbb990c52a477cd0072016fa9be226b5de4fa271304680d8e63c727bb24",
+      "bytes": 10866
+    },
+    "AI_VoiceOver/3.3.5/Libs/AceTimer-3.0/AceTimer-3.0.xml": {
+      "sha256": "c6f5ceece38bd9705e0371443ee16568c547b49a71ac2008ad648c079d4f3446",
+      "bytes": 211
+    },
+    "AI_VoiceOver/3.3.5/Libs/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "46c4676a11167cb7049dbedb5632b6b480731908695adad5c8d8b186f6b0447f",
+      "bytes": 8796
+    },
+    "AI_VoiceOver/3.3.5/Libs/CallbackHandler-1.0/CallbackHandler-1.0.xml": {
+      "sha256": "9310765c5310a395652e60a04f378e836785deb6f0b7181a448c74751d6f0185",
+      "bytes": 218
+    },
+    "AI_VoiceOver/3.3.5/Libs/LibDataBroker-1.1/LibDataBroker-1.1.lua": {
+      "sha256": "f3d4758f2060215492c9764b1d7dc2a336826d4cd253cd54ff9ff7c6d78f04e2",
+      "bytes": 3139
+    },
+    "AI_VoiceOver/3.3.5/Libs/LibDataBroker-1.1/README.textile": {
+      "sha256": "1824b7091f7535e822d3fc0138013e0370eb894efcf7cc2ef1babb81f7997fcf",
+      "bytes": 1037
+    },
+    "AI_VoiceOver/3.3.5/Libs/LibDBIcon-1.0/LibDBIcon-1.0.lua": {
+      "sha256": "92374df0cfbfafa95ffa5f16e657ad38cbcd9c0bf45e1f11ed689dfdd1e4f8cb",
+      "bytes": 15246
+    },
+    "AI_VoiceOver/3.3.5/Libs/LibStub/LibStub.lua": {
+      "sha256": "f378dd3e36f8c6cf6e72bdb79a41171649f59b07d6489ff3e7dab94403a2e9b1",
+      "bytes": 2190
+    },
+    "AI_VoiceOver/addon.xml": {
+      "sha256": "4b7c7cd9fe3fddcc13205e209ab034da5192d585eca4d87d9c1cc4d38e5388ce",
+      "bytes": 554
+    },
+    "AI_VoiceOver/AI_VoiceOver_1.12.toc": {
+      "sha256": "741619a2cf52f626dfa52e5126376257f5dfefb41bbffe5a63e36c95b4c07b2e",
+      "bytes": 175
+    },
+    "AI_VoiceOver/AI_VoiceOver_2.4.3.toc": {
+      "sha256": "f5bd1a6bc645fed2f4f5fce18e009314f8fddf478c10ad4ab90cc1a9f7fec195",
+      "bytes": 176
+    },
+    "AI_VoiceOver/AI_VoiceOver_3.3.5.toc": {
+      "sha256": "76967c379ba6d3fe7384da432225a71fc6d69a83931ae435aeeb635b79556453",
+      "bytes": 176
+    },
+    "AI_VoiceOver/AI_VoiceOver_Mainline.toc": {
+      "sha256": "e2fb4915ea896ec468d3c17637a517330a7eff694d399da64c7868b73bc24a6e",
+      "bytes": 171
+    },
+    "AI_VoiceOver/AI_VoiceOver_TBC.toc": {
+      "sha256": "8710d8f3f4499a986f26e73927a8a6b8cb98215fc039e69157e175eafb2a84e3",
+      "bytes": 170
+    },
+    "AI_VoiceOver/AI_VoiceOver_Vanilla.toc": {
+      "sha256": "8913fe3b3ff49376daaec241a8f69689c165050480cbecf40e562140ddf5669c",
+      "bytes": 170
+    },
+    "AI_VoiceOver/AI_VoiceOver_Wrath.toc": {
+      "sha256": "6cbeb241641df73ea90123cabf03af377c03e15b67b46b150fe7bd72e0245479",
+      "bytes": 170
+    },
+    "AI_VoiceOver/Compatibility.lua": {
+      "sha256": "8faf2a0f10e063ba19fada66cb1c40c18fbde9531b344b025530669929e3fc01",
+      "bytes": 44335
+    },
+    "AI_VoiceOver/DataModules.lua": {
+      "sha256": "f52ff56429b0e45f1570d44c3174163cccdd8b4ce2fd90c1029e3e087fd52958",
+      "bytes": 21944
+    },
+    "AI_VoiceOver/Debug.lua": {
+      "sha256": "08417d080419b767643c1ae1144e3c758b4847f93c85ea88f00842c35dcc3aa1",
+      "bytes": 467
+    },
+    "AI_VoiceOver/embeds.xml": {
+      "sha256": "0ae3ab2815083439331742e21165bf485038186c1ea84cf99f2d8883e6817b05",
+      "bytes": 784
+    },
+    "AI_VoiceOver/Enums.lua": {
+      "sha256": "c04345dd2892d596ebd70742c296cd6c178d1a392a0bedd136485e09602c2059",
+      "bytes": 2590
+    },
+    "AI_VoiceOver/Environment.lua": {
+      "sha256": "6ad8321535d044ea48c3612bf266f14617eeb2798d6e739881562ecdfd1fd68b",
+      "bytes": 1107
+    },
+    "AI_VoiceOver/FuzzySearch.lua": {
+      "sha256": "f6fe00fb3e094467ac4e0e5ca3df16d340f325e6f22b2b052eec17480d4845ea",
+      "bytes": 1079
+    },
+    "AI_VoiceOver/Libs/AceAddon-3.0/AceAddon-3.0.lua": {
+      "sha256": "9aaec858b04820b597155b040dd76ef0d6e8e4f0707e54630001bcfe68497307",
+      "bytes": 25090
+    },
+    "AI_VoiceOver/Libs/AceAddon-3.0/AceAddon-3.0.xml": {
+      "sha256": "611d8d8150de656a7ac5311a4bfe63a1e57a8cf48d636d399a6a821ef6238f98",
+      "bytes": 212
+    },
+    "AI_VoiceOver/Libs/AceBucket-3.0/AceBucket-3.0.lua": {
+      "sha256": "2d8e04f0c3e50753549b39eabd52dd4acfd0db5489fc9290bccea7e16d9f5f64",
+      "bytes": 9477
+    },
+    "AI_VoiceOver/Libs/AceBucket-3.0/AceBucket-3.0.xml": {
+      "sha256": "573057107460ce4fa96b96c58b6b6f4db89666f35dee18f524f5b047f1020aca",
+      "bytes": 213
+    },
+    "AI_VoiceOver/Libs/AceComm-3.0/AceComm-3.0.lua": {
+      "sha256": "aba2e0dbc50f151da02f71e93d04c67288c28daead424742ecaeb425ba3ee45b",
+      "bytes": 10738
+    },
+    "AI_VoiceOver/Libs/AceComm-3.0/AceComm-3.0.xml": {
+      "sha256": "6466474a164193282764c0532cb25305a4bcaf2d03ad947ac51e2b91d6e9e0e2",
+      "bytes": 249
+    },
+    "AI_VoiceOver/Libs/AceComm-3.0/ChatThrottleLib.lua": {
+      "sha256": "2dec1f7b9e7650a136047d0f969f6909112ca70074f75da81275eeb0d5ab98e1",
+      "bytes": 22146
+    },
+    "AI_VoiceOver/Libs/AceConfig-3.0/AceConfig-3.0.lua": {
+      "sha256": "dc1339aac5beab45c8309e791c0d30f1630af6f667bb238647d4574c343921ec",
+      "bytes": 2188
+    },
+    "AI_VoiceOver/Libs/AceConfig-3.0/AceConfig-3.0.xml": {
+      "sha256": "95640308a21beeaf87eccf4d92424eb4de63b92baed51f8e43533156350f629b",
+      "bytes": 474
+    },
+    "AI_VoiceOver/Libs/AceConfig-3.0/AceConfigCmd-3.0/AceConfigCmd-3.0.lua": {
+      "sha256": "936138368dd8fa2523937428b321dab6ac9b5e0e502c6b49d5faa66dc5d5c609",
+      "bytes": 23229
+    },
+    "AI_VoiceOver/Libs/AceConfig-3.0/AceConfigCmd-3.0/AceConfigCmd-3.0.xml": {
+      "sha256": "32c6e2c5bc38a940b3c8e7f499a8d3e8dfc76da387a67c969f39b229e912109c",
+      "bytes": 216
+    },
+    "AI_VoiceOver/Libs/AceConfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua": {
+      "sha256": "5f855bb2559788e5572b6b70a69309144bce49050752e8438850d4abf31c270f",
+      "bytes": 60401
+    },
+    "AI_VoiceOver/Libs/AceConfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.xml": {
+      "sha256": "589196f0f55bfb5587dc0d7647fff4839ac7625317f001970a1b390d10639f91",
+      "bytes": 219
+    },
+    "AI_VoiceOver/Libs/AceConfig-3.0/AceConfigRegistry-3.0/AceConfigRegistry-3.0.lua": {
+      "sha256": "7185800770e786eac398cef5d5a4887b31cddda6f5ce6a2683a9f3fdca1454a6",
+      "bytes": 12755
+    },
+    "AI_VoiceOver/Libs/AceConfig-3.0/AceConfigRegistry-3.0/AceConfigRegistry-3.0.xml": {
+      "sha256": "bd9790653701c529d70a565ae509e441f6355b0fb228300cf152004f1b22f5a5",
+      "bytes": 221
+    },
+    "AI_VoiceOver/Libs/AceConsole-3.0/AceConsole-3.0.lua": {
+      "sha256": "3372abc50efcfa4f643bf7c2f3254de19327d28e2040997d672f94d1845a5499",
+      "bytes": 8103
+    },
+    "AI_VoiceOver/Libs/AceConsole-3.0/AceConsole-3.0.xml": {
+      "sha256": "047fceb9632ac6c99e80ccf12115b5104851ceac3cbd02ab665cdef1644b5a79",
+      "bytes": 214
+    },
+    "AI_VoiceOver/Libs/AceDB-3.0/AceDB-3.0.lua": {
+      "sha256": "9d6659c3de31c931a249c5ce35839939e43c07e5118c1660c30b4a5234e586ce",
+      "bytes": 26688
+    },
+    "AI_VoiceOver/Libs/AceDB-3.0/AceDB-3.0.xml": {
+      "sha256": "db086e63b8af39bd4857394119324573868a8bf5815d4c6f3d1af1027cba0625",
+      "bytes": 209
+    },
+    "AI_VoiceOver/Libs/AceDBOptions-3.0/AceDBOptions-3.0.lua": {
+      "sha256": "698e58102030d4b66d7463ce2c2a7a23338584db7fe3eb28e7717f7e6143a766",
+      "bytes": 20631
+    },
+    "AI_VoiceOver/Libs/AceDBOptions-3.0/AceDBOptions-3.0.xml": {
+      "sha256": "45538ee0179edfc1e2e64dbcc151ef40ef74846eec7075701460edf69c6feb3f",
+      "bytes": 216
+    },
+    "AI_VoiceOver/Libs/AceEvent-3.0/AceEvent-3.0.lua": {
+      "sha256": "928729c0edae955407778463d345baa0e59fc8f6f6ad53877b6243e0f225da4e",
+      "bytes": 4757
+    },
+    "AI_VoiceOver/Libs/AceEvent-3.0/AceEvent-3.0.xml": {
+      "sha256": "365d75a5b296df4d5bef6512cd4fd6ca2ed63b1878df06e528b336d3203dc7c5",
+      "bytes": 212
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/AceGUI-3.0.lua": {
+      "sha256": "bcfcef55d727f8434606bdba2375929123422e051c27fd1bfcbd95e7ab723ed7",
+      "bytes": 30966
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/AceGUI-3.0.xml": {
+      "sha256": "e54bd15393700719dbec2b1b433e570a3f364fa5e927f9227f63037eb16ad522",
+      "bytes": 1451
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIContainer-BlizOptionsGroup.lua": {
+      "sha256": "566551ddd7c8c434d6bb6f4a4c9a67479e6e8a719fcc3a504b18eec4f11e6586",
+      "bytes": 3754
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIContainer-DropDownGroup.lua": {
+      "sha256": "ecf7743bd5fb9059d4226e35cd2374aa13282eca720938498f85d7f328f8c070",
+      "bytes": 4534
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIContainer-Frame.lua": {
+      "sha256": "fb3f9f3b3414bd3b27e1281c2b8836749e38906458df6b69e9f385fbe041df91",
+      "bytes": 9474
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIContainer-InlineGroup.lua": {
+      "sha256": "e9458bd6378d017994408618cbc6921ef7e6bbe152e9bbded199255c399468a5",
+      "bytes": 2986
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIContainer-ScrollFrame.lua": {
+      "sha256": "fef3da3ce311b861d669bc503906cdd0780a372fbea039c1e2d3f75ac6e68709",
+      "bytes": 6911
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIContainer-SimpleGroup.lua": {
+      "sha256": "d65968489c0fa5749d2e35be69c60d0dd7969189aa14a9031f0654715625d214",
+      "bytes": 1890
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIContainer-TabGroup.lua": {
+      "sha256": "ad73ed3b619cba61778ec39b73206daac423bd1f539241f4a58ff623b0b0b687",
+      "bytes": 16475
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIContainer-TreeGroup.lua": {
+      "sha256": "3de6b27dc24d97d4940da37911529235244db610245640980309c44b6bf57642",
+      "bytes": 20332
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIContainer-Window.lua": {
+      "sha256": "d57f41b781d8c021fb69a94e084efadbb891d3a353738e6ca68853da21f94645",
+      "bytes": 9806
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIWidget-Button.lua": {
+      "sha256": "1bcc3592c6315d1369f448316f4bc990c812a37d2a7b5c31fd2324daf6ad7e87",
+      "bytes": 2746
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIWidget-CheckBox.lua": {
+      "sha256": "94b91838f23aaa412e959f5b874e5e960459906d2ac07b48f41bc8a45a1a1206",
+      "bytes": 7870
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIWidget-ColorPicker.lua": {
+      "sha256": "d69b7e600acf2e6f9d0e222d40952f4f25115eb6a48c039bfa71d2807668e5ef",
+      "bytes": 6538
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIWidget-DropDown-Items.lua": {
+      "sha256": "aa7d0bd54525e63b9549ec0a41ff3b3595267a377e0ae65da42577856cf03f4b",
+      "bytes": 10586
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIWidget-DropDown.lua": {
+      "sha256": "42e2a9d9c41bc4f481af1721b6cc45988e2bc5573fd0282499e9bf3af8e8ec20",
+      "bytes": 18521
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIWidget-EditBox.lua": {
+      "sha256": "24a7570e949647c67a0364a8b21d8904c7df812ce0a3d58a74413e473cd023e2",
+      "bytes": 7236
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIWidget-Heading.lua": {
+      "sha256": "ebf0271a8e6f7bce8947cbd339a6a08a6c856bf45e35ae9156c79320521dfa51",
+      "bytes": 2232
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIWidget-Icon.lua": {
+      "sha256": "62df520dba9234f704ac956141e95e9716896b006210f4ae67a9afbff3b93a50",
+      "bytes": 3805
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIWidget-InteractiveLabel.lua": {
+      "sha256": "e47543663cc5c4272ef6fb6d356fb63a49f6b101d3cc0501e769ac6615442cce",
+      "bytes": 2577
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIWidget-Keybinding.lua": {
+      "sha256": "f91cf498566a9bfd60f42b3bd8b5f7a14d4087d6033795e72ddf50f7fd47177f",
+      "bytes": 6667
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIWidget-Label.lua": {
+      "sha256": "7d953f5fd4cb6ba8fb25c0c732e6dd61564684c57bc5175f4d734d646b99842d",
+      "bytes": 4767
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIWidget-MultiLineEditBox.lua": {
+      "sha256": "ac67fd32a7a5642c0bebc5104ee4ac57088fb04e44b15cee64513b78e532e7cd",
+      "bytes": 11062
+    },
+    "AI_VoiceOver/Libs/AceGUI-3.0/widgets/AceGUIWidget-Slider.lua": {
+      "sha256": "59b3ee4b813c8e20c4463e9fb1c167bfb8552e1ad6ec512dccfce24c9e4049ca",
+      "bytes": 8070
+    },
+    "AI_VoiceOver/Libs/AceHook-3.0/AceHook-3.0.lua": {
+      "sha256": "9e8f57d06fa7bfcba6d2a2e9fb8fdfd9fbc040158f4401d4308f8279a26e1378",
+      "bytes": 18836
+    },
+    "AI_VoiceOver/Libs/AceHook-3.0/AceHook-3.0.xml": {
+      "sha256": "13d7aecc03651820a9b4eb17eaded026dea2848428879cc8898dd1d01fb06967",
+      "bytes": 211
+    },
+    "AI_VoiceOver/Libs/AceLocale-3.0/AceLocale-3.0.lua": {
+      "sha256": "584b30b5cd9da71408cdd83a49469aa4348941e185a42cbd218d964678d88e57",
+      "bytes": 5474
+    },
+    "AI_VoiceOver/Libs/AceLocale-3.0/AceLocale-3.0.xml": {
+      "sha256": "3bf70169970f1a9953d11396c3816e3ecb6946f1bc1db992b8274762435e4a0f",
+      "bytes": 213
+    },
+    "AI_VoiceOver/Libs/AceSerializer-3.0/AceSerializer-3.0.lua": {
+      "sha256": "874fabab25ee5c5c08599e37744abe9205659b6f33c59250bccbfbf4fe5d0a41",
+      "bytes": 9045
+    },
+    "AI_VoiceOver/Libs/AceSerializer-3.0/AceSerializer-3.0.xml": {
+      "sha256": "5e346ce596cfe2e203dd8e8b8b45a3d2de960357b314b4a194de8f00d7d5ccff",
+      "bytes": 217
+    },
+    "AI_VoiceOver/Libs/AceTab-3.0/AceTab-3.0.lua": {
+      "sha256": "eb86d3ec6f2f2a6bc23ffdb009ccae34b9a5250d1ab9a060c7b18e65e8c7e9e3",
+      "bytes": 18971
+    },
+    "AI_VoiceOver/Libs/AceTab-3.0/AceTab-3.0.xml": {
+      "sha256": "fb5e8bd48ca053c33f0e5e9cbe87d06ce447380923447adad69c1df7543966e5",
+      "bytes": 210
+    },
+    "AI_VoiceOver/Libs/AceTimer-3.0/AceTimer-3.0.lua": {
+      "sha256": "ae95dbb59d8240cb5ff2c1308d526daf57e504710985fe8532b886a9ad543af6",
+      "bytes": 9768
+    },
+    "AI_VoiceOver/Libs/AceTimer-3.0/AceTimer-3.0.xml": {
+      "sha256": "09b48d4fc537664bd052132a331fe88cfd673d5f957c893db7e3797350fb9441",
+      "bytes": 212
+    },
+    "AI_VoiceOver/Libs/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "e37ca6e5cd4e39c69d600468c8fe2a425b8a4d50023d9903fa3dc7aeeae1561f",
+      "bytes": 7761
+    },
+    "AI_VoiceOver/Libs/CallbackHandler-1.0/CallbackHandler-1.0.xml": {
+      "sha256": "893bd83f5eb818a93a5c8bec4ed37edf2493a9fa655acbcb0cdde02bea5448e5",
+      "bytes": 219
+    },
+    "AI_VoiceOver/Libs/LibDataBroker-1.1/LibDataBroker-1.1.lua": {
+      "sha256": "f3d4758f2060215492c9764b1d7dc2a336826d4cd253cd54ff9ff7c6d78f04e2",
+      "bytes": 3139
+    },
+    "AI_VoiceOver/Libs/LibDataBroker-1.1/README.textile": {
+      "sha256": "1824b7091f7535e822d3fc0138013e0370eb894efcf7cc2ef1babb81f7997fcf",
+      "bytes": 1037
+    },
+    "AI_VoiceOver/Libs/LibDBIcon-1.0/lib.xml": {
+      "sha256": "f9f8ad1829bee7f9aabb610e3a2e6e930119e4b7ea5e4acdff9524567a440356",
+      "bytes": 215
+    },
+    "AI_VoiceOver/Libs/LibDBIcon-1.0/LibDBIcon-1.0.lua": {
+      "sha256": "895e5fcf9df3736f342ca1da26bcad01615a97145a96e1b434f8c4db83581c73",
+      "bytes": 13686
+    },
+    "AI_VoiceOver/Libs/LibStub/LibStub.lua": {
+      "sha256": "26401bc42c26d1d1b6f7ad9410aa464edcbe4d32d74ebadeeecd8c0110236f7d",
+      "bytes": 1366
+    },
+    "AI_VoiceOver/Options.lua": {
+      "sha256": "3a8082522b5b2df02b9c2f36b80985673f6b0799555e7a43d0c3f68d394465c6",
+      "bytes": 27357
+    },
+    "AI_VoiceOver/QuestOverlayUI.lua": {
+      "sha256": "d277f4363590b9ed637036cf98c8503ec2c490fc1d874c07b84211d76917f9aa",
+      "bytes": 5568
+    },
+    "AI_VoiceOver/SoundQueue.lua": {
+      "sha256": "1638a1a09f9ff65d327c87ffd0b89fb5be83456fb29f248ca46867f94bad2438",
+      "bytes": 7657
+    },
+    "AI_VoiceOver/SoundQueueUI.lua": {
+      "sha256": "62118ab010ec41f39c4f02d1714bb2d4cb2b3a6b7ee0caa239e20a25784f26f6",
+      "bytes": 35226
+    },
+    "AI_VoiceOver/Sounds/silence.wav": {
+      "sha256": "f166dac686b5cd3802dc1000442baab43ae836bd5b89a4f17ba5bcd80a85a374",
+      "bytes": 176444
+    },
+    "AI_VoiceOver/Textures/BackgroundGradient.blp": {
+      "sha256": "522cf3b7bb4347602b609e239e7b4e51cdab352ffc8202dd4ca6ddeb01dcf07e",
+      "bytes": 6740
+    },
+    "AI_VoiceOver/Textures/Book.blp": {
+      "sha256": "46025ea7f8ea6331e325db4e61a938760b8965fadb91adbf12836f0f3a22c480",
+      "bytes": 88580
+    },
+    "AI_VoiceOver/Textures/MinimapButton.blp": {
+      "sha256": "d00d4de4c378f036d294af0f12fbd3d664290103410b2352d4f6817512f19fcb",
+      "bytes": 2564
+    },
+    "AI_VoiceOver/Textures/PortraitFrameAtlas.blp": {
+      "sha256": "83bebba25bd09954752b45d2f53ad14c1071f81d8f0c2b03048cc14eb1762d2c",
+      "bytes": 350724
+    },
+    "AI_VoiceOver/Textures/PortraitFrameBackground.blp": {
+      "sha256": "24d8674fefd1f75c1fadb36d607df35e63c8b11a4ed88f645e98fd5cb2a864a7",
+      "bytes": 44876
+    },
+    "AI_VoiceOver/Textures/QuestLogPlayButton.blp": {
+      "sha256": "4ffeae05569581bc349362ae55b438659462035e4ff6d95c4b544103044bd86b",
+      "bytes": 2564
+    },
+    "AI_VoiceOver/Textures/QuestLogStopButton.blp": {
+      "sha256": "588c128d1abb0ef131a5de8065644654cfc89e185b931545f20f66ada41c2487",
+      "bytes": 2564
+    },
+    "AI_VoiceOver/Textures/SettingsButton.blp": {
+      "sha256": "ac4a158ad913a124fd4755cfbb6d27e65bec7ed978b8431259ac1e857f2557e3",
+      "bytes": 2564
+    },
+    "AI_VoiceOver/Textures/SizeGrabber-Down.blp": {
+      "sha256": "7a828c0f28435dbe1da186b10ae49b0635809337fd3292af5a346727cd757657",
+      "bytes": 1540
+    },
+    "AI_VoiceOver/Textures/SizeGrabber-Highlight.blp": {
+      "sha256": "96c9d97f988744fbf2d74628e9e5b143f975b8b38ba2cee449479574a95743f1",
+      "bytes": 1540
+    },
+    "AI_VoiceOver/Textures/SizeGrabber-Up.blp": {
+      "sha256": "bd9e670c8da7d9e5af4a6578355abef4aa2aa2ac20621292fa9487d2311ccb33",
+      "bytes": 1540
+    },
+    "AI_VoiceOver/Textures/SoundQueueBulletAccept.blp": {
+      "sha256": "b92c25b386a2213ab816022054b31bd291e61c44953f7167320010946af41280",
+      "bytes": 1540
+    },
+    "AI_VoiceOver/Textures/SoundQueueBulletComplete.blp": {
+      "sha256": "b51963df507e7fb942bb6e0b3b8c4b05c29267db4dafe2e8915a837a4bcf96b2",
+      "bytes": 1540
+    },
+    "AI_VoiceOver/Textures/SoundQueueBulletDelete.blp": {
+      "sha256": "81cdf32427a7f12ec6b046442358a60036e8eee88fc8afd5f36e7b9295b6adbc",
+      "bytes": 2564
+    },
+    "AI_VoiceOver/Textures/SoundQueueBulletGossip.blp": {
+      "sha256": "15934dc0b16dc994a9b179aee001bd468b0a38ec3c55f8d645634ac17d683088",
+      "bytes": 1540
+    },
+    "AI_VoiceOver/Textures/SoundQueueBulletProgress.blp": {
+      "sha256": "5e3bf010952ecc9cc20667f2ddd20cf96731d24db4e9ab23c838d9a6c3787159",
+      "bytes": 1540
+    },
+    "AI_VoiceOver/Textures/SoundQueueBulletQueue.blp": {
+      "sha256": "7ace0f9af9426a1641033101e8de8c81c6d8a842047e411a2e8a27f595137592",
+      "bytes": 6660
+    },
+    "AI_VoiceOver/Textures/spacer.blp": {
+      "sha256": "bc4c94112bc08146833952d33906e2501aa25f8df5a557e3cc9518f812ee544f",
+      "bytes": 1540
+    },
+    "AI_VoiceOver/Textures/StopGossip.blp": {
+      "sha256": "893dc21d59df4bd15f7cac5783932a854fcf3b65338ad638066e2d0a1884c669",
+      "bytes": 2564
+    },
+    "AI_VoiceOver/Textures/StopGossipMore.blp": {
+      "sha256": "4ea5e59bf10ef6ea7dc297d73be05599986848ba0f9f0248ee34e3c4721b0591",
+      "bytes": 2564
+    },
+    "AI_VoiceOver/Utils.lua": {
+      "sha256": "026ecfe015e17cc4ea61d080d49583bff9070510802a63375932447249f21f87",
+      "bytes": 15593
+    },
+    "AI_VoiceOver/Version.lua": {
+      "sha256": "b9b872575b53e0af1230dfb95b475f2e11737ac146e107fc8635737f1d9ba719",
+      "bytes": 1328
+    },
+    "AI_VoiceOver/VoiceOver.lua": {
+      "sha256": "26200afc431ad75dd0abbf563793aa90cf1afa51faaa39762191ff0f317df66b",
+      "bytes": 13611
+    },
+    "AI_VoiceOverData_TBC/AI_VoiceOverData_TBC.toc": {
+      "sha256": "149847c206ecfb51b84856843d47d9d0ca5b951d803ff63e32b3811117a51fdf",
+      "bytes": 692
+    },
+    "AI_VoiceOverData_TBC/Module.lua": {
+      "sha256": "4f45bb59c3f709e68b8f8752025ab05c4ed205841827d6fb2319067bb31433da",
+      "bytes": 505
+    },
+    "AI_VoiceOverData_Vanilla/AI_VoiceOverData_Vanilla.toc": {
+      "sha256": "52b5893d6c9487dddfa89d18bcc7f13c6529e2ec86d2e684a4a2237656acb9a3",
+      "bytes": 1131
+    },
+    "AI_VoiceOverData_Vanilla/Module.lua": {
+      "sha256": "aacba35132d6e77974f866000c8ebabea1eab5948437b3851d408be228702c32",
+      "bytes": 521
+    },
+    "AI_VoiceOverData_VanillaExtra/AI_VoiceOverData_VanillaExtra.toc": {
+      "sha256": "e982c270b45db616ecbe368fa41ce9ee4c9af38e3e690bcde7598ea658048925",
+      "bytes": 702
+    },
+    "AI_VoiceOverData_VanillaExtra/Module.lua": {
+      "sha256": "3a14266019fb5a7d1c247664d3e2054253a83420d1a6ef36745674fd46bd2a1d",
+      "bytes": 541
+    },
+    "AI_VoiceOverData_WoTLK/AI_VoiceOverData_WoTLK.toc": {
+      "sha256": "f3c17545dc585228e6a16c58bc0cd5f31379ab4bd871976bfc9655a84136508f",
+      "bytes": 695
+    },
+    "AI_VoiceOverData_WoTLK/Module.lua": {
+      "sha256": "1c8701b29024b689c24d07220d817a200ccacdada296c1ffaf54039ac6940c7d",
+      "bytes": 513
+    },
+    "assets/images/easternkingdoms.jpg": {
+      "sha256": "b6194c6a588f655dabfebbf3e115e92eb07807ecb5d3ccde81de10415336e1c0",
+      "bytes": 490080
+    },
+    "assets/images/kalimdor.jpg": {
+      "sha256": "ea0dc903087247e7dfc1d0b81a7c9088be06ef98557d1fdf5b0145e22335b2e1",
+      "bytes": 517478
+    },
+    "assets/sql/exported/CreatureDisplayInfo.sql": {
+      "sha256": "c9d368cbfbf6b4231c055ee5bb2e6eb46057e27aa5f376e3c64d10d8ae879142",
+      "bytes": 2538273
+    },
+    "assets/sql/exported/CreatureDisplayInfoExtra.sql": {
+      "sha256": "3ea2dd1d7006100fd375888a1bca497042aa23ec536e63255344b177b91912b5",
+      "bytes": 2407668
+    },
+    "cli-main.py": {
+      "sha256": "05ef6793a8d6b8d98830e582430da8e169ccd659edd8297a1c1ac06c2e2c4d0e",
+      "bytes": 5791
+    },
+    "docker-compose.yml": {
+      "sha256": "3f15d603340ef2dd53d75ec575a08b83b611b4f8905c0ddc5cfd02f614d03916",
+      "bytes": 234
+    },
+    "example_queries.sql": {
+      "sha256": "0e610cd9a770b46c0e9edb63c6b6b85e493ea8cb42955cdef7c7b8a3988d5e2e",
+      "bytes": 4258
+    },
+    "image-1.png": {
+      "sha256": "02163594e9c21c3ac0f9f7b40d32ad41c5040b884856db342bf4d30771c97193",
+      "bytes": 2631
+    },
+    "image.png": {
+      "sha256": "3b67b906507f71b8fbc372a36ab90f6348ebfbdadc808dd36358bc603ffff764",
+      "bytes": 166903
+    },
+    "LICENSE": {
+      "sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+      "bytes": 1211
+    },
+    "README.md": {
+      "sha256": "c98d375be562c8698fc3928ce6af4956f9c6c705b57721926540f4639c1c2681",
+      "bytes": 7455
+    },
+    "requirements.txt": {
+      "sha256": "27d084900dacd53278172d9088baf3e76e786897840071914ffcc18f702310ec",
+      "bytes": 205
+    },
+    "RETAIL-PLAN.md": {
+      "sha256": "423bb4a3a7de008ea475ae55f9ae5fd2ecc64c8fa236839ed4fbf01069fe23f9",
+      "bytes": 6723
+    },
+    "tts_cli/consts.py": {
+      "sha256": "69db2384e0511d7614b65ffab9b3540d706006522657fe3eae19428af1155fc6",
+      "bytes": 1334
+    },
+    "tts_cli/env_vars.py": {
+      "sha256": "a4927d83532302cdce9faebc66772871bef12c8dba6f287f1b054fc38ec2ffb2",
+      "bytes": 315
+    },
+    "tts_cli/init_db.py": {
+      "sha256": "2a205cb3c255a674ba654015b6ba91b759892a68c7e06beaf219de82ae597770",
+      "bytes": 4001
+    },
+    "tts_cli/length_table.py": {
+      "sha256": "fc69c8ae69781d2c974a48a6165521d172f0efef73f8cda7600b57cdb4a85f13",
+      "bytes": 1089
+    },
+    "tts_cli/sql_queries.py": {
+      "sha256": "d9fc96c82139282c63a7113944e7c69c6ee95ab9537e7b094ff52f4bfcc645c5",
+      "bytes": 15458
+    },
+    "tts_cli/tts_utils.py": {
+      "sha256": "d7994f8a22a46621dcb3b034b446aafb1e1890a5271bf9c31683024c09af4984",
+      "bytes": 15423
+    },
+    "tts_cli/utils.py": {
+      "sha256": "8c71f683b06847163c30dee00cbc6b68508e69086a62a04cf1172cf4d3919f2d",
+      "bytes": 1043
+    },
+    "tts_cli/wrath_model_extraction.py": {
+      "sha256": "8c14274d8d14e7e66b5ef68cff035c7b0626782f44ea59029564ee970ad12e96",
+      "bytes": 3688
+    },
+    "tts_cli/zone_selector.py": {
+      "sha256": "ea50aa127b1c0bd0025e7422775ac56815ee4b52fc08d127ef0b865eab96982b",
+      "bytes": 6590
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

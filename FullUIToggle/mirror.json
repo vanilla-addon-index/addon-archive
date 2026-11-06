@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/spuxx1701/FullUIToggle",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "spuxx1701",
+    "repo": "FullUIToggle",
+    "name": "FullUIToggle",
+    "url": "https://github.com/spuxx1701/FullUIToggle",
+    "api": "https://api.github.com/repos/spuxx1701/FullUIToggle"
+  },
+  "commit": "944192f198880d7d8b3786652f58ff16e697d71e",
+  "sourceFiles": {
+    ".vscode/settings.json": {
+      "sha256": "d1e8d92ba17868a1dcceb080ba1c9c9b9357400cc2b0436f9d0243ab548aabf5",
+      "bytes": 156
+    },
+    "Bindings.xml": {
+      "sha256": "5232ea38d384c880db4219e591163ca04bca2ed4d0f9d36cdddd07c25f78d1a2",
+      "bytes": 113
+    },
+    "FullUIToggle.lua": {
+      "sha256": "73c946a5ded7edd72fabe7c77fa12d526f5b66226e9af97dc35d2c1960f77b6c",
+      "bytes": 1904
+    },
+    "FullUIToggle.toc": {
+      "sha256": "87952d7d304441ce3cb384f6fedc74badd0ea8217244c7fab7c4c17bc143545e",
+      "bytes": 259
+    },
+    "FullUIToggle.xml": {
+      "sha256": "da82be2f796b683c4ff4884bb9e95a9042b262c8a65f18a23a3954e183e4c234",
+      "bytes": 202
+    },
+    "README.md": {
+      "sha256": "e1bd7482b24c1d632df8de0653fde121d497508246a6c32c4d8b0c926ae3aeae",
+      "bytes": 1058
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

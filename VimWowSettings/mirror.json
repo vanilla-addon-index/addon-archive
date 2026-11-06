@@ -1,0 +1,37 @@
+{
+  "upstream": "https://octowow.st/git/Lupo/VimWowSettings",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Lupo",
+    "repo": "VimWowSettings",
+    "name": "VimWowSettings",
+    "url": "https://octowow.st/git/Lupo/VimWowSettings",
+    "api": "https://octowow.st/git/api/v1/repos/Lupo/VimWowSettings"
+  },
+  "commit": "6e03ad55deed8262c6526b9ef9bcf4f397c28920",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+      "bytes": 8
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "README.md": {
+      "sha256": "a3ac92b878cf1a7629c76b3cde483405e9ad8e8f591eb2b000d7bfbcaff39272",
+      "bytes": 819
+    },
+    "settings.lua": {
+      "sha256": "d4d06e72c4e7b8683fff921a8019cc26e3c48669b494b6601a28bb5668861ea8",
+      "bytes": 30052
+    },
+    "VimWowSettings.toc": {
+      "sha256": "9458ffd5a1c45002b4c6176ef236a25508f07d81f0224b4435626cf6aa3495d0",
+      "bytes": 299
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

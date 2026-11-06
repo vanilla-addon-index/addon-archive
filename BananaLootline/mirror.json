@@ -1,0 +1,466 @@
+{
+  "upstream": "https://github.com/BananaForge/BananaLootline",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "BananaForge",
+    "repo": "BananaLootline",
+    "name": "BananaLootline",
+    "url": "https://github.com/BananaForge/BananaLootline",
+    "api": "https://api.github.com/repos/BananaForge/BananaLootline"
+  },
+  "commit": "f082583803cd35266422d5e33806571fff1a6ad0",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "965f8d2cd502b71af1ad88b1b70e540c6c42f4d6d84173fda803fcc5e972f752",
+      "bytes": 134
+    },
+    ".github/workflows/release.yml": {
+      "sha256": "bf182bb49478fdc36e2e928ddc206d830023dbeac7a8346eb31246274470ee7f",
+      "bytes": 2714
+    },
+    ".github/workflows/tests.yml": {
+      "sha256": "191c70ad42ee370e004d6f55556e46b5f6cf29fc408481e743d1ad2b908092f2",
+      "bytes": 341
+    },
+    ".gitignore.upstream": {
+      "sha256": "1309e862cf60d4d5b5963ce9692909d0d17ed2118e74dc68d0d4f4c4556f04d8",
+      "bytes": 290
+    },
+    "BananaLootline.toc": {
+      "sha256": "339211d7519d85a7bab9c65b7dee9b0fe5d42f7dfcb4f34cc561209b82ebe3fb",
+      "bytes": 818
+    },
+    "BananaPresence.lua": {
+      "sha256": "6002bb0e6bb832524f1249304abca46c61ffc9e83d74c6366da7d2216b64bf1e",
+      "bytes": 5908
+    },
+    "BananaPresenceReg.lua": {
+      "sha256": "83661f663e523165c57384514e346b0652eb55e84c8209079e4f2056354c6da1",
+      "bytes": 166
+    },
+    "Candidates.lua": {
+      "sha256": "33df45fcf26a6e376f15f93995a1ca2c28a884fc57c764805cfaa25a79cbab49",
+      "bytes": 79252
+    },
+    "CHANGELOG.md": {
+      "sha256": "74754117636c76e63916a3f3015936d50bf12ffd9293660bf5278464c883c033",
+      "bytes": 64200
+    },
+    "Core.lua": {
+      "sha256": "a922daa84d0a64d78e457601b2bc95e873466ad23de879985d34d7dea3166cb4",
+      "bytes": 36656
+    },
+    "Data/EnchantData.lua": {
+      "sha256": "f2e6359e3ece6ebe4b81e6bc1d580fdce426685b401f5d035861fbecf78638e8",
+      "bytes": 12333
+    },
+    "Data/ItemData.lua": {
+      "sha256": "8161d85f846a2cb397817f05fa62df2b0360e95dce8880ecee6ebe272eb60ef1",
+      "bytes": 2773379
+    },
+    "Data/NpcData.lua": {
+      "sha256": "ede88efc29d5f4e382ee180047da629d200c009ebc112f27b30d044cf67faf15",
+      "bytes": 193964
+    },
+    "Data/QuestData.lua": {
+      "sha256": "7aa0e22073b44986556ae7fa970593e59aea29a985a9481914419c4e66e74fea",
+      "bytes": 605584
+    },
+    "Data/SetData.lua": {
+      "sha256": "4ec086de35d501c5a806b66aec64211a3ae7f41399dae2e14a0347501737fb92",
+      "bytes": 48410
+    },
+    "Data/SourceData.lua": {
+      "sha256": "664a0f0c4e10b7ceff8c30aa25b544874b820c77857a1eb7890b6b9fde6d1dd2",
+      "bytes": 1167836
+    },
+    "Data/ZoneData.lua": {
+      "sha256": "c35dcfbf2a916b78c6a3e0ef00ea95b6e6e2c55e8c3a0a4027031e7f74a2e49d",
+      "bytes": 3968
+    },
+    "Data/ZoneNames.lua": {
+      "sha256": "f4f6e3def906bc73919c3c453e4c211c45e0ef77cf9daaebb5492086b8a64ec8",
+      "bytes": 3884
+    },
+    "docs/ENTWICKLUNG.md": {
+      "sha256": "c03258bfd6b46d22bd075caf4925263d8d606e8c7bfad0acaefd7dc564a3ae50",
+      "bytes": 12568
+    },
+    "EnchantDB.lua": {
+      "sha256": "5bf4829252548f5de87d45a378c4d10b2857d6bcf11ea96a8ee5f3b0a0f92e3f",
+      "bytes": 6199
+    },
+    "Gear.lua": {
+      "sha256": "8fc352464aa8938f8ab67017ccdc645493a7818379bb0fdb29b68fcc79886c35",
+      "bytes": 9013
+    },
+    "Images/BananaForge.tga": {
+      "sha256": "1a476dd427f9c455f008459151dec626d83f15888d0fa816d295f1bb734a7351",
+      "bytes": 65580
+    },
+    "Images/Minimap.tga": {
+      "sha256": "cd4e63de6074ba66cf448ea917724136ce896e98647656ac194c561cab9f6424",
+      "bytes": 16428
+    },
+    "ItemDB.lua": {
+      "sha256": "1d07b5858d355cb5b90d71dfae4f17a93cdbdec226131bbe0c1edd7c394f82ee",
+      "bytes": 3575
+    },
+    "LICENSE": {
+      "sha256": "b26e762cffc41895a95ac84e0d7c2b7688bf87e1cf4178890b4947834a3f0b00",
+      "bytes": 1089
+    },
+    "Locale.lua": {
+      "sha256": "122cf25546628c85def8d9d8ec1873fc1f6990c80999401ab198ecddc94b341c",
+      "bytes": 50024
+    },
+    "MinimapButton.lua": {
+      "sha256": "3746375359b0bd8d6be552ed25fec3aeb4be07fa20bce568eb7566b6b9c9faf7",
+      "bytes": 3284
+    },
+    "Phases.lua": {
+      "sha256": "e794f46330a150f0b3b3c080dbf30a8bfacc56e1d7e6ab1ec634454f84e790e3",
+      "bytes": 6544
+    },
+    "QuestInfo.lua": {
+      "sha256": "bbefcb7f62eeb5770936f18ae20cd2c818535595739241c36ad7da0151b7175d",
+      "bytes": 10291
+    },
+    "README.md": {
+      "sha256": "9b7a3d6cca14aa3d3839c812551fdb8030dfb7207264671514ebb6d927998a7c",
+      "bytes": 19526
+    },
+    "Scanner.lua": {
+      "sha256": "ffa1a1c0d9e4448d11dcd36909641e901ed7098c67d56afe60be4445fa533027",
+      "bytes": 16095
+    },
+    "screenshots/1": {
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "bytes": 2
+    },
+    "screenshots/enchant.png": {
+      "sha256": "73475b959d3a86d0ab98f4fb58cb0fc9d753b08da7c4183a802805739cf0bb3f",
+      "bytes": 81662
+    },
+    "screenshots/lootline.png": {
+      "sha256": "03da90b471493451c17c6ae1da5fdac4913b09705a29e74492c655d8e26c2366",
+      "bytes": 53044
+    },
+    "screenshots/peritem.png": {
+      "sha256": "fdc3709df16f25b80b8a4945646e5bf22c8dcc677360809aca34bc37d939ee2f",
+      "bytes": 88940
+    },
+    "screenshots/wheretogo.png": {
+      "sha256": "c440c6274b9ebd1ee100afc730f9b06838717cac7d977f65c894c29d1db4f5a9",
+      "bytes": 122082
+    },
+    "SetDB.lua": {
+      "sha256": "9e8e11711ebd542a8c3db98bcfc51af926684135dc8ad68f91b8cfe6f9c9b2b9",
+      "bytes": 4124
+    },
+    "Sources.lua": {
+      "sha256": "c8014dd10d74a504e93ff7d37d1fe0f1f3736b25bcdd90aaa99cdca57614963a",
+      "bytes": 34691
+    },
+    "tools/diag_19558.lua": {
+      "sha256": "7c7c9e6642b5a3eb95dcb0cc1a9f035960eef23a2d443fb60c7defc8fcafeaf0",
+      "bytes": 8870
+    },
+    "tools/diag_full.lua": {
+      "sha256": "5a4b3a2ed8e3975b1d37919a2ba2edbdeaade91f9f5f93ad7fc15af41b7332cc",
+      "bytes": 6433
+    },
+    "tools/diag_gaps.lua": {
+      "sha256": "bdd16c6b0c10ef826e15b96ad54496af87476530a3ec954523fae2aed09c90ed",
+      "bytes": 4233
+    },
+    "tools/diag_perf.lua": {
+      "sha256": "3c930416add4b43f5dd5abfef8eb688b5d6054d532001fb313968bf59acfc51e",
+      "bytes": 3373
+    },
+    "tools/octo_import_old.py": {
+      "sha256": "aa86dbf1beb0eca6f1bd64326a277adc90c1a28b3adac4a301240b40c08ab643",
+      "bytes": 14469
+    },
+    "tools/octo_import.py": {
+      "sha256": "eb256be7487ffad7c0f1bdbdb29ed8137059d5a4cf9abe3497925be8c7ee3fd4",
+      "bytes": 46834
+    },
+    "tools/octodb_all.js": {
+      "sha256": "8621b94d53c7e2073c795f53e66a37ca56efb4cd978398947e192883f736fcc2",
+      "bytes": 39065
+    },
+    "tools/octodb_batch.js": {
+      "sha256": "8ca925c42ec31673f7c9e1978c495b1f587addb23c473a0dda38e44c3a29e6a2",
+      "bytes": 26419
+    },
+    "tools/octodb_build.py": {
+      "sha256": "38ac3c49b5f03e86c874c20e5d6cdb6b44df2aa1f601acb8d21d75493ebcf213",
+      "bytes": 15130
+    },
+    "tools/octodb_details.js": {
+      "sha256": "1adcbacd68a551d0223e572c8184f116682748903d39511b304197bc4e12326f",
+      "bytes": 22161
+    },
+    "tools/octodb_enchants_build.py": {
+      "sha256": "1b628f8b3dd93cda41f1ca2385c57e449a3e7d5b04f945cb6d31eb7f2370288c",
+      "bytes": 17230
+    },
+    "tools/octodb_enchants.js": {
+      "sha256": "39b84fd22843d27d4727b960a79253b3903e9f7b8f2c146df2af8666b51f357a",
+      "bytes": 26048
+    },
+    "tools/octodb_extract.js": {
+      "sha256": "8262ca59b91ada3e730d9ffca13950f885d96ff0dd231a920f113c72054d8e10",
+      "bytes": 8754
+    },
+    "tools/octodb_final.js": {
+      "sha256": "2afb21c953a4858cb1315f39f9124e1e24b61d91fccccbc816caf68b4cab300f",
+      "bytes": 35190
+    },
+    "tools/octodb_import.py": {
+      "sha256": "217725a40a7f2f44a6771e20b23b78e82e1913574f8a6b373483508e039eb583",
+      "bytes": 18779
+    },
+    "tools/octodb_missing.js": {
+      "sha256": "b9255b33ced10af51d6c50c05342ce1560225cf36661000c969a357299858ab9",
+      "bytes": 31385
+    },
+    "tools/octodb_rest.js": {
+      "sha256": "ffc8602f065f8afef95617e00b0d1d9485c1483abdfc29a2c5487444505da887",
+      "bytes": 24542
+    },
+    "tools/octodb_sets.js": {
+      "sha256": "0cab14730090738ff836bdcb88f9d30b600387f1ea420f4ef4059537ab33c67f",
+      "bytes": 14702
+    },
+    "tools/quest_import.lua": {
+      "sha256": "02a9dfb63326b47127727e98856730fbcadeb6d8b957bc92510aa1a3cf351529",
+      "bytes": 7019
+    },
+    "tools/run_tests.sh": {
+      "sha256": "e9c486c17a5a9e7a0e13ade43d911ea38c8d54d3174f2632538cba40566a0adb",
+      "bytes": 947
+    },
+    "tools/test_armorpref.lua": {
+      "sha256": "c46a9a0eb934c8dee4b68de5dded40298f68e221266b63611db8c8e1729f9c12",
+      "bytes": 3493
+    },
+    "tools/test_atlas.lua": {
+      "sha256": "fdfa81dd67e870e70a0499b8f681cb5c3d7f1f13f7ede795edf9f24440ee486f",
+      "bytes": 5681
+    },
+    "tools/test_build.py": {
+      "sha256": "6898b5b073af3b247d2133aed64415eb1141722523f1fc07851ac28603cd4763",
+      "bytes": 1545
+    },
+    "tools/test_ilvlfilter.lua": {
+      "sha256": "5f41185cd6491f3b5b6678f7b709adcb1576f0f2a18b47d5c554a591afe8669d",
+      "bytes": 1239
+    },
+    "tools/test_import_sources.lua": {
+      "sha256": "c7a46550d6450190f4fb8443e503898669eea3fe754f225fd28ceb53f3c2d0a5",
+      "bytes": 8387
+    },
+    "tools/test_importrank.lua": {
+      "sha256": "460b742cfbe580b0b7e2c07aa85cae79934cdfc8dbd1259790054ec88a7d031a",
+      "bytes": 3416
+    },
+    "tools/test_lang.lua": {
+      "sha256": "2f39c19f9e171e753d33e8a60f8bbb061f8e35579841f55576f4d1dc7e612042",
+      "bytes": 9126
+    },
+    "tools/test_listview.lua": {
+      "sha256": "fc8546265cb851540d922d612239aa05cc4bd7250fde83303eebc592aa0e1651",
+      "bytes": 6458
+    },
+    "tools/test_lockedsources.lua": {
+      "sha256": "624619491b18af1efe04436919863a883df2e38e4a3d0fbdd4d5ffd9fbf6d8f3",
+      "bytes": 1970
+    },
+    "tools/test_locvote.py": {
+      "sha256": "430bbad7dd90b4272b888941c0ec1d34bf524c3bb9229bdeced39fe71cfa82a5",
+      "bytes": 2725
+    },
+    "tools/test_lootline.lua": {
+      "sha256": "f1ce0114d40ce61135a7705bb2ca9dc663f483e66104b365177054cfb9b09902",
+      "bytes": 11926
+    },
+    "tools/test_meleedps.lua": {
+      "sha256": "e42e6f31e6589c99a00e521d2fd0de6ac02de16941389b681a66503475bc5d31",
+      "bytes": 1597
+    },
+    "tools/test_messages.lua": {
+      "sha256": "b85d9dd421df89470776529ae240b179f30dff306b2939b46c4209ab8b30eac2",
+      "bytes": 4935
+    },
+    "tools/test_minimap.lua": {
+      "sha256": "ae5dd7e8aed27383a9edc82c0163fdaa8ce04b299a9127043eec9977cb8a87ed",
+      "bytes": 2483
+    },
+    "tools/test_nopfquest.lua": {
+      "sha256": "d947168e07d295671302e46f572a0d76847e5cb557a3cf571e19afe34eb8a4ac",
+      "bytes": 2578
+    },
+    "tools/test_octodata.lua": {
+      "sha256": "83217344032144f8b54f9511c1449c1e1eed66f0293eabe596e3eddbed756c71",
+      "bytes": 8248
+    },
+    "tools/test_patterns.lua": {
+      "sha256": "34ad0fa2f5dcbd932083df333564363e3807faf864ff08fde1c938aa1b33225e",
+      "bytes": 1854
+    },
+    "tools/test_pettrainer.lua": {
+      "sha256": "55bb39f6d38ce22ba803c57d86279d275391c7f96b9b31ed6f8a25548af9ae2c",
+      "bytes": 3419
+    },
+    "tools/test_phases.lua": {
+      "sha256": "f146b407bc45b223a38f8b80512095a8b85e6113d120e38720a0f06792d55f38",
+      "bytes": 10283
+    },
+    "tools/test_point1.lua": {
+      "sha256": "2e7398035a0edbb92dac2915622bed981b997ebb38528cd670f385366d6dc4b3",
+      "bytes": 4087
+    },
+    "tools/test_poolbounds.lua": {
+      "sha256": "5954d26593f8466e0d2a8aec7e4e4436a16533a44a7ab8e8270d084d232d6e4a",
+      "bytes": 5081
+    },
+    "tools/test_preload.lua": {
+      "sha256": "1d880483c980c598fcc2478166232c57078610c65534df4bdc13099205159638",
+      "bytes": 2714
+    },
+    "tools/test_questchoice.lua": {
+      "sha256": "faffe762d1866119ed08a36f4e30133290b5880b5843bfb2e75c2847010e8337",
+      "bytes": 4162
+    },
+    "tools/test_questinfo.lua": {
+      "sha256": "c9c2d82ba670baa09a51a8d05d8133c4812a2b9926486bfda6493f0841bfacbd",
+      "bytes": 4568
+    },
+    "tools/test_reach.lua": {
+      "sha256": "2c1db2fc525473b7ba9496b11c466abdc9dff4aefcb30d84151f5d5902ff6f0c",
+      "bytes": 4774
+    },
+    "tools/test_refloot.lua": {
+      "sha256": "dca1dcced02b47a49a1618b4b9bc144af5e07d88df3841352a442a986568ac7f",
+      "bytes": 4164
+    },
+    "tools/test_rename.lua": {
+      "sha256": "cebada987c7901cad04aa31231de1ae249851b48f66acd146d8219e62aa96d73",
+      "bytes": 2569
+    },
+    "tools/test_reputation_req.lua": {
+      "sha256": "4008226d9937c241c8c2d4a0eb0548f5ee6a5b2977cf7a7893aaeadfde1d8983",
+      "bytes": 2251
+    },
+    "tools/test_reputation.lua": {
+      "sha256": "b619ee84447b56275fe3bf5d996a1ae21d09768ee21b7996361339085a422683",
+      "bytes": 7430
+    },
+    "tools/test_reqlevel.lua": {
+      "sha256": "45e36550e51aaaf6ea1b421415c2b5e27219a131123de642435cad9cb1efff5b",
+      "bytes": 4866
+    },
+    "tools/test_restricted.lua": {
+      "sha256": "36cf21a37280c59b7d42974134a421ae34607cdda81b4f28770519ec7eb1e6cd",
+      "bytes": 7757
+    },
+    "tools/test_screenshot.lua": {
+      "sha256": "d838a7f3a1c63e61ece835a5ef7775d9dfe8051424366ae26c91bed396cd072b",
+      "bytes": 9870
+    },
+    "tools/test_searchband.lua": {
+      "sha256": "e27a3ac55cc7812e1cb490bf4a1522f57a419311867aa96ec94335833370aac2",
+      "bytes": 6558
+    },
+    "tools/test_searchfail.lua": {
+      "sha256": "63bb103af44b73eafe1a977b784211f4a05590861ff9263bc58fc65b01a46ca2",
+      "bytes": 3430
+    },
+    "tools/test_setlines.lua": {
+      "sha256": "753dd3cacd2df457a496e902e9873706ce86f1df9c60d3505bec5120637c7ce9",
+      "bytes": 2846
+    },
+    "tools/test_slotview.lua": {
+      "sha256": "6aa58c427f0b94a30d6c406e9ea24015fe93e0ff442bbe3bfa1814ba5f7bc98f",
+      "bytes": 7624
+    },
+    "tools/test_specchoice.lua": {
+      "sha256": "0a9d8de93b5922bd699d5dd3b31b59ea9b2c0dca45205d8452f94d9332e11e77",
+      "bytes": 3337
+    },
+    "tools/test_spellpower.lua": {
+      "sha256": "54a14629046896c58711d912a290ee1add18671108a17685edc2f18102ddde03",
+      "bytes": 5526
+    },
+    "tools/test_trainer.lua": {
+      "sha256": "232a2a569feb98b30299a7ec3e19d88a1f57700e89a1db228d96ef90ee72b79b",
+      "bytes": 7028
+    },
+    "tools/test_trinket.lua": {
+      "sha256": "ad56479ef1c16f305f68ada85a6a764fc046461d9c95cbf5dadf0cd569624d6c",
+      "bytes": 6250
+    },
+    "tools/test_umlaut.lua": {
+      "sha256": "173453f3886efef42dba110aacc683f79b480d5e208ef24da9033606fd1f5798",
+      "bytes": 2640
+    },
+    "tools/test_unscored.lua": {
+      "sha256": "90f9f69907b4ecf3726208edf32b137fb5449d889ea9edf2ab539fa211953380",
+      "bytes": 5866
+    },
+    "tools/test_weaponskills.lua": {
+      "sha256": "7b3634f55de54d4a57684ef62a251d13a778b5e74a1f16ac3de406270baea157",
+      "bytes": 5734
+    },
+    "tools/test_weightsui.lua": {
+      "sha256": "a12bd048c66a968fdc9ecb1bd961757b0962d63476c990f138291921ee3bde26",
+      "bytes": 2696
+    },
+    "tools/test_zonename.lua": {
+      "sha256": "e1f7550b7a68b744b0538d03380349236a69c11a0c76e258f60fe744b5add7f4",
+      "bytes": 4675
+    },
+    "Trainer.lua": {
+      "sha256": "25c4926401b85f6c4f3c8521b63d8d292dae4d64c7cac27cef6f41232d13160b",
+      "bytes": 24738
+    },
+    "UI.lua": {
+      "sha256": "7b0cc10dde49f6c0c6b213ab980c6d6dee93a74f51a842e7fbb06bf6a90581d9",
+      "bytes": 98276
+    },
+    "Weights.lua": {
+      "sha256": "dbaa57157ede4127692662b626859eacccd241d0a42e94ea294e2267043184cc",
+      "bytes": 19356
+    },
+    "WeightsUI.lua": {
+      "sha256": "7c9b5dc2390466a0fef65e64f5cf2044504a0aea5d6bb39b16db575c278774cb",
+      "bytes": 11769
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "424657401": {
+      "tag": "0.24.4",
+      "folder": "0.24.4--424657401",
+      "assets": {
+        "679181012": {
+          "sha256": "a17dae4d794e2ff5c8a86895d6d5352e663cf7ab839eb37b8011ff2fe1e40796",
+          "bytes": 1036403,
+          "id": "679181012",
+          "name": "BananaLootline-0.24.4.zip",
+          "url": "https://github.com/BananaForge/BananaLootline/releases/download/0.24.4/BananaLootline-0.24.4.zip",
+          "path": "releases/0.24.4--424657401/assets/BananaLootline-0.24.4.zip"
+        }
+      },
+      "source": {
+        "sha256": "4e828c6c236387a43572479b1b51a1fa82dc82b21f3f7345cf239eed72ab211a",
+        "bytes": 1540960,
+        "path": "releases/0.24.4--424657401/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/BananaForge/BananaLootline/tarball/0.24.4"
+      }
+    }
+  }
+}

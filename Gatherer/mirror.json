@@ -1,0 +1,373 @@
+{
+  "upstream": "https://github.com/Haaxor1689/Gatherer",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Haaxor1689",
+    "repo": "Gatherer",
+    "name": "Gatherer",
+    "url": "https://github.com/Haaxor1689/Gatherer",
+    "api": "https://api.github.com/repos/Haaxor1689/Gatherer"
+  },
+  "commit": "81ee08ba49d14b3f2dc670749af7c9821b71d621",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "cf237c7aff44efbe6e502e645c3e06da03a69d7bdeb43392108ef3348143417e",
+      "bytes": 10
+    },
+    "Bindings.xml": {
+      "sha256": "2f4ac61a8395bab38a0331754e6b45264fb590826483bf9deaf236854c874d05",
+      "bytes": 731
+    },
+    "constants.lua": {
+      "sha256": "12a1bb82e03181feadff27b04f7776b7304de6295fdf8f9f08e91b506108b04e",
+      "bytes": 1073
+    },
+    "database.lua": {
+      "sha256": "6a1434a9bb324d0b08c30444dad78b11e03615cff86213818bdf8e584125fcab",
+      "bytes": 1017
+    },
+    "GatherBase.lua": {
+      "sha256": "e232c85e887bd1954e77dc27a8ea47dcdddf4f2e9bc373d646db0ba1dc5a1b05",
+      "bytes": 58
+    },
+    "GatherBroadcast.lua": {
+      "sha256": "e7a47acf6e16b479412b6de926bebb24d0d8a2ae09fb51dfb22b69f62a6c1446",
+      "bytes": 5905
+    },
+    "Gatherer_Config.lua": {
+      "sha256": "ffdab4b07b0782a6009fcf24ba0e5f4c032e764168c2790e1e159fd73ac0e42b",
+      "bytes": 3213
+    },
+    "Gatherer.lua": {
+      "sha256": "dbc5393d3df74d2bc00e621194999f427c02aab0fa65c51b0712a14c73fa37c8",
+      "bytes": 91368
+    },
+    "Gatherer.toc": {
+      "sha256": "d38a8ac3a01bd814a2977ca1813f944ed9040344fdedcebb2b0dfcf46456914e",
+      "bytes": 456
+    },
+    "Gatherer.xml": {
+      "sha256": "ac480c6f6541e40834bba8d4ca782035611f1bb195280aff1483b94963fc382a",
+      "bytes": 16015
+    },
+    "GathererInfo.lua": {
+      "sha256": "8521daaf841435288921cf9bb7175b844b76e469be9ccb17186744be96a14b0d",
+      "bytes": 23804
+    },
+    "GathererInfo.xml": {
+      "sha256": "125f8c5de0b1b74a18e01c812a7e698ee26b72eecd63a9aaf683f9de88957bc0",
+      "bytes": 36201
+    },
+    "GathererUI_Lang.lua": {
+      "sha256": "5f7eb86730fd4720fd559d6f0c21b5fa90969b483712fce58524f1444387c213",
+      "bytes": 2126
+    },
+    "GathererUI.lua": {
+      "sha256": "33422cd5cf83ad10c4f9d2e82e3997d0e570c5b36a834a813f8ebb7226f23e21",
+      "bytes": 21776
+    },
+    "GathererUI.xml": {
+      "sha256": "b1ec5832a537c2f739d1bc092ff9701f774f6189359f9536bfff5c862fadac4b",
+      "bytes": 68240
+    },
+    "GatherIcons.lua": {
+      "sha256": "e23e8c06c65c6a0f318b3902aeb5828761b06d54dce25031e649090f52a99bb2",
+      "bytes": 11954
+    },
+    "GatherRegionData.lua": {
+      "sha256": "7dec4b9260dd11f435b22c4a4ba19ee72c525bc074a08eed2f99e1a8a6dc6ad5",
+      "bytes": 6608
+    },
+    "Icons/HerbArthasTears.tga": {
+      "sha256": "eeb987a855f4d9885e576d109ac331d414e4bbd0921ae43fc8d5a95d726b1b33",
+      "bytes": 1068
+    },
+    "Icons/HerbBlackLotus.tga": {
+      "sha256": "9fef937e0ba092c124953393b7896a1140e8a908d7fea2a8dd0b6c08c706f44a",
+      "bytes": 1068
+    },
+    "Icons/HerbBlindweed.tga": {
+      "sha256": "f2abd463927967b18007e493f32b6e8a805cb563590872ae8823bde5cee41bad",
+      "bytes": 1068
+    },
+    "Icons/HerbBriarthorn.tga": {
+      "sha256": "eb5e41b99fb15dfea293da3f086b6ad7bf2f72de017c209dfe589d15c144c14e",
+      "bytes": 1068
+    },
+    "Icons/HerbBruiseweed.tga": {
+      "sha256": "b9620e54800f483bf842986d291f98c2c718a66a55b2c98d38fffc0a124789b3",
+      "bytes": 1068
+    },
+    "Icons/HerbDreamfoil.tga": {
+      "sha256": "a3e40b520dbc8f1f08b06d2bfde30482f0037f71e49fd82f7eceb9fc61a10cb2",
+      "bytes": 1068
+    },
+    "Icons/HerbEarthroot.tga": {
+      "sha256": "d6e46b435d40de3520489d2ad5c07372ecf9d09cbb907b136f184549a9dec4ca",
+      "bytes": 1068
+    },
+    "Icons/HerbFadeleaf.tga": {
+      "sha256": "68022dda04b1e7440be4afa11222f4561ac95837f493c0223b154c157988a318",
+      "bytes": 1068
+    },
+    "Icons/HerbFirebloom.tga": {
+      "sha256": "9ba617cfb95d8fbb4a7e31eb3d7fed68a4af4fa6224d7310a919d5e30ab24825",
+      "bytes": 1068
+    },
+    "Icons/HerbGhostMushroom.tga": {
+      "sha256": "31713b34a5c2e7e23d300313056d65d099cce54258ff708ee44211afc9962da0",
+      "bytes": 1068
+    },
+    "Icons/HerbGoldenSansam.tga": {
+      "sha256": "254ee18ca0c403ea0228a8b45bd30b4e8998bd9b7c97ebc75f344f05025486ca",
+      "bytes": 1068
+    },
+    "Icons/HerbGoldthorn.tga": {
+      "sha256": "f4772c73a40e5581e3fd5a8614ce692e894b3daa300396914a5e2dbb96578728",
+      "bytes": 1068
+    },
+    "Icons/HerbGraveMoss.tga": {
+      "sha256": "7ab26547db76dc01c4ae097a508f341f83ebf6fd5ea59834ca933f7077de2c6f",
+      "bytes": 1068
+    },
+    "Icons/HerbGromsblood.tga": {
+      "sha256": "a752b21b67737ae2c68dc1bc3bb6441fb4d2a7498ddc9b2673f0d8b4a2bc2a50",
+      "bytes": 1068
+    },
+    "Icons/HerbIcecap.tga": {
+      "sha256": "9140f4a604b22be664abf18984862aa470be0e36cec2ec5a96eea186bebb9ad5",
+      "bytes": 1068
+    },
+    "Icons/HerbKhadgarsWhisker.tga": {
+      "sha256": "a7edee80fbd201958ed0da072a74a7333c16fc662f75f9dc84bf250fccd73efc",
+      "bytes": 1068
+    },
+    "Icons/HerbKingsblood.tga": {
+      "sha256": "d1ae99a3be58982d2384c69e58d82ca302d97ff5a65f48eaa815ac37099a11ec",
+      "bytes": 1068
+    },
+    "Icons/HerbLiferoot.tga": {
+      "sha256": "be292e21e5d546e215734adec0a095d327ca903017f253a357f286815435e715",
+      "bytes": 1068
+    },
+    "Icons/HerbMageroyal.tga": {
+      "sha256": "a7f65eb8d672e8b14e304b481644b168903f4e52609e5a2c646e5677b1f73762",
+      "bytes": 1068
+    },
+    "Icons/HerbMountainSilversage.tga": {
+      "sha256": "9f28e7cb384dfd6588b7149b973a3a30b9926a50dcc15faa94b93166bdcf2b86",
+      "bytes": 1068
+    },
+    "Icons/HerbPeacebloom.tga": {
+      "sha256": "a69d14027bb8a3264f61cd347d876c3dbd4c3666b460a829bed700ffb7a38e6d",
+      "bytes": 1068
+    },
+    "Icons/HerbPlaguebloom.tga": {
+      "sha256": "5faf64377b0e736f617d0fec428465bf631ef28646d436d5df74869a55e4fa40",
+      "bytes": 1068
+    },
+    "Icons/HerbPurpleLotus.tga": {
+      "sha256": "c7d2624f888819c0d778ed5c178757cdd4c33c861272518b096ebb4bbc49e775",
+      "bytes": 1068
+    },
+    "Icons/HerbSilverleaf.tga": {
+      "sha256": "b3e81e752151f5674b977cb8efe7a01a526f5933e6cdf629db67a5010090f488",
+      "bytes": 1068
+    },
+    "Icons/HerbStranglekelp.tga": {
+      "sha256": "f9d2d49ec8d6d0482448cfa3bbf40be0691b144fbcf05a7f6635495fb776dac0",
+      "bytes": 1068
+    },
+    "Icons/HerbSungrass.tga": {
+      "sha256": "dd3d15c67a97518ea8aded8d46a2b9401ae4e7b2aa5da896c19cf975d50cbb00",
+      "bytes": 1068
+    },
+    "Icons/HerbSwiftthistle.tga": {
+      "sha256": "fd53dd60377418084230beef0f3472e73abcb36d3689c5f255787b9b2c135493",
+      "bytes": 1068
+    },
+    "Icons/HerbWildSteelbloom.tga": {
+      "sha256": "9ddcd0dc5c73d81a47b6b326778df5dc1469e8cb08a5365b2f28e6ba5930f91e",
+      "bytes": 1068
+    },
+    "Icons/HerbWintersbite.tga": {
+      "sha256": "85b77d1738dafc25e9d8a69b8d03528fdeb0ed28b6a288bb6f7ec66876d8646a",
+      "bytes": 1068
+    },
+    "Icons/OreCopper.tga": {
+      "sha256": "264f227549f740ea15b0a5e78826ce2cdf26f0a202cc07dd19b55cdf56bfe8d4",
+      "bytes": 1563
+    },
+    "Icons/OreDarkIron.tga": {
+      "sha256": "5470b8bc6dc787fb22a36aed2efbe40cbcd07319afbfbc35bfa6e5acd71d3fdb",
+      "bytes": 1034
+    },
+    "Icons/OreGold.tga": {
+      "sha256": "b9a4fd831012e73245edcb64248c9aa0645a26407c14ba45b33aeca678021f1c",
+      "bytes": 1511
+    },
+    "Icons/OreIron.tga": {
+      "sha256": "bfedb95d9fec9118a6e42817fef310951de6c7ae287f91e9e88bf1ff026502b8",
+      "bytes": 1563
+    },
+    "Icons/OreMithril.tga": {
+      "sha256": "640ecd28d39998f472902893e2867de5d9ad328eb9d26bc5cfc9fe845419008f",
+      "bytes": 1563
+    },
+    "Icons/OreRThorium.tga": {
+      "sha256": "d1f6777cc4bc0021890c5f7d9437b8b2105066eb6708a368aef67acc16ef5bc9",
+      "bytes": 1497
+    },
+    "Icons/OreSilver.tga": {
+      "sha256": "ce845ad70391c07c371cc0c54732d636556986e66a248e0e3f33046763f48021",
+      "bytes": 1563
+    },
+    "Icons/OreThorium.tga": {
+      "sha256": "281ab2144810fcff3697e6622de83ac381f8bfcc8a7bd4d8e21189bfc49f8f39",
+      "bytes": 1563
+    },
+    "Icons/OreTin.tga": {
+      "sha256": "56ce6af29001c895de0cad6ca3845408b9ddf00c2ab4fea802701820fd7d036b",
+      "bytes": 1563
+    },
+    "Icons/OreTruesilver.tga": {
+      "sha256": "97e4c3df828f5bcd61fca2368dc700821bba761f721be5242c70a902ddfd5c9e",
+      "bytes": 1563
+    },
+    "Icons/TreasureBarrel.tga": {
+      "sha256": "eddd7b5f6e25f0e4f96924d072193efd742f9c732ed72a7612ae8cc8bed57232",
+      "bytes": 1068
+    },
+    "Icons/TreasureBloodHero.tga": {
+      "sha256": "502d85c1fcf3cef0eb5fa3f4f7d8099c3a1c0da0174bf3588762778fdadb0ab5",
+      "bytes": 1068
+    },
+    "Icons/TreasureChest.tga": {
+      "sha256": "981cf2d8d4f2199bdc69e9a4485ce50d4e1389147c8235e5deb0f5db62b8f7ad",
+      "bytes": 1068
+    },
+    "Icons/TreasureClam.tga": {
+      "sha256": "aa8d28422c1612f4bfbffdb77a33a6d3075b3211ca2cdd4494e525a2c4457c38",
+      "bytes": 1068
+    },
+    "Icons/TreasureCrate.tga": {
+      "sha256": "ede381b8632d7e3357cf7547df967a0fb1ba43b7f0755fe889d8e1e0c7f46bac",
+      "bytes": 1068
+    },
+    "Icons/TreasureFishElem.tga": {
+      "sha256": "847fbba0a0c80eb468755233a451abe7d2295316328f2c235a7cf2da9c164a43",
+      "bytes": 1068
+    },
+    "Icons/TreasureFishnode.tga": {
+      "sha256": "4a79ff62af541d7bed554ae34c96844f587c5bbce5b19ad17c6784a5670a2974",
+      "bytes": 1068
+    },
+    "Icons/TreasureFishwreck.tga": {
+      "sha256": "af8a7c16e90add0a10f4cc616cbbde7cbad5deea495736dd30ddca2b16ccaad0",
+      "bytes": 1068
+    },
+    "Icons/TreasureShellfishTrap.tga": {
+      "sha256": "6d14bf0895180027d004e7d5b5ab10ae72f1466a0e292cf3389a0a0c3b6debad",
+      "bytes": 1068
+    },
+    "Icons/UngoroCrystal.tga": {
+      "sha256": "bf8ac33d820f242b5313d073e64bc19f4f0fd15fe7a76cbace90b4971d2eda1c",
+      "bytes": 1068
+    },
+    "Icons/UngoroDirtPile.tga": {
+      "sha256": "cb76c1f689781e8c7b9fe001f997de033e4d132a44cf97ffcd28c4605227c336",
+      "bytes": 1068
+    },
+    "Icons/UngoroSprout.tga": {
+      "sha256": "889052f4fe07f3d46245eb4c4dbe8c6e94e06235e578e4cf5066860215ff4ec3",
+      "bytes": 1068
+    },
+    "localization.lua": {
+      "sha256": "deaa5d66035b43f925b98cff38f89dac9d0851601e2089d250b051f9b0ff16a8",
+      "bytes": 34699
+    },
+    "math.lua": {
+      "sha256": "6e934c4de802f9a7e1582a1fe107a8a83abfa5fced122c0877303552f011566d",
+      "bytes": 384
+    },
+    "notifications.lua": {
+      "sha256": "0303861c9545c52b2a62ceeb662f446c70919b3f9e4caec9a850a33325e93c81",
+      "bytes": 1440
+    },
+    "Original/Chest.tga": {
+      "sha256": "56a4afd316e96c9b6fe5a94f4316765db667ff5d4fa4ab330a8b4b3d60d42fc5",
+      "bytes": 1068
+    },
+    "Original/Herb.tga": {
+      "sha256": "8e66871f3ed9b377d06d2246086f2143d8b8495cb9b92eeff2579af921037a24",
+      "bytes": 1068
+    },
+    "Original/Ore.tga": {
+      "sha256": "ded39152feccf9b21207de363dea6bc8dfefb2559ae65fadb97fe25aa815d196",
+      "bytes": 1068
+    },
+    "Original/Test.tga": {
+      "sha256": "3869ea1434c0fa0f981d044d46c6fc46212ecacec298ad7a785cb7c67f3ee1da",
+      "bytes": 1068
+    },
+    "Readme.md": {
+      "sha256": "634620bc1e6fe3508f1730eb3765e5c7eeb49f22260a1337cd40123425581926",
+      "bytes": 429
+    },
+    "Shaded/Black.tga": {
+      "sha256": "21d4fd78f216f39e95329ea1ce62cda4280d7d927ed87951c0c8855b4e1f761a",
+      "bytes": 1068
+    },
+    "Shaded/Blue.tga": {
+      "sha256": "8ec630e82c29b300a54f3860cd987f1dbcbaa7a561317e9f45527f7f5c75a6b4",
+      "bytes": 1068
+    },
+    "Shaded/Cyan.tga": {
+      "sha256": "0572e6341cc24660d6faa4ee9e60a9ad1394878973a2122235818ff57fcfb50a",
+      "bytes": 1068
+    },
+    "Shaded/Green.tga": {
+      "sha256": "b5ef1bf10400449b876e3e1f7994074e5e3839d2915df02d6b9384967afbd1d8",
+      "bytes": 1068
+    },
+    "Shaded/Magenta.tga": {
+      "sha256": "2897130376580fc3eb12a65542b3d69800a36d6eca50fc44682a7249b03958bb",
+      "bytes": 1068
+    },
+    "Shaded/Red.tga": {
+      "sha256": "814ee372b58a362dc4f78d8ad794702da676427073e6a4c1f2c0d58d14ada1a8",
+      "bytes": 1068
+    },
+    "Shaded/Test.tga": {
+      "sha256": "44fcb120e9b58ab53265ee3d9db99927d92841f0fe64024a3cfaf2299b9c4e31",
+      "bytes": 1068
+    },
+    "Shaded/White.tga": {
+      "sha256": "de65723cafdb7c76a17905d97cbb9754f34ac66e0e5f835e5648bb10a2ce61c6",
+      "bytes": 1068
+    },
+    "Shaded/Yellow.tga": {
+      "sha256": "261ae9757cc9dd4fa0fc806e0e472e118e54fe8111c58e891a0a1540a9970bf8",
+      "bytes": 1068
+    },
+    "Skin/GatherOrb.tga": {
+      "sha256": "4755ad13c846f4fe6709e80a05f0e9e77e5e8cea54666ba3c0b76cc24783b368",
+      "bytes": 16428
+    },
+    "string.lua": {
+      "sha256": "f6491f7fa33200f3686b16ef90e1984d5d8367c6e93e17e719534c2434cbb5dd",
+      "bytes": 678
+    },
+    "UI_localization.lua": {
+      "sha256": "783556f31802fcb602ca4aeed55ee9e74d32639f5841b275da37c8f70d4658c0",
+      "bytes": 71147
+    },
+    "utils.lua": {
+      "sha256": "4043e01642b23892fb4bb536343b2c23fa78c0fdeba414890a8e3e751af5453a",
+      "bytes": 904
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,69 @@
+----------------------------------Release 0.8.5 (20100)----------------------------------
+2007-05-20	Lev
+	* Added 40 new quotes
+	* Added new category "PvP" and remapped some of the existing quotes to it
+	* Updated TOC to 2.1 game version
+	* Small text changes
+
+----------------------------------Release 0.8.1 (20003)----------------------------------
+2007-01-14	Lev
+	* Updated TOC
+	* Changed some help entries in the addon an readme to clarify the new /wqh
+	  command
+
+----------------------------------Release 0.8.0 (20000)----------------------------------
+2006-12-09	Harag
+	* Integrated WoWQuoteUI into WoWQuote. WoWQuote now has a working graphical
+	  user interface.
+	* Applied necessary changes to be runnable on WoW 2.0
+			Lev
+	* Added quotes 282 to 300
+	* /wq now shows or hides the graphical user interface.
+	* /wqh shows the old help lines.
+
+----------------------------------Release 0.7.0 (11200)----------------------------------
+2006-08-20	Lev
+	* Sound quotes from the raid leader in a raid group were muted, since they had
+	  to be received on a separate channel. Fixed!
+	* Added lots of new quotes
+
+----------------------------------Release 0.6.1 (11100)----------------------------------
+2006-06-21	Lev
+	* Changed the TOC to be compatible with WoW patch 1.11
+	* Since I don't play my hunter on Gul'Dan anymore and being a warrior on the realm
+	  "Die ewige Wacht" for a good while, I changed the "author" alias of this addon. So
+	  Lev@Die Ewige Wacht = Leotard@Gul'dan :)
+
+----------------------------------Release 0.6.0 (11000)----------------------------------
+2006-05-27	Leotard
+	* Added many "summer special" quotes (191 to 235)
+	* Added ability to send quotes in guild officers channel
+	* Added links to the media files in quotes.html, so you can play them
+	  directly while browsing the list
+
+----------------------------------Release 0.5.1 (11000)----------------------------------
+2006-03-29	Leotard
+	* Removed some typos
+	* Updated the TOC to match patch 1.10
+
+----------------------------------Release 0.5.0 (10900)----------------------------------
+2006-01-20	Leotard
+	* Added quotes 181 to 190
+	* Listed messages are now sorted alphabetically
+	* NEW: /wqa takes and saves an userdefined alias for a quote
+	* NEW: /wqf finds quotes by search pattern
+	* All normal and error messages are now defined in the common localization.lua to
+      fulfill later translations in other languages
+	* Removed some typos in the media library
+	* Made the toc compatible with the game version 1.9.x (Duh!)
+	* The addon's version number is being displayed in the list of addons on the login
+      screen
+	* Made some alpha preparations for the coming graphical version ;-)
+
+----------------------------------Release 0.1.1 (1800)------------------------------------
+2005-11-07	Leotard
+	* Removed typos, made some minor localization changes
+
+----------------------------------Release 0.1.0 (1800)------------------------------------
+2005-11-06	Leotard
+	* First official console version

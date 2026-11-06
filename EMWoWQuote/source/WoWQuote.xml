@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Frame name="WQ">
+		<Scripts>
+			<OnLoad>
+				this:RegisterEvent("ADDON_LOADED");
+				this:RegisterEvent("CHAT_MSG_WHISPER");
+			</OnLoad>
+			<OnEvent>
+				WQ_OnEvent(event, arg1, arg2);
+			</OnEvent>
+		</Scripts>
+    </Frame>
+</Ui>

@@ -1,0 +1,50 @@
+{
+  "upstream": "https://github.com/BigPaperBear/ArmorDRCompare-Octo",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "BigPaperBear",
+    "repo": "ArmorDRCompare-Octo",
+    "name": "ArmorDRCompare-Octo",
+    "url": "https://github.com/BigPaperBear/ArmorDRCompare-Octo",
+    "api": "https://api.github.com/repos/BigPaperBear/ArmorDRCompare-Octo"
+  },
+  "commit": "6a0b490b7645e8881111f316b12e3e4827af2caf",
+  "sourceFiles": {
+    "ArmorDRCompare-Octo.lua": {
+      "sha256": "c3c11119a09a457c861619694382e07cd175796dbca27abe5e15e75c1cffe3b6",
+      "bytes": 33745
+    },
+    "ArmorDRCompare-Octo.toc": {
+      "sha256": "aaba57bddf097a693104b1cf3c86516f0921f28167f792e504b1bdaaf34b1f6b",
+      "bytes": 330
+    },
+    "README.md": {
+      "sha256": "84c8fa7b05cfb37d2e9e179d21794ce0c29944eff7b0b7c6ebf805352256eaf1",
+      "bytes": 2769
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "386865517": {
+      "tag": "v1.3.0",
+      "folder": "v1.3.0--386865517",
+      "assets": {
+        "557352680": {
+          "sha256": "433b7f85b4fce2ea50aa504d9ca863113caff36a3625b905b4f40545f42e0067",
+          "bytes": 10112,
+          "id": "557352680",
+          "name": "ArmorDRCompare-Octo.zip",
+          "url": "https://github.com/BigPaperBear/ArmorDRCompare-Octo/releases/download/v1.3.0/ArmorDRCompare-Octo.zip",
+          "path": "releases/v1.3.0--386865517/assets/ArmorDRCompare-Octo.zip"
+        }
+      },
+      "source": {
+        "sha256": "643ca7e7695effad8875788e17ccff3fa9619d245a40d428ce68f644818d2e4c",
+        "bytes": 9665,
+        "path": "releases/v1.3.0--386865517/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/BigPaperBear/ArmorDRCompare-Octo/tarball/v1.3.0"
+      }
+    }
+  }
+}

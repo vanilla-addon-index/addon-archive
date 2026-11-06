@@ -1,0 +1,7 @@
+## Interface: 11200
+## Author: Skizo
+## Title: Chat Timestamps 1.6 |cFFFF8888[Skizo]|r
+## Notes: Adds customizable time stamps to chat windows
+## Version: 1.6
+## SavedVariables: ChatTimestampsSettings
+ChatTimestamps.lua

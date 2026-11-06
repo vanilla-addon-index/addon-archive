@@ -1,0 +1,6 @@
+## Title: MouseOverSounds_PvP
+## Notes: Plays sound when mouseover PvP unit
+## Version: 1.0
+## LoadOnDemand: 0
+
+MouseOverSounds_PvP.lua

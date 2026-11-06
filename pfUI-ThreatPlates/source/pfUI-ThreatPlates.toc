@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: |cff33ffccpf|cffffffffUI |cffaaaaaa[|cffabd473Threat Plates|cffaaaaaa]
+## Author: Duciel
+## Version: 1.9.0
+## Notes: Affiche la menace Turtle WoW (API serveur TWThreat) directement sur les nameplates de pfUI
+## Dependencies: pfUI
+## OptionalDeps: TWThreat
+pfUI-ThreatPlates.lua

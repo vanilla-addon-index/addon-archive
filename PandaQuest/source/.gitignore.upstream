@@ -1,0 +1,29 @@
+# Local AI and project notes; not part of the addon.
+AGENTS.md
+CLAUDE.md
+.claude/
+
+# Design notes stay local.
+docs/
+
+# Dev tooling: generators, importers, smoke tests and their data.
+# release.py stays: the GitHub release workflow runs it.
+tools/*
+!tools/release.py
+
+# Release packages built locally by tools/release.py.
+/PandaQuest*.zip
+/dist/
+
+# Local Python tooling artifacts.
+__pycache__/
+*.pyc
+*.whl
+
+# Stray files from tools and the OS.
+--help
+*.bak
+*.tmp
+*.log
+Thumbs.db
+desktop.ini

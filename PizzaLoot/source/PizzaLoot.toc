@@ -1,0 +1,24 @@
+## Interface: 11200
+## Title: |cffa050ffPizza|cffffffffLoot
+## Author: Pizzahawaii
+## Notes: Animated loot notifications powered by PizzaSauce
+## Version: 0.0.1
+## SavedVariablesPerCharacter: PizzaLoot_config
+
+lib\PizzaSauce.lua
+
+src\main.lua
+src\config.lua
+src\utils.lua
+src\timer.lua
+src\money.lua
+src\notice.lua
+src\anchor.lua
+src\row.lua
+src\stack.lua
+src\confetti.lua
+src\banner.lua
+src\queue.lua
+src\lootwatch.lua
+src\moneywatch.lua
+src\commands.lua

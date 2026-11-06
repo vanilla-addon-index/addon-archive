@@ -1,0 +1,33 @@
+{
+  "upstream": "https://octowow.st/git/Monster/RangeMelee",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Monster",
+    "repo": "RangeMelee",
+    "name": "RangeMelee",
+    "url": "https://octowow.st/git/Monster/RangeMelee",
+    "api": "https://octowow.st/git/api/v1/repos/Monster/RangeMelee"
+  },
+  "commit": "139c915149c5a5266f409f2d217e279a9d6fd529",
+  "sourceFiles": {
+    "RangeMelee.lua": {
+      "sha256": "ce457dc763733aec82d98b7d5ed36cf9d25355e67fd640c8ef0a267c2d6b0719",
+      "bytes": 8329
+    },
+    "RangeMelee.toc": {
+      "sha256": "2648fad44b206a6934c238565575bc6a37ecc4f4fb4ed59b9ad30969e8885fcb",
+      "bytes": 218
+    },
+    "RangeMelee.xml": {
+      "sha256": "fc268cffb25b964c52b803030b8f4dc6dbb717c4014ad59f083b233f7a91323d",
+      "bytes": 521
+    },
+    "Readme": {
+      "sha256": "61a6297dd1f924a1061786ac9687754af6aa3301489c8bbeaa6f148ee2837144",
+      "bytes": 764
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

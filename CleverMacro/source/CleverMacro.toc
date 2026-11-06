@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: |cFFFFFFFFCleverMacro|r|cFF00FF00 v1.2|r
+## Author: _brain
+## Notes: Adds extra slash commands for use in macros.
+## Version: 1.2
+## RequiredDeps:
+## SavedVariables:
+CleverMacro.lua
+Compat.lua

@@ -1,0 +1,65 @@
+{
+  "upstream": "https://octowow.st/git/Mr_Rosh/ColorPickerPlus",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Mr_Rosh",
+    "repo": "ColorPickerPlus",
+    "name": "ColorPickerPlus",
+    "url": "https://octowow.st/git/Mr_Rosh/ColorPickerPlus",
+    "api": "https://octowow.st/git/api/v1/repos/Mr_Rosh/ColorPickerPlus"
+  },
+  "commit": "178e7b9980467a70bd353a9afb95db1ebf6b6a0b",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "1a1dbe176bc233b499d35a57db7513f2941c99ab9759f177830c9149be99005b",
+      "bytes": 66
+    },
+    "Changelog-ColorPickerPlus-r29.txt": {
+      "sha256": "73e7e21c93194bae9d5c11d09f19a20a30710f8a5c8d6f5aad432c6d1e844e35",
+      "bytes": 769
+    },
+    "ColorPickerPlus.lua": {
+      "sha256": "2fda0d9d1505092254c4edf2a9c4fc2de6cedce3387292f1f01d01e0876e1de4",
+      "bytes": 12246
+    },
+    "ColorPickerPlus.toc": {
+      "sha256": "58d664c4e04e10b86eef5c37da2af6900d2a3bb24ae3770bfb173fd2d01316ee",
+      "bytes": 625
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "0ee37907c6bc615e584310530ed6e5967a4faab7c93d51fab90a2267b3be9d4b",
+      "bytes": 31108
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "42aacdcfbe67b76ff1014b54e67c1a917be3f543dc8a4a1609424769c928017a",
+      "bytes": 65879
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "ce0908142841a7cdaf1b9c511677979227ea84b36189c8bc2204204bd77b8644",
+      "bytes": 34741
+    },
+    "libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "09cfc0b69a0feb644fa1a9e5fc6715a4e76e0b2f6c7c04a3a0ea693d633770cd",
+      "bytes": 23114
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "LICENSE": {
+      "sha256": "4296d67901f8e1e436cab4efb0a5e49daf9886b0084e26ef9d55d3f1ed43293c",
+      "bytes": 1064
+    },
+    "README.md": {
+      "sha256": "946f8c980dcd07461ca272675385b0d6a146c485398add5001c778fc8b0f6f10",
+      "bytes": 302
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

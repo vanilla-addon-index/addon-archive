@@ -1,0 +1,505 @@
+-- pandaUI :: modules/gossip.lua
+--
+-- pfUI-modern-inspired treatment of the native NPC dialog window (GossipFrame)
+-- -- what opens when talking to a trainer, quartermaster, or any NPC offering
+-- gossip options. Native gossip data, option list, and click behaviour stay
+-- intact; pandaUI changes only artwork, typography and layout, matching the
+-- Character/Quest Log/Trainer treatment.
+--
+-- WORKING_SOURCE, not runtime-verified on this client: query_compat.py has no
+-- record at all for GossipFrame or any of its children (documentation.json
+-- only covers the Gossip Lua API, not the frame's widget hierarchy), so every
+-- region name below is taken from UnrealPfUI's skins\blizzard\gossipquest.lua
+-- as a same-client working implementation rather than confirmed evidence.
+-- Verify in game and fold any surprises into knowledge.json.
+--
+-- Unlike UnrealPfUI (which hides the NPC portrait entirely), the portrait is
+-- kept and cropped like modules/merchant.lua's header -- rules/unreal-ui-
+-- design.md classifies portraits as meaningful content imagery to preserve,
+-- not decorative chrome to strip.
+
+local U = PandaUI
+local M = U.media
+local GS = U.RegisterModule("gossip")
+
+-- Requested: every string in the NPC dialog reads as plain white, including
+-- the NPC name -- no accent heading colour here. Same request already recorded
+-- in modules/trainer.lua's ReapplyHeaderText, and the same pure-white value
+-- modules/questlog.lua uses (QUEST_WHITE), deliberately not M.color.text: that
+-- token is 0.90 grey and reads dim against this window's dark panel.
+local WHITE = { 1.00, 1.00, 1.00, 1 }
+local ACTIVE_QUEST_ICON = "Interface\\AddOns\\pandaUI\\media\\ActiveQuestIcon"
+local COMPLETE_QUEST_ICON = "Interface\\AddOns\\pandaUI\\media\\CompleteQuestIcon"
+local GOSSIP_ICON_NUDGE_X = 6
+local GOSSIP_ICON_TEXT_GAP = 4
+
+local frame, panel
+-- True when modules/questdesign.lua draws this window (modern-wow with its
+-- `questdialog` surface on): the quest giver's two windows share one design.
+local useModernWow = false
+
+local function G(name)
+  return U.G(name)
+end
+
+local function SetGossipFont(object, size, color)
+  U.SetStockFont(object, size or M.fontSize.normal, color or WHITE)
+end
+
+local function Reposition(object, point, relativeTo, relativePoint, x, y)
+  if not object then return end
+  pcall(function()
+    object:ClearAllPoints()
+    object:SetPoint(point, relativeTo, relativePoint, x, y)
+  end)
+end
+
+-- The client swaps a hovered row's font (smaller) after the native OnEnter
+-- script has returned, so the inline post-hook restores the colour but not the
+-- size (user report: rows shrink on hover). U.DeferOnce documents this exact
+-- shape -- a native handler updating its widget after its script returns -- so
+-- the font is put back once more on the next shared-driver tick, in the colour
+-- the row last painted (white, or the Modern WoW ink).
+-- WORKING_SOURCE, not runtime-verified: the timing is inferred from that note.
+--
+-- Second report (user): after the deferred restore the size grew again on mouse
+-- LEAVE, i.e. the client also repaints the normal-state font later than one
+-- tick. The restore is therefore a guard: it re-checks the row's font size on
+-- every tick while the mouse is over the row and for ROW_FONT_HOLD seconds
+-- after every enter/leave, and re-applies the font only when the size differs
+-- from the one the row had at rest. Timing-independent; still not verified.
+local ROW_FONT_HOLD = 0.75
+
+local function RowFontSize(fontstring)
+  local ok, _, size = pcall(fontstring.GetFont, fontstring)
+  return ok and tonumber(size) or nil
+end
+
+local function RestoreRowFont(button)
+  if not button or not button.GetFontString then return end
+  local ok, fontstring = pcall(button.GetFontString, button)
+  if not ok or not fontstring then return end
+  SetGossipFont(fontstring, M.fontSize.normal, button.puiGossipRowColor or WHITE)
+  if useModernWow then U.ClearTextShadow(fontstring) end
+end
+
+-- Records the size a freshly styled (not hovered) row has at rest.
+local function RememberRowFontSize(button)
+  if not button.GetFontString then return end
+  local ok, fontstring = pcall(button.GetFontString, button)
+  if ok and fontstring then button.puiGossipFontSize = RowFontSize(fontstring) end
+end
+
+local function GuardRowFont(button, index)
+  button.puiGossipGuardUntil = GetTime() + ROW_FONT_HOLD
+  local id = "gossip-row-font-" .. index
+  U.RegisterUpdate(id, 0, function()
+    local shown = true
+    if button.IsShown then
+      local shownOk, value = pcall(button.IsShown, button)
+      shown = shownOk and value
+    end
+    if not shown then
+      button.puiGossipHover = false
+      U.UnregisterUpdate(id)
+      return
+    end
+
+    local want = button.puiGossipFontSize
+    if want and button.GetFontString then
+      local ok, fontstring = pcall(button.GetFontString, button)
+      local size = ok and fontstring and RowFontSize(fontstring) or nil
+      if size and math.abs(size - want) > 0.05 then RestoreRowFont(button) end
+    end
+
+    if not button.puiGossipHover and GetTime() > button.puiGossipGuardUntil then
+      U.UnregisterUpdate(id)
+    end
+  end)
+end
+
+-- Gossip option rows (GossipTitleButton1..N) are plain clickable text/icon
+-- rows, not stock chrome buttons -- same shape as modules/trainer.lua's skill
+-- rows. The per-option icon (GossipTitleButtonNGossipIcon) is a meaningful
+-- content glyph (chat bubble / quest marker), so it is kept explicitly rather
+-- than stripped with the rest of the row's native art.
+local function StyleTitleRow(i)
+  local button = G("GossipTitleButton" .. i)
+  if not button then return end
+
+  local icon = G("GossipTitleButton" .. i .. "GossipIcon")
+  -- U.StripStockRowTextures also detects the icon by texture path and re-shows
+  -- it, so the row keeps its "open the bank" / "train me" / "!" / "?" glyph
+  -- even when the named region is missing on this client or was stripped while
+  -- the row was still empty.
+  U.StripStockRowTextures(button, icon and { icon = icon } or nil)
+
+  -- RUNTIME_VERIFIED (questiconpos.v1): the visible marker is the named
+  -- GossipTitleButtonNGossipIcon, anchored TOPLEFT at 0,0. Move that native
+  -- region itself; the quest-row replacement icon is not involved here.
+  if icon then
+    Reposition(icon, "TOPLEFT", button, "TOPLEFT", GOSSIP_ICON_NUDGE_X, 0)
+  end
+
+  -- Stock 1.12 gives every active gossip quest the same question-mark art.
+  -- Resolve its real state through the quest log: unfinished is grey, while a
+  -- quest ready to turn in keeps the yellow complete marker.
+  local rowType = type(button.type) == "string" and
+                  string.lower(button.type) or nil
+  if icon and rowType == "active" then
+    local title
+    if button.GetText then
+      local textOk, value = pcall(button.GetText, button)
+      if textOk then title = value end
+    end
+    local complete = type(U.QuestDialogQuestIsComplete) == "function" and
+                     U.QuestDialogQuestIsComplete(title) or false
+    pcall(icon.SetTexture, icon,
+          complete and COMPLETE_QUEST_ICON or ACTIVE_QUEST_ICON)
+    U.RestoreContentIcon(icon)
+  end
+
+  local function ForceRowWhite()
+    button.puiGossipRowColor = WHITE
+    -- Button:SetTextColor controls the normal label state; applying the shared
+    -- stock-font adapter to the FontString afterward also wins over the native
+    -- black highlight font that is selected during OnEnter.
+    if button.SetTextColor then
+      pcall(button.SetTextColor, button, 1, 1, 1)
+    end
+
+    if button.GetFontString then
+      local fontOk, fontstring = pcall(button.GetFontString, button)
+      if fontOk and fontstring then
+        SetGossipFont(fontstring, M.fontSize.normal, WHITE)
+      end
+    end
+  end
+
+  ForceRowWhite()
+  -- The icon is nudged right by GOSSIP_ICON_NUDGE_X, which eats the native
+  -- icon/text gap; shift the label by the nudge plus a visible gap.
+  U.CenterRowLabel(button, GOSSIP_ICON_NUDGE_X + GOSSIP_ICON_TEXT_GAP)
+  -- Not while the mouse is over it: a hovered row's font is the client's.
+  if not button.puiGossipHover then RememberRowFontSize(button) end
+
+  -- USER_CONFIRMED_INGAME: the trainer/gossip option becomes black when its
+  -- native yellow highlight appears. Run after the native enter/leave scripts
+  -- so both states are restored to white without replacing click behavior.
+  if not button.puiWhiteTextHooks then
+    button.puiWhiteTextHooks = true
+    U.PostHookScript(button, "OnEnter", function()
+      button.puiGossipHover = true
+      ForceRowWhite()
+      GuardRowFont(button, i)
+    end)
+    U.PostHookScript(button, "OnLeave", function()
+      button.puiGossipHover = false
+      ForceRowWhite()
+      GuardRowFont(button, i)
+    end)
+  end
+end
+
+local function LayoutTitleRows(rows)
+  -- GetStringHeight is absent here; Button:GetTextHeight includes the
+  -- measured height of a wrapped label.
+  local previous
+  local i
+  for i = 1, rows do
+    local button = G("GossipTitleButton" .. i)
+    local shown = false
+    if button and button.IsShown then
+      local shownOk
+      shownOk, shown = pcall(button.IsShown, button)
+      shown = shownOk and shown
+    end
+
+    if shown then
+      if not button.puiGossipBaseHeight and button.GetHeight then
+        local heightOk, height = pcall(button.GetHeight, button)
+        height = heightOk and tonumber(height) or nil
+        if height and height > 0 then
+          button.puiGossipBaseHeight = height
+        end
+      end
+
+      local baseHeight = button.puiGossipBaseHeight or 0
+      local height = baseHeight
+      local wrapped = false
+      if button.GetTextHeight then
+        local textOk, textHeight = pcall(button.GetTextHeight, button)
+        textHeight = textOk and tonumber(textHeight) or nil
+        if textHeight and textHeight + 2 > height then
+          height = textHeight + 2
+          -- Grew past its single-line base height -> the label wrapped to a
+          -- second line, so this row needs the wider gap below it.
+          wrapped = baseHeight > 0 and height > baseHeight
+        end
+      end
+      button.puiGossipWrapped = wrapped
+      if height > 0 and button.SetHeight then
+        pcall(button.SetHeight, button, height)
+      end
+
+      if previous then
+        -- A 2-line gossip option needs more breathing room below it than the
+        -- default 1px row gap, or the next row reads as crowding its wrapped
+        -- second line.
+        local gap = previous.puiGossipWrapped and -6 or -1
+        pcall(function()
+          button:ClearAllPoints()
+          button:SetPoint("TOPLEFT", previous, "BOTTOMLEFT", 0, gap)
+        end)
+      end
+      previous = button
+    end
+  end
+
+  local scroll = G("GossipGreetingScrollFrame")
+  if scroll and scroll.UpdateScrollChildRect then
+    pcall(scroll.UpdateScrollChildRect, scroll)
+  end
+end
+
+-- No compact-DB record for how many GossipTitleButton rows FrameXML ever
+-- instantiates. Same convention as modules/trainer.lua's CLASS_TRAINER_
+-- SKILLS_DISPLAYED fallback: try the documented constant, fall back to a
+-- safe upper bound, and let the per-row G() guard no-op past the real count.
+local function StyleTitleRows()
+  local rows = tonumber(G("NUMGOSSIPBUTTONS")) or 10
+  local i
+  for i = 1, rows do
+    StyleTitleRow(i)
+  end
+  LayoutTitleRows(rows)
+end
+
+-- Theme-only row finish on parchment: heading ink at rest and the warmer
+-- red-brown on hover (M.modernWow.questDialog.row, shared with QuestFrame's
+-- greeting rows); each row's native glyph carries its quest state. Installed
+-- after the common white-text hooks so native enter/leave refreshes cannot
+-- leave the Modern WoW row black or flatten its state.
+local function StyleModernWowTitleRows()
+  if not useModernWow then return end
+
+  local colors = U.ModernWowQuestDialogRowColors()
+  if not colors then return end
+
+  local rows = tonumber(G("NUMGOSSIPBUTTONS")) or 10
+  local i
+  for i = 1, rows do
+    local button = G("GossipTitleButton" .. i)
+    if button then
+      local function PaintRow(color)
+        button.puiGossipRowColor = color
+        if button.SetTextColor then
+          pcall(button.SetTextColor, button, color[1], color[2], color[3])
+        end
+        if button.GetFontString then
+          local ok, fontstring = pcall(button.GetFontString, button)
+          if ok and fontstring then
+            SetGossipFont(fontstring, M.fontSize.normal, color)
+            U.ClearTextShadow(fontstring)
+          end
+        end
+      end
+
+      PaintRow(colors.available)
+      if not button.puiModernWowOptionHooks then
+        button.puiModernWowOptionHooks = true
+        U.PostHookScript(button, "OnEnter", function()
+          PaintRow(colors.hover)
+        end)
+        U.PostHookScript(button, "OnLeave", function()
+          PaintRow(colors.available)
+        end)
+      end
+    end
+  end
+end
+
+local function StyleHeader()
+  local portrait = G("GossipFramePortrait")
+  if portrait then
+    pcall(portrait.SetTexCoord, portrait, 0.08, 0.92, 0.08, 0.92)
+  end
+end
+
+-- Body text recolouring lives in core/stockui.lua (U.ForceStockTextWhite);
+-- modules/quest.lua needs the identical pass for the sibling NPC dialog, so
+-- the walker is shared rather than duplicated per module.
+local function ForceWhiteText(object)
+  U.ForceStockTextWhite(object, WHITE, M.fontSize.normal)
+end
+
+-- Keep the live NPC portrait out of the destructive stock-art strip.  It is
+-- content, and the Modern WoW path places this same region in its gold ring.
+local function StripFrameChrome()
+  local portrait = G("GossipFramePortrait")
+  if portrait then
+    U.StripStockTextures(frame, { keep = { [portrait] = true } })
+  else
+    U.StripStockTextures(frame)
+  end
+end
+
+-- Use the same explicit stock-string treatment as questlog.lua in addition to
+-- the frame walk. GossipGreetingText is the WORKING_SOURCE native greeting
+-- string; G() safely skips it if this client does not expose that peer.
+local function ApplyNamedWhiteText()
+  SetGossipFont(G("GossipGreetingText"), M.fontSize.normal, WHITE)
+end
+
+-- WORKING_SOURCE (knowledge.json frames.stock_singletons_structure_nonvanilla):
+-- questlog.lua/spellbook.lua confirm stock singleton windows can recreate
+-- their decorative regions on native content refresh, not just on first
+-- OnShow, so every stripped region here must be reapplied on each refresh
+-- rather than stripped once in BuildFrame. Reapply is now the single place
+-- that re-strips the greeting panel/scroll chrome too.
+local function Reapply()
+  -- Modern WoW: modules/questdesign.lua draws the window and inks the page;
+  -- the option rows and their glyphs stay here and run after it.
+  if useModernWow then
+    U.ModernWowQuestDialogRefresh("gossip")
+    StyleTitleRows()
+    StyleModernWowTitleRows()
+    return
+  end
+
+  StripFrameChrome()
+  U.StripStockTextures(G("GossipFrameGreetingPanel"))
+  U.StripStockTextures(G("GossipGreetingScrollFrame"))
+  StyleHeader()
+  ForceWhiteText(frame)
+  ApplyNamedWhiteText()
+  SetGossipFont(G("GossipFrameNpcNameText"), M.fontSize.large, WHITE)
+  StyleTitleRows()
+end
+
+local function BuildFrame()
+  frame = G("GossipFrame")
+  if not frame then
+    U.Debug("gossip: native frame unavailable")
+    return false
+  end
+
+  -- The Modern WoW path strips by name in modules/questdesign.lua instead:
+  -- this keep-table strip cannot actually protect the portrait.
+  if not useModernWow then StripFrameChrome() end
+
+  -- Content backdrop inset from the real frame bounds, same shape as
+  -- modules/trainer.lua's panel: leaves the bottom strip clear for the
+  -- Goodbye button instead of burying it inside the dark box.
+  panel = U.CreatePanel(frame, {
+    name = "PandaUIGossipPanel",
+    width = 100,
+    height = 100,
+    background = { 0.01, 0.01, 0.01, 0.78 },
+  })
+  panel:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -10)
+  panel:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -30, 40)
+  pcall(panel.EnableMouse, panel, false)
+
+  pcall(frame.SetHitRectInsets, frame, 8, 30, 10, 40)
+
+  local frameLevelOk, frameLevel = pcall(frame.GetFrameLevel, frame)
+  if frameLevelOk and tonumber(frameLevel) then
+    pcall(panel.SetFrameLevel, panel, frameLevel)
+  end
+
+  -- One position and group with QuestFrame (modules/quest.lua): the two
+  -- windows replace each other in place during one conversation.
+  U.MakeWindowDraggable("questgiver", frame,
+                        { headerInset = 54, group = "questgiver" })
+
+  StyleHeader()
+  Reposition(G("GossipFrameNpcNameText"), "TOP", panel, "TOP", 0, -10)
+
+  U.StyleStockCloseButton(G("GossipFrameCloseButton"), panel, -6, -6)
+
+  -- Requested: the Goodbye label sits 3px higher, like the quest dialog's
+  -- action buttons. U.CenterButtonLabel reads it on every centring.
+  local goodbye = G("GossipFrameGreetingGoodbyeButton")
+  if goodbye then goodbye.puiLabelNudgeY = 3 end
+
+  if useModernWow then
+    -- The complete themed path: the scrollbar and Goodbye button are never
+    -- given the flat treatment first (rules/pandaui-design.md).
+    U.ModernWowQuestDialogBind(frame, panel, "gossip")
+    Reapply()
+  else
+    U.StripStockTextures(G("GossipGreetingScrollFrame"))
+    U.StyleStockScrollbar(G("GossipGreetingScrollFrameScrollBar"))
+    U.StripStockTextures(G("GossipFrameGreetingPanel"))
+
+    ForceWhiteText(frame)
+    ApplyNamedWhiteText()
+    SetGossipFont(G("GossipFrameNpcNameText"), M.fontSize.large, WHITE)
+    StyleTitleRows()
+
+    U.StyleStockButton(G("GossipFrameGreetingGoodbyeButton"))
+  end
+
+  -- No compact-DB record of a documented "gossip list changed" hook (no
+  -- UpdateGossipFrame/GossipFrame_Update entry either). Reapply drives off
+  -- OnShow only, same fallback modules/merchant.lua uses when no native
+  -- refresh hook is confirmed; if in-game testing shows the option list can
+  -- change while the window stays open (e.g. a quest turned in mid-gossip),
+  -- fold the real update hook into knowledge.json and hook it here.
+  U.PostHookScript(frame, "OnShow", Reapply)
+
+  -- Do NOT post-hook GossipFrameUpdate/GossipFrameOptionsUpdate.
+  -- USER_CONFIRMED_INGAME: this client's GossipFrame.lua takes its option list
+  -- through `...`/arg.n, and U.PostHookGlobal's fixed-arity wrapper hands the
+  -- original ten arguments, so arg.n became 10, the update built rows for the
+  -- padding nils, and GossipFrame.lua:123 threw "attempt to concatenate field
+  -- '?' (a nil value)" beneath a column of empty option rows. GOSSIP_SHOW plus
+  -- OnShow already reapply late enough for the icons.
+
+  if frame.IsShown then
+    local ok, shown = pcall(frame.IsShown, frame)
+    if ok and shown then Reapply() end
+  end
+  return true
+end
+
+-- USER_CONFIRMED_INGAME (modules/trainer.lua): stock dialog frames like this
+-- are not reliably resolvable from OnEnable on this client. Same retry shape:
+-- ADDON_LOADED as the lazy-load fallback, GOSSIP_SHOW (documented open-gossip
+-- event) as the real trigger, both torn down once BuildFrame succeeds once.
+local pendingEvents = { "ADDON_LOADED", "GOSSIP_SHOW" }
+
+local function TryBuild()
+  if BuildFrame() then
+    local i
+    for i = 1, table.getn(pendingEvents) do
+      U.UnregisterEvent(pendingEvents[i], TryBuild)
+    end
+    -- GOSSIP_SHOW is the documented content-refresh event (options/quests can
+    -- change per NPC without the frame re-firing OnShow); keep it registered
+    -- after the build so every refresh reapplies the strip, same shape as
+    -- questlog.lua's UpdateRows-driven ReapplyNativeStrip.
+    U.RegisterEvent("GOSSIP_SHOW", Reapply)
+    return true
+  end
+  return false
+end
+
+function GS:OnEnable()
+  local modernWowTheme = type(U.GetActiveThemeStyle) == "function" and
+                         U.GetActiveThemeStyle() == "modern-wow"
+  -- User request (2026-09-19): under modern-wow the quest giver's gossip
+  -- window takes the same design as QuestFrame (modules/questdesign.lua).
+  -- Its `questdialog` surface switched off leaves the window native.
+  useModernWow = modernWowTheme and
+                 type(U.ModernWowQuestDialogActive) == "function" and
+                 U.ModernWowQuestDialogActive() or false
+  if U.ThemeStyleUsesNativeChrome() or (modernWowTheme and not useModernWow) then
+    return
+  end
+  if TryBuild() then return end
+
+  U.RegisterEvent("ADDON_LOADED", TryBuild)
+  U.RegisterEvent("GOSSIP_SHOW", TryBuild)
+end

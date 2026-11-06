@@ -1,0 +1,141 @@
+{
+  "upstream": "https://octowow.st/git/ShempError/EGM",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "ShempError",
+    "repo": "EGM",
+    "name": "EGM",
+    "url": "https://octowow.st/git/ShempError/EGM",
+    "api": "https://octowow.st/git/api/v1/repos/ShempError/EGM"
+  },
+  "commit": "1dd53184b375bd2d2a12fecd8a0ceda9179c4237",
+  "sourceFiles": {
+    "CHANGELOG.md": {
+      "sha256": "bf0646175467930954dd8e59bc6749809a4ea921c8da4a898bba908cfe674b39",
+      "bytes": 3083
+    },
+    "comm/comm.lua": {
+      "sha256": "2d8b42a7cf172444da7f4337de05793a39efde50a8e92241bfdec5c35d5c13d4",
+      "bytes": 12640
+    },
+    "comm/roster.lua": {
+      "sha256": "85c063956cf1b77e04e784b898e5f7edcefca279d17211bf8b5c2bb1f8737d01",
+      "bytes": 4769
+    },
+    "core/db.lua": {
+      "sha256": "55a47c4bf4afc0ea52ef13c4c5e0b7bbdbdca55ce3d6629623dc26932e03b8c0",
+      "bytes": 2703
+    },
+    "core/init.lua": {
+      "sha256": "6d08b60b44dd35046c0504bc8bc63c0d4cba0b6a3088369090bb7579f3d3373c",
+      "bytes": 1758
+    },
+    "core/itemsearch.lua": {
+      "sha256": "fb0da5885fe0be3aaebad1e9f8a7eedaabbbf50a0a4c82ae4246a955c91e7bf6",
+      "bytes": 1932
+    },
+    "core/journal.lua": {
+      "sha256": "c268189927e9ee3545ce713bb01e8b8a112663d40957dbdf24708113a01ebdb0",
+      "bytes": 3643
+    },
+    "core/orders.lua": {
+      "sha256": "57995fdb3b02bc539665e3f2ec65c5c445e2b3fc14a7f1ccef8a3b19ec76b685",
+      "bytes": 10162
+    },
+    "core/util.lua": {
+      "sha256": "952d4ceedfd1276ed1d9ef604c1a2f078ed41d2fdad189f30ff96e9ce7042d8d",
+      "bytes": 6114
+    },
+    "data/items.lua": {
+      "sha256": "a2e8039604cbf6356aab423f50a2dd63f7b8219f8223271b94449fc9cb23d156",
+      "bytes": 564194
+    },
+    "EGM.toc": {
+      "sha256": "dc170536600c222c2cec29ef185af06e0b124c95a027c3057b67a206ca6a30fb",
+      "bytes": 507
+    },
+    "LICENSE": {
+      "sha256": "a59df5624d5f7b8fee2165941f94928f7aff96a8a40feb059e236e26f9b1ea79",
+      "bytes": 1067
+    },
+    "mail/bags.lua": {
+      "sha256": "af2d68ea9cd8112ca89e8ff922143fd33d1c16c792d7a51c1b5dea84665cfef7",
+      "bytes": 1608
+    },
+    "mail/inbox.lua": {
+      "sha256": "39500a0e71eb902d11b7673d367b9992d7fc886c589ad81e668f532d674ae109",
+      "bytes": 9841
+    },
+    "mail/send.lua": {
+      "sha256": "0cccdab060f1a788ec1957add272ad0bc20dda7b087d0db1e6698f18408f32ad",
+      "bytes": 11361
+    },
+    "README.md": {
+      "sha256": "37aaf621df796324bc34f2b0e089a33909380531a6648de3cbbc5f26a6bbf0a3",
+      "bytes": 5937
+    },
+    "screenshots/browse-0.1.4.png": {
+      "sha256": "890a03268ac483418600e185abd4b2e6fc1e226bc05e754b6d0bfbdb6955bc5b",
+      "bytes": 665018
+    },
+    "screenshots/create-0.1.5.png": {
+      "sha256": "0ca7b6e227a7e269b006c3f8ef97d1dae4163b6ec11e22a58ca49e967568dbfe",
+      "bytes": 603395
+    },
+    "screenshots/hero-0.1.5.png": {
+      "sha256": "f91ad7ef56dd41d230dc28d3f1c3339ddc9f1e0e9cc701ed7c92f27d383431c2",
+      "bytes": 613889
+    },
+    "screenshots/myorders.png": {
+      "sha256": "068b7ff314b47b30169b758a96eb7bc75dd4fa39a4227067a8a4e8891acc7d51",
+      "bytes": 353142
+    },
+    "screenshots/options-0.1.4.png": {
+      "sha256": "702c90b03f54a729b231f2ab63d2820e1c74adc7b8e3de95209c97b0c7790df0",
+      "bytes": 259527
+    },
+    "screenshots/stats-0.1.5.png": {
+      "sha256": "4d5027535caba028fd03cdbaefaa91743b5d66c15c31eea0ef7675523ecfedec",
+      "bytes": 690666
+    },
+    "screenshots/tooltip.png": {
+      "sha256": "b17ec4b8c56133eced0ce13a599e77b9eb6f400524210a5a9d8a5d01be82865e",
+      "bytes": 63922
+    },
+    "ui/browse.lua": {
+      "sha256": "e6353ae5d9ca95d8dd90eb0886197093173c69f348da934d6051cc6ac8b26177",
+      "bytes": 49495
+    },
+    "ui/create.lua": {
+      "sha256": "8aeb43404d73c558438d22dae257640381478ebb478dcc15421ce7d5f36ca766",
+      "bytes": 14303
+    },
+    "ui/frame.lua": {
+      "sha256": "390215e5a70c84634d9a13aa64d2b9dc5ce00ad64a354cef9f9c14439b36b8a7",
+      "bytes": 7448
+    },
+    "ui/itemtip.lua": {
+      "sha256": "3f47e27067ca8695ebfabf42c9f490ae42129e3041be4f4f9c78771f7b78d2e0",
+      "bytes": 5487
+    },
+    "ui/minimap.lua": {
+      "sha256": "b5c6a4a52e62577d44b1cfadcbaef1456e92b3a17d5bfa8ef413b992a0f3db5c",
+      "bytes": 2889
+    },
+    "ui/myorders.lua": {
+      "sha256": "99d12bd0ee341790839446475374b49fe7e0299a3d292e5f6fec5217cc03b16e",
+      "bytes": 8545
+    },
+    "ui/options.lua": {
+      "sha256": "0015711bb1d9ba48d622e927af811d32c53e086ad4c4807f1d305b46ef1f374c",
+      "bytes": 8569
+    },
+    "ui/stats.lua": {
+      "sha256": "622dca9ca84234a3dd6188a589fb9e7f3612a0bce331599e9ac40840580a68bd",
+      "bytes": 8330
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,31 @@
+{
+  "upstream": "https://gitlab.com/woblight/honorcounter/-/tree/vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "gitlab.com",
+    "owner": "woblight",
+    "repo": "honorcounter",
+    "name": "honorcounter",
+    "ref": "vanilla",
+    "subpath": "",
+    "url": "https://gitlab.com/woblight/honorcounter",
+    "api": "https://gitlab.com/api/v4/projects/woblight%2Fhonorcounter"
+  },
+  "commit": "4c09f1804667d056726fdd4804d5d45e0283d547",
+  "sourceFiles": {
+    "HonorCounter.lua": {
+      "sha256": "9676d4a2e439e7327a8653cd2594a36ec1bbb1e56b588398102b4f942045ea4b",
+      "bytes": 22953
+    },
+    "HonorCounter.toc": {
+      "sha256": "8a61e7b8b8c6b7d7e2ea429f5c9ccc0ff3727655ba83e82af56b6311f018eea0",
+      "bytes": 266
+    },
+    "README.md": {
+      "sha256": "76f87a43a2c091330f553d1f665e429026c141dd3dc8675d13fb7d8d1c71b375",
+      "bytes": 231
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

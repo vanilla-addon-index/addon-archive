@@ -1,0 +1,89 @@
+{
+  "upstream": "https://octowow.st/git/Dusk/LevelRange-Octo",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Dusk",
+    "repo": "LevelRange-Octo",
+    "name": "LevelRange-Octo",
+    "url": "https://octowow.st/git/Dusk/LevelRange-Octo",
+    "api": "https://octowow.st/git/api/v1/repos/Dusk/LevelRange-Octo"
+  },
+  "commit": "fa21fb38cd47454aad65cf8ab53ea5c2f488a8c7",
+  "sourceFiles": {
+    "Docs/CODE_PROVENANCE.md": {
+      "sha256": "1d05a9b8d13dcbd6a16841bf8028b97f7734f5ccd58aacbd50a2de6d265fe149",
+      "bytes": 2454
+    },
+    "Installation.txt": {
+      "sha256": "67e05376b3f030ada3be329a66ae3e1000a9b0e2b837e86bb673911eec3288a9",
+      "bytes": 801
+    },
+    "LevelRange-Octo.toc": {
+      "sha256": "8d212f1343f974624e7f57ac4753d3164194a017958970c3b747610792af646b",
+      "bytes": 1196
+    },
+    "LevelRange.lua": {
+      "sha256": "9a473be6a384cfefcddd98b3b14bac85c9f339c79b28976447f366885f8aae88",
+      "bytes": 32126
+    },
+    "LevelRange.xml": {
+      "sha256": "351c8bc7b154dbc0820404671a13e75d5c8b427f4a24d70266e6da2406c8bbb0",
+      "bytes": 5906
+    },
+    "LICENSE": {
+      "sha256": "86696216502c4de7f3fcec89b2de3053f98bf9cc304c14f3327d0c9f51500151",
+      "bytes": 1514
+    },
+    "LICENSES/LevelRange-Original-License.txt": {
+      "sha256": "3576325d7e945559fc5082ba984c2401f04d609e9f235aa84b540010bd33805f",
+      "bytes": 339
+    },
+    "LICENSES/README.md": {
+      "sha256": "64a13eb2318672623b1da5c8902b5f56499e84cb3071a50f0151526f05babe8e",
+      "bytes": 429
+    },
+    "Locale/LevelRange-chZN.lua": {
+      "sha256": "a41bf847fcc0c11b3aff101bb16ffa6add1b72247f1bb2dfc0e1f87cc8faf9c2",
+      "bytes": 11052
+    },
+    "Locale/LevelRange-deDE.lua": {
+      "sha256": "9a5669bb142c726b871957c3eb6d88f795daaaa962d65bc57caa3b220326dd1e",
+      "bytes": 11070
+    },
+    "Locale/LevelRange-enUS.lua": {
+      "sha256": "0d713146fe278652daf0c62f3373464603254b82bc4bf78440a2bad61ba84412",
+      "bytes": 10733
+    },
+    "Locale/LevelRange-esES.lua": {
+      "sha256": "0a851dbe224fe5e1ed1d2975e117bae6779a7aaf72c950b33425a0ab31be0fb3",
+      "bytes": 11372
+    },
+    "Locale/LevelRange-frFR.lua": {
+      "sha256": "9c6afa0617e1fe025ac2001c72abe733e6c363a82328a45079fb08497d9134e8",
+      "bytes": 11390
+    },
+    "Locale/LevelRange-ptBR.lua": {
+      "sha256": "18ae48b502dfb60899929710887608e353b5228eabca3c173471f473e80e177d",
+      "bytes": 11226
+    },
+    "PROJECT_IDENTITY.md": {
+      "sha256": "86eb15f094104be8110ffe3ba924054d7e82128fee1c30c7db0e46536f31eac3",
+      "bytes": 1577
+    },
+    "README.md": {
+      "sha256": "66e8cbd11e78028f3a1e34feeff044ff9fc4e761860c1de35e1d7523c7a348ed",
+      "bytes": 4317
+    },
+    "Readme.txt": {
+      "sha256": "e58cec9821ea94008009e5ae5dc2bfe5524065b1bfd792f0ce74d77da3e31f8f",
+      "bytes": 4477
+    },
+    "THIRD_PARTY_NOTICES.md": {
+      "sha256": "7168ea5131a9d346ae6f40741fe1f6ede617c2b59faa5f610a1766009d2aa394",
+      "bytes": 3150
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

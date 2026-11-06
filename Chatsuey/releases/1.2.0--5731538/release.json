@@ -1,0 +1,9 @@
+{
+  "id": "5731538",
+  "tag": "1.2.0",
+  "name": "ChatSuey v1.2.0",
+  "body": "## Change Log\r\n- Added new FontSettings addon.\r\n- Added new MiniChannels addon.\r\n- Added new ChannelLinks addon.\r\n- Added new Mentions addon.\r\n- Updated the \"demonhunter\" color used with [Markdown Links](https://scott.software/chatsuey/#markdown) to reflect the final class color used in Legion (ChatSuey is still for vanilla WoW, though!).\r\n- Worked around a [conflict with Auctioneer](https://github.com/ScottHamper/chatsuey/issues/3).\r\n- Localized ChatSuey for French (frFR) and Simplified Chinese (zhCN) clients.\r\n\r\n**HUGE THANK YOU** to [@eloib](https://github.com/eloib) for providing the French/Simplified Chinese translations!",
+  "published": "2017-03-13T23:44:45Z",
+  "prerelease": false,
+  "url": "https://github.com/ScottHamper/chatsuey/releases/tag/1.2.0"
+}

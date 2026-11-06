@@ -1,0 +1,61 @@
+name: Publish GatherMap v0.6.9
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-v069.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out release source
+        uses: actions/checkout@v4
+
+      - name: Build addon ZIP
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile, ZIP_DEFLATED
+          output = Path("GatherMap-v0.6.9-Turtle-1.18.zip")
+          with ZipFile(output, "w", ZIP_DEFLATED) as package:
+              for path in sorted(Path(".").rglob("*")):
+                  if not path.is_file() or path == output:
+                      continue
+                  if path.parts[0].startswith("."):
+                      continue
+                  package.write(path, "GatherMap/" + path.as_posix())
+          print(f"Created {output} ({output.stat().st_size} bytes)")
+          PY
+
+      - name: Publish v0.6.9 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v0.6.9 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release v0.6.9 already exists; nothing to do."
+            exit 0
+          fi
+          cat > RELEASE_NOTES.md <<'EOF'
+          ## What's new in v0.6.9
+          - Always learn resources, even when their tracking checkbox is unchecked.
+          - Resource checkboxes control display only; saved locations are never deleted by changing visibility.
+          - Skinning skips quest-class loot and handles uncached item data conservatively.
+          - Added Import / Export tab for personal locations with numbered parts, checksums, and safe duplicate-aware merging.
+          - Suppressed per-node "learned" chat messages while preserving recording.
+          - Kept the General / Node Tracking GUI, icon-size sliders, pfQuest herb/mining presets, and previously saved data.
+
+          **Compatibility:** Turtle WoW 1.18 (Vanilla 1.12 API).
+
+          **Install:** Unzip the asset into Interface/AddOns so the folder is named GatherMap. Back up your current GatherMap folder and SavedVariables before replacing it.
+          EOF
+          gh release create v0.6.9 GatherMap-v0.6.9-Turtle-1.18.zip \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "GatherMap v0.6.9 — Import/Export & Silent Learning" \
+            --notes-file RELEASE_NOTES.md

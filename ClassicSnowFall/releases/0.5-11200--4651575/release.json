@@ -1,0 +1,9 @@
+{
+  "id": "4651575",
+  "tag": "0.5-11200",
+  "name": "v0.5-11200",
+  "body": "### Description\n\nCast abilities on KeyDown instead of KeyUp.  \nTested with default actionbars and Bongos.\n\n#### Changelog\n- Pet abilities added.\n",
+  "published": "2016-11-14T13:06:31Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/ClassicSnowFall/releases/tag/0.5-11200"
+}

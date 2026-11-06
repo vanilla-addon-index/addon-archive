@@ -1,0 +1,58 @@
+name: Place v1.1 release screenshots
+
+# A single docs-only push invokes this once; no binary/release tag changes.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/place-v1.1-release-screenshots.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  update-release-description:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Confirm uploaded images and existing release asset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -eu
+          gh release view v1.1.0 --json body --jq '.body' > /tmp/current-release.md
+          gh release view v1.1.0 --json assets --jq '.assets[].name' | grep -Fx 'WorldChatFilter-v1.1.0.zip'
+          python3 - <<'PY'
+          from pathlib import Path
+          old=Path("/tmp/current-release.md").read_text()
+          new=Path("RELEASE_NOTES.md").read_text()
+          u=[
+            "https://github.com/user-attachments/assets/fe01b6ef-b251-4957-bba9-f9e921b7f0db",
+            "https://github.com/user-attachments/assets/add029db-3b51-4314-ac73-b3b95dc4d2a2",
+            "https://github.com/user-attachments/assets/47ffc44a-dbf4-45e6-8d36-74155da7e2c3"
+          ]
+          for url in u:
+              assert url in old, "User-uploaded image missing from original release: "+url
+              assert new.count(url)==1, "Image missing or duplicated in new release notes: "+url
+          assert new.index("#### Custom Filters") < new.index(u[0]) < new.index("#### Statistics")
+          assert new.index("#### Statistics") < new.index(u[1]) < new.index("#### Help / Commands")
+          assert new.index("#### Help / Commands") < new.index(u[2]) < new.index("### Useful commands")
+          assert "| `/wcf help` | In-game help and command reference |" in new
+          assert "| `/wcf stats` | Statistics panel |" in new
+          assert new.count("<img src=")==3
+          print("Three uploaded images validated in their proper sections.")
+          PY
+      - name: Update published notes and verify, leaving ZIP untouched
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -eu
+          gh release edit v1.1.0 --notes-file RELEASE_NOTES.md
+          gh release view v1.1.0 --json body --jq '.body' > /tmp/updated-release.md
+          python3 - <<'PY'
+          from pathlib import Path
+          live=Path("/tmp/updated-release.md").read_text().replace("\r\n","\n").rstrip()
+          expected=Path("RELEASE_NOTES.md").read_text().replace("\r\n","\n").rstrip()
+          assert live==expected, "Published body differs from RELEASE_NOTES.md"
+          print("Official v1.1.0 screenshots placed and release description verified.")
+          PY

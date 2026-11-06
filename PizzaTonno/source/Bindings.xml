@@ -1,0 +1,5 @@
+<Bindings>
+	<Binding name="PIZZATONNO_FISH" header="PIZZATONNO">if keystate == 'down' then PizzaTonno.cast.fish() end</Binding>
+	<Binding name="PIZZATONNO_ALMANAC">PizzaTonno.almanac.toggle()</Binding>
+	<Binding name="PIZZATONNO_CAST" runOnUp="true" hidden="true">PizzaTonno.cast.onBinding(keystate)</Binding>
+</Bindings>

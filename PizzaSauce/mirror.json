@@ -1,0 +1,102 @@
+{
+  "upstream": "https://codeberg.org/Pizzahawaii/PizzaSauce",
+  "source": {
+    "kind": "repository",
+    "host": "codeberg.org",
+    "owner": "Pizzahawaii",
+    "repo": "PizzaSauce",
+    "name": "PizzaSauce",
+    "url": "https://codeberg.org/Pizzahawaii/PizzaSauce",
+    "api": "https://codeberg.org/api/v1/repos/Pizzahawaii/PizzaSauce"
+  },
+  "commit": "b05fbafd91d9d597db95dc9ff26e523466e45967",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "ed19d3c9c8a5e34d0179e0b1a9c2907d2e657738733e4a432a8cf81c76ce56f1",
+      "bytes": 6
+    },
+    "build.sh": {
+      "sha256": "cdb4fba97127d911556fcf68a19ab6eb2e6a95a9ba0174faf2989845ad147ed3",
+      "bytes": 1082
+    },
+    "CHANGELOG.md": {
+      "sha256": "ed714f037d8e71549c0b0f17bacab99f99d18c85277f9f2562a868b5e3ccd44b",
+      "bytes": 707
+    },
+    "docs/API.md": {
+      "sha256": "96bee1774d5a7996c3039f7d161fda95d6adb506154372d9e51f16e5c0a3d732",
+      "bytes": 33796
+    },
+    "docs/Performance.md": {
+      "sha256": "934ab6bde8bbb9eb9dfbd5fae7c6fbd331d9cc0d99ea9572875d176ba4a67300",
+      "bytes": 10761
+    },
+    "LICENSE": {
+      "sha256": "91b7fe06d60b1ca7cdfac97a5c7385aeead2d2365ccc19eb5cb26429b9d94a79",
+      "bytes": 1068
+    },
+    "README.md": {
+      "sha256": "f4402317f7fe1c1bb6706dc90b53fd492e78537969562a648fd04e49a76dece5",
+      "bytes": 8360
+    },
+    "release.sh": {
+      "sha256": "6cb705c778873d26b949df1654f8706517cf7d7e59ab2f749172c1d31f1064d1",
+      "bytes": 4841
+    },
+    "SHOWCASE.md": {
+      "sha256": "9f9d5d325b729df9f9f63f9c54fd63ff3962fabaab475f034382d54bec81a02c",
+      "bytes": 14414
+    },
+    "src/core.lua": {
+      "sha256": "634bbfcb765e6ea4f06cc963c19ba9b19b83212738d10adbbe54fb4612faea88",
+      "bytes": 2513
+    },
+    "src/easing.lua": {
+      "sha256": "b29805ed54bd70e8f305490f3b62b7ba5193d0461ff799b494cc17410fa09a5a",
+      "bytes": 3749
+    },
+    "src/group.lua": {
+      "sha256": "2b996fc51960277b74d713aabacefab1e1c836b113bac9d2fe5b95321b003c3f",
+      "bytes": 2518
+    },
+    "src/helpers.lua": {
+      "sha256": "f263a8a711fce2908c6005bafdccede5d7deae5acd5567f35b7c9f32fc5e66e1",
+      "bytes": 22748
+    },
+    "src/sequence.lua": {
+      "sha256": "a0437964294454c97445f3a1613a825166db3c94ce5e584af30c07b9d1b09f73",
+      "bytes": 2523
+    },
+    "src/tween.lua": {
+      "sha256": "4634cda4da1b18dc18ffe15ce4d8da5e67585a0e5b16a581751fed576902ddd8",
+      "bytes": 3394
+    },
+    "src/types.lua": {
+      "sha256": "6525f0125ad7f18dfb6ca6451c07ae7b6c42eaae315c374dcc30bd4337ab4ccc",
+      "bytes": 2674
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "12114703": {
+      "tag": "v0.1.1",
+      "folder": "v0.1.1--12114703",
+      "assets": {
+        "1894171": {
+          "sha256": "672619203cce0932e297be29da6ac4985e8b0f8389548be413a14e993a384f32",
+          "bytes": 40119,
+          "id": "1894171",
+          "name": "PizzaSauce.lua",
+          "url": "https://codeberg.org/Pizzahawaii/PizzaSauce/releases/download/v0.1.1/PizzaSauce.lua",
+          "path": "releases/v0.1.1--12114703/assets/PizzaSauce.lua"
+        }
+      },
+      "source": {
+        "sha256": "e9736e8b56e35627d7496f0291568be1eb571c59472d521f4778be72079f3d08",
+        "bytes": 30681,
+        "path": "releases/v0.1.1--12114703/upstream-source.tar.gz",
+        "url": "https://codeberg.org/api/v1/repos/Pizzahawaii/PizzaSauce/archive/v0.1.1.tar.gz"
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "upstream": "https://github.com/i2ichardt/HealersMate",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "i2ichardt",
+    "repo": "HealersMate",
+    "name": "HealersMate",
+    "url": "https://github.com/i2ichardt/HealersMate",
+    "api": "https://api.github.com/repos/i2ichardt/HealersMate"
+  },
+  "commit": "8d4801947edaf07fa8f8dd0145f046c45cb5493b",
+  "sourceFiles": {
+    "HealersMate.lua": {
+      "sha256": "5d35f4e7d3038494a2d78b0ce22ea701adfed1ea1e9d2fa53bb1e725ad0a9a13",
+      "bytes": 147622
+    },
+    "HealersMate.toc": {
+      "sha256": "0d3f6d242d32f7304d4ecbd0999b2a067ee20718b0ef4ec7c5cd136df71296d7",
+      "bytes": 559
+    },
+    "README.md": {
+      "sha256": "db9167a47b960ef08f1903a60e80a2082ac7bec3166c5ee48f73bd56ea425172",
+      "bytes": 4367
+    },
+    "screenshots/appearance-settings.png": {
+      "sha256": "c527a390d49eaf4e0c416085318c6f1c1778365a9ddcbe706c3749f5d8ee81f7",
+      "bytes": 128771
+    },
+    "screenshots/party-frames.png": {
+      "sha256": "3279d90b5340109df5bffcde57621618e8d069410d4fedc788d1c823a56bb469",
+      "bytes": 128512
+    },
+    "screenshots/settings-window.png": {
+      "sha256": "e69f35ab46c5440719e3091642df24b2e4dd6e9235c957cfcc489af6fdb877e7",
+      "bytes": 144701
+    },
+    "screenshots/spell-bindings.png": {
+      "sha256": "959cb09ae1b1202039422e544016e4ce206bf99caf56476245d6edf554b064cf",
+      "bytes": 142641
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "356358279": {
+      "tag": "v1.0.0",
+      "folder": "v1.0.0--356358279",
+      "assets": {
+        "482456323": {
+          "sha256": "33d049ec43d7f8dc18fe2b60d942483237923e66ae65a0698c800c17fcba15ca",
+          "bytes": 31399,
+          "id": "482456323",
+          "name": "HealersMate.7z",
+          "url": "https://github.com/i2ichardt/HealersMate/releases/download/v1.0.0/HealersMate.7z",
+          "path": "releases/v1.0.0--356358279/assets/HealersMate.7z"
+        }
+      },
+      "source": {
+        "sha256": "1900e9f5c6cee209dc2ae974ee8643d74c6fec974fc458bd156e97239cdfe5c1",
+        "bytes": 649225,
+        "path": "releases/v1.0.0--356358279/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/i2ichardt/HealersMate/tarball/v1.0.0"
+      }
+    }
+  }
+}

@@ -1,0 +1,1343 @@
+-- pandaUI :: modules/bank.lua
+--
+-- The bank window, in pandaUI's modern style: one flat near-black panel with
+-- a single 1-unit outline, the purchased bank bags and a purchase control in
+-- the header, the addon-accent "Bank" title, an owned close glyph, and the
+-- bank container plus every purchased bank bag packed into one continuous slot
+-- grid at the same density as the bag frame.
+--
+-- It is deliberately the same component as the bag window: both draw their
+-- slots with core/itemslot.lua and both take their metrics from
+-- core/media.lua's M.slot, so the two windows cannot drift into two styles.
+-- Under the bag design the header carries the bag's search field
+-- (U.ModernWowBagSearch, modules/bagdesign.lua; user request, 2026-09-24),
+-- the addon-drawn core/searchbox.lua field, which uses no EditBox
+-- (knowledge.json / widgets.editbox_focus_crash).
+--
+-- Evidence:
+--
+--   * documentation.json (OFFICIAL_CLIENT_DOCUMENTATION,
+--     DOCUMENTED_NOT_RUNTIME_VERIFIED) covers the Bank category used here:
+--     GetNumBankSlots, GetBankSlotCost, PurchaseSlot, CloseBankFrame and
+--     BankButtonIDToInvSlotID.
+--   * The container half (GetContainerNumSlots / GetContainerItemInfo / the
+--     item-button templates) is the same INCONCLUSIVE record the bag frame
+--     runs on -- knowledge.json / bags.container_api_contract_unverified.
+--   * BANKFRAME_OPENED / BANKFRAME_CLOSED / PLAYERBANKSLOTS_CHANGED /
+--     PLAYERBANKBAGSLOTS_CHANGED have no compact record at all, and
+--     BankItemButtonGenericTemplate / BankItemButtonBagTemplate have none
+--     either. Per the UnrealPfUI evidence-gap fallback they default to what
+--     UnrealPfUI/modules/bags.lua demonstrably does on this same client:
+--     bank container -1 with the generic bank template, and bank bag buttons
+--     on BankItemButtonBagTemplate carrying SetID(slot + 4) so container ids
+--     land on 5..10. WORKING_SOURCE only, never runtime verified.
+--
+-- The native BankFrame is parked far off-screen, never hidden. In
+-- Vanilla-shaped FrameXML the stock frame's OnHide calls CloseBankFrame, so
+-- hiding it would end the banker session the moment pandaUI's window opened;
+-- UnrealPfUI avoids that the same way (its bags.lua:83). This is why the bank
+-- is *not* registered with U.SuppressNativeFrame, which hides the object and
+-- neutralises its Show by design. Alpha and scale were the first attempt and
+-- this client ignored both -- see NeutraliseNativeBank.
+
+local U = PandaUI
+local M = U.media
+
+local BK = U.RegisterModule("bank")
+
+local BANK_CONTAINER  = -1
+local BANK_BAG_OFFSET = 4     -- bank bag n is container n + 4, i.e. 5..10
+local MAX_BANK_BAGS   = 6     -- NUM_BANKBAGSLOTS in Vanilla FrameXML
+local BANK_SLOTS      = 24    -- NUM_BANKGENERIC_SLOTS in Vanilla FrameXML
+local NATIVE_PARK     = 4000  -- where the stock bank window is sent to
+local EMPTY_BAG_ICON  = "Interface\\Icons\\INV_Misc_Bag_08"
+
+-- Shared container tokens; only the row length is this window's own.
+local COLUMNS       = 10
+local SLOT_SIZE     = M.slot.size
+local SLOT_GAP      = M.slot.gap
+local PADDING       = M.slot.padding
+local HEADER_HEIGHT = M.slot.header
+local ICON_SIZE     = M.slot.icon
+local HEADER_ICON   = M.slot.headerIcon
+local BAG_BUTTON    = 20      -- header bank-bag button, sized to the header
+
+-- The bag-family design (modules/bagdesign.lua) owns the bank's chrome and
+-- spacing whenever it is on; every layout number below goes through it, so
+-- the flat theme keeps its own values.
+local modernBank = {}
+
+function modernBank.Active()
+  return U.ModernWowBagFamilyActive()
+end
+
+function modernBank.Header()
+  return U.ModernWowBagMetric("header", HEADER_HEIGHT)
+end
+
+function modernBank.SlotGap()
+  return U.ModernWowBagMetric("slotGap", SLOT_GAP)
+end
+
+function modernBank.IconGap()
+  return U.ModernWowBagMetric("iconGap", SLOT_GAP)
+end
+
+function modernBank.SidePad()
+  return U.ModernWowBagMetric("sidePad", PADDING)
+end
+
+function modernBank.BottomPad()
+  return U.ModernWowBagMetric("bottomPad", PADDING)
+end
+
+-- A bank-bag button's resting outline: none under Modern WoW, where the slot
+-- face is the frame and the outline only appears as hover feedback.
+function modernBank.RestBorder(button)
+  if modernBank.Active() then
+    U.SetBorderColor(button, 0, 0, 0, 0)
+  else
+    U.SetBorderColor(button, M.Unpack(M.color.border))
+  end
+end
+
+local anchor, frame, grid
+local slots = {}        -- slots[bag][slot] = button
+local containers = {}   -- containers[bag] = per-bag parent frame, SetID(bag)
+local bagButtons = {}   -- bagButtons[n] = header bank-bag button, n = 1..6
+
+local layoutDirty = true
+local headerDirty = true
+local cooldownDirty = false
+local bagDirty = {}
+local closing = false
+local emptyReported = false
+local sortActive = false
+
+-- The main bank pane and purchased bank bags share a visual grid, but not a
+-- cursor API. A focused live probe (behavior.json / bankmove, probe 1.40.1)
+-- verified that purchased bags use PickupContainerItem(5..10, slot), while
+-- the main pane must be addressed with PickupInventoryItem and the inventory
+-- id returned by BankButtonIDToInvSlotID. Treating the main pane as container
+-- -1 fails even though its contents can be read through container -1.
+--
+-- Remember which bank surface supplied the cursor so only a cross-surface
+-- left-button drop is redirected. Same-surface moves and every modifier-click
+-- keep the stock template handlers.
+local cursorBankBag
+
+-- Shared with the bag-slot wrappers in modules/bags.lua; the reading itself
+-- lives in core/compat.lua.
+local function CursorHasInventoryItem()
+  return U.CursorHasItem()
+end
+
+-- The route itself lives in core/compat.lua (U.PickupContainerSlot), which
+-- carries the bankmove evidence: the sort engine needs the identical
+-- correction, and one measured quirk should not be written down twice.
+local function DropCursorIntoBank(bag, slot)
+  return U.PickupContainerSlot(bag, slot)
+end
+
+local function TransferCursorToBank(bag, slot)
+  if not CursorHasInventoryItem() then
+    cursorBankBag = nil
+    return false
+  end
+
+  if not DropCursorIntoBank(bag, slot) then return false end
+
+  -- An occupied destination leaves its previous item on the cursor.  That
+  -- item's new source is the destination container, so a following cross-bank
+  -- drop must use the destination-specific route again.
+  if CursorHasInventoryItem() then
+    cursorBankBag = bag
+  else
+    cursorBankBag = nil
+  end
+  return true
+end
+
+local function MouseButton(a1, a2)
+  return U.MouseButton(a1, a2)
+end
+
+-- Wrap the stock template rather than discarding it: modifier clicks, stack
+-- splitting, right-click use, repair targeting and tooltips remain native.
+-- Only a left-button drop whose cursor source is a different bank surface is
+-- routed through the verified destination API above.
+local function InstallBankTransfer(button, bag)
+  if not button or button.puiBankTransfer then return end
+  button.puiBankTransfer = true
+
+  local click = button:GetScript("OnClick")
+  button:SetScript("OnClick",
+    function(a1, a2, a3, a4, a5, a6, a7, a8, a9)
+      local slot = button:GetID()
+      local hadItem = CursorHasInventoryItem()
+      local left = MouseButton(a1, a2) == "LeftButton"
+
+      if left and hadItem and cursorBankBag and cursorBankBag ~= bag then
+        TransferCursorToBank(bag, slot)
+        return
+      end
+
+      -- What the category view's empty-slot proxy checks a specialty bag
+      -- against, read before the click lifts the item.
+      local source = U.BagCategoryDropSource(bag, slot)
+      if click then click(a1, a2, a3, a4, a5, a6, a7, a8, a9) end
+
+      if left then
+        if CursorHasInventoryItem() then
+          cursorBankBag = bag
+          if source then U.SetBagCategoryDropSource(source) end
+        else
+          cursorBankBag = nil
+        end
+      end
+    end)
+
+  local dragStart = button:GetScript("OnDragStart")
+  button:SetScript("OnDragStart",
+    function(a1, a2, a3, a4, a5, a6, a7, a8, a9)
+      local source = U.BagCategoryDropSource(bag, button:GetID())
+      if dragStart then
+        dragStart(a1, a2, a3, a4, a5, a6, a7, a8, a9)
+      end
+      if CursorHasInventoryItem() then
+        cursorBankBag = bag
+        if source then U.SetBagCategoryDropSource(source) end
+      end
+    end)
+
+  local receiveDrag = button:GetScript("OnReceiveDrag")
+  button:SetScript("OnReceiveDrag",
+    function(a1, a2, a3, a4, a5, a6, a7, a8, a9)
+      local slot = button:GetID()
+
+      if CursorHasInventoryItem() and cursorBankBag and
+         cursorBankBag ~= bag then
+        TransferCursorToBank(bag, slot)
+        return
+      end
+
+      if receiveDrag then
+        receiveDrag(a1, a2, a3, a4, a5, a6, a7, a8, a9)
+      end
+
+      if CursorHasInventoryItem() then
+        cursorBankBag = bag
+      else
+        cursorBankBag = nil
+      end
+    end)
+end
+
+-- ---------------------------------------------------------------------------
+-- Bank state
+-- ---------------------------------------------------------------------------
+local function MaxBankBags()
+  local stock = tonumber(U.G("NUM_BANKBAGSLOTS"))
+  if stock and stock > 0 then return stock end
+  return MAX_BANK_BAGS
+end
+
+local function PurchasedBags()
+  local ok, n = pcall(GetNumBankSlots)
+  n = (ok and tonumber(n)) or 0
+  if n < 0 then n = 0 end
+  if n > MaxBankBags() then n = MaxBankBags() end
+  return n
+end
+
+-- The bank container first, then every purchased bank bag: the order the grid
+-- packs them in.
+local function BankBags()
+  local list = { BANK_CONTAINER }
+  local i
+  for i = 1, PurchasedBags() do
+    table.insert(list, i + BANK_BAG_OFFSET)
+  end
+  return list
+end
+
+-- ---------------------------------------------------------------------------
+-- Sorting
+--
+-- The same control the bag window carries, on the same engine
+-- (core/itemsort.lua) and the same shared icon: the bank is just another set
+-- of containers to it. BankBags() is passed unchanged, so the run fills the
+-- main pane first and then each purchased bank bag -- the order the grid packs
+-- them in, which is what makes the result read top-left to bottom-right the
+-- way it looks.
+--
+-- The engine addresses the main pane through core/compat.lua: reads go to the
+-- container API, writes to the inventory API. Purchased bank bags are ordinary
+-- containers to it either way.
+--
+-- What broke the first version of this button was neither of those. Probe
+-- bankinv (2026-09-06) measured every lift/drop pair across both bank
+-- surfaces: this client will not move an item from one main-bank slot to
+-- another by any route, and refuses each attempt with "The item was not
+-- found." Since the main pane holds most of a bank, the engine performs those
+-- swaps in three legs through one borrowed empty bank-bag slot -- so a bank
+-- with no free slot outside the main pane cannot be sorted, and says so.
+--
+-- Whether ContainerIDToInventoryID resolves for containers 5..10 here is still
+-- not measured, but it no longer decides anything: IS.IsGeneralBag falls back to
+-- the inventory ids the client documents for bank bag buttons (64..69) and, past
+-- that, skips a bag it cannot positively identify as an ordinary bag.
+--
+-- One run exists at a time for the whole addon, because there is one cursor,
+-- so the desaturated look here reports the engine being busy rather than this
+-- window's own click. ProcessDirty keeps it honest while the window is open:
+-- a bag sort started before the bank was opened greys this button too, and
+-- nothing else would tell it when that run ended. The stack-merge engine
+-- (core/itemstack.lua) holds the same cursor, so either run greys both buttons.
+-- ---------------------------------------------------------------------------
+local function RefreshSortButton()
+  if not frame or not frame.sort or not frame.sort.icon then return end
+
+  local active = U.BagSortActive() or U.BagStackActive()
+  if active == sortActive then return end
+  sortActive = active
+  pcall(frame.sort.icon.SetDesaturated, frame.sort.icon, active)
+  if frame.stack and frame.stack.icon then
+    pcall(frame.stack.icon.SetDesaturated, frame.stack.icon, active)
+  end
+end
+
+-- Merge partial stacks inside the bank only: the main pane and the purchased
+-- bank bags, never the carried bags. Pane-only partial stacks are gathered
+-- through one free bank-bag slot; see core/itemstack.lua.
+local function StackBank()
+  local started = U.StackBags(BankBags(), {
+    onFinish = RefreshSortButton,
+    prefix = "BANK_STACK",
+    owner = "bank",
+  })
+  if started then RefreshSortButton() end
+end
+
+local function SortBank()
+  -- U.SortBags owns every refusal message (already running, cursor holding
+  -- something, nothing to do), so this only has to reflect the new state.
+  local started = U.SortBags(BankBags(), {
+    onFinish = RefreshSortButton,
+    prefix = "BANK_SORT",
+    owner = "bank",
+  })
+  if started then RefreshSortButton() end
+end
+
+-- GetContainerNumSlots is the source of truth, but it reports nothing for the
+-- main bank pane on this client -- the first in-game run drew an empty grid
+-- while the stock window showed 24 usable slots, and probe
+-- bankmove.participants.v1 later measured the same zero. The fallback to the
+-- documented Vanilla size lives in core/compat.lua, shared with the sort
+-- engine, which has to walk exactly the same slots.
+local function BagSlotCount(bag)
+  return U.ContainerSlotCount(bag)
+end
+
+
+-- ---------------------------------------------------------------------------
+-- Native bank frame
+--
+-- Parked off-screen, never hidden; see the header note on why Hide() is wrong.
+-- Re-applied on every refresh tick while the window is open, because the stock
+-- panel manager re-anchors the windows it owns whenever it shows one.
+-- ---------------------------------------------------------------------------
+local function NeutraliseNativeBank()
+  local native = U.G("BankFrame")
+  if not native then return end
+
+  -- Position is the one property this client demonstrably propagates from the
+  -- native bank to its parts. Alpha 0 and scale 0.001 were the first attempt
+  -- and both were ignored: every stock slot, bag button and the purchase
+  -- dialog kept drawing at full size, while the SetPoint in the same function
+  -- moved the whole stock window to exactly where it was anchored (screen
+  -- top-left, user screenshot). So the stock window is parked far outside the
+  -- viewport instead, which takes everything anchored to it along and still
+  -- never calls Hide() -- see the header note on why hiding it is wrong.
+  --
+  -- Scale is reset to 1 first on purpose: SetPoint offsets are in the frame's
+  -- own scale, so leaving 0.001 on it would turn the offset below into four
+  -- pixels. Clamping is dropped for the same reason -- a clamped frame is
+  -- pulled back onto the screen.
+  pcall(native.SetScale, native, 1)
+  pcall(native.SetClampedToScreen, native, false)
+  pcall(native.EnableMouse, native, false)
+  pcall(native.SetAlpha, native, 0)
+  pcall(function()
+    native:ClearAllPoints()
+    native:SetPoint("TOPLEFT", UIParent, "TOPLEFT",
+                    -NATIVE_PARK, NATIVE_PARK)
+  end)
+end
+
+-- ---------------------------------------------------------------------------
+-- Slots
+-- ---------------------------------------------------------------------------
+local function EnsureBagRoot(bag, parent)
+  if containers[bag] then return containers[bag] end
+
+  local root = CreateFrame("Frame", nil, parent)
+  root:SetID(bag)
+  root:SetAllPoints(parent)
+
+  -- The category view (modules/bagcategoryview.lua) anchors these buttons over
+  -- category boxes that are siblings of this root under the same grid, so both
+  -- would land on the grid's level + 1 with an undefined draw order. Lifted
+  -- clear of them once, as the bag window does; harmless in the flat grid.
+  local levelOk, level = pcall(parent.GetFrameLevel, parent)
+  if levelOk and tonumber(level) then
+    pcall(root.SetFrameLevel, root, level + 5)
+  end
+
+  containers[bag] = root
+  slots[bag] = slots[bag] or {}
+  return root
+end
+
+local function EnsureSlot(bag, slot, parent)
+  slots[bag] = slots[bag] or {}
+  if slots[bag][slot] then return slots[bag][slot] end
+
+  local root = EnsureBagRoot(bag, parent)
+  local name = "PandaUIBankSlot" .. (bag < 0 and ("m" .. -bag) or bag) ..
+               "_" .. slot
+
+  local button = U.CreateItemSlot(root, name, bag, slot)
+  if not button then return nil end
+
+  InstallBankTransfer(button, bag)
+  if modernBank.Active() then U.ModernWowBagSlot(button, SLOT_SIZE) end
+
+  slots[bag][slot] = button
+  return button
+end
+
+local function UpdateSlotAppearance(bag, slot)
+  local button = slots[bag] and slots[bag][slot]
+  U.UpdateItemSlot(button, bag, slot)
+  if modernBank.search then modernBank.search.PaintSlot(button, bag, slot) end
+end
+
+local function RefreshBag(bag)
+  local bagSlots = slots[bag]
+  if not bagSlots then return end
+
+  local slot
+  for slot in pairs(bagSlots) do
+    if bagSlots[slot] and bagSlots[slot]:IsShown() then
+      UpdateSlotAppearance(bag, slot)
+    end
+  end
+end
+
+-- Hover feedback for a header bank bag: that bag's slots take the accent
+-- outline while the pointer is over it, which is the one cheap way to tell six
+-- identical-looking bags apart inside a single merged grid.
+local function HighlightBag(bag, on)
+  local bagSlots = bag and slots[bag]
+  if not bagSlots then return end
+
+  local slot
+  for slot in pairs(bagSlots) do
+    local button = bagSlots[slot]
+    if button and button:IsShown() then
+      if on then
+        U.SetBorderColor(button, M.Unpack(M.color.accent))
+      else
+        UpdateSlotAppearance(bag, slot)
+      end
+    end
+  end
+end
+
+-- ---------------------------------------------------------------------------
+-- Header: bank bags, purchase control, title, close
+-- ---------------------------------------------------------------------------
+local function EnsureBankBagButton(index)
+  if bagButtons[index] then return bagButtons[index] end
+
+  -- The stock BankFrameItemButton_OnUpdate calls
+  -- GetInventorySlotInfo(strsub(name, 10)) on a bag button, so the name must be
+  -- a 9-character prefix + "Bag<n>" like the client's own BankFrameBag<n>
+  -- (knowledge frames.bankbag_template_name_derives_inventory_slot).
+  local name = "PandaUIBk" .. "Bag" .. index
+  local ok, button = pcall(CreateFrame, "CheckButton", name, frame.bags,
+                           "BankItemButtonBagTemplate")
+  if not ok or not button then
+    U.Error("bank: BankItemButtonBagTemplate unavailable; bank bag " ..
+            index .. " not created")
+    return nil
+  end
+
+  -- UnrealPfUI's working mapping on this client: the bank bag button carries
+  -- the container id, not a 1-based bag index.
+  button:SetID(index + BANK_BAG_OFFSET)
+  button.puiBag = index + BANK_BAG_OFFSET
+  button:SetWidth(BAG_BUTTON)
+  button:SetHeight(BAG_BUTTON)
+  U.StyleItemSlot(button, name)
+  U.UseBorderOnlyItemSlotHover(button)
+  if modernBank.Active() then U.ModernWowBagSlot(button, BAG_BUTTON) end
+
+  button:SetScript("OnEnter", function()
+    U.SetBorderColor(button, M.Unpack(M.color.moverEdge))
+    HighlightBag(button.puiBag, true)
+
+    -- Above the bank window, like the header icon buttons.
+    U.ShowWindowTooltip(button, frame, U.G("BANK_BAG") or "Bank Bag")
+  end)
+
+  button:SetScript("OnLeave", function()
+    modernBank.RestBorder(button)
+    HighlightBag(button.puiBag, false)
+    U.HideWindowTooltip()
+  end)
+
+  bagButtons[index] = button
+  return button
+end
+
+-- The bag's own icon. Focused runtime probe bankbagicon.mapping.v1 (1.41.0)
+-- verified that BankButtonIDToInvSlotID maps inputs 1..10 to inventory slots
+-- 40..49 on this client, while the equipped red bank bag was at inventory slot
+-- 64. The parked stock BankFrameBag1 icon held the correct red-bag texture both
+-- before and after BankFrameItemButton_Update; the updater left this custom-
+-- named button on its generic fallback. Read the verified stock icon region
+-- after updating the real stock button instead of guessing an inventory id.
+local function RefreshBankBagButton(index)
+  local button = bagButtons[index]
+  if not button then return end
+
+  local texture
+  local nativeName = "BankFrameBag" .. index
+  local nativeButton = U.G(nativeName)
+  local nativeIcon = U.G(nativeName .. "IconTexture")
+  local update = U.G("BankFrameItemButton_Update")
+  if nativeButton and type(update) == "function" then
+    pcall(update, nativeButton)
+  end
+  if nativeIcon then
+    local textureOk, value = pcall(nativeIcon.GetTexture, nativeIcon)
+    if textureOk and value and value ~= "" then texture = value end
+  end
+
+  -- The generic icon is only a capability fallback. In the measured path the
+  -- stock region supplies either the equipped bag art or its native empty-slot
+  -- bag silhouette, so every purchased slot remains visible and accurate.
+  local displayTexture = texture or EMPTY_BAG_ICON
+  pcall(SetItemButtonTexture, button, displayTexture)
+
+  -- The template may leave its named icon hidden after a native update. Keep
+  -- the meaningful bag art visible independently of the stripped state art.
+  local icon = U.G(button:GetName() .. "IconTexture")
+  if icon then
+    pcall(icon.SetTexture, icon, displayTexture)
+    pcall(icon.SetAlpha, icon, 1)
+    pcall(icon.Show, icon)
+  end
+
+  button.tooltipText = U.L("BANK_BAG_LABEL")
+  modernBank.RestBorder(button)
+end
+
+local function BankSlotCost()
+  local ok, cost = pcall(GetBankSlotCost)
+  return (ok and tonumber(cost)) or 0
+end
+
+local function BuyBankSlot()
+  U.ShowConfirm({
+    text = U.L("BANK_BUY_SLOT"),
+    moneyCopper = BankSlotCost(),
+    acceptText = U.L("BANK_PURCHASE"),
+    owner = "bank",
+    onAccept = function()
+      pcall(PurchaseSlot)
+      headerDirty = true
+      layoutDirty = true
+    end,
+  })
+end
+
+-- The bag icon matches the equipped-bag toggle on the player bag window
+-- (modules/bags.lua's frame.bagsToggle); the hover price is the shared
+-- readout (core/widgets.lua's price panel), coloured and iconed the same as
+-- the status overlay's money display (core/media.lua M.money).
+local function EnsureBuyButton()
+  if frame.buy then return frame.buy end
+
+  frame.buy = U.CreateIconButton(frame.bags, {
+    name = "PandaUIBankBuySlot",
+    -- Parented to the bag row; its tooltip still opens above the window.
+    tooltipFrames = frame,
+    texture = "Interface\\Icons\\INV_Misc_Bag_08",
+    fallback = "+",
+    size = BAG_BUTTON,
+    title = U.L("BANK_PURCHASE_TITLE"),
+    price = BankSlotCost,
+    onClick = BuyBankSlot,
+  })
+  if modernBank.Active() then
+    U.ModernWowBagHeaderIcon(frame.buy, BAG_BUTTON)
+  end
+
+  return frame.buy
+end
+
+-- Purchased bags left to right, then the purchase control while slots remain.
+local function LayoutHeader()
+  if not frame or not frame.bags then return end
+
+  local purchased = PurchasedBags()
+  local maximum = MaxBankBags()
+  local shown = 0
+  local index
+
+  for index = 1, maximum do
+    local button
+    if index <= purchased then
+      button = EnsureBankBagButton(index)
+    else
+      button = bagButtons[index]
+    end
+
+    if button then
+      if index <= purchased then
+        button:ClearAllPoints()
+        button:SetPoint("LEFT", frame.bags, "LEFT",
+                        shown * (BAG_BUTTON + modernBank.IconGap()), 0)
+        button:Show()
+        -- Refresh after Show: the stock template can run an OnShow update that
+        -- changes its icon region, so PandaUI's explicit texture wins last.
+        RefreshBankBagButton(index)
+        shown = shown + 1
+      else
+        button:Hide()
+      end
+    end
+  end
+
+  local gap = modernBank.IconGap()
+  local width = shown * (BAG_BUTTON + gap)
+
+  if purchased < maximum then
+    local buy = EnsureBuyButton()
+    buy:ClearAllPoints()
+    buy:SetPoint("LEFT", frame.bags, "LEFT", width, 0)
+    buy:Show()
+    width = width + BAG_BUTTON + gap
+  elseif frame.buy then
+    frame.buy:Hide()
+  end
+
+  if width > 0 then width = width - gap end
+  frame.bags:SetWidth(math.max(1, width))
+  frame.bags:SetHeight(BAG_BUTTON)
+end
+
+-- ---------------------------------------------------------------------------
+-- Layout
+-- ---------------------------------------------------------------------------
+-- The category view (user request, 2026-09-24): the bag window's own grouped
+-- layout, modules/bagcategoryview.lua, drawn over this window's containers
+-- and slot buttons whenever the bag window's category setting is on. The two
+-- views share the buttons, so switching is one relayout. Folds are kept apart
+-- from the carried bags' (U.BagsCategoryCollapsed("bank")).
+local catView
+
+modernBank.MIN_COLUMNS = 7
+modernBank.MAX_COLUMNS = 64
+
+function modernBank.MaxColumns()
+  if not anchor then return modernBank.MAX_COLUMNS end
+  local gap = modernBank.SlotGap()
+  local pitch = SLOT_SIZE + gap
+  local width = U.UIWidth() / U.FrameUIRatio(anchor)
+  local columns = math.floor((width - modernBank.SidePad() * 2 + gap) / pitch)
+  return math.max(modernBank.MIN_COLUMNS,
+                  math.min(modernBank.MAX_COLUMNS, columns))
+end
+
+function modernBank.Geometry()
+  local columns, height, resized = U.GetBagFamilyWindowGeometry("bank")
+  columns = math.floor(columns + 0.5)
+  columns = math.max(modernBank.MIN_COLUMNS,
+                     math.min(modernBank.MaxColumns(), columns))
+  return columns, height, resized
+end
+
+function modernBank.Width(columns)
+  local gap = modernBank.SlotGap()
+  return columns * (SLOT_SIZE + gap) - gap + modernBank.SidePad() * 2
+end
+
+function modernBank.Height(natural)
+  local _, requested, resized = U.GetBagFamilyWindowGeometry("bank")
+  if resized and requested > natural then return requested end
+  return natural
+end
+
+function modernBank.CategoriesWanted()
+  return type(U.BagsEnabled) == "function" and U.BagsEnabled() and
+         type(U.BagsCategoriesEnabled) == "function" and
+         U.BagsCategoriesEnabled() and catView ~= nil
+end
+
+-- Sort belongs to the flat grid only, as in the bag window (user request,
+-- 2026-09-24): the category view already shows every category in sorted
+-- order. Hidden, stack takes sort's place; the drag strip and search field
+-- follow stack.
+function modernBank.SetSortShown(shown)
+  if not frame or not frame.sort or not frame.stack then return end
+  if frame.puiSortShown == shown then return end
+  frame.puiSortShown = shown
+  if shown then frame.sort:Show() else frame.sort:Hide() end
+  frame.stack:ClearAllPoints()
+  if shown then
+    frame.stack:SetPoint("LEFT", frame.sort, "RIGHT", modernBank.IconGap(), 0)
+  else
+    frame.stack:SetPoint("LEFT", frame.sort, "LEFT", 0, 0)
+  end
+end
+
+-- Slots of a bag that is gone entirely (its bank bag was taken out) stay
+-- created, but must not keep drawing over the grid.
+function modernBank.HideGoneBags(bags)
+  local live = {}
+  local i
+  for i = 1, table.getn(bags) do live[bags[i]] = true end
+  local bag, bagSlots
+  for bag, bagSlots in pairs(slots) do
+    if not live[bag] then
+      local slot
+      for slot in pairs(bagSlots) do
+        if bagSlots[slot] then bagSlots[slot]:Hide() end
+      end
+    end
+  end
+end
+
+-- The category view's slot placement: anchor and size, plus the bag-design
+-- face on the empty-slot proxy, which this window did not create.
+function modernBank.PlaceSlot(button, relative, x, y)
+  button:ClearAllPoints()
+  button:SetPoint("TOPLEFT", relative, "TOPLEFT", x, y)
+  button:SetWidth(SLOT_SIZE)
+  button:SetHeight(SLOT_SIZE)
+  if modernBank.Active() and not button.puiBankSlotStyled then
+    button.puiBankSlotStyled = U.ModernWowBagSlot(button, SLOT_SIZE) and true
+  end
+end
+
+-- Returns how many slots the bank reports, for the same retry as the flat
+-- grid below.
+function modernBank.LayoutCategories()
+  local bags = BankBags()
+  modernBank.HideGoneBags(bags)
+
+  local columns = modernBank.Geometry()
+  catView.host.columns = columns
+  local _, _, total = catView.Layout()
+  return total or 0
+end
+
+-- Returns how many slots it actually placed, so the caller can tell an empty
+-- bank from a bank whose contents have not reached the client yet.
+local function LayoutSlots()
+  local categories = modernBank.CategoriesWanted()
+  modernBank.SetSortShown(not categories)
+  if categories then return modernBank.LayoutCategories() end
+  if catView then catView.Clear() end
+
+  local bags = BankBags()
+  local live = {}
+  local placed = 0
+  local x, y = 0, 0
+  local gap = modernBank.SlotGap()
+  local i
+
+  local columns = modernBank.Geometry()
+
+  for i = 1, table.getn(bags) do
+    local bag = bags[i]
+    live[bag] = true
+
+    local n = BagSlotCount(bag)
+
+    local slot
+    for slot = 1, n do
+      local button = EnsureSlot(bag, slot, grid)
+      if button then
+        button:ClearAllPoints()
+        button:SetPoint("TOPLEFT", grid, "TOPLEFT",
+                        x * (SLOT_SIZE + gap), -(y * (SLOT_SIZE + gap)))
+        button:SetWidth(SLOT_SIZE)
+        button:SetHeight(SLOT_SIZE)
+        UpdateSlotAppearance(bag, slot)
+        button:Show()
+        placed = placed + 1
+
+        if x >= columns - 1 then
+          x, y = 0, y + 1
+        else
+          x = x + 1
+        end
+      end
+    end
+
+    -- A bank bag swapped for a smaller one leaves stale buttons past its size.
+    local bagSlots = slots[bag]
+    if bagSlots then
+      local stale
+      for stale in pairs(bagSlots) do
+        if stale > n and bagSlots[stale] then bagSlots[stale]:Hide() end
+      end
+    end
+  end
+
+  -- Slots of a bag that is gone entirely (its bank bag was taken out) stay
+  -- created, but must not keep drawing over the grid.
+  for bag, bagSlots in pairs(slots) do
+    if not live[bag] then
+      local slot
+      for slot in pairs(bagSlots) do
+        if bagSlots[slot] then bagSlots[slot]:Hide() end
+      end
+    end
+  end
+
+  if x > 0 then y = y + 1 end
+  if y == 0 then y = 1 end
+
+  -- The anchor owns the rect; the visible frame is stretched over it, so the
+  -- mover handle keeps the same bounds whether or not the bank is open.
+  anchor:SetWidth(modernBank.Width(columns))
+  local natural = modernBank.Header() + y * (SLOT_SIZE + gap) - gap +
+                  modernBank.BottomPad()
+  anchor:SetHeight(modernBank.Height(natural))
+  if modernBank.Active() then U.ModernWowBagHousing(frame) end
+
+  return placed
+end
+
+local function ProcessDirty()
+  if U.PerfDisabled and U.PerfDisabled("bank") then return end
+
+  if not CursorHasInventoryItem() then
+    cursorBankBag = nil
+  end
+
+  NeutraliseNativeBank()
+
+  -- Before anything is redrawn: this client reports no quantity for the main
+  -- pane, so modules/bankcount.lua works one out by watching what the
+  -- countable containers gained and lost since the previous tick. It has to
+  -- run on every tick, not only on a dirty one, because the tick it misses is
+  -- the before-state the next attribution needs.
+  if type(U.ReconcileBankStacks) == "function" then
+    U.ReconcileBankStacks(false)
+  end
+
+  if headerDirty then
+    headerDirty = false
+    LayoutHeader()
+  end
+
+  if layoutDirty then
+    -- A layout that placed nothing is retried on the next tick rather than
+    -- latched: BANKFRAME_OPENED can arrive before the client has the container
+    -- contents, and nothing else would mark this dirty again. Reported once so
+    -- a client that never fills the bank in is visible instead of silent.
+    if LayoutSlots() > 0 then
+      layoutDirty = false
+      emptyReported = false
+    elseif not emptyReported then
+      emptyReported = true
+      U.Print(U.L("BANK_SLOTS_LOADING"))
+    end
+  end
+
+  local bag
+  for bag, _ in pairs(bagDirty) do
+    bagDirty[bag] = nil
+    RefreshBag(bag)
+  end
+
+  RefreshSortButton()
+
+  if cooldownDirty then
+    cooldownDirty = false
+    local bags = BankBags()
+    local i
+    for i = 1, table.getn(bags) do
+      local bagId = bags[i]
+      local bagSlots = slots[bagId]
+      if bagSlots then
+        local slot
+        for slot in pairs(bagSlots) do
+          U.UpdateItemSlotCooldown(bagId, bagSlots[slot])
+        end
+      end
+    end
+  end
+end
+
+function U.RefreshLiveBankWindowGeometry()
+  layoutDirty = true
+  if frame and frame:IsShown() then ProcessDirty() end
+end
+
+function modernBank.Resize(width, height)
+  local gap = modernBank.SlotGap()
+  local pitch = SLOT_SIZE + gap
+  local inset = 0
+  if modernBank.CategoriesWanted() then
+    inset = U.ModernWowBagMetric("sectionInset", M.bagCategory.inset) * 2
+  end
+  local columns = math.floor((width - modernBank.SidePad() * 2 - inset + gap) /
+                             pitch + 0.5)
+  columns = math.max(modernBank.MIN_COLUMNS,
+                     math.min(modernBank.MaxColumns(), columns))
+  local minimum = modernBank.Header() + modernBank.BottomPad() + SLOT_SIZE
+  local maximum = U.UIHeight() / U.FrameUIRatio(anchor)
+  height = math.floor((tonumber(height) or minimum) + 0.5)
+  height = math.max(minimum, math.min(maximum, height))
+  U.SetBagFamilyWindowGeometry("bank", columns, height)
+  U.RefreshLiveBankWindowGeometry()
+  if type(U.RefreshSavedBankWindowGeometry) == "function" then
+    U.RefreshSavedBankWindowGeometry()
+  end
+end
+
+-- ---------------------------------------------------------------------------
+-- Show / hide
+--
+-- The window follows the banker session rather than the other way round: the
+-- close glyph and Escape both end the session, and BANKFRAME_CLOSED is what
+-- actually hides the frame.
+-- ---------------------------------------------------------------------------
+local function ShowBank()
+  if not frame then return end
+
+  headerDirty = true
+  layoutDirty = true
+  frame:Show()
+
+  -- Seed the derived main-pane quantities before the first refresh tick: with
+  -- no before-state there is nothing to attribute, and a stored quantity whose
+  -- slot no longer holds the same item has to be dropped rather than drawn.
+  if type(U.ReconcileBankStacks) == "function" then
+    U.ReconcileBankStacks(true)
+  end
+
+  U.RegisterUpdate("bank.refresh", 0.2, ProcessDirty)
+  ProcessDirty()
+  if modernBank.search then modernBank.search.Start() end
+end
+
+-- The bag window's category setting changed: redraw on the next tick.
+function U.MarkBankLayoutDirty()
+  layoutDirty = true
+end
+
+local function CloseBank()
+  local ok = pcall(CloseBankFrame)
+  if not ok and frame then frame:Hide() end
+end
+
+-- ---------------------------------------------------------------------------
+-- Build
+-- ---------------------------------------------------------------------------
+local function BuildHeader()
+  -- Left inset of the header, matching where the bag window keeps its icon
+  -- group so the same control is in the same place in both windows. Centred on
+  -- the header strip rather than pinned to its top, which is the line the bag
+  -- row, the title and the close glyph all sit on.
+  frame.sort = U.CreateIconButton(frame, {
+    name = "PandaUIBankSort",
+    texture = M.texture.sortIcon,
+    fallback = "S",
+    size = HEADER_ICON,
+    title = U.L("BANK_SORT"),
+    detail = function() return U.L("BANK_SORT_HINT") end,
+    onClick = SortBank,
+  })
+  frame.sort:SetPoint("LEFT", frame, "TOPLEFT", PADDING,
+                      -math.floor(HEADER_HEIGHT / 2))
+
+  frame.stack = U.CreateIconButton(frame, {
+    name = "PandaUIBankStack",
+    texture = M.texture.stackIcon,
+    fallback = "M",
+    size = HEADER_ICON,
+    title = U.L("BANK_STACK"),
+    detail = function() return U.L("BANK_STACK_HINT") end,
+    onClick = StackBank,
+  })
+  frame.stack:SetPoint("LEFT", frame.sort, "RIGHT", SLOT_GAP, 0)
+
+  frame.close = U.CreateButton(frame, {
+    name = "PandaUIBankClose",
+    text = "X",
+    width = ICON_SIZE,
+    height = ICON_SIZE,
+    size = M.fontSize.small,
+    onClick = CloseBank,
+  })
+  frame.close:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -PADDING, -PADDING)
+
+  frame.title = U.CreateLabel(frame, {
+    size = M.fontSize.normal,
+    color = M.color.accent,
+    inherits = "GameFontNormal",
+  })
+  if frame.title then
+    frame.title:SetText(U.L("BANK_TITLE"))
+    frame.title:SetPoint("RIGHT", frame.close, "LEFT", -8, 0)
+  end
+
+  -- Holder for the bank bag row. Its right edge is pinned to the title, so
+  -- buying a slot grows the row leftwards instead of pushing the title out.
+  frame.bags = CreateFrame("Frame", "PandaUIBankBags", frame)
+  frame.bags:SetWidth(BAG_BUTTON)
+  frame.bags:SetHeight(BAG_BUTTON)
+  if frame.title then
+    frame.bags:SetPoint("RIGHT", frame.title, "LEFT", -8, 0)
+  else
+    frame.bags:SetPoint("RIGHT", frame.close, "LEFT", -8, 0)
+  end
+end
+
+-- ---------------------------------------------------------------------------
+-- Direct drag
+--
+-- The header's empty strip (left of the bag row) moves the window. The bank is
+-- not registered with core/mover.lua at all -- it can be placed at any time
+-- without unlocking the interface first, so an edit-mode handle would only add
+-- a second way to do the same thing.
+--
+-- The drag moves the anchor, the frame that owns the window rect, and saves to
+-- "bank.main": the id the retired mover used, so a placement made before this
+-- change is still the position the bank opens on.
+--
+-- Reuses the throwaway StartMoving/StopMovingOrSizing pair before the real
+-- StartMoving that core/mover.lua and core/windowdrag.lua both use
+-- (knowledge.json / frames.movable_drag_requires_button_handle).
+-- ---------------------------------------------------------------------------
+local BANK_POSITION_ID = "bank.main"
+local BANK_DEFAULT_POSITION = {
+  point = "BOTTOMLEFT", relativePoint = "BOTTOMLEFT", x = 20, y = 20,
+}
+
+-- No mover: the bank is dragged directly by its header strip, so the stored
+-- position -- or the default -- is applied at build time rather than by
+-- U.RegisterMover, and re-applied through the reset hook once /pui reset has
+-- cleared the store. Same arrangement as modules/bags.lua.
+local function ApplyBankPosition()
+  if not U.ApplyFramePoint(anchor, U.GetPosition(BANK_POSITION_ID) or
+                           BANK_DEFAULT_POSITION) then
+    U.Debug("bank: failed to apply position")
+    return false
+  end
+  return true
+end
+
+function U.ApplyLiveBankWindowScale(oldPercent, newPercent)
+  return U.ApplyBagFamilyWindowScale(anchor, BANK_POSITION_ID, oldPercent,
+                                     newPercent, ApplyBankPosition)
+end
+
+function modernBank.BuildResize()
+  frame.resizeGrip = U.BuildBagResizeGrip({
+    window = frame,
+    target = anchor,
+    name = "PandaUIBankResizeGrip",
+    id = BANK_POSITION_ID,
+    updateId = "bank.resize",
+    onResize = modernBank.Resize,
+    onStop = U.RefreshLiveBankWindowGeometry,
+  })
+end
+
+local function StartBankDrag()
+  if not pcall(anchor.SetMovable, anchor, true) then
+    U.Error("bank: SetMovable failed; the bank cannot be moved")
+    return
+  end
+
+  if pcall(anchor.StartMoving, anchor) then
+    pcall(anchor.StopMovingOrSizing, anchor)
+  end
+  if pcall(anchor.StartMoving, anchor) then
+    U.HoldScreenGuard(anchor, true)
+  end
+end
+
+local function StopBankDrag()
+  pcall(anchor.StopMovingOrSizing, anchor)
+  U.HoldScreenGuard(anchor, false)
+
+  -- Edge-derived, not GetPoint offsets (U.GetFramePlacement explains the
+  -- mirrored-Y readback).
+  local p = U.GetFramePlacement(anchor)
+  if p then U.SavePosition(BANK_POSITION_ID, p.point, p.relativePoint, p.x, p.y) end
+  U.CheckOnScreen(anchor)
+end
+
+-- The whole header is the grab strip, with every header control above it
+-- (U.BuildBagDragStrip, shared with the bag window; user request,
+-- 2026-09-27). The bank-bag row is lifted as one frame: its buttons are its
+-- children and sit above it. The search field is built after this and lifted
+-- there.
+local function BuildDragHandle()
+  local handle = U.BuildBagDragStrip(frame, "PandaUIBankDrag",
+    modernBank.Header(), {
+      frame.sort, frame.stack, frame.close, frame.bags,
+    })
+  handle:RegisterForDrag("LeftButton")
+  pcall(handle.EnableMouse, handle, true)
+
+  handle:SetScript("OnDragStart", StartBankDrag)
+  handle:SetScript("OnDragStop", StopBankDrag)
+
+  frame.dragHandle = handle
+  return handle
+end
+
+-- The bag-family header, rearranged for the bank: portrait,
+-- sort and stack on the close button's line, the bank bags right-aligned
+-- before the close button; no title.
+function modernBank.StyleHeader()
+  if not modernBank.Active() then return end
+  local token = M.modernWow.bags
+
+  U.ModernWowBagHousing(frame)
+  U.ModernWowBagPortrait(frame)
+  U.ModernWowBagClose(frame, "PandaUIBankClose")
+
+  frame.sort:ClearAllPoints()
+  frame.sort:SetPoint("TOPLEFT", frame, "TOPLEFT",
+                      token.actions.left, -token.actions.top)
+  frame.stack:ClearAllPoints()
+  frame.stack:SetPoint("LEFT", frame.sort, "RIGHT", modernBank.IconGap(), 0)
+  U.ModernWowBagHeaderIcon(frame.sort, HEADER_ICON)
+  U.ModernWowBagHeaderIcon(frame.stack, HEADER_ICON)
+
+  -- Bank bags and the purchase control are right-aligned against the close
+  -- button, centred on the icon row. frame.bags grows leftwards as bags are
+  -- bought (LayoutHeader sets its width).
+  frame.bags:ClearAllPoints()
+  frame.bags:SetPoint("RIGHT", frame, "TOPRIGHT",
+                      -(token.close.right + token.close.width +
+                        modernBank.IconGap()),
+                      -(token.actions.top + token.actions.height / 2))
+
+  -- No title under Modern WoW (user request).
+  if frame.title then frame.title:Hide() end
+
+  U.ModernWowBagSeparator(frame)
+end
+
+local function Build()
+  -- Same shape as the bag frame: the anchor owns the rect and is the mover
+  -- target, the visible panel is stretched over it, so edit mode can place the
+  -- bank while the bank is closed.
+  local gap = modernBank.SlotGap()
+  anchor = CreateFrame("Frame", "PandaUIBankAnchor", UIParent)
+  pcall(anchor.SetScale, anchor, U.GetBankWindowScale() / 100)
+  anchor:SetWidth(COLUMNS * (SLOT_SIZE + gap) - gap + modernBank.SidePad() * 2)
+  anchor:SetHeight(modernBank.Header() + 4 * (SLOT_SIZE + gap) - gap +
+                   modernBank.BottomPad())
+
+  frame = U.CreatePanel(anchor, { name = "PandaUIBankFrame" })
+  frame:SetAllPoints(anchor)
+  -- Above the HUD, below every interface window (user request, 2026-09-29), and in that
+  -- strata above the carried-bag window's nested slot layers when the two
+  -- overlap. core/style.lua carries the trade-off this gives up.
+  U.LowerWindowBelowInterface(frame, 200)
+  pcall(frame.EnableMouse, frame, true)
+  frame:Hide()
+
+  local special = U.G("UISpecialFrames")
+  if type(special) == "table" then
+    table.insert(special, "PandaUIBankFrame")
+  end
+
+  BuildHeader()
+  modernBank.StyleHeader()
+  BuildDragHandle()
+
+  -- Header search (user request, 2026-09-24): the bag's field
+  -- (modules/bagdesign.lua), fitted between the stack button and the bank-bag
+  -- row. It sits above the drag strip, which keeps the rest of that span.
+  -- Under `modern` the same lane on the flat header (U.FlatBagSearch; user
+  -- requests, 2026-09-24).
+  local searchSpec = {
+    window = frame,
+    name = "PandaUIBankSearch",
+    id = "bank.search",
+    after = frame.stack,
+    before = frame.bags,
+    -- pairs, not table.getn: the category view builds no button for an empty
+    -- slot, so a bag's slot table has holes and a counted walk stops at the
+    -- first one, leaving every later item unshaded.
+    each = function(paint)
+      local bag, bagSlots
+      for bag, bagSlots in pairs(slots) do
+        local slot, button
+        for slot, button in pairs(bagSlots) do
+          paint(button, U.ContainerSlotLink(bag, slot))
+        end
+      end
+    end,
+  }
+  modernBank.search = U.ModernWowBagSearch(searchSpec) or
+                      U.FlatBagSearch(searchSpec)
+  if modernBank.search then
+    U.RaiseOverBagDragStrip(frame, { modernBank.search.field })
+  end
+
+  grid = CreateFrame("Frame", "PandaUIBankGrid", frame)
+  grid:SetPoint("TOPLEFT", frame, "TOPLEFT", modernBank.SidePad(),
+                -modernBank.Header())
+  grid:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -modernBank.SidePad(),
+                modernBank.BottomPad())
+
+  catView = U.CreateBagCategoryView({
+    grid = grid,
+    name = "PandaUIBank",
+    columns = COLUMNS,
+    slotSize = SLOT_SIZE,
+    slotGap = modernBank.SlotGap,
+    bags = BankBags,
+    slotCount = BagSlotCount,
+    slots = slots,
+    ensureSlot = function(bag, slot) return EnsureSlot(bag, slot, grid) end,
+    placeSlot = modernBank.PlaceSlot,
+    updateSlot = UpdateSlotAppearance,
+    collapsed = function() return U.BagsCategoryCollapsed("bank") end,
+    fullText = "BANK_FULL",
+    onDropped = function() layoutDirty = true end,
+    onLayout = function(width, height)
+      anchor:SetWidth(width + modernBank.SidePad() * 2)
+      local natural = modernBank.Header() + height + modernBank.BottomPad()
+      anchor:SetHeight(modernBank.Height(natural))
+      if modernBank.Active() then U.ModernWowBagHousing(frame) end
+    end,
+  })
+
+  -- Escape (UISpecialFrames) and the close glyph both end up here, so the
+  -- banker session is closed from one place instead of from each caller. The
+  -- guard keeps the BANKFRAME_CLOSED -> Hide -> CloseBankFrame path from
+  -- looping back on itself.
+  frame:SetScript("OnHide", function()
+    U.UnregisterUpdate("bank.refresh")
+    if modernBank.search then modernBank.search.Stop() end
+    U.HideConfirm("bank")
+    cursorBankBag = nil
+    -- The bank's containers stop being writable when the session ends, so a
+    -- run in flight is stopped here instead of being left to discover that one
+    -- failed swap later. Silent by design: the window closing is the reason.
+    -- A bag sort is another owner's run and is untouched.
+    U.StopSort("bank")
+    U.StopStack("bank")
+    -- The pane stops being readable with the session, so the derived
+    -- main-pane quantities drop their before-state: the next open seeds
+    -- again instead of diffing against a stale one.
+    if type(U.ReleaseBankStacks) == "function" then U.ReleaseBankStacks() end
+    if closing then return end
+    closing = true
+    pcall(CloseBankFrame)
+    closing = false
+  end)
+
+  pcall(anchor.SetMovable, anchor, true)
+  ApplyBankPosition()
+  U.OnPositionReset(ApplyBankPosition)
+  U.GuardOnScreen(anchor, { id = BANK_POSITION_ID })
+end
+
+-- Second layer under the parking above: the stock bank's own parts, by name,
+-- through the shared native-suppression adapter (core/compat.lua) -- the same
+-- mechanism the bag frame uses on ContainerFrame1..5. BankFrame itself is
+-- deliberately absent from this list; hiding a *child* never runs the parent's
+-- OnHide, so the banker session is untouched.
+local function SuppressNativeBankParts()
+  local names = {
+    "BankFrameTitleText", "BankFrameCloseButton", "BankPortraitTexture",
+    "BankFrameMoneyFrame", "BankFramePurchaseInfo", "BankFramePurchaseButton",
+    "BankFrameSlotCost", "BankSlotsFrame",
+  }
+
+  local i
+  for i = 1, BANK_SLOTS do
+    table.insert(names, "BankFrameItem" .. i)
+  end
+  for i = 1, MAX_BANK_BAGS do
+    table.insert(names, "BankFrameBag" .. i)
+  end
+
+  U.SuppressNativeFrame(names)
+end
+
+function BK:OnEnable()
+  if frame then return end
+  -- The Bags page's Enable switch covers the bank too: off leaves the stock
+  -- BankFrame untouched for another bag addon.
+  if type(U.BagsEnabled) == "function" and not U.BagsEnabled() then return end
+
+  Build()
+  modernBank.BuildResize()
+  NeutraliseNativeBank()
+  SuppressNativeBankParts()
+
+  U.RegisterEvent("BANKFRAME_OPENED", function()
+    NeutraliseNativeBank()
+    ShowBank()
+
+    -- Opening the bank with the bag window shut leaves nothing to move items
+    -- to or from; UnrealPfUI opens the backpack here for the same reason.
+    local open = U.G("OpenBackpack")
+    if type(open) == "function" then pcall(open) end
+  end)
+
+  U.RegisterEvent("BANKFRAME_CLOSED", function()
+    closing = true
+    if frame then frame:Hide() end
+    closing = false
+  end)
+
+  U.RegisterEvent("PLAYERBANKSLOTS_CHANGED", function()
+    bagDirty[BANK_CONTAINER] = true
+    layoutDirty = true
+  end)
+
+  U.RegisterEvent("PLAYERBANKBAGSLOTS_CHANGED", function()
+    headerDirty = true
+    layoutDirty = true
+  end)
+
+  U.RegisterEvent("BAG_UPDATE", function(event, bag)
+    if not frame:IsShown() then return end
+    layoutDirty = true
+    bag = tonumber(bag)
+    if bag then bagDirty[bag] = true end
+  end)
+
+  U.RegisterEvent("ITEM_LOCK_CHANGED", function()
+    if not frame:IsShown() then return end
+    local bags = BankBags()
+    local i
+    for i = 1, table.getn(bags) do bagDirty[bags[i]] = true end
+  end)
+
+  U.RegisterEvent("BAG_UPDATE_COOLDOWN", function()
+    if frame:IsShown() then cooldownDirty = true end
+  end)
+end

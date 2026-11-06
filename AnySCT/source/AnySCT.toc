@@ -1,0 +1,16 @@
+## Interface: 11200
+## Title: AnySCT
+## Notes: Blizzard-pet-style floating combat text for any units you pick: tanks, their pets and totems, mobs, enemy players.
+## Author: ShempError
+## Version: 0.3.1
+## X-Website: https://octowow.st/git/ShempError/AnySCT
+## OptionalDeps: pfUI, CT_RaidAssist, oRA, TWThreat
+## SavedVariables: AnySCTDB
+parse.lua
+plates.lua
+core.lua
+menu.lua
+widgets.lua
+sct.lua
+minimap.lua
+options.lua

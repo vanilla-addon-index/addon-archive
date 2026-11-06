@@ -1,0 +1,110 @@
+{
+  "upstream": "https://github.com/Road-block/KillLog",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "KillLog",
+    "name": "KillLog",
+    "url": "https://github.com/Road-block/KillLog",
+    "api": "https://api.github.com/repos/Road-block/KillLog"
+  },
+  "commit": "4e7b4b36433a5b1d20c5336d1ef57965dbc183a1",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "321a26b9c216db4d30fbe7f9bc0d4e29ab262335512301025e04b8e05b8a58a0",
+      "bytes": 442
+    },
+    "ChatParse.lua": {
+      "sha256": "92152518883893762f5f8482b51858edb1cc18d983c043c15b987610a8d1ca94",
+      "bytes": 7805
+    },
+    "ChatParse.xml": {
+      "sha256": "0b49bad2e6d50bdcbd0e8bd78899268c811b2cf1affe7e89330c08e27511b0d1",
+      "bytes": 669
+    },
+    "ChatParseReadme.txt": {
+      "sha256": "9c59f64b095b6eb431f65c2653be667581d69ccb7bf75d0141aead3d965e0ffc",
+      "bytes": 3956
+    },
+    "KillLog_DeathFrame.lua": {
+      "sha256": "b53c90a5e11d26318fc6747b3256904b1ec2e26cf055d7a748adeb6aae5ff47e",
+      "bytes": 4968
+    },
+    "KillLog_DeathFrame.xml": {
+      "sha256": "27eb3dfdcbb78baa2e21e5cb3cb94c86e5e06082fdbf97c561cc9edf6cf709fe",
+      "bytes": 9541
+    },
+    "KillLog_GeneralFrame.lua": {
+      "sha256": "3fb18f116b893d687391d0c54c12e5ec368fdc974bd3af2babbaa04dfe9b7512",
+      "bytes": 9825
+    },
+    "KillLog_GeneralFrame.xml": {
+      "sha256": "ae67d01b6b4c8d5b1c4c29fb79cef905b328a45a183dcc80768ba29b9fbd01e0",
+      "bytes": 35660
+    },
+    "KillLog_ListFrame.lua": {
+      "sha256": "bc03dff35b557e7aabac1cc28b2c8109818009df2277f709a7d13fe34f222a67",
+      "bytes": 40593
+    },
+    "KillLog_ListFrame.xml": {
+      "sha256": "92ada06b8fbc4c1b45bc4989cd9a33e2fa725c17c8b69338606ee148ce26fd72",
+      "bytes": 38553
+    },
+    "KillLog_OptionsFrame.lua": {
+      "sha256": "3334040d749d9bd715ef9d1935fb142f90eca5b19ce2c2162fa3d543a3be352d",
+      "bytes": 9905
+    },
+    "KillLog_OptionsFrame.xml": {
+      "sha256": "e52266533778f61964b3d0bcf00dd8d2237889483492fbe4aef026c018dc51cf",
+      "bytes": 16483
+    },
+    "killlog.toc": {
+      "sha256": "aeabf3fefbbe05e50136aa858a410834c7ad463bd49fe045dbd9be379e45042f",
+      "bytes": 600
+    },
+    "KillLogFrame.lua": {
+      "sha256": "4b030939068c29eea2faa2d059dcc823011203ee0bb506701e991341da1dbcd5",
+      "bytes": 61325
+    },
+    "KillLogFrame.xml": {
+      "sha256": "8da77d2f081817f833bb28b394054664c880be94af2567712a6e5e92a2e3e859",
+      "bytes": 7266
+    },
+    "localization.lua": {
+      "sha256": "cf6fb2b1f5343f153099433bc0f7c5cb5d82fe5c3162c4e0b30a5b09310214be",
+      "bytes": 14912
+    },
+    "QuickSort.lua": {
+      "sha256": "bbb1b9cee4e1cbedc74fd4709b281cf02ba1f455a19a5bc3333582564f9367e1",
+      "bytes": 1881
+    },
+    "readme.txt": {
+      "sha256": "29359bf434c994bf1b2847e351b0e8adad859a4ba71c3d7ebcee6870e72497f4",
+      "bytes": 13857
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "4452050": {
+      "tag": "2.6.3-11200",
+      "folder": "2.6.3-11200--4452050",
+      "assets": {
+        "2511265": {
+          "sha256": "b2ad2c190ef443a70cebc01f87185c2ffd51e0f76beb04fa6d137d51c530cdf8",
+          "bytes": 52378,
+          "id": "2511265",
+          "name": "KillLog-2.6.3-11200.zip",
+          "url": "https://github.com/Road-block/KillLog/releases/download/2.6.3-11200/KillLog-2.6.3-11200.zip",
+          "path": "releases/2.6.3-11200--4452050/assets/KillLog-2.6.3-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "23f9312b3ef2f7ffaf01ee3fb6db0c85db1c5e6e2b7132e06b4718671c3b8a7a",
+        "bytes": 46351,
+        "path": "releases/2.6.3-11200--4452050/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/KillLog/tarball/2.6.3-11200"
+      }
+    }
+  }
+}

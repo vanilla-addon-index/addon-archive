@@ -4,8 +4,8 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| pfQuest-turtle-HDB-Install | https://github.com/rivi-s/pfQuest-turtle-HDB-Install | new |
-| pfQuest-turtle-HDB-Install--lightblade | https://octowow.st/git/lightblade/pfQuest-turtle-HDB-Install | new |
-| pfQuest-turtle-HDB | https://octowow.st/git/lightblade/pfQuest-turtle-HDB | new |
+| pfQuest-turtle-HDB-Install | https://github.com/rivi-s/pfQuest-turtle-HDB-Install | mirrored |
+| pfQuest-turtle-HDB-Install--lightblade | https://octowow.st/git/lightblade/pfQuest-turtle-HDB-Install | mirrored |
+| pfQuest-turtle-HDB | https://octowow.st/git/lightblade/pfQuest-turtle-HDB | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

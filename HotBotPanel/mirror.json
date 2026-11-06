@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/DuduSandsten/HotBotPanel",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "DuduSandsten",
+    "repo": "HotBotPanel",
+    "name": "HotBotPanel",
+    "url": "https://github.com/DuduSandsten/HotBotPanel",
+    "api": "https://api.github.com/repos/DuduSandsten/HotBotPanel"
+  },
+  "commit": "37bfac2799975c6d9902a4f7b252cc1c7abb8836",
+  "sourceFiles": {
+    "HotBotPanel-screenshot.png": {
+      "sha256": "4fcb4d23f61865e61a8a495451c297348895ea5b990a53887fb19d9f8fd862e0",
+      "bytes": 37152
+    },
+    "HotBotPanel.lua": {
+      "sha256": "18e7a5cd6c5e24a437c7def3223c6d00960525e4ec752311bd0c69392e2c5d94",
+      "bytes": 2744
+    },
+    "HotBotPanel.toc": {
+      "sha256": "4a24803c6c990ef0305d42fb6a81571dd335298d064e3ae2895e6d045131283b",
+      "bytes": 248
+    },
+    "HotBotPanel.xml": {
+      "sha256": "7a1b124b581e3f1db379a667bc157b8dad93aa5844ae167f3c14b34d8391cb40",
+      "bytes": 4855
+    },
+    "readme.md": {
+      "sha256": "a1ec8416e17ca93c1ff318f7471757ceedf674297953d96208e196f87737d5f6",
+      "bytes": 211
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "8430134": {
+      "tag": "1",
+      "folder": "1--8430134",
+      "assets": {},
+      "source": {
+        "sha256": "14fd8fc1c138f9da460be21999d4e3ced45f40038c09660f6c83f45f973a3139",
+        "bytes": 40053,
+        "path": "releases/1--8430134/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/DuduSandsten/HotBotPanel/tarball/1"
+      }
+    }
+  }
+}

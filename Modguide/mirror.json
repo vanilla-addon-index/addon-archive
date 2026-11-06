@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/obble/modguide",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "obble",
+    "repo": "modguide",
+    "name": "modguide",
+    "url": "https://github.com/obble/modguide",
+    "api": "https://api.github.com/repos/obble/modguide"
+  },
+  "commit": "4863fcefbc84680f05d3d989704b2eb983f216f2",
+  "sourceFiles": {
+    "guide.lua": {
+      "sha256": "d9cd41817c19a8a61e500b72a8c2239504ae34adb918289e7368ce691b19fcfe",
+      "bytes": 1565
+    },
+    "modguide.toc": {
+      "sha256": "488dfc651922c010f9071327a5ed0aa4abb8a79c3640dc1bb38949384356210d",
+      "bytes": 138
+    },
+    "README.md": {
+      "sha256": "54e4087c135e5fdee993e76f3ddf9d51f7cf8c0e8f02faee44ba5e3a1d667f76",
+      "bytes": 160
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,7 @@
+## Interface: 11200
+## Author: Community port for 1.12
+## Title: RangeMelee
+## Notes: Automatically switches between default and melee action bars
+## Version: 3.4.0
+## SavedVariables: RangeMeleeSettings
+RangeMelee.xml

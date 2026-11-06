@@ -1,0 +1,25 @@
+{
+  "upstream": "https://github.com/Cabro/CLog",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Cabro",
+    "repo": "CLog",
+    "name": "CLog",
+    "url": "https://github.com/Cabro/CLog",
+    "api": "https://api.github.com/repos/Cabro/CLog"
+  },
+  "commit": "e9fd281f7947bfeffe96decca152446e64b34ec8",
+  "sourceFiles": {
+    "CLog/CLog.lua": {
+      "sha256": "603c34866ae36b2458aa8e2a416cd4a30d87087c13715d812b15100006f0f384",
+      "bytes": 11952
+    },
+    "CLog/CLog.toc": {
+      "sha256": "a2d115e0bca9ebb36cf3b50461a21cea7a735859cdb00bd6856d3ee52d1e9ab9",
+      "bytes": 212
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

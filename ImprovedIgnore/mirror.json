@@ -1,0 +1,66 @@
+{
+  "upstream": "https://github.com/twothe/ImprovedIgnore",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "twothe",
+    "repo": "ImprovedIgnore",
+    "name": "ImprovedIgnore",
+    "url": "https://github.com/twothe/ImprovedIgnore",
+    "api": "https://api.github.com/repos/twothe/ImprovedIgnore"
+  },
+  "commit": "8fa195448453e881607e95bb8f8d4fc96bece6b8",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "ImprovedIgnore.lua": {
+      "sha256": "11f06e416be2219eeedaaac8186c09cacc3a5940c812207e2a00de2234f68d54",
+      "bytes": 8584
+    },
+    "ImprovedIgnore.toc": {
+      "sha256": "3f9086c7fa19a3a4770759dfa2878c17237b290cf6a9edab74aff0cfc33d40ac",
+      "bytes": 247
+    },
+    "ImprovedIgnore.xml": {
+      "sha256": "127465cca52271ca2110d332e6fffb3115f3457ff8b694b1a41e450f3950a519",
+      "bytes": 440
+    },
+    "LICENSE": {
+      "sha256": "5afc42acf3a5bd75c62bd7d4f7a6e3ed7289b48f289f279886380df3659c486e",
+      "bytes": 1071
+    },
+    "README.md": {
+      "sha256": "56e0915c9c5bc46ed82b83c4066e6ef2c9a290f6556ef0a965a95c897b5fe182",
+      "bytes": 170
+    },
+    "strings.lua": {
+      "sha256": "f002ca2d4a6237b4aefaa60a44bd89a6a36f5c9ae9933add91df4abe330d551f",
+      "bytes": 2704
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "1668698": {
+      "tag": "1.2",
+      "folder": "1.2--1668698",
+      "assets": {
+        "787641": {
+          "sha256": "334929472a6d224762c3067bb6864fc001c888a9a93be6b826c7d46649e358dc",
+          "bytes": 5550,
+          "id": "787641",
+          "name": "ImprovedIgnore.zip",
+          "url": "https://github.com/twothe/ImprovedIgnore/releases/download/1.2/ImprovedIgnore.zip",
+          "path": "releases/1.2--1668698/assets/ImprovedIgnore.zip"
+        }
+      },
+      "source": {
+        "sha256": "7b17f3120e30526e5e60252763ff67210fc5e12a9eeeaa64500f3e995a47c1ed",
+        "bytes": 4493,
+        "path": "releases/1.2--1668698/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/twothe/ImprovedIgnore/tarball/1.2"
+      }
+    }
+  }
+}

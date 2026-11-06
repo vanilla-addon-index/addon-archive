@@ -1,0 +1,9 @@
+{
+  "id": "17599788",
+  "tag": "v2.21",
+  "name": "PowerAuras",
+  "body": "+ Added combat status check - just type \"combat\" in buffname field",
+  "published": "2019-05-27T06:36:19Z",
+  "prerelease": false,
+  "url": "https://github.com/laytya/PowerAuras-vanilla/releases/tag/v2.21"
+}

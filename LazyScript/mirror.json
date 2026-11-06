@@ -1,0 +1,341 @@
+{
+  "upstream": "https://github.com/laytya/LazyScript",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "LazyScript",
+    "name": "LazyScript",
+    "url": "https://github.com/laytya/LazyScript",
+    "api": "https://api.github.com/repos/laytya/LazyScript"
+  },
+  "commit": "cf3b7c7220cf2f0fa7062af8033e3e30f8e87a92",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "0a47311af1a7c7ac0b56ac5b493e7944dca62d59c3371a8697127ab45734a413",
+      "bytes": 7
+    },
+    "LazyDruid/BiteTracking.lua": {
+      "sha256": "dec06b6b641921e47d4b91de9c786eafb458754f6a5178a70e7e2f4411549f91",
+      "bytes": 3504
+    },
+    "LazyDruid/LazyDruid.lua": {
+      "sha256": "3f5736b3760d2adfedd384d23d656ed177aec4f449644bb250ba72803259680d",
+      "bytes": 2540
+    },
+    "LazyDruid/LazyDruid.toc": {
+      "sha256": "7fbc0400f053812fabf2e68ab5e797ce1aa43c44864f7130571b917ce8605817",
+      "bytes": 455
+    },
+    "LazyDruid/LazyDruid.xml": {
+      "sha256": "6dd8bb7d3be6fdf75abcaac57cca0977d9c2677a5e0ebfab741b0917f060dd7a",
+      "bytes": 691
+    },
+    "LazyDruid/Localization.lua": {
+      "sha256": "5e8239a4962c82e9c89a9770c2dfb95adf84b6ac49eec6c3101ac724e373a21c",
+      "bytes": 16166
+    },
+    "LazyDruid/ParseDruid.lua": {
+      "sha256": "4267c815a12eec5dc5f8f4731102adf2c07a6db9b8c20e510d34bf69106fa929",
+      "bytes": 27904
+    },
+    "LazyHunter/LazyHunter.lua": {
+      "sha256": "1740efa6948234c806d88c811c988926f06faefa915ab11506aa36841a96d239",
+      "bytes": 1234
+    },
+    "LazyHunter/LazyHunter.toc": {
+      "sha256": "787a3b916d56b7b7af3e8a21890b5d0026bf42d330831824eaed088804cea83b",
+      "bytes": 447
+    },
+    "LazyHunter/LazyHunter.xml": {
+      "sha256": "c9806a7c3fd1efe09ff7622986f7f7fce8f0ccedcf4883275c242aa78b03c78c",
+      "bytes": 695
+    },
+    "LazyHunter/Localization.lua": {
+      "sha256": "d76fdf276d9052c65fd9c9fabe3083e37599bc4ec46b9b5d1c33863ec84cae95",
+      "bytes": 13335
+    },
+    "LazyHunter/ParseHunter.lua": {
+      "sha256": "6d262a2c9f62c951c1e1785c263c38ddffc11e2de9dd41a915988b1a0269d875",
+      "bytes": 21844
+    },
+    "LazyMage/LazyMage.lua": {
+      "sha256": "af9b21c3721999ddbad0c59db30d3e90ce740314a6af4b031dfdfe80dc72e05c",
+      "bytes": 1292
+    },
+    "LazyMage/LazyMage.toc": {
+      "sha256": "74a980345918ebc5ee383e2dfaaadeb4c681b04552a6f1169cd482af7fa021d4",
+      "bytes": 435
+    },
+    "LazyMage/LazyMage.xml": {
+      "sha256": "8330bf7362c667b5efc26241efcfdfd44259900f1f2f2343adee0a71f49b9b59",
+      "bytes": 685
+    },
+    "LazyMage/Localization.lua": {
+      "sha256": "a1cfd3ae55eb54ed97d3d45bdd314c8379401991a8b64c5ef11fa28991de63e3",
+      "bytes": 10289
+    },
+    "LazyMage/ParseMage.lua": {
+      "sha256": "25d3de56aef7a3e8b9faa0fa7c939f1409d7fe48eeaf41db1423d5fbd65d2bcb",
+      "bytes": 13318
+    },
+    "LazyPaladin/LazyPaladin.lua": {
+      "sha256": "5b130dbe0380da1ee515825e1d9cbaeabc27e921173c6548c337a7be8f1e444c",
+      "bytes": 1250
+    },
+    "LazyPaladin/LazyPaladin.toc": {
+      "sha256": "03d781e2647c2b6c707a8de346b4199c904a88c2b2d905fd8283e152ea998c66",
+      "bytes": 458
+    },
+    "LazyPaladin/LazyPaladin.xml": {
+      "sha256": "dd6d7199515ef7e375debfc80f4ab5503b72b0300a820fc8d7b1bc4f8d7fdd0b",
+      "bytes": 700
+    },
+    "LazyPaladin/Localization.lua": {
+      "sha256": "e13f8c36dc1cb10fb959913dcd97a9466b0a99d72a7abdebc456390b8e744086",
+      "bytes": 9214
+    },
+    "LazyPaladin/ParsePaladin.lua": {
+      "sha256": "b3ad5609a34cb6da6f5328b3a3eac19a51c61b4b98c8e1128df6ea4eb32e4f44",
+      "bytes": 11812
+    },
+    "LazyPriest/LazyPriest.lua": {
+      "sha256": "15ab2b2173394d4b1225859e7b074ce6eaff57ce2ce2740b474980bd82663731",
+      "bytes": 1282
+    },
+    "LazyPriest/LazyPriest.toc": {
+      "sha256": "4c0d1cfef92717608a3e76bdddb7c3f677a3490996fb9297ab8e0b8db84a9d40",
+      "bytes": 441
+    },
+    "LazyPriest/LazyPriest.xml": {
+      "sha256": "ed8c07de7bc6a456296997fdff580a57b67f4c300a62f75ad40a4043d26be39d",
+      "bytes": 695
+    },
+    "LazyPriest/Localization.lua": {
+      "sha256": "174b335dda272abd9a4d40b55664cde96fef36eb8236a07cb8178cc967928bd2",
+      "bytes": 8032
+    },
+    "LazyPriest/ParsePriest.lua": {
+      "sha256": "25ed44937c1e3fb8e11eb8a4f21cd0425b3f75e009807a148e3335ddc831c83c",
+      "bytes": 10266
+    },
+    "LazyRogue/EviscerateTracking.lua": {
+      "sha256": "a2b9379ebbbc4911895cfa91ece17cc5fd59ba3dfd5d169cee9d83bfd58d1c9f",
+      "bytes": 3496
+    },
+    "LazyRogue/LazyRogue.lua": {
+      "sha256": "bb0d5c940e1e3753df62573a26eb0416139a5bc12e1eedd9aa9a28733b0394ae",
+      "bytes": 2554
+    },
+    "LazyRogue/LazyRogue.toc": {
+      "sha256": "f98337b0de0e31673ee723cd94ab13f4ad69df3ec0f90fed59b9a488cc3e437a",
+      "bytes": 495
+    },
+    "LazyRogue/LazyRogue.xml": {
+      "sha256": "ca8ca7b3cc331084d0abd05c61dcb368b2a9bc5f045d1c4f936511da77e297b4",
+      "bytes": 690
+    },
+    "LazyRogue/Localization.lua": {
+      "sha256": "b13eec337d7ea5066b6621165245fe6a4cc158c02fc024e3203bed9c291e1a82",
+      "bytes": 15292
+    },
+    "LazyRogue/ParseRogue.lua": {
+      "sha256": "7e9fe404a20528084b43e1c2eb38af7da26f1a7771dde0f553d016a1295808a4",
+      "bytes": 38010
+    },
+    "LazyScript/About.lua": {
+      "sha256": "8a9a1c0590763d064bd819c398f7152fd4e053ac6c0f520c9ec1ea35f42b1195",
+      "bytes": 3112
+    },
+    "LazyScript/About.xml": {
+      "sha256": "01b913c10bd564cddb4c2d586c6f7d78189971fbcffd99f98fb3ffc3247039d9",
+      "bytes": 4037
+    },
+    "LazyScript/Actions.lua": {
+      "sha256": "57749e89f560e0073538419b88acbed2a3ac221561f55429a06dbfda3d5511a7",
+      "bytes": 57703
+    },
+    "LazyScript/AutoAttack.lua": {
+      "sha256": "a76dc00ddb6798ea6bd4c4fc3f7d84a95a797ca235c07c643753c952165406d6",
+      "bytes": 3607
+    },
+    "LazyScript/Bindings.xml": {
+      "sha256": "e3ca60ca3ec7f3701ef4134b5187793dae062819cc0bdec41f0fe68e182cbe98",
+      "bytes": 921
+    },
+    "LazyScript/Deathstimator.lua": {
+      "sha256": "84537b3d893c590eb59ec2c147f58932fa813c316b65973c380a7d7d0a011ccf",
+      "bytes": 5014
+    },
+    "LazyScript/Deathstimator.xml": {
+      "sha256": "8b4a3e05851792030427c5bb31a553e5dacddc01613380cb3d69c09682806178",
+      "bytes": 1912
+    },
+    "LazyScript/FormEdit.lua": {
+      "sha256": "e484c13864a61a4927bfd0ee34c4c1f1145767f8f569e4c60277681fc99f877b",
+      "bytes": 21584
+    },
+    "LazyScript/FormEdit.xml": {
+      "sha256": "54cef26d0a62a36adfdbed4e831e44e6c31e896269b05cfdc39ecf953921762a",
+      "bytes": 16505
+    },
+    "LazyScript/img/corner.tga": {
+      "sha256": "00aa5fb94593cf2c7e3abfc684985d715b5303c11d91787e27f15418c31fe1f6",
+      "bytes": 286
+    },
+    "LazyScript/Immunity.xml": {
+      "sha256": "437e61d01c26788b260bc17a6f2757ea6242bdce80f7ddb3fb1a69485d6fc288",
+      "bytes": 7145
+    },
+    "LazyScript/ImmunityTypeTracking.lua": {
+      "sha256": "f86d261b85cf34d8721c2868c08e7ba8430b38ea50da0457d07f8671800a2959",
+      "bytes": 3980
+    },
+    "LazyScript/Interrupt.lua": {
+      "sha256": "d1286591a411170f83d11952d494de904ce8aba7c6b4f7c7e2945a23ceff777a",
+      "bytes": 2101
+    },
+    "LazyScript/Interrupt.xml": {
+      "sha256": "a2e4392d3ae0bcbbdef93b47e3729051199253ec3608311bd19d0dce58d7bcc8",
+      "bytes": 7163
+    },
+    "LazyScript/LazyScript.lua": {
+      "sha256": "843e4671fb1ea1250d739dc757cd050ab9ee7646eeb19d81d1bb5ea3145c2d90",
+      "bytes": 39591
+    },
+    "LazyScript/LazyScript.toc": {
+      "sha256": "022a05a91e6fd7692bab00a907f0c68b6a5e39f6afb9094e611449056af69760",
+      "bytes": 703
+    },
+    "LazyScript/LazyScript.xml": {
+      "sha256": "d1bba73bdb64b8b337f31745a1b9edf30fe6805f1dd010948de11e2ffaf2a9c0",
+      "bytes": 447
+    },
+    "LazyScript/Localization.lua": {
+      "sha256": "97e9620a65f5bb3efa9f50977eedbab3a45891d36c76198102659c83f666afbc",
+      "bytes": 181942
+    },
+    "LazyScript/LSActionsWarrior.md": {
+      "sha256": "f4d83628b8be5b299402c446d26da684f63f042c0f51ca712b87ee376de52e2a",
+      "bytes": 5586
+    },
+    "LazyScript/LSBuffDebuf.md": {
+      "sha256": "17ec527bf2f6f7f80e38ad69a285c1550bcb872cedd67ac350cab3b3082eaa09",
+      "bytes": 8521
+    },
+    "LazyScript/LSCriteriaWarrior.md": {
+      "sha256": "337fa3bfdcdfcdfe43505a7d5e68b2c130c18c088b8b66903bbe2a2aefa548b0",
+      "bytes": 6881
+    },
+    "LazyScript/LSOverview.md": {
+      "sha256": "247b3e76838fe44723780f996de12ac3f06e03734ec57049ca45f1ebdd80032d",
+      "bytes": 8790
+    },
+    "LazyScript/MinimapMenu.lua": {
+      "sha256": "d56f0c378fdd57b16ba8c13002bfa660b81a45593ff1405e0463ea9669146af1",
+      "bytes": 19079
+    },
+    "LazyScript/MinimapMenu.xml": {
+      "sha256": "66a66d49a6494d088f2cade183176dbd0a739b27aa90c104d69acaaeff116bcf",
+      "bytes": 2754
+    },
+    "LazyScript/Minion.lua": {
+      "sha256": "788cb2c5a5dbbdf3ef530ceea9f8e7dcfe73034e85cf254c499d835de5ab3da4",
+      "bytes": 2586
+    },
+    "LazyScript/Minion.xml": {
+      "sha256": "6a9cafdd81ee349e0c63363095dfe6594e0a81e70d575d17bf3251a04d19cc78",
+      "bytes": 3609
+    },
+    "LazyScript/Parse.lua": {
+      "sha256": "579a6cb74686d5312baf3ea4842a379721c5d7c3ba45ba577460246aae5f00f6",
+      "bytes": 11325
+    },
+    "LazyScript/ParseBuffs.lua": {
+      "sha256": "a88d354122f7a59d080e0ec61685f1d09f55a5415243d5e95c8361300c1efe6e",
+      "bytes": 58140
+    },
+    "LazyScript/ParseGeneral.lua": {
+      "sha256": "61092165bdcb8c15aca7bb6f56f335c729035c684660fe243c3af3794a15b7ea",
+      "bytes": 93722
+    },
+    "LazyScript/Tooltip.lua": {
+      "sha256": "6e00b1eefc3ad698cbf291e1a54211fa712fc0dad61132d5e2ede8bdea833c22",
+      "bytes": 7707
+    },
+    "LazyScript/Tooltip.xml": {
+      "sha256": "d9680839e8a6f17803265bc7e2f74f417b6c2cef9c8c6e8e68af9c388ddad940",
+      "bytes": 537
+    },
+    "LazyScript/Util.lua": {
+      "sha256": "e2bd28875064731281c8a8af45ed8a9a4df65d6c3c6d081a9550ffbb8ab0a4e5",
+      "bytes": 6922
+    },
+    "LazyShaman/LazyShaman.lua": {
+      "sha256": "0cbf4741746cd329ff1fda6634da446fff3e7e458f7fbad0a690feeca6010808",
+      "bytes": 1234
+    },
+    "LazyShaman/LazyShaman.toc": {
+      "sha256": "21dd7e5697cbdc24404056abd207ce92ef9781c8291203a91457dcc4cdec2635",
+      "bytes": 449
+    },
+    "LazyShaman/LazyShaman.xml": {
+      "sha256": "8085610d78e89bae7c7074624dd38b43746a528e0af5a17314070050006574f6",
+      "bytes": 695
+    },
+    "LazyShaman/Localization.lua": {
+      "sha256": "6d7db32b5878010a071e8c4d65c4742ced74e224794d8121376007a53debb707",
+      "bytes": 7842
+    },
+    "LazyShaman/ParseShaman.lua": {
+      "sha256": "53f86d91971290cac3c22a3739f1a38e48a872c1c4741331227915df73e6ecd8",
+      "bytes": 9297
+    },
+    "LazyWarlock/LazyWarlock.lua": {
+      "sha256": "1f62f08df8f57bd486b9835c700a611b48fb43cb388f189fb90844e64daa3b9b",
+      "bytes": 1349
+    },
+    "LazyWarlock/LazyWarlock.toc": {
+      "sha256": "8469bdc8afe15ca74487786fe272b93e691e56ae5fd7d58d69fe8f96a999e162",
+      "bytes": 481
+    },
+    "LazyWarlock/LazyWarlock.xml": {
+      "sha256": "3090a68caab8f0b2e82822c2e26dcea1edb3722ed46822ae0617a45a1f1ea9f9",
+      "bytes": 694
+    },
+    "LazyWarlock/Localization.lua": {
+      "sha256": "a13bc5133afeb781e800ed5e300f15906dc6ef516b82b95c3493a0e9f95e09a1",
+      "bytes": 21569
+    },
+    "LazyWarlock/ParseWarlock.lua": {
+      "sha256": "8b64c057098f06e6223608c3f90193546f48eef0a9ac1ccf58669c42b4a5d542",
+      "bytes": 33802
+    },
+    "LazyWarrior/LazyWarrior.lua": {
+      "sha256": "208ae41ac48165d4b070563169683d08fa7a064a90ec52b4136538f6bd0f7adf",
+      "bytes": 1253
+    },
+    "LazyWarrior/LazyWarrior.toc": {
+      "sha256": "f3b700be19fc598fc43f0b1ff15727a18ca86005afed9049830e8cbc07c04f08",
+      "bytes": 446
+    },
+    "LazyWarrior/LazyWarrior.xml": {
+      "sha256": "1234e96d686a39996ef8ad8a177afc06d4211664e458284e081108dcf9e4f398",
+      "bytes": 700
+    },
+    "LazyWarrior/Localization.lua": {
+      "sha256": "cb0c41a37a720a854c8101240cc4f7c57fa67125170c0ae49cc630c0f66854cd",
+      "bytes": 7273
+    },
+    "LazyWarrior/ParseWarrior.lua": {
+      "sha256": "a5de58bf1096691580fb1d848d58ce7be12bb61d59613d14591be82ae64f0d21",
+      "bytes": 12519
+    },
+    "README.md": {
+      "sha256": "695748f3d220ff515aaa7d146658d4a1568d47978a4dbf5ab0465e70d76cbcdd",
+      "bytes": 86
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

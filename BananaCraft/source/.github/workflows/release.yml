@@ -1,0 +1,46 @@
+name: Release
+
+# Trigger: a tag like v2.2.1. The version in the tag must match
+# "## Version:" in BananaCraft.toc.
+on:
+  push:
+    tags: [ 'v*' ]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Lua 5.1
+        run: sudo apt-get update && sudo apt-get install -y lua5.1
+
+      - name: Syntax check
+        run: for f in *.lua; do luac5.1 -p "$f"; done
+
+      - name: Check version
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          TOC="$(grep '^## Version:' BananaCraft.toc | sed 's/## Version: *//' | tr -d '\r')"
+          if [ "$TAG" != "$TOC" ]; then
+            echo "Tag $TAG does not match .toc version $TOC"; exit 1
+          fi
+          echo "VERSION=$TAG" >> "$GITHUB_ENV"
+
+      # The folder inside the ZIP MUST be called "BananaCraft",
+      # otherwise the client does not find the addon. GitHub's own
+      # "Download ZIP" gives "...-main", hence this package.
+      - name: Build package
+        run: |
+          mkdir -p dist/BananaCraft
+          cp BananaCraft.toc *.lua *.tga README.md LICENSE CHANGELOG.md dist/BananaCraft/
+          cd dist && zip -r "BananaCraft-${VERSION}.zip" BananaCraft
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/BananaCraft-${{ env.VERSION }}.zip
+          generate_release_notes: true

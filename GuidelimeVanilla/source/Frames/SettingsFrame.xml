@@ -1,0 +1,1195 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+    <Frame name="GLV_Settings" parent="UIParent" hidden="true" movable="true" resizable="false" toplevel="true" frameStrata="DIALOG" enableMouse="true">
+        <Size>
+            <AbsDimension x="600" y="450"/>
+        </Size>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
+
+        <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+            <EdgeSize>
+                <AbsValue val="12"/>
+            </EdgeSize>
+            <TileSize>
+                <AbsValue val="8"/>
+            </TileSize>
+            <BackgroundInsets>
+                <AbsInset left="3" right="3" top="3" bottom="3"/>
+            </BackgroundInsets>
+        </Backdrop>
+
+        <Scripts>
+            <OnLoad>
+                this:RegisterForDrag("LeftButton");
+                tinsert(UISpecialFrames, "GLV_Settings");
+                this:SetBackdropColor(0.08, 0.08, 0.12, 0.95);
+                this:SetBackdropBorderColor(0.3, 0.3, 0.4, 0.8);
+            </OnLoad>
+            <OnShow>
+                GLV_ResetDisplaySettingsChanged();
+                GLV_ShowGuide(GLV_SettingsGuidesPage);
+            </OnShow>
+            <OnHide>
+                GLV_CheckReloadOnClose();
+            </OnHide>
+            <OnDragStart>
+                this:StartMoving();
+            </OnDragStart>
+            <OnDragStop>
+                this:StopMovingOrSizing();
+            </OnDragStop>
+        </Scripts>
+
+        <Frames>
+
+            <!-- HEADER -->
+            <Frame name="$parentHeader">
+                <Size>
+                    <AbsDimension x="600" y="40"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" RelativeTo="$parent" RelativePoint="TOPLEFT">
+                        <Offset x="0" y="0"/>
+                    </Anchor>
+                </Anchors>
+
+                <Layers>
+                    <Layer>
+                        <!-- TITLE -->
+                        <FontString name="$parentTitle" font="Fonts\FRIZQT__.TTF" text="Guidelime Vanilla Settings">
+                            <FontHeight>
+                                <AbsValue val="14"/>
+                            </FontHeight>
+                            <Anchors>
+                                <Anchor point="TOP">
+                                    <Offset x="0" y="-14"/>
+                                </Anchor>
+                            </Anchors>
+                            <Color r="0.42" g="0.55" b="0.83"/>
+                            <Shadow>
+                                <Offset>
+                                    <AbsDimension x="2" y="-2"/>
+                                </Offset>
+                                <Color r="0" g="0" b="0" a="1"/>
+                            </Shadow>
+                        </FontString>
+                    </Layer>
+                </Layers>
+
+                <Frames>
+                    <!-- SEPARATOR -->
+                    <Frame name="$parentSeparator">
+                        <Size>
+                            <AbsDimension x="560" y="1"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="BOTTOM">
+                                <Offset x="0" y="0"/>
+                            </Anchor>
+                        </Anchors>
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <Texture>
+                                    <Color r="0.3" g="0.3" b="0.4" a="0.6"/>
+                                </Texture>
+                            </Layer>
+                        </Layers>
+                    </Frame>
+
+                    <!-- CLOSE BUTTON -->
+                    <Button name="$parentCloseButton" inherits="UIPanelButtonTemplate">
+                        <Size>
+                            <AbsDimension x="20" y="20"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPRIGHT" RelativeTo="GLV_Settings" RelativePoint="TOPRIGHT">
+                                <Offset x="-8" y="-8"/>
+                            </Anchor>
+                        </Anchors>
+                        <NormalTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Up"/>
+                        <PushedTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Down"/>
+                        <HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+                        <Scripts>
+                            <OnClick>
+                                GLV_Settings:Hide();
+                            </OnClick>
+                        </Scripts>
+                    </Button>
+                </Frames>
+
+            </Frame>
+            <!-- END HEADER -->
+
+            <!-- LEFT MENU -->
+            <Frame name="$parentMenu">
+                <Size>
+                    <AbsDimension x="120" y="350"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsHeader" RelativePoint="BOTTOMLEFT">
+                        <Offset x="8" y="-8"/>
+                    </Anchor>
+                </Anchors>
+
+                <Frames>
+                    <!-- MENU HIGHLIGHT BACKGROUND -->
+                    <Frame name="GLV_SettingsMenuHighlight" hidden="true">
+                        <Size>
+                            <AbsDimension x="110" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT">
+                                <Offset x="0" y="0"/>
+                            </Anchor>
+                        </Anchors>
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <Texture name="GLV_SettingsMenuHighlightTexture">
+                                    <Color r="0.3" g="0.4" b="0.6" a="0.3"/>
+                                </Texture>
+                            </Layer>
+                        </Layers>
+                    </Frame>
+
+                    <!-- SEPARATOR (vertical line) -->
+                    <Frame name="$parentSeparator">
+                        <Size>
+                            <AbsDimension x="1" y="350"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPRIGHT">
+                                <Offset x="0" y="0"/>
+                            </Anchor>
+                        </Anchors>
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <Texture>
+                                    <Color r="0.3" g="0.3" b="0.4" a="0.6"/>
+                                </Texture>
+                            </Layer>
+                        </Layers>
+                    </Frame>
+
+                    <!-- GUIDE BUTTON -->
+                    <Frame name="$parentGuides" enableMouse="true">
+                        <Size>
+                            <AbsDimension x="110" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT">
+                                <Offset x="0" y="-8"/>
+                            </Anchor>
+                        </Anchors>
+                        <Layers>
+                            <Layer>
+                                <FontString name="$parentText" font="Fonts\FRIZQT__.TTF" text="Guides" justifyH="LEFT">
+                                    <FontHeight>
+                                        <AbsValue val="11"/>
+                                    </FontHeight>
+                                    <Anchors>
+                                        <Anchor point="LEFT">
+                                            <Offset x="10" y="0"/>
+                                        </Anchor>
+                                    </Anchors>
+                                    <Color r="0.8" g="0.8" b="0.8"/>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnMouseDown>
+                                GLV_ShowGuide(GLV_SettingsGuidesPage)
+                            </OnMouseDown>
+                            <OnEnter>
+                                getglobal(this:GetName().."Text"):SetTextColor(1, 1, 1)
+                            </OnEnter>
+                            <OnLeave>
+                                GLV_OnMenuLeave(this)
+                            </OnLeave>
+                        </Scripts>
+                    </Frame>
+
+                    <!-- DISPLAY BUTTON -->
+                    <Frame name="$parentDisplay" enableMouse="true">
+                        <Size>
+                            <AbsDimension x="110" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsMenuGuides" RelativePoint="BOTTOMLEFT">
+                                <Offset x="0" y="-3"/>
+                            </Anchor>
+                        </Anchors>
+                        <Layers>
+                            <Layer>
+                                <FontString name="$parentText" font="Fonts\FRIZQT__.TTF" text="Display" justifyH="LEFT">
+                                    <FontHeight>
+                                        <AbsValue val="11"/>
+                                    </FontHeight>
+                                    <Anchors>
+                                        <Anchor point="LEFT">
+                                            <Offset x="10" y="0"/>
+                                        </Anchor>
+                                    </Anchors>
+                                    <Color r="0.8" g="0.8" b="0.8"/>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnMouseDown>
+                                GLV_ShowGuide(GLV_SettingsDisplayPage)
+                            </OnMouseDown>
+                            <OnEnter>
+                                getglobal(this:GetName().."Text"):SetTextColor(1, 1, 1)
+                            </OnEnter>
+                            <OnLeave>
+                                GLV_OnMenuLeave(this)
+                            </OnLeave>
+                        </Scripts>
+                    </Frame>
+
+                    <!-- TALENTS BUTTON -->
+                    <Frame name="$parentTalents" enableMouse="true">
+                        <Size>
+                            <AbsDimension x="110" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsMenuDisplay" RelativePoint="BOTTOMLEFT">
+                                <Offset x="0" y="-3"/>
+                            </Anchor>
+                        </Anchors>
+                        <Layers>
+                            <Layer>
+                                <FontString name="$parentText" font="Fonts\FRIZQT__.TTF" text="Talents" justifyH="LEFT">
+                                    <FontHeight>
+                                        <AbsValue val="11"/>
+                                    </FontHeight>
+                                    <Anchors>
+                                        <Anchor point="LEFT">
+                                            <Offset x="10" y="0"/>
+                                        </Anchor>
+                                    </Anchors>
+                                    <Color r="0.8" g="0.8" b="0.8"/>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnMouseDown>
+                                GLV_ShowGuide(GLV_SettingsTalentsPage)
+                            </OnMouseDown>
+                            <OnEnter>
+                                getglobal(this:GetName().."Text"):SetTextColor(1, 1, 1)
+                            </OnEnter>
+                            <OnLeave>
+                                GLV_OnMenuLeave(this)
+                            </OnLeave>
+                        </Scripts>
+                    </Frame>
+
+                    <!-- ABOUT BUTTON -->
+                    <Frame name="$parentAbout" enableMouse="true">
+                        <Size>
+                            <AbsDimension x="110" y="22"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsMenuTalents" RelativePoint="BOTTOMLEFT">
+                                <Offset x="0" y="-3"/>
+                            </Anchor>
+                        </Anchors>
+                        <Layers>
+                            <Layer>
+                                <FontString name="$parentText" font="Fonts\FRIZQT__.TTF" text="About" justifyH="LEFT">
+                                    <FontHeight>
+                                        <AbsValue val="11"/>
+                                    </FontHeight>
+                                    <Anchors>
+                                        <Anchor point="LEFT">
+                                            <Offset x="10" y="0"/>
+                                        </Anchor>
+                                    </Anchors>
+                                    <Color r="0.8" g="0.8" b="0.8"/>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnMouseDown>
+                                GLV_ShowGuide(GLV_SettingsAboutPage)
+                            </OnMouseDown>
+                            <OnEnter>
+                                getglobal(this:GetName().."Text"):SetTextColor(1, 1, 1)
+                            </OnEnter>
+                            <OnLeave>
+                                GLV_OnMenuLeave(this)
+                            </OnLeave>
+                        </Scripts>
+                    </Frame>
+
+                </Frames>
+
+            </Frame>
+            <!-- END MENU -->
+
+            <!-- PAGES CONTAINER -->
+            <Frame>
+                <Size>
+                    <AbsDimension x="450" y="380"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPRIGHT" RelativeTo="GLV_SettingsHeader" RelativePoint="BOTTOMRIGHT">
+                        <Offset x="-10" y="-8"/>
+                    </Anchor>
+                </Anchors>
+
+                <Frames>
+
+                    <!-- ==================== GUIDES PAGE ==================== -->
+                    <Frame name="$parentGuidesPage" hidden="false">
+
+                        <Size>
+                            <AbsDimension x="440" y="370"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT">
+                                <Offset x="0" y="0"/>
+                            </Anchor>
+                        </Anchors>
+
+                        <Frames>
+                            <!-- Guide Pack Card -->
+                            <Frame name="$parentGuidePackCard">
+                                <Size>
+                                    <AbsDimension x="430" y="95"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT">
+                                        <Offset x="0" y="0"/>
+                                    </Anchor>
+                                </Anchors>
+                                <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+                                    <EdgeSize><AbsValue val="8"/></EdgeSize>
+                                    <TileSize><AbsValue val="8"/></TileSize>
+                                    <BackgroundInsets><AbsInset left="2" right="2" top="2" bottom="2"/></BackgroundInsets>
+                                </Backdrop>
+                                <Scripts>
+                                    <OnLoad>
+                                        this:SetBackdropColor(0.1, 0.1, 0.15, 0.6);
+                                        this:SetBackdropBorderColor(0.3, 0.3, 0.4, 0.5);
+                                    </OnLoad>
+                                </Scripts>
+
+                                <Layers>
+                                    <Layer>
+                                        <FontString name="$parentTitle" font="Fonts\FRIZQT__.TTF" text="Guide Pack" justifyH="LEFT">
+                                            <FontHeight><AbsValue val="11"/></FontHeight>
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT">
+                                                    <Offset x="10" y="-8"/>
+                                                </Anchor>
+                                            </Anchors>
+                                            <Color r="0.42" g="0.55" b="0.83"/>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+
+                                <Frames>
+                                    <!-- Guide Pack Dropdown -->
+                                    <Frame name="GLV_SettingsGuidesPageGuidePackDropdown" inherits="UIDropDownMenuTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="$parent" RelativePoint="TOPLEFT">
+                                                <Offset x="-5" y="-22"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                UIDropDownMenu_SetWidth(180, this);
+                                            </OnLoad>
+                                            <OnShow>
+                                                GLV_InitGuidePackDropdown(this);
+                                            </OnShow>
+                                        </Scripts>
+                                    </Frame>
+
+                                    <!-- Load Button -->
+                                    <Button name="GLV_SettingsGuidesPageLoadPackButton" inherits="UIPanelButtonTemplate">
+                                        <Size>
+                                            <AbsDimension x="60" y="20"/>
+                                        </Size>
+                                        <Anchors>
+                                            <Anchor point="LEFT" RelativeTo="GLV_SettingsGuidesPageGuidePackDropdown" RelativePoint="RIGHT">
+                                                <Offset x="-10" y="2"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                this:SetText("Load");
+                                            </OnLoad>
+                                            <OnClick>
+                                                GLV_LoadSelectedGuidePack();
+                                            </OnClick>
+                                        </Scripts>
+                                    </Button>
+
+                                    <!-- Unload Guide Button -->
+                                    <Button name="GLV_SettingsGuidesPageUnloadGuideButton" inherits="UIPanelButtonTemplate">
+                                        <Size>
+                                            <AbsDimension x="70" y="20"/>
+                                        </Size>
+                                        <Anchors>
+                                            <Anchor point="LEFT" RelativeTo="GLV_SettingsGuidesPageLoadPackButton" RelativePoint="RIGHT">
+                                                <Offset x="10" y="0"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                this:SetText("Unload");
+                                            </OnLoad>
+                                            <OnClick>
+                                                GLV_UnloadCurrentGuide();
+                                            </OnClick>
+                                        </Scripts>
+                                    </Button>
+
+                                    <!-- Guide Pack Notes -->
+                                    <Frame name="GLV_SettingsGuidesPageGuidePackNotes">
+                                        <Size>
+                                            <AbsDimension x="400" y="25"/>
+                                        </Size>
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsGuidesPageGuidePackDropdown" RelativePoint="BOTTOMLEFT">
+                                                <Offset x="20" y="-2"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Layers>
+                                            <Layer>
+                                                <FontString name="$parentText" font="Fonts\FRIZQT__.TTF" justifyH="LEFT">
+                                                    <FontHeight><AbsValue val="10"/></FontHeight>
+                                                    <Anchors>
+                                                        <Anchor point="TOPLEFT"/>
+                                                    </Anchors>
+                                                    <Color r="0.6" g="0.6" b="0.6"/>
+                                                </FontString>
+                                            </Layer>
+                                        </Layers>
+                                    </Frame>
+                                </Frames>
+                            </Frame>
+
+                            <!-- Automation Card -->
+                            <Frame name="$parentAutomationCard">
+                                <Size>
+                                    <AbsDimension x="430" y="130"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsGuidesPageGuidePackCard" RelativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="-10"/>
+                                    </Anchor>
+                                </Anchors>
+                                <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+                                    <EdgeSize><AbsValue val="8"/></EdgeSize>
+                                    <TileSize><AbsValue val="8"/></TileSize>
+                                    <BackgroundInsets><AbsInset left="2" right="2" top="2" bottom="2"/></BackgroundInsets>
+                                </Backdrop>
+                                <Scripts>
+                                    <OnLoad>
+                                        this:SetBackdropColor(0.1, 0.1, 0.15, 0.6);
+                                        this:SetBackdropBorderColor(0.3, 0.3, 0.4, 0.5);
+                                    </OnLoad>
+                                </Scripts>
+
+                                <Layers>
+                                    <Layer>
+                                        <FontString name="$parentTitle" font="Fonts\FRIZQT__.TTF" text="Automation (BETA)" justifyH="LEFT">
+                                            <FontHeight><AbsValue val="11"/></FontHeight>
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT">
+                                                    <Offset x="10" y="-8"/>
+                                                </Anchor>
+                                            </Anchors>
+                                            <Color r="0.42" g="0.55" b="0.83"/>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+
+                                <Frames>
+                                    <!-- DISABLED: Auto Accept/Turnin causes timing issues with rapid QT→QA sequences -->
+                                    <!-- Auto Accept Quests Checkbox (hidden) -->
+                                    <CheckButton name="GLV_SettingsGuidesPageAutoAcceptQuests" inherits="OptionsCheckButtonTemplate" hidden="true">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="$parent" RelativePoint="TOPLEFT">
+                                                <Offset x="6" y="-24"/>
+                                            </Anchor>
+                                        </Anchors>
+                                    </CheckButton>
+
+                                    <!-- Auto Turnin Quests Checkbox (hidden) -->
+                                    <CheckButton name="GLV_SettingsGuidesPageAutoTurninQuests" inherits="OptionsCheckButtonTemplate" hidden="true">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsGuidesPageAutoAcceptQuests" RelativePoint="BOTTOMLEFT">
+                                                <Offset x="0" y="-2"/>
+                                            </Anchor>
+                                        </Anchors>
+                                    </CheckButton>
+
+                                    <!-- Auto Take Flight Checkbox -->
+                                    <CheckButton name="GLV_SettingsGuidesPageAutoTakeFlight" inherits="OptionsCheckButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="$parent" RelativePoint="TOPLEFT">
+                                                <Offset x="6" y="-24"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                getglobal(this:GetName().."Text"):SetText("Auto Take Flights");
+                                                GLV_InitCheckboxFont(this);
+                                            </OnLoad>
+                                            <OnShow>
+                                                GLV_InitAutomationCheckbox(this, {"Automation", "AutoTakeFlight"});
+                                            </OnShow>
+                                            <OnClick>
+                                                GLV_OnAutomationCheckboxClick(this, {"Automation", "AutoTakeFlight"});
+                                            </OnClick>
+                                        </Scripts>
+                                    </CheckButton>
+                                </Frames>
+                            </Frame>
+
+                        </Frames>
+
+                    </Frame>
+
+                    <!-- ==================== DISPLAY PAGE ==================== -->
+                    <Frame name="$parentDisplayPage" hidden="true">
+
+                        <Size>
+                            <AbsDimension x="440" y="370"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT">
+                                <Offset x="0" y="0"/>
+                            </Anchor>
+                        </Anchors>
+
+                        <Frames>
+                            <!-- Scales Card -->
+                            <Frame name="$parentScalesCard">
+                                <Size>
+                                    <AbsDimension x="430" y="165"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT">
+                                        <Offset x="0" y="0"/>
+                                    </Anchor>
+                                </Anchors>
+                                <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+                                    <EdgeSize><AbsValue val="8"/></EdgeSize>
+                                    <TileSize><AbsValue val="8"/></TileSize>
+                                    <BackgroundInsets><AbsInset left="2" right="2" top="2" bottom="2"/></BackgroundInsets>
+                                </Backdrop>
+                                <Scripts>
+                                    <OnLoad>
+                                        this:SetBackdropColor(0.1, 0.1, 0.15, 0.6);
+                                        this:SetBackdropBorderColor(0.3, 0.3, 0.4, 0.5);
+                                    </OnLoad>
+                                </Scripts>
+
+                                <Layers>
+                                    <Layer>
+                                        <!-- Guide Text Scale Label -->
+                                        <FontString name="GLV_SettingsDisplayPageGuideScaleTitle" font="Fonts\FRIZQT__.TTF" text="Guide Text Scale" justifyH="LEFT">
+                                            <FontHeight><AbsValue val="11"/></FontHeight>
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT" RelativeTo="$parent" RelativePoint="TOPLEFT">
+                                                    <Offset x="10" y="-10"/>
+                                                </Anchor>
+                                            </Anchors>
+                                            <Color r="0.42" g="0.55" b="0.83"/>
+                                        </FontString>
+                                        <!-- Navigation Scale Label -->
+                                        <FontString name="GLV_SettingsDisplayPageNavScaleTitle" font="Fonts\FRIZQT__.TTF" text="Navigation Scale" justifyH="LEFT">
+                                            <FontHeight><AbsValue val="11"/></FontHeight>
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT" RelativeTo="$parent" RelativePoint="TOPLEFT">
+                                                    <Offset x="10" y="-85"/>
+                                                </Anchor>
+                                            </Anchors>
+                                            <Color r="0.42" g="0.55" b="0.83"/>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+
+                                <Frames>
+                                    <!-- Guide Text Scale Slider -->
+                                    <Slider name="GLV_SettingsDisplayPageGuideScaleSlider" inherits="OptionsSliderTemplate">
+                                        <Size>
+                                            <AbsDimension x="200" y="17"/>
+                                        </Size>
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsDisplayPageGuideScaleTitle" RelativePoint="BOTTOMLEFT">
+                                                <Offset x="5" y="-15"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                getglobal(this:GetName().."Low"):SetText("0.8");
+                                                getglobal(this:GetName().."High"):SetText("1.5");
+                                                getglobal(this:GetName().."Text"):SetText("1.0");
+                                                this:SetMinMaxValues(0.8, 1.5);
+                                                this:SetValueStep(0.1);
+                                            </OnLoad>
+                                            <OnShow>
+                                                GLV_InitScaleSlider(this, {"UI", "GuideTextScale"});
+                                            </OnShow>
+                                            <OnValueChanged>
+                                                GLV_OnGuideScaleSliderChanged(this, {"UI", "GuideTextScale"});
+                                            </OnValueChanged>
+                                        </Scripts>
+                                    </Slider>
+
+                                    <!-- Navigation Scale Slider -->
+                                    <Slider name="GLV_SettingsDisplayPageNavScaleSlider" inherits="OptionsSliderTemplate">
+                                        <Size>
+                                            <AbsDimension x="200" y="17"/>
+                                        </Size>
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsDisplayPageNavScaleTitle" RelativePoint="BOTTOMLEFT">
+                                                <Offset x="5" y="-15"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                getglobal(this:GetName().."Low"):SetText("0.8");
+                                                getglobal(this:GetName().."High"):SetText("1.5");
+                                                getglobal(this:GetName().."Text"):SetText("1.0");
+                                                this:SetMinMaxValues(0.8, 1.5);
+                                                this:SetValueStep(0.1);
+                                            </OnLoad>
+                                            <OnShow>
+                                                GLV_InitScaleSlider(this, {"UI", "NavigationScale"});
+                                            </OnShow>
+                                            <OnValueChanged>
+                                                GLV_OnNavScaleSliderChanged(this, {"UI", "NavigationScale"});
+                                            </OnValueChanged>
+                                        </Scripts>
+                                    </Slider>
+                                </Frames>
+                            </Frame>
+
+                            <!-- Navigation Path Card -->
+                            <Frame name="$parentMinimapCard">
+                                <Size>
+                                    <AbsDimension x="430" y="80"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsDisplayPageScalesCard" RelativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="-10"/>
+                                    </Anchor>
+                                </Anchors>
+                                <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+                                    <EdgeSize><AbsValue val="8"/></EdgeSize>
+                                    <TileSize><AbsValue val="8"/></TileSize>
+                                    <BackgroundInsets><AbsInset left="2" right="2" top="2" bottom="2"/></BackgroundInsets>
+                                </Backdrop>
+                                <Scripts>
+                                    <OnLoad>
+                                        this:SetBackdropColor(0.1, 0.1, 0.15, 0.6);
+                                        this:SetBackdropBorderColor(0.3, 0.3, 0.4, 0.5);
+                                    </OnLoad>
+                                </Scripts>
+
+                                <Layers>
+                                    <Layer>
+                                        <FontString name="$parentTitle" font="Fonts\FRIZQT__.TTF" text="Navigation Path" justifyH="LEFT">
+                                            <FontHeight><AbsValue val="11"/></FontHeight>
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT">
+                                                    <Offset x="10" y="-8"/>
+                                                </Anchor>
+                                            </Anchors>
+                                            <Color r="0.42" g="0.55" b="0.83"/>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+
+                                <Frames>
+                                    <!-- Left column -->
+                                    <!-- Show Path on Minimap Checkbox -->
+                                    <CheckButton name="GLV_SettingsDisplayPageMinimapPath" inherits="OptionsCheckButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="$parent" RelativePoint="TOPLEFT">
+                                                <Offset x="6" y="-22"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                getglobal(this:GetName().."Text"):SetText("Show Path on Minimap");
+                                                GLV_InitCheckboxFont(this);
+                                            </OnLoad>
+                                            <OnShow>
+                                                GLV_InitMinimapPathCheckbox(this);
+                                            </OnShow>
+                                            <OnClick>
+                                                GLV_OnMinimapPathCheckboxClick(this);
+                                            </OnClick>
+                                        </Scripts>
+                                    </CheckButton>
+
+                                    <!-- Show Path on World Map Checkbox -->
+                                    <CheckButton name="GLV_SettingsDisplayPageWorldMapPath" inherits="OptionsCheckButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsDisplayPageMinimapPath" RelativePoint="BOTTOMLEFT">
+                                                <Offset x="0" y="-2"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                getglobal(this:GetName().."Text"):SetText("Show Path on World Map");
+                                                GLV_InitCheckboxFont(this);
+                                            </OnLoad>
+                                            <OnShow>
+                                                GLV_InitWorldMapPathCheckbox(this);
+                                            </OnShow>
+                                            <OnClick>
+                                                GLV_OnWorldMapPathCheckboxClick(this);
+                                            </OnClick>
+                                        </Scripts>
+                                    </CheckButton>
+
+                                    <!-- Right column -->
+                                    <!-- Show Minimap Button Checkbox -->
+                                    <CheckButton name="GLV_SettingsDisplayPageMinimapButton" inherits="OptionsCheckButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="$parent" RelativePoint="TOP">
+                                                <Offset x="6" y="-22"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                getglobal(this:GetName().."Text"):SetText("Show Minimap Button");
+                                                GLV_InitCheckboxFont(this);
+                                            </OnLoad>
+                                            <OnShow>
+                                                GLV_InitMinimapButtonCheckbox(this);
+                                            </OnShow>
+                                            <OnClick>
+                                                GLV_OnMinimapButtonCheckboxClick(this);
+                                            </OnClick>
+                                        </Scripts>
+                                    </CheckButton>
+
+                                    <!-- Hide pfQuest Nodes Checkbox -->
+                                    <CheckButton name="GLV_SettingsDisplayPageHidePfQuest" inherits="OptionsCheckButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsDisplayPageMinimapButton" RelativePoint="BOTTOMLEFT">
+                                                <Offset x="0" y="-2"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                getglobal(this:GetName().."Text"):SetText("Hide pfQuest Nodes");
+                                                GLV_InitCheckboxFont(this);
+                                            </OnLoad>
+                                            <OnShow>
+                                                GLV_InitHidePfQuestCheckbox(this);
+                                            </OnShow>
+                                            <OnClick>
+                                                GLV_OnHidePfQuestCheckboxClick(this);
+                                            </OnClick>
+                                        </Scripts>
+                                    </CheckButton>
+                                </Frames>
+                            </Frame>
+
+                            <!-- Frame Strata Card -->
+                            <Frame name="$parentStrataCard">
+                                <Size>
+                                    <AbsDimension x="430" y="60"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" RelativeTo="$parentMinimapCard" RelativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="-10"/>
+                                    </Anchor>
+                                </Anchors>
+                                <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+                                    <EdgeSize><AbsValue val="8"/></EdgeSize>
+                                    <TileSize><AbsValue val="8"/></TileSize>
+                                    <BackgroundInsets><AbsInset left="2" right="2" top="2" bottom="2"/></BackgroundInsets>
+                                </Backdrop>
+                                <Scripts>
+                                    <OnLoad>
+                                        this:SetBackdropColor(0.1, 0.1, 0.15, 0.6);
+                                        this:SetBackdropBorderColor(0.3, 0.3, 0.4, 0.5);
+                                    </OnLoad>
+                                </Scripts>
+
+                                <Layers>
+                                    <Layer>
+                                        <FontString name="$parentTitle" font="Fonts\FRIZQT__.TTF" text="Guide Window Layer" justifyH="LEFT">
+                                            <FontHeight><AbsValue val="11"/></FontHeight>
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT">
+                                                    <Offset x="10" y="-8"/>
+                                                </Anchor>
+                                            </Anchors>
+                                            <Color r="0.42" g="0.55" b="0.83"/>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+
+                                <Frames>
+                                    <Frame name="GLV_SettingsDisplayPageStrataDropdown" inherits="UIDropDownMenuTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="$parent" RelativePoint="TOPLEFT">
+                                                <Offset x="-6" y="-20"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                UIDropDownMenu_SetWidth(160, this);
+                                            </OnLoad>
+                                            <OnShow>
+                                                GLV_InitStrataDropdown(this);
+                                            </OnShow>
+                                        </Scripts>
+                                    </Frame>
+                                </Frames>
+                            </Frame>
+                        </Frames>
+
+                    </Frame>
+
+                    <!-- ==================== TALENTS PAGE ==================== -->
+                    <Frame name="$parentTalentsPage" hidden="true">
+
+                        <Size>
+                            <AbsDimension x="440" y="370"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT">
+                                <Offset x="0" y="0"/>
+                            </Anchor>
+                        </Anchors>
+
+                        <Frames>
+                            <!-- Enable Card -->
+                            <Frame name="$parentEnableCard">
+                                <Size>
+                                    <AbsDimension x="430" y="45"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT">
+                                        <Offset x="0" y="0"/>
+                                    </Anchor>
+                                </Anchors>
+                                <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+                                    <EdgeSize><AbsValue val="8"/></EdgeSize>
+                                    <TileSize><AbsValue val="8"/></TileSize>
+                                    <BackgroundInsets><AbsInset left="2" right="2" top="2" bottom="2"/></BackgroundInsets>
+                                </Backdrop>
+                                <Scripts>
+                                    <OnLoad>
+                                        this:SetBackdropColor(0.1, 0.1, 0.15, 0.6);
+                                        this:SetBackdropBorderColor(0.3, 0.3, 0.4, 0.5);
+                                    </OnLoad>
+                                </Scripts>
+
+                                <Frames>
+                                    <!-- Enable Talent Suggestions Checkbox -->
+                                    <CheckButton name="GLV_SettingsTalentsPageEnableTalents" inherits="OptionsCheckButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="$parent" RelativePoint="TOPLEFT">
+                                                <Offset x="6" y="-10"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                getglobal(this:GetName().."Text"):SetText("Enable Talent Suggestions");
+                                                GLV_InitCheckboxFont(this);
+                                            </OnLoad>
+                                            <OnShow>
+                                                GLV_InitTalentCheckbox(this, {"Talents", "Enabled"});
+                                            </OnShow>
+                                            <OnClick>
+                                                GLV_OnTalentCheckboxClick(this, {"Talents", "Enabled"});
+                                            </OnClick>
+                                        </Scripts>
+                                    </CheckButton>
+                                </Frames>
+                            </Frame>
+
+                            <!-- Template Card -->
+                            <Frame name="$parentTemplateCard">
+                                <Size>
+                                    <AbsDimension x="430" y="70"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsTalentsPageEnableCard" RelativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="-8"/>
+                                    </Anchor>
+                                </Anchors>
+                                <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+                                    <EdgeSize><AbsValue val="8"/></EdgeSize>
+                                    <TileSize><AbsValue val="8"/></TileSize>
+                                    <BackgroundInsets><AbsInset left="2" right="2" top="2" bottom="2"/></BackgroundInsets>
+                                </Backdrop>
+                                <Scripts>
+                                    <OnLoad>
+                                        this:SetBackdropColor(0.1, 0.1, 0.15, 0.6);
+                                        this:SetBackdropBorderColor(0.3, 0.3, 0.4, 0.5);
+                                    </OnLoad>
+                                </Scripts>
+
+                                <Layers>
+                                    <Layer>
+                                        <FontString name="$parentTitle" font="Fonts\FRIZQT__.TTF" text="Template" justifyH="LEFT">
+                                            <FontHeight><AbsValue val="11"/></FontHeight>
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT">
+                                                    <Offset x="10" y="-8"/>
+                                                </Anchor>
+                                            </Anchors>
+                                            <Color r="0.42" g="0.55" b="0.83"/>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+
+                                <Frames>
+                                    <!-- Template Dropdown -->
+                                    <Frame name="GLV_SettingsTalentsPageTemplateDropdown" inherits="UIDropDownMenuTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="$parent" RelativePoint="TOPLEFT">
+                                                <Offset x="-5" y="-22"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                UIDropDownMenu_SetWidth(220, this);
+                                            </OnLoad>
+                                            <OnShow>
+                                                GLV_InitTalentTemplateDropdown(this);
+                                            </OnShow>
+                                        </Scripts>
+                                    </Frame>
+
+                                    <!-- Class Label -->
+                                    <Frame name="GLV_SettingsTalentsPageClassLabel">
+                                        <Size>
+                                            <AbsDimension x="150" y="20"/>
+                                        </Size>
+                                        <Anchors>
+                                            <Anchor point="LEFT" RelativeTo="GLV_SettingsTalentsPageTemplateDropdown" RelativePoint="RIGHT">
+                                                <Offset x="-5" y="2"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Layers>
+                                            <Layer>
+                                                <FontString name="$parentText" font="Fonts\FRIZQT__.TTF" justifyH="LEFT">
+                                                    <FontHeight><AbsValue val="10"/></FontHeight>
+                                                    <Anchors>
+                                                        <Anchor point="LEFT"/>
+                                                    </Anchors>
+                                                    <Color r="0.6" g="0.6" b="0.6"/>
+                                                </FontString>
+                                            </Layer>
+                                        </Layers>
+                                        <Scripts>
+                                            <OnShow>
+                                                GLV_UpdateTalentClassLabel();
+                                            </OnShow>
+                                        </Scripts>
+                                    </Frame>
+                                </Frames>
+                            </Frame>
+
+                            <!-- Options Card -->
+                            <Frame name="$parentOptionsCard">
+                                <Size>
+                                    <AbsDimension x="430" y="170"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsTalentsPageTemplateCard" RelativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="-8"/>
+                                    </Anchor>
+                                </Anchors>
+                                <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+                                    <EdgeSize><AbsValue val="8"/></EdgeSize>
+                                    <TileSize><AbsValue val="8"/></TileSize>
+                                    <BackgroundInsets><AbsInset left="2" right="2" top="2" bottom="2"/></BackgroundInsets>
+                                </Backdrop>
+                                <Scripts>
+                                    <OnLoad>
+                                        this:SetBackdropColor(0.1, 0.1, 0.15, 0.6);
+                                        this:SetBackdropBorderColor(0.3, 0.3, 0.4, 0.5);
+                                    </OnLoad>
+                                </Scripts>
+
+                                <Layers>
+                                    <Layer>
+                                        <FontString name="$parentTitle" font="Fonts\FRIZQT__.TTF" text="Options" justifyH="LEFT">
+                                            <FontHeight><AbsValue val="11"/></FontHeight>
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT">
+                                                    <Offset x="10" y="-8"/>
+                                                </Anchor>
+                                            </Anchors>
+                                            <Color r="0.42" g="0.55" b="0.83"/>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+
+                                <Frames>
+                                    <!-- Show Popup on Level Up Checkbox -->
+                                    <CheckButton name="GLV_SettingsTalentsPageShowPopup" inherits="OptionsCheckButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="$parent" RelativePoint="TOPLEFT">
+                                                <Offset x="6" y="-24"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                getglobal(this:GetName().."Text"):SetText("Show Popup on Level Up");
+                                                GLV_InitCheckboxFont(this);
+                                            </OnLoad>
+                                            <OnShow>
+                                                GLV_InitTalentCheckbox(this, {"Talents", "ShowPopupOnLevelUp"});
+                                            </OnShow>
+                                            <OnClick>
+                                                GLV_OnTalentCheckboxClick(this, {"Talents", "ShowPopupOnLevelUp"});
+                                            </OnClick>
+                                        </Scripts>
+                                    </CheckButton>
+
+                                    <!-- Highlight in Talent Frame Checkbox -->
+                                    <CheckButton name="GLV_SettingsTalentsPageHighlightInFrame" inherits="OptionsCheckButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsTalentsPageShowPopup" RelativePoint="BOTTOMLEFT">
+                                                <Offset x="0" y="-2"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                getglobal(this:GetName().."Text"):SetText("Highlight in Talent Frame");
+                                                GLV_InitCheckboxFont(this);
+                                            </OnLoad>
+                                            <OnShow>
+                                                GLV_InitTalentCheckbox(this, {"Talents", "HighlightInFrame"});
+                                            </OnShow>
+                                            <OnClick>
+                                                GLV_OnTalentCheckboxClick(this, {"Talents", "HighlightInFrame"});
+                                            </OnClick>
+                                        </Scripts>
+                                    </CheckButton>
+
+                                    <!-- Show Endgame at 60 Checkbox -->
+                                    <CheckButton name="GLV_SettingsTalentsPageShowEndgame" inherits="OptionsCheckButtonTemplate">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsTalentsPageHighlightInFrame" RelativePoint="BOTTOMLEFT">
+                                                <Offset x="0" y="-2"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                getglobal(this:GetName().."Text"):SetText("Show Endgame Template at 60");
+                                                GLV_InitCheckboxFont(this);
+                                            </OnLoad>
+                                            <OnShow>
+                                                GLV_InitTalentCheckbox(this, {"Talents", "ShowEndgameAtSixty"});
+                                            </OnShow>
+                                            <OnClick>
+                                                GLV_OnTalentCheckboxClick(this, {"Talents", "ShowEndgameAtSixty"});
+                                            </OnClick>
+                                        </Scripts>
+                                    </CheckButton>
+
+                                    <!-- Move Notification Button -->
+                                    <Button name="GLV_SettingsTalentsPageMoveNotificationButton" inherits="UIPanelButtonTemplate">
+                                        <Size>
+                                            <AbsDimension x="130" y="20"/>
+                                        </Size>
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" RelativeTo="GLV_SettingsTalentsPageShowEndgame" RelativePoint="BOTTOMLEFT">
+                                                <Offset x="0" y="-8"/>
+                                            </Anchor>
+                                        </Anchors>
+                                        <Scripts>
+                                            <OnLoad>
+                                                this:SetText("Move Notification");
+                                            </OnLoad>
+                                            <OnClick>
+                                                GLV_StartMoveToastNotification();
+                                            </OnClick>
+                                        </Scripts>
+                                    </Button>
+                                </Frames>
+                            </Frame>
+                        </Frames>
+
+                    </Frame>
+
+                    <!-- ==================== ABOUT PAGE ==================== -->
+                    <Frame name="$parentAboutPage" hidden="true">
+
+                        <Size>
+                            <AbsDimension x="440" y="370"/>
+                        </Size>
+                        <Anchors>
+                            <Anchor point="TOPLEFT">
+                                <Offset x="0" y="0"/>
+                            </Anchor>
+                        </Anchors>
+
+                        <Frames>
+                            <!-- About Card -->
+                            <Frame name="$parentAboutCard">
+                                <Size>
+                                    <AbsDimension x="430" y="350"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT">
+                                        <Offset x="0" y="0"/>
+                                    </Anchor>
+                                </Anchors>
+                                <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+                                    <EdgeSize><AbsValue val="8"/></EdgeSize>
+                                    <TileSize><AbsValue val="8"/></TileSize>
+                                    <BackgroundInsets><AbsInset left="2" right="2" top="2" bottom="2"/></BackgroundInsets>
+                                </Backdrop>
+                                <Scripts>
+                                    <OnLoad>
+                                        this:SetBackdropColor(0.1, 0.1, 0.15, 0.6);
+                                        this:SetBackdropBorderColor(0.3, 0.3, 0.4, 0.5);
+                                    </OnLoad>
+                                </Scripts>
+
+                                <Layers>
+                                    <Layer>
+                                        <FontString name="GLV_SettingsAboutPageContent" font="Fonts\FRIZQT__.TTF" justifyH="LEFT" justifyV="TOP">
+                                            <FontHeight><AbsValue val="10"/></FontHeight>
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT">
+                                                    <Offset x="12" y="-12"/>
+                                                </Anchor>
+                                            </Anchors>
+                                            <Color r="0.8" g="0.8" b="0.8"/>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+
+                                <Scripts>
+                                    <OnShow>GLV_SettingsAboutPage_OnLoad()</OnShow>
+                                </Scripts>
+                            </Frame>
+                        </Frames>
+
+                    </Frame>
+
+                </Frames>
+
+            </Frame>
+
+        </Frames>
+
+    </Frame>
+
+</Ui>

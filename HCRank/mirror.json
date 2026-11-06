@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/neimad-mp/HCRank",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "neimad-mp",
+    "repo": "HCRank",
+    "name": "HCRank",
+    "url": "https://github.com/neimad-mp/HCRank",
+    "api": "https://api.github.com/repos/neimad-mp/HCRank"
+  },
+  "commit": "d28d9bbbc6642de85c34558db963c513177dbec8",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "d3957c58490771778d7ff36f2ce22c715f5feab41ae35ad1de83dbee3e226d2f",
+      "bytes": 371
+    },
+    "Data.lua": {
+      "sha256": "0efda43f1a3f258e91e15893fc1ae666822c647159addee70231705c5b0fb803",
+      "bytes": 32501
+    },
+    "HCRank.lua": {
+      "sha256": "12c8b9113d819c382caf01f7490b0d9ff5925c7c7394fa0b7318ff087c83198f",
+      "bytes": 1338
+    },
+    "HCRank.toc": {
+      "sha256": "61d3a3577d925aa19b547581ce8289a8e9a3220c9d9103fec2a16ff0c6896fcd",
+      "bytes": 224
+    },
+    "LICENSE": {
+      "sha256": "9d0bf01c643fcc080870901decce7a9f6add51bec47b2c9dd064f65ed0106556",
+      "bytes": 1069
+    },
+    "README.md": {
+      "sha256": "d9babeb83730cb7e2b879095049d07f987bf8c5bf8b38c3b38e873fa97f406eb",
+      "bytes": 963
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

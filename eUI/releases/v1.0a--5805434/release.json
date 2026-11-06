@@ -1,0 +1,9 @@
+{
+  "id": "5805434",
+  "tag": "v1.0a",
+  "name": "v1.0a",
+  "body": "Add math.modf to LuaExtender, fixing eDurability not working without Questie (thanks jagonx!)\r\nRemove test code from eTooltip",
+  "published": "2017-03-20T16:13:11Z",
+  "prerelease": false,
+  "url": "https://github.com/Ennea/eUI/releases/tag/v1.0a"
+}

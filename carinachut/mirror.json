@@ -1,0 +1,33 @@
+{
+  "upstream": "https://gitlab.com/Alizia/carinachut",
+  "source": {
+    "kind": "repository",
+    "host": "gitlab.com",
+    "owner": "Alizia",
+    "repo": "carinachut",
+    "name": "carinachut",
+    "url": "https://gitlab.com/Alizia/carinachut",
+    "api": "https://gitlab.com/api/v4/projects/Alizia%2Fcarinachut"
+  },
+  "commit": "ccb0b9456274c66c47f0a397f0fce7c547d3ee9e",
+  "sourceFiles": {
+    "CarinaChut/CarinaChut.lua": {
+      "sha256": "2fe1c6543a7358f8929095769aa1c24186f7633efe9d7562a6c1ffc6499c2d6e",
+      "bytes": 5119
+    },
+    "CarinaChut/CarinaChut.toc": {
+      "sha256": "fe28d1427ee0e9661454993ee30b37ecc1c34236da6b11066064e92ac525f78c",
+      "bytes": 197
+    },
+    "CarinaChut/CarinaChut.xml": {
+      "sha256": "b74c618b65a7dcadfe99586d2e9e4e90ad2b073a2b0e3a078536895917bd71e2",
+      "bytes": 539
+    },
+    "CarinaChut/CarinaChutFilterList.lua": {
+      "sha256": "a04a08b643ad0a99211fe264c629a13d9c5cd6e1ecda1bed6656e0b497591250",
+      "bytes": 196
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

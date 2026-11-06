@@ -1,0 +1,15 @@
+## Interface: 11200
+## Title: Freewood |cffc89b3cBeasts|r
+## Notes: Archive of wild beasts: where they live, what they eat, what taming teaches. Learns while you play, with export and import.
+## Notes-deDE: Archiv wilder Tiere: wo sie leben, was sie fressen, was das Zähmen lehrt. Lernt beim Spielen, mit Export und Import.
+## Author: Lacustat
+## Version: 0.1.241
+## Dependencies: Freewood-OctoWoW-Core, Freewood-OctoWoW-Pet
+## OptionalDeps: Freewood-OctoWoW-BeastsData, Freewood-OctoWoW-Codex
+
+Locales.lua
+Beasts.lua
+Sync.lua
+MapOverlay.lua
+BeastsUI.lua
+SyncUI.lua

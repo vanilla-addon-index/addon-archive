@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/Paparogue/MobHealth3-Kronos3-Edition",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Paparogue",
+    "repo": "MobHealth3-Kronos3-Edition",
+    "name": "MobHealth3-Kronos3-Edition",
+    "url": "https://github.com/Paparogue/MobHealth3-Kronos3-Edition",
+    "api": "https://api.github.com/repos/Paparogue/MobHealth3-Kronos3-Edition"
+  },
+  "commit": "198fec86d3213cad69d4fa4c2307355daa1a87e9",
+  "sourceFiles": {
+    "MobHealth/Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "88f1943350fd65a0078c634d2aa6288a941491452625abc472f6deb81321df55",
+      "bytes": 22193
+    },
+    "MobHealth/Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "99998a814ff535184cb7ddb16ae334009d9fff8a60633275b19361f46f986b86",
+      "bytes": 60250
+    },
+    "MobHealth/Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "dda405b4520a6040dd02ac5c92d21bf8489c08d6fcd1dd12bc2e88d59994f55e",
+      "bytes": 30960
+    },
+    "MobHealth/Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "2a3511995d2b6f9cd8d58490edfaa0562a9ef59cd2e8045e2df9fabf63895f21",
+      "bytes": 22176
+    },
+    "MobHealth/Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "d65feb4731e2e454373e3deb9a9e76c2ee043500baf97adfa824e47349428c4f",
+      "bytes": 32100
+    },
+    "MobHealth/MobHealth.toc": {
+      "sha256": "042f4a44ee094083e69be01e99a8c2f1b1ac7c4d287975f043478ef03d31d713",
+      "bytes": 460
+    },
+    "MobHealth/MobHealth3.lua": {
+      "sha256": "c53a0d1369022a2bcc911f98ccb0dcdccbc1bca3426bdd76ba21f4bbc459feaf",
+      "bytes": 12588
+    },
+    "README.md": {
+      "sha256": "e44bb0eacb4103d8dc7fa7bf25b8649b2eb7c2cd331d94b2397bde06d4655a9b",
+      "bytes": 816
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

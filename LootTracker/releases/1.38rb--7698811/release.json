@@ -1,0 +1,9 @@
+{
+  "id": "7698811",
+  "tag": "1.38rb",
+  "name": "Roadblock fork",
+  "body": "Changes vs upstream.\r\n- Compact Loot Browser window. (roughy 2/3rds of original)\r\n- Extra options for managing raidids (remove, merge).\r\n- New Tooltips, messages for some options.\r\n- Optional integration with [shootyepgp](https://github.com/Road-block/shootyepgp) for GP pricelist and member GP.\r\n- Recalc DB option, updates DB to current price list.\r\n- Improvements to Search.\r\n- Prevent some leaked globals and small fixes to tooltip show/hide logic.",
+  "published": "2017-09-10T15:31:02Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/LootTracker/releases/tag/1.38rb"
+}

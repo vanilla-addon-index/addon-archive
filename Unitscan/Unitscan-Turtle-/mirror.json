@@ -1,0 +1,61 @@
+{
+  "upstream": "https://github.com/FSuhas/Unitscan-Turtle-",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "FSuhas",
+    "repo": "Unitscan-Turtle-",
+    "name": "Unitscan-Turtle-",
+    "url": "https://github.com/FSuhas/Unitscan-Turtle-",
+    "api": "https://api.github.com/repos/FSuhas/Unitscan-Turtle-"
+  },
+  "commit": "4799f136129da175cf3028642789e3dcd10e350f",
+  "sourceFiles": {
+    "Changelog.txt": {
+      "sha256": "2ca459a3d318d93cd6e01f35684f8a3c83389e4d40312e9e16d37f1ccc5be59e",
+      "bytes": 1296
+    },
+    "README.md": {
+      "sha256": "e3383e7a9e24b9b7ad95368c7751b1be1ed9ca5e2ee28aa26a5039115e29db26",
+      "bytes": 3462
+    },
+    "Sound/Event_wardrum_ogre.ogg": {
+      "sha256": "5d89babab4810c0c28507a3d42c3266fb68c73c46f61c1457a45ee399d55ffd6",
+      "bytes": 36637
+    },
+    "Sound/gruntling_horn_bb.ogg": {
+      "sha256": "69f26434436600de00b3506b07047914563d603aa2e8027b1d999ee7ead579d1",
+      "bytes": 29442
+    },
+    "Sound/scourge_horn.ogg": {
+      "sha256": "dbb9c5e8919bd79e7509575e11fec1ea63a204dce606da5d7620d4a386c43bf7",
+      "bytes": 74163
+    },
+    "UI/UI-Achievement-Alert-Glow.blp": {
+      "sha256": "0cb0305a234ba321f449a56152d7932c422b3a6ed9fa59043f66c6a3a60cb833",
+      "bytes": 88572
+    },
+    "UI/UI-Achievement-Parchment-Horizontal.blp": {
+      "sha256": "261948af2f95a40d7d9d7af159784807557f36eeedec6acc258f8013500ab5b6",
+      "bytes": 88572
+    },
+    "UI/UI-Achievement-Title.blp": {
+      "sha256": "40436fab4ee1ec9c1f5287ec5f5a39ce859ed21931c02c52f12e40526d501111",
+      "bytes": 44900
+    },
+    "unitscan-turtle.toc": {
+      "sha256": "376a0b3c72f51ecd653267c5f164a3224640ed2b3daad4bff851ca31876da9ae",
+      "bytes": 285
+    },
+    "unitscan.lua": {
+      "sha256": "09d367dffa76e139ab6245ed2781a6beadca2954bf268da285c02ee03fe859c6",
+      "bytes": 32688
+    },
+    "zonetargets.lua": {
+      "sha256": "50be34b920f6460750f6e2e699da6586419bbd565dd4f5ce57bce9c6493e6fa0",
+      "bytes": 50802
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

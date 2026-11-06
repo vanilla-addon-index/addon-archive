@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/Geigerkind/DebuffListCheck",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Geigerkind",
+    "repo": "DebuffListCheck",
+    "name": "DebuffListCheck",
+    "url": "https://github.com/Geigerkind/DebuffListCheck",
+    "api": "https://api.github.com/repos/Geigerkind/DebuffListCheck"
+  },
+  "commit": "fb4b5104094c3799a5c17d6bc585e386d293c936",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "b2a8a2d2cedd8dfcdfdc701fb5973f0ff5cd8aa2f094d24b1d90fac2e41a2620",
+      "bytes": 148
+    },
+    "DebuffListCheck.lua": {
+      "sha256": "bf25e64dd832e7b55953885f002c194ef93412665f8679bc1cd72fcf4ecc309c",
+      "bytes": 8391
+    },
+    "DebuffListCheck.toc": {
+      "sha256": "339cf29b7cc1bbf1e2c61acc453260001147852e86ed4c1f5034f55be5ed63df",
+      "bytes": 288
+    },
+    "DebuffListCheck.xml": {
+      "sha256": "9d70fcb51048c73b87ee1b104d764e8a46e5a4270b7fb304a32fb76f5e90d20e",
+      "bytes": 6541
+    },
+    "LICENSE": {
+      "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+      "bytes": 35141
+    },
+    "README.md": {
+      "sha256": "94c89709ebedd4110e76c3f06fe951e37dd7d1a2ea3cbd19c73abb6ddd39f3f8",
+      "bytes": 348
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "4819241": {
+      "tag": "b1",
+      "folder": "b1--4819241",
+      "assets": {},
+      "source": {
+        "sha256": "35807f8c87140521c6b2f195468e7838e5c3d0f6821bda3285801df63484ba64",
+        "bytes": 4522,
+        "path": "releases/b1--4819241/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/tdymel/DebuffListCheck/tarball/b1"
+      }
+    }
+  }
+}

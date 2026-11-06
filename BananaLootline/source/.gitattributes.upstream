@@ -1,0 +1,10 @@
+* text=auto
+*.lua text
+*.toc text
+*.md  text
+*.py  text
+*.js  text
+*.sh  text eol=lf
+*.tga binary
+*.blp binary
+*.png binary

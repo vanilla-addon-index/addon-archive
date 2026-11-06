@@ -1,0 +1,1220 @@
+--[[
+PandaQuest / HUD/Navigator.lua
+
+The quest navigator: a fixed arc whose top ornament means "straight ahead", and
+an arrow rotating about the same pivot to point at the nearest active node of
+the followed quest. With no manual choice, following stays automatic and moves
+to whichever quest owns the nearest drawable node in the current zone.
+
+## What it answers, and the one thing it deliberately refuses to say
+
+It answers exactly one question: **which way do I turn to reach the next node
+of the quest I am following?**
+
+It is not a compass. The arc is never labelled N/E/S/W, never rotates, and
+never encodes world orientation. Its top-centre ornament is the player's own
+forward direction, so the arrow's angle is read directly as "turn this far
+left" or "turn this far right", with no mental step through north. Mixing a
+forward reference and a north reference in one widget would make both harder to
+read than either alone, so this one does not.
+
+## Why this shape and not a projected world marker
+
+The marker this replaced (HUD/Waypoint.lua, gated off behind `hudWorldMarker`)
+projected the target onto the screen. Half of that projection is buildable here
+and half is not, and the missing half cannot be fixed by trying harder:
+
+  * the horizontal half works. It needs a bearing and a facing, and
+    `GetPlayerFacing` supplies the second since the 2026-08-28 client update.
+  * the vertical half is impossible for TWO independent reasons. There is no
+    camera pitch, position or FOV getter -- the whole documented Camera
+    category is setters, and every camera mover in the `Azeroth` category is
+    marked protected. And the bundled world data carries no elevation at all:
+    `units[id].coords` entries are `{x%, y%, areaId, respawn}`. So even a
+    complete camera API would have no target Z to project, and importing Z
+    would still leave no PLAYER Z to subtract it from.
+
+A marker correct horizontally and pinned to an arbitrary horizon band
+vertically reads as broken rather than as partial. A bearing relative to the
+player is the whole of what this client can honestly support, so that is what
+this draws -- the same reason pfQuest's TomTom-derived arrow works well here
+while a world marker does not. Its arrow consumes exactly one number too:
+`atan2` of the x/y delta, minus the facing.
+
+## The rotation
+
+There is no `Texture:SetRotation` here; the documented Texture surface is
+GetTexture, SetBlendMode, SetDesaturated, SetGradientAlpha, SetTexCoord and
+SetTexture. The documented eight-argument `SetTexCoord` call was tried first.
+The client accepted it, but the 2026-09-01 live visual test showed the arrow
+distorting instead of turning rigidly. Call success was not visual support.
+
+The navigator therefore uses the same proven technique as pfQuest's
+TomTom-derived arrow: pre-rotated frames selected with ordinary four-argument
+`SetTexCoord`. `media/Textures/HUD/NavigationArrowFrames0.tga` through `Frames3.tga` hold 64
+frames across four 4x4 atlases generated from the authored PNG by
+`tools/make_navigator_textures.py`. Each 128x128 cell is a 5.625-degree step,
+square, and sampled wholly inside 0..1. The atlases are RLE TGA type 10,
+matching pfQuest's working 512x512 atlas: the live client drew the 1 MiB
+uncompressed type-2 build as diagonal corruption. Their distinct filenames are
+also required because decoded textures stay cached across `/reload`.
+
+## Angle convention
+
+`PlayerHeading:Get` and `BearingFromYards` both work in this addon's
+convention: radians, 0 = north, increasing towards west. Their difference,
+normalized into (-pi, pi], is positive when the target is to the player's LEFT.
+The atlas frames increase counter-clockwise, so the relative angle is handed
+straight to `Client.SetNavigatorArrowAngle` with no sign flip.
+`ROTATION_OFFSET` exists for art whose rest orientation is not "up"; it is zero
+for the shipped texture and is the one knob to reach for if the arrow is
+consistently rotated by a constant.
+
+## Three cadences
+
+Same split, and the same reason, as the tracker and the retired marker.
+`nav.context` at 4Hz chooses the nearest eligible node from a cached active-quest scene.
+The shared map collector may walk hundreds of spawn locations, so that cache is
+rebuilt only when its quest, area, visibility, or relevant quest-item inputs
+change.
+`nav.arrow` at 20Hz does one position read, one facing read and one rotation,
+which is the part that has to keep up with a turning player.
+`nav.eta` every three seconds measures the player's displacement in real yards
+over that window and updates the estimated travel time. The client exposes no
+player-speed API, so a stationary player has no ETA rather than an invented one.
+]]
+
+local PQ = PandaQuest
+local Client = PQ.Client
+local Navigator = PQ:NewModule("Navigator")
+
+-- Added to the computed angle before the arrow is rotated. Zero for the
+-- shipped art, which rests pointing straight up. This is the knob the design
+-- brief anticipates: if the arrow is ever consistently off by a constant --
+-- new art resting at another angle, say -- correct it here rather than by
+-- negating the angle arithmetic, which is pinned by the offline test.
+local ROTATION_OFFSET = 0
+
+-- The authored layout was visually twice the desired HUD footprint. Keep its
+-- internal geometry intact and scale the complete frame tree instead: the arc,
+-- arrow and drag surface then all shrink by exactly the same factor.
+local BASE_RENDER_SCALE = 0.5
+
+-- Directional emphasis: the arrow is solid when the player is aligned with
+-- the target and fades one increment per atlas step towards this alpha as the
+-- target moves behind them. It never flashes; this sits in the middle of the
+-- view for the length of a levelling session.
+local ALPHA_ALIGNED = 1
+local ALPHA_OPPOSITE = 0.45
+local ARC_ALPHA = 0.65
+local ARC_ALPHA_AT_TARGET = 0.35
+
+-- GetUnitSpeed is not present in this client's documented or measured API.
+-- Sample map displacement over the requested three-second window instead. A
+-- sub-half-yard-per-second result is indistinguishable from the map's measured
+-- one-yard position quantization, so it means "no trustworthy ETA".
+local ETA_INTERVAL = 3
+local ETA_MIN_SPEED = 0.5
+
+-- The arc is 512x257; the arrow region is square. These are the authored
+-- dimensions before BASE_RENDER_SCALE is applied.
+local DIAL_WIDTH = 220
+local ARROW_SIZE = 130
+
+Navigator.frame = nil
+Navigator.createFailed = false
+Navigator.rotationSupported = nil
+Navigator.shown = false
+Navigator.context = nil
+Navigator.contextReason = nil
+Navigator.scene = nil
+Navigator.sceneDirty = true
+Navigator.sceneBuiltAt = nil
+Navigator.sceneBuilds = 0
+Navigator.relevantBagItemIds = {}
+Navigator.relevantMapQuestIds = {}
+Navigator.hiddenMapQuestStates = {}
+Navigator.lastBagToken = nil
+Navigator.lastShowInProgressTurnIns = nil
+Navigator.hiddenReason = nil
+Navigator.hiddenCounts = {}
+Navigator.placements = 0
+Navigator.placementFailures = 0
+Navigator.rotations = 0
+Navigator.rotationFailures = 0
+Navigator.lastRelativeAngle = nil
+Navigator.lastDistanceYards = nil
+Navigator.etaSampleAreaId = nil
+Navigator.etaSampleU = nil
+Navigator.etaSampleV = nil
+Navigator.etaSampleAt = nil
+Navigator.lastSpeedYardsPerSecond = nil
+Navigator.lastEtaSeconds = nil
+Navigator.lastEtaText = nil
+Navigator.etaRefreshes = 0
+Navigator.lastFacingSource = nil
+Navigator.lastTargetKind = nil
+Navigator.lastTargetTitle = nil
+Navigator.centreCache = {}
+Navigator.dragging = false
+Navigator.drags = 0
+Navigator.dragFailures = 0
+
+local function Config()
+    return PQ:GetModule("Config")
+end
+
+local function Database()
+    return PQ:GetModule("Database")
+end
+
+local function QuestState()
+    return PQ:GetModule("QuestState")
+end
+
+local function MapContext()
+    return PQ:GetModule("MapContext")
+end
+
+local function QuestTarget()
+    return PQ:GetModule("QuestTarget")
+end
+
+local function WorldMapPins()
+    return PQ:GetModule("WorldMapPins")
+end
+
+local function BagItems()
+    return PQ:GetModule("BagItems")
+end
+
+local function PlayerHeading()
+    return PQ:GetModule("PlayerHeading")
+end
+
+-- Records why the navigator is not on screen. Counted rather than logged, the
+-- same way the retired marker did it: at 20Hz a chat line is useless, but the
+-- difference between "no quest followed", "quest is in another zone" and "this
+-- client refused the rotation" has to survive to a /pq nav read-out.
+function Navigator:Hide(reason)
+    self.hiddenReason = reason
+    if reason then
+        self.hiddenCounts[reason] = (self.hiddenCounts[reason] or 0) + 1
+    end
+    if self.frame and self.shown then
+        Client.HideObject(self.frame)
+        self.shown = false
+    end
+end
+
+function Navigator:GetFrame()
+    if self.frame or self.createFailed then
+        return self.frame
+    end
+    -- The widget name must never contain a hyphen: this client rewrites "-" in
+    -- widget names into a filler string.
+    self.frame = Client.CreateNavigator("PandaQuestNavigator", DIAL_WIDTH,
+        ARROW_SIZE)
+    if not self.frame then
+        self.createFailed = true
+        PQ:Debug("navigator could not be created")
+    elseif not Client.SetNavigatorDrag(self.frame, function()
+        Navigator:StartDrag()
+    end, function()
+        Navigator:StopDrag()
+    end) then
+        PQ:Warn(PQ.L("NAV_WARN_NO_HANDLE"))
+    end
+    return self.frame
+end
+
+function Navigator:StartDrag()
+    if not self.frame then
+        return false
+    end
+    if not Client.StartFrameDrag(self.frame) then
+        self.dragFailures = self.dragFailures + 1
+        PQ:Warn(PQ.L("NAV_WARN_DRAG_FAILED"))
+        return false
+    end
+    self.dragging = true
+    self.drags = self.drags + 1
+    return true
+end
+
+function Navigator:CapturePosition()
+    local config = Config()
+    if not self.frame or not config then
+        return false
+    end
+    local point, relativeName, relativePoint, x, y =
+        Client.GetFrameAnchor(self.frame)
+    if type(point) ~= "string" or type(x) ~= "number" or type(y) ~= "number" then
+        PQ:Warn(PQ.L("NAV_WARN_NO_POSITION"))
+        return false
+    end
+    -- relativeName is deliberately not persisted. A live frame reference is
+    -- not stable across reloads, so every saved anchor is reapplied against
+    -- UIParent, exactly like the tracker and rare-alert positions.
+    config:Set("navigatorPoint", point)
+    config:Set("navigatorRelativePoint",
+        type(relativePoint) == "string" and relativePoint or point)
+    config:Set("navigatorX", x)
+    config:Set("navigatorY", y)
+    -- A drop is placed against the current screen; its heal is kept again.
+    self.followScreen = nil
+    return true
+end
+
+function Navigator:StopDrag()
+    if not self.frame then
+        return false
+    end
+    Client.StopFrameDrag(self.frame)
+    self.dragging = false
+    return self:CapturePosition()
+end
+
+-- Whether this client accepts four-argument atlas selection. Asked once and
+-- cached: an arrow frozen on one atlas cell is not a navigator worth drawing.
+function Navigator:RotationSupported()
+    if self.rotationSupported == nil then
+        self.rotationSupported = Client.HasNavigatorAtlasRotation() and true or false
+        if not self.rotationSupported then
+            PQ:Debug("navigator disabled: this client refused atlas frame selection")
+        end
+    end
+    return self.rotationSupported
+end
+
+-- The slow half ---------------------------------------------------------------
+
+-- Considers one exact database coordinate for the route. The first candidate
+-- wins an exact-distance tie, which makes the result follow quest-log and
+-- location order instead of hash iteration order.
+local function ConsiderTarget(best, point, quest, kind, complete,
+    playerX, playerY, eastPerPercent, southPerPercent)
+    if type(point) ~= "table" or type(point.x) ~= "number"
+        or type(point.y) ~= "number" then
+        return best
+    end
+
+    local east = (point.x - playerX) * eastPerPercent
+    local south = (point.y - playerY) * southPerPercent
+    local distanceSquared = east * east + south * south
+    if best and distanceSquared >= best.distanceSquared then
+        return best
+    end
+
+    return {
+        x = point.x,
+        y = point.y,
+        distanceSquared = distanceSquared,
+        complete = complete and true or false,
+        kind = kind,
+        quest = quest,
+    }
+end
+
+-- Builds the same active-quest spatial scene the map and minimap use. Objective
+-- location arrays stay grouped by quest instead of being copied into one large
+-- flat list; the nearest-node pass can then run four times a second without
+-- allocating one wrapper table per spawn.
+function Navigator:BuildTargetScene(areaId)
+    local database = Database()
+    local questState = QuestState()
+    local worldMap = WorldMapPins()
+    if not database or not database.available or not questState or not worldMap then
+        return false, "questSceneUnavailable"
+    end
+
+    local quests = questState:GetOrderedQuests()
+    local config = Config()
+    local groups = {}
+    local nodeCount = 0
+    local questIndex = 1
+    local questTotal = table.getn(quests)
+    while questIndex <= questTotal do
+        local quest = quests[questIndex]
+        -- The map's own readiness rule, not the raw client flag: a talk-to
+        -- step such as Lost Necklace (85) is never flagged complete, has no
+        -- objective relation, and so left the arrow with nowhere to point.
+        local complete = quest and worldMap:IsQuestReadyToTurnIn(quest) or false
+        local locations = worldMap:CollectQuestLocations(
+            quest, areaId, complete, config)
+        local locationTotal = table.getn(locations)
+        if locationTotal > 0 then
+            table.insert(groups, {
+                quest = quest,
+                complete = complete,
+                locations = locations,
+            })
+            nodeCount = nodeCount + locationTotal
+        end
+        questIndex = questIndex + 1
+    end
+
+    local turnIns = worldMap:CollectTurnIns(database, quests, areaId, config)
+    nodeCount = nodeCount + table.getn(turnIns)
+
+    -- Capture the exact non-quest-model inputs used by the collectors. The old
+    -- one-second expiry rebuilt this entire scene forever to notice these rare
+    -- changes. A small dependency check on each context tick preserves that
+    -- correctness without re-walking hundreds of spawn locations.
+    local relevantMapQuestIds = {}
+    local relevantMapQuestSeen = {}
+    questIndex = 1
+    while questIndex <= questTotal do
+        local questIds = worldMap:GetQuestMapIds(quests[questIndex])
+        local idIndex = 1
+        local idTotal = table.getn(questIds)
+        while idIndex <= idTotal do
+            local questId = questIds[idIndex]
+            if type(questId) == "number" and not relevantMapQuestSeen[questId] then
+                relevantMapQuestSeen[questId] = true
+                table.insert(relevantMapQuestIds, questId)
+            end
+            idIndex = idIndex + 1
+        end
+        questIndex = questIndex + 1
+    end
+    table.sort(relevantMapQuestIds)
+
+    local hiddenMapQuestStates = {}
+    local idIndex = 1
+    local idTotal = table.getn(relevantMapQuestIds)
+    while idIndex <= idTotal do
+        local questId = relevantMapQuestIds[idIndex]
+        hiddenMapQuestStates[questId] = worldMap:IsQuestHidden(questId, config)
+        idIndex = idIndex + 1
+    end
+    self.relevantMapQuestIds = relevantMapQuestIds
+    self.hiddenMapQuestStates = hiddenMapQuestStates
+    self.relevantBagItemIds = worldMap:GetRelevantBagItemIds(quests)
+    local bagItems = BagItems()
+    self.lastBagToken = bagItems and bagItems:GetTokenFor(self.relevantBagItemIds)
+    self.lastShowInProgressTurnIns = config
+        and config:Get("showInProgressTurnIns") and true or false
+    self.scene = {
+        areaId = areaId,
+        groups = groups,
+        turnIns = turnIns,
+        questCount = questTotal,
+        nodeCount = nodeCount,
+    }
+    self.sceneDirty = false
+    self.sceneBuiltAt = Client.Now()
+    self.sceneBuilds = self.sceneBuilds + 1
+    return true
+end
+
+-- Cheap dependency check for the cached spatial scene. Objective-set changes
+-- arrive through QuestState and zone changes are checked separately; this
+-- covers the two inputs that can change without either event: carried
+-- quest-use items and per-quest map visibility.
+function Navigator:SceneDependenciesChanged(worldMap, config)
+    local bagItems = BagItems()
+    local bagToken = bagItems and bagItems:GetTokenFor(self.relevantBagItemIds)
+    if bagToken ~= self.lastBagToken then
+        return true
+    end
+    local showInProgress = config
+        and config:Get("showInProgressTurnIns") and true or false
+    if showInProgress ~= self.lastShowInProgressTurnIns then
+        return true
+    end
+    local index = 1
+    local total = table.getn(self.relevantMapQuestIds)
+    while index <= total do
+        local questId = self.relevantMapQuestIds[index]
+        if worldMap:IsQuestHidden(questId, config)
+            ~= self.hiddenMapQuestStates[questId] then
+            return true
+        end
+        index = index + 1
+    end
+    return false
+end
+
+-- Chooses the nearest exact node from the cached scene. Objectives are the
+-- still-needed raw creature/object/trigger coordinates. A turn-in is eligible
+-- only for a quest that is complete: showInProgressTurnIns may keep the future
+-- ender visible on the maps, but routing there before the current objective is
+-- done points the player away from the work still owed. This is intentionally
+-- a node choice, not QuestTarget:SelectPrimary's stable densest-cluster choice:
+-- the navigator now mirrors pfQuest's route behavior and may change target as
+-- the player moves.
+function Navigator:FindNearestTarget(areaId, playerU, playerV,
+    eastPerPercent, southPerPercent, followingKey)
+    local scene = self.scene
+    if not scene or scene.areaId ~= areaId then
+        return nil, "questSceneUnavailable"
+    end
+    if type(playerU) ~= "number" or type(playerV) ~= "number" then
+        return nil, "playerNotOnView"
+    end
+
+    local playerX = playerU * 100
+    local playerY = playerV * 100
+    local best = nil
+
+    local groupIndex = 1
+    local groupTotal = table.getn(scene.groups)
+    while groupIndex <= groupTotal do
+        local group = scene.groups[groupIndex]
+        local quest = group.quest
+        local complete = group.complete
+        local locations = group.locations
+        if not followingKey or (quest and quest.titleKey == followingKey) then
+            local locationIndex = 1
+            local locationTotal = table.getn(locations)
+            while locationIndex <= locationTotal do
+                best = ConsiderTarget(best, locations[locationIndex], quest,
+                    complete and "turnin" or "objective", complete,
+                    playerX, playerY, eastPerPercent, southPerPercent)
+                locationIndex = locationIndex + 1
+            end
+        end
+        groupIndex = groupIndex + 1
+    end
+
+    -- Turn-ins are separate pins in the map scene. Completed quests may
+    -- duplicate a coordinate collected above; strict-less tie handling keeps
+    -- the earlier quest-owned candidate and changes nothing. Future turn-ins
+    -- remain map context only: select a quest from a shared point only when
+    -- that particular quest is complete (point.complete is an aggregate and
+    -- can be true because a different quest at the same NPC is complete).
+    -- point.readyQuests is the per-quest answer CollectTurnIns already worked
+    -- out with WorldMapPins:IsQuestReadyToTurnIn; the client flag is only the
+    -- fallback for a point built without it.
+    local turnIns = scene.turnIns
+    local turnInIndex = 1
+    local turnInTotal = table.getn(turnIns)
+    while turnInIndex <= turnInTotal do
+        local point = turnIns[turnInIndex]
+        local quest = nil
+        local pointQuests = point and point.quests or {}
+        local readyQuests = point and point.readyQuests
+        local pointQuestIndex = 1
+        local pointQuestTotal = table.getn(pointQuests)
+        while pointQuestIndex <= pointQuestTotal and not quest do
+            local candidate = pointQuests[pointQuestIndex]
+            local ready = false
+            if candidate then
+                if readyQuests then
+                    ready = readyQuests[candidate] and true or false
+                else
+                    ready = candidate.isComplete == 1
+                end
+            end
+            if ready and (not followingKey or candidate.titleKey == followingKey) then
+                quest = candidate
+            end
+            pointQuestIndex = pointQuestIndex + 1
+        end
+        if quest then
+            best = ConsiderTarget(best, point, quest, "turnin", true,
+                playerX, playerY,
+                eastPerPercent, southPerPercent)
+        end
+        turnInIndex = turnInIndex + 1
+    end
+
+    if not best then
+        if followingKey then
+            return nil, "noFollowingQuestNodesInArea"
+        end
+        return nil, scene.questCount == 0 and "noQuests" or "noQuestNodesInArea"
+    end
+    return best
+end
+
+-- The chosen quest's area centre from QuestTarget:Resolve: the point the HUD
+-- marker and the map's quest number use, so the arrow agrees with them. The
+-- nearest node only chooses which quest. Cached until the quest, area,
+-- completion or scene changes, so the 0.25s pass allocates nothing; nil when
+-- the quest has no centre here, and the caller keeps the node.
+function Navigator:ResolveCentre(quest, areaId)
+    if type(quest) ~= "table" or type(quest.questId) ~= "number" then
+        return nil
+    end
+    local cache = self.centreCache
+    local complete = quest.isComplete == 1
+    if cache.titleKey == quest.titleKey and cache.areaId == areaId
+        and cache.complete == complete and cache.builds == self.sceneBuilds then
+        return cache.target
+    end
+    local questTarget = QuestTarget()
+    cache.titleKey = quest.titleKey
+    cache.areaId = areaId
+    cache.complete = complete
+    cache.builds = self.sceneBuilds
+    cache.target = questTarget and questTarget:Resolve(quest, areaId) or nil
+    return cache.target
+end
+
+-- The followed quest's point when it is recorded only on a neighbouring
+-- zone's map that overlaps this one (QuestTarget:ResolveNearby, the HUD
+-- marker's rule), shaped like a FindNearestTarget result. Cached like
+-- ResolveCentre, so the 0.25s pass allocates nothing while it holds.
+Navigator.nearbyCache = {}
+
+function Navigator:ResolveNearbyTarget(quest, areaId, playerU, playerV)
+    if type(quest) ~= "table" or type(quest.questId) ~= "number" then
+        return nil
+    end
+    local cache = self.nearbyCache
+    local complete = quest.isComplete == 1
+    if cache.titleKey == quest.titleKey and cache.areaId == areaId
+        and cache.complete == complete and cache.builds == self.sceneBuilds then
+        return cache.target
+    end
+    local questTarget = QuestTarget()
+    local near = questTarget and questTarget:ResolveNearby(quest, areaId,
+        playerU * 100, playerV * 100)
+    cache.titleKey = quest.titleKey
+    cache.areaId = areaId
+    cache.complete = complete
+    cache.builds = self.sceneBuilds
+    cache.target = nil
+    if near then
+        cache.target = {
+            x = near.x,
+            y = near.y,
+            complete = near.complete and true or false,
+            kind = near.complete and "turnin" or "objective",
+            quest = quest,
+        }
+    end
+    return cache.target
+end
+
+function Navigator:RefreshContext()
+    self.context = nil
+
+    local config = Config()
+    if config and config:Get("navigatorEnabled") == false then
+        self.contextReason = "disabledBySetting"
+        return
+    end
+    if not self:RotationSupported() then
+        self.contextReason = "noRotation"
+        return
+    end
+
+    local mapContext = MapContext()
+    if not mapContext then
+        self.contextReason = "noMapContext"
+        return
+    end
+    -- The same gate the map pins and the retired marker use: a uniquely
+    -- resolved player area, and a view that can project the player. Sharing it
+    -- is what keeps the arrow and the map's blue tiles agreeing about when a
+    -- quest is locatable at all.
+    local areaId, _, why = mapContext:GetCurrentZoneView()
+    if not areaId then
+        self.contextReason = why or "noZoneView"
+        return
+    end
+
+    local questTarget = QuestTarget()
+    if not questTarget then
+        self.contextReason = "noQuestTarget"
+        return
+    end
+    local eastPerPercent, southPerPercent = questTarget:ToYards(areaId, 1, 1)
+    if not eastPerPercent or not southPerPercent then
+        self.contextReason = "noZoneDimensions"
+        return
+    end
+
+    -- Candidate collection is the expensive half. Rebuild only when one of its
+    -- exact inputs changes; choosing the nearest cached coordinate still runs
+    -- at the full 0.25s context cadence.
+    local dependenciesChanged = self.scene and self.scene.areaId == areaId
+        and self:SceneDependenciesChanged(WorldMapPins(), config)
+    if self.sceneDirty or not self.scene or self.scene.areaId ~= areaId
+        or dependenciesChanged then
+        local built, sceneWhy = self:BuildTargetScene(areaId)
+        if not built then
+            self.contextReason = sceneWhy or "questSceneUnavailable"
+            return
+        end
+    end
+
+    -- The target order depends on the player's position, unlike the old
+    -- densest-component main-quest target. Re-evaluating at the 0.25s context
+    -- cadence is responsive while keeping database collection out of the 20Hz
+    -- arrow tick.
+    local playerU, playerV = Client.GetPlayerMapPosition("player")
+    if not playerU then
+        self.contextReason = "playerNotOnView"
+        return
+    end
+    local mainQuest = PQ:GetModule("MainQuest")
+    local followingKey = mainQuest and mainQuest:Get() or nil
+    local automatic = mainQuest and mainQuest:IsAutomatic() or false
+    local targetFollowingKey = followingKey
+    if automatic then
+        targetFollowingKey = nil
+    end
+    local target, targetWhy = self:FindNearestTarget(areaId, playerU, playerV,
+        eastPerPercent, southPerPercent, targetFollowingKey)
+    -- Nothing here for the followed quest: try a neighbouring zone's map.
+    if not target and followingKey and mainQuest then
+        local nearby = self:ResolveNearbyTarget(mainQuest:GetQuest(), areaId,
+            playerU, playerV)
+        if nearby then
+            target = nearby
+        end
+    end
+    if not target then
+        self.contextReason = targetWhy or "noTarget"
+        return
+    end
+
+    if not self:GetFrame() then
+        self.contextReason = "noNavigatorFrame"
+        return
+    end
+
+    -- A fresh character has no selection yet. The closest drawable node is
+    -- the default, and becomes the same followed quest every other surface
+    -- reads. Automatic following keeps evaluating the whole scene as the
+    -- player moves; a click switches it to a manual selection and later passes
+    -- filter to that quest alone.
+    if not followingKey and target.quest and target.quest.titleKey and mainQuest then
+        mainQuest:SetDefault(target.quest.titleKey)
+        followingKey = target.quest.titleKey
+    elseif automatic and target.quest and target.quest.titleKey and mainQuest then
+        mainQuest:UpdateDefault(target.quest.titleKey)
+        followingKey = target.quest.titleKey
+    end
+
+    local aimX, aimY, aimComplete = target.x, target.y, target.complete
+    local centre = self:ResolveCentre(target.quest, areaId)
+    if centre then
+        aimX, aimY, aimComplete = centre.x, centre.y, centre.complete
+    end
+
+    self.contextReason = nil
+    self.context = {
+        areaId = areaId,
+        targetX = aimX,
+        targetY = aimY,
+        complete = aimComplete,
+        targetKind = target.kind,
+        targetTitle = target.quest and target.quest.title,
+        targetTitleKey = target.quest and target.quest.titleKey,
+    }
+end
+
+-- The fast half ---------------------------------------------------------------
+
+-- A linear fade across the selected atlas steps. Cell 0 is straight ahead;
+-- cell 32 is directly behind. Reading the chosen cell rather than the raw
+-- angle keeps each opacity change synchronized with a visible arrow step.
+local function DirectionAlpha(frameIndex)
+    if type(frameIndex) ~= "number" then
+        return ALPHA_ALIGNED
+    end
+    local frameCount = Client.NAVIGATOR_ARROW_FRAMES
+    local halfTurn = frameCount / 2
+    local stepDistance = frameIndex
+    if stepDistance > halfTurn then
+        stepDistance = frameCount - stepDistance
+    end
+    if stepDistance < 0 then
+        stepDistance = 0
+    elseif stepDistance > halfTurn then
+        stepDistance = halfTurn
+    end
+    return ALPHA_ALIGNED
+        - (ALPHA_ALIGNED - ALPHA_OPPOSITE) * stepDistance / halfTurn
+end
+
+local function FormatEta(seconds)
+    local rounded = math.floor(seconds + 0.5)
+    if rounded < 0 then
+        rounded = 0
+    end
+    local hours = math.floor(rounded / 3600)
+    local minutes = math.floor((rounded - hours * 3600) / 60)
+    local remaining = rounded - hours * 3600 - minutes * 60
+    if hours > 0 then
+        return string.format("%d:%02d:%02d h", hours, minutes, remaining)
+    end
+    if minutes > 0 then
+        return string.format("%d:%02d min", minutes, remaining)
+    end
+    return string.format("%d sec", remaining)
+end
+
+function Navigator:ResetEtaSample()
+    self.etaSampleAreaId = nil
+    self.etaSampleU = nil
+    self.etaSampleV = nil
+    self.etaSampleAt = nil
+    self.lastSpeedYardsPerSecond = nil
+    self.lastEtaSeconds = nil
+    self.lastEtaText = nil
+end
+
+-- The fast arrow tick seeds the first position so the first scheduled ETA pass
+-- can answer after one complete three-second window. Later seeds only happen
+-- after the viewed area changes or the clock restarts.
+function Navigator:SeedEtaSample(areaId, playerU, playerV)
+    if type(areaId) ~= "number" or type(playerU) ~= "number"
+        or type(playerV) ~= "number" then
+        return false
+    end
+    if self.etaSampleAreaId == areaId and self.etaSampleAt then
+        return true
+    end
+    local now = Client.Now()
+    if type(now) ~= "number" then
+        return false
+    end
+    self.etaSampleAreaId = areaId
+    self.etaSampleU = playerU
+    self.etaSampleV = playerV
+    self.etaSampleAt = now
+    self.lastSpeedYardsPerSecond = nil
+    self.lastEtaSeconds = nil
+    self.lastEtaText = nil
+    return true
+end
+
+-- Measures speed and refreshes the ETA only on the dedicated three-second job.
+-- Straight-line displacement is deliberate: sampling each one-yard quantized
+-- step at 20Hz would inflate diagonal movement into a Manhattan path.
+function Navigator:RefreshETA()
+    local context = self.context
+    if not context then
+        self:ResetEtaSample()
+        return
+    end
+
+    local playerU, playerV = Client.GetPlayerMapPosition("player")
+    local now = Client.Now()
+    if type(playerU) ~= "number" or type(playerV) ~= "number"
+        or type(now) ~= "number" then
+        self:ResetEtaSample()
+        return
+    end
+    if self.etaSampleAreaId ~= context.areaId or not self.etaSampleAt
+        or now <= self.etaSampleAt then
+        self:ResetEtaSample()
+        self:SeedEtaSample(context.areaId, playerU, playerV)
+        return
+    end
+
+    local questTarget = QuestTarget()
+    if not questTarget then
+        self:ResetEtaSample()
+        return
+    end
+    local elapsed = now - self.etaSampleAt
+    local eastMoved, southMoved = questTarget:ToYards(context.areaId,
+        (playerU - self.etaSampleU) * 100,
+        (playerV - self.etaSampleV) * 100)
+    local eastLeft, southLeft = questTarget:ToYards(context.areaId,
+        context.targetX - playerU * 100,
+        context.targetY - playerV * 100)
+
+    self.etaSampleAreaId = context.areaId
+    self.etaSampleU = playerU
+    self.etaSampleV = playerV
+    self.etaSampleAt = now
+    self.etaRefreshes = self.etaRefreshes + 1
+
+    if not eastMoved or not southMoved or not eastLeft or not southLeft then
+        self.lastSpeedYardsPerSecond = nil
+        self.lastEtaSeconds = nil
+        self.lastEtaText = nil
+        return
+    end
+
+    local moved = math.sqrt(eastMoved * eastMoved + southMoved * southMoved)
+    local speed = moved / elapsed
+    if speed < ETA_MIN_SPEED then
+        self.lastSpeedYardsPerSecond = nil
+        self.lastEtaSeconds = nil
+        self.lastEtaText = nil
+        return
+    end
+
+    local distance = math.sqrt(eastLeft * eastLeft + southLeft * southLeft)
+    self.lastSpeedYardsPerSecond = speed
+    self.lastEtaSeconds = distance / speed
+    self.lastEtaText = FormatEta(self.lastEtaSeconds)
+end
+
+function Navigator:DistanceText(distanceYards)
+    local distance = math.floor(distanceYards + 0.5)
+    if self.lastEtaText then
+        return PQ.L("NAV_DISTANCE_ETA", distance, self.lastEtaText)
+    end
+    return PQ.L("NAV_DISTANCE", distance)
+end
+
+function Navigator:RefreshArrow()
+    local context = self.context
+    if not context then
+        return self:Hide(self.contextReason or "noContext")
+    end
+
+    local heading = PlayerHeading()
+    if not heading then
+        return self:Hide("noPlayerHeading")
+    end
+
+    -- Read fresh every tick and hand it to Sample rather than letting Sample
+    -- read it again: this is the one input that genuinely changes between
+    -- frames, and it costs a single guarded call.
+    local playerU, playerV = Client.GetPlayerMapPosition("player")
+    heading:Sample(context.areaId, playerU, playerV)
+    if not playerU then
+        return self:Hide("playerNotOnView")
+    end
+    self:SeedEtaSample(context.areaId, playerU, playerV)
+
+    local questTarget = QuestTarget()
+    if not questTarget then
+        return self:Hide("noQuestTarget")
+    end
+    local eastYards, southYards = questTarget:ToYards(context.areaId,
+        context.targetX - playerU * 100, context.targetY - playerV * 100)
+    if not eastYards or not southYards then
+        return self:Hide("noZoneDimensions")
+    end
+
+    local distanceYards = math.sqrt(eastYards * eastYards + southYards * southYards)
+    local bearing = heading.BearingFromYards(eastYards, southYards)
+    local facing, facingSource = heading:Get()
+    if not facing then
+        return self:Hide("noFacing")
+    end
+
+    local frame = self:GetFrame()
+    if not frame then
+        return self:Hide("noNavigatorFrame")
+    end
+
+    local config = Config()
+    local alpha = ALPHA_ALIGNED
+
+    if bearing then
+        -- Positive means the target is to the player's LEFT, and a positive
+        -- angle turns the texture counter-clockwise, so this goes straight in.
+        local relative = heading.NormalizeDelta(bearing - facing)
+        if not relative then
+            return self:Hide("badAngle")
+        end
+        if Client.RotateNavigatorArrow(frame, relative + ROTATION_OFFSET) then
+            self.rotations = self.rotations + 1
+            alpha = DirectionAlpha(frame.pandaQuestArrowFrame)
+        else
+            self.rotationFailures = self.rotationFailures + 1
+            return self:Hide("rotationFailed")
+        end
+        Client.ShowNavigatorArrow(frame, true)
+        self.lastRelativeAngle = relative
+    else
+        -- Standing on the target. There is no direction left to point in, so
+        -- the arrow goes rather than spinning on noise.
+        Client.ShowNavigatorArrow(frame, false)
+        self.lastRelativeAngle = nil
+    end
+
+    -- A quest ready to hand in still wears the turn-in colour the map already
+    -- uses for that, rather than the accent gold.
+    if context.complete then
+        Client.SetNavigatorArrowTint(frame, 0.45, 1, 0.45, alpha)
+    else
+        Client.SetNavigatorArrowTint(frame, 1, 1, 1, alpha)
+    end
+    Client.SetNavigatorDistanceText(frame, self:DistanceText(distanceYards))
+
+    if frame.pandaQuestArc then
+        local showArc = not config or config:Get("navigatorShowArc") ~= false
+        if showArc then
+            Client.ShowObject(frame.pandaQuestArc)
+            Client.SetNavigatorArcAlpha(frame,
+                bearing and ARC_ALPHA or ARC_ALPHA_AT_TARGET)
+        else
+            Client.HideObject(frame.pandaQuestArc)
+        end
+    end
+
+    -- StartMoving owns the anchor while the mouse is down. Reapplying the
+    -- stored point at 20Hz would pin the frame under the cursor and make a
+    -- correctly wired drag look broken.
+    if not self.dragging then
+        -- After a UI-scale change the dial is kept on screen without storing
+        -- the correction, until the next drop (Client.PositionNavigator).
+        self.screenLayout = self.screenLayout or {}
+        if Client.ScreenLayoutChanged(self.screenLayout) then
+            self.followScreen = true
+        end
+        local offsetX, offsetY, scale, point, relativePoint = self:Placement()
+        local placed, placedX, placedY, moved = Client.PositionNavigator(frame,
+            offsetX, offsetY, scale, point, relativePoint, self.followScreen)
+        if placed then
+            -- The saved anchor left the dial off screen (a position stored
+            -- mirrored by an earlier release, or a smaller screen); keep the
+            -- on-screen one it was pulled back to.
+            local store = moved and Config()
+            if store then
+                store:Set("navigatorX", placedX)
+                store:Set("navigatorY", placedY)
+            end
+            self.placements = self.placements + 1
+            self.shown = true
+            self.hiddenReason = nil
+        else
+            self.placementFailures = self.placementFailures + 1
+            return self:Hide("placementFailed")
+        end
+    end
+
+    self.lastDistanceYards = distanceYards
+    self.lastFacingSource = facingSource
+    -- Both halves of `relative`, so `/pq nav` can tell a wrong facing from a
+    -- wrong bearing when the arrow points off target.
+    self.lastBearing = bearing
+    self.lastFacing = facing
+    self.lastTargetKind = context.targetKind
+    self.lastTargetTitle = context.targetTitle
+end
+
+function Navigator:Placement()
+    local config = Config()
+    -- A Y saved against the old frame, which carried empty room above the dial,
+    -- is converted once to the drawn-extent frame so the dial does not move
+    -- (Client.NavigatorLegacyOffsetShift). Defaults are already in the new frame.
+    if config and config:GetStored("navigatorFrameLayout") ~= 2 then
+        local storedY = config:GetStored("navigatorY")
+        if type(storedY) == "number" then
+            config:Set("navigatorY", storedY + Client.NavigatorLegacyOffsetShift(
+                config:Get("navigatorPoint"), DIAL_WIDTH, ARROW_SIZE, false))
+        end
+        config:Set("navigatorFrameLayout", 2)
+    end
+    local offsetX = config and config:Get("navigatorX")
+    local offsetY = config and config:Get("navigatorY")
+    local scale = config and config:Get("navigatorScale")
+    local point = config and config:Get("navigatorPoint")
+    local relativePoint = config and config:Get("navigatorRelativePoint")
+    if type(scale) ~= "number" or scale < 0.5 or scale > 2.5 then
+        scale = 1
+    end
+    -- Offsets are in the dial's own units, so the sanity bound scales with it.
+    local limitX, limitY = Client.GetNavigatorOffsetLimits(scale * BASE_RENDER_SCALE)
+    if type(offsetX) ~= "number" or offsetX < -limitX or offsetX > limitX then
+        offsetX = 0
+    end
+    if type(offsetY) ~= "number" or offsetY < -limitY or offsetY > limitY then
+        offsetY = 58
+    end
+    if type(point) ~= "string" then
+        point = "TOP"
+    end
+    if type(relativePoint) ~= "string" then
+        relativePoint = "CENTER"
+    end
+    return offsetX, offsetY, scale * BASE_RENDER_SCALE, point, relativePoint
+end
+
+-- One call that resolves everything and then draws. Kept as the single entry
+-- point for the offline test and for /pq nav; the driver deliberately does not
+-- use it, because the expensive half does not belong at 20Hz.
+function Navigator:Refresh()
+    self.sceneDirty = true
+    self:RefreshContext()
+    self:RefreshArrow()
+end
+
+-- `/pq nav` is also the visual debugger for the chosen raw node. Refresh the
+-- slow context first so the map mark cannot describe a target from the
+-- previous zone or an expired quest scene.
+function Navigator:ShowDebugMapTarget()
+    self:RefreshContext()
+    local worldMap = WorldMapPins()
+    if not worldMap then
+        return false
+    end
+    local context = self.context
+    if not context then
+        worldMap:SetNavigatorDebugTarget(nil)
+        return false
+    end
+    return worldMap:SetNavigatorDebugTarget(context.areaId,
+        context.targetX, context.targetY, context.targetKind,
+        context.targetTitle)
+end
+
+-- Reporting -------------------------------------------------------------------
+
+function Navigator:GetReport()
+    local config = Config()
+    local worldMap = WorldMapPins()
+    return {
+        enabled = config and config:Get("navigatorEnabled") ~= false or false,
+        rotationSupported = self.rotationSupported,
+        created = self.frame ~= nil,
+        createFailed = self.createFailed,
+        shown = self.shown,
+        placements = self.placements,
+        placementFailures = self.placementFailures,
+        rotations = self.rotations,
+        rotationFailures = self.rotationFailures,
+        dragging = self.dragging,
+        drags = self.drags,
+        dragFailures = self.dragFailures,
+        hiddenReason = self.hiddenReason,
+        hiddenCounts = self.hiddenCounts,
+        relativeAngle = self.lastRelativeAngle,
+        distanceYards = self.lastDistanceYards,
+        speedYardsPerSecond = self.lastSpeedYardsPerSecond,
+        etaSeconds = self.lastEtaSeconds,
+        etaRefreshes = self.etaRefreshes,
+        facingSource = self.lastFacingSource,
+        bearing = self.lastBearing,
+        facing = self.lastFacing,
+        targetKind = self.lastTargetKind,
+        targetTitle = self.lastTargetTitle,
+        targetAreaId = self.context and self.context.areaId,
+        targetX = self.context and self.context.targetX,
+        targetY = self.context and self.context.targetY,
+        debugMapShown = worldMap and worldMap.navigatorDebugVisible or false,
+        sceneBuilds = self.sceneBuilds,
+        sceneNodes = self.scene and self.scene.nodeCount or 0,
+    }
+end
+
+-- Persists enough to diagnose an invisible navigator from SavedVariables alone,
+-- the same way mapDiagnostics does for the map layer: "rotated but not visible"
+-- and "never placed" are different bugs and only the counters separate them.
+function Navigator:RecordDiagnostics()
+    local config = Config()
+    if not config then
+        return
+    end
+    config:SetSectionEntry("navigatorDiagnostics", "placements", self.placements)
+    config:SetSectionEntry("navigatorDiagnostics", "placementFailures",
+        self.placementFailures)
+    config:SetSectionEntry("navigatorDiagnostics", "rotations", self.rotations)
+    config:SetSectionEntry("navigatorDiagnostics", "rotationFailures",
+        self.rotationFailures)
+    config:SetSectionEntry("navigatorDiagnostics", "drags", self.drags)
+    config:SetSectionEntry("navigatorDiagnostics", "dragFailures", self.dragFailures)
+    config:SetSectionEntry("navigatorDiagnostics", "shown", self.shown and 1 or 0)
+    config:SetSectionEntry("navigatorDiagnostics", "createFailed",
+        self.createFailed and 1 or 0)
+    config:SetSectionEntry("navigatorDiagnostics", "rotationSupported",
+        self.rotationSupported and 1 or 0)
+    config:SetSectionEntry("navigatorDiagnostics", "hiddenReason",
+        tostring(self.hiddenReason or "none"))
+    config:SetSectionEntry("navigatorDiagnostics", "targetKind",
+        tostring(self.lastTargetKind or "none"))
+    config:SetSectionEntry("navigatorDiagnostics", "targetTitle",
+        tostring(self.lastTargetTitle or "none"))
+    config:SetSectionEntry("navigatorDiagnostics", "sceneBuilds", self.sceneBuilds)
+    config:SetSectionEntry("navigatorDiagnostics", "sceneNodes",
+        self.scene and self.scene.nodeCount or 0)
+    config:SetSectionEntry("navigatorDiagnostics", "etaRefreshes", self.etaRefreshes)
+end
+
+-- Lifecycle -------------------------------------------------------------------
+
+function Navigator:OnInit()
+    if not PQ:IsFeatureEnabled("mainQuestWaypoint") then
+        return
+    end
+    PQ:DeclareCapability("navigatorArrowRotation",
+        Client.HasNavigatorAtlasRotation() and "unverified" or "missing",
+        "the navigator's 64 pre-rotated frames across four high-resolution atlases, selected through four-argument SetTexCoord. "
+        .. "That technique is proven on this client by pfQuest's TomTom-derived arrow, but this "
+        .. "specific atlas remains unverified until its direction and visual stability are confirmed "
+        .. "in game. `missing` means the navigator hides with reason noRotation")
+end
+
+function Navigator:OnEnable()
+    if not PQ:IsFeatureEnabled("mainQuestWaypoint") then
+        -- The expensive half of the disable: without this the driver would run
+        -- nav.arrow at 20Hz forever for a widget that is never shown. Nothing
+        -- else creates the frame either -- GetFrame is lazy and is only ever
+        -- reached from the jobs scheduled below.
+        return
+    end
+
+    local driver = PQ:GetModule("Driver")
+    if not driver then
+        return
+    end
+
+    local config = Config()
+    local interval = config and config:Get("navigatorInterval")
+    if type(interval) ~= "number" or interval < 0.02 or interval > 1 then
+        interval = 0.05
+    end
+
+    -- Four times a second for the expensive half. The database nodes do not
+    -- move, but which one is nearest changes with the player. Label whether a
+    -- pass only searched the cache or had to rebuild it, so the driver's
+    -- backwards stall attribution can verify that the timer-only rebuild is
+    -- really gone in a live session.
+    driver:Schedule("nav.context", 0.25, function()
+        local buildsBefore = Navigator.sceneBuilds
+        Navigator:RefreshContext()
+        driver:Label("nav.context",
+            Navigator.sceneBuilds > buildsBefore and "rebuild" or "select")
+    end)
+
+    -- Fast, because this has to keep up with a turning player: at 20Hz the
+    -- arrow sweeps rather than steps.
+    driver:Schedule("nav.arrow", interval, function()
+        Navigator:RefreshArrow()
+    end)
+
+    -- Player speed has no direct client API. One displacement sample per three
+    -- seconds is enough for a useful estimate and matches the visible cadence.
+    driver:Schedule("nav.eta", ETA_INTERVAL, function()
+        Navigator:RefreshETA()
+    end)
+
+    driver:Schedule("nav.diagnostics", 5, function()
+        Navigator:RecordDiagnostics()
+    end)
+
+    -- Quest additions, removals, completion and target-changing objective
+    -- updates can change the nearest node. Wake immediately when the model
+    -- notices one; dependency polling remains the correctness mechanism for
+    -- bag and visibility changes that have no reliable event.
+    local questState = QuestState()
+    if questState then
+        questState:AddListener(function(event, quest, targetsChanged)
+            -- Progress counters are rendered by the tracker and tooltips, but
+            -- do not move the static scene the navigator searches. Rebuild
+            -- only when the target identity or completion state changed.
+            if event ~= "QUEST_OBJECTIVES_CHANGED" or targetsChanged then
+                Navigator.sceneDirty = true
+                driver:Wake("nav.context")
+                driver:Wake("nav.arrow")
+            end
+        end)
+    end
+
+
+    -- Following changes alter the eligible target even when the quest scene
+    -- itself did not change. Wake both halves immediately so the tracker and
+    -- the arrow switch on the same interaction.
+    local mainQuest = PQ:GetModule("MainQuest")
+    if mainQuest then
+        mainQuest:AddListener(function()
+            driver:Wake("nav.context")
+            driver:Wake("nav.arrow")
+        end)
+    end
+end

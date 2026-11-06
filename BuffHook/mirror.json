@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Schaka/BuffHook",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Schaka",
+    "repo": "BuffHook",
+    "name": "BuffHook",
+    "url": "https://github.com/Schaka/BuffHook",
+    "api": "https://api.github.com/repos/Schaka/BuffHook"
+  },
+  "commit": "3e40ae1c218f27521c99754b43b7b506d8348391",
+  "sourceFiles": {
+    "BuffHook.lua": {
+      "sha256": "7ad5c4b368f491ab06b6c6ead109edc01fa09fb13a4eced25edc18feadec80c5",
+      "bytes": 11308
+    },
+    "BuffHook.toc": {
+      "sha256": "42bfb97df16873efb25c24b2cad98ab4b00dacc4614a49fc299c5c3163d2b974",
+      "bytes": 202
+    },
+    "BuffHook.xml": {
+      "sha256": "ff088f978642267b8e73d721597ceddbfc93db5c1cf625f733d115c6b59dee61",
+      "bytes": 714
+    },
+    "README.md": {
+      "sha256": "d510cabb06d46f32661073630061fb62a6c08bb51df479c41e75b6d2f7552f61",
+      "bytes": 934
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,81 @@
+{
+  "upstream": "https://github.com/kc8pnd/DoTimer",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "kc8pnd",
+    "repo": "DoTimer",
+    "name": "DoTimer",
+    "url": "https://github.com/kc8pnd/DoTimer",
+    "api": "https://api.github.com/repos/kc8pnd/DoTimer"
+  },
+  "commit": "90bad43fe9347cdeb5f2640f71f082255f6bb7a5",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    ".gitignore.upstream": {
+      "sha256": "3593d7cdb24d1a41b8154313c1e5df6db33c4f93895eb7cb1a852854cf11ac9d",
+      "bytes": 696
+    },
+    "1.1.6 changes.txt": {
+      "sha256": "304add8018ca4ca2ac0be2d5a2f0fabc0d919f155444cfdf7f1c750ef746aa38",
+      "bytes": 2754
+    },
+    "DoTimer/DoTimer_Data.lua": {
+      "sha256": "51541577bd18dd9863050a4adac3fa729997463560545dac84a4a20180cd86aa",
+      "bytes": 16831
+    },
+    "DoTimer/DoTimer_Menu.lua": {
+      "sha256": "46b0afcb9519f43993b0f8b74a3a056a0eec068a4574102fdccfb3b0768b51db",
+      "bytes": 5028
+    },
+    "DoTimer/DoTimer_Menu.xml": {
+      "sha256": "573105f3a25a8b9041c26981b662320318226b9583b4c53ba2b094103dac9b4f",
+      "bytes": 30701
+    },
+    "DoTimer/DoTimer.lua": {
+      "sha256": "01427cf15d634f11ccfb22f3fdba0d995b646279d8afaf44150219c0ad513916",
+      "bytes": 113084
+    },
+    "DoTimer/DoTimer.xml": {
+      "sha256": "a2be09f3a79e81337a5de417a790bb775fe6c85ac8464cec86731c1ca64e1f7f",
+      "bytes": 13468
+    },
+    "DoTimer/Localization.lua": {
+      "sha256": "be830c6f2b8f1f6b5fa85bbac17ed45c7f8cb1ec32db36bcf08ef5999d604cff",
+      "bytes": 25702
+    },
+    "DoTimer/Localization.ruRU.lua": {
+      "sha256": "6e22a3489f9653bbe38a14182462b4554948fc46d42a843e35ef26fc32fd3be7",
+      "bytes": 40909
+    },
+    "DoTimer.toc": {
+      "sha256": "3bb43bb8c74bf2437ea5fc5e4c007cefdb8b1f1c90b11b650e05c7a8b5b241d5",
+      "bytes": 266
+    },
+    "Extras/DragButton.tga": {
+      "sha256": "1628e3627c9beeef35f38858626882df11da3a8419e3918bdc53e7e9ffc2aff7",
+      "bytes": 1068
+    },
+    "Extras/expalert.wav": {
+      "sha256": "c31bfed1283b3b1005a44e815c86e8032221b6ce7b89a2a7a354845f17071c8e",
+      "bytes": 21260
+    },
+    "readme.txt": {
+      "sha256": "3ce8bc3b7d0c013c2c34b626178b94c672c554462b7eff7f85c044c8fd9f1b05",
+      "bytes": 7810
+    },
+    "SpellSystem/SpellSystem.lua": {
+      "sha256": "bdac2eaf097d2e58ecf43d78b26f33aad814f0219474c41b1e344fa7cc9d427e",
+      "bytes": 24707
+    },
+    "SpellSystem/SpellSystem.xml": {
+      "sha256": "f2c928f6daf025c3de5a3056335e2eaed410852b5dc07fae0ce07a3643655d81",
+      "bytes": 686
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

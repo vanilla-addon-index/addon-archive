@@ -1,0 +1,81 @@
+{
+  "upstream": "https://github.com/jrc13245/SuperMacro-turtle",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jrc13245",
+    "repo": "SuperMacro-turtle",
+    "name": "SuperMacro-turtle",
+    "url": "https://github.com/jrc13245/SuperMacro-turtle",
+    "api": "https://api.github.com/repos/jrc13245/SuperMacro-turtle"
+  },
+  "commit": "8f2978b992358ab86757d34107f6ddf890467dc7",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "abaa9d7d45365dfd5ed503c2cc9a075f6d3f55f5de144ad807ca75c69f07ca2b",
+      "bytes": 3964
+    },
+    "fonts/UbuntuMono-R.ttf": {
+      "sha256": "b35dd9d2131d5d83a9b87fe9ad22c6288fa3d17688d43302c14da29812417d63",
+      "bytes": 205748
+    },
+    "functions.txt": {
+      "sha256": "3634a62b5238ad5d61e3ed17d464dcea098483e1301c6ccd18ae2c5e9de6dd0d",
+      "bytes": 15819
+    },
+    "localization.lua": {
+      "sha256": "a21f6371361ce6186c86d2e90c21100077428a822cf7521d0256060c08805247",
+      "bytes": 12029
+    },
+    "readme.txt": {
+      "sha256": "b9efde59d0e9055e5b6ea5f46652dc28008b39f6fccbec7694e71acc55121aaa",
+      "bytes": 18888
+    },
+    "SM_Common.lua": {
+      "sha256": "369e9c2fb4eac5ed7a7f746d048586703fc59f8ed30b2a023348997498dec352",
+      "bytes": 4861
+    },
+    "SM_ItemLink.lua": {
+      "sha256": "41648aaac566378ba632c8cd9fee397907a4176f238bd65b9678bea1295865ed",
+      "bytes": 10123
+    },
+    "SM_MacroExtend.lua": {
+      "sha256": "83d301877e5eb1744808ff6b3d252be2f71c2c8031032ffbaa295f0b9ed0104d",
+      "bytes": 2734
+    },
+    "SM_Options.lua": {
+      "sha256": "e7515b5a0018c38fe37b0a7028de382311887cc405f86fe90314aa64f07cfaec",
+      "bytes": 5866
+    },
+    "SM_Slash.lua": {
+      "sha256": "f0e915c315eb840a99980b2d550fe7e97cd8a69db44d65dc29bab7ee93d80391",
+      "bytes": 18658
+    },
+    "SM_Super.lua": {
+      "sha256": "9f4808033b0b76c6bc03df8f1e21119edfdb4e2b5d337f4fbfb2605ee84064bd",
+      "bytes": 3231
+    },
+    "SM_Tooltip.lua": {
+      "sha256": "fdb9c47bf3aaa4202bdcdf8d24cde725d8f536bbcef4e07b3c465fc1f2bf8081",
+      "bytes": 10701
+    },
+    "SuperMacro.lua": {
+      "sha256": "41b6c6f1bbc6a44fc7845ce37cbc2eb46f9cdab0e9f422a5d9824430c615fa8b",
+      "bytes": 33758
+    },
+    "SuperMacro.toc": {
+      "sha256": "2a8de507e40c0b0271f54a5d8a608832239ecd380619e55bda31bdbff7bef256",
+      "bytes": 1136
+    },
+    "SuperMacro.xml": {
+      "sha256": "6713b1c23a375fe279dee095774017d9bff49bd264066ab9b7d051db09be5f95",
+      "bytes": 68746
+    },
+    "SuperMacroOptions.xml": {
+      "sha256": "c7462158f3c3f346c82e9599093cb94a82436baa90b98c547e1eb2371e039b7a",
+      "bytes": 13264
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

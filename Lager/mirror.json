@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/ZenSociety/Lager",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ZenSociety",
+    "repo": "Lager",
+    "name": "Lager",
+    "url": "https://github.com/ZenSociety/Lager",
+    "api": "https://api.github.com/repos/ZenSociety/Lager"
+  },
+  "commit": "19beb37b087acf8f92559d9485ff6902ac9b2803",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "DisabledIcon.tga": {
+      "sha256": "6164d1e65aba4aae1406f57c7290aff429c2d1eaa52311b050bc426ef833b3ce",
+      "bytes": 4114
+    },
+    "EnabledIcon.tga": {
+      "sha256": "7d1a6c43f5da713933d4cfc25b370c6176dc6fd92803c27bf25ac2da5df7b682",
+      "bytes": 4114
+    },
+    "Lager.lua": {
+      "sha256": "bcf5a0f69d773d43a0f75229bdc43713bded71a430c7f9a522e0ffda1c9a9c14",
+      "bytes": 4126
+    },
+    "Lager.toc": {
+      "sha256": "f1a8e6db90dfc72753dcc133f057e8f3cddde96d1df843b928cbf10e73df732e",
+      "bytes": 198
+    },
+    "Lager.xml": {
+      "sha256": "96d3dcb03c29113847f9789df18a4697af585f83936664ce86e3beaf0db4fd1e",
+      "bytes": 2814
+    },
+    "LICENSE": {
+      "sha256": "9417f54d901a30002ce7b145151a637eaaa405c709c5e9809f0196e432a6fdec",
+      "bytes": 1089
+    },
+    "README.md": {
+      "sha256": "68be28fd44eeef675be7a468e60fa6c56fc377e26563b4e21b5f12db217e99b8",
+      "bytes": 2498
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

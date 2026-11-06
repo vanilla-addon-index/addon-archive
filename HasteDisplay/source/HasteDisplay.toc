@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: HasteDisplay
+## Notes: Displays your haste percentage
+## Author: YourName
+## Version: 1.0
+## SavedVariables: HasteDisplayDB
+
+HasteDisplay.lua

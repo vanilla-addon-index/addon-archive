@@ -1,0 +1,106 @@
+{
+  "upstream": "https://octowow.st/git/Lupo/VimFinder",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Lupo",
+    "repo": "VimFinder",
+    "name": "VimFinder",
+    "url": "https://octowow.st/git/Lupo/VimFinder",
+    "api": "https://octowow.st/git/api/v1/repos/Lupo/VimFinder"
+  },
+  "commit": "414f61bee389a7bc2e228e438338741bf23fb354",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+      "bytes": 8
+    },
+    "Bindings.xml": {
+      "sha256": "b6bb1aa586428321724a434c0798a0685f58fd55c66fa6477ff68974bd5ae944",
+      "bytes": 103
+    },
+    "finder.lua": {
+      "sha256": "c6890c3aabbde38292f0d84317a3b26f51c6cec7121c005520d1aeeb479a9479",
+      "bytes": 52479
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "README.md": {
+      "sha256": "bc37f8be1a082e995fa1240423f3f8ddccde7863345ec29f2ebf00a3acb352e1",
+      "bytes": 6343
+    },
+    "screenshots/all-together.png": {
+      "sha256": "9c92e8fbe3d6995cbb7b574746e4d88173169c5ec05cd88bef75a629226ad6a1",
+      "bytes": 815235
+    },
+    "screenshots/finder-bag.png": {
+      "sha256": "6df6edcf174dbbc399deca16140d0c7f757c9f44d6b40c53ce4e3cd4cdd532b0",
+      "bytes": 87300
+    },
+    "screenshots/finder-open.png": {
+      "sha256": "0ccacc44c3a8647f3ab9bebf3278694b997d5fb5ff35aa23fe9aada73e2183ac",
+      "bytes": 99894
+    },
+    "screenshots/finder-recipes.png": {
+      "sha256": "eed0cd3c84a93d301e7bb46385f15e8f2832b456244951a3a1430811f5d1d9ff",
+      "bytes": 82945
+    },
+    "screenshots/finder-search.png": {
+      "sha256": "3b5ad478480b5af8c4be4143912d767880ebe089872165a5aeea1413e8a78eeb",
+      "bytes": 75435
+    },
+    "screenshots/finder-settings.png": {
+      "sha256": "466015a4e267f3bcee796af1034a59bd12768a03dd63e5d2cfe6dba0d2ef46b4",
+      "bytes": 345248
+    },
+    "screenshots/finder-spells.png": {
+      "sha256": "f65d366f1c7396c74e2f4df6bfb712ed2168210026c084a584a7eb8115c7457a",
+      "bytes": 80205
+    },
+    "screenshots/finder-tracking.png": {
+      "sha256": "a80c8fe19f2d9c24db9114b5b0c2bf22da3e841f8d46cf5d8aa3517c65f405eb",
+      "bytes": 89729
+    },
+    "screenshots/finder-window.png": {
+      "sha256": "2bb212b5e94408f9873a275da3a283d49a328d9080042ea15c880c1ae8180d19",
+      "bytes": 602013
+    },
+    "screenshots/with-vimbag.png": {
+      "sha256": "cfc89d736544f27586590369839229dd2664a7d37a2c386afcf2a7e6da6877b3",
+      "bytes": 267328
+    },
+    "screenshots/with-vimwow.png": {
+      "sha256": "53cd6892053fa2b75d7cbd859770959768c6ab7279b55ddbab7985448f896984",
+      "bytes": 354100
+    },
+    "VimFinder.toc": {
+      "sha256": "13adc898a008b09911ee523e4b957ed7aca86d53f55dab4a5175498194b785f3",
+      "bytes": 402
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "630": {
+      "tag": "v0.1.18",
+      "folder": "v0.1.18--630",
+      "assets": {
+        "86": {
+          "sha256": "a88cfb367f96c3fb8a452da84e282564f715ad57d6e9c41930a612211854cab4",
+          "bytes": 2938288,
+          "id": "86",
+          "name": "VimFinder-0.1.18.zip",
+          "url": "https://octowow.st/git/Lupo/VimFinder/releases/download/v0.1.18/VimFinder-0.1.18.zip",
+          "path": "releases/v0.1.18--630/assets/VimFinder-0.1.18.zip"
+        }
+      },
+      "source": {
+        "sha256": "c6c43c1f19e6e4598cd437fe8851a6ac89d513c32b2af1793ef4dc697f8638ce",
+        "bytes": 2917764,
+        "path": "releases/v0.1.18--630/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/Lupo/VimFinder/archive/v0.1.18.tar.gz"
+      }
+    }
+  }
+}

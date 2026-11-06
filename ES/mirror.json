@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Smirgeli/ES",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Smirgeli",
+    "repo": "ES",
+    "name": "ES",
+    "url": "https://github.com/Smirgeli/ES",
+    "api": "https://api.github.com/repos/Smirgeli/ES"
+  },
+  "commit": "2782b20acce0beea71902ee0113858619456d0f7",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "ES.toc": {
+      "sha256": "7eb10efa26a6225945b367f105865c06c3bc48cbaa2193218ef26e36ac4052ff",
+      "bytes": 162
+    },
+    "LICENSE": {
+      "sha256": "436a6d536138f203ac333858cff92a568be62797752b3adb94bcaa0f6ffe7ef6",
+      "bytes": 1235
+    },
+    "Main.lua": {
+      "sha256": "f4be1caea5a793805cb2c079c7a879e636a0adc8881ca59a88eb3e00250e8f72",
+      "bytes": 822
+    },
+    "Sounds/FireShield.ogg": {
+      "sha256": "2d96a31c1a0699533273bab96219a8821df1463478c8b52adf76059e1e40d258",
+      "bytes": 29444
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

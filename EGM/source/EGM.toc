@@ -1,0 +1,27 @@
+## Interface: 11200
+## Title: EGM - ERROR Guild Market
+## Notes: Guild buy orders with C.O.D. delivery
+## Author: ShempError
+## Version: 0.1.5
+## SavedVariables: EGM_DB
+## SavedVariablesPerCharacter: EGM_CharDB
+data\items.lua
+core\util.lua
+core\itemsearch.lua
+core\db.lua
+core\journal.lua
+core\orders.lua
+comm\roster.lua
+comm\comm.lua
+mail\bags.lua
+mail\send.lua
+mail\inbox.lua
+ui\frame.lua
+ui\browse.lua
+ui\create.lua
+ui\myorders.lua
+ui\stats.lua
+ui\minimap.lua
+ui\options.lua
+ui\itemtip.lua
+core\init.lua

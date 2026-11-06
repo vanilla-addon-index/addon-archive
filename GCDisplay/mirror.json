@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/MrDoufuru/GCDisplay",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MrDoufuru",
+    "repo": "GCDisplay",
+    "name": "GCDisplay",
+    "url": "https://github.com/MrDoufuru/GCDisplay",
+    "api": "https://api.github.com/repos/MrDoufuru/GCDisplay"
+  },
+  "commit": "3f1b6e973508d1a960f16903074e591e834a741d",
+  "sourceFiles": {
+    "assets/sounds/plop_01.ogg": {
+      "sha256": "bd996051cd5de630329ba4b026d52e9452e34a54c40e87e3fbdede68c88ec185",
+      "bytes": 14327
+    },
+    "backport.lua": {
+      "sha256": "f972f1b00aa7ff0d67d8cdaae3497105cbeadf21a949b788d7e65c64383c11fe",
+      "bytes": 381
+    },
+    "GCDisplay.lua": {
+      "sha256": "f2c4ac8f0de0b0846c2040326a02ed53bbce3a471b6af4b4ee7e3e8d811203f9",
+      "bytes": 5778
+    },
+    "GCDisplay.toc": {
+      "sha256": "3a6c6753c708c29adae0eab0920d9e8833a3e365b913bc764d0570d061fc516c",
+      "bytes": 148
+    },
+    "README.md": {
+      "sha256": "1e79b87b1791f7b6b66c3c9825f9a7b0737b403ccd001748e67653ab505ac734",
+      "bytes": 257
+    },
+    "tga/Rounded_Normal.tga": {
+      "sha256": "8a4076dec6fd6f0a8157d9b3c5b830cb6c92087ef3e14956e51f9ba79f9efb76",
+      "bytes": 16428
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

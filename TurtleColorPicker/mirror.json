@@ -1,0 +1,45 @@
+{
+  "upstream": "https://octowow.st/git/ShempError/TurtleColorPicker",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "ShempError",
+    "repo": "TurtleColorPicker",
+    "name": "TurtleColorPicker",
+    "url": "https://octowow.st/git/ShempError/TurtleColorPicker",
+    "api": "https://octowow.st/git/api/v1/repos/ShempError/TurtleColorPicker"
+  },
+  "commit": "1d596530154196fd2b33ee4dc0baa8dd0eeefa8d",
+  "sourceFiles": {
+    "CHANGELOG.md": {
+      "sha256": "e76b519a30477110c5760bca144805bc20741ce966519a123f439a9f4839ea52",
+      "bytes": 1443
+    },
+    "Core.lua": {
+      "sha256": "9e5bfffd89945660b8bf155c7ef03e30164428e31f060a6afc4a5d4789f8027c",
+      "bytes": 5782
+    },
+    "LICENSE": {
+      "sha256": "a59df5624d5f7b8fee2165941f94928f7aff96a8a40feb059e236e26f9b1ea79",
+      "bytes": 1067
+    },
+    "README.md": {
+      "sha256": "3f2c44fa6c794cbbb82db6c326c962ff1743b712a2f7e3688ce996908bdf20b1",
+      "bytes": 3367
+    },
+    "screenshot.png": {
+      "sha256": "d649091d0a70eef5b554a164b21421b04ea9204e6450aba4f3e31c9f96d29f6d",
+      "bytes": 113791
+    },
+    "TurtleColorPicker.toc": {
+      "sha256": "d2f426618de7911e780b4acf734876a225790f08a23ff1cd458f8bc9d106b9e0",
+      "bytes": 173
+    },
+    "UI.lua": {
+      "sha256": "3c612867069fc5a536129ea9ce398f61ad702f5414f12650892fc763be533c91",
+      "bytes": 16931
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

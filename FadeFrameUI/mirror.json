@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/Bagan95/FadeFrameUI",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Bagan95",
+    "repo": "FadeFrameUI",
+    "name": "FadeFrameUI",
+    "url": "https://github.com/Bagan95/FadeFrameUI",
+    "api": "https://api.github.com/repos/Bagan95/FadeFrameUI"
+  },
+  "commit": "cbc475155f193b6553fdd4963e51e432e13e8c70",
+  "sourceFiles": {
+    "FadeFrameUI.lua": {
+      "sha256": "3eae5d298aca010f3bdb5b66adac2afcc0a724ab98aeaf35589ec91b164fe116",
+      "bytes": 6485
+    },
+    "FadeFrameUI.toc": {
+      "sha256": "76e05712078d57105b3f710f8e2abe6e7a62f9bf25cdbbafffcb7941ce53abdd",
+      "bytes": 231
+    },
+    "LICENSE": {
+      "sha256": "de8b6ab7dfb0716b20bf315506bb921c4321207199f38be2c9af321ac8365740",
+      "bytes": 1070
+    },
+    "README.md": {
+      "sha256": "579b9a097111adc267eb0a3386e0c5218ae7546864cc39bbae17263be6897a7c",
+      "bytes": 1784
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "184524745": {
+      "tag": "v1.2.0",
+      "folder": "v1.2.0--184524745",
+      "assets": {},
+      "source": {
+        "sha256": "220ba3d6bb4379d49f2df4a30b0fd273eaf7e9ed0b72ce2c7b1b857f4af92dbf",
+        "bytes": 3635,
+        "path": "releases/v1.2.0--184524745/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Bagan95/FadeFrameUI/tarball/v1.2.0"
+      }
+    }
+  }
+}

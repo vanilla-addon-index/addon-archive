@@ -1,0 +1,4 @@
+<Bindings>
+	<Binding name="HBPI_POWERINFUSION" header="HBPOWERINFUSION">HBPowerInfusion:PowerInfusion()</Binding>
+	<Binding name="HBPI_SETFOCUS">HBPowerInfusion:SetPIFocus()</Binding>
+</Bindings>

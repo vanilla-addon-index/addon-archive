@@ -1,0 +1,105 @@
+{
+  "upstream": "https://octowow.st/git/stealthzi/ClassToolkit",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "stealthzi",
+    "repo": "ClassToolkit",
+    "name": "ClassToolkit",
+    "url": "https://octowow.st/git/stealthzi/ClassToolkit",
+    "api": "https://octowow.st/git/api/v1/repos/stealthzi/ClassToolkit"
+  },
+  "commit": "08fee28916fd2fe0b301e6a5a6cfcda9beac8d19",
+  "sourceFiles": {
+    "Aggro.lua": {
+      "sha256": "cee6e4c5ac75fd86114f267f866699f3086f796c51a0769842adc88208768581",
+      "bytes": 16496
+    },
+    "Buffs.lua": {
+      "sha256": "179ba6b5e69085344f21cde19d7a82ead010cdc782c9a28771079104c340cbcb",
+      "bytes": 9655
+    },
+    "ClassToolkit.toc": {
+      "sha256": "fd339a13106a2f679c2bbe785fa6231c098b1dbe88409ada82669442d0aa10b1",
+      "bytes": 617
+    },
+    "Core.lua": {
+      "sha256": "384c958c4172c1782fb2547d7355c7c4c37f17d599d15fa5a830ebb3d12cd1b4",
+      "bytes": 18399
+    },
+    "Dots.lua": {
+      "sha256": "d76d11ec8ca194b4f81282e52d248a69e05e5858f681b0cafea0a7c024e8daee",
+      "bytes": 8603
+    },
+    "EatDrink.lua": {
+      "sha256": "9ca41698d05585984fa7c5f95f4df647a07e6b2357cbef06ddf9db9eaf263d65",
+      "bytes": 8457
+    },
+    "Help.lua": {
+      "sha256": "2cb277d0cbf6cb54c48e2162488277488fb70bd43c29c040e9835a0f7b5e34d5",
+      "bytes": 10208
+    },
+    "Hunter.lua": {
+      "sha256": "248ab182dee4f21ffb599af7ebdc1c8ab5c8d0f1afd128bfe4366609dfa106dd",
+      "bytes": 15139
+    },
+    "Interrupt.lua": {
+      "sha256": "2be573f7528db41ac8b0400f643d90cd44e2518123cd334bd65e6cea15d0174c",
+      "bytes": 10635
+    },
+    "Options.lua": {
+      "sha256": "f8c73648d33969b8da17c4090f00434965ce8f99404365ec73feef7d22eb0338",
+      "bytes": 14064
+    },
+    "PetHealth.lua": {
+      "sha256": "a6f74a677e4a9015761fdb4e8ba984705a98b10db8d731ed03694c00c2191d76",
+      "bytes": 2984
+    },
+    "Pulse.lua": {
+      "sha256": "4f1ae19a39786d55d59cf5d41aaa6af730435cee36b7a62dfa3ec55b1f34058b",
+      "bytes": 6332
+    },
+    "Range.lua": {
+      "sha256": "5bbc44236fc30ec6a448931a30241621b58b0b5a4390a22d4bccef8dc284935b",
+      "bytes": 8009
+    },
+    "Ready.lua": {
+      "sha256": "614c9e6843dddf18af52d77a9f8c82ecdf7b332575ac419a81ee85d9d7b12032",
+      "bytes": 9647
+    },
+    "Reagents.lua": {
+      "sha256": "36b3d496de4407a7ef7986e4861e5917767764079424edacec1085bacffeee6c",
+      "bytes": 4302
+    },
+    "Runner.lua": {
+      "sha256": "b87f21b9b8718151d8732bd4a341a2b5e7978742718457b85e176085a30f8b6d",
+      "bytes": 4703
+    },
+    "Sell.lua": {
+      "sha256": "acdafcfe6f2fa968a139bf100e0f5a5918a5c1ed8298e207f93f230aacad9df5",
+      "bytes": 3585
+    },
+    "Spells.lua": {
+      "sha256": "ae346434f77f1b27e2592a024bac8fcb354d1e94f3caa8f539d77c2758ffe1f6",
+      "bytes": 13590
+    },
+    "Swing.lua": {
+      "sha256": "d73ffc0a1ad47d188fcaabc8334a7098b6a894842de519430362933abae17cf4",
+      "bytes": 9563
+    },
+    "Tick.lua": {
+      "sha256": "f7325fb1787c690269b04104d84783228d67f3adc440f829f8d3984504fedf71",
+      "bytes": 3868
+    },
+    "Trap.lua": {
+      "sha256": "4258ecadb6c84840bcecbcc3ea3f941a398edb8ae2e0b6c57b8d5d1a4ec89de6",
+      "bytes": 5306
+    },
+    "Widgets.lua": {
+      "sha256": "8b6d438c7bb7e9f21b7f28e75e13f5359a1d487c6d1372acfe4a2fedc05c7521",
+      "bytes": 5400
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

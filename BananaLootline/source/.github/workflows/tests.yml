@@ -1,0 +1,18 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lua 5.1 installieren
+        run: sudo apt-get update && sudo apt-get install -y lua5.1
+
+      - name: Tests ausfuehren
+        run: bash tools/run_tests.sh

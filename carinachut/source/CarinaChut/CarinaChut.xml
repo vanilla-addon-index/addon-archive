@@ -1,0 +1,13 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+	..\FrameXML\UI.xsd">
+<Script file="CarinaChut.lua"/> 
+
+<Frame name="CChut_LoadFrame" frameStrata="LOW" toplevel="false" enableMouse="false" movable="true" hidden="false" parent="UIParent"> <!-- Initialisation -->
+	<Scripts>
+		<OnLoad> CChut_OnLoad();</OnLoad>
+		<OnEvent> CChut_OnEvent(event, arg1, arg2);</OnEvent>
+		<OnUpdate> CChut_OnUpdate(arg1);</OnUpdate>
+	</Scripts>
+</Frame>
+
+</Ui>

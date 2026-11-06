@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: BigTimer
+## Notes: Quick-access pull timer bar for BigWigs. Requires raid lead or assist.
+## Author: Fayz
+## Version: 1.0
+## OptionalDeps: BigWigs
+## SavedVariablesPerCharacter: BigTimerDB
+
+BigTimer.lua

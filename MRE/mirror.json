@@ -1,0 +1,25 @@
+{
+  "upstream": "https://github.com/shirsig/MRE",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "MRE",
+    "name": "MRE",
+    "url": "https://github.com/shirsig/MRE",
+    "api": "https://api.github.com/repos/shirsig/MRE"
+  },
+  "commit": "f3b5b43b61c83df106439f0b7ac0f2b4f948600d",
+  "sourceFiles": {
+    "MRE.lua": {
+      "sha256": "45675e9f613707e9d61e1cca811384a30703dd34886489a124679ce3b971eaf9",
+      "bytes": 1599
+    },
+    "MRE.toc": {
+      "sha256": "469811acb451e6d822e82a6b3a8160fabf76c539c8d20d6f0220a810b866bdf8",
+      "bytes": 145
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

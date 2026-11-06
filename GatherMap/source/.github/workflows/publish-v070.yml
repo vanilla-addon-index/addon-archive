@@ -1,0 +1,119 @@
+name: Publish GatherMap v0.7.0
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-v070.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out current main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Apply reviewed v0.7.0 GUI update
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, base64, zlib
+
+          def git_blob_sha(blob):
+              return hashlib.sha1(b"blob " + str(len(blob)).encode() + b"\0" + blob).hexdigest()
+
+          f = Path("GatherMap.lua")
+          old = f.read_text(encoding="utf-8")
+          expected_before = "654b49a59312e34fa8b9f9e2acf4924b5e95cfe2"
+          expected_after = "ee10b1f2756502296ff4e56db544b01b84e3c118"
+          actual = git_blob_sha(old.encode("utf-8"))
+          if actual != expected_after:
+              assert actual == expected_before, "Unexpected main GatherMap.lua; refusing to overwrite newer source."
+              gui = zlib.decompress(base64.b64decode("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")).decode("utf-8")
+              assert hashlib.sha256(gui.encode("utf-8")).hexdigest() == "7dddaf7a5599b7f57f8ef40f589b7f6356defe16317b7f162d66e56b22933ac2"
+              start = old.index("local function CreateOptionsFrame()")
+              end = old.index("local function PositionMinimapButton()", start)
+              updated = old[:start] + gui + old[end:]
+              assert git_blob_sha(updated.encode("utf-8")) == expected_after, "GUI content does not match the tested v0.7.0 ZIP"
+              f.write_text(updated, encoding="utf-8")
+
+          toc = Path("GatherMap.toc")
+          source = toc.read_text(encoding="utf-8")
+          if "## Version: 0.7.0" not in source:
+              assert git_blob_sha(source.encode("utf-8")) == "0234b5de79aa70e673c29cde73d1cd698672ae48"
+              toc.write_text(source.replace("## Version: 0.6.9", "## Version: 0.7.0"), encoding="utf-8")
+          assert git_blob_sha(toc.read_bytes()) == "0088f12a908d14f10a4ec3dcd8a73d920038b4ba"
+
+          readme = Path("README.md")
+          md = readme.read_text(encoding="utf-8")
+          if "Version 0.7.0 introduces" not in md:
+              assert git_blob_sha(md.encode("utf-8")) == "9abc5612cf9aad90e75663163d83a5d866e7571d"
+              addition = """## Settings GUI and minimap button
+
+          Version 0.7.0 introduces the World Chat Filter-inspired dark charcoal/arcane-blue
+          interface with muted gold text and bronze outlines, custom dark buttons and
+          tabs, subtle green checkbox indicators, and a unified three-tab layout.
+          The change is visual only: filters, learned data, sliders, and import/export
+          behave as before.
+          """
+              md = md.replace("## Settings GUI and minimap button", addition)
+              readme.write_text(md, encoding="utf-8")
+          assert git_blob_sha(readme.read_bytes()) == "927d0afb9b63e5bbdafa6aabfe11c02b56ad6999"
+          print("Verified v0.7.0 source SHA hashes against the tested package.")
+          PY
+
+      - name: Commit v0.7.0 to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add GatherMap.lua GatherMap.toc README.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Release v0.7.0: dark themed settings GUI"
+            git push origin HEAD:main
+          fi
+
+      - name: Package source as addon ZIP
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile, ZIP_DEFLATED
+          out = Path("GatherMap-v0.7.0-Turtle-1.18.zip")
+          with ZipFile(out, "w", ZIP_DEFLATED, compresslevel=8) as archive:
+              for p in sorted(Path(".").rglob("*")):
+                  if not p.is_file() or p == out or any(part.startswith(".") for part in p.parts):
+                      continue
+                  archive.write(p, "GatherMap/" + p.as_posix())
+          print("Created " + str(out) + ": " + str(out.stat().st_size) + " bytes")
+          PY
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cat > release-notes.txt <<'EOF'
+          ## GatherMap v0.7.0 — Dark GUI
+
+          - Completely redesigned the settings interface with deep charcoal/arcane-blue panels, muted gold text and bronze borders.
+          - Replaced red Blizzard buttons with custom dark buttons and subtle hover feedback.
+          - Redesigned all three tabs: General, Node Tracking, Import / Export.
+          - Added compact dark checkboxes with green enabled indicators, cohesive input fields and scrollable lists.
+          - Improved General layout with two columns and better spacing.
+          - No change to resource recording, saved locations, pfQuest presets, icon-size controls or import/export functionality.
+          - Existing SavedVariables are preserved.
+
+          Compatible with Turtle WoW 1.18 (Vanilla 1.12 API).
+
+          Install: Extract the ZIP into Interface/AddOns, leaving a GatherMap folder. Back up your current folder and SavedVariables first.
+          EOF
+          if gh release view v0.7.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload v0.7.0 GatherMap-v0.7.0-Turtle-1.18.zip --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create v0.7.0 GatherMap-v0.7.0-Turtle-1.18.zip --repo "$GITHUB_REPOSITORY" --target "$(git rev-parse HEAD)" --title "GatherMap v0.7.0 — Dark GUI" --notes-file release-notes.txt
+          fi

@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/jejkas/BigBrother",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jejkas",
+    "repo": "BigBrother",
+    "name": "BigBrother",
+    "url": "https://github.com/jejkas/BigBrother",
+    "api": "https://api.github.com/repos/jejkas/BigBrother"
+  },
+  "commit": "a1193b887b84067b21eb98ec8c14af6d32845c68",
+  "sourceFiles": {
+    "BigBrother_UI.xml": {
+      "sha256": "8fac6226d7224f57a22448ded0ff0e4b956e3507ff0e23a56b9d7630db96c869",
+      "bytes": 18215
+    },
+    "BigBrother_URL.xml": {
+      "sha256": "92db76d61a615537a3652f6b441ddfee91cbdde543a6a4c0deea268ab0dd8e57",
+      "bytes": 1959
+    },
+    "BigBrother.lua": {
+      "sha256": "e04237342b054e29bda3398a99c4a2d31610f177a8ea21d9ae8a7846bb9054a9",
+      "bytes": 20450
+    },
+    "BigBrother.toc": {
+      "sha256": "d9a61c2659a8c61a7b8d50b752cc6d03e5adb6727b8a2c1cbe22930cfe19c350",
+      "bytes": 222
+    },
+    "README.md": {
+      "sha256": "0338a87cbde64ee5ecfb9be47fcaa226502c9298753577379dca357d75eacafb",
+      "bytes": 61
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

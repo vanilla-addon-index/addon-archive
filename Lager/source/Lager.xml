@@ -1,0 +1,68 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    <!-- Define the minimap button -->
+    <Button name="LagerMinimapButton" parent="Minimap" toplevel="true" movable="true" frameStrata="LOW" enableMouse="true" position="150">
+        <Size>
+            <AbsDimension x="28" y="28"/>
+        </Size>
+        <Anchors>
+            <Anchor point="TOPLEFT"/>
+        </Anchors>
+        <Layers>
+            <Layer level="BORDER">
+                <Texture file="Interface\Minimap\MiniMap-TrackingBorder">
+                    <Size>
+                        <AbsDimension x="64" y="64"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="-5" y="5"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="BACKGROUND">
+                <Texture name="LagerMinimapButtonIcon" file="Interface\AddOns\Lager\EnabledIcon.tga"> <!-- Default to enabled icon -->
+                    <Size>
+                        <AbsDimension x="16" y="16"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="5" y="-5"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Frames>
+            <Frame name="LagerMinimapButton_DraggingFrame" hidden="true">
+                <Scripts>
+                    <OnUpdate>
+                        LagerMinimapButton_DraggingFrame_OnUpdate()
+                    </OnUpdate>
+                </Scripts>
+            </Frame>
+        </Frames>
+        <HighlightTexture file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight" alphaMode="ADD"/>
+        <Scripts>
+            <OnLoad>
+                this:RegisterForClicks("LeftButtonUp","RightButtonUp")
+                this:RegisterForDrag("LeftButton","RightButton")
+            </OnLoad>
+            <OnDragStart>
+                this:LockHighlight()
+                LagerMinimapButton_DraggingFrame:Show()
+            </OnDragStart>
+            <OnDragStop>
+                this:UnlockHighlight()
+                LagerMinimapButton_DraggingFrame:Hide()
+            </OnDragStop>
+            <OnMouseDown>
+                LagerMinimapButton_OnMouseDown(self, button)
+            </OnMouseDown>
+        </Scripts>
+    </Button>
+</Ui>

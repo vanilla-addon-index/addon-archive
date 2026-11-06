@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/JakiraElysium/HideUI",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "JakiraElysium",
+    "repo": "HideUI",
+    "name": "HideUI",
+    "url": "https://github.com/JakiraElysium/HideUI",
+    "api": "https://api.github.com/repos/JakiraElysium/HideUI"
+  },
+  "commit": "ef5f35ff875061d1a51a9081808b9fef870df6ae",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "core.lua": {
+      "sha256": "70af45458e9db855d113551ab6abf37dfae0528cf4a2cae6c74300abe851ada5",
+      "bytes": 232
+    },
+    "hideui.toc": {
+      "sha256": "1b2d59719f34f1dd9039fb244240cbebd669af772df8904764c985e05b3bca21",
+      "bytes": 146
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

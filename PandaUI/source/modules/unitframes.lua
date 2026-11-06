@@ -1,0 +1,7619 @@
+-- pandaUI :: modules/unitframes.lua
+--
+-- Modern player, target and party unit frames use compact stacked status bars;
+-- target-of-target is deliberately simpler. Classic keeps the same PandaUI
+-- roots, mover positions and update machinery but hides those bars and anchors
+-- the client's native portrait frames over them.
+--
+-- None of pfUI's unitframe architecture is reproduced: there is no config
+-- schema, no module framework, no aura/indicator/glow/click-cast machinery,
+-- and no raid support. Auras and pet frames are separate scope. The player
+-- castbar lives in modules/castbar.lua.
+--
+-- Compatibility notes that shaped this file:
+--
+--   * knowledge.json / unitframes.core_unit_api_contract_partial is
+--     INCONCLUSIVE: UNIT_HEALTH, UNIT_MANA and PLAYER_TARGET_CHANGED are
+--     observed, but no unit API return contract is verified in the compact DB.
+--     query_compat.py has no record at all for UnitHealth's return shape,
+--     TargetUnit or GameTooltip:SetUnit, so per the evidence-gap rule these
+--     follow UnrealPfUI's demonstrated call shapes -- WORKING_SOURCE evidence,
+--     not runtime verification. Every call is still resolved and pcall'd, and
+--     every value is coerced, so an unexpected return shape degrades the frame
+--     instead of erroring.
+--   * events.json: PARTY_MEMBERS_CHANGED was accepted but never observed, and
+--     nothing at all reports target-of-target. Both are therefore driven by the
+--     shared polling tick, with events as an accelerator rather than the
+--     mechanism.
+--   * knowledge.json / scripts.child_onupdate_unreliable: no frame built here
+--     owns an OnUpdate. Everything refreshes on U.RegisterUpdate.
+--   * knowledge.json / fonts.stretched_justification_ignored: bar labels are
+--     anchored to the single edge they belong to, never stretched corner to
+--     corner with SetJustifyH.
+--   * knowledge.json / core.getdifficultycolor_missing: GetDifficultyColor is
+--     absent on this client, so level colouring uses a local helper. No global
+--     is installed.
+--   * knowledge.json / compat.native_suppression_pcall_burst_stutter: the
+--     shared suppression sweep this module drives through
+--     U.SuppressNativeFrame used to cost a synchronous ~2000-pcall burst once a
+--     second; the fix lives in core/compat.lua, not here, but the frame lists
+--     below are what made the burst that large in the first place.
+
+local U = PandaUI
+local M = U.media
+
+local UF = U.RegisterModule("unitframes")
+
+-- ---------------------------------------------------------------------------
+-- Unit API access
+--
+-- Nothing in the compact DB pins down what these return on this client, so each
+-- call is resolved by name, pcall'd, and coerced. A missing function or an
+-- unexpected return is nil here rather than an error six frames deep.
+--
+-- The name -> function lookup is memoized: these are stock globals that do not
+-- change identity mid-session, and resolving one used to cost its own pcall
+-- (through U.G) on top of the pcall around the actual call. Caching removes
+-- that repeated half of the cost -- see compat.native_suppression_pcall_burst
+-- _stutter in core/compat.lua for the sibling fix on the suppression sweep.
+-- ---------------------------------------------------------------------------
+local apiFnCache = {}
+
+local function ResolveApiFn(name)
+  -- "/pui party test" fake party (modules/partytest.lua); nil in normal play.
+  local override = U.gOverride
+  if override and override[name] then return override[name] end
+  local cached = apiFnCache[name]
+  if cached ~= nil then
+    if cached == false then return nil end
+    return cached
+  end
+
+  local fn = U.G(name)
+  if type(fn) == "function" then
+    apiFnCache[name] = fn
+    return fn
+  end
+  apiFnCache[name] = false
+  return nil
+end
+
+local function ApiNumber(name, a, b)
+  local fn = ResolveApiFn(name)
+  if not fn then return nil end
+  local ok, value = pcall(fn, a, b)
+  if not ok then return nil end
+  return tonumber(value)
+end
+
+local function ApiString(name, a, b)
+  local fn = ResolveApiFn(name)
+  if not fn then return nil end
+  local ok, value = pcall(fn, a, b)
+  if not ok or type(value) ~= "string" then return nil end
+  return value
+end
+
+-- Vanilla's boolean-ish APIs return 1 or nil, but that is not guaranteed here,
+-- so anything other than nil/false/0/"" counts as true.
+local function ApiTruth(name, a, b)
+  local fn = ResolveApiFn(name)
+  if not fn then return false end
+  local ok, value = pcall(fn, a, b)
+  if not ok then return false end
+  if value == nil or value == false or value == 0 or value == "" then
+    return false
+  end
+  return true
+end
+
+-- UnitClass's useful half is its second return, the unlocalised token.
+local function UnitClassToken(unit)
+  local fn = ResolveApiFn("UnitClass")
+  if not fn then return nil end
+  local ok, _, token = pcall(fn, unit)
+  if not ok or type(token) ~= "string" then return nil end
+  return token
+end
+
+-- ---------------------------------------------------------------------------
+-- Layout
+--
+-- Each frame is a stack of individually bordered boxes: health (large) and,
+-- where the unit has one, power (thin). Every frame now carries its text on
+-- the bars themselves, so no spec asks for the optional text-only "values"
+-- strip the layout still supports. width is the bar width shared by the
+-- stack; height is set per box, valuesHeight for the strip.
+--
+-- Default anchors are UIParent-relative, which is what the mover position
+-- store requires. A frame with anchorTo instead rides another frame's mover:
+-- target-of-target starts docked under the target frame and party members
+-- follow the party anchor, so none of them drift out of alignment with what
+-- they are attached to.
+--
+-- Target-of-target is the one anchorTo frame that also gets its own mover
+-- (spec.mover): it stays docked to the target frame until the user drags it in
+-- edit mode, after which its own UIParent-relative saved position wins like any
+-- other mover. /pui reset drops that position and re-docks it through the
+-- OnPositionReset hook in OnEnable. Party members never get an individual
+-- mover -- LayoutParty owns their positions inside the block.
+-- ---------------------------------------------------------------------------
+-- Target-of-target shares PRIMARY_WIDTH with target rather than carrying its
+-- own literal, so the two can never drift apart again.
+local PRIMARY_WIDTH = 153 -- 180 less 15%, by request
+
+local SPECS = {
+  {
+    -- Compact primary bars.
+    -- No values strip: text lives on the health/power bars themselves --
+    -- level+health on the health bar, power on the power bar, by request.
+    id = "player", unit = "player", name = "Player",
+    labelKey = "MOVER_LABEL_PLAYER",
+    width = PRIMARY_WIDTH, health = 34, power = 10, gap = 0,
+    healthLabels = { left = "level", right = "healthdyn" },
+    powerLabels = { right = "powerdyn" },
+    -- Flat "modern" theme: power value 1px smaller and 1px up (user request,
+    -- 2026-10-15). modern-wow sets its own through modules/modernwow.lua.
+    powerLabelSize = M.fontSize.normal - 2, modernPowerLabelUp = 1,
+    -- Text outline removed (user request, 2026-10-15); shadow only.
+    default = { point = "BOTTOMRIGHT", relativePoint = "BOTTOM", x = -75, y = 125 },
+  },
+  {
+    id = "target", unit = "target", name = "Target",
+    -- Ornamental classification artwork around this frame only (classSkin).
+    classSkin = true,
+    labelKey = "MOVER_LABEL_TARGET",
+    width = PRIMARY_WIDTH, health = 34, power = 10, gap = 0,
+    healthTexture = true,
+    targetReactionName = true,
+    healthLabels = { left = "healthdyn", right = "unitrev" },
+    powerLabels = { left = "powerdyn" },
+    powerLabelSize = M.fontSize.normal - 2, modernPowerLabelUp = 1,
+    -- Text outline removed (user request, 2026-10-15); shadow only.
+    default = { point = "BOTTOMLEFT", relativePoint = "BOTTOM", x = 75, y = 125 },
+  },
+  {
+    -- width matches target's, by request -- see PRIMARY_WIDTH above.
+    id = "targettarget", unit = "targettarget", name = "TargetTarget",
+    labelKey = "MOVER_LABEL_TARGET_TARGET",
+    -- One health bar only: its fixed-colour name is centred above the fill,
+    -- on a raised child layer within the target-of-target frame.
+    -- 18px is half the previous 35px height, rounded to an integer pixel.
+    width = PRIMARY_WIDTH, health = 18, healthText = "nameplain", gap = 0,
+    anchorTo = "target",
+    anchorPoint = "TOP", anchorRelativePoint = "BOTTOM",
+    anchorOffsetX = 0, anchorOffsetY = 1,
+    -- Docks under the target frame by default (above), but also carries its own
+    -- edit-mode handle so it can be pulled off onto a fixed screen position.
+    mover = true,
+  },
+  {
+    -- Hunter (or warlock) pet frame: portrait to the left, health/power
+    -- stacked to its right. Only built and shown while a pet is actually out
+    -- -- RefreshFrame's existing UnitExists gate already hides any frame with
+    -- no unit, so this needs no pet-specific visibility logic of its own.
+    id = "pet", unit = "pet", name = "Pet",
+    labelKey = "MOVER_LABEL_PET",
+    width = 120, health = 20, power = 8, gap = 0,
+    healthLabels = { left = "unit", right = "healthdyn" },
+    powerLabels = { right = "powerdyn" },
+    portrait = true, happiness = true,
+    default = { point = "BOTTOMRIGHT", relativePoint = "BOTTOM", x = -75, y = 90 },
+  },
+}
+
+local PARTY_COUNT = 4
+-- Visible gap between one member's block and the next. A member's own height
+-- is read from FrameHeight rather than written down here, so the gap stays 5
+-- at any border size and stays correct when an optional pet row is stacked
+-- under a member.
+local PARTY_GAP = 5
+-- Shared by a member frame and the pet row that hangs off it, so the two can
+-- never be built at different widths.
+local PARTY_WIDTH = 139 -- 164 less 15%, by request
+
+-- Frame id of the player's own row inside the party block. Not a unit token:
+-- the row's unit is "player" (see the spec below), and nothing may hand
+-- "party0" to a client API.
+local PARTY_PLAYER_ID = "party0"
+
+-- The party frames are laid out inside one anchor frame and moved as a block:
+-- a party is a single unit of layout, and dragging four frames into alignment
+-- by hand is exactly what the grid exists to avoid. Only the anchor gets a
+-- mover; the members keep offsets inside it.
+local PARTY_ANCHOR = "party"
+
+-- Defined next to BuildPartyAnchor, but the refresh scheduler above it drives
+-- the reflow, so the name has to exist before that function is written.
+local LayoutParty
+
+do
+  -- The player's own row, at the top of the party block, so the block reads as
+  -- the whole five-person party instead of the four other members. Geometry is
+  -- a member row's exactly -- the block is one column of identical rows -- but
+  -- the unit is "player": this client has no "party0" unit token, only the
+  -- frame id is called that.
+  --
+  -- LayoutParty owns whether the row is on screen at all, the same way it owns
+  -- the optional pet rows: it is off with PARTY_DEFAULTS.partyPlayer and hidden
+  -- while the player is solo.
+  --
+  -- No rangeCheck and no partyIndex: the player is never out of their own
+  -- range, and there is no roster slot 0 for FrameUnitExists to ask about.
+  table.insert(SPECS, {
+    id = PARTY_PLAYER_ID,
+    unit = "player",
+    partyPlayer = true,
+    name = "PartyPlayer",
+    width = PARTY_WIDTH, health = 36, power = 8, gap = 0,
+    healthTexture = true,
+    healthLabels = { left = "unit", right = "healthdyn" },
+    -- Party text 2px smaller (user request, 2026-10-15; was large / normal).
+    healthLabelSize = M.fontSize.large - 2,
+    healthLabelInherits = "GameFontNormal",
+    nameClassColor = true,
+    powerLabels = { right = "powerdyn" },
+    powerLabelSize = M.fontSize.normal - 2,
+    anchorTo = PARTY_ANCHOR,
+    anchorPoint = "TOPLEFT", anchorRelativePoint = "TOPLEFT",
+  })
+
+  local i
+  for i = 1, PARTY_COUNT do
+    table.insert(SPECS, {
+      id = "party" .. i,
+      unit = "party" .. i,
+      partyIndex = i,
+      name = "Party" .. i,
+      labelKey = "MOVER_LABEL_PARTY_N", labelArg = i,
+      -- Same treatment as player/target/pet: no separate values strip -- the
+      -- text lives on the bars themselves, name+health on the health bar and
+      -- power on the power bar. health doubled from 18 to 36, by request.
+      width = PARTY_WIDTH, health = 36, power = 8, gap = 0,
+      healthTexture = true,
+      healthLabels = { left = "unit", right = "healthdyn" },
+      -- Party health rows have enough vertical room to give their identity and
+      -- health readout stronger hierarchy than the compact power/pet rows.
+      -- Party text 2px smaller (user request, 2026-10-15; was large / normal).
+      healthLabelSize = M.fontSize.large - 2,
+      healthLabelInherits = "GameFontNormal",
+      nameClassColor = true,
+      rangeCheck = true,
+      powerLabels = { right = "powerdyn" },
+      powerLabelSize = M.fontSize.normal - 2,
+      anchorTo = PARTY_ANCHOR,
+      -- No fixed offset: LayoutParty owns every position inside the block,
+      -- because a member's place depends on whether the members above it are
+      -- currently showing a pet row.
+      anchorPoint = "TOPLEFT", anchorRelativePoint = "TOPLEFT",
+    })
+
+    -- The member's pet, off by default and toggled from the Unit Frames
+    -- settings page. Health only and a fraction of the member's height, so it
+    -- reads as belonging to the member above it rather than as another party
+    -- slot. partypet1-4 are documented unit IDs (documentation.json /
+    -- reference:Conventions:Unit IDs, DOCUMENTED_NOT_RUNTIME_VERIFIED); the
+    -- frame simply stays hidden if this client does not resolve them, the
+    -- same as any other unit that does not exist.
+    table.insert(SPECS, {
+      id = "partypet" .. i,
+      unit = "partypet" .. i,
+      name = "PartyPet" .. i,
+      width = PARTY_WIDTH, health = 14, gap = 0,
+      healthTexture = true,
+      healthLabels = { left = "unit", right = "healthdyn" },
+      healthLabelSize = M.fontSize.normal - 2,
+      anchorTo = PARTY_ANCHOR,
+      anchorPoint = "TOPLEFT", anchorRelativePoint = "TOPLEFT",
+      partyPet = true, partyIndex = i,
+    })
+  end
+end
+
+-- Stock frames this module replaces. The name lists are the ones UnrealPfUI
+-- suppresses, which were built from the names actually present in this client's
+-- global table rather than from Vanilla FrameXML.
+local function SuppressStockFrames(units, party)
+  if units then
+    U.SuppressNativeFrame(U.NativeFrameParts("PlayerFrame",
+    { "Texture", "Background", "HealthBar", "HealthBarText", "ManaBar",
+      "ManaBarText", "GroupIndicator", "GroupIndicatorLeft",
+      "GroupIndicatorMiddle", "GroupIndicatorRight", "GroupIndicatorText" }))
+    U.SuppressNativeFrame("PlayerPortrait")
+
+  -- Tagged "target": these are the frames this client actually brings back on
+  -- PLAYER_TARGET_CHANGED, so they are the only ones that event needs to sweep.
+  U.SuppressNativeFrame(U.NativeFrameParts("TargetFrame",
+    { "Texture", "TextureFrame", "Background", "NameBackground", "HealthBar",
+      "HealthBarText", "ManaBar", "ManaBarText" },
+    { { "Buff", 5 }, { "Debuff", 16 } }), "target")
+
+  -- Not $parent-named on this client. "Name", "Level" and "Portrait" were in
+  -- the list above, inherited from UnrealPfUI, but TargetFrameName,
+  -- TargetFrameLevel and TargetFramePortrait do not exist here: a full
+  -- 29,520-entry global enumeration has TargetName, TargetLevelText,
+  -- TargetHighLevelTexture and TargetPortrait instead. Those three names
+  -- resolved to nil on every sweep, so nothing ever cleared the yellow level
+  -- number -- the one piece of stock target art that stayed visible after the
+  -- Tab-spam stability fix took Hide() away from this family.
+  --
+  -- TargetHighLevelTexture is the skull this client draws in place of the
+  -- number for a ??-level target, so it belongs with the level rather than
+  -- being a separate feature.
+  -- TargetDeadText is the "Dead" string this client draws over a corpse, and
+  -- the same enumeration has TargetFrame_CheckDead, which writes it *inside*
+  -- one target rather than at target acquisition. It had no name in this list
+  -- at all, so nothing ever cleared it: it is the one piece of stock target
+  -- art still readable on a screenshot of a dead mob. TargetLeaderIcon,
+  -- TargetPVPIcon and TargetRaidTargetIcon are in the enumeration too and
+  -- belong to the same frame, so they are named here rather than being
+  -- reported one at a time later.
+  U.SuppressNativeFrame({ "TargetName", "TargetLevelText",
+                          "TargetHighLevelTexture", "TargetPortrait",
+                          "TargetDeadText", "TargetLeaderIcon",
+                          "TargetPVPIcon", "TargetRaidTargetIcon" },
+                        "target")
+
+  U.SuppressNativeFrame(U.NativeFrameParts("TargetofTarget",
+    { "Frame", "Texture", "TextureFrame", "Background", "HealthBar",
+      "ManaBar", "Portrait", "Name", "DeadText" }), "target")
+  U.SuppressNativeFrame(U.NativeFrameParts("TargetofTargetFrame",
+    {}, { { "Debuff", 4 } }), "target")
+
+  -- Standalone player pet frame (as opposed to a party member's nested
+  -- PartyMemberFrame%dPetFrame, already covered below). No event re-shows it
+  -- on this client, so it stays in the default "static" group and relies on
+  -- the periodic sweep alone, same as everything else in that group.
+    U.SuppressNativeFrame(U.NativeFrameParts("PetFrame",
+    { "Texture", "Background", "HealthBar", "HealthBarText", "ManaBar",
+      "ManaBarText", "Portrait", "Name", "Happiness" },
+    { { "Debuff", 4 } }))
+  end
+
+  if party then
+    local i
+    for i = 1, PARTY_COUNT do
+      local root = "PartyMemberFrame" .. i
+      U.SuppressNativeFrame(U.NativeFrameParts(root,
+        { "Texture", "Background", "HealthBar", "HealthBarText", "ManaBar",
+          "ManaBarText", "Portrait", "Name", "Status", "Disconnect",
+          "LeaderIcon", "MasterIcon", "PVPIcon",
+          "PetFrame", "PetFrameTexture", "PetFrameHealthBar",
+          "PetFramePortrait", "PetFrameName" },
+        { { "Debuff", 4 } }), "party")
+      U.SuppressNativeFrame(U.NativeFrameParts(root .. "PetFrame",
+        {}, { { "Debuff", 4 } }), "party")
+    end
+  end
+end
+
+-- ---------------------------------------------------------------------------
+-- Colours and formatting
+-- ---------------------------------------------------------------------------
+local function Clamp(value)
+  if value < 0 then return 0 end
+  if value > 1 then return 1 end
+  return value
+end
+
+local function Hex(r, g, b)
+  return string.format("|cff%02x%02x%02x",
+    math.floor(Clamp(tonumber(r) or 1) * 255 + 0.5),
+    math.floor(Clamp(tonumber(g) or 1) * 255 + 0.5),
+    math.floor(Clamp(tonumber(b) or 1) * 255 + 0.5))
+end
+
+-- pfUI's health gradient: red at empty, yellow at half, green at full.
+local function Gradient(perc)
+  perc = Clamp(tonumber(perc) or 0)
+
+  local r1, g1, b1, r2, g2, b2
+  if perc <= 0.5 then
+    perc = perc * 2
+    r1, g1, b1 = 1, 0, 0
+    r2, g2, b2 = 1, 1, 0
+  else
+    perc = perc * 2 - 1
+    r1, g1, b1 = 1, 1, 0
+    r2, g2, b2 = 0, 1, 0
+  end
+
+  return r1 + (r2 - r1) * perc,
+         g1 + (g2 - g1) * perc,
+         b1 + (b2 - b1) * perc
+end
+
+-- pfUI modern runs with pastel enabled, which lifts every derived colour toward
+-- white. Bars and text use different strengths upstream, so both are kept.
+local function PastelBar(r, g, b)
+  if not M.unitFrame.usePastelGradient then return r, g, b end
+  return (r + 0.5) * 0.5, (g + 0.5) * 0.5, (b + 0.5) * 0.5
+end
+
+local function PastelText(r, g, b)
+  if not M.unitFrame.usePastelGradient then return r, g, b end
+  return (r + 0.75) * 0.5, (g + 0.75) * 0.5, (b + 0.75) * 0.5
+end
+
+-- knowledge.json / core.getdifficultycolor_missing: this client has no
+-- GetDifficultyColor, so the bands live here; pandaUI does not install shim
+-- globals, so it is exported on U instead -- the modern-wow target header
+-- (modules/modernwow.lua) colours its own name/level row with the same helper.
+--
+-- Bands and colours are the ones requested on 2026-09-21: +5 and above red,
+-- +3/+4 orange, -2..+2 yellow, anything lower green until the grey threshold,
+-- grey at or below it. The threshold is Vanilla's own -- GetQuestGreenRange,
+-- documented on this client but not runtime verified -- with the fixed 7 the
+-- module used before as the fallback, so a client that does not answer keeps
+-- behaving exactly as it did.
+function U.UnitDifficultyColor(level)
+  level = tonumber(level) or 0
+  local playerLevel = ApiNumber("UnitLevel", "player") or 1
+  -- Kept function-local rather than as two more top-level names: this file is
+  -- close to the 200-local chunk limit (rules/pandaui.md).
+  local greenRange = ApiNumber("GetQuestGreenRange")
+  if not greenRange or greenRange <= 0 then greenRange = 7 end
+
+  -- An unknown ("??") level keeps its own lighter grey rather than joining the
+  -- trivial-mob grey below, so the two stay distinguishable.
+  if level <= 0 then return 0.69, 0.69, 0.69 end
+
+  local diff = level - playerLevel
+  if diff >= 5 then return 1.00, 0.10, 0.10 end
+  if diff >= 3 then return 1.00, 0.50, 0.25 end
+  if diff >= -2 then return 1.00, 1.00, 0.00 end
+  if -diff <= greenRange then return 0.25, 0.75, 0.25 end
+  return 0.50, 0.50, 0.50
+end
+
+local function Abbreviate(value)
+  value = tonumber(value) or 0
+  local absolute = math.abs(value)
+
+  if absolute > 1000000 then
+    return string.format("%.2f", value / 1000000) .. "m"
+  elseif absolute > 1000 then
+    return string.format("%.1f", value / 1000) .. "k"
+  end
+
+  return tostring(U.Round(value))
+end
+
+-- ---------------------------------------------------------------------------
+-- Classification icon
+--
+-- The elite/rare dragon drawn beside a unit's health bar. Two things behind it
+-- are unverified on this client:
+--
+--   * query_compat.py has no record for UnitClassification's return values
+--     (the only unitframe record, unitframes.core_unit_api_contract_partial,
+--     is INCONCLUSIVE and does not cover it), and UnrealPfUI never draws an
+--     icon for classification either -- it only appends the "+"/"R+" level
+--     suffix LevelString already reproduces -- so there is no WORKING_SOURCE
+--     reference for the artwork.
+--   * knowledge.json / textures.separate_coin_paths_not_rendered is a
+--     confirmed case of stock Blizzard texture paths that exist in Vanilla and
+--     simply do not render here; it was only closed by trying paths in game.
+--
+-- That is why the texture, size and crop are runtime variables rather than
+-- literals: /pui elite tex|size|coord answers both questions in one session
+-- instead of an edit/reload cycle per candidate. Nothing here is persisted --
+-- config.savedvariables_backslash_corruption means paths are never written to
+-- SavedVariables, so a candidate that works gets baked into the default below.
+--
+-- The default path is the nameplate emblem, the one piece of classification art
+-- this client is known to draw somewhere: modules/nameplates.lua reads a stock
+-- plate texture region whose path contains "Elite"/"Rare".
+-- ---------------------------------------------------------------------------
+local ELITE_TEXTURE_DEFAULT = "Interface\\Tooltips\\EliteNameplateIcon"
+
+local eliteTexture = ELITE_TEXTURE_DEFAULT
+local eliteWidth, eliteHeight = 18, 18
+local eliteCoords = nil       -- { left, right, top, bottom }; nil = whole file
+
+-- Every classification but plain "normal" gets the icon, tinted per tier so
+-- the same texture still reads as the right one at a glance -- rare gets its
+-- own silver-grey rather than rareelite's silver-blue, so the two stay
+-- distinguishable even though they share the "silver" family.
+local ELITE_TINTS = {
+  elite     = { 1.00, 0.82, 0.20 },
+  rareelite = { 0.72, 0.82, 1.00 },
+  worldboss = { 1.00, 0.45, 0.35 },
+  rare      = { 0.80, 0.80, 0.80 },
+}
+
+-- /pui elite's test override. Forces the classification every frame reads, so
+-- any mob can stand in for an elite instead of hunting one of each tier down.
+local classificationOverride = nil
+
+-- ---------------------------------------------------------------------------
+-- Unit state
+--
+-- One reusable table per frame. Combat refreshes are bounded and should not
+-- allocate per event; the slower full fallback refreshes static identity data.
+-- ---------------------------------------------------------------------------
+-- Units whose UnitHealth/UnitHealthMax are real hit points rather than a
+-- percentage. Vanilla grants this to yourself, your pet and your party; every
+-- other unit is percent-scaled.
+local REAL_HEALTH_UNITS = {
+  player = true, pet = true,
+  party1 = true, party2 = true, party3 = true, party4 = true,
+  partypet1 = true, partypet2 = true, partypet3 = true, partypet4 = true,
+}
+
+local function ReadIdentity(frame)
+  local unit = frame.unit
+  local data = frame.data
+
+  data.name = ApiString("UnitName", unit)
+  data.level = ApiNumber("UnitLevel", unit)
+  data.isPlayer = ApiTruth("UnitIsPlayer", unit)
+
+  -- Classification is an NPC concept: a player-controlled unit is never
+  -- elite/rare/worldboss, on any frame (player, party, or a target that
+  -- happens to be another player). Reading it as nil here, ahead of both the
+  -- level-text "+"/"R+" suffix and the icon, is what keeps the /pui elite
+  -- test override -- which forces every frame at once -- from leaking onto a
+  -- player-controlled frame through either of those two paths.
+  if data.isPlayer then
+    data.classification = nil
+  else
+    data.classification = classificationOverride or
+                          ApiString("UnitClassification", unit)
+  end
+  -- An absent UnitIsConnected must read as connected, not as everyone offline.
+  if ResolveApiFn("UnitIsConnected") then
+    data.connected = ApiTruth("UnitIsConnected", unit)
+  else
+    data.connected = true
+  end
+  -- Only party-member frames use distance styling. The same object-visibility
+  -- guard already protects party auras; nil means the check was unreadable.
+  data.outOfRange = frame.spec.rangeCheck and data.connected ~= false and
+                   U.UnitObjectVisible(unit) == false or false
+  -- Distant members still report live health. Reserve grey for offline units;
+  -- distance only darkens the background and the existing bar colours.
+  data.muted = data.connected == false
+  data.class = UnitClassToken(unit)
+  data.reaction = ApiNumber("UnitReaction", unit, "player")
+end
+
+local function ReadHealth(frame)
+  local unit = frame.unit
+  local data = frame.data
+
+  data.health = ApiNumber("UnitHealth", unit) or 0
+  data.healthMax = ApiNumber("UnitHealthMax", unit) or 0
+  data.isDead = ApiTruth("UnitIsDead", unit) or ApiTruth("UnitIsGhost", unit)
+
+  if data.healthMax > 0 then
+    data.healthPercent = Clamp(data.health / data.healthMax)
+  else
+    data.healthPercent = 0
+  end
+
+  -- This client keeps the Vanilla rule that only units you are grouped with
+  -- report real hit points: everything else returns health on a 0-100 scale
+  -- with UnitHealthMax fixed at 100. Measured on mouseover world units by the
+  -- tooltip probe (behavior.json, probeVersion 1.9.0: 96/100, 97/100, 91/100)
+  -- and confirmed in game on the target frame, where "84 - 84%" printed the
+  -- same number twice. When health *is* the percentage, the value half of the
+  -- dynamic text carries no extra information, so only the percentage is
+  -- drawn.
+  data.healthIsPercent = data.healthMax == 100 and not REAL_HEALTH_UNITS[unit]
+
+  -- A disconnected unit stops reporting, and UnitHealth keeps handing back the
+  -- last value it saw -- which draws a live-looking fill underneath the offline
+  -- word. Drain the bar instead, as UnrealPfUI's RefreshUnitState does for the
+  -- same state. connected is only read by ReadIdentity, so on a health/vitals
+  -- pass this is what the last full refresh established: at most one second
+  -- old, and the drain lands on the same pass that prints the word.
+  if data.connected == false then
+    data.health = 0
+    data.healthPercent = 0
+  end
+
+  -- Absolute hit points for a creature the client only reports as a
+  -- percentage. Nampower's target fields are the live server-fed source. The
+  -- bundled creature table remains the stock-client fallback.
+  data.exactHealth, data.exactHealthMax = nil, nil
+  if unit == "target" and data.connected ~= false and
+     type(U.NampowerUnitField) == "function" then
+    local current = U.NampowerUnitField(unit, "health")
+    local maximum = U.NampowerUnitField(unit, "maxHealth")
+    if current and maximum and maximum > 0 then
+      data.exactHealth, data.exactHealthMax = current, maximum
+    end
+  end
+  if not data.exactHealthMax and data.healthIsPercent and
+     data.connected ~= false and
+     type(U.UnitVitalsHealth) == "function" then
+    data.exactHealth, data.exactHealthMax =
+      U.UnitVitalsHealth(unit, data.name, data.level,
+                         data.health, data.healthMax)
+  end
+end
+
+local function ReadPower(frame)
+  local unit = frame.unit
+  local data = frame.data
+
+  data.power = ApiNumber("UnitMana", unit) or 0
+  data.powerMax = ApiNumber("UnitManaMax", unit) or 0
+  data.powerType = ApiNumber("UnitPowerType", unit)
+
+  -- Same stale reading as health above, so the second bar drains with it
+  -- rather than leaving the frame half alive.
+  if data.connected == false then data.power = 0 end
+
+  -- Nampower exposes the five server power fields in UnitPowerType order.
+  -- The bundled mana table remains the fallback when no live field is usable.
+  data.exactPower, data.exactPowerMax = nil, nil
+  if unit == "target" and data.connected ~= false and
+     type(data.powerType) == "number" and
+     type(U.NampowerUnitPower) == "function" then
+    local current, maximum = U.NampowerUnitPower(unit, data.powerType)
+    if current and maximum and maximum > 0 then
+      data.exactPower, data.exactPowerMax = current, maximum
+    end
+  end
+  if not data.exactPowerMax and data.healthIsPercent and
+     data.connected ~= false and
+     type(U.UnitVitalsPower) == "function" then
+    data.exactPower, data.exactPowerMax =
+      U.UnitVitalsPower(data.name, data.level, data.powerType,
+                        data.power, data.powerMax)
+  end
+end
+
+local function ReadUnit(frame)
+  ReadIdentity(frame)
+  ReadHealth(frame)
+  ReadPower(frame)
+  frame.data.initialised = true
+
+  return frame.data
+end
+
+-- The colour a unit's *name* is drawn in: class colour for players, reaction
+-- colour for everything else. The target frame opts into the relationship-only
+-- path so friendly players are green rather than class-coloured, and hostile
+-- reaction 3 is grouped with the other enemies instead of appearing orange.
+-- Exported because modern-wow draws the target name in its own header row.
+function U.UnitFrameNameColor(data, targetReactionName)
+  local r, g, b
+
+  if targetReactionName then
+    if data.reaction then
+      local reaction = data.reaction
+      if reaction <= 3 then
+        reaction = 1
+      elseif reaction == 4 then
+        reaction = 4
+      else
+        reaction = 5
+      end
+      r, g, b = M.ReactionColor(reaction)
+    end
+  elseif data.isPlayer and data.class then
+    r, g, b = M.ClassColor(data.class)
+  elseif data.reaction then
+    r, g, b = M.ReactionColor(data.reaction)
+  end
+
+  if not r then return 1, 1, 1 end
+  return r, g, b
+end
+
+-- Long NPC/pet names (e.g. battle-pet-style "of the ..." titles) can outgrow
+-- the name bar and overlap neighbouring text, so unit-frame name text is
+-- capped to a fixed character count with a trailing ellipsis.
+local NAME_MAX_LENGTH = 20
+
+-- Second return is whether the name was actually cut down, so callers can
+-- widen the gap to the level text that follows it.
+local function TruncateName(name)
+  if not name or string.len(name) <= NAME_MAX_LENGTH then return name, false end
+  return string.sub(name, 1, NAME_MAX_LENGTH - 3) .. "...", true
+end
+
+local function LevelString(data)
+  local level = data.level
+  local text
+  if not level or level < 0 then text = "??" else text = tostring(level) end
+
+  local class = data.classification
+  if class == "worldboss" then
+    text = text .. "B"
+  elseif class == "rareelite" then
+    text = text .. "R+"
+  elseif class == "elite" then
+    text = text .. "+"
+  elseif class == "rare" then
+    text = text .. "R"
+  end
+
+  return text
+end
+
+-- Shared by StatusText's name/level tokens and the target frame's split
+-- name/level labels (BuildBarLabels), so both colour text identically.
+local function ColoredName(data, nameClassColor, targetReactionName)
+  local name, truncated = TruncateName(data.name)
+  name = name or U.G("UNKNOWN") or "Unknown"
+  if data.muted then
+    return Hex(M.Unpack(M.color.textDim)) .. name, truncated
+  end
+  -- A non-player unit's name carries the same difficulty colour as its level
+  -- (user request, 2026-09-21), so a trivial mob reads grey on both halves of
+  -- the label. Its friend/foe standing is still shown by the health bar's
+  -- reaction colour, so nothing is lost by moving the name onto difficulty.
+  -- Players keep the colour that identifies them -- class on the party frames,
+  -- reaction on the target -- because their level is already in the number
+  -- beside the name.
+  if not data.isPlayer then
+    return Hex(U.UnitDifficultyColor(data.level)) .. name, truncated
+  end
+
+  local nr, ng, nb = U.UnitFrameNameColor(data, targetReactionName)
+  -- Party player names retain the full shared class colour instead of the
+  -- muted pastel treatment, making classes easier to distinguish at a glance.
+  if not targetReactionName and
+     not (nameClassColor and data.isPlayer and data.class) then
+    nr, ng, nb = PastelText(nr, ng, nb)
+  end
+  return Hex(nr, ng, nb) .. name, truncated
+end
+
+-- Difficulty colours are used exactly as specified rather than through
+-- PastelText: the whole point of the five bands is that red/orange/yellow/
+-- green/grey are recognisable at a glance, and the pastel wash moves every one
+-- of them toward white.
+local function ColoredLevel(data)
+  if data.muted then
+    return Hex(M.Unpack(M.color.textDim)) .. LevelString(data)
+  end
+  return Hex(U.UnitDifficultyColor(data.level)) .. LevelString(data)
+end
+
+-- Builds one of the pfUI text tokens this module supports. Only the tokens the
+-- layouts above actually use are implemented; pfUI's full token list is config
+-- surface pandaUI does not have.
+local function StatusText(frame, token)
+  local data = frame.data
+  if not token or token == "none" then return "" end
+
+  if token == "nameplain" then
+    if data.muted then
+      return Hex(M.Unpack(M.color.textDim)) ..
+             (TruncateName(data.name) or U.G("UNKNOWN") or "Unknown")
+    end
+    return TruncateName(data.name) or U.G("UNKNOWN") or "Unknown"
+  end
+
+  if token == "level" then
+    return ColoredLevel(data)
+  end
+
+  if token == "unit" or token == "unitrev" or token == "name" then
+    local colored = ColoredName(data, frame.spec.nameClassColor,
+                                frame.spec.targetReactionName)
+
+    if token == "name" then return colored end
+
+    local level = ColoredLevel(data)
+
+    if token == "unitrev" then return colored .. "  " .. level end
+    return level .. "  " .. colored
+  end
+
+  -- Split readouts, added for modern-wow: the source interface puts a bare
+  -- percentage at one end of the bar and the absolute value at the other,
+  -- where PandaUI's own "healthdyn"/"powerdyn" pack both into one string.
+  -- Kept as separate tokens rather than as a flag on those, so every existing
+  -- layout is untouched.
+  if token == "healthpct" or token == "powerpct" then
+    if data.connected == false then return "" end
+    if token == "healthpct" and data.isDead then return "" end
+
+    -- Only health carries a ready-made percentage (ReadHealth sets
+    -- data.healthPercent); power is stored as value and maximum, so the power
+    -- share is worked out here rather than adding a second stored field.
+    local pct
+    if token == "healthpct" and data.exactHealthMax and
+       data.exactHealthMax > 0 then
+      pct = data.exactHealth / data.exactHealthMax
+    elseif token == "healthpct" then
+      pct = data.healthPercent
+    elseif data.exactPowerMax and data.exactPowerMax > 0 then
+      pct = data.exactPower / data.exactPowerMax
+    elseif type(data.powerMax) == "number" and data.powerMax > 0 then
+      pct = data.power / data.powerMax
+    end
+    if type(pct) ~= "number" then return "" end
+
+    local cr, cg, cb = M.Unpack(M.color.text)
+    if data.muted then cr, cg, cb = M.Unpack(M.color.textDim) end
+    return Hex(cr, cg, cb) .. U.CeilPercent(pct) .. "%"
+  end
+
+  if token == "healthval" then
+    if data.connected == false then
+      return Hex(M.Unpack(M.color.textDim)) .. U.L("UF_OFFLINE")
+    end
+    if data.isDead then return U.G("DEAD") or "Dead" end
+
+    local cr, cg, cb = M.Unpack(M.color.text)
+    if data.muted then cr, cg, cb = M.Unpack(M.color.textDim) end
+    -- Without exact creature data the client exposes a 0-100 health value.
+    -- Numeric mode intentionally prints that number without a percent sign;
+    -- enabling exact vitals replaces it with the real creature value.
+    return Hex(cr, cg, cb) .. Abbreviate(data.exactHealth or data.health)
+  end
+
+  if token == "powerval" then
+    if data.connected == false then return "" end
+    local value = data.exactPower or data.power
+    if type(value) ~= "number" then return "" end
+
+    local cr, cg, cb = M.Unpack(M.color.text)
+    if data.muted then cr, cg, cb = M.Unpack(M.color.textDim) end
+    return Hex(cr, cg, cb) .. Abbreviate(value)
+  end
+
+  if token == "healthdyn" then
+    -- A disconnected unit stops reporting, so its last health value is stale
+    -- and the offline word replaces the readout rather than sitting beside it.
+    -- Match the offline name and level with the shared muted-grey text.
+    if data.connected == false then
+      return Hex(M.Unpack(M.color.textDim)) .. U.L("UF_OFFLINE")
+    end
+
+    local shownHealth = data.exactHealth or data.health
+    local shownHealthMax = data.exactHealthMax or data.healthMax
+    local shownPercent = data.healthPercent
+    if shownHealthMax and shownHealthMax > 0 then
+      shownPercent = shownHealth / shownHealthMax
+    end
+    local hr, hg, hb = PastelText(Gradient(shownPercent))
+    if data.muted then hr, hg, hb = M.Unpack(M.color.textDim) end
+    local prefix = Hex(hr, hg, hb)
+
+    if data.isDead then return prefix .. (U.G("DEAD") or "Dead") end
+    if shownHealth ~= shownHealthMax and shownHealthMax > 0 then
+      if data.healthIsPercent then
+        -- With an exact source behind it the frame can print the real numbers:
+        -- "1121 / 1536" says both how much is left and how much there was.
+        -- Without one there is only the percentage.
+        if data.exactHealthMax then
+          return prefix .. Abbreviate(data.exactHealth) .. " / " ..
+                 Abbreviate(data.exactHealthMax)
+        end
+        return prefix .. U.CeilPercent(data.healthPercent) .. "%"
+      end
+      return prefix .. Abbreviate(shownHealth) .. " - " ..
+             U.CeilPercent(shownPercent) .. "%"
+    end
+    -- Full health on a percent-scaled unit still reads as a percentage, so it
+    -- keeps the "%" rather than printing a bare 100 -- unless the exact
+    -- maximum is known, in which case that number is the useful one.
+    if data.healthIsPercent then
+      if data.exactHealthMax then return prefix .. Abbreviate(data.exactHealthMax) end
+      return prefix .. "100%"
+    end
+    return prefix .. Abbreviate(shownHealth)
+  end
+
+  if token == "powerdyn" then
+    -- Nothing to report while the unit is offline, and a bare "0" beside the
+    -- offline word reads as a real reading rather than as missing data.
+    if data.connected == false then return "" end
+
+    local pr, pg, pb = PastelText(M.Unpack(M.power[data.powerType] or M.power.fallback))
+    if data.muted then pr, pg, pb = M.Unpack(M.color.textDim) end
+    local prefix = Hex(pr, pg, pb)
+
+    -- Absolute power from Nampower, or mana from the bundled fallback,
+    -- matching the health readout above.
+    if data.exactPowerMax then
+      if data.exactPower ~= data.exactPowerMax then
+        return prefix .. Abbreviate(data.exactPower) .. " / " ..
+               Abbreviate(data.exactPowerMax)
+      end
+      return prefix .. Abbreviate(data.exactPowerMax)
+    end
+
+    -- Only mana is worth a percentage; rage and energy are already a 0-100
+    -- scale, which is exactly what pfUI does here.
+    if data.power ~= data.powerMax and data.powerType == 0 and data.powerMax > 0 then
+      return prefix .. Abbreviate(data.power) .. " - " ..
+             U.CeilPercent(data.power / data.powerMax) .. "%"
+    end
+    return prefix .. Abbreviate(data.power)
+  end
+
+  return ""
+end
+
+-- ---------------------------------------------------------------------------
+-- Frame construction
+-- ---------------------------------------------------------------------------
+local frames = {}       -- id -> frame
+local frameOrder = {}
+local textCache = {}    -- fontstring -> last applied string
+local dirtyUnits = {}   -- unit token -> health | power | vitals | full
+local unitMouse = {}
+
+-- Independent health readouts for both ends of every PandaUI unit frame. Each
+-- side can be hidden, percentage or value; when only one health side is used,
+-- the frame's identity text takes the other end. The cached module table keeps
+-- this out of the per-health-event validation path.
+UF.healthText = {
+  defaults = {
+    healthTextLeft = "hidden",
+    healthTextRight = "percent",
+    healthTextVersion = 0,
+  },
+  cfg = nil,
+}
+
+function UF.healthText.Config()
+  if UF.healthText.cfg then return UF.healthText.cfg end
+  local cfg = U.ModuleConfig("unitframes", UF.healthText.defaults)
+
+  -- Migrate the first health-text UI, which stored one enable/mode/side
+  -- selection. It was never released, but a player may have reloaded between
+  -- the two revisions. The independent side values are the durable format.
+  if tonumber(cfg.healthTextVersion) < 1 then
+    if cfg.enabled == false then
+      cfg.healthTextLeft, cfg.healthTextRight = "hidden", "hidden"
+    elseif cfg.enabled ~= nil or cfg.mode ~= nil or cfg.side ~= nil then
+      local value = cfg.mode == "number" and "number" or "percent"
+      if cfg.side == "left" then
+        cfg.healthTextLeft, cfg.healthTextRight = value, "hidden"
+      else
+        cfg.healthTextLeft, cfg.healthTextRight = "hidden", value
+      end
+    end
+    cfg.enabled, cfg.mode, cfg.side = nil, nil, nil
+    cfg.healthTextVersion = 1
+  end
+
+  if cfg.healthTextLeft ~= "percent" and
+     cfg.healthTextLeft ~= "number" then
+    cfg.healthTextLeft = "hidden"
+  end
+  if cfg.healthTextRight ~= "percent" and
+     cfg.healthTextRight ~= "number" then
+    cfg.healthTextRight = "hidden"
+  end
+  if U.db then UF.healthText.cfg = cfg end
+  return cfg
+end
+
+-- Power readouts follow the same two-sided model. "default" keeps the frame's
+-- authored power token for that side, so an untouched install looks as before.
+UF.powerText = {
+  defaults = { powerTextLeft = "default", powerTextRight = "default",
+               textsOnHover = false,
+               healthTextSize = 0, powerTextSize = 0 },
+  cfg = nil,
+}
+
+function UF.powerText.Config()
+  if UF.powerText.cfg then return UF.powerText.cfg end
+  local cfg = U.ModuleConfig("unitframes", UF.powerText.defaults)
+  if cfg.powerTextLeft ~= "percent" and cfg.powerTextLeft ~= "number" and
+     cfg.powerTextLeft ~= "hidden" then
+    cfg.powerTextLeft = "default"
+  end
+  if cfg.powerTextRight ~= "percent" and cfg.powerTextRight ~= "number" and
+     cfg.powerTextRight ~= "hidden" then
+    cfg.powerTextRight = "default"
+  end
+  if U.db then UF.powerText.cfg = cfg end
+  return cfg
+end
+
+function UF.powerText.Token(value, authored)
+  if value == "percent" then return "powerpct" end
+  if value == "number" then return "powerval" end
+  if value == "hidden" then return nil end
+  return authored
+end
+
+function UF.powerText.Labels(labels)
+  local cfg = UF.powerText.Config()
+  return UF.powerText.Token(cfg.powerTextLeft, labels and labels.left),
+         UF.powerText.Token(cfg.powerTextRight, labels and labels.right)
+end
+
+-- Optional: health and power readouts only show while the cursor is over the
+-- frame. Identity text (name, level) is untouched; only the value tokens are
+-- dropped from the label pass, and a full refresh on enter/leave restores them.
+-- Exact size for the health and power bar readouts; 0 keeps the authored size.
+-- Applied lazily from ApplyBarLabels so it lands after any theme sizing pass.
+--
+-- Each frame group (player, target, pet, party) owns its own size, stored as
+-- e.g. petHealthTextSize. Without one the group follows the global
+-- healthTextSize/powerTextSize, which is what the settings page writes and
+-- what older saves carry.
+UF.powerText.groups = { "player", "target", "pet", "party" }
+
+function UF.powerText.Group(frame)
+  local id = frame and frame.spec and frame.spec.id
+  if not id then return nil end
+  if id == "player" or id == "target" or id == "pet" then return id end
+  if string.find(id, "^party") then return "party" end
+  return nil
+end
+
+function UF.powerText.SizeKey(kind, group)
+  if not group then return kind .. "TextSize" end
+  return group .. string.upper(string.sub(kind, 1, 1)) ..
+         string.sub(kind, 2) .. "TextSize"
+end
+
+function UF.powerText.Size(kind, group)
+  local cfg = UF.powerText.Config()
+  local value
+  if group then value = tonumber(cfg[UF.powerText.SizeKey(kind, group)]) end
+  if value == nil then value = tonumber(cfg[UF.powerText.SizeKey(kind)]) end
+  if not value or value < 6 then return 0 end
+  return value
+end
+
+function UF.powerText.ApplySize(frame, box, kind)
+  if not box then return end
+  local want = UF.powerText.Size(kind, UF.powerText.Group(frame))
+  local size = want
+  if want <= 0 then
+    if not box.puiTextSize then return end
+    size = frame.spec[kind .. "LabelSize"]
+    box.puiTextSize = nil
+  elseif box.puiTextSize == want then
+    return
+  else
+    box.puiTextSize = want
+  end
+  if not size then return end
+
+  local labels = { box.leftLabel, box.rightLabel }
+  local shadow = frame.puiModernWowLabelShadow or M.compactTextShadowOffset
+  local i
+  for i = 1, 2 do
+    if labels[i] then
+      if labels[i].puiOutline then
+        pcall(U.SetFont, labels[i], size, "OUTLINE", "unitframe", nil, true)
+      else
+        pcall(U.SetFont, labels[i], size, nil, "unitframe", nil, true)
+        pcall(U.SetTextShadow, labels[i], shadow,
+              shadow.color or M.color.shadowStrong)
+      end
+    end
+  end
+end
+
+function UF.powerText.IsValueToken(token)
+  return token == "healthdyn" or token == "healthpct" or
+         token == "healthval" or token == "powerdyn" or
+         token == "powerpct" or token == "powerval"
+end
+
+function UF.powerText.HoverOnly(frame)
+  return frame and not frame.puiHover and
+         UF.powerText.Config().textsOnHover == true
+end
+
+function UF.healthText.IsHealthToken(token)
+  return token == "healthdyn" or token == "healthpct" or
+         token == "healthval"
+end
+
+-- Returns the effective left and right tokens without allocating a table on
+-- every health update. A layout's non-health token (name or level) is retained
+-- on the side opposite the selected readout.
+function UF.healthText.Token(value)
+  if value == "percent" then return "healthpct" end
+  if value == "number" then return "healthval" end
+  return nil
+end
+
+function UF.healthText.Labels(labels)
+  local cfg = UF.healthText.Config()
+  local left = labels and labels.left or nil
+  local right = labels and labels.right or nil
+  local identity
+
+  if not UF.healthText.IsHealthToken(left) then identity = left end
+  if not identity and not UF.healthText.IsHealthToken(right) then identity = right end
+  local leftHealth = UF.healthText.Token(cfg.healthTextLeft)
+  local rightHealth = UF.healthText.Token(cfg.healthTextRight)
+
+  if leftHealth and rightHealth then return leftHealth, rightHealth end
+  if leftHealth then return leftHealth, identity end
+  if rightHealth then return identity, rightHealth end
+
+  -- With both health sides hidden, retain the frame's authored identity text
+  -- (name or level) in its original slot.
+  if UF.healthText.IsHealthToken(left) then left = nil end
+  if UF.healthText.IsHealthToken(right) then right = nil end
+  return left, right
+end
+
+-- Classic keeps PandaUI's generated frames as invisible layout anchors while
+-- showing the client's real unit frames on top of them. That gives the theme
+-- native portraits, frame art, level badges and status bars without surrendering
+-- saved mover positions, edit-mode handles, aura attachment points or the
+-- module's existing unit refresh contract.
+--
+-- Theme changes require /reload, so a frame family that was destructively
+-- suppressed by the Modern theme is never expected to be restored in place.
+-- On a Classic load SuppressStockFrames is skipped entirely.
+
+local classicNative = {
+  active = false,
+  unitActive = false,
+  partyActive = false,
+  roots = {
+    { id = "player",       names = { "PlayerFrame" },
+      portraitName = "PlayerPortrait",
+      auraAnchorName = "PlayerFrameHealthBar",
+      auraBelowAnchorName = "PlayerFrameManaBar", auraIconScale = 0.9 },
+    { id = "target",       names = { "TargetFrame" },
+      portraitName = "TargetPortrait",
+      auraAnchorName = "TargetFrameHealthBar",
+      auraBelowAnchorName = "TargetFrameManaBar", auraIconScale = 0.9 },
+    -- The stock target-of-target is optional client UI. Keep its native art
+    -- when the client actually shows it, but fall back to PandaUI's existing
+    -- compact bar when that option is off so the theme never loses the unit.
+    { id = "targettarget", names = { "TargetofTargetFrame", "TargetofTarget" },
+      portraitName = "TargetofTargetPortrait",
+      customFallback = true },
+    { id = "pet",          names = { "PetFrame" },
+      portraitName = "PetPortrait" },
+    { id = "party1",       names = { "PartyMemberFrame1" },
+      portraitName = "PartyMemberFrame1Portrait" },
+    { id = "party2",       names = { "PartyMemberFrame2" },
+      portraitName = "PartyMemberFrame2Portrait" },
+    { id = "party3",       names = { "PartyMemberFrame3" },
+      portraitName = "PartyMemberFrame3Portrait" },
+    { id = "party4",       names = { "PartyMemberFrame4" },
+      portraitName = "PartyMemberFrame4Portrait" },
+  },
+}
+
+function classicNative.Enabled()
+  return type(U.ThemeStyleUsesNativeChrome) == "function" and
+         U.ThemeStyleUsesNativeChrome()
+end
+
+function classicNative.UsesNative(id)
+  if not classicNative.Enabled() or type(id) ~= "string" then return false end
+  if string.find(id, "^party") then
+    -- Raid-style party frames (fixed at load, UF:OnEnable) replace the
+    -- client's party frames, so they are suppressed like Modern WoW's.
+    if classicNative.raidParty then return false end
+    return not (type(U.ClassicModernModuleEnabled) == "function" and
+                U.ClassicModernModuleEnabled("partyframes"))
+  end
+  return not (type(U.ClassicModernModuleEnabled) == "function" and
+              U.ClassicModernModuleEnabled("unitframes"))
+end
+
+function classicNative.Resolve(names)
+  local i
+  for i = 1, table.getn(names) do
+    local frame = U.G(names[i])
+    if frame and type(frame.ClearAllPoints) == "function" and
+       type(frame.SetPoint) == "function" then
+      return frame
+    end
+  end
+  return nil
+end
+
+function classicNative.Dimension(frame, method)
+  local fn = frame and frame[method]
+  if type(fn) ~= "function" then return 0 end
+  local ok, value = pcall(fn, frame)
+  if not ok then return 0 end
+  return tonumber(value) or 0
+end
+
+-- Classic always owns the compact fallback, including when its Unit Frames
+-- module routes player and target through modern-wow. Target-of-target is the
+-- deliberate exception: it keeps Classic player-frame art instead of joining
+-- that Modern WoW surface.
+function classicNative.TargetTargetAtlasEnabled()
+  return type(U.GetActiveThemeStyle) == "function" and
+         U.GetActiveThemeStyle() == "classic-wow" and
+         M.classicWow and M.classicWow.targetTarget
+end
+
+-- Classic's primary artwork extends below its power bar, so the generic
+-- native-root bottom offset leaves a below-frame aura row floating under the
+-- decorative frame -- and, on target, makes that row read as if it belongs to
+-- target-of-target. Read the power bar only while binding, copy its position
+-- into bounded numbers on the addon-owned mover, then release it. Player and
+-- target auras therefore stay on their own visible bars, matching the dressed
+-- modern-wow path without retaining a native child as their relative frame.
+function classicNative.PublishAuraLayout(anchor)
+  local nativeName = anchor and anchor.puiAuraBelowAnchorName
+  if type(nativeName) ~= "string" then return end
+
+  local bar = U.G(nativeName)
+  if not bar then return end
+
+  local leftOk, barLeft = pcall(bar.GetLeft, bar)
+  local bottomOk, barBottom = pcall(bar.GetBottom, bar)
+  local anchorLeftOk, anchorLeft = pcall(anchor.GetLeft, anchor)
+  local anchorTopOk, anchorTop = pcall(anchor.GetTop, anchor)
+  if not leftOk or not bottomOk or not anchorLeftOk or not anchorTopOk or
+     not tonumber(barLeft) or not tonumber(barBottom) or
+     not tonumber(anchorLeft) or not tonumber(anchorTop) then
+    return
+  end
+
+  anchor.puiAuraLayout = anchor.puiAuraLayout or {}
+  anchor.puiAuraLayout.iconScale =
+    tonumber(anchor.puiAuraIconScale) or 1
+  anchor.puiAuraLayout.belowLeft = barLeft - anchorLeft
+  anchor.puiAuraLayout.belowTop = barBottom - anchorTop - 4
+end
+
+-- The edit-mode Scale (%) lands on the invisible anchor, and an anchored
+-- (not parented) native root does not inherit it, so only the anchor's own
+-- children (auras, portrait overlay) grew. Give the native root and its click
+-- catcher the anchor's effective scale. The ratio to each one's own parent
+-- also covers native roots parented to another scaled root (PetFrame,
+-- TargetofTargetFrame); Reanchor walks the roots parent first.
+function classicNative.MatchScale(frame, target)
+  if not frame or type(frame.SetScale) ~= "function" then return end
+  local ok, parent = pcall(frame.GetParent, frame)
+  local parentScale = 1
+  if ok and parent then
+    parentScale = classicNative.Dimension(parent, "GetEffectiveScale")
+  end
+  if parentScale <= 0 or target <= 0 then return end
+  local scale = target / parentScale
+  if math.abs(classicNative.Dimension(frame, "GetScale") - scale) > 0.001 then
+    pcall(frame.SetScale, frame, scale)
+  end
+end
+
+function classicNative.Anchor(anchor, native)
+  if not anchor or not native then return end
+
+  -- Before the size reads below: native and anchor then share one unit.
+  local anchorScale = classicNative.Dimension(anchor, "GetEffectiveScale")
+  classicNative.MatchScale(native, anchorScale)
+  classicNative.MatchScale(anchor.puiClassicClickCatcher, anchorScale)
+
+  -- Repositioning the client-owned root is what makes the native art follow
+  -- PandaUI's mover. The 2026-09-06 login-crash bisect cleared it: with this
+  -- write active and only the stock aura suppression removed, the Classic
+  -- theme logs in. See unitframes.classic_stock_aura_suppression_login_crash.
+  if not pcall(native.ClearAllPoints, native) then return end
+  if not pcall(native.SetPoint, native, "CENTER", anchor, "CENTER", 0, 0) then
+    return
+  end
+
+  -- Aura rows remain children of PandaUI's compact anchor. These offsets move
+  -- them from that invisible rectangle to the corresponding edge of the larger
+  -- native artwork without changing the anchor's saved position or dimensions.
+  local nativeWidth = classicNative.Dimension(native, "GetWidth")
+  local nativeHeight = classicNative.Dimension(native, "GetHeight")
+  local anchorWidth = classicNative.Dimension(anchor, "GetWidth")
+  local anchorHeight = classicNative.Dimension(anchor, "GetHeight")
+  anchor.puiAuraRightOffset = math.max(0, (nativeWidth - anchorWidth) / 2)
+  anchor.puiAuraTopOffset = math.max(0, (nativeHeight - anchorHeight) / 2)
+  anchor.puiAuraBottomOffset = anchor.puiAuraTopOffset
+  classicNative.PublishAuraLayout(anchor)
+
+  local catcher = anchor.puiClassicClickCatcher
+  if catcher then
+    pcall(catcher.ClearAllPoints, catcher)
+    -- Level 2+ keeps the catcher off the native root entirely, so no addon
+    -- widget holds a relative reference to a client-owned object either.
+    pcall(catcher.SetPoint, catcher, "CENTER", native, "CENTER", 0, 0)
+    pcall(catcher.SetWidth, catcher, nativeWidth)
+    pcall(catcher.SetHeight, catcher, nativeHeight)
+  end
+end
+
+-- User requests: the native player and target names, the target's health
+-- text and its level sit lower, each by its own number of units. One bounded
+-- read of each region's own anchor (GetPoint keeps SetPoint's Y sign,
+-- knowledge.json / frames.getpoint_y_same_sign_as_setpoint), re-applied once
+-- with the offset changed; nothing is retained and nothing polls it. A region
+-- the client cannot read is left where it is.
+classicNative.textDrops = {
+  player = { { "PlayerName", 2 }, { "PlayerLevelText", 2 } },
+  target = { { "TargetName", 2 }, { "TargetFrameHealthBarText", 2 },
+             { "TargetLevelText", 2 } },
+}
+
+function classicNative.LowerText(name, drop)
+  local region = U.G(name)
+  if not region or type(region.GetPoint) ~= "function" then return false end
+  local ok, point, relative, relativePoint, x, y = pcall(region.GetPoint, region, 1)
+  if not ok or type(point) ~= "string" then return false end
+  if type(relativePoint) ~= "string" then relativePoint = point end
+  return (pcall(region.SetPoint, region, point, relative, relativePoint,
+                tonumber(x) or 0, (tonumber(y) or 0) - drop))
+end
+
+-- A region the client has not created yet (the target's health text is absent
+-- from the 2026-08-16 global enumeration, which the stock UI builds on demand)
+-- is skipped and retried on the next call; each region is moved exactly once.
+function classicNative.LowerName(anchor, entry)
+  if anchor.puiClassicNameLowered then return end
+  local drops = entry and classicNative.textDrops[entry.id]
+  if not drops then return end
+  local done = anchor.puiClassicLoweredText
+  if not done then
+    done = {}
+    anchor.puiClassicLoweredText = done
+  end
+  local pending = false
+  local i
+  for i = 1, table.getn(drops) do
+    local name = drops[i][1]
+    if not done[name] then
+      if classicNative.LowerText(name, drops[i][2]) then done[name] = true
+      else pending = true end
+    end
+  end
+  if not pending then anchor.puiClassicNameLowered = true end
+end
+
+function classicNative.SetCustomVisuals(frame, shown)
+  shown = shown and true or false
+  if frame.puiClassicCustomVisible == shown then return end
+  frame.puiClassicCustomVisible = shown
+
+  local parts = {
+    frame.health, frame.power, frame.values, frame.portrait,
+    frame.puiClassicTargetTargetArt,
+  }
+  local i
+  for i = 1, table.getn(parts) do
+    local part = parts[i]
+    if part then
+      if shown and type(part.Show) == "function" then pcall(part.Show, part)
+      elseif not shown and type(part.Hide) == "function" then pcall(part.Hide, part) end
+    end
+  end
+
+  -- Hide the flat portrait fill and outline explicitly; its backdrop can remain
+  -- visible behind the native Classic pet portrait after the box is hidden.
+  -- The Classic target-of-target atlas draws its own round portrait opening,
+  -- so its box never regains that square (BuildTargetTargetAtlas hid it).
+  if frame.portrait and type(U.SetBackdropShown) == "function" then
+    U.SetBackdropShown(frame.portrait,
+                       shown and not frame.puiClassicTargetTargetArt)
+  end
+
+  -- These state icons have their own refresh functions, all of which defer to
+  -- the native client while Classic is active. They are hidden with the base
+  -- visuals but are never blindly shown by the fallback.
+  if not shown then
+    local extras = {
+      frame.classIcon, frame.restIcon, frame.happiness, frame.leaderIcon,
+    }
+    for i = 1, table.getn(extras) do
+      local extra = extras[i]
+      if extra and type(extra.Hide) == "function" then pcall(extra.Hide, extra) end
+    end
+  end
+
+  -- The native click catcher follows the native root. The fallback is the
+  -- addon-owned Button itself, using the same already-established unit mouse
+  -- path as Modern rather than trying to wake a hidden client frame.
+  if shown then
+    if not frame.puiClassicCustomMouse then
+      unitMouse.Enable(frame)
+      frame.puiClassicCustomMouse = true
+    else
+      pcall(frame.EnableMouse, frame, true)
+    end
+  else
+    pcall(frame.EnableMouse, frame, false)
+  end
+end
+
+function classicNative.HideCustomVisuals(frame)
+  frame.classicNative = true
+  pcall(frame.SetAlpha, frame, 1)
+  classicNative.SetCustomVisuals(frame, false)
+end
+
+-- Keep target-of-target below the visible edge of the larger native target
+-- artwork. The addon-owned mover remains the only persistent relative object;
+-- the native dimensions were already copied into bounded numeric offsets by
+-- Anchor. A user-saved free position always wins over this default docking.
+function classicNative.DockTargetTarget(useNativeChild)
+  if not classicNative.unitActive then return end
+  local frame = frames.targettarget
+  local parent = frames.target
+  if not frame or not parent then return end
+  if type(U.GetPosition) == "function" and
+     U.GetPosition("unitframes.targettarget") then
+    frame.puiClassicDockY = nil
+    return
+  end
+
+  local y = tonumber(frame.spec.anchorOffsetY) or 0
+  y = y - (tonumber(parent.puiAuraBottomOffset) or 0)
+  if useNativeChild then
+    y = y - (tonumber(frame.puiAuraTopOffset) or 0)
+  end
+  if frame.puiClassicDockY == y then return end
+  frame.puiClassicDockY = y
+  pcall(frame.ClearAllPoints, frame)
+  pcall(frame.SetPoint, frame, frame.spec.anchorPoint or "TOP", parent,
+        frame.spec.anchorRelativePoint or "BOTTOM",
+        frame.spec.anchorOffsetX or 0, y)
+end
+
+function classicNative.NativeShown(frame)
+  local native = frame and frame.classicNativeFrame
+  if not native or type(native.IsShown) ~= "function" then return false end
+  local ok, shown = pcall(native.IsShown, native)
+  return ok and shown and true or false
+end
+
+-- Edit mode owns the click while the UI is unlocked.
+--
+-- The catcher is an addon-owned Button covering the whole native artwork at
+-- frame level 100 + root order, which lands in the same numeric neighbourhood
+-- as the mover's transparent drag input (the anchor's own level + 100 + 1, see
+-- RaiseHandle in core/mover.lua). With a target the Target anchor's handle
+-- could therefore not be hovered, selected or dragged at all: the catcher took
+-- the cursor first. Clicking a unit frame in edit mode is meant to select its
+-- anchor rather than target the unit, so the catcher stands down for exactly
+-- as long as the UI is unlocked, and nothing about the mover's layering has to
+-- be guessed against a fixed level.
+function classicNative.CatcherWanted(shown)
+  if not shown then return false end
+  return not (type(U.IsUnlocked) == "function" and U.IsUnlocked())
+end
+
+-- Compares against the state actually applied to the catcher, not against the
+-- native root: the edit-mode gate changes the answer while the root's own
+-- visibility never moves, so a root-shown cache would never notice it.
+function classicNative.ApplyCatcher(anchor, shown)
+  local catcher = anchor and anchor.puiClassicClickCatcher
+  if not catcher then return end
+
+  local wanted = classicNative.CatcherWanted(shown)
+  if anchor.puiClassicCatcherShown == wanted then return end
+  anchor.puiClassicCatcherShown = wanted
+  if wanted then pcall(catcher.Show, catcher)
+  else pcall(catcher.Hide, catcher) end
+end
+
+-- Unlocking and locking have no event and do not change a native root, so the
+-- 1s native sweep is the wrong place to notice them. This is one boolean read
+-- per 0.2s tick; the walk runs only on the transition itself.
+function classicNative.SyncEditMode()
+  if not classicNative.active then return end
+
+  local unlocked = (type(U.IsUnlocked) == "function" and U.IsUnlocked()) and
+                   true or false
+  if classicNative.editUnlocked == unlocked then return end
+  classicNative.editUnlocked = unlocked
+
+  local i
+  for i = 1, table.getn(classicNative.roots) do
+    local entry = classicNative.roots[i]
+    local anchor = entry.anchor
+    if anchor and anchor.classicNativeFrame then
+      if entry.customFallback then
+        -- RefreshCustomFallback owns the "unit actually exists" half of this
+        -- decision, so unlocking only ever takes the catcher down here and
+        -- that refresh restores it after the lock.
+        if unlocked then classicNative.ApplyCatcher(anchor, false) end
+      else
+        classicNative.ApplyCatcher(anchor, classicNative.NativeShown(anchor))
+      end
+    end
+  end
+end
+
+function classicNative.RefreshCustomFallback(frame, exists)
+  local entry = frame and frame.puiClassicEntry
+  if not classicNative.unitActive or not entry or not entry.customFallback then return end
+
+  local nativeShown = classicNative.NativeShown(frame)
+  local fallbackShown = exists and not nativeShown
+  classicNative.SetCustomVisuals(frame, fallbackShown)
+  classicNative.DockTargetTarget(nativeShown)
+
+  -- A stale/native root must not leave an active click surface when there is
+  -- no target-of-target; the client root itself remains completely untouched.
+  classicNative.ApplyCatcher(frame, exists and nativeShown)
+end
+
+function classicNative.Bind(entry, order)
+  local anchor = frames[entry.id]
+  if not anchor then return end
+
+  anchor.puiClassicEntry = entry
+  entry.anchor = anchor
+  entry.order = order
+
+  local native = classicNative.Resolve(entry.names)
+  if not native then
+    anchor.classicNativeFrame = nil
+    entry.native = nil
+    U.Debug("no native Classic unit frame found for: " .. entry.id)
+    return
+  end
+
+  anchor.classicNativeFrame = native
+  classicNative.LowerName(anchor, entry)
+  -- Publish only the global name. The aura module resolves the native child
+  -- solely when it must write a changed point; it does not retain or poll the
+  -- health-bar object for width or other geometry.
+  anchor.puiAuraTopAnchorName = entry.auraAnchorName
+  anchor.puiAuraBelowAnchorName = entry.auraBelowAnchorName
+  anchor.puiAuraIconScale = entry.auraIconScale
+  entry.native = native
+
+  -- unitframes.player_click_hit_route.v1 first confirmed that neither the
+  -- native Button nor its mouse-enabled StatusBar children deliver Lua mouse
+  -- scripts in this Classic rendering path. The same probe's addon-owned
+  -- overlay variant then verified both exact production actions end-to-end:
+  -- left-click TargetUnit("player") and right-click ToggleDropDownMenu both
+  -- succeed. Reproduce that measured construction above every native root.
+  local catcher = anchor.puiClassicClickCatcher
+  if not catcher then
+    local catcherName = "PandaUIClassicUnitClick" .. entry.id
+    local catcherOk
+    catcherOk, catcher = pcall(CreateFrame, "Button", catcherName, UIParent)
+    if not catcherOk then catcher = nil end
+  end
+  if catcher then
+    anchor.puiClassicClickCatcher = catcher
+    pcall(catcher.SetFrameStrata, catcher, "LOW")
+    -- Later roots such as target-of-target and pet can overlap their owner;
+    -- keep their catchers above the earlier/larger root in the same order.
+    pcall(catcher.SetFrameLevel, catcher, 100 + (tonumber(order) or 0))
+    unitMouse.Enable(catcher, anchor.unit)
+  else
+    U.Debug("no Classic click catcher created for: " .. entry.id)
+  end
+
+  classicNative.Anchor(anchor, native)
+
+  -- Defined further down the file, next to the text helpers it uses. Only the
+  -- target carries the exact-vitals readout.
+  if entry.id == "target" then
+    classicNative.BindVitals(entry, anchor, native)
+  end
+
+  local shownOk, shown = pcall(native.IsShown, native)
+  shown = (shownOk and shown) and true or false
+  -- A rebind can hand out a different catcher object, so the applied-state
+  -- cache is dropped rather than trusted across it.
+  anchor.puiClassicCatcherShown = nil
+  classicNative.ApplyCatcher(anchor, shown)
+
+  -- No script hook is installed on the native root here, deliberately.
+  --
+  -- This used to be U.PostHookScript(native, "OnShow"/"OnHide", ...), which is
+  -- frame:SetScript on a client-owned widget: the wrapper *replaces* the
+  -- native root's OnShow, and its body then called ClearAllPoints/SetPoint on
+  -- that same root from inside the client's own show transition. Both halves
+  -- are what .claude/rules/pandaui.md's protected native target lifecycle
+  -- forbids ("Never replace Show/OnShow ... on TargetFrame"), and the hook was
+  -- installed on TargetFrame, PlayerFrame, PetFrame, TargetofTargetFrame and
+  -- PartyMemberFrame1-4 -- every root of that family -- but only under the
+  -- Classic theme. See knowledge.json /
+  -- unitframes.classic_native_crash_signature_1450d5c: that record's
+  -- "script hooks are ruled out" note was about the Modern theme's hooks on
+  -- unrelated stock windows, which never touch this family, so it never
+  -- covered these two calls.
+  --
+  -- Everything the hooks did is now done by reading the native root instead of
+  -- writing to it -- classicNative.SyncNative below, on the module's existing
+  -- one-second sweep. Nothing else in the Classic path replaces a native
+  -- script; keep it that way.
+end
+
+-- Read-only replacement for the removed OnShow/OnHide hooks.
+--
+-- Strictly read-only on the native side: it samples native:IsShown() and moves
+-- an ADDON-owned widget to match. It deliberately does not re-anchor a drifted
+-- root, even though the removed OnShow hook did. Anchor repair is already owned
+-- by classicNative.Reanchor (PLAYER_TARGET_CHANGED, the party events,
+-- PLAYER_ENTERING_WORLD) and by ReconcileTarget on the target's own refresh;
+-- adding a drift check here put a second ClearAllPoints/SetPoint path on eight
+-- client-owned roots on a one-second timer, which is more native writing than
+-- the hooks it replaced, not less. The whole point of this function is to stop
+-- writing to that family.
+--
+-- customFallback roots are skipped: RefreshCustomFallback already owns the
+-- catcher decision for them and adds the "unit actually exists" half this poll
+-- cannot see.
+function classicNative.SyncNative()
+  if not classicNative.active then return end
+
+  local i
+  for i = 1, table.getn(classicNative.roots) do
+    local entry = classicNative.roots[i]
+    local anchor = entry.anchor
+
+    if anchor and anchor.classicNativeFrame and not entry.customFallback then
+      classicNative.ApplyCatcher(anchor, classicNative.NativeShown(anchor))
+    end
+  end
+end
+
+function classicNative.Reanchor()
+  if not classicNative.active then return end
+  local i
+  for i = 1, table.getn(classicNative.roots) do
+    local entry = classicNative.roots[i]
+    if classicNative.UsesNative(entry.id) then
+      local live = classicNative.Resolve(entry.names)
+      if live and live ~= entry.native then
+        classicNative.Bind(entry, entry.order or i)
+      elseif entry.anchor and entry.native then
+        classicNative.Anchor(entry.anchor, entry.native)
+      end
+    end
+  end
+  local targettarget = frames.targettarget
+  if classicNative.unitActive and targettarget then
+    classicNative.DockTargetTarget(classicNative.NativeShown(targettarget))
+  end
+end
+
+-- Is the native root still held by the mover anchor? The client has other
+-- native surfaces that add or replace anchor points during their own refresh,
+-- and the reported corpse frame no longer followed the Target mover. Check the
+-- complete point count as well as point 1: an extra point can displace a frame
+-- while point 1 still looks like ours.
+function classicNative.TargetDrifted(anchor, native)
+  if not anchor or not native then return false end
+  return not U.FramePointMatches(native, "CENTER", anchor, "CENTER", 0, 0, 0.5)
+end
+
+-- The client occasionally leaves its native TargetFrame shown after the
+-- target unit has gone away. Because the next target then reuses an already
+-- shown root, only the newly written pieces (most visibly the health bar) are
+-- refreshed and they draw over the dead target's stale name and portrait. The
+-- same occurrence was reported not to follow its Move UI anchor, so resolve
+-- the live global and repair a changed object or changed anchor as part of the
+-- same target refresh.
+--
+-- Do not hide the native root when the target disappears. In-game testing
+-- confirmed that this client then fails to show TargetFrame for later targets,
+-- and forcing Show would take the lifecycle away from the client. The repair
+-- below is deliberately limited to binding and anchor state for a valid target.
+function classicNative.ReconcileTarget(frame, exists)
+  if not classicNative.unitActive or not frame or frame.unit ~= "target" then
+    return
+  end
+
+  local entry = frame.puiClassicEntry
+  if entry then
+    local live = classicNative.Resolve(entry.names)
+    if live and live ~= entry.native then
+      classicNative.Bind(entry, entry.order)
+    end
+  end
+
+  local native = frame.classicNativeFrame
+  if exists and classicNative.TargetDrifted(frame, native) then
+    classicNative.Anchor(frame, native)
+  end
+end
+
+-- Stock aura suppression is GONE, at load time and deferred alike. Do not
+-- reintroduce it in any form without new client-build evidence.
+--
+-- Load-time suppression of the stock TargetFrame/PartyMemberFrame aura
+-- children crashed this client at login on build AzerothMain-2329 (Classic
+-- only), isolated by a cumulative single-variable bisect on 2026-09-06.
+-- Deferring the identical recipe to 10s after the world is up fixed it on one
+-- character (Malgus) and was confirmed in game -- and then crashed on another
+-- Classic character (Warkys) at 15s, 25s and 26s into the process, two of the
+-- three dumps sharing callstack hash 5402C126BF26CFEF and faulting at 0x1c /
+-- 0x1d: a null pointer plus a small field offset, i.e. a native widget being
+-- read after it was no longer valid.
+--
+-- So the start-up window was never the real boundary. Some Classic characters
+-- reach a state where these stock aura children cannot be safely touched at
+-- all, and no delay fixes that. See
+-- unitframes.classic_stock_aura_suppression_login_crash.
+--
+-- Consequence, accepted deliberately: under Classic the client's own target
+-- and party frames draw their aura icons alongside PandaUI's rows, so a
+-- debuff appears twice. The only remaining way to remove the duplication is to
+-- hide PandaUI's OWN rows, which touches no client-owned object -- that is a
+-- product decision, not a safety one, and it costs PandaUI's timers and
+-- filtering on those units.
+
+function classicNative.BindAll()
+  classicNative.active = true
+  classicNative.unitActive = classicNative.UsesNative("player")
+  classicNative.partyActive = classicNative.UsesNative("party1")
+  local i
+  for i = 1, table.getn(classicNative.roots) do
+    local entry = classicNative.roots[i]
+    if classicNative.UsesNative(entry.id) then classicNative.Bind(entry, i) end
+  end
+  local targettarget = frames.targettarget
+  if classicNative.unitActive and targettarget then
+    classicNative.DockTargetTarget(classicNative.NativeShown(targettarget))
+  end
+end
+
+local function SetLabelText(label, value)
+  if not label then return end
+  value = value or ""
+  if textCache[label] == value then return end
+  textCache[label] = value
+  pcall(label.SetText, label, value)
+end
+
+local function CreateBarBox(parent, width, height, border, color, texture)
+  local box = CreateFrame("Frame", nil, parent)
+  box:SetWidth(width + 2 * border)
+  box:SetHeight(height + 2 * border)
+  U.CreateBackdrop(box, {
+    background = M.unitFrame.background,
+    border = M.color.unitFrameBorder,
+  })
+
+  -- Explicit size plus a single corner anchor. The bar computes its fill from
+  -- its own GetWidth (core/style.lua), so the width has to be a number the
+  -- frame really has -- not one that depends on two-corner anchoring resizing
+  -- the frame, which nothing in the compact DB establishes on this client.
+  local bar = U.CreateStatusBar(box, {
+    width = width,
+    height = height,
+    color = color or M.color.health,
+    texture = texture,
+  })
+  bar:SetPoint("TOPLEFT", box, "TOPLEFT", border, -border)
+
+  box.bar = bar
+  return box
+end
+
+-- Player/target bar text carries the client's OUTLINE flag in place of the
+-- drop shadow (user request, 2026-10-15). pfUI-octo does the same: one
+-- SetFont(face, size, "OUTLINE") per bar label, no separate copies. A layered
+-- or offset-copy border was tried and read blurry and doubled in game.
+local function CreateBarText(parent, size, inherits, outline)
+  local label = U.CreateLabel(parent, {
+    size = size or M.fontSize.normal,
+    color = M.color.text,
+    inherits = inherits or "GameFontNormalSmall",
+    fontRole = "unitframe",
+    flags = outline and "OUTLINE" or nil,
+    shadow = outline and false or nil,
+    shadowOffset = (not outline) and M.compactTextShadowOffset or nil,
+    shadowColor = (not outline) and M.color.shadowStrong or nil,
+  })
+  if label and outline then label.puiOutline = true end
+  return label
+end
+
+local function CreateBarLabel(parent, anchor, target, offset, yOffset,
+                              size, inherits, outline)
+  local label = CreateBarText(parent, size, inherits, outline)
+  if not label then return nil end
+
+  -- Single-edge anchor, per fonts.stretched_justification_ignored.
+  label:SetPoint(anchor, target, anchor, offset, yOffset or 0)
+  return label
+end
+
+-- Left/right margin for text drawn directly on a health or power bar (player
+-- and target, by request -- no separate values strip under those two).
+local BAR_LABEL_MARGIN = 4
+-- Nudges that text 2px down from dead-center for better vertical alignment
+-- against the bar, by request. The power bar's text sits 1px higher than
+-- health's (net -1), by a follow-up request.
+local BAR_LABEL_Y_OFFSET = -2
+local POWER_LABEL_Y_OFFSET = -1
+
+-- Target frame only ("unitrev" token): normal gap between the name and the
+-- level that follows it, and the wider gap used once TruncateName has to cut
+-- the name down, so the trailing "..." doesn't crowd the level number.
+local NAME_LEVEL_GAP = 4
+local NAME_LEVEL_GAP_TRUNCATED = NAME_LEVEL_GAP + 3
+
+-- Puts up to a left- and a right-anchored label directly on a bar box (health
+-- or power), on the same raised-child-layer trick as the targettarget name:
+-- the fill is a sibling texture whose width changes every refresh, and text
+-- on the same layer can end up behind it.
+local function BuildBarLabels(box, labels, yOffset, size, inherits, outline,
+                              leftExtra)
+  if not labels then return end
+  yOffset = yOffset or BAR_LABEL_Y_OFFSET
+  leftExtra = tonumber(leftExtra) or 0
+
+  box.textLayer = CreateFrame("Frame", nil, box)
+  box.textLayer:SetAllPoints(box)
+  local levelOk, level = pcall(box.GetFrameLevel, box)
+  if levelOk and tonumber(level) then
+    pcall(box.textLayer.SetFrameLevel, box.textLayer, level + 10)
+  end
+
+  if labels.left then
+    box.leftLabel = CreateBarLabel(box.textLayer, "LEFT", box.textLayer,
+                                    BAR_LABEL_MARGIN + leftExtra, yOffset, size,
+                                    inherits, outline)
+  end
+  if labels.right then
+    box.rightLabel = CreateBarLabel(box.textLayer, "RIGHT", box.textLayer,
+                                     -BAR_LABEL_MARGIN, yOffset, size, inherits,
+                                     outline)
+
+    -- "unitrev" (target frame) draws name+level as two labels instead of one
+    -- string, so the gap between them can widen by a real pixel amount when
+    -- the name is truncated -- a single FontString can't do that.
+    if labels.right == "unitrev" then
+      box.rightNameLabel = CreateBarText(box.textLayer, size, inherits,
+                                         outline)
+      if box.rightNameLabel then
+        box.rightNameLabel:SetPoint("RIGHT", box.rightLabel, "LEFT",
+                                     -NAME_LEVEL_GAP, 0)
+      end
+    end
+  end
+end
+
+-- Party rows: the modern-wow housing runs before these labels exist, so its
+-- exact-size pass finds nothing. Under the "original" unit-frame font a size
+-- passed at creation is dropped, so the exact size is set here, once built.
+-- shadowOffset: optional per-spec text shadow offset; U.SetFont resets the
+-- shadow to the default, so it is re-applied after every size pass.
+local function ApplyExactLabelSize(box, size, outline, shadowOffset)
+  size = tonumber(size)
+  if not box or not size or size <= 0 then return end
+  local labels = { box.leftLabel, box.rightLabel }
+  local i
+  for i = 1, 2 do
+    if labels[i] then
+      pcall(U.SetFont, labels[i], size, outline and "OUTLINE" or nil,
+            "unitframe", nil, true)
+      if shadowOffset and not outline then
+        pcall(U.SetTextShadow, labels[i], shadowOffset,
+              shadowOffset.color or M.color.shadowStrong)
+      end
+    end
+  end
+end
+
+-- The third bar: no fill, no value, just a bordered strip carrying up to three
+-- text slots. Built the same way as a bar box (backdrop + border) so it reads
+-- as a matching third row rather than bare text floating under the power bar.
+local function CreateValuesStrip(parent, width, height, border, tokens)
+  local strip = CreateFrame("Frame", nil, parent)
+  strip:SetWidth(width + 2 * border)
+  strip:SetHeight(height + 2 * border)
+  U.CreateBackdrop(strip, { border = M.color.unitFrameBorder })
+
+  local inset = 2 * border
+  if tokens.left then
+    strip.left = CreateBarLabel(strip, "LEFT", strip, inset)
+  end
+  if tokens.center then
+    strip.center = CreateBarLabel(strip, "CENTER", strip, 0)
+  end
+  if tokens.right then
+    strip.right = CreateBarLabel(strip, "RIGHT", strip, -inset)
+  end
+
+  return strip
+end
+
+-- ---------------------------------------------------------------------------
+-- Portraits
+--
+-- knowledge.json / unitframes.portrait_model_crash: the original live-model
+-- sequence crashed this client, while the narrower sequence below was later
+-- user-confirmed at full coverage. The supplied stone texture sits under an
+-- enabled model; the 2D unit portrait is used only when that frame family's
+-- 3D option is off or outside modern-wow. The call is guarded on existing at
+-- all; a client without it drops that 2D path rather than guessing.
+-- ---------------------------------------------------------------------------
+local function BuildPortraitBox(parent, size, border, clickable)
+  local box = CreateFrame(clickable and "Button" or "Frame", nil, parent)
+  box:SetWidth(size)
+  box:SetHeight(size)
+  U.CreateBackdrop(box, { border = M.color.unitFrameBorder })
+
+  local icon = box:CreateTexture(nil, "ARTWORK")
+  icon:SetPoint("TOPLEFT", box, "TOPLEFT", border, -border)
+  icon:SetPoint("BOTTOMRIGHT", box, "BOTTOMRIGHT", -border, border)
+
+  box.icon = icon
+  box.puiInnerSize = size - 2 * border
+  return box
+end
+
+-- Whether this frame family draws the flat class circle instead of a unit
+-- portrait. True only for a Modern WoW family AND only when the client has no
+-- SetPortraitTexture: that art is built around a portrait, and a ring with an
+-- empty hole in it reads as a bug rather than as a missing feature. Every
+-- other family keeps the existing behaviour exactly -- no portrait at all on
+-- a client without the API.
+local function UsesClassPortrait(id)
+  if ResolveApiFn("SetPortraitTexture") then return false end
+  local moduleId = type(id) == "string" and string.find(id, "^party") and
+                   "partyframes" or "unitframes"
+  return type(U.ModernWowModuleEnabled) == "function" and
+         U.ModernWowModuleEnabled(moduleId)
+end
+
+-- ---------------------------------------------------------------------------
+-- Optional 3D portrait (modern and modern-wow)
+--
+-- The crash record above never isolated the failing call. UnrealPfUI
+-- (api/unitframes.lua, WORKING_SOURCE) forces 2D with the note that
+-- PlayerModel:SetUnit can terminate the client when an NPC is targeted, so
+-- U.db.portrait3d widens by unit kind: 1 player, 2 + player characters,
+-- 3 + NPCs/pets. Anything the level excludes, or that has no world visual
+-- (SetUnit is documented as a no-op then), keeps the stone portrait background
+-- while its family's 3D option is enabled. pcall cannot catch a native crash --
+-- this is a user-directed bisect, not a shipped path; level 0 never creates a
+-- PlayerModel.
+--
+-- 2026-09-14, USER_CONFIRMED_INGAME: level 3 showed a 3D model on every frame,
+-- NPC targets included, with no crash. The original crash is still not
+-- isolated, so the 2D-only switch and diagnostic coverage levels remain
+-- available (knowledge.json record above).
+--
+-- Differs from UnrealPfUI's model path on purpose: no hidden second model
+-- probed with SetUnit on every refresh, and SetUnit runs only when the unit
+-- behind the frame changes, with a three-call budget spaced in time
+-- (model3d.retryAt) for a model or skin not yet loaded.
+-- ---------------------------------------------------------------------------
+local model3d = {}
+
+model3d.settingKeys = {
+  player = "portrait3dPlayer",
+  target = "portrait3dTarget",
+  targettarget = "portrait3dTargetTarget",
+  party = "portrait3dParty",
+  pet = "portrait3dPet",
+}
+
+model3d.portraitKeys = {
+  player = "portraitPlayer",
+  target = "portraitTarget",
+  targettarget = "portraitTargetTarget",
+  party = "portraitParty",
+  -- Modern shows or hides the pet's portrait with the player's.
+  pet = "portraitPlayer",
+}
+
+-- Player, pet, target and target-of-target are independent families. Both
+-- party members and party pets share the party family.
+function model3d.Family(frame)
+  local id = frame and frame.spec and frame.spec.id
+  if id == "player" then return "player" end
+  if id == "pet" then return "pet" end
+  if id == "target" then return "target" end
+  if id == "targettarget" then return "targettarget" end
+  if type(id) == "string" and string.find(id, "^party") then return "party" end
+  return nil
+end
+
+-- `modern` draws the portrait in a flat square; modern-wow fits it inside its
+-- gold ring, while classic-wow overlays 3D inside the native portrait opening.
+function model3d.SquareTheme()
+  return type(U.GetActiveThemeStyle) == "function" and
+         U.GetActiveThemeStyle() == "modern"
+end
+
+function model3d.PortraitEnabled(frame)
+  if not model3d.SquareTheme() then return true end
+  local key = model3d.portraitKeys[model3d.Family(frame)]
+  return key and U.db and U.db[key] and true or false
+end
+
+function model3d.Level(frame)
+  local level = U.db and U.db.portrait3d
+  level = type(level) == "number" and level or 0
+  if level <= 0 then return 0 end
+  local key = model3d.settingKeys[model3d.Family(frame)]
+  if not key or not U.db or not U.db[key] then return 0 end
+  if type(U.GetActiveThemeStyle) ~= "function" then return 0 end
+  local style = U.GetActiveThemeStyle()
+  if style ~= "modern-wow" and style ~= "modern" and
+     style ~= "classic-wow" then return 0 end
+  return level
+end
+
+-- The square box has no rim to hide corners under, so the model simply fills
+-- the box's inner area inside its 1-unit outline.
+function model3d.FitSquare(box)
+  local model = box and box.puiModel
+  local size = box and box.puiInnerSize
+  if not model or not size then return end
+  pcall(model.ClearAllPoints, model)
+  pcall(model.SetWidth, model, size)
+  pcall(model.SetHeight, model, size)
+  pcall(model.SetPoint, model, "CENTER", box, "CENTER", 0, 0)
+end
+
+function model3d.FitClassic(box)
+  local model = box and box.puiModel
+  local size = box and box.puiInnerSize
+  if not model or not size then return end
+  pcall(model.ClearAllPoints, model)
+  pcall(model.SetWidth, model, size)
+  pcall(model.SetHeight, model, size)
+  pcall(model.SetPoint, model, "CENTER", box, "CENTER", 0, 0)
+end
+
+-- Classic keeps the client-owned 2D portrait. For 3D, copy the portrait's
+-- numeric offset inside its native root into an addon-owned box; never retain
+-- or anchor to the native region. The local offset remains correct while the
+-- native root is still reporting its pre-move screen position.
+function model3d.ClassicBox(frame)
+  if frame.puiClassicPortraitModelBox then
+    return frame.puiClassicPortraitModelBox
+  end
+  local entry = frame.puiClassicEntry
+  local portrait = entry and entry.portraitName and U.G(entry.portraitName)
+  local native = frame.classicNativeFrame
+  if not portrait or not native then return nil end
+
+  local leftOk, left = pcall(portrait.GetLeft, portrait)
+  local topOk, top = pcall(portrait.GetTop, portrait)
+  local widthOk, width = pcall(portrait.GetWidth, portrait)
+  local heightOk, height = pcall(portrait.GetHeight, portrait)
+  local nativeLeftOk, nativeLeft = pcall(native.GetLeft, native)
+  local nativeTopOk, nativeTop = pcall(native.GetTop, native)
+  local nativeWidthOk, nativeWidth = pcall(native.GetWidth, native)
+  local nativeHeightOk, nativeHeight = pcall(native.GetHeight, native)
+  if not leftOk or not topOk or not widthOk or not heightOk or
+     not nativeLeftOk or not nativeTopOk or
+     not nativeWidthOk or not nativeHeightOk or
+     not tonumber(left) or not tonumber(top) or
+     not tonumber(width) or not tonumber(height) or
+     not tonumber(nativeLeft) or not tonumber(nativeTop) or
+     not tonumber(nativeWidth) or not tonumber(nativeHeight) or
+     width <= 0 or height <= 0 or
+     nativeWidth <= 0 or nativeHeight <= 0 then return nil end
+
+  local size = math.min(width, height) * 0.7
+  -- User request: the player and target models are 3 units larger than the
+  -- inscribed square; the other Classic frames keep it.
+  local id = frame.spec and frame.spec.id
+  if id == "player" or id == "target" then size = size + 3 end
+  local x = left + width / 2 - (nativeLeft + nativeWidth / 2)
+  local y = top - height / 2 - (nativeTop - nativeHeight / 2)
+  -- A native portrait exposes a stable TOPLEFT anchor inside its root even
+  -- while its screen coordinates still point at the stock location. Convert
+  -- that local anchor directly to a centre offset for the addon mover. First
+  -- seen on PlayerPortrait; PartyMemberFrame1Portrait then read 688 units from
+  -- its root's real position (user in-game read, 2026-09-29), which left the
+  -- party 3D model at the stock party location, so every root takes it.
+  local point, relative, relativePoint, pointX, pointY =
+    U.GetFramePoint(portrait, 1)
+  if point == "TOPLEFT" and relative == native and
+     relativePoint == "TOPLEFT" and tonumber(pointX) and tonumber(pointY) then
+    x = pointX + width / 2 - nativeWidth / 2
+    -- pointY is GetPoint's own sign on 1.12 (negative = below the top edge).
+    y = nativeHeight / 2 + pointY - height / 2
+  end
+
+  local box = CreateFrame("Frame", nil, frame)
+  box:SetWidth(size)
+  box:SetHeight(size)
+  box:SetPoint("CENTER", frame, "CENTER", x, y)
+  -- The model is the square inscribed in the ring's opening (size above); the
+  -- circular stone background beneath is the whole opening, so it takes the
+  -- native portrait's full diameter and fills the crescents around the model.
+  local backgroundSize = math.min(width, height)
+  local background = box:CreateTexture(nil, "BACKGROUND")
+  background:SetWidth(backgroundSize)
+  background:SetHeight(backgroundSize)
+  background:SetPoint("CENTER", box, "CENTER", 0, 0)
+  pcall(background.SetTexture, background,
+        M.modernWow.texture.portraitBackground)
+  pcall(background.SetTexCoord, background, 0, 1, 0, 1)
+  pcall(background.Hide, background)
+  box.puiClassicPortraitBackground = background
+  box.puiClassicFullSize = backgroundSize
+  box.puiClassicPortrait = true
+  box.puiInnerSize = size
+  local levelOk, nativeLevel = pcall(native.GetFrameLevel, native)
+  nativeLevel = levelOk and tonumber(nativeLevel) or 1
+  box.puiClassicModelLevel = math.max(0, nativeLevel - 1)
+  pcall(box.SetFrameLevel, box, box.puiClassicModelLevel)
+  local strataOk, nativeStrata = pcall(native.GetFrameStrata, native)
+  if strataOk and type(nativeStrata) == "string" then
+    pcall(box.SetFrameStrata, box, nativeStrata)
+    box.puiClassicModelStrata = nativeStrata
+  end
+  frame.puiClassicPortraitModelBox = box
+  return box
+end
+
+function model3d.MirrorClassicTarget2D(frame)
+  if not frame or not frame.spec or frame.spec.id ~= "target" then return end
+  local entry = frame.puiClassicEntry
+  local portrait = entry and entry.portraitName and U.G(entry.portraitName)
+  if portrait then pcall(portrait.SetTexCoord, portrait, 1, 0, 0, 1) end
+end
+
+function model3d.SetClassic2DShown(frame, shown)
+  local entry = frame and frame.puiClassicEntry
+  local portrait = entry and entry.portraitName and U.G(entry.portraitName)
+  if not portrait then return end
+  if frame.puiClassicPortraitAlpha == nil then
+    local ok, alpha = pcall(portrait.GetAlpha, portrait)
+    frame.puiClassicPortraitAlpha = ok and tonumber(alpha) or 1
+  end
+  pcall(portrait.SetAlpha, portrait,
+        shown and frame.puiClassicPortraitAlpha or 0)
+end
+
+function model3d.SetClassicBackgroundShown(box, shown)
+  local background = box and box.puiClassicPortraitBackground
+  if not background then return end
+  if shown then pcall(background.Show, background)
+  else pcall(background.Hide, background) end
+end
+
+-- ---------------------------------------------------------------------------
+-- Optional class-icon portrait (U.db.portraitClassIcon)
+--
+-- Player, target and target-of-target frames only, every theme. While the unit
+-- is a player character its class circle from the selected M.classIcon sheet
+-- replaces the 2D or 3D portrait; an NPC keeps the normal portrait path. Gated
+-- on UnitIsPlayer like the Modern WoW fallback below: a creature has no class.
+-- The icon is not mirrored on target frames; the art has its own orientation.
+-- Kept on model3d: this file is at Lua 5.0's active-local limit.
+-- ---------------------------------------------------------------------------
+function model3d.ClassIconSource(frame)
+  local id = frame and frame.spec and frame.spec.id
+  if id ~= "player" and id ~= "target" and id ~= "targettarget" then
+    return nil
+  end
+  if not U.db or not U.db.portraitClassIcon then return nil end
+  local unit = frame.unit
+  if not unit or not ApiTruth("UnitIsPlayer", unit) then return nil end
+  local token = frame.data and frame.data.class
+  local cell = token and M.modernWow.classCell[token]
+  if not cell then return nil end
+  local texture = M.classIcon.texture[U.GetPortraitClassIconStyle()] or
+                  M.classIcon.texture.blizzard
+  return texture, cell
+end
+
+function model3d.PaintClassIcon(icon, texture, cell)
+  pcall(icon.SetTexture, icon, texture)
+  pcall(icon.SetTexCoord, icon, cell[1], cell[2], cell[3], cell[4])
+  pcall(icon.Show, icon)
+end
+
+-- Classic: an addon-owned texture in the model box, at the native portrait's
+-- full diameter, while the native 2D portrait is faded out exactly as for 3D.
+-- The box sits one level under the native frame, so its ring stays on top.
+function model3d.RefreshClassicClassIcon(frame, box)
+  local texture, cell = model3d.ClassIconSource(frame)
+  local icon = box and box.puiClassIconTexture
+  if texture and box and not icon and box.puiClassicFullSize then
+    local ok, created = pcall(box.CreateTexture, box, nil, "ARTWORK")
+    if ok and created then
+      icon = created
+      icon:SetWidth(box.puiClassicFullSize)
+      icon:SetHeight(box.puiClassicFullSize)
+      icon:SetPoint("CENTER", box, "CENTER", 0, 0)
+      box.puiClassIconTexture = icon
+    end
+  end
+  if not texture or not icon then
+    if icon then pcall(icon.Hide, icon) end
+    return false
+  end
+  model3d.HideBox(box)
+  model3d.PaintClassIcon(icon, texture, cell)
+  model3d.SetClassic2DShown(frame, false)
+  return true
+end
+
+-- Modern square and Modern WoW ring: the class icon takes over box.icon.
+-- Leaving it clears the 2D cache and the stone/cleared markers so the 2D
+-- portrait or the 3D bed is rebuilt on the same refresh.
+function model3d.RefreshBoxClassIcon(frame, box)
+  local texture, cell = model3d.ClassIconSource(frame)
+  if not texture then
+    if box.puiClassIconShown then
+      box.puiClassIconShown = nil
+      box.puiPortraitBackground = nil
+      box.puiPortraitCleared = nil
+      frame.puiPortraitKey = nil
+      frame.puiPortraitPaints = nil
+      pcall(box.icon.SetTexture, box.icon, "")
+      pcall(box.icon.SetTexCoord, box.icon, 0, 1, 0, 1)
+    end
+    return false
+  end
+  model3d.HideBox(box)
+  if not box.puiClassIconShown or box.puiPortraitBackground then
+    box.puiClassIconShown = true
+    box.puiPortraitBackground = nil
+    if not model3d.SquareTheme() and
+       type(U.ModernWowAnchorPortraitIcon) == "function" then
+      U.ModernWowAnchorPortraitIcon(box)
+    end
+  end
+  model3d.PaintClassIcon(box.icon, texture, cell)
+  frame.puiPortraitKey = nil
+  frame.puiPortraitPaints = nil
+  return true
+end
+
+-- Only the real party-member rows carry rangeCheck. When one leaves object
+-- range, its configured 3D portrait is not shown; RefreshPortrait then falls
+-- back to the 2D unit portrait, as for any party member without a model.
+function model3d.Use2DOutOfRange(frame)
+  return frame and frame.spec and frame.spec.rangeCheck and frame.data and
+         frame.data.outOfRange and true or false
+end
+
+function model3d.Eligible(frame, level)
+  local unit = frame.unit
+  if not unit or not ApiTruth("UnitExists", unit) then return false end
+  if model3d.Use2DOutOfRange(frame) then return false end
+  if not ApiTruth("UnitIsVisible", unit) then return false end
+  if unit == "player" then return true end
+  if ApiTruth("UnitIsPlayer", unit) then
+    return level >= 2 and ApiTruth("UnitIsConnected", unit)
+  end
+  return level >= 3
+end
+
+-- Shows or hides the 3D model. The model is a square viewport this client
+-- cannot mask, so modules/modernwow.lua fits it inside the gold rim
+-- (U.ModernWowFitPortraitModel); the circular stone background beneath fills
+-- the crescents between that square and the opening.
+-- A Model draws over its parent's textures (knowledge.json /
+-- rendering.model_m2_spell_fx_in_ui), so that background stays under it.
+function model3d.Refresh(frame, box)
+  local model = box.puiModel
+  local level = model3d.Level(frame)
+  if level == 0 and not model then return end
+
+  if level == 0 or not model3d.Eligible(frame, level) then
+    if model then
+      pcall(model.Hide, model)
+      model.puiKey = nil
+    end
+    return
+  end
+
+  if not model then
+    local fit = (box.puiClassicPortrait or box.puiClassicFallbackPortrait) and
+                model3d.FitClassic or
+                (model3d.SquareTheme() and model3d.FitSquare or
+                 U.ModernWowFitPortraitModel)
+    if type(fit) ~= "function" then return end
+    local ok, created = pcall(CreateFrame, "PlayerModel", nil, box)
+    if not ok or not created then return end
+    model = created
+    box.puiModel = model
+    fit(box)
+    if box.puiClassicPortrait then
+      pcall(model.SetFrameLevel, model, box.puiClassicModelLevel or 0)
+      if box.puiClassicModelStrata then
+        pcall(model.SetFrameStrata, model, box.puiClassicModelStrata)
+      end
+    end
+  end
+
+  pcall(model.Show, model)
+
+  -- Target families also key on the target-change epoch: two mobs sharing a
+  -- name (a pack of Witherbark Scalpers) otherwise never re-apply SetUnit.
+  local key = (frame.data and frame.data.name) or ""
+  local family = model3d.Family(frame)
+  if family == "target" or family == "targettarget" then
+    key = key .. "#" .. model3d.targetEpoch
+  end
+  local calls = model.puiCalls or 0
+  local now = model3d.Now()
+  if key ~= model.puiKey then
+    calls = 0
+    model.puiKey = key
+    model.puiFirstAt = now
+  elseif calls >= table.getn(model3d.retryAt) + 1 then
+    -- A model reload the budget did not see (mount, shapeshift, gear swap,
+    -- hide/show) resets the view to the full body. Re-aiming at the face on
+    -- every refresh is cheap and needs no SetUnit.
+    pcall(model.SetCamera, model, 0)
+    return true
+  else
+    -- Blind safeguard, not runtime-verified: a user screenshot showed an NPC
+    -- model with its skin missing (black silhouette, placeholder blocks), and
+    -- Lua cannot detect that. Re-applies are spaced in time so a skin still
+    -- streaming in gets another chance; back-to-back refreshes used to spend
+    -- the whole budget within one frame. No timer of its own: this rides the
+    -- existing ~1s full refresh. Without a clock, fall back to count-only.
+    local due = model3d.retryAt[calls]
+    if now and model.puiFirstAt and now - model.puiFirstAt < due then
+      pcall(model.SetCamera, model, 0)
+      return true
+    end
+  end
+  model.puiCalls = calls + 1
+  pcall(model.SetUnit, model, frame.unit)
+  pcall(model.SetCamera, model, 0)
+  return true
+end
+
+-- Seconds after the first SetUnit at which the model is re-applied, one
+-- entry per retry (3 calls per unit in total, up from 2 back-to-back).
+model3d.retryAt = { 0.5, 2 }
+model3d.targetEpoch = 0
+
+function model3d.Now()
+  local getTime = ResolveApiFn("GetTime")
+  if not getTime then return nil end
+  local ok, value = pcall(getTime)
+  if ok and type(value) == "number" then return value end
+  return nil
+end
+
+-- Empty mover shells and disabled frames do not reach RefreshPortrait. Hide
+-- their model explicitly so a unit that left the slot cannot remain visible
+-- when edit mode deliberately keeps the otherwise-empty frame on screen.
+function model3d.HideBox(box)
+  local model = box and box.puiModel
+  model3d.SetClassicBackgroundShown(box, false)
+  if box and box.puiClassIconTexture then
+    pcall(box.puiClassIconTexture.Hide, box.puiClassIconTexture)
+  end
+  if not model then return end
+  pcall(model.Hide, model)
+  model.puiKey = nil
+  model.puiCalls = nil
+end
+
+function model3d.Hide(frame)
+  if not frame then return end
+  model3d.HideBox(frame.portrait)
+  if frame.puiClassicPortraitModelBox ~= frame.portrait then
+    model3d.HideBox(frame.puiClassicPortraitModelBox)
+  end
+  if frame.classicNative then model3d.SetClassic2DShown(frame, true) end
+end
+
+-- The `modern` path. Its optional portrait box sits outside the frame and can
+-- show either the 2D snapshot or the 3D model, so toggling visibility never
+-- moves the bars, auras, combo strip or mover rect.
+-- The pet's own 2D portrait box hosts the model in place. While the model is
+-- shown the flat backdrop is the bed beneath it -- no stone art under this
+-- theme. A unit the model cannot show (coverage level, not visible, distant
+-- party member) falls through to the 2D snapshot in the same square.
+-- Returns true when this refresh is finished.
+function model3d.RefreshSquare(frame, box)
+  local visible = model3d.PortraitEnabled(frame)
+  if box.puiSquare3D then
+    if visible then pcall(box.Show, box) else pcall(box.Hide, box) end
+  end
+
+  if not visible then
+    model3d.Hide(frame)
+    return true
+  end
+
+  if model3d.RefreshBoxClassIcon(frame, box) then return true end
+
+  if model3d.Refresh(frame, box) then
+    pcall(box.icon.Hide, box.icon)
+    if not box.puiPortraitCleared then
+      pcall(box.icon.SetTexture, box.icon, "")
+      box.puiPortraitCleared = true
+    end
+    frame.puiPortraitKey = nil
+    frame.puiPortraitPaints = nil
+    return true
+  end
+
+  pcall(box.icon.Show, box.icon)
+  if box.puiPortraitCleared then
+    box.puiPortraitCleared = nil
+    frame.puiPortraitKey = nil
+    frame.puiPortraitPaints = nil
+  end
+  return false
+end
+
+-- Seconds after the first 2D paint of a unit at which it is repainted, one
+-- entry per retry (5 paints per unit in total). Kept on model3d rather than
+-- as a chunk local: this file is at Lua 5.0's active-local limit.
+model3d.portraitRetryAt = { 0.5, 2, 5, 10 }
+
+local function RefreshPortrait(frame)
+  -- Classic keeps the native 2D portrait and overlays an addon-owned 3D model
+  -- only when selected. The target-of-target fallback continues through the
+  -- addon portrait path when the optional native child is not shown.
+  if frame.classicNative then
+    classicNative.LowerName(frame, frame.puiClassicEntry)
+    if classicNative.NativeShown(frame) then
+      model3d.MirrorClassicTarget2D(frame)
+      local classicBox = model3d.ClassicBox(frame)
+      if model3d.RefreshClassicClassIcon(frame, classicBox) then return end
+      local shown3d = classicBox and model3d.Refresh(frame, classicBox)
+      model3d.SetClassicBackgroundShown(classicBox, shown3d)
+      model3d.SetClassic2DShown(frame, not shown3d)
+      return
+    end
+    model3d.SetClassic2DShown(frame, true)
+    model3d.HideBox(frame.puiClassicPortraitModelBox)
+    if not frame.puiClassicTargetTargetArt then return end
+  end
+  local box = frame.portrait
+  if not box or not box.icon then return end
+  -- `modern` owns its square path; the ring/stone block below is modern-wow's.
+  local square = model3d.SquareTheme()
+  if square and model3d.RefreshSquare(frame, box) then return end
+  if not square and model3d.RefreshBoxClassIcon(frame, box) then return end
+  local portrait3d = not square and model3d.Level(frame) > 0
+  local shown3d = not square and model3d.Refresh(frame, box)
+  -- A party member the model cannot show -- offline, out of sight, out of
+  -- range, or excluded by the coverage level -- takes the 2D portrait rather
+  -- than an empty stone bed (user request, 2026-09-29).
+  local party2d = portrait3d and not shown3d and
+                  model3d.Family(frame) == "party"
+
+  -- A configured 3D portrait normally owns the whole portrait bed. The
+  -- supplied stone circle replaces the unit snapshot beneath the model;
+  -- returning here guarantees SetPortraitTexture cannot put the 2D unit
+  -- portrait under it. A party member without a model is the deliberate
+  -- exception and continues into the 2D path below. Reset the snapshot cache
+  -- so that transition or switching the family back to 2D repaints
+  -- immediately even when the unit identity has not changed.
+  if portrait3d and not party2d then
+    if not box.puiPortraitBackground then
+      pcall(box.icon.SetTexture, box.icon,
+            M.modernWow.texture.portraitBackground)
+      pcall(box.icon.SetTexCoord, box.icon, 0, 1, 0, 1)
+      box.puiPortraitBackground = true
+      if type(U.ModernWowAnchorPortraitIcon) == "function" then
+        U.ModernWowAnchorPortraitIcon(box)
+      end
+    end
+    frame.puiPortraitKey = nil
+    frame.puiPortraitPaints = nil
+    return
+  elseif box.puiPortraitBackground then
+    box.puiPortraitBackground = nil
+    frame.puiPortraitKey = nil
+    frame.puiPortraitPaints = nil
+    pcall(box.icon.SetTexCoord, box.icon, 0, 1, 0, 1)
+    if type(U.ModernWowAnchorPortraitIcon) == "function" then
+      U.ModernWowAnchorPortraitIcon(box)
+    end
+  end
+
+  local setPortrait = ResolveApiFn("SetPortraitTexture")
+  if setPortrait then
+    -- Repaint only when the unit behind the frame actually changes.
+    --
+    -- SetPortraitTexture renders the unit's LIVE model into the texture on
+    -- every call, so it returns a fresh snapshot each time rather than a fixed
+    -- portrait. RefreshFrame promotes anything that is not a health, power or
+    -- vitals update to a full refresh, so calling it from there repainted the
+    -- portrait several times a second and the model's idle animation showed
+    -- through as a visibly choppy, low-framerate picture.
+    --
+    -- The unit name is the key: it changes on every target switch and party
+    -- reshuffle, which is exactly when a repaint is wanted, and stays put for
+    -- the player. A nil key -- a frame with no unit yet -- always repaints, so
+    -- a portrait that was not ready at login still fills in.
+    -- The unit's model is not always loaded the first time this runs -- at
+    -- login the call returns a black texture -- so a single paint per unit is
+    -- not enough: caching that first result left the portrait black forever.
+    -- A small budget of repaints per unit settles on a real portrait and then
+    -- stops, which is the fixed picture wanted rather than a running animation.
+    --
+    -- The repaints are spaced in time (model3d.portraitRetryAt): at login
+    -- several full refreshes arrive within the first second and spent the
+    -- whole budget before the model had loaded, leaving the 2D portrait empty
+    -- until a 3D toggle reset the cache (user report, 2026-10-15).
+    -- UNIT_PORTRAIT_UPDATE / UNIT_MODEL_CHANGED also reset it (RegisterEvents).
+    -- Without a clock, fall back to count-only.
+    local key = frame.data and frame.data.name or nil
+    local paints = frame.puiPortraitPaints or 0
+    local now = model3d.Now()
+    if key ~= frame.puiPortraitKey then
+      paints = 0
+      frame.puiPortraitKey = key
+      frame.puiPortraitFirstAt = now
+    elseif paints >= table.getn(model3d.portraitRetryAt) + 1 then
+      return
+    else
+      local due = model3d.portraitRetryAt[paints]
+      if now and frame.puiPortraitFirstAt and
+         now - frame.puiPortraitFirstAt < due then
+        return
+      end
+    end
+
+    frame.puiPortraitPaints = paints + 1
+    pcall(setPortrait, box.icon, frame.unit)
+    -- SetPortraitTexture paints a circular portrait into its square canvas.
+    -- Modern crops to the largest safe centre square so that circular edge is
+    -- outside the visible box; the other themes keep the native round crop.
+    if square then
+      local crop = box.puiSquareCrop or 0.21
+      if box.puiSquareRight then
+        pcall(box.icon.SetTexCoord, box.icon,
+              1 - crop, crop, crop, 1 - crop)
+      else
+        pcall(box.icon.SetTexCoord, box.icon,
+              crop, 1 - crop, crop, 1 - crop)
+      end
+    elseif frame.spec and frame.spec.id == "target" then
+      -- The target portrait sits on the right and is flipped to face inward,
+      -- under modern-wow too, whose Retail target carries its ring on the
+      -- right: every unit, the player and other players included (user
+      -- request, 2026-09-29).
+      pcall(box.icon.SetTexCoord, box.icon, 1, 0, 0, 1)
+    end
+    return
+  end
+
+  -- The Modern WoW class-circle fallback, used only on a client with no
+  -- SetPortraitTexture. The cell comes from the shared media table;
+  -- modules/modernwow.lua owns everything else about how the box looks.
+  --
+  -- Gated on UnitIsPlayer the way DragonflightUI gates the same substitution
+  -- (modules/unit/player.lua, WORKING_SOURCE): a creature has no class, so a
+  -- class icon on an NPC target would be an invented one. Those draw nothing
+  -- and the ring frames the empty bed.
+  if not box.puiClassPortrait then return end
+
+  local isPlayer = ApiTruth("UnitIsPlayer", frame.unit)
+  local token = isPlayer and frame.data and frame.data.class or nil
+  local cell = token and M.modernWow.classCell[token]
+  if not cell then
+    pcall(box.icon.SetTexture, box.icon, "")
+    pcall(box.icon.SetTexCoord, box.icon, 0, 1, 0, 1)
+    return
+  end
+  pcall(box.icon.SetTexture, box.icon, M.modernWow.texture.classPortraits)
+  if frame.spec and frame.spec.id == "target" then
+    pcall(box.icon.SetTexCoord, box.icon,
+          cell[2], cell[1], cell[3], cell[4])
+  else
+    pcall(box.icon.SetTexCoord, box.icon,
+          cell[1], cell[2], cell[3], cell[4])
+  end
+end
+
+-- ---------------------------------------------------------------------------
+-- Pet happiness
+--
+-- Replaces the suppressed stock PetFrameHappiness smiley. The read is
+-- GetPetHappiness(), documented for this client as returning the 1/2/3 band
+-- (documentation.json / global:Pet:GetPetHappiness,
+-- DOCUMENTED_NOT_RUNTIME_VERIFIED) and driven from the same call by
+-- UnrealPfUI's own pet happiness icon on this client
+-- (api/unitframes.lua:1452, WORKING_SOURCE -- not runtime verification).
+-- Non-hunter pets have no happiness and the call returns nothing usable for
+-- them, which is the same gate as pfUI's explicit HUNTER check without needing
+-- the class read.
+--
+-- The indicator uses the supplied three-state artwork rather than the stock
+-- client face. It rides the portrait's corner, so a client without
+-- SetPortraitTexture (portrait_model_crash fallback) has no happiness icon
+-- either rather than one laid over the bar text.
+--
+-- No event: the pet frame already takes a full refresh on every scheduled
+-- sweep (see RefreshScheduledUnits), which is where the band is re-read.
+-- ---------------------------------------------------------------------------
+local HAPPINESS_SIZE = M.petHappiness.size
+
+-- User-requested modern-theme adjustment (2026-09-24): shrink the flat badge
+-- and nudge it up/right relative to the modern-wow layout below.
+local MODERN_HAPPINESS_SCALE = 0.6
+local MODERN_HAPPINESS_TOP_OFFSET = 6
+local MODERN_HAPPINESS_RIGHT_OFFSET = 1
+
+local function BuildHappinessIndicator(frame, border)
+  local box = frame.portrait
+  if not box then return end
+
+  local size, topOffset, rightOffset = HAPPINESS_SIZE, 0, 0
+  local themeStyle = U.GetActiveThemeStyle()
+  if themeStyle == "modern-wow" then
+    local layout = M.modernWow.unitFrame.happiness
+    size = size * layout.scale
+    topOffset = layout.topOffset
+  elseif themeStyle == "modern" then
+    size = size * MODERN_HAPPINESS_SCALE
+    topOffset = MODERN_HAPPINESS_TOP_OFFSET
+    rightOffset = MODERN_HAPPINESS_RIGHT_OFFSET
+  end
+
+  local badge = CreateFrame("Frame", nil, box)
+  badge:SetWidth(size)
+  badge:SetHeight(size)
+  badge:SetPoint("TOPRIGHT", box, "TOPRIGHT", rightOffset - border, topOffset - border)
+  -- Same raised-child-layer guard the classification icon and combo pips use:
+  -- the portrait texture is a sibling region and art on the same level can end
+  -- up behind it.
+  local levelOk, level = pcall(box.GetFrameLevel, box)
+  if levelOk and tonumber(level) then
+    pcall(badge.SetFrameLevel, badge, level + 10)
+  end
+  local fill = badge:CreateTexture(nil, "ARTWORK")
+  fill:SetTexture(M.texture.petHappiness)
+  fill:SetAllPoints(badge)
+  badge.fill = fill
+
+  pcall(badge.Hide, badge)
+  frame.happiness = badge
+  frame.happinessState = false
+end
+
+local function ApplyHappinessIndicator(frame)
+  local badge = frame.happiness
+  if not badge then return end
+  if frame.classicNative then
+    frame.happinessState = false
+    pcall(badge.Hide, badge)
+    return
+  end
+
+  local band = nil
+  local fn = ResolveApiFn("GetPetHappiness")
+  if fn then
+    local ok, value = pcall(fn)
+    if ok then band = tonumber(value) end
+  end
+
+  local cell = band and M.petHappiness.cells[band]
+  local state = cell and band or false
+  -- Nothing below needs to run again while the band has not changed.
+  if frame.happinessState == state then return end
+  frame.happinessState = state
+
+  if not cell then
+    pcall(badge.Hide, badge)
+    return
+  end
+
+  pcall(badge.fill.SetTexCoord, badge.fill, cell[1], cell[2], cell[3], cell[4])
+  pcall(badge.Show, badge)
+end
+
+local function HideHappinessIndicator(frame)
+  if not frame.happiness or frame.happinessState == false then return end
+  frame.happinessState = false
+  pcall(frame.happiness.Hide, frame.happiness)
+end
+
+local function FrameHeight(spec)
+  local border = U.BorderSize()
+  local height = spec.health + 2 * border
+  -- Adjacent rows overlap one border unit. Without that overlap, the health
+  -- bottom edge and power top edge draw as a 2-unit band even though every
+  -- individual outline is only the minimum reliable 1 unit.
+  if spec.power then height = height + spec.gap + spec.power + border end
+  if spec.valuesHeight then
+    height = height + spec.gap + spec.valuesHeight + border
+  end
+  return height
+end
+
+local function FrameWidth(spec)
+  return spec.width + 2 * U.BorderSize()
+end
+
+-- The icon gets its own raised child layer, the same trick the targettarget
+-- name and the combo pips use: the bar's fill is a sibling texture whose width
+-- changes on every refresh, and art on the same layer can end up behind it.
+local function BuildClassificationIcon(frame, health)
+  if type(health.CreateTexture) ~= "function" then return end
+  -- The player is never an elite, so the player frame never needs the slot at
+  -- all. ApplyClassificationIcon still gates on UnitIsPlayer for the frames
+  -- that can hold either kind of unit; this is the one that cannot.
+  if frame.unit == "player" then return end
+
+  local layer = CreateFrame("Frame", nil, health)
+  layer:SetAllPoints(health)
+  local levelOk, level = pcall(health.GetFrameLevel, health)
+  if levelOk and tonumber(level) then
+    pcall(layer.SetFrameLevel, layer, level + 10)
+  end
+
+  local icon = layer:CreateTexture(nil, "OVERLAY")
+  icon:SetWidth(eliteWidth)
+  icon:SetHeight(eliteHeight)
+  -- Just outside the bar's right edge rather than over it: the health bar
+  -- already carries the combo pips on the player frame and the strip below
+  -- carries text, and neither should have artwork laid on top of it.
+  icon:SetPoint("LEFT", health, "RIGHT", 3, 0)
+  pcall(icon.SetTexture, icon, eliteTexture)
+  pcall(icon.Hide, icon)
+
+  frame.classIcon = icon
+end
+
+-- ---------------------------------------------------------------------------
+-- Rest icon
+--
+-- First attempt drew UnrealPfUI's native rest icon (top-left quadrant of
+-- Interface\CharacterFrame\UI-StateIcon, gated on PLAYER_UPDATE_RESTING) as a
+-- WORKING_SOURCE fallback -- query_compat.py had zero evidence for either the
+-- texture or the event on this client. User confirmed in game it never drew.
+-- Second attempt was pandaUI's own flat accent glyph, no client asset at all;
+-- the third was a static user-supplied icon. Modern now uses the same 42-cell
+-- resting-Z flipbook as modern-wow, while keeping this path's existing anchor
+-- on the compact frame. The sheet is copied into the shared media directory so
+-- modern does not read modern-wow's theme-owned media tree.
+-- IsResting() is unchanged -- that call IS documented for this client
+-- (documentation.json / global:Character:IsResting).
+--
+-- modern-wow does not use this icon at all: its playerfx surface draws a
+-- flipbook glyph over its own frame art instead, and BuildRestIcon below
+-- stands down when that surface is on. The two are alternatives, never both.
+-- ---------------------------------------------------------------------------
+UF.restIconFX = { updateId = "unitframes.resticon" }
+
+function UF.restIconFX.SetCell(frame, index)
+  local texture = frame and frame.restIconTexture
+  if not texture then return end
+
+  local cfg = M.unitFrame.restIconFX
+  local unit = cfg.cell / cfg.sheet
+  local column = math.mod(index - 1, cfg.columns)
+  local row = math.floor((index - 1) / cfg.columns)
+  pcall(texture.SetTexCoord, texture,
+        column * unit, (column + 1) * unit,
+        row * unit, (row + 1) * unit)
+end
+
+function UF.restIconFX.Now()
+  local getTime = ResolveApiFn("GetTime")
+  if not getTime then return nil end
+  local ok, value = pcall(getTime)
+  if not ok or type(value) ~= "number" then return nil end
+  return value
+end
+
+function UF.restIconFX.Stop(frame)
+  U.UnregisterUpdate(UF.restIconFX.updateId)
+  if not frame then return end
+  frame.restIconCell = 1
+  frame.restIconCellTime = 0
+  frame.restIconLastTick = nil
+  pcall(frame.restIcon.Hide, frame.restIcon)
+end
+
+function UF.restIconFX.Tick()
+  local frame = UF.restIconFX.frame
+  if not frame or not frame.restIconState then
+    UF.restIconFX.Stop(frame)
+    return
+  end
+
+  local now = UF.restIconFX.Now()
+  if not now then return end
+  local elapsed = now - (frame.restIconLastTick or now)
+  frame.restIconLastTick = now
+  if elapsed < 0 then elapsed = 0 end
+  if elapsed > 0.25 then elapsed = 0.25 end
+
+  local cfg = M.unitFrame.restIconFX
+  frame.restIconCellTime = (frame.restIconCellTime or 0) + elapsed
+  while frame.restIconCellTime >= cfg.interval do
+    frame.restIconCellTime = frame.restIconCellTime - cfg.interval
+    frame.restIconCell = (frame.restIconCell or 1) + 1
+    if frame.restIconCell > cfg.columns * cfg.rows then
+      frame.restIconCell = 1
+    end
+    UF.restIconFX.SetCell(frame, frame.restIconCell)
+  end
+end
+
+function UF.restIconFX.Start(frame)
+  UF.restIconFX.frame = frame
+  frame.restIconCell = 1
+  frame.restIconCellTime = 0
+  frame.restIconLastTick = UF.restIconFX.Now()
+  UF.restIconFX.SetCell(frame, frame.restIconCell)
+  pcall(frame.restIcon.Show, frame.restIcon)
+  U.RegisterUpdate(UF.restIconFX.updateId, 0, UF.restIconFX.Tick)
+end
+
+-- Same raised-child-layer guard as the classification icon and happiness
+-- badge: the health bar's fill is a sibling texture that changes size on every
+-- refresh, and art on the same frame level can end up behind it.
+local function BuildRestIcon(frame, health)
+  if frame.unit ~= "player" then return end
+  -- The player's party row shares the unit but not the chrome: the standalone
+  -- player frame already carries the resting icon, and the party block reads
+  -- as a roster of identical rows.
+  if frame.spec.partyPlayer then return end
+  -- modern-wow draws its own resting glyph on this frame, over its own art
+  -- (modules/modernwow.lua, the playerfx surface). Two resting marks on one
+  -- frame is the failure here, so the shared one steps aside for it. Safe to
+  -- read at build time: modules/modernwow.lua is last in the TOC, so its chunk
+  -- has run long before this module builds a frame -- the same reason
+  -- U.ModernWowWantsPortrait can be asked here.
+  if type(U.ModernWowSurfaceEnabled) == "function" and
+     U.ModernWowSurfaceEnabled("playerfx") then
+    return
+  end
+  if type(health.CreateTexture) ~= "function" then return end
+
+  local cfg = M.unitFrame.restIconFX
+  local layer = CreateFrame("Frame", nil, frame)
+  layer:SetWidth(cfg.size)
+  layer:SetHeight(cfg.size)
+  -- Centred on the frame's top-left corner, by request: half the icon (its
+  -- top-left quadrant) sits outside the frame, the rest overlaps it.
+  layer:SetPoint("CENTER", frame, "TOPLEFT", 0, 0)
+  local levelOk, level = pcall(health.GetFrameLevel, health)
+  if levelOk and tonumber(level) then
+    pcall(layer.SetFrameLevel, layer, level + 10)
+  end
+
+  local icon = layer:CreateTexture(nil, "OVERLAY")
+  icon:SetAllPoints(layer)
+  pcall(icon.SetTexture, icon, M.texture.restingFlipbook)
+
+  pcall(layer.Hide, layer)
+  frame.restIcon = layer
+  frame.restIconTexture = icon
+  frame.restIconState = false
+  UF.restIconFX.SetCell(frame, 1)
+end
+
+-- ---------------------------------------------------------------------------
+-- Party leader star
+--
+-- Replaces the suppressed stock PartyMemberFrame%dLeaderIcon. The read is
+-- UnitIsPartyLeader(unit), documented for this client (documentation.json /
+-- global:Unit:UnitIsPartyLeader, DOCUMENTED_NOT_RUNTIME_VERIFIED) and driven
+-- from the same call by UnrealPfUI's own leader icon on this client
+-- (api/unitframes.lua:1407, WORKING_SOURCE -- not runtime verification).
+--
+-- The roster guard is copied from that implementation rather than trusting the
+-- documented "false when not in a group" return: pfUI pairs the call with a
+-- GetNumPartyMembers/GetNumRaidMembers check, and a solo player wearing a
+-- leader star is the one failure worth spending two cached calls on.
+--
+-- The player frame carries one too. The question the star answers is "who
+-- leads this party", and a player-led party would otherwise show no star at
+-- all -- the same state, silently.
+--
+-- Art is pandaUI's own media/leader-star.tga (see core/media.lua): a stock
+-- GroupFrame path is exactly the kind this client is known to leave blank.
+-- Accent-tinted rather than a semantic colour: leadership is pandaUI chrome
+-- marking a roster fact, not unit state like health or reaction.
+--
+-- No event: PARTY_LEADER_CHANGED is already in GROUP_EVENTS and queues a full
+-- refresh for every member, and the 1s full sweep catches it regardless.
+-- ---------------------------------------------------------------------------
+local LEADER_ICON_SIZE = 14
+
+local LEADER_UNITS = { player = true }
+do
+  local i
+  for i = 1, PARTY_COUNT do LEADER_UNITS["party" .. i] = true end
+end
+
+-- Same raised-child-layer guard as the rest icon and the classification icon:
+-- the health bar's fill is a sibling texture that resizes on every refresh,
+-- and art on the same frame level can end up behind it.
+local function BuildLeaderIcon(frame, health)
+  if not LEADER_UNITS[frame.unit] then return end
+  if type(health.CreateTexture) ~= "function" then return end
+
+  local layer = CreateFrame("Frame", nil, frame)
+  layer:SetWidth(LEADER_ICON_SIZE)
+  layer:SetHeight(LEADER_ICON_SIZE)
+  -- Centred on the frame's top-right corner, mirroring the rest icon on the
+  -- top-left: half the star sits outside the frame, which keeps it clear of
+  -- the health value the party rows print at that end of the bar.
+  layer:SetPoint("CENTER", frame, "TOPRIGHT", 0, 0)
+  local levelOk, level = pcall(health.GetFrameLevel, health)
+  if levelOk and tonumber(level) then
+    -- Well above the other raised children rather than the shared +10: the
+    -- half of the star that sits outside the frame lands exactly on the combo
+    -- strip. The strip itself is a sibling at +10, but its five pips are
+    -- CreateStatusBar frames parented to it, so they inherit +11 -- a star at
+    -- +11 tied with them and lost, being built first. +20 clears the strip and
+    -- anything else this module raises off the health bar.
+    pcall(layer.SetFrameLevel, layer, level + 20)
+  end
+
+  local icon = layer:CreateTexture(nil, "OVERLAY")
+  icon:SetAllPoints(layer)
+  pcall(icon.SetTexture, icon, M.texture.leaderIcon)
+  U.SetColor(icon, M.color.accent[1], M.color.accent[2], M.color.accent[3], 1)
+
+  pcall(layer.Hide, layer)
+  frame.leaderIcon = layer
+  frame.leaderIconState = false
+end
+
+-- ---------------------------------------------------------------------------
+-- Target classification skin
+--
+-- User-supplied ornamental artwork drawn around the target frame, one texture
+-- per classification tier. It replaces the visual job of the classification
+-- icon built above (BuildClassificationIcon), so while a skin is on screen
+-- that icon stays hidden and comes back on its own for a unit whose tier has
+-- no artwork.
+--
+-- One table rather than a dozen top-level locals on purpose: this file already
+-- carries ~157 of the 200 top-level locals a Lua 5.0/5.1 chunk may declare, and
+-- overrunning that limit makes the whole file fail to load with no error at all
+-- (knowledge.json / lua.top_level_local_limit_silent_file_failure).
+--
+-- Eight slices, no centre: the middle of the artwork is the *opening* the unit
+-- frame shows through, so drawing it would cover the bars. Only four-argument
+-- SetTexCoord is used -- knowledge.json /
+-- textures.rle_512_tga_atlas_four_arg_supported records the eight-argument form
+-- as unreliable here and the four-argument form on an RLE type-10 TGA as
+-- USER_CONFIRMED_INGAME.
+--
+-- The source opening (278x54 of a 350x117 file) does NOT share the runtime
+-- opening's aspect ratio, and does not need to: the corners keep their authored
+-- pixel size and only the four edge pieces stretch, so the same three textures
+-- resolve to exactly 182x47 without distorting any ornament.
+-- ---------------------------------------------------------------------------
+local classSkin = {
+  -- Slice geometry, identical for all three textures: 350x117 art on a
+  -- 512x128 canvas cut at
+  -- x 0|36|314|350 and y 0|34|88|117, leaving a 278x54 source opening.
+  uL = 36 / 512,
+  uR = 314 / 512,
+  vT = 34 / 128,
+  vB = 88 / 128,
+  uMax = 350 / 512,
+  vMax = 117 / 128,
+  -- Fixed ornamental insets around the opening. The skin is therefore
+  -- 182 + 15 + 15 = 212 wide and 47 + 14 + 12 = 73 high, and the frame it
+  -- surrounds keeps its own 182x47 exactly.
+  left = 15, right = 15, top = 14, bottom = 12,
+}
+
+classSkin.texture = {
+  rare      = M.texture.targetSkinRare,
+  rareelite = M.texture.targetSkinRare,
+  elite     = M.texture.targetSkinElite,
+  worldboss = M.texture.targetSkinBoss,
+}
+
+-- The outer flat outline the bar boxes already carry would read as a second
+-- line just inside the ornament's inner rim. These are the edge indices to
+-- take out of each box while a skin is up, in U.CreateBorder's fixed EDGES
+-- order (1 top, 2 bottom, 3 left, 4 right).
+--
+-- Deliberately NOT U.SetBackdropShown: that also clears the box fill, which is
+-- the bar's own dark background. Health keeps its bottom edge and power keeps
+-- its top edge -- those two overlap into the single separator between the two
+-- bars, which the ornament does not replace.
+classSkin.healthEdges = { 1, 3, 4 }
+classSkin.powerEdges = { 2, 3, 4 }
+-- The 3D portrait square keeps the edge facing the bars: it overlays the bars'
+-- hidden edge and becomes the one separator between portrait and bars.
+classSkin.portraitEdges = { 1, 2, 3 }
+classSkin.portraitEdgesRight = { 1, 2, 4 }
+
+function classSkin.Dimension(frame, method)
+  local ok, value = pcall(frame[method], frame)
+  return (ok and tonumber(value)) or 0
+end
+
+function classSkin.Slice(skin, layer, u1, u2, v1, v2)
+  local slice = skin:CreateTexture(nil, layer or "ARTWORK")
+  pcall(slice.SetTexCoord, slice, u1, u2, v1, v2)
+  return slice
+end
+
+-- Explicit size as well as the two-corner anchoring, the way every other box
+-- in this module is built: the frame it wraps is a fixed 182x47 that nothing
+-- resizes, so 212x73 is not an approximation, and the slices then have a real
+-- size to lay out against whether or not two-corner sizing carries here.
+--
+-- withPortrait: `modern`'s 3D portrait square (model3d.RefreshSquare) hangs
+-- outside the frame's left edge, sharing one border unit with the bars. While
+-- it is shown the skin's left edge moves out to the square's left edge, so the
+-- ornament frames portrait and bars as one unit. Corners keep their authored
+-- size; only the top/bottom edge pieces stretch further.
+function classSkin.Layout(frame, skin, withPortrait)
+  local extra = 0
+  local box = frame.portrait
+  if withPortrait and box then
+    extra = classSkin.Dimension(box, "GetWidth") - U.BorderSize()
+    if extra < 0 then extra = 0 end
+  end
+  -- A right-hand square (the target's) extends the skin rightwards instead.
+  local extraLeft, extraRight = extra, 0
+  if box and box.puiSquareRight then extraLeft, extraRight = 0, extra end
+  pcall(skin.ClearAllPoints, skin)
+  skin:SetWidth(classSkin.Dimension(frame, "GetWidth") + extra +
+                classSkin.left + classSkin.right)
+  skin:SetHeight(classSkin.Dimension(frame, "GetHeight") +
+                 classSkin.top + classSkin.bottom)
+  skin:SetPoint("TOPLEFT", frame, "TOPLEFT", -classSkin.left - extraLeft,
+                classSkin.top)
+  skin:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT",
+                classSkin.right + extraRight, -classSkin.bottom)
+end
+
+-- Whether the 3D portrait square is on screen beside the frame. Mirrors the
+-- exact condition model3d.RefreshSquare shows the box under, read from
+-- settings rather than from the box, because classSkin.Apply runs before
+-- RefreshPortrait in the same refresh.
+function classSkin.PortraitShown(frame)
+  local box = frame.portrait
+  return box and box.puiSquare3D and model3d.PortraitEnabled(frame) and true or false
+end
+
+-- Builds the eight slices once. Nothing here is rebuilt on a classification
+-- change; only the texture path is swapped.
+function classSkin.Build(frame)
+  if not frame or frame.puiClassSkin then return nil end
+  -- Modern only, gated on the theme id rather than on "not native chrome".
+  -- Both spellings exclude Classic today -- it hands the target over to the
+  -- client's own artwork at native geometry, so this skin has nothing to frame
+  -- -- but the registry also carries an unavailable work-in-progress
+  -- "modern-wow" style (themes/modern-wow.lua), and the loose spelling would
+  -- hand it this skin the day it is switched on, without anyone deciding that.
+  -- GetActiveThemeStyle, not GetThemeStyle: a theme change takes effect only
+  -- after a reload, and this is built once during that reload.
+  if U.GetActiveThemeStyle() ~= "modern" then return nil end
+
+  local skin = CreateFrame("Frame", "PandaUIUnitTargetSkin", frame)
+  -- No SetFrameStrata: it inherits the unit frame's "LOW". Parented straight
+  -- to the frame, so it follows the mover with no position storage of its own.
+  -- Size and anchors come from classSkin.Layout, which also widens the skin
+  -- over the optional 3D portrait square.
+  classSkin.Layout(frame, skin, false)
+
+  -- +20 is the same clearance the classification icon, the leader star and the
+  -- combo pips use to get above this frame's raised text/icon child layers.
+  local ok, level = pcall(frame.GetFrameLevel, frame)
+  if ok and tonumber(level) then
+    pcall(skin.SetFrameLevel, skin, level + 20)
+  end
+
+  local uL, uR, vT, vB = classSkin.uL, classSkin.uR, classSkin.vT, classSkin.vB
+  local l, r, t, b = classSkin.left, classSkin.right, classSkin.top,
+                     classSkin.bottom
+
+  -- Corners: authored size, single anchor, never stretched.
+  local tl = classSkin.Slice(skin, "ARTWORK", 0, uL, 0, vT)
+  tl:SetWidth(l)
+  tl:SetHeight(t)
+  tl:SetPoint("TOPLEFT", skin, "TOPLEFT", 0, 0)
+
+  local tr = classSkin.Slice(skin, "ARTWORK", uR, classSkin.uMax, 0, vT)
+  tr:SetWidth(r)
+  tr:SetHeight(t)
+  tr:SetPoint("TOPRIGHT", skin, "TOPRIGHT", 0, 0)
+
+  local bl = classSkin.Slice(skin, "ARTWORK", 0, uL, vB, classSkin.vMax)
+  bl:SetWidth(l)
+  bl:SetHeight(b)
+  bl:SetPoint("BOTTOMLEFT", skin, "BOTTOMLEFT", 0, 0)
+
+  local br = classSkin.Slice(skin, "ARTWORK", uR, classSkin.uMax,
+                             vB, classSkin.vMax)
+  br:SetWidth(r)
+  br:SetHeight(b)
+  br:SetPoint("BOTTOMRIGHT", skin, "BOTTOMRIGHT", 0, 0)
+
+  -- Edges: fixed thickness plus two-corner anchoring on the stretch axis. That
+  -- is exactly how U.CreateBorder draws its own outline on this client
+  -- (core/style.lua), so it is a proven layout here rather than a guess.
+  local top = classSkin.Slice(skin, "ARTWORK", uL, uR, 0, vT)
+  top:SetHeight(t)
+  top:SetPoint("TOPLEFT", skin, "TOPLEFT", l, 0)
+  top:SetPoint("TOPRIGHT", skin, "TOPRIGHT", -r, 0)
+
+  local bottom = classSkin.Slice(skin, "ARTWORK", uL, uR, vB, classSkin.vMax)
+  bottom:SetHeight(b)
+  bottom:SetPoint("BOTTOMLEFT", skin, "BOTTOMLEFT", l, 0)
+  bottom:SetPoint("BOTTOMRIGHT", skin, "BOTTOMRIGHT", -r, 0)
+
+  local left = classSkin.Slice(skin, "ARTWORK", 0, uL, vT, vB)
+  left:SetWidth(l)
+  left:SetPoint("TOPLEFT", skin, "TOPLEFT", 0, -t)
+  left:SetPoint("BOTTOMLEFT", skin, "BOTTOMLEFT", 0, b)
+
+  local right = classSkin.Slice(skin, "ARTWORK", uR, classSkin.uMax, vT, vB)
+  right:SetWidth(r)
+  right:SetPoint("TOPRIGHT", skin, "TOPRIGHT", 0, -t)
+  right:SetPoint("BOTTOMRIGHT", skin, "BOTTOMRIGHT", 0, b)
+
+  skin.slices = { tl, top, tr, left, right, bl, bottom, br }
+
+  pcall(skin.Hide, skin)
+  frame.puiClassSkin = skin
+  frame.puiClassSkinState = false
+  return skin
+end
+
+-- Shows or restores the flat outer outline the ornament stands in for. The
+-- separator between health and power is never touched.
+function classSkin.SetOuterBordersShown(frame, shown)
+  if frame.puiClassSkinBorders == shown then return end
+  frame.puiClassSkinBorders = shown
+
+  local boxes = { { frame.health, classSkin.healthEdges },
+                  { frame.power, classSkin.powerEdges } }
+  if frame.portrait and frame.portrait.puiSquare3D then
+    table.insert(boxes, { frame.portrait, frame.portrait.puiSquareRight and
+                          classSkin.portraitEdgesRight or
+                          classSkin.portraitEdges })
+  end
+  local i
+  for i = 1, table.getn(boxes) do
+    local box, list = boxes[i][1], boxes[i][2]
+    local edges = box and box.puiEdges
+    if edges then
+      local n
+      for n = 1, table.getn(list) do
+        local edge = edges[list[n]]
+        if edge then
+          if shown then pcall(edge.Show, edge) else pcall(edge.Hide, edge) end
+        end
+      end
+    end
+  end
+end
+
+-- Cheap and idempotent: a classification that has not changed costs one table
+-- lookup and one comparison, and nothing below runs again.
+function classSkin.Apply(frame)
+  local skin = frame.puiClassSkin
+  if not skin then return end
+
+  local class = frame.data.classification or ""
+  local path = classSkin.texture[class]
+  local withPortrait = classSkin.PortraitShown(frame)
+  -- The portrait flag is part of the state so toggling the 3D option re-lays
+  -- out the skin even when the tier is unchanged.
+  local state = path and (class .. (withPortrait and ":portrait" or "")) or false
+  if frame.puiClassSkinState == state then return end
+  frame.puiClassSkinState = state
+
+  if not path then
+    pcall(skin.Hide, skin)
+    classSkin.SetOuterBordersShown(frame, true)
+    return
+  end
+
+  if skin.puiWithPortrait ~= withPortrait then
+    skin.puiWithPortrait = withPortrait
+    classSkin.Layout(frame, skin, withPortrait)
+  end
+
+  local i
+  for i = 1, table.getn(skin.slices) do
+    pcall(skin.slices[i].SetTexture, skin.slices[i], path)
+  end
+  classSkin.SetOuterBordersShown(frame, false)
+  pcall(skin.Show, skin)
+end
+
+function classSkin.Hide(frame)
+  local skin = frame.puiClassSkin
+  if not skin or frame.puiClassSkinState == false then return end
+  frame.puiClassSkinState = false
+  pcall(skin.Hide, skin)
+  classSkin.SetOuterBordersShown(frame, true)
+end
+
+-- Draw the Classic target-of-target as a compact PlayerFrame, using the
+-- player-facing cell of the stock UI-TargetingFrame atlas. This is an
+-- addon-owned surface: it is safe both as the native target-of-target fallback
+-- and as the Classic exception when player/target use the Modern WoW module.
+function classicNative.BuildTargetTargetAtlas(frame)
+  local token = classicNative.TargetTargetAtlasEnabled()
+  if not frame or not token or frame.puiClassicTargetTargetArt then return end
+
+  local scale = tonumber(token.scale) or 1
+  local canvas = token.canvas
+  if not canvas then return end
+
+  frame:SetWidth(canvas.width * scale)
+  frame:SetHeight(canvas.height * scale)
+
+  local function HideFlat(framePart)
+    local edges = framePart and framePart.puiEdges
+    local i
+    for i = 1, table.getn(edges or {}) do pcall(edges[i].Hide, edges[i]) end
+    if framePart and framePart.SetBackdropColor then
+      pcall(framePart.SetBackdropColor, framePart, 0, 0, 0, 0)
+    end
+  end
+
+  local function PlaceBar(box, rect)
+    if not box or not rect then return end
+    local width, height = rect.width * scale, rect.height * scale
+    HideFlat(box)
+    box:SetWidth(width)
+    box:SetHeight(height)
+    box:ClearAllPoints()
+    box:SetPoint("TOPLEFT", frame, "TOPLEFT", rect.x * scale,
+                 -rect.y * scale)
+    if box.bar then
+      box.bar:SetWidth(width)
+      box.bar:SetHeight(height)
+      box.bar:ClearAllPoints()
+      box.bar:SetPoint("TOPLEFT", box, "TOPLEFT", 0, 0)
+    end
+  end
+
+  PlaceBar(frame.health, token.health)
+  PlaceBar(frame.power, token.power)
+
+  if frame.portrait and token.portrait then
+    HideFlat(frame.portrait)
+    frame.portrait:SetWidth(token.portrait.width * scale)
+    frame.portrait:SetHeight(token.portrait.height * scale)
+    frame.portrait:ClearAllPoints()
+    frame.portrait:SetPoint("TOPLEFT", frame, "TOPLEFT",
+                            token.portrait.x * scale,
+                            -token.portrait.y * scale)
+    if frame.portrait.icon then
+      frame.portrait.icon:ClearAllPoints()
+      frame.portrait.icon:SetAllPoints(frame.portrait)
+    end
+  end
+
+  local artFrame = CreateFrame("Frame", nil, frame)
+  artFrame:SetAllPoints(frame)
+  local levelOk, level = pcall(frame.GetFrameLevel, frame)
+  if levelOk and tonumber(level) then
+    pcall(artFrame.SetFrameLevel, artFrame, level + 5)
+  end
+  local art = artFrame:CreateTexture(nil, "ARTWORK")
+  art:SetTexture(token.texture)
+  art:SetAllPoints(artFrame)
+  art:SetTexCoord(token.texCoord[1], token.texCoord[2],
+                  token.texCoord[3], token.texCoord[4])
+  frame.puiClassicTargetTargetArt = artFrame
+
+  if frame.health and frame.health.label and token.name then
+    frame.health.label:ClearAllPoints()
+    frame.health.label:SetPoint("CENTER", frame, "TOPLEFT",
+                                token.name.x * scale,
+                                -token.name.y * scale)
+  end
+end
+
+local function BuildFrame(spec, parent)
+  local border = U.BorderSize()
+
+  local classicTargetTarget = spec.id == "targettarget" and
+                              classicNative.TargetTargetAtlasEnabled()
+  if classicTargetTarget then
+    -- The player atlas has two authored bar openings. Preserve both rather
+    -- than painting a health fill through the mana row and its separator.
+    spec.power = classicTargetTarget.power.height * classicTargetTarget.scale
+    spec.healthTexture = true
+  end
+
+  -- A Button, not a Frame: knowledge.json / frames.movable_drag_requires_button
+  -- _handle records Button as the widget type this client reliably routes mouse
+  -- input to, and the frame needs clicks anyway.
+  local frame = CreateFrame("Button", "PandaUIUnit" .. spec.name, parent or UIParent)
+  frame.unit = spec.unit
+  frame.spec = spec
+  frame.data = {}
+  -- Unit frames are HUD elements, never modal/interface chrome.  Explicitly
+  -- keep them below native windows such as the help and GM-assistance panels;
+  -- SetFrameStrata also carries this layer to the frame's bar children.
+  frame:SetFrameStrata("LOW")
+  -- Same strata as the action bars (also LOW), so the level decides: raise the
+  -- frame before any child is created (a child takes parent level + 1) so the
+  -- whole unit frame draws over a bar it overlaps. 30 clears the bar buttons'
+  -- raised text layers and stays under the LOW level 99/100 tooltip and bags.
+  local baseOk, baseLevel = pcall(frame.GetFrameLevel, frame)
+  if not baseOk or not tonumber(baseLevel) or baseLevel < 30 then
+    pcall(frame.SetFrameLevel, frame, 30)
+  end
+
+  -- The portrait sits to the left of the bar stack on its own square, sized to
+  -- match the stack's full height, and widens the frame by that square less the
+  -- one border unit the two share. That is the same overlap the stacked rows
+  -- use (see FrameHeight): the portrait has to read as part of the frame, and
+  -- butting the boxes edge to edge instead would draw its right outline and the
+  -- bars' left outline as a 2-unit band. hasPortrait can still be false with
+  -- spec.portrait set: per knowledge.json / unitframes.portrait_model_crash, a
+  -- client without SetPortraitTexture drops the portrait rather than guessing
+  -- at a replacement, and the frame is simply bars-only in that case.
+  local portraitSize = FrameHeight(spec)
+  -- modern-wow reproduces an external interface down to its text layout, so it
+  -- rewrites the spec's label tokens before the frame is built. Done through a
+  -- hook rather than in the spec tables because those are shared with `modern`
+  -- and `classic-wow`, both of which are frozen. Absent under every other
+  -- theme, where the spec is used exactly as declared.
+  if type(U.ModernWowSpecOverride) == "function" then
+    U.ModernWowSpecOverride(spec)
+  end
+
+  -- Which frames want a portrait at all. Only the pet spec asks for one in
+  -- PandaUI's own layout, so modern-wow -- whose frame art is built around a
+  -- portrait circle -- adds the rest through this predicate rather than by
+  -- editing the specs. The function is absent under any other theme and the
+  -- answer is then spec.portrait alone.
+  local wantsPortrait = spec.portrait
+  if not wantsPortrait and classicTargetTarget then wantsPortrait = true end
+  if not wantsPortrait and type(U.ModernWowWantsPortrait) == "function" then
+    wantsPortrait = U.ModernWowWantsPortrait(spec.id)
+  end
+
+  local squarePortrait = model3d.SquareTheme() and model3d.Family(frame)
+  local classPortrait = UsesClassPortrait(spec.id)
+  local hasPortrait = not squarePortrait and wantsPortrait and
+                      (ResolveApiFn("SetPortraitTexture") ~= nil or classPortrait)
+  local barOffsetX = hasPortrait and (portraitSize - border) or 0
+
+  frame:SetWidth(FrameWidth(spec) + barOffsetX)
+  frame:SetHeight(FrameHeight(spec))
+  if hasPortrait then
+    frame.portrait = BuildPortraitBox(frame, portraitSize, border)
+    frame.portrait:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+    -- Marks the box for the class-circle path. modules/modernwow.lua reads
+    -- this to know the square chrome has to come off: the class art is a
+    -- circle, so the box's outline and fill would draw a square behind it.
+    frame.portrait.puiClassPortrait = classPortrait or nil
+    frame.portrait.puiClassicFallbackPortrait = classicTargetTarget or nil
+    if spec.happiness then BuildHappinessIndicator(frame, border) end
+  elseif squarePortrait then
+    -- `modern`'s optional portrait for every frame family: a 2D snapshot or
+    -- live 3D model in a square hung outside the bar stack. Keeping it outside
+    -- lets the visibility switch work live without moving the bars or mover.
+    -- The square matches the bar stack's height and shares
+    -- one border unit with it. Outside rather than widening the frame, so the
+    -- per-family switch can show or hide it live (model3d.RefreshSquare)
+    -- without re-laying out bars, auras, the combo strip or the mover rect.
+    local box = BuildPortraitBox(frame, portraitSize, border, true)
+    -- The target faces the player frame, so its portrait mirrors to the
+    -- outer (right) side of the bars; every other family keeps the left.
+    if spec.id == "target" then
+      box:SetPoint("TOPLEFT", frame, "TOPRIGHT", -border, 0)
+      box.puiSquareRight = true
+    else
+      box:SetPoint("TOPRIGHT", frame, "TOPLEFT", border, 0)
+    end
+    box.puiSquare3D = true
+    -- Keep target-of-target at the bar stack's 20px height. Its tighter crop
+    -- makes the subject appear about 2px larger without extending the box.
+    if spec.id == "targettarget" then
+      box.puiSquareCrop = 0.13
+    end
+    box:Hide()
+    frame.portrait = box
+    if spec.happiness then BuildHappinessIndicator(frame, border) end
+  end
+
+  -- Each bar starts on the colour it will normally carry, so a frame is never
+  -- briefly drawn in another bar's colour before the first refresh.
+  local health = CreateBarBox(frame, spec.width, spec.health, border,
+                              M.color.healthFull,
+                              spec.healthTexture and M.unitFrame.statusTexture)
+  health:SetPoint("TOPLEFT", frame, "TOPLEFT", barOffsetX, 0)
+  if spec.healthText then
+    -- The status fill is its own child frame. Put the name on a higher child
+    -- layer so the changing fill can never cover it.
+    health.textLayer = CreateFrame("Frame", nil, health)
+    health.textLayer:SetAllPoints(health)
+    local levelOk, level = pcall(health.GetFrameLevel, health)
+    if levelOk and tonumber(level) then
+      pcall(health.textLayer.SetFrameLevel, health.textLayer, level + 10)
+    end
+    health.label = CreateBarLabel(health.textLayer, "CENTER", health.textLayer, 0)
+  elseif spec.healthLabels then
+    -- Party health text 2px up (user request, 2026-10-15). Done here because
+    -- the modern-wow housing pass runs before these labels exist.
+    BuildBarLabels(health, spec.healthLabels,
+                   (spec.partyIndex or spec.partyPlayer) and
+                     (BAR_LABEL_Y_OFFSET + 2 +
+                      (tonumber(spec.partyHealthLabelY) or 0)) or nil,
+                   spec.healthLabelSize, spec.healthLabelInherits,
+                   spec.outlineLabels)
+    if spec.partyIndex or spec.partyPlayer then
+      ApplyExactLabelSize(health, spec.healthLabelSize, spec.outlineLabels,
+                          spec.partyLabelShadow)
+    end
+  end
+
+  BuildClassificationIcon(frame, health)
+  BuildRestIcon(frame, health)
+  BuildLeaderIcon(frame, health)
+
+  local previous = health
+  local power = nil
+  if spec.power then
+    power = CreateBarBox(frame, spec.width, spec.power, border,
+                         M.power.fallback, M.unitFrame.statusTexture)
+    -- Overlay the two touching horizontal edges so they form one crisp
+    -- separator rather than a double-thick gap between the fills.
+    power:SetPoint("TOPLEFT", previous, "BOTTOMLEFT", 0,
+                   border - spec.gap)
+    previous = power
+    if spec.powerLabels then
+      -- Party power value nudge: modern-wow hands its own through the spec;
+      -- the flat "modern" theme gets 1 up (0.5, then 0.5 more; user request,
+      -- 2026-10-15).
+      local partyPowerY = nil
+      if spec.partyIndex or spec.partyPlayer then
+        partyPowerY = tonumber(spec.partyPowerLabelY)
+        if not partyPowerY and U.GetActiveThemeStyle and
+           U.GetActiveThemeStyle() == "modern" then
+          partyPowerY = 1
+        end
+      end
+      local modernUp = 0
+      if spec.modernPowerLabelUp and U.GetActiveThemeStyle and
+         U.GetActiveThemeStyle() == "modern" then
+        modernUp = spec.modernPowerLabelUp
+      end
+      local modernSized = modernUp ~= 0
+      BuildBarLabels(power, spec.powerLabels,
+                     POWER_LABEL_Y_OFFSET + (partyPowerY or 0) + modernUp,
+                     spec.powerLabelSize, spec.powerLabelInherits,
+                     spec.outlineLabels,
+                     (spec.partyIndex or spec.partyPlayer) and
+                       spec.partyPowerLabelX or nil)
+      -- The "original" unit-frame font drops a size passed at creation, so the
+      -- flat theme's power value gets the exact-size pass too.
+      if modernSized then
+        ApplyExactLabelSize(power, spec.powerLabelSize, spec.outlineLabels)
+      end
+      if spec.partyIndex or spec.partyPlayer then
+        ApplyExactLabelSize(power, spec.powerLabelSize, spec.outlineLabels,
+                            spec.partyLabelShadow)
+        -- Above the modern-wow housing's art overlay (frame level + 20), so
+        -- the rim cannot cover the value.
+        if spec.partyPowerLabelTop and power.textLayer then
+          local okLevel, frameLevel = pcall(frame.GetFrameLevel, frame)
+          if okLevel and tonumber(frameLevel) then
+            pcall(power.textLayer.SetFrameLevel, power.textLayer,
+                  frameLevel + 22)
+          end
+        end
+      end
+    end
+  end
+
+  local values = nil
+  if spec.valuesHeight then
+    values = CreateValuesStrip(frame, spec.width, spec.valuesHeight,
+                              border, spec.values or {})
+    values:SetPoint("TOPLEFT", previous, "BOTTOMLEFT", 0,
+                    border - spec.gap)
+  end
+
+  frame.health = health
+  frame.power = power
+  frame.values = values
+
+  if classicTargetTarget then classicNative.BuildTargetTargetAtlas(frame) end
+
+  -- After the bar boxes exist: the skin has to be able to reach their outline
+  -- edges to take the outer perimeter down while the ornament stands in for it.
+  if spec.classSkin then classSkin.Build(frame) end
+
+  frame:Hide()
+  frame.puiShown = false
+  return frame
+end
+
+-- ---------------------------------------------------------------------------
+-- Rogue combo points
+--
+-- query_compat.py has no record at all for GetComboPoints or any combo-point
+-- event (api/events/behavior/knowledge all came back empty), so this follows
+-- UnrealPfUI's demonstrated shape (modules/combopoints.lua) as WORKING_SOURCE
+-- evidence, not runtime verification: GetComboPoints("target") plus
+-- UNIT_COMBO_POINTS / PLAYER_COMBO_POINTS / PLAYER_TARGET_CHANGED /
+-- PLAYER_ENTERING_WORLD. The same compact treatment is used for Rogue points
+-- and Druid Cat Form; the pfUI reference's separate paladin "reck" tracker is
+-- intentionally out of scope.
+--
+-- The flat themes use five equal pips with the ordered muted red-to-green
+-- palette. Modern WoW uses its own two-state circular atlas and mirrors the
+-- configured aura position: auras above put the circles below, and vice versa.
+-- Both treatments live on one raised child layer, so choosing the player or
+-- target frame follows that frame's mover without changing its geometry.
+-- ---------------------------------------------------------------------------
+local COMBO_MAX = 5
+-- The reference has a single dark 1px divider between each textured point.
+-- A matching one-pixel black outline frames the strip; the 13px pass is now
+-- reduced by 20%.
+local COMBO_GAP = 1
+local COMBO_HEIGHT = 9.4
+-- Brighter than M.color.healthBg (the bar's own empty tone) on purpose: an
+-- empty pip needs to read as a visible slot against the near-black health
+-- bar, not blend into it.
+local COMBO_EMPTY = { 0.24, 0.24, 0.24, 1.00 }
+
+local comboPips = nil
+
+-- The stock combo display is its own global family, not a TargetFrame child
+-- name, so the suppression list above never touched it: ComboFrame plus
+-- ComboPoint1..5 and their Highlight/Shine regions (all sixteen names are in
+-- this client's global table -- 2026-08-16 probe capture). The target family is
+-- suppressed visual-only, alpha 0 with no Hide, and this client does not
+-- propagate parent alpha, so the native gems stayed fully drawn at TargetFrame's
+-- stock position on top of an otherwise invisible frame -- visible to any rogue
+-- who gained a combo point, next to pandaUI's own pips.
+--
+-- Registered in the default "static" group, i.e. the full teardown: hide,
+-- neutralise Show, drop native events. That is what UnrealPfUI's
+-- modules/combopoints.lua does on this same client (ComboFrame:Hide() plus
+-- ComboFrame:UnregisterAllEvents()) -- WORKING_SOURCE evidence, not runtime
+-- verification. Registered only for Rogue and Druid, the two classes whose
+-- combo display pandaUI replaces; the Druid strip itself stays hidden outside
+-- Cat Form.
+local function SuppressStockComboFrame()
+  local names = { "ComboFrame" }
+  local i
+  for i = 1, COMBO_MAX do
+    table.insert(names, "ComboPoint" .. i)
+    table.insert(names, "ComboPoint" .. i .. "Highlight")
+    table.insert(names, "ComboPoint" .. i .. "Shine")
+  end
+  U.SuppressNativeFrame(names)
+end
+
+local function BuildComboPoints(playerFrame, isDruid)
+  local health = playerFrame and playerFrame.health
+  if not health then return end
+
+  local modernWow = type(U.ModernWowSurfaceEnabled) == "function" and
+                    U.ModernWowSurfaceEnabled("unitframes") and
+                    M.modernWow and M.modernWow.combo
+  local width, pipWidth, pipHeight, inset
+  if modernWow then
+    -- The circular art follows the Modern WoW aura icon height. That makes the
+    -- opposite-side swap exact even when a saved aura size changes.
+    local auraSize = type(U.GetAuraSetting) == "function" and
+                     tonumber(U.GetAuraSetting("size")) or 24
+    local auraScale = tonumber(M.modernWow.aura and
+                                M.modernWow.aura.iconScale) or 1
+    pipHeight = auraSize * auraScale *
+                (tonumber(M.modernWow.combo.scale) or 1)
+    pipWidth = pipHeight * (tonumber(M.modernWow.combo.aspect) or 1)
+    width = COMBO_MAX * pipWidth +
+            (COMBO_MAX - 1) * (tonumber(M.modernWow.combo.gap) or 0)
+  else
+    -- Match the outer box, including its one-pixel frame outline, rather than
+    -- the narrower inner health/power bar.
+    width = FrameWidth(playerFrame.spec)
+    inset = U.BorderSize()
+    pipWidth = (width - inset * 2 -
+                (COMBO_MAX - 1) * COMBO_GAP) / COMBO_MAX
+    pipHeight = COMBO_HEIGHT - inset * 2
+  end
+
+  -- Same raised-child-layer trick as the targettarget health label. The flat
+  -- strip starts at the player's top edge; Modern WoW re-anchors this layer to
+  -- the opposite aura origin after the themed housing publishes its geometry.
+  local layer = CreateFrame("Frame", nil, playerFrame)
+  layer:SetWidth(width)
+  layer:SetHeight(modernWow and pipHeight or COMBO_HEIGHT)
+  layer:SetPoint("BOTTOMLEFT", playerFrame, "TOPLEFT", 0, 0)
+  if not modernWow then
+    -- The layer's black fill is visible only through the one-pixel gutters,
+    -- giving every adjacent pair of points the reference's crisp separator.
+    local separators = layer:CreateTexture(nil, "BACKGROUND")
+    separators:SetTexture(M.texture.plain)
+    separators:SetAllPoints(layer)
+    U.SetColor(separators, 0, 0, 0, 1)
+    U.CreateBorder(layer, inset)
+    U.SetBorderColor(layer, 0, 0, 0, 1)
+  end
+  local levelOk, level = pcall(health.GetFrameLevel, health)
+  if levelOk and tonumber(level) then
+    pcall(layer.SetFrameLevel, layer, level + 10)
+  end
+
+  comboPips = { layer = layer, druid = isDruid and true or false,
+                modernWow = modernWow and true or false }
+  local i
+  for i = 1, COMBO_MAX do
+    local pip
+    if modernWow then
+      pip = layer:CreateTexture(nil, "ARTWORK")
+      pip:SetTexture(M.modernWow.texture.comboPoints)
+      pip:SetWidth(pipWidth)
+      pip:SetHeight(pipHeight)
+      local cell = M.modernWow.combo.inactive
+      pip:SetTexCoord(cell[1], cell[2], cell[3], cell[4])
+      pip:SetPoint("TOPLEFT", layer, "TOPLEFT",
+                   (i - 1) * (pipWidth + M.modernWow.combo.gap), 0)
+    else
+      pip = U.CreateStatusBar(layer, {
+        width = pipWidth,
+        height = pipHeight,
+        texture = M.texture.statusBar,
+        color = COMBO_EMPTY,
+        background = COMBO_EMPTY,
+      })
+      pip:SetPoint("TOPLEFT", layer, "TOPLEFT",
+                   inset + (i - 1) * (pipWidth + COMBO_GAP), -inset)
+    end
+    comboPips[i] = pip
+  end
+end
+
+-- The flat strip covers the edge an above-frame aura row uses, so publish its
+-- height on whichever frame currently carries it and clear the other. Modern
+-- WoW places its circles on the opposite edge and therefore publishes zero.
+-- modules/auras.lua reads the field on every refresh pass, so a druid's form
+-- change moves the flat row without an event of its own.
+local function UpdateComboAuraOffset()
+  local onTarget = comboPips and comboPips.anchor == "target"
+  local shown = comboPips and comboPips.layer and
+                comboPips.layer:IsShown() and true or false
+  -- Modern WoW deliberately puts the circles on the side opposite the aura
+  -- rows, so those rows never need to be pushed away. The flat strip used by
+  -- the other themes still occupies the above-frame aura edge.
+  local height = shown and not comboPips.modernWow and COMBO_HEIGHT or 0
+  if frames.player then
+    frames.player.puiAuraComboOffset = (not onTarget) and height or 0
+  end
+  if frames.target then
+    frames.target.puiAuraComboOffset = onTarget and height or 0
+  end
+end
+
+-- Re-anchor and resize the strip in place so changing its setting is visible
+-- immediately. Player and target frames can have different configured widths.
+function U.ApplyComboPointAnchor(location)
+  if not comboPips or not comboPips.layer then return end
+
+  comboPips.anchor = location == "target" and "target" or "player"
+  local anchor = comboPips.anchor == "target" and frames.target or frames.player
+  if not anchor then return end
+
+  if comboPips.modernWow then
+    local token = M.modernWow.combo
+    local auraSize = type(U.GetAuraSetting) == "function" and
+                     tonumber(U.GetAuraSetting("size")) or 24
+    local auraScale = tonumber(anchor.puiAuraLayout and
+                                anchor.puiAuraLayout.iconScale) or
+                      tonumber(M.modernWow.aura and
+                               M.modernWow.aura.iconScale) or 1
+    local pipHeight = auraSize * auraScale * (tonumber(token.scale) or 1)
+    local pipWidth = pipHeight * (tonumber(token.aspect) or 1)
+    local gap = tonumber(token.gap) or 0
+    local layout = anchor.puiAuraLayout
+    local aurasBelow = type(U.GetAuraSetting) == "function" and
+                       U.GetAuraSetting("belowFrame") and true or false
+
+    comboPips.layer:ClearAllPoints()
+    comboPips.layer:SetWidth(COMBO_MAX * pipWidth + (COMBO_MAX - 1) * gap)
+    comboPips.layer:SetHeight(pipHeight)
+    if layout and aurasBelow then
+      -- Auras below: reuse their above-frame origin for the combo row.
+      comboPips.layer:SetPoint("BOTTOMLEFT", anchor, "TOPLEFT",
+                               tonumber(layout.left) or 0,
+                               tonumber(layout.top) or 0)
+    elseif layout then
+      -- Auras above: reuse their below-frame origin for the combo row.
+      comboPips.layer:SetPoint("TOPLEFT", anchor, "TOPLEFT",
+                               tonumber(layout.belowLeft or layout.left) or 0,
+                               tonumber(layout.belowTop) or 0)
+    elseif aurasBelow then
+      comboPips.layer:SetPoint("BOTTOMLEFT", anchor, "TOPLEFT", 0, 0)
+    else
+      comboPips.layer:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, 0)
+    end
+
+    local levelOk, level = pcall(anchor.GetFrameLevel, anchor)
+    if levelOk and tonumber(level) then
+      pcall(comboPips.layer.SetFrameLevel, comboPips.layer, level + 22)
+    end
+
+    local i
+    for i = 1, COMBO_MAX do
+      local pip = comboPips[i]
+      pip:SetWidth(pipWidth)
+      pip:SetHeight(pipHeight)
+      pip:ClearAllPoints()
+      pip:SetPoint("TOPLEFT", comboPips.layer, "TOPLEFT",
+                   (i - 1) * (pipWidth + gap), 0)
+    end
+
+    UpdateComboAuraOffset()
+    return
+  end
+
+  -- FrameWidth includes the selected frame's outer outline, so the combo strip
+  -- reaches precisely from edge to edge on either player or target.
+  local width = anchor.spec and FrameWidth(anchor.spec) or nil
+  if not width or width <= 0 then return end
+
+  local inset = U.BorderSize()
+  local pipWidth = (width - inset * 2 -
+                    (COMBO_MAX - 1) * COMBO_GAP) / COMBO_MAX
+  comboPips.layer:ClearAllPoints()
+  comboPips.layer:SetWidth(width)
+  comboPips.layer:SetPoint("BOTTOMLEFT", anchor, "TOPLEFT", 0, 0)
+
+  local i
+  for i = 1, COMBO_MAX do
+    local pip = comboPips[i]
+    pip:SetWidth(pipWidth)
+    pip:ClearAllPoints()
+    pip:SetPoint("TOPLEFT", comboPips.layer, "TOPLEFT",
+                 inset + (i - 1) * (pipWidth + COMBO_GAP), -inset)
+  end
+
+  UpdateComboAuraOffset()
+end
+
+local function SetComboPoints(count)
+  if not comboPips then return end
+  count = tonumber(count) or 0
+
+  local i
+  for i = 1, COMBO_MAX do
+    if comboPips.modernWow then
+      local cell = i <= count and M.modernWow.combo.active or
+                   M.modernWow.combo.inactive
+      comboPips[i]:SetTexCoord(cell[1], cell[2], cell[3], cell[4])
+    elseif i <= count then
+      U.SetStatusBarColor(comboPips[i], M.Unpack(M.rogueCombo[i]))
+    else
+      U.SetStatusBarColor(comboPips[i], M.Unpack(COMBO_EMPTY))
+    end
+  end
+end
+
+local function RefreshComboPoints()
+  if not comboPips then return end
+
+  local shown = true
+  -- UnitPowerType is already the unit-frame module's form-safe signal for a
+  -- druid: Cat Form uses energy (3), whereas Bear uses rage and caster forms
+  -- use mana. Rogues always keep the strip available.
+  if comboPips.druid then
+    shown = ApiNumber("UnitPowerType", "player") == 3
+  end
+
+  -- A strip anchored to the target frame must not linger when the target frame
+  -- has nothing to represent. PLAYER_TARGET_CHANGED is an accelerator; the
+  -- existing combo-point events also refresh this state.
+  if shown and comboPips.anchor == "target" then
+    local exists = ResolveApiFn("UnitExists")
+    local ok, value = false, nil
+    if exists then ok, value = pcall(exists, "target") end
+    shown = ok and value and true or false
+  end
+
+  if shown then comboPips.layer:Show() else comboPips.layer:Hide() end
+  UpdateComboAuraOffset()
+  if not shown then return end
+
+  local get = ResolveApiFn("GetComboPoints")
+  if not get then return end
+  local ok, value = pcall(get, "target")
+  SetComboPoints(ok and value or 0)
+end
+
+local COMBO_EVENTS = {
+  "UNIT_COMBO_POINTS", "PLAYER_COMBO_POINTS",
+  "PLAYER_TARGET_CHANGED", "PLAYER_ENTERING_WORLD", "UNIT_DISPLAYPOWER",
+}
+
+local function RegisterComboEvents()
+  local i
+  for i = 1, table.getn(COMBO_EVENTS) do
+    U.RegisterEvent(COMBO_EVENTS[i], RefreshComboPoints)
+  end
+end
+
+-- ---------------------------------------------------------------------------
+-- Refresh
+-- ---------------------------------------------------------------------------
+local function SetBar(bar, value, maximum)
+  if not bar then return end
+  maximum = tonumber(maximum) or 0
+  value = tonumber(value) or 0
+  if maximum <= 0 then maximum, value = 1, 0 end
+
+  if bar.puiMin ~= 0 or bar.puiMax ~= maximum then
+    pcall(bar.SetMinMaxValues, bar, 0, maximum)
+  end
+  if bar.puiValue ~= value then
+    pcall(bar.SetValue, bar, value)
+  end
+end
+
+-- Player mana / energy tick
+--
+-- UnrealPfUI's modules/energytick.lua demonstrates the timing model used here:
+-- energy gains synchronise a repeating two-second cycle, while spending mana
+-- starts the five-second regeneration delay and the first real mana gain
+-- synchronises the following two-second ticks. That source is WORKING_SOURCE,
+-- not runtime verification; the client pieces used by this implementation are
+-- independently established here: GetTime is measured by core.time.v1,
+-- UNIT_MANA is observed, and every event remains an accelerator over the
+-- unit-frame polling pass.
+--
+-- Keep the subsystem on one table so this already-large Lua chunk stays well
+-- under the client's silent 200-local failure limit.
+local powerTick = {
+  defaults = { manaTick = true, energyTick = true, comboAnchor = "player" },
+  mode = nil,
+  lastPower = nil,
+  badTick = nil,
+  startAt = nil,
+  duration = nil,
+  markerX = nil,
+  layer = nil,
+  marker = nil,
+  -- Everything below exists to keep the per-render-tick and per-event paths
+  -- cheap: a cached settings table, cached GetTime, the cached bar width, the
+  -- visibility already applied to the layer and the spark, and the flag that
+  -- collapses the client's power-event burst into one sample per pass.
+  cfg = nil,
+  getTime = nil,
+  width = nil,
+  visible = nil,
+  markerShown = nil,
+  dirty = nil,
+  running = nil,
+}
+
+-- U.ModuleConfig re-validates every default against the stored table on each
+-- call. Sample runs on every power event and on the shared refresh, so that
+-- loop was being paid several times a second for a table that never changes
+-- identity once the config has loaded.
+function powerTick.Config()
+  if powerTick.cfg then return powerTick.cfg end
+  local cfg = U.ModuleConfig("unitframes", powerTick.defaults)
+  -- Before LoadConfig, ModuleConfig hands back the defaults table itself, so
+  -- only the real stored table is worth caching.
+  if U.db then powerTick.cfg = cfg end
+  return cfg
+end
+
+function U.GetComboPointAnchor()
+  return powerTick.Config().comboAnchor
+end
+
+-- The player's own power-tick settings, reachable from outside this file so the
+-- Unit Frames page and the contextual panel beside the player mover
+-- (modules/unitframeconfig.lua) write through one path rather than each poking
+-- the stored table. key is "manaTick" or "energyTick".
+function U.GetUnitFramePowerTick(key)
+  if key ~= "manaTick" and key ~= "energyTick" then return nil end
+  return powerTick.Config()[key] and true or false
+end
+
+function U.SetUnitFramePowerTick(key, value)
+  if key ~= "manaTick" and key ~= "energyTick" then return end
+  powerTick.Config()[key] = value and true or false
+  powerTick.ApplySettings()
+  if type(U.RefreshUnitFrameSettingsViews) == "function" then
+    U.RefreshUnitFrameSettingsViews()
+  end
+end
+
+function U.SetComboPointAnchor(value)
+  value = value == "target" and "target" or "player"
+  powerTick.Config().comboAnchor = value
+  U.ApplyComboPointAnchor(value)
+  RefreshComboPoints()
+  if type(U.RefreshUnitFrameSettingsViews) == "function" then
+    U.RefreshUnitFrameSettingsViews()
+  end
+end
+
+function powerTick.WantedMode()
+  -- A dead/ghost player keeps the same power type, so power type alone would
+  -- leave an in-flight spark cycling over the bar. Use the same death queries
+  -- as the player frame and let SetMode stop and hide the subsystem until the
+  -- periodic sample sees the player alive again.
+  if ApiTruth("UnitIsDead", "player") or
+     ApiTruth("UnitIsGhost", "player") then
+    return nil
+  end
+
+  local powerType = ApiNumber("UnitPowerType", "player")
+  local cfg = powerTick.Config()
+  if powerType == 0 and cfg.manaTick then return "MANA" end
+  if powerType == 3 and cfg.energyTick then return "ENERGY" end
+  return nil
+end
+
+-- Called once per updater pass while the marker runs. The first call is
+-- protected; after GetTime has answered once it is called directly, the same
+-- memoisation compat.native_suppression_pcall_burst_stutter applied to the
+-- suppression sweep. A type check still guards the arithmetic below.
+function powerTick.Now()
+  local getTime = powerTick.getTime
+  if getTime then
+    local value = getTime()
+    if type(value) ~= "number" then return nil end
+    return value
+  end
+
+  getTime = ResolveApiFn("GetTime")
+  if not getTime then return nil end
+  local ok, value = pcall(getTime)
+  if not ok or type(value) ~= "number" then return nil end
+  powerTick.getTime = getTime
+  return value
+end
+
+function powerTick.SetMode(force)
+  if not powerTick.layer then return nil end
+  local mode = powerTick.WantedMode()
+  if force or mode ~= powerTick.mode then
+    powerTick.mode = mode
+    powerTick.lastPower = ApiNumber("UnitMana", "player")
+    powerTick.badTick = nil
+    powerTick.width = nil
+    powerTick.Stop()
+  end
+
+  -- Show/Hide only when the visibility actually changes. This used to run on
+  -- every sample, so a full-mana or steady-energy player paid a native
+  -- visibility pass several times a second to re-show an already-shown frame.
+  local visible = mode and true or false
+  if force or powerTick.visible ~= visible then
+    powerTick.visible = visible
+    if visible then powerTick.layer:Show() else powerTick.layer:Hide() end
+  end
+  return mode
+end
+
+-- Power events and the 0.2s compatibility fallback wake the marker updater.
+-- Once that sample finds no active regeneration cycle it unregisters again;
+-- the 50 Hz cadence is retained unchanged for the period in which the spark
+-- is actually moving.
+function powerTick.Wake()
+  if powerTick.running or not powerTick.layer then return end
+  powerTick.running = true
+  U.RegisterUpdate("unitframes.powertick", 0.02, powerTick.Update)
+end
+
+function powerTick.SleepIfIdle()
+  if not powerTick.running or powerTick.dirty or powerTick.startAt then return end
+  powerTick.running = nil
+  U.UnregisterUpdate("unitframes.powertick")
+end
+
+function powerTick.Stop()
+  powerTick.startAt = nil
+  powerTick.duration = nil
+  powerTick.markerX = nil
+  if powerTick.marker and powerTick.markerShown ~= false then
+    powerTick.markerShown = false
+    powerTick.marker:Hide()
+  end
+  powerTick.SleepIfIdle()
+end
+
+function powerTick.Start(duration)
+  local now = powerTick.Now()
+  duration = tonumber(duration)
+  if not now or not duration or duration <= 0 then return end
+  powerTick.startAt = now
+  powerTick.duration = duration
+  powerTick.markerX = nil
+  -- Re-read the bar width once per cycle instead of once per render tick. A
+  -- width change (theme swap, frame scale) is picked up on the next cycle at
+  -- the latest, and Update re-reads it itself if the cached value is unusable.
+  powerTick.width = nil
+  if powerTick.marker and not powerTick.markerShown then
+    powerTick.markerShown = true
+    powerTick.marker:Show()
+  end
+  powerTick.Wake()
+end
+
+function powerTick.Sample()
+  if not powerTick.layer then return end
+  local mode = powerTick.SetMode()
+  local current = ApiNumber("UnitMana", "player")
+  if not current then return end
+
+  local previous = powerTick.lastPower
+  powerTick.lastPower = current
+  local maximum = ApiNumber("UnitManaMax", "player")
+  if maximum and maximum > 0 and current >= maximum then
+    powerTick.Stop()
+    return
+  end
+  if not previous or not mode then return end
+  local diff = current - previous
+
+  if mode == "MANA" and diff < 0 then
+    powerTick.Start(5)
+  elseif mode == "MANA" and diff > 0 then
+    local threshold = powerTick.badTick and powerTick.badTick * 1.2 or 5
+    if powerTick.duration ~= 5 and diff > threshold then
+      powerTick.Start(2)
+    else
+      powerTick.badTick = diff
+    end
+  elseif mode == "ENERGY" and diff > 0 then
+    powerTick.Start(2)
+  end
+end
+
+-- The client delivers the regeneration tick itself as a burst of power events
+-- on one frame, and each one used to run a complete Sample -- settings read,
+-- three protected API calls and a Show/Hide -- at exactly the moment the
+-- marker reaches the end of the bar. Flag the sample instead and let Update
+-- take it once, the same accelerator-over-polling shape the unit frames use.
+-- Reading the value once per pass reads the final value of the burst, which is
+-- what the diff heuristic wants anyway.
+function powerTick.Request()
+  if not powerTick.layer then return end
+  powerTick.dirty = true
+  powerTick.Wake()
+end
+
+function powerTick.OnUnitEvent(event, unit)
+  if not powerTick.layer then return end
+  if event == "UNIT_DISPLAYPOWER" then powerTick.SetMode() end
+  if unit == "player" and
+     (event == "UNIT_MANA" or event == "UNIT_ENERGY") then
+    powerTick.Request()
+  end
+end
+
+-- The layer is sized by SetAllPoints, and an anchor-sized frame's GetWidth is
+-- its extent times its effective scale, while SetPoint offsets are in its own
+-- units (layout.anchor_sized_getwidth_times_effective_scale). Measure from the
+-- edges so the spark ends exactly at the bar's right edge at any frame scale.
+function powerTick.MeasureWidth()
+  local layer = powerTick.layer
+  local left, right = layer:GetLeft(), layer:GetRight()
+  if type(left) == "number" and type(right) == "number" and right > left then
+    return right - left
+  end
+  return tonumber(layer:GetWidth()) or 0
+end
+
+function powerTick.Update()
+  if not powerTick.layer then return end
+
+  if powerTick.dirty then
+    powerTick.dirty = nil
+    powerTick.Sample()
+  end
+
+  if not powerTick.mode or not powerTick.startAt or
+     not powerTick.duration then
+    powerTick.SleepIfIdle()
+    return
+  end
+
+  local now = powerTick.Now()
+  if not now then return end
+  local elapsed = now - powerTick.startAt
+  if elapsed < 0 then
+    powerTick.Start(powerTick.duration)
+    elapsed = 0
+  elseif elapsed > powerTick.duration then
+    -- Mana's five-second delay becomes the normal two-second regeneration
+    -- cycle. Energy is already on that cycle, so both paths meet here.
+    powerTick.startAt = now
+    powerTick.duration = 2
+    powerTick.width = nil
+    elapsed = 0
+  end
+
+  local width = powerTick.width
+  if not width or width <= 0 then
+    width = powerTick.MeasureWidth()
+    powerTick.width = width
+    powerTick.markerX = nil
+  end
+  if width <= 0 then return end
+
+  local x = math.floor(width * (elapsed / powerTick.duration) + 0.5)
+  if x < 0 then x = 0 elseif x > width then x = width end
+  if x == powerTick.markerX then return end
+  powerTick.markerX = x
+  -- One anchor point, re-set in place. UnrealPfUI's modules/energytick.lua
+  -- moves its spark the same way on this client, re-calling SetPoint for the
+  -- same anchor with no ClearAllPoints; that is WORKING_SOURCE, not runtime
+  -- verification, and a client that stacked points instead of replacing them
+  -- would show it immediately as a stretched spark.
+  powerTick.marker:SetPoint("CENTER", powerTick.layer, "LEFT", x, 0)
+end
+
+function powerTick.Build(bar, barHeight, health)
+  if not bar or powerTick.layer then return end
+
+  powerTick.layer = CreateFrame("Frame", nil, bar)
+  powerTick.layer:SetAllPoints(bar)
+  local ok, level = pcall(bar.GetFrameLevel, bar)
+  level = ok and tonumber(level) or nil
+  local healthRaised = false
+  if level then
+    pcall(powerTick.layer.SetFrameLevel, powerTick.layer, level + 5)
+
+    -- Modern lets the larger spark extend into the row above. Raise the entire
+    -- health-bar stack one level beyond the tick so its backdrop, fill and text
+    -- remain the visible top layer wherever the two overlap.
+    if health then
+      local healthLevel = level + 6
+      healthRaised = pcall(health.SetFrameLevel, health, healthLevel)
+      if healthRaised then
+        if health.bar then
+          pcall(health.bar.SetFrameLevel, health.bar, healthLevel + 1)
+        end
+        if health.textLayer then
+          pcall(health.textLayer.SetFrameLevel, health.textLayer, healthLevel + 10)
+        end
+      end
+    end
+  end
+
+  barHeight = tonumber(barHeight) or classicNative.Dimension(bar, "GetHeight")
+  if barHeight <= 0 then barHeight = 10 end
+  powerTick.marker = powerTick.layer:CreateTexture(nil, "OVERLAY")
+  powerTick.marker:SetTexture("Interface\\CastingBar\\UI-CastingBar-Spark")
+  -- Classic stays inside its native power row. Modern restores the larger
+  -- casting-bar spark; its health stack was explicitly raised above it above.
+  powerTick.marker:SetHeight(healthRaised and (barHeight + 15) or barHeight)
+  powerTick.marker:SetWidth(barHeight + 5)
+  if powerTick.marker.SetBlendMode then
+    pcall(powerTick.marker.SetBlendMode, powerTick.marker, "ADD")
+  end
+  powerTick.marker:Hide()
+  powerTick.SetMode(true)
+end
+
+function powerTick.ApplySettings()
+  powerTick.SetMode()
+end
+
+-- Health/power bar colours are user-configurable (settings tab below); values
+-- persist as flat numeric fields (core/config.lua accepts scalars only) and
+-- default to pfUI modern's own colours from core/media.lua.
+--
+-- Power colours are stored per power type, not as one shared colour. The
+-- config is account-wide, so a single "power bar colour" would have meant
+-- recolouring a priest's mana also recoloured a rogue's energy.
+local POWER_TYPES = {
+  { type = 0, key = "powerMana",   labelKey = "UF_POWER_MANA" },
+  { type = 1, key = "powerRage",   labelKey = "UF_POWER_RAGE" },
+  { type = 2, key = "powerFocus",  labelKey = "UF_POWER_FOCUS" },
+  { type = 3, key = "powerEnergy", labelKey = "UF_POWER_ENERGY" },
+}
+
+local POWER_KEY_BY_TYPE = {}
+
+-- customColors is the single master switch for every bar colour on this page.
+-- Unticked, the health and power bars use core/media.lua's own values and the
+-- stored colours are ignored but kept, so re-ticking restores the user's
+-- choices rather than starting over.
+local COLOR_DEFAULTS = {
+  customColors = false,
+  classHealthColors = false,
+  healthColorR = M.color.healthFull[1],
+  healthColorG = M.color.healthFull[2],
+  healthColorB = M.color.healthFull[3],
+}
+
+do
+  local i
+  for i = 1, table.getn(POWER_TYPES) do
+    local entry = POWER_TYPES[i]
+    local default = M.power[entry.type] or M.power.fallback
+    POWER_KEY_BY_TYPE[entry.type] = entry.key
+    COLOR_DEFAULTS[entry.key .. "R"] = default[1]
+    COLOR_DEFAULTS[entry.key .. "G"] = default[2]
+    COLOR_DEFAULTS[entry.key .. "B"] = default[3]
+  end
+end
+
+local function ColorConfig()
+  local cfg = U.ModuleConfig("unitframes", COLOR_DEFAULTS)
+
+  -- Carry-over from the earlier power-only toggle, which this replaced. The
+  -- old key is cleared so it does not linger in SavedVariables; it is no
+  -- longer in COLOR_DEFAULTS, so nothing puts it back.
+  if cfg.customPowerColor ~= nil then
+    if cfg.customPowerColor then cfg.customColors = true end
+    cfg.customPowerColor = nil
+  end
+
+  return cfg
+end
+
+-- The two colours every bar resolves through. With the master switch off they
+-- return core/media.lua's values, which is what makes unticking restore the
+-- default look everywhere at once.
+local function HealthBaseColor(frame)
+  local cfg = ColorConfig()
+  if cfg.customColors then
+    return cfg.healthColorR, cfg.healthColorG, cfg.healthColorB
+  end
+  local modern = frame and frame.puiModernWow and M.modernWow and
+                 M.modernWow.unitFrame
+  local c = (modern and modern.healthFull) or M.color.healthFull
+  return c[1], c[2], c[3]
+end
+
+local function PowerBarColor(powerType)
+  local cfg = ColorConfig()
+  local key = POWER_KEY_BY_TYPE[powerType]
+  -- An unrecognised power type has no configured colour of its own, so it
+  -- keeps the media fallback even while custom colours are on.
+  if cfg.customColors and key then
+    return cfg[key .. "R"], cfg[key .. "G"], cfg[key .. "B"], 1
+  end
+  return M.Unpack(M.power[powerType] or M.power.fallback)
+end
+
+-- Class colouring matches the player tooltip exactly and takes priority over
+-- both the theme gradient and a custom health colour. Non-player units keep
+-- the normal theme/custom path below.
+local function HealthTexture(frame, textured, modernFill)
+  if not textured then return M.texture.plain end
+  local t = M.modernWow and M.modernWow.texture
+  -- A dressed frame whose housing ships its own fills (the Retail target and
+  -- the party rows, modules/modernwow.lua) draws those instead of the shared
+  -- player-sized pair.
+  local own = frame and frame.puiModernWow
+  if modernFill == "green" then
+    if own and own.healthFill then return own.healthFill end
+    if t and t.healthFill then return t.healthFill end
+  end
+  if modernFill == "tint" then
+    if own and own.healthFillTint then return own.healthFillTint end
+    if t and t.healthFillTint then return t.healthFillTint end
+  end
+  return M.unitFrame.statusTexture
+end
+
+-- The Forever artwork is already green. It therefore belongs exclusively to
+-- the default colour mode; a custom colour, or a class colour actually
+-- applied to this unit, draws the neutral fill so only that tint shows. The
+-- theme's M.unitFrame.statusTexture is the green fill too, so the neutral one
+-- has to be named here rather than left to that fallback. Units the class
+-- option does not colour (NPCs) keep the green.
+local function ModernHealthFill(frame, textured, cfg, classTinted)
+  if not (textured and frame and frame.puiModernWow) then return nil end
+  if cfg.customColors or classTinted then return "tint" end
+  return "green"
+end
+
+local function ApplyHealthColor(frame)
+  local perc = frame.data.healthPercent
+  local cfg = ColorConfig()
+  local cr, cg, cb = HealthBaseColor(frame)
+
+  local r, g, b
+  local classTinted = false
+  -- Target and party health always carry normTex2, including theme-colour
+  -- mode. Other health bars use it only for class colouring.
+  local textured = frame.spec and frame.spec.healthTexture and true or false
+  if frame.data.muted then
+    r, g, b = M.Unpack(M.unitFrame.inactiveFill)
+    textured = false
+  elseif cfg.classHealthColors and frame.data.isPlayer and frame.data.class then
+    r, g, b = M.ClassColor(frame.data.class)
+    if r then textured, classTinted = true, true end
+  end
+
+  -- Forever's authored Modern WoW fill keeps its locked white vertex colour;
+  -- its pixels already contain the full health hue and gradient. Custom and
+  -- class colours retain their explicit tint paths.
+  if not r and (cfg.customColors or frame.puiModernWow or perc >= 1) then
+    r, g, b = cr, cg, cb
+  elseif not r then
+    r, g, b = PastelBar(Gradient(perc))
+    r = cr * perc + r * (1 - perc)
+    g = cg * perc + g * (1 - perc)
+    b = cb * perc + b * (1 - perc)
+  end
+
+  if frame.data.outOfRange and not frame.data.muted then
+    local brightness = M.unitFrame.distantBrightness
+    r, g, b = r * brightness, g * brightness, b * brightness
+  end
+
+  local modernFill = ModernHealthFill(frame, textured, cfg, classTinted)
+
+  if frame.healthColorR == r and frame.healthColorG == g and
+     frame.healthColorB == b and
+     frame.healthColorTextured == textured and
+     frame.healthColorModernFill == modernFill then return end
+  frame.healthColorR, frame.healthColorG, frame.healthColorB = r, g, b
+  frame.healthColorTextured = textured
+  frame.healthColorModernFill = modernFill
+  U.SetStatusBarTexture(frame.health.bar,
+                        HealthTexture(frame, textured, modernFill))
+  U.SetStatusBarColor(frame.health.bar, r, g, b, 1)
+end
+
+local function ApplyPowerColor(frame)
+  if not frame.power then return end
+  local r, g, b, a = PowerBarColor(frame.data.powerType)
+  if frame.data.muted then
+    r, g, b, a = M.Unpack(M.unitFrame.inactiveFill)
+  elseif frame.data.outOfRange then
+    local brightness = M.unitFrame.distantBrightness
+    r, g, b = r * brightness, g * brightness, b * brightness
+  end
+  if frame.powerColorR == r and frame.powerColorG == g and
+     frame.powerColorB == b and frame.powerColorA == a then return end
+  frame.powerColorR, frame.powerColorG = r, g
+  frame.powerColorB, frame.powerColorA = b, a
+  U.SetStatusBarColor(frame.power.bar, r, g, b, a)
+end
+
+local function TokenNeedsRefresh(token, mode)
+  if mode == "full" then return true end
+  if token == "healthdyn" then
+    return mode == "health" or mode == "vitals"
+  end
+  if token == "powerdyn" or token == "powerval" or token == "powerpct" then
+    return mode == "power" or mode == "vitals"
+  end
+  if token == "healthval" or token == "healthpct" then
+    return mode == "health" or mode == "vitals"
+  end
+  return false
+end
+
+local function ApplyBarLabels(frame, box, labels, mode, isHealth)
+  if not box or not labels then return end
+  UF.powerText.ApplySize(frame, box, isHealth and "health" or "power")
+  local left, right = labels.left, labels.right
+  if isHealth then
+    left, right = UF.healthText.Labels(labels)
+  elseif box == frame.power then
+    left, right = UF.powerText.Labels(labels)
+  end
+  if UF.powerText.HoverOnly(frame) then
+    if UF.powerText.IsValueToken(left) then left = nil end
+    if UF.powerText.IsValueToken(right) then right = nil end
+  end
+
+  if box.leftLabel and TokenNeedsRefresh(left, mode) then
+    SetLabelText(box.leftLabel, StatusText(frame, left))
+  end
+  if box.rightLabel and TokenNeedsRefresh(right, mode) then
+    if box.rightNameLabel and right == "unitrev" then
+      local name, truncated = ColoredName(frame.data,
+                                          frame.spec.nameClassColor,
+                                          frame.spec.targetReactionName)
+      SetLabelText(box.rightNameLabel, name)
+      SetLabelText(box.rightLabel, ColoredLevel(frame.data))
+      box.rightNameLabel:SetPoint("RIGHT", box.rightLabel, "LEFT",
+        -(truncated and NAME_LEVEL_GAP_TRUNCATED or NAME_LEVEL_GAP), 0)
+    else
+      SetLabelText(box.rightLabel, StatusText(frame, right))
+      if box.rightNameLabel then SetLabelText(box.rightNameLabel, "") end
+    end
+  end
+end
+
+local function ApplyTexts(frame, mode)
+  -- Under the Classic theme the client draws the frame and every PandaUI
+  -- label on it is hidden (classicNative.HideCustomVisuals), so there is
+  -- nothing here to write to. The exact-vitals readout is the one piece of
+  -- text PandaUI still owns there, and it lives on its own overlay.
+  if frame.classicNative and not frame.puiClassicCustomVisible then
+    classicNative.ApplyVitals(frame)
+    return
+  end
+
+  if frame.health.label and TokenNeedsRefresh(frame.spec.healthText, mode) then
+    SetLabelText(frame.health.label, StatusText(frame, frame.spec.healthText))
+  end
+  ApplyBarLabels(frame, frame.health, frame.spec.healthLabels, mode, true)
+  ApplyBarLabels(frame, frame.power, frame.spec.powerLabels, mode)
+
+  local tokens = frame.spec.values or {}
+  local v = frame.values
+  if not v then return end
+  if v.left and TokenNeedsRefresh(tokens.left, mode) then
+    SetLabelText(v.left, StatusText(frame, tokens.left))
+  end
+  if v.center and TokenNeedsRefresh(tokens.center, mode) then
+    SetLabelText(v.center, StatusText(frame, tokens.center))
+  end
+  if v.right and TokenNeedsRefresh(tokens.right, mode) then
+    SetLabelText(v.right, StatusText(frame, tokens.right))
+  end
+end
+
+local function ClearTexts(frame)
+  if frame.classicNative and not frame.puiClassicCustomVisible then
+    SetLabelText(frame.puiClassicVitalsHealth, "")
+    SetLabelText(frame.puiClassicVitalsPower, "")
+    return
+  end
+
+  SetLabelText(frame.health.label, "")
+  SetLabelText(frame.health.leftLabel, "")
+  SetLabelText(frame.health.rightLabel, "")
+  SetLabelText(frame.health.rightNameLabel, "")
+  if frame.power then
+    SetLabelText(frame.power.leftLabel, "")
+    SetLabelText(frame.power.rightLabel, "")
+  end
+
+  local v = frame.values
+  if not v then return end
+  SetLabelText(v.left, "")
+  SetLabelText(v.center, "")
+  SetLabelText(v.right, "")
+end
+
+-- ---------------------------------------------------------------------------
+-- Classic theme: exact-vitals readout
+--
+-- The Classic theme hands the unit frames back to the client, so the numbers
+-- core/unitvitals.lua derives have nowhere to go: every PandaUI label on the
+-- frame is hidden and the client's own frame has no readout of its own for a
+-- creature it only knows a percentage for. Two addon-owned font strings put
+-- them back, one over the native health bar and one over the native mana bar.
+--
+-- Ownership: nothing native is retained. The strings hang off PandaUI's own
+-- click catcher, which classicNative already keeps exactly sized to and
+-- centred on the native root and re-anchors whenever the root moves or is
+-- replaced. The only thing taken from the client is the pair of offsets
+-- measured once per bind -- bounded numeric geometry, which is what the
+-- native-widget ownership rule allows to be carried over.
+-- ---------------------------------------------------------------------------
+function classicNative.MeasureChild(native, name)
+  local child = classicNative.Resolve({ name })
+  if not child or type(child.GetCenter) ~= "function" or
+     not native or type(native.GetCenter) ~= "function" then
+    return nil
+  end
+
+  local okChild, childX, childY = pcall(child.GetCenter, child)
+  local okRoot, rootX, rootY = pcall(native.GetCenter, native)
+  if not okChild or not okRoot then return nil end
+  if not tonumber(childX) or not tonumber(rootX) then return nil end
+  if not tonumber(childY) or not tonumber(rootY) then return nil end
+
+  return childX - rootX, childY - rootY
+end
+
+function classicNative.CreateVitalsLabel(catcher)
+  return U.CreateLabel(catcher, {
+    size = M.fontSize.small,
+    color = M.color.text,
+    inherits = "GameFontNormalSmall",
+    fontRole = "unitframe",
+    shadowOffset = M.compactTextShadowOffset,
+    shadowColor = M.color.shadowStrong,
+  })
+end
+
+-- Called from classicNative.Bind for the target root only: it is the one unit
+-- whose health this client reports as a percentage *and* whose damage it
+-- reports, so it is the only frame the readout has anything to add to.
+function classicNative.BindVitals(entry, anchor, native)
+  local catcher = anchor.puiClassicClickCatcher
+  if not catcher then return end
+
+  if not anchor.puiClassicVitalsHealth then
+    anchor.puiClassicVitalsHealth = classicNative.CreateVitalsLabel(catcher)
+    anchor.puiClassicVitalsPower = classicNative.CreateVitalsLabel(catcher)
+  end
+
+  -- Re-measured on every bind, never cached across one: a rebind means the
+  -- client handed out a different native root, and the stored offsets
+  -- described the old one.
+  local healthX, healthY =
+    classicNative.MeasureChild(native, "TargetFrameHealthBar")
+  local powerX, powerY =
+    classicNative.MeasureChild(native, "TargetFrameManaBar")
+
+  local health = anchor.puiClassicVitalsHealth
+  if health then
+    pcall(health.ClearAllPoints, health)
+    -- Centre of the frame is the safe fallback: it is inside the artwork
+    -- either way, and an unreadable child is not a reason to drop the number.
+    pcall(health.SetPoint, health, "CENTER", catcher, "CENTER",
+          healthX or 0, healthY or 0)
+  end
+
+  local power = anchor.puiClassicVitalsPower
+  if power then
+    pcall(power.ClearAllPoints, power)
+    pcall(power.SetPoint, power, "CENTER", catcher, "CENTER",
+          powerX or 0, powerY or 0)
+  end
+end
+
+-- Classic never showed a number here, so the readout appears only when there
+-- is a real one to show. Without a creature-table match the frame is left
+-- exactly as the client drew it rather than gaining a percentage it never had.
+function classicNative.ApplyVitals(frame)
+  local health = frame.puiClassicVitalsHealth
+  if not health then return end
+
+  local data = frame.data
+  -- A dead target is the one case the client already has a word for: it draws
+  -- its own "Dead" over the health bar (TargetFrame_CheckDead, kept under this
+  -- theme because Classic hands the frame back to the client), and the
+  -- healthdyn readout's own "Dead" landed on top of it -- two red strings at
+  -- the same anchor, reported in game as overlapping text. The client's is
+  -- left to say it alone; the exact numbers have nothing to add to a corpse.
+  if data.isDead then
+    SetLabelText(health, "")
+  elseif data.exactHealthMax and data.connected ~= false then
+    SetLabelText(health, StatusText(frame, "healthdyn"))
+  else
+    SetLabelText(health, "")
+  end
+
+  local power = frame.puiClassicVitalsPower
+  if not power then return end
+  if data.exactPowerMax and data.connected ~= false then
+    SetLabelText(power, StatusText(frame, "powerdyn"))
+  else
+    SetLabelText(power, "")
+  end
+end
+
+-- SetColor caches the tint it applied (core/compat.lua) because this client has
+-- no GetVertexColor to read one back with, so /pui elite status can still
+-- report what the icon was actually told to be.
+local function ApplyClassificationIcon(frame)
+  local icon = frame.classIcon
+  if not icon then return end
+  if frame.classicNative then
+    frame.classIconState = false
+    pcall(icon.Hide, icon)
+    return
+  end
+
+  local class = frame.data.classification or ""
+  local tint = ELITE_TINTS[class]
+  -- The ornamental classification skin (classSkin, above) replaces this icon
+  -- entirely on the frame that carries one, so the icon stands down for any
+  -- tier the artwork covers and returns by itself for one it does not. Nothing
+  -- here is theme-specific: outside Modern no skin is ever built, so the state
+  -- is always false and the icon behaves exactly as it did before.
+  if frame.puiClassSkinState then tint = nil end
+  local state = tint and class or false
+
+  -- Nothing below needs to run again while the classification has not changed.
+  if frame.classIconState == state then return end
+  frame.classIconState = state
+
+  if not tint then
+    pcall(icon.Hide, icon)
+    return
+  end
+
+  U.SetColor(icon, tint[1], tint[2], tint[3], 1)
+  pcall(icon.Show, icon)
+end
+
+local function HideClassificationIcon(frame)
+  if not frame.classIcon or frame.classIconState == false then return end
+  frame.classIconState = false
+  pcall(frame.classIcon.Hide, frame.classIcon)
+end
+
+local function ApplyRestIcon(frame)
+  local icon = frame.restIcon
+  if not icon then return end
+  if frame.classicNative then
+    frame.restIconState = false
+    UF.restIconFX.Stop(frame)
+    return
+  end
+
+  local resting = ApiTruth("IsResting")
+  -- Nothing below needs to run again while the resting state has not changed.
+  if frame.restIconState == resting then return end
+  frame.restIconState = resting
+
+  if resting then
+    UF.restIconFX.Start(frame)
+  else
+    UF.restIconFX.Stop(frame)
+  end
+end
+
+local function HideRestIcon(frame)
+  if not frame.restIcon or frame.restIconState == false then return end
+  frame.restIconState = false
+  UF.restIconFX.Stop(frame)
+end
+
+local function ApplyLeaderIcon(frame)
+  local icon = frame.leaderIcon
+  if not icon then return end
+  if frame.classicNative then
+    frame.leaderIconState = false
+    pcall(icon.Hide, icon)
+    return
+  end
+
+  local leader = ApiTruth("UnitIsPartyLeader", frame.unit) and
+                 (ApiTruth("GetNumPartyMembers") or
+                  ApiTruth("GetNumRaidMembers"))
+  -- Nothing below needs to run again while leadership has not changed.
+  if frame.leaderIconState == leader then return end
+  frame.leaderIconState = leader
+
+  if leader then
+    pcall(icon.Show, icon)
+  else
+    pcall(icon.Hide, icon)
+  end
+end
+
+local function HideLeaderIcon(frame)
+  if not frame.leaderIcon or frame.leaderIconState == false then return end
+  frame.leaderIconState = false
+  pcall(frame.leaderIcon.Hide, frame.leaderIcon)
+end
+
+local function SetFrameShown(frame, shown)
+  if frame.puiShown == shown then return end
+  frame.puiShown = shown
+  if shown then frame:Show() else frame:Hide() end
+end
+
+-- unitalpha.v2 confirmed that parent alpha does not fade the test hierarchy
+-- (knowledge.json / rendering.parent_alpha_not_propagated). Tint our owned
+-- textures directly: grey for offline units, darker live colours for distance.
+local function ApplyAvailabilityStyle(frame, muted, distant)
+  if frame.puiAlpha ~= 1 and pcall(frame.SetAlpha, frame, 1) then
+    frame.puiAlpha = 1
+  end
+  if frame.puiMuted == muted and frame.puiDistant == distant then return end
+  frame.puiMuted = muted
+  frame.puiDistant = distant
+  local color = M.color.healthBg
+  if muted then color = M.unitFrame.inactiveBackground
+  elseif distant then color = M.unitFrame.distantBackground end
+  U.SetColor(frame.health.bar.puiBackground, M.Unpack(color))
+  if frame.power then
+    U.SetColor(frame.power.bar.puiBackground, M.Unpack(color))
+  end
+end
+
+local statFrameRefreshes, statFullRefreshes = 0, 0
+
+function U.UnitFrameStats()
+  return {
+    frameRefreshes = statFrameRefreshes,
+    fullRefreshes = statFullRefreshes,
+  }
+end
+
+-- The incoming-heal segments on a health bar. modules/healpredict.lua owns the
+-- numbers and this owns the bar, so the two meet here and nowhere else; the
+-- module is optional, and a build without it leaves every bar untouched.
+--
+-- Only the amounts are pushed, the player's own and everyone else's. Where the
+-- segments actually land -- chained onto the end of the fill in that order --
+-- is core/style.lua's arithmetic, recomputed on every SetValue, so a unit
+-- taking damage under an incoming heal slides the prediction along with the
+-- fill without this being called again.
+local function ApplyIncomingHeal(frame)
+  if not frame or not frame.health or not frame.health.bar then return end
+  if type(U.UnitIncomingHeal) ~= "function" then return end
+
+  local ok, mine, others = pcall(U.UnitIncomingHeal, frame.unit)
+  if not ok then mine, others = 0, 0 end
+  U.SetStatusBarPrediction(frame.health.bar, mine, others)
+
+  -- Preview only ("/pui heal test"). Nothing can be drawn past a full bar, so
+  -- the demo holds the fill at a wounded value to make room for the segments,
+  -- and restores the unit's real health the moment the preview ends. Ordinary
+  -- refreshes never reach here with a fraction, so this is inert in normal play.
+  local demo = nil
+  if type(U.HealPredictPreviewFill) == "function" then
+    local okFill, fraction = pcall(U.HealPredictPreviewFill)
+    if okFill then demo = tonumber(fraction) end
+  end
+
+  local maximum = frame.data and tonumber(frame.data.healthMax) or nil
+  if demo and maximum and maximum > 0 then
+    frame.puiHealthDemo = true
+    SetBar(frame.health.bar, maximum * demo, maximum)
+  elseif frame.puiHealthDemo then
+    frame.puiHealthDemo = nil
+    if maximum and maximum > 0 then
+      SetBar(frame.health.bar, tonumber(frame.data.health) or 0, maximum)
+    end
+  end
+end
+
+-- Called by modules/healpredict.lua when a prediction opens, closes or times
+-- out. Every other move of the segment rides on the health refresh below.
+function U.ApplyHealPrediction()
+  local i
+  for i = 1, table.getn(frameOrder) do
+    ApplyIncomingHeal(frames[frameOrder[i]])
+  end
+end
+
+-- Party membership outlives a member's world unit during zone transitions.
+-- GetPartyMember is documented as roster-slot occupancy; keep polling vitals
+-- when it is occupied even if UnitExists cannot resolve the member. The exact
+-- transition tuple still needs an in-game capture (knowledge.json /
+-- unitframes.party_zone_transition_visibility). Pets must keep their own gate.
+local function FrameUnitExists(frame)
+  local exists = ApiTruth("UnitExists", frame.unit)
+  local inParty = false
+  if frame.spec.partyIndex and not frame.spec.partyPet then
+    inParty = ApiTruth("GetPartyMember", frame.spec.partyIndex)
+  end
+  return exists or inParty, exists, inParty
+end
+
+local function RefreshFrame(frame, mode)
+  if frame.spec.id == "targettarget" then
+    frame.puiDisabled = not (U.db and U.db.targetTargetEnabled ~= false)
+  end
+  -- A frame the configuration has switched off stays hidden whatever its unit
+  -- is doing, and is not worth an API read. This is checked ahead of the
+  -- unlocked-shell branch below on purpose: edit mode must not put a handle-
+  -- less shell on screen for a frame the user has turned off.
+  if frame.puiDisabled then
+    frame.data.initialised = false
+    model3d.Hide(frame)
+    SetFrameShown(frame, false)
+    return false
+  end
+
+  statFrameRefreshes = statFrameRefreshes + 1
+  if mode == "full" then statFullRefreshes = statFullRefreshes + 1 end
+
+  local exists = FrameUnitExists(frame)
+  classicNative.ReconcileTarget(frame, exists)
+  classicNative.RefreshCustomFallback(frame, exists)
+
+  if not exists then
+    frame.data.initialised = false
+    model3d.Hide(frame)
+    -- Drop the cached portrait identity with the unit. The next unit to take
+    -- this frame repaints, even if it happens to share a name with the one
+    -- that just left.
+    frame.puiPortraitKey = nil
+    frame.puiPortraitPaints = nil
+    classSkin.Hide(frame)
+    HideClassificationIcon(frame)
+    HideHappinessIndicator(frame)
+    HideRestIcon(frame)
+    HideLeaderIcon(frame)
+    -- Clear state styling before this slot becomes an empty mover.
+    ApplyAvailabilityStyle(frame, false, false)
+    -- Before the shell branch, so it happens either way: a prediction left on
+    -- the bar of a unit that has gone away would be inherited by whoever fills
+    -- the slot next.
+    ApplyIncomingHeal(frame)
+    -- An empty shell stays on screen while the UI is unlocked, otherwise a
+    -- frame with no unit could never be dragged into place.
+    if U.IsUnlocked() then
+      SetFrameShown(frame, true)
+      SetBar(frame.health.bar, 0, 1)
+      if frame.power then SetBar(frame.power.bar, 0, 1) end
+      local r, g, b = HealthBaseColor(frame)
+      local textured = frame.spec and frame.spec.healthTexture and true or false
+      local modernFill = ModernHealthFill(frame, textured, ColorConfig(), false)
+      if frame.healthColorR ~= r or frame.healthColorG ~= g or
+         frame.healthColorB ~= b or
+         frame.healthColorTextured ~= textured or
+         frame.healthColorModernFill ~= modernFill then
+        frame.healthColorR, frame.healthColorG, frame.healthColorB = r, g, b
+        frame.healthColorTextured = textured
+        frame.healthColorModernFill = modernFill
+        U.SetStatusBarTexture(frame.health.bar,
+                              HealthTexture(frame, textured, modernFill))
+        U.SetStatusBarColor(frame.health.bar, r, g, b, 1)
+      end
+      ClearTexts(frame)
+    else
+      SetFrameShown(frame, false)
+    end
+    return false
+  end
+
+  SetFrameShown(frame, true)
+
+  if not frame.data.initialised then mode = "full" end
+  if mode ~= "health" and mode ~= "power" and mode ~= "vitals" then
+    mode = "full"
+  end
+
+  local healthChanged = (mode == "full")
+  local powerChanged = (mode == "full")
+
+  if mode == "full" then
+    ReadUnit(frame)
+  else
+    if mode == "health" or mode == "vitals" then
+      local health, maximum, dead = frame.data.health,
+                                    frame.data.healthMax, frame.data.isDead
+      -- The tracked absolute value (core/unitvitals.lua) moves with every
+      -- damage event, while the client percentage it sits inside only changes
+      -- once per percent. Without it in this comparison the exact readout
+      -- would freeze between percentage steps.
+      local exact = frame.data.exactHealth
+      ReadHealth(frame)
+      healthChanged = health ~= frame.data.health or
+                      maximum ~= frame.data.healthMax or
+                      dead ~= frame.data.isDead or
+                      exact ~= frame.data.exactHealth
+    end
+    if mode == "power" or mode == "vitals" then
+      local power, maximum, powerType = frame.data.power,
+                                        frame.data.powerMax,
+                                        frame.data.powerType
+      local exact = frame.data.exactPower
+      ReadPower(frame)
+      powerChanged = power ~= frame.data.power or
+                     maximum ~= frame.data.powerMax or
+                     powerType ~= frame.data.powerType or
+                     exact ~= frame.data.exactPower
+    end
+  end
+
+  if healthChanged then
+    SetBar(frame.health.bar, frame.data.health, frame.data.healthMax)
+    ApplyHealthColor(frame)
+    -- The unit behind this frame can change without any prediction changing --
+    -- a new target, a party slot filled by someone else -- so the segment is
+    -- re-read here rather than only when modules/healpredict.lua pushes.
+    ApplyIncomingHeal(frame)
+  end
+  if frame.power and powerChanged then
+    SetBar(frame.power.bar, frame.data.power, frame.data.powerMax)
+    ApplyPowerColor(frame)
+  end
+
+  local textMode = nil
+  if mode == "full" then
+    textMode = "full"
+  elseif healthChanged and powerChanged then
+    textMode = "vitals"
+  elseif healthChanged then
+    textMode = "health"
+  elseif powerChanged then
+    textMode = "power"
+  end
+  if textMode then ApplyTexts(frame, textMode) end
+  -- modern-wow's name/level row, which lives above the health bar and so has
+  -- no slot in this module's label system. One call, only while that theme is
+  -- loaded, and it reads frame.data rather than the client.
+  if textMode and type(U.ModernWowRefreshHeader) == "function" then
+    U.ModernWowRefreshHeader(frame)
+  end
+  -- Before the icon, not after: ApplyClassificationIcon reads the skin state
+  -- this sets to decide whether the icon is still the thing showing the tier.
+  if mode == "full" then classSkin.Apply(frame) end
+  if mode == "full" then ApplyClassificationIcon(frame) end
+  if mode == "full" then RefreshPortrait(frame) end
+  if mode == "full" then ApplyHappinessIndicator(frame) end
+  if mode == "full" then ApplyRestIcon(frame) end
+  if mode == "full" then ApplyLeaderIcon(frame) end
+
+  -- Connection and party visibility are read by ReadIdentity, so styling
+  -- follows the same full refresh, at most one second behind a state change.
+  if mode == "full" then
+    ApplyAvailabilityStyle(frame, frame.data.muted, frame.data.outOfRange)
+  end
+
+  return true
+end
+
+local function RefreshAll()
+  local i
+  for i = 1, table.getn(frameOrder) do
+    RefreshFrame(frames[frameOrder[i]], "full")
+  end
+end
+
+-- Shared by the integrated Unit Frames page and every contextual unit-frame
+-- mover panel. Keys are deliberately narrow so no caller can write arbitrary
+-- values into the module store.
+function U.GetUnitFrameHealthTextSetting(key)
+  local cfg = UF.healthText.Config()
+  if key == "left" then return cfg.healthTextLeft end
+  if key == "right" then return cfg.healthTextRight end
+  return nil
+end
+
+function U.SetUnitFrameHealthTextSetting(key, value)
+  local cfg = UF.healthText.Config()
+  local store
+  if key == "left" then store = "healthTextLeft"
+  elseif key == "right" then store = "healthTextRight"
+  else return false end
+  if value ~= "percent" and value ~= "number" then value = "hidden" end
+  if cfg[store] == value then return true end
+  cfg[store] = value
+  RefreshAll()
+  if type(U.RefreshUnitFrameSettingsViews) == "function" then
+    U.RefreshUnitFrameSettingsViews()
+  end
+  return true
+end
+
+function U.GetUnitFrameTextsOnHover()
+  return UF.powerText.Config().textsOnHover == true
+end
+
+function U.SetUnitFrameTextsOnHover(value)
+  local cfg = UF.powerText.Config()
+  value = value and true or false
+  if cfg.textsOnHover == value then return true end
+  cfg.textsOnHover = value
+  RefreshAll()
+  if type(U.RefreshUnitFrameSettingsViews) == "function" then
+    U.RefreshUnitFrameSettingsViews()
+  end
+  return true
+end
+
+-- group is a frame group from UF.powerText.groups. Without one the accessors
+-- address the global size every group falls back to; setting that clears the
+-- groups' own sizes so the settings page still sets every frame at once.
+function U.GetUnitFrameTextSize(kind, group)
+  return UF.powerText.Size(kind, group)
+end
+
+function U.SetUnitFrameTextSize(kind, value, group)
+  if kind ~= "health" and kind ~= "power" then return false end
+  local cfg = UF.powerText.Config()
+  value = tonumber(value) or 0
+  if value < 6 then value = 0 end
+  local key = UF.powerText.SizeKey(kind, group)
+  local changed = cfg[key] ~= value
+  cfg[key] = value
+  if not group then
+    local i
+    for i = 1, table.getn(UF.powerText.groups) do
+      local own = UF.powerText.SizeKey(kind, UF.powerText.groups[i])
+      if cfg[own] ~= nil then
+        cfg[own] = nil
+        changed = true
+      end
+    end
+  end
+  if not changed then return true end
+  RefreshAll()
+  if type(U.RefreshUnitFrameSettingsViews) == "function" then
+    U.RefreshUnitFrameSettingsViews()
+  end
+  return true
+end
+
+function U.GetUnitFramePowerTextSetting(key)
+  local cfg = UF.powerText.Config()
+  if key == "left" then return cfg.powerTextLeft end
+  if key == "right" then return cfg.powerTextRight end
+  return nil
+end
+
+function U.SetUnitFramePowerTextSetting(key, value)
+  local cfg = UF.powerText.Config()
+  local store
+  if key == "left" then store = "powerTextLeft"
+  elseif key == "right" then store = "powerTextRight"
+  else return false end
+  if value ~= "percent" and value ~= "number" and value ~= "hidden" then
+    value = "default"
+  end
+  if cfg[store] == value then return true end
+  cfg[store] = value
+  RefreshAll()
+  if type(U.RefreshUnitFrameSettingsViews) == "function" then
+    U.RefreshUnitFrameSettingsViews()
+  end
+  return true
+end
+
+-- ---------------------------------------------------------------------------
+-- Druid form mana bar
+--
+-- In bear/cat/travel form the player's power bar carries rage or energy, so a
+-- druid's mana disappears from the HUD entirely. This is the extra thin bar
+-- that shows it, with its own mover anchor -- registered only when the player
+-- is a druid, so no other class gains a handle it can never use. Same bar box,
+-- border, label placement and configured mana colour as the player frame's own
+-- power bar; none of pfUI's config/module machinery comes with it.
+--
+-- The mana *source* is NOT VERIFIED on this client:
+--   * documentation.json / global:Unit:UnitMana and UnitManaMax document one
+--     numeric return each, the *displayed* power -- rage or energy while
+--     shifted. No documented API returns a shifted druid's mana, and
+--     query_compat.py has no api/behavior/knowledge record for one.
+--   * UnrealPfUI's druid mana bar (modules/superwow.lua) reads the second
+--     return of UnitMana/UnitManaMax. That is a SuperWoW extension and pfUI
+--     gates it on SUPERWOW_VERSION; environment.json records no SuperWoW here,
+--     so it is a candidate shape, not a working reference on this client.
+--
+-- So the source is measured rather than assumed: the second return is read
+-- while shifted and accepted only when the pair reads as plausible mana
+-- (max > 0 and 0 <= value <= max). Until it qualifies the bar stays hidden and
+-- /pui check prints the raw returns -- the readout that turns this gap into
+-- evidence. No estimated or simulated mana is invented as a stand-in, and the
+-- displayed power is never re-labelled as mana.
+-- ---------------------------------------------------------------------------
+local DRUID_BAR_HEIGHT = 8
+
+local druidBar = nil                 -- bar box; also the mover target
+local druidManaSource = "unresolved" -- unresolved | extra-return | none
+local druidRaw = {}                  -- last measured values, for /pui check
+
+local function ReadShiftedMana()
+  local manaFn = ResolveApiFn("UnitMana")
+  local maxFn = ResolveApiFn("UnitManaMax")
+  if not manaFn or not maxFn then return nil end
+
+  local ok, primary, extra = pcall(manaFn, "player")
+  if not ok then return nil end
+  local okMax, primaryMax, extraMax = pcall(maxFn, "player")
+  if not okMax then return nil end
+
+  -- Kept verbatim (nils included) so the self-check reports what the client
+  -- actually returned, not only whether it passed the plausibility test.
+  druidRaw.returns = tostring(primary) .. "/" .. tostring(primaryMax) ..
+                     ", extra " .. tostring(extra) .. "/" .. tostring(extraMax)
+
+  local mana, manaMax = tonumber(extra), tonumber(extraMax)
+  if not mana or not manaMax then return nil end
+  if manaMax <= 0 or mana < 0 or mana > manaMax then return nil end
+  return mana, manaMax
+end
+
+local function ShowDruidBar(shown)
+  if not druidBar or druidBar.puiShown == shown then return end
+  druidBar.puiShown = shown
+  if shown then druidBar:Show() else druidBar:Hide() end
+end
+
+-- Mana keeps its configured colour from the unit-frame colour settings -- the
+-- same value the player's power bar uses in caster form, so the two can never
+-- disagree about what mana looks like.
+local function ApplyDruidManaColor()
+  if not druidBar then return end
+  local r, g, b, a = PowerBarColor(0)
+  if druidBar.colorR == r and druidBar.colorG == g and
+     druidBar.colorB == b and druidBar.colorA == a then return end
+  druidBar.colorR, druidBar.colorG = r, g
+  druidBar.colorB, druidBar.colorA = b, a
+  U.SetStatusBarColor(druidBar.bar, r, g, b, a)
+end
+
+local function RefreshDruidMana()
+  if not druidBar then return end
+
+  local powerType = ApiNumber("UnitPowerType", "player")
+  -- Power type 0 is mana: in caster form the player frame's own power bar is
+  -- already the mana bar, so this one has nothing to add there.
+  local shifted = powerType ~= nil and powerType ~= 0
+  druidRaw.powerType = powerType
+  druidRaw.shifted = shifted
+
+  local mana, manaMax
+  if shifted then mana, manaMax = ReadShiftedMana() end
+  druidRaw.mana, druidRaw.manaMax = mana, manaMax
+
+  if mana then
+    if druidManaSource ~= "extra-return" then
+      druidManaSource = "extra-return"
+      U.Debug("druid mana source: second return of UnitMana/UnitManaMax")
+    end
+  elseif shifted and druidManaSource == "unresolved" then
+    druidManaSource = "none"
+    U.Debug("druid mana: no readable source while shifted (" ..
+            tostring(druidRaw.returns) .. ")")
+  end
+
+  if not mana then
+    -- An empty shell stays on screen while the UI is unlocked, matching the
+    -- unit frames' own edit-mode behaviour: otherwise a druid in caster form
+    -- could never drag this anchor into place.
+    if U.IsUnlocked() then
+      ShowDruidBar(true)
+      SetBar(druidBar.bar, 0, 1)
+      SetLabelText(druidBar.rightLabel, "")
+    else
+      ShowDruidBar(false)
+    end
+    return
+  end
+
+  ShowDruidBar(true)
+  SetBar(druidBar.bar, mana, manaMax)
+  ApplyDruidManaColor()
+
+  -- Same text shape as the power bar's "powerdyn" token: the value, plus a
+  -- percentage while not full.
+  local pr, pg, pb = PastelText(M.Unpack(M.power[0] or M.power.fallback))
+  local text = Hex(pr, pg, pb) .. Abbreviate(mana)
+  if mana ~= manaMax then
+    text = text .. " - " .. U.CeilPercent(mana / manaMax) .. "%"
+  end
+  SetLabelText(druidBar.rightLabel, text)
+end
+
+-- Built only for druids (see OnEnable), which is also what puts the "Druid
+-- Mana" handle in edit mode for that class alone. The default position sits
+-- 2px under the player frame's own default, so an untouched layout reads as a
+-- third row of the player frame.
+local function BuildDruidManaBar()
+  local border = U.BorderSize()
+
+  druidBar = CreateBarBox(UIParent, PRIMARY_WIDTH, DRUID_BAR_HEIGHT, border,
+                          M.power[0] or M.power.fallback, M.unitFrame.statusTexture)
+  druidBar:SetFrameStrata("LOW")
+  BuildBarLabels(druidBar, { right = "druidmana" }, POWER_LABEL_Y_OFFSET)
+  druidBar:Hide()
+  druidBar.puiShown = false
+
+  U.RegisterMover("unitframes.druidmana", druidBar, {
+    label = U.L("MOVER_LABEL_DRUID_MANA"),
+    default = { point = "BOTTOMRIGHT", relativePoint = "BOTTOM", x = -75,
+                y = 125 - (DRUID_BAR_HEIGHT + 2 * border) - 2 },
+  })
+end
+
+-- Events are accelerators only; the shared unit-frame tick refreshes this bar
+-- regardless, which is what covers form changes on a client where
+-- UNIT_DISPLAYPOWER has no capture in events.json.
+local DRUID_EVENTS = {
+  "UNIT_MANA", "UNIT_MAXMANA", "UNIT_DISPLAYPOWER", "PLAYER_ENTERING_WORLD",
+}
+
+local function RegisterDruidEvents()
+  local i
+  for i = 1, table.getn(DRUID_EVENTS) do
+    U.RegisterEvent(DRUID_EVENTS[i], RefreshDruidMana)
+  end
+end
+
+-- nil for every class except druid, so /pui check stays silent where the bar
+-- does not exist.
+function U.DruidManaReport()
+  if not druidBar then return nil end
+
+  local shownOk, shown = pcall(druidBar.IsShown, druidBar)
+  return {
+    source = druidManaSource,
+    powerType = druidRaw.powerType,
+    shifted = druidRaw.shifted,
+    mana = druidRaw.mana,
+    manaMax = druidRaw.manaMax,
+    returns = druidRaw.returns,
+    shown = (shownOk and shown) and true or false,
+  }
+end
+
+-- Settings-panel entry point: recolours every built frame immediately after a
+-- health/power colour change (modules/settings.lua's Apply* pattern).
+--
+-- Deliberately not RefreshAll: the colour picker calls this on every tick of a
+-- drag so the bars track the colour live, and RefreshAll re-runs the whole
+-- ReadUnit path for every frame. That is the same repeated full-refresh cost
+-- that caused the party-only FPS collapse this module's scheduler exists to
+-- avoid. Nothing about the unit has changed here -- only the colour derived
+-- from data already in frame.data -- so this recolours and nothing else.
+--
+-- The cached colour guards in ApplyHealthColor/ApplyPowerColor compare against
+-- the last colour applied, so they are cleared first or a config change would
+-- be skipped as a no-op.
+function U.ApplyUnitFrameColors()
+  local i
+  for i = 1, table.getn(frameOrder) do
+    local frame = frames[frameOrder[i]]
+    if frame and frame.data then
+      frame.healthColorR, frame.healthColorG, frame.healthColorB = nil, nil, nil
+      frame.healthColorTextured = nil
+      frame.healthColorModernFill = nil
+      frame.powerColorR, frame.powerColorG = nil, nil
+      frame.powerColorB, frame.powerColorA = nil, nil
+
+      -- A frame with no unit has no percentage to blend against; it keeps the
+      -- flat full-health colour the empty edit-mode shell already uses.
+      if frame.data.healthPercent then
+        ApplyHealthColor(frame)
+      else
+        local r, g, b = HealthBaseColor(frame)
+        local textured = frame.spec and frame.spec.healthTexture and true or false
+        local modernFill = ModernHealthFill(frame, textured, ColorConfig(), false)
+        frame.healthColorTextured = textured
+        frame.healthColorModernFill = modernFill
+        U.SetStatusBarTexture(frame.health.bar,
+                              HealthTexture(frame, textured, modernFill))
+        U.SetStatusBarColor(frame.health.bar, r, g, b, 1)
+      end
+
+      if frame.data.powerType then ApplyPowerColor(frame) end
+    end
+  end
+
+  -- The druid mana bar carries the same configured mana colour, so it tracks
+  -- the picker live like the frames above. Its cached tint is cleared for the
+  -- same reason theirs is.
+  if druidBar then
+    druidBar.colorR, druidBar.colorG = nil, nil
+    druidBar.colorB, druidBar.colorA = nil, nil
+    ApplyDruidManaColor()
+  end
+end
+
+-- Combat can emit several health/power events for the same unit in one render
+-- interval. Refreshing synchronously in every handler multiplied the complete
+-- ReadUnit + texture-layout path by the number of attackers, which matches the
+-- reported party-only FPS collapse. Keep events as accelerators, but collapse
+-- each unit's burst to at most one refresh per short update interval.
+local function QueueUnitToken(token, mode)
+  if type(token) ~= "string" or not frames[token] then return end
+  if mode ~= "health" and mode ~= "power" and mode ~= "vitals" then
+    mode = "full"
+  end
+
+  local current = dirtyUnits[token]
+  if current == "full" or current == mode then return end
+  if mode == "full" or not current then
+    dirtyUnits[token] = mode
+  else
+    dirtyUnits[token] = "vitals"
+  end
+end
+
+local function FlushDirtyUnits()
+  local i
+  for i = 1, table.getn(frameOrder) do
+    local id = frameOrder[i]
+    local mode = dirtyUnits[id]
+    if mode then
+      dirtyUnits[id] = nil
+      RefreshFrame(frames[id], mode)
+    end
+  end
+end
+
+-- One scheduler owns every recurring unit-frame read. Four cycles use cheap
+-- vitals-only party reads plus queued event work; the fifth performs the full
+-- identity/roster fallback required by this client's unobserved party event.
+-- Keeping these in one callback prevents separate timers from stacking their
+-- work on the same render tick once per second.
+local refreshCycle = 0
+local function RefreshScheduledUnits()
+  if U.PerfDisabled and U.PerfDisabled("frames") then return end
+
+  refreshCycle = refreshCycle + 1
+
+  -- Events are accelerators only. Sampling here also catches an unreported
+  -- power-type change and supplies the fallback for UNIT_ENERGY, which has no
+  -- observed capture in the compact runtime evidence. The request is taken by
+  -- the tick's own updater, so a burst of events and this fallback landing in
+  -- the same pass still costs one sample.
+  powerTick.Request()
+
+  -- Two pcall'd reads for druids, nothing at all for every other class: form
+  -- changes have no observed event on this client, so the bar's visibility
+  -- rides the same tick the frames do.
+  RefreshDruidMana()
+  if comboPips and comboPips.druid then RefreshComboPoints() end
+
+  -- Reflows the party block when a member's pet appears or disappears, and
+  -- when edit mode opens or closes. Nothing here has an event either, and the
+  -- call is a cheap visibility comparison that returns before touching a
+  -- single SetPoint unless the block's shape actually changed.
+  --
+  -- Skipped with the party rows themselves: core/perf.lua's party bisect
+  -- removes "the work that scales with the roster" as one unit, and a reflow
+  -- of rows that are not being refreshed is part of that unit.
+  local partyRows = not (U.PerfDisabled and U.PerfDisabled("partyrows"))
+  if partyRows then LayoutParty() end
+
+  -- Classic only, and a no-op under every other theme: the native click
+  -- catchers hand the cursor back to the mover handles while edit mode is
+  -- open. Cheap enough for this cadence -- it returns after one boolean read
+  -- unless the lock state actually changed.
+  classicNative.SyncEditMode()
+
+  if refreshCycle >= 5 then
+    refreshCycle = 0
+
+    -- Classic only, and a no-op under every other theme. This is what replaced
+    -- the OnShow/OnHide script hooks that used to sit on the native unit-frame
+    -- roots; see classicNative.SyncNative for why they are gone.
+    classicNative.SyncNative()
+
+    local i
+    for i = 1, table.getn(frameOrder) do
+      dirtyUnits[frameOrder[i]] = nil
+    end
+    RefreshAll()
+    return
+  end
+
+  -- Party events are not load-bearing: sample existence, health and power at
+  -- the established 0.2s cadence even when PARTY_MEMBERS_CHANGED never emits.
+  --
+  -- The player's own row rides the same cadence rather than the standalone
+  -- player frame's event path, because what switches it on and off is party
+  -- membership, which is exactly the thing without a load-bearing event here.
+  local playerRow = frames[PARTY_PLAYER_ID]
+  if playerRow and partyRows then
+    local playerMode = dirtyUnits[PARTY_PLAYER_ID]
+    dirtyUnits[PARTY_PLAYER_ID] = nil
+    RefreshFrame(playerRow, playerMode == "full" and "full" or "vitals")
+  end
+
+  local i
+  if partyRows then
+    for i = 1, PARTY_COUNT do
+      local id = "party" .. i
+      local mode = dirtyUnits[id]
+      dirtyUnits[id] = nil
+      if mode == "full" then
+        RefreshFrame(frames[id], "full")
+      else
+        RefreshFrame(frames[id], "vitals")
+      end
+
+      -- The member's pet rides the same cadence for the same reason the
+      -- player's own pet does below: no pet unit token has an observed event
+      -- on this client. With the option off the frame is flagged disabled and
+      -- RefreshFrame returns before reading anything.
+      local petId = "partypet" .. i
+      local petMode = dirtyUnits[petId]
+      dirtyUnits[petId] = nil
+      if petMode == "full" then
+        RefreshFrame(frames[petId], "full")
+      else
+        RefreshFrame(frames[petId], "vitals")
+      end
+    end
+  end
+
+  -- Target-of-target has no observed event. It changes independently of the
+  -- player's target, so it keeps the same bounded polling cadence.
+  dirtyUnits.targettarget = nil
+  RefreshFrame(frames.targettarget, "full")
+
+  -- Pet summon/dismiss has no observed event either (query_compat.py has no
+  -- events.json record for any pet unit token), so it follows the same
+  -- bounded polling cadence rather than waiting on UNIT_HEALTH/UNIT_MANA to
+  -- fire for "pet" -- events remain an accelerator on top of this, not the
+  -- mechanism the frame depends on.
+  dirtyUnits.pet = nil
+  RefreshFrame(frames.pet, "full")
+  FlushDirtyUnits()
+end
+
+UF.Refresh = RefreshAll
+
+-- Anchor lookup for overlays that ride a unit frame without owning one.
+-- modules/auras.lua attaches its aura rows to the edge of the player and target
+-- frames this way, so it never has to know the generated frame names or
+-- duplicate the mover wiring. Returns nil before OnEnable has built the frames.
+function U.GetUnitFrame(id)
+  if type(id) ~= "string" then return nil end
+  return frames[id]
+end
+
+-- ---------------------------------------------------------------------------
+-- Mouse
+--
+-- No compact-DB record covers TargetUnit or GameTooltip:SetUnit, so both follow
+-- UnrealPfUI's call shapes (WORKING_SOURCE) and are pcall'd.
+--
+-- Right-click opens the same native unit popup menu the stock frames use.
+-- query_compat.py has no record at all for ToggleDropDownMenu, any *DropDown
+-- global, or UnitPopup -- api/frames/events/behavior/pfui-relevant/knowledge
+-- all came back empty. Per the evidence-gap rule this follows UnrealPfUI's
+-- <=11200 client branch (api/unitframes.lua RightClickAction/ClickAction),
+-- which is the same client level pandaUI targets (Interface: 11200):
+-- ToggleDropDownMenu(1, nil, <UnitDropDownFrame>, "cursor"), where the
+-- dropdown is the native global Blizzard's own FrameXML creates for that frame
+-- type. SuppressStockFrames above never names these dropdown globals, only the
+-- visible frame and its art/text/bar children, so they should still exist and
+-- still be wired to the live target/party roster.
+--
+-- This is WORKING_SOURCE evidence, not runtime verification -- see
+-- knowledge.json / frames.unit_dropdown_menu_unverified.
+-- ---------------------------------------------------------------------------
+local UNIT_DROPDOWNS = {
+  player = "PlayerFrameDropDown",
+  target = "TargetFrameDropDown",
+  party1 = "PartyMemberFrame1DropDown",
+  party2 = "PartyMemberFrame2DropDown",
+  party3 = "PartyMemberFrame3DropDown",
+  party4 = "PartyMemberFrame4DropDown",
+}
+
+local function ShowUnitMenu(frame, unit)
+  local dropdownName = UNIT_DROPDOWNS[unit or frame.unit]
+  if not dropdownName then return end
+
+  local dropdown = U.G(dropdownName)
+  if not dropdown then
+    U.Debug("no native dropdown frame found: " .. dropdownName)
+    return
+  end
+
+  local toggle = U.G("ToggleDropDownMenu")
+  if type(toggle) ~= "function" then
+    U.Debug("ToggleDropDownMenu is unavailable on this client")
+    return
+  end
+
+  pcall(toggle, 1, nil, dropdown, "cursor")
+end
+
+-- Whisper entry for party and raid member popups, under every theme: the
+-- modern frames open PartyMemberFrameNDropDown above, classic-wow's native
+-- party frames open the same menu, and raidframes.lua reads UnitPopupMenus.RAID.
+--
+-- The user reported this client's PARTY menu has no whisper. query_compat.py
+-- has no record for UnitPopupMenus/UnitPopupButtons/UnitPopup_OnClick or
+-- ChatFrame_SendTell; this follows UnrealPfUI's modules/chat.lua, which adds
+-- IGNORE_PLAYER to the FRIEND menu the same way on this client (WORKING_SOURCE,
+-- not runtime-verified). An own key is used, never the native "WHISPER" one,
+-- because the native click branch for it may be the part this client removed.
+-- The action goes through the client's own chat-open path (the same edit box
+-- Enter/Reply opens); PandaUI never creates or focuses an EditBox itself.
+unitMouse.WHISPER_KEY = "PANDAUI_WHISPER"
+
+function unitMouse.WhisperTargetName()
+  local init = U.G("UIDROPDOWNMENU_INIT_MENU")
+  local dropdown = type(init) == "string" and U.G(init) or init
+  if type(dropdown) ~= "table" then return nil end
+  if type(dropdown.name) == "string" and dropdown.name ~= "" then
+    return dropdown.name
+  end
+  local name = dropdown.unit and ApiString("UnitName", dropdown.unit)
+  if name and name ~= "" then return name end
+  return nil
+end
+
+function unitMouse.OpenWhisper(name)
+  local sendTell = U.G("ChatFrame_SendTell")
+  if type(sendTell) == "function" and pcall(sendTell, name) then return end
+  local openChat = U.G("ChatFrame_OpenChat")
+  if type(openChat) == "function" then
+    pcall(openChat, "/w " .. name .. " ")
+    return
+  end
+  U.Debug("popup whisper: no native chat-open function on this client")
+end
+
+function unitMouse.AddPopupWhisper()
+  if unitMouse.whisperAdded then return end
+  local buttons = U.G("UnitPopupButtons")
+  local menus = U.G("UnitPopupMenus")
+  local party = type(menus) == "table" and menus.PARTY or nil
+  local raid = type(menus) == "table" and menus.RAID or nil
+  if type(buttons) ~= "table" or type(party) ~= "table" or
+     type(raid) ~= "table" then
+    U.Debug("popup whisper: UnitPopupMenus.PARTY/RAID unavailable")
+    return
+  end
+  unitMouse.whisperAdded = true
+
+  local popupMenus = { party, raid }
+  local added = false
+  local i, j
+  for i = 1, table.getn(popupMenus) do
+    local menu = popupMenus[i]
+    local present = false
+    for j = 1, table.getn(menu) do
+      if menu[j] == "WHISPER" or menu[j] == unitMouse.WHISPER_KEY then
+        present = true
+        break
+      end
+    end
+    if not present then
+      table.insert(menu, 1, unitMouse.WHISPER_KEY)
+      added = true
+    end
+  end
+
+  local text = U.G("WHISPER")
+  if type(text) ~= "string" or text == "" then text = U.L("UF_MENU_WHISPER") end
+  buttons[unitMouse.WHISPER_KEY] = { text = text, dist = 0 }
+  if not added then return end
+
+  if not U.PostHookGlobal("UnitPopup_OnClick", function()
+    local button = U.G("this")
+    if not button or button.value ~= unitMouse.WHISPER_KEY then return end
+    local name = unitMouse.WhisperTargetName()
+    if name then unitMouse.OpenWhisper(name) end
+  end) then
+    U.Debug("popup whisper: UnitPopup_OnClick unavailable")
+  end
+end
+
+-- Widget OnClick argument shape is not covered by
+-- scripts.handler_arguments_direct (that record is about RegisterEvent
+-- handlers), but the same ambiguity applies to SetScript callbacks: try direct
+-- arguments first, then the legacy `arg1` global.
+local function ResolveClickButton(a, b)
+  if type(a) == "string" then return a end
+  if type(b) == "string" then return b end
+  return U.G("arg1")
+end
+
+function unitMouse.Enable(frame, unit)
+  unit = unit or frame.unit
+  pcall(frame.EnableMouse, frame, true)
+  pcall(frame.RegisterForClicks, frame, "LeftButtonUp", "RightButtonUp")
+
+  frame:SetScript("OnClick", function(a, b)
+    local button = ResolveClickButton(a, b)
+
+    if button == "RightButton" then
+      ShowUnitMenu(frame, unit)
+      return
+    end
+
+    local target = U.G("TargetUnit")
+    if type(target) == "function" then pcall(target, unit) end
+  end)
+
+  frame:SetScript("OnEnter", function()
+    if frame.health and frame.power and UF.powerText.Config().textsOnHover then
+      frame.puiHover = true
+      RefreshFrame(frame, "full")
+    end
+    local tooltip = U.G("GameTooltip")
+    if not tooltip then return end
+
+    local anchor = U.G("GameTooltip_SetDefaultAnchor")
+    if type(anchor) ~= "function" or not pcall(anchor, tooltip, frame) then
+      pcall(tooltip.SetOwner, tooltip, frame, "ANCHOR_RIGHT")
+    end
+
+    if pcall(tooltip.SetUnit, tooltip, unit) then
+      pcall(tooltip.Show, tooltip)
+    end
+  end)
+
+  frame:SetScript("OnLeave", function()
+    if frame.puiHover then
+      frame.puiHover = nil
+      RefreshFrame(frame, "full")
+    end
+    local tooltip = U.G("GameTooltip")
+    if not tooltip then return end
+
+    -- UnrealPfUI's unit-frame OnLeave (api/unitframes.lua) fades rather than
+    -- hides instantly; Hide() here made the tooltip vanish the moment the
+    -- mouse crossed off the frame instead of the eased dismissal Blizzard's
+    -- own tooltip animates elsewhere. Same evidence gap as SetUnit above:
+    -- WORKING_SOURCE, not runtime-verified on this client.
+    if not pcall(tooltip.FadeOut, tooltip) then
+      pcall(tooltip.Hide, tooltip)
+    end
+  end)
+end
+
+-- ---------------------------------------------------------------------------
+-- Events
+--
+-- UNIT_HEALTH and UNIT_MANA are the two verified to fire with a unit token in
+-- arg1 (events.json, 22 and 20 captures). The rest are registered because they
+-- would each save a poll tick if this client does emit them, and cost nothing
+-- if it does not. None of them is load-bearing: the shared tick below refreshes
+-- everything regardless.
+-- ---------------------------------------------------------------------------
+local UNIT_EVENTS = {
+  "UNIT_HEALTH", "UNIT_MAXHEALTH",
+  "UNIT_MANA", "UNIT_MAXMANA",
+  "UNIT_RAGE", "UNIT_MAXRAGE",
+  "UNIT_ENERGY", "UNIT_MAXENERGY",
+  "UNIT_FOCUS", "UNIT_MAXFOCUS",
+  "UNIT_DISPLAYPOWER", "UNIT_LEVEL", "UNIT_FACTION",
+  "UNIT_NAME_UPDATE",
+}
+
+local HEALTH_EVENTS = {
+  UNIT_HEALTH = true, UNIT_MAXHEALTH = true,
+}
+
+local POWER_EVENTS = {
+  UNIT_MANA = true, UNIT_MAXMANA = true,
+  UNIT_RAGE = true, UNIT_MAXRAGE = true,
+  UNIT_ENERGY = true, UNIT_MAXENERGY = true,
+  UNIT_FOCUS = true, UNIT_MAXFOCUS = true,
+  UNIT_DISPLAYPOWER = true,
+}
+
+local GROUP_EVENTS = {
+  "PARTY_MEMBERS_CHANGED", "PARTY_LEADER_CHANGED", "RAID_ROSTER_UPDATE",
+}
+
+local function RegisterEvents()
+  local i
+  for i = 1, table.getn(UNIT_EVENTS) do
+    U.RegisterEvent(UNIT_EVENTS[i], function(event, unit)
+      powerTick.OnUnitEvent(event, unit)
+      local mode = "full"
+      if HEALTH_EVENTS[event] then
+        mode = "health"
+      elseif POWER_EVENTS[event] then
+        mode = "power"
+      end
+      QueueUnitToken(unit, mode)
+      -- The party row is a second frame on the same unit, so it needs the same
+      -- accelerator: QueueUnitToken keys on frame id, not on unit token.
+      if unit == "player" then QueueUnitToken(PARTY_PLAYER_ID, mode) end
+    end)
+  end
+
+  -- core/unitvitals.lua moves the target's exact health on UNIT_COMBAT, which
+  -- fires between the percent steps that raise UNIT_HEALTH. Without this the
+  -- frame waited up to a second for its full pass while the nameplate, which
+  -- reads the same tracker every 0.1s, already showed the new value.
+  U.RegisterEvent("UNIT_COMBAT", function(event, unit)
+    if unit == "target" then QueueUnitToken("target", "health") end
+  end)
+
+  for i = 1, table.getn(GROUP_EVENTS) do
+    U.RegisterEvent(GROUP_EVENTS[i], function()
+      local n
+      for n = 1, PARTY_COUNT do
+        QueueUnitToken("party" .. n, "full")
+      end
+      -- The player carries a leader star of its own (see BuildLeaderIcon), so
+      -- a leadership change has to reach the player frame as well.
+      QueueUnitToken("player", "full")
+      QueueUnitToken(PARTY_PLAYER_ID, "full")
+      classicNative.Reanchor()
+    end)
+  end
+
+  -- The unit's portrait or model finished loading: restart its 2D paint
+  -- budget. pfUI-octo repaints on the same two events (api/unitframes.lua,
+  -- WORKING_112_SOURCE); the spaced budget in RefreshPortrait still covers a
+  -- client that never fires them.
+  local portraitEvents = { "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED" }
+  for i = 1, table.getn(portraitEvents) do
+    U.RegisterEvent(portraitEvents[i], function(event, unit)
+      local ids = { unit }
+      if unit == "player" then table.insert(ids, PARTY_PLAYER_ID) end
+      local n
+      for n = 1, table.getn(ids) do
+        local frame = type(ids[n]) == "string" and frames[ids[n]]
+        if frame then
+          frame.puiPortraitKey = nil
+          frame.puiPortraitPaints = nil
+          -- The 3D model reloads too: restart its SetUnit/SetCamera budget.
+          local boxes = { frame.portrait, frame.puiClassicPortraitModelBox }
+          local b
+          for b = 1, 2 do
+            local model = boxes[b] and boxes[b].puiModel
+            if model then model.puiKey = nil end
+          end
+          QueueUnitToken(ids[n], "full")
+        end
+      end
+    end)
+  end
+
+  U.RegisterEvent("PLAYER_TARGET_CHANGED", function()
+    model3d.targetEpoch = model3d.targetEpoch + 1
+    QueueUnitToken("target", "full")
+    QueueUnitToken("targettarget", "full")
+    classicNative.Reanchor()
+  end)
+
+  U.RegisterEvent("PLAYER_ENTERING_WORLD", function()
+    classicNative.Reanchor()
+    powerTick.SetMode(true)
+  end)
+
+  -- Unverified event (see the Rest icon section above) -- an accelerator on
+  -- top of the existing 1s full-refresh cycle, which still catches the state
+  -- change if this client never actually fires it.
+  U.RegisterEvent("PLAYER_UPDATE_RESTING", function()
+    QueueUnitToken("player", "full")
+  end)
+end
+
+-- ---------------------------------------------------------------------------
+-- Module
+-- ---------------------------------------------------------------------------
+-- The party block. An invisible frame sized to hold every member: it carries
+-- the mover and the members ride along, so the four frames can never drift out
+-- of alignment with each other. Its size is finished by LayoutParty, which is
+-- what keeps the mover handle over the block's real extent once the optional
+-- pet rows are in play.
+local function BuildPartyAnchor()
+  local anchor = CreateFrame("Frame", "PandaUIPartyAnchor", UIParent)
+  -- Keep the party block on the same HUD layer as the other unit frames.
+  -- SetFrameStrata propagates to child frames on this client, so the anchor
+  -- must own LOW before the party members are parented to it.
+  anchor:SetFrameStrata("LOW")
+  anchor:SetWidth(PARTY_WIDTH + 2 * U.BorderSize())
+  anchor:SetHeight(1)
+
+  U.RegisterMover("unitframes.party", anchor, {
+    label = U.L("MOVER_LABEL_PARTY"),
+    default = { point = "TOPLEFT", relativePoint = "TOPLEFT", x = 5, y = -5 },
+    scalable = true,
+    onScale = classicNative.Reanchor,
+  })
+
+  -- No unit of its own, so nothing ever hides it: the members handle their own
+  -- visibility and the anchor stays available to drag even with no party.
+  anchor:Show()
+  return anchor
+end
+
+-- ---------------------------------------------------------------------------
+-- Party block layout
+--
+-- Everything inside the party anchor is positioned here rather than from a
+-- fixed per-member offset in SPECS, because the optional pet row makes a
+-- member's place depend on the members above it. A member with no pet costs
+-- nothing: the row is skipped and the rest of the block closes up.
+--
+-- The party anchor is resized to whatever the block actually occupies, so the
+-- mover handle and the snap edges the grid uses stay over the visible frames
+-- instead of over a rectangle sized for a layout that is not on screen.
+-- ---------------------------------------------------------------------------
+local PARTY_DEFAULTS = { partyPets = false, partyPlayer = true,
+                         partyRaidStyle = false }
+
+-- Same "unitframes" store the colour settings use -- U.ModuleConfig only fills
+-- in the keys of the defaults table it is handed, so the two views never
+-- overwrite each other. Read partyPets through this one.
+local function PartyConfig()
+  return U.ModuleConfig("unitframes", PARTY_DEFAULTS)
+end
+
+-- Raid-style party frames (user request, 2026-10-26): the party block drawn
+-- by modules/raidframes.lua's cells in one vertical column, under classic-wow
+-- and modern-wow only. Under classic-wow with the client's own party frames
+-- the choice decides at load whether those frames are suppressed, so there it
+-- holds the loaded value until /reload. No new file locals: this chunk is at
+-- its top-level local budget (rules/pandaui.md).
+-- Whether the Party Frames pages offer the option at all.
+function U.PartyRaidStyleAvailable()
+  local style = type(U.GetActiveThemeStyle) == "function" and
+                U.GetActiveThemeStyle() or nil
+  return style == "classic-wow" or style == "modern-wow"
+end
+
+function U.PartyRaidStyleNeedsReload()
+  return classicNative.Enabled() and
+         not (type(U.ClassicModernModuleEnabled) == "function" and
+              U.ClassicModernModuleEnabled("partyframes"))
+end
+
+function U.PartyRaidStyleActive()
+  if not U.PartyRaidStyleAvailable() then return false end
+  if U.PartyRaidStyleNeedsReload() then
+    return classicNative.raidParty and true or false
+  end
+  return PartyConfig().partyRaidStyle and true or false
+end
+
+function U.PartyAnchorFrame()
+  return frames[PARTY_ANCHOR]
+end
+
+-- Party unit tokens can remain populated with the player's raid subgroup.
+-- Keep the party block out of a real raid; Edit Mode still previews it so its
+-- mover remains configurable there.
+function U.PartyFramesSuppressedByRaid()
+  if type(U.IsUnlocked) == "function" and U.IsUnlocked() then return false end
+  return ApiTruth("GetNumRaidMembers") and true or false
+end
+
+-- Whether member i's pet row occupies space this pass. Edit mode shows every
+-- enabled row whether or not a pet is out, so the block that is dragged into
+-- place is the tallest one it can become rather than whatever the current
+-- roster happens to produce.
+local function PartyPetShown(index)
+  if not PartyConfig().partyPets then return false end
+  if U.PartyFramesSuppressedByRaid() then return false end
+  -- The Classic theme hands the party over to the client's own frames, which
+  -- draw their own nested pet frames. Ours would be invisible anchors with
+  -- nothing to anchor, so the option simply does not apply there.
+  if classicNative.partyActive then return false end
+  if U.IsUnlocked() then return true end
+  return ApiTruth("UnitExists", "partypet" .. index) and true or false
+end
+
+-- Whether the player's own row occupies the top of the block this pass. Same
+-- shape as PartyPetShown: off with the option, off under the Classic theme
+-- (which hands the party to the client's own frames, so a lone PandaUI row
+-- above them would belong to nothing), always on in edit mode so the block
+-- dragged into place is the tallest one it can become, and otherwise on only
+-- while there is a party to be part of.
+--
+-- GetNumPartyMembers is documented (documentation.json / Group) but not runtime
+-- verified here; GetPartyMember is what this module already polls for member
+-- occupancy, so it stands as the fallback if the count is missing.
+local function PartyPlayerShown()
+  if not PartyConfig().partyPlayer then return false end
+  if U.PartyFramesSuppressedByRaid() then return false end
+  if classicNative.partyActive then return false end
+  if U.IsUnlocked() then return true end
+  if ApiTruth("GetNumPartyMembers") then return true end
+  return ApiTruth("GetPartyMember", 1) and true or false
+end
+
+-- Recomputed every scheduler tick, so it has to be cheap when nothing moved:
+-- the pass builds a short shape string and returns before touching a frame
+-- unless that string changed.
+local partyLayoutShape = nil
+
+LayoutParty = function(force)
+  local anchor = frames[PARTY_ANCHOR]
+  if not anchor then return end
+
+  -- Raid-style party frames: every row hides and modules/raidframes.lua's
+  -- column, a child of the anchor, gives the anchor its size.
+  local raidWidth, raidHeight = nil, nil
+  if U.PartyRaidStyleActive() and type(U.RaidPartyFootprint) == "function" then
+    raidWidth, raidHeight = U.RaidPartyFootprint()
+  end
+  local raid = U.PartyRaidStyleActive()
+  local inRaid = U.PartyFramesSuppressedByRaid()
+
+  local border = U.BorderSize()
+  local player = PartyPlayerShown() and not raid
+  local shown, shape, i = {}, border .. ":" ..
+                                  (inRaid and "R" or "-") ..
+                                  (player and "P" or "-"), nil
+  for i = 1, PARTY_COUNT do
+    shown[i] = PartyPetShown(i) and not raid
+    shape = shape .. (shown[i] and "1" or "0")
+  end
+  if raid then
+    shape = shape .. ":R" .. tostring(raidWidth) .. "x" .. tostring(raidHeight)
+  end
+  if not force and shape == partyLayoutShape then return end
+  partyLayoutShape = shape
+
+  for i = 1, PARTY_COUNT do
+    local member = frames["party" .. i]
+    if member then
+      member.puiDisabled = (raid or inRaid) and true or nil
+      if raid or inRaid then SetFrameShown(member, false) end
+    end
+  end
+
+  -- `offset` is in the rows' own units: every row of the block shares one
+  -- scale (modules/modernwow.lua mw.units gives them all the same trim).
+  local offset, width = 0, 0
+
+  local playerRow = frames[PARTY_PLAYER_ID]
+
+  -- A theme may draw the rows at a scale of their own. `modern-wow` gives each
+  -- one a pixel-perfect own-scale times its 1.15 size trim (modules/
+  -- modernwow.lua, mw.units). A row's SetPoint offsets are in its OWN units
+  -- (knowledge.json / layout.own_scale_space_on_112), so the
+  -- stacking offsets below scale with the rows and the block simply ends
+  -- `ratio` times `offset` below the anchor's top, in the anchor's units.
+  --
+  -- The ratio is 1 in every theme that draws the rows at the anchor's own
+  -- scale, which leaves this arithmetic exactly as it was.
+  local reference = (player and playerRow) or frames["party1"]
+  local ratio = 1
+  if reference then
+    local rowOk, rowScale = pcall(reference.GetEffectiveScale, reference)
+    local anchorOk, anchorScale = pcall(anchor.GetEffectiveScale, anchor)
+    rowScale, anchorScale = tonumber(rowScale), tonumber(anchorScale)
+    if rowOk and anchorOk and rowScale and anchorScale and
+       rowScale > 0 and anchorScale > 0 then
+      ratio = rowScale / anchorScale
+    end
+  end
+
+  -- The player's row first, so the members below it keep their own order. It
+  -- carries no pet row of its own: the player's pet already has a frame and a
+  -- mover of its own.
+  if playerRow then
+    playerRow.puiDisabled = not player
+    if player then
+      playerRow:ClearAllPoints()
+      playerRow:SetPoint("TOPLEFT", anchor, "TOPLEFT", 0, 0)
+      offset = FrameHeight(playerRow.spec)
+      if FrameWidth(playerRow.spec) > width then
+        width = FrameWidth(playerRow.spec)
+      end
+    else
+      SetFrameShown(playerRow, false)
+    end
+  end
+
+  for i = 1, PARTY_COUNT do
+    local member = frames["party" .. i]
+    local pet = frames["partypet" .. i]
+
+    if member then
+      -- Not "i > 1": the first member also needs the gap when the player's own
+      -- row is sitting above it.
+      if offset > 0 then offset = offset + PARTY_GAP end
+      member:ClearAllPoints()
+      member:SetPoint("TOPLEFT", anchor, "TOPLEFT", 0, -offset)
+      offset = offset + FrameHeight(member.spec)
+      if FrameWidth(member.spec) > width then width = FrameWidth(member.spec) end
+    end
+
+    if pet then
+      pet.puiDisabled = not shown[i]
+      local dressed = pet.puiModernWow and tonumber(pet.puiModernWow.height)
+      if shown[i] and dressed then
+        -- modern-wow dresses the pet row in its own small canvas, whose drawn
+        -- height has nothing to do with the flat spec's 14-unit bar. Stacked
+        -- by what is drawn, flush under the member's art (no flat outline to
+        -- overlap), so it cannot run into the next member.
+        pet:ClearAllPoints()
+        pet:SetPoint("TOPLEFT", anchor, "TOPLEFT", 0, -offset)
+        -- `dressed` is the pet's own height before its frame scale, the same
+        -- units as `offset`.
+        offset = offset + dressed
+        if FrameWidth(pet.spec) > width then width = FrameWidth(pet.spec) end
+      elseif shown[i] then
+        -- Overlapped by one border unit, the same trick the stacked bars
+        -- inside a single frame use: without it the member's bottom outline
+        -- and the pet's top outline draw as one 2-unit band.
+        pet:ClearAllPoints()
+        pet:SetPoint("TOPLEFT", anchor, "TOPLEFT", 0, -(offset - border))
+        offset = offset + FrameHeight(pet.spec) - border
+        if FrameWidth(pet.spec) > width then width = FrameWidth(pet.spec) end
+      else
+        SetFrameShown(pet, false)
+      end
+    end
+  end
+
+  -- The anchor carries the party mover, so its rect has to be the block as
+  -- DRAWN: edit mode's handle and the magnet barrier are that rectangle, and a
+  -- rect that does not cover the block puts both somewhere the player cannot
+  -- see. `ratio` (computed above) converts the rows' units into the anchor's.
+  local height = offset * ratio
+
+  if raid then
+    anchor:SetWidth(raidWidth or (PARTY_WIDTH + 2 * U.BorderSize()))
+    anchor:SetHeight(raidHeight or 1)
+    return
+  end
+
+  anchor:SetWidth((width > 0 and width or
+                   (PARTY_WIDTH + 2 * U.BorderSize())) * ratio)
+  anchor:SetHeight(height > 0 and height or 1)
+end
+
+-- Re-lays the block and refreshes the rows LayoutParty can switch on or off
+-- immediately, so ticking either option does not leave the user watching for
+-- the next scheduler tick.
+local function ApplyPartyLayout()
+  LayoutParty(true)
+
+  local playerRow = frames[PARTY_PLAYER_ID]
+  if playerRow then RefreshFrame(playerRow, "full") end
+
+  local i
+  for i = 1, PARTY_COUNT do
+    local member = frames["party" .. i]
+    if member then RefreshFrame(member, "full") end
+    local pet = frames["partypet" .. i]
+    if pet then RefreshFrame(pet, "full") end
+  end
+end
+
+-- Re-measures the party block and re-sizes its anchor.
+--
+-- For a theme that scales the party rows after they were built: LayoutParty
+-- reads the rows' scale to size the anchor, and at build time that scale is
+-- still the frames' own. modules/modernwow.lua calls this once its unit
+-- surface has dressed and scaled the rows, so the party mover's rect, handle
+-- and magnet barrier end up over the block as drawn.
+function U.RelayoutPartyBlock()
+  if not frames[PARTY_ANCHOR] then return false end
+  LayoutParty(true)
+  return true
+end
+
+-- One settings path for both the Party Frames page and the contextual panel
+-- beside the party mover. Keeping the layout write here means either view
+-- stores, applies and publishes the new shape in the same order.
+-- The unit-frame id of the player's own row inside the party block, for the
+-- modules that draw on that row (modules/hots.lua). Exposed rather than copied,
+-- since "party0" is this file's own spelling of it.
+function U.PartyPlayerFrameId()
+  return PARTY_PLAYER_ID
+end
+
+function U.GetUnitFramePartySetting(key)
+  if PARTY_DEFAULTS[key] == nil then return nil end
+  return PartyConfig()[key] and true or false
+end
+
+function U.SetUnitFramePartySetting(key, value)
+  if PARTY_DEFAULTS[key] == nil then return false end
+  PartyConfig()[key] = value and true or false
+  if key == "partyRaidStyle" and U.PartyRaidStyleNeedsReload() then
+    -- The client's own party frames are suppressed or kept at load only.
+    U.ShowConfirm({
+      owner = "unitframes.party-raid-reload",
+      centered = true,
+      text = U.L("UF_PARTY_HEADER"),
+      detail = U.L("UF_PARTY_RAID_STYLE_RELOAD"),
+      acceptText = U.L("COMMON_OK_SHORT"),
+      cancelText = U.L("COMMON_CLOSE"),
+    })
+  end
+  ApplyPartyLayout()
+  if type(U.ApplyRaidPartyStyle) == "function" then U.ApplyRaidPartyStyle() end
+  if type(U.RefreshUnitFrameSettingsViews) == "function" then
+    U.RefreshUnitFrameSettingsViews()
+  end
+  return true
+end
+
+-- ---------------------------------------------------------------------------
+-- Settings
+-- ---------------------------------------------------------------------------
+-- The "Unit Frames" entry in the settings window is a collapsible group with
+-- one sub-page per subject, the same shape modules/actionbarconfig.lua uses for
+-- ActionBars. This module registers the group and owns three of its pages
+-- because it owns the party layout, the power tick, the combo-point anchor and
+-- the colour configuration; modules/auras.lua registers the Auras page beside
+-- them, and modules/hots.lua contributes its section to the Party page.
+--
+-- Each page starts at the top of its own content frame, so nothing here has to
+-- know what any other page is doing.
+local SETTINGS_GROUP = "unitframes"
+
+-- The unit movers registered in OnEnable that carry a contextual settings
+-- panel (modules/unitframeconfig.lua). Only the panel that is actually open
+-- re-reads, so listing all three ids costs nothing.
+local PLAYER_MOVER_ID = "unitframes.player"
+local TARGET_MOVER_ID = "unitframes.target"
+local TARGET_TARGET_MOVER_ID = "unitframes.targettarget"
+local PARTY_MOVER_ID = "unitframes.party"
+
+-- The pages in this group and the contextual panels beside the player and
+-- target movers are views of the same stored settings, so whichever one wrote a
+-- value tells the others to re-read it. Only the page that is actually open re-reads, and every
+-- view re-reads with SetValue, which does not publish, so this cannot bounce
+-- back into another write.
+--
+-- The Auras page (modules/auras.lua) is listed here because the panel carries
+-- three of its toggles; the page ids stay in one place rather than being spelt
+-- out in each module that writes one of these values.
+function U.RefreshUnitFrameSettingsViews()
+  if type(U.RefreshMoverPanel) == "function" then
+    U.RefreshMoverPanel(PLAYER_MOVER_ID)
+    U.RefreshMoverPanel(TARGET_MOVER_ID)
+    U.RefreshMoverPanel(TARGET_TARGET_MOVER_ID)
+    U.RefreshMoverPanel("unitframes.pet")
+    U.RefreshMoverPanel(PARTY_MOVER_ID)
+  end
+  if type(U.RefreshSettingsPage) == "function" then
+    U.RefreshSettingsPage(SETTINGS_GROUP .. ".general")
+    U.RefreshSettingsPage(SETTINGS_GROUP .. ".party")
+    U.RefreshSettingsPage(SETTINGS_GROUP .. ".auras")
+  end
+end
+
+-- Unit frame style (core/unitframestyle.lua). Kept as its own section because
+-- it does not configure a detail of the frames, it selects which
+-- implementation draws them; the sections below it configure whichever one is
+-- active. The section is built only under a theme that draws PandaUI's own
+-- frames, so the page has no dead control under a theme that hands them to the
+-- client.
+--
+-- STYLE_SECTION_HEIGHT is what the section occupies from its own heading down
+-- to the next one: heading, the selector 26 below it, and the description five
+-- below that. The description has no fixed height -- this client centres a
+-- font string's glyphs inside one and breaks the gap -- so the reserve carries
+-- three wrapped lines, which is more than the longest translation needs.
+local STYLE_SECTION_HEIGHT = 112
+
+local function BuildUnitFrameStyleSettings(parent, y, width)
+  y = y or -4
+  local widgets = {}
+
+  local header = U.CreateSectionHeader(parent, {
+    text = U.L("UF_STYLE_HEADER"),
+    width = width or U.SETTINGS_PAGE_WIDTH,
+    y = y,
+  })
+  table.insert(widgets, header)
+
+  -- An unfinished style stays in the list, disabled and marked, for the same
+  -- reason the WIP theme does: it says the choice is coming rather than
+  -- leaving the selector looking like it has one entry by mistake. It reuses
+  -- the theme selector's suffix so both read the same way.
+  local items = {}
+  local styles = U.GetUnitFrameStyles()
+  local i
+  for i = 1, table.getn(styles) do
+    local style = styles[i]
+    table.insert(items, {
+      value = style.id,
+      text = style.label .. (style.wip and U.L("SETTINGS_THEME_WIP") or ""),
+      disabled = not style.available,
+    })
+  end
+
+  local selector = U.CreateDropdown(parent, {
+    name = "PandaUISettingsUnitFrameStyle",
+    width = 240,
+    height = 24,
+    rowHeight = 20,
+    value = U.GetUnitFrameStyle(),
+    items = items,
+    onChange = function(value)
+      if U.SetUnitFrameStyle(value) and U.UnitFrameStyleRequiresReload() then
+        U.ShowConfirm({
+          owner = "unitframes.style-reload",
+          centered = true,
+          text = U.L("UF_STYLE_CHANGED"),
+          detail = U.L("UF_STYLE_RELOAD",
+                       tostring(U.GetUnitFrameStyleLabel(value))),
+          acceptText = U.L("COMMON_OK_SHORT"),
+          cancelText = U.L("COMMON_CLOSE"),
+        })
+      end
+    end,
+  })
+  selector.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 26)
+  table.insert(widgets, selector)
+
+  local hint = U.CreateSettingsLabel(parent, {
+    size = M.fontSize.small,
+    color = M.color.textDim,
+    inherits = "GameFontNormalSmall",
+    justify = "LEFT",
+    width = width or U.SETTINGS_PAGE_WIDTH,
+  })
+  if hint then
+    U.AnchorSettingsDescription(hint, selector.button)
+    hint:SetText(U.L("UF_STYLE_HINT"))
+    table.insert(widgets, hint)
+  end
+
+  local function Refresh()
+    selector.SetValue(U.GetUnitFrameStyle(), false)
+  end
+
+  return widgets, Refresh
+end
+
+local function BuildUnitFramePartySettings(parent, y, width)
+  y = y or -4
+  local widgets = {}
+
+  local header = U.CreateSectionHeader(parent, {
+    text = U.L("UF_PARTY_HEADER"),
+    width = width or U.SETTINGS_PAGE_WIDTH,
+    y = y,
+  })
+  table.insert(widgets, header)
+
+  local playerToggle = U.CreateCheckbox(parent, {
+    name = "PandaUISettingsPartyPlayer",
+    text = U.L("UF_PARTY_PLAYER"),
+    value = U.GetUnitFramePartySetting("partyPlayer"),
+    onChange = function(value)
+      U.SetUnitFramePartySetting("partyPlayer", value)
+    end,
+  })
+  playerToggle.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 30)
+  table.insert(widgets, playerToggle)
+
+  local petToggle = U.CreateCheckbox(parent, {
+    name = "PandaUISettingsPartyPets",
+    text = U.L("UF_PARTY_PETS"),
+    value = U.GetUnitFramePartySetting("partyPets"),
+    onChange = function(value)
+      U.SetUnitFramePartySetting("partyPets", value)
+    end,
+  })
+  petToggle.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 54)
+  table.insert(widgets, petToggle)
+
+  -- classic-wow and modern-wow only (U.PartyRaidStyleAvailable).
+  local raidToggle
+  if U.PartyRaidStyleAvailable() then
+    raidToggle = U.CreateCheckbox(parent, {
+      name = "PandaUISettingsPartyRaidStyle",
+      text = U.L("UF_PARTY_RAID_STYLE"),
+      value = U.GetUnitFramePartySetting("partyRaidStyle"),
+      onChange = function(value)
+        U.SetUnitFramePartySetting("partyRaidStyle", value)
+      end,
+    })
+    raidToggle.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 78)
+    table.insert(widgets, raidToggle)
+  end
+
+  -- Party buff/debuff icon size, in percent of the built size (user request,
+  -- 2026-10-26); modules/auras.lua owns it. It also sizes the party HoTs and
+  -- the raid-style column's icons.
+  local sliderY = y - (raidToggle and 124 or 100)
+  local iconSize
+  if type(U.AuraPartyIconSizeLimits) == "function" then
+    local min, max, step = U.AuraPartyIconSizeLimits()
+    iconSize = U.CreateSlider(parent, {
+      name = "PandaUISettingsPartyIconSize",
+      text = U.L("UF_PARTY_ICON_SIZE"),
+      width = 200,
+      min = min,
+      max = max,
+      step = step,
+      value = U.GetAuraSetting("partyIconSize"),
+      onChange = function(value) U.SetAuraSetting("partyIconSize", value) end,
+    })
+    iconSize.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, sliderY)
+    table.insert(widgets, iconSize)
+  end
+
+  local function Refresh()
+    playerToggle.SetValue(U.GetUnitFramePartySetting("partyPlayer"))
+    petToggle.SetValue(U.GetUnitFramePartySetting("partyPets"))
+    if raidToggle then
+      raidToggle.SetValue(U.GetUnitFramePartySetting("partyRaidStyle"))
+    end
+    if iconSize then iconSize.SetValue(U.GetAuraSetting("partyIconSize")) end
+  end
+
+  -- The top of the section below this one.
+  return widgets, Refresh, sliderY - 64
+end
+
+-- The target frame's exact creature health and mana (core/unitvitals.lua),
+-- reachable from outside this file so the Unit Frames page and the contextual
+-- panel beside the target mover (modules/unitframeconfig.lua) write through one
+-- path rather than each poking the stored table. The vitals code is a core
+-- module that a stripped build can leave out, so both halves answer safely when
+-- U.unitvitals is not there.
+function U.GetExactVitals()
+  if not U.unitvitals then return false end
+  return U.unitvitals.Config().exactVitals and true or false
+end
+
+function U.SetExactVitals(value)
+  if not U.unitvitals then return false end
+  local config = U.unitvitals.Config()
+  config.exactVitals = value and true or false
+  -- The index and the event handlers are installed once at load, so a change
+  -- that switches the feature back on inside the same session has to build
+  -- what OnEnable would have.
+  if config.exactVitals then U.unitvitals.StartIndex() end
+  RefreshAll()
+  if type(U.RefreshUnitFrameSettingsViews) == "function" then
+    U.RefreshUnitFrameSettingsViews()
+  end
+  return true
+end
+
+-- The settings page and the mover panels each write only their own frame
+-- family. The numeric portrait3d value remains the global diagnostic coverage
+-- ceiling used by /pui portrait3d; ordinary checkboxes do not couple families.
+function U.GetPortrait3D(family)
+  local key = model3d.settingKeys[family]
+  return key and U.db and U.db[key] and true or false
+end
+
+function U.GetTargetTargetEnabled()
+  return not (U.db and U.db.targetTargetEnabled == false)
+end
+
+function U.SetTargetTargetEnabled(value)
+  if not U.db then return false end
+  U.db.targetTargetEnabled = value and true or false
+  RefreshAll()
+  if type(U.RefreshUnitFrameSettingsViews) == "function" then
+    U.RefreshUnitFrameSettingsViews()
+  end
+  return true
+end
+
+function U.GetPortraitEnabled(family)
+  local key = model3d.portraitKeys[family]
+  return key and U.db and U.db[key] and true or false
+end
+
+function U.SetPortraitEnabled(family, value)
+  local key = model3d.portraitKeys[family]
+  if not key or not U.db or not model3d.SquareTheme() then return false end
+  U.db[key] = value and true or false
+  RefreshAll()
+  if type(U.RefreshUnitFrameSettingsViews) == "function" then
+    U.RefreshUnitFrameSettingsViews()
+  end
+  return true
+end
+
+function U.SetPortrait3D(family, value)
+  local key = model3d.settingKeys[family]
+  if not key or not U.db then return false end
+  U.db[key] = value and true or false
+  -- The family checkbox is the normal user-facing control. Enabling it must
+  -- not remain silently blocked by a coverage level previously lowered with
+  -- the diagnostic slash command.
+  if value then U.db.portrait3d = 3 end
+  RefreshAll()
+  if type(U.RefreshUnitFrameSettingsViews) == "function" then
+    U.RefreshUnitFrameSettingsViews()
+  end
+  return true
+end
+
+function U.GetPortraitClassIcon()
+  return U.db and U.db.portraitClassIcon and true or false
+end
+
+-- The stored style is an index into M.classIcon.order; anything out of range
+-- reads as the first (Blizzard) style.
+function U.GetPortraitClassIconStyleIndex()
+  local index = U.db and tonumber(U.db.portraitClassIconStyle)
+  if not index or not M.classIcon.order[index] then return 1 end
+  return index
+end
+
+function U.GetPortraitClassIconStyle()
+  return M.classIcon.order[U.GetPortraitClassIconStyleIndex()]
+end
+
+function U.SetPortraitClassIcon(value, styleIndex)
+  if not U.db then return false end
+  if value ~= nil then U.db.portraitClassIcon = value and true or false end
+  if styleIndex and M.classIcon.order[styleIndex] then
+    U.db.portraitClassIconStyle = styleIndex
+  end
+  RefreshAll()
+  if type(U.RefreshUnitFrameSettingsViews) == "function" then
+    U.RefreshUnitFrameSettingsViews()
+  end
+  return true
+end
+
+-- What the exact-vitals section occupies from its own heading down to the next
+-- one: heading, the checkbox 26 below it, and the description five below that.
+-- The description has no fixed height -- this client centres a font string's
+-- glyphs inside one and breaks the gap -- so the reserve carries three wrapped
+-- lines, which is more than the longest translation needs.
+local EXACT_VITALS_SECTION_HEIGHT = 96
+UF.healthTextSectionHeight = 78
+UF.powerTextSectionHeight = 78
+
+local function BuildUnitFrameGeneralSettings(parent, y, width)
+  y = y or -4
+  local widgets = {}
+
+  local nampowerStatus, refreshNampower = U.CreateOptionalStatusSection(parent, {
+    header = U.L("NAMPOWER_HEADER"),
+    name = U.L("NAMPOWER_NAME"),
+    note = U.L("NAMPOWER_HINT_UNITFRAMES"),
+    detectedText = U.L("NAMPOWER_DETECTED"),
+    missingText = U.L("NAMPOWER_NOT_DETECTED"),
+    detected = U.NampowerDetected,
+    width = width or U.SETTINGS_PAGE_WIDTH,
+    y = y,
+  })
+  table.insert(widgets, nampowerStatus)
+  y = y - U.OPTIONAL_STATUS_SECTION_HEIGHT
+
+  local healthHeader = U.CreateSectionHeader(parent, {
+    text = U.L("UF_HEALTH_TEXT_HEADER"),
+    width = width or U.SETTINGS_PAGE_WIDTH,
+    y = y,
+  })
+  table.insert(widgets, healthHeader)
+
+  local leftLabel = U.CreateSettingsLabel(parent, {
+    size = M.fontSize.small,
+    color = M.color.accent,
+    inherits = "GameFontNormalSmall",
+    justify = "LEFT",
+    width = U.SETTINGS_COLUMN_WIDTH,
+  })
+  if leftLabel then
+    leftLabel:SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 26)
+    leftLabel:SetText(U.L("UF_HEALTH_TEXT_LEFT"))
+    table.insert(widgets, leftLabel)
+  end
+
+  local sideLabel = U.CreateSettingsLabel(parent, {
+    size = M.fontSize.small,
+    color = M.color.accent,
+    inherits = "GameFontNormalSmall",
+    justify = "LEFT",
+    width = U.SETTINGS_COLUMN_WIDTH,
+  })
+  if sideLabel then
+    sideLabel:SetPoint("TOPLEFT", parent, "TOPLEFT", U.SETTINGS_COLUMN_X,
+                       y - 26)
+    sideLabel:SetText(U.L("UF_HEALTH_TEXT_RIGHT"))
+    table.insert(widgets, sideLabel)
+  end
+
+  local healthLeft = U.CreateDropdown(parent, {
+    name = "PandaUISettingsHealthTextLeft",
+    width = U.SETTINGS_COLUMN_WIDTH,
+    height = 24,
+    rowHeight = 20,
+    value = U.GetUnitFrameHealthTextSetting("left"),
+    items = {
+      { value = "hidden", text = U.L("UF_HEALTH_TEXT_HIDDEN") },
+      { value = "percent", text = U.L("UF_HEALTH_TEXT_PERCENT") },
+      { value = "number", text = U.L("UF_HEALTH_TEXT_VALUE") },
+    },
+    onChange = function(value)
+      U.SetUnitFrameHealthTextSetting("left", value)
+    end,
+  })
+  healthLeft.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 42)
+  table.insert(widgets, healthLeft)
+
+  local healthRight = U.CreateDropdown(parent, {
+    name = "PandaUISettingsHealthTextRight",
+    width = U.SETTINGS_COLUMN_WIDTH,
+    height = 24,
+    rowHeight = 20,
+    value = U.GetUnitFrameHealthTextSetting("right"),
+    items = {
+      { value = "hidden", text = U.L("UF_HEALTH_TEXT_HIDDEN") },
+      { value = "percent", text = U.L("UF_HEALTH_TEXT_PERCENT") },
+      { value = "number", text = U.L("UF_HEALTH_TEXT_VALUE") },
+    },
+    onChange = function(value)
+      U.SetUnitFrameHealthTextSetting("right", value)
+    end,
+  })
+  healthRight.SetPoint("TOPLEFT", parent, "TOPLEFT", U.SETTINGS_COLUMN_X,
+                       y - 42)
+  table.insert(widgets, healthRight)
+
+  y = y - UF.healthTextSectionHeight
+
+  local powerHeader = U.CreateSectionHeader(parent, {
+    text = U.L("UF_POWER_TEXT_HEADER"),
+    width = width or U.SETTINGS_PAGE_WIDTH,
+    y = y,
+  })
+  table.insert(widgets, powerHeader)
+
+  local powerSides = {
+    { key = "left", caption = "UF_HEALTH_TEXT_LEFT", x = 0,
+      name = "PandaUISettingsPowerTextLeft" },
+    { key = "right", caption = "UF_HEALTH_TEXT_RIGHT", x = U.SETTINGS_COLUMN_X,
+      name = "PandaUISettingsPowerTextRight" },
+  }
+  local powerDropdowns = {}
+  local ps
+  for ps = 1, 2 do
+    local side = powerSides[ps]
+    local label = U.CreateSettingsLabel(parent, {
+      size = M.fontSize.small,
+      color = M.color.accent,
+      inherits = "GameFontNormalSmall",
+      justify = "LEFT",
+      width = U.SETTINGS_COLUMN_WIDTH,
+    })
+    if label then
+      label:SetPoint("TOPLEFT", parent, "TOPLEFT", side.x, y - 26)
+      label:SetText(U.L(side.caption))
+      table.insert(widgets, label)
+    end
+    local dropdown = U.CreateDropdown(parent, {
+      name = side.name,
+      width = U.SETTINGS_COLUMN_WIDTH,
+      height = 24,
+      rowHeight = 20,
+      value = U.GetUnitFramePowerTextSetting(side.key),
+      items = {
+        { value = "default", text = U.L("UF_POWER_TEXT_DEFAULT") },
+        { value = "hidden", text = U.L("UF_HEALTH_TEXT_HIDDEN") },
+        { value = "percent", text = U.L("UF_HEALTH_TEXT_PERCENT") },
+        { value = "number", text = U.L("UF_POWER_TEXT_VALUE") },
+      },
+      onChange = function(value)
+        U.SetUnitFramePowerTextSetting(side.key, value)
+      end,
+    })
+    dropdown.SetPoint("TOPLEFT", parent, "TOPLEFT", side.x, y - 42)
+    powerDropdowns[side.key] = dropdown
+    table.insert(widgets, dropdown)
+  end
+
+  y = y - UF.powerTextSectionHeight
+
+  local sizeHeader = U.CreateSectionHeader(parent, {
+    text = U.L("UF_TEXT_SIZE_HEADER"),
+    width = width or U.SETTINGS_PAGE_WIDTH,
+    y = y,
+  })
+  table.insert(widgets, sizeHeader)
+
+  local sizeSides = {
+    { kind = "health", caption = "UF_TEXT_SIZE_HEALTH", x = 0,
+      name = "PandaUISettingsHealthTextSize" },
+    { kind = "power", caption = "UF_TEXT_SIZE_POWER", x = U.SETTINGS_COLUMN_X,
+      name = "PandaUISettingsPowerTextSize" },
+  }
+  local sizeDropdowns = {}
+  local ss
+  for ss = 1, 2 do
+    local side = sizeSides[ss]
+    local label = U.CreateSettingsLabel(parent, {
+      size = M.fontSize.small,
+      color = M.color.accent,
+      inherits = "GameFontNormalSmall",
+      justify = "LEFT",
+      width = U.SETTINGS_COLUMN_WIDTH,
+    })
+    if label then
+      label:SetPoint("TOPLEFT", parent, "TOPLEFT", side.x, y - 26)
+      label:SetText(U.L(side.caption))
+      table.insert(widgets, label)
+    end
+    local dropdown = U.CreateDropdown(parent, {
+      name = side.name,
+      width = U.SETTINGS_COLUMN_WIDTH,
+      height = 24,
+      rowHeight = 20,
+      value = U.GetUnitFrameTextSize(side.kind),
+      items = {
+        { value = 0, text = U.L("UF_POWER_TEXT_DEFAULT") },
+        { value = 6, text = "6" },
+        { value = 7, text = "7" },
+        { value = 8, text = "8" },
+        { value = 9, text = "9" },
+        { value = 10, text = "10" },
+        { value = 11, text = "11" },
+        { value = 12, text = "12" },
+        { value = 13, text = "13" },
+        { value = 14, text = "14" },
+        { value = 16, text = "16" },
+      },
+      onChange = function(value)
+        U.SetUnitFrameTextSize(side.kind, value)
+      end,
+    })
+    dropdown.SetPoint("TOPLEFT", parent, "TOPLEFT", side.x, y - 42)
+    sizeDropdowns[side.kind] = dropdown
+    table.insert(widgets, dropdown)
+  end
+
+  y = y - UF.powerTextSectionHeight
+
+  local hoverToggle = U.CreateCheckbox(parent, {
+    name = "PandaUISettingsTextsOnHover",
+    text = U.L("UF_TEXT_ON_HOVER"),
+    value = U.GetUnitFrameTextsOnHover(),
+    onChange = function(value)
+      U.SetUnitFrameTextsOnHover(value)
+    end,
+  })
+  hoverToggle.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y + 8)
+  table.insert(widgets, hoverToggle)
+  y = y - 30
+
+  local targetTargetHeader = U.CreateSectionHeader(parent, {
+    text = U.L("UF_TARGET_TARGET_HEADER"),
+    width = width or U.SETTINGS_PAGE_WIDTH,
+    y = y,
+  })
+  table.insert(widgets, targetTargetHeader)
+
+  local targetTargetToggle = U.CreateCheckbox(parent, {
+    name = "PandaUISettingsTargetTargetEnabled",
+    text = U.L("UF_TARGET_TARGET_ENABLED"),
+    value = U.GetTargetTargetEnabled(),
+    onChange = function(value)
+      U.SetTargetTargetEnabled(value)
+    end,
+  })
+  targetTargetToggle.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 26)
+  table.insert(widgets, targetTargetToggle)
+
+  y = y - 56
+
+  -- Portraits: one independent 3D switch for each mover-owned frame family,
+  -- matching model3d.Family above. Party pets follow party; Modern's pet
+  -- visibility follows the player switch.
+  local portraitHeader = U.CreateSectionHeader(parent, {
+    text = U.L("UF_PORTRAIT_HEADER"),
+    width = width or U.SETTINGS_PAGE_WIDTH,
+    y = y,
+  })
+  table.insert(widgets, portraitHeader)
+
+  local modernPortraits = model3d.SquareTheme()
+  local portraitPlayer, portraitTarget, portraitTargetTarget, portraitParty
+  if modernPortraits then
+    local specs = {
+      { "Player", "UF_PORTRAIT_PLAYER", "player", 0 },
+      { "Target", "UF_PORTRAIT_TARGET", "target", 1 },
+      { "TargetTarget", "UF_PORTRAIT_TARGET_TARGET", "targettarget", 2 },
+      { "Party", "UF_PORTRAIT_PARTY", "party", 3 },
+    }
+    local controls = {}
+    local i
+    for i = 1, table.getn(specs) do
+      local entry = specs[i]
+      local family = entry[3]
+      local control = U.CreateCheckbox(parent, {
+        name = "PandaUISettingsPortrait" .. entry[1],
+        text = U.L(entry[2]),
+        textWidth = U.SETTINGS_COLUMN_WIDTH - 26,
+        value = U.GetPortraitEnabled(family),
+        onChange = function(value)
+          U.SetPortraitEnabled(family, value)
+        end,
+      })
+      control.SetPoint("TOPLEFT", parent, "TOPLEFT", 0,
+                       y - 26 - entry[4] * 24)
+      controls[family] = control
+      table.insert(widgets, control)
+    end
+    portraitPlayer = controls.player
+    portraitTarget = controls.target
+    portraitTargetTarget = controls.targettarget
+    portraitParty = controls.party
+  end
+
+  local portrait3dPlayer = U.CreateCheckbox(parent, {
+    name = "PandaUISettingsPortrait3DPlayer",
+    text = U.L("UF_PORTRAIT_3D_PLAYER"),
+    textWidth = U.SETTINGS_COLUMN_WIDTH - 26,
+    value = U.GetPortrait3D("player"),
+    onChange = function(value)
+      U.SetPortrait3D("player", value)
+    end,
+  })
+  portrait3dPlayer.SetPoint("TOPLEFT", parent, "TOPLEFT",
+                            modernPortraits and U.SETTINGS_COLUMN_X or 0, y - 26)
+  table.insert(widgets, portrait3dPlayer)
+
+  local portrait3dTarget = U.CreateCheckbox(parent, {
+    name = "PandaUISettingsPortrait3DTarget",
+    text = U.L("UF_PORTRAIT_3D_TARGET"),
+    textWidth = U.SETTINGS_COLUMN_WIDTH - 26,
+    value = U.GetPortrait3D("target"),
+    onChange = function(value)
+      U.SetPortrait3D("target", value)
+    end,
+  })
+  portrait3dTarget.SetPoint("TOPLEFT", parent, "TOPLEFT", U.SETTINGS_COLUMN_X,
+                            y - (modernPortraits and 50 or 26))
+  table.insert(widgets, portrait3dTarget)
+
+  local portrait3dTargetTarget = U.CreateCheckbox(parent, {
+    name = "PandaUISettingsPortrait3DTargetTarget",
+    text = U.L("UF_PORTRAIT_3D_TARGET_TARGET"),
+    textWidth = U.SETTINGS_COLUMN_WIDTH - 26,
+    value = U.GetPortrait3D("targettarget"),
+    onChange = function(value)
+      U.SetPortrait3D("targettarget", value)
+    end,
+  })
+  portrait3dTargetTarget.SetPoint("TOPLEFT", parent, "TOPLEFT", U.SETTINGS_COLUMN_X,
+                                  y - (modernPortraits and 74 or 50))
+  table.insert(widgets, portrait3dTargetTarget)
+
+  local portrait3dParty = U.CreateCheckbox(parent, {
+    name = "PandaUISettingsPortrait3DParty",
+    text = U.L("UF_PORTRAIT_3D_PARTY"),
+    value = U.GetPortrait3D("party"),
+    onChange = function(value)
+      U.SetPortrait3D("party", value)
+    end,
+  })
+  portrait3dParty.SetPoint("TOPLEFT", parent, "TOPLEFT",
+                           modernPortraits and U.SETTINGS_COLUMN_X or 0,
+                           y - (modernPortraits and 98 or 74))
+  table.insert(widgets, portrait3dParty)
+
+  local portrait3dPet = U.CreateCheckbox(parent, {
+    name = "PandaUISettingsPortrait3DPet",
+    text = U.L("UF_PORTRAIT_3D_PET"),
+    textWidth = U.SETTINGS_COLUMN_WIDTH - 26,
+    value = U.GetPortrait3D("pet"),
+    onChange = function(value)
+      U.SetPortrait3D("pet", value)
+    end,
+  })
+  portrait3dPet.SetPoint("TOPLEFT", parent, "TOPLEFT",
+                         modernPortraits and U.SETTINGS_COLUMN_X or 0,
+                         y - (modernPortraits and 122 or 50))
+  table.insert(widgets, portrait3dPet)
+
+  local portraitHint = U.CreateSettingsLabel(parent, {
+    size = M.fontSize.small,
+    color = M.color.textDim,
+    inherits = "GameFontNormalSmall",
+    justify = "LEFT",
+    width = width or U.SETTINGS_PAGE_WIDTH,
+  })
+  if portraitHint then
+    U.AnchorSettingsDescription(portraitHint, portrait3dParty.box)
+    if modernPortraits then
+      U.AnchorSettingsDescription(portraitHint, portrait3dPet.box,
+                                  -U.SETTINGS_COLUMN_X)
+    end
+    portraitHint:SetText(U.L("UF_PORTRAIT_3D_HINT"))
+    table.insert(widgets, portraitHint)
+  end
+
+  y = y - (modernPortraits and 190 or EXACT_VITALS_SECTION_HEIGHT + 48)
+
+  -- Class-icon portraits for player, target and target-of-target frames. The
+  -- style picker shows only while the option is on.
+  local classIconHeader = U.CreateSectionHeader(parent, {
+    text = U.L("UF_CLASS_ICON_HEADER"),
+    width = width or U.SETTINGS_PAGE_WIDTH,
+    y = y,
+  })
+  table.insert(widgets, classIconHeader)
+
+  local classIconStyle
+  local classIcon = U.CreateCheckbox(parent, {
+    name = "PandaUISettingsPortraitClassIcon",
+    text = U.L("UF_CLASS_ICON"),
+    textWidth = U.SETTINGS_COLUMN_WIDTH - 26,
+    value = U.GetPortraitClassIcon(),
+    onChange = function(value)
+      U.SetPortraitClassIcon(value)
+      classIconStyle.puiSetShown(value)
+    end,
+  })
+  classIcon.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 26)
+  table.insert(widgets, classIcon)
+
+  local styleItems = {}
+  local s
+  for s = 1, table.getn(M.classIcon.order) do
+    table.insert(styleItems, {
+      value = s,
+      text = U.L("UF_CLASS_ICON_STYLE_" ..
+                 string.upper(M.classIcon.order[s])),
+    })
+  end
+  classIconStyle = U.CreateDropdown(parent, {
+    name = "PandaUISettingsPortraitClassIconStyle",
+    width = 240,
+    height = 24,
+    rowHeight = 20,
+    value = U.GetPortraitClassIconStyleIndex(),
+    items = styleItems,
+    onChange = function(value)
+      U.SetPortraitClassIcon(nil, value)
+    end,
+  })
+  classIconStyle.SetPoint("TOPLEFT", parent, "TOPLEFT", U.SETTINGS_COLUMN_X, y - 26)
+  table.insert(widgets, classIconStyle)
+
+  local classIconHint = U.CreateSettingsLabel(parent, {
+    size = M.fontSize.small,
+    color = M.color.textDim,
+    inherits = "GameFontNormalSmall",
+    justify = "LEFT",
+    width = width or U.SETTINGS_PAGE_WIDTH,
+  })
+  if classIconHint then
+    -- 5 below the 24-tall style dropdown's bottom edge (row at y - 26), not
+    -- below the shorter checkbox, so the text clears the dropdown.
+    classIconHint:ClearAllPoints()
+    classIconHint:SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 26 - 24 - 5)
+    classIconHint:SetText(U.L("UF_CLASS_ICON_HINT"))
+    table.insert(widgets, classIconHint)
+  end
+
+  y = y - EXACT_VITALS_SECTION_HEIGHT
+
+  local vitalsHeader = U.CreateSectionHeader(parent, {
+    text = U.L("UF_EXACT_VITALS_HEADER"),
+    width = width or U.SETTINGS_PAGE_WIDTH,
+    y = y,
+  })
+  table.insert(widgets, vitalsHeader)
+
+  local exactVitals = U.CreateCheckbox(parent, {
+    name = "PandaUISettingsExactVitals",
+    text = U.L("UF_EXACT_VITALS"),
+    value = U.GetExactVitals(),
+    onChange = function(value)
+      U.SetExactVitals(value)
+    end,
+  })
+  exactVitals.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 26)
+  table.insert(widgets, exactVitals)
+
+  local vitalsHint = U.CreateSettingsLabel(parent, {
+    size = M.fontSize.small,
+    color = M.color.textDim,
+    inherits = "GameFontNormalSmall",
+    justify = "LEFT",
+    width = width or U.SETTINGS_PAGE_WIDTH,
+  })
+  if vitalsHint then
+    U.AnchorSettingsDescription(vitalsHint, exactVitals.box)
+    vitalsHint:SetText(U.L("UF_EXACT_VITALS_HINT"))
+    table.insert(widgets, vitalsHint)
+  end
+
+  -- Everything below keeps its own relative layout; the section above simply
+  -- pushes it down as a block.
+  y = y - EXACT_VITALS_SECTION_HEIGHT
+
+  local tickHeader = U.CreateSectionHeader(parent, {
+    text = U.L("UF_POWER_TICK_HEADER"),
+    width = width or U.SETTINGS_PAGE_WIDTH,
+    y = y,
+  })
+  table.insert(widgets, tickHeader)
+
+  local manaTick = U.CreateCheckbox(parent, {
+    name = "PandaUISettingsManaTick",
+    text = U.L("UF_MANA_TICK"),
+    textWidth = U.SETTINGS_COLUMN_WIDTH - 26,
+    value = U.GetUnitFramePowerTick("manaTick"),
+    onChange = function(value)
+      U.SetUnitFramePowerTick("manaTick", value)
+    end,
+  })
+  manaTick.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 26)
+  table.insert(widgets, manaTick)
+
+  local energyTick = U.CreateCheckbox(parent, {
+    name = "PandaUISettingsEnergyTick",
+    text = U.L("UF_ENERGY_TICK"),
+    textWidth = U.SETTINGS_COLUMN_WIDTH - 26,
+    value = U.GetUnitFramePowerTick("energyTick"),
+    onChange = function(value)
+      U.SetUnitFramePowerTick("energyTick", value)
+    end,
+  })
+  energyTick.SetPoint("TOPLEFT", parent, "TOPLEFT", U.SETTINGS_COLUMN_X, y - 26)
+  table.insert(widgets, energyTick)
+
+  local comboHeader = U.CreateSectionHeader(parent, {
+    text = U.L("UF_COMBO_POINTS_HEADER"),
+    width = width or U.SETTINGS_PAGE_WIDTH,
+    y = y - 56,
+  })
+  -- Section headers are composite controls, so give this one the same
+  -- visibility contract as other settings widgets. Rogues configure this in
+  -- their own class tab; the shared General page exposes it to Druids.
+  comboHeader.puiSetShown = function(shown)
+    local i
+    for i = 1, table.getn(comboHeader.puiParts or {}) do
+      if shown then
+        comboHeader.puiParts[i]:Show()
+      else
+        comboHeader.puiParts[i]:Hide()
+      end
+    end
+  end
+  table.insert(widgets, comboHeader)
+
+  local comboAnchor = U.CreateDropdown(parent, {
+    name = "PandaUISettingsComboPointAnchor",
+    width = 240,
+    height = 24,
+    rowHeight = 20,
+    value = U.GetComboPointAnchor(),
+    items = {
+      { value = "player", text = U.L("UF_COMBO_POINTS_PLAYER_FRAME") },
+      { value = "target", text = U.L("UF_COMBO_POINTS_TARGET_FRAME") },
+    },
+    onChange = function(value)
+      U.SetComboPointAnchor(value)
+    end,
+  })
+  comboAnchor.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 82)
+  table.insert(widgets, comboAnchor)
+
+  -- The incoming-heal segment applies to every frame this module draws, not
+  -- just the party rows, so it belongs on the General page. modules/healpredict.
+  -- lua owns its state and builds it; this page only says where it goes. The
+  -- offset clears the combo-point section's reserved space, which stays
+  -- reserved for a class that does not show it so nothing below ever shifts.
+  local refreshHeal
+  if type(U.BuildHealPredictSettings) == "function" then
+    local healWidgets
+    healWidgets, refreshHeal = U.BuildHealPredictSettings(parent, y - 122,
+                                                          width or U.SETTINGS_PAGE_WIDTH)
+    local n
+    for n = 1, table.getn(healWidgets) do
+      table.insert(widgets, healWidgets[n])
+    end
+  end
+
+  local function Refresh()
+    if refreshNampower then refreshNampower() end
+    healthLeft.SetValue(U.GetUnitFrameHealthTextSetting("left"))
+    healthRight.SetValue(U.GetUnitFrameHealthTextSetting("right"))
+    powerDropdowns.left.SetValue(U.GetUnitFramePowerTextSetting("left"))
+    powerDropdowns.right.SetValue(U.GetUnitFramePowerTextSetting("right"))
+    hoverToggle.SetValue(U.GetUnitFrameTextsOnHover())
+    sizeDropdowns.health.SetValue(U.GetUnitFrameTextSize("health"))
+    sizeDropdowns.power.SetValue(U.GetUnitFrameTextSize("power"))
+    targetTargetToggle.SetValue(U.GetTargetTargetEnabled())
+    if modernPortraits then
+      portraitPlayer.SetValue(U.GetPortraitEnabled("player"))
+      portraitTarget.SetValue(U.GetPortraitEnabled("target"))
+      portraitTargetTarget.SetValue(U.GetPortraitEnabled("targettarget"))
+      portraitParty.SetValue(U.GetPortraitEnabled("party"))
+      portrait3dPlayer.SetEnabled(U.GetPortraitEnabled("player"))
+      portrait3dTarget.SetEnabled(U.GetPortraitEnabled("target"))
+      portrait3dTargetTarget.SetEnabled(U.GetPortraitEnabled("targettarget"))
+      portrait3dParty.SetEnabled(U.GetPortraitEnabled("party"))
+      portrait3dPet.SetEnabled(U.GetPortraitEnabled("pet"))
+    end
+    portrait3dPlayer.SetValue(U.GetPortrait3D("player"))
+    portrait3dTarget.SetValue(U.GetPortrait3D("target"))
+    portrait3dTargetTarget.SetValue(U.GetPortrait3D("targettarget"))
+    portrait3dParty.SetValue(U.GetPortrait3D("party"))
+    portrait3dPet.SetValue(U.GetPortrait3D("pet"))
+    classIcon.SetValue(U.GetPortraitClassIcon())
+    classIconStyle.SetValue(U.GetPortraitClassIconStyleIndex())
+    classIconStyle.puiSetShown(U.GetPortraitClassIcon())
+    exactVitals.SetValue(U.GetExactVitals())
+    manaTick.SetValue(U.GetUnitFramePowerTick("manaTick"))
+    energyTick.SetValue(U.GetUnitFramePowerTick("energyTick"))
+    local class = UnitClassToken("player")
+    local supported = class == "DRUID"
+    comboHeader.puiSetShown(supported)
+    comboAnchor.puiSetShown(supported)
+    if supported then comboAnchor.SetValue(U.GetComboPointAnchor()) end
+    if refreshHeal then refreshHeal() end
+  end
+
+  return widgets, Refresh
+end
+
+-- width is the page's own section width, so every heading on the page draws its
+-- rules to the same edges. It falls back to U.SETTINGS_PAGE_WIDTH for a
+-- caller that does not pass one.
+local function BuildUnitFrameColorSettings(parent, y, width)
+  y = y or -4
+  local widgets = {}
+
+  local header = U.CreateSectionHeader(parent, {
+    text = U.L("UF_COLORS_HEADER"),
+    width = width or U.SETTINGS_PAGE_WIDTH,
+    y = y,
+  })
+  table.insert(widgets, header)
+
+  local function ColorValue(prefix)
+    local cfg = ColorConfig()
+    return { r = cfg[prefix .. "R"], g = cfg[prefix .. "G"],
+             b = cfg[prefix .. "B"], a = 1 }
+  end
+
+  local customToggle = U.CreateCheckbox(parent, {
+    name = "PandaUISettingsCustomColors",
+    text = U.L("UF_CUSTOM_BAR_COLORS"),
+    value = ColorConfig().customColors,
+    onChange = function(value)
+      ColorConfig().customColors = value
+      U.ApplyUnitFrameColors()
+    end,
+  })
+  customToggle.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 26)
+  table.insert(widgets, customToggle)
+
+  local healthPicker = U.CreateColorPicker(parent, {
+    name = "PandaUISettingsHealthColor",
+    text = U.L("UF_HEALTH_BAR_COLOR"),
+    value = ColorValue("healthColor"),
+    hasOpacity = false,
+    onChange = function(color)
+      local cfg = ColorConfig()
+      cfg.healthColorR, cfg.healthColorG, cfg.healthColorB =
+        color.r, color.g, color.b
+      U.ApplyUnitFrameColors()
+    end,
+  })
+  -- Health shares the custom-colour row; it is only meaningful once that
+  -- checkbox is enabled and this keeps the combined Unit Frames page compact.
+  healthPicker.SetPoint("TOPLEFT", parent, "TOPLEFT", U.SETTINGS_COLUMN_X, y - 26)
+  table.insert(widgets, healthPicker)
+
+  local classHealthToggle = U.CreateCheckbox(parent, {
+    name = "PandaUISettingsClassHealthColors",
+    text = U.L("UF_CLASS_COLORS"),
+    value = ColorConfig().classHealthColors,
+    onChange = function(value)
+      ColorConfig().classHealthColors = value
+      U.ApplyUnitFrameColors()
+    end,
+  })
+  classHealthToggle.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 52)
+  table.insert(widgets, classHealthToggle)
+
+  -- One picker per power type. The stored colour is per type because the
+  -- config is account-wide: recolouring a priest's mana must not recolour a
+  -- rogue's energy.
+  local powerHeader = U.CreateSettingsLabel(parent, {
+    size = M.fontSize.small,
+    color = M.color.accent,
+    inherits = "GameFontNormalSmall",
+    justify = "LEFT",
+  })
+  if powerHeader then
+    powerHeader:SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 82)
+    powerHeader:SetText(U.L("UF_POWER_BAR_COLORS"))
+    table.insert(widgets, powerHeader)
+  end
+
+  -- Laid out across one row rather than stacked, so the four power types read
+  -- as a set of swatches. The label width is set explicitly because the
+  -- default fills the whole settings column and neighbouring labels would
+  -- overlap.
+  local COLUMN_WIDTH = math.floor(((width or U.SETTINGS_PAGE_WIDTH) - 12) / 4)
+  local powerPickers = {}
+  local i
+  for i = 1, table.getn(POWER_TYPES) do
+    local entry = POWER_TYPES[i]
+    local picker = U.CreateColorPicker(parent, {
+      name = "PandaUISettingsPowerColor" .. entry.key,
+      text = U.L(entry.labelKey),
+      value = ColorValue(entry.key),
+      hasOpacity = false,
+      textWidth = COLUMN_WIDTH - 28,
+      onChange = function(color)
+        local cfg = ColorConfig()
+        cfg[entry.key .. "R"] = color.r
+        cfg[entry.key .. "G"] = color.g
+        cfg[entry.key .. "B"] = color.b
+        U.ApplyUnitFrameColors()
+      end,
+    })
+    picker.SetPoint("TOPLEFT", parent, "TOPLEFT",
+                    12 + (i - 1) * COLUMN_WIDTH, y - 104)
+    table.insert(widgets, picker)
+    table.insert(powerPickers, picker)
+  end
+
+  -- Where the Modern WoW target shows its level colour: its name and level
+  -- (the default) or its portrait ring (modules/modernwow.lua owns the
+  -- setting). Left out while no dressed target carries a ring tint, since the
+  -- switch would then do nothing.
+  local ringToggle
+  if type(U.ModernWowTargetRingAvailable) == "function" and
+     U.ModernWowTargetRingAvailable() then
+    ringToggle = U.CreateCheckbox(parent, {
+      name = "PandaUISettingsTargetRingLevel",
+      text = U.L("UF_TARGET_RING_LEVEL"),
+      value = U.ModernWowTargetRingColor(),
+      onChange = function(value)
+        U.ModernWowSetTargetRingColor(value)
+      end,
+    })
+    ringToggle.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, y - 140)
+    table.insert(widgets, ringToggle)
+
+    local ringHint = U.CreateSettingsLabel(parent, {
+      size = M.fontSize.small,
+      color = M.color.textDim,
+      inherits = "GameFontNormalSmall",
+      justify = "LEFT",
+      width = width or U.SETTINGS_PAGE_WIDTH,
+    })
+    if ringHint then
+      U.AnchorSettingsDescription(ringHint, ringToggle.box)
+      ringHint:SetText(U.L("UF_TARGET_RING_LEVEL_HINT"))
+      table.insert(widgets, ringHint)
+    end
+  end
+
+  local function Refresh()
+    local cfg = ColorConfig()
+    healthPicker.SetValue(ColorValue("healthColor"))
+    customToggle.SetValue(cfg.customColors)
+    classHealthToggle.SetValue(cfg.classHealthColors)
+    if ringToggle then ringToggle.SetValue(U.ModernWowTargetRingColor()) end
+
+    local n
+    for n = 1, table.getn(POWER_TYPES) do
+      powerPickers[n].SetValue(ColorValue(POWER_TYPES[n].key))
+    end
+  end
+
+  return widgets, Refresh
+end
+
+-- ---------------------------------------------------------------------------
+-- Settings pages
+--
+-- One page per subject under the Unit Frames group. Each returns the widget
+-- array and the refresh the settings window expects.
+-- ---------------------------------------------------------------------------
+local function BuildGeneralPage(parent)
+  -- Left out entirely -- rather than shown disabled -- while there is nothing
+  -- to choose: under a theme that does not draw PandaUI's own frames, and
+  -- while Enhanced is still the only other entry and is not selectable yet.
+  -- U.UnitFrameStyleSelectable owns that rule (core/unitframestyle.lua) and
+  -- turns the section back on by itself once a second style is available.
+  -- The rest of the page then keeps the top of the content area rather than
+  -- sitting below a gap.
+  if not U.UnitFrameStyleSelectable() then
+    return BuildUnitFrameGeneralSettings(parent, -4, U.SETTINGS_PAGE_WIDTH)
+  end
+
+  local widgets, refreshStyle = BuildUnitFrameStyleSettings(parent, -4,
+                                                            U.SETTINGS_PAGE_WIDTH)
+  local generalWidgets, refreshGeneral =
+    BuildUnitFrameGeneralSettings(parent, -4 - STYLE_SECTION_HEIGHT,
+                                  U.SETTINGS_PAGE_WIDTH)
+  local i
+  for i = 1, table.getn(generalWidgets) do
+    table.insert(widgets, generalWidgets[i])
+  end
+
+  local function Refresh()
+    if refreshStyle then refreshStyle() end
+    if refreshGeneral then refreshGeneral() end
+  end
+
+  return widgets, Refresh
+end
+
+-- Party frames and the HoT indicators that sit on them. modules/hots.lua owns
+-- the second section's state, so it builds it; this page only places it under
+-- the party controls and merges the two refreshes.
+local function BuildPartyPage(parent)
+  local widgets, refreshParty, nextY =
+    BuildUnitFramePartySettings(parent, -4, U.SETTINGS_PAGE_WIDTH)
+  local refreshHots
+  if type(U.BuildHotSettings) == "function" then
+    local hotWidgets
+    hotWidgets, refreshHots = U.BuildHotSettings(parent, nextY,
+                                                 U.SETTINGS_PAGE_WIDTH)
+    local i
+    for i = 1, table.getn(hotWidgets) do
+      table.insert(widgets, hotWidgets[i])
+    end
+  end
+
+  local function Refresh()
+    if refreshParty then refreshParty() end
+    if refreshHots then refreshHots() end
+  end
+
+  return widgets, Refresh
+end
+
+local function BuildColorPage(parent)
+  return BuildUnitFrameColorSettings(parent, -4, U.SETTINGS_PAGE_WIDTH)
+end
+
+-- modules/auras.lua registers its own page into this group with
+-- after = "unitframes.party", which is what puts Auras between Party Frames and
+-- Colors regardless of module load order.
+U.UnitFrameSettingsGroup = SETTINGS_GROUP
+U.UnitFrameSettingsPageWidth = U.SETTINGS_PAGE_WIDTH
+
+function UF:OnInit()
+  if type(U.RegisterSettingsGroup) ~= "function" then
+    U.Error("settings window has no category API; unit frame options unavailable")
+    return
+  end
+
+  U.RegisterSettingsGroup(SETTINGS_GROUP, U.L("UF_PAGE"))
+  U.RegisterSettingsTab(SETTINGS_GROUP .. ".general", U.L("UF_TAB_GENERAL"),
+                        BuildGeneralPage, { parent = SETTINGS_GROUP })
+  U.RegisterSettingsTab(SETTINGS_GROUP .. ".party", U.L("UF_TAB_PARTY"),
+                        BuildPartyPage, { parent = SETTINGS_GROUP })
+  U.RegisterSettingsTab(SETTINGS_GROUP .. ".colors", U.L("UF_TAB_COLORS"),
+                        BuildColorPage, { parent = SETTINGS_GROUP })
+end
+
+-- Docks an anchorTo frame onto its parent at the spec's offset. Used both when
+-- the frames are first built and by target-of-target's position-reset hook, so
+-- clearing its saved mover position puts it back exactly where it started.
+local function DockToParent(frame, spec, parent)
+  if not frame or not parent then return false end
+  frame:ClearAllPoints()
+  frame:SetPoint(spec.anchorPoint or "TOPLEFT", parent,
+                 spec.anchorRelativePoint or "TOPLEFT",
+                 spec.anchorOffsetX or 0, spec.anchorOffsetY or 0)
+  return true
+end
+
+function UF:OnEnable()
+  if table.getn(frameOrder) > 0 then return end
+
+  local nativeChrome = classicNative.Enabled()
+  local modernUnits = nativeChrome and
+                      type(U.ClassicModernModuleEnabled) == "function" and
+                      U.ClassicModernModuleEnabled("unitframes") or false
+  -- Read before UsesNative is first asked about the party (see there).
+  classicNative.raidParty = U.PartyRaidStyleAvailable() and
+                            PartyConfig().partyRaidStyle and true or false
+  SuppressStockFrames(not nativeChrome or modernUnits,
+                      not classicNative.UsesNative("party1"))
+  if U.Dropdown and type(U.Dropdown.EnsureMenuSkin) == "function" then
+    U.Dropdown.EnsureMenuSkin()
+  end
+  unitMouse.AddPopupWhisper()
+
+  frames[PARTY_ANCHOR] = BuildPartyAnchor()
+
+  local i
+  for i = 1, table.getn(SPECS) do
+    local spec = SPECS[i]
+
+    -- Resolved against frames already built this pass: SPECS lists target
+    -- before targettarget, and the party anchor is built before the loop
+    -- starts, so every anchorTo target exists by the time it is needed.
+    local parent = spec.anchorTo and frames[spec.anchorTo] or nil
+
+    local frame = BuildFrame(spec, parent)
+
+    frames[spec.id] = frame
+    table.insert(frameOrder, spec.id)
+
+    -- A parent anchor is the resting default for anchorTo frames. spec.mover
+    -- (target-of-target only) then registers a handle on top of it: RegisterMover
+    -- re-applies a saved UIParent-relative position if one exists and otherwise
+    -- leaves the parent anchor in place, so it starts docked and stays draggable.
+    if parent then
+      DockToParent(frame, spec, parent)
+    end
+
+    if not parent or spec.mover then
+      U.RegisterMover("unitframes." .. spec.id, frame, {
+        label = U.L(spec.labelKey, spec.labelArg),
+        default = spec.default,
+        scalable = true,
+        onScale = classicNative.Reanchor,
+      })
+    end
+
+    if nativeChrome and classicNative.UsesNative(spec.id) then
+      classicNative.HideCustomVisuals(frame)
+    else
+      unitMouse.Enable(frame)
+      if frame.portrait and frame.portrait.puiSquare3D then
+        unitMouse.Enable(frame.portrait, frame.unit)
+      end
+    end
+  end
+
+  -- /pui reset clears every saved mover position. Any spec.mover frame that also
+  -- has a parent anchor (target-of-target) has a default the position store
+  -- cannot express, so re-dock it by hand the way the build loop did. Returns
+  -- true so the frame is counted among the restored ones.
+  U.OnPositionReset(function()
+    local n
+    for n = 1, table.getn(SPECS) do
+      local spec = SPECS[n]
+      if spec.mover and spec.anchorTo then
+        local restored = DockToParent(frames[spec.id], spec,
+                                      frames[spec.anchorTo])
+        classicNative.DockTargetTarget(
+          classicNative.NativeShown(frames.targettarget))
+        return restored
+      end
+    end
+    return false
+  end)
+
+  if nativeChrome then
+    classicNative.BindAll()
+  end
+
+  -- After BindAll, so PartyPetShown sees the final classicNative.active state
+  -- and the pet rows stay off in the Classic theme.
+  LayoutParty(true)
+
+  local tickBar, tickHeight
+  local playerNative = nativeChrome and classicNative.UsesNative("player")
+  if playerNative then
+    -- unitframes.player_click_hit_route.v1 confirms PlayerFrameManaBar exists,
+    -- is visible and is a native StatusBar in the Classic path. The overlay is
+    -- an addon-owned child, so the stock bar remains responsible for its fill.
+    --
+    -- This is the heaviest addon-into-native binding the Classic path has, and
+    -- it remains a standing violation of the native widget ownership rule in
+    -- .claude/rules/pandaui.md: powerTick.Build does
+    -- CreateFrame("Frame", nil, bar) with bar = the client-owned
+    -- PlayerFrameManaBar, then SetAllPoints(bar) and SetFrameLevel on it -- an
+    -- addon frame parented into the native widget hierarchy and held there for
+    -- the session. The 2026-09-06 login-crash bisect cleared it of causing
+    -- that crash (it was active on the passing run), so it is not being
+    -- removed blind; it goes away with the rest of the native binding when the
+    -- Classic frames become addon-owned.
+    tickBar = classicNative.Resolve({ "PlayerFrameManaBar" })
+    tickHeight = classicNative.Dimension(tickBar, "GetHeight")
+  elseif frames.player and frames.player.power then
+    tickBar = frames.player.power.bar
+    tickHeight = frames.player.spec.power
+  end
+  if tickBar then
+    powerTick.Build(tickBar, tickHeight,
+                    not playerNative and frames.player.health or nil)
+  end
+
+  RegisterEvents()
+
+  local playerClass = UnitClassToken("player")
+  if not playerNative and frames.player and
+     (playerClass == "ROGUE" or playerClass == "DRUID") then
+    SuppressStockComboFrame()
+    BuildComboPoints(frames.player, playerClass == "DRUID")
+    U.SetComboPointAnchor(powerTick.Config().comboAnchor)
+    RegisterComboEvents()
+    RefreshComboPoints()
+  end
+
+  -- Druid only: this is what puts the "Druid Mana" anchor in edit mode for a
+  -- druid and leaves every other class's mover list untouched.
+  if playerClass == "DRUID" then
+    BuildDruidManaBar()
+    RegisterDruidEvents()
+    RefreshDruidMana()
+  end
+
+  -- One bounded scheduler coalesces event bursts, polls party vitals and
+  -- target-of-target at 0.2s, and performs a full fallback once per second.
+  U.RegisterUpdate("unitframes.refresh", 0.2, RefreshScheduledUnits)
+
+  RefreshAll()
+
+  -- The raid-style party column is built by modules/raidframes.lua, which may
+  -- have enabled before this anchor existed.
+  if type(U.ApplyRaidPartyStyle) == "function" then U.ApplyRaidPartyStyle() end
+
+  -- The Modern theme opts every owned unit-frame bar in after the initial
+  -- refresh, so the first real health/power change animates from a settled
+  -- value. modern-wow attaches later through its reload-bound `barfx` surface,
+  -- and Classic keeps the native bars untouched.
+  if not nativeChrome and type(U.GetActiveThemeStyle) == "function" and
+     U.GetActiveThemeStyle() == "modern" and
+     type(U.AttachStatusBarFX) == "function" then
+    for i = 1, table.getn(frameOrder) do
+      local frame = frames[frameOrder[i]]
+      if frame and frame.health then U.AttachStatusBarFX(frame.health.bar) end
+      if frame and frame.power then U.AttachStatusBarFX(frame.power.bar) end
+    end
+    if druidBar then U.AttachStatusBarFX(druidBar.bar) end
+  end
+
+  U.Debug("unit frames built: " .. table.getn(frameOrder))
+end
+
+-- Reports what the client actually did with the unit API, so /pui check can
+-- show measured values instead of restating the INCONCLUSIVE record.
+function U.UnitFrameReport()
+  local report, i = {}, nil
+
+  for i = 1, table.getn(frameOrder) do
+    local frame = frames[frameOrder[i]]
+    local line = { id = frameOrder[i], unit = frame.unit }
+
+    line.exists, line.unitExists, line.inParty = FrameUnitExists(frame)
+    if line.exists then
+      local data = ReadUnit(frame)
+      line.outOfRange = data.outOfRange
+      line.muted = data.muted
+      line.name = data.name or "?"
+      line.health = data.health
+      line.healthMax = data.healthMax
+      line.power = data.power
+      line.powerMax = data.powerMax
+      line.powerType = data.powerType
+      line.class = data.class or "-"
+      line.reaction = data.reaction
+      line.classification = data.classification or "-"
+    end
+
+    local shownOk, shown = pcall(frame.IsShown, frame)
+    if shownOk then line.shown = shown else line.shown = "?" end
+
+    -- Bar geometry readback.
+    --
+    -- The bars are pandaUI's own (core/style.lua) after the client's StatusBar
+    -- widget left the fill unlaid-out on screen. This reports the frame width
+    -- the fill extent is computed from, the value range, and the tint that was
+    -- actually applied, so a bar that still draws wrong produces numbers rather
+    -- than another screenshot guess.
+    local bar = frame.health.bar
+    local ok, value
+
+    ok, value = pcall(bar.GetWidth, bar)
+    line.barWidth = ok and U.Round(value) or "?"
+    ok, value = pcall(bar.GetHeight, bar)
+    line.barHeight = ok and U.Round(value) or "?"
+
+    line.barValue = bar.puiValue
+    line.barMin, line.barMax = bar.puiMin, bar.puiMax
+
+    local fill = bar.puiFillTexture
+    if fill then
+      ok, value = pcall(fill.GetWidth, fill)
+      line.fillWidth = ok and U.Round(value) or "?"
+      ok, value = pcall(fill.GetHeight, fill)
+      line.fillHeight = ok and U.Round(value) or "?"
+      ok, value = pcall(fill.IsShown, fill)
+      line.fillShown = ok and value or "?"
+
+      local r, g, b = U.GetColor(fill)
+      if r then
+        line.fillColor = string.format("%.2f,%.2f,%.2f", r, g, b)
+      else
+        line.fillColor = "not cached"
+      end
+    end
+
+    table.insert(report, line)
+  end
+
+  return report
+end
+
+
+-- ---------------------------------------------------------------------------
+-- Elite icon test surface (/pui elite)
+--
+-- Everything here is transient session state, not config: the override is a
+-- test aid, and the texture/size/crop exist to find a path this client renders
+-- without an edit/reload cycle per candidate. Nothing is written to
+-- SavedVariables.
+-- ---------------------------------------------------------------------------
+local OVERRIDE_VALUES = {
+  elite = true, rareelite = true, worldboss = true, rare = true, normal = true,
+}
+
+local function ApplyEliteIconSettings()
+  local i
+  for i = 1, table.getn(frameOrder) do
+    local icon = frames[frameOrder[i]].classIcon
+    if icon then
+      pcall(icon.SetTexture, icon, eliteTexture)
+      pcall(icon.SetWidth, icon, eliteWidth)
+      pcall(icon.SetHeight, icon, eliteHeight)
+      if eliteCoords then
+        pcall(icon.SetTexCoord, icon, eliteCoords[1], eliteCoords[2],
+              eliteCoords[3], eliteCoords[4])
+      else
+        pcall(icon.SetTexCoord, icon, 0, 1, 0, 1)
+      end
+    end
+  end
+  RefreshAll()
+end
+
+-- Returns ok, override. "normal" is a real value rather than an alias for off:
+-- it proves the icon *hides* on a unit that has one, which is the other half of
+-- the test.
+function U.SetUnitClassificationOverride(value)
+  if value == nil or value == "" or value == "off" or value == "none" then
+    classificationOverride = nil
+  elseif OVERRIDE_VALUES[value] then
+    classificationOverride = value
+  else
+    return false, classificationOverride
+  end
+
+  RefreshAll()
+  return true, classificationOverride
+end
+
+function U.SetEliteIconTexture(path)
+  if type(path) ~= "string" or path == "" or path == "default" then
+    eliteTexture = ELITE_TEXTURE_DEFAULT
+  else
+    eliteTexture = path
+  end
+  ApplyEliteIconSettings()
+  return eliteTexture
+end
+
+function U.SetEliteIconSize(width, height)
+  eliteWidth = tonumber(width) or eliteWidth
+  eliteHeight = tonumber(height) or eliteWidth
+  ApplyEliteIconSettings()
+  return eliteWidth, eliteHeight
+end
+
+-- Four numbers set a crop, anything else clears it back to the whole file.
+function U.SetEliteIconCoords(left, right, top, bottom)
+  left, right = tonumber(left), tonumber(right)
+  top, bottom = tonumber(top), tonumber(bottom)
+
+  if left and right and top and bottom then
+    eliteCoords = { left, right, top, bottom }
+  else
+    eliteCoords = nil
+  end
+
+  ApplyEliteIconSettings()
+  return eliteCoords
+end
+
+function U.EliteIconReport()
+  local report = {
+    override = classificationOverride or "off",
+    texture = eliteTexture,
+    width = eliteWidth,
+    height = eliteHeight,
+    units = {},
+  }
+
+  if eliteCoords then
+    report.coords = table.concat({ eliteCoords[1], eliteCoords[2],
+                                   eliteCoords[3], eliteCoords[4] }, " ")
+  end
+
+  local i
+  for i = 1, table.getn(frameOrder) do
+    local frame = frames[frameOrder[i]]
+    if ApiTruth("UnitExists", frame.unit) then
+      local line = { id = frameOrder[i], unit = frame.unit }
+
+      -- The raw API value next to the value the frame actually drew: with an
+      -- override active these differ, and without one they must not.
+      line.classification = ApiString("UnitClassification", frame.unit) or "nil"
+      line.effective = frame.data.classification or "nil"
+
+      local icon = frame.classIcon
+      if not icon then
+        line.shown = "no icon built"
+      else
+        local ok, shown = pcall(icon.IsShown, icon)
+        if ok then line.shown = shown and true or false else line.shown = "?" end
+
+        -- Readback of what the client kept: a path it rejected outright shows
+        -- up here, though a path it accepts but cannot render will not.
+        local okPath, path = pcall(icon.GetTexture, icon)
+        if okPath and type(path) == "string" then line.path = path end
+
+        local r, g, b = U.GetColor(icon)
+        if r then line.tint = string.format("%.2f,%.2f,%.2f", r, g, b) end
+      end
+
+      -- The ornamental skin on the same lifecycle, so one /pui elite status
+      -- says both which tier the frame settled on and whether the artwork or
+      -- the icon is the thing drawing it.
+      if frame.puiClassSkin then
+        line.skin = frame.puiClassSkinState or "off"
+        local okSkin, skinShown = pcall(frame.puiClassSkin.IsShown,
+                                        frame.puiClassSkin)
+        if okSkin then line.skinShown = skinShown and true or false end
+        local okTex, texPath = pcall(frame.puiClassSkin.slices[1].GetTexture,
+                                     frame.puiClassSkin.slices[1])
+        if okTex and type(texPath) == "string" then line.skinPath = texPath end
+      end
+
+      table.insert(report.units, line)
+    end
+  end
+
+  return report
+end

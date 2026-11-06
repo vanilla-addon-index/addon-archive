@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: OctoArmoryLink
+## Notes: Adds a "Copy armory link" option to player right-click menus.
+## Author: Welf
+## Version: 1.0
+
+OctoArmoryLink.lua

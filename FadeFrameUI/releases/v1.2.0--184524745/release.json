@@ -1,0 +1,9 @@
+{
+  "id": "184524745",
+  "tag": "v1.2.0",
+  "name": "v1.2.0",
+  "body": "Fixed issue with not fading on classes like rogue and warrior caused by script searched for mana to be full or not.",
+  "published": "2024-11-09T19:42:05Z",
+  "prerelease": false,
+  "url": "https://github.com/Bagan95/FadeFrameUI/releases/tag/v1.2.0"
+}

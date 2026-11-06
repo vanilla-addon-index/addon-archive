@@ -1,0 +1,69 @@
+{
+  "upstream": "https://github.com/yutsuku/MapOfScars",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "yutsuku",
+    "repo": "MapOfScars",
+    "name": "MapOfScars",
+    "url": "https://github.com/yutsuku/MapOfScars",
+    "api": "https://api.github.com/repos/yutsuku/MapOfScars"
+  },
+  "commit": "57733c84d3a1ce23ef213edcfb052ae77ece7ccf",
+  "sourceFiles": {
+    "Compass-512.tga": {
+      "sha256": "cf36e54c7942e03a65b64829b0045870736a6676beafce4b600027c14e002d02",
+      "bytes": 131116
+    },
+    "compass.blp": {
+      "sha256": "2c85eee9820b08d9575125543dd7397fc8a0ae38d41716437daf5cc8201a4efc",
+      "bytes": 176036
+    },
+    "Futura-Condensed-Normal.ttf": {
+      "sha256": "aea63dbb83f03ea2f8919ac64255f467513ba80d44d981e4444cc1d0a020eb80",
+      "bytes": 27708
+    },
+    "Icons/Enemy.blp": {
+      "sha256": "61e5778312bfc2793addc78d7ed23689b28b24dec376002126039951cecb3e9b",
+      "bytes": 6660
+    },
+    "Icons/Marker.blp": {
+      "sha256": "bf88948977f93f348eb097ea68409ad55cbbaf606a1ee7054728219e41a0c69f",
+      "bytes": 6660
+    },
+    "Icons/PlayerSet.blp": {
+      "sha256": "19c8414328f09c3c5c392030eb83ac542381c7621dceb2d1da95da3959dc0a78",
+      "bytes": 6660
+    },
+    "Icons/QuestIcon.old.blp": {
+      "sha256": "c47bb35cf835d28f1e0c93200de55d8aa0060b7e7d08263ab4da028537dbdfda",
+      "bytes": 6660
+    },
+    "Icons for Editors/Enemy.ai": {
+      "sha256": "c7262abc114a287fd069e92ce7314b2893644ee2b4f326dcbe84d25606ae8874",
+      "bytes": 79056
+    },
+    "Icons for Editors/PlayerSet.ai": {
+      "sha256": "e362f4fcaab357afa605fb12a128adb3025d1b1cec6685ecd455e6e5f0bbe4ca",
+      "bytes": 46547
+    },
+    "Icons for Editors/QuestIcon.ai": {
+      "sha256": "dd8670d045a9edb984451916463f8aa544792ff15075ec212bee3ff8122d624d",
+      "bytes": 47066
+    },
+    "MapOfScars.lua": {
+      "sha256": "a44459e2222a05a3d3830c291039c06e2df602e7b17c360ff7c543dbded448f2",
+      "bytes": 10578
+    },
+    "MapOfScars.toc": {
+      "sha256": "519451f93f221852e84701a29fc81e8aac82e194f4655904e10d26b4cd56468e",
+      "bytes": 133
+    },
+    "README.md": {
+      "sha256": "0ed2d97c1ec0825fcc7acc10b8bb7960edd982928417cb5ee64231775471d1f6",
+      "bytes": 1032
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

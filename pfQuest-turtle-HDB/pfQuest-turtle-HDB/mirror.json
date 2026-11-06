@@ -1,0 +1,377 @@
+{
+  "upstream": "https://octowow.st/git/lightblade/pfQuest-turtle-HDB",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "lightblade",
+    "repo": "pfQuest-turtle-HDB",
+    "name": "pfQuest-turtle-HDB",
+    "url": "https://octowow.st/git/lightblade/pfQuest-turtle-HDB",
+    "api": "https://octowow.st/git/api/v1/repos/lightblade/pfQuest-turtle-HDB"
+  },
+  "commit": "8e467c8ffa834b82a392769045363c4465b7271c",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "3c1a650012b5634800a05cb2d4a6912ac75fcbe7af45cfdc041262bfe9350c42",
+      "bytes": 147
+    },
+    "changelog-data.lua": {
+      "sha256": "e50a0d26a6806babf7a75f509aafb046e7c3e7b5a22cac6bd5fa01a7918eae3d",
+      "bytes": 6570
+    },
+    "CHANGELOG.md": {
+      "sha256": "b52f2d1102ad42224205ae3d65b2a5ec7d5367dd30a0c8ef4ebaeac372d5e752",
+      "bytes": 9760
+    },
+    "db/areatrigger-turtle.lua": {
+      "sha256": "968cfdc08f2e4c953f5f340e361b8755e22544f5f3fc316509f3b60299d53e21",
+      "bytes": 23069
+    },
+    "db/deDE/items-turtle.lua": {
+      "sha256": "6e5efdeebf3ae72d04c2cd0a99ce77a98507798df4b19c9e757ad55bcaae6dec",
+      "bytes": 439118
+    },
+    "db/deDE/objects-turtle.lua": {
+      "sha256": "0259b90c0d441131366928a053262a6b3c3a53a87f6b8dabd4f5d2e1f2d1ea69",
+      "bytes": 912455
+    },
+    "db/deDE/professions-turtle.lua": {
+      "sha256": "6a53d4ecf16f11c3bc172735d379f20600847b4bcb4e04568357b36f84dac771",
+      "bytes": 3590
+    },
+    "db/deDE/quests-turtle.lua": {
+      "sha256": "4002ddca4a1e3f4a927c33581c2362c43e2ffbd43d904db2f3b42bf60fff37ab",
+      "bytes": 3300937
+    },
+    "db/deDE/units-turtle.lua": {
+      "sha256": "72b44e54386b5fac28ef05f81485c31f2fc61e28c38d200f460e17dcf1c7a31e",
+      "bytes": 269597
+    },
+    "db/deDE/zones-turtle.lua": {
+      "sha256": "454796560d6c6705619b1f3a3ded6b29e0f8a9bd8e8e77faec00b996f0a98214",
+      "bytes": 24233
+    },
+    "db/enUS/items-turtle.lua": {
+      "sha256": "f156430edf9964b73c218ad9602a77170f48157acff657d9ff82072b515be6a1",
+      "bytes": 329303
+    },
+    "db/enUS/objects-turtle.lua": {
+      "sha256": "d74d1fc3d9339cf3ab17090427311a414cc400ad6bbfb171f2283be1b4ced179",
+      "bytes": 910057
+    },
+    "db/enUS/professions-turtle.lua": {
+      "sha256": "0b9fb1613a3f47fd14f75e7b3bf0ee317fedac1f52e6a0e39d2620d8108ea69e",
+      "bytes": 3546
+    },
+    "db/enUS/quests-turtle.lua": {
+      "sha256": "193416f103ee5a079cc3db0a6ab07700d89883638c6eeac3284ea4ea3d58c1e5",
+      "bytes": 3944787
+    },
+    "db/enUS/units-turtle.lua": {
+      "sha256": "297a08eac0ffca09cdc3b0dfa708aa018b13be9eafb109d407f9dd03c6476bc8",
+      "bytes": 179674
+    },
+    "db/enUS/zones-turtle.lua": {
+      "sha256": "1718dc0a73bec247371cd84ce177451f852e54bec69aec1f2f2ef032c90852c8",
+      "bytes": 14779
+    },
+    "db/esES/items-turtle.lua": {
+      "sha256": "afacba4463e0d3f739ad40608a89dfcd4b66d29fc7c11f3d0983a5eabc839364",
+      "bytes": 903327
+    },
+    "db/esES/objects-turtle.lua": {
+      "sha256": "1b3256c73c5a30e0cbf80305ebebf920ed02bfd76a578100e018c98feb59f1ab",
+      "bytes": 1136250
+    },
+    "db/esES/professions-turtle.lua": {
+      "sha256": "2e717137af00b126f4955c6bc47ee80846058000ff2a26382c92696bd3ba7c23",
+      "bytes": 3711
+    },
+    "db/esES/quests-turtle.lua": {
+      "sha256": "829506691550d88493a69ce4da98cefd05adcd1c2ceca9621034a4cd31fc56da",
+      "bytes": 4075452
+    },
+    "db/esES/units-turtle.lua": {
+      "sha256": "da6b098047f31413a0c311ead93502315ed2d1f7a4e5e99c5e728e32c3a770b7",
+      "bytes": 300638
+    },
+    "db/esES/zones-turtle.lua": {
+      "sha256": "cabe0dc724f0d6a52e67d2a65613f33b5f501f667a1ef53796720b274c674472",
+      "bytes": 39165
+    },
+    "db/feature-compat.lua": {
+      "sha256": "459a9179be3c1e52081645fad2775871dfdd391cb0ab644ae7e841fe55034110",
+      "bytes": 2910
+    },
+    "db/items-turtle.lua": {
+      "sha256": "b6699e250ad9d0d4e8ad7ad6844fce47f5e093ce5a1332fe34e4e2f6854d443d",
+      "bytes": 7863863
+    },
+    "db/meta-turtle.lua": {
+      "sha256": "078d6635bf4af5e014933c893d88766317bfe1c223e56848d2b1c5e45e9e7de5",
+      "bytes": 56944
+    },
+    "db/minimap-turtle.lua": {
+      "sha256": "0ec842d9d9d900f2bbb47ebc99bceaf964bb4dfe45cb1cf794d3aa8bd674c508",
+      "bytes": 3026
+    },
+    "db/objects-turtle.lua": {
+      "sha256": "1b7aa8c04dfbc9c8313bf20d4a52d81e80c08865ee6b9e423a8a2c9d50ccf81b",
+      "bytes": 3411247
+    },
+    "db/patches-turtle.lua": {
+      "sha256": "d06f7a611d31b59a149ffc1d271ab59f4c2993842fe7ed22d30923a1dddfd38c",
+      "bytes": 11684
+    },
+    "db/ptBR/items-turtle.lua": {
+      "sha256": "b17bd60e2eff374bb9110643419561d5993c2dbd874247f013945602cac9a76e",
+      "bytes": 777615
+    },
+    "db/ptBR/objects-turtle.lua": {
+      "sha256": "6e046257f11ce6587ed1d57eb175cb4717c32d8e9cd23790ddf136c8d8531338",
+      "bytes": 1152944
+    },
+    "db/ptBR/professions-turtle.lua": {
+      "sha256": "c52843ee3852c4bb5725d6f3cc2ff4547cbff4ccc38bff44348f1f10a2decb35",
+      "bytes": 3657
+    },
+    "db/ptBR/quests-turtle.lua": {
+      "sha256": "7255baccdc9922308bf9d0cf451a703ff886e208c92b50d43d61197a09908059",
+      "bytes": 4021491
+    },
+    "db/ptBR/units-turtle.lua": {
+      "sha256": "74228bfd4bc6325917f7561e200be86a46c12f4f3f782145b463209c00cf0b11",
+      "bytes": 191168
+    },
+    "db/ptBR/zones-turtle.lua": {
+      "sha256": "7d7e1903cd3c3212c5bc92e8b130d74f7e2d45f3bf051e0a22d4d1981f4b8360",
+      "bytes": 41009
+    },
+    "db/quests-itemreq-turtle.lua": {
+      "sha256": "00be0a6d788f6f7226579e2d796f04b7ac9fed72cd182f7f97aae21e00c8020c",
+      "bytes": 2951
+    },
+    "db/quests-turtle.lua": {
+      "sha256": "799b6e5a480c854acfa73e0e6d7b30bafa5f4d647666c3305e4432ef6e0f5945",
+      "bytes": 1303266
+    },
+    "db/refloot-turtle.lua": {
+      "sha256": "a6ced07f9187116cfb1fb4c93e162d1380c7e55b7eb1189123bab963e3b20cc2",
+      "bytes": 697608
+    },
+    "db/ruRU/quests-turtle.lua": {
+      "sha256": "cffcc5565e76b62bb9c18be01fe89f6aea777c44dbb02299bf5d94e96fe9bdb4",
+      "bytes": 3104212
+    },
+    "db/units-turtle.lua": {
+      "sha256": "a4ef58cc51c68bde02ddd29c8609bdcc299b146a6760866cee1939b7a2b16f3c",
+      "bytes": 4721927
+    },
+    "db/zhCN/items-turtle.lua": {
+      "sha256": "39f44b7d4e137f8c92209c3862ac346b048cc3984e4c1f6942bfacd73f42b43a",
+      "bytes": 296569
+    },
+    "db/zhCN/objects-turtle.lua": {
+      "sha256": "d066de90adf083a6c3c534620eb4f486541ee5e6a637e383517f77533a0894db",
+      "bytes": 919353
+    },
+    "db/zhCN/professions-turtle.lua": {
+      "sha256": "04dc35f218d67fa47359c4f4aec88e3dfd2f205be12c7c5b68ace7861abaa0d8",
+      "bytes": 3482
+    },
+    "db/zhCN/quests-turtle.lua": {
+      "sha256": "129a3e6abdfb8218692c387b3b66b56c1b7b81e33885bf252d86e4ce194acb5e",
+      "bytes": 2238452
+    },
+    "db/zhCN/units-turtle.lua": {
+      "sha256": "873ae1cfbf119e8aed12232e1a9d436ed2c57450fce29599ebc38098363a0920",
+      "bytes": 205322
+    },
+    "db/zhCN/zones-turtle.lua": {
+      "sha256": "26707cc5a575817ce5936b3679f7f7703bb1ef14283e4df5b81d20eea8f03d95",
+      "bytes": 14799
+    },
+    "db/zones-turtle.lua": {
+      "sha256": "803f159b4059d2ee42c2c53707daf81760a303fe03fb5cb29c83bff2bdb6ca36",
+      "bytes": 7200
+    },
+    "HDB.md": {
+      "sha256": "1b59bf240618c4629fce35bb2dd3754b308f7e1eceaf5f13628042911498c922",
+      "bytes": 1493
+    },
+    "img/loot.blp": {
+      "sha256": "237974b610c9d3304084b783b35d9021138a7f40d3961c621d1e04accd527e5b",
+      "bytes": 2564
+    },
+    "img/slay.blp": {
+      "sha256": "1a5ab061ac2649cf1953e1ebb82ed9cf957b15937fdf77711861c69038b6db08",
+      "bytes": 2564
+    },
+    "img/tracking/trees.tga": {
+      "sha256": "4a917cb70f27a28860016111af6562a0bb6e254c8ccc4a125cea9c5ded3a44ef",
+      "bytes": 4114
+    },
+    "init/data-turtle.xml": {
+      "sha256": "4e132249c00c5a48f94126964de8b57784fef30c6795b986f5bdfb385c76df39",
+      "bytes": 320
+    },
+    "init/deDE-turtle.xml": {
+      "sha256": "9037cbde43cf51faa6d116959b2595feaa622ec4d9a29d1c5fa44ad5278eddc9",
+      "bytes": 348
+    },
+    "init/enUS-turtle.xml": {
+      "sha256": "9874b733f8b2fd0f4505b2802cfd1b39aa7a640a959dff6891d79e25f70bfc47",
+      "bytes": 153
+    },
+    "init/esES-turtle.xml": {
+      "sha256": "c168e73274df04ac228a66354c9b8568d78ff331dc04f517f808464a5c50dc29",
+      "bytes": 348
+    },
+    "init/ptBR-turtle.xml": {
+      "sha256": "ee406fb2c6064cb0c6f9373c630b9a8a1045bc57ccf92a8125e463872027ee23",
+      "bytes": 348
+    },
+    "init/ruRU-turtle.xml": {
+      "sha256": "badcbc733b0fe531077f6316a2014cccbe51c116d04a9126e9ab9060fc998bd4",
+      "bytes": 100
+    },
+    "init/zhCN-turtle.xml": {
+      "sha256": "ed24542b7c11ece4a565226a917de661065c0bb14284c39877bac5eb7d0673c3",
+      "bytes": 348
+    },
+    "LICENSE": {
+      "sha256": "abbeec2d8248c4da9784dfa8828bf522949edff11853573186e6f391a1c17ff8",
+      "bytes": 1076
+    },
+    "modules/pfQuest-turtle-HDB-ruRU/CHANGELOG.md": {
+      "sha256": "81a73e913f88f8e25fa95d5977effb7338bcbcc3d03198f62bf7648d5e3b4c67",
+      "bytes": 543
+    },
+    "modules/pfQuest-turtle-HDB-ruRU/db/display-names.lua": {
+      "sha256": "bc07dab854f7bc798af2616bf65e89648b4e3ef5894a53974891a026a08673ae",
+      "bytes": 2569285
+    },
+    "modules/pfQuest-turtle-HDB-ruRU/db/display-objectives.lua": {
+      "sha256": "89c46e123e23551d2e7d8b0762239a1fffa39860883f7d2598c7f3b6d860967d",
+      "bytes": 1467906
+    },
+    "modules/pfQuest-turtle-HDB-ruRU/db/quests-turtle.lua": {
+      "sha256": "cffcc5565e76b62bb9c18be01fe89f6aea777c44dbb02299bf5d94e96fe9bdb4",
+      "bytes": 3104212
+    },
+    "modules/pfQuest-turtle-HDB-ruRU/db/quests.lua": {
+      "sha256": "7c4271f6d93e5535fe837fee80fa9c94f6d9fefabdd61d2a45af4cc80a6ed17c",
+      "bytes": 3687926
+    },
+    "modules/pfQuest-turtle-HDB-ruRU/LICENSE": {
+      "sha256": "7ee3c5402cd719de230f3bbc59a6506a3b2b65981d0d793f143fa5b08f926510",
+      "bytes": 1081
+    },
+    "modules/pfQuest-turtle-HDB-ruRU/locales.lua": {
+      "sha256": "ab90448c2ce517675e81a486004b83e06157fcb6a00235a387e83e3a67b41c93",
+      "bytes": 36887
+    },
+    "modules/pfQuest-turtle-HDB-ruRU/module.lua": {
+      "sha256": "75191f62c4993727fa7c7d0353cf136b67526c312ae99386ee9c720912c4fa25",
+      "bytes": 37057
+    },
+    "modules/pfQuest-turtle-HDB-ruRU/pfQuest-turtle-HDB-ruRU.toc": {
+      "sha256": "f8b4c99891f3e47d7edf0fc57478e33439a31101655cf107c46dad6a0286115b",
+      "bytes": 322
+    },
+    "modules/pfQuest-turtle-HDB-ruRU/README.md": {
+      "sha256": "eb53f76d2bd69fa8fa24ad76c53f0a95e173fa9f992886dfea7cfc9b2a95c49f",
+      "bytes": 2755
+    },
+    "overwrites.lua": {
+      "sha256": "c2d4e90e021b10613843ca3ee94a7ae1cacfe58dac9c9d7fb585ccfe66d87b30",
+      "bytes": 48315
+    },
+    "patchtable.lua": {
+      "sha256": "55159f1fa67e745b48e25645982a700f0ab4db5ef931f5f53a709f8d5c99467e",
+      "bytes": 33968
+    },
+    "pfQuest-announce.lua": {
+      "sha256": "abc96e94807677acaf3c0088e345347e8a12601cc8049688e830d66f72eb7813",
+      "bytes": 12855
+    },
+    "pfquest-arrow.lua": {
+      "sha256": "37d86b3c8a2380811df4743d9f233f4cb12828dc7117b0ad30fa719779168974",
+      "bytes": 5293
+    },
+    "pfQuest-config-resize.lua": {
+      "sha256": "094139b4a500e1fc8b44a75fe7c044b63d61230920dbb7447b85db6e4a4552f6",
+      "bytes": 5241
+    },
+    "pfQuest-config.lua": {
+      "sha256": "0df5643a228a598b20a4ed4e7f8382480e4c1ecd7288587e6a9cb1f8c1139097",
+      "bytes": 1114
+    },
+    "pfQuest-lootpanel.lua": {
+      "sha256": "a1efd056deaa83e58494668fea4d1511cadbd9a33d89c6a46d16249e88991782",
+      "bytes": 24601
+    },
+    "pfQuest-nameplates.lua": {
+      "sha256": "e5adbf409dcc3e6c88e63f4a0dff4e022cc756d9a7e9950b7d32b3fb36b1044e",
+      "bytes": 34126
+    },
+    "pfQuest-partyprogress.lua": {
+      "sha256": "ff23fac49c3c304e3d91c1dffb4ae1369648e06c84443e2f05ada2572c455d93",
+      "bytes": 58266
+    },
+    "pfquest-questlog.lua": {
+      "sha256": "976acfa07de4e458391e7c2b2ee71ad63f18399bb42ffcd9812c000f1bd6031b",
+      "bytes": 21327
+    },
+    "pfQuest-trees.lua": {
+      "sha256": "037698ef566997e3a7edc11cf13f108100a9c35156b5c3eab457f687b828d363",
+      "bytes": 2081
+    },
+    "pfQuest-turtle.toc": {
+      "sha256": "3a6d3bc2144c7f36bfe8fc07a29bfcf752fbdd017f5243984203eb3599133b5c",
+      "bytes": 694
+    },
+    "pfQuest-updater.lua": {
+      "sha256": "64d900fd4c9818a2057222253447587627984cfb48005c19b1bcc40d5780d6d0",
+      "bytes": 8464
+    },
+    "pfQuest-worldmap.lua": {
+      "sha256": "a8c4854cc1bd280afffcb1175c268d6648c7d3249bced44625680ff451248d8f",
+      "bytes": 68381
+    },
+    "provider/.gitignore.upstream": {
+      "sha256": "334335e7b497d5c3b69e0788f86c165f1862f94b03fb7634e4b0028186ab0dda",
+      "bytes": 40
+    },
+    "provider/core.lua": {
+      "sha256": "b559f56bad58bbe26e45f9f6bff9d8945608364118e5f416158404fced10ff43",
+      "bytes": 70537
+    },
+    "provider/data/.gitkeep": {
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "bytes": 1
+    },
+    "provider/README.md": {
+      "sha256": "048ac5ee69bf284882cc331d7eaf013986a8b9f85a2619e05a97a63dab15619b",
+      "bytes": 1299
+    },
+    "provider/tools/build_database.py": {
+      "sha256": "710d37361727870ed3e6397679e8705887430e556c997a68467666732923ec61",
+      "bytes": 19071
+    },
+    "provider/tools/export_quests.lua": {
+      "sha256": "e56f358c2907c18eb5853f9f6022f4d7c9a8fb8161fe248b14fc7e9c9d2d7c77",
+      "bytes": 9753
+    },
+    "README.md": {
+      "sha256": "25195359ca58ddad3b321b320c32f66b1e0113aa6f36396552a0f86da5addf71",
+      "bytes": 2676
+    },
+    "toolbox/load.lua": {
+      "sha256": "5d71cf27db186b5cedda94e250251154a1ea8ef5ff9536dcf690724ae2b1ed01",
+      "bytes": 9086
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

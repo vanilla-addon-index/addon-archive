@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com//mikefirefly/MouseOverSounds_PvP",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "mikefirefly",
+    "repo": "MouseOverSounds_PvP",
+    "name": "MouseOverSounds_PvP",
+    "url": "https://github.com/mikefirefly/MouseOverSounds_PvP",
+    "api": "https://api.github.com/repos/mikefirefly/MouseOverSounds_PvP"
+  },
+  "commit": "791787d62a0b0065477bc235f861cf4c2b0b1d5a",
+  "sourceFiles": {
+    "MouseOverSounds_PvP.lua": {
+      "sha256": "253bdf4bd4c08426b7e6d8dbf676a9ee59f0302c4978782f6a1cac853906974d",
+      "bytes": 1073
+    },
+    "MouseOverSounds_PvP.toc": {
+      "sha256": "00816647379489b6331e13e078e8b9948e610b2fb9e8970aef8bdb8a0f41ae8e",
+      "bytes": 135
+    },
+    "pvp.ogg": {
+      "sha256": "e415c359c24b144824067bff25a31d75c7765fd263c9a189c60cc602ad895290",
+      "bytes": 5386
+    },
+    "README.md": {
+      "sha256": "110e2fe718d3776191484d24095f4efb2b2e05d441b6cab098ffc9e3c41a71b3",
+      "bytes": 722
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

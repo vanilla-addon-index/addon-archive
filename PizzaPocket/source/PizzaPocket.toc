@@ -1,0 +1,17 @@
+## Interface: 11200
+## Title: |cffa050ffPizza|cffffffffPocket
+## Author: Pizzahawaii
+## Notes: Smart pickpocket targeting, skips already-picked mobs
+## Version: 0.0.1
+## SavedVariables: PizzaPocketDB
+
+src\main.lua
+src\stats.lua
+src\gold.lua
+src\statsframe.lua
+src\nameplates.lua
+src\finder.lua
+src\finder_legacy.lua
+src\finder_classic.lua
+src\junkbox.lua
+src\commands.lua

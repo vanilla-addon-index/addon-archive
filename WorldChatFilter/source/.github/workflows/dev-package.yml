@@ -1,0 +1,47 @@
+name: Build v1.1 development ZIP
+
+on:
+  push:
+    branches:
+      - v1.1-dev
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run all Lua regression tests
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y lua5.1
+          python3 tests/run_tests.py lua5.1
+
+      - name: Assemble installable WorldChatFilter folder
+        run: |
+          set -eu
+          mkdir -p dist/WorldChatFilter/Media
+          for file in WorldChatFilter.toc Core.lua CustomFilters.lua PanelTheme.lua Color.lua Statistics.lua HelpUI.lua Classifier.lua Filter.lua CustomFiltersUI.lua UI.lua; do
+            test -s "$file"
+            cp "$file" dist/WorldChatFilter/
+          done
+          cp Media/WorldChatFilterOrb.tga dist/WorldChatFilter/Media/
+          test -s dist/WorldChatFilter/Media/WorldChatFilterOrb.tga
+          (cd dist && zip -qr ../WorldChatFilter-v1.1-dev.zip WorldChatFilter)
+          unzip -t WorldChatFilter-v1.1-dev.zip
+          unzip -Z1 WorldChatFilter-v1.1-dev.zip | grep -Fx 'WorldChatFilter/WorldChatFilter.toc'
+          sha256sum WorldChatFilter-v1.1-dev.zip > SHA256SUMS.txt
+
+      - name: Upload separate development build
+        uses: actions/upload-artifact@v4
+        with:
+          name: WorldChatFilter-v1.1-dev
+          path: |
+            WorldChatFilter-v1.1-dev.zip
+            SHA256SUMS.txt
+          retention-days: 90
+          if-no-files-found: error

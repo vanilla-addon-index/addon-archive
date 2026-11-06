@@ -1,0 +1,106 @@
+{
+  "upstream": "https://github.com/opcow/BuffReminder",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "opcow",
+    "repo": "BuffReminder",
+    "name": "BuffReminder",
+    "url": "https://github.com/opcow/BuffReminder",
+    "api": "https://api.github.com/repos/opcow/BuffReminder"
+  },
+  "commit": "a85f276464f21ef40a3fb5aa22d0979a05d08de2",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "98cf3231a8aaec8f9df980f39d9f363095bdaa527072a049cc55293cd6dcf3ff",
+      "bytes": 72
+    },
+    ".github/workflows/release.yml": {
+      "sha256": "87be5ff99c28025e398677d8ad52725f11d5eb731e4f7f5635070d78dc7a03ca",
+      "bytes": 699
+    },
+    ".pkgmeta": {
+      "sha256": "1dc0c32698a2f54f87a7e441c70fdc89555a81348b14a3fe6b73f5f914bddf64",
+      "bytes": 81
+    },
+    "CHANGELOG.md": {
+      "sha256": "5562e0ac06fc2dcf1c75dec3b93faf93588c370a3bfa742e031f17421b4809ea",
+      "bytes": 10798
+    },
+    "Config.lua": {
+      "sha256": "c86c67783951026919ab00678103d4ad69c546d76136d1f9c706aabe04a557e3",
+      "bytes": 88380
+    },
+    "docs/logo.png": {
+      "sha256": "879eda312e7c46a757f82444ff580884010c63754450e240664a005b1d9516cd",
+      "bytes": 136264
+    },
+    "docs/logo.svg": {
+      "sha256": "18983575c9e96d78b269166b4fecaf9860c5cd1a756a7bbdb997fcab5fc25c45",
+      "bytes": 9742
+    },
+    "docs/screen_1.png": {
+      "sha256": "f9d4bfa64ed0cc178c3c2b71f4fd65e020366e871a1cb856d5505e47522ec86a",
+      "bytes": 536059
+    },
+    "docs/screen_2.png": {
+      "sha256": "13ae500a7d0f8a857f5475d2d4033e08ae039832fe1216a19d426266a18ece3f",
+      "bytes": 1448292
+    },
+    "media/cbutton.tga": {
+      "sha256": "9f8a6a802316d36cd6a4192f243a79d778d080a70fa9a29d33f88b4b954f435d",
+      "bytes": 4140
+    },
+    "media/cross.tga": {
+      "sha256": "d80ac5d505466106ca70824192840c0748c4a940d567824ca244229bc71f1296",
+      "bytes": 16428
+    },
+    "OpcowsBuffReminder.lua": {
+      "sha256": "32efdc9e0fc9b98c7df5ad0c4a018f048896572e54cc25b1fc0da2a200cd2839",
+      "bytes": 163787
+    },
+    "OpcowsBuffReminder.toc": {
+      "sha256": "3d9c55d33bcc291ec28963e4bed757a94719af5eb0ed8ee2099d50f4b667b0ec",
+      "bytes": 594
+    },
+    "Party.lua": {
+      "sha256": "f7a6700ea63ea5e3df107f4aef6402c0d6977510edaa88b91b14a8710049c834",
+      "bytes": 23076
+    },
+    "README.md": {
+      "sha256": "4382fb60a01e62ac55ab65311658ae8f9763d084eefd4b7a31f76578a49f498a",
+      "bytes": 16762
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "414594520": {
+      "tag": "v2.10",
+      "folder": "v2.10--414594520",
+      "assets": {
+        "646281508": {
+          "sha256": "8f48373522465504faf359452379e4bb99fc0830f5080a69467d1c60dc87879b",
+          "bytes": 89454,
+          "id": "646281508",
+          "name": "OpcowsBuffReminder-v2.10-forever.zip",
+          "url": "https://github.com/opcow/BuffReminder/releases/download/v2.10/OpcowsBuffReminder-v2.10-forever.zip",
+          "path": "releases/v2.10--414594520/assets/OpcowsBuffReminder-v2.10-forever.zip"
+        },
+        "646281575": {
+          "sha256": "8cd7e3da4168fc518077f3bd0c3168206751a58d926df2bf48fd9d4fb848f1fd",
+          "bytes": 182,
+          "id": "646281575",
+          "name": "release.json",
+          "url": "https://github.com/opcow/BuffReminder/releases/download/v2.10/release.json",
+          "path": "releases/v2.10--414594520/assets/release.json"
+        }
+      },
+      "source": {
+        "sha256": "880c2e39eb7abd7d948810dc2a290158a6a140e59e945f98056ae32cca4a6175",
+        "bytes": 87675,
+        "path": "releases/v2.10--414594520/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/opcow/BuffReminder/tarball/v2.10"
+      }
+    }
+  }
+}

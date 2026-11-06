@@ -1,0 +1,25 @@
+{
+  "upstream": "https://github.com/shirsig/channel_monitor",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "channel_monitor",
+    "name": "channel_monitor",
+    "url": "https://github.com/shirsig/channel_monitor",
+    "api": "https://api.github.com/repos/shirsig/channel_monitor"
+  },
+  "commit": "ed4297565efeb67c8bb743571e2280b79d2f05f7",
+  "sourceFiles": {
+    "channel_monitor.lua": {
+      "sha256": "79ddecf1ebf81025f693de33a1d2c6650d4a120ae34a59fa2430176a2bc295e8",
+      "bytes": 7139
+    },
+    "channel_monitor.toc": {
+      "sha256": "6a66ddeba4b44bce156188caac797dc912497ef4b80396f899746afe18be1f98",
+      "bytes": 260
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

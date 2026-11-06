@@ -1,0 +1,36 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The WoW 1.12 client runs Lua 5.0, so every addon file must compile with it.
+      - name: Build Lua 5.0.3
+        run: |
+          curl -sSL https://www.lua.org/ftp/lua-5.0.3.tar.gz | tar xz -C "$RUNNER_TEMP"
+          make -C "$RUNNER_TEMP/lua-5.0.3" > /dev/null
+          echo "$RUNNER_TEMP/lua-5.0.3/bin" >> "$GITHUB_PATH"
+
+      - name: Compile every addon file with Lua 5.0
+        run: |
+          status=0
+          while IFS= read -r f; do
+            f="${f//\\//}"
+            luac -p "$f" || status=1
+          done < <(grep -v '^#' AshenBuilds.toc | grep -v '^[[:space:]]*$' | tr -d '\r')
+          exit $status
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run the test suites
+        run: |
+          pip install lupa
+          python tests/run.py

@@ -1,0 +1,70 @@
+{
+  "upstream": "https://octowow.st/git/stealthzi/WoodAndSeedsGather",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "stealthzi",
+    "repo": "WoodAndSeedsGather",
+    "name": "WoodAndSeedsGather",
+    "url": "https://octowow.st/git/stealthzi/WoodAndSeedsGather",
+    "api": "https://octowow.st/git/api/v1/repos/stealthzi/WoodAndSeedsGather"
+  },
+  "commit": "338690f3b6f2748816e8df7c23334849c11c4e13",
+  "sourceFiles": {
+    "Data.lua": {
+      "sha256": "9f6121b7a47c7fa2d084254c8c0b506527dfb4391b62aa3ac63cb384d6df4fa2",
+      "bytes": 35244
+    },
+    "icons/bright.tga": {
+      "sha256": "3bb1ff9f7253b65d389769030d214a0ba5224fd780b81eff846b289a95294e05",
+      "bytes": 16402
+    },
+    "icons/shade.tga": {
+      "sha256": "9de7557bb55783b1f98f0e11a7acdfe6f56e1fd2369c02f699ff5b6378b8aca1",
+      "bytes": 16402
+    },
+    "icons/simple.tga": {
+      "sha256": "4f4670772867a03cb0e4e2fe9fa42afdd73952d9b9de46dc6ac469adf59fe41f",
+      "bytes": 16402
+    },
+    "icons/star.tga": {
+      "sha256": "bce5452de3c71f0bc8c851eb6e46da8ae34ecdac7a8220a1e8458da1cb842ee4",
+      "bytes": 16402
+    },
+    "icons/tropical.tga": {
+      "sha256": "2c46192d9c7c4c2b80e033b81d27269fc77a06cb5f59fcad6b49227d6df6f7d3",
+      "bytes": 16402
+    },
+    "WoodAndSeedsGather.lua": {
+      "sha256": "c31338ea6a861ba26f8bdfeb20bb6692b35f9ab9f66472f742d5f33e2e6b48b3",
+      "bytes": 28427
+    },
+    "WoodAndSeedsGather.toc": {
+      "sha256": "656af87b7eddf6b4d10e960476424e8aba78f0198679674a2228142fb49f279d",
+      "bytes": 274
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "740": {
+      "tag": "v1.2.0",
+      "folder": "v1.2.0--740",
+      "assets": {
+        "87": {
+          "sha256": "d1044d09b1e555a0319c1b38b6b6da8ecce22d02f7d35fda4908a3b21875450a",
+          "bytes": 44770,
+          "id": "87",
+          "name": "WoodAndSeedsGather-1.2.0.zip",
+          "url": "https://octowow.st/git/stealthzi/WoodAndSeedsGather/releases/download/v1.2.0/WoodAndSeedsGather-1.2.0.zip",
+          "path": "releases/v1.2.0--740/assets/WoodAndSeedsGather-1.2.0.zip"
+        }
+      },
+      "source": {
+        "sha256": "de78fc7bf69b34d63d573525b3641cc865bf3957d3d4ca7196ae5e02b51b0015",
+        "bytes": 41171,
+        "path": "releases/v1.2.0--740/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/stealthzi/WoodAndSeedsGather/archive/v1.2.0.tar.gz"
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+Readme
+
+InviteOnWhisper lets you automate invites from custom keywords in whispers or chat channels. Players must set the keywords themselves before it will do anything.
+Setup
+
+    Type /iow info to see the current configuration.
+
+    Set one or more keywords with the /iow commands.
+
+    When another player uses a matching keyword, the addon will invite them.
+
+Commands
+
+    /iow info shows the current settings and help text.
+
+    /iow whisperguild <text> sets the whisper keyword for guild invite requests.
+
+    /iow whisperparty <text> sets the whisper keyword for party invite requests.
+
+    /iow guildkeyword <text> sets the channel keyword for guild invite requests.
+
+    /iow partykeyword <text> sets the channel keyword for party invite requests.
+
+    /iow blacklist <name> blocks a player from using the addon.
+
+    /iow unblacklist <name> removes a player from the blacklist.
+
+    /iow bl lists blacklisted names.
+
+Example
+
+If you set:
+
+    /iow whisperparty partyme
+
+    /iow whisperguild guildme
+
+then a whisper of partyme will invite the player to your party, and a whisper of guildme will trigger a guild invite request.

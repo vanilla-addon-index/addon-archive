@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: Custom Icons Enhanced
+## Notes: Créer et gérer des icônes flottantes personnalisées 
+## Author: Tarkusx , Icons credit to seblindfors https://github.com/seblindfors/ConsolePort
+## Version: 2.0
+## SavedVariables: CustomIconsDB
+
+CustomIcons.lua

@@ -1,0 +1,141 @@
+{
+  "upstream": "https://github.com/RollingSmile/GuildRoll",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "RollingSmile",
+    "repo": "GuildRoll",
+    "name": "GuildRoll",
+    "url": "https://github.com/RollingSmile/GuildRoll",
+    "api": "https://api.github.com/repos/RollingSmile/GuildRoll"
+  },
+  "commit": "cb5ccbb40cd81ab586e77d515e92a58883ff2176",
+  "sourceFiles": {
+    "adminlog.lua": {
+      "sha256": "719d7b83a600ea35d8ee43aa9695b11e172c5f78f4ec00b3762b0f26b72aef75",
+      "bytes": 38450
+    },
+    "alts.lua": {
+      "sha256": "56713ad77590e646e1496ae453310eb5e2f9175c87e928d8429fa2230c0919e9",
+      "bytes": 9775
+    },
+    "buffcheck.lua": {
+      "sha256": "27428a4998534db53532872fa29c0acb0332c67b3f263349f74e786688600e68",
+      "bytes": 46501
+    },
+    "guildroll.lua": {
+      "sha256": "4fa1693b87283995c67171b6a477f4db41dd4896e630417b6140b614c8eae6fe",
+      "bytes": 96280
+    },
+    "guildroll.toc": {
+      "sha256": "682483dc4e7267d28aae8fbc84c2f11eb49f92996885f2691cf899248bf23dcb",
+      "bytes": 1660
+    },
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "e460d01bc2f95f3ff01ae0fefe5a575db9748576e7b96df81e56e45bb16d0ee5",
+      "bytes": 30093
+    },
+    "Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "e498c182436c51671590512e02ebcec98e85fe454b5f5b1f00cf1a62b21a13c6",
+      "bytes": 63951
+    },
+    "Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "75643083325a68f0465a7cd81edda611557806da7052df7027a8da3e2c3cb2fe",
+      "bytes": 42284
+    },
+    "Libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "394521bbd40660d05c178fce092bb3c4904405efee2b43c7a4d0d98bf1d8892f",
+      "bytes": 7668
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "0f7b32493afaf5b7e96f3fd1b5135cc9d8a07ded8c64aae11e75f1e0f3212902",
+      "bytes": 28515
+    },
+    "Libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "8c75f829e0f980aac69d53cce8f8c806ea671795f445ab736c8cf76b9fc1f586",
+      "bytes": 22725
+    },
+    "Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "6e315b0d257b7feda50ad6ef4b0c40228f7125330da7b0e4793be62e75ba81a1",
+      "bytes": 15823
+    },
+    "Libs/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "3279c50e816fa15ae3e9f6a10b45abaf8464c0daa9e84df971783005efaba26e",
+      "bytes": 11847
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "1385526e460948771ca6db1ceec81e8b0daf33bfc391f55e6f1bbc449a341a82",
+      "bytes": 30305
+    },
+    "Libs/Babble-Class-2.2/Babble-Class-2.2.lua": {
+      "sha256": "a3f10ff88d5f41fa26a0518998d474658579d02058ff1efb94305d15e8a68bbf",
+      "bytes": 3521
+    },
+    "Libs/Babble-Zone-2.2/Babble-Zone-2.2.lua": {
+      "sha256": "d7881df518da106cc2f6be57467281d961501aabb66b1fbe165d2fb563cca15c",
+      "bytes": 46539
+    },
+    "Libs/ChatThrottleLib.lua": {
+      "sha256": "78ab7b9325c49c3d8ad71cd297bac12cd6a951531d021dc1860e46976ede8f4e",
+      "bytes": 13029
+    },
+    "Libs/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "4133b9069be339d5faca66c489e1db028ee400f114b1f437567c5f19a76f21e5",
+      "bytes": 9209
+    },
+    "Libs/Crayon-2.0/Crayon-2.0.lua": {
+      "sha256": "5610dbb90c6bd244d5f085f2de77d36f32e6ed2a68022b877f4c7ea34e900852",
+      "bytes": 5310
+    },
+    "Libs/Deformat-2.0/Deformat-2.0.lua": {
+      "sha256": "6491e26c67bc4e35eecead3aac60dd1e02abe39a8b281ff6f10bb223e78b7f50",
+      "bytes": 9438
+    },
+    "Libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "783f5d361ab58233eb30e14684f7a66cc77097c19b99172a90bba3c1d42739d2",
+      "bytes": 80011
+    },
+    "Libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "0ee8b878799175790560eef190fe0a723328a74ec2ebd78a49163b544a7a4e20",
+      "bytes": 44920
+    },
+    "Libs/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "1927177be6990043bc63bc8c36168408957c6d1ed86ef971d72415f7dd14d430",
+      "bytes": 7889
+    },
+    "Libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "fa521995b582e42598744950b887be2ae9c40f096b0c7cae33a5b6497fa412ba",
+      "bytes": 85746
+    },
+    "localization.lua": {
+      "sha256": "d9847f338baaacfcac5a8f92a53e349e79618225b5646aac3f5769f94f90a3fa",
+      "bytes": 12962
+    },
+    "notes_v3.lua": {
+      "sha256": "54eeb15f10856d43a36771bbbb9fe101dd0057c8392a5e81ac0bec798015936e",
+      "bytes": 12522
+    },
+    "playerlog.lua": {
+      "sha256": "7ecb76bb85f670a1974453f1dec8177617de5e474e4dd329850b58933b9c6313",
+      "bytes": 19569
+    },
+    "roll.lua": {
+      "sha256": "30548c76a3a0242d58a0427ff5d3a9bed75e15a0c964676eed031a78b945cab6",
+      "bytes": 18838
+    },
+    "standings.lua": {
+      "sha256": "cd7cca14bfdd808c394f658dc2c501b68dee68c0ed650bfc9c6630dd7d5bd097",
+      "bytes": 22639
+    },
+    "utils.lua": {
+      "sha256": "8063330079ae0f072597835195a2c4cb0a7aebf854746046bd368d096f39f00e",
+      "bytes": 8446
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

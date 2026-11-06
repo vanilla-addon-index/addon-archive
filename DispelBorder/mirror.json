@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/wardz/DispelBorder",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "wardz",
+    "repo": "DispelBorder",
+    "name": "DispelBorder",
+    "url": "https://github.com/wardz/DispelBorder",
+    "api": "https://api.github.com/repos/wardz/DispelBorder"
+  },
+  "commit": "db35de80e003af48c741df2e79c0ca7847a677c7",
+  "sourceFiles": {
+    "DispelBorder.lua": {
+      "sha256": "3c5c5c7b434392acfb4d319c2dd185d1384297aa8c42f59729b288fd7a80852c",
+      "bytes": 3860
+    },
+    "DispelBorder.toc": {
+      "sha256": "6e37f9f57bc578a121600e6385383e3a1043c19b5e4a6b004cf51d801d6bde13",
+      "bytes": 199
+    },
+    "README.md": {
+      "sha256": "8bf707a74218fb60cf60e49a873c6dcf56d6688c4d47271e33c875d072afca65",
+      "bytes": 749
+    },
+    "UI-TargetingFrame-Stealable.blp": {
+      "sha256": "e1efdd5ca645cbc5498c6b6f5f2f0a83dc8f9d5994b8f3831348d7cee3cbc4ee",
+      "bytes": 1868
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "7189939": {
+      "tag": "v1.0.0",
+      "folder": "v1.0.0--7189939",
+      "assets": {},
+      "source": {
+        "sha256": "2d63df86a325327201037d0c148b66d73fddfeeb66b4d365bb846036e1e28f54",
+        "bytes": 3139,
+        "path": "releases/v1.0.0--7189939/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/wardz/DispelBorder/tarball/v1.0.0"
+      }
+    }
+  }
+}

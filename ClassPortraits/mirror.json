@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Ko0z/ClassPortraits_Vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Ko0z",
+    "repo": "ClassPortraits_Vanilla",
+    "name": "ClassPortraits_Vanilla",
+    "url": "https://github.com/Ko0z/ClassPortraits_Vanilla",
+    "api": "https://api.github.com/repos/Ko0z/ClassPortraits_Vanilla"
+  },
+  "commit": "1d98c52195de8f603b5c33ddf62bd13d9984319e",
+  "sourceFiles": {
+    "ClassPortraits_Vanilla.lua": {
+      "sha256": "1bd84effad154551cb40f8274fd442bd96172935228eac0812a9d5a1e5a43c3d",
+      "bytes": 2672
+    },
+    "ClassPortraits_Vanilla.toc": {
+      "sha256": "611bcfaefeed2299796920af9844d07ab0578a30228d828e67a7831395f29e85",
+      "bytes": 137
+    },
+    "README.md": {
+      "sha256": "cfac19def1d9d09c9c746421dfcfd14b447c504cd843afaebf92fab584f93d52",
+      "bytes": 140
+    },
+    "UI-CLASSES-CIRCLES.BLP": {
+      "sha256": "9d903ae54561c3ea8e46990b5fc5e8998ff987a7bd016b8df64d4b7b11724791",
+      "bytes": 88580
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

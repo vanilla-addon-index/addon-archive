@@ -1,0 +1,105 @@
+{
+  "upstream": "https://github.com/pushxd/JIM_toolbox",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "pushxd",
+    "repo": "JIM_toolbox",
+    "name": "JIM_toolbox",
+    "url": "https://github.com/pushxd/JIM_toolbox",
+    "api": "https://api.github.com/repos/pushxd/JIM_toolbox"
+  },
+  "commit": "e37354207820a739a878892aa2d6cb0f3f897822",
+  "sourceFiles": {
+    "CLOSE_DIALOG_BUTTON.xml": {
+      "sha256": "17cbd1bd4ceddc946c25787f9c8277f997a173280e6c406172dbccdee101ec0a",
+      "bytes": 531
+    },
+    "GetSpellByName.lua": {
+      "sha256": "98403d5efab202ae191821a202e2825b5a57f2065d8d97758fd0f2daf68eed1d",
+      "bytes": 2694
+    },
+    "GetSpellFromTooltip.lua": {
+      "sha256": "49f6017d93fe45bf298425785ebafb871209860ccb41ecbfb780083af2c3ebcc",
+      "bytes": 2353
+    },
+    "HookUIMethod.xml": {
+      "sha256": "d4b38858cec69b3ab542436d11fd51fe5229d6ee9fa093f897e9328351346e72",
+      "bytes": 1296
+    },
+    "ItemUse.lua": {
+      "sha256": "3024edf402377b2f6b0a93d905c5befec03aaec9df638ff7286bd4e326203ba8",
+      "bytes": 3554
+    },
+    "JIM_AnnounceAddOn.lua": {
+      "sha256": "fec0cfcbc423e2484d9bf244b0baee8d2b9ade9a45ea8d3627371c67a6afef6d",
+      "bytes": 275
+    },
+    "JIM_DROPDOWN.lua": {
+      "sha256": "1018de566efa5b4a00eff1849fd4769be3d1473e4ef54345ca5f820dea430a5b",
+      "bytes": 7835
+    },
+    "JIM_DROPDOWN.xml": {
+      "sha256": "799341260b3b4a3360045b832706687c0e071b89975f8d2c978c344764ee221e",
+      "bytes": 198
+    },
+    "JIM_toolbox.toc": {
+      "sha256": "a23b08d559329f1d46568a22960b4f3b6db15c476fafca841913266cb9db8a03",
+      "bytes": 1616
+    },
+    "JIMLogo256.blp": {
+      "sha256": "3f981d34272ff9b69086594469cfd7f4bb8b4852672ab37f0bb448e0ce3805b1",
+      "bytes": 88580
+    },
+    "LayoutFrame_IndexedSetPoint.lua": {
+      "sha256": "c1abed39c5dd379b98db8790f45430e19655b0eb7219253d24464c26c6e0cc7d",
+      "bytes": 875
+    },
+    "LayoutFrame_IndexedSetPoint.xml": {
+      "sha256": "9e2966ee582c52f76994b908e5a234f70e380726b3693117d7d72bb3b4384fb7",
+      "bytes": 213
+    },
+    "LoadOnDemandConfig.lua": {
+      "sha256": "9ce514bd21ce54995260d3c26128d111e21886c9277d9553a06baaa49cda0c20",
+      "bytes": 3395
+    },
+    "NoRedMessages.lua": {
+      "sha256": "8c9d79dfd3ab702ab76cc5f89c3e49c9a50489b51eec2694c009e5cb4031e927",
+      "bytes": 1001
+    },
+    "README.md": {
+      "sha256": "375992a8406a80ee57040b20d216ec76c3bdcceb18235c57a3a54ed4755f75dd",
+      "bytes": 210
+    },
+    "ROTATING_MINIMAP_BUTTON.lua": {
+      "sha256": "b3c70aa60639f3830d49d47004766de8b760fcd47a2142f3a77310e62adc97d2",
+      "bytes": 4509
+    },
+    "ROTATING_MINIMAP_BUTTON.xml": {
+      "sha256": "9c669d6c09115322dfe53d9b9f5b550542b252c0a5c20ab56bf0db2b141697eb",
+      "bytes": 1275
+    },
+    "SearchAscendingList.lua": {
+      "sha256": "39d376562453182a53f8c5a4358190ed82d41c9bc48a6e67aa7a7505d5e040d8",
+      "bytes": 1472
+    },
+    "SLIDER_SECOND_THUMB.lua": {
+      "sha256": "1757acfbe5330e1dc930aa66f3acb2e84aafb86903b3b37e42f69a3eca259d79",
+      "bytes": 5606
+    },
+    "SLIDER_SECOND_THUMB.xml": {
+      "sha256": "cccbb3e986d537f0fd06d5ac7476518e17bf315e1393925f6ef412247844ee83",
+      "bytes": 1664
+    },
+    "SpellCast.lua": {
+      "sha256": "e392e52211506e86867efcf7c7608c3d390c8b926e02c3bf03fa89b7afa7a657",
+      "bytes": 6383
+    },
+    "SpellCast.xml": {
+      "sha256": "0f35392fc98e80b7745bae60c0bd860ef1eacc20e7212396798e71191d9babf3",
+      "bytes": 4974
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

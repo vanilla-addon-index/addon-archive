@@ -1,0 +1,186 @@
+{
+  "upstream": "https://github.com/papafru/GatherMap",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "papafru",
+    "repo": "GatherMap",
+    "name": "GatherMap",
+    "url": "https://github.com/papafru/GatherMap",
+    "api": "https://api.github.com/repos/papafru/GatherMap"
+  },
+  "commit": "143753367669b266a73e3230d4e215c7ce59183f",
+  "sourceFiles": {
+    ".github/workflows/publish-v069.yml": {
+      "sha256": "d29040116b0d603c307bf0c2c9f7f1ad5a4327f6dc725b30f3adbabb4b29aba2",
+      "bytes": 2472
+    },
+    ".github/workflows/publish-v070.yml": {
+      "sha256": "a4c5e5e4c5da6bdf46176d2002c85129052c7f584495e88fddacf0efaac01ed9",
+      "bytes": 13460
+    },
+    "DATABASE-SOURCES.md": {
+      "sha256": "6a6e097322fede8c1e17dbf7a19ed21be65612ad78f396ba6113dad56e22e7da",
+      "bytes": 831
+    },
+    "GatherMap.lua": {
+      "sha256": "16919478d4caa7850f83f29c3b4359a19acc1a207f58f90c04adcc18063ae214",
+      "bytes": 98732
+    },
+    "GatherMap.toc": {
+      "sha256": "6e55392f49286949d0d8fadb7914e54a94522b64b3ab38d9f9153c508a24c82d",
+      "bytes": 274
+    },
+    "Icons/HerbArthasTears.tga": {
+      "sha256": "eeb987a855f4d9885e576d109ac331d414e4bbd0921ae43fc8d5a95d726b1b33",
+      "bytes": 1068
+    },
+    "Icons/HerbBlackLotus.tga": {
+      "sha256": "9fef937e0ba092c124953393b7896a1140e8a908d7fea2a8dd0b6c08c706f44a",
+      "bytes": 1068
+    },
+    "Icons/HerbBlindweed.tga": {
+      "sha256": "f2abd463927967b18007e493f32b6e8a805cb563590872ae8823bde5cee41bad",
+      "bytes": 1068
+    },
+    "Icons/HerbBriarthorn.tga": {
+      "sha256": "eb5e41b99fb15dfea293da3f086b6ad7bf2f72de017c209dfe589d15c144c14e",
+      "bytes": 1068
+    },
+    "Icons/HerbBruiseweed.tga": {
+      "sha256": "b9620e54800f483bf842986d291f98c2c718a66a55b2c98d38fffc0a124789b3",
+      "bytes": 1068
+    },
+    "Icons/HerbDreamfoil.tga": {
+      "sha256": "a3e40b520dbc8f1f08b06d2bfde30482f0037f71e49fd82f7eceb9fc61a10cb2",
+      "bytes": 1068
+    },
+    "Icons/HerbEarthroot.tga": {
+      "sha256": "d6e46b435d40de3520489d2ad5c07372ecf9d09cbb907b136f184549a9dec4ca",
+      "bytes": 1068
+    },
+    "Icons/HerbFadeleaf.tga": {
+      "sha256": "68022dda04b1e7440be4afa11222f4561ac95837f493c0223b154c157988a318",
+      "bytes": 1068
+    },
+    "Icons/HerbFirebloom.tga": {
+      "sha256": "9ba617cfb95d8fbb4a7e31eb3d7fed68a4af4fa6224d7310a919d5e30ab24825",
+      "bytes": 1068
+    },
+    "Icons/HerbGhostMushroom.tga": {
+      "sha256": "31713b34a5c2e7e23d300313056d65d099cce54258ff708ee44211afc9962da0",
+      "bytes": 1068
+    },
+    "Icons/HerbGoldenSansam.tga": {
+      "sha256": "254ee18ca0c403ea0228a8b45bd30b4e8998bd9b7c97ebc75f344f05025486ca",
+      "bytes": 1068
+    },
+    "Icons/HerbGoldthorn.tga": {
+      "sha256": "f4772c73a40e5581e3fd5a8614ce692e894b3daa300396914a5e2dbb96578728",
+      "bytes": 1068
+    },
+    "Icons/HerbGraveMoss.tga": {
+      "sha256": "7ab26547db76dc01c4ae097a508f341f83ebf6fd5ea59834ca933f7077de2c6f",
+      "bytes": 1068
+    },
+    "Icons/HerbGromsblood.tga": {
+      "sha256": "a752b21b67737ae2c68dc1bc3bb6441fb4d2a7498ddc9b2673f0d8b4a2bc2a50",
+      "bytes": 1068
+    },
+    "Icons/HerbIcecap.tga": {
+      "sha256": "9140f4a604b22be664abf18984862aa470be0e36cec2ec5a96eea186bebb9ad5",
+      "bytes": 1068
+    },
+    "Icons/HerbKhadgarsWhisker.tga": {
+      "sha256": "a7edee80fbd201958ed0da072a74a7333c16fc662f75f9dc84bf250fccd73efc",
+      "bytes": 1068
+    },
+    "Icons/HerbKingsblood.tga": {
+      "sha256": "d1ae99a3be58982d2384c69e58d82ca302d97ff5a65f48eaa815ac37099a11ec",
+      "bytes": 1068
+    },
+    "Icons/HerbLiferoot.tga": {
+      "sha256": "be292e21e5d546e215734adec0a095d327ca903017f253a357f286815435e715",
+      "bytes": 1068
+    },
+    "Icons/HerbMageroyal.tga": {
+      "sha256": "a7f65eb8d672e8b14e304b481644b168903f4e52609e5a2c646e5677b1f73762",
+      "bytes": 1068
+    },
+    "Icons/HerbMountainSilversage.tga": {
+      "sha256": "9f28e7cb384dfd6588b7149b973a3a30b9926a50dcc15faa94b93166bdcf2b86",
+      "bytes": 1068
+    },
+    "Icons/HerbPeacebloom.tga": {
+      "sha256": "a69d14027bb8a3264f61cd347d876c3dbd4c3666b460a829bed700ffb7a38e6d",
+      "bytes": 1068
+    },
+    "Icons/HerbPlaguebloom.tga": {
+      "sha256": "5faf64377b0e736f617d0fec428465bf631ef28646d436d5df74869a55e4fa40",
+      "bytes": 1068
+    },
+    "Icons/HerbPurpleLotus.tga": {
+      "sha256": "c7d2624f888819c0d778ed5c178757cdd4c33c861272518b096ebb4bbc49e775",
+      "bytes": 1068
+    },
+    "Icons/HerbSilverleaf.tga": {
+      "sha256": "b3e81e752151f5674b977cb8efe7a01a526f5933e6cdf629db67a5010090f488",
+      "bytes": 1068
+    },
+    "Icons/HerbStranglekelp.tga": {
+      "sha256": "f9d2d49ec8d6d0482448cfa3bbf40be0691b144fbcf05a7f6635495fb776dac0",
+      "bytes": 1068
+    },
+    "Icons/HerbSungrass.tga": {
+      "sha256": "dd3d15c67a97518ea8aded8d46a2b9401ae4e7b2aa5da896c19cf975d50cbb00",
+      "bytes": 1068
+    },
+    "Icons/HerbSwiftthistle.tga": {
+      "sha256": "fd53dd60377418084230beef0f3472e73abcb36d3689c5f255787b9b2c135493",
+      "bytes": 1068
+    },
+    "Icons/HerbWildSteelbloom.tga": {
+      "sha256": "9ddcd0dc5c73d81a47b6b326778df5dc1469e8cb08a5365b2f28e6ba5930f91e",
+      "bytes": 1068
+    },
+    "Icons/HerbWintersbite.tga": {
+      "sha256": "85b77d1738dafc25e9d8a69b8d03528fdeb0ed28b6a288bb6f7ec66876d8646a",
+      "bytes": 1068
+    },
+    "PFQUEST-LICENSE.txt": {
+      "sha256": "7ee3c5402cd719de230f3bbc59a6506a3b2b65981d0d793f143fa5b08f926510",
+      "bytes": 1081
+    },
+    "PresetDatabase.lua": {
+      "sha256": "bf42a3f106d25da63839f604ccfd2af1c599465a50b2c83a39775596658c0590",
+      "bytes": 137040
+    },
+    "README.md": {
+      "sha256": "a92bbcfbdac655b3393113c202866d8f20a22b6ee1d56cbab443ce6d5b163081",
+      "bytes": 16304
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "411797261": {
+      "tag": "v0.7.0",
+      "folder": "v0.7.0--411797261",
+      "assets": {
+        "637354130": {
+          "sha256": "e2236e572a0804555c23052fc59ccd2961ab837dcc1d31688e89b0303c1f983a",
+          "bytes": 141262,
+          "id": "637354130",
+          "name": "GatherMap-v0.7.0-Turtle-1.18.zip",
+          "url": "https://github.com/papafru/GatherMap/releases/download/v0.7.0/GatherMap-v0.7.0-Turtle-1.18.zip",
+          "path": "releases/v0.7.0--411797261/assets/GatherMap-v0.7.0-Turtle-1.18.zip"
+        }
+      },
+      "source": {
+        "sha256": "4375313cffe33aafd9f4e7dac522c208fdbe3c0ab1b2d8218f7636a3fdc022f2",
+        "bytes": 146945,
+        "path": "releases/v0.7.0--411797261/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/papafru/GatherMap/tarball/v0.7.0"
+      }
+    }
+  }
+}

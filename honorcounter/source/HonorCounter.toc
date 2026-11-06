@@ -1,0 +1,9 @@
+## Interface: 11303
+## Title: Honor Counter
+## Notes: Estimates the honor gained
+## Version: 1
+## Author: WobLight
+## Deps: EmeraldFramework
+## SavedVariables: HonorCounterSettings
+## SavedVariablesPerCharacter: HonorCounterProfile HonorCounterDump
+HonorCounter.lua

@@ -1,0 +1,54 @@
+{
+  "upstream": "https://github.com/EinBaum/MapTarget",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "MapTarget",
+    "name": "MapTarget",
+    "url": "https://github.com/EinBaum/MapTarget",
+    "api": "https://api.github.com/repos/EinBaum/MapTarget"
+  },
+  "commit": "8d2939ad8fbcc954a2f98e3c9f02110572c8d204",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "29b4dae8413e6dd6c3bd48b5e3959491b958e341e5a8dafd6eee2090338f2af2",
+      "bytes": 1064
+    },
+    "MapTarget.lua": {
+      "sha256": "1891fa3ab96682796bdce2603405c4b91ca3a51611fa15b201b1d2af6523d674",
+      "bytes": 1735
+    },
+    "MapTarget.toc": {
+      "sha256": "40e08686ef68ae9b3ba251d7a4df83f8490342e3cbb2c2a96c912619266e8da4",
+      "bytes": 182
+    },
+    "README.md": {
+      "sha256": "64e656cdc765d9455e56f9b0d6672bcf8dfb3cf274314b455b22c463eccd83c1",
+      "bytes": 882
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "7004692": {
+      "tag": "2.1",
+      "folder": "2.1--7004692",
+      "assets": {
+        "4305123": {
+          "sha256": "3cff8e5fc6b5bf71bb2e900cca4687b4c814ef4ba2443b765e33a1f30f94329a",
+          "bytes": 2756,
+          "id": "4305123",
+          "name": "MapTarget.zip",
+          "url": "https://github.com/EinBaum/MapTarget/releases/download/2.1/MapTarget.zip",
+          "path": "releases/2.1--7004692/assets/MapTarget.zip"
+        }
+      },
+      "source": {
+        "sha256": "a91b1615f78516f0b449fd8036918806a813eeb1edc4b0d1e93609ed54cce795",
+        "bytes": 2237,
+        "path": "releases/2.1--7004692/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/EinBaum/MapTarget/tarball/2.1"
+      }
+    }
+  }
+}

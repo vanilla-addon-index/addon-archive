@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Numielle/DouseReminder",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Numielle",
+    "repo": "DouseReminder",
+    "name": "DouseReminder",
+    "url": "https://github.com/Numielle/DouseReminder",
+    "api": "https://api.github.com/repos/Numielle/DouseReminder"
+  },
+  "commit": "a5b3e2b7366b4b12e12afed3fd788612d381078f",
+  "sourceFiles": {
+    "DouseReminder.lua": {
+      "sha256": "7497dbb9359440bd6b0928f830cc2af9fe39190d1b856a0af2e7b7e677b84cc9",
+      "bytes": 953
+    },
+    "DouseReminder.toc": {
+      "sha256": "61d7756bf2d27ad95605b3f08e23ed90d865fcaeae030503d242ec4b9b54212b",
+      "bytes": 174
+    },
+    "LICENSE": {
+      "sha256": "39db8f9acf036595a2566ea3fe560bc7bd65d8749f088e0f4a4ef2f8a6cb4b34",
+      "bytes": 18026
+    },
+    "README.md": {
+      "sha256": "59294d2e05b3e768da0cb94561fdc333fe4dec5f055d93d4d52271b6232c2e48",
+      "bytes": 94
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

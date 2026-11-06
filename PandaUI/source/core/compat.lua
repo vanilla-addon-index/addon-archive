@@ -1,0 +1,2256 @@
+-- pandaUI :: core/compat.lua
+--
+-- Adapters for behaviours where this client is known to differ from Vanilla.
+--
+-- Every helper here exists because compact evidence records a real, repeated
+-- incompatibility. Nothing in this file exists to imitate a pfUI API, and
+-- nothing here installs a fake global or overwrites a client function.
+
+local U = PandaUI
+local M = U.media
+
+-- Optional extension detection is centralised here so modules do not infer a
+-- DLL from one event happening to fire. GetNampowerVersion is Nampower's
+-- documented feature check; calling it also gives Settings a useful version
+-- without making that call part of any cast path. Every consumer still keeps
+-- a stock client path.
+local nampowerVersion = U.G("GetNampowerVersion")
+U.hasNampower = type(nampowerVersion) == "function"
+U.nampowerVersion = nil
+if U.hasNampower then
+  local ok, major, minor, patch = pcall(nampowerVersion)
+  if ok and major ~= nil then
+    U.nampowerVersion = tostring(major)
+    if minor ~= nil then
+      U.nampowerVersion = U.nampowerVersion .. "." .. tostring(minor)
+    end
+    if patch ~= nil then
+      U.nampowerVersion = U.nampowerVersion .. "." .. tostring(patch)
+    end
+  end
+end
+
+function U.NampowerDetected()
+  return U.hasNampower and true or false, U.nampowerVersion
+end
+
+-- Nampower GUIDs (knowledge.json / nameplates.nampower_plate_guid_debuffs,
+-- probe plateaura.v1): a native plate's GetName(1) names its unit, and that
+-- "0x..." string is a unit token for every unit API. nil without Nampower.
+local NULL_GUID = "0x0000000000000000"
+
+local function ValidGuid(guid)
+  if type(guid) ~= "string" or guid == NULL_GUID then return nil end
+  if string.sub(guid, 1, 2) ~= "0x" then return nil end
+  return guid
+end
+
+function U.PlateGuid(plate)
+  if not U.hasNampower or not plate or type(plate.GetName) ~= "function" then
+    return nil
+  end
+  local ok, guid = pcall(plate.GetName, plate, 1)
+  if not ok then return nil end
+  return ValidGuid(guid)
+end
+
+local getUnitGuid = U.hasNampower and U.G("GetUnitGUID") or nil
+if type(getUnitGuid) ~= "function" then getUnitGuid = nil end
+
+function U.UnitGuid(unit)
+  if not getUnitGuid or type(unit) ~= "string" then return nil end
+  if string.sub(unit, 1, 2) == "0x" then return ValidGuid(unit) end
+  local ok, guid = pcall(getUnitGuid, unit)
+  if not ok then return nil end
+  return ValidGuid(guid)
+end
+
+-- Direct unit fields exposed by Nampower. These are the live values the
+-- server has sent for an object currently loaded by the client; callers keep
+-- their stock/database fallback for units Nampower cannot resolve.
+local getUnitField = U.hasNampower and U.G("GetUnitField") or nil
+if type(getUnitField) ~= "function" then getUnitField = nil end
+local unitPowerFields = { "power1", "power2", "power3", "power4", "power5" }
+local unitMaxPowerFields = {
+  "maxPower1", "maxPower2", "maxPower3", "maxPower4", "maxPower5"
+}
+
+function U.NampowerUnitField(unit, field)
+  if not getUnitField or type(unit) ~= "string" or
+     type(field) ~= "string" then
+    return nil
+  end
+  local ok, value = pcall(getUnitField, unit, field)
+  if not ok then return nil end
+  return tonumber(value)
+end
+
+function U.NampowerUnitPower(unit, powerType)
+  local index = tonumber(powerType)
+  if index == nil then return nil end
+  index = index + 1
+  if not unitPowerFields[index] then return nil end
+  return U.NampowerUnitField(unit, unitPowerFields[index]),
+         U.NampowerUnitField(unit, unitMaxPowerFields[index])
+end
+
+-- ---------------------------------------------------------------------------
+-- Numeric helpers
+-- ---------------------------------------------------------------------------
+function U.Round(value)
+  value = tonumber(value) or 0
+  return math.floor(value + 0.5)
+end
+
+-- A 0..1 share as a whole percent, rounded up so a living unit never reads
+-- 0%. The epsilon absorbs double error: 7 / 100 * 100 is 7.000000000000001,
+-- and a bare math.ceil printed 8% (also 14, 28, 55, 56). Unit frames and
+-- nameplates share this so the two readouts agree.
+function U.CeilPercent(fraction)
+  local pct = math.ceil((tonumber(fraction) or 0) * 100 - 0.000001)
+  if pct < 1 then return 0 end
+  return pct
+end
+
+-- A remaining time as a short countdown string plus the tier it falls in, so
+-- callers can colour it from M.cooldownText without repeating the thresholds.
+--
+-- The unit switch points are pfUI-modern's: days above 99 hours, hours above 99
+-- minutes, minutes above 99 seconds, and tenths over the last five seconds --
+-- which keeps the number at most three characters wide at every scale, the
+-- reason it fits inside an action button or a 20-unit aura icon at all.
+--
+-- Shared rather than module-local because both modules/actionbar.lua and
+-- modules/auras.lua draw this readout; see M.cooldownText.
+function U.FormatTimeShort(remaining)
+  remaining = tonumber(remaining) or 0
+
+  if remaining > 356400 then
+    return U.Round(remaining / 86400) .. "d", "day"
+  elseif remaining > 5940 then
+    return U.Round(remaining / 3600) .. "h", "hour"
+  elseif remaining > 99 then
+    return U.Round(remaining / 60) .. "m", "minute"
+  elseif remaining <= 5 then
+    return string.format("%.1f", remaining), "low"
+  end
+  return tostring(U.Round(remaining)), "normal"
+end
+
+-- A client (start, duration) cooldown pair as seconds remaining, or nil when
+-- that cannot be established.
+--
+-- Shared for the same reason U.FormatTimeShort above is: modules/actionbar.lua
+-- and modules/stancebar.lua both draw a countdown from one of these pairs, and
+-- the wrap correction below is exactly the kind of client-specific arithmetic
+-- that must not exist in two copies.
+--
+-- The epoch sources are needed only by that correction, and only if this
+-- client wraps at all, so each one is optional and guarded.
+local function EpochNumber(name, argument)
+  local fn = U.G(name)
+  if type(fn) ~= "function" then return nil end
+  local ok, value = pcall(fn, argument)
+  if not ok then return nil end
+  return tonumber(value)
+end
+
+local function EpochSeconds()
+  local value = EpochNumber("time")
+  if value then return value end
+
+  value = EpochNumber("GetServerTime")
+  if value then return value end
+
+  return EpochNumber("date", "%s")
+end
+
+function U.CooldownRemaining(start, duration)
+  start = tonumber(start) or 0
+  duration = tonumber(duration) or 0
+  local now = EpochNumber("GetTime") or 0
+
+  if start <= now then
+    return duration - (now - start)
+  end
+
+  -- A start stamped ahead of the current time means the client's 32-bit
+  -- millisecond uptime counter wrapped and the stamp belongs to the previous
+  -- cycle, so the plain subtraction would read as a cooldown days long.
+  -- UnrealPfUI corrects it by rebasing both onto wall-clock seconds
+  -- (modules/cooldown.lua); the arithmetic here is that working implementation,
+  -- so it is WORKING_SOURCE evidence and not verified on this client. It only
+  -- runs in a case the plain path is already wrong in.
+  local epoch = EpochSeconds()
+  if not epoch then return nil end
+
+  local startupTime = epoch - now
+  local cdTime = (2 ^ 32) / 1000 - start
+  return (startupTime - cdTime + duration) - epoch
+end
+
+-- ---------------------------------------------------------------------------
+-- Screen metrics
+--
+-- U.UIWidth / U.UIHeight are UIParent's extent in the coordinate space its
+-- children are placed and measured in (SetPoint offsets, GetLeft/GetTop).
+--
+-- OctoWoW (knowledge.json / layout.uiparent_extent_is_screen_size_on_octo,
+-- PandaRuntimeProbe spellbookpos.v2, 2026-10-15): with UIParent at scale 0.9,
+-- UIParent:GetHeight() returned 768 while a child anchored TOPLEFT y = 0 read
+-- GetTop 853.33 = GetScreenHeight() (and -104 read 749.33). UIParent:GetWidth/
+-- GetHeight carry its own scale; GetScreenWidth/GetScreenHeight are the child
+-- space, as pfUI-octo uses them. Driving the screen guard from 768 called an
+-- on-screen window off screen and walked the Spellbook up 85.33 per sweep.
+-- (UnrealUI used UIParent:GetWidth because Unreal's GetScreenWidth was not in
+-- UIParent units; that is an Unreal record.)
+-- ---------------------------------------------------------------------------
+local function ScreenExtent(screenFn, method, fallback)
+  local ok, value = pcall(screenFn)
+  if ok and tonumber(value) and value > 0 then return value end
+  ok, value = pcall(UIParent[method], UIParent)
+  if ok and tonumber(value) and value > 0 then return value end
+  return fallback
+end
+
+function U.UIWidth()
+  return ScreenExtent(GetScreenWidth, "GetWidth", 1024)
+end
+
+function U.UIHeight()
+  return ScreenExtent(GetScreenHeight, "GetHeight", 768)
+end
+
+-- Physical pixels per UIParent unit. Used only for reporting and for deciding
+-- that a sub-unit border is not worth asking for; see core/style.lua. Kept on
+-- its UnrealUI formula (GetScreenWidth over UIParent:GetWidth, which on
+-- OctoWoW is 1 / UIParent's scale) so text shadows do not change with the
+-- U.UIWidth fix above; re-derive it from the real resolution separately.
+function U.PixelScale()
+  local ok, screen = pcall(GetScreenWidth)
+  if not ok or not tonumber(screen) or screen <= 0 then return 1 end
+  local widthOk, width = pcall(UIParent.GetWidth, UIParent)
+  width = widthOk and tonumber(width) or 0
+  if width <= 0 then return 1 end
+  local scale = screen / width
+  if scale < 0.5 or scale > 8 then return 1 end
+  return scale
+end
+
+-- ---------------------------------------------------------------------------
+-- Fonts
+--
+-- fonts.pfui_path_and_measure.v1 (an Unreal-era record with no Octo
+-- counterpart) found SetFont silently keeping the inherited font object. On
+-- Octo, SetFont with a bundled TTF works (knowledge.json /
+-- fonts.enus_client_font_lacks_cyrillic_cjk); size detection still measures: render the same sample at two very different
+-- sizes and keep the first path whose width actually changes. Resolved once and
+-- cached, because the probe frame costs a real font load.
+-- ---------------------------------------------------------------------------
+local fontSample = "MMMMMMMM"
+local fontProbe, resolvedFont
+local fontChecked = {}
+local styledFonts = {}
+local customFontSerial = 0
+
+local FONT_DB_KEYS = {
+  default = "defaultFont",
+  unitframe = "unitFrameFont",
+}
+
+local function NormaliseFontRole(role)
+  if role == "unitframe" then return role end
+  return "default"
+end
+
+-- Returns a validated media id. Both roles default to their inherited native
+-- FontObject; bundled faces remain explicit choices for probe work.
+function U.GetFontChoice(role)
+  role = NormaliseFontRole(role)
+  local fallback = role == "unitframe" and M.defaultUnitFrameFontId or
+                   M.defaultFontId
+  local key = FONT_DB_KEYS[role]
+  local value = U.db and U.db[key] or fallback
+
+  if value == "original" then return value end
+  if M.fontById[value] then return value end
+  return fallback
+end
+
+-- Puts the client's own face back: the inherited FontObject, then, for a label
+-- that once drew a bundled face, the exact path/size/flags it reported when
+-- first styled, because an explicit SetFont is not guaranteed to yield to
+-- SetFontObject.
+local function RestoreOriginalFont(record)
+  local fontstring = record.fontstring
+  local original = record.original or U.G("GameFontNormal")
+  local ok = false
+  if original and fontstring.SetFontObject then
+    ok = pcall(fontstring.SetFontObject, fontstring, original)
+  end
+  local face = record.originalFace
+  if record.directFont and face and fontstring.SetFont then
+    if pcall(fontstring.SetFont, fontstring, face[1], face[2], face[3] or "") then
+      ok = true
+    end
+  end
+  return ok
+end
+
+-- A bundled face goes through FontString:SetFont(path, size, flags), which
+-- draws an AddOns TTF on Octo (knowledge.json /
+-- fonts.enus_client_font_lacks_cyrillic_cjk, probe fontglyph.v1). The request
+-- is read back through GetFont: if the client kept another face, the label
+-- falls back to the original one rather than drawing in an unconfirmed face.
+local function SetBundledFont(record, media)
+  local fontstring = record.fontstring
+  if not fontstring.SetFont then return false end
+  if not pcall(fontstring.SetFont, fontstring, media.path, record.size,
+               record.flags or "") then
+    return false
+  end
+  record.directFont = true
+
+  local ok, path = pcall(function() return fontstring:GetFont() end)
+  if not ok or type(path) ~= "string" then return true end
+  local stem = string.lower((string.gsub(media.file, "%.[^%.]+$", "")))
+  return string.find(string.lower(path), stem, 1, true) ~= nil
+end
+
+local function EnsureCustomFont(record)
+  if record.customFont then return record.customFont end
+
+  local createFont = U.G("CreateFont")
+  if type(createFont) ~= "function" then return nil end
+
+  customFontSerial = customFontSerial + 1
+  local ok, font = pcall(createFont, "PandaUICustomFont" .. customFontSerial)
+  if not ok or not font then return nil end
+  record.customFont = font
+  return font
+end
+
+-- "Original" normally means the inherited stock object, size and all, so a
+-- requested size is dropped. A label marked exactSize keeps the stock face and
+-- flags but at its own size, through a private named Font
+-- (fonts.original_choice_drops_requested_size, user-confirmed).
+local function ApplyOriginalAtSize(record, keepSize)
+  local fontstring = record.fontstring
+  local original = record.original or U.G("GameFontNormal")
+  if not original or not original.GetFont then return false end
+
+  local ok, path, nativeSize, flags = pcall(original.GetFont, original)
+  if not ok or type(path) ~= "string" then return false end
+  -- keepSize: the label only wants record.flags (an outline) on the stock
+  -- face; its size stays the inherited object's own.
+  local size = record.size
+  if keepSize and tonumber(nativeSize) then size = nativeSize end
+  if record.flags then flags = record.flags end
+  local font = EnsureCustomFont(record)
+  if not font then return false end
+
+  local colorOk, r, g, b, a = pcall(function() return fontstring:GetTextColor() end)
+  local setOk = pcall(function()
+    font:SetFont(path, size, flags or "")
+    fontstring:SetFontObject(font)
+    -- An earlier bundled face was set explicitly; override it the same way.
+    if record.directFont then fontstring:SetFont(path, size, flags or "") end
+    if colorOk and type(r) == "number" and type(g) == "number" and type(b) == "number" then
+      fontstring:SetTextColor(r, g, b, a or 1)
+    end
+  end)
+  return setOk
+end
+
+local function ApplyFontRecord(record)
+  local fontstring = record.fontstring
+  -- A pinned face (U.SetFontFace) ignores the global choice: the font
+  -- dropdown draws each row in the face it names.
+  local choice = record.fixedFontId or U.GetFontChoice(record.role)
+  local media = choice ~= "original" and M.fontById[choice] or nil
+  local applied = false
+
+  -- Explicitly opted-in overlay labels stay shadow-free. A bundled face uses
+  -- the direct SetFont route; the client's own face uses the verified
+  -- shadow-free named Font route. Never clear a shared inherited font's
+  -- shadow. Keep this flag on the record so changing the global font choice
+  -- cannot restore shadows.
+  if record.shadowFree and media then
+    applied = SetBundledFont(record, media)
+    if applied then
+      U.ClearTextShadow(fontstring)
+      return true
+    end
+    media = nil
+  end
+
+  if record.shadowFree then
+    local path = M.fontCandidates[1]
+    local size = record.originalSize or record.size
+    local colorOk, r, g, b, a = pcall(function() return fontstring:GetTextColor() end)
+    local font = EnsureCustomFont(record)
+    if font then
+      local ok = pcall(function()
+        font:SetFont(path, size)
+        fontstring:SetFontObject(font)
+        if record.directFont then fontstring:SetFont(path, size) end
+        local bound = fontstring:GetFontObject()
+        if not bound or bound:GetName() ~= font:GetName() then return end
+        -- A newly created Font has no reliable white default. Preserve the
+        -- label's own color on font-choice refresh; CreateLabel sets it first
+        -- time after this function returns.
+        if colorOk and type(r) == "number" and type(g) == "number" and type(b) == "number" then
+          fontstring:SetTextColor(r, g, b, a or 1)
+        else
+          fontstring:SetTextColor(1, 1, 1)
+        end
+        applied = true
+      end)
+      if not ok then applied = false end
+    end
+    if not applied then RestoreOriginalFont(record) end
+    return applied
+  end
+
+  if choice == "original" then
+    if record.exactSize then applied = ApplyOriginalAtSize(record) end
+    if not applied and record.flags then
+      applied = ApplyOriginalAtSize(record, true)
+    end
+    if not applied then applied = RestoreOriginalFont(record) end
+  else
+    if media then applied = SetBundledFont(record, media) end
+
+    -- A missing or rejected font file must never make text disappear.
+    if not applied then RestoreOriginalFont(record) end
+  end
+
+  return applied
+end
+
+function U.ApplyFontChoice(role)
+  role = NormaliseFontRole(role)
+  local fontstring, record
+  for fontstring, record in pairs(styledFonts) do
+    if record.role == role then
+      ApplyFontRecord(record)
+      -- Restoring the inherited FontObject can bring its own shadow back.
+      if not record.shadowFree then U.SetTextShadow(fontstring) end
+    end
+  end
+end
+
+-- Pins one styled FontString to a font id ("original" or an M.fonts id),
+-- whatever the global choice. nil unpins it. Returns whether it applied.
+function U.SetFontFace(fontstring, fontId)
+  if not fontstring then return false end
+  if fontId ~= nil and fontId ~= "original" and not M.fontById[fontId] then
+    return false
+  end
+  local record = styledFonts[fontstring]
+  if not record then
+    U.SetFont(fontstring, M.fontSize.normal)
+    record = styledFonts[fontstring]
+    if not record then return false end
+  end
+  record.fixedFontId = fontId
+  local applied = ApplyFontRecord(record)
+  if not record.shadowFree then U.SetTextShadow(fontstring) end
+  return applied
+end
+
+function U.SetFontChoice(role, value)
+  role = NormaliseFontRole(role)
+  if type(value) ~= "string" then return false end
+  if value ~= "original" and not M.fontById[value] then return false end
+  if not U.db then return false end
+
+  U.db[FONT_DB_KEYS[role]] = value
+  U.ApplyFontChoice(role)
+  return true
+end
+
+local function PathResizes(path)
+  if fontChecked[path] ~= nil then return fontChecked[path] end
+
+  if not fontProbe then
+    local holder = CreateFrame("Frame", nil, UIParent)
+    holder:Hide()
+    local ok, region = pcall(holder.CreateFontString, holder, nil, "ARTWORK")
+    if not ok or not region then
+      fontChecked[path] = false
+      return false
+    end
+    fontProbe = region
+  end
+
+  local function MeasureAt(size)
+    if not pcall(fontProbe.SetFont, fontProbe, path, size, "OUTLINE") then return nil end
+    if not pcall(fontProbe.SetText, fontProbe, fontSample) then return nil end
+    local ok, width = pcall(fontProbe.GetStringWidth, fontProbe)
+    if ok and tonumber(width) then return width end
+    return nil
+  end
+
+  local small = MeasureAt(6)
+  local large = MeasureAt(24)
+  local works = false
+  if small and large and small > 0 and large > small * 1.5 then works = true end
+
+  fontChecked[path] = works
+  return works
+end
+
+-- Returns the first stock font path this client demonstrably resizes, or nil.
+function U.ResolveFont()
+  if resolvedFont ~= nil then
+    if resolvedFont == false then return nil end
+    return resolvedFont
+  end
+
+  local i
+  for i = 1, table.getn(M.fontCandidates) do
+    local path = M.fontCandidates[i]
+    if PathResizes(path) then
+      resolvedFont = path
+      U.Debug("font resolved: " .. path)
+      return path
+    end
+  end
+
+  resolvedFont = false
+  U.Debug("no stock font path resized text; leaving inherited fonts alone")
+  return nil
+end
+
+-- A shadow offset smaller than one screen pixel has nothing to rasterise into:
+-- the request is legal, SetShadowOffset accepts it, and the glyph simply draws
+-- with no visible shadow. Compact unit-frame bar text asked for three quarters
+-- of a pixel and came out flat, while the shared one-pixel treatment kept
+-- drawing everywhere else. Round a sub-pixel request out to a whole physical
+-- pixel and let the shadow colour carry the lighter/stronger difference, which
+-- is the part this client can actually render.
+local function WholePixelOffset(value, fallback)
+  local n = tonumber(value) or fallback
+  if n > 0 and n < 1 then return 1 end
+  if n < 0 and n > -1 then return -1 end
+  return n
+end
+
+-- Applies a physical-pixel shadow to both owned and restyled stock text. The
+-- default is the shared one-pixel treatment; a caller can ask for a wider one,
+-- but not for a sub-pixel one -- see WholePixelOffset above.
+-- SetShadowOffset consumes UI units here: at this client's
+-- measured 1920 / 1365.33 scale, an unconverted offset of 1 can rasterise
+-- nearly two screen pixels away. Convert the shared physical-pixel token back
+-- into UI units so the visible separation stays crisp.
+--
+-- The methods are documented by this client but not runtime-verified, so each
+-- call remains guarded and a missing method never prevents the text itself
+-- from being styled.
+function U.SetTextShadow(fontstring, physicalOffset, shadowColor)
+  if not fontstring then return false end
+
+  local color = shadowColor or M.color.shadow
+  local offset = physicalOffset or M.textShadowOffset
+  local pixelScale = U.PixelScale()
+  if pixelScale <= 0 then pixelScale = 1 end
+  local colorOk, offsetOk = false, false
+  local r, g, b, a = M.Unpack(color)
+
+  if fontstring.SetShadowColor then
+    colorOk = pcall(fontstring.SetShadowColor, fontstring, r, g, b, a)
+    if not colorOk then
+      -- documentation.json / widget-method:FontString:SetShadowColor
+      -- (DOCUMENTED_NOT_RUNTIME_VERIFIED) gives the signature as (r, g, b)
+      -- with no alpha. A client that rejects the fourth argument would leave
+      -- the text on the font object's own (unset) shadow colour with nothing
+      -- visible, so retry without alpha rather than lose the shadow outright.
+      colorOk = pcall(fontstring.SetShadowColor, fontstring, r, g, b)
+    end
+  end
+  if fontstring.SetShadowOffset then
+    -- offset.exact opts out of the whole-pixel rounding, for a caller that
+    -- wants to try a sub-pixel shadow (it may render as no shadow at all).
+    local x, y
+    if offset.exact then
+      x, y = tonumber(offset[1]) or 0, tonumber(offset[2]) or 0
+    else
+      x, y = WholePixelOffset(offset[1], 1), WholePixelOffset(offset[2], -1)
+    end
+    offsetOk = pcall(fontstring.SetShadowOffset, fontstring,
+                     x / pixelScale, y / pixelScale)
+  end
+
+  return colorOk and offsetOk
+end
+
+-- A one-pixel offset is a full stroke width at the compact unit-frame font
+-- size and reads as a second copy of each glyph. Components that explicitly
+-- opt out use a transparent, zero-offset shadow rather than inheriting the
+-- stock FontObject's wider treatment.
+function U.ClearTextShadow(fontstring)
+  if not fontstring then return false end
+
+  local colorOk, offsetOk = false, false
+  if fontstring.SetShadowColor then
+    colorOk = pcall(fontstring.SetShadowColor, fontstring, 0, 0, 0, 0)
+  end
+  if fontstring.SetShadowOffset then
+    offsetOk = pcall(fontstring.SetShadowOffset, fontstring, 0, 0)
+  end
+  return colorOk and offsetOk
+end
+
+-- Applies the selected font. A bundled face goes through FontString:SetFont
+-- (see SetBundledFont); the client's own face is the inherited FontObject, or
+-- a private named Font for exactSize/flags labels. The original inherited
+-- object is retained for the "Original" option and as the safe fallback
+-- whenever a bundled face is not confirmed by readback.
+-- exactSize: honour `size` under the "original" font choice too (see
+-- ApplyOriginalAtSize); otherwise that choice keeps the inherited size.
+function U.SetFont(fontstring, size, flags, role, shadowFree, exactSize)
+  if not fontstring then return false end
+
+  local record = styledFonts[fontstring]
+  if not record then
+    record = { fontstring = fontstring }
+    if fontstring.GetFontObject then
+      local ok, original = pcall(fontstring.GetFontObject, fontstring)
+      if ok then record.original = original end
+    end
+    local faceOk, facePath, faceSize, faceFlags =
+      pcall(function() return fontstring:GetFont() end)
+    if faceOk and type(facePath) == "string" and type(faceSize) == "number" then
+      record.originalFace = { facePath, faceSize, faceFlags }
+    end
+    if shadowFree then
+      local ok, _, height = pcall(function() return fontstring:GetFont() end)
+      if ok and type(height) == "number" and height > 0 then record.originalSize = height end
+    end
+    styledFonts[fontstring] = record
+  end
+
+  record.size = tonumber(size) or M.fontSize.normal
+  -- A later call that names no flags (a size or font-choice refresh) keeps
+  -- the outline an earlier call asked for.
+  if flags ~= nil then record.flags = flags end
+  record.role = NormaliseFontRole(role)
+  if shadowFree ~= nil then record.shadowFree = shadowFree and true or false end
+  if exactSize ~= nil then record.exactSize = exactSize and true or false end
+  local applied = ApplyFontRecord(record)
+  if not record.shadowFree then U.SetTextShadow(fontstring) end
+  -- A label carrying separate outline copies (modules/unitframes.lua
+  -- CreateBarText) keeps them at the same face and size.
+  local backs = fontstring.puiOutlineBacks
+  if backs then
+    local i
+    for i = 1, table.getn(backs) do
+      U.SetFont(backs[i], size, nil, role, false, exactSize)
+      U.ClearTextShadow(backs[i])
+    end
+  end
+  return applied
+end
+
+-- ---------------------------------------------------------------------------
+-- Anchors
+--
+-- OctoWoW (1.12.1): GetPoint returns exactly what SetPoint was given -- the
+-- relative frame as an object and Y with SetPoint's own sign -- so the tuple
+-- goes straight back into SetPoint (knowledge.json /
+-- layout.getpoint_y_sign_native_on_112). UnrealUI negated Y here for an Unreal
+-- Azeroth defect (frames.getpoint_relative_name_y_inverted, an Unreal record);
+-- on 1.12 that mirrored every captured anchor across its relative point, which
+-- sent bottom-anchored elements off the top of the screen.
+--
+-- A relative handed back as a name string is still resolved, as a harmless
+-- guard. Callers must not immediately clear and re-apply a freshly captured
+-- point.
+-- ---------------------------------------------------------------------------
+function U.GetFramePoint(frame, index)
+  if not frame or not frame.GetPoint then return nil end
+
+  local ok, point, relative, relativePoint, x, y =
+    pcall(frame.GetPoint, frame, index or 1)
+  if not ok or type(point) ~= "string" then return nil end
+
+  if type(relative) == "string" then
+    relative = U.G(relative)
+  end
+
+  return point, relative, relativePoint, tonumber(x) or 0, tonumber(y) or 0
+end
+
+-- Anchors a frame to UIParent from a stored position table, offsets in the
+-- frame's own units (the 1.12 SetPoint space).
+function U.ApplyFramePoint(frame, position)
+  if not frame or type(position) ~= "table" then return false end
+  if type(position.point) ~= "string" then return false end
+
+  local relativePoint = position.relativePoint
+  if type(relativePoint) ~= "string" then relativePoint = position.point end
+
+  local ok = pcall(function()
+    frame:ClearAllPoints()
+    frame:SetPoint(position.point, UIParent, relativePoint,
+                   tonumber(position.x) or 0, tonumber(position.y) or 0)
+  end)
+  if ok then
+    frame.puiKnownPoint = position.point
+    frame.puiKnownRelativePoint = relativePoint
+    frame.puiKnownX = tonumber(position.x) or 0
+    frame.puiKnownY = tonumber(position.y) or 0
+  end
+  return ok
+end
+
+-- ---------------------------------------------------------------------------
+-- Texture colour
+--
+-- knowledge.json / textures.settexturecolor_alias_missing: SetTextureColor is
+-- absent, SetVertexColor is present. knowledge.json /
+-- textures.getvertexcolor_readback_missing: there is no GetVertexColor to read
+-- a tint back with. And unlike SetBackdropColor, SetVertexColor does not coerce
+-- strings, so a non-numeric component silently leaves the texture white.
+--
+-- Coerce on the way in and cache what was applied so callers have a readback.
+-- ---------------------------------------------------------------------------
+local textureColors = {}
+local function MirrorTextureColor(texture, cached) texture.puiColor = cached end
+local function ReadTextureColor(texture) return texture.puiColor end
+
+function U.SetColor(texture, r, g, b, a)
+  if not texture or not texture.SetVertexColor then return false end
+
+  r = tonumber(r) or 0
+  g = tonumber(g) or 0
+  b = tonumber(b) or 0
+  a = tonumber(a) or 1
+
+  local cached = textureColors[texture]
+  if cached and cached[1] == r and cached[2] == g and
+     cached[3] == b and cached[4] == a then return true end
+
+  local ok = pcall(texture.SetVertexColor, texture, r, g, b, a)
+  if ok then
+    if cached then
+      cached[1], cached[2], cached[3], cached[4] = r, g, b, a
+    else
+      cached = { r, g, b, a }
+      textureColors[texture] = cached
+    end
+    -- Frames on this client behave as tables, but texture regions are not
+    -- guaranteed to accept an arbitrary field, so this compatibility mirror
+    -- is optional. The side table above is the allocation-free primary cache.
+    pcall(MirrorTextureColor, texture, cached)
+  end
+  return ok
+end
+
+function U.GetColor(texture)
+  if not texture then return nil end
+  local cached = textureColors[texture]
+  if cached then return cached[1], cached[2], cached[3], cached[4] end
+  local ok, fallback = pcall(ReadTextureColor, texture)
+  if not ok or type(fallback) ~= "table" then return nil end
+  return fallback[1], fallback[2], fallback[3], fallback[4]
+end
+
+-- ---------------------------------------------------------------------------
+-- Icon identity
+--
+-- Icon paths are not portable between the APIs that hand them out here. Three
+-- forms of the same art are already measured on this client:
+--
+--   * behavior.json / auras.unitbuff_unitdebuff_contract_unverified --
+--     UnitDebuff returns a UAsset reference, forward slashes, with a prefix and
+--     a suffix: "/Game/Interface/Icons/Spell_Fire_Immolation_TEX".
+--   * api.json / actionbars.action_texture_1.v1 -- GetActionTexture returns
+--     neither: "Interface/Icons/INV_Staff_08".
+--   * This addon's own fallbacks, UnrealPfUI's filter tables and anything
+--     ported from Vanilla use backslashes: "Interface\Icons\INV_Staff_08".
+--
+-- Comparing any two of those as strings fails.
+--
+-- So no code compares two icon paths directly. Everything that has to decide
+-- "is this the same icon" folds both sides through here first: leaf name,
+-- lowercased, with the client's "_tex" suffix and any file extension removed.
+-- That is what makes modules/hots.lua able to match a spellbook texture from
+-- GetSpellTexture against a buff texture from UnitBuff without either side
+-- having to know which form the client used.
+-- ---------------------------------------------------------------------------
+function U.IconKey(texture)
+  if type(texture) ~= "string" or texture == "" then return nil end
+
+  local key = string.lower(texture)
+  -- Both separators, because the two forms above disagree about which one the
+  -- path uses and a mixed path is cheaper to handle than to rule out.
+  key = string.gsub(key, "^.*[\\/]", "")
+  key = string.gsub(key, "%.[a-z0-9]+$", "")
+  key = string.gsub(key, "_tex$", "")
+  if key == "" then return nil end
+  return key
+end
+
+-- ---------------------------------------------------------------------------
+-- Spell rank subtext -> number
+--
+-- knowledge.json / spellbook.spell_ranks_not_always_ascending_in_slot_order
+-- (USER_CONFIRMED_INGAME, BEHAVIOR_VERIFIED): the ranks of one spell are
+-- adjacent in this client's spellbook but are not reliably in ascending slot
+-- order -- a level-10 priest had Shadow Word: Pain listed Rank 2 then Rank 1
+-- while Smite in the same book ascended. Position therefore says nothing about
+-- which slot holds the highest rank, and anything that needs the answer has to
+-- compare the rank numbers themselves.
+--
+-- The number comes from GetSpellName's second return, the localized rank
+-- subtext. Reading the first run of digits out of it is locale-free, which is
+-- the point: "Rank 4" and every translation of it give 4, and a subtext that
+-- carries no number at all (a shapeshift form, a summon) gives nil rather than
+-- a wrong rank.
+--
+-- Central because two features now depend on it for different reasons:
+-- modules/spellbook.lua's highest-rank filter, and modules/castbar.lua's
+-- spellbook walk, whose rank feeds the rank-dependent durations in
+-- core/auradata.lua.
+-- ---------------------------------------------------------------------------
+function U.SpellRankNumber(subtext)
+  if type(subtext) ~= "string" or subtext == "" then return nil end
+  local _, _, digits = string.find(subtext, "(%d+)")
+  return tonumber(digits)
+end
+
+-- ---------------------------------------------------------------------------
+-- Region suppression
+--
+-- knowledge.json / rendering.native_texture_strip_requires_alpha: native
+-- texture regions can survive Hide(), SetTexture(nil) and Set*Texture("").
+-- knowledge.json / rendering.parent_alpha_not_propagated: a parent at alpha 0
+-- does not reliably hide its child regions.
+--
+-- So: clear, hide *and* zero the alpha, on the region itself.
+-- ---------------------------------------------------------------------------
+function U.HideRegion(region)
+  if not region then return false end
+  -- Called every frame from the tooltip updater: no closures here, they were
+  -- its garbage (knowledge.json / perf.pandaui_only_stutter).
+  if type(region) ~= "table" then return true end
+
+  if region.SetTexture then pcall(region.SetTexture, region, nil) end
+  if region.SetAlpha then pcall(region.SetAlpha, region, 0) end
+  if region.Hide then pcall(region.Hide, region) end
+  return true
+end
+
+-- ---------------------------------------------------------------------------
+-- Mouse click identity
+--
+-- knowledge.json / scripts.handler_arguments_direct: this client does not
+-- guarantee where a script handler's arguments land, and the Vanilla-era
+-- `arg1` global may or may not be populated. modules/rogue.lua established
+-- the working resolution order for an OnClick handler on this client -- first
+-- string argument, then the legacy global -- and modules/bagfavorites.lua now
+-- needs the identical answer, so it lives here rather than being copied.
+--
+-- Returns "LeftButton" / "RightButton" / ... or nil when the button cannot be
+-- identified, which every caller must treat as "do not claim this click".
+-- ---------------------------------------------------------------------------
+function U.ClickButtonName(a, b)
+  if type(a) == "string" then return a end
+  if type(b) == "string" then return b end
+  local legacy = U.G("arg1")
+  if type(legacy) == "string" then return legacy end
+  return nil
+end
+
+-- True while the cursor is already carrying an item or a spell. A click chord
+-- on an item button must not claim the click in that state: the client is
+-- about to drop what is on the cursor into the slot, and swallowing the click
+-- would strand it there.
+function U.CursorBusy()
+  local hasItem = U.G("CursorHasItem")
+  if type(hasItem) == "function" then
+    local ok, value = pcall(hasItem)
+    if ok and value then return true end
+  end
+
+  local hasSpell = U.G("CursorHasSpell")
+  if type(hasSpell) == "function" then
+    local ok, value = pcall(hasSpell)
+    if ok and value then return true end
+  end
+  return false
+end
+
+-- True while the player is typing in a chat edit box. Shift-click chords on
+-- item buttons must yield to it: a Shift-click with chat open is the client's
+-- item-link gesture and taking it over would break linking items into chat.
+function U.ChatEditBoxActive()
+  local edit = U.G("ChatFrameEditBox")
+  if not edit or type(edit.IsVisible) ~= "function" then return false end
+  local ok, visible = pcall(edit.IsVisible, edit)
+  return ok and visible and true or false
+end
+
+-- ---------------------------------------------------------------------------
+-- Tooltip line reading
+--
+-- knowledge.json / tooltip.right_line_text_survives_clearlines. behavior.json /
+-- tooltipread caught it in a capture: a unit tooltip reading "Froswald" /
+-- "Level 2 Human (Player)" with NumLines 2 still returned "Rank 1" on
+-- TextRight1 and "30 yd range" on TextRight2 -- the right-hand columns of a
+-- spell tooltip shown in the same frame earlier, alive inside the current line
+-- count while the left column had been rewritten.
+--
+-- documentation.json / GameTooltip:ClearLines says why: it "hides every left
+-- and right line (built-in and extra), clears left-line text". Left text only.
+-- A right-hand fontstring keeps whatever the previous tooltip wrote on it and
+-- is merely hidden, and AddLine fills a row's left column alone -- so inside
+-- the *current* NumLines a right region can still read back a string from a
+-- completely different tooltip.
+--
+-- That is not a cosmetic slip once anything scrapes those lines. The item
+-- comparison in modules/tooltip.lua read "30 yd range" off
+-- GameTooltipTextRight2 -- left there by the spell tooltip modules/actionbar.lua
+-- shows through the same shared frame -- and reported "+30 Yd Range" as a stat
+-- of a cloth robe (user report with screenshot, 2026-08-30).
+--
+-- So every tooltip line this addon reads back goes through here, and a region
+-- has to be shown before its text counts: ClearLines hides what it invalidates,
+-- which makes the shown flag the one reliable marker of a live line. Nothing
+-- else about the frame is trusted -- a hidden region is stale by definition,
+-- whatever it still holds. modules/spellbook.lua carries the same guard locally
+-- for its private action scanner, on the sequence verified there.
+-- ---------------------------------------------------------------------------
+
+-- The text one tooltip line region is currently drawing, or nil for a hidden,
+-- empty or unreadable one.
+function U.TooltipRegionText(region)
+  if not region or type(region.GetText) ~= "function" then return nil end
+
+  if type(region.IsShown) == "function" then
+    local shownOk, shown = pcall(region.IsShown, region)
+    if not shownOk or not shown then return nil end
+  end
+
+  local ok, text = pcall(region.GetText, region)
+  if not ok or type(text) ~= "string" or text == "" then return nil end
+  return text
+end
+
+-- The same reading addressed the way tooltip lines are named:
+-- U.TooltipLineText("GameTooltip", "Right", 2).
+function U.TooltipLineText(name, side, index)
+  if type(name) ~= "string" or name == "" then return nil end
+  if type(side) ~= "string" or side == "" then side = "Left" end
+
+  return U.TooltipRegionText(U.G(name .. "Text" .. side .. index))
+end
+
+-- ---------------------------------------------------------------------------
+-- Private scanner tooltips
+--
+-- Several modules read game text (item durability, action names, reagents,
+-- aura names, recipe stats) through a private GameTooltipTemplate frame armed
+-- with SetOwner(WorldFrame, "ANCHOR_NONE"). Since the client update of
+-- 2026-09-29 the client DRAWS such a frame: a Set* call shows it, and with no
+-- anchor point it sits at the exact centre of the screen with the template's
+-- tooltip backdrop, over the real tooltip (probe tooltipghost.v1: four
+-- scanners shown at alpha 1, rect centred on the screen, same rect in both
+-- walks). The one scanner that already hid itself after reading,
+-- modules/characterstats.lua, was absent from that capture.
+--
+-- So every scanner is created, armed and released here, and is hidden again
+-- on every exit path of a scan. Reads happen between the setter and the Hide,
+-- while the lines are still shown, so the shown/visible guards above and in
+-- modules/spellbook.lua keep working.
+-- ---------------------------------------------------------------------------
+
+function U.CreateScannerTooltip(name, parent)
+  local ok, tip = pcall(CreateFrame, "GameTooltip", name, parent,
+                        "GameTooltipTemplate")
+  if not ok or not tip then return nil end
+  pcall(tip.Hide, tip)
+  return tip
+end
+
+-- core/itemsort.lua's verified order: ClearLines, then SetOwner. A hidden
+-- tooltip has no owner, so this runs before every setter.
+function U.ArmScannerTooltip(tip)
+  if not tip then return end
+  pcall(tip.ClearLines, tip)
+  pcall(tip.SetOwner, tip, U.G("WorldFrame") or UIParent, "ANCHOR_NONE")
+end
+
+function U.ReleaseScannerTooltip(tip)
+  if tip then pcall(tip.Hide, tip) end
+end
+
+-- Arms `tip`, runs read(tip, a1, a2) and hides the tooltip whatever `read`
+-- returned or raised. Returns up to three results of `read`, or nil.
+function U.ScanWithTooltip(tip, read, a1, a2)
+  if not tip or type(read) ~= "function" then return nil end
+  U.ArmScannerTooltip(tip)
+  local ok, r1, r2, r3 = pcall(read, tip, a1, a2)
+  U.ReleaseScannerTooltip(tip)
+  if not ok then
+    U.Debug("tooltip scanner read failed: " .. tostring(r1))
+    return nil
+  end
+  return r1, r2, r3
+end
+
+-- ---------------------------------------------------------------------------
+-- Cursor and mouse input
+--
+-- Two readings that several surfaces need whenever they wrap a stock button's
+-- own click and drag handlers: whether the cursor is currently carrying
+-- something, and which mouse button a handler was entered with.
+--
+-- The cursor state is the only observable a wrapper shares with a native
+-- handler it cannot read, so it is what tells a fallback whether the stock
+-- script actually moved anything. CursorHasItem is documented for this client
+-- (OFFICIAL_CLIENT_DOCUMENTATION, Cursor) but is still resolved through U.G and
+-- pcall, like every other client call in this addon.
+--
+-- The button argument has no single shape here. A handler may be entered with
+-- the button string as its first argument, with the frame first and the string
+-- second, or with neither and only Vanilla's `arg1` global set. All three are
+-- checked in that order rather than assuming one calling convention.
+-- ---------------------------------------------------------------------------
+function U.CursorHasItem()
+  local fn = U.G("CursorHasItem")
+  if type(fn) ~= "function" then return false end
+
+  local ok, hasItem = pcall(fn)
+  return (ok and hasItem) and true or false
+end
+
+function U.MouseButton(a1, a2)
+  if type(a1) == "string" then return a1 end
+  if type(a2) == "string" then return a2 end
+  return U.G("arg1")
+end
+
+-- ---------------------------------------------------------------------------
+-- Container slots
+--
+-- GetContainerItemInfo on this client always returns five values, and an empty
+-- slot is *not* signalled by a nil texture: it returns the empty string, which
+-- is truthy in Lua. The client documentation says so outright -- "Icon path.
+-- Empty string if the slot is empty (still truthy in Lua)", with the explicit
+-- caller note that `if texture then` is true for "" and that callers needing
+-- "has an item" should check GetContainerItemLink or treat a missing texture
+-- path as empty. Empty slots also return count 0 and quality 0, so a
+-- `quality == 0` test alone reads an empty slot as a grey item.
+--
+-- Vanilla returns nil for an empty slot, so every ported `not texture` /
+-- `if texture then` test silently inverts here. This wrapper is the one place
+-- that difference is absorbed: it hands back the same five values with the
+-- texture normalised to nil when the slot is empty, so callers can use the
+-- Vanilla-shaped test they already read as correct.
+-- ---------------------------------------------------------------------------
+-- The main bank pane READS as container -1, on the container API, and only on
+-- it. Probe banksort.actual_sequence.v1 (2026-09-06) measured both addressings
+-- of the same occupied main-bank slots side by side at a live banker:
+--
+--   GetContainerItemLink(-1, 1)                 -> [Chunk of Boar Meat]
+--   GetInventoryItemLink("player", 40)          -> nil
+--   GetContainerItemInfo(-1, 17)                -> texture, 0, locked, quality
+--   GetInventoryItemTexture("player", 56)       -> the item's texture
+--   GetInventoryItemCount("player", 56)         -> 0
+--
+-- So the inventory addressing answers for the texture and for nothing else,
+-- and an earlier inventory-first reader here was strictly worse than the
+-- container read it displaced: it reported `locked` false for a slot the
+-- container API showed locked mid-pickup, and quality nil for every main-bank
+-- item, which is the lock the sort waits on and the quality border the bank
+-- window draws. It also did not fix the bank sort, because the sort was never
+-- reading the pane wrong -- see the write routing further down.
+--
+-- Both readers below are therefore plain container reads for every bag. The
+-- one place the main pane still differs is the WRITE route and its size.
+local BANK_CONTAINER     = -1
+local BANK_GENERIC_SLOTS = 24   -- NUM_BANKGENERIC_SLOTS in Vanilla FrameXML
+
+local function BankInventorySlot(slot)
+  local ok, inventorySlot = pcall(BankButtonIDToInvSlotID, slot)
+  return (ok and tonumber(inventorySlot)) or nil
+end
+
+-- Item quality for one container slot.
+--
+-- GetContainerItemInfo's fourth value is not trustworthy on its own: an item
+-- whose data is not in the local item cache reads as an ordinary (white) item
+-- until something queries it, and hovering the slot is exactly such a query --
+-- the grey item "switches from white to grey" on hover (user report,
+-- 2026-10-16), and a `quality == 0` grey sweep misses it until then. Sources,
+-- in order of authority:
+--   1. GetItemInfo(item string) quality: documented to return nothing for an
+--      uncached item, so a number here is the real index. A full hyperlink
+--      returns nothing on this client (items.getiteminfo_rejects_full_hyperlink).
+--   2. The colour code opening the item link (|cff9d9d9d ...), which the client
+--      writes from the item's quality and which needs no GetItemInfo row.
+--   3. The raw GetContainerItemInfo value.
+-- Only answers from 1 are remembered per link; a fallback is re-resolved on the
+-- next refresh so the slot corrects itself once the item is cached.
+local LINK_COLOR_QUALITY = {
+  ["9d9d9d"] = 0, ["ffffff"] = 1, ["1eff00"] = 2, ["0070dd"] = 3,
+  ["a335ee"] = 4, ["ff8000"] = 5, ["e6cc80"] = 6,
+}
+local cachedLinkQuality = {}
+
+local function ResolveLinkQuality(link)
+  local cached = cachedLinkQuality[link]
+  if cached then return cached, true end
+
+  local ok, _, _, quality = pcall(GetItemInfo, U.ItemInfoKey(link))
+  quality = ok and tonumber(quality) or nil
+  if not quality then
+    local _, _, id = string.find(link, "item:(%d+)")
+    if id then
+      ok, _, _, quality = pcall(GetItemInfo, "item:" .. id)
+      quality = ok and tonumber(quality) or nil
+    end
+  end
+  if quality and quality >= 0 then
+    cachedLinkQuality[link] = quality
+    return quality, true
+  end
+
+  local _, _, hex = string.find(link, "|[cC][fF][fF](%x%x%x%x%x%x)")
+  if hex then return LINK_COLOR_QUALITY[string.lower(hex)], false end
+  return nil, false
+end
+
+function U.ContainerSlotInfo(bag, slot)
+  local ok, texture, count, locked, quality, readable =
+    pcall(GetContainerItemInfo, bag, slot)
+  if not ok then return nil end
+
+  if texture == "" or texture == 0 then
+    texture = nil
+  else
+    local linkOk, link = pcall(GetContainerItemLink, bag, slot)
+    if linkOk and type(link) == "string" and link ~= "" then
+      local resolved = ResolveLinkQuality(link)
+      if resolved then quality = resolved end
+    end
+  end
+  return texture, count, locked, quality, readable
+end
+
+-- An item hyperlink for one slot. Returns nil for an empty or unreadable slot
+-- rather than an empty string, so callers can use it as the "is there an item
+-- here" test as well.
+function U.ContainerSlotLink(bag, slot)
+  local ok, link = pcall(GetContainerItemLink, bag, slot)
+  if not ok or type(link) ~= "string" or link == "" then return nil end
+  return link
+end
+
+-- True only when the slot holds an item. The texture reading above is the
+-- primary test; the link is the fallback the same documentation recommends,
+-- used when the info call itself failed.
+function U.ContainerSlotHasItem(bag, slot)
+  local texture = U.ContainerSlotInfo(bag, slot)
+  if texture then return true end
+
+  return U.ContainerSlotLink(bag, slot) ~= nil
+end
+
+-- ---------------------------------------------------------------------------
+-- Bank-aware container addressing
+--
+-- The main bank pane (container -1) can be *read* through the container API,
+-- but it cannot be written through it and it does not report its own size.
+-- Two PandaUI features need both facts -- the bank window's cross-surface
+-- drops (modules/bank.lua) and the sort engine (core/itemsort.lua) -- so the
+-- difference is absorbed here once instead of in each of them.
+--
+-- Evidence, behavior.json / bankmove (probe 1.40.1, run at a live banker):
+--
+--   * route_A.container_to_container.v1 is RUNTIME_FAILURE_CONFIRMED.
+--     PickupContainerItem(-1, slot) does not drop into the main pane, and the
+--     client answers "You can only do that with empty bags."
+--   * route_B.container_to_inventory.v1 is BEHAVIOR_VERIFIED.
+--     PickupInventoryItem(BankButtonIDToInvSlotID(slot)) does. That route's
+--     restore steps then lifted the item back out of the main pane with
+--     PickupInventoryItem and dropped it into a purchased bank bag with
+--     PickupContainerItem.
+--   * participants.v1 recorded bankContainerReportedSize = 0 while the pane
+--     held 24 usable slots, which is why the count below falls back to the
+--     stock constant instead of trusting a zero.
+--
+-- That is a CROSS-SURFACE result, and it was read here as though it covered
+-- every direction a swap needs. It does not. Probe
+-- banksort.actual_sequence.v1 (2026-09-06) watched the sort engine drive this
+-- very function and caught the transition bankmove never ran: main pane to
+-- main pane, inventory route on both ends. The lift worked -- cursor filled,
+-- source slot locked -- and the drop was refused with "The item was not
+-- found.", the cursor emptied and the item went back where it came from. Ten
+-- calls, five refusals, no item ever moved.
+--
+-- Probe bankinv v1 and v2 then measured the whole matrix at a live banker, and
+-- the answer is not a routing detail: NO call pair moves an item from one
+-- main-bank slot to another on this client. See U.ContainerSlotsCanExchange
+-- below for the four refused routes and the four working ones.
+--
+-- BankButtonIDToInvSlotID's own mapping is separately confirmed: probe
+-- bankbagicon.mapping.v1 (1.41.0) measured inputs 1..10 landing on inventory
+-- slots 40..49 on this client, and banksort.actual_sequence.v1 measured main
+-- slots 1 and 17 landing on 40 and 56.
+-- ---------------------------------------------------------------------------
+-- Usable slots in a container. Identical to GetContainerNumSlots except for
+-- the main bank pane, which reports nothing while it is plainly usable. A
+-- bank *bag* reporting nothing really is absent, so only -1 gets a fallback.
+-- The item id inside an item link, or nil for anything that is not one. The
+-- id is the only stable identity an item has across bags, slots and sessions,
+-- so several features key on it; this is the one parser.
+function U.ItemLinkId(link)
+  if type(link) ~= "string" then return nil end
+  local _, _, id = string.find(link, "item:(%d+)")
+  return tonumber(id)
+end
+
+-- The argument to hand GetItemInfo for an item link. On this client a full
+-- hyperlink returns no values while the item string inside it ("item:id:...")
+-- returns the whole tuple (knowledge.json /
+-- items.getiteminfo_rejects_full_hyperlink, probe itemcompare.v1). An id, an
+-- item string or anything that is not a link passes through unchanged.
+function U.ItemInfoKey(link)
+  if type(link) ~= "string" then return link end
+  local _, _, itemString = string.find(link, "(item:[%-%d:]+)")
+  return itemString or link
+end
+
+function U.ContainerSlotCount(bag)
+  local ok, count = pcall(GetContainerNumSlots, bag)
+  count = (ok and tonumber(count)) or 0
+  if count > 0 then return count end
+
+  if bag == BANK_CONTAINER then
+    local stock = tonumber(U.G("NUM_BANKGENERIC_SLOTS"))
+    if stock and stock > 0 then return stock end
+    return BANK_GENERIC_SLOTS
+  end
+
+  return 0
+end
+
+-- Pick up from, or drop the cursor into, one container slot: the same
+-- semantics as PickupContainerItem everywhere except the main bank pane,
+-- which is routed through the inventory API instead.
+--
+-- The return value says only whether the call could be *made*. This client
+-- refuses container moves silently often enough that a caller must always
+-- verify the outcome against the container rather than trust a true here.
+function U.PickupContainerSlot(bag, slot)
+  if bag == BANK_CONTAINER then
+    local inventorySlot = BankInventorySlot(slot)
+    if not inventorySlot then return false end
+    return pcall(PickupInventoryItem, inventorySlot) and true or false
+  end
+
+  return pcall(PickupContainerItem, bag, slot) and true or false
+end
+
+-- Will this client carry an item directly from one of these containers to the
+-- other? Everything answers true except one pair: the main bank pane cannot
+-- exchange with itself.
+--
+-- Probe bankinv (v1 and v2, 2026-09-06, at a live banker) measured every
+-- combination of lift and drop call across both bank surfaces. Each route was
+-- read twice, half a second apart, and scored on the late read, because v1
+-- scored a route BROKEN off a single early read that a later snapshot showed
+-- had in fact landed.
+--
+-- Working, all BEHAVIOR_VERIFIED:
+--
+--   bank bag  -> main pane   PickupContainerItem then PickupInventoryItem
+--                            (v2 R4/S5; v1 R4 swapped an OCCUPIED main slot
+--                            two ways, so occupancy is not a limit)
+--   main pane -> bank bag    PickupInventoryItem then PickupContainerItem
+--                            (v1 R5), and PickupContainerItem on BOTH ends
+--                            (v2 S3 -- the main pane lifts as container -1
+--                            even though it refuses to be dropped into)
+--   bank bag  -> bank bag    PickupContainerItem both ends (v2 R6)
+--
+-- Refused, all RUNTIME_FAILURE_CONFIRMED, main pane to main pane:
+--
+--   inventory lift -> inventory drop, empty destination      (v2 R1, v1 R1)
+--   inventory lift -> inventory drop, occupied destination    (v2 R2, v1 R2)
+--   container lift -> inventory drop, occupied destination    (v2 S1)
+--   container lift -> inventory drop, empty destination       (v2 S2)
+--
+-- all four with "The item was not found.", and a container drop into the pane
+-- is separately refused with "You can only do that with empty bags."
+-- (v2 S3's restore step, confirming bankmove route_A). The lift always
+-- succeeds -- the cursor fills and the source slot locks -- so a caller that
+-- checks only the lift sees a move that never happened. That is exactly how
+-- the bank sort came to issue the same refused swap five times in a row.
+--
+-- Neither occupancy nor same-frame issuing is involved: v1 R4 swapped an
+-- occupied slot cleanly, and v1 R6 moved in a single frame.
+--
+-- Callers that need such a move must route it through a free slot in a
+-- container that can exchange with both ends -- core/itemsort.lua does.
+function U.ContainerSlotsCanExchange(fromBag, toBag)
+  if fromBag == BANK_CONTAINER and toBag == BANK_CONTAINER then
+    return false
+  end
+  return true
+end
+
+-- ---------------------------------------------------------------------------
+-- Unit-object availability
+--
+-- Shared by party auras and frame colours. UnitExists stays true for distant
+-- group members; UnitIsVisible reports whether their world object is loaded.
+-- This is the existing aura guard (auras.party_out_of_range_duplicate_slots),
+-- not a spell-range or line-of-sight test. An absent/failing API stays unknown
+-- so callers do not hide or grey every party member on an unreadable check.
+-- ---------------------------------------------------------------------------
+function U.UnitObjectVisible(unit)
+  local fn = U.G("UnitIsVisible")
+  if type(fn) ~= "function" then return nil end
+  local ok, value = pcall(fn, unit)
+  if not ok then return nil end
+  return (value and value ~= 0) and true or false
+end
+
+-- ---------------------------------------------------------------------------
+-- Melee range
+--
+-- knowledge.json / range.no_melee_autoattack_range_api: this client exposes no
+-- API that measures melee auto-attack range. IsActionInRange always returns 1
+-- for melee Auto Attack and never measures distance, and CheckInteractDistance
+-- collapses every distIndex below 4 into one interact range while any index of
+-- 4 or more simply returns false, so the index below only satisfies the
+-- documented signature. The range it reports is a little wider than melee
+-- reach, which is the accepted approximation for both callers: the swing bar
+-- shows a melee lane slightly before the first swing can land, and auto attack
+-- engages slightly before the player is strictly in weapon range.
+--
+-- Returns true or false when the client answers and nil when the call is
+-- unreadable, so each caller picks how to degrade instead of inheriting a
+-- guess made here.
+-- ---------------------------------------------------------------------------
+local INTERACT_DISTANCE_INDEX = 1
+
+function U.MeleeInteractRange(unit)
+  local fn = U.G("CheckInteractDistance")
+  if type(fn) ~= "function" then return nil end
+
+  local ok, result = pcall(fn, unit or "target", INTERACT_DISTANCE_INDEX)
+  if not ok then return nil end
+  if result == nil or result == false or result == 0 or result == "" then
+    return false
+  end
+  return true
+end
+
+-- ---------------------------------------------------------------------------
+-- Native frame suppression
+--
+-- knowledge.json / rendering.native_frame_hide_not_persistent: Hide() plus
+-- UnregisterAllEvents() does not keep a natively driven stock frame down. This
+-- client re-shows TargetFrame the moment a target is acquired, and draws named
+-- child regions independently of their parent. The record's failed approaches
+-- are Hide() on the root only, Hide() plus UnregisterAllEvents() on the root
+-- only, and assuming a hidden parent hides its native children.
+--
+-- The recipe that does hold: neutralise Show(), hide, zero the alpha as a
+-- renderer-independent guard (rendering.parent_alpha_not_propagated), drop
+-- mouse input, name the child regions explicitly, and re-apply when the client
+-- brings something back. One shared watcher serves every caller, so registering
+-- more frames never adds another update.
+--
+-- UnregisterAllEvents is not part of that recipe at any level, and is not
+-- merely redundant: repeated on a live native frame it is the measured cause of
+-- the party-only freeze (knowledge.json /
+-- compat.unregisterallevents_native_frame_stall). It never held a frame down
+-- either, per the failed approaches above, so it bought nothing for its cost.
+--
+-- Show() is replaced only on frames a module explicitly names, and only once
+-- per object. Nothing here installs a global or removes a client function
+-- pandaUI was not asked to suppress.
+-- ---------------------------------------------------------------------------
+local suppressedSeen = {}
+local suppressedNames = {}
+-- group -> array of names. The full list above still drives the periodic sweep
+-- and the count readout; the groups exist so an event that can only resurrect
+-- one family of frames does not have to walk all of them. See the sweep-cost
+-- note below.
+local suppressedGroups = {}
+local suppressionArmed = false
+local suppressionCursor = 1
+local SUPPRESSION_BATCH_SIZE = 60
+-- Assigned once the sweep is armed at the bottom of U.SuppressNativeFrame. It
+-- is a forward local because it is built from GroupSweeper, which is defined
+-- further down, while the target-state watcher above needs to be able to run
+-- it.
+local targetSweep
+
+-- knowledge.json / compat.native_suppression_pcall_burst_stutter: this sweep
+-- used to resolve every name through U.G (its own pcall) and then run the full
+-- ~5-pcall teardown on every object, every second, unconditionally. With unit
+-- frames registering around 330 names (TargetFrame's buff/debuff series alone
+-- is over 300 sub-region names), that was a synchronous burst of roughly 2000
+-- pcalls once a second -- reported in game as periodic stuttering that started
+-- with the unit frame feature. Two independent fixes below remove it:
+-- memoizing the name -> object resolution, and skipping the teardown entirely
+-- once an object is confirmed already hidden.
+--
+-- Second round, same record: the sweep was still bound to
+-- PLAYER_TARGET_CHANGED as a whole-list re-apply, so changing target walked
+-- every registered name -- around 1150 once action bars (809) joined unit
+-- frames (340) and bags (5) -- in the same frame the target changed, and did
+-- it on top of whatever the one-second sweep had just done. Target change is
+-- also the worst case for the fast path: it is exactly when this client brings
+-- TargetFrame and its children back, so those ~120 objects fail the IsShown
+-- check and take the full teardown. Reported in game as a micro freeze on
+-- target change. Two more fixes: bucket the names by group so an event sweeps
+-- only what it can actually resurrect, and hoist every per-object pcall body
+-- out of an anonymous closure so a sweep stops allocating one closure per
+-- object. The pcall boundaries themselves are unchanged -- each step still
+-- fails independently.
+local resolvedNative = {}   -- name -> object | false
+local suppressedObjects = {} -- object -> true; avoids a protected field read
+-- Target widgets are owned by native code on this client. Two sustained target
+-- storms ended at the 2,162,688-UObject ceiling after the client had fallen to
+-- 1 fps. Preserving this family's event/Show lifecycle while only making its
+-- named visuals transparent removed the freeze under the same Tab-spam test,
+-- USER_CONFIRMED_INGAME. The exact native UObject creator is not exposed to
+-- Lua, so retain the lifecycle-preserving recipe; see KillNativeObject.
+local visualOnlyNames = {}
+local visualOnlyKinds = {}
+local visualObjectEpoch = {}
+local targetVisualEpoch = 0
+-- The one suppressed family whose content the client rewrites *between* target
+-- changes: the stock frame's own buff/debuff icon block. Everything else in the
+-- visual-only set is written when the target is acquired and then left alone,
+-- which is why one clear per target epoch is enough for it. An aura block is
+-- re-laid-out every time the unit's auras change -- casting Rend on the target
+-- you already have re-issues an icon path into a slot this adapter had already
+-- cleared -- and the epoch stamp then says "already current" and refuses to
+-- clear it again for the rest of that target.
+--
+-- These names therefore verify the content instead of trusting the stamp, and
+-- get their own UNIT_AURA-driven sweep so the re-clear lands on the event that
+-- caused the rewrite rather than waiting for the periodic batch.
+local volatileNames = {}
+local volatileList = {}
+-- volatileNames now covers more than the aura block, so it can no longer double
+-- as the "already in volatileList" guard.
+local volatileListSeen = {}
+-- TargetLevelText is rewritten a few render ticks after the target event on
+-- this client. Retry only this text for a short bounded window; keeping the
+-- target frame lifecycle intact remains mandatory for the confirmed Tab-spam
+-- stability fix.
+--
+-- The name matters: this retry used to resolve "TargetFrameLevel", which does
+-- not exist on this client and therefore made the whole loop a no-op, which is
+-- why the yellow level survived every pass. A full 29,520-entry global
+-- enumeration (UnrealRuntimeProbe capture, 2026-08-16) has TargetLevelText and
+-- TargetName but no TargetFrameLevel/TargetFrameName -- this client keeps
+-- Vanilla's Target* naming for those two, while the bars really are
+-- TargetFrameHealthBar/TargetFrameManaBar.
+local TARGET_LEVEL_RETRY_PASSES = 12
+local targetLevelRetryPasses = 0
+
+-- Hoisted pcall bodies. These were anonymous closures built fresh for every
+-- object on every sweep; as named upvalues they allocate nothing and keep the
+-- one-pcall-per-step failure isolation the closures had.
+local function NoOpShow() return end
+
+local function NeutraliseShow(object)
+  if object.Show then object.Show = NoOpShow end
+end
+-- There is deliberately no DropNativeEvents helper here. UnregisterAllEvents on
+-- a live native frame is the measured cause of the party freeze; see the note
+-- in KillNativeObject below before adding one back.
+local function HideObject(object)
+  if object.Hide then object:Hide() end
+end
+local function ZeroAlpha(object)
+  if object.SetAlpha then object:SetAlpha(0) end
+end
+local function DropMouse(object)
+  if object.EnableMouse then object:EnableMouse(false) end
+end
+local function ClearBarPart(part)
+  if not part then return end
+  -- The native renderer can ignore both widget alpha and its assigned texture,
+  -- but it still lays the green fill out from the StatusBar value. Zero that
+  -- first, then clear every visual representation the bridge exposes.
+  if part.SetValue then part:SetValue(0) end
+  if part.SetStatusBarTexture then part:SetStatusBarTexture(nil) end
+  if part.SetStatusBarColor then part:SetStatusBarColor(0, 0, 0, 0) end
+  if part.SetTexture then part:SetTexture(nil) end
+  if part.SetTexCoord then part:SetTexCoord(0, 0, 0, 0) end
+  if part.SetAlpha then part:SetAlpha(0) end
+end
+
+local function ClearBarVisual(object)
+  ClearBarPart(object)
+
+  -- This client may expose the rendered fill as either a region or a child
+  -- widget, depending on which native TargetFrame object the global resolves
+  -- to. Cover both shapes, bounded to this one known bar and one child level.
+  local regions = object.GetRegions and { object:GetRegions() } or {}
+  local children = object.GetChildren and { object:GetChildren() } or {}
+  local i
+  for i = 1, table.getn(regions) do ClearBarPart(regions[i]) end
+  for i = 1, table.getn(children) do
+    local child = children[i]
+    ClearBarPart(child)
+    local childRegions = child and child.GetRegions and
+                         { child:GetRegions() } or {}
+    local j
+    for j = 1, table.getn(childRegions) do ClearBarPart(childRegions[j]) end
+  end
+end
+local function ClearTextureVisual(object)
+  if object.SetTexture then object:SetTexture(nil) end
+end
+local function ClearTextVisual(object)
+  if object.SetText then object:SetText("") end
+end
+
+-- The steady-state readback. This used to be `pcall(object.IsShown, object)`,
+-- which *throws* for any object that has no IsShown method: the index yields
+-- nil and pcall then calls it, so the sweep built and discarded an error string
+-- for exactly the objects it could never fast-path anyway -- once per object,
+-- on every pass, forever. Reading the method inside the guarded body makes the
+-- absent case a plain nil test.
+--
+-- shownKnown separates "the client says it is hidden" from "this object cannot
+-- answer". Only the first may skip the teardown; an object that cannot answer
+-- keeps taking the full re-apply exactly as it did before.
+local shownKnown, shownAnswer
+local alphaKnown, alphaAnswer
+local contentKnown, contentAnswer
+
+-- Texture:GetTexture is BEHAVIOR_VERIFIED on this client (behavior.json /
+-- textures.pfui_bar_path.v1 read a path straight back off a texture) and is
+-- documented to answer nil when nothing is bound, so an empty answer is a
+-- cleared slot. Same shape as ReadShown: contentKnown separates "the client
+-- says it is empty" from "this object cannot answer", and only the first may
+-- skip the re-clear.
+local function ReadTextureContent(object)
+  local fn = object.GetTexture
+  if not fn then return end
+  local value = fn(object)
+  contentAnswer = (value == nil or value == "")
+  contentKnown = true
+end
+
+local function ReadTextContent(object)
+  local fn = object.GetText
+  if not fn then return end
+  local value = fn(object)
+  contentAnswer = (value == nil or value == "")
+  contentKnown = true
+end
+
+local function ReadShown(object)
+  local fn = object.IsShown
+  if not fn then return end
+  shownAnswer = fn(object) and true or false
+  shownKnown = true
+end
+
+local function ReadAlpha(object)
+  local fn = object.GetAlpha
+  if not fn then return end
+  alphaAnswer = tonumber(fn(object))
+  alphaKnown = alphaAnswer ~= nil
+end
+
+local function ResolveNativeObject(name)
+  local cached = resolvedNative[name]
+  if cached ~= nil then
+    if cached == false then return nil end
+    return cached
+  end
+
+  local object = U.G(name)
+  resolvedNative[name] = object or false
+  return object
+end
+
+-- Work counters. Two integer adds per object, always on: without an intra-frame
+-- profiler (documentation.json / global:Helpers:debugprofilestop is a no-op
+-- here) the only way to attribute the target-change cost is to count the work
+-- rather than time it. statTornDown is the decisive number -- it says how many
+-- objects the client actually brought back and therefore took the full
+-- ~4-native-call teardown, as opposed to being confirmed already hidden.
+local statVisited, statTornDown = 0, 0
+local lastTargetVisited, lastTargetTornDown = 0, 0
+-- How many times an already-suppressed aura slot had to be cleared again
+-- because the client had written a stock icon back into it. Zero means either
+-- the client never rewrites these (and the volatile path costs nothing) or the
+-- readback cannot see the rewrite; anything above zero is the Rend/Hamstring
+-- case being caught. Reported by /pui debug.
+local statAuraRecleared = 0
+-- ---------------------------------------------------------------------------
+-- Startup application
+--
+-- Unreal Azeroth delayed this recipe until a 3-20 second frame-time settle
+-- gate. That timing workaround was copied into the port, but has no OctoWoW
+-- evidence; the Octo pfUI reference suppresses its stock target frame directly
+-- during module setup. PandaUI keeps the safer visual-only target recipe below,
+-- while core/init.lua applies the complete registered list after OnEnable.
+-- ---------------------------------------------------------------------------
+
+-- 0..4; see core/config.lua's suppressLevel. Read once per call rather than
+-- cached, so /pui suppress takes effect on the next sweep without a reload for
+-- the levels that can be lowered live.
+local function SuppressLevel()
+  if U.db and U.db.noSuppress then return 0 end
+  local level = U.db and tonumber(U.db.suppressLevel)
+  if not level then level = 4 end
+  if level < 0 then level = 0 end
+  if level > 4 then level = 4 end
+  return level
+end
+
+-- Set for the duration of one deliberate re-apply. The steady-state fast path
+-- below skips any object already confirmed hidden, which is right in normal
+-- operation but wrong when the recipe itself has just changed: an object hidden
+-- at level 1 would never receive level 2's SetAlpha(0).
+local forceFullApply = false
+
+-- "Is this object's visible content still the empty thing the adapter left
+-- behind?" A per-target-epoch stamp answers that for every family the client
+-- writes once per target. It is wrong for the aura block (see volatileNames),
+-- which is re-laid-out on every aura change, so those objects are asked
+-- directly. An object that cannot answer falls back to re-clearing, which is
+-- correct-but-repeated work rather than a stale icon left on screen.
+local function ContentCleared(object, visualKind, volatile)
+  if not visualKind then return true end
+  if not volatile then
+    return visualObjectEpoch[object] == targetVisualEpoch
+  end
+
+  contentKnown, contentAnswer = false, false
+  if visualKind == "texture" then
+    pcall(ReadTextureContent, object)
+  elseif visualKind == "text" then
+    pcall(ReadTextContent, object)
+  else
+    -- "bar" keeps the stamp: ClearBarVisual walks regions and children, so
+    -- there is no single cheap readback for it, and no bar is in the aura set.
+    return visualObjectEpoch[object] == targetVisualEpoch
+  end
+  return contentKnown and contentAnswer
+end
+
+local function KillNativeObject(object, visualOnly, visualKind, volatile, level)
+  if not object then return end
+
+  level = level or SuppressLevel()
+  if level <= 0 then return end
+
+  statVisited = statVisited + 1
+
+  local alreadyMarked = suppressedObjects[object] and true or false
+  if forceFullApply then alreadyMarked = false end
+
+  -- The target family keeps its native lifecycle intact: it is never hidden,
+  -- its Show is left alone, and only its visible content is cleared. Replacing
+  -- Show() and repeatedly hiding this family was the difference between the
+  -- reproducible 1-fps collapse and a user-confirmed stable run; the native
+  -- mechanism behind that difference remains opaque to Lua. (Event stripping
+  -- was the third part of that original finding and is now gone from every
+  -- path, visual-only or not -- see KillNativeObject's note below.)
+  -- Alpha is applied to every named child because this client does not
+  -- propagate parent alpha. Mouse input is dropped once, but the widget stays
+  -- shown and subscribed so native code can recycle it normally. Some native
+  -- StatusBar/FontString/Texture renderers ignore UIObject alpha, so their
+  -- content is cleared without touching lifecycle -- once per target-change
+  -- epoch for the families the client only writes on target acquisition, and
+  -- whenever the readback says it came back for the aura slots, which it
+  -- rewrites inside a target (see ContentCleared and volatileNames).
+  if visualOnly then
+    if alreadyMarked then
+      alphaKnown, alphaAnswer = false, nil
+      pcall(ReadAlpha, object)
+      -- The content check is second on purpose: for a volatile object it is a
+      -- real readback, and an object the client has already re-alpha'd needs
+      -- the full re-apply regardless of what its content says.
+      if alphaKnown and alphaAnswer == 0 and
+         ContentCleared(object, visualKind, volatile) then
+        return
+      end
+    end
+
+    statTornDown = statTornDown + 1
+    if volatile and alreadyMarked then
+      statAuraRecleared = statAuraRecleared + 1
+    end
+    suppressedObjects[object] = true
+    pcall(ZeroAlpha, object)
+    if not alreadyMarked then pcall(DropMouse, object) end
+    if visualKind == "bar" then
+      pcall(ClearBarVisual, object)
+    elseif visualKind == "texture" then
+      pcall(ClearTextureVisual, object)
+    elseif visualKind == "text" then
+      pcall(ClearTextVisual, object)
+    end
+    if visualKind then visualObjectEpoch[object] = targetVisualEpoch end
+    return
+  end
+
+  -- Steady-state fast path: once an object is marked, the common case on every
+  -- later pass is that it is still exactly where this adapter left it. A
+  -- single IsShown readback confirms that and skips the rest of the teardown;
+  -- the full pcall sequence only runs again for an object the client actually
+  -- brought back, which is the one case this adapter exists to catch.
+  if alreadyMarked then
+    shownKnown, shownAnswer = false, false
+    pcall(ReadShown, object)
+    if shownKnown and not shownAnswer then return end
+  end
+
+  statTornDown = statTornDown + 1
+
+  -- No UnregisterAllEvents here, at any level. See
+  -- knowledge.json / compat.unregisterallevents_native_frame_stall: stripping a
+  -- live native frame's event registrations is what the party-only freeze
+  -- actually was, and it is measured rather than reasoned. Two runs by the same
+  -- reporter, same party, same zone, ~175s each, vsync-locked at 60fps:
+  --
+  --   level 4 (this call present) : 22.8s of stall above the 60fps floor
+  --                                 (12.9% of wall time), worst frame >=1000ms,
+  --                                 worst target-change frame 489ms
+  --   level 3 (this call absent)  : 6.5s of stall (3.7%), worst frame 52.8ms
+  --                                 (and that one is the post-reload settle),
+  --                                 worst target-change frame 19.3ms
+  --
+  -- The decisive part is that the teardown *volume* barely moved between them:
+  -- 10485 -> 9157 objects, -11%, while the stall fell 72%. Everything else in
+  -- this recipe -- Hide, SetAlpha(0), EnableMouse(false), the Show neutraliser
+  -- -- ran at nearly the same rate in the good run. So the cost is not how many
+  -- objects are visited, it is this one call: ~59/s at roughly 1.5-4ms each.
+  --
+  -- It is also not needed. The level 3 run covered ~3 minutes of active play,
+  -- 40 target changes and 215 PARTY_MEMBERS_CHANGED, and the reporter confirmed
+  -- no stock frame ever became visible. NeutraliseShow below already stops a
+  -- Lua-driven re-show, and the bounded periodic batch re-hides anything that
+  -- slips past within about a second.
+  --
+  -- Deliberately deleted rather than moved inside the `alreadyMarked` guard
+  -- below: once-per-object still means ~400-500 of these inside the load batch
+  -- at several ms each, which trades a steady drip for a burst of ~90ms hitches
+  -- right after login. The operation has no home in this recipe.
+
+  -- Wrapping an already-replaced Show would nest the no-op inside itself on
+  -- every re-apply pass, so the swap happens once and is then remembered.
+  -- One shared no-op serves every object: nothing compares these by identity.
+  if not alreadyMarked then
+    if level >= 3 then pcall(NeutraliseShow, object) end
+    suppressedObjects[object] = true
+  end
+
+  pcall(HideObject, object)
+  if level >= 2 then pcall(ZeroAlpha, object) end
+  if level >= 3 then pcall(DropMouse, object) end
+end
+
+local function SweepNames(names)
+  if not names then return end
+  local level = SuppressLevel()
+  if level <= 0 then return end
+  local i
+  for i = 1, table.getn(names) do
+    local name = names[i]
+    KillNativeObject(ResolveNativeObject(name), visualOnlyNames[name],
+                     visualOnlyKinds[name], volatileNames[name], level)
+  end
+end
+
+local function ApplyNativeSuppression()
+  SweepNames(suppressedNames)
+end
+
+-- ---------------------------------------------------------------------------
+-- Target rewrites the epoch cannot see
+--
+-- targetVisualEpoch used to advance on PLAYER_TARGET_CHANGED and nothing else,
+-- and events.json records that event as observed but only PARTIALLY tested
+-- here. Anything that redraws the stock target frame without one -- a missed
+-- event, a corpse the client drops the target on, or simply the target dying,
+-- which this client answers with TargetFrame_CheckDead -- left every
+-- stamp-verified name in the group frozen at "already cleared" for the rest of
+-- that target. What that looks like in game is a stock target frame that comes
+-- back over a dead mob and that no later target replaces.
+--
+-- The two facts that mean the client has something different to draw there are
+-- who the target is and whether it is dead, and both are one API call. Polling
+-- them on the batch tick advances the epoch from observed state as well as
+-- from the event. Two same-named mobs are not distinguished by this: that case
+-- still needs the event, so this is a backstop for it rather than a
+-- replacement.
+-- ---------------------------------------------------------------------------
+local lastTargetKey
+local targetApiCache = {}
+local targetStateCache = {}
+
+local function TargetApiValue(name)
+  local fn = targetApiCache[name]
+  if fn == nil then
+    fn = U.G(name)
+    if type(fn) ~= "function" then fn = false end
+    targetApiCache[name] = fn
+  end
+  if fn == false then return nil end
+  local ok, value = pcall(fn, "target")
+  if not ok then return nil end
+  return value
+end
+
+-- Vanilla's boolean-ish APIs answer 1 or nil, which is not guaranteed here, so
+-- this reads the same way modules/unitframes.lua's ApiTruth does.
+local function TargetFlag(value)
+  if value == nil or value == false or value == 0 or value == "" then
+    return "0"
+  end
+  return "1"
+end
+
+local function TargetStateKey()
+  local name = TargetApiValue("UnitName")
+  if type(name) ~= "string" then name = "" end
+  local exists = TargetFlag(TargetApiValue("UnitExists"))
+  local dead = TargetFlag(TargetApiValue("UnitIsDead"))
+  if targetStateCache.exists == exists and targetStateCache.dead == dead and
+     targetStateCache.name == name then
+    return targetStateCache.key
+  end
+  targetStateCache.exists, targetStateCache.dead, targetStateCache.name =
+    exists, dead, name
+  targetStateCache.key = exists .. dead .. name
+  return targetStateCache.key
+end
+
+-- round 3: the target sweep used to run inline, in the same frame
+-- PLAYER_TARGET_CHANGED fires in. That is also the frame this client re-shows
+-- TargetFrame in -- the whole reason the sweep exists -- so the ~122 objects
+-- that fail the IsShown fast path and take the full teardown were doing it
+-- stacked on top of the client's own target-acquisition work. U.DeferOnce
+-- moves it one driver tick later instead, and a second target change before it
+-- runs replaces the pending sweep rather than queuing both, which is the right
+-- outcome for the fast-tabbing case.
+local function TargetSweepBracketed()
+  if not targetSweep then return end
+  -- Bracket the sweep so the counters describe one target-change sweep
+  -- specifically, separated from the 0.05s periodic batch that is also
+  -- incrementing the same totals.
+  local visited, torn = statVisited, statTornDown
+  targetSweep()
+  lastTargetVisited = statVisited - visited
+  lastTargetTornDown = statTornDown - torn
+end
+
+local function BumpTargetVisualEpoch(key)
+  lastTargetKey = key or TargetStateKey()
+  targetVisualEpoch = targetVisualEpoch + 1
+
+  -- Modern registers TargetLevelText because it replaces the native target
+  -- frame. Classic registers only the native aura slots, but that still arms
+  -- this shared path. Never let an aura-only Classic registration start the
+  -- Modern level-clearing retry.
+  if suppressedSeen["TargetLevelText"] then
+    targetLevelRetryPasses = TARGET_LEVEL_RETRY_PASSES
+  else
+    targetLevelRetryPasses = 0
+  end
+
+  -- Cache canary. This client owns the target widgets natively and creates
+  -- UObjects for them as targets change (knowledge.json /
+  -- compat.target_storm_uobject_exhaustion), while resolvedNative memoizes
+  -- name -> object once and never again. If the client ever rebinds these
+  -- globals to fresh objects, the adapter would spend the rest of the session
+  -- clearing orphans while the live frame stayed fully drawn -- the same
+  -- symptom as the stamp freeze above. Whether it rebinds them is NOT
+  -- established; this is one global read per target change to make the
+  -- question moot, not a fix for a measured behaviour.
+  local root = U.G("TargetFrame")
+  local cached = resolvedNative["TargetFrame"]
+  if root and cached and root ~= cached then
+    local names = suppressedGroups["target"]
+    local i
+    for i = 1, table.getn(names or {}) do
+      resolvedNative[names[i]] = nil
+    end
+  end
+
+  U.DeferOnce("compat.target-sweep", TargetSweepBracketed)
+end
+
+-- The periodic guarantee used to inspect the complete ~1150-name list inside
+-- one updater callback. Even its hidden-object fast path needs an IsShown
+-- pcall per resolved object, so that retained a large once-per-second burst
+-- after the
+-- earlier suppression fixes. Walk one bounded slice per tick instead: at 60
+-- names every 0.05s the complete list is still covered about once per second,
+-- but no render tick inherits the whole scan.
+local function ApplyNativeSuppressionBatch()
+  if U.PerfDisabled and U.PerfDisabled("sweep") then return end
+  local level = SuppressLevel()
+  if level <= 0 then return end
+
+  -- Three API calls a tick, and the only thing standing between a client
+  -- rewrite with no target-change event behind it and a stock frame that stays
+  -- on screen for the rest of the target. See BumpTargetVisualEpoch.
+  local targetKey = TargetStateKey()
+  if targetKey ~= lastTargetKey then BumpTargetVisualEpoch(targetKey) end
+
+  -- PLAYER_TARGET_CHANGED can precede the native level renderer's final write.
+  -- One deferred sweep was therefore early enough for the yellow number to
+  -- return. Clear just that FontString across a bounded 0.6s window (at the
+  -- normal 0.05s cadence), without Hide, event removal, or Show replacement.
+  if targetLevelRetryPasses > 0 and suppressedSeen["TargetLevelText"] then
+    local levelText = ResolveNativeObject("TargetLevelText")
+    if levelText then
+      pcall(ZeroAlpha, levelText)
+      pcall(ClearTextVisual, levelText)
+    end
+    targetLevelRetryPasses = targetLevelRetryPasses - 1
+  end
+
+  local count = table.getn(suppressedNames)
+  if count == 0 then return end
+
+  local limit = SUPPRESSION_BATCH_SIZE
+  if count < limit then limit = count end
+
+  local processed = 0
+  while processed < limit do
+    if suppressionCursor > count then suppressionCursor = 1 end
+    local name = suppressedNames[suppressionCursor]
+    KillNativeObject(ResolveNativeObject(name), visualOnlyNames[name],
+                     visualOnlyKinds[name], volatileNames[name], level)
+    suppressionCursor = suppressionCursor + 1
+    processed = processed + 1
+  end
+end
+
+-- Returns a handler that sweeps one group only. An event that cannot bring a
+-- family of frames back has no reason to walk it; the bounded periodic scan
+-- above stays the guarantee for everything, so the worst case for a name in
+-- the wrong group is that it is re-hidden after the next complete scan.
+local function GroupSweeper(group)
+  return function()
+    if U.PerfDisabled and U.PerfDisabled("sweep") then return end
+    if SuppressLevel() < 4 then return end
+    SweepNames(suppressedGroups[group])
+  end
+end
+
+-- Builds the global names of a stock frame and the children this client draws
+-- on its own. Callers pass the names they have actually seen in this client's
+-- global table; nothing is inferred from what Vanilla FrameXML would define.
+--
+-- root    "TargetFrame"
+-- parts   { "HealthBar", "Name" }        -> TargetFrameHealthBar, ...
+-- series  { { "Buff", 5 } }              -> TargetFrameBuff1..5 plus the
+--                                          Icon/Border/Count region of each
+function U.NativeFrameParts(root, parts, series)
+  local names = { root }
+  local i, j
+
+  for i = 1, table.getn(parts or {}) do
+    table.insert(names, root .. parts[i])
+  end
+
+  for i = 1, table.getn(series or {}) do
+    local suffix, count = series[i][1], series[i][2]
+    for j = 1, count do
+      local base = root .. suffix .. j
+      table.insert(names, base)
+      table.insert(names, base .. "Icon")
+      table.insert(names, base .. "Border")
+      table.insert(names, base .. "Count")
+    end
+  end
+
+  return names
+end
+
+-- names may be a single global name or an array of them. A name that does not
+-- resolve is simply skipped on every pass, so an absent stock frame costs
+-- nothing and never errors.
+--
+-- group names which event-driven re-apply this family belongs to: "target" for
+-- frames this client re-shows when the target changes, "party" for the roster
+-- frames, and the default "static" for everything the periodic sweep alone can
+-- cover. Passing nothing is always safe -- it only means the frame waits for
+-- the bounded periodic scan rather than being re-hidden when an event fires.
+function U.SuppressNativeFrame(names, group)
+  -- Note the level is NOT checked here. The name lists are always built, even
+  -- at level 0 where nothing is applied: KillNativeObject is what honours the
+  -- level, and registering regardless is what makes /pui perf levels possible --
+  -- raising the level mid-session has to have a list to sweep.
+  if type(names) == "string" then names = { names } end
+  if type(names) ~= "table" then return end
+
+  if type(group) ~= "string" then group = "static" end
+  if not suppressedGroups[group] then suppressedGroups[group] = {} end
+  local bucket = suppressedGroups[group]
+
+  local i
+  for i = 1, table.getn(names) do
+    local name = names[i]
+    -- Classic's stock-aura removal left Modern registering the same native
+    -- children through SuppressStockFrames. Reject them before ANY registry
+    -- (including the volatile aura list) can retain or resolve them. The
+    -- deferred Classic attempt also crashed on build 2329, so neither a
+    -- theme check nor a longer settle delay makes these calls safe.
+    -- See unitframes.classic_stock_aura_suppression_login_crash and
+    -- compat.stock_aura_suppression_all_theme_guard. Zoxi's Modern crash is
+    -- still pending repeated in-game validation; this closes the known path,
+    -- not every possible source of the native access violation.
+    if type(name) == "string" and
+       (string.find(name, "^TargetFrameBuff%d") or
+        string.find(name, "^TargetFrameDebuff%d") or
+        string.find(name, "^PartyMemberFrame%d+Debuff%d")) then
+      name = nil
+    end
+    if group == "target" and type(name) == "string" then
+      visualOnlyNames[name] = true
+      if string.find(name, "HealthBar$") or
+         string.find(name, "ManaBar$") then
+        visualOnlyKinds[name] = "bar"
+      -- "Text$" covers this client's TargetLevelText, and subsumes the
+      -- HealthBarText/ManaBarText/DeadText suffixes kept below for clarity.
+      -- Without it TargetLevelText would be registered visual-only with no
+      -- kind, so it would only get SetAlpha(0) -- which this client's
+      -- FontString renderer ignores, the reason ClearTextVisual exists.
+      elseif string.find(name, "Text$") or
+             string.find(name, "HealthBarText$") or
+             string.find(name, "ManaBarText$") or
+             string.find(name, "Name$") or
+             string.find(name, "Level$") or
+             string.find(name, "Count$") then
+        visualOnlyKinds[name] = "text"
+      elseif string.find(name, "Texture$") or
+             string.find(name, "Background$") or
+             string.find(name, "Portrait$") or
+             string.find(name, "Icon$") or
+             string.find(name, "Border$") then
+        visualOnlyKinds[name] = "texture"
+      end
+
+      -- Verify the content instead of trusting the epoch stamp.
+      --
+      -- The stamp assumes this client writes the target frame once, when the
+      -- target is acquired. Anything it rewrites *inside* one target keeps the
+      -- stamp's "already cleared" answer for the rest of that target and stays
+      -- drawn. The aura block was the first case found; the dead state is the
+      -- second and the visible one. TargetFrame_CheckDead exists on this
+      -- client (probe global enumeration, 2026-08-16), so a target dying
+      -- redraws the stock name, portrait and dead text with no
+      -- PLAYER_TARGET_CHANGED to advance the epoch -- reported in game as the
+      -- stock target frame reappearing over a dead mob and staying there while
+      -- later targets never replace it.
+      --
+      -- Cost is one GetText/GetTexture readback per visited object. The aura
+      -- block is around 100 of this group's ~120 names and already paid it, so
+      -- extending it to the dozen remaining text/texture names is not a
+      -- measurable change in sweep cost. Bars keep the stamp: ClearBarVisual
+      -- walks regions and children and has no single cheap readback to verify
+      -- it with (see ContentCleared).
+      local kind = visualOnlyKinds[name]
+      if kind == "text" or kind == "texture" then
+        volatileNames[name] = true
+      end
+
+      -- The aura block, and only it, also gets its own UNIT_AURA-driven sweep:
+      -- "[Bb]uff%d" matches TargetFrameBuff1 and TargetFrameDebuff12Icon alike
+      -- while missing every other name this group carries (bars, portrait,
+      -- name, level, frame art). An aura landing on the target you already
+      -- have is the rewrite that event exists to answer.
+      if not volatileListSeen[name] and string.find(name, "[Bb]uff%d") then
+        volatileListSeen[name] = true
+        volatileNames[name] = true
+        table.insert(volatileList, name)
+      end
+    end
+    if type(name) == "string" and not suppressedSeen[name] then
+      suppressedSeen[name] = true
+      table.insert(suppressedNames, name)
+      table.insert(bucket, name)
+    end
+  end
+
+  -- Deliberately no sweep here. core/init.lua runs one complete pass after all
+  -- OnEnable registrations, avoiding repeated partial sweeps during setup. The
+  -- bounded batch picks up registrations made later in the session.
+
+  if not suppressionArmed then
+    suppressionArmed = true
+
+    -- PLAYER_TARGET_CHANGED is the one of these observed firing on this client
+    -- (events.json, 7 captures); the others are registered but unobserved, so
+    -- the bounded periodic scan is the actual guarantee rather than a backstop.
+    --
+    -- Because it is the one that fires, it is also the one whose cost is felt:
+    -- it gets the "target" bucket only, not the whole list.
+    -- PLAYER_ENTERING_WORLD keeps the full sweep -- it is rare, and a zone-in
+    -- is when the client is most likely to have rebuilt anything.
+    U.RegisterEvent("PLAYER_ENTERING_WORLD", function()
+      ApplyNativeSuppression()
+    end)
+
+    -- The event stays the fast path -- it is the only thing that can tell two
+    -- same-named mobs apart -- but everything it used to do inline now lives
+    -- in BumpTargetVisualEpoch, so the batch tick's state watcher reaches the
+    -- identical work when no event arrives.
+    targetSweep = GroupSweeper("target")
+    U.RegisterEvent("PLAYER_TARGET_CHANGED", function()
+      BumpTargetVisualEpoch()
+    end)
+    -- The aura block's own event. PLAYER_TARGET_CHANGED is not the only thing
+    -- that repopulates the stock frame's buff/debuff slots -- an aura landing
+    -- on the target you already have does it too, and until this existed that
+    -- rewrite was never undone, because the epoch stamp said the slot had
+    -- already been cleared for this target. In the Classic theme that is
+    -- directly visible: the native target frame is re-anchored onto PandaUI's
+    -- own anchor, so its aura block lands exactly where modules/auras.lua
+    -- draws the target aura rows when "below frame" is on, and a stock icon
+    -- left in that slot sits over PandaUI's own. A warrior sees it as Rend and
+    -- Hamstring -- their own casts, on their current target -- never appearing.
+    --
+    -- UNIT_AURA is the one aura event observed firing on this client
+    -- (events.json; modules/auras.lua is built on the same fact). Filtered to
+    -- the two tokens whose frames are in this set and deferred exactly like
+    -- the target sweep, so an aura storm collapses to one sweep per tick. The
+    -- bounded periodic batch stays the guarantee if it does not fire.
+    local function auraSweep()
+      if U.PerfDisabled and U.PerfDisabled("sweep") then return end
+      if SuppressLevel() < 4 then return end
+      SweepNames(volatileList)
+    end
+    U.RegisterEvent("UNIT_AURA", function(event, unit)
+      if unit ~= "target" and unit ~= "targettarget" then return end
+      U.DeferOnce("compat.aura-sweep", auraSweep)
+    end)
+
+    -- Deferred and coalesced for the same reason the target sweep above is,
+    -- and more urgently: PARTY_MEMBERS_CHANGED is by far the noisiest event
+    -- this client emits while grouped. Measured in the reporter's runs, 130
+    -- and 215 occurrences in ~175s -- one every 0.8-1.4s, and 16x the rate of
+    -- PLAYER_TARGET_CHANGED. Run inline that is a synchronous ~204-name sweep
+    -- landing in the same frame the client does its own party-roster work in.
+    --
+    -- events.json still records this event as accepted-but-never-observed;
+    -- that record is wrong and is corrected in knowledge.json /
+    -- compat.party_members_changed_high_frequency.
+    --
+    -- U.DeferOnce replaces a pending sweep rather than queueing a second, so a
+    -- burst of roster events collapses to one sweep on the next driver tick.
+    local partySweep = GroupSweeper("party")
+    U.RegisterEvent("PARTY_MEMBERS_CHANGED", function()
+      U.DeferOnce("compat.party-sweep", partySweep)
+    end)
+    U.RegisterUpdate("compat.native-suppression", 0.05,
+                     ApplyNativeSuppressionBatch)
+  end
+end
+
+-- Re-applies the whole registered list at the CURRENT level, ignoring the
+-- steady-state fast path. Used by /pui perf levels, which raises the level in
+-- place so the whole recipe can be bisected in one session instead of one
+-- reload per step. Raising works live; lowering still needs a reload, because
+-- what has been applied to a stock frame cannot be taken back.
+function U.ReapplyNativeSuppression()
+  forceFullApply = true
+  local ok = pcall(ApplyNativeSuppression)
+  forceFullApply = false
+  return ok
+end
+
+function U.SuppressedFrameCount()
+  return table.getn(suppressedNames)
+end
+
+-- Read by core/perf.lua's export. visited/tornDown are session totals across
+-- every sweep; lastTarget* describe only the most recent target-change sweep,
+-- which is the one the micro freeze is being attributed to.
+--
+-- tornDown vs visited is the whole question: if lastTargetTornDown is close to
+-- lastTargetVisited then this client really does re-show TargetFrame's entire
+-- region tree on every target change and the adapter is paying ~4 native widget
+-- mutations for each one, synchronously. If it is near zero, the sweep is not
+-- the cost and the search moves elsewhere.
+function U.SuppressionStats()
+  return {
+    visited = statVisited,
+    tornDown = statTornDown,
+    lastTargetVisited = lastTargetVisited,
+    lastTargetTornDown = lastTargetTornDown,
+    registeredNames = table.getn(suppressedNames),
+    targetGroupNames = table.getn(suppressedGroups["target"] or {}),
+    auraNames = table.getn(volatileList),
+    auraRecleared = statAuraRecleared,
+  }
+end
+
+-- ---------------------------------------------------------------------------
+-- Runtime self-check
+--
+-- Reports what this client actually did, so /pui debug produces measured
+-- evidence instead of restating assumptions. Everything here is read-only
+-- except for one throwaway hidden frame.
+-- ---------------------------------------------------------------------------
+function U.RunSelfCheck()
+  local report = {}
+
+  report.version = U.version
+  report.handlerShape = U.handlerShape
+  report.ticks = U.ticks
+
+  local font = U.ResolveFont()
+  report.font = font or "none (inherited fonts kept)"
+
+  report.uiWidth = U.UIWidth()
+  report.uiHeight = U.UIHeight()
+  local ok, screenW = pcall(GetScreenWidth)
+  report.screenWidth = (ok and screenW) or "?"
+  report.pixelScale = U.PixelScale()
+
+  -- Anchor round-trip: request a known point, then confirm the normalised
+  -- reader hands back the values SetPoint was given.
+  local probe = CreateFrame("Frame", nil, UIParent)
+  probe:Hide()
+  probe:SetWidth(50)
+  probe:SetHeight(20)
+
+  local requestX, requestY = -75, 25
+  local set = pcall(function()
+    probe:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOM", requestX, requestY)
+  end)
+
+  if set then
+    local rawOk, _, rawRel, _, rawX, rawY = pcall(probe.GetPoint, probe, 1)
+    if rawOk then
+      report.rawRelativeType = type(rawRel)
+      report.rawX = rawX
+      report.rawY = rawY
+    end
+
+    local _, _, _, normX, normY = U.GetFramePoint(probe, 1)
+    report.normX = normX
+    report.normY = normY
+    report.anchorRoundTrip = (normX == requestX and normY == requestY)
+  else
+    report.anchorRoundTrip = false
+  end
+
+  return report
+end

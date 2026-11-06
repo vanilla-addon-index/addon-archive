@@ -1,0 +1,149 @@
+{
+  "upstream": "https://github.com/laytya/TomTom-TWOW",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "TomTom-TWOW",
+    "name": "TomTom-TWOW",
+    "url": "https://github.com/laytya/TomTom-TWOW",
+    "api": "https://api.github.com/repos/laytya/TomTom-TWOW"
+  },
+  "commit": "c64394a6a972d6f27c3eb5ff307097f98c867efa",
+  "sourceFiles": {
+    "Astrolabe/Astrolabe.lua": {
+      "sha256": "777aeacd8cf49215a3107f7263ff8a4392b1f859b41ed93c924383c62394e3d3",
+      "bytes": 37552
+    },
+    "Astrolabe/lgpl.txt": {
+      "sha256": "5df07007198989c622f5d41de8d703e7bef3d0e79d62e24332ee739a452af62a",
+      "bytes": 26436
+    },
+    "Images/Arrow-UP.blp": {
+      "sha256": "9b42f3e36a6dbdbf9701c2c43df503730127fdfae97506f605e2c566efb51017",
+      "bytes": 350724
+    },
+    "Images/Arrow.blp": {
+      "sha256": "2d48d1e085071956f576fbac6c7e94c9a1dbdde7d95821587b165a5ca3d15486",
+      "bytes": 350724
+    },
+    "Images/Arrow2.m2": {
+      "sha256": "cff174a9ed903bf516b4d902987339866f3e2ec81b090485992319f6f9a32313",
+      "bytes": 2944
+    },
+    "Images/ArrowLicense.txt": {
+      "sha256": "2ab66d95158c6f80f3299e30851d1e42f381dacbe5734fbec15ebb62eb710dc4",
+      "bytes": 230
+    },
+    "Images/GoldGreenDot.tga": {
+      "sha256": "0a80f171c289ca1443c6128b99692401d5b680e8df2151d45b7bcbade2d2d0ba",
+      "bytes": 1039
+    },
+    "Images/MinimapArrow-Green.tga": {
+      "sha256": "72e5bcc666587f4aeec1ed4f2535aa2079bb89b975ad75cee03bca59c031ff94",
+      "bytes": 910
+    },
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "e460d01bc2f95f3ff01ae0fefe5a575db9748576e7b96df81e56e45bb16d0ee5",
+      "bytes": 30093
+    },
+    "Libs/AceComm-2.0/AceComm-2.0.lua": {
+      "sha256": "8dce535306a7940cae2f81920193dfb14e1a3af50d706f7e640740ee1c856e60",
+      "bytes": 81466
+    },
+    "Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "e498c182436c51671590512e02ebcec98e85fe454b5f5b1f00cf1a62b21a13c6",
+      "bytes": 63951
+    },
+    "Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "44015c0c1ff68a4e328177f5209b3e3dec49d021ce5b5127c613383eae8ba01e",
+      "bytes": 42658
+    },
+    "Libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "394521bbd40660d05c178fce092bb3c4904405efee2b43c7a4d0d98bf1d8892f",
+      "bytes": 7668
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "0f7b32493afaf5b7e96f3fd1b5135cc9d8a07ded8c64aae11e75f1e0f3212902",
+      "bytes": 28515
+    },
+    "Libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "610f20d3f85852c4ed8b022c4ee83d714d200a671a4a6232d8b8a1089ecbda3c",
+      "bytes": 16780
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "8c75f829e0f980aac69d53cce8f8c806ea671795f445ab736c8cf76b9fc1f586",
+      "bytes": 22725
+    },
+    "Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "6e315b0d257b7feda50ad6ef4b0c40228f7125330da7b0e4793be62e75ba81a1",
+      "bytes": 15823
+    },
+    "Libs/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "3279c50e816fa15ae3e9f6a10b45abaf8464c0daa9e84df971783005efaba26e",
+      "bytes": 11847
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "1385526e460948771ca6db1ceec81e8b0daf33bfc391f55e6f1bbc449a341a82",
+      "bytes": 30305
+    },
+    "Libs/Babble-Boss-2.2/Babble-Boss-2.2.lua": {
+      "sha256": "913769b32c0d7cfb4d727606834d298db7005f744146bb785f8aa8137b35db28",
+      "bytes": 64699
+    },
+    "Libs/Babble-Spell-2.2/Babble-Spell-2.2.lua": {
+      "sha256": "100292ca2e0162d7f045f5a3ea788daccf18d9e576adf8500a2132e3991a076d",
+      "bytes": 301840
+    },
+    "Libs/Babble-Zone-2.2/Babble-Zone-2.2.lua": {
+      "sha256": "c8dbae4c0e2d846a82c5a5361f728e2808f7b3e5bf03464822bb17a237250b29",
+      "bytes": 33868
+    },
+    "Libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "c51aa331b91d1bc7f8023f8c02814a0556e39a39d392f5029b06bf0aee266664",
+      "bytes": 82495
+    },
+    "Libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "2456e593be577cdd8340cd0edc1fce94926a1f9e7dee7f26798bf8b3128dbf06",
+      "bytes": 83748
+    },
+    "Libs/Tourist-2.0/Tourist-2.0.lua": {
+      "sha256": "9680a21280b8b9aee7fe1926efe8770b22d528ffeee0db1aa5fd56074183021a",
+      "bytes": 51356
+    },
+    "Libs/Waterfall-1.0/Waterfall-1.0.lua": {
+      "sha256": "6556160e9e01a6dcfd99cd30072b77a789b9df3a0ac8c500350ba18976249a0f",
+      "bytes": 134340
+    },
+    "Media/ping.mp3": {
+      "sha256": "ca9f6ab3326d27f988d19215138b719a282ae96045688438621d3bc0d3a979de",
+      "bytes": 54752
+    },
+    "Media/PingLicense.txt": {
+      "sha256": "481e19d1d465116183de52650ba54dbfd26fe94bc26f0a789f733beca15cad85",
+      "bytes": 210
+    },
+    "README.md": {
+      "sha256": "5b9651f82a2473b82eed741b855ccdfd5a4b3434c7db5a206f62458d14049020",
+      "bytes": 418
+    },
+    "TomTom-TWOW.toc": {
+      "sha256": "6e868ac0095621576c8de150dd2215d9609eaabd78dcfa6c61b7e3d1d108ecec",
+      "bytes": 952
+    },
+    "TomTom.lua": {
+      "sha256": "816882cb5f79b4a067f717d44942eaaa87aa09d5cd19010b82bcaaac5d064b1f",
+      "bytes": 39981
+    },
+    "WayHandler.lua": {
+      "sha256": "bc19722633e684065a238b0e51db1b37bb768bf6ec28899a07d84799bbb0cb2a",
+      "bytes": 6661
+    },
+    "Waypoints.lua": {
+      "sha256": "66cbb49e4903b384503b9a28b0cfd9ea31b8d43b5d812de8c3a2ff6044c42ae2",
+      "bytes": 14572
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

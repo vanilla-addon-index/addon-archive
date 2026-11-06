@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/DuduSandsten/NBR",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "DuduSandsten",
+    "repo": "NBR",
+    "name": "NBR",
+    "url": "https://github.com/DuduSandsten/NBR",
+    "api": "https://api.github.com/repos/DuduSandsten/NBR"
+  },
+  "commit": "074e06d2191380deec3758a10da3cf54b36c2eb5",
+  "sourceFiles": {
+    "NBR_Frame.xml": {
+      "sha256": "0af0a7ed012690245e5db2ebf12ffa8c8d87bd51f01a91cde1a4384e99444379",
+      "bytes": 1623
+    },
+    "NBR.lua": {
+      "sha256": "020dc55bcad14b68957cfdc093882fce6ab79880a3a8c7e640ac4060500e2252",
+      "bytes": 23151
+    },
+    "NBR.toc": {
+      "sha256": "b1c0513cce82b969b5a4523227c3a3a7bfac3675ea8d363986864c4dc245471f",
+      "bytes": 296
+    },
+    "readme.md": {
+      "sha256": "d8a9fd3fe5a291fece5044338ab1ad42b0fda782eb645ddd0342fe9c338af1e0",
+      "bytes": 551
+    },
+    "screenshot.png": {
+      "sha256": "652b72a731b3b5b065d465fb939af62122e48bd8177e6bbc0fcaced1ada9f11e",
+      "bytes": 283733
+    },
+    "Textures/MinimapButton_disabled.blp": {
+      "sha256": "b7f9fb7f8b338db82edbbce25b001c02a6e0c5c0dea8e816f9e82d93c6814d02",
+      "bytes": 2564
+    },
+    "Textures/MinimapButton.blp": {
+      "sha256": "589aed6c18b6f98c9585e55b92d240722804620cab4ec8366906aa124c653c46",
+      "bytes": 2564
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

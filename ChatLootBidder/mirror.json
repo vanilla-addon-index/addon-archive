@@ -1,0 +1,166 @@
+{
+  "upstream": "https://github.com/trumpetx/ChatLootBidder",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "trumpetx",
+    "repo": "ChatLootBidder",
+    "name": "ChatLootBidder",
+    "url": "https://github.com/trumpetx/ChatLootBidder",
+    "api": "https://api.github.com/repos/trumpetx/ChatLootBidder"
+  },
+  "commit": "bc6c2f807d2c7790308f8abf503b00d83dbc6988",
+  "sourceFiles": {
+    ".editorconfig": {
+      "sha256": "df1d9aab58233d80a3822fa436f5496414ec07069cfd7c7dfc79ad20d9b71950",
+      "bytes": 143
+    },
+    ".github/workflows/release.yml": {
+      "sha256": "7578c8ed9dbcc7a2416d06e81d4ce0bb2796c42801d85d68134be2259e4bb578",
+      "bytes": 1048
+    },
+    ".github/workflows/tests.yml": {
+      "sha256": "80c0e5f3d2fece83c3e93f49b31695e46b34a1ad55f2a10f9009d37274a1f4e2",
+      "bytes": 1347
+    },
+    ".gitignore.upstream": {
+      "sha256": "dcf793583b3be5337048a713f156c41eb4c56eb4933d911bb7cf99070abd2402",
+      "bytes": 35
+    },
+    ".luacov": {
+      "sha256": "e80f04d064bc3e55a85aea0cb17a27808fb882d25987d1c4941befed8726d020",
+      "bytes": 184
+    },
+    "ChatLootBidder.lua": {
+      "sha256": "b4d4b4a45ba13e01a91e0565a7aa2bfcd7532bea50a0f079fbb13521a4c0b5b4",
+      "bytes": 59194
+    },
+    "ChatLootBidder.toc": {
+      "sha256": "6a2a158e1e509a811876c6802838845b26086276484d15cbf50cceb5000d9d28",
+      "bytes": 346
+    },
+    "ChatLootBidder.xml": {
+      "sha256": "4bdc98a5448f9435b9774ca1c9fd65265790ac0a3e006b1ce123b87b8016fc8f",
+      "bytes": 12102
+    },
+    "ChatThrottleLib.lua": {
+      "sha256": "e6fa88e99df7d4e7e1cc2c1e65101ddd636fd54f046ce2d482290c79bd366947",
+      "bytes": 17280
+    },
+    "csv.lua": {
+      "sha256": "7ebdba8f2d5aeeb661392cd4382966cba86f6855c539b159dd10437badc52c0e",
+      "bytes": 1949
+    },
+    "FEATURES.md": {
+      "sha256": "69c17f69a75a1789b466cf74e34f405d9ac9fecda9679a4bbdbd43df085e5a51",
+      "bytes": 16160
+    },
+    "i18n.lua": {
+      "sha256": "a6e3272b5020ad88d8589a7fb278a05e6c6897095ca430b51bd32753a67b5d9b",
+      "bytes": 1000
+    },
+    "json.lua": {
+      "sha256": "52653a62c59c626f0c535de8bf7b48ad72c4ebb346d3a5e34343f8e2cbf48847",
+      "bytes": 9797
+    },
+    "Options.lua": {
+      "sha256": "bf0b2ecedf8355c823a1164ce57e5e3013bc8f5b5c51307b1d238308b8c2b812",
+      "bytes": 4899
+    },
+    "Options.xml": {
+      "sha256": "6daae3b029dfe42c413307cb795a501ee5c4acc354980befcb7a8ea549d32c77",
+      "bytes": 29779
+    },
+    "README.md": {
+      "sha256": "cb94eb640ac2ad1082299554d7882208d39fc3e9b1166c3bffb397a68a24bbf1",
+      "bytes": 14606
+    },
+    "SrEdit.xml": {
+      "sha256": "e089de2a670f1fecb37baf808e9c43a03e617112d1d018ea720553d3ba208c8a",
+      "bytes": 5128
+    },
+    "tests/bidding_test.lua": {
+      "sha256": "c4c46b5c21e2c6dfd443c5b16a32544d60a5cc11502999026dfecd29d0a257a2",
+      "bytes": 5521
+    },
+    "tests/chat_loot_bidder_test.lua": {
+      "sha256": "bb78ecb8cb2c26e0a752accbc70afa58f7764d4641e3e875a48c7c65a95587cf",
+      "bytes": 2436
+    },
+    "tests/csv_test.lua": {
+      "sha256": "638452a7977bed2bf07bedb871c38db8ee691e4f87d9634300685917ec3bc979",
+      "bytes": 633
+    },
+    "tests/dkp_test.lua": {
+      "sha256": "e16a5a60ab6fa4d856eb43c847c1d49f0064ce5661a653a210a3fc8806d1d07f",
+      "bytes": 3741
+    },
+    "tests/roll_system_test.lua": {
+      "sha256": "a34c10eb195ab88770fac75d820b631cc93f529b53b521ff5136b7ce8aac41b9",
+      "bytes": 2072
+    },
+    "tests/session_lifecycle_test.lua": {
+      "sha256": "592d71e071b45d88cf4513fd66336844c5d5f6288586efcc7bcd92709020f2ca",
+      "bytes": 4702
+    },
+    "tests/soft_reserve_test.lua": {
+      "sha256": "bb843c84064704be0d1b1c279af32d85e2d20ac00bf3efb9aaa0846a75c1dc66",
+      "bytes": 9216
+    },
+    "tests/sr_encoding_test.lua": {
+      "sha256": "6854e5e95516f4029af98cba0d75dab01a5b7185af51eb029dfefd74eca6a2e2",
+      "bytes": 4797
+    },
+    "tests/test_helpers.lua": {
+      "sha256": "d9f7ab66dc72a2d115b12c1b7df88b6127bd49cea348a90943f9405aaf70078a",
+      "bytes": 1673
+    },
+    "tests/test_runner.lua": {
+      "sha256": "c298d6fe7ff32c587cc605c106a2ebf9103194dc9e103bcd3c56a9a1cd41387f",
+      "bytes": 2013
+    },
+    "tests/version_util_test.lua": {
+      "sha256": "43b00f29c458f964e391c210d715c2e6d91e0ca12723de73b7fb0a8ad7983f0d",
+      "bytes": 1746
+    },
+    "tests/whisper_dedup_test.lua": {
+      "sha256": "9bd9321df0470607ae52041ceb0adef712ca2923cbf0c900b977f7b77ef6336b",
+      "bytes": 841
+    },
+    "tests/winner_resolution_test.lua": {
+      "sha256": "35a14c363e2129bb113246d1a4972f83800dcd0298d19161bfe4e8d14669dc47",
+      "bytes": 5132
+    },
+    "tests/wow_mocks.lua": {
+      "sha256": "b987772a5a614a02f2ce77ee12097ecd9b851695a4538be6bec0e74505c44438",
+      "bytes": 5820
+    },
+    "VersionUtil.lua": {
+      "sha256": "db81990939ee592a2d6fc3ca30d3fa72aded49effca42ab3c16c530436036d38",
+      "bytes": 6628
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "289177978": {
+      "tag": "v1.11.2",
+      "folder": "v1.11.2--289177978",
+      "assets": {
+        "360311212": {
+          "sha256": "f32b9fb48353e52f7f2e7d2bee943f7e68a02a5b0df79c0f9cd6377d3573ab8e",
+          "bytes": 46747,
+          "id": "360311212",
+          "name": "ChatLootBidder.zip",
+          "url": "https://github.com/trumpetx/ChatLootBidder/releases/download/v1.11.2/ChatLootBidder.zip",
+          "path": "releases/v1.11.2--289177978/assets/ChatLootBidder.zip"
+        }
+      },
+      "source": {
+        "sha256": "8bc9d142725bb6da9a8ff8e59c2c6ec9033e7f70808a3a5a3a54d9a7a1bd2965",
+        "bytes": 51331,
+        "path": "releases/v1.11.2--289177978/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/trumpetx/ChatLootBidder/tarball/v1.11.2"
+      }
+    }
+  }
+}

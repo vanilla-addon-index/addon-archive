@@ -1,0 +1,9 @@
+{
+  "id": "6453509",
+  "tag": "1.0-beta.2",
+  "name": "ClassicDB 1.0-beta.2",
+  "body": "# ClassicDB Beta 2\r\n\r\n### Notes\r\n*This is a beta version. Some minor bugs are to be expected. You can post any feedback you want to the [Issue Tracker](https://github.com/Muehe/classicdb/issues). If you want to report a bug please make sure it is not yet reported there or listed in the [Know Issues](https://github.com/Muehe/classicdb/wiki#known-issues).*\r\n\r\n### Installation\r\nFor installation instructions see the [Readme](https://github.com/Muehe/classicdb/blob/master/README.md#installation).\r\n\r\n### Changes since last version\r\nSee the [Changelog](https://github.com/Muehe/classicdb/blob/master/CHANGELOG.md#classicdb-10-beta2-2017-05-21).\r\n\r\n",
+  "published": "2017-05-21T02:33:04Z",
+  "prerelease": true,
+  "url": "https://github.com/Muehe/classicdb/releases/tag/1.0-beta.2"
+}

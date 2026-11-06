@@ -1,0 +1,45 @@
+RangeMelee is a lightweight addon that automatically switches your action bar page based on:
+
+  -  Whether you are in melee range or ranged range of your target.
+
+
+
+Features
+
+    Automatic action bar paging:
+
+     -  Page 1: Default (ranged or no target).
+
+     -  Page 2: Melee range.
+
+
+    Auto-detects ranged weapon slot from your action bar textures.
+
+    Default enabled for new characters.
+
+
+
+Usage
+
+The addon is active by default. It automatically:
+
+   - Detects your ranged weapon slot.
+
+   - Monitors your target and combat state.
+
+   - Switches your action bar page when conditions change.
+
+You can configure it using slash commands.
+
+
+
+Slash Commands
+
+All commands start with /rm:
+
+/rm help
+/rm status
+/rm on
+/rm off
+/rm page default 1
+/rm page melee 2

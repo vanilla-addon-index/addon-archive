@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: InviteOnWhisper
+## Notes: Automates party and guild invites from player-defined whisper and chat keywords.
+## SavedVariables: IOWConfig, IOWInviteLock
+
+InviteOnWhisper.lua

@@ -1,0 +1,8 @@
+## Interface: 11200
+## Version: 0.1.0
+## Title: I Want It All
+## Notes: One-button rotation for resource tracking abilities.
+## SavedVariablesPerCharacter: IWIA_Settings
+
+IWantItAll.lua
+IWantItAll.xml

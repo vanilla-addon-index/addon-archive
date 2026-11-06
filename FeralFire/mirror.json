@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/MarkTiedemann/FeralFire",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarkTiedemann",
+    "repo": "FeralFire",
+    "name": "FeralFire",
+    "url": "https://github.com/MarkTiedemann/FeralFire",
+    "api": "https://api.github.com/repos/MarkTiedemann/FeralFire"
+  },
+  "commit": "57dabfa970a5f7c6a123cc213df14d2a3813e855",
+  "sourceFiles": {
+    "FeralFire.lua": {
+      "sha256": "c14afd966da7d19f9be7fc9f015f558a4b66c912bcd69bd39feb78f58484e139",
+      "bytes": 8728
+    },
+    "FeralFire.toc": {
+      "sha256": "469d04ad27f7e61379d4ef5444346fadf148333828191ecc3fd12a4834d935dc",
+      "bytes": 179
+    },
+    "README.md": {
+      "sha256": "d829dad647fd130593804b8155f8ce0027bd2c91ee7f125d6b7f23d2992ce6f1",
+      "bytes": 1143
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

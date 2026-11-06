@@ -1,0 +1,81 @@
+{
+  "upstream": "https://github.com/McPewPew/DiivSkins",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "McPewPew",
+    "repo": "DiivSkins",
+    "name": "DiivSkins",
+    "url": "https://github.com/McPewPew/DiivSkins",
+    "api": "https://api.github.com/repos/McPewPew/DiivSkins"
+  },
+  "commit": "4acd8225ac48844cd85280afaa75cee6eb5ab66c",
+  "sourceFiles": {
+    "DiivSkins.toc": {
+      "sha256": "ce6301a99b727862460e910f37d490560398bb974c92d0b433780f9e02bd8f79",
+      "bytes": 261
+    },
+    "DiivSkinsControl.lua": {
+      "sha256": "ade6fc4a237808ce15a9a7334894c1ccc69997444c9fac29110b7b2fcb25f220",
+      "bytes": 11877
+    },
+    "DiivSkinsControl.xml": {
+      "sha256": "fdfd01668f87f3a6f70ac75b9b14240449a6c6883ee6e8143fc9d2f397344ba2",
+      "bytes": 59157
+    },
+    "DiivSkinsEggs.xml": {
+      "sha256": "967b0cba8338202a5766a882e0288728c6f2e242faf22d4764a3879cba01d6ad",
+      "bytes": 4707
+    },
+    "DiivSkinsFrames.xml": {
+      "sha256": "0d67fad602e73993360fbefdcb082b97e4dbf15fd50f664922a027b62ba10538",
+      "bytes": 27032
+    },
+    "Skins/ControlSkins/buttons.blp": {
+      "sha256": "cd8befabbeb21b913c4ebfa02c12931c87791354af978c0fc48e83f9d9f60e84",
+      "bytes": 12132
+    },
+    "Skins/ControlSkins/construction.blp": {
+      "sha256": "c1afbe373c86abdc163772a82e8eac023176cd9c850ed0f5e09f578fad27ecdd",
+      "bytes": 12132
+    },
+    "Skins/ControlSkins/controlback.blp": {
+      "sha256": "0444c29844a45f7e13987ef30e1ef98834b0d5d275e33d18402a40ef84ccb19a",
+      "bytes": 88612
+    },
+    "Skins/ControlSkins/startup.blp": {
+      "sha256": "f11ea88410b7236e24aa99d6e51b345d98f28edd851d20d3513a8878e9ebeebe",
+      "bytes": 350724
+    },
+    "Skins/ControlSkins/startup2.blp": {
+      "sha256": "3ed2215999a8b53a0793e742bddb20736e830c4ba0ad3a97ae855c07c73f1795",
+      "bytes": 350724
+    },
+    "Skins/diivskins_00.blp": {
+      "sha256": "507ac25fadacb9ed3236a2f6fcf81b15d96081daf9f577901c02111a30c49ff6",
+      "bytes": 350724
+    },
+    "Skins/diivskins_01.blp": {
+      "sha256": "87783647b9d24c3106b4384eaa9417251b59d4bbf8bdefdfcf7bb50bb579b761",
+      "bytes": 350724
+    },
+    "Skins/diivskins_02.blp": {
+      "sha256": "ea1fae919ada14406e4e8fd6176ec711f4fb15769df46028f3060fa4c0c5885f",
+      "bytes": 350724
+    },
+    "Skins/diivskins_MA01.blp": {
+      "sha256": "df89610a6f5035e41e6dd7f5c19182c75904b47dfbe3343a49536d5a047d1f4c",
+      "bytes": 350724
+    },
+    "Skins/diivskins_MA02.blp": {
+      "sha256": "be91989cf36369981ea918cbc3c7a7999c705247022f2953c45618d9c8a484ef",
+      "bytes": 175972
+    },
+    "Skins/EggSkins/DiivSkins_SampleTexture.blp": {
+      "sha256": "8dfae220778067c529e83f66750904d04d646f1477482e70a1dacd9099f89ecf",
+      "bytes": 23044
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

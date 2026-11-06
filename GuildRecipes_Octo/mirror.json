@@ -1,0 +1,125 @@
+{
+  "upstream": "https://octowow.st/git/olzon/GuildRecipes_Octo.git",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "olzon",
+    "repo": "GuildRecipes_Octo",
+    "name": "GuildRecipes_Octo",
+    "url": "https://octowow.st/git/olzon/GuildRecipes_Octo",
+    "api": "https://octowow.st/git/api/v1/repos/olzon/GuildRecipes_Octo"
+  },
+  "commit": "8c8866c477fbdbaa87a0a4fb20d2b3a8c41d82fa",
+  "sourceFiles": {
+    "assets/Myriad-Pro.ttf": {
+      "sha256": "a4eefdaeccae42faeaf989b6b642f2e39386fd33a7e11c39e7c08d3bfc4eb18a",
+      "bytes": 209700
+    },
+    "assets/tiny-button-down.tga": {
+      "sha256": "96d75d4e760d3b55c6938ea153b22b34bbd3c873465b5c0a379cadba37569821",
+      "bytes": 982
+    },
+    "assets/tiny-button-up.tga": {
+      "sha256": "c79dde8fdf61a098f12e25c8a240a68643cc46c0154a4c39f891abbcdc521b34",
+      "bytes": 1534
+    },
+    "Bindings.xml": {
+      "sha256": "1df7e388acdba57f78e50d21dde4e3231df2ed086cf9e78a689817011e93c3f0",
+      "bytes": 133
+    },
+    "Enchants.lua": {
+      "sha256": "3a02e84347d005e087173c58ac95ba7bb3813ce5cc5bd3166b2d2ea7349bc8c7",
+      "bytes": 25053
+    },
+    "FrameBuilder.lua": {
+      "sha256": "b24d4d42c757ff10e56c667a174e7b4d5ec225b2e48fe3f82cb1ee1ae97dd875",
+      "bytes": 8844
+    },
+    "GuiElements.lua": {
+      "sha256": "209eae44d760c716ebb5adf3152771ef97bcb35cb8f0d2c9c0e8e446aeab5539",
+      "bytes": 5740
+    },
+    "GuildRecipes_Octo.toc": {
+      "sha256": "21a11dc082494a1bff0112316aff142ac524f35a9f5418c2430722a19eb80aea",
+      "bytes": 383
+    },
+    "GuildRecipesOcto.lua": {
+      "sha256": "e6660cdb7e996b186c4afbaa56180934fc92d84e8017b0d1434b7aacc5c69d06",
+      "bytes": 8180
+    },
+    "libs/AceComm-3.0/AceComm-3.0.lua": {
+      "sha256": "65b9f21166ae6a3ea42524ba6a479b090fd51019f9226310185fd7fe1f56545f",
+      "bytes": 11421
+    },
+    "libs/AceComm-3.0/AceComm-3.0.xml": {
+      "sha256": "a79e85e5d4889d01bcf38a0944636ff4c74b085b4aabd880497bffb79deb6a43",
+      "bytes": 252
+    },
+    "libs/AceComm-3.0/ChatThrottleLib.lua": {
+      "sha256": "929405d5c3c8e0468fcdab1d1c6a68a614ad17d84404a1ee80ca320b67a22e43",
+      "bytes": 15416
+    },
+    "libs/AceCore-3.0/AceCore-3.0.lua": {
+      "sha256": "2ead5751ab4e4d0eda5d2aa95512d7b6155df66ceb58c1d2f9c4f4b8a8a3c74b",
+      "bytes": 6146
+    },
+    "libs/AceCore-3.0/AceCore-3.0.xml": {
+      "sha256": "cebf9f06f52b3a1e76bcf40d69814fa702889efed5642d9b5677cf90760dad89",
+      "bytes": 213
+    },
+    "libs/AceSerializer-3.0/AceSerializer-3.0.lua": {
+      "sha256": "ad3ec791f092c3a73dc770312fc30090a1673df289a57cd5dd40b9b120006d43",
+      "bytes": 9330
+    },
+    "libs/AceSerializer-3.0/AceSerializer-3.0.xml": {
+      "sha256": "16c1e946e4494a31e95c25bf88b969fe9586ea1276163ac68648884b58dea4b5",
+      "bytes": 221
+    },
+    "libs/AceTimer-3.0/AceTimer-3.0.lua": {
+      "sha256": "5e48d83a2dbf5e3a9737b14af1b3c8c3290cb9f94cbc8410e0215a8e743d1800",
+      "bytes": 13068
+    },
+    "libs/AceTimer-3.0/AceTimer-3.0.xml": {
+      "sha256": "0d7db07cae9dcae62cb79d2071dd31460b561b3915c0187989ec6d2f40c2b60a",
+      "bytes": 214
+    },
+    "libs/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "706d98abfcfb207a4af207f650e873da69e92bc05b70a281c3d81d400c301eee",
+      "bytes": 10022
+    },
+    "libs/CallbackHandler-1.0/CallbackHandler-1.0.xml": {
+      "sha256": "5fc06440452a82be9554fc9650fa7de0b6df786c6d188d05d7d0ec4aa3e002fd",
+      "bytes": 221
+    },
+    "libs/Libs.xml": {
+      "sha256": "eed9e4253272c156f66aae498dc37eb8fd8ae2db4f08148a9c200539833fd620",
+      "bytes": 450
+    },
+    "libs/LibStub/LibStub.lua": {
+      "sha256": "6156f11f315b3de4ac75cffdf21ab8970c0293b769ec9d55646dda68b011830e",
+      "bytes": 1569
+    },
+    "MessageHandler.lua": {
+      "sha256": "ee787fa6c19def5e1f614bfac49521618e842c4313aa3c328d61fcadb536a235",
+      "bytes": 8520
+    },
+    "README.md": {
+      "sha256": "a3eafdadbbd85b4aff335f1cade014b066323ae694da06361d45884452d71e1e",
+      "bytes": 3440
+    },
+    "SlashCommand.lua": {
+      "sha256": "a0b9a4cb8c30f29a36ce17bbd42d0c22510ebf65b1642787b1ebfb1889dab21d",
+      "bytes": 6238
+    },
+    "TradeskillRecipesGui.lua": {
+      "sha256": "704702a61a257e9cb53d50f72c0bc4eeb8cb27921c23cedff66db9d7e9f18045",
+      "bytes": 29395
+    },
+    "Utils.lua": {
+      "sha256": "896b5a47fb8e8878dca41b629fc63de5ee607a3239f1c84c1dcb22df89bd6599",
+      "bytes": 12636
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/wbb1977/ChatTimestamps",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "wbb1977",
+    "repo": "ChatTimestamps",
+    "name": "ChatTimestamps",
+    "url": "https://github.com/wbb1977/ChatTimestamps",
+    "api": "https://api.github.com/repos/wbb1977/ChatTimestamps"
+  },
+  "commit": "ea11be079d5a61adf429973ded0ad8beda8c485e",
+  "sourceFiles": {
+    "ChatTimestamps/ChatTimestamps.lua": {
+      "sha256": "aa85f4b3f739104c13e90c8d3087f748b0e5cf328a832c5ae4f331f2044f969b",
+      "bytes": 3873
+    },
+    "ChatTimestamps/ChatTimestamps.toc": {
+      "sha256": "13abbc5a6b9f9e9772a21fe62424121a3a1671bef54274de776beefa75d31e40",
+      "bytes": 227
+    },
+    "README.md": {
+      "sha256": "83be193a12fd07d4a7ff92848accb143d3091970f40adb8836e8dcc7a8cba7c9",
+      "bytes": 1333
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "14744985": {
+      "tag": "1.6a",
+      "folder": "1.6a--14744985",
+      "assets": {},
+      "source": {
+        "sha256": "1ec4a4c53973e80aac4fc2dfa7c965035586b22f1501a5cf2ec237df3d070fa6",
+        "bytes": 2271,
+        "path": "releases/1.6a--14744985/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/wbb1977/ChatTimestamps/tarball/1.6a"
+      }
+    }
+  }
+}

@@ -1,0 +1,1 @@
+AshenDB.Manifest={database="Tortoise-WoW",version="ec14bfe00852",itemCount=16069,setCount=359,sourceItemCount=11999,sourceDropLimit=8,generatedAt="2026-07-16",setCatalogVersion="0.7.4",setCatalogSchema="tortoise-db-viewer-main-2026-07-16"}

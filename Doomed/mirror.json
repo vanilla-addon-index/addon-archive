@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/EinBaum/doomed",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "doomed",
+    "name": "doomed",
+    "url": "https://github.com/EinBaum/doomed",
+    "api": "https://api.github.com/repos/EinBaum/doomed"
+  },
+  "commit": "2217376dc7af8170405db6a11afe510287ed3fc8",
+  "sourceFiles": {
+    "config.lua": {
+      "sha256": "29320aa3b8391335381f36aa16efa2d552d3968aef8d5af7b8a25a586285062e",
+      "bytes": 4378
+    },
+    "doomed.toc": {
+      "sha256": "b15e1f7f503ebc6c674c8075933b130445289013ec356a00ef1aaa1ffaedf0b1",
+      "bytes": 199
+    },
+    "face.lua": {
+      "sha256": "fcc992f1703278bef9ff4dfe9acd676cddc9ecaf9b2753b26ecd1b54238f5c93",
+      "bytes": 3631
+    },
+    "README.md": {
+      "sha256": "695ad3d1a44b13be467949629d380f454a9aff1e3db29ba62c01bad3fc68e34c",
+      "bytes": 132
+    },
+    "sprites.tga": {
+      "sha256": "03ef300d2b4f960d2b8b0cdccfbceef8e4f88b824fc4912c3f44e0fa47064844",
+      "bytes": 122535
+    },
+    "tick.lua": {
+      "sha256": "c1689d3142b403bd72ac24532f80ce0352c4acc1d4eab391f099486a6b6a00b6",
+      "bytes": 1789
+    },
+    "ui.lua": {
+      "sha256": "90f60756f8b399a538bf6258d63177700a7bf23cca3e5f0a4df1e971d2dd94bd",
+      "bytes": 4736
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

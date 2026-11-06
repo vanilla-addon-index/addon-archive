@@ -1,0 +1,29 @@
+{
+  "upstream": "https://octowow.st/git/Monster/FriendHostile",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Monster",
+    "repo": "FriendHostile",
+    "name": "FriendHostile",
+    "url": "https://octowow.st/git/Monster/FriendHostile",
+    "api": "https://octowow.st/git/api/v1/repos/Monster/FriendHostile"
+  },
+  "commit": "f1eb8173800f9e137ace1c1668c6b00dc59cb810",
+  "sourceFiles": {
+    "FriendHostile.lua": {
+      "sha256": "9098bcc928aa41fe3074903ee9a2ab1048fc3ebe8281227d298de0199ee7445b",
+      "bytes": 7323
+    },
+    "FriendHostile.toc": {
+      "sha256": "61f709e28f00005b81ce0484a68dab742e99648cd6b5e9d9e0ef16c7b1877fe4",
+      "bytes": 225
+    },
+    "FriendHostile.xml": {
+      "sha256": "e1624f40b9503c8fb7ab931cb6a4baa8db4457e9459f08248483bf9bbd4b24df",
+      "bytes": 507
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

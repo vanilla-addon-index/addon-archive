@@ -1,0 +1,16 @@
+# WoW
+*.bak
+*.tmp
+WTF/
+Interface/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Build
+*.zip
+lua50
+lua50src/

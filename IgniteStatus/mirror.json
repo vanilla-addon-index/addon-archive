@@ -1,0 +1,61 @@
+{
+  "upstream": "https://github.com/vakos1/Ignite-Status",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "vakos1",
+    "repo": "Ignite-Status",
+    "name": "Ignite-Status",
+    "url": "https://github.com/vakos1/Ignite-Status",
+    "api": "https://api.github.com/repos/vakos1/Ignite-Status"
+  },
+  "commit": "643d58cec868c1e4265653b44d8b277779709c30",
+  "sourceFiles": {
+    "IgniteStatus/ignitestatus.lua": {
+      "sha256": "234b9391b34c1bad381dd9a08bd5cfd16c1ac79691a22883c30299a3f5f6f434",
+      "bytes": 22499
+    },
+    "IgniteStatus/ignitestatus.lua~": {
+      "sha256": "a16c8c8780ae6d3c4d4b90705331587aa2f5c4b1702866ebb1c5227591b74d28",
+      "bytes": 22442
+    },
+    "IgniteStatus/ignitestatus.toc": {
+      "sha256": "6df7055300615744cb477812bb4d3c24b163608137a152e62157a15292b9cecf",
+      "bytes": 228
+    },
+    "IgniteStatus/ignitestatus.xml": {
+      "sha256": "87e643e1d95157c31055931e323a50da44224dee0647aecdbc05b3e97692d2b0",
+      "bytes": 9906
+    },
+    "IgniteStatus/localization.lua": {
+      "sha256": "619757d8380d878f84e2043b3edc6e3138e3fb2e1822e52615d42bd6dc1dd812",
+      "bytes": 2723
+    },
+    "IgniteStatus/Textures/b6.tga": {
+      "sha256": "8bd07b7fbe43437928eb4c83464b909395cf669f6ff560a21b4e5dc994555ad1",
+      "bytes": 6188
+    },
+    "IgniteStatus/Textures/buttonD.tga": {
+      "sha256": "8d7ac5f67140552ec7742b7cf9b5bc5b7c866b7c24c6d082ffde085d7ca6dc22",
+      "bytes": 1068
+    },
+    "IgniteStatus/Textures/buttonL.tga": {
+      "sha256": "3657199375d2581d16a1f2d5d6f265648c0d6eea3a6a9c77d3f9ad444dd18faa",
+      "bytes": 1068
+    },
+    "IgniteStatus/Textures/CloseButton-Down.tga": {
+      "sha256": "89388215ec147eb2ad755065a453aa204b1fce566cba031afd531a641261e646",
+      "bytes": 4140
+    },
+    "IgniteStatus/Textures/CloseButton-Up.tga": {
+      "sha256": "7fd07ff2722107a85c63b2cdf8b3da47609926c8ffa10a9a697a432209c530b1",
+      "bytes": 4140
+    },
+    "README.md": {
+      "sha256": "d357d0b7ad651c661252a146ae80b990a9e73f6d026600729e57a5cc408cc2cd",
+      "bytes": 549
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

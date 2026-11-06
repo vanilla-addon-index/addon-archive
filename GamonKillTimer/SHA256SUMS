@@ -1,0 +1,11 @@
+3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094  source/.gitattributes.upstream
+39b48a08bc89b0390642d250661c23781351a7a7a5ee70388bb13df140109c32  source/.gitignore.upstream
+3920dbf6e7f468ee82d3f8b3b21db4998921551b02a7193c3e2efb7f0b6b21d4  source/GamonKillTimer.toc
+ef08973b85429d9ddc51b67f104d1314d43fe51b8586b06ec146dbb1a79568d2  source/GTK.lua
+10a2b22dbbebbf3974e3a9aac9c9b3f879bd2fb89b5a7113a6e038fa105abb2d  source/Libs/AceAddon-2.0/AceAddon-2.0.lua
+c2f35be6bd677972f35436e0da087812fb9366b293faa6b6d2820228b2763514  source/Libs/AceEvent-2.0/AceEvent-2.0.lua
+c2aea5c71e1a83e5018d050336b367aa33eb44007d0a9965fbeaf4191d248ffa  source/Libs/AceLibrary/AceLibrary.lua
+71d5f6485c4fc89bd29d50a38b03b2cb2885d68833590b131a6801628a799d4a  source/Libs/AceOO-2.0/AceOO-2.0.lua
+c72b3f4692a6b7ff764c4cffda0de092a4ab35b7d21dd509bfc2a7ad4b8397fe  source/Libs/CandyBar-2.0/CandyBar-2.0.lua
+cbb8577f5a891481cfe0b61f3b3f84cc9c10bed5dcb1137d6f2672d5772df277  source/Libs/Compost-2.0/Compost-2.0.lua
+165c8c67460b4bf25381589a8fbc195b8180ae661c4dd9cf7496c31ddfc4d4b6  source/Libs/PaintChips-2.0/PaintChips-2.0.lua

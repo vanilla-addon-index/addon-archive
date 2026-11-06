@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: FriendFinder
+## Version: 2017-04-16
+## Notes: Tries to add your old friends to your friends list! Add the names to FriendFinder.lua!
+## Author: Coax - Anathema PvP
+
+FriendFinder.xml
+FriendFinder.lua

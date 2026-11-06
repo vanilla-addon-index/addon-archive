@@ -1,0 +1,33 @@
+{
+  "upstream": "https://octowow.st/git/Mr_Rosh/ShamanWeaponImbueWarning",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Mr_Rosh",
+    "repo": "ShamanWeaponImbueWarning",
+    "name": "ShamanWeaponImbueWarning",
+    "url": "https://octowow.st/git/Mr_Rosh/ShamanWeaponImbueWarning",
+    "api": "https://octowow.st/git/api/v1/repos/Mr_Rosh/ShamanWeaponImbueWarning"
+  },
+  "commit": "8d09a966df89cabc8ee9b2a2177b8902166f5d47",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "1a1dbe176bc233b499d35a57db7513f2941c99ab9759f177830c9149be99005b",
+      "bytes": 66
+    },
+    "README.md": {
+      "sha256": "8f6256a290582e651dde021c02aa91fa294d09dd16f085c8e4e7b875c9c19a88",
+      "bytes": 1003
+    },
+    "ShamanWeaponImbueWarning.lua": {
+      "sha256": "d7309f485cdd6a5293644df26062f85324ea85b01e5caa1b7c25f0f0d050b61d",
+      "bytes": 2926
+    },
+    "ShamanWeaponImbueWarning.toc": {
+      "sha256": "e12cb255ae4fbd68f4f19638a7d40283e3ccc1d4f68fed1894d312ad7e9a9af7",
+      "bytes": 229
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

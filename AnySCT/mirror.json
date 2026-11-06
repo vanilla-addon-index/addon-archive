@@ -1,0 +1,105 @@
+{
+  "upstream": "https://octowow.st/git/ShempError/AnySCT",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "ShempError",
+    "repo": "AnySCT",
+    "name": "AnySCT",
+    "url": "https://octowow.st/git/ShempError/AnySCT",
+    "api": "https://octowow.st/git/api/v1/repos/ShempError/AnySCT"
+  },
+  "commit": "76b3e1c58eda3c3d23a102e83d3ae953286ad9e8",
+  "sourceFiles": {
+    "AnySCT.toc": {
+      "sha256": "76b24f75e8c69e3d221079073e83cb4b3f0a2c57518465d1c971a1761735466f",
+      "bytes": 420
+    },
+    "CHANGELOG.md": {
+      "sha256": "a536392dd1392d8118da90fa952aa9767399425d7d4a23061c912dbf96a5b369",
+      "bytes": 5227
+    },
+    "core.lua": {
+      "sha256": "7f64d70c1bd6efdcd44caed38daeb6ad6986fafb2a6e221217a6393dc8d83bb7",
+      "bytes": 66340
+    },
+    "LICENSE": {
+      "sha256": "a59df5624d5f7b8fee2165941f94928f7aff96a8a40feb059e236e26f9b1ea79",
+      "bytes": 1067
+    },
+    "menu.lua": {
+      "sha256": "9ea00a6cb37f2aef91b075393b86c67ffca87a1c3a5bc4547e0b2eef3eadbb66",
+      "bytes": 5582
+    },
+    "minimap.lua": {
+      "sha256": "39637981809167bc216c53211859de3487ecc888d194d1a04b606049973ddd15",
+      "bytes": 3764
+    },
+    "options.lua": {
+      "sha256": "c59a2f2f1f3e2472701961096041adf330bb5722754806e8099b49eeea07bfa2",
+      "bytes": 42735
+    },
+    "parse.lua": {
+      "sha256": "3ea71ff15a0299e25326488146c50f7823d7e53dc671bc5b24cb90031c89e2b9",
+      "bytes": 16195
+    },
+    "plates.lua": {
+      "sha256": "226cc6f98f706999276317043e37357b957bec487da43568140492c41bc12938",
+      "bytes": 10813
+    },
+    "README.md": {
+      "sha256": "626fcd58d552958a16866713d810ecb0fcbcd8ad4831986f02dfc2814789b305",
+      "bytes": 23739
+    },
+    "screenshots/anchor-go.png": {
+      "sha256": "41bada2c9d6713dd728e349a555bab2a9c060de36c69a1da5632f79bb9be2cd1",
+      "bytes": 412638
+    },
+    "screenshots/anchor-wait.png": {
+      "sha256": "190ab36eeb24b99f407910e7ae68f3717577b49362ffa5d2c2d26a4be45da03d",
+      "bytes": 380360
+    },
+    "screenshots/crit-block-go.png": {
+      "sha256": "a744d02fee3f28f9893056191233a8adc7e78c67cc43fadf56c2ce0e22d27285",
+      "bytes": 1099956
+    },
+    "screenshots/go.png": {
+      "sha256": "12af8e5a82bf81fa48cac69b3435c4d1dc1f66f5f4f3893318b6a48c1bb89457",
+      "bytes": 1069417
+    },
+    "screenshots/hero-miss-resist-wait.png": {
+      "sha256": "b2393412531243999a05ff167523923cf8baeeaeece295349e8e94722f9a074c",
+      "bytes": 999598
+    },
+    "screenshots/options-colours.png": {
+      "sha256": "4fbb3fef533eb9ecebb91309cc358e61ea01d54ee1bddbd9096a1fac5cc82626",
+      "bytes": 465693
+    },
+    "screenshots/options-placement.png": {
+      "sha256": "caa064ab5c8ce7dfeb64407ccb01f7c458cc0b44dadbf7592eed60719dd0a085",
+      "bytes": 470505
+    },
+    "screenshots/options-targetscts.png": {
+      "sha256": "0c90f1e6532fc5d4131d5b00959bb0a6d3eb80e3fce1d003d1d3ecbe91a0c4ec",
+      "bytes": 474795
+    },
+    "screenshots/options-text.png": {
+      "sha256": "31389bb0af69fccf4b18f32340be75edfa3b61d6c7e71cb77601beccc58e5743",
+      "bytes": 479694
+    },
+    "screenshots/wait.png": {
+      "sha256": "ffd928b90f278ce2e71d3c6609cb9eb017f6bf86096ad0514b832052c0a49eb9",
+      "bytes": 1301357
+    },
+    "sct.lua": {
+      "sha256": "0708a45eb18fb0f1f914baa15e6d20af8144cabaf638736d4b1406f8fc935635",
+      "bytes": 41401
+    },
+    "widgets.lua": {
+      "sha256": "2e16a8fabcc7bb7f8216e50094cfd2b5606193ad53ed0ea131da58ee0ffa7a41",
+      "bytes": 2132
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

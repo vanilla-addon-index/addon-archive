@@ -1,0 +1,273 @@
+{
+  "upstream": "https://github.com/laytya/PowerAuras-vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "PowerAuras-vanilla",
+    "name": "PowerAuras-vanilla",
+    "url": "https://github.com/laytya/PowerAuras-vanilla",
+    "api": "https://api.github.com/repos/laytya/PowerAuras-vanilla"
+  },
+  "commit": "9b53d259d5cd498d5e55510de9705c889368db8d",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    "PowerAuras/Aura1.tga": {
+      "sha256": "25fff10662479ce66a254fd66be51e6e9d437189548c3d95510971c83e4a9866",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura10.tga": {
+      "sha256": "ba82a92ac17dfa6321bcecc70059e8debd456b9f7eb6fd8564a7fdc2c9485aab",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura11.tga": {
+      "sha256": "a3315de863a939d3a014569fe9b9880a1e09c3cfcd0c52915244acd90f7a769b",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura12.tga": {
+      "sha256": "b488d7cce659613ef3ca99ed7fc800fd93f0ef99f5aff3d1e7c5e1e86841d4cd",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura13.tga": {
+      "sha256": "5c803ac55257733c8e692b63ef7280dfe371508b066497abf86710dd3922a6ea",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura14.tga": {
+      "sha256": "1e9f43a74521cf767d7ceec2e10f38509f042a134984b09032c3718ff0b70c72",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura15.tga": {
+      "sha256": "b3036d249866847579a457476b3c22a091727bc4e1398c0ad2a8057807c5bf2a",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura16.tga": {
+      "sha256": "e9c3d840fe5eafd612aafb52e4e91e76609dcbdd8c665ac1fa34730a1a23e715",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura17.tga": {
+      "sha256": "15a4ba52e04cc09ac22de21d2e3bce500489d2d145de26ccad15c9b149eb4806",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura18.tga": {
+      "sha256": "17499f2dcd21f554611ff1e2b5b2ecfa0f61471086cfb8c79579f500a3b9e183",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura19.tga": {
+      "sha256": "49e7aeaa5d8cface98da5bbc8ad67d0c868bfa04a1eacb2f7b6b2949829a9883",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura2.tga": {
+      "sha256": "a295314cebf19fb8f4866cbb8085960087251ec236562d3a7c9f04ba9a7b4c0e",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura20.tga": {
+      "sha256": "d8787a4b567e5a259f58b123f2a62d19c11a0ff2b857dcc2a10ab6155bb3bdc6",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura21.tga": {
+      "sha256": "647a3ca91d1bcde663c254104df9c6934208a30d8ebe63f4d45902da87d971ae",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura22.tga": {
+      "sha256": "83525c8753abee52d8410a9cb82d14bfb83ec8a7095157ba4ab835016d466751",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura23.tga": {
+      "sha256": "ab32a7d3cc6d2f02dc1af560e16372463f2ecf6ea2b6e0090c89ae755f27fe9c",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura24.tga": {
+      "sha256": "bbdfa87ac9da10626dec06a946423ad747bb2e7ebcf036d43ce980d0251aa996",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura25.tga": {
+      "sha256": "6706ca67a6dfc5c5103cedaa7b8adf8f15592926dfbc875182e369f25a78558a",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura26.tga": {
+      "sha256": "587cb2bc205a269c5a9fb34b840ae6574656cdd3fca1e87ead073c1cc95a0533",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura27.tga": {
+      "sha256": "1e958e2b6dd9e408085fcc7b30a662b65bcb99b1c8d5c39cc9f567bc0a6e7790",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura28.tga": {
+      "sha256": "a8429c2e001e4a37f509807f8fcbd29b86fc1a41d434cdd2d9a31470ce9f8d26",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura29.tga": {
+      "sha256": "1fc1bee8299a7fedd5eb338dd75838321b1184f8c647c59144c0443f7e6521ea",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura3.tga": {
+      "sha256": "f7e163aeb0f7f29c7b7cce906fd732742f144a424ad1afc2408dfc7e93e32105",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura30.tga": {
+      "sha256": "ee4dc080f749e496ae7187647cce202d60fc4602c2deffd1cef358f8db64204d",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura31.tga": {
+      "sha256": "f88f1a86e3f12eb4441913f66906955fe403583fc00217fe5ce1b8dc33696351",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura32.tga": {
+      "sha256": "4ba7d70e336e58a68623495e5099a7a876ae550de77079559d17217997fcd40c",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura33.tga": {
+      "sha256": "345c850e8189c17c6b191ee11d92f79d0fc0cdedff38aa003200137e1040e01f",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura34.tga": {
+      "sha256": "d2015ae8fa65fb355c66a43acd11cd94e1b50ce956ad6b3121f897ef99f2cc78",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura35.tga": {
+      "sha256": "6d1a662774c6a51b326d82a3ddd6c5bc966bc1d9f218af5809cd7b3f87b55695",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura36.tga": {
+      "sha256": "498f6afdbd47d21faadbde1abdf386671e128f675f275ed6ff7c38e7bea02087",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura37.tga": {
+      "sha256": "5fcc50c39e888c939e6c852a7b8eb4d8c4826357456bbf7d2dd9bba429d080f3",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura38.tga": {
+      "sha256": "c472166bb9bfdfe36bc31f3763193343dd981d1dbc14e2e73cc6d86e71061874",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura39.tga": {
+      "sha256": "b0cc3e942406492deccaa5e45f01fbe317dcf68782c796a79d724ce403934a7c",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura4.tga": {
+      "sha256": "9c71a5ce4402f661d5c53ae37535d9b0ac63076df3a95cd10139bb5706dfccc9",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura40.tga": {
+      "sha256": "abf95748a865e1960a4a202b03e691b95e73e5be8e0077a04338f15f12828932",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura41.tga": {
+      "sha256": "2edd1373a919369eeac7031bb499f886874c301d26e6b4a4dd6db33f8d2b80db",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura42.tga": {
+      "sha256": "eaa2c35ffcfed60710610e73391ca94267b44e8562e387c7cee1e6530adbcaaf",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura43.tga": {
+      "sha256": "a0f77ef68173231d578b96f900706c9a0249073a5e85d4dd07e7c49b1a4a3471",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura44.tga": {
+      "sha256": "ecbc7b4e65b36c99fec9faa0939a4813f6101a202d34b3c5347123676a0cbb25",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura45.tga": {
+      "sha256": "f2853d59bfb17b56c671b9d0c2bd8316ff086e3722fd88444e78c41028512f11",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura46.tga": {
+      "sha256": "8aeaf8bbfa7ad37cd6444ecfdf2224050269fecbd56af843c288619d7bb28c6a",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura47.tga": {
+      "sha256": "94a9207efee660bc6449330f55bd2b9344e80b265f5b1e61c3c541f10e1e6715",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura48.tga": {
+      "sha256": "0f9cdfe180312346a116c77d700712f03008cc117d8c9ffe7438bd8a58891fae",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura49.tga": {
+      "sha256": "dbe8e209f6432b502a31824b794ceaf27f949dd4c5e09b3792ceb80de8a9c7ce",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura5.tga": {
+      "sha256": "b1dc5127e238749d39dca229caa37607004853504a831570025ece473d0fdb67",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura50.tga": {
+      "sha256": "443b075794fd2adf48bd8a98a0ce98405fe3e8e6a0e1859120b239c90947ce49",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura6.tga": {
+      "sha256": "8f34844df3c82e9ce839da8325e6c128aeaa658e51b4cf252f4a20d194cf45bf",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura7.tga": {
+      "sha256": "03236cb91b7ab2c70283e246ba538ed6370cdb0a835f06c89e0d62242aaf4fac",
+      "bytes": 196652
+    },
+    "PowerAuras/Aura8.tga": {
+      "sha256": "4392684a1f83b4399a55eef5f75edf087fe0acb99fdfd1b02e99a97ccf1bee48",
+      "bytes": 49196
+    },
+    "PowerAuras/Aura9.tga": {
+      "sha256": "4f823e3cf8297b11cdeafa998c1895f49691d1dd8591a8a65042357a07f84653",
+      "bytes": 49196
+    },
+    "PowerAuras/localisation.lua": {
+      "sha256": "c8f0fc1db6f64dd5f91578081a354e569bb3ca7b1ec5abf0d9810891b022d01a",
+      "bytes": 16694
+    },
+    "PowerAuras/Notes.txt": {
+      "sha256": "a6d896bcf41bc67f302b1ccdc8f6048a97639bac009b950925df204af79a757f",
+      "bytes": 4393
+    },
+    "PowerAuras/PowerAuras.lua": {
+      "sha256": "8bd837dee7ccc615a13c9e499b2b30ec7bcc6632e9e62f21ca8bdcab2be9bc88",
+      "bytes": 75777
+    },
+    "PowerAuras/PowerAuras.toc": {
+      "sha256": "c3c69582bef7327175dd5ac8d2849a632ee698148b8f23ac1db7a1315c447223",
+      "bytes": 465
+    },
+    "PowerAuras/PowerAuras.xml": {
+      "sha256": "ba652cbfa4eff9898455b1183ea32f5df8e21d336555abca54ce671adf2732e0",
+      "bytes": 54636
+    },
+    "PowerAuras/PowerAurasList.lua": {
+      "sha256": "6c443d0593d8152b553eea6afcb6852f49a546de99c5c6c9eed28ec7ddd5f5dc",
+      "bytes": 22280
+    },
+    "PowerAuras/PowerAurasList.xml": {
+      "sha256": "9ad41f274970cc1aae0142509fef88b939b4e504dae881c447b4aef156f6fcf4",
+      "bytes": 13565
+    },
+    "PowerAuras/TexturePack.txt": {
+      "sha256": "33728e042e2b7b117807819b1bc155ae5ba2ad26684c85a9d2d05762ee0314e7",
+      "bytes": 954
+    },
+    "PowerAuras/Timers.tga": {
+      "sha256": "42d15dbe189dac008427034eccade8efeba72e16b3dec47d4a79a03e5103c057",
+      "bytes": 196652
+    },
+    "README.md": {
+      "sha256": "a030e07fe29563a350b234edcd996e5f5f5e3ff8a362f0ebd373e2fb7c369f1c",
+      "bytes": 1740
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "17599788": {
+      "tag": "v2.21",
+      "folder": "v2.21--17599788",
+      "assets": {},
+      "source": {
+        "sha256": "26b9073603d3f11efeb2af236187b46618ea252a34dd1eebc0edd78160f98526",
+        "bytes": 629203,
+        "path": "releases/v2.21--17599788/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/laytya/PowerAuras-vanilla/tarball/v2.21"
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "upstream": "https://github.com/gttnvk/unitscan-soft.git",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "gttnvk",
+    "repo": "unitscan-soft",
+    "name": "unitscan-soft",
+    "url": "https://github.com/gttnvk/unitscan-soft",
+    "api": "https://api.github.com/repos/gttnvk/unitscan-soft"
+  },
+  "commit": "5fe620bc7512af6e23faf30148b4c9007e75918d",
+  "sourceFiles": {
+    "Event_wardrum_ogre.ogg": {
+      "sha256": "5d89babab4810c0c28507a3d42c3266fb68c73c46f61c1457a45ee399d55ffd6",
+      "bytes": 36637
+    },
+    "gruntling_horn_bb.ogg": {
+      "sha256": "69f26434436600de00b3506b07047914563d603aa2e8027b1d999ee7ead579d1",
+      "bytes": 29442
+    },
+    "preview/unitscan1.jpg": {
+      "sha256": "7a74683bd23d3b36b59e6fa3b35c05dad52327a43a7de8f719108e9fc7d3b96f",
+      "bytes": 107004
+    },
+    "preview/unitscan2.jpg": {
+      "sha256": "5ec66bbab7afa8542f92e66e13cfb2c3a814cdacdf722653dd3331141c4f8f47",
+      "bytes": 219884
+    },
+    "preview/unitscan3.jpg": {
+      "sha256": "7bc539475d6530a7c872e486d108bfff757ad9152f15ec97bed5f4a55a975a92",
+      "bytes": 141145
+    },
+    "README.md": {
+      "sha256": "f1cd1a6389ff08f173a9a791ce7d33cb631a3d1184b4e94bfe0578d78ba91674",
+      "bytes": 3473
+    },
+    "scourge_horn.ogg": {
+      "sha256": "dbb9c5e8919bd79e7509575e11fec1ea63a204dce606da5d7620d4a386c43bf7",
+      "bytes": 74163
+    },
+    "UI-Achievement-Alert-Glow.blp": {
+      "sha256": "0cb0305a234ba321f449a56152d7932c422b3a6ed9fa59043f66c6a3a60cb833",
+      "bytes": 88572
+    },
+    "UI-Achievement-Parchment-Horizontal.blp": {
+      "sha256": "261948af2f95a40d7d9d7af159784807557f36eeedec6acc258f8013500ab5b6",
+      "bytes": 88572
+    },
+    "UI-Achievement-Title.blp": {
+      "sha256": "40436fab4ee1ec9c1f5287ec5f5a39ce859ed21931c02c52f12e40526d501111",
+      "bytes": 44900
+    },
+    "unitscan-turtle-hc.toc": {
+      "sha256": "3c63cb87f33788fb776df3bb7f4a45ff759ceed70748dbe781c99fae20035751",
+      "bytes": 258
+    },
+    "unitscan.lua": {
+      "sha256": "4f81b5f3815cf6b00589bd7c13192920c0a7e69ffea06efd08525cc3ee0e7f77",
+      "bytes": 15525
+    },
+    "zonetargets.lua": {
+      "sha256": "bdcb0fb97ed8f7dc50d872bc6ecc0a0fb090b0747a87311932e0ffd84a49ee0a",
+      "bytes": 31436
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

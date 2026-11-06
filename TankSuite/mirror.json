@@ -1,0 +1,110 @@
+{
+  "upstream": "https://github.com/ShikawaLePaladin/TankSuite",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ShikawaLePaladin",
+    "repo": "TankSuite",
+    "name": "TankSuite",
+    "url": "https://github.com/ShikawaLePaladin/TankSuite",
+    "api": "https://api.github.com/repos/ShikawaLePaladin/TankSuite"
+  },
+  "commit": "f034b0e1656081df1052c3b921aca8584f213f65",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "512c0674a2a235dda36b11ec404b89186c9f77f41113b6b8b7efce6fff3b1bad",
+      "bytes": 90
+    },
+    ".github/ISSUE_TEMPLATE/bug_report.yml": {
+      "sha256": "618f5c6ea2f5b18276ebf59c2625e871971c3cf549d2ec42c41d48096df289b7",
+      "bytes": 795
+    },
+    ".github/ISSUE_TEMPLATE/feature_request.yml": {
+      "sha256": "1a931712dd9c576186c2bbb5718290977863dc06e7baa9ba71d244371d254b68",
+      "bytes": 346
+    },
+    ".github/workflows/ci.yml": {
+      "sha256": "2d5878e0714915f00d4170c0081b1f77e85f45bfe9cb3c38d72a4a5a18cc13b0",
+      "bytes": 1674
+    },
+    ".github/workflows/release.yml": {
+      "sha256": "723568d94994c4765364cfcac0f69fc5a654ccb1bfe1ab57c991c57c77d46f44",
+      "bytes": 1234
+    },
+    ".gitignore.upstream": {
+      "sha256": "b3f2d9972acc5ce4046927a237eb7b19ef9504c9817e606198bfafc4532f6ef4",
+      "bytes": 105
+    },
+    "Announcer.lua": {
+      "sha256": "92cf34ed239b49b7a72f69f203ebdd24b5c5a7eb603d8de34f8fb6b6b2baca27",
+      "bytes": 16882
+    },
+    "CHANGELOG.md": {
+      "sha256": "2230a07023e3802d7040ec9181c26acc6c5acea73b4d46fc6b5a182e01fd061b",
+      "bytes": 631
+    },
+    "CONTRIBUTING.md": {
+      "sha256": "d8cd696cb3293cf456f854ca00d5a851effab6497db8caaa2f4d3821a4255c17",
+      "bytes": 1761
+    },
+    "Core.lua": {
+      "sha256": "519c5c7fe3613c39db07d0c98ad883ac670828f3970ba0f8c175d2e51eb1afd4",
+      "bytes": 9380
+    },
+    "LICENSE": {
+      "sha256": "67436c4765609a4dc0077ee8dc5aabf5e2e4931ecfaedf9339f5def8054d7103",
+      "bytes": 1085
+    },
+    "Locale.lua": {
+      "sha256": "2021144572da3224481cba937c6c6162a1e9ba158c3e743d61e389ad896c05b7",
+      "bytes": 19473
+    },
+    "Menu.lua": {
+      "sha256": "59a295ff642ed292679651509e90d4f9b949b9a300051f70e9e7df0b5cf7a973",
+      "bytes": 22411
+    },
+    "Nameplates.lua": {
+      "sha256": "fb034b9481d9347122c21851f1b9d6a3d45584127ec76e0da1ee58d222abf8f2",
+      "bytes": 10499
+    },
+    "README.md": {
+      "sha256": "88e5bcff21e56558bac076194d79fe7456d60874be5abcc1991886b7467b7f54",
+      "bytes": 5288
+    },
+    "Roster.lua": {
+      "sha256": "c5bb6204e2f4bff1a24673270d8f63b40c3d6e393fa49360717b96829b66118f",
+      "bytes": 9650
+    },
+    "TankSuite.toc": {
+      "sha256": "6d13940e8fe3534afe24306d81d070dd2c2ec1f21da017777a61522e6b22d718",
+      "bytes": 695
+    },
+    "UI.lua": {
+      "sha256": "d51a546f488025bf5633268bfd05b03f03ddf997d6c1f14ddb9b9614f9704666",
+      "bytes": 13469
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "400429630": {
+      "tag": "v1.0.0",
+      "folder": "v1.0.0--400429630",
+      "assets": {
+        "601782494": {
+          "sha256": "17b6593cf99fb6384f17dd128ed776ff8bb04128698be969e8f65d7809ea97ab",
+          "bytes": 36492,
+          "id": "601782494",
+          "name": "TankSuite-1.0.0.zip",
+          "url": "https://github.com/ShikawaLePaladin/TankSuite/releases/download/v1.0.0/TankSuite-1.0.0.zip",
+          "path": "releases/v1.0.0--400429630/assets/TankSuite-1.0.0.zip"
+        }
+      },
+      "source": {
+        "sha256": "8966f7c6048b39962a58a2f4464969a4702d26a30bc65faf24dae9083f13322e",
+        "bytes": 35013,
+        "path": "releases/v1.0.0--400429630/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/ShikawaLePaladin/TankSuite/tarball/v1.0.0"
+      }
+    }
+  }
+}

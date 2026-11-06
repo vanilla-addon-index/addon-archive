@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/ttcremers/GrayAutoSell",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ttcremers",
+    "repo": "GrayAutoSell",
+    "name": "GrayAutoSell",
+    "url": "https://github.com/ttcremers/GrayAutoSell",
+    "api": "https://api.github.com/repos/ttcremers/GrayAutoSell"
+  },
+  "commit": "a53ac93bfbe12a1a0b77b588060051e19123697f",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "ba3bef106d742aed11c7b830b1b0b6599d730917f083fae5eb536c1407a6392c",
+      "bytes": 17
+    },
+    "GrayAutoSell.lua": {
+      "sha256": "7c8c13ada5e9d68eb1439bf5c09e651efe93240d531a921d7dac367153fc7e64",
+      "bytes": 3576
+    },
+    "GrayAutoSell.toc": {
+      "sha256": "fdc3245e075b7ead90ecfe8e54fd87ca4637f0b8cc0364fe4587a65f19a4f145",
+      "bytes": 333
+    },
+    "GrayAutoSell.xml": {
+      "sha256": "0f28cc36bc7d368ab707c9503d7b88d37a28709b7a4c4fbec67d8831ba598d09",
+      "bytes": 374
+    },
+    "LICENSE": {
+      "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+      "bytes": 35141
+    },
+    "README.md": {
+      "sha256": "68fc332e9a52ec703cbe2dff544fab09cd089e412f5e642495dc4ba19f5db595",
+      "bytes": 789
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "7053057": {
+      "tag": "v0.1.4",
+      "folder": "v0.1.4--7053057",
+      "assets": {},
+      "source": {
+        "sha256": "57d5e524690e21d3ea775dbf9747c55567a5301e713a6de68c193560f43a06e1",
+        "bytes": 14905,
+        "path": "releases/v0.1.4--7053057/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/ttcremers/GrayAutoSell/tarball/v0.1.4"
+      }
+    }
+  }
+}

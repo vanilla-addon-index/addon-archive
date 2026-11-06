@@ -1,0 +1,114 @@
+{
+  "upstream": "https://codeberg.org/Pizzahawaii/PizzaLoot",
+  "source": {
+    "kind": "repository",
+    "host": "codeberg.org",
+    "owner": "Pizzahawaii",
+    "repo": "PizzaLoot",
+    "name": "PizzaLoot",
+    "url": "https://codeberg.org/Pizzahawaii/PizzaLoot",
+    "api": "https://codeberg.org/api/v1/repos/Pizzahawaii/PizzaLoot"
+  },
+  "commit": "f1b90b98e9012c8ed32f3c623bee814879bbe2f9",
+  "sourceFiles": {
+    "img/glow.tga": {
+      "sha256": "6f7edf3e33f4d4735a8e907ee03ac1cea3cbf65b0d9021ead50be6a3e246b3e0",
+      "bytes": 6990
+    },
+    "lib/PizzaSauce.lua": {
+      "sha256": "672619203cce0932e297be29da6ac4985e8b0f8389548be413a14e993a384f32",
+      "bytes": 40119
+    },
+    "PizzaLoot.toc": {
+      "sha256": "1f3666ae6650816fbffe833290bd35373d929ba38832964a2fbcff1b5cc38842",
+      "bytes": 456
+    },
+    "README.md": {
+      "sha256": "445385066ecc7c29c83fb8e964ad3e219af16cf5e9eead611eec2c21aa2d4268",
+      "bytes": 2818
+    },
+    "src/anchor.lua": {
+      "sha256": "e8537ed64ff19c878fffcb6d45614492838303f3ad3888eaad1f7c95997def9c",
+      "bytes": 1683
+    },
+    "src/banner.lua": {
+      "sha256": "d5acf622de46b4a35cdb93b0ce74c053c960b9e6954393fcf5a6c274478ef106",
+      "bytes": 6415
+    },
+    "src/commands.lua": {
+      "sha256": "1d5e326c3707941820e175606ed3c5d7e99afa19f29543983d2a9e981d340d2c",
+      "bytes": 4081
+    },
+    "src/confetti.lua": {
+      "sha256": "d2682d40ba75cbf1b4fa439e2e065779fe1ca6cfe097ce4d95c5c06c5018319c",
+      "bytes": 3140
+    },
+    "src/config.lua": {
+      "sha256": "5d171956a179930b98bc5da533a3344c6d13bc6b055a3fec16ebb56a774f80f0",
+      "bytes": 395
+    },
+    "src/lootwatch.lua": {
+      "sha256": "9026d9d96d74a83b6a292db4e9148421c06bb4923191dcfa2b87915064962b44",
+      "bytes": 778
+    },
+    "src/main.lua": {
+      "sha256": "c74a71a2daeb6927dbbbb33e1d649c990c5be95ed8949f76dfd9832fc68fb4d7",
+      "bytes": 870
+    },
+    "src/money.lua": {
+      "sha256": "19c9b97841d8364da9bff706f82cd98c225c100687d814fc304ea89101b4db0e",
+      "bytes": 1373
+    },
+    "src/moneywatch.lua": {
+      "sha256": "b195d26885acd097a2645ea91381c419a2530fe674eb015ce99d78eeb3aeda1c",
+      "bytes": 2322
+    },
+    "src/notice.lua": {
+      "sha256": "c1b095e104a34468f73863a907c5623860e9b361b692bba84869b3220b4424f2",
+      "bytes": 687
+    },
+    "src/queue.lua": {
+      "sha256": "07efc031f09f269058c895bcf5d379edfe496c10328c471afcc1f1a04f7a49ad",
+      "bytes": 604
+    },
+    "src/row.lua": {
+      "sha256": "612711356b506409db1f0b8031d308d410dabd22a585d6fcb6a2f3e64589c2a5",
+      "bytes": 10145
+    },
+    "src/stack.lua": {
+      "sha256": "966ce5102a9b4b846b7303ceb2809e0d0d445057975c27828719d87c8c6fa863",
+      "bytes": 1808
+    },
+    "src/timer.lua": {
+      "sha256": "80c815b2df0cffed95391299a69903cafbf77578e34ea9ba44454d9f9f4f0e71",
+      "bytes": 1055
+    },
+    "src/utils.lua": {
+      "sha256": "4677e5d94768600205bc5a1061f1e5d5875012906e4ed581c1dd5045106a741f",
+      "bytes": 1972
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "12408658": {
+      "tag": "v0.0.1",
+      "folder": "v0.0.1--12408658",
+      "assets": {
+        "1944082": {
+          "sha256": "bb8168c9d23c011998e2479e52ae11abffc14dfa91c513a51f7c7f6408c111fd",
+          "bytes": 25143,
+          "id": "1944082",
+          "name": "PizzaLoot-0.0.1.zip",
+          "url": "https://codeberg.org/Pizzahawaii/PizzaLoot/releases/download/v0.0.1/PizzaLoot-0.0.1.zip",
+          "path": "releases/v0.0.1--12408658/assets/PizzaLoot-0.0.1.zip"
+        }
+      },
+      "source": {
+        "sha256": "46fb8c6d7d498b636c068cf9bb9435e8f2b3e7d63e968cb1e0ef5bff99e1dc3f",
+        "bytes": 21634,
+        "path": "releases/v0.0.1--12408658/upstream-source.tar.gz",
+        "url": "https://codeberg.org/api/v1/repos/Pizzahawaii/PizzaLoot/archive/v0.0.1.tar.gz"
+      }
+    }
+  }
+}

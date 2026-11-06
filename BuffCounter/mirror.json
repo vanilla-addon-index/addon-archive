@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/Geigerkind/BuffCounter",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Geigerkind",
+    "repo": "BuffCounter",
+    "name": "BuffCounter",
+    "url": "https://github.com/Geigerkind/BuffCounter",
+    "api": "https://api.github.com/repos/Geigerkind/BuffCounter"
+  },
+  "commit": "52101d1fc9570f5618ed0bb5c0c4f113cfeece75",
+  "sourceFiles": {
+    "BuffCounter.lua": {
+      "sha256": "b2818de3bbbefa83502a5af6316608afe1f9f878895a461a4163dd6a386472cf",
+      "bytes": 876
+    },
+    "BuffCounter.toc": {
+      "sha256": "4edd51a58922c3e284cd18fbf110848a912156af57cae0d1c11073fc2b17ae7f",
+      "bytes": 257
+    },
+    "BuffCounter.xml": {
+      "sha256": "1ec6d029e2c4cd59cd456d2298df10cc725ca7a69c846971263c5b9fc4198e43",
+      "bytes": 1176
+    },
+    "LICENSE": {
+      "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+      "bytes": 35141
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "4819275": {
+      "tag": "b1",
+      "folder": "b1--4819275",
+      "assets": {},
+      "source": {
+        "sha256": "002f7e4d5aa4710b7ee863458d47ce61d92d847dd20fb08b8dc72a5076e2443f",
+        "bytes": 1345,
+        "path": "releases/b1--4819275/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/tdymel/BuffCounter/tarball/b1"
+      }
+    }
+  }
+}

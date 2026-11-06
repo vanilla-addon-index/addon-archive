@@ -1,0 +1,8 @@
+<Bindings>
+  <Binding name="OCTOSTREAMCHAT_HISTORY" header="OCTOSTREAMCHAT_HEADER">
+    MicrochipChat_ToggleHistory();
+  </Binding>
+  <Binding name="OCTOSTREAMCHAT_SETTINGS">
+    MicrochipChat_ToggleSettings();
+  </Binding>
+</Bindings>

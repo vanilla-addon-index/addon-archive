@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/Hosq/HideNamePlates",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Hosq",
+    "repo": "HideNamePlates",
+    "name": "HideNamePlates",
+    "url": "https://github.com/Hosq/HideNamePlates",
+    "api": "https://api.github.com/repos/Hosq/HideNamePlates"
+  },
+  "commit": "c95fde46d944690e5db263a6310cb47c5898bf5a",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    ".gitignore.upstream": {
+      "sha256": "3593d7cdb24d1a41b8154313c1e5df6db33c4f93895eb7cb1a852854cf11ac9d",
+      "bytes": 696
+    },
+    "HiddenUnits.lua": {
+      "sha256": "57fae11dc351925a967156b0a956805fe178a8a71ba2ef52ce9657c55386b26a",
+      "bytes": 810
+    },
+    "NamePlateFilter.lua": {
+      "sha256": "ae2b759888dbe754f8bf9116ecd41cd58903473964a65e43e51ae83b73546863",
+      "bytes": 878
+    },
+    "NamePlateFilter.toc": {
+      "sha256": "08e6e34567e0c51def7800397c9577198c2fed9303639b891fc5e29ae414fb16",
+      "bytes": 167
+    },
+    "README.md": {
+      "sha256": "a39183cab4c41b1c403d3fac2ab77e8f1c6a13cc99d32086f32c154514dd9a55",
+      "bytes": 231
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

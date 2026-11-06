@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/AtheneGenesis/Vanilla_ManyQTItemTooltips",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "AtheneGenesis",
+    "repo": "Vanilla_ManyQTItemTooltips",
+    "name": "Vanilla_ManyQTItemTooltips",
+    "url": "https://github.com/AtheneGenesis/Vanilla_ManyQTItemTooltips",
+    "api": "https://api.github.com/repos/AtheneGenesis/Vanilla_ManyQTItemTooltips"
+  },
+  "commit": "4571462e87ecc91d7eb1d711ff17c27e5c9ffcb8",
+  "sourceFiles": {
+    "ManyQTItemTooltips/border.tga": {
+      "sha256": "574c37fdc3cb25ee468ed35226ed836607092ad144de207fd21676ffb252bee1",
+      "bytes": 3378
+    },
+    "ManyQTItemTooltips/ManyQTItemTooltips.lua": {
+      "sha256": "daebbbe8d5771b1701cc983715b39035e1afa19ff461ab1a53db30143f6c8915",
+      "bytes": 3597
+    },
+    "ManyQTItemTooltips/ManyQTItemTooltips.toc": {
+      "sha256": "6e3a4c4b068937d6a5a022a7d50c318eb025eec7b9640fb5252eaa910f486de4",
+      "bytes": 251
+    },
+    "ManyQTItemTooltips/ManyQTItemTooltips.xml": {
+      "sha256": "b36109c4b8a5b47f9c8d16f55636f6c87b812ab4382b7d506ccf6ba704beb95a",
+      "bytes": 4203
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "1869194": {
+      "tag": "v1.0",
+      "folder": "v1.0--1869194",
+      "assets": {},
+      "source": {
+        "sha256": "f6afbda0be8a01a8347f92f5807afea43df896bcb88a56ba4e94afd9b1f7b876",
+        "bytes": 2653,
+        "path": "releases/v1.0--1869194/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/AtheneGenesis/Vanilla_ManyQTItemTooltips/tarball/v1.0"
+      }
+    }
+  }
+}

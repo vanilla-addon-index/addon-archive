@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+
+# Browser-Exporte und Zwischenstaende der Importwerkzeuge.
+# Rohdaten gehoeren nicht ins Repo - nur die erzeugten Data/*.lua.
+exports/
+tools/exports/
+octodb_*.json
+
+# Release-Pakete
+dist/
+*.zip
+
+# Systemdateien
+.DS_Store
+Thumbs.db
+desktop.ini

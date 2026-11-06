@@ -1,0 +1,61 @@
+{
+  "upstream": "https://octowow.st/git/Freewood/Freewood-OctoWoW-Beasts",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Freewood",
+    "repo": "Freewood-OctoWoW-Beasts",
+    "name": "Freewood-OctoWoW-Beasts",
+    "url": "https://octowow.st/git/Freewood/Freewood-OctoWoW-Beasts",
+    "api": "https://octowow.st/git/api/v1/repos/Freewood/Freewood-OctoWoW-Beasts"
+  },
+  "commit": "0a9610f6f748ee6f51b215abb039948196805f52",
+  "sourceFiles": {
+    "Beasts.lua": {
+      "sha256": "491bb7f67cf3a0da322a88c4b62c68c520f7d5ba8c3c192b47b18f589ba027a1",
+      "bytes": 42029
+    },
+    "BeastsUI.lua": {
+      "sha256": "334352c9a18dca9011f7e91c4b9fb57e8fd995cf552bbbca5278c894c4f02c0d",
+      "bytes": 39625
+    },
+    "docs/img/beasts.jpg": {
+      "sha256": "dc5c15b3a418d2dbf1cf93359c484e07843911309b2dfe2af7986180779b9049",
+      "bytes": 80409
+    },
+    "Freewood-OctoWoW-Beasts.toc": {
+      "sha256": "39cef23e47f408ea0a2028a26c2f205cd8fae7ea03a401ef3c3731d3acf4bad9",
+      "bytes": 567
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "Locales.lua": {
+      "sha256": "c5fc25bb7496c00569d523878cd111653a9bfb079e677763426fd277b8a25b5b",
+      "bytes": 11678
+    },
+    "MapOverlay.lua": {
+      "sha256": "53ae173bfdb982aeada8f101c775af05cbc4554a22754282da499a3b94bb59c1",
+      "bytes": 17011
+    },
+    "README.md": {
+      "sha256": "540bc8ebc510b053b5e7b83dabd04f0e3ddc4a6979a0b4fc143a44cf509b6854",
+      "bytes": 2441
+    },
+    "Sync.lua": {
+      "sha256": "f6b1bad77baf461b0e7c84b5290c1ce88d74bd098867fff0033300b9c501b26a",
+      "bytes": 39614
+    },
+    "SyncUI.lua": {
+      "sha256": "b7c0be36a0c9e4411e8ab264266bec753c52a1e59983473630f6968c6a5b5a1b",
+      "bytes": 11569
+    },
+    "Textures/Blob.tga": {
+      "sha256": "40cde318afada677a1d9e59744045fbd329699242e43627730388699b1c715aa",
+      "bytes": 65554
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

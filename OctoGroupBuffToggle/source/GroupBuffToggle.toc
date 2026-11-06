@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: Group Buff Toggle
+## Notes: Adds a Buffs checkbox below the party and shows member buffs beside the group frames.
+## Author: Babuni.dev
+## Version: 1.2.0
+## SavedVariables: GroupBuffsDB
+
+GroupBuffToggle.lua

@@ -1,0 +1,9 @@
+{
+  "id": "740",
+  "tag": "v1.2.0",
+  "name": "Wood and Seeds Gather 1.2.0",
+  "body": "**Install:** download `WoodAndSeedsGather-1.2.0.zip` below and put the `WoodAndSeedsGather` folder in `Interface\\AddOns`. Then close the game completely and start it again.\r\n\r\n**New in 1.2.0**\r\n- **Seeds**: every place to get farming seeds for a Simple Wooden Planter. 150 plant spots (Sandswept Carrots, Northwind Wild Grapes, Wildhammer Yams, Mountain Berry Bushes, Ripe Garden Watermelons and Pumpkins), plus the cabbage seed and mushroom spore vendors.\r\n- A **Seeds** box next to **Trees** on the world map. Right-click it to switch each seed type, or use `/trees seeds`, `/trees carrot` and so on.\r\n- Tree pins show the log icons without their black square, on a half-see-through backing.\r\n- Renamed from Octo Trees to Wood and Seeds Gather. `/trees` still works, and so do `/seeds` and `/wood`.",
+  "published": "2026-11-05T23:07:58Z",
+  "prerelease": false,
+  "url": "https://octowow.st/git/stealthzi/WoodAndSeedsGather/releases/tag/v1.2.0"
+}

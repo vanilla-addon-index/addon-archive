@@ -1,0 +1,129 @@
+{
+  "upstream": "https://github.com/cubenicke/EFCReport",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "cubenicke",
+    "repo": "EFCReport",
+    "name": "EFCReport",
+    "url": "https://github.com/cubenicke/EFCReport",
+    "api": "https://api.github.com/repos/cubenicke/EFCReport"
+  },
+  "commit": "a4ae1f56c2e3fbfd34b2804d59a0e0b214d4b5d4",
+  "sourceFiles": {
+    "EFCReport.lua": {
+      "sha256": "cde35770020db108dc39111b2114074170d6fff95ae83a2ada30d7293526948e",
+      "bytes": 7251
+    },
+    "EFCReport.toc": {
+      "sha256": "bae0da1f328591a3ac309b4820291017a2cf1730d75bae5b9791572db4ef76e1",
+      "bytes": 242
+    },
+    "Icons/abalc.blp": {
+      "sha256": "161d999e4006feca5ead9f5892bdbfa49db0af04794181f1d77091215664d912",
+      "bytes": 4244
+    },
+    "Icons/afence.blp": {
+      "sha256": "0f74f4e856f10c51b19877429f352d7befb18aa8ab7c9afd27ec5ad21b52ad43",
+      "bytes": 4244
+    },
+    "Icons/afr.blp": {
+      "sha256": "0828d17f47f5f56f7374ff3b81f6b09ca4ff82a35d730ae6d24735c6ddf5e24a",
+      "bytes": 4244
+    },
+    "Icons/agy.blp": {
+      "sha256": "146143e75fd3b82b856928eadf8ba5286ee0f9c7b702fa8f8792743ae280421d",
+      "bytes": 4244
+    },
+    "Icons/aramp.blp": {
+      "sha256": "97d37751071c56d37ca7f1cc29cac40e104fac19e2d8cc0dc6322038b34a8e22",
+      "bytes": 4244
+    },
+    "Icons/aresto.blp": {
+      "sha256": "6b6228719b6d4db1e4477e097e8bceae912c66dc6a72a9afed3c303cfb2ecd33",
+      "bytes": 4244
+    },
+    "Icons/aroof.blp": {
+      "sha256": "59d9fb22f6e883c205ab0308d05cebdb5040c48a91f9c73e7e789fe7ef7096e9",
+      "bytes": 4244
+    },
+    "Icons/atun.blp": {
+      "sha256": "7acb6186b50f81ab3d81c7d1106299795c1f151dbc0a4920f8da6e666cf88f78",
+      "bytes": 4244
+    },
+    "Icons/azerk.blp": {
+      "sha256": "0a0e9ac1ead86c8ccae103954383aae3ea0d1590e72bcb07c8475c58af6ed12d",
+      "bytes": 4244
+    },
+    "Icons/cap28.tga": {
+      "sha256": "03dce024951e3fb590ddac998eed56aaad17688d4a95c2ba5a910fefa9066231",
+      "bytes": 4114
+    },
+    "Icons/east.blp": {
+      "sha256": "71d8fb303c8150da28385779cd654387dba3b41bdf2158bc9eceeb469bb8d370",
+      "bytes": 4244
+    },
+    "Icons/hbalc.blp": {
+      "sha256": "6a5b900b4b02c5e3f1d1ebe5863469134d0a099b7b1f220e476dfe0cc1f12202",
+      "bytes": 4244
+    },
+    "Icons/hfence.blp": {
+      "sha256": "347e342a2eee28e33a4114104d051fc0ead80ca1678e8aa6bf26e26a4df129b0",
+      "bytes": 4244
+    },
+    "Icons/hfr.blp": {
+      "sha256": "906abfbd3b4426ee353c3600b9ff0849cb97417155a61141da22ca95c821519f",
+      "bytes": 4244
+    },
+    "Icons/hgy.blp": {
+      "sha256": "f3e2929a7e38dc1b85666036ab8144d585eb0bbad40707480d542de41ef877c7",
+      "bytes": 4244
+    },
+    "Icons/hramp.blp": {
+      "sha256": "1083e86dd1ed9e6761d5c91140d149ca4cdafc19a0d704ab50d5c37042430f3a",
+      "bytes": 4244
+    },
+    "Icons/hresto.blp": {
+      "sha256": "184c16dc725155c68532c085fa027013e4b7b0728f97a53b24cd0a41c8d1742d",
+      "bytes": 4244
+    },
+    "Icons/hroof.blp": {
+      "sha256": "812f6a1e5e3d918bcd1cd221f1f8002fb5c71feb4a76203ca60afe14d75a5ce1",
+      "bytes": 4244
+    },
+    "Icons/htun.blp": {
+      "sha256": "d6eabd9048cf0c4a349efd1b733366e758cacd3c58f09494b539b78e5b3a1c33",
+      "bytes": 4244
+    },
+    "Icons/hzerk.blp": {
+      "sha256": "f05493a33ab602fba06a22bd9b70a2431fb2b2abbaf2894c331318f3dcb211e1",
+      "bytes": 4244
+    },
+    "Icons/mid.blp": {
+      "sha256": "386380954d587ef6290d0102835a2dd7d6b654f735e6858c27f486121c680b89",
+      "bytes": 4244
+    },
+    "Icons/neutral.tga": {
+      "sha256": "a5f23466f692aa96348a27ab0b0d81b5d58a070542b93ed22678e2519e902b2a",
+      "bytes": 3090
+    },
+    "Icons/repic28.tga": {
+      "sha256": "60a2fcb1f6340e476f7c0575ce89313ee8b1bc898e00cf4fcd002621d206c460",
+      "bytes": 4114
+    },
+    "Icons/west.blp": {
+      "sha256": "95b892b9fc881790c2abfe98cec966ca352f06ea8dbce70fe54607bc471df5d0",
+      "bytes": 4244
+    },
+    "LICENSE": {
+      "sha256": "7d275476a0dfecc6a01f67081327bc45208e954d75cb9331d6dc429ee963c658",
+      "bytes": 1066
+    },
+    "README.md": {
+      "sha256": "b303adca6180033b1a80704e92f5bb1e7f4283f1577f712b84ff00bc379f443e",
+      "bytes": 342
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/graved/GuildMainTagger",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "graved",
+    "repo": "GuildMainTagger",
+    "name": "GuildMainTagger",
+    "url": "https://github.com/graved/GuildMainTagger",
+    "api": "https://api.github.com/repos/graved/GuildMainTagger"
+  },
+  "commit": "37c259e18473445ad3c96c70e5b785b7d432b164",
+  "sourceFiles": {
+    "GuildMainTagger.lua": {
+      "sha256": "4fbc10f789e81c266069f5adb0f484855c4f43f8bd50d862d88e484feba0bc4c",
+      "bytes": 19730
+    },
+    "GuildMainTagger.toc": {
+      "sha256": "f1cb6162a14eadc46e0ffe744d299cd8587b1ca8960c4db606dff9f850793698",
+      "bytes": 260
+    },
+    "README.md": {
+      "sha256": "9a1175be9546c9af862394ad9ede2e0d4639a97b201b01e238238fd4d7b33fb0",
+      "bytes": 2141
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,18 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+
+  <Script file="FriendHostile.lua"/>
+
+  <Frame name="FH_Frame" frameStrata="MEDIUM" toplevel="true" enableMouse="true" movable="true" parent="UIParent">
+    <Scripts>
+      <OnUpdate>
+        FH_OnUpdate(arg1);
+        FH_Update(arg1);
+      </OnUpdate>
+      <OnEvent>
+        FH_OnEvent(event);
+      </OnEvent>
+    </Scripts>
+  </Frame>
+</Ui>

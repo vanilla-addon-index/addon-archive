@@ -1,0 +1,121 @@
+{
+  "upstream": "https://github.com/tiffanyplus/TheoryCraft-Turtle",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "tiffanyplus",
+    "repo": "TheoryCraft-Turtle",
+    "name": "TheoryCraft-Turtle",
+    "url": "https://github.com/tiffanyplus/TheoryCraft-Turtle",
+    "api": "https://api.github.com/repos/tiffanyplus/TheoryCraft-Turtle"
+  },
+  "commit": "f286e035877847826923256e679739b2f20c1583",
+  "sourceFiles": {
+    "Docs/Addon Developer notes.txt": {
+      "sha256": "cdd6d699dc93b203027af14025919d4c0552215e940d109d81e2bdac8a90d758",
+      "bytes": 3983
+    },
+    "Docs/formulasused.txt": {
+      "sha256": "9f797563595fc1b4a959a26681da247d7a8692e8d3c002769d49f81fca355242",
+      "bytes": 4642
+    },
+    "Docs/instructions.txt": {
+      "sha256": "0372aae0193ab6a9035ffd17f13b928b7e5ccf414e6969b20a0a24b01298eb63",
+      "bytes": 322
+    },
+    "Docs/Notes to other Addon Developers.txt": {
+      "sha256": "258e7956a4ec7ffa357b4fd0a49db60e82b00c253f82710adcc71dd49bc5db7a",
+      "bytes": 3398
+    },
+    "Docs/Pull index talentree.txt": {
+      "sha256": "55632b6a324a25c567b5189c207b62ed10df6d055fc6eabb89ffe1fd56bb9d7d",
+      "bytes": 172
+    },
+    "Docs/README.md": {
+      "sha256": "14f950820078195aaa48aebc9a562506b827866834cf6c844af215cead12b0c0",
+      "bytes": 1790
+    },
+    "Docs/versionlogTCtwow.txt": {
+      "sha256": "667d578135028434a362b146a951ef8196fcb566205bc19d389dadce740c0f0f",
+      "bytes": 19528
+    },
+    "localization.de.lua": {
+      "sha256": "7597f2ed15bc406a62eb4fc8aded44c35f21e1966d5d19f6658d40dd8ca58805",
+      "bytes": 67328
+    },
+    "localization.fr.lua": {
+      "sha256": "a6ee4dd6c6ae840df6352ddf984e62c81b58dadafa5005d33434ce8742122159",
+      "bytes": 68362
+    },
+    "localization.ko.lua": {
+      "sha256": "554acc6be1b7bfdef7550ffc66c8f343b36bd9bea21775b9133e544989329839",
+      "bytes": 30818
+    },
+    "localization.lua": {
+      "sha256": "4594a36b5544d345af9ae269f8b23c4819d92de27c9839ccc66e997213143df4",
+      "bytes": 93891
+    },
+    "README.md": {
+      "sha256": "b41ea6c8a5f34ac67102f4082ca299d906afb110fa4b1567e61cbd7640fe7051",
+      "bytes": 1972
+    },
+    "spelldata.lua": {
+      "sha256": "6d12cfd1727f796d631af7821971343ac9db7f9b40f40e0d7c99605affba8c78",
+      "bytes": 55436
+    },
+    "TheoryCraft Stripped.xml": {
+      "sha256": "8ae3368ff7b711819a0b3011abeb1064263d2f3873aafda45aaae46b0861520e",
+      "bytes": 21812
+    },
+    "TheoryCraft-Turtle.toc": {
+      "sha256": "eaeaf014e45bd2d38c0b8360ae112ae9452713cc65bf4d6646e90892a4958afd",
+      "bytes": 416
+    },
+    "TheoryCraft.xml": {
+      "sha256": "0349eb5d4b543ba79113885da75d02672e51bbd150257c274eb5cbcff84f684a",
+      "bytes": 58572
+    },
+    "TheoryCraftBuffs.lua": {
+      "sha256": "608e6839fe09aed184b62b21c4bd7e85f8c23276d72adcf695a99b4d0878e2fd",
+      "bytes": 4040
+    },
+    "TheoryCraftColours.lua": {
+      "sha256": "32cceb92bb980e382a52f09039aa28f318d2c09e9b1e4e9bea798f77483aa2f3",
+      "bytes": 827
+    },
+    "TheoryCraftEngine.lua": {
+      "sha256": "492e5d82dd695fe9252b9d19f2a2bb70917647643460c3b6060751874592319e",
+      "bytes": 88725
+    },
+    "TheoryCraftGear.lua": {
+      "sha256": "32229555c01286e75a2e67dcc2eeb2de2e8d2daa2db9e0e960cf9bb642e0b544",
+      "bytes": 23335
+    },
+    "TheoryCraftMain.lua": {
+      "sha256": "cfed2219729dfadde5df38c946fb6dc52b491643101e77a75fcd0565399f3c3a",
+      "bytes": 47378
+    },
+    "TheoryCraftMessy.lua": {
+      "sha256": "6bf46c1a28d66a420bcca1a04dc9af92189b26a3cf16e50604ec1f8d902732eb",
+      "bytes": 28118
+    },
+    "TheoryCraftMitigation.lua": {
+      "sha256": "08ac1304106b5760cd41229694b0fc9419ae6dedf8c24f92df26b202ef7b509e",
+      "bytes": 11624
+    },
+    "TheoryCraftTalents.lua": {
+      "sha256": "2e709de5f0aa423deb1d25796788c7b552a5630a374a4345c984f5f7488e699d",
+      "bytes": 7292
+    },
+    "TheoryCraftTooltip.lua": {
+      "sha256": "2bc6b19e7851236c5663ca9bcb86a744ec5b4dc53a98e60ad9fa86072a82915a",
+      "bytes": 10767
+    },
+    "TheoryCraftUI.lua": {
+      "sha256": "2ac11eb73a11467c88d9f2e8b4e9c946362005963cca2b9abd97baf05ea5a9c3",
+      "bytes": 40384
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

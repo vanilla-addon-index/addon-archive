@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/Zerf/BlackList",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Zerf",
+    "repo": "BlackList",
+    "name": "BlackList",
+    "url": "https://github.com/Zerf/BlackList",
+    "api": "https://api.github.com/repos/Zerf/BlackList"
+  },
+  "commit": "9a066c287d0f923a61beb601f2bec3e8eb9f648c",
+  "sourceFiles": {
+    "BlackList/Bindings.xml": {
+      "sha256": "b92fec3d898a44279da19015b48bbd60f3f9f2fd118226d5e9eecd3e9e93addf",
+      "bytes": 117
+    },
+    "BlackList/BlackList.lua": {
+      "sha256": "8e0cf04527ee973d02dceba2fe33d6af07d34d7e89fb1bc110bbc09a1f0e019a",
+      "bytes": 7513
+    },
+    "BlackList/BlackList.toc": {
+      "sha256": "dca060555d5378b7e0986f39c29e137335e81e3a3b90fac0d1e14d436c8cacb5",
+      "bytes": 270
+    },
+    "BlackList/BlackListFunctions.lua": {
+      "sha256": "2b04abaf826cd1b7277595a3c4fa292030615419e23d53cbbac60d474e4bd994",
+      "bytes": 5007
+    },
+    "BlackList/BlackListUI.lua": {
+      "sha256": "516ba2f2d359d99ae5315d01785fd858f93257145d2f9717a30b33bf7c4903be",
+      "bytes": 6532
+    },
+    "BlackList/BlackListUI.xml": {
+      "sha256": "cbaef0dfaff00c9fd7b5297661cee377817cb9fb56ec7cbf2dcbd3d525d322a5",
+      "bytes": 21793
+    },
+    "README.md": {
+      "sha256": "8e10dc07a0fc158b0d17ae56e806e550f3e8b0af84007104425e4219c20806dd",
+      "bytes": 2714
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

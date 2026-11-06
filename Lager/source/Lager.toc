@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: Lager
+## Notes: reduces lag by pausing superfluous combat logs.
+## Author: Croc
+## Version: 1.0
+## SavedVariablesPerCharacter: LagerSaved
+
+Lager.lua
+Lager.xml

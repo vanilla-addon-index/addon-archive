@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Button name="WoWQuoteItemTemplate" virtual="true">
+		<Size><AbsDimension x="290" y="16"/></Size>
+		
+		<Scripts>
+ 			<OnClick></OnClick>
+ 			<OnDoubleClick>
+ 				 this:GetParent().Quote(this.id)
+ 			</OnDoubleClick>
+ 		</Scripts>
+ 		
+ 		<Frames>
+ 			<Frame name="$parentLabels" setAllPoints="true">
+ 				<Layers>
+ 					<Layer>
+ 						<FontString name="$parentText" inherits="GameFontNormal" justifyH="LEFT">
+ 							<Size><AbsDimension x="235" y="0"/></Size>
+				 			<Anchors>
+				 				<Anchor point="TOPLEFT">
+				 					<Offset><AbsDimension x="5" y="0"/></Offset>
+				 				</Anchor>
+				 				<Anchor point="BOTTOM"/>
+				 			</Anchors>
+ 						</FontString>
+ 						<FontString name="$parentID" inherits="GameFontHighlightSmall" justifyH="RIGHT">
+ 							<Size><AbsDimension x="45" y="0"/></Size>
+				 			<Anchors>
+				 				<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parentText"/>
+				 				<Anchor point="BOTTOM"/>
+				 			</Anchors>
+ 						</FontString>
+ 					</Layer>
+ 				</Layers>
+ 			</Frame>
+ 		</Frames>
+ 		
+ 		<NormalFont inherits="GameFontNormal" justifyH="LEFT"/>
+		<HighlightFont inherits="GameFontHighlight" justifyH="LEFT"/>
+		<DisabledFont inherits="GameFontDisabled" justifyH="LEFT"/>
+		<NormalTexture hidden="true"/>
+		<DisabledTexture hidden="true"/>		
+		<HighlightTexture hidden="true" file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+ 	</Button>
+
+	<Frame name="WoWQuoteDialog" toplevel="true" movable="true" parent="UIParent" enableMouse="true" hidden="true">
+		<Size><AbsDimension x="384" y="512" /></Size>
+		<Anchors><Anchor point="CENTER"/></Anchors>
+		<TitleRegion>
+  			<Size>
+				<AbsDimension x="384" y="36" />
+			</Size>
+			<Anchors>
+				<Anchor point="TOP" />
+  			</Anchors>
+ 		</TitleRegion>
+
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture file="Interface\QuestFrame\UI-QuestLog-BookIcon">
+					<Size>
+						<AbsDimension x="60" y="60"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="7" y="-6"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture file="Interface\ClassTrainerFrame\UI-ClassTrainer-TopLeft">
+					<Size><AbsDimension x="256" y="256"/></Size>
+					<Anchors><Anchor point="TOPLEFT"/></Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture file="Interface\ClassTrainerFrame\UI-ClassTrainer-TopRight">
+					<Size><AbsDimension x="128" y="256"/></Size>
+					<Anchors><Anchor point="TOPRIGHT"/></Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture file="Interface\PaperDollInfoFrame\UI-Character-General-BottomLeft">
+					<Size><AbsDimension x="256" y="256"/></Size>
+					<Anchors><Anchor point="BOTTOMLEFT"/></Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="BORDER">
+				<Texture file="Interface\PaperDollInfoFrame\UI-Character-General-BottomRight">
+					<Size><AbsDimension x="128" y="256"/></Size>
+					<Anchors><Anchor point="BOTTOMRIGHT"/></Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parentTitle" text="WoWQuote" inherits="GameFontHighlight">
+					<Size><AbsDimension x="200" y="16"/></Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset><AbsDimension x="0" y="-16"/></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		
+		<Frames>
+			<Button inherits="UIPanelCloseButton">
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset><AbsDimension x="-30" y="-8"/></Offset> <!-- <AbsDimension x="-42" y="-3"/> -->
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<Frame name="WoWQuoteDialogChannelDropDown" inherits="UIDropDownMenuTemplate" id="1">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="60" y="-40"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						UIDropDownMenu_Initialize(this, WQUI.ChannelDropDown.Initialize);
+						UIDropDownMenu_SetWidth(100);
+						UIDropDownMenu_SetButtonWidth(24);
+						UIDropDownMenu_SetSelectedID(this, 2); -- PARTY
+						UIDropDownMenu_JustifyText("LEFT", WoWQuoteDialogChannelDropDown)
+					</OnLoad>
+				</Scripts>
+			</Frame>			
+		
+			<Frame name="WoWQuoteDialogCategoryDropDown" inherits="UIDropDownMenuTemplate" id="2">
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-30" y="-40"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						UIDropDownMenu_Initialize(this, WQUI.CategoryDropDown.Initialize);
+						UIDropDownMenu_SetWidth(120);
+						UIDropDownMenu_SetButtonWidth(24);
+						UIDropDownMenu_SetSelectedID(this, 1); -- ALL
+						UIDropDownMenu_JustifyText("LEFT", WoWQuoteDialogCategoryDropDown)
+					</OnLoad>
+				</Scripts>
+			</Frame>			
+			
+			<Button name="$parentColumnText" inherits="WhoFrameColumnHeaderTemplate" text="Quote">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset><AbsDimension x="18" y="-71"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						WhoFrameColumn_SetWidth(250)
+						this:GetParent().Columns = {}
+						this:GetParent().Columns.Text = this
+					</OnLoad>
+					<OnClick>
+						parent = this:GetParent()
+						parent:SortItems(parent.Sorters.ByMessage)
+						parent:UpdateItems()
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentColumnID" inherits="WhoFrameColumnHeaderTemplate" text="ID">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeTo="$parentColumnText"/>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						WhoFrameColumn_SetWidth(48);
+						this:GetParent().Columns.ID = this
+					</OnLoad>
+					<OnClick>
+						parent = this:GetParent()
+						parent:SortItems(parent.Sorters.ByID)
+						parent:UpdateItems()
+					</OnClick>
+				</Scripts>
+			</Button>
+
+			<ScrollFrame name="$parentScrollFrame" inherits="FauxScrollFrameTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset><AbsDimension x="20" y="-99"/></Offset>
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset><AbsDimension x="-67" y="84"/></Offset>
+					</Anchor>
+ 				</Anchors>
+
+				<Layers>
+					<Layer level="ARTWORK">
+						<Texture file="Interface\PaperDollInfoFrame\UI-Character-ScrollBar" >
+							<Size><AbsDimension x="31" y="256"/></Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativePoint="TOPRIGHT">
+									<Offset><AbsDimension x="-2" y="5"/></Offset>
+								</Anchor>
+							</Anchors>
+							<TexCoords left="0" right="0.484375" top="0" bottom="1.0"/>
+						</Texture>
+						<Texture file="Interface\PaperDollInfoFrame\UI-Character-ScrollBar">
+							<Size><AbsDimension x="31" y="106"/></Size>
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT">
+									<Offset><AbsDimension x="-2" y="-2"/></Offset>
+								</Anchor>
+							</Anchors>
+							<TexCoords left="0.515625" right="1.0" top="0" bottom="0.4140625"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnVerticalScroll>
+						FauxScrollFrame_OnVerticalScroll(16, function() end)
+						this:GetParent():UpdateItems()
+					</OnVerticalScroll>
+					<OnShow>
+						this:GetParent():UpdateItems()
+					</OnShow>
+				</Scripts>
+			</ScrollFrame>
+				
+		</Frames>
+  		<Scripts>
+			<OnLoad>
+				-- merge this frame and WQUI
+				for FunctionName, Function in pairs(WQUI) do
+					this[FunctionName] = Function
+				end
+				WQUI = this
+				
+				this:Initialize()
+			</OnLoad>
+			<OnShow>
+				PlaySound("igQuestLogOpen");
+			</OnShow>
+			<OnHide>
+				PlaySound("igQuestLogClose");
+			</OnHide>
+		</Scripts>
+	</Frame>
+</Ui>

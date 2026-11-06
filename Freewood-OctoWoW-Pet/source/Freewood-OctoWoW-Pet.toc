@@ -1,0 +1,12 @@
+## Interface: 11200
+## Title: Freewood |cffc89b3cPet|r
+## Notes: Records your hunter companions with stats and abilities, with export and import.
+## Notes-deDE: Erfasst deine Jäger-Begleiter mit Werten und Fähigkeiten, mit Export und Import.
+## Author: Lacustat
+## Version: 0.1.241
+## Dependencies: Freewood-OctoWoW-Core
+
+Locales.lua
+Pet.lua
+Families.lua
+PetUI.lua

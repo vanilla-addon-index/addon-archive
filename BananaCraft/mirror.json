@@ -1,0 +1,118 @@
+{
+  "upstream": "https://github.com/BananaForge/BananaCraft",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "BananaForge",
+    "repo": "BananaCraft",
+    "name": "BananaCraft",
+    "url": "https://github.com/BananaForge/BananaCraft",
+    "api": "https://api.github.com/repos/BananaForge/BananaCraft"
+  },
+  "commit": "81901c07397dd773ae9c22326f263950002e0092",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "965f8d2cd502b71af1ad88b1b70e540c6c42f4d6d84173fda803fcc5e972f752",
+      "bytes": 134
+    },
+    ".github/workflows/release.yml": {
+      "sha256": "0e6ab782e9b6356ac1bec76ab3cbc4c0be9d274f86aeaed5b2974b3a5d8ff6cc",
+      "bytes": 1454
+    },
+    ".github/workflows/tests.yml": {
+      "sha256": "32da563ad9afc84c0106f620b20d73f42b97537de38010e363bd856446763587",
+      "bytes": 348
+    },
+    ".gitignore.upstream": {
+      "sha256": "73055d46bd1514ca66757f13673c0432007659391161f9df8b1740c506975c5b",
+      "bytes": 181
+    },
+    "BananaCraft_Browser.lua": {
+      "sha256": "566a0afee9912a8648ee8fd55b1f3e6c14075ccba0fc724973131199f0cb4a14",
+      "bytes": 32780
+    },
+    "BananaCraft_Catalog.lua": {
+      "sha256": "646b7202b70bb38c1160c9dead86de24e85d5fe7c4bd864ccf54294d8abe5d63",
+      "bytes": 375775
+    },
+    "BananaCraft_Locale.lua": {
+      "sha256": "f681e05e9a00eeeced3ba249c5b132276fab064314b8c01c2e1543410aa51798",
+      "bytes": 22978
+    },
+    "BananaCraft_Logo.tga": {
+      "sha256": "3505801b4d2acafadb3a6a764846542dbf986c3935ab3c4e4b0aad98d69c9064",
+      "bytes": 65580
+    },
+    "BananaCraft_MinimapIcon.tga": {
+      "sha256": "d5d8c86cb8ae0765be107d611e535d02581066471861415263c1caccb1affac5",
+      "bytes": 16428
+    },
+    "BananaCraft_RecipeMaps.lua": {
+      "sha256": "1bd46e842b9002a42d378642a97b25b8fdd0a7e4d7c98b8e03d48c601c86da1a",
+      "bytes": 62206
+    },
+    "BananaCraft.lua": {
+      "sha256": "603ad65f109c44fb5405b8aee0f56ffd748487615a3bc80bd85ff12136aeb259",
+      "bytes": 142395
+    },
+    "BananaCraft.toc": {
+      "sha256": "d9d7f35cd09abcec7aba1594b9bd9759dd5ad4eb3f04c1ecea6bf1aa67deb0e8",
+      "bytes": 373
+    },
+    "BananaPresence.lua": {
+      "sha256": "6002bb0e6bb832524f1249304abca46c61ffc9e83d74c6366da7d2216b64bf1e",
+      "bytes": 5908
+    },
+    "BananaPresenceReg.lua": {
+      "sha256": "a4f2a7f7c9032380069741aac6f5fd949e12d4dc4691d33bbc88898a5ffcdfea",
+      "bytes": 156
+    },
+    "CHANGELOG.md": {
+      "sha256": "f5a5d84e4ca0cdec6b1d83850283b5576a16f97d6c5e2c2d5eb268db37699b3b",
+      "bytes": 10780
+    },
+    "docs/ENTWICKLUNG.md": {
+      "sha256": "cd8f6a6caed92581a96f9f8303d00f43748b578ecf4ddaed26a94ccc691269c8",
+      "bytes": 11354
+    },
+    "LICENSE": {
+      "sha256": "b26e762cffc41895a95ac84e0d7c2b7688bf87e1cf4178890b4947834a3f0b00",
+      "bytes": 1089
+    },
+    "README.md": {
+      "sha256": "8d4dc46a747838d84dd05914fbf35147e55716595ae8d331055a0c816919689e",
+      "bytes": 5380
+    },
+    "screenshots/README.md": {
+      "sha256": "0aecf5f16517f2807bc543385300c33a474a8696eeeb4aa941f6e2c2d87e71e3",
+      "bytes": 868
+    },
+    "tools/gen_catalog.py": {
+      "sha256": "beb6df0da72b0b39c66de25549f0aafbf0d8424ea1238b5a20ce4844be8852d8",
+      "bytes": 13367
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "429586709": {
+      "tag": "v3.0.0",
+      "folder": "v3.0.0--429586709",
+      "assets": {
+        "693765011": {
+          "sha256": "2809a43cb650053d62ca3b81d5db8bee1cafc6d551c61d6bd472a5b6ed98ee34",
+          "bytes": 190922,
+          "id": "693765011",
+          "name": "BananaCraft-3.0.0.zip",
+          "url": "https://github.com/BananaForge/BananaCraft/releases/download/v3.0.0/BananaCraft-3.0.0.zip",
+          "path": "releases/v3.0.0--429586709/assets/BananaCraft-3.0.0.zip"
+        }
+      },
+      "source": {
+        "sha256": "9ddcb198a0d7f89b55a82e19c6ee9d956dbf4cde4b47bee7c8ec4926f19e0480",
+        "bytes": 200520,
+        "path": "releases/v3.0.0--429586709/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/BananaForge/BananaCraft/tarball/v3.0.0"
+      }
+    }
+  }
+}

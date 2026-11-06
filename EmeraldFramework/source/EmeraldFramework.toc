@@ -1,0 +1,13 @@
+## Interface: 11203
+## Title: EmeraldFramework
+## Notes: framework for addons
+## Version: 0.1
+## Author: WobLight
+## SavedVariables: EmeraldFrameworkSettings
+## OptionalDependency: pfUI
+Core.lua
+UI.lua
+Layouts.lua
+Blizzlike.lua
+Config.lua
+pfStyle.lua

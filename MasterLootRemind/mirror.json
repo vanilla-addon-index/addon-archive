@@ -1,0 +1,106 @@
+{
+  "upstream": "https://github.com/Road-block/MasterLootRemind",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "MasterLootRemind",
+    "name": "MasterLootRemind",
+    "url": "https://github.com/Road-block/MasterLootRemind",
+    "api": "https://api.github.com/repos/Road-block/MasterLootRemind"
+  },
+  "commit": "ef9e73f27e13095b358897e223f20b626a91d9ed",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "core.lua": {
+      "sha256": "9b3583a2cfdfc81a0c0ef4eb05556072c5002bef96eae75455a198951ea46698",
+      "bytes": 18901
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "b6832629eb5d943e14230ba5929396f44da1475708e5f3793f5703f54d89d899",
+      "bytes": 34783
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "2be91c4731ea4c3faea63683d745c7e9a34707dcad0e61acdf4a8babca2503cb",
+      "bytes": 67656
+    },
+    "libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "eac68d0efc29472365cdf3d61c7bea777b29d8cf584f9049409300ac6e4448bf",
+      "bytes": 45257
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "09cfc0b69a0feb644fa1a9e5fc6715a4e76e0b2f6c7c04a3a0ea693d633770cd",
+      "bytes": 23114
+    },
+    "libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "31bc9cfda434c890574d1bbfc48c9e1d068f45ff73e1023ca452dedab0bdef41",
+      "bytes": 15957
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "libs/Babble-Boss-2.2/Babble-Boss-2.2.lua": {
+      "sha256": "f876a8cc716c668c4d5bb4c7b43ee86a8fa72c984a68e16f52e4aaf9107e246d",
+      "bytes": 88664
+    },
+    "libs/Deformat-2.0/Deformat-2.0.lua": {
+      "sha256": "6491e26c67bc4e35eecead3aac60dd1e02abe39a8b281ff6f10bb223e78b7f50",
+      "bytes": 9438
+    },
+    "libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "783f5d361ab58233eb30e14684f7a66cc77097c19b99172a90bba3c1d42739d2",
+      "bytes": 80011
+    },
+    "libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "0ee8b878799175790560eef190fe0a723328a74ec2ebd78a49163b544a7a4e20",
+      "bytes": 44920
+    },
+    "libs/ParserLib/ParserLib.lua": {
+      "sha256": "8ba23f4e5f4adc3100fd4ce59b00a0ddd4e9b67583c0935f54b2fb8170f7807c",
+      "bytes": 115236
+    },
+    "libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "fa521995b582e42598744950b887be2ae9c40f096b0c7cae33a5b6497fa412ba",
+      "bytes": 85746
+    },
+    "localization.lua": {
+      "sha256": "700460cee666cc24d1d8796af266dcf92e642fd7b06de901523945af440414da",
+      "bytes": 4621
+    },
+    "MasterLootRemind.toc": {
+      "sha256": "0c8adad0835e26e4319bb9964cb0ab246193e2ae0592640eb0bd89c24c3be8ce",
+      "bytes": 879
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "9724841": {
+      "tag": "1.2",
+      "folder": "1.2--9724841",
+      "assets": {
+        "6249733": {
+          "sha256": "c6bb3740cbd4a274f9bd6543c84aa8411f89ab12024b10770ddb74d905be97d4",
+          "bytes": 134156,
+          "id": "6249733",
+          "name": "MasterLootRemind-1.2-11200.zip",
+          "url": "https://github.com/Road-block/MasterLootRemind/releases/download/1.2/MasterLootRemind-1.2-11200.zip",
+          "path": "releases/1.2--9724841/assets/MasterLootRemind-1.2-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "320ce3771357ca32e341fcb717055cb3871e1f0d0ff959c483873ebc920d3559",
+        "bytes": 131199,
+        "path": "releases/1.2--9724841/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/MasterLootRemind/tarball/1.2"
+      }
+    }
+  }
+}

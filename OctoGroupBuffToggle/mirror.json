@@ -1,0 +1,114 @@
+{
+  "upstream": "https://github.com/Morkahja/OctoGroupBuffToggle",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Morkahja",
+    "repo": "OctoGroupBuffToggle",
+    "name": "OctoGroupBuffToggle",
+    "url": "https://github.com/Morkahja/OctoGroupBuffToggle",
+    "api": "https://api.github.com/repos/Morkahja/OctoGroupBuffToggle"
+  },
+  "commit": "1971006ff5c2b8ba97d939368ce1e7170fc8484f",
+  "sourceFiles": {
+    "AGENTS.md": {
+      "sha256": "e72d7336732952e71c3337c7dc4f47ef83efe76cfec96018c62edbaadf9e1624",
+      "bytes": 4056
+    },
+    "CHANGELOG.md": {
+      "sha256": "72cf52def9cf9af93b486388c791111b6f5558fa05b21726c0bd3983a6ced042",
+      "bytes": 3380
+    },
+    "CONCEPT.md": {
+      "sha256": "750742557df804297eb055efd4c8aa0c315a312f2f26cc71a6a228865f12616c",
+      "bytes": 3415
+    },
+    "docs/AI_COLLABORATION.md": {
+      "sha256": "ecf73a23704e816ba3becb3f55657d49f0eeea8b8e5650249fce0e02d3b32e0b",
+      "bytes": 2969
+    },
+    "docs/ARCHITECTURE.md": {
+      "sha256": "3ee43f540774e97d53d796fc99dd72bc5be390b72d05fa2dd8958673f17cf974",
+      "bytes": 6346
+    },
+    "docs/CONTENT.md": {
+      "sha256": "bfca0c71ebdac40db3d5c996a937baf725ce318ca35d932c6b45acdfccc24689",
+      "bytes": 2945
+    },
+    "docs/DECISIONS.md": {
+      "sha256": "d5a7712710d6d1b8d087d5468a8b3ce3e733ee083215ad1163bbca9c4d5bcffc",
+      "bytes": 3163
+    },
+    "docs/DESIGN.md": {
+      "sha256": "8eee3a9bd524826735cbb7581fcf4e1eea89ed0373f5b897979f30c8dd3a3c3d",
+      "bytes": 3589
+    },
+    "docs/DEVLOG.md": {
+      "sha256": "f8c9b86fab4ae049a5a5343efab8efce527a24952dca83d8bb2739adb070f613",
+      "bytes": 11061
+    },
+    "docs/DOCUMENTATION.md": {
+      "sha256": "9df286816ad4d5d6527d81a9a377abcddca1def1cd550488f0749f15ea1155c7",
+      "bytes": 6191
+    },
+    "GroupBuffToggle.lua": {
+      "sha256": "355fa6928b31780427f78b7f2e243fec6b1f2ffe8ef42f7db3fcabcf48dffbfb",
+      "bytes": 11620
+    },
+    "GroupBuffToggle.toc": {
+      "sha256": "1146c37acc4ad1a0b388a26d2c2ef922ab57777ccf2c49cb447ace8f06adec64",
+      "bytes": 237
+    },
+    "LICENSE": {
+      "sha256": "cb27efeef4e09ea44c2da3277dc48703cc34b542874cfc5e7242b130df0f8bcd",
+      "bytes": 1067
+    },
+    "README.md": {
+      "sha256": "ba2d79e87fea990999c5b1ab02516983a991cdfb859e9d9bd9ea161fae5e8b54",
+      "bytes": 8271
+    },
+    "ROADMAP.md": {
+      "sha256": "1ef34c8360f3ef1652fa91701b2a2c088404b00e3ef46e82d420a72c494503d5",
+      "bytes": 4888
+    },
+    "tests/test_upgrade.ps1": {
+      "sha256": "52bb5c651668d4d9c157e09624bf67dbfbc7b9608088665d4f6090e6afe188db",
+      "bytes": 2692
+    },
+    "Upgrade-SavedData.ps1": {
+      "sha256": "2b08342db6e02a30fa38444dd06529c9e6238d8db8ad389f3df944f6ebd3b84f",
+      "bytes": 4126
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "391703440": {
+      "tag": "v1.2.0",
+      "folder": "v1.2.0--391703440",
+      "assets": {
+        "573230759": {
+          "sha256": "abaafff6b0d4ce60fb5b3d04e1916539ce6acfd4a7f7e87e4cd1de89a227f81c",
+          "bytes": 7350,
+          "id": "573230759",
+          "name": "GroupBuffToggle.zip",
+          "url": "https://github.com/babunidev/GroupBuffToggle/releases/download/v1.2.0/GroupBuffToggle.zip",
+          "path": "releases/v1.2.0--391703440/assets/GroupBuffToggle.zip"
+        },
+        "573230762": {
+          "sha256": "7e53e79351900451cd0ba5105f99897aff7e0440d98cdfb2a50671f81e94d18b",
+          "bytes": 87,
+          "id": "573230762",
+          "name": "SHA256SUMS.txt",
+          "url": "https://github.com/babunidev/GroupBuffToggle/releases/download/v1.2.0/SHA256SUMS.txt",
+          "path": "releases/v1.2.0--391703440/assets/SHA256SUMS.txt"
+        }
+      },
+      "source": {
+        "sha256": "5a09d8d304257d9a1ba41fdbb8afa6ea36f686e6c24655207ed536c460f288ee",
+        "bytes": 7448,
+        "path": "releases/v1.2.0--391703440/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/babunidev/GroupBuffToggle/tarball/v1.2.0"
+      }
+    }
+  }
+}

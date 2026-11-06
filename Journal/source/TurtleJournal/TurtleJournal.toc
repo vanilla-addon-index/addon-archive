@@ -1,0 +1,17 @@
+## Interface: 11200
+## Title: |cff88ff88Turtle Journal|r|cffffffff - ALPHA
+## Notes: A simple notebook addon for World of Warcraft Vanilla.
+## Version: 1.2
+## Author: Guzruul
+## X-Name: TurtleJournal
+## X-url: https://forum.turtle-wow.org/viewtopic.php?t=18820
+## SavedVariablesPerCharacter: TurtleJournal_Settings, TurtleJournal_DB
+
+debug.lua
+
+init.lua
+# profiles.lua -- unused here
+functions.lua
+gui.lua
+
+test.lua

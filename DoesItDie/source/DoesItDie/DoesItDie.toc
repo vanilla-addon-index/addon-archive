@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: DoesItDie |cffffcc00Vanilla|r
+## Notes: Remaining DoT damage and lethal indicators. Requires ClassicAPI; Nampower recommended for actual enemy health.
+## Author: Joe Greive; Vanilla port contributors
+## Version: 0.2.6-vanilla-alpha
+## SavedVariables: DoesItDieVanillaDB
+Bootstrap.lua
+Locale.lua
+DoesItDie.lua
+VanillaDisplay.lua
+VanillaOptions.lua

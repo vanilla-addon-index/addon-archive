@@ -1,0 +1,8 @@
+## Interface: 11200
+## Author: Community port for 1.12
+## Title: FriendHostile
+## Notes: Switches action bar page based on friendly/hostile target
+## Version: 1.4.4
+## SavedVariables: FriendHostileSettings
+
+FriendHostile.xml

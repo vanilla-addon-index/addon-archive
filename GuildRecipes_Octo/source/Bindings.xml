@@ -1,0 +1,3 @@
+<Bindings>
+	<Binding name="Toggle guild tradeskills" header="GUILDRECIPESOCTO">GuildRecipesOcto.tsgui.toggle()</Binding>
+</Bindings>

@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Voidmenull/DebuffTimers",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Voidmenull",
+    "repo": "DebuffTimers",
+    "name": "DebuffTimers",
+    "url": "https://github.com/Voidmenull/DebuffTimers",
+    "api": "https://api.github.com/repos/Voidmenull/DebuffTimers"
+  },
+  "commit": "9da80d56175f4772e6f3c59798eec19aea61bed0",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    ".gitignore.upstream": {
+      "sha256": "3593d7cdb24d1a41b8154313c1e5df6db33c4f93895eb7cb1a852854cf11ac9d",
+      "bytes": 696
+    },
+    "Debuffs.lua": {
+      "sha256": "8633f2bf105cf9e7c1cb38500e66838fd860541fa33a29a7550415ef75c0ca7b",
+      "bytes": 20027
+    },
+    "DebuffTimers.lua": {
+      "sha256": "3ac79d4f1b983d3db7fb80ceb66678ecf02b882538638f3da5bb917393d09a69",
+      "bytes": 43228
+    },
+    "DebuffTimers.toc": {
+      "sha256": "e8c7e7460c5b6e5b74efb7b2005ae4beb49de7c42d78aa9497b7bfe37394b483",
+      "bytes": 350
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

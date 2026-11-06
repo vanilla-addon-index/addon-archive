@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: TurtleColorPicker
+## Notes: Standalone HSV color picker library for addon developers.
+## Author: ShempError
+## Version: 1.0.0
+
+Core.lua
+UI.lua

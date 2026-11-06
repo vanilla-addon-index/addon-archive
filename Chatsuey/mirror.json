@@ -1,0 +1,342 @@
+{
+  "upstream": "https://github.com/ScottHamper/chatsuey",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ScottHamper",
+    "repo": "chatsuey",
+    "name": "chatsuey",
+    "url": "https://github.com/ScottHamper/chatsuey",
+    "api": "https://api.github.com/repos/ScottHamper/chatsuey"
+  },
+  "commit": "c63bbef38a3f8989546f254c3867168567072fb0",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    "ChatSuey/ChatSuey.toc": {
+      "sha256": "c09e3688d8b8bc615ec60ce905b9a7940328a9a2167c6d2ee55b95702580139b",
+      "bytes": 574
+    },
+    "ChatSuey/Colors.lua": {
+      "sha256": "cda655e6b6b80af4a0b0798838739693ed21e275bd64ab16b70a81e5a7fdbdb5",
+      "bytes": 2700
+    },
+    "ChatSuey/Global.lua": {
+      "sha256": "21350150bcc3d9b4fca7d0142f597318f629e66d5c2604b800bdb4801a45d0b1",
+      "bytes": 14
+    },
+    "ChatSuey/HookTable.lua": {
+      "sha256": "904273943d4797cdea0d43d8582b195a1b9d80feaccffacfb16b1c7f4d1b30ff",
+      "bytes": 1038
+    },
+    "ChatSuey/i18n/enUS.lua": {
+      "sha256": "50c50af97df9da00a3d7f8c1c1e530653cd8c632e25b5231689fcb2d09ab80de",
+      "bytes": 1559
+    },
+    "ChatSuey/i18n/frFR.lua": {
+      "sha256": "e2fa840c586965494724a6ed0fe83a67135a8ddcaa064dcf5056b95b0166e5b7",
+      "bytes": 1438
+    },
+    "ChatSuey/i18n/Locale.lua": {
+      "sha256": "156035a1699fe6c71057531db7337d896b52f5fd366c3485271c998117c2a0b3",
+      "bytes": 334
+    },
+    "ChatSuey/i18n/LocaleTable.lua": {
+      "sha256": "851b6dc0320234a925a14af32a47e247544292cf9e0faa98c86bbfc9d2b1eb70",
+      "bytes": 394
+    },
+    "ChatSuey/i18n/ruRU.lua": {
+      "sha256": "c2574033d679b3929e07ca52fc883cb5516ab6b2d11454d4be39e6aaecdd0929",
+      "bytes": 1393
+    },
+    "ChatSuey/i18n/zhCN.lua": {
+      "sha256": "9802029149fb9a9a4d61536cc461f6089644aa19c8fd060099e097e4ade12527",
+      "bytes": 1402
+    },
+    "ChatSuey/Main.lua": {
+      "sha256": "876e304dd1299e8f23f96fdc7f2925c338ce588e27a20322ce417c580d978618",
+      "bytes": 1650
+    },
+    "ChatSuey/UIDropDownMenu.lua": {
+      "sha256": "1eb8a1674d7bb043ab728227531df025da2036f14326aaffe1df7eefb93c2844",
+      "bytes": 3080
+    },
+    "ChatSuey-ArrowKeys/ChatSuey-ArrowKeys.toc": {
+      "sha256": "00927f61f7d72ef62560bd0787a44fb78beadfae2c5ca7e4ef0244456119c605",
+      "bytes": 535
+    },
+    "ChatSuey-ArrowKeys/Main.lua": {
+      "sha256": "9d54eafffe310c3953d50196b35e48771fd0df89c46ba0625b2f438fe03b80e0",
+      "bytes": 43
+    },
+    "ChatSuey-ChannelLinks/ChatSuey-ChannelLinks.toc": {
+      "sha256": "adb04948d756f68df43b24c15845ecd477941ce59827955af4432b00ee8f2a65",
+      "bytes": 585
+    },
+    "ChatSuey-ChannelLinks/Main.lua": {
+      "sha256": "c517028cb87fda3bf1303c7a1494183f3ecc10b36e8057fd888669f82a48a027",
+      "bytes": 2426
+    },
+    "ChatSuey-EditOnTop/ChatSuey-EditOnTop.toc": {
+      "sha256": "48860b6819616ca809789e36fb74c629cb92316dd17dd95dc90e24d24796d55b",
+      "bytes": 426
+    },
+    "ChatSuey-EditOnTop/Main.lua": {
+      "sha256": "f084a06d6584ac5da850203e4a53c94008a1e2efeae0f9e9ae17b30c9e3502ab",
+      "bytes": 304
+    },
+    "ChatSuey-FontSettings/ChatSuey-FontSettings.toc": {
+      "sha256": "0c487209d124b8c5079bb893f67ca9f5e1f0f4dff183fae4a25fa9cca22a151f",
+      "bytes": 645
+    },
+    "ChatSuey-FontSettings/Config.lua": {
+      "sha256": "13bde246aa4df65f92753568c6012efc1b0e57100477d07996c99bb287a001b4",
+      "bytes": 627
+    },
+    "ChatSuey-FontSettings/ConfigUI.lua": {
+      "sha256": "f17a2ab38256bafde9b2fc422b6d6980907dce2a8f2afb68bdc59ce41b708937",
+      "bytes": 3804
+    },
+    "ChatSuey-FontSettings/Fonts.lua": {
+      "sha256": "c1fd3d956b39be88e06728fd8517d3cdc47a4eb07662f1bff78927da7aec38b4",
+      "bytes": 410
+    },
+    "ChatSuey-FontSettings/i18n/enUS.lua": {
+      "sha256": "eb55f0d7ac113a48e38b8d651a517e0c968136982ec480085d313a1065e59de2",
+      "bytes": 401
+    },
+    "ChatSuey-FontSettings/i18n/frFR.lua": {
+      "sha256": "2131fa47278a16dae8882f9dee07bc23d3574aebbc51f79eec3c471a7cc9fc59",
+      "bytes": 234
+    },
+    "ChatSuey-FontSettings/i18n/ruRU.lua": {
+      "sha256": "5c00db5159c096e681320478322535c71409b55aee4bae234bab50647a51c305",
+      "bytes": 262
+    },
+    "ChatSuey-FontSettings/i18n/zhCN.lua": {
+      "sha256": "55f04fb5127c28694d3151a047773adc85168001571052f18c326888aee4f6ed",
+      "bytes": 216
+    },
+    "ChatSuey-FontSettings/Main.lua": {
+      "sha256": "332954f6350974fac021f3bc5ba7ef3b621f9a23de1f46919832c95b234c43a8",
+      "bytes": 394
+    },
+    "ChatSuey-ItemLinkHover/ChatSuey-ItemLinkHover.toc": {
+      "sha256": "b8045b2494398b6058a97b022cd9c97bef14306ccaf2ac569256d14b988171c9",
+      "bytes": 559
+    },
+    "ChatSuey-ItemLinkHover/Main.lua": {
+      "sha256": "ee7088da190ea4856cc37445ac2c387278d379a400b1af045b9b57fc6dc2d58a",
+      "bytes": 970
+    },
+    "ChatSuey-MarkdownLinks/ChatSuey-MarkdownLinks.toc": {
+      "sha256": "d216555b34114fbc60e53efe1ad20edeaab34936607c969cccfa15eeaaca7dcd",
+      "bytes": 501
+    },
+    "ChatSuey-MarkdownLinks/Main.lua": {
+      "sha256": "f78f98836bd0965b7420e144df1fd1ff611c3168545c9df2280081f7da6773d1",
+      "bytes": 1205
+    },
+    "ChatSuey-Mentions/ChatSuey-Mentions.toc": {
+      "sha256": "1f0828d9a58dc0d77c7fbff19c02316b1852d6fd21af9ca4e67d76c891ef2087",
+      "bytes": 417
+    },
+    "ChatSuey-Mentions/Main.lua": {
+      "sha256": "7431ebbed6b64ce0181756ad8ba05585c10faead134dd8ea0110372de953e56d",
+      "bytes": 3881
+    },
+    "ChatSuey-MiniChannels/ChatSuey-MiniChannels.toc": {
+      "sha256": "6217f422c24f204a1152d09426bc5d13cd7425ba387c5a7093d1063e6c0c1841",
+      "bytes": 639
+    },
+    "ChatSuey-MiniChannels/i18n/enUS.lua": {
+      "sha256": "d2508960af9e02564cc081e415e48d0bd68b86e65f36dc36e2005c06b0ea1a25",
+      "bytes": 465
+    },
+    "ChatSuey-MiniChannels/i18n/frFR.lua": {
+      "sha256": "f9e720f744f55fd5eb3644ccc41fc9529673c1de871d8f91a17e3764c84051d8",
+      "bytes": 422
+    },
+    "ChatSuey-MiniChannels/i18n/ruRU.lua": {
+      "sha256": "f4f461da9dccce4c4ef5b0040d26ce202c02ddd06a3c97522a6eb8b80101e280",
+      "bytes": 311
+    },
+    "ChatSuey-MiniChannels/i18n/zhCN.lua": {
+      "sha256": "32ec6dbebd564e5ec5045e76ff1036f0bf89250241bf25b5ad0568082a5c95f8",
+      "bytes": 653
+    },
+    "ChatSuey-MiniChannels/Main.lua": {
+      "sha256": "334a3f052810b58783056159e8396543eec85d6e6390c478837acbb25cf61644",
+      "bytes": 3394
+    },
+    "ChatSuey-MouseWheel/ChatSuey-MouseWheel.toc": {
+      "sha256": "e014dc29248b5f3bb145a12f3bbeb625fa060e2cd724af7cd22991790c2a575d",
+      "bytes": 400
+    },
+    "ChatSuey-MouseWheel/Main.lua": {
+      "sha256": "d4c3cc6399446b46bc231cf445b04b0e11f5506cca7aa50c1a18b63cf73756ba",
+      "bytes": 999
+    },
+    "ChatSuey-PlayerLinks/ChatSuey-PlayerLinks.toc": {
+      "sha256": "61ae39e90b75a488d75ba7e340b2390f83547b7799c15d63e9e5145207667569",
+      "bytes": 705
+    },
+    "ChatSuey-PlayerLinks/Main.lua": {
+      "sha256": "af2c30b0256c829633c307cf6ae2f5bdddde0ca830e469bb6b0d85206ecb9bd2",
+      "bytes": 1302
+    },
+    "ChatSuey-RemoveButtons/BottomFlashTemplate.xml": {
+      "sha256": "1d654ab4aaec9ef0ff2374684b7ff0e835f74028cae794c1cabe7c81b58250bf",
+      "bytes": 1113
+    },
+    "ChatSuey-RemoveButtons/ChatSuey-RemoveButtons.toc": {
+      "sha256": "75a59ba4716d0b33d6ffd21775fdc00439d17525919ac1e386055354dd9f945d",
+      "bytes": 406
+    },
+    "ChatSuey-RemoveButtons/Main.lua": {
+      "sha256": "58f244ba6fff750395cc50be840167045183d0dad12adeec73dc25f923dd5c49",
+      "bytes": 1225
+    },
+    "ChatSuey-StickyChat/ChatSuey-StickyChat.toc": {
+      "sha256": "3a17f65e1f8d7948f85a40a6e0fe5f913945f096294ab3cb39442590e8aa01a3",
+      "bytes": 766
+    },
+    "ChatSuey-StickyChat/Main.lua": {
+      "sha256": "d7c6f95ec36295617fba7ee6ff0fb9fca8a4f901dbee80cc55d4ac9bde63ca9a",
+      "bytes": 109
+    },
+    "ChatSuey-Timestamps/ChatSuey-Timestamps.toc": {
+      "sha256": "19beb4f707d60454c66f0873f4bf6db5ee00d552704caa9a8cec0ebac7fd551d",
+      "bytes": 649
+    },
+    "ChatSuey-Timestamps/Config.lua": {
+      "sha256": "33734ce90977e1fafdd56b1b89bd5ad6bb588101224223b49b59d6c09c13e600",
+      "bytes": 705
+    },
+    "ChatSuey-Timestamps/ConfigUI.lua": {
+      "sha256": "5cc83194d3b98347091d25c19e01015bccef6193f9c3d6b2080497d6c54b4808",
+      "bytes": 3364
+    },
+    "ChatSuey-Timestamps/i18n/enUS.lua": {
+      "sha256": "b1ccb38639a664fd45c64e94a110f4dca431cf9770d575a0b34aa6bf729c227f",
+      "bytes": 394
+    },
+    "ChatSuey-Timestamps/i18n/frFR.lua": {
+      "sha256": "c2b327798ec612b903e9c036f386032cbbc541cab10800758b744d0f84876767",
+      "bytes": 226
+    },
+    "ChatSuey-Timestamps/i18n/ruRU.lua": {
+      "sha256": "b947eb2b3053925edd64742fd12f91fdf8fda9f65142021cee52397f49548b69",
+      "bytes": 335
+    },
+    "ChatSuey-Timestamps/i18n/zhCN.lua": {
+      "sha256": "01c4d753aff777b272249d9bc1113ea2f269fcfa2707e9e8b0b914c33b4f17e7",
+      "bytes": 201
+    },
+    "ChatSuey-Timestamps/Main.lua": {
+      "sha256": "8f98808a6b35fd40e09cf7284c9eab3d1eb5eedce185c463ca36f0dfe5c768c2",
+      "bytes": 2253
+    },
+    "ChatSuey-WebLinks/ChatSuey-WebLinks.toc": {
+      "sha256": "88146fef9e17b1c1884ac13b45c7ff63e6f0b2a4650675563ee8fd9aaf1eb15f",
+      "bytes": 830
+    },
+    "ChatSuey-WebLinks/i18n/enUS.lua": {
+      "sha256": "3f18410a8fd1793e57584ffbd08241bafa53d0003f9c2988f86566b9b88b3405",
+      "bytes": 312
+    },
+    "ChatSuey-WebLinks/i18n/frFR.lua": {
+      "sha256": "9e7aa25e431b346f885499656d529b7b50b94b674f6ed801dfb1d5947260cd75",
+      "bytes": 153
+    },
+    "ChatSuey-WebLinks/i18n/ruRU.lua": {
+      "sha256": "65c4e12c5e25bb755d0c288574ad54770a98ade7a7c106a6d64f4c519d54c233",
+      "bytes": 175
+    },
+    "ChatSuey-WebLinks/i18n/zhCN.lua": {
+      "sha256": "a8c4ee52768c05ea8c6862228fd95b9f78705979813973d7f62cc4ce99a211aa",
+      "bytes": 137
+    },
+    "ChatSuey-WebLinks/Main.lua": {
+      "sha256": "78537f371b48a529f2bcaa2c16149191e708946e3103196899802f7c119a74f2",
+      "bytes": 2567
+    },
+    "docs/fonts/HindVadodara-Bold.woff": {
+      "sha256": "4dc375026f0c25a69f18759fedd1f1f1cc82f2d74b3ce9534d43b2da56780185",
+      "bytes": 10144
+    },
+    "docs/fonts/HindVadodara-Bold.woff2": {
+      "sha256": "a790c1ea20922c4177e7e3e18d19d231176ba78500e7e53d75c89426fe496ed7",
+      "bytes": 7316
+    },
+    "docs/fonts/HindVadodara-Regular.woff": {
+      "sha256": "4d53b4dff1e52c8d64891c2862d1972b51a7cdb0e76198fdde6ca996ae466c0e",
+      "bytes": 10400
+    },
+    "docs/fonts/HindVadodara-Regular.woff2": {
+      "sha256": "9f2e894599cfca9a693db26dab4acd12b0d5bd48382a3e8f7c39d3e7c8e75535",
+      "bytes": 7436
+    },
+    "docs/fonts/Inconsolata-Regular.woff": {
+      "sha256": "00ad9ba08c70815f12d383d705df46272e345343cfb2774a887fe0fbff6889e5",
+      "bytes": 12456
+    },
+    "docs/fonts/Inconsolata-Regular.woff2": {
+      "sha256": "a0c3b064aafcf1b09b36974fc9750782a52d830eb2842d00b3b5944bfc86adc1",
+      "bytes": 31560
+    },
+    "docs/fonts/LICENSE-HindVadodara.txt": {
+      "sha256": "e5168e6f1037af0a7f4dba32e61b6a7f97f884473beb7fc5256b818ba4273614",
+      "bytes": 4462
+    },
+    "docs/fonts/LICENSE-Inconsolata.txt": {
+      "sha256": "b488f0295e9b83428b4aca30ea813c49d3ce8ba3ec63a8b9a7b6caa72eb7cb7e",
+      "bytes": 4500
+    },
+    "docs/images/did-somebody-say.png": {
+      "sha256": "77e5433e97dd9f317f56d7100b456088d7576750fae7bf6f0c3dd40bbde603cd",
+      "bytes": 63947
+    },
+    "docs/index.html": {
+      "sha256": "33b07ed4b71a3f8ef55a6427e7ea29b056f4f3240a2961a679ad2423d4658e5b",
+      "bytes": 17046
+    },
+    "docs/styles/main.css": {
+      "sha256": "c4597c9429dfc42040fdc7baf0a97feaac356b6708a863be362dca3cffb2fa24",
+      "bytes": 5731
+    },
+    "README.md": {
+      "sha256": "47b354f3d4fbcd2a1ad759e39494feba78cb1d9c3906a5b5d43d890e0ab30d5e",
+      "bytes": 1666
+    },
+    "UNLICENSE": {
+      "sha256": "a4ef5224f5b38684bbc95521f04b96325c2402c03da3ecb35e232d82a996282f",
+      "bytes": 1233
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "5731538": {
+      "tag": "1.2.0",
+      "folder": "1.2.0--5731538",
+      "assets": {
+        "3387562": {
+          "sha256": "1569c316e0497011b916d284b6f2f97cfc9af5c24cce1fc667c3ddb516a30db4",
+          "bytes": 36582,
+          "id": "3387562",
+          "name": "ChatSuey-1.2.0.zip",
+          "url": "https://github.com/ScottHamper/chatsuey/releases/download/1.2.0/ChatSuey-1.2.0.zip",
+          "path": "releases/1.2.0--5731538/assets/ChatSuey-1.2.0.zip"
+        }
+      },
+      "source": {
+        "sha256": "13768967354c9e898c8c11b2ec803c2c3d08ef212a69ce2c4158751954ebae80",
+        "bytes": 148419,
+        "path": "releases/1.2.0--5731538/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/ScottHamper/chatsuey/tarball/1.2.0"
+      }
+    }
+  }
+}

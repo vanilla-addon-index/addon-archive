@@ -4,6 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| DoesItDie | https://octowow.st/git/OEVG/DoesItDie | new |
+| DoesItDie | https://octowow.st/git/OEVG/DoesItDie | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

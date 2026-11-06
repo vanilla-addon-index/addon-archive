@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/jlabranche/EliteWarriorTTD",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jlabranche",
+    "repo": "EliteWarriorTTD",
+    "name": "EliteWarriorTTD",
+    "url": "https://github.com/jlabranche/EliteWarriorTTD",
+    "api": "https://api.github.com/repos/jlabranche/EliteWarriorTTD"
+  },
+  "commit": "bab48b161c016848ea9ff52b60015948622c0ade",
+  "sourceFiles": {
+    "EliteWarriorTTD.lua": {
+      "sha256": "425f6f5f536715e3e0dbf1164c5071eeb5b0d2eae5c922d6363558c3110b7f91",
+      "bytes": 10262
+    },
+    "EliteWarriorTTD.toc": {
+      "sha256": "76a8a0ab4d6e424009a0421c67cb5e5d1dc07665798330d6ad85f59bcfc40426",
+      "bytes": 159
+    },
+    "README.md": {
+      "sha256": "0de6314d712b71844a6147b375b76e1c5360b9fe03983f08ef320729a6e95088",
+      "bytes": 165
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

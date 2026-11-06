@@ -1,0 +1,77 @@
+-- Published history and explicitly labeled development notes.
+pfQuestChangelog:Register("pfQuest", {
+{ ["version"] = "0.2.0-beta.5", ["date"] = "2026-10-18", ["notes"] = {
+"Improved login loading with fairer background processing, current-zone previews, and shared objective summaries.",
+"Reduced unnecessary allocations and repeated work while decoding targets and building available quest markers.",
+"Prepared current-zone map pins while background data continues loading.",
+"Fixed minimap markers using the wrong map after closing the world map.",
+"Fixed automatic routing to service markers and corrected route ordering when another target becomes clearly closer.",
+"Fixed empty arrow-description punctuation and creatures with missing respawn timers.",
+"Retained support for the existing HearthDB DLL; the experimental DLL remains optional."
+} },
+{ ["version"] = "0.2.0-beta.4", ["date"] = "2026-10-14", ["notes"] = {
+"Prioritized current-zone quest work and streamed target locations progressively while preserving complete provider caches.",
+"Retained unchanged markers during ordinary quest progress to reduce update hitches.",
+"Corrected tooltip quest-row bindings after accepting or turning in quests, and protected tracker row identities.",
+"Made same-name quest matching tolerate sentence-spacing differences, including Battle of Hillsbrad.",
+"Separated same-name chain-stage item data so map tooltips retain the correct drop chance.",
+"Corrected Feralas breadcrumb availability and excluded obsolete Q6221 offers."
+} },
+{ ["version"] = "0.2.0-beta.3", ["date"] = "2026-10-10", ["notes"] = {
+"Map and minimap appearance settings now refresh existing markers when Save & Close is pressed, including tracking pictures, cut-out circles and spawn colors.",
+"Tracker font, opacity, level labels and default objective expansion apply immediately while preserving manually folded quests.",
+"Minimum item drop chance changes refresh active quest markers; legacy quest-link enhancement respects its setting.",
+"Reduced large quest and tracking delivery spikes with bounded SQL pages and shared pending quest loads.",
+"Spread available quest-giver completion across frames and stopped idle background workers.",
+"Fixed mining tracking toggle errors and false update notices comparing beta versions with older alpha versions.",
+"Includes the earlier Git-only login, quest-progress, background map and database corrections since beta.2.",
+"Occasional small processing or memory-cleanup pauses can remain with dense quest logs."
+} },
+{ ["version"] = "Git update (0.2.0-beta.2)", ["date"] = "2026-10-08", ["update"] = "2026-10-08", ["notes"] = {
+"Reduced dense-quest acceptance and login stalls with batched processing, fewer temporary allocations, and coordinated background workers.",
+"Coalesced repeated tracker reads across spawn points, substantially reducing full-log map update stalls.",
+"Restored background zone-map preparation and corrected tracker Ctrl-click pin colors.",
+"Fixed missing fresh-character objective markers and split item stacks briefly restoring completed objective pins.",
+"Fixed unfinished pylon tracker percentages, instant turn-in availability, and collapsed tracker sections after reload.",
+"Background decoder and pin-render workers stop when idle.",
+"Small dense-log startup pauses remain under investigation, especially around memory cleanup.",
+"Use the companion pfExtend update for gradual loading of its full HDB quest index."
+} },
+{ ["version"] = "0.2.0-beta.2", ["date"] = "2026-10-05", ["notes"] = {
+"Fixed quest-marker tooltip ownership checks on Vanilla clients without GetOwner."
+} },
+{ ["version"] = "0.2.0-beta.1", ["date"] = "2026-10-04", ["notes"] = {
+"Fixed map and minimap tooltips staying visible after leaving a marker.",
+"Added support for the optional repeatable quest display setting supplied by Turtle quest data.",
+"Embedded HearthDB inside pfQuest; a separate provider addon is no longer required.",
+"Protected embedded databases from leftover old provider addons.",
+"Upgrade cleanup: you can delete the old pfQuest-HearthDB and pfQuest-HearthDB-turtle folders from Interface/AddOns. Keep pfQuest, pfQuest-turtle if installed, and your WTF settings. HearthDB.dll is still required.",
+"Improved completion marker refresh and duplicate quest-title handling.",
+"Added this changelog and one update reminder per installed version."
+} },
+{ ["version"] = "0.1.0-alpha.15", ["date"] = "2026-10-02", ["notes"] = {
+"Updated quest objectives and route arrows immediately after progress, completion, turn-in, and abandonment while the World Map is closed.",
+"Restored abandoned quest markers immediately while preserving nearby completed quest markers as quest-log rows shift.",
+"Improved Turtle quest-removal classification and added an optional abandon-flow diagnostic trace."
+} },
+{ ["version"] = "0.1.0-alpha.13", ["date"] = "2026-09-29", ["notes"] = {
+"Restored active quest objectives when removing an accidentally hidden quest from the Journal and fixed the Journal remove button's hover flicker.",
+"Kept route arrows on active objectives when a higher-priority quest marker shares the same NPC or coordinates.",
+"Selected the active quest ID for map pins, tracker entries, and routes in same-title quest chains."
+} },
+{ ["version"] = "0.1.0-alpha.12", ["date"] = "2026-09-26", ["notes"] = {
+"Reorganized the configuration window into five tabs while preserving all existing settings and live-update behavior.",
+"Fixed map-node transparency, route-arrow re-enabling, minimap-button visibility, reload prompting, and configuration-window resizing.",
+"Added rendering, recoloring, tooltip, and route-arrow support for Turtle party quest map pins.",
+"Kept collapsed Quest Log categories stable and improved provider-backed map objective descriptions.",
+"Added generic tracking-extension hooks so Turtle gathering categories stay out of the vanilla HDB interface."
+} },
+{ ["version"] = "0.1.0-alpha.11", ["date"] = "2026-09-24", ["notes"] = {
+"Fixed false tracker completion icons while preserving correct readiness for simple talk and hand-in quests.",
+"Restored route arrows for objective-free hand-ins after asynchronous HearthDB data loads.",
+"Kept completed quests stable in the Current Zone tracker while opening the Quest Log or selecting another quest.",
+"Refreshed stale quest markers and objectives without requiring tooltip hover or reload.",
+"Fixed map objective progress counts and compatibility with UI replacements that do not expose the optional `gfind` global.",
+"Added Turtle boundary-alias filtering support to the shared zone-map renderer."
+} }
+}, "hdb")

@@ -1,0 +1,9 @@
+{
+  "id": "400429630",
+  "tag": "v1.0.0",
+  "name": "v1.0.0",
+  "body": "\n### Added\n- Announcer for failed taunts, used taunts and defensive cooldowns, with a Main Tank mode.\n- Nameplate colouring that shows who each mob is attacking, with automatic tank detection and a per-tank colour.\n- Full in-game configuration menu and minimap button, opened with `/tks`.\n- English and French localisation with automatic client language detection.\n- pfUI and ShaguPlates nameplate integration.\n",
+  "published": "2026-09-30T20:55:09Z",
+  "prerelease": false,
+  "url": "https://github.com/ShikawaLePaladin/TankSuite/releases/tag/v1.0.0"
+}

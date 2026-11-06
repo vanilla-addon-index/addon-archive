@@ -1,0 +1,37 @@
+# Quickcall v2.2
+
+New toggle for Warsong and AB (turning the visual frames off)
+
+/qcwtoggle - toggle to turn warsong frame permanently off after entering the battleground
+
+/qcatoggle - toggle to turn arathi basin frame permanently off  after entering the battleground (hotkeys will still work)
+
+----------------------------------------------------------------------------------------
+
+With this addon you can call numbers in Arathi Basin for incomings and the enemy flag carrier position in Warsong Gulch.
+This Addon is designed for Vanilla wow 1.12.1 on Turtle WoW.
+This Addon even supports Keybindings so you can decide if you want to do the calls by pressing the UI buttons or by pressing a keybind on your keyyboard.
+
+
+
+<img width="786" height="402" alt="grafik" src="https://github.com/user-attachments/assets/c824de9d-65e2-4794-afdf-8202c4276f59" />
+
+
+The addon automatically shows when entering Arathi Basin or Warsong.
+
+You can also manually make both frames shown with the command "/quickcall" or "/qc"
+
+/qca - Will only show Arathi Basin frame.(outside of a battleground)
+
+/qcw - Will only show Warsong frame. (outside of a battleground)
+
+Added a new command to toggle long or short calls
+
+/qclong = "Lumber mill" "Blacksmith" "Gold Mine" "Stables" "Farm"
+
+/qcshort = "LM" "BS" "GM" "ST" "FM"
+
+<img width="215" height="229" alt="grafik" src="https://github.com/user-attachments/assets/7f586b0a-15ce-43d3-9ece-14fed156c6b3" />
+
+<img width="302" height="301" alt="grafik" src="https://github.com/user-attachments/assets/89d1f898-2808-4bf6-a3d0-3be9799134f8" />
+

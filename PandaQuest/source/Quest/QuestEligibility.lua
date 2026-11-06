@@ -1,0 +1,333 @@
+--[[
+PandaQuest / Quest/QuestEligibility.lua
+
+Can this character actually be offered this quest?
+
+The bundled world data lists every quest a giver can hand out to anyone, not
+what the character in front of the screen may take. Without this filter a
+world-map "still to take" marker is wrong in a very visible way: the classic
+example is CLUCK! (quest 3861), started by the Chicken critter, which has 108
+spawn points across 9 zones -- so every chicken in the world became a quest
+marker, including for Horde characters, even though the quest's race mask is
+Alliance-only.
+
+The record fields this reads, and how many quests carry each:
+
+  race   626 quests   bitmask, bit 2^(raceId-1)
+  class  825 quests   bitmask, bit 2^(classId-1)
+  min   4416 quests   minimum character level
+  event  342 quests   seasonal world event id
+  pre   2399 quests   alternative prerequisite quest(s)
+  skill  144 quests   required profession/secondary skill line id
+
+The race and class bits are derived from the numeric ids the client returns,
+which is measured behaviour here (UnitRace/UnitClass both return a third
+numeric value). Matching localized race names would break on any non-enUS
+client and is not done.
+
+`pre` follows pfQuest's offerability rule: when a quest records prerequisites,
+at least one of those quest IDs must be in the completion history. This is an
+OR, not an AND -- the data uses several IDs for alternative race, class or
+branch paths. A predecessor still active always withholds the follow-up.
+
+The history is necessarily local: this client exposes no completed-quest API,
+so Quest/QuestHistory.lua knows only what PandaQuest watched, what the player
+marked, or what was imported from pfQuest. On a fresh install, later chain
+steps therefore stay hidden until that history is learned. This matches
+pfQuest and avoids presenting every same-title chain step at once, such as all
+four "A New Plague" quests on Apothecary Johaan.
+
+Do not relax this test to show a giver that is wrongly hidden: the gap is in
+the history. QuestHistory:InferPrerequisites fills it from later chain steps,
+which is what restored A Crown of Flowers (41191) once its objective-less
+prerequisite Refugees no More (41187) had gone unrecorded.
+
+There is no `bit` library in the compatibility database, so mask tests are
+plain arithmetic in the conservative Lua subset.
+]]
+
+local PQ = PandaQuest
+local Client = PQ.Client
+local QuestEligibility = PQ:NewModule("QuestEligibility")
+
+QuestEligibility.raceBit = nil
+QuestEligibility.classBit = nil
+QuestEligibility.level = nil
+QuestEligibility.greenRange = nil
+QuestEligibility.faction = nil
+QuestEligibility.resolved = false
+
+local function Database()
+    return PQ:GetModule("Database")
+end
+
+-- True when `mask` has `bit` set. Both are non-negative integers and bit is a
+-- power of two. math.floor is the only primitive used, so this stays valid on
+-- both the client and the offline test runtime.
+local function HasBit(mask, bit)
+    if type(mask) ~= "number" or type(bit) ~= "number" or bit < 1 then
+        return false
+    end
+    return math.floor(mask / bit) - math.floor(mask / (bit * 2)) * 2 == 1
+end
+
+local function BitForId(id)
+    if type(id) ~= "number" or id < 1 or id > 31 then
+        return nil
+    end
+    local bit = 1
+    local index = 1
+    while index < id do
+        bit = bit * 2
+        index = index + 1
+    end
+    return bit
+end
+
+-- Refreshed explicitly rather than per quest: the map layer checks dozens of
+-- givers per pass, and Core/Driver.lua records per-tick bursts of guarded
+-- client calls as a measured stuttering hazard on this client.
+function QuestEligibility:RefreshPlayer()
+    local raceId = Client.GetPlayerRaceId()
+    local classId = Client.GetPlayerClassId()
+    self.raceBit = BitForId(raceId)
+    self.classBit = BitForId(classId)
+    self.level = Client.GetPlayerLevel()
+    self.greenRange = Client.GetQuestGreenRange() or 5
+    self.faction = Client.GetPlayerFaction()
+    self:RefreshSkills()
+    self.resolved = (self.raceBit ~= nil or self.classBit ~= nil or self.level ~= nil)
+    return self.resolved
+end
+
+-- The skill walk is one guarded call per Skills-pane row, so it is throttled
+-- rather than repeated on every map pass; a newly learned profession shows
+-- its quests within SKILL_REFRESH_SECONDS.
+local SKILL_REFRESH_SECONDS = 10
+
+function QuestEligibility:RefreshSkills()
+    local now = Client.Now()
+    if now and self.skillsReadAt and now - self.skillsReadAt < SKILL_REFRESH_SECONDS then
+        return
+    end
+    self.skillsReadAt = now
+    local names, complete = Client.GetPlayerSkillLines()
+    self.skillNames = names
+    self.skillsComplete = (names ~= nil and complete) and true or false
+    local count = 0
+    if names then
+        for _ in pairs(names) do
+            count = count + 1
+        end
+    end
+    self.skillCount = count
+end
+
+-- Changes whenever the profession filter could give a different answer: the
+-- option, whether the Skills pane was read in full, and how many skills it
+-- listed (learning or dropping a profession changes the count). The map
+-- layers fold it into the key they rebuild on.
+function QuestEligibility:ProfessionSignature()
+    return tostring(self:HideUnlearnedProfessionQuests())
+        .. ":" .. tostring(self.skillsComplete)
+        .. ":" .. tostring(self.skillCount)
+end
+
+function QuestEligibility:HideUnlearnedProfessionQuests()
+    local config = PQ:GetModule("Config")
+    if not config then
+        return true
+    end
+    return config:Get("hideUnlearnedProfessionQuests") and true or false
+end
+
+-- False only when the Skills pane was read in full and none of the names the
+-- quest's required skill goes by is on it. A collapsed header, an unreadable
+-- list or a skill id with no known name all leave the quest shown: a missing
+-- input must over-show, never blank a giver the player can actually use.
+function QuestEligibility:HasRequiredSkill(record)
+    if type(record) ~= "table" or type(record.skill) ~= "number" then
+        return true
+    end
+    if not self.skillNames then
+        return true
+    end
+    local database = Database()
+    local names = database and database:GetSkillNames(record.skill) or {}
+    local total = table.getn(names)
+    if total == 0 then
+        return true
+    end
+    local index = 1
+    while index <= total do
+        if self.skillNames[names[index]] then
+            return true
+        end
+        index = index + 1
+    end
+    return not self.skillsComplete
+end
+
+-- A quest can omit its race mask even though its starting NPC belongs to one
+-- faction. pfQuest applies this second gate after QuestFilter; without it the
+-- Horde-only givers in Splintertree Post appear to Alliance characters because
+-- quests such as Stonetalon Standstill carry no race field at all.
+--
+-- Missing data remains permissive. The entity faction is bundled world data,
+-- while UnitFactionGroup is documented but not runtime-probed on this client;
+-- either being unavailable must over-show instead of blanking valid givers.
+function QuestEligibility:MatchesGiverFaction(giver)
+    if type(giver) ~= "table" then
+        return true
+    end
+    local giverFaction = giver.faction
+    if type(giverFaction) ~= "string" or giverFaction == "" or giverFaction == "AH" then
+        return true
+    end
+
+    local playerToken = nil
+    if self.faction == "Alliance" then
+        playerToken = "A"
+    elseif self.faction == "Horde" then
+        playerToken = "H"
+    end
+    if not playerToken then
+        return true
+    end
+    return string.find(giverFaction, playerToken, 1, true) ~= nil
+end
+
+-- Race/class exclusion only, without the level/event checks IsOfferable also
+-- applies. Data/QuestMatch.lua uses this to split same-title quest records
+-- (the Alliance/Horde or class-specific variant of one quest line): a quest
+-- already sitting in the log was, by definition, offerable when accepted, so
+-- any candidate record whose race or class mask excludes this character
+-- cannot be the one actually in the log.
+function QuestEligibility:MatchesRaceClass(record)
+    if type(record) ~= "table" then
+        return true
+    end
+    if type(record.race) == "number" and record.race > 0 and self.raceBit then
+        if not HasBit(record.race, self.raceBit) then
+            return false
+        end
+    end
+    if type(record.class) == "number" and record.class > 0 and self.classBit then
+        if not HasBit(record.class, self.classBit) then
+            return false
+        end
+    end
+    return true
+end
+
+function QuestEligibility:ShowEventQuests()
+    local config = PQ:GetModule("Config")
+    if not config then
+        return false
+    end
+    return config:Get("showEventQuests") and true or false
+end
+
+-- A low-level quest is exactly one the client difficulty bands paint grey.
+-- Quest `lvl` is numeric bundled data; the boundary itself stays in ClientAPI
+-- beside GetQuestLevelColor so the tracker and the map cannot disagree.
+function QuestEligibility:IsLowLevel(questId)
+    local database = Database()
+    local record = database and database:GetQuest(questId)
+    if type(record) ~= "table" then
+        return false
+    end
+    return Client.IsQuestLevelTrivial(record.lvl, self.level, self.greenRange)
+end
+
+-- A quest well above the character (the red band) is still offered and shown,
+-- only greyed on the map.
+function QuestEligibility:IsTooHighLevel(questId)
+    local database = Database()
+    local record = database and database:GetQuest(questId)
+    if type(record) ~= "table" then
+        return false
+    end
+    return Client.IsQuestLevelTooHigh(record.lvl, self.level)
+end
+
+-- Returns true plus nil, or false plus the reason it was filtered out. An
+-- unknown player attribute never filters: a missing race id must not blank the
+-- map, so each test is skipped rather than failed when its input is absent.
+function QuestEligibility:IsOfferable(questId, activeQuestIds, questHistory)
+    local database = Database()
+    if not database then
+        return true
+    end
+    local record = database:GetQuest(questId)
+    if type(record) ~= "table" then
+        return true
+    end
+
+    -- A mask of 0 or 255 means "no restriction" / "every race", so only a mask
+    -- that actually excludes this character rejects the quest.
+    if type(record.race) == "number" and record.race > 0 and self.raceBit then
+        if not HasBit(record.race, self.raceBit) then
+            return false, "race"
+        end
+    end
+
+    if type(record.class) == "number" and record.class > 0 and self.classBit then
+        if not HasBit(record.class, self.classBit) then
+            return false, "class"
+        end
+    end
+
+    if type(record.min) == "number" and type(self.level) == "number"
+        and record.min > self.level then
+        return false, "level"
+    end
+
+    -- Seasonal quests are only offered while their world event runs, and this
+    -- client exposes no way to ask which events are active, so they are hidden
+    -- by default rather than shown year round.
+    if record.event ~= nil and not self:ShowEventQuests() then
+        return false, "event"
+    end
+
+    if record.skill ~= nil and self:HideUnlearnedProfessionQuests()
+        and not self:HasRequiredSkill(record) then
+        return false, "profession"
+    end
+
+    -- Match pfQuest's QuestFilter: prerequisites are alternatives, and one
+    -- completed predecessor is enough to unlock the quest. Keep the stronger
+    -- live safeguard too -- a predecessor still active is visibly not done.
+    if type(record.pre) == "table" then
+        local oneComplete = false
+        local index = 1
+        local total = table.getn(record.pre)
+        while index <= total do
+            local prerequisiteId = record.pre[index]
+            if type(prerequisiteId) == "number" then
+                if type(activeQuestIds) == "table" and activeQuestIds[prerequisiteId] then
+                    return false, "activePrerequisite"
+                end
+                if questHistory and questHistory:IsDone(prerequisiteId) then
+                    oneComplete = true
+                end
+            end
+            index = index + 1
+        end
+        if not oneComplete then
+            return false, "prerequisite"
+        end
+    end
+
+    return true
+end
+
+function QuestEligibility:OnEnable()
+    self:RefreshPlayer()
+    PQ:DeclareCapability("questEligibility", "verified",
+        "race/class masks resolved from the measured numeric ids UnitRace/UnitClass return; "
+        .. "prerequisites follow pfQuest's one-completed-predecessor rule using local or imported history")
+    PQ:DeclareCapability("professionQuestFilter", "unverified",
+        "GetNumSkillLines row count is measured; the GetSkillLineInfo name/header/isExpanded tuple "
+        .. "is documented only. Matched by localized name; a collapsed header leaves quests shown")
+end

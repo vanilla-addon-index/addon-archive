@@ -1,0 +1,149 @@
+{
+  "upstream": "https://github.com/jrc13245/QuickHeal",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jrc13245",
+    "repo": "QuickHeal",
+    "name": "QuickHeal",
+    "url": "https://github.com/jrc13245/QuickHeal",
+    "api": "https://api.github.com/repos/jrc13245/QuickHeal"
+  },
+  "commit": "be0d2dee98d26758585f97f807b050bb639c6f4f",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "d4f219e19625697c4c644af5699e6f5aaa42c957b34b0b50dbf4d0f957340c81",
+      "bytes": 159
+    },
+    "Bindings.xml": {
+      "sha256": "39d737184f0f41d5b80d9fe189de30a40b6af3fc9fced7969b016a8f4ac1611a",
+      "bytes": 1757
+    },
+    "Graveyard.lua": {
+      "sha256": "4e3b59c898cc5e2133bb8e1800a3af0b43b75fbcd8db023f4149b1c6f7973059",
+      "bytes": 24870
+    },
+    "HealingBar.xml": {
+      "sha256": "f80e2d33332f685ddc3e0cd675a5888286d94e7c0deee6e3feca346aaf8cc910",
+      "bytes": 6226
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "86cc8f401185d4112ac572b6a40c34902559783768f7bc36db932d79570114c3",
+      "bytes": 31893
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "6bcd5625a8c14866bec07d52f3b8fbbe1e00291bab5afe75548547dd69510fa3",
+      "bytes": 67903
+    },
+    "libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "384d5dd3a2d9c1fd896fc7b2cac78e03fc4ba27c5e69dcdfda266003b721ed3d",
+      "bytes": 7943
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "7b483c934b58101f46b277d61b9ee0d04825c4c2a91f89ba2af26172c5d76fad",
+      "bytes": 29795
+    },
+    "libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "d05fb28fb6d7dbd9a8be4faea455388fd629342491699aa8fe7c3f8b8d6416c4",
+      "bytes": 23442
+    },
+    "libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "d16f5ddeada4f5b58d80c6440ea29af0fc5f000474eeea11755e40b7c34108e4",
+      "bytes": 14298
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "1385526e460948771ca6db1ceec81e8b0daf33bfc391f55e6f1bbc449a341a82",
+      "bytes": 30305
+    },
+    "libs/ChatThrottleLib/ChatThrottleLib.lua": {
+      "sha256": "56acb6393a690e993bc1fbdc9c92d1ae64263e5eb8011d091f8ea65215f4637a",
+      "bytes": 13493
+    },
+    "libs/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "3a834f9e3b64af7e746b8897f523150d56ba4851bb481aa65ac5d8723675a5ec",
+      "bytes": 11031
+    },
+    "libs/Deformat-2.0/Deformat-2.0.lua": {
+      "sha256": "6491e26c67bc4e35eecead3aac60dd1e02abe39a8b281ff6f10bb223e78b7f50",
+      "bytes": 9438
+    },
+    "libs/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "b0d5c95e64c0319042565b389f32e33702a48ba8b3d09e41b86ca5dbb840f011",
+      "bytes": 7906
+    },
+    "libs/HealComm-1.0/HealComm-1.0.lua": {
+      "sha256": "c0283995c093134023285698c17413db778d2b4fa1aba289377d186a3e849f8a",
+      "bytes": 54251
+    },
+    "libs/ItemBonusLib-1.0/ItemBonusLib-1.0.lua": {
+      "sha256": "07d4b1e368cceb37bb19d90d158f79fe60f54e29356842149a0d699664ba2c08",
+      "bytes": 70460
+    },
+    "libs/QHealComm.lua": {
+      "sha256": "2ac588ad14e479e42664d2b61fdbbbaee98c18eba26c05d4c293fb05ce160a40",
+      "bytes": 36122
+    },
+    "libs/RosterLib-2.0/RosterLib-2.0.lua": {
+      "sha256": "f6408d2b85e49548da2aa9b8064803c54c414e8a2ec0eaa87666ecf32fef09dd",
+      "bytes": 11098
+    },
+    "localization.cn.lua": {
+      "sha256": "fe7178874386c99af1575948765fb8d9ba9c7409112310b6943cebc629c8b4ef",
+      "bytes": 2734
+    },
+    "localization.de.lua": {
+      "sha256": "16f39e0b4566e3846ac12dee6737d8685219bab1c83e2ad7bcdaa33f31ffa0d1",
+      "bytes": 649
+    },
+    "localization.en.lua": {
+      "sha256": "a56d522611769c98dba35885ab443835aac995cac14787ffc12d5a771a4a8f78",
+      "bytes": 1024
+    },
+    "localization.fr.lua": {
+      "sha256": "10794c6420bd60439f66f361f31898aec2b6138ab81ebda22181e62c0ee02405",
+      "bytes": 691
+    },
+    "QuickClick.lua": {
+      "sha256": "aef2c714b9645a73e4dbe3c0969c6f4c699ad7684b3d7c71d66a5cdf2b31127b",
+      "bytes": 5838
+    },
+    "QuickHeal.lua": {
+      "sha256": "b884e0263c6803d229f4f0ca7df4cf823567060354f7d84198e36e55a8fcaf8c",
+      "bytes": 170196
+    },
+    "QuickHeal.toc": {
+      "sha256": "0d17a71faa610d3a7ae6ebe75d0a77f6cf7dc7b0a6541403ddbb1b4b9ecb5601",
+      "bytes": 865
+    },
+    "QuickHeal.xml": {
+      "sha256": "c0337928bce83dc15b4acf93014af3fee7d8e473674f2e0620175adf00c718e7",
+      "bytes": 140088
+    },
+    "QuickHealDruid.lua": {
+      "sha256": "037c5e6ad2b9d1aa8431e6064c8a630201f2d58f4b7ca0d9567cc5d00e2f9669",
+      "bytes": 28486
+    },
+    "QuickHealPaladin.lua": {
+      "sha256": "5c9b3b8ad05c46016c2c6c8f600747f2c0e64a0b22c37c392bebdee629858ca6",
+      "bytes": 29813
+    },
+    "QuickHealPriest.lua": {
+      "sha256": "385d78894f8deb73c190c543462e28864c3a23fc840ce3b16d7693023e99579e",
+      "bytes": 36825
+    },
+    "QuickHealShaman.lua": {
+      "sha256": "2b1da8fbd2f328cfe7c196a0bc0e5ed7b8c4364fbbfbaf1304667a00b2f7d10e",
+      "bytes": 26331
+    },
+    "README.md": {
+      "sha256": "d32124e4e5c6b86dd918e9de7572d0b6036cbc9e5e65a78d048319e87b4f1ae4",
+      "bytes": 12390
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

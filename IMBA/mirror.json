@@ -1,0 +1,753 @@
+{
+  "upstream": "https://github.com/0ldi/IMBA",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "0ldi",
+    "repo": "IMBA",
+    "name": "IMBA",
+    "url": "https://github.com/0ldi/IMBA",
+    "api": "https://api.github.com/repos/0ldi/IMBA"
+  },
+  "commit": "88c87ffd4e73e7542e9f46aa411264419d1b815b",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "IMBA/IMBA.toc": {
+      "sha256": "629f03faa8102bc3c77630c54c4cd3ff35bf3137df8bbc6c15931df86dcd5d09",
+      "bytes": 1322
+    },
+    "IMBA/main/IMBA_Alert.lua": {
+      "sha256": "17fd6080ad92aa0eaf21e716a227204c50c0af38c71ffd3af792d6c1b13a65a7",
+      "bytes": 1621
+    },
+    "IMBA/main/IMBA_Alert.xml": {
+      "sha256": "c3a275895a9b17ee3d358efa9da4e15bc71ad15313f2dba73c9f4b06d37f59d4",
+      "bytes": 2207
+    },
+    "IMBA/main/IMBA_Functions.lua": {
+      "sha256": "ce9b7e83352730510c69fb89329ba481956f4740de389fad79455b4447f379cb",
+      "bytes": 6524
+    },
+    "IMBA/main/IMBA_Lines.lua": {
+      "sha256": "ac2d8df7594a3aa0d49100f99b96c5bffc4b35f48c38cf81fe3fc2e90c467f04",
+      "bytes": 9258
+    },
+    "IMBA/main/IMBA_Main.lua": {
+      "sha256": "3c0294d4574bbe83ac06bb83398c04c0f8c7dabf22f072fb2325aa48078d693b",
+      "bytes": 23121
+    },
+    "IMBA/main/IMBA_Main.xml": {
+      "sha256": "f7f9ec75a12db28dfa4638b3ed7e0d745ce8924544c06ac087efcd3f833df49b",
+      "bytes": 745
+    },
+    "IMBA/main/IMBA_MapImages.LUA": {
+      "sha256": "46cfa6c2a12286e295f7d86ce42154d6dec3830334c9063583a8d64ea21c4598",
+      "bytes": 11637
+    },
+    "IMBA/main/IMBA_Minimap.lua": {
+      "sha256": "d3a29cfd42ed8d7a7b43511fbc9fd3d4c4b6b1ed4af56d6873f3ab8a8ed57cfc",
+      "bytes": 8438
+    },
+    "IMBA/main/IMBA_Minimap.xml": {
+      "sha256": "73561291e002aec4ddae4ba389b72fe04550eb820e76912566c5dbac6b5dc972",
+      "bytes": 1786
+    },
+    "IMBA/main/IMBA_MsgQueue.lua": {
+      "sha256": "df504e350a0c7b600d024fa8c6a6ee0ddde9bfd6fd63b2765253fcdbb716cd23",
+      "bytes": 376
+    },
+    "IMBA/main/IMBA_MsgQueue.xml": {
+      "sha256": "62c54b4c57798736da310be1661e56001889ae35c4912c5ed833d41882832814",
+      "bytes": 363
+    },
+    "IMBA/main/IMBA_Options.lua": {
+      "sha256": "70c218c61abcece8f6c2810202b2f703f5a9f6178825a27d52bfaf46cd16278b",
+      "bytes": 18613
+    },
+    "IMBA/main/IMBA_Options.xml": {
+      "sha256": "561089c4168e24a71612001a4a347dfb3d3b24b32e8b0aceb8a8b2be133dd858",
+      "bytes": 33200
+    },
+    "IMBA/main/IMBA_OptionsButton.lua": {
+      "sha256": "cbcc6759de4658ec861b7111251bb65b4a8219e91bbaa8f55d40453ff5e22401",
+      "bytes": 1269
+    },
+    "IMBA/main/IMBA_OptionsButton.xml": {
+      "sha256": "8cef701857058d5c329887459b42188dfb273306078a5a51c53e06bff1546d03",
+      "bytes": 1718
+    },
+    "IMBA/main/IMBA_Template.lua": {
+      "sha256": "c4f013c41b8b6f17eb1b377db36d2400e3e23c825f4b1938b11fd70e7e087427",
+      "bytes": 23809
+    },
+    "IMBA/main/IMBA_Template.xml": {
+      "sha256": "ca81e5d8a3cf7e802d86ce87c7d6714e5c861a3fba015da9ccbcbc48cab25748",
+      "bytes": 22630
+    },
+    "IMBA/main/IMBA_Tracker.lua": {
+      "sha256": "d77e4eccfb3b419f7153f69903ebe9532cf048bd6d7a767da5d26ffda0a0b6df",
+      "bytes": 10060
+    },
+    "IMBA/main/IMBA_Tracker.xml": {
+      "sha256": "959c2c0499060975d4393cdde6b426e9e0f3c187461523b9111d5bd001cd6e3b",
+      "bytes": 467
+    },
+    "IMBA/main/IMBA_Tracker.zip": {
+      "sha256": "e9ddc1835a15d1b14c880ff80bb5a6e1331daf2925c07c38efa0918e474ff8e7",
+      "bytes": 1780
+    },
+    "IMBA/main/IMBA_Tracker2.zip": {
+      "sha256": "4144d473335cfec34b909db2cf6bb0acd37eabe95f3aaef7d72b6adc8f98470d",
+      "bytes": 3264
+    },
+    "IMBA/Mods/AQ40/IMBA_Huhu.lua": {
+      "sha256": "753052e7cb62eb469bcf3cce46d95d6b591664b547b97a5cb22b96a854fc5fca",
+      "bytes": 2718
+    },
+    "IMBA/Mods/AQ40/IMBA_Huhu.xml": {
+      "sha256": "33f28e96f89f6744372c72fc25766efd113c8de86e008602faff0f3b1a4f7c66",
+      "bytes": 3482
+    },
+    "IMBA/Mods/AQ40/IMBA_Ouro.lua": {
+      "sha256": "2a0a937e5563631b98bc7a83a6968ba2bc922b56f4bcca620a35f4113d6a3b67",
+      "bytes": 4260
+    },
+    "IMBA/Mods/AQ40/IMBA_Ouro.xml": {
+      "sha256": "13cc0b04bf947696ac2e2a2c6c1cf085e8ccefe29644f11dae8d0763c9f1212f",
+      "bytes": 3766
+    },
+    "IMBA/Mods/AQ40/IMBA_TwinEmps.lua": {
+      "sha256": "873484144540bd8e3db419c8278bd39882254f462a0d816491eed3d76f6f757d",
+      "bytes": 3157
+    },
+    "IMBA/Mods/AQ40/IMBA_TwinEmps.xml": {
+      "sha256": "4195a2dde7672c19af65eed228830430cbd3f2cf49922f2858f68b4826815356",
+      "bytes": 3814
+    },
+    "IMBA/Mods/AQ40/IMBA_Viscidus.lua": {
+      "sha256": "952e944ecd4b68aa61a9841971436deb9808a79b739493f7cefa4b8e1d5168c2",
+      "bytes": 5154
+    },
+    "IMBA/Mods/AQ40/IMBA_Viscidus.xml": {
+      "sha256": "2f442f18cf933f2b932521327d7470f31674618c8c4787c68e9e51310b6575ee",
+      "bytes": 3478
+    },
+    "IMBA/Mods/NaxxAbom/IMBA_Gluth.lua": {
+      "sha256": "8513f60b828130d70aec56dfadd60e24d27febcf4f2c2ae0bb5bff72b9420a7e",
+      "bytes": 3868
+    },
+    "IMBA/Mods/NaxxAbom/IMBA_Gluth.xml": {
+      "sha256": "8d1958f25dacede733ee44ef459d61c78a9f44e3ed546088bdbc1943fd8cd6ce",
+      "bytes": 3472
+    },
+    "IMBA/Mods/NaxxAbom/IMBA_Grobbulus.lua": {
+      "sha256": "94cb1ce60ee6528e22c9e3a4b68744624bb3e16a61ad6c045272e49be89ceb94",
+      "bytes": 5064
+    },
+    "IMBA/Mods/NaxxAbom/IMBA_Grobbulus.xml": {
+      "sha256": "7bd392d788d3dac88151a4755ad32176a7ca5fa1e0e75df6cc40204e707ca17e",
+      "bytes": 3219
+    },
+    "IMBA/Mods/NaxxAbom/IMBA_Thaddius1.lua": {
+      "sha256": "a01478c82842b9a61a7f8e45ac3ca9f7349c915223c68578d3fc95be12c398b2",
+      "bytes": 3348
+    },
+    "IMBA/Mods/NaxxAbom/IMBA_Thaddius1.xml": {
+      "sha256": "c4d4b5de700e5c7dc841b9c5ba3b269e63f252b1312dc930492ff4053d415830",
+      "bytes": 4114
+    },
+    "IMBA/Mods/NaxxAbom/IMBA_Thaddius2.lua": {
+      "sha256": "3768308fecac9db35cb460272978a9a65ce81151a8b2c78f257e49337a4b50ab",
+      "bytes": 4369
+    },
+    "IMBA/Mods/NaxxAbom/IMBA_Thaddius2.xml": {
+      "sha256": "5218bc0281a623f5ab2221218ef37d5eb8e5ebb50966134429760a2ecde33b13",
+      "bytes": 3571
+    },
+    "IMBA/Mods/NaxxDK/IMBA_FourHorsemen.lua": {
+      "sha256": "bfaed2da98d914289dc714014ee13a7980a7b6e5deb8e1f3be44218d7fe7ce5a",
+      "bytes": 5338
+    },
+    "IMBA/Mods/NaxxDK/IMBA_FourHorsemen.xml": {
+      "sha256": "eb64997bff2beaded6bb621d8c5848a3b581aa51f0415365e1bfca563ff194f1",
+      "bytes": 3826
+    },
+    "IMBA/Mods/NaxxDK/IMBA_Gothik.lua": {
+      "sha256": "46f85945433b764156727d748740e3c5d68637ec7d7ed6ed7b97ba3f4e00c192",
+      "bytes": 10112
+    },
+    "IMBA/Mods/NaxxDK/IMBA_Gothik.xml": {
+      "sha256": "510b7a4bcf152bf7444db387bfeecb40b27e8b7e805312578c791bba4c930845",
+      "bytes": 6644
+    },
+    "IMBA/Mods/NaxxDK/IMBA_Razuvious.lua": {
+      "sha256": "47d11bf95c53c169af4b2d9017c1617404467b156fec71c945198bd4cf05075c",
+      "bytes": 3881
+    },
+    "IMBA/Mods/NaxxDK/IMBA_Razuvious.xml": {
+      "sha256": "fd253824f9b11e83ef4c549e718fe9f7ffc5e8312db360d2bac54f27a02dafa0",
+      "bytes": 2911
+    },
+    "IMBA/Mods/NaxxLair/IMBA_KelThuzad.lua": {
+      "sha256": "448d8043b7474b5da3e7741bb959263dc1648a3f3034d8921ab1a4b26131cc74",
+      "bytes": 13697
+    },
+    "IMBA/Mods/NaxxLair/IMBA_KelThuzad.xml": {
+      "sha256": "0d9510829d83ba7e9cbaa274d05be7f9eb7259160213403b6606d73ed49bf2ff",
+      "bytes": 5670
+    },
+    "IMBA/Mods/NaxxLair/IMBA_KelThuzadInterrupt.lua": {
+      "sha256": "31548e5ef47e4f6117d95214194a557a35bc73951bf6e9d43e507945fdefbae3",
+      "bytes": 8996
+    },
+    "IMBA/Mods/NaxxLair/IMBA_KelThuzadInterrupt.xml": {
+      "sha256": "a6f18433d53f27969397b0fe22c21a151a3dcc93330c67e4460c77ea1c8695aa",
+      "bytes": 8112
+    },
+    "IMBA/Mods/NaxxLair/IMBA_Sapphiron.lua": {
+      "sha256": "9175d9894f5b49fb699d4643967d59289c3390c394b56f552d890cf9a1e9aa80",
+      "bytes": 9352
+    },
+    "IMBA/Mods/NaxxLair/IMBA_Sapphiron.xml": {
+      "sha256": "4f1b7f277060fb41abc55c86bb5b97a00631ba5f80422e315353bf2a0f920a49",
+      "bytes": 3526
+    },
+    "IMBA/Mods/NaxxPlague/heigan/Erupt1.blp": {
+      "sha256": "1dac4a862e1f27b7655e031fc7b3e0cb687418cdaf04fec45e8f48fab4a5850f",
+      "bytes": 175934
+    },
+    "IMBA/Mods/NaxxPlague/heigan/Erupt2.blp": {
+      "sha256": "37c4b6b829be19afebd13cd57273057623dca3add91996405da07c50d2fe6a4c",
+      "bytes": 175934
+    },
+    "IMBA/Mods/NaxxPlague/heigan/Erupt3.blp": {
+      "sha256": "9b2448168843b837ef16a2507465fb033ee2a2f81dbeabd1e3b91ec2be641f64",
+      "bytes": 175934
+    },
+    "IMBA/Mods/NaxxPlague/heigan/Erupt4.blp": {
+      "sha256": "e3506d6aa9eedac05b3f93b51734af16d97bbca2151a089c88ee59e5d700346b",
+      "bytes": 175934
+    },
+    "IMBA/Mods/NaxxPlague/heigan/pErupt1.blp": {
+      "sha256": "6b49224820cfc823fb329001e95da145f226c3694ce4d136e04f5fd75d630d46",
+      "bytes": 175934
+    },
+    "IMBA/Mods/NaxxPlague/heigan/pErupt2.blp": {
+      "sha256": "4e50ab6ea5471a66b7542a1862297618307de741f13a6f8c19ac3ff552f071e3",
+      "bytes": 175934
+    },
+    "IMBA/Mods/NaxxPlague/heigan/pErupt3.blp": {
+      "sha256": "f70bb0a8b94a19de979a56557ddfaaf617da7498393e631e9683ab24bdeea282",
+      "bytes": 175934
+    },
+    "IMBA/Mods/NaxxPlague/heigan/pErupt4.blp": {
+      "sha256": "28ee42cf4ca16c6ee317cb7aca2122e55e1ed9b94ef27a5c1a8277337b00c6b3",
+      "bytes": 175934
+    },
+    "IMBA/Mods/NaxxPlague/IMBA_Heigan.lua": {
+      "sha256": "4f664d031d1e7d4081ba74db72131068451280e04c4366aa17b8ba6e2e05d007",
+      "bytes": 6186
+    },
+    "IMBA/Mods/NaxxPlague/IMBA_Heigan.xml": {
+      "sha256": "c9cd65d1424e49c84a06023a71cd42e59ee68087f3823ba964c5b623390c93ac",
+      "bytes": 3600
+    },
+    "IMBA/Mods/NaxxPlague/IMBA_Loatheb.lua": {
+      "sha256": "e4011ce6c9413e9f988bf8b4212dc60c4c7121fef4ad1de39f0a34fc50202ae8",
+      "bytes": 6678
+    },
+    "IMBA/Mods/NaxxPlague/IMBA_Loatheb.xml": {
+      "sha256": "78e8cbc4f822441e3900a0dd79991a587d2a25048e3f2d598e77ba7d763119d2",
+      "bytes": 3470
+    },
+    "IMBA/Mods/NaxxPlague/IMBA_Noth.lua": {
+      "sha256": "8dd894e0142ba5dba42bb8e18768d848365b0a35d2b9aefebc80592b79b3a5ec",
+      "bytes": 3947
+    },
+    "IMBA/Mods/NaxxPlague/IMBA_Noth.xml": {
+      "sha256": "eb4f9f0580e56dd50a62dede7872d32d64e9d6702c67a01c7002d70a3ceadef1",
+      "bytes": 3468
+    },
+    "IMBA/Mods/NaxxSpider/IMBA_AnubRekhan.lua": {
+      "sha256": "9a5a35b3d6318b92c7f3caa5de209a54a2fcc57251e821d6daafb3a4da31e5ae",
+      "bytes": 4020
+    },
+    "IMBA/Mods/NaxxSpider/IMBA_AnubRekhan.xml": {
+      "sha256": "e5426f274725fb545dcd085364148f17687e306ebbf584c6a842fa5c1fb752a1",
+      "bytes": 3246
+    },
+    "IMBA/Mods/NaxxSpider/IMBA_Faerlina.lua": {
+      "sha256": "dbf80ee1de442fe04f042dab3b426d7449e497a2c8f8219c0d814c413dac013e",
+      "bytes": 8623
+    },
+    "IMBA/Mods/NaxxSpider/IMBA_Faerlina.xml": {
+      "sha256": "749d6ff766c1a66ae89a293db67fce877f309887713f857f531925fd00b5fe2a",
+      "bytes": 3757
+    },
+    "IMBA/Mods/NaxxSpider/IMBA_Maexxna.lua": {
+      "sha256": "6277e6f4e65c3bc9be6c4eb9173778934cdf3090921fa172bd77a7333b53ef51",
+      "bytes": 6454
+    },
+    "IMBA/Mods/NaxxSpider/IMBA_Maexxna.xml": {
+      "sha256": "7220bfce4368aa782e9d0523ef6cbfef48bd2574423e4eac8c6a5ee079077f78",
+      "bytes": 4712
+    },
+    "IMBA/Mods/Other/IMBA_Blackboard.lua": {
+      "sha256": "3279410f4b9f5da3040daa0ebd8cf2f1472d6697fd0dca2beefc4db24e567f0e",
+      "bytes": 29808
+    },
+    "IMBA/Mods/Other/IMBA_Blackboard.xml": {
+      "sha256": "d49cafa99bcbd79a230f3163fdb1130e954ed8379d8efc5b1572acb30bf11506",
+      "bytes": 42005
+    },
+    "IMBA/Mods/Other/IMBA_FriendlyNeighbor.lua": {
+      "sha256": "bb4b41f28f6ea727627b939d570c716d844008f4983ed93af3bb721ac67fa157",
+      "bytes": 3465
+    },
+    "IMBA/Mods/Other/IMBA_FriendlyNeighbor.xml": {
+      "sha256": "8b92684f9556eb858adef132b9664003c2d5b9abee5132cc5996fcbed089f314",
+      "bytes": 3987
+    },
+    "IMBA/Mods/Other/IMBA_MinimapMarkers.lua": {
+      "sha256": "7ff351eb6faf78770b25150e76a6d809f4ff5a1b3e9bd65d343050d8d136bba1",
+      "bytes": 547
+    },
+    "IMBA/Mods/Other/IMBA_MinimapMarkers.xml": {
+      "sha256": "3fe475c56953e562f24d1dd2006699324374abfec5c7b8f82da04070fc8af91e",
+      "bytes": 5954
+    },
+    "IMBA/Mods/Other/IMBA_RaidIcons.lua": {
+      "sha256": "c08fe95c6d1f81d8d66b67d2a0c5ff8ec08044e8f044be732d023a7adbe04feb",
+      "bytes": 2280
+    },
+    "IMBA/Mods/Other/IMBA_RaidIcons.xml": {
+      "sha256": "6644c4a044ca810d648dd9d462d3c6a0206be99416ac9a6f54f26cecd8ec7761",
+      "bytes": 7234
+    },
+    "IMBA/Mods/Other/IMBA_RangeChecker.lua": {
+      "sha256": "cd1c5287c4a532c1a5ec91e99190d99621aa6145065ef817ce9404be581eacbb",
+      "bytes": 1645
+    },
+    "IMBA/Mods/Other/IMBA_RangeChecker.xml": {
+      "sha256": "8bef809bd56a2709471ad7f7d1d129d89126dcf46ba143c8293985bcf91b822c",
+      "bytes": 4202
+    },
+    "IMBA/Mods/Other/IMBA_TankFinder.lua": {
+      "sha256": "8714cf4046d045a6f556184c5743a70aba3b5aa0d030e7055159467208910dd0",
+      "bytes": 2252
+    },
+    "IMBA/Mods/Other/IMBA_TankFinder.xml": {
+      "sha256": "3f222bf41733a269b8dccf62d87f699cedce6bdb2c494e27ec001cfe2e9a4fd8",
+      "bytes": 3379
+    },
+    "IMBA/Mods/ZG/IMBA_Hakkar.lua": {
+      "sha256": "6af815b50ad5d61c6ad8a91b83a21eb63907dad9b8c7c887c3a1c7a483471e92",
+      "bytes": 3271
+    },
+    "IMBA/Mods/ZG/IMBA_Hakkar.xml": {
+      "sha256": "858498cd04c39e68a1127f1508a1a595c0d30a96c91849aee2968ab721f7ae7a",
+      "bytes": 3794
+    },
+    "IMBA/readme.txt": {
+      "sha256": "4162b662832d7dfe771158569ee381cb2d475626cf51f334c5d0f0b66484b512",
+      "bytes": 8233
+    },
+    "IMBA/textures/BarTextures/CandyBar.tga": {
+      "sha256": "5a5deac548c4639de44db55ed79a6784bba95fc8286e7a4e7235ea7da24e19c3",
+      "bytes": 32812
+    },
+    "IMBA/textures/BarTextures/Normal.tga": {
+      "sha256": "5ba70bdeecce2985d6f8f52fb5a74b85542ea51e770cbe5a613e8e7ac13e6dff",
+      "bytes": 65580
+    },
+    "IMBA/textures/BarTextures/smooth.tga": {
+      "sha256": "00e8084e83bf25b941464e2619b59e993b6ac7ae0bd8a6f37b12872e686ded6d",
+      "bytes": 32812
+    },
+    "IMBA/textures/BarTextures/striped.tga": {
+      "sha256": "9c02969479e5dcbce2bcbb4f48bf2f0b2b00c44fa7556140fc8958ba0e9ad09d",
+      "bytes": 32812
+    },
+    "IMBA/textures/bg.tga": {
+      "sha256": "5ba70bdeecce2985d6f8f52fb5a74b85542ea51e770cbe5a613e8e7ac13e6dff",
+      "bytes": 65580
+    },
+    "IMBA/textures/close.tga": {
+      "sha256": "a43f98199e508d4de6f52672d23164092b822f8ff0c52e08e5958ffe789e6c0f",
+      "bytes": 824
+    },
+    "IMBA/textures/close2.tga": {
+      "sha256": "ef9d32c210abf3f8d3a0edd1ee7b74aa4a7579a1aa90092add3ca3d9c79b130b",
+      "bytes": 393
+    },
+    "IMBA/textures/GreenArrow.tga": {
+      "sha256": "ae1e36d66be3d21e49d0b214d22d1568a7f89150f13d3105435a6533d039796f",
+      "bytes": 662
+    },
+    "IMBA/textures/icon_no.tga": {
+      "sha256": "22b1daad455cc6741e82f6d52d423f730a6be8969b28f6012d45dc90c06fff8f",
+      "bytes": 4140
+    },
+    "IMBA/textures/icon.tga": {
+      "sha256": "179c3c77c198dd6b166c394ad1d828deca7bc7e03526b5641fe1ef47702b7390",
+      "bytes": 4140
+    },
+    "IMBA/textures/icons/Button.tga": {
+      "sha256": "41e2ff0d9f27549284201319448b3e4551e6f7c4ce6891e8b1c8003b8cbe4c23",
+      "bytes": 4140
+    },
+    "IMBA/textures/icons/ButtonCursor.tga": {
+      "sha256": "8cdf9595070168c7ae098f8d4172fd4ef4346795a78ee586cd12224821950077",
+      "bytes": 4140
+    },
+    "IMBA/textures/icons/ButtonEraser.tga": {
+      "sha256": "295db80a5b999b1e434faf4bef731e64eb3598ae51df24bf25e0584c3bac68de",
+      "bytes": 4140
+    },
+    "IMBA/textures/icons/ButtonLetters.tga": {
+      "sha256": "074052abfee6aac79250026c6b077bbb876740be81e608babe3e5bc5c9b8c723",
+      "bytes": 4140
+    },
+    "IMBA/textures/icons/ButtonPencil.tga": {
+      "sha256": "1be009fe4ae86a0c1b0266a7f7e12a3e8eb8a108da40686d1e3eaed0302e0b99",
+      "bytes": 4140
+    },
+    "IMBA/textures/line.tga": {
+      "sha256": "cd4a7827ee74ab307279ad3521b58ce2852a52b92688d9d605de284b184734ce",
+      "bytes": 65580
+    },
+    "IMBA/textures/MapImages/ERB1.blp": {
+      "sha256": "58851503b0978db960fc6d42543e3d3290426ed5d12ad759884ef1f0a366138b",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB10.blp": {
+      "sha256": "0201e3aad7989c9d0ece9c31f0ef997865f712dbc147a14c5a541538d2686395",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB11.blp": {
+      "sha256": "fd5b4a3a08e2f39f49b470c08ca5d489d40435d6182c8e61e47206d116a088e2",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB12.blp": {
+      "sha256": "cd1c3a83528b686b8ecdf1eb4356b083f7f330179417f5c6b49d1696ccde396b",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB13.blp": {
+      "sha256": "fa713f848bed8a029bd50ebce93bf356a76758372b45c527ecb19c12b84a1527",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB14.blp": {
+      "sha256": "a21e89460a0aff7218bbfa52410e459bb2dfb710aa46b570e0f54a4fb88ce988",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB15.blp": {
+      "sha256": "5ba8c18e95990a2afc8e3f028d09387e1dc48436b4d7af2936928b7ce4f377d0",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB16.blp": {
+      "sha256": "b22340b29ba6c9de70994c6b4d7445d39b3c90b77959394a0d29b56dce58d4f6",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB17.blp": {
+      "sha256": "ba59e0d19f002c0c65e36b8e2332590aa377999501a8b2206ef28b63749f46c9",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB18.blp": {
+      "sha256": "49e426aec6a18cd85c5f45106c98ccb89f24eb4fcddf9f6e2d6bb246d33f5a29",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB19.blp": {
+      "sha256": "89322903aed5452babcc6de0973a9f1b1ecab0cb6e2fdb21c2411888c6f1b2b1",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB2.blp": {
+      "sha256": "2289b71f33534a818f77bad9bc35046065bcfa84c4bd7458d68ab20a02ab221d",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB20.blp": {
+      "sha256": "f295342f386b85200bbc6c61aaa2c01e2568e62a1a1efd2552a817499c241697",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB21.blp": {
+      "sha256": "7f768fff64a731f6467d2d3cbcffe90e40ec66f6cc0f9388700092591cce7c9a",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB22.blp": {
+      "sha256": "73df1d0f20a4ebeecf72ec0d4df4be05f0de11ec8a9e3767711418a82d182c52",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB23.blp": {
+      "sha256": "a9d85e3861477b597fbf992a75852624b9b5c581ef4fb1945681839b13ba0429",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB24.blp": {
+      "sha256": "41da21f4c349afe5088bad2d35e819dd2e645675792c31ded8cdcc42779f3d2d",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB25.blp": {
+      "sha256": "60422c8a4e72de6293923242d5a7e9097fb36f4eeeec7fd5c44cd416bc7d23c2",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB26.blp": {
+      "sha256": "df8a8f50c1f3c8e38580ff6d1c953ae9d346226b0f45587f97508f9687a04fe0",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB27.blp": {
+      "sha256": "58fd456e2143e8a0c621a18e3325df7a40815565b0cc3fdd9fef6b62a7d71a58",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB28.blp": {
+      "sha256": "2547bec5d3fe3edc98322a6b6cf7c76eb936b30b16319258f6df793bef11bbfe",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB29.blp": {
+      "sha256": "209fdf25bf7b499b6e5977d790baf3375861fb572f399aa976b2326fad10d980",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB3.blp": {
+      "sha256": "2b152cd016e4abe525a05227b413c15e92968acbb4ac6c91c4bcbe9f088e63ed",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB30.blp": {
+      "sha256": "f2c638fc6501305fb39ef86fd91af6600b64a83621ad06503ae443b385633b95",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB31.blp": {
+      "sha256": "a16f23309a216f01e75f225460d43585f37be12133800e4f4003197c716c2897",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB32.blp": {
+      "sha256": "0373357784c632681d8b122bbe52a7c2d4df39a1c2b763466b86833f66c04c2c",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB33.blp": {
+      "sha256": "b7305889b1eac69a0f908ef04625f20eda70f2d8e956a8d0c9516e4b186e33a7",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB34.blp": {
+      "sha256": "d288a57263bfe0314686a0c7374218d41fa4450d74f4f17a1603261a06bd61a1",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB35.blp": {
+      "sha256": "d288a57263bfe0314686a0c7374218d41fa4450d74f4f17a1603261a06bd61a1",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB36.blp": {
+      "sha256": "0c6c98f51f0059694e5eb34e97d7bd1314799fbe6fdc32affad8b0983e8f0534",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB37.blp": {
+      "sha256": "0c6c98f51f0059694e5eb34e97d7bd1314799fbe6fdc32affad8b0983e8f0534",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB38.blp": {
+      "sha256": "5dcb1961929fa83f05b36177cc506438ecf9d7258adaa1247a377aeacecd951c",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB39.blp": {
+      "sha256": "da237a9b21b7b55d49e0efdba2114288996450a315daceb0527e7ff2f2e81f38",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB4.blp": {
+      "sha256": "c9701e2daa17863d76f223c730779c3a2f24006f95be5913b4b3a0b2abd557e2",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB40.blp": {
+      "sha256": "a80764f6b6f34f0fa4ae017bd407ca1539ac3326ac183fe9f81d556598344df4",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB41.blp": {
+      "sha256": "4d7b812f8d554e8a1965a7299c460e3c22bb695ba1dc96278a9e182f483e164f",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB42.blp": {
+      "sha256": "62cf92b2d066d9e31427b41a8e98baa6b2cdeed8dc70325bcb01d09887280065",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB43.blp": {
+      "sha256": "ea8a6a3ea8b02092f1f2cbd18974397d96754a0c96c43e4c450aab69b2a10e21",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB44.blp": {
+      "sha256": "2b4185b0363ec33aed98f32b430c1cbfde716cb22b7d0f9c19543e6a59821e0f",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB45.blp": {
+      "sha256": "2b4185b0363ec33aed98f32b430c1cbfde716cb22b7d0f9c19543e6a59821e0f",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB46.blp": {
+      "sha256": "d94d9640ff755e6529cd068250c11274b1570a5d6ae26e38eb05b9dfe72dfe40",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB47.blp": {
+      "sha256": "9bfd68328f1ca6f9a01c0eee4940f557c1382321f6fbff306cb85e9d1865e53e",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB48.blp": {
+      "sha256": "7877fae981ac4f4898d84f242c6d8e276c2d667ffb7cc6fe218a6305e4be0ad4",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB49.blp": {
+      "sha256": "91f3652a656b256a880e6401502c2a9d887a6161c01743f243ea0bab7e6816c6",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB5.blp": {
+      "sha256": "783fa37b96eb8752265c0eabb8ff1e47919f1acdd0a98367e6f224a27ca75c00",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB50.blp": {
+      "sha256": "99e0f6a9584146ad0ea8c27e3b5f0fb3e0b5e806e07b2d5112a177230e1a1c6e",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB51.blp": {
+      "sha256": "6c35b5a5eb3fed52eedd977ac570e121d3dbeef4b5d5625e6930381d3073d5bb",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB52.blp": {
+      "sha256": "b0feccae8691083719ef0e05dafdcfc66939cfd1565385930726813ff96315a7",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB53.blp": {
+      "sha256": "357da7b1e5991b17cebf27ca7a2d855de8f9a23f6dbf23e69e49c9ac4943350b",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB54.blp": {
+      "sha256": "eb241a87310c32b192ae7eb46c94605038b32418922349ec745fab19521482c2",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB55.blp": {
+      "sha256": "5e1575806caafb699819d15507c578d5c24243fcb2725630a9d849ab2f32a30e",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB56.blp": {
+      "sha256": "e12e13f30f789b4c0c3f3efc00017f28e0079de5bae8205ae93403dadccedcba",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB57.blp": {
+      "sha256": "cb837be6cc6455373e99d003a62f9cfad6ae03f18f954f9eaa38365fc6376293",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB58.blp": {
+      "sha256": "eb8ee095e66c128d855750c74f3194ab7d5c42602812ec56401652eae1ec45f4",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB59.blp": {
+      "sha256": "7b94783c2fddd17ce4ffa7e87f8218322e2e97543be34d4d54e27d1ea658c40d",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB6.blp": {
+      "sha256": "3ca672c924d2f704001ba55bccc449d65e3a3ba75244375a474eda8494645d4b",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB60.blp": {
+      "sha256": "43bc70be9750f5ac770f893391565e91f60faf1e4ea93157fa84364a9abbbc2b",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB61.blp": {
+      "sha256": "a3bbbc4aee1500e268e7b68d9b7d740433e7236afbaa8bd2bcb3924da6536888",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB62.blp": {
+      "sha256": "61d97023a564150c024cb2a6b06d0470eed496a5c927a42448f8613a48f47e14",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB63.blp": {
+      "sha256": "fa7bb6d890bff1f5fb854ef3ec1e3af71cad829e95d2b8e85c18516f1c585365",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB64.blp": {
+      "sha256": "437aff7f3bcea0ba852d618b772e294d65f106c5174be1ed52c31c315511ae90",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB65.blp": {
+      "sha256": "be901c1bd9094479cf4c49eb5acb294b3e7753d94f5e3424e06d7c72c2ae8fe1",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB66.blp": {
+      "sha256": "f1aead5c193b41a25f2b07fc44d9ee750daf0295ff67e9ae88d8e47bb14d2df7",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB67.blp": {
+      "sha256": "abfa18c9ed316f334dd248848252942d76346daefcbb14266e36939f23ac67be",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB68.blp": {
+      "sha256": "9943a19c122d0de8100a32f6be6f2f6c8e3385d7d3b679d4fc0825ae0ceb1649",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB69.blp": {
+      "sha256": "3e348c3cd7a5f2e2882ab8c95ee9f539545eca16ee54157e5f7f5bb965094bb4",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB7.blp": {
+      "sha256": "424885f05ce967b437a9acf5b4275837bf014a21f1db5c14db084c762621c6f6",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB70.blp": {
+      "sha256": "631d849cac2d19366c3e8cff4573263c6707528ee4de99fc5d544f3d8747b899",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB71.blp": {
+      "sha256": "e01e5e386cf473593e7e05279b51eea9a8c1029d9e15de94d0e7bb0ac51ecda8",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB72.blp": {
+      "sha256": "4d3cf936bb1384a000bb1d49d769ef3064236cab73482720f89f860cc5b0d550",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB73.blp": {
+      "sha256": "7230efd74117b7c52c05274c154e06bf1f5b5ed2197778138002f1b244fdb346",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB74.blp": {
+      "sha256": "8d1d00bd313de29b355853c4c48e773d87a30d7c6d73f2540374ae95464ca79b",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB75.blp": {
+      "sha256": "cc6739d6ab2c31d5e92863c0b974cbd54b4a834930bb1db9bc02fd6b06f41a81",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB76.blp": {
+      "sha256": "afc53d1e973f32fbeb8aa71a76c10e3881edbf1e4311967d387de9670717104a",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB77.blp": {
+      "sha256": "46955775e9bcd0178feada1751e0e27a313b6b5fb3495c0835de62c506fdcc36",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB78.blp": {
+      "sha256": "7c7b0505221212f47070a216f7371ce876d597e22e66192bc3869823dd4e8ec3",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB79.blp": {
+      "sha256": "2b632d3e31fa01371aed37e10747b10f732967bf7940faaba260f0e0d7c494d4",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB8.blp": {
+      "sha256": "af87f6853b9fa1f6cf9afea14fa7e4db5252c42560753d702d36796343a84ff1",
+      "bytes": 88596
+    },
+    "IMBA/textures/MapImages/ERB9.blp": {
+      "sha256": "236a9df7b45876b1cfa511ab46bdaf71240fa5456c15c7f4432851c5d39e9f71",
+      "bytes": 88596
+    },
+    "IMBA/textures/PlainBackdrop.tga": {
+      "sha256": "61f41c08e649545b14cdc226c9e26bc4f4f061f357150cf7e7ac1250dc2c5c7f",
+      "bytes": 1068
+    },
+    "IMBA/textures/RedArrow.tga": {
+      "sha256": "1b2b8fc21cec2936006de3f8914f8ac96eecb71d24f3a5cbaf50c01ccc4ff093",
+      "bytes": 662
+    },
+    "README.md": {
+      "sha256": "6d652b430ac3f67e62e2f2bb1091fcf8b37f3c5ab0da55770c16b903666a9b82",
+      "bytes": 2844
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

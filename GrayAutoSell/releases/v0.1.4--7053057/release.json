@@ -1,0 +1,9 @@
+{
+  "id": "7053057",
+  "tag": "v0.1.4",
+  "name": "v0.1.4 GrayAutoSell",
+  "body": "## v0.1.4 Redridge\r\n_What happens in the Lakeshire inn, stays in the Lakeshire inn._\r\n\r\n* Implemented a timed FIFA buffer for selling bag items (we don't want to block the interface)\r\n\r\n",
+  "published": "2017-07-15T17:18:27Z",
+  "prerelease": false,
+  "url": "https://github.com/ttcremers/GrayAutoSell/releases/tag/v0.1.4"
+}

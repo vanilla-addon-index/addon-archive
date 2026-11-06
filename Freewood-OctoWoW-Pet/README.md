@@ -4,6 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| Freewood-OctoWoW-Pet | https://octowow.st/git/Freewood/Freewood-OctoWoW-Pet | new |
+| Freewood-OctoWoW-Pet | https://octowow.st/git/Freewood/Freewood-OctoWoW-Pet | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

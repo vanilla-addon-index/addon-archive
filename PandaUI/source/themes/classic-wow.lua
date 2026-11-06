@@ -1,0 +1,31 @@
+-- pandaUI :: themes/classic-wow.lua
+--
+-- Classic WoW retains the client chrome on stock windows while PandaUI's
+-- modules remain fully enabled. By default unit frames use the real client
+-- artwork over PandaUI's invisible mover/aura anchors, and action buttons
+-- reuse the live client's own button faces over PandaUI's full bar system.
+-- The Classic Modules settings page can route selected surfaces through their
+-- complete Modern WoW drawing paths. The merged bag keeps its PandaUI behavior
+-- but draws from the live ContainerFrame and item-slot assets. Addon-owned HUD
+-- extras use the Classic palette below. The theme is never an addon-off switch.
+
+local U = PandaUI
+
+U.RegisterThemeStyle("classic-wow", {
+  label = "Classic WoW",
+  available = true,
+  nativeChrome = true,
+  apply = function(M)
+    -- These tokens still style addon-owned unit-frame extras such as the druid
+    -- mana bar. Player/target/pet/party visuals themselves come from the native
+    -- client frames while their PandaUI anchors remain alive underneath.
+    M.color.unitFrameBorder[1], M.color.unitFrameBorder[2] = 0.56, 0.43
+    M.color.unitFrameBorder[3], M.color.unitFrameBorder[4] = 0.20, 1.00
+    M.color.healthFull[1], M.color.healthFull[2] = 0.00, 0.75
+    M.color.healthFull[3], M.color.healthFull[4] = 0.00, 1.00
+    M.unitFrame.usePastelGradient = false
+    M.unitFrame.statusTexture = M.texture.classicStatusBar
+    M.unitFrame.background[1], M.unitFrame.background[2] = 0.12, 0.075
+    M.unitFrame.background[3], M.unitFrame.background[4] = 0.035, 0.95
+  end,
+})

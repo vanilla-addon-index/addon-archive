@@ -1,0 +1,49 @@
+{
+  "upstream": "https://octowow.st/git/Freewood/Freewood-OctoWoW-Pet",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Freewood",
+    "repo": "Freewood-OctoWoW-Pet",
+    "name": "Freewood-OctoWoW-Pet",
+    "url": "https://octowow.st/git/Freewood/Freewood-OctoWoW-Pet",
+    "api": "https://octowow.st/git/api/v1/repos/Freewood/Freewood-OctoWoW-Pet"
+  },
+  "commit": "a0570d31395cf5d64862fa2c8d7db3090ba384e0",
+  "sourceFiles": {
+    "docs/img/companion.jpg": {
+      "sha256": "929d9e091595be4753581129a8460112bf54d6cdedeb7c94329014ffc4b48daf",
+      "bytes": 63925
+    },
+    "Families.lua": {
+      "sha256": "4e38dc6110a9068b1910a4e11f1ff427ba9873c6422d4b351cf032c300741be8",
+      "bytes": 5573
+    },
+    "Freewood-OctoWoW-Pet.toc": {
+      "sha256": "5e290260c95d9e1a43f7ab7e3c7cf3ead2872473d11aa83f252fd15805611899",
+      "bytes": 367
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "Locales.lua": {
+      "sha256": "463adf472ccdab5dc6fba4c7ea01bfd9d3d00a61ce6fb871c10472830fd2c0f2",
+      "bytes": 7323
+    },
+    "Pet.lua": {
+      "sha256": "09cfabed0121146e817b8ac360bfdf74887364ed33272e4062d2f68052fd3732",
+      "bytes": 16538
+    },
+    "PetUI.lua": {
+      "sha256": "8889a5beb8589f94dd920a53bfc812909fee6f6f24f21a39a08bab8578a1a63a",
+      "bytes": 24851
+    },
+    "README.md": {
+      "sha256": "a2aae69ed5b597ec8b63b228f3a6e4210b63ff888070848402cfed17868d0026",
+      "bytes": 2103
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

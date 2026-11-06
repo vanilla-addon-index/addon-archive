@@ -1,0 +1,89 @@
+{
+  "upstream": "https://github.com/madScripting/PallyPower-TurtleWoW",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "madScripting",
+    "repo": "PallyPower-TurtleWoW",
+    "name": "PallyPower-TurtleWoW",
+    "url": "https://github.com/madScripting/PallyPower-TurtleWoW",
+    "api": "https://api.github.com/repos/madScripting/PallyPower-TurtleWoW"
+  },
+  "commit": "432048b36515064bef35c4e01543ddf3b86e7e0d",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "06ec01503110948f5d64d53eaebac2e63c77491dfdc23013b8dc747b0b1da6d9",
+      "bytes": 199
+    },
+    "Icons/Druid.tga": {
+      "sha256": "48ffcaaaa51204c1ef8f70052ce914745e50bb27d80b365fe046e00af0b8c36b",
+      "bytes": 12306
+    },
+    "Icons/Hunter.tga": {
+      "sha256": "c3e499450936bb4cacc20d01f0830c7be4782eaa8d5ed7eaf9e809b4fc56efc8",
+      "bytes": 12306
+    },
+    "Icons/Mage.tga": {
+      "sha256": "0cf8860ee8d26dfae3ebf79e333304c66aa0a6a615dce51f5e6a7b190d4dbfb6",
+      "bytes": 12306
+    },
+    "Icons/Paladin.tga": {
+      "sha256": "3842e3b33ab275da8d8815fb593d12c8d580c155e15b33ee62decd999ffababf",
+      "bytes": 12306
+    },
+    "Icons/Pet.png": {
+      "sha256": "f0b7960d6cb28b2e628339ee3b8e533c7ae3f671d453129d2c7479374975caba",
+      "bytes": 23105
+    },
+    "Icons/Pet.tga": {
+      "sha256": "bbe68dcb120ba1039f4682c83b1c0c1b19776adeb5d97e75b71dba84e78690fe",
+      "bytes": 196626
+    },
+    "Icons/Priest.tga": {
+      "sha256": "3f004b3291da51252ba3e470a9775588399af0836239aabb1475832c704ebb72",
+      "bytes": 12306
+    },
+    "Icons/Rogue.tga": {
+      "sha256": "f8ae48b8b0e6bccc67077921482db047a2d9a02301f47623846b0a92a908bcb8",
+      "bytes": 12306
+    },
+    "Icons/Shaman.tga": {
+      "sha256": "cfe546678428e1e5e45927688b4312545c606341f331ab5a7a5bba2dcfaf0644",
+      "bytes": 12332
+    },
+    "Icons/Warlock.tga": {
+      "sha256": "8f2ff9dac07c441ea0529e3dbdf7ddee3074647b9f028c986625a107f8dbafef",
+      "bytes": 12306
+    },
+    "Icons/Warrior.tga": {
+      "sha256": "41bcdc45d7c54af3734208e72c6ca09a73f6e784ddaf28715320353f6a0c9064",
+      "bytes": 12306
+    },
+    "localization.lua": {
+      "sha256": "58b796d1a20a15ef986b0f661021a2c7c190dd6b2a33ccc2e22f1f542754cc23",
+      "bytes": 7477
+    },
+    "PallyPower-ResizeGrip.tga": {
+      "sha256": "f17e6620869ab39c230f860d13e5e9cda42b03938b27b922c99a6e4109bcf5cf",
+      "bytes": 2085
+    },
+    "PallyPower.lua": {
+      "sha256": "6886d0f6458cca74f72d61cca1dfa3cd8a42894b9a77b00f7eb5d3a954bc33e5",
+      "bytes": 42599
+    },
+    "PallyPower.toc": {
+      "sha256": "fbb3fe323e27953854b8989def4cead8ba4bdb9c03ed5a523dbe818e0064b6b5",
+      "bytes": 279
+    },
+    "PallyPower.xml": {
+      "sha256": "5b453005f1a1e7c3415dd0d9f9a9a2be0f48fae08f9712615d8e8b2dfeeaa4bf",
+      "bytes": 63018
+    },
+    "README.md": {
+      "sha256": "0eb1341a688c567e28572d25f0df31c8d62a92e32465994a929e577d7c49ec49",
+      "bytes": 477
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

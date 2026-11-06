@@ -1,0 +1,248 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+    <Script file="localization.lua"/>
+    <Script file="ignitestatus.lua"/>
+
+
+    <Frame name="Ignite_Template" virtual="true">
+        <Size>
+            <AbsDimension x="256" y="128"/>
+        </Size>
+        <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+            <EdgeSize>
+                <AbsValue val="16"/>
+            </EdgeSize>
+            <TileSize>
+                <AbsValue val="16"/>
+            </TileSize>
+            <BackgroundInsets>
+                <AbsInset left="5" right="5" top="5" bottom="5"/>
+            </BackgroundInsets>
+        </Backdrop>
+        <Anchors>
+            <Anchor point="TOPRIGHT">
+                <Offset>
+                    <AbsDimension x="0" y="0" />
+                </Offset>
+            </Anchor>
+        </Anchors>
+
+        <Scripts>
+            <OnLoad>
+                this:SetBackdropColor(0, 0, 0,128);
+            </OnLoad>
+        </Scripts>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture name="$parent_bg1">
+                    <Size>
+                        <AbsDimension x="200" y="84"/>
+                    </Size>
+                    <TexCoords left="0" right="1" top="0" bottom="1"/>
+                    <Anchor point="CENTER">
+                        <Offset>
+                            <AbsDimension x="0" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Texture>
+                <FontString name="$parent_Title" inherits="MasterFont" font="Fonts\FRIZQT__.TTF" justifyH="CENTER" text="Ignite Status">
+                    <FontHeight>
+                        <AbsValue val="12"/>
+                    </FontHeight>
+                    <Color r=".8" g=".31" b=".21"/>
+                    <Anchors>
+                        <Anchor point="CENTER">
+                            <Offset>
+                                <AbsDimension x="0" y="31" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+
+            <Layer level="ARTWORK">
+                <FontString name="$parent_IGNITESTATUS_vDmg" inherits="MasterFont" font="Fonts\FRIZQT__.TTF" justifyH="CENTER" text="Current Damage: ">
+                    <FontHeight>
+                        <AbsValue val="10"/>
+                    </FontHeight>
+                    <Color r="1" g="1" b="1"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="5" y="-43" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parent_IGNITESTATUS_vTotDmg" inherits="MasterFont" font="Fonts\FRIZQT__.TTF" justifyH="CENTER" text="Total Damage: ">
+                    <FontHeight>
+                        <AbsValue val="10"/>
+                    </FontHeight>
+                    <Color r="1" g="1" b="1"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="5" y="-31" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parent_IGNITESTATUS_vTick" inherits="MasterFont" font="Fonts\FRIZQT__.TTF" justifyH="CENTER" text="# of Ticks: ">
+                    <FontHeight>
+                        <AbsValue val="10"/>
+                    </FontHeight>
+                    <Color r="1" g="1" b="1"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="152" y="-31" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parent_IGNITESTATUS_vOwner" inherits="MasterFont" font="Fonts\FRIZQT__.TTF" justifyH="CENTER" text="Ignite Owner: ">
+                    <FontHeight>
+                        <AbsValue val="10"/>
+                    </FontHeight>
+                    <Color r="1" g="1" b="1"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="5" y="-55" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parent_IGNITESTATUS_Last" inherits="MasterFont" font="Fonts\FRIZQT__.TTF" justifyH="CENTER" text="Last:">
+                    <FontHeight>
+                        <AbsValue val="10"/>
+                    </FontHeight>
+                    <Color r="1" g="1" b="1"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="5" y="-67" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parent_IGNITESTATUS_vScorch" inherits="MasterFont" font="Fonts\FRIZQT__.TTF" justifyH="CENTER" text="Fire Vul: ">
+                    <FontHeight>
+                        <AbsValue val="10"/>
+                    </FontHeight>
+                    <Color r="1" g="1" b="1"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="160" y="-19" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parent_IGNITESTATUS_vTarget" inherits="MasterFont" font="Fonts\FRIZQT__.TTF" justifyH="CENTER" text="Target: ">
+                    <FontHeight>
+                        <AbsValue val="10"/>
+                    </FontHeight>
+                    <Color r="1" g="1" b="1"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="5" y="-19" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString name="$parent_IGNITESTATUS_vTimeLeft" inherits="MasterFont" font="Fonts\FRIZQT__.TTF" justifyH="CENTER" text="0">
+                    <FontHeight>
+                        <AbsValue val="24"/>
+                    </FontHeight>
+                    <Color r=".8" g=".31" b=".21"/>
+                    <Anchors>
+                        <Anchor point="CENTER">
+                            <Offset>
+                                <AbsDimension x="90" y="-15" />
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+
+            <Layer level="OVERLAY">
+            </Layer>
+
+        </Layers>
+    </Frame>
+
+    <Frame name="IGNITESTATUSFrame" frameStrata="LOW" enableMouse="true" movable="true" parent="UIParent" hidden="true" resizable="true">
+        <Scripts>
+            <OnLoad>
+                this:SetBackdropColor(0, 0, 0,128);
+                IGNITESTATUS_OnLoad();
+            </OnLoad>
+            <OnEvent>
+            	IGNITESTATUS_OnEvent(event);
+            </OnEvent>
+            <OnMouseDown>
+				if(arg1 == "LeftButton") then
+					IGNITESTATUS_StartMoving();
+				end
+			</OnMouseDown>
+			<OnMouseUp>
+				this:StopMovingOrSizing();
+			</OnMouseUp>
+            <OnUpdate>
+                IGNITESTATUS_TimerOnUpdate();
+            </OnUpdate>
+        </Scripts>
+
+        <Size>
+            <AbsDimension x="220" y="84"/>
+        </Size>
+        <Anchors>
+            <Anchor point="TOPRIGHT"/>
+            <Offset>
+                <AbsDimension x="0" y="0"/>
+            </Offset>
+        </Anchors>
+
+        <Frames>
+        	<Button name="IgniteHideButton">
+                <Size>
+                    <AbsDimension x="16" y="16"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-4" y="-4"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnEnter>
+                        IGNITESTATUS_ShowTooltip("Turn Off");
+                    </OnEnter>
+                    <OnLeave>
+                        GameTooltip:Hide();
+                    </OnLeave>
+                    <OnClick>
+                        IGNITESTATUS_ToggleHidden();
+                    </OnClick>
+                </Scripts>
+                <NormalTexture file="Interface\AddOns\IgniteStatus\Textures\CloseButton-Up"/>
+                <PushedTexture file="Interface\AddOns\IgniteStatus\Textures\CloseButton-Down"/>
+                <HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+        	</Button>
+            <Frame name="igniteFrame" inherits="Ignite_Template">
+                <Size>
+                    <AbsDimension x="220" y="84"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset>
+                            <AbsDimension x="0" y="0" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Frame>
+        </Frames>
+    </Frame>
+</Ui>

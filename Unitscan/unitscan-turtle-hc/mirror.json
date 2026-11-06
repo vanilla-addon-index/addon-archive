@@ -1,0 +1,69 @@
+{
+  "upstream": "https://github.com/RetroCro/unitscan-turtle-hc",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "RetroCro",
+    "repo": "unitscan-turtle-hc",
+    "name": "unitscan-turtle-hc",
+    "url": "https://github.com/RetroCro/unitscan-turtle-hc",
+    "api": "https://api.github.com/repos/RetroCro/unitscan-turtle-hc"
+  },
+  "commit": "0a1002827b611c6cfbefe186329e9e412530f012",
+  "sourceFiles": {
+    "Event_wardrum_ogre.ogg": {
+      "sha256": "5d89babab4810c0c28507a3d42c3266fb68c73c46f61c1457a45ee399d55ffd6",
+      "bytes": 36637
+    },
+    "gruntling_horn_bb.ogg": {
+      "sha256": "69f26434436600de00b3506b07047914563d603aa2e8027b1d999ee7ead579d1",
+      "bytes": 29442
+    },
+    "preview/unitscan1.jpg": {
+      "sha256": "7a74683bd23d3b36b59e6fa3b35c05dad52327a43a7de8f719108e9fc7d3b96f",
+      "bytes": 107004
+    },
+    "preview/unitscan2.jpg": {
+      "sha256": "5ec66bbab7afa8542f92e66e13cfb2c3a814cdacdf722653dd3331141c4f8f47",
+      "bytes": 219884
+    },
+    "preview/unitscan3.jpg": {
+      "sha256": "7bc539475d6530a7c872e486d108bfff757ad9152f15ec97bed5f4a55a975a92",
+      "bytes": 141145
+    },
+    "README.md": {
+      "sha256": "b584b8a709e303abfaa2c98e7bb1e2b586a264af0b09b19120c05e9b45deffad",
+      "bytes": 3998
+    },
+    "scourge_horn.ogg": {
+      "sha256": "dbb9c5e8919bd79e7509575e11fec1ea63a204dce606da5d7620d4a386c43bf7",
+      "bytes": 74163
+    },
+    "UI-Achievement-Alert-Glow.blp": {
+      "sha256": "0cb0305a234ba321f449a56152d7932c422b3a6ed9fa59043f66c6a3a60cb833",
+      "bytes": 88572
+    },
+    "UI-Achievement-Parchment-Horizontal.blp": {
+      "sha256": "261948af2f95a40d7d9d7af159784807557f36eeedec6acc258f8013500ab5b6",
+      "bytes": 88572
+    },
+    "UI-Achievement-Title.blp": {
+      "sha256": "40436fab4ee1ec9c1f5287ec5f5a39ce859ed21931c02c52f12e40526d501111",
+      "bytes": 44900
+    },
+    "unitscan-turtle-hc.toc": {
+      "sha256": "242727a52ae679f5d3f0a2ebb5ec8279875df9528fd8019fc28704a9836868e4",
+      "bytes": 202
+    },
+    "unitscan.lua": {
+      "sha256": "04186d340e229547cc7afaee4361a540889dfa1fc84774f6ae22fdca01f21d4c",
+      "bytes": 12321
+    },
+    "zonetargets.lua": {
+      "sha256": "250b52998ee8172e032e628980303c4eae1c73bbe0bd6829770587c7f2af6d1f",
+      "bytes": 33966
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,39 @@
+# pfQuest-HDB embedded HearthDB layout
+
+The provider is loaded inside `pfQuest`. Keep `provider/core.lua` and
+`provider/data/pfquest.sqlite` inside that addon; do not package the provider as another
+addon. Turtle's enabled extension suppresses the vanilla provider and opens the
+combined database from `pfQuest-turtle` instead.
+
+Large Lua database files are not included in the active load manifests. This
+HDB edition requires the client component and has no Lua database fallback.
+
+Build from the provider directory:
+
+```sh
+python3 tools/build_database.py \
+  --source /path/to/pfQuest-HDB \
+  --locales enUS \
+  --output data/pfquest.sqlite
+```
+
+Generated databases remain excluded from source history; ready-to-install
+repositories contain them. Existing published alpha packages are unchanged.
+
+## Legacy provider compatibility
+
+Leftover pfQuest-HearthDB and pfQuest-HearthDB-turtle addons cannot open their
+old databases or retain ownership of the embedded API/status command. This
+protection works even when installers leave the old runtime files unchanged.
+Unrelated addons using HearthDB are unaffected. Install bundles also include
+tiny inactive load-on-demand stubs at both old addon paths for in-place updates.
+They are migration files, not required providers. Old tools/data left on disk
+are not used. Cleanup is recommended; untouched old addons may still print
+their own database-open failure messages.
+
+## HearthDB DLL compatibility
+
+The existing HearthDB DLL remains supported through bounded SQL paging. The
+optional experimental 0.4.1-exp.3 DLL enables incremental native result delivery;
+it is distributed separately and is not required to install this addon update.
+The install repositories currently include the optional Hitch Profiler 1.0.3 addon. Login capture defaults to off for new installations; see the [diagnostic guide](https://github.com/rivi-s/pfQuest-HDB/blob/main/SUPPORT.md#capture-a-hitch).

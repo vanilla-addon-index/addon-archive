@@ -1,0 +1,45 @@
+{
+  "upstream": "https://octowow.st/git/stealthzi/MacroMaker",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "stealthzi",
+    "repo": "MacroMaker",
+    "name": "MacroMaker",
+    "url": "https://octowow.st/git/stealthzi/MacroMaker",
+    "api": "https://octowow.st/git/api/v1/repos/stealthzi/MacroMaker"
+  },
+  "commit": "bc9f1486fa27302eac64898345164fe1e83ee4b3",
+  "sourceFiles": {
+    "Core.lua": {
+      "sha256": "f662234d7f76856f9630bf94fd7f3f79a3c13cfa07ee108e9120d672328beccd",
+      "bytes": 11965
+    },
+    "Help.lua": {
+      "sha256": "6da898a440a21fa9c6ba5cb489d0d6848c2cd3875b6b9046788fa676d00036f7",
+      "bytes": 6180
+    },
+    "Helpers.lua": {
+      "sha256": "f9135d5bb51b0ddb1077d42771149d453bb3801bfe196685d6209b094c5cd76e",
+      "bytes": 17230
+    },
+    "MacroMaker.toc": {
+      "sha256": "68bed6869410b936aa744a081d487f74ce66463489c852c7ec282588e9450ae2",
+      "bytes": 302
+    },
+    "Minimap.lua": {
+      "sha256": "3922ce87020355d675d834cd614c9447225c2423dc147ce34d1bad3545e4f003",
+      "bytes": 2491
+    },
+    "Recipes.lua": {
+      "sha256": "210b0ce0d7370f514b8d584c4a90d8ca9dd36b3e9a885696174579886755e9b0",
+      "bytes": 16423
+    },
+    "UI.lua": {
+      "sha256": "6296994d3acc3f481465f6000452cf93dbc71b2dbf544e363fc65601c84080e3",
+      "bytes": 30603
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,9 @@
+{
+  "id": "401729258",
+  "tag": "1.3.0",
+  "name": "## BananaBank 1.3.0",
+  "body": "**Important:** the guild needs a guild rank called `Gildenbank` (English: `guildbank`). Without it the addon is locked. There is no setting for any other rank.\r\n\r\n### What's new\r\n- Fixed bank rank `Gildenbank` / `guildbank` as a hard requirement (lock screen, `/bb bankrank` removed)\r\n- Trades with a requester are credited to their confirmed request\r\n- COD price is frozen per stack when the mail goes out\r\n- Returned mail reduces a member's withdrawals\r\n- Transfers between bank characters are no longer booked as donations\r\n- Inbox hook fixed for clients with several mail attachments\r\n- README completely rewritten\r\n\r\n### Installation\r\nDownload the ZIP and put the `BananaBank` folder into `Interface/AddOns/`. When updating, delete the old folder first. Every guild member needs the addon.",
+  "published": "2026-10-02T10:36:44Z",
+  "prerelease": false,
+  "url": "https://github.com/BananaForge/BananaBank/releases/tag/1.3.0"
+}

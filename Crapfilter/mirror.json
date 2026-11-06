@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Metalgrid/crapfilter",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Metalgrid",
+    "repo": "crapfilter",
+    "name": "crapfilter",
+    "url": "https://github.com/Metalgrid/crapfilter",
+    "api": "https://api.github.com/repos/Metalgrid/crapfilter"
+  },
+  "commit": "1ab564e2ec7939b01e2203ba0fcade5467b3b7b9",
+  "sourceFiles": {
+    "CrapFilter.lua": {
+      "sha256": "6a998e7b4d5d3ef277d00f3319f527f568db6f1d3bd727c825a437de1b7fed5f",
+      "bytes": 4702
+    },
+    "CrapFilter.toc": {
+      "sha256": "c000c68f3add28740c60bbd2100392e3f04f672f80a1cf807d61efc32fc2054e",
+      "bytes": 993
+    },
+    "CrapFilter.xml": {
+      "sha256": "6dbb4421dae5ee33eb868bc9af270e4e84d195c7c6a169371c2187ea87737c28",
+      "bytes": 431
+    },
+    "LICENSE": {
+      "sha256": "7a9d8c9f2549855566c0d3931c58cf7263262add3bdea79423ee5a409af6891e",
+      "bytes": 15238
+    },
+    "README.md": {
+      "sha256": "e1092535b3a5dccc39a2525c43c072f327fb15ed39f798839a7705858d928ce8",
+      "bytes": 805
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

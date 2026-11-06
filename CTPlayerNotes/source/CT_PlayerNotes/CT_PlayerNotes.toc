@@ -1,0 +1,8 @@
+## Interface: 11200
+## Version: 1.31 (CTMod 1.856)
+## Title: CT_PlayerNotes
+## Title-ruRU: CT_PlayerNotes
+## Notes: Allows you to save notes for your friends, guildies & ignored persons.
+## Notes-ruRU: Заметки для друзей, игроков в гильдии
+## SavedVariables: CT_PlayerNotes, CT_IgnoreNotes, CT_GuildNotes
+CT_PlayerNotes.xml

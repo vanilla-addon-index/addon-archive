@@ -1,0 +1,266 @@
+{
+  "upstream": "https://github.com/Ennea/eUI",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Ennea",
+    "repo": "eUI",
+    "name": "eUI",
+    "url": "https://github.com/Ennea/eUI",
+    "api": "https://api.github.com/repos/Ennea/eUI"
+  },
+  "commit": "294d94545de5553422b3be45ca1fbb25d2f65cb0",
+  "sourceFiles": {
+    "!!LuaExtender/!!LuaExtender.toc": {
+      "sha256": "ac983eaf13f61c7f81db49d254767a3a7b42fb1e66e887c9c9d24f926791b08d",
+      "bytes": 213
+    },
+    "!!LuaExtender/LuaExtender.lua": {
+      "sha256": "04c170e584ad80bf2083be6fd6a10dd9eb7ce1f89fcf4069d8d6d338df78fdee",
+      "bytes": 6718
+    },
+    "eActionBars/eActionBars.lua": {
+      "sha256": "610a5977134a99a419624493eebcd8d0679f6ba6e20d3c1f2418b53aac8a1674",
+      "bytes": 12040
+    },
+    "eActionBars/eActionBars.toc": {
+      "sha256": "41aeb33262ab8c17c9bd9ff68ff2fc6a6827ce8bd912d20e514d15bcc3e9e715",
+      "bytes": 370
+    },
+    "eActionBars/libs/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "3e04bb7c00e9f21b5205c585f95f27457bc685677173560562cfab5d9b88707c",
+      "bytes": 9114
+    },
+    "eActionBars/libs/LibKeyBound-1.0/lib.xml": {
+      "sha256": "45cc4bb04bac55a74bad3c60889144afc9f5b36b512bb4b43798663705156b05",
+      "bytes": 521
+    },
+    "eActionBars/libs/LibKeyBound-1.0/LibKeyBound-1.0.lua": {
+      "sha256": "12872e6bdd3c601854a8e2c743eddce81660aef30ac0d9089a34e99c6ec51ee8",
+      "bytes": 16768
+    },
+    "eActionBars/libs/LibKeyBound-1.0/Locale-deDE.lua": {
+      "sha256": "b74aa1dc6e2a97e5b8d9fdcaf219961d5a642abf1b7ebff76a865854bec09a93",
+      "bytes": 2389
+    },
+    "eActionBars/libs/LibKeyBound-1.0/Locale-enUS.lua": {
+      "sha256": "20ea20a3068d367b9a81110fb14a10e49fab869414f11137068d3a133082fe64",
+      "bytes": 4217
+    },
+    "eActionBars/libs/LibKeyBound-1.0/Locale-esES.lua": {
+      "sha256": "d210865f1b85bf4f8448da16b9be411eeb82c70b059746720c4efe56729ccd17",
+      "bytes": 2368
+    },
+    "eActionBars/libs/LibKeyBound-1.0/Locale-esMX.lua": {
+      "sha256": "9d6020785ac53af34d90bbef94c38befea1dd173668ec4b098efae73813b23cf",
+      "bytes": 2374
+    },
+    "eActionBars/libs/LibKeyBound-1.0/Locale-frFR.lua": {
+      "sha256": "02fb8d3bd2a939b0b005b5d6ee0cb982256b621547635b0d4d051fa6f4ca874a",
+      "bytes": 2377
+    },
+    "eActionBars/libs/LibKeyBound-1.0/Locale-koKR.lua": {
+      "sha256": "beea2bf6a612f7d70daf849a5053a934f80b4574b4f8f541bdd83666b550141c",
+      "bytes": 2532
+    },
+    "eActionBars/libs/LibKeyBound-1.0/Locale-ruRU.lua": {
+      "sha256": "750d95ace95894b7f0186747d34e134885e58139b04eb32f3d6a84644fd96ada",
+      "bytes": 2731
+    },
+    "eActionBars/libs/LibKeyBound-1.0/Locale-zhCN.lua": {
+      "sha256": "e40f6e1322f9a39916446c763620a8215161c9c6fc173cc7148dae52b4c1edfc",
+      "bytes": 2377
+    },
+    "eActionBars/libs/LibKeyBound-1.0/Locale-zhTW.lua": {
+      "sha256": "6fa613dfb4a282f11cb66913b49049b15f6abb588b7b00b0247c99482d4b0857",
+      "bytes": 2372
+    },
+    "eActionBars/libs/LibStub/LibStub.lua": {
+      "sha256": "b8a4c929f6bfa47ea4d6a35123f4cfd1a47fed6d6d7b5213d6b69771c58d6c2a",
+      "bytes": 1372
+    },
+    "eActionBindings/Bindings.xml": {
+      "sha256": "2419b34d38c4ef22489f511e18fff5449d78f2d4bbd9f4810ced86b920638b15",
+      "bytes": 1683
+    },
+    "eActionBindings/eActionBindings.lua": {
+      "sha256": "a809b66edb3c2d3dd2e347ea8387f24f95baa4272ed67b59dc53eb90c4c57241",
+      "bytes": 5041
+    },
+    "eActionBindings/eActionBindings.toc": {
+      "sha256": "aeccfd8c12add7fa90a46ae348c0ed5c71990b11b7c2e4cb344aee5528a54a4f",
+      "bytes": 321
+    },
+    "eActionBindings/libs/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "3e04bb7c00e9f21b5205c585f95f27457bc685677173560562cfab5d9b88707c",
+      "bytes": 9114
+    },
+    "eActionBindings/libs/LibKeyBound-1.0/lib.xml": {
+      "sha256": "45cc4bb04bac55a74bad3c60889144afc9f5b36b512bb4b43798663705156b05",
+      "bytes": 521
+    },
+    "eActionBindings/libs/LibKeyBound-1.0/LibKeyBound-1.0.lua": {
+      "sha256": "12872e6bdd3c601854a8e2c743eddce81660aef30ac0d9089a34e99c6ec51ee8",
+      "bytes": 16768
+    },
+    "eActionBindings/libs/LibKeyBound-1.0/Locale-deDE.lua": {
+      "sha256": "b74aa1dc6e2a97e5b8d9fdcaf219961d5a642abf1b7ebff76a865854bec09a93",
+      "bytes": 2389
+    },
+    "eActionBindings/libs/LibKeyBound-1.0/Locale-enUS.lua": {
+      "sha256": "20ea20a3068d367b9a81110fb14a10e49fab869414f11137068d3a133082fe64",
+      "bytes": 4217
+    },
+    "eActionBindings/libs/LibKeyBound-1.0/Locale-esES.lua": {
+      "sha256": "d210865f1b85bf4f8448da16b9be411eeb82c70b059746720c4efe56729ccd17",
+      "bytes": 2368
+    },
+    "eActionBindings/libs/LibKeyBound-1.0/Locale-esMX.lua": {
+      "sha256": "9d6020785ac53af34d90bbef94c38befea1dd173668ec4b098efae73813b23cf",
+      "bytes": 2374
+    },
+    "eActionBindings/libs/LibKeyBound-1.0/Locale-frFR.lua": {
+      "sha256": "02fb8d3bd2a939b0b005b5d6ee0cb982256b621547635b0d4d051fa6f4ca874a",
+      "bytes": 2377
+    },
+    "eActionBindings/libs/LibKeyBound-1.0/Locale-koKR.lua": {
+      "sha256": "beea2bf6a612f7d70daf849a5053a934f80b4574b4f8f541bdd83666b550141c",
+      "bytes": 2532
+    },
+    "eActionBindings/libs/LibKeyBound-1.0/Locale-ruRU.lua": {
+      "sha256": "750d95ace95894b7f0186747d34e134885e58139b04eb32f3d6a84644fd96ada",
+      "bytes": 2731
+    },
+    "eActionBindings/libs/LibKeyBound-1.0/Locale-zhCN.lua": {
+      "sha256": "e40f6e1322f9a39916446c763620a8215161c9c6fc173cc7148dae52b4c1edfc",
+      "bytes": 2377
+    },
+    "eActionBindings/libs/LibKeyBound-1.0/Locale-zhTW.lua": {
+      "sha256": "6fa613dfb4a282f11cb66913b49049b15f6abb588b7b00b0247c99482d4b0857",
+      "bytes": 2372
+    },
+    "eActionBindings/libs/LibStub/LibStub.lua": {
+      "sha256": "b8a4c929f6bfa47ea4d6a35123f4cfd1a47fed6d6d7b5213d6b69771c58d6c2a",
+      "bytes": 1372
+    },
+    "eBuffs/border.blp": {
+      "sha256": "f9ddf69ba5eb24186ef0910b2d0273f3690c333caf77bed0bc45d8d945693edd",
+      "bytes": 3916
+    },
+    "eBuffs/eBuffs.lua": {
+      "sha256": "705cf721c12dfd67b23af7b42a397f4feed256a0b52aeb2f9d468f65198ada33",
+      "bytes": 1632
+    },
+    "eBuffs/eBuffs.toc": {
+      "sha256": "ea14517a980bb02a35f128c088ac98ccff75d5c86626a9b10adf08db4b2277dc",
+      "bytes": 186
+    },
+    "eDurability/eDurability.lua": {
+      "sha256": "e9e544cb1e65dfb2299148cab4d06e4cbf0c225e3f4a30833ee4cfc02e72d144",
+      "bytes": 2576
+    },
+    "eDurability/eDurability.toc": {
+      "sha256": "a8709163fb65842915b6aee2efbf9dd39ff45e1446c2d402d4a84be0023162ea",
+      "bytes": 212
+    },
+    "eMap/eMap.lua": {
+      "sha256": "3f81128882084685eb4cdb0c68188a9744e8e1242e630274cd242278ed2a7407",
+      "bytes": 3296
+    },
+    "eMap/eMap.toc": {
+      "sha256": "88a6e03da434aa44a6c50a020d56ee4400ff96a72e244dcd9b8df717b8215da0",
+      "bytes": 147
+    },
+    "eMinimap/eMinimap.lua": {
+      "sha256": "42c560cb6cdbeab33ab21e41d832a981befa45005896a1da04a898ab905027b8",
+      "bytes": 3791
+    },
+    "eMinimap/eMinimap.toc": {
+      "sha256": "7fb4f2f65228b8b905163ded064f1b1fbf4f43fc1bd7a54ece147844a12ba318",
+      "bytes": 159
+    },
+    "eQuest/eQuest.lua": {
+      "sha256": "f706069c274c41ab5e3f83d2181ade1b1966de7b5980caa4fa081b7651aaf8d2",
+      "bytes": 1350
+    },
+    "eQuest/eQuest.toc": {
+      "sha256": "66d070f847a0655b41ac7dca0d5c4d85ab58a01396803565952e726c8fa337ba",
+      "bytes": 156
+    },
+    "eTooltip/eTooltip.lua": {
+      "sha256": "a9af8a25ad371ef3fcf08991eaa89b5b71c766eb5d266317eb1e7792115dc48c",
+      "bytes": 19842
+    },
+    "eTooltip/eTooltip.toc": {
+      "sha256": "d18e3103e03ebd9ab6b28ab9e78c0c358ab49610a3d9c4aea0fd9fc9b8f09a40",
+      "bytes": 177
+    },
+    "eUnitFrames/eUnitFrames.lua": {
+      "sha256": "7fde90d4630c8e03518452d4c5a14e8b345ef1449070881ce1ffb095d5ac9dcd",
+      "bytes": 1759
+    },
+    "eUnitFrames/eUnitFrames.toc": {
+      "sha256": "cc32801918e247dcfe171e4a3978f52849634ecb0f4af2ad8e5351f795b95e9a",
+      "bytes": 168
+    },
+    "LICENSE": {
+      "sha256": "ed78da48d07ed65bed9d7b248f1e7b1a6009755617c21f7ccce121097ffc28e5",
+      "bytes": 1074
+    },
+    "QoLI/QoLI.lua": {
+      "sha256": "4c52650e9cc899e587835f551660ae58e22540586ad27be6f5fcc0e6f262bf91",
+      "bytes": 2542
+    },
+    "QoLI/QoLI.toc": {
+      "sha256": "f5d91bc3bd6e32349bdb0b72198a55eb35e115b31bd9f459e75fec8ac5058424",
+      "bytes": 197
+    },
+    "QoLI/readme.txt": {
+      "sha256": "0c4df8d9e7e7a15fd3bde93c720c4b71fc2e5f9174a78170cae6bff4c03ab8f4",
+      "bytes": 269
+    },
+    "README.md": {
+      "sha256": "0807544daba395fabf6e1732c034908ad362e8dd0b68de026929ba9830408e54",
+      "bytes": 4356
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "5805434": {
+      "tag": "v1.0a",
+      "folder": "v1.0a--5805434",
+      "assets": {
+        "3446474": {
+          "sha256": "779fa5a757651caadbcd7f981f5cc4b1c7c3e7847374e58cbfd744c5306e1dfd",
+          "bytes": 4114,
+          "id": "3446474",
+          "name": "eUI_v1.0a_QoLI_only.zip",
+          "url": "https://github.com/Ennea/eUI/releases/download/v1.0a/eUI_v1.0a_QoLI_only.zip",
+          "path": "releases/v1.0a--5805434/assets/eUI_v1.0a_QoLI_only.zip"
+        },
+        "3446475": {
+          "sha256": "fb437bb79bfeb047ad99c9eb04cbf9c430400dbd4a17334c200d0a13c86e0193",
+          "bytes": 67809,
+          "id": "3446475",
+          "name": "eUI_v1.0a.zip",
+          "url": "https://github.com/Ennea/eUI/releases/download/v1.0a/eUI_v1.0a.zip",
+          "path": "releases/v1.0a--5805434/assets/eUI_v1.0a.zip"
+        },
+        "3446476": {
+          "sha256": "2bdd1ee683ac515ae8926b28518907c50def3ff264f02ec82fdea03fa45d9e2a",
+          "bytes": 2213,
+          "id": "3446476",
+          "name": "eUI_v1.0a_LuaExtender_only.zip",
+          "url": "https://github.com/Ennea/eUI/releases/download/v1.0a/eUI_v1.0a_LuaExtender_only.zip",
+          "path": "releases/v1.0a--5805434/assets/eUI_v1.0a_LuaExtender_only.zip"
+        }
+      },
+      "source": {
+        "sha256": "2d489a32e06936dcd2e722aa3a586be1946b97db7b5359c484f1d8a72dd4fcbc",
+        "bytes": 44324,
+        "path": "releases/v1.0a--5805434/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Ennea/eUI/tarball/v1.0a"
+      }
+    }
+  }
+}

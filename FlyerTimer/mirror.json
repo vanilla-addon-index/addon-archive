@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/trumpetx/FlyerTimer",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "trumpetx",
+    "repo": "FlyerTimer",
+    "name": "FlyerTimer",
+    "url": "https://github.com/trumpetx/FlyerTimer",
+    "api": "https://api.github.com/repos/trumpetx/FlyerTimer"
+  },
+  "commit": "58a1a62caae40c6e4a0147352cc425f5611fe31d",
+  "sourceFiles": {
+    "FlyerTimer.lua": {
+      "sha256": "4925315d90f9f3e6ef1679035cfce56a2e4f41ccafc25c1e055b91ec719f81e6",
+      "bytes": 687
+    },
+    "FlyerTimer.toc": {
+      "sha256": "c19382539a7146bd95aa178e73567f66c0ba28f481578b11e7ca991794ba4773",
+      "bytes": 202
+    },
+    "README.txt": {
+      "sha256": "a1679fe171c2e2b0a445cbdaa700e745feb24418502885a8366b471491278b19",
+      "bytes": 128
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

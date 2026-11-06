@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/trumpetx/TurtleHCFilter",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "trumpetx",
+    "repo": "TurtleHCFilter",
+    "name": "TurtleHCFilter",
+    "url": "https://github.com/trumpetx/TurtleHCFilter",
+    "api": "https://api.github.com/repos/trumpetx/TurtleHCFilter"
+  },
+  "commit": "bf24747d1a18fde163ecefe0c5cc1b07fb1a7696",
+  "sourceFiles": {
+    ".editorconfig": {
+      "sha256": "df1d9aab58233d80a3822fa436f5496414ec07069cfd7c7dfc79ad20d9b71950",
+      "bytes": 143
+    },
+    "README.md": {
+      "sha256": "b7f7c98a418ee9ca8c8fd52c8e2bfa2117bf3789be74bb1b99808d178106a784",
+      "bytes": 908
+    },
+    "TurtleHCFilter.lua": {
+      "sha256": "b0f7f92723ec42b13e5342903c492211f3fb4fe32e33ffbd4683cf78402b974a",
+      "bytes": 8863
+    },
+    "TurtleHCFilter.toc": {
+      "sha256": "20e9c011b0e118f463cac7923aa28a11836b6330b2ff14e7ace5db840dbbdb34",
+      "bytes": 272
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

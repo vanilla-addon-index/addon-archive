@@ -1,0 +1,153 @@
+{
+  "upstream": "https://github.com/yogo1212/healbot-classic",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "yogo1212",
+    "repo": "healbot-classic",
+    "name": "healbot-classic",
+    "url": "https://github.com/yogo1212/healbot-classic",
+    "api": "https://api.github.com/repos/yogo1212/healbot-classic"
+  },
+  "commit": "6c78b6801556e52be829548b1305b2f4a53141e2",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "ca44add4c5e5acfefc55216ef4abb09d587ae03989999ac4bfbcede97e3cd6fe",
+      "bytes": 973
+    },
+    "HealBot_Action.lua": {
+      "sha256": "4a69c56be5e88f86e0a527c3c472a62a5567fc73783207ab44581e8a12e4e50f",
+      "bytes": 46701
+    },
+    "HealBot_Action.xml": {
+      "sha256": "3c3555d9af7571fe4716c7c05b64690844b85c54f9a6e207b772af394df465bd",
+      "bytes": 13969
+    },
+    "HealBot_BonusScanner.lua": {
+      "sha256": "630879a4bc8d48e3a457d1bd6d50c9201437abb46fcda62b71be568643671a96",
+      "bytes": 6014
+    },
+    "HealBot_Data.lua": {
+      "sha256": "9c814e77756b6502121fe4790d03c8057e573565dc2a015c04a522a431672a3f",
+      "bytes": 27796
+    },
+    "HealBot_Error.xml": {
+      "sha256": "1170290401ab5cb1c73d6c9513073e3b66ae08c33712d8b2e884353e3aec353b",
+      "bytes": 12423
+    },
+    "HealBot_Errors.lua": {
+      "sha256": "0dd43fa2e004e49c5eff27a553f9d42a793130d39c193df1a755a6ec533762b5",
+      "bytes": 836
+    },
+    "HealBot_Localization.de.lua": {
+      "sha256": "8a34ad8f3e8a905f246fefc8bd5baa7ccd6d48e4f343e9064d7d82b4028ca726",
+      "bytes": 16840
+    },
+    "HealBot_Localization.en.lua": {
+      "sha256": "8d1b16eabb680f402da58f37ed7adf00959ccd1f607b4278c281254c4b8ec342",
+      "bytes": 16090
+    },
+    "HealBot_Localization.fr.lua": {
+      "sha256": "968228db0471dda0963d9324de2e34be04022fbc3bb1f8eeee167fc68ffab6ed",
+      "bytes": 19580
+    },
+    "HealBot_Localization.kr.lua": {
+      "sha256": "180c7c8673962e16c629aaf8c7ef39b62fe6ce0090fac6fa11565ad3bf85de26",
+      "bytes": 15284
+    },
+    "HealBot_Options.lua": {
+      "sha256": "1ff5649a3b63b58794b1f87872cc486d906ae62578976739fbeefa067706a3a1",
+      "bytes": 71971
+    },
+    "HealBot_Options.xml": {
+      "sha256": "6535d586c307635a3206de24e8d14f79d1b7c0b6d1e452b8bc76c247bde76423",
+      "bytes": 87784
+    },
+    "HealBot.lua": {
+      "sha256": "b774bb359df4566d07523fd0139905ad38d93f9b52d18bd6851c86ce87652f7f",
+      "bytes": 46652
+    },
+    "HealBot.toc": {
+      "sha256": "ed11f4c520d643c85d2b85b4512c9e18575b9ea65fdd31da6edf09c024114628",
+      "bytes": 344
+    },
+    "HealBot.xml": {
+      "sha256": "40dc3f22d5aa274f3f4ab1a29106129bde38e29c79d3fe944ed0388f4c6f16c8",
+      "bytes": 22982
+    },
+    "Images/bar1.tga": {
+      "sha256": "891891be795bb8c35fcb78f6e11763fb26c4bff17d30e959f8e9df4db9aeb393",
+      "bytes": 8236
+    },
+    "Images/bar10.tga": {
+      "sha256": "3d8a59983aada06845871a1eeb65e3b4085d2ebde5de2fd19b503a4fed564855",
+      "bytes": 6188
+    },
+    "Images/bar11.tga": {
+      "sha256": "692b8e6c995d23bbb60b8da4393005eb9242652f1d04af287911d49ff1721865",
+      "bytes": 32812
+    },
+    "Images/bar12.tga": {
+      "sha256": "bde678313ba8bc8cfd913e27af9e3bfe623d7a0aa8b4921caab5196d773b67f0",
+      "bytes": 32812
+    },
+    "Images/bar13.tga": {
+      "sha256": "f51d3556b666ae2c7c1ab4edd0e2d10f8f55be80eb315dafc4f86a0d0375cff3",
+      "bytes": 32812
+    },
+    "Images/bar14.tga": {
+      "sha256": "da316f59d129ad8458082f83f925ccb4ca455071b129bdd21e4d6adc86714880",
+      "bytes": 6188
+    },
+    "Images/bar2.tga": {
+      "sha256": "5bf478e5878f91a958f2d604152fc888588ccb5bf7d7370f1015281323068ca6",
+      "bytes": 6188
+    },
+    "Images/bar3.tga": {
+      "sha256": "8bd07b7fbe43437928eb4c83464b909395cf669f6ff560a21b4e5dc994555ad1",
+      "bytes": 6188
+    },
+    "Images/bar4.tga": {
+      "sha256": "c1903732217941fcab9d1de4ac2ad454e647433c69d07033d76b9df7a10522ff",
+      "bytes": 6188
+    },
+    "Images/bar5.tga": {
+      "sha256": "7a2f1532b62f9d467ddd16702a14d5b840ad9d1babec7bc6252ffbc5b9c20fd3",
+      "bytes": 6188
+    },
+    "Images/bar6.tga": {
+      "sha256": "5a5deac548c4639de44db55ed79a6784bba95fc8286e7a4e7235ea7da24e19c3",
+      "bytes": 32812
+    },
+    "Images/bar7.tga": {
+      "sha256": "e300a87224e7c1a044574ec915a1f9c0de49c3e26f854ecd3e1ea8ed920aaba9",
+      "bytes": 32812
+    },
+    "Images/bar8.tga": {
+      "sha256": "00e8084e83bf25b941464e2619b59e993b6ac7ae0bd8a6f37b12872e686ded6d",
+      "bytes": 32812
+    },
+    "Images/bar9.tga": {
+      "sha256": "dfb8508485a3dbf5dc3c479d3f6b4555fbaeb47118c9ef58cb1adaeac114d757",
+      "bytes": 65580
+    },
+    "Images/HealBot.tga": {
+      "sha256": "68b6435b6eee56a3bc98b4d93e9c30a9775c7c62b664db3fa63d52ae8777885d",
+      "bytes": 3090
+    },
+    "Images/WhiteLine.tga": {
+      "sha256": "61f41c08e649545b14cdc226c9e26bc4f4f061f357150cf7e7ac1250dc2c5c7f",
+      "bytes": 1068
+    },
+    "Images/WhiteLine2.tga": {
+      "sha256": "a961d524fe8c24fe8e55f7fcd3c4e2c864fcc607d0408069b92e989a6bf62640",
+      "bytes": 1042
+    },
+    "Readme.txt": {
+      "sha256": "ae748d77b9e859470a06381c97c4eee8e307f60b82bdae54367465211cac4b33",
+      "bytes": 12285
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,2365 @@
+-- pandaUI :: core/commands.lua
+--
+-- The /pui slash command.
+--
+-- The settings interface is a later module. It registers itself by assigning
+-- U.OpenSettings, and both /pui and the minimap button will call through that
+-- single entry point so they can never diverge.
+
+local U = PandaUI
+
+-- ---------------------------------------------------------------------------
+-- Diagnostic SavedVariables
+--
+-- The nameplate dump and self-check readouts got long enough to flood the
+-- chat frame past what a player can usefully copy out. PandaUIDiagDB is a
+-- second SavedVariables table, separate from PandaUIDB (core/config.lua),
+-- used only as a write-out target for /pui commands -- never read back by the
+-- addon itself, so none of config.lua's validation/whitelisting applies here.
+-- A command writes into it and prints one short line; the full data is read
+-- afterwards straight out of the SavedVariables file.
+--
+-- OctoWoW writes it into the game install's WTF tree
+-- (knowledge savedvariables.wtf_location):
+--
+--   C:\Games\Wow-Octo\WTF\Account\<account>\SavedVariables\pandaUI.lua
+-- ---------------------------------------------------------------------------
+-- Wall-clock stamp for a diagnostic entry, or "?" where the client has no
+-- date(). Shared so every writer stamps the same way and a reader can compare
+-- two entries without knowing which command produced them.
+function U.DiagnosticStamp()
+  if type(date) == "function" then
+    local ok, formatted = pcall(date, "%Y-%m-%d %H:%M:%S")
+    if ok and type(formatted) == "string" then return formatted end
+  end
+  return "?"
+end
+
+local function SaveDiagnostic(key, data)
+  if type(PandaUIDiagDB) ~= "table" then PandaUIDiagDB = {} end
+  PandaUIDiagDB[key] = data
+  PandaUIDiagDB[key .. "_savedAt"] = U.DiagnosticStamp()
+end
+
+-- Shared with core/perf.lua: the perf recorder's report is numeric/table data
+-- with nothing UI-only about it, so it writes into the same diagnostic store
+-- other /pui commands use rather than only ever printing to a chat frame the
+-- player would otherwise have to screenshot.
+U.SaveDiagnostic = SaveDiagnostic
+
+-- One place that knows where SavedVariables actually live, so no command can
+-- print a path that does not exist again.
+function U.SavedVariablesHint()
+  return "WTF/Account/<account>/SavedVariables/pandaUI.lua"
+end
+
+-- Appends rather than overwrites, so several runs survive in one session.
+-- SaveDiagnostic keys are single-slot: a second /pui perf replaced the first,
+-- which forced a /reload between every A/B comparison and made two runs
+-- impossible to take under the same conditions. Capped so a long session cannot
+-- grow the SavedVariables file without bound.
+local APPEND_LIMIT = 12
+
+function U.AppendDiagnostic(key, data)
+  if type(PandaUIDiagDB) ~= "table" then PandaUIDiagDB = {} end
+  if type(PandaUIDiagDB[key]) ~= "table" then PandaUIDiagDB[key] = {} end
+
+  local list = PandaUIDiagDB[key]
+  table.insert(list, data)
+  while table.getn(list) > APPEND_LIMIT do table.remove(list, 1) end
+  return table.getn(list)
+end
+
+-- Append-or-update, keyed by a caller-supplied run id.
+--
+-- Why this exists rather than a second AppendDiagnostic call site: a perf run
+-- is reported more than once. /pui perf prints a mid-run report, /pui perf stop
+-- prints the final one, and a player checking progress prints several more.
+-- With a plain append every one of those took a slot, so three peeks at one run
+-- filled a quarter of the log and pushed genuinely separate earlier runs out of
+-- it -- the recorder's own A/B evidence being deleted by the act of looking at
+-- it. Keyed on the run id, a run occupies exactly one slot for its whole life
+-- and every later report overwrites its own entry in place.
+--
+-- Returns index, stored count and whether the insert evicted the oldest entry,
+-- so the caller can say so out loud instead of losing a run silently.
+function U.UpsertDiagnostic(key, id, data)
+  if type(PandaUIDiagDB) ~= "table" then PandaUIDiagDB = {} end
+  if type(PandaUIDiagDB[key]) ~= "table" then PandaUIDiagDB[key] = {} end
+
+  local list = PandaUIDiagDB[key]
+  local i
+  for i = 1, table.getn(list) do
+    local entry = list[i]
+    if type(entry) == "table" and id ~= nil and entry.id == id then
+      list[i] = data
+      return i, table.getn(list), false
+    end
+  end
+
+  table.insert(list, data)
+  local evicted = false
+  while table.getn(list) > APPEND_LIMIT do
+    table.remove(list, 1)
+    evicted = true
+  end
+  return table.getn(list), table.getn(list), evicted
+end
+
+-- How many entries a diagnostic log currently holds, and its cap.
+function U.DiagnosticLogSize(key)
+  if type(PandaUIDiagDB) ~= "table" then return 0, APPEND_LIMIT end
+  if type(PandaUIDiagDB[key]) ~= "table" then return 0, APPEND_LIMIT end
+  return table.getn(PandaUIDiagDB[key]), APPEND_LIMIT
+end
+
+local function Trim(text)
+  if type(text) ~= "string" then return "" end
+  text = string.gsub(text, "^%s+", "")
+  text = string.gsub(text, "%s+$", "")
+  return text
+end
+
+local function Split(text)
+  local space = string.find(text, " ")
+  if not space then return string.lower(text), "" end
+  return string.lower(string.sub(text, 1, space - 1)),
+         Trim(string.sub(text, space + 1))
+end
+
+-- The diagnostic dumps stay in English in every language and are not part of
+-- the translated catalog. They exist to be pasted into a bug report, where a
+-- translated field name is worse than useless, and they are behind
+-- `/pui help diag` so the listing a player actually reads stays short.
+local DIAGNOSTIC_HELP = {
+  "  |cffffff00/pui menu|r - dump the game menu rows and the PandaUI entries",
+  "  |cffffff00/pui bindscan|r - dump the client binding table",
+  "  |cffffff00/pui keytest|r - measure whether key events reach addon frames",
+  "  |cffffff00/pui elite|r - cycle the classification icon test",
+  "  |cffffff00/pui np|r - dump WorldFrame children (nameplates)",
+  "  |cffffff00/pui bagcat|r - dump what the client calls each bag item and " ..
+    "which category it lands in",
+  "  |cffffff00/pui tabs|r - dump what the character-sheet tab strip measured and wrote",
+  "  |cffffff00/pui charwhite|r - dump every visible texture on the character sheet",
+  "  |cffffff00/pui tabpad|r - measured left/right inset of every tab, character vs spellbook",
+  "  |cffffff00/pui sb|r - dump why a spellbook entry is marked off the action bars",
+  "  |cffffff00/pui sb trace|r - record what the mark does as a spell goes on/off a bar",
+  "  |cffffff00/pui sb ranks|r - dump the spell list layout the highest-rank filter reads",
+  "  |cffffff00/pui aura|r - dump the aura rows and why a timer is missing",
+  "  |cffffff00/pui hot|r - dump the HoT indicators: resolved spells, live stamps, party buffs",
+  "  |cffffff00/pui heal|r - dump incoming-heal prediction: templates, learned " ..
+    "amounts, live predictions",
+  "  |cffffff00/pui heal test|r - paint both prediction segments for 10s to " ..
+    "check their appearance",
+  "  |cffffff00/pui party test [states]|r - fake party with auras, HoTs and " ..
+    "incoming heals; |cffffff00/pui party|r stops",
+  "  |cffffff00/pui map|r - arm the map hover watch before opening it",
+  "  |cffffff00/pui res|r - dump the Character sheet resistance frames",
+  "  |cffffff00/pui abhl [alpha] [hover] [rest]|r - dump or tune the classic hover highlight",
+  "  |cffffff00/pui abcd|r - dump why an action button shows no cooldown number",
+  "  |cffffff00/pui cb|r - arm a placement dump for the native cast bar",
+  "  |cffffff00/pui movertest|r - foundation mover smoke test",
+  "  |cffffff00/pui movesnap|r - record mover snapping into PandaUIDiagDB",
+  "  |cffffff00/pui perf start|r - the stutter scan: frame-time distribution, " ..
+    "group size, network and an addon-off control. |cffffff00stop|r ends it.",
+  "  |cffffff00/pui perf party|r - party freeze bisect: roster-event marks, " ..
+    "one party subsystem removed per phase",
+  "  |cffffff00/pui perf group|r - charge frame time to the group size it was " ..
+    "rendered at (leave on across an invite)",
+  "  |cffffff00/pui perf runs|r - list the stored runs (one slot each, 12 kept)",
+  "  |cffffff00/pui perf clear|r - empty the stored run log",
+  "  |cffffff00/pui nosuppress|r - skip native frame suppression (needs /reload)",
+  "  |cffffff00/pui suppress <0-4>|r - bisect the suppression recipe (needs /reload)",
+  "  |cffffff00/pui portrait3d <0-3>|r - 3D portrait coverage bisect, all themes (needs /reload)",
+}
+
+local function ShowHelp(rest)
+  if type(rest) == "string" and string.lower(Trim(rest)) == "diag" then
+    U.Print("diagnostic dumps (English only, for bug reports):")
+    local d
+    for d = 1, table.getn(DIAGNOSTIC_HELP) do U.Print(DIAGNOSTIC_HELP[d]) end
+    return
+  end
+
+  U.Print(U.L("CMD_HEADER", U.version))
+  U.Print(U.L("CMD_SETTINGS"))
+  U.Print(U.L("CMD_GAME"))
+  U.Print(U.L("CMD_UNLOCK"))
+  U.Print(U.L("CMD_LOCK"))
+  U.Print(U.L("CMD_RESET"))
+  U.Print(U.L("CMD_BIND"))
+  U.Print(U.L("CMD_CHECK"))
+  U.Print(U.L("CMD_THEME"))
+  U.Print(U.L("CMD_PETBAR"))
+  U.Print(U.L("CMD_PETBAR_BUTTONS"))
+  U.Print(U.L("CMD_LANGUAGE"))
+  U.Print(U.L("CMD_PROFILE"))
+  U.Print(U.L("CMD_DEBUG"))
+  U.Print(U.L("CMD_DIAGNOSTICS"))
+end
+
+-- Unit API readout.
+--
+-- knowledge.json / unitframes.core_unit_api_contract_partial is INCONCLUSIVE:
+-- no unit API return contract is verified on this client. This prints what the
+-- calls actually returned for each frame's unit, which is the raw material for
+-- closing that record rather than another assumption about it.
+local function ShowUnitFrameCheck()
+  if type(U.UnitFrameReport) ~= "function" then return end
+
+  U.Print("unit frames:")
+  U.Print("  stock frames suppressed: " .. tostring(U.SuppressedFrameCount()))
+
+  local report, i = U.UnitFrameReport(), nil
+  for i = 1, table.getn(report) do
+    local line = report[i]
+    if not line.exists then
+      U.Print("  " .. line.id .. " (" .. line.unit .. "): no unit, shown " ..
+              tostring(line.shown))
+    else
+      U.Print("  " .. line.id .. " (" .. line.unit .. "): " ..
+              tostring(line.name) .. ", shown " .. tostring(line.shown))
+      U.Print("    hp " .. tostring(line.health) .. "/" ..
+              tostring(line.healthMax) ..
+              "  power " .. tostring(line.power) .. "/" ..
+              tostring(line.powerMax) ..
+              " type " .. tostring(line.powerType))
+      U.Print("    class " .. tostring(line.class) ..
+              ", reaction " .. tostring(line.reaction) ..
+              ", classification " .. tostring(line.classification))
+    end
+
+    -- Bar state, printed for every frame including empty ones: a bar that draws
+    -- wrong with no unit is a different failure from one that draws wrong with
+    -- a unit, and both were visible in the first in-game screenshot.
+    U.Print("    bar " .. tostring(line.barWidth) .. "x" ..
+            tostring(line.barHeight) ..
+            "  value " .. tostring(line.barValue) ..
+            " of " .. tostring(line.barMin) .. ".." .. tostring(line.barMax))
+    U.Print("    fill " .. tostring(line.fillWidth) .. "x" ..
+            tostring(line.fillHeight) ..
+            ", shown " .. tostring(line.fillShown) ..
+            ", tint " .. tostring(line.fillColor))
+  end
+
+  -- knowledge.json / unitframes.target_current_health_from_unit_combat: this
+  -- client has no compat record for UNIT_COMBAT in either direction, so the
+  -- refinement it drives is carried over from UnrealPfUI. "combat seen" is the
+  -- answer to that open question from live play rather than another probe:
+  -- false after a fight means the event does not fire here, and the readout
+  -- has been running on the percentage estimate alone.
+  if type(U.UnitVitalsReport) == "function" then
+    local v = U.UnitVitalsReport()
+    U.Print("  exact vitals: enabled " .. tostring(v.enabled) ..
+            ", creature table " .. tostring(v.data) ..
+            ", names " .. tostring(v.names) ..
+            " (" .. tostring(v.namesLocale) .. ")" ..
+            ", indexed " .. tostring(v.indexed))
+    U.Print("    target " .. tostring(v.trackKey) ..
+            "  tracked " .. tostring(v.trackCurrent) ..
+            " of " .. tostring(v.trackMax) ..
+            ", combat seen " .. tostring(v.sawCombat))
+  end
+
+  -- knowledge.json / castbar.player_events_partial: SPELLCAST_START's argument
+  -- shape was only ever captured once. This readout is how a second cast (of a
+  -- different spell, or interrupted, or channelled) turns into more evidence
+  -- instead of another assumption.
+  if type(U.CastbarReport) == "function" then
+    local cb = U.CastbarReport()
+
+    -- Both reconstructed bars read out the same way, and the pet one is
+    -- the open question: no capture says which CHAT_MSG_SPELL event carries
+    -- a pet's cast text here, so starts/event is the evidence.
+    local PrintCastTracker = function(label, tracker)
+      if not tracker then return end
+      U.Print(label .. " castbar: casting " .. tostring(tracker.casting) ..
+              ", starts " .. tostring(tracker.starts) ..
+              ", unknown estimates " .. tostring(tracker.unknown) ..
+              ", replayed " .. tostring(tracker.replayed) ..
+              ", patterns " .. tostring(tracker.patterns))
+      if tracker.casting then
+        U.Print("  " .. tostring(tracker.caster) .. ": " ..
+                  tostring(tracker.spell) .. ", " ..
+                  tostring(tracker.remaining) .. "s remaining, " ..
+                  tostring(tracker.kind) .. ", id " ..
+                  tostring(tracker.spellId) .. ", guid " ..
+                  tostring(tracker.guid))
+      elseif tracker.lastUnknown then
+        U.Print("  last unknown spell: " .. tostring(tracker.lastUnknown))
+      end
+      U.Print("  event " .. tostring(tracker.lastEvent) ..
+              ", source " .. tostring(tracker.lastSource) ..
+              ", estimated " .. tostring(tracker.estimated) ..
+              ", pushbacks " .. tostring(tracker.pushbacks) ..
+              ", icon " .. tostring(tracker.iconSource))
+    end
+
+    if cb and cb.nampower then
+      local np = cb.nampower
+      U.Print("target cast DLL: available " .. tostring(np.available) ..
+              ", version " .. tostring(np.version) ..
+              ", backend " .. tostring(np.backend) ..
+              ", CVars " .. tostring(np.cvarsEnabled) ..
+              ", starts " .. tostring(np.starts) ..
+              ", stops " .. tostring(np.stops) ..
+              ", failures " .. tostring(np.failures) ..
+              ", interrupts " .. tostring(np.interrupts) ..
+              ", pushbacks " .. tostring(np.pushbacks))
+    end
+
+    if cb and cb.native then
+      -- Native-chrome theme: the client's own CastingBarFrame draws the
+      -- player's casts, so there is no pandaUI player state to read. The
+      -- target bar is addon-owned under this theme too and still reads out.
+      U.Print("castbar: native client bar (theme " ..
+              tostring(U.GetActiveThemeStyle()) .. ")")
+      -- Which target bar was built. "native (...)" means the client's own
+      -- castbar art was readable and cloned; anything starting "modern"
+      -- names the read that came back empty and sent it to the flat bar.
+      U.Print("  target bar: " .. tostring(cb.targetStyle))
+      PrintCastTracker("target", cb.target)
+    elseif cb then
+      U.Print("castbar: casting " .. tostring(cb.casting) ..
+              ", shown " .. tostring(cb.shown))
+      if cb.casting then
+        U.Print("  duration " .. tostring(cb.duration) ..
+                "s, remaining " .. tostring(cb.remaining))
+      end
+      -- The two WORKING_SOURCE gaps in modules/castbar.lua's header: whether
+      -- the spellbook lookup resolved a real icon for the last cast, and
+      -- whether this client emitted SPELLCAST_DELAYED for pushback at all.
+      U.Print("  icon " .. tostring(cb.iconSource) ..
+              ", delays " .. tostring(cb.delays) ..
+              " (+" .. string.format("%.2f", tonumber(cb.delaySeconds) or 0) ..
+              "s)")
+      PrintCastTracker("target", cb.target)
+      PrintCastTracker("pet", cb.pet)
+    end
+  end
+
+  -- Druids only. Reading mana while shifted has no verified source on this
+  -- client (see modules/unitframes.lua's druid section), so this prints the
+  -- raw UnitMana/UnitManaMax returns taken in form -- run it in bear or cat
+  -- form and the gap is either closed or confirmed.
+  if type(U.DruidManaReport) == "function" then
+    local dm = U.DruidManaReport()
+    if dm then
+      U.Print("druid mana: source " .. tostring(dm.source) ..
+              ", power type " .. tostring(dm.powerType) ..
+              ", shifted " .. tostring(dm.shifted) ..
+              ", shown " .. tostring(dm.shown))
+      U.Print("  mana " .. tostring(dm.mana) .. "/" .. tostring(dm.manaMax) ..
+              "  raw " .. tostring(dm.returns))
+    end
+  end
+
+  -- Warriors, Rogues, Druids and Paladins only. modules/stancebar.lua never creates its bar or
+  -- mover for any other class, so supported false with created false is the
+  -- expected line for everyone else. "classic" reports whether the buttons
+  -- took the client's own action-button faces, which only Classic WoW does.
+  if type(U.StanceBarReport) == "function" then
+    local sb = U.StanceBarReport()
+    if sb then
+      U.Print("stance bar: class " .. tostring(sb.class) ..
+              ", supported " .. tostring(sb.supported) ..
+              ", classic " .. tostring(sb.classic) ..
+              ", created " .. tostring(sb.created) ..
+              ", shown " .. tostring(sb.shown) ..
+              ", forms " .. tostring(sb.slotCount) ..
+              ", cd text " .. tostring(sb.cooldownText) ..
+              ", cd sweep " .. tostring(sb.cooldownSweep))
+    end
+  end
+
+  -- The pet bar is the client's own frame; pandaUI only places it. "placed"
+  -- false with "driving" false is the untouched-interface state, and means the
+  -- bar is sitting wherever the client anchored it.
+  --
+  -- The second line answers the one failure this bar actually has: shown true
+  -- with visible false means the client is drawing a bar whose ancestor is
+  -- hidden, which is why modules/petbar.lua re-parents it to UIParent (the
+  -- stock bar hierarchy modules/actionbar.lua suppresses is where the client
+  -- puts it). shown false just means there is no pet bar to draw.
+  if type(U.PetBarReport) == "function" then
+    local pb = U.PetBarReport()
+    if pb and pb.mode == "custom" then
+      U.Print(U.L("PETBAR_MODE_STATUS", U.L("PETBAR_MODE_CUSTOM"),
+                  U.L(pb.selectedMode == "custom" and "PETBAR_MODE_CUSTOM" or "PETBAR_MODE_NATIVE")))
+    elseif pb then
+      U.Print("pet bar: native " .. tostring(pb.native) ..
+              ", has bar " .. tostring(pb.hasPetBar) ..
+              ", placed " .. tostring(pb.placed) ..
+              ", driving " .. tostring(pb.driving) ..
+              ", native anchor " .. tostring(pb.nativeAnchorCaptured))
+      -- "buttons native" means the client still owns the row's size and gap;
+      -- a pair of numbers means /pui petbar size|spacing is placing it.
+      U.Print("  buttons " .. (pb.buttonLayout
+              and (tostring(pb.buttonSize) .. "/" .. tostring(pb.buttonSpacing))
+              or "native"))
+      U.Print("  shown " .. tostring(pb.shown) ..
+              ", visible " .. tostring(pb.visible) ..
+              ", button visible " .. tostring(pb.buttonVisible) ..
+              ", parent " .. tostring(pb.parent) ..
+              " (was " .. tostring(pb.originalParent) ..
+              ", moved " .. tostring(pb.reparented) .. ")")
+    end
+  end
+
+  -- Same arrangement for the native buff/debuff display beside the minimap.
+  -- "root" is whichever of BuffFrame / TemporaryEnchantFrame the handle drives,
+  -- discovered from their anchors rather than assumed; "skipped" says why the
+  -- other one is not driven when it is not.
+  if type(U.BuffFrameReport) == "function" then
+    local bf = U.BuffFrameReport()
+    if bf then
+      U.Print("buffs: root " .. tostring(bf.root) ..
+              " (" .. tostring(bf.point) .. ")" ..
+              ", second " .. tostring(bf.second) ..
+              ", placed " .. tostring(bf.placed) ..
+              ", driving " .. tostring(bf.driving) ..
+              ", native anchor " .. tostring(bf.nativeAnchorCaptured) ..
+              ", shown " .. tostring(bf.nativeShown) ..
+              ", collapsed " .. tostring(bf.collapsed) ..
+              ", arrow " .. tostring(bf.toggle))
+      if bf.skipped then U.Print("  second frame: " .. bf.skipped) end
+    end
+  end
+end
+
+-- Nameplate readout.
+--
+-- query_compat.py has no record at all for nameplates on this client, so
+-- modules/nameplates.lua discovers the plate's structure at runtime instead of
+-- assuming Vanilla's. The full readout (detector, reject reasons, min/max
+-- WorldFrame child count, one sample plate) is long enough to flood the chat
+-- frame past what is copyable, so it is written to PandaUIDiagDB.nameplates
+-- instead -- readable straight out of the SavedVariables file after a reload
+-- and only
+-- a one-line summary prints in chat.
+local function ShowNameplateCheck()
+  if type(U.NameplateReport) ~= "function" then return end
+
+  local report = U.NameplateReport()
+  SaveDiagnostic("nameplates", report)
+
+  local changed = report.minChildren ~= report.maxChildren
+  U.Print("nameplates: detector " .. tostring(report.detector) ..
+          ", plates " .. tostring(report.plates) .. "/" ..
+          tostring(report.worldChildren) ..
+          ", children " .. tostring(report.minChildren) .. ".." ..
+          tostring(report.maxChildren) ..
+          (changed and "" or " |cffff5555(never changed)|r"))
+  U.Print("  saved to PandaUIDiagDB.nameplates - |cffffff00/reload|r then " ..
+          "open " .. U.SavedVariablesHint() .. " to read it")
+end
+
+-- Raw WorldFrame child dump, one line per child.
+--
+-- Nameplate detection is the one part of pandaUI with no compact-DB evidence
+-- behind it at all, and the first run adopted none of this client's 28
+-- WorldFrame children. Rather than print one line per child (28+ lines, past
+-- what can be copied out of chat), the full per-child breakdown is written to
+-- PandaUIDiagDB.nameplateDump and only a count prints in chat.
+local function ShowNameplateDump()
+  if type(U.NameplateDump) ~= "function" then
+    U.Print("nameplate module is not loaded")
+    return
+  end
+
+  local dump = U.NameplateDump()
+  local total = table.getn(dump)
+  SaveDiagnostic("nameplateDump", dump)
+
+  U.Print("WorldFrame children: " .. tostring(total) ..
+          " - saved to PandaUIDiagDB.nameplateDump")
+  U.Print("  |cffffff00/reload|r then open " ..
+          U.SavedVariablesHint() .. " to read it")
+end
+
+-- What this client actually calls each item, and which bag category that
+-- resolves to.
+--
+-- The distinct class/subclass pairs go to chat because that is the answer most
+-- of the time and needs no reload; the full per-slot dump goes to
+-- SavedVariables because a bag holds more rows than a chat frame should carry.
+local SUMMARY_LIMIT = 16
+
+local function ShowItemCategoryDump()
+  if type(U.ItemCategoryDump) ~= "function" then
+    U.Print("item category classifier is not loaded")
+    return
+  end
+
+  local dump = U.ItemCategoryDump()
+  SaveDiagnostic("bagCategories", dump)
+
+  local seen, rows = {}, {}
+  local i
+  for i = 1, table.getn(dump.items) do
+    local item = dump.items[i]
+    local pair = tostring(item.itemType) .. " / " .. tostring(item.subType)
+    if not seen[pair] then
+      seen[pair] = true
+      table.insert(rows, pair .. "  ->  " .. tostring(item.category))
+    end
+  end
+
+  U.Print("bag items: " .. tostring(table.getn(dump.items)) ..
+          ", auction classes: " .. tostring(table.getn(dump.classes)))
+  for i = 1, table.getn(rows) do
+    if i > SUMMARY_LIMIT then
+      U.Print("  ... " .. tostring(table.getn(rows) - SUMMARY_LIMIT) .. " more")
+      break
+    end
+    U.Print("  " .. rows[i])
+  end
+
+  U.Print("  saved to PandaUIDiagDB.bagCategories - |cffffff00/reload|r " ..
+          "then open " .. U.SavedVariablesHint() .. " for the full dump")
+end
+
+-- Elite/classification icon test.
+--
+-- Two unknowns, both exercised without leaving the spot you are standing on:
+-- whether UnitClassification returns Vanilla's tokens on this client, and
+-- whether the icon's texture path renders at all -- knowledge.json /
+-- textures.separate_coin_paths_not_rendered is a confirmed case of stock paths
+-- that do not. The override forces the classification every unit frame reads,
+-- so any mob stands in for an elite.
+local ELITE_CYCLE = { "elite", "rareelite", "worldboss", "rare", "normal", "off" }
+
+local ELITE_USAGE = "usage: |cffffff00/pui elite|r " ..
+  "[elite|rareelite|worldboss|rare|normal|off] | tex <path> | " ..
+  "size <w> <h> | coord <l> <r> <t> <b> | status"
+
+-- Split() only cuts the first token off; this walks the rest of the line.
+local function Numbers(text)
+  local values, rest, count = {}, Trim(text or ""), 0
+
+  -- Indexed rather than table.insert'd: a non-numeric token has to leave a hole
+  -- in place instead of shifting the values after it into the wrong argument.
+  while rest ~= "" do
+    local token
+    token, rest = Split(rest)
+    count = count + 1
+    values[count] = tonumber(token)
+  end
+
+  return values
+end
+
+local function ShowEliteReport()
+  local report = U.EliteIconReport()
+
+  U.Print("elite icon: override " .. tostring(report.override) ..
+          ", size " .. tostring(report.width) .. "x" .. tostring(report.height) ..
+          (report.coords and (", coords " .. report.coords) or ""))
+  U.Print("  texture " .. tostring(report.texture))
+
+  local i
+  for i = 1, table.getn(report.units) do
+    local u = report.units[i]
+    U.Print("  " .. u.id .. " (" .. u.unit .. "): api " ..
+            tostring(u.classification) .. ", drawn as " ..
+            tostring(u.effective) .. ", icon shown " .. tostring(u.shown) ..
+            (u.tint and (", tint " .. u.tint) or ""))
+    if u.path and u.path ~= report.texture then
+      U.Print("    readback " .. tostring(u.path))
+    end
+    -- Only the target frame builds an ornamental classification skin, so this
+    -- line is absent for every other row rather than reading "none" on frames
+    -- that were never meant to have one.
+    if u.skin ~= nil then
+      U.Print("    skin " .. tostring(u.skin) .. ", shown " ..
+              tostring(u.skinShown) ..
+              (u.skinPath and (", " .. u.skinPath) or ""))
+    end
+  end
+
+  if table.getn(report.units) == 0 then
+    U.Print("  no unit on any frame - target something first")
+  end
+end
+
+local function NextOverride(current)
+  local total = table.getn(ELITE_CYCLE)
+  local i
+  for i = 1, total do
+    if ELITE_CYCLE[i] == current then
+      if i >= total then return ELITE_CYCLE[1] end
+      return ELITE_CYCLE[i + 1]
+    end
+  end
+  return ELITE_CYCLE[1]
+end
+
+local function HandleElite(rest)
+  if type(U.SetUnitClassificationOverride) ~= "function" then
+    U.Print("unit frames are not loaded")
+    return
+  end
+
+  local sub, arg = Split(Trim(rest or ""))
+
+  if sub == "status" then
+    ShowEliteReport()
+    return
+  end
+
+  -- The path keeps its original case: Split() only lowercases the token it
+  -- cuts off, never the remainder.
+  if sub == "tex" or sub == "texture" then
+    U.Print("elite icon texture: " .. tostring(U.SetEliteIconTexture(arg)))
+    U.Print("  no icon at all means the path does not render here - try " ..
+            "another, |cffffff00/pui elite tex default|r restores the built-in")
+    return
+  end
+
+  if sub == "size" then
+    local values = Numbers(arg)
+    local width, height = U.SetEliteIconSize(values[1], values[2])
+    U.Print("elite icon size: " .. tostring(width) .. "x" .. tostring(height))
+    return
+  end
+
+  if sub == "coord" or sub == "coords" then
+    local values = Numbers(arg)
+    local coords = U.SetEliteIconCoords(values[1], values[2], values[3],
+                                        values[4])
+    if coords then
+      U.Print("elite icon crop: " .. table.concat(coords, " "))
+    else
+      U.Print("elite icon crop cleared - drawing the whole texture")
+    end
+    return
+  end
+
+  local value = sub
+  if value == "" then value = NextOverride(U.EliteIconReport().override) end
+
+  local ok, override = U.SetUnitClassificationOverride(value)
+  if not ok then
+    U.Print("unknown classification: " .. tostring(sub))
+    U.Print(ELITE_USAGE)
+    return
+  end
+
+  U.Print("classification override: |cffffff00" .. (override or "off") ..
+          "|r - target any mob; |cffffff00/pui elite|r again for the next one")
+  ShowEliteReport()
+end
+
+-- Reports what this client actually did with the calls pandaUI depends on.
+-- The point is to turn the foundation's compatibility assumptions into
+-- observed results that can be fed back into the evidence workflow.
+local function ShowSelfCheck()
+  local report = U.RunSelfCheck()
+
+  U.Print("self-check (v" .. tostring(report.version) .. ")")
+  U.Print("  font:        " .. tostring(report.font))
+  U.Print("  handlers:    " .. tostring(report.handlerShape))
+  U.Print("  OnUpdate:    " .. tostring(report.ticks) .. " ticks")
+  U.Print("  UIParent:    " .. tostring(U.Round(report.uiWidth)) .. " x " ..
+          tostring(U.Round(report.uiHeight)))
+  U.Print("  GetScreenW:  " .. tostring(report.screenWidth) ..
+          "  (pixel scale " .. tostring(report.pixelScale) .. ")")
+  U.Print("  GetPoint rel type: " .. tostring(report.rawRelativeType) ..
+          ", raw y " .. tostring(report.rawY) ..
+          " -> normalised y " .. tostring(report.normY))
+
+  if report.anchorRoundTrip then
+    U.Print("  anchor round-trip: |cff55ff55ok|r (x/y survive capture)")
+  else
+    U.Print("  anchor round-trip: |cffff5555FAILED|r - mover persistence " ..
+            "would drift; report this output")
+  end
+
+  local hookType, hooked = U.PostHookReport()
+  U.Print("  hooksecurefunc: " .. tostring(hookType) ..
+          "  post-hooked: " .. (table.getn(hooked) > 0
+            and table.concat(hooked, ", ") or "|cffff5555none|r"))
+
+  U.Print("  movers registered: " .. tostring(U.MoverCount()))
+
+  -- Per-mover drag state. Frame dragging has no compact-DB record on this
+  -- client, so this is the readout that turns "it does not move" into something
+  -- specific enough to act on.
+  local movers, i = U.MoverReport(), nil
+  for i = 1, table.getn(movers) do
+    local m = movers[i]
+    U.Print("  mover " .. m.id .. ": " .. tostring(m.handleType or "no handle") ..
+            ", movable " .. tostring(m.movable) ..
+            ", mouse " .. tostring(m.mouse))
+    U.Print("    enter " .. tostring(m.enters) ..
+            " / dragStart " .. tostring(m.dragStarts) ..
+            " / dragStop " .. tostring(m.dragStops) ..
+            ", saved " .. tostring(m.saved))
+    U.Print("    at " .. tostring(m.point) ..
+            " " .. tostring(m.x) .. "," .. tostring(m.y))
+  end
+
+  if type(U.MicroBarReport) == "function" then
+    local micro = U.MicroBarReport()
+    U.Print("  micro bar: enabled " .. tostring(micro.enabled) ..
+            ", skin " .. tostring(micro.skin) ..
+            ", found " .. table.getn(micro.found) .. "/" ..
+            (table.getn(micro.found) + table.getn(micro.missing)))
+    if table.getn(micro.missing) > 0 then
+      U.Print("    missing: " .. table.concat(micro.missing, ", "))
+    end
+    if micro.anchor then
+      local a = micro.anchor
+      U.Print("    bar: shown " .. tostring(a.shown) ..
+              ", visible " .. tostring(a.visible) ..
+              ", left " .. tostring(a.left) ..
+              ", top " .. tostring(a.top) ..
+              ", width " .. tostring(a.width))
+    end
+    -- Real edge-to-edge spacing per pair. The skinned row wants every gap to
+    -- equal micro.gap; one odd value names the button something re-anchored
+    -- or resized after the bar laid itself out.
+    local g
+    for g = 1, table.getn(micro.geom or {}) do
+      local b = micro.geom[g]
+      U.Print("    " .. b.name .. ": w " .. tostring(b.width) ..
+              " scale " .. tostring(b.scale) ..
+              " points " .. tostring(b.points) ..
+              " gap " .. tostring(b.gap or "-") ..
+              " (want " .. tostring(micro.gap) .. ")" ..
+              " visible " .. tostring(b.visible) ..
+              " plate " .. tostring(b.plate))
+      U.Print("      anchor " .. tostring(b.point) .. " -> " ..
+              tostring(b.relative) .. " " .. tostring(b.relativePoint) ..
+              " x " .. tostring(b.x))
+    end
+  end
+
+  -- Quick binding rests entirely on calls with no compact runtime record
+  -- (SetBinding, SaveBindings, GetBindingAction, GetCurrentBindingSet,
+  -- GetMouseFocus). Printing which of them this client actually exposes is the
+  -- raw material for closing that gap instead of assuming Vanilla shapes.
+  if type(U.QuickBindReport) == "function" then
+    local qb = U.QuickBindReport()
+    U.Print("  quick bind: active " .. tostring(qb.active) ..
+            ", slots " .. tostring(qb.slots) ..
+            ", pending changes " .. tostring(qb.changes))
+    U.Print("    SetBinding " .. tostring(qb.setBinding) ..
+            ", SaveBindings " .. tostring(qb.saveBindings) ..
+            ", GetBindingAction " .. tostring(qb.bindingAction))
+    U.Print("    GetCurrentBindingSet " .. tostring(qb.bindingSet) ..
+            ", GetMouseFocus " .. tostring(qb.mouseFocus))
+    U.Print("    bars 6-10 key route: declared commands " ..
+            tostring(qb.declaredBindings) ..
+            ", SetOverrideBindingClick " .. tostring(qb.overrideBindings))
+    U.Print("    menu keys held " .. tostring(qb.menuKeysHeld) ..
+            ", menu guard " .. tostring(qb.menuGuard) ..
+            ", slot keys held " .. tostring(qb.slotKeysHeld))
+  end
+
+  if type(U.ChatResizeReport) == "function" then
+    local chat = U.ChatResizeReport()
+    U.Print("  chat resize: frame " .. tostring(chat.frame) ..
+            ", grip " .. tostring(chat.grip) ..
+            ", locked " .. tostring(chat.locked) ..
+            ", shown " .. tostring(chat.shown) ..
+            ", saved " .. tostring(chat.saved) ..
+            ", size " .. tostring(chat.width) .. "x" ..
+            tostring(chat.height))
+    U.Print("    position " .. tostring(chat.left) .. "," ..
+            tostring(chat.bottom) .. "  saved " ..
+            tostring(chat.savedLeft) .. "," ..
+            tostring(chat.savedBottom))
+    -- Non-zero corrections mean something else keeps moving the chat; stopped
+    -- means the enforcement gave up rather than fight it every pass.
+    U.Print("    position corrections " .. tostring(chat.enforceRuns) ..
+            ", stopped " .. tostring(chat.enforceStopped))
+    -- The chat shadow route is documented but not runtime-verified: the shadow
+    -- setters live on FontString and write through to the font object, and no
+    -- record says which of those the client's chat windows expose. Print what
+    -- the last apply actually reached instead of assuming it landed.
+    U.Print("    text shadow removed " .. tostring(chat.noTextShadow) ..
+            ", ChatFontNormal bound " .. tostring(chat.shadowBound) ..
+            ", written " .. tostring(chat.shadowApplied))
+  end
+
+  -- Quest header collapsing has no compact-DB record and the stock row click
+  -- does not do it on this client, so the first header click is the only thing
+  -- that says which entry point actually exists. Read this after clicking one.
+  if type(U.QuestLogCollapseReport) == "function" then
+    local q = U.QuestLogCollapseReport()
+    U.Print("  quest collapse: CollapseQuestHeader " .. tostring(q.collapse) ..
+            ", ExpandQuestHeader " .. tostring(q.expand) ..
+            ", row OnClick " .. tostring(q.nativeClick))
+  end
+
+  if type(U.QuestLogTrackReport) == "function" then
+    local t = U.QuestLogTrackReport()
+    U.Print("  quest tracking: source " .. tostring(t.source) ..
+            ", rows marked " .. tostring(t.marked))
+  end
+
+  -- The extended (classic-wow) Quest Log is a one-shot layout over native widgets
+  -- under the Classic WoW theme, so nothing on screen says whether it landed
+  -- or how many rows the left page took.
+  if type(U.QuestLogExtendedReport) == "function" then
+    local e = U.QuestLogExtendedReport()
+    U.Print("  quest log extended: mode " .. tostring(e.mode) ..
+            ", applied " .. tostring(e.applied) ..
+            ", rows " .. tostring(e.rows) ..
+            ", row pitch " .. tostring(e.pitch))
+  end
+
+  ShowUnitFrameCheck()
+  ShowNameplateCheck()
+end
+
+-- Foundation smoke test.
+--
+-- Creates one styled, registered, movable panel so the shared mover system can
+-- be exercised end to end -- drag, lock, /reload, restore -- before any real
+-- module depends on it. This matters because the anchor behaviour it relies on
+-- (knowledge.json / frames.getpoint_relative_name_y_inverted) inverts Y, and a
+-- persistence bug found here is far cheaper than one found across six modules.
+--
+-- Remove this handler once real modules register movers.
+local testPanel
+
+local function ShowMoverTest()
+  if not testPanel then
+    testPanel = U.CreatePanel(UIParent, {
+      name = "PandaUIMoverTest",
+      width = 170,
+      height = 40,
+    })
+
+    -- No label of its own: the mover handle covers this panel and centres its
+    -- own label, and two centred fontstrings just overprint each other.
+    U.RegisterMover("debug.movertest", testPanel, {
+      label = U.L("MOVER_LABEL_MOVER_TEST"),
+      default = { point = "CENTER", relativePoint = "CENTER", x = 0, y = 0 },
+    })
+  end
+
+  testPanel:Show()
+  U.UnlockUI()
+  U.Print("Drag the blue panel with the left mouse button.")
+  U.Print("Then |cffffff00/pui check|r for measured drag state, " ..
+          "|cffffff00/pui lock|r, |cffffff00/reload|r, and " ..
+          "|cffffff00/pui movertest|r again to confirm it comes back in place.")
+end
+
+-- Resistance-block structure dump.
+--
+-- The Character sheet's resistance readouts are the one part of that skin with
+-- no compact-DB evidence and no working Vanilla assumption behind them: this
+-- client draws its own resistance icons and its own hover tooltip text
+-- ("Increases the ability to resist frost-based attacks...", USER_CONFIRMED_
+-- INGAME screenshot), neither of which matches Vanilla's paper doll. Skinning
+-- them by the Vanilla names (MagicResFrame1-5) changed nothing on screen in
+-- either direction, which is exactly what a wrong frame name looks like.
+--
+-- Rather than keep guessing names, this writes what is actually there. It is a
+-- read-only walk: nothing is hidden, re-anchored or hooked.
+local resDump = {}
+
+resDump.CANDIDATES = {
+  "CharacterResistanceFrame", "PaperDollFrame", "CharacterAttributesFrame",
+  "MagicResFrame1", "MagicResFrame2", "MagicResFrame3", "MagicResFrame4",
+  "MagicResFrame5",
+  "MagicResText1", "MagicResText2", "MagicResText3", "MagicResText4",
+  "MagicResText5",
+  "PlayerResistanceFrame1", "PlayerResistanceFrame2", "PlayerResistanceFrame3",
+  "PlayerResistanceFrame4", "PlayerResistanceFrame5",
+  "ResistanceFrame1", "ResistanceFrame2", "ResistanceFrame3",
+  "ResistanceFrame4", "ResistanceFrame5",
+}
+
+function resDump.Try(object, method)
+  if not object or type(object[method]) ~= "function" then return nil end
+  local ok, value = pcall(object[method], object)
+  if not ok then return nil end
+  return value
+end
+
+function resDump.Describe(object)
+  if not object then return "nil" end
+
+  local line = tostring(resDump.Try(object, "GetName") or "<unnamed>") ..
+    " [" .. tostring(resDump.Try(object, "GetObjectType") or "?") .. "]"
+
+  local id = resDump.Try(object, "GetID")
+  if id then line = line .. " id=" .. tostring(id) end
+
+  local width = resDump.Try(object, "GetWidth")
+  local height = resDump.Try(object, "GetHeight")
+  if width or height then
+    line = line .. " size=" .. tostring(width) .. "x" .. tostring(height)
+  end
+
+  local layer = resDump.Try(object, "GetDrawLayer")
+  if layer then line = line .. " layer=" .. tostring(layer) end
+
+  local texture = resDump.Try(object, "GetTexture")
+  if texture then line = line .. " tex=" .. tostring(texture) end
+
+  local text = resDump.Try(object, "GetText")
+  if text then line = line .. " text=\"" .. tostring(text) .. "\"" end
+
+  if type(object.IsMouseEnabled) == "function" then
+    line = line .. " mouse=" .. tostring(resDump.Try(object, "IsMouseEnabled"))
+  end
+  if type(object.GetScript) == "function" then
+    local ok, handler = pcall(object.GetScript, object, "OnEnter")
+    line = line .. " onEnter=" .. tostring(ok and handler ~= nil)
+  end
+
+  return line
+end
+
+-- Depth-limited so an unexpected parent chain cannot walk the whole UI.
+function resDump.Walk(object, into, depth, prefix)
+  local i
+  if type(object.GetRegions) == "function" then
+    local ok, regions = pcall(function() return { object:GetRegions() } end)
+    if ok then
+      for i = 1, table.getn(regions) do
+        table.insert(into, prefix .. "region " .. resDump.Describe(regions[i]))
+      end
+    end
+  end
+
+  if depth <= 0 or type(object.GetChildren) ~= "function" then return end
+
+  local ok, children = pcall(function() return { object:GetChildren() } end)
+  if not ok then return end
+  for i = 1, table.getn(children) do
+    table.insert(into, prefix .. "child " .. resDump.Describe(children[i]))
+    resDump.Walk(children[i], into, depth - 1, prefix .. "  ")
+  end
+end
+
+-- Direct OnEnter exercise.
+--
+-- The structure dump alone cannot say why the resistance tooltip does not
+-- appear: "no handler", "handler errors out", "handler runs but never calls
+-- Show", and "tooltip shown somewhere invisible" all look identical while
+-- hovering. pandaUI also suppresses Lua errors by default, so a failing
+-- native handler stays silent.
+--
+-- This calls the handler itself and reports the error text and the resulting
+-- GameTooltip state, which separates all four. `this` is set the way the
+-- client's own C caller would for a Vanilla-shaped XML handler, then restored.
+function resDump.FireOnEnter(res, into)
+  local name = tostring(resDump.Try(res, "GetName"))
+  local handler = nil
+  if type(res.GetScript) == "function" then
+    local ok, value = pcall(res.GetScript, res, "OnEnter")
+    if ok then handler = value end
+  end
+
+  table.insert(into, name .. " OnEnter=" .. type(handler) ..
+               " mouse=" .. tostring(resDump.Try(res, "IsMouseEnabled")))
+  if type(handler) ~= "function" then return end
+
+  local tooltip = U.G("GameTooltip")
+  if tooltip then pcall(tooltip.Hide, tooltip) end
+
+  local previousThis = this
+  this = res
+  resDump.firing = true
+  local ok, err = pcall(handler, res)
+  resDump.firing = false
+  this = previousThis
+
+  table.insert(into, "  called: ok=" .. tostring(ok) ..
+               (ok and "" or " err=" .. tostring(err)))
+
+  if not tooltip then
+    table.insert(into, "  GameTooltip missing")
+    return
+  end
+
+  table.insert(into, "  tooltip shown=" ..
+               tostring(resDump.Try(tooltip, "IsShown")) ..
+               " visible=" .. tostring(resDump.Try(tooltip, "IsVisible")) ..
+               " alpha=" .. tostring(resDump.Try(tooltip, "GetAlpha")) ..
+               " lines=" .. tostring(resDump.Try(tooltip, "NumLines")))
+
+  local owner = nil
+  if type(tooltip.GetOwner) == "function" then
+    local ownerOk, value = pcall(tooltip.GetOwner, tooltip)
+    if ownerOk and value then owner = resDump.Try(value, "GetName") end
+  end
+  table.insert(into, "  owner=" .. tostring(owner) ..
+               " point=" .. tostring(resDump.Try(tooltip, "GetPoint")))
+
+  local line
+  for line = 1, 4 do
+    local text = resDump.Try(U.G("GameTooltipTextLeft" .. line), "GetText")
+    if text then table.insert(into, "  line" .. line .. "=\"" .. text .. "\"") end
+  end
+
+  pcall(tooltip.Hide, tooltip)
+end
+
+local function ShowResistanceDump()
+  local lines, i = {}, nil
+
+  for i = 1, table.getn(resDump.CANDIDATES) do
+    local name = resDump.CANDIDATES[i]
+    local object = U.G(name)
+    table.insert(lines, "global " .. name .. " = " ..
+                 (object and resDump.Describe(object) or "nil"))
+  end
+
+  local root = U.G("CharacterResistanceFrame") or U.G("PaperDollFrame")
+  if root then
+    table.insert(lines, "--- walk from " ..
+                 tostring(resDump.Try(root, "GetName")) .. " ---")
+    resDump.Walk(root, lines, 2, "")
+  else
+    table.insert(lines, "--- no CharacterResistanceFrame or PaperDollFrame ---")
+  end
+
+  -- Input priority context: strata first, then level. Printed together so the
+  -- resistance column and everything overlapping it can be compared at a glance.
+  table.insert(lines, "--- input priority ---")
+  local overlap = {
+    "CharacterResistanceFrame", "MagicResFrame1", "CharacterModelFrame",
+    "PandaUICharacterModelRotateCatcher", "PandaUICharacterPanel",
+    "CharacterHandsSlot", "PaperDollFrame", "CharacterFrame",
+  }
+  for i = 1, table.getn(overlap) do
+    local object = U.G(overlap[i])
+    table.insert(lines, overlap[i] .. " = " ..
+      (object and ("strata=" .. tostring(resDump.Try(object, "GetFrameStrata")) ..
+        " level=" .. tostring(resDump.Try(object, "GetFrameLevel")) ..
+        " mouse=" .. tostring(resDump.Try(object, "IsMouseEnabled")) ..
+        " x=" .. tostring(resDump.Try(object, "GetLeft")) ..
+        " y=" .. tostring(resDump.Try(object, "GetBottom")) ..
+        " w=" .. tostring(resDump.Try(object, "GetWidth")) ..
+        " h=" .. tostring(resDump.Try(object, "GetHeight"))) or "nil"))
+  end
+
+  table.insert(lines, "--- OnEnter exercise ---")
+  for i = 1, 5 do
+    local res = U.G("MagicResFrame" .. i)
+    if res then resDump.FireOnEnter(res, lines) end
+  end
+
+  -- Same exercise on an equipment slot, whose tooltip is confirmed working in
+  -- game. If the slot behaves and the resistance frame does not, the
+  -- difference is in the frame; if neither does, it is in how this dump calls
+  -- them, not in the resistance skin.
+  local slot = U.G("CharacterHeadSlot")
+  if slot then
+    table.insert(lines, "--- control: CharacterHeadSlot ---")
+    resDump.FireOnEnter(slot, lines)
+  end
+
+  table.insert(lines, "--- event trace (/pui res trace) ---")
+  for i = 1, table.getn(resDump.events) do
+    table.insert(lines, resDump.events[i])
+  end
+
+  SaveDiagnostic("resistances", lines)
+  U.Print("resistance dump: " .. tostring(table.getn(lines)) ..
+          " lines saved to PandaUIDiagDB.resistances")
+  U.Print("  open the Character sheet first, then |cffffff00/reload|r and open " ..
+          U.SavedVariablesHint() .. " to read it")
+end
+
+-- Who actually receives the cursor.
+--
+-- Raising CharacterResistanceFrame above the model rotate catcher did not bring
+-- the tooltip back, and the handler is already proven to work when called
+-- directly, so the remaining question is only which frame the client hands the
+-- mouse to over that column. GetMouseFocus answers it, but it has to be read
+-- *while* hovering -- which is why this samples on a ticker instead of
+-- reporting once at command time.
+local SLOT_NAMES = {
+  "HeadSlot", "NeckSlot", "ShoulderSlot", "ChestSlot", "WristSlot",
+  "HandsSlot", "WaistSlot", "LegsSlot", "FeetSlot",
+  "MainHandSlot", "SecondaryHandSlot", "RangedSlot",
+}
+
+resDump.HOVER_ID = "commands.res-hover"
+resDump.HOVER_SECONDS = 8
+
+function resDump.Chain(frame)
+  local names, guard = {}, 0
+  while frame and guard < 6 do
+    table.insert(names, tostring(resDump.Try(frame, "GetName") or "<unnamed>") ..
+                 "(L" .. tostring(resDump.Try(frame, "GetFrameLevel")) ..
+                 "/" .. tostring(resDump.Try(frame, "GetFrameStrata")) .. ")")
+    frame = resDump.Try(frame, "GetParent")
+    guard = guard + 1
+  end
+  return table.concat(names, " < ")
+end
+
+-- Event trace on the frames themselves.
+--
+-- GetMouseFocus returned <none> for every sample of an 8s hover watch, so it
+-- reports nothing usable on this client and cannot say who receives the cursor.
+-- Hooking the frames answers the same question directly: if OnEnter never fires
+-- on a resistance frame but does on the equipment slot beside it, the cursor is
+-- being intercepted; if it fires and the tooltip is shown here but invisible in
+-- game, something hides it afterwards -- which is why the tooltip state is
+-- sampled both immediately and one tick later.
+resDump.events = {}
+
+-- FireOnEnter invokes the very handlers this traces, so a /pui res run would
+-- otherwise fill the trace with its own synthetic ENTERs and read exactly like
+-- a successful hover. Anything recorded while the dump is driving is dropped.
+resDump.firing = false
+
+function resDump.Note(text)
+  if resDump.firing then return end
+  if table.getn(resDump.events) < 60 then
+    table.insert(resDump.events, text)
+    U.Print("|cff888888trace|r " .. text)
+    -- Written on every event so the trace survives a plain /reload with no
+    -- second command to remember, and never has to be copied out of chat.
+    SaveDiagnostic("resistanceTrace", resDump.events)
+  end
+end
+
+-- Geometry, not just state: the trace proved the tooltip is shown and populated
+-- on a real hover while nothing appears on screen, so what is left to measure is
+-- where it actually is and what draws over it.
+function resDump.TooltipState(tag, owner)
+  local tooltip = U.G("GameTooltip")
+  if not tooltip then return tag .. " GameTooltip=nil" end
+  return tag .. " " .. tostring(owner) ..
+         " shown=" .. tostring(resDump.Try(tooltip, "IsShown")) ..
+         " lines=" .. tostring(resDump.Try(tooltip, "NumLines")) ..
+         " x=" .. tostring(resDump.Try(tooltip, "GetLeft")) ..
+         " y=" .. tostring(resDump.Try(tooltip, "GetBottom")) ..
+         " w=" .. tostring(resDump.Try(tooltip, "GetWidth")) ..
+         " h=" .. tostring(resDump.Try(tooltip, "GetHeight")) ..
+         " strata=" .. tostring(resDump.Try(tooltip, "GetFrameStrata")) ..
+         " level=" .. tostring(resDump.Try(tooltip, "GetFrameLevel")) ..
+         " alpha=" .. tostring(resDump.Try(tooltip, "GetAlpha"))
+end
+
+function resDump.Trace(frame)
+  local name = tostring(resDump.Try(frame, "GetName"))
+
+  U.PostHookScript(frame, "OnEnter", function()
+    resDump.Note(resDump.TooltipState("ENTER " .. name, name))
+    U.DeferOnce("commands.res-trace", function()
+      resDump.Note(resDump.TooltipState("  +1 tick " .. name, name))
+    end)
+  end)
+  U.PostHookScript(frame, "OnLeave", function()
+    resDump.Note("LEAVE " .. name)
+  end)
+end
+
+local function StartEventTrace()
+  local i
+  for i = 1, 5 do
+    local res = U.G("MagicResFrame" .. i)
+    if res then resDump.Trace(res) end
+  end
+  -- Every gear slot, not just the head: the working tooltip is the reference
+  -- this comparison depends on, and a trace armed on one slot reads as "no
+  -- events" the moment a different piece of armour is hovered.
+  for i = 1, table.getn(SLOT_NAMES) do
+    resDump.Trace(U.G("Character" .. SLOT_NAMES[i]))
+  end
+
+  resDump.events = {}
+  U.Print("trace armed - hover the resistance icons, then a gear slot, " ..
+          "then |cffffff00/pui res|r and |cffffff00/reload|r")
+end
+
+local function StartHoverWatch()
+  local getFocus = U.G("GetMouseFocus")
+  if type(getFocus) ~= "function" then
+    U.Print("GetMouseFocus unavailable on this client")
+    return
+  end
+
+  local samples, seen, elapsed = {}, {}, 0
+
+  U.RegisterUpdate(resDump.HOVER_ID, 0.1, function(step)
+    elapsed = elapsed + (tonumber(step) or 0.1)
+
+    local ok, focus = pcall(getFocus)
+    local line = (ok and focus) and resDump.Chain(focus) or "<none>"
+    if not seen[line] then
+      seen[line] = true
+      table.insert(samples, string.format("%.1fs %s", elapsed, line))
+    end
+
+    if elapsed >= resDump.HOVER_SECONDS then
+      U.UnregisterUpdate(resDump.HOVER_ID)
+      SaveDiagnostic("resistanceHover", samples)
+      U.Print("hover watch done: " .. tostring(table.getn(samples)) ..
+              " distinct targets saved to PandaUIDiagDB.resistanceHover")
+      U.Print("  |cffffff00/reload|r then read " .. U.SavedVariablesHint())
+    end
+  end)
+
+  U.Print("hover watch armed for " .. resDump.HOVER_SECONDS ..
+          "s - move the cursor slowly over the resistance icons NOW")
+end
+
+local handlers = {}
+
+handlers["unlock"] = function() U.UnlockUI() end
+handlers["lock"]   = function() U.LockUI() end
+handlers["toggle"] = function() U.ToggleUI() end
+handlers["reset"]  = function() U.ResetPositions() end
+handlers["check"]  = function() ShowSelfCheck() end
+handlers["help"]   = function(rest) ShowHelp(rest) end
+handlers["movertest"] = function() ShowMoverTest() end
+handlers["np"] = function() ShowNameplateDump() end
+
+-- Mover snap trace.
+--
+-- Records what the snapper decides on every drag tick -- the requested
+-- position, the grid pass, each overlap correction with both rectangles, and
+-- the result -- plus a before/after table of every mover holding the rect
+-- MoverBounds computes AND the rect the client draws. That pair is the point:
+-- where a theme scales a mover's frame the two can disagree, and a magnet
+-- barrier in the wrong place is what throws an anchor across the screen.
+--
+-- Armed here rather than inside edit mode because the overlay takes the
+-- keyboard: no slash command can be typed while it is open. U.LockUI stops the
+-- run and writes it, so the sequence is arm, open edit mode, reproduce, close
+-- edit mode, /reload.
+handlers["movesnap"] = function()
+  if type(U.MoverSnapTrace) ~= "function" then return end
+
+  if U.MoverSnapTraceOn() then
+    U.MoverSnapTrace(false)
+    U.Print("mover snap trace: stopped, saved to PandaUIDiagDB.moveSnap")
+    return
+  end
+
+  U.MoverSnapTrace(true)
+  U.Print("mover snap trace |cff55ff55armed|r")
+  U.Print("  1. |cffffff00/pui|r to open edit mode")
+  U.Print("  2. drag the element that misbehaves, slowly, into the anchor " ..
+          "that throws it")
+  U.Print("  3. close edit mode - it keeps watching 20 s (change target " ..
+          "now); a /reload at any point keeps what was recorded")
+  U.Print("  4. |cffffff00/reload|r, then read PandaUIDiagDB.moveSnap in " ..
+          U.SavedVariablesHint())
+end
+-- themes/modern-wow.lua. Bare `/pui mw` measures what the theme actually
+-- built and writes it to PandaUIDiagDB.modernWow; the sub-commands switch one
+-- surface on or off. Each surface builds its art once at PLAYER_LOGIN, so a
+-- change needs a reload -- the same reason a theme change does.
+handlers["mw"] = function(rest)
+  local args = Trim(rest or "")
+  -- string.find with captures, not string.match: this client's Lua has no
+  -- string.match at all (see modules/spellbook.lua and modules/petbar.lua,
+  -- both of which record it).
+  local _, _, verb, id = string.find(args, "^(%a+)%s*(.*)$")
+  verb = verb and string.lower(verb) or ""
+  id = id and Trim(id) or ""
+
+  if type(U.ModernWowReport) ~= "function" then
+    U.Print("mw: modules/modernwow.lua is not loaded")
+  elseif verb == "list" then
+    U.ModernWowSurfaces()
+  elseif verb == "powertext" then
+    -- Text size on the power bar only, for trying sizes against the art. Live
+    -- when raising it; 0 needs a reload, since restoring the original size
+    -- means rebuilding the label the unit-frame module owns.
+    U.ModernWowSetPowerTextSize(id)
+  elseif verb == "cast" then
+    -- The cast bar's scale remains a separate live control: it does not affect
+    -- the now-fixed unit-frame geometry.
+    U.ModernWowSetCastScale(id)
+  elseif verb == "on" or verb == "off" then
+    if id == "" then
+      U.Print("mw: /pui mw " .. verb .. " <surface>")
+      U.ModernWowSurfaces()
+    else
+      U.ModernWowSetSurface(id, verb == "on")
+    end
+  else
+    U.ModernWowReport()
+  end
+end
+handlers["bagcat"] = function() ShowItemCategoryDump() end
+
+-- Why a derived main-bank stack quantity vanished. modules/bankcount.lua works
+-- the number out by watching containers between ticks, so a disappearance is a
+-- decision some earlier pass made and nothing visible afterwards explains it.
+-- Off by default: the trace writes a row on every pass.
+handlers["bankcount"] = function(rest)
+  if type(U.SetBankCountTrace) ~= "function" then
+    U.Print("bankcount: modules/bankcount.lua is not loaded")
+    return
+  end
+
+  local mode = Trim(rest or "")
+  local on = not (mode == "off" or mode == "stop")
+  U.SetBankCountTrace(on)
+
+  if on then
+    U.Print("bankcount: trace |cff00ff00on|r - open the bank, reproduce the "
+            .. "disappearance, then |cffffff00/pui bankcount off|r")
+  else
+    U.Print("bankcount: trace off - saved to PandaUIDiagDB.bankCount")
+    U.Print("  " .. U.SavedVariablesHint() .. " after |cffffff00/reload|r")
+  end
+end
+-- Every visible Texture region under CharacterFrame, for the white patch that
+-- still appears on the Modern WoW Character pages after the OnShow re-strip
+-- (user report, 2026-09-29). Run while the patch is on screen. A focused
+-- diagnostic, never a production path: the walk only reads, is bounded, and
+-- runs on this command alone. Written to PandaUIDiagDB.characterTextures.
+handlers["charwhite"] = function()
+  local root = U.G("CharacterFrame")
+  if not root then
+    U.Print("charwhite: CharacterFrame unavailable")
+    return
+  end
+  local report = { rows = {}, frames = 0 }
+  local LIMIT, DEPTH = 600, 8
+
+  local function Read(object, method)
+    if not object or type(object[method]) ~= "function" then return nil end
+    local ok, a, b, c, d = pcall(object[method], object)
+    if not ok then return nil end
+    return a, b, c, d
+  end
+  local function Round(value)
+    value = tonumber(value)
+    if not value then return nil end
+    return math.floor(value * 10 + 0.5) / 10
+  end
+
+  local function Walk(frame, path, depth)
+    report.frames = report.frames + 1
+    local okAll, regions = pcall(function() return { frame:GetRegions() } end)
+    if not okAll or type(regions) ~= "table" then regions = {} end
+    local i
+    for i = 1, table.getn(regions) do
+      local region = regions[i]
+      if table.getn(report.rows) >= LIMIT then break end
+      if Read(region, "GetObjectType") == "Texture" and
+         Read(region, "IsVisible") and (tonumber(Read(region, "GetAlpha")) or 1) > 0 then
+        local r, g, b, a = Read(region, "GetVertexColor")
+        table.insert(report.rows, {
+          owner = path,
+          name = Read(region, "GetName"),
+          texture = Read(region, "GetTexture"),
+          alpha = Round(Read(region, "GetAlpha")),
+          layer = Read(region, "GetDrawLayer"),
+          blend = Read(region, "GetBlendMode"),
+          color = { Round(r), Round(g), Round(b), Round(a) },
+          left = Round(Read(region, "GetLeft")),
+          top = Round(Read(region, "GetTop")),
+          width = Round(Read(region, "GetWidth")),
+          height = Round(Read(region, "GetHeight")),
+        })
+      end
+    end
+    if depth >= DEPTH then return end
+    local okKids, kids = pcall(function() return { frame:GetChildren() } end)
+    if not okKids or type(kids) ~= "table" then return end
+    for i = 1, table.getn(kids) do
+      local kid = kids[i]
+      if Read(kid, "IsVisible") then
+        Walk(kid, path .. "/" .. tostring(Read(kid, "GetName") or ("#" .. i)),
+             depth + 1)
+      end
+    end
+  end
+
+  local ok, err = pcall(Walk, root, "CharacterFrame", 0)
+  if not ok then report.error = tostring(err) end
+  local pages = { "PaperDollFrame", "PetPaperDollFrame", "ReputationFrame",
+                  "SkillFrame", "HonorFrame" }
+  local p
+  for p = 1, table.getn(pages) do
+    if Read(U.G(pages[p]), "IsVisible") then report.page = pages[p] end
+  end
+  local okFocus, focus = false, nil
+  if type(GetMouseFocus) == "function" then okFocus, focus = pcall(GetMouseFocus) end
+  report.mouseFocus = okFocus and focus and Read(focus, "GetName") or nil
+  local tooltip = U.G("GameTooltip")
+  report.tooltipShown = tooltip and Read(tooltip, "IsVisible") and true or false
+  report.frameLeft = Round(Read(root, "GetLeft"))
+  report.frameTop = Round(Read(root, "GetTop"))
+  SaveDiagnostic("characterTextures", report)
+  U.Print("charwhite: " .. tostring(table.getn(report.rows)) ..
+          " visible textures in " .. tostring(report.frames) ..
+          " frames saved to PandaUIDiagDB.characterTextures")
+  U.Print("  |cffffff00/reload|r then read " .. U.SavedVariablesHint())
+end
+
+-- What the character sheet's tab strip measured and wrote on its last layout
+-- pass. `target` is what pandaUI asked for, `after` is the width read back
+-- immediately, `live` is the width one call later: target == after == live
+-- means the fit applied and something else is drawing the tabs wide, after ~=
+-- target means SetWidth was refused, and live ~= after means the client resized
+-- the tab back afterwards.
+handlers["tabs"] = function()
+  if type(U.CharacterTabReport) ~= "function" then
+    U.Print("tab report unavailable - modules/character.lua did not load, " ..
+            "or the native-chrome theme is active")
+    return
+  end
+
+  local report = U.CharacterTabReport()
+  if report.reason then
+    U.Print("character tabs: not sized - " .. report.reason)
+    return
+  end
+
+  U.Print("character tabs: shown=" .. tostring(report.count) ..
+          " fits=" .. tostring(report.fits) ..
+          " window=" .. tostring(report.frameWidth) ..
+          " available=" .. tostring(report.available) ..
+          " labels=" .. tostring(report.labelTotal) ..
+          " padding=" .. tostring(report.padding))
+
+  local i
+  for i = 1, table.getn(report.rows) do
+    local row = report.rows[i]
+    U.Print("  " .. row.name ..
+            " label=" .. tostring(row.label) ..
+            " before=" .. tostring(row.before) ..
+            " target=" .. tostring(row.target) ..
+            " after=" .. tostring(row.after) ..
+            " live=" .. tostring(row.live))
+  end
+end
+
+-- Measured left/right inset of every styled tab strip, so a strip that looks
+-- wrong can be compared against one that looks right instead of reasoned
+-- about. Reads the RENDERED edges (GetLeft/GetRight of the tab and of its
+-- label) rather than the widths pandaUI asked for: padLeft/padRight are what
+-- is actually on screen, and they are the only numbers that settle whether a
+-- tab has an inset.
+--
+-- Also dumps what the shared component believes -- the owned label, the
+-- remembered inset, whether a strip fit claimed the tab -- so a zero inset can
+-- be traced to the right cause: no owned label means the client is still
+-- drawing its own, fitOwned means U.FitStockTabStrip computed the padding
+-- instead, and a padding that disagrees with padLeft means something resized
+-- the tab after the component wrote it.
+handlers["tabpad"] = function()
+  local strips = {
+    { "character", "CharacterFrameTab", 5 },
+    { "spellbook", "SpellBookFrameTabButton", 3 },
+    { "social", "FriendsFrameTab", 5 },
+  }
+  local named = {
+    { "spellbook", "PandaUISpellBookSpellsTab" },
+    { "spellbook", "PandaUISpellBookProfessionsTab" },
+  }
+
+  local dump, i, n = {}, nil, nil
+
+  local function Number(object, method)
+    if not object or not object[method] then return nil end
+    local ok, value = pcall(object[method], object)
+    if ok and tonumber(value) then return value end
+    return nil
+  end
+
+  local function Measure(strip, name)
+    local tab = U.G(name)
+    if not tab then return end
+
+    local shown = false
+    if tab.IsShown then
+      local ok, value = pcall(tab.IsShown, tab)
+      shown = ok and value and true or false
+    end
+
+    local label = tab.puiTabLabel
+    if not label and tab.GetFontString then
+      local ok, value = pcall(tab.GetFontString, tab)
+      if ok then label = value end
+    end
+
+    local row = {
+      strip = strip,
+      name = name,
+      shown = shown,
+      width = Number(tab, "GetWidth"),
+      height = Number(tab, "GetHeight"),
+      tabLeft = Number(tab, "GetLeft"),
+      tabRight = Number(tab, "GetRight"),
+      labelLeft = Number(label, "GetLeft"),
+      labelRight = Number(label, "GetRight"),
+      stringWidth = Number(label, "GetStringWidth"),
+      labelWidth = Number(label, "GetWidth"),
+      owned = tab.puiTabLabel and true or false,
+      padding = tab.puiTabPadding,
+      fitOwned = tab.puiTabFitOwned and true or false,
+      styled = tab.puiTabStyled and true or false,
+      active = tab.puiTabActive and true or false,
+    }
+    if row.tabLeft and row.labelLeft then
+      row.padLeft = row.labelLeft - row.tabLeft
+    end
+    -- MEASURED 2026-09-20: FontString:GetRight() returns GetLeft()'s value on
+    -- this client -- every row of the first tabpad run had labelLeft ==
+    -- labelRight while labelWidth was a real number -- so the right edge is
+    -- derived from the left edge plus the width instead of read directly.
+    -- labelRight is still dumped, as the evidence for that.
+    if row.tabRight and row.labelLeft and row.labelWidth then
+      row.padRight = row.tabRight - (row.labelLeft + row.labelWidth)
+    end
+    table.insert(dump, row)
+  end
+
+  for i = 1, table.getn(strips) do
+    for n = 1, strips[i][3] do
+      Measure(strips[i][1], strips[i][2] .. n)
+    end
+  end
+  for i = 1, table.getn(named) do
+    Measure(named[i][1], named[i][2])
+  end
+
+  U.SaveDiagnostic("tabPadding", dump)
+
+  if table.getn(dump) == 0 then
+    U.Print("tabpad: no tab resolved - open the windows first")
+    return
+  end
+
+  U.Print("tabpad: padLeft/padRight are measured from the rendered edges; " ..
+          "open Character and Spellbook first for a like-for-like read")
+  for i = 1, table.getn(dump) do
+    local row = dump[i]
+    U.Print("  " .. row.strip .. " " .. row.name ..
+            (row.shown and "" or " |cff808080(hidden)|r") ..
+            " w=" .. tostring(row.width) ..
+            " str=" .. tostring(row.stringWidth) ..
+            " padL=" .. tostring(row.padLeft) ..
+            " padR=" .. tostring(row.padRight) ..
+            " pad=" .. tostring(row.padding) ..
+            " owned=" .. tostring(row.owned) ..
+            " fit=" .. tostring(row.fitOwned) ..
+            " styled=" .. tostring(row.styled))
+  end
+  U.Print("  saved to PandaUIDiagDB.tabPadding - " ..
+          U.SavedVariablesHint() .. " after |cffffff00/reload|r")
+end
+
+-- Why a spellbook entry is, or is not, marked as absent from the action bars.
+-- The command being unavailable is itself an answer: modules/spellbook.lua did
+-- not load, or the hint never installed.
+handlers["sb"] = function(rest)
+  local mode = Trim(rest or "")
+
+  -- The dump is a snapshot; the trace is the timeline. A mark that is wrong
+  -- only *after* a drag cannot be explained by the snapshot alone, because by
+  -- the time it runs the index it would have to compare against is gone.
+  if mode == "trace" or mode == "trace on" then
+    if type(U.SpellBookBarHintTrace) ~= "function" then
+      U.Print("spellbook trace unavailable - modules/spellbook.lua did not load")
+      return
+    end
+    U.SpellBookBarHintTrace("on")
+    return
+  end
+
+  if mode == "trace off" or mode == "off" then
+    if type(U.SpellBookBarHintTrace) ~= "function" then return end
+    U.SpellBookBarHintTrace("off")
+    return
+  end
+
+  -- The highest-rank filter is a separate question from the bar hint: it turns
+  -- on the layout of the spell list itself, so it gets the layout dump rather
+  -- than the action-slot one. Run it with the Spellbook open.
+  -- The modern-wow window's own drawing state (modules/spellbookmodernwow.lua).
+  if mode == "look" then
+    if type(U.ModernWowSpellBookReport) ~= "function" then
+      U.Print("spellbook look unavailable - modules/spellbookmodernwow.lua did not load")
+      return
+    end
+    U.ModernWowSpellBookReport()
+    return
+  end
+
+  if mode == "ranks" or mode == "rank" then
+    if type(U.SpellBookRankDump) ~= "function" then
+      U.Print("spellbook rank dump unavailable - modules/spellbook.lua did not load")
+      return
+    end
+    U.SpellBookRankDump()
+    return
+  end
+
+  if type(U.SpellBookBarHintDump) ~= "function" then
+    U.Print("spellbook dump unavailable - modules/spellbook.lua did not load")
+    return
+  end
+  U.SpellBookBarHintDump()
+end
+-- Live readout, printed straight to chat: an aura timer that does not appear
+-- has exactly three possible causes and modules/auras.lua's dump names the one
+-- responsible, per row and per index, without a reload or a probe run.
+handlers["aura"] = function()
+  if type(U.AuraDebugDump) ~= "function" then
+    U.Print("aura dump unavailable - modules/auras.lua did not load")
+    return
+  end
+  U.AuraDebugDump()
+end
+-- The two things modules/hots.lua cannot confirm from the compact evidence, in
+-- one readout: whether each tracked HoT resolved to a real spellbook texture,
+-- and whether that texture's key is the same key the unit's own UnitBuff walk
+-- produces. If a HoT is cast and this prints a resolved spell, a live stamp and
+-- no matching party buff, the two paths disagree about the icon and U.IconKey
+-- is where to look.
+handlers["hot"] = function()
+  if type(U.HotDebugDump) ~= "function" then
+    U.Print("hot dump unavailable - modules/hots.lua did not load")
+    return
+  end
+  U.HotDebugDump()
+end
+-- Forty-member preview of the raid frames, filled with the player,
+-- so they can be checked outside a raid. Run again to stop.
+handlers["raid"] = function(rest)
+  if type(U.RaidFramesCommand) ~= "function" then
+    U.Print(U.L("RAID_UNAVAILABLE"))
+    return
+  end
+  U.RaidFramesCommand(rest)
+end
+-- Fake four-member party for screenshots (modules/partytest.lua).
+handlers["party"] = function(rest)
+  if type(U.PartyTestCommand) ~= "function" then
+    U.Print("party test unavailable - modules/partytest.lua did not load")
+    return
+  end
+  U.PartyTestCommand(rest)
+end
+-- Whether the hovered zone name reaches pandaUI at all. The command being
+-- unavailable is itself the first answer: it means modules/worldmap.lua did not
+-- load, which no amount of reading the map code would have shown.
+-- The one thing modules/healpredict.lua cannot settle from the compact evidence:
+-- whether this client emits the self-heal combat text its amounts are learned
+-- from. Templates listed as compiled with nothing learned after a few heals
+-- means the message never arrives, and no amount of reading that module would
+-- have shown it.
+handlers["heal"] = function(rest)
+  local mode = Trim(rest or "")
+
+  -- The appearance cannot be summoned on demand otherwise: your own segment
+  -- needs a heal of that rank already observed landing once, and the other
+  -- players' segment has no source on this client. This paints both.
+  if mode == "test" then
+    if type(U.HealPredictTest) ~= "function" then
+      U.Print("heal test unavailable - modules/healpredict.lua did not load")
+      return
+    end
+    local seconds = U.HealPredictTest(10)
+    U.Print("pandaUI: heal prediction preview for " .. tostring(seconds) ..
+            "s - your heal then another player's, on every unit frame")
+    return
+  end
+
+  if type(U.HealPredictDebugDump) ~= "function" then
+    U.Print("heal dump unavailable - modules/healpredict.lua did not load")
+    return
+  end
+  U.HealPredictDebugDump()
+end
+handlers["map"] = function()
+  if type(U.WorldMapDebugDump) ~= "function" then
+    U.Print("map dump unavailable - modules/worldmap.lua did not load")
+    return
+  end
+  U.WorldMapDebugDump()
+end
+-- Which stage of the tooltip price readout stopped, for the item hovered last.
+-- The command being unavailable is the first answer by itself: modules/
+-- itemprice.lua did not load.
+handlers["price"] = function()
+  if type(U.PriceDebugDump) ~= "function" then
+    U.Print("price dump unavailable - modules/itemprice.lua did not load")
+    return
+  end
+  U.PriceDebugDump()
+end
+handlers["res"] = function(rest)
+  local mode = Trim(rest or "")
+  if mode == "hover" then
+    StartHoverWatch()
+  elseif mode == "trace" then
+    StartEventTrace()
+  else
+    ShowResistanceDump()
+  end
+end
+handlers["elite"] = function(rest) HandleElite(rest) end
+handlers["cb"] = function()
+  if type(U.CastbarNativeDump) ~= "function" then
+    U.Print("castbar dump unavailable - modules/castbar.lua did not load")
+    return
+  end
+  U.CastbarNativeDump()
+end
+handlers["abcd"] = function()
+  if type(U.ActionBarCooldownDump) ~= "function" then
+    U.Print("cooldown dump unavailable - modules/actionbar.lua did not load")
+    return
+  end
+  U.ActionBarCooldownDump()
+end
+handlers["abhl"] = function(rest)
+  if type(U.ActionBarHighlightDump) ~= "function" then
+    U.Print("highlight dump unavailable - modules/actionbar.lua did not load")
+    return
+  end
+  local first, remainder = Split(rest)
+  if first == "" then
+    U.ActionBarHighlightDump()
+    return
+  end
+  local alpha = tonumber(first)
+  if not alpha then
+    U.Print("  |cffffff00/pui abhl|r - dump, or " ..
+            "|cffffff00/pui abhl <alpha> [hover] [rest]|r")
+    return
+  end
+  local second, third = Split(remainder)
+  U.ActionBarHighlightTune(alpha, tonumber(second), tonumber(third))
+end
+
+-- Binding-table readout.
+--
+-- pandaUI declares its own commands for bars 6-10 in Bindings.xml
+-- (UnrealPfUI's working path on this client). A first in-game check reported
+-- them as not registered, and the detection itself is a suspect: GetBinding's
+-- return shape on this client has no compact record, so "not found" and "found
+-- but shaped differently" look the same from modules/actionbar.lua. This prints
+-- the raw enumeration so the two can be told apart.
+local BINDING_SCAN_MARKERS = {
+  -- pandaUI's own declarations (Bindings.xml).
+  "PANDAUIBAR",
+  -- UnrealPfUI's, for the same case on the same client. If pfUI is enabled and
+  -- its commands are missing too, the client ignores addon Bindings.xml
+  -- entirely rather than rejecting pandaUI's file in particular.
+  "PFPAGING",
+  "PFSTANCE",
+}
+
+local function AddOnLoaded(name)
+  local fn = U.G("IsAddOnLoaded")
+  if type(fn) ~= "function" then return "?" end
+  local ok, loaded = pcall(fn, name)
+  if not ok then return "?" end
+  return loaded and "yes" or "no"
+end
+
+local function ShowBindingScan()
+  local numBindings = U.G("GetNumBindings")
+  local getBinding = U.G("GetBinding")
+
+  U.Print("binding scan:")
+  U.Print("  addons loaded: pandaUI " .. AddOnLoaded("pandaUI") ..
+          ", UnrealPfUI " .. AddOnLoaded("UnrealPfUI"))
+  U.Print("  GetNumBindings " .. type(numBindings) ..
+          ", GetBinding " .. type(getBinding))
+
+  if type(numBindings) ~= "function" or type(getBinding) ~= "function" then
+    U.Print("  |cffff5555the client exposes no binding enumeration|r")
+  else
+    local ok, count = pcall(numBindings)
+    count = ok and tonumber(count) or 0
+    U.Print("  bindings reported: " .. tostring(count))
+
+    local hits, m = {}, nil
+    for m = 1, table.getn(BINDING_SCAN_MARKERS) do
+      hits[BINDING_SCAN_MARKERS[m]] = 0
+    end
+
+    local i, last = nil, nil
+    for i = 1, count do
+      local got, a = pcall(getBinding, i)
+      if got and type(a) == "string" then
+        last = a
+        for m = 1, table.getn(BINDING_SCAN_MARKERS) do
+          local marker = BINDING_SCAN_MARKERS[m]
+          if string.find(a, marker, 1, true) then
+            hits[marker] = hits[marker] + 1
+          end
+        end
+      end
+    end
+
+    for m = 1, table.getn(BINDING_SCAN_MARKERS) do
+      local marker = BINDING_SCAN_MARKERS[m]
+      local found = hits[marker]
+      U.Print("  " .. marker .. ": " ..
+              (found > 0 and ("|cff55ff55" .. found .. "|r") or "|cffff55550|r"))
+    end
+
+    -- The last entry is where an addon's commands would land: the client
+    -- appends them after its own table.
+    U.Print("  last command in the table: " .. tostring(last))
+  end
+
+  local key1, key2 = nil, nil
+  local getKey = U.G("GetBindingKey")
+  if type(getKey) == "function" then
+    local got
+    got, key1, key2 = pcall(getKey, "PANDAUIBAR2BUTTON1")
+    if not got then key1, key2 = "error", nil end
+  end
+  U.Print("  GetBindingKey(PANDAUIBAR2BUTTON1): " .. tostring(key1) ..
+          ", " .. tostring(key2))
+  U.Print("  PandaUIActionButton: " .. type(U.G("PandaUIActionButton")))
+end
+
+handlers["menu"] = function()
+  if type(U.DumpGameMenu) == "function" then
+    U.DumpGameMenu()
+  else
+    U.Print("the game menu module is not loaded.")
+  end
+end
+
+-- The grouped window for the client's own Video/Sound/Interface/Key Bindings
+-- panels (modules/gamesettings.lua). The Escape menu's four rows open it too;
+-- this is the way in without going through the menu. An optional page id
+-- (video, sound, interface, keys) selects which one it opens on.
+handlers["game"] = function(argument)
+  if type(U.OpenGameSettings) ~= "function" then
+    U.Print("the game settings module is not loaded.")
+    return
+  end
+  local page = argument
+  if type(page) == "string" then
+    page = string.gsub(page, "^%s+", "")
+    page = string.gsub(page, "%s+$", "")
+    if page == "" then page = nil end
+  end
+  U.OpenGameSettings(page)
+end
+
+-- Chrome inventory of a hosted settings page (default video), written to
+-- PandaUIDiagDB.gameSettingsChrome. See U.DumpGameSettings.
+handlers["gamedump"] = function(argument)
+  if type(U.DumpGameSettings) ~= "function" then
+    U.Print("the game settings module is not loaded.")
+    return
+  end
+  local page = argument
+  if type(page) == "string" then
+    page = string.gsub(page, "^%s+", "")
+    page = string.gsub(page, "%s+$", "")
+    if page == "" then page = nil end
+  end
+  U.DumpGameSettings(page)
+end
+
+-- Input trace for the Forever settings list (modules/gamesettingslist.lua):
+-- toggles; the second call writes PandaUIDiagDB.gameSettingsFocus.
+handlers["gamefocus"] = function()
+  if type(U.GameSettingsFocusTrace) ~= "function" then
+    U.Print("the game settings module is not loaded.")
+    return
+  end
+  U.GameSettingsFocusTrace()
+end
+
+handlers["bindscan"] = function() ShowBindingScan() end
+
+-- NPC quest/gossip dialog text readout.
+--
+-- Reported in game: some strings in the NPC quest window stay non-white even
+-- after modules/quest.lua's U.SetStockFont pass, which already fixed the
+-- decorative gold book font on the rest. This prints only the strings that came
+-- back non-white -- with the name, colour and font the client reports for each
+-- -- so the survivors can be named instead of guessed at. The full list goes to
+-- PandaUIDiagDB because a busy quest window has more strings than chat can
+-- usefully hold.
+local function ShowQuestTextCheck()
+  if type(U.QuestTextReport) ~= "function" then
+    U.Print("quest module is not loaded")
+    return
+  end
+
+  local report = U.QuestTextReport()
+  SaveDiagnostic("questText", report)
+
+  local total = table.getn(report)
+  if total == 0 then
+    U.Print("|cffff5555no FontStrings found|r - open the NPC quest window " ..
+            "first, then run this again")
+    return
+  end
+
+  local offenders, i = 0, nil
+  for i = 1, total do
+    local entry = report[i]
+    -- Only shown strings matter visually, and only ones that are not already
+    -- near-white. Hidden strings are still written to the saved dump.
+    local white = tonumber(entry.r) and entry.r > 0.95
+                  and entry.g > 0.95 and entry.b > 0.95
+    if entry.shown == "yes" and not white then
+      offenders = offenders + 1
+      U.Print("  |cffff5555" .. entry.name .. "|r  rgb " .. entry.color ..
+              "  size " .. entry.size)
+      U.Print("    font " .. entry.font)
+      if entry.text ~= "" then U.Print("    text \"" .. entry.text .. "\"") end
+    end
+  end
+
+  U.Print("quest text: " .. tostring(total) .. " strings, " ..
+          (offenders > 0
+            and ("|cffff5555" .. offenders .. " not white|r")
+            or "|cff55ff55all shown strings white|r"))
+  U.Print("  full dump saved to PandaUIDiagDB.questText")
+end
+
+handlers["questtext"] = function() ShowQuestTextCheck() end
+
+-- Quest Log details-page alignment readout (modules/questlog.lua
+-- U.QuestLogAlignReport). Open the Quest Log on a quest first; the dump is
+-- written to PandaUIDiagDB.questLogAlign and reaches disk on /reload.
+handlers["qlalign"] = function()
+  if type(U.QuestLogAlignReport) ~= "function" then
+    U.Print("quest log module is not loaded (it only builds under modern themes)")
+    return
+  end
+  local report = U.QuestLogAlignReport()
+  SaveDiagnostic("questLogAlign", report)
+  U.Print("quest log alignment: " .. tostring(table.getn(report)) ..
+          " strings saved to PandaUIDiagDB.questLogAlign - /reload to write it")
+end
+
+-- ---------------------------------------------------------------------------
+-- Keyboard capture test
+--
+-- Everything the quick-binding mode does rests on one unrecorded assumption:
+-- that a keyboard-enabled addon frame receives OnKeyDown/OnKeyUp at all on this
+-- client. knowledge.json / chat.mousewheel_uses_binding_layer says the binding
+-- layer resolves before addon frame scripts here, and Escape was confirmed in
+-- game opening the game menu straight through the mode, so the assumption is
+-- actively in doubt.
+--
+-- This measures it instead of arguing about it. Two catchers are shown at once,
+-- a Button and a plain Frame, because frames.movable_drag_requires_button_handle
+-- established that widget type decides whether *mouse* input arrives here and
+-- the same may hold for the keyboard. Each press prints which widget saw it,
+-- which script fired, and how the key name arrived.
+-- ---------------------------------------------------------------------------
+local keyTest
+
+local function StopKeyTest(reason)
+  if not keyTest then return end
+
+  U.UnregisterUpdate("commands.keytest")
+  keyTest.button:Hide()
+  keyTest.frame:Hide()
+  if keyTest.label then keyTest.label:Hide() end
+
+  U.Print("key test stopped (" .. reason .. "): " ..
+          keyTest.button_down .. " button keydown, " ..
+          keyTest.button_up .. " button keyup, " ..
+          keyTest.frame_down .. " frame keydown, " ..
+          keyTest.frame_up .. " frame keyup")
+
+  if keyTest.total == 0 then
+    U.Print("  |cffff5555no key ever reached an addon frame|r - the binding " ..
+            "layer owns the keyboard on this client")
+  end
+
+  keyTest = nil
+end
+
+local function ReportKey(source, script, a, b)
+  if not keyTest then return end
+
+  -- scripts.handler_arguments_direct: report which of the three shapes carried
+  -- the key name, since that is itself part of the answer.
+  local shape, key = "none", nil
+  if type(a) == "string" then
+    shape, key = "arg1-direct", a
+  elseif type(b) == "string" then
+    shape, key = "arg2-direct", b
+  else
+    local legacy = U.G("arg1")
+    if type(legacy) == "string" then shape, key = "global-arg1", legacy end
+  end
+
+  keyTest.total = keyTest.total + 1
+  keyTest[source .. "_" .. script] = keyTest[source .. "_" .. script] + 1
+
+  U.Print("  |cff55ff55" .. source .. " " .. script .. "|r: " ..
+          tostring(key) .. "  (" .. shape .. ")")
+
+  if key == "ESCAPE" then StopKeyTest("escape") end
+end
+
+local function StartKeyTest()
+  if keyTest then
+    StopKeyTest("restarted")
+    return
+  end
+
+  local button = U.G("PandaUIKeyTestButton")
+  local frame = U.G("PandaUIKeyTestFrame")
+
+  if not button then
+    button = CreateFrame("Button", "PandaUIKeyTestButton", UIParent)
+    button:SetWidth(260)
+    button:SetHeight(60)
+    button:SetPoint("CENTER", UIParent, "CENTER", 0, 60)
+    pcall(button.SetFrameStrata, button, "FULLSCREEN_DIALOG")
+    pcall(button.EnableKeyboard, button, true)
+    pcall(button.EnableMouse, button, true)
+    U.CreateBackdrop(button, {})
+
+    frame = CreateFrame("Frame", "PandaUIKeyTestFrame", UIParent)
+    frame:SetWidth(260)
+    frame:SetHeight(20)
+    frame:SetPoint("TOP", button, "BOTTOM", 0, -8)
+    pcall(frame.SetFrameStrata, frame, "FULLSCREEN_DIALOG")
+    pcall(frame.EnableKeyboard, frame, true)
+
+    button:SetScript("OnKeyDown", function(a, b) ReportKey("button", "down", a, b) end)
+    button:SetScript("OnKeyUp",   function(a, b) ReportKey("button", "up", a, b) end)
+    frame:SetScript("OnKeyDown",  function(a, b) ReportKey("frame", "down", a, b) end)
+    frame:SetScript("OnKeyUp",    function(a, b) ReportKey("frame", "up", a, b) end)
+
+    button.puiLabel = U.CreateLabel(button, {
+      size = U.media.fontSize.normal,
+      color = U.media.color.accent,
+      inherits = "GameFontNormal",
+      width = 240,
+    })
+    if button.puiLabel then
+      button.puiLabel:SetPoint("CENTER", button, "CENTER", 0, 0)
+      button.puiLabel:SetText("Key test: press keys. Escape or 15s stops it.")
+    end
+  end
+
+  keyTest = {
+    button = button,
+    frame = frame,
+    label = button.puiLabel,
+    total = 0,
+    button_down = 0, button_up = 0,
+    frame_down = 0, frame_up = 0,
+    elapsed = 0,
+  }
+
+  button:Show()
+  frame:Show()
+  if button.puiLabel then button.puiLabel:Show() end
+
+  U.Print("key test running. Press a bound key (a hotbar key), then an " ..
+          "unbound one (a letter you never use), then Escape.")
+
+  U.RegisterUpdate("commands.keytest", 1, function()
+    if not keyTest then return end
+    keyTest.elapsed = keyTest.elapsed + 1
+    if keyTest.elapsed >= 15 then StopKeyTest("timeout") end
+  end)
+end
+
+handlers["keytest"] = function() StartKeyTest() end
+
+handlers["bind"] = function()
+  if type(U.OpenQuickBind) ~= "function" then
+    U.Print(U.L("QUICKBIND_UNAVAILABLE"))
+    return
+  end
+  U.OpenQuickBind()
+end
+
+handlers["perf"] = function(rest)
+  if type(U.PerfCommand) ~= "function" then
+    U.Print("perf recorder is unavailable in this build")
+    return
+  end
+  U.PerfCommand(rest)
+end
+
+-- The settings window cannot safely create an EditBox on this client, so its
+-- Create button uses a generated name and this chat command is the supported
+-- path for a custom one. Chat input is owned by the native UI and does not use
+-- pandaUI's known-crashing addon-created text-input path.
+handlers["profile"] = function(rest)
+  local action, name = Split(rest)
+  if action ~= "create" or name == "" then
+    U.Print(U.L("CMD_PROFILE_CURRENT",
+                tostring(U.GetCurrentProfileName and
+                         U.GetCurrentProfileName() or "")))
+    U.Print(U.L("CMD_PROFILE_CREATE_USAGE"))
+    return
+  end
+  if type(U.CreateProfile) ~= "function" then
+    U.Print(U.L("CMD_PROFILE_UNAVAILABLE"))
+    return
+  end
+
+  local ok, reason = U.CreateProfile(name)
+  if not ok then
+    if reason == "exists" then
+      U.Print(U.L("CMD_PROFILE_EXISTS", name))
+    else
+      U.Print(U.L("CMD_PROFILE_NAME_RULES"))
+    end
+    return
+  end
+
+  U.Print(U.L("CMD_PROFILE_CREATED", name))
+end
+
+-- Pet bar mode is independent of the overall theme and changes after reload.
+handlers["petbar"] = function(rest)
+  if type(U.PetBarCommand) == "function" then
+    U.PetBarCommand(rest)
+  else
+    U.Print(U.L("PETBAR_UNAVAILABLE"))
+  end
+end
+
+-- Native Classic mode has no PandaUI settings window by design.  Keep theme
+-- selection available through the existing native chat input so a player can
+-- return to Modern without editing SavedVariables by hand.
+handlers["theme"] = function(rest)
+  local id = string.lower(Trim(rest))
+  local style = U.GetThemeStyleDefinition and U.GetThemeStyleDefinition(id)
+  if not style or not style.available then
+    U.Print(U.L("SETTINGS_THEMES_AVAILABLE"))
+    local styles = U.GetThemeStyles and U.GetThemeStyles() or {}
+    local i
+    for i = 1, table.getn(styles) do
+      if styles[i].available then
+        U.Print("  |cffffff00" .. styles[i].id .. "|r - " .. styles[i].label)
+      end
+    end
+    return
+  end
+
+  if U.SetThemeStyle(id) then
+    U.ShowConfirm({
+      owner = "commands.theme-reload",
+      centered = true,
+      text = U.L("SETTINGS_THEME_CHANGED"),
+      detail = U.L("SETTINGS_THEME_RELOAD", style.label),
+      acceptText = U.L("COMMON_OK_SHORT"),
+      cancelText = U.L("COMMON_CLOSE"),
+    })
+  end
+end
+
+-- Language selection from chat, for the same reason `theme` exists here: the
+-- Classic theme has no PandaUI settings window, and a player who has ended up
+-- in a language whose glyphs their client cannot draw needs a way back that
+-- does not depend on reading the interface. Both the two-letter badge (en) and
+-- the full locale code (enUS) are accepted, since the badge is what is on the
+-- selector and the code is what is in SavedVariables.
+handlers["lang"] = function(rest)
+  local wanted = string.lower(Trim(rest))
+  local languages = U.GetLanguages()
+  local i
+
+  for i = 1, table.getn(languages) do
+    local entry = languages[i]
+    if wanted ~= "" and (wanted == string.lower(entry.short) or
+                         wanted == string.lower(entry.code)) then
+      if U.SetLanguage(entry.code) then
+        U.ShowConfirm({
+          owner = "commands.language-reload",
+          centered = true,
+          text = U.L("SETTINGS_LANGUAGE_CHANGED"),
+          detail = U.L("SETTINGS_LANGUAGE_RELOAD", entry.label),
+          acceptText = U.L("COMMON_OK_SHORT"),
+          cancelText = U.L("COMMON_CLOSE"),
+        })
+      end
+      return
+    end
+  end
+
+  U.Print(U.L("CMD_LANGUAGE_CURRENT", U.GetLanguageLabel()))
+  U.Print(U.L("CMD_LANGUAGE_AVAILABLE"))
+  for i = 1, table.getn(languages) do
+    local entry = languages[i]
+    U.Print("  |cffffff00" .. string.lower(entry.short) .. "|r - " .. entry.label)
+  end
+end
+
+-- Skips core/compat.lua's native-frame suppression on the next load.
+--
+-- Why this needs its own command rather than a /pui perf switch: the perf
+-- switches all gate recurring *work*, and can be flipped live. Suppression is
+-- not recurring work -- it is a one-off state change applied to ~1275 stock
+-- objects at OnEnable, and it is irreversible in-session because the original
+-- Show is discarded and UnregisterAllEvents cannot be undone. So it can only
+-- be skipped, and only from the very start, which means a persisted flag and
+-- a reload.
+handlers["nosuppress"] = function()
+  if not U.db then
+    U.Print("config not loaded yet")
+    return
+  end
+  U.db.noSuppress = not U.db.noSuppress
+  if U.db.noSuppress then
+    U.Print("native frame suppression |cffff5555OFF|r on next load - " ..
+            "|cffffff00/reload|r to apply")
+    U.Print("  the stock unit frames and action bars will be visible on top " ..
+            "of pandaUI; that is expected, it is what suppression normally hides")
+  else
+    U.Print("native frame suppression |cff55ff55ON|r again - " ..
+            "|cffffff00/reload|r to apply")
+  end
+end
+
+-- Bisects the suppression recipe rather than switching it wholesale. Measured
+-- (see knowledge.json / compat.native_suppression_pcall_burst_stutter): the
+-- recipe's permanent state, not its sweep, is what costs -- +2.66ms/frame and a
+-- 9ms -> 159ms target-change peak. This narrows that to a step.
+--
+-- Level 4 used to add UnregisterAllEvents on top of the event-driven re-apply,
+-- and that call was the party-only freeze (knowledge.json /
+-- compat.unregisterallevents_native_frame_stall). It is gone from every level,
+-- so 4 now differs from 3 only by the event-driven group sweeps. The ladder is
+-- kept at five steps because it is the instrument that located the freeze.
+local SUPPRESS_LEVELS = {
+  "0 - off, stock frames fully intact",
+  "1 - Hide() only",
+  "2 - + SetAlpha(0)",
+  "3 - + EnableMouse(false) and the Show() neutraliser",
+  "4 - + event-driven re-apply on target/party change (shipped default)",
+}
+
+handlers["suppress"] = function(rest)
+  if not U.db then
+    U.Print("config not loaded yet")
+    return
+  end
+
+  local level = tonumber(rest)
+  if not level then
+    U.Print("suppression level: |cffffff00" ..
+            tostring(U.db.suppressLevel or 4) .. "|r" ..
+            (U.db.noSuppress and "  |cffff5555(nosuppress also on)|r" or ""))
+    local i
+    for i = 1, table.getn(SUPPRESS_LEVELS) do
+      U.Print("  |cffffff00/pui suppress " .. SUPPRESS_LEVELS[i])
+    end
+    U.Print("  lowering a level needs |cffffff00/reload|r to take full effect: " ..
+            "what was already applied to a stock frame cannot be undone in-session")
+    return
+  end
+
+  if level < 0 then level = 0 end
+  if level > 4 then level = 4 end
+  U.db.suppressLevel = level
+  -- The two settings would otherwise fight: noSuppress forces level 0.
+  if level > 0 then U.db.noSuppress = false end
+
+  U.Print("suppression level |cffffff00" .. tostring(level) .. "|r - " ..
+          "|cffffff00/reload|r to apply")
+end
+
+-- Crash bisect for the 3D unit-frame portrait (knowledge.json /
+-- unitframes.portrait_model_crash). Steps widen by unit kind because
+-- UnrealPfUI (WORKING_SOURCE) forces 2D with the note that PlayerModel:SetUnit
+-- can end the client when an NPC is targeted. A reload is required so a crash
+-- cannot leave a half-built model on a live frame; the model is only created
+-- on frames built after the flag is read.
+local PORTRAIT3D_LEVELS = {
+  "0 - off globally, 2D portraits only (family switches unchanged)",
+  "1 - 3D on the player frame only",
+  "2 - + other player characters (target, party, target of target)",
+  "3 - + NPCs and pets (default coverage ceiling)",
+}
+
+handlers["portrait3d"] = function(rest)
+  if not U.db then
+    U.Print("config not loaded yet")
+    return
+  end
+
+  local level = tonumber(rest)
+  if not level then
+    U.Print("3D portrait level: |cffffff00" ..
+            tostring(U.db.portrait3d or 0) .. "|r  (all themes)")
+    local i
+    for i = 1, table.getn(PORTRAIT3D_LEVELS) do
+      U.Print("  |cffffff00/pui portrait3d " .. PORTRAIT3D_LEVELS[i])
+    end
+    U.Print("  player, pet, target, target-of-target and party switches apply within this ceiling")
+    U.Print("  units the level excludes, or that are out of sight, keep the 2D portrait")
+    return
+  end
+
+  level = math.floor(level)
+  if level < 0 then level = 0 end
+  if level > 3 then level = 3 end
+  U.db.portrait3d = level
+  U.Print("3D portrait level |cffffff00" .. tostring(level) .. "|r - " ..
+          "|cffffff00/reload|r to apply")
+end
+
+handlers["debug"] = function()
+  if not U.db then
+    U.Print("config not loaded yet")
+    return
+  end
+  U.db.debug = not U.db.debug
+  U.Print("debug output " .. (U.db.debug and "|cff55ff55on|r" or "|cffff5555off|r"))
+end
+
+local function HandleCommand(message)
+  local command, rest = Split(Trim(message))
+
+  if command == "" then
+    if type(U.OpenSettings) == "function" then
+      U.OpenSettings()
+    else
+      U.Print(U.L("CMD_SETTINGS_UNAVAILABLE"))
+      ShowHelp()
+    end
+    return
+  end
+
+  local handler = handlers[command]
+  if handler then
+    handler(rest)
+    return
+  end
+
+  U.Print(U.L("CMD_UNKNOWN", command))
+  ShowHelp()
+end
+
+-- SlashCmdList handlers receive the message directly. The guard keeps a nil or
+-- unexpected argument shape from erroring out of the command entirely.
+if type(SlashCmdList) == "table" then
+  SLASH_PANDAUI1 = "/pui"
+  SlashCmdList["PANDAUI"] = function(message)
+    if type(message) ~= "string" then message = U.G("arg1") end
+    if type(message) ~= "string" then message = "" end
+    HandleCommand(message)
+  end
+else
+  U.Error("SlashCmdList is unavailable; /pui not registered")
+end
+
+-- Edit mode is a mode, not a setting: a session always starts locked, even if
+-- the last one ended mid-drag. Only frame *positions* survive a reload.
+U.RegisterModule("core.commands", {
+  OnEnable = function()
+    if U.db then U.db.locked = true end
+  end,
+})

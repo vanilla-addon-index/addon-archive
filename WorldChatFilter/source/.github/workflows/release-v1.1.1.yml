@@ -1,0 +1,76 @@
+name: Publish WorldChatFilter v1.1.1
+
+# One-shot stable hotfix. Only the addition of this workflow on main
+# triggers publishing; this retry includes corrected stable-version test assertions.
+# The workflow still refuses to overwrite an already-published release.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/release-v1.1.1.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify stable version, files and historical release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -eu
+          grep -Fq 'WCF.VERSION = "1.1.1"' Core.lua
+          grep -Fq '## Version: 1.1.1' WorldChatFilter.toc
+          test -s RELEASE_NOTES.md
+          test -s Media/WorldChatFilterOrb.tga
+          for f in Core.lua CustomFilters.lua PanelTheme.lua Color.lua Statistics.lua HelpUI.lua Classifier.lua Filter.lua CustomFiltersUI.lua UI.lua; do
+            test -s "$f"
+            grep -Fq "$f" WorldChatFilter.toc
+          done
+          test -s tests/test_wcf_1013_swedish_tagged_guild.lua
+          test -s tests/test_wcf_1013_polish_guild_recruitment.lua
+          test -s tests/test_wcf_1014_spanish_showcase.lua
+          test -s tests/test_wcf_1014_french_guild_recruitment.lua
+          gh release view v1.1.0 >/dev/null
+          if gh release view v1.1.1 >/dev/null 2>&1; then
+            echo "::error::v1.1.1 already exists; refusing to overwrite"
+            exit 1
+          fi
+
+      - name: Run all 39 Lua regression tests
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y lua5.1
+          python3 tests/run_tests.py lua5.1
+
+      - name: Package and validate official installation ZIP
+        run: |
+          set -eu
+          mkdir -p dist/WorldChatFilter/Media
+          cp WorldChatFilter.toc Core.lua CustomFilters.lua PanelTheme.lua Color.lua Statistics.lua HelpUI.lua Classifier.lua Filter.lua CustomFiltersUI.lua UI.lua README.md LICENSE dist/WorldChatFilter/
+          cp Media/WorldChatFilterOrb.tga dist/WorldChatFilter/Media/
+          (cd dist && zip -qr ../WorldChatFilter-v1.1.1.zip WorldChatFilter)
+          unzip -t WorldChatFilter-v1.1.1.zip
+          for f in WorldChatFilter/WorldChatFilter.toc WorldChatFilter/Core.lua WorldChatFilter/Classifier.lua WorldChatFilter/CustomFiltersUI.lua WorldChatFilter/Media/WorldChatFilterOrb.tga; do
+            unzip -Z1 WorldChatFilter-v1.1.1.zip | grep -Fx "$f"
+          done
+          sha256sum WorldChatFilter-v1.1.1.zip
+
+      - name: Publish official GitHub release v1.1.1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -eu
+          if gh release view v1.1.1 >/dev/null 2>&1; then
+            echo "::error::v1.1.1 already exists; refusing to overwrite"
+            exit 1
+          fi
+          gh release create v1.1.1 WorldChatFilter-v1.1.1.zip \
+            --target "$GITHUB_SHA" \
+            --title "World Chat Filter v1.1.1" \
+            --notes-file RELEASE_NOTES.md \
+            --latest

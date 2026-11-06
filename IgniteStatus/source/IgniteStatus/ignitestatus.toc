@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: Ignite Status
+## Version: 1.01
+## Notes: Indicators for Ignite and Scorch
+## Author: Oh Snap! of Moonrunner modified by Eya of Detheroc
+## SavedVariables: ISOptions
+ignitestatus.xml
+ignitestatus.lua

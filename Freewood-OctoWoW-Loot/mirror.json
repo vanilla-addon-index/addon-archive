@@ -1,0 +1,45 @@
+{
+  "upstream": "https://octowow.st/git/Freewood/Freewood-OctoWoW-Loot",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Freewood",
+    "repo": "Freewood-OctoWoW-Loot",
+    "name": "Freewood-OctoWoW-Loot",
+    "url": "https://octowow.st/git/Freewood/Freewood-OctoWoW-Loot",
+    "api": "https://octowow.st/git/api/v1/repos/Freewood/Freewood-OctoWoW-Loot"
+  },
+  "commit": "8ed9eef6f96afc85901c7e312bf861cf80f2e308",
+  "sourceFiles": {
+    "docs/img/loot.jpg": {
+      "sha256": "959c67f1daf0606d8583658970de98b1ade20145422639fe84fe8b0e2f2f3522",
+      "bytes": 71612
+    },
+    "Freewood-OctoWoW-Loot.toc": {
+      "sha256": "dbb7f000d30c787383edc498ee023c360fcc258c1d5e3e9db2966bba23ef6dc3",
+      "bytes": 396
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "Locales.lua": {
+      "sha256": "9bd2b18856a8f8a8ee9614be46236cbcd13498cfbf250498f592d7de36df5791",
+      "bytes": 4508
+    },
+    "Loot.lua": {
+      "sha256": "356276ab0ad60bb261ebcc3cf2849e700c6490029a873c08a7144c0c16d9673a",
+      "bytes": 15894
+    },
+    "LootUI.lua": {
+      "sha256": "d6303f59b3dc69e6117915e11cc0db99227ec137ccaee6741cde383af4f28d44",
+      "bytes": 16810
+    },
+    "README.md": {
+      "sha256": "03a5f0b6b363123346b1b15db3d804b9ec81e588a2904a9d2fbcc94634100497",
+      "bytes": 2602
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,9 @@
+{
+  "id": "2611983",
+  "tag": "1.11-11200",
+  "name": "v1.11-11200",
+  "body": "ChatEmote converts emoticons typed in any chat channel to Emotes.\nSynonym emoticons can be linked, for example :) and :-) both to /smile.  \n- Commands: **/chatemote** or **/cemo**\n  - **/cemo list**  \n    lists all emotes (in batches of 10s)\n  - **/cemo link emoticon EMOTE**  \n    links emoticon with EMOTE  \n    example: /cemo link o_O CONFUSED\n  - **/cemo unlink EMOTE**  \n    removes any emoticons linked to EMOTE  \n    example: /cemo unlink CONFUSED\n  - **/cemo toggle**  \n    disables or enables the addon for this session\n\nAfter linking a few emoticons to EMOTES (by default the addon has a :) => /smile and :( => /cry link)\nJust open any chat and type an emoticon, your character will perform the linked emote.\n\n_v1.11-11200 bugfix /chatemote list_\n",
+  "published": "2016-02-14T14:04:24Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/ChatEmote/releases/tag/1.11-11200"
+}

@@ -1,0 +1,97 @@
+{
+  "upstream": "https://github.com/hitbutton/HBActionBars",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "hitbutton",
+    "repo": "HBActionBars",
+    "name": "HBActionBars",
+    "url": "https://github.com/hitbutton/HBActionBars",
+    "api": "https://api.github.com/repos/hitbutton/HBActionBars"
+  },
+  "commit": "dc39f5a16a173d58f65a0e6c71ec8f526b667714",
+  "sourceFiles": {
+    "bindings.xml": {
+      "sha256": "5b3485627b979f3a4163d779f01c5df2a8281fb13e3b15d584f2ad293e850775",
+      "bytes": 5751
+    },
+    "HBActionBars_Menu.lua": {
+      "sha256": "177e95be46ed693fdf011987fb831eeedf0f7bd3537412324975677333cb93dd",
+      "bytes": 14449
+    },
+    "HBActionBars.lua": {
+      "sha256": "068ee33dbad34f58fe3774b561ede6238213ccbdaad9a8467a040d43ef7bccc4",
+      "bytes": 16690
+    },
+    "HBActionBars.toc": {
+      "sha256": "68423b02c0a46da3b67d0d65ffb932d6a122dca2953d96025af302ca30c794ac",
+      "bytes": 607
+    },
+    "HBActionBars.xml": {
+      "sha256": "347b36afcab82f5c95f699cc2fefb70113f4adf08af1ed77a5effd0c4b1c4b6a",
+      "bytes": 5286
+    },
+    "HBAddOnMenu.lua": {
+      "sha256": "650e068d528e61523c820809960be5e51ff0dd578d2f11341479cbd2d92386d2",
+      "bytes": 1329
+    },
+    "highlight.tga": {
+      "sha256": "49e113abc0a92507229afe5e102cbea5c4cbef9104e6be82bed0929069c2773b",
+      "bytes": 16402
+    },
+    "icon.tga": {
+      "sha256": "6420c4837319d1570e969f6eb232ccd3b0967da92e8d54708f06c6ee67d95eb0",
+      "bytes": 65554
+    },
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "0ee37907c6bc615e584310530ed6e5967a4faab7c93d51fab90a2267b3be9d4b",
+      "bytes": 31108
+    },
+    "Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "73ba2bdfaf3e496e1c1d1534110e9498805759accf0d5b9dd4b867d0207697b0",
+      "bytes": 66005
+    },
+    "Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "33dd5a1f926a7c577847ea04d634e66d821efad218e117bf51f1263d0f72abb5",
+      "bytes": 43459
+    },
+    "Libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "ee2cac2933c60a3632e6ad46f6e58995a4fc2adf19ea5ef421e88c08cde9bc41",
+      "bytes": 7794
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "Libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "09cfc0b69a0feb644fa1a9e5fc6715a4e76e0b2f6c7c04a3a0ea693d633770cd",
+      "bytes": 23114
+    },
+    "Libs/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "a3de67878b122a9f6c937462b9641f7a029b55605107f2db03953fe7a1d412ff",
+      "bytes": 13981
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "Libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "44356adb3bc41f4f10d13fcef0f3c98e108d4763ce1e0b9177351679c2a4d4b7",
+      "bytes": 85810
+    },
+    "Libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "0ee8b878799175790560eef190fe0a723328a74ec2ebd78a49163b544a7a4e20",
+      "bytes": 44920
+    },
+    "Libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "2456e593be577cdd8340cd0edc1fce94926a1f9e7dee7f26798bf8b3128dbf06",
+      "bytes": 83748
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

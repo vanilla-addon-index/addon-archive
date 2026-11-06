@@ -1,0 +1,105 @@
+{
+  "upstream": "https://github.com/brotalnia/BlizzPlates",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "brotalnia",
+    "repo": "BlizzPlates",
+    "name": "BlizzPlates",
+    "url": "https://github.com/brotalnia/BlizzPlates",
+    "api": "https://api.github.com/repos/brotalnia/BlizzPlates"
+  },
+  "commit": "8aa50c0fe0d50aabeab39472abebb3f5f241672b",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    ".gitignore.upstream": {
+      "sha256": "3593d7cdb24d1a41b8154313c1e5df6db33c4f93895eb7cb1a852854cf11ac9d",
+      "bytes": 696
+    },
+    "BlizzPlates.toc": {
+      "sha256": "174f6deafcdc04de8aab42bc49bd6778708a0c2d376969bdf7e09fc9d2ac30b0",
+      "bytes": 379
+    },
+    "castbar.lua": {
+      "sha256": "9394ffcd810404d86cb6652ef81aa78f45a34b961bc2707f89b5e5318718f0b7",
+      "bytes": 3152
+    },
+    "env/locales_deDE.lua": {
+      "sha256": "0a47df481eadf30c411d2e2ac77805965d2245f71b4bf0a10bbb9e7fc753fd21",
+      "bytes": 83889
+    },
+    "env/locales_enUS.lua": {
+      "sha256": "bfb6e4d024f63d6c0c2127623879db45e2a4a18b5826c56be0c26700a3f99d6d",
+      "bytes": 80074
+    },
+    "env/locales_frFR.lua": {
+      "sha256": "d393646ebea8572032d3e19fc2a7c927678fbfef9fd3c56b6c4fe76fde43023d",
+      "bytes": 87478
+    },
+    "env/locales_ruRU.lua": {
+      "sha256": "54a0ed5ef92e6b5e6ed1cc5afe0bab2b3064e00b31fc63eedd86542e491493c9",
+      "bytes": 104245
+    },
+    "env/locales_zhCN.lua": {
+      "sha256": "bafc27c26498a8c49395083adbeb650e05fe608c7c6e8d45eabd5f09d98902aa",
+      "bytes": 78753
+    },
+    "fonts/arial.ttf": {
+      "sha256": "a4eefdaeccae42faeaf989b6b642f2e39386fd33a7e11c39e7c08d3bfc4eb18a",
+      "bytes": 209700
+    },
+    "img/bar.tga": {
+      "sha256": "be38c30d46b0872762f6b8b785004a7b641170e0036100765c4643d6945bccaa",
+      "bytes": 247
+    },
+    "img/class/ClassIcon_Druid.tga": {
+      "sha256": "28645a96124f5e5c26b4482423ab16864c831b77fc73059b5bd035a163c6711f",
+      "bytes": 16428
+    },
+    "img/class/ClassIcon_Hunter.tga": {
+      "sha256": "299077cddafd26ea024cdfd8129f33ce80ae1f11aa467b838443682fb77bc52a",
+      "bytes": 16428
+    },
+    "img/class/ClassIcon_Mage.tga": {
+      "sha256": "33b376d0e3ca32b0a0f0c3bbeda8c26c4dc49ec688c9b33dbf299b418b971770",
+      "bytes": 16428
+    },
+    "img/class/ClassIcon_Paladin.tga": {
+      "sha256": "c957a095edeed51f979af1625054acd250f5fee8d9a8607c9bf2e24d20a1497b",
+      "bytes": 16428
+    },
+    "img/class/ClassIcon_Priest.tga": {
+      "sha256": "5d7c648774df0f4110dc1de8e6f6cb2aba3c85270c68f54e6538d35b2530ad80",
+      "bytes": 16428
+    },
+    "img/class/ClassIcon_Rogue.tga": {
+      "sha256": "daaf15aa2b4b4994b648c9711b7194f3103625dc2d6542e4f4229dbdef0fba4e",
+      "bytes": 16428
+    },
+    "img/class/ClassIcon_Shaman.tga": {
+      "sha256": "864ffc0e99e246602ad26ccc75c5f91ad9bcb44c03250082fdd9efd66cdbda52",
+      "bytes": 16428
+    },
+    "img/class/ClassIcon_Warlock.tga": {
+      "sha256": "0d6f6c024d42a5aa41e130b3996305996c5560f9289110afdb687cb8460d3743",
+      "bytes": 16428
+    },
+    "img/class/ClassIcon_Warrior.tga": {
+      "sha256": "5a5bd13717b88125e64837acaf189561801c59ab6b580d7cfee7e14e5e25b876",
+      "bytes": 16428
+    },
+    "nameplates.lua": {
+      "sha256": "b4f4072a8aa7c20a13fb6d0a4a63e680e59e0ffc819c224d47af0b9d73e8b89a",
+      "bytes": 22209
+    },
+    "readme.txt": {
+      "sha256": "0f54deb79f4379e3d43ac0a0a26645186d062f9909a9c2a9b7e2c9c04fb2a4bf",
+      "bytes": 518
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

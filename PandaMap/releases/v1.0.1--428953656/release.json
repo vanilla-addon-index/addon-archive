@@ -1,0 +1,9 @@
+{
+  "id": "428953656",
+  "tag": "v1.0.1",
+  "name": "PandaMap 1.0.1",
+  "body": "### Changed\n\n- Map packs install separately, so core updates no longer redownload unchanged artwork.\n\n### Fixed\n\n- Without PandaUI, the minimap and World Map show the player arrow again.\n\n### Removed\n\n- Opening the World Map no longer shows the misplaced player ping.\n",
+  "published": "2026-10-30T11:29:01Z",
+  "prerelease": false,
+  "url": "https://github.com/Tom75VN/PandaMap/releases/tag/v1.0.1"
+}

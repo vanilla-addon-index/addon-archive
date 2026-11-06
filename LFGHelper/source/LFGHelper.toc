@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: LFGHelper
+## Notes: Detects LFG/LFM messages in chat and displays them
+## SavedVariables: LFGHelperConfigDB, LFGHelperInstancesDB, LFGHelperSettings, LFGHelperInstancesDBVersion
+## Version: 1.1.2
+LFGHelper.xml
+LFGHelper.lua

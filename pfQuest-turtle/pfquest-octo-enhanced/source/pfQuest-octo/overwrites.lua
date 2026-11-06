@@ -1,0 +1,14 @@
+-- Overwrites for the pfQuest-octo database.
+--
+-- This file runs after the db/*-turtle.lua files load and before
+-- patchtable.lua merges them, and can customize and/or fix entries that the
+-- database files get wrong.
+--
+-- As of 2026-10-18 the entire previous contents of this file (every Octo-only
+-- record, objective restore, mask/event/repeatable flag fix, item/unit/object
+-- correction, and the associated enUS locale strings) were baked directly into
+-- the db/*-turtle.lua files, which are now the single source of truth. This
+-- file is intentionally left empty and is kept as the place for any FUTURE
+-- hand edits.
+--
+-- The pre-bake contents are archived at _tools/overwrites.lua.premigrate.bak.

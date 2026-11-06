@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/welfs/OctoArmoryLink",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "welfs",
+    "repo": "OctoArmoryLink",
+    "name": "OctoArmoryLink",
+    "url": "https://github.com/welfs/OctoArmoryLink",
+    "api": "https://api.github.com/repos/welfs/OctoArmoryLink"
+  },
+  "commit": "dfd4eec9e0116fd75acc15e2a5200158e434dfec",
+  "sourceFiles": {
+    "OctoArmoryLink.lua": {
+      "sha256": "25080fe564ae4476b2affe7d16f8bd4cb5ec5d6c3b8c62de6fa0af7d51255c40",
+      "bytes": 8422
+    },
+    "OctoArmoryLink.toc": {
+      "sha256": "2ca67c586c904ae9aeec18ea38f6ced06ba4f0ebd7e25e27f7524d0e5d6141e1",
+      "bytes": 174
+    },
+    "README.md": {
+      "sha256": "2ebad69b69a0eee3c8cc501c62025c5161518dcc0134947023a8fab8d694905b",
+      "bytes": 272
+    },
+    "screen.png": {
+      "sha256": "f2c1bb2baab3c760d615494bb9f2f1b1d9520169ea65d453cf8dc14c1eabbba5",
+      "bytes": 114876
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

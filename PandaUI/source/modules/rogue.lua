@@ -1,0 +1,294 @@
+-- pandaUI :: modules/rogue.lua
+--
+-- Rogue-only bag conveniences. Poison Shift-clicks are opt-in and preserve
+-- the stock item-slot handler for every other click, including Shift-click
+-- chat linking while the native chat edit box is open.
+--
+-- CastSpell/CastSpellByName are documented as protected on this client, so
+-- the Pick Lock bag shortcut deliberately activates an existing action-bar
+-- copy through UseAction instead. The icon appears when the spell is known;
+-- its tooltip explains when Pick Lock still needs to be placed on a bar.
+
+local U = PandaUI
+local M = U.media
+
+local R = U.RegisterModule("rogue")
+
+local rogue = {
+  defaults = { poisonShiftClick = false },
+  classKnown = false,
+  isRogue = false,
+  pickLockSpell = nil,
+  pickLockAction = nil,
+  pickLockTexture = "spell_nature_moonkey",
+  poisonSubTypes = {
+    Poison = true,
+    Poisons = true,
+    ["毒药"] = true,
+    ["毒藥"] = true,
+    ["Яд"] = true,
+    ["Яды"] = true,
+  },
+  consumableTypes = {
+    Consumable = true,
+    ["消耗品"] = true,
+    ["Расходуемые"] = true,
+    Consommable = true,
+  },
+  -- Standard Rogue poisons use one of these item/spell icons. This is a
+  -- fallback for clients that report their subtype as Item Enhancement rather
+  -- than Poison; the Consumable class check keeps similarly named equipment
+  -- and abilities out of the path.
+  poisonTextures = {
+    ability_poisons = true,
+    ability_poisonsting = true,
+    spell_nature_nullifydisease = true,
+    ability_rogue_dualweild = true,
+    inv_misc_herb_16 = true,
+  },
+}
+
+function rogue.Config()
+  return U.ModuleConfig("rogue", rogue.defaults)
+end
+
+function rogue.IsPlayer()
+  if rogue.classKnown then return rogue.isRogue end
+
+  local ok, _, token = pcall(UnitClass, "player")
+  if ok and type(token) == "string" then
+    rogue.classKnown = true
+    rogue.isRogue = token == "ROGUE"
+  end
+  return rogue.isRogue
+end
+
+U.IsRogue = rogue.IsPlayer
+
+-- Both of these were this module's own; they moved to core/compat.lua when
+-- modules/bagfavorites.lua needed the same two answers for its own bag-slot
+-- click chord. The resolution order is unchanged.
+function rogue.ChatIsEditing()
+  return U.ChatEditBoxActive()
+end
+
+function rogue.MouseButton(a, b)
+  return U.ClickButtonName(a, b)
+end
+
+function rogue.CursorBusy()
+  return U.CursorBusy()
+end
+
+function rogue.IsPoisonItem(bag, slot)
+  local linkOk, link = pcall(GetContainerItemLink, bag, slot)
+  if not linkOk or not link then return false end
+
+  -- Official client documentation records the tuple as name, link, quality,
+  -- minLevel, type, subType, stackCount, equipLoc, texture.
+  local infoOk, _, _, _, _, itemType, itemSubType, _, _, texture =
+    pcall(GetItemInfo, U.ItemInfoKey(link))
+  if not infoOk then return false end
+  if rogue.poisonSubTypes[itemSubType] then return true end
+  if not rogue.consumableTypes[itemType] then return false end
+
+  if type(texture) ~= "string" then
+    local textureOk, containerTexture = pcall(GetContainerItemInfo, bag, slot)
+    if textureOk then texture = containerTexture end
+  end
+  if type(texture) ~= "string" then return false end
+
+  local lower = string.lower(texture)
+  local token
+  for token in pairs(rogue.poisonTextures) do
+    if string.find(lower, token, 1, true) then return true end
+  end
+  return false
+end
+
+function rogue.ApplyPoison(bag, slot, inventorySlot)
+  local useOk = pcall(UseContainerItem, bag, slot)
+  if not useOk then return end
+
+  -- Do not pick the weapon up if using the item failed to produce an item-
+  -- targeting spell cursor (cooldown, combat restriction, unusable item, ...).
+  local isTargeting = U.G("SpellIsTargeting")
+  if type(isTargeting) == "function" then
+    local targetOk, targeting = pcall(isTargeting)
+    if targetOk and not targeting then return end
+  end
+
+  pcall(PickupInventoryItem, inventorySlot)
+end
+
+function U.TryRoguePoisonClick(bag, slot, a, b)
+  if not rogue.IsPlayer() or not rogue.Config().poisonShiftClick then
+    return false
+  end
+
+  local shiftOk, shift = pcall(IsShiftKeyDown)
+  if not shiftOk or not shift or rogue.ChatIsEditing() then return false end
+
+  local button = rogue.MouseButton(a, b)
+  local inventorySlot
+  if button == "LeftButton" then
+    inventorySlot = 16
+  elseif button == "RightButton" then
+    inventorySlot = 17
+  else
+    return false
+  end
+
+  if not rogue.IsPoisonItem(bag, slot) or rogue.CursorBusy() then return false end
+  rogue.ApplyPoison(bag, slot, inventorySlot)
+  return true
+end
+
+function rogue.TextureMatches(texture, token)
+  return type(texture) == "string" and
+         string.find(string.lower(texture), token, 1, true) and true or false
+end
+
+function rogue.ScanPickLock()
+  rogue.pickLockSpell = nil
+  rogue.pickLockAction = nil
+  if not rogue.IsPlayer() then return end
+
+  local tabsOk, tabCount = pcall(GetNumSpellTabs)
+  tabCount = (tabsOk and tonumber(tabCount)) or 0
+  local bookType = U.G("BOOKTYPE_SPELL") or "spell"
+  local tab
+  for tab = 1, tabCount do
+    local tabOk, _, _, offset, count = pcall(GetSpellTabInfo, tab)
+    offset = (tabOk and tonumber(offset)) or 0
+    count = (tabOk and tonumber(count)) or 0
+
+    local spell
+    for spell = offset + 1, offset + count do
+      local textureOk, texture = pcall(GetSpellTexture, spell, bookType)
+      if textureOk and rogue.TextureMatches(texture, rogue.pickLockTexture) then
+        rogue.pickLockSpell = spell
+        break
+      end
+    end
+    if rogue.pickLockSpell then break end
+  end
+
+  if not rogue.pickLockSpell then return end
+
+  local action
+  for action = 1, 120 do
+    local actionOk, texture = pcall(GetActionTexture, action)
+    if actionOk and rogue.TextureMatches(texture, rogue.pickLockTexture) then
+      rogue.pickLockAction = action
+      return
+    end
+  end
+end
+
+function rogue.PublishState()
+  rogue.ScanPickLock()
+  if type(U.RefreshRogueBagButton) == "function" then
+    U.RefreshRogueBagButton()
+  end
+end
+
+function U.RogueHasPickLock()
+  return rogue.pickLockSpell and true or false
+end
+
+function U.RoguePickLockActionAvailable()
+  return rogue.pickLockAction and true or false
+end
+
+function U.ActivateRoguePickLock()
+  rogue.ScanPickLock()
+  if rogue.pickLockAction then
+    local ok = pcall(UseAction, rogue.pickLockAction)
+    if ok then return true end
+  end
+  U.Print(U.L("BAGS_PICK_LOCK_ACTION_HINT"))
+  return false
+end
+
+function rogue.BuildSettingsPage(parent)
+  local widgets = {}
+
+  local header = U.CreateSectionHeader(parent, {
+    text = U.L("ROGUE_SETTINGS_HEADER"),
+    width = U.SETTINGS_PAGE_WIDTH,
+    y = -4,
+  })
+  table.insert(widgets, header)
+
+  local poison = U.CreateCheckbox(parent, {
+    name = "PandaUIRoguePoisonShiftClick",
+    text = U.L("ROGUE_POISON_SHIFT_CLICK"),
+    value = rogue.Config().poisonShiftClick,
+    onChange = function(value)
+      rogue.Config().poisonShiftClick = value
+    end,
+  })
+  poison.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, -34)
+  table.insert(widgets, poison)
+
+  local hint = U.CreateSettingsLabel(parent, {
+    size = M.fontSize.small,
+    color = M.color.textDim,
+    inherits = "GameFontNormalSmall",
+    justify = "LEFT",
+    width = U.SETTINGS_PAGE_WIDTH,
+  })
+  if hint then
+    U.AnchorSettingsDescription(hint, poison.box)
+    hint:SetText(U.L("ROGUE_POISON_SHIFT_CLICK_HINT"))
+    table.insert(widgets, hint)
+  end
+
+  local comboHeader = U.CreateSectionHeader(parent, {
+    text = U.L("UF_COMBO_POINTS_HEADER"),
+    width = U.SETTINGS_PAGE_WIDTH,
+    y = -94,
+  })
+  table.insert(widgets, comboHeader)
+
+  local comboAnchor = U.CreateDropdown(parent, {
+    name = "PandaUIRogueComboPointAnchor",
+    width = 240,
+    height = 24,
+    rowHeight = 20,
+    value = type(U.GetComboPointAnchor) == "function" and
+            U.GetComboPointAnchor() or "player",
+    items = {
+      { value = "player", text = U.L("UF_COMBO_POINTS_PLAYER_FRAME") },
+      { value = "target", text = U.L("UF_COMBO_POINTS_TARGET_FRAME") },
+    },
+    onChange = function(value)
+      if type(U.SetComboPointAnchor) == "function" then
+        U.SetComboPointAnchor(value)
+      end
+    end,
+  })
+  comboAnchor.SetPoint("TOPLEFT", parent, "TOPLEFT", 0, -122)
+  table.insert(widgets, comboAnchor)
+
+  local function Refresh()
+    poison.SetValue(rogue.Config().poisonShiftClick)
+    if type(U.GetComboPointAnchor) == "function" then
+      comboAnchor.SetValue(U.GetComboPointAnchor())
+    end
+  end
+  return widgets, Refresh
+end
+
+function R:OnEnable()
+  if not rogue.IsPlayer() then return end
+
+  U.RegisterSettingsTab("rogue", U.L("SETTINGS_PAGE_ROGUE"),
+                        rogue.BuildSettingsPage, { after = "profiles" })
+  rogue.PublishState()
+
+  U.RegisterEvent("SPELLS_CHANGED", rogue.PublishState)
+  U.RegisterEvent("LEARNED_SPELL_IN_TAB", rogue.PublishState)
+  U.RegisterEvent("ACTIONBAR_SLOT_CHANGED", rogue.PublishState)
+end

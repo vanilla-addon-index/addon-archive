@@ -1,0 +1,114 @@
+{
+  "upstream": "https://github.com/Road-block/FuBar_ToFu",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "FuBar_ToFu",
+    "name": "FuBar_ToFu",
+    "url": "https://github.com/Road-block/FuBar_ToFu",
+    "api": "https://api.github.com/repos/Road-block/FuBar_ToFu"
+  },
+  "commit": "18838b126bd3417b8d32778961dc1e72590b33ab",
+  "sourceFiles": {
+    "changelog-r15647.txt": {
+      "sha256": "33542eb1b464ee4731fc8f3764a8d0b0bf7a299f8a34082df965c95bd01555e3",
+      "bytes": 11341
+    },
+    "FuBar_ToFu.toc": {
+      "sha256": "5a2b3958f3444d171eabbf9f0e2555f99a82208659babf29f01eba0169e635d3",
+      "bytes": 1247
+    },
+    "Libs/Abacus-2.0/Abacus-2.0.lua": {
+      "sha256": "9ddfd2c128d29d9438e687788f4cf85147325c9d8e99ff9b1c63f54e7a603cad",
+      "bytes": 17670
+    },
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "e460d01bc2f95f3ff01ae0fefe5a575db9748576e7b96df81e56e45bb16d0ee5",
+      "bytes": 30093
+    },
+    "Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "e498c182436c51671590512e02ebcec98e85fe454b5f5b1f00cf1a62b21a13c6",
+      "bytes": 63951
+    },
+    "Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "75643083325a68f0465a7cd81edda611557806da7052df7027a8da3e2c3cb2fe",
+      "bytes": 42284
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "0f7b32493afaf5b7e96f3fd1b5135cc9d8a07ded8c64aae11e75f1e0f3212902",
+      "bytes": 28515
+    },
+    "Libs/AceHook-2.0/AceHook-2.0.lua": {
+      "sha256": "8413f0f92437bd49793de8d6380af774a4322716c2ac517bd97efbc11fb7a429",
+      "bytes": 17963
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "8c75f829e0f980aac69d53cce8f8c806ea671795f445ab736c8cf76b9fc1f586",
+      "bytes": 22725
+    },
+    "Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "6e315b0d257b7feda50ad6ef4b0c40228f7125330da7b0e4793be62e75ba81a1",
+      "bytes": 15823
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "1385526e460948771ca6db1ceec81e8b0daf33bfc391f55e6f1bbc449a341a82",
+      "bytes": 30305
+    },
+    "Libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "5e144efd73938774a3a80f3b08fa8ddc4a2769ad7388cf2a839408dd5f1c8e09",
+      "bytes": 79985
+    },
+    "Libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "0ee8b878799175790560eef190fe0a723328a74ec2ebd78a49163b544a7a4e20",
+      "bytes": 44920
+    },
+    "Libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "2456e593be577cdd8340cd0edc1fce94926a1f9e7dee7f26798bf8b3128dbf06",
+      "bytes": 83748
+    },
+    "ToFu.lua": {
+      "sha256": "7c3e3c434e098ef93ca2cd0761e485c2e8af98c7e8bea38d9a0d30a687e4b694",
+      "bytes": 13996
+    },
+    "ToFuDefaultTimes.lua": {
+      "sha256": "5bc9e0ad46e4b14d7eb7b16f4891cc3f8a83471ccc9aa71cf8f02e99fed903e5",
+      "bytes": 47302
+    },
+    "ToFuLocals.koKR.lua": {
+      "sha256": "0e1f67faa6fb0907c832fa9fd6ff23c62edda1c9b50d03eef5e7b4c76bb9f9ea",
+      "bytes": 1273
+    },
+    "ToFuLocals.lua": {
+      "sha256": "8ab156379e15f6d5577581a998e9bf21fd7c28bdb6c690c713cbef69fac4fcdc",
+      "bytes": 844
+    },
+    "ToFuLocals.ruRU.lua": {
+      "sha256": "2db499da3589aa5b3c9c054f731c024c65cddb427bee9439529c3bbd5be62582",
+      "bytes": 1729
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "6578361": {
+      "tag": "r15647",
+      "folder": "r15647--6578361",
+      "assets": {
+        "4010664": {
+          "sha256": "30b3d47c834aae2b0424fbc4b53a39ef335328003955517160603616a1803477",
+          "bytes": 115539,
+          "id": "4010664",
+          "name": "FuBar_ToFu-r15647.zip",
+          "url": "https://github.com/Road-block/FuBar_ToFu/releases/download/r15647/FuBar_ToFu-r15647.zip",
+          "path": "releases/r15647--6578361/assets/FuBar_ToFu-r15647.zip"
+        }
+      },
+      "source": {
+        "sha256": "cd001df0d792e970e5e4d1a395312389ffa6a8e37301e7634291c961cf3a6a94",
+        "bytes": 109023,
+        "path": "releases/r15647--6578361/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/FuBar_ToFu/tarball/r15647"
+      }
+    }
+  }
+}

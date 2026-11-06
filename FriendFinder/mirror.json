@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Fiskehatt/FriendFinder",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Fiskehatt",
+    "repo": "FriendFinder",
+    "name": "FriendFinder",
+    "url": "https://github.com/Fiskehatt/FriendFinder",
+    "api": "https://api.github.com/repos/Fiskehatt/FriendFinder"
+  },
+  "commit": "e339f7c462e034ce49b98f5a1978b4d925cc3b4a",
+  "sourceFiles": {
+    "FriendFinder.lua": {
+      "sha256": "70b71da531c22fea32473b2efe5f6cba716b16a5de3b3f9a17762e714a815732",
+      "bytes": 647
+    },
+    "FriendFinder.toc": {
+      "sha256": "3b6d2606cb9240db8168e285b943c03f57d06fabf1911b7130092e9f3335cc85",
+      "bytes": 229
+    },
+    "FriendFinder.xml": {
+      "sha256": "be3b9aa432503d29e1e84a2d55e6edcaa7b358cd9a9cb6cd0aeac7da16cd115a",
+      "bytes": 550
+    },
+    "LICENSE.txt": {
+      "sha256": "8bccc1da7d1ee54a8b448efbca9812ed247f2df06bb00d1c78fb57d7010099d5",
+      "bytes": 1076
+    },
+    "README.md": {
+      "sha256": "a48351dc9ac8f3b41f5b2ff05af475d7e4a548d78d89645986d8602d02e10e73",
+      "bytes": 407
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

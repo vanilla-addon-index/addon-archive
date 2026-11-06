@@ -1,0 +1,113 @@
+{
+  "upstream": "https://github.com/akzkak/EquipMate",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "akzkak",
+    "repo": "EquipMate",
+    "name": "EquipMate",
+    "url": "https://github.com/akzkak/EquipMate",
+    "api": "https://api.github.com/repos/akzkak/EquipMate"
+  },
+  "commit": "332ae1831f22b1114c1cb4e104c745ce750448f3",
+  "sourceFiles": {
+    "automatic/rules.lua": {
+      "sha256": "4db053cab962eec0945bfdad0b4b59d93f670833d0c262a7869021b881ebb9b0",
+      "bytes": 18115
+    },
+    "Bindings.xml": {
+      "sha256": "e53a54bc6972b1f8f94eb344b1d19c9549949253a217bd31b76c9bf5574c797f",
+      "bytes": 886
+    },
+    "core/addon.lua": {
+      "sha256": "fb83d155fcf3570907defdc42a517f7dc8a2ca96f7110f7862b949884fc4f739",
+      "bytes": 3959
+    },
+    "core/capabilities.lua": {
+      "sha256": "bc63e90d059374f63bc4c7ae09be65d8f0d8f16544d1d03994b2f02939b2fbcd",
+      "bytes": 3320
+    },
+    "core/constants.lua": {
+      "sha256": "3ba2b8e59aa4264df3b3aa1976d476fa852c49ff1844a49a9de1293169121c76",
+      "bytes": 2722
+    },
+    "core/util.lua": {
+      "sha256": "7856a4e5f6c10745b529704d2e2cfc5f83c2f9759a7ea0c6f8cbae98de0c3ee5",
+      "bytes": 1007
+    },
+    "EquipMate.toc": {
+      "sha256": "85f7f4408d9c9755abd6573ce870494d6f9f71bad7db51d9f1776d80ca40b178",
+      "bytes": 577
+    },
+    "equipment/engine.lua": {
+      "sha256": "4591bbad886a5dfe54c975ce7a8fcb83fc90ae5326bcfb7c3274bf3a1d42263c",
+      "bytes": 26106
+    },
+    "equipment/generator.lua": {
+      "sha256": "71bf265e3a4d198ac5b59b89048f7ea24539f1bcf1be0bb8067ed2851094909b",
+      "bytes": 4843
+    },
+    "equipment/inventory.lua": {
+      "sha256": "6560b1f5938029837069d0b43d112013101856118a6da5f223844477b5284c38",
+      "bytes": 10607
+    },
+    "equipment/items.lua": {
+      "sha256": "e7c31e5b9fcdddba7597ad3eaa952287f3c590a59362dd4a0a8398cdba82b992",
+      "bytes": 3080
+    },
+    "equipment/outfits.lua": {
+      "sha256": "30aadc40fd90c948a5ae690cfb029831d68e4a5f99d2e8fdb0cf1c4a2406f55e",
+      "bytes": 11615
+    },
+    "input/bindings.lua": {
+      "sha256": "83aee94f17722c0e5b1a14287d74df2559d7772bcb314731f17a192ad48f0f4f",
+      "bytes": 12544
+    },
+    "localization/deDE.lua": {
+      "sha256": "d447f09ba73273d9cb00ff310f5e7c4f0d25e8585de385056c4a7bba72b18080",
+      "bytes": 3744
+    },
+    "localization/enUS.lua": {
+      "sha256": "173898d8aa04b98c395eaa75231661936f1dda92871786deb8e3062b088e0d10",
+      "bytes": 4009
+    },
+    "localization/frFR.lua": {
+      "sha256": "bb45a071f0d770b808c13c91e2bd014aacdbc9835d3c02c1741b4a7eb8c218e5",
+      "bytes": 4059
+    },
+    "localization/koKR.lua": {
+      "sha256": "474c1b1306e6235833b8f4806091ceef600bba3e673367fc067d3d36c9beb87e",
+      "bytes": 3852
+    },
+    "localization/ruRU.lua": {
+      "sha256": "4ca842725961855c1612ed5b1bc23be0cd77b5736601e8526a82be42346d92fd",
+      "bytes": 5091
+    },
+    "localization/zhCN.lua": {
+      "sha256": "6863eea4add0d0a0d6bac6502f48e7efebb8d35a4c8f363904363a6d11370a19",
+      "bytes": 3403
+    },
+    "localization/zhTW.lua": {
+      "sha256": "955db9cc5a0ca8f736cbc15352382fe4ceceaaef70034a6a41a08a5ccf670691",
+      "bytes": 3406
+    },
+    "README.md": {
+      "sha256": "652eefd83b156aa2c037536b5ac213458dd45b833bd28e161163346d6d0bba80",
+      "bytes": 1011
+    },
+    "tests/manual_state.lua": {
+      "sha256": "881c048903caea59729201f52ba7e2a7a5d242d7f3a760ce504b233588dcea35",
+      "bytes": 5255
+    },
+    "ui/integration.lua": {
+      "sha256": "659dccfc1342c4c3bba1a717ef0c38dcd2196c6c10cefb46bba298ab666965d3",
+      "bytes": 6263
+    },
+    "ui/panel.lua": {
+      "sha256": "461954583bcd25f69619e02e1555df1de11c62248b07f295c076c8af4becb77b",
+      "bytes": 32331
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

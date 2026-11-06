@@ -1,0 +1,70 @@
+{
+  "upstream": "https://github.com/diff3/Ghost",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "diff3",
+    "repo": "Ghost",
+    "name": "Ghost",
+    "url": "https://github.com/diff3/Ghost",
+    "api": "https://api.github.com/repos/diff3/Ghost"
+  },
+  "commit": "fd2bbd44fdf7205f92d42548c4a2a7e6f1c4eb2f",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "554a8ae84e5f1bdf7b7bbd40eb59e0724ae70b32c7a7f4eb397d7d7d55f03ca9",
+      "bytes": 4399
+    },
+    "Changelog.txt": {
+      "sha256": "bf600e6c9e8092e9ad2cf73e0e0952843f2a79a24a063d69ab1f56ac2915de8c",
+      "bytes": 137
+    },
+    "Ghost.lua": {
+      "sha256": "52a78331f6cdb26d343a560ca7e2287a6d7e9ec127bc109a55e1a91e6664cecb",
+      "bytes": 3613
+    },
+    "Ghost.toc": {
+      "sha256": "ea5619fe8f97ae77a3b2d725ddad42634c0cecaeb8b583a9962ebf044aaa9514",
+      "bytes": 262
+    },
+    "GhostFrame.lua": {
+      "sha256": "6721d92fb7930dadb0a1b4ae43e3abf38862fd0b9cb5aacdf1d5c8b90ff623c8",
+      "bytes": 3629
+    },
+    "Localization.lua": {
+      "sha256": "89cd512b55607f288f1ca1caac2184925a7be440fde32b7bdeabff49b1bcceff",
+      "bytes": 2338
+    },
+    "ReadMe.txt": {
+      "sha256": "10c57843b10ddffce454f8fc1ecf3e77f11a5f095d693a55e80f2b89ac447177",
+      "bytes": 1536
+    },
+    "Variables.lua": {
+      "sha256": "725c7f8c8e20cdbdee6987222166467c656ab24639a3a18dfb50856eecd8a4b2",
+      "bytes": 908
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "6524816": {
+      "tag": "3745561",
+      "folder": "3745561--6524816",
+      "assets": {
+        "3975420": {
+          "sha256": "d378b7e110838d44b2829422d52ec397c5dfc37fb488152ca99361834119e205",
+          "bytes": 6026,
+          "id": "3975420",
+          "name": "Ghost_1.1b.zip",
+          "url": "https://github.com/diff3/Ghost/releases/download/3745561/Ghost_1.1b.zip",
+          "path": "releases/3745561--6524816/assets/Ghost_1.1b.zip"
+        }
+      },
+      "source": {
+        "sha256": "4d15440428d3ce2b203b3dbd915c40c23195af2a2a3d3464d0f89a22847cb9e6",
+        "bytes": 4622,
+        "path": "releases/3745561--6524816/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/diff3/Ghost/tarball/3745561"
+      }
+    }
+  }
+}

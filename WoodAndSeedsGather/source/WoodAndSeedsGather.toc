@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: Wood and Seeds Gather
+## Notes: Shows Survival woodcutting trees and where to get farming seeds on the world map and minimap. /trees
+## Author: stealthzi
+## Version: 1.2.0
+## SavedVariables: WoodAndSeedsGatherDB
+Data.lua
+WoodAndSeedsGather.lua

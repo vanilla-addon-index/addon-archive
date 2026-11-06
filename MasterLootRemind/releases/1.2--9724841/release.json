@@ -1,0 +1,9 @@
+{
+  "id": "9724841",
+  "tag": "1.2",
+  "name": "1.2-11200",
+  "body": "MasterLootRemind will attempt to prompt the Raid Leader to set MasterLoot on bosses if it is not already set.  \r\n\r\n- Command-line options: `/mlr` or `/masterlootremind` \r\n- GUI Options available from FuBar or Minimap icon.\r\n\r\nOptions include setting the groupsize for which the addon should activate (party, raid or both)  \r\nBy default the addon prompts when group size check passes and the player or a player they are targeting targets a boss.  \r\nEnabling the Boss Combat option will instead monitor the combatlog and prompt when a boss fight is detected.  \r\nEnabling the Loot Reset option will try to prompt for setting Loot Method back to what it was before the addon set it to ML.",
+  "published": "2018-02-18T14:39:47Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/MasterLootRemind/releases/tag/1.2"
+}

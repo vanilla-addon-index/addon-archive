@@ -1,0 +1,16 @@
+## Interface: 11200
+## Title: |cff33a0f2Tank|r|cffffffffSuite|r
+## Notes: Tank toolkit for SuperWoW - announces missed taunts and misses, shows who every mob is attacking on the nameplates (tanks detected automatically), with a full in-game config menu. Type /tks
+## Notes-frFR: Boite a outils du tank pour SuperWoW - annonce les taunts et coups rates, montre sur les nameplates qui chaque mob attaque (tanks detectes automatiquement), avec un menu de configuration complet. Tapez /tks
+## Author: Shikiwa
+## Version: 1.0.0
+## SavedVariables: TankSuiteDB
+## OptionalDeps: pfUI, ShaguPlates, ShaguTweaks
+
+Locale.lua
+Core.lua
+Roster.lua
+Announcer.lua
+Nameplates.lua
+UI.lua
+Menu.lua

@@ -1,0 +1,46 @@
+{
+  "upstream": "https://github.com/Road-block/ChatEmote",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "ChatEmote",
+    "name": "ChatEmote",
+    "url": "https://github.com/Road-block/ChatEmote",
+    "api": "https://api.github.com/repos/Road-block/ChatEmote"
+  },
+  "commit": "8a8e8dee15ce89ae0cc3ed380a76de76e2653c47",
+  "sourceFiles": {
+    "ChatEmote.toc": {
+      "sha256": "c6f79bc96c6af2cdf3f3d680215153454aafdc5f64857f737a64e62c16b93c55",
+      "bytes": 195
+    },
+    "core.lua": {
+      "sha256": "cc554744766a5a8e0b01948b64b14a97c520470fc1cae6913965d6d8afca650e",
+      "bytes": 4180
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "2611983": {
+      "tag": "1.11-11200",
+      "folder": "1.11-11200--2611983",
+      "assets": {
+        "1310351": {
+          "sha256": "8bb49e613a64e285ec2cfd9425ad9ba16d1aea234c71aae94596603498250eaf",
+          "bytes": 1984,
+          "id": "1310351",
+          "name": "ChatEmote-1.11-11200.zip",
+          "url": "https://github.com/Road-block/ChatEmote/releases/download/1.11-11200/ChatEmote-1.11-11200.zip",
+          "path": "releases/1.11-11200--2611983/assets/ChatEmote-1.11-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "8031330ae077e429382c3bdca52d1a9ffc75530e5845e608f5744dd73685524f",
+        "bytes": 1776,
+        "path": "releases/1.11-11200--2611983/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/ChatEmote/tarball/1.11-11200"
+      }
+    }
+  }
+}

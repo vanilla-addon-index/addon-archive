@@ -1,0 +1,39 @@
+## Interface: 11200
+## Title: |cffa050ffPizza|cffffffffTonno
+## Author: Pizzahawaii
+## Notes: A fishing HUD and an almanac of where and when every fish bites
+## Version: 0.1.2
+## SavedVariables: PizzaTonno_config, PizzaTonno_catches
+## SavedVariablesPerCharacter: PizzaTonno_character
+
+lib\PizzaSauce.lua
+
+src\main.lua
+src\utils.lua
+src\ui.lua
+src\tooltip.lua
+src\config.lua
+data\fishing.lua
+data\overrides.local.lua
+src\data.lua
+src\loot.lua
+src\clock.lua
+src\player.lua
+src\catches.lua
+src\spots.lua
+src\confetti.lua
+src\hud.lua
+src\fishing.lua
+src\cast.lua
+src\sounds.lua
+src\import.lua
+src\minimap.lua
+src\almanac\window.lua
+src\almanac\today.lua
+src\almanac\fish.lua
+src\almanac\calendar.lua
+src\almanac\places.lua
+src\almanac\lists.lua
+src\almanac\timeline.lua
+src\almanac\journal.lua
+src\commands.lua

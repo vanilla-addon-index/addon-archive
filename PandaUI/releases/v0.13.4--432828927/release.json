@@ -1,0 +1,9 @@
+{
+  "id": "432828927",
+  "tag": "v0.13.4",
+  "name": "PandaUI 0.13.4",
+  "body": "### Added\n\n- Shift-click a recipe in the Professions window to link it and its reagents in chat.\n- Hold Alt while dragging in edit mode to move an element without snapping.\n\n### Changed\n\n- Edit mode snapping is gentler on thin elements, aligns only to nearby elements, and the magnet leaves 1 px between what joined elements draw.\n\n### Fixed\n\n- Friendly and enemy nameplates can be shown together, and V, Shift-V and Ctrl-V choices are kept after loading screens.\n- Nameplates no longer flash the default Blizzard plate, or a yellow health bar on hostile mobs, when a mob comes into range.\n- The edit-mode magnet no longer makes elements overlap, such as the XP and reputation bars.\n- Custom bag categories are kept after a reload.\n- Moving items into the bank no longer shows an \"Invalid inventory slot\" error.\n- In edit mode, the health and power text size of the player, target, pet and party frames is now set separately.\n- Blizzard's \"Show Action Bar\" interface options now turn the matching PandaUI action bars on and off.\n",
+  "published": "2026-11-03T14:49:07Z",
+  "prerelease": false,
+  "url": "https://github.com/Tom75VN/PandaUI/releases/tag/v0.13.4"
+}

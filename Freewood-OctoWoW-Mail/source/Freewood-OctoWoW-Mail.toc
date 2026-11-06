@@ -1,0 +1,13 @@
+## Interface: 11200
+## Title: Freewood |cffc89b3cMail|r
+## Notes: Own mailbox window: open all or selected mails safely, recent recipients, mailing lists with automatic sending, multi-item mails, gold surplus and cash on delivery.
+## Notes-deDE: Eigenes Briefkasten-Fenster: alles oder Ausgewähltes sicher öffnen, letzte Empfänger, Mailinglisten mit Automatik, mehrere Items, Gold-Überschuss und Nachnahme.
+## Author: Lacustat
+## Version: 0.1.241
+## Dependencies: Freewood-OctoWoW-Core
+## OptionalDeps: Freewood-OctoWoW-Creator, Freewood-OctoWoW-Brett
+
+Locales.lua
+Mail.lua
+MailUI.lua
+MailArchive.lua

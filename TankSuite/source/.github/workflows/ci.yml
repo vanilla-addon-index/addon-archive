@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Every file listed in the .toc exists
+        run: |
+          missing=0
+          while IFS= read -r line; do
+            line="${line%$'\r'}"
+            case "$line" in ''|'##'*|'#'*) continue ;; esac
+            if [ ! -f "$line" ]; then echo "::error::missing file listed in TankSuite.toc: $line"; missing=1; fi
+          done < TankSuite.toc
+          exit $missing
+
+      - name: .toc and Core.lua versions match
+        run: |
+          toc=$(grep -m1 '^## Version:' TankSuite.toc | sed 's/^## Version:[[:space:]]*//' | tr -d '\r')
+          lua=$(grep -m1 'TS.version' Core.lua | sed 's/.*"\(.*\)".*/\1/')
+          echo "toc=$toc core=$lua"
+          [ "$toc" = "$lua" ] || { echo "::error::version mismatch between TankSuite.toc and Core.lua"; exit 1; }
+
+      - name: No Lua 5.0 incompatible syntax
+        run: |
+          fail=0
+          for f in *.lua; do
+            # drop block comments and line comments so text in comments is not reported
+            code=$(perl -0777 -pe 's/--\[(=*)\[.*?\](=*)\]//gs; s/--[^\n]*//g' "$f")
+            if echo "$code" | grep -nE 'string\.match|[^.A-Za-z_]select\('; then
+              echo "::error file=$f::string.match / select are not available in Lua 5.0"; fail=1
+            fi
+            if echo "$code" | grep -nE '[A-Za-z_)\]]\s*#\s*[A-Za-z_(]|^\s*#[A-Za-z_]' | grep -vE '"[^"]*#[^"]*"'; then
+              echo "::warning file=$f::possible use of the # length operator (not available in Lua 5.0)"
+            fi
+          done
+          exit $fail

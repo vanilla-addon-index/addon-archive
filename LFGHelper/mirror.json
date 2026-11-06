@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/ralliartse/LFGHelper",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ralliartse",
+    "repo": "LFGHelper",
+    "name": "LFGHelper",
+    "url": "https://github.com/ralliartse/LFGHelper",
+    "api": "https://api.github.com/repos/ralliartse/LFGHelper"
+  },
+  "commit": "4a2c42668e859585c73642e12a03bd1bd3a7636f",
+  "sourceFiles": {
+    "images/filters.png": {
+      "sha256": "d8b4ab9ba43a7b328de90a1587dad8f495ac1341089fd88c9042a19f8c1110f2",
+      "bytes": 1000939
+    },
+    "images/mainframe.png": {
+      "sha256": "1872ed16698d55fdefd6da7c9ff33312c3defeac461ad5e92e9ea38d2d5a0769",
+      "bytes": 1040322
+    },
+    "LFGHelper.lua": {
+      "sha256": "288dbb8cc60d965210c15d89cdc577bcf6d203302ef6347c0005b6ed824dc533",
+      "bytes": 23300
+    },
+    "LFGHelper.toc": {
+      "sha256": "42b8b03a7d1c32091c3cbe733e2c786b34b2c9358f8a4338b1c710028aba7309",
+      "bytes": 253
+    },
+    "LFGHelper.xml": {
+      "sha256": "cb5b536d6e58c23d2229c3e9303c2bcfd49bfed296c98a63a8a452ec9cce73e3",
+      "bytes": 9413
+    },
+    "README.md": {
+      "sha256": "e484655b939b8b86f3187c05ff7a8a264319c8510211c7bba4a617df3553113a",
+      "bytes": 1066
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

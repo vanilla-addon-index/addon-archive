@@ -1,0 +1,18 @@
+## Interface: 11200
+## Title: PokeHuntLog
+## Notes: Collection log for hunter pets: every family and skin you have tamed, and the highest level you got each to.
+## Author: stealthzi
+## Version: 2.0.1
+## SavedVariables: PokeHuntLogDB
+
+Data\Skins.lua
+Data\Families.lua
+Data\Abilities.lua
+Core.lua
+Collection.lua
+Tracker.lua
+UI.lua
+Minimap.lua
+Help.lua
+Tooltip.lua
+Training.lua

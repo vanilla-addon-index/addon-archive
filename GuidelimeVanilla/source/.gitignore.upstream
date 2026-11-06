@@ -1,0 +1,5 @@
+.vs
+backup_*
+.planning/
+.claude/
+.vscode/

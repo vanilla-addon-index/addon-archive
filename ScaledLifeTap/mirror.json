@@ -1,0 +1,69 @@
+{
+  "upstream": "https://octowow.st/git/OEVG/ScaledLifeTap",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "OEVG",
+    "repo": "ScaledLifeTap",
+    "name": "ScaledLifeTap",
+    "url": "https://octowow.st/git/OEVG/ScaledLifeTap",
+    "api": "https://octowow.st/git/api/v1/repos/OEVG/ScaledLifeTap"
+  },
+  "commit": "da4193cf17a6a65bb83aadde8297e68cc7436b7f",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "aee74856bb067ffc3ea7a3578e1cc0c9ea16f2ef9cc35da50d3899b7d26ec51e",
+      "bytes": 53
+    },
+    ".gitignore.upstream": {
+      "sha256": "4fd2531abcdd20c5e5dc5cd1ecba8f9c131bb1d0da2b0c4823c31580c7cc3d0d",
+      "bytes": 16
+    },
+    "CHANGELOG.md": {
+      "sha256": "04b349efa5c621ca307629a7261705e61414b9f66286e80a0517cf184528a9fa",
+      "bytes": 2924
+    },
+    "Locale.lua": {
+      "sha256": "09acaa26428f9c07f15d979d319135ef6400ea47760deadc0279a1064e61532d",
+      "bytes": 3662
+    },
+    "Options.lua": {
+      "sha256": "49c40bb81e917cbf1fe381edf675aa1bd7177ccc3f4ee683797ca47b6d51c51e",
+      "bytes": 13413
+    },
+    "README.md": {
+      "sha256": "814d70c5e57a514b018d5058a39147a3a75c81295435cff0b6fc8aeee493de74",
+      "bytes": 7799
+    },
+    "ScaledLifeTap.lua": {
+      "sha256": "e169c205256ea2e22e7c2df35956b329ff54bc49c12128bc4ad11bcd14b7ae37",
+      "bytes": 26120
+    },
+    "ScaledLifeTap.toc": {
+      "sha256": "3dbea13690f68297c97f981f5854d0c86c5bc908c4ef576e2856346814f20e6d",
+      "bytes": 536
+    },
+    "Scanner.lua": {
+      "sha256": "d7f9a0d9c532194d6e51411a379acbae4316afa7d4c6f9f35b29436a8a59e7ed",
+      "bytes": 4560
+    },
+    "tests/mockwow.lua": {
+      "sha256": "36d7f7e991b6ead5bc16aac1054888c57db01423c2e52b971945c935809f4c0a",
+      "bytes": 10849
+    },
+    "tests/test_core.lua": {
+      "sha256": "754dcd7e4a4aa10efce598c1588aea3f379ba3d5969fa33dddf2896bfb8b98c1",
+      "bytes": 7908
+    },
+    "tests/test_options.lua": {
+      "sha256": "7ed8308373e6eb6ae3fc96f3775f0ebb9230ffac029780de1f302e2f5b8fbe08",
+      "bytes": 8406
+    },
+    "tests/test_sources.lua": {
+      "sha256": "265e9fbad0d360b8c99bf2568b8a3a0cabac653fe24d8273d13d0e79ec99fda5",
+      "bytes": 5722
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

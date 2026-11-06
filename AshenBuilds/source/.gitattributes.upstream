@@ -1,0 +1,10 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Left out of release zips (git archive): only the addon itself ships to players.
+tests/ export-ignore
+tools/ export-ignore
+.github/ export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
+README.md export-ignore

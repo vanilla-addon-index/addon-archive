@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Numielle/EasyLoot",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Numielle",
+    "repo": "EasyLoot",
+    "name": "EasyLoot",
+    "url": "https://github.com/Numielle/EasyLoot",
+    "api": "https://api.github.com/repos/Numielle/EasyLoot"
+  },
+  "commit": "c3ee8e6d4970db3df35ae0d5fb7484e29cd9a6f5",
+  "sourceFiles": {
+    "EasyLoot.lua": {
+      "sha256": "c8776a6413412c517b4efc84d1627431a927031cc0a94c2ac2fb6f9d2df83947",
+      "bytes": 2421
+    },
+    "EasyLoot.toc": {
+      "sha256": "0ec5edd1840ab15eb9e466089a27d81ac9fac19eb72278fab59549df3feb25de",
+      "bytes": 163
+    },
+    "LICENSE": {
+      "sha256": "39db8f9acf036595a2566ea3fe560bc7bd65d8749f088e0f4a4ef2f8a6cb4b34",
+      "bytes": 18026
+    },
+    "README.md": {
+      "sha256": "08afcb7094b8b21c6ca55d23087d6e2d5b9683b27a4df85e2a3ba5b16bd767ef",
+      "bytes": 625
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

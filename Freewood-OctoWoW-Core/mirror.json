@@ -1,0 +1,129 @@
+{
+  "upstream": "https://octowow.st/git/Freewood/Freewood-OctoWoW-Core",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Freewood",
+    "repo": "Freewood-OctoWoW-Core",
+    "name": "Freewood-OctoWoW-Core",
+    "url": "https://octowow.st/git/Freewood/Freewood-OctoWoW-Core",
+    "api": "https://octowow.st/git/api/v1/repos/Freewood/Freewood-OctoWoW-Core"
+  },
+  "commit": "10e9117840fbc96ffda79257aee380f839b71d02",
+  "sourceFiles": {
+    "Core/Channels.lua": {
+      "sha256": "f37c0c6c447c77e06c5636c43ca350fbeaba1aab3632883248fd509dff35701d",
+      "bytes": 14568
+    },
+    "Core/ChatLog.lua": {
+      "sha256": "654b6df45a8471b2ceee637a114221cdc7c55a3cbe3ff0337650388f5b5000ec",
+      "bytes": 16284
+    },
+    "Core/Compat.lua": {
+      "sha256": "66f85430df5a8821226bef6efd977f28043c7980cbfebe020bad4ccedaccc537",
+      "bytes": 51682
+    },
+    "Core/Export.lua": {
+      "sha256": "c466e29beee3f3e2f3fdfa94b4cdb1203a73041ba903d68e88b2dabc3f156792",
+      "bytes": 8584
+    },
+    "Core/Init.lua": {
+      "sha256": "1fe6d7d1c00808f2d41da06b959eb8e7e1a64d517746a1a81af353513391f288",
+      "bytes": 14298
+    },
+    "Core/Nameplates.lua": {
+      "sha256": "ee7c43558ccb96c6452f2bee42f85087a48c08458fb034b0265d16004a2c83f0",
+      "bytes": 10906
+    },
+    "Core/Slash.lua": {
+      "sha256": "ef1f161d321a1c41918a752b07e385316a61b8a2f9141767e5b49bfc24dd295a",
+      "bytes": 1576
+    },
+    "Core/TooltipCompare.lua": {
+      "sha256": "7638542e7a9de90a5dccbc4c6535f524c37648a2982022eb0879e7025e492c06",
+      "bytes": 10250
+    },
+    "Core/TooltipInfo.lua": {
+      "sha256": "9cdd12bcbec54f741156ad25725cc5d6e1fff24c7ef338f60c861bb4c96b1680",
+      "bytes": 10830
+    },
+    "Core/Tooltips.lua": {
+      "sha256": "738b75d223b19b1b23341a3361522634cb335e94c3f20c0a65f997b06bbe8dfd",
+      "bytes": 9487
+    },
+    "Core/Util.lua": {
+      "sha256": "66277af2ffaafceef2d3b3b51d4f1e32054b46503e18937e7da5cb1e121a7d2d",
+      "bytes": 11504
+    },
+    "docs/img/channels.jpg": {
+      "sha256": "515d6500a5b126a91be83054dff84cd056086320e514fd1abbc084b76f2e71f5",
+      "bytes": 89269
+    },
+    "docs/img/exchange.jpg": {
+      "sha256": "e013797645a49e5cd3d08575ba2c0207d098c6245f5c8c9ecf20cc8eb3da2133",
+      "bytes": 49555
+    },
+    "docs/img/overview.jpg": {
+      "sha256": "cdadf46eee634285136b75edd5543b71e17c2e49925090e0273dd21de09b7805",
+      "bytes": 89691
+    },
+    "docs/img/settings.jpg": {
+      "sha256": "a5afc664995b9d5a35b2ca2008e2e2f69207f54bc140c7b482669a55a8c5dd16",
+      "bytes": 98597
+    },
+    "docs/img/whisper.jpg": {
+      "sha256": "950ed27dfaf0d2601fcc8eb13c7ec42cb00e9333bbf4752117cd009c4adc2828",
+      "bytes": 80974
+    },
+    "Freewood-OctoWoW-Core.toc": {
+      "sha256": "f2bf80cc8bbf2bfe05188632153f6c3513139d0c44a94d80729dd0f00e0c3d43",
+      "bytes": 703
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "Locales.lua": {
+      "sha256": "88e9b6ce9b33d4e99c9cdb1d4f3a8024cbdcbc6ae9b7799e69ed68882017ae53",
+      "bytes": 17867
+    },
+    "Media/FreeWood_Logo.tga": {
+      "sha256": "9cd9de5b90e4cea783f4503c5a26768f741beed1cde1ac56b9af0dda0ab3a05e",
+      "bytes": 65580
+    },
+    "README.md": {
+      "sha256": "017f01953d1c039433f3916c91987748a09cf1e9d2f857c0c587e49ce9642f88",
+      "bytes": 5752
+    },
+    "UI/ChannelsTab.lua": {
+      "sha256": "1360ba36f449597b48ee6722a00c25a8d077f00070b95a9011fffc6e577bcf65",
+      "bytes": 54455
+    },
+    "UI/Kit.lua": {
+      "sha256": "166dfa6d346dafded49462169d8193487ddd3ee9f85cb19b2612406ef207adaa",
+      "bytes": 35370
+    },
+    "UI/MainFrame.lua": {
+      "sha256": "f63d87ef6d6ceb33a7078ffb95aaedc6088743b61fbe7dd9c765b7eb4462821a",
+      "bytes": 4831
+    },
+    "UI/MainWindow.lua": {
+      "sha256": "12491d08b2ecdb711b6f9a3da7d5a7a1961bd1ea8bdc513b65b7f18cf9a8b42a",
+      "bytes": 11349
+    },
+    "UI/Minimap.lua": {
+      "sha256": "451cf1b54a47065381c7bb0fe0287a25b2455931423fe72a3fb9913669ca8a66",
+      "bytes": 2941
+    },
+    "UI/Tabs.lua": {
+      "sha256": "978e5b361a7de5e100cae1411902b01e75b8fd3806dd540e8ae6458746b3faf3",
+      "bytes": 23001
+    },
+    "UI/WhisperPopups.lua": {
+      "sha256": "0f471140a2006896dcf44e2e06414a6dd26d12acba1d93b4b75b25242352a5b9",
+      "bytes": 9743
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

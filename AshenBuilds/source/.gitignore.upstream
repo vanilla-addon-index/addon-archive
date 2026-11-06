@@ -1,0 +1,4 @@
+tools/work/
+*.sqlite
+*.sqlite.br
+__pycache__/

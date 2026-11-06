@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Timanaku/HasteDisplay",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Timanaku",
+    "repo": "HasteDisplay",
+    "name": "HasteDisplay",
+    "url": "https://github.com/Timanaku/HasteDisplay",
+    "api": "https://api.github.com/repos/Timanaku/HasteDisplay"
+  },
+  "commit": "7f9a7a11161af69402ce17a3ae5fc5855fa10005",
+  "sourceFiles": {
+    "HasteDisplay.lua": {
+      "sha256": "dae2f9e0ef38956065e7f5cf62d80f31d4478f68c036edd7363b1d34548ceeb3",
+      "bytes": 4055
+    },
+    "HasteDisplay.toc": {
+      "sha256": "4249e7c4b51287db55dabf86d3626590f3974b563e6203a64bdacc07a880ce7b",
+      "bytes": 178
+    },
+    "image.png": {
+      "sha256": "624689321f26c43da2c005d1d50476503eadc9b9132c06a3b97146f2346c990b",
+      "bytes": 11000
+    },
+    "README.md": {
+      "sha256": "a4dacec00cc9bc05b851c0cf5d06e4c1a70fa86015fcf7a15fd509a88c2c15e3",
+      "bytes": 829
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

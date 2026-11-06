@@ -1,0 +1,54 @@
+{
+  "upstream": "https://github.com/Duciel/pfUI-ThreatPlates",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Duciel",
+    "repo": "pfUI-ThreatPlates",
+    "name": "pfUI-ThreatPlates",
+    "url": "https://github.com/Duciel/pfUI-ThreatPlates",
+    "api": "https://api.github.com/repos/Duciel/pfUI-ThreatPlates"
+  },
+  "commit": "08abfb1a500ba048a06d7c63eac5b30c5d1a7672",
+  "sourceFiles": {
+    "pfUI-ThreatPlates.lua": {
+      "sha256": "9b87b46daa139f1e7e6ebdb67454cf815a90ba02e7b4c4cdd72f7d7a0c241b81",
+      "bytes": 48994
+    },
+    "pfUI-ThreatPlates.toc": {
+      "sha256": "755692f490525fbd92fca85e7e010547a09952b35bf386b61ba0d28d2def1bba",
+      "bytes": 308
+    },
+    "README.fr.md": {
+      "sha256": "27a4f24521f9d05e40b5c5d3b6baa09d555f87835ce540574b13437376736571",
+      "bytes": 9467
+    },
+    "README.md": {
+      "sha256": "e2ad7e498da871053fbf9f787f6a95ea291994ff7eb6641a75720ec7ad46b759",
+      "bytes": 8781
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "413938456": {
+      "tag": "Release",
+      "folder": "Release--413938456",
+      "assets": {
+        "644199921": {
+          "sha256": "303954d8ffd19c78becad1fe1155784c47eadfdb703de19c692f6b3045876f34",
+          "bytes": 16873,
+          "id": "644199921",
+          "name": "pfUI-ThreatPlates.zip",
+          "url": "https://github.com/Duciel/pfUI-ThreatPlates/releases/download/Release/pfUI-ThreatPlates.zip",
+          "path": "releases/Release--413938456/assets/pfUI-ThreatPlates.zip"
+        }
+      },
+      "source": {
+        "sha256": "40ecbb5e838210439c1c3045a87fdd146e668466f718010d75ec044825259dc7",
+        "bytes": 15645,
+        "path": "releases/Release--413938456/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Duciel/pfUI-ThreatPlates/tarball/Release"
+      }
+    }
+  }
+}

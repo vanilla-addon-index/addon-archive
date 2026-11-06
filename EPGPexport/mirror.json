@@ -1,0 +1,54 @@
+{
+  "upstream": "https://github.com/isitLoVe/EPGPexport",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "isitLoVe",
+    "repo": "EPGPexport",
+    "name": "EPGPexport",
+    "url": "https://github.com/isitLoVe/EPGPexport",
+    "api": "https://api.github.com/repos/isitLoVe/EPGPexport"
+  },
+  "commit": "9d50d4df254bc50aecb57880c54216df74759864",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    "EPGPexport/EPGPexport.lua": {
+      "sha256": "1260c5fee7ca593b802aae1a57b7dee3a3f68535915765ffa68d3d92d187cbef",
+      "bytes": 1659
+    },
+    "EPGPexport/EPGPexport.toc": {
+      "sha256": "280648b9d4e7a579ed3c07bf6f6a42d934e2d43a7b01902bdb9b1e6469012cdf",
+      "bytes": 175
+    },
+    "EPGPexport/EPGPexport.xml": {
+      "sha256": "04e531e6aa0cea7eaafdfbb228570f7b92d7f154d1868bea64abe45cc7bc7b01",
+      "bytes": 1856
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "4952798": {
+      "tag": "1.0",
+      "folder": "1.0--4952798",
+      "assets": {
+        "2846915": {
+          "sha256": "b9f975fbca92c9536071c76e6d153e956b9126173b68e2dec67b89a9206fd66e",
+          "bytes": 1154,
+          "id": "2846915",
+          "name": "EPGPexport.zip",
+          "url": "https://github.com/isitLoVe/EPGPexport/releases/download/1.0/EPGPexport.zip",
+          "path": "releases/1.0--4952798/assets/EPGPexport.zip"
+        }
+      },
+      "source": {
+        "sha256": "839b2c32afea9082ecc6ea83bea82234b9a4372056e9e6e3062c60daecd944a9",
+        "bytes": 1146,
+        "path": "releases/1.0--4952798/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/isitLoVe/EPGPexport/tarball/1.0"
+      }
+    }
+  }
+}

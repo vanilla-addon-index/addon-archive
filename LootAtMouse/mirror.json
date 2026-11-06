@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/mitjafelicijan/LootAtMouse",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "mitjafelicijan",
+    "repo": "LootAtMouse",
+    "name": "LootAtMouse",
+    "url": "https://github.com/mitjafelicijan/LootAtMouse",
+    "api": "https://api.github.com/repos/mitjafelicijan/LootAtMouse"
+  },
+  "commit": "b9801539d7366c9f17d76c97fde77f8f42a10d75",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "37543722a211311869697a52987e71fb68506e8b223ed265b917eaa8f7f9b7f5",
+      "bytes": 1329
+    },
+    "LootAtMouse.lua": {
+      "sha256": "3aebd74695e15a00ab87673e3c65097b804fe9e136eba4ae5cd2cb7b435e9cfb",
+      "bytes": 942
+    },
+    "LootAtMouse.toc": {
+      "sha256": "0f46c409e9b9e0c03ee58802533cfd9dd8380b91437ebdda9a6edbc7c9570e53",
+      "bytes": 168
+    },
+    "README.md": {
+      "sha256": "248ddc5d2160b2251d1368693bab691f83fb7268ee75e22be901496ba1317a05",
+      "bytes": 486
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

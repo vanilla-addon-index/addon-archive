@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/Einherjarn/BGFlag",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Einherjarn",
+    "repo": "BGFlag",
+    "name": "BGFlag",
+    "url": "https://github.com/Einherjarn/BGFlag",
+    "api": "https://api.github.com/repos/Einherjarn/BGFlag"
+  },
+  "commit": "043bb62a22f27f32a0095950b5df65ed52eda218",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "BGFlag.lua": {
+      "sha256": "6999b113ce001f0b4e8e92684e1dabcc4788340715de21c56ba39511c85b5c75",
+      "bytes": 10482
+    },
+    "BGFlag.toc": {
+      "sha256": "105d820a3a326523291075f467cdb7d151804f1537e1db0441e6b3034e576773",
+      "bytes": 256
+    },
+    "BGFLag.xml": {
+      "sha256": "af04ba8617f4b05103a2fb35c26297d534782bcc1e1808da7142774ce0afa155",
+      "bytes": 3420
+    },
+    "Bindings.xml": {
+      "sha256": "19098d6e19c60e2fa059190a4a7525f6118631ab9741c1c878f70c9cac2ec82f",
+      "bytes": 299
+    },
+    "Localization.de.lua": {
+      "sha256": "b0e62959120c136e9b891aef6b70a1b4ea6f9e03a23a4a201287eb481865c2b9",
+      "bytes": 1619
+    },
+    "Localization.fr.lua": {
+      "sha256": "040476ce18edbbdc78044e6ee4b56f8cd2dc6439d17f666ac85cbce2bb2ae80a",
+      "bytes": 1638
+    },
+    "Localization.lua": {
+      "sha256": "125fe2a19c73cf24deac1aa05764cba0ddacab5a8f2ece6a92e06366b1964f80",
+      "bytes": 1303
+    },
+    "Skin/Anchor.tga": {
+      "sha256": "06e03d51368997e202a6c777c7cf72b2f2066927d4e1e5e5d582e4567c80a1a3",
+      "bytes": 16428
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

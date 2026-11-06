@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: VimWow Settings |cff808080by Lupo|r
+## Notes: The options window VimWow and its addons share: a tab for each, with its options and key bindings.
+## Author: Lupo
+# ## Version: 0.1.3
+# ## Version: 0.1.4
+## Version: 0.1.5
+## SavedVariables: VimWowSettingsDB
+
+settings.lua

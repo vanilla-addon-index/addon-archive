@@ -1,0 +1,161 @@
+{
+  "upstream": "https://github.com/Linae-Kronos/Distance",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Linae-Kronos",
+    "repo": "Distance",
+    "name": "Distance",
+    "url": "https://github.com/Linae-Kronos/Distance",
+    "api": "https://api.github.com/repos/Linae-Kronos/Distance"
+  },
+  "commit": "8e02c049d323e8557738981803214fd0f9b0b8e6",
+  "sourceFiles": {
+    "distance_options.lua": {
+      "sha256": "6d1ac737c51a1a93a212e928b7a1fb96ec936f496e59d2a7a4aba5c4cb9d2743",
+      "bytes": 37091
+    },
+    "distance_options.xml": {
+      "sha256": "c9726a9585d0c764f6b871b20ae9ba74b70602dd5f4bcb57fd8e5addd1ac5899",
+      "bytes": 36170
+    },
+    "distance.jpg": {
+      "sha256": "2397e62eb925becd6b97a2828f40d277802cfa8756d0920d2775e68d0f6e07b5",
+      "bytes": 121214
+    },
+    "distance.lua": {
+      "sha256": "0389333391f152a29965d21583123151a92f72a5964bdfaa7cb23a875a346550",
+      "bytes": 147902
+    },
+    "distance.toc": {
+      "sha256": "ceac295ea381e477b509aeb7a6d9f10091774469191d3d1bbf8baab900bab3b2",
+      "bytes": 497
+    },
+    "distance.txt": {
+      "sha256": "ea934c74568de598b434b5848f3939cb4c1e829815e0c45d28f93a9f51026346",
+      "bytes": 2250
+    },
+    "distance.xml": {
+      "sha256": "acef8f16f98937856b1ceb06d62263e70a5f42ff0c400dc5b6cfbb2f9d77cf75",
+      "bytes": 6627
+    },
+    "localization.cn.lua": {
+      "sha256": "ab72878c407046c0f4a8fe8857e3b3a28b7db6916af0dabbc5ffc846674506ca",
+      "bytes": 829
+    },
+    "localization.de.lua": {
+      "sha256": "9fcd99a88330fc1e5f2eb3667a10cc8759aecc056a4626c6aed18d694f20b537",
+      "bytes": 1413
+    },
+    "localization.fr.lua": {
+      "sha256": "08b146170b71d619f3396e309196402b4bdfe308e73ec67c3012d1e1ff640177",
+      "bytes": 1448
+    },
+    "localization.kr.lua": {
+      "sha256": "4cadf288081a3f1e4c51b97366a12f972b20b46ddcea74ec0e17dea4f8d313d7",
+      "bytes": 867
+    },
+    "localization.lua": {
+      "sha256": "eac5d26aefdb2efe924c932ee423f34a02c642217466a339f061db0ecdd709e9",
+      "bytes": 1296
+    },
+    "localization.tw.lua": {
+      "sha256": "9510089dbfb4899761ad6e00c62f5ff09a72ed11064013f3bfdd1f558b8944c7",
+      "bytes": 815
+    },
+    "options.JPG": {
+      "sha256": "3bf7189c46908b891b1391dbd90a6b4e52722ab1e0f2c6ff0bc0a0c968e1ac3b",
+      "bytes": 14304
+    },
+    "README.md": {
+      "sha256": "2133287c38d8a41d57511ce0b8e5e5408723f4d7e1d5e68151fa5558333e0774",
+      "bytes": 138
+    },
+    "spells.txt": {
+      "sha256": "d2c2e428e81d3f19e2705646f78df5012fab3d2bf92a4f2616659310db0ab654",
+      "bytes": 18995
+    },
+    "texture/Background.blp": {
+      "sha256": "d3829984f48afddb8e6288dffa784efb6bd84b2e8aebc31422c47d3988dcff33",
+      "bytes": 6660
+    },
+    "texture/bar_h.tga": {
+      "sha256": "01f73b9594790408ce642b7480e2ac9694e322cb941fea3882bffb61b836d85f",
+      "bytes": 32812
+    },
+    "texture/bar_w.tga": {
+      "sha256": "6abc71e609333af71b0c5c1554093e26e5fb98669b3b929dc3c088ae59ff56d6",
+      "bytes": 32812
+    },
+    "texture/Border.blp": {
+      "sha256": "9b99ad3c29cd68473913e83fdfb440b6108f3b803c9da7199598ed41fc176715",
+      "bytes": 3860
+    },
+    "texture/New Folder/Border1.blp": {
+      "sha256": "6a6a1946032606c1237fce51746411282383869e021bacdf4043d4b8a11c84fc",
+      "bytes": 3940
+    },
+    "texture/New Folder/Border2.blp": {
+      "sha256": "730d6ad028d464bfb8d827614734951943170d0e92073ce5335db298e75dcf14",
+      "bytes": 3860
+    },
+    "texture/New Folder/stone1.tga": {
+      "sha256": "3b66c0840f80c1db2b7c5f829fcfea2982e103dfab6013b928bccc667c34bcbd",
+      "bytes": 32812
+    },
+    "texture/New Folder/stone2.tga": {
+      "sha256": "33d6345ae4ce4b68129d354454ea3af5628237ccc12bfa656020160e72caceac",
+      "bytes": 32812
+    },
+    "texture/New Folder/stone3.tga": {
+      "sha256": "4d8f7078c537b50fef819f5a4b362e1beaadc130d07c7373bf5b5ceaf4ab26e1",
+      "bytes": 32812
+    },
+    "texture/New Folder/stone4.tga": {
+      "sha256": "f8bed5006f9cb2e313fbd95743b87c3ee767170a6013f87c33507ca9395584c4",
+      "bytes": 32812
+    },
+    "texture/old/bar_h.tga": {
+      "sha256": "01f73b9594790408ce642b7480e2ac9694e322cb941fea3882bffb61b836d85f",
+      "bytes": 32812
+    },
+    "texture/old/bar_w.tga": {
+      "sha256": "6abc71e609333af71b0c5c1554093e26e5fb98669b3b929dc3c088ae59ff56d6",
+      "bytes": 32812
+    },
+    "texture/old/stone1.tga": {
+      "sha256": "aafa47f6bd39f78a57115f92fe984e3a14740392b05a0816a0134fc4b4116765",
+      "bytes": 32812
+    },
+    "texture/stone_h.tga": {
+      "sha256": "aafa47f6bd39f78a57115f92fe984e3a14740392b05a0816a0134fc4b4116765",
+      "bytes": 32812
+    },
+    "texture/stone_w.tga": {
+      "sha256": "dbb39d4bde79c29cabe09977c4ce9189d3c35b19ffebfb6517b922d255f3c967",
+      "bytes": 32812
+    },
+    "texture/stone1.tga": {
+      "sha256": "aafa47f6bd39f78a57115f92fe984e3a14740392b05a0816a0134fc4b4116765",
+      "bytes": 32812
+    },
+    "texture/stone2.tga": {
+      "sha256": "d315983d960224248518595c2aee3598e22ee3ce0933eecdd6bac67505b49886",
+      "bytes": 32812
+    },
+    "texture/stone3.tga": {
+      "sha256": "2789685317ac3d671811cb659dfc559c06dbad95ca3018f2cf4beb982596ee84",
+      "bytes": 32812
+    },
+    "texture/stone4.tga": {
+      "sha256": "6a81f4ae7b55375e5b1dbba0a37dab36ac4f3decaf3973fce5612225b4c4a1a5",
+      "bytes": 32812
+    },
+    "todo_changes_bugs.txt": {
+      "sha256": "35dfda36f94eaa7c408ab280c9a56488c165471b288092b22371259ff32651ec",
+      "bytes": 7044
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,28 @@
+## Interface: 11200
+## Title: Freewood |cffc89b3cCore|r
+## Notes: Base addon of the Freewood family: data storage, UI kit, export/import and the main window.
+## Notes-deDE: Basis-Addon der Freewood-Familie: Datenspeicher, UI-Bausteine, Export/Import und Hauptfenster.
+## Author: Lacustat
+## Version: 0.1.241
+## SavedVariables: FreewoodDB
+## SavedVariablesPerCharacter: FreewoodCharDB
+
+Core\Compat.lua
+Locales.lua
+Core\Init.lua
+Core\Util.lua
+Core\Export.lua
+UI\Kit.lua
+UI\MainFrame.lua
+UI\MainWindow.lua
+UI\Tabs.lua
+Core\Channels.lua
+Core\ChatLog.lua
+UI\ChannelsTab.lua
+UI\WhisperPopups.lua
+Core\Tooltips.lua
+Core\TooltipInfo.lua
+Core\TooltipCompare.lua
+Core\Nameplates.lua
+UI\Minimap.lua
+Core\Slash.lua

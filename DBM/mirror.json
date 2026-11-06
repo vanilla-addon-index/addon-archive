@@ -1,0 +1,585 @@
+{
+  "upstream": "https://github.com/yutsuku/LVBM",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "yutsuku",
+    "repo": "LVBM",
+    "name": "LVBM",
+    "url": "https://github.com/yutsuku/LVBM",
+    "api": "https://api.github.com/repos/yutsuku/LVBM"
+  },
+  "commit": "84c4311a9c3d6b4af24c94079d6d157705444bf4",
+  "sourceFiles": {
+    "LVBM_API/Bosses.lua": {
+      "sha256": "938efff2baef25dbefd7b5839cce2d1abf59b6a2e101633b7ab640555678555d",
+      "bytes": 11870
+    },
+    "LVBM_API/BossModTemplate.lua": {
+      "sha256": "53ca6837968f4ae51e0a43c5edc25bdce86355147d71c1b7ac6ac599447748ab",
+      "bytes": 5031
+    },
+    "LVBM_API/localization.cn.lua": {
+      "sha256": "d6e06bdbb436596e6a2a7655558bfc2339a149af07b4864160f7ca8b3df45b56",
+      "bytes": 5760
+    },
+    "LVBM_API/localization.de.lua": {
+      "sha256": "e23f6b0820c99e04e7f5eb939fa9ae0f077e2b472f712b42185952c5dde6958c",
+      "bytes": 5662
+    },
+    "LVBM_API/localization.en.lua": {
+      "sha256": "469255110b87989709c3c7d369b635f7e57e4777ceade9c098ec5dda56d27f25",
+      "bytes": 5993
+    },
+    "LVBM_API/localization.fr.lua": {
+      "sha256": "962bfc1420d5a8088d5a2034e57ccd5051559fd95cca4ec85b9f1abe0c32ea8f",
+      "bytes": 6070
+    },
+    "LVBM_API/localization.kr.lua": {
+      "sha256": "eea43bc04e24fdb5776c8af130e9e9165d0f64b487e41b17a7ef62ac1eb54dad",
+      "bytes": 987
+    },
+    "LVBM_API/localization.tw.lua": {
+      "sha256": "726d15d02d413c06074c9221261c5464a045dcdb6d88bcd7915662fc0a375cb1",
+      "bytes": 7209
+    },
+    "LVBM_API/LVBM_API.lua": {
+      "sha256": "44bf87539f953fa46c6800fc60498e0d96cf46ef2fcbc58322e7203fb9316bb2",
+      "bytes": 109721
+    },
+    "LVBM_API/LVBM_API.toc": {
+      "sha256": "659401dfd8dd4f4a087f1861bb8bce8b7a4c68a07ec313d1220a92ec65b27f72",
+      "bytes": 472
+    },
+    "LVBM_API/LVBM_API.xml": {
+      "sha256": "0ee1df32be83f411de9309a51497423e247e1913f8a53c949966629305da8f4e",
+      "bytes": 11236
+    },
+    "LVBM_API/LVBM_StatusBars.lua": {
+      "sha256": "9834ea935148f5edb59f39989f9944b19ae7340724edc69014c983d6d5683200",
+      "bytes": 30167
+    },
+    "LVBM_API/LVBM_StatusBars.xml": {
+      "sha256": "548a37d7fd1809fb90ac2d6b28e0468ce8d04fa207ebe0dbe3fdc7c19b2b258f",
+      "bytes": 17422
+    },
+    "LVBM_API/Patchnotes.lua": {
+      "sha256": "726c365febc14eaf3ed06bc45f911f8fbf5a9bc4b1ef3c784a3314a6eac5497f",
+      "bytes": 9635
+    },
+    "LVBM_API/Textures/Arrow-Right.tga": {
+      "sha256": "9e08a19c77b6732f9ab469c6efbceba8e8371046afa4161456050dfcd551bacb",
+      "bytes": 4140
+    },
+    "LVBM_API/Textures/CloudStatusBarDesign.tga": {
+      "sha256": "b9df0275de597548020ddd58524962e4508d87982d3466852f2f04b71d8c59d4",
+      "bytes": 24620
+    },
+    "LVBM_API/Textures/ExtraStatusBarDesign1.tga": {
+      "sha256": "356163dcd2f29b7750cdf995f17952e4529f278684b9263fcd573e17c84cffcf",
+      "bytes": 24620
+    },
+    "LVBM_API/Textures/Minimap-Button-Down.blp": {
+      "sha256": "0d1c14c0523f5e13228aec1841db1dbb7b5bcaafd54da48274eaf5bfa94c7a57",
+      "bytes": 2564
+    },
+    "LVBM_API/Textures/Minimap-Button-Up.blp": {
+      "sha256": "4ad4b6abef051e13fc8b2cf8158c3d1efa9bc64740b9f0c9006f62f190c8d139",
+      "bytes": 2564
+    },
+    "LVBM_API/Textures/OptionsFrame.blp": {
+      "sha256": "a9cb2b1e9dc17e6edf7ed876174465e0964808923a466189f386d0e5f1f30bd0",
+      "bytes": 350724
+    },
+    "LVBM_API/Textures/PerlStatusBarDesign.tga": {
+      "sha256": "780e21959381601018d5dac25d572c0d1fb1860a27960a7edc963ebcf894a7cb",
+      "bytes": 24594
+    },
+    "LVBM_API/Textures/Spark.blp": {
+      "sha256": "01b80e926c25ad88dc8828372b2560c93d14772c98328b4bff48216e7034380e",
+      "bytes": 2564
+    },
+    "LVBM_AQ20/localization.cn.lua": {
+      "sha256": "9fcc694b4c5c30b9d5a8c1a26801b1d6c4e997880573b4fecd1e63166e2cc467",
+      "bytes": 4989
+    },
+    "LVBM_AQ20/localization.de.lua": {
+      "sha256": "8f859b0d05fa282bd40e94ef88a7c237a4cd272d932382dfb2d6549bd17a694b",
+      "bytes": 4325
+    },
+    "LVBM_AQ20/localization.en.lua": {
+      "sha256": "26e04c8225fefb824c6e5c8c12dead603e65cf4d312c444a61f74c815e232bc1",
+      "bytes": 4496
+    },
+    "LVBM_AQ20/localization.fr.lua": {
+      "sha256": "936a1abab79ecb5696a15db144f16722f6356b2972756c5e2481339860532ab4",
+      "bytes": 4539
+    },
+    "LVBM_AQ20/localization.tw.lua": {
+      "sha256": "d48178902d846eb04b5b248386672216a6c11a63735e43a4ac4f4d1b064db9db",
+      "bytes": 5422
+    },
+    "LVBM_AQ20/LVAnubisathGuardians.lua": {
+      "sha256": "31d4474faf237cd389893a0b8117863b718997caa22562896d637954ede1efc1",
+      "bytes": 3929
+    },
+    "LVBM_AQ20/LVAyamiss.lua": {
+      "sha256": "7ad704bffd226dceb14d590ec10bf4d1fc8a9878d41a982ee3b442ccc6f9251e",
+      "bytes": 896
+    },
+    "LVBM_AQ20/LVBM_AQ20.toc": {
+      "sha256": "40ab8e225ee91e285d19db74cc3e2df25ee1fa1fe52718bc798fd41e11184991",
+      "bytes": 365
+    },
+    "LVBM_AQ20/LVBuru.lua": {
+      "sha256": "987875c3e68c20715f1aa316ba5359a978d6a9e16ce0357e33be425366ef4336",
+      "bytes": 1795
+    },
+    "LVBM_AQ20/LVMoam.lua": {
+      "sha256": "9c1f24e4bfa97c9524b8001775ef76e0b68266d6272e4432261bf51dbd60b017",
+      "bytes": 2020
+    },
+    "LVBM_AQ20/LVOssirian.lua": {
+      "sha256": "ad9279acd0f9da4346a59bd26f6d9f8c706f14393c17516bdfef8586482b3262",
+      "bytes": 4458
+    },
+    "LVBM_AQ20/LVRajaxx.lua": {
+      "sha256": "b460df4ac8dada63cbe8bf8e7a5fe84776e4cc3eb7f7fbbdd09f3f2a787463ab",
+      "bytes": 1589
+    },
+    "LVBM_AQ40/localization.cn.lua": {
+      "sha256": "7b87a492eb8dcabed472fdb3534945be0a816e4885f89803893202ac299a8e3a",
+      "bytes": 8915
+    },
+    "LVBM_AQ40/localization.de.lua": {
+      "sha256": "05852f1ed59c48d013ab33fb51c9abc88d3ec4945789f9d8cf820692124f67c8",
+      "bytes": 8920
+    },
+    "LVBM_AQ40/localization.en.lua": {
+      "sha256": "1e77b39e5279fa0f804721cad8e90859a3c975612550bcbeccc7cbe0ca9e31c9",
+      "bytes": 8442
+    },
+    "LVBM_AQ40/localization.fr.lua": {
+      "sha256": "0d2f34962447908a2b557fda4f33146f51a71b6836b049ddaf94420a8012028a",
+      "bytes": 7891
+    },
+    "LVBM_AQ40/localization.tw.lua": {
+      "sha256": "1b4f642fa055adcd0088771a5f76118a83aa2f059fe936ebd9f2a4b378ce9c14",
+      "bytes": 9428
+    },
+    "LVBM_AQ40/LVBM_AQ40.toc": {
+      "sha256": "dbfba79d6a52d05f8ddcdc93ff6f3c99679a298798be896a25bf72b1a42ca821",
+      "bytes": 430
+    },
+    "LVBM_AQ40/LVCThun.lua": {
+      "sha256": "1fc1e116314d66675464656ebec236c3ff5035de9dd68f8f0c26dda5f7c319d5",
+      "bytes": 12908
+    },
+    "LVBM_AQ40/LVDefender.lua": {
+      "sha256": "ba1ccb8736559d7320cdccb00d796cb32380167fc9119f0ecb09c7749bb1b339",
+      "bytes": 2164
+    },
+    "LVBM_AQ40/LVFankriss.lua": {
+      "sha256": "5bfe34024da1bd1c9e0c646090f0ef5df80af425399738b9ff7d437ed8c46fd4",
+      "bytes": 619
+    },
+    "LVBM_AQ40/LVHuhuran.lua": {
+      "sha256": "39cdd58c5a67aa57aec7052d41bcb7da716a7925290b742a36636babf55992aa",
+      "bytes": 1917
+    },
+    "LVBM_AQ40/LVOuro.lua": {
+      "sha256": "a9a4585361fc48fb42473443a09c05980bf0826f8963e8db7d4a637a991e752e",
+      "bytes": 6885
+    },
+    "LVBM_AQ40/LVSartura.lua": {
+      "sha256": "92df32473a6e2b34134673f448bd0ee0c3d1a5eae079c698c4b39b39bd7db5a3",
+      "bytes": 1116
+    },
+    "LVBM_AQ40/LVSkeram.lua": {
+      "sha256": "610edcdadcbfd386acd411f0d0ceceef65fbc19a890f7d0182b3de2ed349913c",
+      "bytes": 1412
+    },
+    "LVBM_AQ40/LVThreeBugs.lua": {
+      "sha256": "34a7af25a986310863c1d218dfa45a11211ad5bf5b081a5674c2cac6df716819",
+      "bytes": 1720
+    },
+    "LVBM_AQ40/LVTwinEmps.lua": {
+      "sha256": "d1422477fd7bd2c349bbf732c7cd4312ccb3f63b49404d87359d522a74d20aad",
+      "bytes": 3087
+    },
+    "LVBM_AQ40/LVViscidus.lua": {
+      "sha256": "dfea2b5839543a67c3be1cb97a0b88a29069f8d99a557204fb0f683e3e78fbe7",
+      "bytes": 9372
+    },
+    "LVBM_BWL/localization.cn.lua": {
+      "sha256": "19429277611830d3b2fc5c40ab6ba2158cf38e5f4a8c40d3f43c0ddec535314d",
+      "bytes": 7857
+    },
+    "LVBM_BWL/localization.de.lua": {
+      "sha256": "c4c9f7da13354a3995f4112502be5a4c7bbc2479959455cf9ef1a4a54f71c400",
+      "bytes": 7918
+    },
+    "LVBM_BWL/localization.en.lua": {
+      "sha256": "3df6e01f140b7de84b470bc74fdc0293bbe3a61d4568e6c7b1bc90262ac4400c",
+      "bytes": 7419
+    },
+    "LVBM_BWL/localization.fr.lua": {
+      "sha256": "19f79d83344b0ab63d04c5fd39788620fdb3426fe77a970cf995966b10ea1e9b",
+      "bytes": 7754
+    },
+    "LVBM_BWL/localization.tw.lua": {
+      "sha256": "4cf775dbc729cd753308f98a41261f6bd4d42f21537b72549e136afcc028aa61",
+      "bytes": 8293
+    },
+    "LVBM_BWL/LVBM_BWL.toc": {
+      "sha256": "ee22dfb3f9f77377a0a2f24e6158b0c6006cacfd649c45ccb400e21e331a4ba3",
+      "bytes": 386
+    },
+    "LVBM_BWL/LVChromaggus.lua": {
+      "sha256": "0249eeab1b855c0edad3b15220bd095f3f886e4dd244aacacedcbfee1b2265c1",
+      "bytes": 5156
+    },
+    "LVBM_BWL/LVEbonroc.lua": {
+      "sha256": "22db0c7d07844491005efe576cd7aa3a160fc3a5a4f622d88643cd3211544cb2",
+      "bytes": 3375
+    },
+    "LVBM_BWL/LVFiremaw.lua": {
+      "sha256": "eb18d2d6a94ddd7951869b8f56620a62c98198ce8cb6eed2b196d266e53b7112",
+      "bytes": 1386
+    },
+    "LVBM_BWL/LVFlamegor.lua": {
+      "sha256": "aa2d35e93e23f16813f44835e85b11e8dbf2603c0afaf99507da561f5328e2dd",
+      "bytes": 2019
+    },
+    "LVBM_BWL/LVNefarian.lua": {
+      "sha256": "44c473f3f9abc17de2156c365199a3592d0dfabd445b61ab5453278d68825b73",
+      "bytes": 10166
+    },
+    "LVBM_BWL/LVRazorgore.lua": {
+      "sha256": "04b0f6a86263d0ccdd26962012453bb8c5886e7d35f7c4c0f5a7ddc2ff21b764",
+      "bytes": 1598
+    },
+    "LVBM_BWL/LVVaelastrasz.lua": {
+      "sha256": "eeb062e9dc89c1d29d6a9feb8f263678a66ed673a75a77fe3a268bf13b1530fa",
+      "bytes": 2840
+    },
+    "LVBM_GUI/Bindings.xml": {
+      "sha256": "47a3275ce4cd9d1565abfedcbf34370a39507cc9f8d52be387edcbe23bc3b5b5",
+      "bytes": 277
+    },
+    "LVBM_GUI/localization.gui.cn.lua": {
+      "sha256": "885af8bb0e9e993d269221e4dacdcef6dd3c3e9cba1c9f78b8825b0a02b17573",
+      "bytes": 10217
+    },
+    "LVBM_GUI/localization.gui.de.lua": {
+      "sha256": "bf2b6c26dfe84d9316fac8182c556e6a223a76ecd4ce466d0a0b4e6eeca77c67",
+      "bytes": 8890
+    },
+    "LVBM_GUI/localization.gui.en.lua": {
+      "sha256": "d7a5dbeb69a093e1fa60432817b8a69d94c5afab6bce7a7d607fe3b1aeedb7f4",
+      "bytes": 10767
+    },
+    "LVBM_GUI/localization.gui.fr.lua": {
+      "sha256": "974b0d86e129e3c5dcc7860c57b01fa570580a1a1574ebf3ed67d470153cf2ac",
+      "bytes": 9552
+    },
+    "LVBM_GUI/localization.gui.tw.lua": {
+      "sha256": "a4f24a2ec9486e32ce81b4da3010c37dc19efdb670951fef2f947f56108b7f55",
+      "bytes": 11490
+    },
+    "LVBM_GUI/LVBM_GUI_InfoFrame.lua": {
+      "sha256": "a4c48050372fcbe0ecae809ebdff03c7d31ea90614c50d1fadf041d0c71ab6e9",
+      "bytes": 16077
+    },
+    "LVBM_GUI/LVBM_GUI_Templates.xml": {
+      "sha256": "0a3cc42a9538ed4e513122ada704e23713d717c86004cd139005db0e0daea849",
+      "bytes": 8911
+    },
+    "LVBM_GUI/LVBM_GUI.lua": {
+      "sha256": "444893c41ca4032e4feec466b41245669f75273f37e82c5d6c58cebe119861dd",
+      "bytes": 30194
+    },
+    "LVBM_GUI/LVBM_GUI.toc": {
+      "sha256": "31c330bb8ec496ee5dfe4c68dd4034024eb24063d31d65c97a601c3ca8496e64",
+      "bytes": 301
+    },
+    "LVBM_GUI/LVBM_GUI.xml": {
+      "sha256": "9a29b570738068eed0912766b9b405b65e75899342fc56b1fcbcdb63166bee2c",
+      "bytes": 104238
+    },
+    "LVBM_MC/localization.cn.lua": {
+      "sha256": "32dc473515cee3fbf6e8bee20373afd0ffb0e0fbcc494fdeffdcb5aeeb633015",
+      "bytes": 5354
+    },
+    "LVBM_MC/localization.de.lua": {
+      "sha256": "e2348242253b1174e031f786b8254dfc98e581fd64fed38bb30f6420366dc62f",
+      "bytes": 3775
+    },
+    "LVBM_MC/localization.en.lua": {
+      "sha256": "9ed51c0f8ce697300883dd9f5d4669322c96809919c599893003fa222fcac9d0",
+      "bytes": 4035
+    },
+    "LVBM_MC/localization.fr.lua": {
+      "sha256": "8358351d0282b39ee631bf1b9ce35faf66c30b588a974f0b249cf8124426d4fe",
+      "bytes": 4733
+    },
+    "LVBM_MC/localization.tw.lua": {
+      "sha256": "13c56d38c8c29de70b4f9a261b37fcf05d634499f45180640d7f1a2ce5cdbf30",
+      "bytes": 4731
+    },
+    "LVBM_MC/LVBM_MC.toc": {
+      "sha256": "cc46edbbc6db54972ad33666e735ad9ab9ab60f2170520723bf2aeda62f19c66",
+      "bytes": 376
+    },
+    "LVBM_MC/LVGeddon.lua": {
+      "sha256": "a92a8765afc7fd3078f40d1e25069e3e297b6227ff0655a768b1a621086d71de",
+      "bytes": 3154
+    },
+    "LVBM_MC/LVGehennas.lua": {
+      "sha256": "0658d563d61078972cf13c41e2f3fd2eff1df7209b6c2621bcfaf5fde960199c",
+      "bytes": 1291
+    },
+    "LVBM_MC/LVLucifron.lua": {
+      "sha256": "23d4ce8b6a406db8a38bb438e09cee37c2e7d40a81a2fa22d0be2e2cc717ca98",
+      "bytes": 1820
+    },
+    "LVBM_MC/LVMagmadar.lua": {
+      "sha256": "d2bfd5d47b14286dc7d0522889078f41b5cd4ea481bc41685afcb98d1ff25732",
+      "bytes": 1835
+    },
+    "LVBM_MC/LVMajordomo.lua": {
+      "sha256": "35b630e247d3cbf7295671837ca11fe2543b6f48095c8cbcf07dac4862362a6d",
+      "bytes": 2766
+    },
+    "LVBM_MC/LVRagnaros.lua": {
+      "sha256": "8cf375e5e74e012c60cacbbc172c22ae5d0b5df66c614793cb95bd4f8e707f7a",
+      "bytes": 3996
+    },
+    "LVBM_MC/LVShazzrah.lua": {
+      "sha256": "25a0826098ec42c965e8ab38de962303180ff1666f2a8fc33c2392eb5cb00793",
+      "bytes": 2072
+    },
+    "LVBM_NAXX/Abomination/LVGluth.lua": {
+      "sha256": "2c9fc43bf57914406e2ec67fa189d8fecf214f052d6d8504356a5bd80334ca1d",
+      "bytes": 3724
+    },
+    "LVBM_NAXX/Abomination/LVGrobbulus.lua": {
+      "sha256": "10962096de860019c79a48e1464d0944aba2d5a753d4c68428ece3b58135f30f",
+      "bytes": 4929
+    },
+    "LVBM_NAXX/Abomination/LVPatchwerk.lua": {
+      "sha256": "b9ee5a2c05d7aaa97de977e77ebea6441c0af0331682a99a64b0b6d98fc48e75",
+      "bytes": 12828
+    },
+    "LVBM_NAXX/Abomination/LVThaddius.lua": {
+      "sha256": "c02c522c758771d633cce7781ceeda6095d9497a4083917474c441300271e100",
+      "bytes": 7594
+    },
+    "LVBM_NAXX/Deathknight/LVFourHorsemen.lua": {
+      "sha256": "9fe661e837c012fc9ee3741a3d9ef32271e0aeea0da76f615d4e6bd9c4bfa8d5",
+      "bytes": 15448
+    },
+    "LVBM_NAXX/Deathknight/LVGothik.lua": {
+      "sha256": "50e676ecce5df5d12a32f6cf78cb88626b3e5b3ab3ea3886d7668ecb146b5992",
+      "bytes": 8654
+    },
+    "LVBM_NAXX/Deathknight/LVRazuvious.lua": {
+      "sha256": "cd93452021a568ada1eefd563602967e6abe61c42928c08c9e25acff29aed3ba",
+      "bytes": 3548
+    },
+    "LVBM_NAXX/Frostwyrm/LVKelthuzad.lua": {
+      "sha256": "0515522c7bd20efc4921d7d239f274dc5533097be6d6a13468bcde81d7060890",
+      "bytes": 5086
+    },
+    "LVBM_NAXX/Frostwyrm/LVSapphiron.lua": {
+      "sha256": "f304d5eaf55b593db2d3da086c4da6691e369574faebfe5e0e5871eb2c0c0f61",
+      "bytes": 5625
+    },
+    "LVBM_NAXX/Ghoul/LVHeigan.lua": {
+      "sha256": "1f0e5d2bd11d3d235c88336ac3d4e7ba31ec03c6b7aee73ae90608aa263ebc87",
+      "bytes": 1849
+    },
+    "LVBM_NAXX/Ghoul/LVLoatheb.lua": {
+      "sha256": "3e1d11c0b2240a780c47e418bb84a6fdff74866019755e80268505bd28323dc1",
+      "bytes": 26373
+    },
+    "LVBM_NAXX/Ghoul/LVLoatheb.xml": {
+      "sha256": "74fdcb45cd342bfd0a9dccd14d445f6dca16a3c8b19d2209026574c97942017b",
+      "bytes": 7238
+    },
+    "LVBM_NAXX/Ghoul/LVNoth.lua": {
+      "sha256": "11ef97b1085c43a81ca3d7274583f42cd17dc92e847e86e4b5278d8870d83ea9",
+      "bytes": 5548
+    },
+    "LVBM_NAXX/localization.cn.lua": {
+      "sha256": "69d94fc8e624794c1ef9383136648a85822ec05b20907030e64838556207f8ef",
+      "bytes": 21350
+    },
+    "LVBM_NAXX/localization.de.lua": {
+      "sha256": "495baf41c8bcca6ae17f75efaed6ec7c90f85ee85c32aa849e86041f62e128e7",
+      "bytes": 16689
+    },
+    "LVBM_NAXX/localization.en.lua": {
+      "sha256": "e3d99f69031d3cfdbb2da57dc7c1956f6f7fe25937180052dc7259e40ead419c",
+      "bytes": 18226
+    },
+    "LVBM_NAXX/localization.fr.lua": {
+      "sha256": "94b3bd9fa26d9a6f20b1106c781764bc14908a89b9334503befe7ebc490eef96",
+      "bytes": 17929
+    },
+    "LVBM_NAXX/localization.tw.lua": {
+      "sha256": "8ab6e9d440df8c7ceec4b5463f66037c9e43a88993bb1acf108a9826278a50fc",
+      "bytes": 20394
+    },
+    "LVBM_NAXX/LVBM_NAXX.toc": {
+      "sha256": "228e8cea7c0d485f5bd55999f651bfff13898f8c7f6ffdb08be5d819a21c781c",
+      "bytes": 670
+    },
+    "LVBM_NAXX/Spider/LVAnubRekhan.lua": {
+      "sha256": "6ff38d1d68e88c0a7e5ad8c49ce738c84071dce1f3a5f8a099b7a15d4415e7de",
+      "bytes": 2813
+    },
+    "LVBM_NAXX/Spider/LVGrandWidowFaerlina.lua": {
+      "sha256": "ee03af9a90d2b7bf31d9eb477f6421ad9c7e9c9efd559eda544e1afc4b95e30e",
+      "bytes": 4452
+    },
+    "LVBM_NAXX/Spider/LVMaexxna.lua": {
+      "sha256": "b1827f7476afae633ca5f31339afb2644062216cbbea8a42234fa553cf79e045",
+      "bytes": 3633
+    },
+    "LVBM_Other/localization.cn.lua": {
+      "sha256": "720b0c154394b17d1395f2468a81318e83c635f98120287ed3ceea8916bf30ce",
+      "bytes": 9194
+    },
+    "LVBM_Other/localization.de.lua": {
+      "sha256": "ecc835b9bcdfac28d6703cf4a413c73b40b2a40db93470e1bd5a70eae53af940",
+      "bytes": 9695
+    },
+    "LVBM_Other/localization.en.lua": {
+      "sha256": "7b521fa8a6184506f450963b2243e5ed8737c3a94069e95d2ec73911184d1236",
+      "bytes": 9204
+    },
+    "LVBM_Other/localization.fr.lua": {
+      "sha256": "26d0f71968e666cad1ac614c94c99bceed585c6f5f76d5350a7b063d57111100",
+      "bytes": 2871
+    },
+    "LVBM_Other/localization.tw.lua": {
+      "sha256": "5a53a13e9652ab9a5d46d1e28de02e4fa63f1dab2d3efc17f720434e36c5755a",
+      "bytes": 9570
+    },
+    "LVBM_Other/LVAzuregos.lua": {
+      "sha256": "818c15768c44b71f0af6cbbd454b39fa0ed52e0d820fc497aa4c2e50b173b341",
+      "bytes": 1015
+    },
+    "LVBM_Other/LVBattlegrounds.lua": {
+      "sha256": "9432a0a7deb1cde87d6ed33e13c7f21de2983f54da4e8029140acdc9e978d3fc",
+      "bytes": 24589
+    },
+    "LVBM_Other/LVBM_Other.toc": {
+      "sha256": "643916d391e5f3b9145158a2fe7a7eb68ba74e08fcbf43532d269ae1dce9ccce",
+      "bytes": 391
+    },
+    "LVBM_Other/LVKazzak.lua": {
+      "sha256": "b6e5e62afb7d922a6adf89c797370f4e55affbc8281af458aaddc24a65a612ba",
+      "bytes": 1929
+    },
+    "LVBM_Other/LVOnyxia.lua": {
+      "sha256": "add3ccb3d8997f732a016699ec6fab78450134e0b7c96fa68c742d94af624346",
+      "bytes": 1676
+    },
+    "LVBM_Other/LVOutdoorDragons.lua": {
+      "sha256": "0a7a0ff07da4dbde31b97d5b545c2fc1159753db0a30ace9fd8cde261e0806ab",
+      "bytes": 3348
+    },
+    "LVBM_Other/LVRunecloth.lua": {
+      "sha256": "cb086fb285f5176479637ce87f6aa30be59556721f5634fbc3941c4f7367805e",
+      "bytes": 2371
+    },
+    "LVBM_Other/LVStartUp.lua": {
+      "sha256": "d8ad21ae8d60dc77cc57484b9e47f093103461284a2f98423a0a579207e734e9",
+      "bytes": 109
+    },
+    "LVBM_Other/LVTestBossMod.lua": {
+      "sha256": "f3f2a3da419d531bcdad18acb4c4243463fc3f4f73319342ecf50763b6975280",
+      "bytes": 723
+    },
+    "LVBM_RaidTools/localization.en.lua": {
+      "sha256": "3e66c9d03734dbbe0839bef71f6d4b06a8de85a564c2eb26d4bdc06785bec926",
+      "bytes": 2748
+    },
+    "LVBM_RaidTools/localization.tw.lua": {
+      "sha256": "f99d8f079c3c2bd8c9ad02e8d507ec1a92c461c6f8cbe32211a3efa35ad53a6d",
+      "bytes": 2384
+    },
+    "LVBM_RaidTools/LVBM_RaidTools.lua": {
+      "sha256": "600e25b52ad9c4ccd147027bb4ca41d003c3e5effcca36361a16647336b3e7ae",
+      "bytes": 11574
+    },
+    "LVBM_RaidTools/LVBM_RaidTools.toc": {
+      "sha256": "f03297f5b03196181ee94c116d162a5739da2351aeb01678270c4a802745e32f",
+      "bytes": 323
+    },
+    "LVBM_RaidTools/LVBM_RaidTools.xml": {
+      "sha256": "6d1f136e9bd05db1414598289b137e302334c9b16e0e8496be189fa7eee394ff",
+      "bytes": 405
+    },
+    "LVBM_ZG/localization.cn.lua": {
+      "sha256": "1ea4f6005e119acb513132066d650d82ae178092d49e1f32a7db9c250562e657",
+      "bytes": 3768
+    },
+    "LVBM_ZG/localization.de.lua": {
+      "sha256": "cedcba307b85ccb9f99734e38b4d56205885bd0a6943c61d4cc25029b9a48074",
+      "bytes": 3156
+    },
+    "LVBM_ZG/localization.en.lua": {
+      "sha256": "1fa3cc5f3390ee392959b9c8561ec5f277a80c50bd5bac98f47723881f67c3b0",
+      "bytes": 3493
+    },
+    "LVBM_ZG/localization.fr.lua": {
+      "sha256": "d8a2f8835ac27c3ed7604c258a7bc9c5ce8cf80241e82fe7fc7aa8d217e3daf6",
+      "bytes": 3935
+    },
+    "LVBM_ZG/localization.tw.lua": {
+      "sha256": "684ab7c53bdf632a89e39a6b199837a2e14d859ebf46495a82d42f6960c19363",
+      "bytes": 3768
+    },
+    "LVBM_ZG/LVArlokk.lua": {
+      "sha256": "e2f7ba1ace281004d826e5c9ff6e82279607b3fea7ace33a976118b13596f26e",
+      "bytes": 1147
+    },
+    "LVBM_ZG/LVBM_ZG.toc": {
+      "sha256": "54a17beac765f5bd4e9107561bf47d61b982993c2a05e41dbe2d491b95e5f042",
+      "bytes": 363
+    },
+    "LVBM_ZG/LVHakkar.lua": {
+      "sha256": "5621682c8ade983e607782810110448b238c8fb42ad87f0ea2651ca5662c3575",
+      "bytes": 2643
+    },
+    "LVBM_ZG/LVJeklik.lua": {
+      "sha256": "79a732a54b1661ef76dbfbedc58a3143275716ec9701ea0a81dc4c516f49c2c1",
+      "bytes": 949
+    },
+    "LVBM_ZG/LVJindo.lua": {
+      "sha256": "75e34e923ba962b82cd0f3e38e331d6e06493bc37d69254e9e29833b117124d3",
+      "bytes": 2762
+    },
+    "LVBM_ZG/LVMandokir.lua": {
+      "sha256": "ce6fd723faab591610884cedc3b0e985864e5911489b6d83835a40003e6316b0",
+      "bytes": 1912
+    },
+    "LVBM_ZG/LVMarli.lua": {
+      "sha256": "9e04550498beb1812338847826c4ac9099bc7a5e9c8e1c1daaa8d243dc5a9993",
+      "bytes": 608
+    },
+    "LVBM_ZG/LVVenoxis.lua": {
+      "sha256": "0adc8004f5683feb0136d1fa26f595ed3f0bd49f8b2bed4fcd83d311ff87eb38",
+      "bytes": 818
+    },
+    "README.md": {
+      "sha256": "af8af29d8d1ff1efa7d3a80e442c1811f846662c65bc83d2178e9dcf6a8e8c0d",
+      "bytes": 5388
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

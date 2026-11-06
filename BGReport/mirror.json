@@ -1,0 +1,141 @@
+{
+  "upstream": "https://github.com/yutsuku/BGReport",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "yutsuku",
+    "repo": "BGReport",
+    "name": "BGReport",
+    "url": "https://github.com/yutsuku/BGReport",
+    "api": "https://api.github.com/repos/yutsuku/BGReport"
+  },
+  "commit": "11d5db68c06e913ff211deb79fe447b262acb561",
+  "sourceFiles": {
+    "BGReport.lua": {
+      "sha256": "4f9c1d5ef47ac5f349e53e79b8a26337df45901592b4de19285e87190a3ad51c",
+      "bytes": 35887
+    },
+    "BGReport.toc": {
+      "sha256": "2d1af2368650cb41e8d6890ba6c35d9a11667d900bea282ee8c456fb66091f92",
+      "bytes": 84
+    },
+    "Bindings.xml": {
+      "sha256": "5a351792ad20dd9d6d2a5f2f6376f70a3ac5afb31a3f44f0a9693dc58a74400e",
+      "bytes": 291
+    },
+    "README.md": {
+      "sha256": "837cf7b73932a9b9559b9acdeb17091648f4bef4c4a5b7673a0d7898b4e2fe99",
+      "bytes": 1561
+    },
+    "textures/3-1.blp": {
+      "sha256": "e6074f99c9551358a4fb20dc034668fdd2b2c639624d424c8aaabda27f3315dd",
+      "bytes": 350724
+    },
+    "textures/3-2.blp": {
+      "sha256": "2ded4b93410ce4ac5f222dc05c5a1bed95a315c4f37fe3cb6839431e3b846b2c",
+      "bytes": 350724
+    },
+    "textures/3-3.blp": {
+      "sha256": "5f65f28db6f3fafe92742a90534a4411c8994e48806aaf54a1c35cdf22e34151",
+      "bytes": 350724
+    },
+    "textures/3.blp": {
+      "sha256": "ac46c6cdfc6f602d5439503ad26caf6ad04d7b55da0fbbbabc326ca39f996bdf",
+      "bytes": 350724
+    },
+    "textures/4-1.blp": {
+      "sha256": "24b744c2d94f6cbf41479d0bc48e6c95280763298dc10cce7c6cd07e4e941615",
+      "bytes": 350724
+    },
+    "textures/4-2.blp": {
+      "sha256": "23ee25686264b276477c5bdda4c37a8833d99023f75c44cc637ec61b8e389007",
+      "bytes": 350724
+    },
+    "textures/4-3.blp": {
+      "sha256": "db69d40c4cf76b538c0252fdc4e7afd2e72d98bd065ecf3b61c173875fea44a5",
+      "bytes": 350724
+    },
+    "textures/4-4.blp": {
+      "sha256": "65c7fefb3f4b46eaa0159d4be61de3a433b092e6289bf6969d742816601641d0",
+      "bytes": 350724
+    },
+    "textures/4.blp": {
+      "sha256": "f35755850a085120a7b99f1d2ea2572f2eef47061600c4bdf84708e1d66047ef",
+      "bytes": 350724
+    },
+    "textures/6-1.blp": {
+      "sha256": "ad7c2cd96505e7eb81295ccffb5cf8a38e900468dfb09530a8b5a7730619798a",
+      "bytes": 350724
+    },
+    "textures/6-2.blp": {
+      "sha256": "be18334deee37249e4cf0b8784f60b062449ce759abcf5eb2a0428b7c87a8953",
+      "bytes": 350724
+    },
+    "textures/6-3.blp": {
+      "sha256": "7f855c1a393c2507c8e60d0db810eca8e092e80fbd25170db499e1c3a61f32e1",
+      "bytes": 350724
+    },
+    "textures/6-4.blp": {
+      "sha256": "5706b6e02df0ebbff2cd47e745e759430029a6a26628b677051bd4e4684fb5d6",
+      "bytes": 350724
+    },
+    "textures/6-5.blp": {
+      "sha256": "7828c62280aa9add23b44c81f80e8258559912ea89fff5debf5bd0c4e82bf83c",
+      "bytes": 350724
+    },
+    "textures/6-6.blp": {
+      "sha256": "2fc9db0a00593e2eefee0ead3a39b782dcc6588ca625c4eb089843b1b689ae5d",
+      "bytes": 350724
+    },
+    "textures/6.blp": {
+      "sha256": "c0034312cfb3f7de4d220f16c4bf99befd4e47ffa2c77c0ba8b8a9ab5deff526",
+      "bytes": 350724
+    },
+    "textures/7-1.blp": {
+      "sha256": "7c337991637ef4255e2dfc7f2cb419d0bf895a898aeb9dedca1818339692969d",
+      "bytes": 350724
+    },
+    "textures/7-2.blp": {
+      "sha256": "bde98d4339fc7b89fe89ca78d1e700283e5d1a9784d343b76a0b14ccb3be19d9",
+      "bytes": 350724
+    },
+    "textures/7-3.blp": {
+      "sha256": "f97409b2102cce5245694eba7450a88f6a5ddaa1cc19641a7f6fe64a6d106d1d",
+      "bytes": 350724
+    },
+    "textures/7-4.blp": {
+      "sha256": "e8a158120ce09db3be4edc79e97c1baaf4f4bf30799acbabadc77410d27685ac",
+      "bytes": 350724
+    },
+    "textures/7-5.blp": {
+      "sha256": "4ef4278291666999e2861c6d920450c530ca1c111949339b730df91d015f9afe",
+      "bytes": 350724
+    },
+    "textures/7-6.blp": {
+      "sha256": "0a5e48ffaca0f29837d01fbad8cb36ff2e0e49fa691c7523ba000069afbb109b",
+      "bytes": 350724
+    },
+    "textures/7-7.blp": {
+      "sha256": "299119357314f4dc70bdf8cd6f8e66878a7ec482480a0d964a5791bc16160bb0",
+      "bytes": 350724
+    },
+    "textures/7.blp": {
+      "sha256": "8edfcd6532e0dadfa4770707446e4b7bdf0bfc0a977fbe1b7d29f064caf2a63d",
+      "bytes": 350724
+    },
+    "textures/dot-active.blp": {
+      "sha256": "bc6002f1dc20294c947bd7571ec8f1f7d50d98b60367a2e8d3dbead687dc184e",
+      "bytes": 350724
+    },
+    "textures/dot.blp": {
+      "sha256": "f528e01c754e8b56aff9480670d760d13cee0605151b6f34ce8487c86635417f",
+      "bytes": 350724
+    },
+    "textures/wow bg helper pie texture.psd": {
+      "sha256": "7cda714364a8852afaf2537324a46925fd354d021cfa8c2713ac453ae5b83ac2",
+      "bytes": 1291996
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

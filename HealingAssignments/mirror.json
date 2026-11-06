@@ -1,0 +1,57 @@
+{
+  "upstream": "https://github.com/Voidmenull/VanillaHealingAssignments",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Voidmenull",
+    "repo": "VanillaHealingAssignments",
+    "name": "VanillaHealingAssignments",
+    "url": "https://github.com/Voidmenull/VanillaHealingAssignments",
+    "api": "https://api.github.com/repos/Voidmenull/VanillaHealingAssignments"
+  },
+  "commit": "1d3077c586e71463864faadfc8b8e5b50eeaa769",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    ".gitignore.upstream": {
+      "sha256": "39b48a08bc89b0390642d250661c23781351a7a7a5ee70388bb13df140109c32",
+      "bytes": 617
+    },
+    "Bindings.xml": {
+      "sha256": "0b3ddaea3422cfc8b2f88df26ee8bc2aebc3b358ea23f030060dad5ea9770209",
+      "bytes": 1820
+    },
+    "HealingAssignments.lua": {
+      "sha256": "018d3a46e9c8cd0a9082a7aaca6e41dce1ef537396772c441efc0be63ecefb72",
+      "bytes": 111123
+    },
+    "Media/Icon.tga": {
+      "sha256": "16986d79f4850743c226d06b5eac50ccf6cf493788ae25468fdb1becf2f1f54b",
+      "bytes": 13701
+    },
+    "Media/IconMouseOver.tga": {
+      "sha256": "f8b1b391f945b722d6d72ef7dc099d922f58495505b987aac64fec45a91639d7",
+      "bytes": 13449
+    },
+    "Modules/Database.lua": {
+      "sha256": "0a2f87b620ce9083a0931a0763f15f763dee0dae2843d2e00116524dd31b5b90",
+      "bytes": 19552
+    },
+    "Modules/Posting.lua": {
+      "sha256": "5ed2ff79eb91c75a561c942694bc5b77b60a1f760652b038fe78b1bd66f7545d",
+      "bytes": 16524
+    },
+    "Modules/Sync.lua": {
+      "sha256": "140dfe83572abf1f1516c01c994bbae40c1561624330a349bf6c6ebf3b857776",
+      "bytes": 25598
+    },
+    "VanillaHealingAssignments.toc": {
+      "sha256": "702785d40a7e014ebd39e618837c9c324396f6295aa56c022c7c3e8eb34abfe7",
+      "bytes": 387
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

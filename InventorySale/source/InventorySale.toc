@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: InventorySale
+## Author: rexas (rexas@g33k.se)
+## Notes: Vote
+## SavedVariables: ISale_ItemList
+InventorySale.lua
+InventorySale.xml

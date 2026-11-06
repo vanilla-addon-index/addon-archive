@@ -1,0 +1,140 @@
+{
+  "upstream": "https://gitlab.com/woblight/EmeraldFramework/-/tree/vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "gitlab.com",
+    "owner": "woblight",
+    "repo": "EmeraldFramework",
+    "name": "EmeraldFramework",
+    "ref": "vanilla",
+    "subpath": "",
+    "url": "https://gitlab.com/woblight/EmeraldFramework",
+    "api": "https://gitlab.com/api/v4/projects/woblight%2FEmeraldFramework"
+  },
+  "commit": "ebe5a80d52047c4a5e3e0d82edb4afd9ab97175b",
+  "sourceFiles": {
+    ".gitlab-ci.yml": {
+      "sha256": "cd5cbe3349b835e7953a1ed59bc8468eab63a34ee1594827d4d5fdfbabd8a261",
+      "bytes": 312
+    },
+    "Blizzlike.lua": {
+      "sha256": "dba98321dfe5f8a88b6fd86e9d16253a78cecc70418236b27b02bc965010b00f",
+      "bytes": 23272
+    },
+    "Config.lua": {
+      "sha256": "253093c44e4c9d6321ea28c95c72c5785f0425f1eacbfe4561299101a415c833",
+      "bytes": 2549
+    },
+    "Core.lua": {
+      "sha256": "e354f2fc77759fbe4433a8e97f883ed801d247416ebc53846f892f205dc69636",
+      "bytes": 20019
+    },
+    "docs/API/Connection.md": {
+      "sha256": "3be6f31b3a53c6cc56ac65df6d8d823066f62b33ae73c623e38ffb163c8997e6",
+      "bytes": 152
+    },
+    "docs/API/Globals.md": {
+      "sha256": "a9af8b0cf0f3e279a7102e31fdcdeb42f199f539b5f6f12bdb7a6fdccd3b524a",
+      "bytes": 1943
+    },
+    "docs/API/Image.md": {
+      "sha256": "fe942746f7879ee269ac9c165048794f59289971bf32c86ef1c2bd6668914a1c",
+      "bytes": 1012
+    },
+    "docs/API/Item.md": {
+      "sha256": "f6ee7a92d90d9af0747687f9ed491db688b915a57bc15c2b2b32aa7fda111c71",
+      "bytes": 3778
+    },
+    "docs/API/Label.md": {
+      "sha256": "a1984d81032bf8f6aee3c3cee942bce45020c4a25922687a8de80a806b462632",
+      "bytes": 724
+    },
+    "docs/API/Object.md": {
+      "sha256": "2c97a31eedbb1b906b02c112c2326265505a5055ff0b0ffac2ca3df82cc9fada",
+      "bytes": 266
+    },
+    "docs/API/Property.md": {
+      "sha256": "92b8ef8c5113f22d08a6b44d4bdb562657f2e4a1f38969870516ddeb31d5a4f9",
+      "bytes": 475
+    },
+    "docs/API/Rectangle.md": {
+      "sha256": "3a57f4d46b89e0326fbd65b4f965ca42bce885c19a5d6ee7fdb02d85dd050d9c",
+      "bytes": 572
+    },
+    "docs/API/Signal.md": {
+      "sha256": "4aa0de92b886f37ab2e7fff0ec4fb44ac4677c10b19c617005c5649c1707f848",
+      "bytes": 1192
+    },
+    "docs/Examples/basics.md": {
+      "sha256": "3d9a209f6b99ac187717e2d607975f83a5ff409ef46a47376d4a909795980c5b",
+      "bytes": 2486
+    },
+    "docs/index.md": {
+      "sha256": "2acfbd03c92154cbef7e08680ffc9483ed0a5bcb8d717456d4c1c2a44e1bc370",
+      "bytes": 2276
+    },
+    "EmeraldFramework.toc": {
+      "sha256": "77909d80727635496d922032c6c39f261edbb2cb448609ba81604b52fb4c8122",
+      "bytes": 251
+    },
+    "Layouts.lua": {
+      "sha256": "e95c8234846ae2ee52c0a184e8e08f37b1ee79c31da34b24a43d8d516a482c69",
+      "bytes": 9590
+    },
+    "LICENSE": {
+      "sha256": "cadb306951f6b8011bb4fcdc71eb327060a6a148344564a4698770d64f400e6f",
+      "bytes": 1065
+    },
+    "mkdocs.yml": {
+      "sha256": "3bb979b788dcd83baf01a60c0509768321ec27f473b185b3d00ec299d89f800d",
+      "bytes": 743
+    },
+    "pfStyle.lua": {
+      "sha256": "44a41a9d079e5ccb93d06152a2a5130a2313dd6e3fef7180afcb1892721dd9d7",
+      "bytes": 21366
+    },
+    "Readme.md": {
+      "sha256": "347916696ce767f6cb117c3efa91ec22c1cbbb0ccb2ed0bf94ee8859f5471b2f",
+      "bytes": 544
+    },
+    "Textures/CloseButton.tga": {
+      "sha256": "5435b6944491a0e2a6e91404e5c7cff86d07314fe961d2702e2cd2e285043e20",
+      "bytes": 12454
+    },
+    "Textures/MinimizeButton.tga": {
+      "sha256": "6feda6cbd5ea5c843c5251e07e9ddc7b52af09bdca8832cfd0411b08ee17b545",
+      "bytes": 11824
+    },
+    "Textures/ResizeHandle_small.tga": {
+      "sha256": "c46ac02c332ea9d5528d9740f1ca021e1eaf8d47426d9be8a0a4566554b2796f",
+      "bytes": 884
+    },
+    "UI.lua": {
+      "sha256": "81096dbbb01483e0e04d0e9ddcece0b9d2a5e880db4c19d3e5b5c8dde8025f41",
+      "bytes": 75033
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "undefined": {
+      "tag": "v0.2-39-g6ebaaf3-auto",
+      "folder": "v0.2-39-g6ebaaf3-auto--undefined",
+      "assets": {
+        "6481476": {
+          "sha256": "67601d6c3797869f8400d5877717fdb8512ac4affb1d428ebf5e7736a943e56d",
+          "bytes": 39241,
+          "id": "6481476",
+          "name": "EmeraldFramework",
+          "url": "https://gitlab.com/woblight/EmeraldFramework/-/releases/v0.2-39-g6ebaaf3-auto/downloads/EmeraldFramework",
+          "path": "releases/v0.2-39-g6ebaaf3-auto--undefined/assets/EmeraldFramework"
+        }
+      },
+      "source": {
+        "sha256": "55b22524e3bf46ae405c0a713990ea771765f16460ce71023bf4c7e26ff05028",
+        "bytes": 37390,
+        "path": "releases/v0.2-39-g6ebaaf3-auto--undefined/upstream-source.tar.gz",
+        "url": "https://gitlab.com/api/v4/projects/woblight%2FEmeraldFramework/repository/archive.tar.gz?sha=v0.2-39-g6ebaaf3-auto"
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/0ldi/ChatFix",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "0ldi",
+    "repo": "ChatFix",
+    "name": "ChatFix",
+    "url": "https://github.com/0ldi/ChatFix",
+    "api": "https://api.github.com/repos/0ldi/ChatFix"
+  },
+  "commit": "d9722d760e21465c4bbe1f5511dd03ad69fd6500",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "ChatFix/ChatFix.lua": {
+      "sha256": "2cdfb5167c6e6e2ddff0e27b0e1e25e8ada519eab1f38504990d93b06f08549d",
+      "bytes": 2956
+    },
+    "ChatFix/ChatFix.toc": {
+      "sha256": "bab2330882a97eb236511bfb4914c58446e3adc7e422e5b02a89a267d60b9fdf",
+      "bytes": 193
+    },
+    "README.md": {
+      "sha256": "bc87e06d547b9cf6993bb2ccef48e6675292535e479de10ce79704cfc6ec50bc",
+      "bytes": 673
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

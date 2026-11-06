@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Sulpitz/HCSpy",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Sulpitz",
+    "repo": "HCSpy",
+    "name": "HCSpy",
+    "url": "https://github.com/Sulpitz/HCSpy",
+    "api": "https://api.github.com/repos/Sulpitz/HCSpy"
+  },
+  "commit": "840c80c2f6309aae1e8ba410ca4ec1351ab343f1",
+  "sourceFiles": {
+    "HCSpy.lua": {
+      "sha256": "2b69c21f1a3018c314a0e1a18a74e787f7d9fed1326defd0ea30a2c23de213c0",
+      "bytes": 4545
+    },
+    "HCSpy.toc": {
+      "sha256": "1a5c08caa9daa35b622b133e821573cec769501a95290847524e282239268864",
+      "bytes": 188
+    },
+    "HCSpy.xml": {
+      "sha256": "58ee451bb6fe9a17bc23c72afe73a434ad4d59297407fcc91f3aa136ff175bc8",
+      "bytes": 2036
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

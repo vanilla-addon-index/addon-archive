@@ -1,0 +1,7 @@
+## Interface: 30300
+## Title: EliteWarriorTTD
+## Notes: TimeTillDeath
+## Author: Hobbitt - TurtleWoW
+## SavedVariables: EliteWarriorTTDDB
+
+EliteWarriorTTD.lua

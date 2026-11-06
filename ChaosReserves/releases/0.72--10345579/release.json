@@ -1,0 +1,9 @@
+{
+  "id": "10345579",
+  "tag": "0.72",
+  "name": "Maintenance Release",
+  "body": "- hiding guildies after a roster updater again\r\n- remove statistics module from ChatThrottleLib",
+  "published": "2018-04-01T10:49:20Z",
+  "prerelease": false,
+  "url": "https://github.com/rnorden/ChaosReserves/releases/tag/0.72"
+}

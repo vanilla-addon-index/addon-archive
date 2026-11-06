@@ -1,0 +1,49 @@
+{
+  "upstream": "https://octowow.st/git/Freewood/Freewood-OctoWoW-Mail",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Freewood",
+    "repo": "Freewood-OctoWoW-Mail",
+    "name": "Freewood-OctoWoW-Mail",
+    "url": "https://octowow.st/git/Freewood/Freewood-OctoWoW-Mail",
+    "api": "https://octowow.st/git/api/v1/repos/Freewood/Freewood-OctoWoW-Mail"
+  },
+  "commit": "76d89321b46578fe43fb07278a549c8b7c4b6c76",
+  "sourceFiles": {
+    "docs/img/mail.jpg": {
+      "sha256": "2deb703e37c50c1ad827e045dce707b8119872ee33e02ead7cc98460f6536a99",
+      "bytes": 75787
+    },
+    "Freewood-OctoWoW-Mail.toc": {
+      "sha256": "7c636b7536999ebae012534f4ca22b7d0c2d20840c7bccaa54fe5226fe527616",
+      "bytes": 605
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "Locales.lua": {
+      "sha256": "af1ff59427cc3ade8d6196cdaf4d0ded39feab72930a95fb2cc3c1156d7a5b9d",
+      "bytes": 17962
+    },
+    "Mail.lua": {
+      "sha256": "f4a47b285231e7e28f4f9ce9e8f264c92603034a247afbd64cb1165aedca8cf3",
+      "bytes": 44533
+    },
+    "MailArchive.lua": {
+      "sha256": "7c102ff6a9619c49985c4bf809881bc391c4d6d8d903ff7b318c29f6cdd5f6a1",
+      "bytes": 9385
+    },
+    "MailUI.lua": {
+      "sha256": "1ce8ae05494f79795cd698ed55d92e6a8161ca7ad3fb5157d6e33e3eb403ca6e",
+      "bytes": 53822
+    },
+    "README.md": {
+      "sha256": "49e676afb4074b6fdcb14ad4c6184fb02c0e0312fd9dd1b8c6c69e65f5f254f1",
+      "bytes": 5284
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,48 @@
+## Interface: 11200
+## Title: Gromissingcrafts
+## Notes: Shows the missing crafts for your crafting professions and how to obtain them. Ace3-free, pfUI-friendly fork of MissingCrafts with Survival profession support.
+## Author: Refaim, Grom
+## Version: 1.0
+## SavedVariables: GromissingcraftsDatabase
+## OptionalDeps: AdvancedTradeSkillWindow, AdvancedTradeSkillWindow2, Artisan, pfUI
+
+lib\LibStub\LibStub.lua
+
+lib\LibCraftingProfessions-1.0\LibCraftingProfessions-1.0.xml
+lib\LibCrafts-1.0\LibCrafts-1.0.xml
+lib\LibItemTooltip-1.0\LibItemTooltip-1.0.xml
+
+src\Environment.lua
+src\Compatibility.lua
+
+src\db\Database.lua
+src\db\Character.lua
+src\db\CharacterRepository.lua
+src\db\CraftRepository.lua
+
+src\locale\Tools.lua
+src\locale\enUS.lua
+src\locale\deDE.lua
+src\locale\esES.lua
+src\locale\frFR.lua
+src\locale\koKR.lua
+src\locale\ptBR.lua
+src\locale\ruRU.lua
+src\locale\zhCN.lua
+src\locale\zhTW.lua
+
+src\ui\Tools.lua
+src\ui\VanillaFramePool.lua
+src\ui\list\CraftsListItem.lua
+src\ui\list\CraftsList.lua
+src\ui\filters\SearchField.lua
+src\ui\filters\FiltersPanel.lua
+src\ui\window\PlacementPolicy.lua
+src\ui\window\OpenButton.lua
+src\ui\window\Window.lua
+src\ui\TooltipEnhancer.lua
+src\ui\DataStateManager.lua
+src\ui\UIManager.lua
+
+src\DevTools.lua
+src\Gromissingcrafts.lua

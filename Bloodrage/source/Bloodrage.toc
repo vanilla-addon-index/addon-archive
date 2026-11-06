@@ -1,0 +1,7 @@
+## Interface: 12000
+## Title: Bloodrage
+## Notes: To make Warrior tanking easier.
+## Author: Ollowain
+## DefaultState: enabled
+## OptionalDeps: none
+Bloodrage.xml
