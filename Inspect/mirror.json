@@ -1,0 +1,25 @@
+{
+  "upstream": "https://github.com/shirsig/inspect",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "inspect",
+    "name": "inspect",
+    "url": "https://github.com/shirsig/inspect",
+    "api": "https://api.github.com/repos/shirsig/inspect"
+  },
+  "commit": "a91c16ebfe09a0ef8bfb92e4b593c8da795346e9",
+  "sourceFiles": {
+    "!!inspect.toc": {
+      "sha256": "2b74378b31a32e2dfb8b8bb3e4f164b8080d2f1fcfc09edcf5e959b81d61196f",
+      "bytes": 97
+    },
+    "inspect.lua": {
+      "sha256": "df13733f8c5722bfcbce5356b80c5794b0fa2b0ab9bf6b8675bb493964af4f63",
+      "bytes": 1612
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

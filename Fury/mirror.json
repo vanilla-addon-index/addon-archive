@@ -1,0 +1,69 @@
+{
+  "upstream": "https://github.com/cubenicke/Fury",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "cubenicke",
+    "repo": "Fury",
+    "name": "Fury",
+    "url": "https://github.com/cubenicke/Fury",
+    "api": "https://api.github.com/repos/cubenicke/Fury"
+  },
+  "commit": "e832d00beebe52c32989f8621e4eaf05730ecd7e",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "53f126c2374ac9bd93952e147a37e0047d56bb5a37db144f36ce8718a19369b8",
+      "bytes": 1016
+    },
+    "Fury.lua": {
+      "sha256": "99fd25fc8842d543a8ce90f5dbd8bd11c524faafe98ec061e595222c83938add",
+      "bytes": 99590
+    },
+    "Fury.toc": {
+      "sha256": "2e3edd837a9c41e239d54f7b1725dddf7798439bcbf233ad0fd84736592a9bc6",
+      "bytes": 334
+    },
+    "Fury.xml": {
+      "sha256": "f7b360bf03d31fadafeb52e628cd71fd9459867ea26f0cf61ceb421c3766cfb5",
+      "bytes": 527
+    },
+    "IsMounted/IsMounted.lua": {
+      "sha256": "607f30d5fad3df2c0860757a05a948f295d83a000cac34b4d69134d8ca238ad4",
+      "bytes": 10757
+    },
+    "IsMounted/IsMounted.toc": {
+      "sha256": "17090d2ab0365c3e2e27b12407315e21207e86f36cc75cc74acff3de31ea263f",
+      "bytes": 272
+    },
+    "IsMounted/IsMounted.txt": {
+      "sha256": "906baeacd04b08f882f810d7defcb16111565e467d9f595210da33f627a04bce",
+      "bytes": 2259
+    },
+    "IsMounted/IsMounted.xml": {
+      "sha256": "bb167098caa8c833efec1bf0b93324ca0b96242f2939c910758cb09665d7e6cd",
+      "bytes": 409
+    },
+    "IsMounted/localization.de.lua": {
+      "sha256": "fe8e7e26193808647e9ad35de32cb8054f78d3b451548f26a5b7660ceb2704d9",
+      "bytes": 157
+    },
+    "IsMounted/localization.en.lua": {
+      "sha256": "7b4443b1034a9a3cc0e82bd5c187cedfa91b2f0bef912848d4a38e807b5682a5",
+      "bytes": 196
+    },
+    "IsMounted/localization.fr.lua": {
+      "sha256": "53574b6df931afe7b4363f0d7c67e9ed642d0e6b6f6b21758bb84c43f6bdf8a4",
+      "bytes": 156
+    },
+    "Localization.lua": {
+      "sha256": "5ae87ad45ef588e8a9f38bc2c916ea0b63e51cde4068b1f37178dabff17a0edb",
+      "bytes": 15315
+    },
+    "README.md": {
+      "sha256": "1d55f18978eb5af3861bad192b2ba3376c29b64c332985f8d0a54b1135fe759d",
+      "bytes": 12531
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

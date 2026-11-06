@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: Get Head
+## Author: |c013220ffTrumpetX|r
+## Version: 1.0.0
+## Notes: https://github.com/trumpetx/GetHead
+## SavedVariables: GetHeadLogoutDisabled GetHeadBroadcastDisabled
+
+VersionUtil.lua
+GetHead.xml

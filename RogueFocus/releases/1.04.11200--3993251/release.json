@@ -1,0 +1,9 @@
+{
+  "id": "3993251",
+  "tag": "1.04.11200",
+  "name": "v1.04-11200",
+  "body": "RogueFocus Classic backported to Vanilla.\n- Combo / Energy / Energy Tick (with option for audio)\n- **/rfc** for options\n- Works for Rogues and Catform Druids\n",
+  "published": "2016-08-28T18:12:22Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/RogueFocus/releases/tag/1.04.11200"
+}

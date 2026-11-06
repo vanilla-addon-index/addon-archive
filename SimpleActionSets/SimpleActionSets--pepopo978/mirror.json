@@ -1,0 +1,61 @@
+{
+  "upstream": "https://github.com/pepopo978/SimpleActionSets",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "pepopo978",
+    "repo": "SimpleActionSets",
+    "name": "SimpleActionSets",
+    "url": "https://github.com/pepopo978/SimpleActionSets",
+    "api": "https://api.github.com/repos/pepopo978/SimpleActionSets"
+  },
+  "commit": "e2486ad2169333c1e69f18815224fb7962269ca0",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "localization.lua": {
+      "sha256": "8dab518c683174a40af48d5b174255a30e331269014f442c70093dbf4dcac518",
+      "bytes": 6646
+    },
+    "README.md": {
+      "sha256": "d7cfbe3b8ec4f7090a4646549ee82a13dd2775b57999092106b51cb4a3ce90db",
+      "bytes": 1996
+    },
+    "sas.tga": {
+      "sha256": "501bf39652af559790f21959f8cd4716a64399a7096f37a04b9040fcfa7a8677",
+      "bytes": 4140
+    },
+    "SimpleActionSets_AnsiReader.lua": {
+      "sha256": "ce064c7e1765c42c3b46b0f05e386bfe676ff8e3ec9a8d77bcfa396e9e1ac1df",
+      "bytes": 83
+    },
+    "SimpleActionSets_Hooks.lua": {
+      "sha256": "5310818aa6e7b73a5ba31c243ca1c419fda2363f5fd411180948013a6e8cbd2d",
+      "bytes": 7916
+    },
+    "SimpleActionSets_UTF8Reader.lua": {
+      "sha256": "590f7fa6df9666222f9dbe1aaa7d82ec32dd88876801961315f07107f6d4f23f",
+      "bytes": 84
+    },
+    "SimpleActionSets.lua": {
+      "sha256": "66e22dad28bb9294b7474f36032f7547c17fbe17684fdba0bcb4c2f377a8a7e8",
+      "bytes": 66239
+    },
+    "SimpleActionSets.toc": {
+      "sha256": "e7b9ba0db21dc9db92109762df1e1ea3a1b23408cd9224e439a79782e52a6036",
+      "bytes": 399
+    },
+    "SimpleActionSets.txt": {
+      "sha256": "48a9bd70b6bfe4d9efa3b32808e8104c3d7f402a8208686b3b30deae9414699b",
+      "bytes": 76
+    },
+    "SimpleActionSets.xml": {
+      "sha256": "d6ecd1ca7fee22d45a3a7627438481d8e545d19974858a588475c78e42bb426f",
+      "bytes": 54422
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,66 @@
+{
+  "upstream": "https://github.com/Road-block/RogueFocus",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "RogueFocus",
+    "name": "RogueFocus",
+    "url": "https://github.com/Road-block/RogueFocus",
+    "api": "https://api.github.com/repos/Road-block/RogueFocus"
+  },
+  "commit": "1f0b166192dc8ace0cb42d321eb6b5289b141a49",
+  "sourceFiles": {
+    "localization.lua": {
+      "sha256": "9fc5760a6036e8981561164196324934f1012c3a7df74ff652a0353f15b7daa4",
+      "bytes": 488
+    },
+    "README.md": {
+      "sha256": "807d28b0c68d4fd0863a78eec76845a8b281dbdd21001732366e45f3398fb12b",
+      "bytes": 111
+    },
+    "RogueFocus.lua": {
+      "sha256": "0a0febb3ce020edc1cee44a483416028bb843c977fad393ab9c2bf17a8a7bf2a",
+      "bytes": 8686
+    },
+    "RogueFocus.toc": {
+      "sha256": "a053eaf451d91c832c52b4ed38f34efe1dec2c724b01ccabb821b517eb0e28f8",
+      "bytes": 174
+    },
+    "RogueFocus.xml": {
+      "sha256": "482d1adf81847fd6853e2341fcead70b98de8a27fb642bf43cc474bd98d468f7",
+      "bytes": 10808
+    },
+    "RogueFocusOptions.lua": {
+      "sha256": "35cf6d86a75ce6b21c7d069830e62d98f956fa143143a7dc4c370bc0fa7bfce5",
+      "bytes": 3701
+    },
+    "RogueFocusOptions.xml": {
+      "sha256": "af7846a3ae7983b561202ef0ecd13ac1b575c17733215cdf3030e2b28604fc5f",
+      "bytes": 5778
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "3993251": {
+      "tag": "1.04.11200",
+      "folder": "1.04.11200--3993251",
+      "assets": {
+        "2219324": {
+          "sha256": "037cce079ddd1b529a769806bd25e53f3e97411b0fdf2a9cee8d795808a8d42c",
+          "bytes": 7038,
+          "id": "2219324",
+          "name": "RogueFocus-1.04-11200.zip",
+          "url": "https://github.com/Road-block/RogueFocus/releases/download/1.04.11200/RogueFocus-1.04-11200.zip",
+          "path": "releases/1.04.11200--3993251/assets/RogueFocus-1.04-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "1f9920cde5cfef9683bb7ca7950c8da8f05c7a03886626805593c683d7bd3e36",
+        "bytes": 5616,
+        "path": "releases/1.04.11200--3993251/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/RogueFocus/tarball/1.04.11200"
+      }
+    }
+  }
+}

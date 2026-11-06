@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/shagu/ShaguBoat",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguBoat",
+    "name": "ShaguBoat",
+    "url": "https://github.com/shagu/ShaguBoat",
+    "api": "https://api.github.com/repos/shagu/ShaguBoat"
+  },
+  "commit": "e2b3877a31cefdc36cf6fe46f4ef7a2f98dc228a",
+  "sourceFiles": {
+    "boat.lua": {
+      "sha256": "686056b7c378fc50d0520eee106df4900075f9afb12d1b628f5d9651dfe89277",
+      "bytes": 3758
+    },
+    "LICENSE": {
+      "sha256": "3def8121bde2dc90aa70bebf04030d96e62973c4bec610a3426d9f29ef7faf33",
+      "bytes": 1086
+    },
+    "README.md": {
+      "sha256": "9f0d0809b8ed592d03c176636ac326c216371767f54af7f91cd70b566b022cd1",
+      "bytes": 586
+    },
+    "screenshot.jpg": {
+      "sha256": "cf3866a12631f56813e378b48149fc12bb6ecca9f08adc53fa00925a04f9dc04",
+      "bytes": 81329
+    },
+    "ShaguBoat.toc": {
+      "sha256": "b2c9b4d1c3760d2e90f9c1a76157f08ca77a8c48d467f3abfc5193e1bc4ef2ee",
+      "bytes": 204
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

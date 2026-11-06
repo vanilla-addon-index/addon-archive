@@ -1,0 +1,78 @@
+{
+  "upstream": "https://github.com/Necroskillz/SmartLoot",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Necroskillz",
+    "repo": "SmartLoot",
+    "name": "SmartLoot",
+    "url": "https://github.com/Necroskillz/SmartLoot",
+    "api": "https://api.github.com/repos/Necroskillz/SmartLoot"
+  },
+  "commit": "4e06b1800eeb6298d05c9acae07a6ac160185d36",
+  "sourceFiles": {
+    "Images/SmartLootMinimapButton-Down.blp": {
+      "sha256": "6385bc5340b00c78fb6d51b8ae4dd07bd0f48abbe6fb0947317619ee9fb11229",
+      "bytes": 2564
+    },
+    "Images/SmartLootMinimapButton-Up.blp": {
+      "sha256": "ac7bf423fd6f6204eba783c8390a317aeef2f818d27376c8a70eacc02be3a66b",
+      "bytes": 2564
+    },
+    "README": {
+      "sha256": "c5650f766a4029b2ae37b26bc9a054eb3a1aef2e3c0b6e83df53d6d1a636f8f8",
+      "bytes": 669
+    },
+    "SmartLoot.lua": {
+      "sha256": "eb522f5ed17d7b93ce3ff97d9acd88e5da4b94ed142d40e9f8cee2ccd9966ab4",
+      "bytes": 9259
+    },
+    "SmartLoot.toc": {
+      "sha256": "4f76206815bfb11995f1b05d2cbec1603dbcf2bc8d620c8bac4d145aeb2d9378",
+      "bytes": 240
+    },
+    "SmartLoot.xml": {
+      "sha256": "6c7629ac1b73f0292d9099165e4916c412907b887afc461ebef7a2ce73e59add",
+      "bytes": 7365
+    },
+    "SmartLootButton.lua": {
+      "sha256": "166404ecf2c617b5440abf12d19b71ab1393ead284f53bcda7ecd0634b550029",
+      "bytes": 1241
+    },
+    "SmartLootButton.xml": {
+      "sha256": "ff5227bb1642b5dd8908cd0fbc252eb1b6a86d8e5be795900867e47011c8b633",
+      "bytes": 1605
+    },
+    "SmartLootOptions.lua": {
+      "sha256": "c257fc2ca99064874908116ae3dedaa9cb074dc2d8cffad0797e48d0216a7574",
+      "bytes": 5886
+    },
+    "SmartLootOptions.xml": {
+      "sha256": "bc2045365cca31f58027cd2cd3d682da683faaf1600dc4cf904a011d95b741cc",
+      "bytes": 19218
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "109438": {
+      "tag": "v1.1",
+      "folder": "v1.1--109438",
+      "assets": {
+        "43675": {
+          "sha256": "78eab88e258a527b5573d544b5578402aef6a0a81a953299b674d4d262b67c6a",
+          "bytes": 13852,
+          "id": "43675",
+          "name": "SmartLoot.zip",
+          "url": "https://github.com/Necroskillz/SmartLoot/releases/download/v1.1/SmartLoot.zip",
+          "path": "releases/v1.1--109438/assets/SmartLoot.zip"
+        }
+      },
+      "source": {
+        "sha256": "ffeda6e0041f8a8908e839069e022b80613a7f4e8d5524bc7b5a656c8a8c849e",
+        "bytes": 10407,
+        "path": "releases/v1.1--109438/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Necroskillz/SmartLoot/tarball/v1.1"
+      }
+    }
+  }
+}

@@ -1,0 +1,460 @@
+if UnitClass("player") ~= "Rogue" then return end
+
+function IWin:InitializeRotation()
+	IWin:InitializeRotationCore()
+	IWin_CombatVar["energyPerSecondPrediction"] = IWin_Settings["energyPerSecondPrediction"] or 0
+	if IWin:IsBuffActive("player", "Adrenaline", nil, false) then
+		IWin_CombatVar["energyPerSecondPrediction"] = IWin_CombatVar["energyPerSecondPrediction"] * 2
+	end
+end
+
+function IWin:Ambush()
+	local spell = "Ambush"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:IsBuffActive("player", "Stealth")
+		and IWin:IsBehind()
+		and IWin:IsDaggerEquipped()
+		and IWin:IsEnergyCostAvailable(spell) then
+			IWin:Cast(spell)
+	end
+end
+
+function IWin:Backstab()
+	local spell = "Backstab"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:IsBehind()
+		and IWin:IsDaggerEquipped()
+		and IWin:IsEnergyAvailable(spell) then
+			IWin:Cast(spell)
+	end
+end
+
+function IWin:SetReservedEnergyBackstab()
+	local spell = "Backstab"
+	if not IWin:IsSpellLearnt(spell, nil, false) then return end
+	if IWin:IsBehind(false)
+		and IWin:IsDaggerEquipped(false) then
+			IWin:SetReservedEnergy(spell, "nocooldown")
+	end
+end
+
+function IWin:BladeFlurry(cancelBuff)
+	local spell = "Blade Flurry"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin_Settings["bladeFlurry"] == "off" then return end
+	if not cancelBuff and IWin:GetEnemyInRange("meleeAutoAttack") - (IWin:GetTimeToDie() < 4 and 1 or 0) > 1 then
+		if IWin:IsEnergyAvailable(spell) then
+			IWin:Cast(spell)
+		end
+	else
+		IWin:CancelPlayerBuff(spell)
+	end
+end
+
+function IWin:CastCDShortOffensiveGCD(skipWindowControl, skipTargetControl)
+	IWin:Debug("+++ checking conditions: Short Offensive CD with GCD")
+	if not skipTargetControl and not IWin:IsCDShortOffensiveTarget(true) or not IWin_CombatVar["queueGCD"] then return end
+	if IWin:GetPower("player") <= 60 then IWin:CastCDOffensive("Adrenaline Rush", skipWindowControl, true) end
+	IWin:CastCDOffensive("Perception", skipWindowControl, true)
+end
+
+function IWin:CastCDShortOffensiveNoGCD(skipWindowControl, skipTargetControl)
+	IWin:Debug("+++ checking conditions: Short Offensive CD with no GCD")
+	if not skipTargetControl and not IWin:IsCDShortOffensiveTarget(true) then return end
+	IWin:CastCDOffensive("Blood Fury", skipWindowControl)
+	IWin:CastCDOffensive("Berserking", skipWindowControl)
+end
+
+function IWin:CastCDLongOffensiveGCD(skipWindowControl, skipTargetControl)
+	--none
+end
+
+function IWin:CheapShot()
+	local spell = "Cheap Shot"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:IsBuffActive("player", "Stealth")
+		and IWin:IsEnergyCostAvailable(spell) then
+			IWin:Cast(spell)
+	end
+end
+
+function IWin:DeadlyThrow()
+	local spell = "Deadly Throw"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:IsInRange(spell)
+		and IWin:IsCasting("target")
+		and IWin:IsEnergyCostAvailable(spell) then
+			IWin:Cast(spell)
+	end
+end
+
+function IWin:Envenom()
+	local spell = "Envenom"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:GetComboPoints() < 3
+		and IWin:GetComboPoints(false) > 0
+		and IWin:GetBuffRemaining("player", spell) < 3
+		and IWin:GetBuffRemaining("player", spell) <= IWin:GetBuffRemaining("player", "Slice and Dice")
+		and (
+				IWin:GetTimeToDie() > 6 --longer fight
+				or ( --solo will engage next fight
+						IWin:GetHealthPercent("player") > 50
+						and IWin:GetGroupSize() == 1
+					)
+				or ( --group will engage next pack
+						not IWin:IsBoss()
+						and IWin:GetGroupSize(false) > 1
+					)
+			)
+		and IWin:IsEnergyAvailable(spell) then
+			IWin_CombatVar["queueGCD"] = false
+			-- Energy pooling
+			if IWin:GetTimeToEnergyMax() < IWin_Settings["playerReactionDelay"]
+				or IWin:GetBuffRemaining("player", spell) < IWin_Settings["playerReactionDelay"] then
+					IWin:Cast(spell)
+			end
+	end
+end
+
+function IWin:SetReservedEnergyEnvenom()
+	local spell = "Envenom"
+	if not IWin:IsSpellLearnt(spell, nil, false) then return end
+	if IWin:GetComboPoints(false) < 3
+		and IWin:GetComboPoints(false) > 0
+		and IWin:GetBuffRemaining("player", spell, nil, false) < 3
+		and IWin:GetBuffRemaining("player", spell, nil, false) <= IWin:GetBuffRemaining("player", "Slice and Dice", nil, false)
+		and (
+				IWin:GetTimeToDie(false) > 6 --longer fight
+				or ( --solo will engage next fight
+						IWin:GetHealthPercent("player", false) > 50
+						and IWin:GetGroupSize(false) == 1
+					)
+				or ( --group will engage next pack
+						not IWin:IsBoss(false)
+						and IWin:GetGroupSize(false) > 1
+					)
+			) then
+				IWin:SetReservedEnergy(spell, "buff", "player")
+	end
+end
+
+function IWin:Eviscerate()
+	local spell = "Eviscerate"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if (
+			IWin:IsMaxComboPoints()
+			or (
+					IWin:GetComboPoints() > 2
+					and IWin:GetTimeToDie() < 3
+				)
+		)
+		and IWin:IsEnergyAvailable(spell) then
+				IWin:Cast(spell)
+	end
+end
+
+function IWin:SetReservedEnergyEviscerate()
+	local spell = "Eviscerate"
+	if not IWin:IsSpellLearnt(spell, nil, false) then return end
+	if IWin:IsMaxComboPoints(false)
+		or (
+				IWin:GetComboPoints(false) > 2
+				and IWin:GetTimeToDie(false) < 3
+			) then
+				IWin:SetReservedEnergy(spell, "nocooldown")
+	end
+end
+
+function IWin:ExposeArmor()
+	local spell = "Expose Armor"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:GetTalentRank("Improved Expose Armor") == 2
+		and IWin:IsMaxComboPoints()
+		and IWin:IsBoss()
+		and IWin:GetTimeToDie() > IWin:GetBuffRemaining("target", spell)
+		and IWin:GetBuffRemaining("target", spell, nil, false) < 3
+		and IWin:IsEnergyAvailable(spell) then
+			IWin_CombatVar["queueGCD"] = false
+			-- Energy pooling
+			if IWin:GetTimeToEnergyMax() < IWin_Settings["playerReactionDelay"]
+				or IWin:GetBuffRemaining("target", spell, nil, false) < IWin_Settings["playerReactionDelay"] then
+					IWin:Cast(spell)
+			end
+	end
+end
+
+function IWin:SetReservedEnergyExposeArmor()
+	local spell = "Expose Armor"
+	if not IWin:IsSpellLearnt(spell, nil, false) then return end
+	if IWin:GetTalentRank("Improved Expose Armor", false) == 2
+		and IWin:IsMaxComboPoints(false)
+		and IWin:IsBoss(false)
+		and IWin:GetTimeToDie(false) > IWin:GetBuffRemaining("target", spell, nil, false)
+		and IWin:GetBuffRemaining("target", spell, nil, false) < 3 then
+			IWin:SetReservedEnergy(spell, "buff", "target")
+	end
+end
+
+function IWin:Garrote()
+	local spell = "Garrote"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:IsBuffActive("player", "Stealth")
+		and IWin:IsBehind()
+		and not IWin:IsImmune("target", "bleed")
+		and IWin:IsEnergyCostAvailable(spell) then
+			IWin:Cast(spell)
+	end
+end
+
+function IWin:Gouge()
+	local spell = "Gouge"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if not IWin:IsBehind()
+		and IWin:IsSpellLearnt("Backstab")
+		and not IWin:IsSpellLearnt("Noxious Assault")
+		and not IWin:IsSpellLearnt("Hemorrhage")
+		and IWin:IsTanking()
+		and not IWin:IsBoss()
+		and IWin:IsDaggerEquipped()
+		and not IWin:IsBuffActive("target", spell)
+		and IWin:IsEnergyAvailable(spell) then
+			IWin:Cast(spell)
+	end
+end
+
+function IWin:SetReservedEnergyGouge()
+	local spell = "Gouge"
+	if not IWin:IsSpellLearnt(spell, nil, false) then return end
+	if not IWin:IsBehind(false)
+		and IWin:IsSpellLearnt("Backstab", nil, false)
+		and not IWin:IsSpellLearnt("Noxious Assault", nil, false)
+		and not IWin:IsSpellLearnt("Hemorrhage", nil, false)
+		and IWin:IsTanking(false)
+		and not IWin:IsBoss(false)
+		and IWin:IsDaggerEquipped(false)
+		and not IWin:IsBuffActive("target", spell, nil, false) then
+			IWin:SetReservedEnergy(spell, "buff", "target")
+	end
+end
+
+function IWin:Hemorrhage()
+	local spell = "Hemorrhage"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:IsEnergyAvailable(spell) then
+		IWin:Cast(spell)
+	end
+end
+
+function IWin:Kick()
+	local spell = "Kick"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:IsInRange(spell)
+		and IWin:IsCasting("target")
+		and IWin:IsEnergyCostAvailable(spell) then
+			IWin:Cast(spell)
+	end
+end
+
+function IWin:NoxiousAssault()
+	local spell = "Noxious Assault"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:IsEnergyAvailable(spell) then
+		IWin:Cast(spell)
+	end
+end
+
+function IWin:PickPocket()
+	local spell = "Pick Pocket"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:IsBuffActive("player", "Stealth")
+		and IWin:IsCreatureType("Humanoid") then
+			IWin:Cast(spell, false)
+	end
+end
+
+function IWin:Riposte()
+	local spell = "Riposte"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:IsRiposteAvailable()
+		and IWin:IsEnergyAvailable(spell) then
+			IWin:Cast(spell)
+	end
+end
+
+function IWin:Rupture()
+	local spell = "Rupture"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:IsMaxComboPoints()
+		and IWin:GetTalentRank("Taste for Blood") ~= 0
+		and (
+					(
+						not IWin:IsImmune("target", "bleed")
+						and IWin:GetTimeToDie() > IWin:GetRuptureDuration()
+						and IWin:GetBuffRemaining("target", "Rupture", "player") < 3
+					)
+				or IWin:GetBuffRemaining("player", "Taste for Blood") < 3
+			)
+		and IWin:IsEnergyAvailable(spell) then
+			IWin_CombatVar["queueGCD"] = false
+			-- Energy pooling
+			if IWin:GetTimeToEnergyMax() < IWin_Settings["playerReactionDelay"]
+				or IWin:GetBuffRemaining("target", "Rupture", "player") < IWin_Settings["playerReactionDelay"]
+				or IWin:GetBuffRemaining("player", "Taste for Blood") < IWin_Settings["playerReactionDelay"] then
+					IWin:Cast(spell)
+			end
+	end
+end
+
+function IWin:SetReservedEnergyRupture()
+	local spell = "Rupture"
+	if not IWin:IsSpellLearnt(spell, nil, false) then return end
+	if IWin:IsMaxComboPoints(false)
+		and IWin:GetTalentRank("Taste for Blood", false) ~= 0
+		and (
+					(
+						not IWin:IsImmune("target", "bleed", false)
+						and IWin:GetTimeToDie(false) > IWin:GetRuptureDuration(false)
+						and IWin:GetBuffRemaining("target", "Rupture", "player", false) < 3
+					)
+				or IWin:GetBuffRemaining("player", "Taste for Blood", nil, false) < 3
+			) then
+				IWin:SetReservedEnergy(spell, "nocooldown")
+	end
+end
+
+function IWin:ShadowOfDeath()
+	local spell = "Shadow of Death"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:IsMaxComboPoints()
+		and IWin:IsEnergyAvailable(spell) then
+			IWin:Cast(spell)
+	end
+end
+
+function IWin:SetReservedEnergyShadowOfDeath()
+	local spell = "Shadow of Death"
+	if not IWin:IsSpellLearnt(spell, nil, false) then return end
+	if IWin:IsMaxComboPoints(false) then
+		IWin:SetReservedEnergy(spell, "nocooldown")
+	end
+end
+
+function IWin:SinisterStrike()
+	local spell = "Sinister Strike"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:IsEnergyAvailable(spell) then
+		IWin:Cast(spell)
+	end
+end
+
+function IWin:SliceAndDice()
+	local spell = "Slice and Dice"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:GetComboPoints() < 3
+		and IWin:GetComboPoints(false) > 0
+		and IWin:GetBuffRemaining("player", spell) < 3
+		and (
+				IWin:GetTimeToDie() > 6 --longer fight
+				or ( --solo will engage next fight
+						IWin:GetHealthPercent("player") > 50
+						and IWin:GetGroupSize() == 1
+					)
+				or ( --group will engage next pack
+						not IWin:IsBoss()
+						and IWin:GetGroupSize(false) > 1
+					)
+			)
+		and IWin:IsEnergyAvailable(spell) then
+			IWin_CombatVar["queueGCD"] = false
+			-- Energy pooling
+			if IWin:GetTimeToEnergyMax() < IWin_Settings["playerReactionDelay"]
+				or IWin:GetBuffRemaining("player", spell) < IWin_Settings["playerReactionDelay"] then
+					IWin:Cast(spell)
+			end
+	end
+end
+
+function IWin:SetReservedEnergySliceAndDice()
+	local spell = "Slice and Dice"
+	if not IWin:IsSpellLearnt(spell, nil, false) then return end
+	if IWin:GetComboPoints(false) < 3
+		and IWin:GetComboPoints(false) > 0
+		and IWin:GetBuffRemaining("player", spell, nil, false) < 3
+		and (
+				IWin:GetTimeToDie(false) > 6 --longer fight
+				or ( --solo will engage next fight
+						IWin:GetHealthPercent("player", false) > 50
+						and IWin:GetGroupSize(false) == 1
+					)
+				or ( --group will engage next pack
+						not IWin:IsBoss(false)
+						and IWin:GetGroupSize(false) > 1
+					)
+			) then
+				IWin:SetReservedEnergy(spell, "buff", "player")
+	end
+end
+
+function IWin:SurpriseAttack()
+	local spell = "Surprise Attack"
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:IsSurpriseAttackAvailable()
+		and IWin:GetTimeToEnergyMax() > IWin_Settings["GCDEnergy"]
+		and IWin:IsEnergyAvailable(spell) then
+			IWin:Cast(spell)
+	end
+end
+
+function IWin:UseItemConsumableOffensiveNoGCD(skipWindowControl, skipTargetControl)
+	IWin:Debug("+++ checking conditions: Consumable Offensive NoGCD")
+	if not skipTargetControl and not IWin:IsItemConsumableOffensiveTarget(true) then return end
+	IWin:UseItemConsumableOffensive("Juju Flurry", skipWindowControl)
+	IWin:UseItemConsumableOffensive("Potion of Quickness", skipWindowControl)
+end
+
+function IWin:UseItemConsumableAOEOffensiveNoGCD(skipTargetsControl, skipTargetControl)
+	IWin:Debug("+++ checking conditions: AOE Consumable Offensive")
+	if not skipTargetControl and not IWin:IsItemConsumableAOEOffensiveTarget(true) then return end
+	if not IWin:IsBuffActive("player", "Fire Shield", nil, false)
+		and not IWin:IsImmune("target", "fire") then
+			IWin:UseItemConsumableAOEOffensive("Oil of Immolation", skipTargetsControl, IWin_Settings["targetsOilOfImmolation"], "meleeAutoAttack")
+	end
+end
+
+function IWin:UseItemConsumableAOEOffensiveGCD(skipTargetsControl, skipTargetControl)
+	IWin:Debug("+++ checking conditions: AOE Consumable Offensive")
+	if not skipTargetControl and not IWin:IsItemConsumableAOEOffensiveTarget(true) then return end
+	if IWin:IsCreatureType("Undead")
+		and not IWin:IsImmune("target", "holy") then
+			IWin:UseItemConsumableAOEOffensive("Stratholme Holy Water", skipTargetsControl, IWin_Settings["targetsHolyWater"], "meleeAutoAttack")
+	end
+	if not IWin:IsImmune("target", "fire") then
+		IWin:UseItemConsumableAOEOffensive("Goblin Sapper Charge", skipTargetsControl, IWin_Settings["targetsSapper"], "meleeAutoAttack")
+	end
+	if not IWin:IsImmune("target", "fire") then
+		IWin:UseItemConsumableAOEOffensive("Dense Dynamite", skipTargetsControl, IWin_Settings["targetsDenseDynamite"], "meleeAutoAttack")
+	end
+end
+
+function IWin:UseItemTrinketOffensiveGCD(skipWindowControl, skipTargetControl)
+	--none
+end
+
+function IWin:UseItemTrinketOffensiveNoGCD(skipWindowControl, skipTargetControl)
+	IWin:Debug("+++ checking conditions: Trinket Offensive NoGCD")
+	if not skipTargetControl and not IWin:IsItemTrinketOffensiveTarget(true) then return end
+	IWin:UseItemTrinketOffensive("Badge of the Swarmguard", skipWindowControl)
+	IWin:UseItemTrinketOffensive("Earthstrike", skipWindowControl)
+	IWin:UseItemTrinketOffensive("Jom Gabbar", skipWindowControl)
+	IWin:UseItemTrinketOffensive("Kiss of the Spider", skipWindowControl)
+	IWin:UseItemTrinketOffensive("Molten Emberstone", skipWindowControl)
+	IWin:UseItemTrinketOffensive("Slayer's Crest", skipWindowControl)
+	IWin:UseItemTrinketOffensive("Venomous Totem", skipWindowControl)
+	IWin:UseItemTrinketOffensive("Zandalarian Hero Medallion", skipWindowControl)
+end
+
+function IWin:UseItemTrinketOffensivePrepull(skipWindowControl, skipTargetControl)
+	IWin:Debug("+++ checking conditions: Offensive Trinket pre-pull")
+	if not skipTargetControl and not IWin:IsItemTrinketOffensiveTarget(true, true) then return end
+	IWin:UseItemTrinketOffensive("Gnomish Battle Chicken", skipWindowControl)
+end

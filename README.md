@@ -499,43 +499,43 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [RestBar](RestBar/) | Unit Frames | 1 | mirrored |
 | [Rested](Rested/) | Quests & Leveling | 1 | mirrored |
 | [Retarget](Retarget/) | PvP | 1 | mirrored |
-| [RezzTimer](RezzTimer/) | Raid & Party | 1 | new |
-| [RogueFocus](RogueFocus/) | Class | 1 | new |
-| [RoguePack](RoguePack/) | Class | 1 | new |
-| [RogueRota](RogueRota/) | Class | 1 | new |
-| [RosterFilter](RosterFilter/) | UI & Appearance | 1 | new |
-| [RWSync](RWSync/) | Boss Mods | 1 | new |
-| [SaladCthun](SaladCthun/) | Boss Mods | 1 | new |
-| [SaySapped](SaySapped/) | PvP | 1 | new |
-| [SeeThunGroups](SeeThunGroups/) | Boss Mods | 1 | new |
-| [Sentry](Sentry/) | PvP | 1 | new |
-| [ShaguActions](ShaguActions/) | Action Bars | 1 | new |
-| [ShaguBoat](ShaguBoat/) | Professions | 1 | new |
-| [ShaguChat](ShaguChat/) | Chat & Social | 1 | new |
-| [ShaguColor](ShaguColor/) | Chat & Social | 1 | new |
-| [ShaguCopy](ShaguCopy/) | Chat & Social | 1 | new |
-| [ShaguInventory](ShaguInventory/) | Bags & Inventory | 1 | new |
-| [ShaguJunk](ShaguJunk/) | Auction & Economy | 1 | new |
-| [ShaguKill](ShaguKill/) | Combat | 1 | new |
-| [ShaguPlates](ShaguPlates/) | Unit Frames | 1 | new |
-| [ShaguScan](ShaguScan/) | Miscellaneous | 1 | new |
-| [ShaguStance](ShaguStance/) | Class | 1 | new |
-| [ShaguTooltips](ShaguTooltips/) | Tooltip | 1 | new |
-| [ShamanFix](ShamanFix/) | Class | 1 | new |
-| [ShieldBuddy](ShieldBuddy/) | Class | 1 | new |
-| [ShowChests](ShowChests/) | Map & Minimap | 1 | new |
-| [SilverDragon](SilverDragon/) | Map & Minimap | 1 | new |
-| [SimpleActionSets](SimpleActionSets/) | Action Bars | 2 | new |
-| [SimpleAuras](SimpleAuras/) | Buffs & Debuffs | 1 | new |
-| [SimpleBars](SimpleBars/) | Unit Frames | 1 | new |
-| [SimpleRaidTargetIcons](SimpleRaidTargetIcons/) | Raid & Party | 1 | new |
-| [SKMap](SKMap/) | Map & Minimap | 1 | new |
-| [SmallerRollFrames](SmallerRollFrames/) | UI & Appearance | 1 | new |
-| [SmartDebuffCheck](SmartDebuffCheck/) | Buffs & Debuffs | 1 | new |
-| [SmartHealer](SmartHealer/) | Raid & Party | 2 | new |
-| [SmartLoot](SmartLoot/) | Raid & Party | 1 | new |
-| [SmartRoll](SmartRoll/) | Loot Distribution | 1 | new |
-| [SnagaLoatheb-TurtleEdition](SnagaLoatheb-TurtleEdition/) | Boss Mods | 1 | new |
+| [RezzTimer](RezzTimer/) | Raid & Party | 1 | mirrored |
+| [RogueFocus](RogueFocus/) | Class | 1 | mirrored |
+| [RoguePack](RoguePack/) | Class | 1 | mirrored |
+| [RogueRota](RogueRota/) | Class | 1 | mirrored |
+| [RosterFilter](RosterFilter/) | UI & Appearance | 1 | mirrored |
+| [RWSync](RWSync/) | Boss Mods | 1 | mirrored |
+| [SaladCthun](SaladCthun/) | Boss Mods | 1 | mirrored |
+| [SaySapped](SaySapped/) | PvP | 1 | mirrored |
+| [SeeThunGroups](SeeThunGroups/) | Boss Mods | 1 | mirrored |
+| [Sentry](Sentry/) | PvP | 1 | mirrored |
+| [ShaguActions](ShaguActions/) | Action Bars | 1 | mirrored |
+| [ShaguBoat](ShaguBoat/) | Professions | 1 | mirrored |
+| [ShaguChat](ShaguChat/) | Chat & Social | 1 | mirrored |
+| [ShaguColor](ShaguColor/) | Chat & Social | 1 | mirrored |
+| [ShaguCopy](ShaguCopy/) | Chat & Social | 1 | mirrored |
+| [ShaguInventory](ShaguInventory/) | Bags & Inventory | 1 | mirrored |
+| [ShaguJunk](ShaguJunk/) | Auction & Economy | 1 | mirrored |
+| [ShaguKill](ShaguKill/) | Combat | 1 | mirrored |
+| [ShaguPlates](ShaguPlates/) | Unit Frames | 1 | mirrored |
+| [ShaguScan](ShaguScan/) | Miscellaneous | 1 | mirrored |
+| [ShaguStance](ShaguStance/) | Class | 1 | mirrored |
+| [ShaguTooltips](ShaguTooltips/) | Tooltip | 1 | mirrored |
+| [ShamanFix](ShamanFix/) | Class | 1 | mirrored |
+| [ShieldBuddy](ShieldBuddy/) | Class | 1 | mirrored |
+| [ShowChests](ShowChests/) | Map & Minimap | 1 | mirrored |
+| [SilverDragon](SilverDragon/) | Map & Minimap | 1 | mirrored |
+| [SimpleActionSets](SimpleActionSets/) | Action Bars | 2 | mirrored |
+| [SimpleAuras](SimpleAuras/) | Buffs & Debuffs | 1 | mirrored |
+| [SimpleBars](SimpleBars/) | Unit Frames | 1 | mirrored |
+| [SimpleRaidTargetIcons](SimpleRaidTargetIcons/) | Raid & Party | 1 | mirrored |
+| [SKMap](SKMap/) | Map & Minimap | 1 | mirrored |
+| [SmallerRollFrames](SmallerRollFrames/) | UI & Appearance | 1 | mirrored |
+| [SmartDebuffCheck](SmartDebuffCheck/) | Buffs & Debuffs | 1 | mirrored |
+| [SmartHealer](SmartHealer/) | Raid & Party | 2 | mirrored |
+| [SmartLoot](SmartLoot/) | Raid & Party | 1 | mirrored |
+| [SmartRoll](SmartRoll/) | Loot Distribution | 1 | mirrored |
+| [SnagaLoatheb-TurtleEdition](SnagaLoatheb-TurtleEdition/) | Boss Mods | 1 | mirrored |
 | [Snipe](Snipe/) | Auction & Economy | 1 | mirrored |
 | [SoloRaidTargetIcons](SoloRaidTargetIcons/) | Raid & Party | 1 | mirrored |
 | [SorgisRaidMarks](SorgisRaidMarks/) | Raid & Party | 2 | mirrored |
@@ -760,61 +760,61 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [FubarPossessionsFu](FubarPossessionsFu/) | UI & Appearance | 1 | mirrored |
 | [FuBarPursueFu](FuBarPursueFu/) | UI & Appearance | 1 | mirrored |
 | [FuBarZepMaster](FuBarZepMaster/) | UI & Appearance | 1 | mirrored |
-| [FullSack](FullSack/) | Tooltip | 1 | new |
-| [Fury](Fury/) | Class | 1 | new |
-| [Gamepad](Gamepad/) | UI & Appearance | 1 | new |
-| [Gatherstone-Meeting](Gatherstone-Meeting/) | Chat & Social | 1 | new |
-| [GCDTimerBar](GCDTimerBar/) | Miscellaneous | 1 | new |
-| [GentleGC](GentleGC/) | Miscellaneous | 2 | new |
-| [GetHead](GetHead/) | Buffs & Debuffs | 1 | new |
-| [GMBlacklist](GMBlacklist/) | Miscellaneous | 1 | new |
-| [GMR](GMR/) | Miscellaneous | 1 | new |
-| [GoblinBrainSaver](GoblinBrainSaver/) | UI & Appearance | 1 | new |
-| [Gourmet](Gourmet/) | Miscellaneous | 1 | new |
-| [GrimoireKeeper](GrimoireKeeper/) | Class | 1 | new |
-| [GrimReaper](GrimReaper/) | Miscellaneous | 1 | new |
-| [GrindSpots](GrindSpots/) | Quests & Leveling | 1 | new |
-| [Groupfinder](Groupfinder/) | Chat & Social | 1 | new |
-| [Guildbank](Guildbank/) | Libraries | 1 | new |
-| [GuildMap](GuildMap/) | Map & Minimap | 1 | new |
-| [HardcoreAlarms](HardcoreAlarms/) | Hardcore | 1 | new |
-| [HC-TradeBoard](HC-TradeBoard/) | Hardcore | 1 | new |
-| [HCDeaths](HCDeaths/) | Hardcore | 1 | new |
-| [HCWarn](HCWarn/) | Hardcore | 1 | new |
-| [ShaguTweaksmoremods](ShaguTweaksmoremods/) | Miscellaneous | 1 | new |
-| [HideErrorFrame](HideErrorFrame/) | Miscellaneous | 1 | new |
-| [HordeIronfoe](HordeIronfoe/) | Miscellaneous | 1 | new |
-| [HunterAggroMeter](HunterAggroMeter/) | Class | 1 | new |
-| [IBDF](IBDF/) | Class | 1 | new |
-| [IMDead](IMDead/) | Miscellaneous | 1 | new |
-| [Immersion](Immersion/) | UI & Appearance | 1 | new |
-| [InnerFireWatch](InnerFireWatch/) | Buffs & Debuffs | 1 | new |
-| [Inspect](Inspect/) | Libraries | 1 | new |
-| [InstanceJournal](InstanceJournal/) | UI & Appearance | 2 | new |
-| [InstanceTimers](InstanceTimers/) | Miscellaneous | 1 | new |
-| [IntelliSense](IntelliSense/) | Chat & Social | 1 | new |
-| [Interruptor](Interruptor/) | Chat & Social | 1 | new |
-| [ItemHints](ItemHints/) | Tooltip | 1 | new |
-| [ItemsOfPower](ItemsOfPower/) | Miscellaneous | 1 | new |
-| [ItemSplit](ItemSplit/) | Bags & Inventory | 1 | new |
-| [IWinEnhanced](IWinEnhanced/) | Class | 1 | new |
-| [KANGZ](KANGZ/) | Buffs & Debuffs | 1 | new |
-| [KethoDoc](KethoDoc/) | Libraries | 1 | new |
-| [KeyringOpener](KeyringOpener/) | Bags & Inventory | 1 | new |
-| [KTP3ShackleCounter](KTP3ShackleCounter/) | Boss Mods | 1 | new |
-| [LazyRes](LazyRes/) | Raid & Party | 2 | new |
-| [LazyWeirdo](LazyWeirdo/) | Miscellaneous | 1 | new |
-| [LilSparkysWorkshop](LilSparkysWorkshop/) | Auction & Economy | 1 | new |
-| [Linkmend](Linkmend/) | Chat & Social | 1 | new |
-| [LoadIT](LoadIT/) | Miscellaneous | 1 | new |
-| [LoseControl](LoseControl/) | Miscellaneous | 1 | new |
-| [Magnify](Magnify/) | Map & Minimap | 1 | new |
-| [MainCharacterTag_OC](MainCharacterTag_OC/) | Miscellaneous | 1 | new |
-| [MasterLute](MasterLute/) | Chat & Social | 1 | new |
-| [MB-CA-icons](MB-CA-icons/) | Class | 1 | new |
-| [MCP-TW](MCP-TW/) | Miscellaneous | 1 | new |
-| [Meeting](Meeting/) | Chat & Social | 1 | new |
-| [MeleeStats](MeleeStats/) | UI & Appearance | 1 | new |
+| [FullSack](FullSack/) | Tooltip | 1 | mirrored |
+| [Fury](Fury/) | Class | 1 | mirrored |
+| [Gamepad](Gamepad/) | UI & Appearance | 1 | mirrored |
+| [Gatherstone-Meeting](Gatherstone-Meeting/) | Chat & Social | 1 | mirrored |
+| [GCDTimerBar](GCDTimerBar/) | Miscellaneous | 1 | mirrored |
+| [GentleGC](GentleGC/) | Miscellaneous | 2 | mirrored |
+| [GetHead](GetHead/) | Buffs & Debuffs | 1 | mirrored |
+| [GMBlacklist](GMBlacklist/) | Miscellaneous | 1 | mirrored |
+| [GMR](GMR/) | Miscellaneous | 1 | mirrored |
+| [GoblinBrainSaver](GoblinBrainSaver/) | UI & Appearance | 1 | mirrored |
+| [Gourmet](Gourmet/) | Miscellaneous | 1 | mirrored |
+| [GrimoireKeeper](GrimoireKeeper/) | Class | 1 | mirrored |
+| [GrimReaper](GrimReaper/) | Miscellaneous | 1 | mirrored |
+| [GrindSpots](GrindSpots/) | Quests & Leveling | 1 | mirrored |
+| [Groupfinder](Groupfinder/) | Chat & Social | 1 | mirrored |
+| [Guildbank](Guildbank/) | Libraries | 1 | mirrored |
+| [GuildMap](GuildMap/) | Map & Minimap | 1 | mirrored |
+| [HardcoreAlarms](HardcoreAlarms/) | Hardcore | 1 | error |
+| [HC-TradeBoard](HC-TradeBoard/) | Hardcore | 1 | mirrored |
+| [HCDeaths](HCDeaths/) | Hardcore | 1 | mirrored |
+| [HCWarn](HCWarn/) | Hardcore | 1 | mirrored |
+| [ShaguTweaksmoremods](ShaguTweaksmoremods/) | Miscellaneous | 1 | mirrored |
+| [HideErrorFrame](HideErrorFrame/) | Miscellaneous | 1 | mirrored |
+| [HordeIronfoe](HordeIronfoe/) | Miscellaneous | 1 | mirrored |
+| [HunterAggroMeter](HunterAggroMeter/) | Class | 1 | mirrored |
+| [IBDF](IBDF/) | Class | 1 | mirrored |
+| [IMDead](IMDead/) | Miscellaneous | 1 | mirrored |
+| [Immersion](Immersion/) | UI & Appearance | 1 | mirrored |
+| [InnerFireWatch](InnerFireWatch/) | Buffs & Debuffs | 1 | mirrored |
+| [Inspect](Inspect/) | Libraries | 1 | mirrored |
+| [InstanceJournal](InstanceJournal/) | UI & Appearance | 2 | mirrored |
+| [InstanceTimers](InstanceTimers/) | Miscellaneous | 1 | mirrored |
+| [IntelliSense](IntelliSense/) | Chat & Social | 1 | mirrored |
+| [Interruptor](Interruptor/) | Chat & Social | 1 | mirrored |
+| [ItemHints](ItemHints/) | Tooltip | 1 | mirrored |
+| [ItemsOfPower](ItemsOfPower/) | Miscellaneous | 1 | mirrored |
+| [ItemSplit](ItemSplit/) | Bags & Inventory | 1 | mirrored |
+| [IWinEnhanced](IWinEnhanced/) | Class | 1 | mirrored |
+| [KANGZ](KANGZ/) | Buffs & Debuffs | 1 | mirrored |
+| [KethoDoc](KethoDoc/) | Libraries | 1 | mirrored |
+| [KeyringOpener](KeyringOpener/) | Bags & Inventory | 1 | mirrored |
+| [KTP3ShackleCounter](KTP3ShackleCounter/) | Boss Mods | 1 | mirrored |
+| [LazyRes](LazyRes/) | Raid & Party | 2 | mirrored |
+| [LazyWeirdo](LazyWeirdo/) | Miscellaneous | 1 | mirrored |
+| [LilSparkysWorkshop](LilSparkysWorkshop/) | Auction & Economy | 1 | mirrored |
+| [Linkmend](Linkmend/) | Chat & Social | 1 | mirrored |
+| [LoadIT](LoadIT/) | Miscellaneous | 1 | mirrored |
+| [LoseControl](LoseControl/) | Miscellaneous | 1 | mirrored |
+| [Magnify](Magnify/) | Map & Minimap | 1 | mirrored |
+| [MainCharacterTag_OC](MainCharacterTag_OC/) | Miscellaneous | 1 | mirrored |
+| [MasterLute](MasterLute/) | Chat & Social | 1 | mirrored |
+| [MB-CA-icons](MB-CA-icons/) | Class | 1 | mirrored |
+| [MCP-TW](MCP-TW/) | Miscellaneous | 1 | mirrored |
+| [Meeting](Meeting/) | Chat & Social | 1 | mirrored |
+| [MeleeStats](MeleeStats/) | UI & Appearance | 1 | mirrored |
 | [MessageBox](MessageBox/) | Chat & Social | 1 | mirrored |
 | [MetaHunt](MetaHunt/) | Class | 2 | mirrored |
 | [Metamap](Metamap/) | Map & Minimap | 1 | mirrored |

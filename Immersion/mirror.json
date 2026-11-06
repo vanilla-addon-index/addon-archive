@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/Stormhand81/Immersion",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Stormhand81",
+    "repo": "Immersion",
+    "name": "Immersion",
+    "url": "https://github.com/Stormhand81/Immersion",
+    "api": "https://api.github.com/repos/Stormhand81/Immersion"
+  },
+  "commit": "e87aa4b025da9b810866f64f769af1fb48e3ffe6",
+  "sourceFiles": {
+    "Immersion.lua": {
+      "sha256": "b2be1596225ade05860dfadfc6f888382d525ed5947a56bd912d25624e4801a3",
+      "bytes": 35415
+    },
+    "Immersion.toc": {
+      "sha256": "59aae4ad2b8963d057476f0d2eee224c3d08c60268f6c789f11e10024b3c1a7b",
+      "bytes": 200
+    },
+    "README.md": {
+      "sha256": "5b79d1992223cec1a88759725cda726a859370934aef9c260decee640df6290d",
+      "bytes": 2921
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "297752193": {
+      "tag": "1.4",
+      "folder": "1.4--297752193",
+      "assets": {},
+      "source": {
+        "sha256": "03de54c9ff08e935452b38cf100f43d4b41d96c8aa3a9d36b16c44c0e3c298f5",
+        "bytes": 11661,
+        "path": "releases/1.4--297752193/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Stormhand-dev/Immersion/tarball/1.4"
+      }
+    }
+  }
+}

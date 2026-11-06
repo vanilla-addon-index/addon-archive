@@ -1,0 +1,15 @@
+{
+  "upstream": "https://github.com/laytya/Vanilla-Addons/blob/master/LoadIT.zip",
+  "source": {
+    "kind": "file",
+    "url": "https://raw.githubusercontent.com/laytya/Vanilla-Addons/master/LoadIT.zip",
+    "filename": "LoadIT.zip",
+    "name": "LoadIT.zip"
+  },
+  "file": {
+    "sha256": "c034f23bf8c893a703d5ed8096a70fb00171bbcbc25eea56df36cb4c342fc94d",
+    "bytes": 23600,
+    "path": "releases/files/LoadIT.zip",
+    "url": "https://raw.githubusercontent.com/laytya/Vanilla-Addons/master/LoadIT.zip"
+  }
+}

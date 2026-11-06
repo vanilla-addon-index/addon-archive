@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/shagu/ShaguColor",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguColor",
+    "name": "ShaguColor",
+    "url": "https://github.com/shagu/ShaguColor",
+    "api": "https://api.github.com/repos/shagu/ShaguColor"
+  },
+  "commit": "b4fd1b82b665c36ea6ef5879ec3707d34585bc62",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "7675d2d8dc50a1d9e1b12cf4cd1be8618f4031458c686013aae27a92e5a8f2b4",
+      "bytes": 1045
+    },
+    "ShaguColor-tbc.toc": {
+      "sha256": "364ba877d3376131dc274f6ab836c44f221524a2f9be7b70e43e1952531ededc",
+      "bytes": 151
+    },
+    "ShaguColor.lua": {
+      "sha256": "86d8cdcfedb210a28cdee63b95808d88ae3d31077f08fffd6e56476ca0d9c38a",
+      "bytes": 717
+    },
+    "ShaguColor.toc": {
+      "sha256": "789549b4809e023577c74dbd1e863319f978f6efcfbfbb0650734329be47117d",
+      "bytes": 151
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

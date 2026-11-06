@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Otari98/FullSack",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Otari98",
+    "repo": "FullSack",
+    "name": "FullSack",
+    "url": "https://github.com/Otari98/FullSack",
+    "api": "https://api.github.com/repos/Otari98/FullSack"
+  },
+  "commit": "31f98564023f940715712722058fd2f37dff456a",
+  "sourceFiles": {
+    "FullSack.lua": {
+      "sha256": "b94f2062a343e878738e60994e95876a663a425d320a8f2ce279261c4f71dbfd",
+      "bytes": 21720
+    },
+    "FullSack.toc": {
+      "sha256": "ed27d26f3bd2f10f3155afaa65b836cbbe387943667e94a5c9948f5481811a34",
+      "bytes": 201
+    },
+    "LICENSE": {
+      "sha256": "e15165469fd7608920861fac345c71d500067fdf1ed123ee27cf75932d3f2d86",
+      "bytes": 1061
+    },
+    "README.md": {
+      "sha256": "c70022251a0996374495fb7e3d912e09b76c73c8ad15502f28cbd2a5fdafa440",
+      "bytes": 649
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

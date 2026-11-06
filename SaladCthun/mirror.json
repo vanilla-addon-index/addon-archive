@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/goffauxs/Salad_Cthun",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "goffauxs",
+    "repo": "Salad_Cthun",
+    "name": "Salad_Cthun",
+    "url": "https://github.com/goffauxs/Salad_Cthun",
+    "api": "https://api.github.com/repos/goffauxs/Salad_Cthun"
+  },
+  "commit": "45dd2bc43da9aafa8bbbd88b9103db10d942655c",
+  "sourceFiles": {
+    "Images/CThun_Positioning.tga": {
+      "sha256": "532c63468707402365bc7020308b4ef52d6b7c941f73d82f3c33819e041d31b7",
+      "bytes": 727266
+    },
+    "Images/playerdot.tga": {
+      "sha256": "c54af0bf98a7cb97b10de00600b42cf4c5d749b63cf2b747bbbcfe1a33735c72",
+      "bytes": 1068
+    },
+    "README.md": {
+      "sha256": "8f6f96530452a756667ce2c93dedd2cc040cef3b310b98211f493df98125b04a",
+      "bytes": 223
+    },
+    "Salad_Cthun.lua": {
+      "sha256": "b858abf5b853634dd717168b872cc9d2c0472bb29d08225e01f4660b3594caf8",
+      "bytes": 9339
+    },
+    "Salad_Cthun.toc": {
+      "sha256": "ef3f2fe677d39d9df47d890a0b70760a864df59398883a6b1a7584896a40ac29",
+      "bytes": 163
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

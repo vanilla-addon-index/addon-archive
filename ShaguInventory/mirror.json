@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/shagu/ShaguInventory",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguInventory",
+    "name": "ShaguInventory",
+    "url": "https://github.com/shagu/ShaguInventory",
+    "api": "https://api.github.com/repos/shagu/ShaguInventory"
+  },
+  "commit": "00eeeb2da84d33bb2f51f1a5bda97dc08978772c",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "acebef5666597a9c752ae40ea1971d01403cfd0c5091207877c5938c0b6629b3",
+      "bytes": 1232
+    },
+    "ShaguInventory-tbc.toc": {
+      "sha256": "fb91645fde729fa7265ce568b54faa2efc730239e4cd47294592ca3f99b72e09",
+      "bytes": 274
+    },
+    "ShaguInventory.lua": {
+      "sha256": "800177ff9c65024159f4ad8c97e5f78cac912e6d68a1b5507dea154429fd3e30",
+      "bytes": 4430
+    },
+    "ShaguInventory.toc": {
+      "sha256": "47e8df2da70d6395a0b5b16e4ed321044671aef37981e2b7f72365e3a5baff85",
+      "bytes": 274
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

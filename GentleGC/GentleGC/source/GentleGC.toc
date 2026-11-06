@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: Gentle GC
+## Notes: Schedules Lua garbage collection for moments you won't notice
+## Author: Weird Vibes (MarcelineVQ); forks by TheRealFayz, jrc13245
+## Version: 2.8.2
+## SavedVariables: GentleGCDB
+
+GentleGC.lua

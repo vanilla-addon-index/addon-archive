@@ -1,0 +1,61 @@
+{
+  "upstream": "https://github.com/0ldi/IMDead",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "0ldi",
+    "repo": "IMDead",
+    "name": "IMDead",
+    "url": "https://github.com/0ldi/IMDead",
+    "api": "https://api.github.com/repos/0ldi/IMDead"
+  },
+  "commit": "48ef045409f9e506fc50376fe022e45e3112b523",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "IMDead/Data/IMDead1.ogg": {
+      "sha256": "7446552407921ee1d80eb419751cf7122c262a55e2105814b2ca507df9b9ad9f",
+      "bytes": 55377
+    },
+    "IMDead/Data/IMDead2.ogg": {
+      "sha256": "c2512d169d1299faf4887feea789a54daae939b549036c9e0a86685a24bb98b2",
+      "bytes": 59444
+    },
+    "IMDead/Data/IMDead3.ogg": {
+      "sha256": "085de4ba1ce3dc8a4bcb1dc84d15470c98c2890532f948ed19bd1803ae04834e",
+      "bytes": 109183
+    },
+    "IMDead/Data/IMDead4.ogg": {
+      "sha256": "4016872cc486fb71e8b881334a3f64dd1a7c3515a93d07e90b80ed9a45d6cc40",
+      "bytes": 48525
+    },
+    "IMDead/Data/IMDead5.ogg": {
+      "sha256": "7f01fcc922d49c72c1dd9cbdd7e39127ebee851aedaf3ac241ff269640078e17",
+      "bytes": 62051
+    },
+    "IMDead/Data/Live2Win.ogg": {
+      "sha256": "3bc8ba0cba1219a326981b2fc090fc9e1f9141e5769df6bf97415e37bc1c3b36",
+      "bytes": 468787
+    },
+    "IMDead/IMDead.lua": {
+      "sha256": "3025dc80e372cfd671498ca8cf5215d982994b4d22f6ed161968f28af36cc8f2",
+      "bytes": 812
+    },
+    "IMDead/IMDead.toc": {
+      "sha256": "cca6603a20ab57dd3ce97706c60b1b4a35984be9db6ed1e8d3b8e75646bd65e3",
+      "bytes": 158
+    },
+    "IMDead/IMDead.xml": {
+      "sha256": "a2946d65ed92b462116ec76eb1eb9318f5834798a7e154e2c11eddef0437fba2",
+      "bytes": 361
+    },
+    "README.md": {
+      "sha256": "b3ca9fac560d79c5dcf11d5969b64d346385cf7c9eb7bb9afdb151055a26b1ff",
+      "bytes": 288
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

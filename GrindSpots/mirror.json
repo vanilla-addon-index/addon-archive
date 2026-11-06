@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/onnateldome/GrindSpots",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "onnateldome",
+    "repo": "GrindSpots",
+    "name": "GrindSpots",
+    "url": "https://github.com/onnateldome/GrindSpots",
+    "api": "https://api.github.com/repos/onnateldome/GrindSpots"
+  },
+  "commit": "23a40786ce3066568c64fbfca500404a593f1db4",
+  "sourceFiles": {
+    "GrindSpots.lua": {
+      "sha256": "90a76b2d575d498539d5a9f6e5d3564d69efd2989488b7545675978bdac77280",
+      "bytes": 5315
+    },
+    "GrindSpots.toc": {
+      "sha256": "f7546d83ccaf4160f2b428828a3bdd7ec3109c7b90af6f31763847952d3715e1",
+      "bytes": 294
+    },
+    "GrindSpotsData.lua": {
+      "sha256": "3bdb58491c939672900845d1530b33967895e23925e88d744f375efeeebac9c7",
+      "bytes": 13898
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

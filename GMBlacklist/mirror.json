@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/shagu/GMBlacklist",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "GMBlacklist",
+    "name": "GMBlacklist",
+    "url": "https://github.com/shagu/GMBlacklist",
+    "api": "https://api.github.com/repos/shagu/GMBlacklist"
+  },
+  "commit": "46ee64b772f809fd5d78a7773ddcc2a2335240c4",
+  "sourceFiles": {
+    "GMBlacklist.lua": {
+      "sha256": "6c0fd0f3a3742f38cd1eae71f3400a8083a89eaf4aa39f4b04b6870a9e6d7212",
+      "bytes": 9426
+    },
+    "GMBlacklist.toc": {
+      "sha256": "5d651cc36bcb0f8e7c0a854dde97b25c7c411a8ffcabe81d24d0bb7ec81b99a4",
+      "bytes": 197
+    },
+    "LICENSE": {
+      "sha256": "72a72be6995634837be9bb9cd33ffff83efabe1de5bc361eabad1b0add7adeec",
+      "bytes": 1062
+    },
+    "README.md": {
+      "sha256": "734731140654ef4f376c56aa5e17535f66786e000e2bd7c039975dd43fbd21f1",
+      "bytes": 790
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

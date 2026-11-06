@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/DennisWG/SmallerRollFrames",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "DennisWG",
+    "repo": "SmallerRollFrames",
+    "name": "SmallerRollFrames",
+    "url": "https://github.com/DennisWG/SmallerRollFrames",
+    "api": "https://api.github.com/repos/DennisWG/SmallerRollFrames"
+  },
+  "commit": "27f8954f45eb15e671e350f4aa348366623eba23",
+  "sourceFiles": {
+    "bar.tga": {
+      "sha256": "4d4829a187e340ae80f1ff9e4352406584c06605fa7082d3ef23612b13e3c8ce",
+      "bytes": 32812
+    },
+    "border_smooth.tga": {
+      "sha256": "7f92f3654a9bf126eb2a0c5c6bc20ea5f865029aea0f58365d9a5ab290f75426",
+      "bytes": 2827
+    },
+    "LICENSE": {
+      "sha256": "e91589a7f0a2397867e5e37b1a3e167a7154ec05fc74be1e233af4567934c333",
+      "bytes": 1083
+    },
+    "README.md": {
+      "sha256": "e98a66e087b724cb9b358a28202b8cadf5cf627ac955aca23181287562010170",
+      "bytes": 721
+    },
+    "Screenshot.jpg": {
+      "sha256": "384dae6d5dd0989ade50f974c2d24c0f2860fc9aa2b27fb5f0633adcff2c3b90",
+      "bytes": 181681
+    },
+    "SmallerRollframes.lua": {
+      "sha256": "2316eb8e8e6079ba8814e56be79491117e9d9199a99fa42d678b46dc7fbb7370",
+      "bytes": 3073
+    },
+    "SmallerRollframes.toc": {
+      "sha256": "00a7d604071d184b82a21aa566908f7b145fc499e9ba2c7cb6850533c05e60df",
+      "bytes": 217
+    },
+    "SmallerRollframes.xml": {
+      "sha256": "ab99c80b7fc33518de9fa4dad6f45c0ebc77f22302ba646eeb234af5b32554c5",
+      "bytes": 8178
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

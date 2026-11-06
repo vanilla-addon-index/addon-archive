@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/jejkas/SmartRoll",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jejkas",
+    "repo": "SmartRoll",
+    "name": "SmartRoll",
+    "url": "https://github.com/jejkas/SmartRoll",
+    "api": "https://api.github.com/repos/jejkas/SmartRoll"
+  },
+  "commit": "fd2ca53c752e198070e032c86ab8f43d8e03ed16",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "97d894e82d523316ffe7b90e94d334615477189193c7bb37861b1ab095f8e9ca",
+      "bytes": 399
+    },
+    "SmartRoll.lua": {
+      "sha256": "f7376476d1b1d2f91aac3f3ba1af70d480da6ff93e355dbc88d11970b2e2d575",
+      "bytes": 5561
+    },
+    "SmartRoll.toc": {
+      "sha256": "696aeb3bd8bcce10d8ab35bfcb16ab03e8bb4c48f9e9326535b8f5645ecd8b76",
+      "bytes": 122
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

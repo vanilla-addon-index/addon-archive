@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/jejkas/MeleeStats",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jejkas",
+    "repo": "MeleeStats",
+    "name": "MeleeStats",
+    "url": "https://github.com/jejkas/MeleeStats",
+    "api": "https://api.github.com/repos/jejkas/MeleeStats"
+  },
+  "commit": "eb3adcbe9b1f35734a3a4e7b6f8c4133a3ade5a5",
+  "sourceFiles": {
+    "MeleeStats_Tooltip.xml": {
+      "sha256": "8efad6537868ed17beaf740a00661b2733a158e53f4063bf83f552141e62b0ec",
+      "bytes": 394
+    },
+    "MeleeStats.lua": {
+      "sha256": "a0dc70424ebfee0b428b26841e0c416719ad1506832ba01c18fdd02c115626bc",
+      "bytes": 9408
+    },
+    "MeleeStats.toc": {
+      "sha256": "79e32b884d3b871b3dc6173064f797091513bac87c25ca5c7955e9aa1376206c",
+      "bytes": 229
+    },
+    "README.md": {
+      "sha256": "170a740e8419e83e616f7f577a4ba92f2ce92ebe2e17f056ced1e651f2fd736e",
+      "bytes": 52
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

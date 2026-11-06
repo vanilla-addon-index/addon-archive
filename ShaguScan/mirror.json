@@ -1,0 +1,77 @@
+{
+  "upstream": "https://github.com/shagu/ShaguScan",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguScan",
+    "name": "ShaguScan",
+    "url": "https://github.com/shagu/ShaguScan",
+    "api": "https://api.github.com/repos/shagu/ShaguScan"
+  },
+  "commit": "93de72eef2527cae356d28274afed8f819dc45c1",
+  "sourceFiles": {
+    "core.lua": {
+      "sha256": "7cc69ec298c413782cb2fd200d188c8a711e6fc89a9026c5a4900b51b8c6f1b3",
+      "bytes": 1014
+    },
+    "filter.lua": {
+      "sha256": "afe876f696e0b44cfae8df8afdc3b22b72ecfd0ec78ceecf7dc9168b09fb6a0e",
+      "bytes": 6438
+    },
+    "global.lua": {
+      "sha256": "72be1c4139d72b936f8cadcf746c311c2e965bd11d0869a9ef422665b1334c56",
+      "bytes": 705
+    },
+    "img/config.tga": {
+      "sha256": "fd50bea5db5613b8608c75236822fbf2273b41ebb4d27be144eee11dad79f8fa",
+      "bytes": 1506
+    },
+    "img/target-left.tga": {
+      "sha256": "5cad65733ff5333644d7d84c6d0d5ec0aff19197bb9abba669d86db7d41f396b",
+      "bytes": 754
+    },
+    "img/target-right.tga": {
+      "sha256": "78be02c108303862479aee96c6d8d59e1ac79a85e8d48e7a95181cbcf16589d6",
+      "bytes": 754
+    },
+    "LICENSE": {
+      "sha256": "3def8121bde2dc90aa70bebf04030d96e62973c4bec610a3426d9f29ef7faf33",
+      "bytes": 1086
+    },
+    "README.md": {
+      "sha256": "d81b5a365464e2a33471eec4c4808e861949ab76777199356d9423e330e8dc06",
+      "bytes": 3854
+    },
+    "screenshots/config.jpg": {
+      "sha256": "bfb5ea90109e3f290bbd9b923a3d88693f03a22a99ccd116002a11470a0fb177",
+      "bytes": 119422
+    },
+    "screenshots/infight.jpg": {
+      "sha256": "d198591f74758e0373d08852a3a8cd32abb272c83a71c7662e632afb092d9df7",
+      "bytes": 54416
+    },
+    "screenshots/raidtargets.jpg": {
+      "sha256": "2b7481f50e0e2e3efeb39199c71c7cb7b61b923e4bab167e9ec3b25aed114e37",
+      "bytes": 62231
+    },
+    "settings.lua": {
+      "sha256": "2ef2cf2e4622b0ff47e00bf403d2227bb574584ba228c117fb5cb2461a05635c",
+      "bytes": 12601
+    },
+    "ShaguScan.toc": {
+      "sha256": "57fac490e66455b15788665e81305c9c9b4fe462162fd7957396967ecf68aa37",
+      "bytes": 250
+    },
+    "ui.lua": {
+      "sha256": "f853f9eeeb84d93c615b992b23a54cbb73584ff52d9e4fc8639a2e30815936a5",
+      "bytes": 10297
+    },
+    "utils.lua": {
+      "sha256": "7ed4765faaa64d03c47042db88f3b89e70016e582f5782964b6a0356a7dc8f55",
+      "bytes": 5079
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,69 @@
+{
+  "upstream": "https://github.com/xorann/GrimReaper",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "xorann",
+    "repo": "GrimReaper",
+    "name": "GrimReaper",
+    "url": "https://github.com/xorann/GrimReaper",
+    "api": "https://api.github.com/repos/xorann/GrimReaper"
+  },
+  "commit": "18d52e0660dcd217b8717d457717832ce829b39b",
+  "sourceFiles": {
+    "GrimReaper.lua": {
+      "sha256": "dce8db3e3ef9c7e93251b69ca717473ac6a8fab4e6cc58df63b6e2b207b1cda8",
+      "bytes": 4782
+    },
+    "GrimReaper.toc": {
+      "sha256": "f1fd2c4a8cb9f63e96b72c0e7d22d4c49cd2cf3434fda63d1f88ad3d55bf4eba",
+      "bytes": 520
+    },
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "24eccd5ddd032bfe3f449219f8a0ce4d05b6df2753be2c02073bb80ecabb04b0",
+      "bytes": 33306
+    },
+    "Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "64e94c958c92cba85b4a2a3214ef8d0fd6d86594abfc7a3bb3fd2d262875d055",
+      "bytes": 66933
+    },
+    "Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "a31166b787873d5551180e0600a7f9d2a529fb7f3ee9606e71b91dcf4123a025",
+      "bytes": 44509
+    },
+    "Libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "384d5dd3a2d9c1fd896fc7b2cac78e03fc4ba27c5e69dcdfda266003b721ed3d",
+      "bytes": 7943
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "Libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "09cfc0b69a0feb644fa1a9e5fc6715a4e76e0b2f6c7c04a3a0ea693d633770cd",
+      "bytes": 23114
+    },
+    "Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "31bc9cfda434c890574d1bbfc48c9e1d068f45ff73e1023ca452dedab0bdef41",
+      "bytes": 15957
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "Locale-deDE.lua": {
+      "sha256": "1874faee84024f891c8aabd0627b476e549a6825a1f13e5e8a863a471abc0dcf",
+      "bytes": 348
+    },
+    "Locale-enUS.lua": {
+      "sha256": "ffb8fc4b44a1abe615c24ded241b5ee33c759b725fb760f164f5e984b0926e41",
+      "bytes": 1436
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

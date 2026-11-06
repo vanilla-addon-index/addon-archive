@@ -1,0 +1,105 @@
+{
+  "upstream": "https://octowow.st/git/OEVG/GentleGC",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "OEVG",
+    "repo": "GentleGC",
+    "name": "GentleGC",
+    "url": "https://octowow.st/git/OEVG/GentleGC",
+    "api": "https://octowow.st/git/api/v1/repos/OEVG/GentleGC"
+  },
+  "commit": "1c317a0cb8dc5029e8733aba189cd172fd8b39a0",
+  "sourceFiles": {
+    "!!!!GentleGC_Memory/!!!!GentleGC_Memory.toc": {
+      "sha256": "65d8557aa87aa698a13993bcb6ea2022989123346d34e9834a8a69144fbfafbf",
+      "bytes": 270
+    },
+    "!!!!GentleGC_Memory/GentleGC_Memory.lua": {
+      "sha256": "ebfda642b132fc779ea85b30af9f002210fb8c6e979f4bca9f77fe2de66e3d47",
+      "bytes": 3620
+    },
+    ".gitattributes.upstream": {
+      "sha256": "d60f352d0db1404c70afb4bb8b2ca3fd1c610572aa40720e8a0b7baa7885418c",
+      "bytes": 19
+    },
+    ".gitignore.upstream": {
+      "sha256": "a4ee9ad3f7aadd2c6622869b9f69cf914b0791068f5fcd65f0cabaf93453d52f",
+      "bytes": 79
+    },
+    "CHANGELOG.md": {
+      "sha256": "645d939bd2fe9aef26132a7a870ab9d09aa009ba8b067675e2ef018db2bc713d",
+      "bytes": 4703
+    },
+    "GentleGC.lua": {
+      "sha256": "5d75fc3f4383d6c1066d61caf417793a3dd0c13dd86c5fe399fef8bcd44818ea",
+      "bytes": 55033
+    },
+    "GentleGC.toc": {
+      "sha256": "558d766700f14e7110bc2ba5e3fbe42637400d2890c1c07a2e8f16870a704239",
+      "bytes": 243
+    },
+    "README.md": {
+      "sha256": "3e9cd1ca1b7aca9baeb347029d275842cc4bfeac5d641f9a0fa6934a9b646ae8",
+      "bytes": 11741
+    },
+    "tests/README.md": {
+      "sha256": "4b5eb64e86b40c7d3e87485aa414645aabff6d350ada653823bf7990154f17cd",
+      "bytes": 1148
+    },
+    "tests/run_all.sh": {
+      "sha256": "7653af934f993a04084170a819f296f2e2efb8b101282ba575cb1a2859a55065",
+      "bytes": 406
+    },
+    "tests/test_classicapi.lua": {
+      "sha256": "d06329fd27ab713df4fb5d7dd872d4140e99a7c76ec1a598021586c683bd52ac",
+      "bytes": 2788
+    },
+    "tests/test_combat_auto.lua": {
+      "sha256": "2175b011d7602a309a9cf41c578808294a0fc7c61286e17b2f8534c558b68ad8",
+      "bytes": 1084
+    },
+    "tests/test_factor.lua": {
+      "sha256": "7e06d25594289c430451ea960c58e99f21f8b37972401923e871a63c1bfe7807",
+      "bytes": 5050
+    },
+    "tests/test_hitch.lua": {
+      "sha256": "9e618c46e6c1c5bfaa1ccde1008b803f85c17363b3c0d6f6b5bf82d51d6fb42f",
+      "bytes": 8601
+    },
+    "tests/test_memory.lua": {
+      "sha256": "dae50a7d6e58ae72d304769d0843df6913e1e2755f9dec24657c12c2ec69cec3",
+      "bytes": 6375
+    },
+    "tests/test_native_memory.lua": {
+      "sha256": "957694431afeafedf2f1a1e6055b7407d9af9640c0d45b442a8291dde5bd96c4",
+      "bytes": 5516
+    },
+    "tests/test_raid.lua": {
+      "sha256": "49ffd9577e47db42b91d5ba37b6affb9024fe54a9a2a7cd571dd57adb324116e",
+      "bytes": 8617
+    },
+    "tests/test_stock.lua": {
+      "sha256": "844e8442ddacbe33fcdfa740f72a3a3e8d4ed4936367f0864dfdbb46d64ec2da",
+      "bytes": 5198
+    },
+    "tests/test_threshold.lua": {
+      "sha256": "d6d5a0e6c412dfb7dd9426c1a671d94418688336acf692e4453ce11d3b2e354d",
+      "bytes": 6349
+    },
+    "tests/test_unknown_context.lua": {
+      "sha256": "6c90f829cc3b3ecff9a7b096bcf72bdd0998ef2c4f885927ae261e1f3fdac6fd",
+      "bytes": 3677
+    },
+    "tests/test_weirdperf.lua": {
+      "sha256": "50d7303b1635fe617169f092307fb4d8d9de9f943a1f0d8c6a1ae93fb5c21432",
+      "bytes": 7636
+    },
+    "tests/test_wp_minor.lua": {
+      "sha256": "afdc299ec082471bd813832e31258779e8ad1ccd74448d71810dc7b249378815",
+      "bytes": 4664
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

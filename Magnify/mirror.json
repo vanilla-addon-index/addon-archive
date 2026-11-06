@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/lookino/Magnify",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "lookino",
+    "repo": "Magnify",
+    "name": "Magnify",
+    "url": "https://github.com/lookino/Magnify",
+    "api": "https://api.github.com/repos/lookino/Magnify"
+  },
+  "commit": "3ff15a844a5ade917c6ac63489a9dc375b1411b2",
+  "sourceFiles": {
+    "assets/WorldMapArrow.tga": {
+      "sha256": "62895c46afa3f015c66f0daf13e26411782fb7620fc0c51f02536ca6aa2815dd",
+      "bytes": 2783
+    },
+    "compat.lua": {
+      "sha256": "120233da0082acc9ba9fcf5e39318ed5f82424603835e599b4f739289d249da2",
+      "bytes": 7953
+    },
+    "Frames.xml": {
+      "sha256": "5d45e3244f666381ab8617622b425490aebc4379d900c7391dca96501383d20d",
+      "bytes": 1148
+    },
+    "LICENSE": {
+      "sha256": "e07b85a41d331434c04f3c122ffd0c4da84367ddaaffcae612c8f3c7cebaa05f",
+      "bytes": 1063
+    },
+    "Magnify.toc": {
+      "sha256": "5162e77dad1439e4032dfb5dd916071e2c20a31e04388e5b1cbd571150cb4f0d",
+      "bytes": 230
+    },
+    "main.lua": {
+      "sha256": "27f518735347e1d1524f9118af661d91364ac26434b139c4c13054f50a280e4e",
+      "bytes": 7592
+    },
+    "options.lua": {
+      "sha256": "57655696b49237aebf0f76f30c5719ba76d12ba86be3d46cc7559209f7196a94",
+      "bytes": 2150
+    },
+    "README.md": {
+      "sha256": "c740ef6ff80b680d840ab8880b105fe0ef46f9917f0262ccf1ed5dbb1b7178f8",
+      "bytes": 316
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: Fury
+## Notes: To make Warrior combat easier.
+## Author: CubeNicke (Orig. Bhaerau)
+## eMail: cubenicke@gmail.com (Orig bhaerau@gmail.com)
+## DefaultState: enabled
+## SavedVariables: Fury_Configuration, Fury_Runners, Fury_ImmuneDisarm
+## OptionalDeps: IsMounted, Outfitter
+IsMounted\IsMounted.xml
+Fury.xml

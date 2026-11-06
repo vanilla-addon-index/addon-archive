@@ -1,0 +1,133 @@
+{
+  "upstream": "https://github.com/GrenderG/GMR",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "GrenderG",
+    "repo": "GMR",
+    "name": "GMR",
+    "url": "https://github.com/GrenderG/GMR",
+    "api": "https://api.github.com/repos/GrenderG/GMR"
+  },
+  "commit": "e7ffd2498de4b96e8f11593ebb75d738580f2dfb",
+  "sourceFiles": {
+    "CommandFrame/GMR_CommandTable_functionality.lua": {
+      "sha256": "af5b525cb2e1f03b27fb9df52d32d9a96ce3a03e2be291a2be96f05b7c7fa6a3",
+      "bytes": 9695
+    },
+    "CommandFrame/GMR_CommandTable_graphic.lua": {
+      "sha256": "180a8df9c5cf7676d8e4f04e26f04117a207a644a0212374f51da4fc9436d9ea",
+      "bytes": 25825
+    },
+    "CommandFrame/GMR_CommandTable_graphic.xml": {
+      "sha256": "2b6f43245f9e7792a65a8ffae52a7dec738c11801b972577c70ee2ab872c983d",
+      "bytes": 6410
+    },
+    "CommandFrame/GMR_template_data.lua": {
+      "sha256": "04a5997a30ba0f5694927da88232f5ef5513c8c637e1f0c9b56120a1d2ffbf84",
+      "bytes": 79120
+    },
+    "CommandFrame/GMR_TemplateTable.lua": {
+      "sha256": "fb9417bbc018f344b9dd32220213283475cf8efae3b5580b36b3dab2555d36c4",
+      "bytes": 11622
+    },
+    "DataFrame/GMR_DataVisualization.lua": {
+      "sha256": "e439610be6c658cded9350f71c0e2d323141ca0dced553b58241810763e478eb",
+      "bytes": 20557
+    },
+    "DataFrame/GMR_SortData.lua": {
+      "sha256": "de8f6657313cc16f2d4c292d4c26a57166c8c8f5d33e6bb8c9c4bc88416f170a",
+      "bytes": 6754
+    },
+    "GMR_graphic_lib.lua": {
+      "sha256": "89923179051e822b91e9eb4b60b37128cd7bca34d280dc7ce12e11a9150e6f71",
+      "bytes": 20657
+    },
+    "GMR.lua": {
+      "sha256": "cbe7bb4468d2d31991617ff270ba240f06b654ac23597f91b06acbd9b7b142cd",
+      "bytes": 3863
+    },
+    "GMR.toc": {
+      "sha256": "58480c92bb1565a65989e35387a5eb67da9609681f06ac379265f6617978ad31",
+      "bytes": 882
+    },
+    "GMR.xml": {
+      "sha256": "f93e9d808234084ef07038d9c41b28bb454517c22a57c66c3cb8852e7853867f",
+      "bytes": 4042
+    },
+    "LICENSE": {
+      "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+      "bytes": 35141
+    },
+    "Menu.lua": {
+      "sha256": "ab651200618d3fdcee5a78d3fcf2f54edb5637daead93df09fba87cbe0be8bcd",
+      "bytes": 4110
+    },
+    "Options.lua": {
+      "sha256": "c56c264abb47da8c9f1ac0d20eeb57ede24f1fa5a1e30ba481eaa3f60a3f1321",
+      "bytes": 1434
+    },
+    "README.md": {
+      "sha256": "bea1563e1901b1aaad329cb5413b99da206c694c71c6f91274bcbf5651509695",
+      "bytes": 103
+    },
+    "SendGetSystem/GMR_command_data_nost_old.lua": {
+      "sha256": "7c6d97593c41cde30a9ee26953a7ffa9d7a6e49fcfb50a76d5571fb5f4428ce4",
+      "bytes": 75446
+    },
+    "SendGetSystem/GMR_command_data_valkirie_old.lua": {
+      "sha256": "fabf645729b29de2fab83fa084d17b273c1a8b64c9d33e1a6b920f1adc5082ff",
+      "bytes": 54043
+    },
+    "SendGetSystem/GMR_command_data.lua": {
+      "sha256": "9eaa88ed393a93340533cd54d5bcbe8afc556760e1d2f31b36b3e22ca7c4de7c",
+      "bytes": 76211
+    },
+    "SendGetSystem/GMR_command_handle_functions.lua": {
+      "sha256": "c0b93b9a40c98b696b47dd74a37bd797cd0b3fe5f8f9585fd04412a0c0292187",
+      "bytes": 2806
+    },
+    "SendGetSystem/GMR_command_patterns.lua": {
+      "sha256": "46f071a33020c23ab63f197bf072c89295b7e49d14b88df971189850b66924b1",
+      "bytes": 2904
+    },
+    "SendGetSystem/GMR_command_sequence.lua": {
+      "sha256": "2c7f1892d4214d8af7589a01c0ceee1948dea582a17b61fb5c71f2be14245d28",
+      "bytes": 1500
+    },
+    "SendGetSystem/GMR_get_command.lua": {
+      "sha256": "0655337fdc7f16285d3e733f0b03b00075d869a958c3b75258bc21fb34702ca0",
+      "bytes": 5809
+    },
+    "SendGetSystem/regex_replace for sql_command_export": {
+      "sha256": "610e2814e0a9bcc6e3ee2ea550276eaf671f1d76ce1b350b1d4362631c44a786",
+      "bytes": 128
+    },
+    "ShurakenLib.lua": {
+      "sha256": "0985d740dd681eeb6470e3be52b6c896a0dca72dd3e4ee3fbc6fe076af6cff8e",
+      "bytes": 17105
+    },
+    "TicketFrame/GMR_ticket_functionality.lua": {
+      "sha256": "f709f787d1311732a8781df53576212eb70e3bd22ffa37deea1b6acc0269e22c",
+      "bytes": 6968
+    },
+    "TicketFrame/GMR_ticket_graphic.lua": {
+      "sha256": "29c33d4150e4db2ebb1c91fea2a2a8a6eec26ff48b4985318734f40630113c6b",
+      "bytes": 19135
+    },
+    "TicketFrame/GMR_ticket_graphic.xml": {
+      "sha256": "36ba50897108177036c52eb888d749889b6b6f5c3f3b80451046c49b739582c7",
+      "bytes": 3622
+    },
+    "TicketFrame/GMR_ticket_template_data.lua": {
+      "sha256": "f05267d8a146c6cc8a9020be659db7b59a56d060ecf4231cb1096bd4fa098cef",
+      "bytes": 8089
+    },
+    "TicketFrame/GMR_ticket_template_table.lua": {
+      "sha256": "7cad8511f4c58c82524df18ab5901f9653bf31dff5b84d3db265b79a33584357",
+      "bytes": 15167
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

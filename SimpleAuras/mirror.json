@@ -1,0 +1,1029 @@
+{
+  "upstream": "https://github.com/yani9o/simpleAuras",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "yani9o",
+    "repo": "simpleAuras",
+    "name": "simpleAuras",
+    "url": "https://github.com/yani9o/simpleAuras",
+    "api": "https://api.github.com/repos/yani9o/simpleAuras"
+  },
+  "commit": "84f95b068abbf8a8347b502548efaf054ea89a9c",
+  "sourceFiles": {
+    ".github/ISSUE_TEMPLATE/bug.md": {
+      "sha256": "66357b4118b5bc2caa7d41d1cb7858cd0ad7f00a85628a61420214a8585c76b4",
+      "bytes": 524
+    },
+    ".github/ISSUE_TEMPLATE/feature.md": {
+      "sha256": "b0f3089979e44c3c3b47066e158b8e94b83a26c25956c1dc4c13990764a951eb",
+      "bytes": 611
+    },
+    "Auras/Aura1.tga": {
+      "sha256": "dd0e71f62c0961df4c00e060809398282019ceffe52b548f9008da2522503f2d",
+      "bytes": 262188
+    },
+    "Auras/Aura10.tga": {
+      "sha256": "bf9a89ff3a36d0919b43cf5de6c196ea5ad03c14aa8a6ae2311ac8393fa5ffd2",
+      "bytes": 65580
+    },
+    "Auras/Aura100.tga": {
+      "sha256": "044cdd1d8727c2eafe6419581c4b7cdbb602757455251620e4120d039348789b",
+      "bytes": 23857
+    },
+    "Auras/Aura101.tga": {
+      "sha256": "631709adc41dc098d6353b3fdf5ce274a61fc88962e541ea9d5cbc19c087bb62",
+      "bytes": 11146
+    },
+    "Auras/Aura102.tga": {
+      "sha256": "e6d1a9c197b76a9be9b06407cb5a1aedc774af51e0c6b2516de3a6cd5d8f936d",
+      "bytes": 16582
+    },
+    "Auras/Aura103.tga": {
+      "sha256": "64d4250f41445c5a9357a484dcbce3f4a0ace4cd173971baa7ea1e512bc81ac3",
+      "bytes": 11549
+    },
+    "Auras/Aura104.tga": {
+      "sha256": "0155fa40d26ba1489802eebf8b944b86e4625b2bb84c071fc63496e1eeca342b",
+      "bytes": 1744
+    },
+    "Auras/Aura105.tga": {
+      "sha256": "c1e256f54cc181a9dc1babb548b3484bc54b59940da3f30cdb2467b9a34aae56",
+      "bytes": 12444
+    },
+    "Auras/Aura106.tga": {
+      "sha256": "af7e2446887902fa0460e76442eb8aa180bea2e0d00cae02520b31c07d907fee",
+      "bytes": 2568
+    },
+    "Auras/Aura107.tga": {
+      "sha256": "7227bffcedfe371352aac19e3c72181f89a1dd98ce2808af4de83ed15dddf1a9",
+      "bytes": 2566
+    },
+    "Auras/Aura108.tga": {
+      "sha256": "de206c8d7d94cec5c8a703e383ebb84c838f5d728cc85d653014382ed3319f83",
+      "bytes": 3920
+    },
+    "Auras/Aura109.tga": {
+      "sha256": "0f5651f4838e9393cf0dceb22bb274fd5260520b059ee2a1a6dcf7b07686cbd3",
+      "bytes": 4338
+    },
+    "Auras/Aura11.tga": {
+      "sha256": "d059f0938efbb4377a96e3c0821a77d15ae05ac4f3d65a6dfc79fe558dc4c298",
+      "bytes": 262188
+    },
+    "Auras/Aura110.tga": {
+      "sha256": "c3f8980bc866e3a63e96b63f368abbdd653ffce286e5eaa00edf3c86b754d9d3",
+      "bytes": 6992
+    },
+    "Auras/Aura111.tga": {
+      "sha256": "455865e30e44248d282bf4b59ea6c40e56decb2a3427b870e84f89fc3b786491",
+      "bytes": 6526
+    },
+    "Auras/Aura112.tga": {
+      "sha256": "15a41b10536a4989b3a7367e500416f0104328073604810255ec191295bd7384",
+      "bytes": 15700
+    },
+    "Auras/Aura113.tga": {
+      "sha256": "b0615478df9fb1693630af1b9c4df79e2eb7c5e52ab1e8155367783261f19afb",
+      "bytes": 24858
+    },
+    "Auras/Aura114.tga": {
+      "sha256": "573533e49de7fa50e54c87437dfde607499b83e6e65f73dbbc2dcffcb1d2ebe8",
+      "bytes": 4338
+    },
+    "Auras/Aura115.tga": {
+      "sha256": "6190f682ac3faa3a9e5135a811e9bd5fc3a52c1eac4a8686db2c12c90a42a8fb",
+      "bytes": 4398
+    },
+    "Auras/Aura116.tga": {
+      "sha256": "86d065f3f69451981741798c56965ea84ccd049a6cfd9d5105048c6130435581",
+      "bytes": 1178
+    },
+    "Auras/Aura117.tga": {
+      "sha256": "673c0378fb83f7d8522908447bf6d1b89c6cc99feec3fe1e4a15a1169e484f27",
+      "bytes": 8756
+    },
+    "Auras/Aura118.tga": {
+      "sha256": "234bfbbea6d76ddb49f4bfa30db56d97b1f869c0eaa1b839432a3c1879114958",
+      "bytes": 19210
+    },
+    "Auras/Aura119.tga": {
+      "sha256": "a5aace0764760a3bc243c918d935ca19c4447bd8e2643640ebe307982e26d5e8",
+      "bytes": 13590
+    },
+    "Auras/Aura12.tga": {
+      "sha256": "75f28cb6a1bf272dc8f9f7cf43556fe6a1fe977a068a7b357b195a9cc8660390",
+      "bytes": 65580
+    },
+    "Auras/Aura120.tga": {
+      "sha256": "c958de6ba955bdab0b3f9c2dfccc7d4700cdb7a28f0f9f4f8aa2ca262dc8c54a",
+      "bytes": 11756
+    },
+    "Auras/Aura121.tga": {
+      "sha256": "297850c1a6ccd172f77f98e90371beca833bd69cca6b532879cdcd107c5d34fd",
+      "bytes": 3437
+    },
+    "Auras/Aura122.tga": {
+      "sha256": "a82221096657b649ab1e3046c2d67ab29e169a67292b8a44ac757cbc15561b11",
+      "bytes": 4915
+    },
+    "Auras/Aura123.tga": {
+      "sha256": "240b5fdada9b8243a5e30b7ec815e06092b7348b5a5d0b66c0b0a9e08db46259",
+      "bytes": 4887
+    },
+    "Auras/Aura124.tga": {
+      "sha256": "ff8897e22072b03a46d517d8a8a73168f3e900ab8bc3eea003313e31cacffc4a",
+      "bytes": 5415
+    },
+    "Auras/Aura125.tga": {
+      "sha256": "2a1312f8459095c6d6ba14f3a47ccd652ab28b54b3cef8f20cba7aa26dc74608",
+      "bytes": 8644
+    },
+    "Auras/Aura126.tga": {
+      "sha256": "4b3c89c0320a330a918537b9c597577377e408bf3114b5fc2be51d0955eed5c9",
+      "bytes": 8898
+    },
+    "Auras/Aura127.tga": {
+      "sha256": "a69612fa1873a59dee99b98654ff4adbff6eb15dfd3c04292083dd9861c88476",
+      "bytes": 7761
+    },
+    "Auras/Aura128.tga": {
+      "sha256": "bd86a1a134ff41ddbe8f14c1efd9560a44e5a371dda13e582f720487fb98cc08",
+      "bytes": 9239
+    },
+    "Auras/Aura129.tga": {
+      "sha256": "69a0c515d6ac2939363ee4a13377bdcc1a9fc62963db02deccd25237313bf7fd",
+      "bytes": 24212
+    },
+    "Auras/Aura13.tga": {
+      "sha256": "ce32dc5b20275dd529cbe538a05603ae007447b3250ecf9ee3e458b315d77ccc",
+      "bytes": 65580
+    },
+    "Auras/Aura130.tga": {
+      "sha256": "98d3b1ce57bc874969b29c3016eeac1218c2a2e10eeb69be950c97823cd93c26",
+      "bytes": 35017
+    },
+    "Auras/Aura131.tga": {
+      "sha256": "c287c29a67ac2c4e27f1cdfd43897a8e6762b9c1cf0b5921df1d667996c7a4c7",
+      "bytes": 20623
+    },
+    "Auras/Aura132.tga": {
+      "sha256": "e1ae6f9f2b7c1ef69c9684724aa0c4a09920982f64daad034b9a79aaca0728f2",
+      "bytes": 11268
+    },
+    "Auras/Aura133.tga": {
+      "sha256": "a4916119a5f65538f41150176e2ed856c12cd7dcf2fb0e429c3c03a932c6bbab",
+      "bytes": 25204
+    },
+    "Auras/Aura134.tga": {
+      "sha256": "2a08e556d88846a6a83f9809239393675a874098bbeaa17df883b60aff9b0e35",
+      "bytes": 21407
+    },
+    "Auras/Aura135.tga": {
+      "sha256": "571a4ed84771ae294a5fcda202160f5bea8c6b894cf8001ea7178fa66d85f7ef",
+      "bytes": 24661
+    },
+    "Auras/Aura136.tga": {
+      "sha256": "fa5b42d8d7675b41fbc1ed503b698fad02b23fe8dd446826b34d76edaea34d8a",
+      "bytes": 26926
+    },
+    "Auras/Aura137.tga": {
+      "sha256": "d2293a95fff50d7d6f75cabad77cc74bea3fa7e1ad064d47073a185f50b4573c",
+      "bytes": 30173
+    },
+    "Auras/Aura138.tga": {
+      "sha256": "afb1c7e1c3fdc2a899a0fda69eb555cda3face34f79fe792994f5fc8a495b69e",
+      "bytes": 28183
+    },
+    "Auras/Aura139.tga": {
+      "sha256": "86c0f362a801c290ebaf0c5d7ec11f0219d0db54771164521e4365c6781d56a5",
+      "bytes": 21062
+    },
+    "Auras/Aura14.tga": {
+      "sha256": "a9fbd9c042159a4fd37f7462f50e7225e1ad1e948af14dcb2f7269721b8e802f",
+      "bytes": 65580
+    },
+    "Auras/Aura140.tga": {
+      "sha256": "959e36c0f954c5e9ed37147f1e30b2d41795fc00404b5f0d1762dd963b481cd2",
+      "bytes": 12772
+    },
+    "Auras/Aura141.tga": {
+      "sha256": "113dc0fce5cc3b0b774b68d78dfdbd417ceb7e79889d9151f1a512d07143f43e",
+      "bytes": 21388
+    },
+    "Auras/Aura142.tga": {
+      "sha256": "32084d6e602c84a2253d2980600ca33442c40eab8b642f528611c874bca60a98",
+      "bytes": 19723
+    },
+    "Auras/Aura143.tga": {
+      "sha256": "4054968263c895e35b27d2793ec767912b88b7bcac94da2f87aadfa53d0f5a0d",
+      "bytes": 108184
+    },
+    "Auras/Aura144.tga": {
+      "sha256": "1f4f0fa6c943f05835dc69d6b9381292b1243ad902478e692989bc9d0775b6e3",
+      "bytes": 77124
+    },
+    "Auras/Aura145.tga": {
+      "sha256": "89725c83f5472479cbb8af09f029960bdcc554978b1ea37c5a8a9767584c2a2a",
+      "bytes": 77220
+    },
+    "Auras/Aura146.tga": {
+      "sha256": "de1064017a7d4490c7608db0509f7c7a99c0a19f30439c3374a4e0f92647254a",
+      "bytes": 262188
+    },
+    "Auras/Aura147.tga": {
+      "sha256": "74ed2810de27eea6cfdc6f8051f54c2130ecde93cc7f107199b1a367b1b9ce2e",
+      "bytes": 262188
+    },
+    "Auras/Aura148.tga": {
+      "sha256": "5bda70a1d3f2c79a56853da32e5707289f48099db7469bcf07897e8929172d3d",
+      "bytes": 262188
+    },
+    "Auras/Aura149.tga": {
+      "sha256": "a23c27648630f606d3b03b10e586263fc9046744c32226e0fed6ded553063b3d",
+      "bytes": 262188
+    },
+    "Auras/Aura15.tga": {
+      "sha256": "c0b4fa81265ffa35ef1c8ff3a7f3bf79082830e3633e5a2475bad5a2899dea14",
+      "bytes": 65580
+    },
+    "Auras/Aura150.tga": {
+      "sha256": "ef4adf93e5fdf74e8258a99ed0727979ddbb20ef0e80609f4c980e1f9b850579",
+      "bytes": 262188
+    },
+    "Auras/Aura151.tga": {
+      "sha256": "115d8a01ce1507d615cef7156bedfa4e88bfdd777bfc9ae926ce0a4cd8d30a23",
+      "bytes": 262188
+    },
+    "Auras/Aura152.tga": {
+      "sha256": "b412e13c8c496c6985f24318fe0b7d51626a01cabab8154b5eb21ddaac5d4453",
+      "bytes": 262188
+    },
+    "Auras/Aura153.tga": {
+      "sha256": "b9faaeb9926cb58ca2600fc77b38f5bcdb55de15e96405cc38c7865cea505117",
+      "bytes": 262188
+    },
+    "Auras/Aura154.tga": {
+      "sha256": "37c94161bf76163c0b4468e891fc5e5f6b6b78f863d119319c27c903499d9315",
+      "bytes": 262188
+    },
+    "Auras/Aura155.tga": {
+      "sha256": "c1f1b319b363f54227cb1f6eef03117c6a263303bd1f74a0eb94e571ef42fa58",
+      "bytes": 262188
+    },
+    "Auras/Aura156.tga": {
+      "sha256": "3fa2b57fb3016c5bb6a98eecefe3fbdf32ac0ceab11b73e75a61748d33c2a650",
+      "bytes": 262188
+    },
+    "Auras/Aura157.tga": {
+      "sha256": "3a363ac30488cf0441b1202806500b07dc912fc353348de3e9d4841c4c1cfa43",
+      "bytes": 262188
+    },
+    "Auras/Aura158.tga": {
+      "sha256": "5f09ac4e27eb480dcf24ff83663d4667687662633e17b7f276702e020fd881e2",
+      "bytes": 262188
+    },
+    "Auras/Aura159.tga": {
+      "sha256": "1940070376569ae0c3cac00375d1dc0c43e2531fe25b25646221a16c2ffb76ad",
+      "bytes": 262188
+    },
+    "Auras/Aura16.tga": {
+      "sha256": "73fd834c1718f488fb01a0cbae5bd38dc109ca0ff1469df9192e237ae842e08a",
+      "bytes": 262188
+    },
+    "Auras/Aura160.tga": {
+      "sha256": "6707c2ee9910a0ee740b51a37de68bfa936c74d5e37030399a0b301923e7c660",
+      "bytes": 262188
+    },
+    "Auras/Aura161.tga": {
+      "sha256": "ff40c664fdab717f3f3059b9a641d1028fe63d87dcc7d866dfce889dc39e7957",
+      "bytes": 262188
+    },
+    "Auras/Aura162.tga": {
+      "sha256": "c9bd8569b5775cc4ceedda0ce93b736270c1091e2b3e8fd1ae3678fb6164a4d4",
+      "bytes": 262188
+    },
+    "Auras/Aura163.tga": {
+      "sha256": "87bb71871b56d4e96ee23124b1e5cf5be99b14b9547c437055a0c57b90b30f0b",
+      "bytes": 262188
+    },
+    "Auras/Aura164.tga": {
+      "sha256": "54c74f87ade7086fb17d6afd9c23170d185c391a3aac8dfb1a33ce13b0aabc92",
+      "bytes": 262188
+    },
+    "Auras/Aura165.tga": {
+      "sha256": "033734f30e12b87cae00bcc1d53f790f4400a1497445fed244b9662a6a20bb15",
+      "bytes": 262188
+    },
+    "Auras/Aura166.tga": {
+      "sha256": "570d77d531f988acafe461bd9a0ef082d1ae4754a00eddbe23ae964924d43810",
+      "bytes": 262188
+    },
+    "Auras/Aura167.tga": {
+      "sha256": "dcaaec505fb7366289acbff3c3a3a20efb7eceb04bd7d964fa0bf45820c2c71e",
+      "bytes": 262188
+    },
+    "Auras/Aura168.tga": {
+      "sha256": "1fe38cbd5d8b4d91a5985ef78607f77b8ad0dd279cfa2a015aa4251d67cf4559",
+      "bytes": 262188
+    },
+    "Auras/Aura169.tga": {
+      "sha256": "19c90e9b8e13c06034a7d98b95a105053da34375d105c6286d451110d5e478fb",
+      "bytes": 262188
+    },
+    "Auras/Aura17.tga": {
+      "sha256": "220a11967790012be6c98cab40ebb20f407e47bc76a573ae45db9c87e6256a1c",
+      "bytes": 262188
+    },
+    "Auras/Aura170.tga": {
+      "sha256": "4fd3af033d95e9b8d2645b855ce82e37010a06e8b9847434078a9f334cad0c68",
+      "bytes": 262188
+    },
+    "Auras/Aura171.tga": {
+      "sha256": "bb62ac6049d1b3b19fdde20f893e758239758a2ea55b3a69b42a931afd3cf10a",
+      "bytes": 262188
+    },
+    "Auras/Aura172.tga": {
+      "sha256": "48ed4bb1312307dedc856ea3223fd7865e689d2aa869cdfb908e1b02978fc694",
+      "bytes": 262188
+    },
+    "Auras/Aura173.tga": {
+      "sha256": "37ce6e79bce3ffc7d5401ff64d37ba2cd313bee97f9010d3b0a91a9a1550db77",
+      "bytes": 262188
+    },
+    "Auras/Aura174.tga": {
+      "sha256": "f6d259b1c6851347031f22304fa51da4b3ddd325c4e31eb86036bada7cb7a1e5",
+      "bytes": 262188
+    },
+    "Auras/Aura175.tga": {
+      "sha256": "8c1e5267f68f8aa2399ff2ff9e0e558ffceeafac6ebc6ceb54370da4fa36239f",
+      "bytes": 262188
+    },
+    "Auras/Aura176.tga": {
+      "sha256": "6d401f281ac130b2c9b89e83b25bccb275235bbf10d9250d5f6b640d74e095c1",
+      "bytes": 262188
+    },
+    "Auras/Aura177.tga": {
+      "sha256": "1b3be0fd44d50a7496caab0d0a80b75cc5604621db7a6b6825ce8fab51285ea3",
+      "bytes": 262188
+    },
+    "Auras/Aura178.tga": {
+      "sha256": "28d7e73a75e31cdbd0c1d1a3feb29f2e7c09b902f6950b79b3501d32c9c92448",
+      "bytes": 262188
+    },
+    "Auras/Aura179.tga": {
+      "sha256": "731ac3cfcfc77942e9556634d65ab9d0578b677431402c8d6e9f7ce4e69ec85a",
+      "bytes": 262188
+    },
+    "Auras/Aura18.tga": {
+      "sha256": "d950a50294cdd28c781b0c44d2ffe836212d70228ce40b7586d350045ab63e3f",
+      "bytes": 262188
+    },
+    "Auras/Aura180.tga": {
+      "sha256": "86c6a39c57e455999db1419eb8f5ee58173d654b0049db4e4440fb3231bdc5ba",
+      "bytes": 262188
+    },
+    "Auras/Aura181.tga": {
+      "sha256": "078be1d6b675f4eb9ff8287caa540a8bd066bf73dbfc9dd52a511010259de4b7",
+      "bytes": 262188
+    },
+    "Auras/Aura182.tga": {
+      "sha256": "056513af30b2fdfe1dc4b59280a5b9644b858a87edda3750448bfca532bf455f",
+      "bytes": 171700
+    },
+    "Auras/Aura183.tga": {
+      "sha256": "faa24770bc2f97cd00a82621d4d66b37774d2ce3d388752acd3ee620a1741f52",
+      "bytes": 262188
+    },
+    "Auras/Aura184.tga": {
+      "sha256": "721178ea80634a8cc801c64911b2682179f5f9ff89df0eac6bd6e6c9d72eb930",
+      "bytes": 262188
+    },
+    "Auras/Aura185.tga": {
+      "sha256": "e2e86c6c0d43ec26ac1db8167d04ee65e63505098e2ce53f1dadd5cc17ab9fdb",
+      "bytes": 262188
+    },
+    "Auras/Aura186.tga": {
+      "sha256": "4ff194eeb2535d17ee2ac15209aadf6c4e468cb76b1ed1cf142687ab6edc2967",
+      "bytes": 262188
+    },
+    "Auras/Aura187.tga": {
+      "sha256": "7218e84243ce2ca2cbbfe4060f5592da568d7ee38141e13bb3bbbb518866a660",
+      "bytes": 79160
+    },
+    "Auras/Aura188.tga": {
+      "sha256": "ef7ee2f439400781d28b2cfdf3171c608a9d6215930b05ea0c885b9352f57d5f",
+      "bytes": 75755
+    },
+    "Auras/Aura189.tga": {
+      "sha256": "4223458db80139e9edf96fbcd169861e2d577c5fe6086aff7c7aedbbfc5e852f",
+      "bytes": 68711
+    },
+    "Auras/Aura19.tga": {
+      "sha256": "08b9c14532e0c8c448e3bff17af19fdc24923fbffd315b14aa4fad9dc8bde6cd",
+      "bytes": 65580
+    },
+    "Auras/Aura190.tga": {
+      "sha256": "b435c3a9676f152a271ffef975aa32d8b0e756e1e6132c4526b9be492c5de34f",
+      "bytes": 70896
+    },
+    "Auras/Aura191.tga": {
+      "sha256": "b2782a738af752ab341e769f10828c576ca1c79e647f1df5971b448c93e990bc",
+      "bytes": 77043
+    },
+    "Auras/Aura192.tga": {
+      "sha256": "09bb5c089a49cf73699e857db7cb3ab319b2c592c75c9bbeb75c4fdc7b04dac9",
+      "bytes": 68681
+    },
+    "Auras/Aura193.tga": {
+      "sha256": "b154370a61ef76e4698bd6a71559e851c1c54d81368ac33b8323575b6fe7693f",
+      "bytes": 60852
+    },
+    "Auras/Aura194.tga": {
+      "sha256": "8bce25567287f1b4eca94eb3e32b44c80e1b0a6cc2cf1e357915b7c88a017f68",
+      "bytes": 74257
+    },
+    "Auras/Aura195.tga": {
+      "sha256": "0038fbf5c85af4ed48fadb11985b50feaf32fb054541eac02d5c1f9c53dac82e",
+      "bytes": 54514
+    },
+    "Auras/Aura196.tga": {
+      "sha256": "48656afc81000c196f35badb2007237955df867c7b0db5a73fcb282ed4229c5e",
+      "bytes": 64617
+    },
+    "Auras/Aura197.tga": {
+      "sha256": "943b9cf2def806f3d67e5d0bb353a5ff026b12ef2a07f85a80ca2f7704a94ed3",
+      "bytes": 44143
+    },
+    "Auras/Aura198.tga": {
+      "sha256": "6acc7caf5f2d62e36f600eb8d7aa741227e8fe6aabe39d4a0337351b2abff1b4",
+      "bytes": 41385
+    },
+    "Auras/Aura199.tga": {
+      "sha256": "13ab50c2940b9fcdd97ebabb4daf95a72e4f750bb944d1cbdc4f6e300696d22f",
+      "bytes": 48213
+    },
+    "Auras/Aura2.tga": {
+      "sha256": "f69770c93ec16f49746fbee9a46840c3e677fadb476aefeaca79c9abf9976be1",
+      "bytes": 262188
+    },
+    "Auras/Aura20.tga": {
+      "sha256": "3ae344fa33dfb6f3cc419d2cb4e7d1fb6d8081bcf40211e54eb0050d233ea953",
+      "bytes": 65580
+    },
+    "Auras/Aura200.tga": {
+      "sha256": "8d2b4cdde8cb0e0fda65cb419e6b4129096eead8a755e1b280f42d6de05855f0",
+      "bytes": 94759
+    },
+    "Auras/Aura201.tga": {
+      "sha256": "07ddc9823fcf16286e58d4b1bf54e72c1a8a2ad89bc01fc6bed13114a1f97a0b",
+      "bytes": 37858
+    },
+    "Auras/Aura202.tga": {
+      "sha256": "7246d4069640aec56422046fe5e13ca1c357f03366744dcad5b6c8c7f91ab014",
+      "bytes": 48960
+    },
+    "Auras/Aura203.tga": {
+      "sha256": "5e8d3fd7c5547f9a3166b0fd9c3f70d1f431526bd42526088a48c4e81ab849b4",
+      "bytes": 60241
+    },
+    "Auras/Aura204.tga": {
+      "sha256": "c91cfeefbdc609b50a6d975b810e32ddcb0667f63f0757f498eeb31478ec9e85",
+      "bytes": 49956
+    },
+    "Auras/Aura205.tga": {
+      "sha256": "b42e4020c3ae27e8ab3ec12ece760a9c50b50e8c7eee7cbbc8ca5bbc23571721",
+      "bytes": 49461
+    },
+    "Auras/Aura206.tga": {
+      "sha256": "f7e53919ea8616703812aab7a467b81be4d5679a98c6b92ad01f084b8764c4c0",
+      "bytes": 74507
+    },
+    "Auras/Aura207.tga": {
+      "sha256": "9887e69032d1563c1d19b03ee67eb51f2a24513f2296d678dd845fce37f821e3",
+      "bytes": 39497
+    },
+    "Auras/Aura208.tga": {
+      "sha256": "1ec83779b00ae8546d907f4587c3227b125b29eef0fb43dbf97082fd1ed67d8f",
+      "bytes": 35015
+    },
+    "Auras/Aura209.tga": {
+      "sha256": "3bb212ba3f69a1704bc478b85af7374dd0a2a95d390ed7c1ddca1a87b5259158",
+      "bytes": 26658
+    },
+    "Auras/Aura21.tga": {
+      "sha256": "605cd097b1d057ea5d7ee90ee24b2f19613b32a15fc2ca32984b9518a974b03e",
+      "bytes": 65580
+    },
+    "Auras/Aura210.tga": {
+      "sha256": "4712a38def5cc092a35abcc809e7cc630fbbb99c3eb43fd6fa065205058fdb30",
+      "bytes": 28799
+    },
+    "Auras/Aura211.tga": {
+      "sha256": "0610decdd230a80c2e2093e30a79aa3e804535a881d47b36f3693fac771f48d1",
+      "bytes": 30786
+    },
+    "Auras/Aura212.tga": {
+      "sha256": "9d7774dd17ccde212dcba00c414c5a5565aecfc99e63cf5e3fd73c78227e8f94",
+      "bytes": 14710
+    },
+    "Auras/Aura213.tga": {
+      "sha256": "c5f7a1e5862e388e3a23b22e7d5212239c07cd58f6aac0c74812bbf2cff55cbc",
+      "bytes": 22718
+    },
+    "Auras/Aura214.tga": {
+      "sha256": "becc9dc0e779b9c46aa592f698320ea81621a2b9132d207558c9bc4178d60ad4",
+      "bytes": 63459
+    },
+    "Auras/Aura215.tga": {
+      "sha256": "946356cbce3493aef560f0a25b9eab140bd1fcdce2153de1af7199e5614db063",
+      "bytes": 47930
+    },
+    "Auras/Aura216.tga": {
+      "sha256": "2798d824a31a211cea10bc1ef39397aa9e918721b90feb597ca4c9f26dcd7446",
+      "bytes": 74337
+    },
+    "Auras/Aura217.tga": {
+      "sha256": "35b52af07328379fa2f89fe46bff11a06e5f7752ce102a18c058d8f7dd542a54",
+      "bytes": 80380
+    },
+    "Auras/Aura218.tga": {
+      "sha256": "a0bc7ba98d8e13d7fca8c8542a4d86ee4f28ea8ff32c20fd73baf339495b9fbc",
+      "bytes": 79183
+    },
+    "Auras/Aura219.tga": {
+      "sha256": "0b70ae23a774148a63417eaa17f4efa5245d3145260b9aea39a9b44f919249e1",
+      "bytes": 62359
+    },
+    "Auras/Aura22.tga": {
+      "sha256": "02b602cacce3442e5ac7abb1bbf55989c7289daa21a5a61bf4664d2ee6c0fd7d",
+      "bytes": 65580
+    },
+    "Auras/Aura220.tga": {
+      "sha256": "e7df65e7e2d4f696590b9b635d35845a11d90fb41d3f4c17e206ddc8ec350ab4",
+      "bytes": 63363
+    },
+    "Auras/Aura221.tga": {
+      "sha256": "35a65b1d6b2a42fa2bb43d0a877c89ce7e7882cfd71ab91f09a34c1f5a727159",
+      "bytes": 83005
+    },
+    "Auras/Aura222.tga": {
+      "sha256": "31a8b28c3e53714124dda0a13c35a928d20f80e09345160d8acaedde0e6d5ec0",
+      "bytes": 56039
+    },
+    "Auras/Aura223.tga": {
+      "sha256": "1b39f908ce3729ea709f2f72c05f1679346c4de557a50817d7ac03be9419c57f",
+      "bytes": 49649
+    },
+    "Auras/Aura224.tga": {
+      "sha256": "b2b78e0870a7f680592696db766e057171ab388ea976408b870b065e3c344a7f",
+      "bytes": 43839
+    },
+    "Auras/Aura225.tga": {
+      "sha256": "14199b6898185f23203b8055d5186924aab979eaf3e87e50e679a8a3d3fe5d7b",
+      "bytes": 25049
+    },
+    "Auras/Aura226.tga": {
+      "sha256": "e539b33fdf094d3e0f6a9822e136aab9a6d6cb64ef95c4613f434f685b345d67",
+      "bytes": 73744
+    },
+    "Auras/Aura227.tga": {
+      "sha256": "a336390e7787cd49f249cc0577944804145b95e3da975cada3c2d4376816fd1a",
+      "bytes": 64379
+    },
+    "Auras/Aura228.tga": {
+      "sha256": "b1461da3e5234dc8129fb56c860300fc513a858a44e1540136ae5e90c2b3e41a",
+      "bytes": 42932
+    },
+    "Auras/Aura229.tga": {
+      "sha256": "888f0bf1b130f05a4a4637167549c10b66cb7536a37c633add32d38cf75fa2c8",
+      "bytes": 55281
+    },
+    "Auras/Aura23.tga": {
+      "sha256": "6b31f16fc71c926ef554d03f752e386e3564ff6c98f65cdbd1038f0ad8284797",
+      "bytes": 262188
+    },
+    "Auras/Aura230.tga": {
+      "sha256": "50e82b9a01286b3b94a4058b50fbb80c0ab22398a84e3d92d593963e4b32760a",
+      "bytes": 66900
+    },
+    "Auras/Aura231.tga": {
+      "sha256": "5061627653f5b6e3ddcf80156ff3723d47d0fd15b3b8325b29b89374f8992a3b",
+      "bytes": 65855
+    },
+    "Auras/Aura232.tga": {
+      "sha256": "b3965174fba831296024fc2da5b5649aa8cc3efdeac0b2f19b2d86f1b26c1b50",
+      "bytes": 36713
+    },
+    "Auras/Aura233.tga": {
+      "sha256": "293d3252e960c966365b10275dfa402e1197fb0a820ddec1b2fabe06309d42b8",
+      "bytes": 62107
+    },
+    "Auras/Aura234.tga": {
+      "sha256": "77b7ad24826142a850e98de3eb1e3e6ac83363ed0bd34620478c3c90e6cb4fb8",
+      "bytes": 35805
+    },
+    "Auras/Aura235.tga": {
+      "sha256": "1096bfbde4315145386c6f40864165113ea1ea6e36c679cd19df35847eae7305",
+      "bytes": 65536
+    },
+    "Auras/Aura236.tga": {
+      "sha256": "0aabf45fc821ba220a93da4fdb0ad845157ce650ba69dd3251fe3e6ba8ffc102",
+      "bytes": 98135
+    },
+    "Auras/Aura237.tga": {
+      "sha256": "c84f40933e8332faca51656fa7f6742e8caee77bf0e502efb42e3b556559a064",
+      "bytes": 61738
+    },
+    "Auras/Aura238.tga": {
+      "sha256": "25c31fe9bff0390ae228260ba64351c78eda919287c22eb047f97ab37f96a9f0",
+      "bytes": 64114
+    },
+    "Auras/Aura239.tga": {
+      "sha256": "4d3de292401a46ca3b24d7ad76662f670b34f993a0a797b36143ff39fcd572fc",
+      "bytes": 66597
+    },
+    "Auras/Aura24.tga": {
+      "sha256": "95d74ebd6036df5ee16b844a8a4c5be026b18420c33896264326d37d1be1abcd",
+      "bytes": 262188
+    },
+    "Auras/Aura240.tga": {
+      "sha256": "2d6e63aec8f3c4212cc32c74332ca7ef4a9871ed725ff988d3a34bba73110d9c",
+      "bytes": 66597
+    },
+    "Auras/Aura241.tga": {
+      "sha256": "ce32dc5b20275dd529cbe538a05603ae007447b3250ecf9ee3e458b315d77ccc",
+      "bytes": 65580
+    },
+    "Auras/Aura242.tga": {
+      "sha256": "f32c4b5f37f3a1944f8b8b0d241d1f1e6abe3188d3d82d5e0ee834c07bba2226",
+      "bytes": 66597
+    },
+    "Auras/Aura243.tga": {
+      "sha256": "06f8d48e9fd9963da4a42a899d838deb832a6aa364d366407ce73ff46352f4c5",
+      "bytes": 66597
+    },
+    "Auras/Aura244.tga": {
+      "sha256": "b587f9bd21263e82ebe156417cfab1bc2c1b9d6ff943aaa6d31bf609dcdedf2b",
+      "bytes": 65554
+    },
+    "Auras/Aura245.tga": {
+      "sha256": "15a24bf409a8004716a2d7afe5b2ab712a903412441980efb95c2b5598ff64ee",
+      "bytes": 65554
+    },
+    "Auras/Aura246.tga": {
+      "sha256": "561f9abc4d5139cf37f69b1fa80c99295dc7abb5247ed72ac6eade1956694201",
+      "bytes": 65554
+    },
+    "Auras/Aura25.tga": {
+      "sha256": "a3aed1fad34c4d2d192d3eed5f329fbf0dc1b051c8eedaff8efb2da3038bbe71",
+      "bytes": 65580
+    },
+    "Auras/Aura26.tga": {
+      "sha256": "7745ff0fb3be1b667aca80e44257aeec62988c58c36e8769eceaee9c34c2b8c6",
+      "bytes": 65580
+    },
+    "Auras/Aura27.tga": {
+      "sha256": "8e63294c3e5d357a7deff6c83a11f08212afd9ced21c3d1fbd7e78920abffb07",
+      "bytes": 65580
+    },
+    "Auras/Aura28.tga": {
+      "sha256": "018f4867f6fd02698f2e511a709b4483816356292d83c5110b6574169826fca5",
+      "bytes": 262188
+    },
+    "Auras/Aura29.tga": {
+      "sha256": "ffa89a8a0a8064b44ae9400ab01d7c73d019c0fb95ba9e6e56aec6989521e007",
+      "bytes": 65580
+    },
+    "Auras/Aura3.tga": {
+      "sha256": "cfa2940f2dfa0768dc728fca55425e0793551af8688beb0157364a9e2dd5e083",
+      "bytes": 262188
+    },
+    "Auras/Aura30.tga": {
+      "sha256": "b353a36877e6d900e8d82a3a7d11d978e690da755379a70910e6775dd31bc395",
+      "bytes": 65580
+    },
+    "Auras/Aura31.tga": {
+      "sha256": "8376d32b2c0f717c50df1d63d152799b76b2d9359004d783865b0958daff6de7",
+      "bytes": 262188
+    },
+    "Auras/Aura32.tga": {
+      "sha256": "e03c1c6e9e4a55d0fc1934a5664f58d375762f7899bddd0c3a6cedee61c81551",
+      "bytes": 262188
+    },
+    "Auras/Aura33.tga": {
+      "sha256": "73eecdbb38be03ab6be1b1c5870e746fac1f7252024eb3cd6e2374f26236b68d",
+      "bytes": 262188
+    },
+    "Auras/Aura34.tga": {
+      "sha256": "ed46b63ef0beb9b8529cf3a1ef3bc1b0e1d13d014829bcd8bd3d9749e087cb52",
+      "bytes": 65580
+    },
+    "Auras/Aura35.tga": {
+      "sha256": "e7e14a8498eb935d27f22f50a7aa638f68f35bb188c04c70230f8ca9f5ce32d2",
+      "bytes": 65580
+    },
+    "Auras/Aura36.tga": {
+      "sha256": "5eaa655e40ce1d677d7a9e599e4000ec4644681c9a6266dda409d5ab2214579a",
+      "bytes": 65580
+    },
+    "Auras/Aura37.tga": {
+      "sha256": "cd252711e641e0bca5f743ffa20f7e23f32882a8acd9a249aeff7427ad6440c8",
+      "bytes": 65580
+    },
+    "Auras/Aura38.tga": {
+      "sha256": "6e7d5b68e75e1efdf55bc179e5da02794332447049a0e6cc3b5a48ea6f9f809c",
+      "bytes": 65580
+    },
+    "Auras/Aura39.tga": {
+      "sha256": "a7c269ffbbd5da5c2dde164f72a90ff0e14025735050a5c2f58adf5e14e5d366",
+      "bytes": 65580
+    },
+    "Auras/Aura4.tga": {
+      "sha256": "69890885ad8a491bdcd368335ce653041eb7b146f3c19cb3c99da3e443a1b5ef",
+      "bytes": 262188
+    },
+    "Auras/Aura40.tga": {
+      "sha256": "e62fe705c025e2422f6e086c0d7db20111c9c33671241a80abccc91cd5440d7e",
+      "bytes": 65580
+    },
+    "Auras/Aura41.tga": {
+      "sha256": "e8201a78b5059fafa5c92461302eafef4e75a23bd974027c6319fb58b8b03559",
+      "bytes": 65580
+    },
+    "Auras/Aura42.tga": {
+      "sha256": "ab75671837e7e4d51e7f4143ba419361b5490f2c9ebff010166597c186a1146c",
+      "bytes": 65580
+    },
+    "Auras/Aura43.tga": {
+      "sha256": "7de516f1fba32154f840c23813fb3d1b6480e5d08f3501c27ba466862aa7b28c",
+      "bytes": 65580
+    },
+    "Auras/Aura44.tga": {
+      "sha256": "c19e8ab0c1fc701bbbc16466ca9d0f517cc830873e4ff9cf25f248937e445e26",
+      "bytes": 65580
+    },
+    "Auras/Aura45.tga": {
+      "sha256": "43171d4db032cbb5e259c1b6d9ed1bd87cfe4ce4e42260fc2a2512b1a39667d0",
+      "bytes": 65580
+    },
+    "Auras/Aura46.tga": {
+      "sha256": "a7d5a7a749eca91a254ff85b510df1ce1116f3a9c27e2dff4c7146d6cb9a7825",
+      "bytes": 65580
+    },
+    "Auras/Aura47.tga": {
+      "sha256": "016b4fcd66139f3dd67dcf0d5a8070eb300cc9943ccf297ae04f7b3dfd9ecb00",
+      "bytes": 65580
+    },
+    "Auras/Aura48.tga": {
+      "sha256": "90f6c7437103a7b0de0ee6c7d7799ab4f030820ce527e23590fe0c8f308d9108",
+      "bytes": 65580
+    },
+    "Auras/Aura49.tga": {
+      "sha256": "87289bbccf6516e13b4769df5133559a8623998b23bbf7213272889b3d2c9646",
+      "bytes": 262188
+    },
+    "Auras/Aura5.tga": {
+      "sha256": "dc0059e5ca49f38eaf2742e5b22c104f9407f8cae2ac2f6b3803df6906816fed",
+      "bytes": 262188
+    },
+    "Auras/Aura50.tga": {
+      "sha256": "89cb7c098b64a21dc243be826a99d6d16dd17cd011f5f207f304891f1bb7c8e2",
+      "bytes": 262188
+    },
+    "Auras/Aura51.tga": {
+      "sha256": "c841d8e347275029e1c80964ad1355b4e9c7cd139eb1755a28190194c45bec59",
+      "bytes": 16762
+    },
+    "Auras/Aura52.tga": {
+      "sha256": "b59993a825d8ae1616229ecf54172fbe9526fed0eec4b9583bd7518947708d2e",
+      "bytes": 21406
+    },
+    "Auras/Aura53.tga": {
+      "sha256": "f80b95ee9116ac579a9686124152b0ab2461a1e4525f3c4712c3d88e61743f6a",
+      "bytes": 18731
+    },
+    "Auras/Aura54.tga": {
+      "sha256": "ac093656d0c4e8d4b05d23477f345c0ae08e002c56c4e4ba2530f2a1f69f4c79",
+      "bytes": 10119
+    },
+    "Auras/Aura55.tga": {
+      "sha256": "16de71a3260d996f91e64dbc305f14848c6b5c35b386ebd6c80b2103a6bab9bc",
+      "bytes": 148575
+    },
+    "Auras/Aura56.tga": {
+      "sha256": "e0c1bcd1a76428daaa6d09d43d898356fb1ddc9519823160af2e0e1cc650c9ca",
+      "bytes": 164828
+    },
+    "Auras/Aura57.tga": {
+      "sha256": "87fabea923cee38ba422faca368304dc3ab200afcb3a2082f939cc5566bbcb2a",
+      "bytes": 177085
+    },
+    "Auras/Aura58.tga": {
+      "sha256": "e5ea8104f6387222980cb04ee7778510f87aa382e8d363529e23c6b6581f4925",
+      "bytes": 180175
+    },
+    "Auras/Aura59.tga": {
+      "sha256": "15944c56b78c03f9e632b8132a39c1f5560a95e8f8c5936b91a9c4b276ec159a",
+      "bytes": 200785
+    },
+    "Auras/Aura6.tga": {
+      "sha256": "541c2c431b575a882912717514438aaa5129db75f27e3691e7e5b488d9130a2e",
+      "bytes": 262188
+    },
+    "Auras/Aura60.tga": {
+      "sha256": "a9b66512b195be0b6a5c3fc3850cbc664273682376c5be7ce13659363d66cd5a",
+      "bytes": 200246
+    },
+    "Auras/Aura61.tga": {
+      "sha256": "810c1c3f3860b00eef8b08b63b987d55c9299e1a53054518b9bf980e60dc7e4d",
+      "bytes": 29077
+    },
+    "Auras/Aura62.tga": {
+      "sha256": "1fe1e8abc349d5645797d05e54cda0bcc2d76f426bf3f216b525bbde6d983fd6",
+      "bytes": 30203
+    },
+    "Auras/Aura63.tga": {
+      "sha256": "8fc1f9850534bbcb9b3d8f9ae61c383b6746b00425a95872e25ec574a0999302",
+      "bytes": 143531
+    },
+    "Auras/Aura64.tga": {
+      "sha256": "4263cdb380c1a49600a9381cb55e275b2075df657273eebd8d6e8205b2e96ef3",
+      "bytes": 142767
+    },
+    "Auras/Aura65.tga": {
+      "sha256": "7c133e5bd8fe40c009a4d6edfcff67f31aad18a59dc594d6bd5b8a9048de033a",
+      "bytes": 21937
+    },
+    "Auras/Aura66.tga": {
+      "sha256": "c056b350e03540f4923118a06c25ae567f1bb671ab1f7a313dca72607353991d",
+      "bytes": 19911
+    },
+    "Auras/Aura67.tga": {
+      "sha256": "19ae4dfbf41b7f9a538cbe30eb3d2fd2ec9b88efd835cd79eef960b30352f7be",
+      "bytes": 21937
+    },
+    "Auras/Aura68.tga": {
+      "sha256": "13efa0ebe8bd1f920acbfd20b58303db56374e65a612d4ff17e629cf72e0f28e",
+      "bytes": 44126
+    },
+    "Auras/Aura69.tga": {
+      "sha256": "9ca71e531315715e07e0437b87f1b59e8e7e8d86507a51330c324d67b5f03bc3",
+      "bytes": 9674
+    },
+    "Auras/Aura7.tga": {
+      "sha256": "4c6e36b71cc71d9bb246c8249b63dee58f2895e7ba41389b6f74ac2f23f063c4",
+      "bytes": 262188
+    },
+    "Auras/Aura70.tga": {
+      "sha256": "104772e5b28ff560be6cbbb1a5628abfbf3d9323c57999013f476e34ed01600d",
+      "bytes": 11591
+    },
+    "Auras/Aura71.tga": {
+      "sha256": "d0c20b3cb6cf000a62f0786d6bd199c70119e02ac07d79c9f33bbd88dc3dadbc",
+      "bytes": 764783
+    },
+    "Auras/Aura72.tga": {
+      "sha256": "14005e9bb9af3511d0c0f6fa7c50a0f04af4d0e270d65abaf9fd46c468a3f1f9",
+      "bytes": 42480
+    },
+    "Auras/Aura73.tga": {
+      "sha256": "de2290a170a7ef42f5fd04ee5a4b47a868f10b57890e7c9b8785d391d49cc9b9",
+      "bytes": 78204
+    },
+    "Auras/Aura74.tga": {
+      "sha256": "cf3934b20f5058fe69387a9a87ecfabc93afab9e3171fc858915c727bb498de4",
+      "bytes": 5144
+    },
+    "Auras/Aura75.tga": {
+      "sha256": "5c01ce4aabcd85631c4b981621d2119362bd4246a040f7776c022687fbfeed7d",
+      "bytes": 21467
+    },
+    "Auras/Aura76.tga": {
+      "sha256": "5db97ce747aa59e802387ad826046e7d20ca4e2a18f33ed89079000bb1bae399",
+      "bytes": 12083
+    },
+    "Auras/Aura77.tga": {
+      "sha256": "1c65378adc87e41395788cd32a1eb18da15c31d6bc0bdaa569e6270fa9932d80",
+      "bytes": 24560
+    },
+    "Auras/Aura78.tga": {
+      "sha256": "0824f328e55ef119bed67230901514e0806766f5721c4082044350cc154bba2b",
+      "bytes": 15153
+    },
+    "Auras/Aura79.tga": {
+      "sha256": "8c980dd649a9ce8bb4a0f169a82175fb2c79c09360a911cbf195fd4832b565f3",
+      "bytes": 32497
+    },
+    "Auras/Aura8.tga": {
+      "sha256": "45ec8ef650631d676f7b45f3b4a5e690d818958e47c3107d9a15340fc25313c4",
+      "bytes": 65580
+    },
+    "Auras/Aura80.tga": {
+      "sha256": "d414f97fa53f3c41b931bc065029b082cc1d38059bb2da443a78d91d71fa35d9",
+      "bytes": 24938
+    },
+    "Auras/Aura81.tga": {
+      "sha256": "5e8f10c5ee24a7cbb22f5fe1ad4a582ba6dc11e90e2b951d0d2a66ca463ab3ce",
+      "bytes": 55725
+    },
+    "Auras/Aura82.tga": {
+      "sha256": "5996ed4a41c9c24234c6e427342ff3a582f45a480efd1fb3d7b3d6b3b88f46cc",
+      "bytes": 13788
+    },
+    "Auras/Aura83.tga": {
+      "sha256": "80a25faa14945bf9b22973f75416a08a52ad8c548b9d768a692f439388d057b6",
+      "bytes": 15187
+    },
+    "Auras/Aura84.tga": {
+      "sha256": "d74f9b4dcf1639fe2ce0d855906fdc441c67d32374a0395d5b9a3d6481b2d759",
+      "bytes": 7734
+    },
+    "Auras/Aura85.tga": {
+      "sha256": "76f4dda0c338586992045270b493ce4be74867efee48d5b2feb07398d2fc0ab1",
+      "bytes": 10367
+    },
+    "Auras/Aura86.tga": {
+      "sha256": "4fd6c1c2448fbe91c0f33889d8abf9083b19602e1ea2a6b8b81cf6aec2bb228b",
+      "bytes": 10438
+    },
+    "Auras/Aura87.tga": {
+      "sha256": "9a17be0b3475372f93c2a36dd25e334ab2ac0312fe53b2a46ed21da4a6d0b4ee",
+      "bytes": 16759
+    },
+    "Auras/Aura88.tga": {
+      "sha256": "5cb3bd5f9e043115709812d55d8901ab2a3f5e7c755834bc985809939083de23",
+      "bytes": 32253
+    },
+    "Auras/Aura89.tga": {
+      "sha256": "dbf05bc7998008e8709f983318cb078b410e305057e59bafc7e714ae97010b2c",
+      "bytes": 10646
+    },
+    "Auras/Aura9.tga": {
+      "sha256": "913d08d4c3aff493ad5b8383c4e636b43d9e8ee17aaeb2a28f34bbf61cf2a542",
+      "bytes": 65580
+    },
+    "Auras/Aura90.tga": {
+      "sha256": "d8680c5848ebb3588b7c1f23b9151d2da0f93a388546f21b23bb02f159300767",
+      "bytes": 10100
+    },
+    "Auras/Aura91.tga": {
+      "sha256": "81c4373e44fd0377384a4567b8ba961e9a14366eacb8abc6645af2e494b4c529",
+      "bytes": 9988
+    },
+    "Auras/Aura92.tga": {
+      "sha256": "7ebacb8f411543b54f6e65e25f4ca4520b34b1e998225bd8825e67f42e9b2df5",
+      "bytes": 10745
+    },
+    "Auras/Aura93.tga": {
+      "sha256": "8a94da29fc2ea5e54efcfe6bcde5aceafaac79bf7ee40bc8ddb2b7aa9f2a510b",
+      "bytes": 9074
+    },
+    "Auras/Aura94.tga": {
+      "sha256": "819ed6afd307a403cb8be4d30e6dcd05a5874acacdc91bf8b51fae400a986e9a",
+      "bytes": 39905
+    },
+    "Auras/Aura95.tga": {
+      "sha256": "d7d1c80c518703af4a37e1249c6c87ac8b8ce6dd37d819ca5f0423fb8984b71a",
+      "bytes": 15284
+    },
+    "Auras/Aura96.tga": {
+      "sha256": "9a25ab4a6c3a6088ecfc6145ef04c2fbec83859b630c4f8f6c677e56fb839298",
+      "bytes": 12477
+    },
+    "Auras/Aura97.tga": {
+      "sha256": "4725b52677d81f67cf8684c90f4e5ab8d92cd0c20c9b50522b9277013ef33184",
+      "bytes": 25475
+    },
+    "Auras/Aura98.tga": {
+      "sha256": "167d858646acd24d9ab92b7e144e491ef069ae70ae6d27377dfe9e549a17b64e",
+      "bytes": 26751
+    },
+    "Auras/Aura99.tga": {
+      "sha256": "8fe5c0d0f158f808bf1ddc8679f31bac5ad54dacbcd0a0febf775881832c7124",
+      "bytes": 36004
+    },
+    "core.lua": {
+      "sha256": "335300eb14438494ae38921282f24ec15f3cafb2e776471f5dc602618702b8cd",
+      "bytes": 18547
+    },
+    "gui.lua": {
+      "sha256": "ed965f198d8bb1801ef9203c7f95f2d83148e4b44d06bcf4fa9630ac3f1a6d24",
+      "bytes": 74139
+    },
+    "init.lua": {
+      "sha256": "822351440f2e3bf479058fec1c8d7f19930f98eb822c97098f45f3267d28fa6c",
+      "bytes": 15180
+    },
+    "README.md": {
+      "sha256": "c47b2839c35752d6d4eb5a0fa4d21a611f733f81d7eb7b39abe2b510f2f0b284",
+      "bytes": 4444
+    },
+    "simpleAuras.toc": {
+      "sha256": "2b1f5fc46d3f05f60a32a7ec1240e8a341c2c45c34fc6d723d1bede7cb9c1ada",
+      "bytes": 214
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,57 @@
+{
+  "upstream": "https://github.com/FSuhas/Goblin-Brain-Saver",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "FSuhas",
+    "repo": "Goblin-Brain-Saver",
+    "name": "Goblin-Brain-Saver",
+    "url": "https://github.com/FSuhas/Goblin-Brain-Saver",
+    "api": "https://api.github.com/repos/FSuhas/Goblin-Brain-Saver"
+  },
+  "commit": "2a5948a1f3b034e9cff785ab4e2bea50be8c7920",
+  "sourceFiles": {
+    "BrainSaver.lua": {
+      "sha256": "fb12f1900b84e15e33600d0937ce1ee103462adb5d34104c34d1dd46e955ba0d",
+      "bytes": 797
+    },
+    "BrainSaverDB.lua": {
+      "sha256": "7c37005fc870683c014b74046a4acff4532ab18c0b6465fc619b5e459d6c98ef",
+      "bytes": 2099
+    },
+    "BrainSaverUI.lua": {
+      "sha256": "86cff9dafc8f1b3df642164e3a34ef31fc699f0be5c4b05fd01c56daf7e31e53",
+      "bytes": 9794
+    },
+    "ContextMenu.lua": {
+      "sha256": "5ef6e3888123ae2c6a7451b704ac01b0efed400d8a9599ae704d0a9d82475e97",
+      "bytes": 549
+    },
+    "GoblinBrainSaver.toc": {
+      "sha256": "7f95fe9cc0214e0dc955cbfc481bcc49bf099358fabb17331ccaf3fb64b11651",
+      "bytes": 370
+    },
+    "IconSelector.lua": {
+      "sha256": "6327ab984daa686fb77194a934d45797484cc9611752de0b84fb9d69b4750295",
+      "bytes": 42244
+    },
+    "image.png": {
+      "sha256": "b413ca3d559039ffec66b2cd302c4f6cab886da631cb806acf06958e4a60f3db",
+      "bytes": 355648
+    },
+    "Popups.lua": {
+      "sha256": "17d5376772e8d74817a5c0064dfb19634de6a999dd33bcff8a3044827f19fa4f",
+      "bytes": 11575
+    },
+    "README.md": {
+      "sha256": "85db7e2f41a906d3c9c21cca999d5f2980e895f55b22b9a907abcbf058e4f8ca",
+      "bytes": 2187
+    },
+    "TalentButtons.lua": {
+      "sha256": "e015f0d084039f0a23985ed0d8da5a8c28cd945631efed31d5528d915e6bc9b5",
+      "bytes": 6896
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

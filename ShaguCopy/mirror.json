@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/shagu/ShaguCopy",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguCopy",
+    "name": "ShaguCopy",
+    "url": "https://github.com/shagu/ShaguCopy",
+    "api": "https://api.github.com/repos/shagu/ShaguCopy"
+  },
+  "commit": "f6a7e741c7050478306b8eb13d00bbdd5cd0e182",
+  "sourceFiles": {
+    "button.tga": {
+      "sha256": "eeb8cfc989b7f003e0029552fcac8b6a6d11fda6e3b962a9044a874261ebf46e",
+      "bytes": 1630
+    },
+    "README.md": {
+      "sha256": "c8e3487e24e2970cf1c2515949b7f568baed4a03303929129ee5e22008494b7f",
+      "bytes": 781
+    },
+    "ShaguCopy.lua": {
+      "sha256": "1dc58230a06ca0df31a18faaa8be2b02c9924b81cc7248e94be311ccf101a4fd",
+      "bytes": 3750
+    },
+    "ShaguCopy.toc": {
+      "sha256": "8248a38473b973428c4d680894ec235526656955d1e384ebc8f71d511761db6b",
+      "bytes": 163
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

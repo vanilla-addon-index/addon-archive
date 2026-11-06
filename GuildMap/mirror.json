@@ -1,0 +1,201 @@
+{
+  "upstream": "https://github.com/Haaxor1689/GuildMap",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Haaxor1689",
+    "repo": "GuildMap",
+    "name": "GuildMap",
+    "url": "https://github.com/Haaxor1689/GuildMap",
+    "api": "https://api.github.com/repos/Haaxor1689/GuildMap"
+  },
+  "commit": "e3788a64d7a524430df4bef941a6814ff5bd5635",
+  "sourceFiles": {
+    "GuildMap.lua": {
+      "sha256": "7965d60f1b8a61b1ff229932a9395a64512b0a79a337c19c0f55d92c5945bc9c",
+      "bytes": 29688
+    },
+    "GuildMap.toc": {
+      "sha256": "dea51937a811057b34cf2928ba48aa2f1baccf9c3fd174f61d09fc8ce0f518da",
+      "bytes": 440
+    },
+    "GuildMap.xml": {
+      "sha256": "395a80db4d5f8c1120c13bb6fe43007a7d5744d08c123bba237206088b4d84a6",
+      "bytes": 35434
+    },
+    "GuildMapOptions.lua": {
+      "sha256": "75f1a1370b5e5fbe809547dc82e1262f079ff29e3b286064adfafcc53efb3432",
+      "bytes": 4154
+    },
+    "GuildMapOptions.xml": {
+      "sha256": "07cbe314fe65a4ea08b65a5c029e4d64dd4bb6f80972716608517f71ec8b2508",
+      "bytes": 7827
+    },
+    "GuildMapRegionData.lua": {
+      "sha256": "6261a984bd4c9e75c5233e0900b323a85d9eebc90bee123b1bf58aa4a51af6e8",
+      "bytes": 9680
+    },
+    "images/MiniMapArrow0.tga": {
+      "sha256": "902ff9674201d1e20cc6cd232132289500d18317a58816ee8c98a8099f83cf5a",
+      "bytes": 750
+    },
+    "images/MiniMapArrow10.tga": {
+      "sha256": "7364997c5aa2a4066301828f9ea868405a67e34214d638513c4b5153e4de5d99",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow100.tga": {
+      "sha256": "fe42f735ef77a1dd0e70a09a3f49ee4157d0a92c24336db191613a5e21e0890d",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow110.tga": {
+      "sha256": "6f75b9d11b50b61da4bebe848ce6d817e3718140b7ffdfa728096380fc163b91",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow120.tga": {
+      "sha256": "e18a5b844345563954e6cba30ec01c98cf18ec6795cd9ecdf94f5e3936dec773",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow130.tga": {
+      "sha256": "f3942824543ccafbb896976d22d088aaf3980be1610f3989f48e30074f208889",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow140.tga": {
+      "sha256": "0724ebac647f3f52656dc69b5a75a797fc0120491e72daf90ae97ea718f79452",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow150.tga": {
+      "sha256": "e7929fb4d611489fceabdf77ed7449863d5ba4ff718481b394978b51db1c7aae",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow160.tga": {
+      "sha256": "fbe6923171dbe5e08408ec076a243ef997a48d5944743317058017eb73bde0b8",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow170.tga": {
+      "sha256": "91dc2bf83a7c5b23f4a9560b882ffc6ca051c07cd97c827c8747aa99f80dc173",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow180.tga": {
+      "sha256": "e29436fd2f2460be67259edc3dac262539c4469d6b149ae94265799ce7fe7a00",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow190.tga": {
+      "sha256": "997bbc22a4e10ddbc98c85672689b95d4fbaff4a2611da0e317d8e687c31aa44",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow20.tga": {
+      "sha256": "33f3ad8887dc7ed7d2ff3b201db6bef4b90757dc79d8787ce6aeca593d712b53",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow200.tga": {
+      "sha256": "bbb5d055de7b084b9b3cc93f3aa92078c11b0ae80570f617b1903daa5c558288",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow210.tga": {
+      "sha256": "02c0a0325a13a4f63669a4c21fde76cee0807b85e7b949e8211c2976d73f7365",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow220.tga": {
+      "sha256": "3c929a97cace3f724d0fcef8e7a214874f7f8f882657cd8a29deadafcf368bcb",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow230.tga": {
+      "sha256": "13d1f00a6132a37a455ae583cf5face49382720b832bae2b7bd0ccc07544df5d",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow240.tga": {
+      "sha256": "e40ec8473a969f95c380361a39d2aef95c8279a81af8e91788c67318d0eff1a6",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow250.tga": {
+      "sha256": "7a2e62466bba384cb717efde56f5bafce6d730a01c07f27113a819af60a65330",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow260.tga": {
+      "sha256": "ed2a658ccbbf08bb855a80d290b9da9f6d650f9118f0172dfc3a9cb90745a941",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow270.tga": {
+      "sha256": "f8d05c0e08301648781f5f23ef9c5e30d33b3f6f80c8354c44e5be5d93329d36",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow280.tga": {
+      "sha256": "528d04e2a310d2960ccce3ad894f3fa09d1ffe37add14d6b7d89797de3b9a589",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow290.tga": {
+      "sha256": "a03c991f2069ec5c0f13eebc0b8097a0147bf13f7746c7151f2b93df22f3797b",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow30.tga": {
+      "sha256": "3b6c5c821064315f23680dcad0c65827412da309cbd32fd6bc752c017d5847c3",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow300.tga": {
+      "sha256": "ceef5339a15fb70fbc0ea31ab1dc60b24c9a42de6e94139d94076f27f221a06b",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow310.tga": {
+      "sha256": "76d6cc59585c8641ff222ffb2979c07b297bfba5b47e5fd3bd2c2068b4f4a124",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow320.tga": {
+      "sha256": "4c17c767b6401a7b3f682c05ca522772240ac27a48171f2dd6560aeb6dfe6e63",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow330.tga": {
+      "sha256": "7e0a4ea57bcc291ef69a654f1a109b058dfdccf8c1166646c75df5738ba95be1",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow340.tga": {
+      "sha256": "efa80f393acbd31d446eafd8af388036acb082ba18cc6cbba90adacbc14769d0",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow350.tga": {
+      "sha256": "ae114da5fba96f3d3e7472e14b56833db635c36c85cfbdb877f12059bc4a73a5",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow40.tga": {
+      "sha256": "6edf37e5010415eba5b0834b1fbf28333aae5450df0ee7dd015fce5931de867f",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow50.tga": {
+      "sha256": "ebfa4f5e509c619fd6482c1e6dc0edeb63e53e5c72ed1057f1f4b1ddb1f2983d",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow60.tga": {
+      "sha256": "4e606516cf2286a78213cb13eec5ae49d8399aeb300ff8759ae3ec9da9e15598",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow70.tga": {
+      "sha256": "9f732338242d034b6d618e2036a99608151e847d405f21779904d1ee5bde98c6",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow80.tga": {
+      "sha256": "0f60fd36710d4e41a3b9cfc9297197ec4e5a3499d4b9c634a91c5b5bb080dcea",
+      "bytes": 1068
+    },
+    "images/MiniMapArrow90.tga": {
+      "sha256": "7474bc0d2e2b67f6a477ac5f8ad81f0c75e4cfd3bddf57abb200164fb58dbc6f",
+      "bytes": 1068
+    },
+    "images/MiniMapIcon.tga": {
+      "sha256": "524964121a13822fb0f8ae0d0ecb2dd0d74318921c85275f3d4d01f098d858e1",
+      "bytes": 1068
+    },
+    "images/WorldMapGuildIcon.blp": {
+      "sha256": "e0317ab179ee5c5ceed844f8ec9909a57f6292d37cbfa10200331d457b5b1eea",
+      "bytes": 1300
+    },
+    "localization.lua": {
+      "sha256": "681797cc96f4f4781a0d10288d119a471c16e9a20ab40f1058c072298a77f095",
+      "bytes": 2604
+    },
+    "README.md": {
+      "sha256": "16dc6b08343f4ff951b6cc9e70fd5db058dc662f3e1aa889a810dabae29ba282",
+      "bytes": 429
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

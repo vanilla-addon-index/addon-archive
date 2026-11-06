@@ -1,0 +1,224 @@
+local CastSpellByName = CastSpellByName
+local GetContainerNumSlots = GetContainerNumSlots
+local GetContainerItemLink = GetContainerItemLink
+local UseContainerItem = UseContainerItem
+local SpellStopCasting = SpellStopCasting
+
+function IWin:InitializeRotationCore()
+	IWin:Debug("")
+	IWin:Debug("=== Rotation processing ===")
+	if not IWin.hasSuperwow then
+    	DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFFbalakethelock's SuperWoW|r required:")
+        DEFAULT_CHAT_FRAME:AddMessage("https://github.com/balakethelock/SuperWoW")
+    	return
+	end
+	if not IWin.hasUnitXP then
+    	DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFFUnitXP|r required:")
+        DEFAULT_CHAT_FRAME:AddMessage("https://codeberg.org/konaka/UnitXP_SP3")
+    	return
+	end
+	if not CleveRoids.libdebuff or not CleveRoids.NampowerAPI then
+    	DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFFSuperCleveRoidMacros|r required:")
+        DEFAULT_CHAT_FRAME:AddMessage("https://github.com/jrc13245/SuperCleveRoidMacros")
+    	return
+    end
+	IWin_CombatVar = {
+		["affectingCombat"] = {},
+		["buffRemaining"] = {},
+		["buffStack"] = {},
+		["casting"] = {},
+		["cooldown"] = {},
+		["dead"] = {},
+		["enemyInFront"] = {},
+		["enemyInRange"] = {},
+		["health"] = {},
+		["healthMax"] = {},
+		["healthPercent"] = {},
+		["inRange"] = {},
+		["level"] = {},
+		["power"] = {},
+		["powerMax"] = {},
+		["powerPercent"] = {},
+		["powerType"] = {},
+		["queueGCD"] = true,
+		["reservedEnergy"] = 0,
+		["reservedRage"] = 0,
+		["startAttackThrottle"] = 0,
+		["swingAttackQueued"] = false,
+	}
+	IWin_CastTime = {}
+end
+
+function IWin:Cast(spell, gcd, unit)
+	if gcd ~= false then
+		IWin_CombatVar["queueGCD"] = false
+	end
+	IWin:Debug("=> Casting "..spell)
+	if unit == nil then
+		CastSpellByName(spell)
+	else
+		CastSpellByName(spell, unit)
+	end
+end
+
+function IWin:SpellStopCasting()
+	IWin:Debug("=> Stop casting!")
+	SpellStopCasting()
+end
+
+function IWin:TargetEnemy()
+	if not IWin:IsExists("target", false)
+		or IWin:IsDead("target", false)
+		or IWin:IsFriend("target", "player", false) then
+			TargetNearestEnemy()
+	end
+end
+
+function IWin:StartAttack()
+	--IWin:Debug("+++ checking conditions: startattack")
+	if IWin:IsBuffActive("player", "Prowl", nil, false) or IWin:IsBuffActive("player", "Stealth", nil, false) then return end
+	if IWin_CombatVar["swingAttackQueued"] or IWin_RotationVar["startAttackThrottle"] and IWin_RotationVar["startAttackThrottle"] > IWin:GetTime(false) then return end
+	local attackActionFound = false
+	for action = 1, 172 do
+		if IsAttackAction(action) then
+			attackActionFound = true
+			if not IsCurrentAction(action) then
+				UseAction(action)
+			end
+		end
+	end
+	if not attackActionFound
+		and not PlayerFrame.inCombat then
+			AttackTarget()
+	end
+end
+
+function IWin:PetAttack()
+	if HasPetUI() then
+		PetAttack()
+	end
+end
+
+function IWin:MarkSkull()
+	if IWin:IsExists("target", false)
+		and GetRaidTargetIndex("target") ~= 8
+		and not IWin:IsFriend("player", "target", false)
+		and not UnitInRaid("player")
+		and IWin:GetGroupSize(false) > 1 then
+			IWin:Debug("=> MarkSkull")
+			SetRaidTarget("target", 8)
+	end
+end
+
+function IWin:CancelPlayerBuff(spell)
+	local index = IWin:GetPlayerBuffIndex(spell)
+	if index then
+		CancelPlayerBuff(index)
+	end
+end
+
+function IWin:CancelSalvation()
+	IWin:CancelPlayerBuff("Blessing of Salvation")
+	IWin:CancelPlayerBuff("Greater Blessing of Salvation")
+end
+
+function IWin:CastCDOffensive(spell, skipWindowControl, gcd)
+	if IWin:IsSpellSkip(spell, nil, gcd, queueTime, false) then return end
+	if not skipWindowControl and not IWin:IsDPSWindow(spell) then return end
+	IWin:Cast(spell, gcd)
+end
+
+function IWin:UseItem(item)
+	for bag = 0, 4 do
+		for slot = 1, GetContainerNumSlots(bag) do
+			local itemName = GetContainerItemLink(bag, slot)
+			if itemName and string.find(itemName, item, 1, true) then
+				local start, duration = GetContainerItemCooldown(bag, slot)
+				if start == 0 or duration == 0 then
+					IWin:Debug("=> Using: "..item)
+					UseContainerItem(bag, slot)
+					return true
+				end
+			end
+		end
+	end
+	return false
+end
+
+function IWin:UseItemDrink()
+	if IWin:IsBuffActive("player", "Drink", nil, false) then return end
+	local playerLevel = IWin:GetLevel("player")
+	for _, drinkTable in ipairs({IWin_DrinkConjured, IWin_DrinkVendor}) do
+		--highest level first, a single drink per press
+		local drinks = {}
+		for drinkItem in drinkTable do
+			if playerLevel >= drinkTable[drinkItem] then
+				table.insert(drinks, drinkItem)
+			end
+		end
+		table.sort(drinks, function(a, b) return drinkTable[a] > drinkTable[b] end)
+		for _, drinkItem in ipairs(drinks) do
+			if IWin:UseItem(drinkItem) then return end
+		end
+	end
+end
+
+function IWin:UseItemConsumableOffensive(item, skipWindowControl)
+	if not skipWindowControl and not IWin:IsDPSWindow(item) then return end
+	IWin:UseItem(item)
+end
+
+function IWin:UseItemConsumableAOEOffensive(item, skipTargetsControl, targets, spell)
+	if not skipTargetsControl and (not (IWin:GetEnemyInRange(spell) >= targets) or targets == 0) then return end
+	IWin:UseItem(item)
+end
+
+function IWin:UseItemConsumableDefensive(item, subzone)
+	if not string.find(GetSubZoneText() or "", subzone) then return end
+	IWin:UseItem(item)
+end
+
+function IWin:UseItemTrinket(item, gcd)
+	for _, slot in ipairs({13, 14}) do
+		if IWin:IsItemEquipped(slot, item, false) then
+			local start, duration = GetInventoryItemCooldown("player", slot)
+			if start == 0 or duration == 0 or duration == 1.5 then
+				if gcd then IWin_CombatVar["queueGCD"] = false end
+				IWin:Debug("=> Using: "..item)
+				UseInventoryItem(slot)
+				return
+			end
+		end
+	end
+end
+
+function IWin:UseItemTrinketOffensive(item, skipWindowControl, gcd)
+	if not skipWindowControl and not IWin:IsDPSWindow(item) then return end
+	IWin:UseItemTrinket(item, gcd)
+end
+
+function IWin:RangedAttack(spell, rangedWeapon)
+	if IWin:IsSpellSkip(spell, nil, true, queueTime, true) then return end
+	if IWin:IsItemSubTypeEquipped(rangedWeapon) then
+		IWin:Cast(spell)
+	end
+end
+
+function IWin:RangedAttackAny()
+	IWin:RangedAttack("Shoot", "Wands")
+	IWin:RangedAttack("Shoot Bow", "Bows")
+	IWin:RangedAttack("Shoot Gun", "Guns")
+	IWin:RangedAttack("Shoot Crossbow", "Crossbows")
+	IWin:RangedAttack("Throw", "Thrown")
+end
+
+--shared slash command defaults (core/rotation.lua), overridden by the class action files loaded after this one
+function IWin:CastCDShortOffensiveGCD() end
+function IWin:CastCDShortOffensiveNoGCD() end
+function IWin:CastCDLongOffensiveGCD() end
+function IWin:UseItemConsumableOffensiveNoGCD() end
+function IWin:UseItemConsumableAOEOffensiveNoGCD() end
+function IWin:UseItemConsumableAOEOffensiveGCD() end
+function IWin:UseItemTrinketOffensiveGCD() end
+function IWin:UseItemTrinketOffensiveNoGCD() end
+function IWin:UseItemTrinketOffensivePrepull() end

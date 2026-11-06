@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/LazyWeirdo",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "LazyWeirdo",
+    "name": "LazyWeirdo",
+    "url": "https://github.com/MarcelineVQ/LazyWeirdo",
+    "api": "https://api.github.com/repos/MarcelineVQ/LazyWeirdo"
+  },
+  "commit": "5e248132d6814788f3154e00445c6f7ea45a74fb",
+  "sourceFiles": {
+    "LazyWeirdo.lua": {
+      "sha256": "92c68b2e63eec287c420dc22bc9fc0c0fc61252651b404c01ac107afff5c7ecb",
+      "bytes": 77836
+    },
+    "LazyWeirdo.toc": {
+      "sha256": "0460c36082aa3ea1ef784a5e3800acdb9580f6611d99f72ccd7e311733e761a9",
+      "bytes": 225
+    },
+    "README.md": {
+      "sha256": "afec014d94a1713fe9328e6c00a01dea2260e53c7b9bb49c151e10225d8d760a",
+      "bytes": 2584
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

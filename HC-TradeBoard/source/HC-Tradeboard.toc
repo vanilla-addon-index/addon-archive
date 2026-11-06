@@ -1,0 +1,13 @@
+## Interface: 11200
+## Title: |cffb8c0ccHC|r |cffa335eeTradeBoard|r
+## Notes: v0.8.2: trade tools plus lightweight peer update notices
+## Author: OctoWow Community
+## Version: 0.8.2
+## SavedVariables: TradeBoardDB
+
+Core.lua
+Network.lua
+Features.lua
+UI.lua
+GuildLoot.lua
+MawVersion.lua

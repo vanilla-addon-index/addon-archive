@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/redshadowz/Groupfinder",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "redshadowz",
+    "repo": "Groupfinder",
+    "name": "Groupfinder",
+    "url": "https://github.com/redshadowz/Groupfinder",
+    "api": "https://api.github.com/repos/redshadowz/Groupfinder"
+  },
+  "commit": "51ebb9beca1b0880ea15f3e293132d10488b9450",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "46073331b01d4cb83fe737571d7a79ec3a5248650d73e0fd24320354ccfd521d",
+      "bytes": 246
+    },
+    "database.lua": {
+      "sha256": "fb089efe02ed85df0b931bdacf54ce1b6b76dd80c37162b640db9bc0f9036151",
+      "bytes": 799676
+    },
+    "GroupFinder.lua": {
+      "sha256": "a29d8dc024fc2752b841a4b829a22bbd7785eeeaf61ef0c59e3c7404ccb383f7",
+      "bytes": 464007
+    },
+    "GroupFinder.toc": {
+      "sha256": "50d1e04ae7975236f96e7a2b1389c54eca43175b9ef94eca5f36fd0711036fd6",
+      "bytes": 344
+    },
+    "GroupFinder.xml": {
+      "sha256": "d4660e6f9759e42557c4d51dbb2295747bbc94a23fd1972fc3159d115ccc1790",
+      "bytes": 267827
+    },
+    "localization.lua": {
+      "sha256": "133d9e81c5b6c0db172d1cae33a0e84700ca91a356e197ac690422bc9217cb2e",
+      "bytes": 32088
+    },
+    "README.md": {
+      "sha256": "9823fb3161d8657f3425fffb1543e934ec4db6f56f17122cd59c8058452080a3",
+      "bytes": 2722
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

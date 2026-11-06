@@ -1,0 +1,123 @@
+{
+  "upstream": "https://github.com/coryo/RosterFilter/tree/ff6fbef57dbf5da428a87f5e7f1b57314a859c1d",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "coryo",
+    "repo": "RosterFilter",
+    "name": "RosterFilter",
+    "ref": "ff6fbef57dbf5da428a87f5e7f1b57314a859c1d",
+    "subpath": "",
+    "url": "https://github.com/coryo/RosterFilter",
+    "api": "https://api.github.com/repos/coryo/RosterFilter"
+  },
+  "commit": "ff6fbef57dbf5da428a87f5e7f1b57314a859c1d",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "5ad05f20209e365a601ad897305b32b80ac3de3e701183006f10a39de0be1f34",
+      "bytes": 108
+    },
+    "color.lua": {
+      "sha256": "3aee3d8fbf0af5accf3ba60b038c2d48f0313ff2a3cca0223d009d71912c202c",
+      "bytes": 1945
+    },
+    "control.lua": {
+      "sha256": "709a1721758ce3d80c4b343fad1cdfde55d60d25da4772cdc9797eb3653daafb",
+      "bytes": 2297
+    },
+    "core/slash.lua": {
+      "sha256": "6f86412d02f431d4a2d91afdb286f5e17ec8828d1c00d009ce016552b3170ae3",
+      "bytes": 552
+    },
+    "frame.lua": {
+      "sha256": "beefdcfd6d8a9f86c3a895136f5f2b58989ba44a514795d7ee40f29b0dd1d21c",
+      "bytes": 1542
+    },
+    "gui/core.lua": {
+      "sha256": "f800da3a635e745f051874262a385cb83758545ebd8ee8631a10af0cac894a51",
+      "bytes": 16235
+    },
+    "gui/listing.lua": {
+      "sha256": "4768389ae66140411bf8ecc8a60f647b616c547629491255c982f18dfaaf6dbc",
+      "bytes": 11785
+    },
+    "libs/inspect.lua": {
+      "sha256": "4495c6e1a107f130e7ba792ff7ca15552e3e823ebdfece3453991bc33ee2e95b",
+      "bytes": 1441
+    },
+    "libs/module.lua": {
+      "sha256": "2bc2ee1f08fd85909e96d4ebc94865ea3b4a6568a32c899fb9c022c2738c2d02",
+      "bytes": 3366
+    },
+    "libs/T.lua": {
+      "sha256": "2c5c8ed72a26ff2ec7ed6f677147ffb6b3ed429f611902a0b1069b33db2d8aad",
+      "bytes": 2748
+    },
+    "locale/class.lua": {
+      "sha256": "b473966953297639fd7d25bc5908952bf1d07437561d0de8f85958de3ae251e4",
+      "bytes": 1569
+    },
+    "locale/core.lua": {
+      "sha256": "56145c64df1cffb42b9a42d6bf040ea8ea5c0a203519b028c081fab1152e1643",
+      "bytes": 690
+    },
+    "locale/zone.lua": {
+      "sha256": "4c6640e9f782015a0dc0b4df562ac2ab15fa7225ba715944625317b2bceb4596",
+      "bytes": 20747
+    },
+    "README.md": {
+      "sha256": "00d6702633c7d4245f374bbbebd8caa82065bd99b61e26a075d8c1572fd8882b",
+      "bytes": 767
+    },
+    "RosterFilter.lua": {
+      "sha256": "1a8540bd9064819691ededa8e78d9a035ee6a4958a6a3ba948127e8bd94db6ed",
+      "bytes": 1709
+    },
+    "RosterFilter.toc": {
+      "sha256": "1a4255fe6e3534e318cf22cb75c8560eeebc780b89c899c2b3a1a7a1f9ea841e",
+      "bytes": 430
+    },
+    "tabs/friends/core.lua": {
+      "sha256": "b6b98751d9cea7d1281f4b13fe57004f837abd0c29f3a665f6cd25569e715fd5",
+      "bytes": 2592
+    },
+    "tabs/friends/frame.lua": {
+      "sha256": "5824c6d1e403f4af8529eb193f92425eca3458894a40c3113f04dcb8750a22b8",
+      "bytes": 3803
+    },
+    "tabs/guild/core.lua": {
+      "sha256": "99f99de5a1d067e7746b03616fe705d813c214a819606161034423238ab71c13",
+      "bytes": 1566
+    },
+    "tabs/guild/filter.lua": {
+      "sha256": "b806364435c15b2e26ed93c85a58c36eeae3fde230e72aa6dd07ec9b32c0c022",
+      "bytes": 9855
+    },
+    "tabs/guild/frame.lua": {
+      "sha256": "b3040757a778595d742e5c895ac4acc52811562c68db9e4b116f10d90db6a987",
+      "bytes": 7767
+    },
+    "util.lua": {
+      "sha256": "308a1a702c195c4decd56d4a799b79055fb8a5abdda416fc67cf6b1a14dd7c28",
+      "bytes": 3067
+    },
+    "WORLDSTATEFINALSCORE-HIGHLIGHT.BLP": {
+      "sha256": "6d032b04167ca3a9c930e153480ccb38a4105551b069d40b2c58f242f48a550c",
+      "bytes": 3908
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "192044185": {
+      "tag": "v2.4",
+      "folder": "v2.4--192044185",
+      "assets": {},
+      "source": {
+        "sha256": "3c2a144f677cb1a896eec0958b2a6129cf7af3e7067d6a524b88b64354c1fd2d",
+        "bytes": 20638,
+        "path": "releases/v2.4--192044185/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/coryo/RosterFilter/tarball/v2.4"
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Scoboose/GrimoireKeeper",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Scoboose",
+    "repo": "GrimoireKeeper",
+    "name": "GrimoireKeeper",
+    "url": "https://github.com/Scoboose/GrimoireKeeper",
+    "api": "https://api.github.com/repos/Scoboose/GrimoireKeeper"
+  },
+  "commit": "05f70668d425d0c5073538c3ac8e85b6380ccd5b",
+  "sourceFiles": {
+    ".vscode/settings.json": {
+      "sha256": "484f42f0791ca09e1ae77156f642e898f2dcf7c0df4921b2c5c73be2b6d1db24",
+      "bytes": 742
+    },
+    "GrimoireKeeper.lua": {
+      "sha256": "e6b6a31d3cc58d7853a3e427cdb5d13408a2c3add6720227eb71f1b00faf0887",
+      "bytes": 7554
+    },
+    "GrimoireKeeper.toc": {
+      "sha256": "49ab2c5115389146f4ac09b8490a1c75c0b58f1dedf19662ac39c330d4e4f3df",
+      "bytes": 410
+    },
+    "LICENSE": {
+      "sha256": "80093bdce3500803b58fe37add7011ef5d0edc66bbeecc8ccf3679a0d126b57f",
+      "bytes": 1083
+    },
+    "README.md": {
+      "sha256": "4de309136a272f5fd3c9c8bf10077b7cfb69ec9961d7d63771b00f7688e5d8c3",
+      "bytes": 1035
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

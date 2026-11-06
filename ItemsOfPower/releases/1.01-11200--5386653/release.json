@@ -1,0 +1,9 @@
+{
+  "id": "5386653",
+  "tag": "1.01-11200",
+  "name": "1.01-11200",
+  "body": "### Changelog\n- Fix a conflict with SW_Stats\n- Prevent FuBar incompatible set names\n- Fix armor patterns\n- Cleanup item scanning lib\n",
+  "published": "2017-02-07T19:06:42Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/ItemsOfPower/releases/tag/1.01-11200"
+}

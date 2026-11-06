@@ -1,0 +1,23 @@
+﻿## Interface: 11200
+## Title:|CFF33AAFF[Assist]|R Meeting
+## Title-zhCN: |CFF33AAFF[Assist]|R Meeting
+## Notes:|CFF33AAFFMeeting|R|N A gadget to help you find groups
+## Notes-zhCN: |CFF33AAFFMeeting|R|N A gadget to help you find groups
+## Version: 1.1.5
+## Author: 龟壳, 武藤纯子酱, Wind, Sunelegy
+## SavedVariablesPerCharacter: MEETING_DB
+
+Util.lua
+Compat.lua
+Init.lua
+GUI.lua
+Message.lua
+Meeting.lua
+libs\AceLibrary.lua
+libs\Dewdrop-2.0.lua
+
+Float.lua
+Creator.lua
+Browser.lua
+
+

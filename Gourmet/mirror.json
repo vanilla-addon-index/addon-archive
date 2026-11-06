@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/jsb/Gourmet",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jsb",
+    "repo": "Gourmet",
+    "name": "Gourmet",
+    "url": "https://github.com/jsb/Gourmet",
+    "api": "https://api.github.com/repos/jsb/Gourmet"
+  },
+  "commit": "f0a31d2b0baa4e595481b611fb185923a9981fc4",
+  "sourceFiles": {
+    "Gourmet_Sorting.lua": {
+      "sha256": "2cba72602e492e5bb815b209bb41a09e7ca696a7ec514e20f606cc2bc4af827d",
+      "bytes": 2855
+    },
+    "Gourmet.lua": {
+      "sha256": "494f85bb66c552cc6f60c79b6a3bf34de9c7563b12ca7b15ef68ed16f68780ab",
+      "bytes": 4513
+    },
+    "Gourmet.toc": {
+      "sha256": "1cf16bdfb3115892e6574404c1c6ee2a9dca0ff6e5c0c04806fb73e6dc0dee6e",
+      "bytes": 248
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

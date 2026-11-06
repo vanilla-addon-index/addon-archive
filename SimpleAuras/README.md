@@ -4,6 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| SimpleAuras | https://github.com/yani9o/simpleAuras | new |
+| SimpleAuras | https://github.com/yani9o/simpleAuras | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

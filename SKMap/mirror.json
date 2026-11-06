@@ -1,0 +1,173 @@
+{
+  "upstream": "https://github.com/EinBaum/SKMap",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "SKMap",
+    "name": "SKMap",
+    "url": "https://github.com/EinBaum/SKMap",
+    "api": "https://api.github.com/repos/EinBaum/SKMap"
+  },
+  "commit": "bd4301fbd47e76baa482e48345e63f2832f451f9",
+  "sourceFiles": {
+    "Icons/CreatureKill.tga": {
+      "sha256": "92a2e343bb1114e6239bc2105df14a10e56088a7efce95327657841e40adb843",
+      "bytes": 1446
+    },
+    "Icons/Default.tga": {
+      "sha256": "56902fc976a8f72b00c418f8f3148ffe608ba18880d08c54969f38545b7e56da",
+      "bytes": 1417
+    },
+    "Icons/LevelUp.tga": {
+      "sha256": "f9f1a8c6538e4f95c874a1e9e16c919ccebc680dad2fd1a4a5c328209e77adbf",
+      "bytes": 1469
+    },
+    "Icons/Multi.tga": {
+      "sha256": "7b514d854cd638db581c50db0351a4100720c83c44417e1e74b865b51ac2fbb0",
+      "bytes": 1437
+    },
+    "Icons/PlayerCombat.tga": {
+      "sha256": "d67f3036979a44bea8f70a7d2ed56d715fc2a794040c94103a3a550c92bb7e4c",
+      "bytes": 1448
+    },
+    "Icons/PlayerDeath.tga": {
+      "sha256": "acde439fde5fda9c79185101437eacc054a90cba96d0b53b9053acd0a258e4b9",
+      "bytes": 1360
+    },
+    "Icons/PlayerDeathPvE.tga": {
+      "sha256": "acde439fde5fda9c79185101437eacc054a90cba96d0b53b9053acd0a258e4b9",
+      "bytes": 1360
+    },
+    "Icons/PlayerDeathPvP.tga": {
+      "sha256": "78026fee53c4b5f6971a6ea0199f2b354937b8d88db349eb28ae08d9c1afb850",
+      "bytes": 1360
+    },
+    "Icons/PlayerKill.tga": {
+      "sha256": "c4b30c09f60ea33062136e570438745f1332f9317a0ed6a89fe94ad3750eed25",
+      "bytes": 1443
+    },
+    "Icons/SKMap-Book-Left.tga": {
+      "sha256": "155d4fbb3be5b8c506ab99dfc959051add5050b4e78bc188b866e79404b2b999",
+      "bytes": 190346
+    },
+    "Icons/SKMap-Book-Right.tga": {
+      "sha256": "3f3bb9514dfa565dc4eae08a2463045f9b88d4586a49193ebbc43f659ec4b351",
+      "bytes": 190346
+    },
+    "Icons/SKMap-BottomLeft.tga": {
+      "sha256": "5b3f9a9e231be69a1b5bddbcb8938f1dfb9011e631aecd6d72957a72d0bcadcc",
+      "bytes": 15236
+    },
+    "Icons/SKMap-BottomRight.tga": {
+      "sha256": "e84d9719ffb5127091e308786c6c966d79eb5a27c62b01007d87fe6debd2f028",
+      "bytes": 21416
+    },
+    "Icons/SKMap-H-Separ.tga": {
+      "sha256": "91cf7eab679933eddf77fb8a0fd23d0bbd5624e11e9a14b043b50d5b1402aaed",
+      "bytes": 29971
+    },
+    "Icons/SKMap-HLeft-Separ.tga": {
+      "sha256": "e9c99cb42dea05fe798a0f42724771338d7ca72ca76a38cedc583b5860b0a824",
+      "bytes": 30015
+    },
+    "Icons/SKMap-HRight-Separ.tga": {
+      "sha256": "71d81699b1ef8b2d0437302519b2e5af362706a328d80f7bd71fae0640a30b3d",
+      "bytes": 60175
+    },
+    "Icons/SKMap-TopLeft.tga": {
+      "sha256": "d06a152dc2d71dca4186f5fdc4a0ed1344d2db1d0fa96e226be3f6126082a7ec",
+      "bytes": 79633
+    },
+    "Icons/SKMap-TopRight.tga": {
+      "sha256": "a8ad09f42c22f169be51e410fce977103d45d339fd8e7021d43f79b08b7f8160",
+      "bytes": 162509
+    },
+    "Icons/SKMap-UI-Icon.tga": {
+      "sha256": "5a3b03f881ca4508204a2029752c5e1a7738f5d675bbb2f8a53666d3867c113c",
+      "bytes": 17405
+    },
+    "Icons/SKMapMMButtonUp.tga": {
+      "sha256": "99168b6a256ff43ca31f884d3961a2615262f6d3e98514394b7e4b4a099f6ae6",
+      "bytes": 14737
+    },
+    "Icons/SKMapPvPTruceButtonDown.tga": {
+      "sha256": "43bd7a392b2644af5cd8455bd9f4a3f0bbea8fe30a3a2adf089bd59d7c694eeb",
+      "bytes": 8800
+    },
+    "Icons/SKMapPvPTruceButtonUp.tga": {
+      "sha256": "fd49abee6fdb3bf32c21ac31b793ad6cf605ceae4f20054a738e00d380199e70",
+      "bytes": 10189
+    },
+    "Icons/SKMapPvPWarButtonDown.tga": {
+      "sha256": "f271f2132779b500a402377070c1203bff641e20bcdfe5adcb356ec780786186",
+      "bytes": 9126
+    },
+    "Icons/SKMapPvPWarButtonUp.tga": {
+      "sha256": "d66d0a9abaa44eac45ed572cd4f3098a7ddd82b11926e7fa327dbcc201627a58",
+      "bytes": 9855
+    },
+    "Icons/SKMapTargetInfoMaxButton.tga": {
+      "sha256": "5fd54ebf2123ea834ade1bf900359d08d395d19dc902c388aa149259f72d29ce",
+      "bytes": 10527
+    },
+    "Icons/SKMapTargetInfoMinButton.tga": {
+      "sha256": "d11f061f68824fbfb060bd56336ddf6ef6ef662cad258ca89c02ff7de4d61339",
+      "bytes": 10022
+    },
+    "SKMap_config.lua": {
+      "sha256": "d1451859e8ab8742e92de2a0039c52e2b5fa7c502c3115917bbf8da4aed789cd",
+      "bytes": 10036
+    },
+    "SKMap_doc.txt": {
+      "sha256": "2ed672aada9e62ec2117f0d9a99b207d243c73447f606373d8bec3f2b821651b",
+      "bytes": 33935
+    },
+    "SKMap_DuelFrame.xml": {
+      "sha256": "61420a64527cc93b16c5fabd832026dffbc0c20bb0964bc763f45c94d74e3199",
+      "bytes": 25210
+    },
+    "SKMap_lib.lua": {
+      "sha256": "e920c3ff8c2d37c9b068ab2402b60a69e729c41df6cf712e723f4a0f973b5099",
+      "bytes": 248676
+    },
+    "SKMap_ListFrame.xml": {
+      "sha256": "33930c625573dd052047b2dbc8bb26e58941873ef676c4e3faa0c4cd8794936e",
+      "bytes": 42897
+    },
+    "SKMap_localization.lua": {
+      "sha256": "976af146f8752c0a79fbfc0575625e7cb30dc13ae3d475374669155218d48831",
+      "bytes": 71330
+    },
+    "SKMap_OptionsFrame.xml": {
+      "sha256": "d46051920f4cd7ae6451fe676d0110e8d209945960d4b96a876584b4ecfb2a99",
+      "bytes": 26889
+    },
+    "SKMap_ReportFrame.xml": {
+      "sha256": "0979d543c7810e66b9cdb040997fa84163d26600e6d578f7a2fec683fec7845d",
+      "bytes": 22107
+    },
+    "SKMap.lua": {
+      "sha256": "43fd7f73b5793fbc682fbbd793389a818d415d008a10a8f6845bb718505c7d89",
+      "bytes": 130290
+    },
+    "SKMap.toc": {
+      "sha256": "43da5f022d7ec88e5ec8a4d7f041a2d62ef1cd51cb568379d8f8704686591c8b",
+      "bytes": 233
+    },
+    "SKMap.xml": {
+      "sha256": "b0e8f2257ecef65574ef0b99531bc07f85be898795969dd28b764eeb1b6ebff1",
+      "bytes": 52607
+    },
+    "SKMapFrame.xml": {
+      "sha256": "66e420c97f8ebdfc514887724fade26a6be284279c8241623daaac5e32df0641",
+      "bytes": 10230
+    },
+    "Sound/WarSound.wav": {
+      "sha256": "e957fddb6e6dc88c0a7f8c97a792a228d5e484eda7c91eb35d12e980909944c4",
+      "bytes": 51756
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

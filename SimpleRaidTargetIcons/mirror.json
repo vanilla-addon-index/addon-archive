@@ -1,0 +1,58 @@
+{
+  "upstream": "https://github.com/Road-block/SimpleRaidTargetIcons",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "SimpleRaidTargetIcons",
+    "name": "SimpleRaidTargetIcons",
+    "url": "https://github.com/Road-block/SimpleRaidTargetIcons",
+    "api": "https://api.github.com/repos/Road-block/SimpleRaidTargetIcons"
+  },
+  "commit": "d3fc111d31165da561be9b71e42e90aa01d8322b",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "ed06cf7613955fbb1da7983103557839dcdb10f8c07891eb5cc662e4c02f9aa7",
+      "bytes": 5557
+    },
+    "Localization.lua": {
+      "sha256": "780a4722c941b12b9ef98e70cb7a9cb9ea85214beae51e0c6cb27a1b04b1eec6",
+      "bytes": 5798
+    },
+    "README.md": {
+      "sha256": "5a68d8b4ce409d0d06ad7b85f7ec2fe1821d7c329049e14751fd7f6f80f42e34",
+      "bytes": 3688
+    },
+    "SimpleRaidTargetIcons.lua": {
+      "sha256": "eb632903499cc6269c124c60fdec164eec6d55cf5deb769b89db8cf377582df8",
+      "bytes": 67918
+    },
+    "SimpleRaidTargetIcons.toc": {
+      "sha256": "bce45409185341763e5ac0c087982e078ccc91364b8dff9a48e990c25997bb44",
+      "bytes": 429
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "8908851": {
+      "tag": "2.11",
+      "folder": "2.11--8908851",
+      "assets": {
+        "5623880": {
+          "sha256": "0228e71b1cf213f1d6eb95bf4b2f07e4a6199f298419cba691e1ac387da08048",
+          "bytes": 17083,
+          "id": "5623880",
+          "name": "SimpleRaidTargetIcons-2.11-11200.zip",
+          "url": "https://github.com/Road-block/SimpleRaidTargetIcons/releases/download/2.11/SimpleRaidTargetIcons-2.11-11200.zip",
+          "path": "releases/2.11--8908851/assets/SimpleRaidTargetIcons-2.11-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "be783198e196468e3532c59edc7c9841e6a1b24488c4c4b0afddd6abc7b548fe",
+        "bytes": 16516,
+        "path": "releases/2.11--8908851/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/SimpleRaidTargetIcons/tarball/2.11"
+      }
+    }
+  }
+}

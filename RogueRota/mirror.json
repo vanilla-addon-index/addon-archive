@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/Geigerkind/RogueRota",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Geigerkind",
+    "repo": "RogueRota",
+    "name": "RogueRota",
+    "url": "https://github.com/Geigerkind/RogueRota",
+    "api": "https://api.github.com/repos/Geigerkind/RogueRota"
+  },
+  "commit": "270af53189c0b14ca5320366f2b50b775687c065",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+      "bytes": 35141
+    },
+    "README.md": {
+      "sha256": "fb7c5b98bc003998fb32e30f1f3e2efebd4f581557f857e803f3f6cebb935c28",
+      "bytes": 273
+    },
+    "RogueRota.lua": {
+      "sha256": "472b97f7857b9aba17fbddd10bf9af409440c50180adc84d0166dadc73a6380c",
+      "bytes": 4536
+    },
+    "RogueRota.toc": {
+      "sha256": "b5842e38fba408cc9b99d54a66d26f1760a3f0307345654982b18efa6017672e",
+      "bytes": 280
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "4819251": {
+      "tag": "b1",
+      "folder": "b1--4819251",
+      "assets": {},
+      "source": {
+        "sha256": "5a9afc0a9b5a93b0d631ff76436437a0a22d7bad23034397acdfcd70b545da7c",
+        "bytes": 1762,
+        "path": "releases/b1--4819251/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/tdymel/RogueRota/tarball/b1"
+      }
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "upstream": "https://github.com/ALekseySMM/HunterAggroMeter_WOW_Vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ALekseySMM",
+    "repo": "HunterAggroMeter_WOW_Vanilla",
+    "name": "HunterAggroMeter_WOW_Vanilla",
+    "url": "https://github.com/ALekseySMM/HunterAggroMeter_WOW_Vanilla",
+    "api": "https://api.github.com/repos/ALekseySMM/HunterAggroMeter_WOW_Vanilla"
+  },
+  "commit": "7d8d9003a3deb5d2ab854a0c3b9ba7b1c3d2260c",
+  "sourceFiles": {
+    "CHANGELOG.txt": {
+      "sha256": "97686ea439a49136cf80d5740e1e4ddc11fce28ac494f1094c8a63d2a6d1dc22",
+      "bytes": 16047
+    },
+    "HunterAggroMeter.lua": {
+      "sha256": "89ea822e0303bb10147e188c31f01dc30f59507ea39c1610ef02dd55abf6b4ba",
+      "bytes": 50079
+    },
+    "HunterAggroMeter.toc": {
+      "sha256": "a09d3289e4437fc199d8c7b3c002931db5a4937f7bdf9dcabc18d415b003ea66",
+      "bytes": 335
+    },
+    "LICENSE": {
+      "sha256": "cf5916d68a3b64b7302696908070ad7ec7a04cbf57497ae277824450a027719f",
+      "bytes": 1063
+    },
+    "README_en.md": {
+      "sha256": "a0fdb41e130d47b1788d41ffa635508eccd20e5334984a77aa53d6a4a85d073e",
+      "bytes": 5898
+    },
+    "README.md": {
+      "sha256": "902150f2db2611f712dcffecbaa516e1445645e9879f71816e9d3f0392b1388b",
+      "bytes": 818
+    },
+    "README.ru.md": {
+      "sha256": "1b376925de3a6d002089d16c2ab0ca3cadf87fe7fff3db51bdf97d18e09554b9",
+      "bytes": 9630
+    },
+    "Rules_read_me.txt": {
+      "sha256": "ae095a7b2dad4c8888902f7e48ed93912129c44633ebed5068e2dfd6b513b3e7",
+      "bytes": 1247
+    },
+    "RulesText.lua": {
+      "sha256": "30fdb7f1afb15301eb37a570f620dc90a37b0e730cd2c44e0582d21611df99e6",
+      "bytes": 1326
+    },
+    "screenshots/ScreenShot_142_1.png": {
+      "sha256": "2e2d9a72477fc53d2c17a93a70bac457b0af8a36bf52d720bdae9c61e9c59b85",
+      "bytes": 481792
+    },
+    "screenshots/ScreenShot_143_2.png": {
+      "sha256": "4d20403df438bc99b0dc8dfd7500d325abf1175df9821c3ff5ae567acaa5fe81",
+      "bytes": 469812
+    },
+    "screenshots/ScreenShot_144_3.png": {
+      "sha256": "8119bb92883a089129068e72dcbe2a6b340cf108d03f3c2be0e29eea92e92907",
+      "bytes": 519223
+    },
+    "screenshots/ScreenShot_145_4.png": {
+      "sha256": "8f623feae78d3c55d24878f38d9f1e3b645c2a436dc843363928cd40f50fb55f",
+      "bytes": 526612
+    },
+    "screenshots/ScreenShot_146_5.png": {
+      "sha256": "45fc3c137b6c24444a9c5c129838abf7fe818f0b13fe86d170d0cd089c0880ce",
+      "bytes": 512814
+    },
+    "screenshots/ScreenShot_147_6.png": {
+      "sha256": "697c81b29c0b694f88e60648e7bb39f93ed26ccec092c4c1e303bc5810493b88",
+      "bytes": 522117
+    },
+    "screenshots/ScreenShot_148_8.png": {
+      "sha256": "e15d164d6ba425fe1ccba88a3639a3eae8641449cf0efa00db298a3d030131f7",
+      "bytes": 2668455
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

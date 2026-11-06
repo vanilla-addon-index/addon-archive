@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/shagu/ShaguJunk",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguJunk",
+    "name": "ShaguJunk",
+    "url": "https://github.com/shagu/ShaguJunk",
+    "api": "https://api.github.com/repos/shagu/ShaguJunk"
+  },
+  "commit": "9a91065d8ef9078a9ea8b7d254e88605e8367567",
+  "sourceFiles": {
+    "junk-vendor-ls-rm.gif": {
+      "sha256": "3163e9f29590a6f4148120183dbd3bd5ca9488cf3134cfc4beb59f359f7a61c1",
+      "bytes": 979815
+    },
+    "LICENSE": {
+      "sha256": "7c35b79f9f9834f0e9d5720008b56d483071f87c53dc3c9ff4a9cb66954dc552",
+      "bytes": 1086
+    },
+    "README.md": {
+      "sha256": "b070f9a6adcb8af62e11480deefc9423a74cb16fdf89b9ab452eba9be96e04a1",
+      "bytes": 1456
+    },
+    "ShaguJunk-tbc.toc": {
+      "sha256": "0d5b2048ce96f57110aa7433671aa54472c8ba8eb3e9303b3f2c8eb26977c3a5",
+      "bytes": 232
+    },
+    "ShaguJunk.lua": {
+      "sha256": "4897cc17a7d72202b12f57a54b196e296d9506f4f588fedc83a32965c37e90a9",
+      "bytes": 6082
+    },
+    "ShaguJunk.toc": {
+      "sha256": "9733cf864b48e433b1643918ad03d2e6c84452d9828ddfa8dc6a6f5c905aa328",
+      "bytes": 232
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

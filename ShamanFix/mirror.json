@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/WouterBink/ShamanFix",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "WouterBink",
+    "repo": "ShamanFix",
+    "name": "ShamanFix",
+    "url": "https://github.com/WouterBink/ShamanFix",
+    "api": "https://api.github.com/repos/WouterBink/ShamanFix"
+  },
+  "commit": "bb5931afb798f4820b36e8b0efdbbc2fe5c6d654",
+  "sourceFiles": {
+    "!ShamanFix.toc": {
+      "sha256": "48e12540fabfc27a120a11d70cbe49ab4b366f765e1c01a7d7f6406bb740ecbd",
+      "bytes": 189
+    },
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    ".gitignore.upstream": {
+      "sha256": "3593d7cdb24d1a41b8154313c1e5df6db33c4f93895eb7cb1a852854cf11ac9d",
+      "bytes": 696
+    },
+    "readme.txt": {
+      "sha256": "4520cd495c47e4423311733b72496032733f8f5c9dd711ed29cc16001865eb34",
+      "bytes": 554
+    },
+    "ShamanFix.lua": {
+      "sha256": "7d370a319a76652905452db6337afe267a565551c8923379e0b4d77ce25264a1",
+      "bytes": 1947
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

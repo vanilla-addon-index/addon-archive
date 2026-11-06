@@ -1,0 +1,251 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+	<Script file="lilsparkysworkshop.lua"/>
+
+  <Button name="LSWTradeSkillCostButtonTemplate" hidden="false" virtual="true">
+    <Size>
+      <AbsDimension x="23" y="16"/>
+    </Size>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <FontString name="$parentSubText" inherits="GameFontNormalSmall" justifyH="RIGHT"/>
+      </Layer>
+    </Layers>
+    <Scripts>
+      <OnLoad>
+   --     this:SetFrameLevel(this:GetFrameLevel() + 1);
+      </OnLoad>
+
+      <OnClick>
+      </OnClick>
+      <OnEnter>
+        LSW_CostButton_OnEnter(this);
+      </OnEnter>
+      <OnLeave>
+        LSW_CostButton_OnLeave();
+      </OnLeave>
+    </Scripts>
+
+    <NormalFont inherits="GameFontNormalSmall" justifyH="RIGHT"/>
+    <HighlightFont inherits="GameFontHighlightSmall" justifyH="RIGHT"/>
+    <DisabledFont inherits="GameFontDisableSmall" justifyH="RIGHT"/>
+  </Button>
+  
+  <Button name="LSWTradeSkillValueButtonTemplate" hidden="false" virtual="true">
+    <Size>
+      <AbsDimension x="23" y="16"/>
+    </Size>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <FontString name="$parentSubText" inherits="GameFontNormalSmall" justifyH="RIGHT"/>
+      </Layer>
+    </Layers>
+    <Scripts>
+      <OnLoad>
+    --    this:SetFrameLevel(this:GetFrameLevel() + 1);
+      </OnLoad>
+
+      <OnClick>
+        LSW_ValueButton_OnClick(arg1);
+      </OnClick>
+      <OnEnter>
+         LSW_ValueButton_OnEnter();
+      </OnEnter>
+      <OnLeave>
+         LSW_ValueButton_OnLeave();
+      </OnLeave>
+    </Scripts>
+
+    <NormalFont inherits="GameFontNormalSmall" justifyH="RIGHT"/>
+    <HighlightFont inherits="GameFontHighlightSmall" justifyH="RIGHT"/>
+    <DisabledFont inherits="GameFontDisableSmall" justifyH="RIGHT"/>
+  </Button>
+  
+  <Button name="LSWTradeSkillItemLevelTemplate" hidden="false" virtual="true">
+    <Size>
+      <AbsDimension x="16" y="16"/>
+    </Size>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <FontString name="$parentSubText" inherits="GameFontNormalSmall" justifyH="RIGHT"/>
+      </Layer>
+    </Layers>
+    <Scripts>
+      <OnLoad>
+    --    this:SetFrameLevel(this:GetFrameLevel() + 1);
+      </OnLoad>
+
+      <OnClick>
+      </OnClick>
+      <OnEnter>
+         LSW_ItemLevelButton_OnEnter();
+      </OnEnter>
+      <OnLeave>
+         LSW_ItemLevelButton_OnEnter();
+      </OnLeave>
+    </Scripts>
+
+    <NormalFont inherits="GameFontNormalSmall" justifyH="RIGHT"/>
+    <HighlightFont inherits="GameFontHighlightSmall" justifyH="RIGHT"/>
+    <DisabledFont inherits="GameFontDisableSmall" justifyH="RIGHT"/>
+  </Button>
+  
+	
+	
+	<Frame name="LSWFrame" toplevel="true" enableMouse="true" movable="true" parent="UIParent" hidden="true">
+        
+	    <Frames>
+        <Button name="LSWTradeSkillCost1" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost2" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost3" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost4" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost5" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost6" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost7" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost8" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost9" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost10" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost11" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost12" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost13" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost14" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost15" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost16" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost17" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost18" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost19" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost20" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost21" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost22" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWTradeSkillCost23" inherits="LSWTradeSkillCostButtonTemplate" />  
+        
+        <Button name="LSWTradeSkillValue1" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue2" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue3" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue4" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue5" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue6" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue7" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue8" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue9" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue10" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue11" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue12" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue13" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue14" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue15" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue16" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue17" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue18" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue19" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue20" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue21" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue22" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWTradeSkillValue23" inherits="LSWTradeSkillValueButtonTemplate" />  
+        
+        <Button name="LSWTradeSkillItemLevel1" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel2" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel3" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel4" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel5" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel6" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel7" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel8" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel9" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel10" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel11" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel12" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel13" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel14" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel15" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel16" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel17" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel18" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel19" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel20" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel21" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel22" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWTradeSkillItemLevel23" inherits="LSWTradeSkillItemLevelTemplate" /> 
+        
+        
+        
+        <Button name="LSWCraftCost1" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost2" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost3" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost4" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost5" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost6" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost7" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost8" inherits="LSWTradeSkillCostButtonTemplate" />
+        
+<Button name="LSWCraftCost9" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost10" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost11" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost12" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost13" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost14" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost15" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost16" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost17" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost18" inherits="LSWTradeSkillCostButtonTemplate" />
+        <Button name="LSWCraftCost19" inherits="LSWTradeSkillCostButtonTemplate" />
+                
+        <Button name="LSWCraftValue1" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue2" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue3" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue4" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue5" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue6" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue7" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue8" inherits="LSWTradeSkillValueButtonTemplate" />
+        
+<Button name="LSWCraftValue9" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue10" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue11" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue12" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue13" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue14" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue15" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue16" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue17" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue18" inherits="LSWTradeSkillValueButtonTemplate" />
+        <Button name="LSWCraftValue19" inherits="LSWTradeSkillValueButtonTemplate" />
+
+        
+        <Button name="LSWCraftItemLevel1" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel2" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel3" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel4" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel5" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel6" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel7" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel8" inherits="LSWTradeSkillItemLevelTemplate" />
+            
+<Button name="LSWCraftItemLevel9" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel10" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel11" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel12" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel13" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel14" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel15" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel16" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel17" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel18" inherits="LSWTradeSkillItemLevelTemplate" />
+        <Button name="LSWCraftItemLevel19" inherits="LSWTradeSkillItemLevelTemplate" />
+            
+        </Frames>
+ 
+    
+	
+		<Scripts>
+			<OnLoad>
+				LSW_OnLoad();
+			</OnLoad> 
+			
+			<OnEvent>
+				LSW_OnEvent();
+			</OnEvent>
+		</Scripts>
+	
+	</Frame>
+</Ui>

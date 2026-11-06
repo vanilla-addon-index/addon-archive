@@ -1,0 +1,69 @@
+{
+  "upstream": "https://github.com/Grymskvll/KANGZ",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Grymskvll",
+    "repo": "KANGZ",
+    "name": "KANGZ",
+    "url": "https://github.com/Grymskvll/KANGZ",
+    "api": "https://api.github.com/repos/Grymskvll/KANGZ"
+  },
+  "commit": "a721a1d6ef0bc63cd34f86479a4a259778f3bd26",
+  "sourceFiles": {
+    "Images/KANGZButton-Down-Disabled.blp": {
+      "sha256": "be5581c194ca56fc25ee7409ea10c848a432b10f1ac8a3d07bbcc54f64da2174",
+      "bytes": 2564
+    },
+    "Images/KANGZButton-Down.blp": {
+      "sha256": "f7fa9a9497c052d8e20ff0052955301828983437b8ea68ed79ce3cd550ad01d1",
+      "bytes": 2564
+    },
+    "Images/KANGZButton-Down.psd": {
+      "sha256": "fb38c51021276e95ac7c783a00e881c6f2ab35b008dfaac6d3b3b17c876bf0f2",
+      "bytes": 33276
+    },
+    "Images/KANGZButton-Up-Disabled.blp": {
+      "sha256": "33131b032a43cc89aec45627ff204f958ed9db1a551ef199a0425363f6b5f051",
+      "bytes": 2564
+    },
+    "Images/KANGZButton-Up.blp": {
+      "sha256": "0cd0e9c7f443246566a65a1a0c1ec022f45ef6a71a453bcd4642aad5a195b55f",
+      "bytes": 2564
+    },
+    "Images/KANGZButton-Up.psd": {
+      "sha256": "e9443925882725c1c188bbb0e5f8866edec17c90ae45f8f00563b9d317106602",
+      "bytes": 34007
+    },
+    "Images/MinimapButton.psd": {
+      "sha256": "bcf59d3c188c3b6a101afad8ce6a720e21b09cd2355bad02ba45332d3073fb58",
+      "bytes": 33585
+    },
+    "KANGZ_MinimapButton.lua": {
+      "sha256": "75e2e5fd0256256f94ea308788625976a6a42023af3d9aed75f25d4df7862c4d",
+      "bytes": 1768
+    },
+    "KANGZ_MinimapButton.xml": {
+      "sha256": "878e92d9e025fd5619f05083bad76f71ae21fcc254b57052cbf44cc2866ac0e9",
+      "bytes": 1825
+    },
+    "KANGZ.lua": {
+      "sha256": "e6727cd069929690892c20905d03968213a19ff785ce706d709e860c1f80d3c0",
+      "bytes": 19502
+    },
+    "KANGZ.png": {
+      "sha256": "63053373ec0a855848543e68c4d5ffef227438c3c7fcb3a8afb7efa36c834f41",
+      "bytes": 18674
+    },
+    "KANGZ.toc": {
+      "sha256": "f21d1d0ecc1b662a0c33c606b3a834bd8f4ce4d05fa6fddf3f5db822c3ac442d",
+      "bytes": 225
+    },
+    "README.md": {
+      "sha256": "365d573bab7656bfae5c67a23c7cdd5b1b561363e0e8c245f48f3d6bcb8a8b11",
+      "bytes": 756
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

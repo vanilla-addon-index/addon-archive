@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/GentleGC",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "GentleGC",
+    "name": "GentleGC",
+    "url": "https://github.com/MarcelineVQ/GentleGC",
+    "api": "https://api.github.com/repos/MarcelineVQ/GentleGC"
+  },
+  "commit": "a41404979d9919ebb781e02ea6a493ad604ef2cc",
+  "sourceFiles": {
+    "GentleGC.lua": {
+      "sha256": "65b96db2a0a549ccf8ce4f619ac15a2d6aed30c02c06fc0c2ad91f787fde1696",
+      "bytes": 578
+    },
+    "GentleGC.toc": {
+      "sha256": "224ff1314cf6359c892ae621804cebd2df1399a652a8083eded2d64b7f64450f",
+      "bytes": 161
+    },
+    "readme.md": {
+      "sha256": "ac7f2ed53c96ba35d1d17f199a614d0127502233ee1afc716b04c611be32987b",
+      "bytes": 661
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Geigerkind/IBDF",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Geigerkind",
+    "repo": "IBDF",
+    "name": "IBDF",
+    "url": "https://github.com/Geigerkind/IBDF",
+    "api": "https://api.github.com/repos/Geigerkind/IBDF"
+  },
+  "commit": "0dda784f22d7f405aab8ef1bf1ea8cd94023f861",
+  "sourceFiles": {
+    "IBDF.lua": {
+      "sha256": "30aea0f2bd8f98f75c9cad68858bd008d3f466ced1c1d8503bb5cac300b02b5a",
+      "bytes": 1561
+    },
+    "IBDF.toc": {
+      "sha256": "40c27ed185abe0cf069ecf9e2371c06ff5401e7a8a627223997b2b07fdb3cf61",
+      "bytes": 179
+    },
+    "LICENSE": {
+      "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+      "bytes": 35141
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/yutsuku/Gamepad",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "yutsuku",
+    "repo": "Gamepad",
+    "name": "Gamepad",
+    "url": "https://github.com/yutsuku/Gamepad",
+    "api": "https://api.github.com/repos/yutsuku/Gamepad"
+  },
+  "commit": "3986144052b8aed0a006fe7944b5022cfdba83c7",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "5a0590757dc827495b766e47505aa665d085a9db98d6ea24abdb58e041989222",
+      "bytes": 281
+    },
+    "Gamepad.toc": {
+      "sha256": "58fcaed793d9b927a5ae222722c0351a16a7cc49ed954f1945bc10971ab35d9c",
+      "bytes": 198
+    },
+    "Global.lua": {
+      "sha256": "7d4fdcf0e08e5750c416a2e82284e5af47ae1a81c2faeb70a24c37a8a834f0af",
+      "bytes": 13
+    },
+    "locale/enUS.lua": {
+      "sha256": "15c1e8eb5450d4d1095ff9b758f2c93b2073b5487dbc1d823063d6f9bf3cc63e",
+      "bytes": 233
+    },
+    "locale/Locale.lua": {
+      "sha256": "2360da4d89f6533a492409a7b38202c8baa6b34c98d8fdf5ab3e57c5e6fda8ce",
+      "bytes": 312
+    },
+    "locale/LocaleTable.lua": {
+      "sha256": "f007e55691e8de4d06c1f0908a1fdeb6afefc164dcb9dec9bfe755bab3086f6d",
+      "bytes": 372
+    },
+    "Main.lua": {
+      "sha256": "c88539fd0a05baaa859b5611a756b2136706ddff7af088f5bf84d4acfc1087dd",
+      "bytes": 4269
+    },
+    "README.md": {
+      "sha256": "e2fd97ee3de3c4965c8bfc83614df53b719cd9ecc133b05b860b1a3cf5418453",
+      "bytes": 921
+    },
+    "UI.lua": {
+      "sha256": "33e41b70863fdcf66aa7caf3e828d3860b69a0bc4678b245016a325489c6b2cb",
+      "bytes": 4481
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

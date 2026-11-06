@@ -1,0 +1,125 @@
+{
+  "upstream": "https://github.com/Monteo/RoguePack",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Monteo",
+    "repo": "RoguePack",
+    "name": "RoguePack",
+    "url": "https://github.com/Monteo/RoguePack",
+    "api": "https://api.github.com/repos/Monteo/RoguePack"
+  },
+  "commit": "1a8d0dba7dd4799e6a1881559665b57b9089f562",
+  "sourceFiles": {
+    "BuyPoisons/BuyPoisons.lua": {
+      "sha256": "8fc9b9f789c1ffa43d9c6fc52c1d192d65e2c3701f014a165204f180e3f49aeb",
+      "bytes": 8817
+    },
+    "BuyPoisons/BuyPoisons.toc": {
+      "sha256": "e0c8e524b4c68bfb4796b539ecb6d43d1ba6d3816394b866b952073c18942a82",
+      "bytes": 190
+    },
+    "BuyPoisons/BuyPoisons.xml": {
+      "sha256": "82fde06e591509e6f5b7bd0447cf00b56283c50c157f74660e2552cf2e402d19",
+      "bytes": 11813
+    },
+    "BuyPoisons/BuyPoisonsFrame.lua": {
+      "sha256": "18ffb72f6e36f7da5eec52dc9efb447bec9a7f4a2a0a74ffa33d6c553e5dc6d3",
+      "bytes": 3632
+    },
+    "BuyPoisons/localization_de.lua": {
+      "sha256": "a49dec3f2969c8b16c2731090fbd65b8d6b003233981bbc3e3f7a463adff4c81",
+      "bytes": 4863
+    },
+    "BuyPoisons/localization_en.lua": {
+      "sha256": "b5241e9eeab2229ba6b99091273de0bfe987c1cb02384ef203af6b06abc38e5c",
+      "bytes": 4504
+    },
+    "BuyPoisons/localization_fr.lua": {
+      "sha256": "e270bd42d119d39a12976ee1d4b13615793835d1c1e1f4bc4e450edc762a1cda",
+      "bytes": 4703
+    },
+    "BuyPoisons/Poisons.lua": {
+      "sha256": "0f756d8930599e1ebb3141332d4acb3a66c210ed71c051ba3c4c22886dcb063f",
+      "bytes": 7383
+    },
+    "BuyPoisons/Readme.txt": {
+      "sha256": "5327d884349fdb163647570fef50330738364e11ea2e7f7c94f286a789952c72",
+      "bytes": 3312
+    },
+    "BuyPoisons/Restock.lua": {
+      "sha256": "0ce1f8b43c0d8ef87dd53b66fa2ea1176088db79d6cfcf42f09813e611dbc22b",
+      "bytes": 2135
+    },
+    "PoisonPouch/Img/Handle.tga": {
+      "sha256": "6fb523cc5acb4ecc73c2be753bd8b20fd7153e4e23a01d62f611011606e703a8",
+      "bytes": 16428
+    },
+    "PoisonPouch/Img/PoisonPouch.tga": {
+      "sha256": "62e936825813ff4f5cccc60855ee36630d69c9ec8ea95c4f296809bfc513e2ec",
+      "bytes": 16428
+    },
+    "PoisonPouch/localization.lua": {
+      "sha256": "2907d47db6a2d99288626e51ba13dafb6467c1d913757db58d23745f0a7ae979",
+      "bytes": 5650
+    },
+    "PoisonPouch/PoisonPouch.lua": {
+      "sha256": "c18a44de10a377fcbfeadfe95243c8202ed07180d3934fd8d1496198d449df3f",
+      "bytes": 22803
+    },
+    "PoisonPouch/PoisonPouch.toc": {
+      "sha256": "77fa82d5239bdf87c97b7c910395080a1c6a2fc0d8217f826f138bca45c8f7a4",
+      "bytes": 251
+    },
+    "PoisonPouch/PoisonPouch.xml": {
+      "sha256": "051ca92bdc898e332cf694899caf04b745c32bfc248678cbc87e08deb8f1a42c",
+      "bytes": 7466
+    },
+    "PoisonPouch/PoisonPouchCommandLine.lua": {
+      "sha256": "7fe7bfd7a60f5a82d71dbf98ba3a02044769e1ee3c884f973179e81221d9dd81",
+      "bytes": 7355
+    },
+    "PoisonPouch/readme.txt": {
+      "sha256": "6f5ed52995d2d04b665e32f2cea6bf08ae289959a6341285c2aea99bf186c9e1",
+      "bytes": 3511
+    },
+    "README.md": {
+      "sha256": "7dbd759ddcd8af09aa1d736f0cf3252d4a3612ab4732efddf2d84dc63a0c2795",
+      "bytes": 64
+    },
+    "StylePoints/images/1.tga": {
+      "sha256": "6190f682ac3faa3a9e5135a811e9bd5fc3a52c1eac4a8686db2c12c90a42a8fb",
+      "bytes": 4398
+    },
+    "StylePoints/images/2.tga": {
+      "sha256": "6190f682ac3faa3a9e5135a811e9bd5fc3a52c1eac4a8686db2c12c90a42a8fb",
+      "bytes": 4398
+    },
+    "StylePoints/images/3.tga": {
+      "sha256": "6190f682ac3faa3a9e5135a811e9bd5fc3a52c1eac4a8686db2c12c90a42a8fb",
+      "bytes": 4398
+    },
+    "StylePoints/images/4.tga": {
+      "sha256": "6190f682ac3faa3a9e5135a811e9bd5fc3a52c1eac4a8686db2c12c90a42a8fb",
+      "bytes": 4398
+    },
+    "StylePoints/images/5.tga": {
+      "sha256": "573533e49de7fa50e54c87437dfde607499b83e6e65f73dbbc2dcffcb1d2ebe8",
+      "bytes": 4338
+    },
+    "StylePoints/StylePoints.lua": {
+      "sha256": "88fec12586b69f1d8b904d216956ea1d7dd121e345b99e2eccb57de5913f873a",
+      "bytes": 13030
+    },
+    "StylePoints/StylePoints.toc": {
+      "sha256": "79fdb4b5fff44fc24cbfbbdd322d6a704bafcc3ecf91cdfced18a7f2c5cb9d8b",
+      "bytes": 329
+    },
+    "StylePoints/StylePoints.xml": {
+      "sha256": "de772b24bb3c836635219cb7f49a7e6d40a802ebad570885b8fa5c7812bd5b4a",
+      "bytes": 455
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

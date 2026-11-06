@@ -1,0 +1,29 @@
+{
+  "upstream": "https://octowow.st/git/olzon/MainCharacterTag_OC",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "olzon",
+    "repo": "MainCharacterTag_OC",
+    "name": "MainCharacterTag_OC",
+    "url": "https://octowow.st/git/olzon/MainCharacterTag_OC",
+    "api": "https://octowow.st/git/api/v1/repos/olzon/MainCharacterTag_OC"
+  },
+  "commit": "fdd4e688a6451a82cd602bcbb32efaf2a60426c9",
+  "sourceFiles": {
+    "MainCharacterTag_OC.lua": {
+      "sha256": "e0c9a98d99c81fabc5f7ca95fe2c461a0e698412ca0ac8370254e6c0e1125137",
+      "bytes": 9479
+    },
+    "MainCharacterTag_OC.toc": {
+      "sha256": "38ef48d286b2cceb6220e12a368098fb737ecc91881537fb3b86017e86cb8e31",
+      "bytes": 250
+    },
+    "README.md": {
+      "sha256": "4334b7594a8634721c6108c07dba1ebb8c2eb55f6f9cbaf90ab1c22ffbf4545d",
+      "bytes": 2695
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

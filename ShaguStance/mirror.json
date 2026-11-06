@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/shagu/ShaguStance",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguStance",
+    "name": "ShaguStance",
+    "url": "https://github.com/shagu/ShaguStance",
+    "api": "https://api.github.com/repos/shagu/ShaguStance"
+  },
+  "commit": "26cde9d5049018b9b8de745177a79c972f9f78f8",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "57a37da64e10b2769c41013d8072a5b89f1f9eddebb1b991e5f7caa1396de70a",
+      "bytes": 767
+    },
+    "ShaguStance.lua": {
+      "sha256": "a2533925b498a0f3b45da1d2216cf62004c9b248d0455d0b45f566e85a2bc851",
+      "bytes": 1426
+    },
+    "ShaguStance.toc": {
+      "sha256": "064a785d21dbc0a7fdceac706cc9d0bafdb8ec10f9d515dec7351dbc27a100d0",
+      "bytes": 204
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

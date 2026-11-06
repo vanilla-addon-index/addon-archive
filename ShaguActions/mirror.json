@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/shagu/ShaguActions",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguActions",
+    "name": "ShaguActions",
+    "url": "https://github.com/shagu/ShaguActions",
+    "api": "https://api.github.com/repos/shagu/ShaguActions"
+  },
+  "commit": "b775fee8974e4ef7876b3a4d8bbd1580871e3da8",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "79131477ee5a1287bde29101745761cbd40148974a9085d78c7bb87f8004d627",
+      "bytes": 1078
+    },
+    "README.md": {
+      "sha256": "97eca6088c4fc9fc56f0941bb107c63f1b3e1f36432f0bcd7b13c9d95fb907d9",
+      "bytes": 731
+    },
+    "screenshot.png": {
+      "sha256": "53dc3e27c9194fb571c7a7abe4ff8b87e92874a370e4060adf0c0f6f99109cc8",
+      "bytes": 35474
+    },
+    "ShaguActions.lua": {
+      "sha256": "2d39eecbc4e4d631cbf72f83938eab30dd94d21dbb3dfb1bc9f33c3ae091283c",
+      "bytes": 6849
+    },
+    "ShaguActions.toc": {
+      "sha256": "802f0ca6d88b482f06f728f41efd1c402a580f5d94d6870a0516d22b596dc154",
+      "bytes": 174
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

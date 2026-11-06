@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/asdaaf/MB-CA-icons",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "asdaaf",
+    "repo": "MB-CA-icons",
+    "name": "MB-CA-icons",
+    "url": "https://github.com/asdaaf/MB-CA-icons",
+    "api": "https://api.github.com/repos/asdaaf/MB-CA-icons"
+  },
+  "commit": "8f4c0fcf61ac2305d60b2f8e8b1366a993e7b5b2",
+  "sourceFiles": {
+    "hunter.lua": {
+      "sha256": "2e26be7408004e6d5da8c83938f97e5539ce08fbb187a010c88b0f9e9e3ca1c0",
+      "bytes": 1982
+    },
+    "hunter.xml": {
+      "sha256": "c61864f5a5489f5f53590d23f2b5c085229d80585a343360b0ee8ec36cf863cd",
+      "bytes": 2134
+    },
+    "MB-CA-icons.toc": {
+      "sha256": "9f70e7889e346d6b96d07036c3b05e78d890bb391b98d71283815e3dc8395408",
+      "bytes": 133
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

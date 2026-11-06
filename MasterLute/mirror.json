@@ -1,0 +1,65 @@
+{
+  "upstream": "https://github.com/yutsuku/MasterLute",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "yutsuku",
+    "repo": "MasterLute",
+    "name": "MasterLute",
+    "url": "https://github.com/yutsuku/MasterLute",
+    "api": "https://api.github.com/repos/yutsuku/MasterLute"
+  },
+  "commit": "94a5ce43e99b952b3dd6b74f910d8efa3e1d2015",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "876864c8833a12b1733d70da83f3035c15ca69c37774b2087fd4e73cb83e6730",
+      "bytes": 6
+    },
+    "Commands.lua": {
+      "sha256": "9a9889d7f2d683598aa772852a513fcab6e2d94e77fcca30c499de131dcbf4bc",
+      "bytes": 5078
+    },
+    "Core.lua": {
+      "sha256": "9cb4ae4df969c7a4fcbcecba0b0baddeff7f8d2bee2845b0b7e5c7d8bf999d12",
+      "bytes": 2098
+    },
+    "Global.lua": {
+      "sha256": "0cd3ac6f1f5a71b736aeb27f4bbbd3e5eab1bc6328c493de3340c62e86182633",
+      "bytes": 15
+    },
+    "locale/enUS.lua": {
+      "sha256": "cea5181c77c85ffabc8bd4ac18fe956bf05289bccf1c2495a81832fe0555de42",
+      "bytes": 1979
+    },
+    "locale/Locale.lua": {
+      "sha256": "49df5a9077e7c733c6593b008e1c66e0eceb7295578ff951f94d9953ae7ba6e1",
+      "bytes": 321
+    },
+    "locale/LocaleTable.lua": {
+      "sha256": "45cd8cf081298fb11a663e0f19bd6101ad6be9594bb5ae8aeb1586e2ec6f332f",
+      "bytes": 381
+    },
+    "locale/zhCN.lua": {
+      "sha256": "6da25e581c3e247917821baeb8ae00b87af74b4f192b18519833c8e7d9db66ab",
+      "bytes": 514
+    },
+    "Main.lua": {
+      "sha256": "45f38cd8f0c4ad1e41887148eaaa2f755153998fa71c18abf1d5a8b7f2707fb4",
+      "bytes": 3190
+    },
+    "MasterLute.toc": {
+      "sha256": "eab45f2aad33164a50bb1c29a94d1d9b4ea9c474888ab4598462b909471f8712",
+      "bytes": 263
+    },
+    "README": {
+      "sha256": "74e5658041935988798eb03a520c40c1355755749b9e9707d0250d69f3c62b51",
+      "bytes": 1024
+    },
+    "UI.lua": {
+      "sha256": "880f05a059d9cdc4567f42b66093e1d6b9c10d867dd9f2f98ab29c588f900421",
+      "bytes": 5483
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/madScripting/SnaguLoatheb-TurtleEdition",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "madScripting",
+    "repo": "SnaguLoatheb-TurtleEdition",
+    "name": "SnaguLoatheb-TurtleEdition",
+    "url": "https://github.com/madScripting/SnaguLoatheb-TurtleEdition",
+    "api": "https://api.github.com/repos/madScripting/SnaguLoatheb-TurtleEdition"
+  },
+  "commit": "b111b5a6d5cecb0c928c60c05a0cb017706c8e08",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "8bde6ada89a7e4c0cef3e3fcc149dd90ed71676003d162920fc7fbad5dfeddc1",
+      "bytes": 2227
+    },
+    "SnagaLoa.lua": {
+      "sha256": "4474c564d30f020757ac089788803a5e01c3a748b5e50521ff078fa307739cab",
+      "bytes": 16523
+    },
+    "SnagaLoa.toc": {
+      "sha256": "3e758725ad3946a0521d5a3fa5c08ae3fe4ebc7fa58974ebdd50aaff2a4d1e32",
+      "bytes": 248
+    },
+    "SnagaLoa.xml": {
+      "sha256": "47c010872d9f188ff9825648c3267727646f251558f7cf0f790953393470c7ed",
+      "bytes": 31479
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

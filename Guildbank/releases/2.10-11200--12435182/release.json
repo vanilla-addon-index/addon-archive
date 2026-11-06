@@ -1,0 +1,9 @@
+{
+  "id": "12435182",
+  "tag": "2.10-11200",
+  "name": "2.10-11200",
+  "body": "## Guild Bank\r\nLets a player export bags, bank, mail attachments to a bbcode\r\n![guildbank-bbcode](https://user-images.githubusercontent.com/109839/39319283-511eff10-4989-11e8-88a7-7099e229fe9d.png)\r\n or discord (plain) formatted list for posting.\r\n![guildbank-discord](https://user-images.githubusercontent.com/109839/44212361-d0ba9580-a173-11e8-9a65-97677d9686fb.png)\r\n\r\n### Configuration / Usage\r\n- FuBar or Minimap plugin for setting options.  \r\n- Click icon to show export frame.  \r\n- `/gbank` or `/guildbank` command-line if minimap icon is hidden.\r\n\r\n### Features\r\nFilters Bind on Pickup and equipped items automatically.  \r\n\r\n### Install\r\nDownload the guildbank-x-y.zip file from Assets and extract in AddOns.  \r\nRecommended to remove previous addon folder entirely if upgrading from a v1.0\r\n",
+  "published": "2018-08-16T13:47:40Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/guildbank/releases/tag/2.10-11200"
+}

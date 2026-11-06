@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: LilSparky's Workshop for Vanilla
+## Notes: LilSparky's Workshop mod for Trade Skills
+## RequiredDeps: 
+## OptionalDeps: Auctioneer, Enchantrix, AdvancedTradeSkillWindow, Blizzard_CraftUI, Blizzard_TradeSkillUI, aux-addon
+## LoadOnDemand: 1
+## LoadWith: AdvancedTradeSkillWindow, Blizzard_CraftUI, Blizzard_TradeSkillUI
+## SavedVariables: 
+## SavedVariablesPerCharacter: 
+## Version: v0.6
+lilsparkysworkshop.xml

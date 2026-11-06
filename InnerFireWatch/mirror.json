@@ -1,0 +1,33 @@
+{
+  "upstream": "https://octowow.st/git/olzon/InnerFireWatch",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "olzon",
+    "repo": "InnerFireWatch",
+    "name": "InnerFireWatch",
+    "url": "https://octowow.st/git/olzon/InnerFireWatch",
+    "api": "https://octowow.st/git/api/v1/repos/olzon/InnerFireWatch"
+  },
+  "commit": "c519692082126332afe5ae1cb1f6562aac48d633",
+  "sourceFiles": {
+    "InnerFireWatch.lua": {
+      "sha256": "bf9e1dd67943f77d3d8a67f90594eec571f02fcfbb6a69a8fd3ed8cd6f5e8f58",
+      "bytes": 9298
+    },
+    "InnerFireWatch.toc": {
+      "sha256": "5b4d1c15b9d08c4f9d5552ff296f368e0c037f0d884a6d13428bdb84972a2b29",
+      "bytes": 207
+    },
+    "README.md": {
+      "sha256": "f193f867c37e73a675d5439a95c57c91532287390178aafacdb28e7709375ab7",
+      "bytes": 945
+    },
+    "sounds/expire.wav": {
+      "sha256": "ad76d019fda38e6ecc64d31ec1e9c15c8eb92eb47bdb889728bed573f9ef427e",
+      "bytes": 13422
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

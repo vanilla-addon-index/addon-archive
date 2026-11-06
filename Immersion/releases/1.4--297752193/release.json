@@ -1,0 +1,9 @@
+{
+  "id": "297752193",
+  "tag": "1.4",
+  "name": "Immersion v1.4",
+  "body": "## ✨ Changelog\r\n\r\n- Fixed stealth action bar disappearing after exiting stealth  \r\n- Fixed black background issue on action bar after exiting stealth  \r\n- Restored Dragonflight UI button backgrounds correctly  \r\n- Reduced flickering with improved timing (`0.01s` + conditional second pass)  \r\n- Improved compatibility with Dragonflight UI Reforged  ",
+  "published": "2026-03-17T02:52:58Z",
+  "prerelease": false,
+  "url": "https://github.com/Stormhand-dev/Immersion/releases/tag/1.4"
+}

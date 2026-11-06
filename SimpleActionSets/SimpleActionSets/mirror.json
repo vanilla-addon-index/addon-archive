@@ -1,0 +1,65 @@
+{
+  "upstream": "https://github.com/KarstenBade/SimpleActionSets",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "KarstenBade",
+    "repo": "SimpleActionSets",
+    "name": "SimpleActionSets",
+    "url": "https://github.com/KarstenBade/SimpleActionSets",
+    "api": "https://api.github.com/repos/KarstenBade/SimpleActionSets"
+  },
+  "commit": "ac5162e195513d3658fea3f6ff91a90b0a549cb0",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "localization.lua": {
+      "sha256": "a73b39d51b54697908f0473462b1002af0f56be91df9d4ec831c813ff2d71962",
+      "bytes": 6057
+    },
+    "NOTICE.md": {
+      "sha256": "da61c1c2c146cb91d7822dca5877a3845c63ba4b2e089de8c1531607f999e403",
+      "bytes": 4247
+    },
+    "README.md": {
+      "sha256": "d7cfbe3b8ec4f7090a4646549ee82a13dd2775b57999092106b51cb4a3ce90db",
+      "bytes": 1996
+    },
+    "sas.tga": {
+      "sha256": "501bf39652af559790f21959f8cd4716a64399a7096f37a04b9040fcfa7a8677",
+      "bytes": 4140
+    },
+    "SimpleActionSets_AnsiReader.lua": {
+      "sha256": "ce064c7e1765c42c3b46b0f05e386bfe676ff8e3ec9a8d77bcfa396e9e1ac1df",
+      "bytes": 83
+    },
+    "SimpleActionSets_Hooks.lua": {
+      "sha256": "c189c50665921858ad6a8a1afcc0bc19410cc0ad67b8c63c5c2fdc1acf2fdbde",
+      "bytes": 9134
+    },
+    "SimpleActionSets_UTF8Reader.lua": {
+      "sha256": "590f7fa6df9666222f9dbe1aaa7d82ec32dd88876801961315f07107f6d4f23f",
+      "bytes": 84
+    },
+    "SimpleActionSets.lua": {
+      "sha256": "6797bb7e4cb9c481b20701ed0fb0575ace8c9b1e554b47c0a3005e2524cfc49b",
+      "bytes": 78275
+    },
+    "SimpleActionSets.toc": {
+      "sha256": "1410639ef109c8799543f2f8685509f5ad706fcc04a61a8bd04e97aae5287bca",
+      "bytes": 387
+    },
+    "SimpleActionSets.txt": {
+      "sha256": "48a9bd70b6bfe4d9efa3b32808e8104c3d7f402a8208686b3b30deae9414699b",
+      "bytes": 76
+    },
+    "SimpleActionSets.xml": {
+      "sha256": "5b17bff334656c07c93b8987a1c78caf0256cd1446db290f2f8ba8549e43ccf4",
+      "bytes": 53507
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

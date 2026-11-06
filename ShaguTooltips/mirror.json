@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/shagu/ShaguTooltips",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguTooltips",
+    "name": "ShaguTooltips",
+    "url": "https://github.com/shagu/ShaguTooltips",
+    "api": "https://api.github.com/repos/shagu/ShaguTooltips"
+  },
+  "commit": "85abb17f4181b514ef6848e380aafd0616bad12e",
+  "sourceFiles": {
+    "img/bg.tga": {
+      "sha256": "e4a26a1e7da9649da184795e89e373b053d7b1b9b13556850e93ce924ef5e23d",
+      "bytes": 84
+    },
+    "img/border.tga": {
+      "sha256": "a01b7dc864c6673a19353557ee93cca640230fcce691b03e6d073dd0d7960210",
+      "bytes": 1314
+    },
+    "img/normTex.tga": {
+      "sha256": "939d7fb5a4c80b2e844437593a98b0360658adb3e336632abfc30ad8bf7debf2",
+      "bytes": 14690
+    },
+    "README.md": {
+      "sha256": "f275fe8eb4a08d272546de9103ca824bf720c0f457abe3d7e387dff173e1ac4f",
+      "bytes": 1239
+    },
+    "ShaguTooltips-tbc.toc": {
+      "sha256": "84e584d2ab54fb375e8a8c410b54de9ab729f2e440de2268633c09a6bca8ead8",
+      "bytes": 177
+    },
+    "ShaguTooltips.lua": {
+      "sha256": "0fd65833166ab19bedfbb8603acc1c0c48b5a937ebd158e7c4ca9f72aced7a2f",
+      "bytes": 4833
+    },
+    "ShaguTooltips.toc": {
+      "sha256": "76eca7be5f9ad3c1b21891dcaed3feccf54eb62c9bf3f910b29a6d71b6e4f142",
+      "bytes": 177
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/zirtox1992/HideErrorFrame",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "zirtox1992",
+    "repo": "HideErrorFrame",
+    "name": "HideErrorFrame",
+    "url": "https://github.com/zirtox1992/HideErrorFrame",
+    "api": "https://api.github.com/repos/zirtox1992/HideErrorFrame"
+  },
+  "commit": "c65a36f01ab69c35779313f1b91ef8432c972fc6",
+  "sourceFiles": {
+    "core.lua": {
+      "sha256": "35e85c58a61ad6c7e9e42fa41b499b128903b58111631979743b516cdb306229",
+      "bytes": 248
+    },
+    "HideErrorFrame.toc": {
+      "sha256": "1dfd9b750f86dfe258b557c91feed8f5f848512f3d82bc96bab59b5c6839f078",
+      "bytes": 106
+    },
+    "README.md": {
+      "sha256": "ae9f3cdf1106cd0221fe432c36d2c58fa6c9bc0b5e51b5e42fe7e80c63cd4d0a",
+      "bytes": 66
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: Instance Timers
+## Notes: Tracks your 5 instance lockouts for you.
+## Author: ehawne
+## SavedVariables: InstanceTimersDB
+InstanceTimers.lua

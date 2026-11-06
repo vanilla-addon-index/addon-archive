@@ -1,0 +1,7 @@
+## Interface: 11200
+## Author: shirsig
+## Title: rwsync
+## Version: 1.0
+## SavedVariablesPerCharacter: rwsync_channel, rwsync_players
+
+rwsync.lua

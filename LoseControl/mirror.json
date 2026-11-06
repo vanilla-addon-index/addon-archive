@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/Road-block/LoseControl",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "LoseControl",
+    "name": "LoseControl",
+    "url": "https://github.com/Road-block/LoseControl",
+    "api": "https://api.github.com/repos/Road-block/LoseControl"
+  },
+  "commit": "26f5e1db3aa74565dab0f620795949f2f346f44e",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "LoseControl/Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "3a0690ac3996025393a4c5184ab6af5d39163218795613860e391f5691305c14",
+      "bytes": 23441
+    },
+    "LoseControl/Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "b0f6e98edf9c4ee9f01c4d6d9e8fd3d2a44b4f057fdae2c779cf251617288938",
+      "bytes": 15953
+    },
+    "LoseControl/Libs/Babble-Spell-2.2a/Babble-Spell-2.2a.lua": {
+      "sha256": "ec7d947e70ecd12d4dda885f072b57cfb38c8ae6fcb4c4030a882ee4c515047f",
+      "bytes": 469839
+    },
+    "LoseControl/LoseControl.lua": {
+      "sha256": "a36e33f9e502f76bfc6945890ab93ccc6eb45c0131232302c882c329b3fb4930",
+      "bytes": 11043
+    },
+    "LoseControl/LoseControl.toc": {
+      "sha256": "6ed883e836537e55897338b7917c566a1eadcf2ad4c438062268b33032185d1e",
+      "bytes": 549
+    },
+    "LoseControl/LoseControl.xml": {
+      "sha256": "d8e016d5b82d82f467bc48ab3f033581934a00e7c441477afcec4d6eb79516fe",
+      "bytes": 866
+    },
+    "README.md": {
+      "sha256": "65fbf0d9e17e6d3ff172f1d6dcc71a345ecd14296a197d9f955c94c903009fb1",
+      "bytes": 421
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

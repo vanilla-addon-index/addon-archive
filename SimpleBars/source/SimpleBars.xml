@@ -1,0 +1,297 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xsi:schemaLocation="http://www.blizzard.com/wow/ui/"> 
+    <!-- Frame to handle all core events --> 
+    <Font name="SimpleBarsCustomFont">
+        <FontHeight>
+            <AbsValue val="12"/> <!-- Set your preferred default size -->
+        </FontHeight>
+        <FontFlags>
+            <Flag val="OUTLINE"/> <!-- Set optional flags like 'OUTLINE' or 'THICKOUTLINE' -->
+        </FontFlags>
+        <FontName file="Interface\AddOns\SimpleBars\Media\Font\Expressway.ttf"/>
+    </Font> 
+    
+    <Script file="Core.lua"/>
+    <Script file="SimpleBars.lua"/>
+    <Button name="SimpleBarsHealthFrame" parent="UIParent" movable="true" enableMouse="true" topLevel="true">
+        <Size>
+            <AbsDimension x="150" y="20"/>
+        </Size>
+        <Anchors>
+            <Anchor point="CENTER" relativePoint="CENTER" x="0" y="-200"/>
+        </Anchors>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture name="$parentTexture" file="Interface\AddOns\SimpleBars\Media\background.blp">
+                    <Anchors>
+                        <Anchor point="ALL"/>
+                    </Anchors>
+                    <Color r="1.0" g="1.0" b="1.0" a="1.0"/>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Frames>
+            <StatusBar name="SimpleBars_HealthBar" inherits="TextStatusBar" hidden="false">
+                <Anchors>
+                    <Anchor point="CENTER">
+                        <Offset>
+                            <AbsDimension x="0" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="SimpleBars_HealthBarText" text="0/0">
+                            <Anchors>
+                                <Anchor point="CENTER">
+                                    <Offset>
+                                        <AbsDimension x="0" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <BarTexture file="Interface\AddOns\SimpleBars\Media\statusbar-texture.blp"/>
+                <Scripts>
+                    <OnLoad>
+                        this:RegisterEvent("PLAYER_AURAS_CHANGED");
+                        this:RegisterEvent("UNIT_HEALTH");
+                        this:RegisterEvent("UNIT_NAXHEALTH");
+                        this:RegisterEvent("PLAYER_ENTERING_WORLD");
+                    </OnLoad>
+                    <OnEvent>
+                        SetHealthEvent(event)
+                    </OnEvent>
+                </Scripts>
+            </StatusBar>
+        </Frames>
+        <Scripts>
+            <OnDragStart>
+                if IsShiftKeyDown() then
+                    SimpleBarsHealthFrame:StartMoving()
+                end
+            </OnDragStart>
+            <OnDragStop>
+                SimpleBarsHealthFrame:StopMovingOrSizing()
+                -- Save the position for next session
+                local point, relativeTo, relativePoint, xOfs, yOfs = SimpleBarsHealthFrame:GetPoint()
+                SimpleBarsDB.healthFrame.point = point
+                SimpleBarsDB.healthFrame.relativePoint = relativePoint
+                SimpleBarsDB.healthFrame.xOfs = xOfs
+                SimpleBarsDB.healthFrame.yOfs = yOfs
+            </OnDragStop>
+        </Scripts>
+    </Button>
+
+    <Frame name="$parentBorder" parent="SimpleBarsHealthFrame">
+        <Size>
+            <AbsDimension x="160" y="30"/>
+        </Size>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
+    </Frame>
+
+    <Frame name="SimpleBarsManaFrame" parent="UIParent" movable="true" enableMouse="true" topLevel="true">
+        <Size>
+            <AbsDimension x="150" y="20"/>
+        </Size>
+        <Anchors>
+            <Anchor point="CENTER" relativePoint="CENTER" x="0" y="-220"/>
+        </Anchors>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture name="$parentTexture" file="Interface\AddOns\SimpleBars\Media\background.blp">
+                    <Anchors>
+                        <Anchor point="ALL"/>
+                    </Anchors>
+                    <Color r="1.0" g="1.0" b="1.0" a="1.0"/>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Frames>
+            <StatusBar name="SimpleBars_ManaBar" inherits="TextStatusBar" hidden="false">
+                <Anchors>
+                    <Anchor point="CENTER">
+                        <Offset>
+                            <AbsDimension x="0" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="SimpleBars_ManaBarText" inherits="GameFontNormal" text="0/0">
+                            <Anchors>
+                                <Anchor point="CENTER" relativePoint="CENTER" x="0" y="0">
+                                    <Offset>
+                                        <AbsDimension x="0" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <BarTexture file="Interface\AddOns\SimpleBars\Media\statusbar-texture.blp"/>
+                <Scripts>
+                    <OnLoad>
+                        this:RegisterEvent("PLAYER_AURAS_CHANGED");
+                        this:RegisterEvent("UNIT_MANA");
+                        this:RegisterEvent("UNIT_MAXMANA");
+                        this:RegisterEvent("UNIT_ENERGY");
+                        this:RegisterEvent("UNIT_MAXENERGY");
+                        this:RegisterEvent("UNIT_RAGE");
+                        this:RegisterEvent("UNIT_MAXRAGE");
+                        this:RegisterEvent("PLAYER_ENTERING_WORLD");
+                    </OnLoad>
+                    <OnEvent>
+                        SetManaEvent(event)
+                    </OnEvent>
+                </Scripts>
+            </StatusBar>
+            <StatusBar name="SimpleBars_AltPower" hidden="false" enableMouse="true">
+                <Anchors>
+                    <Anchor point="TOP" relativePoint="BOTTOM" x="0" y="-1"/>
+                </Anchors>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="SimpleBars_AltPowerText" inherits="GameFontNormal" text="0/0">
+                            <Anchors>
+                                <Anchor point="CENTER">
+                                    <Offset>
+                                        <AbsDimension x="0" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <BarTexture file="Interface\AddOns\SimpleBars\Media\statusbar-texture.blp"/>
+                <Scripts>
+                    <OnLoad>
+                        this:RegisterEvent("UNIT_MANA")
+                        this:RegisterEvent("UNIT_MAXMANA")
+                        this:RegisterEvent("PLAYER_AURAS_CHANGED")
+                        this:RegisterEvent("PLAYER_REGEN_ENABLED");
+                        this:RegisterEvent("PLAYER_REGEN_DISABLED");
+                        this:RegisterEvent("PLAYER_ENTERING_WORLD");
+                        this:RegisterEvent("SPELLCAST_STOP");
+                    </OnLoad>
+                    <OnEvent>
+                        AltOnEvent(event)
+                    </OnEvent>
+                    <OnUpdate>
+                        AltOnUpdate()
+                    </OnUpdate>
+                </Scripts>
+            </StatusBar>
+        </Frames>
+        <Scripts>
+            <OnDragStart>
+                if IsShiftKeyDown() then
+                    SimpleBarsManaFrame:StartMoving()
+                end
+            </OnDragStart>
+            <OnDragStop>
+                SimpleBarsManaFrame:StopMovingOrSizing()
+                -- Save the position for next session
+                local point, relativeTo, relativePoint, xOfs, yOfs = SimpleBarsManaFrame:GetPoint()
+                SimpleBarsDB.manaFrame.point = point
+                SimpleBarsDB.manaFrame.relativePoint = relativePoint
+                SimpleBarsDB.manaFrame.xOfs = xOfs
+                SimpleBarsDB.manaFrame.yOfs = yOfs
+            </OnDragStop>
+        </Scripts>
+    </Frame>
+
+    <Frame name="$parentBorder" parent="SimpleBarsManaFrame">
+        <Size>
+            <AbsDimension x="160" y="30"/>
+        </Size>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
+    </Frame>
+
+    <Button name="SimpleBarsPetFrame" parent="UIParent" movable="true" enableMouse="true" topLevel="true">
+        <Size>
+            <AbsDimension x="75" y="20"/>
+        </Size>
+        <Anchors>
+            <Anchor point="CENTER" relativePoint="CENTER" x="-150" y="-200"/>
+        </Anchors>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture name="$parentTexture" file="Interface\AddOns\SimpleBars\Media\background.blp">
+                    <Anchors>
+                        <Anchor point="ALL"/>
+                    </Anchors>
+                    <Color r="1.0" g="1.0" b="1.0" a="1.0"/>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Frames>
+            <StatusBar name="SimpleBars_PetBar" inherits="TextStatusBar" hidden="false">
+                <Anchors>
+                    <Anchor point="CENTER">
+                        <Offset>
+                            <AbsDimension x="0" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString name="SimpleBars_PetBarText" inherits="GameFontNormal" text="0/0">
+                            <Anchors>
+                                <Anchor point="CENTER">
+                                    <Offset>
+                                        <AbsDimension x="0" y="0"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <BarTexture file="Interface\AddOns\SimpleBars\Media\statusbar-texture.blp"/>
+                <Scripts>
+                    <OnLoad>
+                        this:RegisterEvent("PLAYER_AURAS_CHANGED");
+                        this:RegisterEvent("UNIT_HEALTH");
+                        this:RegisterEvent("UNIT_NAXHEALTH");
+                        this:RegisterEvent("PLAYER_ENTERING_WORLD");
+                    </OnLoad>
+                    <OnEvent>
+                        SetPetEvent(event)
+                    </OnEvent>
+                </Scripts>
+            </StatusBar>
+        </Frames>
+        <Scripts>
+            <OnDragStart>
+                if IsShiftKeyDown() then
+                SimpleBarsPetFrame:StartMoving()
+                end
+            </OnDragStart>
+            <OnDragStop>
+                SimpleBarsPetFrame:StopMovingOrSizing()
+                -- Save the position for next session
+                local point, relativeTo, relativePoint, xOfs, yOfs = SimpleBarsPetFrame:GetPoint()
+                SimpleBarsDB.petFrame.point = point
+                SimpleBarsDB.petFrame.relativePoint = relativePoint
+                SimpleBarsDB.petFrame.xOfs = xOfs
+                SimpleBarsDB.petFrame.yOfs = yOfs
+            </OnDragStop>
+        </Scripts>
+    </Button>
+
+    <Frame name="$parentBorder" parent="SimpleBarsPetFrame">
+        <Size>
+            <AbsDimension x="160" y="30"/>
+        </Size>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
+    </Frame>
+ 
+    <GameTooltip name="SB_toolTip" inherits="GameTooltipTemplate"/>
+ 
+ </Ui>

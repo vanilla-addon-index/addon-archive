@@ -4,7 +4,7 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| SimpleActionSets | https://github.com/KarstenBade/SimpleActionSets | new |
-| SimpleActionSets--pepopo978 | https://github.com/pepopo978/SimpleActionSets | new |
+| SimpleActionSets | https://github.com/KarstenBade/SimpleActionSets | mirrored |
+| SimpleActionSets--pepopo978 | https://github.com/pepopo978/SimpleActionSets | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/jrc13245/IntelliSense",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jrc13245",
+    "repo": "IntelliSense",
+    "name": "IntelliSense",
+    "url": "https://github.com/jrc13245/IntelliSense",
+    "api": "https://api.github.com/repos/jrc13245/IntelliSense"
+  },
+  "commit": "e8968c2088054bd3f567529e9f177ebf032d4241",
+  "sourceFiles": {
+    "core/env.lua": {
+      "sha256": "26ab6a15bc04dc56e1483bb4fb1acad5c27502a187401205261b6ec3540d52e3",
+      "bytes": 2257
+    },
+    "core/init.lua": {
+      "sha256": "bb85a77fffcc3b41771e01f350bd49fa861563c087f56aed46b5fb0c4cf6b38f",
+      "bytes": 3068
+    },
+    "data/words.lua": {
+      "sha256": "15ad07185f4686ad695ebd801fac0f521ab79b2a95e8f97471bc96f4182b53ec",
+      "bytes": 9189
+    },
+    "IntelliSense.toc": {
+      "sha256": "9564b17457eae3d484a0c3256618742249fa1252d87eda02a467d99b930d2b19",
+      "bytes": 354
+    },
+    "mods/gui/gui-tools.lua": {
+      "sha256": "0c8840d7fd1d62666a09375e868e81dcd9183edf31ff798a1c3450541a2fb9a8",
+      "bytes": 14978
+    },
+    "mods/gui/gui.lua": {
+      "sha256": "7b34504bfff8a5b5fa9aec2f4ae3848d91f22592e9d05dbaf3386988456ff9bd",
+      "bytes": 17169
+    },
+    "mods/sense.lua": {
+      "sha256": "9e49289a2886f73b2d35441c3b0f9a71b18f053ad5a68685f88a06f4c85410bd",
+      "bytes": 24654
+    },
+    "README.md": {
+      "sha256": "d2912c1021cef8d2f30dc280bb6689d1470a384be76e672c24e1267abd6bb342",
+      "bytes": 2119
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

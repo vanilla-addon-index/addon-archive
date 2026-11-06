@@ -1,0 +1,25 @@
+{
+  "upstream": "https://github.com/shirsig/linkmend",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "linkmend",
+    "name": "linkmend",
+    "url": "https://github.com/shirsig/linkmend",
+    "api": "https://api.github.com/repos/shirsig/linkmend"
+  },
+  "commit": "d9e96234f589e9d38cdb60bf8e7d53477946e5bf",
+  "sourceFiles": {
+    "linkmend.lua": {
+      "sha256": "3ceaef0dd69c5f55c3d24f6fc179f94e2e911756b8f527abf80f0629390dd1f0",
+      "bytes": 1757
+    },
+    "linkmend.toc": {
+      "sha256": "6b65191949b7cdb2af2e1c5693afeb583e48473ef8b9e0247a1db0d705300c3c",
+      "bytes": 136
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

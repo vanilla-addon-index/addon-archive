@@ -1,0 +1,93 @@
+{
+  "upstream": "https://github.com/jhinzuo2/Gatherstone-Meeting",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jhinzuo2",
+    "repo": "Gatherstone-Meeting",
+    "name": "Gatherstone-Meeting",
+    "url": "https://github.com/jhinzuo2/Gatherstone-Meeting",
+    "api": "https://api.github.com/repos/jhinzuo2/Gatherstone-Meeting"
+  },
+  "commit": "8857db690069c4ec082f26bb0dcf53bb34ded46e",
+  "sourceFiles": {
+    "assets/damage.blp": {
+      "sha256": "b6ea615741e2f4814fbaee974386a5d0f5cec5d83777dab773660ef5efe3c7cb",
+      "bytes": 6676
+    },
+    "assets/healer.blp": {
+      "sha256": "4d8dcc5f95bc90fac32aea3c67112a2cccadaac8c425988e1803ca4fbdcaab43",
+      "bytes": 6676
+    },
+    "assets/LFG.blp": {
+      "sha256": "bd976a24efe4694348bdc7c6fb96a37f8a517c83efa7a665c1dee126d2a74daf",
+      "bytes": 1172
+    },
+    "assets/request.ogg": {
+      "sha256": "e070ce744bdc8f7a9282b2b374fc4bfeaa42bf22d79d46af9fec881c752702a7",
+      "bytes": 5730
+    },
+    "assets/tank.blp": {
+      "sha256": "dfdc78f9170deb3b895ea1aaa445c521aa825e116eecb983ce37f3552aaa346a",
+      "bytes": 6676
+    },
+    "Bindings.xml": {
+      "sha256": "720b7dc5ac85ca1fa7f210ce6c467e2141af8bcefdd7fba267e96ec0dbd19aa7",
+      "bytes": 115
+    },
+    "Browser.lua": {
+      "sha256": "87a652e9fc61b31ead1e2f28aa263dfd443b42798cc784fa9613e0190f96e609",
+      "bytes": 53147
+    },
+    "Compat.lua": {
+      "sha256": "c9de7dce056eb46df03b226b3ee56c30642f360d072f04b249a008a2a618109d",
+      "bytes": 1973
+    },
+    "Creator.lua": {
+      "sha256": "e4ab987779cb148311efff7ad76f91916625d4d7994fd6c2b95d4a79968679d7",
+      "bytes": 18722
+    },
+    "Float.lua": {
+      "sha256": "46b9d7cf6b178e3dadfcf265435544a9de78e993c403e84df41a3db929ebb23d",
+      "bytes": 2708
+    },
+    "GUI.lua": {
+      "sha256": "fe7fb1a6530df9ee48be57940c09924b1139151b89532c1b23602f8697ac0dba",
+      "bytes": 10892
+    },
+    "Init.lua": {
+      "sha256": "2bc2ada3ecbf3d6a7187e21d188f158f667a3224727c45b05d35dc052679bba0",
+      "bytes": 26564
+    },
+    "libs/AceLibrary.lua": {
+      "sha256": "8c75f829e0f980aac69d53cce8f8c806ea671795f445ab736c8cf76b9fc1f586",
+      "bytes": 22725
+    },
+    "libs/Dewdrop-2.0.lua": {
+      "sha256": "783f5d361ab58233eb30e14684f7a66cc77097c19b99172a90bba3c1d42739d2",
+      "bytes": 80011
+    },
+    "Meeting.lua": {
+      "sha256": "baf50a75d5332a0dbd18a5b36bb702101e6e68536f3095b8730fb35baf9446a6",
+      "bytes": 27115
+    },
+    "Meeting.toc": {
+      "sha256": "061ce84d1846034d95157049e8326cd1c6173c58fa3cfc686170cb86cd60794f",
+      "bytes": 513
+    },
+    "Message.lua": {
+      "sha256": "b2a01378fe9d589477ae40e5c9f4660b068d53de0f2780271000977425fc802e",
+      "bytes": 8606
+    },
+    "README.md": {
+      "sha256": "ba014248889ae1d8cfcf9015833a43222bddf7220ce4cadddc43b1d8064d65bc",
+      "bytes": 192
+    },
+    "Util.lua": {
+      "sha256": "e476d05628cb61e619a3697cc3362531191b18c30f9acc39932b68ce3fb43ba6",
+      "bytes": 663
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

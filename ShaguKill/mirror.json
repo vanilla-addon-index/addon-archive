@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/shagu/ShaguKill",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguKill",
+    "name": "ShaguKill",
+    "url": "https://github.com/shagu/ShaguKill",
+    "api": "https://api.github.com/repos/shagu/ShaguKill"
+  },
+  "commit": "498e2db84d2d666717d04538641add7ebca967cd",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "5237a82186a0945c3f2562d7689ed1c7c7ed62536e054b85d758fe626e82752b",
+      "bytes": 481
+    },
+    "ShaguKill.lua": {
+      "sha256": "55e4071b0e78fe59bb1be8339d7ca0621574aac7c899bdaf5345b06b8e7fa13d",
+      "bytes": 1344
+    },
+    "ShaguKill.toc": {
+      "sha256": "87b410a1c18d4ef00c55f62854eadc2a3ea61849926877d8d8a716b965e78f2f",
+      "bytes": 183
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

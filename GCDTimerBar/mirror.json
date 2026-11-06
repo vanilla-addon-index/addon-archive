@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Ageous27/GCDTimerBar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Ageous27",
+    "repo": "GCDTimerBar",
+    "name": "GCDTimerBar",
+    "url": "https://github.com/Ageous27/GCDTimerBar",
+    "api": "https://api.github.com/repos/Ageous27/GCDTimerBar"
+  },
+  "commit": "ce25c463b743c3ffb0408b92e7fdea5c19ef25e0",
+  "sourceFiles": {
+    "GCDTimerBar.lua": {
+      "sha256": "b71f8c1ee71fc155dd6cdf779b31c1dcd1ba289b0e1b5bc9e330130ace0db353",
+      "bytes": 30378
+    },
+    "GCDTimerBar.toc": {
+      "sha256": "a7c45097fb4da8ad487c4b3b37b140b5d2343c1199b89189a268cb1d8560abed",
+      "bytes": 204
+    },
+    "Readme.txt": {
+      "sha256": "4b0b86ffd54603ab1df7fbe3f4542a2864305f95a310920d9f0f4bde505014fe",
+      "bytes": 866
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

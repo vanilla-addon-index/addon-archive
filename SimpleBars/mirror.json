@@ -1,0 +1,265 @@
+{
+  "upstream": "https://github.com/Beardedrasta/SimpleBars",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Beardedrasta",
+    "repo": "SimpleBars",
+    "name": "SimpleBars",
+    "url": "https://github.com/Beardedrasta/SimpleBars",
+    "api": "https://api.github.com/repos/Beardedrasta/SimpleBars"
+  },
+  "commit": "fc0bb212cb23a8c976d84a08dbe8a29cab55a856",
+  "sourceFiles": {
+    "Core.lua": {
+      "sha256": "e0b10eace72113b10e8e2a5dc2e4f3537e11c7c6439ede874975c01474adb9df",
+      "bytes": 22078
+    },
+    "Helpers/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "2d212f65a53cf51ae5c5c65e1ad33be6aa3b4f33527dd3d9ccde322811123b60",
+      "bytes": 28825
+    },
+    "Helpers/AceLibrary/AceLibrary.lua": {
+      "sha256": "26fcd4ed3beddcdba2e56ec97e8655883b37ff27354d2969a979812f62eb725a",
+      "bytes": 22854
+    },
+    "Helpers/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "Helpers/Dewdrop/Dewdrop-2.0.lua": {
+      "sha256": "c51aa331b91d1bc7f8023f8c02814a0556e39a39d392f5029b06bf0aee266664",
+      "bytes": 82495
+    },
+    "Helpers/DruidLib-2.0/DruidLib-2.0.lua": {
+      "sha256": "dc8bcf14b113143f996222075c30ce2859a74c2872887cf53e31c8d6e48f918c",
+      "bytes": 8167
+    },
+    "Helpers/DruidManaLib-1.0/DruidManaLib-1.0.lua": {
+      "sha256": "90d3d95cf704af8944fbb77bc0e105fdf24c1ef3bbd7487c45fbe6ae07113b3f",
+      "bytes": 11228
+    },
+    "Media/background.blp": {
+      "sha256": "5bcf89cd4b463c96c9370df19c00b0c917ca3dbcc98f5effea315059b30b3aa1",
+      "bytes": 44876
+    },
+    "Media/Border/border.blp": {
+      "sha256": "232b75fb8e109e8b7f5be468380ba4f507ebd859434c2b4055b0224081338fee",
+      "bytes": 12164
+    },
+    "Media/Border/Caith blue.tga": {
+      "sha256": "ed3c4c2b53add6848c1ae5535872e9bbbf673441ea3ed0e8947f2c4d4a92846a",
+      "bytes": 8236
+    },
+    "Media/Border/Caith green.tga": {
+      "sha256": "3346549f15e65f6872cef473dbf53c1d988f1edfad688eafe93df9bde0fb6c79",
+      "bytes": 8236
+    },
+    "Media/Border/Caith orange.tga": {
+      "sha256": "1e8799c65243d653bdc661f2265f8942419a3d26b531f464ba968624bafdec52",
+      "bytes": 8236
+    },
+    "Media/Border/Caith red.tga": {
+      "sha256": "8d7b7a2b03a4885e0a921d73405dcd1e9c4cb41da21182352267ab0b80e45b39",
+      "bytes": 8236
+    },
+    "Media/Border/Caith White.tga": {
+      "sha256": "59f2dbd829827d5c9ea608c07a24b06e785d86725f1bbe57b6cd6a7bd70515db",
+      "bytes": 8236
+    },
+    "Media/Border/Caith yellow.tga": {
+      "sha256": "dee3d8261474e8cd85b7811bc8191e26c0b09028257c163b3c7179e22fd458f8",
+      "bytes": 8236
+    },
+    "Media/Border/Caith.tga": {
+      "sha256": "f4fad956f5769c5a7c543d9a4541510898355cac54091daa00fa430c1e0255dd",
+      "bytes": 8236
+    },
+    "Media/Border/couture blue.tga": {
+      "sha256": "20ad0d8f479e07ca5ce0f35e39a78b166e873a643ed19f7b641e9b8e01d2adfc",
+      "bytes": 8236
+    },
+    "Media/Border/couture gray.tga": {
+      "sha256": "601303c5d1623fd23c37652626bda81a86c87d2b2ba1f361040de913fe52a1c2",
+      "bytes": 8236
+    },
+    "Media/Border/couture green.tga": {
+      "sha256": "933bcfd89cf4f11cbd1bd18d49e6fe2fbab6f407e2be54a2c24a8a41677446e1",
+      "bytes": 8236
+    },
+    "Media/Border/couture orange.tga": {
+      "sha256": "534adcf6efc989ee9a214ea15d2e50ca66e8fe328b1d4543302793842464975e",
+      "bytes": 8236
+    },
+    "Media/Border/Couture Red.tga": {
+      "sha256": "dfb2d4eda8c7dd60bc386d36acbb77ec62fd1fac4f194f1b1695cadc53232e06",
+      "bytes": 8236
+    },
+    "Media/Border/couture white.tga": {
+      "sha256": "6d3d9e789ccce4308c81efd0536e96530bf79dbf88ef1f193aeb714c9841fb39",
+      "bytes": 8236
+    },
+    "Media/Border/couture yellow.tga": {
+      "sha256": "87dbf20e0f4c293e272e42d51626ba3bbf054b3266874b5ebf7cf357e76b1b4b",
+      "bytes": 8236
+    },
+    "Media/Border/couture.tga": {
+      "sha256": "bc23e0f1ad5c5f26a771ec01ddea0c2b00063136f4b2fe722ff81e8a21fe54d2",
+      "bytes": 8236
+    },
+    "Media/Border/grayborder.tga": {
+      "sha256": "fefd83db0ef2817dd9c02a70620112c3fad7ac5d4c5caf1910c8446fd7c6ffca",
+      "bytes": 8236
+    },
+    "Media/Border/Neav.tga": {
+      "sha256": "4d37646f34a7f792339588e31906c18380716ddb99218fef2c74500cff871790",
+      "bytes": 8236
+    },
+    "Media/Border/roth blue.tga": {
+      "sha256": "06486de7c988b442d057e62d47e3b5e88b2d23a25ca20494c76c11a6b7a344b1",
+      "bytes": 8236
+    },
+    "Media/Border/roth green.tga": {
+      "sha256": "6c12654f3a242c20c7024cca2772ad7c32b239b4d4320588c97bd81a07cf3cde",
+      "bytes": 8236
+    },
+    "Media/Border/roth orange.tga": {
+      "sha256": "b5d2296136ec28f9c7dccd888857eb543737097a8940ee73ad45160f20463f73",
+      "bytes": 8236
+    },
+    "Media/Border/roth red.tga": {
+      "sha256": "44e1eba26796ef1066299fe4d528d38e29d13ddc9f0f399f7a26f43b785e06e6",
+      "bytes": 8236
+    },
+    "Media/Border/roth white.tga": {
+      "sha256": "818b736465ad03932edc2d777e3c91d4bdf130f4c48633837524157185c3c659",
+      "bytes": 8236
+    },
+    "Media/Border/roth yellow.tga": {
+      "sha256": "5f6de8bc812539994476392f1572a8e29cf25b13d935211b117457e32c6abbf5",
+      "bytes": 8236
+    },
+    "Media/Border/roth.tga": {
+      "sha256": "49ca0bc8e0cbdd6abed71748e3b686032f588c5e2829e6b844c9ec1f8b1a3aa9",
+      "bytes": 8236
+    },
+    "Media/Border/rothblack.blp": {
+      "sha256": "2f0df5bf575d4ff5f88ebce05df962abefbc32b32231a0a4595e7c0d3c8765bc",
+      "bytes": 3972
+    },
+    "Media/Border/thick-border.blp": {
+      "sha256": "54599f0ad83873809b72d81ba57b675a4ad28e630ade17e24185eb738a4bcc7b",
+      "bytes": 12164
+    },
+    "Media/border.blp": {
+      "sha256": "232b75fb8e109e8b7f5be468380ba4f507ebd859434c2b4055b0224081338fee",
+      "bytes": 12164
+    },
+    "Media/close.blp": {
+      "sha256": "e8794a997992f099518e5f63cb4577aebc86ee95456f56be5624e7b65a2e0faa",
+      "bytes": 1556
+    },
+    "Media/configBorder.blp": {
+      "sha256": "c1fb256bf27c4f128a62cebee70252a2809465b8c2f5192395e7e179068e9d7d",
+      "bytes": 88596
+    },
+    "Media/display.jpg": {
+      "sha256": "27e512d219e364764c3fa2a5ae36a7b0e941fdaf0a3e43d6faa905cec773d628",
+      "bytes": 12633
+    },
+    "Media/Font/AdobeBlank.ttf": {
+      "sha256": "c42347a12f7ce92cc155579b7ab12e3d1edcd59d127b7715b933933d6a7459e2",
+      "bytes": 72384
+    },
+    "Media/Font/BigNoodleTitling.ttf": {
+      "sha256": "99fcb8e6f65d2d4e443091d856eb4eabec079f08245d31d02695aea860d7ddf1",
+      "bytes": 75156
+    },
+    "Media/Font/Continuum.ttf": {
+      "sha256": "28e295353b910b9ca7bf3d2b437bb5873ce49d5db1df661f8c97efeb9399d8b9",
+      "bytes": 92656
+    },
+    "Media/Font/DieDieDie.ttf": {
+      "sha256": "83a4de712fe501c0026b32955265da787993cc3ca224a918e179ffdef982ee21",
+      "bytes": 384412
+    },
+    "Media/Font/Expressway.ttf": {
+      "sha256": "06a2106170c2b5b736955cc749ed755f3757d103230645158f0bd5b5b91c386b",
+      "bytes": 99820
+    },
+    "Media/Font/Homespun.ttf": {
+      "sha256": "00987661c58306d4166af5c94d69b2becb21548097658e4627ef4dfdfb6b3f90",
+      "bytes": 21196
+    },
+    "Media/Font/Hooge.ttf": {
+      "sha256": "0570ff71826c135d343bce9a707ea49d56ad37c229a3adc6a53f443580943cdc",
+      "bytes": 70016
+    },
+    "Media/Font/Myriad-Pro.ttf": {
+      "sha256": "a4eefdaeccae42faeaf989b6b642f2e39386fd33a7e11c39e7c08d3bfc4eb18a",
+      "bytes": 209700
+    },
+    "Media/Font/PT-Sans-Narrow-Bold.ttf": {
+      "sha256": "e69d83bcf5bd647892b4e2b22f5098dabd55c989413513197722fc156fb9f00e",
+      "bytes": 487720
+    },
+    "Media/Font/PT-Sans-Narrow-Regular.ttf": {
+      "sha256": "4102edda03059163771869d258df54ac8563c408fa6e9ef75b2ddc85eabea6f4",
+      "bytes": 396212
+    },
+    "Media/Font/RobotoMono.ttf": {
+      "sha256": "c570ac128b984104aeeffda5d69eea9496d676b25bdf0425585c4c934618c450",
+      "bytes": 118976
+    },
+    "Media/header.blp": {
+      "sha256": "6d032b04167ca3a9c930e153480ccb38a4105551b069d40b2c58f242f48a550c",
+      "bytes": 3908
+    },
+    "Media/mapIcon.tga": {
+      "sha256": "6bf9a189258d193acdd16a1137d7772deeb13efd8cad01a22f1727805a524ac8",
+      "bytes": 50717
+    },
+    "Media/statusbar-texture.blp": {
+      "sha256": "7931b5d7dcf8733b2ddbc181f66dc7f5c8dcb08b486d914f99a66eacaa4d1c92",
+      "bytes": 2676
+    },
+    "Media/statusbar.blp": {
+      "sha256": "7202ec605ca10c3223fdc96a41aa81b875a12a9259f0273794ef499406d8aa79",
+      "bytes": 6676
+    },
+    "Media/thick-border.blp": {
+      "sha256": "54599f0ad83873809b72d81ba57b675a4ad28e630ade17e24185eb738a4bcc7b",
+      "bytes": 12164
+    },
+    "Options.lua": {
+      "sha256": "491e35df45cfe5579f93c78dfae8792dfbdcbcabb4f92d3f947f15156bdfe3f5",
+      "bytes": 20253
+    },
+    "README.md": {
+      "sha256": "80b7e8cfd1b82718b9aeedaa057e1e0dcbdbc5c7ad57dfcd9e5db7fb9d75ba95",
+      "bytes": 2077
+    },
+    "SimpleBars.lua": {
+      "sha256": "b6b023d15dca714150fe56d9b1fc2bb636b44d325052ca147384609181393be2",
+      "bytes": 25024
+    },
+    "SimpleBars.toc": {
+      "sha256": "0fa52e895c437338fa55399ec9cf9c3b88b938dc5d587dfd6afe7dd0dbb4a6da",
+      "bytes": 407
+    },
+    "SimpleBars.xml": {
+      "sha256": "e262969c5235fa696b1dc6744e10f12db560eba6394b5bb19175a798a51fff0b",
+      "bytes": 12247
+    },
+    "Tick/Frame.xml": {
+      "sha256": "78513fae6d731ce3f76ae1409478bc56f9ce64f06e8943ffd03a89e0e7269e37",
+      "bytes": 2961
+    },
+    "Tick/Ticks.lua": {
+      "sha256": "8c291a6b66e2bb2cff6d4129a3e1abfc051b777c6e892c12b89a99dd90241650",
+      "bytes": 5299
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

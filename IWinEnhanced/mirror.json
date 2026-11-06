@@ -1,0 +1,277 @@
+{
+  "upstream": "https://github.com/Profiler781/IWinEnhanced",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Profiler781",
+    "repo": "IWinEnhanced",
+    "name": "IWinEnhanced",
+    "url": "https://github.com/Profiler781/IWinEnhanced",
+    "api": "https://api.github.com/repos/Profiler781/IWinEnhanced"
+  },
+  "commit": "a9d1a28cf986ca0928e0f0a709016c37929f5e86",
+  "sourceFiles": {
+    "core/action.lua": {
+      "sha256": "d829321e8d4c25259e3be2ecc2574c7a1fccf6c8e0bc082da7c8ddf971df1c38",
+      "bytes": 6945
+    },
+    "core/condition.lua": {
+      "sha256": "2ef26faff2c923f6c98ad0faab2bf0935b0e0fb7e7454f433addbfb2bc45c389",
+      "bytes": 60586
+    },
+    "core/data.lua": {
+      "sha256": "26007cf1dc3b4382a49ec94a7fd00610758938ad2aa05468ddca8ac73d7d9ac3",
+      "bytes": 7789
+    },
+    "core/event.lua": {
+      "sha256": "49dc446ab8dbe304bd67dee2c99c4bf5798e1faceadd5ea1e77ac7df0b8fc20e",
+      "bytes": 3526
+    },
+    "core/rotation.lua": {
+      "sha256": "ecbf4f53b9729dc5df771c6d0282f983688a200ff518eaeed7721dc2395d7298",
+      "bytes": 1741
+    },
+    "druid/action.lua": {
+      "sha256": "c95a4c8f6d9e5a223d9f0de7d3a6f4ed62fa98639428890669c61b6b80036b7e",
+      "bytes": 26403
+    },
+    "druid/condition.lua": {
+      "sha256": "0a40cc88ac5e88e0fdd7b8b060df61f9a7c013c73f4537eb349496d473c0a41a",
+      "bytes": 4420
+    },
+    "druid/data.lua": {
+      "sha256": "ba5923055075f1c2230b103cccdb4e508dd049b08df5fbf424188ae965ac6ac0",
+      "bytes": 1678
+    },
+    "druid/event.lua": {
+      "sha256": "95625daea033ff562bb0727357b4f354c87a37e2a16cb0af586333d78062efbc",
+      "bytes": 3643
+    },
+    "druid/rotation.lua": {
+      "sha256": "d6f5fa1cf3d4cb2c6935eb8b8d6ff01ba025597ffb36882e779cbd28d5e301f3",
+      "bytes": 4139
+    },
+    "druid/setup.lua": {
+      "sha256": "8807bf5456aab5e080e1cd6ebf0cd2ce171bd60456d4d06d07ff8d47cc1da623",
+      "bytes": 8005
+    },
+    "hunter/action.lua": {
+      "sha256": "c089129e1aecb0c91206708a61b9b4184d384352544ea3215e0793ce38487b89",
+      "bytes": 129
+    },
+    "hunter/condition.lua": {
+      "sha256": "728774fc9eb968c3f790f95d974f2bc5864c38ab1d8fc1072c62366dc40432f9",
+      "bytes": 54
+    },
+    "hunter/data.lua": {
+      "sha256": "728774fc9eb968c3f790f95d974f2bc5864c38ab1d8fc1072c62366dc40432f9",
+      "bytes": 54
+    },
+    "hunter/event.lua": {
+      "sha256": "40c7ec32f43d0f25f8aca9a0253d093a9151079253911af69a7c5ebabaaccb0e",
+      "bytes": 286
+    },
+    "hunter/rotation.lua": {
+      "sha256": "1256d4b3fcd416982e4c162e77e50622d21137172858a7c3fe998aaef88d83a9",
+      "bytes": 197
+    },
+    "hunter/setup.lua": {
+      "sha256": "f7c50b79595afbc122073a52e019444d2a2c86a67a162b6146640cdc2ed7af60",
+      "bytes": 957
+    },
+    "IWinEnhanced.lua": {
+      "sha256": "870e2f2414d445d6c5cec2f555971ac02c43205e1d8a29ddf14bc80b9dc4ffdf",
+      "bytes": 566
+    },
+    "IWinEnhanced.toc": {
+      "sha256": "18022b724fbcaec80f76419efabefd89249abf91e56b2c2e37793fbc70fdf74d",
+      "bytes": 1524
+    },
+    "mage/action.lua": {
+      "sha256": "410ef562c817cdff91e970ae4892e70d5d6bca05f795f5383d7c3deacefc9471",
+      "bytes": 127
+    },
+    "mage/condition.lua": {
+      "sha256": "326d0c7543a91ff0ec296f21dc78aeaf4cf6c2baac5de09269bf12484efb6cb5",
+      "bytes": 52
+    },
+    "mage/data.lua": {
+      "sha256": "326d0c7543a91ff0ec296f21dc78aeaf4cf6c2baac5de09269bf12484efb6cb5",
+      "bytes": 52
+    },
+    "mage/event.lua": {
+      "sha256": "7d68d3ac649cc473abf21ea1a0f3da863799f8cee8f890b2f83ab01b05b2d4f4",
+      "bytes": 282
+    },
+    "mage/rotation.lua": {
+      "sha256": "106997bad77132694d46e1d027c52134e2fb4b89021696cbdfd07ebf66d34f2c",
+      "bytes": 191
+    },
+    "mage/setup.lua": {
+      "sha256": "e5a78e2023b05aace4c495272390d719141bac828048496ba29e9a8ec048372d",
+      "bytes": 952
+    },
+    "paladin/action.lua": {
+      "sha256": "abc74c4139a48e0e60808529b877ee21efd907f16315e406360598a09e161776",
+      "bytes": 24781
+    },
+    "paladin/condition.lua": {
+      "sha256": "afce65b9aeae9419f533fc12139ea650d538d3e0d26f93c59f216cb2e613ec87",
+      "bytes": 5031
+    },
+    "paladin/data.lua": {
+      "sha256": "ca79067f8f264bf1b2c92bce5ed8e6b544664b86592cdeaf2315b18448915d28",
+      "bytes": 106
+    },
+    "paladin/event.lua": {
+      "sha256": "5860a59b0f73ca24512b649126d1304a16b27ca98a73ccce432d8ac1c6afc841",
+      "bytes": 1368
+    },
+    "paladin/rotation.lua": {
+      "sha256": "e333ff332838518071c5cd5c10d97e5ca050dc24483729a2972bb1ae1ea827a6",
+      "bytes": 6197
+    },
+    "paladin/setup.lua": {
+      "sha256": "f60c46796612e7bb512cf4959d1ebf2e42a6886d7a11557c87a29de83abacfda",
+      "bytes": 11858
+    },
+    "priest/action.lua": {
+      "sha256": "e3dc3cdd6ef4ad38b409015bbcb6567489a440d11b2faa899803de698e2bf28d",
+      "bytes": 129
+    },
+    "priest/condition.lua": {
+      "sha256": "4d3a7c9783ee2f2014007b0d84dce29047393d515c81730b4a6439aefc7ab63b",
+      "bytes": 54
+    },
+    "priest/data.lua": {
+      "sha256": "4d3a7c9783ee2f2014007b0d84dce29047393d515c81730b4a6439aefc7ab63b",
+      "bytes": 54
+    },
+    "priest/event.lua": {
+      "sha256": "9892cbda46efd76145dc75d9d882c275a46f80c1cffe5924ce0a38de9b0af5ec",
+      "bytes": 286
+    },
+    "priest/rotation.lua": {
+      "sha256": "e31d3ed7918239f8eca059bea15b36ec2ec4faac19f7ae587e092ae0b8dee859",
+      "bytes": 197
+    },
+    "priest/setup.lua": {
+      "sha256": "b132f0f10e1e624d4be21f0fc8eb566d1d7035ce96d6f73e8554ffa60fa8dc72",
+      "bytes": 957
+    },
+    "README.md": {
+      "sha256": "f130f3979b3dff337913965e8a2ef6ba25685dcb16f666c0bc47048a50483860",
+      "bytes": 12373
+    },
+    "review/CODE_REVIEW.md": {
+      "sha256": "a457c83654be3ba16628a56b68941cab4f86908255a7637173f8a4c305dc5fc9",
+      "bytes": 16881
+    },
+    "review/RAPPORT_FR.md": {
+      "sha256": "f880dd858af09a923595db364197004b521aefa0591d59713abbb05f5a489bac",
+      "bytes": 19180
+    },
+    "review/README.md": {
+      "sha256": "e3c3c0dcff1a92fac4940b5eb3b73f9538acc232e1ae597b0db54c465fc07fb7",
+      "bytes": 5779
+    },
+    "rogue/action.lua": {
+      "sha256": "aeac48702cbe68006e1713b15219d9337de5e6beaaaae6fa9438c4cc1ac3823b",
+      "bytes": 16159
+    },
+    "rogue/condition.lua": {
+      "sha256": "8da08f9b8a909828c822dbd13dbd36275aa5ad8dab5900156efab75d686173c1",
+      "bytes": 2985
+    },
+    "rogue/data.lua": {
+      "sha256": "60048e37e8497f95f58486c0ec4601af547d64d1f2269b1fce8d65ccd57b5f09",
+      "bytes": 1538
+    },
+    "rogue/event.lua": {
+      "sha256": "7691eb67bfdda142e9450b98904c8c1635b7c01e70134f7fc7f8931278292bd7",
+      "bytes": 2697
+    },
+    "rogue/rotation.lua": {
+      "sha256": "16aeb57d216b8d18c232616de8e8a895dc53f01544774a0ef9a92627a7a0bc50",
+      "bytes": 2618
+    },
+    "rogue/setup.lua": {
+      "sha256": "97e4d5490fb432765794efece1f807c4e233ada577b73435380e8aac4c5f230e",
+      "bytes": 8048
+    },
+    "shaman/action.lua": {
+      "sha256": "aaf74dde58dec292cc3356261a8674ba7373e8ec88c0e1edf89a7ed4eeca9fc1",
+      "bytes": 917
+    },
+    "shaman/condition.lua": {
+      "sha256": "0da594c012d5af3ce795895094f009b6990fc127b469f91d907bdaa056189cc0",
+      "bytes": 54
+    },
+    "shaman/data.lua": {
+      "sha256": "0da594c012d5af3ce795895094f009b6990fc127b469f91d907bdaa056189cc0",
+      "bytes": 54
+    },
+    "shaman/event.lua": {
+      "sha256": "92fed283b9c1e93b354387142257c8c24757331948125a57c0bfd069c3bef8a7",
+      "bytes": 286
+    },
+    "shaman/rotation.lua": {
+      "sha256": "1585079404eac88c2ab0c8b53eeee50cc736ef9574c4a1bbad4eadf4e1609691",
+      "bytes": 282
+    },
+    "shaman/setup.lua": {
+      "sha256": "4ccc5c2eb0bb8383ae2bd3754b3039133144ff9778dc81225b2c1140348d7679",
+      "bytes": 957
+    },
+    "warlock/action.lua": {
+      "sha256": "d504eac38c02c71d0da54b362e650c6448ae668d1b5eb917883697d1dac01af2",
+      "bytes": 1914
+    },
+    "warlock/condition.lua": {
+      "sha256": "e36fc298c2a151abe7fbc3fffbcd0fee8b321093cac99ed9592b44147be495ae",
+      "bytes": 55
+    },
+    "warlock/data.lua": {
+      "sha256": "e36fc298c2a151abe7fbc3fffbcd0fee8b321093cac99ed9592b44147be495ae",
+      "bytes": 55
+    },
+    "warlock/event.lua": {
+      "sha256": "5ec8d3ee98d1592eeefcb7cf52d191c4e7e49a0f477c28c2e326ead88a39f571",
+      "bytes": 507
+    },
+    "warlock/rotation.lua": {
+      "sha256": "d86870c86ff847a514694219a97d8779c8b15317f16118fb5cb913ddd2766c89",
+      "bytes": 527
+    },
+    "warlock/setup.lua": {
+      "sha256": "bdc4b609966c4eb85c2ffd40109ea5d8366347ace7cb2baba03b12516b25fb81",
+      "bytes": 960
+    },
+    "warrior/action.lua": {
+      "sha256": "499b87f536a1989ab90ef0594285142e6cabf58995dc8e11665e3edc302ee795",
+      "bytes": 47205
+    },
+    "warrior/condition.lua": {
+      "sha256": "ed506b55a0b1d75f31484f225da463dd2f8a2ad1be524944cc33ebc97aeb2deb",
+      "bytes": 6024
+    },
+    "warrior/data.lua": {
+      "sha256": "9fa3c48ab7ff843a3b0cdb0f40e22dcbe3c08e70794997ee9cc6a39831c73679",
+      "bytes": 3494
+    },
+    "warrior/event.lua": {
+      "sha256": "9ea8b8393b8dc4331e92caad59536165ec90543f523e8d52de3a13f58b07f86e",
+      "bytes": 5576
+    },
+    "warrior/rotation.lua": {
+      "sha256": "76b8ffa40d1e8338b64c9526b79d09b8b1536c3b3e9a1d5e46d1af08449dc40f",
+      "bytes": 9449
+    },
+    "warrior/setup.lua": {
+      "sha256": "78ce86c5bcdb168eef8abd2712c58467d82a461b8149e6cddc8f8a76f28bf020",
+      "bytes": 18005
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

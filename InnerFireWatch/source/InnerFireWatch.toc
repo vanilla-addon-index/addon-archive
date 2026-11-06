@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: InnerFireWatch
+## Notes: Alerts you when key self-buffs expire (Priest/Warrior/Shaman).
+## Author: Olzon
+## Version: 1.2
+## SavedVariables: InnerFireWatchDB
+
+InnerFireWatch.lua

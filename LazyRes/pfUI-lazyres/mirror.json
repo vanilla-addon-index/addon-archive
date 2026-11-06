@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/liiora/pfUI-lazyres",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "liiora",
+    "repo": "pfUI-lazyres",
+    "name": "pfUI-lazyres",
+    "url": "https://github.com/liiora/pfUI-lazyres",
+    "api": "https://api.github.com/repos/liiora/pfUI-lazyres"
+  },
+  "commit": "d33a17af316de26595cbeac252a08767f7dcbf5f",
+  "sourceFiles": {
+    ".editorconfig": {
+      "sha256": "2c9ccb2f096b55e5a63342fd75925122bb655f389818984a67592d907460a2e1",
+      "bytes": 252
+    },
+    "pfUI-lazyres-config.lua": {
+      "sha256": "03eef2fa75d758be74f53caae558256125ee79b4fb5f8a19e2a20818fbd0333e",
+      "bytes": 300
+    },
+    "pfUI-lazyres-gui.lua": {
+      "sha256": "2e70279545c7df62d3120829a7dbcdfb35cc1fc7ff7a44bdbd971c9d7f13e992",
+      "bytes": 2172
+    },
+    "pfUI-lazyres.lua": {
+      "sha256": "e81a5d61f1dec5fe276f9def8f5c484dbeda8bc0acccf2ac6cae40ce8c9cd217",
+      "bytes": 2794
+    },
+    "pfUI-lazyres.toc": {
+      "sha256": "4bd940a92ad16918679c66f5a06275c3fd40ece658c31047a56fe9e979fb8a15",
+      "bytes": 305
+    },
+    "README.md": {
+      "sha256": "c3cb1733a05b476c460b5072da2b122105419dda0a6e7141cf54ed2a01405bb1",
+      "bytes": 1014
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

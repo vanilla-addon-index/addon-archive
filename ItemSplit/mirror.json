@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/balakethelock/ItemSplit",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "balakethelock",
+    "repo": "ItemSplit",
+    "name": "ItemSplit",
+    "url": "https://github.com/balakethelock/ItemSplit",
+    "api": "https://api.github.com/repos/balakethelock/ItemSplit"
+  },
+  "commit": "51a435e531ec6822af83ef5960e608a77b608572",
+  "sourceFiles": {
+    "ItemSplit.lua": {
+      "sha256": "484a4fbe6674f285e19365df5d4178c23a62e1f1f65e52f2d1fff04af28fdffa",
+      "bytes": 8003
+    },
+    "ItemSplit.toc": {
+      "sha256": "ce6a4c0a27f5dea23a071ee18404881a89e8cc2414b915b24484122db5e4e4a6",
+      "bytes": 217
+    },
+    "README.md": {
+      "sha256": "47bc88234d8c7782c695a4c03809a7a3ea9ee779310fafdc84ec364f950a2b39",
+      "bytes": 342
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

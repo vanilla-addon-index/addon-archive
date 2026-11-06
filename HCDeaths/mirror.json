@@ -1,0 +1,213 @@
+{
+  "upstream": "https://github.com/neimad-mp/HCDeaths",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "neimad-mp",
+    "repo": "HCDeaths",
+    "name": "HCDeaths",
+    "url": "https://github.com/neimad-mp/HCDeaths",
+    "api": "https://api.github.com/repos/neimad-mp/HCDeaths"
+  },
+  "commit": "15e16fa4ad80c3b89f4b0dc27318ca6362faa713",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "d3957c58490771778d7ff36f2ce22c715f5feab41ae35ad1de83dbee3e226d2f",
+      "bytes": 371
+    },
+    "HCDeaths.lua": {
+      "sha256": "bcaa5ab753ab32dd2271de77c52022ed7e79b425f9e4b10ac006edcc13466140",
+      "bytes": 42024
+    },
+    "HCDeaths.toc": {
+      "sha256": "6ede36fd4fadeadae4a2bc4dc684fb44af3c0d4af0e031096546654443dba85d",
+      "bytes": 197
+    },
+    "LICENSE": {
+      "sha256": "9d0bf01c643fcc080870901decce7a9f6add51bec47b2c9dd064f65ed0106556",
+      "bytes": 1069
+    },
+    "media/Log/Druid.blp": {
+      "sha256": "3db48013e899564a561f27da7b09e0558b2fdbcf9a62a57b5d49ec14e8b66c46",
+      "bytes": 6676
+    },
+    "media/Log/Dwarf.blp": {
+      "sha256": "02ace15310abef267d63c9573ea71114f006f6d8afd140677f0dbdf4abdf1974",
+      "bytes": 6676
+    },
+    "media/Log/Gnome.blp": {
+      "sha256": "03b5bf1f12aec8cd4a00661c6d4f9466c8cb5a8b2906d66dda99b2a50e271387",
+      "bytes": 6676
+    },
+    "media/Log/Goblin.blp": {
+      "sha256": "7ee22f8f353f71bb7e8b00d32bd0a45bc59b1ec3989d1ac0ad18dad28e126a99",
+      "bytes": 6676
+    },
+    "media/Log/High Elf.blp": {
+      "sha256": "5b1e72abb5c20db7a086951bf73f7607a3109ce63ed2179884de6953efb56202",
+      "bytes": 6676
+    },
+    "media/Log/Human.blp": {
+      "sha256": "2ad76056fd2ef2597e5819eac97a34f421bfd4afce460a60e5c0d0350c05beb3",
+      "bytes": 6676
+    },
+    "media/Log/Hunter.blp": {
+      "sha256": "0723aa48a4c5c314be79e0a439c24acba64cdb2e79a98f15857bc0e3466cc7b6",
+      "bytes": 6676
+    },
+    "media/Log/INFERNO.blp": {
+      "sha256": "b752ae5a56831ebb329fa22a89ef98a323d81b87a7f92b0576622e528880a1ea",
+      "bytes": 6676
+    },
+    "media/Log/Mage.blp": {
+      "sha256": "83305d0ace20bd3133c28f56c1987f9de474a53b945a20f63a7aa9b27a7160de",
+      "bytes": 6676
+    },
+    "media/Log/Night Elf.blp": {
+      "sha256": "f8795a6e4fc3d71c006b195593880cc37829eebb1ba53a65d87f10b31f56822e",
+      "bytes": 6676
+    },
+    "media/Log/Orc.blp": {
+      "sha256": "bba466c75fbc3a45ffb05eed84f0f54f1f6b7622f0beb5b9e36b63e08e1357e3",
+      "bytes": 6676
+    },
+    "media/Log/Paladin.blp": {
+      "sha256": "d96bf6b5e8229408a7a5a598072bd2072e209c68255f9f31ae35282d232e64bc",
+      "bytes": 6676
+    },
+    "media/Log/Priest.blp": {
+      "sha256": "90435ef1b293003e9ce659397edc58c160a9d10d2756780aafe912b6e366e38f",
+      "bytes": 6676
+    },
+    "media/Log/PVE.blp": {
+      "sha256": "e8c52dfa389705fee0a522f5f6084ac699abdc547a76127a8f2481ff71ce8350",
+      "bytes": 6676
+    },
+    "media/Log/PVP.blp": {
+      "sha256": "bd863beb329207e81084cd48b8b6c9b85a2c74f8bf04697b87d5a3509b595b68",
+      "bytes": 6676
+    },
+    "media/Log/Rogue.blp": {
+      "sha256": "1a2eccbcca21d00f3560808d84079ce4ea776d4942063f6f3e99d4141a3bf218",
+      "bytes": 6676
+    },
+    "media/Log/Shaman.blp": {
+      "sha256": "1ccc8067609aa762dacff14c6aa04cafd4db78304cb95ddb6c5ad17584383572",
+      "bytes": 6676
+    },
+    "media/Log/Skull.blp": {
+      "sha256": "2c794d5b3345ef90aacf7b004c98ffff585dbe4879b289e3e800a9eb476c077c",
+      "bytes": 6676
+    },
+    "media/Log/Tauren.blp": {
+      "sha256": "a342c2c866845b6ec8c500df759345f6714516e8c792f0e6fe3390b53d315d53",
+      "bytes": 6676
+    },
+    "media/Log/Troll.blp": {
+      "sha256": "4e278d70d122be5250897640ab418f1a05aa22f15f418c44a25880da4596b978",
+      "bytes": 6676
+    },
+    "media/Log/Undead.blp": {
+      "sha256": "90483d482f2cb98889715addf2d4c360262c7c5e3d4a5f1fa9317e337d0d7329",
+      "bytes": 6676
+    },
+    "media/Log/Warlock.blp": {
+      "sha256": "104a6a9aaa76593f9421b931561c26bffc4fee9c8ffbfc35878be05557975dbe",
+      "bytes": 6676
+    },
+    "media/Log/Warrior.blp": {
+      "sha256": "ab0fa4cfbabd09a75279f3d43c8d86a658fec6ca1b514cf14b8df2b0946ba565",
+      "bytes": 6676
+    },
+    "media/Ring/Druid.blp": {
+      "sha256": "a14e26ec73073a938639f711541d4936c382c5ebbf76a7a03a3839f35520bbe4",
+      "bytes": 23060
+    },
+    "media/Ring/Dwarf.blp": {
+      "sha256": "20c04100c6b351f29fa935d4df79dd38b176df1be723200cfd3c31cf4173df63",
+      "bytes": 6676
+    },
+    "media/Ring/Gnome.blp": {
+      "sha256": "df620192d6d4d080822fbebb2af8a3fc83017f4e950d55b1ed2e5ca09fb20b1c",
+      "bytes": 6676
+    },
+    "media/Ring/Goblin.blp": {
+      "sha256": "fe223cf24396c2ae034d8f9b2f5b6e25a31fd02cc05bb5c3201aa87c361e6e3b",
+      "bytes": 6676
+    },
+    "media/Ring/High Elf.blp": {
+      "sha256": "58bf478c20d2fce434dfc28183eee7753e03cb67deaab75258edfe2eab3f360d",
+      "bytes": 6676
+    },
+    "media/Ring/Human.blp": {
+      "sha256": "e61ec2ecb7d877b6734bd7f31373ae04652fe32504cadf07c74ff115be245eb0",
+      "bytes": 6676
+    },
+    "media/Ring/Hunter.blp": {
+      "sha256": "4a5c6b72126ac94e43e16aa18ac6cfc49bff40aadbaf47a298c12a9fe07d8a77",
+      "bytes": 23060
+    },
+    "media/Ring/Mage.blp": {
+      "sha256": "457a59e6d142ea3f2fa296732107ff5b0df7a13b6c57be97f3d72848c005db0e",
+      "bytes": 23060
+    },
+    "media/Ring/Night Elf.blp": {
+      "sha256": "056dab4105e89fcd9646c11ab1966516aef47d489c72ff58c17e246cf7e5e2bd",
+      "bytes": 6676
+    },
+    "media/Ring/Orc.blp": {
+      "sha256": "31deec86c93beec10cf56921a23aff13a3d9052f3041f541c04791bf4deff583",
+      "bytes": 6676
+    },
+    "media/Ring/Paladin.blp": {
+      "sha256": "5be4a44b1f1519a5233a611c8931d5eaad810009cca55c34a12ac5a063ff41d9",
+      "bytes": 23060
+    },
+    "media/Ring/Priest.blp": {
+      "sha256": "7f155a1586c793ca97544933d92fddfcc9eb8cf42663443b6cef0851ab7e2830",
+      "bytes": 23060
+    },
+    "media/Ring/Ring_pfUI.blp": {
+      "sha256": "7b448b1f1059e6237f38e2055ae081f09c3ed52528d880c365ee08952e3a0138",
+      "bytes": 175972
+    },
+    "media/Ring/Ring.blp": {
+      "sha256": "271f462d02d1b8d6ce7850f4992be6aec5084846a45eef95745696c8e6ce8ccd",
+      "bytes": 175972
+    },
+    "media/Ring/Rogue.blp": {
+      "sha256": "90203e80e798ceb589c1908d5ad5a448406ac7d18da70347df440409e20b2ce8",
+      "bytes": 23060
+    },
+    "media/Ring/Shaman.blp": {
+      "sha256": "e42640b45d8737abd8e7e3e85b816bbe3ddf5ec5b4890708f658b7407e486300",
+      "bytes": 23060
+    },
+    "media/Ring/Tauren.blp": {
+      "sha256": "080033c74af29a3b3fecbdc0292c558c13b937fed01ccddf343fb4c02d88199b",
+      "bytes": 6676
+    },
+    "media/Ring/Troll.blp": {
+      "sha256": "5655feb73f2aa33f0a8f95a191de336557bd37156724c0f17625a21468bd54c7",
+      "bytes": 6676
+    },
+    "media/Ring/Undead.blp": {
+      "sha256": "92e1bcb67a0f3529ebb36fc6303464d53c9f21677132a4e313ba3d5d728198a9",
+      "bytes": 6676
+    },
+    "media/Ring/Warlock.blp": {
+      "sha256": "c59b64757df055c650bb87715641e8e7c7245be2328423e88b2f435ca1a2c779",
+      "bytes": 23060
+    },
+    "media/Ring/Warrior.blp": {
+      "sha256": "385d2c0c50f2859d3014386104e65eb0b6c0e3f106405cebbbb7e3ad0e83b518",
+      "bytes": 23060
+    },
+    "README.md": {
+      "sha256": "7a51f5c969efb64e980a05ecbf257f34e519305ab93eba8cf67a1e686cd09713",
+      "bytes": 2059
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

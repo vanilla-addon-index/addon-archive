@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: |cffffff00M|raster |cffffff00C|rontrol |cffffff00P|rrogram |cff40e0d0TW|r
+## Author: |cffadd8e6Gon|r|cffffffffdo|r|cffff7f7fLeon|r
+## Notes: Addon loading control after login
+## SavedVariables: MCP_Config
+MCP-TW.xml
+
+## GitHub: https://github.com/FSuhas/MCP-TW

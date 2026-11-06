@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: Immersion
+## Notes: Hides UI Elements when outside resting zones for more immersion.
+## Author: Stormhand
+## Version: 1.4.1
+## SavedVariables: ImmersionDB
+
+Immersion.lua

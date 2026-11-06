@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Simon3/SmartDebuffCheck",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Simon3",
+    "repo": "SmartDebuffCheck",
+    "name": "SmartDebuffCheck",
+    "url": "https://github.com/Simon3/SmartDebuffCheck",
+    "api": "https://api.github.com/repos/Simon3/SmartDebuffCheck"
+  },
+  "commit": "2e9e292cb56284138fca06038ec26e56c7e46508",
+  "sourceFiles": {
+    "readme.md": {
+      "sha256": "88c506c3439ffd541166911a80e5cb18b539a9b7e673d3071663ff87f2257c18",
+      "bytes": 3561
+    },
+    "SmartDebuffCheck.lua": {
+      "sha256": "09573318cebb7e40bd11286c4f65b816b96f7e77c8f52950b0cfea891d4d1234",
+      "bytes": 19747
+    },
+    "SmartDebuffCheck.toc": {
+      "sha256": "2b308a3730d14176e6064476e8c386f23eac6c1532e399d89cfd8169c61204d0",
+      "bytes": 585
+    },
+    "SmartDebuffCheck.xml": {
+      "sha256": "e80aaeabd35e44a27315b19d4c55d9700d8556ad494a554ff16ade4b25f8f6a4",
+      "bytes": 416
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

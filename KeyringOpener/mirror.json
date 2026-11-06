@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/EinBaum/KeyringOpener",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "KeyringOpener",
+    "name": "KeyringOpener",
+    "url": "https://github.com/EinBaum/KeyringOpener",
+    "api": "https://api.github.com/repos/EinBaum/KeyringOpener"
+  },
+  "commit": "40511af0a994ae284f5057e3cfe3bdee8b41b4ae",
+  "sourceFiles": {
+    "KeyringOpener.lua": {
+      "sha256": "e5ae10eb2cbc6fcdb41f1d35f49aff7c28b3955584a47589886cb0797dfc9db4",
+      "bytes": 261
+    },
+    "KeyringOpener.toc": {
+      "sha256": "e3e6521365ba3c583d98e6db31cf39d5f76d5f284f9cd7b0cfdb396d0578b39c",
+      "bytes": 197
+    },
+    "LICENSE": {
+      "sha256": "7d9e13cdeadf82e6d82489af23877e7073bf1d771f59e8d2248bc8c228e6fe21",
+      "bytes": 1075
+    },
+    "README.md": {
+      "sha256": "d396142fca0ed0160b01689b5a665079e97afd7b1a6666281fac545a0c7de145",
+      "bytes": 105
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

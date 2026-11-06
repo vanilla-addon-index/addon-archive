@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/InstanceTimers",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "InstanceTimers",
+    "name": "InstanceTimers",
+    "url": "https://github.com/MarcelineVQ/InstanceTimers",
+    "api": "https://api.github.com/repos/MarcelineVQ/InstanceTimers"
+  },
+  "commit": "5d4e5535c92aeed47e06e7ee143263931401d96c",
+  "sourceFiles": {
+    "InstanceTimers.lua": {
+      "sha256": "9dab9b884b4e55ac81ee4d1d8e56998738afdcfd0431083a14e92eb466f046b9",
+      "bytes": 6539
+    },
+    "InstanceTimers.toc": {
+      "sha256": "3788f0461520b67ba4392a43e2982e5677777e8db317bdde0bd094fdd53ac9ab",
+      "bytes": 170
+    },
+    "readme.md": {
+      "sha256": "2342d91358726b75f1b8b2f5c3490b5938a502cc1ab3a2f62c282238a011220d",
+      "bytes": 544
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

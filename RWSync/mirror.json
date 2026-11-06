@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/shirsig/rwsync",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "rwsync",
+    "name": "rwsync",
+    "url": "https://github.com/shirsig/rwsync",
+    "api": "https://api.github.com/repos/shirsig/rwsync"
+  },
+  "commit": "798e17d47b24b688e486b23a51d85d2395f609d3",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "e64aa785332f46717981b5f128c45dc1ccf89814649bdf98b57dddea4cdcf84c",
+      "bytes": 1076
+    },
+    "rwsync.lua": {
+      "sha256": "8c0fd28a0980f3a386c8026916762c02744d8d41166d4073d38bbd9d0f2bec1f",
+      "bytes": 1805
+    },
+    "rwsync.toc": {
+      "sha256": "06dc1ce5755611120f589109277ad06e7c99073515d99f38b0500e1ee7d29dd4",
+      "bytes": 145
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

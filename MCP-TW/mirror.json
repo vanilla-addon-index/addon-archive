@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/FSuhas/MCP-TW",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "FSuhas",
+    "repo": "MCP-TW",
+    "name": "MCP-TW",
+    "url": "https://github.com/FSuhas/MCP-TW",
+    "api": "https://api.github.com/repos/FSuhas/MCP-TW"
+  },
+  "commit": "1f5dc1c2de08584fbf5cb6c2fd4bca9a8cc63aa6",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "2b1b0f8460d8035315ca3af9a596a3b6796919c96532a85844decc5ecd152dfe",
+      "bytes": 148
+    },
+    "localization.lua": {
+      "sha256": "51b98834bcd3a85911305e39f813c0a8a5bec65b36ade95bb053a98b560270ba",
+      "bytes": 704
+    },
+    "logo.png": {
+      "sha256": "85d704f081d2b16031b46d2d4aff6ab6d1ce827b88c4ce8d61c46b132d76149a",
+      "bytes": 24301
+    },
+    "logo.tga": {
+      "sha256": "e56ccfaded425552cf59e87a9f05c2e85ee50bbcdf5b7375b98951895ecf44b1",
+      "bytes": 65554
+    },
+    "MCP-TW.lua": {
+      "sha256": "cd9fc4ebbe1475a86a6286426c961b229b5feb69c7a0d7e0966cb289e26413f3",
+      "bytes": 33187
+    },
+    "MCP-TW.toc": {
+      "sha256": "d135afb3c4e5b1e20af3827d4562c8f9eec9214f8622a9227b63f65980ab03a2",
+      "bytes": 297
+    },
+    "MCP-TW.xml": {
+      "sha256": "d7def4bcb80935745cd02da4d44dc9bf57af7ad76be46cfa51ca28c7d3ae0ffa",
+      "bytes": 18057
+    },
+    "README.md": {
+      "sha256": "4bfc71d8f446e3e288501e0c861fe9a522b84f187d2560eba1cde49eecac93e8",
+      "bytes": 3533
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

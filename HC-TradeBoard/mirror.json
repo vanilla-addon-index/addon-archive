@@ -1,0 +1,89 @@
+{
+  "upstream": "https://github.com/MawAddons/HC-TradeBoard",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MawAddons",
+    "repo": "HC-TradeBoard",
+    "name": "HC-TradeBoard",
+    "url": "https://github.com/MawAddons/HC-TradeBoard",
+    "api": "https://api.github.com/repos/MawAddons/HC-TradeBoard"
+  },
+  "commit": "3ee8e0de67fdf30cd0ad730b0419d373e9fe71bd",
+  "sourceFiles": {
+    "Core.lua": {
+      "sha256": "a60be6c4aca50f18ae89244243f123919dfb76558de5c32fa40a978da95a933a",
+      "bytes": 25659
+    },
+    "Features.lua": {
+      "sha256": "bdcf725c665f22b36a8ce5fa5906dbea03aaabf9e97faee3737906c113b99385",
+      "bytes": 10758
+    },
+    "GuildLoot.lua": {
+      "sha256": "912e433852dafeb55ca7f0e0768a88b7f8b9d05e2a65570a7e9ea748194d9041",
+      "bytes": 17501
+    },
+    "HC-Tradeboard.toc": {
+      "sha256": "f56612ba6caa95aecd3c2128c0d6596b2739bab07fccdb44c6db545aa35c6587",
+      "bytes": 285
+    },
+    "MawVersion.lua": {
+      "sha256": "41af026ec319393e66cb56e1148e92c2570186b7bbcc64991aa013ca7ce8f143",
+      "bytes": 8262
+    },
+    "Network.lua": {
+      "sha256": "2e67a1f2791935330faef6b0371b5076d35e8a7b4d350c71f34e9cd16ef078d7",
+      "bytes": 75140
+    },
+    "readme.md": {
+      "sha256": "e10ca33fd2eeea7b96880916f61b8ec75f859f08874efa8f36d74490d2ae9955",
+      "bytes": 12492
+    },
+    "screenshots/browse.png": {
+      "sha256": "9a18a3eaa0ce2f8e2940d2d92317393a637268c93afee34314974c212bfe496e",
+      "bytes": 2533553
+    },
+    "screenshots/my-listings.png": {
+      "sha256": "39b6643958f3b908a1e612912ab300d8953888aa396a82890027918d878f3b34",
+      "bytes": 2564662
+    },
+    "screenshots/professions.png": {
+      "sha256": "74f0a740bb49da6614e86b42994c5ae900283737904a6ef10f2e6ae948c3474e",
+      "bytes": 2565659
+    },
+    "screenshots/trade-chains.png": {
+      "sha256": "5613c3a8fa8c3cd23832e83de177c5a39c14b1b76658e89ba7f48ad298b3db2c",
+      "bytes": 2554897
+    },
+    "tests/browse_dedup_regressions.lua": {
+      "sha256": "5f6cfbbd28bf69e1a0f6c6d6752068ec25ceda45f46d079d6f5d063006cd117a",
+      "bytes": 6673
+    },
+    "tests/data_regressions.lua": {
+      "sha256": "acd2b0d983a4699925c291eecab0b3d7d6be6de1f534ca367cbfb5fdca856019",
+      "bytes": 14886
+    },
+    "tests/guild_loot_smoke.lua": {
+      "sha256": "3a90763387f5c1df76c1063c667d5367b0071f7b6814fb9e1b159c97fd8ea00b",
+      "bytes": 12480
+    },
+    "tests/render_filter_preview.cjs": {
+      "sha256": "dd6c3f97a4bb30a38208b06c17f2b168b39b84976cb3c622e4cda34d8eb63333",
+      "bytes": 1181
+    },
+    "tests/ui_smoke.lua": {
+      "sha256": "a78a0ead224fab8c6e6d2e5bccacee7db47565cce7b022f23d3dc073083c63f7",
+      "bytes": 33221
+    },
+    "tests/world_log_smoke.lua": {
+      "sha256": "b4e4fcc8f8565d248dbcb7490355bb7286128d6bb89ad6dee2a067f94ab146d6",
+      "bytes": 6359
+    },
+    "UI.lua": {
+      "sha256": "57af3f4d71ffa57be29fe02cf23753ad0e4020c30c1a973fba91935a132096da",
+      "bytes": 143736
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

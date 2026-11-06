@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/shirsig/sentry",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "sentry",
+    "name": "sentry",
+    "url": "https://github.com/shirsig/sentry",
+    "api": "https://api.github.com/repos/shirsig/sentry"
+  },
+  "commit": "4632082624c6c20f445f4c4f26af6a9f96238d8b",
+  "sourceFiles": {
+    "data.lua": {
+      "sha256": "e7fd43971ea66a98630a7c54c76594232a869a2b820ab45343d84e511af4f413",
+      "bytes": 15971
+    },
+    "Minimalist.tga": {
+      "sha256": "97976977031766d707a34121ac13c5ab6b7e9d204be2efaa395c717aeb1dc7ab",
+      "bytes": 1304
+    },
+    "README.md": {
+      "sha256": "4b73e12abd0d9ae2f651956febfbac101ede6733c138211c1b507baa64d15c71",
+      "bytes": 614
+    },
+    "sentry.lua": {
+      "sha256": "19718417f2a7907949649c42a84d2d5b54fdd2400574ea2a13d2cf9ba039b7a4",
+      "bytes": 14294
+    },
+    "sentry.toc": {
+      "sha256": "1bf0d8fbfc196d33d685d8f7660facc23f51c5e1eb4f8c8ab6a00a3cdd2251e2",
+      "bytes": 152
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

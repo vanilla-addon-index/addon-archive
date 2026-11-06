@@ -4,7 +4,7 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| InstanceJournal | https://github.com/Arthur-Helias/InstanceJournal | new |
-| InstanceJournal--lightblade | https://octowow.st/git/lightblade/InstanceJournal | new |
+| InstanceJournal | https://github.com/Arthur-Helias/InstanceJournal | mirrored |
+| InstanceJournal--lightblade | https://octowow.st/git/lightblade/InstanceJournal | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

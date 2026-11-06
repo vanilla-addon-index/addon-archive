@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Bergador/KTP3ShackleCounter",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Bergador",
+    "repo": "KTP3ShackleCounter",
+    "name": "KTP3ShackleCounter",
+    "url": "https://github.com/Bergador/KTP3ShackleCounter",
+    "api": "https://api.github.com/repos/Bergador/KTP3ShackleCounter"
+  },
+  "commit": "eb7efedfdcb181f29d69561de1e2d997e873cc09",
+  "sourceFiles": {
+    "KTP3ShackleCounter.lua": {
+      "sha256": "d2735e17279eca5ff815b3a9c3158643a6ec41cd2133cb6739b969f7002bba11",
+      "bytes": 1931
+    },
+    "KTP3ShackleCounter.toc": {
+      "sha256": "3c752c2146451b298b8fc228d3f6d747f3a5b585f50eb6dc3c6093c5c96edf95",
+      "bytes": 245
+    },
+    "README.md": {
+      "sha256": "6f37010f23abfe62b05176824a069e9454a69ac12d36be5d40b0c3796830c12f",
+      "bytes": 443
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

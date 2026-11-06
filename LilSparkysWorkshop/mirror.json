@@ -1,0 +1,66 @@
+{
+  "upstream": "https://github.com/laytya/LilSparkysWorkshop-vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "LilSparkysWorkshop-vanilla",
+    "name": "LilSparkysWorkshop-vanilla",
+    "url": "https://github.com/laytya/LilSparkysWorkshop-vanilla",
+    "api": "https://api.github.com/repos/laytya/LilSparkysWorkshop-vanilla"
+  },
+  "commit": "326db62006d5281b749bb0b3587fd0b977575581",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    ".gitignore.upstream": {
+      "sha256": "eb4c0068b8b821ef36210b02a650102d8ed7f1b5d8c1a4c5d46ad46474827ec8",
+      "bytes": 29
+    },
+    "LilSparkysWorkshop/lilsparkysworkshop.lua": {
+      "sha256": "0683f1a453e883234884081f9264fe1f9b83abd472388157ade55d5a97195683",
+      "bytes": 31370
+    },
+    "LilSparkysWorkshop/LilSparkysWorkshop.toc": {
+      "sha256": "400d99a381e1977fd425ba2260c0847615d50e3bb963a82f714fb940f976616a",
+      "bytes": 452
+    },
+    "LilSparkysWorkshop/lilsparkysworkshop.xml": {
+      "sha256": "4b22f3549f2dd44e715b50c30ecefa0903dca8828c1dd9988be5ce43127f8a6f",
+      "bytes": 14484
+    },
+    "LilSparkysWorkshop/readme.txt": {
+      "sha256": "bcf8e0a83e4478e17e7020b06328d845cf2c28ac5afb77a73a63581bd8e27b57",
+      "bytes": 2847
+    },
+    "README.md": {
+      "sha256": "6e44323736d9e62d237e983815dd0ecfbbab324764023822ed3157d94af15e99",
+      "bytes": 1598
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "186362817": {
+      "tag": "v0.7",
+      "folder": "v0.7--186362817",
+      "assets": {
+        "207786866": {
+          "sha256": "cc677449791bd59262455e182c634d3ad738344b3bc69bf9b50395157b8de96c",
+          "bytes": 10527,
+          "id": "207786866",
+          "name": "LilSparkysWorkshop.v0.7.zip",
+          "url": "https://github.com/laytya/LilSparkysWorkshop-vanilla/releases/download/v0.7/LilSparkysWorkshop.v0.7.zip",
+          "path": "releases/v0.7--186362817/assets/LilSparkysWorkshop.v0.7.zip"
+        }
+      },
+      "source": {
+        "sha256": "cab23f191ff7e4eaa0858b31c0a6e7fc1f6dce658f49b2f40110719f020b6eee",
+        "bytes": 10828,
+        "path": "releases/v0.7--186362817/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/laytya/LilSparkysWorkshop-vanilla/tarball/v0.7"
+      }
+    }
+  }
+}
