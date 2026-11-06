@@ -2,6 +2,7 @@
   "catalogue": "https://raw.githubusercontent.com/vanilla-addon-index/vanilla-addon-index.github.io/snapshot/addons.json",
   "entryType": "addon",
   "listingRoute": "addon",
+  "folderLayout": "alphabetical",
   "archiveTitle": "Addon archive",
   "maxArchiveBytes": 17179869184,
   "maxFileBytes": 2147483648,

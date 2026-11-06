@@ -11,17 +11,20 @@ const json=value=>JSON.stringify(value,null,2)+'\n';
 export async function readJson(file,fallback){try{return JSON.parse(await fs.readFile(file,'utf8'));}catch(e){if(e.code==='ENOENT')return fallback;throw e;}}
 async function write(file,data){await fs.mkdir(path.dirname(file),{recursive:true});await fs.writeFile(file,data);}
 function allocate(name,used,suffix){const base=upstream.safeName(name);let next=base;if(used.has(next.toLowerCase()))next+='--'+upstream.safeName(String(suffix));let n=2;while(used.has(next.toLowerCase()))next=base+'--'+upstream.safeName(String(suffix))+'--'+n++;used.add(next.toLowerCase());return next;}
+function folderGroup(name){const first=[String(name).trim()][0]?.[0]?.toUpperCase();return /^[A-Z]$/.test(first??'')?first:'#';}
+function folderLeaf(folder){return String(folder).replaceAll('\\','/').split('/').at(-1);}
 
 export function reconcile(registry,rows,config){
  if(!Array.isArray(rows)||!rows.length)throw new Error('Empty or invalid catalogue; preserving registry');
  const entryType=config.entryType??'addon';const client=rows.filter(r=>(r.entry_type??'addon')===entryType);if(!client.length)throw new Error(`No ${entryType} entries; refusing to replace registry`);
  const ids=new Set();for(const e of client){if(!Number.isSafeInteger(e.id)||ids.has(e.id)||!e.name||!Array.isArray(e.versions))throw new Error('Invalid or duplicate catalogue entry');ids.add(e.id);}
  const entries=structuredClone(registry.entries??[]);
- const folders=new Set(['docs','.github','.work','readme.md','operations.md','license','config.json','package.json','.gitattributes','.gitignore',...entries.map(e=>e.folder.toLowerCase())]);
+ const folders=new Set(['docs','.github','.work','readme.md','operations.md','license','config.json','package.json','.gitattributes','.gitignore',...entries.map(e=>folderLeaf(e.folder).toLowerCase())]);
+ if(config.folderLayout==='alphabetical')for(const e of entries)e.folder=`${folderGroup(e.name)}/${folderLeaf(e.folder)}`;
  for(const e of entries){e.active=ids.has(e.id);for(const c of e.components)c.active=false;}
  for(const entry of client){
   let e=entries.find(e=>e.id===entry.id);
-  if(!e){e={id:entry.id,name:entry.name,folder:allocate(entry.name,folders,entry.id),components:[]};entries.push(e);}
+  if(!e){const leaf=allocate(entry.name,folders,entry.id);e={id:entry.id,name:entry.name,folder:config.folderLayout==='alphabetical'?`${folderGroup(entry.name)}/${leaf}`:leaf,components:[]};entries.push(e);}
   e.name=entry.name;e.active=true;e.kind=entry.category;e.site=`https://vanilla-addon-index.github.io/${config.listingRoute??'addon'}/${entry.slug}`;
   const excluded=new Set(config.excludedSources?.[String(entry.id)]??[]);
   e.components=e.components.filter(c=>!excluded.has(c.originalUrl));
@@ -83,6 +86,14 @@ export async function copySource(from,to,config,objects){
 function addObject(objects,sha,bytes,config){if(!objects[sha]){const total=Object.values(objects).reduce((a,b)=>a+b,0);if(total+bytes>config.maxArchiveBytes)throw new Error('Archive storage allowance reached; increase maxArchiveBytes after review');objects[sha]=bytes;}}
 async function download(url,dest,config,objects,provider){const data=await provider.request(url,{maxBytes:config.maxFileBytes});const sha=hash(data);addObject(objects,sha,data.length,config);await write(dest,data);return {sha256:sha,bytes:data.length};}
 async function exists(p){try{await fs.access(p);return true;}catch(e){if(e.code==='ENOENT')return false;throw e;}}
+async function relocateEntryFolders(root,previous,next){
+ for(const entry of next.entries){
+  const old=previous.entries?.find(item=>item.id===entry.id);if(!old||old.folder===entry.folder)continue;
+  const from=path.join(root,old.folder),to=path.join(root,entry.folder);if(!await exists(from))continue;
+  if(await exists(to))throw new Error(`Cannot reorganize ${entry.name}: both ${old.folder} and ${entry.folder} exist`);
+  await fs.mkdir(path.dirname(to),{recursive:true});await fs.rename(from,to);
+ }
+}
 function componentDir(root,e,c){return path.join(root,e.folder,c.folder);}
 
 export function selectReleases(releases, scope){
@@ -163,14 +174,17 @@ export async function syncComponent(root,e,c,config,objects,provider=upstream){
 }
 
 export async function render(root,registry){
- const index=[`# ${registry.archiveTitle??'Addon archive'}`,'',`Mirrored source snapshots and the latest published releases for projects in the Vanilla Addon Index ${registry.entryType??'addon'} collection. Upstream Git history is not imported.`,'',`Have a concern about mirrored content or attribution? [Choose the content concern form](https://github.com/vanilla-addon-index/addon-archive/issues/new/choose).`,'','See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.','','| Entry | Kind | Components | Status |','|---|---|---:|---|'];
+ const index=[`# ${registry.archiveTitle??'Addon archive'}`,'',`Mirrored source snapshots and the latest published releases for projects in the Vanilla Addon Index ${registry.entryType??'addon'} collection. Upstream Git history is not imported.`,'','Browse entries in the `#` and `A`–`Z` folders; each folder has an index.','',`Have a concern about mirrored content or attribution? [Choose the content concern form](https://github.com/vanilla-addon-index/addon-archive/issues/new/choose).`,'','See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.','','| Entry | Kind | Components | Status |','|---|---|---:|---|'];
+ const groups=new Map();
  for(const e of registry.entries){
   const lines=[`# ${e.name}`,'',`[Original listing](${e.site}) · ${e.kind} · ${e.active?'Listed':'No longer listed; archive retained'}`,'','| Component | Upstream | Status |','|---|---|---|'];
   for(const c of e.components){const label=c.folder||e.name;lines.push(`| ${label} | ${c.originalUrl} | ${c.status}${c.error?' — '+c.error.replaceAll('|','/'):''} |`);}
   lines.push('','Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.','');
   await write(path.join(root,e.folder,'README.md'),lines.join('\n'));
   const statuses=[...new Set(e.components.map(c=>c.status))].join(', ');index.push(`| [${e.name}](${encodeURI(e.folder)}/) | ${e.kind} | ${e.components.length} | ${statuses} |`);
+  const group=e.folder.includes('/')?e.folder.split('/')[0]:folderGroup(e.name);if(!groups.has(group))groups.set(group,[]);groups.get(group).push(`| [${e.name}](${encodeURI(folderLeaf(e.folder))}/) | ${e.kind} | ${e.components.length} | ${statuses} |`);
  }
+ for(const [group,rows] of groups){await write(path.join(root,group,'README.md'),[`# ${group} addons`,'','| Addon | Kind | Components | Status |','|---|---|---:|---|',...rows,''].join('\n'));}
  index.push('','This repository’s automation is MIT licensed. Mirrored source and release files retain their upstream license notices when provided.','');
  await write(path.join(root,'README.md'),index.join('\n'));
 }
@@ -187,7 +201,7 @@ async function main(){
  const root=process.cwd(),mode=process.argv[2];if(!['initialize','discover','update','verify'].includes(mode))throw new Error('Use initialize, discover, update or verify');
  const config=await readJson(path.join(root,'config.json'));let registry=await readJson(path.join(root,'.github/state/registry.json'),{version:1,entries:[]});
  if(mode==='verify'){console.log(`Verified ${await verify(root,registry)} archived files.`);return;}
- const rows=await upstream.request(config.catalogue,{json:true,maxBytes:30*1024*1024});registry=reconcile(registry,rows,config);registry.archiveTitle=config.archiveTitle??'Addon archive';registry.entryType=config.entryType??'addon';
+ const rows=await upstream.request(config.catalogue,{json:true,maxBytes:30*1024*1024});const previousRegistry=registry;registry=reconcile(registry,rows,config);await relocateEntryFolders(root,previousRegistry,registry);registry.archiveTitle=config.archiveTitle??'Addon archive';registry.entryType=config.entryType??'addon';
  const objects=await readJson(path.join(root,'.github/state/objects.json'),{});await fs.mkdir(path.join(root,'.github/state'),{recursive:true});
  if(mode==='initialize'){await write(path.join(root,'.github/state/registry.json'),json(registry));await write(path.join(root,'.github/state/objects.json'),json(objects));await render(root,registry);console.log(`Prepared ${registry.entries.length} ${registry.entryType} entries.`);return;}
  let failures=0;
