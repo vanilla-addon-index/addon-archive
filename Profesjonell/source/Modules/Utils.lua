@@ -1,0 +1,139 @@
+-- Utils.lua
+-- Helper functions
+-- Ensure the global table exists
+Profesjonell = Profesjonell or {}
+
+if Profesjonell.Log then
+    Profesjonell.Log("Utils.lua loading")
+end
+
+function Profesjonell.GetPlayerName()
+    return UnitName("player")
+end
+
+function Profesjonell.GetGuildName()
+    return GetGuildInfo("player")
+end
+
+local prefixes = {"Recipe: ", "Pattern: ", "Plans: ", "Schematic: ", "Manual: ", "Formula: "}
+function Profesjonell.StripPrefix(s)
+    if not s then return nil end
+    local lowerS = string.lower(s)
+    for _, p in ipairs(prefixes) do
+        local lowerP = string.lower(p)
+        if string.sub(lowerS, 1, string.len(lowerP)) == lowerP then
+            return string.sub(s, string.len(p) + 1)
+        end
+    end
+    return s
+end
+
+-- Removed: IsModern() - all clients are now assumed to be >= 0.34
+
+function Profesjonell.GetItemNameFromLink(link)
+    if not link then return nil end
+    local _, _, name = string.find(link, "%[(.+)%]")
+    return name or link
+end
+
+function Profesjonell.GetIDFromLink(link)
+    if not link then return nil end
+    local _, _, type, id = string.find(link, "|H(%a+):(%d+)")
+    if not type or not id then
+        _, _, type, id = string.find(link, "^(%a+):(%d+)")
+    end
+    if type and id then
+        type = string.lower(type)
+        if type == "item" or type == "i" then type = "i"
+        elseif type == "spell" or type == "s" or type == "enchant" or type == "e" then type = "s"
+        end
+        return type .. ":" .. id
+    end
+    return nil
+end
+
+function Profesjonell.CompareVersions(v1, v2)
+    local _, _, maj1, min1 = string.find(v1 or "0", "(%d+)%.(%d+)")
+    local _, _, maj2, min2 = string.find(v2 or "0", "(%d+)%.(%d+)")
+    
+    maj1, min1 = tonumber(maj1 or v1 or 0), tonumber(min1 or 0)
+    maj2, min2 = tonumber(maj2 or v2 or 0), tonumber(min2 or 0)
+    
+    if maj1 > maj2 then return 1 end
+    if maj1 < maj2 then return -1 end
+    if min1 > min2 then return 1 end
+    if min1 < min2 then return -1 end
+    return 0
+end
+
+function Profesjonell.GetPlayerOffset()
+    local playerOffset = 0
+    local playerName = Profesjonell.GetPlayerName()
+    if playerName then
+        for i=1, string.len(playerName) do
+            playerOffset = math.mod(playerOffset + string.byte(playerName, i), 50)
+        end
+        playerOffset = playerOffset / 100
+    end
+    return playerOffset
+end
+
+function Profesjonell.GetSyncDelay(base, range, priority)
+    base = base or 0.5
+    range = range or 2
+    -- Scale delays based on known addon user count to reduce thundering herd
+    local userCount = Profesjonell.KnownAddonUserCount or 1
+    local userScale = math.min(userCount, 30) / 10 -- 0.1 to 3.0
+    if userScale > 1 then
+        base = base * userScale
+        range = range * userScale
+    end
+    if priority then
+        base = base * 0.5
+        range = range * 0.5
+    end
+    return base + Profesjonell.GetPlayerOffset() + math.random() * range
+end
+
+local classColors = {}
+function Profesjonell.GetClassColor(className)
+    if not next(classColors) and RAID_CLASS_COLORS then
+        for class, color in pairs(RAID_CLASS_COLORS) do
+            local localized = getglobal(class)
+            if localized then
+                classColors[localized] = string.format("%02x%02x%02x", math.floor(color.r*255 + 0.5), math.floor(color.g*255 + 0.5), math.floor(color.b*255 + 0.5))
+            end
+        end
+        -- Fallback for common English names if localized globals aren't what we expect
+        local fallbacks = {
+            ["Warrior"] = "C79C6E", ["Mage"] = "69CCF0", ["Rogue"] = "FFF569",
+            ["Druid"] = "FF7D0A", ["Hunter"] = "ABD473", ["Paladin"] = "F58CBA",
+            ["Priest"] = "FFFFFF", ["Shaman"] = "0070DE", ["Warlock"] = "9482C9"
+        }
+        for k, v in pairs(fallbacks) do
+            if not classColors[k] then classColors[k] = v end
+        end
+    end
+    return classColors[className]
+end
+
+function Profesjonell.ColorizeName(name)
+    if not name then return nil end
+    local class = Profesjonell.GuildRosterCache[name]
+    if class then
+        local color = Profesjonell.GetClassColor(class)
+        if color then
+            return "|cff" .. color .. name .. "|r"
+        end
+    end
+    return name
+end
+
+function Profesjonell.ColorizeList(list)
+    if not list then return nil end
+    local colorized = {}
+    for _, name in ipairs(list) do
+        table.insert(colorized, Profesjonell.ColorizeName(name))
+    end
+    return colorized
+end

@@ -1,0 +1,807 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+	<Script file="COE_Config.lua"/>
+	<Include file="COE_ConfigTemplates.xml"/>
+
+	<Frame name="COE_ConfigFrame" frameStrata="MEDIUM" parent="UIParent" hidden="true" movable="true" enableMouse="true">
+		<Size>
+			<AbsDimension x="482" y="480" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" />
+		</Anchors>
+		<Scripts>
+			<OnLoad>
+				COE_Config:OnFrameLoad();
+			</OnLoad>
+			<OnHide>
+				COE_Config:CloseDialog();
+			</OnHide>
+			<OnDragStart>
+				this:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+			</OnDragStop>
+		</Scripts>
+		<Backdrop name="COE_ConfigFrameBackdrop" bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="COE_ConfigFrameHeader" file="Interface\ChatFrame\ChatFrameTab">
+					<Size>
+						<AbsDimension x="130" y="30" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="28" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="COE_ConfigFrameHeaderText" inherits="GameFontNormal" text="Call Of Elements">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="COE_ConfigFrameHeader" relativePoint="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="-5" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+
+			<!-- Totem tab -->	
+			<CheckButton name="COE_ConfigTotemTab" inherits="COE_ConfigPanelButtonTemplate" checked="true">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="COE_ConfigFrame" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-8" y="-10"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\Icons\INV_Misc_Idol_03.blp"/>
+				<PushedTexture file="Interface\Icons\INV_Misc_Idol_03.blp"/>
+			</CheckButton>
+
+			<Frame name="COE_ConfigTotemTabPanel" inherits="COE_ConfigPanelTemplate">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="COE_ConfigTotemTab" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="-2" y="3"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<!-- master switch for the totem bar -->
+					<CheckButton name="COE_OptionEnableTotemBar" inherits="COE_ConfigCheckButtonTemplate" id="1">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentTitleBox" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="8" y="-3"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</CheckButton>
+
+					<!-- sub panel buttons -->
+					<CheckButton name="COE_ConfigTotemTotemBar" inherits="COE_ConfigSubPanelButtonTemplate" checked="true">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentTitleBox" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-75"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</CheckButton>
+					<CheckButton name="COE_ConfigTotemTotemSets" inherits="COE_ConfigSubPanelButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="COE_ConfigTotemTotemBar" relativePoint="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="5" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</CheckButton>
+					<CheckButton name="COE_ConfigTotemTotemOptions" inherits="COE_ConfigSubPanelButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="COE_ConfigTotemTotemSets" relativePoint="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="5" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</CheckButton>					
+					<CheckButton name="COE_ConfigTotemNotifications" inherits="COE_ConfigSubPanelButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="COE_ConfigTotemTotemOptions" relativePoint="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="5" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</CheckButton>
+					
+					<!-- sub panels -->
+					<Frame name="COE_ConfigTotemTotemBarPanel" inherits="COE_ConfigSubPanelTemplate">
+						<Frames>
+							<CheckButton name="COE_OptionFixBar" inherits="COE_ConfigCheckButtonTemplate" id="12">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="8" y="-8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<CheckButton name="COE_OptionGroupBars" inherits="COE_ConfigCheckButtonTemplate" id="22">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionFixBar" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<CheckButton name="COE_OptionEnableRecallButton" inherits="COE_ConfigCheckButtonTemplate" id="25">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="190" y="-8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<CheckButton name="COE_OptionCtrlClick" inherits="COE_ConfigCheckButtonTemplate" id="31">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionEnableRecallButton" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+
+							<Button name="COE_OptionTTAlignment" inherits="COE_ConfigComboBoxTemplate" id="5">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionGroupBars" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="COE_OptionDisplayMode" inherits="COE_ConfigComboBoxTemplate" id="6">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionTTAlignment" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-15"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="COE_OptionConfigureBar" inherits="COE_ConfigSetButtonTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionDisplayMode" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="8" y="-20"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										COE_Config:ConfigureBar();
+									</OnClick>
+								</Scripts>
+							</Button>
+							<Button name="COE_OptionConfigureOrder" inherits="COE_ConfigSetButtonTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionConfigureBar" relativePoint="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="10" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										COE_Config:ConfigureOrder();
+									</OnClick>
+								</Scripts>
+							</Button>
+
+							<Button name="COE_OptionCurrentFrame" inherits="COE_ConfigComboBoxTemplate" id="15">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionConfigureBar" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="-8" y="-10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="COE_OptionDirection" inherits="COE_ConfigComboBoxTemplate" id="16">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionCurrentFrame" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="COE_OptionFrameMode" inherits="COE_ConfigComboBoxTemplate" id="17">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionDirection" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Slider name="COE_OptionFlexCount" inherits="COE_ConfigSliderTemplate" id="18">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionFrameMode" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="12" y="-20"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Slider>
+
+						</Frames>
+					</Frame>
+
+					<Frame name="COE_ConfigTotemTotemOptionsPanel" inherits="COE_ConfigSubPanelTemplate" hidden="true">
+						<Frames>
+							<CheckButton name="COE_OptionEnableTimers" inherits="COE_ConfigCheckButtonTemplate" id="3">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="8" y="-8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<CheckButton name="COE_OptionEnableTimerFrame" inherits="COE_ConfigCheckButtonTemplate" id="20">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionEnableTimers" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-20"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<CheckButton name="COE_OptionFrameTimersOnly" inherits="COE_ConfigCheckButtonTemplate" id="23">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionEnableTimerFrame" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<Button name="COE_OptionDisplayAlignment" inherits="COE_ConfigComboBoxTemplate" id="7">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionFrameTimersOnly" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="COE_OptionOverrideRank" inherits="COE_ConfigComboBoxTemplate" id="21">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionDisplayAlignment" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-30"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+
+							<Button name="COE_OptionScanTotems" inherits="COE_ConfigSetButtonTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionOverrideRank" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="8" y="-30"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										COE_Totem:Rescan();
+										COE:Message( COESTR_TOTEMSRELOADED );
+									</OnClick>
+								</Scripts>
+							</Button>
+
+							<Slider name="COE_OptionScaling" inherits="COE_ConfigSliderTemplate" id="19">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionScanTotems" relativePoint="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="20" y="-5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnUpdate>
+										if( this.tooltipShown ) then
+											local value = math.floor( COE_Config:GetSaved( COEOPT_SCALING ) * 100 ) / 100;
+											GameTooltip:SetText( value );
+										end
+									</OnUpdate>
+									<OnEnter>
+										GameTooltip:SetOwner( this, "TOPRIGHT" );
+										local value = math.floor( COE_Config:GetSaved( COEOPT_SCALING ) * 100 ) / 100;
+										GameTooltip:SetText( value );
+										this.tooltipShown = true;
+									</OnEnter>
+									<OnLeave>
+										GameTooltip:Hide();
+										this.tooltipShown = false;
+									</OnLeave>
+								</Scripts>
+							</Slider>
+						</Frames>
+					</Frame>
+
+					<Frame name="COE_ConfigTotemTotemSetsPanel" inherits="COE_ConfigSubPanelTemplate" hidden="true">
+						<Frames>
+							<CheckButton name="COE_OptionEnableSets" inherits="COE_ConfigCheckButtonTemplate" id="9">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="8" y="-8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<CheckButton name="COE_OptionEnableForceSets" inherits="COE_ConfigCheckButtonTemplate" id="91">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="190" y="-8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<CheckButton name="COE_OptionEnableDistanceCheck" inherits="COE_ConfigCheckButtonTemplate" id="92">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionEnableForceSets" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<CheckButton name="COE_OptionEnableAutoSwitch" inherits="COE_ConfigCheckButtonTemplate" id="11">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionEnableSets" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<Button name="COE_OptionActiveSet" inherits="COE_ConfigComboBoxTemplate" id="10">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionEnableAutoSwitch" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="COE_OptionConfigureSet" inherits="COE_ConfigSetButtonTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionActiveSet" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-20"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										COE_Config:ConfigureSet();
+									</OnClick>
+								</Scripts>
+							</Button>
+							<Button name="COE_OptionDeleteSet" inherits="COE_ConfigSetButtonTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionConfigureSet" relativePoint="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="10" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										COE_Config:DeleteTotemSet();
+									</OnClick>
+								</Scripts>
+							</Button>
+							<Button name="COE_OptionNewSet" inherits="COE_ConfigSetButtonTemplate" disabled="true">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionConfigureSet" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										COE_Config:NewTotemSet();
+									</OnClick>
+								</Scripts>
+							</Button>
+							<EditBox name="COE_OptionSetName" inherits="COE_ConfigEditTemplate" letters="20">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionNewSet" relativePoint="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="20" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnTextChanged>
+										COE_Config:NewSetTextChanged();
+									</OnTextChanged>
+								</Scripts>
+							</EditBox>
+							
+							<Button name="COE_OptionCastOrder1" inherits="COE_ConfigOrderTemplate" id="1">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionNewSet" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="60" y="-10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button> 
+							<Button name="COE_OptionCastOrder2" inherits="COE_ConfigOrderTemplate" id="2">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionCastOrder1" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button> 
+							<Button name="COE_OptionCastOrder3" inherits="COE_ConfigOrderTemplate" id="3">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionCastOrder2" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button> 
+							<Button name="COE_OptionCastOrder4" inherits="COE_ConfigOrderTemplate" id="4">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionCastOrder3" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Frame name="COE_OptionCastOrderString"> 
+								<Size>
+									<AbsDimension x="100" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionCastOrder2" relativePoint="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="15" y="-13"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="ARTWORK">
+										<FontString name="$parentText" inherits="GameFontNormal"/>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnLoad>
+										COE_Config:OnConfigElementLoad( getglobal( this:GetName() .. "Text" ) );
+									</OnLoad>
+								</Scripts>
+							</Frame>
+
+						</Frames>
+					</Frame>
+
+					<Frame name="COE_ConfigTotemNotificationsPanel" inherits="COE_ConfigSubPanelTemplate" hidden="true">
+						<Frames>
+							<CheckButton name="COE_OptionEnableTimerNotifications" inherits="COE_ConfigCheckButtonTemplate" id="4">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="8" y="-8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<CheckButton name="COE_OptionEnableRecallReminder" inherits="COE_ConfigCheckButtonTemplate" id="24">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionEnableTimerNotifications" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<CheckButton name="COE_OptionAdvisor" inherits="COE_ConfigCheckButtonTemplate" id="8">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionEnableRecallReminder" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<CheckButton name="COE_OptionAdvisorIcon" inherits="COE_ConfigCheckButtonTemplate" id="34">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionAdvisor" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="48" y="16"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<Button name="COE_OptionAdvisorSound" inherits="COE_ConfigComboBoxTemplate" id="30">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="240" y="-74"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<CheckButton name="COE_OptionWeapon" inherits="COE_ConfigCheckButtonTemplate" id="28">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionAdvisor" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<CheckButton name="COE_OptionWeaponIcon" inherits="COE_ConfigCheckButtonTemplate" id="33">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionWeapon" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="48" y="16"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<Button name="COE_OptionWeaponSound" inherits="COE_ConfigComboBoxTemplate" id="29">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionAdvisorSound" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-22" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<CheckButton name="COE_OptionShield" inherits="COE_ConfigCheckButtonTemplate" id="26">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionWeapon" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<CheckButton name="COE_OptionShieldIcon" inherits="COE_ConfigCheckButtonTemplate" id="32">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionShield" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="48" y="16"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<Button name="COE_OptionShieldSound" inherits="COE_ConfigComboBoxTemplate" id="27">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionWeaponSound" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-22"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Frame name="COE_OptionShieldChargesString">
+								<Size>
+									<AbsDimension x="290" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionShield" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="30" y="-10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="ARTWORK">
+										<FontString name="$parentText" inherits="GameFontNormal">
+											<Anchors>
+												<Anchor point="TOPLEFT">
+													<Offset>
+														<AbsDimension x="0" y="-9"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+								<Frames>
+									<EditBox name="COE_OptionShieldCharges" inherits="InputBoxTemplate" autoFocus="false" numeric="true" letters="1" id="35">
+										<Size>
+											<AbsDimension x="20" y="32"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT">
+												<Offset>
+													<AbsDimension x="218" y="0"/>
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnShow>
+												this:SetText( tostring( COE_Config:GetSaved( COEOPT_SHIELDCHARGES ) ) )
+											</OnShow>
+											<OnTextChanged>
+												COE_Config:SetOption( COEOPT_SHIELDCHARGES, tonumber( this:GetText() ) )
+											</OnTextChanged>
+										</Scripts>
+									</EditBox>
+								</Frames>
+								<Scripts>
+									<OnLoad>
+										COE_Config:OnConfigElementLoad( getglobal( this:GetName() .. "Text" ) );
+									</OnLoad>
+								</Scripts>
+							</Frame>
+							<Frame name="COE_ConfigIconHeader">
+								<Size>
+									<AbsDimension x="100" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-230"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="ARTWORK">
+										<FontString name="$parentText" inherits="GameFontHighlight" text="Icon Settings"/>
+									</Layer>
+								</Layers>
+							</Frame>
+							<Slider name="COE_OptionNotifyIconDuration" inherits="COE_ConfigSliderTemplate" id="36">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_ConfigIconHeader" relativePoint="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="0" y="-15"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Slider>
+							<Slider name="COE_OptionNotifyIconSize" inherits="COE_ConfigSliderTemplate" id="37">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionNotifyIconDuration" relativePoint="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="20" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Slider>
+							<Slider name="COE_OptionNotifyIconAlpha" inherits="COE_ConfigSliderTemplate" id="38">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionNotifyIconDuration" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-20"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Slider>
+							<Button name="COE_OptionNotifyIconShow" inherits="COE_ConfigSetButtonTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="COE_OptionNotifyIconAlpha" relativePoint="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="20" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										COE.notify_icon:config_show()
+									</OnClick>
+								</Scripts>
+							</Button>
+						</Frames>
+					</Frame>
+				</Frames>
+			</Frame>
+			
+			<!-- Healing tab -->	
+			<CheckButton name="COE_ConfigHealingTab" inherits="COE_ConfigPanelButtonTemplate" hidden="true">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="COE_ConfigTotemTab" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-5"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\Icons\Spell_Nature_HealingWaveGreater.blp"/>
+				<PushedTexture file="Interface\Icons\Spell_Nature_HealingWaveGreater.blp"/>
+			</CheckButton>
+
+			<Frame name="COE_ConfigHealingTabPanel" hidden="true" inherits="COE_ConfigPanelTemplate">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="COE_ConfigTotemTab" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="-2" y="3"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+
+			<!-- Debuff tab -->	
+			<CheckButton name="COE_ConfigDebuffTab" inherits="COE_ConfigPanelButtonTemplate" hidden="true">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="COE_ConfigHealingTab" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-5"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\Icons\Spell_Nature_NullifyPoison.blp"/>
+				<PushedTexture file="Interface\Icons\Spell_Nature_NullifyPoison.blp"/>
+			</CheckButton>
+
+ 			<Frame name="COE_ConfigDebuffTabPanel" hidden="true" inherits="COE_ConfigPanelTemplate">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="COE_ConfigTotemTab" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="-2" y="3"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+
+			<!-- close button -->
+			<Button name="COE_ConfigClose" inherits="GameMenuButtonTemplate" text="Close">
+				<Anchors>
+					<Anchor point="CENTER" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="20"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this:SetText( COEUI_STRINGS[this:GetName()] );
+					</OnLoad>
+					<OnClick>
+						COE_Config:CloseDialog();
+						PlaySound( "igMainMenuOption" );
+					</OnClick>
+				</Scripts>
+			</Button>
+
+		</Frames>
+	</Frame>
+
+</Ui>

@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: SimpleLvl
+## Notes: Experience Tracker for Vanilla Turtle WoW 1.17
+## Author: Beardedrasta
+## Version: 1.0.0
+## OptionalDeps: pfUI
+## SavedVariables: SLDatastore
+
+SimpleLvl.xml

@@ -4,6 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| TitanWowRadio | https://github.com/Daribon/TitanWowRadio | new |
+| TitanWowRadio | https://github.com/Daribon/TitanWowRadio | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

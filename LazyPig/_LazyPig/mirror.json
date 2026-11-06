@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/Otari98/_LazyPig",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Otari98",
+    "repo": "_LazyPig",
+    "name": "_LazyPig",
+    "url": "https://github.com/Otari98/_LazyPig",
+    "api": "https://api.github.com/repos/Otari98/_LazyPig"
+  },
+  "commit": "2e040b4fa93c8ff1c8895314670b7bfec40e0ef0",
+  "sourceFiles": {
+    "_LazyPig.toc": {
+      "sha256": "0f4299905a63fef3ac37f1e353fc7ee0cd9ab5346aa2c4acf90aa125f8068b05",
+      "bytes": 245
+    },
+    "Bindings.xml": {
+      "sha256": "fdfc3af6039a7b2dcfbea5f59e622f0a8ad9d5c1c3836f400310b4fe382cd90a",
+      "bytes": 370
+    },
+    "LazyPig.lua": {
+      "sha256": "ff866f1f553c110ed1885d2ef8e0c9322e1b4dc5aa8357495f87e56bd6267b4a",
+      "bytes": 64317
+    },
+    "LazyPig.xml": {
+      "sha256": "851c0ac2124dfd410d0a9dbf6726132b89e22168a7eed9e838102249c0503913",
+      "bytes": 1195
+    },
+    "LazyPigKeybindsFrame.lua": {
+      "sha256": "122791eb137165ae335e69bb23da077cb50c7458013ea3c13116965c2018a4c4",
+      "bytes": 5468
+    },
+    "LazyPigMenu.lua": {
+      "sha256": "412500aaeb0471662201bc95bf306848a0ca59f953bfe7bc01ca411ed7fc410a",
+      "bytes": 13619
+    },
+    "Readme.txt": {
+      "sha256": "4c0e97648a9da3afcb69fc51b6b97c574a9034809a44e779761e62f03f95f797",
+      "bytes": 4770
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

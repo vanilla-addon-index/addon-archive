@@ -1,0 +1,69 @@
+{
+  "upstream": "https://github.com/shagu/pfdesktop",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "pfdesktop",
+    "name": "pfdesktop",
+    "url": "https://github.com/shagu/pfdesktop",
+    "api": "https://api.github.com/repos/shagu/pfdesktop"
+  },
+  "commit": "7d65013e01838d96c8750127850da7d517859141",
+  "sourceFiles": {
+    "fonts/Envy-Code-R.ttf": {
+      "sha256": "1b6eeeb2363e77e19e265310d5af35d478f4570b6a61d0fda4638c8214c3632d",
+      "bytes": 89924
+    },
+    "fonts/PT-Sans-Narrow-Bold.ttf": {
+      "sha256": "e69d83bcf5bd647892b4e2b22f5098dabd55c989413513197722fc156fb9f00e",
+      "bytes": 487720
+    },
+    "icons/eventmonitor.tga": {
+      "sha256": "528af939b6a69f4748b9b3109157f730683a07543749460e2e23c200d6e7afc1",
+      "bytes": 4140
+    },
+    "img/close.tga": {
+      "sha256": "1687f87f9545bba213a0dcf736ff068e930dbf90d4051b386dd5d44e5d305c7c",
+      "bytes": 1068
+    },
+    "img/max.tga": {
+      "sha256": "bfeb2f2488491002f6043affc98e0b394f1bfd1afbb1a6e7fc494d07dbf69390",
+      "bytes": 1068
+    },
+    "img/min.tga": {
+      "sha256": "0c898e4d88745a28db9fa70993ecc036efa233aafb5809d2fb5c1e4884726429",
+      "bytes": 1068
+    },
+    "libs/pfWM.lua": {
+      "sha256": "49352ec3c3071833cac3f7f05020c4b8cb9594d6d0daf6a125945870628a7324",
+      "bytes": 7154
+    },
+    "LICENSE": {
+      "sha256": "bcd70ffb5929f7c543d948b45506fb8737c1fdd191e5feb2d1767b4d605709c2",
+      "bytes": 1078
+    },
+    "modules/eventmonitor.lua": {
+      "sha256": "89e57584085efdbf3082500b314261d5667840623ca6cbcde1ddcac304300cc4",
+      "bytes": 4029
+    },
+    "modules/panel.lua": {
+      "sha256": "5f655214fb3806c6516068533c3da66b3d20f4d0f4bcd46c5707b6bbaeeaf5a7",
+      "bytes": 2018
+    },
+    "modules/worldframe.lua": {
+      "sha256": "8e220a8a6d0a45349220e376286676f8845ce2a94d6bb49a834bf892fac9bd51",
+      "bytes": 778
+    },
+    "pfDesktop.lua": {
+      "sha256": "e0354ffc5bee7dc48a91d38ca0d5b3d38712e8b1c774323515ea7657958175dc",
+      "bytes": 594
+    },
+    "pfDesktop.toc": {
+      "sha256": "0bfaa92611bc5a1934371d2783c8e24ea3fdd6ff96fe4be65a24b95c935d1779",
+      "bytes": 313
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

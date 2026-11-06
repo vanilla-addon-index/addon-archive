@@ -1,0 +1,173 @@
+{
+  "upstream": "https://github.com/neimad-mp/PizzaSlices",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "neimad-mp",
+    "repo": "PizzaSlices",
+    "name": "PizzaSlices",
+    "url": "https://github.com/neimad-mp/PizzaSlices",
+    "api": "https://api.github.com/repos/neimad-mp/PizzaSlices"
+  },
+  "commit": "59bcdda1e70a7f3f93362fbe4d0778f6c3e9c867",
+  "sourceFiles": {
+    ".github/FUNDING.yml": {
+      "sha256": "f4e6248fc6c31ae54e5bbc9f2c238d81b7c7315e75b5cc3e199221d258b3a89a",
+      "bytes": 66
+    },
+    ".gitignore.upstream": {
+      "sha256": "d3957c58490771778d7ff36f2ce22c715f5feab41ae35ad1de83dbee3e226d2f",
+      "bytes": 371
+    },
+    "Bindings.xml": {
+      "sha256": "494014916cda9a10d32752f7364c6965a6b240e537d80d82670fe485897db1ca",
+      "bytes": 1651
+    },
+    "img/borderhi.tga": {
+      "sha256": "ec5b03848368bf4c93eef6bae2e8446cbc76979258f6c659068e4b578bd4c182",
+      "bytes": 1866
+    },
+    "img/borderlo.tga": {
+      "sha256": "4d52f6769f7a9ddf0be691cb916e4df4f4e61cba67c2c6007a98fb885d0aaab0",
+      "bytes": 1919
+    },
+    "img/checkboxcheck.tga": {
+      "sha256": "a158da113c693673411571ccf0e98999687d6cad0b656c584100f93ba797661f",
+      "bytes": 204
+    },
+    "img/circle.tga": {
+      "sha256": "b36f583acad612aa44a98f712412eddcd3d49a1f62d399bf565b0bc3ed8b4a32",
+      "bytes": 8164
+    },
+    "img/clear.tga": {
+      "sha256": "1adc898e2b1d03fc0579a6dab3e5ce3a09d715b648caf90576bb7139754bdd03",
+      "bytes": 11573
+    },
+    "img/click.tga": {
+      "sha256": "fb45673f27f72e21985e15037ed1b880f09624da20788099574ab20c11f2d390",
+      "bytes": 51010
+    },
+    "img/close.tga": {
+      "sha256": "10ff2d1f26241a6fc6ca4539cf1f7e464a578e73828da87d0b130ab733cc4892",
+      "bytes": 1068
+    },
+    "img/cross.tga": {
+      "sha256": "534f0adb096b7739fc9f7bbc768a869f3d64629a3477459f9ec10ba90f5caf08",
+      "bytes": 10743
+    },
+    "img/diamond.tga": {
+      "sha256": "68618fd077892047bed9d84fee8282449ceb1c22bcdca466252077c612cb7021",
+      "bytes": 9594
+    },
+    "img/dragndrop.tga": {
+      "sha256": "0bab377f58b6da7fa860ec266ca9ce2c912704115a806f48c1e1adf24e9096f8",
+      "bytes": 55880
+    },
+    "img/glow.tga": {
+      "sha256": "cbf2a65a12822faaad8fa8adc68a2135a58e676f9016715cd19558b0294456ce",
+      "bytes": 87890
+    },
+    "img/iglow.tga": {
+      "sha256": "4c2ac5e5932454f575c4e0dceeeac614861a751b58be49cb0305b882cd2cf1a2",
+      "bytes": 7375
+    },
+    "img/moon.tga": {
+      "sha256": "ab0af029aa2fcfebafd3b3b8028965f4d8d15fda18ceb244be56c5c63db2ac36",
+      "bytes": 7176
+    },
+    "img/nipple.tga": {
+      "sha256": "c0788ae1c432ed2294b427bbf56700dbe5333a741a08e05cca598a767ac681b6",
+      "bytes": 13792
+    },
+    "img/oglow.tga": {
+      "sha256": "ab58429a0025b2976f6aacdedb5130853f184fd186dc6358ef3e57383b071e45",
+      "bytes": 32476
+    },
+    "img/pointer.tga": {
+      "sha256": "4d0310a2af6eb718bc12dd98e1a67d94e76d6d46c37e8b46e6ec2bd97576f815",
+      "bytes": 3810
+    },
+    "img/skull.tga": {
+      "sha256": "f568674a0472a451397610aa1b5ccaced6d9d34bb2ea79684ca0e34719ed6875",
+      "bytes": 10840
+    },
+    "img/square.tga": {
+      "sha256": "5fbac6c24dd1b0b6c688c5fc02be174587a112becb314292d2854f8b461751a3",
+      "bytes": 14288
+    },
+    "img/star.tga": {
+      "sha256": "92c791605bf5b91023c6431d5c7d7bd5940dd49bdf9f2f0b5065ffc4d997d6c4",
+      "bytes": 8494
+    },
+    "img/trash.tga": {
+      "sha256": "e8d907ea8616874de0f6ce5d1b1f4bda2cf0b8d15486b6f8d09ca0f6176a8db2",
+      "bytes": 9559
+    },
+    "img/triangle.tga": {
+      "sha256": "113a08c41923de87a954b438c439da7dcda76e786ebc5fd3e4ec10743af645a1",
+      "bytes": 8952
+    },
+    "LICENSE": {
+      "sha256": "9dfe38085a3a4d98226c3010749f574ca6da44b9bbb9c39625a818b9a89fcffe",
+      "bytes": 1069
+    },
+    "PizzaSlices.toc": {
+      "sha256": "e268a90c5628d3a818ae2d1f80ec6484c86c79cfe21ce4b37b9af2b24688954d",
+      "bytes": 436
+    },
+    "README.md": {
+      "sha256": "959f0494e97f12e6cf1fc12bd048e8808fad9a214ccce3aab84cc318208cc50f",
+      "bytes": 6304
+    },
+    "src/channel.lua": {
+      "sha256": "a86bf9c35da419bec83fcdb281329e954642502974122e9ab45b7fee43a1097b",
+      "bytes": 1123
+    },
+    "src/commands.lua": {
+      "sha256": "5176b802bf26547355c55dd6d648af182e3a505ad0ac0b2a3056cdec12832d36",
+      "bytes": 717
+    },
+    "src/config.lua": {
+      "sha256": "33fc1811594d2e414bdda7edd82b21d76a19fe2da8d8f9423252ab906e861159",
+      "bytes": 672
+    },
+    "src/frame.lua": {
+      "sha256": "b4bffeaaa4b0b45ec19d89e5d5210631ed9697d26f32bbea7bf0e44ad67b8815",
+      "bytes": 18908
+    },
+    "src/macro.lua": {
+      "sha256": "07953f1f8e2f163aa5748347cd9e714a564f7031bf0c885f5eb04623ec6632ee",
+      "bytes": 1272
+    },
+    "src/main.lua": {
+      "sha256": "6a1e76f688217e1419d0a03ebb132fadbfb0a2171894f479e57142b438bea6f3",
+      "bytes": 7841
+    },
+    "src/rings.lua": {
+      "sha256": "9f256f6cf33b090d8c86532baa70720b3f0a0f3647419ea52c506179f95a4249",
+      "bytes": 1931
+    },
+    "src/scanner.lua": {
+      "sha256": "f0fafa0e0ba24f7ad28eaf39d8374a09da73e919b80ea383c4fe6af3728f4012",
+      "bytes": 957
+    },
+    "src/settings.lua": {
+      "sha256": "9c32794dbd999e07dc2a4743266f6774507d44c381fb88da602bb39552eae519",
+      "bytes": 62165
+    },
+    "src/slices.lua": {
+      "sha256": "74ee40cfad0910f32b15184713a9cd4459e3027450f905110e19a948ceeadd46",
+      "bytes": 8050
+    },
+    "src/snowfall.lua": {
+      "sha256": "42abeeda13bd4256c7941b71ceb5450daef0dc089bb6a5d7c66d63abdfcac60a",
+      "bytes": 2548
+    },
+    "src/utils.lua": {
+      "sha256": "d610cae2624b452d03902a0cdd80ec63d15ae5490e254aa59e1a59cdb2a343df",
+      "bytes": 8422
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

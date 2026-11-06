@@ -1,0 +1,133 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/CallOfElements",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "CallOfElements",
+    "name": "CallOfElements",
+    "url": "https://github.com/MarcelineVQ/CallOfElements",
+    "api": "https://api.github.com/repos/MarcelineVQ/CallOfElements"
+  },
+  "commit": "92169c195a253a9158e62989efbc7c4ef1e06433",
+  "sourceFiles": {
+    "CallOfElements/Bindings.xml": {
+      "sha256": "d6cb972f2a9ca2f92aba6686f97f4585fa588f60a8803aba986fc9d8c3562942",
+      "bytes": 3627
+    },
+    "CallOfElements/CallOfElements.lua": {
+      "sha256": "5810cde903f58341bbeb4f4dd71192fee19a4c603465d26b4eb2059693d1daf2",
+      "bytes": 8869
+    },
+    "CallOfElements/CallOfElements.toc": {
+      "sha256": "07b195ec691b5a8b43eac16fffbb93861099cede04bcc6077ce103e749411a21",
+      "bytes": 424
+    },
+    "CallOfElements/CallOfElements.xml": {
+      "sha256": "d66cc25d408d98d808b500f1d07dfb451afc07272d777f717117863627d5ee52",
+      "bytes": 883
+    },
+    "CallOfElements/changes.txt": {
+      "sha256": "c983d8f1158bd75c0dfca6cb56615f285638367d31f00332c834d73cd9fbc6e3",
+      "bytes": 22185
+    },
+    "CallOfElements/Chronos.lua": {
+      "sha256": "c2bf431f7b206ae2703c2b44b33bf6d70c3f754c97af9d13ede31b781806ea5c",
+      "bytes": 25514
+    },
+    "CallOfElements/Chronos.xml": {
+      "sha256": "a9a89b292e982a0a96c010431ab4bb04ba2d6ba0fc4a00e3fee7d1377fc981d0",
+      "bytes": 463
+    },
+    "CallOfElements/COE_Config.lua": {
+      "sha256": "39fec03644e504cb4fb395be060c4bfccb6ba5922a72f4aa8163d5577ec3a459",
+      "bytes": 45224
+    },
+    "CallOfElements/COE_Config.xml": {
+      "sha256": "2bfbeb786b69e656fcf77c7551102816493d1dcb0c6a92dfce98fac5474cd42a",
+      "bytes": 19431
+    },
+    "CallOfElements/COE_ConfigTemplates.xml": {
+      "sha256": "a7cab200f45577f027592fb88d1d2c7015b8a6a8dc42089203b6c1382b44a133",
+      "bytes": 8702
+    },
+    "CallOfElements/COE_Heal.lua": {
+      "sha256": "aa7372ec5c7e0c018490d99fcebf6215dcee8bb0fed373a40920d666cfd24afb",
+      "bytes": 10450
+    },
+    "CallOfElements/COE_Heal.xml": {
+      "sha256": "c533655ab017dc68f0de4cda4018001db859e990895035e60f9546d77b368896",
+      "bytes": 501
+    },
+    "CallOfElements/COE_HealData.lua": {
+      "sha256": "9fd5f205bf41ff63fa583d61cae6b10564aaa9a9942000cc192bba628a616497",
+      "bytes": 4693
+    },
+    "CallOfElements/COE_Totem.xml": {
+      "sha256": "57e362906a8de993e4ae7c3d0a6435de61afb79a525deb7c5fe8a77dddcd4dd5",
+      "bytes": 8528
+    },
+    "CallOfElements/COE_TotemData.lua": {
+      "sha256": "cb87008c2b104ae58582ca3d556bbc4f48b3ec1f4f9b56f2d6f1bdc03382b635",
+      "bytes": 26755
+    },
+    "CallOfElements/COE_TotemLogic.lua": {
+      "sha256": "55b92597a5e68ebb9b8c72c4a51267a5b0c14cfd64a43dd8d6e6aa13bf31e81e",
+      "bytes": 38038
+    },
+    "CallOfElements/COE_TotemVisual.lua": {
+      "sha256": "f7392a4945842a298a902e1b3628dded00d18965ce9dfdb9d55db111c70a7046",
+      "bytes": 52836
+    },
+    "CallOfElements/localization.ch.de.lua": {
+      "sha256": "d11165fc10552e683fa250363ffe8c713191ef6c24f4b6cfca3c597385b82c26",
+      "bytes": 507
+    },
+    "CallOfElements/localization.ch.en.lua": {
+      "sha256": "15bc6800e482ca8412dc059ab5a38ad7236cf11707e6571f9c12c25b89a25ba4",
+      "bytes": 409
+    },
+    "CallOfElements/localization.ch.fr.lua": {
+      "sha256": "749a78f5f47976905a5c5b803dfce2e78477b1386113bab0a8d96cd7c318c9ad",
+      "bytes": 520
+    },
+    "CallOfElements/localization.ch.ru.lua": {
+      "sha256": "49c8f92038c5974627de4ceaec7186a08566b5eaf31245cc788e309488303da7",
+      "bytes": 572
+    },
+    "CallOfElements/Localization.cn.lua": {
+      "sha256": "6632aea8bd8cfba9ddbe5e30a2d17e99a879e8c32c65c3bc076136922bf04d5f",
+      "bytes": 9365
+    },
+    "CallOfElements/Localization.de.lua": {
+      "sha256": "0568843b0a70f71ae8f426dc642c07ac8066bedde60832f276c9754d5b0f712c",
+      "bytes": 10026
+    },
+    "CallOfElements/Localization.fr.lua": {
+      "sha256": "da944747e2af69f68cfe16994b02b63260ffbb4724576b2fb8e9e6612b5f9928",
+      "bytes": 10198
+    },
+    "CallOfElements/Localization.ko.lua": {
+      "sha256": "d9ee0b6d79a6bab654c592b2f08754a1a6b58ccdc9aaf5404c289ad5f6ede7c6",
+      "bytes": 10592
+    },
+    "CallOfElements/Localization.lua": {
+      "sha256": "1c98976e03b214c699a6d560d710800a03c7b454b0dec196ce8a20244228e606",
+      "bytes": 9858
+    },
+    "CallOfElements/Localization.ru.lua": {
+      "sha256": "ab76258b9ba3ef5e046e154c81e8118ab0369e466b3479a09ae1f9245a71bb38",
+      "bytes": 13014
+    },
+    "CallOfElements/readme.txt": {
+      "sha256": "fc2ce1a98e3dd810c889c6b7fa306a40c536682173e45a3c50f554a1e4cf8891",
+      "bytes": 14245
+    },
+    "Readme.md": {
+      "sha256": "24f71c41fb3d5ac657db7e3419cc65ff8b1702b04b5a632d9529d387cbd90865",
+      "bytes": 1536
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,3 @@
+# Exclude these from addon zip downloads
+Images/ export-ignore
+.gitattributes export-ignore

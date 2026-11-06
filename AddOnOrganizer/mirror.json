@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Otari98/AddOnOrganizer",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Otari98",
+    "repo": "AddOnOrganizer",
+    "name": "AddOnOrganizer",
+    "url": "https://github.com/Otari98/AddOnOrganizer",
+    "api": "https://api.github.com/repos/Otari98/AddOnOrganizer"
+  },
+  "commit": "af2a5306d9ab08fafeb7a129ee08cc4956ec49e3",
+  "sourceFiles": {
+    "AddOnOrganizer.lua": {
+      "sha256": "a3ce89b1ffc895d87c6798907aee9a0e75fee00a58e22523aa2e3c23a4c758d3",
+      "bytes": 11990
+    },
+    "AddOnOrganizer.toc": {
+      "sha256": "81992dfe6353b39b684e450c1556009b07438a8cdafdacaaf8f3001b439391a1",
+      "bytes": 244
+    },
+    "AddOnOrganizer.xml": {
+      "sha256": "ece2b10acddee7cf877b93210437bfd6833ebda4cc47ee63f7b1dd45c3d807b9",
+      "bytes": 21382
+    },
+    "Bindings.xml": {
+      "sha256": "4fe5134cafebcd32c570221e8c5ef9d0c8264e12fa83bf84e4eb9305b333be03",
+      "bytes": 146
+    },
+    "Readme.txt": {
+      "sha256": "e9e0c7eb71bea5e7faa55504ef9899c5a512a74255e7de30c81957e0637a0466",
+      "bytes": 3687
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

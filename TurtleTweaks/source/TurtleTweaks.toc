@@ -1,0 +1,45 @@
+## Interface: 11200
+## Title: Turtle Tweaks
+## Author: Mitja Felicijan (mitja.felicijan@gmail.com)
+## Notes: A bunch of tweaks for Vanilla WoW.
+## Version: 0.6
+## SavedVariablesPerCharacter: TurtleTweaksDB
+
+Data\WoWCodexArmor.lua
+Data\WoWCodexWeapons.lua
+
+Core.lua
+
+AlignGrid.lua
+AutoRepair.lua
+CastbarPosition.lua
+ChatArrowKeys.lua
+ChatScrolling.lua
+CompareTooltip.lua
+# CooldownNumbers.lua
+EnvironmentGlow.lua
+ExtendedMacros.lua
+FishingAudio.lua
+FreeBagSlots.lua
+# ItemLevel.lua
+LootAtMouse.lua
+ManaBarColor.lua
+MaxCameraZoom.lua
+MinimapClock.lua
+MiniPlayerFrame.lua
+MouseOverCast.lua
+# NameplatePosition.lua
+NameplateScaling.lua
+OnlyASCII.lua
+RestedXpTooltip.lua
+SellGrayItems.lua
+SoloSelfFound.lua
+
+# In progress or broken.
+# GameplaySmoothness.lua
+# ItemValue.lua
+# ManaEnergyTick.lua
+# FixCastbarVisibility.lua
+
+Settings.lua
+

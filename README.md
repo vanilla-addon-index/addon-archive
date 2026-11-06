@@ -449,56 +449,56 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [MovementTracker](MovementTracker/) | Miscellaneous | 1 | mirrored |
 | [MRE](MRE/) | UI & Appearance | 1 | mirrored |
 | [NBR](NBR/) | Buffs & Debuffs | 1 | mirrored |
-| [Necrosis](Necrosis/) | Class | 2 | new |
-| [NerfedButtons4Wow](NerfedButtons4Wow/) | Action Bars | 1 | new |
-| [Niagara](Niagara/) | Libraries | 1 | new |
-| [NotesUNeed](NotesUNeed/) | Chat & Social | 1 | new |
-| [NoToggle](NoToggle/) | Combat | 1 | new |
-| [NugComboBar](NugComboBar/) | Class | 1 | new |
-| [oCB](oCB/) | Combat | 1 | new |
-| [OmniCC](OmniCC/) | Action Bars | 1 | new |
-| [OnlyASCII](OnlyASCII/) | Chat & Social | 1 | new |
-| [OSHS/OldSchool-HitSplashes](OSHS-OldSchool-HitSplashes/) | UI & Appearance | 1 | new |
-| [PageTurner](PageTurner/) | Miscellaneous | 1 | new |
-| [PartyPlus](PartyPlus/) | Raid & Party | 1 | new |
-| [PerfectShot](PerfectShot/) | Miscellaneous | 1 | new |
-| [PetXPBar](PetXPBar/) | Unit Frames | 1 | new |
-| [pfExtend](pfExtend/) | Quests & Leveling | 2 | new |
-| [pfStudio](pfStudio/) | Miscellaneous | 1 | new |
-| [PicoPoisons](PicoPoisons/) | Class | 1 | new |
-| [Pitty](Pitty/) | Miscellaneous | 1 | new |
-| [PizzaSlices](PizzaSlices/) | Action Bars | 2 | new |
-| [PlayerStates](PlayerStates/) | Macros | 1 | new |
-| [PoisonCharges](PoisonCharges/) | Class | 1 | new |
-| [Possessions](Possessions/) | Bags & Inventory | 1 | new |
-| [Prat](Prat/) | Chat & Social | 1 | new |
-| [PriestBinds](PriestBinds/) | Class | 1 | new |
-| [Profesjonell](Profesjonell/) | Professions | 1 | new |
-| [Pummeler](Pummeler/) | Class | 1 | new |
-| [Punschrulle](Punschrulle/) | UI & Appearance | 1 | new |
-| [Pvpwarn](Pvpwarn/) | PvP | 1 | new |
-| [pwscounter](pwscounter/) | Class | 1 | new |
-| [Quartz3](Quartz3/) | UI & Appearance | 1 | new |
-| [QuestHistory](QuestHistory/) | Quests & Leveling | 1 | new |
-| [QuestSoundBits](QuestSoundBits/) | Quests & Leveling | 1 | new |
-| [QuickBind](QuickBind/) | Action Bars | 1 | new |
-| [QuickChat](QuickChat/) | Chat & Social | 1 | new |
-| [QuickTurtleDBLookUp](QuickTurtleDBLookUp/) | Miscellaneous | 1 | new |
-| [RageTracker](RageTracker/) | Class | 1 | new |
-| [RaidOrganizer](RaidOrganizer/) | Raid & Party | 1 | new |
-| [RaidRollHelper](RaidRollHelper/) | Loot Distribution | 1 | new |
-| [RangeColor](RangeColor/) | Action Bars | 2 | new |
-| [RDX](RDX/) | Unit Frames | 1 | new |
-| [ReagentCounter](ReagentCounter/) | Action Bars | 1 | new |
-| [ReagentData](ReagentData/) | Libraries | 1 | new |
-| [ReckCounter](ReckCounter/) | Class | 1 | new |
-| [RelationshipsDashboard](RelationshipsDashboard/) | UI & Appearance | 1 | new |
-| [RelationshipsJukeBox](RelationshipsJukeBox/) | UI & Appearance | 1 | new |
-| [RelationshipsThreatPlates](RelationshipsThreatPlates/) | Unit Frames | 1 | new |
-| [RenewSpam](RenewSpam/) | Class | 1 | new |
-| [RestBar](RestBar/) | Unit Frames | 1 | new |
-| [Rested](Rested/) | Quests & Leveling | 1 | new |
-| [Retarget](Retarget/) | PvP | 1 | new |
+| [Necrosis](Necrosis/) | Class | 2 | mirrored |
+| [NerfedButtons4Wow](NerfedButtons4Wow/) | Action Bars | 1 | mirrored |
+| [Niagara](Niagara/) | Libraries | 1 | mirrored |
+| [NotesUNeed](NotesUNeed/) | Chat & Social | 1 | mirrored |
+| [NoToggle](NoToggle/) | Combat | 1 | mirrored |
+| [NugComboBar](NugComboBar/) | Class | 1 | mirrored |
+| [oCB](oCB/) | Combat | 1 | mirrored |
+| [OmniCC](OmniCC/) | Action Bars | 1 | mirrored |
+| [OnlyASCII](OnlyASCII/) | Chat & Social | 1 | mirrored |
+| [OSHS/OldSchool-HitSplashes](OSHS-OldSchool-HitSplashes/) | UI & Appearance | 1 | mirrored |
+| [PageTurner](PageTurner/) | Miscellaneous | 1 | mirrored |
+| [PartyPlus](PartyPlus/) | Raid & Party | 1 | mirrored |
+| [PerfectShot](PerfectShot/) | Miscellaneous | 1 | mirrored |
+| [PetXPBar](PetXPBar/) | Unit Frames | 1 | mirrored |
+| [pfExtend](pfExtend/) | Quests & Leveling | 2 | mirrored |
+| [pfStudio](pfStudio/) | Miscellaneous | 1 | mirrored |
+| [PicoPoisons](PicoPoisons/) | Class | 1 | mirrored |
+| [Pitty](Pitty/) | Miscellaneous | 1 | mirrored |
+| [PizzaSlices](PizzaSlices/) | Action Bars | 2 | mirrored |
+| [PlayerStates](PlayerStates/) | Macros | 1 | mirrored |
+| [PoisonCharges](PoisonCharges/) | Class | 1 | mirrored |
+| [Possessions](Possessions/) | Bags & Inventory | 1 | mirrored |
+| [Prat](Prat/) | Chat & Social | 1 | error |
+| [PriestBinds](PriestBinds/) | Class | 1 | mirrored |
+| [Profesjonell](Profesjonell/) | Professions | 1 | mirrored |
+| [Pummeler](Pummeler/) | Class | 1 | mirrored |
+| [Punschrulle](Punschrulle/) | UI & Appearance | 1 | mirrored |
+| [Pvpwarn](Pvpwarn/) | PvP | 1 | mirrored |
+| [pwscounter](pwscounter/) | Class | 1 | mirrored |
+| [Quartz3](Quartz3/) | UI & Appearance | 1 | mirrored |
+| [QuestHistory](QuestHistory/) | Quests & Leveling | 1 | mirrored |
+| [QuestSoundBits](QuestSoundBits/) | Quests & Leveling | 1 | mirrored |
+| [QuickBind](QuickBind/) | Action Bars | 1 | mirrored |
+| [QuickChat](QuickChat/) | Chat & Social | 1 | mirrored |
+| [QuickTurtleDBLookUp](QuickTurtleDBLookUp/) | Miscellaneous | 1 | mirrored |
+| [RageTracker](RageTracker/) | Class | 1 | mirrored |
+| [RaidOrganizer](RaidOrganizer/) | Raid & Party | 1 | mirrored |
+| [RaidRollHelper](RaidRollHelper/) | Loot Distribution | 1 | mirrored |
+| [RangeColor](RangeColor/) | Action Bars | 2 | mirrored |
+| [RDX](RDX/) | Unit Frames | 1 | mirrored |
+| [ReagentCounter](ReagentCounter/) | Action Bars | 1 | mirrored |
+| [ReagentData](ReagentData/) | Libraries | 1 | mirrored |
+| [ReckCounter](ReckCounter/) | Class | 1 | mirrored |
+| [RelationshipsDashboard](RelationshipsDashboard/) | UI & Appearance | 1 | mirrored |
+| [RelationshipsJukeBox](RelationshipsJukeBox/) | UI & Appearance | 1 | mirrored |
+| [RelationshipsThreatPlates](RelationshipsThreatPlates/) | Unit Frames | 1 | mirrored |
+| [RenewSpam](RenewSpam/) | Class | 1 | mirrored |
+| [RestBar](RestBar/) | Unit Frames | 1 | mirrored |
+| [Rested](Rested/) | Quests & Leveling | 1 | mirrored |
+| [Retarget](Retarget/) | PvP | 1 | mirrored |
 | [RezzTimer](RezzTimer/) | Raid & Party | 1 | new |
 | [RogueFocus](RogueFocus/) | Class | 1 | new |
 | [RoguePack](RoguePack/) | Class | 1 | new |
@@ -815,161 +815,161 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [MCP-TW](MCP-TW/) | Miscellaneous | 1 | new |
 | [Meeting](Meeting/) | Chat & Social | 1 | new |
 | [MeleeStats](MeleeStats/) | UI & Appearance | 1 | new |
-| [MessageBox](MessageBox/) | Chat & Social | 1 | new |
-| [MetaHunt](MetaHunt/) | Class | 2 | new |
-| [Metamap](Metamap/) | Map & Minimap | 1 | new |
-| [MiniMage_TWOW](MiniMage_TWOW/) | Class | 1 | new |
-| [MobResist](MobResist/) | Tooltip | 1 | new |
-| [MobResistAndDmg](MobResistAndDmg/) | Tooltip | 1 | new |
-| [MobStats](MobStats/) | Tooltip | 1 | new |
-| [MobsToLevel](MobsToLevel/) | Miscellaneous | 1 | new |
-| [ModUICombatTextStandalone](ModUICombatTextStandalone/) | UI & Appearance | 1 | new |
-| [MonkeySpeed](MonkeySpeed/) | Miscellaneous | 2 | new |
-| [MouseOverSounds](MouseOverSounds/) | Miscellaneous | 1 | new |
-| [MoveAnything](MoveAnything/) | Miscellaneous | 1 | new |
-| [MrPlow](MrPlow/) | Bags & Inventory | 1 | new |
-| [Mule](Mule/) | Bags & Inventory | 1 | new |
-| [MusicExpanded](MusicExpanded/) | Miscellaneous | 2 | new |
-| [MuteCities](MuteCities/) | Miscellaneous | 1 | new |
-| [NameChangeScript](NameChangeScript/) | Miscellaneous | 1 | new |
-| [Nauticus](Nauticus/) | Map & Minimap | 1 | new |
-| [NewLevelFrame](NewLevelFrame/) | UI & Appearance | 1 | new |
-| [Nitro](Nitro/) | Miscellaneous | 1 | new |
-| [NosCursor](NosCursor/) | Miscellaneous | 1 | new |
-| [OctoLatency](OctoLatency/) | Miscellaneous | 1 | new |
-| [OctoPawn](OctoPawn/) | Tooltip | 1 | new |
-| [OoI](OoI/) | Buffs & Debuffs | 1 | new |
-| [Panda](Panda/) | Professions | 1 | new |
-| [Parchment](Parchment/) | Miscellaneous | 1 | new |
-| [PerfBoostSettings](PerfBoostSettings/) | Miscellaneous | 1 | new |
-| [pfDebug](pfDebug/) | Miscellaneous | 1 | new |
-| [pfDesktop](pfDesktop/) | UI & Appearance | 1 | new |
-| [pfUI-autoinvite](pfUI-autoinvite/) | Chat & Social | 1 | new |
-| [pfUI-bettertotems](pfUI-bettertotems/) | UI & Appearance | 1 | new |
-| [pfUI-DQB](pfUI-DQB/) | UI & Appearance | 1 | new |
-| [pfUI-El-Sequito-del-Terror-Edition](pfUI-El-Sequito-del-Terror-Edition/) | Miscellaneous | 1 | new |
-| [pfUI-turtle](pfUI-turtle/) | UI & Appearance | 1 | new |
-| [PingoMatic](PingoMatic/) | Map & Minimap | 1 | new |
-| [PorkNotes](PorkNotes/) | Miscellaneous | 1 | new |
-| [PPBuddy](PPBuddy/) | Class | 1 | new |
-| [Professionquery](Professionquery/) | Professions | 1 | new |
-| [QuestTranslator](QuestTranslator/) | Quests & Leveling | 1 | new |
-| [QuickAssist](QuickAssist/) | Raid & Party | 1 | new |
-| [Rank14losSA](Rank14losSA/) | Combat | 1 | new |
-| [RAT](RAT/) | Raid & Party | 1 | new |
-| [Recap](Recap/) | Combat | 1 | new |
-| [ResurrectionAnnounce](ResurrectionAnnounce/) | Chat & Social | 1 | new |
-| [RightClickModifier](RightClickModifier/) | Miscellaneous | 1 | new |
-| [Rinse](Rinse/) | Buffs & Debuffs | 1 | new |
-| [ScreenResolutionDropdownFix](ScreenResolutionDropdownFix/) | Miscellaneous | 1 | new |
-| [SealTracker](SealTracker/) | Class | 1 | new |
-| [ShaguBam](ShaguBam/) | Miscellaneous | 1 | new |
-| [ShaguBoP](ShaguBoP/) | Bags & Inventory | 1 | new |
-| [ShaguClock](ShaguClock/) | UI & Appearance | 1 | new |
-| [ShaguDelgado](ShaguDelgado/) | Miscellaneous | 1 | new |
-| [ShaguError](ShaguError/) | Miscellaneous | 1 | new |
-| [ShaguMount](ShaguMount/) | Miscellaneous | 1 | new |
-| [ShaguNotify](ShaguNotify/) | Miscellaneous | 1 | new |
-| [ShaguScore](ShaguScore/) | Miscellaneous | 1 | new |
-| [ShaguTweaks](ShaguTweaks/) | Miscellaneous | 3 | new |
-| [ShaguTweaks-extras](ShaguTweaks-extras/) | Miscellaneous | 2 | new |
-| [ShaguTweaksDruidManaBar](ShaguTweaksDruidManaBar/) | Class | 1 | new |
-| [ShaguTweaksMods](ShaguTweaksMods/) | Miscellaneous | 1 | new |
-| [ShaguValue](ShaguValue/) | Tooltip | 1 | new |
-| [ShaguWidget](ShaguWidget/) | Miscellaneous | 1 | new |
-| [ShikaSwap](ShikaSwap/) | Class | 1 | new |
-| [SimpleLvl](SimpleLvl/) | Quests & Leveling | 1 | new |
-| [SimplePowershifts](SimplePowershifts/) | Class | 1 | new |
-| [SleepyPeon](SleepyPeon/) | Quests & Leveling | 1 | new |
-| [SmartRestore](SmartRestore/) | Miscellaneous | 1 | new |
-| [Sniper](Sniper/) | Miscellaneous | 1 | new |
-| [Snowkoban](Snowkoban/) | Miscellaneous | 1 | new |
-| [Sota](Sota/) | Loot Distribution | 1 | new |
-| [SoundBoard](SoundBoard/) | Miscellaneous | 1 | new |
-| [SP_Overpower](SP_Overpower/) | Class | 1 | new |
-| [SP_Revenge](SP_Revenge/) | Class | 1 | new |
-| [SpamSentry](SpamSentry/) | Chat & Social | 1 | new |
-| [SpartanUI_SpinCam](SpartanUI_SpinCam/) | Miscellaneous | 1 | new |
-| [SpiritLinker](SpiritLinker/) | Class | 1 | new |
-| [StealthOverlay](StealthOverlay/) | Class | 1 | new |
-| [StrategosCore](StrategosCore/) | PvP | 1 | new |
-| [Sunderarmor](Sunderarmor/) | Raid & Party | 1 | new |
-| [SunOfTheNight](SunOfTheNight/) | UI & Appearance | 1 | new |
-| [SuperAPI](SuperAPI/) | Miscellaneous | 1 | new |
-| [SVT](SVT/) | Class | 1 | new |
-| [SWStats](SWStats/) | Combat | 1 | new |
-| [T-OoM](T-OoM/) | Chat & Social | 1 | new |
-| [Tactica](Tactica/) | Boss Mods | 1 | new |
-| [Talentsaver](Talentsaver/) | Miscellaneous | 2 | new |
-| [Tankalyze](Tankalyze/) | Miscellaneous | 1 | new |
-| [Tattler](Tattler/) | Chat & Social | 1 | new |
-| [Tframes](Tframes/) | UI & Appearance | 1 | new |
-| [Thaliz](Thaliz/) | Raid & Party | 1 | new |
-| [TimeManager](TimeManager/) | Miscellaneous | 1 | new |
-| [Timers](Timers/) | Miscellaneous | 1 | new |
-| [TimeToDrink](TimeToDrink/) | Chat & Social | 2 | new |
-| [TimeTracker](TimeTracker/) | Miscellaneous | 1 | new |
-| [TitanWowRadio](TitanWowRadio/) | Miscellaneous | 1 | new |
-| [Tmog](Tmog/) | UI & Appearance | 1 | new |
-| [TNENightfall](TNENightfall/) | Class | 1 | new |
-| [ToggleGather](ToggleGather/) | Professions | 1 | new |
-| [TopMeOff](TopMeOff/) | Bags & Inventory | 1 | new |
-| [Totemus](Totemus/) | Class | 1 | new |
-| [TourGuideProfessions](TourGuideProfessions/) | Professions | 1 | new |
-| [ToxicTagger](ToxicTagger/) | Miscellaneous | 1 | new |
-| [TrackingMenu](TrackingMenu/) | UI & Appearance | 1 | new |
-| [TrackTarget](TrackTarget/) | Map & Minimap | 1 | new |
-| [TradeDispenser](TradeDispenser/) | Class | 1 | new |
-| [TriviaBotTurtle](TriviaBotTurtle/) | Chat & Social | 1 | new |
-| [TurtleCalendar](TurtleCalendar/) | UI & Appearance | 1 | new |
-| [TurtleTweaks](TurtleTweaks/) | Miscellaneous | 1 | new |
-| [TWBuyPoisons](TWBuyPoisons/) | Class | 1 | new |
-| [Twister](Twister/) | Class | 1 | new |
-| [TWTrans](TWTrans/) | Chat & Social | 1 | new |
-| [UnifiedTalentGuides](UnifiedTalentGuides/) | Miscellaneous | 1 | new |
-| [Vamper](Vamper/) | Class | 1 | new |
-| [VanillaRatingBuster](VanillaRatingBuster/) | Tooltip | 1 | new |
-| [VanillaStorylineVisualNovel](VanillaStorylineVisualNovel/) | UI & Appearance | 1 | new |
-| [VGSmartUnbuff](VGSmartUnbuff/) | Buffs & Debuffs | 1 | new |
-| [VitalWatch](VitalWatch/) | Chat & Social | 2 | new, unsupported |
-| [VoidBattle](VoidBattle/) | PvP | 1 | new |
-| [WarriorCombatManager](WarriorCombatManager/) | Class | 1 | new |
-| [WFW](WFW/) | Miscellaneous | 1 | new |
-| [WhoDidIt](WhoDidIt/) | Boss Mods | 2 | new |
-| [WhoFavorites](WhoFavorites/) | Miscellaneous | 1 | new |
-| [WhoKicksNow](WhoKicksNow/) | Class | 1 | new |
-| [WhoList_Fix](WhoList_Fix/) | Miscellaneous | 1 | new |
-| [WIM](WIM/) | Chat & Social | 1 | new |
-| [WowLuaVanilla](WowLuaVanilla/) | Libraries | 1 | new |
-| [XiaoMount](XiaoMount/) | Miscellaneous | 1 | new |
-| [XToLevel-Classic](XToLevel-Classic/) | Quests & Leveling | 1 | new |
-| [YAHTTurtle.](YAHTTurtle/) | Class | 1 | new |
-| [ZeroDB](ZeroDB/) | Miscellaneous | 1 | new |
-| [ZGTracker](ZGTracker/) | Bags & Inventory | 1 | new |
-| [ZonesLevel](ZonesLevel/) | Map & Minimap | 1 | new |
-| [_Nameplates](_Nameplates/) | Unit Frames | 1 | new |
-| [AddOnOrganizer](AddOnOrganizer/) | Miscellaneous | 1 | new |
-| [Atlas](Atlas/) | Raid & Party | 2 | new |
-| [AtlasLoot](AtlasLoot/) | Raid & Party | 2 | new |
-| [AtlasQuest](AtlasQuest/) | Raid & Party | 1 | new |
-| [BigWigs](BigWigs/) | Boss Mods | 4 | new |
-| [CallOfElements](CallOfElements/) | Class | 4 | new |
-| [Chronometer](Chronometer/) | Combat | 2 | new |
-| [DiscordActionBars](DiscordActionBars/) | Action Bars | 2 | new |
-| [DPSMate](DPSMate/) | Combat | 2 | new |
-| [FishingBuddy](FishingBuddy/) | Professions | 3 | new |
-| [FuBar](FuBar/) | UI & Appearance | 2 | new |
-| [ImprovedErrorFrame](ImprovedErrorFrame/) | Miscellaneous | 1 | new |
-| [ItemRack](ItemRack/) | Bags & Inventory | 2 | new |
-| [KLHThreatMeter(KTM)](KLHThreatMeter(KTM)/) | Combat | 1 | new |
-| [KuiNameplates](KuiNameplates/) | Unit Frames | 2 | new |
-| [LazyPig](LazyPig/) | Miscellaneous | 3 | new |
-| [LunaUnitFrames](LunaUnitFrames/) | Unit Frames | 2 | new |
-| [MikScrollingBattleText(MSBT)](MikScrollingBattleText(MSBT)/) | Combat | 5 | new |
-| [MinimapButtonBag](MinimapButtonBag/) | Map & Minimap | 2 | new |
-| [NotGrid](NotGrid/) | Unit Frames | 3 | new |
-| [oRA2](oRA2/) | Raid & Party | 1 | new |
-| [PallyPower-Turtle](PallyPower-Turtle/) | Class | 3 | new, mirrored |
+| [MessageBox](MessageBox/) | Chat & Social | 1 | mirrored |
+| [MetaHunt](MetaHunt/) | Class | 2 | mirrored |
+| [Metamap](Metamap/) | Map & Minimap | 1 | mirrored |
+| [MiniMage_TWOW](MiniMage_TWOW/) | Class | 1 | mirrored |
+| [MobResist](MobResist/) | Tooltip | 1 | mirrored |
+| [MobResistAndDmg](MobResistAndDmg/) | Tooltip | 1 | mirrored |
+| [MobStats](MobStats/) | Tooltip | 1 | mirrored |
+| [MobsToLevel](MobsToLevel/) | Miscellaneous | 1 | mirrored |
+| [ModUICombatTextStandalone](ModUICombatTextStandalone/) | UI & Appearance | 1 | mirrored |
+| [MonkeySpeed](MonkeySpeed/) | Miscellaneous | 2 | mirrored |
+| [MouseOverSounds](MouseOverSounds/) | Miscellaneous | 1 | mirrored |
+| [MoveAnything](MoveAnything/) | Miscellaneous | 1 | mirrored |
+| [MrPlow](MrPlow/) | Bags & Inventory | 1 | mirrored |
+| [Mule](Mule/) | Bags & Inventory | 1 | mirrored |
+| [MusicExpanded](MusicExpanded/) | Miscellaneous | 2 | mirrored |
+| [MuteCities](MuteCities/) | Miscellaneous | 1 | mirrored |
+| [NameChangeScript](NameChangeScript/) | Miscellaneous | 1 | mirrored |
+| [Nauticus](Nauticus/) | Map & Minimap | 1 | mirrored |
+| [NewLevelFrame](NewLevelFrame/) | UI & Appearance | 1 | mirrored |
+| [Nitro](Nitro/) | Miscellaneous | 1 | mirrored |
+| [NosCursor](NosCursor/) | Miscellaneous | 1 | mirrored |
+| [OctoLatency](OctoLatency/) | Miscellaneous | 1 | mirrored |
+| [OctoPawn](OctoPawn/) | Tooltip | 1 | mirrored |
+| [OoI](OoI/) | Buffs & Debuffs | 1 | mirrored |
+| [Panda](Panda/) | Professions | 1 | mirrored |
+| [Parchment](Parchment/) | Miscellaneous | 1 | mirrored |
+| [PerfBoostSettings](PerfBoostSettings/) | Miscellaneous | 1 | mirrored |
+| [pfDebug](pfDebug/) | Miscellaneous | 1 | mirrored |
+| [pfDesktop](pfDesktop/) | UI & Appearance | 1 | mirrored |
+| [pfUI-autoinvite](pfUI-autoinvite/) | Chat & Social | 1 | mirrored |
+| [pfUI-bettertotems](pfUI-bettertotems/) | UI & Appearance | 1 | mirrored |
+| [pfUI-DQB](pfUI-DQB/) | UI & Appearance | 1 | mirrored |
+| [pfUI-El-Sequito-del-Terror-Edition](pfUI-El-Sequito-del-Terror-Edition/) | Miscellaneous | 1 | mirrored |
+| [pfUI-turtle](pfUI-turtle/) | UI & Appearance | 1 | mirrored |
+| [PingoMatic](PingoMatic/) | Map & Minimap | 1 | mirrored |
+| [PorkNotes](PorkNotes/) | Miscellaneous | 1 | mirrored |
+| [PPBuddy](PPBuddy/) | Class | 1 | mirrored |
+| [Professionquery](Professionquery/) | Professions | 1 | mirrored |
+| [QuestTranslator](QuestTranslator/) | Quests & Leveling | 1 | mirrored |
+| [QuickAssist](QuickAssist/) | Raid & Party | 1 | mirrored |
+| [Rank14losSA](Rank14losSA/) | Combat | 1 | mirrored |
+| [RAT](RAT/) | Raid & Party | 1 | mirrored |
+| [Recap](Recap/) | Combat | 1 | mirrored |
+| [ResurrectionAnnounce](ResurrectionAnnounce/) | Chat & Social | 1 | mirrored |
+| [RightClickModifier](RightClickModifier/) | Miscellaneous | 1 | mirrored |
+| [Rinse](Rinse/) | Buffs & Debuffs | 1 | mirrored |
+| [ScreenResolutionDropdownFix](ScreenResolutionDropdownFix/) | Miscellaneous | 1 | mirrored |
+| [SealTracker](SealTracker/) | Class | 1 | mirrored |
+| [ShaguBam](ShaguBam/) | Miscellaneous | 1 | mirrored |
+| [ShaguBoP](ShaguBoP/) | Bags & Inventory | 1 | mirrored |
+| [ShaguClock](ShaguClock/) | UI & Appearance | 1 | mirrored |
+| [ShaguDelgado](ShaguDelgado/) | Miscellaneous | 1 | mirrored |
+| [ShaguError](ShaguError/) | Miscellaneous | 1 | mirrored |
+| [ShaguMount](ShaguMount/) | Miscellaneous | 1 | mirrored |
+| [ShaguNotify](ShaguNotify/) | Miscellaneous | 1 | mirrored |
+| [ShaguScore](ShaguScore/) | Miscellaneous | 1 | mirrored |
+| [ShaguTweaks](ShaguTweaks/) | Miscellaneous | 3 | error, mirrored |
+| [ShaguTweaks-extras](ShaguTweaks-extras/) | Miscellaneous | 2 | mirrored |
+| [ShaguTweaksDruidManaBar](ShaguTweaksDruidManaBar/) | Class | 1 | mirrored |
+| [ShaguTweaksMods](ShaguTweaksMods/) | Miscellaneous | 1 | mirrored |
+| [ShaguValue](ShaguValue/) | Tooltip | 1 | mirrored |
+| [ShaguWidget](ShaguWidget/) | Miscellaneous | 1 | mirrored |
+| [ShikaSwap](ShikaSwap/) | Class | 1 | mirrored |
+| [SimpleLvl](SimpleLvl/) | Quests & Leveling | 1 | mirrored |
+| [SimplePowershifts](SimplePowershifts/) | Class | 1 | mirrored |
+| [SleepyPeon](SleepyPeon/) | Quests & Leveling | 1 | mirrored |
+| [SmartRestore](SmartRestore/) | Miscellaneous | 1 | mirrored |
+| [Sniper](Sniper/) | Miscellaneous | 1 | mirrored |
+| [Snowkoban](Snowkoban/) | Miscellaneous | 1 | mirrored |
+| [Sota](Sota/) | Loot Distribution | 1 | mirrored |
+| [SoundBoard](SoundBoard/) | Miscellaneous | 1 | mirrored |
+| [SP_Overpower](SP_Overpower/) | Class | 1 | mirrored |
+| [SP_Revenge](SP_Revenge/) | Class | 1 | mirrored |
+| [SpamSentry](SpamSentry/) | Chat & Social | 1 | mirrored |
+| [SpartanUI_SpinCam](SpartanUI_SpinCam/) | Miscellaneous | 1 | mirrored |
+| [SpiritLinker](SpiritLinker/) | Class | 1 | mirrored |
+| [StealthOverlay](StealthOverlay/) | Class | 1 | mirrored |
+| [StrategosCore](StrategosCore/) | PvP | 1 | mirrored |
+| [Sunderarmor](Sunderarmor/) | Raid & Party | 1 | mirrored |
+| [SunOfTheNight](SunOfTheNight/) | UI & Appearance | 1 | mirrored |
+| [SuperAPI](SuperAPI/) | Miscellaneous | 1 | mirrored |
+| [SVT](SVT/) | Class | 1 | mirrored |
+| [SWStats](SWStats/) | Combat | 1 | mirrored |
+| [T-OoM](T-OoM/) | Chat & Social | 1 | mirrored |
+| [Tactica](Tactica/) | Boss Mods | 1 | mirrored |
+| [Talentsaver](Talentsaver/) | Miscellaneous | 2 | mirrored |
+| [Tankalyze](Tankalyze/) | Miscellaneous | 1 | mirrored |
+| [Tattler](Tattler/) | Chat & Social | 1 | mirrored |
+| [Tframes](Tframes/) | UI & Appearance | 1 | mirrored |
+| [Thaliz](Thaliz/) | Raid & Party | 1 | mirrored |
+| [TimeManager](TimeManager/) | Miscellaneous | 1 | mirrored |
+| [Timers](Timers/) | Miscellaneous | 1 | mirrored |
+| [TimeToDrink](TimeToDrink/) | Chat & Social | 2 | mirrored |
+| [TimeTracker](TimeTracker/) | Miscellaneous | 1 | mirrored |
+| [TitanWowRadio](TitanWowRadio/) | Miscellaneous | 1 | mirrored |
+| [Tmog](Tmog/) | UI & Appearance | 1 | mirrored |
+| [TNENightfall](TNENightfall/) | Class | 1 | mirrored |
+| [ToggleGather](ToggleGather/) | Professions | 1 | mirrored |
+| [TopMeOff](TopMeOff/) | Bags & Inventory | 1 | mirrored |
+| [Totemus](Totemus/) | Class | 1 | mirrored |
+| [TourGuideProfessions](TourGuideProfessions/) | Professions | 1 | mirrored |
+| [ToxicTagger](ToxicTagger/) | Miscellaneous | 1 | mirrored |
+| [TrackingMenu](TrackingMenu/) | UI & Appearance | 1 | mirrored |
+| [TrackTarget](TrackTarget/) | Map & Minimap | 1 | mirrored |
+| [TradeDispenser](TradeDispenser/) | Class | 1 | mirrored |
+| [TriviaBotTurtle](TriviaBotTurtle/) | Chat & Social | 1 | mirrored |
+| [TurtleCalendar](TurtleCalendar/) | UI & Appearance | 1 | mirrored |
+| [TurtleTweaks](TurtleTweaks/) | Miscellaneous | 1 | mirrored |
+| [TWBuyPoisons](TWBuyPoisons/) | Class | 1 | mirrored |
+| [Twister](Twister/) | Class | 1 | mirrored |
+| [TWTrans](TWTrans/) | Chat & Social | 1 | mirrored |
+| [UnifiedTalentGuides](UnifiedTalentGuides/) | Miscellaneous | 1 | mirrored |
+| [Vamper](Vamper/) | Class | 1 | mirrored |
+| [VanillaRatingBuster](VanillaRatingBuster/) | Tooltip | 1 | mirrored |
+| [VanillaStorylineVisualNovel](VanillaStorylineVisualNovel/) | UI & Appearance | 1 | mirrored |
+| [VGSmartUnbuff](VGSmartUnbuff/) | Buffs & Debuffs | 1 | mirrored |
+| [VitalWatch](VitalWatch/) | Chat & Social | 2 | mirrored, unsupported |
+| [VoidBattle](VoidBattle/) | PvP | 1 | mirrored |
+| [WarriorCombatManager](WarriorCombatManager/) | Class | 1 | mirrored |
+| [WFW](WFW/) | Miscellaneous | 1 | mirrored |
+| [WhoDidIt](WhoDidIt/) | Boss Mods | 2 | mirrored |
+| [WhoFavorites](WhoFavorites/) | Miscellaneous | 1 | mirrored |
+| [WhoKicksNow](WhoKicksNow/) | Class | 1 | mirrored |
+| [WhoList_Fix](WhoList_Fix/) | Miscellaneous | 1 | mirrored |
+| [WIM](WIM/) | Chat & Social | 1 | mirrored |
+| [WowLuaVanilla](WowLuaVanilla/) | Libraries | 1 | mirrored |
+| [XiaoMount](XiaoMount/) | Miscellaneous | 1 | mirrored |
+| [XToLevel-Classic](XToLevel-Classic/) | Quests & Leveling | 1 | mirrored |
+| [YAHTTurtle.](YAHTTurtle/) | Class | 1 | mirrored |
+| [ZeroDB](ZeroDB/) | Miscellaneous | 1 | mirrored |
+| [ZGTracker](ZGTracker/) | Bags & Inventory | 1 | mirrored |
+| [ZonesLevel](ZonesLevel/) | Map & Minimap | 1 | mirrored |
+| [_Nameplates](_Nameplates/) | Unit Frames | 1 | mirrored |
+| [AddOnOrganizer](AddOnOrganizer/) | Miscellaneous | 1 | mirrored |
+| [Atlas](Atlas/) | Raid & Party | 2 | mirrored |
+| [AtlasLoot](AtlasLoot/) | Raid & Party | 2 | mirrored |
+| [AtlasQuest](AtlasQuest/) | Raid & Party | 1 | mirrored |
+| [BigWigs](BigWigs/) | Boss Mods | 4 | mirrored |
+| [CallOfElements](CallOfElements/) | Class | 4 | mirrored |
+| [Chronometer](Chronometer/) | Combat | 2 | mirrored |
+| [DiscordActionBars](DiscordActionBars/) | Action Bars | 2 | mirrored |
+| [DPSMate](DPSMate/) | Combat | 2 | mirrored |
+| [FishingBuddy](FishingBuddy/) | Professions | 3 | mirrored |
+| [FuBar](FuBar/) | UI & Appearance | 2 | mirrored |
+| [ImprovedErrorFrame](ImprovedErrorFrame/) | Miscellaneous | 1 | mirrored |
+| [ItemRack](ItemRack/) | Bags & Inventory | 2 | mirrored |
+| [KLHThreatMeter(KTM)](KLHThreatMeter(KTM)/) | Combat | 1 | mirrored |
+| [KuiNameplates](KuiNameplates/) | Unit Frames | 2 | mirrored |
+| [LazyPig](LazyPig/) | Miscellaneous | 3 | mirrored |
+| [LunaUnitFrames](LunaUnitFrames/) | Unit Frames | 2 | mirrored |
+| [MikScrollingBattleText(MSBT)](MikScrollingBattleText(MSBT)/) | Combat | 5 | mirrored |
+| [MinimapButtonBag](MinimapButtonBag/) | Map & Minimap | 2 | mirrored |
+| [NotGrid](NotGrid/) | Unit Frames | 3 | mirrored |
+| [oRA2](oRA2/) | Raid & Party | 1 | mirrored |
+| [PallyPower-Turtle](PallyPower-Turtle/) | Class | 3 | mirrored |
 | [PostalReturned](PostalReturned/) | Auction & Economy | 1 | mirrored |
 | [PowerAuras](PowerAuras/) | Buffs & Debuffs | 1 | mirrored |
 | [Quickcall](Quickcall/) | PvP | 1 | mirrored |

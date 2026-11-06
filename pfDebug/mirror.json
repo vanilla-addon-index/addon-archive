@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/shagu/pfDebug",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "pfDebug",
+    "name": "pfDebug",
+    "url": "https://github.com/shagu/pfDebug",
+    "api": "https://api.github.com/repos/shagu/pfDebug"
+  },
+  "commit": "6f305a9b141cead0d2d141e81dc4e860db3acbbc",
+  "sourceFiles": {
+    "analyzer.jpg": {
+      "sha256": "8e0fd052a340afc1d1d068f90f199b3bbb054873364011dbee8170a9300dd0f3",
+      "bytes": 106320
+    },
+    "analyzer.lua": {
+      "sha256": "64193347122f140e2b555905b6a6534dadf39dde7b962580a593a38c1a51211e",
+      "bytes": 14053
+    },
+    "LICENSE": {
+      "sha256": "72a72be6995634837be9bb9cd33ffff83efabe1de5bc361eabad1b0add7adeec",
+      "bytes": 1062
+    },
+    "pfDebug.lua": {
+      "sha256": "cffff1c11cea7a301554385b9e11c0cbff9fa5004af5dadb41cecafe3f553b38",
+      "bytes": 4173
+    },
+    "pfDebug.toc": {
+      "sha256": "1cad56ba08be1d46fd48858f8f114fbfbfd443dc2e790bc7b041ac32c357e295",
+      "bytes": 229
+    },
+    "README.md": {
+      "sha256": "97b63e4f705630197765410ae0c8fe45f91677a02651d3086adc3b1ec63b93d5",
+      "bytes": 480
+    },
+    "widget.jpg": {
+      "sha256": "9a2c964ca6f01ed8a0b7eba39d335434982993b5d1a8ad6e596c714b4a1c1749",
+      "bytes": 25944
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

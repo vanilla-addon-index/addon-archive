@@ -1,0 +1,57 @@
+{
+  "upstream": "https://github.com/0ldi/RangeColor",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "0ldi",
+    "repo": "RangeColor",
+    "name": "RangeColor",
+    "url": "https://github.com/0ldi/RangeColor",
+    "api": "https://api.github.com/repos/0ldi/RangeColor"
+  },
+  "commit": "86e303f1d97b0355010ed3a010bb7c611eb90112",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "RangeColor/Bindings.xml": {
+      "sha256": "3e6117f27fbf7376b7cb30b2109142a326565218ad7a376ee5c19498c676c4f5",
+      "bytes": 117
+    },
+    "RangeColor/localization.lua": {
+      "sha256": "bc52dbc33ab0824fec399ec6bd3430ac017bd0e28513a89afcae5aaa0d262a28",
+      "bytes": 8927
+    },
+    "RangeColor/RangeColor.lua": {
+      "sha256": "82cb8303c7bce6fa98f3ac49064baf09785743e68baf1f0ecf4bdfdb847430b4",
+      "bytes": 21658
+    },
+    "RangeColor/RangeColor.toc": {
+      "sha256": "c17203068386c70c0443fd1799ec10dff8bdb886a59312bf83a3a8dee6b5817c",
+      "bytes": 320
+    },
+    "RangeColor/RangeColor.xml": {
+      "sha256": "01438b798464f4fd0ffadbf4bb918eb34a0f715319020fdb5dc206af7dfe51cd",
+      "bytes": 425
+    },
+    "RangeColor/RangeColorOptions.lua": {
+      "sha256": "fe77d5774b0320c1074145ed68af991bbb0fa04675a06a1e268312c99ed7228e",
+      "bytes": 9269
+    },
+    "RangeColor/RangeColorOptions.xml": {
+      "sha256": "555ea048a9905a639a30023cc7601d18dfc2d882ce733f7c4168cdb03fbb0629",
+      "bytes": 20871
+    },
+    "RangeColor/readme.txt": {
+      "sha256": "a96a0c67c141751e2608872df3959596448724d5dd2ce8241049fefe700afb73",
+      "bytes": 519
+    },
+    "README.md": {
+      "sha256": "4635acbcaed494d138d56f1d54e790ecbdcb15548ae1e8793e160f14d94a9d49",
+      "bytes": 469
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

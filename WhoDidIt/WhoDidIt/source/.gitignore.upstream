@@ -1,0 +1,13 @@
+# the updater's temporary folders (tools\EmbedUpdate.ps1)
+/Chronicle.new/
+/Chronicle.old/
+/RollFor.new/
+/RollFor.old/
+/DopingControl.new/
+/DopingControl.old/
+# older versions downloaded the raid packs here (they ship in PackData.lua now)
+/Marks/
+# the website's upload address and key (tools\Website-Export.ps1): this PC only
+/tools/website.json
+# the Noto fonts tools\FontSubset.ps1 downloads (the subsets it makes are in Fonts\)
+/tools/.fontcache/

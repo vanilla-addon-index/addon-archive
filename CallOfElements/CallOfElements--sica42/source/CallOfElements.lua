@@ -1,0 +1,388 @@
+--[[
+
+	CALL OF ELEMENTS
+	The All-In-One Shaman Addon
+
+	by Wyverex (2006)
+        by laytya (2018-2022)
+							by Sica(2025-)
+]]
+
+---@class NotificationIcon: Frame
+---@field state "SHOW"|"HOLD"|"HIDE"|"DONE"|"CONFIG"
+---@field elapsedTime number
+
+---@class TotemRank
+---@field SpellID number
+---@field Mana number
+---@field Duration number
+---@field Health number
+---@field Cooldown number
+
+---@class COE
+---@field name string
+---@field pfUISkinEnabled boolean
+---@field Initialized boolean
+---@field hasSuperwow boolean
+---@field DebugMode boolean
+---@field ConfigureBarMode boolean
+---@field ConfigureOrderMode boolean
+---@field ConfigureSetsMode boolean
+---@field UpdateInterval number
+---@field ForceUpdate number
+---@field AdvisorInterval number
+---@field AdvisorWarningInterval number
+---@field RecallReminderInterval number
+---@field RecallReminded boolean
+---@field WeaponCheckInterval number
+---@field WeaponEnchant string|nil
+---@field WeaponCurrent string|nil
+---@field Shields table<string, string>
+---@field activeShield string|nil
+---@field shieldWarning integer|nil
+---@field LastActiveSet string
+---@field ActiveTotems table<TotemElement, Totem>
+---@field MaxTotems table<TotemElement, number>
+---@field CleansingTotems table<string, CleansingTotem>
+---@field TotemsAvailable table<TotemElement, number>
+---@field TotemPendings table<Totem, TotemPending>
+---@field TotemPending TotemPending
+---@field TotemData table<number, Totem>
+---@field TotemTicks table<string, number>
+---@field TotemCount number
+---@field NoTotem Totem
+---@field SetCycle SetCycle
+---@field TotemSets table<number, table>
+---@field TotemSetCount number
+---@field Init fun( self: COE )
+---@field OnEvent fun( self: COE, event: string )
+---@field Message fun( self: COE, msg: string )
+---@field DebugMessage fun( self: COE, msg: string )
+---@field Notification fun( self: COE, msg: string, color: number, alarm: integer?, icon: string? )
+---@field ToggleConfigFrame fun( self: COE )
+---@field DisplayShellCommands fun( self: COE )
+---@field FixSavedVariables fun( self: COE )
+
+---@type COE
+COE = COE or {}
+
+---@diagnostic disable-next-line: undefined-global
+COE.hasSuperwow = SetAutoloot and true or false
+COE.name = "CallOfElements"
+
+COE_VERSION = GetAddOnMetadata( COE.name, "Version" )
+
+COECOL_TOTEMWARNING = 1;
+COECOL_TOTEMDESTROYED = 2;
+COECOL_TOTEMCLEANSING = 3;
+
+--[[ ----------------------------------------------------------------
+	When DebugMode is set to true, all DebugMessage calls will
+	write a debug message into the chat frame
+-------------------------------------------------------------------]]
+COE[ "DebugMode" ] = false;
+
+
+--[[ ----------------------------------------------------------------
+	These variables control frame updates
+	UpdateInterval sets the interval in seconds after which a
+	frame is updated
+	ForceUpdate can be used as input into Update handlers to force
+	an update regardless of the current timer
+-------------------------------------------------------------------]]
+COE[ "UpdateInterval" ] = 0.1;
+COE[ "ForceUpdate" ] = COE.UpdateInterval * 2;
+
+
+--[[ ----------------------------------------------------------------
+	The AdvisorInterval controls how often the party/raid is
+	scanned for debuffs that are curable by totems
+	The AdvisorWarningInterval controls how often the player is
+	notified about existing debuffs
+-------------------------------------------------------------------]]
+COE[ "AdvisorInterval" ] = 1;
+COE[ "AdvisorWarningInterval" ] = 7;
+
+COE[ "RecallReminderInterval" ] = 1;
+COE[ "WeaponCheckInterval" ] = 1;
+
+--[[ ----------------------------------------------------------------
+	METHOD: COE:Init
+
+	PURPOSE: Loads submodules and initializes data
+-------------------------------------------------------------------]]
+function COE:Init()
+	-- load only for shamans
+	-- ----------------------
+	local _, EnglishClass = UnitClass( "player" );
+	if (EnglishClass ~= "SHAMAN") then
+		COE.Initialized = false;
+	else
+		COE.Initialized = true;
+		this:RegisterEvent( "VARIABLES_LOADED" );
+		this:RegisterEvent( "PLAYER_LOGIN")
+		if COE.hasSuperwow then
+			this:RegisterEvent( "UNIT_MODEL_CHANGED" );
+		end
+
+		-- register shell command
+		-- -----------------------
+		SlashCmdList[ "COE" ] = COEProcessShellCommand;
+		SLASH_COE1 = "/coe";
+	end
+end
+
+--[[ ----------------------------------------------------------------
+	METHOD: COE:OnEvent
+
+	PURPOSE: Handles frame events
+-------------------------------------------------------------------]]
+function COE:OnEvent( event )
+	if (event == "VARIABLES_LOADED") then
+		-- fix saved variables if this update has to do so
+		-- ------------------------------------------------
+		COE:FixSavedVariables();
+	elseif event == "UNIT_MODEL_CHANGED" then
+		if arg1 then
+			if not UnitIsUnit( arg1 .. "owner", "player" ) then return end
+
+			local _, _, totem_name = string.find( UnitName( arg1 ) or "", "^(.- Totem)" )
+			if not totem_name then return end
+
+			for element, totem in COE.ActiveTotems do
+				if totem.SpellName == totem_name then
+					COE.ActiveTotems[ element ].guid = arg1
+					break
+				end
+			end
+		end
+	elseif event == "PLAYER_LOGIN" then
+		---@type NotifyIcon
+		COE.notify_icon = COE.NotifyIcon.new()
+
+		if COE.Initialized then
+			COE:Message( "Call of Elements v" .. COE_VERSION .. " loaded: /coe" );
+		else
+			COE:Message( COESTR_NOTASHAMAN );
+		end
+
+		if IsAddOnLoaded( "pfUI" ) and pfUI and pfUI.api and pfUI.env and pfUI.env.C then
+			COE.pfUISkinEnabled = true
+			pfUI:RegisterSkin( COE.name, "vanilla", function()
+				if pfUI.env.C.disabled and pfUI.env.C.disabled[ "skin_RaidCalendar" ] == "1" then
+					COE.pfUISkinEnabled = false
+				end
+			end )
+		end
+		if COE.pfUISkinEnabled then
+			COE_Config:pfUISkin()
+		end
+	end
+end
+
+--[[ ----------------------------------------------------------------
+	METHOD: COE:Message
+
+	PURPOSE: Adds a message to the default chat frame
+-------------------------------------------------------------------]]
+function COE:Message( msg )
+	DEFAULT_CHAT_FRAME:AddMessage( "[COE] " .. msg, 0.93, 0.83, 0.45 );
+end;
+
+--[[ ----------------------------------------------------------------
+	METHOD: COE:DebugMessage
+
+	PURPOSE: Adds a debug message to the default chat frame if
+		debug mode is enabled
+-------------------------------------------------------------------]]
+function COE:DebugMessage( msg )
+	if (COE.DebugMode) then
+		DEFAULT_CHAT_FRAME:AddMessage( "[COE] " .. msg, 0.5, 0.5, 0.5 );
+	end
+end;
+
+--[[ ----------------------------------------------------------------
+	METHOD: COE:Notification
+
+	PURPOSE: Adds a message to the error frame in the upper
+		screen center
+-------------------------------------------------------------------]]
+function COE:Notification( msg, color, alarm, icon )
+	local col;
+
+	-- choose color
+	-- -------------
+	if (color == COECOL_TOTEMWARNING) then
+		col = { r = 0, g = 0.6, b = 1 };
+	elseif (color == COECOL_TOTEMDESTROYED) then
+		col = { r = 1, g = 0.4, b = 0 };
+	elseif (color == COECOL_TOTEMCLEANSING) then
+		col = { r = 0, g = 1, b = 0.4 };
+	else
+		col = { r = 1, g = 1, b = 1 };
+	end
+
+	-- add message
+	-- ------------
+	UIErrorsFrame:AddMessage( msg, col.r, col.g, col.b, 1.0, UIERRORS_HOLD_TIME );
+
+	-- play alarm sound
+	-- -----------------
+	if alarm and alarm > 1 then
+		PlaySoundFile( COE.Sounds[ alarm ].File );
+	end
+
+	-- show icon
+	-- ----------
+	if icon then
+		COE.notify_icon.show( icon );
+	end
+end;
+
+--[[ ----------------------------------------------------------------
+	METHOD: COE:ToggleConfigFrame
+
+	PURPOSE: Toggles the configuration dialog
+-------------------------------------------------------------------]]
+function COE:ToggleConfigFrame()
+	if (COE_ConfigFrame:IsVisible()) then
+		COE_Config:CloseDialog()
+	else
+		COE_ConfigFrame:Show();
+	end
+
+	PlaySound( "igMainMenuOption" );
+end
+
+--[[ ----------------------------------------------------------------
+	METHOD: COEProcessShellCommand
+
+	PURPOSE: Executes the entered shell command
+-------------------------------------------------------------------]]
+---@param command string
+function COEProcessShellCommand( command )
+	local _, _, msg, arg = string.find( command, "(%S*)%s?(.*)" )
+
+	if (msg == "" or msg == "config") then
+		COE:ToggleConfigFrame();
+	elseif (msg == "list" or msg == "help") then
+		COE:DisplayShellCommands();
+	elseif (msg == "nextset") then
+		COE_Totem:SwitchToNextSet();
+	elseif (msg == "priorset") then
+		COE_Totem:SwitchToPriorSet();
+	elseif (msg == "throwset" or msg == "forcethrowset") then
+		COE_Totem:ThrowSet( arg, msg == "forcethrowset" );
+	elseif (msg == "restartset") then
+		COE_Totem:ResetSetCycle();
+	elseif (msg == "reset") then
+		COE_Totem:ResetTimers();
+	elseif (msg == "reload") then
+		COE_Totem:Rescan();
+	elseif (msg == "resetframes") then
+		COE_Totem:ResetFrames();
+	elseif (msg == "advised") then
+		COE_Totem:ThrowAdvisedTotem();
+	elseif (msg == "resetordering") then
+		COE_DisplayedTotems = {};
+		COE_Totem:Rescan();
+	elseif (msg == "bestheal") then
+		COE_Heal:BestHeal();
+	elseif (msg == "battleheal") then
+		COE_Heal:BattleHeal();
+	elseif (msg == "set") then
+		if (arg) then
+			COE_Totem:SwitchToSet( arg );
+		end
+	end
+end
+
+--[[ ----------------------------------------------------------------
+	METHOD: COE:DisplayShellCommands
+
+	PURPOSE: Shows a list of all shell commands
+-------------------------------------------------------------------]]
+function COE:DisplayShellCommands()
+	COE:Message( COESHELL_INTRO );
+	COE:Message( COESHELL_CONFIG );
+	COE:Message( COESHELL_LIST );
+	COE:Message( COESHELL_NEXTSET );
+	COE:Message( COESHELL_PRIORSET );
+	COE:Message( COESHELL_SET );
+	COE:Message( COESHELL_RESTARTSET );
+	COE:Message( COESHELL_RESET );
+	COE:Message( COESHELL_RESETFRAMES );
+	COE:Message( COESHELL_RESETORDERING );
+	COE:Message( COESHELL_RELOAD );
+	COE:Message( COESHELL_MACRONOTE );
+	COE:Message( COESHELL_THROWSET );
+	COE:Message( COESHELL_FORCETHROWSET );
+	COE:Message( COESHELL_ADVISED );
+end
+
+--[[ ----------------------------------------------------------------
+	METHOD: COE:FixSavedVariables
+
+	PURPOSE: If this addon version is higher than the one in
+		the saved variables, check if we have to fix the
+		saved variables due to fixed bugs
+-------------------------------------------------------------------]]
+function COE:FixSavedVariables()
+	-- is the version stored in the saved variables?
+	-- ----------------------------------------------
+	if (not COE_Config:GetSaved( COEOPT_VERSION )) then
+		-- this is version <= v1.6
+		-- ------------------------
+		COE_Config:SetOption( COEOPT_VERSION, 1.6 );
+	end
+
+	local version = COE_Config:GetSaved( COEOPT_VERSION );
+
+	if (version == 1.6) then
+		-- fix localized cast order in 1.7
+		-- --------------------------------
+		COE:Fix_CastOrderLocalization();
+
+		COE:Message( COESTR_UDATEDSAVED .. "1.7" );
+		COE_Config:SetOption( COEOPT_VERSION, 1.7 );
+		version = COE_Config:GetSaved( COEOPT_VERSION );
+	end
+
+	if (version == 1.7) then
+		-- fix cast order again to due to a typo
+		-- --------------------------------------
+		COE:Fix_CastOrderLocalization();
+
+		COE:Message( COESTR_UDATEDSAVED .. "1.8" );
+		COE_Config:SetOption( COEOPT_VERSION, 1.8 );
+		version = COE_Config:GetSaved( COEOPT_VERSION );
+	end
+
+	-- fix totem set element strings
+	-- ------------------------------
+	COE:Fix_CastOrderLocalization2();
+
+	COE_Config:SetOption( COEOPT_VERSION, 2.1 );
+
+	-- Cosmos support
+	if (EarthFeature_AddButton) then
+		EarthFeature_AddButton(
+			{
+				id = BINDING_HEADER_CALLOFELEMENTS,
+				name = BINDING_HEADER_CALLOFELEMENTS,
+				subtext = "Version: " .. COE_VERSION,
+				tooltip = "",
+				icon = "Interface\\Icons\\INV_Misc_Idol_03",
+				callback = COE.ToggleConfigFrame,
+				test = nil,
+			} )
+	elseif (Cosmos_RegisterButton) then
+		Cosmos_RegisterButton( BINDING_HEADER_CALLOFELEMENTS, BINDING_HEADER_CALLOFELEMENTS, COE_VERSION, "Interface\\Icons\\INV_Misc_Idol_03", COE_ToggleConfigFrame );
+	end
+
+	-- Set Totemic Recall button position if missing
+	-- ----------------------------------------------
+	if not COEFramePositions.TotemicRecall then
+		COEFramePositions.TotemicRecall = { x = 0, y = 0 }
+	end
+end

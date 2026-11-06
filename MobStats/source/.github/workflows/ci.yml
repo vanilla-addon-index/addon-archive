@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  stylua:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install StyLua
+      run: |
+        curl -sSL https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux-x86_64.zip -o stylua.zip
+        unzip stylua.zip -d /usr/local/bin
+        chmod +x /usr/local/bin/stylua
+
+    - name: Check formatting
+      run: make stylua
+
+  luacheck:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Lua 5.1 and LuaRocks
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y lua5.1 luarocks
+
+    - name: Install luacheck
+      run: sudo luarocks install luacheck
+
+    - name: Run luacheck
+      run: make luacheck
+
+  emmylua-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: true
+
+    - name: Install emmylua_check
+      run: |
+        curl -sSL https://github.com/EmmyLuaLs/emmylua-analyzer-rust/releases/download/0.20.0/emmylua_check-linux-x64.tar.gz -o emmylua_check.tar.gz
+        tar xzf emmylua_check.tar.gz -C /usr/local/bin
+        chmod +x /usr/local/bin/emmylua_check
+
+    - name: Run emmylua_check
+      run: make emmylua-check
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Lua 5.1 and LuaRocks
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y lua5.1 luarocks
+
+    - name: Install dependencies
+      run: |
+        sudo luarocks install luaunit
+        sudo luarocks install luacov
+
+    - name: Run tests
+      run: make test

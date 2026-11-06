@@ -1,0 +1,9 @@
+{
+  "id": "44",
+  "tag": "A",
+  "name": "V1.1",
+  "body": "## Changes\r\n\r\n### General\r\n- Removed the empty `## Dependencies:` and `## OptionalDeps:` entries from the `.toc` file to prevent the client from reporting missing dependencies.\r\n\r\n### Relationships Dashboard\r\n\r\n#### Buff & Enchant Support\r\n- Improved enchant detection to recognize additional Turtle WoW / OctoWoW enchant descriptions, including:\r\n  - `+X Spell Damage and Healing`\r\n  - `+X to Healing Spells`\r\n  - `+X to Healing`\r\n  - `Damage Bonus: X` (Sharpening Stones & Weightstones)\r\n\r\n- Expanded world buff parsing to correctly recognize bonuses from:\r\n  - Rallying Cry of the Dragonslayer\r\n  - Warchief's Blessing\r\n  - Songflower Serenade\r\n  - Dire Maul Tribute (DMT) buffs\r\n  - Generic spell damage/healing bonus effects (`Increases damage and healing done by magical spells and effects by up to X`)\r\n\r\n- Improved Spell Power and Healing Power fallbacks so these values are displayed correctly even when Turtle WoW's `GetSpellBonusDamage()` or `GetSpellBonusHealing()` APIs do not return data.\r\n\r\n### Notes\r\n- No changes were required for player stat calculations. The player panel already uses Blizzard APIs (`UnitStat`, `UnitAttackPower`, `UnitDamage`, `UnitArmor`, `GetSpellBonusDamage`, etc.), which automatically include buffs, world buffs, and enchants. or GetSpellBonusHealing() APIs do not return data.",
+  "published": "2026-07-20T11:41:26Z",
+  "prerelease": false,
+  "url": "https://octowow.st/git/Relationship/RelationshipsDashboard/releases/tag/A"
+}

@@ -1,0 +1,50 @@
+{
+  "upstream": "https://github.com/Road-block/RageTracker",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "RageTracker",
+    "name": "RageTracker",
+    "url": "https://github.com/Road-block/RageTracker",
+    "api": "https://api.github.com/repos/Road-block/RageTracker"
+  },
+  "commit": "caede7e5c6acf6bc118e45323dd7996c46cc89e7",
+  "sourceFiles": {
+    "RageTracker.lua": {
+      "sha256": "f888c03f0c3f64770b30ba737dd957c64266fbe2ec572aebeb833b705b3d2a1a",
+      "bytes": 1768
+    },
+    "RageTracker.toc": {
+      "sha256": "1a5b5e6e87a9273891f19882e6f4dd4ef47223b8777d857659a145d52b79fe1b",
+      "bytes": 173
+    },
+    "RageTracker.xml": {
+      "sha256": "0b9f3091eb998fcca981dc12922da055428f5bde6c8e83c2706580ceca004220",
+      "bytes": 2539
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "4151006": {
+      "tag": "1.0.0m",
+      "folder": "1.0.0m--4151006",
+      "assets": {
+        "2323542": {
+          "sha256": "53690034548a34d3336697ad8b9eccc846c15069aa5c109d81b21624f7b47d2f",
+          "bytes": 2231,
+          "id": "2323542",
+          "name": "RageTracker-1.0.0m-11200.zip",
+          "url": "https://github.com/Road-block/RageTracker/releases/download/1.0.0m/RageTracker-1.0.0m-11200.zip",
+          "path": "releases/1.0.0m--4151006/assets/RageTracker-1.0.0m-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "cde57ef8457f6f854e0d0cde331a7bf6df1a7dc994e1925b38ba4b5e81c37a7c",
+        "bytes": 1734,
+        "path": "releases/1.0.0m--4151006/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/RageTracker/tarball/1.0.0m"
+      }
+    }
+  }
+}

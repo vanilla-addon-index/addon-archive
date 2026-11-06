@@ -1,0 +1,281 @@
+{
+  "upstream": "https://github.com/Zerf/SW_Stats-Vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Zerf",
+    "repo": "SW_Stats-Vanilla",
+    "name": "SW_Stats-Vanilla",
+    "url": "https://github.com/Zerf/SW_Stats-Vanilla",
+    "api": "https://api.github.com/repos/Zerf/SW_Stats-Vanilla"
+  },
+  "commit": "c000f0ddf31f5bfaa1511c5b15af7c56f24beb4f",
+  "sourceFiles": {
+    "FuBar_SWStatsFu/changelog-r15869.txt": {
+      "sha256": "b1bf6b01442db102503119d82eebafc3a79c8d2efcf1fa9b67ef638c2a00944c",
+      "bytes": 1647
+    },
+    "FuBar_SWStatsFu/FuBar_SWStatsFu.toc": {
+      "sha256": "f62c58e494d6d6358d3b3cb0dfc11942c73675f51bc3e95a9b018e206113bebc",
+      "bytes": 612
+    },
+    "FuBar_SWStatsFu/icon.tga": {
+      "sha256": "227f6c9d68982b0b31e89f6ff4b62fd5d2a524de0199fc6a1c3175623dca5d0a",
+      "bytes": 16428
+    },
+    "FuBar_SWStatsFu/libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "40a66d396b0d974c825ade2c48e71cd141efa582edd68346ed7697e56dfa58e5",
+      "bytes": 46475
+    },
+    "FuBar_SWStatsFu/libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "2456e593be577cdd8340cd0edc1fce94926a1f9e7dee7f26798bf8b3128dbf06",
+      "bytes": 83748
+    },
+    "FuBar_SWStatsFu/SWStatsFu.lua": {
+      "sha256": "2aa14b75b306df42e4da0b9bcc7038d238db28f65e67b4672acd85b351a4d4d3",
+      "bytes": 3718
+    },
+    "FuBar_SWStatsFu/SWStatsFuLocals.lua": {
+      "sha256": "e5d9bf3e260680b47770aa3f3eee8a350c0741daa429440a136d9ede045d7350",
+      "bytes": 2283
+    },
+    "README.md": {
+      "sha256": "d298747d90878aba798ab0bdb1e6681d086099b1454d4ff01f69a4fc9d52be16",
+      "bytes": 2079
+    },
+    "SW_FixLogStrings/FixLogStrings.lua": {
+      "sha256": "a1c11c8c90b5a0e1da2efab3a08e12ad36dac1ddbd23ecd08fb0d0b2e331e524",
+      "bytes": 1672
+    },
+    "SW_FixLogStrings/SW_FixLogStrings.toc": {
+      "sha256": "06fb45c9b85724f6f93bf26b4d6cbf98a48c23058e621762c4626f2e066b89ee",
+      "bytes": 302
+    },
+    "SW_Stats/Bindings.xml": {
+      "sha256": "13bbba7d51d1b96a2c1cd78d589b2a218c7423f9fc55c9b0e1047022e89cf6d4",
+      "bytes": 2117
+    },
+    "SW_Stats/images/b1.tga": {
+      "sha256": "891891be795bb8c35fcb78f6e11763fb26c4bff17d30e959f8e9df4db9aeb393",
+      "bytes": 8236
+    },
+    "SW_Stats/images/b10.tga": {
+      "sha256": "7a2f1532b62f9d467ddd16702a14d5b840ad9d1babec7bc6252ffbc5b9c20fd3",
+      "bytes": 6188
+    },
+    "SW_Stats/images/b11.tga": {
+      "sha256": "8448d6b32c68bd1a93bd77a945c5492ca09080c0c0dde97b445d8fcc58e1765e",
+      "bytes": 8236
+    },
+    "SW_Stats/images/b12.tga": {
+      "sha256": "d1a5156b9c2dcaff270390d53f52a1ea36422b6019ab4f55e3403929d8d75e90",
+      "bytes": 8236
+    },
+    "SW_Stats/images/b13.tga": {
+      "sha256": "5a5deac548c4639de44db55ed79a6784bba95fc8286e7a4e7235ea7da24e19c3",
+      "bytes": 32812
+    },
+    "SW_Stats/images/b2.tga": {
+      "sha256": "da316f59d129ad8458082f83f925ccb4ca455071b129bdd21e4d6adc86714880",
+      "bytes": 6188
+    },
+    "SW_Stats/images/b3.tga": {
+      "sha256": "5bf478e5878f91a958f2d604152fc888588ccb5bf7d7370f1015281323068ca6",
+      "bytes": 6188
+    },
+    "SW_Stats/images/b4.tga": {
+      "sha256": "c137ee5eaf847a108252ddbff551407255ae62ed351dfd1b146196d0ef517f6b",
+      "bytes": 6188
+    },
+    "SW_Stats/images/b5.tga": {
+      "sha256": "edaf9012c8064188fd200e88bc84d3cfaab3a57cb5d259b1371edbf7532ac3f1",
+      "bytes": 6188
+    },
+    "SW_Stats/images/b6.tga": {
+      "sha256": "8bd07b7fbe43437928eb4c83464b909395cf669f6ff560a21b4e5dc994555ad1",
+      "bytes": 6188
+    },
+    "SW_Stats/images/b7.tga": {
+      "sha256": "5010e314d3572086538f686986582c3e5ad6ef4ff9d5fc3e18e24f4c280bab9f",
+      "bytes": 6188
+    },
+    "SW_Stats/images/b8.tga": {
+      "sha256": "0db4faeaf945164b63b53080fe2e8a811fc6c7f30d09ff48633c3920bfa01350",
+      "bytes": 6188
+    },
+    "SW_Stats/images/b9.tga": {
+      "sha256": "c1903732217941fcab9d1de4ac2ad454e647433c69d07033d76b9df7a10522ff",
+      "bytes": 6188
+    },
+    "SW_Stats/images/back.tga": {
+      "sha256": "9935d98cb8260cffb59acdc3f626498f95ef158ab9222a2b96d1f9d77ac287b8",
+      "bytes": 3116
+    },
+    "SW_Stats/images/bIconE.tga": {
+      "sha256": "da2ba52cadaebc206417ec2e0eae8aed3814481701f73ab868c13e6df87eb03a",
+      "bytes": 812
+    },
+    "SW_Stats/images/bIconS.png": {
+      "sha256": "4abaf6c11ae0311141e289f5927c81ce00af95d4425422fb4cc27d48a24d0d13",
+      "bytes": 439
+    },
+    "SW_Stats/images/bIconS.tga": {
+      "sha256": "c8c454018422a0bf1c6697bff387a01886fd64bba2582641cbcc76d7a828338e",
+      "bytes": 1068
+    },
+    "SW_Stats/images/bIconSH.png": {
+      "sha256": "701f73286ed91caf9b7220a988b672822de0fa784fffd86ad7eb7cbf74a90f0f",
+      "bytes": 394
+    },
+    "SW_Stats/images/bIconSH.tga": {
+      "sha256": "8ebcc56ee2e12a29e9a08063aeeba89f14d7819b169ca59a1b2304fd4f48bc7b",
+      "bytes": 1068
+    },
+    "SW_Stats/images/bIconSX.tga": {
+      "sha256": "29d05336be5e0ee127ba4ca4498ad7017d60c1d11ce68594b5f4b1c08c1c6715",
+      "bytes": 1068
+    },
+    "SW_Stats/images/bIconSXH.tga": {
+      "sha256": "3c89a984a36d5a6ba5b56926b529266e0a9d5c2c95ba66a99cf8d353a2d34f0e",
+      "bytes": 1068
+    },
+    "SW_Stats/images/buttonD.tga": {
+      "sha256": "8d7ac5f67140552ec7742b7cf9b5bc5b7c866b7c24c6d082ffde085d7ca6dc22",
+      "bytes": 1068
+    },
+    "SW_Stats/images/buttonL.tga": {
+      "sha256": "3657199375d2581d16a1f2d5d6f265648c0d6eea3a6a9c77d3f9ad444dd18faa",
+      "bytes": 1068
+    },
+    "SW_Stats/images/corner.tga": {
+      "sha256": "00aa5fb94593cf2c7e3abfc684985d715b5303c11d91787e27f15418c31fe1f6",
+      "bytes": 286
+    },
+    "SW_Stats/images/icon.tga": {
+      "sha256": "894dfc91584a1acd2daf14a0c094a54bc46395237954187c6aa9d84d5e6c7076",
+      "bytes": 1315
+    },
+    "SW_Stats/images/settings.tga": {
+      "sha256": "d98a12a1ad203b52171d32005d43e67152b9d2dd17117f23f3914fea924634aa",
+      "bytes": 1068
+    },
+    "SW_Stats/images/SW_Icon.tga": {
+      "sha256": "227f6c9d68982b0b31e89f6ff4b62fd5d2a524de0199fc6a1c3175623dca5d0a",
+      "bytes": 16428
+    },
+    "SW_Stats/images/swatch.tga": {
+      "sha256": "a5036b38c83bf9eda1b18a23087eb4a27d981949ce13ee2600444bfb9a778170",
+      "bytes": 4140
+    },
+    "SW_Stats/images/sync.tga": {
+      "sha256": "f645d6b5d02057291a0314c28b4d28c94e02f8ec302c595bd09adf7a6dfb92d4",
+      "bytes": 1068
+    },
+    "SW_Stats/images/titleBar.tga": {
+      "sha256": "bc04bb28d471c235d66c8ae8b0014ba6d2685b3c58faf7ddd3b7f394249d9103",
+      "bytes": 3116
+    },
+    "SW_Stats/LICENSE.txt": {
+      "sha256": "bf8ae324fc20f35d8f5845910f1656667411570741441435b830b113bd5645c4",
+      "bytes": 743
+    },
+    "SW_Stats/localization.DE.lua": {
+      "sha256": "894625d543fe0c4cd451ee3a2c5a8c38eb4455c054af74ef88b8cc2e7e4f0c0d",
+      "bytes": 21197
+    },
+    "SW_Stats/localization.FR.lua": {
+      "sha256": "a87632187458c33500b29d25ddc208e1750a425deb8bcae2ed4d23887bb82bd8",
+      "bytes": 21240
+    },
+    "SW_Stats/localization.zhCN.lua": {
+      "sha256": "d89878e6f647ebf17451ed4ef6995499b04c1a8c553113c6264dc72a30a07440",
+      "bytes": 22741
+    },
+    "SW_Stats/localization.zhTW.lua": {
+      "sha256": "4f8e9ec5c0549e5c48976a93f41370ce330354c6c010988ad0b4297a1e6a162a",
+      "bytes": 22752
+    },
+    "SW_Stats/neutral.lua": {
+      "sha256": "317214824a334fdb5126fc625f657278adaa583a3aeabab329ffe9458e7bb7f9",
+      "bytes": 40350
+    },
+    "SW_Stats/SW_BarFrames.lua": {
+      "sha256": "fbde141ff435f8156a072590fec1d3844f7d0d1918005359508d3b5192234652",
+      "bytes": 31130
+    },
+    "SW_Stats/SW_BarFrames.xml": {
+      "sha256": "ed0de6fb5dcbf758f7cb4351b3865f3080637b49f66ad5022e6a8b7546c55249",
+      "bytes": 83641
+    },
+    "SW_Stats/SW_BarFrameTemplates.xml": {
+      "sha256": "427be72206ead847c437cedc96c1def6762835bdd620ca578c0f9d80008e02ac",
+      "bytes": 3588
+    },
+    "SW_Stats/SW_CastTrack.lua": {
+      "sha256": "7606664cd5dc7ae2a97ef5445b1596d3d3c51508fd99dd34099971d68265d074",
+      "bytes": 7504
+    },
+    "SW_Stats/SW_console.lua": {
+      "sha256": "bfd386f1d0cb9b50e6a05a4c6ff19893143932519463b991b5bd2afced560a70",
+      "bytes": 5298
+    },
+    "SW_Stats/SW_core_Util.lua": {
+      "sha256": "365ae49d246b09eb4048a19a44d109a2060cbeb8ea309c9e082c440d29680465",
+      "bytes": 98744
+    },
+    "SW_Stats/SW_core.lua": {
+      "sha256": "29f998803adaf87e29a100f42d275805c55c4d24bf7180dd728870d490644de6",
+      "bytes": 17033
+    },
+    "SW_Stats/SW_data_views.lua": {
+      "sha256": "e18556869ff08f7f406179fae824cbbd5e81d697aed52c4266924e248fb51f8f",
+      "bytes": 25972
+    },
+    "SW_Stats/SW_DefaultMap.lua": {
+      "sha256": "8c1230c9ba50c4090f1c4529a221dd3445ffd6c62f1f834d7d6aed82012a08b7",
+      "bytes": 19853
+    },
+    "SW_Stats/SW_Frames.lua": {
+      "sha256": "8b86932329c450c871ac49c74eb43fef2c648dfe57744f8b45b9cfc70007f9ea",
+      "bytes": 15404
+    },
+    "SW_Stats/SW_FrameTemplates.xml": {
+      "sha256": "9884f95eb4b6ca8c641e32fff321a86ddeef35241c3ac40af66e560d17cf2110",
+      "bytes": 18133
+    },
+    "SW_Stats/SW_init.lua": {
+      "sha256": "8a03ba155b6137a5d486c7f526a77cf28e158e204bdbe21841b4848361e757fa",
+      "bytes": 12793
+    },
+    "SW_Stats/SW_parser.lua": {
+      "sha256": "5a7cf2573582837c56f02b3f50e70468c03e3f7fbd1f33e0efd9864858f1a822",
+      "bytes": 96057
+    },
+    "SW_Stats/SW_Stats.toc": {
+      "sha256": "e7d0a48d0d3d0171455db7fb61a5fc71260dd5bcc5d8a858ebeae1509933b21b",
+      "bytes": 572
+    },
+    "SW_Stats/SW_Stats.xml": {
+      "sha256": "eabf8b61afcf2d47fc5489cf500709d91c7b3ca0edae08b994a024571b375dde",
+      "bytes": 6689
+    },
+    "SW_Stats/SW_Sync.lua": {
+      "sha256": "02eb085a207e1e0a960b6f2dd2bd7dde204290240c870cd47587b5008826c78f",
+      "bytes": 20188
+    },
+    "SW_Stats/SW_TextExport.lua": {
+      "sha256": "495b600948d1d2b95ba1c3890f383060cd9d29c9eb31c80979eada1cd5a91c10",
+      "bytes": 2836
+    },
+    "SW_Stats/SW_TimeLine.xml": {
+      "sha256": "d8fae61402653c2a40b73d8efa459585d65345ddff58f4ee8ebb72abd68a3b14",
+      "bytes": 15165
+    },
+    "SW_Stats/SW_Voting.lua": {
+      "sha256": "c0e24c46c674bb171b21c0d911d2608850f822f681ccc23d926beb508ec572fc",
+      "bytes": 3624
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

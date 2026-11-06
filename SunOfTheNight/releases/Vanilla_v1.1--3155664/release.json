@@ -1,0 +1,9 @@
+{
+  "id": "3155664",
+  "tag": "Vanilla_v1.1",
+  "name": "[Vanilla] SunOfTheNight",
+  "body": "Backported to Vanilla (1.12).\nChanged some options in order to make sense in this expansion (i.e. no Dungeon Finder).\n\nCommits:\nhttps://github.com/Lanrutcon/SunOfTheNight/commit/93624f01783673be45a7085bc94258a6827bbd7b\n",
+  "published": "2016-05-04T11:36:54Z",
+  "prerelease": false,
+  "url": "https://github.com/Lanrutcon/SunOfTheNight/releases/tag/Vanilla_v1.1"
+}

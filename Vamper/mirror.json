@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/Vamper",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "Vamper",
+    "name": "Vamper",
+    "url": "https://github.com/MarcelineVQ/Vamper",
+    "api": "https://api.github.com/repos/MarcelineVQ/Vamper"
+  },
+  "commit": "2306cc10e8d3ea86d04e4fbca3fe4fb1ad76e2d1",
+  "sourceFiles": {
+    "readme.md": {
+      "sha256": "d2b9862a2eb4426d5881cdfc289eb02bfe5ec885466199bc96c3d37b2de3ca7b",
+      "bytes": 104
+    },
+    "Vamper.lua": {
+      "sha256": "48418efbc69c2bad6d230065e616738041dc739036e908985885476ee703b598",
+      "bytes": 3601
+    },
+    "Vamper.toc": {
+      "sha256": "adf69ce123052ebc03084f8241994c491a5df473597ed0e9ec6f8e1542dea484",
+      "bytes": 171
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

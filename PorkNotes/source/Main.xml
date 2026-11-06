@@ -1,0 +1,8 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Include file="PorkNotes.lua"/>
+  <Include file="CreateNoteFrame.lua"/>
+  <Include file="NoteDetailFrame.lua"/>
+  <Include file="SyncReviewFrame.lua"/>
+  <Include file="NotesFrame.lua"/>
+  <Include file="SettingsFrame.lua"/>
+</Ui>

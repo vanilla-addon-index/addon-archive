@@ -1,0 +1,12 @@
+## Interface: 11200
+## Author: Gello (Modified by Khalil, McPewPew and many turtles)
+## Title: ItemRack
+## Notes: Item sets and context menus for inventory items
+## Version: 1.98
+## SavedVariables: ItemRack_Users, ItemRack_Settings, ItemRack_Events, Rack_User
+## OptionalDeps: IsMounted, ButtonHole
+localization.lua
+ItemRack.lua
+ItemRack.xml
+ItemRackSets.xml
+mountGUID.lua

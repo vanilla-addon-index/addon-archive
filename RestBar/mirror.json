@@ -1,0 +1,70 @@
+{
+  "upstream": "https://github.com/Steelbash/RestBar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Steelbash",
+    "repo": "RestBar",
+    "name": "RestBar",
+    "url": "https://github.com/Steelbash/RestBar",
+    "api": "https://api.github.com/repos/Steelbash/RestBar"
+  },
+  "commit": "cd36a894369711bf86e20ad29a624f921922bcae",
+  "sourceFiles": {
+    "preview1.png": {
+      "sha256": "d820599a2ab4736610160e700f0f4630ae399aa568ee2a31d4a605496f43da64",
+      "bytes": 28628
+    },
+    "preview2.png": {
+      "sha256": "378980676d0778a9e193561c57f7803fb96e4c82ea858609ff269ccca72e5cc9",
+      "bytes": 34220
+    },
+    "preview3.png": {
+      "sha256": "1d227252ece7c4f359f0879b823cbb92231fce8bfac7e4e382d2077c1b700336",
+      "bytes": 14865
+    },
+    "README.md": {
+      "sha256": "b6908f0ef374f44ebef749c8e641a565501ee49b3268a34d5c8bf9127c72dc0c",
+      "bytes": 1036
+    },
+    "RestBar/RestBar.lua": {
+      "sha256": "d44f183aacaecc4da02d2e961e700c10dab1b69b65dbf881af458af0587dc8f8",
+      "bytes": 6694
+    },
+    "RestBar/RestBar.toc": {
+      "sha256": "158a693e003adbba003f27f2bff5dd55496b7bf55cabab796d4972d9482af6a6",
+      "bytes": 119
+    },
+    "xperl_bottom.png": {
+      "sha256": "705768640014496fa650e70bad31644c9e24257a7cb1306398c67cb205e2f12d",
+      "bytes": 43960
+    },
+    "xperl_top.png": {
+      "sha256": "d4fbfa01684134ee6a1b0d7709a4658ea7434e8b2afed28effea997b5e46b7b7",
+      "bytes": 37120
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "255527366": {
+      "tag": "1.2.1",
+      "folder": "1.2.1--255527366",
+      "assets": {
+        "305814081": {
+          "sha256": "d52a201e7d144f69a500af6b96c380b22be511f527696139fc86f27811b4bc87",
+          "bytes": 2317,
+          "id": "305814081",
+          "name": "RestBar_v1.2.1.zip",
+          "url": "https://github.com/Steelbash/RestBar/releases/download/1.2.1/RestBar_v1.2.1.zip",
+          "path": "releases/1.2.1--255527366/assets/RestBar_v1.2.1.zip"
+        }
+      },
+      "source": {
+        "sha256": "d79d3f093ca857627de444c9223c65ea2634e09cddaa16570da295ffc3f7d890",
+        "bytes": 161943,
+        "path": "releases/1.2.1--255527366/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Steelbash/RestBar/tarball/1.2.1"
+      }
+    }
+  }
+}

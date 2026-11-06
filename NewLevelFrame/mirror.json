@@ -1,0 +1,62 @@
+{
+  "upstream": "https://github.com/alchem1ster/Vanilla-NewLevelFrame",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "alchem1ster",
+    "repo": "Vanilla-NewLevelFrame",
+    "name": "Vanilla-NewLevelFrame",
+    "url": "https://github.com/alchem1ster/Vanilla-NewLevelFrame",
+    "api": "https://api.github.com/repos/alchem1ster/Vanilla-NewLevelFrame"
+  },
+  "commit": "ae0a23812409ae3c4dc731136b9cdc25cb44b09c",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "2826f50bb9bae4b2d746591fba54deb8f6a936eab9f98347383fbb319bab84ae",
+      "bytes": 11
+    },
+    "localization.lua": {
+      "sha256": "f8e16134ee38dc37cc1c7a201b839c1c9f358687bc7c99a44fdeb229bc29e620",
+      "bytes": 1144
+    },
+    "main.lua": {
+      "sha256": "04f3b32df0d66e1de394061cff02a2301a3f72a6cc48504da840594ea9a621e1",
+      "bytes": 2602
+    },
+    "newlevel_frame.blp": {
+      "sha256": "cc065d19d29fdb0925b0307595365817768fd7e31a03917408376f6c1fb0404b",
+      "bytes": 175972
+    },
+    "NewLevelFrame.toc": {
+      "sha256": "74df5ba5eb08f6e9d8693a42ef6d512b4bbdfca63809c7f5c3b500f065efc94d",
+      "bytes": 681
+    },
+    "README.md": {
+      "sha256": "7c0658e87d981e6838745124431f0bced9ac77af624187fda51f093534a67334",
+      "bytes": 475
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "168568362": {
+      "tag": "1.1",
+      "folder": "1.1--168568362",
+      "assets": {
+        "183712849": {
+          "sha256": "41f98480f51c2ac3b5232d084b7a85ea4fba83def58081311cf61682ec388054",
+          "bytes": 20149,
+          "id": "183712849",
+          "name": "NewLevelFrame.zip",
+          "url": "https://github.com/alchem1ster/Vanilla-NewLevelFrame/releases/download/1.1/NewLevelFrame.zip",
+          "path": "releases/1.1--168568362/assets/NewLevelFrame.zip"
+        }
+      },
+      "source": {
+        "sha256": "7ed2c8d23f11d579f1262aa80c3cc09dfb5a4b4f1fe97ee3038413de9437c622",
+        "bytes": 74839,
+        "path": "releases/1.1--168568362/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/alchem1ster/Vanilla-NewLevelFrame/tarball/1.1"
+      }
+    }
+  }
+}

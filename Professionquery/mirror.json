@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/shirsig/profession_query",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "profession_query",
+    "name": "profession_query",
+    "url": "https://github.com/shirsig/profession_query",
+    "api": "https://api.github.com/repos/shirsig/profession_query"
+  },
+  "commit": "5386fc98ec9b3cdf3c68a7e47a1fcebe286f5ac6",
+  "sourceFiles": {
+    "profession_query.lua": {
+      "sha256": "042659458e050c36344965be29e05edd20699e0a195b159ef8b0a4b6d9db9f63",
+      "bytes": 6574
+    },
+    "profession_query.toc": {
+      "sha256": "aff3909ff536d0daa48ff00c62691cf21a5073a37d9d7f5f820d85cc588740a0",
+      "bytes": 188
+    },
+    "profession_query.xml": {
+      "sha256": "b91a1938a25023dced9e545acd55c5e021eb425f6c0dafbff8de79d536a77b1e",
+      "bytes": 365
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

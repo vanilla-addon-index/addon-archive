@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/BahamutxD/pfUI-autoinvite",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "BahamutxD",
+    "repo": "pfUI-autoinvite",
+    "name": "pfUI-autoinvite",
+    "url": "https://github.com/BahamutxD/pfUI-autoinvite",
+    "api": "https://api.github.com/repos/BahamutxD/pfUI-autoinvite"
+  },
+  "commit": "e67988f1f28478c2df1163e3b8a2a1b50656ad0a",
+  "sourceFiles": {
+    "pfUI-autoinvite-config.lua": {
+      "sha256": "d801cf9e84e08e0ae047cfd4e5cf619ba201b8f2cc4091ee069ccf7fb34359d1",
+      "bytes": 871
+    },
+    "pfUI-autoinvite-gui.lua": {
+      "sha256": "6d87d7a4841a05e042e94d5ad757605ce5eb7697c63151a7bac7b0e283ed628a",
+      "bytes": 4692
+    },
+    "pfUI-autoinvite.lua": {
+      "sha256": "d758cb905fed338cfd7041f4b60ed8a26650819e88a3d4e61ed757cb921f92ff",
+      "bytes": 5580
+    },
+    "pfUI-autoinvite.toc": {
+      "sha256": "c42dc2df7570ac49c8d8bb486036024bab4a530ac2d758c9c448589a84104a01",
+      "bytes": 361
+    },
+    "README.md": {
+      "sha256": "431ddf41c7524280b1ff6419f3518da9bf2366c51cccc550fe12efcf8be501b4",
+      "bytes": 818
+    },
+    "settings.png": {
+      "sha256": "f9ea8b6c3e02970ef2c217fa08a25e6d43e6ebde674aabde5fc76d469f2a6ef2",
+      "bytes": 117446
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

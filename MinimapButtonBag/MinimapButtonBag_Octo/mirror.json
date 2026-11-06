@@ -1,0 +1,53 @@
+{
+  "upstream": "https://octowow.st/git/olzon/MinimapButtonBag_Octo",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "olzon",
+    "repo": "MinimapButtonBag_Octo",
+    "name": "MinimapButtonBag_Octo",
+    "url": "https://octowow.st/git/olzon/MinimapButtonBag_Octo",
+    "api": "https://octowow.st/git/api/v1/repos/olzon/MinimapButtonBag_Octo"
+  },
+  "commit": "d87f577d61992a8cc7912db62644385c3984d5bf",
+  "sourceFiles": {
+    "icon.tga": {
+      "sha256": "a70539a57b6d94d99364d1e71b39f14078ae9b9099f6b65027ba905db1f8b36f",
+      "bytes": 2240
+    },
+    "localization-deDE.lua": {
+      "sha256": "b0d440bea8917ef73eea240325cc3561c162fa1c64416bb3f68de6eb29667fe0",
+      "bytes": 1225
+    },
+    "localization-enGB.lua": {
+      "sha256": "4b3d8534a9986329611230987730b6f56b85fe0da4773e78feb769ddd13d5519",
+      "bytes": 1068
+    },
+    "localization-ruRU.lua": {
+      "sha256": "0e4087b521d2936dc23ff60d6db4223e19f642c2d965afa32784f2e0c5bdafaa",
+      "bytes": 1449
+    },
+    "MBB.lua": {
+      "sha256": "f025e72d2c988da9586c4546ce90a641e101b2e68c67128b93a0a05fab95c0db",
+      "bytes": 22346
+    },
+    "MBB.xml": {
+      "sha256": "5eb87cc8c4b9163e2461e9477648b8ee74968e0eb8879cc29ae4f707b85ad7f2",
+      "bytes": 20754
+    },
+    "MinimapButtonBag_Octo.toc": {
+      "sha256": "a17a0ab64f14846f4263317fd5f63d30aa72b56e469db24a68c1972dc945bf34",
+      "bytes": 602
+    },
+    "MinimapButtonBag.toc": {
+      "sha256": "490b61074f4ef3ba1b6abf1934aad3876f90adcd3e219e4f4a81df5a8176aa1a",
+      "bytes": 576
+    },
+    "README.md": {
+      "sha256": "0eb336f5053ee8cc18947323f22d3a4b789e5bed9ce80cf8f56f5de20d77e939",
+      "bytes": 2363
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

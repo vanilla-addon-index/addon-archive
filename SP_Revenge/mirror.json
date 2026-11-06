@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/Aggromemnon/SP_Revenge",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Aggromemnon",
+    "repo": "SP_Revenge",
+    "name": "SP_Revenge",
+    "url": "https://github.com/Aggromemnon/SP_Revenge",
+    "api": "https://api.github.com/repos/Aggromemnon/SP_Revenge"
+  },
+  "commit": "e19426df9bc586cefd2cc39ae61cfea549b6fd59",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "CLAUDE.md": {
+      "sha256": "fd9b2010e950e0de07b7a4be7742f3f278c769efa2cfc58041b1bdf13ae153d8",
+      "bytes": 2285
+    },
+    "README.md": {
+      "sha256": "c7446d3a5100e27b7a7eb2aa3bd0765d5d8fe44e35769c839cdcddc481e9e1a5",
+      "bytes": 1738
+    },
+    "SP_Revenge.lua": {
+      "sha256": "eac69fb0579dda2cae5abb84450ebcc1dc4d5f5b07f0f0add56ccbe049ac2f9a",
+      "bytes": 6862
+    },
+    "SP_Revenge.toc": {
+      "sha256": "d24e6110159044343b248fdfa030a41906c0998dce11b3a97fe16291d319c228",
+      "bytes": 308
+    },
+    "SP_Revenge.xml": {
+      "sha256": "502a2d8cadc96fab22961bb005a4b1cac8b77a6a680650e9bf3b844678a659d9",
+      "bytes": 1635
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/jhinzuo/another.ScreenResolutionDropdownFix",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jhinzuo",
+    "repo": "another.ScreenResolutionDropdownFix",
+    "name": "another.ScreenResolutionDropdownFix",
+    "url": "https://github.com/jhinzuo/another.ScreenResolutionDropdownFix",
+    "api": "https://api.github.com/repos/jhinzuo/another.ScreenResolutionDropdownFix"
+  },
+  "commit": "5b7457c6c5df860e6ad6d7e900d8d9ae0a18f38e",
+  "sourceFiles": {
+    "!OptionsFrameFix/!OptionsFrameFix.lua": {
+      "sha256": "22aa2722b5bc091b9666d707e6505b4612c16482fddb4d60fc059f5b4a27e369",
+      "bytes": 8317
+    },
+    "!OptionsFrameFix/!OptionsFrameFix.toc": {
+      "sha256": "d8b22f31a11829200822c912aa6f7edc29d11de9ce21ad14f2b57d18e9e847d3",
+      "bytes": 238
+    },
+    "LICENSE": {
+      "sha256": "91a48ae5b5acf8507d71ef5d91a88ef0c3018fff8104cdcaebaa7c5b504f6091",
+      "bytes": 1063
+    },
+    "README.md": {
+      "sha256": "23eb2cc112559d833a19bd79d6bcbad93d09edeed5a1ba1f111fc6cbaa3f89cf",
+      "bytes": 2927
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

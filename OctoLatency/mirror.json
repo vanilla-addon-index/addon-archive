@@ -1,0 +1,41 @@
+{
+  "upstream": "https://octowow.st/git/palladinpala/OctoLatency",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "palladinpala",
+    "repo": "OctoLatency",
+    "name": "OctoLatency",
+    "url": "https://octowow.st/git/palladinpala/OctoLatency",
+    "api": "https://octowow.st/git/api/v1/repos/palladinpala/OctoLatency"
+  },
+  "commit": "60c67c5eefd64f8a9c7e25112b473023ff736f7e",
+  "sourceFiles": {
+    "CHANGELOG.md": {
+      "sha256": "9451dc52e6dd7824f406e4ff7766b4f5216ccff634c1e6d9e929413a37959dab",
+      "bytes": 3406
+    },
+    "LICENSE": {
+      "sha256": "c8986cd37b6dc3d8d7acbc76ee151f991ab7ff040764a62c74a1ebf4737f8e69",
+      "bytes": 1078
+    },
+    "OctoLatency.lua": {
+      "sha256": "420f07d910e9deee13c1566a8d9962c1ce34d053163815fce5352083ed7d9e4a",
+      "bytes": 9219
+    },
+    "OctoLatency.toc": {
+      "sha256": "f9d3ce416f6f82bb53c1baad4c349664045fea1d09fd3bba369f4e6afcb78f01",
+      "bytes": 341
+    },
+    "OctoLatency.xml": {
+      "sha256": "aeffdf05a59d677dd69ec8dcb3a1cb09400129f9504e30deb0bd2ebedaa5bcfd",
+      "bytes": 1776
+    },
+    "README.md": {
+      "sha256": "52483f1aa9d934c36e1bb022d8198ed5b41ac597e17ca87708ee5ee6470c1580",
+      "bytes": 2247
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,47 @@
+## Interface: 11200
+## Version: 2.1.0
+## Title: MetaHunt - |cff00ff00Hunter
+## Author: Metasploit and his Copilot ;)
+## Notes: Unified addon suite for huntards making old addons compatible with Twow, and adding an arsenal of never seen Hunter's utilities.
+## SavedVariables: MTH_SavedVariables
+## SavedVariablesPerCharacter: MTH_CharSavedVariables
+
+
+data\init.lua
+Bindings.xml
+
+## Load initialization and core framework
+init\api.xml
+api\core-feed-tracking.lua
+
+## Load database files (DB files must come before data\init.lua)
+data\ds-beasts.lua
+data\ds-vendors.lua
+data\ds-vendors-extra.lua
+data\ds-items.lua
+data\ds-items-extra.lua
+data\ds-items-origins.lua
+data\ds-bags.lua
+data\ds-items-atlas-sources.lua
+data\ds-zones.lua
+data\ds-zones-fallback.lua
+data\ds-zones-wma.lua
+data\ds-minimap-sizes.lua
+data\ds-unit-coords.lua
+data\ds-creature-coords.lua
+data\ds-beasts-families.lua
+data\ds-beasts-families-dbc.lua
+data\ds-beasts-skins.lua
+data\ds-pet-spells.lua
+data\ds-pet-spells-trainer.lua
+data\ds-hunter-spells.lua
+data\ds-hunter-spells-dbc.lua
+data\ds-trainer-catalog.lua
+data\ds-racial.lua
+data\init.lua
+
+## Load main addon entry point
+MetaHunt.lua
+
+## Load modules (each addon is now a self-contained module)
+init\modules.xml

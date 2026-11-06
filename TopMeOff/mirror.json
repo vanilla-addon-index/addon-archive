@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/melbaa/TopMeOff",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "melbaa",
+    "repo": "TopMeOff",
+    "name": "TopMeOff",
+    "url": "https://github.com/melbaa/TopMeOff",
+    "api": "https://api.github.com/repos/melbaa/TopMeOff"
+  },
+  "commit": "5a3e66b6d9d0996238a2c01b030397344fc19097",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "16a17c95461d4449586cce268b65810b5d3732acd36497db184be74ec432349d",
+      "bytes": 925
+    },
+    "ss.png": {
+      "sha256": "e753b964c4e22adb4605161f581ce2a08acd77605abfe02acba0aefe04b292a6",
+      "bytes": 58663
+    },
+    "TopMeOff.lua": {
+      "sha256": "9c4cb3f521e8b3a0ce96ff6aed91f9bd9645b844f579509479897261001ad0ef",
+      "bytes": 13304
+    },
+    "TopMeOff.toc": {
+      "sha256": "e69174f2e5be040fa5e79a0381f4cd05e0026fadd9d23bb02d51a15aec8f735e",
+      "bytes": 244
+    },
+    "TopMeOff.xml": {
+      "sha256": "ee2ad26bc1a14ba24c0bf82fb0c0ca893b50c18805effcdf11f707ee70f79386",
+      "bytes": 582
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

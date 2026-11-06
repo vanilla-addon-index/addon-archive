@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/ShikawaLePaladin/ShikaSwap",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ShikawaLePaladin",
+    "repo": "ShikaSwap",
+    "name": "ShikaSwap",
+    "url": "https://github.com/ShikawaLePaladin/ShikaSwap",
+    "api": "https://api.github.com/repos/ShikawaLePaladin/ShikaSwap"
+  },
+  "commit": "fb28ae9bceac50fc75a7d70b732c1692d1fe0f86",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "d113139af092d580c1dbbe3f0e633056999bc133fb7f794edafb2d101f64a796",
+      "bytes": 144
+    },
+    "LibramSwap_fixed.lua": {
+      "sha256": "0ce78a46504ab5f191bfb4f3408d78bd36623c845bf14e337ff35e2053b477dc",
+      "bytes": 27534
+    },
+    "LibramSwap.toc": {
+      "sha256": "06874d04ece05c2d738f341685795c3b6a8ae16dceb57f404e8ab10d212b2eb1",
+      "bytes": 245
+    },
+    "LibramSwapConfig.lua": {
+      "sha256": "7983a4296d13f8b2c7c5e3c0335d1610a0f7a50c8b8864e27d7d5de91093ab1c",
+      "bytes": 91722
+    },
+    "README.md": {
+      "sha256": "a9996f957d165245dbeb54c39f87c2daeac79493d879c4b23251ab8314d79856",
+      "bytes": 8295
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

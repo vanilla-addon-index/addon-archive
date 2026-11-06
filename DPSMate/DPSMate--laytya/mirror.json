@@ -1,0 +1,1289 @@
+{
+  "upstream": "https://github.com/laytya/DPSMate",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "DPSMate",
+    "name": "DPSMate",
+    "url": "https://github.com/laytya/DPSMate",
+    "api": "https://api.github.com/repos/laytya/DPSMate"
+  },
+  "commit": "0ebf7e83640795852e2dea395aaed7f6c1518510",
+  "sourceFiles": {
+    "DPSMate/Bindings.xml": {
+      "sha256": "6b6ea413e17a6bc56dffc21f770e49ee5fcdbaedcea6c06cae15ff02f3a5586b",
+      "bytes": 313
+    },
+    "DPSMate/Damage/DPSMate_Damage.lua": {
+      "sha256": "bfd400fad8fbaf41242dfa5d4a05dc8fbcb6594150eace9e5ac1bb2ced61d5d7",
+      "bytes": 7991
+    },
+    "DPSMate/Damage/DPSMate_Details_Damage.lua": {
+      "sha256": "456ba2b0537a3dcd36965af1a26ee7260c1d19c4927e601d6f5bd78056c72fdc",
+      "bytes": 38829
+    },
+    "DPSMate/Damage/DPSMate_Details_Damage.xml": {
+      "sha256": "135b69821198983a8f961dbb8b106dbc67401de2d32a8d1d4a9e36d381aa743f",
+      "bytes": 66685
+    },
+    "DPSMate/Damage/DPSMate_Details_DamageTotal.lua": {
+      "sha256": "4cdcee4bf99ec7a6e989be6650446103e720d916461e5f2db75bbf772669eeca",
+      "bytes": 13920
+    },
+    "DPSMate/Damage/DPSMate_Details_DamageTotal.xml": {
+      "sha256": "949c75f18fe1d474d64460ecebe6bf6e004f122f62b5fbc3416e9a8c5ac6e2cb",
+      "bytes": 27571
+    },
+    "DPSMate/Damage/DPSMate_DPS.lua": {
+      "sha256": "e329080bb265bfabec31acfb7da8652f66b1c12f2d923e6301011a0033484978",
+      "bytes": 8184
+    },
+    "DPSMate/DPSMate_DataBuilder.lua": {
+      "sha256": "597933763f439b7430f87a422bd5f5d1fac5f2ed7d3ba7490b33c5cb65d96ca6",
+      "bytes": 70906
+    },
+    "DPSMate/DPSMate_Frame.xml": {
+      "sha256": "8c178f4c1ff1898de54cd43cb91283da011be525b190f32ac78c0d900e6397ee",
+      "bytes": 15110
+    },
+    "DPSMate/DPSMate_Options.lua": {
+      "sha256": "47eb85d0cc4d53b3d2657f3d226b71942c180d170abe0acc9033f7f286a3a45b",
+      "bytes": 84554
+    },
+    "DPSMate/DPSMate_Options.xml": {
+      "sha256": "9b48bd3d7ea5c3819b78598791d291c3a21a8c8da5d3c7efb2e47a9732567931",
+      "bytes": 231878
+    },
+    "DPSMate/DPSMate_Parser.lua": {
+      "sha256": "d49e431bc070a974f138ad66384d4e37ea4af325201320abeb7a23a3c09421f7",
+      "bytes": 21587
+    },
+    "DPSMate/DPSMate_Sync.lua": {
+      "sha256": "d11a73f16d736a099e2cf0126ee2e5d41815abada7cdb3f7af2ba8d52e27d873",
+      "bytes": 55204
+    },
+    "DPSMate/DPSMate.lua": {
+      "sha256": "caa04d9733266c446fb556d42466d57b7bf6c4100ba0c907cb48cae0d027c7c9",
+      "bytes": 23929
+    },
+    "DPSMate/DPSMate.toc": {
+      "sha256": "6a8d260884e4cc922b39ff6b58c356e1137d803f5a93fb465fd254fd8787fb89",
+      "bytes": 1596
+    },
+    "DPSMate/enUS/Babble-Boss-2.3.lua": {
+      "sha256": "a54554c2e26948f57c1e5b93093ee1283b0e78ee480b9555701828cbf5cb7048",
+      "bytes": 6312
+    },
+    "DPSMate/enUS/Babble-Spell-2.3.lua": {
+      "sha256": "206902a74d2820d467a30e944789c1d9e9fb587619d52838f20ef813aadcebf0",
+      "bytes": 97587
+    },
+    "DPSMate/enUS/DPSMate_ParserENUS.lua": {
+      "sha256": "52af9b29095074da991668647840cedc923c60d9de68cb05303f9b6d18f8f3cc",
+      "bytes": 80642
+    },
+    "DPSMate/enUS/enUS.lua": {
+      "sha256": "0ca809c1154347aa64aba7a5d3a478294d45efde5791a8242d6b2056763783e3",
+      "bytes": 25876
+    },
+    "DPSMate/enUS/NPCDB-1.0.lua": {
+      "sha256": "9cebf68f55f047ba0aa70acad8dbad70a40f9767e7d478a3cc51ca5f6a16d873",
+      "bytes": 98648
+    },
+    "DPSMate/fonts/Accidental Presidency.ttf": {
+      "sha256": "91980438519aff2fd182b77d316be9549cbf6cf0daadab8e8f5638367f1d9242",
+      "bytes": 41556
+    },
+    "DPSMate/fonts/AlteHaas.ttf": {
+      "sha256": "41d867ef23989482db849e3c420d66925d71e5e75d5e1cdfb1a274b56cb777a0",
+      "bytes": 143896
+    },
+    "DPSMate/fonts/CaviarDreams.ttf": {
+      "sha256": "e0e9896c72eaf72dec960bd405ec8d1cfff6629cb5309a44333d96fa2af3bcc5",
+      "bytes": 59284
+    },
+    "DPSMate/fonts/Enigma__2.ttf": {
+      "sha256": "eba6927102e658c4e8a237e0d3cf12bc4791841c9be1188d18ea5b89a06b1925",
+      "bytes": 17992
+    },
+    "DPSMate/fonts/Expressway.ttf": {
+      "sha256": "94110de3c2ae4d21e27afe706e64ef3142e97d2611d3b51d6c9078051193cc33",
+      "bytes": 156244
+    },
+    "DPSMate/fonts/ExpresswayBold.ttf": {
+      "sha256": "06a2106170c2b5b736955cc749ed755f3757d103230645158f0bd5b5b91c386b",
+      "bytes": 99820
+    },
+    "DPSMate/fonts/Mandarin1.ttf": {
+      "sha256": "e4370c49c27838a019ea71c7b227c7443d0f21165d364fda3e87d128d2343abd",
+      "bytes": 8644640
+    },
+    "DPSMate/fonts/Mandarin2.ttf": {
+      "sha256": "864d20a8f80b913f5a4cd26768e6d0c1ac43b6080930ea7a229f050914a92b2f",
+      "bytes": 6580908
+    },
+    "DPSMate/fonts/Roboto.ttf": {
+      "sha256": "94df4e4976db8ddaec27f8e8c33eef912e744fb200ca09051794b38e5a502fc0",
+      "bytes": 162636
+    },
+    "DPSMate/fonts/The Bad Times.ttf": {
+      "sha256": "ae60db2d76e0e06169e2fd13b0890a2b47ff201db7b46108d29c69ab51bff5eb",
+      "bytes": 46060
+    },
+    "DPSMate/fonts/Vegur.otf": {
+      "sha256": "b0d25ce0ea5fb6c6fe8da1c04680e2319a877ffe76f47dd57e19e81e48f3752d",
+      "bytes": 15300
+    },
+    "DPSMate/fonts/VeraSe.ttf": {
+      "sha256": "6afd927937d84fc00831441cbe0165b2d926b5bb9c18ac9018e5df6e4b0c006a",
+      "bytes": 60280
+    },
+    "DPSMate/fonts/visitor2.ttf": {
+      "sha256": "48ccd009dfe6a07223cc3571dc906acea1a255e67c72a121ced1b5071fbb06bb",
+      "bytes": 37388
+    },
+    "DPSMate/images/class/druid.tga": {
+      "sha256": "8d3858efbaccfe6f6ad5fbe8798053fb6c2eb55cb55f76ce38ffc1b188b69ab8",
+      "bytes": 11857
+    },
+    "DPSMate/images/class/hunter.tga": {
+      "sha256": "a67e804381815edbdc90468dabf9a8dd0a332f5d28e7ad03074e1c6c798ab5c7",
+      "bytes": 8397
+    },
+    "DPSMate/images/class/mage.tga": {
+      "sha256": "e5ebce412a2ba6d4f1aee185f4efe8e6f1ee90327b4f4b5072bb5efbb1a96911",
+      "bytes": 11855
+    },
+    "DPSMate/images/class/None.tga": {
+      "sha256": "02929d21f8463c6896e12c68198548b1a6982f013d0813c493b61574b68a6be9",
+      "bytes": 16428
+    },
+    "DPSMate/images/class/paladin.tga": {
+      "sha256": "47f531da8ebff0a14c0d50585f7334d1ff53ba029bc8fe13ea63cac0640d46b0",
+      "bytes": 11413
+    },
+    "DPSMate/images/class/priest.tga": {
+      "sha256": "c8ff53d0560521603ce849ed8ce3916c6de1a150f992aafdcc5166a36d94aa17",
+      "bytes": 9091
+    },
+    "DPSMate/images/class/rogue.tga": {
+      "sha256": "2f2273c38c7d62ffa3137aeeb2d295063f28c0a335a84c1adde60513c5d7a646",
+      "bytes": 10399
+    },
+    "DPSMate/images/class/shaman.tga": {
+      "sha256": "016dfbe6525c8d98c0e873e029e63bb57f224593743c5ea00a4aa227de85f83f",
+      "bytes": 11401
+    },
+    "DPSMate/images/class/warlock.tga": {
+      "sha256": "247cfc073e553defbad670b5be2a5a124f8f8a95dc910e1f0b07f991b35c2960",
+      "bytes": 11210
+    },
+    "DPSMate/images/class/warrior.tga": {
+      "sha256": "089b2fbc0abc7832930c290a8726308fd65c6925c974fcfbfcdab67d2d23fa9a",
+      "bytes": 11747
+    },
+    "DPSMate/images/dummy.tga": {
+      "sha256": "02929d21f8463c6896e12c68198548b1a6982f013d0813c493b61574b68a6be9",
+      "bytes": 16428
+    },
+    "DPSMate/images/icon-config.tga": {
+      "sha256": "d88685bc72aafc546868a69a6c2c782a376bfb0ca7292087a2d04ea78caab47e",
+      "bytes": 4140
+    },
+    "DPSMate/images/icon-reset.tga": {
+      "sha256": "02841e10d258c6fb874ab1cdf7fc157b96ca7e07172cee5a9634d4b907e32aab",
+      "bytes": 1068
+    },
+    "DPSMate/images/npc.tga": {
+      "sha256": "eb0e578b8fa3420086d9e962ebb68c0525bd82474cd4b97eb22e96c6a7dcf3d6",
+      "bytes": 4140
+    },
+    "DPSMate/images/ResizeGripRight.tga": {
+      "sha256": "f17e6620869ab39c230f860d13e5e9cda42b03938b27b922c99a6e4109bcf5cf",
+      "bytes": 2085
+    },
+    "DPSMate/images/ResizeGripRightTop.tga": {
+      "sha256": "4f14b5ca977898f01090faabc837a9ea6802e2a527291d0bb999f0871ee95052",
+      "bytes": 320
+    },
+    "DPSMate/images/statusbar/Aluminium.tga": {
+      "sha256": "679e0dbbb1e1f26871a2a84610d327289db1faf2743590692e57c22f6d52358d",
+      "bytes": 32812
+    },
+    "DPSMate/images/statusbar/Armory.tga": {
+      "sha256": "7f5d7718082fc4f2bfda40f264d550eb6cc141922acfc7e1554aebad4744015e",
+      "bytes": 812
+    },
+    "DPSMate/images/statusbar/BantoBar.tga": {
+      "sha256": "5a5deac548c4639de44db55ed79a6784bba95fc8286e7a4e7235ea7da24e19c3",
+      "bytes": 32812
+    },
+    "DPSMate/images/statusbar/Glaze2.tga": {
+      "sha256": "805cc920b241fe6d09f7907c99c16a09c15e9bb5ebb7c736486854b5c13122cb",
+      "bytes": 32812
+    },
+    "DPSMate/images/statusbar/Gloss.tga": {
+      "sha256": "20f70840ccfd8c7a94ccdc57a95810a56d495e1de62ac90e4f051e44c8215205",
+      "bytes": 32812
+    },
+    "DPSMate/images/statusbar/Graphite.tga": {
+      "sha256": "4fafd7e34444a05f1d261a76156fadc3130c6f7d1538779b559ed6b8e4825856",
+      "bytes": 65580
+    },
+    "DPSMate/images/statusbar/Grid.tga": {
+      "sha256": "9caee4d0382316aa64ec4891eb8b05ffba0df5e421bef9274f8533e639637d74",
+      "bytes": 24594
+    },
+    "DPSMate/images/statusbar/Healbot.tga": {
+      "sha256": "9b3cdfeba85c0fed3e9089dc4f8c21ac0e079eeac018b1e2c518af4295f832a6",
+      "bytes": 24594
+    },
+    "DPSMate/images/statusbar/LiteStep.tga": {
+      "sha256": "9bd025e9217a88cda7ef3bd185976ded94a647468c6126d42c55df4a88f3a7c2",
+      "bytes": 32812
+    },
+    "DPSMate/images/statusbar/Minimalist.tga": {
+      "sha256": "97976977031766d707a34121ac13c5ab6b7e9d204be2efaa395c717aeb1dc7ab",
+      "bytes": 1304
+    },
+    "DPSMate/images/statusbar/normTex.tga": {
+      "sha256": "500b74637f1d0fa7a75b965152de3e9c1814cad3706526938ea251f683da8e7e",
+      "bytes": 14690
+    },
+    "DPSMate/images/statusbar/Otravi.tga": {
+      "sha256": "e300a87224e7c1a044574ec915a1f9c0de49c3e26f854ecd3e1ea8ed920aaba9",
+      "bytes": 32812
+    },
+    "DPSMate/images/statusbar/Outline.tga": {
+      "sha256": "f1f5c8e7032b24c0e08f42fc5ad3ab14d20005bb7a31921bd982d5883b4cad28",
+      "bytes": 664
+    },
+    "DPSMate/images/statusbar/Perl.tga": {
+      "sha256": "e0fd78c10c65cc4ef4cd455ecf97e0b1f0d0e8808d0822eb94f4f2f9dae98596",
+      "bytes": 2037
+    },
+    "DPSMate/images/statusbar/Round.tga": {
+      "sha256": "8da9acf03ae2629228635fe039ffcf1a8776567168e28d5a74113599002bedcf",
+      "bytes": 4980
+    },
+    "DPSMate/images/statusbar/Smooth.tga": {
+      "sha256": "00e8084e83bf25b941464e2619b59e993b6ac7ae0bd8a6f37b12872e686ded6d",
+      "bytes": 32812
+    },
+    "DPSMate/images/sync.tga": {
+      "sha256": "f645d6b5d02057291a0314c28b4d28c94e02f8ec302c595bd09adf7a6dfb92d4",
+      "bytes": 1068
+    },
+    "DPSMate/images/UI-ChatIM-SizeGrabber-Down.tga": {
+      "sha256": "099102522b5f45ba28df0abf2f54ec5574a29b258c25330360780fdc2553159b",
+      "bytes": 824
+    },
+    "DPSMate/images/UI-ChatIM-SizeGrabber-Highlight.tga": {
+      "sha256": "5829b57218b92b8c979e9e54d1daab948a096f987e0f536f175f7b102f6c24ac",
+      "bytes": 862
+    },
+    "DPSMate/images/UI-ChatIM-SizeGrabber-Up.tga": {
+      "sha256": "9b35b6497bc801b7bcaf4e4313ed58e06022e7908f1805c9d14a1ed140aa42c3",
+      "bytes": 795
+    },
+    "DPSMate/images/UI-GuildButton-MOTD-Up.tga": {
+      "sha256": "b8070218d4419a9f20c710a63d0a642f20dd9f92b42a4dd7468f474c29c547dd",
+      "bytes": 408
+    },
+    "DPSMate/images/UI-GuildButton-PublicNote-Up.tga": {
+      "sha256": "fb87dd21a686910b3ce3542879106b60f0172acfdbeb12722ef7ce718ef71614",
+      "bytes": 538
+    },
+    "DPSMate/images/UI-Listbox-Highlight2.tga": {
+      "sha256": "902fb4d014ca9269c3f2a0d75d2ee13427f694be1318a1604d90cfe53534d7e0",
+      "bytes": 3477
+    },
+    "DPSMate/images/UI-Panel-CollapseButton-Down.tga": {
+      "sha256": "5e77f7f59e6c495589d47b86557fb9599277ea6e276ccc20c9f772c3e80f0495",
+      "bytes": 906
+    },
+    "DPSMate/images/UI-Panel-CollapseButton-Up.tga": {
+      "sha256": "08c527d404c1d7cbe5958adbc65c70cf2c332ff88c9dd1009cfc068c0036f3c7",
+      "bytes": 1055
+    },
+    "DPSMate/images/UI-Panel-ExpandButton-Down.tga": {
+      "sha256": "aae022a84094abd83a376a45e4ccab18a02597c7722de324cf03f2acabf73605",
+      "bytes": 895
+    },
+    "DPSMate/images/UI-Panel-ExpandButton-Up.tga": {
+      "sha256": "7a8abf4675709ec1cfd3a4b9529566a91a8b8b76752e62090532e1f30e58eace",
+      "bytes": 1025
+    },
+    "DPSMate/libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "81e208a05586b840786d12eb238636b33cdd3350c33aa0a12ca803b4da0b533a",
+      "bytes": 25356
+    },
+    "DPSMate/libs/ChatThrottleLib.lua": {
+      "sha256": "78ab7b9325c49c3d8ad71cd297bac12cd6a951531d021dc1860e46976ede8f4e",
+      "bytes": 13029
+    },
+    "DPSMate/libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "eecc0b35ec32e95ac46ba327188ea22e0563f2f7d61b099e13fb42e122608c8c",
+      "bytes": 76630
+    },
+    "DPSMate/libs/GraphLib/Graph-1.0/Graph-1.0.lua": {
+      "sha256": "3621d2adb9c5f7684ace6485a9f5eb560bc2e17c184eb9b07fefe616dce44b73",
+      "bytes": 64418
+    },
+    "DPSMate/libs/GraphLib/GraphLib.toc": {
+      "sha256": "f650f6562106dca614827c3c086436134aa08d319eb8e97705b8941432c98e89",
+      "bytes": 301
+    },
+    "DPSMate/libs/GraphLib/GraphTextures/line.tga": {
+      "sha256": "ca58e58ac890f6d27cf542b9a5158467d7680739cd2ea36dd098528d125584a0",
+      "bytes": 764
+    },
+    "DPSMate/libs/GraphLib/GraphTextures/party.tga": {
+      "sha256": "76143ac142b803c1bb5adfa8408116598c7669c9c75ffba64793045615d003cf",
+      "bytes": 4140
+    },
+    "DPSMate/libs/GraphLib/GraphTextures/Pie/1-1.tga": {
+      "sha256": "0f1ab7c4a7d2337dbf52602c8e5a01509f15bf135e8d796840578b91479e956c",
+      "bytes": 21663
+    },
+    "DPSMate/libs/GraphLib/GraphTextures/Pie/1-128.tga": {
+      "sha256": "8cd3e2565d0e839fa2f0fac76450153e730eb76861b62b06ef48bf9477d5d552",
+      "bytes": 13781
+    },
+    "DPSMate/libs/GraphLib/GraphTextures/Pie/1-16.tga": {
+      "sha256": "57269af377bd61b22c76fd1fa2114e613872a58062c863e910f11045e865a0c8",
+      "bytes": 14332
+    },
+    "DPSMate/libs/GraphLib/GraphTextures/Pie/1-2.tga": {
+      "sha256": "1efa63a6e8ac9fe88df9476e81601a5b6586862af23e967ff069601c0f12c214",
+      "bytes": 18611
+    },
+    "DPSMate/libs/GraphLib/GraphTextures/Pie/1-32.tga": {
+      "sha256": "6775aedca8c18c1769b57916e66df79621f0a5395794b7fece797b4ecdaf7525",
+      "bytes": 13995
+    },
+    "DPSMate/libs/GraphLib/GraphTextures/Pie/1-4.tga": {
+      "sha256": "073452f9500b4ff226b96d1152ccb4bf8fcd658ffd015c6b8eae22e401929664",
+      "bytes": 14824
+    },
+    "DPSMate/libs/GraphLib/GraphTextures/Pie/1-64.tga": {
+      "sha256": "41eaa9379e2b0cfea0c84618a002a4ddd7fb4a384e04b4633d7cf225b535e93d",
+      "bytes": 13859
+    },
+    "DPSMate/libs/GraphLib/GraphTextures/Pie/1-8.tga": {
+      "sha256": "324a86838b6d085c409c444f117559655a05e91cfc9f69d6efea402dc36b009e",
+      "bytes": 14863
+    },
+    "DPSMate/libs/GraphLib/GraphTextures/sline.tga": {
+      "sha256": "2e29c147eb68e6678c0cbada07b4b5de2499d571074cfe4a313fbe2b0c93e06b",
+      "bytes": 684
+    },
+    "DPSMate/libs/GraphLib/GraphTextures/triangle.tga": {
+      "sha256": "56267df8302725ec28b5bc7ea3da132d5eb787f137d7be73db6f23fa7a153918",
+      "bytes": 6152
+    },
+    "DPSMate_!deDE/Babble-Boss-2.3_deDE.lua": {
+      "sha256": "f1ab6183624043361928d3625a07207a1f96898f83533b3be01a35bf82b71e96",
+      "bytes": 12400
+    },
+    "DPSMate_!deDE/Babble-Spell-2.3_deDE.lua": {
+      "sha256": "0fced67c9788efbabacabc58bcb29f4d979df9ba31c17d1479c1b9d2c5da244d",
+      "bytes": 127783
+    },
+    "DPSMate_!deDE/deDE.lua": {
+      "sha256": "452297b6a77df353e331f24e07405a5f38d4ee018e03936e0a76bb645d9f95f1",
+      "bytes": 53244
+    },
+    "DPSMate_!deDE/DPSMate_!deDE.toc": {
+      "sha256": "b9114201639b94570f7e36912a999f3a8fb26c08563d7f1a400957ce2c4dff38",
+      "bytes": 299
+    },
+    "DPSMate_!deDE/DPSMate_ParserDEDE.lua": {
+      "sha256": "3aae3e55f5ca98c4869f28538c46035a38cf6e2d810e2f2397bfacc05edda812",
+      "bytes": 54395
+    },
+    "DPSMate_!deDE/NPCDB-1.0_deDE.lua": {
+      "sha256": "8114b2f801d3f901fc150542065ec4b6903e21f929a70fe9aeea5d2d8f0c8937",
+      "bytes": 205996
+    },
+    "DPSMate_!frFR/Babble-Boss-2.3_frFR.lua": {
+      "sha256": "9102e8840c5ffedc6375777a1efc19c40a35671f71b9892f4f514941f6814edb",
+      "bytes": 12657
+    },
+    "DPSMate_!frFR/Babble-Spell-2.3_frFR.lua": {
+      "sha256": "a60a9ae7d557b7a3231ddaea017510e12ffa929502c1a22277af6ae38c13f01d",
+      "bytes": 124922
+    },
+    "DPSMate_!frFR/DPSMate_!frFR.toc": {
+      "sha256": "cd66612fc9025cc0675e431d38e64dea432298ff28c12b37aa639b544785c640",
+      "bytes": 292
+    },
+    "DPSMate_!frFR/DPSMate_ParserFRFR.lua": {
+      "sha256": "b1fd0a049c0760914e8a0717b915c9090b94b29e4dd54258923d0eb53a04ed64",
+      "bytes": 66582
+    },
+    "DPSMate_!frFR/frFR.lua": {
+      "sha256": "c193c9efa0ef4dbad774aba6c56180d129eb2f29d0037f522c2f4a168102e21f",
+      "bytes": 53273
+    },
+    "DPSMate_!frFR/NPCDB-1.0_frFR.lua": {
+      "sha256": "cb70504c0daead1006fea09092647509d3dbaa55c2169030d15decc8ac4d3313",
+      "bytes": 203529
+    },
+    "DPSMate_!koKR/Babble-Boss-2.3_koKR.lua": {
+      "sha256": "91fbb844abd51bc5140322a2dc69079e657e2c34ef589c9031d8be3ba199bbaf",
+      "bytes": 17843
+    },
+    "DPSMate_!koKR/Babble-Spell-2.3_koKR.lua": {
+      "sha256": "a58503f5f763d159747e2e829cff116015fa09ddf1e3e884940a055c178fde6b",
+      "bytes": 79802
+    },
+    "DPSMate_!koKR/DPSMate_!koKR.toc": {
+      "sha256": "bebd995b268710f093950f4334e81720614446b1952e16fc28e21ce9c7aaa12f",
+      "bytes": 283
+    },
+    "DPSMate_!koKR/DPSMate_ParserKRKR.lua": {
+      "sha256": "58fdea0781ce559226b3af0423532bb6910022850f7f10a16c5e509eabfc7181",
+      "bytes": 54647
+    },
+    "DPSMate_!koKR/koKR.lua": {
+      "sha256": "bb25549c861733d3290ed44e426e5957fe165fae4043e4341fd3720d45ea242b",
+      "bytes": 55634
+    },
+    "DPSMate_!koKR/NPCDB-1.0_koKR.lua": {
+      "sha256": "ed977122b2e74eb1e769e19755904455a9e23517fccd2a7318ecf73caad8b857",
+      "bytes": 213939
+    },
+    "DPSMate_!ruRU/Babble-Boss-2.3_ruRU.lua": {
+      "sha256": "2be6a80acef77ffebe7b4e32ea850fc051e6a70e6f19abb5cbaf5f509f459db9",
+      "bytes": 14664
+    },
+    "DPSMate_!ruRU/Babble-Spell-2.3_ruRU.lua": {
+      "sha256": "ea6a6727120ceaeb52e5d4f9f1b75b0b4c416eee134ad860c3e3b8bd09c03eb3",
+      "bytes": 170980
+    },
+    "DPSMate_!ruRU/DPSMate_!ruRU.toc": {
+      "sha256": "5cdd733746c0f6304634e3b5114301b01f0ef81fc60ad340c4a173a4507c6d75",
+      "bytes": 475
+    },
+    "DPSMate_!ruRU/DPSMate_ParserRURU.lua": {
+      "sha256": "9067171ddb46cce67c153cd5221dd8ccfe95cafd0fe6845725c21a58c991f770",
+      "bytes": 51860
+    },
+    "DPSMate_!ruRU/NPCDB-1.0_ruRU.lua": {
+      "sha256": "8804f856c149c0109e0b1d87407b67c669dfc36518c05889702b0a17c6a86e7e",
+      "bytes": 434402
+    },
+    "DPSMate_!ruRU/ruRU.lua": {
+      "sha256": "7e6bf0faa6ec618ecf62470cfca5674c7b2922d98374ab878ef41b9652c6689c",
+      "bytes": 62290
+    },
+    "DPSMate_!zhCN/Babble-Boss-2.3_zhCN.lua": {
+      "sha256": "da47b457170d4c2b2bda9a57990db657bf00bcf3a91df3819f03e16a9bf830ec",
+      "bytes": 12566
+    },
+    "DPSMate_!zhCN/Babble-Spell-2.3_zhCN.lua": {
+      "sha256": "130ccdcd3f1b31e195d7d3e68e8d521a399e85c6f18805543c14bfb112a9c212",
+      "bytes": 108561
+    },
+    "DPSMate_!zhCN/DPSMate_!zhCN.toc": {
+      "sha256": "33e81a4666318cf6c9940be32b2b5d384ee1cbd4b161ac027ceac280868b9438",
+      "bytes": 294
+    },
+    "DPSMate_!zhCN/DPSMate_ParserZHCN.lua": {
+      "sha256": "56243ccdd14b2060a70bea0c3227fee6c927244a5332b643c72690e5428e7ec1",
+      "bytes": 57246
+    },
+    "DPSMate_!zhCN/NPCDB-1.0_zhCN.lua": {
+      "sha256": "b0dacb6aad2808f5e20b769234dec6c1aed7bcdbd1c050b478fab146978e345d",
+      "bytes": 195365
+    },
+    "DPSMate_!zhCN/zhCN.lua": {
+      "sha256": "1ccbe9e649c46895faa98296b1021cb9457e3d015c8d51982382a765c7a15166",
+      "bytes": 50036
+    },
+    "DPSMate_Absorbs/DPSMate_Absorbs.lua": {
+      "sha256": "46e5b7f273b95fb452c02fd060a83435869a3995830b54236e20b75c943710ff",
+      "bytes": 10992
+    },
+    "DPSMate_Absorbs/DPSMate_Absorbs.toc": {
+      "sha256": "5cf20b9ec1b9dcf4043896c8a6bdd28269349c4ef35050d830bedfa7c2710e50",
+      "bytes": 310
+    },
+    "DPSMate_Absorbs/DPSMate_Details_Absorbs.lua": {
+      "sha256": "ff2c9b0be01f98b20c23f5dc09fba1183fcaf226165c8f49205fccc81283cc77",
+      "bytes": 22345
+    },
+    "DPSMate_Absorbs/DPSMate_Details_Absorbs.xml": {
+      "sha256": "2db1914438d7e89829e6b0555ae1bfcef552d0e1ff24aae0404dc999aacefd86",
+      "bytes": 41592
+    },
+    "DPSMate_Absorbs/DPSMate_Details_AbsorbsTotal.lua": {
+      "sha256": "8807ff9d5388aa9c906d19d4d97f78ba273e7777637b28a87f581eb150fdcede",
+      "bytes": 18507
+    },
+    "DPSMate_Absorbs/DPSMate_Details_AbsorbsTotal.xml": {
+      "sha256": "52e22c0ddbc18aae4940c2e90bb786ce445d8a378d7b6812efe08e1677d571c0",
+      "bytes": 28990
+    },
+    "DPSMate_AbsorbsTaken/DPSMate_AbsorbsTaken.lua": {
+      "sha256": "34d446935d20f8ccff3834d18085fc224e7bfba09b3dda2dbf77e39db82f7cd7",
+      "bytes": 11241
+    },
+    "DPSMate_AbsorbsTaken/DPSMate_AbsorbsTaken.toc": {
+      "sha256": "f6cb165d14810ee491809cc585ecdf7de6ecdfdf42836e3ae5e358c0d0276391",
+      "bytes": 347
+    },
+    "DPSMate_AbsorbsTaken/DPSMate_Details_AbsorbsTaken.lua": {
+      "sha256": "f27f3529a1e9aec28ba63d335a59b3ac0ed5be064bcf869a90d6fce29d8ad6a4",
+      "bytes": 22905
+    },
+    "DPSMate_AbsorbsTaken/DPSMate_Details_AbsorbsTaken.xml": {
+      "sha256": "372fb0fde826424c8078df887437d7a491bffe264f07aaf825a1f372fa02fa9e",
+      "bytes": 42205
+    },
+    "DPSMate_AbsorbsTaken/DPSMate_Details_AbsorbsTakenTotal.lua": {
+      "sha256": "fd2ebab4b826bdc407b2d1a896b7b3621ae273869372b6ddc9d3792c7fc69603",
+      "bytes": 18933
+    },
+    "DPSMate_AbsorbsTaken/DPSMate_Details_AbsorbsTakenTotal.xml": {
+      "sha256": "b16949f566866e52ba914a6949256f760e1a0b0c6ed593dc44c92c90bedafcb7",
+      "bytes": 29345
+    },
+    "DPSMate_Activity/DPSMate_Activity.lua": {
+      "sha256": "4942fef281f11e14208454910f29f79636773fdda773d45427d1601027101238",
+      "bytes": 2516
+    },
+    "DPSMate_Activity/DPSMate_Activity.toc": {
+      "sha256": "c2ebd63c461039116ec5a80ce6b189d06b96ff952a2576a43de9ddd94fc40608",
+      "bytes": 177
+    },
+    "DPSMate_Auras/DPSMate_Auras.toc": {
+      "sha256": "87cf8178794e0891bebca16588713aad84218a851eaf28c4e98ff0a0768410d1",
+      "bytes": 376
+    },
+    "DPSMate_Auras/DPSMate_AurasGained.lua": {
+      "sha256": "5b1281e494e8bcddf319a82fcc60edde7e2f944192909b9b60c567a967b3729d",
+      "bytes": 4366
+    },
+    "DPSMate_Auras/DPSMate_AurasLost.lua": {
+      "sha256": "f1f8e71e322740dc0467cd825f864fc4dde06af08f4609063672a7ec4b8a05be",
+      "bytes": 4323
+    },
+    "DPSMate_Auras/DPSMate_AuraUptimers.lua": {
+      "sha256": "7d8f4e914cc758ae38eac730a8b1bebf5f45ecbccdb3dfd3efe7ad5640a631e9",
+      "bytes": 4387
+    },
+    "DPSMate_Auras/DPSMate_Details_Auras.lua": {
+      "sha256": "4307f28f0dbd27d5779b23b60306d7bbfe57a1a6004f509aba6434c7e64b4ec1",
+      "bytes": 14962
+    },
+    "DPSMate_Auras/DPSMate_Details_Auras.xml": {
+      "sha256": "a53340e298e6a35ff42f20bd05b7d2989e6369ede3f7f67653a259d40d9585f1",
+      "bytes": 15094
+    },
+    "DPSMate_Auras/DPSMate_Details_AurasTotal.lua": {
+      "sha256": "8e29493388801eb01558c1179cf921bcb82d7e8602b125f90cf1a9e448953157",
+      "bytes": 13351
+    },
+    "DPSMate_Auras/DPSMate_Details_AurasTotal.xml": {
+      "sha256": "654b501cbb553ff50e64503f047b60308e3e64270f7191ee7c866a9e77e57833",
+      "bytes": 9905
+    },
+    "DPSMate_Casts/DPSMate_Casts.lua": {
+      "sha256": "57a38a4554c5cf99239072477e42271711e2941687e5e10289e9ba25d0872e66",
+      "bytes": 5045
+    },
+    "DPSMate_Casts/DPSMate_Casts.toc": {
+      "sha256": "6de0987020542d49981d013e17f1fa4de73977e41e71d076a6a559858a0bde4c",
+      "bytes": 282
+    },
+    "DPSMate_Casts/DPSMate_Details_Casts.lua": {
+      "sha256": "49c45dbaced9f51f3cd784b70a6243a59f56dc8ecfa88b4b7d090dc015ca49a4",
+      "bytes": 3040
+    },
+    "DPSMate_Casts/DPSMate_Details_Casts.xml": {
+      "sha256": "3338c46f9f7c470ae8ca56e14f9b1e8c6d94ea2a18ed02c3970eb55f81081dd1",
+      "bytes": 8915
+    },
+    "DPSMate_Casts/DPSMate_Details_CastsTotal.lua": {
+      "sha256": "32170162f13e7342ab9857bb1885950fa62d74b447d4dec7f54552ff86e3778d",
+      "bytes": 2631
+    },
+    "DPSMate_Casts/DPSMate_Details_CastsTotal.xml": {
+      "sha256": "7c8c402f667ab70b7a18726511b00d849c76108b24474cec2160d05b7309ce9e",
+      "bytes": 6288
+    },
+    "DPSMate_CCBreaker/DPSMate_CCBreaker.lua": {
+      "sha256": "b589a7c8d03090399dd98e580652622397667f44507c5b591ea2e93d87e3fda4",
+      "bytes": 4851
+    },
+    "DPSMate_CCBreaker/DPSMate_CCBreaker.toc": {
+      "sha256": "a03a7301cabf792489fc1186f573cc414ea4e65176da6109eb0dbb4dced350e6",
+      "bytes": 310
+    },
+    "DPSMate_CCBreaker/DPSMate_Details_CCBreaker.lua": {
+      "sha256": "9afbed99fbd4371c81f19978828931995a359e57bccd6434058d1b08e8f23851",
+      "bytes": 3640
+    },
+    "DPSMate_CCBreaker/DPSMate_Details_CCBreaker.xml": {
+      "sha256": "718355f7e0f95ac7885cd07871e1a73634a49e64b69cdd93bad3dcbcc5b06c93",
+      "bytes": 10467
+    },
+    "DPSMate_CCBreaker/DPSMate_Details_CCBreakerTotal.lua": {
+      "sha256": "c338381860fae55108a17c364b487ab762f13e8c39826205f2eb7e589e9abe4f",
+      "bytes": 3551
+    },
+    "DPSMate_CCBreaker/DPSMate_Details_CCBreakerTotal.xml": {
+      "sha256": "481cf676a4a5cf64865fa98d51a0b37eca99c64fe54ae13d0f6f2f8b0632b638",
+      "bytes": 8246
+    },
+    "DPSMate_CureDisease/DPSMate_CureDisease.lua": {
+      "sha256": "502ee135af6e0088589773a7aefb57bdfa57d9ae61b48ccdd0b11c56f85e102c",
+      "bytes": 6971
+    },
+    "DPSMate_CureDisease/DPSMate_CureDisease.toc": {
+      "sha256": "1d059ec2c6b6ea2b9ba8dec2674776b8b4864930f32f6aa40e5e3dea19a6948a",
+      "bytes": 454
+    },
+    "DPSMate_CureDisease/DPSMate_Details_CureDisease.lua": {
+      "sha256": "c1efda41be6add1d621dd0e77df167fbe1b8e1b3525764599749ac03beec6c75",
+      "bytes": 7637
+    },
+    "DPSMate_CureDisease/DPSMate_Details_CureDisease.xml": {
+      "sha256": "ec24932af6a9d4a9f695481457a6dd0e81d55636d228b434c7ac0b055c8b4f14",
+      "bytes": 37088
+    },
+    "DPSMate_CureDisease/DPSMate_Details_CureDiseaseTotal.lua": {
+      "sha256": "9e84b0afc7e33154c6e266b89c0939582f1b35f8ae0a1cb799e822e2767c2d3b",
+      "bytes": 4475
+    },
+    "DPSMate_CureDisease/DPSMate_Details_CureDiseaseTotal.xml": {
+      "sha256": "4d8b6b324bc4b64c005d351e16df0b823adfdd6d625279a9fa5e76d9644a651d",
+      "bytes": 9401
+    },
+    "DPSMate_CureDiseaseReceived/DPSMate_CureDiseaseReceived.lua": {
+      "sha256": "f3f4d34bfd4ed006ec240768e0cd528c444170b3b6b9549ca15160797cdb8c53",
+      "bytes": 6029
+    },
+    "DPSMate_CureDiseaseReceived/DPSMate_CureDiseaseReceived.toc": {
+      "sha256": "52504f13fa2acbc00c99ac02d3f15c844d4bbf9ece21b146b46ca4e2df922a1c",
+      "bytes": 331
+    },
+    "DPSMate_CureDiseaseReceived/DPSMate_Details_CureDiseaseReceived.lua": {
+      "sha256": "df2b18d18376efa7696449e3d30092575e24bd2666143b32a21a77b168e16314",
+      "bytes": 8382
+    },
+    "DPSMate_CureDiseaseReceived/DPSMate_Details_CureDiseaseReceived.xml": {
+      "sha256": "8a332bdc5fe6a6bb6eb6fb195598b1275019e5de7787ec37da6af86206598d3f",
+      "bytes": 38008
+    },
+    "DPSMate_CurePoison/DPSMate_CurePoison.lua": {
+      "sha256": "16a90a93f0cbd99e813886c8f5f218f2caf9a7289412d89a48c4527539c0b88d",
+      "bytes": 6892
+    },
+    "DPSMate_CurePoison/DPSMate_CurePoison.toc": {
+      "sha256": "1b7d990f2b497e3f190d6882f116577fb19756bc596f1042cabf78f2376d410a",
+      "bytes": 444
+    },
+    "DPSMate_CurePoison/DPSMate_Details_CurePoison.lua": {
+      "sha256": "5cae20ff78ee4c09887e613422031e6c85143b8a55286adeb00cb84aebb3168c",
+      "bytes": 7604
+    },
+    "DPSMate_CurePoison/DPSMate_Details_CurePoison.xml": {
+      "sha256": "314725c07ed18b8b65f6ee7f782f2aa2d62a63cb27b3c34612275c7ade9f69bb",
+      "bytes": 36973
+    },
+    "DPSMate_CurePoison/DPSMate_Details_CurePoisonTotal.lua": {
+      "sha256": "bd858d4642ff635cbd040aebb3568142478c02bb674e2effff23af889371f07d",
+      "bytes": 4452
+    },
+    "DPSMate_CurePoison/DPSMate_Details_CurePoisonTotal.xml": {
+      "sha256": "60915911780ae36699ea3a7cd9e49cfd4748fa0b56e35881570235e46c5c6912",
+      "bytes": 9371
+    },
+    "DPSMate_CurePoisonReceived/DPSMate_CurePoisonReceived.lua": {
+      "sha256": "9a0744fdf01b3a87b138a7af325863f08368c20fc8b97ba3d18c9f19e570446b",
+      "bytes": 6003
+    },
+    "DPSMate_CurePoisonReceived/DPSMate_CurePoisonReceived.toc": {
+      "sha256": "c55a436d3a6d66188c2d3e0bdebac9afbfebe8244bbfd785a89ea56309526c4e",
+      "bytes": 325
+    },
+    "DPSMate_CurePoisonReceived/DPSMate_Details_CurePoisonReceived.lua": {
+      "sha256": "1e7dd63733b2d359ad9c37e59213367abea9e7286a51ee7ddda9a5832aafe9d2",
+      "bytes": 8351
+    },
+    "DPSMate_CurePoisonReceived/DPSMate_Details_CurePoisonReceived.xml": {
+      "sha256": "0d26b33514e74cc11c788f6475bdbae9fc298e491aef0e8ba013a596cfbf7693",
+      "bytes": 37893
+    },
+    "DPSMate_DamageTaken/DPSMate_DamageTaken.lua": {
+      "sha256": "2face6714cb4777cc87c6d0b2740bde380173f6c84ce70a1cb0c37b86eed32f7",
+      "bytes": 5892
+    },
+    "DPSMate_DamageTaken/DPSMate_DamageTaken.toc": {
+      "sha256": "0994a3a075dc59fa787fd2dafd5f3449304c7bde37bdfd35afee3c3af99a247f",
+      "bytes": 359
+    },
+    "DPSMate_DamageTaken/DPSMate_Details_DamageTaken.lua": {
+      "sha256": "8cb8cd22b07461d84878ac23a403a40f6e2fc0f80b118adcf9f429eec5037577",
+      "bytes": 28774
+    },
+    "DPSMate_DamageTaken/DPSMate_Details_DamageTaken.xml": {
+      "sha256": "c545c0df6afe3de39ebf066bc959d131d811e13c9434827606ef555e5ff1b937",
+      "bytes": 56133
+    },
+    "DPSMate_DamageTaken/DPSMate_Details_DamageTakenTotal.lua": {
+      "sha256": "e6dfd7ecea02860bf75ffb69b4291b9a99827522a042e17535151ddd1cbbafcd",
+      "bytes": 14301
+    },
+    "DPSMate_DamageTaken/DPSMate_Details_DamageTakenTotal.xml": {
+      "sha256": "05fbde0493023ee51dce18407bf85e0defd72b3a38a039305453f15de81989b1",
+      "bytes": 28474
+    },
+    "DPSMate_DamageTaken/DPSMate_DTPS.lua": {
+      "sha256": "7a88fbb772804f0c9d812ac7c60f8bc93f9d4bf14f2623f88b60f3b544886987",
+      "bytes": 5838
+    },
+    "DPSMate_Deaths/DPSMate_Deaths.lua": {
+      "sha256": "acfbcd100c96cf1f551b36279bb450d71965fb7f046418d9a8d607bfa9f55bc4",
+      "bytes": 5864
+    },
+    "DPSMate_Deaths/DPSMate_Deaths.toc": {
+      "sha256": "6a1eb2819912ad42968bd00147fbb3a72af00587e939e9d3376c2417eab15924",
+      "bytes": 304
+    },
+    "DPSMate_Deaths/DPSMate_Details_Deaths.lua": {
+      "sha256": "8377fb14e909b2902f503c2e07104bbc3258733c5ba2158e2076cd3cd3b0c542",
+      "bytes": 7023
+    },
+    "DPSMate_Deaths/DPSMate_Details_Deaths.xml": {
+      "sha256": "cd68b5c51854fcce33e8934ccaed14b581bfc690147283750e675d3369e5ea37",
+      "bytes": 33257
+    },
+    "DPSMate_Deaths/DPSMate_Details_DeathsTotal.lua": {
+      "sha256": "d51202cfe6f22b381ba8084df829a4db37e19577d68e29aee6400aecc7fe4455",
+      "bytes": 6268
+    },
+    "DPSMate_Deaths/DPSMate_Details_DeathsTotal.xml": {
+      "sha256": "f75fc9e23288c97dc164149d3d2b0b59896f456f8b9b19cba3fd1810619e1bfe",
+      "bytes": 11282
+    },
+    "DPSMate_Debug/DPSMate_Debug.lua": {
+      "sha256": "98ee3463f440f31c3b702b018905ac62a292ef0dbfd2c987547c2a202cf4a6f1",
+      "bytes": 4729
+    },
+    "DPSMate_Debug/DPSMate_Debug.toc": {
+      "sha256": "6e5b6b4a92cdd2417142206f0acbac8dac5400499088ebed61a4bf4174264a9d",
+      "bytes": 168
+    },
+    "DPSMate_Decurses/DPSMate_Decurses.lua": {
+      "sha256": "0e6d9da59de4e2dce1aca5de3edb620743aecf7b0287e6e28647ed590470eeec",
+      "bytes": 6936
+    },
+    "DPSMate_Decurses/DPSMate_Decurses.toc": {
+      "sha256": "3913c8751a9b418227a041b5322e0f18f49b2da7ee481bdc81dc1e41710141b9",
+      "bytes": 421
+    },
+    "DPSMate_Decurses/DPSMate_Details_Decurses.lua": {
+      "sha256": "41d959fb9ea1195056beb7a018b6e068e697c95ace680e1ce26b94889d3a9cbf",
+      "bytes": 7575
+    },
+    "DPSMate_Decurses/DPSMate_Details_Decurses.xml": {
+      "sha256": "ecc3aef334c29beeda09f8a840d1958346168cba5dff5c3f86e84f88b7e66999",
+      "bytes": 36743
+    },
+    "DPSMate_Decurses/DPSMate_Details_DecursesTotal.lua": {
+      "sha256": "b9656fd20a8bf44c213bfe138fd370c1f131389a8238ae752a9473a4e9be5e9f",
+      "bytes": 4425
+    },
+    "DPSMate_Decurses/DPSMate_Details_DecursesTotal.xml": {
+      "sha256": "c73b0bdb69a5c546c3f65a093c7ec636299e957566fd050e7aaab13be515f881",
+      "bytes": 9350
+    },
+    "DPSMate_DecursesReceived/DPSMate_DecursesReceived.lua": {
+      "sha256": "927af0834d12f0f42685520fad7587e441daeccf7b440f755a0cb2caca1b969c",
+      "bytes": 6037
+    },
+    "DPSMate_DecursesReceived/DPSMate_DecursesReceived.toc": {
+      "sha256": "1ed241ece49cc419d5eabd036792d1223cffe2c3cb8bcd78c56623a7d58d16f0",
+      "bytes": 311
+    },
+    "DPSMate_DecursesReceived/DPSMate_Details_DecursesReceived.lua": {
+      "sha256": "39f20fc8d2dacdb7bfae6670af5f5311bc98babd020e0cdd5dc12dc2925b19f5",
+      "bytes": 8342
+    },
+    "DPSMate_DecursesReceived/DPSMate_Details_DecursesReceived.xml": {
+      "sha256": "30500f1425df7c1ad77362777729fb43452ac8c7155d48b7e7b0dd6e5bb9a77f",
+      "bytes": 37663
+    },
+    "DPSMate_Dispels/DPSMate_Details_Dispels.lua": {
+      "sha256": "271e10e3025f5b7b251788cb82acdd0268d133c364e9c824852a1f747b71c122",
+      "bytes": 7366
+    },
+    "DPSMate_Dispels/DPSMate_Details_Dispels.xml": {
+      "sha256": "4adf83e4f9f4a97fc585ffa1e65d04f8bbec75e8ce530508d36f62bece3d3052",
+      "bytes": 36628
+    },
+    "DPSMate_Dispels/DPSMate_Details_DispelsTotal.lua": {
+      "sha256": "21e217eb2c59d6692b5b14c7f3a9d2805d453222bb5226824b29065b4d719a55",
+      "bytes": 4315
+    },
+    "DPSMate_Dispels/DPSMate_Details_DispelsTotal.xml": {
+      "sha256": "c3c521fbe514fc1f24d823fee6a4360d893355e9266a98156783f5dc299f1898",
+      "bytes": 9333
+    },
+    "DPSMate_Dispels/DPSMate_Dispels.lua": {
+      "sha256": "57df35852915befb962d290012a9bb051f34f3e0bdd513163cbcddc94b598aac",
+      "bytes": 5964
+    },
+    "DPSMate_Dispels/DPSMate_Dispels.toc": {
+      "sha256": "9772b135890d1ea32fa731fc74477cdd23b99c3384a26472e20118f93353c7bf",
+      "bytes": 419
+    },
+    "DPSMate_DispelsReceived/DPSMate_Details_DispelsReceived.lua": {
+      "sha256": "0b556eb1e0dc7367d3a0fab8ac67b78382873d14b1666076266e071586160237",
+      "bytes": 8139
+    },
+    "DPSMate_DispelsReceived/DPSMate_Details_DispelsReceived.xml": {
+      "sha256": "4cce8c524c02dbeca5230df0d926906d5b46a44ffe1ba854bad246535784d531",
+      "bytes": 37548
+    },
+    "DPSMate_DispelsReceived/DPSMate_DispelsReceived.lua": {
+      "sha256": "58bd2dea8880dba6fa901878adfba2ab67891bacd05b7fc5f931918096f8ae8a",
+      "bytes": 5516
+    },
+    "DPSMate_DispelsReceived/DPSMate_DispelsReceived.toc": {
+      "sha256": "900275e754539f24ac18bb03d208cecfdbe0f0a3c804a05058401c84c3897573",
+      "bytes": 305
+    },
+    "DPSMate_EDD/DPSMate_Details_EDD.lua": {
+      "sha256": "f7dd78049163b08dbf2be2989435a932d9c82297d77495443dbbbf4b866b169e",
+      "bytes": 22766
+    },
+    "DPSMate_EDD/DPSMate_Details_EDD.xml": {
+      "sha256": "7d979dbe2152f8d870b59c8a2fb7cbbef357237302319edbbf789a01cf71ff35",
+      "bytes": 53875
+    },
+    "DPSMate_EDD/DPSMate_Details_EDDTotal.lua": {
+      "sha256": "a0f48c0ed96ee675f2e56df466b3377370f634d51fb96a73da5a01d382686844",
+      "bytes": 13663
+    },
+    "DPSMate_EDD/DPSMate_Details_EDDTotal.xml": {
+      "sha256": "c037072da30a5aafe888d1705fd9c876b2bf7872f0afd93f44e18fb59f5c06d8",
+      "bytes": 27915
+    },
+    "DPSMate_EDD/DPSMate_EDD.lua": {
+      "sha256": "62245981bc2177520c2e7e1a9c3c92f4669eef006940ecfd2fed1052e75e0fc0",
+      "bytes": 5959
+    },
+    "DPSMate_EDD/DPSMate_EDD.toc": {
+      "sha256": "53af4e0ac48a98f544a24fa01fbb945cb14f2d7767b24e7cdd7c2872c57b2e7c",
+      "bytes": 302
+    },
+    "DPSMate_EDT/DPSMate_Details_EDT.lua": {
+      "sha256": "b67fbfe873bece9ad6d0f37e9fb97640f421c42115c79b95676d7c0f3df83f39",
+      "bytes": 22794
+    },
+    "DPSMate_EDT/DPSMate_Details_EDT.xml": {
+      "sha256": "c1acfd81ffb94a7f10c5c5413fca059084fec5e733015696bd0b84220d8f4841",
+      "bytes": 54141
+    },
+    "DPSMate_EDT/DPSMate_Details_EDTTotal.lua": {
+      "sha256": "42a711baf6ad1b1dc7e0446c1544dded711261e674efd31633f249a153ba641b",
+      "bytes": 13664
+    },
+    "DPSMate_EDT/DPSMate_Details_EDTTotal.xml": {
+      "sha256": "92a442e78e24b0037df5fd20b0bdd426365eaad4da7cc9a06d69dd2075de8140",
+      "bytes": 27915
+    },
+    "DPSMate_EDT/DPSMate_EDT.lua": {
+      "sha256": "1ddfb2b932c97309a497337c4abd58280be436ca87838b1bf940f4edf5cd9ead",
+      "bytes": 5985
+    },
+    "DPSMate_EDT/DPSMate_EDT.toc": {
+      "sha256": "55083722597335d1570e20e8405baffdf17a8b2b0806c0ff77c188573ea20eb5",
+      "bytes": 303
+    },
+    "DPSMate_EHealing/DPSMate_Details_EHealing.lua": {
+      "sha256": "aee724d9634c0a05135597d7830e4f24994510bb85bb6b8b72aceb8a66b393a5",
+      "bytes": 30745
+    },
+    "DPSMate_EHealing/DPSMate_Details_EHealing.xml": {
+      "sha256": "0d646e7dc29de84b29cc1960fccb71c80674c3dc7c403a532ec82b709429b2a3",
+      "bytes": 49340
+    },
+    "DPSMate_EHealing/DPSMate_Details_EHealingTotal.lua": {
+      "sha256": "ec84549c5af88bdfef5c7622628ae4f2801fd391c12474fdcfd9dec7b33d5c61",
+      "bytes": 13247
+    },
+    "DPSMate_EHealing/DPSMate_Details_EHealingTotal.xml": {
+      "sha256": "87d0b348d43e0e2268ea4972803fe02bc1045e97f62bd6182f93fb12d31c1ba2",
+      "bytes": 27711
+    },
+    "DPSMate_EHealing/DPSMate_EffectiveHealing.lua": {
+      "sha256": "cefaf8975f944eaff4d984905c204ecebe973655b3acf0592aab305a8c983106",
+      "bytes": 5313
+    },
+    "DPSMate_EHealing/DPSMate_EffectiveHPS.lua": {
+      "sha256": "dd6deb44e40bfc7aa8db2a8c6f3def18ccbc23bb078dc0d5ef93354915e27533",
+      "bytes": 4936
+    },
+    "DPSMate_EHealing/DPSMate_EHealing.toc": {
+      "sha256": "9f384550ac1a6badb936c3e21457b2e62f6a41b47a86e3bbe89a02c5b2590221",
+      "bytes": 374
+    },
+    "DPSMate_EHealingTaken/DPSMate_Details_EHealingTaken.lua": {
+      "sha256": "6f16c3950cc1c5cd88ca82ca385d4d17cd6cace5a1dc18b5665cfaff32fcd3fc",
+      "bytes": 19251
+    },
+    "DPSMate_EHealingTaken/DPSMate_Details_EHealingTaken.xml": {
+      "sha256": "a8c25ff92cbc4b6114ea0777a3440bf4b4e87d55ec394fb26ade30c8b5f9b5cf",
+      "bytes": 37502
+    },
+    "DPSMate_EHealingTaken/DPSMate_Details_EHealingTakenTotal.lua": {
+      "sha256": "4483f22ea237ab9e590bad36ada7282561916ab76c0217519272375c21afba14",
+      "bytes": 14268
+    },
+    "DPSMate_EHealingTaken/DPSMate_Details_EHealingTakenTotal.xml": {
+      "sha256": "bf4e6a525f9e40610e6db2c6c8b439547f93ee9fda2a660b28b88d5eabb385fe",
+      "bytes": 28067
+    },
+    "DPSMate_EHealingTaken/DPSMate_EffectiveHealingTaken.lua": {
+      "sha256": "9e03dbde43d5a733cf373b6b5c399d876e7a8111109799612fd3f9f3564f8a2e",
+      "bytes": 5927
+    },
+    "DPSMate_EHealingTaken/DPSMate_EHealingTaken.toc": {
+      "sha256": "aeedd5758c4a0fbc1d02c58c13ee76f79133bba1f6faa55d0a8729b68040dd78",
+      "bytes": 386
+    },
+    "DPSMate_Fails/DPSMate_Details_Fails.lua": {
+      "sha256": "5a882d37e8dba13c2734dc2ccb4da90c97a268a3bb9de2ebe882b5efe3de4325",
+      "bytes": 3728
+    },
+    "DPSMate_Fails/DPSMate_Details_Fails.xml": {
+      "sha256": "2539f5307aaecefed111149aa42822cb44c785e1963a7f7e4f6dc0badb6a3918",
+      "bytes": 10470
+    },
+    "DPSMate_Fails/DPSMate_Details_FailsTotal.lua": {
+      "sha256": "bcb4ed6dfa8d09c7b40d7369d2d18b960ecc62bdf0fb734f345d1f02aabdb713",
+      "bytes": 3778
+    },
+    "DPSMate_Fails/DPSMate_Details_FailsTotal.xml": {
+      "sha256": "3c5d2edeb0b26731bdfbe6a0205e2a02a89dcf8556e4cef29ab3fb2f3e61681d",
+      "bytes": 7680
+    },
+    "DPSMate_Fails/DPSMate_Fails.lua": {
+      "sha256": "b472ba2d5f3213c4f44bb3b58ac42a9a1d880999042ac6d2422b452c0cd73d4f",
+      "bytes": 4784
+    },
+    "DPSMate_Fails/DPSMate_Fails.toc": {
+      "sha256": "fe3b12a2d105a3dc27ec82ea361ce29dcae0b1a9d1e81c9fc2e54c37dc2c9767",
+      "bytes": 301
+    },
+    "DPSMate_FriendlyFire/DPSMate_Details_FriendlyFire.lua": {
+      "sha256": "e4b5ae489cc5b240c1d4b07cdecd2b1474642c8b5f191ba73bd628db5bab3de9",
+      "bytes": 21485
+    },
+    "DPSMate_FriendlyFire/DPSMate_Details_FriendlyFire.xml": {
+      "sha256": "70cf3aafd3229194464b9d7ac9623bfeeaedc1bf5620cbab37b2383637a69fac",
+      "bytes": 48334
+    },
+    "DPSMate_FriendlyFire/DPSMate_Details_FriendlyFireTotal.lua": {
+      "sha256": "46835fbb536f441b9c3a26425b520068ea2eaec160ca04cec2efed8ddf596e18",
+      "bytes": 14666
+    },
+    "DPSMate_FriendlyFire/DPSMate_Details_FriendlyFireTotal.xml": {
+      "sha256": "31bff5d0ac9c743190eb45efe21e89560c5de73cb4d246a2d1cefcd7c0f12509",
+      "bytes": 27287
+    },
+    "DPSMate_FriendlyFire/DPSMate_FriendlyFire.lua": {
+      "sha256": "e64714e568b5facdac90ceff2d45bd16dfad7989963de2849690971996b36003",
+      "bytes": 6940
+    },
+    "DPSMate_FriendlyFire/DPSMate_FriendlyFire.toc": {
+      "sha256": "870b1590e5242c18bea57f9f902bd909cacd836b8c3a9b8de80930a9a4724082",
+      "bytes": 353
+    },
+    "DPSMate_FriendlyFireTaken/DPSMate_Details_FriendlyFireTaken.lua": {
+      "sha256": "6d7f1251e561daebc4f307592144458cbc8fb268e837c95ceb08535f7fffb8b0",
+      "bytes": 21301
+    },
+    "DPSMate_FriendlyFireTaken/DPSMate_Details_FriendlyFireTaken.xml": {
+      "sha256": "2f12d01ce818b939f69df8a8a5e79ba0eab086ba614179a36ab23fdef6938d17",
+      "bytes": 48448
+    },
+    "DPSMate_FriendlyFireTaken/DPSMate_Details_FriendlyFireTakenTotal.lua": {
+      "sha256": "378531257ff7e2084456be2bd8a136bf8eee7c56be99dee73c1da5bc772af563",
+      "bytes": 14779
+    },
+    "DPSMate_FriendlyFireTaken/DPSMate_Details_FriendlyFireTakenTotal.xml": {
+      "sha256": "cdb19792b04afb7f399b5f110ed85b88442e9d8b45d9297bd670364cb1de5b06",
+      "bytes": 27357
+    },
+    "DPSMate_FriendlyFireTaken/DPSMate_FriendlyFireTaken.lua": {
+      "sha256": "ca82fb36b77f7f7c19df7a4b964637a7ba58cc4ba777bd0878fcd850fa7af738",
+      "bytes": 5839
+    },
+    "DPSMate_FriendlyFireTaken/DPSMate_FriendlyFireTaken.toc": {
+      "sha256": "622c91b50b83e71470c30c0f0a9307c96d21130d666bb576817b8e18e87a3884",
+      "bytes": 390
+    },
+    "DPSMate_Healing/DPSMate_Details_Healing.lua": {
+      "sha256": "a0b9fec770c1476e179c90a622a3e950d0894db7114aeb065fc434982600f2da",
+      "bytes": 30560
+    },
+    "DPSMate_Healing/DPSMate_Details_Healing.xml": {
+      "sha256": "6af850b5851811377c47e2f4cc332ba5d4bcd41a8bfbdd3929ea3221f372191c",
+      "bytes": 49244
+    },
+    "DPSMate_Healing/DPSMate_Details_HealingTotal.lua": {
+      "sha256": "79332ca8abdbc21ef8d8ad3369d8481396fb7a3a82d5266b4d235ee80da3bbcb",
+      "bytes": 13168
+    },
+    "DPSMate_Healing/DPSMate_Details_HealingTotal.xml": {
+      "sha256": "abca52dd2a42e02578c73057b66f172ed1957436b4aee13f5be512d8f8c787c9",
+      "bytes": 27639
+    },
+    "DPSMate_Healing/DPSMate_Healing.lua": {
+      "sha256": "dfd8ac72270c87bafe9e17f4a7f870b0523de97b5011ee39e031e2e177eb6ba1",
+      "bytes": 5137
+    },
+    "DPSMate_Healing/DPSMate_Healing.toc": {
+      "sha256": "65efba334e941f5e26f5e96c0a4e8536ede106223066e76a964707c742af9873",
+      "bytes": 340
+    },
+    "DPSMate_Healing/DPSMate_HPS.lua": {
+      "sha256": "0e84b2ba3feefe6b39b304a4cdae7414de38b23ec57d7b67ad61d74a17a316d4",
+      "bytes": 4765
+    },
+    "DPSMate_HealingAndAbsorbs/DPSMate_Details_HealingAndAbsorbs.lua": {
+      "sha256": "b090106edc63e19d7f95302f3450761d728815b01c61c033653f67dd18cbc29e",
+      "bytes": 43451
+    },
+    "DPSMate_HealingAndAbsorbs/DPSMate_Details_HealingAndAbsorbs.xml": {
+      "sha256": "57a5cea1274b9e70e44af135f3b5fa5c64a037c4c514e742032691f06b892ab1",
+      "bytes": 50204
+    },
+    "DPSMate_HealingAndAbsorbs/DPSMate_Details_HealingAndAbsorbsTotal.lua": {
+      "sha256": "efe1606aac7f709a69576894712a35926cccb788d8f038c9f05c3222cfc5f9b5",
+      "bytes": 19213
+    },
+    "DPSMate_HealingAndAbsorbs/DPSMate_Details_HealingAndAbsorbsTotal.xml": {
+      "sha256": "201ac013b81aac5ccf1e05cdcc202c625ffd00e8be21b0454eba838ae6f6c4a3",
+      "bytes": 27356
+    },
+    "DPSMate_HealingAndAbsorbs/DPSMate_HealingAndAbsorbs.lua": {
+      "sha256": "b3a5ce3f883b5922193a740f9ecf5555151eadfd545503e83ef1866a06256356",
+      "bytes": 11243
+    },
+    "DPSMate_HealingAndAbsorbs/DPSMate_HealingAndAbsorbs.toc": {
+      "sha256": "6709884ac28ccd7942c6fff00fe8ffd2f791afe79b834ed5c6b7dca893a8f42b",
+      "bytes": 390
+    },
+    "DPSMate_HealingTaken/DPSMate_Details_HealingTaken.lua": {
+      "sha256": "36226c3b331bf5c8634bab8fdb1d4e26ba22596a4919b41acd30916f40d97860",
+      "bytes": 19186
+    },
+    "DPSMate_HealingTaken/DPSMate_Details_HealingTaken.xml": {
+      "sha256": "7871bf5e81d63fce747b79ec5f046e032e4cbd664748c75e5e6235483f07c3eb",
+      "bytes": 37433
+    },
+    "DPSMate_HealingTaken/DPSMate_Details_HealingTakenTotal.lua": {
+      "sha256": "110439ef15b01bc2831f51eff21fb905e1de9b8eb012014785759eb4808b970b",
+      "bytes": 14189
+    },
+    "DPSMate_HealingTaken/DPSMate_Details_HealingTakenTotal.xml": {
+      "sha256": "4bca45e69cd739331f49a4bd6dc8d680fe83c051d97a23cfcfae4e7c8ab59c83",
+      "bytes": 27995
+    },
+    "DPSMate_HealingTaken/DPSMate_HealingTaken.lua": {
+      "sha256": "e7274561dea913abc24a5289164f5c25d474aecec6dcef1950e43948cbe2fb05",
+      "bytes": 5749
+    },
+    "DPSMate_HealingTaken/DPSMate_HealingTaken.toc": {
+      "sha256": "fdc2c1cbfa5f3fcb6546e7a6a12cb4d9c3045e3e15b20578b71545bb33518b2f",
+      "bytes": 361
+    },
+    "DPSMate_Interrupts/DPSMate_Details_Interrupts.lua": {
+      "sha256": "8901346ec043003f2f3e6832758bd30dd02f1ed8da3bd82b1d04e90b5164bd64",
+      "bytes": 8013
+    },
+    "DPSMate_Interrupts/DPSMate_Details_Interrupts.xml": {
+      "sha256": "d2962f4be974460825f168503154cc44ad01baf4b146951a91d48a862a6ba916",
+      "bytes": 36977
+    },
+    "DPSMate_Interrupts/DPSMate_Details_InterruptsTotal.lua": {
+      "sha256": "1248b305a757e37df212c30a9412cba353bb74109a9e8d54221d62ebf34ce43c",
+      "bytes": 4428
+    },
+    "DPSMate_Interrupts/DPSMate_Details_InterruptsTotal.xml": {
+      "sha256": "a6c23ec89dc42c660038296ffb32155ca10044d5c79584d7ce3f66766756d926",
+      "bytes": 9366
+    },
+    "DPSMate_Interrupts/DPSMate_Interrupts.lua": {
+      "sha256": "2ada88947de94b6fad497bec1bbd52166e7a6975c778cee5513d695eb056afb4",
+      "bytes": 8894
+    },
+    "DPSMate_Interrupts/DPSMate_Interrupts.toc": {
+      "sha256": "b83f29c6d700e19005f92ac4d0d64fd0c7b67450ed4002d7b46e40737dd229c6",
+      "bytes": 336
+    },
+    "DPSMate_LiftMagic/DPSMate_Details_LiftMagic.lua": {
+      "sha256": "86733e7e2657a81ee33d0096974fc2ccd5fa115449ba22eb87fc1309c5e0682b",
+      "bytes": 7571
+    },
+    "DPSMate_LiftMagic/DPSMate_Details_LiftMagic.xml": {
+      "sha256": "f5f533bf3cc7dee6970d5934ae325baaa9e8b5c481237fbbf3fe3b5c318d192e",
+      "bytes": 36858
+    },
+    "DPSMate_LiftMagic/DPSMate_Details_LiftMagicTotal.lua": {
+      "sha256": "edfbfe590db8ab727eecb2ee2e5e23da15c8eff081113a61fc930c136fe9fa89",
+      "bytes": 4429
+    },
+    "DPSMate_LiftMagic/DPSMate_Details_LiftMagicTotal.xml": {
+      "sha256": "405f12d92d72f9325134e8121d31876f03547a9e154911f04e87b373d80b29ff",
+      "bytes": 9372
+    },
+    "DPSMate_LiftMagic/DPSMate_LiftMagic.lua": {
+      "sha256": "167c267a9bfd70e20e19e4271c7bd9708a2ee99c1a0394b218d6d4d9e172b586",
+      "bytes": 6884
+    },
+    "DPSMate_LiftMagic/DPSMate_LiftMagic.toc": {
+      "sha256": "48e677ca6ee84c2872e1dfcf07f35bacf22ffb69c6f953abfa0ff025820d76c6",
+      "bytes": 434
+    },
+    "DPSMate_LiftMagicReceived/DPSMate_Details_LiftMagicReceived.lua": {
+      "sha256": "3748f0004d87f7381c3acf8a2dc4dee30c13c56d6b319ee182a77eb838e454c8",
+      "bytes": 8318
+    },
+    "DPSMate_LiftMagicReceived/DPSMate_Details_LiftMagicReceived.xml": {
+      "sha256": "93f0b935447ce974b64c2ef8c4bb5fe39c4405b20e8676548f940cdf50e23b76",
+      "bytes": 37778
+    },
+    "DPSMate_LiftMagicReceived/DPSMate_LiftMagicReceived.lua": {
+      "sha256": "6992cc0ae83e1eaf83a813f43af1a5bd1b1ffcf2e0a02c50721a742b67b7fed7",
+      "bytes": 6000
+    },
+    "DPSMate_LiftMagicReceived/DPSMate_LiftMagicReceived.toc": {
+      "sha256": "5b31fdd83d538b5bb90e4c44b64006681119e79c48c7d35d259fbc689314b6fd",
+      "bytes": 319
+    },
+    "DPSMate_OHealingTaken/DPSMate_Details_OHealingTaken.lua": {
+      "sha256": "01bb4b34ef6927950daee970e3dfdf1e60ced774058738ca0567ebf013336b55",
+      "bytes": 19247
+    },
+    "DPSMate_OHealingTaken/DPSMate_Details_OHealingTaken.xml": {
+      "sha256": "23fb8203047c9ac1c912ac5fc711ed3b3343682968e050df381e0ad27f98c272",
+      "bytes": 37502
+    },
+    "DPSMate_OHealingTaken/DPSMate_Details_OverhealingTakenTotal.lua": {
+      "sha256": "8faebca25fa20ece80762b6851c0174b09dcc900bf7fe22478b96aca1cfa06d8",
+      "bytes": 14453
+    },
+    "DPSMate_OHealingTaken/DPSMate_Details_OverhealingTakenTotal.xml": {
+      "sha256": "3d67b2083040b4069ef30d45f5995148564a4abbadb95a080869117e3c2bfd70",
+      "bytes": 28280
+    },
+    "DPSMate_OHealingTaken/DPSMate_OHealingTaken.lua": {
+      "sha256": "2a18ee663f3c08e4f6a6d831b4b189a23546b6cd857c2e9d46404b1e5fd50535",
+      "bytes": 5753
+    },
+    "DPSMate_OHealingTaken/DPSMate_OHealingTaken.toc": {
+      "sha256": "6fadc76b5c0d55114d4b196d40ff9e16a16d880d16c1049a7b3d2ddc848b1b68",
+      "bytes": 372
+    },
+    "DPSMate_Overhealing/DPSMate_Details_Overhealing.lua": {
+      "sha256": "abe9aeb57ba595ee9157fb1807d78e8405b82014944390f642410df23a8dc11b",
+      "bytes": 31253
+    },
+    "DPSMate_Overhealing/DPSMate_Details_Overhealing.xml": {
+      "sha256": "17d2e8ee514a47755b9bdb1b7cea09301f896c4e77041b2ec06b0c54864136c9",
+      "bytes": 49628
+    },
+    "DPSMate_Overhealing/DPSMate_Details_OverhealingTotal.lua": {
+      "sha256": "6aa04c42f10acaad8f14991ee817bb8bab6dfaee921dacb49a80ce11962d20f6",
+      "bytes": 13435
+    },
+    "DPSMate_Overhealing/DPSMate_Details_OverhealingTotal.xml": {
+      "sha256": "ddbe79372e1c9185171364f17505992eb68cd5603d68d1c89d7d26351d09da31",
+      "bytes": 27924
+    },
+    "DPSMate_Overhealing/DPSMate_OHPS.lua": {
+      "sha256": "e0abe20590685721470297e2a9af7133947dc8a5963b6aa10677f01bac29d582",
+      "bytes": 4787
+    },
+    "DPSMate_Overhealing/DPSMate_Overhealing.lua": {
+      "sha256": "c4cab76b84ae55a55f0970172ca161e7f569fe46637d41cc59de3265fc7ec314",
+      "bytes": 5243
+    },
+    "DPSMate_Overhealing/DPSMate_Overhealing.toc": {
+      "sha256": "350d30d4db731cd315cd77b377176fe8b365c457e7ad042ee5836d99a54f0f62",
+      "bytes": 361
+    },
+    "DPSMate_Procs/DPSMate_Details_Procs.lua": {
+      "sha256": "1598c752905faa3ce08ea1a96213db79b79322d43a0c66c553cb0c7d37ee3025",
+      "bytes": 9816
+    },
+    "DPSMate_Procs/DPSMate_Details_Procs.xml": {
+      "sha256": "33536d5981c5b28696ee0013bee006b57c2041b538e8d2eef526a66be337e410",
+      "bytes": 9748
+    },
+    "DPSMate_Procs/DPSMate_Details_ProcsTotal.lua": {
+      "sha256": "3022fa7c73b0c9331f47cabc30c70a321bee927b3584306ea0342d9d09d0b7b5",
+      "bytes": 8787
+    },
+    "DPSMate_Procs/DPSMate_Details_ProcsTotal.xml": {
+      "sha256": "5306b9b5c2fd3a1f36bd102e36ee900293dd644081fe1a616f431fa497dcce4e",
+      "bytes": 7047
+    },
+    "DPSMate_Procs/DPSMate_Procs.lua": {
+      "sha256": "8dc7084a2a5ff27d100c11e50874c6e1f714a0a35ce10518109cb00f5ccfa070",
+      "bytes": 5386
+    },
+    "DPSMate_Procs/DPSMate_Procs.toc": {
+      "sha256": "a5555f1d2358619166913509373d086d3851568733151769b2cfbcf86af46d70",
+      "bytes": 301
+    },
+    "DPSMate_Threat/DPSMate_Details_Threat.lua": {
+      "sha256": "fa894c9f4b6a3dfb94130230b3ccf1aa2bc536bae7da56d93aaa29841542bfd1",
+      "bytes": 23566
+    },
+    "DPSMate_Threat/DPSMate_Details_Threat.xml": {
+      "sha256": "23296b970e7aa0876233c7628515f3f58aa355d28372f1e11dd354ce1580e02e",
+      "bytes": 36916
+    },
+    "DPSMate_Threat/DPSMate_Details_ThreatTotal.lua": {
+      "sha256": "d20d42981c70956754a155f61d740cb6959164eb7b1a2658bb5e91fe08be73ad",
+      "bytes": 13466
+    },
+    "DPSMate_Threat/DPSMate_Details_ThreatTotal.xml": {
+      "sha256": "8fa3b5818ff1f3e7be57bed32cf0872103c03fedf8f2dd2079ac553983e24e10",
+      "bytes": 27569
+    },
+    "DPSMate_Threat/DPSMate_Threat.lua": {
+      "sha256": "168906ab08b3b4ebb5d9a1743b3d575d50a04ed4dcd19cde50096386d9b9f57b",
+      "bytes": 5049
+    },
+    "DPSMate_Threat/DPSMate_Threat.toc": {
+      "sha256": "5ea03977c7c4fb322f3c1ee890afaa6d80be97245c9563ee19c2739378275f10",
+      "bytes": 341
+    },
+    "DPSMate_Threat/DPSMate_TPS.lua": {
+      "sha256": "8434119353282aab965d924d86cb0e9665c96a31fd705704414ef92d0ba59964",
+      "bytes": 5126
+    },
+    "LICENSE": {
+      "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+      "bytes": 35141
+    },
+    "README.md": {
+      "sha256": "a13cb77e9bb93b63f440542872b7da6d9a95caff732de5484551d56dc21e355a",
+      "bytes": 3684
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

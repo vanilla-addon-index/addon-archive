@@ -1,0 +1,473 @@
+{
+  "upstream": "https://github.com/Otari98/Atlas",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Otari98",
+    "repo": "Atlas",
+    "name": "Atlas",
+    "url": "https://github.com/Otari98/Atlas",
+    "api": "https://api.github.com/repos/Otari98/Atlas"
+  },
+  "commit": "31650e64f52e74f06a0b1cc9622864c3bc2d0dbe",
+  "sourceFiles": {
+    "Atlas.lua": {
+      "sha256": "7a76932b248a4445299242ca66f90569487e3139946702158d21263566194a5c",
+      "bytes": 27060
+    },
+    "Atlas.toc": {
+      "sha256": "fcea57e36e93111829b49260ac9bb0157f958527b764f421cb8d1e529e16a032",
+      "bytes": 1278
+    },
+    "Atlas.xml": {
+      "sha256": "0e79e9331bade10607f0afe59e5360bbdc8022142d181e1ae5183c500816ad36",
+      "bytes": 13736
+    },
+    "AtlasButton.lua": {
+      "sha256": "1169901c0a77f07e553ccfe98f845c419f2b92c061549fd371121025a7d81fff",
+      "bytes": 2260
+    },
+    "AtlasButton.xml": {
+      "sha256": "9732c77bc049da6ae0376e991f3ecf8c53145b5077fb52ede1af80e744e600f6",
+      "bytes": 2452
+    },
+    "AtlasDropDown.lua": {
+      "sha256": "c3eb393b7ce21fc58da0b6c92ea79d378d125d15762f81abc06b92fce479f514",
+      "bytes": 8205
+    },
+    "AtlasMaps.lua": {
+      "sha256": "6532c7dfd29686f031a6d571a7a39e594f1c4de8f6413c1fbd9f17d42c818eca",
+      "bytes": 94312
+    },
+    "AtlasOptions.lua": {
+      "sha256": "06876dc590c2f5257a97db8f363973a5da3a8ede0bba4024a4b34afea988caab",
+      "bytes": 4545
+    },
+    "AtlasOptions.xml": {
+      "sha256": "cfdffc82e3e94067e6e8a60af285f87b879265b53f3ed4cfd08d01c6856d0b3f",
+      "bytes": 8800
+    },
+    "AtlasTitan.lua": {
+      "sha256": "125289776d3705cc4d9f3746ea9d12af977ed59bb84e50902f971116feecf0cb",
+      "bytes": 3186
+    },
+    "AtlasTitan.xml": {
+      "sha256": "f5bbb74b3a1332c6382675f0eddbd06d4a11c4062474673a22b74ac56f62ec38",
+      "bytes": 1599
+    },
+    "Bindings.xml": {
+      "sha256": "06c573320ba5ce7a9d4c640dbf7a2d968987c429204945a062b032e719f3b1e9",
+      "bytes": 1030
+    },
+    "Changelog.txt": {
+      "sha256": "543af5715b184bdc67dbade27b54070360e526dee502de99eee4d19989cce0db",
+      "bytes": 1366
+    },
+    "Images/AtlasFrame-Bottom.blp": {
+      "sha256": "1117cd8c3100df0f4864b5896e0efb437e5d1859ffedea5039c1353c255623e4",
+      "bytes": 175972
+    },
+    "Images/AtlasFrame-Bottom2.blp": {
+      "sha256": "1a3e2bf3e1921d03412b9bd4b29ca333d63db8e024fe61c3dd5ec22155390ef6",
+      "bytes": 88612
+    },
+    "Images/AtlasFrame-Left.blp": {
+      "sha256": "4d8fcc25b874ee18d7f555cc16600f8b01737de3ebd266cd9bed8bf8ebca9b07",
+      "bytes": 12196
+    },
+    "Images/AtlasFrame-Right.blp": {
+      "sha256": "e35141756db04d3f96eabfd36cd1ff7f7653ad72c708491f5a67d4d9f3b314a5",
+      "bytes": 350724
+    },
+    "Images/AtlasFrame-Top.blp": {
+      "sha256": "755d583d3cc01508182eccc87057c58d048d46ce49ceab27987a25ad802375c2",
+      "bytes": 88612
+    },
+    "Images/LockButton-Locked-Down.blp": {
+      "sha256": "6e96d3e9572170d784b9686bd2d0d8a843ca1d0d2243ef941324935b325808d7",
+      "bytes": 2564
+    },
+    "Images/LockButton-Locked-Up.blp": {
+      "sha256": "ce20bccd510f5e77fa3065c50e0e933881c1924fda45662cb2f9dfd6a67160b8",
+      "bytes": 2564
+    },
+    "Images/LockButton-Unlocked-Down.blp": {
+      "sha256": "a60f474b3d418f592a838966a5ee080fd68141d1c8111d6bd7c1f06a643e03d5",
+      "bytes": 2564
+    },
+    "Images/LockButton-Unlocked-Up.blp": {
+      "sha256": "4a51373edc1deee19c97496f417ad7b6283d781cecd089d3fdec1da26add19e6",
+      "bytes": 2564
+    },
+    "Images/Maps/AlteracValleyNorth.blp": {
+      "sha256": "ae758ea431110488f8a5273b4884fe2b2027ab1560fe6a5c770f8497d127fc5c",
+      "bytes": 349700
+    },
+    "Images/Maps/AlteracValleySouth.blp": {
+      "sha256": "5cb43bed874610a47544956b5cb58ee487b2f219f784423c5b87ea2cd6e1f5d8",
+      "bytes": 349700
+    },
+    "Images/Maps/ArathiBasin.blp": {
+      "sha256": "ba834f7fbb55c7d2f88d380a197ec2eaa0ae1aea604da8e8ca75525c3c3cb9f7",
+      "bytes": 350724
+    },
+    "Images/Maps/Azuregos.blp": {
+      "sha256": "643400c2f605247440ca0bfcca09fefb943509da0df2244630edc928a2a1f0c7",
+      "bytes": 350724
+    },
+    "Images/Maps/BlackfathomDeeps.blp": {
+      "sha256": "84fe1e29c8feb5c064c12a06294eaea7546485b047dbf9e0538f7c54a3692d6b",
+      "bytes": 263316
+    },
+    "Images/Maps/BlackfathomDeepsEnt.blp": {
+      "sha256": "b5e270afb10788c5a95eb58ab127696be54bc437f28d5cae7cbf41dc7426a023",
+      "bytes": 350724
+    },
+    "Images/Maps/BlackrockDepths.blp": {
+      "sha256": "824067b9a9a5c949bb70ddf170984e578cb3d6849ac95a3250831929a0ff869b",
+      "bytes": 350724
+    },
+    "Images/Maps/BlackrockMountainEnt.blp": {
+      "sha256": "68911a6b7c649a19665313e09cb03d7a1a1e07d5deb60bc84eaab1e0163696d8",
+      "bytes": 350724
+    },
+    "Images/Maps/BlackrockSpireLower.blp": {
+      "sha256": "2d5d50d46c4fbaa871b8286fba2341120ae6eee901d5b7f2488d6594f2025d2e",
+      "bytes": 350724
+    },
+    "Images/Maps/BlackrockSpireUpper.blp": {
+      "sha256": "1c7a2d28675d3924c161126188a0bb7a149862b43c092066efabb757afa1a13e",
+      "bytes": 350724
+    },
+    "Images/Maps/BlackwingLair.blp": {
+      "sha256": "a31618351ebbbdf6cd2d016034bf2121bde89ed279a6fb6d274553701e58098b",
+      "bytes": 350724
+    },
+    "Images/Maps/CavernsOfTimeBlackMorass.blp": {
+      "sha256": "f9dc3386ec7343a622ebe6fbe34cb5facfde90299cbd52734c00dce845c62cc2",
+      "bytes": 263316
+    },
+    "Images/Maps/Clackora.blp": {
+      "sha256": "f6bf186e8cff977e7ed4e88146e8702089c11df74447faf624943928e33cc8fa",
+      "bytes": 350724
+    },
+    "Images/Maps/Concavius.blp": {
+      "sha256": "dba46f4f808fdc050fd54932088f004fce0c7030977a6dee16a2ff7fe762661f",
+      "bytes": 525460
+    },
+    "Images/Maps/CowKing.blp": {
+      "sha256": "af86efbae93adc7809c89c0e9f019287f96152cd8bf5f73a79b052c30ca3b5fe",
+      "bytes": 262292
+    },
+    "Images/Maps/DireMaulEast.blp": {
+      "sha256": "a74a935b70791b9db031be6b87cee808f407273bebab76d972816d3e3b9b865c",
+      "bytes": 349700
+    },
+    "Images/Maps/DireMaulEnt.blp": {
+      "sha256": "e7e5deb51342efd93778a82cc57dd576059b361ef9d75e6120f1094f03742631",
+      "bytes": 349700
+    },
+    "Images/Maps/DireMaulNorth.blp": {
+      "sha256": "ebb63a002aed6b8b97a5be3ac9b4d5a902318a4e83d0d9bfac32766a36d55052",
+      "bytes": 349700
+    },
+    "Images/Maps/DireMaulWest.blp": {
+      "sha256": "876edb8f947012ce179baa8e57a8f37f261781012588da7bd646dfbf54844aa7",
+      "bytes": 349700
+    },
+    "Images/Maps/DLEast.blp": {
+      "sha256": "4f2349b06d7d7df33aaac46f6d1774f344a393d4fabfef2da5ec079b81675d16",
+      "bytes": 263316
+    },
+    "Images/Maps/DLWest.blp": {
+      "sha256": "b63f328969609555ab6cc2e4e0cdd666db0f04ea959d62ee109d3df69c1dc063",
+      "bytes": 263316
+    },
+    "Images/Maps/DragonmawRetreat.blp": {
+      "sha256": "516f8cb55d1b7457c465a16ee0d5327755b387735030a29e0ad41a89861ac15b",
+      "bytes": 263316
+    },
+    "Images/Maps/EmeraldSanctum.blp": {
+      "sha256": "9cbe9b8cc7b451d244e3ba1bb6f3fea666a7d3145c591bcc79d2ef050ddf5721",
+      "bytes": 263316
+    },
+    "Images/Maps/FourDragons.blp": {
+      "sha256": "2809f0b35e720c2eb4ae30080a5b7ded0b00679feaeb8252090b3683950b0ff3",
+      "bytes": 350724
+    },
+    "Images/Maps/FPAllianceEast.blp": {
+      "sha256": "392291cca7b9172eced04053cc8d9092f1b152b1f6df3e9da32741ab20b71052",
+      "bytes": 263316
+    },
+    "Images/Maps/FPAllianceWest.blp": {
+      "sha256": "6ae9e20c2e1bc39103ce046007ffae5ab76f46a9fe6334a89bdcaf315f848eae",
+      "bytes": 263316
+    },
+    "Images/Maps/FPHordeEast.blp": {
+      "sha256": "40df9a2590b8b9600aae68f4677c9496e12f182bdf8474d6a0b9d85b6d9b9969",
+      "bytes": 263316
+    },
+    "Images/Maps/FPHordeWest.blp": {
+      "sha256": "bdb6dd532478f2f0da0cf0b5d162087e94cf66fd77cd5591ec927f78a255a31b",
+      "bytes": 263316
+    },
+    "Images/Maps/FrostmaneHollow.blp": {
+      "sha256": "0d9f8f2d7377892e42321626a5113b4020719d49adbf56aa2c3458ae2a54cd32",
+      "bytes": 350724
+    },
+    "Images/Maps/GilneasCity.blp": {
+      "sha256": "000ce0941d385d6aa288f8ee4a4b8f82fc2b7961529a33788d4ec7d30895b197",
+      "bytes": 262292
+    },
+    "Images/Maps/Gnomeregan.blp": {
+      "sha256": "77470cee50262af17778b6ab8cac18e52d80fa5b67adf4b130cf7ce85ff905d7",
+      "bytes": 349700
+    },
+    "Images/Maps/GnomereganEnt.blp": {
+      "sha256": "c943ec7e0396b3ba655d3f647e6f79ffaf094f01b2ddf45550ad0eef9ef22ce1",
+      "bytes": 350724
+    },
+    "Images/Maps/HateforgeQuarry.blp": {
+      "sha256": "a075e9134594fe2885d2cd4255ce336f7665059b8d53d5ba9cbcb86361ffaa31",
+      "bytes": 262292
+    },
+    "Images/Maps/KarazhanCrypt.blp": {
+      "sha256": "ee760793e1f7728f457637690618b8623a27f0fc1c627515547d2ad52d4e8646",
+      "bytes": 262292
+    },
+    "Images/Maps/LordKazzak.blp": {
+      "sha256": "02bb9174f0f73290c5e4a6cce332afc3bf51e34628b186a52c417ef995d90a7c",
+      "bytes": 350724
+    },
+    "Images/Maps/LowerKara.blp": {
+      "sha256": "6563dc632f406570c0fec4e3cd3dae3a7b34c887d004df56eef21fd742021432",
+      "bytes": 262292
+    },
+    "Images/Maps/Maraudon.blp": {
+      "sha256": "b59cac4b6502cb82c6fb1278e46a5668d9121bfa5d89122d1549bb57b0e919a7",
+      "bytes": 350724
+    },
+    "Images/Maps/MaraudonEnt.blp": {
+      "sha256": "4f15700e6bfc853bd489011337ce9a77f1d1660474d0eafbf820287d2dc6c493",
+      "bytes": 349700
+    },
+    "Images/Maps/MoltenCore.blp": {
+      "sha256": "4878d8408cf93f06f23598615aace8d8be1cc59fb6272e07c6422715ad518303",
+      "bytes": 263316
+    },
+    "Images/Maps/Naxxramas.blp": {
+      "sha256": "c92c2aa0445a51c69a6841431294f303ccf4d6287f040ccd083d69a957c5b7f7",
+      "bytes": 350724
+    },
+    "Images/Maps/Nerubian.blp": {
+      "sha256": "6f8208073027b6a81292fbc8089ffc1765c38c3302ed251f163eec2529e5c692",
+      "bytes": 525460
+    },
+    "Images/Maps/OnyxiasLair.blp": {
+      "sha256": "426f3234a28229db893e637aa045d9f9a3049b304e42f125be237e486d860440",
+      "bytes": 263316
+    },
+    "Images/Maps/Ostarius.blp": {
+      "sha256": "62822797bdb7d19fb83caac648bf51bdd4e4f7c8de44a6b8ae88609c988db24e",
+      "bytes": 525460
+    },
+    "Images/Maps/RagefireChasm.blp": {
+      "sha256": "3d6b66f355d65187ff25860c228781a8bd179e841744cb86b6084bfb6610ee41",
+      "bytes": 350724
+    },
+    "Images/Maps/RazorfenDowns.blp": {
+      "sha256": "a20d88158f1bc7d5f7d45c090ab8597fbd2fe5de3a45a8ae5a7139e342bce350",
+      "bytes": 263316
+    },
+    "Images/Maps/RazorfenKraul.blp": {
+      "sha256": "c416c8c68f25521f696f976c810222d5c68985813c31b3486a62fe278add53fa",
+      "bytes": 263316
+    },
+    "Images/Maps/Reaver.blp": {
+      "sha256": "fab350e0fe89a560e3083db71bb056d1ebc223fa5a9ce4e13a706f6a230a8011",
+      "bytes": 262292
+    },
+    "Images/Maps/Scholomance.blp": {
+      "sha256": "851871cb40b9c18de7e6e89dc6df7d7d005a552cc6f0111b868f564186f61391",
+      "bytes": 350724
+    },
+    "Images/Maps/ShadowfangKeep.blp": {
+      "sha256": "a16f5c524533cce641792ecb240ad09f69fec5718b7e503f4cf9436d1a2f97db",
+      "bytes": 350724
+    },
+    "Images/Maps/SMArmory.blp": {
+      "sha256": "13b8ed5735883732eed65236b47bc792cf190ce272859e0e17b93f3a05bba864",
+      "bytes": 263316
+    },
+    "Images/Maps/SMCathedral.blp": {
+      "sha256": "6b01fa2eaa1812237933d9fe8e9668722afb11beabcb11e4afd2abb3cd130448",
+      "bytes": 263316
+    },
+    "Images/Maps/SMEnt.blp": {
+      "sha256": "b23d9f14498bc39f4d274d3b483215e1724489f888984c986a5aab9efa1aa2da",
+      "bytes": 350724
+    },
+    "Images/Maps/SMGraveyard.blp": {
+      "sha256": "025795c8f07d6e4aee03deb0d02c60c83f643de67b375d87ec5ae9e9c60f3b5d",
+      "bytes": 263316
+    },
+    "Images/Maps/SMLibrary.blp": {
+      "sha256": "1773baaa388919c698bf63be53bcf7423646bba68d64070fb1ed2fb85ca43ff6",
+      "bytes": 263316
+    },
+    "Images/Maps/StormwindVault.blp": {
+      "sha256": "c46ba7413c4815507754c6b7ae87cde365c7067d8050b0052bbf2b443596d65a",
+      "bytes": 262292
+    },
+    "Images/Maps/StormwroughtRuins.blp": {
+      "sha256": "bf683fb8be761c6c143a2313642cbfc9ed77fa1115b2051353eac292d07757c8",
+      "bytes": 263316
+    },
+    "Images/Maps/Stratholme.blp": {
+      "sha256": "2eadd82cdca4e2d0b0f1564222c77c6b96cff9f651773374371a879b415e39b2",
+      "bytes": 350724
+    },
+    "Images/Maps/TheCrescentGrove.blp": {
+      "sha256": "afb22cef8687459e92f340b9151601fa5a34eb896114b69650755622dcc0784b",
+      "bytes": 262292
+    },
+    "Images/Maps/TheDeadmines.blp": {
+      "sha256": "621063c0d90e3617a81d149b584762df7bd6c2d231108a1826fbf209307d584f",
+      "bytes": 263316
+    },
+    "Images/Maps/TheDeadminesEnt.blp": {
+      "sha256": "398dea4d1e1d87282ee52eefa9889682deef09d96b09e0cdfb53b91baae05bbc",
+      "bytes": 350724
+    },
+    "Images/Maps/TheRuinsofAhnQiraj.blp": {
+      "sha256": "24b46103e7848a77bb8c81c78c4a5e3e37b538320351349a7015e5a0922a3dcc",
+      "bytes": 350724
+    },
+    "Images/Maps/TheStockade.blp": {
+      "sha256": "4d443d7d1a906dc90f3249828df588d8c09d0355d38fe57446a3e324771291c7",
+      "bytes": 350724
+    },
+    "Images/Maps/TheSunkenTemple.blp": {
+      "sha256": "985b1647de4d0ff553b76239ecc2bb3fc41f72b0b0297188f9beaae956b163e0",
+      "bytes": 349700
+    },
+    "Images/Maps/TheSunkenTempleEnt.blp": {
+      "sha256": "3a889aa3cd37e3e09ee0140f4d2191e3b456eb3f566d550de793b1edc0ca6e3d",
+      "bytes": 349700
+    },
+    "Images/Maps/TheTempleofAhnQiraj.blp": {
+      "sha256": "64a232bc75f9cf46ca60bd6f4ee085da37e0e33c47f47a9190179eb5fab04a33",
+      "bytes": 350724
+    },
+    "Images/Maps/TimbermawHold.blp": {
+      "sha256": "489aeca91e27df9445ed400808f9f97e64b9d78ed5dc136464a8c515f0c654f6",
+      "bytes": 262292
+    },
+    "Images/Maps/TransportRoutes.blp": {
+      "sha256": "df745b410f74050f949e53d291bb2dcf41b5093faab4f721a00a57adf9f77da8",
+      "bytes": 525460
+    },
+    "Images/Maps/Turtlhu.blp": {
+      "sha256": "d6ba59cb8d4ced1427bf7c75bf058bcecf0faea593d4985e96f64297ea09dcad",
+      "bytes": 350740
+    },
+    "Images/Maps/Uldaman.blp": {
+      "sha256": "b59af2268f449dfea169b1cad8421375d185cc6f4aef85bbb3fc8cea0de2d03a",
+      "bytes": 350724
+    },
+    "Images/Maps/UldamanEnt.blp": {
+      "sha256": "18694d33463a69e2284c8e058eeab8b2c386cc2429cfacf78b0fc43ab427b9b9",
+      "bytes": 350724
+    },
+    "Images/Maps/UpperKara.blp": {
+      "sha256": "a5c9db345da5755ccf7c84191d0a9ddd799a737924e89f98363f0e41e7603dc1",
+      "bytes": 263316
+    },
+    "Images/Maps/WailingCaverns.blp": {
+      "sha256": "fa516b00fbce444e94d4a71b8819efdb7270b1a4c9d93ed40bfa20bc1e4a7131",
+      "bytes": 263316
+    },
+    "Images/Maps/WailingCavernsEnt.blp": {
+      "sha256": "962ac06678a60e6cec661c2417f3fd6740fa435809f201de4b863a27daa6e91b",
+      "bytes": 350724
+    },
+    "Images/Maps/WarsongGulch.blp": {
+      "sha256": "b5bb35250cd2b7f75d35a0947f74ac21cbece228d210b250da2b386908ab4165",
+      "bytes": 350724
+    },
+    "Images/Maps/WindhornCanyon.blp": {
+      "sha256": "bee1c18dc26d026fac764f2b342ae790283c6b9696a567f11592911f83e87f2a",
+      "bytes": 262292
+    },
+    "Images/Maps/ZulFarrak.blp": {
+      "sha256": "4baecd39fd07c2e440b013d19e9a21b65a2b2ab0278ff78353f473bb8000cb33",
+      "bytes": 263316
+    },
+    "Images/Maps/ZulGurub.blp": {
+      "sha256": "232014a9ae1b1f136c24935e2442e2e7e9b12c993dd5d3456d707043bcc7d8b4",
+      "bytes": 349700
+    },
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "e5b173f1b34cb0ffb4115241fa846207ca39e45503ef0aa1dec243b6ee1d21fc",
+      "bytes": 34787
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "d05fb28fb6d7dbd9a8be4faea455388fd629342491699aa8fe7c3f8b8d6416c4",
+      "bytes": 23442
+    },
+    "Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "31bc9cfda434c890574d1bbfc48c9e1d068f45ff73e1023ca452dedab0bdef41",
+      "bytes": 15957
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "Libs/Babble-Class-2.2/Babble-Class-2.2.lua": {
+      "sha256": "0c40d760c095a1ba5cb248f1fec75d30f5aadbe090c64889c070b935b86fbf39",
+      "bytes": 4173
+    },
+    "Libs/Babble-Faction-2.2/Babble-Faction-2.2.lua": {
+      "sha256": "912792349d77f4fc820acc99d36804edbc2431875bec85ee117e9b4ff8c142d9",
+      "bytes": 6188
+    },
+    "Libs/Babble-ItemSet-2.2/Babble-ItemSet-2.2.lua": {
+      "sha256": "772dc0f68951b86b44afe90bec9bba7d01c48ad5652f3753738b446223beb2c1",
+      "bytes": 29826
+    },
+    "Locale/Atlas-deDE.lua": {
+      "sha256": "cab1e57755432cf56f13ef31e8470ee137f0ae6959715e912bf26dbf7dccc56e",
+      "bytes": 59344
+    },
+    "Locale/Atlas-enUS.lua": {
+      "sha256": "b63605d18229a8395762d503f813f39f2f301acee30d1e2c0a8dae39bb64003a",
+      "bytes": 41481
+    },
+    "Locale/Atlas-esES.lua": {
+      "sha256": "97d09797c05dc0ef93b661e1b1ac2f0f3a6cbc68fb31bae9df2499e9e4382f66",
+      "bytes": 31132
+    },
+    "Locale/Atlas-frFR.lua": {
+      "sha256": "53dce39415c73a61aab400605ad75a8acdc737291774f805dc66ccd7ab32cfec",
+      "bytes": 61023
+    },
+    "Locale/Atlas-ruRU.lua": {
+      "sha256": "262042e5f3e214852476260c5e90e7b32542d2070093f79f9253c04ab0cbbcd7",
+      "bytes": 37325
+    },
+    "Locale/Atlas-zhCN.lua": {
+      "sha256": "f4d883d87db2e0bf663484605f233f9cffe6a2dce641b6d93cabc19a0ca57d51",
+      "bytes": 57056
+    },
+    "Locale/Atlas-zhTW.lua": {
+      "sha256": "ee9fb7feb2144392c4bbc3eda9791628352137480b61f4d8beece59cc4d25720",
+      "bytes": 55897
+    },
+    "README.md": {
+      "sha256": "019e1037963b29e53d9b8d40d087e3f595d0cc0b25a69906ae343985380fa94d",
+      "bytes": 542
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

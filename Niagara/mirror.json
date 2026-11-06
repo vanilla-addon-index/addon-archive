@@ -1,0 +1,98 @@
+{
+  "upstream": "https://github.com/laytya/Niagara",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "Niagara",
+    "name": "Niagara",
+    "url": "https://github.com/laytya/Niagara",
+    "api": "https://api.github.com/repos/laytya/Niagara"
+  },
+  "commit": "9c09951be42a8a7152a2c67eebc42077618eb39d",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    "Niagara/Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "c1d5c648e8eb49d432d8435cf9d0446ff5d61021598d9b7aa46cf6a36770a3ae",
+      "bytes": 34384
+    },
+    "Niagara/Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "ab8c61a5174d468bee9c7f7264a7ef8adaead087b7db42ca48da23cfd3d6637d",
+      "bytes": 68842
+    },
+    "Niagara/Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "aec50568954370b65a14b9d720de2282e6b045feb4415a53578d0d1cae46cca4",
+      "bytes": 46027
+    },
+    "Niagara/Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "8222e7a75d0f0fba8030099939611732b50c28cb26b6ce6427f52fd5f2f409d8",
+      "bytes": 29927
+    },
+    "Niagara/Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "a421bd39e4cb7bcd54bb79de85c21d6e8c4c56551406972141bba26ae7d0c16d",
+      "bytes": 23871
+    },
+    "Niagara/Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "f0b829c007fd8cd897aa9059bd6c9ee27f0b9b71b9c9468b1572c1d3db4397fe",
+      "bytes": 16495
+    },
+    "Niagara/Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "03e71bcf0ba8ce7c806c5ffe966991cb997c12c25b351198c918fe32e469bdaf",
+      "bytes": 31435
+    },
+    "Niagara/Libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "d14a47732ef771dcb5c380218a398db26bd39315652b8d5ffb4afd14f1d90cbd",
+      "bytes": 79066
+    },
+    "Niagara/Libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "6f6b55cbb836ad14dbdb7570ff469e1c689013a5414d06aa78ffa4c6f76e28b2",
+      "bytes": 47956
+    },
+    "Niagara/Libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "c6a6d3f4bb4c5fb3a92998dd1f11aba137a19ada7e64afe156a895ebfa2e35b1",
+      "bytes": 88568
+    },
+    "Niagara/Libs/Waterfall-1.0/Waterfall-1.0.lua": {
+      "sha256": "8d270946fd501ba3741fa03b2cff0c08a3dc6f56446809748206c3ff8db4154d",
+      "bytes": 140215
+    },
+    "Niagara/Niagara.lua": {
+      "sha256": "c2d697f1de0f572d6903930252cdc372888cab3c58c39513798e40b3854cbb9c",
+      "bytes": 7252
+    },
+    "Niagara/Niagara.toc": {
+      "sha256": "9d5b8b3e7503688cc3edf4f5e5406b11df56746b4161ad7afb45323bb7c461e1",
+      "bytes": 1028
+    },
+    "README.md": {
+      "sha256": "c5e8132eb751d86b8b8b7eddb193b2874d428d7977d230262e1dfa95dff77412",
+      "bytes": 220
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "76858816": {
+      "tag": "v.1.1a",
+      "folder": "v.1.1a--76858816",
+      "assets": {
+        "77581462": {
+          "sha256": "9f2aba4f36fca8fb5e60b012174833ffe9dc2b51a049e48e2ce8c465da57c730",
+          "bytes": 122788,
+          "id": "77581462",
+          "name": "Niagara-v1.1a.zip",
+          "url": "https://github.com/laytya/Niagara/releases/download/v.1.1a/Niagara-v1.1a.zip",
+          "path": "releases/v.1.1a--76858816/assets/Niagara-v1.1a.zip"
+        }
+      },
+      "source": {
+        "sha256": "695ca08db8e152d33b6eb4197f05264f8513587719050eb48d10c34c01f99668",
+        "bytes": 116119,
+        "path": "releases/v.1.1a--76858816/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/laytya/Niagara/tarball/v.1.1a"
+      }
+    }
+  }
+}

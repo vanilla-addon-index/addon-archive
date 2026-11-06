@@ -1,0 +1,9 @@
+{
+  "id": "4151006",
+  "tag": "1.0.0m",
+  "name": "v1.0.0m-11200",
+  "body": "## A modified version of Anaron's RageTracker addon.\n\nShows rage as an independent movable bar (warrior only).\n\n#### Command line options:\n\n`/rt lock` locks or unlocks the bar for dragging\n`/rt scalex 0.75` sets the width of the bar to 75% the default\n`/rt scaley 0.8` sets the height of the bar to 80% the default\n\n#### Changes:\n- Fix fill texture not resizing to bar\n- Add saved variables for options\n- Add /ragetracker as an alternative unabbreviated command\n- Add /rt lock for enabling/disabling mouse interaction\n- Make the bar remember its position between logins\n",
+  "published": "2016-09-16T10:34:42Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/RageTracker/releases/tag/1.0.0m"
+}

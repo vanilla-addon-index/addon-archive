@@ -1,0 +1,89 @@
+{
+  "upstream": "https://github.com/Beardedrasta/PallyPower",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Beardedrasta",
+    "repo": "PallyPower",
+    "name": "PallyPower",
+    "url": "https://github.com/Beardedrasta/PallyPower",
+    "api": "https://api.github.com/repos/Beardedrasta/PallyPower"
+  },
+  "commit": "8a81806dd6c6d340a60cc2e70dce547d6ab57ab1",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "06ec01503110948f5d64d53eaebac2e63c77491dfdc23013b8dc747b0b1da6d9",
+      "bytes": 199
+    },
+    "Icons/Druid.tga": {
+      "sha256": "48ffcaaaa51204c1ef8f70052ce914745e50bb27d80b365fe046e00af0b8c36b",
+      "bytes": 12306
+    },
+    "Icons/Hunter.tga": {
+      "sha256": "c3e499450936bb4cacc20d01f0830c7be4782eaa8d5ed7eaf9e809b4fc56efc8",
+      "bytes": 12306
+    },
+    "Icons/Mage.tga": {
+      "sha256": "0cf8860ee8d26dfae3ebf79e333304c66aa0a6a615dce51f5e6a7b190d4dbfb6",
+      "bytes": 12306
+    },
+    "Icons/Paladin.tga": {
+      "sha256": "3842e3b33ab275da8d8815fb593d12c8d580c155e15b33ee62decd999ffababf",
+      "bytes": 12306
+    },
+    "Icons/Pet.png": {
+      "sha256": "f0b7960d6cb28b2e628339ee3b8e533c7ae3f671d453129d2c7479374975caba",
+      "bytes": 23105
+    },
+    "Icons/Pet.tga": {
+      "sha256": "bbe68dcb120ba1039f4682c83b1c0c1b19776adeb5d97e75b71dba84e78690fe",
+      "bytes": 196626
+    },
+    "Icons/Priest.tga": {
+      "sha256": "3f004b3291da51252ba3e470a9775588399af0836239aabb1475832c704ebb72",
+      "bytes": 12306
+    },
+    "Icons/Rogue.tga": {
+      "sha256": "f8ae48b8b0e6bccc67077921482db047a2d9a02301f47623846b0a92a908bcb8",
+      "bytes": 12306
+    },
+    "Icons/Shaman.tga": {
+      "sha256": "cfe546678428e1e5e45927688b4312545c606341f331ab5a7a5bba2dcfaf0644",
+      "bytes": 12332
+    },
+    "Icons/Warlock.tga": {
+      "sha256": "8f2ff9dac07c441ea0529e3dbdf7ddee3074647b9f028c986625a107f8dbafef",
+      "bytes": 12306
+    },
+    "Icons/Warrior.tga": {
+      "sha256": "41bcdc45d7c54af3734208e72c6ca09a73f6e784ddaf28715320353f6a0c9064",
+      "bytes": 12306
+    },
+    "localization.lua": {
+      "sha256": "c932360a1542c7f1eef006ef5956664a1067fd8c182167d632bad8a510685958",
+      "bytes": 7527
+    },
+    "PallyPower-ResizeGrip.tga": {
+      "sha256": "f17e6620869ab39c230f860d13e5e9cda42b03938b27b922c99a6e4109bcf5cf",
+      "bytes": 2085
+    },
+    "PallyPower.lua": {
+      "sha256": "1560bca2493e58418d81b2e0186a07ee419c1bd4aa5acb3ec3f5cfe617350af5",
+      "bytes": 40495
+    },
+    "PallyPower.toc": {
+      "sha256": "2334617ccf30a5fd5f88fe062ea2824ce27edfb9b89d270d41f06946e85164b0",
+      "bytes": 279
+    },
+    "PallyPower.xml": {
+      "sha256": "5b453005f1a1e7c3415dd0d9f9a9a2be0f48fae08f9712615d8e8b2dfeeaa4bf",
+      "bytes": 63018
+    },
+    "README.md": {
+      "sha256": "e5c9ab251258dc922cbf1dc4f7c3850e14a62e61426e6ec0b5306bd6335f9bdf",
+      "bytes": 530
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

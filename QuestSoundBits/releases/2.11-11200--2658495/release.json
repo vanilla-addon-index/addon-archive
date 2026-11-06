@@ -1,0 +1,9 @@
+{
+  "id": "2658495",
+  "tag": "2.11-11200",
+  "name": "v2.11-11200",
+  "body": "QuestSoundBits is a quest progress sound alert addon.  \nIt will play short Peon (Horde players) or Peasant (Alliance players) voice clips when the player \n- Completes a Quest\n- Completes a Quest Objective\n- Progresses a Quest Objective  \n  Each kind of alert can be toggled ON or OFF. \n\n**/questsoundbits**, **/questsounds** or **/qsb** for command-line help  \nAddon makes an effort not to play overlapping sounds when events happen at the same time _(eg. Last or single quest objective completes and that completes the quest)_  \nIt will instead play the higher priority alert (Quest completion over Objective completion over Objective Progress).\n\n2.11 Changelog\nTweak quest completion caching and improve handling quest acquire/abandon at start of play session causing false positives.  \nAdd a better quality Job's Done sound.\n",
+  "published": "2016-02-21T21:27:45Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/QuestSoundBits/releases/tag/2.11-11200"
+}

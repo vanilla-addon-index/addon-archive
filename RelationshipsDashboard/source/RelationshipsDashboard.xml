@@ -1,0 +1,655 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    <Script file="Database.lua"/>
+    <Script file="RelationshipsDashboard.lua"/>
+
+    <!-- Category header template - gold header with warm dark background bar
+         Enhanced gold accent lines (2px, brighter) for a polished look -->
+    <Frame name="RDSectionHeaderTemplate" virtual="true">
+        <Size x="228" y="24"/>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <!-- Warm dark bar behind the category title -->
+                <Texture name="$parentBG">
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset x="0" y="0"/>
+                        </Anchor>
+                        <Anchor point="BOTTOMRIGHT">
+                            <Offset x="0" y="0"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="0.18" g="0.15" b="0.08" a="0.97"/>
+                </Texture>
+                <!-- Gold accent line at top of header -->
+                <Texture name="$parentTopLine">
+                    <Size x="228" y="0.5"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset x="0" y="0"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="0.85" g="0.70" b="0.25" a="0.85"/>
+                </Texture>
+                <!-- Gold accent line under the header -->
+                <Texture name="$parentLine">
+                    <Size x="228" y="0.5"/>
+                    <Anchors>
+                        <Anchor point="BOTTOMLEFT">
+                            <Offset x="0" y="0"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="0.85" g="0.70" b="0.25" a="0.85"/>
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK">
+                <FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT" text="Category">
+                    <Anchors>
+                        <Anchor point="LEFT">
+                            <Offset x="8" y="0"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="1" g="0.85" b="0"/>
+                </FontString>
+            </Layer>
+        </Layers>
+    </Frame>
+
+    <!-- GearScore stat row template - BIGGER and BOLDER than normal stat rows
+         Uses GameFontNormal for labels (instead of GameFontNormalSmall)
+         and GameFontHighlight for values (instead of GameFontHighlightSmall)
+         Taller row height (22px instead of 16px) for prominence -->
+    <Frame name="RDGearScoreStatRowTemplate" virtual="true">
+        <Size x="228" y="22"/>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <!-- Subtle background stripe (toggled on/off in Lua) -->
+                <Texture name="$parentBG" hidden="true">
+                    <Anchors>
+                        <Anchor point="TOPLEFT"/>
+                        <Anchor point="BOTTOMRIGHT"/>
+                    </Anchors>
+                    <Color r="1" g="1" b="1" a="0.04"/>
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK">
+                <FontString name="$parentLabel" inherits="GameFontNormal" justifyH="LEFT" nonspacewrap="true">
+                    <Anchors>
+                        <Anchor point="LEFT">
+                            <Offset x="10" y="0"/>
+                        </Anchor>
+                        <Anchor point="RIGHT" relativeTo="$parentValue" relativePoint="LEFT">
+                            <Offset x="-8" y="0"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="1" g="0.82" b="0"/>
+                </FontString>
+                <FontString name="$parentValue" inherits="GameFontHighlight" justifyH="RIGHT">
+                    <Anchors>
+                        <Anchor point="RIGHT">
+                            <Offset x="-10" y="0"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="1" g="1" b="1"/>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnEnter>
+                -- Highlight row on hover
+                local bg = getglobal(this:GetName() .. "BG");
+                if bg then
+                    bg:Show();
+                    bg:SetAlpha(0.12);
+                end
+            </OnEnter>
+            <OnLeave>
+                -- Restore alternating row state
+                local bg = getglobal(this:GetName() .. "BG");
+                if bg then
+                    if this.stripeOn then
+                        bg:SetAlpha(0.04);
+                    else
+                        bg:Hide();
+                    end
+                end
+                GameTooltip:Hide();
+            </OnLeave>
+        </Scripts>
+    </Frame>
+
+    <!-- Stat row template with alternating row backgrounds
+         Label on LEFT (gold), Value on RIGHT (white)
+         $parentBG is toggled for alternating row stripe effect -->
+    <Frame name="RDStatRowTemplate" virtual="true">
+        <Size x="228" y="16"/>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <!-- Alternating row background (toggled on/off in Lua) -->
+                <Texture name="$parentBG" hidden="true">
+                    <Anchors>
+                        <Anchor point="TOPLEFT"/>
+                        <Anchor point="BOTTOMRIGHT"/>
+                    </Anchors>
+                    <Color r="1" g="1" b="1" a="0.04"/>
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK">
+                <FontString name="$parentLabel" inherits="GameFontNormalSmall" justifyH="LEFT" nonspacewrap="true">
+                    <Anchors>
+                        <Anchor point="LEFT">
+                            <Offset x="10" y="0"/>
+                        </Anchor>
+                        <Anchor point="RIGHT" relativeTo="$parentValue" relativePoint="LEFT">
+                            <Offset x="-8" y="0"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="1" g="0.82" b="0"/>
+                </FontString>
+                <FontString name="$parentValue" inherits="GameFontHighlightSmall" justifyH="RIGHT">
+                    <Anchors>
+                        <Anchor point="RIGHT">
+                            <Offset x="-10" y="0"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="1" g="1" b="1"/>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnEnter>
+                -- Highlight row on hover
+                local bg = getglobal(this:GetName() .. "BG");
+                if bg then
+                    bg:Show();
+                    bg:SetAlpha(0.12);
+                end
+            </OnEnter>
+            <OnLeave>
+                -- Restore alternating row state
+                local bg = getglobal(this:GetName() .. "BG");
+                if bg then
+                    if this.stripeOn then
+                        bg:SetAlpha(0.04);
+                    else
+                        bg:Hide();
+                    end
+                end
+                GameTooltip:Hide();
+            </OnLeave>
+        </Scripts>
+    </Frame>
+
+    <!-- Main Stats Panel Frame - positioned flush against CharacterFrame right side
+         Fixed height 420px (smaller than CharacterFrame's 512px content area)
+         x offset -24 for flush fit (moved 5px left from -19) -->
+    <Frame name="RelationshipsDashboardFrame" parent="CharacterFrame" hidden="true">
+        <Size x="236" y="420"/>
+        <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="CharacterFrame" relativePoint="TOPRIGHT">
+                <Offset x="-30" y="-16"/>
+            </Anchor>
+        </Anchors>
+        <Layers>
+            <!-- Background: solid dark panel matching CharacterFrame backdrop -->
+            <Layer level="BACKGROUND">
+                <Texture name="RelationshipsDashboardBG">
+                    <Anchors>
+                        <Anchor point="TOPLEFT"/>
+                        <Anchor point="BOTTOMRIGHT"/>
+                    </Anchors>
+                    <Color r="0.06" g="0.06" b="0.06" a="0.97"/>
+                </Texture>
+            </Layer>
+            <!-- Gold accent line on left edge to visually connect with CharacterFrame border -->
+            <Layer level="BORDER">
+                <Texture name="RelationshipsDashboardLeftAccent">
+                    <Size x="0.5" y="420"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset x="0" y="0"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="0.85" g="0.70" b="0.25" a="0.85"/>
+                </Texture>
+                <!-- Gold accent line on right edge for symmetrical flat UI -->
+                <Texture name="RelationshipsDashboardRightAccent">
+                    <Size x="0.5" y="420"/>
+                    <Anchors>
+                        <Anchor point="TOPRIGHT">
+                            <Offset x="0" y="0"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="0.85" g="0.70" b="0.25" a="0.85"/>
+                </Texture>
+                <Texture name="RelationshipsDashboardTopAccent">
+                    <Size x="236" y="0.5"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset x="0" y="0"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="0.85" g="0.70" b="0.25" a="0.85"/>
+                </Texture>
+                <Texture name="RelationshipsDashboardBottomAccent">
+                    <Size x="236" y="0.5"/>
+                    <Anchors>
+                        <Anchor point="BOTTOMLEFT">
+                            <Offset x="0" y="0"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="0.85" g="0.70" b="0.25" a="0.85"/>
+                </Texture>
+            </Layer>
+            <!-- Title bar with addon name -->
+            <Layer level="ARTWORK">
+                <Texture name="RelationshipsDashboardTitleBG">
+                    <Size x="236" y="20"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset x="0" y="0"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="0.18" g="0.15" b="0.08" a="0.97"/>
+                </Texture>
+                <FontString name="RelationshipsDashboardTitleText" inherits="GameFontNormalSmall" justifyH="CENTER" text="Character Dashboard">
+                    <Size x="236" y="20"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset x="0" y="0"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="1" g="0.82" b="0"/>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+            <!-- Scroll Frame for stats content
+                 Uses UIPanelScrollFrameTemplate for scroll functionality,
+                 but the scrollbar is hidden in OnLoad for a flat UI.
+                 Content fills the full width (no space for scrollbar). -->
+            <ScrollFrame name="RelationshipsDashboardScrollFrame" inherits="UIPanelScrollFrameTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset x="4" y="-22"/>
+                    </Anchor>
+                    <Anchor point="BOTTOMRIGHT">
+                        <Offset x="-4" y="4"/>
+                    </Anchor>
+                </Anchors>
+                <ScrollChild>
+                    <Frame name="RelationshipsDashboardContent">
+                        <Size x="228" y="720"/>
+
+                        <!-- ===== GearScore Rows (no header, bigger/bolder) ===== -->
+                        <Frames>
+                            <Frame name="RelationshipsDashboardGearScoreRow" inherits="RDGearScoreStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardContent" relativePoint="TOPLEFT">
+                                        <Offset x="0" y="0"/>
+                                    </Anchor>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardAvgILvlRow" inherits="RDGearScoreStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardGearScoreRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+
+                            <!-- ===== Section: General ===== -->
+                            <Frame name="RDHeaderGeneral" inherits="RDSectionHeaderTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardAvgILvlRow" relativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="-4"/>
+                                    </Anchor>
+                                </Anchors>
+                            </Frame>
+
+                            <Frame name="RelationshipsDashboardHealthRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RDHeaderGeneral" relativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="0"/>
+                                    </Anchor>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardPowerRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardHealthRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardManaRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardPowerRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardArmorRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardManaRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardMovementRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardArmorRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardDurabilityRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardMovementRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardRepairCostRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardDurabilityRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+
+                            <!-- ===== Section: Attributes ===== -->
+                            <Frame name="RDHeaderAttributes" inherits="RDSectionHeaderTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardRepairCostRow" relativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="-4"/>
+                                    </Anchor>
+                                </Anchors>
+                            </Frame>
+
+                            <Frame name="RelationshipsDashboardStrengthRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RDHeaderAttributes" relativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="0"/>
+                                    </Anchor>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardAgilityRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardStrengthRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardStaminaRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardAgilityRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardIntellectRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardStaminaRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardSpiritRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardIntellectRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+
+                            <!-- ===== Section: Offense ===== -->
+                            <Frame name="RDHeaderOffense" inherits="RDSectionHeaderTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardSpiritRow" relativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="-4"/>
+                                    </Anchor>
+                                </Anchors>
+                            </Frame>
+
+                            <Frame name="RelationshipsDashboardMeleeDmgRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RDHeaderOffense" relativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="0"/>
+                                    </Anchor>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardMeleeAPRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardMeleeDmgRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardMeleeSpeedRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardMeleeAPRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardWeaponDPSRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardMeleeSpeedRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardWeaponSkillRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardWeaponDPSRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardMeleeHitRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardWeaponSkillRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardMeleeCritRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardMeleeHitRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+
+                            <!-- ===== Section: Enhancements ===== -->
+                            <Frame name="RDHeaderEnhancements" inherits="RDSectionHeaderTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardMeleeCritRow" relativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="-4"/>
+                                    </Anchor>
+                                </Anchors>
+                            </Frame>
+
+                            <Frame name="RelationshipsDashboardRangedAPRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RDHeaderEnhancements" relativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="0"/>
+                                    </Anchor>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardRangedCritRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardRangedAPRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardRangedSpeedRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardRangedCritRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardRangedDmgRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardRangedSpeedRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardSpellPowerRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardRangedDmgRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardHealingPowerRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardSpellPowerRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardSpellHitRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardHealingPowerRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardSpellCritRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardSpellHitRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardManaRegenRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardSpellCritRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+
+                            <!-- ===== Section: Defenses ===== -->
+                            <Frame name="RDHeaderDefenses" inherits="RDSectionHeaderTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardManaRegenRow" relativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="-4"/>
+                                    </Anchor>
+                                </Anchors>
+                            </Frame>
+
+                            <Frame name="RelationshipsDashboardDefenseRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RDHeaderDefenses" relativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="0"/>
+                                    </Anchor>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardDodgeRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardDefenseRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardParryRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardDodgeRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardBlockRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardParryRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardAvoidanceRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardBlockRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+
+                            <!-- ===== Section: Resistances ===== -->
+                            <Frame name="RDHeaderResistances" inherits="RDSectionHeaderTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardAvoidanceRow" relativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="-4"/>
+                                    </Anchor>
+                                </Anchors>
+                            </Frame>
+
+                            <Frame name="RelationshipsDashboardArcaneResRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RDHeaderResistances" relativePoint="BOTTOMLEFT">
+                                        <Offset x="0" y="0"/>
+                                    </Anchor>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardFireResRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardArcaneResRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardNatureResRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardFireResRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardFrostResRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardNatureResRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame name="RelationshipsDashboardShadowResRow" inherits="RDStatRowTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="RelationshipsDashboardFrostResRow" relativePoint="BOTTOMLEFT"/>
+                                </Anchors>
+                            </Frame>
+                        </Frames>
+                    </Frame>
+                </ScrollChild>
+            </ScrollFrame>
+
+            <!-- ================================================================
+                 SCROLL VIEWPORT MASKS
+                 Vanilla 1.12 ScrollFrame only clips the ScrollChild's own
+                 regions (textures / fontstrings). Nested child Frames (our
+                 stat rows) are NOT clipped, so when the content is scrolled
+                 their FontStrings render outside the scroll viewport - on
+                 top of the title bar / below the panel border, and in the
+                 inspect view they can appear behind other UI.
+
+                 Fix: two opaque mask frames sitting on top of the panel at
+                 a very high FrameLevel, covering the strips above and below
+                 the ScrollFrame with the panel background color. Anything
+                 that bleeds outside the viewport is hidden behind them.
+                 The top mask redraws the title bar art so it still shows.
+                 ================================================================ -->
+            <Frame name="RelationshipsDashboardMaskTop" frameLevel="128" enableMouse="true">
+                <Size x="236" y="22"/>
+                <Anchors>
+                    <Anchor point="TOPLEFT"/>
+                </Anchors>
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture>
+                            <Anchors>
+                                <Anchor point="TOPLEFT"/>
+                                <Anchor point="BOTTOMRIGHT"/>
+                            </Anchors>
+                            <Color r="0.06" g="0.06" b="0.06" a="1"/>
+                        </Texture>
+                    </Layer>
+                    <Layer level="ARTWORK">
+                        <!-- Title bar redraw so it stays visible on top of the mask -->
+                        <Texture>
+                            <Size x="236" y="20"/>
+                            <Anchors><Anchor point="TOPLEFT"/></Anchors>
+                            <Color r="0.18" g="0.15" b="0.08" a="0.97"/>
+                        </Texture>
+                        <FontString name="RelationshipsDashboardMaskTopTitle" inherits="GameFontNormalSmall" justifyH="CENTER" text="Character Dashboard">
+                            <Size x="236" y="20"/>
+                            <Anchors><Anchor point="TOPLEFT"/></Anchors>
+                            <Color r="1" g="0.82" b="0"/>
+                        </FontString>
+                    </Layer>
+                    <Layer level="OVERLAY">
+                        <!-- Gold accent line redraw at the very top -->
+                        <Texture>
+                            <Size x="236" y="0.5"/>
+                            <Anchors><Anchor point="TOPLEFT"/></Anchors>
+                            <Color r="0.85" g="0.70" b="0.25" a="0.85"/>
+                        </Texture>
+                    </Layer>
+                </Layers>
+            </Frame>
+            <Frame name="RelationshipsDashboardMaskBottom" frameLevel="128" enableMouse="true">
+                <Size x="236" y="6"/>
+                <Anchors>
+                    <Anchor point="BOTTOMLEFT"/>
+                </Anchors>
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture>
+                            <Anchors>
+                                <Anchor point="TOPLEFT"/>
+                                <Anchor point="BOTTOMRIGHT"/>
+                            </Anchors>
+                            <Color r="0.06" g="0.06" b="0.06" a="1"/>
+                        </Texture>
+                    </Layer>
+                    <Layer level="OVERLAY">
+                        <!-- Gold accent line redraw at the very bottom -->
+                        <Texture>
+                            <Size x="236" y="0.5"/>
+                            <Anchors><Anchor point="BOTTOMLEFT"/></Anchors>
+                            <Color r="0.85" g="0.70" b="0.25" a="0.85"/>
+                        </Texture>
+                    </Layer>
+                </Layers>
+            </Frame>
+        </Frames>
+        <Scripts>
+            <OnLoad>
+                RelationshipsDashboard_OnLoad();
+            </OnLoad>
+            <OnEvent>
+                RelationshipsDashboard_OnEvent(event);
+            </OnEvent>
+            <OnShow>
+                RelationshipsDashboard_UpdateStats();
+            </OnShow>
+        </Scripts>
+    </Frame>
+</Ui>

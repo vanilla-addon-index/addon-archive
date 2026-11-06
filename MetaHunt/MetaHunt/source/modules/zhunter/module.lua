@@ -1,0 +1,405 @@
+------------------------------------------------------
+-- MetaHunt: zhunter Module Wrapper
+-- Modern module abstraction for the zhunter addon
+------------------------------------------------------
+
+MTH_ZH_MANAGED_HOOKS = true
+
+local MTH_ZHunter = {
+	name = "zhunter",
+	enabled = true,
+	events = {
+		"VARIABLES_LOADED",
+		-- PLAYER_ENTERING_WORLD handled by bootstrap frame + adjustment frames
+		"MTH_PET_LIVE_STATE_CHANGED",
+	},
+	features = {
+		aspect = true,
+		tracking = true,
+		traps = true,
+		ranged = true,
+		ammo = true,
+		pet = true,
+	}
+}
+
+local MTH_ZH_PostLoginRestore = nil
+local MTH_ZH_BootstrapFrame = nil
+local MTH_ZH_SyncSavedVariables
+local MTH_ZH_SetButtonsVisible
+local MTH_ZH_SetAuxFramesVisible
+local MTH_ZH_RestoreRuntimeFeatureFlags
+local MTH_ZH_ApplyEnabledRuntimeState
+local MTH_ZH_QueuePostLoginRestore
+
+local function MTH_ZH_ApplyDefaultWidgetSpawnLayoutOnce()
+	local savedRoot = nil
+	if type(MTH_ZH_GetSavedRoot) == "function" then
+		savedRoot = MTH_ZH_GetSavedRoot()
+	elseif type(ZHunterMod_Saved) == "table" then
+		savedRoot = ZHunterMod_Saved
+	end
+
+	if type(savedRoot) ~= "table" then
+		return false
+	end
+
+	if savedRoot["_mth_widget_spawn_layout_v1"] then
+		return false
+	end
+
+	local orderedButtons = {
+		"zButtonAspect",
+		"zButtonAmmo",
+		"zButtonTrack",
+		"zButtonTrap",
+		"zButtonRanged",
+		"zButtonPet",
+		"zButtonMounts",
+		"zButtonCompanions",
+		"zButtonToys",
+		"zButtonCraft",
+	}
+
+	local startY = -140
+	local stepY = -54
+
+	local orderedCount = table.getn(orderedButtons)
+	for i = 1, orderedCount do
+		if not getglobal(orderedButtons[i]) then
+			return false
+		end
+	end
+
+	for i = 1, orderedCount do
+		local buttonName = orderedButtons[i]
+		local button = getglobal(buttonName)
+		if button then
+			button:ClearAllPoints()
+			button:SetPoint("TOP", UIParent, "TOP", 0, startY + ((i - 1) * stepY))
+		end
+	end
+
+	savedRoot["_mth_widget_spawn_layout_v1"] = 1
+	return true
+end
+
+function MTH_ZH_OnDeferredInitComplete()
+	if not (MTH and MTH.IsModuleEnabled and MTH:IsModuleEnabled("zhunter", true)) then
+		if MTH_ZH_SetButtonsVisible then
+			MTH_ZH_SetButtonsVisible(false)
+		end
+		if MTH_ZH_SetAuxFramesVisible then
+			MTH_ZH_SetAuxFramesVisible(false)
+		end
+		return
+	end
+	MTH_ZH_SyncSavedVariables()
+	MTH_ZH_RestoreRuntimeFeatureFlags()
+	MTH_ZH_QueuePostLoginRestore("deferred-init")
+end
+
+MTH_ZH_QueuePostLoginRestore = function(tag)
+	if not MTH_ZH_PostLoginRestore then
+		MTH_ZH_PostLoginRestore = CreateFrame("Frame", "MTH_ZH_PostLoginRestore")
+		if not MTH_ZH_PostLoginRestore then
+			return
+		end
+	end
+
+	MTH_ZH_PostLoginRestore._mthElapsed = 0
+	MTH_ZH_PostLoginRestore:SetScript("OnUpdate", function()
+		this._mthElapsed = (this._mthElapsed or 0) + (arg1 or 0)
+		if this._mthElapsed < 0.2 then
+			return
+		end
+
+		this:SetScript("OnUpdate", nil)
+		if not (MTH and MTH.IsModuleEnabled and MTH:IsModuleEnabled("zhunter", true)) then
+			return
+		end
+
+		MTH_ZH_SyncSavedVariables()
+		MTH_ZH_RestoreRuntimeFeatureFlags()
+	end)
+end
+
+local function MTH_ZH_EnsureBootstrapRestoreFrame()
+	if MTH_ZH_BootstrapFrame then
+		return MTH_ZH_BootstrapFrame
+	end
+
+	MTH_ZH_BootstrapFrame = CreateFrame("Frame", "MTH_ZH_BootstrapRestore")
+	if not MTH_ZH_BootstrapFrame then
+		return nil
+	end
+
+	MTH_ZH_BootstrapFrame:RegisterEvent("VARIABLES_LOADED")
+	MTH_ZH_BootstrapFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+	MTH_ZH_BootstrapFrame:SetScript("OnEvent", function()
+		if not (MTH and MTH.IsModuleEnabled and MTH:IsModuleEnabled("zhunter", true)) then
+			return
+		end
+
+		if event == "VARIABLES_LOADED" then
+			MTH_ZH_SyncSavedVariables()
+			return
+		end
+
+		if event == "PLAYER_ENTERING_WORLD" then
+			MTH_ZH_ApplyEnabledRuntimeState("bootstrap:" .. tostring(event))
+			MTH_ZH_QueuePostLoginRestore("bootstrap:" .. tostring(event))
+			this:UnregisterAllEvents()
+			this:SetScript("OnEvent", nil)
+		end
+	end)
+
+	return MTH_ZH_BootstrapFrame
+end
+
+MTH_ZH_ApplyEnabledRuntimeState = function(source)
+	MTH_ZH_SyncSavedVariables()
+	MTH_ZH_SetButtonsVisible(true)
+	MTH_ZH_SetAuxFramesVisible(true)
+	MTH_ZH_RestoreRuntimeFeatureFlags()
+end
+
+MTH_ZH_SyncSavedVariables = function()
+	-- Bind the ZHunterMod_Saved global as a runtime alias into the canonical
+	-- nested store (MTH_CharSavedVariables.modules.zhunter). GetSavedRoot does the
+	-- adoption + aliasing; there is no second on-disk copy anymore.
+	if type(MTH_ZH_GetSavedRoot) == "function" then
+		MTH_ZH_GetSavedRoot()
+	end
+end
+
+MTH_ZH_SetButtonsVisible = function(visible)
+	local buttonNames = {
+		"zButtonAspect",
+		"zButtonTrack",
+		"zButtonTrap",
+		"zButtonRanged",
+		"zButtonAmmo",
+		"zButtonPet",
+		"zButtonMounts",
+		"zButtonCompanions",
+		"zButtonToys",
+		"zButtonCraft",
+	}
+
+	local function MTH_ZH_SetChildButtonsVisible(parentButton, parentName, show)
+		if not parentButton then
+			return
+		end
+
+		if not show then
+			if parentButton.children then
+				parentButton.children:Hide()
+			end
+
+			if not parentButton.count then
+				return
+			end
+
+			local hideBaseName = parentButton.name or parentName
+			if not hideBaseName then
+				return
+			end
+
+			for index = 1, parentButton.count do
+				local child = getglobal(hideBaseName .. index)
+				if child then
+					child:Hide()
+				end
+			end
+			return
+		end
+
+		local showChildren = false
+		if type(ZSpellButton_GetChildrenExpanded) == "function" then
+			showChildren = ZSpellButton_GetChildrenExpanded(parentButton)
+		else
+			showChildren = true
+		end
+
+		if parentButton.children then
+			if showChildren then
+				parentButton.children:Show()
+			else
+				parentButton.children:Hide()
+			end
+		end
+
+		if not parentButton.count then
+			return
+		end
+
+		local baseName = parentButton.name or parentName
+		if not baseName then
+			return
+		end
+
+		if showChildren then
+			for index = 1, parentButton.count do
+				local child = getglobal(baseName .. index)
+				if child then
+					if child.id then
+						child:Show()
+					else
+						child:Hide()
+					end
+				end
+			end
+		end
+	end
+
+	for _, buttonName in ipairs(buttonNames) do
+		local button = getglobal(buttonName)
+		if button then
+			if visible then
+				-- Respect per-button enabled state
+				local getterName = buttonName .. "_GetSaved"
+				local getter = getglobal(getterName)
+				local shouldShow = true
+				if type(getter) == "function" then
+					local ok, saved = pcall(getter)
+					if ok and type(saved) == "table" and (saved["enabled"] == false or saved["enabled"] == 0) then
+						shouldShow = false
+					end
+				end
+				if shouldShow then
+					MTH_ZH_SetChildButtonsVisible(button, buttonName, true)
+					button:Show()
+				else
+					MTH_ZH_SetChildButtonsVisible(button, buttonName, false)
+					button:Hide()
+				end
+			else
+				MTH_ZH_SetChildButtonsVisible(button, buttonName, false)
+				button:Hide()
+			end
+		end
+	end
+end
+
+MTH_ZH_SetAuxFramesVisible = function(visible)
+	return
+end
+
+local function MTH_ZH_SetAdjustmentHandlersActive(active)
+	local frameSpecs = {
+		{ frame = "MTH_ZH_AspectAdjust", handler = "MTH_ZH_AspectAdjust_OnEvent", getter = "zButtonAspect_GetSaved" },
+		{ frame = "MTH_ZH_TrackAdjust", handler = "MTH_ZH_TrackAdjust_OnEvent", getter = "zButtonTrack_GetSaved" },
+		{ frame = "MTH_ZH_TrapAdjust", handler = "MTH_ZH_TrapAdjust_OnEvent", getter = "zButtonTrap_GetSaved" },
+		{ frame = "MTH_ZH_RangedAdjust", handler = "MTH_ZH_RangedAdjust_OnEvent", getter = "zButtonRanged_GetSaved" },
+		{ frame = "MTH_ZH_AmmoAdjust", handler = "MTH_ZH_AmmoAdjust_OnEvent", getter = "zButtonAmmo_GetSaved" },
+		{ frame = "MTH_ZH_PetAdjust", handler = "MTH_ZH_PetAdjust_OnEvent", getter = "zButtonPet_GetSaved" },
+		{ frame = "MTH_ZH_MountsAdjust", handler = "MTH_ZH_MountsAdjust_OnEvent", getter = "zButtonMounts_GetSaved" },
+		{ frame = "MTH_ZH_CompanionsAdjust", handler = "MTH_ZH_CompanionsAdjust_OnEvent", getter = "zButtonCompanions_GetSaved" },
+		{ frame = "MTH_ZH_ToysAdjust", handler = "MTH_ZH_ToysAdjust_OnEvent", getter = "zButtonToys_GetSaved" },
+		{ frame = "MTH_ZH_CraftAdjust", handler = "MTH_ZH_CraftAdjust_OnEvent", getter = "zButtonCraft_GetSaved" },
+	}
+
+	local function isFeatureEnabled(getterName)
+		local getter = getglobal(getterName)
+		if type(getter) ~= "function" then
+			return true
+		end
+		local ok, saved = pcall(getter)
+		if not ok or type(saved) ~= "table" then
+			return true
+		end
+		if saved["enabled"] == false or saved["enabled"] == 0 then
+			return false
+		end
+		return true
+	end
+
+	for _, spec in ipairs(frameSpecs) do
+		local frameName = spec.frame
+		local handlerName = spec.handler
+		local frame = getglobal(frameName)
+		if frame and frame.SetScript then
+			if active then
+				if isFeatureEnabled(spec.getter) then
+					local handler = getglobal(handlerName)
+					if type(handler) == "function" then
+						frame:SetScript("OnEvent", handler)
+					else
+						frame:SetScript("OnEvent", nil)
+					end
+				else
+					frame:SetScript("OnEvent", nil)
+				end
+			else
+				frame:SetScript("OnEvent", nil)
+			end
+		end
+	end
+end
+
+local function MTH_ZH_ClearRuntimeFeatureFlags()
+	return
+end
+
+MTH_ZH_RestoreRuntimeFeatureFlags = function()
+	if type(MTH_ZBar_Init) == "function" then
+		MTH_ZBar_Init()
+	end
+end
+
+function MTH_ZHunter:init()
+	-- ZHunterMod initializes via the game events
+	-- Features: Aspect, Tracking, Trap, Ammo, Pet management buttons
+	MTH_ZH_SyncSavedVariables()
+	MTH_ZH_EnsureBootstrapRestoreFrame()
+	if self.enabled then
+		MTH_ZH_SyncSavedVariables()
+	end
+end
+
+function MTH_ZHunter:setEnabled(enabled)
+	MTH_ZH_SyncSavedVariables()
+	if enabled then
+		MTH_ZH_EnsureBootstrapRestoreFrame()
+		MTH_ZH_SetAdjustmentHandlersActive(true)
+		MTH_ZH_ApplyEnabledRuntimeState("setEnabled")
+	else
+		MTH_ZH_ClearRuntimeFeatureFlags()
+		MTH_ZH_SetAdjustmentHandlersActive(false)
+		MTH_ZH_SetButtonsVisible(false)
+		MTH_ZH_SetAuxFramesVisible(false)
+		-- Hide the zBar anchor so it doesn't float while the module is off
+		local zbarAnchor = getglobal("MTH_ZBar_Anchor")
+		if zbarAnchor then zbarAnchor:Hide() end
+	end
+end
+
+function MTH_ZHunter:onEvent(evt, arg1, arg2)
+	if not self.enabled then
+		return
+	end
+	if evt == "MTH_PET_LIVE_STATE_CHANGED" then
+		if type(zButtonPet_RefreshLiveState) == "function" then
+			zButtonPet_RefreshLiveState(arg1, arg2)
+		end
+		return
+	end
+	if evt == "VARIABLES_LOADED" then
+		MTH_ZH_SyncSavedVariables()
+		MTH_ZH_RestoreRuntimeFeatureFlags()
+		return
+	end
+	if evt == "PLAYER_ENTERING_WORLD" then
+		MTH_ZH_ApplyEnabledRuntimeState("event:" .. tostring(evt))
+		MTH_ZH_QueuePostLoginRestore(evt)
+	end
+end
+
+function MTH_ZHunter:cleanup()
+	-- Cleanup code when module is unloaded
+	self:setEnabled(false)
+end
+
+-- Register with MTH
+MTH:RegisterModule("zhunter", MTH_ZHunter)

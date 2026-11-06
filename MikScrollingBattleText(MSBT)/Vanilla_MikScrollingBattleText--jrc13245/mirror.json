@@ -1,0 +1,237 @@
+{
+  "upstream": "https://github.com/jrc13245/Vanilla_MikScrollingBattleText",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jrc13245",
+    "repo": "Vanilla_MikScrollingBattleText",
+    "name": "Vanilla_MikScrollingBattleText",
+    "url": "https://github.com/jrc13245/Vanilla_MikScrollingBattleText",
+    "api": "https://api.github.com/repos/jrc13245/Vanilla_MikScrollingBattleText"
+  },
+  "commit": "c6e246c13403769d377cb5e6ea83294af3757ddc",
+  "sourceFiles": {
+    "MikScrollingBattleText/Artwork/PlainBackdrop.tga": {
+      "sha256": "61f41c08e649545b14cdc226c9e26bc4f4f061f357150cf7e7ac1250dc2c5c7f",
+      "bytes": 1068
+    },
+    "MikScrollingBattleText/Fonts/adventure.ttf": {
+      "sha256": "e5de92f4cd5e99f7c1e70a573f220403366c7d0f901f2ba740ae190b99be2076",
+      "bytes": 50896
+    },
+    "MikScrollingBattleText/Fonts/archangelsk.ttf": {
+      "sha256": "8ce867bf441b551b09cc5a8290e1c4d1aa64c03b94171c8af52b5a43358ac9eb",
+      "bytes": 51884
+    },
+    "MikScrollingBattleText/Fonts/backsplatter.ttf": {
+      "sha256": "000283cd7d1d9ef9b263180151573c67d0d0fee0674784eeaa1871f358c3f4d2",
+      "bytes": 38164
+    },
+    "MikScrollingBattleText/Fonts/basketofhammers.ttf": {
+      "sha256": "0e4fd5226ed527f9d532039bb73006c3aa4cad91a05f87aa3ffe08ab2c38bf4d",
+      "bytes": 114972
+    },
+    "MikScrollingBattleText/Fonts/bazooka.ttf": {
+      "sha256": "40b937264d2325eafd8dd97b18d93d449c92aa065ba4001d87f411bb7e45c6fa",
+      "bytes": 46064
+    },
+    "MikScrollingBattleText/Fonts/BigNoodleTitling.ttf": {
+      "sha256": "1bdaea7c5e8925016a9da5500fa68b544d9681d667c661be53a7dc6a94a815e7",
+      "bytes": 74860
+    },
+    "MikScrollingBattleText/Fonts/BlackCastleMF.ttf": {
+      "sha256": "149d71d96348ee9b2e36b9557c527364911149bbd91a0edafa51f0399e04f8eb",
+      "bytes": 50176
+    },
+    "MikScrollingBattleText/Fonts/budhand.ttf": {
+      "sha256": "02cf00d0024d3db6160d74f1f479a839f0cd0a6ba844dba845c0587f0cb3c055",
+      "bytes": 30768
+    },
+    "MikScrollingBattleText/Fonts/college.ttf": {
+      "sha256": "ba089e3e585ccc59c2297aaf51cb5efe68c0cb8553558a3de7224428eae53963",
+      "bytes": 11336
+    },
+    "MikScrollingBattleText/Fonts/comic.ttf": {
+      "sha256": "b82c53776058f291382ff7e008d4675839d2dc21eb295c66391f6fb0655d8fc0",
+      "bytes": 126364
+    },
+    "MikScrollingBattleText/Fonts/Continuum.ttf": {
+      "sha256": "28e295353b910b9ca7bf3d2b437bb5873ce49d5db1df661f8c97efeb9399d8b9",
+      "bytes": 92656
+    },
+    "MikScrollingBattleText/Fonts/cooline.ttf": {
+      "sha256": "3e676d16860f06085da51cf9a44155feac03e4afabdcefed72ac8f403a9b02a6",
+      "bytes": 53472
+    },
+    "MikScrollingBattleText/Fonts/creeper.ttf": {
+      "sha256": "bcb6e888ae414be26ad14f98b5ceeaed5abe5035e61ac6a532e67d7ebaa03f9e",
+      "bytes": 48752
+    },
+    "MikScrollingBattleText/Fonts/defused.ttf": {
+      "sha256": "d46bb098446762e1a8063e373954a75f21fc83edf090895c7a24f3e4823fec41",
+      "bytes": 831676
+    },
+    "MikScrollingBattleText/Fonts/DieDieDie.ttf": {
+      "sha256": "a7cf332ae1604f905a419e0ff03bd6dafe3caf1fb02de0b4c022e5f1dc761af9",
+      "bytes": 383352
+    },
+    "MikScrollingBattleText/Fonts/exocet.ttf": {
+      "sha256": "612b829e26d86b0f92811c1efe80ccc157995f54988c84b223545f612047c994",
+      "bytes": 50844
+    },
+    "MikScrollingBattleText/Fonts/Expressway.ttf": {
+      "sha256": "06a2106170c2b5b736955cc749ed755f3757d103230645158f0bd5b5b91c386b",
+      "bytes": 99820
+    },
+    "MikScrollingBattleText/Fonts/FuturaBold.ttf": {
+      "sha256": "aa64abd2aac5374ec35657476233ca8873ec1c2057a2031cd3979df3b2e24af8",
+      "bytes": 38308
+    },
+    "MikScrollingBattleText/Fonts/galaxy.ttf": {
+      "sha256": "61551e5aac084a487ec5caefc3e27098e07d1910a54c94f29d6b81ebf5dc7666",
+      "bytes": 198224
+    },
+    "MikScrollingBattleText/Fonts/Homespun.ttf": {
+      "sha256": "00987661c58306d4166af5c94d69b2becb21548097658e4627ef4dfdfb6b3f90",
+      "bytes": 21196
+    },
+    "MikScrollingBattleText/Fonts/mailrays.TTF": {
+      "sha256": "0ac4cb0dbc9f6c73da1c7d3fba3924f280c8a02318a56e92b357be516932c595",
+      "bytes": 62376
+    },
+    "MikScrollingBattleText/Fonts/Myriad-Pro.ttf": {
+      "sha256": "a4eefdaeccae42faeaf989b6b642f2e39386fd33a7e11c39e7c08d3bfc4eb18a",
+      "bytes": 209700
+    },
+    "MikScrollingBattleText/Fonts/pepsi.ttf": {
+      "sha256": "986311d9f65f5687dcbddb8f7e8176efe277f31e0f276f00e5dde4dd5f119ba6",
+      "bytes": 11632
+    },
+    "MikScrollingBattleText/Fonts/porky.ttf": {
+      "sha256": "7e5798e90dcc1545ebae2f41bf8325bf6061e62b97288dec053c05b985acc85a",
+      "bytes": 79752
+    },
+    "MikScrollingBattleText/Fonts/PT-Sans-Narrow-Bold.ttf": {
+      "sha256": "e69d83bcf5bd647892b4e2b22f5098dabd55c989413513197722fc156fb9f00e",
+      "bytes": 487720
+    },
+    "MikScrollingBattleText/Fonts/PT-Sans-Narrow-Regular.ttf": {
+      "sha256": "4102edda03059163771869d258df54ac8563c408fa6e9ef75b2ddc85eabea6f4",
+      "bytes": 396212
+    },
+    "MikScrollingBattleText/Fonts/signature.ttf": {
+      "sha256": "cd3580f120c185b1e36ce6d107e657dbf1c04a70ac69c5b560f8312ebf418906",
+      "bytes": 39904
+    },
+    "MikScrollingBattleText/Fonts/simhei.ttf": {
+      "sha256": "336a838f4a78e150826be608dae69de59d50948c3d2b71760e096ae764154bdc",
+      "bytes": 9751960
+    },
+    "MikScrollingBattleText/Fonts/skratchpunk.ttf": {
+      "sha256": "4309144a2f1b084407031b7f1da2dacab96dcf284fb1c31c70a2c27e4587a025",
+      "bytes": 149264
+    },
+    "MikScrollingBattleText/Fonts/yellowjacket.ttf": {
+      "sha256": "716f35a0d2a6c56e191bad19a772b049b6948dea0e4d5a667fef6cb02913c291",
+      "bytes": 79196
+    },
+    "MikScrollingBattleText/Fonts/zombie.ttf": {
+      "sha256": "619e6ba6e3852d747064d276abd028b89204d9e1d383d991ee893b4a30edff95",
+      "bytes": 43556
+    },
+    "MikScrollingBattleText/Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "292addebb616ab225039cb2e747578f0e115a2dddb6655e318d9ee318da7b4a5",
+      "bytes": 21663
+    },
+    "MikScrollingBattleText/Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "31bc9cfda434c890574d1bbfc48c9e1d068f45ff73e1023ca452dedab0bdef41",
+      "bytes": 15957
+    },
+    "MikScrollingBattleText/Libs/BabbleSpell-2.2/Babble-Spell-2.2.lua": {
+      "sha256": "f93fe5f0ad0ee39446f0df3ef5a235e63d3ea59371d6f9c2ea1322bbedfdc62d",
+      "bytes": 460786
+    },
+    "MikScrollingBattleText/localization.lua": {
+      "sha256": "31bbd561977e658262c74628d867791c7e74a0dba4299e19fb5e4da9227ab895",
+      "bytes": 41467
+    },
+    "MikScrollingBattleText/MikCombatEventHelper.lua": {
+      "sha256": "f354ed1357695a80d3b446af79ed9760f5a8e878e4c0303a0017cf4827e17ec8",
+      "bytes": 142620
+    },
+    "MikScrollingBattleText/MikCombatEventHelper.xml": {
+      "sha256": "78c61da6999a1eea384c06e2f9412fc6a102812c0b726a1b9e65185b0bc5b095",
+      "bytes": 412
+    },
+    "MikScrollingBattleText/MikScrollingBattleText-deDE.lua": {
+      "sha256": "476b89e61ee1f105623fe57c647d13b7efbac54c474ecf5d9c54e35556f8fdc5",
+      "bytes": 1382
+    },
+    "MikScrollingBattleText/MikScrollingBattleText-enUS.lua": {
+      "sha256": "a9d08a554eb7cc8a48ebff6ea7ac0c622a93ecdb490a5f999139d6902040fbd3",
+      "bytes": 1114
+    },
+    "MikScrollingBattleText/MikScrollingBattleText-frFR.lua": {
+      "sha256": "bc8c0a33068b5a46dd0ca2e27e53871b64e61d68481e9b20af0a0d510a804320",
+      "bytes": 1382
+    },
+    "MikScrollingBattleText/MikScrollingBattleText-ruRU.lua": {
+      "sha256": "1837f81385287ebcd586c7565e99d311e97771ef00131a6d869352dd962be52b",
+      "bytes": 1842
+    },
+    "MikScrollingBattleText/MikScrollingBattleText.lua": {
+      "sha256": "1afbb5d52eb1435747779766230fc2435ee705f3f389f76e62c30267904ad5aa",
+      "bytes": 115173
+    },
+    "MikScrollingBattleText/MikScrollingBattleText.toc": {
+      "sha256": "4075db398917440c74d79da1eae27d8fefa40cba87e2a34c0925b5ac4e8c77b1",
+      "bytes": 701
+    },
+    "MikScrollingBattleText/MikScrollingBattleText.xml": {
+      "sha256": "2cb95e5612f1870d5e9f381bb851327de297200aefc7ea26264561b60e994ae7",
+      "bytes": 10850
+    },
+    "MikScrollingBattleText/MikTableRecyclerObject.lua": {
+      "sha256": "95d6583a224a27908075a683426b6d165f08645ef6ce49025fc4276ba7893172",
+      "bytes": 5903
+    },
+    "MikScrollingBattleText/readme.html": {
+      "sha256": "426ec92eb4a663bfee1ea2b541bfc4d0bcc349a13f9d5c09db1fe7581671ad6f",
+      "bytes": 39825
+    },
+    "MikScrollingBattleText/sounds/LowHealth.mp3": {
+      "sha256": "ef0401268b779f1e86755ee603370c022df14a20df1f0bef369d7890ccede2eb",
+      "bytes": 8112
+    },
+    "MikScrollingBattleText/sounds/LowMana.mp3": {
+      "sha256": "de8d0d4ddb4d107fc63f5a3dbea146e25b732e3255b7f702a465ca9c15de0fb7",
+      "bytes": 9956
+    },
+    "MikScrollingBattleText/sounds/Resist.mp3": {
+      "sha256": "d94b976a59bf1b6fba0c00a7d5345143ba6d0e5cc4710d1c4126d9ae987702cb",
+      "bytes": 25771
+    },
+    "MikScrollingBattleTextOptions/localization_options-ruRU.lua": {
+      "sha256": "0bd762fbf80fae99c0b9009f8e6789cfb3d3c078e354e252eedc4d49720d28ec",
+      "bytes": 55296
+    },
+    "MikScrollingBattleTextOptions/localization_options.lua": {
+      "sha256": "f17695b7b8d06ac67c274475c67dce7caff176827f99eea71e3b55faa73c4605",
+      "bytes": 33097
+    },
+    "MikScrollingBattleTextOptions/MikScrollingBattleTextOptions.toc": {
+      "sha256": "fdc8fb3c25a318abc3e7fc07b896c521de9a24b03e2a0b05adab59d0b6989b22",
+      "bytes": 362
+    },
+    "MikScrollingBattleTextOptions/MSBTOptions.lua": {
+      "sha256": "3d81630a421de6cd6fd517cf00729be843707da53482319378c27306f809fa55",
+      "bytes": 172513
+    },
+    "MikScrollingBattleTextOptions/MSBTOptions.xml": {
+      "sha256": "d33e3ec24bf1628ee1a33fd27020706ea21a9040519e4ea02dde97eb2ca903b0",
+      "bytes": 75872
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

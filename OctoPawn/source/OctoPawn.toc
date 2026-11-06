@@ -1,0 +1,47 @@
+## Interface: 11200
+## Title: |cFFFF8000O|r|cFFA335EEcto|r|cFFFF8000P|r|cFFA335EEawn|r by |cffffd700iGreed|r
+## Notes: Pawn/Gearscore addon to Score items and players. Primarily intended for new players.
+## Author: iGreed
+## Version: 1.5.10
+## SavedVariablesPerCharacter: OctoPawnDB
+
+Defaults\Helpers.lua
+Defaults\Warrior\Arms.lua
+Defaults\Warrior\Fury.lua
+Defaults\Warrior\Protection.lua
+Defaults\Paladin\Holy.lua
+Defaults\Paladin\Retribution.lua
+Defaults\Paladin\Protection.lua
+Defaults\Hunter\BeastMastery.lua
+Defaults\Hunter\Marksmanship.lua
+Defaults\Hunter\Survival.lua
+Defaults\Rogue\Assassination.lua
+Defaults\Rogue\Combat.lua
+Defaults\Rogue\Subtlety.lua
+Defaults\Priest\Holy.lua
+Defaults\Priest\Discipline.lua
+Defaults\Priest\Shadow.lua
+Defaults\Shaman\Elemental.lua
+Defaults\Shaman\Enhancement.lua
+Defaults\Shaman\EnhancementTank.lua
+Defaults\Shaman\Restoration.lua
+Defaults\Mage\Arcane.lua
+Defaults\Mage\Fire.lua
+Defaults\Mage\Frost.lua
+Defaults\Warlock\Affliction.lua
+Defaults\Warlock\Demonology.lua
+Defaults\Warlock\Destruction.lua
+Defaults\Druid\Balance.lua
+Defaults\Druid\FeralCat.lua
+Defaults\Druid\FeralThreat.lua
+Defaults\Druid\FeralMitigation.lua
+Defaults\Druid\Restoration.lua
+
+Core.lua
+Scoring\ScoringStats.lua
+Scoring\ScoringCore.lua
+Compare.lua
+Commands.lua
+UI\Config.lua
+UI\Paperdoll\Paperdoll.lua
+UI\Paperdoll\Pdmo.lua

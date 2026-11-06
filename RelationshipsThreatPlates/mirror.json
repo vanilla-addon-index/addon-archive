@@ -1,0 +1,94 @@
+{
+  "upstream": "https://octowow.st/git/Relationship/RelationshipsThreatPlates",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Relationship",
+    "repo": "RelationshipsThreatPlates",
+    "name": "RelationshipsThreatPlates",
+    "url": "https://octowow.st/git/Relationship/RelationshipsThreatPlates",
+    "api": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsThreatPlates"
+  },
+  "commit": "ea59f09714232d951062940b3560e162f2bdc0da",
+  "sourceFiles": {
+    "Media/Bar.blp": {
+      "sha256": "c9372f34e89926aeeac529d15aad8edd386b4e74c5c4b7656db0306922792c44",
+      "bytes": 396
+    },
+    "Media/BarBG.blp": {
+      "sha256": "c9372f34e89926aeeac529d15aad8edd386b4e74c5c4b7656db0306922792c44",
+      "bytes": 396
+    },
+    "Media/Glow.blp": {
+      "sha256": "fbc8294b2f15171f10044cae29e8196733b124d9428ac5a1acace0ed2328dcf3",
+      "bytes": 1164
+    },
+    "Media/ShadowBorder.blp": {
+      "sha256": "fbc8294b2f15171f10044cae29e8196733b124d9428ac5a1acace0ed2328dcf3",
+      "bytes": 1164
+    },
+    "Media/Spark.blp": {
+      "sha256": "49145741add4c041bcc3bbb3b7ec717d9bf17078b272c42ddb3e3f9351264d29",
+      "bytes": 268
+    },
+    "README.md": {
+      "sha256": "2d89f094df48ce9175abb83a1295b59340d43304b9bd6c8538b3fe0c9e3fd8a0",
+      "bytes": 2745
+    },
+    "RelationshipsThreatPlates_Core.lua": {
+      "sha256": "3cff07e411e4c16f2b7b3b55b0b19b846db38686dd0dfe7ce3b19d4529d084d4",
+      "bytes": 7817
+    },
+    "RelationshipsThreatPlates_GUI.lua": {
+      "sha256": "7736c2612ec7e6f5d84b897223d3561c3dfcc6b6b47b0d4ae3b53dc816299c4c",
+      "bytes": 27315
+    },
+    "RelationshipsThreatPlates_Media.lua": {
+      "sha256": "0245dc8eb7129b2cf2b214b265de1ffcb7d44b7a33ab6064b11153a77fe12652",
+      "bytes": 6198
+    },
+    "RelationshipsThreatPlates_Nameplates.lua": {
+      "sha256": "b6bb4ac2b364836720b2ee756e4372d0f52f02a9541eb8ae67a4973417cd3033",
+      "bytes": 62333
+    },
+    "RelationshipsThreatPlates_Threat.lua": {
+      "sha256": "f0e2162f76f7acf0072332551c45fbd9537009a1a1303fe4e1572b8d0bceeebe",
+      "bytes": 36929
+    },
+    "RelationshipsThreatPlates_ThreatEngine.lua": {
+      "sha256": "87dcdbab765d9f2ee4856f2aa26ceed109a93f025b5e2ba5b0a2cd6a4e59486e",
+      "bytes": 82575
+    },
+    "RelationshipsThreatPlates.toc": {
+      "sha256": "496c8b448374f4d30ec5c8b923a2b2cff73aba33cfbe2a624d4a96859f330de7",
+      "bytes": 397
+    },
+    "RelationshipsThreatPlates.xml": {
+      "sha256": "c63d88a7ba3fcd190ef9bcd2f8ba25a617b5ce417185a237b718324e80b1f43b",
+      "bytes": 403
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "64": {
+      "tag": "aaaaa",
+      "folder": "aaaaa--64",
+      "assets": {
+        "23": {
+          "sha256": "df1c2bedf18dfabb6de0521c45903260c074d128017415ab480b8fa39ede19f4",
+          "bytes": 53285,
+          "id": "23",
+          "name": "RelationshipsThreatPlates.zip",
+          "url": "https://octowow.st/git/Relationship/RelationshipsThreatPlates/releases/download/aaaaa/RelationshipsThreatPlates.zip",
+          "path": "releases/aaaaa--64/assets/RelationshipsThreatPlates.zip"
+        }
+      },
+      "source": {
+        "sha256": "e63d4e687af69328a85e51af90c334ecf36ae6e26652599c003b2b021a9fd7c6",
+        "bytes": 49565,
+        "path": "releases/aaaaa--64/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsThreatPlates/archive/aaaaa.tar.gz"
+      }
+    }
+  }
+}

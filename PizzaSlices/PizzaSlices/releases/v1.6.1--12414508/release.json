@@ -1,0 +1,9 @@
+{
+  "id": "12414508",
+  "tag": "v1.6.1",
+  "name": "v1.6.1",
+  "body": "- no longer joins the LFT channel on login or posts your addon version there, and the \"new version available\" message is gone",
+  "published": "2026-09-23T12:50:40+02:00",
+  "prerelease": false,
+  "url": "https://codeberg.org/Pizzahawaii/PizzaSlices/releases/tag/v1.6.1"
+}

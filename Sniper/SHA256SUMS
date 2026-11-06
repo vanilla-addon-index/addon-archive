@@ -1,0 +1,15 @@
+5454ce410d66564a3875e087daf7545c710fc3cb8ad155621b29ff1d5afe4a9c  source/Sniper/bindings.xml
+e460d01bc2f95f3ff01ae0fefe5a575db9748576e7b96df81e56e45bb16d0ee5  source/Sniper/Libs/AceAddon-2.0/AceAddon-2.0.lua
+e498c182436c51671590512e02ebcec98e85fe454b5f5b1f00cf1a62b21a13c6  source/Sniper/Libs/AceConsole-2.0/AceConsole-2.0.lua
+75643083325a68f0465a7cd81edda611557806da7052df7027a8da3e2c3cb2fe  source/Sniper/Libs/AceDB-2.0/AceDB-2.0.lua
+394521bbd40660d05c178fce092bb3c4904405efee2b43c7a4d0d98bf1d8892f  source/Sniper/Libs/AceDebug-2.0/AceDebug-2.0.lua
+0f7b32493afaf5b7e96f3fd1b5135cc9d8a07ded8c64aae11e75f1e0f3212902  source/Sniper/Libs/AceEvent-2.0/AceEvent-2.0.lua
+8c75f829e0f980aac69d53cce8f8c806ea671795f445ab736c8cf76b9fc1f586  source/Sniper/Libs/AceLibrary/AceLibrary.lua
+6e315b0d257b7feda50ad6ef4b0c40228f7125330da7b0e4793be62e75ba81a1  source/Sniper/Libs/AceLocale-2.2/AceLocale-2.2.lua
+3279c50e816fa15ae3e9f6a10b45abaf8464c0daa9e84df971783005efaba26e  source/Sniper/Libs/AceModuleCore-2.0/AceModuleCore-2.0.lua
+1385526e460948771ca6db1ceec81e8b0daf33bfc391f55e6f1bbc449a341a82  source/Sniper/Libs/AceOO-2.0/AceOO-2.0.lua
+783f5d361ab58233eb30e14684f7a66cc77097c19b99172a90bba3c1d42739d2  source/Sniper/Libs/Dewdrop-2.0/Dewdrop-2.0.lua
+0ee8b878799175790560eef190fe0a723328a74ec2ebd78a49163b544a7a4e20  source/Sniper/Libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua
+2456e593be577cdd8340cd0edc1fce94926a1f9e7dee7f26798bf8b3128dbf06  source/Sniper/Libs/Tablet-2.0/Tablet-2.0.lua
+8418307bbab5336db012206d6cbac3ca6c5324cb0dc97c822f2d08441d462923  source/Sniper/Sniper.lua
+f8c85f154b2e387c84ce4de61c3a9d4d80b75123249c4df2a7e21ef1b1e98a3b  source/Sniper/Sniper.toc

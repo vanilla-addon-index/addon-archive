@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: ToxicTagger
+## Notes: hello
+## Author: Nobody
+
+ToxicTagger.lua

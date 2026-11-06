@@ -1,0 +1,84 @@
+{
+  "upstream": "https://github.com/rgd87/NugComboBar/tree/vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "rgd87",
+    "repo": "NugComboBar",
+    "name": "NugComboBar",
+    "ref": "vanilla",
+    "subpath": "",
+    "url": "https://github.com/rgd87/NugComboBar",
+    "api": "https://api.github.com/repos/rgd87/NugComboBar"
+  },
+  "commit": "fdd68847ea1b91358f141fee5b81969254290218",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "f1cf605ae5fd739c553335aa2771649387243f82cd6caa4741115235998170e6",
+      "bytes": 23
+    },
+    "greyflame_tex.tga": {
+      "sha256": "13287393fa438c425f6d0b435bebb4fd37cc755bbcd4bb231b67c6a009b8a668",
+      "bytes": 16428
+    },
+    "greyflame2_tex.tga": {
+      "sha256": "709ac8be52df1ce4ec2d0a5759b5e8f9e5d738628ce855850c930b81fa3dacdd",
+      "bytes": 16428
+    },
+    "ncbc_bg5.tga": {
+      "sha256": "4e42cc7a50107f0b0dbfd60a7a2532b06a6f784b5cd535e857f323be8d157eac",
+      "bytes": 131116
+    },
+    "NugComboBar.lua": {
+      "sha256": "87562fb8cc7bbe22dc1e20574797c69a36cb0249392a26f7b988b72e08769fcf",
+      "bytes": 8878
+    },
+    "NugComboBar.toc": {
+      "sha256": "30a8aaf937f4e35802653d37bc033bfe5d7815e32803ff58d30360394706a938",
+      "bytes": 146
+    },
+    "NugComboBar.xml": {
+      "sha256": "c1e3cef05feb675b0aa9a06d9df34c44a3c8e934dfbc606f05d608332e31e554",
+      "bytes": 4961
+    },
+    "README.md": {
+      "sha256": "68d3c728d435289a6c6af57a9167c296d73c5beba72f0c1927105bd5e1794850",
+      "bytes": 124
+    },
+    "spark.tga": {
+      "sha256": "0e15dae4dcc06ab26522e8265e1dfb4e80f5fcc2b2422da497b9e642ff9c4afd",
+      "bytes": 16428
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "433602441": {
+      "tag": "12.1.2",
+      "folder": "12.1.2--433602441",
+      "assets": {
+        "708567002": {
+          "sha256": "f8d155e1bb4feddcd66e563dbdf51fee4aaee9f2ed0bf3c1c2cb692fd253c569",
+          "bytes": 267404,
+          "id": "708567002",
+          "name": "NugComboBar-12.1.2.zip",
+          "url": "https://github.com/rgd87/NugComboBar/releases/download/12.1.2/NugComboBar-12.1.2.zip",
+          "path": "releases/12.1.2--433602441/assets/NugComboBar-12.1.2.zip"
+        },
+        "708567031": {
+          "sha256": "44c25f13480ae72f2d6fcef078d44cad10e2d251f52b0c711d2fb9e77095a8ba",
+          "bytes": 241,
+          "id": "708567031",
+          "name": "release.json",
+          "url": "https://github.com/rgd87/NugComboBar/releases/download/12.1.2/release.json",
+          "path": "releases/12.1.2--433602441/assets/release.json"
+        }
+      },
+      "source": {
+        "sha256": "dac0d28ab86dc145d3ad71ff8801d841728568b4bf1b289756838a5c0576b64b",
+        "bytes": 164998,
+        "path": "releases/12.1.2--433602441/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/rgd87/NugComboBar/tarball/12.1.2"
+      }
+    }
+  }
+}

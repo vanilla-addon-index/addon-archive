@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: RelationshipsThreatPlates - OctoWoW
+## Notes: OctoWoW-compatible RelationshipsThreatPlates
+## Author: Relationship
+## Version: 1.5
+## SavedVariables: RelationshipsThreatPlatesDB
+## X-Website: https://github.com/Relationship-OctoWoW/RelationshipsThreatPlates
+## X-GitHub: https://github.com/Relationship-OctoWoW/RelationshipsThreatPlates
+
+RelationshipsThreatPlates.xml

@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: PerfectShot
+## Notes: Hides UI / name plates and then takes a series of screenshots.
+## OptionalDeps: myAddOns
+## Author: Bastian Pflieger (wbb)
+## Version: v10
+## X-Email: wbb1977@gmail.com
+## X-Date: 2018-27-12
+## X-Category: MYADDONS_CATEGORY_OTHERS
+PerfectShot.xml

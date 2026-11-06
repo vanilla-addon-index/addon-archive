@@ -1,0 +1,6 @@
+## Title: PiTTY
+## Version: 1.1.2
+## Author: Mimma @ VanillaGaming.org
+## Interface: 11200
+
+PittyFrame.xml

@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Voidmenull/WhoList_Fix",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Voidmenull",
+    "repo": "WhoList_Fix",
+    "name": "WhoList_Fix",
+    "url": "https://github.com/Voidmenull/WhoList_Fix",
+    "api": "https://api.github.com/repos/Voidmenull/WhoList_Fix"
+  },
+  "commit": "07ccd926719160dd6461895eef66148ba0e7fde0",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    ".gitignore.upstream": {
+      "sha256": "39b48a08bc89b0390642d250661c23781351a7a7a5ee70388bb13df140109c32",
+      "bytes": 617
+    },
+    "WhoList_Fix.lua": {
+      "sha256": "6a181d3acf5d554e8731d12abad0cb403d82ea2416a07d8accb42a9b32558fcf",
+      "bytes": 593
+    },
+    "WhoList_Fix.toc": {
+      "sha256": "b7cced10f06c44d2550d9dbe624899ac931c9c35f203749cb811351e21a4ef71",
+      "bytes": 242
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

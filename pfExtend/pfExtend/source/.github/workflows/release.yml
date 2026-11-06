@@ -1,0 +1,108 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Extract version from pfExtend.toc
+      id: get_version
+      shell: pwsh
+      run: |
+        $tocContent = Get-Content "pfExtend.toc" -Raw
+        if ($tocContent -match '## Version:\s*([^\s]+)') {
+          $version = $matches[1]
+          Write-Output "version=$version" >> $env:GITHUB_OUTPUT
+          Write-Output "Detected version: $version"
+        } else {
+          Write-Error "Could not find version in pfExtend.toc"
+          exit 1
+        }
+    
+    - name: Create zip archive
+      shell: pwsh
+      run: |
+        $version = "${{ steps.get_version.outputs.version }}"
+        $zipName = "pfExtend_$version.zip"
+        
+        # Define excluded files and folders
+        $excludedFiles = @('.gitattributes', '.gitignore', 'LICENSE', 'README.md', 'README-zhCN.md')
+        $excludedFolders = @('img', '.git', '.github','questGaindb')
+        
+        # Create temp folder structure: temp_pfExtend/pfExtend/
+        $tempDir = "temp_pfExtend"
+        $finalDir = "$tempDir\pfExtend"
+        New-Item -ItemType Directory -Force -Path $finalDir | Out-Null
+        
+        # Get all items in root directory
+        $items = Get-ChildItem -Path "." -Force
+        
+        foreach ($item in $items) {
+          $name = $item.Name
+          
+          # Skip excluded files
+          if ($excludedFiles -contains $name) {
+            Write-Output "Excluding file: $name"
+            continue
+          }
+          
+          # Skip excluded folders
+          if ($excludedFolders -contains $name) {
+            Write-Output "Excluding folder: $name"
+            continue
+          }
+          
+          # Skip temp directory itself
+          if ($name -eq $tempDir) {
+            continue
+          }
+          
+          # Copy to final directory
+          $destPath = Join-Path $finalDir $name
+          if ($item.PSIsContainer) {
+            Copy-Item -Path $item.FullName -Destination $destPath -Recurse -Force
+          } else {
+            Copy-Item -Path $item.FullName -Destination $destPath -Force
+          }
+        }
+        
+        # Create zip file from temp folder (includes pfExtend subfolder)
+        Compress-Archive -Path "$tempDir\pfExtend" -DestinationPath $zipName -Force
+        
+        # Cleanup
+        Remove-Item -Recurse -Force $tempDir
+        
+        Write-Output "Created: $zipName"
+        if (Test-Path $zipName) {
+          Write-Output "Zip file exists with size: $((Get-Item $zipName).Length) bytes"
+        }
+    
+    - name: List files
+      shell: pwsh
+      run: |
+        Get-ChildItem -Filter "*.zip"
+
+    - name: Create Release
+      id: create_release
+      uses: softprops/action-gh-release@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.get_version.outputs.version }}
+        files: pfExtend_*.zip
+        name: pfExtend ${{ steps.get_version.outputs.version }}
+        prerelease: false
+        make_latest: true
+        generate_release_notes: true

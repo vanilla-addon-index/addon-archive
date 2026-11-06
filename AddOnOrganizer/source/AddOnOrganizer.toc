@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: Add On Organizer
+## Notes: Lists and organizes all of you'r addons, let's you create global profiles.
+## SavedVariables: CS_AddOnOrganizer_Profiles
+## Author: Christian Schubert
+## Version: 2.0
+
+AddOnOrganizer.xml

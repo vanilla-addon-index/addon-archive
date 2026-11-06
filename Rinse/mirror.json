@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/Otari98/Rinse",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Otari98",
+    "repo": "Rinse",
+    "name": "Rinse",
+    "url": "https://github.com/Otari98/Rinse",
+    "api": "https://api.github.com/repos/Otari98/Rinse"
+  },
+  "commit": "97f2122c10fe4ee16156be309804806deafadc5e",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "0ab41adb46642301fb420410644e0a4500e207e31b6489dee65ecff95bdbe664",
+      "bytes": 377
+    },
+    "LICENSE": {
+      "sha256": "e15165469fd7608920861fac345c71d500067fdf1ed123ee27cf75932d3f2d86",
+      "bytes": 1061
+    },
+    "Localization.lua": {
+      "sha256": "9871751ece93dda66106c61a0d9e2632f8c784696961d47cfa22563cfb164bb4",
+      "bytes": 11843
+    },
+    "README.md": {
+      "sha256": "3fc4f0ddc2343f0ef5df51dadf2dd5ab1d20b38cf9046345b7d30471b1442a3f",
+      "bytes": 892
+    },
+    "Rinse.lua": {
+      "sha256": "e97ea1c03301d6a75a345ccccd5e7a6ba5c611d968a7f7e841f0eedaa574327a",
+      "bytes": 71972
+    },
+    "Rinse.toc": {
+      "sha256": "62d7e2aa216e411cafa29def3ad215f3ad6cf272b68779a511a540937f56e2bb",
+      "bytes": 265
+    },
+    "Rinse.xml": {
+      "sha256": "519d75e28a432d09bcd5abc8b4345b8b3b85635c43cdce35f81ea9e5cbce6d1e",
+      "bytes": 62174
+    },
+    "Templates.xml": {
+      "sha256": "9e7ce05dbfbbf64cd33903b274fa9fc21eb64c1f004f6aa954af26eaa9544163",
+      "bytes": 11662
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

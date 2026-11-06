@@ -1,0 +1,9 @@
+{
+  "id": "64",
+  "tag": "aaaaa",
+  "name": "V1.5",
+  "body": "Fix applied in RelationshipsThreatPlates_Core.lua:\r\n\r\nAdded EnsureDB() and call it at file load\r\n\r\nReplaced the strict arg1 check with a one-time InitializeModules() guarded by a flag",
+  "published": "2026-07-25T14:45:37Z",
+  "prerelease": false,
+  "url": "https://octowow.st/git/Relationship/RelationshipsThreatPlates/releases/tag/aaaaa"
+}

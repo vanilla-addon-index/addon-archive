@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/hazlema/Rested",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "hazlema",
+    "repo": "Rested",
+    "name": "Rested",
+    "url": "https://github.com/hazlema/Rested",
+    "api": "https://api.github.com/repos/hazlema/Rested"
+  },
+  "commit": "8bcc360ddec4b3ca56a89d1cd445c5d19484d0b2",
+  "sourceFiles": {
+    "README.txt": {
+      "sha256": "ecaf7e78d2204df188f88870322a50c7b6da9c1c9d21460d5d6bc9c05b089e86",
+      "bytes": 1978
+    },
+    "Rested.lua": {
+      "sha256": "1758f6dc69cf3f3570eeaf15e19249a6976b04f09529ead7c6c63dfb114d3be8",
+      "bytes": 12062
+    },
+    "Rested.toc": {
+      "sha256": "5ee0765c63d8f15373a02673a6390222ffe44baa4c631d9ee2b1b49fe17d3e85",
+      "bytes": 190
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

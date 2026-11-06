@@ -1,0 +1,9 @@
+{
+  "id": "297746281",
+  "tag": "0.4.1",
+  "name": "PorkNotes v0.4.1",
+  "body": "## What's Changed\r\n* v0.4.1 features: Sync toggle, throttle, validation; Frame UI/logic improvements by @porkfriedlumpia in https://github.com/porkfriedlumpia/PorkNotes/pull/7\r\n\r\n\r\n**Full Changelog**: https://github.com/porkfriedlumpia/PorkNotes/compare/0.4.0...0.4.1",
+  "published": "2026-03-17T02:21:00Z",
+  "prerelease": false,
+  "url": "https://github.com/porkfriedlumpia/PorkNotes/releases/tag/0.4.1"
+}

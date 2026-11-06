@@ -4,6 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| TNENightfall | https://github.com/Monteo/TNE_Nightfall | new |
+| TNENightfall | https://github.com/Monteo/TNE_Nightfall | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

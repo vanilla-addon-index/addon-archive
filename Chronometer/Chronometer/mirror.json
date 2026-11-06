@@ -1,0 +1,285 @@
+{
+  "upstream": "https://github.com/Judo101/Chronometer",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Judo101",
+    "repo": "Chronometer",
+    "name": "Chronometer",
+    "url": "https://github.com/Judo101/Chronometer",
+    "api": "https://api.github.com/repos/Judo101/Chronometer"
+  },
+  "commit": "ddb6a1364174cec86594c5a7659b659406861d89",
+  "sourceFiles": {
+    "Chronometer.toc": {
+      "sha256": "1125eca892d79d7bdf8ce164cd8e6a31b956e4a50897fb5ca3f3f8eacde4f5af",
+      "bytes": 1943
+    },
+    "Core/Chronometer-Locale.lua": {
+      "sha256": "e11d0c48e2f85ac772f1d4b2d8ca9bda8055b40b916148868d5ac4dd92a93101",
+      "bytes": 17679
+    },
+    "Core/Chronometer.lua": {
+      "sha256": "1e60be4e3bb83346f898e215c34e6342633cf3605b720a033df6dcaac5be80fc",
+      "bytes": 47904
+    },
+    "Core/Icon.tga": {
+      "sha256": "582a795ebdc0b9e616b3f816ef59ae6d424251f96ac031e7c3369c49b58993b2",
+      "bytes": 4140
+    },
+    "Data/Common.lua": {
+      "sha256": "74649123e4c83a3f84600e6a8debacb43fa86b914a85c737d37355f93732613a",
+      "bytes": 1092
+    },
+    "Data/Druid.lua": {
+      "sha256": "edbe5a1c509895d11a9a23363a524a8f691a4a578b830e4e33f3b88592dce8e2",
+      "bytes": 3376
+    },
+    "Data/Hunter.lua": {
+      "sha256": "3545ff72ab75ec3a8efa1f2a5b1b9c4f300b2c56be59105934707cb1afd942fc",
+      "bytes": 3281
+    },
+    "Data/Mage.lua": {
+      "sha256": "5e54ede85937c9a91a5cb3e3527ce4c6eaffbf8d91cf4706dbaf204ff364c22d",
+      "bytes": 3037
+    },
+    "Data/Paladin.lua": {
+      "sha256": "b5c3af0b0ba4589ed523a733aa0e14014d40939fe14a6f69e4db90b8f9346dff",
+      "bytes": 3958
+    },
+    "Data/Priest.lua": {
+      "sha256": "414a3147f8cffd5a7c4ac411afe1d22de763ba16ff2bf1859858c2e36323f4e3",
+      "bytes": 2568
+    },
+    "Data/Racial.lua": {
+      "sha256": "05f132e9b2899eff853a3978d36948c06108d376a23cc9fb470305532221a917",
+      "bytes": 1121
+    },
+    "Data/Rogue.lua": {
+      "sha256": "09fd161dbf12eb54545d2c0410c273522ccc885663966c4607545fb7e006e28f",
+      "bytes": 2699
+    },
+    "Data/Shaman.lua": {
+      "sha256": "b91012eb00dab31dac1ba99ac8685eb2f0b5f0203d462d52b75e3adc5e0eec7a",
+      "bytes": 3729
+    },
+    "Data/Warlock.lua": {
+      "sha256": "8e27c3965c6ee8f29e50f5b59cb448377bde71fb1d84e77596991d099ca4f3c4",
+      "bytes": 3099
+    },
+    "Data/Warrior.lua": {
+      "sha256": "464f23b4c6bb3332288ce334e42e093645d24fb2cda716b2ff16262f754c1839",
+      "bytes": 4381
+    },
+    "gitignore": {
+      "sha256": "61f16dd746186c78e647c302e77d5690512e35f88bc0cae2ec9b7bbf6a48c446",
+      "bytes": 28
+    },
+    "icon.tga": {
+      "sha256": "582a795ebdc0b9e616b3f816ef59ae6d424251f96ac031e7c3369c49b58993b2",
+      "bytes": 4140
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "24eccd5ddd032bfe3f449219f8a0ce4d05b6df2753be2c02073bb80ecabb04b0",
+      "bytes": 33306
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "5dc8ab9ca973cff851869ee451a307c4a3e07642fee99e85fce22648e3fb24d2",
+      "bytes": 66936
+    },
+    "libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "a31166b787873d5551180e0600a7f9d2a529fb7f3ee9606e71b91dcf4123a025",
+      "bytes": 44509
+    },
+    "libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "384d5dd3a2d9c1fd896fc7b2cac78e03fc4ba27c5e69dcdfda266003b721ed3d",
+      "bytes": 7943
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "09cfc0b69a0feb644fa1a9e5fc6715a4e76e0b2f6c7c04a3a0ea693d633770cd",
+      "bytes": 23114
+    },
+    "libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "31bc9cfda434c890574d1bbfc48c9e1d068f45ff73e1023ca452dedab0bdef41",
+      "bytes": 15957
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "libs/Babble-Spell-2.2/Babble-Spell-2.2.lua": {
+      "sha256": "3f2cdaa3be32fad675984e65de8a08bac1dbe76e90028b0cb68a6bf0554b949b",
+      "bytes": 458922
+    },
+    "libs/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "75cc380a1b0035a2d3de506ed269fbec951be6219e994d702067ed3bc95dcd64",
+      "bytes": 9742
+    },
+    "libs/CallbackHandler-1.0/CallbackHandler-1.0.xml": {
+      "sha256": "9310765c5310a395652e60a04f378e836785deb6f0b7181a448c74751d6f0185",
+      "bytes": 218
+    },
+    "libs/CandyBar-2.0/CandyBar-2.0.lua": {
+      "sha256": "e2558bf968d6254e384e3b18eede907ef3fd166453f561a74aca063eedb4605c",
+      "bytes": 51403
+    },
+    "libs/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "382e92a1f87fb34b523a2f7c051b21352b91640752cb95bf4f758ee4f3df0670",
+      "bytes": 10943
+    },
+    "libs/Deformat-2.0/Deformat-2.0.lua": {
+      "sha256": "6491e26c67bc4e35eecead3aac60dd1e02abe39a8b281ff6f10bb223e78b7f50",
+      "bytes": 9438
+    },
+    "libs/DewDrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "ed3907019caf50fc2baa72446982b59b134342a94f2b217c0148e7d2c3f70df7",
+      "bytes": 85853
+    },
+    "libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "019a3ddec75f04b5d78fc8361e0364c8be1deebddfe34c65f8e185e3ae3e9f5c",
+      "bytes": 46454
+    },
+    "libs/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "1927177be6990043bc63bc8c36168408957c6d1ed86ef971d72415f7dd14d430",
+      "bytes": 7889
+    },
+    "libs/LibSharedMedia-3.0/lib.xml": {
+      "sha256": "bd4f30d101a13ffb915114f6cd2d510fee506bca333f35387b3e08f238d85f8c",
+      "bytes": 218
+    },
+    "libs/LibSharedMedia-3.0/LibSharedMedia-3.0.lua": {
+      "sha256": "2f5556c976c16484105f12745e074943819f1efda3ce822f75748673916de5dc",
+      "bytes": 7244
+    },
+    "libs/LibStub/LibStub.lua": {
+      "sha256": "d024dc95604e228e94a4406c2582a0ae571d829be78cd81658dcd5d44ad0eaef",
+      "bytes": 1462
+    },
+    "libs/PaintChips-2.0/PaintChips-2.0.lua": {
+      "sha256": "252849f037912115e675c368d115d5e50d1282dfdac5c33c8bfdc439046a5b27",
+      "bytes": 4070
+    },
+    "libs/ParserLib/FixGlobalString.lua": {
+      "sha256": "8cac6f5edf29e5720695d9193cbe97f110a8ff06b63b46681b7ee0da65d9b25e",
+      "bytes": 1181
+    },
+    "libs/ParserLib/optimizer-enUS.lua": {
+      "sha256": "f71761fab1cdb6b09322adda57dac39be83ceeb72aab0ea4a51a20e25556b3f8",
+      "bytes": 7467
+    },
+    "libs/ParserLib/optimizer-koKR.lua": {
+      "sha256": "efb28068019c0482767a74febcf6f90db91d18e01dae6c39c09a2b6c4289bba4",
+      "bytes": 12051
+    },
+    "libs/ParserLib/optimizer-ruRU.lua": {
+      "sha256": "9a84ebea2761f4e376394fd3a3cfafb5f1f0d1beb89f83d3c2a2c3aebeeba5e4",
+      "bytes": 10369
+    },
+    "libs/ParserLib/optimizer-zhTW.lua": {
+      "sha256": "5e26888c7e362ad1dc1846d7493b23e2523c88618fdc49b0eb48672616a8ee0f",
+      "bytes": 8008
+    },
+    "libs/ParserLib/ParserLib.lua": {
+      "sha256": "db3a8d3f93ebe5d6f4e74d3f429c4978fcd517eb29ab79f8921d570ac973278a",
+      "bytes": 88863
+    },
+    "libs/ParserLib/readme.txt": {
+      "sha256": "762a52185e9eeeff3d6c5f9905b63222dc823642be922a0b03c04979867b90aa",
+      "bytes": 82
+    },
+    "libs/SpellCache-1.0/SpellCache-1.0.lua": {
+      "sha256": "2d789aea89dcf0f98b068fa24d27427409eaa1603db1fd27b2fff09158ae8e8d",
+      "bytes": 8287
+    },
+    "libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "0f320f2c8feec2d0d17d6550a550a9df22295510b06ade9a43925383c43c5416",
+      "bytes": 85746
+    },
+    "libs/Waterfall-1.0/Waterfall-1.0.lua": {
+      "sha256": "bb59b05ab9739c0288b34b4ccf0fa5624d75c9e3c10c645f54e273b58c019875",
+      "bytes": 135440
+    },
+    "README.md": {
+      "sha256": "11fd07b2ae6087218959060fff06cc858895abd803af29c21ee0f254acbb4162",
+      "bytes": 180
+    },
+    "readme.txt": {
+      "sha256": "cd7efb27cc869e413093870e3ee1ef818e12c7dcdf46159dbecf8ce266e007a7",
+      "bytes": 4873
+    },
+    "Textures/banto.tga": {
+      "sha256": "5a5deac548c4639de44db55ed79a6784bba95fc8286e7a4e7235ea7da24e19c3",
+      "bytes": 32812
+    },
+    "Textures/Charcoal.tga": {
+      "sha256": "dfb8508485a3dbf5dc3c479d3f6b4555fbaeb47118c9ef58cb1adaeac114d757",
+      "bytes": 65580
+    },
+    "Textures/cilo.tga": {
+      "sha256": "5ba70bdeecce2985d6f8f52fb5a74b85542ea51e770cbe5a613e8e7ac13e6dff",
+      "bytes": 65580
+    },
+    "Textures/Diagonal.tga": {
+      "sha256": "97b7d820816c51a3324a3a7fbd19d81ed26526cd3e14c7762ff360ae513811e4",
+      "bytes": 24594
+    },
+    "Textures/Fifths.tga": {
+      "sha256": "62beaf8d85a5cc7e4e3623708b511cb8e378481ae4369631ed7dee317cb491ba",
+      "bytes": 24594
+    },
+    "Textures/Frost.tga": {
+      "sha256": "09be41c173472af35f7dde8253f7b42ce36821d8b95c593ced46bd0ef9cc03f6",
+      "bytes": 32812
+    },
+    "Textures/glaze.tga": {
+      "sha256": "5bd704e0c4d1c3553823a48905d107694aba5f40e0ad985404ef02d8c618081b",
+      "bytes": 32812
+    },
+    "Textures/Healbot.tga": {
+      "sha256": "9b3cdfeba85c0fed3e9089dc4f8c21ac0e079eeac018b1e2c518af4295f832a6",
+      "bytes": 24594
+    },
+    "Textures/LiteStep.tga": {
+      "sha256": "9bd025e9217a88cda7ef3bd185976ded94a647468c6126d42c55df4a88f3a7c2",
+      "bytes": 32812
+    },
+    "Textures/LiteStepLite.tga": {
+      "sha256": "42d9385366d409b5ab9a7101753040be9877bab3d89d795e6acb659f1000c3d9",
+      "bytes": 8236
+    },
+    "Textures/perl.tga": {
+      "sha256": "e0fd78c10c65cc4ef4cd455ecf97e0b1f0d0e8808d0822eb94f4f2f9dae98596",
+      "bytes": 2037
+    },
+    "Textures/Rocks.tga": {
+      "sha256": "3f4380421045a1c3ca0672ecce1ba44b0f0d3b4f53cf351d3f6b5827f2cd8aa8",
+      "bytes": 32812
+    },
+    "Textures/Runes.tga": {
+      "sha256": "a5c40e0e82e76f6002a3ffaaaf5defcc7a2c6576406d7f1d5eadf5c2bbc9bce1",
+      "bytes": 32812
+    },
+    "Textures/smooth.tga": {
+      "sha256": "9aee6cd66bbed869170cf34188792efea5f9e612e1b16c22b5c4e907f8dd73ad",
+      "bytes": 32812
+    },
+    "Textures/Smoothv2.tga": {
+      "sha256": "a08b5085568fb0aeffb469a89ee96e15909a6d85fd86e423fb9f6733ac70dcd9",
+      "bytes": 32812
+    },
+    "Textures/Xeon.tga": {
+      "sha256": "8e96b7d24921765a905f9aa4c2e83a97b2651c7a246d58d3e9e48b6589c7e54b",
+      "bytes": 32812
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

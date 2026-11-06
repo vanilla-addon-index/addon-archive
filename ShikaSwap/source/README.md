@@ -1,0 +1,253 @@
+# ShikaSwap - WoW Vanilla/Turtle Addon
+
+**ShikaSwap** is an addon for World of Warcraft 1.12 (Vanilla/Turtle WoW) that automatically equips the correct libram when you cast Paladin spells.
+
+> **Note**: This is a modified version of the original LibramSwap addon by Theo. I've rebuilt and enhanced it with my own features and improvements.
+
+## 📋 Features
+
+- ✅ **Automatic libram swapping** before casting spells
+- ✅ **GCD-aware combat casting** (auto deferred cast after swap when needed)
+- ✅ **Profile system** to save different configurations
+- ✅ **Spell management** via Sorts Manager (Add/Remove)
+- ✅ **Visual indicators** (green = libram in bags, red = missing)
+- ✅ **Auto-load** last used profile on login
+- ✅ **Intuitive interface** with dropdowns and checkboxes
+
+## 🔄 Patch Status
+
+This addon has been modified recently due to a patch and behavior updates.
+
+- Some options are still under active testing
+- Combat timing behavior can vary depending on latency and client state
+- Future updates may adjust combat-related toggles for better reliability
+
+## 🎮 Installation
+
+1. Download the addon (green "Code" button → "Download ZIP")
+2. Extract the `Libramswap-main` folder
+3. Rename it to `LibramSwap`
+4. Place it in: `World of Warcraft/Interface/AddOns/LibramSwap`
+5. Restart WoW or type `/reload` in-game
+
+## ⌨️ Commands
+
+| Command | Description |
+|---------|-------------|
+| `/ss` | Open/close the configuration menu |
+| `/shikaconfig` | Alternate command to open/close the configuration menu |
+| `/ssikaprofile` | Show the currently selected profile and configured spell count |
+
+> Debug output can be enabled from the configuration window. Manual test commands are not exposed as slash commands in the current addon build.
+
+## 📖 Usage Guide
+
+### 1️⃣ First Launch
+
+After installation, type `/ss` to open the menu.
+
+### 2️⃣ Add Spells to Configure
+
+1. Click the **"Sorts"** button (top right)
+2. Search for a spell in the list (e.g., "Holy Light")
+3. Click **"Add"** to add it to your configuration
+4. Repeat for all your important spells
+
+### 3️⃣ Choose Librams
+
+1. In the main configuration, click the button next to the spell name
+2. Select the libram you want to equip for that spell
+3. The indicator turns **green** if you have the libram in your bags
+
+### 4️⃣ Save a Profile
+
+1. Click **"Save"** (top right)
+2. Enter a profile name (e.g., "Heal", "Tank", "PvP")
+3. Click **"Create"** or **"Save"**
+4. Your configuration is now saved!
+
+### 5️⃣ Load a Profile
+
+1. Click **"Save"** to open the profile manager
+2. Click on a profile in the list
+3. Click **"Load"**
+4. The profile will auto-load on next login
+
+### 6️⃣ Remove Spells
+
+1. Click **"Sorts"**
+2. Find the spell to remove
+3. Click **"Remove"**
+4. The spell disappears from the configuration
+
+## ⚠️ Important - Macro Requirements
+
+**For proper functionality, you MUST use macros for the following spells:**
+
+The addon needs the **exact spell rank** to work correctly. Create macros for these spells:
+
+### Required Macros
+
+**Holy Strike:**
+```
+#showtooltip Holy Strike
+/cast Holy Strike(Rank X)
+```
+
+**Holy Shield:**
+```
+#showtooltip Holy Shield
+/cast Holy Shield(Rank X)
+```
+
+**Consecration:**
+```
+#showtooltip Consecration
+/cast Consecration(Rank X)
+```
+
+**Flash of Light:**
+```
+#showtooltip Flash of Light
+/cast Flash of Light(Rank X)
+```
+
+**Holy Light:**
+```
+#showtooltip Holy Light
+/cast Holy Light(Rank X)
+```
+
+> **Note**: Replace `Rank X` with your actual spell rank (e.g., `Rank 5`, `Rank 6`, etc.)
+
+### Why Macros Are Needed
+
+The game client doesn't always provide the spell rank when you cast directly from your action bar. Using macros ensures ShikaSwap can:
+- Identify the exact spell being cast
+- Equip the correct libram before casting
+- Work reliably in all situations
+
+**Without macros**, these spells may not trigger the libram swap!
+
+## 🔧 Advanced Options
+
+### Swap Delay
+- Adjust the delay between libram swap and spell cast
+- Recommended value: **0.02 seconds**
+
+### GCD Behavior
+- In combat, if the libram swap and cast cannot happen safely in the same instant, ShikaSwap queues a short deferred cast
+- This helps the spell fire right after swap/GCD timing without requiring extra key presses
+
+### Try same-tick (Experimental)
+- The **Try same-tick** option is currently experimental
+- It is not fully reliable yet and may fail in some combat situations
+- If you encounter unstable behavior, disable this option and use standard deferred casting
+
+### Debug
+- Enable it from the configuration window to see detailed messages in chat
+- Useful for troubleshooting
+
+## 🎯 Supported Spells
+
+| Spell | Category |
+|-------|----------|
+| Holy Light | Healing |
+| Flash of Light | Healing |
+| Holy Shield | Protection |
+| Holy Strike | Damage |
+| Consecration | AOE |
+| Cleanse | Utility |
+| Blessing of Wisdom | Buff |
+| Blessing of Might | Buff |
+| Blessing of Kings | Buff |
+| Blessing of Salvation | Buff |
+| Greater Blessing of Light | Buff |
+| Greater Blessing of Wisdom | Buff |
+| Greater Blessing of Sanctuary | Buff |
+| Seal of Righteousness | Seal |
+| Seal of Crusader | Seal |
+| Seal of Wisdom | Seal |
+| Judgement | Damage |
+| Holy Shock | Healing/Damage |
+| Hammer of Justice | Control |
+| Hand of Freedom | Utility |
+| Devotion Aura | Passive |
+
+## 📦 Supported Librams
+
+| Libram | Type | Effect |
+|--------|------|--------|
+| Libram of the Faithful | Healing | Holy Light / Holy Shield |
+| Libram of the Farraki Zealot | Damage | Seal damage |
+| Libram of Radiance | Healing | Flash of Light |
+| Libram of Light | Healing | General healing |
+| Libram of Grace | Holy | Blessings |
+| Libram of the Dreamguard | Protection | Holy Shield |
+| Libram of the Justicar | Damage | Judgement |
+| Libram of the Resolute | Protection | Defense |
+| Libram of the Eternal Tower | Damage | Seal/Judgement |
+| Libram of Final Judgement | Damage | Judgement |
+| Libram of Hope | Healing | Holy Light |
+| Libram of Fervor | Holy | Auras |
+| Libram of Truth | Holy | Spells |
+| Libram of Veracity | Holy | Blessings |
+| Libram of Divinity | Healing | Holy Light / Flash of Light |
+| Libram of the Radiant Dawn | Holy | General |
+| Libram of Ardour | Holy | Holy Magic |
+| Libram of Hallowed Ground | Protection | Consecration |
+
+## ❓ FAQ
+
+**Q: The addon doesn't load my librams on login?**  
+A: Make sure you clicked "Save" after configuring your spells. The profile must be saved to auto-load.
+
+**Q: Dropdowns are empty after `/reload`?**  
+A: This means the profile was created before configuring librams. Configure your spells, then click "Save" to overwrite the profile.
+
+**Q: How do I know which profile is active?**  
+A: Type `/ssikaprofile` to see the active profile and number of configured spells.
+
+**Q: The addon doesn't swap in combat?**  
+A: For safety, the addon won't swap if your cursor has an item or a transaction window is open.
+
+**Q: How do I create multiple profiles (Heal/Tank/PvP)?**  
+A: Configure spells for one role, save the profile with a name (e.g., "Heal"). Change configuration, save with another name (e.g., "Tank"). Load the desired profile as needed.
+
+## 🐛 Known Issues
+
+- Swap may fail if you spam the spell too quickly (use the delay setting)
+- Some librams require exact name matching (case-sensitive)
+- **Try same-tick** is not fully functional yet and is still being tested
+
+## 👨‍💻 Development
+
+This project is open-source. Contributions are welcome!
+
+There is no build pipeline for this addon. Validate changes in-game by reloading the UI with `/reload` and then exercising the affected configuration or spell flow.
+
+### File Structure
+- `LibramSwap_fixed.lua` : Main swap logic
+- `LibramSwapConfig.lua` : User interface (Configuration, Profiles, Sorts Manager)
+- `LibramSwap.toc` : Addon manifest
+
+## 📜 Credits
+
+- **Original LibramSwap**: Created by Theo
+- **ShikaSwap**: Modified and enhanced by Shikawa
+
+This version is a complete overhaul of the original addon with new features, improved UI, and a robust profile system.
+
+## 📜 License
+
+Free to use and modify.
+
+## 🙏 Acknowledgments
+
+Thanks to the Turtle WoW community for their feedback and suggestions!
+
+---
+
+**Version** : 1.0  
+**Author** : Shikawa (based on LibramSwap by Theo)  
+**Compatibility** : WoW 1.12 (Vanilla) / Turtle WoW

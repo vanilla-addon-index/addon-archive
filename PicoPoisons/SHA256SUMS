@@ -1,0 +1,6 @@
+3cdf673f271bc7e3184f125691fd71074890e46196f4773a7a97305f55a38aea  releases/v1.00--1976269/assets/PicoPoisons-1.00.zip
+8eb28d6776a67dffc4a6864e83813152a0c7ef833a9aeea31d80953c2e5a7c65  releases/v1.00--1976269/upstream-source.tar.gz
+cf237c7aff44efbe6e502e645c3e06da03a69d7bdeb43392108ef3348143417e  source/.gitignore.upstream
+fc1f7f4325d3d630008cdcbf4d6ec2feef471b8b7e6f7ebb986184967440913c  source/PicoPoisons.lua
+008e19d775f5bafdae3f12e67d3dbb58e159b97ffd021b5d4702314b99842f04  source/PicoPoisons.toc
+8405910819cabf4faf232404909caadc9143b37dc64150e64699cdf56c252607  source/README.md

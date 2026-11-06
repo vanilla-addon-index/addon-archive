@@ -1,0 +1,33 @@
+name: Package Addon
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: TurtleCalendar
+
+      - name: Create Release Zip
+        run: |
+          rm -rf TurtleCalendar/.git TurtleCalendar/.github TurtleCalendar/tools TurtleCalendar/tests TurtleCalendar/__pycache__
+          rm -f TurtleCalendar/*.py TurtleCalendar/.gitignore TurtleCalendar/.editorconfig TurtleCalendar/.luarc.json TurtleCalendar/.gitattributes
+          rm -f TurtleCalendar/HANDOFF.md TurtleCalendar/AGENTS.md
+          zip -r TurtleCalendar.zip TurtleCalendar
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: TurtleCalendar.zip
+          generate_release_notes: true

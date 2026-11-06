@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/TrackTarget",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "TrackTarget",
+    "name": "TrackTarget",
+    "url": "https://github.com/MarcelineVQ/TrackTarget",
+    "api": "https://api.github.com/repos/MarcelineVQ/TrackTarget"
+  },
+  "commit": "f5b28a96cfef537f52c34f73212053646e699208",
+  "sourceFiles": {
+    "readme.md": {
+      "sha256": "eb75e3f47233560fb722bb8e7e043ca2896eea1894f9972274d7b68760f2dc88",
+      "bytes": 374
+    },
+    "TrackTarget.lua": {
+      "sha256": "e9a9b0c62ebb6c92fc906c1070cfd98621fb3dad0b4455b7ac69f82aaa10be53",
+      "bytes": 2080
+    },
+    "TrackTarget.toc": {
+      "sha256": "f8eb3917f0afca7e15c4b223ec4ab87ac456afe1afb1e1a23fa958953c5a7890",
+      "bytes": 243
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: Seal Tracker
+## Notes: Displays your current Paladin seal with a countdown timer in a draggable, resizable frame.
+## Version: 1.0.2
+## SavedVariables: SealTrackerDB
+
+SealTracker.lua

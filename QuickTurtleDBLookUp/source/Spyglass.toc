@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: Spyglass
+## Notes: Right-click unit frames or Ctrl+Right-click item/quest/spell links to get a direct database lookup link.
+## Author: Taeko
+## Version: 1.1.0
+## SavedVariables: SpyglassDB
+## OptionalDeps: SuperWoW, SuperAPI, pfUI, LunaUnitFrames, XPerl, SUF, DUF, DiscordUnitFrames
+Spyglass.lua

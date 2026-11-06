@@ -1,0 +1,57 @@
+{
+  "upstream": "https://github.com/Dauls/SmartRestore",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Dauls",
+    "repo": "SmartRestore",
+    "name": "SmartRestore",
+    "url": "https://github.com/Dauls/SmartRestore",
+    "api": "https://api.github.com/repos/Dauls/SmartRestore"
+  },
+  "commit": "ce7ccc9ba7bc18a52ab9fc85d1e85fbe2a78bc93",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "e8ff10169d773dbff8f2e1ea0e00a447d1944906fb7cb9df0c6d7e22a50a9c7d",
+      "bytes": 602
+    },
+    "changelog.txt.txt": {
+      "sha256": "23ceea1f6924ec5f92940f8ee800e18c863561fa943edfcef8fd83a480aacf37",
+      "bytes": 20509
+    },
+    "ItemList.lua": {
+      "sha256": "3d4a579647a596b902be1d09f6974820baf05f64ba61848c2d54de7ce70f6196",
+      "bytes": 12220
+    },
+    "readme.txt": {
+      "sha256": "8f8d0c0aa34c4d84fe108e7f01c7113650c6334216014bf421896976871e3c9b",
+      "bytes": 10068
+    },
+    "SmartRestore.lua": {
+      "sha256": "6171af50f8ea42d1f9eb661fd3eb16b3518bd279505b0209863f9574262a5f57",
+      "bytes": 81489
+    },
+    "SmartRestore.toc": {
+      "sha256": "acafbd21260c44aebdbbaf7001268a39ed3d73365285c13a59e3ac86d7bd2965",
+      "bytes": 565
+    },
+    "SmartRestore.xml": {
+      "sha256": "5ce2322ed051b2be1b71afa4548515b00df1b5f0c8809ff298668fa58c2f74bd",
+      "bytes": 456
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "157426574": {
+      "tag": "v3.4.1",
+      "folder": "v3.4.1--157426574",
+      "assets": {},
+      "source": {
+        "sha256": "716f3791606fa1a4ac24712ce1968b4f1274ff4f16c63e693efa06100d494ec4",
+        "bytes": 26354,
+        "path": "releases/v3.4.1--157426574/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Dauls/SmartRestore/tarball/v3.4.1"
+      }
+    }
+  }
+}

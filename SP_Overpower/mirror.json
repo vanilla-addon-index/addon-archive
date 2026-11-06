@@ -1,0 +1,54 @@
+{
+  "upstream": "https://github.com/EinBaum/SP_Overpower",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "SP_Overpower",
+    "name": "SP_Overpower",
+    "url": "https://github.com/EinBaum/SP_Overpower",
+    "api": "https://api.github.com/repos/EinBaum/SP_Overpower"
+  },
+  "commit": "9e09e73604140a65a5c5cc141377c2310b7e90a6",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "ed88c56ac4b1433a64631ab48e52a6af646fb5716be118c938a1a3d4385b339f",
+      "bytes": 269
+    },
+    "SP_Overpower.lua": {
+      "sha256": "817f7e2eef7f5f59d82dad751e96dde8f46561a4bc459fac09af69a55c4def17",
+      "bytes": 6100
+    },
+    "SP_Overpower.toc": {
+      "sha256": "427c3d8eb07b16d96c0a24559cef64bae6b40b2b7c2501db58de38e732ccacb6",
+      "bytes": 305
+    },
+    "SP_Overpower.xml": {
+      "sha256": "e3c3413c24eb7b78f4f7f7f4ebe542d65070a5f6260346eefaadd94bde05d93e",
+      "bytes": 1575
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "16298950": {
+      "tag": "3.0.0",
+      "folder": "3.0.0--16298950",
+      "assets": {
+        "11688382": {
+          "sha256": "f8786a8797652d01eec765d63a40cfc991444a219b88b333710a93cab80392c8",
+          "bytes": 3718,
+          "id": "11688382",
+          "name": "SP_Overpower.zip",
+          "url": "https://github.com/EinBaum/SP_Overpower/releases/download/3.0.0/SP_Overpower.zip",
+          "path": "releases/3.0.0--16298950/assets/SP_Overpower.zip"
+        }
+      },
+      "source": {
+        "sha256": "6b3543af09cbb84fb0cc69234f4508040df12f8f8ea81236488b69b0736a918c",
+        "bytes": 3078,
+        "path": "releases/3.0.0--16298950/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/EinBaum/SP_Overpower/tarball/3.0.0"
+      }
+    }
+  }
+}

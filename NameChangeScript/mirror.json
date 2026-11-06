@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/zirtox1992/NameChangeScript",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "zirtox1992",
+    "repo": "NameChangeScript",
+    "name": "NameChangeScript",
+    "url": "https://github.com/zirtox1992/NameChangeScript",
+    "api": "https://api.github.com/repos/zirtox1992/NameChangeScript"
+  },
+  "commit": "6f9915267b6822b4bf7278e9435d9d8a929548a6",
+  "sourceFiles": {
+    "NameChangeScript.lua": {
+      "sha256": "f9e214c3be37bb25f3fd44d2df41e92d1813be0a37f9133b4e8f174c24aa1218",
+      "bytes": 1142
+    },
+    "NameChangeScript.toc": {
+      "sha256": "5da7d4f438d69556bf07ab25fcafe59ef4b83616468b15746b0013bf2c109e14",
+      "bytes": 124
+    },
+    "README.md": {
+      "sha256": "67a2e88a977df6b8f3456d827ffb5f656c9d64126a7e1e1226a035123f5c25a4",
+      "bytes": 258
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

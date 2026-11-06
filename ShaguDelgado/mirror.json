@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/shagu/ShaguDelgado",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguDelgado",
+    "name": "ShaguDelgado",
+    "url": "https://github.com/shagu/ShaguDelgado",
+    "api": "https://api.github.com/repos/shagu/ShaguDelgado"
+  },
+  "commit": "cbe2dd666f1c0f388d5133412e6b151cb6abb4e7",
+  "sourceFiles": {
+    "border.tga": {
+      "sha256": "31f543047c7ede0fb333553d2b121cf0ed0bd46f49bd9e49fdb8013ba3d18093",
+      "bytes": 1794
+    },
+    "README.md": {
+      "sha256": "94bef09e8e3a4a864da61eb9e1b3b23ebe1280681ac390fd53c3e62bc59dc6e2",
+      "bytes": 554
+    },
+    "ShaguDelgado.lua": {
+      "sha256": "2d6f4f30b2364fba4f8a45f222168a2da2cfe66d577fffbb4f6721534d7dd7c9",
+      "bytes": 1552
+    },
+    "ShaguDelgado.toc": {
+      "sha256": "576cd8a273e6b60b3bbcbd769f0baf3fd80201ea70f417dc7817ef0fdb2b0764",
+      "bytes": 171
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

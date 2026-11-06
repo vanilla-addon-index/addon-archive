@@ -1,0 +1,5 @@
+## Interface: 11200
+## Author: shirsig
+## Title: notoggle
+## Notes: Removes toggling behavior from Attack, Auto Shot and Shoot
+notoggle.lua

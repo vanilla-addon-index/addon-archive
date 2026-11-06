@@ -1,0 +1,25 @@
+{
+  "upstream": "https://github.com/yutsuku/VoidBattle",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "yutsuku",
+    "repo": "VoidBattle",
+    "name": "VoidBattle",
+    "url": "https://github.com/yutsuku/VoidBattle",
+    "api": "https://api.github.com/repos/yutsuku/VoidBattle"
+  },
+  "commit": "0548bf3bb02a007ca031cce3d6c10d36b775603f",
+  "sourceFiles": {
+    "VoidBattle.lua": {
+      "sha256": "1f16cc20ec049483f6d2481a9ba5eacbe11f31ac5ec01d19dcf40be7522851fd",
+      "bytes": 476
+    },
+    "VoidBattle.toc": {
+      "sha256": "7fcf57e78afaaeb68ee151239f39c3494312ca6d1bb5ca8825b11de034c82c52",
+      "bytes": 123
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

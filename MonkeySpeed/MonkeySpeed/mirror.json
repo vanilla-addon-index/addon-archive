@@ -1,0 +1,121 @@
+{
+  "upstream": "https://github.com/TrangOul/MonkeySpeed",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "TrangOul",
+    "repo": "MonkeySpeed",
+    "name": "MonkeySpeed",
+    "url": "https://github.com/TrangOul/MonkeySpeed",
+    "api": "https://api.github.com/repos/TrangOul/MonkeySpeed"
+  },
+  "commit": "0f87c5d4e1916d0d055146106f58fe457867be1b",
+  "sourceFiles": {
+    "LICENSE.md": {
+      "sha256": "00d0889035e63b02762292ccf6f2ba9c8c69405bf43b4806f6f7535fd1ee3ed8",
+      "bytes": 1148
+    },
+    "MonkeyLibrary/Fonts/adventure.ttf": {
+      "sha256": "e5de92f4cd5e99f7c1e70a573f220403366c7d0f901f2ba740ae190b99be2076",
+      "bytes": 50896
+    },
+    "MonkeyLibrary/Fonts/framd.ttf": {
+      "sha256": "f103d31608ff1fa1b861ff297b16a49a74441dae98ce12c506a7085c01de9a11",
+      "bytes": 135984
+    },
+    "MonkeyLibrary/Fonts/myriapsc.ttf": {
+      "sha256": "a4eefdaeccae42faeaf989b6b642f2e39386fd33a7e11c39e7c08d3bfc4eb18a",
+      "bytes": 209700
+    },
+    "MonkeyLibrary/MonkeyGlobals.lua": {
+      "sha256": "eaf979944a7439e001eb773d9f264a30680d262729da435d8c6b549ad1f2ad72",
+      "bytes": 531
+    },
+    "MonkeyLibrary/MonkeyLibrary.lua": {
+      "sha256": "e5790e4e6fc1333a42459f40cecfcc16378f6c3b53f3a5bd024a0a5485682cfc",
+      "bytes": 1769
+    },
+    "MonkeyLibrary/MonkeyLibrary.toc": {
+      "sha256": "4d0d948d1924961e48a01b31585fdf64859e23509a21b3abaaf4e7b9869f6f95",
+      "bytes": 216
+    },
+    "MonkeyLibrary/MonkeyLibrary.xml": {
+      "sha256": "97c7a01abbc5e34c6833cafebe2d1b05919cf6b1340f2113bc540146876aa364",
+      "bytes": 999
+    },
+    "MonkeyLibrary/Textures/BackDrop.tga": {
+      "sha256": "bd109ea738f7956f53c671463c92b6d7c4a8b03d9c11f34832d67df9db089dd5",
+      "bytes": 204
+    },
+    "MonkeyLibrary/Textures/bar.tga": {
+      "sha256": "5ba70bdeecce2985d6f8f52fb5a74b85542ea51e770cbe5a613e8e7ac13e6dff",
+      "bytes": 65580
+    },
+    "MonkeyLibrary/Textures/ButtonBackDrop.tga": {
+      "sha256": "9f98e42f4d268c96c001c7935229db4ea34f5d7814c06a1e3c0431b8b18d7e3d",
+      "bytes": 4140
+    },
+    "MonkeyLibrary/Textures/CloseButton-Down.tga": {
+      "sha256": "89388215ec147eb2ad755065a453aa204b1fce566cba031afd531a641261e646",
+      "bytes": 4140
+    },
+    "MonkeyLibrary/Textures/CloseButton-Up.tga": {
+      "sha256": "7fd07ff2722107a85c63b2cdf8b3da47609926c8ffa10a9a697a432209c530b1",
+      "bytes": 4140
+    },
+    "MonkeyLibrary/Textures/Frame-Border.tga": {
+      "sha256": "87e7b1e13c523b5e708050e5be4321b25af2c16a1c1078b90f366f5e3385814a",
+      "bytes": 1264
+    },
+    "MonkeyLibrary/Textures/MinimizeButton-Down.tga": {
+      "sha256": "84adadb20b8c4d081196b6ce35953e2375b8bf814b4abd9c9a3c649719bdf7bc",
+      "bytes": 4140
+    },
+    "MonkeyLibrary/Textures/MinimizeButton-Up.tga": {
+      "sha256": "722ed4837ae34cd66db8e5e38d531ceba9c47ada5ec5317ea8213561c3b9155e",
+      "bytes": 4140
+    },
+    "MonkeyLibrary/Textures/MonkeyBuddyIcon.tga": {
+      "sha256": "2fc045e664552955f71531a539b742e2cf2e594e1bb8dbab7f4801badd62520b",
+      "bytes": 2155
+    },
+    "MonkeyLibrary/Textures/ResizeButton-Highlight.tga": {
+      "sha256": "958dbb4fe7cd4d0de3fab64a679f65cb116d0cc250c57a8e3b08773c52fdf30c",
+      "bytes": 2055
+    },
+    "MonkeyLibrary/Textures/ResizeButton.tga": {
+      "sha256": "a6a7b662811509d2b5a6e17b29978447642c4880344ca942e0aca91555a94a66",
+      "bytes": 994
+    },
+    "MonkeySpeed/localization.lua": {
+      "sha256": "752c4d384ffd653fbaf53fdd62475d5e93ed28af4221faba73acf6826497ba7d",
+      "bytes": 2072
+    },
+    "MonkeySpeed/MonkeySpeed.lua": {
+      "sha256": "fc0486cca751412831ca4ea86b99430aeb19a474b88dcf30e6241bdc0d83f744",
+      "bytes": 14118
+    },
+    "MonkeySpeed/MonkeySpeed.toc": {
+      "sha256": "d88909bb2cfe14397905f790d1627ec50d690fc1b4c8be71c2fecb7c53250aec",
+      "bytes": 320
+    },
+    "MonkeySpeed/MonkeySpeed.xml": {
+      "sha256": "e6b5eacaf134b2db9b275b87462ed3b30d7c94a108bf0b60264b45abcc46d7fa",
+      "bytes": 2751
+    },
+    "MonkeySpeed/MonkeySpeedInit.lua": {
+      "sha256": "f1a22955dcaa16f1bfcb3b5ec591e13021c17f5b6d99feff1614c1368e694cfe",
+      "bytes": 8036
+    },
+    "MonkeySpeed/MonkeySpeedSlash.lua": {
+      "sha256": "c7074ca18c8cb76a14c67fa9ced1cb56e58cbb9e362215f4d8bbec90b95cf632",
+      "bytes": 5393
+    },
+    "README.md": {
+      "sha256": "fa1fddc63601d0644e795198971dfe9796837992382b85fb0b7b74518cb4d6bc",
+      "bytes": 1292
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

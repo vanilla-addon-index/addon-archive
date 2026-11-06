@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: Mute Cities
+## Notes: Mutes the music while in SW and Org
+## Author: |cffbe5effLexie|r
+## Version: 1.1
+MuteCities.lua

@@ -1,0 +1,62 @@
+{
+  "upstream": "https://octowow.st/git/Relationship/RelationshipsJukeBox",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Relationship",
+    "repo": "RelationshipsJukeBox",
+    "name": "RelationshipsJukeBox",
+    "url": "https://octowow.st/git/Relationship/RelationshipsJukeBox",
+    "api": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsJukeBox"
+  },
+  "commit": "bc9d5f520b89fefad5e4358824c3af6b5fd30fea",
+  "sourceFiles": {
+    "Core.lua": {
+      "sha256": "093441c2cc17ea096ad721652e553d06d3370629f220fee92bc51ea68601fe88",
+      "bytes": 129094
+    },
+    "GeneratePlaylist.bat": {
+      "sha256": "b1a58df03c49187fab0dbc6047f13ca05bf178d71c63944d872ea2ea6fd69c65",
+      "bytes": 355
+    },
+    "GeneratePlaylist.ps1": {
+      "sha256": "b9a47b99a07bff07431615601c80e35009dacd6ed184a4b4fd7939b7657ac0e8",
+      "bytes": 107443
+    },
+    "Media/PUT SOUND FILES IN THIS FOLDER.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "README.md": {
+      "sha256": "c2de02214cabbc1a7eb7a2e91acdbc3187d64d5116fe484230bfd2ddc17c562e",
+      "bytes": 5107
+    },
+    "RelationshipsJukeBox.toc": {
+      "sha256": "7a34a6d329fc48c47d6e9d5c21b156edb439a58d6d3d00607d435eaca320e315",
+      "bytes": 363
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "43": {
+      "tag": "A",
+      "folder": "A--43",
+      "assets": {
+        "7": {
+          "sha256": "45e240ef48c108e7bb1573aea6709262b13bb52fdffaca4deb9cf45b73a9e80b",
+          "bytes": 55097,
+          "id": "7",
+          "name": "RelationshipsJukeBox.zip",
+          "url": "https://octowow.st/git/Relationship/RelationshipsJukeBox/releases/download/A/RelationshipsJukeBox.zip",
+          "path": "releases/A--43/assets/RelationshipsJukeBox.zip"
+        }
+      },
+      "source": {
+        "sha256": "6438e20fec44eb5aabe1a322063b50759995bcdc0005519952fcc2853a6686bb",
+        "bytes": 56728,
+        "path": "releases/A--43/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsJukeBox/archive/A.tar.gz"
+      }
+    }
+  }
+}

@@ -1,0 +1,233 @@
+{
+  "upstream": "https://octowow.st/git/shaga/VitalWatch",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "shaga",
+    "repo": "VitalWatch",
+    "name": "VitalWatch",
+    "url": "https://octowow.st/git/shaga/VitalWatch",
+    "api": "https://octowow.st/git/api/v1/repos/shaga/VitalWatch"
+  },
+  "commit": "047226847559f90afb26384fad12b2325ebd5c7d",
+  "sourceFiles": {
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "0981f8c130c06a53514a2180569230c7f1aefaf8f039fc55c46b2f8e4de67346",
+      "bytes": 33060
+    },
+    "libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "a2fa077cfe1933928aafb112f01ab84440e918f3a70c2bfff5afe8a31b876bdc",
+      "bytes": 57431
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "41ec1c0c0abe8dc24a6c6f71fb0db396f91b84c38cfaa57f03149f5087e79fef",
+      "bytes": 31886
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "dadd3baa8a01a213ccff542aed9641344154173fde6c50513da3d19a8bea9004",
+      "bytes": 22682
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "9c79c46511505b06754afb5c7a1c9b91a85113532d24ad15d7b1fd3aa6bbcacd",
+      "bytes": 26585
+    },
+    "libs/Banzai-1.1/Banzai-1.1.lua": {
+      "sha256": "fa6ce43cc2020008509d75e0a0cf0656529633858261ec294849cd8e9298c384",
+      "bytes": 7426
+    },
+    "libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "81c7fc65555e56309225e51314b27b98a2a30e49a1b3db231d165f3ba9a3fabf",
+      "bytes": 90689
+    },
+    "libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "4a6b43530ed46077a7129b6260fe42116822e0dcb1d41f6733371687097ebf85",
+      "bytes": 51078
+    },
+    "libs/Roster-2.1/Roster-2.1.lua": {
+      "sha256": "32e885e9a54133258dcf0b46224064ee2a094967819c690e49b1a42bf0462c11",
+      "bytes": 10171
+    },
+    "libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "07187a22500173b911c74e3b0b912c348f7a1a8b2f4ab0400af0495d096fc2ba",
+      "bytes": 86971
+    },
+    "README.md": {
+      "sha256": "c371bdfdb76ba7f0a3c2a47110636b412ac3117db467203d983ab87c4f63ab1a",
+      "bytes": 371
+    },
+    "sounds/blareaggro.wav": {
+      "sha256": "b395858771f5b4ec175452a545c1cec955b8d93570b48b59fa56f8f47bcd1483",
+      "bytes": 27224
+    },
+    "sounds/blaredanger.wav": {
+      "sha256": "a0e292eaf46a8111244e1ad65197996bc47ac959beb367111c7a637630723fde",
+      "bytes": 27224
+    },
+    "sounds/blaredruid.wav": {
+      "sha256": "44b7563d59eee63a46fef5407338a11322124ed3a5d111c457b422fa81b80d30",
+      "bytes": 27250
+    },
+    "sounds/blarehunter.wav": {
+      "sha256": "243c685736a97597e4694986b9547d8042cfa263a17464f31eface75ba851c8c",
+      "bytes": 27252
+    },
+    "sounds/blaremage.wav": {
+      "sha256": "35f0db057b650d7514f7c804fb170ef7b991c0fa9ed41682edf13238d44b1261",
+      "bytes": 27250
+    },
+    "sounds/blarepaladin.wav": {
+      "sha256": "facbe1f426d6ba7ed44badc5ae0cf8368cbf3bd3b1b2e0a1096ecfb108f4d55f",
+      "bytes": 24440
+    },
+    "sounds/blarepriest.wav": {
+      "sha256": "37d2385a15b58a3bd8766542bd44c0600718b996b99550488450ccc21d29516f",
+      "bytes": 27224
+    },
+    "sounds/blarerogue.wav": {
+      "sha256": "c8a5d07f8ad4523453cad92919bac848ae9ab154955c612aea029d69e4089b43",
+      "bytes": 27250
+    },
+    "sounds/blareshaman.wav": {
+      "sha256": "0794e98fe586ca6406cb598cd40b2ea36dab995e913544093645e80df2502e1d",
+      "bytes": 27224
+    },
+    "sounds/blarewarlock.wav": {
+      "sha256": "f470f008568941be588be26dbb107ea8163edd2fde1b8ea492ccbd291189f436",
+      "bytes": 27224
+    },
+    "sounds/blarewarrior.wav": {
+      "sha256": "fea6ec26f0553f159344e2de70ee983254869fdc178f5611a6bfd803210fd86b",
+      "bytes": 27252
+    },
+    "sounds/blip5.wav": {
+      "sha256": "8c4cdea02a7eaf101582e0468ff14101f63e6a3ba617ba3fbcc3effb71cb9673",
+      "bytes": 2460
+    },
+    "sounds/blip5druid.wav": {
+      "sha256": "57e305fed5498c0153601a804c46dbd212d1f80f901e1700f714ee2269b03b70",
+      "bytes": 16186
+    },
+    "sounds/blip5hunter.wav": {
+      "sha256": "3f8ef91070c949ab6855b3b4794d8882e329fdebb4d1b178eb86dfe6e374bdca",
+      "bytes": 16060
+    },
+    "sounds/blip5mage.wav": {
+      "sha256": "2db1e688c69b010f8e95682fc837b0ea3ab98640c620365867b31f2b9548ff8c",
+      "bytes": 18086
+    },
+    "sounds/blip5paladin.wav": {
+      "sha256": "0add2980f555ab4d7eb3c2338d38696baadca2536b9488a2ac6161678151a49a",
+      "bytes": 14684
+    },
+    "sounds/blip5priest.wav": {
+      "sha256": "a8975676ed3f718db29b3c74139cf729ca8cbc1aa6fc99b2f8679439c896d348",
+      "bytes": 19482
+    },
+    "sounds/blip5rogue.wav": {
+      "sha256": "c9285c022f98321308d70643d8c9c67975588a84ff5660719442cf9c3afd35dd",
+      "bytes": 13802
+    },
+    "sounds/blip5shaman.wav": {
+      "sha256": "1203ba29d7982644ab6c499fafea96659b4b5c762bf132279fd964f5f115b41b",
+      "bytes": 16442
+    },
+    "sounds/blip5warlock.wav": {
+      "sha256": "35710cb6cf3e0dfdee34d061e0eb52baf6da341ae6c7a4c96cd4fe7346cfe0fd",
+      "bytes": 24276
+    },
+    "sounds/blip5warrior.wav": {
+      "sha256": "1b7478784279d0b6c05c31f749a21e7358471258cc724c04c5e49100e7f4080e",
+      "bytes": 20086
+    },
+    "sounds/Heartbeat.wav": {
+      "sha256": "d8cfe8c438b16fffbf6e44b397b4b42635a51afb852c569769a5fdad205fbec4",
+      "bytes": 14446
+    },
+    "sounds/phasers3.wav": {
+      "sha256": "29f56726f059381f7e4c79b97028b6b2c7bce1204a2f97df9fce89fb99d3a177",
+      "bytes": 4124
+    },
+    "sounds/phasers3druid.wav": {
+      "sha256": "4cada888bf59330eeb485cd30a1d6bb8bf6f3bc1a71ef90eb55a8931ebd7b203",
+      "bytes": 16186
+    },
+    "sounds/phasers3hunter.wav": {
+      "sha256": "160ff0af6fd6bc7b06a3a5aea6f3bb31a52bb9956da90614458d90c383883c13",
+      "bytes": 16060
+    },
+    "sounds/phasers3mage.wav": {
+      "sha256": "c145a2da7b17f0a8d722ad8c9e43c0786cb6b18002c41630df98add3ab55235c",
+      "bytes": 18086
+    },
+    "sounds/phasers3paladin.wav": {
+      "sha256": "9af8e123df7436cff433dc741fab2dcbc83c07ac42bd73535ee5dcfeac651a36",
+      "bytes": 14684
+    },
+    "sounds/phasers3priest.wav": {
+      "sha256": "6c7bff9d95852a5780cd99e865c6499626511494efbd6ac79358f303573d991b",
+      "bytes": 19482
+    },
+    "sounds/phasers3rogue.wav": {
+      "sha256": "d4afc7f2c5e66b5cac1e16f347704e1c9e3d8d13ed89a0ef81d3c098a48fef17",
+      "bytes": 13802
+    },
+    "sounds/phasers3shaman.wav": {
+      "sha256": "ba1a53eaefb9cb67a3513bc9ac287e5f076a251909487c8acccc71ec71c7eede",
+      "bytes": 16442
+    },
+    "sounds/phasers3warlock.wav": {
+      "sha256": "9f2175b0680467b4a9f20e4cc0cddfd060159a6401b2169d1dddd49aa1279edf",
+      "bytes": 24276
+    },
+    "sounds/phasers3warrior.wav": {
+      "sha256": "5e51915967cbc7b29edfa56b085fe8a23d6c0a943adf03a5ce1e6f378d498b2e",
+      "bytes": 20086
+    },
+    "sounds/shrink.wav": {
+      "sha256": "fd9ec91b933f7b95d29a7be0bb3dadd2900d22a8ba15d81364998700bfb9ab11",
+      "bytes": 19998
+    },
+    "sounds/shrinkdruid.wav": {
+      "sha256": "7eaa0e9438d3877054d4705ade0a51e32bcd7e958232575a9d5fd761d186ef02",
+      "bytes": 23184
+    },
+    "sounds/shrinkhunter.wav": {
+      "sha256": "b5f8ce6baa3f7e20fce997f1db1daf5e6a5cbb46198af46ee30b92771b6489a3",
+      "bytes": 21666
+    },
+    "sounds/shrinkmage.wav": {
+      "sha256": "67f9df965661667ef2f32509b0acc18d4b1f09798d6fde21371f9770df5530db",
+      "bytes": 19966
+    },
+    "sounds/shrinkpaladin.wav": {
+      "sha256": "a6543d0d2fcab3685676f49187b902ff5b492f60c2d7dc6a77065270ed9896f9",
+      "bytes": 19940
+    },
+    "sounds/shrinkpriest.wav": {
+      "sha256": "442eaedefdaf97f272d63d62947cfe659b0b79ee97181e0f4956e9267a315605",
+      "bytes": 19940
+    },
+    "sounds/shrinkshaman.wav": {
+      "sha256": "05208754bebef662ecd3d72e12e4c06f44c03fa55f99809292bb9c410f4fd6e8",
+      "bytes": 19940
+    },
+    "sounds/shrinkwarlock.wav": {
+      "sha256": "b49f0bf11c623217e6b2aa2910d2298ccf95146cc0907a51ce5a65454d7dcd7d",
+      "bytes": 24276
+    },
+    "VitalWatch.lua": {
+      "sha256": "3299bea3071752cfcba351d46e45471592976831361f9b982892ca11b574ebbd",
+      "bytes": 48221
+    },
+    "VitalWatch.toc": {
+      "sha256": "da4d7ff36c672f314d199a2b2ed8f297ce0c78bb53bd828ea41257b8a1ab0b2c",
+      "bytes": 646
+    },
+    "VitalWatchLocale_enEN.lua": {
+      "sha256": "06c483dfcda82f5791cd2a109440cb219e1d24baf2aeb29d582ec2da98c77e1c",
+      "bytes": 1526
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

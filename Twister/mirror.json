@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/Twister",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "Twister",
+    "name": "Twister",
+    "url": "https://github.com/MarcelineVQ/Twister",
+    "api": "https://api.github.com/repos/MarcelineVQ/Twister"
+  },
+  "commit": "924829c3f4bfd9b405c3b316082d49f8ea6c673a",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "d996d4479b84e4f6b27550c91da412690d572fcd61ea6512a9ec84149a5e5a6d",
+      "bytes": 100
+    },
+    "readme.md": {
+      "sha256": "cae79b8bad9f67dc3f07116ff900f65419e096c09476b344f0d12cdaa4bbd5b3",
+      "bytes": 1422
+    },
+    "Twister.lua": {
+      "sha256": "450085445e51378e1e0983f96bfdfa13827cffbd6f810f8817bb05d4e65cfbc9",
+      "bytes": 17556
+    },
+    "Twister.toc": {
+      "sha256": "da92b68a2003ab8357b64276a6b0d39add1c8893699ee81153b510ebfddc7627",
+      "bytes": 220
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

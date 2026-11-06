@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: |cffabd473TW Buy Poisons |cff58ff00v 4.4
+## Notes: Buy Stacks of Poison Components
+## OptionalDeps:
+## Dependencies:
+## SavedVariables: BuyPoisonsData
+BuyPoisons.xml
+BuyPoisonsConfig.xml
+
+

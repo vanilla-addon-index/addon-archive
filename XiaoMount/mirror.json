@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Kmschr/XiaoMount",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Kmschr",
+    "repo": "XiaoMount",
+    "name": "XiaoMount",
+    "url": "https://github.com/Kmschr/XiaoMount",
+    "api": "https://api.github.com/repos/Kmschr/XiaoMount"
+  },
+  "commit": "dc5d777c5c16e84e1ba5d93588cc7890165f2f57",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "5f28c699f2ff5df86c796c4fb56173bdb31e8a2dd539a94281d26418b47b7cee",
+      "bytes": 1072
+    },
+    "README.md": {
+      "sha256": "356eabc4b088d0df4146213ab35c238de339d9f9e9406cfa1a9fc7deedefcbc3",
+      "bytes": 1210
+    },
+    "XiaoMount.lua": {
+      "sha256": "3481069662d4db4e35fd891e46bae243f95ff3339771b0c60a022d3d6f69bc3e",
+      "bytes": 22858
+    },
+    "XiaoMount.toc": {
+      "sha256": "9e3295f051191fc8e4b840988dfd04d098888af537c713717f31df2b0c87c013",
+      "bytes": 212
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

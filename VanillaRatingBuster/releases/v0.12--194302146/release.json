@@ -1,0 +1,9 @@
+{
+  "id": "194302146",
+  "tag": "v0.12",
+  "name": "Initial TWoW updates for 1.17.2",
+  "body": "- Updates to both BonusScanner and VanillaRatingBuster addons to support updates and changes on TWoW\r\n- Currently only English lang clients fully supported by BonusScanner",
+  "published": "2025-01-12T13:49:51Z",
+  "prerelease": false,
+  "url": "https://github.com/kxseven/VanillaRatingBuster/releases/tag/v0.12"
+}

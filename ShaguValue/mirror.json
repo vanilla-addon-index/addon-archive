@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/shagu/ShaguValue",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguValue",
+    "name": "ShaguValue",
+    "url": "https://github.com/shagu/ShaguValue",
+    "api": "https://api.github.com/repos/shagu/ShaguValue"
+  },
+  "commit": "debbde88b68a941b13a614612a7aa867cadbe542",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "571dd3040c4d3537f4d9afc3a2080fd3218832154c446aa1ca4af9e9cdf6e505",
+      "bytes": 1053
+    },
+    "ShaguValue-tbc.toc": {
+      "sha256": "1df1cfd5d145cc5a2fa0b8a2bda39e64d8762a5c0a18ae225d11f60fd8f25cda",
+      "bytes": 156
+    },
+    "ShaguValue.lua": {
+      "sha256": "f3a3cdb01b3ec13651fdca7ce4b46a05b1bf030b939c71f3b2036ec9c2f01930",
+      "bytes": 549685
+    },
+    "ShaguValue.toc": {
+      "sha256": "d4fce045a269584c5dfc761f691ca0b67a1dc641828c53741af54116c60b27d7",
+      "bytes": 156
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

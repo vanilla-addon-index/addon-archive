@@ -1,0 +1,61 @@
+{
+  "upstream": "https://github.com/Sebben7Sebben/ImprovedErrorFrame",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Sebben7Sebben",
+    "repo": "ImprovedErrorFrame",
+    "name": "ImprovedErrorFrame",
+    "url": "https://github.com/Sebben7Sebben/ImprovedErrorFrame",
+    "api": "https://api.github.com/repos/Sebben7Sebben/ImprovedErrorFrame"
+  },
+  "commit": "1f028e8d84288dae3e5a0892c07ddae6b655eb3f",
+  "sourceFiles": {
+    "ImprovedErrorFrame.lua": {
+      "sha256": "c7f8977721152f18f133394b5199cd6ac3bd3e094ffe55fc3da6a6030f69c259",
+      "bytes": 39274
+    },
+    "ImprovedErrorFrame.toc": {
+      "sha256": "15f3d75e1ff42e2fcde6db03f43d7cac9700b8197f6c446cd11dc27204d4b1e8",
+      "bytes": 222
+    },
+    "ImprovedErrorFrame.xml": {
+      "sha256": "d65523adbd9a58f558819c4adfba1e901634a1488ec7c70c12f3b2bda8fc36e4",
+      "bytes": 5840
+    },
+    "localization.de.lua": {
+      "sha256": "c6f5c2dca44ec8f192924aa0725c642dd4c546e6ef6a86634390a390f7f3e9e8",
+      "bytes": 3825
+    },
+    "localization.fr.lua": {
+      "sha256": "e77ceb5d6f537c3e3ce4d9e6848cdbe17ae03497b7874ff36266fd18860fb119",
+      "bytes": 3718
+    },
+    "localization.lua": {
+      "sha256": "9ae80b3b501c49e5ec192ca41e8f55182fc8865f02c17a5be6038f1089ee81e3",
+      "bytes": 3175
+    },
+    "Skin/ErrorButton-Blank.tga": {
+      "sha256": "9298f216b0c068cf42992033340031550c935b34024cf9c66345bf19a4144fa8",
+      "bytes": 4140
+    },
+    "Skin/ErrorButton-Disabled.tga": {
+      "sha256": "75a3ba3733bf75cbff9f121ca222fac6d775bf59ab4bf8ae6188459cf10555f7",
+      "bytes": 4140
+    },
+    "Skin/ErrorButton-Down.tga": {
+      "sha256": "8f181f0f94f78757366b948d357a8539d0edcfcdd224b9d648c17947c0149a86",
+      "bytes": 4140
+    },
+    "Skin/ErrorButton-Up.tga": {
+      "sha256": "61781ae1279cbb1d888a7cb0a66fb0ab14f15fb5d307aa915d50263d20903f72",
+      "bytes": 4140
+    },
+    "SoundNOPE/ErrorSound.mp3": {
+      "sha256": "9944e13f7d38c7272203c3725178cbb9565fce352d6906775cdf510bea272e96",
+      "bytes": 12749
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

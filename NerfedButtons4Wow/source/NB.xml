@@ -1,0 +1,32 @@
+<Ui xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+
+  <Script file="Util.lua" />
+  <Script file="Checks.lua" />
+  <Script file="Actions.lua" />
+  <Script file="Lists.lua" />
+  <Script file="NB.lua" />
+
+  <GameTooltip name="NBTooltip" frameStrata="TOOLTIP" hidden="true" parent="UIParent" inherits="GameTooltipTemplate"/>
+
+  <!-- Frame to handle all core events -->
+  <Frame name="NerfedButtonsMainFrame" parent="UIParent" toplevel="true" enableMouse="true">
+
+    <Scripts>
+      <OnLoad>
+        this:RegisterEvent("VARIABLES_LOADED");
+        this:RegisterEvent("ADDON_LOADED");
+        this:RegisterEvent("BAG_UPDATE");
+        this:RegisterEvent("SPELLS_CHANGED");
+        this:RegisterEvent("UNIT_SPELLCAST_START");
+        this:RegisterEvent("UNIT_SPELLCAST_SENT");
+        this:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED");
+        self = {};
+      </OnLoad>
+      <OnEvent>
+        NerfedButtons_EventHandler();
+      </OnEvent>
+    </Scripts>
+  </Frame>
+
+
+</Ui>

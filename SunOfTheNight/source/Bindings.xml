@@ -1,0 +1,7 @@
+<Bindings>
+	<Binding name="ENTRY" header="HEADER" default="TAB" runOnUp="true">
+    		if ( keystate == "up" ) then
+   			toggleSunNight();
+   		end
+ 	</Binding>
+</Bindings>

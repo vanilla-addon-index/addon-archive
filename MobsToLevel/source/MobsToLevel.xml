@@ -1,0 +1,116 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+	<Frame name="M2LFrame" toplevel="true" movable="true" parent="UIParent" inherits="OptionFrameBoxTemplate">
+		<Size>
+			<AbsDimension x="125" y="90"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOP">
+				<Offset>
+					<AbsDimension x="0" y="-300"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Frames>
+		</Frames>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString inherits="GameFontNormalSmall" text="Kills to level up:">
+					<Color r="0.8" g="0.8" b="0.1"/>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="-15"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name = "M2LString" inherits="GameFontNormal" text="0">
+					<Color r="1" g="1" b="1"/>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="-30"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString inherits="GameFontNormalSmall" text="Time to level up:">
+					<Color r="0.8" g="0.8" b="0.1"/>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="30"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name = "M2LTimeString" inherits="GameFontNormal" text="0">
+					<Color r="1" g="1" b="1"/>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="15"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:SetBackdropColor(0.1, 0.1, 0.1);
+				this:RegisterForDrag("LeftButton");
+				M2L_OnLoad();
+			</OnLoad>
+			<OnDragStart>
+				this:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+			</OnDragStop>
+			<OnMouseUp>
+				this:StopMovingOrSizing();
+			</OnMouseUp>
+			<OnEvent>
+				M2L_OnEvent();
+			</OnEvent>
+		</Scripts>
+	</Frame>
+	
+	<Button name="M2LCloseButton" inherits="UIPanelCloseButton">
+		<Size>
+			<AbsDimension x="30" y="30"/>
+		</Size>
+		<Anchors>
+			<Anchor point="LEFT" relativeTo="M2LFrame" relativePoint="RIGHT">
+				<Offset>
+					<AbsDimension x="-5" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Scripts>
+			<OnClick>
+				if M2LFrame:IsVisible() == 1 then
+					HideUIPanel(M2LFrame);
+					GameTooltip:SetText("Opens the MobsToLevel window.");
+				else
+					ShowUIPanel(M2LFrame);
+					GameTooltip:SetText("Close the MobsToLevel window.");
+				end
+			</OnClick>
+			<OnEnter>
+				GameTooltip:SetOwner(this, "ANCHOR_RIGHT", 0, -32);
+				if M2LFrame:IsVisible() == 1 then
+					GameTooltip:SetText("Close the MobsToLevel window.");
+				else
+					GameTooltip:SetText("Opens the MobsToLevel window.");
+				end
+				GameTooltip:Show();
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide();
+			</OnLeave>
+		</Scripts>
+	</Button>
+</Ui> 

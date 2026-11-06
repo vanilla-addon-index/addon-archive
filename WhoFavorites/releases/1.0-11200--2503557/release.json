@@ -1,0 +1,9 @@
+{
+  "id": "2503557",
+  "tag": "1.0-11200",
+  "name": "v1.0-11200",
+  "body": "WhoFavorites, lets you store and replay /who queries.\nWait 15-20seconds between requests, who is throttled.\n/who accepts a few command-line switches\n- x-y limits the level range (eg. 15-25)\n- z-\"zonename\" limits results to the zone (eg. z-\"Ironforge\")\n- n-\"name\" limits results to matches / partial matches of \"name\"\n- c-\"class\" limits results to class (eg. c-\"Warrior\")\n- g-\"guildname\" limits results to guild\n\nYou can mix and match different switches.\nExample: /who c-\"druid\" z-\"Ironforge\" z-\"Stormwind\" 35-45\n",
+  "published": "2016-01-27T18:56:44Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/WhoFavorites/releases/tag/1.0-11200"
+}

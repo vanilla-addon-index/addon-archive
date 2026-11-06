@@ -1,0 +1,103 @@
+## Interface: 11200
+## Title: |cffffcc00Shagu|cffffffffTweaks |cffcccccc[ClassicAPI]
+## Author: Shagu
+## Notes: A collection of tweaks and enhancements to the Default UI
+## Notes-ruRU: Коллекция настроек и улучшений стандартного пользовательского интерфейса.
+## Version: GIT
+## Dependencies: !!!ClassicAPI
+## SavedVariables: ShaguTweaks_player_cache, ShaguTweaks_social_cache
+## SavedVariablesPerCharacter: ShaguTweaks_config, ShaguTweaks_cache
+
+# locales
+locales\locales_deDE.lua
+locales\locales_enUS.lua
+locales\locales_esES.lua
+locales\locales_frFR.lua
+locales\locales_koKR.lua
+locales\locales_ruRU.lua
+locales\locales_zhCN.lua
+
+# translations
+locales\translations_deDE.lua
+locales\translations_enUS.lua
+locales\translations_esES.lua
+locales\translations_frFR.lua
+locales\translations_koKR.lua
+locales\translations_ruRU.lua
+locales\translations_zhCN.lua
+locales\translations_zhTW.lua
+
+# basic
+main.lua
+helpers.lua
+api.lua
+config.lua
+
+# libraries
+libs\libtipscan.lua
+libs\libspell.lua
+libs\libcast.lua
+libs\libdebuff.lua
+libs\libunitscan.lua
+libs\libnameplate.lua
+libs\libpredict.lua
+libs\libhealth.lua
+
+# custom
+mods\custom.lua
+
+# modules
+mods\dark-ui-elements.lua
+mods\blue-shaman.lua
+mods\equip-compare.lua
+mods\minimap-clock.lua
+mods\minimap-square.lua
+mods\minimap-tweaks.lua
+mods\minimap-clean.lua
+mods\minimap-zoom.lua
+mods\minimap-tracking.lua
+mods\actionbar-range-color.lua
+mods\free-slots.lua
+mods\xpbar-text.lua
+mods\nameplate-scale.lua
+mods\sell-junk.lua
+mods\unitframes-classcolor.lua
+mods\vendor-values.lua
+mods\worldmap-coordinates.lua
+mods\worldmap-window.lua
+mods\nameplate-classcolor.lua
+mods\nameplate-castbar.lua
+mods\move-unitframes.lua
+mods\target-castbar.lua
+mods\target-debufftimer.lua
+mods\social-colors.lua
+mods\item-colors.lua
+mods\health-color.lua
+mods\auto-dismount.lua
+mods\auto-stance.lua
+mods\tooltip-details.lua
+mods\hide-errors.lua
+mods\chat-tweaks.lua
+mods\chat-levels.lua
+mods\chat-spam-filter.lua
+mods\hide-gryphons.lua
+mods\worldmap-colors.lua
+mods\unitframes-bighealth.lua
+mods\health-numbers.lua
+mods\unitframes-classportrait.lua
+mods\unitframes-energy-tick.lua
+mods\cooldown-numbers.lua
+mods\turtle-wow.lua
+mods\superwow.lua
+mods\reduced-actionbar.lua
+mods\no-toggle.lua
+mods\aoe-loot.lua
+mods\loot-cursor.lua
+mods\improved-roll-frames.lua
+mods\improved-castbar.lua
+mods\smaller-errors-frame.lua
+mods\skip-gossip.lua
+
+# compatibility
+compat-dragonflightui.lua
+compat-guda.lua

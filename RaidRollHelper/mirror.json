@@ -1,0 +1,54 @@
+{
+  "upstream": "https://github.com/EinBaum/RaidRollHelper",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "RaidRollHelper",
+    "name": "RaidRollHelper",
+    "url": "https://github.com/EinBaum/RaidRollHelper",
+    "api": "https://api.github.com/repos/EinBaum/RaidRollHelper"
+  },
+  "commit": "e1caf2c3bfd343f96f8ea3bc114c162a7545fa0a",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "7d9e13cdeadf82e6d82489af23877e7073bf1d771f59e8d2248bc8c228e6fe21",
+      "bytes": 1075
+    },
+    "RaidRollHelper.lua": {
+      "sha256": "440f0ad3e1c76da6d303c6f73a9df0a3c91ff4ccb3f5c7b1b4f410e56f125626",
+      "bytes": 1101
+    },
+    "RaidRollHelper.toc": {
+      "sha256": "3351b4e26f91309a26e06f6731f38c96d49f3ef533e893c08ea247c5fddfa944",
+      "bytes": 255
+    },
+    "README.md": {
+      "sha256": "eb6294acf2d3bfbf71a3df4b97fa6ff536753ed38342e86c096fc2be167f45fa",
+      "bytes": 256
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "9018892": {
+      "tag": "1.0",
+      "folder": "1.0--9018892",
+      "assets": {
+        "5704010": {
+          "sha256": "e80acc1f771e23fb81aff1c7e98a095ab95773720b21957ae017d01225b932b3",
+          "bytes": 2370,
+          "id": "5704010",
+          "name": "RaidRollHelper.zip",
+          "url": "https://github.com/EinBaum/RaidRollHelper/releases/download/1.0/RaidRollHelper.zip",
+          "path": "releases/1.0--9018892/assets/RaidRollHelper.zip"
+        }
+      },
+      "source": {
+        "sha256": "f38741b8b50fe31612a1f729418ffc0c4d62915435b222bd7ba05491fcd9d24f",
+        "bytes": 1776,
+        "path": "releases/1.0--9018892/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/EinBaum/RaidRollHelper/tarball/1.0"
+      }
+    }
+  }
+}

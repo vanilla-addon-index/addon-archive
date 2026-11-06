@@ -1,0 +1,65 @@
+{
+  "upstream": "https://github.com/Arthur-Helias/ZonesLevel",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Arthur-Helias",
+    "repo": "ZonesLevel",
+    "name": "ZonesLevel",
+    "url": "https://github.com/Arthur-Helias/ZonesLevel",
+    "api": "https://api.github.com/repos/Arthur-Helias/ZonesLevel"
+  },
+  "commit": "985652b77532fe09dd3a1044bb736f92d7cfefd1",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+      "bytes": 1211
+    },
+    "Locale/ZonesLevel-deDE.lua": {
+      "sha256": "e3afcd9b424c428987895bdb22412515c1fe48c47bce203439f3e7271337f3fc",
+      "bytes": 2304
+    },
+    "Locale/ZonesLevel-enUS.lua": {
+      "sha256": "0dac4d0236ec42d9ec5580044c39d17ffdb45031c714e5d3ba05da058115214e",
+      "bytes": 1910
+    },
+    "Locale/ZonesLevel-esES.lua": {
+      "sha256": "ba39298f5e6d8ab488134b81bc0910798d6668e46375b835c320065432b6e77e",
+      "bytes": 2445
+    },
+    "Locale/ZonesLevel-frFR.lua": {
+      "sha256": "a3db5962802d00c96462f4915755f3ac6645e864edb63620c9859ca77c67344e",
+      "bytes": 2433
+    },
+    "Locale/ZonesLevel-ptBR.lua": {
+      "sha256": "9e72c2c6a36959c7133ac929076390fa9700d479a91ebe2d0913449e3543462d",
+      "bytes": 2420
+    },
+    "Locale/ZonesLevel-ruRU.lua": {
+      "sha256": "b0a7a9e69643f7cfc654369c319eff507b688f0dfc4659065cad8c353b9cd263",
+      "bytes": 2986
+    },
+    "Locale/ZonesLevel-zhCN.lua": {
+      "sha256": "be3cb0358a5c93e80df7d49ea9af6afecbeb1b865294140b793e40667eef3627",
+      "bytes": 2283
+    },
+    "README.md": {
+      "sha256": "65fa43292011475c3b9305d3929b6f03edb721b8271f8cd090c1ca0858a9d65e",
+      "bytes": 2159
+    },
+    "ZonesLevel.lua": {
+      "sha256": "60300e00f29c2e0ca8b1aa813d2640da42dd39efbd66baf092881055fd1abc6b",
+      "bytes": 4362
+    },
+    "ZonesLevel.toc": {
+      "sha256": "bb72ef985ed4dd7fa22349fbe4b1412d4e0cebab78808fa25b1909f0c73ada1e",
+      "bytes": 473
+    },
+    "ZonesLevel.xml": {
+      "sha256": "eec5ac216cb3b925cb58f40d30ba5786f887b15cfe1cd379574cb820d7abb79b",
+      "bytes": 415
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

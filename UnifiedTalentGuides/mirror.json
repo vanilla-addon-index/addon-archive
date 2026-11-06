@@ -1,0 +1,77 @@
+{
+  "upstream": "https://github.com/rmarc29/UnifiedTalentGuides",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "rmarc29",
+    "repo": "UnifiedTalentGuides",
+    "name": "UnifiedTalentGuides",
+    "url": "https://github.com/rmarc29/UnifiedTalentGuides",
+    "api": "https://api.github.com/repos/rmarc29/UnifiedTalentGuides"
+  },
+  "commit": "186691f8d98ef084e7e1c483380b27d9474a66bf",
+  "sourceFiles": {
+    ".github/workflows/lua-scan.yml": {
+      "sha256": "4b09baf8628c4e02215530dd96563603fa99425a580af12009b51b26c648589c",
+      "bytes": 571
+    },
+    "DruidTalents.lua": {
+      "sha256": "f8f6c33a1dc9f71c910cec5ae88c6a9ce24a58a15ca1c35c1c4e28bac63b98c8",
+      "bytes": 4341
+    },
+    "HunterTalents.lua": {
+      "sha256": "a288ac27abd846c35372a74384f8f048e90de957a5666bbbab0f11d1bdde3d8e",
+      "bytes": 4106
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "lua_safety_check.lua": {
+      "sha256": "d1326003ac444378f346f040474f38302ba76ad645f1d210d3d1094c5281734d",
+      "bytes": 1027
+    },
+    "MageTalents.lua": {
+      "sha256": "b17631f163c3ac9c0a9510653986abd8f0a9d23b8852daff81d8efdd25e4d137",
+      "bytes": 4138
+    },
+    "PaladinTalents.lua": {
+      "sha256": "9aa4f92004020e3e89f624abf066fa9ba8658a418e50ea48edea3c5f64a38fc2",
+      "bytes": 4125
+    },
+    "PriestTalents.lua": {
+      "sha256": "aceda822dc119c7390abd3abd48cbbb7fc40b919827311287e8633f8ef41b19a",
+      "bytes": 4275
+    },
+    "README.md": {
+      "sha256": "d90c40abea579b0de1af2fcc91d202bcdecb69114177cd5744fa479f26256950",
+      "bytes": 1037
+    },
+    "RogueTalents.lua": {
+      "sha256": "a44cba02f28d740c8358a11d3a353e0ebd8bfbfe7adbe508c142ca76ffb88170",
+      "bytes": 4029
+    },
+    "ShamanTalents.lua": {
+      "sha256": "0e4cba759ee5965a4b0a02fffd777962e78e2c615304b69462789188076d56ab",
+      "bytes": 4023
+    },
+    "UnifiedTalentGuides.lua": {
+      "sha256": "c6b88a31d288a106c3a04270bbf231fd893b5908d01d887d3990dbc34057833b",
+      "bytes": 17790
+    },
+    "UnifiedTalentGuides.toc": {
+      "sha256": "3558473fdb1c00b3600ad10f4bdb1e49f89e9eb09528297efc515dd9b86ec949",
+      "bytes": 401
+    },
+    "WarlockTalents.lua": {
+      "sha256": "e4ad2bf8abe058ebf8f8f7abfbe779a032a2c0f8e1609d033d2180695feeac3e",
+      "bytes": 4446
+    },
+    "WarriorTalents.lua": {
+      "sha256": "e3f6eaf7aa83365ae2839563d006e846ff57ccb58cd24a3e860aac470fed59b3",
+      "bytes": 4054
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

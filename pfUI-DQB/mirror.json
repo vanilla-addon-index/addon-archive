@@ -1,0 +1,81 @@
+{
+  "upstream": "https://octowow.st/git/jKalfis/pfUI-DQB",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "jKalfis",
+    "repo": "pfUI-DQB",
+    "name": "pfUI-DQB",
+    "url": "https://octowow.st/git/jKalfis/pfUI-DQB",
+    "api": "https://octowow.st/git/api/v1/repos/jKalfis/pfUI-DQB"
+  },
+  "commit": "b7b7df4d260cc2788d07a5b9799fd93124f5991e",
+  "sourceFiles": {
+    "config.lua": {
+      "sha256": "73869d29e30ef0b396cdc552233e4886ee9ed6b99ff3d80796f2fd5e1a91d327",
+      "bytes": 1117
+    },
+    "core.lua": {
+      "sha256": "08b05bffab0573b64b1a7956c3e6e572564491db175fdeef1a988c1b17a2953c",
+      "bytes": 2911
+    },
+    "gui.lua": {
+      "sha256": "878b4d70a15ad4571b775bbec46426e5d22714e7863667a31fc42e9024b333ec",
+      "bytes": 1886
+    },
+    "LICENSE": {
+      "sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+      "bytes": 1211
+    },
+    "modules/gossipquest.lua": {
+      "sha256": "a1700d62b95fc102de51464405b2074211f50eeda239c05af62ee1aaab75901d",
+      "bytes": 18420
+    },
+    "modules/itemtext.lua": {
+      "sha256": "31cfb941458e4d77fb927e4203fc6cd18234c3b83d7c0ee029cf52ec81ba7b50",
+      "bytes": 12957
+    },
+    "modules/questlog.lua": {
+      "sha256": "ae8e90cace7400f77bd6bc872cc67a277101fc47cadd73f64991f433cee89588",
+      "bytes": 30296
+    },
+    "pfUI-DQB.toc": {
+      "sha256": "4638e738783f2657934e8c37474473d60d7b29add2ff8ace02a07192699f0b4a",
+      "bytes": 321
+    },
+    "README.md": {
+      "sha256": "05e6f271e90e8c5e86041c999613e180e869fb0b527d17426b8239f818a418f3",
+      "bytes": 8946
+    },
+    "screenshots/books.png": {
+      "sha256": "8ef2e493131c0db6b938fa5dc7a838411da9c9137ae7dc74dfb893147496c7f4",
+      "bytes": 359671
+    },
+    "screenshots/config.png": {
+      "sha256": "823e1d22157a4d9a8e21d11a5a3c3dafc9215d9680f3c4b22cdf9899a4c08ffa",
+      "bytes": 458704
+    },
+    "screenshots/gossipquest.png": {
+      "sha256": "e5cfd744e41d693e5bd882311919b3e2e0a770599633b7542d693a94781824a6",
+      "bytes": 380444
+    },
+    "screenshots/questlog.png": {
+      "sha256": "d46d25e97abd73afc1de452a12a55e2ff00c3e3f1fb71fb7b0e79ac2999b6755",
+      "bytes": 938289
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "254": {
+      "tag": "v1.0.0",
+      "folder": "v1.0.0--254",
+      "assets": {},
+      "source": {
+        "sha256": "ff3bec0c83b622b56325fdd86c803014985054ecd5394e301ccae388ab063ccd",
+        "bytes": 12535,
+        "path": "releases/v1.0.0--254/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/jKalfis/pfUI-DQB/archive/v1.0.0.tar.gz"
+      }
+    }
+  }
+}

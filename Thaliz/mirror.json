@@ -1,0 +1,222 @@
+{
+  "upstream": "https://github.com/Sentilix/thaliz",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Sentilix",
+    "repo": "thaliz",
+    "name": "thaliz",
+    "url": "https://github.com/Sentilix/thaliz",
+    "api": "https://api.github.com/repos/Sentilix/thaliz"
+  },
+  "commit": "501cdab796a711bb4c0a7e22e8fdd360b4d095fe",
+  "sourceFiles": {
+    "doc/roadmap.txt": {
+      "sha256": "5782fdd54040158a06d93f58043d67aa0f975c71515c18e59baa91e9a0617d9a",
+      "bytes": 245
+    },
+    "LICENSE": {
+      "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+      "bytes": 35141
+    },
+    "README.md": {
+      "sha256": "5eae58507eb5404ac6541df6f3ecaf52c188646692b3b68f6b7727e4a1e76b69",
+      "bytes": 2441
+    },
+    "releases/Thaliz-0.0.1.zip": {
+      "sha256": "f658399dbcc95c5149a798840524d9fe76af95f2801b6fa6458c7710b91c9833",
+      "bytes": 6922
+    },
+    "releases/Thaliz-0.1.0.zip": {
+      "sha256": "2a5ca7592b020f927a9fd2222d2a564748978aca673ca70c7d05bedfdca07cb8",
+      "bytes": 7195
+    },
+    "releases/Thaliz-0.2.0.zip": {
+      "sha256": "4852b1f79a53173d50dd13e96dd11e4fee76895ee6ea5edd6d162d3e7a07240f",
+      "bytes": 8382
+    },
+    "releases/Thaliz-0.2.1.zip": {
+      "sha256": "74687e7ae75795e45da896eb9ebea78274cc98c0a6aea9cf69c0e9d45b8b73d2",
+      "bytes": 5342
+    },
+    "releases/Thaliz-0.2.2.zip": {
+      "sha256": "4e0c283ae5072095fed4d47731035d00b8e416ec1a248c4102fe1ba367b32597",
+      "bytes": 5719
+    },
+    "releases/Thaliz-0.3.0.zip": {
+      "sha256": "65f9befc1083a3800f541897f1b14b6eafa04197ac0dabc7977869237a6ed386",
+      "bytes": 8334
+    },
+    "releases/Thaliz-0.3.1.zip": {
+      "sha256": "26ab684ab970d07d1a9dd17a328c7abbf9495f131d8b5b6950107bb3ffe60df4",
+      "bytes": 8551
+    },
+    "releases/Thaliz-0.3.2.zip": {
+      "sha256": "6102cebf2cca456b3b87b11aa1d27894829e0ccfd35b4c009aa40d287d749d8b",
+      "bytes": 9050
+    },
+    "releases/Thaliz-1.0.0-beta1.zip": {
+      "sha256": "0c23a3358bd059a2a47a268dc944aa099a0069b9830c9d0c1ec312dc300544e0",
+      "bytes": 9145
+    },
+    "releases/Thaliz-1.0.0-beta2.zip": {
+      "sha256": "260f6927c878e0d2a7ed5b194e15f3a32aca19cdbb8c9f2d1c07d1a4c28b42e4",
+      "bytes": 9693
+    },
+    "releases/Thaliz-1.0.0-beta3.zip": {
+      "sha256": "3cfaa811192c1b60f49a4875660b6c23ea0cad0dbed3f98bc0501791decb34b4",
+      "bytes": 9878
+    },
+    "releases/Thaliz-1.0.0.zip": {
+      "sha256": "5b5f470b73635667651aa465272635a59e11803f02993c08feff90be72145f04",
+      "bytes": 9851
+    },
+    "releases/Thaliz-1.0.1.zip": {
+      "sha256": "c1c671885706b0ddddca7eee71587983e6a13c8531033e845517ace26bd8fd8f",
+      "bytes": 9893
+    },
+    "releases/Thaliz-1.1.0-alpha1.zip": {
+      "sha256": "919f40f0cd5d702b1cc8d4ea9b9cf8c9e862831eb763b0c477e6523178297130",
+      "bytes": 10536
+    },
+    "releases/Thaliz-1.1.0-alpha2.zip": {
+      "sha256": "b81a5987216840b576791893522a661b471fd5179ff3e3fe1b03021a49eb38a3",
+      "bytes": 13919
+    },
+    "releases/Thaliz-1.1.0-beta1.zip": {
+      "sha256": "45aed1889cdb76ed5ac4f18604b1bcd5e9aaacfe71fdb94b5f332b79f5a921fd",
+      "bytes": 10522
+    },
+    "releases/Thaliz-1.1.0.zip": {
+      "sha256": "63d572cb643eda0c5f63a4c36d9b06979db29a0450861166a8d24dadfbc76fbe",
+      "bytes": 10612
+    },
+    "releases/Thaliz-1.2.0.zip": {
+      "sha256": "c5948322c448dd3cf70963b5513d893e7d945cc8ce161b9caa44639da384897d",
+      "bytes": 10837
+    },
+    "releases/Thaliz-1.2.1.zip": {
+      "sha256": "28525c71701c35a70d7ac9f683505f71fdc9ba8cc0a0e22075aef91326c924c0",
+      "bytes": 12860
+    },
+    "releases/Thaliz-1.3.0.zip": {
+      "sha256": "2cb6bbe251245b4f395d4e5520b8a246e6a5022dbec30d4b54a700dd65442979",
+      "bytes": 13502
+    },
+    "releases/thaliz-1.4-sample.jpg": {
+      "sha256": "86c229f55be748f2e3fc0232009cb195cf7923a862021bb8b8ad468a24b86a56",
+      "bytes": 123465
+    },
+    "releases/Thaliz-1.4.0-beta3.zip": {
+      "sha256": "d1c358f17c796bea7df7e647e083e7cb337fad67dc9e96eb253c5ca65052e212",
+      "bytes": 31373
+    },
+    "releases/Thaliz-1.4.0-rc2.zip": {
+      "sha256": "a1e84210737e0b6f12e2198e2f74119c9d796a0e059075028db0374c5bc6181f",
+      "bytes": 31380
+    },
+    "releases/Thaliz-1.4.0.zip": {
+      "sha256": "88942451074b927d6abd07dced9bc4aa459e522ad7e587bf5b9ab860ce720840",
+      "bytes": 31390
+    },
+    "releases/Thaliz-1.4.1-beta1.zip": {
+      "sha256": "4b33dd6a50348dde0d57dc3e1207b623ad5413e44c0e129cfb0a2dde862adf3d",
+      "bytes": 31081
+    },
+    "releases/Thaliz-1.4.1.zip": {
+      "sha256": "d4fe3e33e33c2a70e865c9fc4787d962b053a3ffebd59244d5f55eab36d78999",
+      "bytes": 31076
+    },
+    "releases/Thaliz-1.4.2.zip": {
+      "sha256": "9e1ed9c50f2f716e354d734b035c37a534cfcca29c0aae977fc069b90c86f5e6",
+      "bytes": 31147
+    },
+    "releases/Thaliz-1.4.3-beta1.zip": {
+      "sha256": "1b25d1d8b5143ae354961492e7436fc3b5c0f17b8e6af0aae6c571394f57aaf9",
+      "bytes": 31757
+    },
+    "releases/Thaliz-1.4.3-beta2.zip": {
+      "sha256": "ad42929e617cac4c569c7f46a56acc58162336193c268161ebe0de27f457cdcb",
+      "bytes": 31685
+    },
+    "releases/Thaliz-1.4.3-beta3.zip": {
+      "sha256": "0beef491e55efd45d13cd581c0d1a9650f68c7aef97493a56b326000e9944086",
+      "bytes": 31659
+    },
+    "releases/Thaliz-1.4.3.zip": {
+      "sha256": "469f6fe32adf406b296c890b1cb255c629ff9e11ae538f8c75a14b8c600687d9",
+      "bytes": 31708
+    },
+    "releases/Thaliz-1.4.4-beta2.zip": {
+      "sha256": "0c2f3305f6215e59334487d87b817bc473ca2283e610a899d8b71fa8b16f9efc",
+      "bytes": 31854
+    },
+    "releases/Thaliz-1.4.4.zip": {
+      "sha256": "b6bc174b3c095a16254e3cb8fba4d954aa1eff7ca611ca65a0228575d4b06670",
+      "bytes": 31846
+    },
+    "releases/Thaliz-1.4.5.zip": {
+      "sha256": "4922c503fa92e93274d695230e0954feeef558e1592b9abfe4cf9c98afb80bcd",
+      "bytes": 32241
+    },
+    "releases/Thaliz-1.5.0.zip": {
+      "sha256": "2076d140e24842f6aaf6b97297727bab5d78e098d35e3257e648943f76736132",
+      "bytes": 33011
+    },
+    "releases/thaliz-cfg-sample.jpg": {
+      "sha256": "4dbf665eec26be2bc79e65bc53a22521f592b6de8e99fe38b1058cc33cd081dd",
+      "bytes": 35478
+    },
+    "releases/thaliz-cfg.jpg": {
+      "sha256": "3a41ab78625fca18738f0415adbff587fe05ed39cf0a1e8b205c622452bac2a1",
+      "bytes": 157557
+    },
+    "Thaliz/changelog.txt": {
+      "sha256": "0965dbe47ad1fbe9e59624f43481b23e32478ed5054829ad221bb28e646fc1e9",
+      "bytes": 4367
+    },
+    "Thaliz/ReadMe.txt": {
+      "sha256": "6a0ef0b8544412cc66be83b88c7745ad23b8efc8d736d86be099ce60b34d573f",
+      "bytes": 2589
+    },
+    "Thaliz/Thaliz.lua": {
+      "sha256": "457b5312e7a381b5f60327cec8238cd5ef81f2396a9fb2c9d61d65c2f513fd3f",
+      "bytes": 48690
+    },
+    "Thaliz/Thaliz.toc": {
+      "sha256": "fe456ce09815aa3aa08d94f147df2477ff164b02f28084f919b07e112234d0c5",
+      "bytes": 338
+    },
+    "Thaliz/Thaliz.wowproj": {
+      "sha256": "ecc78f7356018f35daffadf177da7f39d747b6f2b17e09dc4f7ffadb2e8689f9",
+      "bytes": 1736
+    },
+    "Thaliz/Thaliz.xml": {
+      "sha256": "2b4345210226062d459ff1460c8b080307a2c26f9274aff1bee4dba902ce6d63",
+      "bytes": 19567
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "11617774": {
+      "tag": "thaliz-1.5.0",
+      "folder": "thaliz-1.5.0--11617774",
+      "assets": {
+        "7638479": {
+          "sha256": "2076d140e24842f6aaf6b97297727bab5d78e098d35e3257e648943f76736132",
+          "bytes": 33011,
+          "id": "7638479",
+          "name": "Thaliz-1.5.0.zip",
+          "url": "https://github.com/Sentilix/thaliz/releases/download/thaliz-1.5.0/Thaliz-1.5.0.zip",
+          "path": "releases/thaliz-1.5.0--11617774/assets/Thaliz-1.5.0.zip"
+        }
+      },
+      "source": {
+        "sha256": "5022b79a0568a7f61a4c29d027915f02e385aa37c542614aa223914e9871a3fb",
+        "bytes": 756952,
+        "path": "releases/thaliz-1.5.0--11617774/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Sentilix/thaliz/tarball/thaliz-1.5.0"
+      }
+    }
+  }
+}

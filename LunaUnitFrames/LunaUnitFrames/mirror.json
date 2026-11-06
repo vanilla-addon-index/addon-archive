@@ -1,0 +1,513 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/LunaUnitFrames",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "LunaUnitFrames",
+    "name": "LunaUnitFrames",
+    "url": "https://github.com/MarcelineVQ/LunaUnitFrames",
+    "api": "https://api.github.com/repos/MarcelineVQ/LunaUnitFrames"
+  },
+  "commit": "3594b68747928bd52565667d9df83813cd27b9e8",
+  "sourceFiles": {
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "8a2d85604031fce32566bb1d13baba966cfbe81aa1848e7c331c20b83448f526",
+      "bytes": 32064
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "3b77dcabc99f3e0d7ca8d94cf61bf3052a2ef24a806473a8b285c861a2111427",
+      "bytes": 66917
+    },
+    "libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "3ec601a4953f105128dc7c38c305eb8d2d8a58578535dfd12eae23034bdd6eb7",
+      "bytes": 44460
+    },
+    "libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "34e4e52df5e10eb6ecf423e5e04768b1daa28562d8ec2206df9647cb2f6c0219",
+      "bytes": 7941
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "d657f60076d5a99ba2caa7c00ee03e13c122bd35141369b2bfcf819b012581ea",
+      "bytes": 28867
+    },
+    "libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "3473e0c7ea754c1a6bc99c7fcfaeb11b256a436b6ae97744eef0714ee84344ff",
+      "bytes": 16946
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "5b9a465389a2c77ddb4200170e05a61cde91782ededc995e9ec1ea031a65c9b0",
+      "bytes": 23050
+    },
+    "libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "03d54b24e00511950a06b0310139badfa3176da924cbe47bdb8a7fc03fc3dbcf",
+      "bytes": 15953
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "4abf633e4208af1543b4043ca5d3b2d8f9c90b87f365e7003a57ca4d10c9bf38",
+      "bytes": 30300
+    },
+    "libs/Babble-Spell-2.2/Babble-Spell-2.2.lua": {
+      "sha256": "95644642893df29a341cd58622963351c7ee241bc31dd8e08044f9542706c29d",
+      "bytes": 498112
+    },
+    "libs/Banzai-1.0/Banzai-1.0.lua": {
+      "sha256": "7c07cc494d229c349bcd18545c3927ef3498fbec4df3383002a00c53ede5247b",
+      "bytes": 4694
+    },
+    "libs/CastLib-1.0/CastLib-1.0.lua": {
+      "sha256": "c8339cc02d410f5a9eabea9eb74edaf0e3e6524ddc183c4fd610647e8a87f91a",
+      "bytes": 11342
+    },
+    "libs/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "3bb660a69fe85d2b37bbdef130071d378dcde12d3c44cc19d5fe41d61f2c4a5a",
+      "bytes": 11050
+    },
+    "libs/Deformat-2.0/Deformat-2.0.lua": {
+      "sha256": "6491e26c67bc4e35eecead3aac60dd1e02abe39a8b281ff6f10bb223e78b7f50",
+      "bytes": 9438
+    },
+    "libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "0e1c2e893ae0342170ffc3d8f816b765eaf8dbed689da5cf5353f6e9271b9c06",
+      "bytes": 85808
+    },
+    "libs/DruidManaLib-1.0/DruidManaLib-1.0.lua": {
+      "sha256": "90d3d95cf704af8944fbb77bc0e105fdf24c1ef3bbd7487c45fbe6ae07113b3f",
+      "bytes": 11228
+    },
+    "libs/FiveSecLib-1.0/FiveSecLib-1.0.lua": {
+      "sha256": "5afdfd2783aedbc8437471892d5fc1e625d4d774e640929a9eea8424756ccde0",
+      "bytes": 4997
+    },
+    "libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "765b660206812a6f4eb787f41145571d801f652fb014c462613a52e80d6b518b",
+      "bytes": 45849
+    },
+    "libs/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "1927177be6990043bc63bc8c36168408957c6d1ed86ef971d72415f7dd14d430",
+      "bytes": 7889
+    },
+    "libs/HealComm-1.0/HealComm-1.0.lua": {
+      "sha256": "50efb562bd061385d197c6bff7bd2910fe424ae130ea6a500e500e68b10301d8",
+      "bytes": 68114
+    },
+    "libs/ItemBonusLib-1.0/ItemBonusLib-1.0.lua": {
+      "sha256": "f4c4e93a58e6c32a48d4e9bcdb200111c4f9c0e6a5c6b4674a52ec06c3bf85c9",
+      "bytes": 12162
+    },
+    "libs/ItemBonusLib-1.0/Locales/deDE.lua": {
+      "sha256": "7b46b233c41062617ef4c19ddaa4043ea8a4a8e5331a309b770c1aa1366af4f2",
+      "bytes": 7749
+    },
+    "libs/ItemBonusLib-1.0/Locales/enUS.lua": {
+      "sha256": "e45bc468044f3bf908cd93079024ad13c849499f77fe741a4cbe08f89956aae8",
+      "bytes": 11008
+    },
+    "libs/ItemBonusLib-1.0/Locales/frFR.lua": {
+      "sha256": "d1340316d9d87767978ee1dd13aed349f93414f52c374fdb77e4de2eb946f75d",
+      "bytes": 11401
+    },
+    "libs/ItemBonusLib-1.0/Locales/ruRU.lua": {
+      "sha256": "8aace8fbd230d7a7fd37ac2023019483df5ba67c8a378be8445b820940f75314",
+      "bytes": 16859
+    },
+    "libs/RosterLib-2.0/RosterLib-2.0.lua": {
+      "sha256": "3a44ae0f1f2f6472dadeb4af92c8a36b6077bcc1bf23ef8972a36f81a97867f9",
+      "bytes": 10876
+    },
+    "libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "9f903be67049f1b00eb138e0332b5a625f6a394761f20b3ca6ede67bef75c2c8",
+      "bytes": 86674
+    },
+    "locales/deDE.lua": {
+      "sha256": "d60ad3851969ad572432977a10b8be099045aa3d8272bc8d989fad0a0cecd146",
+      "bytes": 22789
+    },
+    "locales/enUS.lua": {
+      "sha256": "cdf03f8c4c2b0d63bcc7f2b42eebfb016769c524377350b45e0c1f9ae48d04c9",
+      "bytes": 20966
+    },
+    "locales/frFR.lua": {
+      "sha256": "788133dc3619041632007ed668307a3320f431d258584e2742e8dda591a85438",
+      "bytes": 20618
+    },
+    "locales/ruRU.lua": {
+      "sha256": "2cb5510a4e7d2c5153939dcc6e06cf64715c6390c01745b8a363ed3a80ad8505",
+      "bytes": 31472
+    },
+    "locales/zhCN.lua": {
+      "sha256": "7d806336e34b73d0404de236cb00f50985d6c0d28d694ed54df042d78cb2ae72",
+      "bytes": 21502
+    },
+    "LunaUnitFrames.lua": {
+      "sha256": "6978a0c22d12af8c85e8e60cef4c8fae18e305a6cf4ad70fad30ea23fdc8259f",
+      "bytes": 24532
+    },
+    "LunaUnitFrames.toc": {
+      "sha256": "78ac1e3755f7df2c0f088b5c09c44bd47054f4f3d3347e5158207ee0cf66efcc",
+      "bytes": 2316
+    },
+    "media/fonts/Aldrich.ttf": {
+      "sha256": "127bf6998eb63ca126c1e4545f8d2824db98d5e92b8dd97c559e100543aa8679",
+      "bytes": 58420
+    },
+    "media/fonts/Bangers.ttf": {
+      "sha256": "2ed60c9da5285298170e6b421da2299f1f4a185bc6e3ce09e7a28e59be73ae10",
+      "bytes": 128928
+    },
+    "media/fonts/Celestia.ttf": {
+      "sha256": "fba56e994074ca4236ac9f0a0f538fa42548c6888328ce5b11c107779a577b59",
+      "bytes": 234008
+    },
+    "media/fonts/DorisPP.ttf": {
+      "sha256": "6b1ebf2f4a879c5236d566b97b0b807c78c7588fc2e3043db6ab7f8c3d8f019c",
+      "bytes": 33980
+    },
+    "media/fonts/Enigmatic.ttf": {
+      "sha256": "d96a87665afe34f952fb8590b370f3ee8e10d591a15db78142140fff8bf7d44e",
+      "bytes": 79556
+    },
+    "media/fonts/Expressway.ttf": {
+      "sha256": "06a2106170c2b5b736955cc749ed755f3757d103230645158f0bd5b5b91c386b",
+      "bytes": 99820
+    },
+    "media/fonts/FasterOne.ttf": {
+      "sha256": "8f0fb101285ce1f138ad81350084dfb5fd6a57dd4dbb9318530ef0f5a5c3812a",
+      "bytes": 39008
+    },
+    "media/fonts/Fitzgerald.ttf": {
+      "sha256": "0e7dce73d2df3c5a6d3e44334264f092e90343c655aa096d537c208c299136b3",
+      "bytes": 17356
+    },
+    "media/fonts/Gentium.ttf": {
+      "sha256": "ccf52be5a5950696f435d61a6727d6e745eef62e0c1d0741332bfe4a98ded6f1",
+      "bytes": 362664
+    },
+    "media/fonts/HDZB_35.TTF": {
+      "sha256": "80327bc7d7e8160bb0744274d92d405661d8e7c953480b7a5302255e7d64d81b",
+      "bytes": 2127596
+    },
+    "media/fonts/Iceland.ttf": {
+      "sha256": "f8a550a9ec5fb8c3fd6769279ac5fb4c308f07eb41b723b860c70b8e9368a8b3",
+      "bytes": 35476
+    },
+    "media/fonts/Inconsolata.ttf": {
+      "sha256": "0cbfe4215172180bf609bf1261d5272a148d46d3382d5e4c35ce4de046f55d75",
+      "bytes": 35716
+    },
+    "media/fonts/LiberationSans.ttf": {
+      "sha256": "490a62d414a590da4ec71c4d4e81166e86ca12c5aa62bf3d66cc93c74a178734",
+      "bytes": 133828
+    },
+    "media/fonts/Luna.ttf": {
+      "sha256": "2d2fc6670ddc5b6f9fa5ff4b839d274545e14e56da83faf5ead260b9e30bb09b",
+      "bytes": 82836
+    },
+    "media/fonts/MetalLord.ttf": {
+      "sha256": "caf2beb25073fa707dcc59eb8737c03dd801be192933f65d0cdf2c0d36374ec3",
+      "bytes": 138448
+    },
+    "media/fonts/Optimus.ttf": {
+      "sha256": "7254696db2f063098a9f7d497376dfa839806684bc69121a5e3fd5760644f9e1",
+      "bytes": 20424
+    },
+    "media/fonts/TradeWinds.ttf": {
+      "sha256": "cf6c302d76dca9f861142deec97765e164d5c4da74b6c62c1708cc8f1140f16f",
+      "bytes": 81528
+    },
+    "media/fonts/VeraSerif.ttf": {
+      "sha256": "6afd927937d84fc00831441cbe0165b2d926b5bb9c18ac9018e5df6e4b0c006a",
+      "bytes": 60280
+    },
+    "media/fonts/Yellowjacket.ttf": {
+      "sha256": "716f35a0d2a6c56e191bad19a772b049b6948dea0e4d5a667fef6cb02913c291",
+      "bytes": 79196
+    },
+    "media/textures/bar/Aluminium.tga": {
+      "sha256": "679e0dbbb1e1f26871a2a84610d327289db1faf2743590692e57c22f6d52358d",
+      "bytes": 32812
+    },
+    "media/textures/bar/Armory.tga": {
+      "sha256": "7f5d7718082fc4f2bfda40f264d550eb6cc141922acfc7e1554aebad4744015e",
+      "bytes": 812
+    },
+    "media/textures/bar/BantoBar.tga": {
+      "sha256": "5a5deac548c4639de44db55ed79a6784bba95fc8286e7a4e7235ea7da24e19c3",
+      "bytes": 32812
+    },
+    "media/textures/bar/Bars.tga": {
+      "sha256": "a9c53566569fa45bbc83874d5b01d6e10166680d2329beae1ac039bc10c53a1b",
+      "bytes": 24594
+    },
+    "media/textures/bar/Button.tga": {
+      "sha256": "cae82e28e6aff91cfd6e33f0b7c537efb48c1898d982b0a49a453fc03811e508",
+      "bytes": 24594
+    },
+    "media/textures/bar/Charcoal.tga": {
+      "sha256": "dfb8508485a3dbf5dc3c479d3f6b4555fbaeb47118c9ef58cb1adaeac114d757",
+      "bytes": 65580
+    },
+    "media/textures/bar/Cilo.tga": {
+      "sha256": "5ba70bdeecce2985d6f8f52fb5a74b85542ea51e770cbe5a613e8e7ac13e6dff",
+      "bytes": 65580
+    },
+    "media/textures/bar/Dabs.tga": {
+      "sha256": "d77efe01cb73a144a587a20d7885825d29c21316ee19c12875af8322c5cc8578",
+      "bytes": 24594
+    },
+    "media/textures/bar/Diagonal.tga": {
+      "sha256": "97b7d820816c51a3324a3a7fbd19d81ed26526cd3e14c7762ff360ae513811e4",
+      "bytes": 24594
+    },
+    "media/textures/bar/Fifths.tga": {
+      "sha256": "62beaf8d85a5cc7e4e3623708b511cb8e378481ae4369631ed7dee317cb491ba",
+      "bytes": 24594
+    },
+    "media/textures/bar/Flat.tga": {
+      "sha256": "05a414ad2d3501fb8ca4c290dcdabe8b47c89bfec5d7e4bec5c23988be373432",
+      "bytes": 812
+    },
+    "media/textures/bar/Fourths.tga": {
+      "sha256": "f2d6f8bd849db376a235402b028c0e2a14c959d2ca66b8425b5b5a040fb4417a",
+      "bytes": 24594
+    },
+    "media/textures/bar/Glamour.tga": {
+      "sha256": "521105745ed5a2a67b1a4e65d19c7a5a22c821946dd7d2160691591d5fc6c776",
+      "bytes": 65580
+    },
+    "media/textures/bar/Glamour2.tga": {
+      "sha256": "ce435de6a51384c4d0903a5530206ba78e9b34b43b8f702229fe55fb5fbcaacd",
+      "bytes": 65580
+    },
+    "media/textures/bar/Glamour3.tga": {
+      "sha256": "bb43545d102f90a3c30a44d06d21e18203e93220b0d1588b12fab477a90bb54c",
+      "bytes": 65580
+    },
+    "media/textures/bar/Glamour4.tga": {
+      "sha256": "e1767517ad49ac4c86f309198655b44d6142d35b77f7bd152f7c7f50da0437ab",
+      "bytes": 65580
+    },
+    "media/textures/bar/Glamour5.tga": {
+      "sha256": "d735d7020794ae82a4efe0c679c54c53343dab9620f4afd9776afa3e17f173f9",
+      "bytes": 65580
+    },
+    "media/textures/bar/Glamour6.tga": {
+      "sha256": "cdfcc1e417fbf72d62c47359e4ed77f992dcc0d358d97e7426d9dce927a32f54",
+      "bytes": 65580
+    },
+    "media/textures/bar/Glamour7.tga": {
+      "sha256": "eae335c45840dabaf4412fa285b759da7982172335a987cbea689a291366c0ab",
+      "bytes": 65580
+    },
+    "media/textures/bar/Glaze.tga": {
+      "sha256": "5bd704e0c4d1c3553823a48905d107694aba5f40e0ad985404ef02d8c618081b",
+      "bytes": 32812
+    },
+    "media/textures/bar/Gloss.tga": {
+      "sha256": "20f70840ccfd8c7a94ccdc57a95810a56d495e1de62ac90e4f051e44c8215205",
+      "bytes": 32812
+    },
+    "media/textures/bar/Healbot.tga": {
+      "sha256": "9b3cdfeba85c0fed3e9089dc4f8c21ac0e079eeac018b1e2c518af4295f832a6",
+      "bytes": 24594
+    },
+    "media/textures/bar/Luna.tga": {
+      "sha256": "97976977031766d707a34121ac13c5ab6b7e9d204be2efaa395c717aeb1dc7ab",
+      "bytes": 1304
+    },
+    "media/textures/bar/Lyfe.tga": {
+      "sha256": "4dff3f5df33d49438165eb962bb0ff2bd16281a7bd192ff11ea139a93b6eb993",
+      "bytes": 32812
+    },
+    "media/textures/bar/Otravi.tga": {
+      "sha256": "e300a87224e7c1a044574ec915a1f9c0de49c3e26f854ecd3e1ea8ed920aaba9",
+      "bytes": 32812
+    },
+    "media/textures/bar/Perl2.tga": {
+      "sha256": "6f613780409d0ae1049330ddd851b63547d72b98108272a2d70f0dff91d443c6",
+      "bytes": 24620
+    },
+    "media/textures/bar/Ruben.tga": {
+      "sha256": "8707455054b6dba441865d5ee3e94d26efdd80559bfc36f1588a0dd8298004bd",
+      "bytes": 24620
+    },
+    "media/textures/bar/Skewed.tga": {
+      "sha256": "f0449978e7323c3291a5f4bc0fde578e1a41b6a25b615b1db3a3409388f6b7f7",
+      "bytes": 24594
+    },
+    "media/textures/bar/Smooth.tga": {
+      "sha256": "00e8084e83bf25b941464e2619b59e993b6ac7ae0bd8a6f37b12872e686ded6d",
+      "bytes": 32812
+    },
+    "media/textures/bar/Striped.tga": {
+      "sha256": "9c02969479e5dcbce2bcbb4f48bf2f0b2b00c44fa7556140fc8958ba0e9ad09d",
+      "bytes": 32812
+    },
+    "media/textures/bar/Wisps.tga": {
+      "sha256": "2b7aef7fbbea2b0664ccc60c73f4d14f24b421e505058d817298a03177fa85ea",
+      "bytes": 24594
+    },
+    "media/textures/borders/border-black.tga": {
+      "sha256": "94e80a5650a756a607d3a9861f72b41b3223f5c4f87092e2831a77134ae2b2db",
+      "bytes": 444
+    },
+    "media/textures/borders/border-dark.tga": {
+      "sha256": "3785803b2b4d548a0c253a224d82dcb30f02267bc04c46343ebe137fda18b35c",
+      "bytes": 1436
+    },
+    "media/textures/borders/border-light.tga": {
+      "sha256": "d975abb2a2cbfccd251957c98eea495400bbdcb7809bab4a61c2300fa65d79aa",
+      "bytes": 1436
+    },
+    "media/textures/highlight.tga": {
+      "sha256": "48fd1022772da107ea70e7550dc361bb25141c0cb742d8f63b3250e1b3b8f564",
+      "bytes": 5999
+    },
+    "media/textures/icon.tga": {
+      "sha256": "68abe899a156674c200687e79684688a2a379af3f75d9bc0fc6d63ce9837ca2d",
+      "bytes": 10100
+    },
+    "media/textures/indicator.tga": {
+      "sha256": "fe811d05291fb913145eb1574e06444c813fb15b78bc5d9fd52e2a62c89d72b9",
+      "bytes": 812
+    },
+    "media/textures/Raid-Icon-Rez.tga": {
+      "sha256": "95eb8f20d06d68be2e28f72ebac7fb4e36e8b2b14cdc2e32b9fc841a1c68fd3c",
+      "bytes": 10266
+    },
+    "media/textures/ReadyCheck-NotReady.blp": {
+      "sha256": "cdfc33f6e9dd11c1f9dd587ef0f5005bf27e6d9e85b618c2ec495e51206d38d0",
+      "bytes": 6660
+    },
+    "media/textures/ReadyCheck-Ready.blp": {
+      "sha256": "a21e7487d51be0f518ed0fe6741d2d1c97345ad2c07bc9db6e4e8a90e9979bc8",
+      "bytes": 6660
+    },
+    "media/textures/ReadyCheck-Waiting.blp": {
+      "sha256": "cda0ccaefac48e8af5dee39519ebef83645ce2c6d09659fb11a02c66f47333ba",
+      "bytes": 6660
+    },
+    "media/textures/UI-DialogBox-Gold-Dragon-right.tga": {
+      "sha256": "e41fb3f544c8d47083a4c027c030ad69a06a2741107fb557ac71816f4789c6a1",
+      "bytes": 20566
+    },
+    "media/textures/UI-DialogBox-Gold-Dragon.blp": {
+      "sha256": "e3f13a9bf130ac58d1271c0e3a1a91bf1b901293d4f3f122b4964fb236f1f29a",
+      "bytes": 23044
+    },
+    "media/textures/UI-DialogBox-Silver-Dragon-right.tga": {
+      "sha256": "b0a00d1f118eafc4798b226c5dc6d8c8233aeee7de48af4c54171a87b4b0fdc9",
+      "bytes": 20527
+    },
+    "media/textures/UI-DialogBox-Silver-Dragon.tga": {
+      "sha256": "2e6b1765deba42b7c8350062c3ec621be14ca0fbba49c5d1cbd3800a3ebfaf56",
+      "bytes": 20524
+    },
+    "modules/auras.lua": {
+      "sha256": "427eba428d8c25780608016b70c621196202352155a4ac7bca9ae4702ee2b337",
+      "bytes": 31671
+    },
+    "modules/borders.lua": {
+      "sha256": "20115fb9da5e2ed7a74585a3523a924b8ecca60571ab8be101f0964bb8cea983",
+      "bytes": 3019
+    },
+    "modules/cast.lua": {
+      "sha256": "eee2986903be66d8f402dfdc65d57046c80c5abb6693873cd3837053d85433d7",
+      "bytes": 33841
+    },
+    "modules/combattext.lua": {
+      "sha256": "bf8b9415dab8e65ae26c831392e5b85df20356fc7c1286271985958a41a95e68",
+      "bytes": 1904
+    },
+    "modules/combopoints.lua": {
+      "sha256": "cd4c08b3b23734054bdd0732418e4f99e7497a2ca154ec4d5133fbe0d3253fb7",
+      "bytes": 2614
+    },
+    "modules/Cooldown.lua": {
+      "sha256": "76ccb062a534cd0babf5c9b2045ef5cdd42e407edfcd2aa613383b27e9ca6df4",
+      "bytes": 637
+    },
+    "modules/defaults.lua": {
+      "sha256": "ded3085dbc7daa5efa6005b3864d7d0fff90b6923a9697981cc8c948ef58e6b4",
+      "bytes": 35126
+    },
+    "modules/druid.lua": {
+      "sha256": "4f77a0947b399d60919535cb1372dbb5a1d72bc36df18c757cbcd42cd11444da",
+      "bytes": 3898
+    },
+    "modules/emptyBar.lua": {
+      "sha256": "492854e88a6d4b58364a6deef81f8836cecd362f9c11c7cfaa62106806e3879d",
+      "bytes": 1705
+    },
+    "modules/fader.lua": {
+      "sha256": "62b491659905afea201585db1c7b6e7eb5439d3d4ae87b069107d572dd537f55",
+      "bytes": 5253
+    },
+    "modules/health.lua": {
+      "sha256": "1752736138ca27b71ebb3462272832a8a74229d7167ecbc90a4a8fe9435b436a",
+      "bytes": 13619
+    },
+    "modules/highlight.lua": {
+      "sha256": "fcdac208ae7037a8c71ccf3a242dfacfa6f7a6cfa974d478c60ec7a0c10c557f",
+      "bytes": 2459
+    },
+    "modules/incheal.lua": {
+      "sha256": "444f6fcb55f992821a9efa259ddcf02741593a27184df66dbe774d7fa229727a",
+      "bytes": 3216
+    },
+    "modules/indicators.lua": {
+      "sha256": "a67449ed9a905074a0eba6d79bebc78bd0800aff5e3457a98c36f7ef7c3e3a66",
+      "bytes": 17176
+    },
+    "modules/options.lua": {
+      "sha256": "d5f9ef6b9a8ab5c23aa62aed3f81f8ba7d03db7b309df0f536d2d57616d59d63",
+      "bytes": 268274
+    },
+    "modules/portrait.lua": {
+      "sha256": "dc827270a841508f9b00941eef51d4f1356265380c3a248368629797084256ab",
+      "bytes": 3858
+    },
+    "modules/power.lua": {
+      "sha256": "f2b4a22ace2695c21c80642aaac20dddc1a67356b2ec3f7f8570e7536276b5fe",
+      "bytes": 11309
+    },
+    "modules/range.lua": {
+      "sha256": "bbaaedc30a37b1c52f9f604828c6f01f34a35c713a280116410c7f354dd6fb31",
+      "bytes": 19756
+    },
+    "modules/reckstacks.lua": {
+      "sha256": "2c22e3203933161849e942b7f789cfc4ab41bf98f8071e34fbb01591b1cf81ce",
+      "bytes": 3846
+    },
+    "modules/squares.lua": {
+      "sha256": "087a27e4fa3758e87b6fc70f0d87204410fd2c8a33858ee584eea5a635b88535",
+      "bytes": 10551
+    },
+    "modules/Tags.lua": {
+      "sha256": "5c8f33a70e6d1028769ac42683a5c7b4cd651ad7e946ff3236264f842f6a0d0f",
+      "bytes": 28889
+    },
+    "modules/threat.lua": {
+      "sha256": "e996b3ef8c7df9a3b043c3a4c7d66263df4597ab602a51fb73fa8e2baeb4fc86",
+      "bytes": 7768
+    },
+    "modules/totems.lua": {
+      "sha256": "d693b76af917403cae4f4e8c5cf7b019320efd373e63bec08db87ce390d12cbc",
+      "bytes": 12389
+    },
+    "modules/units.lua": {
+      "sha256": "0b7288961e57845a3c95fc961717af8673b26dca749967e3a5eb4d86ce543d95",
+      "bytes": 30689
+    },
+    "modules/xp.lua": {
+      "sha256": "b91ed9fb542001a4c76ee7c5650ebb5a45c73d0570579f5afcf853630a58c094",
+      "bytes": 6867
+    },
+    "README.md": {
+      "sha256": "995a4a527398588916519e0ee155661ce268c9e9182facc82deb2d23c393b1e4",
+      "bytes": 751
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

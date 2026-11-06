@@ -1,0 +1,593 @@
+local module, L = BigWigs:ModuleDeclaration("Keeper Gnarlmoon", "Karazhan")
+
+-- module variables
+module.revision = 30001
+module.enabletrigger = module.translatedName
+module.toggleoptions = { "moondebuff", "lunarshift", "ravens", "ravensbar", "bloodboil", -1, "owlphase", "owlenrage", "owlhpframe", "owlgaze", -1, "printkeeper", "bosskill" }
+module.zonename = {
+	AceLibrary("AceLocale-2.2"):new("BigWigs")["Tower of Karazhan"],
+	AceLibrary("Babble-Zone-2.2")["Tower of Karazhan"],
+}
+-- module defaults
+module.defaultDB = {
+	moondebuff = true,
+	lunarshift = true,
+	ravens = true,
+	ravensbar = true,
+	bloodboil = true,
+	owlphase = true,
+	owlenrage = true,
+	owlhpframe = true,
+	owlgaze = true,
+	printkeeper = false,
+}
+
+-- localization
+L:RegisterTranslations("enUS", function()
+	return {
+		cmd = "Gnarlmoon",
+
+		moondebuff_cmd = "moondebuff",
+		moondebuff_name = "Moon Debuff Alert",
+		moondebuff_desc = "Warns when you get Red Moon or Blue Moon",
+
+		lunarshift_cmd = "lunarshift",
+		lunarshift_name = "Lunar Shift Alert",
+		lunarshift_desc = "Warns when Keeper Gnarlmoon begins to cast Lunar Shift",
+
+		ravens_cmd = "ravens",
+		ravens_name = "Raven Alert",
+		ravens_desc = "Alerts a few seconds before 12 Blood Ravens will appear (requires someone with SuperWoW in the raid)",
+
+		ravensbar_cmd = "ravensbar",
+		ravensbar_name = "Raven timer bar",
+		ravensbar_desc = "Shows a timer bar for Flock of Ravens (requires someone with SuperWoW in the raid)",
+
+		bloodboil_cmd = "bloodboil",
+		bloodboil_name = "Blood Boil Alert",
+		bloodboil_desc = "Timer for Keeper Gnarlmoon's Blood Boil ability",
+
+		owlphase_cmd = "owlphase",
+		owlphase_name = "Owl Phase Alert",
+		owlphase_desc = "Warns about timing of the Owl phase",
+
+		owlenrage_cmd = "owlenrage",
+		owlenrage_name = "Owl Enrage Alert",
+		owlenrage_desc = "Warns when the Owls are about to enrage",
+
+		owlhpframe_cmd = "owlhpframe",
+		owlhpframe_name = "Owl HP Bars",
+		owlhpframe_desc = "Shows HP bars during owl phases",
+
+		owlgaze_cmd = "owlgaze",
+		owlgaze_name = "Owl Gaze Alert",
+		owlgaze_desc = "Warns when Owl Gaze is about to swap your Moon color",
+
+		printkeeper_cmd = "printkeeper",
+		printkeeper_name = "Troubleshoot Info",
+		printkeeper_desc = "Print information to your main chat window: Owl kill time stamps",
+
+
+		trigger_lunarShiftCast = "Keeper Gnarlmoon begins to perform Lunar Shift",
+		bar_lunarShiftCast = "Lunar Shift Casting!",
+		bar_lunarShiftCD = "Next Lunar Shift",
+		msg_lunarShift = "Lunar Shift casting!",
+
+		msg_ravensSoon = "12 ravens incoming",
+		bar_ravens = "Flock of Ravens",
+
+		msg_midHp = "Keeper Gnarlmoon < 71% - Owls Soon (@ 66%)!",
+		msg_lowHp = "Keeper Gnarlmoon < 38% - Owls Soon (@ 33%)!",
+
+		trigger_owlPhaseStart = "Keeper Gnarlmoon gains Worgen Dimension",
+		trigger_owlKill = "Owl dies.", --CHAT_MSG_COMBAT_HOSTILE_DEATH
+		trigger_owlPhaseEnd = "Worgen Dimension fades from Keeper Gnarlmoon",
+		msg_owlPhaseStart = "Owl Phase - kill at the same time",
+		msg_owlPhaseEnd = "Owl Phase ended!",
+		unit_owlBlue = "Blue Owl",
+		unit_owlRed = "Red Owl",
+		bar_owlBlueClose = "Blue Front",
+		bar_owlBlueFar = "Blue Back",
+		bar_owlRedClose = "Red Front",
+		bar_owlRedFar = "Red Back",
+
+		bar_owlEnrage = "Owls Enrage",
+		msg_owlEnrage = "Owls will enrage in 10 seconds!",
+		msg_owlsEnraged = "Owls Enraged!",
+
+		trigger_owlGaze = "You are afflicted by Owl Gaze", --CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE
+		bar_owlGaze = "Color Change!",
+		msg_owlGaze = "Imminent color change - swap sides!",
+		warn_owlGaze = "OWL GAZE",
+
+		trigger_redMoon = "afflicted by Red Moon",
+		trigger_blueMoon = "afflicted by Blue Moon",
+		msg_redMoon = "You have RED MOON!",
+		msg_blueMoon = "You have BLUE MOON!",
+		warn_redMoon = "<-- RED",
+		warn_blueMoon = "BLUE -->",
+
+		trigger_bloodBoil = "Keeper Gnarlmoon's Blood Boil hits",
+		bar_bloodBoil = "Next Blood Boil",
+	}
+end)
+
+-- timer and icon variables
+local timer = {
+	lunarShiftCast = 5,
+	lunarShiftCD = 30,
+	owlEnrage = 60,
+	owlKill = 10,
+	owlGaze = 2.5,
+	ravenSummon = { 15, 35 },
+	bloodBoil = 11,
+}
+
+local icon = {
+	lunarShift = "Spell_Nature_StarFall",
+	owlPhase = "Ability_EyeOfTheOwl",
+	owlEnrage = "Spell_Shadow_UnholyFrenzy",
+	owlGaze = "Ability_EyeOfTheOwl",
+	redMoon = "inv_misc_orb_05",
+	blueMoon = "inv_ore_arcanite_02",
+	bloodBoil = "Spell_Shadow_BloodBoil",
+	ravens = "Ability_Hunter_Pet_Bat",
+	owl = "Ability_Hunter_Pet_Owl",
+}
+
+local color = {
+	lunarShift = "Blue",
+	owlPhase = "Green",
+	owlEnrage = "Orange",
+	bloodBoil = "Red",
+	ravens = "Black",
+	owlRed = "ff4444",
+	owlBlue = "2277ff",
+}
+
+local syncName = {
+	lunarShift = "GnarlmoonLunarShift" .. module.revision,
+	owlPhaseStart = "GnarlmoonOwlStart" .. module.revision,
+	owlKill = "GnarlmoonOwlKill" .. module.revision,
+	owlPhaseEnd = "GnarlmoonOwlEnd" .. module.revision,
+	bloodBoil = "GnarlmoonBloodBoil" .. module.revision,
+	ravens = "GnarlmoonRavens" .. module.revision,
+}
+
+local spellIds = {
+	ravens = 51083, -- Flock of Ravens
+}
+
+local guid = {
+	gnarlmoon = "0xF13000F1F3276A33",
+	owlRedClose = nil,
+	owlRedFar = nil,
+	owlBlueClose = nil,
+	owlBlueFar = nil,
+}
+
+function module:OnEnable()
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
+	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE")
+
+	self:ThrottleSync(3, syncName.lunarShift)
+	self:ThrottleSync(5, syncName.owlPhaseStart)
+	self:ThrottleSync(25, syncName.owlKill) --only check 1 owl kill per phase
+	self:ThrottleSync(5, syncName.owlPhaseEnd)
+	self:ThrottleSync(5, syncName.bloodBoil)
+	self:ThrottleSync(5, syncName.ravens)
+
+	if SUPERWOW_VERSION then
+		self:RegisterCastEventsForUnitName("Keeper Gnarlmoon", "GnarlmoonCastEvent")
+	end
+
+	-- enable custom colors
+	BigWigsColors:RegHex(color.owlRed)
+	BigWigsColors:RegHex(color.owlBlue)
+end
+
+function module:OnSetup()	
+	self.started = nil
+
+	self.lowHp = nil
+	self.midHp = nil
+	self.gnarlHealth = 100
+end
+
+function module:OnEngage()
+	if self.db.profile.lunarshift then
+		self:Bar(L["bar_lunarShiftCD"], timer.lunarShiftCD, icon.lunarShift, true, color.lunarShift)
+	end
+
+	if self.db.profile.ravensbar then
+		self:Bar(L["bar_ravens"], timer.ravenSummon[1], icon.ravens, true, color.ravens)
+	end
+	if self.db.profile.ravens then
+		self:DelayedMessage(timer.ravenSummon[1] - 5, L["msg_ravensSoon"], "Important")
+	end
+
+	self.lowHp = nil
+	self.midHp = nil
+	self.gnarlHealth = 100
+	self:ScheduleRepeatingEvent("CheckHps", self.CheckHps, 1, self)
+end
+
+function module:OnDisengage()
+	self:CancelScheduledEvent("CheckHps")
+	self:StopMonitoringOwls()
+end
+
+function module:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+	if string.find(msg, L["trigger_lunarShiftCast"]) then
+		self:Sync(syncName.lunarShift)
+	end
+end
+
+function module:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+	if string.find(msg, L["trigger_owlPhaseStart"]) then
+		self:Sync(syncName.owlPhaseStart)
+	end
+end
+
+function module:OnEnemyDeath(msg)
+	if string.find(msg, L["trigger_owlKill"]) then
+		self:Sync(syncName.owlKill)
+		if self.db.profile.printkeeper then
+			print(msg)
+		end
+	end
+end
+
+function module:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
+	if string.find(msg, L["trigger_owlPhaseEnd"]) then
+		self:Sync(syncName.owlPhaseEnd)
+	end
+end
+
+function module:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
+	if self.db.profile.moondebuff then
+		if string.find(msg, L["trigger_redMoon"]) then
+			self:Message(L["msg_redMoon"], "Important", true, "Alarm")
+			self:WarningSign(icon.redMoon, 5, true, L["warn_redMoon"])
+		elseif string.find(msg, L["trigger_blueMoon"]) then
+			self:Message(L["msg_blueMoon"], "Important", true, "Alert")
+			self:WarningSign(icon.blueMoon, 5, true, L["warn_blueMoon"])
+		end
+	end
+	if self.db.profile.owlgaze then
+		if string.find(msg, L["trigger_owlGaze"]) then
+			self:Message(L["msg_owlGaze"], "Important", true, "Beware")
+			self:Bar(L["bar_owlGaze"], timer.owlGaze, icon.owlGaze, false)
+			self:WarningSign(icon.owlGaze, timer.owlGaze, false, L["warn_owlGaze"])
+		end
+	end
+end
+
+function module:CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE(msg)
+	if string.find(msg, L["trigger_bloodBoil"]) then
+		self:Sync(syncName.bloodBoil)
+	end
+end
+
+function module:BloodBoil()
+	if self.db.profile.bloodboil then
+		self:RemoveBar(L["bar_bloodBoil"])
+		self:Bar(L["bar_bloodBoil"], timer.bloodBoil, icon.bloodBoil, true, color.bloodBoil)
+	end
+end
+
+function module:GnarlmoonCastEvent(casterGuid, targetGuid, eventType, spellId, castTime)
+	if spellId == spellIds.ravens and eventType == "CAST" then
+		self:Sync(syncName.ravens)
+	end
+end
+
+function module:BigWigs_RecvSync(sync, rest, nick)
+	if sync == syncName.lunarShift then
+		self:LunarShift()
+	elseif sync == syncName.owlPhaseStart then
+		self:OwlPhaseStart()
+	elseif sync == syncName.owlKill then
+		self:OwlKill()
+	elseif sync == syncName.owlPhaseEnd then
+		self:OwlPhaseEnd()
+	elseif sync == syncName.bloodBoil then
+		self:BloodBoil()
+	elseif sync == syncName.ravens then
+		self:Ravens()
+	end
+end
+
+function module:LunarShift()
+	if self.db.profile.lunarshift then
+		self:Message(L["msg_lunarShift"], "Important")
+		self:RemoveBar(L["bar_lunarShiftCD"])
+		self:Bar(L["bar_lunarShiftCast"], timer.lunarShiftCast, icon.lunarShift, true, color.lunarShift)
+		self:DelayedBar(timer.lunarShiftCast, L["bar_lunarShiftCD"], timer.lunarShiftCD - timer.lunarShiftCast, icon.lunarShift, true, color.lunarShift)
+	end
+end
+
+function module:Ravens()
+	if self.db.profile.ravensbar then
+		self:RemoveBar(L["bar_ravens"])
+		self:Bar(L["bar_ravens"], timer.ravenSummon[2], icon.ravens, true, color.ravens)
+	end
+	if self.db.profile.ravens then
+		self:DelayedMessage(timer.ravenSummon[2] - 5, L["msg_ravensSoon"], "Important")
+	end
+end
+
+function module:OwlPhaseStart()
+	if self.db.profile.printkeeper then
+		print("Start of Owl Phase")
+	end
+	
+	if self.db.profile.owlphase then		
+		self:Message(L["msg_owlPhaseStart"], "Attention", nil, "Alarm")
+	end
+
+	if self.db.profile.owlenrage then
+		self:Bar(L["bar_owlEnrage"], timer.owlEnrage, icon.owlEnrage, true, color.owlEnrage)
+		self:DelayedMessage(timer.owlEnrage - timer.owlKill, L["msg_owlEnrage"], "Urgent")
+		self:DelayedMessage(timer.owlEnrage, L["msg_owlsEnraged"], "Important")
+	end
+
+	-- Cancel Lunar Shift bars during owl phase
+	self:RemoveBar(L["bar_lunarShiftCast"])
+	self:RemoveBar(L["bar_lunarShiftCD"])
+
+	-- Cancel Blood Boil bar during owl phase
+	self:RemoveBar(L["bar_bloodBoil"])
+
+	if self.db.profile.owlhpframe then
+		self:FindOwls()
+	end
+end
+
+function module:OwlKill()
+	local enrageBar, time, elapsed = self:BarStatus(L["bar_owlEnrage"])
+	if self.db.profile.owlenrage and enrageBar and time - elapsed > timer.owlKill then -- if an owl dies >10s before enrage, shorten the timer
+		--adjust bar
+		self:Bar(L["bar_owlEnrage"], timer.owlKill, icon.owlEnrage, true, color.owlEnrage)
+		--cancel scheduled enrage messages
+		self:CancelDelayedMessage(L["msg_owlEnrage"])
+		self:CancelDelayedMessage(L["msg_owlsEnraged"])
+		--trigger 10s warning immediately
+		self:Message(L["msg_owlEnrage"], "Urgent")
+		--schedule new enrage announcement
+		self:DelayedMessage(timer.owlKill, L["msg_owlsEnraged"], "Important")
+	end
+end
+
+function module:OwlPhaseEnd()
+	if self.db.profile.owlphase then
+		self:Message(L["msg_owlPhaseEnd"], "Positive", nil, "Long")
+	end
+
+	local enrageBar, time, elapsed = self:BarStatus(L["bar_owlEnrage"])
+	if enrageBar then
+		if time - elapsed > timer.owlKill then -- more than 10s left
+		self:CancelDelayedMessage(L["msg_owlEnrage"])
+		end
+		if time - elapsed > 0 then -- more than 0s left
+			self:CancelDelayedMessage(L["msg_owlsEnraged"])
+		end
+		self:RemoveBar(L["bar_owlEnrage"])
+	end
+
+	self:StopMonitoringOwls()
+end
+
+function module:CheckHps()
+	local percent = BigWigs:GetHealthPercent(guid.gnarlmoon)
+	if percent then
+		self.gnarlHealth = percent
+	end
+
+	-- Handle Gnarlmoon's health thresholds for phase warnings
+	if self.gnarlHealth < 71 and self.midHp == nil then
+		self.midHp = true
+		self:Message(L["msg_midHp"], "Urgent", true, "Info")
+	end
+
+	if self.gnarlHealth < 38 and self.lowHp == nil then
+		self.lowHp = true
+		self:Message(L["msg_lowHp"], "Urgent", true, "Info")
+		self:CancelScheduledEvent("CheckHps")
+	end
+end
+
+function module:FindOwls()
+	local anyBlue = BigWigs:GetGUIDByName(L["unit_owlBlue"], 1)
+	if anyBlue then
+		local plusOne = BigWigs:OffsetGUID(anyBlue, 1)
+		if UnitExists(plusOne) and UnitName(plusOne) == L["unit_owlBlue"] then
+			guid.owlRedClose = BigWigs:OffsetGUID(anyBlue, -16777214)
+			guid.owlRedFar = BigWigs:OffsetGUID(anyBlue, -16777213)
+			guid.owlBlueClose = anyBlue
+			guid.owlBlueFar = plusOne
+			self:StartOwlMonitorBars()
+		else
+			guid.owlRedClose = BigWigs:OffsetGUID(anyBlue, -16777215)
+			guid.owlRedFar = BigWigs:OffsetGUID(anyBlue, -16777214)
+			guid.owlBlueClose = BigWigs:OffsetGUID(anyBlue, -1)
+			guid.owlBlueFar = anyBlue
+			self:StartOwlMonitorBars()
+		end
+	else
+		self:ScheduleEvent("GnarlmoonFindOwls", self.FindOwls, 0.2, self)
+	end
+end
+
+function module:StartOwlMonitorBars()
+	self:MonitorBar(L["bar_owlBlueClose"], icon.owl, guid.owlBlueClose, "health", false, false, false, true, color.owlBlue)
+	self:MonitorBar(L["bar_owlBlueFar"], icon.owl, guid.owlBlueFar, "health", false, false, false, true, color.owlBlue)
+	self:MonitorBar(L["bar_owlRedClose"], icon.owl, guid.owlRedClose, "health", false, false, false, true, color.owlRed)
+	self:MonitorBar(L["bar_owlRedFar"], icon.owl, guid.owlRedFar, "health", false, false, false, true, color.owlRed)
+end
+
+function module:StopMonitoringOwls()
+	self:CancelScheduledEvent("GnarlmoonFindOwls")
+	self:RemoveBar(L["bar_owlBlueClose"])
+	self:RemoveBar(L["bar_owlBlueFar"])
+	self:RemoveBar(L["bar_owlRedClose"])
+	self:RemoveBar(L["bar_owlRedFar"])
+	guid.owlBlueClose = nil
+	guid.owlBlueFar = nil
+	guid.owlRedClose = nil
+	guid.owlRedFar = nil
+end
+
+function module:Test()
+	-- Initialize module state
+	self:Engage()
+
+	-- Flag to prevent resetting owl health during test
+	self.testInProgress = true
+
+	local events = {
+		-- Initial setup
+		{ time = 3, func = function()
+			print("Test: Keeper Gnarlmoon engaged")
+			module:OnEngage()
+		end },
+
+		-- First Blood Boil
+		{ time = 7, func = function()
+			print("Test: Keeper Gnarlmoon's Blood Boil hits you")
+			module:CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE("Keeper Gnarlmoon's Blood Boil hits you for 500 Fire damage.")
+		end },
+
+		-- Initial Lunar Shift
+		{ time = 10, func = function()
+			print("Test: Keeper Gnarlmoon begins to cast Lunar Shift")
+			module:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE("Keeper Gnarlmoon begins to perform Lunar Shift.")
+		end },
+
+		-- Second Blood Boil
+		{ time = 17, func = function()
+			print("Test: Keeper Gnarlmoon's Blood Boil hits you")
+			module:CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE("Keeper Gnarlmoon's Blood Boil hits you for 500 Fire damage.")
+		end },
+
+		-- First Flock of Ravens (15s after engage)
+		{ time = 18, func = function()
+			print("Test: Keeper Gnarlmoon casts Flock of Ravens")
+			module:Ravens()
+		end },
+
+		-- HP triggers
+		{ time = 20, func = function()
+			print("Test: 70% hp")
+			module.gnarlHealth = 70
+			module:CheckHps()
+		end },
+
+		-- Second Lunar Shift
+		{ time = 21, func = function()
+			print("Test: Keeper Gnarlmoon begins to cast Lunar Shift")
+			module:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE("Keeper Gnarlmoon begins to perform Lunar Shift.")
+		end },
+
+		-- First Owl Phase (at 66.66% HP)
+		{ time = 23, func = function()
+			print("Test: Keeper Gnarlmoon gains Worgen Dimension")
+			module:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS("Keeper Gnarlmoon gains Worgen Dimension")
+		end },
+
+		-- Moon debuffs and owl HP reduction
+		{ time = 25, func = function()
+			print("Test: You are afflicted by Red Moon")
+			module:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE("You are afflicted by Red Moon.")
+		end },
+
+		{ time = 31, func = function()
+			print("Test: You are afflicted by Owl Gaze")
+			module:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE("You are afflicted by Owl Gaze.")
+		end },
+
+		{ time = 33, func = function()
+			print("Test: You are afflicted by Blue Moon")
+			module:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE("You are afflicted by Blue Moon.")
+		end },
+
+		-- Owl Phase ends
+		{ time = 36, func = function()
+			print("Test: Worgen Dimension fades from Keeper Gnarlmoon")
+			module:CHAT_MSG_SPELL_AURA_GONE_OTHER("Worgen Dimension fades from Keeper Gnarlmoon")
+		end },
+
+		-- Third Lunar Shift
+		{ time = 40, func = function()
+			print("Test: Keeper Gnarlmoon begins to cast Lunar Shift")
+			module:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE("Keeper Gnarlmoon begins to perform Lunar Shift.")
+		end },
+
+		-- HP triggers for second owl phase
+		{ time = 45, func = function()
+			print("Test: 37% hp")
+			module.gnarlHealth = 37
+			module:CheckHps()
+		end },
+
+		-- Second Owl Phase (at 33.33% HP)
+		{ time = 50, func = function()
+			print("Test: Keeper Gnarlmoon gains Worgen Dimension")
+			module:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS("Keeper Gnarlmoon gains Worgen Dimension")
+		end },
+
+		-- Moon debuffs and owl HP reduction for second phase
+		{ time = 52, func = function()
+			print("Test: You are afflicted by Blue Moon")
+			module:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE("You are afflicted by Blue Moon.")
+		end },
+
+		-- Second Flock of Ravens (35s after first)
+		{ time = 53, func = function()
+			print("Test: Keeper Gnarlmoon casts Flock of Ravens")
+			module:Ravens()
+		end },
+
+		{ time = 58, func = function()
+			print("Test: Red Owl dies.")
+			module:CHAT_MSG_COMBAT_HOSTILE_DEATH("Red Owl dies.")
+		end },
+
+		{ time = 62, func = function()
+			print("Test: You are afflicted by Red Moon")
+			module:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE("You are afflicted by Red Moon.")
+		end },
+
+		-- Owl Phase ends
+		{ time = 65, func = function()
+			print("Test: Worgen Dimension fades from Keeper Gnarlmoon")
+			module:CHAT_MSG_SPELL_AURA_GONE_OTHER("Worgen Dimension fades from Keeper Gnarlmoon")
+		end },
+
+		-- Final Lunar Shift
+		{ time = 75, func = function()
+			print("Test: Keeper Gnarlmoon begins to cast Lunar Shift")
+			module:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE("Keeper Gnarlmoon begins to perform Lunar Shift.")
+		end },
+
+		-- End test
+		{ time = 80, func = function()
+			print("Test: Test complete")
+			module.testInProgress = false
+			module:Disengage()
+		end },
+	}
+
+	-- Schedule each event at its absolute time
+	for i, event in ipairs(events) do
+		self:ScheduleEvent("GnarlmoonTest" .. i, event.func, event.time)
+	end
+
+	self:Message("Keeper Gnarlmoon test started", "Positive")
+	return true
+end
+
+-- Usage: /run BigWigs:GetModule("Keeper Gnarlmoon"):Test();

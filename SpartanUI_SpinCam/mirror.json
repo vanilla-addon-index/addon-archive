@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Daribon/SpartanUI_SpinCam",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Daribon",
+    "repo": "SpartanUI_SpinCam",
+    "name": "SpartanUI_SpinCam",
+    "url": "https://github.com/Daribon/SpartanUI_SpinCam",
+    "api": "https://api.github.com/repos/Daribon/SpartanUI_SpinCam"
+  },
+  "commit": "16fa426a517745aa5c267cb8de91c0f695f787f2",
+  "sourceFiles": {
+    "docs/License.htm": {
+      "sha256": "048b57fcef6107679c03448ef0fbc60f0cbc704c2ce505674802ed772c804f2b",
+      "bytes": 17516
+    },
+    "README.md": {
+      "sha256": "7f3bf223ffcd5738660dd02596f0a68ba34228ae7a266a19755d0d5cb713de82",
+      "bytes": 161
+    },
+    "SpartanUI_SpinCam.lua": {
+      "sha256": "ce48fdfb847825c95d8f9e8a80e430407c1e16cbc31ff146bb9c45d612d11157",
+      "bytes": 2809
+    },
+    "SpartanUI_SpinCam.toc": {
+      "sha256": "b73f8383919af0fe1ef5de0e21c25567fb3cdfa5e98849734e18bb61581cdce8",
+      "bytes": 268
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,253 @@
+{
+  "upstream": "https://github.com/refaim/WIM",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "refaim",
+    "repo": "WIM",
+    "name": "WIM",
+    "url": "https://github.com/refaim/WIM",
+    "api": "https://api.github.com/repos/refaim/WIM"
+  },
+  "commit": "83498bba3333a96d1fd59415c11be21c2de3df6b",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "1733da1399343818781d4f0e059e66e20ea651465faae2ed0ad686c5556d4cd9",
+      "bytes": 512
+    },
+    "CLAUDE.md": {
+      "sha256": "e61e9e955e2f394d12bf08426e13ec944887b0217aeaf7df0fb63755dba37e05",
+      "bytes": 553
+    },
+    "Images/Blizzard.tga": {
+      "sha256": "774a1ad1a15535bacf41da1cda741755b2c1975a503f861eeecc5a681d71815d",
+      "bytes": 4142
+    },
+    "Images/classBLANK.tga": {
+      "sha256": "14ed3aa08f3bb40696d1cb015d0004caf4836d538092d6f01a2cad36f96187f6",
+      "bytes": 16428
+    },
+    "Images/classDRUID.tga": {
+      "sha256": "14130a52cc92450a2ab872965cdafce132260734267921ff83c50df7adcada2b",
+      "bytes": 16428
+    },
+    "Images/classHUNTER.tga": {
+      "sha256": "c8b0971d5b3e58f25c2eddfd82232c854ded43f46fc13bc36b43e5457726ec6c",
+      "bytes": 16428
+    },
+    "Images/classMAGE.tga": {
+      "sha256": "36fc560d83c505fb9d17d2a8030c3b7cecd3c7dc635a7cc1663ba244eb8f89ab",
+      "bytes": 16428
+    },
+    "Images/classPALADIN.tga": {
+      "sha256": "369105cb66421fbb9f6a1e2da0ceeb928405b88b5e11238347bb33909fc030b4",
+      "bytes": 16428
+    },
+    "Images/classPRIEST.tga": {
+      "sha256": "e69e4a0382bbe029ee39a9831ef3c97cc789800b0c90ff63d1c9809c73ff7805",
+      "bytes": 16428
+    },
+    "Images/classROGUE.tga": {
+      "sha256": "2b952858fd9bf1e6da1c9b2f7bd7153756125b4121644eb7f58d254182322e70",
+      "bytes": 16428
+    },
+    "Images/classSHAMAN.tga": {
+      "sha256": "c1e798f5e40862f3f5df3041cea3e38cfc86d50e9c86dd47df9d1e5b23739e4b",
+      "bytes": 16428
+    },
+    "Images/classWARLOCK.tga": {
+      "sha256": "8980b9f02dcada75e6a04229f0ab3398fa0b5f97667525e56afbcc2aadeafc90",
+      "bytes": 16428
+    },
+    "Images/classWARRIOR.tga": {
+      "sha256": "df1bb31fb69a0300e4e7c3e1e54659d66bdf98bc3f06f2907761ce8652c5ce2e",
+      "bytes": 16428
+    },
+    "Images/closebutton.tga": {
+      "sha256": "d06a5df319edb5b3d265c236eedf8e006b9c310e8f91f302b708775ed049a557",
+      "bytes": 1068
+    },
+    "Images/DragButton.tga": {
+      "sha256": "1628e3627c9beeef35f38858626882df11da3a8419e3918bdc53e7e9ffc2aff7",
+      "bytes": 1068
+    },
+    "Images/miniDisabled.tga": {
+      "sha256": "635db073fd9d5416d2333dcb81c3534027628e666948bf41da188420a5b9e660",
+      "bytes": 4140
+    },
+    "Images/miniEnabled.tga": {
+      "sha256": "5d609545d9837409e234d31df0fd21f5c5e22371dd9428e386052248598dc365",
+      "bytes": 4140
+    },
+    "Images/miniOff.tga": {
+      "sha256": "eeb2637695e0f3ca618d5838327f607386ac40af3bc3a26e8763d562a7ac1728",
+      "bytes": 4140
+    },
+    "Images/toggle_new.tga": {
+      "sha256": "db696e77184b95fdb3b59ad66121b131970eb3df2614e879109ffc93710ee81e",
+      "bytes": 16428
+    },
+    "Images/toggle_read.tga": {
+      "sha256": "69cbb2f96685f1c3b77c5044e4f431161005c36153d5d91620552b6eb5f0ba15",
+      "bytes": 16428
+    },
+    "Images/urlCopy.tga": {
+      "sha256": "64e421e3028c1a3c603c8a930a99bbdd01bfe3ad143e9baa81544adf64d24036",
+      "bytes": 131116
+    },
+    "Images/WIM_UI_BG.tga": {
+      "sha256": "1b18a8ee1e7acca87a8606ffc7395f0064961d645eacbbe55702c2c60dfd7ff9",
+      "bytes": 300
+    },
+    "Images/WIM_UI.tga": {
+      "sha256": "59ffb71f511c2e581dc6328f07f5ae5a14c54d4bd742d4e88a78364a3c216650",
+      "bytes": 131116
+    },
+    "Locales/Changelog/Changelog.xml": {
+      "sha256": "3b042a95af471f44ac567e1de72967568c9a99549f14c34c1cc84019fec1b9da",
+      "bytes": 455
+    },
+    "Locales/Changelog/deDE.lua": {
+      "sha256": "b55a7825b210ab3e8d8d09cf43adce260b78edc3f5d8d2180f0de26e6f41658c",
+      "bytes": 9622
+    },
+    "Locales/Changelog/enGB.lua": {
+      "sha256": "584ad53412bd280889624ad00a2c57629760806f88b2cdf2ecd678f90004dbbd",
+      "bytes": 8130
+    },
+    "Locales/Changelog/enUS.lua": {
+      "sha256": "9570ea9da8d998b891a590411a043fef187af7ef9a9409063d4544c5e9eb9b84",
+      "bytes": 8088
+    },
+    "Locales/Changelog/esES.lua": {
+      "sha256": "129cc2d6c33826896f6f6ed3de3de397eefb3a986d68323b0fa67aedad2ca68c",
+      "bytes": 9770
+    },
+    "Locales/Changelog/frFR.lua": {
+      "sha256": "7fe388e89e8e19ee0e75ba89a6cbcaff896403e0d11354d9cef709c57d61ff69",
+      "bytes": 10523
+    },
+    "Locales/Changelog/koKR.lua": {
+      "sha256": "b95fa161b0ac99d12c677928f0c6fc44af70ed47360e7397d33d713f025af7ad",
+      "bytes": 9132
+    },
+    "Locales/Changelog/ptBR.lua": {
+      "sha256": "89703a32f6549bb6a8df4b83c8deccdd5b7c495df8d0145dec44f155bf5a5238",
+      "bytes": 9383
+    },
+    "Locales/Changelog/ruRU.lua": {
+      "sha256": "432c8f396815d666ee2bf281d43fdc8053583058cda26308b51283d5b63207bc",
+      "bytes": 14787
+    },
+    "Locales/Changelog/zhCN.lua": {
+      "sha256": "7da236f7e8207c8f10db3ece6e190d75728a49c4527ef982def7644d07d02764",
+      "bytes": 7731
+    },
+    "Locales/Changelog/zhTW.lua": {
+      "sha256": "f11d0badeeae1eaa3869f9968d59fa5cec3f99cd2b45e2e9c70c3c3214df78e8",
+      "bytes": 7801
+    },
+    "Locales/deDE.lua": {
+      "sha256": "649e81b5338c7f6a9edfec0ace4439da83d70cdbde8af5856e849e1c73b1b60b",
+      "bytes": 9102
+    },
+    "Locales/enGB.lua": {
+      "sha256": "f6b57ca998affc272a09abc6ef04f259f078f98fb2033da947bf4905259e89a8",
+      "bytes": 72
+    },
+    "Locales/enUS.lua": {
+      "sha256": "d3b5792a074601474b7809038e323c3237b2ef14b979e98967fcedff2f5a344b",
+      "bytes": 9205
+    },
+    "Locales/esES.lua": {
+      "sha256": "fc46e2a4858537f2b1fac68f2a4660610e32b7e3422da5b0eca0d87a000507d2",
+      "bytes": 9295
+    },
+    "Locales/frFR.lua": {
+      "sha256": "89927fd161fd885d293cc3b1e8baaa8434672df64291100dbbaa190d09165427",
+      "bytes": 9563
+    },
+    "Locales/koKR.lua": {
+      "sha256": "56a6dcfb9fe6ce58ecb9ff0df7e37b9542287f40af50ddccc9ed01b68e1c82a0",
+      "bytes": 9113
+    },
+    "Locales/Locales.xml": {
+      "sha256": "c4ff51ca73fbb495c4d742b8b10ad78c2177fb23f3b833eb31b083236393bc96",
+      "bytes": 496
+    },
+    "Locales/ptBR.lua": {
+      "sha256": "7d3501d9897631d7c8e414606623009bbd4fcd8210b9b9d886410a3a5fb2875e",
+      "bytes": 9121
+    },
+    "Locales/ruRU.lua": {
+      "sha256": "455b21502b59d9e52ef52707f6f916ced2d2a77e60c9ad7c0f14b45b5f93891a",
+      "bytes": 12223
+    },
+    "Locales/zhCN.lua": {
+      "sha256": "533d59a63c63a8608ac05289df2f88c6f2e818378cc034f8d75495644a74bf9a",
+      "bytes": 8249
+    },
+    "Locales/zhTW.lua": {
+      "sha256": "ab9a9412a18b665387bbbd4c013255ef7b94ec13e980332947b4d0795184b33b",
+      "bytes": 8268
+    },
+    "README.md": {
+      "sha256": "4d11ffe8e304fa9d22ad71c3cc02fbbf494f99ec9aa445d329d1cc987938d83d",
+      "bytes": 3094
+    },
+    "Sounds/wisp.wav": {
+      "sha256": "782ff1ae723708816a8b22c57c3319c82d9bcbe3aa5c1ffb791bc5af84b605b2",
+      "bytes": 225324
+    },
+    "WIM_History.lua": {
+      "sha256": "39714841c945592860d15d4dc9b69e662e88f8de22827e5d7bf828dc39c41d23",
+      "bytes": 4905
+    },
+    "WIM_History.xml": {
+      "sha256": "92629679d617e28866e77f35828ff79e87908b41de459a9dd72071a1c41cbbab",
+      "bytes": 22148
+    },
+    "WIM_Hooks.lua": {
+      "sha256": "843c0b7c89ed733b3913c58977051f378527f245e5835a17e65fb5938a2c27b8",
+      "bytes": 8545
+    },
+    "WIM_Icon.xml": {
+      "sha256": "3740cea6f585086ae62b769d324d8d848a943b838f82ec6bdca5e80b7404e281",
+      "bytes": 17192
+    },
+    "WIM_Options.lua": {
+      "sha256": "a16a6296263fa4bb9694e56870c22687feac6d425806c496c4303bef09815846",
+      "bytes": 32330
+    },
+    "WIM_Options.xml": {
+      "sha256": "d625be5085daf0810153d3a444fe521f810361e537c48563f7665e6dcfa8cc2e",
+      "bytes": 144389
+    },
+    "WIM_Titan.lua": {
+      "sha256": "01672be590ff03e61e83e1e8f0f74dafdb3f7fd31e09ca795aad3bc7de59183d",
+      "bytes": 2024
+    },
+    "WIM_Titan.xml": {
+      "sha256": "a31c46a469513adb06385c3a700ebf50c1fd780700f833a30a6063f7bbc53912",
+      "bytes": 2309
+    },
+    "WIM_UrlCopy.xml": {
+      "sha256": "a85a2fa849ee3da5ddd9f913dd98b5563d52ad2a885ff829d4259a75db22d571",
+      "bytes": 2896
+    },
+    "WIM.lua": {
+      "sha256": "e9c1e275d5361cfb904ffd489c4d7c2400d8c946699d193e8be48394d4c5392f",
+      "bytes": 44009
+    },
+    "WIM.toc": {
+      "sha256": "fbade0573b1ef0f7c89cf00b1944e0ed9657ebd4d89b7be6de3e3f498a7f5d3a",
+      "bytes": 964
+    },
+    "WIM.xml": {
+      "sha256": "849e199ab86090e04e5ddc943d0319b81e0471b285cf060309914a2ae476b4ef",
+      "bytes": 18359
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

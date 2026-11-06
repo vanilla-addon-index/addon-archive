@@ -1,0 +1,9 @@
+{
+  "id": "118424917",
+  "tag": "v.1.2.1",
+  "name": "PoisonCharges v1.2.1 Release (Classic 1.14.4)",
+  "body": "CHANGELOG:\r\n\r\nv1.2.1 (23.08.2023)\r\n\r\n- Renamed functions to match recent Container API changes.\r\n\r\nv1.2 (16.11.2019)\r\n\r\n- Updated for WoW Classic.\r\n\r\nv1.1 (18.08.2019)\r\n\r\n- Added configuration menu.\r\n- Added minimap button.\r\n- Added buttons to apply poisons with one click.\r\n\r\nv1.0 (19.07.2015)\r\n\r\n- Added track of remaining time and remaining amount of charges of applied poisons.\r\n- Added slash commands.",
+  "published": "2023-08-23T15:12:36Z",
+  "prerelease": false,
+  "url": "https://github.com/StafordDev/PoisonCharges/releases/tag/v.1.2.1"
+}

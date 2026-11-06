@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/Daribon/QuestTranslator",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Daribon",
+    "repo": "QuestTranslator",
+    "name": "QuestTranslator",
+    "url": "https://github.com/Daribon/QuestTranslator",
+    "api": "https://api.github.com/repos/Daribon/QuestTranslator"
+  },
+  "commit": "151667024e19be5640440596e1b41f984eaa9677",
+  "sourceFiles": {
+    "Fonts/ipafont-enduser_license.txt": {
+      "sha256": "8df9b57e967f04df70b5ce93db91edcc3e24add89835c8816afdf8330aeb4b03",
+      "bytes": 9192
+    },
+    "Fonts/ipagui.ttf": {
+      "sha256": "2a0196cd6deec16f8827c1d65b91c28c745b18381169881f1a06dc0f32aae4b1",
+      "bytes": 4940836
+    },
+    "QuestData_it.lua": {
+      "sha256": "1072fa8e3a1e7fba0e1dde15c371b9524a2ed8ece5d3161d50a99c78fdcc6369",
+      "bytes": 7117037
+    },
+    "QuestList.lua": {
+      "sha256": "ff4c8d562cfa4166203ee079291e2dd211c14aab740a33269b9592a0e5f1de02",
+      "bytes": 235242
+    },
+    "QuestTranslator.lua": {
+      "sha256": "1ac0097c9bd1d523923e5b72740a6ca7d556c6ac2787bf8d10aa44f4976d899a",
+      "bytes": 18466
+    },
+    "QuestTranslator.toc": {
+      "sha256": "530b12e019c56d4341b822b8abdd7287bae780e03cb5a74eb0fc867439db032b",
+      "bytes": 541
+    },
+    "QuestTranslatorFrames.xml": {
+      "sha256": "ca939913de9cc59325166cc4166b07489b6a7294d7385c9355aec778fcc02eae",
+      "bytes": 5961
+    },
+    "README.md": {
+      "sha256": "fe33af20c69a1a27b285211443716f06ee5557c045462dab8cd8057624ce457e",
+      "bytes": 388
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

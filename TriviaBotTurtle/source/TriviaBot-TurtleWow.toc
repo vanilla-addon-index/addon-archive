@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: TriviaBot-TurtleWoW
+## Version: 1.0
+## Notes: A fun in-game trivia bot with TurtleWoW questions.
+## Author: LizardBerry
+## X-Credits: Roadblock (Nostalrius), Guri (Trollbane), Psy (Frostwolf)
+## SavedVariables:TRIVIA_QLIST, TRIVIA_CHANNEL
+
+TriviaBot-TurtleWoW.lua
+TriviaBot-TurtleWoW.xml

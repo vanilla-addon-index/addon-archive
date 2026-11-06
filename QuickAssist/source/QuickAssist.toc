@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: QuickAssist
+## Notes: Quickly assist targets with a single key press
+## SavedVariables: QuickAssistDB
+## Version: 1.2
+
+QuickAssist.lua
+Bindings.xml

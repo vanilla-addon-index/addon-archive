@@ -1,0 +1,9 @@
+{
+  "id": "2486428",
+  "tag": "2.01-11200",
+  "name": "v2.01-11200",
+  "body": "- Add a FIFO (first in first out) message queue and a throttle to avoid hitting custom channel spam prevention.\n- Replace usage of string.gmatch (not available in WoW Lua 5.0)\n",
+  "published": "2016-01-25T13:44:25Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/Nauticus/releases/tag/2.01-11200"
+}

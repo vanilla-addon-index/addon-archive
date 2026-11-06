@@ -1,0 +1,46 @@
+## Interface: 11200
+## Title: AtlasLoot |cff7fff7f TurtleWOW|r
+## Notes: Shows possible loot from dungeon bosses and other sources.
+## Author: Otari (overhaul/revamp, menu changes, bugfixes/updates), Lexie (Turtle WoW fixes/updates), Pepopo, MarcelineVQ (Kara40 loot), Shagu
+## LegacyAuthor: Daviesh, Pompa (Turtle WoW World Bosses), Xerron (Turtle WoW World Bosses), Gurky (Turtle WoW 1.16/1.16.1 Dungeons)
+## Version: 3.4.6
+## SavedVariablesPerCharacter: AtlasLootCharDB
+## OptionalDeps: Alphamap, AtlasLoader, LootLink, ItemSync, HewdropLib, Ace2, EquipCompare, EQCompare
+
+Libs\AceLibrary\AceLibrary.lua
+Libs\AceOO\AceOO-2.0.lua
+Libs\AceEvent\AceEvent-2.0.lua
+Libs\AceDB\AceDB-2.0.lua
+Libs\AceLocale\AceLocale-2.2.lua
+Libs\AceAddon\AceAddon-2.0.lua
+Libs\Hewdrop\Hewdrop-2.0.lua
+
+Locale\locale.en.lua
+Locale\locale.ru.lua
+Locale\locale.de.lua
+Locale\locale.fr.lua
+Locale\locale.cn.lua
+Locale\locale.kr.lua
+Locale\locale.tw.lua
+Locale\locale.es.lua
+
+Core\AtlasLoot.lua
+
+Database\TooltipStrings.lua
+Database\Sets.lua
+Database\Crafting.lua
+Database\PvP.lua
+Database\WorldEvents.lua
+Database\Factions.lua
+Database\Instances.lua
+Database\WorldBosses.lua
+Database\TableRegister.lua
+Database\Spells.lua
+Database\Menus.lua
+
+Core\ButtonRegistry.lua
+Core\TextParsing.lua
+Core\WishList.lua
+Core\Search.lua
+Core\Tooltip.lua
+Core\AtlasLoot.xml

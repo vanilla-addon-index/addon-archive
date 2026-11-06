@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: VanillaRatingBuster
+## Author: Kylosandrax, 2017
+## Dependencies: BonusScanner
+## Notes: Displays ratings for items in tooltips based on stat weights 
+## Version: 0.11
+
+VanillaRatingBuster.lua
+VanillaRatingBusterWeights.lua

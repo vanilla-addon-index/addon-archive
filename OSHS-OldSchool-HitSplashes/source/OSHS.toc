@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: OSRS Hit Splashes
+## Notes: Old School RuneScape-style combat hit splashes for OctoWoW
+## Version: 1.0.0
+## SavedVariables: OSHSDB
+## OptionalDeps: pfUI, !!!ClassicAPI
+
+Core.lua
+Options.lua

@@ -1,0 +1,169 @@
+{
+  "upstream": "https://github.com/rsheep/ZGTracker",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "rsheep",
+    "repo": "ZGTracker",
+    "name": "ZGTracker",
+    "url": "https://github.com/rsheep/ZGTracker",
+    "api": "https://api.github.com/repos/rsheep/ZGTracker"
+  },
+  "commit": "b6dee9ff1d670adbd95643b7eff3fea1e5d18bae",
+  "sourceFiles": {
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "8c75f829e0f980aac69d53cce8f8c806ea671795f445ab736c8cf76b9fc1f586",
+      "bytes": 22725
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "1385526e460948771ca6db1ceec81e8b0daf33bfc391f55e6f1bbc449a341a82",
+      "bytes": 30305
+    },
+    "Libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "c68c8adecb99fba5ad7227d723b564a504e262a048ecda12d798c683ea078de7",
+      "bytes": 45130
+    },
+    "Libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "7a7160fad6426eb5d3dac53ff26a54129d9d84598bda31be9ce67a050eb705d2",
+      "bytes": 84958
+    },
+    "README.md": {
+      "sha256": "0dadcd77affe7981afee394ee9addabd091cbd0a3e9da39763773843966cd89c",
+      "bytes": 2327
+    },
+    "Textures/Buttons/Button-About-Normal.tga": {
+      "sha256": "414ef96bd3a89a0740ff6c64c5d03c5d033271758088c0c6031575cbeae1ad7e",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-About-Pushed.tga": {
+      "sha256": "34213d8269b543b3af0523f9bf45ffd2c1f711cfe9a2049f75bc31660ec0e84a",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Blue-Highlight.tga": {
+      "sha256": "997926de7f58f0f57db117e77a1f5157742ba2ab2dae151c7420dd8e10cbfa85",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Close-Normal.tga": {
+      "sha256": "ec32f7468b0f006756fec9cc4784d48469c44abcb045a00cc77d9e7fa6b946d5",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Close-Pushed.tga": {
+      "sha256": "1c0be94b4bc3f9d2458a1b13d9e4430fc9f136d17118845a5e15fb7305577e61",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Cyan-Highlight.tga": {
+      "sha256": "e7e3e82ae86118429422459a6cd1ff151455ab22b6c6a798126aafa27e326b84",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Details-Normal.tga": {
+      "sha256": "5884bdcb3488b9e0bc1780630c23ba5d779491730a892592bdff7e99476f89c0",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Details-Pushed.tga": {
+      "sha256": "08f1100d381966e39476b56db8380cf1ce48be6a168734de104547aeb2692d92",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Flash-Normal.tga": {
+      "sha256": "bd6c78ceab7a1a34e3ca3dff4b5e79ace065cdecd8f72bd33a66350522601a32",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Flash-Pushed.tga": {
+      "sha256": "e35802472fe7d0fd2efa105c6a99347071c9187e60602d03c125e77ab58179c5",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Greed-Normal.tga": {
+      "sha256": "66d875d9ecd6e25da6300068e7871c4654803a0ebc57c9da061f78cedf778233",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Greed-Pushed.tga": {
+      "sha256": "93d4e63aa4bacaeae19643afb65158de1648fc74992c13dd1e435cf08bf34f0d",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Need-Normal.tga": {
+      "sha256": "fe1b4c46213602c8676ec4e3c7f2841b213170f8e9481f7030140450d5393adb",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Need-Pushed.tga": {
+      "sha256": "b14f16465cb2422a6df84f20cfdce7b8947e041d38c440279d5487aa2654cc90",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-No-Normal.tga": {
+      "sha256": "7a2662320cad29ac6feee4d308aefb96067c1b497dcc4623e4ef4c6a68c8210f",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-No-Pushed.tga": {
+      "sha256": "52f2e0db791f7584493b4f9bcc7cd6916a67fb0d68eb5431b67f2dfa3e6dd24f",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Off-Normal.tga": {
+      "sha256": "1eb5fb56b1e99dfefe9cbe820c0d9925db94a6a83e4168a3754e8f84662e3f15",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Off-Pushed.tga": {
+      "sha256": "055c806c4961c0f72365e05422aed53c2e65f4bb7c86c19b6a0f2feccdbf47dc",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-On-Normal.tga": {
+      "sha256": "f7686dce4d22f5f5bf11ec42d2678909c370da8c7b6949a9755005c4c686d02e",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-On-Pushed.tga": {
+      "sha256": "1a45b2343e4067a71340f8530569e67917aa704964459a7288681b63e84c7e2f",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Option-Normal.tga": {
+      "sha256": "bd25c3ed7cc175c1e7820a01e19af71b83aadb8ef41acbb9afda482245011e71",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Option-Pushed.tga": {
+      "sha256": "d0c9f59b6cab61b1c7df91131a2eb3308ed05aa6b2ed7564bfe8d4c8211cc7d8",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Pass-Normal.tga": {
+      "sha256": "71e1b6595b15555304294fcdaca72bd13d6757f7772c9c43097ae4376dad6109",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Pass-Pushed.tga": {
+      "sha256": "af8d4eea231f0db487a3dc56500b92fe1860cccfe1ff820a1be79feef2bfeb13",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Red-Highlight.tga": {
+      "sha256": "26c04ce6761c4e60db9b728bb5e4dca55c84499601bec25785faf77f85a7afaf",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Yellow-Highlight.tga": {
+      "sha256": "aa8a8d952b5f44c2214e646673a87c54d27f32d92cd71ef12263a1e3bc3cf2cb",
+      "bytes": 4134
+    },
+    "ZGTracker.lua": {
+      "sha256": "c66611c5800d0ee2e08b927be23cea4cd694343cd95cc155c589a9c080a5b36e",
+      "bytes": 17576
+    },
+    "ZGTracker.toc": {
+      "sha256": "796b68648fdd7c438875cfd4959b640d0f86c0c016a67722948367f7182c6fba",
+      "bytes": 530
+    },
+    "ZGTrackerFu.lua": {
+      "sha256": "870090580e2566c9922b920612c7edadbea975efbbd65fe46b39cf0137c3b20a",
+      "bytes": 14699
+    },
+    "ZGTrackerGUI.lua": {
+      "sha256": "60baa43c700d6480e701c756a0d565b6e3a15fcb983b06e28039f18906d5cd7c",
+      "bytes": 47859
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "258258": {
+      "tag": "v0.095",
+      "folder": "v0.095--258258",
+      "assets": {},
+      "source": {
+        "sha256": "943201395d825de48661b259b61fe0f5307f333d22ef9fbcd4ca3eabaf56bb09",
+        "bytes": 80128,
+        "path": "releases/v0.095--258258/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/rsheep/ZGTracker/tarball/v0.095"
+      }
+    }
+  }
+}

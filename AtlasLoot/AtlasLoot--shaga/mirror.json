@@ -1,0 +1,233 @@
+{
+  "upstream": "https://octowow.st/git/shaga/AtlasLoot",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "shaga",
+    "repo": "AtlasLoot",
+    "name": "AtlasLoot",
+    "url": "https://octowow.st/git/shaga/AtlasLoot",
+    "api": "https://octowow.st/git/api/v1/repos/shaga/AtlasLoot"
+  },
+  "commit": "d057918a1dc3b04169da533b5e14f43604b18309",
+  "sourceFiles": {
+    "AtlasLoot.toc": {
+      "sha256": "efe4b6cae5db5ce4de2a5c010e1d4c3fc3bbd721dc8d8b1874329b18d0995275",
+      "bytes": 1333
+    },
+    "Bindings.xml": {
+      "sha256": "d46d4061e35f94c7587bcc2bcf809093fde95574834e3e4bbb72d744ea9d36da",
+      "bytes": 1513
+    },
+    "Core/AtlasLoot.lua": {
+      "sha256": "affc8a3ed6b05e706a126f92c817d403caa63fd5ccfc2d1b66fe342f55c22476",
+      "bytes": 83358
+    },
+    "Core/AtlasLoot.xml": {
+      "sha256": "2e89e150c2a604a811896695f16f406c28fff5ccf5e0420d77f534972b0fe4a8",
+      "bytes": 60287
+    },
+    "Core/ButtonRegistry.lua": {
+      "sha256": "fb935caacb2a076cf2d9908baf29c5e07065e7a3339fd85150c538140b799765",
+      "bytes": 96696
+    },
+    "Core/Search.lua": {
+      "sha256": "5bac7166d6e33cef96f13f26eaf07806c5bcdc40e3cd5042db7e2fb3562f89e6",
+      "bytes": 4399
+    },
+    "Core/TextParsing.lua": {
+      "sha256": "6ef9193c32d2429eb18aafcd9a3b003c6aeeff240703bd37aeccc5ce0eb58f30",
+      "bytes": 22217
+    },
+    "Core/Tooltip.lua": {
+      "sha256": "887d7dce184cb18bb59df831c74464a711c309790e9aa15b0007dd8f9430e15a",
+      "bytes": 10039
+    },
+    "Core/WishList.lua": {
+      "sha256": "a2eaac026a4e576a94f7554bbe794933240417ea007c9266c363c92e5d450466",
+      "bytes": 8979
+    },
+    "Database/Crafting.lua": {
+      "sha256": "44dd95d5b97d4e131b7290156b88855f37c3d58682bd162a15f246e0d0cc1c11",
+      "bytes": 392151
+    },
+    "Database/Factions.lua": {
+      "sha256": "9fd49e1bca768be5e36af18b370cc969a083e3233224c12bbc1c9e7fe9c1f8e6",
+      "bytes": 54410
+    },
+    "Database/Instances.lua": {
+      "sha256": "fbfa1b284c8561516f7730cd394846e9c95269e55805b526bd89bcce76169fbb",
+      "bytes": 499757
+    },
+    "Database/Menus.lua": {
+      "sha256": "e3802b804050e2117549625d33e52193ad6d0e488a5366245d01679519971fc6",
+      "bytes": 82485
+    },
+    "Database/PvP.lua": {
+      "sha256": "cc037940ea8025587cc3926347ee68fc860168b42d29ca2a8250c132213dbea0",
+      "bytes": 88673
+    },
+    "Database/Sets.lua": {
+      "sha256": "6966d75ed4f27e07b3e2967f0f5824cdc3c0bf3c82bc9c10189f8195426b19e7",
+      "bytes": 144462
+    },
+    "Database/Spells.lua": {
+      "sha256": "65f1c48d38453e63083dc92ad1d23901045be46a5a4428e429aab691bea42cd0",
+      "bytes": 364506
+    },
+    "Database/TableRegister.lua": {
+      "sha256": "9008ecf3be497e23623594afde5ce01f6d020d3a18066dbe150f5e20019dc0c9",
+      "bytes": 176613
+    },
+    "Database/TooltipStrings.lua": {
+      "sha256": "010931255f9711c9de8acaebb31d81678e2740541aecd8765a05ef365f6e2319",
+      "bytes": 492252
+    },
+    "Database/WorldBosses.lua": {
+      "sha256": "1d55f422ea5808c4c6de69722f0b57055eb41d31a37f4f35c06c65b5859d12c0",
+      "bytes": 33922
+    },
+    "Database/WorldEvents.lua": {
+      "sha256": "89a5a798838706c0f4e28eaca34e1f955bc2f7570531bf32ddb62d3052db92cd",
+      "bytes": 28099
+    },
+    "Images/Alliance.tga": {
+      "sha256": "837e373dad75787eaa82dc5443d159499d206b442dd778dc73658bf8cb71e115",
+      "bytes": 3254
+    },
+    "Images/AtlasLootMinimap.blp": {
+      "sha256": "4727a65be04e8fcf4e86b3b7373f2e0dfea1b6f9e53c2e1b259be0be4b67b8b9",
+      "bytes": 2564
+    },
+    "Images/border.blp": {
+      "sha256": "fa643f42405d7d41c49c83c07c69ad6c96d4999fbe57681d4cca08a8defcbdc5",
+      "bytes": 2196
+    },
+    "Images/druid.tga": {
+      "sha256": "caec527518c0ce1a591206d0565eea211be1a4a0a1c04576bed58fb6ae9df035",
+      "bytes": 11890
+    },
+    "Images/gold.blp": {
+      "sha256": "5c0395b5dfbda3dfcf0a0260029a643c228a90651d298e163092cde165e66d94",
+      "bytes": 516
+    },
+    "Images/gold.tga": {
+      "sha256": "d98e3bf02ba0f09ebeecce5d9a83302dee9beb5f3ca0efd8f1f448622b2ea025",
+      "bytes": 1042
+    },
+    "Images/Horde.tga": {
+      "sha256": "d6b580a500060bc264cd8c237b2fd843a776fef64edf391bfe417072f5e0b853",
+      "bytes": 3863
+    },
+    "Images/hunter.tga": {
+      "sha256": "9d25bc7b55bd4233fa9e9d184cf5f558ea5598fd150def7f60c363bc46694a94",
+      "bytes": 8397
+    },
+    "Images/looticon.blp": {
+      "sha256": "28bcb56a2e843c028cad0a866db0547b562c1a9747ac41d9fb771094a41079b2",
+      "bytes": 1540
+    },
+    "Images/looticon.tga": {
+      "sha256": "bd591fe622e01b54d8c4e416e8a228076cb5ac08e97e840ae34aad45f7532f51",
+      "bytes": 4114
+    },
+    "Images/mage.tga": {
+      "sha256": "a7c687cc555d4aa98b81306946a20bf1e0a6937257a3b4985b7d388755d89b00",
+      "bytes": 11858
+    },
+    "Images/paladin.tga": {
+      "sha256": "3013ed32257045eb9b775b91bf4a5069e9e9d25a22f35c1744d384afd3cdd2f7",
+      "bytes": 11413
+    },
+    "Images/priest.tga": {
+      "sha256": "e9037dc6968bc6c3d5be552f13b0c9b86aa0740c9958c4d973bcf7fb83605b4e",
+      "bytes": 9063
+    },
+    "Images/rogue.tga": {
+      "sha256": "38050495063d1b25361a6e7604b25c1fb2fb1a6a209215300df97df59b7780d9",
+      "bytes": 10377
+    },
+    "Images/shaman.tga": {
+      "sha256": "d859725cf64dd7b881be661fc9c21efadf80768efa11ce97c7cb224b3a13f683",
+      "bytes": 11401
+    },
+    "Images/warlock.tga": {
+      "sha256": "ec089b6782fa9e22907e90bc440979140f6f50f2701c9b9626dfdfc4a62d9c26",
+      "bytes": 11107
+    },
+    "Images/warrior.tga": {
+      "sha256": "7abfac021b43fa849a075482ebb9b2192f1302743f403d5aaece83cfabb021bc",
+      "bytes": 11747
+    },
+    "Libs/AceAddon/AceAddon-2.0.lua": {
+      "sha256": "cb613c833036624bc2ac1848e4ff8e73e7edd93c57671a5447c28bcb158028ea",
+      "bytes": 26351
+    },
+    "Libs/AceDB/AceDB-2.0.lua": {
+      "sha256": "0f7509a928ccde8cbd1f7b53ee5a92aa8695a663bd340a4d72cc341fdd27f824",
+      "bytes": 40053
+    },
+    "Libs/AceEvent/AceEvent-2.0.lua": {
+      "sha256": "b9bf1f0c9f497783f8488b9da4537f0e5d92e54636e216794452ccf5d5be4037",
+      "bytes": 28506
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "013ab59d61f9567dc86041889ecd20aa8f5c12364e60949b6bcf9a0153e232f5",
+      "bytes": 22736
+    },
+    "Libs/AceLocale/AceLocale-2.2.lua": {
+      "sha256": "31bc9cfda434c890574d1bbfc48c9e1d068f45ff73e1023ca452dedab0bdef41",
+      "bytes": 15957
+    },
+    "Libs/AceOO/AceOO-2.0.lua": {
+      "sha256": "1385526e460948771ca6db1ceec81e8b0daf33bfc391f55e6f1bbc449a341a82",
+      "bytes": 30305
+    },
+    "Libs/Dewdrop/Dewdrop-2.0.lua": {
+      "sha256": "0e1c2e893ae0342170ffc3d8f816b765eaf8dbed689da5cf5353f6e9271b9c06",
+      "bytes": 85808
+    },
+    "Libs/Hewdrop/Hewdrop-2.0.lua": {
+      "sha256": "b525a28540d655ab339581a9f05a16567d9eff1090ebbdc64542e1c7afeb3a14",
+      "bytes": 85741
+    },
+    "Locale/locale.cn.lua": {
+      "sha256": "7ff15e7bb0eda14febbe9a910ea52c44828e3537c898c4370f441bc507b79fb5",
+      "bytes": 117887
+    },
+    "Locale/locale.de.lua": {
+      "sha256": "c976933f4cf64315101719783379e84a33ec7a66e621ae123c28db2ea4965517",
+      "bytes": 131269
+    },
+    "Locale/locale.en.lua": {
+      "sha256": "88993e67b77d136980ec585de0954e1a1fe3218b4c4b6aa378e3fad364e71b4d",
+      "bytes": 117180
+    },
+    "Locale/locale.es.lua": {
+      "sha256": "2c39aa73b1ff35552c5adfcd66ccbe0bece763ace213ba47bf7a34531d34a72c",
+      "bytes": 136720
+    },
+    "Locale/locale.fr.lua": {
+      "sha256": "4d093916ca82a0139ad8681eae3df1720d61b9ffe968d13c5f2021ba25e80e4c",
+      "bytes": 35544
+    },
+    "Locale/locale.kr.lua": {
+      "sha256": "8e1f9434047f3163879453b97aded1733e1ee642fc82d0e44964403aaec4dd7f",
+      "bytes": 22194
+    },
+    "Locale/locale.ru.lua": {
+      "sha256": "fd7bbdb74b74fda2f1e4a2d3c98f555a9df5042c466b1d6f62be316ba3b35d8b",
+      "bytes": 37164
+    },
+    "Locale/locale.tw.lua": {
+      "sha256": "b812998cb8ce42e8be657f4a5d05d38222d03e74c892d4b1858efa629dc56683",
+      "bytes": 32737
+    },
+    "README.md": {
+      "sha256": "1b6664b8e73198913361c790799b839ad25cc18f8ed8c3aba1c5d15d80819440",
+      "bytes": 1186
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

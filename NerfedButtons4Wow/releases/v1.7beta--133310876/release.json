@@ -1,0 +1,9 @@
+{
+  "id": "133310876",
+  "tag": "v1.7beta",
+  "name": "v1.7beta",
+  "body": "This is a beta release of the NerfedButtons4Wow addon. Most things work fine although error messages can be improved. One things that does not work correctly is smart targeting, been mainly soloing whilst levelling and haven't had a chance to iron out the kinks with that feature as yet.\r\n\r\nAgain, doesn't allow you to do anything you cant already do with LUA. just makes it more accessible to some. Have fun!",
+  "published": "2023-12-10T08:19:07Z",
+  "prerelease": false,
+  "url": "https://github.com/GarethFromWales/NerfedButtons4Wow/releases/tag/v1.7beta"
+}

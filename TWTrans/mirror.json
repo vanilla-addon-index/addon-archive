@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/YamaYAML/twtrans",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "YamaYAML",
+    "repo": "twtrans",
+    "name": "twtrans",
+    "url": "https://github.com/YamaYAML/twtrans",
+    "api": "https://api.github.com/repos/YamaYAML/twtrans"
+  },
+  "commit": "1bcef7f3f2631cf3a13bbf63cd91da14a7b6f06c",
+  "sourceFiles": {
+    "EnglishToRussianDictionary.lua": {
+      "sha256": "e1c83082901d311183e7b0d2d63eb263d55af1c41719b56fea1d322510d4326e",
+      "bytes": 1300
+    },
+    "README.md": {
+      "sha256": "39d3f7809f1bfcf856d1687fe7f4b5b8d559e68a871435f408567c722b3eda40",
+      "bytes": 2265
+    },
+    "RussianToEnglishDictionary.lua": {
+      "sha256": "95cb2c0ed232499b4d17a7cbcec9535ad6f5854e181f5de057af570087f6b025",
+      "bytes": 2308
+    },
+    "twTrans.lua": {
+      "sha256": "6755e7824eb4e79a72307da4ca3a3f8462e29202c7d0f42fc4d02b4c802eef6f",
+      "bytes": 1866
+    },
+    "twTrans.toc": {
+      "sha256": "f8d8436a2fb692544e3aaee75fca8573ff8c3478239df0b2d08f0dbee4a8ec72",
+      "bytes": 238
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,19 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Include file="..\modules\manager.lua"/>
+
+
+  <Include file="..\modules\About\config.lua"/>
+
+  <Include file="..\modules\ShowLoots\config.lua"/>
+  <Include file="..\modules\ShowLoots\main.lua"/>
+  <Include file="..\modules\ShowLoots\browser.lua"/>
+
+  <Include file="..\modules\QuestHelper\config.lua"/>
+  <Include file="..\modules\QuestHelper\rewards_data.lua"/>
+  <Include file="..\modules\QuestHelper\main.lua"/>
+  <Include file="..\modules\QuestHelper\browser.lua"/>
+  <Include file="..\modules\QuestHelper\chainviewer.lua"/>
+  <Include file="..\modules\QuestHelper\detailviewer.lua"/>
+  <Include file="..\modules\QuestHelper\rewards.lua"/>
+
+</Ui>

@@ -1,0 +1,181 @@
+{
+  "upstream": "https://github.com/Atreyyo/RAT",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Atreyyo",
+    "repo": "RAT",
+    "name": "RAT",
+    "url": "https://github.com/Atreyyo/RAT",
+    "api": "https://api.github.com/repos/Atreyyo/RAT"
+  },
+  "commit": "0c3add0173307a955f245f2aec52832b21862a22",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "fonts/ABF.ttf": {
+      "sha256": "2d2fc6670ddc5b6f9fa5ff4b839d274545e14e56da83faf5ead260b9e30bb09b",
+      "bytes": 82836
+    },
+    "fonts/Accidental Presidency.ttf": {
+      "sha256": "91980438519aff2fd182b77d316be9549cbf6cf0daadab8e8f5638367f1d9242",
+      "bytes": 41556
+    },
+    "fonts/Adventure.ttf": {
+      "sha256": "360725a152c1966d3256be129bd8dc0862679abc217a3ba1b3fd2c7580afe7b3",
+      "bytes": 48776
+    },
+    "fonts/Avqest.ttf": {
+      "sha256": "5929a5fd6c16df17069ed7cf57b6ff61bbe3c959d9ef59b30120a3845d98fee6",
+      "bytes": 51536
+    },
+    "fonts/Bazooka.ttf": {
+      "sha256": "40b937264d2325eafd8dd97b18d93d449c92aa065ba4001d87f411bb7e45c6fa",
+      "bytes": 46064
+    },
+    "fonts/BigNoodleTitling-Oblique.ttf": {
+      "sha256": "d53daee73ec4cded465bb34229a565815ca4f404cc2b5ab287d680fc50f54314",
+      "bytes": 27876
+    },
+    "fonts/BigNoodleTitling.ttf": {
+      "sha256": "351f2781dc4835f1d683ff1149d187b55745a60dfa9ea37bc4b36b3fc2e109e6",
+      "bytes": 26828
+    },
+    "fonts/BlackChancery.ttf": {
+      "sha256": "532c89b9841cfbced0f4337863d6b062f4e8b92902f73d369bd302a2b39234d2",
+      "bytes": 56732
+    },
+    "fonts/Emblem.ttf": {
+      "sha256": "f7aba56028f0376ad6ad8f157f33f9ed26b33f512f1b5786754f45e8b6d3ff96",
+      "bytes": 33204
+    },
+    "fonts/Enigma__2.ttf": {
+      "sha256": "eba6927102e658c4e8a237e0d3cf12bc4791841c9be1188d18ea5b89a06b1925",
+      "bytes": 17992
+    },
+    "fonts/Movie_Poster-Bold.ttf": {
+      "sha256": "d8858ec6288dbccdd5a4beebddf7483ee00a4976b53ad5c23421df5c77e14f5f",
+      "bytes": 22240
+    },
+    "fonts/Porky.ttf": {
+      "sha256": "7e5798e90dcc1545ebae2f41bf8325bf6061e62b97288dec053c05b985acc85a",
+      "bytes": 79752
+    },
+    "fonts/rm_midse.ttf": {
+      "sha256": "f8dc42bb3eff0fd67f7c0f4c30d8d735aafd27c3d5191f43ef2d6870d4fedd2f",
+      "bytes": 50932
+    },
+    "fonts/Tangerin.ttf": {
+      "sha256": "fdffecf84dcc203b0b21bcdbaf61a2362b1cb085721592a247856ae7b4d07005",
+      "bytes": 25648
+    },
+    "fonts/Tw_Cen_MT_Bold.ttf": {
+      "sha256": "68e622267253dddae00832e0ca12509f392ca0d47127280ff1531133e5fac848",
+      "bytes": 67140
+    },
+    "fonts/Ultima_Campagnoli.ttf": {
+      "sha256": "6786ea15be8a4ce301f55701acce57218cff55312b8cc89e182cdfd15a4a9513",
+      "bytes": 70336
+    },
+    "fonts/VeraSe.ttf": {
+      "sha256": "6afd927937d84fc00831441cbe0165b2d926b5bb9c18ac9018e5df6e4b0c006a",
+      "bytes": 60280
+    },
+    "fonts/visitor2.ttf": {
+      "sha256": "48ccd009dfe6a07223cc3571dc906acea1a255e67c72a121ced1b5071fbb06bb",
+      "bytes": 37388
+    },
+    "fonts/Yellowjacket.ttf": {
+      "sha256": "716f35a0d2a6c56e191bad19a772b049b6948dea0e4d5a667fef6cb02913c291",
+      "bytes": 79196
+    },
+    "media/bartextures/Aluminium.tga": {
+      "sha256": "679e0dbbb1e1f26871a2a84610d327289db1faf2743590692e57c22f6d52358d",
+      "bytes": 32812
+    },
+    "media/bartextures/Armory.tga": {
+      "sha256": "7f5d7718082fc4f2bfda40f264d550eb6cc141922acfc7e1554aebad4744015e",
+      "bytes": 812
+    },
+    "media/bartextures/BantoBar.tga": {
+      "sha256": "5a5deac548c4639de44db55ed79a6784bba95fc8286e7a4e7235ea7da24e19c3",
+      "bytes": 32812
+    },
+    "media/bartextures/Glaze2.tga": {
+      "sha256": "805cc920b241fe6d09f7907c99c16a09c15e9bb5ebb7c736486854b5c13122cb",
+      "bytes": 32812
+    },
+    "media/bartextures/Gloss.tga": {
+      "sha256": "20f70840ccfd8c7a94ccdc57a95810a56d495e1de62ac90e4f051e44c8215205",
+      "bytes": 32812
+    },
+    "media/bartextures/Graphite.tga": {
+      "sha256": "4fafd7e34444a05f1d261a76156fadc3130c6f7d1538779b559ed6b8e4825856",
+      "bytes": 65580
+    },
+    "media/bartextures/Grid.tga": {
+      "sha256": "9caee4d0382316aa64ec4891eb8b05ffba0df5e421bef9274f8533e639637d74",
+      "bytes": 24594
+    },
+    "media/bartextures/Healbot.tga": {
+      "sha256": "9b3cdfeba85c0fed3e9089dc4f8c21ac0e079eeac018b1e2c518af4295f832a6",
+      "bytes": 24594
+    },
+    "media/bartextures/LiteStep.tga": {
+      "sha256": "9bd025e9217a88cda7ef3bd185976ded94a647468c6126d42c55df4a88f3a7c2",
+      "bytes": 32812
+    },
+    "media/bartextures/Minimalist.tga": {
+      "sha256": "97976977031766d707a34121ac13c5ab6b7e9d204be2efaa395c717aeb1dc7ab",
+      "bytes": 1304
+    },
+    "media/bartextures/normTex.tga": {
+      "sha256": "500b74637f1d0fa7a75b965152de3e9c1814cad3706526938ea251f683da8e7e",
+      "bytes": 14690
+    },
+    "media/bartextures/Otravi.tga": {
+      "sha256": "e300a87224e7c1a044574ec915a1f9c0de49c3e26f854ecd3e1ea8ed920aaba9",
+      "bytes": 32812
+    },
+    "media/bartextures/Outline.tga": {
+      "sha256": "f1f5c8e7032b24c0e08f42fc5ad3ab14d20005bb7a31921bd982d5883b4cad28",
+      "bytes": 664
+    },
+    "media/bartextures/Perl.tga": {
+      "sha256": "e0fd78c10c65cc4ef4cd455ecf97e0b1f0d0e8808d0822eb94f4f2f9dae98596",
+      "bytes": 2037
+    },
+    "media/bartextures/Round.tga": {
+      "sha256": "8da9acf03ae2629228635fe039ffcf1a8776567168e28d5a74113599002bedcf",
+      "bytes": 4980
+    },
+    "media/bartextures/Smooth.tga": {
+      "sha256": "00e8084e83bf25b941464e2619b59e993b6ac7ae0bd8a6f37b12872e686ded6d",
+      "bytes": 32812
+    },
+    "media/icon.tga": {
+      "sha256": "4843dfa3366b9bbed4a7873ad225e66e5ef09c2ebf8955415cdc3da34c3a7306",
+      "bytes": 16428
+    },
+    "Rat.lua": {
+      "sha256": "b4acf53acb1ae7ed263e528baaa930cc42dfc6acab38dc20ce3e17a9e4994a44",
+      "bytes": 103439
+    },
+    "Rat.toc": {
+      "sha256": "c6ed8f373ae306855dba3e5c45485c627cf977831f7aef3ed1cfe2d08a6635c1",
+      "bytes": 221
+    },
+    "README.md": {
+      "sha256": "81a55d2703130c73891eff448e44154c1ed3039ac1fd02177d605753327c0db7",
+      "bytes": 5
+    },
+    "Readme.txt": {
+      "sha256": "8f52f7d1bd2a89bf01e55cafe7d30125268137b584ea7beeef151e99257879c2",
+      "bytes": 611
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

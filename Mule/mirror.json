@@ -1,0 +1,57 @@
+{
+  "upstream": "https://github.com/cubenicke/Mule",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "cubenicke",
+    "repo": "Mule",
+    "name": "Mule",
+    "url": "https://github.com/cubenicke/Mule",
+    "api": "https://api.github.com/repos/cubenicke/Mule"
+  },
+  "commit": "c90acd5139ae8a5bff7d4a04d7024d4071fb5bc0",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "67096f5a9ce55e3e67794eb6ff4b49629f2a00f6760a6a718deafe63e04f6354",
+      "bytes": 176
+    },
+    "icons/donkey-icon-32x32.tga": {
+      "sha256": "f92a1a7ffed3140406a99cf6a114bb6e8708b418962379820dd41444454df924",
+      "bytes": 4114
+    },
+    "icons/donkey-icon.license": {
+      "sha256": "bb8fcf0fca1745221600b25bff25f757d9f283f014c5a11d0edf3c6133c26056",
+      "bytes": 146
+    },
+    "icons/donkey-icon.png": {
+      "sha256": "504b1581b7c6201eb5d829e2f3752be76ce8dd5191ee1c9d7c977038ff225e0d",
+      "bytes": 18057
+    },
+    "LICENSE": {
+      "sha256": "817c06f1368467e0971e12fedaaf3797208dd0bbe2278c8c388c362cf25e7de3",
+      "bytes": 1066
+    },
+    "Mule.lua": {
+      "sha256": "255c6bcc3a92bca533bb8bf01932f62a8b7c03f78f94e0c4cc70c8df22822997",
+      "bytes": 52620
+    },
+    "Mule.toc": {
+      "sha256": "c9a5131211a2981e035f7889218736a2b9f05a23f9215ea8654e7d0e9008448f",
+      "bytes": 231
+    },
+    "Mule.xml": {
+      "sha256": "fab2b77c23ee2b6be454ac97d4281395f201045353d33a2d461f2481eaeef82f",
+      "bytes": 517
+    },
+    "MuleFrame.lua": {
+      "sha256": "77a6f0468f2d3b9aa2f69065dcbe0aee34d4ecfde05135a394296d80068f7f3e",
+      "bytes": 23300
+    },
+    "README.md": {
+      "sha256": "4cbb14d8cff2f8c77101c24f986dc5dfd897a4437c66938c6fdc75ed8368d684",
+      "bytes": 4788
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

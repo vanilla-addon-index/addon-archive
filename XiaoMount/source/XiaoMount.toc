@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: |cff33ffccXiao|cffffffffMount
+## Author: Smallguy
+## Notes: Riding and Swimming Equipment Auto-equipper for TurtleWoW
+## Version: 1.2.5
+## SavedVariables: XiaoMountDB
+
+XiaoMount.lua

@@ -1,0 +1,57 @@
+{
+  "upstream": "https://github.com/wbb1977/PerfectShot",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "wbb1977",
+    "repo": "PerfectShot",
+    "name": "PerfectShot",
+    "url": "https://github.com/wbb1977/PerfectShot",
+    "api": "https://api.github.com/repos/wbb1977/PerfectShot"
+  },
+  "commit": "36e21f5ffb007f258b70b6874802a2f73576bd6c",
+  "sourceFiles": {
+    "PerfectShot/Bindings.xml": {
+      "sha256": "cc6356c88333f1e038e0c0e26e93d0437fc38190b119fb073fce515cca0c3a4a",
+      "bytes": 554
+    },
+    "PerfectShot/Localization.lua": {
+      "sha256": "83aa3f4e9e785e435ecca4408123bf29af2feb4bc015a7bf6da21c74950c21ea",
+      "bytes": 3138
+    },
+    "PerfectShot/PerfectShot.lua": {
+      "sha256": "7e5357e1e04f4bd381f60e5b70272f303aca7fc5f6d2c49b51d3bb6a7ca21742",
+      "bytes": 5392
+    },
+    "PerfectShot/PerfectShot.toc": {
+      "sha256": "bf20c13984d7b96eb2f19f7cc6ca5b4bfb300c0e26eb0a1234e10534371e7e58",
+      "bytes": 307
+    },
+    "PerfectShot/PerfectShot.xml": {
+      "sha256": "bada7be584f26f13ddf6f0a0f7d3ec2d19674aa80ca9159fb59c10770f49c031",
+      "bytes": 794
+    },
+    "PerfectShot/t": {
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "bytes": 1
+    },
+    "README.md": {
+      "sha256": "546ec8be656369052a8c27981ab19122eaa7a7c3d88b73f537f36cc642d7ee30",
+      "bytes": 1070
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "14714332": {
+      "tag": "v10",
+      "folder": "v10--14714332",
+      "assets": {},
+      "source": {
+        "sha256": "f978a5d9c6e2fc72e7bf7a98debb71513c640656f9f1ffcc14b80ce11b6ca8c0",
+        "bytes": 3892,
+        "path": "releases/v10--14714332/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/wbb1977/PerfectShot/tarball/v10"
+      }
+    }
+  }
+}

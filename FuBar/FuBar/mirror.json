@@ -1,0 +1,109 @@
+{
+  "upstream": "https://github.com/laytya/FuBar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "FuBar",
+    "name": "FuBar",
+    "url": "https://github.com/laytya/FuBar",
+    "api": "https://api.github.com/repos/laytya/FuBar"
+  },
+  "commit": "2bb40fb180791eae3d144f99d1c672235c61fe5a",
+  "sourceFiles": {
+    "background.tga": {
+      "sha256": "f49a5539752be2ba58d9e8af4c8c9b6935efa119d80e58aa7010c36fd0eec7c6",
+      "bytes": 195830
+    },
+    "changelog-r12212.txt": {
+      "sha256": "8e4ea6479be7473d16308b2408e508a3bdd02a18cb4d343d2342475417433437",
+      "bytes": 52689
+    },
+    "changelog.txt": {
+      "sha256": "d714fc27ab7dcb5a7605bee265de1f2acc6b3d62d63b502c46e68317cb62f518",
+      "bytes": 52280
+    },
+    "FuBar_Panel.lua": {
+      "sha256": "b6db69ba1e6f2dc53ecbb97883f5cc23c2e9b24424839e0f65ea24df643a1f4d",
+      "bytes": 31602
+    },
+    "FuBar-Locale-deDE.lua": {
+      "sha256": "509cc6efdedd69c3dadd9124da663cf104dc52b66f8dba3f904eb757682ef3bc",
+      "bytes": 3732
+    },
+    "FuBar-Locale-enUS.lua": {
+      "sha256": "50d92c9a2d155f68834be4fff736cb022d520df84aaf44a1a7e9a42af57090e6",
+      "bytes": 2363
+    },
+    "FuBar-Locale-koKR.lua": {
+      "sha256": "5913adb3cd69e9273e550f2f931719793ebca49b2c8500babbc6aa9556fb1909",
+      "bytes": 3474
+    },
+    "FuBar-Locale-ruRU.lua": {
+      "sha256": "67a6f79322315d3fce62bb692104a461320e5d89d0261f83b5be0c66fe8c81ec",
+      "bytes": 4949
+    },
+    "FuBar-Locale-zhCN.lua": {
+      "sha256": "3eae530c6b31ce73586bf91f1c188d097e01e275afbc3a65ccfdfdd88c9e8714",
+      "bytes": 3345
+    },
+    "FuBar.lua": {
+      "sha256": "49f83211f57d796d1faaced6aa29b11e84a52f0bc3856ba87a9e86cd3fa16ea6",
+      "bytes": 36951
+    },
+    "FuBar.toc": {
+      "sha256": "8db8762dcb251b1d763153c54d77067ebde10c5eb429f2aec5af072f9fcf9840",
+      "bytes": 1243
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "bd2c58e226cbd3ec0ce23933ae5232b37f6ad693cac1e0238c2548a43e4f9b7b",
+      "bytes": 33310
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "64e94c958c92cba85b4a2a3214ef8d0fd6d86594abfc7a3bb3fd2d262875d055",
+      "bytes": 66933
+    },
+    "libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "a31166b787873d5551180e0600a7f9d2a529fb7f3ee9606e71b91dcf4123a025",
+      "bytes": 44509
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "libs/AceHook-2.0/AceHook-2.0.lua": {
+      "sha256": "dce2044f8e83a9ae7696c0489491157d722f86f165e5203dcfdddd891ddd05f9",
+      "bytes": 18089
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "d05fb28fb6d7dbd9a8be4faea455388fd629342491699aa8fe7c3f8b8d6416c4",
+      "bytes": 23442
+    },
+    "libs/AceLocale-2.0/AceLocale-2.0.lua": {
+      "sha256": "54627507c07436b5ccda2cd049070bd5f7da514f863c23c3d327d3ff540a50cd",
+      "bytes": 15536
+    },
+    "libs/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "a3de67878b122a9f6c937462b9641f7a029b55605107f2db03953fe7a1d412ff",
+      "bytes": 13981
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "libs/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "3a834f9e3b64af7e746b8897f523150d56ba4851bb481aa65ac5d8723675a5ec",
+      "bytes": 11031
+    },
+    "libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "a4076e190313dcbf99ad0cd8db25405d7f5674755b57ef74feac39678a496519",
+      "bytes": 85842
+    },
+    "libs/Jostle-2.0/Jostle-2.0.lua": {
+      "sha256": "5526b0b5d67706850b3db79cf0fa2c789128eb64958ca5c665063f560eb72aba",
+      "bytes": 14153
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

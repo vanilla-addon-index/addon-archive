@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: PWSCounter
+## Notes: Counts shields to help sleep
+## Version: 1
+## Author: WobLight
+## Deps: EmeraldFramework
+## SavedVariables: PWSCounterSettings, PWSCounterLog
+PWSCounter.lua

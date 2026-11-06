@@ -1,0 +1,21 @@
+## Interface: 11200
+## Title: Nos: |cff1a9fc0Cursor|r
+## Author: Rasta
+## Version: 1.0
+## Notes: Vanilla most advanced mouse tracker
+## SavedVariables: NosCursorDB, NocCursorCache
+
+# locales
+Locales\enUS.lua
+
+# core
+Init.lua
+
+# Api
+Api\Api.lua
+
+# display
+NosCursor.lua
+
+# config
+Config.lua

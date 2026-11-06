@@ -1,0 +1,93 @@
+{
+  "upstream": "https://github.com/McPewPew/MrPlow",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "McPewPew",
+    "repo": "MrPlow",
+    "name": "MrPlow",
+    "url": "https://github.com/McPewPew/MrPlow",
+    "api": "https://api.github.com/repos/McPewPew/MrPlow"
+  },
+  "commit": "865f76924c37060236ec60a3d7c136637debc6f5",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "02bec7b5917992e69427049ce801e885314d7cd39640a6ba51b773d5e225645e",
+      "bytes": 550
+    },
+    "changelog-r23832.txt": {
+      "sha256": "acc80b2734213891410016f4b8ee5e835a83897b479edf66a602f8f826651d0d",
+      "bytes": 2858
+    },
+    "icon.tga": {
+      "sha256": "26a7d290f0bbd587696e35fe8b4deea514d99a2507430894eacd2269f517955e",
+      "bytes": 1571
+    },
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "09c00fc3e6d4ede82ec7e622e9f26baf33cb496585d56879dcdd344551faaf9e",
+      "bytes": 30507
+    },
+    "Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "42aacdcfbe67b76ff1014b54e67c1a917be3f543dc8a4a1609424769c928017a",
+      "bytes": 65879
+    },
+    "Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "0d55cb94c745d2940c31a4297251333d87bd238a322b375c5842eff2131c5869",
+      "bytes": 42674
+    },
+    "Libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "394521bbd40660d05c178fce092bb3c4904405efee2b43c7a4d0d98bf1d8892f",
+      "bytes": 7668
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "edb95b5acd98e0d7bf79eaa63e5bdc19c1db33418c80c54e2f8ad6d5678d142d",
+      "bytes": 28699
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "8c75f829e0f980aac69d53cce8f8c806ea671795f445ab736c8cf76b9fc1f586",
+      "bytes": 22725
+    },
+    "Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "6e315b0d257b7feda50ad6ef4b0c40228f7125330da7b0e4793be62e75ba81a1",
+      "bytes": 15823
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "1385526e460948771ca6db1ceec81e8b0daf33bfc391f55e6f1bbc449a341a82",
+      "bytes": 30305
+    },
+    "Libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "412c5baf1eb5a9151664fb34def8597117da77c8ea799a6fa0ef5a072dd074f7",
+      "bytes": 85097
+    },
+    "Libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "40a66d396b0d974c825ade2c48e71cd141efa582edd68346ed7697e56dfa58e5",
+      "bytes": 46475
+    },
+    "Libs/PeriodicTable-2.0/PeriodicTable-2.0.lua": {
+      "sha256": "c80be2d45ceff48441aa968d48c670786cce73387d302943f511cacdc5530503",
+      "bytes": 108546
+    },
+    "Libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "7edd5feb3faa3cf16e39abc60f459588c9b4a76e47bb29f8d07a7902a42629b8",
+      "bytes": 83249
+    },
+    "Localization_enUS.lua": {
+      "sha256": "5de1f21bb1bc56df469760c317d75830b0b961fe1b1b5dfc4559d9ece03bdfc0",
+      "bytes": 5812
+    },
+    "MrPlow.lua": {
+      "sha256": "d89b12913a3ad987c038befcf9652e2b3ee29d2ef6c0510c05fccac34732674d",
+      "bytes": 42932
+    },
+    "MrPlow.toc": {
+      "sha256": "99f60b50ca95b157b0226b8b3e2984bfa0fd82d2f04c38ffeb99dd2e42aa9d58",
+      "bytes": 817
+    },
+    "README.md": {
+      "sha256": "1c1875436ee3560bbf48d03de3a6c93aad65bf9746cb1b6404860eef4cefcd8a",
+      "bytes": 132
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

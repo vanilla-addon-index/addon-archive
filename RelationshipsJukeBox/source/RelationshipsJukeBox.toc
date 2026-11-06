@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: Relationships Jukebox
+## Notes: Simple in-game MP3/WAV/OGG player with GUI.
+## Author: Relationship
+## Version: 1.5
+## SavedVariables: RelationshipsJukeboxDB
+## X-Website: https://github.com/Relationship-OctoWoW/RelationshipsJukeBox
+## X-GitHub: https://github.com/Relationship-OctoWoW/RelationshipsJukeBox
+AutoPlaylist.lua
+Core.lua

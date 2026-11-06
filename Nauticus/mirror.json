@@ -1,0 +1,82 @@
+{
+  "upstream": "https://github.com/Road-block/Nauticus",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "Nauticus",
+    "name": "Nauticus",
+    "url": "https://github.com/Road-block/Nauticus",
+    "api": "https://api.github.com/repos/Road-block/Nauticus"
+  },
+  "commit": "a70898e2db91fdca139c336663a0fb3efe7a6890",
+  "sourceFiles": {
+    "Artwork/Departing.blp": {
+      "sha256": "63a7ca2fe04d82e7b24e08b7a5de5a9c85f2d41f6652f48f66bb50ee83efd1f3",
+      "bytes": 2564
+    },
+    "Artwork/NauticusLogo.blp": {
+      "sha256": "d09a3086b512081235c48b022137faf9e84341d51face9f6183c0fdae6c14aed",
+      "bytes": 2564
+    },
+    "Artwork/Transit.blp": {
+      "sha256": "360792a84f0048ca615d8a39436215e5f93008477021a87c0c1c21979da6111d",
+      "bytes": 2564
+    },
+    "data.lua": {
+      "sha256": "8c76fa59df7698c980d930c9bc4f1ba0c6c0aa3f00cb5c15a9a997b7dfe2f5c8",
+      "bytes": 138932
+    },
+    "localisation.de.lua": {
+      "sha256": "bf9d2bd45251ce9647a9ecdf4b9d000afc467f07ddca3c5e34363e68acfa348b",
+      "bytes": 1822
+    },
+    "localisation.en.lua": {
+      "sha256": "15a02126656bfba9185a731db2db37db858354bc5264a92b38a2408abf982982",
+      "bytes": 1757
+    },
+    "localisation.kr.lua": {
+      "sha256": "b42425a7ac5bcd4b1f4bed46e77d4fcdd057068947f78f9738e6cfcc5aa8c272",
+      "bytes": 1939
+    },
+    "Nauticus.lua": {
+      "sha256": "2caf1a7b5c301a7dd888838f596417584030938bf109142c2e6a754e17ee84e2",
+      "bytes": 27449
+    },
+    "Nauticus.toc": {
+      "sha256": "746ea66fc81f2c3455babb956087dca013df520c8698a7f8d31a30df160c8b69",
+      "bytes": 352
+    },
+    "Nauticus.xml": {
+      "sha256": "962100d1047161afcb477c63a6caef1c152124ce4eb135d397a4947ab97c20d4",
+      "bytes": 12589
+    },
+    "readme.txt": {
+      "sha256": "5194129ef88013e1bba753d7889ab6c36eef5070e68fbe04c024a05061b195b8",
+      "bytes": 8880
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "2486428": {
+      "tag": "2.01-11200",
+      "folder": "2.01-11200--2486428",
+      "assets": {
+        "1242745": {
+          "sha256": "e4e2b9d81ab957e1e91f676b40fe343781bd44fd70a1eceaa4ae44636b2ab977",
+          "bytes": 142724,
+          "id": "1242745",
+          "name": "Nauticus-2.01-11200.zip",
+          "url": "https://github.com/Road-block/Nauticus/releases/download/2.01-11200/Nauticus-2.01-11200.zip",
+          "path": "releases/2.01-11200--2486428/assets/Nauticus-2.01-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "f3852970d6c4bdf1498e9063e9627396b1b4a7596353f9a9ea5d02a15e63d9d5",
+        "bytes": 66262,
+        "path": "releases/2.01-11200--2486428/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/Nauticus/tarball/2.01-11200"
+      }
+    }
+  }
+}

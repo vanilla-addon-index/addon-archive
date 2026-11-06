@@ -1,0 +1,53 @@
+## Interface: 11200
+## Title: |cffffcc00Shagu|cffffffffTweaks |cffcccccc[Extras]
+## Author: Shagu
+## Notes: A collection of tweaks and enhancements to the Default UI
+## Notes-ruRU: Коллекция настроек и улучшений для стандартного пользовательского интерфейса.
+## Version: GIT
+## Dependencies: ShaguTweaks
+
+# translations
+locales\translations_deDE.lua
+locales\translations_enUS.lua
+locales\translations_esES.lua
+locales\translations_frFR.lua
+locales\translations_koKR.lua
+locales\translations_ruRU.lua
+locales\translations_zhCN.lua
+locales\translations_zhTW.lua
+
+# core
+main.lua
+
+# general
+mods\macro-icons.lua
+mods\macro-tweaks.lua
+mods\actionbar-df-gryphon.lua
+mods\actionbar-right-center.lua
+mods\actionbar-reagents.lua
+mods\actionbar-float.lua
+mods\unitframe-energytick.lua
+mods\bag-item-click.lua
+mods\bag-search.lua
+mods\worldmap-reveal.lua
+
+# chat
+mods\chat-input-center.lua
+mods\chat-history.lua
+mods\chat-text-shadow.lua
+mods\chat-timestamps.lua
+
+# raid frames
+mods\raid.lua
+mods\raid-party.lua
+mods\raid-group-header.lua
+mods\raid-combat-feedback.lua
+mods\raid-dispel-indicators.lua
+mods\raid-aggro-indicator.lua
+mods\raid-healing-predictions.lua
+mods\raid-compact-layout.lua
+mods\raid-hide-party.lua
+
+# reduced actionbar size
+mods\reduced-actionbar-bags.lua
+mods\reduced-actionbar-micromenu.lua

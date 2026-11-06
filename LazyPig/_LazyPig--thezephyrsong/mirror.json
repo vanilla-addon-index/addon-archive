@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/thezephyrsong/_LazyPig",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "thezephyrsong",
+    "repo": "_LazyPig",
+    "name": "_LazyPig",
+    "url": "https://github.com/thezephyrsong/_LazyPig",
+    "api": "https://api.github.com/repos/thezephyrsong/_LazyPig"
+  },
+  "commit": "ee15ba71a9afdf5c8c74904ec07778b9f03d2a7a",
+  "sourceFiles": {
+    "_LazyPig.toc": {
+      "sha256": "53ad7071c230b524239111b4f821b1faedadfad3b06dbec9f39997e824a6099b",
+      "bytes": 517
+    },
+    "Bindings.xml": {
+      "sha256": "fdfc3af6039a7b2dcfbea5f59e622f0a8ad9d5c1c3836f400310b4fe382cd90a",
+      "bytes": 370
+    },
+    "LazyPig.lua": {
+      "sha256": "ccd38f728967a1f62f67f343776add5356d9559064b177c870d7bc701285a108",
+      "bytes": 73586
+    },
+    "LazyPig.xml": {
+      "sha256": "ad84cab34e83938c46204be48f9503a053949d9d22662b262513f7e7431afdc1",
+      "bytes": 1189
+    },
+    "LazyPigKeybindsFrame.lua": {
+      "sha256": "122791eb137165ae335e69bb23da077cb50c7458013ea3c13116965c2018a4c4",
+      "bytes": 5468
+    },
+    "LazyPigMenu.lua": {
+      "sha256": "4ddac90c4f7b213d9d60b66fc9306ff61acd4beb1313b315a82ad363a12b5040",
+      "bytes": 14521
+    },
+    "README.md": {
+      "sha256": "1f22561ebd62115197c87047dbc45615a51e4dc725fccbc7a843288268d3db1d",
+      "bytes": 5291
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

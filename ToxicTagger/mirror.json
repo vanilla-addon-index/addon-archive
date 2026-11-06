@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/dogmax/ToxicTagger",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "dogmax",
+    "repo": "ToxicTagger",
+    "name": "ToxicTagger",
+    "url": "https://github.com/dogmax/ToxicTagger",
+    "api": "https://api.github.com/repos/dogmax/ToxicTagger"
+  },
+  "commit": "f2b751d9216b9a10b050aa529dd92fc4aad3376a",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "430cfc08c6034abf6bf2fd058e9c9858712f44615ebb61623e8f400f8be3721f",
+      "bytes": 2741
+    },
+    "ToxicTagger.lua": {
+      "sha256": "0e28531a2f3e6c4810de2cf2f72bccfd0cebc6932458f695ef8f0dbdb0d6c612",
+      "bytes": 1012
+    },
+    "ToxicTagger.toc": {
+      "sha256": "ba8719f555972469afa4934e6839c818a73039eca0d7e7af9345212dbc5c20c0",
+      "bytes": 93
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

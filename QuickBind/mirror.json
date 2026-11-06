@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/DennisWG/QuickBind",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "DennisWG",
+    "repo": "QuickBind",
+    "name": "QuickBind",
+    "url": "https://github.com/DennisWG/QuickBind",
+    "api": "https://api.github.com/repos/DennisWG/QuickBind"
+  },
+  "commit": "91e414ec9460db9a9ba4acb391a455b8ac814b3d",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "843ecc8a537eb97be0178cdabd4e4d15f91dd10a8ac9b5cbf01d6020fd3dbe36",
+      "bytes": 1065
+    },
+    "QuickBind.lua": {
+      "sha256": "05917d84dd93b400398c2bed0ac5b85e882dfd3ee0bc2763a8a2816255ce933b",
+      "bytes": 7364
+    },
+    "QuickBind.toc": {
+      "sha256": "271f7b7c5799671d50a87a6b9e29d914e354b827cad389bbec8c400fef8d14cb",
+      "bytes": 125
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

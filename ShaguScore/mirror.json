@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/shagu/ShaguScore",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguScore",
+    "name": "ShaguScore",
+    "url": "https://github.com/shagu/ShaguScore",
+    "api": "https://api.github.com/repos/shagu/ShaguScore"
+  },
+  "commit": "b07d25e6a1fa30391d9dca0dd728e33a762c6711",
+  "sourceFiles": {
+    ".directory": {
+      "sha256": "a16729e239a3b6bfc7fec991e2b042ee8838678d88c6e34767c43a3434fafd57",
+      "bytes": 48
+    },
+    "Database.lua": {
+      "sha256": "65decb9a16a54919b5c3dc541fc9cfd98638569879a2153944342d5d691b89f9",
+      "bytes": 142022
+    },
+    "README.md": {
+      "sha256": "0566eaa69586fed7100327ed4e14b5a76d39ad1398f1e2a32d0d29ac7c4d5afe",
+      "bytes": 1362
+    },
+    "ShaguScore.lua": {
+      "sha256": "b8c39ea0b70adcc3d2efaab0dc8b76ea372d16121c0b3c9ac7f0bf6bcf43586d",
+      "bytes": 9468
+    },
+    "ShaguScore.toc": {
+      "sha256": "b4f2f318f1b1924ca33f389cfde28abebc83022dc97e6d84ce1937f02708da3d",
+      "bytes": 192
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

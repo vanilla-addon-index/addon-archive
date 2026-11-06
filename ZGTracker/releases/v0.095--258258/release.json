@@ -1,0 +1,9 @@
+{
+  "id": "258258",
+  "tag": "v0.095",
+  "name": "ZGTracker v0.095",
+  "body": "**ZGTracker** is a \"World of Warcraft Addon\" to tracks Zul'Gurub Bijous and Coins lootage.\n\nFeatures:\n- Raid Announcements for Bijous/Coins, Zandalar reputation and Money.\n- InfoLines colored-by-class.\n- Roll-Automation (Auto Need/Greed/Pass on bijous and coins).\n- Roll-Spam filtering (you can even suppress the AutoRoll message now!).\n- Looted Money tracking.\n- Money-Spam filtering.\n- Zandalar reputation tracking.\n- Fubar2 Support.\n\nHope you will enjoy it!\n\n> `*NOTE 1*`\n> \n> Remeber to rename the extracted directory (from the zip).\n> From `ZGTracker-0.095` to `ZGTracker`\n> before copying it in your Interface\\Addons directory.\n> \n> `*NOTE 2*`\n> \n> It might be needed to delete the adddon setting file.\n> Such file is a per-character file, located in:\n> `X:\\WoW_Directory\\WTF\\Account\\ACCOUNT\\SERVER\\CHARACTER\\SavedVariables\\`\n> The file is called `ZGTracker.lua`\n",
+  "published": "2014-04-05T12:54:05Z",
+  "prerelease": false,
+  "url": "https://github.com/rsheep/ZGTracker/releases/tag/v0.095"
+}

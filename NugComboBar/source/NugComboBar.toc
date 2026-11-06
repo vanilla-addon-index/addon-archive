@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: NugComboBar
+## Notes: Combo points bar replacement.
+## Author: d87
+## SavedVariables: NugComboBarDB
+
+NugComboBar.xml

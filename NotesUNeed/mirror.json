@@ -1,0 +1,89 @@
+{
+  "upstream": "https://github.com/Scoboose/NotesUNeed-Turtle",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Scoboose",
+    "repo": "NotesUNeed-Turtle",
+    "name": "NotesUNeed-Turtle",
+    "url": "https://github.com/Scoboose/NotesUNeed-Turtle",
+    "api": "https://api.github.com/repos/Scoboose/NotesUNeed-Turtle"
+  },
+  "commit": "0f35ca358bc0ea052bd4ce38bd1a13f977dd37ef",
+  "sourceFiles": {
+    "Artwork/Disabled.blp": {
+      "sha256": "d4580b14408560c822f0cf891f7fd3816601cfb983e7d31301951bca80060061",
+      "bytes": 1540
+    },
+    "Artwork/MagGlass.blp": {
+      "sha256": "1e919cdf027fc57af3f3306c45d7bd8217b57b7ca95c13759ffe8e5ccb735994",
+      "bytes": 2564
+    },
+    "Artwork/NuN-AButton-Down.blp": {
+      "sha256": "5effd813f0948296cfb26d18ec4dbe1941ba88d2ff9518e020955cf13008cab8",
+      "bytes": 2564
+    },
+    "Artwork/NuN-AButton-Up.blp": {
+      "sha256": "b4ffb1668e5b837ac12a92d8482bc5466c149bdabee6c7fb0b362b72bf52d68c",
+      "bytes": 2564
+    },
+    "Artwork/NuN-HButton-Down.blp": {
+      "sha256": "11759431be5c50274a29c04b14d23baad025ae6ae035a9f30f54e863a5fee5f4",
+      "bytes": 2564
+    },
+    "Artwork/NuN-HButton-Up.blp": {
+      "sha256": "c60136813d4c5d639fda969d6dbe9d3a6769fbbcf6caf422d95360e2c29a4e7b",
+      "bytes": 2564
+    },
+    "Artwork/NuNScale.blp": {
+      "sha256": "ddc6142f697b5834fba1e35fe37518507598c84368b6539f3d1c1717329f2a0a",
+      "bytes": 1540
+    },
+    "Artwork/tAlliance.blp": {
+      "sha256": "89cc55c70af4222e36aec95f3ef3b1d52e911a0d7cc43a4445d04f255f761d05",
+      "bytes": 2564
+    },
+    "Artwork/Texture1.blp": {
+      "sha256": "8ff0a34864619cd31a3e6aa68e54a01d01db025217029f4a47666403583df8c0",
+      "bytes": 88580
+    },
+    "Artwork/tHorde.blp": {
+      "sha256": "aab1f1bb482d051ffa10a0aedf76a3f9483368ed97c7a77399562b4494ca06a9",
+      "bytes": 2564
+    },
+    "Artwork/tNote.blp": {
+      "sha256": "d93f4ba7639f236550774b0ef845beda2cae6f973c7bfb87a4dfde3ea9e5269c",
+      "bytes": 1356
+    },
+    "Bindings.xml": {
+      "sha256": "2f16b8954516cb873e0b126650ab4b89626611f377a5694128007b5fc36c7456",
+      "bytes": 646
+    },
+    "Localisation.de.lua": {
+      "sha256": "1794c5d6cc1d5817e4ca400117996459b29fbd2a1c2aa44a1674e936e473df2b",
+      "bytes": 22582
+    },
+    "Localisation.lua": {
+      "sha256": "5f0a4feed9f79062d254e877bb07a49f0277b4ac8949c45e5aa4aec18bce259f",
+      "bytes": 18451
+    },
+    "NotesUNeed.lua": {
+      "sha256": "c13d068eccb67f1beaeea3bec48b66eaff04e98f4ce5bd8ccb41124b5ddb66a0",
+      "bytes": 213165
+    },
+    "NotesUNeed.toc": {
+      "sha256": "91b115c88b0a334d47681a9f61484b9fbbea1e739e28b5a7453bc4bc3728a579",
+      "bytes": 875
+    },
+    "NotesUNeed.xml": {
+      "sha256": "8283e73ba2f2b37b5c81d1fdd3693653e3333d7613654ca727cae93a769faa51",
+      "bytes": 158475
+    },
+    "Readme.txt": {
+      "sha256": "0fbd475619b53790a88e3512165fb1c1de76c47ae4264a41c272947b69c4bd3f",
+      "bytes": 47311
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

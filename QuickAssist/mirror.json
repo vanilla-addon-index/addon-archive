@@ -1,0 +1,33 @@
+{
+  "upstream": "https://octowow.st/git/Armadel/QuickAssist",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Armadel",
+    "repo": "QuickAssist",
+    "name": "QuickAssist",
+    "url": "https://octowow.st/git/Armadel/QuickAssist",
+    "api": "https://octowow.st/git/api/v1/repos/Armadel/QuickAssist"
+  },
+  "commit": "4b66beb97c405cc9d8a899299b9ec3b527f484ba",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "f597ebfa0c862c9ab8ec3ba05ff8b4951dfbbadc0223ca2a1d404575ac7b6fc5",
+      "bytes": 423
+    },
+    "QuickAssist.lua": {
+      "sha256": "5c2ec580342ba100df6dd2c93ae0677ede0ad8843b7b11222113796c83f4d6f1",
+      "bytes": 4835
+    },
+    "QuickAssist.toc": {
+      "sha256": "2eb0a3cf87c166fb515366807aa9c1ef8da713cb6b6a123b3f895e2b5a60b991",
+      "bytes": 178
+    },
+    "README.md": {
+      "sha256": "a38d6d20f3daf8c2b62a9a6e0cc8dea0ecbb0b40fe13e18e69167f3b958ced73",
+      "bytes": 2125
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

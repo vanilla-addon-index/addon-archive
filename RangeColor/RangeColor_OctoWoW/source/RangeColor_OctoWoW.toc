@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: RangeColor_OctoWoW
+## Notes: Changes the icon color and/or HotKey text color when the skill is out of range, has no mana or isn't usable.
+## Author: Edswor, adapted for OctoWoW by livians + DeepSeek 4 pro
+## OptionalDeps: myAddOns
+## SavedVariablesPerCharacter: RangeColor_Save2
+RangeColor.xml
+RangeColorOptions.xml
+

@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: !OptionsFrameFix
+## Notes: Fixes the nil xindex error in OptionsFrame.lua and provides resolution filtering.
+## Author: Jhinzuo + veechs (original Author of !ScreenResolutionDropdownFix)
+
+!OptionsFrameFix.lua

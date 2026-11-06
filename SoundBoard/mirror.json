@@ -1,0 +1,137 @@
+{
+  "upstream": "https://github.com/FSuhas/SoundBoard",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "FSuhas",
+    "repo": "SoundBoard",
+    "name": "SoundBoard",
+    "url": "https://github.com/FSuhas/SoundBoard",
+    "api": "https://api.github.com/repos/FSuhas/SoundBoard"
+  },
+  "commit": "643be948143f8cdc513bc73c8aba1fb3513c6782",
+  "sourceFiles": {
+    "Changelog": {
+      "sha256": "cc99726a3560e91d8373da26537a6a6672cacda034ecaef3fff2bf8b5f3e3e67",
+      "bytes": 415
+    },
+    "image.png": {
+      "sha256": "c0ee81218e702a67947a356d4409581227932174faaa0798296b1420ed70c69a",
+      "bytes": 73075
+    },
+    "README.md": {
+      "sha256": "ae41b81197a4241b91b7ceac39c6270a55384f29a6891a947c96f60fbdf69528",
+      "bytes": 1400
+    },
+    "SoundBoard_Comms.lua": {
+      "sha256": "8f6e8b47d5d8bb6b10ed4b55ea8e3f11bbe30ba582d72d10f7d6d310918a0a36",
+      "bytes": 1120
+    },
+    "SoundBoard_Sounds.lua": {
+      "sha256": "9ac8cd5be46998c6d0bf9ef268033c3e711644988e3bb19bab5e992c00c5d4c4",
+      "bytes": 1587
+    },
+    "SoundBoard_UI.lua": {
+      "sha256": "471e20e3790225b1ca4bd4732c25bc4bf470da9941f6d41d4b9adf346e951b95",
+      "bytes": 6549
+    },
+    "SoundBoard.lua": {
+      "sha256": "d3347fc694f976f44f821e92ceaed93bc2d7e6da68e2e6b116fa09c42c114f6f",
+      "bytes": 3190
+    },
+    "SoundBoard.toc": {
+      "sha256": "e9bd477e159a66614aaba4898bef3493af0d6bd14c5e7946cf201b8a40baaef0",
+      "bytes": 255
+    },
+    "Sounds/alerte.mp3": {
+      "sha256": "ce7c7055216c93dee0555ab422ee7c4cafdba2c7180d3faba12c242a58009e0d",
+      "bytes": 38452
+    },
+    "Sounds/buzzer.ogg": {
+      "sha256": "3650cd926851d2ac4e9675300bd1a28a7212bd1cc0a7d40aa0f384426b4f647b",
+      "bytes": 19959
+    },
+    "Sounds/cat.mp3": {
+      "sha256": "a35a80e561c1bc7a6acd647cd0e0149a923ce574ba494da4d29a3644c9a40184",
+      "bytes": 17763
+    },
+    "Sounds/claps.mp3": {
+      "sha256": "65351faabbd4556856842528ccb78d1afd81a159b609162b53c599644b7c889b",
+      "bytes": 69600
+    },
+    "Sounds/coin.ogg": {
+      "sha256": "2ae8d24554da592078caf5442a1efd515fb265fc9eaded90cbfed860e3b836db",
+      "bytes": 5803
+    },
+    "Sounds/cow.mp3": {
+      "sha256": "6b7e13ff196dc618cb56c9d7968bf7b2cd9c146d8214f3d9ee862b85ee10bc8c",
+      "bytes": 81084
+    },
+    "Sounds/ding.ogg": {
+      "sha256": "ad84defec99a0453a14047d0c1c5ad7456aa42b51a1416c8a5497e44027be3a8",
+      "bytes": 31587
+    },
+    "Sounds/error.mp3": {
+      "sha256": "966ebeb3215795288c6473235cf4a0c9f8312283409dc34d7a28fb935c2c8eab",
+      "bytes": 23040
+    },
+    "Sounds/fail.mp3": {
+      "sha256": "6499739fe6ec26745d378a929f7d01195abe2dc57a380926a1da6b5c9304a100",
+      "bytes": 92928
+    },
+    "Sounds/fart.ogg": {
+      "sha256": "c109e14759ab72d7e13b4a5a931772483905f51d9bf43eef42f150a2fd8f39ed",
+      "bytes": 7717
+    },
+    "Sounds/game-over.mp3": {
+      "sha256": "ecc55585c679ec406e949557a1fb7cf9cc8f3dfc6711122c7a682cb058d5f870",
+      "bytes": 67584
+    },
+    "Sounds/huh.mp3": {
+      "sha256": "e4464206d33cd0b0f588a7e82a1f0434e3d43b35d1e070fdc143d54dbcb59dbc",
+      "bytes": 33792
+    },
+    "Sounds/lets-go.mp3": {
+      "sha256": "4f58f67e78ddc57c923fe15d644bdad37d6410add275e6487c298415246f249f",
+      "bytes": 33792
+    },
+    "Sounds/minion.mp3": {
+      "sha256": "d7a35c3e65cb091021690d92d7ae027dacd2220af0af273d4c3b3cf137d1770b",
+      "bytes": 35527
+    },
+    "Sounds/mouhahaha.ogg": {
+      "sha256": "5bb62a5c731f5f4f3c4239e9a44caea5aae17ed9516203834c0e9f20506ff9e7",
+      "bytes": 24045
+    },
+    "Sounds/putri.mp3": {
+      "sha256": "d1010999ad5a1739014f0f7d02690e4a3812364106be161336d60c9640243a27",
+      "bytes": 45975
+    },
+    "Sounds/running.mp3": {
+      "sha256": "68624765d88042118e2be093eb8c79ac4ff7456093bfa4d7da3fa161ec37e650",
+      "bytes": 103680
+    },
+    "Sounds/sheep.mp3": {
+      "sha256": "45d71dc726720bddae0b0f5df426bc3c0fec6c3539a3e8996bbc79d4116667a0",
+      "bytes": 58368
+    },
+    "Sounds/war.mp3": {
+      "sha256": "b2646489ab9a83694a5bab18acae020e2b53e4df6b7f7acdc5f5469b3c6c3e01",
+      "bytes": 69888
+    },
+    "Sounds/whip.mp3": {
+      "sha256": "7f35d7cc07d52d3cb770f9b85d06feee41339e9234ea11f7e5510752c08b8a7b",
+      "bytes": 61440
+    },
+    "Sounds/wow.ogg": {
+      "sha256": "728c287d4a1de2753009be18591c470ef7052a0ddc5de363503f71666a42b133",
+      "bytes": 20067
+    },
+    "Sounds/yeah-boy.mp3": {
+      "sha256": "265e93add5a23c6ef6ebbb0a6c467976d4ee4818317b653a90194f635213cc9b",
+      "bytes": 61440
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/Faraso/WarriorCombatManager",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Faraso",
+    "repo": "WarriorCombatManager",
+    "name": "WarriorCombatManager",
+    "url": "https://github.com/Faraso/WarriorCombatManager",
+    "api": "https://api.github.com/repos/Faraso/WarriorCombatManager"
+  },
+  "commit": "1b4f2a4d775f7035483746f9d1f294397a84a989",
+  "sourceFiles": {
+    "Core.lua": {
+      "sha256": "42321282224a23047851540b33e8918f5951f5b76e347b6eef87a748063c2de9",
+      "bytes": 65128
+    },
+    "README.md": {
+      "sha256": "ccc24c6574fbf8494c9845d9a5b30d6ed94cb99af9065270f4c9e8eb053d2203",
+      "bytes": 6718
+    },
+    "WarriorCombatManager.toc": {
+      "sha256": "0ca8f22ceff503a32b6f23d4d1e16abf7b958e8791bddeaa03b6ccbbc6488248",
+      "bytes": 226
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "272841212": {
+      "tag": "v0.1.0",
+      "folder": "v0.1.0--272841212",
+      "assets": {},
+      "source": {
+        "sha256": "ae88e8fa518bb567525ac3ca298e9dfff4aa0aee6e3de4fb279a4ad8131554d9",
+        "bytes": 14691,
+        "path": "releases/v0.1.0--272841212/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Faraso/WarriorCombatManager/tarball/v0.1.0"
+      }
+    }
+  }
+}

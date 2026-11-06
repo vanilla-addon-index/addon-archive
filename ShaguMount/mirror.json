@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/shagu/ShaguMount",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguMount",
+    "name": "ShaguMount",
+    "url": "https://github.com/shagu/ShaguMount",
+    "api": "https://api.github.com/repos/shagu/ShaguMount"
+  },
+  "commit": "e688d31e6f7792728d2e9adf5c33bc8d48f72e75",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "ac9c2e747791fc73da1cfe413ff648fa79af3580a249b44302acb828b99c462f",
+      "bytes": 892
+    },
+    "ShaguMount.lua": {
+      "sha256": "35de8f7fe06c2e9724b61061efd621f697e24b5a145624e3873f70e4460c7687",
+      "bytes": 1365
+    },
+    "ShaguMount.toc": {
+      "sha256": "a0c48039a93c4adfcdf2007099d01b755a0f2fce7e34d260f79c77f2274b5c7c",
+      "bytes": 216
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,109 @@
+{
+  "upstream": "https://github.com/shagu/pfStudio",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "pfStudio",
+    "name": "pfStudio",
+    "url": "https://github.com/shagu/pfStudio",
+    "api": "https://api.github.com/repos/shagu/pfStudio"
+  },
+  "commit": "01e1dacf6c63d7920dcbb22dc32c624f6bc36f78",
+  "sourceFiles": {
+    "api/windget.lua": {
+      "sha256": "3506e7087b2b6da1fd6a495b07305501a92fb68872758b0da45a3240e5d8c804",
+      "bytes": 8180
+    },
+    "fonts/Envy-Code-R.ttf": {
+      "sha256": "1b6eeeb2363e77e19e265310d5af35d478f4570b6a61d0fda4638c8214c3632d",
+      "bytes": 89924
+    },
+    "fonts/PT-Sans-Narrow-Bold.ttf": {
+      "sha256": "e69d83bcf5bd647892b4e2b22f5098dabd55c989413513197722fc156fb9f00e",
+      "bytes": 487720
+    },
+    "img/bg.tga": {
+      "sha256": "1d7cbb69a2e6a892c021790d8fc046015c52f26a1f2bb0713a9ca5dcd1503175",
+      "bytes": 76
+    },
+    "img/border.tga": {
+      "sha256": "f2c742e15508c0df6f9c8c0a55d0725fc249bf996bcbf4607f41592d25810d32",
+      "bytes": 660
+    },
+    "img/close.tga": {
+      "sha256": "1687f87f9545bba213a0dcf736ff068e930dbf90d4051b386dd5d44e5d305c7c",
+      "bytes": 1068
+    },
+    "img/debug.tga": {
+      "sha256": "d2d089f395c193c3d948633a755bcd4e6272f5d1933864de3db594f094d2a62a",
+      "bytes": 1068
+    },
+    "img/delete.tga": {
+      "sha256": "43df2db0ca15fa52516d681f4bb3396ffe02183acfd70c0330c033eafe4717f6",
+      "bytes": 1068
+    },
+    "img/editor.tga": {
+      "sha256": "90503d0e22c856b4f1cf738a321233c6e4db24de040239d83af7dcb96d0a3f25",
+      "bytes": 1068
+    },
+    "img/events.tga": {
+      "sha256": "d6a52697ae5e697f3124fca231754bcc8db52d40e4a734211d3f19a5c51179a5",
+      "bytes": 1068
+    },
+    "img/info.tga": {
+      "sha256": "ec0eebfdd3e33f439ff6d6bac25c7f548af6f1273c7d3b799a239525a25861c0",
+      "bytes": 1068
+    },
+    "img/max.tga": {
+      "sha256": "bfeb2f2488491002f6043affc98e0b394f1bfd1afbb1a6e7fc494d07dbf69390",
+      "bytes": 1068
+    },
+    "img/min.tga": {
+      "sha256": "0c898e4d88745a28db9fa70993ecc036efa233aafb5809d2fb5c1e4884726429",
+      "bytes": 1068
+    },
+    "img/run.tga": {
+      "sha256": "9e2253a8c9287a868051e5e296dd4a5e87cedf6fee13f58ed5d677431259245c",
+      "bytes": 1068
+    },
+    "img/time.tga": {
+      "sha256": "17d50f8544d791890670b8cacd5a6c4ac3be9c3a3123fd97ecf6726c6335cf2e",
+      "bytes": 1068
+    },
+    "LICENSE": {
+      "sha256": "55fcc644107825bdfe92401fc13e985f77314140c0b951a9c5261d6b197a9fcb",
+      "bytes": 1078
+    },
+    "modules/debug.lua": {
+      "sha256": "4615249a82463045790f7018cb54ef1d38efb134403b111fb04480ce8de992bc",
+      "bytes": 1277
+    },
+    "modules/editor.lua": {
+      "sha256": "90df9f16c24dac91d5883b57556e3d1daab86f08b7f056a843ccdf2206821664",
+      "bytes": 7376
+    },
+    "modules/events.lua": {
+      "sha256": "c124ece1ed5da38d5f366c77357a96b3fab397a81d93cdf9c06cf0d47e627ffc",
+      "bytes": 1966
+    },
+    "modules/toolbar.lua": {
+      "sha256": "41f761a727acb21be65b279c9ddac7285d522e85442fff78ced3104cb39db821",
+      "bytes": 1871
+    },
+    "pfStudio.lua": {
+      "sha256": "1d7cb601b6681f20af309e35826cda16b4bcef7889446e7846c76f4980a4d759",
+      "bytes": 3624
+    },
+    "pfStudio.toc": {
+      "sha256": "ce808fa28e1f9a6b05f9feafbcfefa3e162d6d5bd9a49292a23590e11d1784d6",
+      "bytes": 326
+    },
+    "README.md": {
+      "sha256": "a7ca6fa8664f5c56eaf0bbf3761f8ed4c78b51e30fed3f8c660d348325949791",
+      "bytes": 1140
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

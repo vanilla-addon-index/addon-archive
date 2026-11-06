@@ -1,0 +1,6 @@
+## Interface: 20400 
+## Title: |cff33ffccShagu|cffffffffClock
+## Author: Shagu
+## Notes: Draws a movable clock on the screen
+## Version: 0.1
+ShaguClock.lua

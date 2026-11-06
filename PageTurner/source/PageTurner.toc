@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: PageTurner
+## Notes: Scrolls pages in paged windows using the mouse wheel.
+## Author: ZythDr
+## Version: 1.0
+
+
+PageTurner.lua

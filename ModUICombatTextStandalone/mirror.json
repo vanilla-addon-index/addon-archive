@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/dogmax/ModUICombatTextStandalone",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "dogmax",
+    "repo": "ModUICombatTextStandalone",
+    "name": "ModUICombatTextStandalone",
+    "url": "https://github.com/dogmax/ModUICombatTextStandalone",
+    "api": "https://api.github.com/repos/dogmax/ModUICombatTextStandalone"
+  },
+  "commit": "0a92ff158429c04d55404e3350225618c9f56dee",
+  "sourceFiles": {
+    "ct.lua": {
+      "sha256": "530c61339777011ec788e5be549689e3d3f4252077fe6a9c86c2c5c4be149283",
+      "bytes": 11357
+    },
+    "globals/vars.lua": {
+      "sha256": "b6aaeb82f4d0f6f5488b1ca92c519c8d9b8e94c3471107b65b3ce480ee045bc5",
+      "bytes": 737
+    },
+    "ModUICombatTextStandalone.toc": {
+      "sha256": "8850c6a217dbcb1891279bc4c37f4a964a1e9bbc9930a252422a851705d95413",
+      "bytes": 214
+    },
+    "readme.md": {
+      "sha256": "24458e578315472799eeca7c43fada118332426766b9c1fa31b2aa751d3cf393",
+      "bytes": 331
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

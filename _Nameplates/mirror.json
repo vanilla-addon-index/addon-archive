@@ -1,0 +1,64 @@
+{
+  "upstream": "https://github.com/Road-block/wow-saiket/tree/_Nameplates",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "wow-saiket",
+    "name": "wow-saiket",
+    "ref": "_Nameplates",
+    "subpath": "",
+    "url": "https://github.com/Road-block/wow-saiket",
+    "api": "https://api.github.com/repos/Road-block/wow-saiket"
+  },
+  "commit": "9502717bd7894c2a38526416f3af104848d23304",
+  "sourceFiles": {
+    "_Nameplates.lua": {
+      "sha256": "76cabd563f06aa3448d2aa2049f9c5f991b024579d5a4d2795c975a4ba70923a",
+      "bytes": 29772
+    },
+    "_Nameplates.toc": {
+      "sha256": "8a8f83953f221ca7955a1788a0ec9c66f582e3498f2acc57e719c76d5d1ef4a7",
+      "bytes": 307
+    },
+    "_Nameplates.xml": {
+      "sha256": "539f72d1428ab71545f667407868ea7ffcaa727b548eadc49055c7525ddd2c55",
+      "bytes": 4765
+    },
+    "Localization.lua": {
+      "sha256": "e02bdca91b529f9fb0ba33a24dd924ff8f498d84ef60d03368e4049c2471366b",
+      "bytes": 880
+    },
+    "Skin/HorizontalBar.tga": {
+      "sha256": "da150030f996164f3914f4d4523da3336ca918e0fff51d1724d0bc4e5497dfd5",
+      "bytes": 124
+    },
+    "Skin/VerticalBar.tga": {
+      "sha256": "fae6630958c12a7ea8b6de6c0f66ebd73dfc44de7e502dd8178804ec68785374",
+      "bytes": 444
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "2404947": {
+      "tag": "_Nameplates-1.12.4",
+      "folder": "_Nameplates-1.12.4--2404947",
+      "assets": {
+        "1199371": {
+          "sha256": "1d7c5eb5a35c201cd043e4db9d0723f03f46bb8781f8d1fb5bac2cb3b457bbac",
+          "bytes": 8569,
+          "id": "1199371",
+          "name": "_Nameplates-1.12.4.zip",
+          "url": "https://github.com/Road-block/wow-saiket/releases/download/_Nameplates-1.12.4/_Nameplates-1.12.4.zip",
+          "path": "releases/_Nameplates-1.12.4--2404947/assets/_Nameplates-1.12.4.zip"
+        }
+      },
+      "source": {
+        "sha256": "9ebde7fe0e3b48dc38f9bdee9ad3896706846decbaea669d5d76811a61bf8c2a",
+        "bytes": 7406,
+        "path": "releases/_Nameplates-1.12.4--2404947/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/wow-saiket/tarball/_Nameplates-1.12.4"
+      }
+    }
+  }
+}

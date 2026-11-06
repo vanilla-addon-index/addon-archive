@@ -1,0 +1,64 @@
+{
+  "upstream": "https://gitlab.com/woblight/nitro/-/tree/vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "gitlab.com",
+    "owner": "woblight",
+    "repo": "nitro",
+    "name": "nitro",
+    "ref": "vanilla",
+    "subpath": "",
+    "url": "https://gitlab.com/woblight/nitro",
+    "api": "https://gitlab.com/api/v4/projects/woblight%2Fnitro"
+  },
+  "commit": "aac5bac8e8a7cdffb553cd7672f8ef4364d24064",
+  "sourceFiles": {
+    "Nitro.lua": {
+      "sha256": "643b7cbaf4f0e1e96ac8fe1c512665b9897b90b5f2f8ca73b3df4109611a25da",
+      "bytes": 10467
+    },
+    "Nitro.toc": {
+      "sha256": "b3298d6706becfe495928279c30c3c62330e730691b49f44b755872954202608",
+      "bytes": 215
+    },
+    "nitro1.tga": {
+      "sha256": "a43860a1a3f0ef50c4fc4648a26ca665c37b7e08394a0a309eea08ca7b366f04",
+      "bytes": 55780
+    },
+    "nitro2.tga": {
+      "sha256": "563b5ae3a93b2109325c98c32fd0031722a9080a37cd42ce61152eccc7da37c5",
+      "bytes": 38316
+    },
+    "NitroIndicator.tga": {
+      "sha256": "96f9ff07acedf370e75b3fb9b3815ed162ccdbae1e177254e0da4d2d00a1570b",
+      "bytes": 4810
+    },
+    "README.md": {
+      "sha256": "b50888bb940969b6540af22fd57df1c01b4626ffdfbdf37a07ec173dbf671888",
+      "bytes": 261
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "undefined": {
+      "tag": "v1.0-0-gddcb65a",
+      "folder": "v1.0-0-gddcb65a--undefined",
+      "assets": {
+        "227024": {
+          "sha256": "685484f3b4bcbdfdeb51a886199bdf5f07202d3097895a12f599617e7b673828",
+          "bytes": 41440,
+          "id": "227024",
+          "name": "Nitro",
+          "url": "https://gitlab.com/woblight/nitro/-/releases/v1.0-0-gddcb65a/downloads/Nitro",
+          "path": "releases/v1.0-0-gddcb65a--undefined/assets/Nitro"
+        }
+      },
+      "source": {
+        "sha256": "41da33c6fccdd9458f8b191f02f6be53a0f365eef4741d3ef8c78880a1fb2630",
+        "bytes": 38091,
+        "path": "releases/v1.0-0-gddcb65a--undefined/upstream-source.tar.gz",
+        "url": "https://gitlab.com/api/v4/projects/woblight%2Fnitro/repository/archive.tar.gz?sha=v1.0-0-gddcb65a"
+      }
+    }
+  }
+}

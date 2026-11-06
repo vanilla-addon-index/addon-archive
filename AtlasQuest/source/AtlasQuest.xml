@@ -1,0 +1,749 @@
+<!--
+	
+	AtlasQuest, a World of Warcraft addon.
+	Email me at m4r3lk4@gmail.com
+	
+	This file is part of AtlasQuest.
+	
+	AtlasQuest is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 2 of the License, or
+	(at your option) any later version.
+	
+	AtlasQuest is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with AtlasQuest; if not, write to the Free Software
+	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+	
+-->
+
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<Script file="AtlasQuest.lua" />
+
+	<Button name="AtlasQuestButtonTemplate" virtual="true" hidden="true">
+		<Size x="165" y="20"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentHighlight" file="Interface\QuestFrame\UI-QuestTitleHighlight" hidden="true" alphaMode="ADD" setAllPoints="true"/>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="$parentIcon" file="Interface\Glues\Login\UI-BackArrow">
+					<Size x="15" y="15"/>
+					<Anchors>
+						<Anchor point="LEFT" >
+							<Offset x="0" y="0"/>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<ButtonText name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT">
+			<Size x="165" y="20"/>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset x="15" y="0"/>
+				</Anchor>
+			</Anchors>
+		</ButtonText>
+		<NormalFont inherits="GameFontNormalSmall" justifyH="LEFT"/>
+		<HighlightFont inherits="GameFontHighlightSmall" justifyH="LEFT"/>
+		<DisabledFont inherits="GameFontHighlightSmall" justifyH="LEFT"/>
+		<Scripts>
+			<OnLoad>
+				RaiseFrameLevel(this);
+			</OnLoad>
+			<OnClick>
+				AtlasQuestButton_OnClick(arg1);
+			</OnClick>
+		</Scripts>
+	</Button>
+
+	<Button name="AtlasQuestItemframeTemplate" virtual="true">
+		<Size x="236" y="30"/>
+		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="$parent_Icon">
+					<Size x="30" y="30"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT"/>
+					</Anchors>
+				</Texture>
+				<FontString name="$parent_Name" inherits="GameFontNormal" justifyH="LEFT">
+					<Size x="205" y="16"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parent_Icon" relativePoint="TOPRIGHT">
+							<Offset x="3" y="0"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parent_Extra" inherits="GameFontNormalSmall" justifyH="LEFT">
+					<Size x="205" y="16"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parent_Name" relativePoint="BOTTOMLEFT"/>
+					</Anchors>
+				</FontString>
+				<FontString name="$parent_Count" inherits="NumberFontNormal" justifyH="RIGHT" hidden="true">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" relativeTo="$parent_Icon">
+							<Offset x="-2" y="2"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="$parent_IconBorder" file="Interface\AddOns\AtlasQuest\border">
+					<Size x="37" y="37"/>
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent_Icon"/>
+					</Anchors>
+					<Color r="1" g="1" b="1" a="1"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnEnter>
+				AtlasQuestItem_OnEnter();
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide();
+			</OnLeave>
+			<OnClick>
+				AtlasQuestItem_OnClick(arg1);
+			</OnClick>
+		</Scripts>
+	</Button>
+
+	<!-- AtlasQuest Inside Atlas frame -->
+	<Frame name="AtlasQuestInsideFrame" toplevel="true" enableMouse="true" parent="AtlasFrame">
+		<Size x="510" y="510"/>
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset x="18" y="-84"/>
+			</Anchor>
+		</Anchors>
+		<Frames>
+			<Button name="AtlasQuestItemframe1" inherits="AtlasQuestItemframeTemplate" id="1">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset x="20" y="120"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AtlasQuestItemframe2" inherits="AtlasQuestItemframeTemplate" id="2">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset x="266" y="120"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AtlasQuestItemframe3" inherits="AtlasQuestItemframeTemplate" id="3">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset x="20" y="70"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AtlasQuestItemframe4" inherits="AtlasQuestItemframeTemplate" id="4">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset x="266" y="70"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AtlasQuestItemframe5" inherits="AtlasQuestItemframeTemplate" id="5">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset x="20" y="20"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AtlasQuestItemframe6" inherits="AtlasQuestItemframeTemplate" id="6">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset x="266" y="20"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parentCloseButton" inherits="UIPanelCloseButton">
+				<Size x="30" y="30"/>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset x="-5" y="-3"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<CheckButton name="$parentFinishedButton" inherits="UICheckButtonTemplate" checked="false">
+				<Size x="25" y="25"/>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset x="-20" y="-45"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						AQFinishedAtlasQuestButton_OnClick();
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<Button name="$parentNextPage" hidden="true">
+				<Size x="40" y="40"/>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset x="45" y="10"/>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\Glues\Common\Glue-RightArrow-Button-Up"/>
+				<PushedTexture file="Interface\Glues\Common\Glue-RightArrow-Button-Down"/>
+				<HighlightTexture file="Interface\Glues\Common\Glue-RightArrow-Button-Highlight" alphaMode="ADD"/>
+				<Scripts>
+					<OnLoad>
+						RaiseFrameLevel(this);
+					</OnLoad>
+					<OnClick>
+						AQNextPage_OnClick();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentPrevPage" hidden="true">
+				<Size x="40" y="40"/>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset x="-45" y="10"/>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\Glues\Common\Glue-LeftArrow-Button-Up"/>
+				<PushedTexture file="Interface\Glues\Common\Glue-LeftArrow-Button-Down"/>
+				<HighlightTexture file="Interface\Glues\Common\Glue-LeftArrow-Button-Highlight" alphaMode="ADD"/>
+				<Scripts>
+					<OnLoad>
+						RaiseFrameLevel(this);
+					</OnLoad>
+					<OnClick>
+						AQPrevPage_OnClick();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentBackground">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT"/>
+						<Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="BOTTOMRIGHT"/>
+					</Anchors>
+					<Color r="0" g="0" b="0" a="0.75"/>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString name="$parentQuestName" inherits="SystemFont">
+					<Size x="400" y="12"/>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset x="0" y="-20"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentQuestLevel" inherits="GameFontHighlight" justifyH="LEFT" justifyV="TOP">
+					<Size x="400" y="12"/>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset x="20" y="-50"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentAttainLevel" inherits="GameFontHighlight" justifyH="LEFT" justifyV="TOP">
+					<Size x="400" y="12"/>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset x="140" y="-50"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentQuestInfo" inherits="GameFontHighlight" justifyH="LEFT" justifyV="TOP">
+					<Size x="470" y="500"/>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset x="20" y="-75"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentStoryText" inherits="GameFontHighlight" justifyH="LEFT" justifyV="TOP">
+					<Size x="410" y="450"/>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset x="50" y="-50"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentRewardText" inherits="GameFontHighlight" justifyH="LEFT" justifyV="TOP" >
+					<Size x="400" y="12"/>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT">
+							<Offset x="20" y="155"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentFinishedText" inherits="GameFontHighlight" justifyH="RIGHT" justifyV="TOP">
+					<Size x="150" y="12"/>
+					<Anchors>
+						<Anchor point="TOPRIGHT">
+							<Offset x="-50" y="-50"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentPagesText" inherits="SystemFont" justifyV="TOP">
+					<Size x="50" y="20"/>
+					<Anchors>
+						<Anchor point="BOTTOM">
+							<Offset x="0" y="18"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnHide>
+				AtlasQuestInsideFrame_OnHide()
+			</OnHide>
+		</Scripts>
+	</Frame>
+
+	<Button name="AtlasQuestButton" parent="AtlasFrame" inherits="UIPanelButtonTemplate2" text="AtlasQuest">
+		<Size x="90" y="20"/>
+		<Anchors>
+			<Anchor point="TOPRIGHT">
+				<Offset x="-130" y="-60"/>
+			</Anchor>
+		</Anchors>
+		<Scripts>
+			<OnClick>
+				AQCLOSE_OnClick();
+			</OnClick>
+		</Scripts>
+	</Button>
+
+	<!-- Option panel -->
+	<Frame name="AtlasQuestOptionFrame" enableMouse="true" movable="true" hidden="true" parent="UIParent" toplevel="true" frameStrata="DIALOG" enableKeyboard="true">
+		<Size x="300" y="150"/>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets left="11" right="12" top="12" bottom="11"/>
+			<TileSize val="32"/>
+			<EdgeSize val="32"/>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="$parentHeader" file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size x="320" y="64"/>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset x="0" y="14"/>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="$parent_Title" inherits="GameFontNormal">
+					<Anchors>
+						<Anchor point="TOP"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<CheckButton name="AQAutoshowOption" inherits="OptionsCheckButtonTemplate">
+				<Size x="30" y="30"/>
+				<HitRectInsets left="0" right="0" top="0" bottom="0"/>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="20" y="-28"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						AQAutoshowOption_OnClick();
+						PlaySound("igMainMenuOptionCheckBoxOn")
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="AQLEFTOption" inherits="OptionsCheckButtonTemplate">
+				<Size x="30" y="30"/>
+				<HitRectInsets left="0" right="0" top="0" bottom="0"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="AQAutoshowOption" relativePoint="BOTTOMLEFT">
+						<Offset x="0" y="4"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						AQLEFTOption_OnClick();
+						PlaySound("igMainMenuOptionCheckBoxOn")
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="AQRIGHTOption" inherits="OptionsCheckButtonTemplate" checked="true">
+				<Size x="30" y="30"/>
+				<HitRectInsets left="0" right="0" top="0" bottom="0"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="AQLEFTOption" relativePoint="BOTTOMLEFT">
+						<Offset x="0" y="4"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						AQRIGHTOption_OnClick();
+						PlaySound("igMainMenuOptionCheckBoxOn")
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<Button name="AQOptionCloseButton" inherits="OptionsButtonTemplate" text="OKAY">
+				<Size x="80" y="20"/>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset x="0" y="15"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						AtlasQuestOptionFrame:Hide();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+				this:SetMovable(1);
+			</OnLoad>
+			<OnShow>
+				AtlasQuestOptionFrame_OnShow()
+			</OnShow>
+			<OnDragStart>
+				this:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+			</OnDragStop>
+		</Scripts>
+	</Frame>
+	
+	<!-- AtlasQuest Panel-->
+	<Frame name="AtlasQuestFrame" toplevel="false" enableMouse="true" movable="false" parent="AtlasFrame">
+		<Size x="220" y="590"/>
+		<Anchors>
+			<Anchor point="TOP" relativeTo="AtlasFrame">
+				<Offset x="-556" y="-20"/>
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\Buttons\WHITE8x8" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<EdgeSize val="32"/>
+			<TileSize val="32"/>
+			<BackgroundInsets left="5" right="5" top="5" bottom="5"/>
+			<Color r="0" g="0" b="0" a="0.7"/>
+		</Backdrop>
+		<Frames>
+			<Button name="$parentCloseButton" inherits="UIPanelCloseButton">
+				<Size x="27" y="27"/>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="10" y="-10"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parentOptionsButton" inherits="OptionsButtonTemplate">
+				<Size x="80" y="20"/>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset x="-20" y="15"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						AQOPTION1_OnClick();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentStoryButton" inherits="OptionsButtonTemplate">
+				<Size x="70" y="20"/>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset x="20" y="15"/>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						AtlasQuestStoryButton_OnClick();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<CheckButton name="AtlasQuestFrameAllianceButton" inherits="UICheckButtonTemplate">
+				<Size x="30" y="30"/>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="12" y="-52"/>
+					</Anchor>
+				</Anchors>
+				<HitRectInsets>
+					<AbsInset left="0" right="0" top="0" bottom="0"/>
+				</HitRectInsets>
+				<Scripts>
+					<OnClick>
+						AtlasQuestFrameAllianceButton_OnClick();
+						PlaySound("igMainMenuOptionCheckBoxOn")
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="AtlasQuestFrameHordeButton" inherits="UICheckButtonTemplate">
+				<Size x="30" y="30"/>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset x="-12" y="-52"/>
+					</Anchor>
+				</Anchors>
+				<HitRectInsets>
+					<AbsInset left="0" right="0" top="0" bottom="0"/>
+				</HitRectInsets>
+				<Scripts>
+					<OnClick>
+						AtlasQuestFrameHordeButton_OnClick();
+						PlaySound("igMainMenuOptionCheckBoxOn")
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<Button name="AQQuestButton1" inherits="AtlasQuestButtonTemplate" id="1">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-90"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton2" inherits="AtlasQuestButtonTemplate" id="2">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-110"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton3" inherits="AtlasQuestButtonTemplate" id="3">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-130"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton4" inherits="AtlasQuestButtonTemplate" id="4">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-150"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton5" inherits="AtlasQuestButtonTemplate" id="5">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-170"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton6" inherits="AtlasQuestButtonTemplate" id="6">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-190"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton7" inherits="AtlasQuestButtonTemplate" id="7">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-210"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton8" inherits="AtlasQuestButtonTemplate" id="8">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-230"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton9" inherits="AtlasQuestButtonTemplate" id="9">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-250"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton10" inherits="AtlasQuestButtonTemplate" id="10">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-270"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton11" inherits="AtlasQuestButtonTemplate" id="11">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-290"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton12" inherits="AtlasQuestButtonTemplate" id="12">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-310"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton13" inherits="AtlasQuestButtonTemplate" id="13">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-330"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton14" inherits="AtlasQuestButtonTemplate" id="14">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-350"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton15" inherits="AtlasQuestButtonTemplate" id="15">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-370"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton16" inherits="AtlasQuestButtonTemplate" id="16">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-390"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton17" inherits="AtlasQuestButtonTemplate" id="17">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-410"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton18" inherits="AtlasQuestButtonTemplate" id="18">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-430"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton19" inherits="AtlasQuestButtonTemplate" id="19">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-450"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton20" inherits="AtlasQuestButtonTemplate" id="20">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-470"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton21" inherits="AtlasQuestButtonTemplate" id="21">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-490"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton22" inherits="AtlasQuestButtonTemplate" id="22">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-510"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="AQQuestButton23" inherits="AtlasQuestButtonTemplate" id="23">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="15" y="-530"/>
+					</Anchor>
+				</Anchors>
+			</Button>
+		</Frames>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="$parentHeader" file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size x="160" y="64"/>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset x="0" y="14"/>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="$parent_Title" inherits="GameFontNormal">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset x="0" y="0"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="AtlasQuestFrameZoneName" inherits="GameFontNormal">
+					<Size x="220" y="12"/>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset x="0" y="-32"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="AtlasQuestFrameNumQuests" inherits="GameFontNormal">
+					<Size x="60" y="40"/>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset x="0" y="-45"/>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="AQ_HordeTexture" file="Interface\TargetingFrame\UI-PVP-HORDE">
+					<Size x="50" y="50"/>
+					<Anchors>
+						<Anchor point="TOPRIGHT" >
+							<Offset x="-26" y="-50"/>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<Texture name="AQ_AllianceTexture" file="Interface\TargetingFrame\UI-PVP-ALLIANCE">
+					<Size x="50" y="50"/>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset x="38" y="-50"/>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				AQ_OnLoad();
+			</OnLoad>
+			<OnUpdate>
+				AQ_OnUpdate(arg1);
+			</OnUpdate>
+			<OnShow>
+				AQ_OnShow();
+			</OnShow>
+			<OnEvent>
+				AtlasQuest_OnEvent();
+			</OnEvent>
+		</Scripts>
+	</Frame>
+</Ui>

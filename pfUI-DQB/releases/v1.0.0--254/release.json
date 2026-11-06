@@ -1,0 +1,9 @@
+{
+  "id": "254",
+  "tag": "v1.0.0",
+  "name": "pfUI-DQB - v1.0.0",
+  "body": "## 📦 Installation\r\n\r\n1. [Dowload](https://octowow.st/git/jKalfis/pfUI-DQB/archive/v1.0.0.zip) the latest pfUI-DQB release.\r\n2. Extract the addon.\r\n3. **Rename folder to `pfUI-DQB` make sure folder has the same name as the `pfUI-DQB.toc` file inside.**\r\n4. Place the `pfUI-DQB` folder inside:\r\n\r\n```text\r\nyour OctoWoW folder/\r\n          └── Interface/\r\n                └── AddOns/\r\n                      └── pfUI-DQB/\r\n                                   └── pfUI-DQB.toc\r\n                                             gui.lua\r\n                                             etc...\r\n```\r\n\r\n5. Make sure **pfUI** is installed and enabled.\r\n6. Start the game.\r\n7. Open the pfUI configuration.\r\n8. Find the **DQB** section.\r\n9. Enable the desired options.\r\n10. Reload the UI.\r\n\r\n\r\n## 📋 Changelog\r\n\r\n### v1.0.0\r\n\r\nInitial stable release.\r\n\r\n* Added pfUI-DQB core system\r\n* Added pfUI configuration integration\r\n* Added Gossip & Quest customization\r\n* Added Quest Log customization\r\n* Added Books / Item Text customization\r\n* Added independent module toggles\r\n* Added saved configuration\r\n* Added dark translucent parchment replacement\r\n* Added white/gold text styling\r\n* Preserved pfUI frame styling",
+  "published": "2026-09-05T22:13:36Z",
+  "prerelease": false,
+  "url": "https://octowow.st/git/jKalfis/pfUI-DQB/releases/tag/v1.0.0"
+}

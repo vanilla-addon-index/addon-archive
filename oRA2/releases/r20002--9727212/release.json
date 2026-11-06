@@ -1,0 +1,9 @@
+{
+  "id": "9727212",
+  "tag": "r20002",
+  "name": "r20002",
+  "body": "Cooldown Monitor:\r\n- Added Innervate, Divine Intervention, Shield Wall and Challenging Shout/Roar\r\n- Added configuration for each Spell\r\n- Added an option to lock the Frame. If the frame is unlocked in can be moved by Drag&Drop (pressing you Alt-key is not necessary anymore)\r\n- Added an option to scale the bar size\r\n\r\nRessurection Monitor\r\n- Added an option to lock the Frame. If the frame is unlocked in can be moved by Drag&Drop (pressing you Alt-key is not necessary anymore)\r\n\t\t\r\nInvite:\r\n- Added AutoPromote Feature: automatically promotes all players on your AutoPromote list to raid assistants whenever you become the raid leader or when you already are the raid leader and they join the raid\r\n- Added the possibility to define multiple keywords for AutoInvite. Separate your keywords with a Space, e.g. \"inv raid\" would mean whenever someone whispers you \"inv\" or \"raid\", you would automatically invite them.\r\n\t\t\r\nReady Check:\r\n- Added Slashcommand `/ready` to perform a ready check\r\n- Raid members without oRA2 can participate in ready checks by whispering + or -\r\n\t\t\r\nMain Tank:\r\n- Added a Test option to set up the main tank frame outside of a raid group",
+  "published": "2018-02-18T22:35:18Z",
+  "prerelease": false,
+  "url": "https://github.com/xorann/oRA2/releases/tag/r20002"
+}

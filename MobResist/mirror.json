@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/0ldi/MobResist",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "0ldi",
+    "repo": "MobResist",
+    "name": "MobResist",
+    "url": "https://github.com/0ldi/MobResist",
+    "api": "https://api.github.com/repos/0ldi/MobResist"
+  },
+  "commit": "68c3dc00dedf3a615416b111e81fbe0651b2f0e8",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "MobResist/MobResist.lua": {
+      "sha256": "287653a58886d8af8dce80a86150bcae6d9e4fdc6672b0b84eda1b5b3540dee2",
+      "bytes": 5369
+    },
+    "MobResist/MobResist.toc": {
+      "sha256": "4a53ad65f2bb283187c5367b1ff1005f70305a6eb6d43ba047367aa9bba5620f",
+      "bytes": 209
+    },
+    "MobResist/MobResist.xml": {
+      "sha256": "3c9b1ebccbb37abbd24393fa4fc7e521ed648a3811fcdddcc76b1c92aaf1be66",
+      "bytes": 406
+    },
+    "MobResist/MobResistMenu.xml": {
+      "sha256": "34134675691a08c05c77b169e99079ce4ede4fdf6b19e291bcb39cb0180c1554",
+      "bytes": 2781
+    },
+    "MobResist/README.txt": {
+      "sha256": "db8d5524968ff58d06a7d3f072ee95124bdb7a1038b19aaad22c2147081a5b4c",
+      "bytes": 227
+    },
+    "README.md": {
+      "sha256": "803ff628518dafd0f641a9d8568112f8e1fe3b993348ab1074acb833c0d59bde",
+      "bytes": 767
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

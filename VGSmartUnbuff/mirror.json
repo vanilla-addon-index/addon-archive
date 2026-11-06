@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/firenahzku/VGSmartUnbuff",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "firenahzku",
+    "repo": "VGSmartUnbuff",
+    "name": "VGSmartUnbuff",
+    "url": "https://github.com/firenahzku/VGSmartUnbuff",
+    "api": "https://api.github.com/repos/firenahzku/VGSmartUnbuff"
+  },
+  "commit": "c108a72250db707e98ecccceee78da967f88a356",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "784d35638ab55bf8040768a57ab693c73f28f464b6c954f9f77c3409b8fcdbeb",
+      "bytes": 882
+    },
+    "VGSmartUnbuff.lua": {
+      "sha256": "98e7ffc7cc8b100f1d51e6722ede217a5de141eded1f2d8606fe598a113d10df",
+      "bytes": 11193
+    },
+    "VGSmartUnbuff.toc": {
+      "sha256": "e2831b63bf17e391243ce5a71d9c8248d576075c6d6b340ac1670e4dbe925a01",
+      "bytes": 132
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

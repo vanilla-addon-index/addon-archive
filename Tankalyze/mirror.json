@@ -1,0 +1,101 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/Tankalyze",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "Tankalyze",
+    "name": "Tankalyze",
+    "url": "https://github.com/MarcelineVQ/Tankalyze",
+    "api": "https://api.github.com/repos/MarcelineVQ/Tankalyze"
+  },
+  "commit": "99cc74be8dd4e1292f57d45365657bc7849398f4",
+  "sourceFiles": {
+    "Core.lua": {
+      "sha256": "86fbda745cca9672dc39634e7856c7f4a7e80851dea0a6996198f960ad5c9b64",
+      "bytes": 59697
+    },
+    "icon.tga": {
+      "sha256": "518aff037ac3560d3831104a6d7e05af0e0408059824d127b0bfe5bc604d720a",
+      "bytes": 4114
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "e977ae5a93e6e0120481cd44f96e6050949d3ade56d6168577a4c829df1b1c67",
+      "bytes": 32120
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "6bcd5625a8c14866bec07d52f3b8fbbe1e00291bab5afe75548547dd69510fa3",
+      "bytes": 67903
+    },
+    "libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "d94da32d564024e176da8fe6cc4f31c2f0cf680ad756dce490d01688a9b657d3",
+      "bytes": 44956
+    },
+    "libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "201e99eae723b3e2d2f0715203dd94d7d17bd283d9922887a2bf96866813989d",
+      "bytes": 8033
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "8222e7a75d0f0fba8030099939611732b50c28cb26b6ce6427f52fd5f2f409d8",
+      "bytes": 29927
+    },
+    "libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "e5defd2a1efe661ce7970891762d76a27ce539e65dd1a7894c8391ebd941be80",
+      "bytes": 17515
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "a421bd39e4cb7bcd54bb79de85c21d6e8c4c56551406972141bba26ae7d0c16d",
+      "bytes": 23871
+    },
+    "libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "6646e83c71c5ef9ffdeb2d0cb0b31d346a21df5322e4c5b10bc3bcf360b9eb14",
+      "bytes": 16487
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "03e71bcf0ba8ce7c806c5ffe966991cb997c12c25b351198c918fe32e469bdaf",
+      "bytes": 31435
+    },
+    "libs/Deformat-2.0/Deformat-2.0.lua": {
+      "sha256": "843f4e0d82213521bfcc6ec1cd0b78eeac6d74bf98eb65029abdedc6ed9cef11",
+      "bytes": 9781
+    },
+    "libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "7496ed3e339a5d5d171d7986d2a12ffa5223800594056d127a942c201d2ac105",
+      "bytes": 88536
+    },
+    "libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "6f6b55cbb836ad14dbdb7570ff469e1c689013a5414d06aa78ffa4c6f76e28b2",
+      "bytes": 47956
+    },
+    "libs/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "0e551ad3aa9619cf7287d1a7cfff6588324a47be14ac357426be785041e40a69",
+      "bytes": 8109
+    },
+    "libs/SpellCache-1.0/SpellCache-1.0.lua": {
+      "sha256": "4caff4b3041c8d80343988152cbe7bee9edc767edd48c0da6483c68bfc153324",
+      "bytes": 8480
+    },
+    "libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "c6a6d3f4bb4c5fb3a92998dd1f11aba137a19ada7e64afe156a895ebfa2e35b1",
+      "bytes": 88568
+    },
+    "libs/Waterfall-1.0/Waterfall-1.0.lua": {
+      "sha256": "55fb62dc4c259a0ada4aae7722a252081c5611337b261fa7a9961cc839785a5b",
+      "bytes": 140305
+    },
+    "Localization.lua": {
+      "sha256": "6fecef82d68d4178b5ab9bef406260df6c69a593201baf15057ade1e96f5f9c0",
+      "bytes": 7054
+    },
+    "readme.md": {
+      "sha256": "b6661a44d2665a639fa7ce480e233c436bb2a925531fb9b8e26f47afb02c328d",
+      "bytes": 562
+    },
+    "Tankalyze.toc": {
+      "sha256": "3079c796a7480c97dad8bd87f086ff57dd770b2cc669c90e518db166d4278fed",
+      "bytes": 1165
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

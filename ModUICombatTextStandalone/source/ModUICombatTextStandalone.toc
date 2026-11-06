@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: ModUI Combat Text Standalone
+## Notes: Standalone version of the scrolling combat text that's built into modui.
+## Author: obble (Made standalone by Johnlars).
+ct.lua
+globals\vars.lua

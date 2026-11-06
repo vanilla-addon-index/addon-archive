@@ -1,0 +1,73 @@
+{
+  "upstream": "https://github.com/yutsuku/WhoKicksNow",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "yutsuku",
+    "repo": "WhoKicksNow",
+    "name": "WhoKicksNow",
+    "url": "https://github.com/yutsuku/WhoKicksNow",
+    "api": "https://api.github.com/repos/yutsuku/WhoKicksNow"
+  },
+  "commit": "cdebe08fd20d8057fc3ca787bdd1fe250b6cdb64",
+  "sourceFiles": {
+    "docs/img/preview.png": {
+      "sha256": "e8add4d2511ff0d2eee1b2e097f074c2a00d93ce3896ed451368a91271bd090a",
+      "bytes": 31723
+    },
+    "libs/ChatThrottleLib.lua": {
+      "sha256": "78ab7b9325c49c3d8ad71cd297bac12cd6a951531d021dc1860e46976ede8f4e",
+      "bytes": 13029
+    },
+    "README": {
+      "sha256": "1d432d7f7d0998bf676f896ebcea7c8c233ecb29a91f5443a1e746580b4d29e3",
+      "bytes": 1462
+    },
+    "textures/padlock-disabled.blp": {
+      "sha256": "aa785e2731bd413bbc0914d20d36556933268770249ea3176aeff5ad8d47df57",
+      "bytes": 2564
+    },
+    "textures/padlock-highlight.blp": {
+      "sha256": "761559de4cb652a6d65cd69d5c36a4927a7ffb719c4ba323e834b31ed7449bb5",
+      "bytes": 2564
+    },
+    "textures/padlock-locked-disabled.blp": {
+      "sha256": "e4d9c0a94293198b337dc6ac52dcf3265eff041e1a6e3c0b7e6c501d90cfda95",
+      "bytes": 2564
+    },
+    "textures/padlock-locked-highlight.blp": {
+      "sha256": "594284f85b539160897190b5f004bad5362fcf519921590fb62a776b186fa076",
+      "bytes": 2564
+    },
+    "textures/padlock-locked-pushed.blp": {
+      "sha256": "73ffb0c01bd57d079b3ada111af78e5549ddb4c42e221fcd2eeb67b8d3e4e3a1",
+      "bytes": 2564
+    },
+    "textures/padlock-locked.blp": {
+      "sha256": "fc91938e3d2079eeda3e23483d5ac03c699d642fd329ccf590cf542c2b1c64ba",
+      "bytes": 2564
+    },
+    "textures/padlock-open.blp": {
+      "sha256": "902c72abb7a147995a4669fa677b9f902090fbea957202c60c71c85e8d013987",
+      "bytes": 2564
+    },
+    "textures/padlock-pushed.blp": {
+      "sha256": "43065feb96bdea0c136f488786c1dbb1903bc2cfd9090ee8f2d0efd348305859",
+      "bytes": 2564
+    },
+    "textures/padlock.psd": {
+      "sha256": "f7b13bc3f5f065af5bec3243e52b968d48dd32547b832ea133b307697d7af800",
+      "bytes": 55295
+    },
+    "WhoKicksNow.lua": {
+      "sha256": "5c1a6ee6b2b51d38d766f44519845c8f403053a34f08167ed68e1e7ab44aa155",
+      "bytes": 47042
+    },
+    "WhoKicksNow.toc": {
+      "sha256": "cdf2979d2aec9e083044fe45afafa03b6a527f59f7a0069c4efbf8a9ce2d958e",
+      "bytes": 218
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

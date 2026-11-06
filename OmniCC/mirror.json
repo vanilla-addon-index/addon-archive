@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Otari98/OmniCC",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Otari98",
+    "repo": "OmniCC",
+    "name": "OmniCC",
+    "url": "https://github.com/Otari98/OmniCC",
+    "api": "https://api.github.com/repos/Otari98/OmniCC"
+  },
+  "commit": "fd60e8570be099ae4975afb3da4242b48d9a6311",
+  "sourceFiles": {
+    "!OmniCC.toc": {
+      "sha256": "df11fc485904e4a99c6b75b4f55548bb9710df0d9d6796b11ddd185442dee2e5",
+      "bytes": 197
+    },
+    "OmniCC.lua": {
+      "sha256": "86a20eaf0f14d26ac776c53c701e4f42f0dae507c166765a1c2e3257eedb4d94",
+      "bytes": 8727
+    },
+    "README.md": {
+      "sha256": "bf88ee22f14ad607f2b00bd70df571e22a4f14a8aeaaf78735346bf3fa0db617",
+      "bytes": 299
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

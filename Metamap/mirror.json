@@ -1,0 +1,649 @@
+{
+  "upstream": "https://github.com/laytya/Metamap-vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "Metamap-vanilla",
+    "name": "Metamap-vanilla",
+    "url": "https://github.com/laytya/Metamap-vanilla",
+    "api": "https://api.github.com/repos/laytya/Metamap-vanilla"
+  },
+  "commit": "8dcc99d182480cac3e44efd9b4ac2ccb9f441e14",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    ".gitignore.upstream": {
+      "sha256": "efa103d17dd91087fb1bfded4f738bf0a8ed5048f65dbac8ca5a5f80073bc1f4",
+      "bytes": 2874
+    },
+    "MetaMap/Bindings.xml": {
+      "sha256": "09144aef75e8605702089ab344739c0c23261d6c41c23f6a9ad455112c48cbdd",
+      "bytes": 772
+    },
+    "MetaMap/Icons/Color0.tga": {
+      "sha256": "9f5d33d6f92c5ac39e4092e0394d6166cf0ae1d4b7abd3e48fbbcc1a18c7b941",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Color1.tga": {
+      "sha256": "5ec2f31e85f8fe3b1836a4557f8487905a9ead2261b3a0afbc239462f86fc854",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Color2.tga": {
+      "sha256": "1f6c62ccc3deb1d0b63dccc3c06068019dab6935a01ec8f5ff7436cecd5b08a5",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Color3.tga": {
+      "sha256": "2fe2f3e88e86f86e2666de81318fb5388b9677b1f35baefc7d59b4d92fee4a70",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Color4.tga": {
+      "sha256": "4b79c9eeb32a1bdeb42461da8bd2d17faf502a0b2ea2093be9b42b48cfb7a119",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Color5.tga": {
+      "sha256": "d8bbb54daa807fd0679b8ee742d3015ddd5d6fcef726a553ceea055a7ff95998",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Color6.tga": {
+      "sha256": "f468a52fc5ea12e00cddf2bddbc42b7bedfe31604a7a76382d154b5efea14246",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Color7.tga": {
+      "sha256": "4eb0dd33a57fce1e97323e2833c22b85383ef99621146c3aa370aaedf6cf3a22",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Color8.tga": {
+      "sha256": "61f41c08e649545b14cdc226c9e26bc4f4f061f357150cf7e7ac1250dc2c5c7f",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Color9.tga": {
+      "sha256": "1d9847f8fe531975ad05d29660570a5fdeb8d938413e8a79e20cac13463d842d",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Icon0.tga": {
+      "sha256": "9fabb91625da62a5f26adb41728c0d00095c03443d8474cabe823522a33d30e8",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Icon1.tga": {
+      "sha256": "c8dc9610f8de71ed419093a97eaee963fde0aa837a7171e0c068c19ca0f5b38a",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Icon10.tga": {
+      "sha256": "0e07116cb05881c74e8221120f27a62fe5a486b83712d2b3d3787d6763dd0f30",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Icon2.tga": {
+      "sha256": "141553fc43ebc16e48a584bb5ad61cf162c54749927b227122b0cb503863d096",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Icon3.tga": {
+      "sha256": "87dafc4e453009cf1183c706825443275fcfbd6ccd58f9dc6e25d83c44e3182e",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Icon4.tga": {
+      "sha256": "8c6b3ce5eed24e69e5415dca58abbe33f2d0676753f24f2dfdad24d328e9ec6d",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Icon5.tga": {
+      "sha256": "8fa1c94f17b3ecd18fec2d62074a5a4edfece90c4ef4d452bd8f7e9393305318",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Icon6.tga": {
+      "sha256": "24c4056dfa9ee0ab9196e56dd79c0b3d0d97f9d6177cb37e72a7ab5dd6c59451",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Icon7.tga": {
+      "sha256": "1a5dc8cf7ad2d083ce74a084da6e3fc656b200e5763bc35853afea26dc11fc5f",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Icon8.tga": {
+      "sha256": "e0aae15669a8b4d703da63f453e5088503d254462eed464355efc46b46bb7843",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Icon9.tga": {
+      "sha256": "0e15d94776bb7b2f5fc9f2d6030af55e63bf16c95ccb4578c29392a74db52119",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/IconGlowBlue.blp": {
+      "sha256": "2429bc9b623abfe529ec35089bd4d9715eb1a9fcc29414dcd65017e3c71bcc68",
+      "bytes": 2564
+    },
+    "MetaMap/Icons/IconGlowRed.blp": {
+      "sha256": "363f34352fc4c7a12f4beec1b8df252a7af552b4cfa34cc16cd732b382604631",
+      "bytes": 2564
+    },
+    "MetaMap/Icons/Iconparty.tga": {
+      "sha256": "7db8e0cbaacd7178efa5f396921928d65939cc8817f36998dc1277612f916fcf",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Iconpartyblue.tga": {
+      "sha256": "f4b685d66ac11d568789b134f6faa3e7898f6f941966a12152478dcf456adacc",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Icontloc.tga": {
+      "sha256": "0e07116cb05881c74e8221120f27a62fe5a486b83712d2b3d3787d6763dd0f30",
+      "bytes": 1068
+    },
+    "MetaMap/Icons/Overlay.tga": {
+      "sha256": "e496bceb5e8f560ecf6d14b860147aa23af9d534ec582d7c2f27cc6b4f3e28b5",
+      "bytes": 4140
+    },
+    "MetaMap/Images/Color1.tga": {
+      "sha256": "a38f9a98d6231384abe69eb2f4a6c32aea8ecf48ad5ef6f02d949971b548a41a",
+      "bytes": 786
+    },
+    "MetaMap/Images/Color2.tga": {
+      "sha256": "5b5683ee030580bc62fd983413df0931ccc883be72637acc475be71ff5b36993",
+      "bytes": 786
+    },
+    "MetaMap/Images/Color3.tga": {
+      "sha256": "227fcdf09a6a32e4e74b409914938981ff858c91040d85af67f1b85390d6579f",
+      "bytes": 786
+    },
+    "MetaMap/Images/Color4.tga": {
+      "sha256": "c02f0a1411a05de341b1be4a43a1c0fa47562ee881c92ef9eeff73f0e09a844c",
+      "bytes": 786
+    },
+    "MetaMap/Images/goldedge.tga": {
+      "sha256": "0e91459e1522969d6330fa369b92f043e56e7088917fcfbf9eb9eeb117aabee7",
+      "bytes": 4140
+    },
+    "MetaMap/Images/LineTemplateNegative256.tga": {
+      "sha256": "2fae6f92d2cb28b0f0c729486f006875f8560f80eea97dc40d1462bcf119a60a",
+      "bytes": 5134
+    },
+    "MetaMap/Images/LineTemplatePositive256.tga": {
+      "sha256": "290b30e5eac901cfb71d93c521d20350e529dfdfe3c4a5c752a9644041b16c91",
+      "bytes": 5134
+    },
+    "MetaMap/Images/MetaMapButton-Down.blp": {
+      "sha256": "1372be1a40dedcaf67405b9ba68ccbc362a11f97b065e7bb3f0e44da693a496c",
+      "bytes": 2564
+    },
+    "MetaMap/Images/MetaMapButton-Up.blp": {
+      "sha256": "fa05dc0c2752ce83acce30c37c60658157a5d7bf51e5b622da23d2c80b5dd1ae",
+      "bytes": 2564
+    },
+    "MetaMap/Images/MetaMapButton.blp": {
+      "sha256": "f3973d2470f6e82178104584090897d72f62ec8a21fb8500fb2cd8ff670c6cab",
+      "bytes": 6660
+    },
+    "MetaMap/localisation.de.lua": {
+      "sha256": "ec0919d4c3980318252f145f98bb261b2ed9fbf5709f2fc52123dd2d940287e7",
+      "bytes": 52631
+    },
+    "MetaMap/localisation.es.lua": {
+      "sha256": "f56b0ca1de4a3378a33a3cd879205d085da6c49ddbf305120ca2caf69e28117c",
+      "bytes": 44932
+    },
+    "MetaMap/localisation.fr.lua": {
+      "sha256": "fa116fec5c8dc5a47d3acb410988f3e28e7b77c586582dde63b7e487a4bd99d5",
+      "bytes": 47121
+    },
+    "MetaMap/localisation.lua": {
+      "sha256": "b308d747a91f08c48cd4c21f67cf74a96808203dfb17033afa955f81fc4c57d2",
+      "bytes": 43464
+    },
+    "MetaMap/Maps/BlackfathomDeeps.blp": {
+      "sha256": "afdfc6aafbf04ff43cf7a2fdf5e7da49b6f2a27aee3dfac3f9f0b77dbe02b49a",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/BlackrockDepths.blp": {
+      "sha256": "dc120b502c7944f296060fd3850e2c7f33c3d38c666b23cee9accd55f3793715",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/BlackrockSpireLower.blp": {
+      "sha256": "905d97ef53b6e3af51b9274aa652a40aa92f23205c44ae7ff7f9653a795d03c1",
+      "bytes": 350692
+    },
+    "MetaMap/Maps/BlackrockSpireUpper.blp": {
+      "sha256": "e331bfac71d328d4dba2f4080c39c036e6c5dc43df20a3f1b30ada81e69d3910",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/BlackwingLair.blp": {
+      "sha256": "0063125f6aad8ec48d82b08c6f443907630a16d47b18b433052648b25b703e8f",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/DireMaul.blp": {
+      "sha256": "9f0eff254f8b0bd5ae91055980e624c2298b38e1b9caf4373d492d4b76a87d5c",
+      "bytes": 350692
+    },
+    "MetaMap/Maps/DireMaulEast.blp": {
+      "sha256": "aaa584897a2d6c45fa28b87fe183569a11d18d4ab97d2d5638dc38c314bdedce",
+      "bytes": 350692
+    },
+    "MetaMap/Maps/DireMaulNorth.blp": {
+      "sha256": "310b3fa464127e306dada994e04a846d11db945db9a002055f977eb961c53002",
+      "bytes": 350692
+    },
+    "MetaMap/Maps/DireMaulWest.blp": {
+      "sha256": "35b8602892d4a3bc071192982bab8eac1e051c8efb53fc2831c7226a6a4d7dd4",
+      "bytes": 350692
+    },
+    "MetaMap/Maps/Gnomeregan.blp": {
+      "sha256": "b6f258cb8d543c298ea188384d36a80a079dee17e72b5d8722d63e12e9d54968",
+      "bytes": 350692
+    },
+    "MetaMap/Maps/HCBloodFurnaces.blp": {
+      "sha256": "b326caf5b2e075e6cc84d07722eea92754f2d7a1361d2bd4cb50f1f002965ca7",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/HCShatteredHalls.blp": {
+      "sha256": "acbd900ec07817f872c213ddf9a64ee84729985badc279dda87b2b4fb50b9a78",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/Maraudon.blp": {
+      "sha256": "90ded7365643fd3b49d7d7cf77479ff283bdec03e58c92f7e5c622369c8df8c6",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/MoltenCore.blp": {
+      "sha256": "1c7c4e65dc77ed3cf58c6cde904b62309a392fc0efdf0a958d2e871ceac3dae9",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/Naxxramas.blp": {
+      "sha256": "791dec12e7cd8ba5f383bbbb759ce7ce612ebe3c75f5cc2d95af03c856c8eb74",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/OnyxiasLair.blp": {
+      "sha256": "2d35a8a4979676d26b07c4b498df9558ac3aad369f388773b2efddf3b85176d0",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/RagefireChasm.blp": {
+      "sha256": "99b2a4ea763ad6e2aba8b723a676acdad61b3b9c41ef7f8399375f256c2d8ee6",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/RazorfenDowns.blp": {
+      "sha256": "0456ea267ab333f29cdbc63ac3e08b90cc802e282afb696ef788735c5903cf1e",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/RazorfenKraul.blp": {
+      "sha256": "50a082cc44ff6d6fc530244ad73f5a07c12cad82b130d926c9fafd9597e4f168",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/RuinsofAhnQiraj.blp": {
+      "sha256": "f3b5598f2880762893a077286db81783f615d5f6c2f31d3b553d103ea53147d2",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/ScarletMonastery.blp": {
+      "sha256": "9c7df269c348a24d07d3c938a4c9cc68841e9156cf941f3cc2a43bb81e656991",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/Scholomance.blp": {
+      "sha256": "7f24384c05e125f35089cd7bc87bccdfaecd508d3db4293d4f3809e7a7b96de7",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/ShadowfangKeep.blp": {
+      "sha256": "f8909a4598c0554e018e5aec5e670f259776cce40faf60d25f54d9dd618136de",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/Stratholme.blp": {
+      "sha256": "bb90f1c0ada8280615cfa4a21984189fc580855dd703124f4de44ec120a91927",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/TempleofAhnQiraj.blp": {
+      "sha256": "07bcfdb84278973f191553ae6d1db34d434def08940a0a9f41013c04940ae93a",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/TheDeadmines.blp": {
+      "sha256": "11d09990ab247e7d3f949da46c59dc6e083014fa3d9b6bde45fd010aedff4c7b",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/TheStockades.blp": {
+      "sha256": "153427604fa5229bc1397cd4a6308554efa9ef82088474eb73eaf12ad17c8208",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/TheSunkenTemple.blp": {
+      "sha256": "18d032d7a34cb6c5104e69273dc0736d4a6edb50dbbeafbf12b75210edbea53c",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/Uldaman.blp": {
+      "sha256": "83a381d5cb9fc4ce82c78d53399edeb320cdb42206fa36ee392f1713efc01895",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/WailingCaverns.blp": {
+      "sha256": "419df14b887abcff7fab91b5d16126b3c1c777d1e82df817a38990161b7fc043",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/ZulFarrak.blp": {
+      "sha256": "f8f8672a51d88872fe3221f6d042ebd13af5dd6161bb840673082257a6820e4a",
+      "bytes": 350724
+    },
+    "MetaMap/Maps/ZulGurub.blp": {
+      "sha256": "9741f2e9456fcda5ee60f8c8c2f5270a268628bdbe075e31d766b9690b3f99c5",
+      "bytes": 350724
+    },
+    "MetaMap/MetaMap.lua": {
+      "sha256": "2870ca050cab4b216c17eff5c670c1f3973af08f384547a0374aab7267296532",
+      "bytes": 117530
+    },
+    "MetaMap/MetaMap.toc": {
+      "sha256": "40f8fd65e678e246c3d6fc49543393c7769e28865fff372febb5b940e66c6ad4",
+      "bytes": 391
+    },
+    "MetaMap/MetaMap.xml": {
+      "sha256": "243b1d60e9896f6ebdd03df2ac9243b9ad8a82b7b7c9c166fb1ccb1edb0fa2b1",
+      "bytes": 163512
+    },
+    "MetaMap/MetaMapConstants.lua": {
+      "sha256": "8101ce76a889d027522bab90dfb753729f3be03f68d87f8aed94cfda9bf1e90a",
+      "bytes": 13074
+    },
+    "MetaMap/MetaMapCVT.lua": {
+      "sha256": "89ea1d9372fd149d1cb6ca4f45903757fa30ca61a22f38906a69e5b9e5aba157",
+      "bytes": 15503
+    },
+    "MetaMap/MetaMapCVT.xml": {
+      "sha256": "4cfaafa9c31f4e7778fd001bf58d26bb9185d5fa6c1400cc02fcd8df16f561e6",
+      "bytes": 3476
+    },
+    "MetaMap/Shaders/Shader1.tga": {
+      "sha256": "ff841e3346f0e2ab07d7d2431131b46872659eae8e08353f93453de115e384d3",
+      "bytes": 196626
+    },
+    "MetaMap/Shaders/Shader2.tga": {
+      "sha256": "015a18cdeed1f2fce947c806b1212fb662302646c82318ee09efe5c41107f38c",
+      "bytes": 196626
+    },
+    "MetaMap/Shaders/Shader3.tga": {
+      "sha256": "7be1c6d0f4ede44156d041295e39cf51d7ddeee8b9849e9da57ca2d91be63f1c",
+      "bytes": 196626
+    },
+    "MetaMap/Shaders/Shader4.tga": {
+      "sha256": "89d74797ca0c070a827a001185395fbb4f080b2c722a53289ae40dc0fb4c3a56",
+      "bytes": 196626
+    },
+    "MetaMapBKP/MetaMapBKP.lua": {
+      "sha256": "a4366153f5bcc025b2ced2b9271f8d5063d6d50716adf7ab8b2695483810a709",
+      "bytes": 3384
+    },
+    "MetaMapBKP/MetaMapBKP.toc": {
+      "sha256": "071212a01cb193de01c2da1fa4b9b2a6f2e973ac305dcf10d807baa42e633095",
+      "bytes": 282
+    },
+    "MetaMapBKP/MetaMapBKP.xml": {
+      "sha256": "f95d93518d637682d13da6c18824d4f41713504ab5330280f8d81aab0d73297e",
+      "bytes": 2607
+    },
+    "MetaMapBLT/MetaMapBLT.loc": {
+      "sha256": "70772505586c37a9359706a25de7c933ae616f41cebb2ceffce8c61209b4080e",
+      "bytes": 48505
+    },
+    "MetaMapBLT/MetaMapBLT.lua": {
+      "sha256": "b74abfb0a5aab0e2760927943d4e07d435618d7b843e4bed2b8eb458bbdc34ff",
+      "bytes": 20776
+    },
+    "MetaMapBLT/MetaMapBLT.toc": {
+      "sha256": "cba87c14e45efc3c37f79bebab9aa4f49df670cd9c1dc56a70955e1ef2c82991",
+      "bytes": 246
+    },
+    "MetaMapBLT/MetaMapBLT.xml": {
+      "sha256": "54407b485c5bf29e521cf21ae5d15f5076b80f38c433b1c80f83528f308f531b",
+      "bytes": 12797
+    },
+    "MetaMapBWP/Artwork/Arrows/! template.psd": {
+      "sha256": "3d7fb7dafa202247838e57b6a6128d45528d7d8b52d8942a5bd9847767835830",
+      "bytes": 39444
+    },
+    "MetaMapBWP/Artwork/Arrows/Arrived.tga": {
+      "sha256": "c9a202ad485f247a10937805727104f331e41ff5b6da6e36f438cf6be888f5bb",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/Arrivedalt.tga": {
+      "sha256": "f76d853d1cf60850bbed81c9011a2ac8ab6562e5c286991f391ed5f2617ba126",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/Arrow template.psd": {
+      "sha256": "bf42c9188d3d6e022d8332f40b74a554039d1a901327344c0c5e5f42055d8373",
+      "bytes": 45317
+    },
+    "MetaMapBWP/Artwork/Arrows/Backward.tga": {
+      "sha256": "af112a6fcf830bfe2da9f2c80e688d970db76035621dae91def30db4da77e078",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/BLeft-1.tga": {
+      "sha256": "4cc08d4f3a5513b343acc3f5cf469a129f935c3f0c64ac20c38d47d032f40ce8",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/BLeft-2.tga": {
+      "sha256": "6420915c55ada63cd710acd5fdb3dac5d1e5c04de7a1b40544605cc847921bd5",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/BLeft.tga": {
+      "sha256": "3e75dbeced327dc51a6b564c6315f9823b64487dea9e4480949a35cdbf5fae66",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/BLeft+1.tga": {
+      "sha256": "505bcefb560a4b6047d410e8be582fddbc320be9f144dddc8fa5a269f75410a8",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/BLeft+2.tga": {
+      "sha256": "197481e59680432a0a9eeba589382f4eb25c80b4ebe4cac944faa4f2561b869a",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/BRight-1.tga": {
+      "sha256": "9a024ed26292ddd61e22e83ad3173ff00c578b23fa0b9316a9bb8005e15c7a15",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/BRight-2.tga": {
+      "sha256": "0f125c4733f37ad267729f582483f39ddf640324a25e274b28f0839ef4baf6c5",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/BRight.tga": {
+      "sha256": "492dff02c71a9a61efa9b18b7d661e3998252addb45aafd7f68665a722cab1b6",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/BRight+1.tga": {
+      "sha256": "d390e2e9ce98382b5c4591c6ef4ce9a2533e4f751770a7d9e9b49a00a6da1a31",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/BRight+2.tga": {
+      "sha256": "401c2c571d9fc4bf98e5b707954ab28f834c92a02ee4109ef1b60e4ee81271d8",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/FLeft-1.tga": {
+      "sha256": "52a4bcad7891f0acf6940d41081604068826c4d154cd8ed24100cb0d57860fdb",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/FLeft-2.tga": {
+      "sha256": "7d832f193add919d0a35f5750ed4074af63ffef2ff468361ccbc778fd27c8b0d",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/FLeft.tga": {
+      "sha256": "fa4a66239eae0d3d9b31f898961a66297761705a0a348fc6da1acd058c4d6e15",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/FLeft+1.tga": {
+      "sha256": "36ed634d59e779b76e26077dd629b1f5489131dd0ac208540d8beb9eb8eb6d2a",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/FLeft+2.tga": {
+      "sha256": "6bd4ee44b16f9cdbdcb2a89efc0cf339eac8ba4dbfd402155eaa29927a7176cc",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/forward.tga": {
+      "sha256": "b00f3d9ea915514cd465f538166b3ca7c0c61a11a2aeae382463219095f08784",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/FRight-1.tga": {
+      "sha256": "b2e4a2aee03504ec3350f9c7c77f24678f9dedc5036489ac5991fcd19509b314",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/FRight-2.tga": {
+      "sha256": "c599ec3aa86701dc68f763282f5978faf29be3a68241e52e10ff12d5f355c438",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/FRight.tga": {
+      "sha256": "ece57d8204ff43dfb1a8eab76e89ef598cf6eba014f75aaea16409d31d6574b6",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/FRight+1.tga": {
+      "sha256": "d8464b957556b3c9e139f74e378fbf556eca18b8460d2642c5d21f9a2b4c652c",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/FRight+2.tga": {
+      "sha256": "08356f37d3e2ceb11a77b38edc0248edfad42952057c31d17edf7074ebd823f5",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/left.tga": {
+      "sha256": "0d6400e6887f871288b84fd08467c0f63c598c980b5d11eb92e9c918347affb2",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Artwork/Arrows/right.tga": {
+      "sha256": "b9b054485416e83dc700f890e4aa5b365ea40dd0d8b256a2c3bd5c4d38996cb6",
+      "bytes": 65580
+    },
+    "MetaMapBWP/Bindings.xml": {
+      "sha256": "5b048c77bc9b5854909b4f7fd8dab4c6382a188df38381c2c91f1b68b7feb1f6",
+      "bytes": 110
+    },
+    "MetaMapBWP/MetaMapBWP.loc": {
+      "sha256": "102b59aee0353a5e04dae317f568a2959af51a8c6dc91a0eb3b1ac9ca8c9e6d6",
+      "bytes": 3806
+    },
+    "MetaMapBWP/MetaMapBWP.lua": {
+      "sha256": "9c30af2e1b8e1d236f8adfaf61d35cd5ce414bb2a68d98f49709b8ddc5bb5300",
+      "bytes": 41244
+    },
+    "MetaMapBWP/MetaMapBWP.toc": {
+      "sha256": "87347c55fed87edf5374b652c45c61c4bfd6f2b7a3534d436cc01bbeb9b584ed",
+      "bytes": 246
+    },
+    "MetaMapBWP/MetaMapBWP.xml": {
+      "sha256": "d5da7924a00eb979c1b5eb48a99c309650ee1ffb9a3c020f42bbd438d3f10c5f",
+      "bytes": 13278
+    },
+    "MetaMapCVT/MetaMapBLTdata.lua": {
+      "sha256": "d4b1f88398bbed69aef563b9b264022b7f994a6f0823e71eec270392298a3e74",
+      "bytes": 371055
+    },
+    "MetaMapCVT/MetaMapCVT.toc": {
+      "sha256": "fbd81fa687257a92844480550d490759d13ea33a3c551a5ad1b06cf388af3fed",
+      "bytes": 178
+    },
+    "MetaMapCVT/MetaMapData.lua": {
+      "sha256": "0d23cd19e2b20fedc451b34dfe1785237216b538c48e3868cf0d0c7794f0eea1",
+      "bytes": 148310
+    },
+    "MetaMapEXP/MetaMapEXP.lua": {
+      "sha256": "c15fb7b5dbdfef3b12488c0c79a99c51e87540490e86e2e39e11b8ec7e709147",
+      "bytes": 2897
+    },
+    "MetaMapEXP/MetaMapEXP.toc": {
+      "sha256": "7119005c1bdd21a5bf558fd437fe6155f032e88283cd1c0fdbf171e48e7af715",
+      "bytes": 235
+    },
+    "MetaMapEXP/MetaMapEXP.xml": {
+      "sha256": "737e6b59e0f784cc6b3304cb272d24517454c131f8de8910924dffd5f68df74d",
+      "bytes": 2820
+    },
+    "MetaMapFWM/MetaMapFWM.lua": {
+      "sha256": "0343099c386a750355fb163dea876cda6f078a5ee1bda6cbd8746de0dc40cca0",
+      "bytes": 36767
+    },
+    "MetaMapFWM/MetaMapFWM.toc": {
+      "sha256": "05f4288f726788f96e786cb3cec76db6a7b728fcb0380e0f16f5a98927d36185",
+      "bytes": 209
+    },
+    "MetaMapFWM/MetaMapFWM.xml": {
+      "sha256": "e3a7ce09f1cf38a1f6aa2aaa0c562e57f3947b89cd25a309d242bde0f192ed49",
+      "bytes": 1962
+    },
+    "MetaMapHLP/MetaMapHLP.lua": {
+      "sha256": "6b0fb89d40f10a28f4f1d96a090399124bb82ac03c54a6aac93a876488deb811",
+      "bytes": 76949
+    },
+    "MetaMapHLP/MetaMapHLP.toc": {
+      "sha256": "7746d975aa32b5befd3e3feb7348b1935db0eac78e62d8527872028af2d29a46",
+      "bytes": 162
+    },
+    "MetaMapHLP/MetaMapHLP.xml": {
+      "sha256": "1f9e407a3d925a321d4b61305909c483bcfe10199badff26d2e7ff63f2280ad7",
+      "bytes": 2768
+    },
+    "MetaMapNBK/MetaMapNBK.loc": {
+      "sha256": "3f614aea3208956f7821a473c0cd446998b46b6f36132d0f551d57b363485e2f",
+      "bytes": 1529
+    },
+    "MetaMapNBK/MetaMapNBK.lua": {
+      "sha256": "ac035fcb633bd0f5a18e18f5132fe6552d847ebae238d023edffb7a9cb8249fb",
+      "bytes": 6470
+    },
+    "MetaMapNBK/MetaMapNBK.toc": {
+      "sha256": "f0003a18aaef12c9d1ffc52129673177fe7e2bdfaaed6078ed7a3fad469f029b",
+      "bytes": 236
+    },
+    "MetaMapNBK/MetaMapNBK.xml": {
+      "sha256": "d9bfa9becef2876a39aa3f3153f0bdc48c7fd5ba243b3c2b45fbaf52d5c1ef3f",
+      "bytes": 13701
+    },
+    "MetaMapQST/background.tga": {
+      "sha256": "af6afe9dddc1cbb0965876be521b96fd4e3dd0bbd80b789b730a6d755df33c29",
+      "bytes": 65580
+    },
+    "MetaMapQST/MetaMapQST.loc": {
+      "sha256": "fd42fe5a46b0100c90d5c50f27dfa444664180043a598b4aaecac30d08eb0859",
+      "bytes": 6262
+    },
+    "MetaMapQST/MetaMapQST.lua": {
+      "sha256": "9ddef93c3026bdc31eaa51f732e1c8728f8db5714e312c5cafb4207249f12317",
+      "bytes": 44518
+    },
+    "MetaMapQST/MetaMapQST.toc": {
+      "sha256": "6b2e46c337b3e75d92ed311a306ab1011b18a32f20964893250a8cf3594f399e",
+      "bytes": 251
+    },
+    "MetaMapQST/MetaMapQST.xml": {
+      "sha256": "9ae040036b06f744221b9645c4edc906dac9e88319d02d927645081f5320bd44",
+      "bytes": 19883
+    },
+    "MetaMapWKB/MetaMapWKB.loc": {
+      "sha256": "e916205975d2ef855883311ec5c756ecce24cf3e8f799a3a17b166943202e919",
+      "bytes": 14779
+    },
+    "MetaMapWKB/MetaMapWKB.lua": {
+      "sha256": "2b94a66f55028a23260a00f3c56c24ccc3ac57f19007445074ef50df82faa364",
+      "bytes": 23714
+    },
+    "MetaMapWKB/MetaMapWKB.toc": {
+      "sha256": "c61dad31efd65c40791c0bbc727a2125d0e039464f0a1b9e2c187688a8158b37",
+      "bytes": 251
+    },
+    "MetaMapWKB/MetaMapWKB.xml": {
+      "sha256": "efee289d2d048544a91db2f5be027e4b390fce3e3c7102dcaaa48abac71bc58c",
+      "bytes": 34653
+    },
+    "MetaMapZSM/MetaMapZSM.lua": {
+      "sha256": "838718862eb38943e7dc0b2c22d22cb97225869805e9f31e9f07811c8d39bb9c",
+      "bytes": 5632
+    },
+    "MetaMapZSM/MetaMapZSM.toc": {
+      "sha256": "b48d7c2bebff275354d5dbfba2d8ae3c460f83a3f89e786246847c06a436ccf4",
+      "bytes": 205
+    },
+    "MetaMapZSM/MetaMapZSM.xml": {
+      "sha256": "6a20b6fd5e98f83d34f1d99e231b145a49fc788ab34954bdb8cd9e94f255ab04",
+      "bytes": 3696
+    },
+    "README.md": {
+      "sha256": "545df9f04ca38c78b48976d313cfa421db31eaacb30e1ecf3cbc804fda300bb7",
+      "bytes": 2666
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "5137323": {
+      "tag": "11200-10",
+      "folder": "11200-10--5137323",
+      "assets": {},
+      "source": {
+        "sha256": "2af2cc77b861354d71fd7436eb71b981addf218f5d88ed976ac9a7c89e8e86b4",
+        "bytes": 3171449,
+        "path": "releases/11200-10--5137323/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/laytya/Metamap-vanilla/tarball/11200-10"
+      }
+    }
+  }
+}

@@ -1,0 +1,1137 @@
+{
+  "upstream": "https://github.com/jrc13245/DPSMate",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jrc13245",
+    "repo": "DPSMate",
+    "name": "DPSMate",
+    "url": "https://github.com/jrc13245/DPSMate",
+    "api": "https://api.github.com/repos/jrc13245/DPSMate"
+  },
+  "commit": "b592eafb2175351afae73b65789b19f33911c1e4",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "6b6ea413e17a6bc56dffc21f770e49ee5fcdbaedcea6c06cae15ff02f3a5586b",
+      "bytes": 313
+    },
+    "Damage/DPSMate_Damage.lua": {
+      "sha256": "b8137f800695041c0873ada1a68ccb17eca535462f94be5648246a83e8e3a91c",
+      "bytes": 9659
+    },
+    "Damage/DPSMate_Details_Damage.lua": {
+      "sha256": "eee185068ce51714a44474ebfeb0bbb0a0f4e6dad863a842c6b9c0a032614e23",
+      "bytes": 38626
+    },
+    "Damage/DPSMate_Details_Damage.xml": {
+      "sha256": "135b69821198983a8f961dbb8b106dbc67401de2d32a8d1d4a9e36d381aa743f",
+      "bytes": 66685
+    },
+    "Damage/DPSMate_Details_DamageTotal.lua": {
+      "sha256": "222bbfa98213dcae432b3cfec1decc83902058b1539a64bf553cb024afa41bbf",
+      "bytes": 14093
+    },
+    "Damage/DPSMate_Details_DamageTotal.xml": {
+      "sha256": "949c75f18fe1d474d64460ecebe6bf6e004f122f62b5fbc3416e9a8c5ac6e2cb",
+      "bytes": 27571
+    },
+    "Damage/DPSMate_DPS.lua": {
+      "sha256": "456bbc43d2c8a74d66b4bf7f291e58cb6eea905298aa9e2bed43115f71ea744e",
+      "bytes": 9887
+    },
+    "DPSMate_CombatPatterns.lua": {
+      "sha256": "50f7f1f367ba426769cb7589f4cd650979e08dd6c896ca5e9c5376f7959845f7",
+      "bytes": 14652
+    },
+    "DPSMate_DataBuilder.lua": {
+      "sha256": "3cb5cfeb1c89175cec4c1e8bcb89c10f2767bfbefe6abf52e6a581a8d17babbc",
+      "bytes": 76416
+    },
+    "DPSMate_Frame.xml": {
+      "sha256": "8c178f4c1ff1898de54cd43cb91283da011be525b190f32ac78c0d900e6397ee",
+      "bytes": 15110
+    },
+    "DPSMate_Options.lua": {
+      "sha256": "5fb6255b588ed0ca3c0f710d376e7203e8b200d6c7c4d46dc2b2a35f86fea5d9",
+      "bytes": 86263
+    },
+    "DPSMate_Options.xml": {
+      "sha256": "7a095f750be0c6d5993eecf6588630594bb0fc6d34c6c2dfadc2d5f832cc9a3d",
+      "bytes": 233456
+    },
+    "DPSMate_Parser.lua": {
+      "sha256": "33bbd0b3243457f6610abc008d0c929c77dd85f288da17ccbdc3a807c3237972",
+      "bytes": 23675
+    },
+    "DPSMate_Sync.lua": {
+      "sha256": "6485d389ff026f3ffdda542be8cb2b1998fa70caa20fedd6abda027768f313de",
+      "bytes": 56102
+    },
+    "DPSMate.lua": {
+      "sha256": "82d80948b4a03defefb4a3499a65998916f6afee342e061ac9d10234bbe7cadd",
+      "bytes": 30977
+    },
+    "DPSMate.toc": {
+      "sha256": "ff808b61c0834143d56fea0268db87de4283b8478fb2c5faf6767d7c1f24b405",
+      "bytes": 8089
+    },
+    "enUS/Babble-Boss-2.3.lua": {
+      "sha256": "adb90334b99c50c242ff1dc4f0504a26a2c749f63dd42a112b297c685a24c23e",
+      "bytes": 13034
+    },
+    "enUS/Babble-Spell-2.3.lua": {
+      "sha256": "206902a74d2820d467a30e944789c1d9e9fb587619d52838f20ef813aadcebf0",
+      "bytes": 97587
+    },
+    "enUS/DPSMate_ParserENUS.lua": {
+      "sha256": "df7983e4347bb6599792e05538b562ef630b1e4b3477c1171780111a1203a1cb",
+      "bytes": 97655
+    },
+    "enUS/enUS.lua": {
+      "sha256": "98d5c353a5923dc9878bbe7b7e11f2a96196d9b89da6092f095b9f5f1fb143dc",
+      "bytes": 26899
+    },
+    "enUS/NPCDB-1.0.lua": {
+      "sha256": "9cebf68f55f047ba0aa70acad8dbad70a40f9767e7d478a3cc51ca5f6a16d873",
+      "bytes": 98648
+    },
+    "fonts/Accidental Presidency.ttf": {
+      "sha256": "91980438519aff2fd182b77d316be9549cbf6cf0daadab8e8f5638367f1d9242",
+      "bytes": 41556
+    },
+    "fonts/AlteHaas.ttf": {
+      "sha256": "41d867ef23989482db849e3c420d66925d71e5e75d5e1cdfb1a274b56cb777a0",
+      "bytes": 143896
+    },
+    "fonts/CaviarDreams.ttf": {
+      "sha256": "e0e9896c72eaf72dec960bd405ec8d1cfff6629cb5309a44333d96fa2af3bcc5",
+      "bytes": 59284
+    },
+    "fonts/Enigma__2.ttf": {
+      "sha256": "eba6927102e658c4e8a237e0d3cf12bc4791841c9be1188d18ea5b89a06b1925",
+      "bytes": 17992
+    },
+    "fonts/Expressway.ttf": {
+      "sha256": "94110de3c2ae4d21e27afe706e64ef3142e97d2611d3b51d6c9078051193cc33",
+      "bytes": 156244
+    },
+    "fonts/ExpresswayBold.ttf": {
+      "sha256": "06a2106170c2b5b736955cc749ed755f3757d103230645158f0bd5b5b91c386b",
+      "bytes": 99820
+    },
+    "fonts/Mandarin1.ttf": {
+      "sha256": "e4370c49c27838a019ea71c7b227c7443d0f21165d364fda3e87d128d2343abd",
+      "bytes": 8644640
+    },
+    "fonts/Mandarin2.ttf": {
+      "sha256": "864d20a8f80b913f5a4cd26768e6d0c1ac43b6080930ea7a229f050914a92b2f",
+      "bytes": 6580908
+    },
+    "fonts/Roboto.ttf": {
+      "sha256": "94df4e4976db8ddaec27f8e8c33eef912e744fb200ca09051794b38e5a502fc0",
+      "bytes": 162636
+    },
+    "fonts/The Bad Times.ttf": {
+      "sha256": "ae60db2d76e0e06169e2fd13b0890a2b47ff201db7b46108d29c69ab51bff5eb",
+      "bytes": 46060
+    },
+    "fonts/Vegur.otf": {
+      "sha256": "b0d25ce0ea5fb6c6fe8da1c04680e2319a877ffe76f47dd57e19e81e48f3752d",
+      "bytes": 15300
+    },
+    "fonts/VeraSe.ttf": {
+      "sha256": "6afd927937d84fc00831441cbe0165b2d926b5bb9c18ac9018e5df6e4b0c006a",
+      "bytes": 60280
+    },
+    "fonts/visitor2.ttf": {
+      "sha256": "48ccd009dfe6a07223cc3571dc906acea1a255e67c72a121ced1b5071fbb06bb",
+      "bytes": 37388
+    },
+    "images/class/druid.tga": {
+      "sha256": "8d3858efbaccfe6f6ad5fbe8798053fb6c2eb55cb55f76ce38ffc1b188b69ab8",
+      "bytes": 11857
+    },
+    "images/class/hunter.tga": {
+      "sha256": "a67e804381815edbdc90468dabf9a8dd0a332f5d28e7ad03074e1c6c798ab5c7",
+      "bytes": 8397
+    },
+    "images/class/mage.tga": {
+      "sha256": "e5ebce412a2ba6d4f1aee185f4efe8e6f1ee90327b4f4b5072bb5efbb1a96911",
+      "bytes": 11855
+    },
+    "images/class/None.tga": {
+      "sha256": "02929d21f8463c6896e12c68198548b1a6982f013d0813c493b61574b68a6be9",
+      "bytes": 16428
+    },
+    "images/class/paladin.tga": {
+      "sha256": "47f531da8ebff0a14c0d50585f7334d1ff53ba029bc8fe13ea63cac0640d46b0",
+      "bytes": 11413
+    },
+    "images/class/priest.tga": {
+      "sha256": "c8ff53d0560521603ce849ed8ce3916c6de1a150f992aafdcc5166a36d94aa17",
+      "bytes": 9091
+    },
+    "images/class/rogue.tga": {
+      "sha256": "2f2273c38c7d62ffa3137aeeb2d295063f28c0a335a84c1adde60513c5d7a646",
+      "bytes": 10399
+    },
+    "images/class/shaman.tga": {
+      "sha256": "016dfbe6525c8d98c0e873e029e63bb57f224593743c5ea00a4aa227de85f83f",
+      "bytes": 11401
+    },
+    "images/class/warlock.tga": {
+      "sha256": "247cfc073e553defbad670b5be2a5a124f8f8a95dc910e1f0b07f991b35c2960",
+      "bytes": 11210
+    },
+    "images/class/warrior.tga": {
+      "sha256": "089b2fbc0abc7832930c290a8726308fd65c6925c974fcfbfcdab67d2d23fa9a",
+      "bytes": 11747
+    },
+    "images/dummy.tga": {
+      "sha256": "02929d21f8463c6896e12c68198548b1a6982f013d0813c493b61574b68a6be9",
+      "bytes": 16428
+    },
+    "images/icon-config.tga": {
+      "sha256": "d88685bc72aafc546868a69a6c2c782a376bfb0ca7292087a2d04ea78caab47e",
+      "bytes": 4140
+    },
+    "images/icon-reset.tga": {
+      "sha256": "02841e10d258c6fb874ab1cdf7fc157b96ca7e07172cee5a9634d4b907e32aab",
+      "bytes": 1068
+    },
+    "images/npc.tga": {
+      "sha256": "eb0e578b8fa3420086d9e962ebb68c0525bd82474cd4b97eb22e96c6a7dcf3d6",
+      "bytes": 4140
+    },
+    "images/ResizeGripRight.tga": {
+      "sha256": "f17e6620869ab39c230f860d13e5e9cda42b03938b27b922c99a6e4109bcf5cf",
+      "bytes": 2085
+    },
+    "images/ResizeGripRightTop.tga": {
+      "sha256": "4f14b5ca977898f01090faabc837a9ea6802e2a527291d0bb999f0871ee95052",
+      "bytes": 320
+    },
+    "images/statusbar/Aluminium.tga": {
+      "sha256": "679e0dbbb1e1f26871a2a84610d327289db1faf2743590692e57c22f6d52358d",
+      "bytes": 32812
+    },
+    "images/statusbar/Armory.tga": {
+      "sha256": "7f5d7718082fc4f2bfda40f264d550eb6cc141922acfc7e1554aebad4744015e",
+      "bytes": 812
+    },
+    "images/statusbar/BantoBar.tga": {
+      "sha256": "5a5deac548c4639de44db55ed79a6784bba95fc8286e7a4e7235ea7da24e19c3",
+      "bytes": 32812
+    },
+    "images/statusbar/Glaze2.tga": {
+      "sha256": "805cc920b241fe6d09f7907c99c16a09c15e9bb5ebb7c736486854b5c13122cb",
+      "bytes": 32812
+    },
+    "images/statusbar/Gloss.tga": {
+      "sha256": "20f70840ccfd8c7a94ccdc57a95810a56d495e1de62ac90e4f051e44c8215205",
+      "bytes": 32812
+    },
+    "images/statusbar/Graphite.tga": {
+      "sha256": "4fafd7e34444a05f1d261a76156fadc3130c6f7d1538779b559ed6b8e4825856",
+      "bytes": 65580
+    },
+    "images/statusbar/Grid.tga": {
+      "sha256": "9caee4d0382316aa64ec4891eb8b05ffba0df5e421bef9274f8533e639637d74",
+      "bytes": 24594
+    },
+    "images/statusbar/Healbot.tga": {
+      "sha256": "9b3cdfeba85c0fed3e9089dc4f8c21ac0e079eeac018b1e2c518af4295f832a6",
+      "bytes": 24594
+    },
+    "images/statusbar/LiteStep.tga": {
+      "sha256": "9bd025e9217a88cda7ef3bd185976ded94a647468c6126d42c55df4a88f3a7c2",
+      "bytes": 32812
+    },
+    "images/statusbar/Minimalist.tga": {
+      "sha256": "97976977031766d707a34121ac13c5ab6b7e9d204be2efaa395c717aeb1dc7ab",
+      "bytes": 1304
+    },
+    "images/statusbar/normTex.tga": {
+      "sha256": "500b74637f1d0fa7a75b965152de3e9c1814cad3706526938ea251f683da8e7e",
+      "bytes": 14690
+    },
+    "images/statusbar/Otravi.tga": {
+      "sha256": "e300a87224e7c1a044574ec915a1f9c0de49c3e26f854ecd3e1ea8ed920aaba9",
+      "bytes": 32812
+    },
+    "images/statusbar/Outline.tga": {
+      "sha256": "f1f5c8e7032b24c0e08f42fc5ad3ab14d20005bb7a31921bd982d5883b4cad28",
+      "bytes": 664
+    },
+    "images/statusbar/Perl.tga": {
+      "sha256": "e0fd78c10c65cc4ef4cd455ecf97e0b1f0d0e8808d0822eb94f4f2f9dae98596",
+      "bytes": 2037
+    },
+    "images/statusbar/Round.tga": {
+      "sha256": "8da9acf03ae2629228635fe039ffcf1a8776567168e28d5a74113599002bedcf",
+      "bytes": 4980
+    },
+    "images/statusbar/Smooth.tga": {
+      "sha256": "00e8084e83bf25b941464e2619b59e993b6ac7ae0bd8a6f37b12872e686ded6d",
+      "bytes": 32812
+    },
+    "images/sync.tga": {
+      "sha256": "f645d6b5d02057291a0314c28b4d28c94e02f8ec302c595bd09adf7a6dfb92d4",
+      "bytes": 1068
+    },
+    "images/UI-ChatIM-SizeGrabber-Down.tga": {
+      "sha256": "099102522b5f45ba28df0abf2f54ec5574a29b258c25330360780fdc2553159b",
+      "bytes": 824
+    },
+    "images/UI-ChatIM-SizeGrabber-Highlight.tga": {
+      "sha256": "5829b57218b92b8c979e9e54d1daab948a096f987e0f536f175f7b102f6c24ac",
+      "bytes": 862
+    },
+    "images/UI-ChatIM-SizeGrabber-Up.tga": {
+      "sha256": "9b35b6497bc801b7bcaf4e4313ed58e06022e7908f1805c9d14a1ed140aa42c3",
+      "bytes": 795
+    },
+    "images/UI-GuildButton-MOTD-Up.tga": {
+      "sha256": "b8070218d4419a9f20c710a63d0a642f20dd9f92b42a4dd7468f474c29c547dd",
+      "bytes": 408
+    },
+    "images/UI-GuildButton-PublicNote-Up.tga": {
+      "sha256": "fb87dd21a686910b3ce3542879106b60f0172acfdbeb12722ef7ce718ef71614",
+      "bytes": 538
+    },
+    "images/UI-Listbox-Highlight2.tga": {
+      "sha256": "902fb4d014ca9269c3f2a0d75d2ee13427f694be1318a1604d90cfe53534d7e0",
+      "bytes": 3477
+    },
+    "images/UI-Panel-CollapseButton-Down.tga": {
+      "sha256": "5e77f7f59e6c495589d47b86557fb9599277ea6e276ccc20c9f772c3e80f0495",
+      "bytes": 906
+    },
+    "images/UI-Panel-CollapseButton-Up.tga": {
+      "sha256": "08c527d404c1d7cbe5958adbc65c70cf2c332ff88c9dd1009cfc068c0036f3c7",
+      "bytes": 1055
+    },
+    "images/UI-Panel-ExpandButton-Down.tga": {
+      "sha256": "aae022a84094abd83a376a45e4ccab18a02597c7722de324cf03f2acabf73605",
+      "bytes": 895
+    },
+    "images/UI-Panel-ExpandButton-Up.tga": {
+      "sha256": "7a8abf4675709ec1cfd3a4b9529566a91a8b8b76752e62090532e1f30e58eace",
+      "bytes": 1025
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "81e208a05586b840786d12eb238636b33cdd3350c33aa0a12ca803b4da0b533a",
+      "bytes": 25356
+    },
+    "libs/ChatThrottleLib.lua": {
+      "sha256": "fdb69eafc691158f1f623515c8bfe7d3f4837e09305c08f67174f43fb0d82404",
+      "bytes": 13038
+    },
+    "libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "4a6de23725ce0e377abacec22a6a4c9a46670a6257a0abf104aa386c69332c46",
+      "bytes": 76637
+    },
+    "libs/GraphLib/Graph-1.0/Graph-1.0.lua": {
+      "sha256": "48059ed038dbcace00bd64a10e3688e7563f90e670c44a7c8aa0bacc84151c53",
+      "bytes": 64424
+    },
+    "libs/GraphLib/GraphLib.toc": {
+      "sha256": "f650f6562106dca614827c3c086436134aa08d319eb8e97705b8941432c98e89",
+      "bytes": 301
+    },
+    "libs/GraphLib/GraphTextures/line.tga": {
+      "sha256": "ca58e58ac890f6d27cf542b9a5158467d7680739cd2ea36dd098528d125584a0",
+      "bytes": 764
+    },
+    "libs/GraphLib/GraphTextures/party.tga": {
+      "sha256": "76143ac142b803c1bb5adfa8408116598c7669c9c75ffba64793045615d003cf",
+      "bytes": 4140
+    },
+    "libs/GraphLib/GraphTextures/Pie/1-1.tga": {
+      "sha256": "0f1ab7c4a7d2337dbf52602c8e5a01509f15bf135e8d796840578b91479e956c",
+      "bytes": 21663
+    },
+    "libs/GraphLib/GraphTextures/Pie/1-128.tga": {
+      "sha256": "8cd3e2565d0e839fa2f0fac76450153e730eb76861b62b06ef48bf9477d5d552",
+      "bytes": 13781
+    },
+    "libs/GraphLib/GraphTextures/Pie/1-16.tga": {
+      "sha256": "57269af377bd61b22c76fd1fa2114e613872a58062c863e910f11045e865a0c8",
+      "bytes": 14332
+    },
+    "libs/GraphLib/GraphTextures/Pie/1-2.tga": {
+      "sha256": "1efa63a6e8ac9fe88df9476e81601a5b6586862af23e967ff069601c0f12c214",
+      "bytes": 18611
+    },
+    "libs/GraphLib/GraphTextures/Pie/1-32.tga": {
+      "sha256": "6775aedca8c18c1769b57916e66df79621f0a5395794b7fece797b4ecdaf7525",
+      "bytes": 13995
+    },
+    "libs/GraphLib/GraphTextures/Pie/1-4.tga": {
+      "sha256": "073452f9500b4ff226b96d1152ccb4bf8fcd658ffd015c6b8eae22e401929664",
+      "bytes": 14824
+    },
+    "libs/GraphLib/GraphTextures/Pie/1-64.tga": {
+      "sha256": "41eaa9379e2b0cfea0c84618a002a4ddd7fb4a384e04b4633d7cf225b535e93d",
+      "bytes": 13859
+    },
+    "libs/GraphLib/GraphTextures/Pie/1-8.tga": {
+      "sha256": "324a86838b6d085c409c444f117559655a05e91cfc9f69d6efea402dc36b009e",
+      "bytes": 14863
+    },
+    "libs/GraphLib/GraphTextures/sline.tga": {
+      "sha256": "2e29c147eb68e6678c0cbada07b4b5de2499d571074cfe4a313fbe2b0c93e06b",
+      "bytes": 684
+    },
+    "libs/GraphLib/GraphTextures/triangle.tga": {
+      "sha256": "56267df8302725ec28b5bc7ea3da132d5eb787f137d7be73db6f23fa7a153918",
+      "bytes": 6152
+    },
+    "LICENSE": {
+      "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+      "bytes": 35141
+    },
+    "locales/Babble-Boss-2.3_deDE.lua": {
+      "sha256": "f1ab6183624043361928d3625a07207a1f96898f83533b3be01a35bf82b71e96",
+      "bytes": 12400
+    },
+    "locales/Babble-Boss-2.3_frFR.lua": {
+      "sha256": "9102e8840c5ffedc6375777a1efc19c40a35671f71b9892f4f514941f6814edb",
+      "bytes": 12657
+    },
+    "locales/Babble-Boss-2.3_koKR.lua": {
+      "sha256": "91fbb844abd51bc5140322a2dc69079e657e2c34ef589c9031d8be3ba199bbaf",
+      "bytes": 17843
+    },
+    "locales/Babble-Boss-2.3_ruRU.lua": {
+      "sha256": "2be6a80acef77ffebe7b4e32ea850fc051e6a70e6f19abb5cbaf5f509f459db9",
+      "bytes": 14664
+    },
+    "locales/Babble-Boss-2.3_zhCN.lua": {
+      "sha256": "da47b457170d4c2b2bda9a57990db657bf00bcf3a91df3819f03e16a9bf830ec",
+      "bytes": 12566
+    },
+    "locales/Babble-Spell-2.3_deDE.lua": {
+      "sha256": "0fced67c9788efbabacabc58bcb29f4d979df9ba31c17d1479c1b9d2c5da244d",
+      "bytes": 127783
+    },
+    "locales/Babble-Spell-2.3_frFR.lua": {
+      "sha256": "a60a9ae7d557b7a3231ddaea017510e12ffa929502c1a22277af6ae38c13f01d",
+      "bytes": 124922
+    },
+    "locales/Babble-Spell-2.3_koKR.lua": {
+      "sha256": "a58503f5f763d159747e2e829cff116015fa09ddf1e3e884940a055c178fde6b",
+      "bytes": 79802
+    },
+    "locales/Babble-Spell-2.3_ruRU.lua": {
+      "sha256": "ea6a6727120ceaeb52e5d4f9f1b75b0b4c416eee134ad860c3e3b8bd09c03eb3",
+      "bytes": 170980
+    },
+    "locales/Babble-Spell-2.3_zhCN.lua": {
+      "sha256": "130ccdcd3f1b31e195d7d3e68e8d521a399e85c6f18805543c14bfb112a9c212",
+      "bytes": 108561
+    },
+    "locales/deDE.lua": {
+      "sha256": "850189a7b29bd472ad9631f9c4fb20f737bcc22ce350fe959d80e604d6ae0658",
+      "bytes": 53320
+    },
+    "locales/DPSMate_ParserDEDE.lua": {
+      "sha256": "3aae3e55f5ca98c4869f28538c46035a38cf6e2d810e2f2397bfacc05edda812",
+      "bytes": 54395
+    },
+    "locales/DPSMate_ParserFRFR.lua": {
+      "sha256": "b1fd0a049c0760914e8a0717b915c9090b94b29e4dd54258923d0eb53a04ed64",
+      "bytes": 66582
+    },
+    "locales/DPSMate_ParserKRKR.lua": {
+      "sha256": "58fdea0781ce559226b3af0423532bb6910022850f7f10a16c5e509eabfc7181",
+      "bytes": 54647
+    },
+    "locales/DPSMate_ParserRURU.lua": {
+      "sha256": "89e47aea4b4b21582c144d2a29313728358f21689c8eda5963ab49536487e9a5",
+      "bytes": 52458
+    },
+    "locales/DPSMate_ParserZHCN.lua": {
+      "sha256": "56243ccdd14b2060a70bea0c3227fee6c927244a5332b643c72690e5428e7ec1",
+      "bytes": 57246
+    },
+    "locales/frFR.lua": {
+      "sha256": "56fab47775f8011b644b359d6206922042477d96b5165459cd80049ca9363e17",
+      "bytes": 53349
+    },
+    "locales/koKR.lua": {
+      "sha256": "57ee426b8f9c6f1e806682a472be61393c174c35628928691cb8111dacea66ca",
+      "bytes": 55710
+    },
+    "locales/NPCDB-1.0_deDE.lua": {
+      "sha256": "8114b2f801d3f901fc150542065ec4b6903e21f929a70fe9aeea5d2d8f0c8937",
+      "bytes": 205996
+    },
+    "locales/NPCDB-1.0_frFR.lua": {
+      "sha256": "cb70504c0daead1006fea09092647509d3dbaa55c2169030d15decc8ac4d3313",
+      "bytes": 203529
+    },
+    "locales/NPCDB-1.0_koKR.lua": {
+      "sha256": "ed977122b2e74eb1e769e19755904455a9e23517fccd2a7318ecf73caad8b857",
+      "bytes": 213939
+    },
+    "locales/NPCDB-1.0_ruRU.lua": {
+      "sha256": "8804f856c149c0109e0b1d87407b67c669dfc36518c05889702b0a17c6a86e7e",
+      "bytes": 434402
+    },
+    "locales/NPCDB-1.0_zhCN.lua": {
+      "sha256": "b0dacb6aad2808f5e20b769234dec6c1aed7bcdbd1c050b478fab146978e345d",
+      "bytes": 195365
+    },
+    "locales/ruRU.lua": {
+      "sha256": "5a6fec9284d006ded559ef93856e653906810ff91b7432a54212efd991cec746",
+      "bytes": 62366
+    },
+    "locales/zhCN.lua": {
+      "sha256": "65c73dc4eb026577f874511e35edcea0116d259219ef266d57c3fca1a82b2305",
+      "bytes": 50112
+    },
+    "modules/DPSMate_Absorbs.lua": {
+      "sha256": "6a470bb3e472b388bb0445146468415da763eedbba9ea3172fc79145ed2aa2c3",
+      "bytes": 11089
+    },
+    "modules/DPSMate_AbsorbsTaken.lua": {
+      "sha256": "eea388a4a3d73ce276be7bc1b703f67e4eb53f56d8bc5584adb97a08263ca412",
+      "bytes": 11387
+    },
+    "modules/DPSMate_Activity.lua": {
+      "sha256": "799238aac31580dab009cad315421ba14c3c56e416675ea5b056cbd6bd8cf253",
+      "bytes": 2553
+    },
+    "modules/DPSMate_AurasGained.lua": {
+      "sha256": "57e8831f372a7976d1ea53129b7c0dcd4fe6d798c83c7b88203b9cfdfc75c7f3",
+      "bytes": 4452
+    },
+    "modules/DPSMate_AurasLost.lua": {
+      "sha256": "68fb73bffb8f3fd29628a92dcc9b30d99d18a8540ca5f0eb57f078e7ead04112",
+      "bytes": 4409
+    },
+    "modules/DPSMate_AuraUptimers.lua": {
+      "sha256": "4d2251149b9a8bbe950d23c8796d81ce99477f748a240e460a03ae321bc3a784",
+      "bytes": 4692
+    },
+    "modules/DPSMate_Casts.lua": {
+      "sha256": "d5975ed29c06c6ed755cc0fde763c232186a2954bf729f19661756c9f121d90c",
+      "bytes": 5084
+    },
+    "modules/DPSMate_CCBreaker.lua": {
+      "sha256": "60b77466dda025ca2d27fd10e6884bf1580cec234b017cf6f9771ddebe026d75",
+      "bytes": 4900
+    },
+    "modules/DPSMate_CureDisease.lua": {
+      "sha256": "ad317d0155dc3aba39bc26b41c2a74a959cba3924b9b1346a203997eced50223",
+      "bytes": 7123
+    },
+    "modules/DPSMate_CureDiseaseReceived.lua": {
+      "sha256": "ac7b76e23f1fd70a06e53e7de6fdb26ba2ce0e0104dd2a53781101b44600d57f",
+      "bytes": 6068
+    },
+    "modules/DPSMate_CurePoison.lua": {
+      "sha256": "9eede82954162d59e62655922187c5523432f4363b033eb5814365dd4cd6a29a",
+      "bytes": 7044
+    },
+    "modules/DPSMate_CurePoisonReceived.lua": {
+      "sha256": "e447d9610f1c84fbcb1801cb69c9418d938070172bd6f32fd243a44fda961b6c",
+      "bytes": 6042
+    },
+    "modules/DPSMate_DamageTaken.lua": {
+      "sha256": "cb50a74b91801ab6f62b5401be1485ab19857411d4e76fc662c9c228889161fa",
+      "bytes": 5992
+    },
+    "modules/DPSMate_Deaths.lua": {
+      "sha256": "9e4b8bcf6e9a96b8deec32e0a0c1efecdd8f33a51f799519e46a879151667518",
+      "bytes": 5913
+    },
+    "modules/DPSMate_Debug.lua": {
+      "sha256": "98ee3463f440f31c3b702b018905ac62a292ef0dbfd2c987547c2a202cf4a6f1",
+      "bytes": 4729
+    },
+    "modules/DPSMate_Decurses.lua": {
+      "sha256": "45160ee2da8a8bfec107364ec0ac5efc523bbb02e912b84b5987b2c40efa8b29",
+      "bytes": 7088
+    },
+    "modules/DPSMate_DecursesReceived.lua": {
+      "sha256": "572e6a29e58a0f1e46975e1140f0c35a74cebcec48f10bfc0633ee90c33f1c9b",
+      "bytes": 6076
+    },
+    "modules/DPSMate_Details_Absorbs.lua": {
+      "sha256": "5a8e6fa53c8ec9cfc15fb7c1026796babd081ca8a76f1da8f2ddd787e517c08c",
+      "bytes": 22263
+    },
+    "modules/DPSMate_Details_Absorbs.xml": {
+      "sha256": "2db1914438d7e89829e6b0555ae1bfcef552d0e1ff24aae0404dc999aacefd86",
+      "bytes": 41592
+    },
+    "modules/DPSMate_Details_AbsorbsTaken.lua": {
+      "sha256": "6bfaac72e4b342e7373f701f86ae7ce66f1feba497fdb713868d7a7ed8c2585f",
+      "bytes": 23024
+    },
+    "modules/DPSMate_Details_AbsorbsTaken.xml": {
+      "sha256": "372fb0fde826424c8078df887437d7a491bffe264f07aaf825a1f372fa02fa9e",
+      "bytes": 42205
+    },
+    "modules/DPSMate_Details_AbsorbsTakenTotal.lua": {
+      "sha256": "6b7d25a5df5258fcecb9d7e1e0bb5507afeb94ba9b002db136f5d1e57b22bbab",
+      "bytes": 19159
+    },
+    "modules/DPSMate_Details_AbsorbsTakenTotal.xml": {
+      "sha256": "b16949f566866e52ba914a6949256f760e1a0b0c6ed593dc44c92c90bedafcb7",
+      "bytes": 29345
+    },
+    "modules/DPSMate_Details_AbsorbsTotal.lua": {
+      "sha256": "b0984c717d748f049ce17a4de96dd0362fe6e4acc2c3accd0a934a873071d580",
+      "bytes": 18733
+    },
+    "modules/DPSMate_Details_AbsorbsTotal.xml": {
+      "sha256": "52e22c0ddbc18aae4940c2e90bb786ce445d8a378d7b6812efe08e1677d571c0",
+      "bytes": 28990
+    },
+    "modules/DPSMate_Details_Auras.lua": {
+      "sha256": "d7b4b99db2649bac28186600527f8a69414e5b490b336423219aa306547bc15c",
+      "bytes": 15089
+    },
+    "modules/DPSMate_Details_Auras.xml": {
+      "sha256": "a53340e298e6a35ff42f20bd05b7d2989e6369ede3f7f67653a259d40d9585f1",
+      "bytes": 15094
+    },
+    "modules/DPSMate_Details_AurasTotal.lua": {
+      "sha256": "f76ea58406f7dad0d5de913fc1ef5c440d364d7209e35a9e3f1ab6f6cd275f09",
+      "bytes": 13411
+    },
+    "modules/DPSMate_Details_AurasTotal.xml": {
+      "sha256": "654b501cbb553ff50e64503f047b60308e3e64270f7191ee7c866a9e77e57833",
+      "bytes": 9905
+    },
+    "modules/DPSMate_Details_Casts.lua": {
+      "sha256": "4b3fd6c983ce2cf2727bafdd91c82d99c1db901398bd327c89a4163658de6c01",
+      "bytes": 3085
+    },
+    "modules/DPSMate_Details_Casts.xml": {
+      "sha256": "3338c46f9f7c470ae8ca56e14f9b1e8c6d94ea2a18ed02c3970eb55f81081dd1",
+      "bytes": 8915
+    },
+    "modules/DPSMate_Details_CastsTotal.lua": {
+      "sha256": "de9b421bd11f23d68e6bc17987a6bd8453fe292fdeb8192c5284aaa12e1e80aa",
+      "bytes": 2635
+    },
+    "modules/DPSMate_Details_CastsTotal.xml": {
+      "sha256": "7c8c402f667ab70b7a18726511b00d849c76108b24474cec2160d05b7309ce9e",
+      "bytes": 6288
+    },
+    "modules/DPSMate_Details_CCBreaker.lua": {
+      "sha256": "d15f30115c4bad1022efeddf340b90ba1ca633054036c195f93626d2803839c9",
+      "bytes": 3685
+    },
+    "modules/DPSMate_Details_CCBreaker.xml": {
+      "sha256": "718355f7e0f95ac7885cd07871e1a73634a49e64b69cdd93bad3dcbcc5b06c93",
+      "bytes": 10467
+    },
+    "modules/DPSMate_Details_CCBreakerTotal.lua": {
+      "sha256": "b676fcbd6649650038be36750728e209fae018f8af758a108a3d96ced7d53f8b",
+      "bytes": 3589
+    },
+    "modules/DPSMate_Details_CCBreakerTotal.xml": {
+      "sha256": "481cf676a4a5cf64865fa98d51a0b37eca99c64fe54ae13d0f6f2f8b0632b638",
+      "bytes": 8246
+    },
+    "modules/DPSMate_Details_CureDisease.lua": {
+      "sha256": "af93d68b4a4dc9190055b45f88c5998f479458ea443d48566c7c0b09cd76c472",
+      "bytes": 7730
+    },
+    "modules/DPSMate_Details_CureDisease.xml": {
+      "sha256": "ec24932af6a9d4a9f695481457a6dd0e81d55636d228b434c7ac0b055c8b4f14",
+      "bytes": 37088
+    },
+    "modules/DPSMate_Details_CureDiseaseReceived.lua": {
+      "sha256": "fdc58dda6d968a7823b90939b43498709c95c5c9aa01f29f8a78f12a2aaa30ad",
+      "bytes": 8475
+    },
+    "modules/DPSMate_Details_CureDiseaseReceived.xml": {
+      "sha256": "8a332bdc5fe6a6bb6eb6fb195598b1275019e5de7787ec37da6af86206598d3f",
+      "bytes": 38008
+    },
+    "modules/DPSMate_Details_CureDiseaseTotal.lua": {
+      "sha256": "4f2b3bab5c7f5a347e3f4a5cec176857ca414bd83e7834ff9a7326537a5e350c",
+      "bytes": 4559
+    },
+    "modules/DPSMate_Details_CureDiseaseTotal.xml": {
+      "sha256": "4d8b6b324bc4b64c005d351e16df0b823adfdd6d625279a9fa5e76d9644a651d",
+      "bytes": 9401
+    },
+    "modules/DPSMate_Details_CurePoison.lua": {
+      "sha256": "6e604ea878ab2ffb0b8aff2539db56d0a6a9686cb181f328c4be2012e6574a15",
+      "bytes": 7697
+    },
+    "modules/DPSMate_Details_CurePoison.xml": {
+      "sha256": "314725c07ed18b8b65f6ee7f782f2aa2d62a63cb27b3c34612275c7ade9f69bb",
+      "bytes": 36973
+    },
+    "modules/DPSMate_Details_CurePoisonReceived.lua": {
+      "sha256": "09d2d78a20bbacf81cde9a41a825e61fb695a2877192fb3ba1166cf30508270d",
+      "bytes": 8444
+    },
+    "modules/DPSMate_Details_CurePoisonReceived.xml": {
+      "sha256": "0d26b33514e74cc11c788f6475bdbae9fc298e491aef0e8ba013a596cfbf7693",
+      "bytes": 37893
+    },
+    "modules/DPSMate_Details_CurePoisonTotal.lua": {
+      "sha256": "6689852da4d6d3e99d20b3638c9da8966528853d0ec3b3157a90a6ec8587f1a8",
+      "bytes": 4536
+    },
+    "modules/DPSMate_Details_CurePoisonTotal.xml": {
+      "sha256": "60915911780ae36699ea3a7cd9e49cfd4748fa0b56e35881570235e46c5c6912",
+      "bytes": 9371
+    },
+    "modules/DPSMate_Details_DamageTaken.lua": {
+      "sha256": "63fc3ad602d294e14cdd13351857f4c130f5b82fc925f2013ad528d93cd44018",
+      "bytes": 28902
+    },
+    "modules/DPSMate_Details_DamageTaken.xml": {
+      "sha256": "c545c0df6afe3de39ebf066bc959d131d811e13c9434827606ef555e5ff1b937",
+      "bytes": 56133
+    },
+    "modules/DPSMate_Details_DamageTakenTotal.lua": {
+      "sha256": "523c3c8b6cf5d5044d77fcb8da4d6fbff0b625cf51b14bf7cdabbfa47d40db1c",
+      "bytes": 14474
+    },
+    "modules/DPSMate_Details_DamageTakenTotal.xml": {
+      "sha256": "05fbde0493023ee51dce18407bf85e0defd72b3a38a039305453f15de81989b1",
+      "bytes": 28474
+    },
+    "modules/DPSMate_Details_Deaths.lua": {
+      "sha256": "9fc4b68f604d3f2026c13b9a66d346b990f20d4e43b0c69ba2b9048b6d543c06",
+      "bytes": 7149
+    },
+    "modules/DPSMate_Details_Deaths.xml": {
+      "sha256": "cd68b5c51854fcce33e8934ccaed14b581bfc690147283750e675d3369e5ea37",
+      "bytes": 33257
+    },
+    "modules/DPSMate_Details_DeathsTotal.lua": {
+      "sha256": "644286933903d48ac195628c55fcef3504000806ee8090adb0b3d1f882dec910",
+      "bytes": 6352
+    },
+    "modules/DPSMate_Details_DeathsTotal.xml": {
+      "sha256": "f75fc9e23288c97dc164149d3d2b0b59896f456f8b9b19cba3fd1810619e1bfe",
+      "bytes": 11282
+    },
+    "modules/DPSMate_Details_Decurses.lua": {
+      "sha256": "f9ac0bfc12f00a3e0969216f2ce21ad154007a59b25ed099ae11c33616489b1e",
+      "bytes": 7638
+    },
+    "modules/DPSMate_Details_Decurses.xml": {
+      "sha256": "ecc3aef334c29beeda09f8a840d1958346168cba5dff5c3f86e84f88b7e66999",
+      "bytes": 36743
+    },
+    "modules/DPSMate_Details_DecursesReceived.lua": {
+      "sha256": "7e8e5b83b5de7fe868ea776481c03bed2bc7b5996916c13a8302b05741c3baba",
+      "bytes": 8432
+    },
+    "modules/DPSMate_Details_DecursesReceived.xml": {
+      "sha256": "30500f1425df7c1ad77362777729fb43452ac8c7155d48b7e7b0dd6e5bb9a77f",
+      "bytes": 37663
+    },
+    "modules/DPSMate_Details_DecursesTotal.lua": {
+      "sha256": "415d7843990d3201e59ffe9a9f0126e1843573eb0fc549cf14829e071be07a1b",
+      "bytes": 4515
+    },
+    "modules/DPSMate_Details_DecursesTotal.xml": {
+      "sha256": "c73b0bdb69a5c546c3f65a093c7ec636299e957566fd050e7aaab13be515f881",
+      "bytes": 9350
+    },
+    "modules/DPSMate_Details_Dispels.lua": {
+      "sha256": "3e4a9c326c3c37531d71e5b73352e04c8b6eadbe86a828814d4e3a99d8b228e1",
+      "bytes": 7459
+    },
+    "modules/DPSMate_Details_Dispels.xml": {
+      "sha256": "4adf83e4f9f4a97fc585ffa1e65d04f8bbec75e8ce530508d36f62bece3d3052",
+      "bytes": 36628
+    },
+    "modules/DPSMate_Details_DispelsReceived.lua": {
+      "sha256": "6e84c5f1efc3291341afc37654035d3cdf2c276200579d43d10855c8786898a1",
+      "bytes": 8232
+    },
+    "modules/DPSMate_Details_DispelsReceived.xml": {
+      "sha256": "4cce8c524c02dbeca5230df0d926906d5b46a44ffe1ba854bad246535784d531",
+      "bytes": 37548
+    },
+    "modules/DPSMate_Details_DispelsTotal.lua": {
+      "sha256": "1598e487679234ec52ea6686780f9986765b114b83f94b65957467e901c26d7f",
+      "bytes": 4399
+    },
+    "modules/DPSMate_Details_DispelsTotal.xml": {
+      "sha256": "c3c521fbe514fc1f24d823fee6a4360d893355e9266a98156783f5dc299f1898",
+      "bytes": 9333
+    },
+    "modules/DPSMate_Details_EDD.lua": {
+      "sha256": "8770586def5a777acde24d7efdf28f0279466b966b523154b6507ed9d6981836",
+      "bytes": 22846
+    },
+    "modules/DPSMate_Details_EDD.xml": {
+      "sha256": "7d979dbe2152f8d870b59c8a2fb7cbbef357237302319edbbf789a01cf71ff35",
+      "bytes": 53875
+    },
+    "modules/DPSMate_Details_EDDTotal.lua": {
+      "sha256": "7aea281a76760b0ec89d950369b4344e6f3c0b9c78c8408036f8ceacee850aad",
+      "bytes": 13775
+    },
+    "modules/DPSMate_Details_EDDTotal.xml": {
+      "sha256": "c037072da30a5aafe888d1705fd9c876b2bf7872f0afd93f44e18fb59f5c06d8",
+      "bytes": 27915
+    },
+    "modules/DPSMate_Details_EDT.lua": {
+      "sha256": "f6941433ca9cd66091330447839637b6fa99978552cec90e73f5b54588332eb8",
+      "bytes": 22874
+    },
+    "modules/DPSMate_Details_EDT.xml": {
+      "sha256": "c1acfd81ffb94a7f10c5c5413fca059084fec5e733015696bd0b84220d8f4841",
+      "bytes": 54141
+    },
+    "modules/DPSMate_Details_EDTTotal.lua": {
+      "sha256": "e723061234b35c9545fcc48a01fff603f0c2243bdbff01101f3333375f266174",
+      "bytes": 13776
+    },
+    "modules/DPSMate_Details_EDTTotal.xml": {
+      "sha256": "92a442e78e24b0037df5fd20b0bdd426365eaad4da7cc9a06d69dd2075de8140",
+      "bytes": 27915
+    },
+    "modules/DPSMate_Details_EHealing.lua": {
+      "sha256": "1d1e238402524fb9b2f6e36e7d676edd49f794f6a19b0eff3c52a6adc9483958",
+      "bytes": 30920
+    },
+    "modules/DPSMate_Details_EHealing.xml": {
+      "sha256": "0d646e7dc29de84b29cc1960fccb71c80674c3dc7c403a532ec82b709429b2a3",
+      "bytes": 49340
+    },
+    "modules/DPSMate_Details_EHealingTaken.lua": {
+      "sha256": "fd52a9d0c30affd6bc7e71e61985e5a3e29f597febde9704a726380a13d64c96",
+      "bytes": 19331
+    },
+    "modules/DPSMate_Details_EHealingTaken.xml": {
+      "sha256": "a8c25ff92cbc4b6114ea0777a3440bf4b4e87d55ec394fb26ade30c8b5f9b5cf",
+      "bytes": 37502
+    },
+    "modules/DPSMate_Details_EHealingTakenTotal.lua": {
+      "sha256": "dc4f6560437495cf6004871c4fe3227aacaaea4100f4357f3c0e4e353efcf489",
+      "bytes": 14392
+    },
+    "modules/DPSMate_Details_EHealingTakenTotal.xml": {
+      "sha256": "bf4e6a525f9e40610e6db2c6c8b439547f93ee9fda2a660b28b88d5eabb385fe",
+      "bytes": 28067
+    },
+    "modules/DPSMate_Details_EHealingTotal.lua": {
+      "sha256": "bc9a21ad507f4da3fdddaffe2ae32774c0d84692c63439b42cdbccc82828bbf7",
+      "bytes": 13371
+    },
+    "modules/DPSMate_Details_EHealingTotal.xml": {
+      "sha256": "87d0b348d43e0e2268ea4972803fe02bc1045e97f62bd6182f93fb12d31c1ba2",
+      "bytes": 27711
+    },
+    "modules/DPSMate_Details_Fails.lua": {
+      "sha256": "9bbbb7407da474063e460961909d9278331579e709769e1f7b5f05dd20e91143",
+      "bytes": 3773
+    },
+    "modules/DPSMate_Details_Fails.xml": {
+      "sha256": "2539f5307aaecefed111149aa42822cb44c785e1963a7f7e4f6dc0badb6a3918",
+      "bytes": 10470
+    },
+    "modules/DPSMate_Details_FailsTotal.lua": {
+      "sha256": "bcb4ed6dfa8d09c7b40d7369d2d18b960ecc62bdf0fb734f345d1f02aabdb713",
+      "bytes": 3778
+    },
+    "modules/DPSMate_Details_FailsTotal.xml": {
+      "sha256": "3c5d2edeb0b26731bdfbe6a0205e2a02a89dcf8556e4cef29ab3fb2f3e61681d",
+      "bytes": 7680
+    },
+    "modules/DPSMate_Details_FriendlyFire.lua": {
+      "sha256": "44e8905f7d2083c4a1cadea75f96296d605a54573d2aa578f1adfa2c558b742e",
+      "bytes": 21594
+    },
+    "modules/DPSMate_Details_FriendlyFire.xml": {
+      "sha256": "70cf3aafd3229194464b9d7ac9623bfeeaedc1bf5620cbab37b2383637a69fac",
+      "bytes": 48334
+    },
+    "modules/DPSMate_Details_FriendlyFireTaken.lua": {
+      "sha256": "0f465c0581e87aca4f1c52becbd95876290f803cb9136300ed94290396da5802",
+      "bytes": 21382
+    },
+    "modules/DPSMate_Details_FriendlyFireTaken.xml": {
+      "sha256": "2f12d01ce818b939f69df8a8a5e79ba0eab086ba614179a36ab23fdef6938d17",
+      "bytes": 48448
+    },
+    "modules/DPSMate_Details_FriendlyFireTakenTotal.lua": {
+      "sha256": "b0ccb85e7f8c4e8ae03009b41ed5b3f3336d903d758ba3d3f1be47407db01c92",
+      "bytes": 14889
+    },
+    "modules/DPSMate_Details_FriendlyFireTakenTotal.xml": {
+      "sha256": "cdb19792b04afb7f399b5f110ed85b88442e9d8b45d9297bd670364cb1de5b06",
+      "bytes": 27357
+    },
+    "modules/DPSMate_Details_FriendlyFireTotal.lua": {
+      "sha256": "d045a45180ef1b330df9b2228fcb3915711814464b672131ab8784cb1456d09d",
+      "bytes": 14776
+    },
+    "modules/DPSMate_Details_FriendlyFireTotal.xml": {
+      "sha256": "31bff5d0ac9c743190eb45efe21e89560c5de73cb4d246a2d1cefcd7c0f12509",
+      "bytes": 27287
+    },
+    "modules/DPSMate_Details_Healing.lua": {
+      "sha256": "86e83dcd680a3f0c986b1765c715bb06c1a754c8415722f5689c14d2c905c9fe",
+      "bytes": 30531
+    },
+    "modules/DPSMate_Details_Healing.xml": {
+      "sha256": "6af850b5851811377c47e2f4cc332ba5d4bcd41a8bfbdd3929ea3221f372191c",
+      "bytes": 49244
+    },
+    "modules/DPSMate_Details_HealingAndAbsorbs.lua": {
+      "sha256": "cc21ddeaee0331000b7edfcb91eee6a0b681db6c6c765c96c030beabb8ac225f",
+      "bytes": 43778
+    },
+    "modules/DPSMate_Details_HealingAndAbsorbs.xml": {
+      "sha256": "57a5cea1274b9e70e44af135f3b5fa5c64a037c4c514e742032691f06b892ab1",
+      "bytes": 50204
+    },
+    "modules/DPSMate_Details_HealingAndAbsorbsTotal.lua": {
+      "sha256": "952e6cc25dbcd1e2e95cd59d867ea87cd14263b42cdc8af35061341b6f577067",
+      "bytes": 19453
+    },
+    "modules/DPSMate_Details_HealingAndAbsorbsTotal.xml": {
+      "sha256": "201ac013b81aac5ccf1e05cdcc202c625ffd00e8be21b0454eba838ae6f6c4a3",
+      "bytes": 27356
+    },
+    "modules/DPSMate_Details_HealingTaken.lua": {
+      "sha256": "ca008575780bb8bfd711472b6fa701f7fdc42add6dc8194bf12f1a5c54b0e4d8",
+      "bytes": 19266
+    },
+    "modules/DPSMate_Details_HealingTaken.xml": {
+      "sha256": "7871bf5e81d63fce747b79ec5f046e032e4cbd664748c75e5e6235483f07c3eb",
+      "bytes": 37433
+    },
+    "modules/DPSMate_Details_HealingTakenTotal.lua": {
+      "sha256": "8e0cf751437dccd0580867746afda76086d7e0287309e0b21680113a71f5aa27",
+      "bytes": 14313
+    },
+    "modules/DPSMate_Details_HealingTakenTotal.xml": {
+      "sha256": "4bca45e69cd739331f49a4bd6dc8d680fe83c051d97a23cfcfae4e7c8ab59c83",
+      "bytes": 27995
+    },
+    "modules/DPSMate_Details_HealingTotal.lua": {
+      "sha256": "e27570949a7cd1dc8d66e589e725fcd36621bd31587a18d5b29e85ca3d78cd10",
+      "bytes": 13292
+    },
+    "modules/DPSMate_Details_HealingTotal.xml": {
+      "sha256": "abca52dd2a42e02578c73057b66f172ed1957436b4aee13f5be512d8f8c787c9",
+      "bytes": 27639
+    },
+    "modules/DPSMate_Details_Interrupts.lua": {
+      "sha256": "5dc3e5ad8dfcea73c0dbd2a8a98a771194a392d6fb8433b8fcbc4fd53bc4bdee",
+      "bytes": 8057
+    },
+    "modules/DPSMate_Details_Interrupts.xml": {
+      "sha256": "d2962f4be974460825f168503154cc44ad01baf4b146951a91d48a862a6ba916",
+      "bytes": 36977
+    },
+    "modules/DPSMate_Details_InterruptsTotal.lua": {
+      "sha256": "90ed7409c0d74834bb5acf2f9905c8192ad2e8f06540991ddbed304b38675b67",
+      "bytes": 4512
+    },
+    "modules/DPSMate_Details_InterruptsTotal.xml": {
+      "sha256": "a6c23ec89dc42c660038296ffb32155ca10044d5c79584d7ce3f66766756d926",
+      "bytes": 9366
+    },
+    "modules/DPSMate_Details_LiftMagic.lua": {
+      "sha256": "abc83f2c27da25c68a1ecd0d9fdc0e07b583fb6d762d7c4862afd1cd5f42d919",
+      "bytes": 7664
+    },
+    "modules/DPSMate_Details_LiftMagic.xml": {
+      "sha256": "f5f533bf3cc7dee6970d5934ae325baaa9e8b5c481237fbbf3fe3b5c318d192e",
+      "bytes": 36858
+    },
+    "modules/DPSMate_Details_LiftMagicReceived.lua": {
+      "sha256": "2a3490ef6806bf5154e2108bd9b47c22fdbbe474570fd8535b604346dc7c7087",
+      "bytes": 8411
+    },
+    "modules/DPSMate_Details_LiftMagicReceived.xml": {
+      "sha256": "93f0b935447ce974b64c2ef8c4bb5fe39c4405b20e8676548f940cdf50e23b76",
+      "bytes": 37778
+    },
+    "modules/DPSMate_Details_LiftMagicTotal.lua": {
+      "sha256": "7d9277a2a4e0fe5a3a54ca2215dddc7959c905991b1a173e2ee0597b766efb94",
+      "bytes": 4513
+    },
+    "modules/DPSMate_Details_LiftMagicTotal.xml": {
+      "sha256": "405f12d92d72f9325134e8121d31876f03547a9e154911f04e87b373d80b29ff",
+      "bytes": 9372
+    },
+    "modules/DPSMate_Details_OHealingTaken.lua": {
+      "sha256": "08fa2e46d420ff149f4e869bf6b15f7a19793a9f885d13abd64ecba36bd26a51",
+      "bytes": 19327
+    },
+    "modules/DPSMate_Details_OHealingTaken.xml": {
+      "sha256": "23fb8203047c9ac1c912ac5fc711ed3b3343682968e050df381e0ad27f98c272",
+      "bytes": 37502
+    },
+    "modules/DPSMate_Details_Overhealing.lua": {
+      "sha256": "78ad4b3cf7c0463e46b8a7450bbb7326b7031acd926af5ee849fcbc0fac1da86",
+      "bytes": 31428
+    },
+    "modules/DPSMate_Details_Overhealing.xml": {
+      "sha256": "17d2e8ee514a47755b9bdb1b7cea09301f896c4e77041b2ec06b0c54864136c9",
+      "bytes": 49628
+    },
+    "modules/DPSMate_Details_OverhealingTakenTotal.lua": {
+      "sha256": "d77a79eeb3d12a59639bf3b607b7b7117196876f68803d2259de11afb081dcc1",
+      "bytes": 14577
+    },
+    "modules/DPSMate_Details_OverhealingTakenTotal.xml": {
+      "sha256": "3d67b2083040b4069ef30d45f5995148564a4abbadb95a080869117e3c2bfd70",
+      "bytes": 28280
+    },
+    "modules/DPSMate_Details_OverhealingTotal.lua": {
+      "sha256": "e0c1b2338888fd69a6f108b20486796e4706dc24943d870896a8cfd1cae13d53",
+      "bytes": 13559
+    },
+    "modules/DPSMate_Details_OverhealingTotal.xml": {
+      "sha256": "ddbe79372e1c9185171364f17505992eb68cd5603d68d1c89d7d26351d09da31",
+      "bytes": 27924
+    },
+    "modules/DPSMate_Details_Procs.lua": {
+      "sha256": "c226968461d968aadb0f5b32a94d120b13c431e6cbe2e2d886022319ef3570d8",
+      "bytes": 10022
+    },
+    "modules/DPSMate_Details_Procs.xml": {
+      "sha256": "33536d5981c5b28696ee0013bee006b57c2041b538e8d2eef526a66be337e410",
+      "bytes": 9748
+    },
+    "modules/DPSMate_Details_ProcsTotal.lua": {
+      "sha256": "ce3d14086012238107af537222afbe2b49bf076c9d675ea9908b4cd1f0d2fe73",
+      "bytes": 8830
+    },
+    "modules/DPSMate_Details_ProcsTotal.xml": {
+      "sha256": "5306b9b5c2fd3a1f36bd102e36ee900293dd644081fe1a616f431fa497dcce4e",
+      "bytes": 7047
+    },
+    "modules/DPSMate_Details_Threat.lua": {
+      "sha256": "e4f6815e1a64d90b218f28fa48a7cc88e86dce64372b765c8e9d2b2617454e22",
+      "bytes": 23695
+    },
+    "modules/DPSMate_Details_Threat.xml": {
+      "sha256": "23296b970e7aa0876233c7628515f3f58aa355d28372f1e11dd354ce1580e02e",
+      "bytes": 36916
+    },
+    "modules/DPSMate_Details_ThreatTotal.lua": {
+      "sha256": "7792e47aefd85e6aa12fadc8ab5cf75b868ba68dba363f53db0d9d8f11885b52",
+      "bytes": 13576
+    },
+    "modules/DPSMate_Details_ThreatTotal.xml": {
+      "sha256": "8fa3b5818ff1f3e7be57bed32cf0872103c03fedf8f2dd2079ac553983e24e10",
+      "bytes": 27569
+    },
+    "modules/DPSMate_Dispels.lua": {
+      "sha256": "5184049dfe261e6a77ac75792dd4244a84365f9313189b92ab19226db3349c8d",
+      "bytes": 6177
+    },
+    "modules/DPSMate_DispelsReceived.lua": {
+      "sha256": "c2ef6f058abec54ec89731e14cd386ce69e6ea86443e147e185f3c7813a91f1b",
+      "bytes": 5555
+    },
+    "modules/DPSMate_DTPS.lua": {
+      "sha256": "8a414366dd6393dac2c60008bc87028adc4954235fc073976a7551d8782fcbcd",
+      "bytes": 5974
+    },
+    "modules/DPSMate_EDD.lua": {
+      "sha256": "b973f550440770a37f166b5bc8d5741e8aa0ca1fbdf0801c7ac0c640376aa7ca",
+      "bytes": 6065
+    },
+    "modules/DPSMate_EDT.lua": {
+      "sha256": "2982ba8d4af71a38189843a4bd23eef1f2c9a4252793a495de924003853dd702",
+      "bytes": 6189
+    },
+    "modules/DPSMate_EffectiveHealing.lua": {
+      "sha256": "141154be737e0944cb14b6af901c7b58a195c9fbe6f7830d52f7e7cb8607f675",
+      "bytes": 5423
+    },
+    "modules/DPSMate_EffectiveHealingTaken.lua": {
+      "sha256": "7f9b293f01ec658b3a8c31fa65f3dc0c664e032d64785bdd9b1982405ddd02a4",
+      "bytes": 5983
+    },
+    "modules/DPSMate_EffectiveHPS.lua": {
+      "sha256": "a838fb7e121aaa904ed75e1e2ace05124e52a6456f98b2505ee7bc434fd990f8",
+      "bytes": 5087
+    },
+    "modules/DPSMate_Fails.lua": {
+      "sha256": "cf10eb4a6c913f62a28ccc3e5455ba7a474c2e619f3d6a265b8f9447f0e93071",
+      "bytes": 4833
+    },
+    "modules/DPSMate_FriendlyFire.lua": {
+      "sha256": "f95944138e7b3ca4427aa787bfa57a7696f1457b846058894f4cdf81dbc8266e",
+      "bytes": 7016
+    },
+    "modules/DPSMate_FriendlyFireTaken.lua": {
+      "sha256": "426ada9fa6f7166268a235e5a2654d78d69a18d34c56e9e8ea1ab888a4eaef39",
+      "bytes": 5946
+    },
+    "modules/DPSMate_Healing.lua": {
+      "sha256": "74ad2e2df1024860129e9a63867b65f067883239c5b1cb7109b5f3d1398cd378",
+      "bytes": 5247
+    },
+    "modules/DPSMate_HealingAndAbsorbs.lua": {
+      "sha256": "4a2affd16137c703e978b57e185bea15dd6aaa5a1a1b95b2ea9ddbb45fd74230",
+      "bytes": 11397
+    },
+    "modules/DPSMate_HealingTaken.lua": {
+      "sha256": "95b0ded9d2aca504ba7b525e557e8001fbb638d4c3014860cf5c51929ab1e958",
+      "bytes": 5805
+    },
+    "modules/DPSMate_HPS.lua": {
+      "sha256": "165cd50c4dd7a1f334a14f753eb7adfb9424ada09b6aa344ea47eebd8d542419",
+      "bytes": 4916
+    },
+    "modules/DPSMate_Interrupts.lua": {
+      "sha256": "be5a15e083cb361ddc425345f1948c2b1dc858a4918a4c2cd2b987f122fa75e3",
+      "bytes": 9186
+    },
+    "modules/DPSMate_LiftMagic.lua": {
+      "sha256": "06304f6a033577b4efa866ca47b93151a64ab8a053abb75e7e6e49d8e0b8f159",
+      "bytes": 7036
+    },
+    "modules/DPSMate_LiftMagicReceived.lua": {
+      "sha256": "d553c594fdc524dda014fbad1d1c043a431af073e4ead3f55cfb0461fed7a538",
+      "bytes": 6039
+    },
+    "modules/DPSMate_OHealingTaken.lua": {
+      "sha256": "2b150efc1f95c5bdfd43b4e2472d658a13ce03f56ecb7e92672484e3e619e59e",
+      "bytes": 5809
+    },
+    "modules/DPSMate_OHPS.lua": {
+      "sha256": "df656be2121b85fbfb955ef21350ad14582346a69311b57acc3110ef23450242",
+      "bytes": 4938
+    },
+    "modules/DPSMate_Overhealing.lua": {
+      "sha256": "555d838570494457693aa2bfdc63a98d2c3c54c63bd3e8eb8ae6d49127c41916",
+      "bytes": 5353
+    },
+    "modules/DPSMate_Procs.lua": {
+      "sha256": "ff9c8a25e95e4a6bbe2888eb6a1527774348218a8038a6cb4f302fd79c5344d7",
+      "bytes": 5474
+    },
+    "modules/DPSMate_Threat.lua": {
+      "sha256": "8df2c24af54f19f562bfee3d1cbcad6507be4704fcb29bcdf4512e9a39885c1c",
+      "bytes": 5098
+    },
+    "modules/DPSMate_TPS.lua": {
+      "sha256": "12af7ffbd83bc106d9fa379367035b1c6503b6249b5999da3c9d62bcd88a21fd",
+      "bytes": 5216
+    },
+    "README.md": {
+      "sha256": "25b183ed54066f7cc0aa31eb9b83e766bbe2260beab090cfad36b3725e7e3fc7",
+      "bytes": 3410
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

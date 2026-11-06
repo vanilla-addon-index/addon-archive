@@ -4,6 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| OoI | https://github.com/jejkas/OoI | new |
+| OoI | https://github.com/jejkas/OoI | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

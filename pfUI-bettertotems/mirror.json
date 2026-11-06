@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/Bombg/pfUI-bettertotems",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Bombg",
+    "repo": "pfUI-bettertotems",
+    "name": "pfUI-bettertotems",
+    "url": "https://github.com/Bombg/pfUI-bettertotems",
+    "api": "https://api.github.com/repos/Bombg/pfUI-bettertotems"
+  },
+  "commit": "4bcb23338570476c97db89590a70d102b0438b09",
+  "sourceFiles": {
+    "libbettertotem.lua": {
+      "sha256": "a095bcd2eaf9560ca2fa29734a7fcf00eabb375c5237de6806150ac342585e63",
+      "bytes": 7028
+    },
+    "librangecalc.lua": {
+      "sha256": "fda20d3ebe8835230402841dff3ef8abed98612919daabd852072edad6cf3475",
+      "bytes": 1306
+    },
+    "pfUI-bettertotems-config.lua": {
+      "sha256": "3e7d9c97edbd21f3894b368afbfbbc3b93cb305bb05e7b8ef8539ec95546163f",
+      "bytes": 2344
+    },
+    "pfUI-bettertotems.lua": {
+      "sha256": "619595b8c1b0c7679a54941a71bff08e9b5a712b8369bacba60c5597507c41c0",
+      "bytes": 6739
+    },
+    "pfUI-bettertotems.toc": {
+      "sha256": "a58ae7e76bcde1caf72b0c6e37800faab06f344c56acfdd835d5f581b0743262",
+      "bytes": 280
+    },
+    "README.MD": {
+      "sha256": "78a9edf47e17144183aef01f7178fa2e644b85f141c73af893ffec7fbc87c002",
+      "bytes": 1537
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

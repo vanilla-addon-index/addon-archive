@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/SpiritLinker",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "SpiritLinker",
+    "name": "SpiritLinker",
+    "url": "https://github.com/MarcelineVQ/SpiritLinker",
+    "api": "https://api.github.com/repos/MarcelineVQ/SpiritLinker"
+  },
+  "commit": "750d6d168dc601361c3a5a70956114a0dd095834",
+  "sourceFiles": {
+    "readme.md": {
+      "sha256": "56be00458884f5b99db7398500f6fe39ed241556f113724723ed543f3d22752a",
+      "bytes": 474
+    },
+    "SpiritLinker.lua": {
+      "sha256": "6104ac416012a82d3b3148edb4ffd9a72a1b47431e1ab7bb9e23a23c5386b1e9",
+      "bytes": 13093
+    },
+    "SpiritLinker.toc": {
+      "sha256": "ea3257c7dbde522c9bd7b9fe209e7f601c785b7d2eab7ffc71d923d82200a1b1",
+      "bytes": 244
+    },
+    "tank2.blp": {
+      "sha256": "dfdc78f9170deb3b895ea1aaa445c521aa825e116eecb983ce37f3552aaa346a",
+      "bytes": 6676
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

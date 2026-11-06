@@ -4,6 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| oRA2 | https://github.com/xorann/oRA2 | new |
+| oRA2 | https://github.com/xorann/oRA2 | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

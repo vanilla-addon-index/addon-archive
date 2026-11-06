@@ -1,0 +1,21 @@
+## Interface: 11200
+## Title: Panda
+## Author: |ccf3CE13Ftubtubs 
+## Version: 0.1
+## Notes: A simple vanilla wow addon that makes quick work of disenchanting. /Panda to learn more. Uses animations from |cffa050ffPizza|cffffffffSauce by PizzaHawaii
+## DefaultState: Enabled
+## LoadOnDemand: 0
+## SavedVariablesPerCharacter: PA_Vars, Panda_Icon
+libs\PizzaSauce.lua
+libs\AceLibrary.lua
+libs\Dewdrop-2.0.lua
+libs\LibStub.lua
+libs\AceCore-3.0.lua
+libs\AceHook-3.0.lua
+libs\CallbackHandler-1.0.lua
+libs\LibDataBroker-1.1.lua
+libs\LibDBIcon-1.0.lua
+Animations.lua
+localisation.lua
+Panda.xml
+Panda.lua

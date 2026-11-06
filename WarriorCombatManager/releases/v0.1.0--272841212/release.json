@@ -1,0 +1,9 @@
+{
+  "id": "272841212",
+  "tag": "v0.1.0",
+  "name": "Initial public release",
+  "body": "This is the first public release of WarriorCombatManager.\r\n\r\nWarriorCombatManager is designed to reduce DPS noise and promote consistent Warrior performance by managing cooldown usage around realistic fight timing rather than peak snapshots.\r\n\r\n### Included\r\n- Boss fight timing based on historical kill data\r\n- Live fight length adjustment using HP% drop rate\r\n- Clean timeline UI for cooldowns and usable trinkets\r\n- Optional execute-phase focused view\r\n- Lightweight and raid-safe implementation\r\n\r\n### Notes\r\n- This addon does not automate gameplay\r\n- Intended for TurtleWoW / SuperWoW supported setups\r\n- APIs and behavior may evolve as the system stabilizes\r\n",
+  "published": "2025-12-26T03:50:11Z",
+  "prerelease": false,
+  "url": "https://github.com/Faraso/WarriorCombatManager/releases/tag/v0.1.0"
+}

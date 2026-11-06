@@ -1,0 +1,9 @@
+{
+  "id": "224484554",
+  "tag": "beta0.16",
+  "name": "Kui-Namaplates",
+  "body": "**Updated:**\r\n- Reworked options GUI (ACE3  dialogoptions updated)\r\n- Added offtanks tracker to tankmode\r\n- small updates\r\n- Added libs (submodules removed) to git so you can use [CODE] button and gitaddonmanager again.\r\n\r\nPS updated zip (libs)",
+  "published": "2025-06-11T03:40:00Z",
+  "prerelease": false,
+  "url": "https://github.com/laytya/Kui-Namaplates/releases/tag/beta0.16"
+}

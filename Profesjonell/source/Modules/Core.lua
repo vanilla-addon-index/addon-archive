@@ -1,0 +1,109 @@
+-- Core.lua
+-- Main initialization and event loop
+-- Ensure the global table exists
+Profesjonell = Profesjonell or {}
+
+if Profesjonell.Log then
+    Profesjonell.Log("Core.lua loading")
+end
+
+local frame = CreateFrame("Frame")
+Profesjonell.Frame = frame
+
+-- Reusable timer frames for scheduled tasks to avoid creating many short-lived frames
+Profesjonell.TimerFrames = Profesjonell.TimerFrames or {}
+for i = 1, 4 do
+    if not Profesjonell.TimerFrames[i] then
+        Profesjonell.TimerFrames[i] = CreateFrame("Frame")
+    end
+end
+
+frame:RegisterEvent("ADDON_LOADED")
+frame:RegisterEvent("TRADE_SKILL_SHOW")
+frame:RegisterEvent("TRADE_SKILL_UPDATE")
+frame:RegisterEvent("CRAFT_SHOW")
+frame:RegisterEvent("CRAFT_UPDATE")
+frame:RegisterEvent("CHAT_MSG_ADDON")
+frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+frame:RegisterEvent("CHAT_MSG_GUILD")
+frame:RegisterEvent("PLAYER_GUILD_UPDATE")
+frame:RegisterEvent("GUILD_ROSTER_UPDATE")
+
+frame:SetScript("OnEvent", function()
+    -- In WoW 1.12, event, arg1, arg2, etc. are global variables during the execution of OnEvent
+    local event = event
+    local arg1 = arg1
+    local arg2 = arg2
+    local arg4 = arg4
+
+    if event == "ADDON_LOADED" and arg1 == "Profesjonell" then
+        if not ProfesjonellDB then ProfesjonellDB = {} end
+        if not ProfesjonellConfig then ProfesjonellConfig = {} end
+        
+        -- Link persistent NameCache
+        if not ProfesjonellConfig.nameCache then ProfesjonellConfig.nameCache = {} end
+        if Profesjonell.NameCache then
+            -- Copy any names cached during loading into the persistent cache
+            for k, v in pairs(Profesjonell.NameCache) do
+                ProfesjonellConfig.nameCache[k] = v
+            end
+        end
+        Profesjonell.NameCache = ProfesjonellConfig.nameCache
+
+        Profesjonell.Print(Profesjonell.Version .. " loaded.")
+
+        -- Migration check
+        if not ProfesjonellConfig.version or Profesjonell.CompareVersions(ProfesjonellConfig.version, Profesjonell.Version) < 0 then
+            if Profesjonell.MigrateDatabase then
+                Profesjonell.MigrateDatabase()
+            end
+            ProfesjonellConfig.version = Profesjonell.Version
+        end
+
+        if Profesjonell.WipeDatabaseIfGuildChanged then
+            Profesjonell.WipeDatabaseIfGuildChanged()
+        end
+        if Profesjonell.AttachTooltipHooks then
+            Profesjonell.AttachTooltipHooks()
+        end
+        if Profesjonell.AttachGuildMemberProfessionInfo then
+            Profesjonell.AttachGuildMemberProfessionInfo()
+        end
+        if Profesjonell.CreateMinimapButton then
+            Profesjonell.CreateMinimapButton()
+        end
+    elseif event == "TRADE_SKILL_SHOW" or event == "TRADE_SKILL_UPDATE" then
+        if Profesjonell.ScanRecipes then
+            Profesjonell.ScanRecipes(false)
+        end
+    elseif event == "CRAFT_SHOW" or event == "CRAFT_UPDATE" then
+        if Profesjonell.ScanRecipes then
+            Profesjonell.ScanRecipes(true)
+        end
+    elseif event == "PLAYER_ENTERING_WORLD" then
+        if Profesjonell.OnPlayerEnteringWorld then
+            Profesjonell.OnPlayerEnteringWorld()
+        end
+    elseif event == "CHAT_MSG_GUILD" then
+        if Profesjonell.OnGuildChat then
+            Profesjonell.OnGuildChat(arg1, arg2)
+        end
+    elseif event == "PLAYER_GUILD_UPDATE" then
+        if Profesjonell.WipeDatabaseIfGuildChanged then
+            Profesjonell.WipeDatabaseIfGuildChanged()
+        end
+    elseif event == "GUILD_ROSTER_UPDATE" then
+        if Profesjonell.OnGuildRosterUpdate then
+            Profesjonell.OnGuildRosterUpdate()
+        end
+    elseif event == "CHAT_MSG_ADDON" and arg1 == "Profesjonell" then
+        if Profesjonell.OnAddonMessage then
+            Profesjonell.OnAddonMessage(arg2, arg4)
+        end
+    end
+end)
+
+frame:SetScript("OnUpdate", function()
+    if Profesjonell.OnUpdate then Profesjonell.OnUpdate() end
+    if Profesjonell.OnCommUpdate then Profesjonell.OnCommUpdate() end
+end)

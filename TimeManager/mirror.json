@@ -1,0 +1,114 @@
+{
+  "upstream": "https://github.com/gashole/TimeManager",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "gashole",
+    "repo": "TimeManager",
+    "name": "TimeManager",
+    "url": "https://github.com/gashole/TimeManager",
+    "api": "https://api.github.com/repos/gashole/TimeManager"
+  },
+  "commit": "4a2bd0af61745cf3d5f01166b470e33982759c56",
+  "sourceFiles": {
+    "Locales/deDE.lua": {
+      "sha256": "99a0eaf3c82b0a21ab23d34b09a6796241908ccceb91723ca2296919f82b08a2",
+      "bytes": 1608
+    },
+    "Locales/enUS.lua": {
+      "sha256": "f786aa50326934e31961b9bd0db5d94509953b1c4b89689c1459a7f517414a39",
+      "bytes": 1502
+    },
+    "Locales/frFR.lua": {
+      "sha256": "68cd3e93165b096230fa2062038b42c4882ef07b3a040403f94cc2dc70d20967",
+      "bytes": 1662
+    },
+    "Locales/Locales.xml": {
+      "sha256": "e502a006151007d914b3a79e8366c7fa9472fb2d47a61d9616c3609ed8ae133f",
+      "bytes": 225
+    },
+    "Locales/ruRU.lua": {
+      "sha256": "3d7cd5dd3f1327902581a7df762914069dc11dbaa77d5d8777465cdff19f4d5b",
+      "bytes": 1864
+    },
+    "Locales/zhCN.lua": {
+      "sha256": "17c9a5222ac001f77b1e2a0f0b678e04a1fd552c7dd7d61537bf43fb2e715649",
+      "bytes": 1590
+    },
+    "Locales/zhTW.lua": {
+      "sha256": "f6078a98c43481a457287a141851b28858310b3c1aa0c0b97f86a5ee4b5f251a",
+      "bytes": 1579
+    },
+    "README.md": {
+      "sha256": "64ee86f49f0d24a2208d8d159e58f4e940ef12d7b113105362e0d06f1f4f9959",
+      "bytes": 922
+    },
+    "Sounds/AlarmClockWarning1.wav": {
+      "sha256": "81f4b46b95540433ce734eb69bfe8c72b9d42d9c1c44c974f585eed8adafc32d",
+      "bytes": 180134
+    },
+    "Sounds/AlarmClockWarning2.wav": {
+      "sha256": "1e3f38d08a0c265bceadb0bfc068a435b32ceef035fe622df9cdbb181c679dbc",
+      "bytes": 121364
+    },
+    "Sounds/AlarmClockWarning3.wav": {
+      "sha256": "2e9c76e92b666a083f9e1c30f904b7307530a13c15567c13e1608981098c7558",
+      "bytes": 85676
+    },
+    "Textures/ClockBackground.blp": {
+      "sha256": "38378cd9f447385138ca6a348b2f5ec1f2b3a528eb3fe7a2ecb33334ff7a6a3d",
+      "bytes": 6660
+    },
+    "Textures/GlobeIcon.blp": {
+      "sha256": "106887469b164a6d8b44a4ba086674b337d6fc2699f8fdb1276dc8ee18736665",
+      "bytes": 6660
+    },
+    "Textures/PauseButton.blp": {
+      "sha256": "1bc922fddde1c95cf5dd6440aee0be40a0ae483955717cc3905a95f75171cc63",
+      "bytes": 2564
+    },
+    "Textures/ResetButton.blp": {
+      "sha256": "588c128d1abb0ef131a5de8065644654cfc89e185b931545f20f66ada41c2487",
+      "bytes": 2564
+    },
+    "Textures/TimerBackground.blp": {
+      "sha256": "fde392d31517983e317448636d44c71dd30e905c99c552d00f4c27b37261a257",
+      "bytes": 12132
+    },
+    "TimeManager.lua": {
+      "sha256": "8e70a17e29888eb28f137a76bd949e2469ecf4889da89d4fb5e32d69840f9894",
+      "bytes": 30014
+    },
+    "TimeManager.toc": {
+      "sha256": "e916a1e3df90cbc046f29ecf139472b4c967f48044c4627ce02607b00a2a5d36",
+      "bytes": 289
+    },
+    "TimeManager.xml": {
+      "sha256": "097207bb74c2cf218362f2cc0dc8a567a2f84b8c614769c7b2a8c42086f01357",
+      "bytes": 17632
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "135934843": {
+      "tag": "current",
+      "folder": "current--135934843",
+      "assets": {
+        "143899401": {
+          "sha256": "8afa44681bd39d2808b01e1517d85b3e715f5688052e8dcc7f82eeae422a5133",
+          "bytes": 319588,
+          "id": "143899401",
+          "name": "TimeManager.zip",
+          "url": "https://github.com/gashole/TimeManager/releases/download/current/TimeManager.zip",
+          "path": "releases/current--135934843/assets/TimeManager.zip"
+        }
+      },
+      "source": {
+        "sha256": "8c54d95df5f3f36916b543b57598dd9eb26f35839c5cb38b883e27e4b8208dc4",
+        "bytes": 320390,
+        "path": "releases/current--135934843/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/gashole/TimeManager/tarball/current"
+      }
+    }
+  }
+}

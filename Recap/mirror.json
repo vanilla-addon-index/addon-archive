@@ -1,0 +1,81 @@
+{
+  "upstream": "https://github.com/dreaming-possum/Recap",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "dreaming-possum",
+    "repo": "Recap",
+    "name": "Recap",
+    "url": "https://github.com/dreaming-possum/Recap",
+    "api": "https://api.github.com/repos/dreaming-possum/Recap"
+  },
+  "commit": "c20ddb525c45e98be6cd7e6418e7ed3a19f272bf",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "d356c80a5ee54d7516a50f13a65556f275c67abcc756bc2dc0753504d3977918",
+      "bytes": 374
+    },
+    "localization.lua": {
+      "sha256": "cadb71d1a97dd6aa9ca63c8ec288ccdb3277c087ddbd859c79844ad09cd2c8b7",
+      "bytes": 54909
+    },
+    "readme.txt": {
+      "sha256": "33118c56d969a34ca0331c014096f33c99e6b0e72672e94ba18c739bc92781e6",
+      "bytes": 37224
+    },
+    "Recap-Classes.blp": {
+      "sha256": "19b63b4d88e12ada39ec1ed1471df7b0e8073a470a0ace221150287f1b635c8c",
+      "bytes": 33940
+    },
+    "Recap-Status.blp": {
+      "sha256": "9e20937fc9775d89a8bc611ad3d0d0da71d68c761fa034742e4f08e8736ef08f",
+      "bytes": 2580
+    },
+    "Recap-TitleBack.blp": {
+      "sha256": "3a84f277178fac1e450ce12cd5e7bb25e4a53c10e35407c54b4de533213700b4",
+      "bytes": 3220
+    },
+    "Recap.lua": {
+      "sha256": "9a1d628949f0cc3ec51e43d70515d69815585d7d46d3a1ef3130cffaf79464cc",
+      "bytes": 119742
+    },
+    "Recap.toc": {
+      "sha256": "9a9a84c71f0603f10cf825e14ed4b3ad9c5d23ea37fd2cded7bcd3b8ef99e523",
+      "bytes": 239
+    },
+    "Recap.xml": {
+      "sha256": "5cd74790b2c1bde47a4cfed8116daa0a332b02f91f6990ec829dce505ffa4674",
+      "bytes": 52059
+    },
+    "RecapButtons-Down.blp": {
+      "sha256": "0474c2217b8e9894b19f3d21a68aae621f8698faac456169285a067b4b7c7f77",
+      "bytes": 23060
+    },
+    "RecapButtons-Up.blp": {
+      "sha256": "e354acbf92a02aafa44f00fbecbbf6e3a052dc56f3d8fbac340d4154355ef2d7",
+      "bytes": 23060
+    },
+    "RecapOptions.lua": {
+      "sha256": "07ca7c0ef16716b61d36d4a2a8814416501166f1fcfd2e917fc1f453816393d0",
+      "bytes": 21117
+    },
+    "RecapOptions.xml": {
+      "sha256": "73cdb0153e6ec8770313608de774cf0007e237aa916830fe04572505d526e751",
+      "bytes": 92329
+    },
+    "RecapPanel.lua": {
+      "sha256": "a983fe8a6c2f79ede23439ea6a9c1f4a3f93ef387555540cdbbde73e43affac1",
+      "bytes": 27190
+    },
+    "RecapPanel.xml": {
+      "sha256": "d49a5b0237e8932c57ecaac220e9b8c01eceb24e2e7434c3a4115c3dccdfcd86",
+      "bytes": 43871
+    },
+    "Status-Idle.blp": {
+      "sha256": "52168e877ded3d19290274753cd8121df7704e9e9345688d7ee87dbefb3f9db3",
+      "bytes": 2580
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

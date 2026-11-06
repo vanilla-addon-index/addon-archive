@@ -1,0 +1,173 @@
+{
+  "upstream": "https://github.com/Linae-Kronos/tradeDispenser",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Linae-Kronos",
+    "repo": "tradeDispenser",
+    "name": "tradeDispenser",
+    "url": "https://github.com/Linae-Kronos/tradeDispenser",
+    "api": "https://api.github.com/repos/Linae-Kronos/tradeDispenser"
+  },
+  "commit": "63aee841b835e291a30c40b46c452a9aa47717b1",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "4c5614d9ea130690754b0642cdbfb81c996d51efd094b74b7c26cd869d0d08cb",
+      "bytes": 2236
+    },
+    "tradeDispenser/artwork/MainFrame_Background.tga": {
+      "sha256": "43095cb620a935d777fb0c427191a167b5823c93e0e8701cf9627464c793627e",
+      "bytes": 196652
+    },
+    "tradeDispenser/artwork/OSD_tdBroadcast_Active_1.tga": {
+      "sha256": "3f77df445f778e312ae9943ce4a61a53ca95b3d4429b1e13dcb1340878c4be2b",
+      "bytes": 3116
+    },
+    "tradeDispenser/artwork/OSD_tdBroadcast_Active_2.tga": {
+      "sha256": "488413cd55060cbec989ebc46dba2c29ed30f9b100b4f904cf28a6f372b71bf5",
+      "bytes": 3116
+    },
+    "tradeDispenser/artwork/OSD_tdBroadcast_Inactive_1.tga": {
+      "sha256": "3deb875e4870f5489c6286dbaf58f69de6b0a532fdf2a23047d5a87dff073a08",
+      "bytes": 12332
+    },
+    "tradeDispenser/artwork/OSD_tdBroadcast_Inactive_2.tga": {
+      "sha256": "a22b2223ae9fc0082ce988f6052b7e1b02adfad3abb7c6ff2f3910af34430df0",
+      "bytes": 12332
+    },
+    "tradeDispenser/artwork/OSD_tdBroadcast_Normal_1.tga": {
+      "sha256": "d2be6137412842351d2e33c9fd92ef898d1ca4a31cc87a4002c64228be26da22",
+      "bytes": 12332
+    },
+    "tradeDispenser/artwork/OSD_tdBroadcast_Normal_2.tga": {
+      "sha256": "d933f9f5dc8efb8605148be212b8ed971bdcb8ff972b841088ea576d7c8a21be",
+      "bytes": 12332
+    },
+    "tradeDispenser/artwork/OSD_tdConfig_Active_1.tga": {
+      "sha256": "6e7ed767a5cabaf8264c7168e5cd8cc36c5178ac87ad766d9f46535cce46d850",
+      "bytes": 3116
+    },
+    "tradeDispenser/artwork/OSD_tdConfig_Active_2.tga": {
+      "sha256": "a794bfef81491eff8fe133d08bd87defe3e725bc09d884237ddeebca913ed27a",
+      "bytes": 3116
+    },
+    "tradeDispenser/artwork/OSD_tdConfig_Inactive_1.tga": {
+      "sha256": "5d72c2514e8deb6040a1c22da080faabb26a94c615e09ef18700d3e2d7e82902",
+      "bytes": 3116
+    },
+    "tradeDispenser/artwork/OSD_tdConfig_Inactive_2.tga": {
+      "sha256": "a258667fde9d6b88b1dbfa30577e8e6cf91896a1d52737cd36c6565eb607a7c3",
+      "bytes": 3116
+    },
+    "tradeDispenser/artwork/OSD_tdConfig_Normal_1.tga": {
+      "sha256": "baa35dc85047762ca5e026cd3a085710481e42130b4e4632478f20c5b039a3d2",
+      "bytes": 3116
+    },
+    "tradeDispenser/artwork/OSD_tdConfig_Normal_2.tga": {
+      "sha256": "afbc216b33cfa099444551a5cc1a6fb4da2f60cc023ccac07c2bc4b42c63dc82",
+      "bytes": 3116
+    },
+    "tradeDispenser/artwork/OSD_tdToggle_Active_1.tga": {
+      "sha256": "64de0336b145d796ccfb3efc1966e73437ce0756a1acd866b53dfdf9d94bcd89",
+      "bytes": 3116
+    },
+    "tradeDispenser/artwork/OSD_tdToggle_Active_2.tga": {
+      "sha256": "cd4e109b8beeac52366dc5170c5adc27fd9f60aba238300d71f1222268d7bda9",
+      "bytes": 3116
+    },
+    "tradeDispenser/artwork/OSD_tdToggle_Inactive_1.tga": {
+      "sha256": "25d16bc794eb2f4eb8b0a40a4faed70dee7c8dbfaf7f14ed430732e07d510a8b",
+      "bytes": 4140
+    },
+    "tradeDispenser/artwork/OSD_tdToggle_Inactive_2.tga": {
+      "sha256": "998bca5e3aab20c15d5d4431357cb908a0295797ad64ee77ca4280232b32374e",
+      "bytes": 3116
+    },
+    "tradeDispenser/Bindings.xml": {
+      "sha256": "7b0a81616d083692509a2af48b9a3c8c5a7d2a100a2b1461d4b0c3f87c2c4d94",
+      "bytes": 1086
+    },
+    "tradeDispenser/FAQ.txt": {
+      "sha256": "1e502f63a3f74530b0565bc5ee8f78cae4701d5669821c1a2820dfa4a56d5ee9",
+      "bytes": 3068
+    },
+    "tradeDispenser/LiesMich.txt": {
+      "sha256": "d127ce72dfc466ca72e32683ec4321168fa2e8c2d83980ab0f7c151d89a8fc5c",
+      "bytes": 10390
+    },
+    "tradeDispenser/ReadMe.txt": {
+      "sha256": "004d4d78051ccce535a62e59f8107dbe8420e2f38d6bd90c0747e964c0353df5",
+      "bytes": 9071
+    },
+    "tradeDispenser/tradeDispenser_Banlist.lua": {
+      "sha256": "7f2b61dd8e31938601dd79244a3a9f07f2de058243d3a9461ae7c431bd518cfe",
+      "bytes": 4915
+    },
+    "tradeDispenser/tradeDispenser_Banlist.xml": {
+      "sha256": "3501e249c76f32c5ec9e586409f8a1977a9248e55e80cf16c5182c3d06c447f2",
+      "bytes": 8876
+    },
+    "tradeDispenser/tradeDispenser_Functions.lua": {
+      "sha256": "b18603ca0f4146c7d6be819923e102c7d1e4d16ebbcb4d071e14fea3d61fb8d9",
+      "bytes": 13950
+    },
+    "tradeDispenser/tradeDispenser_Initialize.lua": {
+      "sha256": "f9be58181f6db1483ed6041936d38c822e5b93c8bd8e7802ddafca68fe72171a",
+      "bytes": 7256
+    },
+    "tradeDispenser/tradeDispenser_Localisation.lua": {
+      "sha256": "6407cf6b3aa96311e6eaa605d4afcbdf34809163b1101a508b87fa2b8c1d4984",
+      "bytes": 50444
+    },
+    "tradeDispenser/tradeDispenser_Messages.xml": {
+      "sha256": "5362f77f0e3c5e7914e6ec2474cd183a7828a544097deb013eadc6e7a268f796",
+      "bytes": 7921
+    },
+    "tradeDispenser/tradeDispenser_OSD.lua": {
+      "sha256": "26ffc737201d5b58d9d4e2e213f5271010158f3e8b3d60b69499669c43b7395a",
+      "bytes": 3608
+    },
+    "tradeDispenser/tradeDispenser_OSD.xml": {
+      "sha256": "814867edf54a04d631ed39e6d3919d0748d8a8ac7cfa981aaf8602add890554a",
+      "bytes": 5770
+    },
+    "tradeDispenser/tradeDispenser_Settings.lua": {
+      "sha256": "d64d78f0f9a608e8c68d8a56c00f3a375ac286ddcba10743b8845807e5c0ddfd",
+      "bytes": 7055
+    },
+    "tradeDispenser/tradeDispenser_Settings.xml": {
+      "sha256": "b3cfb4ab4a935256dd53ee5ea45a6d21b8a5c40cc29441d2a8a6f556ce56eeef",
+      "bytes": 32951
+    },
+    "tradeDispenser/tradeDispenser_SlaveFrame.lua": {
+      "sha256": "7a7fe8a1ec9719fe6664a7b56e3c9d5c73bcb41c7f8fcfb2d14f6aa3cc32fb2b",
+      "bytes": 8724
+    },
+    "tradeDispenser/tradeDispenser_SlaveFrame.xml": {
+      "sha256": "41a8ec14725dec6ba108f708a9b4e7e2e7a07a2dc3830874f5dac0bc376a87be",
+      "bytes": 228
+    },
+    "tradeDispenser/tradeDispenser_TradeControl.lua": {
+      "sha256": "ac08b9b7acd7631b96d6bd31b2534ed9c2afa00ba04fe72a92f9e35c6774a16c",
+      "bytes": 1677
+    },
+    "tradeDispenser/tradeDispenser_TradeControl.xml": {
+      "sha256": "b334dc1c1cfd78f2eaee6b010ce6e97ea5bfc5dc015e342703323440229d6472",
+      "bytes": 13428
+    },
+    "tradeDispenser/tradeDispenser.lua": {
+      "sha256": "2837bf920a57b7f14123448d066b09de49731ec9d453697d241f8e07130c8ad3",
+      "bytes": 12715
+    },
+    "tradeDispenser/tradeDispenser.toc": {
+      "sha256": "49bae4b169a3107480ebb78905c1e1022ea7c475af42c2fb5b5511d7e5d327b1",
+      "bytes": 1348
+    },
+    "tradeDispenser/tradeDispenser.xml": {
+      "sha256": "8016e2e28674d45a9faacb5c00209c2ec5d009a976e37f1ec1496f191e84dab0",
+      "bytes": 28253
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

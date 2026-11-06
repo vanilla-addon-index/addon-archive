@@ -1,0 +1,29 @@
+{
+  "upstream": "https://gitlab.com/woblight/pwscounter",
+  "source": {
+    "kind": "repository",
+    "host": "gitlab.com",
+    "owner": "woblight",
+    "repo": "pwscounter",
+    "name": "pwscounter",
+    "url": "https://gitlab.com/woblight/pwscounter",
+    "api": "https://gitlab.com/api/v4/projects/woblight%2Fpwscounter"
+  },
+  "commit": "17a3f445c347d6d52d17c236baa4b9653c8d314f",
+  "sourceFiles": {
+    "PWSCounter.lua": {
+      "sha256": "302bee364188d6db2aa4306d65911523517cf430f6f14acf34d18d4331629278",
+      "bytes": 14068
+    },
+    "PWSCounter.toc": {
+      "sha256": "65bf31f8c8f28a79fa3814634d0fb48332ebe592da8ae37115ccac85dba0982e",
+      "bytes": 208
+    },
+    "README.md": {
+      "sha256": "eaac3f98eced0743aca9e75c60dbf5e03c5bd2e1dec93d664e8a20302fa942a0",
+      "bytes": 1673
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: |cff33ffccShagu|cffffffffError
+## Author: Shagu
+## Notes: Hides Error Popups
+## Version: 1.0
+ShaguError.lua

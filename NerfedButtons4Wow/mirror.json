@@ -1,0 +1,89 @@
+{
+  "upstream": "https://github.com/GarethFromWales/NerfedButtons4Wow",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "GarethFromWales",
+    "repo": "NerfedButtons4Wow",
+    "name": "NerfedButtons4Wow",
+    "url": "https://github.com/GarethFromWales/NerfedButtons4Wow",
+    "api": "https://api.github.com/repos/GarethFromWales/NerfedButtons4Wow"
+  },
+  "commit": "59eb02ae49be594df6a234206c0d76079b199311",
+  "sourceFiles": {
+    ".github/ISSUE_TEMPLATE/bug_report.md": {
+      "sha256": "c9dff2e10a8d4cf3456bc919fc6a6d5fe5e7df7aefd270ce36b41858582416e8",
+      "bytes": 548
+    },
+    ".github/ISSUE_TEMPLATE/feature_request.md": {
+      "sha256": "aa0f09e290b6fcccedade8a2491228918863460a80c1d21d1f62c2448c6a53b2",
+      "bytes": 608
+    },
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    ".vscode/settings.json": {
+      "sha256": "498d31b033c7a10f8e5341ca76d81c0c549c58aba0814dd52a45e6b22e89e977",
+      "bytes": 1541
+    },
+    "Actions.lua": {
+      "sha256": "85264ecabb765a275fc4c6638e660a85a0de73dd8c8ce4e6cd88d071edde3d35",
+      "bytes": 5196
+    },
+    "Checks.lua": {
+      "sha256": "8cb814e4192f715cf660d368b815da6de3feba8ec5feeb7b8d9f2d451cda5d2e",
+      "bytes": 15731
+    },
+    "docs/_config.yml": {
+      "sha256": "6b3efc15516b973bcfbaee3b273420cdc74b014a2f49c8b5a612bfa488d0f6b2",
+      "bytes": 138
+    },
+    "docs/index.md": {
+      "sha256": "0fac9a06f5f404fbd00483539716c07dbd6e079cff499b5896b9f5e7ac4fb791",
+      "bytes": 33234
+    },
+    "LICENSE": {
+      "sha256": "ce1b8e84caba72cca7b8616ddea1d8d417ec4164f3c2b975d880942ef4ccf9db",
+      "bytes": 1072
+    },
+    "Lists.lua": {
+      "sha256": "8467d55ead41b1c5efb38bfa138e52ff0f7de0e69fc96725baf2ffa6e5f06882",
+      "bytes": 3897
+    },
+    "NB.lua": {
+      "sha256": "729c01e665564d4998b6f5243facfb4a7f00ae13fabd82bb40cfd1c5b0393aa6",
+      "bytes": 20929
+    },
+    "NB.xml": {
+      "sha256": "fa8559d93efe428c42600a4c8f7e12843f59684ba3644afa82c95e7a7df13565",
+      "bytes": 973
+    },
+    "NerfedButtons4WoW.toc": {
+      "sha256": "4c8b8fd1db4cdd568b92b5e14b0d54d900600adc6046897b0b811e435d999873",
+      "bytes": 172
+    },
+    "README.md": {
+      "sha256": "34e0f19f66b657703cedcb3ec5a62f426dbf60816bc83283b9c2711a97189a30",
+      "bytes": 895
+    },
+    "Util.lua": {
+      "sha256": "69a798cc44390bf9e21ed0a306c7fd370fd69a98499ceb0fbd53810fb5a926d8",
+      "bytes": 4647
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "133310876": {
+      "tag": "v1.7beta",
+      "folder": "v1.7beta--133310876",
+      "assets": {},
+      "source": {
+        "sha256": "625f9b7fe658ce796c55d7d0ce35fadd2211cba073a2cd52c000da54281a4144",
+        "bytes": 25103,
+        "path": "releases/v1.7beta--133310876/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/GarethFromWales/NerfedButtons4Wow/tarball/v1.7beta"
+      }
+    }
+  }
+}

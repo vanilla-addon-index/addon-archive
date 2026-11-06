@@ -1,0 +1,54 @@
+{
+  "upstream": "https://github.com/jsb/PicoPoisons",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jsb",
+    "repo": "PicoPoisons",
+    "name": "PicoPoisons",
+    "url": "https://github.com/jsb/PicoPoisons",
+    "api": "https://api.github.com/repos/jsb/PicoPoisons"
+  },
+  "commit": "92f89feb2959910106c960f71c9913279cee0073",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "cf237c7aff44efbe6e502e645c3e06da03a69d7bdeb43392108ef3348143417e",
+      "bytes": 10
+    },
+    "PicoPoisons.lua": {
+      "sha256": "fc1f7f4325d3d630008cdcbf4d6ec2feef471b8b7e6f7ebb986184967440913c",
+      "bytes": 1727
+    },
+    "PicoPoisons.toc": {
+      "sha256": "008e19d775f5bafdae3f12e67d3dbb58e159b97ffd021b5d4702314b99842f04",
+      "bytes": 169
+    },
+    "README.md": {
+      "sha256": "8405910819cabf4faf232404909caadc9143b37dc64150e64699cdf56c252607",
+      "bytes": 199
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "1976269": {
+      "tag": "v1.00",
+      "folder": "v1.00--1976269",
+      "assets": {
+        "952002": {
+          "sha256": "3cdf673f271bc7e3184f125691fd71074890e46196f4773a7a97305f55a38aea",
+          "bytes": 1512,
+          "id": "952002",
+          "name": "PicoPoisons-1.00.zip",
+          "url": "https://github.com/jsb/PicoPoisons/releases/download/v1.00/PicoPoisons-1.00.zip",
+          "path": "releases/v1.00--1976269/assets/PicoPoisons-1.00.zip"
+        }
+      },
+      "source": {
+        "sha256": "8eb28d6776a67dffc4a6864e83813152a0c7ef833a9aeea31d80953c2e5a7c65",
+        "bytes": 1019,
+        "path": "releases/v1.00--1976269/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/jsb/PicoPoisons/tarball/v1.00"
+      }
+    }
+  }
+}

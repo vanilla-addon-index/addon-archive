@@ -1,0 +1,17 @@
+*.log
+*.bak
+*.tmp
+.DS_Store
+__pycache__/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+_knowledge.json
+/tmp/
+LAST_DEPLOY.txt 
+deploy_log.txt 
+# Fuentes TTF — archivos binarios bloqueados por el cliente de WoW en ejecucion
+# Excluidos para evitar errores de 'Permission denied' durante git add
+fonts/*.ttf
+fonts/*.TTF

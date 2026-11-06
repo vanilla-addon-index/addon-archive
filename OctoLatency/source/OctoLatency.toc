@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: |cff003c00O|cff005000c|cff006300t|cff007700o|cff008a00L|cff009e00a|cff00b100t|cff00c500e|cff00d800n|cff00ec00c|cff00ff00y|r
+## Notes: Lightweight latency monitor with color-coding for Vanilla WoW (1.12.1)
+## Author: Palladinpala
+## Version: 1.3
+## SavedVariables: OctoLatencyDB
+
+OctoLatency.xml
+OctoLatency.lua

@@ -1,0 +1,30 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <!-- MainFrame -->
+  <Frame name="PVPW_MainFrame" toplevel="true" frameStrata="LOW" enableMouse="true" movable="true" parent="UIParent" hidden="true">
+    <Anchors>
+      <Anchor point="TOPLEFT" relativeTo="UIParent" relativePoint="BOTTOMLEFT">
+        <Offset>
+          <AbsDimension x="400" y="400"/>
+        </Offset>
+      </Anchor>
+    </Anchors>
+    <!-- script events -->
+    <Scripts>
+      <OnLoad>
+        pvpw.OnLoad()
+      </OnLoad>
+      <OnEvent>
+        pvpw.OnEvent()
+      </OnEvent>
+    </Scripts>
+  </Frame>
+
+  <!-- OnUpdate to process all timers -->
+  <Frame name="PVPW_TimersFrame" hidden="true">
+    <Scripts>
+      <OnUpdate>
+        pvpw.timer.TimersFrameOnUpdate()
+      </OnUpdate>
+    </Scripts>
+  </Frame>
+</Ui>

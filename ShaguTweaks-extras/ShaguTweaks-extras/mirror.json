@@ -1,0 +1,193 @@
+{
+  "upstream": "https://github.com/shagu/ShaguTweaks-extras",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguTweaks-extras",
+    "name": "ShaguTweaks-extras",
+    "url": "https://github.com/shagu/ShaguTweaks-extras",
+    "api": "https://api.github.com/repos/shagu/ShaguTweaks-extras"
+  },
+  "commit": "e5140e52fb974e29d554a0c8867f317d24c5285d",
+  "sourceFiles": {
+    ".github/FUNDING.yml": {
+      "sha256": "a11eece9ed2552e47d9d1f94d41f851678835c5ac491a141ed4e3aca58d72bf5",
+      "bytes": 29
+    },
+    "img/df-gryphon-beta.tga": {
+      "sha256": "24085022225e7a8bae9d0771a4e90b462e8b6aacee7afe7e5636283422db1e96",
+      "bytes": 34945
+    },
+    "img/df-gryphon.tga": {
+      "sha256": "a21b49fadc116ed76fbdb6b359c631f650f4605023ebc0079c47f5e482323450",
+      "bytes": 29430
+    },
+    "img/df-wyvern.tga": {
+      "sha256": "9ed2acf21cfe4b2582c45e81232922c7ecefbe79c0329bae5df2fb4b59b2a9e3",
+      "bytes": 25998
+    },
+    "img/xpbar.tga": {
+      "sha256": "a59ac41f89addd601a4189167d17492b08bac208cd245eac6fa9cf9b8d591a95",
+      "bytes": 3398
+    },
+    "LICENSE": {
+      "sha256": "9317b10df0d255f5997f6cfc6b00b865645c799aa49fea0308bec7602413e48d",
+      "bytes": 1086
+    },
+    "locales/translations_deDE.lua": {
+      "sha256": "c432be041c2d8efab866c63a407892cda80018ea2c28df36685887dbaed885a1",
+      "bytes": 104
+    },
+    "locales/translations_enUS.lua": {
+      "sha256": "a1caf5430ec30e7874999bbb3511d46edb05001ef6de27f13e5b39ee655eb38a",
+      "bytes": 104
+    },
+    "locales/translations_esES.lua": {
+      "sha256": "98b775dad1de8a827881afb17136f0199489bb7332f6d7a406a996488f2a92ef",
+      "bytes": 104
+    },
+    "locales/translations_frFR.lua": {
+      "sha256": "fa94b7c7f3825beb8e159c99e24eccfbc8b425de1a499d4802e97dbbbc792bdc",
+      "bytes": 104
+    },
+    "locales/translations_koKR.lua": {
+      "sha256": "2e37924eaee133fa9fe6ba8571418c5d2a67a0c027560fab4432d2aa33fa5475",
+      "bytes": 104
+    },
+    "locales/translations_ruRU.lua": {
+      "sha256": "94c119cbde8eb723085a61581dd30b9189ac5e30dd00748ebd478ddc82a9a8e7",
+      "bytes": 104
+    },
+    "locales/translations_zhCN.lua": {
+      "sha256": "25a516795342a1db586a4278b06153de7087644ed66c7b0b48b966b8939941c3",
+      "bytes": 104
+    },
+    "locales/translations_zhTW.lua": {
+      "sha256": "f9e46bf863c3cdfcaab442084d2eb4997b9cbbc301718acfdd06e481935a64a0",
+      "bytes": 104
+    },
+    "main.lua": {
+      "sha256": "3021cf3aba5b381cdd570f05aebc1a43d21083d2be72f8503622f580b72665a0",
+      "bytes": 45
+    },
+    "mods/actionbar-df-gryphon.lua": {
+      "sha256": "f030fc476759528373fcd3d8fdf6e55b15406a5f7e728124b8248afcc47b7221",
+      "bytes": 1722
+    },
+    "mods/actionbar-float.lua": {
+      "sha256": "2ac75628642de8d60c36df08fda0b7bea70cd1e66ed314dfe5c7fe54f56f9a4b",
+      "bytes": 2915
+    },
+    "mods/actionbar-reagents.lua": {
+      "sha256": "3378241b4a0d6d56523603eb248c27dbf3481ebd9d8090703e5bc1db86184ee9",
+      "bytes": 2780
+    },
+    "mods/actionbar-right-center.lua": {
+      "sha256": "4850fb7d380f21ee1e6072c1be6c07c3537c9456c679610aad29c492226142f2",
+      "bytes": 499
+    },
+    "mods/bag-item-click.lua": {
+      "sha256": "90370a041949cb1b21bdf9039279e5841a61e0eb756047e86ecae8186ec08b62",
+      "bytes": 2490
+    },
+    "mods/bag-search.lua": {
+      "sha256": "89b34216c8b7512085fbbfcccc3494166450176411dd06b3008a5d16d4f06c91",
+      "bytes": 3376
+    },
+    "mods/chat-history.lua": {
+      "sha256": "e8de820b8a3ef6fb122cadace885e4d04d2241d6db7eaff796cb5daa66e163b3",
+      "bytes": 3039
+    },
+    "mods/chat-input-center.lua": {
+      "sha256": "4ae332a01fb54d218f7c445c8f11c02a692aa3927fe6f7c0bba8993a1fb3f8d4",
+      "bytes": 1208
+    },
+    "mods/chat-text-shadow.lua": {
+      "sha256": "395ff74f9ad690ca4e07b625414d3cf65ba68c7b0d140e3cc4696cab70041478",
+      "bytes": 543
+    },
+    "mods/chat-timestamps.lua": {
+      "sha256": "30d972707a3a5265e1cac6b98813de63b61999fdb658e1dc75853e186a1a4f67",
+      "bytes": 1414
+    },
+    "mods/macro-icons.lua": {
+      "sha256": "1746dc4ae3792c429dbd4280d3f7f59a64b07e7818a7c4f674be854db85a29ac",
+      "bytes": 3305
+    },
+    "mods/macro-tweaks.lua": {
+      "sha256": "ca867749f9f90b4de170730872902e559191fec5458beefb211a33b5dfef23ec",
+      "bytes": 2652
+    },
+    "mods/raid-aggro-indicator.lua": {
+      "sha256": "6a25d81421f710b271d95280b7084259862b4be3802e367e3dd4febe96c4a18c",
+      "bytes": 2824
+    },
+    "mods/raid-combat-feedback.lua": {
+      "sha256": "6245fe4e4462d5f93151bf34dd5b3e5ab0f0a1d1239056ee794e1d678c09b7d3",
+      "bytes": 1342
+    },
+    "mods/raid-compact-layout.lua": {
+      "sha256": "0ba75481b350888a7ac63de1fdea5242bd0279a5de5a96c798663aa3d50af90f",
+      "bytes": 2113
+    },
+    "mods/raid-dispel-indicators.lua": {
+      "sha256": "9476d137fe96f60375e92a9ae7dc7f7ac583c8960e364723761499303b510677",
+      "bytes": 3165
+    },
+    "mods/raid-group-header.lua": {
+      "sha256": "37b13ad2edc03906dfa82e10dee21785a0a0dfa4a837360156e52c4cca91e949",
+      "bytes": 2833
+    },
+    "mods/raid-healing-predictions.lua": {
+      "sha256": "4b031b32d5ea74d0d45adbbb7f7c7bb3d073c46e3b9b9eb442a1bdb8285c80c3",
+      "bytes": 1898
+    },
+    "mods/raid-hide-party.lua": {
+      "sha256": "e65afa833540b11c86bfd99d90e62d584cf246cd06e1b635d8f0f0eb7260ca4d",
+      "bytes": 1394
+    },
+    "mods/raid-party.lua": {
+      "sha256": "a36a0727c8c212947288a584005fe80e0d9b242d0b07fabaadf4e67ce2051ca7",
+      "bytes": 1843
+    },
+    "mods/raid.lua": {
+      "sha256": "57837f068b288d886c7a4041b20f29af79668fec638fa4a69e20faa1dd44ce69",
+      "bytes": 17429
+    },
+    "mods/reduced-actionbar-bags.lua": {
+      "sha256": "7101876b78a8fcd7f72ad1ca5f40cd10872a7763147507c511f45b4f7e6b10ff",
+      "bytes": 2766
+    },
+    "mods/reduced-actionbar-micromenu.lua": {
+      "sha256": "e978b3cbf437c3ea6b637cbc906b6f5b96ee4e2b073be3bc5c87cb4905e473ca",
+      "bytes": 2807
+    },
+    "mods/unitframe-energytick.lua": {
+      "sha256": "4b4cfa2afc113a4793189970867b4040aa1cc59df7068a86dd73cec5ca30f79a",
+      "bytes": 2307
+    },
+    "mods/worldmap-reveal.lua": {
+      "sha256": "0dc897427353b6042208124280392bad51dd1d7e2c223f28fcc08bcb4dd7d20a",
+      "bytes": 50534
+    },
+    "README.md": {
+      "sha256": "629ffb616bd51b333cda6e159b75c97e9e023c382ff39ab00a3ae87126538167",
+      "bytes": 3830
+    },
+    "screenshots/actionbar.gif": {
+      "sha256": "9bd636f381af52bbecd083905565be1780a14748b51b837efb3d56f6d4dabd67",
+      "bytes": 343273
+    },
+    "screenshots/raid.jpg": {
+      "sha256": "674b3c52fc284206ece7b44de4eb2e19f2909b5affe0570fd0c549786c77d88c",
+      "bytes": 144187
+    },
+    "ShaguTweaks-extras.toc": {
+      "sha256": "4222dbf7e7dfb8e68f49c497c10776df3a73ce5d703d7ff4c434635b95650739",
+      "bytes": 1373
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

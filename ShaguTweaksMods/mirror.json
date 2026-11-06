@@ -1,0 +1,349 @@
+{
+  "upstream": "https://github.com/TokensWorth/ShaguTweaks-mods",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "TokensWorth",
+    "repo": "ShaguTweaks-mods",
+    "name": "ShaguTweaks-mods",
+    "url": "https://github.com/TokensWorth/ShaguTweaks-mods",
+    "api": "https://api.github.com/repos/TokensWorth/ShaguTweaks-mods"
+  },
+  "commit": "b782e1e17fcfd68ec77f9ca96df797a6a977d2e8",
+  "sourceFiles": {
+    "img/borders/border-bottom.TGA": {
+      "sha256": "c6e15640b63d6f9d341a34446c6b351c93c7bc1a55da4f97a0e910a38c6d4e8d",
+      "bytes": 359
+    },
+    "img/borders/border-bottomleft.TGA": {
+      "sha256": "e6b7ce156b9b5998ae6848349be593dda671e33a12878a94559cc7ddd22e73da",
+      "bytes": 804
+    },
+    "img/borders/border-bottomright.TGA": {
+      "sha256": "c6fb90c6e585e3134cb4658fb4dad4b82a5f696141beee76ed9023fc44e8f9e4",
+      "bytes": 797
+    },
+    "img/borders/border-left.TGA": {
+      "sha256": "151819f046c349dd068c8641d077e23bfbdbf8003b74edc3bf03482d157cb1a5",
+      "bytes": 1676
+    },
+    "img/borders/border-right.TGA": {
+      "sha256": "566c69e0b6417b3e32a0358ed847446b0f322d91e0ec657f43793f33318ed0bc",
+      "bytes": 1676
+    },
+    "img/borders/border-top.TGA": {
+      "sha256": "f778805091d0924a94a32b3120fa8135388407029c701044b0b5b33ff67035fb",
+      "bytes": 365
+    },
+    "img/borders/border-topleft.TGA": {
+      "sha256": "a377d50fd7e63e843ed6607570e26bcdab905717f117fd88da230224cc50d85f",
+      "bytes": 801
+    },
+    "img/borders/border-topright.TGA": {
+      "sha256": "2747e06c7350d6c9b35bdb1ee0865828043e3b6579aed88c8a11afb48529a80b",
+      "bytes": 797
+    },
+    "img/df/gryphon.blp": {
+      "sha256": "0573e2ffa3e752c1056b327c416722c5ef212916c0c737734c959ac3275704c9",
+      "bytes": 23060
+    },
+    "img/df/wyvern.blp": {
+      "sha256": "b9d5a6533fcf149e00550c2af7f610b4cddac23bc49f12e7d5d86b1b0e37c66d",
+      "bytes": 23060
+    },
+    "LICENSE": {
+      "sha256": "1aac0dff373630cae3b1e20f49688aec86966af65692b3d3305d5132ed3520c4",
+      "bytes": 1069
+    },
+    "locales/translations_enUS.lua": {
+      "sha256": "1329fb321da428a3fcc53f727e7d7a914ece843c443be9acfd3cbc04c61b664c",
+      "bytes": 9082
+    },
+    "locales/translations_ruRU.lua": {
+      "sha256": "098ba46eb07f7e32fb2d5f0aea194b21283e8768b36ee4fc3ea60a74c8f86a29",
+      "bytes": 24094
+    },
+    "mods/accept-invites.lua": {
+      "sha256": "8ea5df18bdd189b13306034e007b4d5724803b502a9a9db3a161e81b72b70e5a",
+      "bytes": 1106
+    },
+    "mods/actionbar-dfgryphons.lua": {
+      "sha256": "4342e5662c1e1d845b27f13c9e456dc865b989447aae6f89eefe278200968f58",
+      "bytes": 574
+    },
+    "mods/actionbar-dfwyverns.lua": {
+      "sha256": "5c4207c70ec59cd0911f2205b1ceab1fe9eb5b0e7e1379904388fef3478b3b92",
+      "bytes": 572
+    },
+    "mods/actionbar-front-gryphons.lua": {
+      "sha256": "b77233884fd8cc9821ec12240c4d157ba45e6431818eaa08b17f0f2c2d1f579c",
+      "bytes": 1921
+    },
+    "mods/actionbar-hide-hotkey.lua": {
+      "sha256": "a2a83067ad9e2d04c2b834577e7e007ad444044d964fb8edcb9dc95287f9fd76",
+      "bytes": 1352
+    },
+    "mods/actionbar-hide-macro.lua": {
+      "sha256": "99ed5ac25f6f29871e384e9d57a38ac3200be694ba68503a1aadb9549cf91ad0",
+      "bytes": 1108
+    },
+    "mods/actionbar-improved-expbar.lua": {
+      "sha256": "2cbb8b85dfb20594eae30220dca57a2a520ed3354bef3b26d924df756ab7c665",
+      "bytes": 6635
+    },
+    "mods/actionbar-lions.lua": {
+      "sha256": "01030542d99a6f09bb0ed85ae861941182777a47c7ac6c0d9cea7d2d610e4260",
+      "bytes": 520
+    },
+    "mods/actionbar-macro-icons.lua": {
+      "sha256": "4dddbd3b65c21fdc1a70c0e18d27bebacdb7e5e43c6a859b5864ad8863d0f0ae",
+      "bytes": 4809
+    },
+    "mods/actionbar-mouseover-bar-bottomleft.lua": {
+      "sha256": "28803201f3a5e463ba9156d8ad577f455206cfcdb28dad6cf9aee66985033f3a",
+      "bytes": 8546
+    },
+    "mods/actionbar-mouseover-bar-bottomright.lua": {
+      "sha256": "5edd18493b3c5a1467b0d40ad2ccf0a062c61b5cf0a7593370372d1ebdbab637",
+      "bytes": 7579
+    },
+    "mods/actionbar-mouseover-bar-right.lua": {
+      "sha256": "c2e2cf3a16a6a41fbc6788d7e85141d2929f197812c27c79fe43d861cfa8e3f6",
+      "bytes": 4157
+    },
+    "mods/actionbar-mouseover-bar-right2.lua": {
+      "sha256": "c670d767fce47c3bda5d3c4c69f3f2ab4c8c47a14d22b9cf782bed9f13730b40",
+      "bytes": 4154
+    },
+    "mods/actionbar-quick-actions.lua": {
+      "sha256": "010977a32ef349695695dbdc93f6bc914eac2c74658882c30668529fd10e9321",
+      "bytes": 2361
+    },
+    "mods/actionbar-range-color.lua": {
+      "sha256": "4afde752e05dd8447cdeead897ac54d617e65211a561150476400c9f3e967de4",
+      "bytes": 1301
+    },
+    "mods/actionbar-reagent-count.lua": {
+      "sha256": "03c7944cec7962d30e429ff8f9bb2bcca3ea341e6799e87bfae66da2b16e4332",
+      "bytes": 4679
+    },
+    "mods/auction-search-timer.lua": {
+      "sha256": "0e63a54da23b72069c2cfb1333d13a82ee325aac8a92b6ea4f725e990ed70845",
+      "bytes": 2563
+    },
+    "mods/bag-search.lua": {
+      "sha256": "9508ecdbbce37a6b85cf4b15668be0d9a5567f018b38dc6336757292d3562bfe",
+      "bytes": 5038
+    },
+    "mods/bags-reduced-actionbar.lua": {
+      "sha256": "d48e49421f6a31b265cf6f274e0a90b756a6e1b639dc3917ba16823c2b137c72",
+      "bytes": 4822
+    },
+    "mods/camera.lua": {
+      "sha256": "676538bf2874df56a28527084d73e7296440a6ae56f8f630618ac534bec90920",
+      "bytes": 579
+    },
+    "mods/central-ui.lua": {
+      "sha256": "ad1c8e854824f112a4c9a335e7a04ea0001a29aeaebe8a7a85800f6674f09f4e",
+      "bytes": 5773
+    },
+    "mods/central-windows.lua": {
+      "sha256": "ffe1ecf65db8a097d2519963aa9781839dd64ada7f54b1753ef482de0dff4cff",
+      "bytes": 3376
+    },
+    "mods/chat-basic.lua": {
+      "sha256": "342fc40a6349f412501c7cb7a721ae859ced5e79a16dd814d651ad0f6d5512b7",
+      "bytes": 2941
+    },
+    "mods/chat-bubbles.lua": {
+      "sha256": "b712f2e3831ad9e48747b6529295a1c856a3aaf0d91b5ddab7bb0ae909559eb1",
+      "bytes": 4311
+    },
+    "mods/chat-levels.lua": {
+      "sha256": "3959d0b1639a49acc36ecd2d67bdde4e709b6eb99756abbf448ee18561de6817",
+      "bytes": 1383
+    },
+    "mods/chat-npcspam.lua": {
+      "sha256": "dd20eb06750733db9b838d192a610c6c8a34d71e65c41625d3610cb950a2b659",
+      "bytes": 2539
+    },
+    "mods/chat-select-tab.lua": {
+      "sha256": "b964b699299cd30ff612cf407dfdb8222fbbb09ead2db70570d09eb953b95fe7",
+      "bytes": 655
+    },
+    "mods/chat-timestamps.lua": {
+      "sha256": "a6ca34438b1127114cbcde900bffed0d8031b8dc927a507be0282aebb4a9b2b9",
+      "bytes": 1355
+    },
+    "mods/chat-tweaks-extended.lua": {
+      "sha256": "aa83000a08e9e4423a2e38fde64691887415fb7f9ddce4051ea10df9d5c2568f",
+      "bytes": 5800
+    },
+    "mods/chat-whtm.lua": {
+      "sha256": "8e1f04ff4072e1f8df0c2a355eb6d424486a5a9ce844e63c07eaaebbaa9f8d68",
+      "bytes": 3369
+    },
+    "mods/cursor-tooltip.lua": {
+      "sha256": "2ac6f063435df9d4cc13238a462e86dab865789b0239cac04f526d0f7f1554ca",
+      "bytes": 1158
+    },
+    "mods/free-slots.lua": {
+      "sha256": "2a0d737415f335b0df25dc845497b84d770166d00cba3cd3645c598fa4279771",
+      "bytes": 5201
+    },
+    "mods/health-numbers-extended.lua": {
+      "sha256": "05402fb8dadea3cf357c78fb3c1c7286f2e42a7d79d051fea8f6661cb39a0988",
+      "bytes": 2673
+    },
+    "mods/hide-combat-tooltip.lua": {
+      "sha256": "4cb5f770a635c36db48321fb4e7ccc5234e3c04d959825ba36c29c6bd0eea1bf",
+      "bytes": 1729
+    },
+    "mods/hide-unit-frames.lua": {
+      "sha256": "9bad460e026e6bc16a4cae7a27694cec323e86f01a732372c50d8811863a4476",
+      "bytes": 3998
+    },
+    "mods/hide-world-chat.lua": {
+      "sha256": "5af8298e84ae54795584029545174028ebb744e8d28759c30a8dcfbf73e70c3c",
+      "bytes": 2292
+    },
+    "mods/improved-advanced-options.lua": {
+      "sha256": "bda61f34207596f41f7e4a4e9a567280e1531cda200dd8f611a1be3de099a697",
+      "bytes": 1308
+    },
+    "mods/improved-castbar.lua": {
+      "sha256": "3a144df94bf1fb9149016befe7519b9151b7f452fcaaaca0ac49d4484fb49b51",
+      "bytes": 3545
+    },
+    "mods/improved-interface-options.lua": {
+      "sha256": "e0840dc68ea025e7fe0a8d1b02f9290e98b9ee60382515217f936b5be353720f",
+      "bytes": 798
+    },
+    "mods/improved-roll-frames.lua": {
+      "sha256": "7cd9600ea88970e5bbe3de5ad14f288b2bbaa7eefa8f43c9c0b1d9cebb0c1ce4",
+      "bytes": 14383
+    },
+    "mods/item-colors-extended.lua": {
+      "sha256": "df0423edcd8ab9c6f3225ff99aa26fd747a555e3b615d67abefdffa7c7b701ff",
+      "bytes": 9461
+    },
+    "mods/item-colors-glow.lua": {
+      "sha256": "55a4851078cf00f0a800f487864148a149fbe9d530ad815ef846f4f69549f96c",
+      "bytes": 46276
+    },
+    "mods/loot-cursor.lua": {
+      "sha256": "fe92dc4fdac781f5e81eaf1d613ecc80540c061b790147aeae97e5d3ee796dd6",
+      "bytes": 1235
+    },
+    "mods/loot-monitor.lua": {
+      "sha256": "159e40be27494d804cd2c17fa2baa8a6eb875fe849b8b7da743b27c2c9df3dae",
+      "bytes": 11240
+    },
+    "mods/loot-quality.lua": {
+      "sha256": "0a7e7184510e5d3e0574e3a2f08aff93dbcbdd4387866abf38c38a3f7bd4f506",
+      "bytes": 2587
+    },
+    "mods/lowhealth.lua": {
+      "sha256": "0f097bfb98b6883322fc2bebdc35fe0497bf9b5555907f55208ae874e29925d1",
+      "bytes": 2281
+    },
+    "mods/max-graphics.lua": {
+      "sha256": "eaa09055ae23c5f44cb264856ec126fd7d44df7e29b94a20e9bb7b2eb06cacae",
+      "bytes": 4039
+    },
+    "mods/max-smoothness.lua": {
+      "sha256": "5ab48efda1efec107f27210cf53c0b0a59ee04e538337ac019ab02cdd570573a",
+      "bytes": 837
+    },
+    "mods/microbuttons-reduced-actionbar.lua": {
+      "sha256": "a79af4fd3dda85efeb6ed1b6729b4c8b0ce6a4f6f7e5f340e38bac4f6b0e794f",
+      "bytes": 5282
+    },
+    "mods/minimap-framerate-latency.lua": {
+      "sha256": "2605c962109800ba570a393a7889343d434dd8d13b0e3a90fc2937cfa5434bd4",
+      "bytes": 7720
+    },
+    "mods/minimap-timer.lua": {
+      "sha256": "bf1ade817ba0fa2bd609a61e69ab74d372eb4404215118f4936bdac1796c64a0",
+      "bytes": 4647
+    },
+    "mods/modifier-actions.lua": {
+      "sha256": "1b6b525f4adb5a046024df40bd78c93e61b0933f1e990ec28a76d78734cd94f2",
+      "bytes": 15765
+    },
+    "mods/mouseover.lua": {
+      "sha256": "432b7c2282a550482644dd4d32621cd1dcd2d05f0e584f9ae6c7a4cd718de505",
+      "bytes": 4932
+    },
+    "mods/move-unitframes-extended.lua": {
+      "sha256": "333f398c9ae9095841ee76ed7909d6154de176d1a7d26245b7f57df7273d2fc1",
+      "bytes": 5045
+    },
+    "mods/nameplate-lowhealth.lua": {
+      "sha256": "275d9785278fd62d904ce65bee47a5d6dedf3401b01e5f90942333a41cf92663",
+      "bytes": 1395
+    },
+    "mods/pet-name-happiness.lua": {
+      "sha256": "a6e3ca024a404b7ca3eb28f8d76fe1c618b8c299ebc98645d9cf6c5fc4cd36de",
+      "bytes": 815
+    },
+    "mods/restyle-grylls.lua": {
+      "sha256": "df3073ac1d12e9aa9dcfbd7ee00e57db173dcbd6bc7b9bfc1f66a09e53c0805e",
+      "bytes": 25041
+    },
+    "mods/ShaguTweaks-mods.toc": {
+      "sha256": "ccf06a11f62fddf0286782af42d35d129e8c37a15e66fc21f156e48c93b893b9",
+      "bytes": 2064
+    },
+    "mods/skip-gossip.lua": {
+      "sha256": "d1c55e821dea6162bd6f30d2c6258a48747b7709b25c10156a8b2cc7af5a7f1d",
+      "bytes": 3497
+    },
+    "mods/smaller-errors-frame.lua": {
+      "sha256": "63e33a2591e8dfe5d9b744cff438ed811c9ca77d0a353bd054cb894a22481516",
+      "bytes": 349
+    },
+    "mods/ui-scale.lua": {
+      "sha256": "19ab4b1c38b15fb54e475e9ccd624378c7973c4f4cb398235ccfaf31f4ba13d3",
+      "bytes": 937
+    },
+    "mods/unitframes-abbrev-names.lua": {
+      "sha256": "df2a05eca406cbcc985021569670ab041c921d58b1ada82151e4bb0572f1becd",
+      "bytes": 1438
+    },
+    "mods/unitframes-combat-indicator.lua": {
+      "sha256": "164613a4c5e50e59f8f8c820a725538d14330660556944113749bce52775fc4d",
+      "bytes": 5317
+    },
+    "mods/unitframes-energy-tick.lua": {
+      "sha256": "fa355e0ab1c7f80c4b72128add5a2bf4e1b12787e772ceaa1b935f2c3b4ad628",
+      "bytes": 2767
+    },
+    "mods/unitframes-target-buffs.lua": {
+      "sha256": "4935fcca1feaea63a47c087b47ee8d850339071187f1e3f8d1f7eb8471b0a180",
+      "bytes": 5697
+    },
+    "mods/unitframes-whitemana.lua": {
+      "sha256": "a6a843861e26bbc15855109cfd80621a6f3d272399bcca0acb06c354270e8ce0",
+      "bytes": 706
+    },
+    "mods/worldmap-reveal.lua": {
+      "sha256": "f2c8cd72a73242f0755b3b46378adeff90ea1a77026a4b983477343bd8785e10",
+      "bytes": 26404
+    },
+    "Optional/img/UI-Classes-Circles.tga": {
+      "sha256": "5a7af506b0d309eb768c74f60cc00a56eaf887eb088076449d96ef0e7c3e1a63",
+      "bytes": 105411
+    },
+    "README.md": {
+      "sha256": "5fb7d07ad223e730f514bdcf918b4d21535b923fad514ecd2df2101a28582321",
+      "bytes": 12490
+    },
+    "ShaguTweaks-mods.toc": {
+      "sha256": "d4e7475163e8f324a57a29eae59070d5d6a9a7904b823b053c9df1657668e1be",
+      "bytes": 2648
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

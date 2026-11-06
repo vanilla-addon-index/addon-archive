@@ -1,0 +1,829 @@
+{
+  "upstream": "https://github.com/coryo/RDX",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "coryo",
+    "repo": "RDX",
+    "name": "RDX",
+    "url": "https://github.com/coryo/RDX",
+    "api": "https://api.github.com/repos/coryo/RDX"
+  },
+  "commit": "d413628bbca92b0da93a7872523e5a30bc5aaee5",
+  "sourceFiles": {
+    "RDX/AggroMonitor.lua": {
+      "sha256": "c397b4ead180992f13a0e72e8feddf8546d2dea7c570ae5bc9b7d06d62301b5f",
+      "bytes": 4604
+    },
+    "RDX/Alerts.lua": {
+      "sha256": "938838f1c19833f121630c23a05be49fa95a14b1e5568e10545cbb46ab287e12",
+      "bytes": 11045
+    },
+    "RDX/Alerts.xml": {
+      "sha256": "491139e7f52acedcd211870d8b9cb03b8a464c433e84575be04763f8ae8cbf6b",
+      "bytes": 4558
+    },
+    "RDX/AutoPromote.lua": {
+      "sha256": "170bf2d2d844a5abfd59bc872e6f5ae475c4c4273fc3d80d68fda6253fbde95c",
+      "bytes": 2551
+    },
+    "RDX/Bindings.xml": {
+      "sha256": "7b2bf6c9634c661c3b80ccb170ab64acb914db0c42a2b0ed1587864fdd4ff534",
+      "bytes": 723
+    },
+    "RDX/DB.lua": {
+      "sha256": "0ebb7e51ea2deac17981c6cedf697e930010c6e48426971f3925e53c42e1ea39",
+      "bytes": 24010
+    },
+    "RDX/Defaults.lua": {
+      "sha256": "2c596acf6e547242d5ecfae83098b6fa065ccb11b942872cb5971d0bb3866635",
+      "bytes": 5584
+    },
+    "RDX/empty.xml": {
+      "sha256": "992ba36093dd994a9750883ba4a04fea940e4624b71a6c64a66f63ccecedb997",
+      "bytes": 202
+    },
+    "RDX/Encounters.lua": {
+      "sha256": "3285b6cedd3bcfa03f247afaf75163bb0e8d067b66652a00a4f513792bd9713c",
+      "bytes": 16245
+    },
+    "RDX/Encounters.xml": {
+      "sha256": "5100f54c01c00acb9e3597b1ca689941a22ec5bd2b95d804c2fd12812a3c1d64",
+      "bytes": 8330
+    },
+    "RDX/Filter.lua": {
+      "sha256": "66d665d8e9af6ffec8886e17177bdd69c5a0bb309849971f91987a4bc9292059",
+      "bytes": 9541
+    },
+    "RDX/Filter.xml": {
+      "sha256": "4c2be59d6f0b1da7d9926c8f22719f8870174d74ec78bdcbf10199bdf82b910d",
+      "bytes": 19782
+    },
+    "RDX/ImpliedTarget.lua": {
+      "sha256": "534997c6b526b4e049bcf740063e26050f434b3ddcec9e35dd76675e0dbd8411",
+      "bytes": 3440
+    },
+    "RDX/Init.lua": {
+      "sha256": "9d15aeabb1396c215e5c38a14641b9ed85a2689d635c5eaf1596919e82713b99",
+      "bytes": 7315
+    },
+    "RDX/Interactors.lua": {
+      "sha256": "42a0ee84feb8ab29b976416d2e5df9c72b14bcf3bc604e7a28ea956a564947d1",
+      "bytes": 6643
+    },
+    "RDX/Interactors.xml": {
+      "sha256": "a4f6336cde72ba3aee8cc4c0ee7382f7fbc3f1d113830bdbe2c44371b138b80d",
+      "bytes": 3518
+    },
+    "RDX/libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "6c4e23e37cf0893782922cdef23057ad180bca18ec85b05c35ea068209e1b167",
+      "bytes": 30892
+    },
+    "RDX/libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "2d212f65a53cf51ae5c5c65e1ad33be6aa3b4f33527dd3d9ccde322811123b60",
+      "bytes": 28825
+    },
+    "RDX/libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "RDX/libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "26fcd4ed3beddcdba2e56ec97e8655883b37ff27354d2969a979812f62eb725a",
+      "bytes": 22854
+    },
+    "RDX/libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "RDX/libs/Banzai-1.0/Banzai-1.0.lua": {
+      "sha256": "7c07cc494d229c349bcd18545c3927ef3498fbec4df3383002a00c53ede5247b",
+      "bytes": 4694
+    },
+    "RDX/libs/HealComm-1.0/HealComm-1.0.lua": {
+      "sha256": "1fe1f77d63ebfcca58f7d2096a8829b3bd8077e672d0b00efe975d7f338a3972",
+      "bytes": 58377
+    },
+    "RDX/libs/NotProximityLib-1.0/NotProximityLib-1.0.lua": {
+      "sha256": "770b9f0271ac73d2e94bf96e3e0a7aa2443ca133b7bf2dff59e7050568cba62a",
+      "bytes": 18423
+    },
+    "RDX/libs/NotProximityLib-1.0/readme.md": {
+      "sha256": "9f544a4e7b181d14ca7c76976051e6b6075beb40aede84effc83272de4ef3feb",
+      "bytes": 3702
+    },
+    "RDX/libs/RosterLib-2.0/RosterLib-2.0.lua": {
+      "sha256": "17d04168174793fd6cf8db81bf9e91d19781b000ec0d6a808dd502cb5491941a",
+      "bytes": 10705
+    },
+    "RDX/Location.lua": {
+      "sha256": "69334b3ef9c8417d4f926664a9b492d75a43853a21966bb4695b8f4e9f76a323",
+      "bytes": 5037
+    },
+    "RDX/Macros.lua": {
+      "sha256": "0a7166c077031ddfd8a65520cbd145240f3c655e4dd8a48a137af4047333be60",
+      "bytes": 4771
+    },
+    "RDX/MainMenu.lua": {
+      "sha256": "41feaf5d34756a6d06f9dd7aae02b410931bb0414b52f2a46d86daf46bc302d3",
+      "bytes": 3171
+    },
+    "RDX/media/textures/bar/Luna.tga": {
+      "sha256": "97976977031766d707a34121ac13c5ab6b7e9d204be2efaa395c717aeb1dc7ab",
+      "bytes": 1304
+    },
+    "RDX/Metadata.lua": {
+      "sha256": "bed0a6f2b76a63799cec8a87972e94a8d21fb504caa254797b5d6152f6be3963",
+      "bytes": 16859
+    },
+    "RDX/Modules.lua": {
+      "sha256": "01b3006899e345407a70cebb7849d236351170cca59ec817638c4d76b7452f46",
+      "bytes": 1638
+    },
+    "RDX/Raid.lua": {
+      "sha256": "b28dd69fcafd2cd8fe151f8fb497155bea5c4cb617c148b2a06b8a207d24caad",
+      "bytes": 11049
+    },
+    "RDX/RDX.toc": {
+      "sha256": "a0a66f5ac97d4b7d8cac8b1ba5d4eb2b13f9388636f73bdc4ffd3336aa7f7ceb",
+      "bytes": 598
+    },
+    "RDX/RDX.xml": {
+      "sha256": "f1d3829093bff36fa73b643cfda836bba2c4abdc59ae2788789c5c58495c0885",
+      "bytes": 1206
+    },
+    "RDX/Root.lua": {
+      "sha256": "bcbd1036b21a81d35ee920785bd04b001d75657c3b6e8eaac3fd52606314f8fe",
+      "bytes": 5165
+    },
+    "RDX/Root.xml": {
+      "sha256": "60cda438d9c1dac93d06ec8476f012680842b277519daf97c1e9453dde73b412",
+      "bytes": 1073
+    },
+    "RDX/RPC.lua": {
+      "sha256": "5848d70554eb53aaaf64f0a851c468b7345781c50c3ffb44eb03f32eb2c697fc",
+      "bytes": 9342
+    },
+    "RDX/Skin/arrowleft.tga": {
+      "sha256": "0cca873d9a7b124b242a8742401d713d5583454fb42fdc54f6ac8d39399e83a0",
+      "bytes": 98599
+    },
+    "RDX/Skin/arrowright.tga": {
+      "sha256": "355dee58c7dd6b76d721c86184f792ed5fe3df05fd7d02a7f6ccf4bda80bea0d",
+      "bytes": 98542
+    },
+    "RDX/Skin/black.tga": {
+      "sha256": "da2ba52cadaebc206417ec2e0eae8aed3814481701f73ab868c13e6df87eb03a",
+      "bytes": 812
+    },
+    "RDX/Skin/disk.tga": {
+      "sha256": "5dc995d0bd3f003f9e6d46b511677f0b7634b740696f0e01c4e06069d3a2cce9",
+      "bytes": 4140
+    },
+    "RDX/Skin/disk2.tga": {
+      "sha256": "9134541b777ed14df1f879b0b93324c37cb6d3629234c85e88c7043c54a066fa",
+      "bytes": 4140
+    },
+    "RDX/Skin/funnel.tga": {
+      "sha256": "27850a5c1769287d3b5bf2f15ca521ad9d45f6029e1face90a98ede4eb885cd5",
+      "bytes": 4140
+    },
+    "RDX/Skin/mark.tga": {
+      "sha256": "a97099fd0888eda9d3002b19caca85d5336ba68eb9802b49e92bf11155ef2778",
+      "bytes": 4140
+    },
+    "RDX/Skin/menu.tga": {
+      "sha256": "cf2cf1f930d7fdfda067e086923d7f1ca5e0120a9ce13da00276b736a2c031a1",
+      "bytes": 4140
+    },
+    "RDX/Skin/mmbtn.tga": {
+      "sha256": "e2f2e53c9644a2b2c42f2b901a70206c0c9ac5548b1fd726571fae6b9f4da8da",
+      "bytes": 16428
+    },
+    "RDX/Skin/play.tga": {
+      "sha256": "7635ca2d6125f0bfdac8d66a5153cd2bb376681139759de03706c12645cabded",
+      "bytes": 4140
+    },
+    "RDX/Skin/raidicon1.tga": {
+      "sha256": "2b1c4491124e9aa4e3a13c2c9b79288a6995cb59d852bd0d7d5899da0d3d72ad",
+      "bytes": 49170
+    },
+    "RDX/Skin/raidicon2.tga": {
+      "sha256": "0c7ea37964d98c0f32875476e9af3580bc8514b5009ef87e0b68ddcef2e9af29",
+      "bytes": 49170
+    },
+    "RDX/Skin/raidicon3.tga": {
+      "sha256": "928b2020a4855c34c41107557ad8c6f53e3b8ac6f773a51c0fee7bd5f011b744",
+      "bytes": 49170
+    },
+    "RDX/Skin/raidicon4.tga": {
+      "sha256": "2e368caeba3fa16f18868011499b96ba7ef8bb2dd3cfe8a415756e1fefce0b55",
+      "bytes": 49170
+    },
+    "RDX/Skin/raidicon5.tga": {
+      "sha256": "f3d5af994b5a5c703b3c7e5c0956a2099bd6d5bde7b84440a3a18eac273772a8",
+      "bytes": 49170
+    },
+    "RDX/Skin/raidicon6.tga": {
+      "sha256": "7a94c42687b470bec92300128cba2428ebe4f9f23f2c8c750d2eec6348c049c9",
+      "bytes": 49170
+    },
+    "RDX/Skin/raidicon7.tga": {
+      "sha256": "8f020e3cccd9e64a9cf37b95ce11ccffad27adfb84a82a9e07d874d56d533858",
+      "bytes": 49170
+    },
+    "RDX/Skin/raidicon8.tga": {
+      "sha256": "403e8217adfed2254e53f242f222438e4cef4b04ea93656ced3a6d8793ca8757",
+      "bytes": 49170
+    },
+    "RDX/Skin/speaker.tga": {
+      "sha256": "e88325da8d832464f5b0b70526e4e116a3ddd071689f74d598c026f4c408adfc",
+      "bytes": 4140
+    },
+    "RDX/Skin/src/disk2.xcf": {
+      "sha256": "16d1ce6b8a6c0e228b72484859d76acb863c4249d96804b22256443bb7132daa",
+      "bytes": 5237
+    },
+    "RDX/Skin/src/funnel.xcf": {
+      "sha256": "05ccd815f50e18173927495fc4eee3d29e5f6c32f7ae739c188cc4a28e5f2044",
+      "bytes": 1949
+    },
+    "RDX/Skin/src/mark.xcf": {
+      "sha256": "44900c746facebb2ab5e13cb2daf8c636afd0edec87bc651242ef5ab6acd0867",
+      "bytes": 2784
+    },
+    "RDX/Skin/src/menu.xcf": {
+      "sha256": "b1877dd519e159d778ea6bb599c63e012520fbc21a65149e5900a9e2a0f91d89",
+      "bytes": 2038
+    },
+    "RDX/Skin/src/play.xcf": {
+      "sha256": "d51f077cf531ad72c5c0f93ab74b91111a48bf1804023854a4d1840fdbeb23fd",
+      "bytes": 1926
+    },
+    "RDX/Skin/src/speaker.xcf": {
+      "sha256": "c210a399a0e3a49061743f20dffdeba6f60dc6c6631e58535d912243fb369906",
+      "bytes": 3048
+    },
+    "RDX/Skin/src/stop.xcf": {
+      "sha256": "7083c5e14a38fac1ecf4a76fe85cef7f8d1008b3fa6de9130908dbe46dd53885",
+      "bytes": 1888
+    },
+    "RDX/Skin/src/sync.xcf": {
+      "sha256": "425adbd69d9e2c22d46cfee10f3475d825b8697a80e9f632a2551be798333e33",
+      "bytes": 3500
+    },
+    "RDX/Skin/src/sync2.xcf": {
+      "sha256": "b77f7d3c7c2acc36771bb03c22d26d8831fe7b6948f7337401123aa7e20bfb50",
+      "bytes": 3446
+    },
+    "RDX/Skin/src/x.xcf": {
+      "sha256": "cdacbe85d7330a80cb47996a04601bb7b56720f27b632a426737cdbf4460fdf1",
+      "bytes": 2229
+    },
+    "RDX/Skin/StatusBar.tga": {
+      "sha256": "5ba70bdeecce2985d6f8f52fb5a74b85542ea51e770cbe5a613e8e7ac13e6dff",
+      "bytes": 65580
+    },
+    "RDX/Skin/stop.tga": {
+      "sha256": "a4b8effcaa501cdee0077e5323cc02eab9ce5dc8cf4ab81fac5e507e042479b7",
+      "bytes": 4140
+    },
+    "RDX/Skin/sword.tga": {
+      "sha256": "9921b9bfc23d93ce0bf862c9a9f0d2a8e9db051d15cf7d3de68022d6df8f57cb",
+      "bytes": 4140
+    },
+    "RDX/Skin/sync.tga": {
+      "sha256": "fbf474fab41ff138e7a2427d4cc3f561e0b992eaab24f1a315cb69285ff1d01c",
+      "bytes": 4140
+    },
+    "RDX/Skin/x.tga": {
+      "sha256": "976f1e4b4528456fd783432362ed224a0e036426953356067ab8b9e1c90a6b7d",
+      "bytes": 4140
+    },
+    "RDX/Smartcast.lua": {
+      "sha256": "c49054174c9fa680d90db84d70add428006948c7c34b1becb595908e3658f7ad",
+      "bytes": 2853
+    },
+    "RDX/SyncCore.lua": {
+      "sha256": "5a137bd4f2c1dd37ffd193e8e9cceda5ca23c50f1bd81cd35f2848d1021a81d2",
+      "bytes": 5645
+    },
+    "RDX/Tracking.lua": {
+      "sha256": "27c0908c7e493e561fe01607a63109d3e903536104d1ac22e8267b5e9d99cad6",
+      "bytes": 8953
+    },
+    "RDX/UnitFrame.lua": {
+      "sha256": "1f6f00adb45a5b77b46c4298e5f09594ab18f8f3b5b3c813f1baf5445fa66abb",
+      "bytes": 8102
+    },
+    "RDX/UnitFrame.xml": {
+      "sha256": "48caa06596c4c640cdaf371d87f14473080c3bf33a76a411ff77ec98b06e5c40",
+      "bytes": 13460
+    },
+    "RDX/Windows.lua": {
+      "sha256": "b3124b4bce914046f0e17e7e57c97129437bc3de307bff67abcd4d7ae399dbbe",
+      "bytes": 10578
+    },
+    "RDX/Windows.xml": {
+      "sha256": "c059b6f521b76bae28ef2a543b571573b1bdc6dc8d0a3a4f5a0f9979530e7153",
+      "bytes": 5043
+    },
+    "RDXM_Windows/RDXM_Windows.lua": {
+      "sha256": "c9bb0df7d7d18c42f6a6075cb5edaddbfd98924bfaf8cb403f4a8b5184a3bf58",
+      "bytes": 26841
+    },
+    "RDXM_Windows/RDXM_Windows.toc": {
+      "sha256": "854b30da53adb2e2f45bbedee88cb6fb04839c0cb42193be7ad86672460f3b07",
+      "bytes": 197
+    },
+    "RDXM_Windows/RDXM_Windows.xml": {
+      "sha256": "c5afb0a8fe45c368f5ee9297d148820604aa3385d7ff515f2703248d1b3851da",
+      "bytes": 14539
+    },
+    "RDXM_Windows/WindowDesc.lua": {
+      "sha256": "88d1c19b476c130a2556acfe556a32be725beba7ce5decd288ef34cb977a3720",
+      "bytes": 12394
+    },
+    "README.md": {
+      "sha256": "09b8b36f8423e15d41b265be76359ee26e3c7f65c496e8c75424ee3f51df67fd",
+      "bytes": 588
+    },
+    "VFL/ConfigInterface.lua": {
+      "sha256": "61cac194b8635bc5dbc27e21f8651165c061b87eeae2e8bab513ad61b35084a9",
+      "bytes": 20731
+    },
+    "VFL/DataStructures/Error.lua": {
+      "sha256": "e031532a55b366fd9f0b6c79359389e24bd5377a71dbe6b51dd849c326e48992",
+      "bytes": 693
+    },
+    "VFL/DataStructures/Literator.lua": {
+      "sha256": "fe1215aea864ba305ebd63356290e133e2dfa051780a8614f67c79772318eb2e",
+      "bytes": 1403
+    },
+    "VFL/DataStructures/Recycler.lua": {
+      "sha256": "8127db2758aaab43b8ca9b77d79ff0d1c44a34bb974a378ddf1e3d2ab8c32f7f",
+      "bytes": 703
+    },
+    "VFL/Deprecated/Misc.lua": {
+      "sha256": "a4635479cb10cb35ffa90acbbfd29ab5f93130f10b61d41da91ed62c6e698c2c",
+      "bytes": 7144
+    },
+    "VFL/Deprecated/VFL_Event.lua": {
+      "sha256": "c901a13a482bbfbf5b759d645343b3eb6707ba7a973cc9146a3db4bf37773648",
+      "bytes": 4686
+    },
+    "VFL/Deprecated/VFL_Game.lua": {
+      "sha256": "d8dbc51f9f7c17ee070e1e6205bd8ede270c401554d280628b81b92396415dc6",
+      "bytes": 11583
+    },
+    "VFL/Deprecated/VFL_Spell.lua": {
+      "sha256": "b09d22b44ddb7d82b709af95085f385b861b4a24563a2336dd0f4d7af14ad2e2",
+      "bytes": 3114
+    },
+    "VFL/Deprecated/VFL_UI.lua": {
+      "sha256": "9c52c9ca477f214e23bbb6b29e4f1f4d50af7fcf9a875d664fa61fc4bd76dc47",
+      "bytes": 19786
+    },
+    "VFL/Deprecated/VFL_UI.xml": {
+      "sha256": "332fab4b1650c065ac1b7b453aebee4d15b3412ef54d3f7d091e32ce2c81a407",
+      "bytes": 15011
+    },
+    "VFL/DispatchTable.lua": {
+      "sha256": "7d5e1d5a2b0665c569f9b658d4425d58f9b7e4aa2b71086bcec2d3c29a25bd1e",
+      "bytes": 11413
+    },
+    "VFL/Fonts/Aldrich.ttf": {
+      "sha256": "c616b8da00790c538e511256b96b6c4afda21f762e4fb8de417f46177f8b5bf0",
+      "bytes": 38612
+    },
+    "VFL/Fonts/Bangers.ttf": {
+      "sha256": "72d7761bfdeed0103d456258f32d8f8d8cc79759addd705bbec5c0c450249df8",
+      "bytes": 35844
+    },
+    "VFL/Fonts/bs.ttf": {
+      "sha256": "2646f80cf6fe0550c5f155a7df681756dd00f33c4828c21dda13cb0fc7bf9aee",
+      "bytes": 79084
+    },
+    "VFL/Fonts/Celestia.ttf": {
+      "sha256": "fba56e994074ca4236ac9f0a0f538fa42548c6888328ce5b11c107779a577b59",
+      "bytes": 234008
+    },
+    "VFL/Fonts/DorisPP.ttf": {
+      "sha256": "6b1ebf2f4a879c5236d566b97b0b807c78c7588fc2e3043db6ab7f8c3d8f019c",
+      "bytes": 33980
+    },
+    "VFL/Fonts/Enigmatic.ttf": {
+      "sha256": "61db4ba5ea9ef585d18702c3d1dbecb66dd90cffd10a32366f65266c1f1ad6f7",
+      "bytes": 19112
+    },
+    "VFL/Fonts/FasterOne.ttf": {
+      "sha256": "8f0fb101285ce1f138ad81350084dfb5fd6a57dd4dbb9318530ef0f5a5c3812a",
+      "bytes": 39008
+    },
+    "VFL/Fonts/Fitzgerald.ttf": {
+      "sha256": "0e7dce73d2df3c5a6d3e44334264f092e90343c655aa096d537c208c299136b3",
+      "bytes": 17356
+    },
+    "VFL/Fonts/framd.ttf": {
+      "sha256": "f103d31608ff1fa1b861ff297b16a49a74441dae98ce12c506a7085c01de9a11",
+      "bytes": 135984
+    },
+    "VFL/Fonts/framdit.ttf": {
+      "sha256": "02bf3f5c3289f66a314e9758f48ad729e3995b26ad74887b04ebbf0d775b2492",
+      "bytes": 152844
+    },
+    "VFL/Fonts/Gentium.ttf": {
+      "sha256": "ccf52be5a5950696f435d61a6727d6e745eef62e0c1d0741332bfe4a98ded6f1",
+      "bytes": 362664
+    },
+    "VFL/Fonts/HDZB_35.TTF": {
+      "sha256": "d1ee233090cda37cd121ba9f5db55459e79972bf0cf3b6b0b9bc3a65816e5554",
+      "bytes": 1547677
+    },
+    "VFL/Fonts/Iceland.ttf": {
+      "sha256": "f8a550a9ec5fb8c3fd6769279ac5fb4c308f07eb41b723b860c70b8e9368a8b3",
+      "bytes": 35476
+    },
+    "VFL/Fonts/Inconsolata.ttf": {
+      "sha256": "0cbfe4215172180bf609bf1261d5272a148d46d3382d5e4c35ce4de046f55d75",
+      "bytes": 35716
+    },
+    "VFL/Fonts/LiberationSans.ttf": {
+      "sha256": "490a62d414a590da4ec71c4d4e81166e86ca12c5aa62bf3d66cc93c74a178734",
+      "bytes": 133828
+    },
+    "VFL/Fonts/Luna.ttf": {
+      "sha256": "2d2fc6670ddc5b6f9fa5ff4b839d274545e14e56da83faf5ead260b9e30bb09b",
+      "bytes": 82836
+    },
+    "VFL/Fonts/MetalLord.ttf": {
+      "sha256": "b833b9bacc658d65dc6f1844b6e7d60975bc37f70aca133abae8d73862c43f59",
+      "bytes": 27120
+    },
+    "VFL/Fonts/Optimus.ttf": {
+      "sha256": "7254696db2f063098a9f7d497376dfa839806684bc69121a5e3fd5760644f9e1",
+      "bytes": 20424
+    },
+    "VFL/Fonts/TradeWinds.ttf": {
+      "sha256": "cf6c302d76dca9f861142deec97765e164d5c4da74b6c62c1708cc8f1140f16f",
+      "bytes": 81528
+    },
+    "VFL/Fonts/VeraSerif.ttf": {
+      "sha256": "6afd927937d84fc00831441cbe0165b2d926b5bb9c18ac9018e5df6e4b0c006a",
+      "bytes": 60280
+    },
+    "VFL/Fonts/Yellowjacket.ttf": {
+      "sha256": "716f35a0d2a6c56e191bad19a772b049b6948dea0e4d5a667fef6cb02913c291",
+      "bytes": 79196
+    },
+    "VFL/IntervalTree.lua": {
+      "sha256": "1e082cb7f3c6f11cee984587c9a5463e9df3592361cf7b9842a0a5d7936704a0",
+      "bytes": 6329
+    },
+    "VFL/Kernel.lua": {
+      "sha256": "a3c8c5dc0ad32d4bfe35af972329f8b9c5db78332d1b6cb4b6f9758dd5e45bb8",
+      "bytes": 7754
+    },
+    "VFL/Metadata/Metadata_Warlock.lua": {
+      "sha256": "6b1cd6aaeb43cb7a332f324cfe1f686dc980fa92061267fe3c4ad2ff889fec78",
+      "bytes": 831
+    },
+    "VFL/Pool.lua": {
+      "sha256": "e90d4f846c10552040501ea52ce71799e8793342fdfe35c2531896ca01a940d7",
+      "bytes": 3487
+    },
+    "VFL/Primitives.lua": {
+      "sha256": "139a576bd27f4aca7798c2490d41605446715ec9f70f49cb983cf90c86b31810",
+      "bytes": 17379
+    },
+    "VFL/Skin/a80black.tga": {
+      "sha256": "f09baafe3cd841b99abcaf2f9d5bbe2da8d18bbfa9411c659f594bc352bfc398",
+      "bytes": 4140
+    },
+    "VFL/Skin/beep1.wav": {
+      "sha256": "114f6e26b860e5d39b7d455d59e544729dac938b70aa0dcc202d59659f1cbbd6",
+      "bytes": 3664
+    },
+    "VFL/Skin/beep2.wav": {
+      "sha256": "d821f627c357a75f3af56f5e8b2a6f2af86aa0103f15d1db565d2fcf4a2f8315",
+      "bytes": 3014
+    },
+    "VFL/Skin/beep3.wav": {
+      "sha256": "97ea0b9e773777f55db3a41d493800d63017cbf53eff3e0717f1d8be3f044772",
+      "bytes": 5376
+    },
+    "VFL/Skin/beep4.wav": {
+      "sha256": "7c18912cfbbd54b201e301c03ad640b37a1cc326334bb6606d06b580cb6df9ce",
+      "bytes": 12688
+    },
+    "VFL/Skin/beep5.wav": {
+      "sha256": "38210da2866a22e7fb39c3732164de79727786fe2ed4cf83e4ed859c9af55287",
+      "bytes": 5744
+    },
+    "VFL/Skin/beep6.wav": {
+      "sha256": "4bcd1ebab18bb34e2e255ffc8d9ed2a7c2055f18424038d2b8016d6b0f17462b",
+      "bytes": 12354
+    },
+    "VFL/Skin/black.tga": {
+      "sha256": "da2ba52cadaebc206417ec2e0eae8aed3814481701f73ab868c13e6df87eb03a",
+      "bytes": 812
+    },
+    "VFL/Skin/Fonts.lua": {
+      "sha256": "5ca578c9fd2ec5b922cf45b95d03f905ae8e374d1d90e7fdbd9287654e1819e0",
+      "bytes": 697
+    },
+    "VFL/Skin/mag_glass.tga": {
+      "sha256": "247437c94dd8640521d4306c539f173dd108ae351ba98733cc17c61c43af8a28",
+      "bytes": 4140
+    },
+    "VFL/Skin/redx.tga": {
+      "sha256": "44ddf8bfaa83423c4028a592bc7df4df87e94e829a867489e66acff34ccb26ab",
+      "bytes": 4140
+    },
+    "VFL/Skin/sb_down_disabled.tga": {
+      "sha256": "da4a1b2b3b65c4d37ae073200fbf2cc03339bb685a4b4bdbc3cb7cf4d20fcfe9",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_down_hlt.tga": {
+      "sha256": "e547a817f4ec3defc767619c6666a9697b4f7871c9607d63d2a729d76b8a765e",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_down_pressed.tga": {
+      "sha256": "a01ecc8dacd6435103addba843d5c332ca3b7cb26e9beab8fc9f69fd5daf9d5b",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_down.tga": {
+      "sha256": "aed3d5f3e86850029bbcd8e43dc47d1306ea000cd8556e387b5195acaa159215",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_hgutter.tga": {
+      "sha256": "8728fe742ae6aee55c5de6189c5ff27841acf78c759a5e64f850a1b7f3b57b82",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_left_disabled.tga": {
+      "sha256": "7a2dcb7ceb07efa7f15d141a7b095d988585b0cc3a132b51a0288f81f4bd8329",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_left_hlt.tga": {
+      "sha256": "4cdb803bdb3c074c3917e8910a3037ee8482341b28a61598fcbb1922c15d3250",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_left_pressed.tga": {
+      "sha256": "a3b7d6fb3fe69e13bd91c049dad1cbeab417a77cd6e954170e664e301bff9ee8",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_left.tga": {
+      "sha256": "4f6b7730f7baa4a1a13d73b146cab53521ff5cd07b498fab11fc8ce30d12ed17",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_nub.tga": {
+      "sha256": "4fcd730f78fe09afe416e82c333b7c7237b4034653a28b4fefb7c44883d23a9c",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_right_disabled.tga": {
+      "sha256": "88741fe37b17021322f4cbab19833cd7c0d77af57b9debc75579362e81f7288f",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_right_hlt.tga": {
+      "sha256": "309df1535b8aee207c7914908480f058241561e23dad86be4b8b71593d9c859c",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_right_pressed.tga": {
+      "sha256": "0384a90bf2a12e8e8000f53d513ac27e619b6ab8a5cf442136c70510685b3801",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_right.tga": {
+      "sha256": "31b90fba45bb482f890cd9dfb5e969743973437de496468b81e67bb44ad1b2e1",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_up_disabled.tga": {
+      "sha256": "d2f2c0c554898d96553b2bc2e1d6fea33902c695659268b85826dd89b3a4a5b1",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_up_hlt.tga": {
+      "sha256": "d5352157b37b041adc9d0d8179542c562fcaf6d0620350b9d271a074a7e99299",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_up_pressed.tga": {
+      "sha256": "20da5ee4aa58858dffe7a7cf1f90f4ce374cb592e965bfd0e57ffb8ae9fab493",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_up.tga": {
+      "sha256": "2f4f963128f607e41dade67917c08ab00a8e0a70a8a10c6ce51bfa8fe57c0d36",
+      "bytes": 1068
+    },
+    "VFL/Skin/sb_vgutter.tga": {
+      "sha256": "49a07ceac6c04282861b5a642836232e9be2fa3ff9624527738e8b5512d2f40e",
+      "bytes": 1068
+    },
+    "VFL/Skin/src/mag_glass.xcf": {
+      "sha256": "bbf98f65f635fffd6099070d71b1aea91ad76d0a3487756f3b893cf4ea974c72",
+      "bytes": 1768
+    },
+    "VFL/Skin/src/sb_nub.svg": {
+      "sha256": "6691364cbb4c2948140ee9d7b2be510c8c917d68ddd687327164f35b1d2befe1",
+      "bytes": 1438
+    },
+    "VFL/Skin/src/sb_up.svg": {
+      "sha256": "f957ec9ee8f03d9a8fb03d950ca0af5e4467f0129e1ef1b709f7bc4ec28f53be",
+      "bytes": 1379
+    },
+    "VFL/Skin/tab_bottom.tga": {
+      "sha256": "ebae55528b8c8f67c2355e054297a99a1a69a57b9c1ac1405cab739d3099ba72",
+      "bytes": 3099
+    },
+    "VFL/Skin/tab_top.tga": {
+      "sha256": "cc0d64cf427727a96a70256428e6b4130cec318bb792130582516be85d7f7d49",
+      "bytes": 8236
+    },
+    "VFL/Skin/x.tga": {
+      "sha256": "976f1e4b4528456fd783432362ed224a0e036426953356067ab8b9e1c90a6b7d",
+      "bytes": 4140
+    },
+    "VFL/Spells/Spells.lua": {
+      "sha256": "9b8da93aaa08acf2eec478fbb97d97221e0807563fdb42fbb67b99fcc886e0a4",
+      "bytes": 13115
+    },
+    "VFL/Time.lua": {
+      "sha256": "1fedfd00d71b797534ad272cf3bb4f936e4fcac0c20f681da81d23cdb6048279",
+      "bytes": 13813
+    },
+    "VFL/Tools/empty.xml": {
+      "sha256": "41c6246b219e96fb03959434bd30f6788982a208d1db0e6bbb13eb5a5dda3174",
+      "bytes": 277
+    },
+    "VFL/Tools/xmlgen.lua": {
+      "sha256": "51acbcc32656d31b0265b60bc34942d13ed4685de87c00732f6813f4a977358f",
+      "bytes": 371
+    },
+    "VFL/Tools/xmlgen.xml": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "VFL/UI/Core.lua": {
+      "sha256": "902d2ce85b09a9bfe4e2d032eff21b3694eb00062216858da1304953a73b7c14",
+      "bytes": 13243
+    },
+    "VFL/UI/DragDrop.lua": {
+      "sha256": "d31f900ca7078a0fd9775dd396a0e4f5b19bf6d56100143dea4f95cfa631aa82",
+      "bytes": 4415
+    },
+    "VFL/UI/EscapeHandler.lua": {
+      "sha256": "3a2780f990317bab0947b7f5e06271d0c5fda5d11b94df0f8f995cbcad197794",
+      "bytes": 2365
+    },
+    "VFL/UI/FrameClasses/Button.lua": {
+      "sha256": "9c706d807d571e755e9478866a63d24e24195e7f8cbbf0c4ae0bc59e17dce13e",
+      "bytes": 7314
+    },
+    "VFL/UI/FrameClasses/Dropdown.lua": {
+      "sha256": "3547c3ace9ba76a0df90bf59c57e9d5e30020a13ac24fdfc0b177150c5667339",
+      "bytes": 2529
+    },
+    "VFL/UI/FrameClasses/Edit.lua": {
+      "sha256": "251429ad15f81913211fc546d3a862a586cd5edf84cce8966c225bc778ee16b7",
+      "bytes": 1062
+    },
+    "VFL/UI/FrameClasses/GroupBox.lua": {
+      "sha256": "594d547459b009278c64c05ccc3e9d28bf7b82d93684a2690d709b8b1112bc25",
+      "bytes": 3809
+    },
+    "VFL/UI/FrameClasses/List.lua": {
+      "sha256": "7cedfa9442067b3539e1ec6e554c7ffbbe4a935f0d9024d875a976b5ac927071",
+      "bytes": 4279
+    },
+    "VFL/UI/FrameClasses/Scroll.lua": {
+      "sha256": "c09ff7648f55ebb6f626ecdfabdc97ca2e9d9e9c7312d2c5cfe19f74cf3f0acd",
+      "bytes": 10074
+    },
+    "VFL/UI/FrameClasses/Selectable.lua": {
+      "sha256": "dbc4e958891d9adcf52d8fa2a775a7f7776c5233db83e2fc75d63356c52b5c6b",
+      "bytes": 4365
+    },
+    "VFL/UI/FrameClasses/TabBar.lua": {
+      "sha256": "1ef6041977757d04db65849d9000a6dee7ecc9e9498e43e030c1b9a58af34c15",
+      "bytes": 9488
+    },
+    "VFL/UI/FrameClasses/TabBox.lua": {
+      "sha256": "98aa796b0bab0294be2d0fc5789ea185aa0c0f4f3e921d77b4738a23855d6c3a",
+      "bytes": 2687
+    },
+    "VFL/UI/FrameClasses/Window.lua": {
+      "sha256": "5ae3141d0e507c420006ab71fdd4f61f398a01343de1aaf1442737e6f2f044a6",
+      "bytes": 6173
+    },
+    "VFL/UI/Grid.lua": {
+      "sha256": "20aadbf30e776a20e6e8def6508aa702d2ebe8b25749a0c2b468316497fa40d2",
+      "bytes": 19271
+    },
+    "VFL/UI/MessageBox.lua": {
+      "sha256": "d956de23d682a0b7c453a5d3ddcebeaa11551711e8777a3e2f4a6f39de31ef54",
+      "bytes": 2439
+    },
+    "VFL/UI/PopupMenu.lua": {
+      "sha256": "3e4d20a6cd38a8af12902e503bbe061e41367500fdaf2ba5bbc2ed38946c7eaf",
+      "bytes": 6931
+    },
+    "VFL/UI/Shortcuts.lua": {
+      "sha256": "e05d5555c1b41baef20845793ede23ecb1f67777e4997a9925fa8aa4d4fa02ca",
+      "bytes": 1109
+    },
+    "VFL/UI/UIContext.lua": {
+      "sha256": "a469433d35d9b34321fbca729100a8ab911be8e3db0a7434c3795b4827579e56",
+      "bytes": 2068
+    },
+    "VFL/VFL_CC_Buttons.xml": {
+      "sha256": "2517f5d4346017a1620b5dca4c0632d4925d4aee519060eecab1a853befd2cb4",
+      "bytes": 2475
+    },
+    "VFL/VFL_CC_Checkbox.xml": {
+      "sha256": "293c1814a3546d44769d541edd41ad80a5e2b414a2046d316b2a1635ff00ffc2",
+      "bytes": 1773
+    },
+    "VFL/VFL_CC_Framepools.lua": {
+      "sha256": "73659e1038a71bb06600ad24eba1dd93798b8b08eefaef8d3d65dc4607017684",
+      "bytes": 1057
+    },
+    "VFL/VFL_CC_Framepools.xml": {
+      "sha256": "31121272090e264dc46fd80127ce9e6873f4c2a24f30e118e9b6a62631e44fff",
+      "bytes": 6590
+    },
+    "VFL/VFL_CC_Grid.lua": {
+      "sha256": "a2dccb89f8754370658c2f37089b1169510ec1bb33c1cdc1f0b04fd19b4945bc",
+      "bytes": 12887
+    },
+    "VFL/VFL_CC_Init.lua": {
+      "sha256": "97698c66d649a6dbd325cf2543c08018a6b294a0eb8dda43ffeb29c9fb3ddf3e",
+      "bytes": 118
+    },
+    "VFL/VFL_CC_ItemLink.xml": {
+      "sha256": "64a4e254ef499ac79268def654dc1e126ff69d32e54c5be895fd2321c372f37b",
+      "bytes": 883
+    },
+    "VFL/VFL_CC_Lists.lua": {
+      "sha256": "9b255b0dc5f70744588381f1e90b0da518561d3414ca70d30d35049d4b09cd0c",
+      "bytes": 8495
+    },
+    "VFL/VFL_CC_Lists.xml": {
+      "sha256": "2b157a686667246f916585130932b2ecfa17782bfb118adf80b62aa004e45faa",
+      "bytes": 9438
+    },
+    "VFL/VFL_CC_Radio.lua": {
+      "sha256": "5b782e76ab040eb803a5d31ef94cb280771b16c6ab837f6d23b52c9ebb703704",
+      "bytes": 2265
+    },
+    "VFL/VFL_CC_Radio.xml": {
+      "sha256": "701726163fedc2e73184e36bdda24e3454337ed5bb343f7f1a797bdd435d6bb1",
+      "bytes": 2001
+    },
+    "VFL/VFL_CC_Scrollbar.xml": {
+      "sha256": "0274a43002d4e87aa4129de19284e5f4255e8a220b1d3971aea83bfb8e3d9c79",
+      "bytes": 5371
+    },
+    "VFL/VFL_CC_Static.xml": {
+      "sha256": "cee7ee17aaf357d71f93df4a07f36c8c841f8fb0b4b9f5df3bc22b6aa7c032bd",
+      "bytes": 1001
+    },
+    "VFL/VFL_CC.lua": {
+      "sha256": "016dbe4c76e0142ff7791ade4a5287e69d755397d86bd39115143436adcabf28",
+      "bytes": 4287
+    },
+    "VFL/VFL_CC.xml": {
+      "sha256": "f13b67bba77e8e4d013ec2bb442ae6b8fa0d8c86ebfac97dd11623ff0111081f",
+      "bytes": 6704
+    },
+    "VFL/VFL_Deque.lua": {
+      "sha256": "77240e2039400028f64fb89f61ad0ba665648c7957376bb81abee15e5eb5dbd3",
+      "bytes": 1064
+    },
+    "VFL/VFL_Init.lua": {
+      "sha256": "ca96d0757c2669193a2d705adf0653f85b378efea0a69c202c8079aaaf2bfb01",
+      "bytes": 1170
+    },
+    "VFL/VFL_PopupFix.lua": {
+      "sha256": "699f1df802ec049f5213a60322b3eb10b3120325f53d0882cc28558c6a3947c9",
+      "bytes": 4661
+    },
+    "VFL/VFL_Signal.lua": {
+      "sha256": "a9595251b3228a7530969f1ad87d77e05308f5e53d3601552ab260ae891c4da4",
+      "bytes": 1799
+    },
+    "VFL/VFL_WoWItems.lua": {
+      "sha256": "4faa7849754ce9693391ebd346017bf2862cd868f5762cc176ccdeb5f0e4d447",
+      "bytes": 2102
+    },
+    "VFL/VFL.lua": {
+      "sha256": "e6a126e1048948fbb2f09034f2f41b05d900d14ff5227c27e9fc9273cf2c2061",
+      "bytes": 739
+    },
+    "VFL/VFL.toc": {
+      "sha256": "5ac6b7258f43c38d0e4f5fe0c22ec1a03b5a8f8bf491ecc5e48d824309213d19",
+      "bytes": 238
+    },
+    "VFL/VFL.xml": {
+      "sha256": "52e267deec114b04499710ac4a8a67835ec8932de01d55f2538c05cca95f154f",
+      "bytes": 4276
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

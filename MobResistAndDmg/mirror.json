@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/leenux/MobResistAndDmg",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "leenux",
+    "repo": "MobResistAndDmg",
+    "name": "MobResistAndDmg",
+    "url": "https://github.com/leenux/MobResistAndDmg",
+    "api": "https://api.github.com/repos/leenux/MobResistAndDmg"
+  },
+  "commit": "f04af9fc33f76f989bae23f604f54a8aa1597c81",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "16858e645cdb285a81aba54e80ab483f743356d26e618820f02b192d552913b8",
+      "bytes": 1063
+    },
+    "MobResist.lua": {
+      "sha256": "acb092dd7f9e2c0cd42f5127e0418c36bf88dc8a2cb7a5e52d94db8011def1c1",
+      "bytes": 5523
+    },
+    "MobResist.xml": {
+      "sha256": "3c9b1ebccbb37abbd24393fa4fc7e521ed648a3811fcdddcc76b1c92aaf1be66",
+      "bytes": 406
+    },
+    "MobResistAndDmg.toc": {
+      "sha256": "180bba6fc5f32ae8b302b69b9ccdef101c14a7c6b9850a1d50f92e529ae4c6b7",
+      "bytes": 232
+    },
+    "MobResistMenu.xml": {
+      "sha256": "34134675691a08c05c77b169e99079ce4ede4fdf6b19e291bcb39cb0180c1554",
+      "bytes": 2781
+    },
+    "README.txt": {
+      "sha256": "0f66f61ffb98c3bf63d2401b6931cdd2b9951b3a75ee8228bda84dd63a575ccb",
+      "bytes": 329
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

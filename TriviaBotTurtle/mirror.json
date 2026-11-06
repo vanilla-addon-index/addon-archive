@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/cyaohiri/TriviaBot-TurtleWow",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "cyaohiri",
+    "repo": "TriviaBot-TurtleWow",
+    "name": "TriviaBot-TurtleWow",
+    "url": "https://github.com/cyaohiri/TriviaBot-TurtleWow",
+    "api": "https://api.github.com/repos/cyaohiri/TriviaBot-TurtleWow"
+  },
+  "commit": "e11b168dd15d3d0eac358bf2f7c7a75c68dcd63b",
+  "sourceFiles": {
+    "GeographyQuestions.lua": {
+      "sha256": "d1b2e960a96b4bc529300871a8d36ecd6c83f3ffe59df23b779f504d39d91a55",
+      "bytes": 18645
+    },
+    "NormalQuestions.lua": {
+      "sha256": "e46147c7233385f17ba1bd610b43c762cabd7e54e75953e4b797fdafd5780715",
+      "bytes": 513020
+    },
+    "ReadMe.txt": {
+      "sha256": "5b4481190693cc27fa0696a3ab17c04389d1931125bfe9049c63abf24527b4ad",
+      "bytes": 1641
+    },
+    "TriviaBot-TurtleWow.lua": {
+      "sha256": "48c69f099d0f396dabb000e6cc75a085a2446f1f6b7915be35447f606f07d65b",
+      "bytes": 21047
+    },
+    "TriviaBot-TurtleWow.toc": {
+      "sha256": "2671fe1b8c26ecd2bbdc63de4b8aae528739bdf378c3fcf063e2f2123ac0d2aa",
+      "bytes": 317
+    },
+    "TriviaBot-TurtleWow.xml": {
+      "sha256": "bdeb5fb68b7682f60e1556ea133a1be8744b77ddbb5c4fa22d82eb49848b6e42",
+      "bytes": 653
+    },
+    "TurtleQuestions.lua": {
+      "sha256": "417a33f24b609f1223ddcd5a0fbc8c7fad99920588b85bb71d0a587bcd84afa6",
+      "bytes": 3255
+    },
+    "WoWQuestions.lua": {
+      "sha256": "82d2076155506102b93698388aa9326e14cbb2eb560ebebad716d0cffa4ea882",
+      "bytes": 140134
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

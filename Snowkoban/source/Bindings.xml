@@ -1,0 +1,14 @@
+<Bindings>
+	<Binding name="MOVELEFT" header="Snowkoban">
+		SKBmove("left");
+	</Binding>
+	<Binding name="MOVERIGHT">
+		SKBmove("right");
+	</Binding>
+	<Binding name="MOVEUP">
+		SKBmove("up");
+	</Binding>
+	<Binding name="MOVEDOWN">
+		SKBmove("down");
+	</Binding>
+</Bindings>

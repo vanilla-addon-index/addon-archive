@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/JembaWoW/MoveAnything",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "JembaWoW",
+    "repo": "MoveAnything",
+    "name": "MoveAnything",
+    "url": "https://github.com/JembaWoW/MoveAnything",
+    "api": "https://api.github.com/repos/JembaWoW/MoveAnything"
+  },
+  "commit": "01b20a0a35d7526a31f136227beac5b23bf544ab",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "5173ee926199d8d9080b216a864fe71a5c80b07f639a50706155c93d6f1dddd2",
+      "bytes": 229
+    },
+    "MAPredefinedFrames.lua": {
+      "sha256": "7a905b82ecbfab79e0a1c77ef20fc1c83068cff0c3babcabaee4ae5560b0c86e",
+      "bytes": 816
+    },
+    "MoveAnything.lua": {
+      "sha256": "f5be1e1781102f26c7af6889bb2a8031084b40828795c18b54cea6356df420cd",
+      "bytes": 50896
+    },
+    "MoveAnything.toc": {
+      "sha256": "c289a1ac52f117f015b0ed457c1ee7b7367862454c2c7c6026f1646f97f7a583",
+      "bytes": 341
+    },
+    "MoveAnything.xml": {
+      "sha256": "1ffd577f860ef31f2a6f120f77d4cf1d6d399d24d13dc06d72ec12cebfb8b1df",
+      "bytes": 51494
+    },
+    "ReadMe_10900_3.txt": {
+      "sha256": "2c9f082a74c22716aecb26b03ac004993258a9264d687426daf313cfa198d5b2",
+      "bytes": 10049
+    },
+    "ReadMe_11100_0.txt": {
+      "sha256": "3a4009052f47c83183535b06dc7c513bbd5a71a54c67d0203e11f1b2b59c31bf",
+      "bytes": 10420
+    },
+    "README.md": {
+      "sha256": "16072e409c31c86cc5c564f2b27e3d6b0900ca914bbe980825f415252f1396d6",
+      "bytes": 68
+    },
+    "readme.txt": {
+      "sha256": "6246d25a43b77ebf815f4a2ee1f10a7615a2560a3e099733ae3365d7b468566a",
+      "bytes": 9024
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

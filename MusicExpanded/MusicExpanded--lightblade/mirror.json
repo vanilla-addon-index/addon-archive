@@ -1,0 +1,785 @@
+{
+  "upstream": "https://octowow.st/git/lightblade/MusicExpanded",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "lightblade",
+    "repo": "MusicExpanded",
+    "name": "MusicExpanded",
+    "url": "https://octowow.st/git/lightblade/MusicExpanded",
+    "api": "https://octowow.st/git/api/v1/repos/lightblade/MusicExpanded"
+  },
+  "commit": "094f35bf55dc1de4f77b3911466aaa3dda152393",
+  "sourceFiles": {
+    "eventData.lua": {
+      "sha256": "28812988ea6da9259b2a871d3c426c6fa07f9d4ed23584d694c8052b98b65a9e",
+      "bytes": 824
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "music/arathi/arathihighlands_a_day1.mp3": {
+      "sha256": "9bd71a6c96eaca445679334cc835315ae3a201fcad8da6202dbc3bde5810182f",
+      "bytes": 1355682
+    },
+    "music/arathi/arathihighlands_b_day1.mp3": {
+      "sha256": "16924ff4b71097b723dccd4a56bad3cf52cbf75944d0587bf3983f40ebe6fbfa",
+      "bytes": 1392411
+    },
+    "music/arathi/arathihighlands_c_day1.mp3": {
+      "sha256": "257d673143a700d21cbf1cd33856cf7524e132770c793c2d9671f08092d6dd08",
+      "bytes": 1804791
+    },
+    "music/arathi/human/classicbattle_c.mp3": {
+      "sha256": "9ace8624233713d14fa28a2a7e7aff67fbfdebe090265e8889c49c4259910cfe",
+      "bytes": 2042714
+    },
+    "music/arathi/human/classicbattle_d.mp3": {
+      "sha256": "ad3d3053adf97663dd408924cf34b9023779da269a53ab0598495fc4f9fc9afc",
+      "bytes": 1756136
+    },
+    "music/arathi/human/classicbattle_e.mp3": {
+      "sha256": "164421eb0cb61180a7284e7ef3d547b2b00d3cc20616dd2954db3403dac7171c",
+      "bytes": 1848008
+    },
+    "music/arathi/human/classicbattle_f.mp3": {
+      "sha256": "7b591f2c17948c7557e1e54e3b9e5d30237214c2d70469909a1def69d6f7208d",
+      "bytes": 2046890
+    },
+    "music/arathi/orc/warfrontsbattle_o.mp3": {
+      "sha256": "e8db12858119f5de52f4a7e2436b8557252fe90310773f5c0e670cc9472ab913",
+      "bytes": 1712288
+    },
+    "music/arathi/warfrontsbattle_l.mp3": {
+      "sha256": "257fbbe4e63bae3d27e9b4c965a2442876c50bf976f121f0c97c0994f2a6b65b",
+      "bytes": 2729256
+    },
+    "music/arathi/warfrontsbattle_p.mp3": {
+      "sha256": "9aa13b399f0b629dc04271496e5a1ed2d834d3fa9694724c78d098ded10c3e9c",
+      "bytes": 1852706
+    },
+    "music/balor/Balor2.mp3": {
+      "sha256": "93319439f1e286caa70b141a4cec63be79a502cea348d8a95ef4cecbafa188a5",
+      "bytes": 4828656
+    },
+    "music/balor/Balor3.mp3": {
+      "sha256": "0d2246e881601c88e79a9b2e10875c1bb60002e1f537e1ecf01ab7cf504b609c",
+      "bytes": 3616008
+    },
+    "music/blackrock/blackrock_spire/event/protectthethrone_h1.mp3": {
+      "sha256": "7cfa009c7cbe8555ebe2ced3f2ef0efc7d2388c7c10d65b99b99bfb083bdcdb4",
+      "bytes": 1342190
+    },
+    "music/blackrock/blackrock_spire/event/protectthethrone_h2.mp3": {
+      "sha256": "08961df8bbc7dee8e35e60a09582f842edc732c4ebc69247e623156f3e92876c",
+      "bytes": 1962326
+    },
+    "music/blackrock/blackrock_spire/event/protectthethrone_h3.mp3": {
+      "sha256": "f115bbf9999d2831958c74a469a0a8e518aa8f229904573a868858a60def39a3",
+      "bytes": 1841222
+    },
+    "music/blackrock/burningsteppes_1.mp3": {
+      "sha256": "c12c13a286a426ea9cd098c12a8c75a97c98eeb214ae2c509dc5e19a43457aa1",
+      "bytes": 2679139
+    },
+    "music/blackrock/burningsteppes_2.mp3": {
+      "sha256": "1172466af195a608078cd4deff100aa3878ccf8933ee6d2499334ece8057d5c5",
+      "bytes": 1047139
+    },
+    "music/blackrock/burningsteppes_3.mp3": {
+      "sha256": "17fd4591a2a9faf63011cb40ec04bb179cfb46877c5db93a9977452c936e2aeb",
+      "bytes": 1611139
+    },
+    "music/blackrock/burningsteppes_4.mp3": {
+      "sha256": "56a9dfdec29c336c30eba12c5273dbca95efdb13f95d8a2e361ec44255dca765",
+      "bytes": 2031139
+    },
+    "music/chapel/arathi_memorial_h.mp3": {
+      "sha256": "b1d14fb690677aa551e8d5b42ea90dbb46fa529b865444c2e4e56b7733a069cb",
+      "bytes": 5584484
+    },
+    "music/chapel/cathedral/bellsofdawn_calm.mp3": {
+      "sha256": "70721b434276e935ca041a04b4301e547a90168e369e43b4cd3bc2e827a845a9",
+      "bytes": 2928170
+    },
+    "music/chapel/cathedral/childrenofthelight_calm.mp3": {
+      "sha256": "162041d96287ec30319a15807af468ba472dca4c654930e393cce27fba15027f",
+      "bytes": 2746393
+    },
+    "music/chapel/cathedral/lightbringsushope_calm.mp3": {
+      "sha256": "f4f6c52ac90e54e51a883be20f480f4b1e7f9fdcdbc01f1b6570a36c42bfdb0d",
+      "bytes": 3080236
+    },
+    "music/darkshore/darkshore_cult/forsakenflame_a.mp3": {
+      "sha256": "142652d81e633cca0300bd7069e1c990a7de22a94685b6bf5885b929a4075437",
+      "bytes": 1757702
+    },
+    "music/darkshore/darkshore_cult/forsakenflame_e.mp3": {
+      "sha256": "9c11f4039677e92e32ebe81ee61199c264a158c9c238d381631529b40b3bbb04",
+      "bytes": 1553078
+    },
+    "music/darkshore/forsakenflame_b.mp3": {
+      "sha256": "9d67e66ff66f9d1416b653ed0245d8ce651224cc38303cdd425f0d0b64cd0cf9",
+      "bytes": 3170234
+    },
+    "music/darkshore/forsakenflame_d.mp3": {
+      "sha256": "7e78d374f8a062297572f7a7e284d5722a103480b9775f181c0e065f67e55f8e",
+      "bytes": 3088280
+    },
+    "music/darkshore/forsakenflame_f.mp3": {
+      "sha256": "bbd12526d6be715be98af9f622003997de5308322915fbcdc89c6cb894821988",
+      "bytes": 1587008
+    },
+    "music/darkshore/naga_cave/fromthedepths_1_a.mp3": {
+      "sha256": "2534837d65af41d3e2cfc1742029ea21e53f20cfd383d8a51b6124cf6234b085",
+      "bytes": 1920044
+    },
+    "music/darkshore/naga_cave/fromthedepths_1_c.mp3": {
+      "sha256": "1352a9261bd1262fe288ea6a782b482391de6a7cdfd8d62e0178b39d89efe99f",
+      "bytes": 1371944
+    },
+    "music/darkshore/naga_cave/fromthedepths_1_d.mp3": {
+      "sha256": "0803d52a14abb6c5339e129ef38ba3ff09bded212733be209e381e9df275c845",
+      "bytes": 1782758
+    },
+    "music/darkshore/naga_cave/fromthedepths_1_e.mp3": {
+      "sha256": "faf572e96d5794fa4402b987758ab373f46b0541e1ff14a990b91a980f5d0bf2",
+      "bytes": 1509752
+    },
+    "music/darkshore/nightwarrior_a.mp3": {
+      "sha256": "8d3432e1317ea5a3a022aeb28ace24b8e6a2f56ced033c40ee937b551f4e1987",
+      "bytes": 1763966
+    },
+    "music/darkshore/nightwarrior_c.mp3": {
+      "sha256": "b7c600c8fbc44babb90f2fe3b850c7665a7af12290bdf6da1071b5e3c5420401",
+      "bytes": 2056808
+    },
+    "music/dwarf/darkiron_city/darkironforge_1.mp3": {
+      "sha256": "f59c5c6ae967816520541d03002dc2090d04e5841e3da11078b9a9c4a922d040",
+      "bytes": 3092422
+    },
+    "music/dwarf/darkiron_city/darkironforge_2.mp3": {
+      "sha256": "2d7250e18e2032d47b2698166ead78b0404a9f7bd77264c6d97a5cfa6b84fb82",
+      "bytes": 1327462
+    },
+    "music/dwarf/darkiron_city/darkironforge_3.mp3": {
+      "sha256": "27d17c957b45e8d7c5bbf56ca311c5242905b45bae0e99a361b77b518723ad3e",
+      "bytes": 1095622
+    },
+    "music/dwarf/darkiron_city/darkironforge_4.mp3": {
+      "sha256": "f4bf2e07a8983152035e0d8932c27200f9e39def99945fcd9f64e60699877d01",
+      "bytes": 2050342
+    },
+    "music/dwarf/darkiron_city/darkironforge_5.mp3": {
+      "sha256": "b560a33ca5deed614ef773abb0c971295f9d36a35b555963effe1c8042af6655",
+      "bytes": 920902
+    },
+    "music/dwarf/darkiron_digsite/dwarf_a_day1.mp3": {
+      "sha256": "e2ffb4f7ed556e2bc53ddd5e808f0660bb13d870bb1ba2d98af34c77d252f34f",
+      "bytes": 1997322
+    },
+    "music/dwarf/darkiron_digsite/dwarf_a_night1.mp3": {
+      "sha256": "3419d319268826d14c1aafa61bd768f24a666cf7908d06cf61355777d19a1961",
+      "bytes": 1988963
+    },
+    "music/dwarf/darkiron_digsite/dwarf_adark_uni1.mp3": {
+      "sha256": "8511d4dac23a0f522d8b59c50df8c4a35df8cfb3d2f67be60c1217e26938063a",
+      "bytes": 2256980
+    },
+    "music/dwarf/darkiron_digsite/dwarf_b_uni2.mp3": {
+      "sha256": "a9874f1628212d8f8c226d6640e8d6d381ca85be9df48e09204d1031f213eaa7",
+      "bytes": 3279412
+    },
+    "music/dwarf/darkiron_digsite/dwarf_cdark_uni4.mp3": {
+      "sha256": "e6bbb3660d285eee5b608cab26f825c3bf19e48a9652cc5b876b177fec502785",
+      "bytes": 1645192
+    },
+    "music/dwarf/darkiron_digsite/dwarf_ddark_uni5.mp3": {
+      "sha256": "845b33422acdbe7f35bbe0c82ecb04cec25c6e237e85c4d291266c79f16c69cc",
+      "bytes": 1388147
+    },
+    "music/dwarf/dwarf_b_day2.mp3": {
+      "sha256": "932deff48e43e6a80a5d7aeab6661065d0059844148c84cbfc4d0fe23cc00b5d",
+      "bytes": 1949780
+    },
+    "music/dwarf/dwarf_b_night2.mp3": {
+      "sha256": "969c746fd29a9df77e04932b190fcb4cdc0d2eaadc7c1b8647e5a4d6f471c27c",
+      "bytes": 1913208
+    },
+    "music/dwarf/dwarf_c_day3.mp3": {
+      "sha256": "c50e0951177499f8503cbafe0c0f5a2a644477fac3bd4fe37f18ec6254e43fa8",
+      "bytes": 841143
+    },
+    "music/dwarf/dwarf_c_night3.mp3": {
+      "sha256": "c11c825ece48996a99bbf43ddf14900d290f0cc9d9f3c6d93a0b0f2918e5714d",
+      "bytes": 841143
+    },
+    "music/dwarf/dwarf_c_uni3.mp3": {
+      "sha256": "5bbea668e9214ba56d83721ebb947262cc306eab4b9462172f635d87415393fa",
+      "bytes": 841665
+    },
+    "music/dwarf/dwarf_d_day4.mp3": {
+      "sha256": "2a818b86d5371f99c8e2839803dcbe322e2fba815122fdd9016cb298278e0871",
+      "bytes": 916898
+    },
+    "music/elf/highelf/islelightwalk_2.mp3": {
+      "sha256": "f66f5d2a3ec63d086d726fa4f5d9e67bb635676ec3ba96d76b1315383ac0636d",
+      "bytes": 2392601
+    },
+    "music/evil_swamp/bloodsacrifice_a.mp3": {
+      "sha256": "ad23e4cdea16bb961131a2faff17d1d7a73dd989bda27ab69e775191905dac48",
+      "bytes": 1986338
+    },
+    "music/evil_swamp/nazmirswamp_c.mp3": {
+      "sha256": "e2500548b632e1125a40705021ac2f507692490eafe0864da80da9c6fe6b2754",
+      "bytes": 2048978
+    },
+    "music/evil_swamp/nazmirswamp_e.mp3": {
+      "sha256": "e47cbe401af6c15ee2425dcaf960c62e3632cd36a4224dd9a92447020399ec42",
+      "bytes": 1956584
+    },
+    "music/faction_leader/sylvanas/sylvanas_freewill_h.mp3": {
+      "sha256": "d1e6f484dc53a4a416d5e10501405a1f4d11a18a392ee50cae9da207b15c8a81",
+      "bytes": 3448662
+    },
+    "music/faction_leader/sylvanas/windrunner_h.mp3": {
+      "sha256": "39c644169db8e25f7c1d0b89286a5440203ad0dbb772b36662b96f2b7bec2e98",
+      "bytes": 2590292
+    },
+    "music/forest/aeriepeak.mp3": {
+      "sha256": "3629b6743cfa2202b2cfbc6bbc0b0092f5f8da71eb0e11bb74c4804100f770f8",
+      "bytes": 1105464
+    },
+    "music/forest/hyjal/cataclysm_night8.mp3": {
+      "sha256": "ddb1142832afa1165de9d2d20d9ee0cfb3924d4d924d5b9dda27288acfd05896",
+      "bytes": 2233353
+    },
+    "music/forest/hyjal/groveoftheancients_1.mp3": {
+      "sha256": "94f1c1cdf670d4a0d4dbd1a36ca427071e0080a0f15467e9f54e091071cf77b9",
+      "bytes": 1776745
+    },
+    "music/forest/hyjal/nordrassil_1.mp3": {
+      "sha256": "4168825c426748b2011cc2e09ed83cfb6643c9429743b451e0d37c380d3ce1e3",
+      "bytes": 2359460
+    },
+    "music/forest/moonglade/eye_of_ysera_b.mp3": {
+      "sha256": "f8dff5bf257d03f5eb9db44bbb5154320a94f1e06ae569bc6e4c3aa9f2117e50",
+      "bytes": 2954126
+    },
+    "music/forest/moonglade/eye_of_ysera_d.mp3": {
+      "sha256": "33837570f5f3b9c5c7b456f7e24b3bed7c0253c4917084f192431fff8d8b5789",
+      "bytes": 2907146
+    },
+    "music/forest/moonglade/eye_of_ysera_h.mp3": {
+      "sha256": "ef8aa4389fad927c16c5b3c603900b0920d1c07eb9a5e4805c82e6cf198c858a",
+      "bytes": 4067552
+    },
+    "music/forest/redridge/westfall_2.mp3": {
+      "sha256": "4f5abaf193d7eaaeb7955dc0dfad9dc5b447c532dd6a560ccb9a2e2ea726d2d7",
+      "bytes": 2454631
+    },
+    "music/forest/westplague_a_day1.mp3": {
+      "sha256": "80590c1a644b5da46a1475edc697ec423f7e1c5bdd06d0a42f8d7195f9d7fd7a",
+      "bytes": 1014294
+    },
+    "music/forest/westplague_b_day1.mp3": {
+      "sha256": "d2ca1c5b01df0ae8f1065759a4d018fec67133f1d45db192dab942b710bce83e",
+      "bytes": 1014294
+    },
+    "music/forest/westplague_c_day1.mp3": {
+      "sha256": "0716e1c3dfa6b1a07f46ceb65ac35766824213ce2d78b2b3d1b31939e96a2945",
+      "bytes": 1014294
+    },
+    "music/graveyard/ghosts_1.mp3": {
+      "sha256": "948ae4f23df1bc5a1adebf4d19a126e1a5b07194b4765364ecc8b4f7e7589d13",
+      "bytes": 1682650
+    },
+    "music/graveyard/ghosts_2.mp3": {
+      "sha256": "0b754883ff779a31ab817772045d71ff792c086ceaed45cdcd7c486732cd17ae",
+      "bytes": 1696570
+    },
+    "music/graveyard/ghosts_3.mp3": {
+      "sha256": "549fd21abfaaba8260f6d14af2665d3ac8cfbee4aa73455734ceeb4ba7b34a88",
+      "bytes": 1832890
+    },
+    "music/graveyard/haunted_uu02.mp3": {
+      "sha256": "c7ae5de20c637317de55a8b350c5a212d2bc78165a2852f147832bfe2df68970",
+      "bytes": 2560575
+    },
+    "music/graveyard/shadow_death_a.mp3": {
+      "sha256": "ada00f187c49e984520b5d4e07966dc82fb5a2ec330b96cee08eacdd1fa03e12",
+      "bytes": 1857933
+    },
+    "music/graveyard/shadow_death_b.mp3": {
+      "sha256": "457a6647491e81b5386ce1f9f63968697c9e34a19061162d0796c4cbb991da62",
+      "bytes": 2583693
+    },
+    "music/graveyard/shadow_death_h.mp3": {
+      "sha256": "f551b0dada033e6ae7f6862488f35811f2535c1b51666be56cbe5087ce2cfb21",
+      "bytes": 3086733
+    },
+    "music/highborne/ruinsofzinazshari_b.mp3": {
+      "sha256": "9407142d4730c46fb52eea32d37dcb61ddfa26086eb0d0f06d5f59d9f6f03434",
+      "bytes": 3441152
+    },
+    "music/highborne/ruinsofzinazshari_c.mp3": {
+      "sha256": "369090cda866c10197f578c925c1d3e21ec2c9ced1c90edd71344cb07451d412",
+      "bytes": 1505054
+    },
+    "music/highborne/zinazshari_1.mp3": {
+      "sha256": "707fda30d0a3acb92baaaaa498692d14a7c55e06364d2e96d4a3f0c8b008658a",
+      "bytes": 1856904
+    },
+    "music/highborne/zinazshari_2.mp3": {
+      "sha256": "e41cb1b26cdd6daebd80f6c61d623edf0c615742bb2dba2432f0911660c3301e",
+      "bytes": 1423464
+    },
+    "music/highborne/zinazshari_4.mp3": {
+      "sha256": "44905e9d7e096f03f9ee56c818e621f02aa44d83154e54d76e24b2c0d2587765",
+      "bytes": 2150184
+    },
+    "music/highborne/zinazshari_5.mp3": {
+      "sha256": "d7c8f645937a41d8c157bc7b379a306362a0c44fa8b8ac01add2cdfe055f903d",
+      "bytes": 935304
+    },
+    "music/highborne/zinazshari_6.mp3": {
+      "sha256": "8ae5d6d953e14376d584d5c490ddbe78f3efc4ffb16fcc86b8c04317be2bfdd3",
+      "bytes": 2262984
+    },
+    "music/highborne/zinazshari_h1.mp3": {
+      "sha256": "87f501da94bf53ebf0afb4c85a5c44039500656f1cd57ee40d5d98d344b4769e",
+      "bytes": 3543144
+    },
+    "music/jungle/lapidis/GillijimAttack.mp3": {
+      "sha256": "ae788e83c4d6c667ecb7c083fb4d8d3eb6cf4e8f06f79e2d1d3d6a60ca8cbf55",
+      "bytes": 1798224
+    },
+    "music/jungle/lapidis/GillijimMoment.mp3": {
+      "sha256": "c65e43f99b1318f8104e3d7829518e42e06bbdc69286382eb2db4b659cb47bc3",
+      "bytes": 3058344
+    },
+    "music/jungle/lapidis/GillijimWalking.mp3": {
+      "sha256": "6c5ab7e84b4cff9dd293e4add3ca724b7c0cbc861b1b6edb4c879dfa7917f563",
+      "bytes": 2865216
+    },
+    "music/naga/blackfathom/nazjatarrise_a.mp3": {
+      "sha256": "64900575c45e0dc56e99e6a0da21b40daf07be3e22fc74e54019205bde76d213",
+      "bytes": 2633096
+    },
+    "music/naga/blackfathom/nazjatarrise_c.mp3": {
+      "sha256": "67714f8e0ba47dd83ce4d558048b849f0a38bfc7b2c99aa1db4ad5c37db42a46",
+      "bytes": 2719226
+    },
+    "music/naga/blackfathom/nazjatarrise_d.mp3": {
+      "sha256": "c8989ad736bbd60cc93a27126959314d4aacd7a6e6eeeea7923e2d78bfa5683b",
+      "bytes": 1999910
+    },
+    "music/naga/blackfathom/nazjatarrise_e.mp3": {
+      "sha256": "bda3f7c534c8dba642b6d53228ed3a47d21d35c80ed48b20811273abb3f33add",
+      "bytes": 1927874
+    },
+    "music/naga/blackfathom/nazjatarrise_g.mp3": {
+      "sha256": "7d07a6f58d9552958f4618b7e2dddb108c7e4d498c2e3b9ed05f1cf0763af336",
+      "bytes": 1775972
+    },
+    "music/naga/blackfathom/vashjirnagathrone_1.mp3": {
+      "sha256": "772e467d4138585d57a84c76dcdd32668fdb72b2aca7b5bdf52412803446d071",
+      "bytes": 870166
+    },
+    "music/naga/blackfathom/vashjirnagathrone_2.mp3": {
+      "sha256": "bc7d69220655a59cc4cbb25ef6b21a61f572798a2bf9bc9d90232657647c597d",
+      "bytes": 1792726
+    },
+    "music/naga/blackfathom/vashjirnagathrone_4.mp3": {
+      "sha256": "16c4a0f77389d971ce3469975f4368fe2d3747f55c51cee4e8d61657ecb6b0c3",
+      "bytes": 1936726
+    },
+    "music/naga/land/naga_1.mp3": {
+      "sha256": "8852851c0391a05c1dad82fc6391d34998c4e397fdbd8e4a4a35029647ce85b6",
+      "bytes": 2063801
+    },
+    "music/naga/land/naga_2.mp3": {
+      "sha256": "34679457d2878685115ace115212c8cbd7a2f61d79b5fe0509e8f2dc87254887",
+      "bytes": 1482315
+    },
+    "music/naga/land/naga_3.mp3": {
+      "sha256": "636dd4afadc1fa00bd2226ea5eb50cda9a230f6039d18c039c57d6fd607f7e62",
+      "bytes": 2999507
+    },
+    "music/naga/land/naga_5.mp3": {
+      "sha256": "3cd5b0afe157b44791d16726dfd56d571c675aabc5db6af6ff920e16e964de50",
+      "bytes": 1975507
+    },
+    "music/naga/land/nagaincursion_h.mp3": {
+      "sha256": "ef9d835f8e58bb2517c67da0fadff6827e675a25e30d898c5fdc71a0fa32ca7c",
+      "bytes": 3084626
+    },
+    "music/naga/water/vashjirnaga_1.mp3": {
+      "sha256": "912e53636fed663921ce2e67a9f826b9e6e119afd1abe805c1cf446d41ceb7b0",
+      "bytes": 1759120
+    },
+    "music/naga/water/vashjirnaga_2.mp3": {
+      "sha256": "50bc31200b50b5cbae5690ebb0642b45ad580d81bbec759c063fa43ea1aff468",
+      "bytes": 1944880
+    },
+    "music/naga/water/vashjirnaga_3.mp3": {
+      "sha256": "03830039dd32a66442ca0be78897502f203493fbbcd70d577f8e395057d352cf",
+      "bytes": 1941040
+    },
+    "music/naga/water/vashjirnaga_5.mp3": {
+      "sha256": "032bd3928fee73e709321232fc9487e0892f1453bc96c6094d2f17afc28eaa71",
+      "bytes": 2548240
+    },
+    "music/ogre/ogre_1.mp3": {
+      "sha256": "e1be2a5917cf0e0054e10547916c611ca7463ea025d5339ed23bd7cb9891beaf",
+      "bytes": 1506850
+    },
+    "music/ogre/ogre_2.mp3": {
+      "sha256": "3ab021647baad7b0705c15423b85da4ba121e69539351889a2e6b325499c6c2b",
+      "bytes": 2078134
+    },
+    "music/orc/orcintro_1.mp3": {
+      "sha256": "6818887af65f6a10973a3423b17975b5b4c4ea4637e467939bf981c1172adaca",
+      "bytes": 237299
+    },
+    "music/orc/orcintro_2.mp3": {
+      "sha256": "604eba5891fe097a5dec921cc7969e7d698af5aa8a05fbcc380046dd3b623773",
+      "bytes": 356940
+    },
+    "music/orc/orcintro_3.mp3": {
+      "sha256": "1747579706e594de38ff48f12a5b94ec09a318fe8f507b294100119126cb1494",
+      "bytes": 236254
+    },
+    "music/orc/orcintro_4.mp3": {
+      "sha256": "b70b0a1211daa1a41bbfcad46502532702c4efc2e8a52fddf8eaf7545c0d0f57",
+      "bytes": 270736
+    },
+    "music/scarlet/eh_assault_6.mp3": {
+      "sha256": "da59d5fe1f252ac548c8420b4dc893cd3f889905c1d694e76f7e0f2d29cf7efe",
+      "bytes": 1873724
+    },
+    "music/scarlet/eh_assault_7.mp3": {
+      "sha256": "49b1870ea8d8dca3332fe97167f3e781d03519fd0e4cd921ef002eecf724c502",
+      "bytes": 1921724
+    },
+    "music/scarlet/haunted_1.mp3": {
+      "sha256": "e805ee37227ce7dfad7d2a89b3f27f8f63a212855d38a2c62b52952905fb89db",
+      "bytes": 2236575
+    },
+    "music/scarlet/haunted_3.mp3": {
+      "sha256": "711b0e4c8eb865603af5d0e7a824d896f4384a1f773a10d25d721e7070119e33",
+      "bytes": 2191938
+    },
+    "music/scarlet/scarletmonastery_h1.mp3": {
+      "sha256": "9c85ebe361e9affedb72f143e332a9004e67141a7a4f698f538af5e57280842d",
+      "bytes": 1665809
+    },
+    "music/scarlet/scarletmonastery_h2.mp3": {
+      "sha256": "b5795509825693cda384c8b4ef6df2a88b13b563c891af761ce53a8352e87494",
+      "bytes": 1085489
+    },
+    "music/scarlet/scarletmonastery_h3.mp3": {
+      "sha256": "45c6df417b1579595b737d1d7b2b057951ff8bd62f1d50367631bbbc653dc060",
+      "bytes": 2358449
+    },
+    "music/scholomance/scholomance_1.mp3": {
+      "sha256": "951273d20d14f8d3d9660f247408b0a723cf297ba27f293aba8bc4b5eaad0f93",
+      "bytes": 1281600
+    },
+    "music/scholomance/scholomance_10.mp3": {
+      "sha256": "c1722aa7a3b98e4c1d56a8a108fa5961d299f773104ece6006d668aafd8f6a06",
+      "bytes": 1795200
+    },
+    "music/scholomance/scholomance_11.mp3": {
+      "sha256": "94c17c0cb2f045ab74710d14e1e6854177b23bba455da0f9b71ab915b53c55be",
+      "bytes": 1244640
+    },
+    "music/scholomance/scholomance_12.mp3": {
+      "sha256": "591f384e2911425c551b8f85263f48b4f53916d2db50725489ca43493ddc7717",
+      "bytes": 2272224
+    },
+    "music/scholomance/scholomance_3.mp3": {
+      "sha256": "e8cee7962db8844b96b9fa58a71eb1a3accb9c1810ff3331d1bc85c6db1921b6",
+      "bytes": 1349688
+    },
+    "music/scholomance/scholomance_4.mp3": {
+      "sha256": "297c21744830943c1262ea9a962bb525e7d335e7a80b6f58c7761fdf2a5d74e7",
+      "bytes": 1709856
+    },
+    "music/scholomance/scholomance_6.mp3": {
+      "sha256": "25451d3eaf349a7f54a76aa64bb4237355e8639448d76387b4218604945f8626",
+      "bytes": 1751280
+    },
+    "music/scholomance/scholomance_8.mp3": {
+      "sha256": "d235169ad6133f0de7f2884ae1d1351af93612412ac842bd7293f71af8efe788",
+      "bytes": 1685856
+    },
+    "music/scholomance/scholomance_9.mp3": {
+      "sha256": "85e3c60c3eb306c40a5975447f2861c8d43481e3b996aa7625ccdfd9a04cf4f0",
+      "bytes": 2041920
+    },
+    "music/silence/silence_angelic01.mp3": {
+      "sha256": "2f04c61fa0ae1a9bb04599e47a9e9c36c9d72b7e0d157281e3e2b2d9f73e3716",
+      "bytes": 188168
+    },
+    "music/silence/silence_battle03.mp3": {
+      "sha256": "4228fa48d5d946779c53d4110536c212842240b9654b45c2bae57805ec6f9db2",
+      "bytes": 108057
+    },
+    "music/silence/silence_gloomy01.mp3": {
+      "sha256": "10e3138eb3904d7cb020459105c24d15551379645a3146df596388ec94588a0c",
+      "bytes": 143937
+    },
+    "music/silence/silence_Grim_Intro.mp3": {
+      "sha256": "fbe4936c18555111656365c1b275eed8a753bd886b1321dd8cfb5149f1510eef",
+      "bytes": 510121
+    },
+    "music/silence/silence_magic01-moment.mp3": {
+      "sha256": "ee52bf0fb4b81ce5ee7c3c4739b4d669795f48531bfd730e85c81b880d88de8f",
+      "bytes": 252480
+    },
+    "music/silence/silence_sacred.mp3": {
+      "sha256": "f8513a9a3e6ef99bd086d9f01c6590d833fa72cd4352c63a1d6181ac67304c8a",
+      "bytes": 80185
+    },
+    "music/silence/silence_stormwind01moment.mp3": {
+      "sha256": "54b45f24a38d378f0bf0c83c91bb8f6d283786d27a5b865b507b97e2ce64a7b1",
+      "bytes": 215593
+    },
+    "music/silence/silence_stormwind03moment.mp3": {
+      "sha256": "afcc97b90bc2659ee1e8d72a5d8b5b2d835466f1fcb86b97a470d721dedee8bf",
+      "bytes": 275289
+    },
+    "music/silence/silence_warriorterrace.mp3": {
+      "sha256": "9f3866c294b573e2e56850b6e84a5c4c943f318bf8ee7be75bfd9a746fa24891",
+      "bytes": 212544
+    },
+    "music/silence/silence.mp3": {
+      "sha256": "c8c7539b524e5cee7707575c08130c472ee9b92a4cea5e2cb2803060a143b98f",
+      "bytes": 16537
+    },
+    "music/silithus/silithus_1.mp3": {
+      "sha256": "b0ee7e5f17e2da480b3f8615f4b2770135cda9ba43d26549a36ad9b694e75daa",
+      "bytes": 1995623
+    },
+    "music/silithus/silithus_2.mp3": {
+      "sha256": "e3cc16beb2e43592147a7f5720436a39c7a9d9dc65cd13ed62a24e457a3d79dc",
+      "bytes": 1249703
+    },
+    "music/silithus/silithus_3.mp3": {
+      "sha256": "ebed081a723b357f7137030419aa05d860583915e11c9c9839997cbb9aae5498",
+      "bytes": 1963463
+    },
+    "music/silithus/silithus_4.mp3": {
+      "sha256": "164c33367600645cb1d070c03a57319d5d80f05a0a948791857fa90e163ab823",
+      "bytes": 2224103
+    },
+    "music/silithus/silithus_5.mp3": {
+      "sha256": "3ee0ba2a9ffe63c6837bcc18299104dcf14fba440d297ae73bb91a484defe8bf",
+      "bytes": 1966343
+    },
+    "music/silithus/silithus_6.mp3": {
+      "sha256": "d3ccf0cb79423a303f86e8f16ff6e25ecd30c84a7bb81aae4f6675daf863f0cd",
+      "bytes": 2825543
+    },
+    "music/silithus/zereth_mortis_barren_a.mp3": {
+      "sha256": "84af74b2a93d5ade98b8186cdeb39abbd79a57dde1eff41e50188721820da4cb",
+      "bytes": 4075904
+    },
+    "music/silithus/zereth_mortis_barren_b.mp3": {
+      "sha256": "30c38d54a9b62eb66ab2a51a7b5d10e0f06f4cc36611e0dbbd75f19c6b9d3f22",
+      "bytes": 2319374
+    },
+    "music/silithus/zereth_mortis_barren_c.mp3": {
+      "sha256": "1f6ac4ad3607caf20116f7c636d4cf99eb9de06affc8162f54ec6e3164bc8c8e",
+      "bytes": 2719226
+    },
+    "music/tanaris/tanaris_1.mp3": {
+      "sha256": "2fabb14f66188c7f27625d19cbf3f51ab71f1e1e4fb70010d5a9b362ef8dfcc4",
+      "bytes": 1752741
+    },
+    "music/tanaris/tanaris_10.mp3": {
+      "sha256": "d2186d9aeb8b95d744d792ee5aa485ff74972fa42b91e84bb410c58fbc662fb0",
+      "bytes": 1686021
+    },
+    "music/troll/zul_mashar/zuldrak_day2.mp3": {
+      "sha256": "6c7b84dc66b3ce72f5bc8f55c179087c9feabb6adc2a5c40764d978a845a9ffc",
+      "bytes": 1816683
+    },
+    "music/troll/zul_mashar/zuldrak_day3.mp3": {
+      "sha256": "3e53097b92ef5559efece29dcdeb99d732972070804ba8c5d8db889c8deced75",
+      "bytes": 2034544
+    },
+    "music/troll/zul_mashar/zuldrak_intro4.mp3": {
+      "sha256": "d8b009089bcb762fb9e17d44794f817f1e5a4f2302a384ed01d4c0b1c4f77bb7",
+      "bytes": 2518332
+    },
+    "music/troll/zul_mashar/zuldrak_intro6.mp3": {
+      "sha256": "0a3032151c16cfa44372b6df6e54552b50a48252950dd273b30385286647dd9d",
+      "bytes": 2517809
+    },
+    "music/troll/zul_mashar/zuldrak_night2.mp3": {
+      "sha256": "81eb635ffa762b154da37dc5b46292f193e86f2bc4a5e1638d527edbf3a3c2c0",
+      "bytes": 1803621
+    },
+    "music/troll/zul_mashar/zuldrak_night4.mp3": {
+      "sha256": "4599f7a7a00078c3c9d5b3ab4e9b44dd8fd720b18c3238472a1e64cb0a502e3e",
+      "bytes": 1860568
+    },
+    "music/twilight/calm/twilighthighlands_1.mp3": {
+      "sha256": "e3121f33340194f357a3cc14eb50ae297fa9447731f4df4bc3f9f6cd831ba42a",
+      "bytes": 1363601
+    },
+    "music/twilight/calm/twilighthighlands_2.mp3": {
+      "sha256": "8a33933a8a3f00993824c0ace71b40eb9a27de460667f7459f5a636376e5531d",
+      "bytes": 1350033
+    },
+    "music/twilight/calm/twilighthighlands_4.mp3": {
+      "sha256": "ef11b2171fed5444448a53229394ffdf897a1e6933a0eb9788e8dd8b410590de",
+      "bytes": 1563150
+    },
+    "music/twilight/calm/twilights_blade_f.mp3": {
+      "sha256": "b21936f01e55288e5fb66f0755ae294faa10bb929d091e0ae87db2ab665985d7",
+      "bytes": 1556732
+    },
+    "music/twilight/calm/twilightshammer_1.mp3": {
+      "sha256": "deda4e943a1a56716e405de031138c29b0a6aef0cde377aff6df8d1af0491b89",
+      "bytes": 1850191
+    },
+    "music/twilight/calm/twilightshammer_2.mp3": {
+      "sha256": "d92397476a4518f4fb0ec21b7c01e3191e8f0769a1019528cf06e7d749624b2f",
+      "bytes": 963151
+    },
+    "music/twilight/calm/twilightvale_1.mp3": {
+      "sha256": "fec9c94feb6ce78436651a321bececf4fc9a4cbec541e5f02dcf810ae66cf398",
+      "bytes": 2216908
+    },
+    "music/twilight/calm/twilightvale_3.mp3": {
+      "sha256": "69871d8086b746ff61890ece7b7d691c1fbd2f2e1689ebc52837321cb07fb502",
+      "bytes": 1616905
+    },
+    "music/twilight/calm/twilightvale_5.mp3": {
+      "sha256": "fa2b87a4a5185c619f5b6980b626ea345b2a8ba52f59da73c77301b689287eb3",
+      "bytes": 923305
+    },
+    "music/twilight/old_god/crucibleofstorms_a.mp3": {
+      "sha256": "4e31a67d81d9f62d89d7e768994544b9434fe81afa46e4065859aef46452997b",
+      "bytes": 1703470
+    },
+    "music/twilight/old_god/crucibleofstorms_b.mp3": {
+      "sha256": "4315aea912bedf8426fee0636b754816d9be53ddd69532b544936c9ffb05c7f5",
+      "bytes": 1737866
+    },
+    "music/twilight/old_god/kthir_a.mp3": {
+      "sha256": "0544e18bd00aa3ed1b3127982c23edab2e50a4a995c68e6d32f625330d4713de",
+      "bytes": 2631008
+    },
+    "music/twilight/old_god/kthir_b.mp3": {
+      "sha256": "238020d8273bf2a9d65329d5a8f608e2811b97a648d3b95220411f811c9aaec5",
+      "bytes": 2631008
+    },
+    "music/uldaman/lightningbattlewalk.mp3": {
+      "sha256": "5f85acb4c45db8bc39167c5129e7b8779bfe90d97a3fec275b7f6b18711a783f",
+      "bytes": 1057481
+    },
+    "music/uldaman/lightningintro.mp3": {
+      "sha256": "1c4d7cc64563be305fb5611835fb36cae594a732e0c6b938011c8ebcf9266b5e",
+      "bytes": 1650416
+    },
+    "music/uldaman/lightningwalkfull.mp3": {
+      "sha256": "b279eb6ed3e76a232b08770c4c91712aaa1128485a6889dd6e4fe52e79b776fc",
+      "bytes": 3115516
+    },
+    "music/uldaman/preserver_h1.mp3": {
+      "sha256": "621a3d6bf679bc7c664617ff4f6e5c3c524f0066e30cefb0a639e67f73263d95",
+      "bytes": 1830067
+    },
+    "music/uldaman/preserver_h2end.mp3": {
+      "sha256": "334fdb0b385803b2c573cc9f498156e4e74dd30c26edd652ab950c027fe3b683",
+      "bytes": 4412283
+    },
+    "music/undead/nightelf/darnassusintro_h.mp3": {
+      "sha256": "8ed8691c185e164ad0a88f9382268440b47a1a28214688321435473360be00cd",
+      "bytes": 1049421
+    },
+    "music/undead/nightelf/ruinsofauberdine_1.mp3": {
+      "sha256": "bf7fd36291f09d411a592ba067d3726ac27f01fe7f755207b53c5a17e9873859",
+      "bytes": 2005222
+    },
+    "music/undead/nightelf/ruinsofauberdine_2.mp3": {
+      "sha256": "d126d9e207ab1de2ce07e7b753f243a67846b05b2dad39e1d40a9f801fa557e7",
+      "bytes": 1666822
+    },
+    "music/undead/nightelf/ruinsofauberdine_3.mp3": {
+      "sha256": "82b9536329cba736c71dfcad2a42f65bddca8805d18e7f88bbf962d4ab74f98d",
+      "bytes": 1666822
+    },
+    "music/undead/nightelf/ruinsofauberdine_4.mp3": {
+      "sha256": "e25175e0d0b441809a31d04f1d7183db9277ca434f5339d03de8b857f0dbbcfe",
+      "bytes": 1551142
+    },
+    "music/undead/nightelf/ruinsofauberdine_5.mp3": {
+      "sha256": "e4f8bc8b4ab31f812e812b6dbbe03e197011628e4d3f6aed1ae6e06b35a33877",
+      "bytes": 1551142
+    },
+    "music/undead/stratholme/eh_assault_1.mp3": {
+      "sha256": "c2ce312cd0a1ca66de29c4a80a406fc4468e4e111e48bbadaca9a50396565b4a",
+      "bytes": 1301564
+    },
+    "music/undead/stratholme/eh_assault_3.mp3": {
+      "sha256": "ffa8b8a8f361e352e6955bc701f5452d59eaeaa885a1f3f0dae9d8da041c62cf",
+      "bytes": 1309724
+    },
+    "music/undead/stratholme/eh_assault_4.mp3": {
+      "sha256": "96e8fcbc15d142e08a4518ca4dea11e6e25f777ae1f6edb2db15fd812a32bfc7",
+      "bytes": 1348124
+    },
+    "music/undead/stronghold/cursed_6.mp3": {
+      "sha256": "c85a8415b070242746a2d266d8665ad3dd24734f9e5cefd1af0fccd799f3f599",
+      "bytes": 1585221
+    },
+    "music/undead/stronghold/cursed_7.mp3": {
+      "sha256": "c6b27437662dae270e269b606cfb8cb7a36b59fd238b324146b00db08c8e9e3a",
+      "bytes": 1581861
+    },
+    "music/undead/stronghold/cursed_8.mp3": {
+      "sha256": "dfcf3e70f04bc202a6b66f387382ce2c7a379c82bca7c7d8605ec89dc0b0e91a",
+      "bytes": 1584741
+    },
+    "music/undead/zanzil/WC3Undead_1.mp3": {
+      "sha256": "56dd26b1d6bbcfe90321b13783d3ee64e863b7e554a6684575bb374cc6bb4ff2",
+      "bytes": 7600684
+    },
+    "music/undead/zanzil/WC3Undead_3.mp3": {
+      "sha256": "e4453a8276abbb9b3b862cb1e9c360cb66208d796898fad1e5d5239cd094a55e",
+      "bytes": 7687896
+    },
+    "music/undead/zanzil/WC3Undead_4.mp3": {
+      "sha256": "36d218ea207952318ae3b60460174ff552ff19576250a3217414d014871b532f",
+      "bytes": 6999170
+    },
+    "MusicExpanded_ClassicAPI.toc": {
+      "sha256": "624c9452a9c6f7592635d971b37c93ae687fc3ba1ea685e32ad028ac66f51d52",
+      "bytes": 301
+    },
+    "MusicExpanded.lua": {
+      "sha256": "1d71f7ca2359fe8d7f55cbba1018e35bdf8e0cb759d8b77dea1505b4563669fd",
+      "bytes": 19739
+    },
+    "musicRegistry.lua": {
+      "sha256": "247c3a68fc9eb85032e234f66fecd479ab688bd183ddf58d2b4d5c265bf21373",
+      "bytes": 27826
+    },
+    "README.md": {
+      "sha256": "c35ca10295706d82c12009a7b57f1eab4ef8a1be82d2f90a0cbdce7d1c8907f4",
+      "bytes": 15461
+    },
+    "zoneData.lua": {
+      "sha256": "19ab1a602442dca77b8fbd1bc280643d3a66d168482fc1f997df5b4878710465",
+      "bytes": 51400
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,77 @@
+{
+  "upstream": "https://github.com/porkfriedlumpia/PorkNotes/",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "porkfriedlumpia",
+    "repo": "PorkNotes",
+    "name": "PorkNotes",
+    "url": "https://github.com/porkfriedlumpia/PorkNotes",
+    "api": "https://api.github.com/repos/porkfriedlumpia/PorkNotes"
+  },
+  "commit": "229e81106cc1c9da39c200d68999f345a69febf9",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3d6c84e5e90690acde30695c40c45a7f1257d2266ed3652df9ad49fe73ee8a77",
+      "bytes": 91
+    },
+    "CreateNoteFrame.lua": {
+      "sha256": "c6d686a0744bb2f700fa8fdee5aaabf9d475bca6cc47c94ffcb94af529db3faa",
+      "bytes": 9330
+    },
+    "LICENSE": {
+      "sha256": "d61088a0baef290deb66ca0ae83a9685676b8eebc524ef7eb8699fe88230d20d",
+      "bytes": 1122
+    },
+    "Main.xml": {
+      "sha256": "5e167a9f2a6042cc812e9ad375a2de908f76c409b6a32c70e1fd06592c3a32b5",
+      "bytes": 278
+    },
+    "NoteDetailFrame.lua": {
+      "sha256": "2f714954bdd2084beb744912294ea66095011580f201101d5ef369404f6981ba",
+      "bytes": 18510
+    },
+    "NotesFrame.lua": {
+      "sha256": "0b307ee09ac6a3699a8161f3d68be5a9544d61d624f9da2b2fdd479e1ddff78f",
+      "bytes": 22137
+    },
+    "PorkNotes.lua": {
+      "sha256": "ab31276a884aeecac7e268a1b745b72bac0c8d683e67a3a55349bda3fae24dc0",
+      "bytes": 28699
+    },
+    "PorkNotes.toc": {
+      "sha256": "305ada49eee1cfc7ed84f9ad94d1bf5c2cda6108b5665f210dabae870708a005",
+      "bytes": 234
+    },
+    "README.md": {
+      "sha256": "4e336f8254e4bf7d56d544a970d61e3e2d95e91891a0671e9cf43617657856d4",
+      "bytes": 5762
+    },
+    "SettingsFrame.lua": {
+      "sha256": "b2ff41739d172a467bbbf53d0030c31092a3db81841372e839e6c4aa157fa98a",
+      "bytes": 9254
+    },
+    "SyncReviewFrame.lua": {
+      "sha256": "11aaf2d16551070eb13fac8d0fa80a7c204768dda939d90ebaa7073bdc1738d9",
+      "bytes": 7725
+    },
+    "Textures/porknotes.tga": {
+      "sha256": "21644ef3e42e2a62980a57c61683038df159b725f4cb6a54c29ec10eede7e29d",
+      "bytes": 4546
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "297746281": {
+      "tag": "0.4.1",
+      "folder": "0.4.1--297746281",
+      "assets": {},
+      "source": {
+        "sha256": "4318e677e78f9d04846d7d21144b4ccfad3d812662feb2beea757a3ef06f6b1f",
+        "bytes": 25683,
+        "path": "releases/0.4.1--297746281/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/porkfriedlumpia/PorkNotes/tarball/0.4.1"
+      }
+    }
+  }
+}

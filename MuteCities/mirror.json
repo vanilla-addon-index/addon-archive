@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/KameleonUK/MuteCities",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "KameleonUK",
+    "repo": "MuteCities",
+    "name": "MuteCities",
+    "url": "https://github.com/KameleonUK/MuteCities",
+    "api": "https://api.github.com/repos/KameleonUK/MuteCities"
+  },
+  "commit": "2d038834b06ac6b0749479ff2151d2998a66191e",
+  "sourceFiles": {
+    "MuteCities.lua": {
+      "sha256": "c51c719949c598d7e6fef6c0a0cdae0db5efc69300fd463af5a1ad8da46ffa34",
+      "bytes": 563
+    },
+    "MuteCities.toc": {
+      "sha256": "05903c142ddc045110ed4fd457e3234af7c38f4852aec7547e09e2841daf6287",
+      "bytes": 148
+    },
+    "README.md": {
+      "sha256": "a9d606df1fed2086b0cc84111635512e1ba22459119db1bdae3f8730e70b9bc9",
+      "bytes": 77
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

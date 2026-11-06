@@ -4,6 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| SP_Revenge | https://github.com/Aggromemnon/SP_Revenge | new |
+| SP_Revenge | https://github.com/Aggromemnon/SP_Revenge | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

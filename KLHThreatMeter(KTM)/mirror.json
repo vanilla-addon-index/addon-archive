@@ -1,0 +1,326 @@
+{
+  "upstream": "https://github.com/laytya/KLHThreatMeter",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "KLHThreatMeter",
+    "name": "KLHThreatMeter",
+    "url": "https://github.com/laytya/KLHThreatMeter",
+    "api": "https://api.github.com/repos/laytya/KLHThreatMeter"
+  },
+  "commit": "6d5c04d85afdf1192461caf18a2d83361e4ca121",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "dad8d2e814508ea9d3eb6f3c31ba5c89bef5325c236e3d0cc9417e20302faa39",
+      "bytes": 489
+    },
+    "Code/GUI/KTM_Frame.xml": {
+      "sha256": "ce46c646cbf7d654a40f660e70a63cc7d23a620f6f8d54f287ba54fcb1625b8c",
+      "bytes": 39576
+    },
+    "Code/GUI/KTM_Gui.lua": {
+      "sha256": "0b2e71833d39f3a277f26ea927887a007dd8d0f482ee8e704651555007951c94",
+      "bytes": 22327
+    },
+    "Code/GUI/KTM_OptionsFrame.xml": {
+      "sha256": "bc8064b32f0083fbb0d303af648884a1a630265600394df6e08d40cf8f8e4bc3",
+      "bytes": 24625
+    },
+    "Code/GUI/KTM_OptionsGui.lua": {
+      "sha256": "35cdaf3243693b1fc0425779a3662abc6d76b09c0c4d458fa7e88c616acb0363",
+      "bytes": 23742
+    },
+    "Code/GUI/KTM_RaidGui.lua": {
+      "sha256": "f52079aabd742e244942efad3e4ab4b4df26c7d9142982b18f83e02d409a8c44",
+      "bytes": 17961
+    },
+    "Code/GUI/KTM_SelfGui.lua": {
+      "sha256": "fc7712b66a2ca54f2b3c51483b823b465e5c7649ac256c27d280d2401f8c3780",
+      "bytes": 15572
+    },
+    "Code/GUI/KTM_TitleGui.lua": {
+      "sha256": "2d815f3b7c0bc907c0947950c4c8c45058be89acec31cbc4ffe8de2a3f7737b7",
+      "bytes": 10792
+    },
+    "Code/KTM_Alert.lua": {
+      "sha256": "2ac7ecf02010d633ff800c06653b67bb921c8ce407c5754950bdfacca76f2fc7",
+      "bytes": 3758
+    },
+    "Code/KTM_Bosses.lua": {
+      "sha256": "79baa59f5f7648a8b20bbf3bbdf98f1200b2bd0befd90d0a05b440e47534cfc6",
+      "bytes": 34711
+    },
+    "Code/KTM_Combat.lua": {
+      "sha256": "ef7d89148a774b5d2464a9d874a0fcdd87b32aece70c4f0dfe2615de849a6e86",
+      "bytes": 27756
+    },
+    "Code/KTM_CombatParser.lua": {
+      "sha256": "239c32e209dd926797ab4a2fa9bf318e12f716e2c416c2a1635d7a9dcd8b0950",
+      "bytes": 12400
+    },
+    "Code/KTM_Console.lua": {
+      "sha256": "69c6c339843868784fe0ca3cb3122715bda0d9892b62894fb0deb8f94745e0b8",
+      "bytes": 14675
+    },
+    "Code/KTM_Core.lua": {
+      "sha256": "50434fb5a14c406f17bbfac5c0d6f404b39507f8b34fa09c3530bb6da16b971c",
+      "bytes": 3874
+    },
+    "Code/KTM_Data.lua": {
+      "sha256": "d8a0ba9d1efaaf57ea19e42264ea2fdf3b65702277ab9efa63601bb62519be3e",
+      "bytes": 13032
+    },
+    "Code/KTM_Diagnostic.lua": {
+      "sha256": "38b323d85e4b3692b4796654aa51b448ce36417045a8857edf7821c360e6c2e6",
+      "bytes": 8680
+    },
+    "Code/KTM_MasterTarget.lua": {
+      "sha256": "837ac6e4031874d6e10e7eaf112450e6be048f1de16d28a45bfd6eb8f4bc8757",
+      "bytes": 13258
+    },
+    "Code/KTM_My.lua": {
+      "sha256": "8297df6050f71027dc65ce90a3ecf9d371986db15d0802198977f93e82d45dce",
+      "bytes": 33774
+    },
+    "Code/KTM_Net.lua": {
+      "sha256": "de72ec0d23441fdab06355fbadc1dadf8b9cc44c9ef564066f4234e5ec99dad2",
+      "bytes": 15862
+    },
+    "Code/KTM_NetIn.lua": {
+      "sha256": "37dca5d91ea8871711e5b33f12f9075fc0ed8dcbccb70c4faf653a78a40550c3",
+      "bytes": 12570
+    },
+    "Code/KTM_Output.lua": {
+      "sha256": "d9bd10e0535159193fedffa72af061998e0c5c51cd0ce1ddf7a1d4d9fecb55f6",
+      "bytes": 10649
+    },
+    "Code/KTM_PetMod.lua": {
+      "sha256": "296d1506dd6dfd724791d3d08ba45bb1ee1fc61b1908a4d6d4d6f6706278d866",
+      "bytes": 6775
+    },
+    "Code/KTM_Regex.lua": {
+      "sha256": "6a70a4f9771a94136bf039d452371472e32ddfe4f694c8e602a50a5937d1e5a6",
+      "bytes": 17397
+    },
+    "Code/KTM_Tables.lua": {
+      "sha256": "500e1d67db70e2fa4449dc64c0ee9becb0e99b69e98b843046f710b39c1bf659",
+      "bytes": 9611
+    },
+    "Code/KTM_TWT.lua": {
+      "sha256": "783c96424af3dfb114517d88917d181477aedfbb92e816e8f5cee22daa56e4d9",
+      "bytes": 2629
+    },
+    "Code/KTM_Unit.lua": {
+      "sha256": "64ece3c9b46eaa0b3c914aaec63942433ade38ff1266581f637d84c9515467d5",
+      "bytes": 3281
+    },
+    "Code/KTM_UserMods.lua": {
+      "sha256": "e8f3e02c826e2bf5c9f311efe80ceab36d622ab20a63412780b7fa497709f45c",
+      "bytes": 553
+    },
+    "Code/Localisation/KTM_deDE.lua": {
+      "sha256": "d4d3ae9aec3a2f430d06bc2d598b80068bdba825c79bd51e8e86c7d2e7ed3100",
+      "bytes": 17571
+    },
+    "Code/Localisation/KTM_enUS.lua": {
+      "sha256": "f07832b9631e846e18f45ea6aa71f5d4203fa32b393bae2a183859f0ccd53274",
+      "bytes": 17357
+    },
+    "Code/Localisation/KTM_frFR.lua": {
+      "sha256": "44015b8e60be85d41a864aff1700170e6f44578d94e31528ec85fae3213d671c",
+      "bytes": 18829
+    },
+    "Code/Localisation/KTM_koKR.lua": {
+      "sha256": "185caa40defebb4aee063939ecad1d6e036da570fcda040388c7120e492aa155",
+      "bytes": 16553
+    },
+    "Code/Localisation/KTM_Localisation.lua": {
+      "sha256": "0b00b9eadef56abcc43481c9ab3735dafdec5a43f8a4d272cac0f1afad22add1",
+      "bytes": 10733
+    },
+    "Code/Localisation/KTM_ruRU.lua": {
+      "sha256": "2714f8ce232fbbfa6f6f5b7193f8f5670592090c42ec9421c34d67539e4c9a90",
+      "bytes": 23623
+    },
+    "Code/Localisation/KTM_zhCN.lua": {
+      "sha256": "2a5b1b5ed67a00390045f6a5250f3ce5c376e803635508c93236d9848e728139",
+      "bytes": 8619
+    },
+    "Code/Localisation/KTM_zhTW.lua": {
+      "sha256": "cd6573efcfdb2f4b9370166dee6d5a19d13e0b9b95ca200d48add3fbee15c299",
+      "bytes": 17578
+    },
+    "Images/close.tga": {
+      "sha256": "2d577ec730633b08fddc3b181e78ecb99767424305b3d164e2de99f97b6375eb",
+      "bytes": 786
+    },
+    "Images/closep.tga": {
+      "sha256": "3297bfd059d60e2b74452244b2782e716674ceab1e13f22e8c8cfe28350c9178",
+      "bytes": 786
+    },
+    "Images/locked.tga": {
+      "sha256": "1232cf9e1530abcf266fd65c70d48d5dd33aac213d41bf4437608f8287b37a40",
+      "bytes": 786
+    },
+    "Images/lockedp.tga": {
+      "sha256": "ab5dafe60291278992006e81203feaabc443e04b45e6a7422fe266ecb88a22e5",
+      "bytes": 786
+    },
+    "Images/maximise.tga": {
+      "sha256": "b3e0d24f8698a4d89bea5622fc19f1e9f8ef92d7f33e39b51307c51dfdeaf8ae",
+      "bytes": 786
+    },
+    "Images/minimise.tga": {
+      "sha256": "15da03a901fc0b2d309a4fb74e8aeb653bea198e3d33e3f9aebc26c83dd20176",
+      "bytes": 786
+    },
+    "Images/options.tga": {
+      "sha256": "0dbae9f0ad16bdbc82de505c2f72d62df01ac1cba4626bb5329cabca52161400",
+      "bytes": 786
+    },
+    "Images/optionsp.tga": {
+      "sha256": "09c7564a0d662d920c8e7c714ef8812248906935c8da943eeb56a655cfda030f",
+      "bytes": 786
+    },
+    "Images/raidv.tga": {
+      "sha256": "28eff2c78275900ce4506ac039a2e07fda63353a84bd2739fe97d0bc2d90b4d1",
+      "bytes": 786
+    },
+    "Images/raidvp.tga": {
+      "sha256": "0c9957a732a5dfbadfc8501cb7c3b762e5fd69b44f85193b113c0f5ebe6b579f",
+      "bytes": 786
+    },
+    "Images/reset.tga": {
+      "sha256": "10403a16deb0f59b622ae6f671da154a49906277d64b0bbebfe7b14e1ecc2e6f",
+      "bytes": 786
+    },
+    "Images/resetp.tga": {
+      "sha256": "d39f7841fb4744195ce2a822fa6b42e544d4a05d770ee457a9b7628de62a29c0",
+      "bytes": 786
+    },
+    "Images/selfv.tga": {
+      "sha256": "4619bccb17d332aa21bdd8e669f0ce66d3094c338b2c0dcccbbb530517d7cf79",
+      "bytes": 786
+    },
+    "Images/selfvp.tga": {
+      "sha256": "9f9ca9ac43f3cab54cb73a42f121f2f2f807468f2a5b0ba0eebb3f3f18a87bab",
+      "bytes": 786
+    },
+    "Images/target.tga": {
+      "sha256": "492299d8536d4fec74080988ffb4f8b7538e4535a4296e84782a813d36a3d6cd",
+      "bytes": 786
+    },
+    "Images/unlocked.tga": {
+      "sha256": "3db2f67214632d2c28898586d4ec3d51e997953ea76b9870194a6d3473e7e2ef",
+      "bytes": 786
+    },
+    "Images/unlockedp.tga": {
+      "sha256": "e0e7d264129197e3f5a9114f835dd3a5bd987fd7b9c83a09fa5a8bf5c99d48e8",
+      "bytes": 786
+    },
+    "KLHThreatMeter.toc": {
+      "sha256": "20e6b09a180d26cc90cc1a5ed1f602e58ab69ab8a18f263e390a93f190721b81",
+      "bytes": 1156
+    },
+    "Readme/Advanced Raid Commands.txt": {
+      "sha256": "49146572a99055ce6cda8d0390ee7cf21ae7f5277e6d0d187ef75a623f87e79c",
+      "bytes": 2645
+    },
+    "Readme/Development - My To Do List.txt": {
+      "sha256": "82de8d84eeec3fac98eef570e2f1436570be0769fb444b35123d48105668d138",
+      "bytes": 1721
+    },
+    "Readme/How You Can Help! (R17).txt": {
+      "sha256": "262bcc3bc7984ea09597eabdbaf527f6a4ed518fd21df737dc82d9a505617253",
+      "bytes": 5466
+    },
+    "Readme/How You Can Help!.txt": {
+      "sha256": "d27a2d2fbb35879aaf32a9478601d7d90243b17aa2afe3b8a9d817f2bc7413f6",
+      "bytes": 8069
+    },
+    "Readme/Implementation Notes (R17).txt": {
+      "sha256": "16838d07640460e35ced2430838ea983c056da814a14f618e349108ad6840229",
+      "bytes": 4502
+    },
+    "Readme/Implementation Notes.txt": {
+      "sha256": "4a551068cdeda879a9bab36f4d115c6e32d0abe98678f636b994be979322ff27",
+      "bytes": 3737
+    },
+    "Readme/Localisation Notes.txt": {
+      "sha256": "53e3ed14924de998a5f376f860bf5f05b5b27d43573e7913657741b5a811dff8",
+      "bytes": 3146
+    },
+    "Readme/Old Changelogs/Changes in Release 15.txt": {
+      "sha256": "c07cda327b803bb1c64015816eaf80bfc2e495e2efc3b7d74fb2e7abd0cfbf67",
+      "bytes": 2930
+    },
+    "Readme/Old Changelogs/R16 Changes.txt": {
+      "sha256": "ecfa539cb16d9d34689e00a0a99962912eef5b4bdec521a641b9dfc58064b306",
+      "bytes": 9930
+    },
+    "Readme/Old Changelogs/R17 Release Notes.txt": {
+      "sha256": "a77e28ea732c7679ce74f0590eb0aad1647858ddb9427dfeb76fc35210f1eb25",
+      "bytes": 5066
+    },
+    "Readme/Old Changelogs/R17b Changes.txt": {
+      "sha256": "fc2e7b8e6679062f0736b752584a5fd15d4472fade8edef0ac5909d1277a737c",
+      "bytes": 1231
+    },
+    "Readme/Old Changelogs/Release 16b Notes.txt": {
+      "sha256": "04f233c9e9382b04315c034196994718a18c4d0b65a8e713ef2da1e4687cff3d",
+      "bytes": 2220
+    },
+    "Readme/R17 Release Notes.txt": {
+      "sha256": "a77e28ea732c7679ce74f0590eb0aad1647858ddb9427dfeb76fc35210f1eb25",
+      "bytes": 5066
+    },
+    "Readme/R17b Changes.txt": {
+      "sha256": "fc2e7b8e6679062f0736b752584a5fd15d4472fade8edef0ac5909d1277a737c",
+      "bytes": 1231
+    },
+    "Readme/R17c Changes.txt": {
+      "sha256": "a752293c9bab3c0d09bab834cb83e45f42f79b38ce111e93e8deb5e2cc8ba494",
+      "bytes": 2891
+    },
+    "Readme/Readme.txt": {
+      "sha256": "949f22cf6771e8639f6aaa2f85387042af31b3637ee070d199c44e0c24f9f44d",
+      "bytes": 1248
+    },
+    "Readme/Warriors - Read Me!.txt": {
+      "sha256": "e0c73edef3c7bc84d3080a3f15fb626f4f341e8bf2d003153e246580d250da43",
+      "bytes": 1554
+    },
+    "README.md": {
+      "sha256": "69b0db9da26b601c603020268a751393b0ab7ccb62bc300572182ab3ee490b54",
+      "bytes": 909
+    },
+    "Recent Changes.txt": {
+      "sha256": "0b814ca6fc0bb1b2ced60ab7b924f3e8461dec5ad4952733667fe1821b2e746d",
+      "bytes": 4259
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "210761384": {
+      "tag": "17.40.250",
+      "folder": "17.40.250--210761384",
+      "assets": {
+        "244263034": {
+          "sha256": "422b9daccf2fcb9c9b93d21bb804438e86a90b75ebc175a45218cb1b7a7752b8",
+          "bytes": 198385,
+          "id": "244263034",
+          "name": "KLHThreatMeter_v17.40.250.zip",
+          "url": "https://github.com/laytya/KLHThreatMeter/releases/download/17.40.250/KLHThreatMeter_v17.40.250.zip",
+          "path": "releases/17.40.250--210761384/assets/KLHThreatMeter_v17.40.250.zip"
+        }
+      },
+      "source": {
+        "sha256": "f6f16d0de04ddd494d73d18e4b79f47c590ef997559d0c89bda3d520776a4e6d",
+        "bytes": 153336,
+        "path": "releases/17.40.250--210761384/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/laytya/KLHThreatMeter/tarball/17.40.250"
+      }
+    }
+  }
+}

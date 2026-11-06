@@ -1,0 +1,142 @@
+{
+  "upstream": "https://github.com/Road-block/PingoMatic",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "PingoMatic",
+    "name": "PingoMatic",
+    "url": "https://github.com/Road-block/PingoMatic",
+    "api": "https://api.github.com/repos/Road-block/PingoMatic"
+  },
+  "commit": "9f20a088971d43b1152344ddb5a19fea0d65319c",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "Bindings.xml": {
+      "sha256": "592cefc89acf678b41fec52b3c66bab223b74caa7f2e3434abab4b544dc8cf19",
+      "bytes": 145
+    },
+    "core.lua": {
+      "sha256": "f54f3d1a7fb554157cb3a004d5183b9233697fee071f8069fb0ad4966844b3a7",
+      "bytes": 31494
+    },
+    "img/Arrow-bevel.tga": {
+      "sha256": "21610e4ed8154a96fc402a3daa74c63c21b482f4a6d69d06c5a36897f7e52f0c",
+      "bytes": 9191
+    },
+    "img/Arrow-flow.tga": {
+      "sha256": "da57f9b47691cd8de67de811825f83a3d1809b5e6277d488e803a8d00edabd2a",
+      "bytes": 30010
+    },
+    "img/Arrow.tga": {
+      "sha256": "caf4d016e6fa48a5e827ea137aac56b2bc539ce16a6beb14a5436b89865a09e6",
+      "bytes": 7971
+    },
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "b6832629eb5d943e14230ba5929396f44da1475708e5f3793f5703f54d89d899",
+      "bytes": 34783
+    },
+    "Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "2be91c4731ea4c3faea63683d745c7e9a34707dcad0e61acdf4a8babca2503cb",
+      "bytes": 67656
+    },
+    "Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "eac68d0efc29472365cdf3d61c7bea777b29d8cf584f9049409300ac6e4448bf",
+      "bytes": 45257
+    },
+    "Libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "b0a21917345e27f957de39f0c11d9716e5537c2f6946187711357de0995a2de4",
+      "bytes": 8049
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "Libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "8c75f829e0f980aac69d53cce8f8c806ea671795f445ab736c8cf76b9fc1f586",
+      "bytes": 22725
+    },
+    "Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "32ddf3ce78ea3d2e3b7f99bd19333c30ddbe168036e94b0f636d81df440a6816",
+      "bytes": 15815
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "Libs/Babble-Spell-2.2/Babble-Spell-2.2.lua": {
+      "sha256": "100292ca2e0162d7f045f5a3ea788daccf18d9e576adf8500a2132e3991a076d",
+      "bytes": 301840
+    },
+    "Libs/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "f26f5f9bff4fe032fa705819c6d1ff1263c868f7ba237eef533b9f7b1405432f",
+      "bytes": 11041
+    },
+    "Libs/Deformat-2.0/Deformat-2.0.lua": {
+      "sha256": "6491e26c67bc4e35eecead3aac60dd1e02abe39a8b281ff6f10bb223e78b7f50",
+      "bytes": 9438
+    },
+    "Libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "783f5d361ab58233eb30e14684f7a66cc77097c19b99172a90bba3c1d42739d2",
+      "bytes": 80011
+    },
+    "Libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "0ee8b878799175790560eef190fe0a723328a74ec2ebd78a49163b544a7a4e20",
+      "bytes": 44920
+    },
+    "Libs/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "1927177be6990043bc63bc8c36168408957c6d1ed86ef971d72415f7dd14d430",
+      "bytes": 7889
+    },
+    "Libs/RosterLib-2.0/RosterLib-2.0.lua": {
+      "sha256": "17d04168174793fd6cf8db81bf9e91d19781b000ec0d6a808dd502cb5491941a",
+      "bytes": 10705
+    },
+    "Libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "fa521995b582e42598744950b887be2ae9c40f096b0c7cae33a5b6497fa412ba",
+      "bytes": 85746
+    },
+    "localization.lua": {
+      "sha256": "1f5259384b22088f0b4cba8cd4de3cb76401980980112d7b80c9259c6a98c637",
+      "bytes": 4705
+    },
+    "PingoMatic.toc": {
+      "sha256": "63d72843540fee14c4a86ce7f1596045f57b0d4b0c22a3ee2d876a7884909ed3",
+      "bytes": 1047
+    },
+    "README.md": {
+      "sha256": "1cc4add032591a3d574b3f9e9ff4f6deb335b516ad88dc1ceee67988a959e4d2",
+      "bytes": 1162
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "10547127": {
+      "tag": "1.12-11200",
+      "folder": "1.12-11200--10547127",
+      "assets": {
+        "6845686": {
+          "sha256": "d953670a4daf0b63f3f255c3c4db33f18e7b959772cfb892253ef20d16b24322",
+          "bytes": 206876,
+          "id": "6845686",
+          "name": "PingoMatic-1.12-11200.zip",
+          "url": "https://github.com/Road-block/PingoMatic/releases/download/1.12-11200/PingoMatic-1.12-11200.zip",
+          "path": "releases/1.12-11200--10547127/assets/PingoMatic-1.12-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "82bba3ebc6c9ccbbad0a0eee4081025764b227866bfd3f9aa15219d85b1a182e",
+        "bytes": 202679,
+        "path": "releases/1.12-11200--10547127/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/PingoMatic/tarball/1.12-11200"
+      }
+    }
+  }
+}

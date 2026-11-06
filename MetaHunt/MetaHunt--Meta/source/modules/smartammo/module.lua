@@ -1,0 +1,129 @@
+------------------------------------------------------
+-- MetaHunt: SmartAmmo Module
+------------------------------------------------------
+
+MTH_SA_MANAGED_HOOKS = true
+
+local MTH_SmartAmmo = {
+	name = "smartammo",
+	enabled = true,
+	events = {
+		"VARIABLES_LOADED",
+		-- PLAYER_ENTERING_WORLD handled by engine's own frame
+	},
+}
+
+local MTH_SA_BOUNDARY_KEY = "smartammo.core"
+
+function MTH_SA_IsModuleEnabled()
+	if MTH and MTH.IsModuleEnabled then
+		return MTH:IsModuleEnabled("smartammo", true) and true or false
+	end
+	return true
+end
+
+function MTH_SA_Print(msg, severity)
+	if MTH and MTH.Print then
+		MTH:Print(tostring(msg), severity)
+		return
+	end
+	if DEFAULT_CHAT_FRAME and DEFAULT_CHAT_FRAME.AddMessage then
+		DEFAULT_CHAT_FRAME:AddMessage(tostring(msg))
+	end
+end
+
+local function MTH_SA_ApplySavedState()
+	if type(MTHSmartAmmo_SetSmartEnabled) ~= "function" then
+		return
+	end
+
+	local moduleStore = MTH and MTH.GetModuleCharSavedVariables and MTH:GetModuleCharSavedVariables("smartammo") or nil
+	local settings = (type(moduleStore) == "table" and type(moduleStore.settings) == "table") and moduleStore.settings or {}
+
+	local smart = settings.smartEnabled
+	if smart == nil then smart = true end
+	local reload = settings.reloadEnabled
+	if reload == nil then reload = true end
+	local swap = settings.weaponSwapEnabled
+	if swap == nil then swap = true end
+
+	MTHSmartAmmo_SetSmartEnabled(smart and 1 or nil, 1)
+	if type(MTHSmartAmmo_SetReloadEnabled) == "function" then
+		MTHSmartAmmo_SetReloadEnabled(reload and 1 or nil, 1)
+	end
+	if type(MTHSmartAmmo_SetWeaponSwapEnabled) == "function" then
+		MTHSmartAmmo_SetWeaponSwapEnabled(swap and 1 or nil, 1)
+	end
+	if type(MTHSmartAmmo_EnsureHooks) == "function" then
+		MTHSmartAmmo_EnsureHooks("module-apply")
+	end
+
+	if not (MTH and MTH.CaptureHookBoundary) then
+		return
+	end
+
+	local castHook = getglobal("MTHSmartAmmo_CastSpell_Hook")
+	local useActionHook = getglobal("MTHSmartAmmo_UseAction_Hook")
+	local castByNameHook = getglobal("MTHSmartAmmo_CastSpellByName_Hook")
+	if type(castHook) ~= "function" or type(useActionHook) ~= "function" or type(castByNameHook) ~= "function" then
+		return
+	end
+	if CastSpell ~= castHook or UseAction ~= useActionHook or CastSpellByName ~= castByNameHook then
+		return
+	end
+
+	MTH:CaptureHookBoundary(MTH_SA_BOUNDARY_KEY, {
+		{ globalName = "CastSpell", originalName = "MTH_SA_CastSpell" },
+		{ globalName = "UseAction", originalName = "MTH_SA_UseAction" },
+		{ globalName = "CastSpellByName", originalName = "MTH_SA_CastSpellByName" },
+	})
+end
+
+local function MTH_SA_RestoreHooks()
+	if MTH and MTH.RestoreHookBoundary and MTH:RestoreHookBoundary(MTH_SA_BOUNDARY_KEY) then
+		return
+	end
+
+	local castHook = getglobal("MTHSmartAmmo_CastSpell_Hook")
+	local useActionHook = getglobal("MTHSmartAmmo_UseAction_Hook")
+	local castByNameHook = getglobal("MTHSmartAmmo_CastSpellByName_Hook")
+
+	if CastSpell == castHook and type(MTH_SA_CastSpell) == "function" then
+		CastSpell = MTH_SA_CastSpell
+	end
+	if UseAction == useActionHook and type(MTH_SA_UseAction) == "function" then
+		UseAction = MTH_SA_UseAction
+	end
+	if CastSpellByName == castByNameHook and type(MTH_SA_CastSpellByName) == "function" then
+		CastSpellByName = MTH_SA_CastSpellByName
+	end
+end
+
+function MTH_SmartAmmo:init()
+	if self.enabled then
+		MTH_SA_ApplySavedState()
+	end
+end
+
+function MTH_SmartAmmo:setEnabled(enabled)
+	if enabled then
+		MTH_SA_ApplySavedState()
+	else
+		MTH_SA_RestoreHooks()
+	end
+end
+
+function MTH_SmartAmmo:onEvent(evt)
+	if not self.enabled then
+		return
+	end
+	if evt == "VARIABLES_LOADED" or evt == "PLAYER_ENTERING_WORLD" then
+		MTH_SA_ApplySavedState()
+	end
+end
+
+function MTH_SmartAmmo:cleanup()
+	self:setEnabled(false)
+end
+
+MTH:RegisterModule("smartammo", MTH_SmartAmmo)

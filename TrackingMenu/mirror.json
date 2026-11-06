@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/blomma/bc_TrackingMenu",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "blomma",
+    "repo": "bc_TrackingMenu",
+    "name": "bc_TrackingMenu",
+    "url": "https://github.com/blomma/bc_TrackingMenu",
+    "api": "https://api.github.com/repos/blomma/bc_TrackingMenu"
+  },
+  "commit": "0d462546337f620454635bdbc7dfbbdbc51d8636",
+  "sourceFiles": {
+    "bc_TrackingMenu.lua": {
+      "sha256": "43f00b83d787ad46f5fc57c636652b634c5d076dac7fb0ec86fe1bb91c8dec57",
+      "bytes": 18784
+    },
+    "bc_TrackingMenu.toc": {
+      "sha256": "e265ec03e91abb765f0cbff37dd293e5649c7a0c63a3f67fdd6b4e4b4a72fa11",
+      "bytes": 575
+    },
+    "bc_TrackingMenu.xml": {
+      "sha256": "ed09b3029793565b582263bf6e02f3aba2235f796e95bbcb360701d0d75c03d5",
+      "bytes": 16704
+    },
+    "Bindings.xml": {
+      "sha256": "64d800e001509ffbeb650e17a9e7b0071ff28e62ecc779c7b4fd108d4412c576",
+      "bytes": 2243
+    },
+    "localization.lua": {
+      "sha256": "3ce884ec07ae26588c4e8d639d7cf55ea2880c59c23421333d07c9484cac2a67",
+      "bytes": 8170
+    },
+    "README.md": {
+      "sha256": "7336f665791741c19dd312290edaf7803ee2704bb98bcb2ee783b51a2b3467db",
+      "bytes": 7653
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

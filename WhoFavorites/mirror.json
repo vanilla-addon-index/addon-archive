@@ -1,0 +1,58 @@
+{
+  "upstream": "https://github.com/Road-block/WhoFavorites",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "WhoFavorites",
+    "name": "WhoFavorites",
+    "url": "https://github.com/Road-block/WhoFavorites",
+    "api": "https://api.github.com/repos/Road-block/WhoFavorites"
+  },
+  "commit": "04fd2b9eaca0d297a24d1daed103c534c344c921",
+  "sourceFiles": {
+    "README.txt": {
+      "sha256": "0807b7f26aba6feec3dbba132c84dc77cb9b3e4a0338be31ac47798e3baef144",
+      "bytes": 1836
+    },
+    "WhoFavLocals.lua": {
+      "sha256": "9e670b39bc2f761b3b20d5a0b938f3c1c0fde3775f894c6840ae2e11202c11e4",
+      "bytes": 1246
+    },
+    "WhoFavorites.lua": {
+      "sha256": "cb3e11627498348e008b9ace2d38b62762c0e0c5cad60786a333ec354044cc0d",
+      "bytes": 8999
+    },
+    "WhoFavorites.toc": {
+      "sha256": "f65c6806d735752c6795439a1240136344b359d200795a358c0415f464476ded",
+      "bytes": 314
+    },
+    "WhoFavorites.xml": {
+      "sha256": "5a9490c71f52a81497cb6cb16cbe8137ee064f66ce1d36a170ae4de738811689",
+      "bytes": 2282
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "2503557": {
+      "tag": "1.0-11200",
+      "folder": "1.0-11200--2503557",
+      "assets": {
+        "1251274": {
+          "sha256": "87484007cf348c7571d18645e4b6df9246edf303a3dc3ace41a29795e6c42598",
+          "bytes": 6286,
+          "id": "1251274",
+          "name": "WhoFavorites-1.0-11200.zip",
+          "url": "https://github.com/Road-block/WhoFavorites/releases/download/1.0-11200/WhoFavorites-1.0-11200.zip",
+          "path": "releases/1.0-11200--2503557/assets/WhoFavorites-1.0-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "5600d8db3edcbabe08738eca4268cc48cba0e0cbc8b14a079961c2dc6ca64cd0",
+        "bytes": 5294,
+        "path": "releases/1.0-11200--2503557/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/WhoFavorites/tarball/1.0-11200"
+      }
+    }
+  }
+}

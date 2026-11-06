@@ -1,0 +1,86 @@
+{
+  "upstream": "https://github.com/Sentilix/pitty",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Sentilix",
+    "repo": "pitty",
+    "name": "pitty",
+    "url": "https://github.com/Sentilix/pitty",
+    "api": "https://api.github.com/repos/Sentilix/pitty"
+  },
+  "commit": "a6f7ee211029d9adbe9f0c7130a7361e44a19a13",
+  "sourceFiles": {
+    "Doc/Roadmap.txt": {
+      "sha256": "803f5f8e78bd8640bc1048451878f0cbf69aff48bde916580bbf6e4339c581c4",
+      "bytes": 178
+    },
+    "LICENSE": {
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    "Pitty/LICENSE": {
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
+    },
+    "Pitty/Pitty.toc": {
+      "sha256": "90f8a0f16fe0939ac3d5ccfeb32defb79e0688826497141b4439b82080316c03",
+      "bytes": 107
+    },
+    "Pitty/Pitty.wowproj": {
+      "sha256": "a753e4c58355fd390da898183dc2d5325fbbe0c46c795630073ba9898a624e2b",
+      "bytes": 1375
+    },
+    "Pitty/PittyFrame.lua": {
+      "sha256": "3b67a0bbb18d9de79bf7163dc146b6dfbfe7082911cbab4d941ea3222527f146",
+      "bytes": 10244
+    },
+    "Pitty/PittyFrame.xml": {
+      "sha256": "e03708714482ffdd395c8a59e1efcd17b7e6d2425f96f0d6f408d2f0ad721701",
+      "bytes": 435
+    },
+    "README.md": {
+      "sha256": "9e5827006df78a08c603e1a63e61139fa35d035c39cdce2573bd1b5ca59f333f",
+      "bytes": 1778
+    },
+    "Releases/Pitty-1.0.0.zip": {
+      "sha256": "05bd8d27e264bc85fbdbd212ee92b7ff8c71904678ec3db267780450bba17f57",
+      "bytes": 2589
+    },
+    "Releases/Pitty-1.1.0.zip": {
+      "sha256": "9893f952d6553ab065bc784fa957dc09e563c268a82fbf7658bb053307c995d5",
+      "bytes": 3536
+    },
+    "Releases/Pitty-1.1.1.zip": {
+      "sha256": "02b5e39a8b23723c6675d3f89349bbc8930db891a98a642bf24078260e52a8df",
+      "bytes": 17505
+    },
+    "Releases/Pitty-1.1.2.zip": {
+      "sha256": "75ed940bf8f72827d30089b030e40b3bd6fbcbeb494b2751565f2fe1601a0b0a",
+      "bytes": 15458
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "11085912": {
+      "tag": "PiTTY-1.1.2",
+      "folder": "PiTTY-1.1.2--11085912",
+      "assets": {
+        "7240149": {
+          "sha256": "75ed940bf8f72827d30089b030e40b3bd6fbcbeb494b2751565f2fe1601a0b0a",
+          "bytes": 15458,
+          "id": "7240149",
+          "name": "Pitty-1.1.2.zip",
+          "url": "https://github.com/Sentilix/pitty/releases/download/PiTTY-1.1.2/Pitty-1.1.2.zip",
+          "path": "releases/PiTTY-1.1.2--11085912/assets/Pitty-1.1.2.zip"
+        }
+      },
+      "source": {
+        "sha256": "544a600faa4437ce96980353e434d3ec701ac4da78676dea84d335a8e5e83505",
+        "bytes": 52696,
+        "path": "releases/PiTTY-1.1.2--11085912/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Sentilix/pitty/tarball/PiTTY-1.1.2"
+      }
+    }
+  }
+}

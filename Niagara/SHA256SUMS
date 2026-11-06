@@ -1,0 +1,17 @@
+9f2aba4f36fca8fb5e60b012174833ffe9dc2b51a049e48e2ce8c465da57c730  releases/v.1.1a--76858816/assets/Niagara-v1.1a.zip
+695ca08db8e152d33b6eb4197f05264f8513587719050eb48d10c34c01f99668  releases/v.1.1a--76858816/upstream-source.tar.gz
+3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094  source/.gitattributes.upstream
+c1d5c648e8eb49d432d8435cf9d0446ff5d61021598d9b7aa46cf6a36770a3ae  source/Niagara/Libs/AceAddon-2.0/AceAddon-2.0.lua
+ab8c61a5174d468bee9c7f7264a7ef8adaead087b7db42ca48da23cfd3d6637d  source/Niagara/Libs/AceConsole-2.0/AceConsole-2.0.lua
+aec50568954370b65a14b9d720de2282e6b045feb4415a53578d0d1cae46cca4  source/Niagara/Libs/AceDB-2.0/AceDB-2.0.lua
+8222e7a75d0f0fba8030099939611732b50c28cb26b6ce6427f52fd5f2f409d8  source/Niagara/Libs/AceEvent-2.0/AceEvent-2.0.lua
+a421bd39e4cb7bcd54bb79de85c21d6e8c4c56551406972141bba26ae7d0c16d  source/Niagara/Libs/AceLibrary/AceLibrary.lua
+f0b829c007fd8cd897aa9059bd6c9ee27f0b9b71b9c9468b1572c1d3db4397fe  source/Niagara/Libs/AceLocale-2.2/AceLocale-2.2.lua
+03e71bcf0ba8ce7c806c5ffe966991cb997c12c25b351198c918fe32e469bdaf  source/Niagara/Libs/AceOO-2.0/AceOO-2.0.lua
+d14a47732ef771dcb5c380218a398db26bd39315652b8d5ffb4afd14f1d90cbd  source/Niagara/Libs/Dewdrop-2.0/Dewdrop-2.0.lua
+6f6b55cbb836ad14dbdb7570ff469e1c689013a5414d06aa78ffa4c6f76e28b2  source/Niagara/Libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua
+c6a6d3f4bb4c5fb3a92998dd1f11aba137a19ada7e64afe156a895ebfa2e35b1  source/Niagara/Libs/Tablet-2.0/Tablet-2.0.lua
+8d270946fd501ba3741fa03b2cff0c08a3dc6f56446809748206c3ff8db4154d  source/Niagara/Libs/Waterfall-1.0/Waterfall-1.0.lua
+c2d697f1de0f572d6903930252cdc372888cab3c58c39513798e40b3854cbb9c  source/Niagara/Niagara.lua
+9d5b8b3e7503688cc3edf4f5e5406b11df56746b4161ad7afb45323bb7c461e1  source/Niagara/Niagara.toc
+c5e8132eb751d86b8b8b7eddb193b2874d428d7977d230262e1dfa95dff77412  source/README.md

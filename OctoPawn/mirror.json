@@ -1,0 +1,193 @@
+{
+  "upstream": "https://github.com/Bestoriop/OctoPawn",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Bestoriop",
+    "repo": "OctoPawn",
+    "name": "OctoPawn",
+    "url": "https://github.com/Bestoriop/OctoPawn",
+    "api": "https://api.github.com/repos/Bestoriop/OctoPawn"
+  },
+  "commit": "de3c786f1f15292a24b055d12c11288c04bffdbb",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "Commands.lua": {
+      "sha256": "29e43762801e6c744e52d709d9ec8ecd09f4c7db617932250ef9a394d04ba7f4",
+      "bytes": 2376
+    },
+    "Compare.lua": {
+      "sha256": "3dc3166ed4fbb4f0527a9b965b35fdb87f5a5bcf8d9a7c187bf0f35366782a06",
+      "bytes": 4827
+    },
+    "Core.lua": {
+      "sha256": "8938bfaa697ff058bebe45c74d671bc3a8c632eb374f8714ae87ecd7cbe4071d",
+      "bytes": 16874
+    },
+    "Defaults/Druid/Balance.lua": {
+      "sha256": "3b81599c2ba062ca6c4674415e8477b3dc28123bb3cf2cd78f6522f4a779e579",
+      "bytes": 396
+    },
+    "Defaults/Druid/FeralCat.lua": {
+      "sha256": "1a786026d89ec7d230724ba1e55c192cea503359d202bf7fab56a04d8c005881",
+      "bytes": 441
+    },
+    "Defaults/Druid/FeralMitigation.lua": {
+      "sha256": "88673335771c94c03a975ba123cd866bea750f2018f6cabfb5ea81b4664e339a",
+      "bytes": 445
+    },
+    "Defaults/Druid/FeralThreat.lua": {
+      "sha256": "510660a74db2b9f9a8e9f55db819900eacfd60aa523219343f419b6e8f0ab729",
+      "bytes": 526
+    },
+    "Defaults/Druid/Restoration.lua": {
+      "sha256": "7fbd7c869da04e857da02e88a8e0203e7513d2499568397763f2d8f3c9850071",
+      "bytes": 384
+    },
+    "Defaults/Helpers.lua": {
+      "sha256": "4f58317a7bd4d55f6ad3484aa4d2e81b9eb16e4f84fa25b22ec5238913832b50",
+      "bytes": 2542
+    },
+    "Defaults/Hunter/BeastMastery.lua": {
+      "sha256": "0dd15dc8a21c703ebd19ee16f1e051a64718b56d8b3e7820c148723d961b1c92",
+      "bytes": 558
+    },
+    "Defaults/Hunter/Marksmanship.lua": {
+      "sha256": "30122b9ff4f4c96f3a1465866e36437865eb022238b4ba5ab5561f9f50003363",
+      "bytes": 539
+    },
+    "Defaults/Hunter/Survival.lua": {
+      "sha256": "f0d88bb665e4fb0fcc2a3be44abc32b6a5f0f892ccade55c0b9ea94a6955de11",
+      "bytes": 560
+    },
+    "Defaults/Mage/Arcane.lua": {
+      "sha256": "c4584ee0e521948e5b8d2a15d6ed526b320a71729fc01b3c0d9cfa19a3379346",
+      "bytes": 443
+    },
+    "Defaults/Mage/Fire.lua": {
+      "sha256": "3a476787b186042bea91f4ea51d60ea7ac4c0fdc88ee05f5254f01b98e2d78ad",
+      "bytes": 417
+    },
+    "Defaults/Mage/Frost.lua": {
+      "sha256": "bd6ba09df5e2739dccb318dc733c8f42219fd21e81176640156dfac4720befe9",
+      "bytes": 436
+    },
+    "Defaults/Paladin/Holy.lua": {
+      "sha256": "ddca2bdaf499f91e7bd8e9efe9cb9df5fb954f6c6edae0ab76da343fa9a789e4",
+      "bytes": 386
+    },
+    "Defaults/Paladin/Protection.lua": {
+      "sha256": "58897d5a28bc8e9d34ffc70e8ad8718ec8f49c6d253a1ab6d92fee4e420b3a0a",
+      "bytes": 591
+    },
+    "Defaults/Paladin/Retribution.lua": {
+      "sha256": "bbdda5aafc6dac63f976f82e9099526705e870b2d8a4ffcead787e7bf8a66985",
+      "bytes": 612
+    },
+    "Defaults/Priest/Discipline.lua": {
+      "sha256": "6d17fb4d283164ccaf200329958822bd21c6a41168005fd121e9e626a56f0b7d",
+      "bytes": 412
+    },
+    "Defaults/Priest/Holy.lua": {
+      "sha256": "6ed98af3e54f7473c74376f431205ec575aa54d45bee8a461bf9a8129dfda35d",
+      "bytes": 387
+    },
+    "Defaults/Priest/Shadow.lua": {
+      "sha256": "37b816f578cfb618a39a9063513504cc143089425d6404a2282dfe5309580132",
+      "bytes": 438
+    },
+    "Defaults/Rogue/Assassination.lua": {
+      "sha256": "1489a3559fd009215fbdf3f11f163c9f644a68cc355d8c1c6b7f50054e35cb0d",
+      "bytes": 433
+    },
+    "Defaults/Rogue/Combat.lua": {
+      "sha256": "d723dc6cb097e5f800ba5889b3a40801671921deb16c2857a84925029909ab14",
+      "bytes": 458
+    },
+    "Defaults/Rogue/Subtlety.lua": {
+      "sha256": "1d929feea41af70e21b72d5c7511ab6d884db52325df2f6b07cab7708ced7510",
+      "bytes": 411
+    },
+    "Defaults/Shaman/Elemental.lua": {
+      "sha256": "881f4f92bdd36e43adccf95fc17911046e53c767e7409bc4c6350056370b31e3",
+      "bytes": 428
+    },
+    "Defaults/Shaman/Enhancement.lua": {
+      "sha256": "ea0049e2e0687e198063c104410ac5ee1b4e03f045fecacfa7df0da34c0776a0",
+      "bytes": 608
+    },
+    "Defaults/Shaman/EnhancementTank.lua": {
+      "sha256": "f984e515d4d2b71ca6ab071442b4ac990fed0b6659567b3e5b4f53e4f21582c9",
+      "bytes": 750
+    },
+    "Defaults/Shaman/Restoration.lua": {
+      "sha256": "cc267cf382e719e57ec94818652e418cd14c65b87c6957306a5db569c35f67c5",
+      "bytes": 350
+    },
+    "Defaults/Warlock/Affliction.lua": {
+      "sha256": "f70ae324eeaa28ff26f519a18160276038bf185c22e3b1a53feea3ad8170ba64",
+      "bytes": 503
+    },
+    "Defaults/Warlock/Demonology.lua": {
+      "sha256": "745789357f51087baef598bfce748f9b2184eaeafd586370cc48a3b5e6916656",
+      "bytes": 487
+    },
+    "Defaults/Warlock/Destruction.lua": {
+      "sha256": "72314880b7e3692adc258b3d29a460d9ed3e5763dbbe35dac7fb0d76f3f2eea6",
+      "bytes": 468
+    },
+    "Defaults/Warrior/Arms.lua": {
+      "sha256": "2036d0a454cdd512951210cda90e3e5c572eb131a80ab2deec9da1f0daebeea7",
+      "bytes": 411
+    },
+    "Defaults/Warrior/Fury.lua": {
+      "sha256": "726b9596ff9f147cb60aabc6094d766d146ac95fca93331a89ca85e6f6cd6a5a",
+      "bytes": 405
+    },
+    "Defaults/Warrior/Protection.lua": {
+      "sha256": "6449028fc26b91d64b248ce2d3199a6721d0dfc56ae9919df7ad3e8d2ccc63e4",
+      "bytes": 414
+    },
+    "LICENSE": {
+      "sha256": "04425155b0809fd0d090dad838a207abdbf703d52d48572c534bc5b038abf1f9",
+      "bytes": 1084
+    },
+    "OctoPawn.toc": {
+      "sha256": "a2a31995c1ba7040d4c0efb23a0640b5915ecd337944341e0b41fb4219e26f41",
+      "bytes": 1390
+    },
+    "README.md": {
+      "sha256": "9bc09f2b7fa5a31eb1b12e16036283ba44dc0501e5eda481986f2d17a7173d61",
+      "bytes": 2647
+    },
+    "Scoring/ScoringCore.lua": {
+      "sha256": "88fb41c015208ced7c980a4b0bb1e54aacda1820eccfdbe27d40fb339ea6a007",
+      "bytes": 29124
+    },
+    "Scoring/ScoringStats.lua": {
+      "sha256": "98d3bb8e95a64aedaedb1469ab736d714283a5dd854f38a33f0e12e8eba7571e",
+      "bytes": 13276
+    },
+    "Screenshots/OctoPawnScreen.png": {
+      "sha256": "32bb7e90882f270014ca3f02e88416b939830cb67cba24dd45ba598453fe24ee",
+      "bytes": 1153135
+    },
+    "UI/Config.lua": {
+      "sha256": "0afe16d1754f97de9fc96e92abd54a43730d604b6a4b73d3bbeed4ce1ca72df3",
+      "bytes": 43796
+    },
+    "UI/Paperdoll/Paperdoll.lua": {
+      "sha256": "e1a4517922ca6af842bf94574e744e5e8f8a89a737a3f99bc13c732904b9c173",
+      "bytes": 10142
+    },
+    "UI/Paperdoll/Pdmo.lua": {
+      "sha256": "3a30a710c99df8d751bd36c38d7eb4eb0670b3fc946c6aacc95279315160ecb1",
+      "bytes": 3840
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

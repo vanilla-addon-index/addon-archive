@@ -1,0 +1,93 @@
+{
+  "upstream": "https://github.com/whtmst/T-OoM",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "whtmst",
+    "repo": "T-OoM",
+    "name": "T-OoM",
+    "url": "https://github.com/whtmst/T-OoM",
+    "api": "https://api.github.com/repos/whtmst/T-OoM"
+  },
+  "commit": "3b4d7c1b2529bde2f447f9d1ce63a3ff7384eaa4",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "092788ddd8130ec97de5e3c9b67e1d1c1ac0810249467167f6cd00737250dc6f",
+      "bytes": 21
+    },
+    "Core/Commands.lua": {
+      "sha256": "0f5e94ee04e8cb9674819c7744d66cb69b927eb2ce7ff4e3951afaea21d17d29",
+      "bytes": 6463
+    },
+    "Core/SavedVariables.lua": {
+      "sha256": "b92b766dcba7f16dce987ac67a5a0ceb53b284a76ea4fd9410b9488559af8365",
+      "bytes": 6002
+    },
+    "fonts/ARIALN.ttf": {
+      "sha256": "06a2106170c2b5b736955cc749ed755f3757d103230645158f0bd5b5b91c386b",
+      "bytes": 99820
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "Locales/enUS.lua": {
+      "sha256": "9fd7e13a75492cb0dd53b58e99898e26d144e44a797ace72b74635fd4933b6f1",
+      "bytes": 4698
+    },
+    "Locales/ruRU.lua": {
+      "sha256": "5c62b707edaef3f352ec2c247ad9e1551b31cec9cca50a6857d09476476bd6ca",
+      "bytes": 5646
+    },
+    "Modules/ManaMonitor.lua": {
+      "sha256": "50553b8cb627ea5c72a55402a8d1c4337ee66cbf2aa3cd9a48b6863a51b1260d",
+      "bytes": 9249
+    },
+    "Modules/UIDisplay.lua": {
+      "sha256": "b7740c120d91c0f18e3e6141d012dbd9fce86c7f5abb9fccb048b08925c8f138",
+      "bytes": 4468
+    },
+    "README.md": {
+      "sha256": "99bd862c30defa542ccb42ab8b2c06762460faf6938ec2d62e452111a12519c1",
+      "bytes": 6772
+    },
+    "T-OoM.lua": {
+      "sha256": "d494ad75d7b39ac2c4c7bf6ad15080e6d0db3dd77181c2fb9d83db4ad58024e2",
+      "bytes": 4745
+    },
+    "T-OoM.toc": {
+      "sha256": "dc5397052cd3bb26425f734f509ae16ab698b82047f3c387e13ca1fddb3d2e7c",
+      "bytes": 1377
+    },
+    "textures/dropdown_down.tga": {
+      "sha256": "84357402c7e8ab85fcda56204f5b1033b9fc33ec082e0ea0327f9d4663e8bb00",
+      "bytes": 204
+    },
+    "textures/dropdown_up.tga": {
+      "sha256": "d615db55286c613613cf77bc9b5abac00ac5e8fe2f1b7b0b90bad472b945375c",
+      "bytes": 1068
+    },
+    "textures/miniMapIcon.tga": {
+      "sha256": "8081887ce97be1ccd2386a3f1b9038d9f91a7bb62f5564e3decf1fe31f833584",
+      "bytes": 4114
+    },
+    "UI/ConfigWindow.lua": {
+      "sha256": "c60ff8b4e84641ad0bb7113561ff39e95ed656f96b58193a5e20415241beb9b5",
+      "bytes": 18805
+    },
+    "UI/MinimapButton.lua": {
+      "sha256": "ac0ffbe0ada035d631e195ba7ef4e0bffe1baffed9922b685134abcca20e6eb7",
+      "bytes": 6865
+    },
+    "UI/Tooltip.lua": {
+      "sha256": "1ec9812d37f06fddea164bcf546dc7e26f83b941e6683a3343c9b058f7d1b8c8",
+      "bytes": 6328
+    },
+    "UI/Widgets.lua": {
+      "sha256": "b80de7d425c0a96ec5a1fd2a269bc09c5373a8ccb2a908981329e0a29def67f9",
+      "bytes": 20297
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

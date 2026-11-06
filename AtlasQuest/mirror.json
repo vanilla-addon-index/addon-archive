@@ -1,0 +1,61 @@
+{
+  "upstream": "https://github.com/Otari98/AtlasQuest",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Otari98",
+    "repo": "AtlasQuest",
+    "name": "AtlasQuest",
+    "url": "https://github.com/Otari98/AtlasQuest",
+    "api": "https://api.github.com/repos/Otari98/AtlasQuest"
+  },
+  "commit": "fe9ccb773037d76c9321dfc3e527cff35555da52",
+  "sourceFiles": {
+    "AtlasQuest.lua": {
+      "sha256": "453b5924fe1d8322b8f9d7a46f36b23485c4bb0d44c13151dd62ea6100ccb620",
+      "bytes": 26105
+    },
+    "AtlasQuest.toc": {
+      "sha256": "1a03be320396a08fc7d7d6028bc1a81d8266a771f729c07c55082cdb72d74802",
+      "bytes": 1000
+    },
+    "AtlasQuest.xml": {
+      "sha256": "083d67e92680fb3d1f55ae0a50d86b8eb724c5bcb2f2e1da89d9c3d5809c819f",
+      "bytes": 21373
+    },
+    "border.blp": {
+      "sha256": "fa643f42405d7d41c49c83c07c69ad6c96d4999fbe57681d4cca08a8defcbdc5",
+      "bytes": 2196
+    },
+    "Changelog.txt": {
+      "sha256": "fed4efe58af36c856ac2389c5b6ad8ba269be352a45b17d302efb6bd478f3998",
+      "bytes": 3476
+    },
+    "Locale/localization.cn.lua": {
+      "sha256": "6a046b4b74a79a0df3eeafb42df9a211a01bf7b607754a1a5be73e2cc208d446",
+      "bytes": 557624
+    },
+    "Locale/localization.de.lua": {
+      "sha256": "dbc5abda89619de16903fcd11f7f6b3f8b7bde48332e955f112daf493baa045a",
+      "bytes": 602040
+    },
+    "Locale/localization.en.lua": {
+      "sha256": "5b5e1260a3db7434f2feb90e43105ea5256ece1717d60754b1a8d4bbc8e8e23b",
+      "bytes": 630449
+    },
+    "Locale/localization.es.lua": {
+      "sha256": "7973d4757184705d1df27440953342a48c9dc5d9a828ec48a5787aa92a3fd1a2",
+      "bytes": 581539
+    },
+    "Locale/localization.ru.lua": {
+      "sha256": "58301f12e0cf592af1ba3e97bf6655f87abe29eb5036b1cd2382c13733249212",
+      "bytes": 733519
+    },
+    "README.md": {
+      "sha256": "4804bb25831b15a140a9d07f5ea1015b1c6cd0395886e5065643e023fac45d07",
+      "bytes": 263
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

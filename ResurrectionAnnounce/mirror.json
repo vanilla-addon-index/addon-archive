@@ -1,0 +1,58 @@
+{
+  "upstream": "https://github.com/stokbaek/ResurrectionAnnounce",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "stokbaek",
+    "repo": "ResurrectionAnnounce",
+    "name": "ResurrectionAnnounce",
+    "url": "https://github.com/stokbaek/ResurrectionAnnounce",
+    "api": "https://api.github.com/repos/stokbaek/ResurrectionAnnounce"
+  },
+  "commit": "58a2c8a0d18ea42e4797e86b4bb89782a417c413",
+  "sourceFiles": {
+    "cmd.lua": {
+      "sha256": "9b4f88c8cef25ac30ad7239c32f3716af038705d0762854e60f48f33fff549b3",
+      "bytes": 1491
+    },
+    "core.lua": {
+      "sha256": "57585170a8842ce03fa7b8b774b80b946af7c2cc54ba0093fb3033fb8bd3b7de",
+      "bytes": 943
+    },
+    "LICENSE": {
+      "sha256": "0dd50ca79bc06f62b1d60465f3e830af86377dd5bac64ed1b9edcd3f12a15890",
+      "bytes": 1065
+    },
+    "README.md": {
+      "sha256": "22457372e126815e08b6435cb9b61764129f7f2c4544a22cf723bbede26fffc9",
+      "bytes": 233
+    },
+    "ResurrectionAnnounce.toc": {
+      "sha256": "f3aec1ceb4c3b49d65bf22feb1b1df95a67827fc607f97d93ea3ebeda4166a64",
+      "bytes": 322
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "9818717": {
+      "tag": "v1.1",
+      "folder": "v1.1--9818717",
+      "assets": {
+        "6314058": {
+          "sha256": "e1f029ab0ad0f0015da73cc0188a5e9fde235fa7ba5fe8b59555e99f491866b4",
+          "bytes": 2921,
+          "id": "6314058",
+          "name": "ResurrectionAnnounce-v1.1.zip",
+          "url": "https://github.com/stokbaek/ResurrectionAnnounce/releases/download/v1.1/ResurrectionAnnounce-v1.1.zip",
+          "path": "releases/v1.1--9818717/assets/ResurrectionAnnounce-v1.1.zip"
+        }
+      },
+      "source": {
+        "sha256": "777b28cb063336be117997987d9d8dd9d1eebd743a482217ca38f2b6aa4e1018",
+        "bytes": 1957,
+        "path": "releases/v1.1--9818717/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/stokbaek/ResurrectionAnnounce/tarball/v1.1"
+      }
+    }
+  }
+}

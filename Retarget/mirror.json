@@ -1,0 +1,25 @@
+{
+  "upstream": "https://github.com/shirsig/retarget",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "retarget",
+    "name": "retarget",
+    "url": "https://github.com/shirsig/retarget",
+    "api": "https://api.github.com/repos/shirsig/retarget"
+  },
+  "commit": "6ec740eb7b120898426b989a32e410a51c3e0c61",
+  "sourceFiles": {
+    "retarget.lua": {
+      "sha256": "8f92d1b8e90ccae0f183ae08e8d6527c5bd93913fc2cddd8fa1a340070fbdfb6",
+      "bytes": 912
+    },
+    "retarget.toc": {
+      "sha256": "b3325e3101605af88e1a4b17d6c034e12410b1a902939b2a058ac7c50491327c",
+      "bytes": 141
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

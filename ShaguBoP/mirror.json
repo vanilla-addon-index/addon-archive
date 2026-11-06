@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/shagu/ShaguBoP",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguBoP",
+    "name": "ShaguBoP",
+    "url": "https://github.com/shagu/ShaguBoP",
+    "api": "https://api.github.com/repos/shagu/ShaguBoP"
+  },
+  "commit": "0aa413780b8e2c3e3ed88b195b4fd2e284f158b9",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "0959657aa3ef82d9f7fe4ce1acdc47a41f8f68399960f1afa6e7e49fc8e35a7c",
+      "bytes": 704
+    },
+    "ShaguBoP.lua": {
+      "sha256": "0eb8ba96398bf68478509f3f03134d49b6899cad28cac32f4c8fea0541adea50",
+      "bytes": 488
+    },
+    "ShaguBoP.toc": {
+      "sha256": "5e8d5ef5ac95b0078c908ce6930a7167f55f850a9aeeaecf9632694d8193f099",
+      "bytes": 155
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

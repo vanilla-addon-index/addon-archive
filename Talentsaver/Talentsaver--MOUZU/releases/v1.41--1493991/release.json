@@ -1,0 +1,9 @@
+{
+  "id": "1493991",
+  "tag": "v1.41",
+  "name": "Hotfix 1.41",
+  "body": "The DoubleCheck function was not working properly since I didn't had the chance to test it before. This fix delays the DoubleCheck process and should work flawlessly.\n",
+  "published": "2015-07-03T16:56:51Z",
+  "prerelease": false,
+  "url": "https://github.com/MOUZU/Talentsaver/releases/tag/v1.41"
+}

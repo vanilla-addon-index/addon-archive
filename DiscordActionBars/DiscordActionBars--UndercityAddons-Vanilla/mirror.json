@@ -1,0 +1,226 @@
+{
+  "upstream": "https://github.com/UndercityAddons-Vanilla/DiscordActionBars",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "UndercityAddons-Vanilla",
+    "repo": "DiscordActionBars",
+    "name": "DiscordActionBars",
+    "url": "https://github.com/UndercityAddons-Vanilla/DiscordActionBars",
+    "api": "https://api.github.com/repos/UndercityAddons-Vanilla/DiscordActionBars"
+  },
+  "commit": "4add5292b2a95cafd5422ba8f617f2067e38a320",
+  "sourceFiles": {
+    "DiscordActionBars/Bindings.xml": {
+      "sha256": "1510ecea7a83c7a9e11219758eadde06c15883f996d67eb7be410ac21ceb356d",
+      "bytes": 18800
+    },
+    "DiscordActionBars/CustomTextures/ArrowLeft.tga": {
+      "sha256": "5fd8777e9948fe85f0f5eadca66f9f3313409dfc75b0a32c6e7abd65c4e5f4c2",
+      "bytes": 8236
+    },
+    "DiscordActionBars/CustomTextures/ArrowRight.tga": {
+      "sha256": "f0577901a540b72222ed43e0ea33381caf1e8233bf56331e0485e5f2f4929747",
+      "bytes": 8236
+    },
+    "DiscordActionBars/DAB_ActionButton.lua": {
+      "sha256": "9316a910604d5b00f346b86e27a6d772c3d7db86e1d5e13ffcff8cc32b7f18bf",
+      "bytes": 34018
+    },
+    "DiscordActionBars/DAB_Bar.lua": {
+      "sha256": "58a5cddf44b36767f754fc338a08fb74a3c992dd5be1b4f89992151b343ca6d5",
+      "bytes": 32938
+    },
+    "DiscordActionBars/DAB_ControlBox.lua": {
+      "sha256": "b3ed29cfa9abb7d381b9c41b0e4b513046a12625b7834dd947b1d4ba40633644",
+      "bytes": 9543
+    },
+    "DiscordActionBars/DAB_Custom-BasicDruid.lua": {
+      "sha256": "039d93f4255444bcca0df77b16c65b9098fd764f339d7938439d112a134bee29",
+      "bytes": 80022
+    },
+    "DiscordActionBars/DAB_Custom-BasicRogue.lua": {
+      "sha256": "8af66f4234eaad4a48a888dc1efcff85246e542d02096110e70297029bd1f4dd",
+      "bytes": 80022
+    },
+    "DiscordActionBars/DAB_Custom-BasicWarrior.lua": {
+      "sha256": "40f0cf7d9ed3a3dcbc3a1c5f126ef3a169dea62777b2e976f8303f8d393b7874",
+      "bytes": 80166
+    },
+    "DiscordActionBars/DAB_Custom.lua": {
+      "sha256": "65af955c73058cab522441a764a9320d6908be07974775a48c28db60e7a75ac4",
+      "bytes": 89022
+    },
+    "DiscordActionBars/DAB_Default.lua": {
+      "sha256": "a8f27d04f5d729a649f205a9f04cc7302cd55488ac53916699792713478d3909",
+      "bytes": 96402
+    },
+    "DiscordActionBars/DAB_Floater.lua": {
+      "sha256": "14333a94ea5bdd2226b40fad49eb13d804ff8a699581e82e60419a2acae30c03",
+      "bytes": 13311
+    },
+    "DiscordActionBars/DAB_Initialization.lua": {
+      "sha256": "a8d285db69aa12adcb8f545406efb5dd097583f8c8b079f378647c8548b58d49",
+      "bytes": 33638
+    },
+    "DiscordActionBars/DAB_Main.lua": {
+      "sha256": "8bffc282fa18dc091a7280a07d8bca045972192c4ccb4e8a78025d36fba49fee",
+      "bytes": 28328
+    },
+    "DiscordActionBars/DAB_Main.xml": {
+      "sha256": "09edfd23cf6388cfff09753a86d9f24638364c0d1118f156c06857e660103bac",
+      "bytes": 32807
+    },
+    "DiscordActionBars/DAB_OtherBar.lua": {
+      "sha256": "b6a73ca15a399b28676e57174020906828f9dbb7287efc9ccfe209b3c21833c3",
+      "bytes": 6962
+    },
+    "DiscordActionBars/DAB_Scripts.xml": {
+      "sha256": "26ee177b07c2c3b05f526a964a42d5907dd030c2182fe2460d9988269b1f265e",
+      "bytes": 531
+    },
+    "DiscordActionBars/DAB_Templates.xml": {
+      "sha256": "316da746c48ece99a56d6439697032a6e0583ddb5add049a557ff9282e186b55",
+      "bytes": 10471
+    },
+    "DiscordActionBars/DiscordActionBars.toc": {
+      "sha256": "9c1d4e8650a18345591ca2627b4f59d14eb2abb8c63e7cff83157a0d53dace1a",
+      "bytes": 267
+    },
+    "DiscordActionBars/localization.lua": {
+      "sha256": "554fe33ad161045fcb3ac3456e09bc89d61c591c497bebc77052a3554744ea68",
+      "bytes": 31452
+    },
+    "DiscordActionBars/Note3_16.txt": {
+      "sha256": "44e11d025c1c293f467bf5ead309c0c0d6fc9bbc418ff3ab517e727b32ef8729",
+      "bytes": 1057
+    },
+    "DiscordActionBars/README.html": {
+      "sha256": "4b817c7daa7bd7367ef652988dc51a8291b0c3507e4937c79d59f4d7e9d33f02",
+      "bytes": 67770
+    },
+    "DiscordActionBarsOptions/DAB_Options_Bar.xml": {
+      "sha256": "cf2b08fd8b490a3f82e31bcdd0479053069779823fa017b7ec2d20df3117c25f",
+      "bytes": 91930
+    },
+    "DiscordActionBarsOptions/DAB_Options_ControlBox.xml": {
+      "sha256": "1e48ad8875453572c006ea806ef587472ca8c6d8f02ef61ab1556b1bb056efde",
+      "bytes": 32195
+    },
+    "DiscordActionBarsOptions/DAB_Options_Floater.xml": {
+      "sha256": "26847e6ff45c6513dae5bbd5ac47e643732626ec600c37849fc76f9ebe0bce69",
+      "bytes": 47519
+    },
+    "DiscordActionBarsOptions/DAB_Options_Init.lua": {
+      "sha256": "f46892ad7810161cb16c22a6d5e62207fd1cc9dfa1d7c482b79b8c42d3b6662c",
+      "bytes": 28186
+    },
+    "DiscordActionBarsOptions/DAB_Options_NumButtons.xml": {
+      "sha256": "fc884e36ac313886c86fc29df1af952aaf035f875a01950f0637418e4321ee96",
+      "bytes": 16459
+    },
+    "DiscordActionBarsOptions/DAB_Options_OtherBar.xml": {
+      "sha256": "59e1fc5f6273182cf26a8f0ef01be668faf1fffb10cd425fd4d5b3f16cbe0d3e",
+      "bytes": 19185
+    },
+    "DiscordActionBarsOptions/DAB_Options.lua": {
+      "sha256": "e7f9c15a2ea43e64f6dbfc70351bbf9285fc7bd6213918444ec82f951244e4b0",
+      "bytes": 81826
+    },
+    "DiscordActionBarsOptions/DAB_Options.xml": {
+      "sha256": "a1e18c7b5f6a1f8285d2c180314f987c9c5ee554eec0bb8e9237662ce497f637",
+      "bytes": 35769
+    },
+    "DiscordActionBarsOptions/DAB_OptionsScripts.xml": {
+      "sha256": "f7c91a65c5dfbe78e0ed501f817fa9ede18eb4547ced7a97ea5af76af4840a47",
+      "bytes": 255
+    },
+    "DiscordActionBarsOptions/DAB_OptionsTemplates.xml": {
+      "sha256": "ee440660cd41f0802674de5b17da0a32a06e9cc2cabfb6a81307674b8240fc97",
+      "bytes": 11324
+    },
+    "DiscordActionBarsOptions/DiscordActionBarsOptions.toc": {
+      "sha256": "51990fb741ec87faa4a60fd4f26b0d95bcfbb8f10a08128bf3cf066aea13b0fa",
+      "bytes": 752
+    },
+    "DiscordActionBarsOptions/title.tga": {
+      "sha256": "94d0ecc5b8cf839e6cb9e9d942f7711bb2785957837ffef5310fb97a268d4029",
+      "bytes": 262188
+    },
+    "DiscordLibrary/DiscordLib_Conditions.lua": {
+      "sha256": "6705f956b05507aceaadff50f2c8692c3bd43d7bf4ba61a2a035287f606ee889",
+      "bytes": 26008
+    },
+    "DiscordLibrary/DiscordLib_Main.lua": {
+      "sha256": "a44385b0ea9b114d9aa53b5451b20baddcff3b08e89284cdc2c075af6c532286",
+      "bytes": 32905
+    },
+    "DiscordLibrary/DiscordLib_Main.xml": {
+      "sha256": "0ba7874167e69430fdc074bb8286f7b96b33c1e7ccdaea4c79097b7cf4e30d65",
+      "bytes": 5714
+    },
+    "DiscordLibrary/DiscordLib_OptionsTemplates.xml": {
+      "sha256": "46f5fe1fc5fd3ad5414b941fa471483defb06260e34e76bfe61987b37ee50b72",
+      "bytes": 25853
+    },
+    "DiscordLibrary/DiscordLib_Templates.xml": {
+      "sha256": "35301f9379eb80f4a0ca62ae27e684a4275a3272a40641182d45f4fa91b273c5",
+      "bytes": 6315
+    },
+    "DiscordLibrary/DiscordLibrary.toc": {
+      "sha256": "70261f9b2ff3b8516675ce1e7a785711f6f8e1caf5c0b2a2161466c18bb4e4e3",
+      "bytes": 436
+    },
+    "DiscordLibrary/Elite.blp": {
+      "sha256": "67998d4243f85ad0dc61800f19de8cd1c4e4179c1f8feb33b84d7f8bef1b4181",
+      "bytes": 23044
+    },
+    "DiscordLibrary/EliteLeft.blp": {
+      "sha256": "618c1ff48c41c83ff90fd8505a609b914df6347a8ada7bb64ad41ff01efc0037",
+      "bytes": 23044
+    },
+    "DiscordLibrary/EmptyButton.tga": {
+      "sha256": "9dff2195ec66f472084241bcf38898e0c406b37954325004957112e72d082215",
+      "bytes": 16428
+    },
+    "DiscordLibrary/localization.lua": {
+      "sha256": "e2f041c2a7406d0e7d7ce9107d971437b0fc0fe2a79e548745ce6404b67dac13",
+      "bytes": 3881
+    },
+    "DiscordLibrary/meatbg.tga": {
+      "sha256": "599293f8414eb7993507d61da9d3367b27b5fb1de0f2bfdbc9042f78811ea296",
+      "bytes": 65580
+    },
+    "DiscordLibrary/PlainBackdrop.tga": {
+      "sha256": "61f41c08e649545b14cdc226c9e26bc4f4f061f357150cf7e7ac1250dc2c5c7f",
+      "bytes": 1068
+    },
+    "README.md": {
+      "sha256": "29317f7930931eb2bc2b2af2051e60c36df9cbe0edf07d092800d931b67b64d8",
+      "bytes": 4042
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "10444330": {
+      "tag": "v3.16",
+      "folder": "v3.16--10444330",
+      "assets": {
+        "6772326": {
+          "sha256": "3f8ef52f672126a91399f883a7e363be4b5457a62d4e706ce5cd412285beaed5",
+          "bytes": 227762,
+          "id": "6772326",
+          "name": "DiscordActionBars.v3.16.zip",
+          "url": "https://github.com/UndercityAddons-Vanilla/DiscordActionBars/releases/download/v3.16/DiscordActionBars.v3.16.zip",
+          "path": "releases/v3.16--10444330/assets/DiscordActionBars.v3.16.zip"
+        }
+      },
+      "source": {
+        "sha256": "d13767a834283403a114631e74823cfdfab96a1e78a22f95ce07ab7080ba09fd",
+        "bytes": 211245,
+        "path": "releases/v3.16--10444330/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/UndercityAddons-Vanilla/DiscordActionBars/tarball/v3.16"
+      }
+    }
+  }
+}

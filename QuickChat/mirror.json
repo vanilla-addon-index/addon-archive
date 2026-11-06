@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/0ldi/QuickChat",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "0ldi",
+    "repo": "QuickChat",
+    "name": "QuickChat",
+    "url": "https://github.com/0ldi/QuickChat",
+    "api": "https://api.github.com/repos/0ldi/QuickChat"
+  },
+  "commit": "52aeb268a9cd1d7ba3cb8dc1b31fdfdf0002ea9e",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "QuickChat/Bindings.xml": {
+      "sha256": "d23211746514e6e794a9cb410f31edc837d2f66ad570259ebe85b6623e8cd5ac",
+      "bytes": 1530
+    },
+    "QuickChat/QuickChat.lua": {
+      "sha256": "21b3f43b5ae8dda3b710d8fb0fd1023f7db3c5e8b0380e26df86d7617d62000d",
+      "bytes": 901
+    },
+    "QuickChat/QuickChat.toc": {
+      "sha256": "1f4931bcca66ce4fcc27173c9f3d6f7ea57b3eb83b86594d5cbb2f40a5efe40a",
+      "bytes": 168
+    },
+    "QuickChat/Read me.txt": {
+      "sha256": "411965487d2e632e513d2ce4194abf7e87dece4db25f62c33d0d09c57cf6b601",
+      "bytes": 447
+    },
+    "README.md": {
+      "sha256": "ff4299fd6de9019aa6d78d7310a74dd6b4281ecceaae5cb5389afed9f310ce49",
+      "bytes": 776
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

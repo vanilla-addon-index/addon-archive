@@ -1,0 +1,8 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Script file="RelationshipsThreatPlates_Core.lua"/>
+    <Script file="RelationshipsThreatPlates_Media.lua"/>
+    <Script file="RelationshipsThreatPlates_ThreatEngine.lua"/>
+    <Script file="RelationshipsThreatPlates_Threat.lua"/>
+    <Script file="RelationshipsThreatPlates_Nameplates.lua"/>
+    <Script file="RelationshipsThreatPlates_GUI.lua"/>
+</Ui>

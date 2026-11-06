@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: SP_|cffa050ffRevenge|r
+## Author: https://github.com/EinBaum
+## Version: 1.0.0
+## Notes: Revenge alert and timer. Chat command: |cffa050ff/rev|r
+## Dependencies:
+## OptionalDeps:
+## SavedVariablesPerCharacter:
+## SavedVariables: SP_R_GS
+SP_Revenge.xml
+SP_Revenge.lua

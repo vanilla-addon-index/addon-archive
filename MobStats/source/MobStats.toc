@@ -1,0 +1,39 @@
+## Interface: 11200
+## Title: MobStats
+## Version: 1.7
+## Author: Refaim
+## Notes: Displays mob stats in the game tooltip
+## Notes-deDE: Zeigt Mob-Statistiken im Spiel-Tooltip an
+## Notes-esES: Muestra estadísticas del enemigo en el tooltip del juego
+## Notes-frFR: Affiche les statistiques des mobs dans l'infobulle du jeu
+## Notes-koKR: 게임 툴팁에 몬스터 능력치를 표시합니다
+## Notes-ptBR: Exibe estatísticas do inimigo na dica do jogo
+## Notes-ruRU: Показывает характеристики мобов в игровом тултипе
+## Notes-zhCN: 在游戏提示框中显示怪物属性
+## Notes-zhTW: 在遊戲提示框中顯示怪物屬性
+
+src\Boot.lua
+src\Utils.lua
+src\Environment.lua
+src\Infrastructure\GameAPI.lua
+src\Domain\Armor.lua
+src\Domain\Damage.lua
+src\Domain\Melee.lua
+src\Domain\MobLevel.lua
+src\Domain\Resistance.lua
+src\Application\ApplicationService.lua
+src\Presentation\Locale\enUS.lua
+src\Presentation\Locale\deDE.lua
+src\Presentation\Locale\esES.lua
+src\Presentation\Locale\frFR.lua
+src\Presentation\Locale\koKR.lua
+src\Presentation\Locale\ptBR.lua
+src\Presentation\Locale\ruRU.lua
+src\Presentation\Locale\zhCN.lua
+src\Presentation\Locale\zhTW.lua
+src\Presentation\Utils.lua
+src\Presentation\TooltipInterface.lua
+src\Presentation\Drawers\ArmorDrawer.lua
+src\Presentation\Drawers\MeleeDrawer.lua
+src\Presentation\Drawers\ResistancesDrawer.lua
+src\Presentation\TooltipController.lua

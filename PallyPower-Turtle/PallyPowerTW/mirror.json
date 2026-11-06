@@ -1,0 +1,385 @@
+{
+  "upstream": "https://github.com/ShikawaLePaladin/PallyPowerTW",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ShikawaLePaladin",
+    "repo": "PallyPowerTW",
+    "name": "PallyPowerTW",
+    "url": "https://github.com/ShikawaLePaladin/PallyPowerTW",
+    "api": "https://api.github.com/repos/ShikawaLePaladin/PallyPowerTW"
+  },
+  "commit": "ceed48b90690f5b6e1b1956caeaee4398acbf59f",
+  "sourceFiles": {
+    "AUDIT.md": {
+      "sha256": "c08ecb074e893115dc7201ee96f8c85598254c78daf7e2b781cf66a8fed1170d",
+      "bytes": 13820
+    },
+    "Bindings.xml": {
+      "sha256": "e0c50320a556675ffc9e3eab0b81536aba82b1935e74de18bbbda2b87d12da19",
+      "bytes": 388
+    },
+    "HDIcons/Ability_ThunderBolt.tga": {
+      "sha256": "aadc1fc356ec0b21f4c8b717b78c3b31043ed553b1bc62a8ddb90051fd97ee8a",
+      "bytes": 65580
+    },
+    "HDIcons/Ability_Warrior_InnerRage.tga": {
+      "sha256": "969462f695636a39398cc72390015962ff73ac276698088b540ca1830c915325",
+      "bytes": 65580
+    },
+    "HDIcons/Druid.tga": {
+      "sha256": "7e379e2e6b7188cc26cc49e559e0f871d296ffe063d88e583b10f6799658ed34",
+      "bytes": 65580
+    },
+    "HDIcons/Hunter.tga": {
+      "sha256": "670e0c0db1a94e5bb1ead6db3c1152bc9ef44f562e0fc3566e9cf3c0f8aa84ef",
+      "bytes": 65580
+    },
+    "HDIcons/Mage.tga": {
+      "sha256": "4eb3e12cbb16561678b031a388261f9fd21a4d785407e329ac9ffb37901535c3",
+      "bytes": 65580
+    },
+    "HDIcons/Paladin.tga": {
+      "sha256": "762e8738a350d122474c72ae21dcbea6e0c1d9bf636e3f52375bf903aaa76902",
+      "bytes": 65580
+    },
+    "HDIcons/Pet.tga": {
+      "sha256": "59bb11314b7e2c545b762452756c7880f3cd35fd2f0349aadfd86b838c8ce4be",
+      "bytes": 65580
+    },
+    "HDIcons/Priest.tga": {
+      "sha256": "ae78129843a0e7add35d16cc58da67de51c3818a664a7fdd85b8c17808ea593b",
+      "bytes": 65580
+    },
+    "HDIcons/Rogue.tga": {
+      "sha256": "bd010164f3c1c796a72a5e16d57d6de0a4feb033a0f041b8765632c89bff6d3e",
+      "bytes": 65580
+    },
+    "HDIcons/Shaman.tga": {
+      "sha256": "6c1c297f9d6f3f78a056a3a398ad67b17826ba3921ba7a5ff985c0055b2a3ea9",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Fire_SealOfFire.tga": {
+      "sha256": "290dc0f2753ba772649f261ff3ec082764b74ecb3b4077a56aa329c6f19a16d4",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Frost_WizardMark.tga": {
+      "sha256": "a71ea5712e353e10da89604a7d4c7c8fdc83fb34797ceff672155aacd03ba1b6",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_AuraMastery.tga": {
+      "sha256": "644a556d5cc119e509c73c160c79bd64f1e76c7e0750441d1b14a8b6599ccd1b",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_AuraOfLight.tga": {
+      "sha256": "8e2d073d08b29bd3d983e762745e15829149642c2f35a0eba99f33dbc33e7dd7",
+      "bytes": 65580
+    },
+    "HDIcons/SPELL_HOLY_DEVOTIONAURA.tga": {
+      "sha256": "1800fa4201e44c91f7e0e412c923294a441de505d8fb98a8abe86f1dd0229c5b",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_FistOfJustice.tga": {
+      "sha256": "d7c274183ba7ad1b140c3a2d12c94503b3cd8d37c181c423fdb1f8b0de3edd6f",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_GreaterBlessingofKings.tga": {
+      "sha256": "e092ab48710c76074e04a430b0aea5324bb2cd626cc34fafde59c29a17d2c085",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_GreaterBlessingofLight.tga": {
+      "sha256": "1ca4cd7e8cbcdc2e300612166e0f1e496bb61e2652e514ae85d0ef1c4475f55f",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_GreaterBlessingofSalvation.tga": {
+      "sha256": "b8d8116306954ed5b21676e1b6b54bd69bf49c1d14a8914fa1ea13813ef0ce3c",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_GreaterBlessingofSanctuary.tga": {
+      "sha256": "9aa375b2d81225b9bebf2651ed72f9c70913eb62075f9f20d63da8af5553c88d",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_GreaterBlessingofWisdom.tga": {
+      "sha256": "97806e8cd5f85740dfa2b603d7a468ee6f799e2e57e81904d7218f6680febaa4",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_HealingAura.tga": {
+      "sha256": "03bfc6abf03a75595cc04596fcb45dee0e244d17580abf0c48da5b420139cfe8",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_HolySmite.tga": {
+      "sha256": "f31b7c1019b5849705b030df29ca215b690b1cde1ddf297021c07cbaa55a97d0",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_MindSooth.tga": {
+      "sha256": "ba06158fc7ba63da28e4ea903d085e14761e2d3ef7e3e8dfcde104de01afac18",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_MindVision.tga": {
+      "sha256": "a7de610dd67c12d9a03fc25b06ec17fbef422042f23a7e5dd272dc8fc97e551b",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_PrayerOfHealing02.tga": {
+      "sha256": "137f1a3572c7e0f31a6e69261129b2d85fc4c6eee7f748701d0aa337becd1456",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_RighteousnessAura.tga": {
+      "sha256": "0efc93a6539a6a6e968641bab41efdab0d4f6a3fe31e84283881d4e7da3548ab",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_SealOfFury.tga": {
+      "sha256": "b532f4fabe509a718929de54ffb553aa60950d5c24ed6b876916e3f9ac977b3e",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_SealOfSalvation.tga": {
+      "sha256": "8de80c0f027fcb60ac68bbaa9d6fa932b56b20a9170d7c77640c04d2925dcf79",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_SealOfWisdom.tga": {
+      "sha256": "6a5ae49601a58c1ce12d9ff23e88b772dcbdb4bfd75a4b748eb26976402bc15f",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Holy_SealOfWrath.tga": {
+      "sha256": "96118f752645c303e3e3db3fbee30ccdee06b9c13eadcff723029d101c31e6aa",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Magic_GreaterBlessingofKings.tga": {
+      "sha256": "e7fbd96475bae648075f9bff19d22070fe5379606c0a700b942b016a5b751132",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Magic_MageArmor.tga": {
+      "sha256": "7246940f9575b01074867b4bed9b7f617f70f5410d51bf439cb0c0c3c35e6cd4",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Nature_LightningShield.tga": {
+      "sha256": "4913d4a0beb03403918a040a561442e23c0c3f8829652508515e44742d8b1e11",
+      "bytes": 65580
+    },
+    "HDIcons/Spell_Shadow_SealOfKings.tga": {
+      "sha256": "1735ed9b7bb6aed4637c2d304a26b3947e0331a5cbbd9620de32cf4a1d8d6424",
+      "bytes": 65580
+    },
+    "HDIcons/Warlock.tga": {
+      "sha256": "c842951e76a3610563e01a07e8b21563b20f77f42f3b8b85e4b055101714e54d",
+      "bytes": 65580
+    },
+    "HDIcons/Warrior.tga": {
+      "sha256": "ec37241f95b9646a36887b32d9f60be1eae94b3c1b706c32057516bde81f04ba",
+      "bytes": 65580
+    },
+    "Icons/Ability_ThunderBolt.blp": {
+      "sha256": "f66f767fcdc666bc8ca3fd601fbefe3ebf7d4c19eff76a5086359a1308a6f01c",
+      "bytes": 6660
+    },
+    "Icons/Ability_Warrior_InnerRage.blp": {
+      "sha256": "afcafb11c6a202704085e4d679cc518c2aca1eb546724562722a6651097c6f81",
+      "bytes": 6660
+    },
+    "Icons/Druid.tga": {
+      "sha256": "48ffcaaaa51204c1ef8f70052ce914745e50bb27d80b365fe046e00af0b8c36b",
+      "bytes": 12306
+    },
+    "Icons/Hunter.tga": {
+      "sha256": "c3e499450936bb4cacc20d01f0830c7be4782eaa8d5ed7eaf9e809b4fc56efc8",
+      "bytes": 12306
+    },
+    "Icons/Mage.tga": {
+      "sha256": "0cf8860ee8d26dfae3ebf79e333304c66aa0a6a615dce51f5e6a7b190d4dbfb6",
+      "bytes": 12306
+    },
+    "Icons/Minimap_Down.tga": {
+      "sha256": "c49abf00303f0d6550018b00c37aafde828f268276a697169a9fd9d4dc822764",
+      "bytes": 4140
+    },
+    "Icons/Minimap.tga": {
+      "sha256": "b1bece4f76abf93150a1acbf41ba374f1aa10a4cb43abfa2f18e8411f18fa688",
+      "bytes": 4140
+    },
+    "Icons/Paladin.tga": {
+      "sha256": "3842e3b33ab275da8d8815fb593d12c8d580c155e15b33ee62decd999ffababf",
+      "bytes": 12306
+    },
+    "Icons/Pet.tga": {
+      "sha256": "e28cb152b2b972fa3845514edae0a08c34dd8c5de3e11a5bd8bf0832cf724419",
+      "bytes": 11671
+    },
+    "Icons/Priest.tga": {
+      "sha256": "3f004b3291da51252ba3e470a9775588399af0836239aabb1475832c704ebb72",
+      "bytes": 12306
+    },
+    "Icons/Rogue.tga": {
+      "sha256": "f8ae48b8b0e6bccc67077921482db047a2d9a02301f47623846b0a92a908bcb8",
+      "bytes": 12306
+    },
+    "Icons/Shaman.tga": {
+      "sha256": "cfe546678428e1e5e45927688b4312545c606341f331ab5a7a5bba2dcfaf0644",
+      "bytes": 12332
+    },
+    "Icons/Spell_Fire_SealOfFire.blp": {
+      "sha256": "64da55801d4aa3c2e26dba160e2f9160b66af5407bc91292600d2cab1c568abc",
+      "bytes": 6660
+    },
+    "Icons/Spell_Frost_WizardMark.blp": {
+      "sha256": "35cebfb70ed804255f07e4067e2377296812e140bf9b079cf80a3db8b1227ac4",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_AuraMastery.blp": {
+      "sha256": "07f422b4e2beadd15dd42d6a88aa3855f00162f068ef6f113d3361505b3cf99b",
+      "bytes": 3220
+    },
+    "Icons/Spell_Holy_AuraOfLight.blp": {
+      "sha256": "5d9b9b161c6528275fbb2063120114748da4425b5bc16e7afb1a3ce562abf97d",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_DevotionAura.blp": {
+      "sha256": "335f47b77781cf74036738dc7143a2e9f06d989034ed8b364ee293bc254ac134",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_FistOfJustice.blp": {
+      "sha256": "83d93ba1390122e2af44f6eea5c37bb53498b8a4521d97f9b9951490004dd5b1",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_GreaterBlessingofKings.blp": {
+      "sha256": "88943f1f5357a09e46fa615f67c3f859a4e007a5f168850183de88fb1c0d6c45",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_GreaterBlessingofLight.blp": {
+      "sha256": "a9b6cdf89ef4bba6c4f541a792a7492d58fc348849bc318f4ad0de00bdabfadd",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_GreaterBlessingofSalvation.blp": {
+      "sha256": "bcd6e2bfe35eca5cc80dbe62e05905285bb826c80009ef687bac382b13cda146",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_GreaterBlessingofSanctuary.blp": {
+      "sha256": "b04a36e99a17204731780fca7b31c0e3cd832edf4a31c6eb2b4d4bcb02ea575a",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_GreaterBlessingofWisdom.blp": {
+      "sha256": "15299d5ee45ba97c73c1ac89635649a5cdec6d8d0e45adf8221258391ae8700c",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_HealingAura.blp": {
+      "sha256": "e38bc6c32a4035573c5b9f72df0028372009f5089b2395e8412526d11799db3f",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_HolySmite.blp": {
+      "sha256": "4a4a2071a05104dd6506ea6e9c60d121216678675cca1e90c2f559f59cd21d92",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_MindSooth.blp": {
+      "sha256": "9ef936e08281f681b76e7695c93de36d33a949bfb590a61748ac03f22ff56a11",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_MindVision.blp": {
+      "sha256": "a514213bb8ba87b9813d24857381dac543b17815e675adaeb663f69e7c8f15ad",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_PrayerOfHealing02.blp": {
+      "sha256": "00ac8829b7d7a7747cde39b550aca4ed080beb482473f887a21a159f7a127f33",
+      "bytes": 6660
+    },
+    "Icons/Spell_Holy_RighteousnessAura.blp": {
+      "sha256": "f528911fd40d01561bbe1c3605fc7bede097a5f10aafbd2a612adfee9a1eb8b0",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_SealOfFury.blp": {
+      "sha256": "80eb2c2d6226268af435e5d7a3624cf24d9d8b2ea8682374cc454467ae82894c",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_SealOfSalvation.blp": {
+      "sha256": "c83709c9a7c15a4b48fc2e9324fac08fd08343bd2451997e14805c6bf25d31ad",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_SealOfWisdom.blp": {
+      "sha256": "3b7613dcfacc60e881af8573ea2411cf93527ced203f2577045e087d8d260af4",
+      "bytes": 3916
+    },
+    "Icons/Spell_Holy_SealOfWrath.blp": {
+      "sha256": "f6a93a4f077b119397a5d0dfd74afd18a29e27434143c71dbcc5ecf0ceaefbe1",
+      "bytes": 6660
+    },
+    "Icons/Spell_Magic_GreaterBlessingofKings.blp": {
+      "sha256": "527b15219a2a34c07c7833a201bcac0010407906ef29091cad31945c41d5a496",
+      "bytes": 6660
+    },
+    "Icons/Spell_Magic_MageArmor.blp": {
+      "sha256": "9f23ae9cefffaa333b640375b7d8f6263657acbe63c8bf49778a0ad0bb4af782",
+      "bytes": 3916
+    },
+    "Icons/Spell_Nature_LightningShield.blp": {
+      "sha256": "f8165eddd4813c56c8bb36cbc7ab0b1f9109414342b2f6251ad5616efed49e3b",
+      "bytes": 6660
+    },
+    "Icons/Spell_Shadow_SealOfKings.blp": {
+      "sha256": "b9bc54452063a2f9f675a3838c3aa25e5cf1cfd1c568b98709fca0cb04bed35a",
+      "bytes": 6660
+    },
+    "Icons/Warlock.tga": {
+      "sha256": "8f2ff9dac07c441ea0529e3dbdf7ddee3074647b9f028c986625a107f8dbafef",
+      "bytes": 12306
+    },
+    "Icons/Warrior.tga": {
+      "sha256": "41bcdc45d7c54af3734208e72c6ca09a73f6e784ddaf28715320353f6a0c9064",
+      "bytes": 12306
+    },
+    "Locale/localization-deDE.lua": {
+      "sha256": "a005c2cce805079ff37654d3acaaa1d8c296362455285be14be5cd1b94332b75",
+      "bytes": 7402
+    },
+    "Locale/localization-enUS.lua": {
+      "sha256": "121ab0eaa5d131db043b3330621e187160b17b1383f620f8984ff7e1c5e7de8b",
+      "bytes": 6341
+    },
+    "Locale/localization-esES.lua": {
+      "sha256": "9bc8f79c05bb7bfb7f27be69a2c12449d41560c12266e24150d143870fd3b744",
+      "bytes": 7304
+    },
+    "MinimapButton.lua": {
+      "sha256": "fb1e4c9516c042bcc80bbffd78a3b6a1aa076a2a21b212cdd3e443184e1cc908",
+      "bytes": 7314
+    },
+    "MinimapButton.xml": {
+      "sha256": "089ca986c3bb7fc3620835bbb2e29c1b9a20aaeb6a9ac263246da1678e28ae1e",
+      "bytes": 10452
+    },
+    "PallyPower-ResizeGrip.tga": {
+      "sha256": "f17e6620869ab39c230f860d13e5e9cda42b03938b27b922c99a6e4109bcf5cf",
+      "bytes": 2085
+    },
+    "PallyPower.lua": {
+      "sha256": "59164596cf0c4a83f8cc0bee5eab779dc1d2dd97bbb966a9200e41e221358610",
+      "bytes": 148583
+    },
+    "PallyPower.xml": {
+      "sha256": "8a16ac2609d838ad12277d0c38e1ee5096e8af20fe85c4634e23020cad8417ce",
+      "bytes": 83540
+    },
+    "PallyPowerManaCost.lua": {
+      "sha256": "b834bb165661d5b465b4c47caca55ee398b10c73722bb15424f94734aa1bece7",
+      "bytes": 1617
+    },
+    "PallyPowerTW.toc": {
+      "sha256": "37eafc26ab029d4c072cab60218fbab63f99e0d95b4529db786f0353ad82d4b7",
+      "bytes": 541
+    },
+    "README.md": {
+      "sha256": "6381f22174cbbc67b12b4c12c2efbe04e98c9afa4c00ccdca4fd115e8632761c",
+      "bytes": 5048
+    },
+    "ScreenShot.png": {
+      "sha256": "98d0efd299efa0f378f01bb27473ffe22bdb3388c71ad191f4bab303cfa8ff52",
+      "bytes": 455458
+    },
+    "ScreenShotAura.png": {
+      "sha256": "a1ab393d4e4cea76b9b0aaa4c37a9982d0ae737ffa5db3ae2b83cc5a6018a450",
+      "bytes": 152469
+    },
+    "Sounds/ding.mp3": {
+      "sha256": "6180177a351fc2c018e1c014056b812089aece86c0a12cb34c59d72d0829fe35",
+      "bytes": 89442
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

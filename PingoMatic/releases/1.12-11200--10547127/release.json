@@ -1,0 +1,9 @@
+{
+  "id": "10547127",
+  "tag": "1.12-11200",
+  "name": "1.12-11200",
+  "body": "\r\n![pingomatic](https://user-images.githubusercontent.com/109839/38913706-dd0b48c2-42e4-11e8-9ffd-9efa17db6b92.png)\r\n`/pingo` or FuBar, Minimap icon for configuration.\r\n\r\nMore info: [main page](https://github.com/Road-block/PingoMatic)\r\n\r\n### Installing release:\r\n Get PingoMatic-x.y-11200.zip from Assets and extract in AddOns folder.",
+  "published": "2018-04-14T14:15:55Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/PingoMatic/releases/tag/1.12-11200"
+}

@@ -1,0 +1,50 @@
+{
+  "upstream": "https://github.com/gashole/ShaguTweaks-DruidManaBar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "gashole",
+    "repo": "ShaguTweaks-DruidManaBar",
+    "name": "ShaguTweaks-DruidManaBar",
+    "url": "https://github.com/gashole/ShaguTweaks-DruidManaBar",
+    "api": "https://api.github.com/repos/gashole/ShaguTweaks-DruidManaBar"
+  },
+  "commit": "9a661f54515f1c953417ab46a66c181be25e3352",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "a341d7c99829356c6e78df510af30ef7c122cab500323bfd78998724fedba989",
+      "bytes": 1084
+    },
+    "ShaguTweaks-DruidManaBar.lua": {
+      "sha256": "f4102b09fc39a2e87353dfb8dc6c8a6f2e07bcab5261ede5f0d5e74af8e819f2",
+      "bytes": 702
+    },
+    "ShaguTweaks-DruidManaBar.toc": {
+      "sha256": "06ffea5374f2530a44269d748c8c770ecbd7b599ab56efce22713233746a410a",
+      "bytes": 184
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "119745734": {
+      "tag": "current",
+      "folder": "current--119745734",
+      "assets": {
+        "124389496": {
+          "sha256": "3492027caf58a95416057428b7c921effa276ad3cec306dbc8a79bdb074ddf07",
+          "bytes": 1333,
+          "id": "124389496",
+          "name": "ShaguTweaks-DruidManaBar.zip",
+          "url": "https://github.com/gashole/ShaguTweaks-DruidManaBar/releases/download/current/ShaguTweaks-DruidManaBar.zip",
+          "path": "releases/current--119745734/assets/ShaguTweaks-DruidManaBar.zip"
+        }
+      },
+      "source": {
+        "sha256": "eeeaad397acf8c14649a5959aef1f0f2d050a1508ac74c3b3a6257cd7d315b26",
+        "bytes": 996,
+        "path": "releases/current--119745734/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/gashole/ShaguTweaks-DruidManaBar/tarball/current"
+      }
+    }
+  }
+}

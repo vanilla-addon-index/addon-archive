@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: RelationshipsDashboard
+## Notes: Character stats, GearScore, and repair cost display |cffff9900by Relationship|r
+## Author: Relationship
+## Version: 1.1
+## SavedVariables: RelationshipsDashboardDB
+## SavedVariablesPerCharacter: RelationshipsDashboardDB_SavedDurability
+Database.lua
+RelationshipsDashboard.lua
+RelationshipsDashboard.xml
+

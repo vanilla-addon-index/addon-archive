@@ -1,0 +1,323 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+	<Script file="SKB.lua" />
+<!-- Templates start here -->
+	<Button name="SKBLevelButtonTemplate" inherits="SKBSmallButtonTemplate" hidden="true" virtual="true" Text="bla">
+		<Size x="22" y="22" />
+		<Scripts>
+			<OnClick>SKBLevelButtonTemplate_OnClick();</OnClick>
+		</Scripts>
+	</Button>
+	<Button name="SKBSmallButtonTemplate" virtual="true">
+		<ButtonText name="$parentText" />
+		<NormalFont inherits="SKBFontSmall"/>
+		<HighlightFont inherits="SKBFontSmall"/>
+		<DisabledFont inherits="SKBFontSmall"/>
+		<NormalTexture file="Interface\AddOns\Snowkoban\SKBtinybutton"/>
+		<PushedTexture file="Interface\AddOns\Snowkoban\SKBtinybutton"/>
+		<DisabledTexture file="Interface\AddOns\Snowkoban\SKBtinybutton"/>
+		<HighlightTexture file="Interface\AddOns\Snowkoban\SKBtinybutton" alphaMode="ADD"/>
+	</Button>
+	<Font name="SKBFontSmall" font="Fonts\FRIZQT__.TTF" virtual="true">
+		<FontHeight>
+			<AbsValue val="10" />
+		</FontHeight>
+		<Color r="1.0" g="1.0" b="1.0" />
+	</Font>
+	<Font name="SKBCreditsFont" font="Fonts\ARIALN.TTF" virtual="true">
+		<FontHeight>
+			<AbsValue val="10" />
+		</FontHeight>
+		<Color r="1.0" g="1.0" b="1.0" />
+	</Font>
+<!-- Templates end here -->
+	<Frame name="SKBBinder" parent="UIParent" enableMouse="true" movable="true" hidden="true">
+		<Size x="368" y="436" />
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset x="0" y="45" />
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\AddOns\Snowkoban\SKBbg" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="4" right="4" top="4" bottom="4" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="16" />
+			</EdgeSize>
+		</Backdrop>
+		<Scripts>
+			<OnLoad>this:RegisterForDrag("LeftButton");</OnLoad>
+			<OnDragStart>this:StartMoving();</OnDragStart>
+			<OnDragStop>this:StopMovingOrSizing();</OnDragStop>
+		</Scripts>
+		<Frames>
+<!-- Snowy Header Art -->
+			<Frame name="SKBHead">
+				<Anchors>
+					<Anchor point="TOPLEFT" />
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
+						<Offset x="0" y="-46" />
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\AddOns\Snowkoban\SKBsplash">
+					<BackgroundInsets>
+						<AbsInset left="0" right="0" top="0" bottom="0" />
+					</BackgroundInsets>
+				</Backdrop>
+			</Frame>
+<!-- Main Menu Frame -->
+			<Frame name="SKBMenu">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="4" y="-46" />
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset x="-4" y="4" />
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\AddOns\Snowkoban\SKBbg" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="0" right="0" top="0" bottom="0" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="16" />
+					</TileSize>
+				</Backdrop>
+				<Scripts>
+					<OnLoad>SKBMenu_OnLoad();</OnLoad>
+				</Scripts>
+				<Frames>
+					<Button name="$parentTitle">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset x="0" y="-6" />
+							</Anchor>
+							<Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
+								<Offset x="0" y="-22" />
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="BORDER">
+								<FontString name="$parent_Text" inherits="GameFontNormalLarge" wraponspaces="false" justifyH="CENTER" text="Main Menu" />
+							</Layer>
+						</Layers>
+					</Button>
+					<Button name="SKBLevelSelect" inherits="UIPanelButtonTemplate" Text="Level Select">
+						<Size x="105" y="30" />
+						<Anchors>
+							<Anchor point="CENTER">
+								<Offset x="0" y="17" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>SKBLevelSelect_OnClick();</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="SKBQuit" inherits="UIPanelButtonTemplate" Text="Quit">
+						<Size x="105" y="30" />
+						<Anchors>
+							<Anchor point="CENTER" relativeTo="SKBLevelSelect">
+								<Offset x="0" y="-34" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>SKBQuit_OnClick();</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="SKBCredits">
+						<Size x="25" y="25" />
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="BOTTOMLEFT">
+								<Offset x="0" y="25" />
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="BORDER">
+								<FontString name="$parent_Text" inherits="SKBCreditsFont" wraponspaces="false" justifyH="LEFT" text="bla" />
+							</Layer>
+						</Layers>
+					</Button>
+				</Frames>
+			</Frame>
+<!-- Level Select Frame -->
+			<Frame name="SKBLevelSelectFrame" hidden="true">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="4" y="-46" />
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset x="-4" y="4" />
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\AddOns\Snowkoban\SKBbg" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="0" right="0" top="0" bottom="0" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="16" />
+					</TileSize>
+				</Backdrop>
+				<Scripts>
+					<OnLoad>SKBLevelSelectFrame_OnLoad();</OnLoad>
+					<OnShow>SKBLevelSelectFrame_OnShow();</OnShow>
+				</Scripts>
+				<Frames>
+					<Button name="SKBBackToMenu" inherits="UIPanelButtonTemplate" Text="Menu">
+						<Size x="55" y="22" />
+						<Anchors>
+							<Anchor point="TOPLEFT" />
+						</Anchors>
+						<Scripts>
+							<OnClick>SKBBackToMenu_OnClick();</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="$parentTitle">
+						<Size x="50" y="16" />
+						<Anchors>
+							<Anchor point="BOTTOMLEFT" relativeTo="SKBBackToMenu" relativePoint="BOTTOMRIGHT">
+								<Offset x="100" y="0" />
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="BORDER">
+								<FontString name="$parent_Text" inherits="GameFontNormalLarge" wraponspaces="false" justifyH="CENTER" text="Level Select" />
+							</Layer>
+						</Layers>
+					</Button>
+				</Frames>
+			</Frame>
+<!-- Play Game Frame -->
+			<Frame name="SKBGameFrame" hidden="true">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="4" y="-46" />
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset x="-4" y="4" />
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\AddOns\Snowkoban\SKBbg" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="0" right="0" top="0" bottom="0" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="16" />
+					</TileSize>
+				</Backdrop>
+				<Scripts>
+					<OnLoad>SKBGameFrame_OnLoad();</OnLoad>
+					<OnShow>SKBGameFrame_OnShow();</OnShow>
+					<OnHide>SKBGameFrame_OnHide();</OnHide>
+				</Scripts>
+				<Frames>
+					<Button name="SKBBackToLS" inherits="UIPanelButtonTemplate" Text="Level Select">
+						<Size x="90" y="22" />
+						<Anchors>
+							<Anchor point="TOPLEFT" />
+						</Anchors>
+						<Scripts>
+							<OnClick>SKBBackToLS_OnClick();</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="SKBRestart" inherits="UIPanelButtonTemplate" Text="Restart">
+						<Size x="55" y="22" />
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="SKBBackToLS" relativePoint="TOPRIGHT">
+								<Offset x="20" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>SKBRestart_OnClick();</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="SKBUndo" inherits="UIPanelButtonTemplate" Text="Undo">
+						<Size x="45" y="22" />
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="SKBRestart" relativePoint="TOPRIGHT">
+								<Offset x="20" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>SKBUndo_OnClick();</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="SKBGameFrameClose" inherits="UIPanelButtonTemplate" Text="Close">
+						<Size x="50" y="22" />
+						<Anchors>
+							<Anchor point="TOPRIGHT">
+								<Offset x="0" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>SKBGameFrameClose_OnClick();</OnClick>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+		</Frames>
+	</Frame>
+	<Frame name="SKBProceedFrame" parent="UIParent" enableMouse="true" movable="true" hidden="true" toplevel="true" alpha="0.75">
+		<Size x="250" y="100" />
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset x="0" y="45" />
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\AddOns\Snowkoban\SKBbg" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="4" right="4" top="4" bottom="4" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="16" />
+			</EdgeSize>
+		</Backdrop>
+		<Scripts>
+			<OnLoad>this:RegisterForDrag("LeftButton");</OnLoad>
+			<OnDragStart>this:StartMoving();</OnDragStart>
+			<OnDragStop>this:StopMovingOrSizing();</OnDragStop>
+			<OnShow>SKBProceedFrame_OnShow();</OnShow>
+		</Scripts>
+		<Frames>
+			<Button name="$parentTitle">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="10" y="-10" />
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
+						<Offset x="-10" y="-40" />
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BORDER">
+						<FontString name="$parent_Text" inherits="GameFontNormal" wraponspaces="true" justifyH="CENTER" text="bla">
+							<Anchors>
+								<Anchor point="TOPLEFT" />
+								<Anchor point="BOTTOMRIGHT" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</Button>
+			<Button name="SKBProceed" inherits="UIPanelButtonTemplate" Text="Proceed">
+				<Size x="75" y="22" />
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset x="0" y="-15" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>SKBProceed_OnClick();</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+	</Frame>
+</Ui>

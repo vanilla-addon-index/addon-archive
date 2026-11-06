@@ -1,0 +1,57 @@
+{
+  "upstream": "https://github.com/Monteo/TNE_Nightfall",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Monteo",
+    "repo": "TNE_Nightfall",
+    "name": "TNE_Nightfall",
+    "url": "https://github.com/Monteo/TNE_Nightfall",
+    "api": "https://api.github.com/repos/Monteo/TNE_Nightfall"
+  },
+  "commit": "c7bbcdfd7a15946513a1e2457ec69225faad1430",
+  "sourceFiles": {
+    "localization.lua": {
+      "sha256": "737b5ae99f43f1718f74adab3b0d91944fa9b70c9bc1dfecd87eafca3a599293",
+      "bytes": 2714
+    },
+    "Nightfall.lua": {
+      "sha256": "6ba2214fc7cc2e1dd88315a2be2d7ce078c95fadda2f95146e0284a3b8f718da",
+      "bytes": 3206
+    },
+    "Nightfall.xml": {
+      "sha256": "1b69019b2424e18504299694379a7a8cd197067628cffcaaca3b82b896a8425c",
+      "bytes": 1429
+    },
+    "NightfallSettings.lua": {
+      "sha256": "2d670e051b387a24125c6d67fab6f1c7941a5418feb925d679edeec860e00d3d",
+      "bytes": 2370
+    },
+    "NightfallSettings.xml": {
+      "sha256": "b246e6b5a291051cf0dbee69f6a201f5d93a247b133de9c85e557ff283316418",
+      "bytes": 5416
+    },
+    "readme.txt": {
+      "sha256": "871d800d331d4f4a2c874675eeab4723921cb6ecf339cf2a4bf8f35a41a6e74b",
+      "bytes": 856
+    },
+    "sounds/Put 'ShadowTrance.mp3' here.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "texture/flash1.tga": {
+      "sha256": "a258f60054aeefd7a62f59ce04ceff9b0d8c12446ae44b0f6eaf2ecc32a56e49",
+      "bytes": 607914
+    },
+    "texture/flash2.tga": {
+      "sha256": "7674135fa641f74751768ff81f1b794979dabc5393f470f846ece1bd39d54192",
+      "bytes": 220192
+    },
+    "TNE_Nightfall.toc": {
+      "sha256": "a4ae4447740f588e0d63013931d301880a6726bc9ee1ec9a54619503eb542fb7",
+      "bytes": 308
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

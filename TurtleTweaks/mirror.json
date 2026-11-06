@@ -1,0 +1,197 @@
+{
+  "upstream": "https://github.com/mitjafelicijan/TurtleTweaks",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "mitjafelicijan",
+    "repo": "TurtleTweaks",
+    "name": "TurtleTweaks",
+    "url": "https://github.com/mitjafelicijan/TurtleTweaks",
+    "api": "https://api.github.com/repos/mitjafelicijan/TurtleTweaks"
+  },
+  "commit": "91ee7f608a6b35085e8b0be8d6d136210daf3b33",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "a822344d2b7ae95af19da9594630e95a9faf281d16859d5182c47978cdafeba9",
+      "bytes": 24
+    },
+    "AlignGrid.lua": {
+      "sha256": "b10dc803e086c4a4723157b45b1bb25ffafa23f28b28f4c34eab34d955063e65",
+      "bytes": 1937
+    },
+    "AutoRepair.lua": {
+      "sha256": "a1dd2793c21487a13b56d43668a799d19ca6516cc5db58dc0f8d64f4b0703531",
+      "bytes": 713
+    },
+    "CastbarPosition.lua": {
+      "sha256": "dde1b8df1641f426706653236a653d5b3379db2ef839222731ece1ae329d3175",
+      "bytes": 406
+    },
+    "ChatArrowKeys.lua": {
+      "sha256": "dc9663326cd864952d99be2fb7a4046027e973751ae7f8ec3dfbaaa410aedee4",
+      "bytes": 388
+    },
+    "ChatScrolling.lua": {
+      "sha256": "c464229d4b850b986e6c95a461f446d474229c4746a905dab6e1d62e7bffcbbc",
+      "bytes": 915
+    },
+    "CompareTooltip.lua": {
+      "sha256": "4e3a4f5fc4ce44764f683ef7da99ce4a32b94ea0169815d36302cd3ff5076fda",
+      "bytes": 3707
+    },
+    "CooldownNumbers.lua": {
+      "sha256": "53af2afba04aa223aad0a131f4c93ef77769a0f6ab172e996ce097d772d93281",
+      "bytes": 2288
+    },
+    "Core.lua": {
+      "sha256": "1440c61f7f3fae33057e4a6b8d162caa9abd623aa8858b552cb4a989751f9cea",
+      "bytes": 2170
+    },
+    "Data/WoWCodexArmor.lua": {
+      "sha256": "4035cc42705fde9fce099871270f1166879fd953e41cba5384ceb2d1e34025dc",
+      "bytes": 869518
+    },
+    "Data/WoWCodexWeapons.lua": {
+      "sha256": "019cf96844c0a67bd5bea52ae3a7048cdda0d15be29e7d97d8257f9b6a0a4943",
+      "bytes": 255228
+    },
+    "EnvironmentGlow.lua": {
+      "sha256": "9472bfc1389733615d8d81c6c038568483de7801e0271dbb53f077c9feb339f9",
+      "bytes": 484
+    },
+    "ExtendedMacros.lua": {
+      "sha256": "b851b96d46e3823efa013217ea7e5e6e2557e9cec81cdc7a86d8c1f3c4c68537",
+      "bytes": 1959
+    },
+    "FishingAudio.lua": {
+      "sha256": "77e1e5e3890f78634a48bf212fe0a8b6b8cb869796fcc237aae2b948370d58d0",
+      "bytes": 1752
+    },
+    "FixCastbarVisibility.lua": {
+      "sha256": "3cd1667a557cca2440b541467f69c72c8717de0aa885ceeb1a255374decc0215",
+      "bytes": 640
+    },
+    "FreeBagSlots.lua": {
+      "sha256": "9fbb0f90a8838fc5f84f7e952770116e4532c17c17c30fd2f1a160ff77bcc808",
+      "bytes": 1400
+    },
+    "GameplaySmoothness.lua": {
+      "sha256": "b32d66813ec9a0b9e62c2c0960c2c33c56ae6ad195278145ade9fb5e7437088a",
+      "bytes": 1091
+    },
+    "ItemLevel.lua": {
+      "sha256": "e28e5572aa969b6c28b6db9f58d1da3bfe5088c480d67f8a9da32cbf36156da2",
+      "bytes": 4411
+    },
+    "ItemValue.lua": {
+      "sha256": "d369c24ecf918c73d97c4a661c81a325a5150642dd104b3a5164a40cb0b0439f",
+      "bytes": 893
+    },
+    "LootAtMouse.lua": {
+      "sha256": "da0641fbf20f8a627bb28486d0f26c0a1e7b3b03a0d2e79cc4201f26ff80631d",
+      "bytes": 655
+    },
+    "ManaBarColor.lua": {
+      "sha256": "4f5e0c7173abfcaac22824f881a27dbe76a6ec5513e0d8b3d878755b6f249251",
+      "bytes": 868
+    },
+    "ManaEnergyTick.lua": {
+      "sha256": "21cc92fe9733fd25551532e89268b96f3c1ae7fc6bf772ca02e48cc821837ec2",
+      "bytes": 372
+    },
+    "MaxCameraZoom.lua": {
+      "sha256": "b822b6f610193b9a8c3fb3f1829acbde571265320fdf576456e9c6f89652c39c",
+      "bytes": 847
+    },
+    "MinimapClock.lua": {
+      "sha256": "d60e84af200750719b8d4631f8ae308ed224492d2d043eca533728b4a63aa5be",
+      "bytes": 1957
+    },
+    "MiniPlayerFrame.lua": {
+      "sha256": "6909cb1f78689851a8e2d8515f7c59f98a8a8faef3316b2e1d84e15cc2958084",
+      "bytes": 4882
+    },
+    "MouseOverCast.lua": {
+      "sha256": "bf5c9ff9bf9eba47bbb76876f934bb6cbbc268534f3c6d6550e239d40512c0eb",
+      "bytes": 1428
+    },
+    "NameplatePosition.lua": {
+      "sha256": "b781e5d35f3148b89ca3a59a278c73f28cf9a9e8b359f793d5788e20b2790471",
+      "bytes": 2384
+    },
+    "NameplateScaling.lua": {
+      "sha256": "5c67e47af11ce096da702f476e23b722a274dcb4124e98f99357d68bc143d405",
+      "bytes": 2146
+    },
+    "NOTES.md": {
+      "sha256": "c9733374109efca75555457f3d691545817a5993871fb7e9e47d589cdb9b869e",
+      "bytes": 177
+    },
+    "OnlyASCII.lua": {
+      "sha256": "2b0a438c0ebeb805fccf33d3d1351dd2c289072ff2642f08c4d1226d32da728f",
+      "bytes": 819
+    },
+    "README.md": {
+      "sha256": "dacd9d5d37f26ff34a065d9ac920579f7ca28e504efaaf3aecd00b6e53360095",
+      "bytes": 3691
+    },
+    "RestedXpTooltip.lua": {
+      "sha256": "7cdd7bd21027ac3d0f493b166e5dd31cce62378aaddbe31699381ec15ce8a3be",
+      "bytes": 1944
+    },
+    "SellGrayItems.lua": {
+      "sha256": "e46764d32832cae26a90b433e3b1a147f7ad919f7e88088b32e2a2d9ee1ee64f",
+      "bytes": 780
+    },
+    "Settings.lua": {
+      "sha256": "aa4be78527bde148faec2bf387e98f9ca08d0f98f3d7f6b603b52b0e82e17c6f",
+      "bytes": 4866
+    },
+    "SoloSelfFound.lua": {
+      "sha256": "58162bea8aace1b6b1218a98acea76609cb16b41d7cdc4b6cd1a24f48de09225",
+      "bytes": 1027
+    },
+    "TurtleTweaks.toc": {
+      "sha256": "03ffb041c395124b5dacf0826a5978e1fb6645bf423b778b710c697ffaecc297",
+      "bytes": 832
+    },
+    "UI/BG.tga": {
+      "sha256": "1215e1f7f52b4ae0c9e3e9e66db147512d7759c3ec80aae3210fc7aa9d5fe576",
+      "bytes": 808779
+    },
+    "UI/BG.xcf": {
+      "sha256": "dfbadd4cba92d0746fc62f291af6fc1b3d3fa4552f055cefe57dfd6edab5c8e4",
+      "bytes": 1064823
+    },
+    "UI/Border.tga": {
+      "sha256": "c5a5d50edea7c7292c3e1bf751bdc566338008b8b985ce3cf3346aa65d5cb0f0",
+      "bytes": 11156
+    },
+    "UI/Border.xcf": {
+      "sha256": "c6257599fdb6f3278dbf750ad31f21a846f6c5407861fded18d9a48907989be7",
+      "bytes": 9164
+    },
+    "UI/MiniUnitFrame.tga": {
+      "sha256": "43a46114ffc1df3359b521302fac690c3d5ade07d1e6bf84603b328d28a932a6",
+      "bytes": 65580
+    },
+    "UI/MiniUnitFrame.xcf": {
+      "sha256": "1327bcfb172f5093024ba6441ea04d898d1dbc6a1e71597297ebc3b426178dfe",
+      "bytes": 5051
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "102912505": {
+      "tag": "v0.7",
+      "folder": "v0.7--102912505",
+      "assets": {},
+      "source": {
+        "sha256": "6ce4bbad138ff759aa4233c8e83827350fa23ca373d14121aa9f90844ef008b0",
+        "bytes": 11522,
+        "path": "releases/v0.7--102912505/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/mitjafelicijan/TurtleTweaks/tarball/v0.7"
+      }
+    }
+  }
+}

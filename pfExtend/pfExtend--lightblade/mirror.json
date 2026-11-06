@@ -1,0 +1,221 @@
+{
+  "upstream": "https://octowow.st/git/lightblade/pfExtend",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "lightblade",
+    "repo": "pfExtend",
+    "name": "pfExtend",
+    "url": "https://octowow.st/git/lightblade/pfExtend",
+    "api": "https://octowow.st/git/api/v1/repos/lightblade/pfExtend"
+  },
+  "commit": "2e49f9f8542dd61efa7ffcb146fd46c1dc906db5",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "1a1dbe176bc233b499d35a57db7513f2941c99ab9759f177830c9149be99005b",
+      "bytes": 66
+    },
+    ".github/workflows/release.yml": {
+      "sha256": "7e071eaef2200c442131e452f0c11acc339402f0ec5226c730559f2d53702d77",
+      "bytes": 3230
+    },
+    ".gitignore.upstream": {
+      "sha256": "741dc6326f5f178851af76d0d606dfb82bf300692e580474093e27d48de7f798",
+      "bytes": 34
+    },
+    "compat/client.lua": {
+      "sha256": "ba4de35fa7b2a5b632d9553e133faf868f01a4d0c4eda6d030a2b434d9632be9",
+      "bytes": 7571
+    },
+    "compat/close.tga": {
+      "sha256": "10ff2d1f26241a6fc6ca4539cf1f7e464a578e73828da87d0b130ab733cc4892",
+      "bytes": 1068
+    },
+    "compat/down.tga": {
+      "sha256": "84357402c7e8ab85fcda56204f5b1033b9fc33ec082e0ea0327f9d4663e8bb00",
+      "bytes": 204
+    },
+    "compat/fav.tga": {
+      "sha256": "0d545c490e065b2a2a4a6f70ff3f5e7296d12b507a7b34a419e8163cf7ee6c44",
+      "bytes": 1374
+    },
+    "compat/global.lua": {
+      "sha256": "97933b050f5bceac7699dffe0a50787ef2631b6ba8b476c9359cad8c16cb4c99",
+      "bytes": 2678
+    },
+    "compat/icon_npc.tga": {
+      "sha256": "fed886ce6fccd633cf763cb6e7f9748c2bea323bfedd20daddf0169fd727efe3",
+      "bytes": 4140
+    },
+    "compat/icon_object.tga": {
+      "sha256": "f8691f4b2222ebfab854cb8d912c7ec96fc7a5c57b8302eb289dca7c2bb6fac4",
+      "bytes": 4140
+    },
+    "compat/icon_vendor.tga": {
+      "sha256": "61282628766e108d0e05c1f880bf83f28cd716e8fa94fadd9c188d0331914229",
+      "bytes": 4140
+    },
+    "compat/pfUI.lua": {
+      "sha256": "dacb1796a91901dfc0f6deda8e0540c453bc4df8076faf660bade6d00ff2667c",
+      "bytes": 20665
+    },
+    "compat/track.tga": {
+      "sha256": "3eac7b2944273cbafbc20f02b76a7ad52e6b03377f5dd57cf885b483cffdea6c",
+      "bytes": 1671
+    },
+    "compat/tracker_search.tga": {
+      "sha256": "b155db9bbac6c3ad5ecb113a4c39b8db797957b985fe9f23597f1c269d33d0b1",
+      "bytes": 1856
+    },
+    "compat/tracker_settings.tga": {
+      "sha256": "9d27808100de86cdebb4315aed7e81b85aebc8fcfb5717effa1c0168698de1b6",
+      "bytes": 2011
+    },
+    "dbOverwrite.lua": {
+      "sha256": "f5e8c6cd2580b63a4671a45cc6d408d74fcd08ff7d6a9c20a19a54ea8bb1993c",
+      "bytes": 330
+    },
+    "img/Snipaste_2026-02-10_17-50-45.jpg": {
+      "sha256": "d98260494c6f1d87ea7bf30475adbc6ca07f735f66603c4e4bf29c66a66cd619",
+      "bytes": 531415
+    },
+    "img/Snipaste_2026-02-10_17-51-52.jpg": {
+      "sha256": "6bb4a0c4d0d6d54ebbff6e4697b3d16ce2a3532789eaf8f16b37f2b6ff20efeb",
+      "bytes": 165609
+    },
+    "img/Snipaste_2026-02-10_17-52-11.jpg": {
+      "sha256": "895032a84de0c7f94a2e2f7499601588265a22a5efefa79a5e22e5a08a45b58f",
+      "bytes": 48571
+    },
+    "init/compat.xml": {
+      "sha256": "b6fa493e0da7067e4273e84155c8c4e68a783edbdb7f89d7971cc09660041b7c",
+      "bytes": 172
+    },
+    "init/locales.xml": {
+      "sha256": "c531649f3ad63daa7341c125b0ed4e66027c52adf8f602cfb685c4e3238bc3b0",
+      "bytes": 195
+    },
+    "init/main.xml": {
+      "sha256": "595ce7e214bf902fb9497530b138548547178771b468d399494c78cfdd22ce33",
+      "bytes": 437
+    },
+    "init/modules.xml": {
+      "sha256": "4d54b6b0e68f4558c1c2bfa6c4a7cd6e5315bb79b11171b71e9d4a9e7b8b0d91",
+      "bytes": 696
+    },
+    "LICENSE": {
+      "sha256": "5ff1549528612ca484159f2e02891e0fe871a50084eb60479f3f1444a5842ce2",
+      "bytes": 1066
+    },
+    "locales/locales_enUS.lua": {
+      "sha256": "7fde8351f0afd6dcea6b4a457b6e08542f48594c3bd9d17743697bea8c9f1d6a",
+      "bytes": 4193
+    },
+    "locales/locales_zhCN.lua": {
+      "sha256": "cdd5448bc1ea3ebac58cbdce96e8315f858da42ff4d8d8126397df9320aff103",
+      "bytes": 4274
+    },
+    "locales/manager.lua": {
+      "sha256": "88a97e2f8c9d772b247d840dfedf9f87b9831a25bc851177c2cfa9d95bf814aa",
+      "bytes": 228
+    },
+    "modules/About/config.lua": {
+      "sha256": "977b81851a28ed43543649d72182737c9270396e25e246d2e44164913284e24d",
+      "bytes": 378
+    },
+    "modules/manager.lua": {
+      "sha256": "8a2b0d3455748ba403cfcb1b75d429b7aed2b2ef6f8be95e9ca5ae69803e1d41",
+      "bytes": 15729
+    },
+    "modules/QuestHelper/browser.lua": {
+      "sha256": "78587e07f55c9e0587a2c1549f99f31969fdb1b2c7e5eeeb28e647394775771d",
+      "bytes": 38512
+    },
+    "modules/QuestHelper/chainviewer.lua": {
+      "sha256": "0d7d98adec75b465c9d08f8add711381e2934913476095be22c94ed670101ef1",
+      "bytes": 9410
+    },
+    "modules/QuestHelper/config.lua": {
+      "sha256": "514da70503183464736ca96e1edb6178d96519aee05e0f2cd07be643628219ed",
+      "bytes": 795
+    },
+    "modules/QuestHelper/detailviewer.lua": {
+      "sha256": "680581d37fd4de2479ee20a9b59b2403ab511711827445d37286a198e05dbbe7",
+      "bytes": 11283
+    },
+    "modules/QuestHelper/main.lua": {
+      "sha256": "626e55463b021d67ac1ec3901bd8e54038a910b3c0c23ccdd3006c45877807de",
+      "bytes": 24767
+    },
+    "modules/QuestHelper/rewards_data.lua": {
+      "sha256": "08478660e3a843c8a47db5b349d3816b904ae90b15c86a71d6b78282adcd2900",
+      "bytes": 218597
+    },
+    "modules/QuestHelper/rewards.lua": {
+      "sha256": "68b2905dfd30f37a567ded9b789298476ac8d9e9809eb1bc9e5bf40153380321",
+      "bytes": 3825
+    },
+    "modules/ShowLoots/browser.lua": {
+      "sha256": "cd43f3a30df663fea31390f6752fc5f84aa3d47b03d0586944eea9d492221249",
+      "bytes": 26969
+    },
+    "modules/ShowLoots/config.lua": {
+      "sha256": "1891a311f77df28a44aa052dfae8a4e53a941200d523eeec575083ec9b8d6ca3",
+      "bytes": 1102
+    },
+    "modules/ShowLoots/main.lua": {
+      "sha256": "6bf7ed5da2ad06ff6c01bc1057fce39fa2b1488a96aa123fff758f1a39b61969",
+      "bytes": 12478
+    },
+    "pfExtend.lua": {
+      "sha256": "a80bb1b47ffdc0fcda03c908acb9b2cad0f04c1f883ac9efeafa3ebe38ea4694",
+      "bytes": 2174
+    },
+    "pfExtend.toc": {
+      "sha256": "fb678fa0be25db1483a0f0f4d84d1869803004d9ac5ba2d6bd58992839803280",
+      "bytes": 506
+    },
+    "pfExtend.xml": {
+      "sha256": "aeade72610c9b213477d84388906af0d92ef370059d259f9f0b3c401d102022f",
+      "bytes": 401
+    },
+    "questGaindb/catalog.json": {
+      "sha256": "979526a4e5996641d54c644b2a37f75faf0208d80d713b03d2d9a6e99b3e28c9",
+      "bytes": 1205714
+    },
+    "questGaindb/cookies.txt": {
+      "sha256": "43094347bef129187d39897961313347854e0a0d62160ab30a9405bbf9291a22",
+      "bytes": 259
+    },
+    "questGaindb/README.md": {
+      "sha256": "1bb4875d43fcc3006cd8ead1b1a0485b1e33ebf575ff5e8063450a05682a2827",
+      "bytes": 2987
+    },
+    "questGaindb/rewards_data.lua": {
+      "sha256": "08478660e3a843c8a47db5b349d3816b904ae90b15c86a71d6b78282adcd2900",
+      "bytes": 218597
+    },
+    "questGaindb/scrape.py": {
+      "sha256": "a3f73bd22bb8cb4adac29ea5668f075a532f54af19eef6179cb24ef943d3adda",
+      "bytes": 19203
+    },
+    "questGaindb/test_detailviewer.py": {
+      "sha256": "3b43369c56b6b222ca30155c659db72438ef3ef9f7dbbee3439f1414aefa7844",
+      "bytes": 5890
+    },
+    "questGaindb/test_showloots_guard.py": {
+      "sha256": "675a007883b01498326ba5d92973e67528d5f5e76957833dae353f784bebd871",
+      "bytes": 3464
+    },
+    "README-zhCN.md": {
+      "sha256": "beef410dbb42079e521e20e17bbc9cab76be88b450da9def14aeaa1d08c190db",
+      "bytes": 7177
+    },
+    "README.md": {
+      "sha256": "a3ea513ecee0f054e60125a8d5da3c9fc5058f0235c8415603fe68f3b42f9c28",
+      "bytes": 7684
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/maxcodk/ToggleGather-by-Svarrog",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "maxcodk",
+    "repo": "ToggleGather-by-Svarrog",
+    "name": "ToggleGather-by-Svarrog",
+    "url": "https://github.com/maxcodk/ToggleGather-by-Svarrog",
+    "api": "https://api.github.com/repos/maxcodk/ToggleGather-by-Svarrog"
+  },
+  "commit": "2cccdd58b4acdec885df92c465e6dcd845337641",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "edaf2c22d900cf05bca7d5b78945fc262e606da81160395c62eafca583f64878",
+      "bytes": 115
+    },
+    "README.md": {
+      "sha256": "7c89e45f95c775b46ab1d956b5c9f53c63e60991fd61c5f6b0c527e917162988",
+      "bytes": 314
+    },
+    "ToggleGather.lua": {
+      "sha256": "c5d702586a9312e40e66d74621749a2fba0b0ab52540626cf41b2b55dbe91ec1",
+      "bytes": 471
+    },
+    "ToggleGather.toc": {
+      "sha256": "84960a1f42b7ab2ed85b2a1e6941de335f6e35f9fbae73c23e40715ff1d8436e",
+      "bytes": 196
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

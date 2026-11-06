@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Taeko-ar/QuickTurtleDBLookUp",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Taeko-ar",
+    "repo": "QuickTurtleDBLookUp",
+    "name": "QuickTurtleDBLookUp",
+    "url": "https://github.com/Taeko-ar/QuickTurtleDBLookUp",
+    "api": "https://api.github.com/repos/Taeko-ar/QuickTurtleDBLookUp"
+  },
+  "commit": "3b5923f304cc31a2c20a1105780e2af4fd68dd68",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "cc9d7425cebc9a8fdf1300b17b8e777f87ada471a0374d834cc329cfab6c47d9",
+      "bytes": 2565
+    },
+    "Spyglass.lua": {
+      "sha256": "6e6a8ba0b60340ee6c09e4a362fbf09f00984e2d8e2fefd9e7f0224afae378a4",
+      "bytes": 26056
+    },
+    "Spyglass.toc": {
+      "sha256": "38a18db6ccc217d633268201cf6cd15d70a2fdc007037ea161238288d66fcace",
+      "bytes": 326
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

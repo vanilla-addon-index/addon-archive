@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/elboaf/PPBuddy",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "elboaf",
+    "repo": "PPBuddy",
+    "name": "PPBuddy",
+    "url": "https://github.com/elboaf/PPBuddy",
+    "api": "https://api.github.com/repos/elboaf/PPBuddy"
+  },
+  "commit": "3f1ac235717464a176eed5e320118d8666945ef5",
+  "sourceFiles": {
+    "PPBuddy.lua": {
+      "sha256": "f23bac587c0e59e60cdf9520d047320dfe7cac42270f874c9776879a3a67c63b",
+      "bytes": 37001
+    },
+    "PPBuddy.toc": {
+      "sha256": "05c07b2c3ac4b98b747b3d3ef6e676cc8aa4f88a110843dce4a399a3482d59c9",
+      "bytes": 210
+    },
+    "README.md": {
+      "sha256": "7411f6865b2569417fb2f91a06a7f84ec8fb0e5a0c13a06ab907d2bbf85fb216",
+      "bytes": 5564
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

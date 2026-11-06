@@ -1,0 +1,9 @@
+{
+  "id": "83590853",
+  "tag": "v1.1.1",
+  "name": "v1.1.1",
+  "body": "# Fixes\r\n\r\n* Fix #6 - a wrong value was returned when checking whether the option showEventsForTargetOnly is active or not\r\n* Cleanup repository with minor code smells\r\n",
+  "published": "2022-11-18T18:06:49Z",
+  "prerelease": false,
+  "url": "https://github.com/RagedUnicorn/wow-vanilla-pvpwarn/releases/tag/v1.1.1"
+}

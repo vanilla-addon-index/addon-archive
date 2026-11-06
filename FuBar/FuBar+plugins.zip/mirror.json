@@ -1,0 +1,15 @@
+{
+  "upstream": "https://github.com/laytya/Vanilla-Addons/blob/master/FuBar%2Bplugins.zip",
+  "source": {
+    "kind": "file",
+    "url": "https://raw.githubusercontent.com/laytya/Vanilla-Addons/master/FuBar%2Bplugins.zip",
+    "filename": "FuBar+plugins.zip",
+    "name": "FuBar+plugins.zip"
+  },
+  "file": {
+    "sha256": "ff6f36cabbfca5a46eb55d991e5371e0c8e7c04b43495cbbc469d0ef25200571",
+    "bytes": 7878660,
+    "path": "releases/files/FuBar+plugins.zip",
+    "url": "https://raw.githubusercontent.com/laytya/Vanilla-Addons/master/FuBar%2Bplugins.zip"
+  }
+}

@@ -1,0 +1,5 @@
+## Interface: 11200
+## Title: PartyPlus
+## Notes: Easy tool for party invites!
+## Version: 0.1
+PartyPlus.lua

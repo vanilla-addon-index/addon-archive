@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: SP_|cffa050ffOverpower|r
+## Author: https://github.com/EinBaum
+## Version: 3.0.0
+## Notes: Overpower alert and timer. Chat command: |cffa050ff/op|r
+## Dependencies:
+## OptionalDeps:
+## SavedVariablesPerCharacter:
+## SavedVariables: SP_OP_GS
+SP_Overpower.xml
+SP_Overpower.lua

@@ -1,0 +1,2550 @@
+-------------------------------------------------------------------------------------
+-- Title: Mik's Scrolling Battle Text
+-- Author: Mik
+-- Maintainer: Athene
+-------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------
+-- Public Constants.
+-------------------------------------------------------------------------------------
+
+-- The combat event helper, private to this addon.
+local _, addonTable = ...
+local MikCEH = addonTable.MikCEH;
+
+-- The search pattern trigger type, for the options addon.
+MikSBT.TRIGGERTYPE_SEARCH_PATTERN = MikCEH.TRIGGERTYPE_SEARCH_PATTERN;
+
+-- Upvalue caches for frequently called functions.
+local string_find, string_gsub = string.find, string.gsub
+local table_insert, table_getn, table_wipe = table.insert, table.getn, table.wipe
+local math_ceil, math_floor, math_random = math.ceil, math.floor, math.random
+local GetTime = GetTime
+local getglobal = getglobal
+local tonumber = tonumber
+local UnitClass = UnitClass
+
+-- Display types for incoming, outgoing, and notification events.
+MikSBT.DISPLAYTYPE_INCOMING			= 1;
+MikSBT.DISPLAYTYPE_OUTGOING			= 2;
+MikSBT.DISPLAYTYPE_NOTIFICATION		= 3;
+
+
+-------------------------------------------------------------------------------------
+-- Public Variables.
+-------------------------------------------------------------------------------------
+
+-- Holds the current profile.
+MikSBT.CurrentProfile = nil;
+
+
+-------------------------------------------------------------------------------------
+-- Private constants.
+-------------------------------------------------------------------------------------
+
+-- Icons resolved from effect names, for events that carry no spell ID. A name with no icon
+-- is stored as false so the lookup runs once per name.
+local nameIconCache = {}
+
+-- Returns the icon for an effect name: an aura on the player, a spell in the player's or
+-- pet's spellbook, or an equipped or carried item.
+local function GetNameIcon(name)
+ local icon = nameIconCache[name];
+ if (icon == nil) then
+  local _, _, spellIcon = GetSpellInfo(name);
+  icon = MikSBT.GetAuraIcon(name) or spellIcon or MikSBT.FindItemIcon(name) or false;
+  nameIconCache[name] = icon;
+ end
+ return icon or nil;
+end
+
+-- Damage type → {r, g, b} float lookup for SetTextColor (lazily initialized).
+local damageTypeFontColors
+local function GetDamageTypeFontColor(dt)
+ if not damageTypeFontColors then
+  local function CreateSpellColor(r, g, b)
+    local color = CreateColor(r, g, b)
+    color.colorStr = color:GenerateHexColorMarkup() .. "\124h"
+    return color
+  end
+  damageTypeFontColors = {
+   [SPELL_SCHOOL1_CAP] = CreateSpellColor(0.965, 0.976, 0.620),  -- Holy
+   [SPELL_SCHOOL2_CAP] = CreateSpellColor(0.933, 0.490, 0.501),  -- Fire
+   [SPELL_SCHOOL3_CAP] = CreateSpellColor(0.631, 0.858, 0.396),  -- Nature
+   [SPELL_SCHOOL4_CAP] = CreateSpellColor(0.462, 0.792, 0.929),  -- Frost
+   [SPELL_SCHOOL5_CAP] = CreateSpellColor(0.356, 0.290, 0.596),  -- Shadow
+   [SPELL_SCHOOL6_CAP] = CreateSpellColor(0.956, 0.658, 0.894),  -- Arcane
+  }
+ end
+ return damageTypeFontColors[dt]
+end
+
+-- Number of font strings.
+local NUM_FONT_STRINGS = 20;
+
+-- Animation values for incoming and outgoing events.
+local MIN_VERTICAL_SPACING = 8;
+
+-- How long to wait before showing events so that merges may happen.
+local MERGE_DELAY_TIME = 0.3;
+
+-- How long to show stickies before they are faded.
+local STICKY_FADE_IN_TIME = 0.15;
+local STICKY_DISPLAY_TIME = 2;
+local STICKY_FADE_OUT_TIME = 0.5;
+
+-- The animation speed.
+local ANIMATION_SPEED = 0.02;
+
+-- Inline icon escape after the path: font-height square, cropped to the inner 48x48 of the 64x64 icon.
+local ICON_ESCAPE_SUFFIX = ":0:0:0:0:64:64:8:56:8:56|t ";
+
+-- Scroll directions
+local SCROLL_DIRECTION_UP			= 1;
+local SCROLL_DIRECTION_DOWN			= 2;
+
+-- Animation Styles
+local ANIMATION_STYLE_STRAIGHT		= 1;
+local ANIMATION_STYLE_LEFT_PARABOLA		= 2;
+local ANIMATION_STYLE_RIGHT_PARABOLA	= 3;
+
+-- Max number of combo points.
+local MAX_COMBO_POINTS = 5;
+
+
+-- Pre-built event type string lookup tables (eliminates string concatenation in CombatEventsHandler).
+local DIRECTION_SCROLLAREA_KEY = {
+ [MikCEH.DIRECTIONTYPE_PLAYER_INCOMING] = "Incoming",
+ [MikCEH.DIRECTIONTYPE_PLAYER_OUTGOING] = "Outgoing",
+ [MikCEH.DIRECTIONTYPE_PET_OUTGOING]    = "Outgoing",
+ [MikCEH.DIRECTIONTYPE_PET_INCOMING]    = "Incoming",
+};
+
+local DIRECTION_PREFIX = {
+ [MikCEH.DIRECTIONTYPE_PLAYER_INCOMING] = "MSBT_EVENTTYPE_INCOMING_",
+ [MikCEH.DIRECTIONTYPE_PLAYER_OUTGOING] = "MSBT_EVENTTYPE_OUTGOING_",
+ [MikCEH.DIRECTIONTYPE_PET_OUTGOING]    = "MSBT_EVENTTYPE_OUTGOING_PET_",
+ [MikCEH.DIRECTIONTYPE_PET_INCOMING]    = "MSBT_EVENTTYPE_INCOMING_PET_",
+};
+
+-- Action type → suffix string for damage events.
+local ACTION_SUFFIX = {
+ [MikCEH.ACTIONTYPE_MISS]    = "MISS",
+ [MikCEH.ACTIONTYPE_DODGE]   = "DODGE",
+ [MikCEH.ACTIONTYPE_PARRY]   = "PARRY",
+ [MikCEH.ACTIONTYPE_BLOCK]   = "BLOCK",
+ [MikCEH.ACTIONTYPE_RESIST]  = "RESIST",
+ [MikCEH.ACTIONTYPE_ABSORB]  = "ABSORB",
+ [MikCEH.ACTIONTYPE_IMMUNE]  = "IMMUNE",
+ [MikCEH.ACTIONTYPE_EVADE]   = "EVADE",
+ [MikCEH.ACTIONTYPE_REFLECT] = "REFLECT",
+};
+
+-- Environmental action type → localized effect name.
+local ENVIRONMENTAL_NAMES = {
+ [MikCEH.ACTIONTYPE_DROWNING] = MikSBT.MSG_ENVIRONMENTAL_DROWNING,
+ [MikCEH.ACTIONTYPE_FALLING]  = MikSBT.MSG_ENVIRONMENTAL_FALLING,
+ [MikCEH.ACTIONTYPE_FATIGUE]  = MikSBT.MSG_ENVIRONMENTAL_FATIGUE,
+ [MikCEH.ACTIONTYPE_FIRE]     = MikSBT.MSG_ENVIRONMENTAL_FIRE,
+ [MikCEH.ACTIONTYPE_LAVA]     = MikSBT.MSG_ENVIRONMENTAL_LAVA,
+ [MikCEH.ACTIONTYPE_SLIME]    = MikSBT.MSG_ENVIRONMENTAL_SLIME,
+};
+
+-- Class name → color prefix string for unit name coloring.
+local CLASS_COLORS = {
+ PALADIN  = "|cffF58CBA|h",
+ DRUID    = "|cffFF7D0A|h",
+ HUNTER   = "|cffABD473|h",
+ MAGE     = "|cff69CCF0|h",
+ PRIEST   = "|cffFFFFFF|h",
+ ROGUE    = "|cffFFF569|h",
+ SHAMAN   = "|cff0070DE|h",
+ WARLOCK  = "|cff9482C9|h",
+ WARRIOR  = "|cffC79C6E|h",
+};
+
+-- Notification type → suffix string.
+local NOTIFICATION_SUFFIX = {
+ [MikCEH.NOTIFICATIONTYPE_DEBUFF]          = "DEBUFF",
+ [MikCEH.NOTIFICATIONTYPE_BUFF]            = "BUFF",
+ [MikCEH.NOTIFICATIONTYPE_ITEM_BUFF]       = "ITEM_BUFF",
+ [MikCEH.NOTIFICATIONTYPE_BUFF_FADE]       = "BUFF_FADE",
+ [MikCEH.NOTIFICATIONTYPE_COMBAT_ENTER]    = "COMBAT_ENTER",
+ [MikCEH.NOTIFICATIONTYPE_COMBAT_LEAVE]    = "COMBAT_LEAVE",
+ [MikCEH.NOTIFICATIONTYPE_POWER_GAIN]      = "POWER_GAIN",
+ [MikCEH.NOTIFICATIONTYPE_POWER_LOSS]      = "POWER_LOSS",
+ [MikCEH.NOTIFICATIONTYPE_CP_GAIN]         = "CP_GAIN",
+ [MikCEH.NOTIFICATIONTYPE_HONOR_GAIN]      = "HONOR_GAIN",
+ [MikCEH.NOTIFICATIONTYPE_REP_GAIN]        = "REP_GAIN",
+ [MikCEH.NOTIFICATIONTYPE_REP_LOSS]        = "REP_LOSS",
+ [MikCEH.NOTIFICATIONTYPE_SKILL_GAIN]      = "SKILL_GAIN",
+ [MikCEH.NOTIFICATIONTYPE_EXPERIENCE_GAIN] = "EXPERIENCE_GAIN",
+ [MikCEH.NOTIFICATIONTYPE_PC_KILLING_BLOW] = "PC_KILLING_BLOW",
+ [MikCEH.NOTIFICATIONTYPE_NPC_KILLING_BLOW] = "NPC_KILLING_BLOW",
+};
+
+-- Pre-build all possible event type strings to avoid runtime concatenation.
+-- dmgEventStr[dirType][suffix] for non-spell damage, dmgEventStrSpell[dirType][suffix] for spell damage.
+local dmgEventStr = {};
+local dmgEventStrSpell = {};
+local healEventStr = {};
+local notifEventStr = {};
+
+do
+ local suffixes = {"DAMAGE", "DOT", "MISS", "DODGE", "PARRY", "BLOCK", "RESIST", "ABSORB", "IMMUNE", "EVADE", "REFLECT", "ENVIRONMENTAL"};
+ for dirType, prefix in pairs(DIRECTION_PREFIX) do
+  dmgEventStr[dirType] = {};
+  dmgEventStrSpell[dirType] = {};
+  for _, suffix in ipairs(suffixes) do
+   dmgEventStr[dirType][suffix] = prefix .. suffix;
+   dmgEventStrSpell[dirType][suffix] = prefix .. "SPELL_" .. suffix;
+  end
+  healEventStr[dirType] = {};
+  healEventStr[dirType]["HEAL"] = prefix .. "HEAL";
+  healEventStr[dirType]["HOT"] = prefix .. "HOT";
+ end
+
+ for notifType, suffix in pairs(NOTIFICATION_SUFFIX) do
+  notifEventStr[notifType] = "MSBT_EVENTTYPE_NOTIFICATION_" .. suffix;
+ end
+ notifEventStr["CP_FULL"] = "MSBT_EVENTTYPE_NOTIFICATION_CP_FULL";
+end
+
+
+-------------------------------------------------------------------------------------
+-- Private variables.
+-------------------------------------------------------------------------------------
+
+-- Holds whether or not debugging is active.
+local debugMode = false;
+
+
+-- Holds the events the mod is interested in.
+local listenEvents = {};
+
+-- Holds data for each scroll area.
+local scrollAreas = {};
+
+-- Frame that handles the core events.
+local eventFrame = CreateFrame("Frame");
+
+-- Holds arrays of unmerged events, merged events to be displayed and the time since
+-- the last merge for incoming and outgoing events.
+local animationMergeData = {
+ ["Incoming"]	= {["TimeSinceMerge"] = 0, UnmergedEvents={}, MergedEvents={}},
+ ["Outgoing"]	= {["TimeSinceMerge"] = 0, UnmergedEvents={}, MergedEvents={}},
+};
+
+-- Holds whether or not a merge is still being processed.
+local stillMerging = false;
+
+-- Temp arrays for repositioning animation display data to avoid overlaps.
+local activeNonStickies = {};
+local activeStickies = {};
+
+-- Pool of animation event tables, reused to keep garbage (and 1.12's full-heap GC pauses) down.
+-- Every acquired table must be released exactly once.
+local eventsPool = CreateUnsecuredObjectPool(function() return {} end, function(_, t) table.wipe(t) end);
+
+
+-------------------------------------------------------------------------------------
+-- Printing functions.
+-------------------------------------------------------------------------------------
+
+-- **********************************************************************************
+-- Prints out the passed message to the default chat frame.
+-- **********************************************************************************
+function MikSBT.Print(msg, r, g, b)
+ -- Add the message to the default chat frame.
+ DEFAULT_CHAT_FRAME:AddMessage("MSBT: " .. msg, r, g, b);
+end
+
+
+-- **********************************************************************************
+-- Prints out the passed message to the default chat frame.
+-- **********************************************************************************
+function MikSBT.PrintDebug(msg, r, g, b)
+ -- Check if debugging is active.
+ if (debugMode) then
+  -- Add the message to the default chat frame.
+  DEFAULT_CHAT_FRAME:AddMessage(msg, r, g, b);
+ end
+end
+
+
+-------------------------------------------------------------------------------------
+-- Core event handlers.
+-------------------------------------------------------------------------------------
+
+-- **********************************************************************************
+-- Registers all of the core events the mod is interested in.
+-- **********************************************************************************
+function MikSBT.RegisterEvents()
+ -- Register the events we are interested in receiving for shaman.
+ for k, v in listenEvents do
+  eventFrame:RegisterEvent(v);
+ end
+end
+
+
+-- **********************************************************************************
+-- Unregisters all of the events the mod registered for.
+-- **********************************************************************************
+function MikSBT.UnregisterEvents()
+ for k, v in listenEvents do
+  eventFrame:UnregisterEvent(v);
+ end
+end
+
+
+-- **********************************************************************************
+-- Called when the events we registered for occur.
+-- **********************************************************************************
+function MikSBT.OnEvent()
+ -- When an addon is loaded.
+ if (event == "ADDON_LOADED") then
+ 
+  -- Set Game Damage font
+ if MikSBT_Save and MikSBT_Save.Profiles[MikSBT_Save.CurrentProfile].BlizzardFontSettings then
+	DAMAGE_TEXT_FONT = MikSBT.AVAILABLE_FONTS[MikSBT_Save.Profiles[MikSBT_Save.CurrentProfile].BlizzardFontSettings.Normal.FontIndex].Path or "Fonts\\FRIZQT__.TTF"
+ end
+ 
+  -- Make sure it's this addon.
+  if (arg1 == MikSBT.MOD_NAME) then
+
+   -- Register for the events the helper is interested in receiving.
+   MikSBT.RegisterEvents();
+
+   -- Initialize the mod.
+   MikSBT.Init();
+  end
+
+ end
+ 
+ if (event == "PLAYER_ENTERING_WORLD") then
+	this:UnregisterEvent("ADDON_LOADED");
+	this:UnregisterEvent("PLAYER_ENTERING_WORLD");
+ end
+end
+
+
+-- **********************************************************************************
+-- Called when the core events frame is updated.
+-- **********************************************************************************
+function MikSBT.OnUpdate()
+
+ -- Loop through all of the merge data tables.
+ for _, mergeData in animationMergeData do
+  -- Add the elapsed time since the last merge.
+  mergeData.TimeSinceMerge = mergeData.TimeSinceMerge + arg1;
+
+  -- Once enough time has passed and all previous merges are done.
+  if ((mergeData.TimeSinceMerge >= MERGE_DELAY_TIME) and not stillMerging) then
+   -- Set the still merging flag.
+   stillMerging = true;
+
+   -- Merge like events.
+   local numEvents = table_getn(mergeData.UnmergedEvents);
+   MikSBT.MergeEvents(mergeData, numEvents);
+
+   -- Add the merged animation events to the animation system.
+   for _, animationEvent in mergeData.MergedEvents do
+    MikSBT.AddAnimation(animationEvent);
+   end
+
+   -- Clear the merged animation events array.
+   table_wipe(mergeData.MergedEvents);
+
+
+   -- Reset the last merged time.
+   mergeData.TimeSinceMerge = 0;
+
+   -- Clear the still merging flag.
+   stillMerging = false;
+  end
+ end
+end
+
+eventFrame:SetScript("OnEvent", MikSBT.OnEvent);
+eventFrame:SetScript("OnUpdate", MikSBT.OnUpdate);
+eventFrame:RegisterEvent("ADDON_LOADED");
+eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD");
+
+
+-- **********************************************************************************
+-- Called when the mod's animation frames are updated.
+-- **********************************************************************************
+function MikSBT.OnUpdateAnimationFrame()
+ local frame = this;
+ local scrollArea = frame.ScrollArea;
+
+ -- Flag for whether or not all the animations are inactive.
+ local allInactive = true;
+
+ -- Loop through all possible animation display objects for the scroll area.
+ for _, animDisplayInfo in scrollArea.AnimationDisplayArray do
+  -- Check if the animation is active.
+  if (animDisplayInfo.IsActive) then
+   -- Do the animation and clear the all inactive flag.
+   MikSBT.DoAnimation(animDisplayInfo, scrollArea);
+   allInactive = false;
+  end
+ end
+
+ -- Check if none of the animations are active and the events frame is visible.  If so, hide it so
+ -- the OnUpdate events stop firing.  This is done to keep the number of OnUpdate events down to a minimum for
+ -- better performance.
+ if (allInactive and frame:IsVisible()) then
+  frame:Hide();
+ end
+end
+
+
+-- **********************************************************************************
+-- Called when the mod is fully loaded (variables loaded).
+-- **********************************************************************************
+function MikSBT.Init()
+ -- Register slash commands
+ SLASH_MSBT1 = MikSBT.COMMAND;
+ SlashCmdList["MSBT"] = function (params)
+  MikSBT.CommandHandler(params);
+ end
+
+ -- Check if there are no saved variables.
+ if (not MikSBT_Save or not MikSBT_Save.Profiles) then
+  MikSBT_Save = {};
+
+  MikSBT_Save.UserDisabled = false;
+  MikSBT_Save.CurrentProfile = MikSBT.DEFAULT_PROFILE_NAME;
+  MikSBT_Save.Profiles = {};
+  MikSBT_Save.Profiles[MikSBT_Save.CurrentProfile] = {};
+
+  -- Set all the options to their defaults.
+  MikSBT.ResetProfile(MikSBT_Save.CurrentProfile);
+ end
+
+ -- Updates profiles created by older versions.
+ MikSBT.UpdateProfiles();
+
+ -- Set the current profile.
+ MikSBT.CurrentProfile = MikSBT_Save.Profiles[MikSBT_Save.CurrentProfile];
+
+ -- Sets up all of the animation scroll areas.
+ MikSBT.SetupAnimationScrollAreas();
+
+ -- Reposition the animation frames to the stored offsets.
+ MikSBT.RepositionAnimationFrames();
+
+ -- Register the triggers with the combat event helper.
+ MikSBT.RegisterTriggers();
+
+ -- Disable or enable the mod depending on the saved setting.
+ MikSBT.SetOptionUserDisabled(MikSBT_Save.UserDisabled)
+end
+
+
+-- **********************************************************************************
+-- Sets up all of the animation scroll areas.
+-- **********************************************************************************
+function MikSBT.SetupAnimationScrollAreas()
+ -- Setup a table for data for each scroll area.
+ scrollAreas.Incoming = {};
+ scrollAreas.Outgoing = {};
+ scrollAreas.Notification = {};
+
+ -- Setup the display settings.
+ scrollAreas.Incoming.DisplaySettings = MikSBT.CurrentProfile.DisplaySettings.Incoming;
+ scrollAreas.Outgoing.DisplaySettings = MikSBT.CurrentProfile.DisplaySettings.Outgoing;
+ scrollAreas.Notification.DisplaySettings = MikSBT.CurrentProfile.DisplaySettings.Notification;
+
+
+ -- Loop through the scroll areas.
+ for _, scrollArea in scrollAreas do
+  -- Initialize the next available animation display object.
+  scrollArea.NextAnimationDisplay = 1;
+
+  -- Initialize the next available sticky animation display object.
+  scrollArea.FirstSticky = 11;
+  scrollArea.NextSticky = scrollArea.FirstSticky;
+
+  -- Create the scroll area's frame. It stays hidden while nothing animates so its OnUpdate doesn't run;
+  -- RepositionAnimationFrames anchors it.
+  local frame = CreateFrame("Frame", nil, UIParent);
+  frame:SetFrameStrata("HIGH");
+  frame:SetWidth(24);
+  frame:SetHeight(24);
+  frame:Hide();
+  frame.ScrollArea = scrollArea;
+  frame:SetScript("OnUpdate", MikSBT.OnUpdateAnimationFrame);
+  scrollArea.Frame = frame;
+
+  -- Create a font string for each animation display object.
+  scrollArea.AnimationDisplayArray = {};
+  for x = 1, NUM_FONT_STRINGS do
+   scrollArea.AnimationDisplayArray[x] = {};
+   scrollArea.AnimationDisplayArray[x].FontObject = frame:CreateFontString(nil, "ARTWORK", "MasterFont");
+   scrollArea.AnimationDisplayArray[x].LastUpdated = 0;
+  end
+ end
+end
+
+
+-- **********************************************************************************
+-- Repositions the animation frames based on the stored offsets.
+-- **********************************************************************************
+function MikSBT.RepositionAnimationFrames()
+ -- Loop through each scroll area and reposition its associated frame.
+ for _, scrollArea in scrollAreas do
+  scrollArea.Frame:SetPoint("BOTTOM", "UIParent", "CENTER", scrollArea.DisplaySettings.FrameOffsets.x, scrollArea.DisplaySettings.FrameOffsets.y);
+ end
+end
+
+
+-- **********************************************************************************
+-- Receive combat events from Mik's combat event helper.
+-- **********************************************************************************
+function MikSBT.CombatEventsHandler(combatEvent)
+ -- Get a table from the events pool.
+ local animationEvent = eventsPool:Acquire();
+
+ -- Look up the scroll area and event type string via pre-built tables (no string concatenation).
+ local dirType = combatEvent.DirectionType;
+ local scrollAreaKey = DIRECTION_SCROLLAREA_KEY[dirType];
+ if (scrollAreaKey) then
+  animationEvent.ScrollArea = scrollAreas[scrollAreaKey];
+ end
+
+ local eventTypeString;
+
+ -- Check if it's a damage event.
+ if (combatEvent.EventType == MikCEH.EVENTTYPE_DAMAGE) then
+  local actionType = combatEvent.ActionType;
+
+  -- Check for environmental damage (sets EffectName as side effect).
+  local envName = ENVIRONMENTAL_NAMES[actionType];
+  if (envName) then
+   combatEvent.EffectName = envName;
+   eventTypeString = dmgEventStr[dirType] and dmgEventStr[dirType]["ENVIRONMENTAL"];
+  else
+   -- Determine the action suffix.
+   local suffix;
+   if (actionType == MikCEH.ACTIONTYPE_HIT) then
+    suffix = (combatEvent.HitType == MikCEH.HITTYPE_OVER_TIME) and "DOT" or "DAMAGE";
+   else
+    suffix = ACTION_SUFFIX[actionType];
+   end
+
+   -- Use spell or non-spell variant based on whether there is an effect name.
+   if (suffix) then
+    if (combatEvent.EffectName ~= nil) then
+     eventTypeString = dmgEventStrSpell[dirType] and dmgEventStrSpell[dirType][suffix];
+    else
+     eventTypeString = dmgEventStr[dirType] and dmgEventStr[dirType][suffix];
+    end
+   end
+  end
+
+ -- Heal event.
+ elseif (combatEvent.EventType == MikCEH.EVENTTYPE_HEAL) then
+  local suffix = (combatEvent.HealType == MikCEH.HEALTYPE_OVER_TIME) and "HOT" or "HEAL";
+  eventTypeString = healEventStr[dirType] and healEventStr[dirType][suffix];
+
+ -- Notification event.
+ elseif (combatEvent.EventType == MikCEH.EVENTTYPE_NOTIFICATION) then
+  animationEvent.ScrollArea = scrollAreas.Notification;
+  local notifType = combatEvent.NotificationType;
+
+  -- Special case: combo points at max.
+  if (notifType == MikCEH.NOTIFICATIONTYPE_CP_GAIN and combatEvent.Amount == MAX_COMBO_POINTS) then
+   eventTypeString = notifEventStr["CP_FULL"];
+  else
+   eventTypeString = notifEventStr[notifType];
+   -- Fallback for unknown notification types.
+   if (not eventTypeString and notifType ~= nil) then
+    eventTypeString = "MSBT_EVENTTYPE_NOTIFICATION_" .. notifType;
+   end
+  end
+ end
+
+ -- Check if the event is a crit and set the crit field appropriately
+ if (combatEvent.HitType == MikCEH.HITTYPE_CRIT or combatEvent.HealType == MikCEH.HEALTYPE_CRIT) then
+  animationEvent.IsCrit = true;
+ end
+
+ -- Copy the amount, effect name, and player/enemy name from the passed combat event data.
+ -- if combatEvent.Amount then
+ -- animationEvent.Amount = combatEvent.Amount * 420;
+ -- else
+  animationEvent.Amount = combatEvent.Amount;
+ -- end
+ animationEvent.EffectName = combatEvent.EffectName;
+ animationEvent.Name = combatEvent.Name;
+ animationEvent.SpellId = combatEvent.SpellId;
+
+ -- Check if there is a damage type and get the appropriate string.
+ if (combatEvent.DamageType ~= nil) then
+  animationEvent.DamageType = MikCEH.GetDamageTypeString(combatEvent.DamageType);
+ end
+ 
+ -- If there are partial action types set the partial effect text appropriately.
+ if (combatEvent.PartialActionType == MikCEH.PARTIALACTIONTYPE_ABSORB) then
+  if (ABSORB_TRAILER) then
+   animationEvent.PartialEffectText = "\124cffFAFA00\124h"..string_gsub(ABSORB_TRAILER, "%%d", combatEvent.PartialAmount).."\124h\124r";
+  end
+ elseif (combatEvent.PartialActionType == MikCEH.PARTIALACTIONTYPE_BLOCK) then
+  if (BLOCK_TRAILER) then
+   animationEvent.PartialEffectText = "\124cff7F00FF\124h"..string_gsub(BLOCK_TRAILER, "%%d", combatEvent.PartialAmount).."\124h\124r";
+  end
+ elseif (combatEvent.PartialActionType == MikCEH.PARTIALACTIONTYPE_RESIST) then
+  if (RESIST_TRAILER) then
+   animationEvent.PartialEffectText = " \124cff81007F\124h"..string_gsub(RESIST_TRAILER, "%%d", combatEvent.PartialAmount).."\124h\124r";
+  end
+ elseif (combatEvent.PartialActionType == MikCEH.PARTIALACTIONTYPE_VULNERABLE) then
+  if (MikSBT.MSG_VULERNABLE_TRAILER) then
+   animationEvent.PartialEffectText = string_gsub(MikSBT.MSG_VULERNABLE_TRAILER, "%%d", combatEvent.PartialAmount);
+  end
+ elseif (combatEvent.PartialActionType == MikCEH.PARTIALACTIONTYPE_CRUSHING) then
+  if (CRUSHING_TRAILER) then
+   animationEvent.PartialEffectText = "\124cff7D0000\124h"..CRUSHING_TRAILER.."\124h\124r";
+  end
+ elseif (combatEvent.PartialActionType == MikCEH.PARTIALACTIONTYPE_GLANCING) then
+  if (GLANCING_TRAILER) then
+   animationEvent.PartialEffectText = "\124cffFA0000\124h"..GLANCING_TRAILER.."\124h\124r";
+  end
+ elseif (combatEvent.PartialActionType == MikCEH.PARTIALACTIONTYPE_OVERHEAL) then
+  animationEvent.OverhealAmount = combatEvent.PartialAmount;
+ end
+
+
+
+ -- Check if there is profile data for the event type.
+ if (MikSBT.CurrentProfile.EventSettings[eventTypeString]) then
+  -- Set the event type, the settings for it, its unformatted text and dispatch it to the animation system.
+  animationEvent.EventType = eventTypeString;
+  animationEvent.EventSettings = MikSBT.CurrentProfile.EventSettings[animationEvent.EventType];
+  animationEvent.UnformattedText = animationEvent.EventSettings.Message;
+
+  -- Dispatch the event to the animation system.
+  MikSBT.DispatchAnimationEvent(animationEvent);
+ else
+  -- Print an error message and release the animation event table to the events pool.
+  MikSBT.Print("No profile data found for " .. eventTypeString, 1, 0, 0)
+  eventsPool:Release(animationEvent);
+ end
+end
+
+
+
+-- **********************************************************************************
+-- Receive trigger events from Mik's trigger helper.
+-- **********************************************************************************
+function MikSBT.TriggerHandler(triggerEvent)
+ -- Get a table from the events pool.
+ local animationEvent = eventsPool:Acquire();
+
+ -- Check if the trigger require a stance
+ if (MikSBT.CurrentProfile.Triggers[triggerEvent.TriggerKey].TriggerSettings.Stance) then
+	local _,_,isActive = GetShapeshiftFormInfo(MikSBT.CurrentProfile.Triggers[triggerEvent.TriggerKey].TriggerSettings.Stance)
+	if not isActive then
+		-- Release the animation event table to the events pool.
+		eventsPool:Release(animationEvent);
+		return
+	end
+ end
+ 
+ -- Check if there is profile data for the trigger.
+ if (MikSBT.CurrentProfile.Triggers[triggerEvent.TriggerKey].EventSettings) then
+  -- Set the scroll area, event settings, and output text.
+  animationEvent.ScrollArea = scrollAreas.Notification;
+  animationEvent.EventSettings = MikSBT.CurrentProfile.Triggers[triggerEvent.TriggerKey].EventSettings;
+  MikSBT.FormatTriggerText(animationEvent, triggerEvent);
+  
+  if (MikSBT.CurrentProfile.Triggers[triggerEvent.TriggerKey].Texture) then
+	 animationEvent.Texture = MikSBT.CurrentProfile.Triggers[triggerEvent.TriggerKey].Texture
+  end
+
+  -- Dispatch the event to the animation system.
+  MikSBT.DispatchAnimationEvent(animationEvent);
+ else
+  -- Print an error message and release the animation event table to the events pool.
+  MikSBT.Print("No profile data found for trigger key " .. triggerEvent.TriggerKey, 1, 0, 0);
+  eventsPool:Release(animationEvent);  
+ end
+end
+
+
+-------------------------------------------------------------------------------------
+-- Utility functions.
+-------------------------------------------------------------------------------------
+
+-- **********************************************************************************
+-- This function copies a table.
+-- **********************************************************************************
+function MikSBT.CopyTable(srcTable)
+ -- Create a new table.
+ local newTable = {};
+
+ -- Loop through all of the entires in the table.
+ for key, value in srcTable do
+  -- Check if it's a nested table.
+  if (type(value) == "table") then
+   -- Recursively call the function to copy the nested table.
+   value = MikSBT.CopyTable(value);
+  end
+
+  -- Make a copy of the value into the new table.
+  newTable[key] = value;
+ end
+
+ -- Return the new table.
+ return newTable;
+end
+
+
+-- **********************************************************************************
+-- Merges like animation events.
+-- **********************************************************************************
+function MikSBT.MergeEvents(mergeData, numEvents)
+  -- Hold whether or not the event was merged.
+  local eventMerged = false;
+ 
+  -- Don't attempt to merge any more events than were available when the function was called since
+  -- more events may get added while the merge is taking place.
+  for x = 1, numEvents do
+ 
+   -- Loop through all of the events in the merged events array.
+   for _, animationEvent in mergeData.MergedEvents do
+     local unmergedEventMatched = false;
+ 
+     -- Check if the event types match and the effect names are the same.
+    if ((mergeData.UnmergedEvents[x].EventType == animationEvent.EventType) and
+        (mergeData.UnmergedEvents[x].EffectName == animationEvent.EffectName)) then
+ 
+     -- Check if there is no effect name
+     if (mergeData.UnmergedEvents[x].EffectName == nil) then
+      -- Check if the affected unit name is the same.
+      if ((mergeData.UnmergedEvents[x].Name == animationEvent.Name) and mergeData.UnmergedEvents[x].Name ~= nil) then
+       -- Do Merge.
+       eventMerged = true;
+       unmergedEventMatched = true;
+      end -- Same name.
+ 
+     -- There is an effect name.
+     else
+      -- Check if there is a name and replace it with the multiple targets string.
+      if (animationEvent.Name ~= nil) then
+       animationEvent.Name = MikSBT.MSG_MULTIPLE_TARGETS;
+      end
+ 
+      -- Do Merge.
+      eventMerged = true;
+      unmergedEventMatched = true;
+     end -- Effect name?
+    end -- Event types match and effect names the same.
+ 
+ 
+    -- Check if the event should be merged.
+    if (unmergedEventMatched) then
+     -- Set the event merged flag for the event being merged.
+     mergeData.UnmergedEvents[x].EventMerged = true;
+ 
+     -- If the events have an amount then total them.
+     if (animationEvent.Amount ~= nil and mergeData.UnmergedEvents[x].Amount ~= nil) then
+    animationEvent.Amount = tonumber(animationEvent.Amount, 10)
+     if animationEvent.Amount and type(animationEvent.Amount) == "number" and mergeData.UnmergedEvents[x].Amount then
+       animationEvent.Amount = animationEvent.Amount + mergeData.UnmergedEvents[x].Amount;
+     end
+      -- animationEvent.Amount = animationEvent.Amount + mergeData.UnmergedEvents[x].Amount;
+     end
+ 
+     -- Check if there is an overheal amount and total it.
+     if (mergeData.UnmergedEvents[x].OverhealAmount ~= nil) then
+      animationEvent.OverhealAmount = (animationEvent.OverhealAmount or 0) + mergeData.UnmergedEvents[x].OverhealAmount;
+     end
+ 
+     -- Clear any partial effect text.
+     animationEvent.PartialEffectText = nil;
+ 
+     
+     -- Increment the number of merged events.
+     animationEvent.NumMerged = animationEvent.NumMerged + 1;
+ 
+     -- Check if the event being merged is a crit and increment the number of crits.
+     if (mergeData.UnmergedEvents[x].IsCrit) then
+      animationEvent.NumCrits = animationEvent.NumCrits + 1;
+     end
+ 
+     -- Make sure the merged event is not flagged as a crit.
+     animationEvent.IsCrit = false;
+    end -- Do Merge.
+   end -- Loop through all merged events.
+ 
+ 
+   -- If the event wasn't merged add it to the end of the merged events array.
+   if (not eventMerged) then
+    local animationEvent = mergeData.UnmergedEvents[x];
+    animationEvent.NumMerged = 0;
+ 
+    -- Check if the event is a crit and set the number of crits appropriately.
+    if (animationEvent.IsCrit) then
+     animationEvent.NumCrits = 1;
+    else
+     animationEvent.NumCrits = 0;
+    end
+ 
+    -- Add the animation event to the end of the merged events array.
+    table_insert(mergeData.MergedEvents, animationEvent);
+   end
+ 
+   -- Reset the event merged flag.
+   eventMerged = false;
+  end
+
+
+ -- Loop through each event in the merged events array.
+ for _, animationEvent in mergeData.MergedEvents do
+  -- Check if there were any events merged.
+  if (animationEvent.NumMerged > 0) then
+   -- Create trailer text with the number of merged events.
+   local trailerText = " [" .. 1 + animationEvent.NumMerged.. " " .. MikSBT.MSG_HITS;
+
+   -- Check if there were any crits merged.
+   if (animationEvent.NumCrits > 1) then
+    trailerText = trailerText .. ", " .. animationEvent.NumCrits .. " " .. MikSBT.MSG_CRITS;
+   elseif (animationEvent.NumCrits == 1) then
+    trailerText = trailerText .. ", " .. animationEvent.NumCrits .. " " .. MikSBT.MSG_CRIT;
+   end
+
+   -- Close the merge string.
+   trailerText = trailerText .. "]";
+
+   -- Set the animation event's merge trailer text field.
+   animationEvent.MergeTrailerText = trailerText;
+  end
+ end
+
+
+ -- Remove the processed animation events from unmerged events queue.
+ for x = 1, numEvents do
+  -- Check if the event was merged into a different animation event.
+  if (mergeData.UnmergedEvents[x] and mergeData.UnmergedEvents[x].EventMerged) then
+   -- Release the animation event table to the events pool.
+   eventsPool:Release(mergeData.UnmergedEvents[x]);
+  end
+ end
+ table_wipe(mergeData.UnmergedEvents);
+end
+
+
+-- **********************************************************************************
+-- This function gets the appropriate font size for an event.
+-- **********************************************************************************
+function MikSBT.GetFontSize(scrollArea, eventSettings, isCrit)
+ -- Holds the font sizes for the event level.
+ local eventFontSizeNormal = 0;
+ local eventFontSizeCrit = 0;
+
+ -- Check if there are event settings.
+ if (eventSettings ~= nil) then
+  -- Get the font sizes for the event type.
+  eventFontSizeNormal = eventSettings.FontSettings.Normal.FontSize;
+
+  -- Check if there are crit font settings for the event.
+  if (eventSettings.FontSettings.Crit ~= nil) then
+   eventFontSizeCrit = eventSettings.FontSettings.Crit.FontSize;
+  end
+ end
+
+  -- Get the font sizes for the scroll area and master.
+ local scrollAreaFontSizeNormal = scrollArea.DisplaySettings.FontSettings.Normal.FontSize;
+ local scrollAreaFontSizeCrit = scrollArea.DisplaySettings.FontSettings.Crit.FontSize;
+ local masterFontSizeNormal = MikSBT.CurrentProfile.MasterFontSettings.Normal.FontSize;
+ local masterFontSizeCrit = MikSBT.CurrentProfile.MasterFontSettings.Crit.FontSize;
+
+
+ -- Get the normal font size for the event.
+ local fontSize = eventFontSizeNormal;
+
+ -- Check if the font size is inherited from the scroll area font size.
+ if (fontSize == 0) then
+  fontSize = scrollAreaFontSizeNormal;
+ end
+
+ -- Check if the font size for the scroll area is inherited from the master font size.
+ if (fontSize == 0) then
+  fontSize = masterFontSizeNormal;
+ end
+
+
+ -- Check if the event is a crit.
+ if (isCrit) then
+  -- Get the crit font size for the event.
+  fontSize = eventFontSizeCrit;
+
+  -- Check if the font size is inherited from the scroll area font size.
+  if (fontSize == 0) then
+   fontSize = scrollAreaFontSizeCrit;
+  end
+
+  -- Check if the font size for the scroll area is inherited from the master font size.
+  if (fontSize == 0) then
+   fontSize = masterFontSizeCrit;
+  end
+ end
+
+ -- Return the font size.
+ return fontSize;
+end
+
+
+-- **********************************************************************************
+-- This function gets the appropriate font path for an event.
+-- **********************************************************************************
+function MikSBT.GetFontPath(scrollArea, eventSettings, isCrit)
+ -- Holds the font indices for the event level.
+ local eventFontIndexNormal = 0;
+ local eventFontIndexCrit = 0;
+
+ -- Check if there are event settings.
+ if (eventSettings ~= nil) then
+  -- Get the font indices for the event type.
+  eventFontIndexNormal = eventSettings.FontSettings.Normal.FontIndex;
+
+  -- Check if there are crit font settings for the event.
+  if (eventSettings.FontSettings.Crit ~= nil) then
+   eventFontIndexCrit = eventSettings.FontSettings.Crit.FontIndex;
+  end
+ end
+
+ -- Get the font indices for the scroll area and master.
+ local scrollAreaFontIndexNormal = scrollArea.DisplaySettings.FontSettings.Normal.FontIndex;
+ local scrollAreaFontIndexCrit = scrollArea.DisplaySettings.FontSettings.Crit.FontIndex;
+ local masterFontIndexNormal = MikSBT.CurrentProfile.MasterFontSettings.Normal.FontIndex;
+ local masterFontIndexCrit = MikSBT.CurrentProfile.MasterFontSettings.Crit.FontIndex;
+
+
+ -- Get the normal font index for the event.
+ local fontIndex = eventFontIndexNormal;
+
+ -- Check if the font index is inherited from the scroll area font index.
+ if (fontIndex == 0) then
+  fontIndex = scrollAreaFontIndexNormal;
+ end
+
+ -- Check if the font index for the scroll area is inherited from the master font index.
+ if (fontIndex == 0) then
+  fontIndex = masterFontIndexNormal;
+ end
+
+
+ -- Check if the event is a crit.
+ if (isCrit) then
+  -- Get the crit font index for the event.
+  fontIndex = eventFontIndexCrit;
+
+  -- Check if the font index is inherited from the scroll area font index.
+  if (fontIndex == 0) then
+   fontIndex = scrollAreaFontIndexCrit;
+  end
+
+  -- Check if the font index for the scroll area is inherited from the master font index.
+  if (fontIndex == 0) then
+   fontIndex = masterFontIndexCrit;
+  end
+ end
+
+ -- Check if the font index is invalid and set it to the default if it is.
+ if (MikSBT.AVAILABLE_FONTS[fontIndex] == nil) then
+  fontIndex = 1;
+ end
+
+ -- Return the font path.
+ return MikSBT.AVAILABLE_FONTS[fontIndex].Path;
+end
+
+
+-- **********************************************************************************
+-- This function gets the appropriate font outline style for an event.
+-- **********************************************************************************
+function MikSBT.GetFontOutline(scrollArea, eventSettings, isCrit)
+ -- Holds the outline indices for the event level.
+ local eventOutlineIndexNormal = 0;
+ local eventOutlineIndexCrit = 0;
+
+ -- Check if there are event settings.
+ if (eventSettings ~= nil) then
+  -- Get the outline indices for the event type.
+  eventOutlineIndexNormal = eventSettings.FontSettings.Normal.OutlineIndex;
+
+  -- Check if there are crit font settings for the event.
+  if (eventSettings.FontSettings.Crit ~= nil) then
+   eventOutlineIndexCrit = eventSettings.FontSettings.Crit.OutlineIndex;
+  end
+ end
+
+ -- Get the outline indices for the scroll area and master.
+ local scrollAreaOutlineIndexNormal = scrollArea.DisplaySettings.FontSettings.Normal.OutlineIndex;
+ local scrollAreaOutlineIndexCrit = scrollArea.DisplaySettings.FontSettings.Crit.OutlineIndex;
+ local masterOutlineIndexNormal = MikSBT.CurrentProfile.MasterFontSettings.Normal.OutlineIndex;
+ local masterOutlineIndexCrit = MikSBT.CurrentProfile.MasterFontSettings.Crit.OutlineIndex;
+
+
+ -- Get the normal outline index for the event.
+ local outlineIndex = eventOutlineIndexNormal;
+
+ -- Check if the outline index is inherited from the scroll area outline index.
+ if (outlineIndex == 0) then
+  outlineIndex = scrollAreaOutlineIndexNormal;
+ end
+
+ -- Check if the outline index for the scroll area is inherited from the master outline index.
+ if (outlineIndex == 0) then
+  outlineIndex = masterOutlineIndexNormal;
+ end
+
+
+ -- Check if the event is a crit.
+ if (isCrit) then
+  -- Get the crit outline index for the event.
+  outlineIndex = eventOutlineIndexCrit;
+
+  -- Check if the outline index is inherited from the scroll area outline index.
+  if (outlineIndex == 0) then
+   outlineIndex = scrollAreaOutlineIndexCrit;
+  end
+
+  -- Check if the outline index for the scroll area is inherited from the master outline index.
+  if (outlineIndex == 0) then
+   outlineIndex = masterOutlineIndexCrit;
+  end
+ end
+
+
+ -- Return the outline style.
+ return MikSBT.AVAILABLE_OUTLINES[outlineIndex].Style;
+end
+
+
+-- **********************************************************************************
+-- This function substitutes the codes in the unformatted text of the passed
+-- animation event with the values in its fields.
+-- **********************************************************************************
+function MikSBT.FormatEventText(animationEvent)
+ local outputString = animationEvent.UnformattedText;
+ 
+ -- Print(animationEvent)
+ 
+ -- Check if there is no unformatted text and bail.
+ if (outputString == nil) then
+  return;
+ end
+
+	outputString = string_gsub(outputString, "-%%a", "\124cffff0000\124h-\124h\124r%%a");
+
+	if animationEvent.DamageType then
+		local color = GetDamageTypeFontColor(animationEvent.DamageType)
+		if color then
+			outputString = string_gsub(outputString, "%%a", color.colorStr .. "%%a\124h\124r")
+		end
+	end
+
+ -- Substitute amount.
+ if (animationEvent.Amount ~= nil) then
+  -- Check if there is overheal info 
+  if (animationEvent.OverhealAmount ~= nil and MikSBT.CurrentProfile.ShowOverheals) then
+   local overhealTrailer = string_gsub(MikSBT.MSG_OVERHEAL_TRAILER, "%%d", animationEvent.OverhealAmount);
+   outputString = string_gsub(outputString, "%%a", (animationEvent.Amount - animationEvent.OverhealAmount) .. overhealTrailer);
+  else 
+   outputString = string_gsub(outputString, "%%a", animationEvent.Amount);
+  end
+ end
+
+ -- Substitute enemy/player names.
+ local unitID, unitName = MikCEH.GetUnitIDFromName(animationEvent.Name)
+ animationEvent._unitID = unitID
+ animationEvent._unitName = unitName
+ if unitName and unitID and not UnitIsUnit(unitID, "player") then
+  outputString = string_gsub(outputString, "%%n", unitName);
+ else
+  outputString = string_gsub(outputString, "%(%%n%)", "");
+  outputString = string_gsub(outputString, "%%n", "");
+ end
+
+ -- Substitute effect names.
+ if (animationEvent.EffectName ~= nil) then
+  outputString = string_gsub(outputString, "%%s", animationEvent.EffectName);
+ end
+
+ -- Substitute damage types.
+ if (animationEvent.DamageType ~= nil) then
+  outputString = string_gsub(outputString, "%%t", animationEvent.DamageType);
+ end
+
+ -- Check if there is partial effect text and the show partial effects flag is on and append it.
+ if (animationEvent.PartialEffectText ~= nil and MikSBT.CurrentProfile.ShowPartialEffects) then
+  outputString = outputString .. animationEvent.PartialEffectText;
+ end
+
+
+ -- Check if there is merge trailer text and append it.
+ if (animationEvent.MergeTrailerText ~= nil) then
+  outputString = outputString .. animationEvent.MergeTrailerText;
+ end
+
+ -- Set the event's output text.
+ animationEvent.Text = outputString;
+end
+
+
+-- **********************************************************************************
+-- This function returns the output message for the passed trigger event with all
+-- %1-9 codes substituted with captured data.
+-- **********************************************************************************
+function MikSBT.FormatTriggerText(animationEvent, triggerEvent)
+ local outputString = animationEvent.EventSettings.Message;
+
+ -- Check if there is no text and bail.
+ if (outputString == nil) then
+  return;
+ end
+
+ -- Loop through all of the captures in the trigger event.
+ for i = 1, triggerEvent.NumCaptures do
+  outputString = string_gsub(outputString , "%%" .. i, triggerEvent["CapturedData" .. i]);
+ end
+
+ -- Set the event's output text.
+ animationEvent.Text = outputString;
+end
+
+
+-- **********************************************************************************
+-- Registers the triggers in the current profile with combat event lib.
+-- **********************************************************************************
+function MikSBT.RegisterTriggers()
+ -- Unregister all of the triggers from the combat event helper.
+ MikCEH.UnregisterAllTriggers();
+
+ -- Loop through all of the triggers in the current profile.
+ for triggerKey, triggerData in MikSBT.CurrentProfile.Triggers do
+  -- Make sure the trigger is being shown and register it with the combat event helper.
+  if (triggerData.EventSettings.Show) then
+   MikCEH.RegisterTrigger(triggerKey, triggerData.TriggerSettings);
+  end
+ end
+end
+
+
+-------------------------------------------------------------------------------------
+-- Profile functions.
+-------------------------------------------------------------------------------------
+
+-- **********************************************************************************
+-- Fills keys missing from target with copies of the defaults. Triggers and
+-- Suppressions are user lists: a missing entry there was deleted on purpose, so
+-- only the lists themselves are filled, never their entries.
+-- **********************************************************************************
+local USER_LISTS = {Triggers = true, Suppressions = true};
+
+local function FillMissingDefaults(target, defaults)
+ for key, value in defaults do
+  if (target[key] == nil) then
+   target[key] = (type(value) == "table") and MikSBT.CopyTable(value) or value;
+  elseif (type(value) == "table" and type(target[key]) == "table" and not USER_LISTS[key]) then
+   FillMissingDefaults(target[key], value);
+  end
+ end
+end
+
+
+-- **********************************************************************************
+-- Brings saved profiles up to date by adding settings introduced since they were created.
+-- **********************************************************************************
+function MikSBT.UpdateProfiles()
+ for _, profile in MikSBT_Save.Profiles do
+  FillMissingDefaults(profile, MikSBT.DEFAULT_CONFIG);
+ end
+end
+
+
+-- **********************************************************************************
+-- Returns whether or not the passed profile exists.
+-- **********************************************************************************
+function MikSBT.ProfileExists(profileName)
+ local profileFound = false;
+
+ -- Loop through all of the profiles looking for the passed one.
+ for pName in MikSBT_Save.Profiles do
+  if (pName == profileName) then
+   profileFound = true;   
+  end
+ end
+
+ -- Return whether or not the profile exists.
+ return profileFound;
+end
+
+
+-- **********************************************************************************
+-- Resets the passed profile to its defaults.
+-- **********************************************************************************
+function MikSBT.ResetProfile(profileName, showOutput)
+ -- Get whether or not the profile exists.
+ local profileExists = MikSBT.ProfileExists(profileName);
+
+ -- Check if the profile exists.
+ if (profileExists) then
+  -- Reset the profile.
+  MikSBT_Save.Profiles[profileName] = MikSBT.CopyTable(MikSBT.DEFAULT_CONFIG);
+
+  -- Check if it's the current profile being reset.
+  if (profileName == MikSBT_Save.CurrentProfile) then
+   -- Reset the current profile pointer.
+   MikSBT.CurrentProfile = MikSBT_Save.Profiles[MikSBT_Save.CurrentProfile];
+
+   -- Reassociate the display settings if the scroll areas have been setup.
+   if (scrollAreas.Incoming ~= nil) then
+    -- Setup the display settings.
+    scrollAreas.Incoming.DisplaySettings = MikSBT.CurrentProfile.DisplaySettings.Incoming;
+    scrollAreas.Outgoing.DisplaySettings = MikSBT.CurrentProfile.DisplaySettings.Outgoing;
+    scrollAreas.Notification.DisplaySettings = MikSBT.CurrentProfile.DisplaySettings.Notification;
+   end
+
+   -- Reposition the animation frames.
+   MikSBT.RepositionAnimationFrames();
+
+   -- Register the triggers with the combat event helper.
+   MikSBT.RegisterTriggers();
+  end
+
+  -- Check if the output text is to be shown.
+  if (showOutput) then
+   -- Print the profile reset string.
+   MikSBT.Print(profileName .. " " .. MikSBT.MSG_PROFILE_RESET, 0, 1, 0);
+  end
+ end 
+end
+
+
+-- **********************************************************************************
+-- Selects the passed profile.
+-- **********************************************************************************
+function MikSBT.SelectProfile(profileName)
+ -- Get whether or not the profile exists.
+ local profileExists = MikSBT.ProfileExists(profileName);
+
+ -- Check if the profile exists.
+ if (profileExists) then
+  -- Set the current profile name to the one being selected.
+  MikSBT_Save.CurrentProfile = profileName;
+
+  -- Reset the current profile pointer.
+  MikSBT.CurrentProfile = MikSBT_Save.Profiles[MikSBT_Save.CurrentProfile];
+
+  -- Reassociate the display settings if the scroll areas have been setup.
+  if (scrollAreas.Incoming ~= nil) then
+   -- Setup the display settings.
+   scrollAreas.Incoming.DisplaySettings = MikSBT.CurrentProfile.DisplaySettings.Incoming;
+   scrollAreas.Outgoing.DisplaySettings = MikSBT.CurrentProfile.DisplaySettings.Outgoing;
+   scrollAreas.Notification.DisplaySettings = MikSBT.CurrentProfile.DisplaySettings.Notification;
+  end
+
+  -- Reposition the animation frames.
+  MikSBT.RepositionAnimationFrames();
+
+  -- Register the triggers with the combat event helper.
+  MikSBT.RegisterTriggers();
+ end
+end
+
+
+-- **********************************************************************************
+-- Creates a profile for the passed name.
+-- **********************************************************************************
+function MikSBT.CreateProfile(profileName)
+ -- Get whether or not the profile exists.
+ local profileExists = MikSBT.ProfileExists(profileName);
+
+ -- Make sure a profile name was passed and it doesn't already exist.
+ if (not profileExists and profileName ~= nil and profileName ~= "") then
+  -- Create an array for the profile.
+  MikSBT_Save.Profiles[profileName] = {};
+  
+  -- Reset the profile.
+  MikSBT.ResetProfile(profileName);
+ end
+end
+
+
+-- **********************************************************************************
+-- Deletes the passed profile.
+-- **********************************************************************************
+function MikSBT.DeleteProfile(profileName)
+ -- Check if the passed profile is the default one.
+ if (profileName == MikSBT.DEFAULT_PROFILE_NAME) then
+  return;
+ end
+
+ -- Get whether or not the profile exists.
+ local profileExists = MikSBT.ProfileExists(profileName);
+
+ -- Check if the profile exists.
+ if (profileExists) then
+  -- Check if the profile being deleted is the current one.
+  if (profileName == MikSBT_Save.CurrentProfile) then
+   -- Select the default profile.
+   MikSBT.SelectProfile(MikSBT.DEFAULT_PROFILE_NAME);
+  end
+
+  -- Delete the profile.
+  MikSBT_Save.Profiles[profileName] = nil;
+ end
+end
+
+
+-------------------------------------------------------------------------------------
+-- Option functions.
+-------------------------------------------------------------------------------------
+
+-- **********************************************************************************
+-- Set the user disabled option
+-- **********************************************************************************
+function MikSBT.SetOptionUserDisabled(isDisabled)
+ MikSBT_Save.UserDisabled = isDisabled;
+
+ -- Check if the mod is being set to disabled.
+ if (isDisabled) then
+  -- Unregister all events.
+  MikSBT.UnregisterEvents();
+  MikCEH.UnregisterEvents();
+
+  -- Turn on the game's display of outgoing damage.
+  SetCVar("CombatDamage", 1);
+
+  -- Turn on Blizzard's default combat text.
+  if (SHOW_COMBAT_TEXT ~= nil) then
+   SHOW_COMBAT_TEXT = 1;
+  end
+ else
+  -- Reregister events.
+  MikSBT.RegisterEvents();
+  MikCEH.RegisterEvents();
+
+  -- Turn the game damage display on or off depending on the user setting.
+  MikSBT.SetOptionShowGameDamage(MikSBT.CurrentProfile.ShowGameDamage);
+  
+  -- Turn off Blizzard's default combat text.
+  if (SHOW_COMBAT_TEXT ~= nil) then
+   SHOW_COMBAT_TEXT = 0;
+  end
+
+  -- Make sure that periodic spell effects are reported.
+  SetCVar("CombatLogPeriodicSpells", 1);
+ end
+end
+
+
+-- **********************************************************************************
+-- Set the game damage disabled option
+-- **********************************************************************************
+function MikSBT.SetOptionShowGameDamage(showDamage)
+ MikSBT.CurrentProfile.ShowGameDamage = showDamage;
+
+ -- Check if the game damage is being set to on.
+ if (showDamage) then
+   -- Turn on the game damage display.
+   SetCVar("CombatDamage", 1);
+ else
+   -- Turn off the game damage display.
+   SetCVar("CombatDamage", 0);
+ end
+end
+
+
+-- **********************************************************************************
+-- This function takes a string version of a variable path
+-- and returns its value from the current profile.
+-- **********************************************************************************
+function MikSBT.GetOptionFromVarPath(varPath)
+ -- Set the current table to the current profile.
+ local currentTable = MikSBT.CurrentProfile;
+
+ -- Index into each sub table until we reach the actual variable wanted.
+ for varName in string.gfind(varPath, "[%w_]+") do
+  if (type(currentTable[varName]) == "table") then
+   currentTable = currentTable[varName];
+  else
+   return currentTable[varName];
+  end
+ end
+
+ return nil;
+end
+
+
+-- **********************************************************************************
+-- This function takes a string version of a variable path
+-- and sets its value in the current profile to the passed value.
+-- **********************************************************************************
+function MikSBT.SetOptionFromVarPath(varPath, newValue)
+ -- Sets the current table to the current profile.
+ local currentTable = MikSBT.CurrentProfile;
+
+ -- Index into each sub table until we reach the actual variable wanted and set it
+ -- to the passed value.
+ for varName in string.gfind(varPath, "[%w_]+") do
+  if (type(currentTable[varName]) == "table") then
+   currentTable = currentTable[varName]
+  else
+   currentTable[varName] = newValue;
+  end
+ end
+end
+
+
+-------------------------------------------------------------------------------------
+-- Animation functions.
+-------------------------------------------------------------------------------------
+
+-- **********************************************************************************
+-- Adds the passed animation event to the animation system for the appropriate scroll
+-- area.
+--
+-- animationEvent Possible Fields:
+--  ScrollArea		- The scroll area to use for the event.
+--  EventType		- The event type.
+--  EventSettings		- The event settings for the event.
+--  IsCrit			- Whether or not the event is a crit.
+--  UnformattedText	- The unformatted text to display.
+--  Amount			- The amount of the attack, heal, gain, loss, etc.
+--  EffectName		- The name of the spell, ability, buff, debuff, power type, etc.
+--  Name			- The name of the enemy/player.
+--  DamageType		- The type of damage.
+--  PartialEffectText	- Partial effect text to be appended. (partial resists, absorbs, blocks)
+--  OverhealAmount	- The amount overhealed.
+--  Text			- The formatted text to display.
+-- **********************************************************************************
+function MikSBT.DispatchAnimationEvent(animationEvent)
+ -- Check if the event is to be shown.
+ if (animationEvent.EventSettings.Show and animationEvent.ScrollArea.DisplaySettings.Show) then
+
+  -- If it's an incoming or outgoing event add it to the associated scroll area's events array
+  -- for potential merging.
+  if (animationEvent.ScrollArea == scrollAreas.Incoming) then
+   table_insert(animationMergeData.Incoming.UnmergedEvents, animationEvent);
+  elseif (animationEvent.ScrollArea == scrollAreas.Outgoing) then
+   table_insert(animationMergeData.Outgoing.UnmergedEvents, animationEvent);
+
+  -- Add the event the animation system.
+  else
+   MikSBT.AddAnimation(animationEvent);
+  end
+ else
+  -- The event is hidden so release it.
+  eventsPool:Release(animationEvent);
+ end
+end
+
+
+-- **********************************************************************************
+-- Add the event to the appropriate scroll area's animation display array.
+-- **********************************************************************************
+function MikSBT.AddAnimation(animationEvent)
+ -- Format the animation event's output text.
+ MikSBT.FormatEventText(animationEvent);
+
+ -- Loop through all of the suppression entries and look for a match.
+ for _, suppressionSettings in MikSBT.CurrentProfile.Suppressions do
+  -- Check if the suppression's search pattern is a match.
+  if (suppressionSettings.Enabled and (string_find(animationEvent.Text, suppressionSettings.SearchPattern))) then
+   -- Release the animation event table to the events pool and leave the function.
+   eventsPool:Release(animationEvent);
+   return;
+  elseif (suppressionSettings.Enabled and animationEvent.EffectName and string_find(animationEvent.EffectName, suppressionSettings.SearchPattern)) then
+   -- Release the animation event table to the events pool and leave the function.
+   eventsPool:Release(animationEvent);
+   return;
+  end
+ end
+ 
+ if animationEvent.EventType == "MSBT_EVENTTYPE_NOTIFICATION_POWER_GAIN" and animationEvent.EffectName ~= 0 and MikSBT.CurrentProfile.ShowAllManaGains then
+	eventsPool:Release(animationEvent);
+	return
+ end
+
+
+ -- Check if the animation event is to be displayed sticky style.
+ if (animationEvent.EventSettings ~= nil and animationEvent.EventSettings.IsSticky) then
+  animationEvent.IsSticky = true;
+ end
+
+ -- Color UnitName by class (reuse cached lookup from FormatEventText)
+ local unitID = animationEvent._unitID
+ local uName = animationEvent._unitName
+ if unitID then
+  local _, class = UnitClass(unitID)
+  local colorPrefix = class and CLASS_COLORS[class]
+  if colorPrefix then
+   animationEvent.Text = string_gsub(animationEvent.Text, animationEvent.Name, colorPrefix .. uName .. "|h|r")
+  end
+ end
+
+ -- Get the next available animation display info object for the scroll area.
+ local animDisplayInfo = MikSBT.GetNextAnimationDisplayInfo(animationEvent);
+
+ -- Get the scroll function to use.
+ animDisplayInfo.ScrollFunction = MikSBT.GetScrollFunction(animationEvent);
+
+ -- Get the starting X and Y positions.
+ animDisplayInfo.PositionX, animDisplayInfo.PositionY = MikSBT.GetAnimationStartingPosition(animationEvent)
+
+
+ -- Check if the animation event has event settings associated with it.
+ if (animationEvent.EventSettings ~= nil) then
+  -- Get the font size for the event.
+  animDisplayInfo.FontSize = MikSBT.GetFontSize(animationEvent.ScrollArea, animationEvent.EventSettings, animationEvent.IsCrit);
+
+  -- Get the font path for the event.
+  animDisplayInfo.FontPath = MikSBT.GetFontPath(animationEvent.ScrollArea, animationEvent.EventSettings, animationEvent.IsCrit);
+
+  -- Get the font outline style for the event.
+  animDisplayInfo.FontOutline = MikSBT.GetFontOutline(animationEvent.ScrollArea, animationEvent.EventSettings, animationEvent.IsCrit);
+
+  -- Set the r, g, and b color for the animation display object.
+  animDisplayInfo.ColorR = animationEvent.EventSettings.FontSettings.Color.r;
+  animDisplayInfo.ColorG = animationEvent.EventSettings.FontSettings.Color.g;
+  animDisplayInfo.ColorB = animationEvent.EventSettings.FontSettings.Color.b;
+
+  -- Override font color based on spell school damage type.
+  if animationEvent.DamageType and animationEvent.EventType then
+   local dtColor = GetDamageTypeFontColor(animationEvent.DamageType)
+   if dtColor then
+    animDisplayInfo.ColorR, animDisplayInfo.ColorG, animDisplayInfo.ColorB = dtColor:GetRGB()
+   end
+  end
+
+ -- No event type associated with the event so get the display info from the animation event itself.
+ else
+  -- Get the font size for the event.
+  animDisplayInfo.FontSize = animationEvent.FontSize;
+
+  -- Get the font path for the event.
+  animDisplayInfo.FontPath = animationEvent.FontPath;
+
+  -- Get the font outline style for the event.
+  animDisplayInfo.FontOutline = animationEvent.FontOutline;
+
+  -- Set the r, g, and b color for the animation display object.
+  animDisplayInfo.ColorR = animationEvent.ColorR;
+  animDisplayInfo.ColorG = animationEvent.ColorG;
+  animDisplayInfo.ColorB = animationEvent.ColorB;
+ end
+
+
+ -- Set the animation display alpha, anchor point, crit flag, and sticky flag.
+ animDisplayInfo.Alpha = 0;
+ animDisplayInfo.AnchorPoint = MikSBT.AVAILABLE_TEXT_ALIGNS[animationEvent.ScrollArea.DisplaySettings.FontSettings.TextAlignIndex].AnchorPoint;
+ animDisplayInfo.IsCrit = animationEvent.IsCrit;
+ animDisplayInfo.IsSticky = animationEvent.IsSticky;
+
+ if (animationEvent.EventType == "MSBT_EVENTTYPE_OUTGOING_SPELL_RESIST") then 
+  -- play sound if enabled
+  if MikSBT.CurrentProfile.ResistSound then
+    if animationEvent.EffectName then
+      if (string_find(animationEvent.EffectName, "Cone of Cold") or string_find(animationEvent.EffectName, "Frost Nova")) then
+        PlaySoundFile("Interface\\AddOns\\MikScrollingBattleText\\sounds\\Resist.mp3");
+      end
+    end
+  end
+ end
+  
+ -- Set the font object properties.
+ animDisplayInfo.FontObject:ClearAllPoints();
+ -- SetTextHeight does NOT apply if the original font size wouldn't be changed by it
+ -- FontSize tops out at 32 and in vanilla doesn't seem to apply at all - every different size I've tried has refused to work
+ -- TextHeight does scale past 32, but expectedly becomes blurry - still better than unreadable numbers on a 4k display
+ local fontSize = animDisplayInfo.FontSize;
+ if (not fontSize or fontSize < 2) then fontSize = 18; end
+ animDisplayInfo.FontObject:SetFont(animDisplayInfo.FontPath, fontSize-1, animDisplayInfo.FontOutline);
+ -- Fall back to default font if the configured font file was not found.
+ if (not animDisplayInfo.FontObject:GetFont()) then
+  animDisplayInfo.FontObject:SetFont("Fonts\\FRIZQT__.TTF", fontSize-1, animDisplayInfo.FontOutline);
+ end
+ animDisplayInfo.FontObject:SetTextColor(animDisplayInfo.ColorR, animDisplayInfo.ColorG, animDisplayInfo.ColorB);
+ -- Spell icon: the trigger's own texture, else the event's spell ID, else its effect name.
+ local texture = animationEvent.Texture
+ if (not texture and animationEvent.SpellId) then
+  texture = C_Spell.GetSpellTexture(animationEvent.SpellId);
+ end
+ if (not texture and animationEvent.EffectName) then
+  texture = GetNameIcon((string_gsub(animationEvent.EffectName, " %(%d+%)", "")));
+ end
+ 
+ -- Prefix the icon as an inline texture sized to the font height and cropped to the icon border.
+ local text = animationEvent.Text
+ if texture then
+  text = "|T" .. texture .. ICON_ESCAPE_SUFFIX .. text
+ end
+
+ animDisplayInfo.FontObject:SetText(text);
+ animDisplayInfo.FontObject:SetTextHeight(animDisplayInfo.FontSize);
+ animDisplayInfo.FontObject:SetAlpha(animDisplayInfo.Alpha);
+ animDisplayInfo.FontObject:SetPoint(animDisplayInfo.AnchorPoint, animDisplayInfo.PositionX, animDisplayInfo.PositionY);
+
+
+ -- Set the last update to the current time.
+ animDisplayInfo.LastUpdated = GetTime();
+
+ -- Set the active flag.
+ animDisplayInfo.IsActive = true;
+
+
+ -- Check if the scroll area's display frame is not visible and make it visible so the OnUpdate events start firing.
+ -- This is done to keep the number of OnUpdate events down to a minimum for better performance.
+ if (not animationEvent.ScrollArea.Frame:IsVisible()) then
+  animationEvent.ScrollArea.Frame:Show();
+ end
+
+ -- Check if it's a sticky or a crit and sticky crits are enabled.
+ if (animDisplayInfo.IsSticky or (animDisplayInfo.IsCrit and MikSBT.CurrentProfile.UseStickyCrits)) then
+  -- Make sure the stickies don't overlap.
+  MikSBT.RepositionStickyAnimDisplayInfo(animationEvent.ScrollArea);
+ else
+  -- Make sure there are no overlaps in the scrolling text.
+  MikSBT.RepositionAnimDisplayInfo(animationEvent.ScrollArea);
+ end
+
+ -- Release the animation event table to the events pool.
+ eventsPool:Release(animationEvent);
+end
+
+-- **********************************************************************************
+-- This function return the buff texture based on
+-- it's name.
+-- **********************************************************************************
+function ItemLinkToName(link)
+	return gsub(link,"^.*%[(.*)%].*$","%1");
+end
+
+function MikSBT.FindItemIcon(item)
+	if ( not item ) then return end
+	item = string.lower(item);
+  for slot = INVSLOT_FIRST_EQUIPPED, INVSLOT_LAST_EQUIPPED + 4 do
+    local itemLocation = ItemLocation:CreateFromEquipmentSlot(slot)
+    local itemName = C_Item.GetItemName(itemLocation)
+    if itemName and item == string.lower(itemName) then
+      return C_Item.GetItemIcon(itemLocation)
+    end
+  end
+	for i = 0, NUM_BAG_FRAMES do
+		for j = 1, GetContainerNumSlots(i) do
+			local itemName = C_Item.GetItemName(ItemLocation:CreateFromBagAndSlot(i,j))
+			if itemName and item == string.lower(itemName) then
+        return (GetContainerItemInfo(i,j))
+			end
+		end
+	end
+end
+
+-- **********************************************************************************
+-- Returns the icon for an active buff/debuff or temporary weapon enchant whose
+-- name matches, or nil. Uses ClassicAPI (C_UnitAuras / C_Item) instead of the old
+-- tooltip-scanning approach.
+-- **********************************************************************************
+function MikSBT.GetAuraIcon(name, unit)
+	unit = unit or "player";
+	-- Buffs and debuffs (helpful then harmful) -- AuraData carries the icon directly.
+	local aura = C_UnitAuras.GetAuraDataBySpellName(unit, name);
+	if ( aura and aura.icon ) then return aura.icon end
+
+	-- Temporary weapon enchant (oils, poisons, imbues) matching this name.
+	local hasMain, _, _, mainID, hasOff, _, _, offID = C_Item.GetWeaponEnchantInfo();
+	if ( hasMain and mainID ) then
+		local info = C_Item.GetEnchantInfo(mainID);
+		if ( info and info.name == name and info.spellID ) then
+			return C_Spell.GetSpellTexture(info.spellID);
+		end
+	end
+	if ( hasOff and offID ) then
+		local info = C_Item.GetEnchantInfo(offID);
+		if ( info and info.name == name and info.spellID ) then
+			return C_Spell.GetSpellTexture(info.spellID);
+		end
+	end
+end
+
+-- **********************************************************************************
+-- This function return some debug stuff
+-- for real.
+-- **********************************************************************************
+
+local depth = 0
+
+local function dump(...)
+	local out = "";
+	for i = 1, arg.n, 1 do
+		if depth > 30 then
+			out = out .. "|cffffd800... Too many things here!|r"
+			return out;
+		end
+		local d = arg[i];
+		local t = type(d);
+		if (t == "table") then
+			out = out .. "{ |cff9f9f9f--[[" .. tostring(arg[i]) .. "]]|r\n";
+			local first = true;
+			if (d) then
+				for k, v in pairs(d) do
+					if (not first) then out = out .. ", \n"; end
+					first = false;
+					depth = depth + 1
+					out = out .. "  " .. dump(k);
+					out = out .. " = ";
+					out = out .. dump(v);
+				end
+			end
+			out = out .. "\n}, |cff9f9f9f--[[" .. tostring(arg[i]) .. "]]|r\n";
+		elseif (t == "nil") then
+			out = out .. "|cffff7f7fnil|r";
+		elseif (t == "number") then
+			out = out .. "|cffff7fff" .. d .. "|r";
+		elseif (t == "string") then
+			out = out .. '"|cff7fd5ff' .. d .. '|r"';
+		elseif (t == "boolean") then
+			if (d) then
+				out = out .. "|cffff9100true|r";
+			else
+				out = out .. "|cffff9100false|r";
+			end
+		elseif (t == "function") then
+			out = out .. "|cff7fd5ff" .. tostring(d) .. "|r";
+		elseif (t == "userdata") then
+			out = out .. string.format("|cffffea00<%s:%s>|r", t, getmetatable(d) or "(anon)")
+		else
+			out = out .. string.upper(t) .. "??";
+		end
+
+		if (i < arg.n) then out = out .. ", "; end
+	end
+	return out;
+end
+
+function MikSBT.debugPrint(...)
+	local debugWin = 0;
+	local name, shown;
+	for i=1, NUM_CHAT_WINDOWS do
+		name,_,_,_,_,_,shown = GetChatWindowInfo(i);
+		if (string.lower(name) == "debug") then debugWin = i; break; end
+	end
+	if (debugWin == 0) then return end
+	local out = "";
+	depth = 0
+	for i = 1, arg.n, 1 do
+		if (i > 1) then out = out .. ", "; end
+		out = arg[i].." = "
+		arg[i] = getglobal(arg[i])
+		local t = type(arg[i]);
+		if (t == "string") then
+			out = out .. '"|cff7fd5ff'..arg[i]..'|r"';
+		elseif (t == "number") then
+			out = out .. "|cffff7fff" .. arg[i] .. "|r";
+		elseif (t == "boolean") then
+			out = out .. "|cffff9100" .. arg[i] .. "|r";
+		elseif (t == nil) then
+			out = out .. "|cffff7f7f" .. arg[i] .. "|r";
+		else
+			out = out .. dump(arg[i]);
+		end
+	end
+	local start = GetTime()
+	getglobal("ChatFrame"..debugWin):AddMessage("|cffffd800<|r\n" .. out, 1.0, 1.0, 1.0);
+	getglobal("ChatFrame"..debugWin):AddMessage("|cffffd800> displayed in:|r "..string.format( "%.4f",GetTime()-start).."|cffffd800s|r", 1.0, 1.0, 1.0);
+end
+
+SLASH_MSBTDUMPCMD1 = "/bump"
+SlashCmdList["MSBTDUMPCMD"] = MikSBT.debugPrint
+
+
+-- **********************************************************************************
+-- This function gets the next animation display info object for the correct
+-- scroll area.
+-- **********************************************************************************
+function MikSBT.GetNextAnimationDisplayInfo(animationEvent)
+ -- Holds the next animation display info object.
+ local animDisplayInfo;
+
+ -- Check if it's a sticky or it's a crit and sticky crits are enabled.
+ if (animationEvent.IsSticky or (animationEvent.IsCrit and MikSBT.CurrentProfile.UseStickyCrits)) then
+  -- Get the next available animation display object for stickies.
+  -- This is done so that stickies use the last set of font strings to avoid normal hits
+  -- overlapping them.
+  animDisplayInfo = animationEvent.ScrollArea.AnimationDisplayArray[animationEvent.ScrollArea.NextSticky];
+
+  -- Increment to the next sticky animation display object.
+  animationEvent.ScrollArea.NextSticky = animationEvent.ScrollArea.NextSticky + 1;
+ 
+  -- Loop back around to the first sticky animation display object.
+  if (animationEvent.ScrollArea.NextSticky > NUM_FONT_STRINGS) then
+   animationEvent.ScrollArea.NextSticky = animationEvent.ScrollArea.FirstSticky;
+  end
+
+ -- Not a sticky.
+ else
+  -- Get the next available animation display object.
+  animDisplayInfo = animationEvent.ScrollArea.AnimationDisplayArray[animationEvent.ScrollArea.NextAnimationDisplay];
+
+  -- Increment to the next animation display object.
+  animationEvent.ScrollArea.NextAnimationDisplay = animationEvent.ScrollArea.NextAnimationDisplay + 1;
+ 
+  -- Loop back around to the first animation display object.
+  if (animationEvent.ScrollArea.NextAnimationDisplay > (animationEvent.ScrollArea.FirstSticky - 1)) then
+   animationEvent.ScrollArea.NextAnimationDisplay = 1;
+  end
+ end
+
+ -- Return the animation display info object.
+ return animDisplayInfo;
+end
+
+
+-- **********************************************************************************
+-- This function gets the scroll function to use for the event.
+-- **********************************************************************************
+function MikSBT.GetScrollFunction(animationEvent)
+ -- Straight animation style.
+ if (animationEvent.ScrollArea.DisplaySettings.AnimationStyle == ANIMATION_STYLE_STRAIGHT) then
+  -- Text is scrolling down.
+  if (animationEvent.ScrollArea.DisplaySettings.ScrollDirection == SCROLL_DIRECTION_DOWN) then
+   -- Return the appropriate animation function.
+   return MikSBT.ScrollStraightDown;
+  -- Text is scrolling up.
+  else
+   -- Return the appropriate animation function.
+   return MikSBT.ScrollStraightUp;
+  end
+
+ -- Left parabola animation style.
+ elseif (animationEvent.ScrollArea.DisplaySettings.AnimationStyle == ANIMATION_STYLE_LEFT_PARABOLA) then
+  -- Text is scrolling down.
+  if (animationEvent.ScrollArea.DisplaySettings.ScrollDirection == SCROLL_DIRECTION_DOWN) then
+   -- Return the appropriate animation function.
+   return MikSBT.ScrollLeftParabolaDown;
+  -- Text is scrolling up.
+  else
+   -- Return the appropriate animation function.
+   return MikSBT.ScrollLeftParabolaUp;
+  end
+
+ -- Right parabola animation style.
+ elseif (animationEvent.ScrollArea.DisplaySettings.AnimationStyle == ANIMATION_STYLE_RIGHT_PARABOLA) then
+  -- Text is scrolling down.
+  if (animationEvent.ScrollArea.DisplaySettings.ScrollDirection == SCROLL_DIRECTION_DOWN) then
+   -- Return the appropriate animation function.
+   return MikSBT.ScrollRightParabolaDown;
+  -- Text is scrolling up.
+  else
+   -- Return the appropriate animation function.
+   return MikSBT.ScrollRightParabolaUp;
+  end
+
+ end
+
+ -- Default to the straight up animation style although the function should never get
+ -- to this point.
+ return MikSBT.ScrollStraightUp;
+end
+
+
+-- **********************************************************************************
+-- This function gets the starting animation x and and y position.
+-- **********************************************************************************
+function MikSBT.GetAnimationStartingPosition(animationEvent)
+ -- Holds where to start the animation at.
+ local startPositionX, startPositionY;
+
+ -- Check which animation style is selected for the scroll area.
+ if (animationEvent.ScrollArea.DisplaySettings.AnimationStyle == ANIMATION_STYLE_STRAIGHT or
+     animationEvent.ScrollArea.DisplaySettings.AnimationStyle == ANIMATION_STYLE_LEFT_PARABOLA or
+     animationEvent.ScrollArea.DisplaySettings.AnimationStyle == ANIMATION_STYLE_RIGHT_PARABOLA) then
+
+  -- Check if the text is scrolling down.
+  if (animationEvent.ScrollArea.DisplaySettings.ScrollDirection == SCROLL_DIRECTION_DOWN) then
+   -- Set the starting X and Y positions.
+   startPositionX = 0;
+   startPositionY = animationEvent.ScrollArea.DisplaySettings.ScrollHeight;
+  -- Text is scrolling up.
+  else
+   -- Set the starting X and Y positions.
+   startPositionX = 0;
+   startPositionY = 0;
+  end
+
+  -- Check if it's a sticky or a crit and sticky crits are enabled.
+  if (animationEvent.IsSticky or (animationEvent.IsCrit and MikSBT.CurrentProfile.UseStickyCrits)) then
+   -- Set the sticky to the center.
+   startPositionY = math_ceil(animationEvent.ScrollArea.DisplaySettings.ScrollHeight / 2);
+  end
+ end
+
+ -- Return the x and y starting positions.
+ return startPositionX, startPositionY;
+end
+
+
+-- **********************************************************************************
+-- This function makes sure there is no overlapping text.
+-- **********************************************************************************
+function MikSBT.RepositionAnimDisplayInfo(scrollArea)
+ -- Construct a table with the non sticky animation display info in the same order the events were added.
+ for x = scrollArea.NextAnimationDisplay, scrollArea.FirstSticky-1 do
+  local animDisplayInfo = scrollArea.AnimationDisplayArray[x];
+  if (animDisplayInfo.IsActive) then
+   table_insert(activeNonStickies, animDisplayInfo);
+  end
+ end
+
+ for x = 1, scrollArea.NextAnimationDisplay-1 do
+  local animDisplayInfo = scrollArea.AnimationDisplayArray[x];
+  if (animDisplayInfo.IsActive) then
+   table_insert(activeNonStickies, animDisplayInfo);
+  end
+ end
+
+ -- Get the number of active non sticky data objects.
+ local numNonStickies = table_getn(activeNonStickies);
+
+ -- Animation style straight, left parabola, or right parabola.
+ if (scrollArea.DisplaySettings.AnimationStyle == ANIMATION_STYLE_STRAIGHT or 
+     scrollArea.DisplaySettings.AnimationStyle == ANIMATION_STYLE_LEFT_PARABOLA or 
+     scrollArea.DisplaySettings.AnimationStyle == ANIMATION_STYLE_RIGHT_PARABOLA) then
+
+  -- Scrolling down.
+  if (scrollArea.DisplaySettings.ScrollDirection == SCROLL_DIRECTION_DOWN) then
+
+   -- Check if there is more than 1 active non sticky animation.
+   if (numNonStickies > 1) then
+    -- Loop backwards through the active non sticky animation display objects and move the ones that are colliding.
+    for x = numNonStickies, 2, -1 do
+     local bottomPointCurrent = activeNonStickies[x].PositionY;
+     local topPointNext = activeNonStickies[x-1].PositionY + activeNonStickies[x-1].FontSize + MIN_VERTICAL_SPACING;
+     if (topPointNext > bottomPointCurrent) then
+      activeNonStickies[x-1].PositionY = bottomPointCurrent - activeNonStickies[x-1].FontSize - MIN_VERTICAL_SPACING;
+     end
+    end
+   end
+
+  -- Scrolling up.
+  else
+
+   -- Check if there is more than 1 active non sticky animation.
+   if (numNonStickies > 1) then
+    -- Loop backwards through the active non sticky animation display objects and move the ones that are colliding.
+    for x = numNonStickies, 2, -1 do
+     local topPointCurrent = activeNonStickies[x].PositionY + activeNonStickies[x].FontSize + MIN_VERTICAL_SPACING;
+     local bottomPointNext = activeNonStickies[x-1].PositionY;
+     if (bottomPointNext < topPointCurrent) then
+      activeNonStickies[x-1].PositionY = topPointCurrent;
+     end
+    end
+   end
+
+  end -- Scrolling Direction
+ end -- Animation Style
+
+ -- Clear the temp non stickies table.
+ table_wipe(activeNonStickies);
+end
+
+
+-- **********************************************************************************
+-- This function makes sure stickies don't overlap.
+-- **********************************************************************************
+function MikSBT.RepositionStickyAnimDisplayInfo(scrollArea)
+ -- Construct a table with the sticky animation display info in the same order the events were added.
+ for x = scrollArea.NextSticky, NUM_FONT_STRINGS do
+  local animDisplayInfo = scrollArea.AnimationDisplayArray[x];
+  if (animDisplayInfo.IsActive) then
+   table_insert(activeStickies, animDisplayInfo);
+  end
+ end
+
+ for x = scrollArea.FirstSticky, scrollArea.NextSticky-1 do
+  local animDisplayInfo = scrollArea.AnimationDisplayArray[x];
+  if (animDisplayInfo.IsActive) then
+   table_insert(activeStickies, animDisplayInfo);
+  end
+ end
+
+ -- Get the number of active stickies.
+ local numStickies = table_getn(activeStickies);
+
+
+ -- Animation style straight, left parabola, or right parabola.
+ if (scrollArea.DisplaySettings.AnimationStyle == ANIMATION_STYLE_STRAIGHT or 
+     scrollArea.DisplaySettings.AnimationStyle == ANIMATION_STYLE_LEFT_PARABOLA or 
+     scrollArea.DisplaySettings.AnimationStyle == ANIMATION_STYLE_RIGHT_PARABOLA) then
+
+  -- Scrolling down.
+  if (scrollArea.DisplaySettings.ScrollDirection == SCROLL_DIRECTION_DOWN) then
+
+   -- Check if there is more than 1 active sticky animation.
+   if (numStickies > 1) then
+    -- Get the middle active sticky.
+    local middleSticky = math_floor((numStickies + 1) / 2);
+
+    -- Set the middle sticky to the center of the scroll area.
+    activeStickies[middleSticky].PositionY = scrollArea.DisplaySettings.ScrollHeight / 2;
+
+    -- Loop backwards from the middle sticky.
+    for x = middleSticky - 1, 1, -1 do
+     activeStickies[x].PositionY = activeStickies[x+1].PositionY - activeStickies[x].FontSize - MIN_VERTICAL_SPACING;
+    end
+
+    -- Loop forwards from the middle sticky.
+    for x = middleSticky + 1, numStickies do
+     activeStickies[x].PositionY = activeStickies[x-1].PositionY + activeStickies[x-1].FontSize + MIN_VERTICAL_SPACING;
+    end
+   end
+
+  -- Scrolling up.
+  else
+
+   -- Check if there is more than 1 active sticky animation.
+   if (numStickies > 1) then
+    -- Get the middle active sticky.
+    local middleSticky = math_ceil((numStickies + 1) / 2);
+
+    -- Set the middle sticky to the center of the scroll area.
+    activeStickies[middleSticky].PositionY = scrollArea.DisplaySettings.ScrollHeight / 2;
+   
+    -- Loop backwards from the middle sticky.
+    for x = middleSticky - 1, 1, -1 do
+     activeStickies[x].PositionY = activeStickies[x+1].PositionY + activeStickies[x+1].FontSize + MIN_VERTICAL_SPACING;
+    end
+
+    -- Loop forwards from the middle sticky.
+    for x = middleSticky + 1, numStickies do
+     activeStickies[x].PositionY = activeStickies[x-1].PositionY - activeStickies[x].FontSize - MIN_VERTICAL_SPACING;
+    end
+   end
+
+  end -- Scrolling Direction
+ end -- Animation Style
+
+ -- Clear the temp stickies table.
+ table_wipe(activeStickies);
+end
+
+
+-- **********************************************************************************
+-- Animates the passed animation display data.
+-- **********************************************************************************
+function MikSBT.DoAnimation(animDisplayInfo, scrollArea)
+
+ -- Get the current and elapsed times since the last update.
+ local currentTime = GetTime();
+ local elapsedTime = currentTime - animDisplayInfo.LastUpdated;
+
+ -- Check if it's a sticky or a crit and sticky crits are enabled.
+ if (animDisplayInfo.IsSticky or (animDisplayInfo.IsCrit and MikSBT.CurrentProfile.UseStickyCrits)) then
+  -- Move the sticky in case it was repositioned.
+  animDisplayInfo.FontObject:SetPoint(animDisplayInfo.AnchorPoint, animDisplayInfo.PositionX, animDisplayInfo.PositionY);
+
+  if (elapsedTime <= STICKY_FADE_IN_TIME) then
+   local textDelta = animDisplayInfo.FontSize * (1 - (elapsedTime / STICKY_FADE_IN_TIME));
+   animDisplayInfo.FontObject:SetTextHeight(animDisplayInfo.FontSize + textDelta);
+   animDisplayInfo.FontObject:SetAlpha(1);
+   return;
+  elseif (elapsedTime <= (STICKY_DISPLAY_TIME + STICKY_FADE_IN_TIME)) then
+   animDisplayInfo.FontObject:SetTextHeight(animDisplayInfo.FontSize);
+     if animDisplayInfo.IsCrit then
+	  if not animDisplayInfo.timeLastJiggled then
+			animDisplayInfo.originalPositionX = animDisplayInfo.PositionX
+			animDisplayInfo.originalPositionY = animDisplayInfo.PositionY
+			animDisplayInfo.DecalageX = 0
+			animDisplayInfo.DecalageY = 0
+			animDisplayInfo.timeLastJiggled = 0
+	   end
+	   if animDisplayInfo.PositionY ~= (animDisplayInfo.originalPositionY + animDisplayInfo.DecalageY) then
+			animDisplayInfo.originalPositionX = animDisplayInfo.PositionX
+			animDisplayInfo.originalPositionY = animDisplayInfo.PositionY
+	   end
+	   if (elapsedTime - animDisplayInfo.timeLastJiggled > 0.05) then
+	   animDisplayInfo.DecalageX = math_random(-1, 1);
+	   animDisplayInfo.DecalageY = math_random(-1, 1);
+	   animDisplayInfo.PositionX = animDisplayInfo.originalPositionX + animDisplayInfo.DecalageX;
+	   animDisplayInfo.PositionY = animDisplayInfo.originalPositionY + animDisplayInfo.DecalageY;
+	   animDisplayInfo.timeLastJiggled = elapsedTime;
+	   animDisplayInfo.FontObject:SetPoint(animDisplayInfo.AnchorPoint, animDisplayInfo.PositionX, animDisplayInfo.PositionY);
+	  end
+  end
+   return;
+  elseif (elapsedTime <= (STICKY_DISPLAY_TIME + STICKY_FADE_IN_TIME + STICKY_FADE_OUT_TIME)) then
+   local alpha = 1 - ((elapsedTime - STICKY_DISPLAY_TIME - STICKY_FADE_IN_TIME) / STICKY_FADE_OUT_TIME);
+   animDisplayInfo.timeLastJiggled = nil
+   animDisplayInfo.FontObject:SetAlpha(alpha);
+   return;
+  end
+
+  -- Deactivate the animation.
+  animDisplayInfo.FontObject:SetAlpha(0);
+  animDisplayInfo.IsActive = false;
+
+  return;
+ end
+
+
+ -- Check if it's time to update.
+ if (elapsedTime > ANIMATION_SPEED) then
+  -- Scroll the text by the step scaled to the elapsed time so the speed doesn't depend on the framerate.
+  local step = MikSBT.CurrentProfile.AnimationStep * elapsedTime / ANIMATION_SPEED;
+  local animationComplete = animDisplayInfo.ScrollFunction(animDisplayInfo, scrollArea, step);
+
+
+  -- Check if the animation is complete.
+  if (animationComplete) then
+   -- Set the font object's alpha.
+   animDisplayInfo.FontObject:SetAlpha(0);
+
+   -- Deactive the animation.
+   animDisplayInfo.IsActive = false;
+  else
+   -- Move the font object and set its alpha.
+   animDisplayInfo.FontObject:SetPoint(animDisplayInfo.AnchorPoint, animDisplayInfo.PositionX, animDisplayInfo.PositionY);
+   animDisplayInfo.FontObject:SetAlpha(animDisplayInfo.Alpha);
+  end
+
+  -- Set the last update to the current time.
+  animDisplayInfo.LastUpdated = currentTime;
+ end -- Time for update.
+end
+
+
+-- **********************************************************************************
+-- Moves the passed animation display info upward and fades the alpha correctly.
+-- Returns true when the animation is complete.
+-- **********************************************************************************
+function MikSBT.ScrollUp(animDisplayInfo, scrollArea, step)
+ -- Calculate the animation midpoint.
+ local animationMidPoint = scrollArea.DisplaySettings.ScrollHeight / 2;
+
+ -- Increment the Y position by the step.
+ animDisplayInfo.PositionY = animDisplayInfo.PositionY + step;
+
+ -- Start fading out the text on the upper half.
+ if (animDisplayInfo.PositionY >= animationMidPoint) then
+  animDisplayInfo.Alpha = 1 - ((animDisplayInfo.PositionY - animationMidPoint) / animationMidPoint);
+ else
+  animDisplayInfo.Alpha = 1;
+ end
+
+ -- Check if the animation is complete.
+ if (animDisplayInfo.PositionY >= scrollArea.DisplaySettings.ScrollHeight) then
+  -- Return true to indicated the animation is complete.
+  return true;
+ end
+
+ -- Return false to indicate the animation is NOT complete.
+ return false;
+end
+
+
+-- **********************************************************************************
+-- Moves the passed animation display info downward and fades the alpha correctly.
+-- Returns true when the animation is complete.
+-- **********************************************************************************
+function MikSBT.ScrollDown(animDisplayInfo, scrollArea, step)
+ -- Calculate the animation midpoint.
+ local animationMidPoint = scrollArea.DisplaySettings.ScrollHeight / 2;
+
+ -- Decrement the Y position by the step.
+ animDisplayInfo.PositionY = animDisplayInfo.PositionY - step;
+
+ -- Start fading out the text on the bottom half.
+ if (animDisplayInfo.PositionY < animationMidPoint) then
+  animDisplayInfo.Alpha = 1 - ((animationMidPoint - animDisplayInfo.PositionY) / animationMidPoint);
+ else
+  animDisplayInfo.Alpha = 1;
+ end
+
+ -- Check if the animation is complete.
+ if (animDisplayInfo.PositionY <= 0) then
+  -- Return true to indicated the animation is complete.
+  return true;
+ end
+
+ -- Return false to indicate the animation is NOT complete.
+ return false;
+end
+
+
+-- **********************************************************************************
+-- Moves the passed animation display info straight up. Returns true when the
+-- animation is complete.
+-- **********************************************************************************
+function MikSBT.ScrollStraightUp(animDisplayInfo, scrollArea, step)
+ -- Returns the result of the scroll up function.
+ return MikSBT.ScrollUp(animDisplayInfo, scrollArea, step);
+end
+
+
+-- **********************************************************************************
+-- Moves the passed animation display info straight down.  Returns true when the
+-- animation is complete.
+-- **********************************************************************************
+function MikSBT.ScrollStraightDown(animDisplayInfo, scrollArea, step)
+ -- Returns the result of the scroll down function.
+ return MikSBT.ScrollDown(animDisplayInfo, scrollArea, step);
+end
+
+
+-- **********************************************************************************
+-- Moves the passed animation display info in a left parabolic shape going upwards.
+-- Returns true when the animation is complete.
+-- **********************************************************************************
+function MikSBT.ScrollLeftParabolaUp(animDisplayInfo, scrollArea, step)
+ -- Scroll the animation display info straight up and set the alpha correctly.
+ local animationComplete = MikSBT.ScrollUp(animDisplayInfo, scrollArea, step);
+
+ -- Calculate the animation midpoint.
+ local animationMidPoint = scrollArea.DisplaySettings.ScrollHeight / 2;
+
+ -- Calculate the new x position based on equation of a parabola.
+ -- Equation of a parabola at vertex 0,0: x = y^2 / 4a
+ local parabolaMaxX = math_ceil((animationMidPoint * animationMidPoint) / (4 * animationMidPoint));
+ local parabolaY = animDisplayInfo.PositionY - animationMidPoint;
+ local newX = parabolaMaxX - math_ceil((parabolaY * parabolaY) / (4 * animationMidPoint));
+
+ -- Set the new x position.
+ animDisplayInfo.PositionX = newX * -1;
+
+ -- Return whether or not the animation is complete.
+ return animationComplete;
+end
+
+
+-- **********************************************************************************
+-- Moves the passed animation display info in a left parabolic shape going downwards.
+-- Returns true when the animation is complete.
+-- **********************************************************************************
+function MikSBT.ScrollLeftParabolaDown(animDisplayInfo, scrollArea, step)
+ -- Scroll the animation display info straight up and set the alpha correctly.
+ local animationComplete = MikSBT.ScrollDown(animDisplayInfo, scrollArea, step);
+
+ -- Calculate the animation midpoint.
+ local animationMidPoint = scrollArea.DisplaySettings.ScrollHeight / 2;
+
+ -- Calculate the new x position based on equation of a parabola.
+ -- Equation of a parabola at vertex 0,0: x = y^2 / 4a
+ local parabolaMaxX = math_ceil((animationMidPoint * animationMidPoint) / (4 * animationMidPoint));
+ local parabolaY = animDisplayInfo.PositionY - animationMidPoint;
+ local newX = parabolaMaxX - math_ceil((parabolaY * parabolaY) / (4 * animationMidPoint));
+
+ -- Set the new x position.
+ animDisplayInfo.PositionX = newX * -1;
+
+ -- Return whether or not the animation is complete.
+ return animationComplete;
+end
+
+
+-- **********************************************************************************
+-- Moves the passed animation display info in a right parabolic shape going upwards.
+-- Returns true when the animation is complete.
+-- **********************************************************************************
+function MikSBT.ScrollRightParabolaUp(animDisplayInfo, scrollArea, step)
+ -- Scroll the animation display info straight up and set the alpha correctly.
+ local animationComplete = MikSBT.ScrollUp(animDisplayInfo, scrollArea, step);
+
+ -- Calculate the animation midpoint.
+ local animationMidPoint = scrollArea.DisplaySettings.ScrollHeight / 2;
+
+ -- Calculate the new x position based on equation of a parabola.
+ -- Equation of a parabola at vertex 0,0: x = y^2 / 4a
+ local parabolaMaxX = math_ceil((animationMidPoint * animationMidPoint) / (4 * animationMidPoint));
+ local parabolaY = animDisplayInfo.PositionY - animationMidPoint;
+ local newX = parabolaMaxX - math_ceil((parabolaY * parabolaY) / (4 * animationMidPoint));
+
+ -- Set the new x position.
+ animDisplayInfo.PositionX = newX;
+
+ -- Return whether or not the animation is complete.
+ return animationComplete;
+end
+
+
+-- **********************************************************************************
+-- Moves the passed animation display info in a right parabolic shape going downwards.
+-- Returns true when the animation is complete.
+-- **********************************************************************************
+function MikSBT.ScrollRightParabolaDown(animDisplayInfo, scrollArea, step)
+ -- Scroll the animation display info straight up and set the alpha correctly.
+ local animationComplete = MikSBT.ScrollDown(animDisplayInfo, scrollArea, step);
+
+ -- Calculate the animation midpoint.
+ local animationMidPoint = scrollArea.DisplaySettings.ScrollHeight / 2;
+
+ -- Calculate the new x position based on equation of a parabola.
+ -- Equation of a parabola at vertex 0,0: x = y^2 / 4a
+ local parabolaMaxX = math_ceil((animationMidPoint * animationMidPoint) / (4 * animationMidPoint));
+ local parabolaY = animDisplayInfo.PositionY - animationMidPoint;
+ local newX = parabolaMaxX - math_ceil((parabolaY * parabolaY) / (4 * animationMidPoint));
+
+ -- Set the new x position.
+ animDisplayInfo.PositionX = newX;
+
+ -- Return whether or not the animation is complete.
+ return animationComplete;
+end
+
+
+-------------------------------------------------------------------------------------
+-- Command handler functions.
+-------------------------------------------------------------------------------------
+
+-- **********************************************************************************
+-- Returns the current and remaining parameters from the passed string.
+-- **********************************************************************************
+function MikSBT.GetNextParameter(paramString)
+ local remainingParams;
+ local currentParam = paramString;
+
+ -- Look for a space.
+ local idx = string_find(paramString, " ");
+
+ if (idx) then
+  -- Get the current and remaing parameters.
+  currentParam = string.sub(paramString, 1, idx-1);
+  remainingParams = string.sub(paramString, idx+1);
+ end
+
+ -- Return the current parameter and the remaining ones.
+ return currentParam, remainingParams;
+end
+
+
+-- **********************************************************************************
+-- Called to handle commands.
+-- **********************************************************************************
+function MikSBT.CommandHandler(params)
+ -- Get the parameter.
+ local currentParam;
+ local remainingParams;
+ currentParam, remainingParams = MikSBT.GetNextParameter(params);
+
+ -- Flag for whether or not to show usage info.
+ local showUsage = true;
+
+ -- Make sure there is a current parameter and lower case it.
+ if (currentParam) then
+  currentParam = string.lower(currentParam);
+ end
+
+ -- Look for the recognized parameters.
+ if (currentParam == "") then
+  -- Check if the load on demand options are not loaded.
+  if (not IsAddOnLoaded(MikSBT.MOD_NAME .. "Options")) then
+   -- Load the on demand options.
+   UIParentLoadAddOn(MikSBT.MOD_NAME .. "Options");
+  end
+
+  -- Make sure the on demand options actually loaded.
+  if (IsAddOnLoaded(MikSBT.MOD_NAME .. "Options")) then
+   -- Make sure the scroll area mover control frame is not shown.
+   if (not MSBTScrollAreaMoverControlFrame:IsShown()) then
+    -- Show the options interface.
+    MSBTFrameOptions:Show();
+   end
+  end
+
+  -- Don't show the usage info.
+  showUsage = false;
+
+ elseif (currentParam == MikSBT.COMMAND_RESET) then
+  -- Reset the current profile.
+  MikSBT.ResetProfile(MikSBT_Save.CurrentProfile, true);
+
+  -- Don't show the usage info.
+  showUsage = false;
+
+ elseif (currentParam == MikSBT.COMMAND_DISABLE) then
+  -- Set the user disabled option.
+  MikSBT.SetOptionUserDisabled(true);
+
+  -- Output an informative message.
+  MikSBT.Print(MikSBT.MSG_DISABLE, 1,1,1);
+
+  -- Don't show the usage info.
+  showUsage = false;
+
+ elseif (currentParam == MikSBT.COMMAND_ENABLE) then
+  -- Unset the user disabled option.
+  MikSBT.SetOptionUserDisabled(false);
+
+  -- Output an informative message.
+  MikSBT.Print(MikSBT.MSG_ENABLE, 1,1,1);
+
+  -- Don't show the usage info.
+  showUsage = false;
+
+ elseif (currentParam == MikSBT.COMMAND_SHOWVER) then
+  -- Output the current version number.
+  MikSBT.Print(MikSBT.VERSION_STRING, 1,1,1);
+
+  -- Don't show the usage info.
+  showUsage = false;
+
+ elseif (currentParam == MikSBT.COMMAND_STATS) then
+  -- Print the number of event tables in use; a count that keeps growing while idle means a missed release.
+  MikSBT.Print("Event tables in use: " .. eventsPool:GetNumActive(), 1, 1, 1);
+
+  -- Don't show the usage info.
+  showUsage = false;
+
+ elseif (currentParam == MikSBT.COMMAND_SEARCH) then
+  -- Check if there is any filter text
+  if (remainingParams and remainingParams ~= "") then
+   -- Turn on event searching mode.
+   MikCEH.EnableEventSearching(remainingParams);
+   MikSBT.Print(MikSBT.MSG_SEARCH_ENABLE .. remainingParams, 1, 1, 1);
+  else
+   -- Turn off event searching mode.
+   MikCEH.DisableEventSearching();
+   MikSBT.Print(MikSBT.MSG_SEARCH_DISABLE, 1, 1, 1);
+  end
+
+  -- Don't show the usage info.
+  showUsage = false;
+
+ elseif (currentParam == MikSBT.COMMAND_DEBUG) then
+  -- Toggle the debug mode option.
+  debugMode = not debugMode;
+
+  -- Check if debug mode was enabled or disabled and output the appropriate message.
+  if (debugMode) then
+   MikSBT.Print(MikSBT.MSG_DEBUG_ENABLE, 1,1,1);
+  else
+   MikSBT.Print(MikSBT.MSG_DEBUG_DISABLE, 1,1,1);
+  end  
+
+  -- Don't show the usage info.
+  showUsage = false;
+
+ end
+
+ -- Check if the usage information should be shown.
+ if (showUsage) then
+  MikSBT.PrintUsage();
+ end
+end
+
+
+-- **********************************************************************************
+-- Prints out the usage information.
+-- **********************************************************************************
+function MikSBT.PrintUsage()
+ -- Loop through all of the entries in the command usage list.
+ for _, msg in MikSBT.COMMAND_USAGE do
+  MikSBT.Print(msg, 1, 1, 1);
+ end
+end
+
+
+
+-------------------------------------------------------------------------------------
+-- Public Access functions.
+-------------------------------------------------------------------------------------
+
+-- **********************************************************************************
+-- Displays the passed message in the passed scroll area with the passed parameters.
+-- This function is for easy displaying of messages from external sources.
+-- **********************************************************************************
+function MikSBT.DisplayMessage(message, displayType, isSticky, colorR, colorG, colorB, fontSize, fontIndex, outlineIndex, Texture)
+ -- Check if no message was passed and do nothing.
+ if (message == nil) then
+  return;
+ end
+
+ -- Check if the passed display type is invalid..
+ if (displayType ~= MikSBT.DISPLAYTYPE_INCOMING and displayType ~= MikSBT.DISPLAYTYPE_OUTGOING and
+     displayType ~= MikSBT.DISPLAYTYPE_NOTIFICATION) then
+
+  -- Set the display type to the default.
+  displayType = MikSBT.DISPLAYTYPE_NOTIFICATION;
+ end
+
+ -- Get the correct scroll area for the event.
+ local scrollArea;
+ if (displayType == MikSBT.DISPLAYTYPE_INCOMING) then
+  scrollArea = scrollAreas.Incoming;  
+ elseif (displayType == MikSBT.DISPLAYTYPE_OUTGOING) then
+  scrollArea = scrollAreas.Outgoing;
+ elseif (displayType == MikSBT.DISPLAYTYPE_NOTIFICATION) then
+  scrollArea = scrollAreas.Notification;
+ end
+
+ -- Check if the scroll area is hiding events.
+ if (not scrollArea.DisplaySettings.Show) then
+  return;
+ end
+
+ -- Check if the red color value is invalid.
+ if (colorR == nil or colorR < 0 or colorR > 255) then
+  -- Set the red color value to the default.
+  colorR = 255;
+ end
+
+ -- Check if the green color value is invalid.
+ if (colorG == nil or colorG < 0 or  colorG > 255) then
+  -- Set the green color value to the default.
+  colorG = 255;
+ end
+
+ -- Check if the blue color value is invalid.
+ if (colorB == nil or colorB < 0 or  colorB > 255) then
+  -- Set the blue color value to the default.
+  colorB = 255;
+ end
+
+ -- Check if the font size is invalid.
+ if (fontSize == nil or fontSize < 12 or fontSize > 64) then
+  fontSize = MikSBT.GetFontSize(scrollArea, nil, false);
+ end
+
+ local fontPath;
+ -- Check if the font index in invalid.
+ if (fontIndex == nil or MikSBT.AVAILABLE_FONTS[fontIndex] == nil) then
+  fontPath = MikSBT.GetFontPath(scrollArea, nil, false);
+ -- Font index is valid.
+ else
+  fontPath = MikSBT.AVAILABLE_FONTS[fontIndex].Path;
+ end
+
+ local fontOutline;
+ -- Check if the outline index in invalid.
+ if (outlineIndex == nil or MikSBT.AVAILABLE_OUTLINES[outlineIndex] == nil) then
+  fontOutline = MikSBT.GetFontOutline(scrollArea, nil, false);
+ else
+  fontOutline = MikSBT.AVAILABLE_OUTLINES[outlineIndex].Style;
+ end
+
+
+ -- Get a table from the events pool.
+ local animationEvent = eventsPool:Acquire();
+
+ -- Populate the animation event data.
+ animationEvent.ScrollArea = scrollArea;
+ animationEvent.IsCrit = false;
+ animationEvent.IsSticky = isSticky;
+ animationEvent.Text = message;
+ animationEvent.FontSize = fontSize;
+ animationEvent.FontPath = fontPath;
+ animationEvent.FontOutline = fontOutline;
+ animationEvent.ColorR = colorR;
+ animationEvent.ColorG = colorG;
+ animationEvent.ColorB = colorB;
+ animationEvent.Texture = Texture;
+
+
+ -- Add the event to the animation system.
+ MikSBT.AddAnimation(animationEvent);
+end

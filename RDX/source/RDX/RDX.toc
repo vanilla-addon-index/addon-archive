@@ -1,0 +1,21 @@
+## Interface: 11200
+## Title: RDX
+## Notes: RDX is Raid Data Exchange - a tool for acquiring, filtering, and visualizing information about your raid team.
+## Author: Bill Johnson (Venificus of Eredar server)
+## Version: 5
+## RequiredDeps: VFL
+## SavedVariables: RDX5Data
+
+libs\AceLibrary\AceLibrary.lua
+
+libs\AceOO-2.0\AceOO-2.0.lua
+libs\AceAddon-2.0\AceAddon-2.0.lua
+libs\AceHook-2.1\AceHook-2.1.lua
+libs\AceEvent-2.0\AceEvent-2.0.lua
+
+libs\RosterLib-2.0\RosterLib-2.0.lua
+libs\Banzai-1.0\Banzai-1.0.lua
+libs\HealComm-1.0\HealComm-1.0.lua
+libs\NotProximityLib-1.0\NotProximityLib-1.0.lua
+
+RDX.xml

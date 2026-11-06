@@ -1,0 +1,58 @@
+{
+  "upstream": "https://octowow.st/git/Relationship/RelationshipsDashboard",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Relationship",
+    "repo": "RelationshipsDashboard",
+    "name": "RelationshipsDashboard",
+    "url": "https://octowow.st/git/Relationship/RelationshipsDashboard",
+    "api": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsDashboard"
+  },
+  "commit": "9869eeb5013b61371bb6d6bdb3d98487eec97d69",
+  "sourceFiles": {
+    "Database.lua": {
+      "sha256": "ca43a8074544eb9dd85bf0d4813c33acacebccf356e9e83a81ad4d2c86d4d606",
+      "bytes": 142051
+    },
+    "README.md": {
+      "sha256": "42018aca982925cd38aa93de52f24ce51a9637b58a93b15d27a236c017f6f986",
+      "bytes": 3497
+    },
+    "RelationshipsDashboard.lua": {
+      "sha256": "7cd15fb2cfc562684f7914a390de5b481a2e10388b38e8f238ec5e1256d35ef6",
+      "bytes": 201570
+    },
+    "RelationshipsDashboard.toc": {
+      "sha256": "964c6c3fa9987c18892d0f7c2bdb0af7a0a8182595896b63d0e2a8efc3519f4b",
+      "bytes": 367
+    },
+    "RelationshipsDashboard.xml": {
+      "sha256": "5caa04c2d6681c4290f4ff31d3e3ccd35a6d932178513fc4a9c23e089f24d1d8",
+      "bytes": 35257
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "44": {
+      "tag": "A",
+      "folder": "A--44",
+      "assets": {
+        "8": {
+          "sha256": "eaa9f5d968728199ff07c8f28a64726f6bfad7b61a082d4e88e2de9b6ae34498",
+          "bytes": 88103,
+          "id": "8",
+          "name": "RelationshipsDashboard.zip",
+          "url": "https://octowow.st/git/Relationship/RelationshipsDashboard/releases/download/A/RelationshipsDashboard.zip",
+          "path": "releases/A--44/assets/RelationshipsDashboard.zip"
+        }
+      },
+      "source": {
+        "sha256": "6fd3c7eb7cf091ada388c1152c6f035e6cd2cdf0613c450b0142b248099dde99",
+        "bytes": 90877,
+        "path": "releases/A--44/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/Relationship/RelationshipsDashboard/archive/A.tar.gz"
+      }
+    }
+  }
+}

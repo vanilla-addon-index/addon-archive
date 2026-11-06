@@ -1,0 +1,25 @@
+{
+  "upstream": "https://github.com/shirsig/notoggle",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "notoggle",
+    "name": "notoggle",
+    "url": "https://github.com/shirsig/notoggle",
+    "api": "https://api.github.com/repos/shirsig/notoggle"
+  },
+  "commit": "43fb54eac45d1f0f6a8ee1e31cc76ef9442d6629",
+  "sourceFiles": {
+    "!notoggle.toc": {
+      "sha256": "d71f294b0a08972da50768b1592d93bef4b6352888d92fc4b0eeec594a820bc3",
+      "bytes": 139
+    },
+    "notoggle.lua": {
+      "sha256": "4deb117ab35f6d763e56124aa8cade8f99edd71f8af311e02cc47d5e1da13157",
+      "bytes": 1285
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

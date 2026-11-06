@@ -1,0 +1,54 @@
+{
+  "upstream": "https://github.com/Road-block/QuestSoundBits",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "QuestSoundBits",
+    "name": "QuestSoundBits",
+    "url": "https://github.com/Road-block/QuestSoundBits",
+    "api": "https://api.github.com/repos/Road-block/QuestSoundBits"
+  },
+  "commit": "2ddce3ae7d854b37cb4d11df227b796be510ddbe",
+  "sourceFiles": {
+    "Peasant_job_done.mp3": {
+      "sha256": "cd8f01073c1d57e8bf3e5aa3c4717f37bbb8173868e51e370fe8d24cfb7ab9d0",
+      "bytes": 21314
+    },
+    "QuestSoundBits-master.toc": {
+      "sha256": "613f290375045edac4b09d3222026d08e781757a85fdeb451c10469b2d5e650f",
+      "bytes": 220
+    },
+    "QuestSoundBits.lua": {
+      "sha256": "29d52bd3062dfeabb9f76f8b44e042669e3e297a196a48972328c5de3ade7dc8",
+      "bytes": 7443
+    },
+    "QuestSoundBits.toc": {
+      "sha256": "613f290375045edac4b09d3222026d08e781757a85fdeb451c10469b2d5e650f",
+      "bytes": 220
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "2658495": {
+      "tag": "2.11-11200",
+      "folder": "2.11-11200--2658495",
+      "assets": {
+        "1337533": {
+          "sha256": "55ae3949e5cd1eba05121457f79a9511d7f759c11227891d685ce52baec2b4ec",
+          "bytes": 22320,
+          "id": "1337533",
+          "name": "QuestSoundBits-2.11-11200.zip",
+          "url": "https://github.com/Road-block/QuestSoundBits/releases/download/2.11-11200/QuestSoundBits-2.11-11200.zip",
+          "path": "releases/2.11-11200--2658495/assets/QuestSoundBits-2.11-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "d8aa25684c51d19f1d8ececf726f7972b3e02146764bf848f5336eb32bb4e372",
+        "bytes": 22447,
+        "path": "releases/2.11-11200--2658495/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/QuestSoundBits/tarball/2.11-11200"
+      }
+    }
+  }
+}

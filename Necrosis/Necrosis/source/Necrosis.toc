@@ -1,0 +1,16 @@
+## Interface: 11200
+## Title: |cFFB700B7N|cFFFF00FFe|cFFFF50FFc|cFFFF99FFr|cFFFFC4FFo|cFFFFFFFFs|cFFFFC4FFi|cFFFF99FFs |cFFFF50FFL|cFFFF00FFd|cFFB700B7C
+## Notes: Gestion graphique des shards.
+## OptionalDeps:
+## Dependencies:
+## DefaultState:
+## SavedVariables:
+## SavedVariablesPerCharacter: NecrosisConfig
+NecrosisGeneral.xml
+Necrosis.xml
+NecrosisTimer.xml
+NecrosisShardMenu.xml
+NecrosisMessageMenu.xml
+NecrosisButtonMenu.xml
+NecrosisTimerMenu.xml
+NecrosisGraphOptionMenu.xml

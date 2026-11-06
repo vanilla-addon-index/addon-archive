@@ -1,0 +1,89 @@
+{
+  "upstream": "https://github.com/NegusZek/SleepyPeon",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "NegusZek",
+    "repo": "SleepyPeon",
+    "name": "SleepyPeon",
+    "url": "https://github.com/NegusZek/SleepyPeon",
+    "api": "https://api.github.com/repos/NegusZek/SleepyPeon"
+  },
+  "commit": "979da6c7e3f6f70c37d1778dcbb00f462d7d4165",
+  "sourceFiles": {
+    "art/bar_elvui.tga": {
+      "sha256": "965dcab4e85bad31eecdfa0159484246ef2e40dd2dca023fa53dda6097d5e90c",
+      "bytes": 32812
+    },
+    "art/bar_tukui.tga": {
+      "sha256": "500b74637f1d0fa7a75b965152de3e9c1814cad3706526938ea251f683da8e7e",
+      "bytes": 14690
+    },
+    "art/bar.tga": {
+      "sha256": "be38c30d46b0872762f6b8b785004a7b641170e0036100765c4643d6945bccaa",
+      "bytes": 247
+    },
+    "art/border1.blp": {
+      "sha256": "82e2a41ac99b989674be9663def42177be7c9b8343cd26f8aaa0bb25dd29e9fe",
+      "bytes": 6772
+    },
+    "art/border2.blp": {
+      "sha256": "94ebbd97d86aff3bc9614d9f808e936d8365f777a4122eaf118da991d74d8dff",
+      "bytes": 6772
+    },
+    "art/border3.blp": {
+      "sha256": "98c95c9837e92474751c173896db6b2a51680e2530df92086f700747f409f8c8",
+      "bytes": 6772
+    },
+    "art/border4.blp": {
+      "sha256": "18d5429c74a5b6045556ab2e914f09e6fcad77f646226ca7d48d38474e1841dd",
+      "bytes": 6772
+    },
+    "art/borderstud.blp": {
+      "sha256": "b09a7bbed2c2a754523e42ebb38ec3898f6eaee29e8af97dc9eed024bd27dc4e",
+      "bytes": 1556
+    },
+    "art/divider.blp": {
+      "sha256": "8362c49e70c05e34da22bc17fb6e0b9529a6169df495ce996c73c48865d9ba32",
+      "bytes": 1892
+    },
+    "art/glassborder.tga": {
+      "sha256": "4cee749f90029c77c0552269de2ece740a342dc99d8983dccf2807e345795628",
+      "bytes": 8236
+    },
+    "art/red_spark.blp": {
+      "sha256": "3e912f507db7c6b854b4147f76a48a6053396ee93857d4c6cae8b02298f23031",
+      "bytes": 1868
+    },
+    "art/spark.blp": {
+      "sha256": "5913109d9a6a4818bc5a7bd939b820de428facf6a30fbbc8a2c24dfd1b4fa719",
+      "bytes": 1868
+    },
+    "ExBar.lua": {
+      "sha256": "759952f6c773a2347c34c701a8eb831496f1ee61c7a3aff5d73a462e190d5a59",
+      "bytes": 15923
+    },
+    "Helpers.lua": {
+      "sha256": "3924f173bdd296bef7bbadbedda98e05631814227992f12f1445b88873b07c60",
+      "bytes": 1392
+    },
+    "Options.lua": {
+      "sha256": "2a378ca4a056905d2b06aa121731f3013ae65ec316ab281b30f1c16a33ea8042",
+      "bytes": 2629
+    },
+    "README.md": {
+      "sha256": "c9cd793c45f52540c0380af8bfd8030a723b33b5d7e7151922dcc9598746f387",
+      "bytes": 1227
+    },
+    "SleepyPeon.toc": {
+      "sha256": "72e156cc1ad1c8129a28be6fb27f7fce82d14ee79784bb9d2be18021a4a1db35",
+      "bytes": 293
+    },
+    "Tables.lua": {
+      "sha256": "96b92ede04cf17d3cf14dc0732a4b8946e33bdd04597df7357a3e61a947c0beb",
+      "bytes": 955
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

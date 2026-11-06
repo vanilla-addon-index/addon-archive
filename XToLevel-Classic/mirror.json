@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/jayparry/XToLevel-Classic",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jayparry",
+    "repo": "XToLevel-Classic",
+    "name": "XToLevel-Classic",
+    "url": "https://github.com/jayparry/XToLevel-Classic",
+    "api": "https://api.github.com/repos/jayparry/XToLevel-Classic"
+  },
+  "commit": "41e8a92d79e565959492e6e3c3f704bff5701d1e",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "a005f563258d58422fb8d442a745d30a7361fea9a129a2dddb4df09d3322394f",
+      "bytes": 703
+    },
+    "XToLevelClassic.lua": {
+      "sha256": "8db979535b6092c983bc067e4bf958338c3af8e9ce0226f2b33af2184c2b0f3c",
+      "bytes": 22891
+    },
+    "XToLevelClassic.toc": {
+      "sha256": "707b6e8c897110138b03d6e6c31cb38aaa5c8b8354603f4a2235a96f0077eabc",
+      "bytes": 288
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

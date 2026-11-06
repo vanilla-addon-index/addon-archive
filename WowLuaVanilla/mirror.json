@@ -1,0 +1,190 @@
+{
+  "upstream": "https://github.com/laytya/WowLuaVanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "WowLuaVanilla",
+    "name": "WowLuaVanilla",
+    "url": "https://github.com/laytya/WowLuaVanilla",
+    "api": "https://api.github.com/repos/laytya/WowLuaVanilla"
+  },
+  "commit": "be006cbbcd6fbf5dcaf769dd300168389225604b",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "513265e28892e19cae753ba717525340113fa789927e0acbd35421ea46e9029c",
+      "bytes": 528
+    },
+    "Debug.lua": {
+      "sha256": "65f459d2722cf2f889b975010f5ecabcb9cd8d56f8870c0158a9f6688d1a2674",
+      "bytes": 3218
+    },
+    "FAIAP.lua": {
+      "sha256": "f3edea61d19102d76c0a8ee9b2565b42f92a331be6ec60507f60de6bea4408c0",
+      "bytes": 32569
+    },
+    "fonts/consola.ttf": {
+      "sha256": "c6e6ce8119fdd47ec6a5449a08e2d2ad7f41ea03143aae193068ed9fa58eaebc",
+      "bytes": 459180
+    },
+    "fonts/COPYRIGHT.TXT": {
+      "sha256": "3361d054759a2fc686a2c058be82deaf9c2e6fe549be9004d7935a6c1736315d",
+      "bytes": 5954
+    },
+    "images/config.tga": {
+      "sha256": "14ea403dddab74130a16dbd39762f6591683e837e8970ec9787b224e6d52bb11",
+      "bytes": 12179
+    },
+    "images/delete.tga": {
+      "sha256": "96bd8ef30296e54f8241a7869fb63e0c6d6f3f2e1a3b85635793886e1b042bcd",
+      "bytes": 10772
+    },
+    "images/highlight.tga": {
+      "sha256": "0a13212136fde07cffe90322867abac8335b6e821b57bc660a2b06821d66e109",
+      "bytes": 7171
+    },
+    "images/left.tga": {
+      "sha256": "3db7f4fd338cd12ebb195903482f4b0992db5debf6c4ebb340bce2b9c9fe27b9",
+      "bytes": 7953
+    },
+    "images/new.tga": {
+      "sha256": "fd9e22b0661670631375f922a945dc76f7e0e4607c126cc4b81e36a86f9c0cc5",
+      "bytes": 11703
+    },
+    "images/open.tga": {
+      "sha256": "38fbf3d9ccb2195a86948f94da0e21551a85f2cac772a8c86144fea388067d19",
+      "bytes": 10837
+    },
+    "images/padlock-disabled.tga": {
+      "sha256": "3308ebcddb518009828cbc194a838b288d4929774c861af211c1ba893b625658",
+      "bytes": 12276
+    },
+    "images/padlock.tga": {
+      "sha256": "7178ed1a77e82ade028678b6d8f60738644b65030ccb8639cb6560cc5ca8b6a4",
+      "bytes": 12107
+    },
+    "images/redo.tga": {
+      "sha256": "1eb99c393b1fed84af1b529004806ee211f79e57d25f91ba99bde515ed2bd6b4",
+      "bytes": 11764
+    },
+    "images/resize.tga": {
+      "sha256": "c3ac16d93eb7a46fb518e4c908176138cc171e88534c2e85b82178afcb29473e",
+      "bytes": 1068
+    },
+    "images/right.tga": {
+      "sha256": "50243b9b72d23b7661ea9989b5c7c5fb465fa9322ae0c65c2531e58dfeebe9f2",
+      "bytes": 8164
+    },
+    "images/rl.tga": {
+      "sha256": "dbcd72755daf1ded2beecfcb2759c1ddaa528e9b481105e19de69004a3cd9306",
+      "bytes": 3449
+    },
+    "images/run-1.tga": {
+      "sha256": "44d39d48da9bac85096b49e96b8f6d7d0459acaa28d84881bdff23641723c1fd",
+      "bytes": 9606
+    },
+    "images/save.tga": {
+      "sha256": "532e17c84ae73c06ec1cb8204f5ce7d57a96a8752deba3fbefc0f5c388f04e93",
+      "bytes": 10666
+    },
+    "images/topleft.tga": {
+      "sha256": "51f18533bbf66df53e22e2be724783fe72c75a2ab22be87ddab35d47cdaa9ec8",
+      "bytes": 17081
+    },
+    "images/undo.tga": {
+      "sha256": "4b5556385abbceb42708cb8d7ff75fb05b31f195f50425b4dfa399699b32f5e5",
+      "bytes": 11834
+    },
+    "images/unused/close.tga": {
+      "sha256": "ad9448cec363237b09938ef1d09ff071bebc8054cc2f2087476cd04a615cd901",
+      "bytes": 7302
+    },
+    "images/unused/down-pushed.tga": {
+      "sha256": "a2e0143d084be86df7559ac25a8f18172edf37d517915e7bdc803f7001d2bdc3",
+      "bytes": 9092
+    },
+    "images/unused/down.tga": {
+      "sha256": "488b6a38d46d5b04d7bef335c887738b6282f4f42810f7ddc4d838898d0d1378",
+      "bytes": 7455
+    },
+    "images/unused/edit.tga": {
+      "sha256": "2f672ca36015bb6d352c63c7f4fa087778ae166b498549debec3a05850e6c713",
+      "bytes": 9928
+    },
+    "images/unused/left-pushed.tga": {
+      "sha256": "53743a2ef97f25e9359444fd2d4929c102f1543063bde632cb54ccfff330555d",
+      "bytes": 9243
+    },
+    "images/unused/pin.tga": {
+      "sha256": "4cd45b5df1cbb8a8feddc33e9dc5349b1cdbd39e3b6277544b3a2584acd1bfbd",
+      "bytes": 6928
+    },
+    "images/unused/pinned.tga": {
+      "sha256": "dc067ace45cbdcc54ff705cf4f1e722d96352a46f6a8774e23e0a5fae4166291",
+      "bytes": 6917
+    },
+    "images/unused/right-pushed.tga": {
+      "sha256": "d2799d88cd16bf76de44b9b1632f519d315230f45ec14de78a155fd94990a481",
+      "bytes": 9312
+    },
+    "images/unused/run.tga": {
+      "sha256": "14ea403dddab74130a16dbd39762f6591683e837e8970ec9787b224e6d52bb11",
+      "bytes": 12179
+    },
+    "images/unused/up-pushed.tga": {
+      "sha256": "b9634bc6dfda380213d5614da79796ef13404d3f3450451156d1dea7d572d587",
+      "bytes": 9396
+    },
+    "images/unused/up.tga": {
+      "sha256": "92ccb90aedbd0e2a84bebef551dd87c80a88577173021b353d1b2507bb7cf563",
+      "bytes": 7842
+    },
+    "Localization.enUS.lua": {
+      "sha256": "c6504776af67cedbcd36cc5cec179867a8ddd23c60d07e67d6a3e34c22923873",
+      "bytes": 1837
+    },
+    "README.md": {
+      "sha256": "0a15ab891ceda0e8a83e3983c2e0f3e1ef1dbf2655ad530652ec035e24a42c89",
+      "bytes": 1030
+    },
+    "WowLua_Config.lua": {
+      "sha256": "8369912bc2399aba0610e99506e635e7c0caae7cc762c7647616e177c68ecfd6",
+      "bytes": 1817
+    },
+    "WowLua.lua": {
+      "sha256": "3ded71df52fb780f32ddf34c4c939607794d71e53f082447e706bdd0959b93aa",
+      "bytes": 26376
+    },
+    "WowLua.xml": {
+      "sha256": "2fc22fe62d98ab646e20910dbe180c1dc948f68fadd107979d217c372f042e07",
+      "bytes": 23774
+    },
+    "WowLuaVanilla.toc": {
+      "sha256": "8151d924d061470f68f2858a6da31c6ab0703d8f1e555d656ffd8083ead2bf75",
+      "bytes": 270
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "77705489": {
+      "tag": "v1.0",
+      "folder": "v1.0--77705489",
+      "assets": {
+        "78501707": {
+          "sha256": "712744c881d525815e58585695bc1cf309e2e96cb563b8badc0d4ce35aaa7fae",
+          "bytes": 183442,
+          "id": "78501707",
+          "name": "WowLuaVanilla.zip",
+          "url": "https://github.com/laytya/WowLuaVanilla/releases/download/v1.0/WowLuaVanilla.zip",
+          "path": "releases/v1.0--77705489/assets/WowLuaVanilla.zip"
+        }
+      },
+      "source": {
+        "sha256": "4e587f22e70f71d911298cfcc01283eea8fcd7f995b70d65791f5163ad328042",
+        "bytes": 160406,
+        "path": "releases/v1.0--77705489/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/laytya/WowLuaVanilla/tarball/v1.0"
+      }
+    }
+  }
+}

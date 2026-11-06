@@ -1,0 +1,69 @@
+{
+  "upstream": "https://github.com/vakos1/Snowkoban",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "vakos1",
+    "repo": "Snowkoban",
+    "name": "Snowkoban",
+    "url": "https://github.com/vakos1/Snowkoban",
+    "api": "https://api.github.com/repos/vakos1/Snowkoban"
+  },
+  "commit": "1236a4c68e3cf5e0e58f003bec0621cb910591cf",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "f108afaeb4ff769c63427f58ac86c04574488d6e2c568709f693009a28bb12c6",
+      "bytes": 271
+    },
+    "Readme.txt": {
+      "sha256": "2bc8c6eab1dd11184d607d482127f9d787163848d21f740b7f276ffcf926d016",
+      "bytes": 182
+    },
+    "SKB.lua": {
+      "sha256": "43164d5edb7fb83b3652c76d2b866046f557f5a1ad08431d1dfbe540424f6624",
+      "bytes": 59091
+    },
+    "SKB.xml": {
+      "sha256": "654cec7b99ef2f3340b154fd92e4458b475ea1f77a12d26333895a0340f02bda",
+      "bytes": 9962
+    },
+    "SKBbg.tga": {
+      "sha256": "0dfa73f676ea87c4d8659ab701788f263cf23716ed24d147be2c016ddd21abff",
+      "bytes": 3116
+    },
+    "SKBbox.tga": {
+      "sha256": "ddf958aa2c078910f5bad94c0940152b86adab1b4a510368891c4a034acf455c",
+      "bytes": 3116
+    },
+    "SKBhome.tga": {
+      "sha256": "eeae314f80cf1a4312c7aedd6f1c32c01ca48198f2a2627925fa72f6c4964455",
+      "bytes": 3116
+    },
+    "SKBhomebox.tga": {
+      "sha256": "62d256a6c8441b169b652e9831fd4aad6259d23c0c9beb5277267757abc41cd0",
+      "bytes": 3116
+    },
+    "SKBplayer.tga": {
+      "sha256": "a44552904f169cc0a2c530eda50f97866bd8497486cfc9ea5ea7852433e62b9d",
+      "bytes": 3116
+    },
+    "SKBsplash.tga": {
+      "sha256": "92cc576555e3f174dd05d5ef0e6db3a7b7923ce5b3e7c16dc49a3d50180c3eef",
+      "bytes": 98348
+    },
+    "SKBtinybutton.tga": {
+      "sha256": "2d92d4e60bcd9901c2c0633f78630f805970502f4c5fd06730d9c962b92d9056",
+      "bytes": 3116
+    },
+    "SKBwall.tga": {
+      "sha256": "3077e258a20a71d39dc2c7f7aaf19b3aa1cfa40fd266830b695cd6ecf089646d",
+      "bytes": 3116
+    },
+    "Snowkoban.toc": {
+      "sha256": "d725c257e6fc94abf40d48fb19293c1c01b57155a3aa59ee58cf2e7fda6485da",
+      "bytes": 183
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

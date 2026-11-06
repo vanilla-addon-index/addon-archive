@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: PPBuddy
+## Notes: Compact blessing status bar. Works with any paladin running PallyPowerTW.
+## Author: Rel
+## Version: 2.0.2
+## SavedVariables: PPBuddy_Config
+
+PPBuddy.lua

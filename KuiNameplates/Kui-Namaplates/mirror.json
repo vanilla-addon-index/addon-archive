@@ -1,0 +1,954 @@
+{
+  "upstream": "https://github.com/laytya/Kui-Namaplates",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "Kui-Namaplates",
+    "name": "Kui-Namaplates",
+    "url": "https://github.com/laytya/Kui-Namaplates",
+    "api": "https://api.github.com/repos/laytya/Kui-Namaplates"
+  },
+  "commit": "d8ca08ecfdda9ccba9ed33398e120b5c7cd9c2ee",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    ".gitignore.upstream": {
+      "sha256": "1aed21fcf46e0e76fa17ee7c4e6b2288fb2fbb844ae1f67dcb322bf64b7a90b7",
+      "bytes": 365
+    },
+    "FuBar_KuiNameplates/embeds.xml": {
+      "sha256": "469462ab909eb56645c571323ec41b5fcc756e37dcd519334daf0bb6f18b02cd",
+      "bytes": 598
+    },
+    "FuBar_KuiNameplates/FuBar_KNPLocale-enUS.lua": {
+      "sha256": "2c464788281f38a1bf3b0f34e421aadee088f187ee08bbab924d75af5fc20493",
+      "bytes": 373
+    },
+    "FuBar_KuiNameplates/FuBar_KNPLocale-ruRU.lua": {
+      "sha256": "06c387c81973c5377df8db69b53c68c72c822c7630a4968a6e1c2a9fe0f38603",
+      "bytes": 808
+    },
+    "FuBar_KuiNameplates/FuBar_KuiNameplates.lua": {
+      "sha256": "31157cd7d8c08015d9092f23406678db8ef5c12b85715c5c81c04883c26b3793",
+      "bytes": 2904
+    },
+    "FuBar_KuiNameplates/FuBar_KuiNameplates.toc": {
+      "sha256": "e0c11154463d30b02a978178e48d230be3683ec6b8efa0a77f84117138f18f12",
+      "bytes": 676
+    },
+    "FuBar_KuiNameplates/icon_.png": {
+      "sha256": "64143e8235d876584e934eb5f4b33d9402998d66399566ec46d68e5c9a8211c6",
+      "bytes": 5878
+    },
+    "FuBar_KuiNameplates/icon_.psd": {
+      "sha256": "45271abdaa0b56d7e0bacbb57d044eb92d9c778ad80da02760a18ab4674e34d2",
+      "bytes": 51107
+    },
+    "FuBar_KuiNameplates/icon.tga": {
+      "sha256": "5528c54e8906fd01379096b02df6ec9a65f1d208c5938ada8fb6fb55e7f85588",
+      "bytes": 16428
+    },
+    "FuBar_KuiNameplates/Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "aec50568954370b65a14b9d720de2282e6b045feb4415a53578d0d1cae46cca4",
+      "bytes": 46027
+    },
+    "FuBar_KuiNameplates/Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "8222e7a75d0f0fba8030099939611732b50c28cb26b6ce6427f52fd5f2f409d8",
+      "bytes": 29927
+    },
+    "FuBar_KuiNameplates/Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "1237d45fdf7e6aa30442c36fdebd7a0c11c75ed6cc0183339eb22c4a7911b8c4",
+      "bytes": 24193
+    },
+    "FuBar_KuiNameplates/Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "f0b829c007fd8cd897aa9059bd6c9ee27f0b9b71b9c9468b1572c1d3db4397fe",
+      "bytes": 16495
+    },
+    "FuBar_KuiNameplates/Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "03e71bcf0ba8ce7c806c5ffe966991cb997c12c25b351198c918fe32e469bdaf",
+      "bytes": 31435
+    },
+    "FuBar_KuiNameplates/Libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "5de3350ec00008f843991bf4644b6720485d5d9a1ca4e69464be14dfc0801791",
+      "bytes": 88571
+    },
+    "FuBar_KuiNameplates/Libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "6f6b55cbb836ad14dbdb7570ff469e1c689013a5414d06aa78ffa4c6f76e28b2",
+      "bytes": 47956
+    },
+    "FuBar_KuiNameplates/Libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "8fc37df9feab266e62bbcee78edb3998f33545af87ab7a37cac1c8ee7a6a2353",
+      "bytes": 88568
+    },
+    "Kui_Media/f/francois.ttf": {
+      "sha256": "093de20e0a2ac2efe756cbd282e57f1336c119f2a23a56b95376d342f82a5f3b",
+      "bytes": 60580
+    },
+    "Kui_Media/f/Readme.txt": {
+      "sha256": "5690ea93fed3ae3bf9a654e80a433e0bfcab23856dbb11f3705259caad602d90",
+      "bytes": 250
+    },
+    "Kui_Media/f/yanone.ttf": {
+      "sha256": "c8e6a221ebbbf23d30f25017ee2c2f853f75d4c934d60fd0887b3564267072b5",
+      "bytes": 83980
+    },
+    "Kui_Media/Kui_Media.toc": {
+      "sha256": "0bdb89c3dbf57b9b98d8ad4c3c6172835d8c8bc81040585b8c54fb6fbd3783a2",
+      "bytes": 287
+    },
+    "Kui_Media/lib/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "706d98abfcfb207a4af207f650e873da69e92bc05b70a281c3d81d400c301eee",
+      "bytes": 10022
+    },
+    "Kui_Media/lib/CallbackHandler-1.0/CallbackHandler-1.0.xml": {
+      "sha256": "5fc06440452a82be9554fc9650fa7de0b6df786c6d188d05d7d0ec4aa3e002fd",
+      "bytes": 221
+    },
+    "Kui_Media/lib/LibSharedMedia-3.0/lib.xml": {
+      "sha256": "b4de98e3097db71406927fe7dcca508911bfd6e871b1bb744049fb4201f983cf",
+      "bytes": 221
+    },
+    "Kui_Media/lib/LibSharedMedia-3.0/LibSharedMedia-3.0.lua": {
+      "sha256": "9660c75152ade952e7cacd7f11c44bacec3d86984bf89337c68d6b75298e3df3",
+      "bytes": 7463
+    },
+    "Kui_Media/lib/LibStub/lib.xml": {
+      "sha256": "9d2e01dc67e340de7c280a59a9d0583d8d64a2701f2419c912ca6f5db0f0c2ad",
+      "bytes": 210
+    },
+    "Kui_Media/lib/LibStub/LibStub.lua": {
+      "sha256": "a72d0bb8f06c37a022a4e1e15d2356798c40295b30ed817daeb8b3aee624d68c",
+      "bytes": 1495
+    },
+    "Kui_Media/t/bar-old.tga": {
+      "sha256": "8efe1628c2281378435aff3445630911581aa76e6203bcadc8a26928913096f4",
+      "bytes": 15147
+    },
+    "Kui_Media/t/bar.tga": {
+      "sha256": "39cf0e1a7ef9edc8192a28b41a43d50bdabe339c96cd0cfe97ea0dbb0e811d0b",
+      "bytes": 32812
+    },
+    "Kui_Media/t/barSmall.tga": {
+      "sha256": "ccac87b4d6aecf02d3ba39d8dd206d59d292f994734a47e279192b71a0f0e290",
+      "bytes": 10863
+    },
+    "Kui_Media/t/chrono/banto.tga": {
+      "sha256": "5a5deac548c4639de44db55ed79a6784bba95fc8286e7a4e7235ea7da24e19c3",
+      "bytes": 32812
+    },
+    "Kui_Media/t/chrono/Charcoal.tga": {
+      "sha256": "dfb8508485a3dbf5dc3c479d3f6b4555fbaeb47118c9ef58cb1adaeac114d757",
+      "bytes": 65580
+    },
+    "Kui_Media/t/chrono/cilo.tga": {
+      "sha256": "5ba70bdeecce2985d6f8f52fb5a74b85542ea51e770cbe5a613e8e7ac13e6dff",
+      "bytes": 65580
+    },
+    "Kui_Media/t/chrono/Diagonal.tga": {
+      "sha256": "97b7d820816c51a3324a3a7fbd19d81ed26526cd3e14c7762ff360ae513811e4",
+      "bytes": 24594
+    },
+    "Kui_Media/t/chrono/Fifths.tga": {
+      "sha256": "62beaf8d85a5cc7e4e3623708b511cb8e378481ae4369631ed7dee317cb491ba",
+      "bytes": 24594
+    },
+    "Kui_Media/t/chrono/Frost.tga": {
+      "sha256": "09be41c173472af35f7dde8253f7b42ce36821d8b95c593ced46bd0ef9cc03f6",
+      "bytes": 32812
+    },
+    "Kui_Media/t/chrono/glaze.tga": {
+      "sha256": "5bd704e0c4d1c3553823a48905d107694aba5f40e0ad985404ef02d8c618081b",
+      "bytes": 32812
+    },
+    "Kui_Media/t/chrono/Healbot.tga": {
+      "sha256": "9b3cdfeba85c0fed3e9089dc4f8c21ac0e079eeac018b1e2c518af4295f832a6",
+      "bytes": 24594
+    },
+    "Kui_Media/t/chrono/LiteStep.tga": {
+      "sha256": "9bd025e9217a88cda7ef3bd185976ded94a647468c6126d42c55df4a88f3a7c2",
+      "bytes": 32812
+    },
+    "Kui_Media/t/chrono/LiteStepLite.tga": {
+      "sha256": "42d9385366d409b5ab9a7101753040be9877bab3d89d795e6acb659f1000c3d9",
+      "bytes": 8236
+    },
+    "Kui_Media/t/chrono/perl.tga": {
+      "sha256": "e0fd78c10c65cc4ef4cd455ecf97e0b1f0d0e8808d0822eb94f4f2f9dae98596",
+      "bytes": 2037
+    },
+    "Kui_Media/t/chrono/Rocks.tga": {
+      "sha256": "3f4380421045a1c3ca0672ecce1ba44b0f0d3b4f53cf351d3f6b5827f2cd8aa8",
+      "bytes": 32812
+    },
+    "Kui_Media/t/chrono/Runes.tga": {
+      "sha256": "a5c40e0e82e76f6002a3ffaaaf5defcc7a2c6576406d7f1d5eadf5c2bbc9bce1",
+      "bytes": 32812
+    },
+    "Kui_Media/t/chrono/smooth.tga": {
+      "sha256": "9aee6cd66bbed869170cf34188792efea5f9e612e1b16c22b5c4e907f8dd73ad",
+      "bytes": 32812
+    },
+    "Kui_Media/t/chrono/Smoothv2.tga": {
+      "sha256": "a08b5085568fb0aeffb469a89ee96e15909a6d85fd86e423fb9f6733ac70dcd9",
+      "bytes": 32812
+    },
+    "Kui_Media/t/chrono/Xeon.tga": {
+      "sha256": "8e96b7d24921765a905f9aa4c2e83a97b2651c7a246d58d3e9e48b6589c7e54b",
+      "bytes": 32812
+    },
+    "Kui_Media/t/empty.tga": {
+      "sha256": "b3fc6b4c921bff522638c448bf2672f8648c74c694c25c414eec8d2310a4254a",
+      "bytes": 124
+    },
+    "Kui_Media/t/innerShade.tga": {
+      "sha256": "898d09cc15f4b9388e6d9e29b7c891ee45344864d1e50d208be3d678c20632d8",
+      "bytes": 262188
+    },
+    "Kui_Media/t/pfui/pfUI-A.tga": {
+      "sha256": "89d285407b51f7029670dbeefef3fc1f5718c95da6a02fe6d9868752c1a07b23",
+      "bytes": 24620
+    },
+    "Kui_Media/t/pfui/pfUI-B.tga": {
+      "sha256": "0dc71b76caa4b83c79f07feb5e0464a13d940d0115476b9aca06607aa2fd936e",
+      "bytes": 24620
+    },
+    "Kui_Media/t/pfui/pfUI-C.tga": {
+      "sha256": "555f7d567a2a5bde1cf135b5e0962df3f4c88550ec045fc61eb678633625b73c",
+      "bytes": 1114
+    },
+    "Kui_Media/t/pfui/pfUI-D.tga": {
+      "sha256": "e13d3b6c1502674c20f12cc4326737b40205851db0a9ddf6665f3e14aa824431",
+      "bytes": 32812
+    },
+    "Kui_Media/t/pfui/pfUI-E.tga": {
+      "sha256": "3d51d47dc397b066222de2a4c39d847ba06d9e828f97caf30bdf34c923482012",
+      "bytes": 32812
+    },
+    "Kui_Media/t/pfui/pfUI-F.tga": {
+      "sha256": "43b3ccb5454d67481f0c0f372534b124eabc5642011d9613d447561f00849891",
+      "bytes": 32812
+    },
+    "Kui_Media/t/pfui/pfUI-G.tga": {
+      "sha256": "9ceeeb86b54cbb3bc26424d505a81a06ddea436eb65cb08fc28930853c97bf1e",
+      "bytes": 274
+    },
+    "Kui_Media/t/pfui/pfUI-H.tga": {
+      "sha256": "09fc8c706174cd6eda019845d7e9345f294e853b3fc2e7924eea026171b108bd",
+      "bytes": 8620
+    },
+    "Kui_Media/t/pfui/pfUI-I.tga": {
+      "sha256": "20dc3842caf250de5aed0f450fc25199c9b41e6a5fa8795ce02ffcf708c87d46",
+      "bytes": 33307
+    },
+    "Kui_Media/t/pfui/pfUI-J.tga": {
+      "sha256": "801edf5df6945af6b9b9d3151cb89872c2c0da6aec521db415b88512126ed8da",
+      "bytes": 33307
+    },
+    "Kui_Media/t/pfui/pfUI-K.tga": {
+      "sha256": "a436a8ee70e8d93836b8197eed6047ff658ae9973d58fb4a9a948a5baac90b02",
+      "bytes": 33307
+    },
+    "Kui_Media/t/pfui/pfUI-L.tga": {
+      "sha256": "d504f58bdcd59792c6babd920becb5f44291f20ab567cce2cc2db92ddcda640a",
+      "bytes": 33307
+    },
+    "Kui_Media/t/pfui/pfUI-M.tga": {
+      "sha256": "b2c97073ac6b0e8b41b7918f3e38fa4e312a64d1da9bde5100326a2ce3240175",
+      "bytes": 30485
+    },
+    "Kui_Media/t/pfui/pfUI-N.tga": {
+      "sha256": "1d8a90f750a1e2b1e04480c98bd10eebcd926295ffbcbff748198d37e0fa8345",
+      "bytes": 7650
+    },
+    "Kui_Media/t/pfui/pfUI-O.tga": {
+      "sha256": "e2b85afe0d1dbdc4f52ffb8089e5dfde8ad2a78f40eb53ef9e343a79158eeee2",
+      "bytes": 98322
+    },
+    "Kui_Media/t/pfui/pfUI-P.tga": {
+      "sha256": "6f613780409d0ae1049330ddd851b63547d72b98108272a2d70f0dff91d443c6",
+      "bytes": 24620
+    },
+    "Kui_Media/t/pfui/pfUI-Q.tga": {
+      "sha256": "75bd028d69619f510bec4e8ec0fc83be607eb3fb47901e20599304f17cb039e6",
+      "bytes": 28116
+    },
+    "Kui_Media/t/pfui/pfUI-R.tga": {
+      "sha256": "383bc17f01a3ef10ad2d9b5d9f1c45a4d883a186a572487ee393a2721899c82c",
+      "bytes": 32812
+    },
+    "Kui_Media/t/pfui/pfUI-S.tga": {
+      "sha256": "f638fd9468fbebdfc8e216ea4b0b7400e96417eba5610cb80969eb26b56883f4",
+      "bytes": 530
+    },
+    "Kui_Media/t/pfui/pfUI-T.tga": {
+      "sha256": "9e491e7fbe8630721abebb8b8626144a3c40de0e740857c25d8af157a9b33ca2",
+      "bytes": 13865
+    },
+    "Kui_Media/t/pfui/pfUI-U.tga": {
+      "sha256": "4012a5980c6570ce1e6f39a000bdccd8243ebab5fa645e6e901fb9a54a2584ee",
+      "bytes": 274
+    },
+    "Kui_Media/t/pfui/pfUI-V.tga": {
+      "sha256": "944889be88e4a68a6a72adcb11aed101434a57cd993190005e3bc8796a97e842",
+      "bytes": 98322
+    },
+    "Kui_Media/t/pfui/pfUI-W.tga": {
+      "sha256": "5115089a9b078993c47c144bdff269ad5c208910798fa5f485a83c5a7d2f9847",
+      "bytes": 274
+    },
+    "Kui_Media/t/pfui/pfUI-X.tga": {
+      "sha256": "20f70840ccfd8c7a94ccdc57a95810a56d495e1de62ac90e4f051e44c8215205",
+      "bytes": 32812
+    },
+    "Kui_Media/t/pfui/pfUI-Y.tga": {
+      "sha256": "dfbed7933bc229f6d0df8b0fef3d8792743d43b00f90ffae2beb7bdb76887355",
+      "bytes": 24620
+    },
+    "Kui_Media/t/Readme.txt": {
+      "sha256": "f9168c24ea0a9fb81544d7a979407efd3ae31cac3579c96967d241e3c1a7f19a",
+      "bytes": 206
+    },
+    "Kui_Media/t/shadowBorder.tga": {
+      "sha256": "39a96ec195f5fb7f61d102e1581b4c43c548d49cfe419ab468d0ba3cb7969cda",
+      "bytes": 8236
+    },
+    "Kui_Media/t/solid.tga": {
+      "sha256": "a8e0d3ee000d69782cec58e3a2e975fd3285c84e8d1ebcec9cd4a30181ef9c8f",
+      "bytes": 300
+    },
+    "Kui_Media/t/solidRoundedBorder.tga": {
+      "sha256": "a5444ef314b893f768119428669587cc5328ebb7b641321a0a079c44273a2b1a",
+      "bytes": 8236
+    },
+    "Kui_Media/textures.lua": {
+      "sha256": "ef91d1f8445c627e0904d840dbe8bdaeab54c4f961edebacc43c19c88d6470a6",
+      "bytes": 1457
+    },
+    "Kui_Nameplates/castbar.lua": {
+      "sha256": "73154eadd0cd4ee176f2a929994975c82d9f9f5d3278e6954c2fc20cf7e4d119",
+      "bytes": 16074
+    },
+    "Kui_Nameplates/castwarnings.lua": {
+      "sha256": "5b6f2f547e0ca1ec4054218adcccc6cd63535a510654ed32a3adaddfb596ffce",
+      "bytes": 8586
+    },
+    "Kui_Nameplates/combopoints.lua": {
+      "sha256": "c5ba608c78bcacc6ff4c9e27a67aedc0251ab86454fb2f472a3fe7c4a9d05af4",
+      "bytes": 6543
+    },
+    "Kui_Nameplates/config.lua": {
+      "sha256": "5db959f91eba2f89dd8d28ea1d5395c3d8a0e5d7faf19f40cba6aa6f6aae4bf6",
+      "bytes": 22986
+    },
+    "Kui_Nameplates/core.lua": {
+      "sha256": "8567047c355c045b518a2285eab54b54bf73ba8c1e3834afa09a646ae9513eae",
+      "bytes": 21030
+    },
+    "Kui_Nameplates/create.lua": {
+      "sha256": "4f309c6bb438be1497f38a4fa831346d576800b6153800ce86f43f1fd5553848",
+      "bytes": 13013
+    },
+    "Kui_Nameplates/critters.lua": {
+      "sha256": "a5e35649ebc20aa78ef1fb78da11421caf5cac70583a70b179c7cf067761014a",
+      "bytes": 3805
+    },
+    "Kui_Nameplates/custom-rename-me.lua": {
+      "sha256": "48671c4191d1be1e8e7b9641afe8b416d953be7968b07b8aab8a1c683e28e37d",
+      "bytes": 1562
+    },
+    "Kui_Nameplates/Kui_Nameplates.toc": {
+      "sha256": "f8944ecaee46347e0f9c6adade1a4753cb08845bbf848a4d3f7b0009bef52e9c",
+      "bytes": 1120
+    },
+    "Kui_Nameplates/layout.lua": {
+      "sha256": "3cd3acb5cd4069eb54923679ad5b43a06a493393664693906c4b85ba1c9b7deb",
+      "bytes": 31117
+    },
+    "Kui_Nameplates/lib/Ace3/Ace3.lua": {
+      "sha256": "7df70a87e1d240f3627607b6458a0efd7fc53cdfd4e8c557018bd7c0dcd88e75",
+      "bytes": 2906
+    },
+    "Kui_Nameplates/lib/Ace3/Ace3.toc": {
+      "sha256": "f347d1121748f44db127d09c08d30a60dee231609cc984d9de2b98c900c3a999",
+      "bytes": 858
+    },
+    "Kui_Nameplates/lib/Ace3/AceAddon-3.0/AceAddon-3.0.lua": {
+      "sha256": "370652e9c41c7ffbf687f7d0e36734b71fa96502256f102bbc79cbce3e47baf7",
+      "bytes": 26559
+    },
+    "Kui_Nameplates/lib/Ace3/AceAddon-3.0/AceAddon-3.0.xml": {
+      "sha256": "39d218f94f9abe9a3f9a474e3ac6aab119f4bbf5c9a45eb7e33e380e5e5606f3",
+      "bytes": 214
+    },
+    "Kui_Nameplates/lib/Ace3/AceBucket-3.0/AceBucket-3.0.lua": {
+      "sha256": "8ba1ca660de2f056f6e69c4e029fdb8544e86a627a3045f48fdd78631856c24c",
+      "bytes": 10268
+    },
+    "Kui_Nameplates/lib/Ace3/AceBucket-3.0/AceBucket-3.0.xml": {
+      "sha256": "4bb9ad5d34027160d476ed4471078fa02c5da6e601f770281cae3337a8901b12",
+      "bytes": 215
+    },
+    "Kui_Nameplates/lib/Ace3/AceComm-3.0/AceComm-3.0.lua": {
+      "sha256": "65b9f21166ae6a3ea42524ba6a479b090fd51019f9226310185fd7fe1f56545f",
+      "bytes": 11421
+    },
+    "Kui_Nameplates/lib/Ace3/AceComm-3.0/AceComm-3.0.xml": {
+      "sha256": "a79e85e5d4889d01bcf38a0944636ff4c74b085b4aabd880497bffb79deb6a43",
+      "bytes": 252
+    },
+    "Kui_Nameplates/lib/Ace3/AceComm-3.0/ChatThrottleLib.lua": {
+      "sha256": "5c35c9f89c1aaca73ec64863820e3b5e68dd1f8b2721b665a166da9db3dcd782",
+      "bytes": 16337
+    },
+    "Kui_Nameplates/lib/Ace3/AceConfig-3.0/AceConfig-3.0.lua": {
+      "sha256": "bc4b9cff4e37dc236ab52f704e7b7209b50609b5941d4913eff592558f02b2e9",
+      "bytes": 2612
+    },
+    "Kui_Nameplates/lib/Ace3/AceConfig-3.0/AceConfig-3.0.xml": {
+      "sha256": "edbd83772e15d26a318137bc9bcd3e027a109897a3aca60182fd192ae2e7312d",
+      "bytes": 480
+    },
+    "Kui_Nameplates/lib/Ace3/AceConfig-3.0/AceConfigCmd-3.0/AceConfigCmd-3.0.lua": {
+      "sha256": "039497be9c01f1aee3a361de43ab8e01fca38c422f2e0cad03e836de2e817a09",
+      "bytes": 26545
+    },
+    "Kui_Nameplates/lib/Ace3/AceConfig-3.0/AceConfigCmd-3.0/AceConfigCmd-3.0.xml": {
+      "sha256": "356cb017a78284e76ff62b6f677a2f380b9cad4d5fb2034a7eeaac8316d20a13",
+      "bytes": 218
+    },
+    "Kui_Nameplates/lib/Ace3/AceConfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua": {
+      "sha256": "adcdbcf2a305372f0632f63bb5e5eeec25d9f7303513e36270104290c3811071",
+      "bytes": 62533
+    },
+    "Kui_Nameplates/lib/Ace3/AceConfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.xml": {
+      "sha256": "c2af74760e12602c51534d43f8bc741f5be981c7da66cdffb5282aef2e2f0812",
+      "bytes": 221
+    },
+    "Kui_Nameplates/lib/Ace3/AceConfig-3.0/AceConfigRegistry-3.0/AceConfigRegistry-3.0.lua": {
+      "sha256": "9d771bbdc699be4bed9597bdf363755d7c4df4f0020d0ad3455377106d1004d8",
+      "bytes": 12757
+    },
+    "Kui_Nameplates/lib/Ace3/AceConfig-3.0/AceConfigRegistry-3.0/AceConfigRegistry-3.0.xml": {
+      "sha256": "3a49acf5f0158fd769a2f461f6176a5cd126da6fed33e38f0a10a2ad12d9cd2d",
+      "bytes": 223
+    },
+    "Kui_Nameplates/lib/Ace3/AceConsole-3.0/AceConsole-3.0.lua": {
+      "sha256": "d2562fec8a441eb69076bb709d60881a001f75233b392fa7d7334618b8017c9b",
+      "bytes": 9546
+    },
+    "Kui_Nameplates/lib/Ace3/AceConsole-3.0/AceConsole-3.0.xml": {
+      "sha256": "00f05946fcbb73fb31ad17effb9aa2fb2b42e0d4b1eebcb546c8104f0e2bb68f",
+      "bytes": 216
+    },
+    "Kui_Nameplates/lib/Ace3/AceCore-3.0/AceCore-3.0.lua": {
+      "sha256": "2ead5751ab4e4d0eda5d2aa95512d7b6155df66ceb58c1d2f9c4f4b8a8a3c74b",
+      "bytes": 6146
+    },
+    "Kui_Nameplates/lib/Ace3/AceCore-3.0/AceCore-3.0.xml": {
+      "sha256": "cebf9f06f52b3a1e76bcf40d69814fa702889efed5642d9b5677cf90760dad89",
+      "bytes": 213
+    },
+    "Kui_Nameplates/lib/Ace3/AceCursor-3.0/AceCursor-3.0.lua": {
+      "sha256": "fa22a96eea0212ddc9f62b663e174d76ff00797a0721095aeb6b50974f23205e",
+      "bytes": 7330
+    },
+    "Kui_Nameplates/lib/Ace3/AceCursor-3.0/AceCursor-3.0.xml": {
+      "sha256": "e9032bda621bd53562381bcfe23e16ed86c90b8fe816cba4c6c383f55d1a988f",
+      "bytes": 217
+    },
+    "Kui_Nameplates/lib/Ace3/AceDB-3.0/AceDB-3.0.lua": {
+      "sha256": "ccd71471695ff77dbbe50cc6fa23bbcdff1d5a72838f4116825786deac7d2250",
+      "bytes": 25651
+    },
+    "Kui_Nameplates/lib/Ace3/AceDB-3.0/AceDB-3.0.xml": {
+      "sha256": "474da5baa67888d6440de73f27705ed2e75c8dce240d9ba2848cfa9583f16e49",
+      "bytes": 211
+    },
+    "Kui_Nameplates/lib/Ace3/AceDBOptions-3.0/AceDBOptions-3.0.lua": {
+      "sha256": "b146ad2cf618fb6cda61840d0a37316a5a3c62323771ff7ef82d1b28b0e21b04",
+      "bytes": 21666
+    },
+    "Kui_Nameplates/lib/Ace3/AceDBOptions-3.0/AceDBOptions-3.0.xml": {
+      "sha256": "3b761587cc17f1c1e8c5265c9ac49e88a91c002c5c1e5fe79f8ba6cd7db30532",
+      "bytes": 218
+    },
+    "Kui_Nameplates/lib/Ace3/AceEvent-3.0/AceEvent-3.0.lua": {
+      "sha256": "1e4591247cc16950d1f654b9feff57303cc49a1f0024215b6f4e385492587f39",
+      "bytes": 5050
+    },
+    "Kui_Nameplates/lib/Ace3/AceEvent-3.0/AceEvent-3.0.xml": {
+      "sha256": "be26f49ff449ef5cf5071c8b278c0627662daef3e73cb278bdd07f1236026e9c",
+      "bytes": 214
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/AceGUI-3.0.lua": {
+      "sha256": "a024ac9eaf316e1dfd85633a5fc5b119c918cc7db2c8178d3b37b5b2bc4dca8f",
+      "bytes": 24054
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/AceGUI-3.0.xml": {
+      "sha256": "e62e8ec4128142fcc53c89710b7c7aa25bc5a1e55de22ec46c4627bbb7176c5f",
+      "bytes": 254
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIContainer-BlizOptionsGroup.lua": {
+      "sha256": "6c81977433ecb0fa46780a38ad7a2f031e3a5c92af39cc3bef9872f4c16d0555",
+      "bytes": 3710
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIContainer-DropDownGroup.lua": {
+      "sha256": "bbf7ecb0a79e680017be2cc6194f350db87e7e5c24d9e6f4ccf300c19381bc0e",
+      "bytes": 4680
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIContainer-Frame.lua": {
+      "sha256": "10f0ddf1d933740b0c16caa863ffbf1f4a9ba95326bff64adc5d900b522a1c1c",
+      "bytes": 9130
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIContainer-InlineGroup.lua": {
+      "sha256": "92f7407b7d489a7a4eb4485309698a3eabb1aa6607a91c30be6900a078b35ef8",
+      "bytes": 3069
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIContainer-ScrollFrame.lua": {
+      "sha256": "5b50d6ec5c91b006ec261ca9f19744ef3d00eea19386c02f6fada334bb51c080",
+      "bytes": 7483
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIContainer-SimpleGroup.lua": {
+      "sha256": "4b3661108629a77cd25f671bd98c840070ff3e2b5ad795a512cebef3bcc7bb4d",
+      "bytes": 1967
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIContainer-TabGroup.lua": {
+      "sha256": "d26d81ed9488a8b16780960905201d2fe2777f3dc5afdb586a988a07acc62d99",
+      "bytes": 11654
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIContainer-TreeGroup.lua": {
+      "sha256": "8538af7e0b3bd0f0bb6c0983d6e6ebb39fabb137ccd0b1f3ae4f2880f4f0793f",
+      "bytes": 22375
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIContainer-Window.lua": {
+      "sha256": "cf9255fef141f0325511b75b02b203ce3d0b1f366931c12092e5cc40b84f1041",
+      "bytes": 10045
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIWidget-Button.lua": {
+      "sha256": "7c38922676b2cb5bf0cc3122cf16d4a5950cd6ba69be593a3383b95af4dd62d0",
+      "bytes": 2907
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIWidget-CheckBox.lua": {
+      "sha256": "666824cd8543244d2d629171ad6a601cc55732331ab06ca3395ec5c3f26ab30c",
+      "bytes": 8209
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIWidget-ColorPicker.lua": {
+      "sha256": "f39de30ad66232a674d51633b9c29515286efea5c8f635350987222c5684a277",
+      "bytes": 5554
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIWidget-DropDown-Items.lua": {
+      "sha256": "b8a4e20a0714777e2b302a8f7d549d07074d9c459309834ba8637fce1c34f919",
+      "bytes": 10616
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIWidget-DropDown.lua": {
+      "sha256": "ad27661ea5df28d216cc8ca06ec4c3506df3e785b020cfa7e853480d0b17f57f",
+      "bytes": 19019
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIWidget-EditBox.lua": {
+      "sha256": "e28f448714671678f2c007130eeec6f234a0807d0879da5aa16265950723ea0c",
+      "bytes": 11159
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIWidget-Heading.lua": {
+      "sha256": "d1bcabfa0ba6f635060e8f6062eeedd5d001d013c7d6cddd65efd3abc2880b71",
+      "bytes": 2302
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIWidget-Icon.lua": {
+      "sha256": "a873df9bf53ce0e7c11d13ea9135e1b37496b0a40bb9671dc6820266c1da8052",
+      "bytes": 3958
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIWidget-InteractiveLabel.lua": {
+      "sha256": "82b6bc62e9826118ef8ace041edabb54b616513feba14f7c8fb8123b3a965bf3",
+      "bytes": 2937
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIWidget-Keybinding.lua": {
+      "sha256": "1150f9c4c7c69e0976c5f556a9c01ab4e6ad5648ad1632191a7ccb3f4fbb3d38",
+      "bytes": 7615
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIWidget-Label.lua": {
+      "sha256": "6117ef76b5aa1d791126693b4e86388d622ecda1cd61b268343bd919ca8a5801",
+      "bytes": 4608
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIWidget-MultiLineEditBox.lua": {
+      "sha256": "b21d2a5a0d06d33bd390b27e6dbdb841f003635d7ad149e6e6d47a2d7e29f7b9",
+      "bytes": 14544
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/AceGUIWidget-Slider.lua": {
+      "sha256": "25179dc60dd0b99115e773889be320128c8ed07c2b2b7d9a3264c430d925a2a4",
+      "bytes": 8411
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0/widgets/widgets.xml": {
+      "sha256": "20034dab26cf33cfaec224ee36993d011016db98dbabd762919974277cae74b1",
+      "bytes": 1269
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0-SharedMediaWidgets/BackgroundWidget.lua": {
+      "sha256": "eb8ba96912cd5827ae1c51aa593014e422230430fda584e002ce18a4da9dc9f0",
+      "bytes": 6955
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0-SharedMediaWidgets/BorderWidget.lua": {
+      "sha256": "f2950bbcbc3e208665b074aa9b97ee7a81cbfa7b007a66062ee295d183216e8a",
+      "bytes": 6911
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0-SharedMediaWidgets/FontWidget.lua": {
+      "sha256": "795c8b01146661db6bd17a2da4d9a012653f550d4aa1ce24a30673422c67da27",
+      "bytes": 6421
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0-SharedMediaWidgets/prototypes.lua": {
+      "sha256": "2d5a35492f4d5272ba7821c3dc416dcce150f26556b556f7b9597ea958e5cc38",
+      "bytes": 8829
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0-SharedMediaWidgets/SoundWidget.lua": {
+      "sha256": "774cf86f1c05212665bfdb658968f552637bad5f2c642c7cb4a203d49561d681",
+      "bytes": 8248
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0-SharedMediaWidgets/StatusbarWidget.lua": {
+      "sha256": "65ba2976a0be1ef77820ae3e240dc510d4a81d688d18df52ebcb0a3fb94b9e7c",
+      "bytes": 6854
+    },
+    "Kui_Nameplates/lib/Ace3/AceGUI-3.0-SharedMediaWidgets/widget.xml": {
+      "sha256": "257659c4462e5427bb7d86cd2395c0cc35cc883a0488e98beda9d57a5c326629",
+      "bytes": 402
+    },
+    "Kui_Nameplates/lib/Ace3/AceHook-3.0/AceHook-3.0.lua": {
+      "sha256": "30cb675b868c75f47b62f2fe0d58482ed4a915eb80579f4bb3f28895eacd15f8",
+      "bytes": 20660
+    },
+    "Kui_Nameplates/lib/Ace3/AceHook-3.0/AceHook-3.0.xml": {
+      "sha256": "7f61b277580c753dba119f9de6e7c930d8c62658c115a07580feea792330cde2",
+      "bytes": 213
+    },
+    "Kui_Nameplates/lib/Ace3/AceLocale-3.0/AceLocale-3.0.lua": {
+      "sha256": "3d8950fe4fa08f9d5cf114304e55ddab0481f22de02ec127347faa38993ef62a",
+      "bytes": 5778
+    },
+    "Kui_Nameplates/lib/Ace3/AceLocale-3.0/AceLocale-3.0.xml": {
+      "sha256": "6f903f251cc531bbcd7e8106478f795a2e8650216904eb95ff7a63a59b72b06a",
+      "bytes": 215
+    },
+    "Kui_Nameplates/lib/Ace3/AceLocale-3.1/AceLocale-3.1.lua": {
+      "sha256": "61a8b19e7e866413316a82c96090013b67bd938bf35b32cb88d55c3150af2a71",
+      "bytes": 7390
+    },
+    "Kui_Nameplates/lib/Ace3/AceLocale-3.1/AceLocale-3.1.xml": {
+      "sha256": "e784261377acfdd2aaf414e8c378b6f60aee606acbc2ea87331b18cedaedcbd4",
+      "bytes": 215
+    },
+    "Kui_Nameplates/lib/Ace3/AceSerializer-3.0/AceSerializer-3.0.lua": {
+      "sha256": "ad3ec791f092c3a73dc770312fc30090a1673df289a57cd5dd40b9b120006d43",
+      "bytes": 9330
+    },
+    "Kui_Nameplates/lib/Ace3/AceSerializer-3.0/AceSerializer-3.0.xml": {
+      "sha256": "de1ec9e6d77039f669997e1dba09dbf1748138424a079054bcbc98ce0bc2ba7f",
+      "bytes": 219
+    },
+    "Kui_Nameplates/lib/Ace3/AceTab-3.0/AceTab-3.0.lua": {
+      "sha256": "cab640ebff9ebd78e68499303865ae4f0534895da94c4b59973ab415e9555703",
+      "bytes": 20184
+    },
+    "Kui_Nameplates/lib/Ace3/AceTab-3.0/AceTab-3.0.xml": {
+      "sha256": "005e2b9fff88fd547317961f4318be21a1a283f8e72143ef10ff3fcef2c80075",
+      "bytes": 214
+    },
+    "Kui_Nameplates/lib/Ace3/AceTimer-3.0/AceTimer-3.0.lua": {
+      "sha256": "5e48d83a2dbf5e3a9737b14af1b3c8c3290cb9f94cbc8410e0215a8e743d1800",
+      "bytes": 13068
+    },
+    "Kui_Nameplates/lib/Ace3/AceTimer-3.0/AceTimer-3.0.xml": {
+      "sha256": "0d7db07cae9dcae62cb79d2071dd31460b561b3915c0187989ec6d2f40c2b60a",
+      "bytes": 214
+    },
+    "Kui_Nameplates/lib/Ace3/Bindings.xml": {
+      "sha256": "3a2ad311322a410394c02a74ba0de33778368fd69928ae0eb21c5a18497ea57a",
+      "bytes": 142
+    },
+    "Kui_Nameplates/lib/Ace3/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "706d98abfcfb207a4af207f650e873da69e92bc05b70a281c3d81d400c301eee",
+      "bytes": 10022
+    },
+    "Kui_Nameplates/lib/Ace3/CallbackHandler-1.0/CallbackHandler-1.0.xml": {
+      "sha256": "5fc06440452a82be9554fc9650fa7de0b6df786c6d188d05d7d0ec4aa3e002fd",
+      "bytes": 221
+    },
+    "Kui_Nameplates/lib/Ace3/changelog.txt": {
+      "sha256": "fff8af9bfbe16e05887bb6b442e12b420a80c99c9e416ed6e899e0bba4181081",
+      "bytes": 30089
+    },
+    "Kui_Nameplates/lib/Ace3/LibStub/lib.xml": {
+      "sha256": "9d2e01dc67e340de7c280a59a9d0583d8d64a2701f2419c912ca6f5db0f0c2ad",
+      "bytes": 210
+    },
+    "Kui_Nameplates/lib/Ace3/LibStub/LibStub.lua": {
+      "sha256": "a72d0bb8f06c37a022a4e1e15d2356798c40295b30ed817daeb8b3aee624d68c",
+      "bytes": 1495
+    },
+    "Kui_Nameplates/lib/Ace3/LICENSE.txt": {
+      "sha256": "05c69fb56f4da18c9430b2e7904e0cd1439e14e24d49c235daa18f8806b980f9",
+      "bytes": 1725
+    },
+    "Kui_Nameplates/lib/Ace3/README.md": {
+      "sha256": "a87094bd38223faa681ba41d0dab6ae35b521320dda5b5f6df0e6b31f26951a8",
+      "bytes": 509
+    },
+    "Kui_Nameplates/lib/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+      "sha256": "706d98abfcfb207a4af207f650e873da69e92bc05b70a281c3d81d400c301eee",
+      "bytes": 10022
+    },
+    "Kui_Nameplates/lib/CallbackHandler-1.0/CallbackHandler-1.0.xml": {
+      "sha256": "5fc06440452a82be9554fc9650fa7de0b6df786c6d188d05d7d0ec4aa3e002fd",
+      "bytes": 221
+    },
+    "Kui_Nameplates/lib/embeds.xml": {
+      "sha256": "b42012fbf77cc233e86c52e3267dcc236c579bee955aa03c041ae51236fd340c",
+      "bytes": 724
+    },
+    "Kui_Nameplates/lib/Kui/Kui.lua": {
+      "sha256": "2b017bae7f080949d79773b093bdba385c15df1d86ce6dbcfef8596982539483",
+      "bytes": 10496
+    },
+    "Kui_Nameplates/lib/LibBabble-Spell-3.0/Changelog-LibBabble-Spell-3.0-r78562.txt": {
+      "sha256": "64739fc9ff8fb42e939877d93335e933ef84d53844c0c25464c7c85fd0f4dc4d",
+      "bytes": 366
+    },
+    "Kui_Nameplates/lib/LibBabble-Spell-3.0/Cleanup.lua": {
+      "sha256": "8ca9f4bb106089e45e512adb552ce50ca800b12700645c8f5b9c6b54dfe291c6",
+      "bytes": 598
+    },
+    "Kui_Nameplates/lib/LibBabble-Spell-3.0/deDE.lua": {
+      "sha256": "c300e4aaa7db16deeae852856c585e062063a1432a77b150e61266595c5804ad",
+      "bytes": 68053
+    },
+    "Kui_Nameplates/lib/LibBabble-Spell-3.0/esES.lua": {
+      "sha256": "8d5d54828f470aae31430f32c8950f270baa6ce9758601325a69bbc6e6bac85c",
+      "bytes": 58800
+    },
+    "Kui_Nameplates/lib/LibBabble-Spell-3.0/frFR.lua": {
+      "sha256": "1d1ff3fd4dfb6e5a1a5918d65ab438968a62962c99b5e293db2145e50d29324e",
+      "bytes": 64358
+    },
+    "Kui_Nameplates/lib/LibBabble-Spell-3.0/koKR.lua": {
+      "sha256": "611247cad6555a57a62acaadb225caaa263014deac11cebefa0815eff8dfa577",
+      "bytes": 56001
+    },
+    "Kui_Nameplates/lib/LibBabble-Spell-3.0/lib.xml": {
+      "sha256": "b43eb1652d6d47acb0c89f1da618cf187eaacea59f4254a8fbbd66daf84b5cdf",
+      "bytes": 501
+    },
+    "Kui_Nameplates/lib/LibBabble-Spell-3.0/LibBabble-3.0.lua": {
+      "sha256": "dfc100585799356bf01d75902a130eab64ab140ebabdbcf5122ddd6c69dbb08a",
+      "bytes": 8263
+    },
+    "Kui_Nameplates/lib/LibBabble-Spell-3.0/LibBabble-Spell-3.0.lua": {
+      "sha256": "d2653bba537f93b92f85ff66ba0c5d1867d022af94d6d575794ef9d154704ebc",
+      "bytes": 117975
+    },
+    "Kui_Nameplates/lib/LibBabble-Spell-3.0/LibBabble-Spell-3.0.toc": {
+      "sha256": "cc3972bf6200aa735876afca4b0de2cde187b5cd23c43b70f98da585a49fda59",
+      "bytes": 495
+    },
+    "Kui_Nameplates/lib/LibBabble-Spell-3.0/LibStub/LibStub.lua": {
+      "sha256": "a72d0bb8f06c37a022a4e1e15d2356798c40295b30ed817daeb8b3aee624d68c",
+      "bytes": 1495
+    },
+    "Kui_Nameplates/lib/LibBabble-Spell-3.0/ruRU.lua": {
+      "sha256": "fcc751cf92e5c094ef192a42472660ed0269c689f45e19d35d4a6390967c8549",
+      "bytes": 88784
+    },
+    "Kui_Nameplates/lib/LibBabble-Spell-3.0/zhCN.lua": {
+      "sha256": "6794f7d803f518991f6c0291085ae9099ff92626c481a49befc09e6b3bb38312",
+      "bytes": 52307
+    },
+    "Kui_Nameplates/lib/LibBabble-Spell-3.0/zhTW.lua": {
+      "sha256": "2cb13f8b26ff4145c38bf457767a55e6b9c28bd4b8d23696e3dd51a37bc65f39",
+      "bytes": 52525
+    },
+    "Kui_Nameplates/lib/LibSharedMedia-3.0/lib.xml": {
+      "sha256": "b4de98e3097db71406927fe7dcca508911bfd6e871b1bb744049fb4201f983cf",
+      "bytes": 221
+    },
+    "Kui_Nameplates/lib/LibSharedMedia-3.0/LibSharedMedia-3.0.lua": {
+      "sha256": "9660c75152ade952e7cacd7f11c44bacec3d86984bf89337c68d6b75298e3df3",
+      "bytes": 7463
+    },
+    "Kui_Nameplates/lib/LibStub/lib.xml": {
+      "sha256": "9d2e01dc67e340de7c280a59a9d0583d8d64a2701f2419c912ca6f5db0f0c2ad",
+      "bytes": 210
+    },
+    "Kui_Nameplates/lib/LibStub/LibStub.lua": {
+      "sha256": "a72d0bb8f06c37a022a4e1e15d2356798c40295b30ed817daeb8b3aee624d68c",
+      "bytes": 1495
+    },
+    "Kui_Nameplates/lib/ParserLib/FixGlobalString.lua": {
+      "sha256": "fd3b3edece2d5aba4fcaf156b9d6bfdb5e31302ccb8a802fc7712bf3bb0755f2",
+      "bytes": 1213
+    },
+    "Kui_Nameplates/lib/ParserLib/optimizer-enUS.lua": {
+      "sha256": "5e0a62a713c874b721090f3de072e2337d1750a0933112a11dc2b53362c91afc",
+      "bytes": 7604
+    },
+    "Kui_Nameplates/lib/ParserLib/optimizer-koKR.lua": {
+      "sha256": "394bfe2565341d48181d25b7a382557c504c0d520a98e2835206a3286f63d513",
+      "bytes": 12190
+    },
+    "Kui_Nameplates/lib/ParserLib/optimizer-ruRU.lua": {
+      "sha256": "a1dcc856fc22816601877629345bdc7317f5220579372ee8b9d29d61d874a102",
+      "bytes": 10491
+    },
+    "Kui_Nameplates/lib/ParserLib/optimizer-zhTW.lua": {
+      "sha256": "36bdcf70d87875573b1fe5a70fb3c31fbf2e93388b951c92f0ba328bbd19d312",
+      "bytes": 8140
+    },
+    "Kui_Nameplates/lib/ParserLib/ParserLib.lua": {
+      "sha256": "84e6186ae6f6ee856c60d074c6584d038190cf2b893f66e5fa983e528d7d664d",
+      "bytes": 92318
+    },
+    "Kui_Nameplates/lib/ParserLib/readme.txt": {
+      "sha256": "762a52185e9eeeff3d6c5f9905b63222dc823642be922a0b03c04979867b90aa",
+      "bytes": 82
+    },
+    "Kui_Nameplates/lib/UnitCasting-1.1/data-1.1.lua": {
+      "sha256": "19c3541f189217e01154c192fa89b2444dbbbe68502a872368c019477e334368",
+      "bytes": 43508
+    },
+    "Kui_Nameplates/lib/UnitCasting-1.1/lib.xml": {
+      "sha256": "0c9ce944f9e78f6171687c648008900f5ec14aa7b82620234b432c4e6eccb3ec",
+      "bytes": 251
+    },
+    "Kui_Nameplates/lib/UnitCasting-1.1/UnitCasting-1.1.lua": {
+      "sha256": "f20b33a53f6ab6bd415fe79f07db3d91de3325a4ff4bc1577034e35f0106a95a",
+      "bytes": 24658
+    },
+    "Kui_Nameplates/media/combopoint-glow.tga": {
+      "sha256": "fc576f295cc5f4ce3c4a243e9db09f8518b7fdbdb5cf6e1b2282ef00279f5139",
+      "bytes": 1068
+    },
+    "Kui_Nameplates/media/combopoint-round.tga": {
+      "sha256": "4c3a60dc23f0c760f332b2d13010a9896a453d5b8d2dcc7ccbf490e37effa577",
+      "bytes": 1068
+    },
+    "Kui_Nameplates/media/FrameGlow.tga": {
+      "sha256": "c727abc89187721777fa4423d6da0603b2d4b098ff3446ff2a34aa7820b92262",
+      "bytes": 32812
+    },
+    "Kui_Nameplates/media/Shield.tga": {
+      "sha256": "0e58361df02c6da74e18bd6c58dd264bc698328829de29bb2d06fa5577cd7134",
+      "bytes": 1325
+    },
+    "Kui_Nameplates/media/spark.tga": {
+      "sha256": "7dfcf7ba16c232c690001db0621bd87884e801d8e5228ad4fcf6245328b11f9a",
+      "bytes": 1068
+    },
+    "Kui_Nameplates/media/target-glow.tga": {
+      "sha256": "c169dcdc2806501dde4763f25b68bf4cf7d9e910968533694cd5b4ef5c6b9321",
+      "bytes": 8236
+    },
+    "Kui_Nameplates/media/targetarrows3.tga": {
+      "sha256": "c14ff48d243a851c0481f7e7cbf0e84f58fc2804465b532175905a0ffa348db2",
+      "bytes": 8861
+    },
+    "Kui_Nameplates/tankmode.lua": {
+      "sha256": "b8c6454aae130a0c160b4424547892db451c53705d4b70673a7976fbf0774a10",
+      "bytes": 14870
+    },
+    "Kui_Nameplates_Auras/.vscode/settings.json": {
+      "sha256": "1fbb4b21634db0251dc72777877e4739ef053874a8f90bd1ba09e5951cdbb9b2",
+      "bytes": 294
+    },
+    "Kui_Nameplates_Auras/auras.lua": {
+      "sha256": "7dec6e7fe5354662fa530b2e490b9d72a37583a126ae6d7d874ef2312574986c",
+      "bytes": 25418
+    },
+    "Kui_Nameplates_Auras/data.lua": {
+      "sha256": "4be93a2e757e76b200977dae5d4780ed47cfed7605e81b1bd49cc677a5be0435",
+      "bytes": 2653
+    },
+    "Kui_Nameplates_Auras/Kui_Nameplates_Auras.toc": {
+      "sha256": "b497ef3c08a0c83b7aceda2d53c552221e316e41521e4cabb50b967c9bcabd10",
+      "bytes": 265
+    },
+    "Kui_Nameplates_Auras/lib/AceLibrary/AceLibrary.lua": {
+      "sha256": "1237d45fdf7e6aa30442c36fdebd7a0c11c75ed6cc0183339eb22c4a7911b8c4",
+      "bytes": 24193
+    },
+    "Kui_Nameplates_Auras/lib/embeds.xml": {
+      "sha256": "b82b468ddecb670f6651fc28a8efcda51872559b18b37ff3b5125563dc33851d",
+      "bytes": 471
+    },
+    "Kui_Nameplates_Auras/lib/Gratuity-2.0/Gratuity-2.0 API Documentation - WowAce Wiki.mhtml": {
+      "sha256": "be53cabf8785a01713feff23ad84cec27fe29d266c0b6505a1d6d65dc109ed59",
+      "bytes": 87155
+    },
+    "Kui_Nameplates_Auras/lib/Gratuity-2.0/Gratuity-2.0_.lua": {
+      "sha256": "ee4de5562aa689561e9bf8efbbf40fc49277af58eedc4bdbcc4978139a5761a5",
+      "bytes": 8250
+    },
+    "Kui_Nameplates_Auras/lib/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "0e551ad3aa9619cf7287d1a7cfff6588324a47be14ac357426be785041e40a69",
+      "bytes": 8109
+    },
+    "Kui_Nameplates_Auras/lib/KuiSpellList/KuiSpellList.lua": {
+      "sha256": "892c57cc66f3c4fd0bddf7a7d01073914c4bbcdcb28fc8e784789f6a1de5b69a",
+      "bytes": 10513
+    },
+    "Kui_Nameplates_Auras/lib/ParserLib/FixGlobalString.lua": {
+      "sha256": "fd3b3edece2d5aba4fcaf156b9d6bfdb5e31302ccb8a802fc7712bf3bb0755f2",
+      "bytes": 1213
+    },
+    "Kui_Nameplates_Auras/lib/ParserLib/optimizer-enUS.lua": {
+      "sha256": "5e0a62a713c874b721090f3de072e2337d1750a0933112a11dc2b53362c91afc",
+      "bytes": 7604
+    },
+    "Kui_Nameplates_Auras/lib/ParserLib/optimizer-koKR.lua": {
+      "sha256": "394bfe2565341d48181d25b7a382557c504c0d520a98e2835206a3286f63d513",
+      "bytes": 12190
+    },
+    "Kui_Nameplates_Auras/lib/ParserLib/optimizer-ruRU.lua": {
+      "sha256": "a1dcc856fc22816601877629345bdc7317f5220579372ee8b9d29d61d874a102",
+      "bytes": 10491
+    },
+    "Kui_Nameplates_Auras/lib/ParserLib/optimizer-zhTW.lua": {
+      "sha256": "36bdcf70d87875573b1fe5a70fb3c31fbf2e93388b951c92f0ba328bbd19d312",
+      "bytes": 8140
+    },
+    "Kui_Nameplates_Auras/lib/ParserLib/ParserLib.lua": {
+      "sha256": "84e6186ae6f6ee856c60d074c6584d038190cf2b893f66e5fa983e528d7d664d",
+      "bytes": 92318
+    },
+    "Kui_Nameplates_Auras/lib/ParserLib/readme.txt": {
+      "sha256": "762a52185e9eeeff3d6c5f9905b63222dc823642be922a0b03c04979867b90aa",
+      "bytes": 82
+    },
+    "LICENSE": {
+      "sha256": "a0ee746064b06d09cab0768116ec265fd0d45261d4087c9ad2c698a07c7aac0e",
+      "bytes": 35803
+    },
+    "README.md": {
+      "sha256": "7f7a521d50aab46617c21615586538f5216b332f244f55a79885c54e35992c19",
+      "bytes": 179
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "224484554": {
+      "tag": "beta0.16",
+      "folder": "beta0.16--224484554",
+      "assets": {
+        "264438088": {
+          "sha256": "b9d668dc78e7721e41425692bb4c316c9acd1bf860c6df983f9dc1a8c98cb3b3",
+          "bytes": 1001350,
+          "id": "264438088",
+          "name": "Kui-Namaplates_beta0.16b.zip",
+          "url": "https://github.com/laytya/Kui-Namaplates/releases/download/beta0.16/Kui-Namaplates_beta0.16b.zip",
+          "path": "releases/beta0.16--224484554/assets/Kui-Namaplates_beta0.16b.zip"
+        }
+      },
+      "source": {
+        "sha256": "e9495dff44b6eeda89a6d79bcda4cebffa11d38fa818548fcf41e663c1004d03",
+        "bytes": 932640,
+        "path": "releases/beta0.16--224484554/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/laytya/Kui-Namaplates/tarball/beta0.16"
+      }
+    }
+  }
+}

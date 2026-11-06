@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/shagu/ShaguError",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguError",
+    "name": "ShaguError",
+    "url": "https://github.com/shagu/ShaguError",
+    "api": "https://api.github.com/repos/shagu/ShaguError"
+  },
+  "commit": "da847ea462dd6c3f8c009267ccf8eb9ef35b5916",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "9759c24ae29fed395469aeeff901967b1b8ae40f626b431031592221b715270f",
+      "bytes": 1090
+    },
+    "ShaguError-tbc.toc": {
+      "sha256": "7978961a1176a21058b63c83ab7e9a4c361a4d72648eec0ca4aad4c3e2fe3108",
+      "bytes": 138
+    },
+    "ShaguError.lua": {
+      "sha256": "0da3ee7f6664a09465a67399c1b1c05767ee97de3562198a5de09c1bccfbab59",
+      "bytes": 257
+    },
+    "ShaguError.toc": {
+      "sha256": "55c3e6ec98885a6b3d88da805fe66e9430571a959e9801ee22a2a304058eab15",
+      "bytes": 138
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

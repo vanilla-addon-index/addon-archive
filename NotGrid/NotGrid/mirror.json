@@ -1,0 +1,173 @@
+{
+  "upstream": "https://github.com/KameleonUK/NotGrid",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "KameleonUK",
+    "repo": "NotGrid",
+    "name": "NotGrid",
+    "url": "https://github.com/KameleonUK/NotGrid",
+    "api": "https://api.github.com/repos/KameleonUK/NotGrid"
+  },
+  "commit": "f088643d297b4195e3971fb305721da436e3ffaf",
+  "sourceFiles": {
+    "core.lua": {
+      "sha256": "7c1c15c046febce3a180223dbecd6f08f0e9ffb193c0c2cdf15854a3c426d259",
+      "bytes": 24927
+    },
+    "frames.lua": {
+      "sha256": "ca9344737bda02afac1f5827063ea9462f98747d2b683c15323c7776c553990d",
+      "bytes": 22081
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "6c4e23e37cf0893782922cdef23057ad180bca18ec85b05c35ea068209e1b167",
+      "bytes": 30892
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "73ba2bdfaf3e496e1c1d1534110e9498805759accf0d5b9dd4b867d0207697b0",
+      "bytes": 66005
+    },
+    "libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "34e4e52df5e10eb6ecf423e5e04768b1daa28562d8ec2206df9647cb2f6c0219",
+      "bytes": 7941
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "2d212f65a53cf51ae5c5c65e1ad33be6aa3b4f33527dd3d9ccde322811123b60",
+      "bytes": 28825
+    },
+    "libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "26fcd4ed3beddcdba2e56ec97e8655883b37ff27354d2969a979812f62eb725a",
+      "bytes": 22854
+    },
+    "libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "951a8460955cfa7a68929a7d878501d29126d1a92730b9e6cf3f692731b1d6b1",
+      "bytes": 15949
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "libs/Banzai-1.0/Banzai-1.0.lua": {
+      "sha256": "a054f6712307f1691b954759c9d051178004c69702087c0ca59aa5c84b9b618b",
+      "bytes": 5248
+    },
+    "libs/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "4133b9069be339d5faca66c489e1db028ee400f114b1f437567c5f19a76f21e5",
+      "bytes": 9209
+    },
+    "libs/Deformat-2.0/Deformat-2.0.lua": {
+      "sha256": "6491e26c67bc4e35eecead3aac60dd1e02abe39a8b281ff6f10bb223e78b7f50",
+      "bytes": 9438
+    },
+    "libs/Gratuity-2.0/Gratuity-2.0.lua": {
+      "sha256": "1927177be6990043bc63bc8c36168408957c6d1ed86ef971d72415f7dd14d430",
+      "bytes": 7889
+    },
+    "libs/HealComm-1.0/_OLD_HealComm-1.0.lua": {
+      "sha256": "24a9ec16788be8310d5212788d0ad72a142751f927fc908ae2fa511cf097fd5f",
+      "bytes": 65389
+    },
+    "libs/HealComm-1.0/HealComm-1.0.lua": {
+      "sha256": "8bfbe59b6d56a8a17b891e501b95ad242f8417325fa153b514ab996e0c2672fe",
+      "bytes": 66356
+    },
+    "libs/ItemBonusLib-1.0/ItemBonusLib-1.0.lua": {
+      "sha256": "f4c4e93a58e6c32a48d4e9bcdb200111c4f9c0e6a5c6b4674a52ec06c3bf85c9",
+      "bytes": 12162
+    },
+    "libs/ItemBonusLib-1.0/Locales/deDE.lua": {
+      "sha256": "7b46b233c41062617ef4c19ddaa4043ea8a4a8e5331a309b770c1aa1366af4f2",
+      "bytes": 7749
+    },
+    "libs/ItemBonusLib-1.0/Locales/enUS.lua": {
+      "sha256": "e45bc468044f3bf908cd93079024ad13c849499f77fe741a4cbe08f89956aae8",
+      "bytes": 11008
+    },
+    "libs/ItemBonusLib-1.0/Locales/frFR.lua": {
+      "sha256": "d1340316d9d87767978ee1dd13aed349f93414f52c374fdb77e4de2eb946f75d",
+      "bytes": 11401
+    },
+    "libs/ItemBonusLib-1.0/Locales/ruRU.lua": {
+      "sha256": "8aace8fbd230d7a7fd37ac2023019483df5ba67c8a378be8445b820940f75314",
+      "bytes": 16859
+    },
+    "libs/RosterLib-2.0/RosterLib-2.0.lua": {
+      "sha256": "17d04168174793fd6cf8db81bf9e91d19781b000ec0d6a808dd502cb5491941a",
+      "bytes": 10705
+    },
+    "localization.lua": {
+      "sha256": "60287c36592b786ebdfa525ae6c696537d77500527f7a37af8e2af77d540812e",
+      "bytes": 10276
+    },
+    "mapsizes.lua": {
+      "sha256": "6f91bb9640ba096f1f88631b8b74553e886d04f2fa9ac908f3ad3db87ea4f539",
+      "bytes": 9899
+    },
+    "media/borderartwork.tga": {
+      "sha256": "89a679b4b2b924d9232f736316be42bdf3662f600a080c0ee63206644a0a2790",
+      "bytes": 3501
+    },
+    "media/damage2.blp": {
+      "sha256": "b6ea615741e2f4814fbaee974386a5d0f5cec5d83777dab773660ef5efe3c7cb",
+      "bytes": 6676
+    },
+    "media/GridGradient.tga": {
+      "sha256": "ac97d122a38db4148b5e79b06b55b48997d769379ea192a9a718abb199b3a9f7",
+      "bytes": 12332
+    },
+    "media/GridHorizontalGradient.tga": {
+      "sha256": "d248be43f12cdfc3402b700a0e6507690fae436d79602dec632f5ba08f4bdbf6",
+      "bytes": 12043
+    },
+    "media/healer2.blp": {
+      "sha256": "4d8dcc5f95bc90fac32aea3c67112a2cccadaac8c425988e1803ca4fbdcaab43",
+      "bytes": 6676
+    },
+    "media/mc.tga": {
+      "sha256": "7944a44e531d64a4e2da688f629066c6766146f821ea64243f5ac95a3d8604b7",
+      "bytes": 4458
+    },
+    "media/res.tga": {
+      "sha256": "727b5459c998a83d468cb92b460592bb7998a31d3b4c29755d233b18a6b6658d",
+      "bytes": 16428
+    },
+    "media/screenshot.jpg": {
+      "sha256": "46773ff927ad0e4cdaae4124bbf392b11895975e20f42f79f80861e13e8cecd0",
+      "bytes": 72109
+    },
+    "media/Striped.tga": {
+      "sha256": "6fb63ceca5d08a158708171b0c60e4836c698d121fcbbe555c538c15bb9e923e",
+      "bytes": 3769
+    },
+    "media/tank2.blp": {
+      "sha256": "dfdc78f9170deb3b895ea1aaa445c521aa825e116eecb983ce37f3552aaa346a",
+      "bytes": 6676
+    },
+    "menus.lua": {
+      "sha256": "73650eccbcac38fd695d6f9880599c01f21d5a6568fde3472c39540a16537352",
+      "bytes": 26317
+    },
+    "notgrid.toc": {
+      "sha256": "ba95af6ad479b18aa45e38091d853ce488ac000b1e8e769d50de6cfdd47e6688",
+      "bytes": 927
+    },
+    "options.lua": {
+      "sha256": "18c73bd9bd98f19ef0206d4a099fccf26038d5ed6ff94629ee1ea47e54d4e005",
+      "bytes": 7043
+    },
+    "proximity.lua": {
+      "sha256": "9ed4513beb7de079620cb5adba8ec9b2c2c85a88399cd1651c2b2b54de70ba8a",
+      "bytes": 10903
+    },
+    "README.md": {
+      "sha256": "4c891ef4bdbf6fc49bb10702b1802788151d75decd2a989217af5ed89d0553d0",
+      "bytes": 1350
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

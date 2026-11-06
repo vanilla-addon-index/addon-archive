@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: Snowkoban
+## Author: Snowcone (therebirth server)
+## Notes: A puzzle minigame adapted from "Sokoban" by Perun Labs
+## SavedVariables: SKB_Highest
+SKB.xml

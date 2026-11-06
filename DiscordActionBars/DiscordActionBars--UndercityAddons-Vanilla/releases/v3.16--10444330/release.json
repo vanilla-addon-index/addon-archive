@@ -1,0 +1,9 @@
+{
+  "id": "10444330",
+  "tag": "v3.16",
+  "name": "Discord Action Bars v3.16",
+  "body": "# Discord Action Bars 3.16\r\n\r\nThis was the final release by the original author. This project was abandoned after Vanilla.\r\n\r\n## Installation\r\n\r\nAlthough functionally one AddOn, Discord Action Bars technically is a collection of three separate AddOns:\r\n\r\n    DiscordActionBars\r\n    DiscordActionBarsOptions\r\n    DiscordLibrary\r\n\r\nTo install, extract the attached zip file, and copy each of the three directories within the extract directory  to your _Interface/AddOns_ folder.",
+  "published": "2018-04-08T11:54:29Z",
+  "prerelease": false,
+  "url": "https://github.com/UndercityAddons-Vanilla/DiscordActionBars/releases/tag/v3.16"
+}

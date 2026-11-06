@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: SoundBoard
+## Author: |cffadd8e6Gon|r|cffffffffdo|r|cffff7f7fLeon|r
+## Version: 0.0.5
+## Notes: Shares and plays sounds in the group/raid
+
+SoundBoard_Comms.lua
+SoundBoard_Sounds.lua
+SoundBoard_UI.lua
+SoundBoard.lua

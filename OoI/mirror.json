@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/jejkas/OoI",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jejkas",
+    "repo": "OoI",
+    "name": "OoI",
+    "url": "https://github.com/jejkas/OoI",
+    "api": "https://api.github.com/repos/jejkas/OoI"
+  },
+  "commit": "fc2bfe8d7ac2ea596295ae87a92d417905b10f2d",
+  "sourceFiles": {
+    "OoI_Tooltip.xml": {
+      "sha256": "8934f4fc9600c3fe8aacbb18abd338e24fffcbc78c23b1720a63c3cd7c5c8703",
+      "bytes": 1608
+    },
+    "OoI.lua": {
+      "sha256": "40c6c335dfb807584ccbffba74a1e3fde40b0cf9a51939131d0e4d2699f80ba5",
+      "bytes": 6999
+    },
+    "OoI.toc": {
+      "sha256": "7d07a7595ceb760c5ba4435ff2b9388caaa024768fb0f56012d5cf0f361949d0",
+      "bytes": 164
+    },
+    "README.md": {
+      "sha256": "528173cefbf248c42afead386ce6732dab690aa4910981ee74dd529e9e702ea6",
+      "bytes": 52
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

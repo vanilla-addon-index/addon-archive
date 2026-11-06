@@ -1,0 +1,592 @@
+local _G = ShaguTweaks.GetGlobalEnv()
+local L = ShaguTweaks.L
+local API = ShaguTweaks.API
+local GetExpansion = ShaguTweaks.GetExpansion
+local libtipscan = ShaguTweaks.libtipscan
+local libspell = ShaguTweaks.libspell
+local hooksecurefunc = ShaguTweaks.hooksecurefunc
+local strsplit = ShaguTweaks.strsplit
+local cmatch = ShaguTweaks.cmatch
+
+local senttarget
+local heals, ress, events = {}, {}, {}
+
+local PRAYER_OF_HEALING
+do -- Prayer of Healing
+  local locales = {
+    ["deDE"] = "Gebet der Heilung",
+    ["enUS"] = "Prayer of Healing",
+    ["esES"] = "Rezo de curación",
+    ["frFR"] = "Prière de soins",
+    ["koKR"] = "치유의 기원",
+    ["ruRU"] = "Молитва исцеления",
+    ["zhCN"] = "治疗祷言",
+  }
+
+  PRAYER_OF_HEALING = locales[GetLocale()] or locales["enUS"]
+end
+
+local libpredict = CreateFrame("Frame")
+libpredict.enabled = false
+libpredict:SetScript("OnEvent", function()
+  if event == "CHAT_MSG_ADDON" and (arg1 == "HealComm" or arg1 == "CTRA") then
+    this:ParseChatMessage(arg4, arg2, arg1)
+  elseif event == "UNIT_HEALTH" then
+    local name = UnitName(arg1)
+    if ress[name] and not UnitIsDeadOrGhost(arg1) then
+      ress[UnitName(arg1)] = nil
+    end
+  end
+end)
+
+local function UpdateTimeouts()
+  local now = GetTime()
+  local pending
+
+  for timestamp in pairs(events) do
+    if now >= timestamp then
+      events[timestamp] = nil
+    else
+      pending = true
+    end
+  end
+
+  -- No prediction timeout is pending: completely remove OnUpdate until the
+  -- next AddEvent() instead of waking this library on every rendered frame.
+  if not pending then
+    libpredict.timeoutActive = nil
+    libpredict:SetScript("OnUpdate", nil)
+  end
+end
+
+function libpredict:ParseComm(sender, msg)
+  local msgtype, target, heal, time
+
+  if msg == "Healstop" or msg == "GrpHealstop" then
+    msgtype = "Stop"
+  elseif msg == "Resurrection/stop/" then
+    msgtype = "RessStop"
+  elseif msg then
+    local msgobj = {strsplit("/", msg)}
+
+    if msgobj and msgobj[1] and msgobj[2] then
+      -- legacy healcomm object
+      if msgobj[1] == "GrpHealdelay" or msgobj[1] == "Healdelay" then
+        msgtype, time = "Delay", msgobj[2]
+      end
+
+      if msgobj[1] and msgobj[1] == "Resurrection" and msgobj[2] then
+        msgtype, target = "Ress", msgobj[2]
+      end
+
+      if msgobj[1] == "Heal" and msgobj[2] then
+        msgtype, target, heal, time = "Heal", msgobj[2], msgobj[3], msgobj[4]
+      end
+
+      if msgobj[1] == "GrpHeal" and msgobj[2] then
+        msgtype, target, heal, time = "Heal", {}, msgobj[2], msgobj[3]
+        for i=4,8 do
+          if msgobj[i] then table.insert(target, msgobj[i]) end
+        end
+      end
+    elseif select and UnitCastingInfo then
+      -- latest healcomm
+      msgtype = tonumber(string.sub(msg, 1, 3))
+      if not msgtype then return end
+
+      if msgtype == 0 then
+        msgtype = "Heal"
+        heal = tonumber(string.sub(msg, 4, 8))
+        target = string.sub(msg,9, -1)
+
+        local starttime = select(5, UnitCastingInfo(sender))
+        local endtime = select(6, UnitCastingInfo(sender))
+        if not starttime or not endtime then return end
+        time = endtime - starttime
+      elseif msgtype == 1 then
+        msgtype = "Stop"
+      elseif msgtype == 2 then
+        msgtype = "Heal"
+        heal = tonumber(string.sub(msg,4, 8))
+        target = {strsplit(":", string.sub(msg,9, -1))}
+        local starttime = select(5, UnitCastingInfo(sender))
+        local endtime = select(6, UnitCastingInfo(sender))
+        if not starttime or not endtime then return end
+        time = endtime - starttime
+      end
+    end
+  end
+
+  return msgtype, target, heal, time
+end
+
+function libpredict:ParseChatMessage(sender, msg, comm)
+  local msgtype, target, heal, time
+
+  if comm == "HealComm" then
+    msgtype, target, heal, time = libpredict:ParseComm(sender, msg)
+  elseif comm == "CTRA" then
+    local _, _, cmd, ctratarget = string.find(msg, "(%a+)%s?([^#]*)")
+    if cmd == "RES" and ctratarget and ctratarget ~= "" and ctratarget ~= UNKNOWN then
+      msgtype = "Ress"
+      target = ctratarget
+    elseif cmd == "RESNO" then
+      msgtype = "RessStop"
+    end
+  end
+
+  if msgtype == "Stop" and sender then
+    libpredict:HealStop(sender)
+    return
+  elseif msgtype == "RessStop" and sender then
+    libpredict:RessStop(sender)
+    return
+  elseif msgtype == "Delay" and time then
+    libpredict:HealDelay(sender, time)
+  elseif msgtype == "Heal" and target and heal and time then
+    if type(target) == "table" then
+      for _, name in pairs(target) do
+        libpredict:Heal(sender, name, heal, time)
+      end
+    else
+      libpredict:Heal(sender, target, heal, time)
+    end
+  elseif msgtype == "Ress" then
+    libpredict:Ress(sender, target)
+  end
+end
+
+function libpredict:AddEvent(time, target)
+  events[time] = events[time] or {}
+  table.insert(events[time], target)
+
+  if not self.timeoutActive then
+    self.timeoutActive = true
+    self:SetScript("OnUpdate", UpdateTimeouts)
+  end
+end
+
+function libpredict:Heal(sender, target, amount, duration)
+  if not sender or not target or not amount or not duration then
+    return
+  end
+
+  local timeout = duration/1000 + GetTime()
+  heals[target] = heals[target] or {}
+  heals[target][sender] = { amount, timeout }
+  libpredict:AddEvent(timeout, target)
+end
+
+function libpredict:HealStop(sender)
+  for ttarget, t in pairs(heals) do
+    for tsender in pairs(heals[ttarget]) do
+      if sender == tsender then
+        heals[ttarget][tsender] = nil
+      end
+    end
+  end
+end
+
+function libpredict:HealDelay(sender, delay)
+  local delay = delay/1000
+  for target, t in pairs(heals) do
+    for tsender, amount in pairs(heals[target]) do
+      if sender == tsender then
+        amount[2] = amount[2] + delay
+        libpredict:AddEvent(amount[2], target)
+      end
+    end
+  end
+end
+
+function libpredict:Ress(sender, target)
+  ress[target] = ress[target] or {}
+  ress[target][sender] = true
+end
+
+function libpredict:RessStop(sender)
+  for ttarget, t in pairs(ress) do
+    for tsender in pairs(ress[ttarget]) do
+      if sender == tsender then
+        ress[ttarget][tsender] = nil
+      end
+    end
+  end
+end
+
+function libpredict:UnitGetIncomingHeals(unit)
+  if not unit or not UnitName(unit) then return 0 end
+  if UnitIsDeadOrGhost(unit) then return 0 end
+  local name = UnitName(unit)
+
+  local sumheal = 0
+  if not heals[name] then
+    return sumheal
+  else
+    for sender, amount in pairs(heals[name]) do
+      if amount[2] <= GetTime() then
+        heals[name][sender] = nil
+      else
+        sumheal = sumheal + amount[1]
+      end
+    end
+  end
+  return sumheal
+end
+
+function libpredict:UnitHasIncomingResurrection(unit)
+  if not unit or not UnitName(unit) then return nil end
+  local name = UnitName(unit)
+
+  if not ress[name] then
+    return nil
+  else
+    for sender, val in pairs(ress[name]) do
+      if val == true then
+        return val
+      end
+    end
+  end
+  return nil
+end
+
+local spell_queue = { "DUMMY", "DUMMYRank 9", "TARGET" }
+local realm = GetRealmName()
+local player = UnitName("player")
+local cache, gear_string = {}, ""
+local resetcache = CreateFrame("Frame")
+resetcache:SetScript("OnEvent", function()
+  if event == "PLAYER_ENTERING_WORLD" then
+    -- load and initialize previous caches of spell amounts
+    ShaguTweaks_cache = ShaguTweaks_cache or {}
+    ShaguTweaks_cache["prediction"] = ShaguTweaks_cache["prediction"] or {}
+    ShaguTweaks_cache["prediction"][realm] = ShaguTweaks_cache["prediction"][realm] or {}
+    ShaguTweaks_cache["prediction"][realm][player] = ShaguTweaks_cache["prediction"][realm][player] or {}
+    ShaguTweaks_cache["prediction"][realm][player]["heals"] = ShaguTweaks_cache["prediction"][realm][player]["heals"] or {}
+    cache = ShaguTweaks_cache["prediction"][realm][player]["heals"]
+    return
+  end
+
+  if event == "UNIT_INVENTORY_CHANGED" then
+    -- skip non-player events
+    if arg1 and arg1 ~= "player" then return end
+
+    local gear = ""
+    for id = 1, 18 do
+      gear = gear .. (GetInventoryItemLink("player",id) or "")
+    end
+
+    -- abort when inventory didn't change
+    if gear == gear_string then return end
+    gear_string = gear
+  end
+
+  -- flag all cached heals for renewal
+  for k in pairs(cache) do
+    if type(cache[k]) == "number" or type(cache[k]) == "string" then
+      -- migrate old data
+      local oldval = cache[k]
+      cache[k] = { [1] = oldval }
+    end
+
+    -- flag for reset
+    cache[k][2] = true
+  end
+end)
+
+local function UpdateCache(spell, heal, crit)
+  if not spell or not heal then return end
+  local heal = tonumber(heal)
+
+  if not cache[spell] or cache[spell][2] then
+    -- skills or equipment changed, save whatever is detected
+    cache[spell] = cache[spell] or {}
+    cache[spell][1] = crit and heal*2/3 or heal
+    cache[spell][2] = crit
+  elseif not crit and cache[spell][1] < heal then
+    -- safe the best heal we can get
+    cache[spell][1] = heal
+    cache[spell][2] = nil
+  end
+end
+
+-- Gather Data by User Actions. Hooks are installed lazily by libpredict:Enable()
+-- so disabling healing predictions leaves no spell hook on the hot path.
+local scanner
+local hooksInstalled
+local useClassicSenderEvents
+
+local function TrackCastSpell(id, bookType)
+  if not libpredict.sender.enabled then return end
+  local effect, rank = libspell.GetSpellInfo(id, bookType)
+  if not effect then return end
+  spell_queue[1] = effect
+  spell_queue[2] = effect.. ( rank or "" )
+  spell_queue[3] = UnitName("target") and UnitCanAssist("player", "target") and UnitName("target") or UnitName("player")
+end
+
+local function TrackCastSpellByName(effect, target)
+  if not libpredict.sender.enabled then return end
+  local effect, rank = libspell.GetSpellInfo(effect)
+  if not effect then return end
+  spell_queue[1] = effect
+  spell_queue[2] = effect.. ( rank or "" )
+  spell_queue[3] = UnitName("target") and UnitCanAssist("player", "target") and UnitName("target") or UnitName("player")
+end
+
+local function TrackUseAction(slot, target, selfcast)
+  if not libpredict.sender.enabled then return end
+
+  -- Conditional macros are resolved by the later CastSpellByName hook. For a
+  -- direct spell action, ClassicAPI gives us the spellID without a tooltip.
+  if API and API.actioninfo and API.GetActionInfo then
+    local actionType, actionID = API.GetActionInfo(slot)
+    if actionType == "macro" or actionType == "item" then return end
+
+    if actionType == "spell" and actionID then
+      if not IsCurrentAction(slot) then return end
+      local effect, rank = API.GetSpellInfo(actionID)
+      if not effect then return end
+      spell_queue[1] = effect
+      spell_queue[2] = effect.. ( rank or "" )
+      spell_queue[3] = selfcast and UnitName("player") or UnitName("target") and UnitCanAssist("player", "target") and UnitName("target") or UnitName("player")
+      return
+    elseif actionType then
+      return
+    end
+  end
+
+  if GetActionText(slot) or not IsCurrentAction(slot) then return end
+  scanner = scanner or libtipscan:GetScanner("prediction")
+  scanner:SetAction(slot)
+  local effect, rank = scanner:Line(1)
+  if not effect then return end
+  spell_queue[1] = effect
+  spell_queue[2] = effect.. ( rank or "" )
+  spell_queue[3] = selfcast and UnitName("player") or UnitName("target") and UnitCanAssist("player", "target") and UnitName("target") or UnitName("player")
+end
+
+local function InstallSenderHooks()
+  if hooksInstalled then return end
+  hooksecurefunc("CastSpell", TrackCastSpell)
+  hooksecurefunc("CastSpellByName", TrackCastSpellByName)
+  hooksecurefunc("UseAction", TrackUseAction)
+  hooksInstalled = true
+end
+
+libpredict.sender = CreateFrame("Frame", "ShaguTweaksPredictionSender", UIParent)
+libpredict.sender.enabled = false
+libpredict.sender.SendHealCommMsg = function(self, msg)
+  SendAddonMessage("HealComm", msg, "RAID")
+  SendAddonMessage("HealComm", msg, "BATTLEGROUND")
+end
+libpredict.sender.SendResCommMsg = function(self, msg)
+  SendAddonMessage("CTRA", msg, "RAID")
+  SendAddonMessage("CTRA", msg, "BATTLEGROUND")
+end
+
+libpredict.sender:SetScript("OnEvent", function()
+  if event == "CHAT_MSG_SPELL_SELF_BUFF" then -- vanilla
+    local spell, _, heal = cmatch(arg1, HEALEDSELFOTHER) -- "Your %s heals %s for %d."
+    if spell and heal then
+      if spell == spell_queue[1] then UpdateCache(spell_queue[2], heal) end
+      return
+    end
+
+    local spell, heal = cmatch(arg1, HEALEDSELFSELF) -- "Your %s heals you for %d."
+    if spell and heal then
+      if spell == spell_queue[1] then UpdateCache(spell_queue[2], heal) end
+      return
+    end
+
+    local spell, heal = cmatch(arg1, HEALEDCRITSELFOTHER) -- "Your %s critically heals %s for %d."
+    if spell and heal then
+      if spell == spell_queue[1] then UpdateCache(spell_queue[2], heal, true) end
+      return
+    end
+
+    local spell, _, heal = cmatch(arg1, HEALEDCRITSELFSELF) -- "Your %s critically heals you for %d."
+    if spell and heal then
+      if spell == spell_queue[1] then UpdateCache(spell_queue[2], heal, true) end
+      return
+    end
+  elseif event == "COMBAT_LOG_EVENT_UNFILTERED" and arg2 == "SPELL_HEAL" and arg4 == player then -- tbc
+    local spell, heal, crit = arg10, arg12, arg13
+    if spell and heal and crit then
+      if spell == spell_queue[1] then UpdateCache(spell_queue[2], heal, true) end
+    elseif spell and heal then
+      if spell == spell_queue[1] then UpdateCache(spell_queue[2], heal) end
+    end
+  elseif event == "UNIT_SPELLCAST_SENT" then
+    if arg1 ~= "player" then return end
+
+    if GetExpansion() == "vanilla" and useClassicSenderEvents then
+      -- ClassicAPI already resolved the actual outgoing spell and target:
+      -- unit, target, castGUID, spellID, spellName, rank. Use it directly so
+      -- prediction tracking needs no CastSpell/UseAction hooks at all.
+      local target = arg2 and arg2 ~= "" and arg2 or UnitName("player")
+      local spell = arg5
+      local rank = arg6 or ""
+
+      senttarget = target
+      if spell then
+        spell_queue[1] = spell
+        spell_queue[2] = spell .. rank
+        spell_queue[3] = target
+      end
+    else
+      -- Native TBC layout keeps the target in arg4.
+      local castTarget = arg4
+      senttarget = castTarget and castTarget ~= "" and castTarget or nil
+    end
+  elseif strfind(event, "SPELLCAST_START", 1) then
+    local spell, time = arg1, arg2
+
+    if strfind(event, "UNIT_", 1) then
+      if arg1 ~= "player" then return end
+
+      if GetExpansion() == "vanilla" and API and API.casts then
+        local spellname, _, _, _, starttime, endtime = API.GetCastInfo("player")
+        spell = spellname
+        time = starttime and endtime and endtime - starttime or nil
+      else
+        local spellname, _, _, _, starttime, endtime = UnitCastingInfo("player")
+        spell = spellname
+        time = starttime and endtime and endtime - starttime or nil
+      end
+    end
+
+    if not spell or not time then return end
+
+    if spell_queue[1] == spell and cache[spell_queue[2]] then
+      local sender = player
+      local target = senttarget or spell_queue[3]
+      local amount = cache[spell_queue[2]][1]
+      local casttime = time
+
+      if spell == PRAYER_OF_HEALING then
+        target = sender
+
+        for i=1,4 do
+          if CheckInteractDistance("party"..i, 4) then
+            libpredict:Heal(player, UnitName("party"..i), amount, casttime)
+            if GetExpansion() == "vanilla" then -- vanilla
+              libpredict.sender:SendHealCommMsg("Heal/" .. UnitName("party"..i) .. "/" .. amount .. "/" .. casttime .. "/")
+            else -- tbc
+              libpredict.sender:SendHealCommMsg(string.format("002%05d%s", math.min(amount, 99999), UnitName("party"..i)))
+            end
+            libpredict.sender.healing = true
+          end
+        end
+      end
+
+      libpredict:Heal(player, target, amount, casttime)
+      if GetExpansion() == "vanilla" then -- vanilla
+        libpredict.sender:SendHealCommMsg("Heal/" .. target .. "/" .. amount .. "/" .. casttime .. "/")
+      else -- tbc
+        libpredict.sender:SendHealCommMsg(string.format("002%05d%s", math.min(amount, 99999), target))
+      end
+      libpredict.sender.healing = true
+
+    elseif spell_queue[1] == spell and L["resurrections"][spell] then
+      local target = senttarget or spell_queue[3]
+      libpredict:Ress(player, target)
+      libpredict.sender:SendHealCommMsg("Resurrection/" .. target .. "/start/")
+      libpredict.sender:SendResCommMsg("RES " .. target)
+      libpredict.sender.resurrecting = true
+    end
+  elseif strfind(event, "SPELLCAST_FAILED", 1) or strfind(event, "SPELLCAST_INTERRUPTED", 1) then
+    if strfind(event, "UNIT_", 1) and arg1 ~= "player" then return end
+    if libpredict.sender.healing then
+      libpredict:HealStop(player)
+      if GetExpansion() == "vanilla" then -- vanilla
+        libpredict.sender:SendHealCommMsg("HealStop")
+      else -- tbc
+        libpredict.sender:SendHealCommMsg("001F")
+      end
+      libpredict.sender.healing = nil
+    elseif libpredict.sender.resurrecting then
+      local target = senttarget or spell_queue[3]
+      libpredict:RessStop(player)
+      libpredict.sender:SendHealCommMsg("Resurrection/stop/")
+      libpredict.sender:SendResCommMsg("RESNO " .. target)
+      libpredict.sender.resurrecting = nil
+    end
+    senttarget = nil
+  elseif event == "SPELLCAST_DELAYED" then
+    if libpredict.sender.healing then
+      libpredict:HealDelay(player, arg1)
+      libpredict.sender:SendHealCommMsg("Healdelay/" .. arg1 .. "/")
+    end
+  elseif strfind(event, "SPELLCAST_STOP", 1) then
+    if strfind(event, "UNIT_", 1) and arg1 ~= "player" then return end
+    libpredict:HealStop(player)
+    senttarget = nil
+  end
+end)
+
+function libpredict:Enable()
+  if self.enabled then return end
+
+  self.enabled = true
+  self.sender.enabled = true
+
+  -- incoming HealComm / resurrection tracking
+  self:RegisterEvent("UNIT_HEALTH")
+  self:RegisterEvent("CHAT_MSG_ADDON")
+  self:RegisterEvent("PLAYER_TARGET_CHANGED")
+
+  -- prediction cache lifecycle
+  resetcache:RegisterEvent("PLAYER_ENTERING_WORLD")
+  resetcache:RegisterEvent("SKILL_LINES_CHANGED")
+  resetcache:RegisterEvent("UNIT_INVENTORY_CHANGED")
+
+  if GetExpansion() == "vanilla" then
+    -- ClassicAPI supplies structured player spellcast events on 1.12. Use
+    -- those instead of registering both event families and processing each cast
+    -- twice. Keep the native SPELLCAST_DELAYED event because it carries the
+    -- exact delay delta consumed by HealDelay().
+    useClassicSenderEvents = API and API.eventutils and _G.C_EventUtils
+      and _G.C_EventUtils.IsEventValid("UNIT_SPELLCAST_START")
+      and _G.C_EventUtils.IsEventValid("UNIT_SPELLCAST_STOP")
+      and _G.C_EventUtils.IsEventValid("UNIT_SPELLCAST_FAILED")
+      and _G.C_EventUtils.IsEventValid("UNIT_SPELLCAST_FAILED_QUIET")
+      and _G.C_EventUtils.IsEventValid("UNIT_SPELLCAST_INTERRUPTED")
+      and _G.C_EventUtils.IsEventValid("UNIT_SPELLCAST_SENT")
+
+    if useClassicSenderEvents then
+      self.sender:RegisterEvent("UNIT_SPELLCAST_START")
+      self.sender:RegisterEvent("UNIT_SPELLCAST_STOP")
+      self.sender:RegisterEvent("UNIT_SPELLCAST_FAILED")
+      self.sender:RegisterEvent("UNIT_SPELLCAST_FAILED_QUIET")
+      self.sender:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
+      self.sender:RegisterEvent("UNIT_SPELLCAST_SENT")
+    else
+      self.sender:RegisterEvent("SPELLCAST_START")
+      self.sender:RegisterEvent("SPELLCAST_STOP")
+      self.sender:RegisterEvent("SPELLCAST_FAILED")
+      self.sender:RegisterEvent("SPELLCAST_INTERRUPTED")
+    end
+
+    self.sender:RegisterEvent("SPELLCAST_DELAYED")
+    self.sender:RegisterEvent("CHAT_MSG_SPELL_SELF_BUFF")
+  else
+    -- Native TBC event layout and combat log.
+    self.sender:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+    self.sender:RegisterEvent("UNIT_SPELLCAST_START")
+    self.sender:RegisterEvent("UNIT_SPELLCAST_STOP")
+    self.sender:RegisterEvent("UNIT_SPELLCAST_FAILED")
+    self.sender:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
+    self.sender:RegisterEvent("UNIT_SPELLCAST_SENT")
+  end
+
+  -- force cache updates
+  self.sender:RegisterEvent("UNIT_INVENTORY_CHANGED")
+  self.sender:RegisterEvent("SKILL_LINES_CHANGED")
+
+  if not useClassicSenderEvents then
+    InstallSenderHooks()
+  end
+end
+
+ShaguTweaks.libpredict = libpredict

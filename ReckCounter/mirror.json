@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/satan666/ReckCounter-Fix",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "satan666",
+    "repo": "ReckCounter-Fix",
+    "name": "ReckCounter-Fix",
+    "url": "https://github.com/satan666/ReckCounter-Fix",
+    "api": "https://api.github.com/repos/satan666/ReckCounter-Fix"
+  },
+  "commit": "f3d3714df928af06858090e0ea78fd3dec079d87",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "12ca81b43544aad1199998a226e032a9ffd27a827437fbb3e9edb5f2f7223bcc",
+      "bytes": 505
+    },
+    ".gitignore.upstream": {
+      "sha256": "a5e54048202def346fcd461496aaaf0b42d313153bee1d54f46242e7b4ed9d20",
+      "bytes": 485
+    },
+    "ReckCounter/localization.lua": {
+      "sha256": "31be053e5af1278d2c16bddee81bf9ce4700f13a2bf2474f02d097c5eff2f61b",
+      "bytes": 823
+    },
+    "ReckCounter/ReadMe.txt": {
+      "sha256": "7ced54aeff1997810df44d9040904fa0abe9b67db34b4c138ee599a7705c99cf",
+      "bytes": 1013
+    },
+    "ReckCounter/ReckCounter.lua": {
+      "sha256": "2ac4dbed4793c73188347742334477818123c51a64ded2b1a20038f4de68ad1b",
+      "bytes": 9208
+    },
+    "ReckCounter/ReckCounter.toc": {
+      "sha256": "03d4d769dc428a1ab2b7f4846043f6f20e6470c27d734b7fdc59900e8636c5ae",
+      "bytes": 160
+    },
+    "ReckCounter/ReckCounter.xml": {
+      "sha256": "28872f6d6d2271e84ef6d59149e51f05e0359bdd3dfb1e2e608edf28854954dc",
+      "bytes": 4074
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

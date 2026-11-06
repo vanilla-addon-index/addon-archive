@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/shagu/ShaguClock",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguClock",
+    "name": "ShaguClock",
+    "url": "https://github.com/shagu/ShaguClock",
+    "api": "https://api.github.com/repos/shagu/ShaguClock"
+  },
+  "commit": "3ca9d1d41c9e7327d4c638dd19a65df15e8dbc68",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "6bca343cd258190d0b9f338cff7a6327f35b87d99bf818a3e33ee66b06ddcd88",
+      "bytes": 776
+    },
+    "ShaguClock-tbc.toc": {
+      "sha256": "b40e31d302c11243ca4281efa1a3a6eed72640c6a1eca4c6b360ddde5996478d",
+      "bytes": 156
+    },
+    "ShaguClock.lua": {
+      "sha256": "ba3f37746dbde2bed1e38101903980b690719c7e96df65664cb3125bfe954f48",
+      "bytes": 706
+    },
+    "ShaguClock.toc": {
+      "sha256": "92dfa2e1a09bd217565dd2f828764949acd609bae739e7fe38af48a0a0247e84",
+      "bytes": 155
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

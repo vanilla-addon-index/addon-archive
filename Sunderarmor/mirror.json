@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/melbaa/sunderarmor",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "melbaa",
+    "repo": "sunderarmor",
+    "name": "sunderarmor",
+    "url": "https://github.com/melbaa/sunderarmor",
+    "api": "https://api.github.com/repos/melbaa/sunderarmor"
+  },
+  "commit": "dc5dff076f131d24f61e1fe31b12c03085c88c3e",
+  "sourceFiles": {
+    "readme.txt": {
+      "sha256": "80c1c99d1decdde7bbcd8d31270898528aea29ce0388d524adc2f0eb08525cd3",
+      "bytes": 220
+    },
+    "sunderarmor.lua": {
+      "sha256": "2a953673285df02125172aaeb8fb4718beb5d8e586d364cd484f41340842fd38",
+      "bytes": 9763
+    },
+    "sunderarmor.toc": {
+      "sha256": "f7b9cb365fcd4b0af2db2547f24842f59ee414e65cebb795342ff467bc3582b0",
+      "bytes": 121
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

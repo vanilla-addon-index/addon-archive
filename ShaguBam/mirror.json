@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/shagu/ShaguBam",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguBam",
+    "name": "ShaguBam",
+    "url": "https://github.com/shagu/ShaguBam",
+    "api": "https://api.github.com/repos/shagu/ShaguBam"
+  },
+  "commit": "5fd6bc33e1b0b4d1999a2470d651295163daeab2",
+  "sourceFiles": {
+    "bam.ogg": {
+      "sha256": "79c4e34d6bb72b89fb223c344e9c62c7c8414aaf1fd299e7e373517056642977",
+      "bytes": 20783
+    },
+    "README.md": {
+      "sha256": "0b77e2a84d5d2338ed56696a4c37af9a077cfe17a4080877b6bc637455bd4196",
+      "bytes": 660
+    },
+    "ShaguBam.lua": {
+      "sha256": "dc00bf4f661de328daeda6667fd4a7a79473f34bec8124ee0c3a63835839d275",
+      "bytes": 3384
+    },
+    "ShaguBam.toc": {
+      "sha256": "2c9ac902bb93d9cf2f8f8a7a194e51358c6281400d3d625e11a3c6dc80ee215a",
+      "bytes": 218
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

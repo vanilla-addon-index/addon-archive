@@ -1,0 +1,117 @@
+{
+  "upstream": "https://github.com/doorknob6/pfUI-turtle",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "doorknob6",
+    "repo": "pfUI-turtle",
+    "name": "pfUI-turtle",
+    "url": "https://github.com/doorknob6/pfUI-turtle",
+    "api": "https://api.github.com/repos/doorknob6/pfUI-turtle"
+  },
+  "commit": "4cba1b4e07a70b0c3a53122016c25cd9745bec7a",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "07c0afb0d87a31dbb9ab0d62e0d936a9215270ceded658af6e32c246316a7d49",
+      "bytes": 21
+    },
+    "img/cancel.blp": {
+      "sha256": "0995077691380a35c5087045b221e3e3eea9c81253a639cba8da9df994513bd0",
+      "bytes": 1556
+    },
+    "img/damage2.blp": {
+      "sha256": "68ddcf5812ca3d5ce906037772403069dff0321543c2d3d144969b646068d12d",
+      "bytes": 6676
+    },
+    "img/healer2.blp": {
+      "sha256": "7326a69d12cfb1da5c1bbca91f0966b1e1d1dbc49bf89d485f8bf5e99d817870",
+      "bytes": 6676
+    },
+    "img/tank2.blp": {
+      "sha256": "afe49cdaa193a15ac7deac617b5060f13169c8f260d04a88f8a8476e1eac5a66",
+      "bytes": 6676
+    },
+    "init/modules.xml": {
+      "sha256": "14f466789ffb8873a976d8115878c1494a2b7a32ac4b91d68e800d4f88432807",
+      "bytes": 196
+    },
+    "init/skins.xml": {
+      "sha256": "33f729b6ac51634cb0a4c323fe731e40a3277684d4a07379b1d7442672746e2e",
+      "bytes": 502
+    },
+    "init/tests.xml": {
+      "sha256": "af0edf00d7a8e9c57a079dce646ab4297be4e7889a37f4e38e3f3070f9983d92",
+      "bytes": 137
+    },
+    "LICENSE": {
+      "sha256": "58b33a447f44df8871670e36211eb4af4d2a3fb522c5510a6753d19537005c41",
+      "bytes": 1081
+    },
+    "modules/autoshift.lua": {
+      "sha256": "dbfd861f0c86b01afd31ba29ced569ab2c5985760f37deecd8c0c26d19c7d1c7",
+      "bytes": 991
+    },
+    "modules/championindicators.lua": {
+      "sha256": "5b055bd9ac1013aa19526d4496854a6461443caaeaa27bf734b4e9a439d8755d",
+      "bytes": 2880
+    },
+    "modules/energytick.lua": {
+      "sha256": "4a3614562368d1f78ab82cf761ff0f4cbb3fecfeb62a4eca90fc426f95f3183a",
+      "bytes": 4379
+    },
+    "pfUI-turtle.toc": {
+      "sha256": "893de249b69ee3fc433b71865a73a9c724ff78abe6168e44114d785dd3089578",
+      "bytes": 261
+    },
+    "README.md": {
+      "sha256": "be1763d1acb6a274b8848d7d1caa09b8028097f7c009724c5d60209f726efceb",
+      "bytes": 2353
+    },
+    "skins/turtle/arena.lua": {
+      "sha256": "cddd57dd6738272bf5ed8a664e37423acb1fbbb5b0ea83819562e08e68e17d45",
+      "bytes": 4130
+    },
+    "skins/turtle/character.lua": {
+      "sha256": "4679949862225e0ad38d4ba67a79622b6c62439f1d13aa59d21ab22b149fe0a6",
+      "bytes": 838
+    },
+    "skins/turtle/everlook_broadcasting_co.lua": {
+      "sha256": "1b0d9d520e3e3324f47c4c1cf847cdea4fcca5770cff993cc896f8ea3e62c2c6",
+      "bytes": 2113
+    },
+    "skins/turtle/guild_bank.lua": {
+      "sha256": "da2a706536daeb2138369a2588887550b036c0788640d1f207fd42977f34642e",
+      "bytes": 13048
+    },
+    "skins/turtle/honor.lua": {
+      "sha256": "ac66c65e239a93350066cd2bb53b31fb10383664c28f54209d8e8462bf3b57aa",
+      "bytes": 653
+    },
+    "skins/turtle/inspect.lua": {
+      "sha256": "f774b3421fa50d9da653f236a448f25664ce498e462478cca361cac819fe6409",
+      "bytes": 3149
+    },
+    "skins/turtle/lft.lua": {
+      "sha256": "3bd82f971f6a5ddf9d5e9cc3677b25fb0e3ee13de24e10d51c164ce26b690367",
+      "bytes": 22476
+    },
+    "skins/turtle/static_popup.lua": {
+      "sha256": "64fe19c8b8671f042661cf342432a9722834b46c043e6a74c1dd91874b738f16",
+      "bytes": 1443
+    },
+    "skins/turtle/transmog.lua": {
+      "sha256": "9025ab7e64c7c3f8044d91c903f1bb1ca1296f30a512fcbe75fd01b71522d455",
+      "bytes": 13167
+    },
+    "tests/test_api.lua": {
+      "sha256": "d3edc061b7da454d5c252039b785e6823580f102541bc050ed0638ce3464f475",
+      "bytes": 453
+    },
+    "tests/test_arena.lua": {
+      "sha256": "5b55d1a73151fc54ab081f78beb2b419b851e2e44e2343a4e6ab84194156b273",
+      "bytes": 3970
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

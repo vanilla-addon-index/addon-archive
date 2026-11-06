@@ -1,0 +1,214 @@
+{
+  "upstream": "https://github.com/minexew/zeroDB",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "minexew",
+    "repo": "zeroDB",
+    "name": "zeroDB",
+    "url": "https://github.com/minexew/zeroDB",
+    "api": "https://api.github.com/repos/minexew/zeroDB"
+  },
+  "commit": "b77faf7c78b6dcdfa55e7a02c0eb26e798004392",
+  "sourceFiles": {
+    "AddOns/zeroDB/assets/icon.tga": {
+      "sha256": "defda0e6918e5ad63f39fd6af101d3d17ab63752fe757bb986231581d264b753",
+      "bytes": 3129
+    },
+    "AddOns/zeroDB/assets/Lato-Light.ttf": {
+      "sha256": "ce27719f469f86ee1a0bbfd60c9ce88951654e104a1dcf8e22d2fa7bb6c5a234",
+      "bytes": 632536
+    },
+    "AddOns/zeroDB/assets/Lato-Regular.ttf": {
+      "sha256": "0ad460bd756454f8485609747b25c5644a54d307a65daabbb24c646c112ed541",
+      "bytes": 661592
+    },
+    "AddOns/zeroDB/assets/tab_active.tga": {
+      "sha256": "94ac2e6e9d3ed16bbac017261c69539d30e7e6b9b9b3654cb34f425035228bf7",
+      "bytes": 710
+    },
+    "AddOns/zeroDB/assets/tab_highlight.tga": {
+      "sha256": "9d1a709abf5c585431af9d78ac498bfea28a295a475ad62570a0a733dc7c72d0",
+      "bytes": 1102
+    },
+    "AddOns/zeroDB/assets/tab_inactive.tga": {
+      "sha256": "9805eb07aa7e67ec0b24d0598eef562908431f8cf7ea4254d32c8f73e4efd9fb",
+      "bytes": 204
+    },
+    "AddOns/zeroDB/assets/ui_back.tga": {
+      "sha256": "51cff6fac92b57d22bad57706f93716fc241b23578ca19e7e7657b4a15d0d345",
+      "bytes": 4140
+    },
+    "AddOns/zeroDB/db/creatures.lua": {
+      "sha256": "db55f2aa6d3fc489cdd4696638b3a89c2817fa616f83dac809d6f790e38ec6d5",
+      "bytes": 1578537
+    },
+    "AddOns/zeroDB/db/items.lua": {
+      "sha256": "e44aea4f9bd223c3047a27466616349069867384f0536a791541f70f21d9e66b",
+      "bytes": 27383635
+    },
+    "AddOns/zeroDB/db/keywords.lua": {
+      "sha256": "ea6e4e4c96ba3007f93f4f3ab2581846ebe6c8b77af3508e83c9ac246f53a487",
+      "bytes": 835193
+    },
+    "AddOns/zeroDB/db/quests.lua": {
+      "sha256": "c554a4c51f240b3a87b12cdcb71138fff41f824412f4f65e41af17d67cd9b123",
+      "bytes": 443433
+    },
+    "AddOns/zeroDB/db/search.lua": {
+      "sha256": "011291d97965b4416074345de3ffc88fe5541edbaa99c17a9207317e155f1eb1",
+      "bytes": 5505
+    },
+    "AddOns/zeroDB/language/default.lua": {
+      "sha256": "00516e15b70256161ad52efefd08b69df214caa5f7d66cbdc97dc0d0f6a05030",
+      "bytes": 261
+    },
+    "AddOns/zeroDB/navigate.lua": {
+      "sha256": "b9877194ccadba54ee3c5995d955fcf8bda619fe017971356387fe8288a9155a",
+      "bytes": 661
+    },
+    "AddOns/zeroDB/ui/IconFrame.lua": {
+      "sha256": "e8f0ee60114c5c8679ba033809c046e3efe8171396da82dd10b85a525a6047e3",
+      "bytes": 1315
+    },
+    "AddOns/zeroDB/ui/IconFrame.xml": {
+      "sha256": "b1abd5471350d93bf7961b9c5f20e1c9731c0f49e9e1b983f35224f60e8c6de5",
+      "bytes": 3497
+    },
+    "AddOns/zeroDB/ui/ItemViewFrame.lua": {
+      "sha256": "7799e51808607c7599af794a2b4598a596445136c448ebf0f7556a1c99adc685",
+      "bytes": 5240
+    },
+    "AddOns/zeroDB/ui/ItemViewFrame.xml": {
+      "sha256": "c2ee1baa55d4a2fe942da5373c1ff552a52304b5ed390c7dd6b00e12731bd642",
+      "bytes": 6677
+    },
+    "AddOns/zeroDB/ui/ListView.lua": {
+      "sha256": "c9f054df9492daa3de7ffbb58e6468e54fcf408bfcc7f4d7539654f9a56d4bdc",
+      "bytes": 1175
+    },
+    "AddOns/zeroDB/ui/MainWindow.lua": {
+      "sha256": "ef2a1f2b10d3479d658e05704f359032417c69a135e5b936361c7b717ef09059",
+      "bytes": 46
+    },
+    "AddOns/zeroDB/ui/MainWindow.xml": {
+      "sha256": "e8b313378a0f2883276d2bab93597998f6708d8e45b3dc5783d8e8662ab094c3",
+      "bytes": 1569
+    },
+    "AddOns/zeroDB/ui/ObjectViewFrame.lua": {
+      "sha256": "25882a148aa6b0290f548a4bf630adc96b435e3ce89e3a2b4e55e7a30ba9dbc4",
+      "bytes": 135
+    },
+    "AddOns/zeroDB/ui/ObjectViewFrame.xml": {
+      "sha256": "2966c1b42d9a0545b0c18bf83873c1c10154b04451de733b4f281c5dd1e1bf88",
+      "bytes": 3784
+    },
+    "AddOns/zeroDB/ui/SpotlightFrame.lua": {
+      "sha256": "16587d78e58ace2ad161425be1c653cfa0efe59f8cd532c614ccc6d89c82b54c",
+      "bytes": 5575
+    },
+    "AddOns/zeroDB/ui/SpotlightFrame.xml": {
+      "sha256": "a04be6080a6f1681148cc67406015ef625ac34108c9b510651e2f4859144c14c",
+      "bytes": 5759
+    },
+    "AddOns/zeroDB/ui/TabView.lua": {
+      "sha256": "252bc4faf7cbc6716b5981df5270eae9c1c56400dca89bb285859271a699a54a",
+      "bytes": 2354
+    },
+    "AddOns/zeroDB/ui/ViewHeader.lua": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "AddOns/zeroDB/ui/ViewHeader.xml": {
+      "sha256": "5ce5594a4e056b0ba2b332f94f4289f7b37853326528e20a78cbe26725212df1",
+      "bytes": 162
+    },
+    "AddOns/zeroDB/utility.lua": {
+      "sha256": "edc49a65d1f041cbbc90d40448aefdb102bb80843316e48d4cde96d3f0767e4a",
+      "bytes": 1109
+    },
+    "AddOns/zeroDB/zeroDB.lua": {
+      "sha256": "63cd918e699114bdda984c35599ca29c7a17818b596077aff949a65f18d4b00b",
+      "bytes": 1157
+    },
+    "AddOns/zeroDB/zeroDB.toc": {
+      "sha256": "2347a0ea64a85afc85f7dff69fbbbdabc59dcc3214539216b07f08a68d97e784",
+      "bytes": 589
+    },
+    "AddOns/zeroDB/zeroDB.xml": {
+      "sha256": "85cf36bf9653f53d91418293809b50d56434a3aebb6b25dcb6c5dd230019486f",
+      "bytes": 1316
+    },
+    "back.png": {
+      "sha256": "9918764e548974769191c80881a497f8ba6f9b7a58fbbbd6d4808ef5b1e6802c",
+      "bytes": 51164
+    },
+    "icon.png": {
+      "sha256": "728994e71135c646388b457ed736c0a599abbdf00df47000f00e0f437d5114c4",
+      "bytes": 49241
+    },
+    "LICENSE": {
+      "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+      "bytes": 35141
+    },
+    "README.md": {
+      "sha256": "7006825dcf1516e7cfc2f49244cd40a13da8d744253b89f0656bed5b5fc9d0cd",
+      "bytes": 1129
+    },
+    "tab_highlight.png": {
+      "sha256": "ad3509f8038038e21d317dac140024f800d9d81c0c4959b2ae064c6524922a51",
+      "bytes": 47870
+    },
+    "tab.png": {
+      "sha256": "47dfdc7b3a7e103e7db6da4d2e1b3d7848ab30b42cc47d4f4a99901befb28c62",
+      "bytes": 48396
+    },
+    "Tools/creatures.lua.in": {
+      "sha256": "7103763b77706e1c7e94d0dd36420c221f9fddf8cf7b29b5308095018f9ee669",
+      "bytes": 280
+    },
+    "Tools/game_tables.py": {
+      "sha256": "fe8a10806bf72f9377d92a6dcdf1c8dfa9ac1e1f8bf796fe45a20760e3d56529",
+      "bytes": 2919
+    },
+    "Tools/items.lua.in": {
+      "sha256": "aea82ad2ca21c50a237bc15f0ef651e789ea31250f8936011893fac6f23da767",
+      "bytes": 617
+    },
+    "Tools/keywords.lua.in": {
+      "sha256": "06be5f3e72b57f46eb7c8843ad8f1b28c9f45bf27b1224f48decc77d985147ab",
+      "bytes": 52
+    },
+    "Tools/process_db.py": {
+      "sha256": "da504990b1798ab040e902c2c5f9d9fbdcb8e4c6068902e17281ef78ba231829",
+      "bytes": 11860
+    },
+    "Tools/quests.lua.in": {
+      "sha256": "06be5f3e72b57f46eb7c8843ad8f1b28c9f45bf27b1224f48decc77d985147ab",
+      "bytes": 52
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "2485790": {
+      "tag": "r3",
+      "folder": "r3--2485790",
+      "assets": {
+        "1242460": {
+          "sha256": "be5c4409ca2ff7d628d47aba5fc416ab338dff98d7a56d4bda5a648627d8cbfe",
+          "bytes": 1502070,
+          "id": "1242460",
+          "name": "zeroDB-r3.7z",
+          "url": "https://github.com/minexew/zeroDB/releases/download/r3/zeroDB-r3.7z",
+          "path": "releases/r3--2485790/assets/zeroDB-r3.7z"
+        }
+      },
+      "source": {
+        "sha256": "e9be50beb9b0b2ac72c7ab75ee941a55742306e7f0010f92390de546575332c2",
+        "bytes": 3914891,
+        "path": "releases/r3--2485790/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/minexew/zeroDB/tarball/r3"
+      }
+    }
+  }
+}

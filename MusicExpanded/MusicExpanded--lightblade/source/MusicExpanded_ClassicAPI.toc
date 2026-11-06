@@ -1,0 +1,13 @@
+
+## Interface: 11200
+## Title: Music Expanded
+## Notes: Adds music to vanilla and custom zones from later expansions, TBC and onwards
+## Author: Lightblade
+## Version: 2.1
+## SavedVariables: MusicExpandedDB
+## Dependencies: !!!ClassicAPI
+
+musicRegistry.lua
+eventData.lua
+zoneData.lua
+MusicExpanded.lua

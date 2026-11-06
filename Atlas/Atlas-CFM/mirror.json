@@ -1,0 +1,1101 @@
+{
+  "upstream": "https://github.com/SandreaSub/Atlas-CFM",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "SandreaSub",
+    "repo": "Atlas-CFM",
+    "name": "Atlas-CFM",
+    "url": "https://github.com/SandreaSub/Atlas-CFM",
+    "api": "https://api.github.com/repos/SandreaSub/Atlas-CFM"
+  },
+  "commit": "4d56fbe0d45d7475a1e2020927f4c066ac48960c",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "0d8db931c017d4e4b4a1616edbc854b5d637d55ddfdb2f9d3015e9fab1ca9190",
+      "bytes": 4
+    },
+    "Atlas-CFM.toc": {
+      "sha256": "bf70d72b91fc6420c986fa2a679195515e110f8250f262e12c7e6fb33a9e607d",
+      "bytes": 792
+    },
+    "Bindings.xml": {
+      "sha256": "ee85f510c824b7c9e863a6f97a6b26e250fd3712b5163bad8f4f5826f73f2d40",
+      "bytes": 1596
+    },
+    "CFMAtlas/Atlas.lua": {
+      "sha256": "a3a654535e6d37fd2bebacff0f7f027083b28214799c95168b2f8390af0418cc",
+      "bytes": 30871
+    },
+    "CFMAtlas/AtlasConfig.lua": {
+      "sha256": "a66d68ae6099876b19fcfe9eaca6a9c78f8adff798c39c13f0e54e7ba683e4c3",
+      "bytes": 5665
+    },
+    "CFMAtlas/AtlasDropDown.lua": {
+      "sha256": "6aa7865e62ab7cb9a9320e98db11e9bec70ceb2b0b2eea8fd2f206d1a66b568a",
+      "bytes": 14811
+    },
+    "CFMAtlas/AtlasHewdrop.lua": {
+      "sha256": "883467b487172a89b95ae682f685ed14ef4b23fabb2ecbdbe33991154634a391",
+      "bytes": 34288
+    },
+    "CFMAtlas/AtlasInit.xml": {
+      "sha256": "16beb05ccb47d1cbc9db1a716bd8e153c0b4d4332ce4f61e23a91c1925960c95",
+      "bytes": 792
+    },
+    "CFMAtlas/AtlasMapMarkers.lua": {
+      "sha256": "3b2c63e8bd09683018087b2495a82a12e0e11c8184110ff6d1bbb2b4f9f8010f",
+      "bytes": 28696
+    },
+    "CFMAtlas/AtlasOptions.lua": {
+      "sha256": "e43e08c976e39325929221a141e757436c7065ca9aae36409417acda931b27f0",
+      "bytes": 30355
+    },
+    "CFMAtlas/AtlasOptionsUI.lua": {
+      "sha256": "2b6f41b7f4a5e902d1b20f1b19d6f303eef0fde5be193ef88982f2676cd2d90c",
+      "bytes": 28089
+    },
+    "CFMAtlas/AtlaspfUI.lua": {
+      "sha256": "9f2808d562dea8011cbe611bdc28f00d4fc121fb0e508348f9d3f81ce157df72",
+      "bytes": 49862
+    },
+    "CFMAtlas/AtlasServer.lua": {
+      "sha256": "0dfa1c2435a512e836bc3eb63539236956d271261bf398120559cf03a427238a",
+      "bytes": 8026
+    },
+    "CFMAtlas/AtlasUI.lua": {
+      "sha256": "a662fc4c9f665eb2efa73f642ab1c0b5f904805aa142815398eccbcd6d6f742f",
+      "bytes": 23784
+    },
+    "CFMAtlas/AtlasUILogic.lua": {
+      "sha256": "b72e1cb02b7fd702e44a23fd9094060d35b42849877c316cd07443d079571224",
+      "bytes": 6037
+    },
+    "CFMLoot/Core/Cache.lua": {
+      "sha256": "e53f59f90d2a45017d9e35212592fb153ea43685bba87cdaab991906b00f02b7",
+      "bytes": 16698
+    },
+    "CFMLoot/Core/Container.lua": {
+      "sha256": "d408dba5e4cbe9b53f3739963e0aac2c7e583403d150a7a3cdbce35d109578f1",
+      "bytes": 7965
+    },
+    "CFMLoot/Core/DataIndex.lua": {
+      "sha256": "13818f812988bcd5e194328132dd27f1333603832fe5b5f242923e341a29d2da",
+      "bytes": 46556
+    },
+    "CFMLoot/Core/DataResolver.lua": {
+      "sha256": "a1d989c2118548c365799282910d649c56222128998e7e66c7b129111d81a370",
+      "bytes": 13579
+    },
+    "CFMLoot/Core/Init.lua": {
+      "sha256": "8ae8d3c4f2ee46ab16c18fecfb1d806549a2c2c368424aa267b7e5d0b690e5a9",
+      "bytes": 3906
+    },
+    "CFMLoot/Core/Integrations.lua": {
+      "sha256": "765c327037a738e3ed72a902acfc49eea872f8b568075e14767ec3def57d1638",
+      "bytes": 19375
+    },
+    "CFMLoot/Core/Interactions.lua": {
+      "sha256": "391c6be01fa36c456d5bc4ae0d921d0249e76199772a6a31de9b45bb1f45cbbd",
+      "bytes": 45070
+    },
+    "CFMLoot/Core/ItemDB.lua": {
+      "sha256": "96d86b518b0ea26c27ed5e66dc8f999579b4fb9088737216de199f177259147a",
+      "bytes": 25674
+    },
+    "CFMLoot/Core/LootBrowserUI.lua": {
+      "sha256": "1bc01defe920117bcd34259c25a1679aa27aa0486ba38e17207dea909124b6b3",
+      "bytes": 48915
+    },
+    "CFMLoot/Core/Menu.lua": {
+      "sha256": "d3b6c39b92ecbb895a16202e9dbcd7d80bd8ad32680e43393af2d67f3ccdee4e",
+      "bytes": 19795
+    },
+    "CFMLoot/Core/ProfessionHooks.lua": {
+      "sha256": "767279d117d64a0ce55ae33fa9436de6457117093298a42928486234481c5bfc",
+      "bytes": 83681
+    },
+    "CFMLoot/Core/QuickLook.lua": {
+      "sha256": "036818881cb34cfdc41bf528a4f0deb11bb8072ac9fae8cc596b0d12d0475cf5",
+      "bytes": 3476
+    },
+    "CFMLoot/Core/ReagentData.lua": {
+      "sha256": "d4168142500817bad0cb0032a46c8340377ae1361a7e596c4022c2c128d42b40",
+      "bytes": 6041
+    },
+    "CFMLoot/Core/Search.lua": {
+      "sha256": "5a58745e120c012a2485803e17115f9890510c2b1391030071ac1648a2370846",
+      "bytes": 7473
+    },
+    "CFMLoot/Core/Tooltip.lua": {
+      "sha256": "349147486adb4a8a202f3ff7d6b555cd1850b20cf30ef6c6bcf6b2eecec19596",
+      "bytes": 20794
+    },
+    "CFMLoot/Core/TooltipExtras.lua": {
+      "sha256": "23a35545fe0001acf9955f23b86f1fda9ca949a6f90463ee2584b111716223ae",
+      "bytes": 3356
+    },
+    "CFMLoot/Core/Utils.lua": {
+      "sha256": "4d9ee3fc607290a762ba3e5dab4795d33eee7eb19f65709a4180196d15717447",
+      "bytes": 35778
+    },
+    "CFMLoot/Core/WishList.lua": {
+      "sha256": "dcdd1295b8bbbb99a486a12f70f5c097027648ba7f3fac063277c1c09a4fda5c",
+      "bytes": 28698
+    },
+    "CFMLoot/Data/DataInit.xml": {
+      "sha256": "558d7d5ab6932ac04d9a54befed19754932ececfda165064124f584068076a7e",
+      "bytes": 4161
+    },
+    "CFMLoot/Data/Info/DLEast.lua": {
+      "sha256": "47ca4935bc5b0373bdb7b40b0bf76b76f6c9ae7e165a51d0ebaed688eb2208fa",
+      "bytes": 6644
+    },
+    "CFMLoot/Data/Info/DLWest.lua": {
+      "sha256": "0429c4d1e156c6089b9c95e12c9daaf6e918ef8b1c9c25704fd37f5288154960",
+      "bytes": 4659
+    },
+    "CFMLoot/Data/Info/FPAllianceEast.lua": {
+      "sha256": "9d45c6a0c039376136923fad6a78d4209b944f34791c8f7bc0a6c795a7e0d3d8",
+      "bytes": 5510
+    },
+    "CFMLoot/Data/Info/FPAllianceWest.lua": {
+      "sha256": "574be449bcb58fe2ce6b0ad9f6d2c0879d7e3fcafa42367f801a449172ec606b",
+      "bytes": 4928
+    },
+    "CFMLoot/Data/Info/FPHordeEast.lua": {
+      "sha256": "42d6c4d08e49e077d01d0b76806f5b6635c253006db10cae5540a46dfcc551a8",
+      "bytes": 3831
+    },
+    "CFMLoot/Data/Info/FPHordeWest.lua": {
+      "sha256": "08e0601b840c937f28a70ffd2aaf7512ed167d0efb39c93f359b99dfaf8547e7",
+      "bytes": 4991
+    },
+    "CFMLoot/Data/Info/TransportRoutes.lua": {
+      "sha256": "682425aaa7768e9f0ac62e32afa1da4bbd5be23708ac97546b352632681d993f",
+      "bytes": 5810
+    },
+    "CFMLoot/Data/Instances/BlackfathomDeeps.lua": {
+      "sha256": "eb38c81eff8947cc9d925ea4a58b75216935f07ec92c0c257555b03b5f262bb5",
+      "bytes": 8368
+    },
+    "CFMLoot/Data/Instances/BlackrockDepths.lua": {
+      "sha256": "6986e2f1872793dc8f0f446d66ef89ec34363f9acedae009a92fb130c24d8d94",
+      "bytes": 60089
+    },
+    "CFMLoot/Data/Instances/BlackrockSpireLower.lua": {
+      "sha256": "ed61cf9d73172de8b47b9954d6ce49311d2fe6558047c6290981fadc7f522c2a",
+      "bytes": 50981
+    },
+    "CFMLoot/Data/Instances/BlackrockSpireUpper.lua": {
+      "sha256": "b5c3b8bf87ce3be62c3e6d2cb35cab7b9e56fc2636894b6c64642a7a9718d618",
+      "bytes": 30529
+    },
+    "CFMLoot/Data/Instances/BlackwingLair.lua": {
+      "sha256": "059b8f341685202b1aeb5878535b210b9a43711fee874eba3c3300c7daaaaa0f",
+      "bytes": 49393
+    },
+    "CFMLoot/Data/Instances/DireMaul.lua": {
+      "sha256": "d29cbde314ffbb5fc514737b80ae76a0f2617e0f235169e7c2db452b6e761027",
+      "bytes": 77032
+    },
+    "CFMLoot/Data/Instances/DragonmawRetreat.lua": {
+      "sha256": "70e7dfa33b2727f38a97e4d1862b46453f2199d61c63bdf4c7438aa09d595071",
+      "bytes": 11365
+    },
+    "CFMLoot/Data/Instances/EmeraldSanctum.lua": {
+      "sha256": "9ad7b78b8d009e662dbff6e245f936b76eaa578c27d1c50b0e1f9f4726105663",
+      "bytes": 11543
+    },
+    "CFMLoot/Data/Instances/FrostmaneHollow.lua": {
+      "sha256": "939633da56038cbeeafb4c4f2769b63f5292ef76bde2df5bf25ed874baa2b81f",
+      "bytes": 3684
+    },
+    "CFMLoot/Data/Instances/GilneasCity.lua": {
+      "sha256": "4875d7c9cf462a036169b26f260e6f9b4ad78370aa36c582936c66634970367b",
+      "bytes": 9153
+    },
+    "CFMLoot/Data/Instances/Gnomeregan.lua": {
+      "sha256": "12389b538d4687d9f55cf3be2a655d9624e36770c582299842644f4af8a68b94",
+      "bytes": 14998
+    },
+    "CFMLoot/Data/Instances/HateforgeQuarry.lua": {
+      "sha256": "f20e3db42d9e87e2d5e78ab93fcf71a40587e2737677ac565eca3714da6bc3e1",
+      "bytes": 10486
+    },
+    "CFMLoot/Data/Instances/KarazhanCrypt.lua": {
+      "sha256": "7d82fcd2dd9aad6438050666524f795a1f14d3db4b81a2f0c5e2e552857a6624",
+      "bytes": 16490
+    },
+    "CFMLoot/Data/Instances/LowerKarazhanHalls.lua": {
+      "sha256": "64d054ee6f3e26f40ce9e9c04c5394d1b33aefebd4182e339ec9578a27566202",
+      "bytes": 17577
+    },
+    "CFMLoot/Data/Instances/Maraudon.lua": {
+      "sha256": "3beff23b8ede02c92a5ebe6fc0dc3483ce8141fc8e64ef5f37a1bd8f6b958beb",
+      "bytes": 15964
+    },
+    "CFMLoot/Data/Instances/MoltenCore.lua": {
+      "sha256": "48768d62107ee28eed5b3e264cb6661094fa3ee54abf4cbed6aa797a9c39f8e3",
+      "bytes": 82828
+    },
+    "CFMLoot/Data/Instances/Naxxramas.lua": {
+      "sha256": "dfde692a4d2368051ea63bf7b5fbb29c208585a87bc1ccf7a97af631559003ae",
+      "bytes": 70353
+    },
+    "CFMLoot/Data/Instances/OnyxiasLair.lua": {
+      "sha256": "cc171ed2512127551c573b5390ea4da2d3ec7d8694a53213b718ae2b8aaaa669",
+      "bytes": 11512
+    },
+    "CFMLoot/Data/Instances/RagefireChasm.lua": {
+      "sha256": "929a6c514b4a0684a122f8a485594fbb30b11f3e6d38b4123d7d1b7e88f838cb",
+      "bytes": 5898
+    },
+    "CFMLoot/Data/Instances/RazorfenDowns.lua": {
+      "sha256": "2070d49affa54086a8f4f0ae3d228ef13c4b11600bf7d1f0bf4d505e5b395270",
+      "bytes": 8937
+    },
+    "CFMLoot/Data/Instances/RazorfenKraul.lua": {
+      "sha256": "cfc0574caf9d742461f3f8beee7370f42fe2251a339588cdc5387a5c25acb8f3",
+      "bytes": 10083
+    },
+    "CFMLoot/Data/Instances/RuinsofAhnQiraj.lua": {
+      "sha256": "7f9759a81e423ecb727666f80fa34a67dddb77973b86c15c486e022efcc05580",
+      "bytes": 23478
+    },
+    "CFMLoot/Data/Instances/ScarletMonastery.lua": {
+      "sha256": "23aa34daa220465638f367ecb92fe0f58d18d64e489c27245048fc7e80bf14f3",
+      "bytes": 24323
+    },
+    "CFMLoot/Data/Instances/Scholomance.lua": {
+      "sha256": "980de6abc5df88dc7e9ad7e9ac9daca5abd1269496a8031059c45d7a1bedf6bd",
+      "bytes": 38953
+    },
+    "CFMLoot/Data/Instances/ShadowfangKeep.lua": {
+      "sha256": "df3f6f07e673788d9247f8d6c81fab603833aa34f9a9a8c94adc49b7e349db25",
+      "bytes": 9719
+    },
+    "CFMLoot/Data/Instances/StormwindVault.lua": {
+      "sha256": "61d8d222d4f27ee013d4d0c451ece7bd5f4f589d77897c9470636387aea42fe5",
+      "bytes": 12473
+    },
+    "CFMLoot/Data/Instances/StormwroughtRuins.lua": {
+      "sha256": "7a8f87c70f65c452c629532dcb4d066f7a9889301bac49c1b2e456ee7ef6090d",
+      "bytes": 13546
+    },
+    "CFMLoot/Data/Instances/Stratholme.lua": {
+      "sha256": "d00ac0f7d665d06d3b7acf78f85e1ecfadf3b8a93e2bb29411d093a6ed1c9445",
+      "bytes": 57022
+    },
+    "CFMLoot/Data/Instances/TempleofAhnQiraj.lua": {
+      "sha256": "1e506ac6ac3a398760d5826ce6fcfeb94fa5e514961d8573ce4112ded94a1feb",
+      "bytes": 31573
+    },
+    "CFMLoot/Data/Instances/TheBlackMorass.lua": {
+      "sha256": "53528a0a299b52f1cc75d7c2aeb28f6773a955d46959573df200f7ef39bdd8ab",
+      "bytes": 16516
+    },
+    "CFMLoot/Data/Instances/TheCrescentGrove.lua": {
+      "sha256": "b43582914fba13b91b393608717ac919460cd96a2cf5e25fb1d453d316437ddf",
+      "bytes": 7344
+    },
+    "CFMLoot/Data/Instances/TheDeadmines.lua": {
+      "sha256": "e5899b6e56ae021006489bee0277abb530dc116f11ffefb23e14755c8b653dbf",
+      "bytes": 12107
+    },
+    "CFMLoot/Data/Instances/TheStockade.lua": {
+      "sha256": "d92e121a4033ef5a4c9a732f74d1908693a52e8367a065f71d606bb7cc55683f",
+      "bytes": 5766
+    },
+    "CFMLoot/Data/Instances/TheSunkenTemple.lua": {
+      "sha256": "91e14798d2ec7e5d104b4b9ced155dc6def61ea2b07614db10cac866df67acca",
+      "bytes": 25420
+    },
+    "CFMLoot/Data/Instances/TimbermawHold.lua": {
+      "sha256": "955fdb429e15ecf1dbbe42a520690b8cd240ec9295a8a11d97485529ab828ed3",
+      "bytes": 20382
+    },
+    "CFMLoot/Data/Instances/TowerofKarazhan.lua": {
+      "sha256": "1ffa870bb41655fcb44e07ecf76a9712319b7b0cf741b0a61a93f78ec1ffb144",
+      "bytes": 16273
+    },
+    "CFMLoot/Data/Instances/Uldaman.lua": {
+      "sha256": "68bc6953252241d0d59552352f76eb3f80fba02bead86478cc1cf9d0a20e0e09",
+      "bytes": 14204
+    },
+    "CFMLoot/Data/Instances/WailingCaverns.lua": {
+      "sha256": "8a4e68a5a441aaba95ea0ef672712ae3938893c155f5bd97982c58b3d949f9fa",
+      "bytes": 14457
+    },
+    "CFMLoot/Data/Instances/WindhornCanyon.lua": {
+      "sha256": "86d5d317f9778a42067dd29039b6a5d2f575549c91a0ecfeae2f429d132fb50d",
+      "bytes": 6493
+    },
+    "CFMLoot/Data/Instances/ZulFarrak.lua": {
+      "sha256": "999f64afd07686a45258008ed489cac81f66024c588f932aa1d38e0bf43c026d",
+      "bytes": 13290
+    },
+    "CFMLoot/Data/Instances/ZulGurub.lua": {
+      "sha256": "055c6a4051f9a8cb124dbc9bfffbda085d98f93fbbe5df887666db9aad3dc1a7",
+      "bytes": 33001
+    },
+    "CFMLoot/Data/Menu/Crafting.lua": {
+      "sha256": "ebc40a55383c18b13bbc4e266f0b1df59156166a381554338d78c78915361651",
+      "bytes": 34383
+    },
+    "CFMLoot/Data/Menu/Dungeons.lua": {
+      "sha256": "4f19535a0f2f3d54de442cd97b55c076cb88b266bc8b5c8dd70b881804e193f4",
+      "bytes": 6021
+    },
+    "CFMLoot/Data/Menu/Factions.lua": {
+      "sha256": "d5709b1898d850528b3b065b20364f668c337b07962c6c9529e6aa4daed53b0d",
+      "bytes": 9553
+    },
+    "CFMLoot/Data/Menu/PvP.lua": {
+      "sha256": "2cdcb55c5cdc99cef2965ed380d86e19ebe9deaf729f1be508e30003ee4d62e7",
+      "bytes": 6833
+    },
+    "CFMLoot/Data/Menu/Sets.lua": {
+      "sha256": "bc20d81c16fcfd206359404f5af3cc33905cf7358667eca238ebc1b6e88869fb",
+      "bytes": 23526
+    },
+    "CFMLoot/Data/Menu/WeaponSkills.lua": {
+      "sha256": "892440304b47badee18d58454423a115d8abf57203e3153a0e4aa92153a2b0fb",
+      "bytes": 2256
+    },
+    "CFMLoot/Data/Menu/World.lua": {
+      "sha256": "9b56ff92117803e45b67de5843912322b9ab83476b8849513e99ed7987f6115a",
+      "bytes": 4532
+    },
+    "CFMLoot/Data/Menu/WorldEvents.lua": {
+      "sha256": "04ccd164c72f073162832709abf7d0e0bd0493978a33deb683f83859d9d2484b",
+      "bytes": 3446
+    },
+    "CFMLoot/Data/PvP/AlteracValleyNorth.lua": {
+      "sha256": "fc5dc9db711237a084d5904836ea0236becee09e4f2c15d155d44a803868eaaa",
+      "bytes": 9222
+    },
+    "CFMLoot/Data/PvP/AlteracValleySouth.lua": {
+      "sha256": "ad505e3e2a93d7847d13f746d9d18bd97c74927672a8b1a55b6f69a94525b0fc",
+      "bytes": 6969
+    },
+    "CFMLoot/Data/PvP/ArathiBasin.lua": {
+      "sha256": "261aa1eb8fda8a44c77c35960b743090c8bd9c99fd26dbaeeab9d4fe7836c693",
+      "bytes": 1124
+    },
+    "CFMLoot/Data/PvP/PVPRewards.lua": {
+      "sha256": "b1137008d267839303a90d6e3eac3b8e4e073ea5d73e270ab20e75a82ce8bb2c",
+      "bytes": 109164
+    },
+    "CFMLoot/Data/PvP/ThornGorge.lua": {
+      "sha256": "661975dd724f0efe9b44431be34ebdd821d3027be141d97851f3a078cfe8e2db",
+      "bytes": 1191
+    },
+    "CFMLoot/Data/PvP/WarsongGulch.lua": {
+      "sha256": "682277dc16a28abd306bb2527412b56bac08dbf20ee5380e3420854daa6fd23a",
+      "bytes": 1167
+    },
+    "CFMLoot/Data/Tables/Crafting.lua": {
+      "sha256": "36d73e74ea99ab44c1dcc5919f3179141834e7dad270c8e9ba68a583ae176ce5",
+      "bytes": 421582
+    },
+    "CFMLoot/Data/Tables/Events.lua": {
+      "sha256": "42e8c64ec193f83375a41c69a8925d4d1310c3f0c2122496cfce6b9d3db27342",
+      "bytes": 34970
+    },
+    "CFMLoot/Data/Tables/Factions.lua": {
+      "sha256": "9d692f2276bc5e1579862aec2e051da6e24038b64baf743add608664689b53d3",
+      "bytes": 85630
+    },
+    "CFMLoot/Data/Tables/ProfessionTrainers.lua": {
+      "sha256": "ff6f328c608a933e847a50e2e92bc437ecdf2071a6036e1a2847acd688bef62a",
+      "bytes": 55149
+    },
+    "CFMLoot/Data/Tables/Sets.lua": {
+      "sha256": "9d131b312c34bbaee92d3f4b3e4fb0c62ec3ebea8ee540008c5d148a36d4319a",
+      "bytes": 142751
+    },
+    "CFMLoot/Data/Tables/Spells.lua": {
+      "sha256": "e13d209309ac2006d53b1ea110698be8ad598bcf9a02cde864ab898daf9cf83a",
+      "bytes": 318077
+    },
+    "CFMLoot/Data/Tables/WeaponSkills.lua": {
+      "sha256": "f9bc18afc952c04441c49e958bbf5775f7cdb96eb2cd413a73d8bc91e9480e6c",
+      "bytes": 7082
+    },
+    "CFMLoot/Data/World/Azuregos.lua": {
+      "sha256": "40e892e9ee417d053bc1052893c56f73cc38657aaa3192fb1bb25c5c17cc9d81",
+      "bytes": 3654
+    },
+    "CFMLoot/Data/World/Clackora.lua": {
+      "sha256": "29f2bbcd661421f53a7748ed020c6e4e3ba2f5a06f9343ca1490b5d11b49e8e6",
+      "bytes": 2307
+    },
+    "CFMLoot/Data/World/Concavius.lua": {
+      "sha256": "42d0e55a16bb4ed30726bc6f6cbe19d6d6185d307be2840b2eafdd608a0150f1",
+      "bytes": 2893
+    },
+    "CFMLoot/Data/World/CowKing.lua": {
+      "sha256": "6e4cca9efb50fe2b54332c6a27ddd958f10e9928b3064c287ced3d0c3e470fb0",
+      "bytes": 2284
+    },
+    "CFMLoot/Data/World/FourDragons.lua": {
+      "sha256": "de2d08e03da2fc9564a2ad37ada52d7990aa1fd06029d97fe905e7be649fa0bb",
+      "bytes": 9330
+    },
+    "CFMLoot/Data/World/KingMosh.lua": {
+      "sha256": "cca65a032083fb6b58343ce90ede150c4be6ca41d752fe216263a294c159be46",
+      "bytes": 2107
+    },
+    "CFMLoot/Data/World/Kurinnaxx.lua": {
+      "sha256": "ce615697fc658329d5d14007a9eed7f2b6ec7ed1bb1e04603dc1d84fbc328fb9",
+      "bytes": 2258
+    },
+    "CFMLoot/Data/World/LadyHederine.lua": {
+      "sha256": "e66f2804edaf4d29fc6ca3d0e64d4efe486cea463acdcb91acb298c2a1508686",
+      "bytes": 1941
+    },
+    "CFMLoot/Data/World/LordKazzak.lua": {
+      "sha256": "37c31f5b6fad19610e11515df0e23d7f31dc67629c2d91852bde053df9343b6a",
+      "bytes": 7945
+    },
+    "CFMLoot/Data/World/NerubianOverseer.lua": {
+      "sha256": "46e0fef9cd88232c4d5668dc9d614fd0e1bd909f7ddff666dce0a745b8aff03d",
+      "bytes": 2924
+    },
+    "CFMLoot/Data/World/Ostarius.lua": {
+      "sha256": "939880256f62c6de553efdd8cf7dbbc0e62f947a59fd3547d10a076e5777a1b2",
+      "bytes": 4339
+    },
+    "CFMLoot/Data/World/RareMobs.lua": {
+      "sha256": "e3884a68423376d43ad94599ec80fc80c526d0e1acdc919b94aff483f8c6f122",
+      "bytes": 22465
+    },
+    "CFMLoot/Data/World/Reaver.lua": {
+      "sha256": "27eff4530d2ffaf38b889adf071a72fa4df5899fbe95af94a528022635d032ed",
+      "bytes": 3109
+    },
+    "CFMLoot/Data/World/TeremustheDevourer.lua": {
+      "sha256": "b8cf94641acfbfd75a297b33009175a62d70c97c23f54942a3ef6be1fcef6484",
+      "bytes": 1748
+    },
+    "CFMLoot/LootInit.xml": {
+      "sha256": "4de4445d483a58a486eeec8a52c2840a5eaabe02d1caadc3e65333331f164c00",
+      "bytes": 928
+    },
+    "CFMLoot/LootUI.lua": {
+      "sha256": "2db00814e7d88fa12bc4a125ee6de31d087a32d191f1db69c0ad96c5884f9e17",
+      "bytes": 49732
+    },
+    "CFMQuest/QuestInit.xml": {
+      "sha256": "ad119882c8f9fc6530383cb37581e2bf862029ec2f8e2e901a6fd3c5eaf52e91",
+      "bytes": 317
+    },
+    "CFMQuest/QuestLogic.lua": {
+      "sha256": "bec76a4a8bcbac7dda16d9c8145111d1b504623f8f7bb86f8958f21f7e0d2de5",
+      "bytes": 23950
+    },
+    "CFMQuest/QuestMain.lua": {
+      "sha256": "9217a27f842f2d1d35df2fcf898b12033ba81e06fcd76e52b0dc93466c5d1c44",
+      "bytes": 25783
+    },
+    "CFMQuest/QuestUI.lua": {
+      "sha256": "7b6792d6e1f6554304306bea92d6105ebb9a83350cc337e9ff8842aa061f1159",
+      "bytes": 9104
+    },
+    "CFMQuest/QuestUIinAtlas.lua": {
+      "sha256": "4700a1746b07e04db9802a03f820967aa1e00e60c4f08aebb150f63dae425124",
+      "bytes": 8557
+    },
+    "FUNDING.yml": {
+      "sha256": "adbd8cb0591010f80e6e0c2572a3fb1452919f136ad3fd6ae92ba18b7d168c26",
+      "bytes": 806
+    },
+    "Images/Container-Border.blp": {
+      "sha256": "8387bce3adc952b1428d5f0f5986caf3e22b3b25e29042591b00e64e42b653a3",
+      "bytes": 16532
+    },
+    "Images/Frame-Bottom.blp": {
+      "sha256": "1117cd8c3100df0f4864b5896e0efb437e5d1859ffedea5039c1353c255623e4",
+      "bytes": 175972
+    },
+    "Images/Frame-Bottom2.blp": {
+      "sha256": "1a3e2bf3e1921d03412b9bd4b29ca333d63db8e024fe61c3dd5ec22155390ef6",
+      "bytes": 88612
+    },
+    "Images/Frame-Left.blp": {
+      "sha256": "4d8fcc25b874ee18d7f555cc16600f8b01737de3ebd266cd9bed8bf8ebca9b07",
+      "bytes": 12196
+    },
+    "Images/Frame-Right.blp": {
+      "sha256": "9fa55365680717a3bfc31f65a72f53ed36bd5194274a1fcbecef8206917827a1",
+      "bytes": 262292
+    },
+    "Images/Frame-Top.blp": {
+      "sha256": "755d583d3cc01508182eccc87057c58d048d46ce49ceab27987a25ad802375c2",
+      "bytes": 88612
+    },
+    "Images/LockButton-Locked-Down.blp": {
+      "sha256": "6e96d3e9572170d784b9686bd2d0d8a843ca1d0d2243ef941324935b325808d7",
+      "bytes": 2564
+    },
+    "Images/LockButton-Locked-Up.blp": {
+      "sha256": "ce20bccd510f5e77fa3065c50e0e933881c1924fda45662cb2f9dfd6a67160b8",
+      "bytes": 2564
+    },
+    "Images/LockButton-Unlocked-Down.blp": {
+      "sha256": "a60f474b3d418f592a838966a5ee080fd68141d1c8111d6bd7c1f06a643e03d5",
+      "bytes": 2564
+    },
+    "Images/LockButton-Unlocked-Up.blp": {
+      "sha256": "4a51373edc1deee19c97496f417ad7b6283d781cecd089d3fdec1da26add19e6",
+      "bytes": 2564
+    },
+    "Images/Maps/Azuregos.blp": {
+      "sha256": "643400c2f605247440ca0bfcca09fefb943509da0df2244630edc928a2a1f0c7",
+      "bytes": 350724
+    },
+    "Images/Maps/BGAlteracValleyNorth.blp": {
+      "sha256": "ae758ea431110488f8a5273b4884fe2b2027ab1560fe6a5c770f8497d127fc5c",
+      "bytes": 349700
+    },
+    "Images/Maps/BGAlteracValleySouth.blp": {
+      "sha256": "5cb43bed874610a47544956b5cb58ee487b2f219f784423c5b87ea2cd6e1f5d8",
+      "bytes": 349700
+    },
+    "Images/Maps/BGArathiBasin.blp": {
+      "sha256": "ba834f7fbb55c7d2f88d380a197ec2eaa0ae1aea604da8e8ca75525c3c3cb9f7",
+      "bytes": 350724
+    },
+    "Images/Maps/BGThornGorge.blp": {
+      "sha256": "4bcec4c38ac628a9ea67fa5e300497e00f8a90c7e43e8fa60cb14fb6ff3a5b12",
+      "bytes": 262292
+    },
+    "Images/Maps/BGWarsongGulch.blp": {
+      "sha256": "b5bb35250cd2b7f75d35a0947f74ac21cbece228d210b250da2b386908ab4165",
+      "bytes": 350724
+    },
+    "Images/Maps/BlackfathomDeeps.blp": {
+      "sha256": "fc0b40a21237d35b1cb945e402fa823452dbadfd5f269dd62457575882551ab9",
+      "bytes": 262292
+    },
+    "Images/Maps/BlackfathomDeepsEnt.blp": {
+      "sha256": "b5e270afb10788c5a95eb58ab127696be54bc437f28d5cae7cbf41dc7426a023",
+      "bytes": 350724
+    },
+    "Images/Maps/BlackrockDepths.blp": {
+      "sha256": "824067b9a9a5c949bb70ddf170984e578cb3d6849ac95a3250831929a0ff869b",
+      "bytes": 350724
+    },
+    "Images/Maps/BlackrockMountainEnt.blp": {
+      "sha256": "bd26e5e5bedff68cc76fac29a39116e97527002de57827efe39ac56a2c5288b5",
+      "bytes": 262292
+    },
+    "Images/Maps/BlackrockSpireLower.blp": {
+      "sha256": "2d5d50d46c4fbaa871b8286fba2341120ae6eee901d5b7f2488d6594f2025d2e",
+      "bytes": 350724
+    },
+    "Images/Maps/BlackrockSpireUpper.blp": {
+      "sha256": "1c7a2d28675d3924c161126188a0bb7a149862b43c092066efabb757afa1a13e",
+      "bytes": 350724
+    },
+    "Images/Maps/BlackwingLair.blp": {
+      "sha256": "55f02b1c448371cca0b07a33c6fd0305d928bf36097ae1b28485172fe066ddb3",
+      "bytes": 262292
+    },
+    "Images/Maps/CavernsOfTimeBlackMorass.blp": {
+      "sha256": "f9dc3386ec7343a622ebe6fbe34cb5facfde90299cbd52734c00dce845c62cc2",
+      "bytes": 263316
+    },
+    "Images/Maps/Clackora.blp": {
+      "sha256": "f6bf186e8cff977e7ed4e88146e8702089c11df74447faf624943928e33cc8fa",
+      "bytes": 350724
+    },
+    "Images/Maps/Concavius.blp": {
+      "sha256": "d933125077014d39788a599b09ca31a325bfde6b7308ed1f925e90088144a2fb",
+      "bytes": 344212
+    },
+    "Images/Maps/CowKing.blp": {
+      "sha256": "af86efbae93adc7809c89c0e9f019287f96152cd8bf5f73a79b052c30ca3b5fe",
+      "bytes": 262292
+    },
+    "Images/Maps/DireMaulEast.blp": {
+      "sha256": "a74a935b70791b9db031be6b87cee808f407273bebab76d972816d3e3b9b865c",
+      "bytes": 349700
+    },
+    "Images/Maps/DireMaulEnt.blp": {
+      "sha256": "e7e5deb51342efd93778a82cc57dd576059b361ef9d75e6120f1094f03742631",
+      "bytes": 349700
+    },
+    "Images/Maps/DireMaulNorth.blp": {
+      "sha256": "ebb63a002aed6b8b97a5be3ac9b4d5a902318a4e83d0d9bfac32766a36d55052",
+      "bytes": 349700
+    },
+    "Images/Maps/DireMaulWest.blp": {
+      "sha256": "876edb8f947012ce179baa8e57a8f37f261781012588da7bd646dfbf54844aa7",
+      "bytes": 349700
+    },
+    "Images/Maps/DLEast.blp": {
+      "sha256": "4928117f652b4e1aed018c5ee8888c47bce586b9035190a03606f897dc63016f",
+      "bytes": 262292
+    },
+    "Images/Maps/DLWest.blp": {
+      "sha256": "32154925c87c547cada5cdee203a9dff82bf382b8e7a3f1ba17915358ee79785",
+      "bytes": 262292
+    },
+    "Images/Maps/DragonmawRetreat.blp": {
+      "sha256": "b4068027543b217c0bf245904ffdb4cf6a08c9bfc58cebfb3a3870655146937d",
+      "bytes": 262292
+    },
+    "Images/Maps/EmeraldSanctum.blp": {
+      "sha256": "9cbe9b8cc7b451d244e3ba1bb6f3fea666a7d3145c591bcc79d2ef050ddf5721",
+      "bytes": 263316
+    },
+    "Images/Maps/FourDragons.blp": {
+      "sha256": "2809f0b35e720c2eb4ae30080a5b7ded0b00679feaeb8252090b3683950b0ff3",
+      "bytes": 350724
+    },
+    "Images/Maps/FPAllianceEast.blp": {
+      "sha256": "392291cca7b9172eced04053cc8d9092f1b152b1f6df3e9da32741ab20b71052",
+      "bytes": 263316
+    },
+    "Images/Maps/FPAllianceWest.blp": {
+      "sha256": "d6f4ddda81e10a4a9d32a617566bb04120fd5d237eef5c4763b092463f5020b4",
+      "bytes": 262292
+    },
+    "Images/Maps/FPHordeEast.blp": {
+      "sha256": "40df9a2590b8b9600aae68f4677c9496e12f182bdf8474d6a0b9d85b6d9b9969",
+      "bytes": 263316
+    },
+    "Images/Maps/FPHordeWest.blp": {
+      "sha256": "bdb6dd532478f2f0da0cf0b5d162087e94cf66fd77cd5591ec927f78a255a31b",
+      "bytes": 263316
+    },
+    "Images/Maps/FrostmaneHollow.blp": {
+      "sha256": "962a41218142840b9f912e059f0764a41649b558d7a93ddc285d861d5ba21c88",
+      "bytes": 262292
+    },
+    "Images/Maps/GilneasCity.blp": {
+      "sha256": "000ce0941d385d6aa288f8ee4a4b8f82fc2b7961529a33788d4ec7d30895b197",
+      "bytes": 262292
+    },
+    "Images/Maps/Gnomeregan.blp": {
+      "sha256": "675583585605aa59c8d2c400501a0cf92927f6b2f52bef5d44eb3a5366087f28",
+      "bytes": 350724
+    },
+    "Images/Maps/GnomereganEnt.blp": {
+      "sha256": "c943ec7e0396b3ba655d3f647e6f79ffaf094f01b2ddf45550ad0eef9ef22ce1",
+      "bytes": 350724
+    },
+    "Images/Maps/HateforgeQuarry.blp": {
+      "sha256": "a075e9134594fe2885d2cd4255ce336f7665059b8d53d5ba9cbcb86361ffaa31",
+      "bytes": 262292
+    },
+    "Images/Maps/KarazhanCrypt.blp": {
+      "sha256": "ee760793e1f7728f457637690618b8623a27f0fc1c627515547d2ad52d4e8646",
+      "bytes": 262292
+    },
+    "Images/Maps/LordKazzak.blp": {
+      "sha256": "02bb9174f0f73290c5e4a6cce332afc3bf51e34628b186a52c417ef995d90a7c",
+      "bytes": 350724
+    },
+    "Images/Maps/LowerKarazhan.blp": {
+      "sha256": "6563dc632f406570c0fec4e3cd3dae3a7b34c887d004df56eef21fd742021432",
+      "bytes": 262292
+    },
+    "Images/Maps/Maraudon.blp": {
+      "sha256": "b59cac4b6502cb82c6fb1278e46a5668d9121bfa5d89122d1549bb57b0e919a7",
+      "bytes": 350724
+    },
+    "Images/Maps/MaraudonEnt.blp": {
+      "sha256": "4f15700e6bfc853bd489011337ce9a77f1d1660474d0eafbf820287d2dc6c493",
+      "bytes": 349700
+    },
+    "Images/Maps/MoltenCore.blp": {
+      "sha256": "5fe5c75b5fe7d826c8dab77dc7d479dcaba1a700cb3d09e46e3c737e0e5c9133",
+      "bytes": 262292
+    },
+    "Images/Maps/Naxxramas.blp": {
+      "sha256": "0622273feb0b5700b0d90dcb2cbf0176520eada17d9e590359ac263dd5754323",
+      "bytes": 262292
+    },
+    "Images/Maps/Nerubian.blp": {
+      "sha256": "cef75fe8ffe1a60d0ac4f0973817080641fd49d26ca2d3d74f8c4b8238972ba6",
+      "bytes": 350740
+    },
+    "Images/Maps/OnyxiasLair.blp": {
+      "sha256": "44c737357c117224a6e13d0efdd881d0b655c81522696629f156fb7f2fcf39db",
+      "bytes": 262292
+    },
+    "Images/Maps/Ostarius.blp": {
+      "sha256": "c2dab2fdd3a48f7a53e7e04322df56222c0a506c5dbeb1accb2342216b3be1c7",
+      "bytes": 262292
+    },
+    "Images/Maps/RagefireChasm.blp": {
+      "sha256": "82663aab9458cc396bdee9293fa2fae272d3023e5deaa6d97a904fd5129d5f1c",
+      "bytes": 262292
+    },
+    "Images/Maps/RareMobs.blp": {
+      "sha256": "ca7ed8f96de0c7992cd8a53756070a978beaf6f28a4172b4a1de446fe29f5396",
+      "bytes": 262292
+    },
+    "Images/Maps/RazorfenDowns.blp": {
+      "sha256": "4c8302b46c732729406214f6118b416c72fa5e73a46cdd581d2aaddd5bfaf582",
+      "bytes": 262292
+    },
+    "Images/Maps/RazorfenKraul.blp": {
+      "sha256": "817d9398e5c8974c089ca3b7c1135a01d05c0a7a675a9fdeff7c254f1a4d7cb0",
+      "bytes": 262292
+    },
+    "Images/Maps/Reaver.blp": {
+      "sha256": "0d9c45f9b4e25ba6e9a9961f1a58d97b90a196aedaf1c1c82ab6abbd207c27d8",
+      "bytes": 327828
+    },
+    "Images/Maps/ScarletMonasteryArmory.blp": {
+      "sha256": "13b8ed5735883732eed65236b47bc792cf190ce272859e0e17b93f3a05bba864",
+      "bytes": 263316
+    },
+    "Images/Maps/ScarletMonasteryCathedral.blp": {
+      "sha256": "6b01fa2eaa1812237933d9fe8e9668722afb11beabcb11e4afd2abb3cd130448",
+      "bytes": 263316
+    },
+    "Images/Maps/ScarletMonasteryEnt.blp": {
+      "sha256": "b23d9f14498bc39f4d274d3b483215e1724489f888984c986a5aab9efa1aa2da",
+      "bytes": 350724
+    },
+    "Images/Maps/ScarletMonasteryGraveyard.blp": {
+      "sha256": "025795c8f07d6e4aee03deb0d02c60c83f643de67b375d87ec5ae9e9c60f3b5d",
+      "bytes": 263316
+    },
+    "Images/Maps/ScarletMonasteryLibrary.blp": {
+      "sha256": "1773baaa388919c698bf63be53bcf7423646bba68d64070fb1ed2fb85ca43ff6",
+      "bytes": 263316
+    },
+    "Images/Maps/Scholomance.blp": {
+      "sha256": "851871cb40b9c18de7e6e89dc6df7d7d005a552cc6f0111b868f564186f61391",
+      "bytes": 350724
+    },
+    "Images/Maps/ShadowfangKeep.blp": {
+      "sha256": "a16f5c524533cce641792ecb240ad09f69fec5718b7e503f4cf9436d1a2f97db",
+      "bytes": 350724
+    },
+    "Images/Maps/StormwindVault.blp": {
+      "sha256": "a27ba70e5c441c7c527357d468caad1c225ac69dc52174db05626e8afc220441",
+      "bytes": 262292
+    },
+    "Images/Maps/StormwroughtRuins.blp": {
+      "sha256": "117f2fc9ea2ca019d8e4983029d07a598ea2acd58b19dcdc1b5adaab1d92e5a3",
+      "bytes": 262292
+    },
+    "Images/Maps/Stratholme.blp": {
+      "sha256": "2eadd82cdca4e2d0b0f1564222c77c6b96cff9f651773374371a879b415e39b2",
+      "bytes": 350724
+    },
+    "Images/Maps/TheCrescentGrove.blp": {
+      "sha256": "afb22cef8687459e92f340b9151601fa5a34eb896114b69650755622dcc0784b",
+      "bytes": 262292
+    },
+    "Images/Maps/TheDeadmines.blp": {
+      "sha256": "621063c0d90e3617a81d149b584762df7bd6c2d231108a1826fbf209307d584f",
+      "bytes": 263316
+    },
+    "Images/Maps/TheDeadminesEnt.blp": {
+      "sha256": "398dea4d1e1d87282ee52eefa9889682deef09d96b09e0cdfb53b91baae05bbc",
+      "bytes": 350724
+    },
+    "Images/Maps/TheRuinsofAhnQiraj.blp": {
+      "sha256": "24b46103e7848a77bb8c81c78c4a5e3e37b538320351349a7015e5a0922a3dcc",
+      "bytes": 350724
+    },
+    "Images/Maps/TheStockade.blp": {
+      "sha256": "4d443d7d1a906dc90f3249828df588d8c09d0355d38fe57446a3e324771291c7",
+      "bytes": 350724
+    },
+    "Images/Maps/TheSunkenTemple.blp": {
+      "sha256": "985b1647de4d0ff553b76239ecc2bb3fc41f72b0b0297188f9beaae956b163e0",
+      "bytes": 349700
+    },
+    "Images/Maps/TheSunkenTempleEnt.blp": {
+      "sha256": "3a889aa3cd37e3e09ee0140f4d2191e3b456eb3f566d550de793b1edc0ca6e3d",
+      "bytes": 349700
+    },
+    "Images/Maps/TheTempleofAhnQiraj.blp": {
+      "sha256": "64a232bc75f9cf46ca60bd6f4ee085da37e0e33c47f47a9190179eb5fab04a33",
+      "bytes": 350724
+    },
+    "Images/Maps/TimbermawHold.blp": {
+      "sha256": "b50291569d1bff9989800bf55bc2d37ce0201ee1c3e6ec0e20a48e0a69d72463",
+      "bytes": 262292
+    },
+    "Images/Maps/TowerofKarazhan.blp": {
+      "sha256": "a5c9db345da5755ccf7c84191d0a9ddd799a737924e89f98363f0e41e7603dc1",
+      "bytes": 263316
+    },
+    "Images/Maps/TransportRoutes.blp": {
+      "sha256": "b40a786e761b65576c7abf8405b1fdb47fc027210223e56782954901de28b2df",
+      "bytes": 262292
+    },
+    "Images/Maps/Uldaman.blp": {
+      "sha256": "b59af2268f449dfea169b1cad8421375d185cc6f4aef85bbb3fc8cea0de2d03a",
+      "bytes": 350724
+    },
+    "Images/Maps/UldamanEnt.blp": {
+      "sha256": "18694d33463a69e2284c8e058eeab8b2c386cc2429cfacf78b0fc43ab427b9b9",
+      "bytes": 350724
+    },
+    "Images/Maps/WailingCaverns.blp": {
+      "sha256": "fa516b00fbce444e94d4a71b8819efdb7270b1a4c9d93ed40bfa20bc1e4a7131",
+      "bytes": 263316
+    },
+    "Images/Maps/WailingCavernsEnt.blp": {
+      "sha256": "962ac06678a60e6cec661c2417f3fd6740fa435809f201de4b863a27daa6e91b",
+      "bytes": 350724
+    },
+    "Images/Maps/WindhornCanyon.blp": {
+      "sha256": "69f50e530d3c601309619b6923b43d3044f07cdb3cdda069be40cdbe5cff81d0",
+      "bytes": 262292
+    },
+    "Images/Maps/ZulFarrak.blp": {
+      "sha256": "1b482463517b0914fe6b9369fcec9484ad2d295dadbab1f589fb415f8d860222",
+      "bytes": 262292
+    },
+    "Images/Maps/ZulGurub.blp": {
+      "sha256": "73996eb22f2e5f1a059088f5e94ab283061597a89c257d5bab7028179212ba28",
+      "bytes": 350740
+    },
+    "Images/Markers/boat.blp": {
+      "sha256": "21f873e9bb5aa7fd808290e63f2969975697b267f9e65bb314e1f197c7a0621c",
+      "bytes": 4244
+    },
+    "Images/Markers/dungeon.blp": {
+      "sha256": "9122a3cd9005a2072a05238047b1e95ee3896123100107eebb38d1ecea9a870a",
+      "bytes": 4244
+    },
+    "Images/Markers/raid.blp": {
+      "sha256": "c1bcfb87fedde0f1462e2b470e70bb2e70a649118968b9f78e8133740f5a3ffc",
+      "bytes": 4244
+    },
+    "Images/Markers/tram.blp": {
+      "sha256": "714e63287c9f93c317d5e83d6e5896fccf7b969ceca5bc1ef0623823557f9535",
+      "bytes": 4244
+    },
+    "Images/Markers/worldboss.blp": {
+      "sha256": "5a1f514c8f2d79e40c2be43dd45a1c2b76a507b46a123f06684e65c557d443f5",
+      "bytes": 4244
+    },
+    "Images/Markers/zepp.blp": {
+      "sha256": "ceb23a27144b9ff0b953899194ba605ab6bb91ad3fa7ad9e50cdd594f8f2d73e",
+      "bytes": 4244
+    },
+    "Images/Scrolldown.blp": {
+      "sha256": "f20c854eb2b457026432fcec7a2efaa466dcee5f252885fe961272bc78c8222c",
+      "bytes": 32916
+    },
+    "Images/Turtle-Border.blp": {
+      "sha256": "6857ed7ab8f17d29e01f7423da03722e2affd73d00abca4bc0bec36d52ac0506",
+      "bytes": 16532
+    },
+    "Images/V+Border.blp": {
+      "sha256": "292fdd17390c6483e4489442c225e36731814f5e5d337c7500e8bfe5c760e056",
+      "bytes": 16532
+    },
+    "LICENSE": {
+      "sha256": "8e744a54ae755bbce9eaea1221406103f590a38d430bc579e9d788af94ec0489",
+      "bytes": 744
+    },
+    "Locales/deDE/Bosses.lua": {
+      "sha256": "6afd3bc6ef17a988e860605c778816015c6537cbbed90f80f413fc77c1d1b43c",
+      "bytes": 31123
+    },
+    "Locales/deDE/Classes.lua": {
+      "sha256": "536e29e016bb89c7a6dba38a19bbee728548580a32f2a7e106d37a6dd6636f1f",
+      "bytes": 463
+    },
+    "Locales/deDE/Core.lua": {
+      "sha256": "5b15313a054cce7e9dea623c99ddcfec61677853a388fde5bf0bf5c4114ad0d5",
+      "bytes": 27007
+    },
+    "Locales/deDE/Factions.lua": {
+      "sha256": "3811718513bd3709173807dc87f153b3f2a6fb50188fefe830ae35aba2bda316",
+      "bytes": 1966
+    },
+    "Locales/deDE/ItemSets.lua": {
+      "sha256": "0fb9f5d4b0ab153f8d185194e6ad758e89fc60e9d8a2bc58ff56bf32745ac63f",
+      "bytes": 13575
+    },
+    "Locales/deDE/MapData.lua": {
+      "sha256": "664cd7b0dc26ff2e77478d69f169412fef2b08a2f54567c274985262e9db98d0",
+      "bytes": 27854
+    },
+    "Locales/deDE/QuestData.lua": {
+      "sha256": "06364da4c22e00539fe974bd3c8ee1eba4d890cea50f88a80186ad2e4d883e02",
+      "bytes": 484876
+    },
+    "Locales/deDE/Spells.lua": {
+      "sha256": "fad25b553a9bd34ea93fc665b9bec62bd23ac9064b55c41c0d262e022a0597ca",
+      "bytes": 18260
+    },
+    "Locales/deDE/Zones.lua": {
+      "sha256": "7a01d35c96b7b4a4e15ad83cb7dd8b13f0a6e570bb9ab1ce7cd84521119d7042",
+      "bytes": 5819
+    },
+    "Locales/enUS/Bosses.lua": {
+      "sha256": "01b90a8e1adcf29e773f1c712741c6393093d6554b10dd96f0439b15d66de3e5",
+      "bytes": 28702
+    },
+    "Locales/enUS/Classes.lua": {
+      "sha256": "77ddd3b70a09f7be01f60274138476c08e137a28998fcb4bbd58ce7278ed3599",
+      "bytes": 401
+    },
+    "Locales/enUS/Core.lua": {
+      "sha256": "5e51c02c53ebc5816d5e4a921b95ca6652db29e6cd5ac9588c342cec5195e14a",
+      "bytes": 21328
+    },
+    "Locales/enUS/Factions.lua": {
+      "sha256": "43c21f50a1267340168df389f7c40c3e9efcffc3c44d6f267f258f06c523102a",
+      "bytes": 1478
+    },
+    "Locales/enUS/ItemSets.lua": {
+      "sha256": "a2ed0d9ffa16e4cb621903b7621d1a367d9b6ac5f254a70cf0636ad240a27cdb",
+      "bytes": 9122
+    },
+    "Locales/enUS/MapData.lua": {
+      "sha256": "4fe27197459c0643c70f8c2e63713668a33d3dbbe9a5ff0dbc639ba5c97fa898",
+      "bytes": 19416
+    },
+    "Locales/enUS/QuestData.lua": {
+      "sha256": "c59310d98d7afe394126576581ceee4569672cde215aa0ab0c01464bfd79f3f5",
+      "bytes": 456203
+    },
+    "Locales/enUS/Spells.lua": {
+      "sha256": "6c00528b8a4e331bfce32c0ea09b320e56a25a8056914de7d0f98278d4af4b47",
+      "bytes": 11129
+    },
+    "Locales/enUS/Zones.lua": {
+      "sha256": "ccdb7c8d2581d092ca649dc766270de783bab2bec16f91b5020867864698f0aa",
+      "bytes": 4437
+    },
+    "Locales/esES/Bosses.lua": {
+      "sha256": "810c7fa8ff8bed6a0ee51083383856becf5bfa9545ba1ee86487cce5957e33c4",
+      "bytes": 31322
+    },
+    "Locales/esES/Classes.lua": {
+      "sha256": "c2bbf3547311363c39c774af55f07d1d1a94c2857b8afe58412145ffd6596cac",
+      "bytes": 439
+    },
+    "Locales/esES/Core.lua": {
+      "sha256": "0b4435b4576c5c0393893c4e27dec0ebdaabfc04633473d23f2124fb64975f3b",
+      "bytes": 27696
+    },
+    "Locales/esES/Factions.lua": {
+      "sha256": "7c63a4a69f258c97519561e984923859021ad3ed4effeb5c04c7c1ebd34b6d99",
+      "bytes": 1963
+    },
+    "Locales/esES/ItemSets.lua": {
+      "sha256": "aa1ec446e98e0c48c6ddcb0902f82a606bd769ec89dea61d18e2d85359e48c92",
+      "bytes": 13648
+    },
+    "Locales/esES/MapData.lua": {
+      "sha256": "3fbde378943494ff315170a514e5ea0f8aa78f0c7ddb4fc334a614aeed01c475",
+      "bytes": 26446
+    },
+    "Locales/esES/QuestData.lua": {
+      "sha256": "fa49fb0bd20f33ad53cf5581b30a7d6668be615a2e02b70f9457bed208e8f1c2",
+      "bytes": 486668
+    },
+    "Locales/esES/Spells.lua": {
+      "sha256": "a9ab7074a754b135b67b4199b14cd9a4c8670f7cb01d0efc9d9fdf225fb67f21",
+      "bytes": 17328
+    },
+    "Locales/esES/Zones.lua": {
+      "sha256": "59d95f90a35e281df96c5b7a9eccfc8bf18b0ccd549f586b88a57692cbb3b94a",
+      "bytes": 5973
+    },
+    "Locales/locales.xml": {
+      "sha256": "d7db9e784c3ea9b662ec79a838fc595ccdf32ac1b2ef673c3d02df2768eada12",
+      "bytes": 1901
+    },
+    "Locales/LocalizationFramework.lua": {
+      "sha256": "f909dd86019456a2fa3b55a6ff13308446bca572029a2d6e80949b6ceb42d650",
+      "bytes": 4080
+    },
+    "Locales/ptBR/Bosses.lua": {
+      "sha256": "711a4949e318cb959fd5642a278475d6a6b8165ac5aa656dac02208f9da26d35",
+      "bytes": 31133
+    },
+    "Locales/ptBR/Classes.lua": {
+      "sha256": "eebb2e07416e4736d961f844ba78164b0f663130c8b25f8e1a561f15a5ce8fd0",
+      "bytes": 444
+    },
+    "Locales/ptBR/Core.lua": {
+      "sha256": "af3e4663859d85cae8c10b63694c549b7880192d6e6dc142d03379ed5db082cd",
+      "bytes": 27375
+    },
+    "Locales/ptBR/Factions.lua": {
+      "sha256": "4108fc61495aa52b62ec25a7158301344363bc967e14a5d0fcd726c3e80fb2f4",
+      "bytes": 1979
+    },
+    "Locales/ptBR/ItemSets.lua": {
+      "sha256": "6842921ae12b6a16aca125d499fe0b28977205e3f5504fdde51237fa3b19fb19",
+      "bytes": 13691
+    },
+    "Locales/ptBR/MapData.lua": {
+      "sha256": "b2380ba9e5f22f24ca7724c597cc93840ae3742052c5adc1c2cc036f59b996f2",
+      "bytes": 27864
+    },
+    "Locales/ptBR/QuestData.lua": {
+      "sha256": "fd4b3f42a8c2e72d8bc3d86a33838a7e1673c2e8b0dd3b0e6cbcf754ef92415d",
+      "bytes": 477417
+    },
+    "Locales/ptBR/Spells.lua": {
+      "sha256": "2c44662bd01061cc2735cd3177e2105332a46c57dfb459ab573d9a142891d92b",
+      "bytes": 17543
+    },
+    "Locales/ptBR/Zones.lua": {
+      "sha256": "2a921000b17a002038a3f5bd13487699244eb0cb99c67126d9e104ce136191b5",
+      "bytes": 5918
+    },
+    "Locales/zhCN/Bosses.lua": {
+      "sha256": "654cc6ae2f2630c481550620319c01baa0fd3c097d1bce46e0d38a1f64bf3963",
+      "bytes": 32266
+    },
+    "Locales/zhCN/Classes.lua": {
+      "sha256": "6a1064bcaf38852beeda20e610e1effbef4d5b2f364b2be6810ed096b018a837",
+      "bytes": 444
+    },
+    "Locales/zhCN/Core.lua": {
+      "sha256": "19a9078bd67402e9ffba94a3351d634815ad636ab876e753cf3ece03ec3ea523",
+      "bytes": 22931
+    },
+    "Locales/zhCN/Factions.lua": {
+      "sha256": "247f37067586e9febf6aac1eff31cd856c40e8469049a0b8104e75c6e07df607",
+      "bytes": 1790
+    },
+    "Locales/zhCN/ItemSets.lua": {
+      "sha256": "52fd9ba96e10ba42910379d797d8a975a7e263ba94c0290acb0236f19702aa71",
+      "bytes": 11038
+    },
+    "Locales/zhCN/MapData.lua": {
+      "sha256": "3cf0a4e4215759b2624b1bea3589a1ab91e200e6803020c8065cf9ca68f8fcd8",
+      "bytes": 26163
+    },
+    "Locales/zhCN/QuestData.lua": {
+      "sha256": "9a659de68945d60619517600321baeb0b6a17d59f77757f0974a997875db0124",
+      "bytes": 431853
+    },
+    "Locales/zhCN/Spells.lua": {
+      "sha256": "4f233dde52274903964d458e219ea1202f6282fc53c4c55745d72bf31ea159bf",
+      "bytes": 15918
+    },
+    "Locales/zhCN/Zones.lua": {
+      "sha256": "1322d31f21a299a1eec5d6bd257747ccc9713c207a4183dc226b15fb41608cf1",
+      "bytes": 5527
+    },
+    "README.md": {
+      "sha256": "c16eea527ea94c21ee724498791b62a1fae122aa4e223e48bffd16345e841b1c",
+      "bytes": 5609
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

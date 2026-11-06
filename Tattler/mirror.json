@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/Tattler",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "Tattler",
+    "name": "Tattler",
+    "url": "https://github.com/MarcelineVQ/Tattler",
+    "api": "https://api.github.com/repos/MarcelineVQ/Tattler"
+  },
+  "commit": "61ec222b47ce8268510aac8e49e9808c8cd20229",
+  "sourceFiles": {
+    "readme.md": {
+      "sha256": "0e9a456f5a6f5619526e396c9ca22e127c5def288ad7a46b9b8a253aa2ec7781",
+      "bytes": 460
+    },
+    "Tattler.lua": {
+      "sha256": "2054960a98653def401a2c3f24fcd4562cd01d50295ec95676bf34186996a7ae",
+      "bytes": 12506
+    },
+    "Tattler.toc": {
+      "sha256": "38b7ad49c1a0543ab1b8b043819c31840c491eb9d9eeaa4724d6b00080906eba",
+      "bytes": 239
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

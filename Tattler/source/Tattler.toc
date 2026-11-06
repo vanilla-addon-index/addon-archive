@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: Tattler
+## Notes: Announce when certain items or spells are used
+## X-Category: Interface Enhancements
+## X-Date: 2024-05-24
+## X-Website:
+## Version: 1.1
+## SavedVariablesPerCharacter: TattlerDB
+
+Tattler.lua

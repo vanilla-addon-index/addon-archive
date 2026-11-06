@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/TheRealFayz/TimeToDrink",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "TheRealFayz",
+    "repo": "TimeToDrink",
+    "name": "TimeToDrink",
+    "url": "https://github.com/TheRealFayz/TimeToDrink",
+    "api": "https://api.github.com/repos/TheRealFayz/TimeToDrink"
+  },
+  "commit": "8f3189a741721e702a84d06ffef9083eaf9a024d",
+  "sourceFiles": {
+    ".github/workflows/mirror-sync.yml": {
+      "sha256": "4bd75a3522beca75bf0199e8c8de7e35ada5a36dcc25db8dcb1b071be68fabdc",
+      "bytes": 355
+    },
+    "README.md": {
+      "sha256": "678343e6d5c525c67ef301b2b890c7a64633dac95a1a32a70c143ea1ecaa8ad3",
+      "bytes": 2451
+    },
+    "TimeToDrink.lua": {
+      "sha256": "e933649fc5e3ece7e805713d8fe4b176fa89921e66394b2c57705f8bcd2e6986",
+      "bytes": 21949
+    },
+    "TimeToDrink.toc": {
+      "sha256": "f952b57f4ec7f1e7161a3a66b896bab56b24efbc854ad0c9923e3b803ef68d67",
+      "bytes": 256
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

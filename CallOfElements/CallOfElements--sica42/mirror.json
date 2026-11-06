@@ -1,0 +1,161 @@
+{
+  "upstream": "https://github.com/sica42/CallOfElements",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "sica42",
+    "repo": "CallOfElements",
+    "name": "CallOfElements",
+    "url": "https://github.com/sica42/CallOfElements",
+    "api": "https://api.github.com/repos/sica42/CallOfElements"
+  },
+  "commit": "afc5398aef1f2f31ed34732ec89eaf77bce06d2f",
+  "sourceFiles": {
+    ".editorconfig": {
+      "sha256": "caea6f08051086d65175e077190f79d903c21ec8ffd4bfe84c3d003aba2f7e48",
+      "bytes": 270
+    },
+    ".luarc.json": {
+      "sha256": "e60852c159e022f413429c9bf99cde54e51e482e8c470a02556c497ac19a6c37",
+      "bytes": 2332
+    },
+    "assets/Alarm1.wav": {
+      "sha256": "250b50782501b970f803f8ce5867140fc96f9f6834a84d75679fa0070570e643",
+      "bytes": 99150
+    },
+    "assets/Alarm2.wav": {
+      "sha256": "0cd53d41a3d71a39dc6333d6234e7b92bcffff31c64611819ec1688ddc1c82cd",
+      "bytes": 86648
+    },
+    "assets/Alarm3.wav": {
+      "sha256": "8e7caee48e6f0814a82caae70e29e9013db551f80f388b7e0a5d2600347eff72",
+      "bytes": 85886
+    },
+    "assets/Warning.wav": {
+      "sha256": "bf23421428e12ae825865c3715eecddd3ccb4f3aa678197461c6bbbfeeb48452",
+      "bytes": 108332
+    },
+    "Bindings.xml": {
+      "sha256": "91d0672db2cf92151f1da4a4030a408b9b714340a13076e44d348c63cf172892",
+      "bytes": 3619
+    },
+    "CallOfElements.lua": {
+      "sha256": "1be3032c07fb04cd232c0617b83e71ff100e80d0d078f6d4f0fd543de7c9b875",
+      "bytes": 12029
+    },
+    "CallOfElements.toc": {
+      "sha256": "220971d46a88c410de20446da082fd8fbcbcbddf5d3dcebf9863dbee9c43cb8d",
+      "bytes": 449
+    },
+    "CallOfElements.xml": {
+      "sha256": "d66cc25d408d98d808b500f1d07dfb451afc07272d777f717117863627d5ee52",
+      "bytes": 883
+    },
+    "changes.txt": {
+      "sha256": "c983d8f1158bd75c0dfca6cb56615f285638367d31f00332c834d73cd9fbc6e3",
+      "bytes": 22185
+    },
+    "COE_Config.lua": {
+      "sha256": "0254845c21e4cdabef4e8b044b5bf426e24aa2073a8d8915edabedc7ee6dd036",
+      "bytes": 64388
+    },
+    "COE_Config.xml": {
+      "sha256": "5cb13c475592a29f393cf80538a323b0679f046376917c75502133e6219b2cb8",
+      "bytes": 27247
+    },
+    "COE_ConfigTemplates.xml": {
+      "sha256": "db6d115e793751a92a6a1f127d6c3d27eab408bc4b250a0a719676628d9fd096",
+      "bytes": 8702
+    },
+    "COE_Heal.lua": {
+      "sha256": "9477c950f00ce8f1606ea093fdbd6764c23954dabf6ab0f8a431d77967e80963",
+      "bytes": 11052
+    },
+    "COE_Heal.xml": {
+      "sha256": "c533655ab017dc68f0de4cda4018001db859e990895035e60f9546d77b368896",
+      "bytes": 501
+    },
+    "COE_HealData.lua": {
+      "sha256": "d97a27718e0142f0347bcf2f099d844e277367a523fe3814841a5e3825e08203",
+      "bytes": 5122
+    },
+    "COE_NotifyIcon.lua": {
+      "sha256": "4c232ce6bbd092ec7bfb8483917aeddca5521f7ca923417d0efdf4bc7cd02081",
+      "bytes": 4386
+    },
+    "COE_Totem.xml": {
+      "sha256": "7fc111dd3adf9065d6de95d5b946ed8844d66a9184b888eaa3d92b000e975603",
+      "bytes": 9417
+    },
+    "COE_TotemData.lua": {
+      "sha256": "1c61b0d20dc19c80d33774f4e1253cd6f7b2348473bdc1b8697e4ed0b6a0f365",
+      "bytes": 30160
+    },
+    "COE_TotemLogic.lua": {
+      "sha256": "45ba9fe586514de397c339ffe78de057b375d0189622bf223ed8627f2c514b20",
+      "bytes": 43524
+    },
+    "COE_TotemVisual.lua": {
+      "sha256": "e95389d220c51b51239d1cbb9296652efa9e84130c9e04e30274bb6b28ed8120",
+      "bytes": 63199
+    },
+    "libs/Chronos.lua": {
+      "sha256": "6f0f65411e2edd1ed2e6fcb97f104708389175fe01473dbca55518053d4c7941",
+      "bytes": 25390
+    },
+    "libs/Chronos.xml": {
+      "sha256": "a9a89b292e982a0a96c010431ab4bb04ba2d6ba0fc4a00e3fee7d1377fc981d0",
+      "bytes": 463
+    },
+    "libs/localization.ch.de.lua": {
+      "sha256": "d11165fc10552e683fa250363ffe8c713191ef6c24f4b6cfca3c597385b82c26",
+      "bytes": 507
+    },
+    "libs/localization.ch.en.lua": {
+      "sha256": "15bc6800e482ca8412dc059ab5a38ad7236cf11707e6571f9c12c25b89a25ba4",
+      "bytes": 409
+    },
+    "libs/localization.ch.fr.lua": {
+      "sha256": "749a78f5f47976905a5c5b803dfce2e78477b1386113bab0a8d96cd7c318c9ad",
+      "bytes": 520
+    },
+    "libs/localization.ch.ru.lua": {
+      "sha256": "49c8f92038c5974627de4ceaec7186a08566b5eaf31245cc788e309488303da7",
+      "bytes": 572
+    },
+    "Localization.cn.lua": {
+      "sha256": "6632aea8bd8cfba9ddbe5e30a2d17e99a879e8c32c65c3bc076136922bf04d5f",
+      "bytes": 9365
+    },
+    "Localization.de.lua": {
+      "sha256": "762c44edd1b9dd50707c64cb770624456307745d4853eafd43c30faced9bb8c9",
+      "bytes": 10036
+    },
+    "Localization.fr.lua": {
+      "sha256": "cb516d9b7aead2dc4b7c99960eba890ecdeee282329eb00933310d2d0a116a83",
+      "bytes": 10199
+    },
+    "Localization.ko.lua": {
+      "sha256": "d9ee0b6d79a6bab654c592b2f08754a1a6b58ccdc9aaf5404c289ad5f6ede7c6",
+      "bytes": 10592
+    },
+    "Localization.lua": {
+      "sha256": "56570247e87b4f2a024055de4c7d536c1da88a32982e2506ec79d3e06d690648",
+      "bytes": 11807
+    },
+    "Localization.ru.lua": {
+      "sha256": "0b62d9152fcaf9ccf6751b73aca45aacf85aee707f1f2eff4aa5e26c07853a2d",
+      "bytes": 13019
+    },
+    "Readme.md": {
+      "sha256": "17010f624312ef5ae98178d128ffe1d1b29e039fc8eaf4d1e11d1a772ac883c3",
+      "bytes": 3382
+    },
+    "readme.txt": {
+      "sha256": "fc2ce1a98e3dd810c889c6b7fa306a40c536682173e45a3c50f554a1e4cf8891",
+      "bytes": 14245
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

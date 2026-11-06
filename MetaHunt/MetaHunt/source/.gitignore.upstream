@@ -1,0 +1,20 @@
+# Ignore all hidden files and hidden directories
+.*
+**/.*
+
+# Keep this ignore file tracked
+!.gitignore
+
+# Exclude non-runtime localization helper artifacts
+tools/
+LOC*.md
+LOCALIZATION*.md
+
+# Dev tooling — Python generators, data processing scripts, scratch files
+# Not part of the addon, never ship this
+.tools/
+
+# GitHub Copilot — never sync Copilot data to GitHub
+.copilot/
+.github/copilot-instructions.md
+**/copilot-*

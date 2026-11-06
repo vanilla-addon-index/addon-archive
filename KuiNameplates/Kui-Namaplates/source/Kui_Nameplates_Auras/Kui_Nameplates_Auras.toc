@@ -1,0 +1,11 @@
+## Interface: 11200
+## Author: Kesava, ported by laytya
+## Title: Kui |cff9966ffNameplates|r Auras
+## Notes: Aura display plugin for Kui Nameplates
+## Dependencies: Kui_Nameplates
+## SavedVariables: KuiSpellListCustom
+
+
+lib\embeds.xml
+data.lua
+auras.lua

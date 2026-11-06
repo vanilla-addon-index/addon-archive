@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/McPewPew/MinimapButtonBag",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "McPewPew",
+    "repo": "MinimapButtonBag",
+    "name": "MinimapButtonBag",
+    "url": "https://github.com/McPewPew/MinimapButtonBag",
+    "api": "https://api.github.com/repos/McPewPew/MinimapButtonBag"
+  },
+  "commit": "a3ae16a352889ec491b8d917297aecb262d0b437",
+  "sourceFiles": {
+    "icon.tga": {
+      "sha256": "a70539a57b6d94d99364d1e71b39f14078ae9b9099f6b65027ba905db1f8b36f",
+      "bytes": 2240
+    },
+    "localization-deDE.lua": {
+      "sha256": "dabf270223d9a1fa49719cc8d9f28f4003d8ba7e6f96c932c1e3e44aa42b810f",
+      "bytes": 1203
+    },
+    "localization-enGB.lua": {
+      "sha256": "b06e1d0b4cfcb1bea1b9ded6aec3d5dfe13345f44eff730af56fff238840008a",
+      "bytes": 1048
+    },
+    "localization-ruRU.lua": {
+      "sha256": "e0275711f35ca40c106a7564aa31471b5618873200f3089b51a3899395a186a4",
+      "bytes": 1426
+    },
+    "MBB.lua": {
+      "sha256": "96d890555968e94f2a0da2eb7dbd2cf4d2c8378fd4e50e26611971392c20a308",
+      "bytes": 21601
+    },
+    "MBB.xml": {
+      "sha256": "032f439fab7d3d18c91456783310854eef519e47eccc720629370febcda76aea",
+      "bytes": 20066
+    },
+    "MinimapButtonBag.toc": {
+      "sha256": "490b61074f4ef3ba1b6abf1934aad3876f90adcd3e219e4f4a81df5a8176aa1a",
+      "bytes": 576
+    },
+    "README.md": {
+      "sha256": "866ce5f2d066a3d47890a0a097f54ea61b804051e2ac4916b197d428cac7fe7d",
+      "bytes": 561
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

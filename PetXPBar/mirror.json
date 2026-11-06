@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/refaim/PetXPBar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "refaim",
+    "repo": "PetXPBar",
+    "name": "PetXPBar",
+    "url": "https://github.com/refaim/PetXPBar",
+    "api": "https://api.github.com/repos/refaim/PetXPBar"
+  },
+  "commit": "2a28c86848d4a6f8e6dd60d78d60d884e82c7493",
+  "sourceFiles": {
+    "img.jpg": {
+      "sha256": "57de42296bc5055cd680f8c3321fd12164b504b1b1f591cdca5dc64c6bb865b1",
+      "bytes": 11252
+    },
+    "LICENSE": {
+      "sha256": "c0dc3dc30fad19c10f1202195dc27f5e0f90c0cf518f84e4ac413b901c7d8fc9",
+      "bytes": 1073
+    },
+    "PetXPBar.lua": {
+      "sha256": "d55640a596056bb37436aefc12e0003252beea636fbb203cd27a638fa865af76",
+      "bytes": 1773
+    },
+    "PetXPBar.toc": {
+      "sha256": "0c5fc851b19dd94534adacb221f80c54fe3ceda2faee92130157cfe478946de3",
+      "bytes": 147
+    },
+    "README.md": {
+      "sha256": "3afd8b80395847d2ea1ebbf8955f251e924ec7e55fba273096672b48613b5f2c",
+      "bytes": 494
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

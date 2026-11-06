@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Cernie/Pummeler",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Cernie",
+    "repo": "Pummeler",
+    "name": "Pummeler",
+    "url": "https://github.com/Cernie/Pummeler",
+    "api": "https://api.github.com/repos/Cernie/Pummeler"
+  },
+  "commit": "5094843163426678e129316910672515af58ee72",
+  "sourceFiles": {
+    "pummeler.lua": {
+      "sha256": "417e1b543d9926d5680417f5153455757cbb0aaf986f6341c9742a3a9052de02",
+      "bytes": 7984
+    },
+    "pummeler.toc": {
+      "sha256": "957ad5621996dfe7990bd180441cf5ce3e9fd33f64a86aac51609eaf2d64f4f8",
+      "bytes": 170
+    },
+    "pummeler.xml": {
+      "sha256": "cf5d368879c15bb2360bec44eb606b185f5dd7401b2733d713d71509ed698ab6",
+      "bytes": 346
+    },
+    "README.md": {
+      "sha256": "cadb49cc8c2512e5017f69b8127187bb202137b557a4f742b459e6638e9ec7a0",
+      "bytes": 721
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

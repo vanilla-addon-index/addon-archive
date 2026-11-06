@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/ZythDr/PageTurner",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ZythDr",
+    "repo": "PageTurner",
+    "name": "PageTurner",
+    "url": "https://github.com/ZythDr/PageTurner",
+    "api": "https://api.github.com/repos/ZythDr/PageTurner"
+  },
+  "commit": "0e51751babef4abf5a66397c66620c7c73420738",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "LICENSE": {
+      "sha256": "125ed56bba4d6a351777800747a08805b5535904a9fab6edc7f2dbfe80365769",
+      "bytes": 1063
+    },
+    "PageTurner.lua": {
+      "sha256": "f2f690bdff71cb48dd64050158bd08138f5398dd3ffa69595b5c20683f793b54",
+      "bytes": 4754
+    },
+    "PageTurner.toc": {
+      "sha256": "1ec5eac3f7e4958d9dd1e9ed51dfd1c4c5600a47e865ea29d436cb785bb80eae",
+      "bytes": 162
+    },
+    "README.md": {
+      "sha256": "a247856ccd0bddbc40a0914bab6174651acaf0630326baa3ae5b34eb39774dd2",
+      "bytes": 196
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

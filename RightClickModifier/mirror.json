@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/RightClickModifier",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "RightClickModifier",
+    "name": "RightClickModifier",
+    "url": "https://github.com/MarcelineVQ/RightClickModifier",
+    "api": "https://api.github.com/repos/MarcelineVQ/RightClickModifier"
+  },
+  "commit": "dc40936c0991230c8e92bc099b26c022510603a1",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "11ed098d9b1422e8878e93009d816e8390266ae72809293025ae15b130a836df",
+      "bytes": 898
+    },
+    "RightClickModifier.lua": {
+      "sha256": "a31e4c5ac55693f8b74ec734c4656d3b7fa77ff5f7c3601f47267737351c5a98",
+      "bytes": 5215
+    },
+    "RightClickModifier.toc": {
+      "sha256": "a6e798b8d6dbcb90187738020d13d72bad387c790188c909e98a236b9a1f801f",
+      "bytes": 154
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

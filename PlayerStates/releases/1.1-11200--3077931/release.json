@@ -1,0 +1,9 @@
+{
+  "id": "3077931",
+  "tag": "1.1-11200",
+  "name": "v1.1-11200",
+  "body": "## PlayerStates\n\nadds a couple macro helpers to Vanilla WoW.\n- PlayerState.Channeling (true when the player is channeling a spell)\n- PlayerState.Spelltargeting (true when the player has a spell loaded on the cursor)\n\n#### Macro Usage Examples\n\nSpammable Tame beast (will not try to recast Tame Beast and interrupt it when already channeling)  \n\n``` lua\n/tar Broken Tooth\n/script if (UnitName(\"target\"))==\"Broken Tooth\" and not PlayerState.Channeling then CastSpellByName(\"Tame Beast\") end\n```\n\nSpammable Blizzard (will not try to cast Blizzard when the spell is already loaded on cursor)  \n\n``` lua\n/script if not PlayerState.Spelltargeting then CastSpellByName(\"Blizzard\") end\n```\n",
+  "published": "2016-04-22T14:09:47Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/PlayerStates/releases/tag/1.1-11200"
+}

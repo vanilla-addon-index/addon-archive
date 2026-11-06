@@ -1,0 +1,98 @@
+{
+  "upstream": "https://octowow.st/git/Clank-o-matic/OldSchool-HitSplashes",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Clank-o-matic",
+    "repo": "OldSchool-HitSplashes",
+    "name": "OldSchool-HitSplashes",
+    "url": "https://octowow.st/git/Clank-o-matic/OldSchool-HitSplashes",
+    "api": "https://octowow.st/git/api/v1/repos/Clank-o-matic/OldSchool-HitSplashes"
+  },
+  "commit": "75fb77206bd96c409b9b8716eb9c652d1f649a38",
+  "sourceFiles": {
+    "Assets/Hitsplat-Arcane.tga": {
+      "sha256": "ed8df4a82418a7544ee4a2d45c6ff8dd9c9215296f3f58faee9bde6ff5b5604e",
+      "bytes": 16402
+    },
+    "Assets/Hitsplat-Fire.tga": {
+      "sha256": "e77ec3c2d25ffb77ea041f8d86724bc466fd77e06e8e4050a77cbc15a2a86caf",
+      "bytes": 16402
+    },
+    "Assets/Hitsplat-Frost.tga": {
+      "sha256": "7096d2e6506230644e4c7a084c6372a678958cc2f8bf4e8c84ac5929067b9077",
+      "bytes": 16402
+    },
+    "Assets/Hitsplat-Heal.tga": {
+      "sha256": "ed8df4a82418a7544ee4a2d45c6ff8dd9c9215296f3f58faee9bde6ff5b5604e",
+      "bytes": 16402
+    },
+    "Assets/Hitsplat-Holy.tga": {
+      "sha256": "b6904f2d29f20f754c53ab04b8ccd26bf033e21fcd64675b84192f4b778c4e46",
+      "bytes": 16402
+    },
+    "Assets/Hitsplat-Miss.tga": {
+      "sha256": "8931f11b40dadb70773b40cbd6a3bab722c905337ab660fa7997b07e2c569e05",
+      "bytes": 16402
+    },
+    "Assets/Hitsplat-Nature.tga": {
+      "sha256": "8ed9a2c9c7f6f3c26c778bc211fe010eead295c60b0d1d76ed8bef95025f6339",
+      "bytes": 16402
+    },
+    "Assets/Hitsplat-Physical.tga": {
+      "sha256": "a407125abd2399824e34300b021207e0982aa03334815beb986ea26a127a7701",
+      "bytes": 16402
+    },
+    "Assets/Hitsplat-Shadow.tga": {
+      "sha256": "22999309aa0ea7f444633bba624980afe622413d3c9c247727f52947fa6f577f",
+      "bytes": 16402
+    },
+    "Assets/runescape.ttf": {
+      "sha256": "7477bbfd998b8e16e8a1e898fd49fb736a6fdfa00e7eb364d4d441f10290f03a",
+      "bytes": 22500
+    },
+    "Core.lua": {
+      "sha256": "4548b1caa4b376b41e4afc442e3f413db394dbb8c8d26378993f18da1a5f5ab7",
+      "bytes": 66777
+    },
+    "LICENSE": {
+      "sha256": "9909bcbbddb7579626fe7b4a0b2d9133c2e1b257ebed5efe6e2cdaec19807edf",
+      "bytes": 1079
+    },
+    "Options.lua": {
+      "sha256": "37378700def86ba21d6935060bca21d4af4ff635821251e0c5c078973f4c35af",
+      "bytes": 7746
+    },
+    "OSHS.toc": {
+      "sha256": "58adea9093f47348a65193b8452dbf881a814b145c232d818ce3a98689ee17b1",
+      "bytes": 220
+    },
+    "README.md": {
+      "sha256": "8bca35b4bbfa31cf6ab95cca0c8faf1f803637e35553894588ecea55e90ff635",
+      "bytes": 1661
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "290": {
+      "tag": "v1.0.0",
+      "folder": "v1.0.0--290",
+      "assets": {
+        "80": {
+          "sha256": "b27b79d3af7d46d84839a60bd30241f98500e2458cdf5ca721520bb72de3e1e7",
+          "bytes": 87191,
+          "id": "80",
+          "name": "OSHS.rar",
+          "url": "https://octowow.st/git/Clank-o-matic/OldSchool-HitSplashes/releases/download/v1.0.0/OSHS.rar",
+          "path": "releases/v1.0.0--290/assets/OSHS.rar"
+        }
+      },
+      "source": {
+        "sha256": "26a9ee546aaa52b961c51ba8637c3abca3035eb658a011d05e7035dbaabc7aae",
+        "bytes": 87063,
+        "path": "releases/v1.0.0--290/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/Clank-o-matic/OldSchool-HitSplashes/archive/v1.0.0.tar.gz"
+      }
+    }
+  }
+}

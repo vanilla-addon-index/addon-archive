@@ -1,0 +1,149 @@
+{
+  "upstream": "https://github.com/Beardedrasta/NosCursor",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Beardedrasta",
+    "repo": "NosCursor",
+    "name": "NosCursor",
+    "url": "https://github.com/Beardedrasta/NosCursor",
+    "api": "https://api.github.com/repos/Beardedrasta/NosCursor"
+  },
+  "commit": "fb59ba7dcc739b45ba7aaaa231a5ebe6536510a1",
+  "sourceFiles": {
+    "Api/Api.lua": {
+      "sha256": "f33b1bc251d9fec0ff6c1f148efc0e3e03fd899fcca47f2b015809ec60b058c9",
+      "bytes": 919
+    },
+    "Config.lua": {
+      "sha256": "8a6015d61dbfd9735d51b65c652700996d7d6b5bba75fd2e35f8f036b628c210",
+      "bytes": 24207
+    },
+    "Init.lua": {
+      "sha256": "f9103c8167ed7957f7148b3556051724680089c8a1ffc845df3a3d215bf7e454",
+      "bytes": 3033
+    },
+    "Locales/enUS.lua": {
+      "sha256": "6aa0feec5f77729f90302ce56a8434f684c4d73b3e714b2e0feb611dbb383f32",
+      "bytes": 447
+    },
+    "Media/Circle 1.tga": {
+      "sha256": "1b80b33e7e595920fca4416679650ccc5890f3941c13efe1ffa0741263a1230c",
+      "bytes": 16428
+    },
+    "Media/Circle 2.tga": {
+      "sha256": "583c15d3e28c81db0fbd6fabe326f57df4636605099d00d50b48d9bde2c02e8f",
+      "bytes": 16428
+    },
+    "Media/Circle.tga": {
+      "sha256": "72874c33a315b759e92c48aea239f769617dd1388f7630d1700de2d367d9f870",
+      "bytes": 11078
+    },
+    "Media/CircleCluster.tga": {
+      "sha256": "d1b4702de2158a4ceb4409845cb31fca66bdfa8b2162f9aaa00af66b6b3323a5",
+      "bytes": 2307
+    },
+    "Media/CircleFull.tga": {
+      "sha256": "54b97b44894fe0500e06746aab57a5a438c04629e6970123610f35401a3d416f",
+      "bytes": 7039
+    },
+    "Media/close.tga": {
+      "sha256": "10ff2d1f26241a6fc6ca4539cf1f7e464a578e73828da87d0b130ab733cc4892",
+      "bytes": 1068
+    },
+    "Media/Cross 1.tga": {
+      "sha256": "c9f95e0beda2bbf6e8b5214862a936907fd653dc4427411927cf298a2957ccb2",
+      "bytes": 16428
+    },
+    "Media/Cross 2.tga": {
+      "sha256": "98c5cec3d2bdf667e51f8c6a8b2662c44a824130217015eb74c1a2741ba7cf32",
+      "bytes": 16428
+    },
+    "Media/Cross 3.tga": {
+      "sha256": "2b3d11dd06c7c80f40117f0e3386567daa4dd37741348cf1c80b89a767425662",
+      "bytes": 16428
+    },
+    "Media/Glow 1.tga": {
+      "sha256": "2f7b7248a95b55f6d33d4792bc488b87e8932b87162bf23f913410020da4ba27",
+      "bytes": 262188
+    },
+    "Media/Glow Reversed.tga": {
+      "sha256": "b450ffe2c8c10845ed3c8a277e3aef374776d5cc5686663fbd91dbdfb5e143ce",
+      "bytes": 16428
+    },
+    "Media/Glow.tga": {
+      "sha256": "b32db393a2ecd8042c9733ee12fbba26649f706f693434413bed49efe9d53f6a",
+      "bytes": 16428
+    },
+    "Media/Ring 1.tga": {
+      "sha256": "93ba2f54d47e6f8a4aa487537471bcc9aab734d8626ed060eef9d94e867731fd",
+      "bytes": 16428
+    },
+    "Media/Ring 2.tga": {
+      "sha256": "42799d7ef193dbe81c32799913684584d6cbcdcd4e1cb335efdd2071ef2f49fe",
+      "bytes": 16428
+    },
+    "Media/Ring 3.tga": {
+      "sha256": "60bdd32cd0c4c8d3c231bb7299ea1e42654df9423961384937755be3850b7000",
+      "bytes": 16428
+    },
+    "Media/Ring 4.tga": {
+      "sha256": "8d7ace0ec78b845e6c2c43d1d849e91a3e6b587634585df9bbc529c80d789758",
+      "bytes": 16428
+    },
+    "Media/Ring Soft 1.tga": {
+      "sha256": "0110dbbc484af3303bcbfef937dd869d72505737e3675cf9c6bbbb1d2d488164",
+      "bytes": 16428
+    },
+    "Media/Ring Soft 2.tga": {
+      "sha256": "cabb4b042d992c293113f95fa2f4c1ff608abf41e7da9ecc984add689bd1b75e",
+      "bytes": 16428
+    },
+    "Media/Ring Soft 3.tga": {
+      "sha256": "18789c81a39ff966436e8ec590abc5587748a89802eeb92d997be52ef1ba963f",
+      "bytes": 16428
+    },
+    "Media/Ring Soft 4.tga": {
+      "sha256": "572f2bdf5e83e8f0d2dc5564c7cc2c262d806ca12220fb9baa4422a098748612",
+      "bytes": 16428
+    },
+    "Media/Sphere Edge 2.tga": {
+      "sha256": "dbbb6d75f36cfb53a83675c809cab268ec8a8df543ec830ba033f413e0a48c07",
+      "bytes": 65580
+    },
+    "Media/Star 1.tga": {
+      "sha256": "9d7b9265ec254cc223dd709f446735afb9c7ca8fd40cb73087e2e18c728c84af",
+      "bytes": 16428
+    },
+    "Media/Swirl.tga": {
+      "sha256": "0ef83564ef6212bd6a6398810f9a8de775c4d9fb05a551512806db94ca14e44a",
+      "bytes": 262188
+    },
+    "NetID.png": {
+      "sha256": "82526c63065e067e70ea6e2f49fd9b180816e4377774dbaa3f589f0aa8a15022",
+      "bytes": 148029
+    },
+    "NosCursor.lua": {
+      "sha256": "3c7a47313924e5d727f0df5b9f5879fa42196c8914525c527bce796b7fdd0442",
+      "bytes": 4678
+    },
+    "NosCursor.toc": {
+      "sha256": "a3256f2d2c7d1f3f1319fc4651fdb93e184cc5a16435be8bb18c9c3f6baa874d",
+      "bytes": 290
+    },
+    "README.md": {
+      "sha256": "bab5b56353762a9dbc742b29863566706c9b239fae168e9fc04804280b976818",
+      "bytes": 1624
+    },
+    "screenshot.jpg": {
+      "sha256": "d9e6d1e2e17faf65dd446256e9a4b505fbd0831da4c5caf473803c1987eb24c1",
+      "bytes": 29944
+    },
+    "screenshot2.jpg": {
+      "sha256": "8213c7c4e61988a8d8289e926c6fbc2d8b1b32a7a1a8be6ba1e01fa623ca8d75",
+      "bytes": 2003
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

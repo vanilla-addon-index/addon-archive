@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/cregham/PartyPlus",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "cregham",
+    "repo": "PartyPlus",
+    "name": "PartyPlus",
+    "url": "https://github.com/cregham/PartyPlus",
+    "api": "https://api.github.com/repos/cregham/PartyPlus"
+  },
+  "commit": "81027ce5b13da8ad81dd312dabcbba0f444babf6",
+  "sourceFiles": {
+    "PartyPlus.lua": {
+      "sha256": "ddf6ac3b6e6438e7e5768f402991aaffde17b5d9f75c34842d8d2f014e1c0969",
+      "bytes": 10810
+    },
+    "PartyPlus.toc": {
+      "sha256": "180ad057cdca8b1f65b234eb84c5b98dae3bf7982c5d5a3f01031938a8408e27",
+      "bytes": 108
+    },
+    "readme.md": {
+      "sha256": "657180d8b4f7c99a38a41ba04ab665e498bc72d16e67e2d338aa00af7d19a81c",
+      "bytes": 2336
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

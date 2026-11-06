@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/jejkas/WFW",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jejkas",
+    "repo": "WFW",
+    "name": "WFW",
+    "url": "https://github.com/jejkas/WFW",
+    "api": "https://api.github.com/repos/jejkas/WFW"
+  },
+  "commit": "71deefad363323bd719d4669c225b1030ae13a5d",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "dd2bc13df86ee2831b08b04788e47bbadd87ab82087324035e56c5c7c28bbcf6",
+      "bytes": 477
+    },
+    "WFW.lua": {
+      "sha256": "a4863ccf105897ff97ee663431666df0946083def4fc4fbc4f3e23aa9888e7d5",
+      "bytes": 7606
+    },
+    "WFW.toc": {
+      "sha256": "1d5503e3407c69cc93f90d74bd2b1af50cc1169229f67b6846b06ca43cf5fc29",
+      "bytes": 135
+    },
+    "WFW.xml": {
+      "sha256": "848b19db91cb26c281df4882d2e95dc5c11ee6dcac9a5662c0d36c233785188e",
+      "bytes": 400
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

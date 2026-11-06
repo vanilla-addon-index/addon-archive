@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/ericschn/OnlyASCII",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ericschn",
+    "repo": "OnlyASCII",
+    "name": "OnlyASCII",
+    "url": "https://github.com/ericschn/OnlyASCII",
+    "api": "https://api.github.com/repos/ericschn/OnlyASCII"
+  },
+  "commit": "bc9e839976419db0bcc8213c432c94c8a01a6cbe",
+  "sourceFiles": {
+    "OnlyASCII.lua": {
+      "sha256": "2e1d5094c17d89c7ca0b6d1ee533881ac6dbbbd7960a1ef2b41e5f5d8a689693",
+      "bytes": 520
+    },
+    "OnlyASCII.toc": {
+      "sha256": "0ff1e149f3f8edcde380291c521977244c401829b9ff05acf9195b8811410520",
+      "bytes": 180
+    },
+    "README.md": {
+      "sha256": "88be85b1203587d06eb961f9e499b74ba61fb3aa1315e7dcc239416983e745ed",
+      "bytes": 157
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,46 @@
+{
+  "upstream": "https://octowow.st/git/Relationship/KuiNamePlates",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Relationship",
+    "repo": "KuiNamePlates",
+    "name": "KuiNamePlates",
+    "url": "https://octowow.st/git/Relationship/KuiNamePlates",
+    "api": "https://octowow.st/git/api/v1/repos/Relationship/KuiNamePlates"
+  },
+  "commit": "7c9070fbeac928c22ab1d6a46613b82450f27236",
+  "sourceFiles": {
+    "Kui-Nameplates-OctoWoW.zip": {
+      "sha256": "d519b34a996b6550f4e47ed7ce3fac4188da3349325f17b6692fcf8367dd7d5c",
+      "bytes": 999573
+    },
+    "README.md": {
+      "sha256": "6deffad413ab89a7c84f2ad69a217cd21e4b6c2d067bacf0f91be401561cb64a",
+      "bytes": 944
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "45": {
+      "tag": "A",
+      "folder": "A--45",
+      "assets": {
+        "14": {
+          "sha256": "d519b34a996b6550f4e47ed7ce3fac4188da3349325f17b6692fcf8367dd7d5c",
+          "bytes": 999573,
+          "id": "14",
+          "name": "Kui-Nameplates-OctoWoW.zip",
+          "url": "https://octowow.st/git/Relationship/KuiNamePlates/releases/download/A/Kui-Nameplates-OctoWoW.zip",
+          "path": "releases/A--45/assets/Kui-Nameplates-OctoWoW.zip"
+        }
+      },
+      "source": {
+        "sha256": "8f5f8decf81ff60187d5ae8d74ae1198c8c5cc37a32b97509804fbf00e8f2d8d",
+        "bytes": 963126,
+        "path": "releases/A--45/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/Relationship/KuiNamePlates/archive/A.tar.gz"
+      }
+    }
+  }
+}

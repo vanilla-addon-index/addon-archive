@@ -1,0 +1,105 @@
+{
+  "upstream": "https://github.com/refaim/ReagentData",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "refaim",
+    "repo": "ReagentData",
+    "name": "ReagentData",
+    "url": "https://github.com/refaim/ReagentData",
+    "api": "https://api.github.com/repos/refaim/ReagentData"
+  },
+  "commit": "546f00fd43ae30f77f62ed3465dfafcebbfffffb",
+  "sourceFiles": {
+    "alchemy.lua": {
+      "sha256": "57034e329c7b43f92a23f2cb82466172ff9eebb5e11fe5d1b4d202d43c6e4e45",
+      "bytes": 49129
+    },
+    "blacksmithing.lua": {
+      "sha256": "9e22105318ced48bffffe71e923c4478bd684ae8482097f86b87d1975292e03d",
+      "bytes": 123071
+    },
+    "cooking.lua": {
+      "sha256": "b18ea40a233295a5165c4df48a312f4c71c734015321c6a4f8ceb33a64febbc0",
+      "bytes": 35197
+    },
+    "datatables.lua": {
+      "sha256": "b3f3760b27279a9a4139dc00a53bfa24412ed9e8359f22f645874f6fe1fa0a3c",
+      "bytes": 23283
+    },
+    "enchanting.lua": {
+      "sha256": "552520aace2ed267f3d6ef09b18c9536d4ed9812adc935690e7fa6efd7f81975",
+      "bytes": 62265
+    },
+    "engineering.lua": {
+      "sha256": "f2d31d25cf19f4cd61c5ecdfb1c1f011257e8396efa2e576eef4eddcb85be51b",
+      "bytes": 82050
+    },
+    "firstaid.lua": {
+      "sha256": "55879471b81cc12323f6f94b52964ba6ceb6aa21538d6a110c107525a6ee679b",
+      "bytes": 4234
+    },
+    "leatherworking.lua": {
+      "sha256": "f465f851499a34df9ad47afb9fc5faaaca9b6e1ad91ec3fbeeceff65b44e2cbd",
+      "bytes": 119476
+    },
+    "mining.lua": {
+      "sha256": "f73f546cd11306dc3d26c13e694d958877996ce379646752bcdd91157432b16a",
+      "bytes": 3157
+    },
+    "poisons.lua": {
+      "sha256": "1c4d83297aaf9c490d4da4ac9cb6f6373178dd0ea3125dadd1f5eb6ad60eeae9",
+      "bytes": 10625
+    },
+    "questitems.lua": {
+      "sha256": "d3185218e89362995958af150468b2fb57a9d94a12e1452d5265f5f186d04db7",
+      "bytes": 69441
+    },
+    "readme.txt": {
+      "sha256": "627be6396207e1bfe968a6a4f7e79b087a5cc7ea40077ebb00faafa40a56c6b9",
+      "bytes": 43409
+    },
+    "ReagentData-Cn.lua": {
+      "sha256": "4c0f598f0d62dd1af887bf8cf8caed3a0696cec855972452f27434a8e9a8987b",
+      "bytes": 34361
+    },
+    "ReagentData-De.lua": {
+      "sha256": "da794fe65e6afcb0eb7d5c372720db2212e770631924830edf225266507eaa7a",
+      "bytes": 42826
+    },
+    "ReagentData-En.lua": {
+      "sha256": "e0cb08da71a9f3199ba7eb4cd958cdc24a6fecaf9bdc6f58218f709c53e1f736",
+      "bytes": 35840
+    },
+    "ReagentData-Fr.lua": {
+      "sha256": "a808bc0c3603983fced1187d9c5308fe33f18a0fbef1e34e0da733c2ce0c9417",
+      "bytes": 45598
+    },
+    "ReagentData-Ru.lua": {
+      "sha256": "c333f64985136cf122859661ed4728c504d20d12bcbc3aa8e7fba0bc163158a7",
+      "bytes": 48328
+    },
+    "ReagentData.lua": {
+      "sha256": "46ddd800950e6e5a4e840e2845f18ed6fd0ea3c9dffb3f5162555e26d7b8eaca",
+      "bytes": 9834
+    },
+    "ReagentData.nopatch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "ReagentData.toc": {
+      "sha256": "c49f3e1fa0e6c5ccd7aa3a916e359a6299de5520390b8eea07bbea3734570e55",
+      "bytes": 461
+    },
+    "ReagentData.xml": {
+      "sha256": "2f648b2b8a223be5ffb4815998e0dfed0023b55a48ab4bbf896015e562d2531b",
+      "bytes": 834
+    },
+    "tailoring.lua": {
+      "sha256": "2d184a1eebd73f1f0bf914fd16e0d5e490a653cfd4855fce4cd5e65edc3304d5",
+      "bytes": 109445
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

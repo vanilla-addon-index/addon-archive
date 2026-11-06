@@ -1,0 +1,9 @@
+{
+  "id": "436689981",
+  "tag": "v1.29.1-times-20261106",
+  "name": "WhoDidIt 1.29.1 (raid times 6 Nov 2026)",
+  "body": "**Fresh raid times** (every guild's kill and clear times, and the 5-man runs) as of 6 Nov 2026. WhoDidIt itself is the same as 1.29.1, so update only if you want the newer times.\n\n## Install\n\n1. Download **WhoDidIt.zip** below.\n2. Unzip it into `World of Warcraft\\Interface\\AddOns\\`. You get a folder called `WhoDidIt` - nothing to rename.\n3. Make sure **Nampower** and **SuperWoW** are installed, start the game and type `/wdi`.\n\n**Updating:** close the game, delete the old `WhoDidIt` folder and unzip the new one in its place. Your settings,\nfights and Hall of Fame are kept (they're saved in the `WTF` folder, not in the addon).\n\nEverything is in the zip - the Chronicle logger, RollFor, DopingControl and the Auto Marker's raid packs. Nothing to run.\n",
+  "published": "2026-11-06T15:46:39Z",
+  "prerelease": false,
+  "url": "https://github.com/bdot89/WhoDidIt/releases/tag/v1.29.1-times-20261106"
+}

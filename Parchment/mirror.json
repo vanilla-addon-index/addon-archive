@@ -1,0 +1,103 @@
+{
+  "upstream": "https://github.com/ericraio/vanilla-wow-addons/tree/238c6d633d5a5b8a0cc4ee7a8cbb548ea80da081/p/Parchment",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ericraio",
+    "repo": "vanilla-wow-addons",
+    "name": "vanilla-wow-addons",
+    "ref": "238c6d633d5a5b8a0cc4ee7a8cbb548ea80da081",
+    "subpath": "p/Parchment",
+    "url": "https://github.com/ericraio/vanilla-wow-addons",
+    "api": "https://api.github.com/repos/ericraio/vanilla-wow-addons"
+  },
+  "commit": "238c6d633d5a5b8a0cc4ee7a8cbb548ea80da081",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "5984c1a28057ba56915f9aa7cac3225eb889322019b6347a92b4a35b99b231a9",
+      "bytes": 212
+    },
+    "CloseButton-Down.tga": {
+      "sha256": "89388215ec147eb2ad755065a453aa204b1fce566cba031afd531a641261e646",
+      "bytes": 4140
+    },
+    "CloseButton-Up.tga": {
+      "sha256": "7fd07ff2722107a85c63b2cdf8b3da47609926c8ffa10a9a697a432209c530b1",
+      "bytes": 4140
+    },
+    "MinimizeButton-Down.tga": {
+      "sha256": "84adadb20b8c4d081196b6ce35953e2375b8bf814b4abd9c9a3c649719bdf7bc",
+      "bytes": 4140
+    },
+    "MinimizeButton-Up.tga": {
+      "sha256": "722ed4837ae34cd66db8e5e38d531ceba9c47ada5ec5317ea8213561c3b9155e",
+      "bytes": 4140
+    },
+    "Parchment_old.xml": {
+      "sha256": "c935a6afd1000396bfe3d9c212332252fdcf9d85773a6a4f2e7eb9949faa57e2",
+      "bytes": 26525
+    },
+    "Parchment.lua": {
+      "sha256": "ed8a0b267f5c286fdbc0133fec7f3facb840f063e7a49e777e56ab43d00f2bbd",
+      "bytes": 23949
+    },
+    "Parchment.toc": {
+      "sha256": "4fd6b820588c9671c2a630f8c83adb2221b5527a38aad8723b5db6ebebe17127",
+      "bytes": 368
+    },
+    "Parchment.txt": {
+      "sha256": "f71980c9ea2aad4ebedd7142b0c39bc5b68e9bbcfebb0176dd642afe2f30885d",
+      "bytes": 63
+    },
+    "Parchment.xml": {
+      "sha256": "80270e8f124319f525f8cb2c514a7e4ecd0b5276f68ba94353878ed8cef57433",
+      "bytes": 22471
+    },
+    "ParchmentButton_Down.tga": {
+      "sha256": "0f0a2da35e58df7f2899c83318b223ad8fc1c2e3be44d0a326d601997ab6aab7",
+      "bytes": 4140
+    },
+    "ParchmentButton.lua": {
+      "sha256": "f60e5cf4e85a0d7388175dadc083b5682a90095a72db7e4cbc7639c35af003a0",
+      "bytes": 411
+    },
+    "ParchmentButton.tga": {
+      "sha256": "e3df4b23b2a2fd48a61827db4aecc56929d532f23325479f5bab13b9f8e8a867",
+      "bytes": 4140
+    },
+    "ParchmentButton.xml": {
+      "sha256": "3633c05eb8f13c95dfe82b0d648a9ce1efa55b1572657633746e275670e1d2cb",
+      "bytes": 1380
+    },
+    "ParchmentChapter.lua": {
+      "sha256": "7fc8b9f8df716a9c3f6562f21f8232e2c84537b560e55f6531bacd0fe8b0d232",
+      "bytes": 2025
+    },
+    "ParchmentChapter.xml": {
+      "sha256": "4e6dcde912e7efc0e3908247878ad995e39f4923c66b12202884b150a3397eb2",
+      "bytes": 6632
+    },
+    "ParchmentConfirm.lua": {
+      "sha256": "2862e5008d41fd52e089edccf53805a67ddd0212e5ea2bda364373471bf62556",
+      "bytes": 350
+    },
+    "ParchmentConfirm.xml": {
+      "sha256": "834d022a5c6b7e59c85854533d64c67705a793acac8df8559299ca31fb20311e",
+      "bytes": 3094
+    },
+    "ParchmentTack.lua": {
+      "sha256": "e430fdd72d65946040b5fc2c3e1646b2eb6fa3427c162430093f5361fdb7988b",
+      "bytes": 6325
+    },
+    "ParchmentTack.xml": {
+      "sha256": "3f946909ca1682ea8bf1f7a517db3302424e7764dfd911d1ed30cc2a91e9ab58",
+      "bytes": 10460
+    },
+    "PatchNotes.txt": {
+      "sha256": "77d9e9aff8eb6149174947870ac3f470b8e5ce4833895ba48963d30c708dc517",
+      "bytes": 15297
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

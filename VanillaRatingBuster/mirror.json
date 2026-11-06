@@ -1,0 +1,109 @@
+{
+  "upstream": "https://github.com/kxseven/VanillaRatingBuster",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "kxseven",
+    "repo": "VanillaRatingBuster",
+    "name": "VanillaRatingBuster",
+    "url": "https://github.com/kxseven/VanillaRatingBuster",
+    "api": "https://api.github.com/repos/kxseven/VanillaRatingBuster"
+  },
+  "commit": "d1c4df6a3a2f59e5a0c794f600090bfe55078818",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "aea16200c06083a8831f76d26bb64840a448bb28dd2d7f26d8f5daa0dec34a29",
+      "bytes": 45
+    },
+    "BonusScanner/BonusScanner.lua": {
+      "sha256": "c1a459cf1e41c6e4e4962dbd7718934f2e9888ca196b7883c6c07837b28b486a",
+      "bytes": 16965
+    },
+    "BonusScanner/BonusScanner.toc": {
+      "sha256": "ee7b1a544a33269878ffa219cfd8a3b510c47b4d48d9a4f72f332c37221d8205",
+      "bytes": 322
+    },
+    "BonusScanner/BonusScanner.xml": {
+      "sha256": "08e2969880370ac13b7d1e55ce740ad5c2e4a846f6b96c22fd68027c4d95556a",
+      "bytes": 744
+    },
+    "BonusScanner/Localization.DE.lua": {
+      "sha256": "9590bb16558384dd042968ad8f2bf86e7ff5758be45035eea6b2a96f35e79dcd",
+      "bytes": 7472
+    },
+    "BonusScanner/Localization.FR.lua": {
+      "sha256": "215aea38197cf6a0473c001b489127854468bdf6cf892564f5de208851cb6c21",
+      "bytes": 6828
+    },
+    "BonusScanner/Localization.lua": {
+      "sha256": "385883e0e36892e159ad70b501aabed6c29d2145313756b81870eacb2d4fa98f",
+      "bytes": 7717
+    },
+    "BonusScanner/TitanItemBonuses.xml": {
+      "sha256": "bc9a7df0dcf4803c021ac027aac97ff926ce1bf57463cc37da2b12aef0f85f51",
+      "bytes": 725
+    },
+    "README.md": {
+      "sha256": "f48dd5463625ed98020487995938539b31752028c0a84146d6a84b9d37cab753",
+      "bytes": 2092
+    },
+    "VanillaRatingBuster/assets/example_druid.png": {
+      "sha256": "a8521ceea3e0181c634ccca9fa778435f27f02c8b5ff85f8dbd0462012246d8e",
+      "bytes": 18657
+    },
+    "VanillaRatingBuster/assets/vb_druid_feral.png": {
+      "sha256": "0dab049376a71c28f315e476ebb4d370620512c221769dfbf118f05f412c6006",
+      "bytes": 42686
+    },
+    "VanillaRatingBuster/assets/vb_druid_healing.png": {
+      "sha256": "dc27c97c32e3287ba2ef9d0ca7180814ffc55c51a3e21d1a7458aef9582547e1",
+      "bytes": 63528
+    },
+    "VanillaRatingBuster/assets/vb_priest_sample1.png": {
+      "sha256": "0a1e38361e91f671646feaca7863def7d3a109b778160a1ddc6aa096f304abf7",
+      "bytes": 85571
+    },
+    "VanillaRatingBuster/assets/vb_priest_sample2.png": {
+      "sha256": "25781f4f51f09b5d017334058b07ce700a6f89f2fa957ff6bf42496d1960c812",
+      "bytes": 251986
+    },
+    "VanillaRatingBuster/assets/vb_warrior_dps.png": {
+      "sha256": "b0cb0c1fac3f7968c9121745c72c57ad4eb78f78101bfa5abbbbd598dee09eb8",
+      "bytes": 59595
+    },
+    "VanillaRatingBuster/assets/vb_warrior_tank.png": {
+      "sha256": "33102e7cc18502fe9dcd6e257f0dbe3a1b2e312594f4f181f1d92cd2b27e326d",
+      "bytes": 35198
+    },
+    "VanillaRatingBuster/README.md": {
+      "sha256": "104ac1d8125a60589cdddfe7d59731de451171b3b3fdd3ceb7c3ab5d6e90a8b6",
+      "bytes": 5836
+    },
+    "VanillaRatingBuster/VanillaRatingBuster.lua": {
+      "sha256": "b1f334100b33996151ed3956acb667cfd6fa33e6ad242a47b900fa0b2935ced1",
+      "bytes": 3679
+    },
+    "VanillaRatingBuster/VanillaRatingBuster.toc": {
+      "sha256": "202ae17462c48937e6e8b6c62c541fe578516b3e53c045830f089613c79b2724",
+      "bytes": 253
+    },
+    "VanillaRatingBuster/VanillaRatingBusterWeights.lua": {
+      "sha256": "c7a6a9e6b50e2c410c2b5eedbb376a204a99e1a1fc65f194c6046617bd8a3ba5",
+      "bytes": 7306
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "194302146": {
+      "tag": "v0.12",
+      "folder": "v0.12--194302146",
+      "assets": {},
+      "source": {
+        "sha256": "47f6b07de28fae01dbe28119e87ba1ab92d7927dc341982188dce904308fd6c0",
+        "bytes": 573718,
+        "path": "releases/v0.12--194302146/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/kxseven/VanillaRatingBuster/tarball/v0.12"
+      }
+    }
+  }
+}
