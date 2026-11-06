@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: SpamThrottle
+## Notes: Eliminates unnecessary and annoying chat messages
+## Notes-ruRU: Устраняет ненужные и раздражающие сообщения чата.
+## Author: Mopar
+## Version:Vanilla 1.17
+## SavedVariablesPerCharacter: SpamThrottle_Config 
+## SavedVariables: SpamThrottle_KeywordFilterList SpamThrottle_PlayerFilterList SpamThrottle_PlayerBanTime
+SpamThrottle.xml

@@ -1,0 +1,206 @@
+{
+  "upstream": "https://github.com/Road-block/XLoot_AddOns",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "XLoot_AddOns",
+    "name": "XLoot_AddOns",
+    "url": "https://github.com/Road-block/XLoot_AddOns",
+    "api": "https://api.github.com/repos/Road-block/XLoot_AddOns"
+  },
+  "commit": "4b7eab944828b061862f1fefb9b95f2f94f836c0",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "README.md": {
+      "sha256": "11cac49683f2ab013eddd3ce444226c7ac25d7b8e3f38f88f11dd1c899c91107",
+      "bytes": 835
+    },
+    "XLoot/libs/AceAddon/AceAddon-2.0.lua": {
+      "sha256": "0ee37907c6bc615e584310530ed6e5967a4faab7c93d51fab90a2267b3be9d4b",
+      "bytes": 31108
+    },
+    "XLoot/libs/AceConsole/AceConsole-2.0.lua": {
+      "sha256": "73ba2bdfaf3e496e1c1d1534110e9498805759accf0d5b9dd4b867d0207697b0",
+      "bytes": 66005
+    },
+    "XLoot/libs/AceDB/AceDB-2.0.lua": {
+      "sha256": "33dd5a1f926a7c577847ea04d634e66d821efad218e117bf51f1263d0f72abb5",
+      "bytes": 43459
+    },
+    "XLoot/libs/AceEvent/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "XLoot/libs/AceHook/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "XLoot/libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "09cfc0b69a0feb644fa1a9e5fc6715a4e76e0b2f6c7c04a3a0ea693d633770cd",
+      "bytes": 23114
+    },
+    "XLoot/libs/AceLocale/AceLocale-2.2.lua": {
+      "sha256": "951a8460955cfa7a68929a7d878501d29126d1a92730b9e6cf3f692731b1d6b1",
+      "bytes": 15949
+    },
+    "XLoot/libs/AceModuleCore/AceModuleCore-2.0.lua": {
+      "sha256": "a3de67878b122a9f6c937462b9641f7a029b55605107f2db03953fe7a1d412ff",
+      "bytes": 13981
+    },
+    "XLoot/libs/AceOO/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "XLoot/libs/AnchorsAway/AnchorsAway-1.0.lua": {
+      "sha256": "0d9305d8a2fd5d2d82a9e299cec7427e95e233ccbfe372820793eacd55647068",
+      "bytes": 16171
+    },
+    "XLoot/libs/Deformat/Deformat-2.0.lua": {
+      "sha256": "6491e26c67bc4e35eecead3aac60dd1e02abe39a8b281ff6f10bb223e78b7f50",
+      "bytes": 9438
+    },
+    "XLoot/libs/Dewdrop/Dewdrop-2.0.lua": {
+      "sha256": "0e1c2e893ae0342170ffc3d8f816b765eaf8dbed689da5cf5353f6e9271b9c06",
+      "bytes": 85808
+    },
+    "XLoot/localization.deDE.lua": {
+      "sha256": "efe4d7cf773ab673ebd5cf2a46b428c8cb308eab48fd89150643f1f571c1e45a",
+      "bytes": 182
+    },
+    "XLoot/localization.enUS.lua": {
+      "sha256": "0272c0976ced5766d9e3ebfad20d6484a6a37558f7c79dc64ebfcf474abea70a",
+      "bytes": 5105
+    },
+    "XLoot/localization.frFR.lua": {
+      "sha256": "eea3015cf7b5cd68970ead5aeb3f3ea51d3d6c34cdcab3821bd2c7c1906ed435",
+      "bytes": 6563
+    },
+    "XLoot/localization.koKR.lua": {
+      "sha256": "467aadbd5993ae9e6b33e29f27c176d1aa959ae6ae427b8ce8dbf52c286cac29",
+      "bytes": 5662
+    },
+    "XLoot/localization.zhCN.lua": {
+      "sha256": "40c10d5e00e5d45803948cd76a88297afdc34019c68155d9485e28d8c197d32c",
+      "bytes": 274
+    },
+    "XLoot/localization.zhTW.lua": {
+      "sha256": "cfe1c7eb92ed081216d2f64e685b50f8864b0fbcdd224fdf267a9480d3d74e4b",
+      "bytes": 4978
+    },
+    "XLoot/XLoot.lua": {
+      "sha256": "b471568bd7b3d26f9a5a845a7b61e105348d74fce02a12af2089937146ccce89",
+      "bytes": 29785
+    },
+    "XLoot/XLoot.toc": {
+      "sha256": "455a4b17bbb02b2d6ce4937822a53c3409aca5a4970932c58139d0b00432fd48",
+      "bytes": 1285
+    },
+    "XLoot/XLootOptions.lua": {
+      "sha256": "ee83a0fdf86c386de88ba52e669e92699e68b28dbb1535c019fb9a997945826a",
+      "bytes": 13052
+    },
+    "XLoot/XLootRowTools.lua": {
+      "sha256": "b0d431dd37533ceca70fa9e2e0ff00a6325397555b8297aba43ca2aacc799ec8",
+      "bytes": 4870
+    },
+    "XLoot/XLootSkin.lua": {
+      "sha256": "c15784c59cfb955c1c62790e83b101e6906fffed2d1db02fc162c530edc351ec",
+      "bytes": 4508
+    },
+    "XLoot/XLootUtilities.lua": {
+      "sha256": "ebf7998c6e8be385528cdc52869ebc026ab5675c2bb3b8d19d4525404c49a01c",
+      "bytes": 3244
+    },
+    "XLootGroup/DarkBottom.tga": {
+      "sha256": "4d4829a187e340ae80f1ff9e4352406584c06605fa7082d3ef23612b13e3c8ce",
+      "bytes": 32812
+    },
+    "XLootGroup/localization.enUS.lua": {
+      "sha256": "211371dc48e121a2bc8140de079fb8a77da8db2b6eff16653941cf2f230c0212",
+      "bytes": 504
+    },
+    "XLootGroup/localization.frFR.lua": {
+      "sha256": "5461f7a7bdb7a8202dc689cbd344ba09a5a39dbdceb882a76564f30ed20746dc",
+      "bytes": 837
+    },
+    "XLootGroup/XLootGroup.lua": {
+      "sha256": "10fd7ccb106fa32c23a67f8ff425d151daebbf1f3acde51814fcde2cb63c428a",
+      "bytes": 9005
+    },
+    "XLootGroup/XLootGroup.toc": {
+      "sha256": "0f7a0f0c2932f91f1384f59a6edb2e892f7216258838e0cc05582b120f68c436",
+      "bytes": 380
+    },
+    "XLootMaster/localization.enUS.lua": {
+      "sha256": "c129a703e4f582cce33eceb94b555ec1f42dc46cfeea4d8522917ac94ed5a8f9",
+      "bytes": 2783
+    },
+    "XLootMaster/localization.frFR.lua": {
+      "sha256": "a501f246c3ec17de6a3068283a6ae8605823aff99bd0acc13dbe4cb3e440f8d9",
+      "bytes": 4570
+    },
+    "XLootMaster/XLootMaster.lua": {
+      "sha256": "affae124bd9d9a0d7412b2ac0e80d3a2d3533a228c397f7871659fb06870d506",
+      "bytes": 16214
+    },
+    "XLootMaster/XLootMaster.toc": {
+      "sha256": "abcab26625e21f095f67ccc13c6ebd58405c0882df4caf29c892ec2bcd5d0b9e",
+      "bytes": 390
+    },
+    "XLootMaster/XLootMasterOptions.lua": {
+      "sha256": "85baed056bafbfb253f450a64a6f365e55c716abe9639d9e3a88846399ac8e8e",
+      "bytes": 7609
+    },
+    "XLootMonitor/localization.enUS.lua": {
+      "sha256": "e85b2519794992068d28514c7f4173b90d38bb805f075964aaba061643ec0143",
+      "bytes": 2832
+    },
+    "XLootMonitor/localization.frFR.lua": {
+      "sha256": "c73186483acfb5285a99ffedf6f47aa67d7394157eacc1f9e78f456662b88ffd",
+      "bytes": 3660
+    },
+    "XLootMonitor/localization.koKR.lua": {
+      "sha256": "99b6d1de704a221af8a2d34ab3e01690d31e2060ff054ee17b7278af56d739e1",
+      "bytes": 2542
+    },
+    "XLootMonitor/XLootMonitor.lua": {
+      "sha256": "38d741e5dbcaef4a14c8208fdec65d8ddf17db3a623b7e70bcd432861618993a",
+      "bytes": 17773
+    },
+    "XLootMonitor/XLootMonitor.toc": {
+      "sha256": "20974409bf419a702a0d7822c268c15b23ccbbeb85bd539cec3f1d5903cc73e4",
+      "bytes": 445
+    },
+    "XLootMonitor/XLootMonitorOptions.lua": {
+      "sha256": "ae8955053c503f98784521ac2a2eb07ca9b0d760dfcfcc7b12197b621e72d526",
+      "bytes": 10011
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "9791153": {
+      "tag": "0.93",
+      "folder": "0.93--9791153",
+      "assets": {
+        "6295071": {
+          "sha256": "4918dbbffedbfc6708499633c4233d9862f369fb4516ab1b2bd4db9077911db5",
+          "bytes": 132402,
+          "id": "6295071",
+          "name": "XLoot_AddOns-0.93-11200.zip",
+          "url": "https://github.com/Road-block/XLoot_AddOns/releases/download/0.93/XLoot_AddOns-0.93-11200.zip",
+          "path": "releases/0.93--9791153/assets/XLoot_AddOns-0.93-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "87eeefa6edbd23d784b66fb4d22d73d669a7421d60618350b8510b827a122ea7",
+        "bytes": 115260,
+        "path": "releases/0.93--9791153/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/XLoot_AddOns/tarball/0.93"
+      }
+    }
+  }
+}

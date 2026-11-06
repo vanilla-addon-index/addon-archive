@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/pepopo978/Flamestriker",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "pepopo978",
+    "repo": "Flamestriker",
+    "name": "Flamestriker",
+    "url": "https://github.com/pepopo978/Flamestriker",
+    "api": "https://api.github.com/repos/pepopo978/Flamestriker"
+  },
+  "commit": "ebcf8bdd1661b5dcc11b107f459c3d5006c44c00",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "0a44bd2b8e7c35cfad385b8f440c3ec6ebcf8bd10248cf5925d2ceacc92f8078",
+      "bytes": 7
+    },
+    "Flamestriker.lua": {
+      "sha256": "c07d2024446fc9e2dfee5a526aaf28e8fb7134986ba10ecf0d8f04ee05085ffd",
+      "bytes": 959
+    },
+    "Flamestriker.toc": {
+      "sha256": "874a97cf2c17d0137a29b6db2b29bab75eca8cacee0339550186abb0bcbc0b81",
+      "bytes": 135
+    },
+    "README.md": {
+      "sha256": "79e0221fc332f117e90b2cbf8c298b4fab59bc696c108b37f27d825dccc92ff2",
+      "bytes": 270
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

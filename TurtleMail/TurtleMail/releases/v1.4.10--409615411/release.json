@@ -1,0 +1,9 @@
+{
+  "id": "409615411",
+  "tag": "v1.4.10",
+  "name": "v1.4.10 - Tooltip XML & Returned Mail Fixes",
+  "body": "Resolves nil global L in auction and returned mail tooltip XML handlers.",
+  "published": "2026-10-11T11:09:59Z",
+  "prerelease": false,
+  "url": "https://github.com/prodigeomix/TurtleMail/releases/tag/v1.4.10"
+}

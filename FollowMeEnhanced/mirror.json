@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/NOo0B1/FollowMeEnhanced",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "NOo0B1",
+    "repo": "FollowMeEnhanced",
+    "name": "FollowMeEnhanced",
+    "url": "https://github.com/NOo0B1/FollowMeEnhanced",
+    "api": "https://api.github.com/repos/NOo0B1/FollowMeEnhanced"
+  },
+  "commit": "53bf3f88b860ca4bdd184edfa07e08689398fcf0",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "FollowMeEnhanced.lua": {
+      "sha256": "37027bd794b2ff128797c0f81e0d78719822bdf2df1227a52a1dffca9da482da",
+      "bytes": 13397
+    },
+    "FollowMeEnhanced.toc": {
+      "sha256": "75ae18db6e93cfb37417336df9525e3c7cce603463911648ddcf2ac3d9d56849",
+      "bytes": 281
+    },
+    "FollowMeEnhanced.xml": {
+      "sha256": "79c42d5ff1a6f77721b912b121d84d11c02581745d7af78bd320377f8a8487b8",
+      "bytes": 443
+    },
+    "localization.de.lua": {
+      "sha256": "5c24fe588d1be2fc4c39d7d09478159a623208120f1969ab6af3fa4cee0decab",
+      "bytes": 3524
+    },
+    "localization.lua": {
+      "sha256": "8e649f8391982de5ddf0a0a908927e1c10d3171aa98ea5eb093858c25b650c2d",
+      "bytes": 3213
+    },
+    "ReadMe-de.txt": {
+      "sha256": "a4d2904d80a9edff0d45543cd48cf988397b258ca2497ff29b4aad9a86f0042b",
+      "bytes": 1226
+    },
+    "ReadMe.txt": {
+      "sha256": "bf189386b4b8053ae7f9a4bf76f03bbeae207871dde26f309f990d09bb3fef29",
+      "bytes": 4343
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

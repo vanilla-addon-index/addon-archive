@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/XalZul/Dwarvenizer-1.12",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "XalZul",
+    "repo": "Dwarvenizer-1.12",
+    "name": "Dwarvenizer-1.12",
+    "url": "https://github.com/XalZul/Dwarvenizer-1.12",
+    "api": "https://api.github.com/repos/XalZul/Dwarvenizer-1.12"
+  },
+  "commit": "2b28d2a62a61f3d4a5251ef34a541a868d25acb0",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8ae788c4bdbbb868d4bc8c5bc04cbaf4be6b3b260183b16077449e19cc95b9dd",
+      "bytes": 17
+    },
+    "build_dwarvenizer.sh": {
+      "sha256": "352a7253ff8ae3219973f5c61cc720bb2f3287b4a9a89dfa14e6b8aed45d2e9c",
+      "bytes": 228
+    },
+    "CHANGELOG.txt": {
+      "sha256": "f762bd452255d6569b7c28b17835a7ad9a4c5c715bccd5c12fc4eed9c0138e25",
+      "bytes": 1783
+    },
+    "Dwarvenizer.lua": {
+      "sha256": "04b4f84f69f5c9742ea967f85b68b2bd165e75814ceba0defb51608ac30fef51",
+      "bytes": 14968
+    },
+    "Dwarvenizer.toc": {
+      "sha256": "109998f73e9fcf641cc7b6865c682d8513c8a1a7c68484bf2bccd77f74709f72",
+      "bytes": 350
+    },
+    "Dwarvenizer.xml": {
+      "sha256": "cc631fcd369b91e6792e901b04afd55c1e36ea0800ed96d7b50320148b81f2be",
+      "bytes": 531
+    },
+    "langDwarven.lua": {
+      "sha256": "cc1c6d75d589c5bff52cb5cd4cce025c320de94bec768549d623c7720477ca3e",
+      "bytes": 2818
+    },
+    "langTrollish.lua": {
+      "sha256": "99f0b32a4aed75b6e65f6d39c97aa35af605b591acd238862b67dc29fa5bfc60",
+      "bytes": 2077
+    },
+    "README.md": {
+      "sha256": "c5298f3c67ac89b650f5f3dc418747cc79c58194b645a721d44f7aa0dc872368",
+      "bytes": 3633
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

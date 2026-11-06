@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/Atreyyo/TankAssignments",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Atreyyo",
+    "repo": "TankAssignments",
+    "name": "TankAssignments",
+    "url": "https://github.com/Atreyyo/TankAssignments",
+    "api": "https://api.github.com/repos/Atreyyo/TankAssignments"
+  },
+  "commit": "d465f021627ce56ca857cb825a8d0cd664493e20",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "Icon.tga": {
+      "sha256": "9703a813028111ba120d8a1f42fd9b6347f0445957ce82b8816d485aeda7270f",
+      "bytes": 16428
+    },
+    "LiteStep.tga": {
+      "sha256": "9bd025e9217a88cda7ef3bd185976ded94a647468c6126d42c55df4a88f3a7c2",
+      "bytes": 32812
+    },
+    "README.md": {
+      "sha256": "6bfb671092b95bd0a262ce029e6aae765fda9cd0b41f727d50f193f6ab5083b5",
+      "bytes": 92
+    },
+    "ReadMe.txt": {
+      "sha256": "be6961fe6d56e33db93d39964621104a3a9b123818fd65e1b2b51b300aad23a6",
+      "bytes": 108
+    },
+    "TankAssignments.lua": {
+      "sha256": "c68d4ed939329d40f3d97d6fdb54bdd853d99dc2cbb614b42f8fe5faf04ddf9f",
+      "bytes": 40892
+    },
+    "TankAssignments.toc": {
+      "sha256": "d4d00ba521b738f50f537b4034a326720b3a08b1501c8f2ef2560749b203c3cb",
+      "bytes": 262
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

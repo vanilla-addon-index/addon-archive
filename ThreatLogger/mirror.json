@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/ZenSociety/ThreatLogger",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ZenSociety",
+    "repo": "ThreatLogger",
+    "name": "ThreatLogger",
+    "url": "https://github.com/ZenSociety/ThreatLogger",
+    "api": "https://api.github.com/repos/ZenSociety/ThreatLogger"
+  },
+  "commit": "e0e7f651a4a2b6e07ccd5bfd2d592f62bc33f1bf",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "LICENSE": {
+      "sha256": "9417f54d901a30002ce7b145151a637eaaa405c709c5e9809f0196e432a6fdec",
+      "bytes": 1089
+    },
+    "README.md": {
+      "sha256": "cab1f18d66f77ad20ae088cb2c889600b5bc6803971400123617351e179c6230",
+      "bytes": 1878
+    },
+    "ThreatLogger.lua": {
+      "sha256": "ebfa035b507f8820f06bb6efbd85a3ce22c9289c9d8ecd053659a05de19498fd",
+      "bytes": 6595
+    },
+    "ThreatLogger.toc": {
+      "sha256": "e6f902d50e395b58090915e58df2af3fa59d5586601f309d24fe57a14cf9be5e",
+      "bytes": 285
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

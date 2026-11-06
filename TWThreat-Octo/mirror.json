@@ -1,0 +1,181 @@
+{
+  "upstream": "https://github.com/Sheed90/TWThreat-Octo",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Sheed90",
+    "repo": "TWThreat-Octo",
+    "name": "TWThreat-Octo",
+    "url": "https://github.com/Sheed90/TWThreat-Octo",
+    "api": "https://api.github.com/repos/Sheed90/TWThreat-Octo"
+  },
+  "commit": "a72932c59357d9e8de1cfa2040149d9175d46858",
+  "sourceFiles": {
+    "fonts/BalooBhaina.ttf": {
+      "sha256": "c80fae67500c90e3d57dacc8320a5ec8846b7e1120427b5e6b8b2b4c45774cbb",
+      "bytes": 376576
+    },
+    "fonts/BigNoodleTitling.ttf": {
+      "sha256": "99fcb8e6f65d2d4e443091d856eb4eabec079f08245d31d02695aea860d7ddf1",
+      "bytes": 75156
+    },
+    "fonts/Expressway.ttf": {
+      "sha256": "06a2106170c2b5b736955cc749ed755f3757d103230645158f0bd5b5b91c386b",
+      "bytes": 99820
+    },
+    "fonts/Homespun.ttf": {
+      "sha256": "00987661c58306d4166af5c94d69b2becb21548097658e4627ef4dfdfb6b3f90",
+      "bytes": 21196
+    },
+    "fonts/Hooge.ttf": {
+      "sha256": "0570ff71826c135d343bce9a707ea49d56ad37c229a3adc6a53f443580943cdc",
+      "bytes": 70016
+    },
+    "fonts/LondrinaSolid.ttf": {
+      "sha256": "e82b9b3ee21ccf153dcf67e5f4226a210474591a6ad31b5f17f2f14dc2524514",
+      "bytes": 92132
+    },
+    "fonts/Myriad-Pro.ttf": {
+      "sha256": "a4eefdaeccae42faeaf989b6b642f2e39386fd33a7e11c39e7c08d3bfc4eb18a",
+      "bytes": 209700
+    },
+    "fonts/PT-Sans-Narrow-Bold.ttf": {
+      "sha256": "e69d83bcf5bd647892b4e2b22f5098dabd55c989413513197722fc156fb9f00e",
+      "bytes": 487720
+    },
+    "fonts/PT-Sans-Narrow-Regular.ttf": {
+      "sha256": "4102edda03059163771869d258df54ac8563c408fa6e9ef75b2ddc85eabea6f4",
+      "bytes": 396212
+    },
+    "fonts/Roboto.ttf": {
+      "sha256": "79e851404657dac2106b3d22ad256d47824a9a5765458edb72c9102a45816d95",
+      "bytes": 171676
+    },
+    "fonts/RobotoMono.ttf": {
+      "sha256": "c570ac128b984104aeeffda5d69eea9496d676b25bdf0425585c4c934618c450",
+      "bytes": 118976
+    },
+    "fonts/Share.ttf": {
+      "sha256": "ef1c3522c12628f19174fbdb2939a2dbd03c83d2498e4a8c0c74c6a4caa9914b",
+      "bytes": 92012
+    },
+    "fonts/ShareBold.ttf": {
+      "sha256": "9419ff27f645fe25ae465342d77c82fcd2a3f6b97a7ff09051432e64f2df7581",
+      "bytes": 91072
+    },
+    "fonts/Sniglet.ttf": {
+      "sha256": "2856a975b9c0ac0402e8402ac4bd126cd97d6c90490435b6198d77e6384ae4f0",
+      "bytes": 75212
+    },
+    "fonts/SquadaOne.ttf": {
+      "sha256": "5b34a1633dbc48db3835d8a847bc475e6e0267121d3435854729ba4b407a05df",
+      "bytes": 19072
+    },
+    "images/arrow_to_bottom.blp": {
+      "sha256": "e7dac40d2c4a270427d057576ca3789012f39f8e4d1394460bb6a7d5c5f6ca31",
+      "bytes": 2580
+    },
+    "images/arrow_to_left.blp": {
+      "sha256": "9108b58ede3ce3d6c72512cdd5e19a972f405d1d126cc814a6af33b0f2d4c350",
+      "bytes": 2580
+    },
+    "images/arrow_to_right.blp": {
+      "sha256": "713f5fae6e014761dc4933a83de5d333720a6249052fbe0b7237aeb4d3c2c7ff",
+      "bytes": 2580
+    },
+    "images/arrow_to_top.blp": {
+      "sha256": "4f2e1f145db19ce255e20023ac5b805314489ad92561eefba4fad47f033a53fd",
+      "bytes": 2580
+    },
+    "images/elite.blp": {
+      "sha256": "b1d421918b251fbb8e256652356b6523b027aaee36d6c6b4a9731ff177c98176",
+      "bytes": 44900
+    },
+    "images/fs_glow.blp": {
+      "sha256": "cfcd30b24b539f065e813595627352ba74361ac0f78c5a0139c53869d03aaae0",
+      "bytes": 44876
+    },
+    "images/icon_cog.blp": {
+      "sha256": "466c74b3ad26ecff653359cd2862796f24818324391c2514c42c1b0f68d3c460",
+      "bytes": 2580
+    },
+    "images/icon_locked.blp": {
+      "sha256": "1d96230b212fd6210bd9a9180a4698ecab7ff77f0ff50b8802df849bd0ea1265",
+      "bytes": 2580
+    },
+    "images/icon_unlocked.blp": {
+      "sha256": "63e4e9f313bf0fb8f9af586c0ff9992b91bd04ef937f73b14e575b4dd7bd4608",
+      "bytes": 2580
+    },
+    "images/icon_x.blp": {
+      "sha256": "15ef7481bfd4a30de252731802ba3d448b117cd5a6a90a5045e85961db11c169",
+      "bytes": 2580
+    },
+    "images/normal.blp": {
+      "sha256": "71be0b814d555a7de0774d6036508dc43d88ce41795d11da8043e827a51cdfd1",
+      "bytes": 44900
+    },
+    "images/numericthreatborder_pfui_wide.blp": {
+      "sha256": "4ffba591a450b5c25f702db8e4afeab16154500591f9a75672095e945eaec4be",
+      "bytes": 6676
+    },
+    "images/numericthreatborder_pfui.blp": {
+      "sha256": "db10059bac9e7510ded6497bfab8f02dcdd1747ecdd5bbbf4fd6666527dcab58",
+      "bytes": 6676
+    },
+    "images/numericthreatborder_wide.blp": {
+      "sha256": "d5b2c6e862bf5ca3088c06467e52281dced1799d3ce56d0e85073f8b32b24208",
+      "bytes": 6676
+    },
+    "images/numericthreatborder.blp": {
+      "sha256": "7a6bca450a6ea6fc359919a51bdc8c2f6eab3ec796c38cc1ec1ccb731022deb1",
+      "bytes": 2556
+    },
+    "images/pfui_glow.blp": {
+      "sha256": "532d6e9166b3fe00e98f83d3258ee7c5fa6354353f4d6a26a6930f16f8fb0206",
+      "bytes": 44900
+    },
+    "images/rare.blp": {
+      "sha256": "494add85da9f600b88924fe8ad63973fe3c9f4c618825ef50a27888167781120",
+      "bytes": 44900
+    },
+    "images/rareelite.blp": {
+      "sha256": "85132628f86e4bf3a51a0c08d1db695df674b4023c141d8250c42c2eeb86f868",
+      "bytes": 44900
+    },
+    "images/ResizeGrip.tga": {
+      "sha256": "f17e6620869ab39c230f860d13e5e9cda42b03938b27b922c99a6e4109bcf5cf",
+      "bytes": 2085
+    },
+    "images/tank.blp": {
+      "sha256": "87e2db4bde530d71aa4ce3317a2393dc91bd56fce7a230b3a4dd33675c19b204",
+      "bytes": 2580
+    },
+    "images/textures/Smooth.tga": {
+      "sha256": "00e8084e83bf25b941464e2619b59e993b6ac7ae0bd8a6f37b12872e686ded6d",
+      "bytes": 32812
+    },
+    "README.md": {
+      "sha256": "2c11d8c504a68b9e5f43c186f80400b67412bd651442f42d71a7b2b4672ae93a",
+      "bytes": 4426
+    },
+    "sounds/warn.ogg": {
+      "sha256": "a6507f678b2f93d4fd18d2ae63c53c74acf4dd2ad7ec96b9858eda9f69f04621",
+      "bytes": 18227
+    },
+    "TWThreat.lua": {
+      "sha256": "6a2d071e80bdfe42c270916aea3d2a73e75b38d56e3a687c915d000c9218edc8",
+      "bytes": 79998
+    },
+    "TWThreat.toc": {
+      "sha256": "c412335598d22579bdd0ed2e2bcfee6fc9d6a0e704d9acfeec5cf0e3ca40e04e",
+      "bytes": 208
+    },
+    "TWThreat.xml": {
+      "sha256": "82779d62b21c8acb2d6352e9d91168365f2eed8066dea904dedf9ee04fa92825",
+      "bytes": 116447
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/gregdeichler/TotemTimers",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "gregdeichler",
+    "repo": "TotemTimers",
+    "name": "TotemTimers",
+    "url": "https://github.com/gregdeichler/TotemTimers",
+    "api": "https://api.github.com/repos/gregdeichler/TotemTimers"
+  },
+  "commit": "eeb49f807d3a18f805cf2e7514efd29ff3f23805",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "26fbea9c45c7d0758a7b9094a058e60231864ea9b0c251c5e2a42c545648b438",
+      "bytes": 1070
+    },
+    "README.md": {
+      "sha256": "7a2d9b3a75d9f32ccbafc0ca7752afeaf8c933a75f2d958989fed580ccd49e46",
+      "bytes": 4823
+    },
+    "TotemTimers_Advanced.lua": {
+      "sha256": "2dad151f67edfa6acb5ed9806fa8a4dbd9cf49fcbbbdc57497bc0162588b4f0b",
+      "bytes": 1383
+    },
+    "TotemTimers_Config.lua": {
+      "sha256": "6a15e1a8f691ca1d67f3927983915b3efea9f1a6df2a0bd16c76488bfc55af4f",
+      "bytes": 2671
+    },
+    "TotemTimers_Core.lua": {
+      "sha256": "f404bd69fe6c8330f553e7f2a3c2907b6a7d6ddd35918ddc784e31b8d393561e",
+      "bytes": 11327
+    },
+    "TotemTimers_Init.lua": {
+      "sha256": "5d01c4c7e8b329ce42b23feae094349411dbf8ff8ac9a73eb439b2140689aa52",
+      "bytes": 299
+    },
+    "TotemTimers_Layout.lua": {
+      "sha256": "e0f968f5d0327f2e0b72c95ba627960202a4a030a356e3223038b1e473d638cf",
+      "bytes": 7524
+    },
+    "TotemTimers_UI.lua": {
+      "sha256": "e9722e9eef21579f6b564021e749fee245b00978392d139008922308503067fc",
+      "bytes": 14315
+    },
+    "TotemTimers.toc": {
+      "sha256": "d142092426ae113580bd497668c985c1c260f7dad42b72d985a42b09e1703641",
+      "bytes": 379
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

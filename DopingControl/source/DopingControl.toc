@@ -1,0 +1,37 @@
+## Interface: 11200
+## Title: DopingControl
+## Notes: Raid consumables, buffs, debuffs, resistances, hit and enchant checker
+## Author: ShempError
+## Version: 0.8.1
+## SavedVariables: DopingControlDB
+
+core\const.lua
+core\config.lua
+data\consumables.lua
+data\classbuffs.lua
+data\enchants.lua
+data\expectations.lua
+data\hit.lua
+data\talenthit.lua
+data\resist.lua
+core\model.lua
+core\roles.lua
+core\sim.lua
+core\demo.lua
+scan\talents.lua
+scan\reach.lua
+scan\aura.lua
+scan\gear.lua
+scan\resist.lua
+scan\hit.lua
+scan\engine.lua
+scan\pull.lua
+scan\addons.lua
+core\probe.lua
+ui\cellsheet.lua
+ui\widgets.lua
+ui\matrix.lua
+ui\options.lua
+ui\report.lua
+features\minimap.lua
+core\init.lua

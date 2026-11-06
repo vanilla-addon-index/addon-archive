@@ -1,0 +1,46 @@
+## Interface: 11200
+## Title: |cffff8c69super|cffffffffLazyScript
+## Version: 2.0
+## X-Revision: $Revision: 2 $
+## X-LazyScriptCompatibility: 3
+## Notes: Programmable Class Attacks.
+## Notes-ruRU: Программируемые атаки классов.
+## OptionalDeps: SP_SwingTimer, Quiver
+## SavedVariables: lsConfGlobal
+## SavedVariablesPerCharacter: lsConf
+
+
+LazyScript.lua
+Util.lua
+Localization.lua
+About.lua
+Actions.lua
+AutoAttack.lua
+Deathstimator.lua
+FormEdit.lua
+ImmunityTypeTracking.lua
+Interrupt.lua
+MinimapMenu.lua
+Minion.lua
+Parse.lua
+ParseGeneral.lua
+ParseBuffs.lua
+Tooltip.lua
+LazyScript.xml
+Bindings.xml
+About.xml
+Deathstimator.xml
+FormEdit.xml
+Interrupt.xml
+Immunity.xml
+MinimapMenu.xml
+Minion.xml
+Tooltip.xml
+
+modules\themes.lua
+modules\fonts.lua
+modules\skin.lua
+modules\superwow.lua
+modules\localisation.lua
+modules\help.lua
+modules\init.lua

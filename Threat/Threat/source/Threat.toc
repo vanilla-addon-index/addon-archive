@@ -1,0 +1,10 @@
+## Interface: 12000
+## Title: Threat
+## Notes: To make tanking easier (Warrior/Paladin/Druid)
+## Author: Zedorff (Maintained by Cleone)
+## Version: 1.1
+## DefaultState: enabled
+## OptionalDeps: none
+## SavedVariables: Threat_Configuration, ShouldStackSunder, ShouldBuffShout, ShouldJudgementWisdom, ShouldUseAoe, Threat_AoE_ManualOverride
+## SavedVariablesPerCharacter: Threat_AoE_ManualOverride
+Threat.xml

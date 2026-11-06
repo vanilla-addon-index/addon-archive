@@ -1,0 +1,29 @@
+name: Package Addon for Release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+	# Make sure the action has permission to push to the release attachments 
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Bundle and Zip
+        run: |
+          mkdir FishSwap
+          cp FishSwap.lua FishSwap.toc README.md FishSwap/
+          zip -r FishSwap.zip FishSwap
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: FishSwap.zip

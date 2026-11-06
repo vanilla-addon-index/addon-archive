@@ -1,0 +1,94 @@
+{
+  "upstream": "https://github.com/notforever-ship-it/EquipCompareAdv",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "notforever-ship-it",
+    "repo": "EquipCompareAdv",
+    "name": "EquipCompareAdv",
+    "url": "https://github.com/notforever-ship-it/EquipCompareAdv",
+    "api": "https://api.github.com/repos/notforever-ship-it/EquipCompareAdv"
+  },
+  "commit": "67ff4551ad298b81fc18e88df0e8887ded24a619",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "f19b85d7c98e2af7e7a400933ed7e492cc25925ae07cc41bce721dc81e77906b",
+      "bytes": 194
+    },
+    ".gitignore.upstream": {
+      "sha256": "a0847316f6aa3a0e43012c885d5c72587a1609a83bbba6f972cb74d6663d5760",
+      "bytes": 40
+    },
+    "Arrows.lua": {
+      "sha256": "b7bba147a8b29993b8a720a80e719f322dedf025bc81b33e17122e1bb7e345d7",
+      "bytes": 14227
+    },
+    "Compare.lua": {
+      "sha256": "9aa218b04cb5188a9089eec49fa3ebc4011234ec0aabb3b81cc7a348caf353d5",
+      "bytes": 24342
+    },
+    "Core.lua": {
+      "sha256": "ca851c6bcbb800dc690d89e29bd46a6606ac146edef23f99fca13eaacfc7ea63",
+      "bytes": 13566
+    },
+    "EquipCompareAdv.toc": {
+      "sha256": "fdff66cc50b5e8c3146596b7bbdf590cfcd4c0d7f896b7a1230d4f90c167bce4",
+      "bytes": 365
+    },
+    "LICENSE": {
+      "sha256": "11b94c464011ee5ac41bb74fa44fd7cf0e7be2596373de2ab40ac3f245df0e74",
+      "bytes": 1066
+    },
+    "Options.lua": {
+      "sha256": "43897c9e7508676316fa8840a11886a92f6f720a558949efc30ee970d2873620",
+      "bytes": 18182
+    },
+    "Panel.lua": {
+      "sha256": "a7e92c651b4a02ccd14f014d9f7434cef2fa3ab83e9fa2b80a69db4ea03e0fbe",
+      "bytes": 31027
+    },
+    "Profiles.lua": {
+      "sha256": "862d47968cb8d45364fc06482dd3de921e9dd8d78998d89bcddfa76e443dd2e8",
+      "bytes": 29886
+    },
+    "README.md": {
+      "sha256": "9b0465e40161f3adc6de2b4feea4afb1072f2f5ce142d66ddd56afcd62e0e7e2",
+      "bytes": 19048
+    },
+    "Stats.lua": {
+      "sha256": "9ae42704c929889e1e68f9e5dc7a1664b27aff8c5498b77a9307d1c07b1eb50f",
+      "bytes": 19080
+    },
+    "tools/check-lua.js": {
+      "sha256": "0979857bd110f92078767d18d8d93b9a26061919d397119bcbedee9339d3e2ae",
+      "bytes": 20445
+    },
+    "tools/install.js": {
+      "sha256": "b17125205f180197a1c9155376ef6e2e1a79d650d659defc5288d0466b33d38f",
+      "bytes": 1594
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "416030091": {
+      "tag": "v1.6.0",
+      "folder": "v1.6.0--416030091",
+      "assets": {
+        "651460991": {
+          "sha256": "2373878ab5fcf2b5ac01dda330199e7b591bbcec9ea84fb3c8a3036034967a16",
+          "bytes": 47059,
+          "id": "651460991",
+          "name": "EquipCompareAdv-1.6.0.zip",
+          "url": "https://github.com/notforever-ship-it/EquipCompareAdv/releases/download/v1.6.0/EquipCompareAdv-1.6.0.zip",
+          "path": "releases/v1.6.0--416030091/assets/EquipCompareAdv-1.6.0.zip"
+        }
+      },
+      "source": {
+        "sha256": "79fee54b86e35dad03f1a8fa5912f6d886fbbbfc5c5d95053e187ab781844352",
+        "bytes": 42193,
+        "path": "releases/v1.6.0--416030091/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/notforever-ship-it/EquipCompareAdv/tarball/v1.6.0"
+      }
+    }
+  }
+}

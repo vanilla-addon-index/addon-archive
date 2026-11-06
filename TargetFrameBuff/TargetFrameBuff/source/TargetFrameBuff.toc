@@ -1,0 +1,8 @@
+## Interface: 1700
+## Title: TargetFrameBuff v0.9.6
+## Notes: Shows up to 32 Buffs & 16 Debuffs on a Target, with countdowns when ClassicAPI is installed
+## Author: lua@lumpn.de (modified)
+## SavedVariables: TargetFrameBuffDB
+## OptionalDeps: !!!ClassicAPI
+## Dependencies:
+TargetFrameBuff.xml

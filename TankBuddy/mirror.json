@@ -1,0 +1,57 @@
+{
+  "upstream": "https://github.com/srazdokunebil/TankBuddy",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "srazdokunebil",
+    "repo": "TankBuddy",
+    "name": "TankBuddy",
+    "url": "https://github.com/srazdokunebil/TankBuddy",
+    "api": "https://api.github.com/repos/srazdokunebil/TankBuddy"
+  },
+  "commit": "a005cdabc24c2938ca4ad6fe77b1fb3d1be68863",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "b178f37e1fb21fdd5cbdafb1288ceb039202f7b76d7d21b94006f588a17c2307",
+      "bytes": 9
+    },
+    "localization.lua": {
+      "sha256": "660288545aaca582b161f328ba60c46ff37d111944082f42a1c6b8500ea76101",
+      "bytes": 14386
+    },
+    "localization.lua.bak": {
+      "sha256": "44b03e7f1450521c80e36fc17384ca04fa6b594da9ac98021c451348b35f5b4b",
+      "bytes": 14326
+    },
+    "README.md": {
+      "sha256": "9dfddf0fa0b314454d040c3fea65b30dd88fad14a6d98bd5bc229b8ffafd2330",
+      "bytes": 354
+    },
+    "TankBuddy - Kopi.lua": {
+      "sha256": "8faf0c6875346c3e788dd73268fe01851a0b9d06167ea30577715735f514bd34",
+      "bytes": 21085
+    },
+    "TankBuddy - Kopi.lua.bak": {
+      "sha256": "c69f899e824fdf833b38888932103e209a611e70b645284b988b69ce1390f69c",
+      "bytes": 21084
+    },
+    "TankBuddy.lua": {
+      "sha256": "ff1243770c7aad5fd76da782d85379a556311293700b60c7e9e8b2a8279eddbf",
+      "bytes": 21523
+    },
+    "TankBuddy.lua.bak": {
+      "sha256": "2e277670cc321c752a848bc5422426ce5874792dff938f3cd978acc63410488d",
+      "bytes": 21397
+    },
+    "TankBuddy.toc": {
+      "sha256": "c3f859724ce9ee9d1e256b436d138511ab774c5381f2b79d1c6928ef33860fc6",
+      "bytes": 364
+    },
+    "TankBuddy.xml": {
+      "sha256": "594e3f35ec157d6e5c615e6f7fc58c5e0fd67ea9caec572e8b577c60d74f3e68",
+      "bytes": 25762
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

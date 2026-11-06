@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/shagu/ShaguCombat",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "ShaguCombat",
+    "name": "ShaguCombat",
+    "url": "https://github.com/shagu/ShaguCombat",
+    "api": "https://api.github.com/repos/shagu/ShaguCombat"
+  },
+  "commit": "04e7a81a58d0e45d0529737d35a1d62dd3204f0c",
+  "sourceFiles": {
+    "border.tga": {
+      "sha256": "87de6261852799509e86dabb1aaa79c7c45782b42cf33731dbff974458c7ad35",
+      "bytes": 6990
+    },
+    "CombatNotify.lua": {
+      "sha256": "0c7b7c3966dbd72f996e05d00343e740ad7ba1643e2cfe6630c5c58568ff0d6b",
+      "bytes": 1667
+    },
+    "README.md": {
+      "sha256": "407bcb8ad0ce2de7cd5ffc34ca1d16990e0c2bd45b160c1b44b81172a64f5937",
+      "bytes": 778
+    },
+    "ShaguCombat.lua": {
+      "sha256": "236c4d24d12808c2a4fb71b6ec346b0e3f1c6eec264e00679d3a5d225f6fe5cf",
+      "bytes": 1707
+    },
+    "ShaguCombat.toc": {
+      "sha256": "b5c845009c6789d7732458689e649c15fc49f4bb3a14ccb18b8be68a3a8c1220",
+      "bytes": 207
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

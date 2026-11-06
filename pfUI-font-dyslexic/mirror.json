@@ -1,0 +1,77 @@
+{
+  "upstream": "https://gitlab.com/Road-block/pfUI-font-dyslexic",
+  "source": {
+    "kind": "repository",
+    "host": "gitlab.com",
+    "owner": "Road-block",
+    "repo": "pfUI-font-dyslexic",
+    "name": "pfUI-font-dyslexic",
+    "url": "https://gitlab.com/Road-block/pfUI-font-dyslexic",
+    "api": "https://gitlab.com/api/v4/projects/Road-block%2FpfUI-font-dyslexic"
+  },
+  "commit": "e6a2fa5ab6139f9f6e43ad2c466ce549d0d3bbe0",
+  "sourceFiles": {
+    "fonts/OpenDyslexic-Bold.ttf": {
+      "sha256": "ffdbc5e2e454f6d9e1d0fc581995ef23f608cc5a2c92dc9ecae3d723547cedc7",
+      "bytes": 142508
+    },
+    "fonts/OpenDyslexic-BoldItalic.ttf": {
+      "sha256": "9cdff05f925d0eb68976b6df216113989c8458471e69559b6a171b44e6931c18",
+      "bytes": 291756
+    },
+    "fonts/OpenDyslexic-Italic.ttf": {
+      "sha256": "885e906c6465e3c075d30bea1eb642df983b8e2ab42918ec1fbf73465591271d",
+      "bytes": 269124
+    },
+    "fonts/OpenDyslexic-Regular.ttf": {
+      "sha256": "9e397e67a856cbe4caa5ff5ae8670a1ffe3d67d2591d69a1162556f01bb5ac6b",
+      "bytes": 138312
+    },
+    "fonts/OpenDyslexic3-Bold.ttf": {
+      "sha256": "159a62d2c629cb16867fd2822cbcf64d75e6fb3c915c9d2a14b491e9a6a5f605",
+      "bytes": 239556
+    },
+    "fonts/OpenDyslexic3-Regular.ttf": {
+      "sha256": "54c5c2129fb7ba2c48fa3cb75379f0ea47cfcc24e20f1956a6c080d1efb480a3",
+      "bytes": 237868
+    },
+    "fonts/OpenDyslexicAlta-Bold.ttf": {
+      "sha256": "6c6f2cc2200d85cdb8997006866a525e3e6108de0b432dea38594894630d474f",
+      "bytes": 142324
+    },
+    "fonts/OpenDyslexicAlta-BoldItalic.ttf": {
+      "sha256": "d674fd27dae723f57c3664e58d4d3336fec5f80d83a219d83ca80a89053a36f4",
+      "bytes": 289736
+    },
+    "fonts/OpenDyslexicAlta-Italic.ttf": {
+      "sha256": "3d010b2102f56d83d6dd9e67f256b5eedd5d3a02184721140546f88d033671da",
+      "bytes": 268968
+    },
+    "fonts/OpenDyslexicAlta-Regular.ttf": {
+      "sha256": "b0aef6c63a66abc1b5438f0f7f2341075ba8b576c0d0b676f76cad46c013dc0c",
+      "bytes": 137652
+    },
+    "fonts/OpenDyslexicMono-Regular.ttf": {
+      "sha256": "4b7e60e6874ba10bb4d28a8c5acc673767dae48c50f5b1f2fe20e6f2906a3a22",
+      "bytes": 157400
+    },
+    "pfUI-font-dyslexic-master.toc": {
+      "sha256": "feffff86e9dcc875919be0cf5f2a9522491302785d1d0241208c53db78409185",
+      "bytes": 247
+    },
+    "pfUI-font-dyslexic.lua": {
+      "sha256": "3f52e8c5d2cdf5feb801299a550f6ec014682ae8b17cdbb5ae134cdf49b78f78",
+      "bytes": 1560
+    },
+    "pfUI-font-dyslexic.toc": {
+      "sha256": "feffff86e9dcc875919be0cf5f2a9522491302785d1d0241208c53db78409185",
+      "bytes": 247
+    },
+    "README.md": {
+      "sha256": "e342397e5d03177971ba40fbc403155669ff2b26d6ebce3e727fc0ef584b4075",
+      "bytes": 851
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/EinBaum/XFactionChat",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "XFactionChat",
+    "name": "XFactionChat",
+    "url": "https://github.com/EinBaum/XFactionChat",
+    "api": "https://api.github.com/repos/EinBaum/XFactionChat"
+  },
+  "commit": "22a07d52979359792dafd721c1d9e7d1aa7d57fc",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "29b4dae8413e6dd6c3bd48b5e3959491b958e341e5a8dafd6eee2090338f2af2",
+      "bytes": 1064
+    },
+    "preview.jpg": {
+      "sha256": "fdc8f20cd1db05f5ca0c1c048dd2d0661ef50f674544ee5f7bb26a43df30edbd",
+      "bytes": 224681
+    },
+    "README.md": {
+      "sha256": "00bd6b92892d7d0ebc1b5e451688d0e9f678f11242f41da6c97771c0c513428f",
+      "bytes": 187
+    },
+    "TODO.md": {
+      "sha256": "ae458a335b4d7930b8ef8b5409ae91e458e972aa8c531189f03b90f44d176219",
+      "bytes": 56
+    },
+    "XFactionChat.lua": {
+      "sha256": "b65240999ec8cf3ccb7de682b49a34419a1033c5425934cc6aa62ec1a7cea0c4",
+      "bytes": 5713
+    },
+    "XFactionChat.toc": {
+      "sha256": "b300ca8d8d7335b1f016f2f0d3a36a01ae3a354b2bd3e0110cd19ef1ce762fe0",
+      "bytes": 261
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

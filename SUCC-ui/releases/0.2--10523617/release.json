@@ -1,0 +1,9 @@
+{
+  "id": "10523617",
+  "tag": "0.2",
+  "name": "Alpha",
+  "body": "<p align=\"center\">\r\n  <img src=\"https://user-images.githubusercontent.com/17740865/38700250-4939b79e-3e4f-11e8-8d93-0f829e449709.png\">\r\n</p>\r\n\r\nThis is an alpha release of the addon. It's fully functional, although additional configuration is required(see readme).\r\n\r\nFor best experience, usage of theese addons is recommended:\r\n\r\n![succbag](https://user-images.githubusercontent.com/17740865/38700607-7f1fb312-3e50-11e8-88cc-59d874991b0d.png)\r\n[SUCC-bag](https://www.google.com \"SUCC-bag - player inventory and bank overhaul addon for world of warcraft 1.12.1\")\r\n\r\n![cooline](https://user-images.githubusercontent.com/17740865/38700627-90c2d0ea-3e50-11e8-8003-211b89e2081b.png)\r\n[Cooline](https://github.com/shirsig/cooline)\r\n\r\n![ringmenu](https://user-images.githubusercontent.com/17740865/38701380-8b770d02-3e52-11e8-87bb-00c738290844.png)\r\n[RingMenu](https://github.com/jsb/RingMenu)\r\n\r\n![castbar](https://user-images.githubusercontent.com/17740865/38700654-a1438f90-3e50-11e8-8710-e2adb3a54a07.png)\r\nand a player castbar modification addon, for example, [Punschrulle](https://github.com/Attero/Punschrulle).",
+  "published": "2018-04-12T19:55:33Z",
+  "prerelease": false,
+  "url": "https://github.com/checkem/SUCC-ui/releases/tag/0.2"
+}

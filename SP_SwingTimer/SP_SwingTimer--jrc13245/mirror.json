@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/jrc13245/SP_SwingTimer",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jrc13245",
+    "repo": "SP_SwingTimer",
+    "name": "SP_SwingTimer",
+    "url": "https://github.com/jrc13245/SP_SwingTimer",
+    "api": "https://api.github.com/repos/jrc13245/SP_SwingTimer"
+  },
+  "commit": "780568f2234218e9cf64be945c711fa988668763",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "d4f219e19625697c4c644af5699e6f5aaa42c957b34b0b50dbf4d0f957340c81",
+      "bytes": 159
+    },
+    "Macros.txt": {
+      "sha256": "48c7e4be245a023ebeae465a88cffdfe7b32bd2f2772a724302362196033a82c",
+      "bytes": 332
+    },
+    "README.md": {
+      "sha256": "d363ec7e83c0964fc42b757dd2136c98393726f7abeceb79d21ad8b950121740",
+      "bytes": 870
+    },
+    "SP_SwingTimer.lua": {
+      "sha256": "6ab3afe01064a39cd6d3905e5f4a8502fb4ad9c1b8d7f239865ec45f3775bf65",
+      "bytes": 38452
+    },
+    "SP_SwingTimer.toc": {
+      "sha256": "7319c3ab06336d18512afd4dec0fdc0075d6a7732e46152ce0e97645a3931f92",
+      "bytes": 351
+    },
+    "SP_SwingTimer.xml": {
+      "sha256": "523167f706b46773f8a001b62c1fb2748d2d41c75dd85927fcb130199543a0c0",
+      "bytes": 2638
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

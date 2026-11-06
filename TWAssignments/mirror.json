@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/CosminPOP/TWAssignments",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "CosminPOP",
+    "repo": "TWAssignments",
+    "name": "TWAssignments",
+    "url": "https://github.com/CosminPOP/TWAssignments",
+    "api": "https://api.github.com/repos/CosminPOP/TWAssignments"
+  },
+  "commit": "e4533a9809ec30fa1b27f0821130f08d237a5b14",
+  "sourceFiles": {
+    "ChatThrottleLib/ChatThrottleLib.lua": {
+      "sha256": "78ab7b9325c49c3d8ad71cd297bac12cd6a951531d021dc1860e46976ede8f4e",
+      "bytes": 13029
+    },
+    "README.md": {
+      "sha256": "a28a744402fa54c99e12ffcdf68ad8e7c8f76b7aff697ef7fabc53fd857958a7",
+      "bytes": 53
+    },
+    "TWAssignments.lua": {
+      "sha256": "03a8e017f4374daa94f860f2dde124a7ba648d6a8e2164e4a5e8ebfb2fb349d5",
+      "bytes": 67557
+    },
+    "TWAssignments.toc": {
+      "sha256": "9352a894cbdd9a9d96db43bddb2fb3aa0ffbaf6e9267cd40694e8a9a098cd79c",
+      "bytes": 234
+    },
+    "TWAssignments.xml": {
+      "sha256": "98155a361419bcebb7508959b525f599474836fe3e11070de7f5e7804e588671",
+      "bytes": 15631
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

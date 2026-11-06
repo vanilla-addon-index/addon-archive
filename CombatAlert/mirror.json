@@ -1,0 +1,193 @@
+{
+  "upstream": "https://github.com/41-0/41sCombatAlert",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "41-0",
+    "repo": "41sCombatAlert",
+    "name": "41sCombatAlert",
+    "url": "https://github.com/41-0/41sCombatAlert",
+    "api": "https://api.github.com/repos/41-0/41sCombatAlert"
+  },
+  "commit": "97b4988916ea2bfb8b90475d34b7c549236dfd09",
+  "sourceFiles": {
+    "41sCombatAlert.lua": {
+      "sha256": "5efabc11cd2034ac70628b727282c873fe9dea7016071f75723b87025cb85fd3",
+      "bytes": 57674
+    },
+    "41sCombatAlert.toc": {
+      "sha256": "74297087805199faf348cc3cf125c4ac8d689e14190d2c7fd46099038aeb2555",
+      "bytes": 181
+    },
+    "LICENSE": {
+      "sha256": "403981f20226b06d15a0f2cfd2931dfcea793331f6d82933feebc79aa86aa3f6",
+      "bytes": 1053
+    },
+    "README.md": {
+      "sha256": "d7236ff26dce7cb11736b3e6e782334e615ca07eeaff9d907d5652db9b01016e",
+      "bytes": 5172
+    },
+    "Sounds/d2-paladin/blessedaim.wav": {
+      "sha256": "1dd5a6b2446ee956a047dc25a92a80059056e14f199310e662cb121e0475c0d3",
+      "bytes": 84344
+    },
+    "Sounds/d2-paladin/bolthammercast.wav": {
+      "sha256": "d9c14436607ea52d328027745fe26835112d3429f140669a7494e20f7eb9bcad",
+      "bytes": 22802
+    },
+    "Sounds/d2-paladin/charge.wav": {
+      "sha256": "53fa91e89caade80cc5f37930e47a07f5ea817ac450e9ee72a00706bdd87a7d4",
+      "bytes": 40878
+    },
+    "Sounds/d2-paladin/cleansing.wav": {
+      "sha256": "233fb02fa72d29dde09a63f59c7f6cf8fb40131e692e4b20213f2548d8961a03",
+      "bytes": 92536
+    },
+    "Sounds/d2-paladin/concentration.wav": {
+      "sha256": "d395ec11af9b47e37572c51b7b07358703e131260d706332940a0897fa84933b",
+      "bytes": 82552
+    },
+    "Sounds/d2-paladin/conversion.wav": {
+      "sha256": "ae4cdbeb27f397584f019653d13836c0c1ce4befbf4a3d2fc05709e32d3c06a1",
+      "bytes": 56686
+    },
+    "Sounds/d2-paladin/defiance.wav": {
+      "sha256": "1ce8e8510ad0ab227f0a0b1138a4ff99d9b69ef00e99b5c729211590bb0204ad",
+      "bytes": 77176
+    },
+    "Sounds/d2-paladin/fanaticism.wav": {
+      "sha256": "a70ae5748223ffc14458569efa5caf52c14d74765db65b30828ffb2022fabc17",
+      "bytes": 88440
+    },
+    "Sounds/d2-paladin/might.wav": {
+      "sha256": "f85a1e813bd6f37032c46bd4c2b3bee3e286b0c61d0d472a08a54a3d1c0a3153",
+      "bytes": 72728
+    },
+    "Sounds/d2-paladin/resistcold.wav": {
+      "sha256": "50923e42ab64d04e7863c16467b4a95a195f448ace3db494b011d970107f4592",
+      "bytes": 89208
+    },
+    "Sounds/d2-paladin/resistfire.wav": {
+      "sha256": "73ee6ef8a29b75aa44589cc21879c90314d8629e7b6853e3aee99aa8b4a0229f",
+      "bytes": 87160
+    },
+    "Sounds/d2-paladin/resistlightning.wav": {
+      "sha256": "8d5fc1df2d333bb9050284fe7b1fa74c315b745b868db4accead7adc051ef4c2",
+      "bytes": 84600
+    },
+    "Sounds/d2-paladin/stamina.wav": {
+      "sha256": "8ae89458458e9c90232baa2ec088d7471852b1b24b0d26abb8beda6eee274db0",
+      "bytes": 78526
+    },
+    "Sounds/d2-paladin/thorns.wav": {
+      "sha256": "415715fe4b603f48fa0f9a1fe7e69f365e056a1594571fe7d0de07a695dd86b6",
+      "bytes": 72568
+    },
+    "Sounds/death.wav": {
+      "sha256": "497a1e49592a238baa0f9c99214238c2eabde9fffc0658bca4301e65c7d63c9a",
+      "bytes": 256560
+    },
+    "Sounds/ei.wav": {
+      "sha256": "afc15b6518e2049c491ab57545837d8ea831cac0bfcde5218cf2824a3eb19b98",
+      "bytes": 46872
+    },
+    "Sounds/Fatality.wav": {
+      "sha256": "af7fac03eee66018639608f245a64c61d74aedb5b18e33700f8cf577a62aac1e",
+      "bytes": 240752
+    },
+    "Sounds/fun.wav": {
+      "sha256": "ad0bf7cd9759c2214f17633c80047236fc49a8bf0d8c2549581a24ecaefcf9db",
+      "bytes": 58396
+    },
+    "Sounds/game-over.wav": {
+      "sha256": "71c638964b7b028327be6f881d89e8450dd7acddc9ca62f81380e415b0df02ba",
+      "bytes": 311448
+    },
+    "Sounds/gouki-hu.wav": {
+      "sha256": "ee8806caeda71af845f670bc7783728b0297b13b522efede3742770369552337",
+      "bytes": 52592
+    },
+    "Sounds/gouki-nnnnnnnn.wav": {
+      "sha256": "21366b8a9fabc8011a8089dfc7874803740296a3cf371224d91ee6e6fe1980c8",
+      "bytes": 234872
+    },
+    "Sounds/lose.wav": {
+      "sha256": "3698b1999e355e33eecab39878eea44ff4a76031a0d27e0fe166e8f56ce22104",
+      "bytes": 135008
+    },
+    "Sounds/match-end.wav": {
+      "sha256": "0b3178e3a4caaa3ff0f919953bfe326d14536bb3451bd146c913fabf7270d095",
+      "bytes": 916796
+    },
+    "Sounds/perfect.wav": {
+      "sha256": "b324dd638f2ff01b2fe612c33d4caa99f3e88a56cb6d7dd1a4d4a8eb83f2afd0",
+      "bytes": 81244
+    },
+    "Sounds/punch-heavy-hit.wav": {
+      "sha256": "2592e522330a1d746d34a5e00b05865dd33a71dab1b8fb7dc8ab2c2a6cd933ff",
+      "bytes": 104220
+    },
+    "Sounds/punch-light-hit.wav": {
+      "sha256": "9cfaaeeb489985867b6ab96ca23eac856cbb066c94ab5edfb60dee137ebf45cd",
+      "bytes": 46732
+    },
+    "Sounds/punch-medium-hit.wav": {
+      "sha256": "21baf3a3e6de9fc16228501ba845e20994d2610c2dc6b5fb33b7b89f644ea122",
+      "bytes": 51060
+    },
+    "Sounds/SF2 - Win Sequence 02.wav": {
+      "sha256": "e3a860d17fd2a3e0c057db1dbfbdc58e2e7eac025db695687aac5ecc9de347dc",
+      "bytes": 1950824
+    },
+    "Sounds/SF2 - Win Sequence 03.wav": {
+      "sha256": "675ad52bd105e292e1ce91ec9079cd85b0384be3f1d55177a0c557e7bb700433",
+      "bytes": 962076
+    },
+    "Sounds/SF2 - Win Sequence.wav": {
+      "sha256": "957806507f9348c9676ee7bdf59bf47a3cc1e7f089a06f7171d7ce7059d81ef5",
+      "bytes": 1622404
+    },
+    "Sounds/SoundA.wav": {
+      "sha256": "19ec827145b5311d46029333da1d95790d0508ee4d7fa2dbe2231f8efaf287a5",
+      "bytes": 334240
+    },
+    "Sounds/SoundB.wav": {
+      "sha256": "5c890341688f5df67c305a3e03e138e9050e981b19913a58391c823127068e9c",
+      "bytes": 94664
+    },
+    "Sounds/SoundC.wav": {
+      "sha256": "380f5ae73becaa394f690c1b8daa472c2ed5c71c324d3a5a994101ffd1196605",
+      "bytes": 230928
+    },
+    "Sounds/SoundD.wav": {
+      "sha256": "211a37ffca5257ad72b5c8de533f8d7bc141ce54d6dcd76c64e91a13782ac12e",
+      "bytes": 88584
+    },
+    "Sounds/SoundE.wav": {
+      "sha256": "540d83e65d3b4aa4ab13f3fcec89a50d05af65a917f14cdeb7f9d7d2635c0784",
+      "bytes": 112024
+    },
+    "Sounds/SoundF.wav": {
+      "sha256": "c4bafebbdfb407df5fbcaf7e2c7bfa56632c5294c02b4ba7f98a15e88b3d9d76",
+      "bytes": 228128
+    },
+    "Sounds/tiger.wav": {
+      "sha256": "0812f5e6cdff99fcbeb799aee2d833f8bc7de1b0efaa34e609427ab9aae4128f",
+      "bytes": 112104
+    },
+    "Sounds/wahahaha.wav": {
+      "sha256": "d90af74dfb403b67974dd55d5168495d461a5a0ba7b39a52ccc861c58da6b7a9",
+      "bytes": 401908
+    },
+    "Sounds/win.wav": {
+      "sha256": "9b94a17fd79b0ba777750b05e08472989aa3d132fcf38eee22ab8d22fdcebbf7",
+      "bytes": 79748
+    },
+    "Sounds/you.wav": {
+      "sha256": "9e2d48fe7f998f8d825157c4a01eba46541795d78f6871a0b5ba1aa43154c56c",
+      "bytes": 98488
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Daribon/UnicodeFont",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Daribon",
+    "repo": "UnicodeFont",
+    "name": "UnicodeFont",
+    "url": "https://github.com/Daribon/UnicodeFont",
+    "api": "https://api.github.com/repos/Daribon/UnicodeFont"
+  },
+  "commit": "f19092f3bf49b5303f9bba16f45d51397b610c0a",
+  "sourceFiles": {
+    "LICENSE.txt": {
+      "sha256": "ed38357cf4631d1dd7e88029336920a9fe19b1cdd012fa2af21021c4c1f4de96",
+      "bytes": 4517
+    },
+    "README.md": {
+      "sha256": "017a924516349c6010e7c9abe302633ebd11993c0df895a235839bba89ceaa99",
+      "bytes": 1388
+    },
+    "UnicodeFont.lua": {
+      "sha256": "9d8ce7ee3fd34b8b14da804c66dd80e2b38b44afa9a8a7ae1fb9690800370ad7",
+      "bytes": 874
+    },
+    "UnicodeFont.toc": {
+      "sha256": "6f01222d165a17ae9e6a377feff54bd50334be7415c07513efcc2f7d7b85f498",
+      "bytes": 320
+    },
+    "WarSansTT-Bliz-500.ttf": {
+      "sha256": "1fa4ca36819a843e6cfb475c94a7bfba701170494ff335141e824ab03f273926",
+      "bytes": 8438732
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

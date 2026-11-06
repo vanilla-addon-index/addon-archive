@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Numielle/EasyCloak",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Numielle",
+    "repo": "EasyCloak",
+    "name": "EasyCloak",
+    "url": "https://github.com/Numielle/EasyCloak",
+    "api": "https://api.github.com/repos/Numielle/EasyCloak"
+  },
+  "commit": "2cf5e3e0a896e63a164e9cde81b00a7492b74f15",
+  "sourceFiles": {
+    "EasyCloak.toc": {
+      "sha256": "b7c9557ceba2b854007f079f010d275e08ae83bd1257504fa81c8a38e9cff150",
+      "bytes": 205
+    },
+    "EasyCloakMain.lua": {
+      "sha256": "bf21f4c0d1ce929c10c4e2fa70ebb1378b233fb696f2ef4cfde8c80a4c58f6ba",
+      "bytes": 6369
+    },
+    "LICENSE": {
+      "sha256": "39db8f9acf036595a2566ea3fe560bc7bd65d8749f088e0f4a4ef2f8a6cb4b34",
+      "bytes": 18026
+    },
+    "README.md": {
+      "sha256": "a00122558272da1d95d7e139d8b2f4ed69ff06322234ef6bdcb3d93c153e7822",
+      "bytes": 1200
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

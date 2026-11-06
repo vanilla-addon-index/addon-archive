@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/gbl/TradeChat",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "gbl",
+    "repo": "TradeChat",
+    "name": "TradeChat",
+    "url": "https://github.com/gbl/TradeChat",
+    "api": "https://api.github.com/repos/gbl/TradeChat"
+  },
+  "commit": "ef76057e10220d8138955c3e027a238d3b3825d9",
+  "sourceFiles": {
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "d05fb28fb6d7dbd9a8be4faea455388fd629342491699aa8fe7c3f8b8d6416c4",
+      "bytes": 23442
+    },
+    "README.md": {
+      "sha256": "633fa75c237116c6961841407ecfda9336a240d4955778420566425c3a241ac3",
+      "bytes": 737
+    },
+    "TradeChat.lua": {
+      "sha256": "9ae7d748c073893e51efbf35b458dda38635aa3f0853f829e17c384b40571107",
+      "bytes": 1291
+    },
+    "TradeChat.png": {
+      "sha256": "ed6d01ad5b91d666bb3a775e2a61a1d6d3a5226c98cfca31e8baba0b2081901b",
+      "bytes": 80959
+    },
+    "TradeChat.toc": {
+      "sha256": "5b5279488e898851f68c61b364e14fd4403863a7ec92bc27ed8343a00a6ef04f",
+      "bytes": 194
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

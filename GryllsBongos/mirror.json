@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/carolluparu/GryllsBongos",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "carolluparu",
+    "repo": "GryllsBongos",
+    "name": "GryllsBongos",
+    "url": "https://github.com/carolluparu/GryllsBongos",
+    "api": "https://api.github.com/repos/carolluparu/GryllsBongos"
+  },
+  "commit": "485e3840c5975e0da1fed4070a0eb71e0f429e85",
+  "sourceFiles": {
+    "GryllsBongos.lua": {
+      "sha256": "216cbdc39ca4a9fc893a7afa311f2e2f3411f2c868e347f6b257c210c687c985",
+      "bytes": 17971
+    },
+    "GryllsBongos.toc": {
+      "sha256": "a15e89722ef339817a82976aadfcfffd8b9b2cb5606539943afa8590b510c2c1",
+      "bytes": 214
+    },
+    "LICENSE": {
+      "sha256": "1aac0dff373630cae3b1e20f49688aec86966af65692b3d3305d5132ed3520c4",
+      "bytes": 1069
+    },
+    "README.md": {
+      "sha256": "0f43c51cd5923989d2bf15618f7aa78cbe56ecf36d7d8606a615777568fa162b",
+      "bytes": 1951
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

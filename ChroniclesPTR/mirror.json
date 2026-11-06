@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/EinBaum/ChroniclesPTR",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "ChroniclesPTR",
+    "name": "ChroniclesPTR",
+    "url": "https://github.com/EinBaum/ChroniclesPTR",
+    "api": "https://api.github.com/repos/EinBaum/ChroniclesPTR"
+  },
+  "commit": "027d1dc67cdbaf5a4f10fcba504911eeaba8c0f5",
+  "sourceFiles": {
+    "ChroniclesPTR.toc": {
+      "sha256": "c26f3780e3454d9557ff7cbaf9a4db036182dedcdb0f911b67f734cfafd6870c",
+      "bytes": 237
+    },
+    "Core.lua": {
+      "sha256": "1dba0258a4fb76b24108d72b337c3310d382e9c31023f1020d3bf8740648bbe9",
+      "bytes": 5312
+    },
+    "DataBuffs.lua": {
+      "sha256": "30e3e117853ebdc5bf8eabf13d4c6ff4b62c9de6e07b5df670298ec6504dbcc1",
+      "bytes": 2748
+    },
+    "DataItems.lua": {
+      "sha256": "26333f0bb88a2a3d373c55c9ee0ae8c49978790da2ad710f6b348debfaa4e07f",
+      "bytes": 2780
+    },
+    "README.md": {
+      "sha256": "4e475bd7698a31b7a2f508c420ce3efe0276f217b5b01f0c9e0efe72ff19d79a",
+      "bytes": 805
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

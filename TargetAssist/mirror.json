@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/0ldi/TargetAssist",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "0ldi",
+    "repo": "TargetAssist",
+    "name": "TargetAssist",
+    "url": "https://github.com/0ldi/TargetAssist",
+    "api": "https://api.github.com/repos/0ldi/TargetAssist"
+  },
+  "commit": "8167f541f1ba2d2cf8bc28711dad7973042124f7",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "README.md": {
+      "sha256": "181d0708f4e2274da152c21423f403a61e3cb803b9ca83803d1a7c40e3bc7ed9",
+      "bytes": 446
+    },
+    "TargetAssist/Bindings.xml": {
+      "sha256": "c35ca84dae2bd4d8f3002cfd8555a1d41c02fbbd9af4138c510551d9ae8e3737",
+      "bytes": 615
+    },
+    "TargetAssist/settings.lua": {
+      "sha256": "50d8218dc6c305dbb0134c7831cf4b1ed664e22a763fc14715cf7711aba2cee6",
+      "bytes": 95
+    },
+    "TargetAssist/Smooth.tga": {
+      "sha256": "00e8084e83bf25b941464e2619b59e993b6ac7ae0bd8a6f37b12872e686ded6d",
+      "bytes": 32812
+    },
+    "TargetAssist/TargetAssist.lua": {
+      "sha256": "120db0d2d2ac092207e2e2ed8178c3622eb470f4567096b8f786008d45641f74",
+      "bytes": 3595
+    },
+    "TargetAssist/TargetAssist.toc": {
+      "sha256": "36a139f61d65d9e76f9cb371f4703e7aa7ed46e338b4dc2316c63a73a222fba8",
+      "bytes": 108
+    },
+    "TargetAssist/TargetAssist.xml": {
+      "sha256": "d9d92597d43f93dc18c82e79a8dbb048be5e058bccdff8e4edd708208c2b7d53",
+      "bytes": 3979
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

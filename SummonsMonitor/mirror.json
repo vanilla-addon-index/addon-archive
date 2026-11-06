@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/0ldi/SummonsMonitor",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "0ldi",
+    "repo": "SummonsMonitor",
+    "name": "SummonsMonitor",
+    "url": "https://github.com/0ldi/SummonsMonitor",
+    "api": "https://api.github.com/repos/0ldi/SummonsMonitor"
+  },
+  "commit": "06c8f377bab24fd59f094a01674f1aaa7376aea0",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "README.md": {
+      "sha256": "5bda4de4c968951e350df61d621809815e640c58d228e1071c72afad9ac1bf0a",
+      "bytes": 5917
+    },
+    "SummonsMonitor/Bindings.xml": {
+      "sha256": "4dc02991e5f4606e27148ef6d8e75040d952a9bd73f7f2b62c4117b8499bfa2c",
+      "bytes": 445
+    },
+    "SummonsMonitor/README.txt": {
+      "sha256": "d76831f8adea11d8ee1121c49afd8689c093a6cc73a1191804f81a790e87fde6",
+      "bytes": 5883
+    },
+    "SummonsMonitor/SummonsMonitor.lua": {
+      "sha256": "9fcb0dfc748c1343dbbcceb6df409adfe4ed47d226a55e8cecb61af89d1e1560",
+      "bytes": 20106
+    },
+    "SummonsMonitor/SummonsMonitor.toc": {
+      "sha256": "b2dbcc10911fb2ee760d245ed005025c9307209f78b790e6257f4822993a8426",
+      "bytes": 288
+    },
+    "SummonsMonitor/SummonsMonitor.xml": {
+      "sha256": "a6986bbf77cc7dfc3cf2625d2b4667da58cd776684e5c2bf281afcbcbd9a571d",
+      "bytes": 11826
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

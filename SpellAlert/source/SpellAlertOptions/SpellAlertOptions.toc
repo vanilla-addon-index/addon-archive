@@ -1,0 +1,17 @@
+## Interface: 11200
+## Title: SpellAlertOptions |cFFFFFFFF- Baroque edit|r
+## Version: 1.12.x
+## Author: Awen (Original), Mithryn, MarsMod, Sent, Baroque
+## Notes: Load on demand option windows for SpellAlert.
+## RequiredDeps: SpellAlert
+## OptionalDeps: MikScrollingBattleText
+## LoadOnDemand: 1
+..\..\FrameXML\Fonts.xml
+..\..\FrameXML\UIPanelTemplates.xml
+..\..\FrameXML\OptionsFrameTemplates.xml
+..\..\FrameXML\CharacterFrameTemplates.xml
+localization.lua
+localization.de.lua
+localization.fr.lua
+SpellAlertOptions.lua
+SpellAlertOptions.xml

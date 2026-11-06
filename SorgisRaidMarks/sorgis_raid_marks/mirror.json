@@ -1,0 +1,54 @@
+{
+  "upstream": "https://github.com/sorgis-sorgis/sorgis_raid_marks",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "sorgis-sorgis",
+    "repo": "sorgis_raid_marks",
+    "name": "sorgis_raid_marks",
+    "url": "https://github.com/sorgis-sorgis/sorgis_raid_marks",
+    "api": "https://api.github.com/repos/sorgis-sorgis/sorgis_raid_marks"
+  },
+  "commit": "eb3433adb40ffc20b019d36327973767f42e5de6",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "a59f7d412b3e1f32a78775b0877555bcd638ac116f5fa9205c94f5c231807202",
+      "bytes": 894
+    },
+    "main.lua": {
+      "sha256": "dae45c04a64838d77057d4d46099f467ca5b4fd7c410a538fd29c954408a0032",
+      "bytes": 27215
+    },
+    "readme.md": {
+      "sha256": "a33afab5a252c41b830c71acd6feaf04a5948c6f6e5838cbc7e4a86fca4d3ef0",
+      "bytes": 4422
+    },
+    "sorgis_raid_marks.toc": {
+      "sha256": "4b92607cb3720fa41a2ca7082fdfe3f46c1bcbfc71ca1544e00d597c2dfd6722",
+      "bytes": 247
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "198527879": {
+      "tag": "1.2.0",
+      "folder": "1.2.0--198527879",
+      "assets": {
+        "226451939": {
+          "sha256": "60ed2f70d0c4483006c4e6e8d23cad3e757c7c3470a1f373a6ff78b4ebbb1d82",
+          "bytes": 7986,
+          "id": "226451939",
+          "name": "sorgis_raid_marks.zip",
+          "url": "https://github.com/sorgis-sorgis/sorgis_raid_marks/releases/download/1.2.0/sorgis_raid_marks.zip",
+          "path": "releases/1.2.0--198527879/assets/sorgis_raid_marks.zip"
+        }
+      },
+      "source": {
+        "sha256": "8626ed0de1b46768bd6cf3996f06aa9536b1d3163b8667c0719a07e570fc542c",
+        "bytes": 7746,
+        "path": "releases/1.2.0--198527879/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/sorgis-sorgis/sorgis_raid_marks/tarball/1.2.0"
+      }
+    }
+  }
+}

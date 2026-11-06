@@ -1,0 +1,726 @@
+{
+  "upstream": "https://codeberg.org/Mejiro/TurtlesEpoch",
+  "source": {
+    "kind": "repository",
+    "host": "codeberg.org",
+    "owner": "Mejiro",
+    "repo": "TurtlesEpoch",
+    "name": "TurtlesEpoch",
+    "url": "https://codeberg.org/Mejiro/TurtlesEpoch",
+    "api": "https://codeberg.org/api/v1/repos/Mejiro/TurtlesEpoch"
+  },
+  "commit": "5a07e5e19209806dbc7bba447a4996c20b7bc33b",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "2bfc99294612789bd7d050583efed8bcf9526b8ddd48ce3a026400b220831859",
+      "bytes": 172
+    },
+    "AGENTS.md": {
+      "sha256": "c6c30e0cab505ae487f6420cd35c01be9992316892ce60d2ebdf27acd4b0dc55",
+      "bytes": 75148
+    },
+    "core/EventHandler.lua": {
+      "sha256": "4503bd1552553ed478886c6c1cab68075a977890d568d904287b2e87f656cd8b",
+      "bytes": 25610
+    },
+    "core/Init.lua": {
+      "sha256": "3e17217102fac8e07b3be0ba93f77a8d32cc696af91622295b8146127f3776a8",
+      "bytes": 12052
+    },
+    "core/NPCDatabase.lua": {
+      "sha256": "5596e6a785b62ff08db8d701b438506d317b05e6c457b0deb90f65b88d6f7996",
+      "bytes": 1375
+    },
+    "core/QuestLogOverlay.lua": {
+      "sha256": "64e49fead6d2dab82fd6b51c4893c8f89277c8fc5e3ed9f641c7567faefc52d5",
+      "bytes": 7275
+    },
+    "core/Settings.lua": {
+      "sha256": "9572c1d63c6403397d0656d69e577c158ce2c54d28a3ed9b174de3f361c3329c",
+      "bytes": 5832
+    },
+    "core/SoundPlayer.lua": {
+      "sha256": "c7387baa2254c8d6b0b5d1dfbe2c9f8fc9bdf76727584afbfb74874dfbec5a10",
+      "bytes": 12031
+    },
+    "data/ChrRaces.csv": {
+      "sha256": "50d38122d038837346de5103005834996c5ff11be5e65814827befbd3f17727f",
+      "bytes": 2539
+    },
+    "data/CreatureDisplayInfo.csv": {
+      "sha256": "a0931f2b38412a397b0b166bf2902ed300d91791250f0bf63c549338be9dbc36",
+      "bytes": 893385
+    },
+    "data/CreatureDisplayInfoExtra.csv": {
+      "sha256": "3d96fc3c96f09c322aa20d0b8a5098b25a0be3a8e9e14ec6089f84da99d68828",
+      "bytes": 1218308
+    },
+    "data/CreatureModelData.csv": {
+      "sha256": "bdbe433055a7ff48828468bf75af0b2b601968f360b44c0c0194541432f118bd",
+      "bytes": 98595
+    },
+    "data/emotion_cache.json": {
+      "sha256": "ef4389cfc1c45ba27e677da505e72fce9ce706d39bf5cf880cec75e0842c3a18",
+      "bytes": 5378969
+    },
+    "data/manual_entries.json": {
+      "sha256": "701b99c48f8ea97509e8ad7ccb4ff980fb5bb147277835f69fc5bf31ca4f5682",
+      "bytes": 36
+    },
+    "data/npc_data.lua": {
+      "sha256": "d3c28b866659ab4cd2100511633d2837c83d434358fa6503963eef11ba2dfdee",
+      "bytes": 834551
+    },
+    "data/npc_database.json": {
+      "sha256": "104187a3df7dd85109fe29b09cf2047554431d5072e92c12baaeae3173c6fdad",
+      "bytes": 1810725
+    },
+    "data/object_database.json": {
+      "sha256": "91a6bf27bf34d3dc4479abad60fc472ba2f81e2461c6797f7728c1af7e73e573",
+      "bytes": 325275
+    },
+    "data/quest_database.json": {
+      "sha256": "3d800df9c97d5cdf8f2be51a7c45572a57e41f68099c957a0400c2fdde0735d8",
+      "bytes": 6757486
+    },
+    "data/quest_sound_lookup.lua": {
+      "sha256": "e9de43009ebf24d2d40bceb7b3751180bfddea35ac9428d16fe6f729d0e31b31",
+      "bytes": 7238352
+    },
+    "data/voice_configs/archmage_ansirem_runeweaver.json": {
+      "sha256": "6bddb1f8ab016e606eb97ae845754d7f92dff2bd642cf38ae2c187d184fd5b9f",
+      "bytes": 262
+    },
+    "data/voice_configs/banshee.json": {
+      "sha256": "2553ce5c719eb09326d0e4c1a08ec931080aae3267457241115cb7af72a4ac70",
+      "bytes": 240
+    },
+    "data/voice_configs/cairne_bloodhoof.json": {
+      "sha256": "bbe555ffa4d5972192a0a4bfca3bf901f4a6e19d27c4e9858b3a7be61aafc8a4",
+      "bytes": 263
+    },
+    "data/voice_configs/centaur_female.json": {
+      "sha256": "885b662034e635dc6acfc5476f3e7cb42b7531b0f91f5ca5aa244f79c492ed15",
+      "bytes": 267
+    },
+    "data/voice_configs/centaur_male.json": {
+      "sha256": "a09b3395100db154ff543573d0ef0373b6250d36418b29aef66455d6046f4745",
+      "bytes": 303
+    },
+    "data/voice_configs/chromie.json": {
+      "sha256": "11fbc0d0eb506a8352608f404363fc21b9535aeafd45439ec217393aab189611",
+      "bytes": 252
+    },
+    "data/voice_configs/draenei.json": {
+      "sha256": "a5a770a600d35e27029a558bf9f9fcfe7835fead61097c2201df06846e2f2019",
+      "bytes": 286
+    },
+    "data/voice_configs/dragon.json": {
+      "sha256": "a35f568b34c069dd32901dfe25e4af05f736a4ee848059035fdb66a56a5c3c35",
+      "bytes": 301
+    },
+    "data/voice_configs/dragonspawn.json": {
+      "sha256": "3663dd823af719ce5c77a0b2aad6e7aed8b058e5e472691840b320aaf072cc92",
+      "bytes": 265
+    },
+    "data/voice_configs/dreadlord.json": {
+      "sha256": "6af4eefd5f6d361cfcb02c2837806bddf74d6da4ce4ea71fed3f043eb9116524",
+      "bytes": 258
+    },
+    "data/voice_configs/dryad.json": {
+      "sha256": "3957e1c5c7e720dedfe3f5f4dbce34e45bd9d4b9b062f5ec5245f2f538eec002",
+      "bytes": 248
+    },
+    "data/voice_configs/dwarf_female.json": {
+      "sha256": "36c55245864552c2b02e6ee6389382e6869a03987cf5a9a91932746aecca18cb",
+      "bytes": 223
+    },
+    "data/voice_configs/dwarf_male.json": {
+      "sha256": "41774de1a95e20d8d2107945bc4ab9900360be620fb95f475cfdab294b1390b9",
+      "bytes": 297
+    },
+    "data/voice_configs/elemental.json": {
+      "sha256": "8bba34276a131c5195f791b297446925992f1e477eafc1944108655e86676b87",
+      "bytes": 293
+    },
+    "data/voice_configs/furbolg.json": {
+      "sha256": "6c45f5f7d2f80e700274441a5bd22fed046252b1be5b07374a6f1fd3f6945245",
+      "bytes": 250
+    },
+    "data/voice_configs/gazlowe.json": {
+      "sha256": "32108f054d06604de9a1c6c729ca80cce42b35463c3aa9df9f65d6c84f99485e",
+      "bytes": 239
+    },
+    "data/voice_configs/ghost.json": {
+      "sha256": "bafe8c9986a06e747e114fd7dd90f41928d20be8e8821b7f212ddee3553bd1fc",
+      "bytes": 279
+    },
+    "data/voice_configs/ghoul.json": {
+      "sha256": "5c87463e5e9818500b6119d6d03a14d897874d74a50d51351ba72771e487ef13",
+      "bytes": 304
+    },
+    "data/voice_configs/gnoll.json": {
+      "sha256": "33aa8a9ff92826e6e2e9a14c06cd8f0e63715c86de31419fd222583951306abe",
+      "bytes": 286
+    },
+    "data/voice_configs/gnome_female.json": {
+      "sha256": "36a78c6aee97d105108ece4a37992d9309791773ca95af4ca3c60afb01ff6bbb",
+      "bytes": 270
+    },
+    "data/voice_configs/gnome_male.json": {
+      "sha256": "6cac599d2855779426dd7efe76037327baadecf8a135e16cebc8e8158deea15b",
+      "bytes": 284
+    },
+    "data/voice_configs/goblin_female.json": {
+      "sha256": "b6894324e2c16c4d46cdf701f0e43e892af0717d4206e07c90192250a10219dc",
+      "bytes": 270
+    },
+    "data/voice_configs/goblin_male.json": {
+      "sha256": "3b04c1466bca2b48b9db34de14c1a18648fcaa01509a61fbd9f0337dd8b37e26",
+      "bytes": 291
+    },
+    "data/voice_configs/harpy.json": {
+      "sha256": "53f9a6af8fb1365486ebecaa5922d3effbbe4727c09472a111a2e8901c3faa4f",
+      "bytes": 280
+    },
+    "data/voice_configs/high_elf_female.json": {
+      "sha256": "def3ab078f2a4caf7d1d55e77b6de742d21b1172dcd09af78fe53c935deb981b",
+      "bytes": 215
+    },
+    "data/voice_configs/high_elf_male.json": {
+      "sha256": "5f1ebc025a78fedeaf3dcac1261de787a9c5234e0170cb63069ce11ff878b7c3",
+      "bytes": 214
+    },
+    "data/voice_configs/highlord_bolvar_fordragon.json": {
+      "sha256": "3a11e9a1a18b27981d000692459f700b208c6156088e75660ba70eedb15e9a3b",
+      "bytes": 241
+    },
+    "data/voice_configs/human_female.json": {
+      "sha256": "45c132adb5027083a8ba675ae6bc95abf87a780075823374b2a136c1ea2f3ff9",
+      "bytes": 230
+    },
+    "data/voice_configs/human_male.json": {
+      "sha256": "9953645bce2169b0907b303701d8d686743407f2637782ab747993355ee1c9c2",
+      "bytes": 230
+    },
+    "data/voice_configs/imp.json": {
+      "sha256": "74f8d57692a0a8d13553c90c3ab4eb3ed38efea58fcf4ff71885d2d57a6b7d2c",
+      "bytes": 269
+    },
+    "data/voice_configs/keeper_of_the_grove.json": {
+      "sha256": "ead8d12d2b4576abf34c7cddcaf4f643ee7242a3c08006bfcb17d08e06668060",
+      "bytes": 271
+    },
+    "data/voice_configs/king_magni_bronzebeard.json": {
+      "sha256": "f10dac070acc5076b3ab556e55c499f93e4175e9451ac5132ea75028f887de97",
+      "bytes": 248
+    },
+    "data/voice_configs/kobold.json": {
+      "sha256": "ec408eb495a9b5d198d5844e64182b32e1fbdce597efd91c2ef3157d0eacf134",
+      "bytes": 263
+    },
+    "data/voice_configs/lady_jaina_proudmoore.json": {
+      "sha256": "814e0fc73b5bb11ddcc0f20892b82d66bbe92d8599ff08cb007ac25226306b57",
+      "bytes": 236
+    },
+    "data/voice_configs/lady_sylvanas_windrunner.json": {
+      "sha256": "a5165a7ea51ddf4ca7a672a852676753a3aa8414d73dd730cf0c3435d358b274",
+      "bytes": 266
+    },
+    "data/voice_configs/murloc.json": {
+      "sha256": "f8512314ac6baa9fcd7424e00114bcaf6d0810341e8bd292ff54aa6f9b78aa18",
+      "bytes": 330
+    },
+    "data/voice_configs/naga_female.json": {
+      "sha256": "64e1c9b4a3e674505cfe21e69399a2fdcaf5d32c3bbe61a9be661c37b2ea080c",
+      "bytes": 304
+    },
+    "data/voice_configs/naga_male.json": {
+      "sha256": "2e4f0b42ec7406ac1e53d6a6b5a1943d7dec396bcf08b7293d2ef7be9d0b9ddb",
+      "bytes": 303
+    },
+    "data/voice_configs/narrator.json": {
+      "sha256": "09b6d7c7db275d455040aa9bbd618d4f1264a7d3e9b28b812374f64f6bf5eefc",
+      "bytes": 271
+    },
+    "data/voice_configs/nathanos_blightcaller.json": {
+      "sha256": "c244c583b3f215c9517f3e78106cba08c495673b51199b5c0fc0d3e2ddfef2a8",
+      "bytes": 257
+    },
+    "data/voice_configs/night_elf_female.json": {
+      "sha256": "a2cc1c786fd7902b3910a4fb09f5474963e338efd984188f3ca02b69c9c3405a",
+      "bytes": 212
+    },
+    "data/voice_configs/night_elf_male.json": {
+      "sha256": "d08169e12aaf38eb83b7965c7b15d46c21ba1c23e5164763b1f090bf80e024ee",
+      "bytes": 225
+    },
+    "data/voice_configs/ogre.json": {
+      "sha256": "53b8d49b1df073899478558a7f62cdfb1130249f7de2ae23fc9ba0af8c77b5c8",
+      "bytes": 242
+    },
+    "data/voice_configs/orc_female.json": {
+      "sha256": "eede6d23a3d2bea242bd799a567051f7843ba0861df4c259d8d2f8929e2fb193",
+      "bytes": 242
+    },
+    "data/voice_configs/orc_male.json": {
+      "sha256": "ce4e644dd901babeeaa3bdb5353c75e94d667a3f982fc4005ca015d90650d40d",
+      "bytes": 212
+    },
+    "data/voice_configs/pandaren.json": {
+      "sha256": "8d3e8d917f0f7f9343204621974c0197376b08bd0ac54a2c6e74d8999ff03a78",
+      "bytes": 253
+    },
+    "data/voice_configs/quilboar.json": {
+      "sha256": "0c5c6dc65fd5fbc92b2bf87e61ce21141a19b86433348bd4d875964b703763c2",
+      "bytes": 251
+    },
+    "data/voice_configs/rexxar.json": {
+      "sha256": "8523ebcd9d36fa7cf2c33f13f88a27c301597fe8221b3f015b86c2f9d303cd7e",
+      "bytes": 247
+    },
+    "data/voice_configs/satyr.json": {
+      "sha256": "9c7bb5f0d2d7f3d130e3ade2a4aabaa4e57bfa9edeb7982da9fa334c5a2aa7a6",
+      "bytes": 250
+    },
+    "data/voice_configs/succubus.json": {
+      "sha256": "0206bc0ee28f38caa1de46237d26451e11dee6ca3831a190ad58dfb75fc3bb94",
+      "bytes": 256
+    },
+    "data/voice_configs/tauren_female.json": {
+      "sha256": "dc3f1c21d29eaad7542e63b5d3ed18b61bdf5fa81b9161959860167c5f0f2c6d",
+      "bytes": 224
+    },
+    "data/voice_configs/tauren_male.json": {
+      "sha256": "fc1262473efa6526bcc83eff5c4f2de8934433ab9f18be9f2e5698fc5f626baa",
+      "bytes": 283
+    },
+    "data/voice_configs/thrall.json": {
+      "sha256": "8fa48acc46e6eaaa79b241834c5b93d6323b083f8c9a101ae47148442ffc825e",
+      "bytes": 308
+    },
+    "data/voice_configs/tirion_fordring.json": {
+      "sha256": "d0a6bae3ed53f86e178ea2f1733b8fce989cccb8522a2a5eca1c187dd19332a3",
+      "bytes": 241
+    },
+    "data/voice_configs/treant.json": {
+      "sha256": "6288915ac6ae001a69a5a3cd660eb6a59bc7852b97d033af5f71273cdf1e338a",
+      "bytes": 261
+    },
+    "data/voice_configs/troll_female.json": {
+      "sha256": "dabc2c457deb000ea66db70343356776b146dc7e1f924c0994cbb69ba8922282",
+      "bytes": 212
+    },
+    "data/voice_configs/troll_male.json": {
+      "sha256": "f54f963304b3b7da0d48f7ce6cf8c9d4a2546a76b2742ca00fed72a40d7d40a1",
+      "bytes": 209
+    },
+    "data/voice_configs/tuskarr.json": {
+      "sha256": "969fb6c8411bf81ebf17b588bb3d0e7357ccbdc739f7593d3bd5cb858863f58c",
+      "bytes": 239
+    },
+    "data/voice_configs/tyrande_whisperwind.json": {
+      "sha256": "55f0cbf9ae32fb23abdbf6653e429404b1c5baafb202a12feaa009330b9f7a1d",
+      "bytes": 245
+    },
+    "data/voice_configs/undead_female.json": {
+      "sha256": "77d7225f9213856565acbe138d0ed15c4c46ec7fb99d17fcc6227bd562f49b4a",
+      "bytes": 220
+    },
+    "data/voice_configs/undead_male.json": {
+      "sha256": "792266977aaf2974e642759ea6e7a80cdd36a5653ddf07b286f9481a1da80436",
+      "bytes": 244
+    },
+    "data/voice_configs/varimathras.json": {
+      "sha256": "f774eea0a9a9981ef257784591a2d211c1a00d62e46a331234dcf9ac9f2131c8",
+      "bytes": 249
+    },
+    "data/voice_configs/vereesa_windrunner.json": {
+      "sha256": "1253f707560dde5e9d027a3c87e6fe6b8cc172435a92b78b32bd164dc2011a04",
+      "bytes": 272
+    },
+    "data/voice_configs/voljin.json": {
+      "sha256": "03ddb71b8c12152424454e4bbcd414c3918c2f1ddac0e52e40cde62afb3dfd7d",
+      "bytes": 236
+    },
+    "data/voice_configs/wisp.json": {
+      "sha256": "215adc6d3e2a57a08185050e078e7a10bb17779cd5f5fcd8b2f48e7346a62912",
+      "bytes": 283
+    },
+    "data/voice_manifest.lua": {
+      "sha256": "94e7626a60ada06fdd075ba065ecbec2c600340016288a823c3dc6ce1adc5168",
+      "bytes": 2007308
+    },
+    "data/voice_profile_report.json": {
+      "sha256": "4b16c1d26f310ba4baa543fcc4360f194e491e239812259fdad9e420d25b4d05",
+      "bytes": 800012
+    },
+    "DISCLAIMER.md": {
+      "sha256": "7270e94f96c97b076d9e0b9b3703dd2280f54ced922c724894c6dd6deb95b284",
+      "bytes": 1990
+    },
+    "LICENSE": {
+      "sha256": "6c6488a036e1cdf6598ee9ac40f565748e30fcfcd5171457df4c80121775c5f6",
+      "bytes": 1063
+    },
+    "README.md": {
+      "sha256": "c10026327091cb62b71a5db0f0fed199b1bc34c4016fc41c880c095b53d5535c",
+      "bytes": 19256
+    },
+    "samples/creature/banshee/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/centaur_female/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/centaur_male/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/draenei/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/dragon/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/dragonspawn/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/dreadlord/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/dryad/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/elemental/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/furbolg/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/ghost/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/ghoul/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/gnoll/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/harpy/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/imp/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/keeper_of_the_grove/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/kobold/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/murloc/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/naga_female/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/naga_male/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/ogre/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/pandaren/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/quilboar/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/satyr/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/succubus/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/treant/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/tuskarr/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/creature/wisp/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/archmage_ansirem_runeweaver/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/cairne_bloodhoof/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/chromie/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/gazlowe/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/highlord_bolvar_fordragon/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/king_magni_bronzebeard/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/lady_jaina_proudmoore/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/lady_sylvanas_windrunner/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/nathanos_blightcaller/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/rexxar/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/thrall/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/tirion_fordring/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/tyrande_whisperwind/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/varimathras/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/vereesa_windrunner/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/custom/voljin/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/dwarf_female/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/dwarf_male/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/gnome_female/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/gnome_male/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/goblin_female/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/goblin_male/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/high_elf_female/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/high_elf_male/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/human_female/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/human_male/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/narrator/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/night_elf_female/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/night_elf_male/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/orc_female/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/orc_male/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/README.md": {
+      "sha256": "14de43b37ad566848fb13e62497cb8b4ff66b5eb658fdde9eaae729f0a61fe0d",
+      "bytes": 4106
+    },
+    "samples/tauren_female/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/tauren_male/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/troll_female/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/troll_male/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/undead_female/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "samples/undead_male/.gitkeep": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "scripts/add_entry.py": {
+      "sha256": "f8dd7221b6a87e15b0344be70dd4df1c00038d0b4ece7559ce06ce1cf6591232",
+      "bytes": 8467
+    },
+    "scripts/analyze_quest_races.py": {
+      "sha256": "cb1a747e8a7f456c4b6f0f45fc31293c3861198119cf6d016ae9149f145fc084",
+      "bytes": 23354
+    },
+    "scripts/audio_effects.py": {
+      "sha256": "4e3faa7dab9d60fd31f911e67f28d339a02e15f9cbacabf563d400b8c7d7ec52",
+      "bytes": 10050
+    },
+    "scripts/convert_to_lua.py": {
+      "sha256": "8175554dec935ec7a2d5a238b7865203d08936b39aec3b56c0c8bb824ba24131",
+      "bytes": 5706
+    },
+    "scripts/convert_to_mp3.sh": {
+      "sha256": "ce83bcd465ed1f86588ea5e937db8255b31e801a38c0c1a4b39a048c0c08113e",
+      "bytes": 1286
+    },
+    "scripts/convert_to_ogg.sh": {
+      "sha256": "31d9093bd951c67e80d034af099e394f0d41fbb58fcedb79c624e09753e62ea3",
+      "bytes": 1607
+    },
+    "scripts/crawler.py": {
+      "sha256": "4ae9a3ffd9d95f2b8c208d52a018bbc721960afadb567b5c6244cdfa370876fa",
+      "bytes": 26056
+    },
+    "scripts/emotion_tagger.py": {
+      "sha256": "a53e40a686ba0a79560f6e3b5beddc479351e4b795e3cb04cdb6539cf8157b99",
+      "bytes": 48053
+    },
+    "scripts/enrich_sex.py": {
+      "sha256": "ac847f70b26e5061e9462599b0aa5652f47c6b31ed1f13e9b6a1a5d0348da69c",
+      "bytes": 7078
+    },
+    "scripts/extract_wc3_sounds.py": {
+      "sha256": "668cfc400d3127aa51c0769b1167f0026d5e91a374e06ae441dbe86633afa45a",
+      "bytes": 14257
+    },
+    "scripts/generate_report.py": {
+      "sha256": "a2961e042286a35b26aa1f0ccc3f466831af4e709d3391c29be8a63fdc60b265",
+      "bytes": 19406
+    },
+    "scripts/generate_voice.py": {
+      "sha256": "ebb056eb89022e7db5800515364b0d9b251f8b565f1b86184af78a9813edc4e5",
+      "bytes": 53951
+    },
+    "scripts/player_config.py": {
+      "sha256": "2c8aa3cbfc72d08c38bbc212dccae92e65abcc2e8d0f4aa4b8781131e1e9128b",
+      "bytes": 5441
+    },
+    "scripts/requirements.txt": {
+      "sha256": "9039652d2196e24ca7ee5099acacdcaa483171fdcd5ccc06ae495f63ec211d65",
+      "bytes": 1604
+    },
+    "scripts/text_sub.py": {
+      "sha256": "ae976af155e6e8335786f8616c25fd2cee1884c1ed7cdef29561bfff1bb314a9",
+      "bytes": 5794
+    },
+    "textures/tticon.tga": {
+      "sha256": "fc5b2c748f82f253aff67db6b998adfa6c0b910876dee8722e45321fa34bbf38",
+      "bytes": 4114
+    },
+    "TurtlesEpoch.toc": {
+      "sha256": "7ba8f2a31c932fd1823e245b3fbb2b269db956f46fc43f090850e25c4479a926",
+      "bytes": 387
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "10024958": {
+      "tag": "turtleepochv1.1.2",
+      "folder": "turtleepochv1.1.2--10024958",
+      "assets": {
+        "1462514": {
+          "sha256": "5fe54a361593e12b617e943a468f9379ab934d1e0ef484a57991fecf43c9a2ea",
+          "bytes": 2049626,
+          "id": "1462514",
+          "name": "TurtlesEpochv1.1.2.zip",
+          "url": "https://codeberg.org/Mejiro/TurtlesEpoch/releases/download/turtleepochv1.1.2/TurtlesEpochv1.1.2.zip",
+          "path": "releases/turtleepochv1.1.2--10024958/assets/TurtlesEpochv1.1.2.zip"
+        }
+      },
+      "source": {
+        "sha256": "4bb0cf4cc9c85936bc90e7fcbbf595bd9f8f89111145a4eb026218e30f3d2ffe",
+        "bytes": 6505082,
+        "path": "releases/turtleepochv1.1.2--10024958/upstream-source.tar.gz",
+        "url": "https://codeberg.org/api/v1/repos/Mejiro/TurtlesEpoch/archive/turtleepochv1.1.2.tar.gz"
+      }
+    }
+  }
+}

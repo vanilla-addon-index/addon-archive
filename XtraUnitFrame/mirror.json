@@ -1,0 +1,137 @@
+{
+  "upstream": "https://github.com/unknauwn/XtraUnitFrame",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "unknauwn",
+    "repo": "XtraUnitFrame",
+    "name": "XtraUnitFrame",
+    "url": "https://github.com/unknauwn/XtraUnitFrame",
+    "api": "https://api.github.com/repos/unknauwn/XtraUnitFrame"
+  },
+  "commit": "46121e25c1c72ea012de28658a29fe83a443a862",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "modules/LoadSyncFromLauncher.lua": {
+      "sha256": "0bf3f50fc7ced334d1759655ab8f5323cb7c619e82c1f73f39cb2c2c44e235bb",
+      "bytes": 2007
+    },
+    "modules/XtraUnitFrameFunc.lua": {
+      "sha256": "06ecb6bf9fdd96463f69aa62b5b9985c30c6435d5548320686c77ae14a650195",
+      "bytes": 14577
+    },
+    "modules/XtraUnitFrameProfil.lua": {
+      "sha256": "bbbe1a9bff0937e4d04977000b06de5faaad53e6b73853105b482c6998c7935a",
+      "bytes": 6364
+    },
+    "modules/XtraUnitFrameProfileSync.lua": {
+      "sha256": "c1f4162ed4337554312fc535f67ca4d91d9e6b1a2625e341fb95a1e69ad01d8d",
+      "bytes": 2821
+    },
+    "README.md": {
+      "sha256": "6ae0b5fd7f95b81b91965258939d753c35473ab32720c7a1e1a055d834d38cab",
+      "bytes": 2954
+    },
+    "textures/Aluminium.tga": {
+      "sha256": "679e0dbbb1e1f26871a2a84610d327289db1faf2743590692e57c22f6d52358d",
+      "bytes": 32812
+    },
+    "textures/Armory.tga": {
+      "sha256": "7f5d7718082fc4f2bfda40f264d550eb6cc141922acfc7e1554aebad4744015e",
+      "bytes": 812
+    },
+    "textures/BantoBar.tga": {
+      "sha256": "5a5deac548c4639de44db55ed79a6784bba95fc8286e7a4e7235ea7da24e19c3",
+      "bytes": 32812
+    },
+    "textures/Cilo.tga": {
+      "sha256": "5ba70bdeecce2985d6f8f52fb5a74b85542ea51e770cbe5a613e8e7ac13e6dff",
+      "bytes": 65580
+    },
+    "textures/Glaze2.tga": {
+      "sha256": "805cc920b241fe6d09f7907c99c16a09c15e9bb5ebb7c736486854b5c13122cb",
+      "bytes": 32812
+    },
+    "textures/Gloss.tga": {
+      "sha256": "20f70840ccfd8c7a94ccdc57a95810a56d495e1de62ac90e4f051e44c8215205",
+      "bytes": 32812
+    },
+    "textures/Graphite.tga": {
+      "sha256": "4fafd7e34444a05f1d261a76156fadc3130c6f7d1538779b559ed6b8e4825856",
+      "bytes": 65580
+    },
+    "textures/Grid.tga": {
+      "sha256": "9caee4d0382316aa64ec4891eb8b05ffba0df5e421bef9274f8533e639637d74",
+      "bytes": 24594
+    },
+    "textures/Healbot.tga": {
+      "sha256": "9b3cdfeba85c0fed3e9089dc4f8c21ac0e079eeac018b1e2c518af4295f832a6",
+      "bytes": 24594
+    },
+    "textures/LiteStep.tga": {
+      "sha256": "9bd025e9217a88cda7ef3bd185976ded94a647468c6126d42c55df4a88f3a7c2",
+      "bytes": 32812
+    },
+    "textures/Minimalist.tga": {
+      "sha256": "97976977031766d707a34121ac13c5ab6b7e9d204be2efaa395c717aeb1dc7ab",
+      "bytes": 1304
+    },
+    "textures/normTex.tga": {
+      "sha256": "500b74637f1d0fa7a75b965152de3e9c1814cad3706526938ea251f683da8e7e",
+      "bytes": 14690
+    },
+    "textures/Otravi.tga": {
+      "sha256": "e300a87224e7c1a044574ec915a1f9c0de49c3e26f854ecd3e1ea8ed920aaba9",
+      "bytes": 32812
+    },
+    "textures/Outline.tga": {
+      "sha256": "f1f5c8e7032b24c0e08f42fc5ad3ab14d20005bb7a31921bd982d5883b4cad28",
+      "bytes": 664
+    },
+    "textures/Perl.tga": {
+      "sha256": "e0fd78c10c65cc4ef4cd455ecf97e0b1f0d0e8808d0822eb94f4f2f9dae98596",
+      "bytes": 2037
+    },
+    "textures/Round.tga": {
+      "sha256": "8da9acf03ae2629228635fe039ffcf1a8776567168e28d5a74113599002bedcf",
+      "bytes": 4980
+    },
+    "textures/Smooth.tga": {
+      "sha256": "00e8084e83bf25b941464e2619b59e993b6ac7ae0bd8a6f37b12872e686ded6d",
+      "bytes": 32812
+    },
+    "XtraUnitFrame.lua": {
+      "sha256": "744049951ebd864caa4c42063c52661d759e79f577f3f73f6c9ed2133a8f3978",
+      "bytes": 10694
+    },
+    "XtraUnitFrame.toc": {
+      "sha256": "fd3c241f86d7a987236e17cb07319837bfe380e80b2c65bac0f00379d54dd4ed",
+      "bytes": 580
+    },
+    "XtraUnitFrameConf.lua": {
+      "sha256": "10d1cafd0f19f4ef7718c3548d8d70d8259046927e3e2846671914f208d259ad",
+      "bytes": 1409
+    },
+    "XtraUnitFrameUI.xml": {
+      "sha256": "60e2333cf2e03c8bad665dbbd1373dabe7aaf77af94dd11c97876968e7fa3740",
+      "bytes": 69860
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "11064020": {
+      "tag": "4.0",
+      "folder": "4.0--11064020",
+      "assets": {},
+      "source": {
+        "sha256": "b25970944a38204c1553b4fe94350895d1ec248b036cf5b4c383dd04d79f59b4",
+        "bytes": 87601,
+        "path": "releases/4.0--11064020/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/unknauwn/XtraUnitFrame/tarball/4.0"
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Cephel/DankScore",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Cephel",
+    "repo": "DankScore",
+    "name": "DankScore",
+    "url": "https://github.com/Cephel/DankScore",
+    "api": "https://api.github.com/repos/Cephel/DankScore"
+  },
+  "commit": "9c38910c9c6d66417c7e44762857b6781b0d38fe",
+  "sourceFiles": {
+    ".editorconfig": {
+      "sha256": "56467ecb22e92ff636b3c665b47107740ff00219d279de79f741ded866fb1dc2",
+      "bytes": 190
+    },
+    "backup.bak": {
+      "sha256": "a8fbebd05a84400330fd23af1624d6a1e16d9f5f0ee86a8dfb4801dcf28fa56a",
+      "bytes": 2887
+    },
+    "DankScore.lua": {
+      "sha256": "5bdc4ba095e5c8856c2067abd8059d43d646fe8d7b5eaf0c6eae3e69aafd7a1d",
+      "bytes": 6629
+    },
+    "DankScore.toc": {
+      "sha256": "76cb257f7f72eb548bc3fac9fc7dba1fc56c9106b2b1421c35d57a87f187e9c5",
+      "bytes": 110
+    },
+    "README.md": {
+      "sha256": "b48773701a06d794d857abb85586b3d35b4cbfbdc305574debcf9123a34b58a0",
+      "bytes": 88
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

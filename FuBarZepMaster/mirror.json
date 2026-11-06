@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/EbedaNostalrius/FuBar_ZepMaster",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EbedaNostalrius",
+    "repo": "FuBar_ZepMaster",
+    "name": "FuBar_ZepMaster",
+    "url": "https://github.com/EbedaNostalrius/FuBar_ZepMaster",
+    "api": "https://api.github.com/repos/EbedaNostalrius/FuBar_ZepMaster"
+  },
+  "commit": "ddf6a5042ef9131dae9ffebe1fe0757253f590e9",
+  "sourceFiles": {
+    "FuBar_ZepMaster.toc": {
+      "sha256": "7122d8eaa580bfc26e03d19e3d9888c946b4d4549584e6c744ef8f12c089a6b3",
+      "bytes": 674
+    },
+    "README.md": {
+      "sha256": "b318bc5da3c5683696966247e83cc2e07a94b89fd4c9812584aea7e22e06b907",
+      "bytes": 187
+    },
+    "ZepMaster.lua": {
+      "sha256": "04f14a767eb778db502c2e362c36d829633f6e161fbb8c54a45f643c016a1843",
+      "bytes": 8958
+    },
+    "ZepMasterLocale-enUS.lua": {
+      "sha256": "0e60e50642c0606d8221d3361f14f7f718391b060f66400fac2ba553cd25ce3d",
+      "bytes": 319
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

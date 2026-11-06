@@ -1,0 +1,11 @@
+{
+  "donor_voice": "creature/furbolg",
+  "pitch_shift": 0,
+  "reverb": 0.0,
+  "reverb_decay": 0.6,
+  "bass_boost_db": 2,
+  "treble_boost_db": 0,
+  "status": "approved",
+  "test_quest_id": null,
+  "notes": "F0 ~194 Hz. Donor: furbolg samples. Bass +2. 21/21 lines generated (4 NPCs)."
+}

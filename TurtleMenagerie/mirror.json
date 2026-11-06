@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/TrangOul/TurtleMenagerie",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "TrangOul",
+    "repo": "TurtleMenagerie",
+    "name": "TurtleMenagerie",
+    "url": "https://github.com/TrangOul/TurtleMenagerie",
+    "api": "https://api.github.com/repos/TrangOul/TurtleMenagerie"
+  },
+  "commit": "025952539801894d37bc5cc899315a87aa9e769d",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "55d6130d75e9bf92114b06f3e845a4fda74e227f501394f7ebdbef072c69f6a3",
+      "bytes": 155
+    },
+    "localization.lua": {
+      "sha256": "44ccee518e3464d35e48b5e892f96b9e7bdf204b55448b76aa6181d9b297858c",
+      "bytes": 133
+    },
+    "README.md": {
+      "sha256": "09f4c6f11f796fd706886e53c1067e9a735a19eb18e99065614993981bb54e3a",
+      "bytes": 913
+    },
+    "TurtleMenagerie.lua": {
+      "sha256": "029c5d95dcfa38c2b55b200408df4b816f7899df3ddb0a05b31df8a2d0d99037",
+      "bytes": 7328
+    },
+    "TurtleMenagerie.toc": {
+      "sha256": "c40ee21419fd8f90eec10f3fed8448936ec07780dfa8ae81615ef840cc3ed846",
+      "bytes": 221
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

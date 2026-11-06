@@ -15157,9 +15157,10 @@
             "url": "https://github.com/shirsig/snipe",
             "api": "https://api.github.com/repos/shirsig/snipe"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15183,9 +15184,10 @@
             "url": "https://github.com/refaim/SoloRaidTargetIcons",
             "api": "https://api.github.com/repos/refaim/SoloRaidTargetIcons"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -15209,9 +15211,10 @@
             "url": "https://github.com/sorgis-sorgis/sorgis_raid_marks",
             "api": "https://api.github.com/repos/sorgis-sorgis/sorgis_raid_marks"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://github.com/MarcelineVQ/sorgis_raid_marks",
@@ -15225,9 +15228,10 @@
             "url": "https://github.com/MarcelineVQ/sorgis_raid_marks",
             "api": "https://api.github.com/repos/MarcelineVQ/sorgis_raid_marks"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15251,9 +15255,10 @@
             "url": "https://github.com/Magues17/SortBags",
             "api": "https://api.github.com/repos/Magues17/SortBags"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://github.com/shirsig/SortBags-vanilla",
@@ -15267,9 +15272,10 @@
             "url": "https://github.com/shirsig/SortBags-vanilla",
             "api": "https://api.github.com/repos/shirsig/SortBags-vanilla"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15293,9 +15299,10 @@
             "url": "https://github.com/Redbu11dev/SortByBuyout",
             "api": "https://api.github.com/repos/Redbu11dev/SortByBuyout"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "GPL-3.0"
         }
       ],
       "active": true,
@@ -15319,9 +15326,10 @@
             "url": "https://github.com/refaim/SoulShardManager",
             "api": "https://api.github.com/repos/refaim/SoulShardManager"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15345,9 +15353,10 @@
             "url": "https://github.com/MarcelineVQ/SP_SwingTimer",
             "api": "https://api.github.com/repos/MarcelineVQ/SP_SwingTimer"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://github.com/jrc13245/SP_SwingTimer",
@@ -15361,9 +15370,10 @@
             "url": "https://github.com/jrc13245/SP_SwingTimer",
             "api": "https://api.github.com/repos/jrc13245/SP_SwingTimer"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://github.com/balakethelock/SP_SwingTimer",
@@ -15377,9 +15387,10 @@
             "url": "https://github.com/balakethelock/SP_SwingTimer",
             "api": "https://api.github.com/repos/balakethelock/SP_SwingTimer"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15403,9 +15414,10 @@
             "url": "https://github.com/laytya/SpamThrottle",
             "api": "https://api.github.com/repos/laytya/SpamThrottle"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "GPL-3.0"
         }
       ],
       "active": true,
@@ -15429,9 +15441,10 @@
             "url": "https://github.com/Dyaxler/SpartanUI_Vanilla",
             "api": "https://api.github.com/repos/Dyaxler/SpartanUI_Vanilla"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "GPL-3.0"
         }
       ],
       "active": true,
@@ -15455,9 +15468,10 @@
             "url": "https://github.com/KrekoG/SpecialTalent",
             "api": "https://api.github.com/repos/KrekoG/SpecialTalent"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15481,9 +15495,10 @@
             "url": "https://github.com/tomek7667/speed-o-meter",
             "api": "https://api.github.com/repos/tomek7667/speed-o-meter"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15507,9 +15522,10 @@
             "url": "https://github.com/Brqje/SpellAlert",
             "api": "https://api.github.com/repos/Brqje/SpellAlert"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15533,9 +15549,10 @@
             "url": "https://github.com/kevmodrome/SpellPowerMulti",
             "api": "https://api.github.com/repos/kevmodrome/SpellPowerMulti"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15559,9 +15576,10 @@
             "url": "https://github.com/Montspy/sQMinimapFix",
             "api": "https://api.github.com/repos/Montspy/sQMinimapFix"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -15585,9 +15603,10 @@
             "url": "https://github.com/satan666/sRaidFrames_Improved",
             "api": "https://api.github.com/repos/satan666/sRaidFrames_Improved"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15611,9 +15630,10 @@
             "url": "https://github.com/grimfiendish/StatCompare",
             "api": "https://api.github.com/repos/grimfiendish/StatCompare"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15637,9 +15657,10 @@
             "url": "https://github.com/Paparogue/StopDuelBuffer",
             "api": "https://api.github.com/repos/Paparogue/StopDuelBuffer"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15663,9 +15684,10 @@
             "url": "https://github.com/Geigerkind/StopWatch",
             "api": "https://api.github.com/repos/Geigerkind/StopWatch"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15689,9 +15711,10 @@
             "url": "https://gitlab.com/WobLight/Strategos_Battleground",
             "api": "https://gitlab.com/api/v4/projects/WobLight%2FStrategos_Battleground"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15715,9 +15738,10 @@
             "url": "https://gitlab.com/WobLight/Strategos_Minimap",
             "api": "https://gitlab.com/api/v4/projects/WobLight%2FStrategos_Minimap"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15741,9 +15765,10 @@
             "url": "https://github.com/Otari98/SUCC-bag",
             "api": "https://api.github.com/repos/Otari98/SUCC-bag"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15767,9 +15792,10 @@
             "url": "https://github.com/checkem/SUCC-ecb",
             "api": "https://api.github.com/repos/checkem/SUCC-ecb"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15793,9 +15819,10 @@
             "url": "https://github.com/checkem/SUCC-ui",
             "api": "https://api.github.com/repos/checkem/SUCC-ui"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15819,9 +15846,10 @@
             "url": "https://github.com/0ldi/SummonsMonitor",
             "api": "https://api.github.com/repos/0ldi/SummonsMonitor"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15845,9 +15873,10 @@
             "url": "https://github.com/perks/SunderNP",
             "api": "https://api.github.com/repos/perks/SunderNP"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15871,9 +15900,10 @@
             "url": "https://github.com/balakethelock/SuperAPI_Castlib",
             "api": "https://api.github.com/repos/balakethelock/SuperAPI_Castlib"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15897,9 +15927,10 @@
             "url": "https://github.com/akzkak/SuperIgnore",
             "api": "https://api.github.com/repos/akzkak/SuperIgnore"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://github.com/refaim/SuperIgnore",
@@ -15913,9 +15944,10 @@
             "url": "https://github.com/refaim/SuperIgnore",
             "api": "https://api.github.com/repos/refaim/SuperIgnore"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -15939,9 +15971,10 @@
             "url": "https://github.com/vakos1/SuperInspect",
             "api": "https://api.github.com/repos/vakos1/SuperInspect"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -15965,9 +15998,10 @@
             "url": "https://github.com/akzkak/SuperTotem",
             "api": "https://api.github.com/repos/akzkak/SuperTotem"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://github.com/elboaf/SuperTotem",
@@ -15981,9 +16015,10 @@
             "url": "https://github.com/elboaf/SuperTotem",
             "api": "https://api.github.com/repos/elboaf/SuperTotem"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16007,9 +16042,10 @@
             "url": "https://github.com/melbaa/swapondeath",
             "api": "https://api.github.com/repos/melbaa/swapondeath"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16033,9 +16069,10 @@
             "url": "https://github.com/gabrielecimolino/Swapper",
             "api": "https://api.github.com/repos/gabrielecimolino/Swapper"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -16059,9 +16096,10 @@
             "url": "https://github.com/Grymskvll/SwapRaidSubgroupByName",
             "api": "https://api.github.com/repos/Grymskvll/SwapRaidSubgroupByName"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16085,9 +16123,10 @@
             "url": "https://github.com/vashin1/SyncedUI",
             "api": "https://api.github.com/repos/vashin1/SyncedUI"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16111,9 +16150,10 @@
             "url": "https://github.com/Atreyyo/TankAssignments",
             "api": "https://api.github.com/repos/Atreyyo/TankAssignments"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16137,9 +16177,10 @@
             "url": "https://github.com/srazdokunebil/TankBuddy",
             "api": "https://api.github.com/repos/srazdokunebil/TankBuddy"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16163,9 +16204,10 @@
             "url": "https://github.com/xorann/TankHeal",
             "api": "https://api.github.com/repos/xorann/TankHeal"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16189,9 +16231,10 @@
             "url": "https://github.com/balakethelock/TankHelper",
             "api": "https://api.github.com/repos/balakethelock/TankHelper"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16215,9 +16258,10 @@
             "url": "https://github.com/MarcelineVQ/TankPlates",
             "api": "https://api.github.com/repos/MarcelineVQ/TankPlates"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16241,9 +16285,10 @@
             "url": "https://github.com/0ldi/TargetAssist",
             "api": "https://api.github.com/repos/0ldi/TargetAssist"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16267,9 +16312,10 @@
             "url": "https://octowow.st/git/OEVG/TargetFrameBuff",
             "api": "https://octowow.st/git/api/v1/repos/OEVG/TargetFrameBuff"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://github.com/ZiiMs/TargetFrameBuff",
@@ -16283,9 +16329,10 @@
             "url": "https://github.com/ZiiMs/TargetFrameBuff",
             "api": "https://api.github.com/repos/ZiiMs/TargetFrameBuff"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16309,9 +16356,10 @@
             "url": "https://github.com/phrxqt/TargetSoundRestore",
             "api": "https://api.github.com/repos/phrxqt/TargetSoundRestore"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -16335,9 +16383,10 @@
             "url": "https://github.com/ZenSociety/ThreatLogger",
             "api": "https://api.github.com/repos/ZenSociety/ThreatLogger"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -16361,9 +16410,10 @@
             "url": "https://github.com/Xleone1/Threat",
             "api": "https://api.github.com/repos/Xleone1/Threat"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://github.com/muellerj/Threat",
@@ -16377,9 +16427,10 @@
             "url": "https://github.com/muellerj/Threat",
             "api": "https://api.github.com/repos/muellerj/Threat"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16403,9 +16454,10 @@
             "url": "https://github.com/jrc13245/TimeToKill",
             "api": "https://api.github.com/repos/jrc13245/TimeToKill"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16429,9 +16481,10 @@
             "url": "https://github.com/EinBaum/TinyTip",
             "api": "https://api.github.com/repos/EinBaum/TinyTip"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16455,9 +16508,10 @@
             "url": "https://github.com/isitLoVe/TitanCritLine",
             "api": "https://api.github.com/repos/isitLoVe/TitanCritLine"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16481,9 +16535,10 @@
             "url": "https://github.com/isitLoVe/TitanGuild",
             "api": "https://api.github.com/repos/isitLoVe/TitanGuild"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16507,9 +16562,10 @@
             "url": "https://github.com/sica42/TitleRotator",
             "api": "https://api.github.com/repos/sica42/TitleRotator"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16533,9 +16589,10 @@
             "url": "https://github.com/refaim/TNE-FiveSec",
             "api": "https://api.github.com/repos/refaim/TNE-FiveSec"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16559,9 +16616,10 @@
             "url": "https://octowow.st/git/ShempError/TotemBar",
             "api": "https://octowow.st/git/api/v1/repos/ShempError/TotemBar"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -16585,9 +16643,10 @@
             "url": "https://octowow.st/git/Fayz/TotemNesia",
             "api": "https://octowow.st/git/api/v1/repos/Fayz/TotemNesia"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://github.com/TheRealFayz/TotemNesia",
@@ -16601,9 +16660,10 @@
             "url": "https://github.com/TheRealFayz/TotemNesia",
             "api": "https://api.github.com/repos/TheRealFayz/TotemNesia"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16627,9 +16687,10 @@
             "url": "https://github.com/gregdeichler/TotemTimers",
             "api": "https://api.github.com/repos/gregdeichler/TotemTimers"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -16653,9 +16714,10 @@
             "url": "https://github.com/MOUZU/TotemTimers-Enhanced",
             "api": "https://api.github.com/repos/MOUZU/TotemTimers-Enhanced"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16679,9 +16741,10 @@
             "url": "https://github.com/gbl/TradeChat",
             "api": "https://api.github.com/repos/gbl/TradeChat"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16705,9 +16768,10 @@
             "url": "https://github.com/refaim/TradeSkillsData",
             "api": "https://api.github.com/repos/refaim/TradeSkillsData"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://github.com/refaim/TradeSkillsData-turtle",
@@ -16721,9 +16785,10 @@
             "url": "https://github.com/refaim/TradeSkillsData-turtle",
             "api": "https://api.github.com/repos/refaim/TradeSkillsData-turtle"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16747,9 +16812,10 @@
             "url": "https://github.com/Liijin/Trailblazer",
             "api": "https://api.github.com/repos/Liijin/Trailblazer"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16773,9 +16839,10 @@
             "url": "https://github.com/refaim/TrainerSkills-vanilla",
             "api": "https://api.github.com/repos/refaim/TrainerSkills-vanilla"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16799,9 +16866,10 @@
             "url": "https://github.com/jrc13245/TrinketMenu",
             "api": "https://api.github.com/repos/jrc13245/TrinketMenu"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16825,9 +16893,10 @@
             "url": "https://github.com/DaMaGepyHUN/TurtleChatColors",
             "api": "https://api.github.com/repos/DaMaGepyHUN/TurtleChatColors"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16851,9 +16920,10 @@
             "url": "https://github.com/neimad-mp/TurtleCount",
             "api": "https://api.github.com/repos/neimad-mp/TurtleCount"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -16877,9 +16947,10 @@
             "url": "https://github.com/FrancisEgan/TurtleDebug",
             "api": "https://api.github.com/repos/FrancisEgan/TurtleDebug"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -16903,9 +16974,10 @@
             "url": "https://github.com/madamsmall/TurtleEnchant",
             "api": "https://api.github.com/repos/madamsmall/TurtleEnchant"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16929,9 +17001,10 @@
             "url": "https://github.com/refaim/TurtleHardcoreChatTamer",
             "api": "https://api.github.com/repos/refaim/TurtleHardcoreChatTamer"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -16955,9 +17028,10 @@
             "url": "https://github.com/dnkrse/TurtleHonorSpyEnhanced",
             "api": "https://api.github.com/repos/dnkrse/TurtleHonorSpyEnhanced"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -16981,9 +17055,10 @@
             "url": "https://github.com/prodigeomix/TurtleMail",
             "api": "https://api.github.com/repos/prodigeomix/TurtleMail"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://octowow.st/git/Dusk/TurtleMail",
@@ -16997,9 +17072,10 @@
             "url": "https://octowow.st/git/Dusk/TurtleMail",
             "api": "https://octowow.st/git/api/v1/repos/Dusk/TurtleMail"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17023,9 +17099,10 @@
             "url": "https://github.com/TrangOul/TurtleMenagerie",
             "api": "https://api.github.com/repos/TrangOul/TurtleMenagerie"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17049,9 +17126,10 @@
             "url": "https://github.com/Avery1337/TurtlePetSearch",
             "api": "https://api.github.com/repos/Avery1337/TurtlePetSearch"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17075,9 +17153,10 @@
             "url": "https://github.com/clungo/TurtlePvp",
             "api": "https://api.github.com/repos/clungo/TurtlePvp"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17101,9 +17180,10 @@
             "url": "https://github.com/FrancisEgan/TurtleReagentDisplay",
             "api": "https://api.github.com/repos/FrancisEgan/TurtleReagentDisplay"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -17127,9 +17207,10 @@
             "url": "https://github.com/bratmage/TurtleRP",
             "api": "https://api.github.com/repos/bratmage/TurtleRP"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://github.com/OldManAlpha/TurtleRP",
@@ -17143,9 +17224,10 @@
             "url": "https://github.com/OldManAlpha/TurtleRP",
             "api": "https://api.github.com/repos/OldManAlpha/TurtleRP"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17169,9 +17251,10 @@
             "url": "https://codeberg.org/Mejiro/TurtlesEpoch",
             "api": "https://codeberg.org/api/v1/repos/Mejiro/TurtlesEpoch"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -17195,9 +17278,10 @@
             "url": "https://github.com/McPewPew/TurtleSnacks",
             "api": "https://api.github.com/repos/McPewPew/TurtleSnacks"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17221,9 +17305,10 @@
             "url": "https://github.com/picardebooks/TurtleTranslator",
             "api": "https://api.github.com/repos/picardebooks/TurtleTranslator"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -17247,9 +17332,10 @@
             "url": "https://github.com/CosminPOP/TWAssignments",
             "api": "https://api.github.com/repos/CosminPOP/TWAssignments"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17273,9 +17359,10 @@
             "url": "https://github.com/CosminPOP/TWBlueDragon",
             "api": "https://api.github.com/repos/CosminPOP/TWBlueDragon"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17299,9 +17386,10 @@
             "url": "https://github.com/brues-code/TwitchEmotes",
             "api": "https://api.github.com/repos/brues-code/TwitchEmotes"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://octowow.st/git/brues/TwitchEmotes",
@@ -17315,9 +17403,10 @@
             "url": "https://octowow.st/git/brues/TwitchEmotes",
             "api": "https://octowow.st/git/api/v1/repos/brues/TwitchEmotes"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17341,9 +17430,10 @@
             "url": "https://github.com/Ageous27/TwMapReveal",
             "api": "https://api.github.com/repos/Ageous27/TwMapReveal"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17367,9 +17457,10 @@
             "url": "https://github.com/CosminPOP/TWOwenWilson",
             "api": "https://api.github.com/repos/CosminPOP/TWOwenWilson"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17393,9 +17484,10 @@
             "url": "https://github.com/FSuhas/TWPulse",
             "api": "https://api.github.com/repos/FSuhas/TWPulse"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://github.com/CosminPOP/TWPulse",
@@ -17409,9 +17501,10 @@
             "url": "https://github.com/CosminPOP/TWPulse",
             "api": "https://api.github.com/repos/CosminPOP/TWPulse"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17435,9 +17528,10 @@
             "url": "https://github.com/CosminPOP/TWSunders",
             "api": "https://api.github.com/repos/CosminPOP/TWSunders"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17461,9 +17555,10 @@
             "url": "https://github.com/Sheed90/TWThreat-Octo",
             "api": "https://api.github.com/repos/Sheed90/TWThreat-Octo"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17487,9 +17582,10 @@
             "url": "https://gitlab.com/Artur91425/UberBanish",
             "api": "https://gitlab.com/api/v4/projects/Artur91425%2FUberBanish"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -17513,9 +17609,10 @@
             "url": "https://github.com/yutsuku/UITweaks",
             "api": "https://api.github.com/repos/yutsuku/UITweaks"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17539,9 +17636,10 @@
             "url": "https://github.com/jrc13245/UltimaMacros",
             "api": "https://api.github.com/repos/jrc13245/UltimaMacros"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17565,9 +17663,10 @@
             "url": "https://github.com/Daribon/UnicodeFont",
             "api": "https://api.github.com/repos/Daribon/UnicodeFont"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -17591,9 +17690,10 @@
             "url": "https://github.com/Redbu11dev/UnitPlates",
             "api": "https://api.github.com/repos/Redbu11dev/UnitPlates"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17617,9 +17717,10 @@
             "url": "https://github.com/Szalor/UnleashedTracker",
             "api": "https://api.github.com/repos/Szalor/UnleashedTracker"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unlicense"
         }
       ],
       "active": true,
@@ -17643,9 +17744,10 @@
             "url": "https://octowow.st/git/ShempError/Vampify",
             "api": "https://octowow.st/git/api/v1/repos/ShempError/Vampify"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -17669,9 +17771,10 @@
             "url": "https://github.com/hixio-mh/VanillaGraphicBoost",
             "api": "https://api.github.com/repos/hixio-mh/VanillaGraphicBoost"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17695,9 +17798,10 @@
             "url": "https://github.com/TheUnprofessionalGamer/VanillaGuide",
             "api": "https://api.github.com/repos/TheUnprofessionalGamer/VanillaGuide"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17721,9 +17825,10 @@
             "url": "https://github.com/DonutsDelivery/VanillaGuide-Plus",
             "api": "https://api.github.com/repos/DonutsDelivery/VanillaGuide-Plus"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://github.com/tmerle/VanillaGuide/tree/pfquest-localization",
@@ -17739,9 +17844,10 @@
             "url": "https://github.com/tmerle/VanillaGuide",
             "api": "https://api.github.com/repos/tmerle/VanillaGuide"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17765,9 +17871,10 @@
             "url": "https://github.com/JeromeM/VanillaGuideReloaded",
             "api": "https://api.github.com/repos/JeromeM/VanillaGuideReloaded"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17791,9 +17898,10 @@
             "url": "https://github.com/0ldi/VanillaMaps",
             "api": "https://api.github.com/repos/0ldi/VanillaMaps"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17817,9 +17925,10 @@
             "url": "https://github.com/tubtubs/VanillaStoryline",
             "api": "https://api.github.com/repos/tubtubs/VanillaStoryline"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://github.com/Voidmenull/VanillaStoryline",
@@ -17833,9 +17942,10 @@
             "url": "https://github.com/Voidmenull/VanillaStoryline",
             "api": "https://api.github.com/repos/Voidmenull/VanillaStoryline"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17859,9 +17969,10 @@
             "url": "https://github.com/EinBaum/VendorAutoBuy",
             "api": "https://api.github.com/repos/EinBaum/VendorAutoBuy"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -17885,9 +17996,10 @@
             "url": "https://github.com/MarcelineVQ/VendorList",
             "api": "https://api.github.com/repos/MarcelineVQ/VendorList"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17911,9 +18023,10 @@
             "url": "https://github.com/Otari98/VF_WarriorAddon",
             "api": "https://api.github.com/repos/Otari98/VF_WarriorAddon"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17937,9 +18050,10 @@
             "url": "https://github.com/firenahzku/VanguardAntiCooldown",
             "api": "https://api.github.com/repos/firenahzku/VanguardAntiCooldown"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17963,9 +18077,10 @@
             "url": "https://github.com/firenahzku/VGAttackBar",
             "api": "https://api.github.com/repos/firenahzku/VGAttackBar"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -17989,9 +18104,10 @@
             "url": "https://github.com/firenahzku/VGInterrupt",
             "api": "https://api.github.com/repos/firenahzku/VGInterrupt"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18015,9 +18131,10 @@
             "url": "https://github.com/firenahzku/VanguardShamanTools",
             "api": "https://api.github.com/repos/firenahzku/VanguardShamanTools"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18041,9 +18158,10 @@
             "url": "https://github.com/gregdeichler/Vizput",
             "api": "https://api.github.com/repos/gregdeichler/Vizput"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18067,9 +18185,10 @@
             "url": "https://github.com/ZythDr/vPeddler",
             "api": "https://api.github.com/repos/ZythDr/vPeddler"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18093,9 +18212,10 @@
             "url": "https://github.com/mr-rosh/WarriorHUD",
             "api": "https://api.github.com/repos/mr-rosh/WarriorHUD"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -18119,9 +18239,10 @@
             "url": "https://github.com/Cernie/WarriorTank",
             "api": "https://api.github.com/repos/Cernie/WarriorTank"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18145,9 +18266,10 @@
             "url": "https://github.com/Goose404/WarriorTweaks",
             "api": "https://api.github.com/repos/Goose404/WarriorTweaks"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18171,9 +18293,10 @@
             "url": "https://github.com/fuffc/WeakestAuras",
             "api": "https://api.github.com/repos/fuffc/WeakestAuras"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "GPL-2.0"
         },
         {
           "originalUrl": "https://octowow.st/git/lightblade/WeakestAuras",
@@ -18187,9 +18310,10 @@
             "url": "https://octowow.st/git/lightblade/WeakestAuras",
             "api": "https://octowow.st/git/api/v1/repos/lightblade/WeakestAuras"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "LGPL"
         }
       ],
       "active": true,
@@ -18213,9 +18337,10 @@
             "url": "https://github.com/webdkpthroaway/WebDKP_Elysium",
             "api": "https://api.github.com/repos/webdkpthroaway/WebDKP_Elysium"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18239,9 +18364,10 @@
             "url": "https://github.com/FrancisEgan/WhatsTraining_Turtle",
             "api": "https://api.github.com/repos/FrancisEgan/WhatsTraining_Turtle"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         },
         {
           "originalUrl": "https://github.com/Gescht/WhatsTraining_Turtle",
@@ -18255,9 +18381,10 @@
             "url": "https://github.com/Gescht/WhatsTraining_Turtle",
             "api": "https://api.github.com/repos/Gescht/WhatsTraining_Turtle"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -18281,9 +18408,10 @@
             "url": "https://github.com/Forbium/WhisperBind",
             "api": "https://api.github.com/repos/Forbium/WhisperBind"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18307,9 +18435,10 @@
             "url": "https://github.com/LadaBr/whisperfilter",
             "api": "https://api.github.com/repos/LadaBr/whisperfilter"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18333,9 +18462,10 @@
             "url": "https://github.com/ZenSociety/WhisperProfile",
             "api": "https://api.github.com/repos/ZenSociety/WhisperProfile"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18359,9 +18489,10 @@
             "url": "https://github.com/Road-block/WhoHas",
             "api": "https://api.github.com/repos/Road-block/WhoHas"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18385,9 +18516,10 @@
             "url": "https://github.com/Fiurs-Hearth/WIIIUI",
             "api": "https://api.github.com/repos/Fiurs-Hearth/WIIIUI"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18411,9 +18543,10 @@
             "url": "https://github.com/MOUZU/WorkAroundSelfCast",
             "api": "https://api.github.com/repos/MOUZU/WorkAroundSelfCast"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18437,9 +18570,10 @@
             "url": "https://github.com/Bergador/WorldBuffSoundAlert",
             "api": "https://api.github.com/repos/Bergador/WorldBuffSoundAlert"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18463,9 +18597,10 @@
             "url": "https://github.com/twothe/WorldFilter",
             "api": "https://api.github.com/repos/twothe/WorldFilter"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -18489,9 +18624,10 @@
             "url": "https://octowow.st/git/Dusk/WowRadio-Vanilla",
             "api": "https://octowow.st/git/api/v1/repos/Dusk/WowRadio-Vanilla"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://github.com/paokkerkir/WowRadio-Vanilla",
@@ -18505,9 +18641,10 @@
             "url": "https://github.com/paokkerkir/WowRadio-Vanilla",
             "api": "https://api.github.com/repos/paokkerkir/WowRadio-Vanilla"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18531,9 +18668,10 @@
             "url": "https://github.com/Daribon/WRUGS",
             "api": "https://api.github.com/repos/Daribon/WRUGS"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18557,9 +18695,10 @@
             "url": "https://github.com/max-bruhn/WTBox",
             "api": "https://api.github.com/repos/max-bruhn/WTBox"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -18585,9 +18724,10 @@
             "url": "https://github.com/unknauwn/XckMasterLootAdvanced",
             "api": "https://api.github.com/repos/unknauwn/XckMasterLootAdvanced"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18611,9 +18751,10 @@
             "url": "https://github.com/EinBaum/XFactionChat",
             "api": "https://api.github.com/repos/EinBaum/XFactionChat"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -18637,9 +18778,10 @@
             "url": "https://github.com/Ko0z/XLoot",
             "api": "https://api.github.com/repos/Ko0z/XLoot"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18663,9 +18805,10 @@
             "url": "https://github.com/Redbu11dev/X-Perl-UnitFrames",
             "api": "https://api.github.com/repos/Redbu11dev/X-Perl-UnitFrames"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18691,9 +18834,10 @@
             "url": "https://github.com/unknauwn/XTranqManager",
             "api": "https://api.github.com/repos/unknauwn/XTranqManager"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18717,9 +18861,10 @@
             "url": "https://github.com/unknauwn/XtraUnitFrame",
             "api": "https://api.github.com/repos/unknauwn/XtraUnitFrame"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18743,9 +18888,10 @@
             "url": "https://github.com/Lichery/ZGLoot",
             "api": "https://api.github.com/repos/Lichery/ZGLoot"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18769,9 +18915,10 @@
             "url": "https://github.com/Xian55/Zorlen",
             "api": "https://api.github.com/repos/Xian55/Zorlen"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18795,9 +18942,10 @@
             "url": "https://github.com/Ko0z/zUI",
             "api": "https://api.github.com/repos/Ko0z/zUI"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -18821,9 +18969,10 @@
             "url": "https://github.com/41-0/41sCombatAlert",
             "api": "https://api.github.com/repos/41-0/41sCombatAlert"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -18847,9 +18996,10 @@
             "url": "https://github.com/akzkak/CombatLedger",
             "api": "https://api.github.com/repos/akzkak/CombatLedger"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         },
         {
           "originalUrl": "https://octowow.st/git/lightblade/CombatLedger",
@@ -18863,9 +19013,10 @@
             "url": "https://octowow.st/git/lightblade/CombatLedger",
             "api": "https://octowow.st/git/api/v1/repos/lightblade/CombatLedger"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18889,9 +19040,10 @@
             "url": "https://github.com/trumpetx/CombatLoggingReminder",
             "api": "https://api.github.com/repos/trumpetx/CombatLoggingReminder"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -18915,9 +19067,10 @@
             "url": "https://github.com/phrxqt/CombatPlates",
             "api": "https://api.github.com/repos/phrxqt/CombatPlates"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -18941,9 +19094,10 @@
             "url": "https://octowow.st/git/OEVG/Cursive",
             "api": "https://octowow.st/git/api/v1/repos/OEVG/Cursive"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         },
         {
           "originalUrl": "https://github.com/Wayoff333/Cursive",
@@ -18957,9 +19111,10 @@
             "url": "https://github.com/Wayoff333/Cursive",
             "api": "https://api.github.com/repos/Wayoff333/Cursive"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         },
         {
           "originalUrl": "https://github.com/pepopo978/Cursive",
@@ -18973,9 +19128,10 @@
             "url": "https://github.com/pepopo978/Cursive",
             "api": "https://api.github.com/repos/pepopo978/Cursive"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -18999,9 +19155,10 @@
             "url": "https://github.com/carolluparu/GryllsBongos",
             "api": "https://api.github.com/repos/carolluparu/GryllsBongos"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -19025,9 +19182,10 @@
             "url": "https://github.com/thezephyrsong/GudaPlates",
             "api": "https://api.github.com/repos/thezephyrsong/GudaPlates"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19051,9 +19209,10 @@
             "url": "https://github.com/moiian/ImmersiveDialogUI",
             "api": "https://api.github.com/repos/moiian/ImmersiveDialogUI"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -19077,9 +19236,10 @@
             "url": "https://github.com/xniko/KallyoAutoShot",
             "api": "https://api.github.com/repos/xniko/KallyoAutoShot"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -19103,9 +19263,10 @@
             "url": "https://github.com/gashole/modui-FocusFrame",
             "api": "https://api.github.com/repos/gashole/modui-FocusFrame"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19129,9 +19290,10 @@
             "url": "https://github.com/gashole/modui-TallHealthBar",
             "api": "https://api.github.com/repos/gashole/modui-TallHealthBar"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19155,9 +19317,10 @@
             "url": "https://github.com/Shellyoung/oCB-SuperWoW",
             "api": "https://api.github.com/repos/Shellyoung/oCB-SuperWoW"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19181,9 +19344,10 @@
             "url": "https://github.com/maxcodk/PaladinLibramSwap",
             "api": "https://api.github.com/repos/maxcodk/PaladinLibramSwap"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19207,9 +19371,10 @@
             "url": "https://github.com/shagu/pfQuest-icons",
             "api": "https://api.github.com/repos/shagu/pfQuest-icons"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -19233,9 +19398,10 @@
             "url": "https://github.com/jrc13245/pfUI-addonskinner",
             "api": "https://api.github.com/repos/jrc13245/pfUI-addonskinner"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19259,9 +19425,10 @@
             "url": "https://github.com/vakos1/pfUI-chatscrollbutton",
             "api": "https://api.github.com/repos/vakos1/pfUI-chatscrollbutton"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -19285,9 +19452,10 @@
             "url": "https://github.com/mr-rosh/pfUI-CustomMedia",
             "api": "https://api.github.com/repos/mr-rosh/pfUI-CustomMedia"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         },
         {
           "originalUrl": "https://octowow.st/git/Mr_Rosh/pfUI-CustomMedia",
@@ -19301,9 +19469,10 @@
             "url": "https://octowow.st/git/Mr_Rosh/pfUI-CustomMedia",
             "api": "https://octowow.st/git/api/v1/repos/Mr_Rosh/pfUI-CustomMedia"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -19327,9 +19496,10 @@
             "url": "https://github.com/shagu/pfUI-eliteoverlay",
             "api": "https://api.github.com/repos/shagu/pfUI-eliteoverlay"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19353,9 +19523,10 @@
             "url": "https://gitlab.com/Road-block/pfUI-font-dyslexic",
             "api": "https://gitlab.com/api/v4/projects/Road-block%2FpfUI-font-dyslexic"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19379,9 +19550,10 @@
             "url": "https://github.com/shagu/pfUI-fonts",
             "api": "https://api.github.com/repos/shagu/pfUI-fonts"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19405,9 +19577,10 @@
             "url": "https://github.com/Arthur-Helias/pfUI-LocationPlus",
             "api": "https://api.github.com/repos/Arthur-Helias/pfUI-LocationPlus"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unlicense"
         }
       ],
       "active": true,
@@ -19431,9 +19604,10 @@
             "url": "https://github.com/Arthur-Helias/pfUI-MoreDatatexts",
             "api": "https://api.github.com/repos/Arthur-Helias/pfUI-MoreDatatexts"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unlicense"
         }
       ],
       "active": true,
@@ -19457,9 +19631,10 @@
             "url": "https://github.com/WanLiQiaoXi/pfUI-RainbowHealthBar",
             "api": "https://api.github.com/repos/WanLiQiaoXi/pfUI-RainbowHealthBar"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -19483,9 +19658,10 @@
             "url": "https://github.com/jrc13245/pfUI-WeakIcons",
             "api": "https://api.github.com/repos/jrc13245/pfUI-WeakIcons"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19509,9 +19685,10 @@
             "url": "https://github.com/Linae-Kronos/RaidSummon",
             "api": "https://api.github.com/repos/Linae-Kronos/RaidSummon"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19535,9 +19712,10 @@
             "url": "https://github.com/Eryzil-GitHub/rais_AutoShot",
             "api": "https://api.github.com/repos/Eryzil-GitHub/rais_AutoShot"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19561,9 +19739,10 @@
             "url": "https://github.com/MarcelineVQ/Roid-Macros",
             "api": "https://api.github.com/repos/MarcelineVQ/Roid-Macros"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -19587,9 +19766,10 @@
             "url": "https://github.com/Fiskehatt/SaySapped_Extended",
             "api": "https://api.github.com/repos/Fiskehatt/SaySapped_Extended"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -19613,9 +19793,10 @@
             "url": "https://codeberg.org/Thaodan/sct",
             "api": "https://codeberg.org/api/v1/repos/Thaodan/sct"
           },
-          "status": "new",
-          "error": null,
-          "active": true
+          "status": "error",
+          "error": "HTTP 404: https://codeberg.org/api/v1/repos/Thaodan/sct/releases",
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19639,9 +19820,10 @@
             "url": "https://github.com/shagu/ShaguCombat",
             "api": "https://api.github.com/repos/shagu/ShaguCombat"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19665,9 +19847,10 @@
             "url": "https://github.com/Road-block/SimpleCombatLog",
             "api": "https://api.github.com/repos/Road-block/SimpleCombatLog"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "GPL"
         }
       ],
       "active": true,
@@ -19691,9 +19874,10 @@
             "url": "https://github.com/KrekoG/SkelaCustomNameplates",
             "api": "https://api.github.com/repos/KrekoG/SkelaCustomNameplates"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19717,9 +19901,10 @@
             "url": "https://github.com/brues-code/SuperCleveRoidMacros",
             "api": "https://api.github.com/repos/brues-code/SuperCleveRoidMacros"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         },
         {
           "originalUrl": "https://octowow.st/git/brues/SuperCleveRoidMacros",
@@ -19733,9 +19918,10 @@
             "url": "https://octowow.st/git/brues/SuperCleveRoidMacros",
             "api": "https://octowow.st/git/api/v1/repos/brues/SuperCleveRoidMacros"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -19759,9 +19945,10 @@
             "url": "https://github.com/arimbaud-x/lazyScript",
             "api": "https://api.github.com/repos/arimbaud-x/lazyScript"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19785,9 +19972,10 @@
             "url": "https://github.com/pepopo978/SuperWowCombatLogger",
             "api": "https://api.github.com/repos/pepopo978/SuperWowCombatLogger"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19811,9 +19999,10 @@
             "url": "https://github.com/whtmst/T-RestedXP",
             "api": "https://api.github.com/repos/whtmst/T-RestedXP"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "GPL-3.0"
         }
       ],
       "active": true,
@@ -19837,9 +20026,10 @@
             "url": "https://github.com/laytya/TankBuddyEnh",
             "api": "https://api.github.com/repos/laytya/TankBuddyEnh"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19863,9 +20053,10 @@
             "url": "https://github.com/FrancisEgan/TurtleRestedXP",
             "api": "https://api.github.com/repos/FrancisEgan/TurtleRestedXP"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -19889,9 +20080,10 @@
             "url": "https://github.com/Ko0z/UnitFramesImproved_Vanilla",
             "api": "https://api.github.com/repos/Ko0z/UnitFramesImproved_Vanilla"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -19915,9 +20107,10 @@
             "url": "https://github.com/Numielle/WorldBossAlert",
             "api": "https://api.github.com/repos/Numielle/WorldBossAlert"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "GPL-2.0"
         }
       ],
       "active": true,
@@ -19941,9 +20134,10 @@
             "url": "https://github.com/Road-block/XLoot_AddOns",
             "api": "https://api.github.com/repos/Road-block/XLoot_AddOns"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -19967,9 +20161,10 @@
             "url": "https://github.com/Dyaxler/BlizzMo_Vanilla",
             "api": "https://api.github.com/repos/Dyaxler/BlizzMo_Vanilla"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "GPL-3.0"
         }
       ],
       "active": true,
@@ -19993,9 +20188,10 @@
             "url": "https://github.com/Road-block/CallToArms",
             "api": "https://api.github.com/repos/Road-block/CallToArms"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20019,9 +20215,10 @@
             "url": "https://github.com/Sentilix/capslock",
             "api": "https://api.github.com/repos/Sentilix/capslock"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20045,9 +20242,10 @@
             "url": "https://github.com/SwizzPop/ChickenJockey",
             "api": "https://api.github.com/repos/SwizzPop/ChickenJockey"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20071,9 +20269,10 @@
             "url": "https://github.com/EinBaum/ChroniclesBuffAssignments",
             "api": "https://api.github.com/repos/EinBaum/ChroniclesBuffAssignments"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -20097,9 +20296,10 @@
             "url": "https://github.com/EinBaum/ChroniclesPI",
             "api": "https://api.github.com/repos/EinBaum/ChroniclesPI"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -20123,9 +20323,10 @@
             "url": "https://github.com/EinBaum/ChroniclesPTR",
             "api": "https://api.github.com/repos/EinBaum/ChroniclesPTR"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20149,9 +20350,10 @@
             "url": "https://github.com/shirsig/Cleanup-vanilla",
             "api": "https://api.github.com/repos/shirsig/Cleanup-vanilla"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20175,9 +20377,10 @@
             "url": "https://github.com/ItsLusse/CliffTells",
             "api": "https://api.github.com/repos/ItsLusse/CliffTells"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20201,9 +20404,10 @@
             "url": "https://github.com/MarcelineVQ/Clique",
             "api": "https://api.github.com/repos/MarcelineVQ/Clique"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20227,9 +20431,10 @@
             "url": "https://github.com/Chad90b/codex",
             "api": "https://api.github.com/repos/Chad90b/codex"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "GPL-3.0"
         }
       ],
       "active": true,
@@ -20253,9 +20458,10 @@
             "url": "https://github.com/Cysthen/Comix",
             "api": "https://api.github.com/repos/Cysthen/Comix"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20279,9 +20485,10 @@
             "url": "https://github.com/sica42/CompanionManager",
             "api": "https://api.github.com/repos/sica42/CompanionManager"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20305,9 +20512,10 @@
             "url": "https://octowow.st/git/Horyoshi/ConsumesManager",
             "api": "https://octowow.st/git/api/v1/repos/Horyoshi/ConsumesManager"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20331,9 +20539,10 @@
             "url": "https://github.com/wbb1977/CorpseInfo",
             "api": "https://api.github.com/repos/wbb1977/CorpseInfo"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20357,9 +20566,10 @@
             "url": "https://github.com/Caracioly/Critei",
             "api": "https://api.github.com/repos/Caracioly/Critei"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "GPL-3.0"
         }
       ],
       "active": true,
@@ -20380,7 +20590,7 @@
             "filename": "Cryolysis.zip",
             "name": "Cryolysis.zip"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
           "active": true
         }
@@ -20406,9 +20616,10 @@
             "url": "https://github.com/Cephel/DankScore",
             "api": "https://api.github.com/repos/Cephel/DankScore"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20432,9 +20643,10 @@
             "url": "https://github.com/Kirchlive/Deathlog_Vanilla",
             "api": "https://api.github.com/repos/Kirchlive/Deathlog_Vanilla"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20458,9 +20670,10 @@
             "url": "https://github.com/MarcelineVQ/Decursive",
             "api": "https://api.github.com/repos/MarcelineVQ/Decursive"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20484,9 +20697,10 @@
             "url": "https://github.com/adrianocastro189/destroy-cursor-item",
             "api": "https://api.github.com/repos/adrianocastro189/destroy-cursor-item"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20510,9 +20724,10 @@
             "url": "https://github.com/EinBaum/DisableEscape",
             "api": "https://api.github.com/repos/EinBaum/DisableEscape"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -20536,9 +20751,10 @@
             "url": "https://github.com/uc9089/DistanceDisplay",
             "api": "https://api.github.com/repos/uc9089/DistanceDisplay"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20562,9 +20778,10 @@
             "url": "https://github.com/quakerzz/DKPAuctionBidder",
             "api": "https://api.github.com/repos/quakerzz/DKPAuctionBidder"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20588,9 +20805,10 @@
             "url": "https://octowow.st/git/ShempError/DopingControl",
             "api": "https://octowow.st/git/api/v1/repos/ShempError/DopingControl"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -20614,9 +20832,10 @@
             "url": "https://github.com/gashole/DruidManaBar",
             "api": "https://api.github.com/repos/gashole/DruidManaBar"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20640,9 +20859,10 @@
             "url": "https://github.com/akzkak/DrunkTracker",
             "api": "https://api.github.com/repos/akzkak/DrunkTracker"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20666,9 +20886,10 @@
             "url": "https://github.com/XalZul/Dwarvenizer-1.12",
             "api": "https://api.github.com/repos/XalZul/Dwarvenizer-1.12"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20692,9 +20913,10 @@
             "url": "https://github.com/trumpetx/NotChatLootBidder",
             "api": "https://api.github.com/repos/trumpetx/NotChatLootBidder"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20718,9 +20940,10 @@
             "url": "https://octowow.st/git/Horyoshi/shootyepgp",
             "api": "https://octowow.st/git/api/v1/repos/Horyoshi/shootyepgp"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         },
         {
           "originalUrl": "https://github.com/Aethusx/shootyepgp",
@@ -20734,9 +20957,10 @@
             "url": "https://github.com/Aethusx/shootyepgp",
             "api": "https://api.github.com/repos/Aethusx/shootyepgp"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -20760,9 +20984,10 @@
             "url": "https://github.com/CosminPOP/TWLC2c",
             "api": "https://api.github.com/repos/CosminPOP/TWLC2c"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20786,9 +21011,10 @@
             "url": "https://github.com/Numielle/EasyCloak",
             "api": "https://api.github.com/repos/Numielle/EasyCloak"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "GPL-2.0"
         }
       ],
       "active": true,
@@ -20812,9 +21038,10 @@
             "url": "https://github.com/Numielle/EasyRess",
             "api": "https://api.github.com/repos/Numielle/EasyRess"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "GPL-2.0"
         }
       ],
       "active": true,
@@ -20838,9 +21065,10 @@
             "url": "https://github.com/laytya/EavesDrop",
             "api": "https://api.github.com/repos/laytya/EavesDrop"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20864,9 +21092,10 @@
             "url": "https://github.com/fulzamoth/eePanels-V",
             "api": "https://api.github.com/repos/fulzamoth/eePanels-V"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20890,9 +21119,10 @@
             "url": "https://github.com/Rumchiller/EM_MonkeyBuddy",
             "api": "https://api.github.com/repos/Rumchiller/EM_MonkeyBuddy"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20916,9 +21146,10 @@
             "url": "https://github.com/laytya/EQL3",
             "api": "https://api.github.com/repos/laytya/EQL3"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20942,9 +21173,10 @@
             "url": "https://github.com/TrangOul/EquipColor",
             "api": "https://api.github.com/repos/TrangOul/EquipColor"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20968,9 +21200,10 @@
             "url": "https://github.com/notforever-ship-it/EquipCompareAdv",
             "api": "https://api.github.com/repos/notforever-ship-it/EquipCompareAdv"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         },
         {
           "originalUrl": "https://octowow.st/git/stealthzi/EquipCompareAdv",
@@ -20984,9 +21217,10 @@
             "url": "https://octowow.st/git/stealthzi/EquipCompareAdv",
             "api": "https://octowow.st/git/api/v1/repos/stealthzi/EquipCompareAdv"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -21010,9 +21244,10 @@
             "url": "https://github.com/TheOneReed/EVTCalendar",
             "api": "https://api.github.com/repos/TheOneReed/EVTCalendar"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -21036,9 +21271,10 @@
             "url": "https://github.com/laytya/EzDismount",
             "api": "https://api.github.com/repos/laytya/EzDismount"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -21062,9 +21298,10 @@
             "url": "https://github.com/NiclasEriksen/Feid",
             "api": "https://api.github.com/repos/NiclasEriksen/Feid"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -21088,9 +21325,10 @@
             "url": "https://github.com/0ldi/FelwoodGather",
             "api": "https://api.github.com/repos/0ldi/FelwoodGather"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -21114,9 +21352,10 @@
             "url": "https://github.com/ItsLusse/Fika",
             "api": "https://api.github.com/repos/ItsLusse/Fika"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -21140,9 +21379,10 @@
             "url": "https://github.com/Stormhand81/FineZoom",
             "api": "https://api.github.com/repos/Stormhand81/FineZoom"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -21166,9 +21406,10 @@
             "url": "https://github.com/wbb1977/FishInfo2",
             "api": "https://api.github.com/repos/wbb1977/FishInfo2"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -21192,9 +21433,10 @@
             "url": "https://github.com/Draiscor/FishSwap",
             "api": "https://api.github.com/repos/Draiscor/FishSwap"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -21218,9 +21460,10 @@
             "url": "https://github.com/pepopo978/Flamestriker",
             "api": "https://api.github.com/repos/pepopo978/Flamestriker"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -21244,9 +21487,10 @@
             "url": "https://github.com/NOo0B1/FollowMeEnhanced",
             "api": "https://api.github.com/repos/NOo0B1/FollowMeEnhanced"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -21270,9 +21514,10 @@
             "url": "https://github.com/Shellyoung/FuBar_Population",
             "api": "https://api.github.com/repos/Shellyoung/FuBar_Population"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -21296,9 +21541,10 @@
             "url": "https://github.com/laytya/FuBar_PortalFu",
             "api": "https://api.github.com/repos/laytya/FuBar_PortalFu"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -21322,9 +21568,10 @@
             "url": "https://github.com/Road-block/Fubar_PossessionsFu",
             "api": "https://api.github.com/repos/Road-block/Fubar_PossessionsFu"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -21348,9 +21595,10 @@
             "url": "https://github.com/laytya/FuBar_PursueFu",
             "api": "https://api.github.com/repos/laytya/FuBar_PursueFu"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "GPL-3.0"
         }
       ],
       "active": true,
@@ -21374,9 +21622,10 @@
             "url": "https://github.com/EbedaNostalrius/FuBar_ZepMaster",
             "api": "https://api.github.com/repos/EbedaNostalrius/FuBar_ZepMaster"
           },
-          "status": "new",
+          "status": "mirrored",
           "error": null,
-          "active": true
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,

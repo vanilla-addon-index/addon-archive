@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: |cff33cc66Viz|cffffcc33put
+## Notes: Vizput's batch poster for multiple stacks and singles.
+## Author: gregdeichler
+## Version: 1.0.0
+## Dependencies: Blizzard_AuctionUI
+
+Vizput.lua

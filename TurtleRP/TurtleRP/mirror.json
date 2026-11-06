@@ -1,0 +1,229 @@
+{
+  "upstream": "https://github.com/bratmage/TurtleRP",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "bratmage",
+    "repo": "TurtleRP",
+    "name": "TurtleRP",
+    "url": "https://github.com/bratmage/TurtleRP",
+    "api": "https://api.github.com/repos/bratmage/TurtleRP"
+  },
+  "commit": "395756d1355e37b4a8babf3531484f733d13ecdc",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "15093ccf76e1aa623e0fe9d23172fa6cdf29131a772d2eb49bae10708e1e6434",
+      "bytes": 6
+    },
+    "ChatThrottleLib/ChatThrottleLib.lua": {
+      "sha256": "78ab7b9325c49c3d8ad71cd297bac12cd6a951531d021dc1860e46976ede8f4e",
+      "bytes": 13029
+    },
+    "components/TurtleRP_Admin.xml": {
+      "sha256": "2b59b02318b5268f0c4f2da5ad493ff301170c415efb46ef858fc90b6d47e0c1",
+      "bytes": 157143
+    },
+    "components/TurtleRP_ChatBox.xml": {
+      "sha256": "7efad81d613eb5bba9d3c117654a3721060857487a272e3cfa355d44864fd97d",
+      "bytes": 10146
+    },
+    "components/TurtleRP_Directory.xml": {
+      "sha256": "32f58b11f8e0601c464c7930cc89d7f7136634f346fa734f48092554320179c8",
+      "bytes": 30598
+    },
+    "components/TurtleRP_IconTray.xml": {
+      "sha256": "67c0f98ad6bce244c5df6e77fe68c151ce62eb689831170d87b8982ebfe5c487",
+      "bytes": 16492
+    },
+    "components/TurtleRP_Minimap.xml": {
+      "sha256": "1ab03349961057e5c7fc67f750baa6076b3835c8aebd78e7d4c6a29284645963",
+      "bytes": 2516
+    },
+    "components/TurtleRP_Profile.xml": {
+      "sha256": "c7f3867d816413d882683f674446a59733d4c723833e974772fe2d8406ec10f9",
+      "bytes": 44242
+    },
+    "components/TurtleRP_Target.xml": {
+      "sha256": "24ba0bb998b9a587060d4a00ff70582b0b556443efafc6027e455f5bb9e7d417",
+      "bytes": 13361
+    },
+    "components/TurtleRP_Tooltip.xml": {
+      "sha256": "b2e0163e702d90538062a0606101db8757b6d0d989908abcf7a26036a6ef9c8b",
+      "bytes": 1365
+    },
+    "images/description/TTRP-Description-BotLeft.blp": {
+      "sha256": "862243e11f1868c4a832f6581695df7ca37656e7ff20a1bd032bbb1ec0eedfc7",
+      "bytes": 88580
+    },
+    "images/description/TTRP-Description-BotRight.blp": {
+      "sha256": "35cc20f5c41a6a4731aab59c51b9292e3b36693e5c4cabbb3f3c305db951d4e8",
+      "bytes": 44884
+    },
+    "images/description/TTRP-Description-TopLeft.blp": {
+      "sha256": "9a687bd94399bbd2f01ad2b605d90a999bb814d207cb56a05a57416a8c2bb764",
+      "bytes": 88580
+    },
+    "images/directory-icon.blp": {
+      "sha256": "9842b728237aa4773cb71f96b30adc355f7440f5f8989ba9cac79ec31da92d0a",
+      "bytes": 6660
+    },
+    "images/helm-icon.blp": {
+      "sha256": "a593add1e673b4f21cad736200d1fe7428bcabca3b6c4339351279739d7f6c04",
+      "bytes": 6660
+    },
+    "images/text_texture.blp": {
+      "sha256": "e2b7a10fc0794dadfeb574d7d68a9318451e7e7c044d81105cdabd5088706481",
+      "bytes": 44876
+    },
+    "images/trp_faction_alliance_tt.blp": {
+      "sha256": "8b2779a14de3201bf15daa772e367c8d490226d97b0c7608f7acdfac47f00a8b",
+      "bytes": 23044
+    },
+    "images/trp_faction_alliance.blp": {
+      "sha256": "806572191724dc87b6c6d19373b07537a556de837da4ab5d87603b8276f2b1da",
+      "bytes": 23044
+    },
+    "images/trp_faction_horde_tt.blp": {
+      "sha256": "2474b4b7f8abb93b45db5443c48c1db78c0a711184064a0da0d9102e14b52be8",
+      "bytes": 23044
+    },
+    "images/trp_faction_horde.blp": {
+      "sha256": "bee4d87e58a225aff7209516eb48efe1ed0141b2d7d179ddd39906d67621dbab",
+      "bytes": 23044
+    },
+    "images/trp_faction_neutral_tt.blp": {
+      "sha256": "8feb6755127e05a5e38c17f0bcf3023ae73ed4b1cd5d94db84d361c4bbc49a8f",
+      "bytes": 23044
+    },
+    "images/trp_faction_neutral.blp": {
+      "sha256": "71d72db2b2083c4f467661a0679c7a5970ff93111762868c36aefd1947a58f91",
+      "bytes": 23044
+    },
+    "images/trp_faction_scarlet_tt.blp": {
+      "sha256": "338c0421dacfd1e4c390e9818565d18485408c20df196286aa52bb49c10b900e",
+      "bytes": 23044
+    },
+    "images/trp_faction_scarlet.blp": {
+      "sha256": "4c5a2ddceabafb32882b2de1cf3e09f01ece202ab74ec34b272139490c5912f1",
+      "bytes": 23044
+    },
+    "images/trp_faction_scourge_tt.blp": {
+      "sha256": "10667304a72f470ee510b8764dd56556cd80cbd99f2d6eb1688cfe3853eb5d8d",
+      "bytes": 23044
+    },
+    "images/trp_faction_scourge.blp": {
+      "sha256": "c4c51bfa87c0c8a97074383a461c1c696505ac02c524124afd5505c1e4dc3bd4",
+      "bytes": 23044
+    },
+    "images/TurtleRP_Icon.blp": {
+      "sha256": "bc12cc0572b327f7b47b2d649e1833346206a597c569b9cfb1e6b216128846b5",
+      "bytes": 88580
+    },
+    "images/wizard-hat.blp": {
+      "sha256": "3cca2867fe8cf485421bdf99675691600c3ef00ff73fd7596cffa181f7db0db8",
+      "bytes": 3916
+    },
+    "images/wizardturtle-round.blp": {
+      "sha256": "cb0fbdd618753bd5093618791d159b76491656e5a1e2e83238806b131e6e3ce3",
+      "bytes": 88580
+    },
+    "images/wizardturtle.blp": {
+      "sha256": "3a7022865e62560bf037c47b1b3f68303d101dc0cbd69ea9e34b5b8b21b59a7f",
+      "bytes": 88580
+    },
+    "images/WorldMapPlayerIconAlliance.blp": {
+      "sha256": "bc6ef9487aac0d55b796bf191b066e356d7f03f481cf03b461581b8c21d1fab3",
+      "bytes": 1540
+    },
+    "images/WorldMapPlayerIconHorde.blp": {
+      "sha256": "b371ba1c553c2d2f53192671de72750d032d6acb50ebee939cde1f52eb68ddc0",
+      "bytes": 1540
+    },
+    "images/WorldMapPlayerIconIC.blp": {
+      "sha256": "f8a3d97c11ff5ceb96a45613162483b6d1766a96367b94ace9dd6fac967f5131",
+      "bytes": 1540
+    },
+    "images/WorldMapPlayerIconOOC.blp": {
+      "sha256": "8064d8e3b9d61ab3f5189f56a5d138419c23be7357053ad82c10e177353f7184",
+      "bytes": 1540
+    },
+    "images/WorldMapPlayerIconScarlet.blp": {
+      "sha256": "b6a17053b8743228d6d704013086aec7abfa74901b68e99e50b9617a66124940",
+      "bytes": 1540
+    },
+    "images/WorldMapPlayerIconScourge.blp": {
+      "sha256": "45dcc5d84f18738b96e1906fd2f2827e61a7b97ada4f9043ce339f9102707ecc",
+      "bytes": 1540
+    },
+    "images/WorldMapPlayerIconTRP.blp": {
+      "sha256": "af393b42ced684755d18ea0c13f79c57ea8431070a7eff8760f02bec8602c54b",
+      "bytes": 1540
+    },
+    "README.md": {
+      "sha256": "b84d17bee6bda3e164db557646af36c3210ac3d42887ac7ded906ed3f197c354",
+      "bytes": 22000
+    },
+    "scripts/TurtleRP.lua": {
+      "sha256": "d3356a41612e2efb697a472ead9aac96fd4c6b2010f074b277d404b1450cfade",
+      "bytes": 159225
+    },
+    "scripts/TurtleRPAdmin.lua": {
+      "sha256": "9aa15bbd9a6a211680183d6a91b4a72e67f9477b0bddc07a3b1b6a2f3fffeb1d",
+      "bytes": 50843
+    },
+    "scripts/TurtleRPAltIdentifier.lua": {
+      "sha256": "d74f03a398c5a2a7cfb9c77c285238d63d416550744359a137db94040e566672",
+      "bytes": 16667
+    },
+    "scripts/TurtleRPComms.lua": {
+      "sha256": "e62dbf0a9c024d793659df7d6b341f08839552beefd858c3234947215881e447",
+      "bytes": 32614
+    },
+    "scripts/TurtleRPConstants.lua": {
+      "sha256": "8953125b326b1d69e661f1fae3a2f74b70ca6886c4d7daea725d98e9881423b3",
+      "bytes": 1434049
+    },
+    "scripts/TurtleRPDirectory.lua": {
+      "sha256": "58c4b8aef4cf73eee69697f2db9e58f27ca68d339722aefc6ee2797c878bcc39",
+      "bytes": 25681
+    },
+    "scripts/TurtleRPEmotes.lua": {
+      "sha256": "9e5c908530acdd94e4973f3e176bc0cf67bf6c55f718ff01da5fa7ed34386248",
+      "bytes": 8463
+    },
+    "scripts/TurtleRPIconTray.lua": {
+      "sha256": "bb6909a0f42b376a6452f9036fd87d66376aa14224366b19f4275baf3c1e38c5",
+      "bytes": 2757
+    },
+    "scripts/TurtleRPProfile.lua": {
+      "sha256": "d20de8aaca80864063fe0a69f82c324b972417096ae76a915a399b465589920e",
+      "bytes": 36354
+    },
+    "scripts/TurtleRPTooltip.lua": {
+      "sha256": "7ff937d2dc4d7f13657911a6a548a96618305a58807350c52e0ff003bc255b99",
+      "bytes": 32901
+    },
+    "scripts/vanilla-images.lua": {
+      "sha256": "09e70ba2ba14d52e0634ba5729eaa0403b9882f69b88433c94d344a6ad05d692",
+      "bytes": 7066
+    },
+    "TurtleRP.toc": {
+      "sha256": "ce83c390126ad702cca99724557d37d4afabcd810cd98ff26ac50c2ad8cd868f",
+      "bytes": 1181
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "310718947": {
+      "tag": "2.0.3",
+      "folder": "2.0.3--310718947",
+      "assets": {},
+      "source": {
+        "sha256": "ca64a89eaad7a5a27ceb7202d9508b97571dfff4a59cf8edc1b1a92e32adf9b1",
+        "bytes": 627032,
+        "path": "releases/2.0.3--310718947/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/bratmage/TurtleRP/tarball/2.0.3"
+      }
+    }
+  }
+}

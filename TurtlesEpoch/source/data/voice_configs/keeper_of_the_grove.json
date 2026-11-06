@@ -1,0 +1,11 @@
+{
+  "donor_voice": null,
+  "pitch_shift": 0,
+  "reverb": 0.25,
+  "reverb_decay": 0.6,
+  "bass_boost_db": 3,
+  "treble_boost_db": 0,
+  "status": "approved",
+  "test_quest_id": null,
+  "notes": "F0 ~49 Hz. Very low. Reverb 0.25, bass +3. 49/49 lines generated (6 NPCs)."
+}

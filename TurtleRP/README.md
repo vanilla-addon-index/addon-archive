@@ -4,7 +4,7 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| TurtleRP | https://github.com/bratmage/TurtleRP | new |
-| TurtleRP--OldManAlpha | https://github.com/OldManAlpha/TurtleRP | new |
+| TurtleRP | https://github.com/bratmage/TurtleRP | mirrored |
+| TurtleRP--OldManAlpha | https://github.com/OldManAlpha/TurtleRP | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

@@ -1,0 +1,58 @@
+{
+  "upstream": "https://github.com/Road-block/WhoHas",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "WhoHas",
+    "name": "WhoHas",
+    "url": "https://github.com/Road-block/WhoHas",
+    "api": "https://api.github.com/repos/Road-block/WhoHas"
+  },
+  "commit": "cf4cc4e7d4b724f711fd34d1d03af54592346b2f",
+  "sourceFiles": {
+    "Localization-enUS.lua": {
+      "sha256": "0b03938991d4b8500988389128e884e6252e899672abdaf55be58090a9c0a6df",
+      "bytes": 1029
+    },
+    "README.md": {
+      "sha256": "7cf8ddca1ba339697e159d720e280a5b34226d8c800e43396585ba14020ce942",
+      "bytes": 545
+    },
+    "WhoHas.lua": {
+      "sha256": "35704adbf71bebe086f8188fc43eb1dff58593a8c719a23c57d2e266807dd91d",
+      "bytes": 18079
+    },
+    "WhoHas.toc": {
+      "sha256": "19314e41c1992b1d73dab9b718dcbff33152dbe284aa63be4520aeb92af68d19",
+      "bytes": 482
+    },
+    "WhoHas.xml": {
+      "sha256": "a41f084e062de8ae3a790b3bb2973307a6e0f34cfc2684ef80584e0599709f04",
+      "bytes": 6277
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "8990011": {
+      "tag": "2.33-11200",
+      "folder": "2.33-11200--8990011",
+      "assets": {
+        "5683458": {
+          "sha256": "cfed62cc7c3504909b9e3bc9a8b89e43939e90993ce9769c3e1f6067550f2ba0",
+          "bytes": 23586,
+          "id": "5683458",
+          "name": "WhoHas-2.33-11200.zip",
+          "url": "https://github.com/Road-block/WhoHas/releases/download/2.33-11200/WhoHas-2.33-11200.zip",
+          "path": "releases/2.33-11200--8990011/assets/WhoHas-2.33-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "2e4f4b90dd72597248b1e54d2d4322c669bf7bc950fbf74c2f4aa9a773504640",
+        "bytes": 5930,
+        "path": "releases/2.33-11200--8990011/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/WhoHas/tarball/2.33-11200"
+      }
+    }
+  }
+}

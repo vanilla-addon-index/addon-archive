@@ -1,0 +1,145 @@
+{
+  "upstream": "https://github.com/laytya/EavesDrop",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "EavesDrop",
+    "name": "EavesDrop",
+    "url": "https://github.com/laytya/EavesDrop",
+    "api": "https://api.github.com/repos/laytya/EavesDrop"
+  },
+  "commit": "244cba1c61f861bfc643a8b8617691a742e33c44",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    "EavesDrop/EavesDrop.lua": {
+      "sha256": "424adc5f011ff7d752d1a9195b0eafc08904729a94fb722789bfd0c9b434ef77",
+      "bytes": 30218
+    },
+    "EavesDrop/EavesDrop.toc": {
+      "sha256": "fb38bce253d27ca942ba0ee39f3319a82d515fd913fc978d1781c8ffc075b531",
+      "bytes": 1206
+    },
+    "EavesDrop/EavesDrop.xml": {
+      "sha256": "3cc7239f3dd8e60f2a13ad29eca67cce965225c708699e68a1ce24a8e30ede86",
+      "bytes": 27521
+    },
+    "EavesDrop/EavesDropStats.lua": {
+      "sha256": "777403c62e6dfabc618aa04a63a131a582eae312aa07ce3932b74810d55e6f2a",
+      "bytes": 5524
+    },
+    "EavesDrop/libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "c1d5c648e8eb49d432d8435cf9d0446ff5d61021598d9b7aa46cf6a36770a3ae",
+      "bytes": 34384
+    },
+    "EavesDrop/libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "ab8c61a5174d468bee9c7f7264a7ef8adaead087b7db42ca48da23cfd3d6637d",
+      "bytes": 68842
+    },
+    "EavesDrop/libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "aec50568954370b65a14b9d720de2282e6b045feb4415a53578d0d1cae46cca4",
+      "bytes": 46027
+    },
+    "EavesDrop/libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "8222e7a75d0f0fba8030099939611732b50c28cb26b6ce6427f52fd5f2f409d8",
+      "bytes": 29927
+    },
+    "EavesDrop/libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "a421bd39e4cb7bcd54bb79de85c21d6e8c4c56551406972141bba26ae7d0c16d",
+      "bytes": 23871
+    },
+    "EavesDrop/libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "f0b829c007fd8cd897aa9059bd6c9ee27f0b9b71b9c9468b1572c1d3db4397fe",
+      "bytes": 16495
+    },
+    "EavesDrop/libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "03e71bcf0ba8ce7c806c5ffe966991cb997c12c25b351198c918fe32e469bdaf",
+      "bytes": 31435
+    },
+    "EavesDrop/libs/Babble-Spell-2.2/Babble-Spell-2.2.lua": {
+      "sha256": "1aec66b43fc2fff5622ba4390044556f5ac3e8a4e57b15b941ec9aaeebf17f3f",
+      "bytes": 469235
+    },
+    "EavesDrop/libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "d14a47732ef771dcb5c380218a398db26bd39315652b8d5ffb4afd14f1d90cbd",
+      "bytes": 79066
+    },
+    "EavesDrop/libs/Metrognome-2.0/Metrognome-2.0.lua": {
+      "sha256": "feccaa6b673ddbd41836a27c711270467b541a5170a8bc7a88fd92a4d468e862",
+      "bytes": 8960
+    },
+    "EavesDrop/libs/ParserLib-1.1/FixGlobalString.lua": {
+      "sha256": "fd3b3edece2d5aba4fcaf156b9d6bfdb5e31302ccb8a802fc7712bf3bb0755f2",
+      "bytes": 1213
+    },
+    "EavesDrop/libs/ParserLib-1.1/optimizer-enUS.lua": {
+      "sha256": "baebd0f7e02d4d8d1d257075187c16b8e30aa77381b787cafce58f326825413e",
+      "bytes": 7682
+    },
+    "EavesDrop/libs/ParserLib-1.1/optimizer-koKR.lua": {
+      "sha256": "ad86143100884a699ec45b54458dc64ce96a6ededbdefd521b01125f8a9ab9d6",
+      "bytes": 12266
+    },
+    "EavesDrop/libs/ParserLib-1.1/optimizer-ruRU.lua": {
+      "sha256": "a62cf041ad77d541e9790dbf3503fa7e4e88c9ad979ef9d7f66e864d6d997d8c",
+      "bytes": 10584
+    },
+    "EavesDrop/libs/ParserLib-1.1/optimizer-zhTW.lua": {
+      "sha256": "1a5850162882cae9ceab044b361a3e231bb2f6dfd4ec1a5392d464fa43d7fb86",
+      "bytes": 8223
+    },
+    "EavesDrop/libs/ParserLib-1.1/ParserLib.lua": {
+      "sha256": "91333aa793254e522a8ebcd519eb68ecba5c375fcdf3f677e9b3bd28b869a29d",
+      "bytes": 91422
+    },
+    "EavesDrop/libs/ParserLib-1.1/readme.txt": {
+      "sha256": "762a52185e9eeeff3d6c5f9905b63222dc823642be922a0b03c04979867b90aa",
+      "bytes": 82
+    },
+    "EavesDrop/libs/Waterfall-1.0/Waterfall-1.0.lua": {
+      "sha256": "1588f3d2c4365ea24886a1c980acdcb978b2999b89487289c371d0bdfd358b38",
+      "bytes": 140211
+    },
+    "EavesDrop/localization-enUS.lua": {
+      "sha256": "c757f87156b314e3d8d7c1da70d2a5b63e5d9fc6d8cecf62730e694836c6c37e",
+      "bytes": 6774
+    },
+    "EavesDrop/localization-koKR.lua": {
+      "sha256": "d94b054d51152ba7fbc32cde5ee9ca2175053015484c9f4a2d4685270fc4d245",
+      "bytes": 6544
+    },
+    "EavesDrop/localization-ruRU.lua": {
+      "sha256": "69741a8ab4cba900ecd0707f95329e6bde897b4eb576a0020e1e2565184d3f7f",
+      "bytes": 9423
+    },
+    "EavesDrop/options.lua": {
+      "sha256": "ff9ef65827cf2d84f82b9d46ca149a11fc9bb358b25962444e225ea00712c268",
+      "bytes": 22741
+    },
+    "EavesDrop/readme.txt": {
+      "sha256": "c302a2b5087823a44ddee44fda465b7a8db47044ebdeb3549db0331f5c359055",
+      "bytes": 3013
+    },
+    "readme.md": {
+      "sha256": "ff2c5439887ca47744866b8116a05d019b27a486a657af3a8e99a59eab34478b",
+      "bytes": 2648
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "6042233": {
+      "tag": "1.4.1",
+      "folder": "1.4.1--6042233",
+      "assets": {},
+      "source": {
+        "sha256": "51701e492d5f168b61c94adf74c10a35f4a9eb962e3e51e3aed22acdb0dfecd3",
+        "bytes": 244074,
+        "path": "releases/1.4.1--6042233/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/laytya/EavesDrop/tarball/1.4.1"
+      }
+    }
+  }
+}

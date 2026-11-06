@@ -1,0 +1,249 @@
+{
+  "upstream": "https://github.com/Voidmenull/VanillaStoryline",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Voidmenull",
+    "repo": "VanillaStoryline",
+    "name": "VanillaStoryline",
+    "url": "https://github.com/Voidmenull/VanillaStoryline",
+    "api": "https://api.github.com/repos/Voidmenull/VanillaStoryline"
+  },
+  "commit": "60c4442d172bf87feb45977da6b09535a7af3c19",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    ".gitignore.upstream": {
+      "sha256": "3593d7cdb24d1a41b8154313c1e5df6db33c4f93895eb7cb1a852854cf11ac9d",
+      "bytes": 696
+    },
+    "Assets/Animations.lua": {
+      "sha256": "4e36ee592702f4befdc38ddcf660b7bd6a0ddb2637101dab82da72daf2104007",
+      "bytes": 6931
+    },
+    "Assets/Images/CHATBUBBLE-TAIL.BLP": {
+      "sha256": "38a8b5cc1e9adb83ed4e19a699bd4b48acebdf496c3db61483cc9b21f7a20c1d",
+      "bytes": 2564
+    },
+    "Assets/Images/GarrMission_RewardsBanner-Desaturate.tga": {
+      "sha256": "ea838eeb7dec7f57990fbcaa056a100455a02edfcb89a8c72f6a255188357015",
+      "bytes": 65580
+    },
+    "Assets/Images/GarrZoneAbility-TradingPost.blp": {
+      "sha256": "7a2ba843d96eb9f0aef30c3ec6ef50782b46b703e117b914f3d8bb15a0744be8",
+      "bytes": 44900
+    },
+    "Assets/Images/Locations/AlteracMountains.blp": {
+      "sha256": "b49d6848ab113752086d056d80c4bc56992721369f6a3875117fbf402787b386",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/ArathiHighlands.blp": {
+      "sha256": "cac7feb6f0620a168ab88b6da75b470fdf852ed6c2143fe9fd1c753e01d21dc0",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Ashenvale.blp": {
+      "sha256": "6eb8ddfd7c45bd31cb67263f6a467cbac51b1007e778e8cdef090c65c926b576",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/BackgroundPicturesources.txt": {
+      "sha256": "a5a68e4b04acdaa4db40f40e558ef863346aec305d4217cd4f0fe699b7120c27",
+      "bytes": 2657
+    },
+    "Assets/Images/Locations/BlackrockMountain.blp": {
+      "sha256": "d1a8df9b31ce8818ffb46499423dae5d0522547ddd0e427296630a418fbd7e45",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/BurningSteppes.blp": {
+      "sha256": "5fb5d2987e35f531c6560360ddb22e20470a9db26eb91cdea2cc953ef58aa6f0",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/DeadwindPass.blp": {
+      "sha256": "847b9dfd59146e2838676808b57f027a88730dd50526a05396bdb63f6e08850d",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/DunMorogh.blp": {
+      "sha256": "5a388dbdbb341c88b5b8ff3b8faa31bf51012b16f8e6adae476b2751c1997152",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Durotar.blp": {
+      "sha256": "77bf47c4630e0107bead56693c0c9308fd04bb10c0b35c137d7b778202ad0f2f",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Duskwood.blp": {
+      "sha256": "b6251660ed30c2cf21a37c97fa019d0470699944ec7a83e2d201a3be4dd63207",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/DustwallowMarsh.blp": {
+      "sha256": "6fd09a0b0fcda764534d2b5cd4cc46922e736f525f7bbbb33ee8f74df9b2ecf5",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/EasternPlaguelands.blp": {
+      "sha256": "1c9adf92bf331db71607ecd2d41e3ff2cfaa5f415bd95cf2cf57b148f3ea8f08",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/ElwynnForest.blp": {
+      "sha256": "c75da8dc181f46fac0013b09fb878a0a66282b6f02e9763eda520eebb2c4858e",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Felwood.blp": {
+      "sha256": "0811f1ad573edd57643ea4c5a608d14e31ff6243202156f9e4330e2a32ac759a",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Feralas.blp": {
+      "sha256": "e63357437088a26cfb1da4e755b82fa963c09ae91abbbf9c27f76b4bd2af092c",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/HillsbradFoothills.blp": {
+      "sha256": "552b7b2a19a994de1a106ca50e6e7698995eb00d39b6793a75e8d41fde313e8b",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Ironforge.blp": {
+      "sha256": "0ecb03a874d318b91a33e7f9664ae3794b3db896edb3b7357274c9fa78884b8d",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/LochModan.blp": {
+      "sha256": "2628655bfba4c8ae57f75d422e11e1d5e236f44e3b6ca72420f8378773583905",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Moonglade.blp": {
+      "sha256": "6f84dcc98fbf9596a5fce94a2e979224b2a8200408d2f5e710808a9d52cc41f7",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Mulgore.blp": {
+      "sha256": "76d73ce32743a9f972e8a8b153397e859cc8e0f907af6f266f51881e32c410be",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/RedridgeMountains.blp": {
+      "sha256": "acb7e2065b6239fbe1600555b09011198e9cbed07e5a1fc7683752ab49ff7308",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/SearingGorge.blp": {
+      "sha256": "21a8323da7ef2d267baafdc963dda9e518e3473b3bdf4e5ea120a6db1f0ca5ff",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Silithus.blp": {
+      "sha256": "2ea2b574aab7bebf80e76623f1a4b579f90426ff8dcc6a8ad6e250c12f549f32",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/SilverpineForest.blp": {
+      "sha256": "32f9c4fc90b785e34e0653c537ee4867ce6f083ecff1e3c598138c3deeeca637",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Standard.blp": {
+      "sha256": "7d724e3c99097761d840f9115a10c342ce98052d67206712da17111a110aef9f",
+      "bytes": 44876
+    },
+    "Assets/Images/Locations/StonetalonMountains.blp": {
+      "sha256": "c244b2f50c8caf4010692610559831f067cafbf4ae8ff9feb96a3d17941eb1de",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/StormwindCity.blp": {
+      "sha256": "9e008573cb0887d81931e974f6e609927049cbd28b98de74d73fc7f842d1778b",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/StranglethornVale.blp": {
+      "sha256": "e7a12284cbd4db13cf68fd8c4f250676883ab5a216473fc9df1123c70e827dac",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Tanaris.blp": {
+      "sha256": "579dd91014a40d195cf7ffc24ed430a3ed6efd3e436d304dae96f40779bb97c7",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Teldrassil.blp": {
+      "sha256": "1004c2a4345aa8bc1b9b68c314c1edef403c4eda42264cbd3b56cb584b5f65de",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/TheBarrens.blp": {
+      "sha256": "2cd90ec3acb38a15d4f51b76aebebe7bf969f24c6828859cf9be0f68357792c3",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/TheHinterlands.blp": {
+      "sha256": "6cfd8715047f53bd900b2f760dc4b163fa2da1f37cb1b218f2db3d02fafa6d34",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Undercity.blp": {
+      "sha256": "9dbfd3f4f5c7c5b63f7bd7987678a941f1592dfda4628d4f867644f2d78c8673",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/UngoroCrater.blp": {
+      "sha256": "c8315e491a5c8f903f001e0dbffc2669e0a643cf1eba44b5e4f0ad9ce31685b2",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/WesternPlaguelands.blp": {
+      "sha256": "3337de1f2eb8a3d2fd557fd93192a9a275ebc7beeda9c6efe0b5531a64a2b767",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Westfall.blp": {
+      "sha256": "39ad94d739c39919d1c161baff7dfc59f5e33dc34493da727a25b8de16c3f5d5",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Wetlands.blp": {
+      "sha256": "e440068c20666864aed733f4de50238d4a17cced9fc4faedfab8f2fd003eea5f",
+      "bytes": 88572
+    },
+    "Assets/Images/Locations/Winterspring.blp": {
+      "sha256": "1aeaadb0f0b65aa18d44abcaa2825f62ef3ef5e7a3eb3d47105ddcd51017b5b1",
+      "bytes": 88572
+    },
+    "Assets/Images/PandarenTrainingLarge_Circular_Flash.blp": {
+      "sha256": "1529d233b8c7ea91126367dab99f9ffc956cc9ccf12d5c22a4f2b9397a5e723d",
+      "bytes": 44876
+    },
+    "Assets/Images/PandarenTrainingLarge_Circular_Frame.blp": {
+      "sha256": "c69eeb6b5561f627820de7b0fc059bbeba4add6aaeef2694bba619a2656967df",
+      "bytes": 88580
+    },
+    "Assets/Images/PetBattle-SelectedPetGlow.blp": {
+      "sha256": "c091d1da0c59fcad39a7ee7f779546f599ae85bceeb1e1d0ae3a0e60b8c28f96",
+      "bytes": 23044
+    },
+    "Assets/Images/question-background.blp": {
+      "sha256": "e85ed0f1b793102f34e68dbefa0116262f0298c716ca79f3da121d38eec4ec5d",
+      "bytes": 44876
+    },
+    "Assets/Images/Question-HTile.blp": {
+      "sha256": "ec7fe3c6ffa0785654f647adcca2217a0a70819778f0a15b837c601a75b96839",
+      "bytes": 175972
+    },
+    "Assets/Images/Question-Main.blp": {
+      "sha256": "0cb00c809645233f822082be9da70e93cd3fc0afefb7c0e62a4d534cb4121cc3",
+      "bytes": 350724
+    },
+    "Assets/Images/Question-VTile.blp": {
+      "sha256": "e2e196253d060ceac4230d3dbbf6bc91d3153428eedb4ece0d2d069744f4b5df",
+      "bytes": 88580
+    },
+    "Assets/Images/ReadyCheck-NotReady.blp": {
+      "sha256": "cdfc33f6e9dd11c1f9dd587ef0f5005bf27e6d9e85b618c2ec495e51206d38d0",
+      "bytes": 6660
+    },
+    "Assets/Images/ReadyCheck-Ready.blp": {
+      "sha256": "a21e7487d51be0f518ed0fe6741d2d1c97345ad2c07bc9db6e4e8a90e9979bc8",
+      "bytes": 6660
+    },
+    "Assets/Images/UI-Achievement-IconFrame.blp": {
+      "sha256": "addcecf9e9ced385f762f3b5e73cb286190b067a52e5f076d00e4d35cb739931",
+      "bytes": 23044
+    },
+    "Assets/Images/UI-GuildAchievement-Parchment-Horizontal.blp": {
+      "sha256": "3035e159df78b082e108dbd6ef18cc1453666d18876ade673f53f8076c4f225f",
+      "bytes": 88572
+    },
+    "Assets/Localisation.lua": {
+      "sha256": "d1cd52f1c4e807c810c180535e70beed2adf8b71893b0ea8f2cc901cf69aa33d",
+      "bytes": 7802
+    },
+    "VanillaStoryline.lua": {
+      "sha256": "166e4f190e24a0ecaea88f9603104c5fe39e93213e6464a37eafeac58dbf53c0",
+      "bytes": 144106
+    },
+    "VanillaStoryline.toc": {
+      "sha256": "cf9e590f8524851574a1e37bee8dddc21fa4cfcb06623cbb671a40a3ee3f2488",
+      "bytes": 334
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

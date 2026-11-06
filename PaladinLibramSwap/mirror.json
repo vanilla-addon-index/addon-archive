@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/maxcodk/PaladinLibramSwap",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "maxcodk",
+    "repo": "PaladinLibramSwap",
+    "name": "PaladinLibramSwap",
+    "url": "https://github.com/maxcodk/PaladinLibramSwap",
+    "api": "https://api.github.com/repos/maxcodk/PaladinLibramSwap"
+  },
+  "commit": "62142d89d734a03faf4030ad1925a75d981f1dd7",
+  "sourceFiles": {
+    "PaladinLibramSwap.lua": {
+      "sha256": "ef78a0b5be08040c76d38a1edc3febbeb0343f8175bc32ddf252fa890a1aee14",
+      "bytes": 6576
+    },
+    "PaladinLibramSwap.toc": {
+      "sha256": "29066df5823b74a2f8999a6b3f5baccaffc60b6e5bb540052eff115f14013249",
+      "bytes": 141
+    },
+    "readme.txt": {
+      "sha256": "6f78f97c84f5edc84909538eb0fd993608e19054c88f97413a1af3c929bece51",
+      "bytes": 1316
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,9 @@
+{
+  "id": "238728852",
+  "tag": "v1.0",
+  "name": "CombatPlates v1.0",
+  "body": "Initial release. Features:\r\n- Automatic nameplate visibility: Configure nameplates to automatically show or hide whether in or out of combat\r\n- Precise control: Independent controls for enemy and friendly nameplates\r\n- Minimap button: Easy access, movable button\r\n- Clean UI: Simple configuration interface\r\n- Persistent settings: Preferences save automatically across sessions",
+  "published": "2025-08-09T00:29:43Z",
+  "prerelease": false,
+  "url": "https://github.com/phrxqt/CombatPlates/releases/tag/v1.0"
+}

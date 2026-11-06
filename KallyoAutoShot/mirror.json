@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/xniko/KallyoAutoShot",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "xniko",
+    "repo": "KallyoAutoShot",
+    "name": "KallyoAutoShot",
+    "url": "https://github.com/xniko/KallyoAutoShot",
+    "api": "https://api.github.com/repos/xniko/KallyoAutoShot"
+  },
+  "commit": "ee23361084583e26de4afff6685206ba9dcc3d7e",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "KallyoAutoShot-dev.xml": {
+      "sha256": "b64f892c44beff662dd50eea3de1c7acfca5449325f42fd398a34f0ad9bbfe2d",
+      "bytes": 16036
+    },
+    "KallyoAutoShot.lua": {
+      "sha256": "235c1c948ca25345dda4b47d7ffc6fe91a2d5703ead29bca0c05c777f43af5c6",
+      "bytes": 16762
+    },
+    "KallyoAutoShot.toc": {
+      "sha256": "2c628c498e322b7f0b8bf2c60a5a1726066d5f414573dba699f5f8011e4dfd38",
+      "bytes": 152
+    },
+    "LICENSE": {
+      "sha256": "53fb928bd125ede93e684fad73f3ee77da53088f62396352ffba16b89ae7e19e",
+      "bytes": 1068
+    },
+    "README.md": {
+      "sha256": "1d46d14dc7b75a24a7bae3ade28452dba3bfe0ad1a047f976a65fc4a90017e20",
+      "bytes": 395
+    },
+    "Textures/Bar.tga": {
+      "sha256": "dd77485bb552ea7109b3dfe30a9d4628a5d5288057a1787710f355aaa5ea39e2",
+      "bytes": 204
+    },
+    "Textures/DorisPP.ttf": {
+      "sha256": "6b1ebf2f4a879c5236d566b97b0b807c78c7588fc2e3043db6ab7f8c3d8f019c",
+      "bytes": 33980
+    },
+    "Textures/Smoothv2.tga": {
+      "sha256": "a08b5085568fb0aeffb469a89ee96e15909a6d85fd86e423fb9f6733ac70dcd9",
+      "bytes": 32812
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

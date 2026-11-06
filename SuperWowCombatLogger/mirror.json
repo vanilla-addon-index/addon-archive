@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/pepopo978/SuperWowCombatLogger",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "pepopo978",
+    "repo": "SuperWowCombatLogger",
+    "name": "SuperWowCombatLogger",
+    "url": "https://github.com/pepopo978/SuperWowCombatLogger",
+    "api": "https://api.github.com/repos/pepopo978/SuperWowCombatLogger"
+  },
+  "commit": "c67e198a8a0921747ed4d487d25aa25eb4317779",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "6a63ee07ea923319fc0474bb4db4d14d51f92b7b157de4114788d205ea0412ab",
+      "bytes": 77
+    },
+    "core.lua": {
+      "sha256": "5c982090c2cd7dad824d4964c2fd1245e5f85e3833a2f16ed5ee1c524b5fd251",
+      "bytes": 38673
+    },
+    "format_log_for_upload.py": {
+      "sha256": "907b7278212ea27585050e1479e6731b06fed6533a849ab3256ae3961d28862a",
+      "bytes": 17726
+    },
+    "README.md": {
+      "sha256": "9dd89a58a517f48d2dc3e9aa535cc62369ee601ec3352810dda08ea43ac7849e",
+      "bytes": 2860
+    },
+    "RPLLCollector.xml": {
+      "sha256": "738089592021a60bf4732e2a30111f8cebf849b10e1a5b416a76fbf65f410d8d",
+      "bytes": 359
+    },
+    "run_format_log.bat": {
+      "sha256": "53e766fcf9c8903da4296cf99c0b6ae338eaa786d95f6caad63c7dc6c9c24744",
+      "bytes": 73
+    },
+    "SuperWowCombatLogger.toc": {
+      "sha256": "0a827bee0726c2b162f47b098fa892ff8303a504d3e59eccfd6f009ecb86aeea",
+      "bytes": 245
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,86 @@
+{
+  "upstream": "https://github.com/Sentilix/capslock",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Sentilix",
+    "repo": "capslock",
+    "name": "capslock",
+    "url": "https://github.com/Sentilix/capslock",
+    "api": "https://api.github.com/repos/Sentilix/capslock"
+  },
+  "commit": "2960f9fc9d0fdef39949729fbc71fbc4ea84a67d",
+  "sourceFiles": {
+    "Capslock/Capslock.lua": {
+      "sha256": "81cd9f295456bed0c1d30137178f5e691401cd748f0a354ee8020a3a686c0e80",
+      "bytes": 36293
+    },
+    "Capslock/Capslock.toc": {
+      "sha256": "95852fe1cf0736e0711d7a297d10ac53d38d72a3c1baf547bce72b1eff7cc4bf",
+      "bytes": 165
+    },
+    "Capslock/Capslock.wowproj": {
+      "sha256": "ed3c74ccb827db0659c069da8d7751cd7a0a97b1054a3d172af6efb88a29ac9a",
+      "bytes": 1721
+    },
+    "Capslock/Capslock.wowsln": {
+      "sha256": "fe0e469208bd1ba99e3d3e9a00cc75c9fb8a61450e800ed4e926f675c3de1b5e",
+      "bytes": 726
+    },
+    "Capslock/Capslock.xml": {
+      "sha256": "7babcb9cfcd2b5fdb36de0ddb32abc09afa8f5cce95f74714712a11df7090f7f",
+      "bytes": 7002
+    },
+    "Capslock/CapslockTitanPanel.lua": {
+      "sha256": "5c544983e95a5e88971747f3e6ebb40c0c93e0fd662c9e6be9d6d998281f0f7a",
+      "bytes": 1634
+    },
+    "Capslock/CapslockTitanPanel.xml": {
+      "sha256": "3f1c0bebbeee38ee52fc1653809a97aade30361ce92e6c939ff62b568d255254",
+      "bytes": 688
+    },
+    "Capslock/changelog.txt": {
+      "sha256": "a19641bca5958946c36d3729433a4f26c6dcc440ca71f3bf4f9eb9f58fdf2c59",
+      "bytes": 926
+    },
+    "Capslock/LICENSE": {
+      "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2",
+      "bytes": 35141
+    },
+    "Doc/roadmap.txt": {
+      "sha256": "3d5e06b38a3902545bf627e2f8dcd2c33a498506d43e853bba32ad9d50aa3fa7",
+      "bytes": 481
+    },
+    "README.md": {
+      "sha256": "e72bf5d634d729b16d3f5d2748ff81133e1e7d3cde76833ca29548a054dbfc3c",
+      "bytes": 1080
+    },
+    "Releases/Capslock-0.3.1.zip": {
+      "sha256": "048641c98883ffc6ffffbd9d84ebc971e7bd1aa946528930b86b62a6323e2947",
+      "bytes": 25972
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "10412595": {
+      "tag": "0.3.1",
+      "folder": "0.3.1--10412595",
+      "assets": {
+        "6746586": {
+          "sha256": "048641c98883ffc6ffffbd9d84ebc971e7bd1aa946528930b86b62a6323e2947",
+          "bytes": 25972,
+          "id": "6746586",
+          "name": "Capslock-0.3.1.zip",
+          "url": "https://github.com/Sentilix/capslock/releases/download/0.3.1/Capslock-0.3.1.zip",
+          "path": "releases/0.3.1--10412595/assets/Capslock-0.3.1.zip"
+        }
+      },
+      "source": {
+        "sha256": "414d86b328a602313382803ca25fcf59cf88fdc1b3623c23109f13a49e17b461",
+        "bytes": 50341,
+        "path": "releases/0.3.1--10412595/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Sentilix/capslock/tarball/0.3.1"
+      }
+    }
+  }
+}

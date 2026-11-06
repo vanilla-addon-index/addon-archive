@@ -1,0 +1,11 @@
+{
+  "donor_voice": null,
+  "pitch_shift": 0,
+  "reverb": 0.08,
+  "reverb_decay": 0.6,
+  "bass_boost_db": 0,
+  "treble_boost_db": 0,
+  "status": "untested",
+  "test_quest_id": null,
+  "notes": "F0 ~118 Hz. Slight reverb for undead character."
+}

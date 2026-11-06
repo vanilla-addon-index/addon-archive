@@ -1,0 +1,9 @@
+{
+  "id": "275774146",
+  "tag": "1.3",
+  "name": "FineZoom v1.3",
+  "body": "Initial public release of FineZoom.\r\n\r\nProvides fine and precise camera zoom control for Vanilla / Turtle WoW using configurable zoom steps and safe custom bindings. Lightweight, engine-friendly, and designed to preserve the original game feel.\r\n",
+  "published": "2026-01-11T01:58:44Z",
+  "prerelease": false,
+  "url": "https://github.com/Stormhand-dev/FineZoom/releases/tag/1.3"
+}

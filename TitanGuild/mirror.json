@@ -1,0 +1,66 @@
+{
+  "upstream": "https://github.com/isitLoVe/TitanGuild",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "isitLoVe",
+    "repo": "TitanGuild",
+    "name": "TitanGuild",
+    "url": "https://github.com/isitLoVe/TitanGuild",
+    "api": "https://api.github.com/repos/isitLoVe/TitanGuild"
+  },
+  "commit": "fc5a45134a1cc796444a9776cf2fa5768201f424",
+  "sourceFiles": {
+    "TitanGuild/localization.lua": {
+      "sha256": "d178ce0189ededd0e1a8ed9018bd3733b47631f7a1742b86dd1096a58dd3ec8c",
+      "bytes": 7600
+    },
+    "TitanGuild/TitanGuild.lua": {
+      "sha256": "5953d5d0513190c83ec07dbc1a745e154a1f7bf2ce37aa383552072fbc725272",
+      "bytes": 27851
+    },
+    "TitanGuild/TitanGuild.toc": {
+      "sha256": "ba997dae8be46b6d96d635ef6a1a49623a3de29c2c98c8dc1b2c4fbb88d1bf13",
+      "bytes": 238
+    },
+    "TitanGuild/TitanGuild.xml": {
+      "sha256": "82319fec1747c5fee4dc7a111312a063f844690f3b7fa9e83fb3cb4687915a5e",
+      "bytes": 1082
+    },
+    "TitanGuild/TitanGuildFilterMenu.lua": {
+      "sha256": "2e0961ff5fb019ffae623f5db96af61a742add06fd45d83642d7bc9d153617ea",
+      "bytes": 2886
+    },
+    "TitanGuild/TitanGuildMenu.lua": {
+      "sha256": "2d9ce4edc5984ca5f8b7b935cbab5405a07a3b4f0afcd731782e9099274c88bf",
+      "bytes": 12659
+    },
+    "TitanGuild/TitanGuildPaging.lua": {
+      "sha256": "795de523321694d7676b6a0820e0a959534e1a934d35ca6057a3b96c0be9f4c5",
+      "bytes": 5899
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "4755153": {
+      "tag": "2.20",
+      "folder": "2.20--4755153",
+      "assets": {
+        "2712444": {
+          "sha256": "08bf673bbd1dad5f8d2aca4432262e52812eee82f8f8df00e51daa511abef789",
+          "bytes": 14031,
+          "id": "2712444",
+          "name": "TitanGuild.zip",
+          "url": "https://github.com/isitLoVe/TitanGuild/releases/download/2.20/TitanGuild.zip",
+          "path": "releases/2.20--4755153/assets/TitanGuild.zip"
+        }
+      },
+      "source": {
+        "sha256": "08628d67f886dc6ac3defb1dd1356a67b62bf301714e501249b67ced25deb01b",
+        "bytes": 11822,
+        "path": "releases/2.20--4755153/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/isitLoVe/TitanGuild/tarball/2.20"
+      }
+    }
+  }
+}

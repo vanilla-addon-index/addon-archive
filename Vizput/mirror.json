@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/gregdeichler/Vizput",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "gregdeichler",
+    "repo": "Vizput",
+    "name": "Vizput",
+    "url": "https://github.com/gregdeichler/Vizput",
+    "api": "https://api.github.com/repos/gregdeichler/Vizput"
+  },
+  "commit": "ef28e445c11e5c48c87a099a6338d4932426a363",
+  "sourceFiles": {
+    "assets/screenshots/Green-Item-Label.png": {
+      "sha256": "116efc5e994da31f0b09287de286f6f3456ffa751e53b4bb5d051a3f4a53ac0a",
+      "bytes": 515930
+    },
+    "assets/screenshots/Overstock-Warning.png": {
+      "sha256": "e1f9d24a009c633eb9e265df0b0e7f71a6ea4017ae3abf54554c6f108db7e83e",
+      "bytes": 526527
+    },
+    "README.md": {
+      "sha256": "10bf38cd44d626879f72fbd00ea4bdeb153c801500706d7541003316e558f371",
+      "bytes": 2352
+    },
+    "Vizput.lua": {
+      "sha256": "ce5c28a043da35a4978b72b64a2ef183121c1186cbc39ac88875fd2f0ffcb212",
+      "bytes": 31769
+    },
+    "Vizput.toc": {
+      "sha256": "8e294a718d82fd0b0932e0cfc1479291dd86f28dba0a4cd78224789484992d39",
+      "bytes": 212
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

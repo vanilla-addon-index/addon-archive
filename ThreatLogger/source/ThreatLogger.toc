@@ -1,0 +1,10 @@
+## Interface: 11200
+## Name: ThreatLogger
+## Title: Threat Logger
+## Notes: addon for logging ability threat.
+## Version: 0.01
+## Author: Croc
+## X-Website: https://github.com/ZenSociety/ThreatLogger
+## SavedVariablesPerCharacter: TL_ON, TL_PLAYER, TL_LOGS
+
+ThreatLogger.lua

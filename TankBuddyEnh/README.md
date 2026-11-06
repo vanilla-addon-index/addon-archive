@@ -4,6 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| TankBuddyEnh | https://github.com/laytya/TankBuddyEnh | new |
+| TankBuddyEnh | https://github.com/laytya/TankBuddyEnh | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

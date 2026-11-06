@@ -1,0 +1,13 @@
+## Interface: 11200
+## Title: TotemTimers (Turtle WoW)
+## Notes: Modern Turtle WoW totem bar with timers, flyouts, and per-character settings
+## Author: Original + fixes for Turtle WoW
+## Version: 3.6
+## SavedVariablesPerCharacter: TotemTimersDB
+
+TotemTimers_Core.lua
+TotemTimers_UI.lua
+TotemTimers_Init.lua
+TotemTimers_Config.lua
+TotemTimers_Layout.lua
+TotemTimers_Advanced.lua

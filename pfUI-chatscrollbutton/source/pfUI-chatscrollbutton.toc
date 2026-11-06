@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: |cff33ffccpf|cffffffffUI |cffcccccc[Chat Scroll Button]|r
+## Notes: Adds a pfUI-styled bottom scroll button when chat is scrolled up.
+## Author: Vakos
+## Version: 1.0
+## Dependencies: pfUI
+pfUI-chatscrollbutton.lua

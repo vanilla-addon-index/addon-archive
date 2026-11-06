@@ -1,0 +1,161 @@
+{
+  "upstream": "https://github.com/EinBaum/TinyTip",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "TinyTip",
+    "name": "TinyTip",
+    "url": "https://github.com/EinBaum/TinyTip",
+    "api": "https://api.github.com/repos/EinBaum/TinyTip"
+  },
+  "commit": "c4f4947afc7d907033010ec05d46be14d28ed87b",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "2cf078c81c56e3aea20e06746b0ffa83435595e94a3fc5d7d8484988d2103937",
+      "bytes": 259
+    },
+    "TinyTip/AceHook-2.0/AceHook-2.0.lua": {
+      "sha256": "ff01a90fa0ec6c5452d700991060fa6aae5bc287a40661f896b6d72a55aeb4ae",
+      "bytes": 17796
+    },
+    "TinyTip/AceLibrary/AceLibrary.lua": {
+      "sha256": "d26e83aa24d1bfdaf9cc9b005982233b1575b3cb7709ff62c6b552199fb35990",
+      "bytes": 21742
+    },
+    "TinyTip/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "c9ce46e6cbac86498355c626e1df5642903d1aa7a0607ac1f9719690fb3e0846",
+      "bytes": 31789
+    },
+    "TinyTip/CHANGELOG.TXT": {
+      "sha256": "76a1f04d0e101e6219fe0b02cafbe384735786ea049f308aa37f7de3fdb643c5",
+      "bytes": 4196
+    },
+    "TinyTip/README.TXT": {
+      "sha256": "95884d3dbae96e1a2b3bd0f3abd8e8eb8603569bfd31253238b750ac1adf728d",
+      "bytes": 4226
+    },
+    "TinyTip/TinyTip.lua": {
+      "sha256": "899ae0699ebe26433b762d43674e2502946b83066af923c5dc6e2a7bdbd68ef1",
+      "bytes": 29442
+    },
+    "TinyTip/TinyTip.toc": {
+      "sha256": "71cf8128b4c424d2964a512aff79055b752f420b34c19025891594dad818aec5",
+      "bytes": 725
+    },
+    "TinyTip/TinyTipAnchor.lua": {
+      "sha256": "2c88a380cfe80a1944998856ec01311784415f626994ae6ca3137747f185d625",
+      "bytes": 8103
+    },
+    "TinyTip/TinyTipLocale_deDE.lua": {
+      "sha256": "36a6cb69f5daa8e98c9c6e977d8a1f1d7b0f6223b486577caf1909f239adfaa6",
+      "bytes": 771
+    },
+    "TinyTip/TinyTipLocale_enEN.lua": {
+      "sha256": "b9451cdab8eab69307258c19f4a6e624d31c84cb646f885fa8310ffb160048c3",
+      "bytes": 757
+    },
+    "TinyTip/TinyTipLocale_frFR.lua": {
+      "sha256": "cad7962029ff30dea9ebd787212ff1241f4a545507db7296a0cfc2fa205f3e4e",
+      "bytes": 782
+    },
+    "TinyTip/TinyTipLocale_ruRU.lua": {
+      "sha256": "6fba6436141261d85d728ddd02bf46a34a7dc4738271b092e03c09098dbb05cb",
+      "bytes": 769
+    },
+    "TinyTip/TinyTipLocale_zhCN.lua": {
+      "sha256": "2239a334e3f917e3bd681adefd1a9e3eb47c8715657be889b67e588b404fe614",
+      "bytes": 781
+    },
+    "TinyTipExtras/CHANGELOG.TXT": {
+      "sha256": "dc5a0151b392098734d009314269240aa2722c8c0976ba32117467638209e2a4",
+      "bytes": 240
+    },
+    "TinyTipExtras/README.TXT": {
+      "sha256": "a578655e59180d808c66635dc92790f56941bd8d7766d57ba38c2ce5ad034c63",
+      "bytes": 91
+    },
+    "TinyTipExtras/TinyTipExtras.lua": {
+      "sha256": "049afea601304df29f199a7ebfc263ae61a27f6faf0098ce7bae94eee654acca",
+      "bytes": 8523
+    },
+    "TinyTipExtras/TinyTipExtras.toc": {
+      "sha256": "26e11b98f58013a64ce949b988ced002dfd5cad35e5dc07a7e781bf513e5a9bf",
+      "bytes": 723
+    },
+    "TinyTipExtras/TinyTipExtrasLocale_deDE.lua": {
+      "sha256": "ac02228598b610d815d3ebfbc92906b740722f0652fa18a9f65823596fbff59a",
+      "bytes": 569
+    },
+    "TinyTipExtras/TinyTipExtrasLocale_enEN.lua": {
+      "sha256": "d9e4cdbe9361a570052db1f58056be9f4ffb45b3fe0761186128ad8ec4381f8d",
+      "bytes": 517
+    },
+    "TinyTipExtras/TinyTipExtrasLocale_frFR.lua": {
+      "sha256": "1f10ecdf9603513982667d4ad36303b91de05014e50227163a3a449753241587",
+      "bytes": 628
+    },
+    "TinyTipExtras/TinyTipExtrasLocale_ruRU.lua": {
+      "sha256": "37eb8b68247ea48baf1f280ad0b5af9d7f879a9a159194028c73db478dd133a1",
+      "bytes": 578
+    },
+    "TinyTipExtras/TinyTipExtrasLocale_zhCN.lua": {
+      "sha256": "09b9dc4acf496274b905d89ade0632b6c82eb1d5498dabf7af8cd0757c43ba67",
+      "bytes": 551
+    },
+    "TinyTipExtras/TinyTipIcons.lua": {
+      "sha256": "b012590aa9e0f85a44f00f85dcfe309b92bc7d8d444e23c2302898b55a260c23",
+      "bytes": 7078
+    },
+    "TinyTipExtras/TinyTipTargets.lua": {
+      "sha256": "1cb035f411f0992800125bb1bf0f2c9f1a40cf1adf3275945a2abd73c174e217",
+      "bytes": 4091
+    },
+    "TinyTipExtras/TipLib/TipLib.lua": {
+      "sha256": "7a3330e6f8e433d3c27cde53995900579e5503d3221415f312d7f469125d8fdb",
+      "bytes": 7701
+    },
+    "TinyTipOptions/CHANGELOG.TXT": {
+      "sha256": "9fe8677d80ba5e1e2bab46003a2cedc54810300dfa62edc29adef016bf832d05",
+      "bytes": 44
+    },
+    "TinyTipOptions/DewdropLib/Dewdrop-2.0.lua": {
+      "sha256": "6a2e6b1a57b91ff3739f398b0b4b94c2a0e6ee168b73346b9995ac926d290fda",
+      "bytes": 78886
+    },
+    "TinyTipOptions/README.TXT": {
+      "sha256": "cfe1bc9955c72076054b257eaf24f2eaaffd020e6259d180a45eee382664832b",
+      "bytes": 126
+    },
+    "TinyTipOptions/TinyTipChatLocale_deDE.lua": {
+      "sha256": "967010064252ffa3332b7feeeae0608ac5a4787f6ec4b600efc5f092655bd147",
+      "bytes": 14806
+    },
+    "TinyTipOptions/TinyTipChatLocale_enEN.lua": {
+      "sha256": "bd28822b1576c44a462836924126140d578832fbba8c1d9464a1c39002ce6a03",
+      "bytes": 12756
+    },
+    "TinyTipOptions/TinyTipChatLocale_frFR.lua": {
+      "sha256": "3b03c3ac1046fae756b383ae13ae2905d1f487f0cfb1217eaadf29624d9d83f3",
+      "bytes": 131
+    },
+    "TinyTipOptions/TinyTipChatLocale_ruRU.lua": {
+      "sha256": "4e66ecb3bbcfab60249f01efe515530ac3667d7c0429e6bb4715ebb14593f6b8",
+      "bytes": 18881
+    },
+    "TinyTipOptions/TinyTipChatLocale_zhCN.lua": {
+      "sha256": "9347062f243deb85c274cb37eef7081bb83fded584e5ff5ba5e05a4202ef9520",
+      "bytes": 13004
+    },
+    "TinyTipOptions/TinyTipOptions.lua": {
+      "sha256": "ada818eff52c5b887a09c8ece80e7da0e56f4a4432513c19c543b862c80ff8e3",
+      "bytes": 14424
+    },
+    "TinyTipOptions/TinyTipOptions.toc": {
+      "sha256": "1cc55d65ed98ab57593e70fecfd4db89c57230a4a2c0188f382e7f5328a6d2f1",
+      "bytes": 570
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

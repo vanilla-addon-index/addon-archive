@@ -1,0 +1,9 @@
+{
+  "id": "9603659",
+  "tag": "0.9.6.3",
+  "name": "SpartanUI v0.9.6.3 Alpha",
+  "body": "* Certain addons were causing some nil errors in player, party, target, target of target buff tooltips.",
+  "published": "2018-02-09T03:31:08Z",
+  "prerelease": false,
+  "url": "https://github.com/Dyaxler/SpartanUI_Vanilla/releases/tag/0.9.6.3"
+}

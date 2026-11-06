@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: X-Perl Raid Admin by |cFFFF8080Redbu11|r
+## Notes: Provides useful raid admin tools for todays raid leader. https://github.com/Redbu11dev/X-Perl-UnitFrames
+## Author: Redbu11
+## SavedVariablesPerCharacter: XPerl_Admin, XPerl_CheckItems
+XPerl_RaidAdmin.xml
+XPerl_Check.xml

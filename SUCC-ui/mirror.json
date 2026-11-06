@@ -1,0 +1,61 @@
+{
+  "upstream": "https://github.com/checkem/SUCC-ui",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "checkem",
+    "repo": "SUCC-ui",
+    "name": "SUCC-ui",
+    "url": "https://github.com/checkem/SUCC-ui",
+    "api": "https://api.github.com/repos/checkem/SUCC-ui"
+  },
+  "commit": "11679eac1b16814e1ef3c41a0baffe872c7f698b",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "ca5cd5a7de9be7e2a1add41f44a8cfa2baf527d52624141235337fd2a60f519d",
+      "bytes": 2751
+    },
+    "SUCC-ui.lua": {
+      "sha256": "f98271f595189d74563bba942f4e18ea88eed59f090afd8f4d3fbe07ea2050fa",
+      "bytes": 13507
+    },
+    "SUCC-ui.toc": {
+      "sha256": "e5097f83fadb8be8477efe5f3c9f88c5162e2c3048dad25b60774435afd78f1e",
+      "bytes": 259
+    },
+    "SUCC-UIParent.lua": {
+      "sha256": "7cf6874b74974cf016bb7dc1b62d1d6d435dfaf57fa2e345c2815d61b4bbda97",
+      "bytes": 4724
+    },
+    "Textures/37-e-slot-empty-exact-6440-1.0.tga": {
+      "sha256": "1bbf0ebb6d2acc4e1df56b6a0abe11308fca0f774ac1604224eee1d9075ef377",
+      "bytes": 7960
+    },
+    "Textures/37-e-slot-exact-6440-1.0.tga": {
+      "sha256": "ece81051599804a4ee23c84de222fe3db5a6a9eeea992da8193f9097c8d94099",
+      "bytes": 4210
+    },
+    "Textures/37-e-xp-bar-reduced-5123216-1.0.tga": {
+      "sha256": "0708610e9ddf33a25a8270ca702f3e6c8691d8370f575a3ae1d0cbbe35e8e211",
+      "bytes": 6753
+    },
+    "Textures/37-e-xp-bar-regular-51232-1.0.tga": {
+      "sha256": "eae1aae980f4183ac428cb5f048ba37954b225ec2ba6b228d318a07fe625e8f7",
+      "bytes": 10645
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "10523617": {
+      "tag": "0.2",
+      "folder": "0.2--10523617",
+      "assets": {},
+      "source": {
+        "sha256": "349ed7ad7ef3120652968661e5a51c44c9e9e525702ce146e6ae770ffa51591a",
+        "bytes": 14423,
+        "path": "releases/0.2--10523617/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/checkem/SUCC-ui/tarball/0.2"
+      }
+    }
+  }
+}

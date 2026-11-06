@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/shirsig/snipe",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "snipe",
+    "name": "snipe",
+    "url": "https://github.com/shirsig/snipe",
+    "api": "https://api.github.com/repos/shirsig/snipe"
+  },
+  "commit": "bbd83684f7e18e38b41c74ee64a256792e4aa5e0",
+  "sourceFiles": {
+    "snipe.lua": {
+      "sha256": "d771d9d5ec43e00bc8e6606e5b61500c19485a11ba16de57f8b40b6e1d70bc58",
+      "bytes": 4756
+    },
+    "snipe.toc": {
+      "sha256": "d375bae8a899c8a29afef8efe2cde3f2becd91b1204db604012857b2650626bd",
+      "bytes": 57
+    },
+    "snipe.xml": {
+      "sha256": "fbb3c4b5a88c918c9be441166586eeac9874e0820969d3a1b8775e831f986e50",
+      "bytes": 528
+    },
+    "targets.lua": {
+      "sha256": "7a07c81966f6ffb6b551f61455d2f58f903294c87daa9920043ca7f789052aa8",
+      "bytes": 968
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

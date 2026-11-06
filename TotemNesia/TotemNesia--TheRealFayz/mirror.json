@@ -1,0 +1,169 @@
+{
+  "upstream": "https://github.com/TheRealFayz/TotemNesia",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "TheRealFayz",
+    "repo": "TotemNesia",
+    "name": "TotemNesia",
+    "url": "https://github.com/TheRealFayz/TotemNesia",
+    "api": "https://api.github.com/repos/TheRealFayz/TotemNesia"
+  },
+  "commit": "4091f4c4dfb63690c7d7aa1a7a6e6a8bd3398114",
+  "sourceFiles": {
+    ".github/workflows/mirror-sync.yml": {
+      "sha256": "3ec919e1af17c7a1cb3e799a2f95ece44aae6d812c5865c3e1ce206644d40c47",
+      "bytes": 354
+    },
+    "Alerts.lua": {
+      "sha256": "2a2658ac01ecb4570ac223010ce21c76512fa4f1e720b8da632c127892b0da5e",
+      "bytes": 9547
+    },
+    "Bindings.xml": {
+      "sha256": "13ca69d86f81407163ac7017f91c2a02c7d3a597a4044865341487c43495b5b5",
+      "bytes": 787
+    },
+    "Casting.lua": {
+      "sha256": "3474947fbde8234139b6c4f13ab6891c56c4481b6e4c7801fcbe3f01b8e865dd",
+      "bytes": 7215
+    },
+    "Core.lua": {
+      "sha256": "9af754634a82c58674d4511f40ec06117c26ec4a788aaf287f00cf0d6ccc880d",
+      "bytes": 46003
+    },
+    "Events.lua": {
+      "sha256": "838ad0faf385577fe8d8980d3bf8569a3b1eda56f80e81b0d2f459cf81d86472",
+      "bytes": 14614
+    },
+    "Images/1 button totems.gif": {
+      "sha256": "5a80c26da7959353986db349f8311fb8911e4bf6d9fc9dac3d67f8d514fef8e0",
+      "bytes": 2708992
+    },
+    "Images/Totem Bar Closed.png": {
+      "sha256": "6fd6cdd0964314adff082aaa36fc5bb60a3b7fa680a4c624b48cfb7ba77d2e02",
+      "bytes": 14798
+    },
+    "Images/Totem Bar.png": {
+      "sha256": "8eb8cfe26fc8c509fa8aa4d9f161d156af11426fd29141d500058823944ae989",
+      "bytes": 116131
+    },
+    "Images/Totemic Recall.png": {
+      "sha256": "0f35bc8655284839d3ebc7a52ce84d89e0463f6ba5e2dedde95693c45ceb9444",
+      "bytes": 24510
+    },
+    "Mana.lua": {
+      "sha256": "2bd20d6db95d9355986cd59cea8aeb044a06da5747c495a97cb849b59cd99726",
+      "bytes": 3838
+    },
+    "Options.lua": {
+      "sha256": "5fbffa0243abed01b423a474cbded2b110e54b01cf4ad0bd8934240d0e3db647",
+      "bytes": 45102
+    },
+    "README.md": {
+      "sha256": "ad86ced8b0890a4376727b9c1221c3562bbbb88f5cb88a615ff1aa348e28b4ff",
+      "bytes": 8281
+    },
+    "Recall.lua": {
+      "sha256": "8aa96032a6c23004da5f1f5e9909e89a71345b27b37d81093620d4e04eb270a8",
+      "bytes": 7977
+    },
+    "Sounds/Aggro - Aria.mp3": {
+      "sha256": "eb2631f2979e9a9305b475b73384fb6635ae2c36c9f1d092f347e20da143b28c",
+      "bytes": 12096
+    },
+    "Sounds/Aggro - Jenny.mp3": {
+      "sha256": "9146fda67f61419d9e076fa3ed4f5f1af5479c965f52997b3f4805bf07ad1136",
+      "bytes": 12096
+    },
+    "Sounds/Aggro - Libby.mp3": {
+      "sha256": "c711dae382e70806cd3f834829feeb1ea8a47bab31525ab0f3b8fa6db9715199",
+      "bytes": 12096
+    },
+    "Sounds/Aggro - Roger.mp3": {
+      "sha256": "cd5bbecbd908f8be0faed3c6e995deff56c418344f45500e9a9214969e101798",
+      "bytes": 12096
+    },
+    "Sounds/Low Mana - Aria.mp3": {
+      "sha256": "1dab81d58a904e378da6f3c3670e9be36df67f5ebb3069faa3138a6587c9a214",
+      "bytes": 12096
+    },
+    "Sounds/Low Mana - Jenny.mp3": {
+      "sha256": "7bf25e7e2459f7c1f9da1890dc36f567ca0defe0e67cd37b92a5f204967a44e1",
+      "bytes": 12096
+    },
+    "Sounds/Low Mana - Libby.mp3": {
+      "sha256": "695ef0f7dd61a8842b015f955bd88499b295519d27f07c6ca2f692575dd23330",
+      "bytes": 12096
+    },
+    "Sounds/Low Mana - Roger.mp3": {
+      "sha256": "cd17c832a36e56fb6b3888640dfed3c13decb9e21559c0c78f69634ab0956187",
+      "bytes": 12096
+    },
+    "Sounds/Mana Potion - Aria.mp3": {
+      "sha256": "6e4ec77f20bc83329516abeb44a7570fce9eded35d854cdf2c6cc7d9222583f9",
+      "bytes": 12672
+    },
+    "Sounds/Mana Potion - Jenny.mp3": {
+      "sha256": "e0851226036f6d0abe542b85fd3ac88762887fc224a88f202ce50b5e67ab39b3",
+      "bytes": 12384
+    },
+    "Sounds/Mana Potion - Libby.mp3": {
+      "sha256": "bbb1ed18f7c4b3a3def8838b6cc9f005c1600099fc938e575b9ac612c1bb3ffb",
+      "bytes": 12816
+    },
+    "Sounds/Mana Potion - Roger.mp3": {
+      "sha256": "335f70274fc31f383cfe7516c7a152d2c101302fd034dcdd876cb14cb0141ed6",
+      "bytes": 12384
+    },
+    "Sounds/Totems - Aria.mp3": {
+      "sha256": "9079097249b5320e24250bdae245a93750f26559900595b028fc1db10b5961a1",
+      "bytes": 12096
+    },
+    "Sounds/Totems - Jenny.mp3": {
+      "sha256": "2d6dc71e27fabc073489402f0b5809d6b6eb1c7fd10457040d4157d08dc18d0e",
+      "bytes": 12096
+    },
+    "Sounds/Totems - Libby.mp3": {
+      "sha256": "bc6c43ad158541370dc72671dd24d3cd876a6562ef6e5df1fe0291ea107695b8",
+      "bytes": 12096
+    },
+    "Sounds/Totems - Roger.mp3": {
+      "sha256": "4cc0ed8a594afced1f88e6cc73e8216a769075ba444f7a04ff9b9278e7dbfb4a",
+      "bytes": 12096
+    },
+    "Textures/Logo.tga": {
+      "sha256": "e71018faa3d2de2c395f87ebaf32d9bbeadd3475798b00aca836e2a6f4885e85",
+      "bytes": 65580
+    },
+    "Textures/LogoRing.tga": {
+      "sha256": "a97fd1d96ec0100b4a79fec07bd587266ceaf53d287da9e79b8051227dc05ec9",
+      "bytes": 65580
+    },
+    "Textures/SizeGrabber-Down.tga": {
+      "sha256": "8ad47ceb56ded219ac3d013efe8ed7f6f2550fde84314cbe78eba0a02dfca43e",
+      "bytes": 1042
+    },
+    "Textures/SizeGrabber-Highlight.tga": {
+      "sha256": "7f7a4f115a5fcb087ae976d76237d865a81cb25c86b43436220bd4a00daa84ca",
+      "bytes": 1042
+    },
+    "Textures/SizeGrabber-Up.tga": {
+      "sha256": "2b24dc4cf9fc841cc492a9dc20d713495c92edc5ee5103dcb318065f9d2e557c",
+      "bytes": 1042
+    },
+    "TotemBar.lua": {
+      "sha256": "a96579d5f4dfc29c509cb3dd02cd84830b68a44ca3f8391c605ae15740e0263a",
+      "bytes": 53587
+    },
+    "TotemNesia.toc": {
+      "sha256": "98b96fb588e812fb05c0dad4ab36e25661e8a53dcb4709257cb1b508e03a9d4c",
+      "bytes": 348
+    },
+    "Troubleshooting.md": {
+      "sha256": "85c79aa7d151b42cfb72151d702ba04ea6c11430fc23648a98d99bb1c36b789c",
+      "bytes": 3813
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

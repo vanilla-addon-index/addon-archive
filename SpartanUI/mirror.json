@@ -1,0 +1,626 @@
+{
+  "upstream": "https://github.com/Dyaxler/SpartanUI_Vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Dyaxler",
+    "repo": "SpartanUI_Vanilla",
+    "name": "SpartanUI_Vanilla",
+    "url": "https://github.com/Dyaxler/SpartanUI_Vanilla",
+    "api": "https://api.github.com/repos/Dyaxler/SpartanUI_Vanilla"
+  },
+  "commit": "0e19353f1b689e83bb658e16b494ea16384454a7",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "90046ea2587d5171ae8b3a32e2e14838f271bdce4b6e5467ae36d310256f42a0",
+      "bytes": 407
+    },
+    ".gitignore.upstream": {
+      "sha256": "0803fa6d3c20f5d6dec1042cf80f1e8ee56970128c371c4c73d0e690887895a9",
+      "bytes": 386
+    },
+    "LICENSE": {
+      "sha256": "53927bd0b739d38c87a0a82236fd9b070c2dfff11c0c119be50372005d5047ad",
+      "bytes": 35815
+    },
+    "MobInfo2/Bindings.xml": {
+      "sha256": "dd0b0094014e96a16d5e7ebf66064ff34b83eec99333a29c832e16b4cb2de062",
+      "bytes": 116
+    },
+    "MobInfo2/localization.de.lua": {
+      "sha256": "dcc768647c3fa6456c86003007fa9a92fdd3488377d1a8374ab5d6f66f29dfbf",
+      "bytes": 18448
+    },
+    "MobInfo2/localization.es.lua": {
+      "sha256": "3b855bc578985274ad8ebd7716618d25949b6722e2d29146894606638e2107df",
+      "bytes": 19687
+    },
+    "MobInfo2/localization.fr.lua": {
+      "sha256": "8916097cc5626eeecd4d048455e2aa7cd3020167226acfbe4b01360439d4640a",
+      "bytes": 19994
+    },
+    "MobInfo2/localization.lua": {
+      "sha256": "ff70ac54477d37904d7345bd03a0f461f83eddf2be8fad1f85949ef40110e998",
+      "bytes": 16989
+    },
+    "MobInfo2/localization.tw.lua": {
+      "sha256": "9f8298ac8ef895820ab5ce8462be2bf30febefbfc864850398aa5ca42fc421d1",
+      "bytes": 18093
+    },
+    "MobInfo2/MI2_Config.lua": {
+      "sha256": "2a14e15776f5fd4d0f67838622228f74dacaeff1ec3519c813f0501576bd4c3e",
+      "bytes": 10258
+    },
+    "MobInfo2/MI2_Config.xml": {
+      "sha256": "d4e951aca871a72ffa8e40a3954f2ab1730c2d3a35f64d378d211293284c460a",
+      "bytes": 48461
+    },
+    "MobInfo2/MI2_ConvDropRate.lua": {
+      "sha256": "c3a74d746816ce2924d554d09e07eb1e622dd2a803c72b422e60e69a699bc841",
+      "bytes": 6669
+    },
+    "MobInfo2/MI2_Events.lua": {
+      "sha256": "cd5c84a0e020a87f0cc499b7a7d7024bcfccc6e611b31d0a1d17244639695307",
+      "bytes": 31502
+    },
+    "MobInfo2/MI2_Health.lua": {
+      "sha256": "ee6ceac07b95d5d1cb60801cfcc6e34e1dec51b88c1feae8cb42710d6269e9aa",
+      "bytes": 9692
+    },
+    "MobInfo2/MI2_Import.lua": {
+      "sha256": "3535fa9497462909be05ef2a8ace077a7837e74618dcc140c98924d880f06146",
+      "bytes": 1954322
+    },
+    "MobInfo2/MI2_ItemData.lua": {
+      "sha256": "d57ca68c9400bcd221932d6aaa537407c97f1ec2576f035192cb3a643811c2d2",
+      "bytes": 173668
+    },
+    "MobInfo2/MI2_Search.lua": {
+      "sha256": "ea80410751638c6e3a07a1334fd213b50cb1d3570df486ec57c5228677df8ae6",
+      "bytes": 17445
+    },
+    "MobInfo2/MI2_Slash.lua": {
+      "sha256": "0d9b722a276a4760024abdb3a0cbf5c0c62ec518f95d401ef1bc4e03b3716104",
+      "bytes": 20483
+    },
+    "MobInfo2/MobInfo2.lua": {
+      "sha256": "1a1ffbdd31c3857fe901e973667e291c449546fff20288d7a082c7170c637659",
+      "bytes": 90850
+    },
+    "MobInfo2/MobInfo2.toc": {
+      "sha256": "ffae10d18d69300f2f3f5e2d9caf34d8f2eda55d2cd98789e950d84243eea089",
+      "bytes": 819
+    },
+    "MobInfo2/MobInfo2.xml": {
+      "sha256": "f86d3a85a2492b3158ba0f9357e8f02d763c252c5b8fafa7ce9215be22db93b7",
+      "bytes": 1530
+    },
+    "MobInfo2/MobInfoIcon.tga": {
+      "sha256": "1f59d4499bdf207489c4e0f83fa0837d621d5b829300e83c40454d0ca1e4aed7",
+      "bytes": 17445
+    },
+    "MobInfo2 Database/MobInfo2.lua": {
+      "sha256": "5727b20cffbd4eef8c6c8873adf6c01af2071e1bfea5b1d5c07a1e6c45de31ed",
+      "bytes": 1959806
+    },
+    "MobInfo2 Database/Readme.txt": {
+      "sha256": "6413189c197f2727b2f9f78ef8d1c36d8dc9bdd98e3d7347dfae5561f60d103b",
+      "bytes": 111
+    },
+    "README.md": {
+      "sha256": "cbb8d40c077bd5b0c02da4ca28ccdf9ce09327bf14e9f8c4904493d3b41c7688",
+      "bytes": 3478
+    },
+    "ScreenShots/FullUI.jpg": {
+      "sha256": "b9a48484d90f6c0edb3877980c596b276fe710f9d8a9dbdab68a825d40bd05f1",
+      "bytes": 669690
+    },
+    "ScreenShots/LeftPanel.jpg": {
+      "sha256": "673a9ba71fe16bdde8b8f99bfb68e8cee25bc9732be7cf06f9372bb8ef271a62",
+      "bytes": 92932
+    },
+    "ScreenShots/PartyFrames.jpg": {
+      "sha256": "8b13901de996e1ee88b6870dff91a41fc71587698359c39c095bbdcbf83090fc",
+      "bytes": 272639
+    },
+    "ScreenShots/Pet.jpg": {
+      "sha256": "8766744e5681fe252c59c8ebfbabd1bc744f7403cb9381241444ef3f30c7548c",
+      "bytes": 56551
+    },
+    "ScreenShots/Right Panel.jpg": {
+      "sha256": "6114ee3907513dd3a7f46d950f25a74b527dbf64a26871c7f9f9e14e6c4b8673",
+      "bytes": 73584
+    },
+    "ScreenShots/Rogue.jpg": {
+      "sha256": "8d37b64b6305d2d341811836b1dbf36b994a73a8a639dfd5b2745904fda3735b",
+      "bytes": 36509
+    },
+    "SpartanUI/Animations/CastBar.blp": {
+      "sha256": "a20acce49ea7e5a46def09dc83fee5ef0c4e48e239ca4cf249aeb4972ef83a17",
+      "bytes": 700222
+    },
+    "SpartanUI/Animations/EnergyBar.blp": {
+      "sha256": "0f7ab1799b87a97608a8969875cc6de41f7c6b9ca932a3dc18288d31f3478f6b",
+      "bytes": 175934
+    },
+    "SpartanUI/Animations/FocusBar.blp": {
+      "sha256": "b41fb899cf015655e817ddb90b0c0017e1dbb4a61326c412cc2246443aeabcf9",
+      "bytes": 175934
+    },
+    "SpartanUI/Animations/HealthBar.blp": {
+      "sha256": "1ea7da527b2b546d886f9f54936f2808c8fe581651bf4cfe0ff75506b0811d15",
+      "bytes": 175934
+    },
+    "SpartanUI/Animations/ManaBar.blp": {
+      "sha256": "3e16d8d35259ae614bf6004ecb8be6572caf7e30ca92fbbbb3b30d201f64b3a9",
+      "bytes": 175934
+    },
+    "SpartanUI/Animations/RageBar.blp": {
+      "sha256": "9a4a448fca4738f7033707a0503bee1674845a0d8bdcb6f29ed336388f828040",
+      "bytes": 175934
+    },
+    "SpartanUI/Backup MobInfo/MobInfo2.lua": {
+      "sha256": "97f12a096ff3189ba6da584bf8c9572a5cd5787773ce6fe60e8abf734eb115c6",
+      "bytes": 1955410
+    },
+    "SpartanUI/Bindings.xml": {
+      "sha256": "fc69d8625c866d526f7fdbc504547b113702b77be8da64e4a87d92cdae8e863f",
+      "bytes": 147
+    },
+    "SpartanUI/ChangeLog.txt": {
+      "sha256": "5f0f266be04dfd2e918460696d772f038f88d0c9f3f0e0a39c3a03bead7097d1",
+      "bytes": 3495
+    },
+    "SpartanUI/Font.xml": {
+      "sha256": "216cac0a955641a982e74aa27ead4468d20ddbd534301f319fbe87f2a9c351ec",
+      "bytes": 3772
+    },
+    "SpartanUI/Fonts/Cognosis.ttf": {
+      "sha256": "e38cd0a0a2a577e28f6f12aaadf78a82fefee0882e634d1424b80785670fd3b9",
+      "bytes": 22852
+    },
+    "SpartanUI/Fonts/micro.ttf": {
+      "sha256": "b25fa5563cc8a2e1e9b3913c3129668fa9084b684b5071de34e80ba79b91e89e",
+      "bytes": 6632
+    },
+    "SpartanUI/Fonts/MyriadPro-Regular.ttf": {
+      "sha256": "e7b1a41b90a9ba905382f46711c153df84810ca7763c23432c592401c7444ead",
+      "bytes": 118472
+    },
+    "SpartanUI/Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "7b04142f00d5a887a32722c55bb64798e593f3504929f656aa440c298c63b529",
+      "bytes": 31075
+    },
+    "SpartanUI/Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "f24029b2b68114216eaa16e9c60b750f9be5ef16ac5eb81d76890c675dd71d31",
+      "bytes": 65848
+    },
+    "SpartanUI/Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "857c997b45898d8e9b0cfcf0e788bfe3ac845b94c65a5d952a7c370c8179f234",
+      "bytes": 44137
+    },
+    "SpartanUI/Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "9024eb7de5aa86ff376e3f0d4e3502e6b07c8498609e51001e574d41729b7f0b",
+      "bytes": 29477
+    },
+    "SpartanUI/Libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "fe376e949ec8294d88e6a0d7d2d2c95186da7d735252ef652add469656db30c0",
+      "bytes": 17348
+    },
+    "SpartanUI/Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "c2aea5c71e1a83e5018d050336b367aa33eb44007d0a9965fbeaf4191d248ffa",
+      "bytes": 23476
+    },
+    "SpartanUI/Libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "64b6a9a20828dee3dcda9287bc0d8c85f564c55273b50bf0b92f4ef3ffb14efb",
+      "bytes": 16360
+    },
+    "SpartanUI/Libs/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "adf608781a4b112e21df58b11aba09ad636e03b7ae74d61e26b01f3ef19b47c7",
+      "bytes": 12251
+    },
+    "SpartanUI/Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "71d5f6485c4fc89bd29d50a38b03b2cb2885d68833590b131a6801628a799d4a",
+      "bytes": 31308
+    },
+    "SpartanUI/Libs/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "cbb8577f5a891481cfe0b61f3b3f84cc9c10bed5dcb1137d6f2672d5772df277",
+      "bytes": 9486
+    },
+    "SpartanUI/Localization.lua": {
+      "sha256": "e769de83d82bb1e832e770cb54e9761ef25af966d4ae8b846d0f3740cd9d6c68",
+      "bytes": 25274
+    },
+    "SpartanUI/Modules/Adapt/Adapt-ModelBack.tga": {
+      "sha256": "a711a43fb40b4d8f1aa308a9f9635504d535ac3f62e9cfea1acf391f73ec80c7",
+      "bytes": 17445
+    },
+    "SpartanUI/Modules/Adapt/Adapt.lua": {
+      "sha256": "47da50c5281cdd42cc87ff3bfcb6094bc743a7d6a093256f51f3778249d5e689",
+      "bytes": 13377
+    },
+    "SpartanUI/Modules/Adapt/Adapt.xml": {
+      "sha256": "92a04c7ffa2920fa88a7370cdf345d8317adde84759ac1444cae2a8d852c44e4",
+      "bytes": 198
+    },
+    "SpartanUI/Modules/Bartender2/Alias.lua": {
+      "sha256": "5d78a1c63997c6c2d9baaef5a1e75a99db530d4e8ebdf46d0d26eba26fb316b4",
+      "bytes": 15027
+    },
+    "SpartanUI/Modules/Bartender2/Bartender2-Locale-deDE.lua": {
+      "sha256": "e0a9332b9a2570601170a3bbb0e053b6d971963e2c5f7a0083a11b684e6cc414",
+      "bytes": 3316
+    },
+    "SpartanUI/Modules/Bartender2/Bartender2-Locale-enUS.lua": {
+      "sha256": "901ed4d7684b516143ae62ed505b32b3d2d1cbdf6b6918d87c9b8ff9949008e8",
+      "bytes": 2177
+    },
+    "SpartanUI/Modules/Bartender2/Bartender2-Locale-koKR.lua": {
+      "sha256": "98d6cdc78359f34e3e94287f36244ab2edfcb415eb5392fe00ca16efd8f10cc5",
+      "bytes": 3905
+    },
+    "SpartanUI/Modules/Bartender2/Bartender2-Locale-zhCN.lua": {
+      "sha256": "f607b6d6b27768d403da35020e39c0a7092774d9e394587b34aafe2764d7b148",
+      "bytes": 3189
+    },
+    "SpartanUI/Modules/Bartender2/Bartender2-Locale-zhTW.lua": {
+      "sha256": "ccc6ba7daaca751e2f4da8389c0d6181b9e6a84a11bfea6e5ff9aeea322181de",
+      "bytes": 3202
+    },
+    "SpartanUI/Modules/Bartender2/Bartender2.lua": {
+      "sha256": "043bb9587b99374ffb989857ccd1af2b3cddb7951fd4d8845e099b1508bd5b7b",
+      "bytes": 18244
+    },
+    "SpartanUI/Modules/Bartender2/Defaults.lua": {
+      "sha256": "74c44409e97b1838d470b12754f6d06ce1b847d731a39ad187df8e8f6930f8e6",
+      "bytes": 1842
+    },
+    "SpartanUI/Modules/Bartender2/HunterBars.lua": {
+      "sha256": "c09246733a40082038bffddf696cadebcda5d50d0e34425dce2ab35f6e759d3e",
+      "bytes": 2320
+    },
+    "SpartanUI/Modules/Bartender2/Options.lua": {
+      "sha256": "081dda7d04dfc1730e7c258625d510f4035f18baff4e328660b5b4f65d2d4202",
+      "bytes": 5190
+    },
+    "SpartanUI/Modules/Bartender2/StickyFrames.lua": {
+      "sha256": "0e2c82c57a826bf984f6beea680a4ac95d6f61a6e8510ad7791371eb26b1135f",
+      "bytes": 9391
+    },
+    "SpartanUI/Modules/Bartender2/Tables.lua": {
+      "sha256": "086d33c86f6ad673c97905acab859ec79d5b72aab353fe40bb69ee4a1300c548",
+      "bytes": 1131
+    },
+    "SpartanUI/Modules/ClearFont/ClearFont.lua": {
+      "sha256": "e59477b449e93b7cee72155bf46853e2d188e708b6d7471b8cc5237e5cc6f001",
+      "bytes": 12619
+    },
+    "SpartanUI/Modules/ClearFont/Fonts/Centaur_Bold_Italic.ttf": {
+      "sha256": "54652083d082e8815960b5ca43d1b3addd61849b6ef5e8a609f91059e3f7e702",
+      "bytes": 67988
+    },
+    "SpartanUI/Modules/ClearFont/Fonts/ClearFont.ttf": {
+      "sha256": "76160ce9cd774532131cf4902b810a2d02c94f225da238ff8c04e25875eb66c5",
+      "bytes": 59976
+    },
+    "SpartanUI/Modules/ClearFont/Fonts/ClearFontBold.ttf": {
+      "sha256": "76160ce9cd774532131cf4902b810a2d02c94f225da238ff8c04e25875eb66c5",
+      "bytes": 59976
+    },
+    "SpartanUI/Modules/ClearFont/Fonts/ClearFontBoldItalic.ttf": {
+      "sha256": "76160ce9cd774532131cf4902b810a2d02c94f225da238ff8c04e25875eb66c5",
+      "bytes": 59976
+    },
+    "SpartanUI/Modules/ClearFont/Fonts/ClearFontItalic.ttf": {
+      "sha256": "76160ce9cd774532131cf4902b810a2d02c94f225da238ff8c04e25875eb66c5",
+      "bytes": 59976
+    },
+    "SpartanUI/Modules/ClearFont/Fonts/ClearFontNumber.ttf": {
+      "sha256": "76160ce9cd774532131cf4902b810a2d02c94f225da238ff8c04e25875eb66c5",
+      "bytes": 59976
+    },
+    "SpartanUI/Modules/ClearFont/Fonts/Montreal_Bold.ttf": {
+      "sha256": "f681f2a494a7b944896e6d9d35830b2f9ffa7e24e81edb1a8cbb2ce92819980f",
+      "bytes": 35872
+    },
+    "SpartanUI/Modules/ClearFont/Fonts/Montreal_Heavy_Bold.ttf": {
+      "sha256": "714351827092d0ed290a8625a75780636b66c66fcc91d575bb80a633ae0c4329",
+      "bytes": 35308
+    },
+    "SpartanUI/Modules/ClearFont/Fonts/Sui_Font_Bold_Italic.ttf": {
+      "sha256": "44053f1e07c7903a4624d0e43777198a693011daf6de5d4122442dce7454d887",
+      "bytes": 68044
+    },
+    "SpartanUI/Modules/ClearFont/Fonts/Sui_Font_Bold.ttf": {
+      "sha256": "68e622267253dddae00832e0ca12509f392ca0d47127280ff1531133e5fac848",
+      "bytes": 67140
+    },
+    "SpartanUI/Modules/ClearFont/Fonts/Sui_Font_Condensed_ExtraBold.ttf": {
+      "sha256": "dd5f1da8c17bedea3ef311ff055d99a7e05cef10ce12eee6c1ca2c1f54285827",
+      "bytes": 67360
+    },
+    "SpartanUI/Modules/ClearFont/Fonts/Sui_Font_Italic.ttf": {
+      "sha256": "7ba5c7815cc0167eec4ae4a7e1a46d1b208475f77951662109137f162b322544",
+      "bytes": 72464
+    },
+    "SpartanUI/Modules/ClearFont/Fonts/Sui_Font.ttf": {
+      "sha256": "da42e00d30101ee3af03506986f218e66e1e9bdd4da6de740ec04ae5a3d85bf5",
+      "bytes": 70448
+    },
+    "SpartanUI/Modules/Flare/FilmEffects.lua": {
+      "sha256": "edc2743d35f9cef1edf2576e4d0b169acf0d3552a3ac3c80afab9e71b42f8aee",
+      "bytes": 4260
+    },
+    "SpartanUI/Modules/Flare/Textures/25ASA_Add.blp": {
+      "sha256": "7ceee48b996b695f09bc9ecd48ca55126399b67fc66ac50bc6bed6b4e8463b07",
+      "bytes": 175948
+    },
+    "SpartanUI/Modules/Flare/Textures/25ASA_Mod.blp": {
+      "sha256": "7cf6688ab6eb75894b9121d325c544cf3b1e5cb160480df9e77dcb3e082ab9ac",
+      "bytes": 175948
+    },
+    "SpartanUI/Modules/Flare/Textures/vignette.blp": {
+      "sha256": "e9493431b2442da87b186c44133810ed2b49f5c76d5ea7a16195e42ba1af679c",
+      "bytes": 175948
+    },
+    "SpartanUI/Readme1st.txt": {
+      "sha256": "c40754ab1ca8b365bfb0ee61c0c30b5361e689bccfea8385b6f77ec50793fa61",
+      "bytes": 3765
+    },
+    "SpartanUI/SpartanUI.lua": {
+      "sha256": "6096803269fbc52df767efe33a7e59b330852472a698ff00457d6b262c4396a2",
+      "bytes": 151776
+    },
+    "SpartanUI/SpartanUI.toc": {
+      "sha256": "3cd416bb0b55a8a5f9c898217f84ba0d0766dba5bf1fdbcfeea8fbf703e3e16a",
+      "bytes": 1415
+    },
+    "SpartanUI/SpartanUI.xml": {
+      "sha256": "7b13604f803258aa0faccba508bc94146aea198a0d0731c64feed3981a546ef3",
+      "bytes": 189786
+    },
+    "SpartanUI/Textures/HUD_1.blp": {
+      "sha256": "dca0dc960bc0468d98f681c83c461b5626e3552e8663b0b4caf5af9027c81545",
+      "bytes": 350698
+    },
+    "SpartanUI/Textures/HUD_1a.blp": {
+      "sha256": "85e69cf209d2493bd37229a967e5cfd330c3332de80a5b20cd3e9916b26d40f9",
+      "bytes": 175956
+    },
+    "SpartanUI/Textures/HUD_2.blp": {
+      "sha256": "34d1c04a0e30ba5ce1b35f0d67f21c0d0fda96e655f6c752f4d08ff077a95bfe",
+      "bytes": 350698
+    },
+    "SpartanUI/Textures/HUD_3.blp": {
+      "sha256": "c7dd20fe8a4d5d1b9f2b9bdbaf1d79eb0657841a446b53ece226bbe35d77a8ad",
+      "bytes": 350698
+    },
+    "SpartanUI/Textures/HUD_4.blp": {
+      "sha256": "972bf3f98fad2e5b2829fdd83e663a482449cc4b74b371584e8439897028a2f1",
+      "bytes": 350698
+    },
+    "SpartanUI/Textures/HUD_5.blp": {
+      "sha256": "e9b35ebb8ceef3b1e18d180f52a9c87e4066df9e91e302424d41409e53079cde",
+      "bytes": 350698
+    },
+    "SpartanUI/Textures/HUD_6.blp": {
+      "sha256": "047d288d5ea838a10db6cca635925dff08a19f3e91ee67e4d969fc5b54295b1c",
+      "bytes": 175956
+    },
+    "SpartanUI/Textures/Icon_AFK.blp": {
+      "sha256": "61fa06159c899348509b83b3e045151c379b423f922674e24c70493e2a3e276a",
+      "bytes": 6634
+    },
+    "SpartanUI/Textures/Icon_Audio.blp": {
+      "sha256": "c3b215aab5e9292b3440db6ee26367925976bfd155790b6492673ab9eb2abb1d",
+      "bytes": 12094
+    },
+    "SpartanUI/Textures/Icon_Class.blp": {
+      "sha256": "7cd184fb451ac56f7afcb909589e1a2662b5207656332348a96c09ee315a67ef",
+      "bytes": 175934
+    },
+    "SpartanUI/Textures/Icon_ClassSmall.blp": {
+      "sha256": "31df7dd9bdfb4865fc850b7dfaf4f1e5121a35b3d8e3eac968cf17af99dead23",
+      "bytes": 44862
+    },
+    "SpartanUI/Textures/Icon_Elite.blp": {
+      "sha256": "df78fe177114943eebaf8deee767fef56f3df5be826a80e84d808bedbb497bc4",
+      "bytes": 44862
+    },
+    "SpartanUI/Textures/Icon_RaidTargets.blp": {
+      "sha256": "1862da4f8e965691025cf19dc9afb5592125f8e45eecbfe1e88704ca189c0454",
+      "bytes": 175934
+    },
+    "SpartanUI/Textures/Icon_Rare.blp": {
+      "sha256": "4cd833d816d106dc3bd6ed0317a3d1296a44edca75d604589e0bc61c36f6d718",
+      "bytes": 44862
+    },
+    "SpartanUI/Textures/Icon_Readycheck_Maybe.blp": {
+      "sha256": "17b4d314bedec8ec7717a863ebb0e45386934b081bbf742f9abc5ca84327d243",
+      "bytes": 12094
+    },
+    "SpartanUI/Textures/Icon_Readycheck_No.blp": {
+      "sha256": "eeccafc240c204abc6bfd40c95975edb09ba7e0a4c818eaf2b980bc0f02467ab",
+      "bytes": 12094
+    },
+    "SpartanUI/Textures/Icon_Readycheck_Yes.blp": {
+      "sha256": "40ced5ba82fe10df56ce80e21be2b8071602e8211089d598e7c2a4fe4ac286c1",
+      "bytes": 12094
+    },
+    "SpartanUI/Textures/Object_Bar_1Row.blp": {
+      "sha256": "1e5e6d70d835e14ffddd8b4c686d3b47e13fe4fac72c85e2ab98f6be74e0cfd9",
+      "bytes": 88562
+    },
+    "SpartanUI/Textures/Object_Bar_3Row.blp": {
+      "sha256": "e7795514fde8af80a4deef124be7d7f2e1b09264cec38411b4f0033812f00b6d",
+      "bytes": 88554
+    },
+    "SpartanUI/Textures/Object_Bar_Flare.blp": {
+      "sha256": "1b60f894876edd9d387cec93c5da6bdf1a2f4071d6f7118bf42ad67086445cc1",
+      "bytes": 2538
+    },
+    "SpartanUI/Textures/Object_Bar_Pop-DownLeft.blp": {
+      "sha256": "0949a356bc31827d58822861b448b4b410f0217957422f781247ac30e58d1e48",
+      "bytes": 44882
+    },
+    "SpartanUI/Textures/Object_Bar_Pop-DownRight.blp": {
+      "sha256": "551543b25339cb1019ebe3f1a272e07b9d4e3b3314fbb1351b58ba3ef48ea69e",
+      "bytes": 44882
+    },
+    "SpartanUI/Textures/Object_Bar_Pop-UpLeft.blp": {
+      "sha256": "dbe111acae4dd2fd1875dd72a5a1356485b98d1fddd3938570210a4917ccf068",
+      "bytes": 44882
+    },
+    "SpartanUI/Textures/Object_Bar_Pop-UpRight.blp": {
+      "sha256": "23abf0b148f1bfd1efe79ba78d0eb20d7f31a39780bdc91ade136a97fe37f1b8",
+      "bytes": 44882
+    },
+    "SpartanUI/Textures/Object_Bar_SpartanAmber.blp": {
+      "sha256": "67af8c8d2a8c663a05d41c33f3aec57e7244b640e0b390ac662171e6e5087b30",
+      "bytes": 23026
+    },
+    "SpartanUI/Textures/Object_Bar_SpartanBlue.blp": {
+      "sha256": "1771293e0e00e6c72d2c50455ee66f54ad80df8590152c42a3337f3916e30cd8",
+      "bytes": 23026
+    },
+    "SpartanUI/Textures/Object_Bar_SpartanGreen.blp": {
+      "sha256": "959f1f4a7c1f667f53c75ca5a7568473c81d583633e8abfaf2d8692cdc191318",
+      "bytes": 23026
+    },
+    "SpartanUI/Textures/Object_Bar_SpartanRed.blp": {
+      "sha256": "2c52977671058bbaf86badb9a82316f1c4be477c6b153acba22f2daf44e22ef4",
+      "bytes": 23026
+    },
+    "SpartanUI/Textures/Object_Buff_BG.blp": {
+      "sha256": "b716efdc625f70517431237dc0de2a33b61996e9e6a8d2dd5b3e3a4e02ceabe3",
+      "bytes": 12094
+    },
+    "SpartanUI/Textures/Object_ComboPoint.blp": {
+      "sha256": "e910f2cedaa659830717901777aa6874d8321b368661f169a4f1a6af8ef76af1",
+      "bytes": 1854
+    },
+    "SpartanUI/Textures/Object_Minimap_Overlay.blp": {
+      "sha256": "fbb1b7854d222a7fe2a4cec44ce3beae1a4216bda8444bd667fd671fc5262118",
+      "bytes": 175934
+    },
+    "SpartanUI/Textures/Object_Rep_Plate.blp": {
+      "sha256": "709d464ce2b405b9f631c5beb6caa32018f2e47f77375e5d5f80dab8e4c1c3ec",
+      "bytes": 44882
+    },
+    "SpartanUI/Textures/Object_Tooltip.blp": {
+      "sha256": "130ffe8d8678466eedc02955e70691d6282470b747915e4833aca5f97e051a98",
+      "bytes": 3902
+    },
+    "SpartanUI/Textures/Object_TooltipOrigin.blp": {
+      "sha256": "81ed5ba5baf940cdfb51e60cffc75347efa55e4e47c66bf9331b6c243ff21449",
+      "bytes": 2538
+    },
+    "SpartanUI/Textures/Object_TooltipStat.blp": {
+      "sha256": "8cd2b30e43f257243510eb8cb8dfe6d3bf7bb972091caf8714ff4e3eec1bc65b",
+      "bytes": 175938
+    },
+    "SpartanUI/Textures/Object_XP_Flare.blp": {
+      "sha256": "0c491834ac11b173f331110a6207f4c6b32e200dcb4d70a9ebfeff03b8d3126a",
+      "bytes": 3902
+    },
+    "SpartanUI/Textures/Object_XP_GlowLead.blp": {
+      "sha256": "bad2352b9d5f5b42a4964dcd5e7d1edd821ab194ff2fe8cdbeea4654777a2e4d",
+      "bytes": 3902
+    },
+    "SpartanUI/Textures/Object_XP_GlowText.blp": {
+      "sha256": "2eba60b16fc07a3e9cacd5c4698def749efeffc30c2ed35afb5ea9c28c3dc740",
+      "bytes": 1868
+    },
+    "SpartanUI/Textures/Object_XP_Plate.blp": {
+      "sha256": "483bd4bbd818df68a33492b6040d4b6af8ef677030162d4620845ac6ed7708e4",
+      "bytes": 44882
+    },
+    "SpartanUI/Textures/Object_XP_RestedHigh.blp": {
+      "sha256": "02ca608c913e2c812d2b10e5be1a2d06519af52481393775d2bf373e9cb1a993",
+      "bytes": 23058
+    },
+    "SpartanUI/Textures/Object_XP_RestedLow.blp": {
+      "sha256": "6731e4dcbd105ecb3226dd48835190520ed6cb72e792fe08768afbeefd086182",
+      "bytes": 23058
+    },
+    "SpartanUI/Textures/Object_XPRep_Plate.blp": {
+      "sha256": "eec9275989bc040d9746dabe4eb2a27f6787bdfef13686d013be34aee182aaf0",
+      "bytes": 44882
+    },
+    "SpartanUI/Textures/Unit_Extra_BuffsRow1.blp": {
+      "sha256": "e2e2ec122aca9b974ecdb5cd0f0ae26829a51fe8666b86c91a976c84e0934474",
+      "bytes": 44866
+    },
+    "SpartanUI/Textures/Unit_Extra_BuffsRow2.blp": {
+      "sha256": "905f213754e7379c603d15eba9be569ea7ddad9b7201e3ac18c003f8f5e280a7",
+      "bytes": 23026
+    },
+    "SpartanUI/Textures/Unit_Extra_Pet.blp": {
+      "sha256": "34a62e3541cb190e055395ddab3faada0549ad0524da98d8cce9a2e187e0d842",
+      "bytes": 23026
+    },
+    "SpartanUI/Textures/Unit_Extra_Plate.blp": {
+      "sha256": "81920f1d6e242e8b3112a13de2eeb202b2dd9265611a3beae1011e1e10540ef1",
+      "bytes": 88554
+    },
+    "SpartanUI/Textures/Unit_Extra_Portrait.blp": {
+      "sha256": "38cdd4e1cf4d8eb4f626c4948fcc6c57182df2d4457df47d0b8d6f43d8259622",
+      "bytes": 44862
+    },
+    "SpartanUI/Textures/Unit_Main_Buffs.blp": {
+      "sha256": "eb837bad547901d2ba5e8315ae9a591af83243107062b59db16e48374a027a69",
+      "bytes": 175938
+    },
+    "SpartanUI/Textures/Unit_Main_BuffTop.blp": {
+      "sha256": "fd43774f0db41c988196e3115c49b4046f75df3cea6574db6ec9ec706aa40453",
+      "bytes": 23026
+    },
+    "SpartanUI/Textures/Unit_Main_PlateRight.blp": {
+      "sha256": "5c7901a6a6a891645541c0cde09487acf9413d0f827013fc8cac131a254640d5",
+      "bytes": 175938
+    },
+    "SpartanUI/Textures/Unit_Main_Ring.blp": {
+      "sha256": "75dbf959c71c0d02931745bc6e66444a401ad1586480de7339b2ae6ab6c0847c",
+      "bytes": 88554
+    },
+    "SpartanUI/Textures/Unit_PetFocus_Plate.blp": {
+      "sha256": "0f7a05b2baa3f1b59c09468cd0d97477984e225b91f1ac500049e26d22960b93",
+      "bytes": 44866
+    },
+    "SpartanUI/Textures/Unit_PetFocus_Portrait.blp": {
+      "sha256": "f4a60ab4aaf8c96ffe8312bdc251318c3586da22909893465d072101c148f732",
+      "bytes": 44862
+    },
+    "SpartanUI/Textures/Unit_Self_Backdrop.blp": {
+      "sha256": "b50b34a998984e7c67dba9f822ce54e97a84996218749933b70c3586b5fdecb1",
+      "bytes": 3916
+    },
+    "SpartanUI/Textures/Unit_Target_Backdrop.blp": {
+      "sha256": "3db4184936b44b779442cf9f59a25a070363dc073e2287a96eafdf93ffa0db39",
+      "bytes": 3916
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "9603659": {
+      "tag": "0.9.6.3",
+      "folder": "0.9.6.3--9603659",
+      "assets": {
+        "6157251": {
+          "sha256": "58184271c4800db2873f7e65014eb323d5dd8564b47f3fe190210d8333bdf4ef",
+          "bytes": 5371046,
+          "id": "6157251",
+          "name": "SpartanUI-0.9.6.3.zip",
+          "url": "https://github.com/Dyaxler/SpartanUI_Vanilla/releases/download/0.9.6.3/SpartanUI-0.9.6.3.zip",
+          "path": "releases/0.9.6.3--9603659/assets/SpartanUI-0.9.6.3.zip"
+        }
+      },
+      "source": {
+        "sha256": "bcbfb00e9568aced9f3f1b51637c7b5aec71eb4010490cdaec991216404c0a9b",
+        "bytes": 5379689,
+        "path": "releases/0.9.6.3--9603659/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Dyaxler/SpartanUI_Vanilla/tarball/0.9.6.3"
+      }
+    }
+  }
+}

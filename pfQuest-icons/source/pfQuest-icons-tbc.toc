@@ -1,0 +1,8 @@
+## Interface: 20400
+## Title: |cff33ffccpf|cffffffffQuest |cffcccccc[Icons]
+## Author: Shagu
+## Notes: Replace all node icons with icon textures
+## Version: GIT
+## Dependencies: pfQuest-tbc
+
+pfQuest-icons.lua

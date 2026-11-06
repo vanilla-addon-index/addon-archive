@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/firenahzku/VGInterrupt",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "firenahzku",
+    "repo": "VGInterrupt",
+    "name": "VGInterrupt",
+    "url": "https://github.com/firenahzku/VGInterrupt",
+    "api": "https://api.github.com/repos/firenahzku/VGInterrupt"
+  },
+  "commit": "83451262197f5a23e58ae9144cfcdc5f93ac4a64",
+  "sourceFiles": {
+    "InterruptableSpells.lua": {
+      "sha256": "9e4cc40609ccfec7cb6e38a76ebe383a4acc631fa46a1434dc65efe372e649f4",
+      "bytes": 4859
+    },
+    "README.md": {
+      "sha256": "27dbaa9bffbffff683e87e07d12dbaf1ae6c32c33720a49e0a2f8531f6b25dc3",
+      "bytes": 169
+    },
+    "VGInterrupt.lua": {
+      "sha256": "3b599d11f5f7057e3c62d15398722e5786ceaf0f4002c619fac80000839e2398",
+      "bytes": 23357
+    },
+    "VGInterrupt.toc": {
+      "sha256": "e08f1897f4b44634f39aa54d1f970cac33873c34ef133c9f484414f61af76e87",
+      "bytes": 197
+    },
+    "VGInterrupt.xml": {
+      "sha256": "2949cb6f7453c460826b3482d55d3e55c947d056908cfd25bee2d90d4b8eb6be",
+      "bytes": 602
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

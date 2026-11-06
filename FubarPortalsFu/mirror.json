@@ -1,0 +1,141 @@
+{
+  "upstream": "https://github.com/laytya/FuBar_PortalFu",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "FuBar_PortalFu",
+    "name": "FuBar_PortalFu",
+    "url": "https://github.com/laytya/FuBar_PortalFu",
+    "api": "https://api.github.com/repos/laytya/FuBar_PortalFu"
+  },
+  "commit": "d50fdbbe0765edd073640ed317bfade682cffb4f",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    ".gitignore.upstream": {
+      "sha256": "1aed21fcf46e0e76fa17ee7c4e6b2288fb2fbb844ae1f67dcb322bf64b7a90b7",
+      "bytes": 365
+    },
+    "changelog.txt": {
+      "sha256": "ade4726998fdf7c34c449d63ef02f8037519ac67b130e1907f49a324b068a6a2",
+      "bytes": 347
+    },
+    "FuBar_PortalFu.toc": {
+      "sha256": "dc3172a358755e3c7e7d8ab642b6c0c5e24122e5b9af25cf27bd6b800ffef7dc",
+      "bytes": 1091
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "d50be33b0ff53a82f2845115ff165b279ab4268ac38325891fec7decb4540979",
+      "bytes": 34388
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.toc": {
+      "sha256": "b687cc0f7247cf07e10a6c47952ea19e4999f2c0d6932c2dd3ecc56b27bbd6e7",
+      "bytes": 454
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "ab8c61a5174d468bee9c7f7264a7ef8adaead087b7db42ca48da23cfd3d6637d",
+      "bytes": 68842
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.toc": {
+      "sha256": "8ba9b0ab058e0274712f807971d48e281b95ef5386ca6816309fd67250daa65b",
+      "bytes": 472
+    },
+    "libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "aec50568954370b65a14b9d720de2282e6b045feb4415a53578d0d1cae46cca4",
+      "bytes": 46027
+    },
+    "libs/AceDB-2.0/AceDB-2.0.toc": {
+      "sha256": "8f1ed6c456195eb12bb926c513e94cfa325eac3a1303da009774a9319c2d0f4e",
+      "bytes": 462
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "8222e7a75d0f0fba8030099939611732b50c28cb26b6ce6427f52fd5f2f409d8",
+      "bytes": 29927
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.toc": {
+      "sha256": "4bd1a75dee473e8aa41773ac5caae9eb05e2ae00bf1a8f740942e0423642f570",
+      "bytes": 454
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "1237d45fdf7e6aa30442c36fdebd7a0c11c75ed6cc0183339eb22c4a7911b8c4",
+      "bytes": 24193
+    },
+    "libs/AceLibrary/AceLibrary.toc": {
+      "sha256": "89439a6295ffbca783f8f202943ca2d0196108ed9c0005dccc562b6936506567",
+      "bytes": 390
+    },
+    "libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "f0b829c007fd8cd897aa9059bd6c9ee27f0b9b71b9c9468b1572c1d3db4397fe",
+      "bytes": 16495
+    },
+    "libs/AceLocale-2.2/AceLocale-2.2.toc": {
+      "sha256": "50d1bd0d5c88056b75ddc4cdf0019802dd55ff3f5f9b5dc9d7b03f1329941640",
+      "bytes": 445
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "03e71bcf0ba8ce7c806c5ffe966991cb997c12c25b351198c918fe32e469bdaf",
+      "bytes": 31435
+    },
+    "libs/AceOO-2.0/AceOO-2.0.toc": {
+      "sha256": "e52e085669260b6dd64b58a228d8ea767c304910c91effe2a5155a9b5ca76bb6",
+      "bytes": 435
+    },
+    "libs/Babble-Spell-2.3/Babble-Spell-2.3.lua": {
+      "sha256": "ffa9d880e9284a0b452bb1bee84e0973f8154fa87fce9ed5ba317b139c96c883",
+      "bytes": 470925
+    },
+    "libs/Dewdrop-2.0/AceLibrary/AceLibrary.lua": {
+      "sha256": "ff722100142ec410d8ea5ef5cca3c1734c06d9d873e9be8e69db768823172278",
+      "bytes": 26225
+    },
+    "libs/Dewdrop-2.0/AceLibrary/AceLibrary.toc": {
+      "sha256": "89439a6295ffbca783f8f202943ca2d0196108ed9c0005dccc562b6936506567",
+      "bytes": 390
+    },
+    "libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "7496ed3e339a5d5d171d7986d2a12ffa5223800594056d127a942c201d2ac105",
+      "bytes": 88536
+    },
+    "libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "6f6b55cbb836ad14dbdb7570ff469e1c689013a5414d06aa78ffa4c6f76e28b2",
+      "bytes": 47956
+    },
+    "libs/Tablet-2.0/AceLibrary/AceLibrary.lua": {
+      "sha256": "ff722100142ec410d8ea5ef5cca3c1734c06d9d873e9be8e69db768823172278",
+      "bytes": 26225
+    },
+    "libs/Tablet-2.0/AceLibrary/AceLibrary.toc": {
+      "sha256": "89439a6295ffbca783f8f202943ca2d0196108ed9c0005dccc562b6936506567",
+      "bytes": 390
+    },
+    "libs/Tablet-2.0/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "2fcd9c4253ab3644d1650cdef3b033c0216f031325d73c8cd4d81f63233cf741",
+      "bytes": 108632
+    },
+    "libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "8fc37df9feab266e62bbcee78edb3998f33545af87ab7a37cac1c8ee7a6a2353",
+      "bytes": 88568
+    },
+    "LICENSE": {
+      "sha256": "2b221a29a5a17954040a3231b8a2d5096d0054ff5c348b233c03be3b1dff66eb",
+      "bytes": 1082
+    },
+    "locales.lua": {
+      "sha256": "08e30b8d87b548ee60c24a08af2108ee74c82f092a11f9db6483b824e8ac4f33",
+      "bytes": 2510
+    },
+    "PortalFu.lua": {
+      "sha256": "b9bb1c361e8a369e7cd4b7c8b8f587ec434cdafa4036c5ccd2c3426537c2c823",
+      "bytes": 11184
+    },
+    "README.md": {
+      "sha256": "6b250850a57f5f8e7fe35b27cb95183cae568cdb7d9681733b2222218d09c52f",
+      "bytes": 471
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,17 @@
+<Bindings>
+	<Binding name="WOWRADIO_TOGGLE" header="WOWRADIO">
+		WowRadioBinding_Toggle();
+	</Binding>
+	<Binding name="WOWRADIO_PLAYSTOP">
+		WowRadioBinding_PlayStop();
+	</Binding>
+	<Binding name="WOWRADIO_NEXT">
+		WowRadioBinding_Next();
+	</Binding>
+	<Binding name="WOWRADIO_PREV">
+		WowRadioBinding_Prev();
+	</Binding>
+	<Binding name="WOWRADIO_RANDOM">
+		WowRadioBinding_Random();
+	</Binding>
+</Bindings>

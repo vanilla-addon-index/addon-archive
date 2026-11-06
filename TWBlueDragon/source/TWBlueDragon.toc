@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: Blue Dragon Tracker
+## Author: Xerron/Er
+## Version: 1.0.0.0
+## Notes: v1.0.0.0 Blue Dragon Tracker
+## SavedVariables:
+TWBlueDragon.xml

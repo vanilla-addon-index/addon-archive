@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/laytya/EzDismount",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "EzDismount",
+    "name": "EzDismount",
+    "url": "https://github.com/laytya/EzDismount",
+    "api": "https://api.github.com/repos/laytya/EzDismount"
+  },
+  "commit": "e95b05be42a35f05367749dda6e8930ad592247d",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    ".gitignore.upstream": {
+      "sha256": "39b48a08bc89b0390642d250661c23781351a7a7a5ee70388bb13df140109c32",
+      "bytes": 617
+    },
+    "Bindings.xml": {
+      "sha256": "d0eb43292f2c7c24c116bd344eb559d2caa5b7a3fc084d27c35ae19a78a95dd3",
+      "bytes": 107
+    },
+    "EzDismount_tables.lua": {
+      "sha256": "635427b5dcea704bbbf372b0040adb884884d353ad3168eb3460357b85b33ac3",
+      "bytes": 1631
+    },
+    "EzDismount.lua": {
+      "sha256": "6c71d6a7f4f2ab981150ebb6e71c3b960a9ecc0a6caa5c1725cdf9f3f193056f",
+      "bytes": 17347
+    },
+    "EzDismount.toc": {
+      "sha256": "47fe32d6d2aff720a13b2ae4636a13b669f82ab302626c5782c6bc193567fd83",
+      "bytes": 299
+    },
+    "EzDismount.xml": {
+      "sha256": "f402a62c40c103bf1a30aa742fb1093d50e0defff150b2c7bd2576a6a214401c",
+      "bytes": 13382
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

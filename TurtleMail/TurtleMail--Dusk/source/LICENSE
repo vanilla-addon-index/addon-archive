@@ -1,0 +1,30 @@
+TurtleMail mixed-origin copyright and license notice
+
+This repository contains material from multiple origins.
+
+1. Original modifications and documentation authored by Dusk-92
+   Copyright (c) 2026 Dusk-92.
+   All rights reserved unless a specific file states otherwise.
+
+2. Historical and upstream TurtleMail / Mail code
+   Significant portions of this repository descend from:
+   - https://github.com/shirsig/Mail
+   - https://github.com/sica42/TurtleMail
+
+   No explicit project-wide license was identified in either upstream
+   repository during the 2026-08-31 provenance audit.
+
+   This file does NOT relicense inherited code and does not grant rights that
+   the applicable original copyright holders did not grant.
+
+3. Visual assets, trademarks, and game-facing material
+   These remain subject to their respective rights holders. The presence of a
+   file in this repository does not by itself establish ownership or a right to
+   relicense any underlying third-party or game-derived asset.
+
+World of Warcraft, Warcraft, Blizzard Entertainment, Turtle WoW, and associated
+names, marks, artwork, and game assets remain the property of their respective
+rights holders.
+
+See THIRD_PARTY_NOTICES.md, PROJECT_IDENTITY.md, and Docs/ for provenance and
+scope details.

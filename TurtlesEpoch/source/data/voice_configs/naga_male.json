@@ -1,0 +1,11 @@
+{
+  "donor_voice": null,
+  "pitch_shift": 0,
+  "reverb": 0.15,
+  "reverb_decay": 0.6,
+  "bass_boost_db": 2,
+  "treble_boost_db": 0,
+  "status": "approved",
+  "test_quest_id": null,
+  "notes": "F0 ~72 Hz. Low. Reverb 0.15 + bass +2 for serpentine quality. 25/25 lines (5 NPCs). Gendered: male+female."
+}

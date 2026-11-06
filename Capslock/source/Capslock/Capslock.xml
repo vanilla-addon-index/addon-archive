@@ -1,0 +1,271 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Script file="Capslock.lua" />
+
+	<!-- template for Message list entries -->
+	<Button name="CAPSLOCK_CellTemplate" hidden="true" virtual="true">
+		<Size>
+			<AbsDimension x="244" y="16"/>
+		</Size>
+		<Layers>
+			<Layer>
+				<FontString name="$parentTarget" justifyH="LEFT" inherits="GameFontNormal">
+					<Size>
+						<AbsDimension x="80" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="4" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentZone" justifyH="CENTER" inherits="GameFontNormal">
+					<Size>
+						<AbsDimension x="160" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parentTarget"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnClick>
+				CAPSLOCK_OnTargetClick(this, arg1)
+				PlaySound("igMainMenuOptionCheckBoxOn")
+			</OnClick>
+			<OnEnter>
+				getglobal(this:GetName().."BG"):SetVertexColor(1, 1, 1, 1)
+			</OnEnter>
+			<OnLeave>
+				getglobal(this:GetName().."BG"):SetVertexColor(0.7, 0.7, 0.7, 0.7)
+			</OnLeave>
+			<OnLoad>
+				this:RegisterForClicks(
+				"LeftButtonDown",
+				"RightButtonDown"
+				)
+				this:GetScript("OnLeave")(this)
+			</OnLoad>
+		</Scripts>
+		<NormalTexture name="$parentBG">
+			<Color r="0.0" g="0.0" b="0.5" a="0.5"/>
+		</NormalTexture>
+	</Button>
+
+	<!-- Main configuration frame -->
+	<Frame name="CapslockFrame" parent="UIParent" toplevel="true" hidden="true">
+		<Size>
+			<AbsDimension x="300" y="248" />
+		</Size>
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset x="312" y="-118" />
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+		</Backdrop>
+		<Frames>
+			<!-- Message list frame -->
+			<ScrollFrame name="$parentSummonQueue" inherits="FauxScrollFrameTemplate">
+				<Size>
+					<AbsDimension x="250" y="106"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="16" y="-24"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+					<EdgeSize>
+						<AbsValue val="16"/>
+					</EdgeSize>
+					<TileSize>
+						<AbsValue val="16"/>
+					</TileSize>
+				</Backdrop>
+				<Scripts>
+					<OnVerticalScroll>
+						FauxScrollFrame_OnVerticalScroll(6, CAPSLOCK_UpdateMessageList);
+					</OnVerticalScroll>
+					<OnShow>
+						CAPSLOCK_UpdateMessageList();
+					</OnShow>
+				</Scripts>
+			</ScrollFrame>
+			<!-- Summon button (icon) -->
+			<Button name="SummonButton" inherits="ActionButtonTemplate" frameStrata="HIGH" hidden="false">
+				<Size>
+					<AbsDimension x="64" y="64" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="20" y="-136" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\Icons\Spell_Shadow_Twilight.blp" />
+				<PushedTexture file="Interface\Icons\Spell_Shadow_Teleport.blp" />
+				<Scripts>
+					<OnClick>
+						CAPSLOCK_SummonPriorityTarget();
+					</OnClick>
+					<OnEnter>
+						CAPSLOCK_ShowButtonToolTip(this, "Summon next player in the summon queue");
+					</OnEnter>
+					<OnLeave>
+						CAPSLOCK_HideButtonToolTip(this);
+					</OnLeave>
+				</Scripts>
+			</Button>
+			<!-- Announce button (icon) -->
+			<Button name="SummonButton" inherits="ActionButtonTemplate" frameStrata="HIGH" hidden="false">
+				<Size>
+					<AbsDimension x="64" y="64" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="200" y="-136" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\Icons\Ability_Druid_DemoralizingRoar.blp" />
+				<PushedTexture file="Interface\Icons\Ability_Druid_ChallangingRoar.blp" />
+				<Scripts>
+					<OnClick>
+						CAPSLOCK_AnnounceSummons();
+					</OnClick>
+					<OnEnter>
+						CAPSLOCK_ShowButtonToolTip(this, "Announce Summons in raid/party char");
+					</OnEnter>
+					<OnLeave>
+						CAPSLOCK_HideButtonToolTip(this);
+					</OnLeave>
+				</Scripts>
+			</Button>
+			<!-- Summon button - old implementation
+			<Button name="SummonButton2" inherits="UIPanelButtonTemplate" movable="true" text="Summon next">
+				<Size>
+					<AbsDimension x="160" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="70" y="-128" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						CAPSLOCK_SummonPriorityTarget();
+					</OnClick>
+				</Scripts>
+			</Button>
+			-->
+			<!-- Announce button - old implementation
+			<Button name="AnnounceButton" inherits="UIPanelButtonTemplate" movable="true" text="Announce Summons">
+				<Size>
+					<AbsDimension x="160" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="70" y="-154" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						CAPSLOCK_AnnounceSummons();
+					</OnClick>
+				</Scripts>
+			</Button>
+			-->
+			<!-- Close button -->
+			<Button name="CloseButton" inherits="UIPanelButtonTemplate" movable="true" text="Close">
+				<Size>
+					<AbsDimension x="80" y="23" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset x="110" y="-210" />
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						CAPSLOCK_CloseConfigurationDialog();
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="$parentHeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="256" y="64"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString inherits="GameFontNormal" text="Summon Queue">
+					<Anchors>
+						<Anchor point="TOP" relativeTo="$parentHeaderTexture">
+							<Offset>
+								<AbsDimension x="0" y="-14"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:SetMovable(true)
+				this:SetUserPlaced(true)
+				this:RegisterForDrag("LeftButton")
+			</OnLoad>
+			<OnDragStart>
+				this:StartMoving()
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing()
+			</OnDragStop>
+		</Scripts>
+	</Frame>
+	
+	<!-- Dummy event frame -->
+	<Frame name="CapslockEventFrame">
+		<Scripts>
+			<OnLoad>
+				if (CAPSLOCK_OnLoad) then
+				CAPSLOCK_OnLoad();
+				end
+			</OnLoad>
+			<OnEvent>
+				if (CAPSLOCK_OnEvent) then
+				CAPSLOCK_OnEvent(event);
+				end
+			</OnEvent>
+			<OnUpdate>
+				if (CAPSLOCK_OnTimer) then
+				CAPSLOCK_OnTimer(arg1);
+				end
+			</OnUpdate>
+		</Scripts>
+	</Frame>
+</Ui>

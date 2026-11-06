@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/firenahzku/VanguardShamanTools",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "firenahzku",
+    "repo": "VanguardShamanTools",
+    "name": "VanguardShamanTools",
+    "url": "https://github.com/firenahzku/VanguardShamanTools",
+    "api": "https://api.github.com/repos/firenahzku/VanguardShamanTools"
+  },
+  "commit": "0b521998c335ed6933e3393ea7ee8066a987239b",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "cc80d8044cd79ca947f60011560fafc5074b35ae253a8da39d37e1864337dea4",
+      "bytes": 1178
+    },
+    "VanguardShamanTools.lua": {
+      "sha256": "1f1212d2ca5829dd6ee2991a7f746190e5557ce51dd10f5db64635fbffb36512",
+      "bytes": 34213
+    },
+    "VanguardShamanTools.toc": {
+      "sha256": "ae70794301ab0226a2ac587bb93409c8680a0e55d9313b9b834311567ffc78c4",
+      "bytes": 154
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "10216118": {
+      "tag": "1.02",
+      "folder": "1.02--10216118",
+      "assets": {},
+      "source": {
+        "sha256": "7d743c0cd9e08d1154c3a9f359b2458cce252edb1a6a7a7b1e0ec82c8709b71d",
+        "bytes": 7003,
+        "path": "releases/1.02--10216118/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/firenahzku/VanguardShamanTools/tarball/1.02"
+      }
+    }
+  }
+}

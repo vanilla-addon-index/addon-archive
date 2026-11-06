@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/Xleone1/Threat",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Xleone1",
+    "repo": "Threat",
+    "name": "Threat",
+    "url": "https://github.com/Xleone1/Threat",
+    "api": "https://api.github.com/repos/Xleone1/Threat"
+  },
+  "commit": "72168120a25e4cc47c131e301778ced9e9c1db13",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "dff63ac6128cba009176daf42bef10ac8043ff0c3fa5e528ca1c718e0bf8f6b9",
+      "bytes": 12
+    },
+    "Bindings.xml": {
+      "sha256": "23777e68a45ee0f2fa79fc27b000a2f310d8ea6be363b926889493c9bb90abd5",
+      "bytes": 97
+    },
+    "Localization.lua": {
+      "sha256": "9b64f8f3f7ca19c1b9fe5780a21166ca2135a0133727bcc0f449a94deeb305cb",
+      "bytes": 3390
+    },
+    "README.markdown": {
+      "sha256": "ddc2b56000ddc859085215a134b17af0cb0a5d00f10794c137251081756de5e8",
+      "bytes": 1024
+    },
+    "Threat.lua": {
+      "sha256": "9612559444d651775e19132eef001de34f10d618f6c61071ad1745533da236af",
+      "bytes": 14436
+    },
+    "Threat.toc": {
+      "sha256": "f26e860ffc9be9515ecac3a57e699adaebbbf785f0f246c13f187af2c8fefd8f",
+      "bytes": 415
+    },
+    "Threat.xml": {
+      "sha256": "7107dfdfd8179652e5285e730ff4880962e054c88624c866b11a31ea5e372887",
+      "bytes": 722
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

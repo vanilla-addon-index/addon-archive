@@ -1,0 +1,9 @@
+{
+  "id": "5918480",
+  "tag": "1.3",
+  "name": "EVT Calendar: Raid Manager and Static Events!",
+  "body": "Change Log:\r\n-Added a Raid Manager! Event creators can now build a raid through the Manage button under events. Players can sign up for events as a certain role, and the creator can build a raid in the calendar, and then invite all members of the raid at once!\r\n\r\n-Added Events! Theses dates may not be 100% accurate, due to server differences. I'll allow a config option in the future to enable/disable and change dates on these events. These events are your yearly world events such as Brewfest, Love is in the Air, Lunar Festival and much more! Code and assets modified from /u/Air_Chandler.\r\n\r\n-Added some options. Mainly the ability to switch between 24 and 12 hour format, resetting all frames to the default position, and the option to automatically respond and confirm for events.\r\n\r\n-Added the ability to Copy and Paste events! Copied events do not copy the list of those attending, but everything else is copied for easily repeating events, such as raids.\r\n\r\n-Clock displays both local and server time now!\r\n\r\n\r\n\r\n",
+  "published": "2017-03-30T06:43:49Z",
+  "prerelease": false,
+  "url": "https://github.com/TheOneReed/EVTCalendar/releases/tag/1.3"
+}

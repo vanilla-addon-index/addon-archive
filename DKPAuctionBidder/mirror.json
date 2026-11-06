@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/quakerzz/DKPAuctionBidder",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "quakerzz",
+    "repo": "DKPAuctionBidder",
+    "name": "DKPAuctionBidder",
+    "url": "https://github.com/quakerzz/DKPAuctionBidder",
+    "api": "https://api.github.com/repos/quakerzz/DKPAuctionBidder"
+  },
+  "commit": "8b38ae52ac3a3613216fb7dc37cfaddc73627c34",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "DKPAuctionBidder.lua": {
+      "sha256": "482111b0feda4aa77983387e938806f8fd68990d17f50b233201ff9d3408d904",
+      "bytes": 14745
+    },
+    "DKPAuctionBidder.toc": {
+      "sha256": "c11a624756a5244077395fb1314dccb0c46afe026181a46f92a2b4bdfb11d329",
+      "bytes": 108
+    },
+    "DKPAuctionBidder.xml": {
+      "sha256": "8fea5614e045fad5193544d40db361a86768d2ebfd105c4166e4046e2d0d1ca6",
+      "bytes": 14026
+    },
+    "Icon.tga": {
+      "sha256": "e269fe2873986a05a389d1261bd56a92e064d250bc663a536414c0bef74ca1e7",
+      "bytes": 3147
+    },
+    "Luna.tga": {
+      "sha256": "97976977031766d707a34121ac13c5ab6b7e9d204be2efaa395c717aeb1dc7ab",
+      "bytes": 1304
+    },
+    "README.md": {
+      "sha256": "3de9d06ea968f621cd78e691e4daa72368a073b9412c8497be70fab0e27f6367",
+      "bytes": 402
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Chad90b/codex",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Chad90b",
+    "repo": "codex",
+    "name": "codex",
+    "url": "https://github.com/Chad90b/codex",
+    "api": "https://api.github.com/repos/Chad90b/codex"
+  },
+  "commit": "dff918ab8a2c742982fa12df865d6224cf7d4a4f",
+  "sourceFiles": {
+    "Codex_Data.lua": {
+      "sha256": "c1b8bac12f5536f943045dd5fe46ac18a6cf932867af1996aafd89c676b5f9b8",
+      "bytes": 1294074
+    },
+    "Codex.toc": {
+      "sha256": "3d44131b002bfcfa19702f684b218e44dcd213001cdd6b21a60d60c841f4b0c7",
+      "bytes": 136
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "Main.lua": {
+      "sha256": "a702a090bc33394229643cb1181fec06aca326b28eebe855ee4457073becb875",
+      "bytes": 4802
+    },
+    "README.md": {
+      "sha256": "a21bfb0212398fa621a763208da0e777bada97355339879556ec1cc20da7ca3c",
+      "bytes": 1906
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

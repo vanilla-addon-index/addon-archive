@@ -1,0 +1,58 @@
+{
+  "upstream": "https://github.com/gashole/modui-TallHealthBar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "gashole",
+    "repo": "modui-TallHealthBar",
+    "name": "modui-TallHealthBar",
+    "url": "https://github.com/gashole/modui-TallHealthBar",
+    "api": "https://api.github.com/repos/gashole/modui-TallHealthBar"
+  },
+  "commit": "8b6d6ce12345299da2676ddb81ab73ba0eb741bc",
+  "sourceFiles": {
+    "core.lua": {
+      "sha256": "41602cd5cf4976423a1671a70652b0f52317f4072efa44aea4a659b7205e1dc6",
+      "bytes": 3537
+    },
+    "modui-TallHealthBar.toc": {
+      "sha256": "fa50f97ccad93b361d64e7aaaf00526cba9119df4e966e7aff244c3ba2be4991",
+      "bytes": 143
+    },
+    "README.md": {
+      "sha256": "47269a2c82efc18c84a3b8b0ebbe7b9cb103187e564ee102b26fe06148ee5ca8",
+      "bytes": 700
+    },
+    "Textures/UI-Player-Status.tga": {
+      "sha256": "095ffce0869609382ec0b568f81dc43e65676ef63297f79dc5e5e31ee5e90cda",
+      "bytes": 131116
+    },
+    "Textures/UI-TargetingFrame.tga": {
+      "sha256": "e122fe42c6d41d47c8c036c41edc0759045f4b210164e2b2e9afaa490dbc203c",
+      "bytes": 131116
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "6236469": {
+      "tag": "current",
+      "folder": "current--6236469",
+      "assets": {
+        "3771644": {
+          "sha256": "2fd0b82167c6562e61fc0638b75d6ddf869852b907dd3fe6063fecff9dd917c8",
+          "bytes": 10492,
+          "id": "3771644",
+          "name": "modui-TallHealthBar.zip",
+          "url": "https://github.com/gashole/modui-TallHealthBar/releases/download/current/modui-TallHealthBar.zip",
+          "path": "releases/current--6236469/assets/modui-TallHealthBar.zip"
+        }
+      },
+      "source": {
+        "sha256": "4b1845bd0a55e91d8a579ccfd2996eae2efa326f6a477d299edb4213d24fe050",
+        "bytes": 9955,
+        "path": "releases/current--6236469/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/gashole/modui-TallHealthBar/tarball/current"
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+## Interface: 11200
+## Title: Turtle's Epoch
+## Notes: AI-generated voice lines for NPC quest text, books, and world objects
+## Author: Mejiro
+## Version: 1.1.1
+## SavedVariables: TurtlesEpochDB
+
+data\npc_data.lua
+data\voice_manifest.lua
+data\quest_sound_lookup.lua
+core\Init.lua
+core\NPCDatabase.lua
+core\SoundPlayer.lua
+core\Settings.lua
+core\QuestLogOverlay.lua
+core\EventHandler.lua

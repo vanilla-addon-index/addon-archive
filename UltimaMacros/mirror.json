@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/jrc13245/UltimaMacros",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jrc13245",
+    "repo": "UltimaMacros",
+    "name": "UltimaMacros",
+    "url": "https://github.com/jrc13245/UltimaMacros",
+    "api": "https://api.github.com/repos/jrc13245/UltimaMacros"
+  },
+  "commit": "67d908144a85b5d4ceed84491e6e80fa034a5d9e",
+  "sourceFiles": {
+    "example/UltimaMacrosExample.png": {
+      "sha256": "ba2b494399d8fb2937980feb05858efb0cea75ba744b32e7cdf2a0b158f6d944",
+      "bytes": 923920
+    },
+    "README.md": {
+      "sha256": "2d1714807f6e5497f7a098b07e09acc78e34e792cb8c25040676bea3ebabe3a9",
+      "bytes": 4288
+    },
+    "UltimaMacros.lua": {
+      "sha256": "4b9c7b509f4aca402414069d70fa0e069f1a0526431b77891ce7e457a3bc514b",
+      "bytes": 91384
+    },
+    "UltimaMacros.toc": {
+      "sha256": "2634204a3f2781e6bdfb2ede62f38b4465f0886eb6b4eab0a2cd010d0da11d57",
+      "bytes": 211
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

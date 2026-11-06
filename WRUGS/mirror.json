@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/Daribon/WRUGS",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Daribon",
+    "repo": "WRUGS",
+    "name": "WRUGS",
+    "url": "https://github.com/Daribon/WRUGS",
+    "api": "https://api.github.com/repos/Daribon/WRUGS"
+  },
+  "commit": "608e64dcbd79d4f8dd2823a4fb9a9b789150a0ea",
+  "sourceFiles": {
+    "localization_de.lua": {
+      "sha256": "a2904ca4c7e66eed5007624f3945ba26d10cd7f61896799572f50e4909f3c1f4",
+      "bytes": 2564
+    },
+    "localization_fr.lua": {
+      "sha256": "34b1f853c8cc514e96580c6866b4f6eec0e0de1cb8c268f1570c8e742ec34868",
+      "bytes": 2947
+    },
+    "localization.lua": {
+      "sha256": "3687784ed60de07de243933c2e79838ac958e3e6cfec1ab4a422c45ceec1b5b3",
+      "bytes": 2277
+    },
+    "readme.txt": {
+      "sha256": "e8205637de971f8b1d5c8369c008885bf3ac9a628ef9465c2e97489d87c39fd2",
+      "bytes": 4530
+    },
+    "WRUGS.lua": {
+      "sha256": "91f35fb80d5c1f7d1780cb69e1eef45d1abe38164b78fbad78b1234764a08131",
+      "bytes": 14050
+    },
+    "WRUGS.toc": {
+      "sha256": "fdf78a219ebbce03bf31db04bdbafd7c8fb0432ea95d7b8e3a17c7e3095f0ab9",
+      "bytes": 460
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

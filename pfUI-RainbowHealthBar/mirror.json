@@ -1,0 +1,245 @@
+{
+  "upstream": "https://github.com/WanLiQiaoXi/pfUI-RainbowHealthBar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "WanLiQiaoXi",
+    "repo": "pfUI-RainbowHealthBar",
+    "name": "pfUI-RainbowHealthBar",
+    "url": "https://github.com/WanLiQiaoXi/pfUI-RainbowHealthBar",
+    "api": "https://api.github.com/repos/WanLiQiaoXi/pfUI-RainbowHealthBar"
+  },
+  "commit": "b119b56718c091d2d20d9e2fa1d8d2f0d88c32ad",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "animations.lua": {
+      "sha256": "0052d957f58a7a6af2e35d220b4f658c94d2875b863cfee34dc95cd82c490267",
+      "bytes": 1313174
+    },
+    "compat.lua": {
+      "sha256": "c9de7dce056eb46df03b226b3ee56c30642f360d072f04b249a008a2a618109d",
+      "bytes": 1973
+    },
+    "LICENSE": {
+      "sha256": "51eca34908a5be9f9dc1246b0d46bf5068114f78fb11dc69b49ec15e70ab851d",
+      "bytes": 1068
+    },
+    "locales_enUS.lua": {
+      "sha256": "a681cb6614f85d6353436d2bef5ce04bdf703b94b71a9285fdcd48761859ffeb",
+      "bytes": 12262
+    },
+    "locales_zhCN.lua": {
+      "sha256": "0af44b8c486f1f7202fceeaa82c681e1d24b58647124cd56746ac0dabafbb61f",
+      "bytes": 12431
+    },
+    "pfUI-ExtraBarTextures.lua": {
+      "sha256": "adee3d430c27330f585d70d883170feea1c3466d5ea11b31e191f7e360a99ad4",
+      "bytes": 4313
+    },
+    "pfUI-PortraitEnhance.lua": {
+      "sha256": "b17098321437ab2a34d45ba016d952dc30c8edb96fe7cc98ff95d5722cca6ce6",
+      "bytes": 75844
+    },
+    "pfUI-RainbowHealthBar.lua": {
+      "sha256": "6c3ae1796c972746ae8f45165af0fed1607d0098a182dc146f7b7dc35e902521",
+      "bytes": 19081
+    },
+    "pfUI-RainbowHealthBar.toc": {
+      "sha256": "7cb437c667520469b56fa38ef9c68ec676f3aad50055413a4005255885212bfa",
+      "bytes": 623
+    },
+    "README.md": {
+      "sha256": "81eede3448364830bd40f71466953db05dd4a92146b3cefc431b688659e994a6",
+      "bytes": 4787
+    },
+    "Textures/Armory.tga": {
+      "sha256": "7f5d7718082fc4f2bfda40f264d550eb6cc141922acfc7e1554aebad4744015e",
+      "bytes": 812
+    },
+    "Textures/Cabaret 2.tga": {
+      "sha256": "7e49ef2af2214d12eab1ea5827483419cd5bd3069672efa615fa393d36d60269",
+      "bytes": 16428
+    },
+    "Textures/ElvUI1.tga": {
+      "sha256": "965dcab4e85bad31eecdfa0159484246ef2e40dd2dca023fa53dda6097d5e90c",
+      "bytes": 32812
+    },
+    "Textures/ElvUI2.tga": {
+      "sha256": "90804a28758a5f60cc1ecd6783b510b1cf0be6b20e13925b12893d1b0167b11a",
+      "bytes": 32812
+    },
+    "Textures/Extra1.tga": {
+      "sha256": "01f86c957471488d6c901eccb06b80f7d59c19a0df7d6cbda7c77eeae23d22db",
+      "bytes": 16428
+    },
+    "Textures/Extra2.tga": {
+      "sha256": "014a1d4850f49402be73e6f49684ea7f5971b61f9cc7f54ae7f61883e165cd32",
+      "bytes": 32812
+    },
+    "Textures/HealthBar_Filter.tga": {
+      "sha256": "bd9fca896bc78524e17c817611a0023348796282ba2afe4cb8a62936ac014f93",
+      "bytes": 1068
+    },
+    "Textures/HealthBar_Transparent.tga": {
+      "sha256": "2431e64c8912c95fea10c99ea78c4dd853651716e340998b1dea77737bd5e9e2",
+      "bytes": 1068
+    },
+    "Textures/InternalGlow.tga": {
+      "sha256": "02582cfc274209091c1891421e62f3f9961d1fcae7df48acb4dbb036f0886c78",
+      "bytes": 8236
+    },
+    "Textures/Raeli 1.tga": {
+      "sha256": "51d648a3ff64c3754822ce1d3bea5ea0079fe640d3dff17283a35b9c14a4282e",
+      "bytes": 32812
+    },
+    "Textures/Raeli 2.tga": {
+      "sha256": "2b24d1a1b236cbff997e05143b654f0dd7e83faafbf531cce393cb066efd8d4c",
+      "bytes": 24620
+    },
+    "Textures/Raeli 3.tga": {
+      "sha256": "b4132d659f47ff7b1289f76802b9981ded788635c4cf243e6fbfa67df1284834",
+      "bytes": 24620
+    },
+    "Textures/Raeli 4.tga": {
+      "sha256": "3dcdbe554491b82796210b9ed535f9361f1e5827966dd8f35d63fc6b65c9aab1",
+      "bytes": 98348
+    },
+    "Textures/Raeli 5.tga": {
+      "sha256": "9427930ca833f7790620cf830fd8266735a9b3fa773e24cc8a9703478c62c704",
+      "bytes": 98348
+    },
+    "Textures/Raeli 6.tga": {
+      "sha256": "26ef3663708ad664b431d89443df1d1c363eb8252a6bd3a44b0153a1c4c51207",
+      "bytes": 32812
+    },
+    "Textures/Rainbow1.tga": {
+      "sha256": "e27e9cd23bceb04154706a849afa107c5b9f030121cb6b9392645104eed0a0ae",
+      "bytes": 93728
+    },
+    "Textures/Rainbow2.tga": {
+      "sha256": "ef2a42dc5f2c1c2abaea58592e2ac1e0e43775f68026c5d66e500752af580b5d",
+      "bytes": 32812
+    },
+    "Textures/ReadMe.md": {
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "bytes": 1
+    },
+    "Textures/Simpy1.tga": {
+      "sha256": "693d558e7cd5e94502a4664f56727f761a50230bf665e2ec3ef846e123328ca7",
+      "bytes": 32812
+    },
+    "Textures/Simpy10.tga": {
+      "sha256": "96d605406b9d24e3a78e4cc1789a6b3dba7afa6e0885d527236eae5b5c5e45a4",
+      "bytes": 32812
+    },
+    "Textures/Simpy11.tga": {
+      "sha256": "c7800e8358a568ebf3421b4a836f452f3349b20b0191538746adf8603e6a08d2",
+      "bytes": 32812
+    },
+    "Textures/Simpy12.tga": {
+      "sha256": "64b1778ce6c6097c0371d01896aa86da632d5baf01ea85e914e82c6ca51b3565",
+      "bytes": 32812
+    },
+    "Textures/Simpy13.tga": {
+      "sha256": "00cbc2178de27ef1cbe2e446982e69eba4f59ba5b7cb7d772bf1f7efe6796c3b",
+      "bytes": 32812
+    },
+    "Textures/Simpy14.tga": {
+      "sha256": "781c980adfefe251e20817fb7097586a6837d96e4cb938e95bc88a0ec504c9a9",
+      "bytes": 32812
+    },
+    "Textures/Simpy15.tga": {
+      "sha256": "5d89a256776e21b65bc1d72ea8231df3de699de8e948b93f5a2ddbd7323d9fc0",
+      "bytes": 32812
+    },
+    "Textures/Simpy16.tga": {
+      "sha256": "935a8408ec9acd81b985a4e9ed0df5a076b7d3ac8d005fe4ffd0bb302785ac9e",
+      "bytes": 32812
+    },
+    "Textures/Simpy17.tga": {
+      "sha256": "612f7db0423b35c3256988dd3b0a5a89491c24188ea24137a7c8f16cf7862787",
+      "bytes": 32812
+    },
+    "Textures/Simpy18.tga": {
+      "sha256": "bab019aa83a3a48d0d226cb9766bc85964599d957bd157e05b46c85e6fe4f477",
+      "bytes": 32812
+    },
+    "Textures/Simpy19.tga": {
+      "sha256": "decf00224e53db2852101705654cb76f9c984acfe7322b168741e08e3e37f498",
+      "bytes": 32812
+    },
+    "Textures/Simpy2.tga": {
+      "sha256": "85061a475b401f7ad5791a2e65926bc1dc5ec57c5977a930a17d469416f4a3cf",
+      "bytes": 32812
+    },
+    "Textures/Simpy20.tga": {
+      "sha256": "bc37d24028190b6c6904c1a270de68f57f408c4e61feed210732f4dbcdb4c2fc",
+      "bytes": 32812
+    },
+    "Textures/Simpy3.tga": {
+      "sha256": "581e59b19bbc925456d2e70b8f594f06394c7641fa04f45902b2318f1d4514f6",
+      "bytes": 32812
+    },
+    "Textures/Simpy4.tga": {
+      "sha256": "b6b344ce4d9a395ec83f2dda8628c52f8ddbd9d6178d8f3546244066d665386e",
+      "bytes": 32812
+    },
+    "Textures/Simpy5.tga": {
+      "sha256": "2a0c1f52ae394a156c70b56ea6fe236c7212fcdd1f5bd7e8d5e13cfc0f7dea90",
+      "bytes": 32812
+    },
+    "Textures/Simpy6.tga": {
+      "sha256": "481b95d6242f72cfda80fa98ff28ad1172177aab6bc5791de22c323db39cb108",
+      "bytes": 32812
+    },
+    "Textures/Simpy7.tga": {
+      "sha256": "60e16739af86c5f14ad98109d77bad0bbd59ad249ed0a65ce9e9ad9081f693de",
+      "bytes": 32812
+    },
+    "Textures/Simpy8.tga": {
+      "sha256": "4d57eb58cc5d9ee36b97ac90aebc93195556a47257514e6aa5e040fd702cb319",
+      "bytes": 32812
+    },
+    "Textures/Simpy9.tga": {
+      "sha256": "8ad8d6e6c7bf15a6ec1576c8de752ccf7aa23362c5980524dbe0534bbc82220a",
+      "bytes": 32812
+    },
+    "Textures/Tukui.tga": {
+      "sha256": "a3e62ec54c4a68e4a9d892a2a5fdbeeaf86ba1c60752898ee4f30ea68915324d",
+      "bytes": 32786
+    },
+    "translations_enUS.lua": {
+      "sha256": "ffaee1824212dbe4e25aeef1cfa580c4084593d7b35f0d9cc40a5db705f19234",
+      "bytes": 4741
+    },
+    "translations_zhCN.lua": {
+      "sha256": "d3bcc3e976f154f28e250ff400cf40c6d7e54063e2b631bc5ee314d9218a7d35",
+      "bytes": 5796
+    },
+    "utils-api.lua": {
+      "sha256": "2dff2a393ff7fd0fd9b8d5743aa92dbea7a788641aea11d0e8bd5369a58d9a06",
+      "bytes": 7868
+    },
+    "utils-widgets.lua": {
+      "sha256": "95c947f9712cd158c9ac20e68a12755c9b0ef350b2fa7f2607b4e47502d1f97d",
+      "bytes": 21867
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "123240782": {
+      "tag": "v1.1.1",
+      "folder": "v1.1.1--123240782",
+      "assets": {},
+      "source": {
+        "sha256": "9565f81b2d752965eb3980e475f7ee3cdae0ce4273209e66c337bdb86fa13567",
+        "bytes": 401185,
+        "path": "releases/v1.1.1--123240782/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/WanLiQiaoXi/pfUI-RainbowHealthBar/tarball/v1.1.1"
+      }
+    }
+  }
+}

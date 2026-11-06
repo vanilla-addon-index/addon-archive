@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/firenahzku/VanguardAntiCooldown",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "firenahzku",
+    "repo": "VanguardAntiCooldown",
+    "name": "VanguardAntiCooldown",
+    "url": "https://github.com/firenahzku/VanguardAntiCooldown",
+    "api": "https://api.github.com/repos/firenahzku/VanguardAntiCooldown"
+  },
+  "commit": "f99ac37b0d858a287a7dc2b25fad043195bf92b0",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "1e1f24680c91049257f26361beb6b1e18510660e47accfcb164cd8f770639018",
+      "bytes": 582
+    },
+    "VanguardAntiCooldown.lua": {
+      "sha256": "fff1d10a707b2cebcad28ca5b65c9e26311e76ad47d5d1b5455bdcf9ce4c87ab",
+      "bytes": 22459
+    },
+    "VanguardAntiCooldown.toc": {
+      "sha256": "52e86cfe6322307cd65ba0b4d09d01bb958a0ebf3c7321e7b0f5e0a35b8bdf9d",
+      "bytes": 156
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

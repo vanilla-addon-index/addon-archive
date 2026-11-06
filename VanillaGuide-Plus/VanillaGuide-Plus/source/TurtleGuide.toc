@@ -1,0 +1,60 @@
+## Interface: 11200
+
+## Title: VanillaGuide+
+## Notes: Hybrid leveling guide with race-based routing and TomTom navigation
+## Author: VanillaGuide+ Contributors
+## Version: 1.0
+## X-Category: Quest
+
+## SavedVariables: TurtleGuideDB
+
+## OptionalDeps: TomTom, pfQuest, MetaMap, MetaMapBWP
+
+# libs Core
+libs\AceLibrary\AceLibrary.lua
+libs\AceOO-2.0\AceOO-2.0.lua
+libs\AceConsole-2.0\AceConsole-2.0.lua
+libs\AceEvent-2.0\AceEvent-2.0.lua
+libs\AceDebug-2.0\AceDebug-2.0.lua
+libs\AceDB-2.0\AceDB-2.0.lua
+libs\AceAddon-2.0\AceAddon-2.0.lua
+libs\AceHook-2.1\AceHook-2.1.lua
+# libs Extra
+libs\Deformat-2.0\Deformat-2.0.lua
+libs\Gratuity-2.0\Gratuity-2.0.lua
+libs\Dewdrop-2.0\Dewdrop-2.0.lua
+libs\Tablet-2.0\Tablet-2.0.lua
+libs\FuBarPlugin-2.0\FuBarPlugin-2.0.lua
+
+# Core Addon files
+Locale.lua
+Core.lua
+WidgetWarlock.lua
+Parser.lua
+QuestShellPlusParser.lua
+Navigation.lua
+QuestTracker.lua
+StatusFrame.lua
+OptionsFrame.lua
+GuideListFrame.lua
+ObjectivesFrame.lua
+
+# Routes
+Routes\Routes.lua
+
+# Optimized Guides (VanillaGuide quest order)
+Guides\Optimized\Alliance\Guides.xml
+Guides\Optimized\Horde\Guides.xml
+
+# Alliance Zone Completion Guides
+Guides\Alliance\Guides.xml
+
+# Horde Zone Completion Guides
+Guides\Horde\Guides.xml
+
+# Both Factions Guides
+Guides\Both\Guides.xml
+
+# RestedXP Converted Guides (Survival routes)
+Guides\RXP\Alliance\Guides.xml
+Guides\RXP\Horde\Guides.xml

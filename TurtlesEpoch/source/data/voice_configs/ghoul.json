@@ -1,0 +1,11 @@
+{
+  "donor_voice": null,
+  "pitch_shift": 2,
+  "reverb": 0,
+  "reverb_decay": 0,
+  "bass_boost_db": -2,
+  "treble_boost_db": 0,
+  "status": "approved",
+  "test_quest_id": null,
+  "notes": "F0 ~60 Hz. Pitch +2, bass -2. Tuned per NPC: Gordo (bom samples), Wiggles (ghoul samples). 6/6 lines generated."
+}

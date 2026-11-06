@@ -1,0 +1,65 @@
+{
+  "upstream": "https://github.com/sica42/CompanionManager",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "sica42",
+    "repo": "CompanionManager",
+    "name": "CompanionManager",
+    "url": "https://github.com/sica42/CompanionManager",
+    "api": "https://api.github.com/repos/sica42/CompanionManager"
+  },
+  "commit": "9efb42eb8c98a44c20918687c146374cceb4d56d",
+  "sourceFiles": {
+    ".editorconfig": {
+      "sha256": "e4988f4b80cca793a1b5adcafa534255a5aeac990ab3eab1d06b773fbd78a4de",
+      "bytes": 269
+    },
+    ".github/FUNDING.yml": {
+      "sha256": "c5d5779da5a54a27ed737b93c835f371c3164f3a2c143025473c06aadaf831e8",
+      "bytes": 877
+    },
+    ".gitignore.upstream": {
+      "sha256": "92ccf9247d58e46ffae1e250d165faa3bbed6cfbd05ec6a7a8188d81166c70cd",
+      "bytes": 30
+    },
+    ".luarc.json": {
+      "sha256": "c4b4618c7d4a3f21c906d5f4f2f78c54a23008460a55298e1cccc1277521934b",
+      "bytes": 477
+    },
+    "assets/Companion-Button-Glow.tga": {
+      "sha256": "0554e6af0ec32a5f367b8a297e7ec1e082b4428290fee3c243fc8ad87531069f",
+      "bytes": 7148
+    },
+    "assets/Companion-Button.tga": {
+      "sha256": "b889329b40be3f22a1e9143fa0479ab34777f80aabfba528488271f8739f4900",
+      "bytes": 7413
+    },
+    "assets/Companion-Tooltip.tga": {
+      "sha256": "04fa50a2776cd76ee284b6cadd1fa322607e05e296e49c239a5191d1bc8c609b",
+      "bytes": 2893
+    },
+    "Bindings.xml": {
+      "sha256": "e726a4162e1daf2df4f8b9cd62fa039c722d46410cdf94aa1154bd52ccebd61b",
+      "bytes": 108
+    },
+    "CompanionManager.lua": {
+      "sha256": "b94dd03845fd62b61001cd639b8f378134125faca019afb94186bcd4801f5fbc",
+      "bytes": 24151
+    },
+    "CompanionManager.toc": {
+      "sha256": "e8d05b4421e7b828bf90673e85b2d3e1ec1ec6460ae0bbcd71214ee2ffbbd8e0",
+      "bytes": 230
+    },
+    "README.md": {
+      "sha256": "a08c4ef1396810b120e2977de82ef49346618cf7177324aefdbdeb085d9d5102",
+      "bytes": 2514
+    },
+    "SlashCommand.lua": {
+      "sha256": "a0f8bb4e11a746634c7484ed982b56e62204db49a74a7894efcd7390ada76161",
+      "bytes": 3897
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

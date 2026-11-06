@@ -1,0 +1,249 @@
+{
+  "upstream": "https://github.com/Ko0z/UnitFramesImproved_Vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Ko0z",
+    "repo": "UnitFramesImproved_Vanilla",
+    "name": "UnitFramesImproved_Vanilla",
+    "url": "https://github.com/Ko0z/UnitFramesImproved_Vanilla",
+    "api": "https://api.github.com/repos/Ko0z/UnitFramesImproved_Vanilla"
+  },
+  "commit": "bf6c9cc40b2039f107a2af7b6bc3db2e695661c1",
+  "sourceFiles": {
+    "energy.lua": {
+      "sha256": "da6b20e78965124c3979a30fa82ea45528fc0b4bd12f16c92e8fc44284a27e05",
+      "bytes": 4330
+    },
+    "extramana.lua": {
+      "sha256": "76dfd2bf7e558cf70392ebacf791eec1713c5e45eeba09a2d76a4ed858b4f6bf",
+      "bytes": 6479
+    },
+    "extrathreat.lua": {
+      "sha256": "a19738844d15931692bf026f916aa98cb45494f614dc161ab981d80261c4659f",
+      "bytes": 2998
+    },
+    "feigndeath.lua": {
+      "sha256": "ee5032d4899c5cd4cb1b4a8bd05d9d2cd5e144f51bdc17865e8e0d6ed2d911ee",
+      "bytes": 1023
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "6c4e23e37cf0893782922cdef23057ad180bca18ec85b05c35ea068209e1b167",
+      "bytes": 30892
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "99998a814ff535184cb7ddb16ae334009d9fff8a60633275b19361f46f986b86",
+      "bytes": 60250
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "2d212f65a53cf51ae5c5c65e1ad33be6aa3b4f33527dd3d9ccde322811123b60",
+      "bytes": 28825
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "26fcd4ed3beddcdba2e56ec97e8655883b37ff27354d2969a979812f62eb725a",
+      "bytes": 22854
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "6205f6b12facfe3587dd03cc238920a6ce1bf9a8e60e46623f54c322c3c1cd1c",
+      "bytes": 30431
+    },
+    "libs/DruidManaLib-1.0/DruidManaLib-1.0.lua": {
+      "sha256": "81d5db0c39abd11c53a106368921b162b83a6c0b6b987aebe427398c3c7a19d5",
+      "bytes": 9774
+    },
+    "libs/MH3_Blizzard.lua": {
+      "sha256": "6bf54b5efcd935b73b9a6d910b044e6b40b24d3b0a2bedafeb6c09ae9bc8e338",
+      "bytes": 7413
+    },
+    "libs/mobhealth.lua": {
+      "sha256": "178dcf0b96d0781e938f40cbc0a77e67e4d8f4b6306ca2d01e434bf1f754bb1c",
+      "bytes": 5365
+    },
+    "libs/MobHealth3.lua": {
+      "sha256": "7cbc080742199f20df876f17caf4cb0e206b7a0a14b5b06ac08437c76ac5d693",
+      "bytes": 15486
+    },
+    "LICENSE": {
+      "sha256": "e0179a7ac5f34508d7651e5b68f1f2342bff26608ab6138eff155ea5ba13bd9f",
+      "bytes": 1064
+    },
+    "README.md": {
+      "sha256": "a6b12feb9e5ec0bbbd8b8a91db23dfe5842b200e1713e483c01dee15b883b44e",
+      "bytes": 1575
+    },
+    "retarget.lua": {
+      "sha256": "0e0b335dbd3823d103d52b44354f9c65c8f4a0a9f8c7ceeb2d11567573dbf167",
+      "bytes": 1013
+    },
+    "SimpleFeignHealth.lua": {
+      "sha256": "1e0ab4b60048c1c9d964b6336146e53933ca8c360fc211a56ea1555e07bd9ada",
+      "bytes": 9354
+    },
+    "skin/method.lua": {
+      "sha256": "fd3625586b4c7c80cee60b2b32a2cfe2ae59342c2b85030eedab145ffc275e63",
+      "bytes": 3892
+    },
+    "skin/texture/border-bottom.TGA": {
+      "sha256": "9a00a3102e58121c6594ff449ba5118747ed2b5d38decfe32cc2fac284bcb112",
+      "bytes": 2092
+    },
+    "skin/texture/border-bottomleft.TGA": {
+      "sha256": "7a98f24daf7268e1ce1ca13d564ecb65c16733ca2de95f29765c77005b418ba4",
+      "bytes": 1068
+    },
+    "skin/texture/border-bottomright.TGA": {
+      "sha256": "7315904a4a2d6fff47b2b94f8a307c00a2792a34fe9cf870d98151a114e6ecdd",
+      "bytes": 1068
+    },
+    "skin/texture/border-left.TGA": {
+      "sha256": "3cc43ca04dcefe707260c871b010f4025b50f84522b3697fc58d591ba6f0e94a",
+      "bytes": 2092
+    },
+    "skin/texture/border-right.TGA": {
+      "sha256": "a6af24e1fe150aaab3c2f38d3d9e0e6958ec75d14daa2b3d267a8fbcd3d764fb",
+      "bytes": 2092
+    },
+    "skin/texture/border-top.TGA": {
+      "sha256": "fa34570ee3e2532ee9385fb5f294932f9be5aeb6f532ec918019e473f08a462d",
+      "bytes": 2092
+    },
+    "skin/texture/border-topleft.TGA": {
+      "sha256": "a7df5f8b9cb382a409a27a79e3eeb1971e098290eb9187e2f596929335a72353",
+      "bytes": 1068
+    },
+    "skin/texture/border-topright.TGA": {
+      "sha256": "5e972c300dd8ccdd6b9a299c2c44589601f0fb6a38ba1057af5b6d25d2c2b86e",
+      "bytes": 1068
+    },
+    "Textures/compactUI-TargetingFrame-Elite.blp": {
+      "sha256": "96417d0a52ef2cf6c3d44870dfeaf9bd70eee03bd4754e0ce2a5fbc8553e4f19",
+      "bytes": 88552
+    },
+    "Textures/compactUI-TargetingFrame-Rare-Elite.blp": {
+      "sha256": "aa550da647281d92be7096279f386b2c5ee9f674551bc8323f044ce1b0ade65f",
+      "bytes": 88552
+    },
+    "Textures/compactUI-TargetingFrame-Rare.blp": {
+      "sha256": "f08fca10553f826dec3cb15bb7480d9b7ff969b5a6136b287c0120ca85b706f9",
+      "bytes": 88552
+    },
+    "Textures/compactUI-TargetingFrame.blp": {
+      "sha256": "c91a8630679497daf86d9f1ba390011a36e297e4de166d3a1b352037f6c5f214",
+      "bytes": 88552
+    },
+    "Textures/DarkCompactUI-TargetingFrame-Elite.blp": {
+      "sha256": "2ad377e83078f34f2e46a7e73837035d18a3aeb7ea9611c7407e3ebd4c58516d",
+      "bytes": 88552
+    },
+    "Textures/DarkCompactUI-TargetingFrame-Rare-Elite.blp": {
+      "sha256": "bfacda40b09d3e60fa5cfe9b4fbf17675eb92db2baf6faca8a4c5d6290eabd5e",
+      "bytes": 88552
+    },
+    "Textures/DarkCompactUI-TargetingFrame-Rare.blp": {
+      "sha256": "e7e78200c56bc5e869eeed68629c8daafcc611e9aa77c500f62d9890f1bec18e",
+      "bytes": 88552
+    },
+    "Textures/DarkCompactUI-TargetingFrame.blp": {
+      "sha256": "4f81075519af0167b9a369c67647468b0f1c58592fe0c7f3525701705bd97d7a",
+      "bytes": 88552
+    },
+    "Textures/darkUI-TargetingFrame-Elite.blp": {
+      "sha256": "9e435c6249b05c15c9696b7298cd12a367865ef8cf2589a835850ae3736add4e",
+      "bytes": 88552
+    },
+    "Textures/darkUI-TargetingFrame-Rare-Elite.blp": {
+      "sha256": "b276d30af1c906e60c4fb034cc0befc6b2cbd0e2b1fffd89dec77abe4176dc5b",
+      "bytes": 88552
+    },
+    "Textures/darkUI-TargetingFrame-Rare.blp": {
+      "sha256": "6be6fe0c7d8be107ef8ba7dd174d0a702338fa4306e7d743e48f4f2b56246f92",
+      "bytes": 88552
+    },
+    "Textures/darkUI-TargetingFrame.blp": {
+      "sha256": "4d53a16b88b99f8b0bb875aa7f87cde201d2ce39fd907454961946197f8c4b09",
+      "bytes": 88552
+    },
+    "Textures/name.tga": {
+      "sha256": "7f5d7718082fc4f2bfda40f264d550eb6cc141922acfc7e1554aebad4744015e",
+      "bytes": 812
+    },
+    "Textures/newUI-TargetingFrame-Elite.blp": {
+      "sha256": "9e435c6249b05c15c9696b7298cd12a367865ef8cf2589a835850ae3736add4e",
+      "bytes": 88552
+    },
+    "Textures/newUI-TargetingFrame-Rare-Elite.blp": {
+      "sha256": "b276d30af1c906e60c4fb034cc0befc6b2cbd0e2b1fffd89dec77abe4176dc5b",
+      "bytes": 88552
+    },
+    "Textures/newUI-TargetingFrame-Rare.blp": {
+      "sha256": "6be6fe0c7d8be107ef8ba7dd174d0a702338fa4306e7d743e48f4f2b56246f92",
+      "bytes": 88552
+    },
+    "Textures/newUI-TargetingFrame.blp": {
+      "sha256": "4d53a16b88b99f8b0bb875aa7f87cde201d2ce39fd907454961946197f8c4b09",
+      "bytes": 88552
+    },
+    "Textures/sb.tga": {
+      "sha256": "b123043d65955f5fbf64eecd504a2fb1eb9445fa70c74c78ab2d2b235c7cf3c2",
+      "bytes": 1068
+    },
+    "Textures/UI-FocusTargetingFrame.blp": {
+      "sha256": "fe21ac1d4eddb35bca1b0c187fd2c51cc5fc39fc9d909c3030342842dbb9de09",
+      "bytes": 12116
+    },
+    "Textures/UI-Player-Status.blp": {
+      "sha256": "bad98669fd07109f808eafee61734a7c5c15592ade47252cefcecfba10074e88",
+      "bytes": 44884
+    },
+    "Textures/UI-TargetingFrame-Elite.blp": {
+      "sha256": "ffb3483d2f20c7ff30918232d90b100f80e3c0a68ea0716741a5edd9ced4b8e7",
+      "bytes": 44884
+    },
+    "Textures/UI-TargetingFrame-Rare-Elite.blp": {
+      "sha256": "965d00e4975385f77f678354c3d3303adb46b9489c76b126a19b535050b7231e",
+      "bytes": 44884
+    },
+    "Textures/UI-TargetingFrame-Rare.blp": {
+      "sha256": "679f92506ceb604fe11379eea5a3c55a0fb97de38b4d4ee3f441b3df4e4c6110",
+      "bytes": 44884
+    },
+    "Textures/UI-TargetingFrame.blp": {
+      "sha256": "19533662e3dee7344db7423811b6b4f7869e29fd7bab7fde00f84cb13d6177f1",
+      "bytes": 44884
+    },
+    "Textures/UI-UnitFrame-Boss.blp": {
+      "sha256": "3cc54fd4d3b4baa83350180a5eb1c86a29d4b66124f5282e6caa19b0936d297a",
+      "bytes": 44884
+    },
+    "ufi_options.lua": {
+      "sha256": "16e73827f27ea46d5401fef60e94579e6da9475b5184abd8cfcab94505faa366",
+      "bytes": 38034
+    },
+    "UI-CLASSES-CIRCLES.blp": {
+      "sha256": "233de5013e12f9965a51a7764c492f9d1ca3911786d94294dd4d0ecf2a079b01",
+      "bytes": 175934
+    },
+    "UnitFramesImproved_Vanilla.lua": {
+      "sha256": "8235d7ad902da043abf03c6caf350e34f41ed09f5f66ae6fcfc3f626e6cf48ff",
+      "bytes": 27939
+    },
+    "UnitFramesImproved_Vanilla.toc": {
+      "sha256": "ecc6f7c7bf883d51ba525b0107a27a9db22ce97669afb71c7470c2664a411625",
+      "bytes": 973
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "11293515": {
+      "tag": "v1.0-beta3",
+      "folder": "v1.0-beta3--11293515",
+      "assets": {},
+      "source": {
+        "sha256": "90592f977e261eb49415b543c1ba6bf82a7d66789ede6eadd3739d9bc6ccafd5",
+        "bytes": 183100,
+        "path": "releases/v1.0-beta3--11293515/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Ko0z/UnitFramesImproved_Vanilla/tarball/v1.0-beta3"
+      }
+    }
+  }
+}

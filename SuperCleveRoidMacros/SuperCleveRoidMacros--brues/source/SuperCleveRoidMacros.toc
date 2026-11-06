@@ -1,0 +1,49 @@
+## Interface: 11200
+## Author: DWG, _brain, Torio, yani9o, Avitasia
+## Title: [Super]CleveRoidMacros
+## Notes: /cleveroid for settings
+## Version: @project-version@
+## OptionalDeps: ClassicFocus, FocusFrame, pfUI, SuperMacro, Bongos_ActionBar, Cursive, XPerl, LunaUnitFrames, DragonflightReloaded, -Dragonflight3
+## SavedVariables: CleveRoidMacros, CleveRoids_LearnedDurations, CleveRoids_AuraTextures, CleveRoids_ImmunityData, CleveRoids_ComboDurations, CleveRoids_SpellSchools
+## LoadSavedVariablesFirst: 1
+Localization.lua
+Init.lua
+NampowerAPI.lua
+ClassicAPI.lua
+Utility.lua
+Core.lua
+Conditionals.lua
+Console.lua
+ExtensionsManager.lua
+ComboPointTracker.lua
+MacroErrorChecker.lua
+
+Compatibility\SuperMacro.lua
+Compatibility\pfUI.lua
+Compatibility\Bongos.lua
+Compatibility\UltimaMacros.lua
+
+Extensions\MacroLengthWarn.lua
+Extensions\MacroErrorUI.lua
+Extensions\Mouseover\GameTooltip.lua
+Extensions\Mouseover\Blizzard.lua
+Extensions\Mouseover\CT_RaidAssist.lua
+Extensions\Mouseover\CT_UnitFrames.lua
+Extensions\Mouseover\DiscordUnitFrames.lua
+Extensions\Mouseover\FocusFrame.lua
+Extensions\Mouseover\Grid.lua
+Extensions\Mouseover\NotGrid.lua
+Extensions\Mouseover\PerfectRaid.lua
+Extensions\Mouseover\pfUI.lua
+Extensions\Mouseover\sRaidFrames.lua
+Extensions\Mouseover\ag_UnitFrames.lua
+Extensions\Mouseover\XPerl.lua
+Extensions\Mouseover\LunaUnitFrames.lua
+Extensions\Mouseover\DragonflightReloaded.lua
+Extensions\Mouseover\Dragonflight3.lua
+Extensions\Mouseover\Cursive.lua
+
+Extensions\Tooltip\Generic.lua
+Extensions\CursiveCustomSpells.lua
+Extensions\OverflowBuffFrame.lua
+

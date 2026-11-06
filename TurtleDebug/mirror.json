@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/FrancisEgan/TurtleDebug",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "FrancisEgan",
+    "repo": "TurtleDebug",
+    "name": "TurtleDebug",
+    "url": "https://github.com/FrancisEgan/TurtleDebug",
+    "api": "https://api.github.com/repos/FrancisEgan/TurtleDebug"
+  },
+  "commit": "0a98d2aadecd0ab6c7ba498fd2dca844dc3ddc82",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "126d566e971ea0a5e3b62037fe7b9a9d4584dbba777e2e79b772a39a8f2fab56",
+      "bytes": 1069
+    },
+    "README.md": {
+      "sha256": "011dd36fbcea0f6c6f676c350affb5f154e7aad1277c0d67cf5160598b666512",
+      "bytes": 836
+    },
+    "screenshot.png": {
+      "sha256": "36b21739b4d27272ded31c3e62c96f88e009649e1dc494e98b5118f273bf24d0",
+      "bytes": 189520
+    },
+    "TurtleDebug.lua": {
+      "sha256": "b2bf749495379fffef3bc762cac91625537af76136f90de3bca44b30106f8840",
+      "bytes": 37409
+    },
+    "TurtleDebug.toc": {
+      "sha256": "f280a49d2ffa17155763e3759126b489264e631d4edcdcea043acb951c8bd270",
+      "bytes": 253
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

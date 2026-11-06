@@ -1,0 +1,469 @@
+{
+  "upstream": "https://github.com/FrancisEgan/WhatsTraining_Turtle",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "FrancisEgan",
+    "repo": "WhatsTraining_Turtle",
+    "name": "WhatsTraining_Turtle",
+    "url": "https://github.com/FrancisEgan/WhatsTraining_Turtle",
+    "api": "https://api.github.com/repos/FrancisEgan/WhatsTraining_Turtle"
+  },
+  "commit": "ad1bce7fa239d17c6b261286c2cf723bd7e6dca8",
+  "sourceFiles": {
+    ".editorconfig": {
+      "sha256": "d22b394a5a140050065207d160273570edb04200480160e0951df3291dd7848f",
+      "bytes": 230
+    },
+    ".gitignore.upstream": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    ".gitmodules": {
+      "sha256": "0228e6f21417e2a933fb3b58e4cb3144fbcf6ca93213627ccd0b3692bc296b37",
+      "bytes": 148
+    },
+    ".luarc.json": {
+      "sha256": "dd6101ad862d3c7b1e9bf42c0d127e86da36e26e7366cd226ec282ee16d4f261",
+      "bytes": 679
+    },
+    "changes.log": {
+      "sha256": "d1609c36fff67e80a36203ba7c590cd179152ad35c67f76ec1dfad5a4a25acfa",
+      "bytes": 37
+    },
+    "Classes/Turtle/Druid.lua": {
+      "sha256": "03ce8914d9e7a23dea858e25128cab0a62ab72f73e5f4a09892a44a27b798991",
+      "bytes": 31029
+    },
+    "Classes/Turtle/Hunter.lua": {
+      "sha256": "8557098559239b272534f5fbd03045fba7276969817a30bf22477f9474f75a6e",
+      "bytes": 22042
+    },
+    "Classes/Turtle/Mage.lua": {
+      "sha256": "cb1ed94d1c079e041d6a39c5d792a9a4a27df544f7d264b81e5ecc1f7229b459",
+      "bytes": 22835
+    },
+    "Classes/Turtle/Paladin.lua": {
+      "sha256": "f9a3a7b358440c3826792880312acf6e38e74c1294ed5fb39345d64ced1fdb87",
+      "bytes": 25928
+    },
+    "Classes/Turtle/Priest.lua": {
+      "sha256": "a8666f9672d086af1ccb1620c8644699bac06b04e3c7298792c328a2f9c17917",
+      "bytes": 33735
+    },
+    "Classes/Turtle/Rogue.lua": {
+      "sha256": "412ba512ac5bb1ac5bcf09fbd110732fc943ee9e563e9548a0a5e6050e5c1d3d",
+      "bytes": 15210
+    },
+    "Classes/Turtle/Shaman.lua": {
+      "sha256": "390cc74d3812af9c1ad6142fb280101d82f755f0e465acadddcb7fa931cdf14f",
+      "bytes": 27460
+    },
+    "Classes/Turtle/Warlock.lua": {
+      "sha256": "bb5358d6807c95a1248ebd22dada7b8eab2ebfb332aa9acb44ed32e79326de8f",
+      "bytes": 23261
+    },
+    "Classes/Turtle/Warrior.lua": {
+      "sha256": "9060b98646686001fc94e6f99652011db752e70ed8013e62477024e19322beb3",
+      "bytes": 15257
+    },
+    "Constants.lua": {
+      "sha256": "76859c7e1d7eecb537dec3ffc7fc9830c08675cd7f5e820d47c64ae2effcb3a8",
+      "bytes": 1796
+    },
+    "defs/GlobalDefs.lua": {
+      "sha256": "7718750d036c274ba56146323c4d9f94c385569bb5bd5a3179362b2d9efc41db",
+      "bytes": 1256
+    },
+    "defs/wow-api-type-definitions/Enums.d.lua": {
+      "sha256": "f1e2d34f02778a4e157a29ee5a98997e7ad3416ebe7e67568e36bd868c31b6ff",
+      "bytes": 12326
+    },
+    "defs/wow-api-type-definitions/Event/ActionBar.d.lua": {
+      "sha256": "647c83d3f414657999208803c3de7c2bd9193791197ed1beb9ded47a22935c68",
+      "bytes": 1426
+    },
+    "defs/wow-api-type-definitions/Event/Auction.d.lua": {
+      "sha256": "006601082ea6714763ab0666fce11e9ff59c16dab10ab5e9e58f5c4954d591d7",
+      "bytes": 238
+    },
+    "defs/wow-api-type-definitions/Event/Bank.d.lua": {
+      "sha256": "9e756e6485c88fbc29a3da269c2ab1d0221dc85956c07325e721be215420d147",
+      "bytes": 587
+    },
+    "defs/wow-api-type-definitions/Event/Buff.d.lua": {
+      "sha256": "e0f27e6ccaf447da949054f237ef6b80996ca024ea265d07b1f4244186bbb6cc",
+      "bytes": 550
+    },
+    "defs/wow-api-type-definitions/Event/Chat.lua": {
+      "sha256": "5a1be51501f405f3b3d064ba9cd3776893c5174385524e018d1c632a7c4c05ca",
+      "bytes": 17713
+    },
+    "defs/wow-api-type-definitions/Event/Combat.d.lua": {
+      "sha256": "f39f7ba9cb6cef463682a4600cc1c23b1740d04fcefb48a63b5f89ef5ea823c8",
+      "bytes": 2615
+    },
+    "defs/wow-api-type-definitions/Event/Death.d.lua": {
+      "sha256": "5901486419227c5586af3854398861b413c1d20bf93a7621076a0180e961375f",
+      "bytes": 1437
+    },
+    "defs/wow-api-type-definitions/Event/Guild.d.lua": {
+      "sha256": "381e703a4931a1507a63a2eca2bfc795d6d3371a822e6ee2dc346676632987d8",
+      "bytes": 627
+    },
+    "defs/wow-api-type-definitions/Event/Item.d.lua": {
+      "sha256": "ce794f6f7d16b2e47fcb26db66cca34ac56dc9bf1c8b958263332164d0a31d06",
+      "bytes": 2894
+    },
+    "defs/wow-api-type-definitions/Event/Loot.d.lua": {
+      "sha256": "7cbb1a1e55a8c344f0f45a65c23dfc0d756304bc24cef0d468a0581ca327a070",
+      "bytes": 679
+    },
+    "defs/wow-api-type-definitions/Event/Mail.d.lua": {
+      "sha256": "826704647d3a78ed0ce9418e062daaae86c58541e1704a6649e5fc90bf18afaa",
+      "bytes": 1144
+    },
+    "defs/wow-api-type-definitions/Event/Map.d.lua": {
+      "sha256": "d177d958c1107ff8cf303f7759203330fe8b82714aacc8b9b5cc261ba2649918",
+      "bytes": 1437
+    },
+    "defs/wow-api-type-definitions/Event/Misc.d.lua": {
+      "sha256": "de7a9609c7740e766e3fca889344957a900937c6269cff1be86a24c631174e50",
+      "bytes": 3405
+    },
+    "defs/wow-api-type-definitions/Event/Party.d.lua": {
+      "sha256": "bbf8dbf650b5fa27964f0048ee14b0a83488ed5a32bc5db530d3c13dd481d039",
+      "bytes": 1918
+    },
+    "defs/wow-api-type-definitions/Event/Pet.d.lua": {
+      "sha256": "08a66b30f6572b10ff42a504bbe6db2134a052c96549c5be90c5b7f1cd9c97d0",
+      "bytes": 1544
+    },
+    "defs/wow-api-type-definitions/Event/Player.d.lua": {
+      "sha256": "cba44ba6fc4dde4fe20415ebd163465a4cb93d33e88c5614a6a41b9b0402ce8a",
+      "bytes": 3037
+    },
+    "defs/wow-api-type-definitions/Event/PvP.d.lua": {
+      "sha256": "71aef7aeca7d2eb459b9cc719ef33cdddc3fc2a332dfdaf0aca7375abf9775a9",
+      "bytes": 1306
+    },
+    "defs/wow-api-type-definitions/Event/Quest.d.lua": {
+      "sha256": "8aa64934cf5e7cc1b7ba6f3908fe28f69f768e2c3baea0dade7ee18fc959d820",
+      "bytes": 1743
+    },
+    "defs/wow-api-type-definitions/Event/Spell.d.lua": {
+      "sha256": "87a9544fdf3ad0dfb689a0acfb3e10b46982541aebd6a0eba6d21c4392a49f99",
+      "bytes": 3268
+    },
+    "defs/wow-api-type-definitions/Event/System.d.lua": {
+      "sha256": "08511b7db71ffe4a13a1304aa2d764eb4c35bb72a8558629ef5a1f7b28d2e668",
+      "bytes": 3451
+    },
+    "defs/wow-api-type-definitions/Event/Tooltip.d.lua": {
+      "sha256": "6b03831a955c9da6bd9f18f6f16ace6b70877e4aecfbf4f60f27d7170860885d",
+      "bytes": 484
+    },
+    "defs/wow-api-type-definitions/Event/Trade.d.lua": {
+      "sha256": "7a339e8d98f841935bba916d95f6f16874ab269f75eb4c722e76f349db82572a",
+      "bytes": 1606
+    },
+    "defs/wow-api-type-definitions/Event/Tradeskill.d.lua": {
+      "sha256": "e7c754867953b93c3736b65d283a561e06d638bd763932db1d69b8c52b507091",
+      "bytes": 506
+    },
+    "defs/wow-api-type-definitions/Event/Trainer.d.lua": {
+      "sha256": "78914a707abc359ccf3916a86b8bbbf5908daa0a14351c76a50b045479428656",
+      "bytes": 197
+    },
+    "defs/wow-api-type-definitions/Event/Unit.d.lua": {
+      "sha256": "62d2b749790ace0f47fa13a7fe98c8f55be8ecfad5bf67295c28190a81caaf87",
+      "bytes": 4031
+    },
+    "defs/wow-api-type-definitions/Event.d.lua": {
+      "sha256": "4a8f2221c7e95883bd48612941116a46c01168a33fd75e322892cad2e3bb6e87",
+      "bytes": 551
+    },
+    "defs/wow-api-type-definitions/Function/Action.d.lua": {
+      "sha256": "2b0be422ca026ec0a5ccb7ead61fba0db5d0640c884e6b5ffcd7c89972d7692c",
+      "bytes": 6379
+    },
+    "defs/wow-api-type-definitions/Function/Addon.d.lua": {
+      "sha256": "15e11170029090f4646581360058202bb422250614651f18fdfbfc6367e0f1f3",
+      "bytes": 3077
+    },
+    "defs/wow-api-type-definitions/Function/Aura.d.lua": {
+      "sha256": "7ca9a3b0e8cd685822097df24e241edb089faa1a220714778b95fdf4761db40f",
+      "bytes": 3876
+    },
+    "defs/wow-api-type-definitions/Function/Communication.d.lua": {
+      "sha256": "96d5c537fad014912a1e8585da9b7dcc67946277d4ed7041dfbdf7533dcaf215",
+      "bytes": 2224
+    },
+    "defs/wow-api-type-definitions/Function/Crafting.d.lua": {
+      "sha256": "5d4d0fa992ff2c910722c6a19f3f69fec141e4eceb72ad48f82db366a0271577",
+      "bytes": 4872
+    },
+    "defs/wow-api-type-definitions/Function/Debugging.d.lua": {
+      "sha256": "be50af5a812f870bf622f6057f8f85e9ed0f3754e31f70cf6a250f92cb841a7a",
+      "bytes": 1417
+    },
+    "defs/wow-api-type-definitions/Function/FrameManagement.d.lua": {
+      "sha256": "f5b42caf2faf1600ff7c15700ecee25cd4d8f4475bb06b08fa463c94672f1ffe",
+      "bytes": 8242
+    },
+    "defs/wow-api-type-definitions/Function/Group.d.lua": {
+      "sha256": "1fd6d0884029002805271c98cd6c9e45c3f2c27cafe2ee8eaae751f1e2f7e261",
+      "bytes": 5263
+    },
+    "defs/wow-api-type-definitions/Function/Inspection.d.lua": {
+      "sha256": "04ac702f564585bf28e8a8a9f56d54d5201f92a83bd58cfae0037143c4937260",
+      "bytes": 1725
+    },
+    "defs/wow-api-type-definitions/Function/Inventory.d.lua": {
+      "sha256": "42be12167782ab3d230cd6311ca50637d82df719d5fdff74646228f527aee1d7",
+      "bytes": 3611
+    },
+    "defs/wow-api-type-definitions/Function/KeyBinding.d.lua": {
+      "sha256": "6dec82fd19e1b47c42bf445daa3ad667961354d13210d47d2fc8a19776ce21b7",
+      "bytes": 2778
+    },
+    "defs/wow-api-type-definitions/Function/Location.d.lua": {
+      "sha256": "43ce12939c83e7355c43005cbb364c474f82324cb9f2e85556a5250c0611c56e",
+      "bytes": 1072
+    },
+    "defs/wow-api-type-definitions/Function/Macro.d.lua": {
+      "sha256": "ccb7a70ea26b37a144082314bddf6db140a8c4d7c238b93607c505c2388d294f",
+      "bytes": 3141
+    },
+    "defs/wow-api-type-definitions/Function/Map.d.lua": {
+      "sha256": "1cd93a9292841cdc47eb88bdf337a6c314c41cb4094b9a39725d13dfcbe1b965",
+      "bytes": 7546
+    },
+    "defs/wow-api-type-definitions/Function/Movement.d.lua": {
+      "sha256": "7d129bc96b68736ab07e5a39f29281a86de4278a06ddf53f5080b5e90ecef2ba",
+      "bytes": 399
+    },
+    "defs/wow-api-type-definitions/Function/Pet.d.lua": {
+      "sha256": "75a992d6bf51fdc788a497a81db4910de1c7174d2f1efd549cf517e7e97726ea",
+      "bytes": 7742
+    },
+    "defs/wow-api-type-definitions/Function/Quest.d.lua": {
+      "sha256": "91c8249bc0b0dc7c9d2cf2ad0d5c22323b6454212068595ffb177dd1f205945a",
+      "bytes": 5592
+    },
+    "defs/wow-api-type-definitions/Function/Raid.d.lua": {
+      "sha256": "b1ad2a914fa9367362cac4bcf1742d5b96ce263926d1448f9f341c8d3ebcc76c",
+      "bytes": 2733
+    },
+    "defs/wow-api-type-definitions/Function/Settings.d.lua": {
+      "sha256": "ccf0883f65c0d37e31cdfd22c9b797e6339f4079853dd47b87efe26dd192cf05",
+      "bytes": 3869
+    },
+    "defs/wow-api-type-definitions/Function/Spell.d.lua": {
+      "sha256": "d06dadb2aa1e84aa287a443e28937ccdd4226c15d1fe47b32b26787adebedbe9",
+      "bytes": 7366
+    },
+    "defs/wow-api-type-definitions/Function/System.d.lua": {
+      "sha256": "d24ade7833819cc3136ce211431bebc2a866445877c1b4f78bafb8fddcb6c663",
+      "bytes": 11620
+    },
+    "defs/wow-api-type-definitions/Function/Targetting.d.lua": {
+      "sha256": "57ce74592257024f23afec87af39571270332ab858a973fca7879e206718841a",
+      "bytes": 2232
+    },
+    "defs/wow-api-type-definitions/Function/Unit.d.lua": {
+      "sha256": "260e30991e0705e7885cdd9c8b4def4e9cf20df239b2473ecb6a07770cd2b334",
+      "bytes": 15017
+    },
+    "defs/wow-api-type-definitions/Interface/_Unsorted.lua": {
+      "sha256": "54e34806393d6189427b0a823b2f17f11ce4f1bc325cff6c0942930aa53f2d99",
+      "bytes": 936
+    },
+    "defs/wow-api-type-definitions/Interface/UIParent.d.lua": {
+      "sha256": "691d6ef837b74be9423c6f447d1dc2b030fa411cc736381514dca3d180e29d7b",
+      "bytes": 842
+    },
+    "defs/wow-api-type-definitions/LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "defs/wow-api-type-definitions/README.md": {
+      "sha256": "d083abc592e5b0a847690aa65a2148608ebd2749f821ece604cc0eabfaab76e1",
+      "bytes": 1867
+    },
+    "defs/wow-api-type-definitions/ScriptHandlers.d.lua": {
+      "sha256": "1a0adc375a4f61e9af3b9a04febfb083dca07b2cef022961186fbcd00a1ae69b",
+      "bytes": 10775
+    },
+    "defs/wow-api-type-definitions/Widget/Button.d.lua": {
+      "sha256": "ddcb46612f317370c7422648b3c956b71ed4f075773efb434efa49b2aad3237f",
+      "bytes": 6771
+    },
+    "defs/wow-api-type-definitions/Widget/CheckButton.d.lua": {
+      "sha256": "dade19d4b0a060b5ad2b4100ab6a04425cd8cd8c7aee11e0ff31081b2a9af888",
+      "bytes": 1154
+    },
+    "defs/wow-api-type-definitions/Widget/ColorSelect.d.lua": {
+      "sha256": "6d0dcf463c1f4e6f7297b65cca730267382da01440dec65988045e43bc578dd2",
+      "bytes": 2393
+    },
+    "defs/wow-api-type-definitions/Widget/DressUpModel.d.lua": {
+      "sha256": "45d029d9f16d9c5269936182d7746a288f6c67d700c8752bed73584b668734c9",
+      "bytes": 160
+    },
+    "defs/wow-api-type-definitions/Widget/EditBox.d.lua": {
+      "sha256": "7540864f198a0655502f6f3c98f30b35c4edd5a1f541afaa791787eddb9903ac",
+      "bytes": 5109
+    },
+    "defs/wow-api-type-definitions/Widget/Font.d.lua": {
+      "sha256": "73677267073b6966f46de93d6dc6f42abce93655e81686c063699e076a709055",
+      "bytes": 537
+    },
+    "defs/wow-api-type-definitions/Widget/FontInstance.d.lua": {
+      "sha256": "e66339a766bdbe58e19ca12350dfdacdec05df6a7edea5338ec1bc5b7b74d0aa",
+      "bytes": 3384
+    },
+    "defs/wow-api-type-definitions/Widget/FontString.d.lua": {
+      "sha256": "496dc3e38d1e44c478ae8a61653bfee9e2fcc1af263de0412b2cb86caefa3237",
+      "bytes": 1788
+    },
+    "defs/wow-api-type-definitions/Widget/Frame.d.lua": {
+      "sha256": "79456c6cfc3db992ba1bcd9ab0c6b7fd4d81fc7d9d1e8275005a1081c0eb007b",
+      "bytes": 12899
+    },
+    "defs/wow-api-type-definitions/Widget/GameTooltip.d.lua": {
+      "sha256": "a1ec9de9f4ab287f69a1d65f0c01c8ea04320d632c65fe2c0c99bbb79cbc808f",
+      "bytes": 8291
+    },
+    "defs/wow-api-type-definitions/Widget/LayeredRegion.d.lua": {
+      "sha256": "498375ba29574a8f5d9121ff403fd16b93a8b606f778e8b173657f648e0f5434",
+      "bytes": 838
+    },
+    "defs/wow-api-type-definitions/Widget/LootButton.d.lua": {
+      "sha256": "f23aa9f00acd055e753be2627664f11ad9e7a9a6d996079e9ca9759c37f4c31d",
+      "bytes": 149
+    },
+    "defs/wow-api-type-definitions/Widget/MessageFrame.d.lua": {
+      "sha256": "55e561eef3fbb7405e98d8ca6c550ebf7b727a9e241fea4ef002c232b61c4dd8",
+      "bytes": 168
+    },
+    "defs/wow-api-type-definitions/Widget/Minimap.d.lua": {
+      "sha256": "549e236d20b44439ca3661c12d4469993d06592f7be65d7d13c0a301700c9268",
+      "bytes": 139
+    },
+    "defs/wow-api-type-definitions/Widget/Model.d.lua": {
+      "sha256": "91d6e9833ccd2fb25ed3397c38c16486a5971fd4a9827f4c7082405b9a4174db",
+      "bytes": 133
+    },
+    "defs/wow-api-type-definitions/Widget/PlayerModel.d.lua": {
+      "sha256": "ecfacf98bedd1e87ec0595cf89f318cfe072238d01df724ae7a536535860197a",
+      "bytes": 151
+    },
+    "defs/wow-api-type-definitions/Widget/README.md": {
+      "sha256": "3a0f35b05c590d731964da8cee919b9d6bd127fffca67701248b3d4a3847aa06",
+      "bytes": 821
+    },
+    "defs/wow-api-type-definitions/Widget/Region.d.lua": {
+      "sha256": "404fa78ba7831f3ffcf6749bb8563003728e0b5c759b75533fdc69ebf1cc60a9",
+      "bytes": 3443
+    },
+    "defs/wow-api-type-definitions/Widget/ScrollFrame.d.lua": {
+      "sha256": "197317bd804b86f121ea52b0b47e2cdb1b37ffa07f4bf648e7368604366bc5b6",
+      "bytes": 151
+    },
+    "defs/wow-api-type-definitions/Widget/ScrollingMessageFrame.d.lua": {
+      "sha256": "439a48dcb1127f98184210bc59521188a8bcd01972442292af5735cf22f43684",
+      "bytes": 2205
+    },
+    "defs/wow-api-type-definitions/Widget/SimpleHTML.d.lua": {
+      "sha256": "4f4da7b24b839574e7618c9e5853409d234ad79a896584f3809bbad2e54a422f",
+      "bytes": 148
+    },
+    "defs/wow-api-type-definitions/Widget/Slider.d.lua": {
+      "sha256": "8cf1b2a2b4df080ff6d906c8b196a04b65d7448c15758b073dabcaef012c8bbc",
+      "bytes": 136
+    },
+    "defs/wow-api-type-definitions/Widget/StatusBar.d.lua": {
+      "sha256": "b8f134667ac0515dcfb9f07163afc9f606535100e1fdd7acfc36f119b75eff3f",
+      "bytes": 145
+    },
+    "defs/wow-api-type-definitions/Widget/TabardModel.d.lua": {
+      "sha256": "aeb6c1eb4b11b8cc788b0fd0de7ad60a8d43899ecb4f3e41a19dd7d5e38a923d",
+      "bytes": 157
+    },
+    "defs/wow-api-type-definitions/Widget/Texture.d.lua": {
+      "sha256": "60c883740abacdc7dfdde102a3fd27b6739f87d1c672545c4835f3d0251368f2",
+      "bytes": 5010
+    },
+    "defs/wow-api-type-definitions/Widget/UIObject.d.lua": {
+      "sha256": "7d707536b61a3ba03b302ae81180e2b2d6b45a0f7d5150da2ab6171a5a67ea02",
+      "bytes": 1517
+    },
+    "defs/wow-api-type-definitions/Widget.d.lua": {
+      "sha256": "250d129b1c050d6002728082e4f6c8782a3dd22f90d802c8519819226c3ce70f",
+      "bytes": 536
+    },
+    "Environment.lua": {
+      "sha256": "7fa8ec0a5b04edba7bf81f5bd26cadd5e6a6bec8dba71b5676983c21cfdb071d",
+      "bytes": 1200
+    },
+    "images/screenshot.png": {
+      "sha256": "c58c14e41542161c1b4b4a264afecac850c44215f87dfc3054b488cccd27ba05",
+      "bytes": 330957
+    },
+    "LICENSE": {
+      "sha256": "64c4e54df59cc6516ddffd512abb053e7cee2e064d2af53ce5ada164be4a67fa",
+      "bytes": 1055
+    },
+    "PlayerData.lua": {
+      "sha256": "6b19493a646d8d300ee8ff5bb23c0bf2a36c3e9fcf5e2b83beacac8984a7bba0",
+      "bytes": 7015
+    },
+    "README.md": {
+      "sha256": "65c4e54a3a9357e49d667882c2ec0a188899b2ba4577a47a88bc564ce97fca12",
+      "bytes": 222
+    },
+    "SpellsByLevel.lua": {
+      "sha256": "9eb807ffed50ecc4a24b00b7ee31c67144bfa40fd8e477aa8b049656654dbfc2",
+      "bytes": 200
+    },
+    "tests/check-chains.cjs": {
+      "sha256": "7fe60eaba09f99c7f5e901fc981f1438f628698df2a9056672bb063b9fe8f329",
+      "bytes": 5475
+    },
+    "tests/README.md": {
+      "sha256": "d2e7ca0ee88cd049a9d1e80cfc7681f10d69e0f7a3cf7918df3843bdc1bcf39f",
+      "bytes": 2338
+    },
+    "textures/highlight.blp": {
+      "sha256": "d379fbe8ac0314d711012fece57f6c67790f394fb35aa797c1fc0d92ae6f0a8f",
+      "bytes": 3972
+    },
+    "textures/left.blp": {
+      "sha256": "6f85be54409b25aa723e9fd1e2f18d6eb87e1acee8d2e1d717caef35190fd923",
+      "bytes": 175972
+    },
+    "textures/right.blp": {
+      "sha256": "d9fb827c2602eaf8e552dc457737b3901c6cec88cf0d9ab02d3b6db4df91cb6e",
+      "bytes": 88596
+    },
+    "Utils.lua": {
+      "sha256": "3d50abfbe43c42c72d11f6e1c05ebaf34287c9efc05f60d6ee121a83fd7fb9fb",
+      "bytes": 2723
+    },
+    "WhatsTraining_Turtle.toc": {
+      "sha256": "9740bd208be66665b7f1f24015c2e5fc141a8dce7ea03a37dbc7fc837e0a5d1b",
+      "bytes": 529
+    },
+    "WhatsTraining.lua": {
+      "sha256": "4b3697fd5438b5cb29eeac65f7a52e05bd88730e5543129fede914985c6e6961",
+      "bytes": 1571
+    },
+    "WhatsTrainingUI.lua": {
+      "sha256": "c600a3821defa79a9a26f2c219e567d015526e6823ea4b4690fd1a4c181f3c3d",
+      "bytes": 12831
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

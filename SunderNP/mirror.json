@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/perks/SunderNP",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "perks",
+    "repo": "SunderNP",
+    "name": "SunderNP",
+    "url": "https://github.com/perks/SunderNP",
+    "api": "https://api.github.com/repos/perks/SunderNP"
+  },
+  "commit": "606d69cdf80ee3d139256585773da6d7f078fbfd",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "fd3c1b6282bd56a878527569d9aa4165299d9a9da5cb2c37abd9e7808721b7ed",
+      "bytes": 2357
+    },
+    "SunderNP.lua": {
+      "sha256": "66abc4105cab33e34d964b83defe67f2250e753e2e9a691dda203e1f22cc87da",
+      "bytes": 12846
+    },
+    "SunderNP.toc": {
+      "sha256": "4b98976eab22a2cd16bb9e20f36e322a421d97fabb97de172209b694b1be9bdc",
+      "bytes": 236
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

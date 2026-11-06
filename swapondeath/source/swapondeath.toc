@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: Swap On Death
+## Notes: Re-equip some buggy items after death
+## Version: 1
+## DefaultState: enabled
+## Author: melba
+
+swapondeath.lua
+
+

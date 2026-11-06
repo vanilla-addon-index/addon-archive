@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: Trailblazer
+## Notes: Use |cffff0000/trailblazer|r or |cffff0000/tb|r to mount. Use |cffff0000/trailblazer fav|r to show favorites-menu.
+## Author: Goldbart
+## Version: 1.0
+## SavedVariablesPerCharacter: Trailblazer_Favs
+
+
+Trailblazer.lua

@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: 41sCombatAlert
+## Notes: Configurable combat-log alerts for WoW 1.12.1
+## Author: ChatGPT
+## SavedVariables: FortyOneSCombatAlertDB
+41sCombatAlert.lua

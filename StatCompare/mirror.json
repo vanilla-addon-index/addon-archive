@@ -1,0 +1,217 @@
+{
+  "upstream": "https://github.com/grimfiendish/StatCompare",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "grimfiendish",
+    "repo": "StatCompare",
+    "name": "StatCompare",
+    "url": "https://github.com/grimfiendish/StatCompare",
+    "api": "https://api.github.com/repos/grimfiendish/StatCompare"
+  },
+  "commit": "4b325f1b2d599c171e409f712c84b275294eb9a8",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "5f6fda386627152dd3a00c3390ad8bac58a066cf346f905755a23d9aa2cc7360",
+      "bytes": 340
+    },
+    "ChangeLog.txt": {
+      "sha256": "5b6b398acdb25d955914cbcd406310d0150692714871de0e217cacf8c0dd19a0",
+      "bytes": 7329
+    },
+    "devnotes.txt": {
+      "sha256": "5690419d336e145f1a9aa9830b86baa9a7daa77e9d429f87854bc60232361192",
+      "bytes": 145
+    },
+    "init/StatCompareArmor.xml": {
+      "sha256": "ca9de2c9bcffc627a2fbb0de7eee53b2f6bad2ffacf85e61ec5449b5239876c6",
+      "bytes": 289
+    },
+    "init/StatCompareBetterCharacterStats.xml": {
+      "sha256": "0169831c8ec7b1ee223858e9b19d69d58ef19cc2d295b6ecb4772607e9ac006e",
+      "bytes": 277
+    },
+    "init/StatCompareBuff.xml": {
+      "sha256": "7cef1f65e4b31135b0459bfc085454fb5fddcc77b4ef0462849679a0008ba44f",
+      "bytes": 284
+    },
+    "init/StatCompareChar.xml": {
+      "sha256": "9332f27b3088885962d4107f328c9c0bfc5b5a00999e014f1dbbb9fb55b87d65",
+      "bytes": 104
+    },
+    "init/StatCompareSpell.xml": {
+      "sha256": "770d7aa6e4c15fe0185c63fc0d363e9819d7b4e794e3ec264e0bd979b3852e06",
+      "bytes": 164
+    },
+    "init/StatCompareTutorial.xml": {
+      "sha256": "ccd10fc0317fb14bd95cf6271c0a672621edf775f71fc696d8d6d2a5f2abb0b5",
+      "bytes": 177
+    },
+    "init/StatCompareUI.xml": {
+      "sha256": "79def5fe78321ce346835ae04ecff30de04c9da2f2dab0ca7b3bf89a188f9e9e",
+      "bytes": 156
+    },
+    "Localization_enUS.lua": {
+      "sha256": "b372c04e32a3a896ca73491851d42815a58d624e5990ce9274b0297a70b4d33e",
+      "bytes": 16717
+    },
+    "Localization_zhCN.lua": {
+      "sha256": "9c357e12b2fa15dcf9231927d26b3a8afb20fc175db8d6c92ab43ecd1ad70489",
+      "bytes": 19318
+    },
+    "Localization.lua": {
+      "sha256": "6a40816cb57b74b00e5d2ed583b843d4785387c2d287aef0fc4760d77dd90cfc",
+      "bytes": 217
+    },
+    "media/Character - Hide Armor - Hide Spells - Show Stats.jpg": {
+      "sha256": "edc486394ec108807c1605c82fa04ae678c49a37fc0c4f0728b825b129d8fb15",
+      "bytes": 73779
+    },
+    "media/Character - Hide Armor - Show Spells - Hide Stats.jpg": {
+      "sha256": "c09643dbcec20c9aec62341036b3552cd0a7d5e62ccb5f261b508b12895ee86c",
+      "bytes": 33348
+    },
+    "media/Character - Show Armor - Hide Spells - Hide Stats.jpg": {
+      "sha256": "5d3a2bcc7244d95a22973e69a8c3dd5ec81290f557908ac798556ddf3873d23e",
+      "bytes": 55823
+    },
+    "media/Character - Show Armor - Show Spells - Show Stats - Annotated.jpg": {
+      "sha256": "a18effaf72dbc1b19a24ad7f3d2eeff64adb5df4cf02adfb7a365c2e543e984d",
+      "bytes": 219605
+    },
+    "media/Character - Show Armor - Show Spells - Show Stats.jpg": {
+      "sha256": "6b5ff1420d739b7252638fc0e57198c617298f611d63c6d88b9d2cfd1962ac67",
+      "bytes": 205703
+    },
+    "media/Inspect - Show Armor - Show Spells - Show Stats.jpg": {
+      "sha256": "24aa45aafb1966c6e8fc532262466ff5c96fce7456481b9f2445226daadd8aba",
+      "bytes": 325006
+    },
+    "media/inv_helmet_10.jpg": {
+      "sha256": "a4af4f802fb939bc2216a82e1aabb8e472c3ef15753931f3317584f4d3c0f85b",
+      "bytes": 1721
+    },
+    "media/inv_misc_book_08.jpg": {
+      "sha256": "854c6c066db49b03cda916abfb3ba1af6e90c5f9a3e87c259b92771029f85d8e",
+      "bytes": 1876
+    },
+    "media/inv_misc_note_01.jpg": {
+      "sha256": "41572810abe51571fbaed405d6519614fcc3cf2a52390a0d1eeaf1ccb9a0cc1f",
+      "bytes": 1602
+    },
+    "README.md": {
+      "sha256": "7ce47810836faf00522dc11c706069960119800f78a0114206e7cb61ab240f70",
+      "bytes": 5036
+    },
+    "SCButtons-Down.blp": {
+      "sha256": "c448ccb73648fc91dfb2e5dfda3b6ae86e7f4b9a282f7c74fddd07bc107b0a4e",
+      "bytes": 9364
+    },
+    "SCButtons-Up.blp": {
+      "sha256": "b027b92ef0f61fc152e14471427ea73644529a90829f66742d59c47955bafb5f",
+      "bytes": 9364
+    },
+    "SCOptions.lua": {
+      "sha256": "d96151ae5506765a4fb8484a9d1fc7c17b69a0fba7c76e86f242ae086c05d9a9",
+      "bytes": 9500
+    },
+    "StatCompare.lua": {
+      "sha256": "43f1e666695b48173a0d5c92a82650dd9a61c7e505fe87ca2eff6bac59b409c0",
+      "bytes": 56513
+    },
+    "StatCompare.toc": {
+      "sha256": "776fd634261184fafacdbfc20f22069044e79db405ba7d891a13bbf171f9e639",
+      "bytes": 1099
+    },
+    "StatCompare.xml": {
+      "sha256": "94de4c226fbd84129419b86507ef854d7c5edcd2d40c61d352b3fc0c1c109adc",
+      "bytes": 35921
+    },
+    "StatCompareArmor/ActiveBuffs.lua": {
+      "sha256": "2a2b5f67030e4321ca125a3256db43bd9a726ec6a71483f4d47ab6593ac1aaee",
+      "bytes": 3805
+    },
+    "StatCompareArmor/EquipmentEnchants.lua": {
+      "sha256": "503a556fe9eb2361144a503ecdc0429a8a2ffc5b9176e72696dabc0f41471979",
+      "bytes": 119627
+    },
+    "StatCompareArmor/Localization.lua": {
+      "sha256": "20d380992931c383f6a7fbd8bb9d537905dec1be61925d522a57c0da0b9fc9b9",
+      "bytes": 1239
+    },
+    "StatCompareArmor/TalentSpec.lua": {
+      "sha256": "a6e2df51c358569ba50e09a6e1a65bfc6a1c6702de2d4f0878f85ad644fc1e6f",
+      "bytes": 834
+    },
+    "StatCompareBetterCharacterStats/BCSLib.lua": {
+      "sha256": "4842093c06d7f08c86182f2ebabe9ea8fd29f3be6d311b36e659bbcf95f5e826",
+      "bytes": 14577
+    },
+    "StatCompareBetterCharacterStats/Localization_enUS.lua": {
+      "sha256": "0cd99299b76316f1c2564b9bb7bc887f4a4fd840f53832f49c8f7d9b660dacfb",
+      "bytes": 136
+    },
+    "StatCompareBetterCharacterStats/Localization.lua": {
+      "sha256": "6449c8e50670a4fba0d715203f64630c681c964452e1b20aebf2d973ecbe7355",
+      "bytes": 352
+    },
+    "StatCompareBuff/BuffScanner.lua": {
+      "sha256": "f7070a1b5375167fd815e7cd7059e7f383de90cd76684c7cc8be03814f93caf1",
+      "bytes": 2489
+    },
+    "StatCompareBuff/Localization_enUS.lua": {
+      "sha256": "5a71da0ced9b1f7fb5904eb3185139767253d01754d67900fb611a4481d6978a",
+      "bytes": 1705
+    },
+    "StatCompareBuff/Localization_zhCN.lua": {
+      "sha256": "494c83073d0a62c221464ecdcbdc7e3f86b8e06e19e9c207295e1a96d5dc05fa",
+      "bytes": 2617
+    },
+    "StatCompareBuff/Localization.lua": {
+      "sha256": "de8ae9cdd3a21543d31477b457b2f6277b8c4e4cfc4f0e6bcc6577ce23c6cb1b",
+      "bytes": 358
+    },
+    "StatCompareChar/CharStats.lua": {
+      "sha256": "fecd14f4afb349d5422c6f2f53b763b6268c12123e310b3034e89944065de312",
+      "bytes": 23940
+    },
+    "StatCompareSpell/Localization.lua": {
+      "sha256": "f7238aeeebdc339cabe903f646b8182c89010099338eba966e32c18999022717",
+      "bytes": 547
+    },
+    "StatCompareSpell/SpellsStats.lua": {
+      "sha256": "690ecaa73bd2e8a4f80aff15ed994efb7669b8aaa99f01a230e9d1ffcc8289a1",
+      "bytes": 46935
+    },
+    "StatCompareTutorial/Localization.lua": {
+      "sha256": "00ce5ade40845a4aed8c4c858c8c47d64e1ec7a8ed127c891f57eccf2e173bd1",
+      "bytes": 597
+    },
+    "StatCompareTutorial/TutorialUI.lua": {
+      "sha256": "7a4265bb9e14fac49de978bce1d26fa726b4246a0bca444f707b20cd40c7aafb",
+      "bytes": 396
+    },
+    "StatCompareUI/Localization.lua": {
+      "sha256": "be907a7a0244072d778903572072cf4e913c91255f2e54dbdeae8d96217743d9",
+      "bytes": 7247
+    },
+    "StatCompareUI/SCOptions.xml": {
+      "sha256": "0043b885a1ba6486e1958953bc7f7d32e572c1ae2436e2ad03c065d857cfed0f",
+      "bytes": 34616
+    },
+    "StatScanner.lua": {
+      "sha256": "9ae4823284f7a1f261bc332328128a125eca950305b2f809a9f3a892f6832f60",
+      "bytes": 10380
+    },
+    "Status-Idle.blp": {
+      "sha256": "88f6bf91712246583042bc1d4779e366f789100c710152e167e155fcb4731782",
+      "bytes": 1684
+    },
+    "装备属性统计.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

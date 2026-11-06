@@ -1,0 +1,129 @@
+{
+  "upstream": "https://github.com/refaim/TradeSkillsData-turtle",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "refaim",
+    "repo": "TradeSkillsData-turtle",
+    "name": "TradeSkillsData-turtle",
+    "url": "https://github.com/refaim/TradeSkillsData-turtle",
+    "api": "https://api.github.com/repos/refaim/TradeSkillsData-turtle"
+  },
+  "commit": "a3a09fea9e753d85907fdd7b80b70b742c180950",
+  "sourceFiles": {
+    "data.lua": {
+      "sha256": "2f6faa1747c27bd0d6727c961ac44c0a9e8b36203a9423819a97bcef832c66de",
+      "bytes": 438
+    },
+    "db/factions.lua": {
+      "sha256": "c22e0baada643ce0476e9f774b6d0b1943bdd4a4bf42f87a0df38535fd142359",
+      "bytes": 344
+    },
+    "db/npcs.lua": {
+      "sha256": "fc6fd1ac99e4779a5153cd68025495f142d755eb2f611c9e29991de1b86ecf6d",
+      "bytes": 52305
+    },
+    "db/professions/alchemy/items.lua": {
+      "sha256": "e4cc2fba748621ed0ef8e5ea70178cb6f7d6be895313c60fb55870a0f8023ff1",
+      "bytes": 2707
+    },
+    "db/professions/alchemy/skills.lua": {
+      "sha256": "62376dc4d5d5f07e2b3ec6f3dfc07371a9fa6aab586905d7a68dec31f7ab1fa6",
+      "bytes": 1571
+    },
+    "db/professions/blacksmithing/items.lua": {
+      "sha256": "7a5848ee26c04b194e344611d2c8efe97213a69320be9b4f3fc64fe205ec0016",
+      "bytes": 23589
+    },
+    "db/professions/blacksmithing/skills.lua": {
+      "sha256": "ea47ee52a5a757ff653e9bfb80045b862200532ebeb8f8dd67065b40b65e259f",
+      "bytes": 17365
+    },
+    "db/professions/cooking/items.lua": {
+      "sha256": "e835574f9eb5af034e4d17a0cee72a74503e11a12b0a376b76899d220acb3143",
+      "bytes": 1728
+    },
+    "db/professions/cooking/skills.lua": {
+      "sha256": "ddac9f4a6a2f4862241a2d8a91b76e52621f0a2b4fdc19c7cc3c5a99d40b3ddb",
+      "bytes": 1572
+    },
+    "db/professions/enchanting/items.lua": {
+      "sha256": "d4b1747052d4a18513be01ea9dd8fe85a28f3da95549c68c81215908cf7833ec",
+      "bytes": 5670
+    },
+    "db/professions/enchanting/skills.lua": {
+      "sha256": "17121ab305e091d1bc9f6d121cf6a5843c89843a3269fb79b381856764dde707",
+      "bytes": 4122
+    },
+    "db/professions/engineering/items.lua": {
+      "sha256": "cee8c92e9f99f838d5753ef8c7c1db5978541c59132f39a083347baecd24c4f5",
+      "bytes": 3614
+    },
+    "db/professions/engineering/skills.lua": {
+      "sha256": "d9866a7d722bc456f5a58099c77ab126b83e4658c4bc55ad27a1bd319bc64530",
+      "bytes": 1874
+    },
+    "db/professions/firstaid/items.lua": {
+      "sha256": "9c9c73cab68e953ec63cf4d9ce6d0f342c5f961b05dbe7ccf41b9e5065c8bde0",
+      "bytes": 1083
+    },
+    "db/professions/firstaid/skills.lua": {
+      "sha256": "717646113aef280ebc05fa9901903cff221db21a8a87e52b4cec5f4f93a1eaf2",
+      "bytes": 317
+    },
+    "db/professions/leatherworking/items.lua": {
+      "sha256": "058f5fad61ab36c7f639346805a37c87a847feff84b91067a00d0c19a37efa3f",
+      "bytes": 8365
+    },
+    "db/professions/leatherworking/skills.lua": {
+      "sha256": "c2ba1425f1640f2fdcf225a7fa964906fc9764add87d47718191250858a2a6bd",
+      "bytes": 10486
+    },
+    "db/professions/mining/items.lua": {
+      "sha256": "828f92bebeb0b8ae3cc021cdd62afb0e5b7cc81956b4bf0312a85f03ffdf3a4f",
+      "bytes": 319
+    },
+    "db/professions/mining/skills.lua": {
+      "sha256": "8ded3a07d2b87b5435d2727ece9d2c0b9769ba6aed21176b615d79523079d7f4",
+      "bytes": 308
+    },
+    "db/professions/tailoring/items.lua": {
+      "sha256": "5456e515b75f37fe0f647bec8ec01857136d339f28f0d0febe061a5fc097007d",
+      "bytes": 5703
+    },
+    "db/professions/tailoring/skills.lua": {
+      "sha256": "d5410eef8f0dfe6adfa67f9cd98f2a5a9fe2671f930aa70207b17b37d2258548",
+      "bytes": 10878
+    },
+    "db/quests.lua": {
+      "sha256": "8bca4c34d2b446377623d83fd6628c1181d8afb9238da8930cc7f6c395f844b3",
+      "bytes": 7171
+    },
+    "db/zones.lua": {
+      "sha256": "2bb29ee81f5f6d8a72ebec17881f4e44de243a095c47bbb872ada92b379001c3",
+      "bytes": 3106
+    },
+    "format-db.py": {
+      "sha256": "4331f25d61f3d94ee1bf5cf6c0c35610af9f5b40e5dee8a0469544491f94c375",
+      "bytes": 699
+    },
+    "lua-format.cfg": {
+      "sha256": "3728bf99422fa8f89c75752eaa5a78ae60e375042872c7cc517cede6aefafaf6",
+      "bytes": 923
+    },
+    "main.lua": {
+      "sha256": "bce8a101c801213d9d2e4950a2e3b59e647532dbd8ee7ea2f3eb1d5976c2c057",
+      "bytes": 1386
+    },
+    "README.md": {
+      "sha256": "f11fe1be31db98a35e64a067e5284bbbf35dd50004c99aa0ce8549ca1ceab159",
+      "bytes": 2772
+    },
+    "TradeSkillsData-turtle.toc": {
+      "sha256": "88c415ed14c6086a06194eaf1ed3fedbb75df351d19421d900c0836e7f29e50c",
+      "bytes": 955
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

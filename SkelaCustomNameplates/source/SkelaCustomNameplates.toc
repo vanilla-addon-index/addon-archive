@@ -1,0 +1,6 @@
+## Interface:11200
+## Title: Skela's Custom Nameplates
+## Notes: type /scn to customizes
+## Author: Skela (based on Bonho's Custom Nameplates)
+## SavedVariables: SCN_Options
+SkelaCustomNameplates.lua

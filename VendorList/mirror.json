@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/VendorList",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "VendorList",
+    "name": "VendorList",
+    "url": "https://github.com/MarcelineVQ/VendorList",
+    "api": "https://api.github.com/repos/MarcelineVQ/VendorList"
+  },
+  "commit": "6fcec31fbf19fabec6dcb58075f677a766d0dda4",
+  "sourceFiles": {
+    "readme.md": {
+      "sha256": "cb969e854c9ce1e6d823c386cd67ea877298ba9758fd6fb98a54d706d0e66d04",
+      "bytes": 494
+    },
+    "VendorList.lua": {
+      "sha256": "83d10ca16790ec5ad47d2b686addf94e2ca7b813db743e8df42a99837a7ff501",
+      "bytes": 6421
+    },
+    "VendorList.toc": {
+      "sha256": "87c14699c0d659d10fd1a05779c0abf860bbf0ad94e015dc3b5ecec845c5d41c",
+      "bytes": 185
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

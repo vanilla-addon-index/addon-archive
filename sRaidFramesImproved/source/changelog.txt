@@ -1,0 +1,64 @@
+>> sRaidFrames
+
+--== USING UNITFRAMES OTHER THAN BLIZZARD UF OR LUNA UF OR MODIFIED AG UNITFRAMES MAY CAUSE PROBLEMS(DISAPPEARING LOOT FRAME OR TARGET FLICKING - YOU CAN FIND MODIFIED AGUF IN THIS PACK)
+--== IF YOU'RE USING SRF 0.85 AND OLDER IT'S MANDATORY TO DELETE SRF FILES FROM SAVEDVARIABLES FOLDER !!!
+
+
+patch_0.50 - 40 yard range check support
+- 40y range check is only limited to healing classes due its mechanism
+- 40y range check require certain spells to be on actionbar(you will be noticed by message if spell missing)
+- 40y range check is compatible with standard blizzard target frame or modified agUnitFrames using any others unit_frame addons may cause target flicking and small perfomance drop
+
+patch_0.58 - grid like healing Indicators 
+- indicators can be colored differently, it depends on how many heals are casted on unit at same time
+  - green: 1
+  - yellow: 2
+  - orange: 3
+  - red: 4 and more
+
+patch 0.61 - focus frame
+- focus frame is independable frame that can be modified by adding/removing units
+- to add/remove unit, bind key in keybinding menu then target unit and use the function
+- added new group sorting method "Fixed Group" it helps to avoid gaps in raid frames when you move unit to focus
+- to enable multidrag(moving all frames at once) press alt key
+
+patch 0.66 - class colors
+- added class color status bar
+- greatly improved focus frame functionality
+
+patch 0.70 - anti overheal focus sort
+- reworked range 
+- added anti overheal sorting to focus frame
+- raid and focus frames are now resizable independably
+- implemented agUnitFrames modification by Snelf
+- fixed meni bugs
+
+patch 0.80 - first stable release
+- fixed bug where raid interface didn't appear after logging in
+- fixed bug with face texture debuffs appearing when units are far away
+- added support to Xloot addon(resolved problem with dissapearing loot frame - Xloot users)
+- modified and improved sorting method  Menu->Group By->Fixed Group
+- added combinded range check method(most effective 40y range calculation for low fps computers)
+- splitted compact style option into three separate ones for better GUI customization(Menu->_Pure View->Disable colored debuff aura/Disable bottom buff name/Short unit names)
+
+
+patch 0.85 - visual improvements
+- SRF is now complatible with Luna Unit Frames
+- added alot of new bar textures
+- units are now highlighted on mouseover
+- unitframe bar was reworked for better look
+- added grid like vertical hp bar mode
+- implemented round healing indicators for better look when using borders 
+- this release requires to delete sRaidFrames.lua and sRaidFrames.bak from WTF/../SavedVariables to avoid various errors
+
+patch 0.95 - functionality improvements
+- reworked buff/debuff menu for better customization
+- added fast configuration available from Load profiles menu
+- implemented healcomm lib 
+- implemented HealBot, CTRA, ORA, HealerAsst spell listener
+- added border texture change functionality
+
+-=cheers Ogrisch
+
+
+

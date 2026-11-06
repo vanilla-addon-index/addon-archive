@@ -1,0 +1,11 @@
+{
+  "donor_voice": null,
+  "pitch_shift": 0,
+  "reverb": 0.05,
+  "reverb_decay": 0,
+  "bass_boost_db": 2,
+  "treble_boost_db": 0,
+  "status": "approved",
+  "test_quest_id": null,
+  "notes": "F0 ~200 Hz. No pitch shift needed. Slight reverb + bass for ancient power. 90/90 lines generated (8 NPCs)."
+}

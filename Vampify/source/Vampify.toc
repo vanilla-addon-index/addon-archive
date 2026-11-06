@@ -1,0 +1,25 @@
+## Interface: 11200
+## Title: Vampify
+## Notes: Tracks the healing returned by the Vampirism item stat.
+## Author: ShempError
+## Version: 0.4.0
+## SavedVariables: VampifyDB
+## SavedVariablesPerCharacter: VampifyCharDB
+
+core\const.lua
+core\model.lua
+core\histogram.lua
+core\aggregate.lua
+core\watch.lua
+core\perhit.lua
+core\config.lua
+capture\detect.lua
+capture\damage.lua
+capture\incoming.lua
+gui\widgets.lua
+gui\sct.lua
+gui\display.lua
+gui\fct.lua
+gui\minimap.lua
+gui\options.lua
+core\commands.lua

@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Eryzil-GitHub/rais_AutoShot",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Eryzil-GitHub",
+    "repo": "rais_AutoShot",
+    "name": "rais_AutoShot",
+    "url": "https://github.com/Eryzil-GitHub/rais_AutoShot",
+    "api": "https://api.github.com/repos/Eryzil-GitHub/rais_AutoShot"
+  },
+  "commit": "b2aca3d80423e71d661afb232a6f46611b10a237",
+  "sourceFiles": {
+    "rais_AutoShot.lua": {
+      "sha256": "c393ba93bd7f038733ec405493b6699276f15b05cf892e1a03557bb7d764abff",
+      "bytes": 10760
+    },
+    "rais_AutoShot.toc": {
+      "sha256": "cc31bb4ea593584f67a856712c4c8e916fb9062bb62c9bb4990c0eacb8d86056",
+      "bytes": 106
+    },
+    "Textures/Bar.tga": {
+      "sha256": "dd77485bb552ea7109b3dfe30a9d4628a5d5288057a1787710f355aaa5ea39e2",
+      "bytes": 204
+    },
+    "Textures/DorisPP.ttf": {
+      "sha256": "6b1ebf2f4a879c5236d566b97b0b807c78c7588fc2e3043db6ab7f8c3d8f019c",
+      "bytes": 33980
+    },
+    "Textures/Smoothv2.tga": {
+      "sha256": "a08b5085568fb0aeffb469a89ee96e15909a6d85fd86e423fb9f6733ac70dcd9",
+      "bytes": 32812
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

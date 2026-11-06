@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: Destroy Cursor Item
+## Notes: Destroy the item currently on the cursor with a keybind
+## Author: Adriano Castro, https://adrianocastro.itch.io/
+## Version: 1.1.0
+
+DestroyCursorItem.lua

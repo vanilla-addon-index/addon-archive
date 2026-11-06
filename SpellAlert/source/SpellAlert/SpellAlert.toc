@@ -1,0 +1,17 @@
+## Interface: 11200
+## Version: 1.12.x
+## Title: SpellAlert |cFFFFFFFF- Baroque edit|r
+## Author: Awen (Original), Mithryn, MarsMod, Sent, Baroque
+## Notes: Warns the player of the spell being casting from the hostile units.
+## OptionalDeps: MikScrollingBattleText
+## SavedVariablesPerCharacter: SAVars
+localization.lua
+localization.de.lua
+localization.fr.lua
+localization.sp.lua
+MarsMessageParser.lua
+Init.lua
+Event.lua
+Slashcmd.lua
+Alertframe.lua
+SpellAlert.xml

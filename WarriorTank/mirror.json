@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Cernie/WarriorTank",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Cernie",
+    "repo": "WarriorTank",
+    "name": "WarriorTank",
+    "url": "https://github.com/Cernie/WarriorTank",
+    "api": "https://api.github.com/repos/Cernie/WarriorTank"
+  },
+  "commit": "0e1dfdb342b6e5c3e38e63d487eb9270c4be580c",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "41a273bc65d462a3f62793acdffbde834aa01d8ea5bebe243c8dc361cbe45c01",
+      "bytes": 507
+    },
+    "warriorTank.lua": {
+      "sha256": "62608910d39ef37e0c97fc1f5fe1ee3b6c177f7555291d54f74fce1c6b0e2af4",
+      "bytes": 3360
+    },
+    "warriorTank.toc": {
+      "sha256": "93e05b7c64dcea96dcf9fa677360bf2f030d493808e72085a28a261e985209ce",
+      "bytes": 221
+    },
+    "warriorTank.xml": {
+      "sha256": "791901f0c6ad72c105678178991100958f319dbaefa91a2a1c67e2ae25c250ac",
+      "bytes": 355
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

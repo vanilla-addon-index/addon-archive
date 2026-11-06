@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: |cffFF7D0ACliff|cff00ff00Tells
+## Author: Cliffholger
+## Version: 1.8.4
+## Notes: An addon for Turtle-Wow HC that announces when a guild member dies, levels up, becomes Immortal, or enters the Inferno challenge, and keeps logs of these events. By |cffFF7D0ACliffholger
+## DefaultState: Enabled
+## SavedVariables: CT_List, CT_Settings
+## LoadOnDemand: 0
+
+CliffTells.lua

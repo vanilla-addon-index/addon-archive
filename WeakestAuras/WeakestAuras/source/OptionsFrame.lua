@@ -1,0 +1,5279 @@
+-- WeakestAuras -- the main config window: an aura list down the left (add/
+-- delete), a tabbed editor on the right (Info/Display/Trigger). Built entirely
+-- in Lua (no XML) since nothing here needs to survive a reload independent of
+-- WeakestAurasDB -- follows the same shared config-panel pattern as sibling
+-- config panel does the same.
+
+if WeakestAuras.disabled then return end
+
+local WA = WeakestAuras
+local W = WA.Widgets
+
+-- Friendly labels for WA.RegionTypeList()'s raw regionType strings -- shared by
+-- the Info tab's Region type dropdown and the "+ New" type-picker menu
+-- (buildPanel) so both read the same, rather than one showing raw
+-- "dynamicgroup" text. Taken from each type's own spec.displayName so a new
+-- region type names itself where it's registered instead of needing a second
+-- entry here; safe to build at load, since this is the last file in the .toc
+-- and every RegisterRegionType call has already run.
+local REGION_TYPE_LABELS = {}
+for name, spec in pairs(WA.regionTypes) do
+	REGION_TYPE_LABELS[name] = spec.displayName or name
+end
+
+-- Lua 5.0 caps a function at 32 upvalues, and buildPanel below -- one large
+-- function nesting a dozen+ button/row closures -- blew past that referencing
+-- this many chunk-level locals directly (every constant/state var/forward-
+-- declared function any nested closure touches counts against the *enclosing*
+-- function too, not just the closure itself). Bundling all of it into one
+-- table fixes it: a table costs ONE upvalue regardless of how many fields it
+-- holds. Same fix as Quartermaster's listEditor and FearWardHelper's
+-- buildConfig -- the table keeps the large builder within Lua 5.0's upvalue limit.
+local S = {
+	-- Two-row layout per WeakAuras2's AceGUIWidget-WeakAurasNewButton.lua: a
+	-- full-height icon on the left, the aura name anchored to the row's top
+	-- edge, and a trigger summary anchored to the row's bottom edge, both
+	-- right of the icon.
+	ROW_H = 34,
+	VISIBLE = 10,
+	-- Not the list's width -- the list is elastic (see buildPanel). This is the
+	-- minimum MIN_W is sized to guarantee it.
+	LIST_W = 200,
+	-- The options pane's fixed width, and the one number the window's minimum is
+	-- built from. Deliberately the width that pane had when it was the elastic
+	-- side at the default window size, so pinning it changed no tab's layout.
+	CONTENT_W = 442,
+	INDENT_W = 14,
+	-- Matches upstream's own strip and the 16px eye beside it. The strip grows
+	-- leftward from the eye and the trigger summary is pinned to its left edge,
+	-- so this number is what each entry costs that summary.
+	STATUS_SIZE = 16,
+	UNGROUP_W = 12,
+	-- The New pane's rows: a 32px preview plus two lines of text.
+	NEW_ROW_H = 40,
+	-- A bucket header is one line of text, not a two-line aura row (WA2's is 20px
+	-- against its own 42px rows). Rows are therefore *not* a uniform grid: every
+	-- position below is accumulated from the heights actually painted.
+	HEADER_H = 20,
+	FALLBACK_ICON = "Interface\\Icons\\INV_Misc_QuestionMark",
+	SEARCH_H = 26, -- search box height (20) + gap above the list (6)
+	TOOLBAR_H = 26, -- toolbar button row (22 tall + 4 gap) above the search box
+	TAB_ROW_H = 22, -- one row of the tab strip
+	TAB_ROW_GAP = 4, -- between two rows of a wrapped strip
+	TAB_TO_CONTENT = 6, -- gap below the strip's last row
+	BOTTOM_RESERVED = 12, -- bottom margin only; the list runs to the footer
+	FOOTER_H = 22, -- version/website footer line (16 tall + 6 gap above)
+	-- MIN_W = left inset + LIST_W + gap + CONTENT_W + right inset, i.e. the
+	-- narrowest window that still gives the list its minimum beside a
+	-- full-width options pane.
+	MIN_W = 12 + 200 + 12 + 442 + 14, MIN_H = 360,
+	MAX_W = 1000, MAX_H = 800,
+	TAB_DEFS = {
+		{ key = "info", name = "Info" },
+		{ key = "display", name = "Display" },
+		{ key = "trigger", name = "Trigger" },
+		{ key = "conditions", name = "Conditions" },
+		{ key = "animation", name = "Animations" },
+		{ key = "action", name = "Actions" },
+		{ key = "load", name = "Load" },
+		{ key = "config", name = "Custom" },
+	},
+	-- The context menu's Copy settings submenu, mirroring upstream's less the
+	-- parts this addon has no subsystem for (author options, custom
+	-- config). A group offers the single "Group" entry: it has
+	-- no triggers, conditions or load of its own to copy.
+	COPY_PARTS_LEAF = {
+		{ text = "Everything", part = "all", paste = "Paste Settings" },
+		{ text = "Display", part = "display", paste = "Paste Display Settings" },
+		{ text = "Trigger", part = "trigger", paste = "Paste Trigger Settings" },
+		{ text = "Conditions", part = "condition", paste = "Paste Condition Settings" },
+		{ text = "Animations", part = "animation", paste = "Paste Animation Settings" },
+		{ text = "Actions", part = "action", paste = "Paste Action Settings" },
+		{ text = "Load", part = "load", paste = "Paste Load Settings" },
+	},
+	COPY_PARTS_GROUP = {
+		{ text = "Group", part = "display", paste = "Paste Group Settings" },
+	},
+	-- Keys a "Display" copy never carries: the aura's identity, its place in the
+	-- tree, and the parts that have their own entry. subRegions is deliberately
+	-- absent -- the text/border/glow *are* the display here, and a copy that
+	-- dropped them would surprise.
+	COPY_IGNORE = {
+		triggers = true, conditions = true, animation = true, actions = true, load = true,
+		id = true, parent = true, controlledChildren = true,
+		uid = true, internalVersion = true, desc = true, url = true,
+		-- Provenance belongs to the string it arrived in. Pasting settings out of
+		-- a downloaded aura must not stamp the target with a source it was never
+		-- served from.
+		sourceUrl = true, sourceVersion = true,
+	},
+	searchTerms = {},
+	-- Per-group expand/collapse state, keyed by aura id. Absence means
+	-- expanded -- only an explicit `false` collapses a group -- so newly
+	-- created groups start open without needing to be added here.
+	expanded = {},
+	-- Loaded/Not Loaded bucket collapse state, keyed by "loaded"/"unloaded" --
+	-- a separate table from S.expanded (which is keyed by aura id) since an
+	-- aura literally named "loaded" would otherwise collide with the bucket's
+	-- own entry. Same absence-means-expanded convention.
+	bucketExpanded = {},
+	-- Ordered array of selected aura ids (click/insertion order), replacing
+	-- the old single S.selectedId scalar. Empty
+	-- means nothing picked; a single entry is the ordinary case every
+	-- existing single-aura code path reads via S.primaryId(); more than one means
+	-- a multi-selection, which supports the placeholder pane and bulk actions,
+	-- not per-field editing.
+	selection = {},
+}
+S.DEFAULT_W, S.DEFAULT_H = 680, 440 + S.SEARCH_H + S.TOOLBAR_H
+S.visibleRows = S.VISIBLE
+
+-- Read-only handle for Debug.lua's /wa rows, which measures the list's laid-out
+-- geometry -- the one thing the headless harness has no way to see.
+WA.OptionsState = S
+
+function S.trim(s)
+	local t = string.gsub(s or "", "^%s*(.-)%s*$", "%1")
+	return t
+end
+
+-- Same OR-search syntax as WeakAuras2's own filter box (GenericTrigger.lua's
+-- splitAtOr): "|" or " or " between fragments broadens the match instead of
+-- narrowing it, so e.g. "rend or thrash" matches either.
+function S.splitFilterTerms(text)
+	local terms = {}
+	text = string.lower(S.trim(text or ""))
+	if text == "" then return terms end
+	text = string.gsub(text, " or ", "|")
+	local start = 1
+	while true do
+		local s, e = string.find(text, "|", start, true)
+		local piece = string.sub(text, start, s and (s - 1) or -1)
+		if piece ~= "" then table.insert(terms, piece) end
+		if not s then break end
+		start = e + 1
+	end
+	return terms
+end
+
+function S.matchesFilter(id, terms)
+	if #terms == 0 then return true end
+	local lower = string.lower(id)
+	for i = 1, #terms do
+		if string.find(lower, terms[i], 1, true) then return true end
+	end
+	return false
+end
+
+function S.isSelected(id)
+	for i = 1, #S.selection do
+		if S.selection[i] == id then return true end
+	end
+	return false
+end
+
+-- The single selected id, or nil when nothing or more than one is selected --
+-- every pre-multi-select code path (Info/Display/Trigger tabs, Rename, the
+-- Delete button) is single-aura-only and reads this instead of S.selection
+-- directly, so it stays inert (rather than acting on an arbitrary member)
+-- once a second aura joins the selection.
+function S.primaryId()
+	if #S.selection == 1 then return S.selection[1] end
+	return nil
+end
+
+-- Common refresh after any selection change -- was S.selectAura's body
+-- before the single-id model became an array; every mutator below ends by
+-- calling this instead of repeating the same three refreshes. Also closes
+-- the context menu if it's open, so it can't linger over a
+-- row after a plain click elsewhere changes the selection out from under it
+-- -- S.menu doesn't exist until buildPanel runs, hence the guard.
+function S.applySelectionChange()
+	if S.menu then S.menu.Close() end
+	S.searchBox:ClearFocus()
+	-- Update the forced-visibility selection BEFORE refreshList: the row eyes
+	-- render WA.ForcedState, which reads selectionLeaves, so painting the list
+	-- first would show the previous selection's amber until the next refresh.
+	-- Paints a dummy region for the aura being edited even when its real trigger
+	-- doesn't currently match -- primaryId() is nil for no/multi (clears preview).
+	WA.SetPreview(S.primaryId())
+	-- Attach the in-world mover to the (now force-shown) single selection;
+	-- nil/multi detaches it.
+	WA.Mover.Attach(S.primaryId())
+	S.refreshList()
+	S.updateTabAvailability()
+	-- Picking an aura leaves the New pane, since the pane is about the thing
+	-- that doesn't exist yet -- except for an empty group, where offering to
+	-- fill it is the whole point.
+	local sole = S.primaryId() and WeakestAurasDB.displays[S.primaryId()]
+	if sole and WA.IsGroup(sole) and #(sole.controlledChildren or {}) == 0 then
+		S.activeTab = "new"
+	elseif S.activeTab == "new" and #S.selection > 0 then
+		S.activeTab = "info"
+		if S.tabStrip then S.tabStrip.select("info") end
+	end
+	S.refreshTabContent()
+end
+
+function S.setSelection(id)
+	S.selection = id and { id } or {}
+	S.applySelectionChange()
+end
+
+function S.clearSelection()
+	S.selection = {}
+	S.applySelectionChange()
+end
+
+-- The ordered sibling list a given parentId's children live in -- top-level
+-- WA.GetOrder() when nil, a group's own controlledChildren otherwise. Lets
+-- the bulk drag-move code below (buildPanel's endDrag) translate a drop
+-- position into WA.ReorderAura's numeric `before` index without duplicating
+-- Data.lua's own private currentList/indexOf.
+function S.siblingList(parentId)
+	if parentId == nil then return WA.GetOrder() end
+	local parent = WeakestAurasDB.displays[parentId]
+	return (parent and parent.controlledChildren) or {}
+end
+
+function S.indexOfId(list, id)
+	for i = 1, #list do
+		if list[i] == id then return i end
+	end
+	return nil
+end
+
+-- Recursively collects every non-group leaf under id (upstream's TraverseLeafs
+-- pattern, WeakAuras.lua:6660-6748, applied to a new context: expanding a
+-- ctrl-clicked group into the selection instead of a single-group export/
+-- duplicate/move). A plain leaf just returns itself. This is what lets
+-- S.selection keep its "always leaf ids, never a group" invariant even once
+-- group rows become valid ctrl-click targets.
+function S.leafDescendants(id, out)
+	out = out or {}
+	local data = WeakestAurasDB.displays[id]
+	if not data then return out end
+	if WA.IsGroup(data) then
+		local children = data.controlledChildren or {}
+		for i = 1, #children do
+			S.leafDescendants(children[i], out)
+		end
+	else
+		table.insert(out, id)
+	end
+	return out
+end
+
+-- True only when id is a group with at least one leaf descendant and every
+-- one of them is currently selected -- drives the group row's own highlight
+-- in S.refreshList, since a group's id never itself enters S.selection (see
+-- S.leafDescendants) and a collapsed group would otherwise show no feedback
+-- at all after a ctrl-click selects its hidden children.
+function S.allDescendantsSelected(id)
+	local leaves = S.leafDescendants(id)
+	if #leaves == 0 then return false end
+	for i = 1, #leaves do
+		if not S.isSelected(leaves[i]) then return false end
+	end
+	return true
+end
+
+-- Ctrl-click a leaf: add if not already selected, remove (from anywhere in
+-- the list, not just the end) if it is -- unchanged from before groups could
+-- be clicked here. Ctrl-click a group: same toggle, but applied to the
+-- group's *entire* recursive leaf-descendant set at once (S.leafDescendants)
+-- rather than the group's own id, which never enters S.selection. "Already
+-- selected" for a group means every one of its descendants already is; any
+-- other state (partial or none) adds whichever aren't selected yet, the
+-- usual tri-state-parent-checkbox convention. Never called while the current
+-- sole selection is a group -- see the row OnClick handler -- so id here can
+-- be a group, but S.selection itself never ends up mixing a literal group id
+-- into a multi-member selection.
+function S.toggleSelection(id)
+	local data = WeakestAurasDB.displays[id]
+	local ids = (data and WA.IsGroup(data)) and S.leafDescendants(id) or { id }
+
+	local allSelected = true
+	for i = 1, #ids do
+		if not S.isSelected(ids[i]) then allSelected = false end
+	end
+
+	if allSelected then
+		local remove = {}
+		for i = 1, #ids do remove[ids[i]] = true end
+		local kept = {}
+		for i = 1, #S.selection do
+			if not remove[S.selection[i]] then table.insert(kept, S.selection[i]) end
+		end
+		S.selection = kept
+	else
+		for i = 1, #ids do
+			if not S.isSelected(ids[i]) then table.insert(S.selection, ids[i]) end
+		end
+	end
+	S.applySelectionChange()
+end
+
+-- Shift-click: extend the selection to every same-parent leaf between the
+-- current anchor (the most-recently-added member -- derived on the fly
+-- rather than tracked separately, same as upstream WeakAuras2) and the
+-- clicked row, walking S.buildRows()'s current *rendered* output. That means
+-- a search filter narrows what a range can span for free (filtered rows
+-- never appear in buildRows), and a range can never cross a group boundary
+-- (anchor and target must share .parent) -- both match upstream's own
+-- shift-range-select rules. Adds to the existing selection rather than
+-- replacing it, so ctrl-click picks plus a trailing shift-click compose.
+function S.selectRange(id)
+	local anchor = S.selection[#S.selection]
+	if not anchor or anchor == id then
+		S.setSelection(id)
+		return
+	end
+	local anchorData = WeakestAurasDB.displays[anchor]
+	local targetData = WeakestAurasDB.displays[id]
+	if not anchorData or not targetData or anchorData.parent ~= targetData.parent then return end
+
+	local rows = S.buildRows()
+	local anchorIdx, targetIdx
+	for i = 1, #rows do
+		if rows[i].id == anchor then anchorIdx = i end
+		if rows[i].id == id then targetIdx = i end
+	end
+	if not anchorIdx or not targetIdx then return end
+	if anchorIdx > targetIdx then anchorIdx, targetIdx = targetIdx, anchorIdx end
+
+	for i = anchorIdx, targetIdx do
+		local entry = rows[i]
+		local rowData = WeakestAurasDB.displays[entry.id]
+		if rowData and rowData.parent == anchorData.parent and not WA.IsGroup(rowData)
+			and not S.isSelected(entry.id) then
+			table.insert(S.selection, entry.id)
+		end
+	end
+	S.applySelectionChange()
+end
+
+-- Right-click menu for an active multi-selection. Both group entries are
+-- refused when every member already shares one dynamic-group parent, since a
+-- dynamic group lays out its own children and cannot own a nested group -- the
+-- new group would silently land at top level instead. Upstream's other disabled
+-- rule (a selected member being itself a group) is unreachable here: a group id
+-- never enters a multi-member S.selection, see S.leafDescendants.
+function S.showBulkMenu(row)
+	local parent = S.commonParent()
+	local nestBlocked = (parent and not WA.CanPlaceAura("group", parent)) and true or nil
+	S.menu.Open({
+		{ text = "Add to new Group", disabled = nestBlocked,
+			onClick = function() S.groupSelection("group") end },
+		{ text = "Add to new Dynamic Group", disabled = nestBlocked,
+			onClick = function() S.groupSelection("dynamicgroup") end },
+		{ text = "Duplicate All", onClick = S.duplicateSelection },
+		{ separator = true },
+		{ text = "Delete Selected", confirm = true, onClick = S.deleteSelection },
+	}, row)
+end
+
+-- Opens the inline rename box on whichever painted row currently holds `id`.
+-- Rows are pooled and rebound, so the row a menu was opened over is not
+-- guaranteed to still hold the aura the menu was built for.
+function S.renameById(id)
+	for i = 1, #(S.rows or {}) do
+		local row = S.rows[i]
+		if row.id == id and row:IsShown() then
+			S.beginRename(row)
+			return
+		end
+	end
+end
+
+-- Copies one part of `source` onto `dest` (upstream's copyAuraPart). Deep at
+-- both ends -- copy and paste alike -- or the two auras end up sharing one
+-- physical triggers table and an edit to either shows up in both.
+function S.copyAuraPart(source, dest, part)
+	local all = (part == "all")
+	if part == "display" or all then
+		for k, v in pairs(source) do
+			if not S.COPY_IGNORE[k] then dest[k] = WA.DeepCopy(v) end
+		end
+	end
+	if WA.IsGroup(source) then return end
+	if part == "trigger" or all then dest.triggers = WA.DeepCopy(source.triggers) end
+	if part == "condition" or all then dest.conditions = WA.DeepCopy(source.conditions) end
+	if part == "action" or all then dest.actions = WA.DeepCopy(source.actions) end
+	if part == "load" or all then dest.load = WA.DeepCopy(source.load) end
+end
+
+-- S.clipboard holds the last copied part: { part, paste text, a snapshot of the
+-- source }. Session-scoped and never written to WeakestAurasDB -- upstream's is
+-- a file-local table too, and a settings copy is a gesture within one sitting.
+function S.copySettings(data, part, pasteText)
+	S.clipboard = { part = part, text = pasteText, source = WA.DeepCopy(data) }
+end
+
+-- Pasting a leaf's settings onto a group applies them to every leaf under it
+-- (upstream does the same); anything else pastes onto the one aura.
+-- MergeDefaults first, since the pasted part may predate a field the target's
+-- type now expects.
+function S.pasteSettings(id)
+	local clip = S.clipboard
+	local data = WeakestAurasDB.displays[id]
+	if not clip or not data then return end
+
+	local targets = { id }
+	if not WA.IsGroup(clip.source) and WA.IsGroup(data) then
+		targets = S.leafDescendants(id)
+	end
+	for i = 1, #targets do
+		local target = WeakestAurasDB.displays[targets[i]]
+		if target then
+			S.copyAuraPart(clip.source, target, clip.part)
+			WA.MergeDefaults(target)
+			WA.Add(target)
+		end
+	end
+	S.refreshTabContent()
+end
+
+-- The per-aura right-click menu, built from that aura's own data: a leaf, a
+-- child and a group each get a different list. `anchor` only positions the menu
+-- when the client gives no cursor position, so a repaint rebinding that row
+-- between the click and a pick costs nothing.
+function S.showAuraMenu(id, anchor)
+	local data = WeakestAurasDB.displays[id]
+	if not data then return end
+	local isGroup = WA.IsGroup(data)
+
+	-- Same leaf/group categories the Info tab's Region type dropdown offers,
+	-- less the type the aura already is.
+	local convert = {}
+	local types = WA.RegionTypeList(isGroup)
+	for i = 1, #types do
+		local regionType = types[i]
+		if regionType ~= data.regionType then
+			table.insert(convert, {
+				text = REGION_TYPE_LABELS[regionType] or regionType,
+				onClick = function() S.convertRegionType(data, regionType) end,
+			})
+		end
+	end
+
+	local items = { { text = "Rename", onClick = function() S.renameById(id) end } }
+
+	local parts = isGroup and S.COPY_PARTS_GROUP or S.COPY_PARTS_LEAF
+	local copyItems = {}
+	for i = 1, #parts do
+		local entry = parts[i]
+		table.insert(copyItems, {
+			text = entry.text,
+			onClick = function() S.copySettings(data, entry.part, entry.paste) end,
+		})
+	end
+	table.insert(items, { text = "Copy settings", submenu = copyItems })
+
+	-- Paste appears only once something has been copied, and never from a group
+	-- onto a leaf -- a group's settings have nothing a leaf can take.
+	local clip = S.clipboard
+	if clip and not (WA.IsGroup(clip.source) and not isGroup) then
+		table.insert(items, { text = clip.text, onClick = function() S.pasteSettings(id) end })
+	end
+
+	if #convert > 0 then
+		table.insert(items, { text = "Convert to", submenu = convert })
+	end
+	table.insert(items, {
+		text = "Duplicate",
+		onClick = function()
+			local newId = WA.DuplicateAura(id)
+			if newId then S.setSelection(newId) end
+		end,
+	})
+	table.insert(items, { text = "Export...", onClick = function() S.openExport(id) end })
+	-- Shift-clicking a row with the editbox already open is undiscoverable, and
+	-- from here the editbox can be opened for the user instead.
+	table.insert(items, { text = "Link to Chat", onClick = function() WA.Comm.LinkAura(id) end })
+	if data.parent then
+		table.insert(items, {
+			text = "Ungroup",
+			onClick = function()
+				WA.RemoveChildFromGroup(id)
+				S.refreshList()
+				S.refreshTabContent()
+			end,
+		})
+	end
+	table.insert(items, { separator = true })
+	-- Delete promotes a group's children; the cascading variant is the entry
+	-- below it, offered only where the distinction exists.
+	table.insert(items, {
+		text = "Delete", confirm = true,
+		onClick = function()
+			WA.DeleteAura(id)
+			S.clearSelection()
+		end,
+	})
+	if isGroup then
+		table.insert(items, {
+			text = "Delete children and group", confirm = true,
+			onClick = function()
+				WA.DeleteAuraTree(id)
+				S.clearSelection()
+			end,
+		})
+	end
+
+	S.menu.Open(items, anchor)
+end
+
+-- Inline rename: which row currently has its box open, and the aura it was
+-- opened *for*. Both are needed because rows are pooled by slot and rebound on
+-- every repaint -- the captured id is re-checked at commit so an open box can
+-- never rename whatever aura happens to occupy its slot by then.
+S.renameRow, S.renameId = nil, nil
+
+function S.beginRename(row)
+	if not row or not row.id then return end
+	S.closeRename()
+	S.renameRow, S.renameId = row, row.id
+	row.title:Hide()
+	row.rename:SetText(row.id)
+	row.rename:Show()
+	row.rename:SetFocus()
+	row.rename:HighlightText()
+end
+
+function S.closeRename()
+	local row = S.renameRow
+	S.renameRow, S.renameId = nil, nil
+	if not row then return end
+	row.rename:Hide()
+	row.rename:ClearFocus()
+	row.title:Show()
+end
+
+-- Enter. An empty name, an unchanged one, or one already taken reverts in
+-- silence rather than erroring -- upstream does the same, and there is nowhere
+-- on a list row to put an error message.
+function S.commitRename()
+	local row, id = S.renameRow, S.renameId
+	if not row then return end
+	local text = S.trim(row.rename:GetText() or "")
+	S.closeRename()
+	if not id or row.id ~= id then return end
+	if text == "" or text == id or WeakestAurasDB.displays[text] then return end
+	if WA.RenameAura(id, text) then S.setSelection(text) end
+end
+
+-- The toolbar's New: creates against whatever is picked, so a picked group takes
+-- the new aura as a child and a picked leaf gets it as its next sibling
+-- (WA.PlaceAura decides which). Expands the owning group before selecting, since
+-- a child dropped into a collapsed group is invisible and reads as New having
+-- done nothing. Returns nil for a placement the target refuses.
+function S.createAura(regionType)
+	local data = WA.NewAura(regionType, S.primaryId())
+	if not data then return nil end
+	if data.parent then S.expanded[data.parent] = true end
+	S.setSelection(data.id)
+	return data
+end
+
+-- The parent every selected aura shares, or nil when they disagree (or are all
+-- top-level) -- the two cases behave identically everywhere this is read.
+function S.commonParent()
+	local first = WeakestAurasDB.displays[S.selection[1]]
+	local parent = first and first.parent
+	for i = 2, #S.selection do
+		local data = WeakestAurasDB.displays[S.selection[i]]
+		if not data or data.parent ~= parent then return nil end
+	end
+	return parent
+end
+
+-- "Add to new Group"/"Add to new Dynamic Group" (the bulk menu): reuses the
+-- same Groups primitives a manual drag-into-group would (WA.NewAura/
+-- WA.AddChildToGroup) applied to every selected leaf instead of one. Nests the
+-- new group inside the selection's shared parent if there is one (append --
+-- controlledChildren order isn't otherwise meaningful yet beyond what the
+-- user last dragged) and that parent will take a group; otherwise the new group
+-- lands at top level, same as WA.NewAura's own default. Selects the new group
+-- afterward so the user is looking at what they just made, matching upstream's
+-- own habit.
+function S.groupSelection(regionType)
+	regionType = regionType or "group"
+	local n = #S.selection
+	local commonParent = S.commonParent()
+
+	local group = WA.NewAura(regionType)
+	if not group then return end
+	if commonParent and WA.CanPlaceAura(regionType, commonParent) then
+		WA.AddChildToGroup(commonParent, group.id)
+	end
+	for i = 1, n do
+		WA.AddChildToGroup(group.id, S.selection[i])
+	end
+	S.setSelection(group.id)
+end
+
+-- "Duplicate All" (the bulk menu). Selects the batch of copies afterward, so
+-- the obvious next gesture -- dragging them somewhere -- acts on the new ones.
+function S.duplicateSelection()
+	local made = {}
+	for i = 1, #S.selection do
+		local newId = WA.DuplicateAura(S.selection[i])
+		if newId then table.insert(made, newId) end
+	end
+	S.selection = made
+	S.applySelectionChange()
+end
+
+-- "Delete Selected" (the bulk menu): always leaf-only since groups
+-- can never be selection members, so unlike the single Delete button
+-- there's no cascade-vs-ungroup ambiguity to resolve here -- every call is
+-- a plain leaf delete.
+function S.deleteSelection()
+	for i = 1, #S.selection do
+		WA.DeleteAura(S.selection[i])
+	end
+	S.clearSelection()
+end
+
+-- Re-types an aura in place, shared by the Info tab's Region type dropdown and
+-- the context menu's "Convert to". MergeDefaults fills whatever the new type
+-- needs; the tab has to be rebuilt because a different type offers different
+-- fields.
+function S.convertRegionType(data, regionType)
+	data.regionType = regionType
+	WA.MergeDefaults(data)
+	WA.Add(data)
+	S.updateTabAvailability()
+	S.refreshTabContent()
+end
+
+-- The version stamp as a display string, or nil. The format calls it an
+-- unsigned integer and "%d" holds it to that whatever the decoder hands back;
+-- a site that wrote a text label instead is shown verbatim rather than dropped.
+local function sourceVersionText(v)
+	if type(v) == "number" then return string.format("%d", v) end
+	if type(v) == "string" and v ~= "" then return v end
+	return nil
+end
+
+-- The Info tab's provenance block: where a string came from, stamped by the
+-- distributing site at download time (see design/architecture/export-format.md).
+-- Read-only by contract -- the addon never writes the pair, and the only edit
+-- offered here is dropping it -- so this is a description plus two buttons and
+-- not an input; typing a sourceUrl by hand would be a claim the site never made.
+function S.addSourceFields(fields, data)
+	local url = data.sourceUrl
+	if type(url) ~= "string" or url == "" then return end
+	local line = "Imported from |cff82c5ff" .. url .. "|r"
+	local ver = sourceVersionText(data.sourceVersion)
+	if ver then line = line .. "  (version " .. ver .. ")" end
+	-- "Imported from", never "this is that aura": the pair survives editing and
+	-- re-export, so it names an origin with exactly the strength of uid.
+	line = line .. "\nCheck that page for a newer version of this aura."
+	table.insert(fields, { type = "header", name = "Source", soloOnly = true })
+	table.insert(fields, { type = "description", name = line, soloOnly = true })
+	table.insert(fields, {
+		type = "button", name = "Copy Source Link", soloOnly = true,
+		onClick = function() S.openURLDialog("Aura Source", url) end,
+	})
+	-- Two-click confirm, the Delete button's affordance: erasing the stamp is
+	-- unrecoverable from inside the game -- nothing re-derives it but importing
+	-- the site's string again.
+	table.insert(fields, {
+		type = "button", name = "Clear Source Link", soloOnly = true,
+		onClick = function()
+			if this.confirming then
+				this.confirming = nil
+				data.sourceUrl = nil
+				data.sourceVersion = nil
+				S.refreshTabContent()
+			else
+				this.confirming = true
+				this.label:SetText("Confirm?")
+				S.scheduleUnconfirm(this, "Clear Source Link")
+			end
+		end,
+	})
+end
+
+-- `soloOnly` marks what a multi-selection's merged Info tab must not carry: an
+-- identity (the name header, Rename), an op whose fan-out is wrong (Delete's
+-- two-click confirm lives on one button, so the second member's closure would
+-- read the first's arming and fire immediately), or per-aura prose (warnings,
+-- provenance). What remains -- Description, URL, the compatibility toggle --
+-- is upstream's own multi Information surface.
+function S.getInfoOptions(data)
+	local fields = {
+		{ type = "header", name = data.id, soloOnly = true },
+		{
+			type = "input", name = "Rename", key = "id", soloOnly = true,
+			get = function() return data.id end,
+			set = function(v)
+				v = S.trim(v)
+				if WA.RenameAura(data.id, v) then S.setSelection(v) end
+			end,
+		},
+		{
+			type = "select", name = "Region type", key = "regionType", soloOnly = true,
+			-- Filtered to data's own leaf/group category -- see WA.RegionTypeList's
+			-- comment for why converting across that boundary isn't offered here.
+			values = WA.RegionTypeList(WA.IsGroup(data)),
+			labels = REGION_TYPE_LABELS,
+			get = function() return data.regionType end,
+			set = function(v) S.convertRegionType(data, v) end,
+		},
+		-- Author metadata, travelling with every export and surviving a WA2
+		-- import (upstream's Information tab holds the same pair).
+		{
+			type = "input", name = "Description", key = "desc",
+			get = function() return data.desc or "" end,
+			set = function(v)
+				v = S.trim(v)
+				data.desc = v ~= "" and v or nil
+			end,
+		},
+		{
+			type = "input", name = "URL", key = "url",
+			get = function() return data.url or "" end,
+			set = function(v)
+				v = S.trim(v)
+				data.url = v ~= "" and v or nil
+			end,
+		},
+		-- data.uid is deliberately not shown: it's an internal identity for
+		-- import/export and cross-references, not something the user acts on
+		-- (upstream never surfaces it in the Information tab either).
+	}
+	S.addSourceFields(fields, data)
+	-- Upstream's Information-tab compatibility block, narrowed to the one flag
+	-- with a local effect. The preview runs a trigger's own code under a synthetic
+	-- event, and code written to read a live payload can throw there; only custom
+	-- triggers can, since generated prototype code compares its arguments and
+	-- never calls them.
+	local hasCustomTrigger
+	local triggers = data.triggers or {}
+	for i = 1, #triggers do
+		local t = WA.GetTrigger(data, i)
+		if t and t.type == "custom" then hasCustomTrigger = true; break end
+	end
+	if hasCustomTrigger then
+		table.insert(fields, { type = "header", name = "Compatibility Options" })
+		table.insert(fields, {
+			type = "toggle", name = "Custom Trigger: ignore Lua errors while previewing",
+			key = "information.ignoreOptionsEventErrors",
+			get = function()
+				return (data.information and data.information.ignoreOptionsEventErrors) and true or false
+			end,
+			-- Recompiled rather than just stored: the preview reads the flag off
+			-- `data` when it runs, so nothing here needs the ti rebuilt -- but
+			-- WA.Add is what clears the report the previous preview already filed
+			-- and re-derives the preview under the new answer, so ticking the box
+			-- takes the error away instead of leaving it on the row until the next
+			-- unrelated edit.
+			set = function(v)
+				data.information = data.information or {}
+				data.information.ignoreOptionsEventErrors = v or nil
+				WA.Add(data)
+			end,
+		})
+	end
+	table.insert(fields, { type = "button", name = "Export", soloOnly = true,
+		onClick = function() S.openExport(data.id) end })
+	-- Every warning this aura has, titled by the worst severity -- the block the
+	-- row's status icon click arrives at. Upstream puts it midway down its own
+	-- Information tab; here it sits above everything else, because landing on it
+	-- is that click's whole purpose. A group reaches this too, for its own
+	-- warnings only: a click on a group's row icon goes to the offending leaf
+	-- unless the group itself is what is broken.
+	local _, warnTitle, warnBody = WA.FormatWarnings(data.uid)
+	if warnTitle and warnBody then
+		table.insert(fields, 2, { type = "header", name = warnTitle, soloOnly = true })
+		table.insert(fields, 3, { type = "description", name = warnBody, soloOnly = true })
+	end
+	-- Dragging a child to a top-level boundary also promotes it (trackDrag
+	-- targets the hovered row's list); this button is the same move as a plain
+	-- affordance, without the aim.
+	if data.parent then
+		table.insert(fields, {
+			type = "button", name = "Ungroup (remove from \"" .. data.parent .. "\")", soloOnly = true,
+			onClick = function()
+				WA.RemoveChildFromGroup(data.id)
+				S.refreshList()
+				S.refreshTabContent()
+			end,
+		})
+	end
+	-- Two-click confirm, the same morph-then-revert affordance the bulk menu
+	-- uses. poolButton binds this field's onClick as the button's own OnClick
+	-- script, so `this` is the button and the confirming flag can live on it;
+	-- a tab repaint resets the label, which is the wanted behaviour -- a
+	-- half-confirmed delete should not survive switching away and back.
+	table.insert(fields, {
+		type = "button", name = "Delete", soloOnly = true,
+		onClick = function()
+			if this.confirming then
+				this.confirming = nil
+				WA.DeleteAura(data.id)
+				S.clearSelection()
+			else
+				this.confirming = true
+				this.label:SetText("Confirm?")
+				S.scheduleUnconfirm(this)
+			end
+		end,
+	})
+	return fields
+end
+
+-- ---------------------------------------------------------------------------
+-- Collapse state for the Display/Trigger tabs' collapsible sections. Session-
+-- only (upstream keeps it out of saved data too) and keyed by aura id as well
+-- as section key, so one aura's folded triggers don't carry over onto the next
+-- aura's. Collapsing itself is done by the field-list generators below --
+-- a folded section simply omits its body fields -- so BuildOptions only ever
+-- paints the arrow/delete affordance.
+-- ---------------------------------------------------------------------------
+
+S.collapsed = {}
+
+function S.isCollapsed(data, key, default)
+	local v = S.collapsed[data.id .. "::" .. key]
+	if v == nil then v = default end
+	-- A mass-edit merge build reads each member with fold forced open: folding
+	-- is presentation, so a folded section must still contribute its fields to
+	-- the merge (which member a write reaches must never depend on what
+	-- someone folded). The genuine answer -- generator defaults included -- is
+	-- recorded for the merged pane's own fold state.
+	if S.foldProbe then
+		S.foldProbe[key] = v and true or false
+		return false
+	end
+	return v
+end
+
+function S.setCollapsed(data, key, v)
+	S.collapsed[data.id .. "::" .. key] = v
+end
+
+-- Drops every collapse entry in a namespace ("trigger:"/"sub:") for this aura.
+-- Removing an entry renumbers everything after it, so the saved fold states
+-- would otherwise land on the wrong sections; resetting the namespace is the
+-- honest answer for state that only lives for the session anyway.
+function S.clearCollapsed(data, prefix)
+	local full = data.id .. "::" .. prefix
+	local n = string.len(full)
+	for k in pairs(S.collapsed) do
+		if string.sub(k, 1, n) == full then S.collapsed[k] = nil end
+	end
+end
+
+-- Carries a numeric collapse-state namespace through the same old -> new index
+-- map a structural list edit hands WA.RemapSubRegionRefs: an entry the map sends
+-- to false is dropped, one it does not mention stays put. Lifted out of the
+-- namespace first and written back second, so a swap doesn't overwrite the state
+-- it is about to move.
+function S.remapCollapsed(data, prefix, map)
+	local base = data.id .. "::" .. prefix
+	local lifted = {}
+	for old in pairs(map) do
+		lifted[old] = S.collapsed[base .. old]
+		S.collapsed[base .. old] = nil
+	end
+	for old, new in pairs(map) do
+		if new then S.collapsed[base .. new] = lifted[old] end
+	end
+end
+
+-- Makes every plain header in `fields` collapsible, returning a new array with
+-- folded sections' bodies dropped. For generated sections whose generator has
+-- no fold state of its own (Regions.lua's Icon/Size/Position, which are the
+-- same shape for every region type) -- a header that already carries
+-- `collapsed`/`onDelete` manages itself and is passed through untouched.
+-- A section runs from its header to the next one, so nesting isn't expressible
+-- here; the generators that need it (triggers, display effects) build their own
+-- headers instead. `prefix` namespaces the keys so two tabs' identically-named
+-- sections don't share one fold state.
+function S.collapsibleSections(fields, data, prefix)
+	local out, folded = {}, false
+	for i = 1, #fields do
+		local f = fields[i]
+		if f.type == "header" then
+			folded = false
+			if f.collapsed ~= nil or f.onDelete then
+				table.insert(out, f)
+			else
+				local key = prefix .. (f.name or tostring(i))
+				local collapsed = S.isCollapsed(data, key, false)
+				folded = collapsed
+				-- Copied, not mutated: the generator may hand back a table it
+				-- reuses, and fold state is ours rather than its.
+				local hdr = {}
+				for k, v in pairs(f) do hdr[k] = v end
+				hdr.key = hdr.key or key
+				hdr.collapsed = collapsed
+				hdr.onToggle = function()
+					S.setCollapsed(data, key, not collapsed)
+					S.refreshTabContent()
+				end
+				table.insert(out, hdr)
+			end
+		elseif not folded then
+			table.insert(out, f)
+		end
+	end
+	return out
+end
+
+-- Deep-copies a subregion type's `default` so a newly-added instance never
+-- shares a table field (e.g. a colour array) with the registry default or
+-- another instance.
+local function copySubDefault(v)
+	if type(v) ~= "table" then return v end
+	local out = {}
+	for k, vv in pairs(v) do out[k] = copySubDefault(vv) end
+	return out
+end
+
+-- Appends the sub-region editor ("Display Effects") onto the Display tab's field
+-- list (matching upstream, where subtext/border/glow live under Display, not a
+-- separate tab): one block per instance in data.subRegions rendered from its own
+-- spec.options field array, plus per-type add and per-instance
+-- duplicate/up/down/delete. List order is draw order (index-derived frame
+-- levels, see RegionPrototype's SUB_LEVEL), so the arrows restack. Walks
+-- WA.subRegionTypes so a newly-registered subregion type shows up here for free;
+-- the "+ Add" list is filtered to types that support this region type. Each
+-- block's closures capture their own `sub`/`idx` locals (fresh per loop
+-- iteration in Lua); per-field edits route through WA.Add (the live region
+-- rebuilds its subregions via modifyFinish), structural add/remove additionally
+-- re-render the tab.
+function S.appendDisplayEffectsOptions(fields, data)
+	table.insert(fields, { type = "header", name = "Display Effects" })
+	local subs = data.subRegions or {}
+	-- Counted per type, so [text, border, text] reads Text 1 / Border 1 / Text 2
+	-- rather than numbering a lone border "2" (upstream's `subIndex`,
+	-- DisplayOptions.lua). The list position stays the *address* -- `sub.<n>`,
+	-- the fold key, the index each action renumbers against -- and only the
+	-- label counts per type. Advanced for every entry, not just the ones with an
+	-- options block, so it cannot drift from WA.GetProperties' identical count.
+	local perType = {}
+	for i = 1, #subs do
+		local sub = subs[i]
+		local idx = i
+		local spec = WA.subRegionTypes[sub.type]
+		perType[sub.type] = (perType[sub.type] or 0) + 1
+		if spec and spec.options then
+			-- An enforced row is the region's own art standing in the draw-order
+			-- list: exactly one exists, so it takes no count, and it offers only
+			-- the arrows -- nothing to fold, nothing to delete, nothing a copy
+			-- would mean.
+			local enforced = spec.enforced and true or false
+			local label = spec.displayName or sub.type
+			if not enforced then label = label .. " " .. perType[sub.type] end
+			local key = "sub:" .. idx
+			-- Unfolded by default. Upstream folds subregions instead
+			-- (DisplayOptions.lua's __collapsed = true), but it can afford to:
+			-- its Display tab is long enough that an effect's fields are clearly
+			-- more content below, whereas here they're most of the tab, and a
+			-- column of collapsed headers reads as an empty page.
+			local collapsed
+			if not enforced then collapsed = S.isCollapsed(data, key, false) end
+			table.insert(fields, {
+				-- The header's key carries the sub's type as well as its index --
+				-- index alone is ambiguous the moment two auras' effect lists
+				-- differ in type at the same position. Fold state stays under the
+				-- bare index (`foldKey`): conditions address effects by index, and
+				-- S.remapCollapsed carries "sub:<n>" through structural renumbering.
+				type = "header", name = label, key = key .. ":" .. sub.type, foldKey = key, collapsed = collapsed,
+				onToggle = not enforced and function()
+					S.setCollapsed(data, key, not collapsed)
+					S.refreshTabContent()
+				end or nil,
+				-- Delete stays the header's own arming two-click button rather
+				-- than joining the actions row, where it would be a plain icon
+				-- that removes a configured effect on one click.
+				onDelete = not enforced and function()
+					local map = { [idx] = false }
+					for i = idx + 1, #data.subRegions do map[i] = i - 1 end
+					table.remove(data.subRegions, idx)
+					WA.RemapSubRegionRefs(data, map)
+					S.remapCollapsed(data, "sub:", map)
+					WA.Add(data)
+					S.refreshTabContent()
+				end or nil,
+				-- Every structural edit renumbers, so every one of them maps.
+				-- data.subRegions is positional, a condition addresses an effect
+				-- as `sub.<n>.<key>`, and the index is the only thing tying the
+				-- two together -- a shift no map describes leaves that condition
+				-- pointing at whatever moved into the slot, silently. Each map is
+				-- built against the pre-edit indices, which is why duplicate
+				-- walks its range backwards and delete builds the map before the
+				-- removal.
+				actions = W.ListActions(subs, idx, function()
+					WA.Add(data)
+					S.refreshTabContent()
+				end, {
+					delete = false,
+					duplicate = not enforced and function(list, i)
+						local map = {}
+						for j = #list, i + 1, -1 do map[j] = j + 1 end
+						table.insert(list, i + 1, WA.DeepCopy(list[i]))
+						WA.RemapSubRegionRefs(data, map)
+						S.remapCollapsed(data, "sub:", map)
+						-- The copy takes the original's fold state: it lands
+						-- directly under the section the user was looking at.
+						-- Conditions are deliberately not cloned onto it -- the
+						-- original keeps them, and duplicating every change that
+						-- targets an effect is a separate judgement call.
+						S.setCollapsed(data, "sub:" .. (i + 1),
+							S.isCollapsed(data, "sub:" .. i, false))
+					end or false,
+					moveUp = function(list, i)
+						list[i - 1], list[i] = list[i], list[i - 1]
+						local map = { [i] = i - 1, [i - 1] = i }
+						WA.RemapSubRegionRefs(data, map)
+						S.remapCollapsed(data, "sub:", map)
+					end,
+					moveDown = function(list, i)
+						list[i + 1], list[i] = list[i], list[i + 1]
+						local map = { [i] = i + 1, [i + 1] = i }
+						WA.RemapSubRegionRefs(data, map)
+						S.remapCollapsed(data, "sub:", map)
+					end,
+				}),
+			})
+			if not collapsed then
+				local typeFields = spec.options(data, sub, idx)
+				for j = 1, #typeFields do
+					table.insert(fields, typeFields[j])
+				end
+			end
+		end
+	end
+
+	-- One drop button covering every subregion type that supports this region
+	-- type, in stable display order -- the alternative is a stack of near-
+	-- identical "+ Add X" buttons that grows with each new subregion type.
+	local addable, addLabels = {}, {}
+	for name, spec in pairs(WA.subRegionTypes) do
+		if spec.options and not spec.enforced
+			and (not spec.supports or spec.supports(data.regionType)) then
+			table.insert(addable, name)
+			addLabels[name] = spec.displayName or name
+		end
+	end
+	table.sort(addable)
+	if #addable > 0 then
+		table.insert(fields, {
+			type = "menu", name = "+ Add Display Effect", scope = "tab", values = addable, labels = addLabels,
+			onSelect = function(name)
+				local spec = WA.subRegionTypes[name]
+				if not spec then return end
+				data.subRegions = data.subRegions or {}
+				local default = spec.defaultFor and spec.defaultFor(data.regionType) or spec.default
+				table.insert(data.subRegions, copySubDefault(default))
+				-- Open the one just added -- it's what the user is about to edit.
+				S.setCollapsed(data, "sub:" .. #data.subRegions, false)
+				WA.Add(data)
+				S.refreshTabContent()
+			end,
+		})
+	end
+
+	-- The %c function is one per *aura*, shared by the region's own text and
+	-- every subtext of it, so its editor is one block here rather than a copy
+	-- inside each text's section -- upstream shows one subtext at a time and can
+	-- afford to repeat it; this page shows them all at once. Empty until
+	-- something in the aura's text references %c.
+	local customText = WA.regionPrototype.CustomTextOptionFields(data)
+	for i = 1, #customText do table.insert(fields, customText[i]) end
+end
+
+-- ---------------------------------------------------------------------------
+-- Conditions tab: edits data.conditions -- each is a check
+-- (trigger/variable/op/value), optionally an AND/OR tree, plus a list of
+-- property changes. The vocabulary (checkable variables, changeable
+-- properties) is pulled from the engine (WA.GetConditionTemplates /
+-- WA.GetProperties / WA.globalConditions) so a new trigger or region property
+-- shows up here for free. Structural edits (add/remove a condition, nested
+-- check or change, or switching a variable/property whose type changes the
+-- value widget) re-render the tab via S.refreshTabContent.
+--
+-- One generator serves every selection shape, always running over a merged
+-- copy of the members' condition lists -- upstream ConditionOptions.lua's
+-- reference-merge. Conditions align across members by check shape (same
+-- trigger and variable; combination trees only when strictly equal), and a
+-- merged condition's check carries references[id] = { conditionIndex, op,
+-- value } locating it in each member. Every write fans through those
+-- references into the members' real lists and keeps the merged copy in sync,
+-- so reads stay fresh between repaints; a single aura is a one-member merge
+-- on the same path, where nothing can disagree. Disagreement wears the same
+-- dress as the other mass-edit tabs -- blanked value, blue caption,
+-- per-member value tooltip -- and a condition or change only some members
+-- carry ("subset") gets the blue caption, the member list, and upstream's
+-- copy-to-all affordance. The merge decorations (references, samevalue,
+-- sameop, referenceCount) live on the merged copy only; nothing written back
+-- to a member ever carries them.
+-- ---------------------------------------------------------------------------
+
+function S.sortedKeys(map)
+	local out = {}
+	for k in pairs(map) do table.insert(out, k) end
+	table.sort(out)
+	return out
+end
+
+-- (type, template) for a check's variable: a combination pseudo-trigger at
+-- -2, a global condition at -1, otherwise the trigger's condition template.
+-- Defaults keep the editor functional even if a saved variable no longer exists.
+local CONDITION_COMBINATION_VALUES = { "AND", "OR" }
+local CONDITION_COMBINATION_LABELS = { AND = "All of", OR = "Any of" }
+
+function S.conditionVarType(check, templates)
+	if check.trigger == -2 then
+		return "combination", nil
+	elseif check.trigger == -1 then
+		local g = WA.globalConditions[check.variable]
+		return g and g.type or "bool", g
+	end
+	local t = templates and templates[check.trigger]
+	local v = t and t[check.variable]
+	return v and v.type or "number", v
+end
+
+-- Sorted variable keys + display labels for a trigger (or the global set).
+function S.conditionVariableList(trigger, templates)
+	if trigger == -2 then
+		return CONDITION_COMBINATION_VALUES, CONDITION_COMBINATION_LABELS
+	end
+	local map = (trigger == -1) and WA.globalConditions or ((templates and templates[trigger]) or {})
+	local vals = S.sortedKeys(map)
+	local labels = {}
+	for i = 1, #vals do labels[vals[i]] = (map[vals[i]] and map[vals[i]].display) or vals[i] end
+	return vals, labels
+end
+
+-- Sensible starting op+value when a check's variable (hence its type) changes.
+function S.defaultOpValue(vtype, template)
+	if vtype == "timer" or vtype == "elapsedTimer" then return "<", 5
+	elseif vtype == "number" then return ">=", 1
+	elseif vtype == "bool" then return "==", true
+	elseif vtype == "select" then return "==", (template and template.values and template.values[1]) or ""
+	-- A custom check's op is its event list and its value the author's Lua;
+	-- neither has a sensible starting text, and a seeded one would be code the
+	-- user did not write.
+	elseif vtype == "combination" or vtype == "alwaystrue" or vtype == "customcheck" then return nil, nil end
+	return "==", ""
+end
+
+function S.defaultPropertyValue(pentry)
+	if not pentry then return nil end
+	if pentry.type == "bool" then return true
+	elseif pentry.type == "color" then return { 1, 0, 0, 1 }
+	elseif pentry.type == "number" then return pentry.min or 0
+	elseif pentry.type == "list" then return pentry.default
+	elseif pentry.type == "icon" then return pentry.default or "" end
+	return nil
+end
+
+local function mergeValuesEqual(a, b)
+	if type(a) ~= "table" or type(b) ~= "table" then return a == b end
+	for k, v in pairs(a) do
+		if not mergeValuesEqual(v, b[k]) then return false end
+	end
+	for k in pairs(b) do
+		if a[k] == nil then return false end
+	end
+	return true
+end
+
+-- One member's current value as a tooltip-line string: booleans as on/off,
+-- a colour or name list as its comma-joined parts, a code blob cut at its
+-- first line.
+local function mergeValueText(v)
+	if v == nil then return "-" end
+	if v == true then return "on" end
+	if v == false then return "off" end
+	if type(v) == "table" then
+		local parts = {}
+		for i = 1, #v do
+			local piece = v[i]
+			if type(piece) == "number" then piece = math.floor(piece * 100 + 0.5) / 100 end
+			table.insert(parts, tostring(piece))
+		end
+		return table.concat(parts, ", ")
+	end
+	local s = tostring(v)
+	local nl = string.find(s, "\n", 1, true)
+	if nl then s = string.sub(s, 1, nl - 1) .. "..." end
+	if string.len(s) > 60 then s = string.sub(s, 1, 57) .. "..." end
+	return s
+end
+
+-- Property types whose change value is a table of independently-edited keys
+-- (the sound/chat/glow editors). Custom code stores its string directly here,
+-- unlike upstream's { custom = ... } wrapper, so it merges as a scalar.
+local TABLE_VALUE_PROPERTY = { sound = true, chat = true, glowexternal = true }
+
+local function conditionPropertyType(property, props)
+	local entry = property and props[property]
+	return entry and entry.type
+end
+
+-- First-contributor samevalue shape: per-key for table values -- over the
+-- keys actually present, because chat's message_format_* keys are open-ended
+-- and a fixed subproperty list would miss them -- a plain flag otherwise.
+local function initSameValue(change, props)
+	local ptype = conditionPropertyType(change.property, props)
+	if TABLE_VALUE_PROPERTY[ptype] and type(change.value) == "table" then
+		change.samevalue = {}
+		for k in pairs(change.value) do change.samevalue[k] = true end
+	else
+		change.samevalue = true
+	end
+end
+
+-- Union of the members' condition-variable templates per trigger index, and
+-- the largest member trigger count (sizes the Trigger dropdown). A variable
+-- two members type differently goes "incompatible" in a fresh table -- never
+-- mutating a member's own template -- so no value editor paints for it.
+-- Mirrors upstream's mergeConditionTemplates.
+local function mergedConditionTemplates(members)
+	local out, numTriggers = {}, 0
+	for m = 1, #members do
+		local n = #(members[m].triggers or {})
+		if n > numTriggers then numTriggers = n end
+		local mine = WA.GetConditionTemplates(members[m])
+		for triggernum, vars in pairs(mine) do
+			out[triggernum] = out[triggernum] or {}
+			for name, tmpl in pairs(vars) do
+				local have = out[triggernum][name]
+				if not have then
+					out[triggernum][name] = tmpl
+				elseif have.type ~= tmpl.type then
+					out[triggernum][name] = { display = tmpl.display, type = "incompatible" }
+				end
+			end
+		end
+	end
+	return out, numTriggers
+end
+
+-- Union of the members' changeable properties: type conflicts go
+-- incompatible, list value sets merge into a fresh entry so no member's own
+-- registry table is mutated. Mirrors upstream's buildAllPotentialProperties.
+local function mergedConditionProperties(members)
+	local out = {}
+	for m = 1, #members do
+		for k, v in pairs(WA.GetProperties(members[m])) do
+			local have = out[k]
+			if not have then
+				out[k] = v
+			elseif have.type ~= v.type then
+				out[k] = { display = have.display, type = "incompatible" }
+			elseif have.type == "list" and v.values and have.values ~= v.values then
+				local values = {}
+				for key, label in pairs(have.values or {}) do values[key] = label end
+				for key, label in pairs(v.values) do
+					if values[key] == nil then values[key] = label end
+				end
+				local copy = {}
+				for key, entry in pairs(have) do copy[key] = entry end
+				copy.values = values
+				out[k] = copy
+			end
+		end
+	end
+	return out
+end
+
+local function getOrCreateSubCheck(base, path)
+	for i = 1, #path do
+		base.checks = base.checks or {}
+		base.checks[path[i]] = base.checks[path[i]] or {}
+		base = base.checks[path[i]]
+	end
+	return base
+end
+
+local function removeSubCheck(base, path)
+	getOrCreateSubCheck(base, path)
+	local parent = base
+	for i = 1, #path - 1 do parent = parent.checks[path[i]] end
+	table.remove(parent.checks, path[#path])
+end
+
+-- Deep equality for combination subtrees: only strictly equal trees merge,
+-- which is what lets everything below a merged combination count as
+-- agreement by construction (upstream compareSubChecks).
+local function compareSubChecks(a, b, templates)
+	if a == nil and b == nil then return true end
+	if a == nil or b == nil then return false end
+	if #a ~= #b then return false end
+	for i = 1, #a do
+		if a[i].trigger ~= b[i].trigger or a[i].variable ~= b[i].variable then return false end
+		if a[i].trigger == -2 then
+			if not compareSubChecks(a[i].checks, b[i].checks, templates) then return false end
+		else
+			local vtype = S.conditionVarType(a[i], templates)
+			if vtype == "bool" then
+				if a[i].value ~= b[i].value then return false end
+			else
+				if a[i].op ~= b[i].op or a[i].value ~= b[i].value then return false end
+			end
+		end
+	end
+	return true
+end
+
+-- The next merged condition (from a moving start point, so shared runs keep
+-- their relative order) the needle can merge into: same trigger and
+-- variable, and for a combination the whole subtree equal.
+local function findMatchingCondition(all, needle, start, templates)
+	while true do
+		local cond = all[start]
+		if not cond then return nil end
+		if cond.check.trigger == needle.check.trigger and cond.check.variable == needle.check.variable then
+			if cond.check.trigger == -2 then
+				if compareSubChecks(cond.check.checks, needle.check.checks, templates) then return start end
+			elseif cond.check.variable == "customcheck" then
+				-- Stricter, as upstream is: the code and its event list are the whole
+				-- of what this row edits, so a merge that blanked both would leave
+				-- nothing to edit and no way to tell the two checks apart.
+				if cond.check.op == needle.check.op and cond.check.value == needle.check.value then
+					return start
+				end
+			else
+				return start
+			end
+		end
+		start = start + 1
+	end
+end
+
+-- The first merged change of the same property this member hasn't already
+-- claimed -- two same-property changes on one member stay two rows.
+local function findMatchingProperty(all, change, id)
+	for i = 1, #all do
+		if all[i].property == change.property then
+			if not (all[i].references and all[i].references[id]) then return i end
+		end
+	end
+	return nil
+end
+
+local function mergeConditionChange(all, change, id, changeIndex, props)
+	local ptype = conditionPropertyType(all.property, props)
+	if TABLE_VALUE_PROPERTY[ptype] and type(all.value) == "table" and type(change.value) == "table" then
+		-- Per-key merge over the union of keys either side holds. A key
+		-- present on one side and absent on the other is a disagreement, not
+		-- an adoption.
+		if type(all.samevalue) ~= "table" then all.samevalue = {} end
+		local keys = {}
+		for k in pairs(all.value) do keys[k] = true end
+		for k in pairs(change.value) do keys[k] = true end
+		for k in pairs(keys) do
+			if all.samevalue[k] == false then
+				-- settled as a conflict by an earlier member
+			elseif mergeValuesEqual(all.value[k], change.value[k]) then
+				all.samevalue[k] = true
+			else
+				all.value[k] = nil
+				all.samevalue[k] = false
+			end
+		end
+	elseif TABLE_VALUE_PROPERTY[ptype] then
+		if type(all.value) ~= type(change.value) then
+			all.value = nil
+			all.samevalue = nil
+		end
+	elseif not mergeValuesEqual(all.value, change.value) then
+		all.value = nil
+		all.samevalue = false
+	end
+	all.references = all.references or {}
+	all.references[id] = { changeIndex = changeIndex, value = change.value }
+	all.referenceCount = (all.referenceCount or 0) + 1
+end
+
+local function mergeCondition(all, cond, id, conditionIndex, props)
+	if all.check.op ~= cond.check.op then
+		all.check.op = nil
+		all.check.sameop = false
+	end
+	if all.check.value ~= cond.check.value then
+		all.check.value = nil
+		all.check.samevalue = false
+	end
+	all.check.references[id] = { conditionIndex = conditionIndex, op = cond.check.op, value = cond.check.value }
+	all.check.referenceCount = all.check.referenceCount + 1
+	local insertPoint = 1
+	for changeIndex = 1, #cond.changes do
+		local change = cond.changes[changeIndex]
+		local match = findMatchingProperty(all.changes, change, id)
+		if not match then
+			local copy = WA.DeepCopy(change)
+			initSameValue(copy, props)
+			copy.references = { [id] = { changeIndex = changeIndex, value = change.value } }
+			copy.referenceCount = 1
+			table.insert(all.changes, insertPoint, copy)
+			insertPoint = insertPoint + 1
+		else
+			mergeConditionChange(all.changes[match], change, id, changeIndex, props)
+			insertPoint = match + 1
+		end
+	end
+end
+
+-- Folds one member's condition list into the merged copy (upstream
+-- mergeConditions): matched conditions merge in place, unmatched ones
+-- deep-copy in at the moving insert point.
+local function mergeConditions(all, list, id, templates, props)
+	local insertPoint = 1
+	for conditionIndex = 1, #list do
+		local cond = list[conditionIndex]
+		local match = findMatchingCondition(all, cond, insertPoint, templates)
+		if not match then
+			local copy = WA.DeepCopy(cond)
+			copy.check.samevalue = true
+			copy.check.sameop = true
+			copy.check.references = { [id] = { conditionIndex = conditionIndex, op = cond.check.op, value = cond.check.value } }
+			copy.check.referenceCount = 1
+			for changeIndex = 1, #(copy.changes or {}) do
+				local change = copy.changes[changeIndex]
+				initSameValue(change, props)
+				change.references = { [id] = { changeIndex = changeIndex, value = cond.changes[changeIndex].value } }
+				change.referenceCount = 1
+			end
+			table.insert(all, insertPoint, copy)
+			insertPoint = insertPoint + 1
+		else
+			mergeCondition(all[match], cond, id, conditionIndex, props)
+			insertPoint = match + 1
+		end
+	end
+end
+
+-- Whether a change's value is whole enough to travel in a copy-to-all: the
+-- load-bearing keys must agree for a table value (upstream checkSameValue).
+local function checkSameValue(samevalue, ptype)
+	if ptype == "chat" then
+		return type(samevalue) == "table" and samevalue.message_type and samevalue.message
+	elseif ptype == "sound" then
+		return type(samevalue) == "table" and samevalue.sound_type
+			and (samevalue.sound_type == "Stop" or samevalue.sound)
+	else
+		return samevalue
+	end
+end
+
+-- The whole conditions pane for a member set -- one path for every selection
+-- shape, a single aura being a one-member merge where nothing can disagree.
+local function conditionOptionsCore(fields, members)
+	local memberCount = #members
+	local multi = memberCount > 1
+	local templates, numTriggers = mergedConditionTemplates(members)
+	local props = mergedConditionProperties(members)
+
+	-- The merged condition list. Members fold in reverse, as upstream's do.
+	local conditions = {}
+	for m = #members, 1, -1 do
+		local data = members[m]
+		data.conditions = data.conditions or {}
+		for ci = 1, #data.conditions do
+			data.conditions[ci].check = data.conditions[ci].check or {}
+			data.conditions[ci].changes = data.conditions[ci].changes or {}
+		end
+		mergeConditions(conditions, data.conditions, data.id, templates, props)
+	end
+
+	table.insert(fields, { type = "header", name = "Conditions" })
+
+	-- Trigger dropdown: Combinations (-2), each trigger number, plus Global (-1).
+	local trigVals, trigLabels = {}, {}
+	for n = 1, numTriggers do
+		table.insert(trigVals, tostring(n))
+		trigLabels[tostring(n)] = "Trigger " .. n
+	end
+	table.insert(trigVals, 1, "-2")
+	trigLabels["-2"] = "Combinations"
+	table.insert(trigVals, "-1")
+	trigLabels["-1"] = "Global"
+
+	-- Property dropdown (shared by every change row).
+	local propVals = S.sortedKeys(props)
+	local propLabels = {}
+	for i = 1, #propVals do propLabels[propVals[i]] = props[propVals[i]].display end
+
+	local function newConditionCheck()
+		local trigger = numTriggers >= 1 and 1 or -1
+		local check = { trigger = trigger }
+		local vars = S.conditionVariableList(trigger, templates)
+		check.variable = vars[1]
+		local vt, tmpl = S.conditionVarType(check, templates)
+		check.op, check.value = S.defaultOpValue(vt, tmpl)
+		return check
+	end
+
+	-- -----------------------------------------------------------------------
+	-- Write plumbing. Every edit walks the merged condition's references into
+	-- each member's real list and keeps the merged copy in sync, so a read
+	-- between repaints stays fresh. Repaint policy: structural edits always
+	-- repaint; value writes repaint only under a multi-member pane, where the
+	-- disagreement dress has to follow the data.
+	-- -----------------------------------------------------------------------
+
+	local function eachRef(cond, fn)
+		for id, ref in pairs(cond.check.references) do
+			local child = WeakestAurasDB.displays[id]
+			local ccond = child and child.conditions and child.conditions[ref.conditionIndex]
+			if ccond then fn(child, ccond, ref.conditionIndex) end
+		end
+	end
+
+	local function fanCheck(cond, path, fn, structural)
+		S.beginRepaintBatch()
+		eachRef(cond, function(child, ccond)
+			fn(getOrCreateSubCheck(ccond.check, path))
+			WA.Add(child)
+		end)
+		fn(getOrCreateSubCheck(cond.check, path))
+		if structural or multi then S.refreshTabContent() end
+		S.endRepaintBatch()
+	end
+
+	local function eachChangeRef(cond, change, fn)
+		for id, ref in pairs(change.references) do
+			local condRef = cond.check.references[id]
+			local child = WeakestAurasDB.displays[id]
+			local ccond = child and condRef and child.conditions and child.conditions[condRef.conditionIndex]
+			local cchange = ccond and ccond.changes and ccond.changes[ref.changeIndex]
+			if cchange then fn(child, cchange, ccond, ref.changeIndex) end
+		end
+	end
+
+	local function fanChangeValue(cond, change, v)
+		S.beginRepaintBatch()
+		eachChangeRef(cond, change, function(child, cchange)
+			cchange.value = type(v) == "table" and WA.DeepCopy(v) or v
+			WA.Add(child)
+		end)
+		change.value = v
+		if multi then S.refreshTabContent() end
+		S.endRepaintBatch()
+	end
+
+	-- The sound/chat/glow editors write individual keys into a change's value
+	-- table, so the merged copy can't be handed to them directly. They get a
+	-- write-through proxy instead: reads fall through to the merged value,
+	-- writes fan the one key to every referenced member. The proxy itself
+	-- stays empty -- that is what keeps __newindex firing on every write, not
+	-- just the first per key.
+	local function changeValueProxy(cond, change)
+		if type(change.value) ~= "table" then change.value = {} end
+		local merged = change.value
+		return setmetatable({}, {
+			__index = merged,
+			__newindex = function(_, k, v)
+				S.beginRepaintBatch()
+				eachChangeRef(cond, change, function(child, cchange)
+					if type(cchange.value) ~= "table" then cchange.value = {} end
+					cchange.value[k] = type(v) == "table" and WA.DeepCopy(v) or v
+					WA.Add(child)
+				end)
+				merged[k] = v
+				if multi then S.refreshTabContent() end
+				S.endRepaintBatch()
+			end,
+		})
+	end
+
+	-- Disagreement and subset dress, matching the other mass-edit tabs: blue
+	-- caption, per-member value tooltip; a condition or change only some
+	-- members carry gets the blue plus the member list.
+	local function isSubset(carrier)
+		return multi and (carrier.referenceCount or 0) < memberCount
+	end
+	local function blue(name) return "|cFF4080FF" .. name .. "|r" end
+	local function subsetTooltip(carrier)
+		local lines = {}
+		for id in pairs(carrier.references) do
+			table.insert(lines, "|cFFE0E000" .. id .. "|r")
+		end
+		return { title = "Only on:", lines = lines }
+	end
+	-- Whether a merged change carries any disagreement. samevalue is nil when
+	-- the members' value types don't even match (one edited a table, one
+	-- never touched the change and holds nil) -- upstream's blueIfNoValue2
+	-- reads that as "differs", and so does this.
+	local function changeDiverges(change)
+		local same = change.samevalue
+		if same == false or same == nil then return true end
+		if type(same) == "table" then
+			for _, flag in pairs(same) do
+				if flag == false then return true end
+			end
+		end
+		return false
+	end
+	local function checkTooltip(name, cond, withOp)
+		local lines = {}
+		for id, ref in pairs(cond.check.references) do
+			local text = mergeValueText(ref.value)
+			if withOp then text = tostring(ref.op or "-") .. " " .. text end
+			table.insert(lines, "|cFFE0E000" .. id .. ":|r " .. text)
+		end
+		return { title = name, lines = lines }
+	end
+	local function changeTooltip(name, change, subkey)
+		local lines = {}
+		for id, ref in pairs(change.references) do
+			local v = ref.value
+			if subkey then v = type(v) == "table" and v[subkey] or nil end
+			table.insert(lines, "|cFFE0E000" .. id .. ":|r " .. mergeValueText(v))
+		end
+		return { title = name, lines = lines }
+	end
+
+	-- Appends the op/value editor for a check, picking the widget by variable
+	-- type. Only a top-level check can carry disagreement -- merged
+	-- combination subtrees are strictly equal by construction -- and `mode`
+	-- says which half of it a widget wears (the string case splits op and
+	-- value across two).
+	local function appendCheckValue(out, cond, path, check, vtype, template, indent)
+		-- alwaystrue takes no operator and no value, so it gets no widgets: the
+		-- string fallback at the end of this chain would otherwise offer two.
+		if vtype == "combination" or vtype == "incompatible" or vtype == "alwaystrue" then return end
+		local top = #path == 0
+		local opDiff = multi and top and cond.check.sameop == false
+		local valDiff = multi and top and cond.check.samevalue == false
+		local function dress(f, plainName, mode)
+			local diff = (mode ~= "value" and opDiff) or (mode ~= "op" and valDiff)
+			if diff then
+				f.name = blue(plainName)
+				f.tooltip = checkTooltip(plainName, cond, mode ~= "value")
+			end
+			return f
+		end
+		if vtype == "number" or vtype == "timer" or vtype == "elapsedTimer" then
+			local label = vtype == "timer" and "Remaining (s)"
+				or (vtype == "elapsedTimer" and "Elapsed (s)" or "Value")
+			table.insert(out, dress({
+				type = "opnumber", name = label, indent = indent,
+				getOp = function() if opDiff then return nil end return check.op or ">=" end,
+				setOp = function(v) fanCheck(cond, path, function(c) c.op = v end) end,
+				getVal = function() if valDiff then return nil end return check.value end,
+				setVal = function(v) fanCheck(cond, path, function(c) c.value = v end) end,
+			}, label, "both"))
+		elseif vtype == "bool" then
+			table.insert(out, dress({
+				type = "toggle", name = "Is true", indent = indent, tristate = multi,
+				get = function()
+					if valDiff then return nil end
+					return check.value == true or check.value == "true"
+				end,
+				set = function(v)
+					fanCheck(cond, path, function(c) c.op = "=="; c.value = v and true or false end)
+				end,
+			}, "Is true", "value"))
+		elseif vtype == "select" then
+			table.insert(out, dress({
+				type = "select", name = "Value", indent = indent,
+				values = (template and template.values) or {},
+				get = function() if valDiff then return nil end return check.value end,
+				set = function(v)
+					fanCheck(cond, path, function(c) c.op = "=="; c.value = v end)
+				end,
+			}, "Value", "value"))
+		elseif vtype == "customcheck" then
+			-- The one check whose two halves are not an operator and a value: `op`
+			-- is the whitespace-separated list of extra events the check
+			-- re-evaluates on, `value` the author's Lua. Both are edited through
+			-- the op/value seats regardless, so the merge dress and the write
+			-- fan-out reach them without a case of their own.
+			table.insert(out, dress({
+				type = "input", name = "Additional Events", indent = indent,
+				get = function() if opDiff then return nil end return check.op end,
+				set = function(v) fanCheck(cond, path, function(c) c.op = v end) end,
+			}, "Additional Events", "op"))
+			table.insert(out, dress({
+				type = "code", name = "Custom Check", height = 80, indent = indent,
+				validate = function(txt)
+					return W.LuaSyntaxError(WA.WrapFunctionSource(txt), "custom check")
+				end,
+				get = function() if valDiff then return nil end return check.value end,
+				set = function(v) fanCheck(cond, path, function(c) c.value = v end) end,
+			}, "Custom Check", "value"))
+		else -- string
+			table.insert(out, dress({
+				type = "select", name = "Op", half = true, indent = indent,
+				values = { "==", "~=" },
+				get = function() if opDiff then return nil end return check.op or "==" end,
+				set = function(v) fanCheck(cond, path, function(c) c.op = v end) end,
+			}, "Op", "op"))
+			table.insert(out, dress({
+				type = "input", name = "Value", half = true, indent = indent,
+				get = function() if valDiff then return nil end return check.value end,
+				set = function(v) fanCheck(cond, path, function(c) c.value = v end) end,
+			}, "Value", "value"))
+		end
+	end
+
+	local appendConditionCheck
+	appendConditionCheck = function(out, cond, check, path, depth)
+		local top = #path == 0
+
+		local triggerField = {
+			type = "select", name = "Trigger", half = true, indent = depth,
+			values = trigVals, labels = trigLabels,
+			get = function() return tostring(check.trigger or 1) end,
+			set = function(v)
+				local trigger = tonumber(v)
+				local seed
+				if trigger == -2 then
+					seed = newConditionCheck()
+				else
+					seed = { trigger = trigger }
+					local vars = S.conditionVariableList(trigger, templates)
+					seed.variable = vars[1]
+					local vt, tmpl = S.conditionVarType(seed, templates)
+					seed.op, seed.value = S.defaultOpValue(vt, tmpl)
+				end
+				fanCheck(cond, path, function(c)
+					c.trigger = trigger
+					if trigger == -2 then
+						if c.variable ~= "AND" and c.variable ~= "OR" then c.variable = "AND" end
+						c.op, c.value = nil, nil
+						c.checks = c.checks or { WA.DeepCopy(seed) }
+					else
+						c.checks = nil
+						c.variable = seed.variable
+						c.op, c.value = seed.op, seed.value
+					end
+				end, true)
+			end,
+		}
+		if not top then
+			triggerField.actions = { W.DeleteAction(function()
+				S.beginRepaintBatch()
+				eachRef(cond, function(child, ccond)
+					removeSubCheck(ccond.check, path)
+					WA.Add(child)
+				end)
+				S.refreshTabContent()
+				S.endRepaintBatch()
+			end) }
+		end
+		table.insert(out, triggerField)
+
+		local varVals, varLabels = S.conditionVariableList(check.trigger, templates)
+		table.insert(out, {
+			type = "select", name = "Variable", half = true, indent = depth,
+			values = varVals, labels = varLabels,
+			get = function() return check.variable end,
+			set = function(v)
+				local probe = { trigger = check.trigger, variable = v }
+				local vt, tmpl = S.conditionVarType(probe, templates)
+				local op, value = S.defaultOpValue(vt, tmpl)
+				local sub = (check.trigger == -2) and newConditionCheck() or nil
+				fanCheck(cond, path, function(c)
+					c.variable = v
+					if c.trigger == -2 then
+						c.op, c.value = nil, nil
+						c.checks = c.checks or { WA.DeepCopy(sub) }
+					else
+						c.checks = nil
+						c.op, c.value = op, value
+					end
+				end, true)
+			end,
+		})
+
+		local vtype, template = S.conditionVarType(check, templates)
+		appendCheckValue(out, cond, path, check, vtype, template, depth)
+
+		if check.trigger == -2 then
+			local subChecks = check.checks or {}
+			for ci = 1, #subChecks do
+				local subPath = {}
+				for pi = 1, #path do subPath[pi] = path[pi] end
+				table.insert(subPath, ci)
+				appendConditionCheck(out, cond, subChecks[ci], subPath, depth + 1)
+			end
+			table.insert(out, {
+				type = "button", name = "+ Add nested check", indent = depth,
+				onClick = function()
+					local seed = newConditionCheck()
+					fanCheck(cond, path, function(c)
+						c.checks = c.checks or {}
+						table.insert(c.checks, WA.DeepCopy(seed))
+					end, true)
+				end,
+			})
+		end
+	end
+
+	-- Appends the value widget for one property change, picked by property
+	-- type. The sound/chat/glow editors paint against the write-through
+	-- proxy, then their captions are dressed after the fact per subkey, off
+	-- the samevalue table the merge filled in.
+	local function appendChangeValue(out, cond, change, pentry)
+		local ptype = pentry and pentry.type
+		local valDiff = multi and change.samevalue == false
+		local function dress(f, plainName)
+			if valDiff then
+				f.name = blue(plainName)
+				f.tooltip = changeTooltip(plainName, change, nil)
+			end
+			return f
+		end
+		if pentry and pentry.action then
+			local start = #out
+			if ptype == "sound" and WA.ActionSoundFields then
+				WA.ActionSoundFields(out, members[1], changeValueProxy(cond, change), true)
+			elseif ptype == "chat" and WA.ActionMessageFields then
+				WA.ActionMessageFields(out, members[1], changeValueProxy(cond, change), "condition", true)
+			elseif ptype == "customcode" then
+				table.insert(out, dress({ type = "code", height = 80, name = "Custom Code",
+					get = function() if valDiff then return nil end return change.value end,
+					set = function(v) fanChangeValue(cond, change, v) end }, "Custom Code"))
+			elseif ptype == "glowexternal" then
+				WA.ConditionGlowFields(out, members[1], { value = changeValueProxy(cond, change) })
+			end
+			local same = change.samevalue
+			-- samevalue nil means the members' value types didn't even match
+			-- (one edited a table, another still holds nil): every keyed
+			-- subkey is a disagreement then, not none of them.
+			if multi and (same == nil or type(same) == "table") then
+				for fi = start + 1, #out do
+					local f = out[fi]
+					local diff
+					-- The chat colour field is a composite over the r/g/b keys.
+					if same == nil then
+						diff = f.key ~= nil
+					elseif f.key == "message_color" then
+						diff = same.r == false or same.g == false or same.b == false
+					else
+						diff = f.key and same[f.key] == false
+					end
+					if diff then
+						local plain = f.name
+						f.name = blue(plain)
+						f.tooltip = changeTooltip(plain, change,
+							f.key ~= "message_color" and f.key or nil)
+						-- The helper's own get falls back to its default over
+						-- the blanked merged key, which would paint one
+						-- member's-looking value as if everyone agreed; a
+						-- disagreeing subkey blanks like every other merged
+						-- field.
+						if f.type == "color" then
+							f.get = function() return { 0, 0, 0, 1 } end
+						else
+							if f.type == "toggle" then f.tristate = true end
+							f.get = function() return nil end
+						end
+					end
+				end
+			end
+			return
+		end
+		if ptype == "incompatible" then
+			table.insert(out, { type = "description",
+				name = "The selected auras type this property differently; it cannot be edited here." })
+			return
+		end
+		if ptype == "bool" then
+			table.insert(out, dress({
+				type = "toggle", name = "Value", half = true, tristate = multi,
+				get = function()
+					if valDiff then return nil end
+					return change.value and true or false
+				end,
+				set = function(v) fanChangeValue(cond, change, v and true or false) end,
+			}, "Value"))
+		elseif ptype == "color" then
+			-- A disagreeing colour shows black -- the swatch has to show
+			-- something pickable, and the blue caption is what says "differ".
+			table.insert(out, dress({
+				type = "color", name = "Value", half = true,
+				get = function()
+					if valDiff then return { 0, 0, 0, 1 } end
+					return change.value
+				end,
+				set = function(v) fanChangeValue(cond, change, v) end,
+			}, "Value"))
+		-- A property naming only a `softMax` is still a track-and-box field, not
+		-- the plain input box below: the ceiling it omits is the hard one.
+		elseif ptype == "number" and pentry.min and (pentry.max or pentry.softMax) then
+			table.insert(out, dress({
+				type = "range", name = "Value", half = true, min = pentry.min, max = pentry.max,
+				softMin = pentry.softMin, softMax = pentry.softMax, step = pentry.step or 1,
+				get = function() if valDiff then return nil end return change.value end,
+				set = function(v) fanChangeValue(cond, change, v) end,
+			}, "Value"))
+		elseif ptype == "list" then
+			local vals, labels = {}, {}
+			for k, lbl in pairs(pentry.values or {}) do table.insert(vals, k); labels[k] = lbl end
+			table.sort(vals)
+			table.insert(out, dress({
+				type = "select", name = "Value", half = true, values = vals, labels = labels,
+				get = function() if valDiff then return nil end return change.value end,
+				set = function(v) fanChangeValue(cond, change, v) end,
+			}, "Value"))
+		else
+			table.insert(out, dress({
+				type = "input", name = "Value", half = true,
+				get = function() if valDiff then return nil end return change.value end,
+				set = function(v) fanChangeValue(cond, change, (ptype == "number") and tonumber(v) or v) end,
+			}, "Value"))
+		end
+	end
+
+	for i = 1, #conditions do
+		local cond = conditions[i]
+		local idx = i
+		local subset = isSubset(cond.check)
+
+		-- Fold state lives per member under that member's own index; the
+		-- merged section folds when ANY member has it folded (upstream's
+		-- convention), and toggling writes every member.
+		local defaultCollapsed = #conditions > 1
+		local collapsed = false
+		eachRef(cond, function(child, ccond, childIndex)
+			if S.isCollapsed(child, "cond:" .. childIndex, defaultCollapsed) then collapsed = true end
+		end)
+
+		-- Structural ops fan per reference into each member's list at its own
+		-- index; each op handles its own fold bookkeeping, and the repaint
+		-- comes from ListActions' onChanged.
+		local function eachRefStructural(fn)
+			S.beginRepaintBatch()
+			eachRef(cond, function(child, ccond, childIndex)
+				fn(child, ccond, childIndex)
+				WA.Add(child)
+			end)
+			S.endRepaintBatch()
+		end
+
+		-- Collapsible + deletable, same as a trigger/display-effect section.
+		-- The delete lives in the header rather than as a trailing button
+		-- precisely so a folded condition can still be removed. The title
+		-- carries the changes' property names (upstream's GetConditionTitle):
+		-- bare positional numbers made a move look like a no-op, since the
+		-- reordered list reads identically. A change the members disagree on
+		-- -- or that only some carry -- blues its name in the title and adds a
+		-- line to the header tooltip, because a folded section otherwise hides
+		-- every divergence mark its rows wear. The header cap counts visible
+		-- characters only; cutting a colour-coded string mid-escape would
+		-- bleed the colour into the rest of the line.
+		local hdrName = "Condition " .. idx
+		local tipLines = {}
+		if subset then
+			local carriers = {}
+			for id in pairs(cond.check.references) do table.insert(carriers, id) end
+			table.sort(carriers)
+			table.insert(tipLines, "|cFFE0E000Only on " .. table.concat(carriers, ", ") .. "|r")
+		end
+		local parts, visible = {}, 0
+		for cj = 1, #cond.changes do
+			local change = cond.changes[cj]
+			local entry = change.property and props[change.property]
+			if entry and entry.display then
+				local plain = entry.display
+				local text = plain
+				if multi and isSubset(change) then
+					local carriers = {}
+					for id in pairs(change.references) do table.insert(carriers, id) end
+					table.sort(carriers)
+					table.insert(tipLines, plain .. " |cFFE0E000only on " .. table.concat(carriers, ", ") .. "|r")
+					if not subset then text = blue(plain) end
+				elseif multi and changeDiverges(change) then
+					table.insert(tipLines, plain .. " |cFFE0E000differs|r")
+					if not subset then text = blue(plain) end
+				end
+				if visible + string.len(plain) > 40 and #parts > 0 then
+					table.insert(parts, "...")
+					break
+				end
+				visible = visible + string.len(plain) + 2
+				table.insert(parts, text)
+			end
+		end
+		if #parts > 0 then hdrName = hdrName .. ": " .. table.concat(parts, ", ") end
+
+		-- Reordering happens on the merged pane's own axis: the section swaps
+		-- slots and every member's list is rewritten into the pane's order of
+		-- the conditions it carries, fold state following by the same map. A
+		-- per-member relative swap (upstream's semantics) moves only where a
+		-- member can, which re-pairs same-variable conditions mid-move and
+		-- reads as sections recombining at random.
+		local function moveSection(delta)
+			local target = idx + delta
+			if target < 1 or target > #conditions then return end
+			conditions[idx], conditions[target] = conditions[target], conditions[idx]
+			S.beginRepaintBatch()
+			for m = 1, #members do
+				local child = members[m]
+				local list, map, touched = {}, {}, false
+				for s = 1, #conditions do
+					local ref = conditions[s].check.references[child.id]
+					if ref then
+						table.insert(list, child.conditions[ref.conditionIndex])
+						map[ref.conditionIndex] = #list
+						if ref.conditionIndex ~= #list then touched = true end
+					end
+				end
+				if touched then
+					for s = 1, #list do child.conditions[s] = list[s] end
+					S.remapCollapsed(child, "cond:", map)
+					WA.Add(child)
+				end
+			end
+			S.endRepaintBatch()
+		end
+		local hdr = {
+			type = "header", name = subset and blue(hdrName) or hdrName,
+			key = "cond:" .. idx, collapsed = collapsed,
+			actions = W.ListActions(conditions, idx, S.refreshTabContent, {
+				duplicate = function()
+					eachRefStructural(function(child, ccond, childIndex)
+						table.insert(child.conditions, childIndex + 1, WA.DeepCopy(ccond))
+						S.clearCollapsed(child, "cond:")
+					end)
+				end,
+				moveUp = function() moveSection(-1) end,
+				moveDown = function() moveSection(1) end,
+				delete = function()
+					eachRefStructural(function(child, ccond, childIndex)
+						table.remove(child.conditions, childIndex)
+						S.clearCollapsed(child, "cond:")
+					end)
+				end,
+			}),
+			onToggle = function()
+				eachRef(cond, function(child, ccond, childIndex)
+					S.setCollapsed(child, "cond:" .. childIndex, not collapsed)
+				end)
+				S.refreshTabContent()
+			end,
+		}
+		if #tipLines > 0 then
+			hdr.tooltip = { title = "Condition " .. idx, lines = tipLines }
+		end
+		table.insert(fields, hdr)
+
+		if not collapsed then
+			appendConditionCheck(fields, cond, cond.check, {}, 0)
+
+			if subset then
+				-- Upstream's "Copy to all auras": plant this condition into
+				-- every member that lacks it, right after wherever that member
+				-- last shared a condition with the pane, carrying only the
+				-- changes whose values the sharing members agree on.
+				table.insert(fields, {
+					type = "button", name = "Copy to all selected",
+					onClick = function()
+						S.beginRepaintBatch()
+						for m = 1, #members do
+							local child = members[m]
+							if not cond.check.references[child.id] then
+								local insertPoint = 1
+								for back = idx, 1, -1 do
+									local ref = conditions[back].check.references[child.id]
+									if ref then insertPoint = ref.conditionIndex + 1; break end
+								end
+								local newCond = { check = {
+									trigger = cond.check.trigger, variable = cond.check.variable,
+									op = cond.check.op, value = cond.check.value,
+								}, changes = {} }
+								if cond.check.checks then
+									newCond.check.checks = WA.DeepCopy(cond.check.checks)
+								end
+								for cj = 1, #cond.changes do
+									local change = cond.changes[cj]
+									local ptype = conditionPropertyType(change.property, props)
+									if checkSameValue(change.samevalue, ptype) then
+										table.insert(newCond.changes, { property = change.property,
+											value = type(change.value) == "table"
+												and WA.DeepCopy(change.value) or change.value })
+									end
+								end
+								table.insert(child.conditions, insertPoint, newCond)
+								WA.Add(child)
+							end
+						end
+						S.refreshTabContent()
+						S.endRepaintBatch()
+					end,
+				})
+			end
+
+			for j = 1, #cond.changes do
+				local change = cond.changes[j]
+				local changeSubset = isSubset(change)
+				local sel = {
+					type = "select", name = changeSubset and blue("Change") or "Change",
+					half = true, values = propVals, labels = propLabels,
+					get = function() return change.property end,
+					set = function(v)
+						local default = S.defaultPropertyValue(props[v])
+						S.beginRepaintBatch()
+						eachChangeRef(cond, change, function(child, cchange)
+							cchange.property = v
+							cchange.value = type(default) == "table" and WA.DeepCopy(default) or default
+							WA.Add(child)
+						end)
+						S.refreshTabContent()
+						S.endRepaintBatch()
+					end,
+				}
+				if changeSubset then sel.tooltip = subsetTooltip(change) end
+				table.insert(fields, sel)
+				appendChangeValue(fields, cond, change, change.property and props[change.property])
+				table.insert(fields, {
+					type = "button", name = "Remove change",
+					onClick = function()
+						S.beginRepaintBatch()
+						eachChangeRef(cond, change, function(child, cchange, ccond, changeIndex)
+							table.remove(ccond.changes, changeIndex)
+							WA.Add(child)
+						end)
+						S.refreshTabContent()
+						S.endRepaintBatch()
+					end,
+				})
+			end
+			table.insert(fields, {
+				type = "button", name = "+ Add change",
+				onClick = function()
+					local firstProp = propVals[1]
+					local default = S.defaultPropertyValue(props[firstProp])
+					S.beginRepaintBatch()
+					eachRef(cond, function(child, ccond)
+						table.insert(ccond.changes, { property = firstProp,
+							value = type(default) == "table" and WA.DeepCopy(default) or default })
+						WA.Add(child)
+					end)
+					S.refreshTabContent()
+					S.endRepaintBatch()
+				end,
+			})
+		end
+	end
+
+	table.insert(fields, {
+		type = "button", name = "+ Add Condition",
+		onClick = function()
+			local seed = { check = newConditionCheck(), changes = {} }
+			S.beginRepaintBatch()
+			for m = 1, #members do
+				local child = members[m]
+				child.conditions = child.conditions or {}
+				table.insert(child.conditions, WA.DeepCopy(seed))
+				S.setCollapsed(child, "cond:" .. #child.conditions, false)
+				WA.Add(child)
+			end
+			S.refreshTabContent()
+			S.endRepaintBatch()
+		end,
+	})
+end
+
+function S.appendConditionOptions(fields, data)
+	conditionOptionsCore(fields, { data })
+end
+
+-- The merged conditions pane for a multi-selection or a group's leaves; the
+-- id list is the only thing distinguishing the two shapes.
+function S.buildMergedConditionFields(ids)
+	local fields = {}
+	local members = {}
+	for i = 1, #ids do
+		local data = WeakestAurasDB.displays[ids[i]]
+		if data then table.insert(members, data) end
+	end
+	if #members > 0 then
+		conditionOptionsCore(fields, members)
+	end
+	return fields
+end
+
+-- ---------------------------------------------------------------------------
+-- Load tab: edits data.load -- the constraints (class/level/zone/
+-- combat/group-size/stance) that decide whether the aura is active at all. The
+-- editor is generated from WA.loadPrototype (Load.lua), so a new load constraint
+-- shows up here for free. Every edit routes through WA.Add, which re-evaluates
+-- load state and shows/hides the live region immediately.
+-- ---------------------------------------------------------------------------
+
+function S.appendLoadOptions(fields, data)
+	table.insert(fields, { type = "header", name = "Load Conditions" })
+	data.load = data.load or {}
+	local L = data.load
+
+	table.insert(fields, {
+		type = "toggle", name = "Never load (disable)", key = "never",
+		get = function() return L.never and true or false end,
+		set = function(v) L.never = v and true or false; WA.Add(data) end,
+	})
+
+	local proto = WA.loadPrototype or {}
+	for i = 1, #proto do
+		local arg = proto[i]
+		local useKey = "use_" .. arg.name
+
+		if arg.widget == "multiselect" then
+			-- Not a plain on/off gate: the tier picks between one value and a set
+			-- of them. The rows, the mode keys and the "several values" reading
+			-- are WeakestAuras.lua's, shared with the generic trigger args.
+			-- The player's own class is the useful starting point, where every
+			-- other constraint's declared default is as good as any.
+			local seed = arg.default
+			if arg.name == "class" then
+				local _, playerClass = UnitClass("player")
+				seed = playerClass or seed
+			end
+			-- A per-character domain (the shapeshift bar) is walked at paint time,
+			-- so a form learned since the window opened is in the list.
+			local values, labels = arg.values, arg.labels
+			if arg.valuesFunc then values, labels = arg.valuesFunc() end
+			WA.MultiSelectFields(fields, {
+				config = L, name = arg.name, display = arg.display,
+				values = values, labels = labels, default = seed,
+				onChange = function(repaint)
+					WA.Add(data)
+					if repaint then S.refreshTabContent() end
+				end,
+			})
+		else
+			table.insert(fields, {
+				type = "toggle", name = arg.display, key = useKey,
+				get = function() return L[useKey] and true or false end,
+				set = function(v)
+					L[useKey] = v and true or false
+					if v and L[arg.name] == nil then L[arg.name] = arg.default end
+					WA.Add(data); S.refreshTabContent()
+				end,
+			})
+			if L[useKey] then
+				if arg.widget == "select" then
+					table.insert(fields, {
+						type = "select", name = arg.display, key = arg.name,
+						values = arg.values, labels = arg.labels,
+						get = function() return L[arg.name] or arg.default end,
+						set = function(v) L[arg.name] = v; WA.Add(data) end,
+					})
+				elseif arg.widget == "opnumber" then
+					table.insert(fields, {
+						type = "opnumber", name = arg.display, key = arg.name,
+						getOp = function() return L[arg.name .. "_operator"] or arg.operator or ">=" end,
+						setOp = function(v) L[arg.name .. "_operator"] = v; WA.Add(data) end,
+						getVal = function() return L[arg.name] or arg.default end,
+						setVal = function(v) L[arg.name] = v; WA.Add(data) end,
+					})
+				elseif arg.widget == "range" then
+					table.insert(fields, {
+						type = "range", name = arg.display, key = arg.name,
+						min = arg.min, max = arg.max, step = arg.step,
+						get = function() return L[arg.name] or arg.default end,
+						set = function(v) L[arg.name] = v; WA.Add(data) end,
+					})
+				elseif arg.widget == "spell" then
+					table.insert(fields, {
+						type = "spell", name = arg.display, key = arg.name,
+						get = function() return L[arg.name] or "" end,
+						set = function(v) L[arg.name] = v; WA.Add(data) end,
+					})
+				else -- input
+					table.insert(fields, {
+						type = "input", name = arg.display, key = arg.name,
+						get = function() return L[arg.name] or "" end,
+						set = function(v) L[arg.name] = v; WA.Add(data) end,
+					})
+				end
+			end
+		end
+	end
+end
+
+-- ---------------------------------------------------------------------------
+-- Trigger tab: every trigger listed one under the other, each as a collapsible
+-- section headed "Trigger n: <type>" with its own delete button, then "+ Add
+-- Trigger" at the bottom -- the same layout as upstream's own trigger tab
+-- (TriggerOptions.lua: combination options first, per-trigger groups, add at
+-- order 5000). The combination controls above them (disjunctive,
+-- activeTriggerMode) drive machinery the runtime already has -- StateMachine's
+-- UpdatedTriggerState -- and only appear once there's more than one trigger.
+-- ---------------------------------------------------------------------------
+
+local DISJUNCTIVE_LABELS = { all = "All Triggers", any = "Any Trigger", custom = "Custom" }
+
+function S.appendTriggerOptions(fields, data)
+	local triggers = data.triggers or {}
+	local numTriggers = #triggers
+
+	table.insert(fields, { type = "header", name = "Triggers" })
+
+	-- Combination + active-trigger controls only matter once there's more than
+	-- one trigger; a single-trigger aura keeps the tab uncluttered.
+	if numTriggers > 1 then
+		table.insert(fields, {
+			type = "select", name = "Show If", key = "disjunctive", half = true,
+			values = { "all", "any", "custom" }, labels = DISJUNCTIVE_LABELS,
+			get = function() return triggers.disjunctive or "all" end,
+			set = function(v) triggers.disjunctive = v; WA.Add(data); S.refreshTabContent() end,
+		})
+
+		local modeVals, modeLabels = { "auto" }, { auto = "Automatic" }
+		for n = 1, numTriggers do
+			table.insert(modeVals, tostring(n))
+			modeLabels[tostring(n)] = "Trigger " .. n
+		end
+		table.insert(fields, {
+			type = "select", name = "Dynamic Info From", key = "activeTriggerMode", half = true, values = modeVals, labels = modeLabels,
+			get = function()
+				local atm = triggers.activeTriggerMode
+				if atm == nil or atm == WA.trigger_modes.first_active then return "auto" end
+				return tostring(atm)
+			end,
+			set = function(v)
+				triggers.activeTriggerMode = (v == "auto") and WA.trigger_modes.first_active or tonumber(v)
+				WA.Add(data)
+			end,
+		})
+
+		if (triggers.disjunctive or "all") == "custom" then
+			table.insert(fields, {
+				type = "code", height = 60, key = "customTriggerLogic",
+				name = "Custom Logic (e.g. function(t) return t[1] and not t[2] end)",
+				-- Raw, not `or ""`: nil means never configured (open at the
+				-- default below), "" means cleared and left cleared.
+				get = function() return triggers.customTriggerLogic end,
+				set = function(v) triggers.customTriggerLogic = v; WA.Add(data) end,
+				-- Seeds a working expression rather than the empty string the
+				-- field actually defaults to: "" is what you get before writing
+				-- anything, not something worth resetting *to*.
+				default = "function(t) return t[1] end",
+				-- Asked of the compiler for its wrapper, so the reported line
+				-- numbers match what the user is looking at.
+				validate = function(txt)
+					return W.LuaSyntaxError(WA.WrapFunctionSource(txt), "trigger logic")
+				end,
+			})
+		end
+	end
+
+	for n = 1, numTriggers do
+		local tn = n
+		local t = WA.GetTrigger(data, tn)
+		local spec = t and WA.triggerTypes[t.type]
+		local title = "Trigger " .. tn
+		if t then title = title .. ": " .. ((spec and spec.displayName) or t.type or "?") end
+		local key = "trigger:" .. tn
+		-- Folded by default once there's more than one, so a multi-trigger aura
+		-- opens as a readable list instead of a wall of fields (upstream's own
+		-- __collapsed = #data.triggers > 1).
+		local collapsed = S.isCollapsed(data, key, numTriggers > 1)
+
+		local header = {
+			type = "header", name = title, key = key, collapsed = collapsed,
+			onToggle = function()
+				S.setCollapsed(data, key, not collapsed)
+				S.refreshTabContent()
+			end,
+		}
+		-- No delete on a lone trigger: a display always has trigger 1
+		-- (WA.DeleteTrigger refuses the last one anyway).
+		if numTriggers > 1 then
+			header.onDelete = function()
+				WA.DeleteTrigger(data, tn)
+				S.clearCollapsed(data, "trigger:")
+				WA.Add(data); S.refreshTabContent()
+			end
+		end
+		table.insert(fields, header)
+
+		if not collapsed then
+			local typeFields = spec and spec.options(data, tn) or {}
+			for i = 1, #typeFields do
+				table.insert(fields, typeFields[i])
+			end
+		end
+	end
+
+	table.insert(fields, {
+		type = "button", name = "+ Add Trigger", scope = "tab",
+		onClick = function()
+			local idx = WA.AddTrigger(data)
+			-- Open the new one; the others keep whatever fold state they had.
+			if idx then S.setCollapsed(data, "trigger:" .. idx, false) end
+			WA.Add(data); S.refreshTabContent()
+		end,
+	})
+end
+
+function S.appendActionOptions(fields, data)
+	data.actions = data.actions or {}
+	data.actions.init = data.actions.init or {}
+	data.actions.start = data.actions.start or {}
+	data.actions.finish = data.actions.finish or {}
+	local function codeField(block, enabled, source, name)
+		local out = {
+			type = "toggle", name = name, key = enabled,
+			get = function() return block[enabled] and true or false end,
+			set = function(v) block[enabled] = v and true or false; WA.Add(data); S.refreshTabContent() end,
+		}
+		local fields = { out }
+		if block[enabled] then
+			table.insert(fields, {
+				type = "code", height = 80, name = source, key = source,
+				get = function() return block[source] end,
+				set = function(v) block[source] = v; WA.Add(data) end,
+			})
+		end
+		return fields
+	end
+
+	table.insert(fields, { type = "header", name = "Custom Functions", key = "actions.init" })
+	local initFields = codeField(data.actions.init, "do_custom", "custom", "Custom Init")
+	for i = 1, #initFields do table.insert(fields, initFields[i]) end
+	local loadFields = codeField(data.actions.init, "do_custom_load", "customOnLoad", "Custom On Load")
+	for i = 1, #loadFields do table.insert(fields, loadFields[i]) end
+	local unloadFields = codeField(data.actions.init, "do_custom_unload", "customOnUnload", "Custom On Unload")
+	for i = 1, #unloadFields do table.insert(fields, unloadFields[i]) end
+
+	table.insert(fields, { type = "header", name = "On Show", key = "actions.start" })
+	if WA.ActionMessageFields then WA.ActionMessageFields(fields, data, data.actions.start, "start") end
+	if WA.ActionSoundFields then WA.ActionSoundFields(fields, data, data.actions.start, nil, "start") end
+	if WA.ActionGlowFields then WA.ActionGlowFields(fields, data, data.actions.start, "start") end
+	local startFields = codeField(data.actions.start, "do_custom", "custom", "Custom Code")
+	for i = 1, #startFields do table.insert(fields, startFields[i]) end
+
+	table.insert(fields, { type = "header", name = "On Hide", key = "actions.finish" })
+	if WA.ActionMessageFields then WA.ActionMessageFields(fields, data, data.actions.finish, "finish") end
+	if WA.ActionSoundFields then WA.ActionSoundFields(fields, data, data.actions.finish, nil, "finish") end
+	if WA.ActionGlowFields then WA.ActionGlowFields(fields, data, data.actions.finish, "finish") end
+	local finishFields = codeField(data.actions.finish, "do_custom", "custom", "Custom Code")
+	for i = 1, #finishFields do table.insert(fields, finishFields[i]) end
+end
+
+function S.appendAnimationOptions(fields, data)
+	data.animation = data.animation or {}
+	local blocks = { "start", "main", "finish" }
+	local names = { start = "Start", main = "Main", finish = "Finish" }
+	for i = 1, #blocks do
+		local key = blocks[i]
+		local block = data.animation[key] or { type = "none", duration_type = "seconds" }
+		data.animation[key] = block
+		table.insert(fields, { type = "header", name = names[key], key = "animation." .. key })
+		table.insert(fields, {
+			type = "select", name = "Type", key = "type", values = WA.anim_type_values, labels = WA.anim_types,
+			get = function() return block.type or "none" end,
+			set = function(v) block.type = v; WA.Add(data, true); S.refreshTabContent() end,
+		})
+		if block.type == "preset" then
+			local values = key == "start" and WA.anim_start_preset_values or key == "main" and WA.anim_main_preset_values or WA.anim_finish_preset_values
+			local labels = key == "start" and WA.anim_start_preset_types or key == "main" and WA.anim_main_preset_types or WA.anim_finish_preset_types
+			table.insert(fields, { type = "select", name = "Preset", key = "preset", values = values, labels = labels,
+				get = function() return block.preset end,
+				set = function(v) block.preset = v; block.type = "preset"; WA.Add(data, true) end })
+		end
+		if block.type == "custom" then
+			local durationValues = key == "finish" and WA.duration_values_no_choice or WA.duration_values
+			local durationLabels = key == "finish" and WA.duration_types_no_choice or WA.duration_types
+			table.insert(fields, { type = "select", name = "Time In", key = "duration_type", values = durationValues, labels = durationLabels,
+				get = function() return block.duration_type or "seconds" end,
+				set = function(v) block.duration_type = v; WA.Add(data, true) end })
+			table.insert(fields, { type = "input", name = "Duration", key = "duration", get = function() return tostring(block.duration or "") end,
+				set = function(v) block.duration = v; WA.Add(data, true) end })
+			table.insert(fields, { type = "select", name = "Ease Type", key = "easeType", values = WA.anim_ease_values, labels = WA.anim_ease_types,
+				get = function() return block.easeType or "none" end,
+				set = function(v) block.easeType = v; WA.Add(data, true) end })
+			local function slot(use, label, types, capability, prefix)
+				if capability and not capability() then return end
+				table.insert(fields, { type = "toggle", name = label, key = use, get = function() return block[use] end,
+					set = function(v) block[use] = v and true or false; WA.Add(data, true); S.refreshTabContent() end })
+				if block[use] then
+					local typeValues = prefix == "alpha" and WA.anim_alpha_values
+						or prefix == "translate" and WA.anim_translate_values
+						or prefix == "scale" and WA.anim_scale_values
+						or prefix == "rotate" and WA.anim_rotate_values
+						or WA.anim_color_values
+					local typeLabels = types
+					table.insert(fields, { type = "select", name = "Type", key = prefix .. "Type", values = typeValues, labels = typeLabels, get = function() return block[prefix .. "Type"] end,
+						set = function(v) block[prefix .. "Type"] = v; WA.Add(data, true) end })
+				end
+			end
+			slot("use_alpha", key == "start" and "Fade In" or key == "finish" and "Fade Out" or "Fade", WA.anim_alpha_types, function() return true end, "alpha")
+			slot("use_translate", key == "start" and "Slide In" or key == "finish" and "Slide Out" or "Slide", WA.anim_translate_types, function() return true end, "translate")
+			slot("use_scale", "Zoom", WA.anim_scale_types, function() return WA.GetRegion(data.id, "").Scale ~= nil end, "scale")
+			slot("use_rotate", "Rotate", WA.anim_rotate_types, function() return WA.GetRegion(data.id, "").SetAnimRotation ~= nil end, "rotate")
+			slot("use_color", "Colour", WA.anim_color_types, function() return WA.GetRegion(data.id, "").Color ~= nil end, "color")
+		end
+	end
+end
+
+-- Paints S.content and resizes it to fit, so the surrounding scroll frame gets
+-- a correct range (BuildOptions records page.contentHeight). Scroll goes back to
+-- the top on a tab or aura switch, and is held across a repaint of the same one.
+local lastContentKey
+local function paintContent(fields)
+	local content = S.content
+	-- A repaint of the same aura's same tab is a control revealing or hiding its
+	-- dependent fields, not navigation. Every such toggle goes through
+	-- WA.RefreshOptions, so resetting here unconditionally threw the user back to
+	-- the top of a long tab on each click.
+	local key = tostring(S.primaryId()) .. "|" .. tostring(S.activeTab)
+	local keep = 0
+	if key == lastContentKey then keep = S.contentScroll:GetVerticalScroll() or 0 end
+	lastContentKey = key
+	-- Leave a few px on the right for the slim slider so widgets never sit under it.
+	content:SetWidth(S.contentScroll:GetWidth() - 8)
+	-- pcall'd and reported: a field descriptor with a bad get/values/range takes
+	-- down only the rest of that one paint, and says so. Unhandled, it would just
+	-- leave a half-drawn tab with no explanation -- this client swallows script
+	-- errors unless the user has turned them on.
+	local ok, err = pcall(W.BuildOptions, content, fields)
+	if not ok then
+		DEFAULT_CHAT_FRAME:AddMessage("|cffff4040WeakestAuras:|r options paint failed -- " .. tostring(err))
+	end
+	content:SetHeight(content.contentHeight or 1)
+	S.contentScroll.Update()
+	-- A repaint that removed rows can leave the kept offset past the new end.
+	local range = (content.contentHeight or 1) - S.contentScroll:GetHeight()
+	if range < 0 then range = 0 end
+	if keep > range then keep = range end
+	S.contentScroll:SetVerticalScroll(keep)
+	-- The slider holds its own value, so it has to be told too or the thumb
+	-- parts company with the content it represents.
+	if S.contentScroll.slider then S.contentScroll.slider:SetValue(keep) end
+	-- Any ordinary tab paint puts the New pane away, including its thumbnails.
+	S.clearNewPane()
+end
+
+-- ---------------------------------------------------------------------------
+-- The New pane: a pseudo-tab (S.activeTab == "new") with no tab button, painted
+-- into the same content area. Its rows carry a live thumbnail frame, which no
+-- field descriptor describes, so it paints itself instead of going through
+-- W.BuildOptions -- but it still runs BuildOptions once with nothing in it, or
+-- the previous tab's pooled widgets would sit visible underneath.
+-- ---------------------------------------------------------------------------
+
+S.newRows = {}
+
+function S.ensureNewRow(i)
+	if S.newRows[i] then return S.newRows[i] end
+	local row = CreateFrame("Button", nil, S.content)
+	row:SetHeight(S.NEW_ROW_H)
+	local hl = row:CreateTexture(nil, "HIGHLIGHT")
+	hl:SetAllPoints(row)
+	hl:SetTexture(1, 1, 1, 0.12)
+
+	local box = CreateFrame("Frame", nil, row)
+	box:SetWidth(S.NEW_ROW_H - 8); box:SetHeight(S.NEW_ROW_H - 8)
+	box:SetPoint("LEFT", row, "LEFT", 4, 0)
+	row.box = box
+
+	local icon = box:CreateTexture(nil, "ARTWORK")
+	icon:SetAllPoints(box)
+	row.icon = icon
+
+	local name = row:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	name:SetPoint("TOPLEFT", box, "TOPRIGHT", 8, -2)
+	name:SetPoint("TOPRIGHT", row, "TOPRIGHT", -4, -2)
+	name:SetJustifyH("LEFT")
+	row.name = name
+
+	local desc = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	desc:SetPoint("BOTTOMLEFT", box, "BOTTOMRIGHT", 8, 2)
+	desc:SetPoint("BOTTOMRIGHT", row, "BOTTOMRIGHT", -4, 2)
+	desc:SetJustifyH("LEFT")
+	desc:SetTextColor(0.7, 0.7, 0.7)
+	row.desc = desc
+
+	row:SetScript("OnClick", function() if row.onClick then row.onClick() end end)
+	S.newRows[i] = row
+	return row
+end
+
+-- Releases pane rows from `from` onward, thumbnails included -- the pools only
+-- ever grow otherwise. Used both for the tail a repaint stopped using and for
+-- the whole pane on the way out.
+local function releaseNewRows(from)
+	for i = from, #S.newRows do
+		local row = S.newRows[i]
+		if row.thumb then
+			WA.ReleaseThumbnail(row.thumb)
+			row.thumb = nil
+			row.thumbType = nil
+		end
+		row:Hide()
+	end
+end
+
+-- Puts the whole pane away. The two headings are plain FontStrings parented to
+-- the shared content frame, so they outlive an ordinary tab's paint unless they
+-- are hidden here -- BuildOptions only sweeps the widget pools, which they are
+-- not part of.
+function S.clearNewPane()
+	releaseNewRows(1)
+	if S.newHeader then S.newHeader:Hide() end
+	if S.newExternal then S.newExternal:Hide() end
+end
+
+-- group/dynamicgroup first, then alphabetically by display name -- upstream's
+-- own ordering, and it puts the two containers where someone building a layout
+-- looks for them.
+local function newPaneTypes(targetId)
+	local list = {}
+	local names = WA.RegionTypeList()
+	for i = 1, #names do
+		local name = names[i]
+		if WA.CanPlaceAura(name, targetId) then table.insert(list, name) end
+	end
+	table.sort(list, function(a, b)
+		local ga = WA.regionTypes[a].isGroup == true
+		local gb = WA.regionTypes[b].isGroup == true
+		if ga ~= gb then return ga end
+		local la = WA.regionTypes[a].displayName or a
+		local lb = WA.regionTypes[b].displayName or b
+		if la == lb then return a < b end
+		return la < lb
+	end)
+	return list
+end
+
+-- What a creation would do with the current selection, said out loud: New
+-- behaving differently depending on what's picked is a bug report unless the
+-- pane shows it.
+function S.newPaneTargetText(targetId)
+	local target = targetId and WeakestAurasDB.displays[targetId]
+	if not target then return "New aura" end
+	if WA.IsGroup(target) then return "New aura in \"" .. targetId .. "\"" end
+	return "New aura after \"" .. targetId .. "\""
+end
+
+function S.paintNewPane()
+	local content = S.content
+	content:SetWidth(S.contentScroll:GetWidth() - 8)
+	-- Hide-first sweep for the widget pools; this pane owns none of them.
+	local ok, err = pcall(W.BuildOptions, content, {})
+	if not ok then
+		DEFAULT_CHAT_FRAME:AddMessage("|cffff4040WeakestAuras:|r options paint failed -- " .. tostring(err))
+	end
+
+	local targetId = S.primaryId()
+	if not S.newHeader then
+		S.newHeader = W.sectionHeader(content, "")
+		S.newExternal = W.sectionHeader(content, "External")
+	end
+	S.newHeader:SetText(S.newPaneTargetText(targetId))
+	S.newHeader:ClearAllPoints()
+	S.newHeader:SetPoint("TOPLEFT", content, "TOPLEFT", 4, -8)
+	S.newHeader:Show()
+
+	local types = newPaneTypes(targetId)
+	local y = 28
+	local n = 0
+	for i = 1, #types do
+		local rtype = types[i]
+		local spec = WA.regionTypes[rtype]
+		n = i
+		local row = S.ensureNewRow(i)
+		row:ClearAllPoints()
+		row:SetPoint("TOPLEFT", content, "TOPLEFT", 4, -y)
+		row:SetPoint("TOPRIGHT", content, "TOPRIGHT", -4, -y)
+		row.name:SetText(spec.displayName or rtype)
+		row.desc:SetText(spec.description or "")
+		row.onClick = function() S.createAura(rtype) end
+
+		-- The preview is of the *type*, so it renders against that type's own
+		-- defaults rather than any saved aura. A type marked thumbnailNoScroll
+		-- keeps its static icon here: this pane is a ScrollFrame's scroll
+		-- child, where its live preview cannot render in place.
+		if row.thumbType ~= rtype then
+			if row.thumb then WA.ReleaseThumbnail(row.thumb) end
+			local sample = S.newPaneSample(rtype)
+			row.thumb = (not spec.thumbnailNoScroll)
+				and WA.AcquireThumbnail(rtype, row, sample, S.NEW_ROW_H - 8) or nil
+			row.thumbType = row.thumb and rtype or nil
+			if row.thumb then
+				row.thumb:SetPoint("TOPLEFT", row.box, "TOPLEFT", 0, 0)
+			end
+		end
+		if row.thumb then
+			row.icon:Hide()
+		else
+			row.icon:Show()
+			row.icon:SetTexture(spec.icon or S.FALLBACK_ICON)
+		end
+		row:Show()
+		y = y + S.NEW_ROW_H + 2
+	end
+
+	y = y + 8
+	S.newExternal:ClearAllPoints()
+	S.newExternal:SetPoint("TOPLEFT", content, "TOPLEFT", 4, -y)
+	S.newExternal:Show()
+	y = y + 20
+
+	n = n + 1
+	local importRow = S.ensureNewRow(n)
+	importRow:ClearAllPoints()
+	importRow:SetPoint("TOPLEFT", content, "TOPLEFT", 4, -y)
+	importRow:SetPoint("TOPRIGHT", content, "TOPRIGHT", -4, -y)
+	importRow.name:SetText("Import from string")
+	importRow.desc:SetText("Paste an aura from WeakAuras, WeakestAuras, or weako.xyz.")
+	importRow.onClick = function() S.openImport() end
+	if importRow.thumb then
+		WA.ReleaseThumbnail(importRow.thumb)
+		importRow.thumb = nil
+		importRow.thumbType = nil
+	end
+	importRow.icon:Show()
+	importRow.icon:SetTexture("Interface\\Buttons\\UI-GuildButton-PublicNote-Up")
+	importRow:Show()
+	y = y + S.NEW_ROW_H + 8
+
+	releaseNewRows(n + 1)
+	content:SetHeight(y)
+	S.contentScroll:SetVerticalScroll(0)
+	S.contentScroll.Update()
+end
+
+-- A throwaway display carrying nothing but a type's own defaults, cached per
+-- type so the pane isn't rebuilding them on every repaint.
+S.newPaneSamples = {}
+function S.newPaneSample(regionType)
+	local sample = S.newPaneSamples[regionType]
+	if not sample then
+		sample = { id = "", uid = "", regionType = regionType }
+		WA.MergeDefaults(sample)
+		S.newPaneSamples[regionType] = sample
+	end
+	return sample
+end
+
+-- The New pane belongs to no tab, so nothing in the strip is lit while it is up.
+function S.openNewPane()
+	S.activeTab = "new"
+	if S.tabStrip then S.tabStrip.select(nil) end
+	S.refreshTabContent()
+end
+
+-- One aura's field array for a tab -- the single source both the ordinary
+-- single-selection paint and the mass-edit merge build from, so the two can
+-- never drift apart on what a tab contains.
+function S.buildTabFields(tab, data)
+	if tab == "display" then
+		-- Resolved rather than looked up, so an aura naming a type this addon
+		-- lacks gets the fallback's tab (which says so) instead of a blank one.
+		local region = WA.RegionSpecFor(data)
+		-- The region's own sections (Icon/Size/Position) fold too; done here
+		-- rather than in each region generator so a new region type gets it for
+		-- free. Applied before the effects are appended, which bring their own
+		-- (nested, deletable) headers.
+		local fields = S.collapsibleSections(region and region.options(data) or {}, data, "region:")
+		-- Subregion (text/border/glow) editing lives under Display, matching
+		-- upstream (appended to the region options, not a separate tab).
+		if not WA.IsGroup(data) then S.appendDisplayEffectsOptions(fields, data) end
+		return fields
+	elseif tab == "trigger" then
+		local fields = {}
+		S.appendTriggerOptions(fields, data)
+		return fields
+	elseif tab == "conditions" then
+		local fields = {}
+		S.appendConditionOptions(fields, data)
+		return fields
+	elseif tab == "animation" then
+		local fields = {}
+		S.appendAnimationOptions(fields, data)
+		return fields
+	elseif tab == "action" then
+		local fields = {}
+		S.appendActionOptions(fields, data)
+		return S.collapsibleSections(fields, data, "actions:")
+	elseif tab == "load" then
+		local fields = {}
+		S.appendLoadOptions(fields, data)
+		return fields
+	elseif tab == "config" then
+		local fields = {}
+		WA.CustomOptionsFields(fields, data)
+		return fields
+	end
+	return S.getInfoOptions(data)
+end
+
+-- Repaint batching for mass-edit fan-out: one merged write runs N per-member
+-- set closures, and most of those call S.refreshTabContent themselves --
+-- unbatched, that is N full repaints per keystroke. Inside a batch the calls
+-- collapse into one repaint at the closing end. Depth-counted so nested
+-- batches compose.
+local repaintBatchDepth, repaintBatchDirty = 0, false
+
+-- The tabs a multi-selection mass-edits through the generic key-merge
+-- (S.buildMergedFields). Selection members are always leaves, so every leaf
+-- tab applies. Conditions and Custom Options mass-edit too, each via its own
+-- merge (S.buildMergedConditionFields; WA.CustomOptionsFieldsMerged).
+local MULTI_TABS = {
+	info = true, display = true, trigger = true,
+	load = true, action = true, animation = true,
+}
+
+-- The tabs where a sole-selected group stands for its recursive leaf
+-- descendants and mass-edits them, as upstream's real groups do on every
+-- ordinary tab. Info and Display stay the group's own -- Display is the
+-- container-settings tab, upstream's dedicated Group tab -- and Custom runs
+-- its own group merge (WA.CustomOptionsFields).
+local GROUP_CHILD_TABS = {
+	trigger = true, conditions = true, animation = true, action = true, load = true,
+}
+
+function S.beginRepaintBatch()
+	repaintBatchDepth = repaintBatchDepth + 1
+end
+
+function S.endRepaintBatch()
+	repaintBatchDepth = repaintBatchDepth - 1
+	if repaintBatchDepth <= 0 then
+		repaintBatchDepth = 0
+		if repaintBatchDirty then
+			repaintBatchDirty = false
+			S.refreshTabContent()
+		end
+	end
+end
+
+function S.refreshTabContent()
+	if repaintBatchDepth > 0 then repaintBatchDirty = true; return end
+	-- Drop popups hosted on the panel (LibWidgets menus now float above the
+	-- content ScrollFrame rather than being parented to their button) before a
+	-- repaint hides their buttons, so none can survive a tab/aura switch.
+	LibWidgets.CloseAllMenus()
+	if S.activeTab == "new" then S.paintNewPane(); return end
+	local n = #S.selection
+	if n > 1 then
+		-- Mass edit: the merged field array across every selected aura.
+		-- Conditions and Custom Options run their own merges (a
+		-- reference-merge and the per-reference config paths that already
+		-- serve the group case).
+		if MULTI_TABS[S.activeTab] then
+			paintContent(S.buildMergedFields(S.activeTab, S.selection))
+		elseif S.activeTab == "conditions" then
+			paintContent(S.buildMergedConditionFields(S.selection))
+		elseif S.activeTab == "config" then
+			local merged = {}
+			WA.CustomOptionsFieldsMerged(merged, S.selection)
+			paintContent(merged)
+		else
+			paintContent({ { type = "header", name = n .. " auras selected" } })
+		end
+		return
+	end
+	local data = S.primaryId() and WeakestAurasDB.displays[S.primaryId()]
+	if not data then
+		-- Nothing picked: offer creation rather than a placeholder telling the
+		-- reader to go and create something.
+		S.activeTab = "new"
+		S.paintNewPane()
+		return
+	end
+	if WA.IsGroup(data) and GROUP_CHILD_TABS[S.activeTab] then
+		-- A group's leaf tabs mass-edit its recursive leaf descendants through
+		-- the same merges the multi-selection pane runs; which id list feeds
+		-- them is the only difference between the two.
+		local leaves = S.leafDescendants(data.id)
+		local ln = #leaves
+		if ln == 0 then
+			paintContent({ { type = "header", name = "0 child auras" } })
+		elseif MULTI_TABS[S.activeTab] then
+			paintContent(S.buildMergedFields(S.activeTab, leaves))
+		else
+			paintContent(S.buildMergedConditionFields(leaves))
+		end
+		return
+	end
+	paintContent(S.buildTabFields(S.activeTab, data))
+end
+
+-- ---------------------------------------------------------------------------
+-- Mass edit: one field array merged across several auras. Each member's own
+-- generators run with fold forced open (see S.isCollapsed), so a field absent
+-- from a member's array means "inapplicable to this member" -- a use_ gate off,
+-- a type without the field -- never "folded away". Fields match across members
+-- by section-qualified key; a merged read blanks (nil) on disagreement; a
+-- merged write fans out through each contributing member's own set closure, so
+-- per-member side effects (WA.Add, dependent-field resets, repaints) keep
+-- their single-aura semantics. Buttons and menu picks run per member the same
+-- way. Mirrors upstream's CreateGetAll/CreateSetAll/CreateExecuteAll
+-- (WeakAurasOptions/CommonOptions.lua), with the descriptor `key` playing the
+-- role of the AceConfig option path and S.selection the role of tempGroup's
+-- children. mergeValuesEqual/mergeValueText live up by the conditions merge,
+-- which shares them.
+-- ---------------------------------------------------------------------------
+
+-- The identity one member's field is matched to another's by. A field carrying
+-- `scope = "tab"` (the trailing structural add buttons) matches tab-wide, so
+-- members with different section counts still share it. An unkeyed passive
+-- (space, description) has no identity and rides along from the first member
+-- that shows it.
+local function mergeIdentity(sectionKey, f)
+	if f.type == "header" then
+		return f.key and ("H:" .. f.key) or nil
+	end
+	local section = (f.scope == "tab") and "" or sectionKey
+	if f.key then return section .. "/" .. f.key end
+	if (f.type == "button" or f.type == "menu") and f.name then
+		return section .. "/" .. f.type .. ":" .. f.name
+	end
+	return nil
+end
+
+-- Whether the contributors' reads disagree right now -- what earns a merged
+-- field upstream's blue "these differ" label. Distinct from a merged get
+-- returning nil, which agreement on nil (a code field nobody configured) also
+-- produces.
+local function contributorsDisagree(list, getterKey)
+	local first, have = nil, false
+	for i = 1, #list do
+		local f = list[i]
+		if f[getterKey] then
+			local v = f[getterKey]()
+			if f.type == "toggle" and getterKey == "get" then v = v and true or false end
+			if not have then
+				first, have = v, true
+			elseif not mergeValuesEqual(first, v) then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+-- The per-member value listing a disagreeing merged field hangs off its
+-- caption -- upstream's descIfNoValue convention, one gold-named line per
+-- contributor.
+local function mergeTooltip(item, plainName)
+	local lines = {}
+	for i = 1, #item.list do
+		local c = item.list[i]
+		local text
+		if c.getOp or c.getVal then
+			text = tostring(c.getOp and c.getOp() or "") .. " " .. tostring(c.getVal and c.getVal() or "")
+		elseif c.get then
+			local v = c.get()
+			if c.type == "toggle" then v = v and true or false end
+			text = mergeValueText(v)
+		end
+		if text then
+			table.insert(lines, "|cFFE0E000" .. tostring(item.ids and item.ids[i] or "?") .. ":|r " .. text)
+		end
+	end
+	return { title = plainName, lines = lines }
+end
+
+-- All members agree -> the value; any disagreement -> nil, which the widgets
+-- render as their blank state rather than silently showing one member's value.
+-- A toggle's nil and false read the same per member before comparing.
+local function mergedGet(list, getterKey)
+	return function()
+		local first, have = nil, false
+		for i = 1, #list do
+			local f = list[i]
+			if f[getterKey] then
+				local v = f[getterKey]()
+				if f.type == "toggle" and getterKey == "get" then v = v and true or false end
+				if not have then
+					first, have = v, true
+				elseif not mergeValuesEqual(first, v) then
+					return nil
+				end
+			end
+		end
+		return first
+	end
+end
+
+local function mergedCall(list, fnKey)
+	return function(v)
+		S.beginRepaintBatch()
+		for i = 1, #list do
+			local fn = list[i][fnKey]
+			if fn then fn(v) end
+		end
+		S.endRepaintBatch()
+	end
+end
+
+-- A namelist widget mutates the very table its get() returns and then fires
+-- the change callbacks, so handing it one member's real list would edit that
+-- member alone. The merged field gets a throwaway proxy instead -- a copy of
+-- the agreed list, or empty when the members disagree (from which only Add is
+-- reachable, so an index-addressed op can never land on rows the members
+-- don't share) -- and every structural op re-applies itself to each member's
+-- real list before that member's own callbacks run.
+local function mergeNamelist(f, list)
+	local proxy = {}
+	local agreed = true
+	local first = list[1].get and list[1].get()
+	for i = 2, #list do
+		if not mergeValuesEqual(first, list[i].get and list[i].get()) then agreed = false end
+	end
+	if agreed and first then
+		for i = 1, #first do proxy[i] = first[i] end
+	end
+	f.get = function() return proxy end
+	f.onChange = nil
+	local function each(op)
+		S.beginRepaintBatch()
+		for i = 1, #list do
+			local c = list[i]
+			local l = c.get and c.get()
+			if l then op(c, l) end
+		end
+		S.endRepaintBatch()
+	end
+	f.onAdd = function(text)
+		each(function(c, l)
+			table.insert(l, text)
+			if c.onAdd then c.onAdd(text) elseif c.onChange then c.onChange() end
+		end)
+	end
+	f.onRemove = function(index)
+		each(function(c, l)
+			table.remove(l, index)
+			if c.onRemove then c.onRemove(index) elseif c.onChange then c.onChange() end
+		end)
+	end
+	f.onReorder = function(fromIndex, before)
+		each(function(c, l)
+			local moved = table.remove(l, fromIndex)
+			local at = before > fromIndex and before - 1 or before
+			table.insert(l, at, moved)
+			if c.onReorder then c.onReorder(fromIndex, before) elseif c.onChange then c.onChange() end
+		end)
+	end
+	return agreed
+end
+
+function S.buildMergedFields(tab, ids)
+	local members = {}
+	for i = 1, #ids do
+		local data = WeakestAurasDB.displays[ids[i]]
+		if data then
+			S.foldProbe = {}
+			local fields = S.buildTabFields(tab, data)
+			local folds = S.foldProbe
+			S.foldProbe = nil
+			table.insert(members, { data = data, fields = fields, folds = folds })
+		end
+	end
+	if #members == 0 then return {} end
+
+	-- Sections in first-appearance order, each holding its merged header and
+	-- an ordered item list; "" is the tab-scope run before any header and
+	-- "anon:" sections hang off plain (unkeyed, unfoldable) headers, matched
+	-- by name. Identity entries collect one contributor descriptor per member.
+	local sections, sectionByKey = {}, {}
+	local function sectionFor(key)
+		local s = sectionByKey[key]
+		if not s then
+			s = { key = key, items = {} }
+			sectionByKey[key] = s
+			table.insert(sections, s)
+		end
+		return s
+	end
+	local entries = {}
+	for m = 1, #members do
+		local cur = sectionFor("")
+		-- The keyed section a plain header's subsection lives inside. A plain
+		-- header ("Spell Selection" inside a trigger) subdivides the keyed
+		-- section around it rather than ending it: its anonymous section is
+		-- qualified by the outer key -- or trigger 2's "Spell Selection" would
+		-- merge into trigger 1's -- and folds when the outer section folds.
+		local outer = nil
+		local fields = members[m].fields
+		for i = 1, #fields do
+			local f = fields[i]
+			if f.soloOnly then
+				-- Single-aura-only: an identity, a per-aura op, or per-aura
+				-- prose. Skipped outright -- neither a section nor a passive.
+			elseif f.type == "header" then
+				if f.key then
+					cur = sectionFor(f.key)
+					outer = cur
+				else
+					cur = sectionFor((outer and outer.key .. "/" or "")
+						.. "anon:" .. (f.name or "?"))
+					cur.outer = outer
+				end
+				if not cur.header then cur.header = { spine = f, list = {} } end
+				if cur.header.lastMember ~= m then
+					cur.header.lastMember = m
+					table.insert(cur.header.list, f)
+				end
+			else
+				local ident = mergeIdentity(cur.key, f)
+				if ident then
+					local e = entries[ident]
+					if not e then
+						e = { spine = f, list = {}, ids = {} }
+						entries[ident] = e
+						local home = (f.scope == "tab") and sectionFor("__tail") or cur
+						table.insert(home.items, e)
+					end
+					if e.lastMember ~= m then
+						e.lastMember = m
+						table.insert(e.list, f)
+						table.insert(e.ids, members[m].data.id)
+					end
+				elseif m == 1 then
+					table.insert(cur.items, { passive = f })
+				end
+			end
+		end
+	end
+
+	-- "__tail" (the tab-scope add buttons) always flattens last: a member with
+	-- more sections than the spine appends them at the end, and the add button
+	-- belongs below those too, as it sits below every section in a single
+	-- member's own array.
+	local flat = {}
+	for s = 1, #sections do
+		if sections[s].key ~= "__tail" then table.insert(flat, sections[s]) end
+	end
+	if sectionByKey["__tail"] then table.insert(flat, sectionByKey["__tail"]) end
+
+	local merged = {}
+	for s = 1, #flat do
+		local section = flat[s]
+		local collapsed = false
+		-- A subsection of a folded keyed section disappears with it, header and
+		-- all -- what the single-aura generator does by omitting everything up
+		-- to the next trigger header. The outer always flattens first (it was
+		-- created first), so its state is already decided here.
+		if section.outer and section.outer.nowCollapsed then
+			collapsed = true
+		elseif section.header then
+			local spine = section.header.spine
+			local hdr = {}
+			for k, v in pairs(spine) do hdr[k] = v end
+			-- Per-member structural actions (duplicate/reorder arrows) act on
+			-- one member's list; until they fan out they are withheld rather
+			-- than silently editing whichever member built the spine.
+			hdr.actions = nil
+			if spine.collapsed ~= nil then
+				-- Folded if ANY member has it folded (upstream's convention,
+				-- ConditionOptions.lua) -- so the body only ever paints when
+				-- every member is contributing to it. Toggling writes the new
+				-- state to every member. Fold state lives under the header's
+				-- foldKey where that differs from its identity key (the display
+				-- effects, whose folds are addressed by bare index).
+				local foldKey = spine.foldKey or section.key
+				for m = 1, #members do
+					if members[m].folds[foldKey] then collapsed = true end
+				end
+				hdr.collapsed = collapsed
+				local newState = not collapsed
+				hdr.onToggle = function()
+					for m = 1, #members do
+						S.setCollapsed(members[m].data, foldKey, newState)
+					end
+					S.refreshTabContent()
+				end
+			end
+			if spine.onDelete then
+				hdr.onDelete = mergedCall(section.header.list, "onDelete")
+			end
+			table.insert(merged, hdr)
+		end
+		section.nowCollapsed = collapsed
+		if not collapsed then
+			for i = 1, #section.items do
+				local item = section.items[i]
+				if item.passive then
+					table.insert(merged, item.passive)
+				else
+					local f = {}
+					for k, v in pairs(item.spine) do f[k] = v end
+					f.actions = nil
+					-- Never auto-seed a merged field (see poolCode): its nil read
+					-- means disagreement at least as often as never-configured,
+					-- and the seed would write the default into every member.
+					f.noSeed = true
+					-- A merged toggle's nil is real disagreement (per-member reads
+					-- are coerced before comparing), so it alone earns the
+					-- indeterminate dash; an ordinary toggle's nil just means
+					-- false.
+					if item.spine.type == "toggle" then f.tristate = true end
+					local disagree = false
+					if item.spine.type == "namelist" then
+						disagree = not mergeNamelist(f, item.list)
+					else
+						if item.spine.get then
+							f.get = mergedGet(item.list, "get")
+							disagree = contributorsDisagree(item.list, "get")
+						end
+						if item.spine.set then f.set = mergedCall(item.list, "set") end
+						if item.spine.getOp then
+							f.getOp = mergedGet(item.list, "getOp")
+							disagree = disagree or contributorsDisagree(item.list, "getOp")
+						end
+						if item.spine.setOp then f.setOp = mergedCall(item.list, "setOp") end
+						if item.spine.getVal then
+							f.getVal = mergedGet(item.list, "getVal")
+							disagree = disagree or contributorsDisagree(item.list, "getVal")
+						end
+						if item.spine.setVal then f.setVal = mergedCall(item.list, "setVal") end
+						if item.spine.onClick then f.onClick = mergedCall(item.list, "onClick") end
+						if item.spine.onSelect then f.onSelect = mergedCall(item.list, "onSelect") end
+						-- A disagreeing colour shows black, as upstream's does --
+						-- the swatch has to show something pickable, and the blue
+						-- label below is what says "these differ", not the well.
+						if disagree and item.spine.type == "color" then
+							local realGet = f.get
+							f.get = function() return realGet() or { 0, 0, 0, 1 } end
+						end
+					end
+					-- Upstream's convention for "the members disagree": the
+					-- field's label turns blue (replaceNameDescFuncs) and its
+					-- caption carries a per-member value tooltip (descIfNoValue).
+					-- Both computed per build, and every edit repaints.
+					if disagree then
+						f.tooltip = mergeTooltip(item, f.name)
+						if f.name then f.name = "|cFF4080FF" .. f.name .. "|r" end
+					end
+					table.insert(merged, f)
+				end
+			end
+		end
+	end
+	return merged
+end
+
+-- Hands the strip the tab list. Every tab applies to every selection shape --
+-- a group's leaf tabs mass-edit its descendants (GROUP_CHILD_TABS) -- so the
+-- list is static.
+function S.rebuildTabs()
+	local list = {}
+	for i = 1, #S.TAB_DEFS do
+		local def = S.TAB_DEFS[i]
+		list[i] = { value = def.key, text = def.name }
+	end
+	S.tabStrip.setTabs(list)
+end
+
+-- Re-syncs the strip after a selection change.
+function S.updateTabAvailability()
+	S.rebuildTabs()
+	S.tabStrip.select(S.activeTab)
+end
+
+-- Status icons, pooled across every row rather than per row -- see the strip in
+-- S.ensureRow for why. A released icon is hidden and reparented on its next
+-- acquire; frames can't be destroyed on this client, so the pool is the only
+-- way the count stays bounded by what's on screen.
+S.statusPool = {}
+
+function S.acquireStatusIcon(parent)
+	local icon = table.remove(S.statusPool)
+	if not icon then
+		icon = CreateFrame("Button", nil, parent)
+		icon:SetWidth(S.STATUS_SIZE); icon:SetHeight(S.STATUS_SIZE)
+		local fill = icon:CreateTexture(nil, "ARTWORK")
+		fill:SetAllPoints(icon)
+		icon.fill = fill
+		icon:SetScript("OnEnter", function()
+			GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+			GameTooltip:SetText(this.tipTitle or "", 1, 1, 1)
+			if this.tipDesc then GameTooltip:AddLine(this.tipDesc, 0.8, 0.8, 0.8, true) end
+			GameTooltip:Show()
+		end)
+		icon:SetScript("OnLeave", function() GameTooltip:Hide() end)
+		icon:SetScript("OnClick", function() if this.onClick then this.onClick() end end)
+	end
+	icon:SetParent(parent)
+	icon:ClearAllPoints()
+	return icon
+end
+
+function S.releaseStatusIcon(icon)
+	if not icon then return end
+	icon:Hide()
+	icon.tipTitle, icon.tipDesc, icon.onClick = nil, nil, nil
+	for i = 1, #S.statusPool do
+		if S.statusPool[i] == icon then return end
+	end
+	table.insert(S.statusPool, icon)
+end
+
+-- The load entry's three looks, upstream's own art through the same strip the
+-- warning severities use.
+local LOAD_STATUS = {
+	loaded = { tex = WA.STATUS_TEXTURES .. "loaded.tga", title = "Loaded",
+		desc = "This aura's load conditions currently pass." },
+	standby = { tex = WA.STATUS_TEXTURES .. "standby.tga", title = "Standby",
+		desc = "This aura belongs to this character, but the moment doesn't qualify -- a combat, zone, group or form condition is holding it back." },
+	unloaded = { tex = WA.STATUS_TEXTURES .. "unloaded.tga", title = "Not Loaded",
+		desc = "This aura's load conditions don't currently pass, so it isn't active." },
+}
+
+-- "loaded"/"standby" share the upper bucket, "unloaded" is the lower one --
+-- matching upstream's loaded[id] ~= nil test (WA.DisplayLoadState collapses
+-- the same three-state read StateMachine.lua exposes).
+local function loadBucket(id)
+	return WA.DisplayLoadState(id) == "unloaded" and "unloaded" or "loaded"
+end
+
+-- Which bucket a rendered row index sits in: the nearest header at or above it.
+-- nil above the first header, which is a position no aura occupies. Drag uses
+-- this to keep a move inside the bucket it started in -- bucket membership is
+-- derived from load state every repaint, so a drop that changed it would have
+-- nothing to commit.
+local function bucketAt(rows, index)
+	for i = index, 1, -1 do
+		local entry = rows[i]
+		if entry and entry.header then return entry.header end
+	end
+	return nil
+end
+
+-- Flattens the display tree into the order rows actually render in: each
+-- entry is { id = ..., depth = ... }. With no active search, this is
+-- WA.GetOrder() depth-first, descending into a group's controlledChildren
+-- right after it only while S.expanded[groupId] isn't explicitly false.
+-- With an active search, hierarchy stops mattering -- every display (at any
+-- depth) whose id matches is included flat at depth 0, same as the old
+-- flat-list filter, just extended to search nested auras too.
+--
+-- `bucket`, when given, filters *top-level* (depth 0) entries to the ones
+-- whose loadBucket matches -- a child never bucket-filters on its own, so once
+-- a top-level id has been accepted for this pass every descendant renders
+-- under it regardless of its own load state.
+local function walkTree(ids, depth, rows, forceExpand, filterTerms, bucket)
+	for i = 1, #ids do
+		local id = ids[i]
+		local data = WeakestAurasDB.displays[id]
+		if data and (not bucket or depth > 0 or loadBucket(id) == bucket) then
+			if not filterTerms or S.matchesFilter(id, filterTerms) then
+				table.insert(rows, { id = id, depth = filterTerms and 0 or depth })
+			end
+			if WA.IsGroup(data) and (forceExpand or S.expanded[id] ~= false) then
+				walkTree(data.controlledChildren or {}, depth + 1, rows, forceExpand, filterTerms, bucket)
+			end
+		end
+	end
+end
+
+-- Fallback texture for a row whose regionType registers no thumbnail (or a
+-- group, which never gets one). WA.ResolveDisplayIcon (Data.lua) is the actual
+-- resolution rule, shared with the icon/progressbar thumbnails' modifyThumbnail
+-- so the two can't drift apart.
+local function resolveRowIcon(data)
+	return WA.ResolveDisplayIcon(data)
+end
+
+-- Two passes over the same tree, one per bucket, each fronted by its own
+-- header entry ({ header = "loaded"/"unloaded" }, no `id` field at all --
+-- bucket membership is derived here every repaint, never stored). Both
+-- headers always render, filtering or not, so a filtered result still shows
+-- which side of the divide it landed on.
+function S.buildRows()
+	local rows = {}
+	local searching = #S.searchTerms > 0
+	local filterTerms = searching and S.searchTerms or nil
+
+	table.insert(rows, { header = "loaded" })
+	if S.bucketExpanded["loaded"] ~= false then
+		walkTree(WA.GetOrder(), 0, rows, searching, filterTerms, "loaded")
+	end
+
+	table.insert(rows, { header = "unloaded" })
+	if S.bucketExpanded["unloaded"] ~= false then
+		walkTree(WA.GetOrder(), 0, rows, searching, filterTerms, "unloaded")
+	end
+
+	return rows
+end
+
+-- Frees whatever a row was holding on to before it goes dark or is rebound.
+-- The thumbnail pool only ever grows, so a row that skips this leaks one frame
+-- per type for every aura ever scrolled past.
+local function releaseRow(row)
+	if row.thumb then
+		WA.ReleaseThumbnail(row.thumb)
+		row.thumb = nil
+		row.thumbType = nil
+	end
+	row.clearStatuses()
+end
+
+-- A bucket header is a mode of the pooled row, not a second pool: it drops
+-- row.id (everything downstream keys off that staying non-nil for a real aura)
+-- and shows only the expand toggle and the title, styled as a caption.
+-- Every top-level aura currently in a bucket. The header's eye acts on all of
+-- them at once, so it needs the membership the row list derives per repaint.
+function S.bucketMembers(bucket)
+	local ids = {}
+	local order = WA.GetOrder()
+	for i = 1, #order do
+		if loadBucket(order[i]) == bucket then table.insert(ids, order[i]) end
+	end
+	return ids
+end
+
+-- One line: caption on the left, then the eye and the collapse toggle against
+-- the right edge (WA2's own header orders them the same way). The pooled row's
+-- parts are shared with an aura row, so each one that moves is re-anchored here
+-- and put back by paintAuraRow.
+local function paintBucketHeader(row, bucket)
+	row.header = true
+	row.id = nil
+	row.bucket = bucket
+	row.title:ClearAllPoints()
+	row.title:SetPoint("LEFT", row, "LEFT", 6, 0)
+	row.title:SetPoint("RIGHT", row.eye, "LEFT", -4, 0)
+	row.title:SetText(bucket == "loaded" and "Loaded" or "Not Loaded")
+	row.title:SetTextColor(1, 0.82, 0)
+	row.sub:SetText("")
+	row.sel:Hide()
+	row.icon:Hide()
+	row.iconBox:Hide()
+	row.ungroup:Hide()
+	releaseRow(row)
+
+	row.expand:ClearAllPoints()
+	row.expand:SetPoint("RIGHT", row, "RIGHT", -3, 0)
+	row.expand:Show()
+	row.expand.label:SetText(S.bucketExpanded[bucket] == false and "+" or "-")
+
+	-- Force-shows every aura in the bucket, so a whole set can be eyeballed at
+	-- once; the tri-state rolls up the same way a group's does.
+	row.eye:ClearAllPoints()
+	row.eye:SetPoint("RIGHT", row.expand, "LEFT", -2, 0)
+	row.eye:Show()
+	local fs = WA.ForcedStateMany(S.bucketMembers(bucket))
+	if fs == 2 then
+		row.eye.fill:SetTexture(W.EYE_TEXTURES .. "full")
+	elseif fs == 1 then
+		row.eye.fill:SetTexture(W.EYE_TEXTURES .. "partial")
+	else
+		row.eye.fill:SetTexture(W.EYE_TEXTURES .. "empty")
+	end
+	row:Show()
+end
+
+local function paintAuraRow(row, entry)
+	row.beginStatuses()
+	local id = entry.id
+	local data = WeakestAurasDB.displays[id]
+	local isGroup = WA.IsGroup(data)
+	row.header = false
+	row.id = id
+	-- Put back everything a header repaint moves: the two lines of text against
+	-- the preview, and the eye in the row's bottom-right corner.
+	row.title:ClearAllPoints()
+	row.title:SetPoint("TOPLEFT", row.iconBox, "TOPRIGHT", 4, 0)
+	row.title:SetPoint("TOPRIGHT", row, "TOPRIGHT", -4, -2)
+	row.title:SetTextColor(1, 1, 1)
+	row.title:SetText(id)
+	row.eye:ClearAllPoints()
+	row.eye:SetPoint("BOTTOMRIGHT", row, "BOTTOMRIGHT", -3, 2)
+	row.expand:ClearAllPoints()
+	row.expand:SetPoint("BOTTOMLEFT", row.iconBox, "BOTTOMRIGHT", 2, 0)
+	row.iconBox:Show()
+	row.eye:Show()
+	if isGroup then
+		local n = #(data.controlledChildren or {})
+		row.sub:SetText(n == 1 and "1 aura" or (n .. " auras"))
+		row.expand:Show()
+		row.expand.label:SetText(S.expanded[id] == false and "+" or "-")
+		-- The summary shares its line with the toggle, so it starts after it on a
+		-- group row and against the preview on a leaf.
+		row.sub:SetPoint("BOTTOMLEFT", row.expand, "BOTTOMRIGHT", 2, 0)
+	else
+		local t1 = WA.GetTrigger(data, 1)
+		local trigger = t1 and WA.triggerTypes[t1.type]
+		row.sub:SetText(trigger and trigger.summary and trigger.summary(data) or "")
+		row.expand:Hide()
+		row.expand.label:SetText("")
+		row.sub:SetPoint("BOTTOMLEFT", row.iconBox, "BOTTOMRIGHT", 4, 0)
+	end
+	-- Indent, then the ungroup button on a child row, then the preview.
+	local x = 2 + entry.depth * S.INDENT_W
+	if data.parent then
+		row.ungroup:ClearAllPoints()
+		row.ungroup:SetPoint("LEFT", row, "LEFT", x, 0)
+		row.ungroup:Show()
+		x = x + S.UNGROUP_W + 2
+	else
+		row.ungroup:Hide()
+	end
+	row.iconBox:ClearAllPoints()
+	row.iconBox:SetPoint("TOPLEFT", row, "TOPLEFT", x, -2)
+	-- Real per-region-type preview when the type registers one (Regions.lua); a
+	-- row is pooled by *slot* and rebound to a different aura on every scroll
+	-- tick, so the thumbnail is only trustworthy while regionType hasn't changed
+	-- underneath it -- a change releases and reacquires, an unchanged type just
+	-- repaints the frame already sitting there.
+	local regionSpec = WA.regionTypes[data.regionType]
+	if regionSpec and regionSpec.createThumbnail then
+		if row.thumbType ~= data.regionType then
+			WA.ReleaseThumbnail(row.thumb)
+			row.thumb = WA.AcquireThumbnail(data.regionType, row, data, S.ROW_H - 4)
+			-- Only claim the type once a frame actually came back, or a failed
+			-- acquire would look satisfied on every later repaint and the row
+			-- would stay blank.
+			row.thumbType = row.thumb and data.regionType or nil
+			if row.thumb then
+				row.thumb:SetPoint("TOPLEFT", row.iconBox, "TOPLEFT", 0, 0)
+			end
+		else
+			WA.ModifyThumbnail(data.regionType, row.thumb, data)
+		end
+	elseif row.thumb then
+		WA.ReleaseThumbnail(row.thumb)
+		row.thumb = nil
+		row.thumbType = nil
+	end
+	if row.thumb then
+		row.icon:Hide()
+	else
+		row.icon:Show()
+		row.icon:SetTexture(resolveRowIcon(data) or S.FALLBACK_ICON)
+	end
+	-- A group's own id never enters S.selection (see S.leafDescendants), so its
+	-- row highlights instead when every one of its descendants is selected --
+	-- otherwise a collapsed group ctrl-clicked into the selection would show no
+	-- feedback at all.
+	local highlighted = isGroup and S.allDescendantsSelected(id) or S.isSelected(id)
+	if highlighted then row.sel:Show() else row.sel:Hide() end
+	-- Eye tri-state (WA.ForcedState 2/1/0): full = eye-pinned (stays shown),
+	-- partial = shown only because it's the current selection, empty =
+	-- hidden/muted. For a group these roll up (all pinned / partly visible /
+	-- dark). The frames stay Shown throughout -- an empty eye is a state, not an
+	-- absence, so hiding it would read as the indicator being missing rather
+	-- than as "not visible".
+	local fs = WA.ForcedState(id)
+	local fill = row.eye.fill
+	if fs == 2 then
+		fill:SetTexture(W.EYE_TEXTURES .. "full")
+	elseif fs == 1 then
+		fill:SetTexture(W.EYE_TEXTURES .. "partial")
+	else
+		fill:SetTexture(W.EYE_TEXTURES .. "empty")
+	end
+	-- Load state as the strip's first entry. A group takes the priority roll-up
+	-- (any leaf loaded wins, else any standby), with the leaf counts in the
+	-- tooltip so the "n of N" reading survives.
+	local state, nLoaded, nStandby, nLeaves = WA.DisplayLoadState(id)
+	if not (isGroup and nLeaves == 0) then
+		local look = LOAD_STATUS[state]
+		local desc = look.desc
+		if isGroup then
+			desc = nLoaded .. " of " .. nLeaves .. " auras loaded"
+			if nStandby > 0 then desc = desc .. ", " .. nStandby .. " on standby" end
+		end
+		row.setStatus("load", 1, look.tex, look.title, desc)
+	end
+	-- One warning entry carrying the worst severity, where upstream renders one
+	-- icon per severity. The summary line is pinned to the strip's left edge, so
+	-- each extra icon truncates it -- at LIST_W a child row's summary starts with
+	-- about 86px and every entry costs 18 of them.
+	local wIcon, wTitle, wBody, wLook, wOffender
+	if isGroup then
+		-- A group's own warnings *and* its leaves', worst wins. Its own are not
+		-- hypothetical: a dynamic group's custom sort, grow and per-unit anchor are
+		-- three user-code fields that live on the group, so a group row is the only
+		-- place a failure in one of them can be reported. A leaf that beats it
+		-- carries the offender's id, so the click lands on the fault rather than on
+		-- a container that only contains it.
+		local bestRank
+		local own = WA.MaxWarningSeverity(data.uid)
+		if own then bestRank = WA.WarningRank(own) end
+		local leaves = S.leafDescendants(id)
+		for i = 1, #leaves do
+			local child = WeakestAurasDB.displays[leaves[i]]
+			local severity = child and WA.MaxWarningSeverity(child.uid)
+			local rank = severity and WA.WarningRank(severity)
+			if rank and (not bestRank or rank > bestRank) then
+				wOffender, bestRank = leaves[i], rank
+			end
+		end
+		if wOffender then
+			wIcon, wTitle, wBody, wLook = WA.FormatWarnings(WeakestAurasDB.displays[wOffender].uid)
+			wBody = wOffender .. ": " .. (wBody or "")
+		elseif bestRank then
+			wIcon, wTitle, wBody, wLook = WA.FormatWarnings(data.uid)
+		end
+	else
+		wIcon, wTitle, wBody, wLook = WA.FormatWarnings(data.uid)
+	end
+	if wIcon then
+		local target = wOffender or id
+		row.setStatus("warning", 5, wIcon, wTitle, wBody, function()
+			S.setSelection(target)
+			S.selectTab("info")
+		end, wLook)
+	end
+	-- Releases every entry this repaint didn't re-set, so a status that stopped
+	-- applying doesn't ride the row into its next aura.
+	row.layoutStatuses()
+	row:Show()
+end
+
+local function entryHeight(entry)
+	return entry.header and S.HEADER_H or S.ROW_H
+end
+
+-- Rows are not a uniform grid: a bucket header is shorter than an aura row, so
+-- each row is placed at the running total of the heights above it and carries
+-- that geometry (row.slotY/slotH) for the drag hit-test to read back. The paint
+-- runs until the next entry wouldn't fit, which is what decides how many rows
+-- are on screen -- S.visibleRows is only the pool's starting size.
+function S.refreshList()
+	-- Before anything rebinds: an open rename box belongs to the aura it was
+	-- opened on, and this repaint may hand its row to a different one.
+	S.closeRename()
+	S.updateVisibleRows()
+	local rows = S.buildRows()
+
+	local offset = S.scroll.offset or 0
+	local avail = (S.listAvail or 0) - 4
+	local y, painted = 0, 0
+	local i = 1
+	while true do
+		local entry = rows[offset + i]
+		if not entry then break end
+		local h = entryHeight(entry)
+		if y + h > avail then break end
+		local row = S.ensureRow(i)
+		row:SetHeight(h)
+		row:ClearAllPoints()
+		row:SetPoint("TOPLEFT", S.listBg, "TOPLEFT", 2, -2 - y)
+		row:SetPoint("TOPRIGHT", S.scroll, "TOPRIGHT", 0, -y)
+		row.slotY, row.slotH = y, h
+		row.index = offset + i
+		if entry.header then
+			paintBucketHeader(row, entry.header)
+		else
+			paintAuraRow(row, entry)
+		end
+		y = y + h
+		painted = i
+		i = i + 1
+	end
+	S.paintedCount = painted
+	-- Ends the border flush under the last row painted, whatever mix of header
+	-- and aura heights that turned out to be.
+	S.listBg:SetHeight(y + 4)
+
+	-- The bar counts rows, not pixels. The largest offset is the one that still
+	-- fills the view, so scrolling stops with the last entry at the bottom
+	-- rather than running past it into blank space.
+	local total = #rows
+	local maxOffset = total - painted
+	if maxOffset < 0 then maxOffset = 0 end
+	S.maxOffset = maxOffset
+	if offset > maxOffset then
+		S.scroll.offset = maxOffset
+		return S.refreshList()
+	end
+	if S.listBar then
+		S.barSyncing = true
+		S.listBar.Fit(maxOffset, y, total > 0 and painted / total or 1)
+		S.listBar:SetValue(offset)
+		S.barSyncing = nil
+	end
+	-- Every row past what the paint used goes dark. A held thumbnail or status
+	-- icon must be released on the way, or scrolling past an aura leaks one
+	-- frame per type into nothing -- the pools only ever grow.
+	for k = painted + 1, #S.rows do
+		local r = S.rows[k]
+		releaseRow(r)
+		r.slotY, r.slotH = nil, nil
+		r:Hide()
+	end
+end
+
+-- Where the tab strip's top edge sits, measured down from the panel's top. The
+-- strip grows downward from here and the content pane starts below whatever it
+-- ends up occupying, so this is the one fixed number of the pair.
+function S.tabStripTop()
+	return 36 + S.SEARCH_H + S.TOOLBAR_H
+end
+
+-- Puts the content pane's top edge under a strip of `rows` rows. Called at build
+-- with one row and from the strip's onReflow after that; a group hiding five
+-- tabs collapses to one row and hands the second row's height back to the
+-- content pane. contentBg is anchored to contentScroll and follows for free.
+function S.anchorContent(rows)
+	if rows < 1 then rows = 1 end
+	local stripH = rows * S.TAB_ROW_H + (rows - 1) * S.TAB_ROW_GAP
+	S.contentScroll:SetPoint("TOPRIGHT", S.panel, "TOPRIGHT", -14,
+		-(S.tabStripTop() + stripH + S.TAB_TO_CONTENT))
+end
+
+function S.selectTab(key)
+	S.searchBox:ClearFocus()
+	S.activeTab = key
+	S.tabStrip.select(key)
+	S.refreshTabContent()
+end
+
+function S.scheduleUnconfirm(button, text)
+	text = text or "Delete"
+	C_Timer.After(3, function()
+		if button.confirming then
+			button.confirming = nil
+			button.label:SetText(text)
+		end
+	end)
+end
+
+-- ---------------------------------------------------------------------------
+-- Import/Export dialog: one lazily-built toplevel window reused for
+-- both directions -- a multi-line editbox plus a Load button shown only in
+-- import mode. Independent of buildPanel (its own frame), so /wa export|import
+-- work whether or not the main panel is open.
+-- ---------------------------------------------------------------------------
+
+function S.ensureIEDialog()
+	if S.ieDialog then return S.ieDialog end
+	-- Function-scoped rather than chunk-level: a local here would count against
+	-- buildPanel's upvalue budget, which is already at Lua 5.0's limit (see the
+	-- S-table note at the top of this file).
+	local DIALOG_W = 480
+	local f = CreateFrame("Frame", "WeakestAurasIEDialog", UIParent)
+	f:SetWidth(DIALOG_W); f:SetHeight(360)
+	f:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+	f:SetBackdrop(W.PANEL_BACKDROP)
+	f:SetBackdropColor(0, 0, 0, 1)
+	f:SetFrameStrata("FULLSCREEN_DIALOG")
+	f:SetToplevel(true)
+	f:SetMovable(true)
+	f:EnableMouse(true)
+	f:RegisterForDrag("LeftButton")
+	f:SetScript("OnDragStart", function() f:StartMoving() end)
+	f:SetScript("OnDragStop", function() f:StopMovingOrSizing() end)
+	f:Hide()
+
+	local title = f:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+	title:SetPoint("TOP", 0, -14)
+	title:SetTextColor(1, 0.82, 0)
+	f.title = title
+
+	local close = CreateFrame("Button", nil, f, "UIPanelCloseButton")
+	close:SetPoint("TOPRIGHT", -4, -4)
+	close:SetScript("OnClick", function() f:Hide() end)
+
+	local box = LibWidgets.NewMultiLineEditBox(f, {
+		width = 456, height = 250,
+		-- Editing the box after a preview throws the pending tree away, so that
+		-- Confirm can never install something other than what was reviewed.
+		--
+		-- Recognising our own write by content, not by a flag raised around
+		-- `setText`: this client does not deliver a scripted SetText's
+		-- OnTextChanged inside the call, so any such flag is already lowered by
+		-- the time the change lands and the summary reads as the user having
+		-- retyped the box -- which discards the tree one frame after it was
+		-- built and leaves Confirm re-parsing its own report.
+		onChange = function(text)
+			if f.preview then
+				if text == f.previewText then return end
+				f.pending, f.report, f.preview = nil, nil, nil
+				f.confirmMode, f.importText, f.previewText = nil, nil, nil
+			end
+			S.refreshImportNotice(f, text)
+		end,
+	})
+	box:SetPoint("TOPLEFT", 12, -40)
+	f.box = box
+
+	-- A refusal reason runs past one line, and **SetWidth is what makes a
+	-- FontString wrap here** -- anchoring both horizontal edges gives it a
+	-- layout width without wrapping anything, and the text is then cut instead.
+	-- The text region relies on the same rule from the other side: it clears the
+	-- width with SetWidth(0) precisely to stop a string wrapping.
+	--
+	-- One anchor, not two: with an explicit width a second horizontal point
+	-- constrains the same axis twice. Anchoring at the BOTTOM leaves the height
+	-- free to grow upward as lines are added.
+	local status = f:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	status:SetPoint("BOTTOMLEFT", f, "BOTTOMLEFT", 14, 18)
+	status:SetWidth(DIALOG_W - 14 - 104)
+	status:SetJustifyH("LEFT")
+	status:SetJustifyV("BOTTOM")
+	f.status = status
+
+	local loadBtn = W.button(f, "Import", nil)
+	loadBtn:SetWidth(84)
+	loadBtn:SetPoint("BOTTOMRIGHT", -12, 12)
+	loadBtn:SetScript("OnClick", function()
+		if f.pending then
+			local id, err = WA.ConfirmImport(f.pending, f.confirmMode, f.duplicateOf)
+			if id then S.finishImport(f, id)
+			else f.status:SetText("Import failed: " .. (err or "unknown")); f.status:SetTextColor(1, 0.4, 0.4) end
+		else
+			S.stageImport(f, "copy")
+		end
+	end)
+	f.loadBtn = loadBtn
+
+	local updateBtn = W.button(f, "Update", nil)
+	updateBtn:SetWidth(84)
+	updateBtn:SetPoint("RIGHT", loadBtn, "LEFT", -8, 0)
+	updateBtn:SetScript("OnClick", function()
+		if f.pending then
+			local id, err = WA.ConfirmImport(f.pending, "update", f.duplicateOf)
+			if id then S.finishImport(f, id)
+			else f.status:SetText("Update failed: " .. (err or "unknown")); f.status:SetTextColor(1, 0.4, 0.4) end
+		else
+			S.stageImport(f, "update")
+		end
+	end)
+	updateBtn:Hide()
+	f.updateBtn = updateBtn
+	f:SetScript("OnHide", function()
+		f.pending, f.report, f.preview = nil, nil, nil
+		f.confirmMode, f.importText, f.previewText = nil, nil, nil
+	end)
+
+	S.ieDialog = f
+	return f
+end
+
+-- The received-transfer dialog is independent from the list. A received import
+-- may have no list state.
+function S.finishImport(f, id)
+	f:Hide()
+	if not S.panel or not S.updateVisibleRows then return end
+	S.refreshList()
+	S.setSelection(id)
+end
+
+function S.stageImport(f, requestedMode)
+	local text = f.box.getText() or ""
+	f.importText = text
+	local pending, report = WA.ImportPreview(text)
+	f.pending, f.report = pending, report
+	if not pending or report.refused then
+		f.pending, f.report, f.preview = nil, report, nil
+		f.confirmMode, f.duplicateOf, f.canUpdate = nil, nil, nil
+		f.previewText = nil
+		f.loadBtn.setText("Import")
+		f.loadBtn:SetWidth(84)
+		f.updateBtn:Hide()
+		f.status:SetText(report and report.refused or "Import failed")
+		f.status:SetTextColor(1, 0.4, 0.4)
+		f.status:SetPoint("RIGHT", f, "RIGHT", -24 - f.loadBtn:GetWidth(), 0)
+		return nil
+	end
+	local existing, canUpdate = WA.ImportInfo(text)
+	f.duplicateOf, f.canUpdate = existing, canUpdate
+	f.confirmMode = requestedMode == "update" and canUpdate and "update" or "copy"
+	f.preview = true
+	f.previewText = WA.ImportSummary(pending, report)
+	f.box.setText(f.previewText)
+	f.noticeFor = nil
+	f.loadBtn.setText("Confirm")
+	f.loadBtn:SetWidth(84)
+	if canUpdate then
+		f.updateBtn:Show()
+		f.updateBtn.setText(f.confirmMode == "update" and "Confirm Update" or "Update")
+	else
+		f.updateBtn:Hide()
+	end
+	local reserve = 24 + f.loadBtn:GetWidth()
+	if f.updateBtn:IsShown() then reserve = reserve + 8 + f.updateBtn:GetWidth() end
+	if report and report.schemaAhead then
+		f.status:SetText("Made with a newer WeakestAuras -- read the summary, then confirm.")
+	else
+		f.status:SetText("Review the summary, then confirm.")
+	end
+	f.status:SetTextColor(1, 0.82, 0)
+	f.status:SetPoint("RIGHT", f, "RIGHT", -reserve, 0)
+	return pending, report
+end
+
+-- Says whether the pasted or received string is one we already hold, and
+-- renames the button to match. Only ever advice: importing adds a display and
+-- never touches the one it recognises. Memoised on the exact text because
+-- onChange fires per keystroke and the check has to decode the whole blob.
+-- A long aura name would otherwise push the notice under the buttons.
+local function shortId(id)
+	if string.len(id) > 26 then return string.sub(id, 1, 25) .. "..." end
+	return id
+end
+
+function S.refreshImportNotice(f, text)
+	if f.exporting then return end
+	text = text or f.box.getText() or ""
+	if f.noticeFor == text then return end
+	f.noticeFor = text
+
+	local existing, canUpdate
+	if text ~= "" then existing, canUpdate = WA.ImportInfo(text) end
+	f.duplicateOf, f.canUpdate = existing, canUpdate
+
+	if not existing then
+		f.updateBtn:Hide()
+		f.loadBtn.setText("Import")
+		f.loadBtn:SetWidth(84)
+		f.status:SetText(f.baseStatus or "")
+		f.status:SetTextColor(0.7, 0.7, 0.7)
+	else
+		f.loadBtn.setText("Import as Copy")
+		f.loadBtn:SetWidth(112)
+		f.status:SetTextColor(1, 0.82, 0)
+		-- The button labels say what each choice does; repeating it here is what
+		-- made this line long enough to run under them.
+		if canUpdate then
+			f.updateBtn:Show()
+			f.status:SetText("You already have this as \"" .. shortId(existing) .. "\".")
+		else
+			f.updateBtn:Hide()
+			f.status:SetText("You already have \"" .. shortId(existing)
+				.. "\". Groups can only be copied.")
+		end
+	end
+
+	-- Re-reserve the right edge from the buttons actually showing, rather than a
+	-- constant sized for the one button this dialog used to have.
+	local reserve = 24 + f.loadBtn:GetWidth()
+	if f.updateBtn:IsShown() then reserve = reserve + 8 + f.updateBtn:GetWidth() end
+	f.status:SetPoint("RIGHT", f, "RIGHT", -reserve, 0)
+end
+
+function S.openExport(id)
+	local f = S.ensureIEDialog()
+	f.title:SetText("Export Aura")
+	f.exporting = true
+	f.pending, f.report, f.preview = nil, nil, nil
+	f.confirmMode, f.importText, f.previewText = nil, nil, nil
+	f.noticeFor = nil
+	f.loadBtn:Hide()
+	f.updateBtn:Hide()
+	local blob, err = WA.Export(id)
+	f.box.setText(blob or ("-- export failed: " .. (err or "unknown")))
+	f.status:SetText(blob and "Ctrl-C to copy this string." or (err or ""))
+	f.status:SetTextColor(0.7, 0.7, 0.7)
+	f:Show()
+	if blob then f.box.focusSelectAll() end
+end
+
+function S.openImport()
+	local f = S.ensureIEDialog()
+	f.title:SetText("Import Aura")
+	f.exporting = nil
+	f.pending, f.report, f.preview = nil, nil, nil
+	f.confirmMode, f.importText, f.previewText = nil, nil, nil
+	f.noticeFor = nil
+	f.loadBtn:Show()
+	f.box.setText("")
+	if WA.hasImportExport then
+		f.baseStatus = "Paste an exported string, then Import."
+	else
+		f.baseStatus = "C_EncodingUtil unavailable -- import/export disabled on this client."
+	end
+	S.refreshImportNotice(f, "")
+	f:Show()
+	f.box.focusSelectAll()
+end
+
+-- A received aura lands in the ordinary import dialog rather than importing
+-- itself: the user still confirms, and the string stays inspectable and
+-- copyable if the import goes wrong.
+function S.openReceived(sender, name, blob)
+	local f = S.ensureIEDialog()
+	f.title:SetText(sender .. " sent you \"" .. name .. "\"")
+	f.exporting = nil
+	f.pending, f.report, f.preview = nil, nil, nil
+	f.confirmMode, f.importText, f.previewText = nil, nil, nil
+	f.noticeFor = nil
+	-- Nothing to say: the title names the sender and the aura, and the box holds
+	-- an opaque blob there is no way to read. A duplicate notice may fill this.
+	f.baseStatus = ""
+	f.loadBtn:Show()
+	f.box.setText(blob)
+	-- setText fires onChange, but not on a client where it doesn't; ask directly
+	-- so the duplicate notice is up before the user reads the dialog.
+	S.refreshImportNotice(f, blob)
+	f:Show()
+	f.box.focusSelectAll()
+end
+
+WA.Comm.OnPayload = S.openReceived
+
+-- ---------------------------------------------------------------------------
+-- Footer: the build's own version, the companion website, and the detected
+-- client-mod versions. WA2 parks its link row (Discord/docs/bug tracker) in a
+-- bottom tipFrame the same way; version-in-the-title is the one thing it does
+-- differently, and the footer keeps our title row free for the toolbar.
+-- ---------------------------------------------------------------------------
+
+-- Colour runs for the footer's mod list: green = present, grey = an optional
+-- mod that is absent.
+local MOD_OK, MOD_OPTIONAL = "|cff33ff99", "|cff999999"
+
+function S.footerModsText()
+	local parts = {}
+	table.insert(parts, MOD_OK .. "ClassicAPI " .. (WA.ClassicAPIVersionString() or "?") .. "|r")
+
+	local np = WA.NampowerVersionString()
+	if np or WA.hasNampower then
+		table.insert(parts, MOD_OK .. "Nampower" .. (np and (" " .. np) or "") .. "|r")
+	else
+		table.insert(parts, MOD_OPTIONAL .. "Nampower (optional)|r")
+	end
+	return table.concat(parts, "   ")
+end
+
+-- Fills an already-owned GameTooltip; the caller anchors and shows it.
+function S.footerModsTooltip()
+	GameTooltip:SetText("Client mods", 1, 1, 1)
+	GameTooltip:AddLine("ClassicAPI " .. (WA.ClassicAPIVersionString() or "?"), 0.2, 1, 0.6)
+
+	local np = WA.NampowerVersionString()
+	if np or WA.hasNampower then
+		GameTooltip:AddLine("Nampower" .. (np and (" " .. np) or ""), 0.2, 1, 0.6)
+	else
+		GameTooltip:AddLine("Nampower not installed. It is optional: without it the swing timer polls "
+			.. "the action bar for a queued ability.", 0.6, 0.6, 0.6, true)
+	end
+	GameTooltip:AddLine(" ")
+	GameTooltip:AddLine("Click for copyable download links.", 0.8, 0.8, 0.8)
+end
+
+-- The client cannot open a browser, so every "link" in the addon -- the footer's
+-- site button and an aura's imported-from stamp alike -- is this copyable box.
+--
+-- `url` is one string, or an array of { label, url } for a dialog offering
+-- several. Rows are pooled and hidden up front, so a two-row dialog opened
+-- after a three-row one cannot leave the third on screen.
+local URL_ROW_H = 40
+
+local function urlDialogRow(f, index)
+	local rows = f.rows
+	if rows[index] then return rows[index] end
+	local label = f:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	label:SetPoint("TOPLEFT", f, "TOPLEFT", 16, -(34 + (index - 1) * URL_ROW_H))
+	label:SetJustifyH("LEFT")
+	local box = LibWidgets.NewTextBox(f, { width = 332, text = "" })
+	box:SetPoint("TOPLEFT", f, "TOPLEFT", 14, -(48 + (index - 1) * URL_ROW_H))
+	box:SetScript("OnEscapePressed", function()
+		this:ClearFocus()
+		f:Hide()
+	end)
+	rows[index] = { label = label, box = box }
+	return rows[index]
+end
+
+function S.openURLDialog(title, url)
+	if not S.urlDialog then
+		local f = CreateFrame("Frame", "WeakestAurasURLDialog", UIParent)
+		f:SetWidth(360); f:SetHeight(96)
+		f:SetPoint("CENTER", UIParent, "CENTER", 0, 60)
+		f:SetBackdrop(W.PANEL_BACKDROP)
+		f:SetBackdropColor(0, 0, 0, 1)
+		f:SetFrameStrata("FULLSCREEN_DIALOG")
+		f:SetToplevel(true)
+		f:EnableMouse(true)
+		f:Hide()
+
+		local heading = f:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+		heading:SetPoint("TOP", 0, -14)
+		heading:SetTextColor(1, 0.82, 0)
+		f.heading = heading
+
+		local close = CreateFrame("Button", nil, f, "UIPanelCloseButton")
+		close:SetPoint("TOPRIGHT", -4, -4)
+		close:SetScript("OnClick", function() f:Hide() end)
+
+		f.rows = {}
+
+		local hint = f:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+		hint:SetPoint("BOTTOM", 0, 10)
+		hint:SetText("Ctrl-C to copy, Escape to close.")
+
+		S.urlDialog = f
+	end
+	local f = S.urlDialog
+	local entries = type(url) == "table" and url or { { url = url } }
+	local count = #entries
+
+	for i = 1, #f.rows do
+		f.rows[i].label:Hide()
+		f.rows[i].box:Hide()
+	end
+	for i = 1, count do
+		local row = urlDialogRow(f, i)
+		if entries[i].label then
+			row.label:SetText(entries[i].label)
+			row.label:Show()
+		end
+		row.box:SetText(entries[i].url)
+		row.box:Show()
+	end
+
+	-- Kept for the single-URL callers, and for the driver that reads it back.
+	f.box = f.rows[1].box
+	f:SetHeight(48 + count * URL_ROW_H + 26)
+	f.heading:SetText(title)
+	f:Show()
+	f.box:SetFocus()
+	f.box:HighlightText()
+end
+
+function S.openWebsite()
+	S.openURLDialog("Companion Website", WA.WEBSITE)
+end
+
+-- Where to get the three client mods WeakestAuras runs on.
+function S.openModSources()
+	local entries = {}
+	for i = 1, #WA.MOD_SOURCES do
+		table.insert(entries, {
+			label = WA.MOD_SOURCES[i].mod, url = WA.MOD_SOURCES[i].url,
+		})
+	end
+	S.openURLDialog("Client mod downloads", entries)
+end
+
+function S.buildFooter(panel)
+	local footer = CreateFrame("Frame", nil, panel)
+	footer:SetHeight(16)
+	footer:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 14, 10)
+	-- Right inset clears the resize grip.
+	footer:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", -26, 10)
+
+	local logo = footer:CreateTexture(nil, "ARTWORK")
+	logo:SetWidth(16); logo:SetHeight(16)
+	logo:SetPoint("LEFT", footer, "LEFT", 0, 0)
+	logo:SetTexture("Interface\\AddOns\\WeakestAuras\\textures\\weako.tga")
+
+	local version = footer:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+	version:SetPoint("LEFT", logo, "RIGHT", 5, 0)
+
+	-- Labelled by task, not by domain -- upstream's wago button says "Find
+	-- Auras", and the domain rides behind it. The lead-in is an escaped grey
+	-- run, so the hover recolour (SetTextColor sets only the base) brightens
+	-- just the site name.
+	local site = CreateFrame("Button", nil, footer)
+	site:SetHeight(16)
+	local siteText = site:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	siteText:SetPoint("LEFT", 0, 0)
+	siteText:SetText("|cff9d9d9dFind or upload auras at|r weako.xyz")
+	site.text = siteText
+	site:SetWidth((siteText:GetStringWidth() or 160) + 2)
+	site:SetPoint("LEFT", version, "RIGHT", 10, 0)
+	site:SetScript("OnClick", function() S.openWebsite() end)
+	site:SetScript("OnEnter", function()
+		this.text:SetTextColor(1, 1, 0.5)
+		GameTooltip:SetOwner(this, "ANCHOR_NONE")
+		GameTooltip:SetPoint("BOTTOMLEFT", this, "TOPLEFT", 0, 6)
+		GameTooltip:SetText("The WeakestAuras companion website", 1, 1, 1)
+		GameTooltip:AddLine("Click for a copyable link.", 0.8, 0.8, 0.8)
+		GameTooltip:Show()
+	end)
+	site:SetScript("OnLeave", function()
+		this.text:SetTextColor(1, 0.82, 0)
+		GameTooltip:Hide()
+	end)
+
+	local mods = CreateFrame("Button", nil, footer)
+	mods:SetHeight(16)
+	mods:SetPoint("RIGHT", footer, "RIGHT", 0, 0)
+	mods:EnableMouse(true)
+	local modsText = mods:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	modsText:SetPoint("RIGHT", 0, 0)
+	mods:SetScript("OnEnter", function()
+		GameTooltip:SetOwner(this, "ANCHOR_NONE")
+		GameTooltip:SetPoint("BOTTOMRIGHT", this, "TOPRIGHT", 0, 6)
+		S.footerModsTooltip()
+		GameTooltip:Show()
+	end)
+	mods:SetScript("OnLeave", function() GameTooltip:Hide() end)
+	mods:SetScript("OnClick", function() S.openModSources() end)
+
+	-- Refreshed on every open, not just at build: the degraded list grows as
+	-- gated features first run.
+	local function updateFooter()
+		version:SetText(WA.version and ("WeakestAuras " .. WA.version) or "WeakestAuras")
+		modsText:SetText(S.footerModsText())
+		mods:SetWidth((modsText:GetStringWidth() or 0) + 4)
+	end
+	footer:SetScript("OnShow", updateFooter)
+	updateFooter()
+end
+
+local function buildPanel()
+	local panel = CreateFrame("Frame", "WeakestAurasOptions", UIParent)
+	S.panel = panel
+	panel:SetWidth(S.DEFAULT_W); panel:SetHeight(S.DEFAULT_H)
+	panel:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+	panel:SetBackdrop(W.PANEL_BACKDROP)
+	panel:SetBackdropColor(0, 0, 0, 1)
+	panel:SetFrameStrata("DIALOG")
+	panel:SetToplevel(true)
+	panel:SetMovable(true)
+	panel:SetResizable(true)
+	panel:SetMinResize(S.MIN_W, S.MIN_H)
+	panel:SetMaxResize(S.MAX_W, S.MAX_H)
+	panel:EnableMouse(true)
+	panel:Hide()
+	-- Closing the window (the X button, or /wa toggling it shut) should stop
+	-- painting a dummy preview for whatever aura was selected -- otherwise it'd
+	-- keep showing a fake state in-world with no config window open to explain why.
+	-- Also close any open LibWidgets dropdown: hiding the panel only suppresses a
+	-- child menu's visibility, not its Shown flag, so one left open would pop back
+	-- up expanded next time the panel reopens.
+	-- ClearForced drops the fakes; SetOptionsOpen(false) lifts the config-mode
+	-- mute so every aura's real state resumes in-world.
+	panel:SetScript("OnHide", function()
+		S.closeRename()
+		WA.ClearForced()
+		WA.SetOptionsOpen(false)
+		WA.Mover.Detach()
+		LibWidgets.CloseAllMenus()
+		-- The icon picker is a UIParent-level dialog (it has to outrank the panel
+		-- to sit over it), so nothing takes it down with the panel unless we do.
+		W.CloseIconPicker()
+		W.CloseTexturePicker()
+		-- Same for the context menu's click-away catcher, which is a UIParent
+		-- child so that it can cover the whole screen.
+		if S.menu then S.menu.Close() end
+	end)
+	-- A click on bare panel background (no interactive widget under the cursor)
+	-- closes an open dropdown and drops edit focus -- the one case LibWidgets'
+	-- interaction-driven auto-close can't catch on its own. The content pane and
+	-- its backdrop take no clicks, so a click into the empty space beside a code
+	-- editor lands here, which is what commits and re-colours it.
+	panel:SetScript("OnMouseDown", function()
+		LibWidgets.CloseAllMenus()
+		if S.menu then S.menu.Close() end
+	end)
+
+	-- Dragging the panel by its body/title, exactly like the sibling
+	-- Quartermaster's own main panel (Config.lua's build()) -- registered on
+	-- the panel itself rather than a separate invisible strip. That strip
+	-- (this file's previous approach) sat on top of the close button's
+	-- top-right corner and was intercepting clicks meant for it; a plain
+	-- RegisterForDrag on the panel doesn't shadow child frames like close,
+	-- since a topmost mouse-enabled child still wins hit-testing at its pixels.
+	panel:RegisterForDrag("LeftButton")
+	panel:SetScript("OnDragStart", function() panel:StartMoving() end)
+	panel:SetScript("OnDragStop", function() panel:StopMovingOrSizing() end)
+
+	-- Title + close button styled exactly like Quartermaster's: plain title
+	-- text, and a close button left at its UIPanelCloseButton template default
+	-- size rather than resized.
+	local title = panel:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+	title:SetPoint("TOP", 0, -14)
+	title:SetText("WeakestAuras")
+	title:SetTextColor(1, 0.82, 0)
+
+	local close = CreateFrame("Button", nil, panel, "UIPanelCloseButton")
+	close:SetPoint("TOPRIGHT", -4, -4)
+	close:SetScript("OnClick", function() panel:Hide() end)
+
+	-- Bottom-right resize grip, using the same stock chat-frame resize art every
+	-- 1.12 client ships (no custom texture asset needed).
+	local grip = CreateFrame("Button", nil, panel)
+	grip:SetWidth(16); grip:SetHeight(16)
+	grip:SetPoint("BOTTOMRIGHT", -4, 4)
+	grip:SetNormalTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+	grip:SetPushedTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Down")
+	grip:SetHighlightTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight", "ADD")
+	grip:SetScript("OnMouseDown", function() panel:StartSizing("BOTTOMRIGHT") end)
+	grip:SetScript("OnMouseUp", function() panel:StopMovingOrSizing() end)
+
+	S.buildFooter(panel)
+
+	-- The content pane is the *fixed*-width column and the list absorbs a resize,
+	-- not the other way round -- WA2 anchors its options container a constant
+	-- distance in from the window's right edge for the same reason. BuildOptions
+	-- caps a full-width field at 240px and never lays out more than two columns,
+	-- so width past S.CONTENT_W becomes whitespace; an aura list, by contrast,
+	-- shows more of a truncated name with every pixel it gains.
+	--
+	-- S.CONTENT_W is deliberately the width this pane already had at the default
+	-- window size, so no tab's layout shifts at any window width -- only the
+	-- list grows.
+	local contentScroll = LibWidgets.NewScrollFrame(panel, { wheelStep = 28 })
+	S.contentScroll = contentScroll
+	contentScroll:SetWidth(S.CONTENT_W)
+	-- The tab strip wraps, so where the content pane starts is decided by the
+	-- strip's row count rather than by a constant -- S.anchorContent, driven from
+	-- the strip's onReflow. One row reproduces the offset this used to hardcode.
+	contentScroll:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", -14, 12 + S.FOOTER_H)
+	S.anchorContent(1)
+
+	-- The options pane reads as its own surface rather than as fields floating on
+	-- the window, matching the list's box. Held at the panel's own frame level so
+	-- it stays behind the scroll frame it frames -- a sibling created later would
+	-- otherwise sit on top of the controls.
+	local contentBg = CreateFrame("Frame", nil, panel)
+	S.contentBg = contentBg
+	contentBg:SetFrameLevel(panel:GetFrameLevel())
+	contentBg:SetPoint("TOPLEFT", contentScroll, "TOPLEFT", -6, 6)
+	contentBg:SetPoint("BOTTOMRIGHT", contentScroll, "BOTTOMRIGHT", 6, -6)
+	contentBg:SetBackdrop(W.EDITBOX_BACKDROP)
+	contentBg:SetBackdropColor(0, 0, 0, 0.6)
+	contentBg:SetBackdropBorderColor(0.4, 0.4, 0.4, 0.8)
+
+	-- Left: aura list
+	local listBg = CreateFrame("Frame", nil, panel)
+	S.listBg = listBg
+	listBg:SetPoint("TOPLEFT", 12, -36 - S.SEARCH_H - S.TOOLBAR_H)
+	-- Bottom pinned to the panel's own bottom edge rather than a fixed height,
+	-- so growing the panel grows the list instead of leaving dead space -- row
+	-- count is recalculated from the live height in updateVisibleRows.
+	-- No bottom anchor: S.updateVisibleRows sets the height to the rows that fit,
+	-- so the border ends flush under the last one instead of stretching to the
+	-- panel's bottom margin with a partial row's slack left inside it.
+	listBg:SetPoint("RIGHT", contentScroll, "LEFT", -12, 0)
+	listBg:SetBackdrop(W.EDITBOX_BACKDROP)
+	listBg:SetBackdropColor(0, 0, 0, 0.6)
+	listBg:SetBackdropBorderColor(0.4, 0.4, 0.4, 0.8)
+
+	-- The search box and the toolbar span whatever width the list currently has,
+	-- so both track a resize with it. S.LIST_W survives only as the minimum the
+	-- window's MIN_W is sized to guarantee.
+	local searchBox = W.searchbox(panel, S.LIST_W, function(text)
+		S.searchTerms = S.splitFilterTerms(text)
+		S.scroll.offset = 0
+		S.refreshList()
+	end)
+	S.searchBox = searchBox
+	searchBox:SetPoint("BOTTOMLEFT", listBg, "TOPLEFT", 0, 6)
+	searchBox:SetPoint("RIGHT", listBg, "RIGHT", 0, 0)
+
+	-- The list virtualises: a fixed pool of rows is repainted at a row offset
+	-- rather than one frame per aura, so the ScrollFrame here is only a viewport
+	-- and a set of bounds. Its own scrollbar is retired in favour of the shared
+	-- library's slim bar (the same one the options pane and the code editor use),
+	-- driven in *rows* rather than pixels -- a row is the smallest thing this
+	-- list can show, so a half-scrolled row would be a lie the paint can't tell.
+	local scroll = CreateFrame("ScrollFrame", "WeakestAurasOptionsListScroll", listBg, "FauxScrollFrameTemplate")
+	S.scroll = scroll
+	scroll:SetPoint("TOPLEFT", 2, -2)
+	scroll:SetPoint("BOTTOMRIGHT", -12, 2)
+	scroll.offset = 0
+	local defaultBar = getglobal("WeakestAurasOptionsListScrollScrollBar")
+	if defaultBar then
+		defaultBar:Hide()
+		defaultBar:SetScript("OnValueChanged", nil)
+	end
+
+	local listBar = LibWidgets.NewScrollBar(scroll, { inset = 8 })
+	S.listBar = listBar
+	listBar:SetValueStep(1)
+	listBar:SetScript("OnValueChanged", function()
+		-- Guarded: refreshList sets this bar's value back, which would otherwise
+		-- re-enter here on every repaint.
+		if S.barSyncing then return end
+		local v = math.floor(this:GetValue() + 0.5)
+		if v == S.scroll.offset then return end
+		S.scroll.offset = v
+		S.refreshList()
+	end)
+
+	local function wheelList()
+		local maxOffset = S.maxOffset or 0
+		local v = (S.scroll.offset or 0) - arg1
+		if v < 0 then v = 0 elseif v > maxOffset then v = maxOffset end
+		if v == S.scroll.offset then return end
+		S.scroll.offset = v
+		S.refreshList()
+	end
+	scroll:EnableMouseWheel(true)
+	scroll:SetScript("OnMouseWheel", wheelList)
+	listBg:EnableMouseWheel(true)
+	listBg:SetScript("OnMouseWheel", wheelList)
+
+	-- Drag-to-reorder: an insertion indicator tracked off the live cursor position,
+	-- resolved to a boundary index and committed via WA.ReorderAura on release. Mirrors
+	-- the pattern validated in the sibling Quartermaster's own drag-reorder list
+	-- (Config.lua's beginDrag/endDrag/trackDrag) rather than reinventing hit-testing --
+	-- there's no cursor-move event on 1.12 to key off of otherwise.
+	--
+	-- Two drop modes, chosen by where the cursor lands: near a row boundary
+	-- inserts before/after the *hovered* row, in that row's own sibling list --
+	-- so a boundary drop can move an aura between parents, and the one
+	-- boundary line between a group's last child and the next top-level row
+	-- means whichever of the two rows the cursor is actually over (the
+	-- indicator's indent shows which list won). Hovering over a group row's
+	-- body instead drops *into* that group, at the end.
+	local dragLayer = CreateFrame("Frame", nil, listBg)
+	dragLayer:SetAllPoints(scroll)
+	dragLayer:SetFrameLevel(listBg:GetFrameLevel() + 10)
+	local indicator = dragLayer:CreateTexture(nil, "OVERLAY")
+	indicator:SetHeight(3)
+	indicator:SetTexture(0.95, 0.82, 0.2, 0.95)
+	indicator:Hide()
+	-- Where a drop would land, as the drag sees it. On S so the headless harness
+	-- can read back a refusal that leaves the tree untouched either way.
+	S.dropIndicator = indicator
+	local groupHighlight = dragLayer:CreateTexture(nil, "OVERLAY")
+	groupHighlight:SetHeight(S.ROW_H)
+	groupHighlight:SetTexture(0.2, 0.8, 0.3, 0.35)
+	groupHighlight:Hide()
+
+	local reorder = { active = false, fromId = nil, parentId = nil, before = nil, hoverGroupId = nil, bulk = false }
+	local trackDrag, beginDrag, endDrag -- forward decl: the row loop below and the
+	-- OnUpdate poll further down both need to close over these before they're assigned.
+
+	trackDrag = function()
+		local scale = scroll:GetEffectiveScale()
+		local top = scroll:GetTop() or 0
+		local _, cy = GetCursorPosition()
+		cy = cy / scale
+
+		local rows = S.buildRows()
+		local n = #rows
+		local offset = S.scroll.offset or 0
+		local count = S.paintedCount or 0
+
+		-- Rows have two different heights, so the cursor is resolved against the
+		-- geometry the paint actually laid down instead of a division.
+		local depth = top - cy
+		local slot, frac = -1, 0
+		for k = 1, count do
+			local r = S.rows[k]
+			if r.slotY and depth < r.slotY + r.slotH then
+				slot = k - 1
+				frac = (depth - r.slotY) / r.slotH
+				break
+			end
+		end
+		if slot < 0 then slot = count end -- past the last painted row
+		local hoverEntry = (slot >= 0 and slot < count) and rows[offset + slot + 1] or nil
+		-- A header is not a drop target of any kind: it owns no aura to drop
+		-- beside and no list to drop into. Clearing both targets makes the
+		-- release a no-op rather than a move to wherever they last pointed.
+		if hoverEntry and hoverEntry.header then
+			reorder.hoverGroupId = nil
+			reorder.before = nil
+			indicator:Hide()
+			groupHighlight:Hide()
+			return
+		end
+		local hoverData = hoverEntry and WeakestAurasDB.displays[hoverEntry.id]
+		local hoverIsGroup = hoverData and WA.IsGroup(hoverData) and hoverEntry.id ~= reorder.fromId
+			and frac > 0.25 and frac < 0.75
+
+		if hoverIsGroup then
+			reorder.hoverGroupId = hoverEntry.id
+			reorder.before = nil
+			indicator:Hide()
+			local hovered = S.rows[slot + 1]
+			groupHighlight:SetHeight(hovered.slotH or S.ROW_H)
+			groupHighlight:ClearAllPoints()
+			groupHighlight:SetPoint("TOPLEFT", dragLayer, "TOPLEFT", 0, -(hovered.slotY or 0))
+			groupHighlight:SetPoint("TOPRIGHT", dragLayer, "TOPRIGHT", 0, -(hovered.slotY or 0))
+			groupHighlight:Show()
+			return
+		end
+
+		reorder.hoverGroupId = nil
+		groupHighlight:Hide()
+
+		-- Nearest boundary: the top of the hovered row, or the bottom of it.
+		local p = (frac < 0.5) and slot or (slot + 1)
+		if p < 0 then p = 0 elseif p > count then p = count end
+		-- The boundary's pixel position, again from the painted geometry.
+		local py
+		if p == 0 then
+			py = 0
+		elseif S.rows[p] and S.rows[p].slotY then
+			py = S.rows[p].slotY + S.rows[p].slotH
+		else
+			py = 0
+		end
+
+		-- A boundary that would land the aura in the other bucket is refused
+		-- outright: it reads as "drag into Loaded", which has no meaning to
+		-- commit, and the row would snap straight back on the next repaint.
+		if bucketAt(rows, offset + p) ~= reorder.bucket then
+			reorder.before = nil
+			indicator:Hide()
+			return
+		end
+
+		-- The drop target is the hovered row's own sibling list: before it from
+		-- the upper half, after it from the lower. Deriving the target from the
+		-- grabbed row's parent instead once turned "drag these two out of the
+		-- group" into "append them both to it" -- the boundary index was being
+		-- read against a list the cursor was nowhere near.
+		local anchorEntry = hoverEntry
+		local after = frac >= 0.5
+		if not anchorEntry then
+			-- Past the last painted row: after whatever is rendered last.
+			anchorEntry = rows[offset + count]
+			after = true
+		end
+		local anchorData = anchorEntry and not anchorEntry.header
+			and WeakestAurasDB.displays[anchorEntry.id]
+		if not anchorData then
+			reorder.before = nil
+			indicator:Hide()
+			return
+		end
+		local targetParent = anchorData.parent
+
+		-- Refusals the commit could not survive: a container the dragged item
+		-- may not join (a group into a dynamic group), and a group dropped into
+		-- its own subtree. Leaves pass both trivially, so a bulk selection
+		-- (always leaves) never trips either -- what is checked is whatever is
+		-- actually being dragged.
+		local dragged = reorder.bulk and S.selection or { reorder.fromId }
+		for i = 1, #dragged do
+			local d = WeakestAurasDB.displays[dragged[i]]
+			if not d or not WA.CanPlaceAura(d.regionType, targetParent) then
+				reorder.before = nil
+				indicator:Hide()
+				return
+			end
+			local up = targetParent
+			while up do
+				if up == dragged[i] then
+					reorder.before = nil
+					indicator:Hide()
+					return
+				end
+				local upData = WeakestAurasDB.displays[up]
+				up = upData and upData.parent
+			end
+		end
+
+		local siblings = S.siblingList(targetParent)
+		local idx = S.indexOfId(siblings, anchorEntry.id)
+		if not idx then
+			reorder.before = nil
+			indicator:Hide()
+			return
+		end
+		reorder.parentId = targetParent
+		reorder.before = after and idx + 1 or idx
+
+		indicator:ClearAllPoints()
+		indicator:SetPoint("TOPLEFT", dragLayer, "TOPLEFT", 2 + anchorEntry.depth * S.INDENT_W, -py + 1)
+		indicator:SetPoint("TOPRIGHT", dragLayer, "TOPRIGHT", 0, -py + 1)
+		indicator:Show()
+	end
+
+	beginDrag = function(row)
+		-- Reordering while a search narrows/flattens the rows shown would
+		-- silently move the wrong aura, so just don't start a drag then --
+		-- same reasoning as before the tree existed.
+		if not row.id or #S.searchTerms > 0 then return end
+		local data = WeakestAurasDB.displays[row.id]
+		if not data then return end
+		-- Dragging a row that isn't already part of the current multi-selection
+		-- collapses to a plain single-select first -- mirrors upstream
+		-- WeakAurasDisplayButton's OnDragStart re-pick check (see
+		-- bulk drag-move behavior) -- otherwise an
+		-- unrelated selection would stay highlighted after only this one row
+		-- actually moved. Skipped when row.id is already the sole selection,
+		-- so an ordinary single-row drag doesn't pay for a redundant refresh.
+		local partOfMultiSelection = S.isSelected(row.id) and #S.selection > 1
+		local alreadySoleSelection = #S.selection == 1 and S.selection[1] == row.id
+		if not partOfMultiSelection and not alreadySoleSelection then
+			S.setSelection(row.id)
+		end
+		reorder.active = true
+		reorder.fromId = row.id
+		reorder.parentId = data.parent
+		reorder.hoverGroupId = nil
+		reorder.before = row.index
+		-- The bucket this drag is confined to, read off the rendered list rather
+		-- than recomputed from load state -- a child's bucket is its top-level
+		-- ancestor's, which the row order already encodes.
+		reorder.bucket = bucketAt(S.buildRows(), row.index)
+		-- Bulk drag whenever the dragged row is (still) part of a >1
+		-- selection after the collapse-check above -- everything past this
+		-- point (trackDrag's hover targeting) is unchanged and shared with
+		-- the single-item case; only endDrag branches on it.
+		reorder.bulk = #S.selection > 1
+		-- Dim every row actually being dragged (the whole selection in bulk
+		-- mode, just this row otherwise) so the drop target reads clearly
+		-- underneath. Only rendered rows can be dimmed; that's fine, same
+		-- "currently rendered only" scope selectRange already accepts.
+		for i = 1, #S.rows do
+			local r = S.rows[i]
+			if r.id and (r.id == row.id or (reorder.bulk and S.isSelected(r.id))) then
+				r:SetAlpha(0.4)
+			end
+		end
+		trackDrag()
+	end
+
+	endDrag = function()
+		if not reorder.active then return end
+		reorder.active = false
+		indicator:Hide()
+		groupHighlight:Hide()
+		for i = 1, #S.rows do S.rows[i]:SetAlpha(1) end
+
+		if reorder.bulk then
+			-- Top-down rendered order of the dragged selection, computed fresh
+			-- (pre-move) -- this is what determines relative order at the drop
+			-- site, same role as upstream's CompareButtonOrder sort before its
+			-- own per-item Ungroup+Group loop.
+			local ordered = {}
+			local rowsNow = S.buildRows()
+			for i = 1, #rowsNow do
+				if S.isSelected(rowsNow[i].id) then table.insert(ordered, rowsNow[i].id) end
+			end
+			local n = #ordered
+			if reorder.hoverGroupId then
+				-- Append each in top-down order -- WA.AddChildToGroup with no
+				-- index always lands at the end, so doing this forward
+				-- naturally preserves relative order, same as the single-item
+				-- drop-into-group-body case below.
+				for i = 1, n do
+					WA.AddChildToGroup(reorder.hoverGroupId, ordered[i])
+				end
+			elseif reorder.before then
+				-- WA.ReorderAura already reparents a single id correctly
+				-- regardless of where it currently lives, so a mixed-parent
+				-- selection doesn't need special-casing here -- only the
+				-- *order* of N individual moves needs care. Walking `ordered`
+				-- back-to-front and re-deriving each numeric `before` from a
+				-- stable anchor *id* (not a numeric index, which would go
+				-- stale as soon as the first move mutates the list) means
+				-- every later (earlier-in-order) item just inserts right
+				-- before whichever item was placed immediately after it,
+				-- chaining up to the original drop anchor with no index-math
+				-- to keep in sync across iterations.
+				local list = S.siblingList(reorder.parentId)
+				local anchorId = list[reorder.before] -- nil = drop at list's end
+				for i = n, 1, -1 do
+					local idx = anchorId and S.indexOfId(list, anchorId)
+					if not idx then idx = #list + 1 end
+					WA.ReorderAura(ordered[i], reorder.parentId, idx)
+					anchorId = ordered[i]
+				end
+			end
+		elseif reorder.fromId then
+			if reorder.hoverGroupId then
+				WA.AddChildToGroup(reorder.hoverGroupId, reorder.fromId)
+			elseif reorder.before then
+				WA.ReorderAura(reorder.fromId, reorder.parentId, reorder.before)
+			end
+		end
+
+		reorder.fromId, reorder.parentId, reorder.before, reorder.hoverGroupId, reorder.bulk = nil, nil, nil, nil, nil
+		S.refreshList()
+	end
+
+	-- No cursor-release event either -- poll so a release the row's own OnDragStop
+	-- misses (e.g. outside the list) still ends the drag instead of leaving it stuck
+	-- with the row dimmed until a reload.
+	listBg:SetScript("OnUpdate", function()
+		if reorder.active then
+			trackDrag()
+			if not IsMouseButtonDown("LeftButton") then endDrag() end
+		end
+	end)
+
+	-- The aura list's right-click menu, repainted per opening from whichever item
+	-- list the clicked row calls for (S.showBulkMenu and friends). Assigned onto
+	-- S (not a local) so nested row closures reference it via table lookup
+	-- instead of adding another upvalue to buildPanel's already-tight budget.
+	S.menu = W.ContextMenu(panel)
+
+	-- Row frames are created lazily and the pool only ever grows: a resize can
+	-- ask for more rows than currently exist, but never needs to destroy any --
+	-- refreshList just hides whatever's beyond the current visibleRows count.
+	local rows = {}
+	S.rows = rows
+	S.ensureRow = function(i)
+		if rows[i] then return rows[i] end
+		local row = CreateFrame("Button", nil, listBg)
+		row:SetHeight(S.ROW_H)
+		-- Placed by refreshList, which accumulates each row's own height rather
+		-- than multiplying by a fixed one. Both points there are TOP-anchored on
+		-- purpose: a plain RIGHT point pins the frame's vertical *centre* as well
+		-- as its right edge, which over-constrains a frame that already has a top
+		-- and a height -- and the row's highlight/selection textures are
+		-- SetAllPoints(row), so anything that moves that rect off the laid-out
+		-- content shows up as a highlight not covering the whole row.
+		row:SetPoint("TOPLEFT", 2, -2)
+
+		local sel = row:CreateTexture(nil, "ARTWORK")
+		sel:SetAllPoints(row)
+		sel:SetTexture(0.9, 0.8, 0.2, 0.2)
+		sel:Hide()
+		row.sel = sel
+
+		local hl = row:CreateTexture(nil, "HIGHLIGHT")
+		hl:SetAllPoints(row)
+		hl:SetTexture(1, 1, 1, 0.1)
+
+		-- Forced-visibility (fake state) toggle. The fill's colour shows whether
+		-- this row is eye-pinned visible; for a group it reflects all/some/none
+		-- of its leaves. Clicking cycles WA.ToggleForced, which cascades to a
+		-- group's children -- so an inactive dynamic group can be fake-shown and
+		-- its layout debugged. refreshList sets the fill colour.
+		--
+		-- 16px in the row's bottom-right corner, matching WA2's own view button.
+		-- Sitting on the bottom line rather than centred is what lets the title
+		-- above run the row's full width, which a 200px list needs more than
+		-- WA2's much wider one does.
+		local eye = CreateFrame("Button", nil, row)
+		eye:SetWidth(16); eye:SetHeight(16)
+		eye:SetPoint("BOTTOMRIGHT", row, "BOTTOMRIGHT", -3, 2)
+		local eyeFill = eye:CreateTexture(nil, "ARTWORK")
+		eyeFill:SetAllPoints(eye)
+		-- The frames carry their own padding, cropped the same amount WA2 crops
+		-- them by so the eye fills its 16px box.
+		eyeFill:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+		eyeFill:SetTexture(W.EYE_TEXTURES .. "empty")
+		eye.fill = eyeFill
+		eye:SetScript("OnClick", function()
+			if row.header then
+				WA.ToggleForcedMany(S.bucketMembers(row.bucket))
+				S.refreshList()
+				return
+			end
+			if not row.id then return end
+			WA.ToggleForced(row.id)
+			S.refreshList()
+		end)
+		row.eye = eye
+
+		-- The preview box is a frame, not the texture that paints it. Everything
+		-- to its right (title, summary, badge, the expand toggle) anchors to the
+		-- box, because the texture is hidden whenever a region type supplies a
+		-- real thumbnail -- and a hidden region's rect stops being recomputed,
+		-- dragging whatever hangs off it to a stale position.
+		--
+		-- This is also the row's one indent anchor: refreshList re-points it by
+		-- depth and the whole row follows.
+		local iconBox = CreateFrame("Frame", nil, row)
+		iconBox:SetWidth(S.ROW_H - 4); iconBox:SetHeight(S.ROW_H - 4)
+		iconBox:SetPoint("TOPLEFT", row, "TOPLEFT", 2, -2)
+		row.iconBox = iconBox
+
+		-- Expand/collapse toggle for a group row, on the summary line beside the
+		-- preview rather than in a gutter of its own (WA2 anchors its own expand
+		-- BOTTOM/LEFT off the icon the same way). A gutter costs every row 14px
+		-- of title width to serve the few rows that are groups; indentation is
+		-- the iconBox offset above instead.
+		local expand = CreateFrame("Button", nil, row)
+		expand:SetWidth(S.INDENT_W); expand:SetHeight(S.INDENT_W)
+		expand:SetPoint("BOTTOMLEFT", iconBox, "BOTTOMRIGHT", 2, 0)
+		local expandFs = expand:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+		expandFs:SetPoint("CENTER", 0, 0)
+		expand.label = expandFs
+		expand:SetScript("OnClick", function()
+			if row.header then
+				S.bucketExpanded[row.bucket] = (S.bucketExpanded[row.bucket] == false) and true or false
+				S.refreshList()
+				return
+			end
+			if not row.id then return end
+			S.expanded[row.id] = (S.expanded[row.id] == false) and true or false
+			S.refreshList()
+		end)
+		row.expand = expand
+
+		local icon = iconBox:CreateTexture(nil, "ARTWORK")
+		icon:SetAllPoints(iconBox)
+		row.icon = icon
+
+		-- Ungroup, left of the preview on a child row (WA2 puts its own there,
+		-- between the indent and the icon). A glyph rather than upstream's
+		-- MoneyFrame arrow: no addon on this client uses that texture, so it is
+		-- unconfirmed art, and the eye already cost us a round of vendoring.
+		local ungroup = CreateFrame("Button", nil, row)
+		ungroup:SetWidth(S.UNGROUP_W); ungroup:SetHeight(S.UNGROUP_W)
+		local ungroupFs = ungroup:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+		ungroupFs:SetPoint("CENTER", 0, 0)
+		ungroupFs:SetText("<")
+		local ungroupHl = ungroup:CreateTexture(nil, "HIGHLIGHT")
+		ungroupHl:SetAllPoints(ungroup)
+		ungroupHl:SetTexture(1, 1, 1, 0.2)
+		ungroup:SetScript("OnEnter", function()
+			GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+			GameTooltip:SetText("Ungroup", 1, 1, 1)
+			GameTooltip:AddLine("Move this aura out of its group, back to the top level.", 0.8, 0.8, 0.8, true)
+			GameTooltip:Show()
+		end)
+		ungroup:SetScript("OnLeave", function() GameTooltip:Hide() end)
+		ungroup:SetScript("OnClick", function()
+			if not row.id then return end
+			WA.RemoveChildFromGroup(row.id)
+			S.refreshList()
+		end)
+		ungroup:Hide()
+		row.ungroup = ungroup
+
+		-- Status strip: keyed, prioritised indicators on the summary line's right,
+		-- just inside the eye. Mirrors WA2's DisplayButton statusIcons; load state
+		-- is its only occupant so far, which is why the priorities are banded
+		-- (load 1-3, warnings 5+) rather than a bare ordering.
+		--
+		-- The icons come from a pool shared by *every* row, not one per row: rows
+		-- are pooled by slot and rebound on each scroll tick, so a per-row pool
+		-- would grow to (rows x statuses) frames and strand nearly all of them.
+		local strip = CreateFrame("Frame", nil, row)
+		strip:SetHeight(S.STATUS_SIZE)
+		strip:SetWidth(1)
+		strip:SetPoint("BOTTOMRIGHT", eye, "BOTTOMLEFT", -2, 0)
+		row.statusStrip = strip
+		row.statuses = {}
+
+		-- Marks every entry stale. layoutStatuses releases the ones a repaint
+		-- didn't re-set, which is what keeps a status from riding a pooled row
+		-- into the next aura it gets bound to.
+		row.beginStatuses = function()
+			for _, entry in pairs(row.statuses) do entry.stale = true end
+		end
+
+		-- `look` is optional and carries what the art needs past its path: a `color`
+		-- vertex tint, and `flip` to turn a glyph the half-turn its own frame drew it
+		-- against. Both are written on *every* set rather than only when given: the
+		-- icons pool across rows, so an entry wanting neither would inherit the tint
+		-- and the orientation of whatever last drew on that frame.
+		row.setStatus = function(key, prio, tex, title, desc, onClick, look)
+			local entry = row.statuses[key]
+			if not entry then
+				entry = { icon = S.acquireStatusIcon(strip) }
+				row.statuses[key] = entry
+			end
+			entry.stale = nil
+			entry.prio = prio or 5
+			local icon = entry.icon
+			icon.tipTitle, icon.tipDesc, icon.onClick = title, desc, onClick
+			local fill = icon.fill
+			-- Cleared before it is set, because this client leaves the *previous*
+			-- texture on the object when it refuses a path -- so on an icon pooled
+			-- across rows a bad path silently renders as whichever severity drew there
+			-- last, a wrong answer that looks like a right one. Clearing first makes
+			-- a refusal show as nothing, which is the honest reading; the tooltip
+			-- still names the severity either way.
+			--
+			-- Deliberately not a `GetTexture() ~= tex` read-back. That reads back
+			-- *unequal* for a path carrying a file extension, so it blanked every
+			-- shipped `.tga` while leaving the extension-less client paths alone.
+			fill:SetTexture(nil)
+			fill:SetTexture(tex)
+			local color = look and look.color
+			if color then
+				fill:SetVertexColor(color[1], color[2], color[3], color[4] or 1)
+			else
+				fill:SetVertexColor(1, 1, 1, 1)
+			end
+			-- Both axes reversed, which is a half turn. Reversed coords are the same
+			-- mirroring the texture region's own `mirror` uses.
+			if look and look.flip then
+				fill:SetTexCoord(1, 0, 1, 0)
+			else
+				fill:SetTexCoord(0, 1, 0, 1)
+			end
+		end
+
+		row.clearStatus = function(key)
+			local entry = row.statuses[key]
+			if not entry then return end
+			S.releaseStatusIcon(entry.icon)
+			row.statuses[key] = nil
+		end
+
+		row.clearStatuses = function()
+			for key in pairs(row.statuses) do row.clearStatus(key) end
+		end
+
+		-- Releases what this repaint left stale, then lays the survivors out
+		-- left-to-right by ascending priority and sizes the strip to them -- the
+		-- summary line's right edge is pinned to the strip, so it truncates
+		-- before the icons rather than running underneath them.
+		row.layoutStatuses = function()
+			local live = {}
+			for key, entry in pairs(row.statuses) do
+				if entry.stale then
+					S.releaseStatusIcon(entry.icon)
+					row.statuses[key] = nil
+				else
+					table.insert(live, entry)
+				end
+			end
+			table.sort(live, function(a, b) return a.prio < b.prio end)
+			local n = #live
+			for i = 1, n do
+				local icon = live[i].icon
+				icon:ClearAllPoints()
+				icon:SetPoint("BOTTOMLEFT", strip, "BOTTOMLEFT", (i - 1) * (S.STATUS_SIZE + 2), 0)
+				icon:Show()
+			end
+			-- Never zero: a zero-width frame is an anchor the summary can't be
+			-- pinned against meaningfully.
+			strip:SetWidth(n > 0 and (n * (S.STATUS_SIZE + 2) - 2) or 1)
+		end
+
+		-- The title spans to the row's own right edge; only the summary line
+		-- below stops short of the eye.
+		-- Each line pins one horizontal edge on its *own* vertical edge (TOP with
+		-- TOP, BOTTOM with BOTTOM). A bare RIGHT point would pin the string's
+		-- vertical centre too, stretching it against the point that already fixes
+		-- its top or bottom.
+		local rtitle = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+		rtitle:SetPoint("TOPLEFT", iconBox, "TOPRIGHT", 4, 0)
+		rtitle:SetPoint("TOPRIGHT", row, "TOPRIGHT", -4, -2)
+		rtitle:SetJustifyH("LEFT")
+		row.title = rtitle
+
+		-- Rename box, overlaying the title. Built with the row and hidden until a
+		-- double-click on it; the row pool is small, so one box per slot costs
+		-- little and avoids handing a shared box between rows.
+		local rename = LibWidgets.NewTextBox(row, { height = 18 })
+		rename:SetPoint("TOPLEFT", iconBox, "TOPRIGHT", 2, 0)
+		rename:SetPoint("TOPRIGHT", row, "TOPRIGHT", -4, -1)
+		rename:Hide()
+		rename:SetScript("OnEnterPressed", function() S.commitRename() end)
+		rename:SetScript("OnEscapePressed", function() S.closeRename() end)
+		rename:SetScript("OnEditFocusLost", function() S.closeRename() end)
+		row.rename = rename
+
+		local sub = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+		sub:SetPoint("BOTTOMLEFT", iconBox, "BOTTOMRIGHT", 4, 0)
+		sub:SetPoint("BOTTOMRIGHT", strip, "BOTTOMLEFT", -4, 0)
+		sub:SetJustifyH("LEFT")
+		sub:SetTextColor(0.6, 0.6, 0.6)
+		row.sub = sub
+
+		-- Ctrl-click toggles (a group expands to its leaf descendants -- see
+		-- S.toggleSelection/S.leafDescendants), shift-click range-selects
+		-- leaves only, plain left click replaces the whole selection with
+		-- whatever was clicked (leaf or group). Both modifiers still force a
+		-- plain single-select instead whenever the *current* sole selection
+		-- is a group, matching upstream WeakAuras2's "wasGroup" fallback
+		-- (PickDisplayMultiple): a group can be the sole single-selection
+		-- (needed to edit its own border/anchor/scale fields), but its literal
+		-- id can never sit inside a multi-member S.selection. Without this
+		-- check, ctrl/shift-clicking anything while a group was the last
+		-- plain-clicked row would silently mix that group id in. Shift-click
+		-- additionally still refuses a group as its own target (unextended
+		-- range-selecting *through* a group boundary is a
+		-- harder, more ambiguous problem than a ctrl-click toggle, and
+		-- upstream doesn't attempt it either even for its plain leaf-only
+		-- case). Right-click opens the bulk menu when the clicked row is
+		-- already part of an active multi-selection, and the per-aura menu
+		-- otherwise -- picking that row first, the same rule upstream uses.
+		-- Note a group row itself never reads as "already selected" here even
+		-- when every one of its children is, since S.isSelected checks literal
+		-- membership; right-click one of the highlighted child rows instead.
+		row:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+		row:SetScript("OnClick", function()
+			if row.header then
+				-- The header row's body is a big easy target for the same toggle
+				-- the expand button drives -- it must never fall through to the
+				-- selection logic below, which keys off row.id.
+				S.bucketExpanded[row.bucket] = (S.bucketExpanded[row.bucket] == false) and true or false
+				S.refreshList()
+				return
+			end
+			if not row.id then return end
+			-- Double-click opens the rename box. 1.12 has no OnDoubleClick, so the
+			-- gap between clicks is measured here -- keyed by the *id* as well as
+			-- the time, or two quick clicks either side of a scroll would count as
+			-- a double-click on whatever aura the slot ended up holding.
+			local now = GetTime()
+			if arg1 ~= "RightButton" and not IsControlKeyDown() and not IsShiftKeyDown()
+				and row.lastClickId == row.id and (now - (row.lastClickAt or 0)) < 0.4 then
+				row.lastClickAt = nil
+				S.beginRename(row)
+				return
+			end
+			row.lastClickId, row.lastClickAt = row.id, now
+			if arg1 == "RightButton" then
+				local id = row.id
+				if #S.selection > 1 and S.isSelected(id) then
+					S.showBulkMenu(row)
+				else
+					S.setSelection(id)
+					S.showAuraMenu(id, row)
+				end
+				return
+			end
+			local data = WeakestAurasDB.displays[row.id]
+			local isGroup = data and WA.IsGroup(data)
+			local soleId = S.primaryId()
+			local soleData = soleId and WeakestAurasDB.displays[soleId]
+			local soleIsGroup = soleData and WA.IsGroup(soleData)
+			if IsControlKeyDown() and not soleIsGroup then
+				S.toggleSelection(row.id)
+			-- Shift means two things, and an open chat editbox is what tells them
+			-- apart: upstream's own rule, and the only signal available here since
+			-- this client has no GetCurrentKeyBoardFocus.
+			elseif IsShiftKeyDown() and ChatFrameEditBox and ChatFrameEditBox:IsVisible() then
+				WA.Comm.LinkAura(row.id)
+			elseif IsShiftKeyDown() and not isGroup and not soleIsGroup then
+				S.selectRange(row.id)
+			else
+				S.setSelection(row.id)
+			end
+		end)
+		row:RegisterForDrag("LeftButton")
+		row:SetScript("OnDragStart", function() beginDrag(row) end)
+		row:SetScript("OnDragStop", function() endDrag() end)
+		rows[i] = row
+		return row
+	end
+
+	S.updateVisibleRows = function()
+		-- Measured from the panel, not from listBg: the box is sized to a whole
+		-- number of rows below, so reading its own height back would feed each
+		-- snap into the next one.
+		local avail = (panel:GetHeight() or 0) - (36 + S.SEARCH_H + S.TOOLBAR_H)
+			- S.BOTTOM_RESERVED - S.FOOTER_H
+		-- The room the list may use. The box itself is sized by refreshList to
+		-- the rows it actually laid out -- with two row heights in play, the only
+		-- way the border ends flush under the last one is to measure the paint
+		-- rather than predict it.
+		S.listAvail = avail
+		local n = math.floor((avail - 4) / S.ROW_H)
+		if n < 1 then n = 1 end
+		S.visibleRows = n
+	end
+
+	-- Toolbar strip above the search box, in two groups: what *creates* an aura
+	-- on the left (icon plus caption, as upstream's own toolbar buttons), the
+	-- mode toggles pushed to the right edge as icon-only squares whose tooltips
+	-- carry their names -- upstream captions those too, but its window is 830px
+	-- wide against our 680 default, and four captioned toggles were crowding the
+	-- title out of this one. The toggles read their lit state back from
+	-- WA.Mover, which owns the flags and persists them.
+	--
+	-- Undo/Redo are deliberately absent: upstream backs them with a TimeMachine
+	-- edit-history subsystem that has no counterpart here.
+	local toolbar = CreateFrame("Frame", nil, panel)
+	toolbar:SetPoint("TOPLEFT", 12, -36)
+	-- Spans the whole window, not just the list column: the toolbar acts on the
+	-- window rather than on the list, and WA2's own runs the full width too.
+	toolbar:SetPoint("TOPRIGHT", panel, "TOPRIGHT", -14, -36)
+	toolbar:SetHeight(22)
+
+	-- "New" opens the New pane, which offers every registered region type with a
+	-- preview of each.
+	local newBtn = W.toolbarButton(toolbar, "Interface\\Buttons\\UI-PlusButton-Up", "New aura",
+		nil, "New Aura")
+	newBtn:SetPoint("LEFT", 0, 0)
+
+	local importBtn = W.toolbarButton(toolbar, "Interface\\Buttons\\UI-GuildButton-PublicNote-Up",
+		"Import from string", function() S.openImport() end, "Import")
+	importBtn:SetPoint("LEFT", newBtn, "RIGHT", 4, 0)
+
+	local lockBtn = W.toolbarButton(toolbar, "Interface\\Icons\\INV_Misc_Key_03", "Lock Positions")
+	lockBtn.tipDesc = "Stops the in-world mover from dragging or resizing an aura."
+	lockBtn.setToggled(WA.Mover.locked)
+	lockBtn:SetScript("OnClick", function()
+		WA.Mover.SetLocked(not WA.Mover.locked)
+		lockBtn.setToggled(WA.Mover.locked)
+	end)
+
+	local magnetBtn = W.toolbarButton(toolbar, "Interface\\Icons\\Spell_Frost_FrostArmor",
+		"Magnetically Align")
+	magnetBtn:SetPoint("RIGHT", toolbar, "RIGHT", 0, 0)
+	lockBtn:SetPoint("RIGHT", magnetBtn, "LEFT", -4, 0)
+	magnetBtn.tipDesc = "Snaps a dragged aura's edges to nearby auras. Hold Shift during a drag to suppress it."
+	magnetBtn.setToggled(WA.Mover.magnetism)
+	magnetBtn:SetScript("OnClick", function()
+		WA.Mover.SetMagnetism(not WA.Mover.magnetism)
+		magnetBtn.setToggled(WA.Mover.magnetism)
+	end)
+
+	-- Lit unless explicitly switched off, so an install that predates the setting
+	-- gets the notice. It silences only the chat line: the version we broadcast is
+	-- what tells everyone else, and withholding it helps nobody.
+	local notifyBtn = W.toolbarButton(toolbar, "Interface\\Icons\\INV_Misc_Note_01",
+		"Update Notices")
+	notifyBtn:SetPoint("RIGHT", lockBtn, "LEFT", -4, 0)
+	notifyBtn.tipDesc = "Says once per session when someone in your guild or group is running a newer release."
+	notifyBtn.setToggled(WA.Options().updateNotify ~= false)
+	notifyBtn:SetScript("OnClick", function()
+		local opts = WA.Options()
+		if opts.updateNotify == false then opts.updateNotify = nil else opts.updateNotify = false end
+		notifyBtn.setToggled(opts.updateNotify ~= false)
+	end)
+	S.updateNotifyBtn = notifyBtn
+
+	newBtn:SetScript("OnClick", function()
+		searchBox:ClearFocus()
+		S.openNewPane()
+	end)
+
+	-- Right: tab strip + content. The strip sizes each tab to its own label and
+	-- wraps, rather than handing every tab an equal share of the pane -- with
+	-- eight tabs an equal share is narrower than "Animations", and a label with
+	-- no width set overflows into its neighbours rather than clipping.
+	local tabStrip = LibWidgets.NewTabStrip(panel, {
+		width = S.CONTENT_W,
+		rowHeight = S.TAB_ROW_H,
+		rowGap = S.TAB_ROW_GAP,
+		onSelect = function(value) S.selectTab(value) end,
+		onReflow = function(rows) S.anchorContent(rows) end,
+	})
+	S.tabStrip = tabStrip
+	S.tabButtons = tabStrip.buttons
+	tabStrip:SetPoint("TOPRIGHT", panel, "TOPRIGHT", -14, -S.tabStripTop())
+	S.rebuildTabs()
+
+	-- The content pane scrolls: a region's Display tab (including its subtext
+	-- editors) can run taller than the window. Built above, where its width has
+	-- to be established before the list can anchor its right edge to it. The
+	-- painted frame (S.content) is the scroll child, sized to its content by
+	-- paintContent so the scroll range is correct.
+	local content = contentScroll.content
+	S.content = content
+
+	-- Recompute the row pool whenever the panel's live size actually changes
+	-- (grip drag or otherwise). Only the list changes width now, so the content
+	-- pane needs nothing re-fitted here.
+	panel:SetScript("OnSizeChanged", function()
+		S.refreshList()
+	end)
+
+	S.activeTab = "info"
+	tabStrip.select("info")
+end
+
+function WeakestAuras.ToggleOptions()
+	-- Reported here rather than at file load (chat output during load is
+	-- unreliable on this client) and only once, on the first open: without it a
+	-- displaced LibWidgets shows up as an unexplained nil call mid-repaint.
+	if not S.libWarned then
+		S.libWarned = true
+		local problem = W.LibWidgetsProblem()
+		if problem then
+			DEFAULT_CHAT_FRAME:AddMessage("|cffff4040WeakestAuras:|r " .. problem)
+		end
+	end
+	if not S.panel then buildPanel() end
+	if S.panel:IsShown() then
+		S.panel:Hide()
+	else
+		S.panel:Show()
+		-- Mute all live auras (WA2 config behavior) before revealing the current
+		-- selection, so opening /wa starts from a blank board and shows only what
+		-- you're editing.
+		WA.SetOptionsOpen(true)
+		S.refreshList()
+		S.updateTabAvailability()
+		S.refreshTabContent()
+		S.applySelectionChange()
+	end
+end
+
+-- Let option `set` callbacks (in Regions.lua/Triggers.lua) re-render the tab
+-- after a reveal-toggle changes which fields apply. Wrapped so it late-binds
+-- S.refreshTabContent and no-ops safely if the window was never built.
+WA.RefreshOptions = function()
+	if S.panel and S.panel:IsShown() then S.refreshTabContent() end
+end
+
+-- Cheaper sibling of WA.RefreshOptions for setters that change a display's
+-- name/icon (spell fields, manual icon) but don't need the whole tab rebuilt
+-- (which would drop editbox focus mid-typing) -- just the list row's icon/
+-- summary text.
+WA.RefreshList = function()
+	if S.panel and S.panel:IsShown() then S.refreshList() end
+end
+
+-- Slash entry points for the import/export dialog (Debug.lua's /wa
+-- export|import). buildPanel is ensured first so a successful import's
+-- S.setSelection has the (possibly still-hidden) list frames to refresh.
+WA.ShowExport = function(id)
+	if not S.panel then buildPanel() end
+	id = (id and id ~= "" and id) or S.primaryId()
+	if not id then
+		WA.Debug.Log("[export] usage: /wa export <aura id> (or select an aura first)")
+		return
+	end
+	S.openExport(id)
+end
+WA.ShowImport = function()
+	if not S.panel then buildPanel() end
+	S.openImport()
+end
+
+SLASH_WEAKESTAURAS1 = "/weakestauras"
+SLASH_WEAKESTAURAS2 = "/wa"
+SlashCmdList["WEAKESTAURAS"] = function(msg)
+	if msg and msg ~= "" then
+		WA.Debug.HandleSlash(msg)
+	else
+		WeakestAuras.ToggleOptions()
+	end
+end
+
+-- Runs only once every RegisterRegionType/RegisterTriggerType/
+-- RegisterTriggerSystem call has happened (this is the last file in the .toc)
+-- AND WeakestAurasDB has actually been populated from the SavedVariables file.
+-- The latter is NOT guaranteed yet at plain top-level file-load time on this
+-- client -- confirmed via in-game tracing (2026-07): WeakestAurasDB.displays
+-- read back 0 entries here despite saved auras existing, meaning every
+-- session silently started with nothing compiled/loaded until the user
+-- touched an aura through the UI (which calls WA.Add directly). ADDON_LOADED
+-- for this addon fires only after this file (the last one in the .toc) has
+-- already finished executing, so waiting for it here is safe -- it cannot
+-- have already fired by the time this registers.
+local initFrame = CreateFrame("Frame")
+initFrame:RegisterEvent("ADDON_LOADED")
+-- The client-side spell cache that name->ID resolution reads (C_Spell.GetSpellInfo
+-- by name, via WA.ResolveSpellID) is still cold at ADDON_LOADED, so any trigger
+-- keyed by spell name compiles to a 0 id / never starts its watcher on a fresh
+-- login (only re-typing the name or a later /reload fixes it). Recompile what is
+-- waiting on a name once the spellbook populates and on later talent/spell
+-- changes -- same two events DoiteAuras rebuilds its own spell caches on.
+initFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+initFrame:RegisterEvent("SPELLS_CHANGED")
+-- Item data arrives asynchronously for the same reason: GetItemInfo (via
+-- WA.ResolveItemID) answers nil for any item the client has not seen this
+-- session, and the resolved id is baked into the generated source at compile
+-- time, so an item trigger built against an uncached item stays dead until
+-- something recompiles it. ClassicAPI fires this once the server answers.
+initFrame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+local didInit = false
+local recompilePending = false
+local function doRecompile()
+	recompilePending = false
+	if didInit then WeakestAuras.RecompileResolvedNames() end
+end
+initFrame:SetScript("OnEvent", function()
+	if event == "ADDON_LOADED" then
+		if arg1 ~= "WeakestAuras" then return end
+		initFrame:UnregisterEvent("ADDON_LOADED")
+		-- The same SavedVariables load this waits for is also what can take the
+		-- table away again -- it assigns the global outright, and a file saved
+		-- by a session that never built one assigns nil. Repairing it here, at
+		-- the first point after that file has run, is what keeps every later
+		-- WeakestAurasDB.displays read from erroring.
+		WeakestAuras.EnsureDB()
+		WeakestAuras.NormalizeAll()
+		WeakestAuras.AddAllDisplays()
+		didInit = true
+		return
+	end
+	-- Debounced: the login burst of PLAYER_ENTERING_WORLD + SPELLS_CHANGED, and the
+	-- run of GET_ITEM_INFO_RECEIVED a bagful of uncached items produces, coalesce
+	-- into a single sweep.
+	if not didInit or recompilePending then return end
+	-- Only while some trigger still holds a name the client cannot resolve, and
+	-- the sweep recompiles only the displays whose name now resolves.
+	-- GET_ITEM_INFO_RECEIVED and SPELLS_CHANGED keep arriving all session, and a
+	-- recompile discards the states its triggers produced, which a status or aura
+	-- trigger re-derives on the next pass but a Trigger State Updater cannot: its
+	-- clones came from events that have already happened.
+	if WeakestAuras.HasUnresolvedNames and not WeakestAuras.HasUnresolvedNames() then
+		return
+	end
+	recompilePending = true
+	C_Timer.After(1, doRecompile)
+end)

@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Paparogue/StopDuelBuffer",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Paparogue",
+    "repo": "StopDuelBuffer",
+    "name": "StopDuelBuffer",
+    "url": "https://github.com/Paparogue/StopDuelBuffer",
+    "api": "https://api.github.com/repos/Paparogue/StopDuelBuffer"
+  },
+  "commit": "5f46676befeb26a46beb670241cf622b0bd7c90e",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "d8936f06a376a110f1bdbd01adc199121a1b998a559e478fc69d5f76f4e20a57",
+      "bytes": 248
+    },
+    "StopDuelBuffer/StopDuelBuffer.lua": {
+      "sha256": "7c742c0ee50fd426a3018244fa985bd3966658013973af53d555da56b29cc085",
+      "bytes": 2471
+    },
+    "StopDuelBuffer/StopDuelBuffer.toc": {
+      "sha256": "51d54eeb499b9f015d343b36fc7adc35c8c17b8aa967b4536405ec9f72d40df3",
+      "bytes": 149
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

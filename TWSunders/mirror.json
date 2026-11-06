@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/CosminPOP/TWSunders",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "CosminPOP",
+    "repo": "TWSunders",
+    "name": "TWSunders",
+    "url": "https://github.com/CosminPOP/TWSunders",
+    "api": "https://api.github.com/repos/CosminPOP/TWSunders"
+  },
+  "commit": "ab3f92bc9b557fc337174bae9d04f24d29fee89d",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "01c1f007f8e4c51ca17112a9d87534bd51b35cb91ae2b1df9263cdc6cf9a6171",
+      "bytes": 68
+    },
+    "TWSunders.lua": {
+      "sha256": "733309f70dfc179020cacfeac7300ed10a764cd9ef49bde6f6e442ffa89c032f",
+      "bytes": 2606
+    },
+    "TWSunders.toc": {
+      "sha256": "d3450f14e7f91a9ead8249fce8e7e96bb82501b601ae2e9a924101da1d7a9feb",
+      "bytes": 131
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

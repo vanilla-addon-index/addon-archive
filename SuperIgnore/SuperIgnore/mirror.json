@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/akzkak/SuperIgnore",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "akzkak",
+    "repo": "SuperIgnore",
+    "name": "SuperIgnore",
+    "url": "https://github.com/akzkak/SuperIgnore",
+    "api": "https://api.github.com/repos/akzkak/SuperIgnore"
+  },
+  "commit": "baf577951573b1576749a4d332f14bb8f968bda0",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "16b39044dba1676f0b73d17027b237f1db7b90a0426413ceb10d81c0969d5499",
+      "bytes": 51
+    },
+    "Modules/Debugger.lua": {
+      "sha256": "562014469cbca625bfdb23b436a02c5948ed19a5cdaf9f039e2fba674ac3ff4a",
+      "bytes": 26368
+    },
+    "README.md": {
+      "sha256": "440f2286551071249687ac394790f062bd3da3da713e8f518035e794427debce",
+      "bytes": 1943
+    },
+    "SuperIgnore.lua": {
+      "sha256": "582b4d3a8d17b0c8defbb5f72b3d1b8b06bdd413b69a3de36bcf2e362cdba734",
+      "bytes": 34189
+    },
+    "SuperIgnore.toc": {
+      "sha256": "89c11a6d12a493d0d5e2e0c375c94be512335c4e0f9e2e699efea9955f06f3f7",
+      "bytes": 294
+    },
+    "UI.lua": {
+      "sha256": "187d51777be7dfef64b761b5e04da2f44724bf01ade5d60829bb6e48cb6c1e10",
+      "bytes": 40961
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

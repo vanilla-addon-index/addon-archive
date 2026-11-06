@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Fiskehatt/SaySapped_Extended",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Fiskehatt",
+    "repo": "SaySapped_Extended",
+    "name": "SaySapped_Extended",
+    "url": "https://github.com/Fiskehatt/SaySapped_Extended",
+    "api": "https://api.github.com/repos/Fiskehatt/SaySapped_Extended"
+  },
+  "commit": "3eec8d18c9ddfd1087ca75b72cc198de2bd92e12",
+  "sourceFiles": {
+    "LICENSE.txt": {
+      "sha256": "8bccc1da7d1ee54a8b448efbca9812ed247f2df06bb00d1c78fb57d7010099d5",
+      "bytes": 1076
+    },
+    "README.txt": {
+      "sha256": "8e0f6081a5d0e33af3de3e0860c20011db0d35a79c7f250675af8bb690c002c2",
+      "bytes": 450
+    },
+    "SaySapped_Extended.toc": {
+      "sha256": "ccbf9ad29152fb8442ff2933393c94ea7535535c9b904bb52be07646391007e7",
+      "bytes": 335
+    },
+    "SaySapped.lua": {
+      "sha256": "b24d822cdd28fbb3878b77a6069f8721b9c68e27a3f95ee40f02ae42c234e546",
+      "bytes": 5565
+    },
+    "SaySapped.xml": {
+      "sha256": "9b0ebdfabf690ccee3127defbbbcefdb1d1fb50718aeeed4abc3cf540301f113",
+      "bytes": 16012
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

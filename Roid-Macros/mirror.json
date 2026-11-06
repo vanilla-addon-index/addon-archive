@@ -1,0 +1,293 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/Roid-Macros",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "Roid-Macros",
+    "name": "Roid-Macros",
+    "url": "https://github.com/MarcelineVQ/Roid-Macros",
+    "api": "https://api.github.com/repos/MarcelineVQ/Roid-Macros"
+  },
+  "commit": "019afbcc018dc3765bc802b8c2fea2811f300689",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "0a0f938c9df5407106bd68ccd2f1569b1f306a7e9a52db859c563bee06f31526",
+      "bytes": 15
+    },
+    "Compatibility/pfUI.lua": {
+      "sha256": "7ca0f375833bc3b154c057ef48003fbff78ee7495aab02191b7662b281e07fc4",
+      "bytes": 979
+    },
+    "Compatibility/SuperMacro.lua": {
+      "sha256": "30a59b68054a2b64a8758312033654c5b41b420b2f215b314ef7dacb68338a42",
+      "bytes": 473
+    },
+    "Conditionals.lua": {
+      "sha256": "1b55eb0a15606815ed361be28621de0aa94e39d3a17c4536754df33095208a0a",
+      "bytes": 34086
+    },
+    "Console.lua": {
+      "sha256": "b40c68fcb3da0a975769d186be0a688b475fb666d8b51db8fdd65427588eb9ce",
+      "bytes": 2543
+    },
+    "Core.lua": {
+      "sha256": "db5b837fb01fce0387c4db2cab62223613b1a072f6367d704bf91d1fd83a272f",
+      "bytes": 28318
+    },
+    "docs/about.md": {
+      "sha256": "a43624c3a93cd868efbe0b194935fbff05143fd83e6943354d826c373db67e4f",
+      "bytes": 1082
+    },
+    "docs/commands/equip.md": {
+      "sha256": "eeca14822f6a1b6c0944d9c192fb2195b69e671941ff8951933e57e247bee178",
+      "bytes": 563
+    },
+    "docs/commands/petattack.md": {
+      "sha256": "958642342c0a0fb7d8ebc4b7d3fbaf97cbf46ab589d7d96d1163e63c3b684cc4",
+      "bytes": 322
+    },
+    "docs/commands/reload.md": {
+      "sha256": "bb8d0238b862653cdb2f5d20042c25f4782880ca8f967afd5dac23fd61c4ad65",
+      "bytes": 86
+    },
+    "docs/commands/startattack.md": {
+      "sha256": "195900a81e9bfc5a31b4e16709ed927cae560bc3ebf8b84ff73ef4398a2d830a",
+      "bytes": 217
+    },
+    "docs/commands/stopattack.md": {
+      "sha256": "d00836d8fcba0d633241d952e00d9b2c2795edc0d300e4081c9deda93a228e68",
+      "bytes": 196
+    },
+    "docs/commands/stopcasting.md": {
+      "sha256": "321291ea558a99596ced1b8631cbebe7b03594f1025cfb5b5d82da3d34d597bc",
+      "bytes": 225
+    },
+    "docs/commands/target.md": {
+      "sha256": "615207eb279b1a276637249171a1c0a735dc3165c6d4c8435bb1aa0a93203cb1",
+      "bytes": 2173
+    },
+    "docs/commands/unshift.md": {
+      "sha256": "bd416e61f92f2740bde69c12fe825b83987cbfae25d4e7fe863bbac9761f07e2",
+      "bytes": 471
+    },
+    "docs/commands/use.md": {
+      "sha256": "aa3f3e1a08aae76d556ca68d3677e714eddd88171508c16833402d502d1c885f",
+      "bytes": 526
+    },
+    "docs/commands.md": {
+      "sha256": "5e7af403fb0a29defdf0036e730c064d6814be7632b0d20a6314fc41472783db",
+      "bytes": 328
+    },
+    "docs/compatibility.md": {
+      "sha256": "a78468e30f29f8bf5df63335d8dc0062494416edfab9f6e03d619a2d9bb5a57f",
+      "bytes": 1972
+    },
+    "docs/conditions/attacks.md": {
+      "sha256": "0cf5351d3c351ec64e3df6ea7e82482da7bc38147905dcf09628c38eb839d72c",
+      "bytes": 417
+    },
+    "docs/conditions/buffs.md": {
+      "sha256": "015be17d26975378ef1b657691971734f94bccea07ebdca73c289a05438fa222",
+      "bytes": 999
+    },
+    "docs/conditions/casting.md": {
+      "sha256": "a6a1123d9b20d02d7e05145fa51945c8078b8567e08f6b4a668a3d0171c28a82",
+      "bytes": 537
+    },
+    "docs/conditions/channeled.md": {
+      "sha256": "be9d2c2d1f9818f5afc8e6188671c028dc7d4a61ee20684a6acd59a44392f05b",
+      "bytes": 250
+    },
+    "docs/conditions/combat.md": {
+      "sha256": "b9575722fbfa53e29ed9de30117319dc99a3c5a9797498abcd27d2a8380a73d4",
+      "bytes": 243
+    },
+    "docs/conditions/combo.md": {
+      "sha256": "f151516c144ce170a9872738191f573da37ae28a3dc491c3d5e7fcda60d9eab5",
+      "bytes": 283
+    },
+    "docs/conditions/cooldown.md": {
+      "sha256": "0139a1ce093410c69690a454b82789140542ececb0979de15c715ce3e0c287be",
+      "bytes": 461
+    },
+    "docs/conditions/dead.md": {
+      "sha256": "d04ad185f91ee2e14b93b20cf5affdea27256270e496e97f90e79112ceb5e6db",
+      "bytes": 379
+    },
+    "docs/conditions/equipped.md": {
+      "sha256": "4f5dd57a71789710ddc91a93285d486499c01e826c5e756f00dce53a81da7b3a",
+      "bytes": 1162
+    },
+    "docs/conditions/group.md": {
+      "sha256": "1c42f7e56ebcf7f6d1fc2395b400fcf3fbcc4741c8eb6b2d8d7e3e5db2020008",
+      "bytes": 415
+    },
+    "docs/conditions/help_harm.md": {
+      "sha256": "b2e135472be18328e112827ec926ac0c0bb9ce033eacf82f08fbcc7cebf02a98",
+      "bytes": 365
+    },
+    "docs/conditions/hp.md": {
+      "sha256": "8bc1cf9b272a371ab5dc4cdc4b2e1c0dd6de93a49ec0694944ac59057fbf3334",
+      "bytes": 580
+    },
+    "docs/conditions/isnpc.md": {
+      "sha256": "c6a9f475390386b125f1544146c3215bf9d0be69376aec5d7a6ee0b680cab499",
+      "bytes": 278
+    },
+    "docs/conditions/isplayer.md": {
+      "sha256": "4bb8cc278910c6a647c0cf6059c843563431d0f47082b9bf34ef4d22961a27b0",
+      "bytes": 290
+    },
+    "docs/conditions/mod.md": {
+      "sha256": "5cd9d2b95232861997e412ed5f031e1264e84a498e53be413861d15a2e5f9cf9",
+      "bytes": 603
+    },
+    "docs/conditions/party.md": {
+      "sha256": "c917e4b5572852af278e50918471a15454dda7f57effd64cfb068efbb7e05736",
+      "bytes": 297
+    },
+    "docs/conditions/power.md": {
+      "sha256": "8bc15773d7ec10bc6297934c338c946017a04a65acce1612d304de3cc5c16604",
+      "bytes": 758
+    },
+    "docs/conditions/raid.md": {
+      "sha256": "f503ff2b24f673c0b9b62be7e645720c88f670629e6d774a122574775c2b822e",
+      "bytes": 293
+    },
+    "docs/conditions/reactive.md": {
+      "sha256": "f267486c5d7cc10689466800b3d4fa7d4267a0b5addb735e7f62d327931c9059",
+      "bytes": 414
+    },
+    "docs/conditions/stance.md": {
+      "sha256": "945772e8b1d69f056ecc1eb93fb26650c13e1f8cea4f9ae2cd9c844a0180f8b0",
+      "bytes": 798
+    },
+    "docs/conditions/stealth.md": {
+      "sha256": "417fc14ca072e94e9b90ee2b7e0b6052a81f077ff039e8f2048dbbb685c9417f",
+      "bytes": 351
+    },
+    "docs/conditions/target.md": {
+      "sha256": "1b41f4dea2b5cd049602492d5537ad58b377826ae064cb4287f8e22f48769117",
+      "bytes": 1488
+    },
+    "docs/conditions/type.md": {
+      "sha256": "04c8e43d318cd24b32f8adeebb760f11cd9678ffe4ff896b4f35ebfb360cb18e",
+      "bytes": 769
+    },
+    "docs/conditions/zone.md": {
+      "sha256": "818054ffa034c70ec043cc63459579a6a6eaaf5e89f9779d02423e9caab147c9",
+      "bytes": 428
+    },
+    "docs/conditions.md": {
+      "sha256": "007cd46b8021a505e12c5746eece55168c1ab94c5b7be6053579eaba15468677",
+      "bytes": 3036
+    },
+    "docs/index.md": {
+      "sha256": "25bdc02de9b627bdae04b06653798e393fcc584f78f3d2195c19e15482b2f12f",
+      "bytes": 497
+    },
+    "docs/macro_invoking.md": {
+      "sha256": "ed501e3d0115aab06aa693e9773c542c621fdcebcb53cd2764a24cc5f8dc9eec",
+      "bytes": 1499
+    },
+    "docs/showtooltip.md": {
+      "sha256": "5c193ce045330210387fa58aa6892c6ada15f99e6c4ae2e936ef96861c509a2a",
+      "bytes": 306
+    },
+    "docs/toggable_abilities_and_channelled_spells.md": {
+      "sha256": "b46385a5cb7afc6a97cacf9170769d284ea2774c290d58f9eb5ea7f55afb0959",
+      "bytes": 676
+    },
+    "Extensions/MacroLengthWarn.lua": {
+      "sha256": "4ac0e403d03665bf1990e211c7d1a3b7cf19442877a59eed7419196646ad7341",
+      "bytes": 1287
+    },
+    "Extensions/Mouseover/ag_UnitFrames.lua": {
+      "sha256": "9d11f64172b369cfe4dc0515820cbd9484a9cf3bd4e193048736fe7577f24247",
+      "bytes": 1264
+    },
+    "Extensions/Mouseover/Blizzard.lua": {
+      "sha256": "c23c63789b6b666307745f677165eaafdf1e9e2b0f375911f7b31b5b4fb6ee02",
+      "bytes": 2054
+    },
+    "Extensions/Mouseover/CT_RaidAssist.lua": {
+      "sha256": "190e00835f94b7cd6941442615f2a43f03c1401094248dcec876ccfba124a54c",
+      "bytes": 1499
+    },
+    "Extensions/Mouseover/CT_UnitFrames.lua": {
+      "sha256": "938bceabc7df6530b1d93339f1ee1d9a9688cfbe7234349599c3f0a3e7cfbcc5",
+      "bytes": 1049
+    },
+    "Extensions/Mouseover/DiscordUnitFrames.lua": {
+      "sha256": "80fa0b4b5046c6258a04f4560e1c097993af91a8edf968c8ddb1f42951b9f913",
+      "bytes": 993
+    },
+    "Extensions/Mouseover/FocusFrame.lua": {
+      "sha256": "c415dc3a49a1e25fd66dbebfd5888b41d8317a97264e41d51d8939b28d823d14",
+      "bytes": 1116
+    },
+    "Extensions/Mouseover/GameTooltip.lua": {
+      "sha256": "4821313a6d74a7e45c27fcfd323956333d9d0c83ed7525e7ef96b3cdce62c02c",
+      "bytes": 630
+    },
+    "Extensions/Mouseover/Grid.lua": {
+      "sha256": "c49f6fed77d123561e8fa78922b5502301fdb2a6ce364ff71b90ed84e5cadc3b",
+      "bytes": 3426
+    },
+    "Extensions/Mouseover/NotGrid.lua": {
+      "sha256": "62c5b01ebfbcbe7ca04d888f779f120d849b189c30b4df0435729a3561320422",
+      "bytes": 1396
+    },
+    "Extensions/Mouseover/PerfectRaid.lua": {
+      "sha256": "f09c46fe2b373bcfda66faf324be14d2d72b6b5528924ba782a1eb38566c1c4a",
+      "bytes": 4186
+    },
+    "Extensions/Mouseover/pfUI.lua": {
+      "sha256": "bdab4fa7b00693a29266e161ecc4bb438a6f0367d46c65813d29454f63d3fc39",
+      "bytes": 2311
+    },
+    "Extensions/Mouseover/sRaidFrames.lua": {
+      "sha256": "2406c20ae7ab7a775ad76f0a130e1caff6aba68bc72f47b7bc9be138fd52629a",
+      "bytes": 542
+    },
+    "Extensions/Tooltip/Generic.lua": {
+      "sha256": "ae25d7049d535133b7b08aa419304eabfcf110ecf6d059c515c2ff1393f93a54",
+      "bytes": 4086
+    },
+    "ExtensionsManager.lua": {
+      "sha256": "2bf379ebcdd2575a822fb8ef5afdb7c475b06fddde2288ed768661a7a94cddb9",
+      "bytes": 7515
+    },
+    "LICENSE": {
+      "sha256": "e91589a7f0a2397867e5e37b1a3e167a7154ec05fc74be1e233af4567934c333",
+      "bytes": 1083
+    },
+    "Localization.lua": {
+      "sha256": "9206e46cf8f6aa921685f0cfe2460de1fd3553481b56f22d7a6927e9feeb9373",
+      "bytes": 9371
+    },
+    "mkdocs.yml": {
+      "sha256": "6f13dec95863ff6b4d21a6efb787ce4976bae8225cb526c3a4d294c2871f5eb0",
+      "bytes": 1273
+    },
+    "README.md": {
+      "sha256": "93f9ab1b832824da5db859addc3a8b3a3a9610aa6807e987ee258a63e928ecc0",
+      "bytes": 2438
+    },
+    "Roid-Macros.toc": {
+      "sha256": "751e41e59582d4048519c24be1fc202fd310ed30d025c10dccdfdd1f831ec337",
+      "bytes": 906
+    },
+    "Utility.lua": {
+      "sha256": "dd74a605bf87169f74120c441ffaafb67aea169cb429f8899757e9987aab8928",
+      "bytes": 4484
+    },
+    "Widgets.xml": {
+      "sha256": "0b347b0a96f8e246f12fdcab24f053e7869b65057a56a741ada08e64ec3c0cdd",
+      "bytes": 297
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,153 @@
+{
+  "upstream": "https://github.com/thezephyrsong/GudaPlates",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "thezephyrsong",
+    "repo": "GudaPlates",
+    "name": "GudaPlates",
+    "url": "https://github.com/thezephyrsong/GudaPlates",
+    "api": "https://api.github.com/repos/thezephyrsong/GudaPlates"
+  },
+  "commit": "ac0114987cf403345baed3d98ef1482e0cdcc1af",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "9c6d1395161570d2c4d00de4f88273089d8015247c9eabf2d96cec8e902e1697",
+      "bytes": 51
+    },
+    "Assets/combat.blp": {
+      "sha256": "28d9a734c61beb33a73cbef5f9b81e0fbf35ed43b1d456d68f1b134464422fd6",
+      "bytes": 6676
+    },
+    "Assets/shield.blp": {
+      "sha256": "a0b329fa8fd34f9aa6e759e98d0e4d7dd64297135856952fe0c8105a744c6b75",
+      "bytes": 6676
+    },
+    "Bindings.xml": {
+      "sha256": "de99d512add08c19c95c3ac0b6bf324832d7172431190b217c5ab2a3e2945f4c",
+      "bytes": 859
+    },
+    "fonts/AdobeBlank.ttf": {
+      "sha256": "c42347a12f7ce92cc155579b7ab12e3d1edcd59d127b7715b933933d6a7459e2",
+      "bytes": 72384
+    },
+    "fonts/BigNoodleTitling.ttf": {
+      "sha256": "99fcb8e6f65d2d4e443091d856eb4eabec079f08245d31d02695aea860d7ddf1",
+      "bytes": 75156
+    },
+    "fonts/Continuum.ttf": {
+      "sha256": "28e295353b910b9ca7bf3d2b437bb5873ce49d5db1df661f8c97efeb9399d8b9",
+      "bytes": 92656
+    },
+    "fonts/DieDieDie.ttf": {
+      "sha256": "83a4de712fe501c0026b32955265da787993cc3ca224a918e179ffdef982ee21",
+      "bytes": 384412
+    },
+    "fonts/Expressway.ttf": {
+      "sha256": "06a2106170c2b5b736955cc749ed755f3757d103230645158f0bd5b5b91c386b",
+      "bytes": 99820
+    },
+    "fonts/Homespun.ttf": {
+      "sha256": "00987661c58306d4166af5c94d69b2becb21548097658e4627ef4dfdfb6b3f90",
+      "bytes": 21196
+    },
+    "fonts/Hooge.ttf": {
+      "sha256": "0570ff71826c135d343bce9a707ea49d56ad37c229a3adc6a53f443580943cdc",
+      "bytes": 70016
+    },
+    "fonts/Myriad-Pro.ttf": {
+      "sha256": "a4eefdaeccae42faeaf989b6b642f2e39386fd33a7e11c39e7c08d3bfc4eb18a",
+      "bytes": 209700
+    },
+    "fonts/PT-Sans-Narrow-Bold.ttf": {
+      "sha256": "e69d83bcf5bd647892b4e2b22f5098dabd55c989413513197722fc156fb9f00e",
+      "bytes": 487720
+    },
+    "fonts/PT-Sans-Narrow-Regular.ttf": {
+      "sha256": "4102edda03059163771869d258df54ac8563c408fa6e9ef75b2ddc85eabea6f4",
+      "bytes": 396212
+    },
+    "fonts/WarSansTT-Bliz-500.ttf": {
+      "sha256": "1fa4ca36819a843e6cfb475c94a7bfba701170494ff335141e824ab03f273926",
+      "bytes": 8438732
+    },
+    "GudaPlates_Castbar.lua": {
+      "sha256": "19f8bf62630f27f214534f88b93c2f59a0d0646d6a48cc5d5434409c52df345f",
+      "bytes": 4868
+    },
+    "GudaPlates_CombatLog.lua": {
+      "sha256": "bcbf1d30021c8002ae00110450203ebe3db01dfa4fbc552bf24a99756b298c29",
+      "bytes": 14006
+    },
+    "GudaPlates_ComboPoints.lua": {
+      "sha256": "3c8c7e7443ef14e37dbb2ae6df9e0f4decfed4f2ec62d4180422ecabdfd88629",
+      "bytes": 6404
+    },
+    "GudaPlates_Debuffs.lua": {
+      "sha256": "70e54bb909e73ce45ff500c6134e7cd224d6e236a502254ebee698f5c3049d2b",
+      "bytes": 39225
+    },
+    "GudaPlates_Filter.lua": {
+      "sha256": "f30570823f457eb6db5146efe18ab90f75e6f763325f2db80d2eade2f4498037",
+      "bytes": 4972
+    },
+    "GudaPlates_Healthbar.lua": {
+      "sha256": "f45a969c23e2b22a5fe21a7fbfe0300cf4338553c5df7b7c2a9cf4d5620e0cbb",
+      "bytes": 6655
+    },
+    "GudaPlates_Hide.lua": {
+      "sha256": "e95421d0e0904f4ea712f0744ea27ca5bb97e44543487ab24c9d1f523eff752f",
+      "bytes": 6366
+    },
+    "GudaPlates_Level.lua": {
+      "sha256": "db63e34c7b89d30d3cdeee33ed40656330d77cb9d6cbc104478a42d46afe85c5",
+      "bytes": 11368
+    },
+    "GudaPlates_Locale.lua": {
+      "sha256": "b4301d4c786e8a6fafdfc0855f980951d1614901cafb5460369bc972d3b77b41",
+      "bytes": 66237
+    },
+    "GudaPlates_Marks.lua": {
+      "sha256": "28072c33ca790e3371f047f30f3c506618dc1c20d03f6c3da82c97acc9ac42a0",
+      "bytes": 27193
+    },
+    "GudaPlates_Options.lua": {
+      "sha256": "7e91c18a9ae149e2f99b4083d5fbe8f509b2049321060164f9ab907bec5fc6b7",
+      "bytes": 83975
+    },
+    "GudaPlates_Players.lua": {
+      "sha256": "bbbbf2503b6add02c02f002ec7b7bd7f325d1427e6f309e3376824b026c32e29",
+      "bytes": 6788
+    },
+    "GudaPlates_Scanner.lua": {
+      "sha256": "d4572542ca093f6374a882d529820d7365ccccaf9bd6cbb9efe001fce04bb142",
+      "bytes": 4397
+    },
+    "GudaPlates_Settings.lua": {
+      "sha256": "a29fcacb5e9b24ddc71d7964f9e0f5912a62c1f11589908654a95a1882c45aac",
+      "bytes": 8978
+    },
+    "GudaPlates_SpellDB.lua": {
+      "sha256": "31be9acd4b17778634f157e722004bbbd9b5346937f135076b7c84e39a66287c",
+      "bytes": 44627
+    },
+    "GudaPlates_Threat.lua": {
+      "sha256": "c4f07bcacf2af0b9ab60ec8ad0e1799e1f6c54c04c1373797f64c460ecdecb87",
+      "bytes": 13912
+    },
+    "GudaPlates.lua": {
+      "sha256": "823a4cc821d993ffd33962f150b23b5e63f8398d91e1901e061e1e168f4e37ee",
+      "bytes": 134120
+    },
+    "GudaPlates.toc": {
+      "sha256": "281afc2bcc866738c0f06906470e7ab1a72cfd7edc8e7fce4b1a23d610f4436c",
+      "bytes": 625
+    },
+    "README.md": {
+      "sha256": "9a78485b54cf5e858a3fd7a31e0fb6134fdf8057eb7673558174cc9ca61484cd",
+      "bytes": 2486
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Magues17/SortBags",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Magues17",
+    "repo": "SortBags",
+    "name": "SortBags",
+    "url": "https://github.com/Magues17/SortBags",
+    "api": "https://api.github.com/repos/Magues17/SortBags"
+  },
+  "commit": "cb3595f0689ec59b83d838fb3e6e6445d9b0736e",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "04d0c6a7ed8c37745f1cd66937604e0a710cf29e4f5a81f7de3da3b9ddf4fd8e",
+      "bytes": 1466
+    },
+    "SortBags_Boot.lua": {
+      "sha256": "dfc52c5b090fd585cf0879836742643638365e2c522c0ad2f54489fc3986879d",
+      "bytes": 264
+    },
+    "SortBags_Button.lua": {
+      "sha256": "6c567cb51e251ea38b2d68714747f8c998fc5b0342e09605ee1a844dbcf53ae5",
+      "bytes": 3098
+    },
+    "SortBags_Core.lua": {
+      "sha256": "90bafb2923590a7c5e49227863680a26cc3341539b293bf6cf50191cc5fe90ed",
+      "bytes": 7903
+    },
+    "SortBags.toc": {
+      "sha256": "bdc68f542d2579cce98f27e6279acbd616a334f9cba4e2133dff75c6243a3b99",
+      "bytes": 212
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

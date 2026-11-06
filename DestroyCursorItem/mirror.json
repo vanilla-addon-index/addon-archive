@@ -1,0 +1,49 @@
+{
+  "upstream": "https://github.com/adrianocastro189/destroy-cursor-item",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "adrianocastro189",
+    "repo": "destroy-cursor-item",
+    "name": "destroy-cursor-item",
+    "url": "https://github.com/adrianocastro189/destroy-cursor-item",
+    "api": "https://api.github.com/repos/adrianocastro189/destroy-cursor-item"
+  },
+  "commit": "2e653d867768f52de7c69dfebdc4343619eee64d",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "c66f7467ad32ac228ac9fd8018c3e63f3c4c731b8b5fa598090722e02489e899",
+      "bytes": 142
+    },
+    "CHANGELOG.md": {
+      "sha256": "5e36efcd8d88caedf604b92dba2508a4f171a5efb3ce2bc15f74a04d043037b9",
+      "bytes": 470
+    },
+    "DestroyCursorItem.lua": {
+      "sha256": "a46a4c01f516ea2e70639a6a09b24cdb845357d542e2c014d4fc318a9a35a2e0",
+      "bytes": 3874
+    },
+    "DestroyCursorItem.toc": {
+      "sha256": "b022eb4ef3408f49da1f5a03586016c50ebaad930210cfe79bc56f2d0bccc038",
+      "bytes": 214
+    },
+    "README.md": {
+      "sha256": "0e97b454d56a03f74e4c96504b730bcc5e1aeb136fa80d9ca56bb5b09fa84d15",
+      "bytes": 946
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "259014989": {
+      "tag": "1.1.0",
+      "folder": "1.1.0--259014989",
+      "assets": {},
+      "source": {
+        "sha256": "97de542538f475b9717e1494dad7f47898d8f2143a40261a6f4605572f71743c",
+        "bytes": 2250,
+        "path": "releases/1.1.0--259014989/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/adrianocastro189/destroy-cursor-item/tarball/1.1.0"
+      }
+    }
+  }
+}

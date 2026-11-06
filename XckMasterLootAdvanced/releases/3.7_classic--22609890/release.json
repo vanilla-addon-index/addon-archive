@@ -1,0 +1,9 @@
+{
+  "id": "22609890",
+  "tag": "3.7_classic",
+  "name": "Update to 3.7",
+  "body": "Fix an LUA error on login not major error",
+  "published": "2020-01-06T06:48:05Z",
+  "prerelease": false,
+  "url": "https://github.com/unknauwn/XckMasterLootAdvanced/releases/tag/3.7_classic"
+}

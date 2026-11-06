@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/refaim/SoloRaidTargetIcons",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "refaim",
+    "repo": "SoloRaidTargetIcons",
+    "name": "SoloRaidTargetIcons",
+    "url": "https://github.com/refaim/SoloRaidTargetIcons",
+    "api": "https://api.github.com/repos/refaim/SoloRaidTargetIcons"
+  },
+  "commit": "6bfda6cb0a7ba487eb674c15fc67fd6cec599297",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "c0dc3dc30fad19c10f1202195dc27f5e0f90c0cf518f84e4ac413b901c7d8fc9",
+      "bytes": 1073
+    },
+    "main.lua": {
+      "sha256": "9518823a991a0b6c5a87ac6fbe3e08abc896587c19f0758753c74ea2ca6b385c",
+      "bytes": 1791
+    },
+    "README.md": {
+      "sha256": "2ed29c59f730ee92942c342b7c34efa0427c5adae4c76d5192b4fe2686b73e34",
+      "bytes": 264
+    },
+    "SoloRaidTargetIcons.toc": {
+      "sha256": "59fd2f147015c16db3985ee45adb5ab5f34f07782755c5874f19e4da976016ca",
+      "bytes": 417
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

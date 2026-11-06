@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/yutsuku/UITweaks",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "yutsuku",
+    "repo": "UITweaks",
+    "name": "UITweaks",
+    "url": "https://github.com/yutsuku/UITweaks",
+    "api": "https://api.github.com/repos/yutsuku/UITweaks"
+  },
+  "commit": "4c5dbd523e787ef66efa3f482e2adb38a82f367d",
+  "sourceFiles": {
+    "Config.lua": {
+      "sha256": "ee51cc2f092a6dc16bc61bfc004972c1fc26cad64025e7919ab06602c714f2eb",
+      "bytes": 2014
+    },
+    "help/GlobalStrings.lua": {
+      "sha256": "974e9ec8b80f3be3ca3bafbb0f3160a456b7504f85b8c3c9ab87e26b1b9d03d5",
+      "bytes": 308881
+    },
+    "README.md": {
+      "sha256": "9e1b4c63070dc8fa1341ec24626f0e79a345a34d4a2d64abb9e775dbe51b7a1b",
+      "bytes": 1485
+    },
+    "shitpost.lua": {
+      "sha256": "d001ad077057c64bef8950a023bef71dc4c0f719dea4f35821d2235c53ae25f5",
+      "bytes": 1377
+    },
+    "textures/background-gradient.blp": {
+      "sha256": "1c125a94f088dd7b2181d20e85acbaf045c8ecf686052e291783c31b44cb1c20",
+      "bytes": 175956
+    },
+    "textures/background-gradient.psd": {
+      "sha256": "2cb3e33d8d2db5fd29a6e70f169d53070632e0f201cee3352595ec073d4a5b81",
+      "bytes": 4563604
+    },
+    "UITweaks.lua": {
+      "sha256": "249426e187a67764b0798ee49a3a011d955b8ad737e6bdd6342c04e5b593e3cf",
+      "bytes": 29761
+    },
+    "UITweaks.toc": {
+      "sha256": "4265729ad0a51d22044a283892aa21ac41e9f53129d111b968ae08f57eae2ad7",
+      "bytes": 167
+    },
+    "UITweaks.xml": {
+      "sha256": "c61f987494b55bd7df063ce5fba287bfc3f8c6b20837b62d409ccabfd5d93a88",
+      "bytes": 773
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

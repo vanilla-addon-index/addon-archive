@@ -1,0 +1,11 @@
+{
+  "donor_voice": "narrator",
+  "pitch_shift": 0,
+  "reverb": 0,
+  "reverb_decay": 0,
+  "bass_boost_db": 0,
+  "treble_boost_db": 0,
+  "status": "approved",
+  "test_quest_id": null,
+  "notes": "Tadpole: mostly narrator + 2 grgls replaced with classic murloc sound (no ML). Smallgil: kobold donor with pitch shift. 15/15 lines."
+}

@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: SuperTotem
+## Notes: Totem and shield manager for Shaman with optional SuperWoW and Nampower support.
+## Author: 
+## Version: 1.0.4.15
+## SavedVariables: SuperTotemDB
+## OptionalDeps: pfUI
+
+libs\DoiteGlow.lua
+SuperTotem.lua

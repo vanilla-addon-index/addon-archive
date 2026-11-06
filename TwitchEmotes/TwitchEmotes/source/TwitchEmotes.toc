@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: TwitchEmotes (MISSING CLASSICAPI)
+## Notes: If you're seeing this, ClassicAPI has failed to load.
+## Author: Brues
+## Version: @project-version@
+## SavedVariables: Emoticons_Settings, Emoticons_Eyecandy, TwitchEmoteStatistics
+
+CAPI_Warning.lua

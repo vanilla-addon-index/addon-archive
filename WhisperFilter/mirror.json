@@ -1,0 +1,57 @@
+{
+  "upstream": "https://github.com/LadaBr/whisperfilter",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "LadaBr",
+    "repo": "whisperfilter",
+    "name": "whisperfilter",
+    "url": "https://github.com/LadaBr/whisperfilter",
+    "api": "https://api.github.com/repos/LadaBr/whisperfilter"
+  },
+  "commit": "666977c9117ee5777f053ac9eedcae1e3961df3a",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "2b514ee293eeeba1ee431473de6598cf6609f3d22359dc501468b3bbd6cb3dd2",
+      "bytes": 3950
+    },
+    "WhisperFilter/bindings.xml": {
+      "sha256": "badf35ec3e612df5ef7c78143c6305b989d2d32d399d0e0719516b178dc5f9e8",
+      "bytes": 154
+    },
+    "WhisperFilter/chatcopy.tga": {
+      "sha256": "c0ea55f0e7a9755d8be88ab9eea29c6169c15c23e99c78eb0d8886e849f610ea",
+      "bytes": 5157
+    },
+    "WhisperFilter/chatcopy2.tga": {
+      "sha256": "711cd4ba5d5b0d5a62f7db0bd220f6a18ec59863db895c5aa3207ab39da40dbc",
+      "bytes": 5157
+    },
+    "WhisperFilter/ChatScroll.lua": {
+      "sha256": "78234b7d9a98d7a53b87056f8976d376b1fac88bbbe863d7ba0ac81343539d7c",
+      "bytes": 899
+    },
+    "WhisperFilter/ChatScroll.xml": {
+      "sha256": "23ae2ef57ba4e78bae25a425f8b662300ce014f502eba02c6a87e41aef549220",
+      "bytes": 1352
+    },
+    "WhisperFilter/ChatURL.lua": {
+      "sha256": "28ab719b091106ef3548a3bfea39fe86641968002fff3603f85a95722e1ac2b0",
+      "bytes": 2606
+    },
+    "WhisperFilter/notif.mp3": {
+      "sha256": "f49bdc7ae27e0fd81574bed5deb4c217a50019d2e94538d2022908b589efc407",
+      "bytes": 122293
+    },
+    "WhisperFilter/WhisperFilter.lua": {
+      "sha256": "e50ec68c593a959907c2d8b1fe8571c323680b000816f8384cb1ee7fd76034e5",
+      "bytes": 101568
+    },
+    "WhisperFilter/WhisperFilter.toc": {
+      "sha256": "66bc23f42ab43fd44f0f63c8d925a1a6a9ef4e73ac14a182b66350e984fed9c1",
+      "bytes": 744
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -4,6 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| SummonsMonitor | https://github.com/0ldi/SummonsMonitor | new |
+| SummonsMonitor | https://github.com/0ldi/SummonsMonitor | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

@@ -1,0 +1,149 @@
+{
+  "upstream": "https://octowow.st/git/lightblade/CombatLedger",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "lightblade",
+    "repo": "CombatLedger",
+    "name": "CombatLedger",
+    "url": "https://octowow.st/git/lightblade/CombatLedger",
+    "api": "https://octowow.st/git/api/v1/repos/lightblade/CombatLedger"
+  },
+  "commit": "a4cc3077c8a510883885a0de84b8caab0082c471",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "d3e0916e92c4e3d01caf4cdf8b9649f99a137af60d57e20745b42f224e30c105",
+      "bytes": 236
+    },
+    "Aggregator.lua": {
+      "sha256": "cb0fab03e9fd655162266605b26779979719e6b5f744e091ba0e48d736158587",
+      "bytes": 49087
+    },
+    "Bindings.xml": {
+      "sha256": "d92de4955455d35fb99fa16c59e952ab7723101a1c31dfb6216bbee3d84a06d9",
+      "bytes": 128
+    },
+    "Bosses.lua": {
+      "sha256": "117e035e9f95e8a8656893460108e0283a00a3fe8acf3092acae406d7f64c414",
+      "bytes": 4927
+    },
+    "CombatLedger.toc": {
+      "sha256": "692fb8ea17847c065130c807e0179e6c4561963bd42765727526d2448d6e759e",
+      "bytes": 686
+    },
+    "Core.lua": {
+      "sha256": "26d0d3167c98e466c12680f737b733bb2dd78319f50ce04128cce6b70fef149f",
+      "bytes": 38384
+    },
+    "docs/ClassicAPI.md": {
+      "sha256": "61b1b3e7fad114af5aef9605e44cb8ac579e9b388bb825858bc4b906cddb7b3d",
+      "bytes": 2311
+    },
+    "docs/DEVELOPMENT.md": {
+      "sha256": "59323fc4277fe302cec1fee13a46d5546f169c169a5d2661da271d18923e2208",
+      "bytes": 2360
+    },
+    "docs/Nampower.md": {
+      "sha256": "c25a510cbdbb161ac9232dbad0e7da9a43fd5ad46066a95cc59158295753ab28",
+      "bytes": 2364
+    },
+    "docs/SuperWoW.md": {
+      "sha256": "31662c511214a0e4f9f0cb2261999e76f82a9fb13846fbf2cad8f5b03a8f1c35",
+      "bytes": 2255
+    },
+    "Events.lua": {
+      "sha256": "4fd354cc0bb96522955f97ed480f375d0e65cfc6e6be1e4135ec0ec422df2958",
+      "bytes": 40538
+    },
+    "fonts/Expressway.ttf": {
+      "sha256": "06a2106170c2b5b736955cc749ed755f3757d103230645158f0bd5b5b91c386b",
+      "bytes": 99820
+    },
+    "GuidCache.lua": {
+      "sha256": "82ee5f2246f379e609baff695ac80d9b54cf2ac930b7865ff93896d9b01af7c9",
+      "bytes": 7247
+    },
+    "History.lua": {
+      "sha256": "1b4c362a8a2a3ce25e0db6e210f0249a0dc083de1fa9296fa49ad4b16752f2f7",
+      "bytes": 6568
+    },
+    "img/bar_elvui.tga": {
+      "sha256": "c95d937cd0a1ce65c71602d412c8449532ef4e6bfcb338adb346d01fa0ac0a89",
+      "bytes": 4140
+    },
+    "img/bar_gradient.tga": {
+      "sha256": "973ee17cc23ed95908122d551f5acb303379f28421bfd5a7c45332b803421e21",
+      "bytes": 2781
+    },
+    "img/bar_smooth.tga": {
+      "sha256": "533e051209baf04339c37f342a8d272fdaa69cd8722e72cb0e727c9b94d5330b",
+      "bytes": 4140
+    },
+    "img/bar_striped.tga": {
+      "sha256": "5525ba5df8260b24ad3559cef8d85307191bfc9f72910d155ac4821f7104bad8",
+      "bytes": 4140
+    },
+    "img/bar_tukui.tga": {
+      "sha256": "c191039609ab7fd49fabf2d9f79e2ac03e068107f421d32a5d281d18094d49e0",
+      "bytes": 3506
+    },
+    "img/bar.tga": {
+      "sha256": "be38c30d46b0872762f6b8b785004a7b641170e0036100765c4643d6945bccaa",
+      "bytes": 247
+    },
+    "img/classicons.tga": {
+      "sha256": "210f3f42439c196deb9a37c9cedbb66f577873e7d4923fbafc971f2530a54093",
+      "bytes": 72005
+    },
+    "img/glow2.tga": {
+      "sha256": "3d80b172ee7ee007834edbc5329543a8982a18c67a103f54fc64317691bc78fc",
+      "bytes": 5366
+    },
+    "README.md": {
+      "sha256": "2690376535e3b3cf918cb3208f760d536e506ce2841a0217a8a9134d4c0d61e7",
+      "bytes": 6744
+    },
+    "screenshots/breakdown.png": {
+      "sha256": "442b317a06f1b3d58577e10043c2dadb472c752876f7d918b0e0bea15d28a040",
+      "bytes": 598254
+    },
+    "screenshots/main.png": {
+      "sha256": "b3184ef948170d4d08412a3d89fdc24b8e60dd486ea14d7a3e077332beb0841f",
+      "bytes": 307541
+    },
+    "Threat.lua": {
+      "sha256": "ca2527b77b09bc0a69d951bca6da472726d63fea64751ffdf1274c107bd9d785",
+      "bytes": 27682
+    },
+    "UI_BreakdownWindow.lua": {
+      "sha256": "a0c06266aa889116d67bc7f5b2eafb994d1e69cf3510202d0de58a00a948f79f",
+      "bytes": 49847
+    },
+    "UI_DeathRecap.lua": {
+      "sha256": "1915d30158b6e3d04c598374bbfd13565882ae715753d343fd5f0a7b7e6e9752",
+      "bytes": 8671
+    },
+    "UI_EncounterReport.lua": {
+      "sha256": "512c61e28e3b5e2abc39b6de0216e16e911d999c6ae364510aab8dbe86da16b8",
+      "bytes": 16624
+    },
+    "UI_HistoryWindow.lua": {
+      "sha256": "0ec11061332142ff6b98f6a3a3b6de269c098968ba090e7d1f795ea55a29e102",
+      "bytes": 13121
+    },
+    "UI_MainWindow.lua": {
+      "sha256": "31cff59f3f510d826cf691fee23f262c7d47f374881136deb7a1a7489942af07",
+      "bytes": 71068
+    },
+    "UI_Options.lua": {
+      "sha256": "cbfe479997f7e5739e93da4668df8d687052586b9daa3a4828abac2f78519d52",
+      "bytes": 53510
+    },
+    "UI_PfuiDock.lua": {
+      "sha256": "de889b07c994f176248143520d6b6403247e351a6360c5b2179fb0fbc5a42758",
+      "bytes": 5527
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

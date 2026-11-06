@@ -1,0 +1,61 @@
+{
+  "upstream": "https://octowow.st/git/OEVG/TargetFrameBuff",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "OEVG",
+    "repo": "TargetFrameBuff",
+    "name": "TargetFrameBuff",
+    "url": "https://octowow.st/git/OEVG/TargetFrameBuff",
+    "api": "https://octowow.st/git/api/v1/repos/OEVG/TargetFrameBuff"
+  },
+  "commit": "4b1da3734ecd870634deb9dc66d0063ef46e3334",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d60f352d0db1404c70afb4bb8b2ca3fd1c610572aa40720e8a0b7baa7885418c",
+      "bytes": 19
+    },
+    ".gitignore.upstream": {
+      "sha256": "65c449a9610b8dd8255e76529e5ec9bd335bad7b743b30650a626c55b7b280d1",
+      "bytes": 25
+    },
+    "CHANGELOG.md": {
+      "sha256": "0ef9293a42be7acd159a56ebf668bdda1be40ec712a1cda483d72cf20dca10eb",
+      "bytes": 1950
+    },
+    "README.md": {
+      "sha256": "21573686ecfc33a00d75c33283fbf85da63a6b4ff0764e85a3120cf3c90705ea",
+      "bytes": 4374
+    },
+    "Settings.lua": {
+      "sha256": "2fb6d9d78340540a9af22c273998d3351415c289cb6aa2e5ebd734d23c628d3c",
+      "bytes": 7244
+    },
+    "TargetFrameBuff.lua": {
+      "sha256": "43e029462b6855593d4d4c58437a8b350630f6413a185c411b6831e01a07e30a",
+      "bytes": 21787
+    },
+    "TargetFrameBuff.toc": {
+      "sha256": "2d4468c09d259f689f3a27aca41084feb7b8f53e7f8680e191110bc849d14369",
+      "bytes": 294
+    },
+    "TargetFrameBuff.xml": {
+      "sha256": "599d4f1c9c41b19fb50bdd38501f97e75a5e1575e4a0dd615a67fff5a91e7327",
+      "bytes": 8459
+    },
+    "tests/mock_wow.lua": {
+      "sha256": "bc85a8314b35ccdf2a87301a3f2143e9ba2d342cda370c1455f881e4963908ed",
+      "bytes": 4464
+    },
+    "tests/test_addon.py": {
+      "sha256": "0d797acb7d30a722d5a2f5b2386735f183c26a7eb6d3814ed657e3fae299918a",
+      "bytes": 14937
+    },
+    "VALIDATION.md": {
+      "sha256": "51d76c9e3911601014899e9c9b360ea3424773810fd171d6e9bd681d132fcd09",
+      "bytes": 1245
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

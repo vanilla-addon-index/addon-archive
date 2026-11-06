@@ -1,0 +1,82 @@
+{
+  "upstream": "https://github.com/max-bruhn/WTBox",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "max-bruhn",
+    "repo": "WTBox",
+    "name": "WTBox",
+    "url": "https://github.com/max-bruhn/WTBox",
+    "api": "https://api.github.com/repos/max-bruhn/WTBox"
+  },
+  "commit": "9227e42a67c1287217e865e0d7ac2237b5dd9cc5",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "1789e881d54e980a6d5ec1f9aca5df0bd4ab8ce9c94536e646bf35318fd45221",
+      "bytes": 125
+    },
+    "LICENSE": {
+      "sha256": "ee73eca8d157b208b6e578bb72baef48d5bc5be814b1134f6e78ca52cbfecfa0",
+      "bytes": 1077
+    },
+    "README.md": {
+      "sha256": "89cbdbb229bf00b5c468073c0d01727dba409537ae9407573c7b414e9ef641ba",
+      "bytes": 3664
+    },
+    "README.zh-CN.md": {
+      "sha256": "da3ae06f5eaf8be38781985dc9e2215a682998fcfd29cffa724a954626e8dac9",
+      "bytes": 3223
+    },
+    "screenshot-classic.png": {
+      "sha256": "1e705b8477d696923eb5d3d7a25d99827211ab5df2cf4969f7fe94baf420b480",
+      "bytes": 112032
+    },
+    "screenshot-modern.png": {
+      "sha256": "c590b88b0506fb29f61df281d690226517a4ef7101f11a596fd82cd8a97ffd32",
+      "bytes": 99991
+    },
+    "screenshot-pfui.png": {
+      "sha256": "d1014edae54674835efb2e605ab0735c8c18cdabd71431113a8205ad6541a51d",
+      "bytes": 98328
+    },
+    "WTBox_Glossary.lua": {
+      "sha256": "91240a2fb54a352bd33f25e89a8c280e0bf47f4c20ddeb337f7e5302eff32674",
+      "bytes": 1533
+    },
+    "WTBox.lua": {
+      "sha256": "6c6bfcb38537ce155db74c4b63c8be6cfa3008bf4a2af50c4151f16ed61dbb3b",
+      "bytes": 59377
+    },
+    "WTBox.toc": {
+      "sha256": "94a00e82b05a3e43c377d4abf121670ea8dbb33aa14a65de84fe5aa543c035b7",
+      "bytes": 287
+    },
+    "WTBoxFonts.xml": {
+      "sha256": "63fb3a1125b6b09d8dd97ddcb1c241f0e9914544416431f66ee401b408aa0143",
+      "bytes": 1336
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "368157090": {
+      "tag": "v1.4",
+      "folder": "v1.4--368157090",
+      "assets": {
+        "509190347": {
+          "sha256": "a0f96450864dc4599f0e681e9162af2d7da713f0ee20957ddf9bef4c1c7d4836",
+          "bytes": 22696,
+          "id": "509190347",
+          "name": "WTBox-v1.4.zip",
+          "url": "https://github.com/max-bruhn/WTBox/releases/download/v1.4/WTBox-v1.4.zip",
+          "path": "releases/v1.4--368157090/assets/WTBox-v1.4.zip"
+        }
+      },
+      "source": {
+        "sha256": "8c6ce0ca7ebc4c9cd187c76b00d770dd2f744dfcb4998213a1c2e676c1babd3d",
+        "bytes": 93735,
+        "path": "releases/v1.4--368157090/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/max-bruhn/WTBox/tarball/v1.4"
+      }
+    }
+  }
+}

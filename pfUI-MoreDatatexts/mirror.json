@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/Arthur-Helias/pfUI-MoreDatatexts",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Arthur-Helias",
+    "repo": "pfUI-MoreDatatexts",
+    "name": "pfUI-MoreDatatexts",
+    "url": "https://github.com/Arthur-Helias/pfUI-MoreDatatexts",
+    "api": "https://api.github.com/repos/Arthur-Helias/pfUI-MoreDatatexts"
+  },
+  "commit": "565d6f3b5d9c37e9892f21dc88e1c9f0940f573b",
+  "sourceFiles": {
+    "CHANGELOG.md": {
+      "sha256": "e662043515ff096826e8b1841a19609b1e61c360ad6f9993e16604c564badce5",
+      "bytes": 425
+    },
+    "datatexts/MessageBox.lua": {
+      "sha256": "80d04390c3898623e72ba3a25d0868cd454ffbc6e741287d9aeb74d8c8a5cc02",
+      "bytes": 6173
+    },
+    "datatexts/Reputation.lua": {
+      "sha256": "dcecab36f95578900bb51fbe626dce6c6c812386850c2d1ea4f235895c753e8b",
+      "bytes": 7129
+    },
+    "datatexts/WIM.lua": {
+      "sha256": "407771ad8581e17d5ed73b90a362c409844234665ca3a344e534eb069a2c4f56",
+      "bytes": 3325
+    },
+    "LICENSE": {
+      "sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+      "bytes": 1211
+    },
+    "pfUI-moredatatexts-config.lua": {
+      "sha256": "0b10d4c750d1daf5045020a0e010f89a9bcdcf0dfbe702ffb361d679ca94dbff",
+      "bytes": 4900
+    },
+    "pfUI-moredatatexts.lua": {
+      "sha256": "ca070537ecde76874b73f96c6034051c4d38aa15fb3e3be74b1a25789476aad1",
+      "bytes": 6186
+    },
+    "pfUI-moredatatexts.toc": {
+      "sha256": "7797df647f1f32f6adcd4fb08502df5aea8b1821145082d9ac86b788b3e92dd2",
+      "bytes": 442
+    },
+    "README.md": {
+      "sha256": "0e5d3b0f57885bb3a760c56903587a27016ddb0ab71b66685ff949c6e5c8ae71",
+      "bytes": 4465
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

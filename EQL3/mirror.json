@@ -1,0 +1,193 @@
+{
+  "upstream": "https://github.com/laytya/EQL3",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "laytya",
+    "repo": "EQL3",
+    "name": "EQL3",
+    "url": "https://github.com/laytya/EQL3",
+    "api": "https://api.github.com/repos/laytya/EQL3"
+  },
+  "commit": "a0ced1c73e99aa2662e5d959dd96fcec33ddcfb4",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    "EQL3/EQL3_Log.lua": {
+      "sha256": "a7fa1a0e99b54eb291d0ff184e69c37ea0d85e96fa75c1e4f774cb67acd37828",
+      "bytes": 46319
+    },
+    "EQL3/EQL3_Log.xml": {
+      "sha256": "c6a6cadab6b03afab6d0adc17a305fab4bb40108788e327ed83a30acd26288ef",
+      "bytes": 46631
+    },
+    "EQL3/EQL3_Main.lua": {
+      "sha256": "b0db14d291fb96942b218e9692e079ff92888613a76b9710542cd2b3b2fae20c",
+      "bytes": 3699
+    },
+    "EQL3/EQL3_Options.lua": {
+      "sha256": "5a69c1a3059cb7b5c3c8e8f7072d0f4a193bb2f13485b7aba98bb3db200b1331",
+      "bytes": 49547
+    },
+    "EQL3/EQL3_Options.xml": {
+      "sha256": "083a172f9c49b6047ffb097c0c58eb94b26328c5a59fb630fdcac4fbf6f22fe0",
+      "bytes": 68300
+    },
+    "EQL3/EQL3_OrganizeFrame.xml": {
+      "sha256": "1349e41905624f58ab7939e06eb3f50af481ee795423f5f70a8449e102cb6a71",
+      "bytes": 4568
+    },
+    "EQL3/EQL3_QuestDB.lua": {
+      "sha256": "c34dccc021efa82d22012e5df56a328823b0a694e85f5db9f9f0926fc2484ff7",
+      "bytes": 7803
+    },
+    "EQL3/EQL3_QuestDB.xml": {
+      "sha256": "57e0665f2948be75383de7a83bd1bbad2320fd28d0d94b6bcd7ef5ad75af0c36",
+      "bytes": 442
+    },
+    "EQL3/EQL3_Tooltip.lua": {
+      "sha256": "fcd6833c5aa62aed69fb27c4cba024332bcbfbaf0b02d42cb3c81f9d80fc16e2",
+      "bytes": 3888
+    },
+    "EQL3/EQL3_Tooltip.xml": {
+      "sha256": "420343931b0a2fffc4eccc3b61ca7cbfac109e07af0f8cf3ca5d51e72b13e565",
+      "bytes": 446
+    },
+    "EQL3/EQL3_Tracker.lua": {
+      "sha256": "e24f5b75a061888195f98a3d0e7b94cb731c1d48ad2df640a1a2afaaafd1fdcd",
+      "bytes": 28422
+    },
+    "EQL3/EQL3_Tracker.xml": {
+      "sha256": "3846ed5a6d0fe0d9507b71b701603cd6a6596bfb8c67ebb80ea732f13f5b3010",
+      "bytes": 15274
+    },
+    "EQL3/EQL3.toc": {
+      "sha256": "169c7057f60ca8b51aad421b3622d12bb622930caee468e85d169b0ff602bdef",
+      "bytes": 1274
+    },
+    "EQL3/Images/EQL3_BookIcon.tga": {
+      "sha256": "cc440ca2417d9deab41bb859bb6ca0a2e3a06ef7766a2dcb72690f07b0200ca3",
+      "bytes": 16428
+    },
+    "EQL3/Images/EQL3_BottomLeft.tga": {
+      "sha256": "d4a2ec17c901f8dedc7f4186eb7867ffccf17950521842e90c9a549c41b1217f",
+      "bytes": 262188
+    },
+    "EQL3/Images/EQL3_BottomMiddle.tga": {
+      "sha256": "f7366a173618ecde7f89e0fa527ded3329e380d25b9e3878db5a514772fe42d9",
+      "bytes": 262188
+    },
+    "EQL3/Images/EQL3_BottomRight.tga": {
+      "sha256": "b5b69a9e10e44957e9160c3c97f0145589cc30188b250ed58eb023f3c9cd8d77",
+      "bytes": 65580
+    },
+    "EQL3/Images/EQL3_BottomSwitchOff.tga": {
+      "sha256": "01afa81a54bb1fa3f4c3ba27caf3c8c5296a63cdd21d98da4aa0b84b46d611c3",
+      "bytes": 131116
+    },
+    "EQL3/Images/EQL3_BottomSwitchOn.tga": {
+      "sha256": "0023448c6ba716b92de6a5ddeaed469322e0b38e8c1ff8a008fb8325fd301b2f",
+      "bytes": 131116
+    },
+    "EQL3/Images/EQL3_Header_Icon.tga": {
+      "sha256": "92082f8a850f21145d84c636a90e5deb0c6d2e1aae2db20fc19014ae86cee916",
+      "bytes": 1068
+    },
+    "EQL3/Images/EQL3_TopLeft.tga": {
+      "sha256": "c2f6c507ef76eef6f152bc444bd799e8fdfde561e3438b8b349aefd0ce4f9622",
+      "bytes": 262188
+    },
+    "EQL3/Images/EQL3_TopMiddle.tga": {
+      "sha256": "0eb53a33b554ac70f4c1ae489f4b6c587501f10a3afb08eb8bd4225e9c324a77",
+      "bytes": 262188
+    },
+    "EQL3/Images/EQL3_TopRight.tga": {
+      "sha256": "4bf7f2d147978b61760fffb2192b9ad2c45b0534bf8acbc1c4183677392c0402",
+      "bytes": 65580
+    },
+    "EQL3/Images/EQL3_TopSwitchOff.tga": {
+      "sha256": "82b1fded16ffaa4b3922a89b65b9331c70b31d393fb44cb4b9e58abb71be2b3e",
+      "bytes": 131116
+    },
+    "EQL3/Images/EQL3_TopSwitchOn.tga": {
+      "sha256": "65bcb19042624b1045aa812cfd9fa3e4de7eb55a202d8ea6d8b1b667ef0fe0c7",
+      "bytes": 131116
+    },
+    "EQL3/Images/LoadButton-Disabled.tga": {
+      "sha256": "2476fdd3e739deb783d67074b2630184d52e6edaa8a567f7d19b1d136d05cc38",
+      "bytes": 4140
+    },
+    "EQL3/Images/LoadButton-Down.tga": {
+      "sha256": "de060903046e05853439386a106a590f871fe4ce43b3a90b61c70c34de3f1490",
+      "bytes": 4140
+    },
+    "EQL3/Images/LoadButton-Up.tga": {
+      "sha256": "d784788b06a43814a3769946ddda1dc6aae32de5cb9ddcf8f33c6565bb067ad0",
+      "bytes": 4140
+    },
+    "EQL3/Images/MaximizeButton-Disabled.tga": {
+      "sha256": "da4eb6c16b6ead34896580b4eeac84a2a72f9c25bc1696dd478f9b84acb96a6f",
+      "bytes": 4140
+    },
+    "EQL3/Images/MaximizeButton-Down.tga": {
+      "sha256": "787717f00696c43113d86f0bce8622956e8cc7e9bbd41312e322ef2814108f9e",
+      "bytes": 4140
+    },
+    "EQL3/Images/MaximizeButton-Up.tga": {
+      "sha256": "487516443c8157bd84a9f16ab3beb14038eda344cf062aeec3622937c5b42cff",
+      "bytes": 4140
+    },
+    "EQL3/Images/MinimizeButton-Disabled.tga": {
+      "sha256": "0bca4d8cfe4064b08a06383d6c6031b56ff7cdb0377cf36e1ddde0c5fe5d5ace",
+      "bytes": 4140
+    },
+    "EQL3/Images/MinimizeButton-Down.tga": {
+      "sha256": "a73e5fec81575ad4206f70665936497e248d1db7034c914ea9cf7c9866b3e498",
+      "bytes": 4140
+    },
+    "EQL3/Images/MinimizeButton-Up.tga": {
+      "sha256": "d9d426818b0addd8e85b2f46bd30853f03a5ca1a0cc4b5f685c5ff825fb6e2ca",
+      "bytes": 4140
+    },
+    "EQL3/Images/RestoreButton-Disabled.tga": {
+      "sha256": "827539583b7137c76154a6328a4817becf210b4e61e37153b97e1e88d9a20202",
+      "bytes": 4140
+    },
+    "EQL3/Images/RestoreButton-Down.tga": {
+      "sha256": "0f493a01d4970e702ad440006c1477558caaa5a41ea71b8fb34562b54e8c5a1b",
+      "bytes": 4140
+    },
+    "EQL3/Images/RestoreButton-Up.tga": {
+      "sha256": "d21276da7bfeadb2f7bf5a4aa64b67cc403a9a5f5fb624a679f7c746e6926ae8",
+      "bytes": 4140
+    },
+    "EQL3/localization_de.lua": {
+      "sha256": "86cc663e96864634d7b5316f7031df77d4744f160cdff8b99acc1dc5c95c5d1b",
+      "bytes": 3704
+    },
+    "EQL3/localization_en.lua": {
+      "sha256": "515669d0771ce68364f882fbb6beaf5158b56fc7ed26a74b6c48597c08a0cfd8",
+      "bytes": 3294
+    },
+    "EQL3/localization_es.lua": {
+      "sha256": "990551e293cb9c3ff8c158788dc2777e60870d67709c3a0892ed4ce131fd0cd7",
+      "bytes": 3998
+    },
+    "EQL3/localization_fr.lua": {
+      "sha256": "a900119a6437c38e325a1cb08dac8fae8318bd9cb274d7a57cca538cd80a70c7",
+      "bytes": 4273
+    },
+    "EQL3/localization_ru.lua": {
+      "sha256": "abee694c1383bf03a6a64d3824955d74e4be59c161f17e50adeaa517eded3e82",
+      "bytes": 4443
+    },
+    "README.md": {
+      "sha256": "7da607542346d4cc39c01942d317019e8317b29bec2829dbbbc5058a54552f74",
+      "bytes": 291
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,81 @@
+{
+  "upstream": "https://github.com/KrekoG/SkelaCustomNameplates",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "KrekoG",
+    "repo": "SkelaCustomNameplates",
+    "name": "SkelaCustomNameplates",
+    "url": "https://github.com/KrekoG/SkelaCustomNameplates",
+    "api": "https://api.github.com/repos/KrekoG/SkelaCustomNameplates"
+  },
+  "commit": "8ee5ace1b67d6f88cc070c79dc19990e46277ca1",
+  "sourceFiles": {
+    "barSmall.tga": {
+      "sha256": "ccac87b4d6aecf02d3ba39d8dd206d59d292f994734a47e279192b71a0f0e290",
+      "bytes": 10863
+    },
+    "barSmall5ths.tga": {
+      "sha256": "09281570e748d9371ee8f106754f374cee9576c49ed5103058e3ed3a35892908",
+      "bytes": 11380
+    },
+    "Class/ClassIcon_Druid.tga": {
+      "sha256": "28645a96124f5e5c26b4482423ab16864c831b77fc73059b5bd035a163c6711f",
+      "bytes": 16428
+    },
+    "Class/ClassIcon_Hunter.tga": {
+      "sha256": "299077cddafd26ea024cdfd8129f33ce80ae1f11aa467b838443682fb77bc52a",
+      "bytes": 16428
+    },
+    "Class/ClassIcon_Mage.tga": {
+      "sha256": "33b376d0e3ca32b0a0f0c3bbeda8c26c4dc49ec688c9b33dbf299b418b971770",
+      "bytes": 16428
+    },
+    "Class/ClassIcon_Paladin.tga": {
+      "sha256": "c957a095edeed51f979af1625054acd250f5fee8d9a8607c9bf2e24d20a1497b",
+      "bytes": 16428
+    },
+    "Class/ClassIcon_Priest.tga": {
+      "sha256": "5d7c648774df0f4110dc1de8e6f6cb2aba3c85270c68f54e6538d35b2530ad80",
+      "bytes": 16428
+    },
+    "Class/ClassIcon_Rogue.tga": {
+      "sha256": "daaf15aa2b4b4994b648c9711b7194f3103625dc2d6542e4f4229dbdef0fba4e",
+      "bytes": 16428
+    },
+    "Class/ClassIcon_Shaman.tga": {
+      "sha256": "864ffc0e99e246602ad26ccc75c5f91ad9bcb44c03250082fdd9efd66cdbda52",
+      "bytes": 16428
+    },
+    "Class/ClassIcon_Warlock.tga": {
+      "sha256": "0d6f6c024d42a5aa41e130b3996305996c5560f9289110afdb687cb8460d3743",
+      "bytes": 16428
+    },
+    "Class/ClassIcon_Warrior.tga": {
+      "sha256": "5a5bd13717b88125e64837acaf189561801c59ab6b580d7cfee7e14e5e25b876",
+      "bytes": 16428
+    },
+    "Fonts/Helvetica_Neue_LT_Com_77_Bold_Condensed.ttf": {
+      "sha256": "13b685f8aac53fa46f76a3781d7acd5d8df634f76e1aa1b23489b084ad13044b",
+      "bytes": 142964
+    },
+    "Fonts/Ubuntu-C.ttf": {
+      "sha256": "335173652aa12d172b97d21aa7d1a31b039eebc00d333ea49d624aa0b2d82736",
+      "bytes": 350420
+    },
+    "README.md": {
+      "sha256": "6a46af26c6a4ae256521699087d9dc5238215ea1f3e3e46ca58571410d6fea22",
+      "bytes": 469
+    },
+    "SkelaCustomNameplates.lua": {
+      "sha256": "cf52a2ffbe08c78d9164a350c4d657a5b0bece85d7e1f7d2cf2dc34cb13578ba",
+      "bytes": 23288
+    },
+    "SkelaCustomNameplates.toc": {
+      "sha256": "abcb4cfb060d8db1c5383a8deec6ddc381be6d3d3495e10eb8a3681392d549fd",
+      "bytes": 199
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

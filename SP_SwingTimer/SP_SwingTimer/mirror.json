@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/SP_SwingTimer",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "SP_SwingTimer",
+    "name": "SP_SwingTimer",
+    "url": "https://github.com/MarcelineVQ/SP_SwingTimer",
+    "api": "https://api.github.com/repos/MarcelineVQ/SP_SwingTimer"
+  },
+  "commit": "3dc83fce3b59ec473f1637c86ffb13f6facf2fbe",
+  "sourceFiles": {
+    "Macros.txt": {
+      "sha256": "48c7e4be245a023ebeae465a88cffdfe7b32bd2f2772a724302362196033a82c",
+      "bytes": 332
+    },
+    "README.md": {
+      "sha256": "87df67b335ce14d30907f6a96866096c4b081d12fe71de845174bd9e70afdddb",
+      "bytes": 707
+    },
+    "SP_SwingTimer.lua": {
+      "sha256": "48861c1ef81c908685efd28657a921dfa95444a5a3f2156c02b22c73d37d9929",
+      "bytes": 29393
+    },
+    "SP_SwingTimer.toc": {
+      "sha256": "67e2966a5cc43200f60905fb759e0c15a6a6d36281bbf6507d26311d500a8f0b",
+      "bytes": 362
+    },
+    "SP_SwingTimer.xml": {
+      "sha256": "e7754c13d69770402f69fd144c73aa2bea2ff4c7608c4f854f3933463fafd387",
+      "bytes": 2794
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

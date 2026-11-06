@@ -1,0 +1,54 @@
+{
+  "upstream": "https://github.com/phrxqt/TargetSoundRestore",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "phrxqt",
+    "repo": "TargetSoundRestore",
+    "name": "TargetSoundRestore",
+    "url": "https://github.com/phrxqt/TargetSoundRestore",
+    "api": "https://api.github.com/repos/phrxqt/TargetSoundRestore"
+  },
+  "commit": "7a3a32630fbc62e2c036192a250e0be29921f651",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "f944e2950a9c55b993c870637de3f589c464e49162ce54eb517ba067184abb9c",
+      "bytes": 1063
+    },
+    "README.md": {
+      "sha256": "e772635878907d1898ed01d2026580e7a82385a75ae70f179d079700f0ef9225",
+      "bytes": 1267
+    },
+    "TargetSoundRestore.lua": {
+      "sha256": "d0f54bfedbe8bbc1e8d51b9368c9faa75c34d0d4f0fc8d78606827edbc04494a",
+      "bytes": 785
+    },
+    "TargetSoundRestore.toc": {
+      "sha256": "7819dd5fc9f3c75346a6af206671cbe0f330f3e011d807762bda6d63131f14f1",
+      "bytes": 204
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "236438926": {
+      "tag": "v1.0",
+      "folder": "v1.0--236438926",
+      "assets": {
+        "278718123": {
+          "sha256": "3e391e9103ea6246d787937f28374ead338c4c8a156404a63ac1e2c0a4c2e93e",
+          "bytes": 2867,
+          "id": "278718123",
+          "name": "TargetSoundRestore.zip",
+          "url": "https://github.com/phrxqt/TargetSoundRestore/releases/download/v1.0/TargetSoundRestore.zip",
+          "path": "releases/v1.0--236438926/assets/TargetSoundRestore.zip"
+        }
+      },
+      "source": {
+        "sha256": "85c8273c23e0389032cbd696d0cd6a738788486dc35ede7c3edf85e163af9dd9",
+        "bytes": 1981,
+        "path": "releases/v1.0--236438926/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/phrxqt/TargetSoundRestore/tarball/v1.0"
+      }
+    }
+  }
+}

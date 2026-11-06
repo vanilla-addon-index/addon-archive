@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: DrunkTracker
+## Notes: Tracks drunk states for the drunk challenge - shows RED/YELLOW/GREEN status
+## Author: DrunkTracker
+## Version: 1.0
+## SavedVariables: DrunkTrackerDB
+
+DrunkTracker.lua

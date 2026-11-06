@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/FSuhas/TWPulse",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "FSuhas",
+    "repo": "TWPulse",
+    "name": "TWPulse",
+    "url": "https://github.com/FSuhas/TWPulse",
+    "api": "https://api.github.com/repos/FSuhas/TWPulse"
+  },
+  "commit": "8322635c65c87ef81b7f3cbcffde4156afa60982",
+  "sourceFiles": {
+    "animation.GIF": {
+      "sha256": "85a7cd947d02ab8347fcb625012e537cdf6959b1ccd144d1533275d0610d3be3",
+      "bytes": 464631
+    },
+    "README.md": {
+      "sha256": "400fc8f8f3195da8ef5731a48b291f08911af95ced7904aa1aaf73ac5aa1b2e5",
+      "bytes": 3531
+    },
+    "settings.PNG": {
+      "sha256": "045782d17f0f61b9d23a59075b2f91ad3226864131d77c5bb44dbcfb3d534974",
+      "bytes": 116139
+    },
+    "TWPulse.lua": {
+      "sha256": "12c8a0171b952bf70d1ce49b171433442890af10602bd6c051b9caf1556a38e9",
+      "bytes": 12567
+    },
+    "TWPulse.toc": {
+      "sha256": "3a3c5a6b08aa21ac79f33bbf56d5db1077198af06ec2160be25ad3ee851a3e81",
+      "bytes": 184
+    },
+    "TWPulse.xml": {
+      "sha256": "d5cdc1ea408d1528dd22831479fd745bc695657536341e6849ad616ce814f202",
+      "bytes": 3261
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,11 @@
+{
+  "donor_voice": null,
+  "pitch_shift": 0,
+  "reverb": 0.1,
+  "reverb_decay": 0.6,
+  "bass_boost_db": 3,
+  "treble_boost_db": 0,
+  "status": "approved",
+  "test_quest_id": null,
+  "notes": "Tier 3. Human mage. reverb 0.1/0.6, bass 3. 31/31 lines generated."
+}

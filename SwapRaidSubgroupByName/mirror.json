@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Grymskvll/SwapRaidSubgroupByName",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Grymskvll",
+    "repo": "SwapRaidSubgroupByName",
+    "name": "SwapRaidSubgroupByName",
+    "url": "https://github.com/Grymskvll/SwapRaidSubgroupByName",
+    "api": "https://api.github.com/repos/Grymskvll/SwapRaidSubgroupByName"
+  },
+  "commit": "2b2e73ec3abd00478bf64b4dd208f2b54cd17dce",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "218802dfa76767df30a8a68a6f9f71a5f6869ca9d17266bef2cdfbd417be9f02",
+      "bytes": 872
+    },
+    "SwapRaidSubgroupByName.lua": {
+      "sha256": "ff7211048417bf62715b35ba390ba0b292d299a6d14e18441554f71929d619de",
+      "bytes": 1435
+    },
+    "SwapRaidSubgroupByName.toc": {
+      "sha256": "bb340744deae71e92df2a3faef22ac3c7502bf0cbb4aff7161cc709c265a6784",
+      "bytes": 177
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

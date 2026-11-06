@@ -1,0 +1,173 @@
+{
+  "upstream": "https://github.com/pepopo978/Cursive",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "pepopo978",
+    "repo": "Cursive",
+    "name": "Cursive",
+    "url": "https://github.com/pepopo978/Cursive",
+    "api": "https://api.github.com/repos/pepopo978/Cursive"
+  },
+  "commit": "e8d46dff3de8ae14fca72c68766862e32892c6c1",
+  "sourceFiles": {
+    "commands.lua": {
+      "sha256": "9581e9d957f3e0a1e58137a5cda0cf045acf0fd6c1ad569881d5e3aa354ca4a3",
+      "bytes": 22376
+    },
+    "core.lua": {
+      "sha256": "d03d7d1e203be77b59f67213b55a988d5cc8ab4e332119f0f3b00d77c99810b9",
+      "bytes": 1441
+    },
+    "curses.lua": {
+      "sha256": "407e6a5d4de80f8cb848d5e66ab204ecdb1a6e4389b6756763279c1f2daac1fc",
+      "bytes": 22047
+    },
+    "Cursive.toc": {
+      "sha256": "ce079257d7775cf9714163087a4f8eb5cd602f7b4ea1b7c88dea557467867135",
+      "bytes": 1068
+    },
+    "filter.lua": {
+      "sha256": "88ce7d120685dd88302ca53fb160a65bc9ffa11dccc1424835878bd2ca1ea0d7",
+      "bytes": 3196
+    },
+    "global.lua": {
+      "sha256": "861f1aea9f64c9fc4b22bcfc053bccaa800e72ad344bef6bd63f5a0ccdbc00b5",
+      "bytes": 2050
+    },
+    "img/config.tga": {
+      "sha256": "fd50bea5db5613b8608c75236822fbf2273b41ebb4d27be144eee11dad79f8fa",
+      "bytes": 1506
+    },
+    "img/target-left.tga": {
+      "sha256": "5cad65733ff5333644d7d84c6d0d5ec0aff19197bb9abba669d86db7d41f396b",
+      "bytes": 754
+    },
+    "img/target-right.tga": {
+      "sha256": "78be02c108303862479aee96c6d8d59e1ac79a85e8d48e7a95181cbcf16589d6",
+      "bytes": 754
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "6561a1a96465f5276c784989a2c989e21b1b8f666391fccf4b64ab87a0a63d54",
+      "bytes": 34783
+    },
+    "libs/AceConsole/AceConsole-2.0.lua": {
+      "sha256": "e498c182436c51671590512e02ebcec98e85fe454b5f5b1f00cf1a62b21a13c6",
+      "bytes": 63951
+    },
+    "libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "a57404bbff9dab8d53ff5e1752219a8c8e7042c0ebcb2edd6b5a7eaf8b9d39c8",
+      "bytes": 45257
+    },
+    "libs/AceDebug/AceDebug-2.0.lua": {
+      "sha256": "394521bbd40660d05c178fce092bb3c4904405efee2b43c7a4d0d98bf1d8892f",
+      "bytes": 7668
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "1a837a24dd8af5b4ee51011fe99e8fde7e39b1af3ba908535a4cb445174eb79e",
+      "bytes": 16946
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "09cfc0b69a0feb644fa1a9e5fc6715a4e76e0b2f6c7c04a3a0ea693d633770cd",
+      "bytes": 23114
+    },
+    "libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "f751df94f961870d2e35818a6f5774f7441786958ee6fd8adf227479f896a385",
+      "bytes": 15957
+    },
+    "libs/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "a3de67878b122a9f6c937462b9641f7a029b55605107f2db03953fe7a1d412ff",
+      "bytes": 13981
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "0447ac520cae9b5f9544f9619c23a89c0e192bc7891763e2a0269a5d664f79df",
+      "bytes": 30469
+    },
+    "libs/Dewdrop/Dewdrop-2.0.lua": {
+      "sha256": "c51aa331b91d1bc7f8023f8c02814a0556e39a39d392f5029b06bf0aee266664",
+      "bytes": 82495
+    },
+    "libs/FuBarPlugin/FuBarPlugin-2.0.lua": {
+      "sha256": "9102d327901e72e0523f7d21c989c32cd698a7b6d66e5cb0bf5cdff3eef5f73b",
+      "bytes": 44995
+    },
+    "libs/Tablet/Tablet-2.0.lua": {
+      "sha256": "2456e593be577cdd8340cd0edc1fce94926a1f9e7dee7f26798bf8b3128dbf06",
+      "bytes": 83748
+    },
+    "LICENSE": {
+      "sha256": "3def8121bde2dc90aa70bebf04030d96e62973c4bec610a3426d9f29ef7faf33",
+      "bytes": 1086
+    },
+    "Localization.lua": {
+      "sha256": "b06c8879f6d7ef39cd5e204984fe8e4189819469273573e4231de95cf05b9f57",
+      "bytes": 22008
+    },
+    "README.md": {
+      "sha256": "54b5c8aaf9989554111a349a113c8f6097c9ff9015dd402d49419a3ac0fa8f2f",
+      "bytes": 10735
+    },
+    "settings.lua": {
+      "sha256": "0d6fa3f8dbfd0815d9b54864e4b06e82d629016ba8055062817eadbdd4d91b98",
+      "bytes": 15826
+    },
+    "sounds/expiring.mp3": {
+      "sha256": "86f8ce302d826b04fb0db317749322957c5b2cf71ab9e29cbb1460dec39dc7b3",
+      "bytes": 5318
+    },
+    "sounds/resist.mp3": {
+      "sha256": "c87a242298b0b9a3777818a5e39835a93d5e9df2e859477e2f8669bc37dce8aa",
+      "bytes": 42363
+    },
+    "spells/druid.lua": {
+      "sha256": "10d5a971fd3ecd4737e95a04c047e45e81b5d50eb0b57d7d37b549418f328028",
+      "bytes": 5517
+    },
+    "spells/hunter.lua": {
+      "sha256": "123eea0e06df9c5f8c49b2193d955077aec908f511e48e2f62f1459cb382e898",
+      "bytes": 2721
+    },
+    "spells/mage.lua": {
+      "sha256": "99c3905d320093da552de81cbbac0c69d939e2e120594fe4fec8a824d0186c4c",
+      "bytes": 559
+    },
+    "spells/priest.lua": {
+      "sha256": "3bc94bdef601c14a38c59ecacb179f8109ea7c966daacde965379174ae2d7ad8",
+      "bytes": 2998
+    },
+    "spells/rogue.lua": {
+      "sha256": "ff1e664bca7e259cbd0506c1ed1da95fb33e5cd51e6998c9e7f7a3bf12fb7a68",
+      "bytes": 3853
+    },
+    "spells/shaman.lua": {
+      "sha256": "c7e50f737e7386ad0d9bd358190607ef4a760d10489bb29a304d6ac8a4840b65",
+      "bytes": 640
+    },
+    "spells/shared_debuffs.lua": {
+      "sha256": "aceaec4ef6f092cf877109c8657cb0d5897986410d216f534fc9082068ba3519",
+      "bytes": 1060
+    },
+    "spells/warlock.lua": {
+      "sha256": "6d504f138f4baa5b80586617df6418d193cb9a6f925610259d0328bb300e4d9b",
+      "bytes": 4716
+    },
+    "spells/warrior.lua": {
+      "sha256": "ce4d8de617ae7857d9e55b357ec8275ae9b5185e4dd192d709fe6296f01fe3cf",
+      "bytes": 624
+    },
+    "ui.lua": {
+      "sha256": "23978c42f052430670850f93766a001ea923a99b60e28a0fad1d2d714a79c6b0",
+      "bytes": 23116
+    },
+    "utils.lua": {
+      "sha256": "076b7c821f7fce90c86e6cd29463ddbf40a043e4db3ade34042f114941648412",
+      "bytes": 5127
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

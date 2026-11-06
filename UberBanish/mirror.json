@@ -1,0 +1,53 @@
+{
+  "upstream": "https://gitlab.com/Artur91425/UberBanish",
+  "source": {
+    "kind": "repository",
+    "host": "gitlab.com",
+    "owner": "Artur91425",
+    "repo": "UberBanish",
+    "name": "UberBanish",
+    "url": "https://gitlab.com/Artur91425/UberBanish",
+    "api": "https://gitlab.com/api/v4/projects/Artur91425%2FUberBanish"
+  },
+  "commit": "140c239423f1a15e1bc2d6ddf4e0650785e4373c",
+  "sourceFiles": {
+    "core.lua": {
+      "sha256": "79231c184c5e1f49cea08d005ccfdf812dc2855ac4c64974a89ffdaf9d3d4c32",
+      "bytes": 14110
+    },
+    "frames.lua": {
+      "sha256": "b37856242a8882e5969a8f94cd9de24f2ba2684e1e9750f152daba2fd9826608",
+      "bytes": 12532
+    },
+    "init.lua": {
+      "sha256": "775901f3ece883b5533cdfa007505e93c49135f7132bef8c68b2d4c50940812a",
+      "bytes": 1127
+    },
+    "LICENSE": {
+      "sha256": "80093bdce3500803b58fe37add7011ef5d0edc66bbeecc8ccf3679a0d126b57f",
+      "bytes": 1083
+    },
+    "Locale/Localization_other.lua": {
+      "sha256": "175268bdcaf2763e94dcdc5d32c9f2a944e54147ac931948e43357a48ec24600",
+      "bytes": 677
+    },
+    "Locale/Localization_ruRU.lua": {
+      "sha256": "9e10d7540f219d64e583308b015c48898849b8741942e3c2953f2a9d4b370a6d",
+      "bytes": 4400
+    },
+    "Locale/Localization.lua": {
+      "sha256": "22d761a7afbaea96de8d39f4d506119384447db53ece3ecac74b6d1a056b254f",
+      "bytes": 2005
+    },
+    "README.md": {
+      "sha256": "e56c5f656e143c98cb81a7e171128ed4a12c8c23fcbd5da64bf17fb5565aba70",
+      "bytes": 465
+    },
+    "UberBanish.toc": {
+      "sha256": "bf8ef507365f80319ff2d9a648877f2ab21e85425e212cd317e27f4ba726d28d",
+      "bytes": 879
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

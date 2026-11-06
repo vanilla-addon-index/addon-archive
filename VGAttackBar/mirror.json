@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/firenahzku/VGAttackBar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "firenahzku",
+    "repo": "VGAttackBar",
+    "name": "VGAttackBar",
+    "url": "https://github.com/firenahzku/VGAttackBar",
+    "api": "https://api.github.com/repos/firenahzku/VGAttackBar"
+  },
+  "commit": "8cb9ae5c9ac9c4c5a82670cfe92710c7708ec97f",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "317bbac238111a75a5dd008b7b9e89e6d775b002e7048fde84031bef7e7fade2",
+      "bytes": 253
+    },
+    "VGAttackBar.lua": {
+      "sha256": "755f05b47e1a5d044b3bc856f1b83fb20d581cc057d65fbd2ab418fa2f61801a",
+      "bytes": 16324
+    },
+    "VGAttackBar.toc": {
+      "sha256": "b546b918db60ce884130a9f5c98c4f1a9c7225ce2b9cee5d25d74b21868671d7",
+      "bytes": 223
+    },
+    "VGAttackBar.xml": {
+      "sha256": "5d54fe0fdff60d54c4da56b1719cc587923459a7e00f75a81e255219c4bd6308",
+      "bytes": 5758
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

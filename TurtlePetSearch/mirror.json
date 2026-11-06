@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Avery1337/TurtlePetSearch",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Avery1337",
+    "repo": "TurtlePetSearch",
+    "name": "TurtlePetSearch",
+    "url": "https://github.com/Avery1337/TurtlePetSearch",
+    "api": "https://api.github.com/repos/Avery1337/TurtlePetSearch"
+  },
+  "commit": "f56a670e0080f8af2c5cf363c6cf8b4580c4e528",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "README.md": {
+      "sha256": "91abaf841541e12a6d0cee4969c9166c9afb167c81573aafd179b0df55e3580f",
+      "bytes": 827
+    },
+    "TurtlePetSearch.lua": {
+      "sha256": "5fff7d7b7a7996e7faf85d678d8d4a0b886530c451e3396267bd1a2740c8c4b1",
+      "bytes": 12617
+    },
+    "TurtlePetSearch.toc": {
+      "sha256": "5cab6de01973aa43b2f221746f7430196322939a8050370349b0cd0f4cc95a91",
+      "bytes": 157
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

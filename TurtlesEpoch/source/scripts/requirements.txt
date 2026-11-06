@@ -1,0 +1,52 @@
+# TurtleTongue Dependencies
+#
+# Two groups: (1) Crawling — lightweight, any Python 3.9+
+#              (2) Voice generation — requires CUDA GPU + Fish Speech S2 Pro server
+#
+# Quick install: pip install -r scripts/requirements.txt
+
+# ── Crawling + general utilities ──
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+
+# ── Voice generation scripts (generate_voice.py, audio_effects.py) ──
+librosa>=0.10.1
+scipy>=1.11.0
+soundfile>=0.12.0
+numpy>=1.24.0
+
+# ── Fish Speech S2 Pro API server (inference-only deps) ──
+# The server itself lives in a separate repo — clone it alongside TurtleTongue:
+#   git clone https://github.com/fishaudio/fish-speech.git
+#   cd fish-speech && pip install -e . --no-deps
+#
+# Then install these inference-only deps (fish-speech's full dep list includes
+# training packages we don't need). These were identified by tracing the actual
+# import chain of `python tools/api_server.py --device cuda`:
+uvicorn>=0.30.0
+kui>=1.6.0
+lightning>=2.1.0
+tokenizers>=0.21.0
+transformers>=4.45.0
+ormsgpack>=1.5.0
+loguru>=0.6.0
+pyrootutils>=1.0.4
+loralib>=0.1.2
+torchcodec>=0.1.0
+einops>=0.7.0
+hydra-core>=1.3.2
+omegaconf>=2.3.0
+natsort>=8.4.0
+cachetools>=5.0.0
+safetensors>=0.4.0
+tiktoken>=0.8.0
+pydantic>=2.9.0
+tqdm>=4.65.0
+rich>=13.0.0
+
+# ── PyTorch + CUDA (install separately, not from PyPI) ──
+# pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu130
+# Fish Speech pins torch==2.8.0, but we use torch>=2.11.0 (works fine)
+#
+# ── descript-audio-codec (DAC) — needed by Fish Speech server ──
+# pip install descript-audio-codec

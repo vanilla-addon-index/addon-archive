@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/Rumchiller/EM_MonkeyBuddy",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Rumchiller",
+    "repo": "EM_MonkeyBuddy",
+    "name": "EM_MonkeyBuddy",
+    "url": "https://github.com/Rumchiller/EM_MonkeyBuddy",
+    "api": "https://api.github.com/repos/Rumchiller/EM_MonkeyBuddy"
+  },
+  "commit": "07137f6d32f67c5ffac9b35de6e150e1845f676d",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "05192c372d211ee48f3a6ccff06896d68952469fdc92fa0ee7429bfed232abd6",
+      "bytes": 175
+    },
+    "localization.lua": {
+      "sha256": "b5311ee59cfd2227b5013e09169a174866e7940f356ddacfa0f1bc0ba41ff502",
+      "bytes": 12966
+    },
+    "MonkeyBuddy.lua": {
+      "sha256": "d54ad6784c9fbe6d3383df4a0bb7bb7de1744d37347a73a9f43c4249e11dda1b",
+      "bytes": 24132
+    },
+    "MonkeyBuddy.toc": {
+      "sha256": "da52eedd3a589b91cf8267ba5b7bd6d281eb164aee9260d64c448c379ea03103",
+      "bytes": 434
+    },
+    "MonkeyBuddy.xml": {
+      "sha256": "51b35240a0367bb867208a2303409b2fca813fd5995fc11eb385a802e2d88fdc",
+      "bytes": 30269
+    },
+    "readme.txt": {
+      "sha256": "845a3e53ea56b9a179f4bba262dcbae9ff16c3e150c3516af077597a0a15c05b",
+      "bytes": 156
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

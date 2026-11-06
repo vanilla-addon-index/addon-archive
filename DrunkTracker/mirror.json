@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/akzkak/DrunkTracker",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "akzkak",
+    "repo": "DrunkTracker",
+    "name": "DrunkTracker",
+    "url": "https://github.com/akzkak/DrunkTracker",
+    "api": "https://api.github.com/repos/akzkak/DrunkTracker"
+  },
+  "commit": "e12b77980ba35d47c1d2401b9bbb522fddd2f230",
+  "sourceFiles": {
+    "DrunkTracker.lua": {
+      "sha256": "147ece30b00cdb88da4b8edb5e09d4b8d1037483a6c40873c48084815a24d560",
+      "bytes": 5174
+    },
+    "DrunkTracker.toc": {
+      "sha256": "8407e3cb3b8d2b769493ea35f4047090133c88c21f7eea23691046a17b2115cf",
+      "bytes": 220
+    },
+    "README.md": {
+      "sha256": "13d14c3261ece6b154f93c710b3cc2fba3611849ecac3bcbe03780d9a5dbe5a9",
+      "bytes": 583
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

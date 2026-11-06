@@ -1,0 +1,58 @@
+{
+  "upstream": "https://github.com/Shellyoung/FuBar_Population",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Shellyoung",
+    "repo": "FuBar_Population",
+    "name": "FuBar_Population",
+    "url": "https://github.com/Shellyoung/FuBar_Population",
+    "api": "https://api.github.com/repos/Shellyoung/FuBar_Population"
+  },
+  "commit": "9bf2673f876fb9700a6cef4265144e832d0f4b29",
+  "sourceFiles": {
+    "FuBar_Population.lua": {
+      "sha256": "790319f7d79add3ba7913a1e257f25ac0d7c3a7afab1151207ad352a4a908598",
+      "bytes": 2351
+    },
+    "FuBar_Population.toc": {
+      "sha256": "2cd5c552683b13775f546a1bf39e42ad1688aaad5af5b291cacba99414a03cb8",
+      "bytes": 327
+    },
+    "icon.blp": {
+      "sha256": "2f603ee385318c452978d735e83c4d81262b92de451609c90898ce17c9717c86",
+      "bytes": 6676
+    },
+    "icon.tga": {
+      "sha256": "4096ff4b7b3a22183f57d6eb7bbd702b3200877e8268426e28c42ab6c7d4f993",
+      "bytes": 8833
+    },
+    "README.md": {
+      "sha256": "a6fbde02d6f6da6dc847cb3fe6dff005ca4c6f2f2183920019afb49c30f3a29e",
+      "bytes": 557
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "237125048": {
+      "tag": "2.3",
+      "folder": "2.3--237125048",
+      "assets": {
+        "278944756": {
+          "sha256": "6a7297d8ef0758668d22f0a721a4dc031c8e38f1723e39bb2f3495764d308fc6",
+          "bytes": 4180,
+          "id": "278944756",
+          "name": "FuBar_Population.rar",
+          "url": "https://github.com/Shellyoung/FuBar_Population/releases/download/2.3/FuBar_Population.rar",
+          "path": "releases/2.3--237125048/assets/FuBar_Population.rar"
+        }
+      },
+      "source": {
+        "sha256": "b4738fdf1173fef1efd521c395709839209d90b0e25cbdc0ffd6f922284ea6b0",
+        "bytes": 9724,
+        "path": "releases/2.3--237125048/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Shellyoung/FuBar_Population/tarball/2.3"
+      }
+    }
+  }
+}

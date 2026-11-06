@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/gabrielecimolino/Swapper",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "gabrielecimolino",
+    "repo": "Swapper",
+    "name": "Swapper",
+    "url": "https://github.com/gabrielecimolino/Swapper",
+    "api": "https://api.github.com/repos/gabrielecimolino/Swapper"
+  },
+  "commit": "d6b707fbfede36cd9e781ce54a1b07ff55fb9759",
+  "sourceFiles": {
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "e460d01bc2f95f3ff01ae0fefe5a575db9748576e7b96df81e56e45bb16d0ee5",
+      "bytes": 30093
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "0f7b32493afaf5b7e96f3fd1b5135cc9d8a07ded8c64aae11e75f1e0f3212902",
+      "bytes": 28515
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "8c75f829e0f980aac69d53cce8f8c806ea671795f445ab736c8cf76b9fc1f586",
+      "bytes": 22725
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "1385526e460948771ca6db1ceec81e8b0daf33bfc391f55e6f1bbc449a341a82",
+      "bytes": 30305
+    },
+    "LICENSE": {
+      "sha256": "a78df0c4b7fb5b22d642d1d00cd7dcdd4c9f614065a135cfa684e7a804ced931",
+      "bytes": 1073
+    },
+    "Swapper.lua": {
+      "sha256": "141f477833e6f7c58d68b7e2fe17c5bd07a915e76069149f355626f638812bde",
+      "bytes": 4570
+    },
+    "Swapper.toc": {
+      "sha256": "12d8fe19b52af2aab148cf22dea3fccef5aaaf0a351aa35eb447fd5d20ae61ce",
+      "bytes": 320
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: WTBox
+## Notes: Translation box built on WoWTranslate. Write EN<->ZH, verify the result, post to any channel. Type /wtb
+## Author: Ronniel
+## Version: 1.4
+## Dependencies: WoWTranslate
+## SavedVariables: WTBoxDB
+
+WTBoxFonts.xml
+WTBox_Glossary.lua
+WTBox.lua

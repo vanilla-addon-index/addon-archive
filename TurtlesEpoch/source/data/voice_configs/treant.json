@@ -1,0 +1,11 @@
+{
+  "donor_voice": null,
+  "pitch_shift": -3,
+  "reverb": 0.2,
+  "reverb_decay": 0.6,
+  "bass_boost_db": 5,
+  "treble_boost_db": 0,
+  "status": "approved",
+  "test_quest_id": null,
+  "notes": "F0 ~122 Hz. Pitch -3, reverb 0.2, bass +5. 41/41 lines (8 NPCs)."
+}

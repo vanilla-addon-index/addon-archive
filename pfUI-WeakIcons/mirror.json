@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/jrc13245/pfUI-WeakIcons",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jrc13245",
+    "repo": "pfUI-WeakIcons",
+    "name": "pfUI-WeakIcons",
+    "url": "https://github.com/jrc13245/pfUI-WeakIcons",
+    "api": "https://api.github.com/repos/jrc13245/pfUI-WeakIcons"
+  },
+  "commit": "fe59bea6e70ef6ec54a1f84c914d070cdea065c8",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "CLAUDE.md": {
+      "sha256": "20e49453fe5ccd578bdc159811f9d3395e200f7b9b8c95c0193c5c96d86593d0",
+      "bytes": 2430
+    },
+    "pfUI-WeakIcons.lua": {
+      "sha256": "c405bee0594c64137d6bc855111d3a0630acb7ae0905a2f2706d99f5e9439bc6",
+      "bytes": 24118
+    },
+    "pfUI-WeakIcons.toc": {
+      "sha256": "bd76c4335c17128a1779bb22a9a2ada842d15629da2f22639ee4cf5dd49d149a",
+      "bytes": 227
+    },
+    "README.md": {
+      "sha256": "d752e80742c11e83f1f3259b46a67ae4ffab186ee0d1b394f4dabe80c4adc30d",
+      "bytes": 538
+    },
+    "watcher.lua": {
+      "sha256": "0231016130ea0027eb0657536d488e78c47689a5cf8767a9a62a632463bf05b2",
+      "bytes": 4935
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

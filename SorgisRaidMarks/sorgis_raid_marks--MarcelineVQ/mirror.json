@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/sorgis_raid_marks",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "sorgis_raid_marks",
+    "name": "sorgis_raid_marks",
+    "url": "https://github.com/MarcelineVQ/sorgis_raid_marks",
+    "api": "https://api.github.com/repos/MarcelineVQ/sorgis_raid_marks"
+  },
+  "commit": "080b75b1572e777384a7331cfe7c4174a92eb8b0",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "a59f7d412b3e1f32a78775b0877555bcd638ac116f5fa9205c94f5c231807202",
+      "bytes": 894
+    },
+    "main.lua": {
+      "sha256": "9b63e91bc978a411e16da6a7e7ce4675d83b9b4e3303e243fe7fd231cdf85e08",
+      "bytes": 28878
+    },
+    "readme.md": {
+      "sha256": "3fe859cbe10d6aaaabab5ed1c6905c01c7e959d03a2881cff50dcee9f2779768",
+      "bytes": 4366
+    },
+    "sorgis_raid_marks.toc": {
+      "sha256": "f51e09a1fb495e67f6dfbcbebdf470ab5324a2cd16388b04ed51ae70c2d55e04",
+      "bytes": 274
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

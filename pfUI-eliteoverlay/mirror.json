@@ -1,0 +1,65 @@
+{
+  "upstream": "https://github.com/shagu/pfUI-eliteoverlay",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "pfUI-eliteoverlay",
+    "name": "pfUI-eliteoverlay",
+    "url": "https://github.com/shagu/pfUI-eliteoverlay",
+    "api": "https://api.github.com/repos/shagu/pfUI-eliteoverlay"
+  },
+  "commit": "aca68921e9b08139bf48e7762a46e737b9cf0ba0",
+  "sourceFiles": {
+    "img/BOTTOM_GOLD_LEFT.tga": {
+      "sha256": "5e610c58dc93b88949258faa4f1a24fee7406fb896f06d6844911e8086f2d494",
+      "bytes": 19622
+    },
+    "img/BOTTOM_GOLD_RIGHT.tga": {
+      "sha256": "745615f25e2c23951c6127c81556f62d99e1a845cb625c3555d4774897c84add",
+      "bytes": 30503
+    },
+    "img/BOTTOM_GRAY_LEFT.tga": {
+      "sha256": "0123b89f2973618a364095fb790c67dfd783acfa1a56b11b2e6cf623daf4f764",
+      "bytes": 19661
+    },
+    "img/BOTTOM_GRAY_RIGHT.tga": {
+      "sha256": "bf3591d431cffb725942408df2aaba87d0c62dbb1df87a7ad6f4161e6a8da1f4",
+      "bytes": 30635
+    },
+    "img/TOP_GOLD_LEFT.tga": {
+      "sha256": "f12fabcbc438a87f918a8ec837c92cc7b84b57c20c2a9ba7f3bb5e1beb666b1f",
+      "bytes": 48949
+    },
+    "img/TOP_GOLD_RIGHT.tga": {
+      "sha256": "5f8cbf53ac9f3725f04c4c5a41c7a0c9878c71d26ffaa3088611c05b87835459",
+      "bytes": 48949
+    },
+    "img/TOP_GRAY_LEFT.tga": {
+      "sha256": "f4812ff615fe2c3289f28fe3922255e3b4f725a34abdad02ba66352aae1754cb",
+      "bytes": 49037
+    },
+    "img/TOP_GRAY_RIGHT.tga": {
+      "sha256": "f97af7d96d18a515c9ae85f0e909a010b5d7014f459674be97973ff91a2f3e7a",
+      "bytes": 49037
+    },
+    "pfUI-eliteoverlay-tbc.toc": {
+      "sha256": "3b73633cd8fadab276e9c73b7a7dfafcf550b2fe7d90b37dfe954d57e90e315b",
+      "bytes": 214
+    },
+    "pfUI-eliteoverlay.lua": {
+      "sha256": "7dc58c1a7782be9f674e59336538f9d1ef192ca9c8d0b88b8f55b96a54bbcb4f",
+      "bytes": 3837
+    },
+    "pfUI-eliteoverlay.toc": {
+      "sha256": "caabd78a1c7b4a517b057ecc07ad2cfd2467954c6ce746a1827bf66b65c75557",
+      "bytes": 210
+    },
+    "README.md": {
+      "sha256": "2319149797d6c9125d4efe585b133f265be4e98e0b27a6fee4f3d1c86ed93624",
+      "bytes": 944
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

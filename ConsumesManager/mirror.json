@@ -1,0 +1,57 @@
+{
+  "upstream": "https://octowow.st/git/Horyoshi/ConsumesManager",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Horyoshi",
+    "repo": "ConsumesManager",
+    "name": "ConsumesManager",
+    "url": "https://octowow.st/git/Horyoshi/ConsumesManager",
+    "api": "https://octowow.st/git/api/v1/repos/Horyoshi/ConsumesManager"
+  },
+  "commit": "978ba87c9f65bf7ae3f142ee06b1cbdca355293f",
+  "sourceFiles": {
+    "ConsumesManager.toc": {
+      "sha256": "bb11ead93f9436bb4ddc0ead909b490ae70c0fb8b88fc6b34d3912ab1574a31a",
+      "bytes": 567
+    },
+    "images/minimap_icon.tga": {
+      "sha256": "0f2b7eb7354553b1ee8695e97d5c7cfd920d4cb20a81c32ea739257b150fe6de",
+      "bytes": 16428
+    },
+    "images/tracker_icon.tga": {
+      "sha256": "1a7ea00cd84634a4999335f60ee71b083f452b68f724adbbeb198ee4d25773c6",
+      "bytes": 16428
+    },
+    "Itemlist.lua": {
+      "sha256": "9c9b78a40dce90475c22962676740ea6795fca043d9bcf782bf1e8a561775758",
+      "bytes": 27669
+    },
+    "libs/LibCompress/LibCompress.lua": {
+      "sha256": "a3005b76f93f19ceea52777abcb65fcb0cd3d54367850c00cb4bfffbbbed3461",
+      "bytes": 22262
+    },
+    "libs/LibStub/LibStub.lua": {
+      "sha256": "3be355ecd82d7b8de5abb5ac8c1affefd3600e1083fc36d1c916e528532e3d85",
+      "bytes": 1461
+    },
+    "libs/LzwLib-1.0/LzwLib-1.0.lua": {
+      "sha256": "e918fde0bc811c4ea3cf2b7bfcc61b5b16405c4d2ed4d898aaddf1792c85a0d6",
+      "bytes": 11625
+    },
+    "Main.lua": {
+      "sha256": "274a6ff4c4c2d2fa0c991395022e554926a68f7f077b0993816e7453dac1cf25",
+      "bytes": 164871
+    },
+    "minimap_icon.xml": {
+      "sha256": "6c75ce96405deac7eae3c516f0c207894b8a3ea52792f2269b80513f3b0d4828",
+      "bytes": 2336
+    },
+    "README.md": {
+      "sha256": "d8d15dd2c4b3aaf297e0be3133b72933300e2de96821e4da1f96630ac58dbd4a",
+      "bytes": 557
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

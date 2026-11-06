@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: Combat Logging Reminder
+## Version: 1.0.2
+## Notes: Automatically reminds you to enable combat logging when entering raids and disables it when leaving.
+## Author: |c013220ffTrumpetX|r
+
+CombatLoggingReminder.lua

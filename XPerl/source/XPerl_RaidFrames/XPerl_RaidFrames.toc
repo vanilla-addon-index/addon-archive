@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: X-Perl RaidFrames by |cFFFF8080Redbu11|r
+## Notes: X-Perl Raid frames https://github.com/Redbu11dev/X-Perl-UnitFrames
+## Author: Redbu11
+## Dependencies: XPerl
+## SavedVariablesPerCharacter: XPerl_Roster
+XPerl_Raid.xml

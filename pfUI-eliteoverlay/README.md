@@ -4,6 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| pfUI-eliteoverlay | https://github.com/shagu/pfUI-eliteoverlay | new |
+| pfUI-eliteoverlay | https://github.com/shagu/pfUI-eliteoverlay | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

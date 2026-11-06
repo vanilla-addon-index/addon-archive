@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Otari98/VF_WarriorAddon",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Otari98",
+    "repo": "VF_WarriorAddon",
+    "name": "VF_WarriorAddon",
+    "url": "https://github.com/Otari98/VF_WarriorAddon",
+    "api": "https://api.github.com/repos/Otari98/VF_WarriorAddon"
+  },
+  "commit": "fa9a2932ebf1ea10900a70323d5aa53eb565decd",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "7d94b3c74aaa1546b1fe6a5bf3a3c10c5f65d186d1aa27aea78d5a8cee4b2ed3",
+      "bytes": 233
+    },
+    "VF_WarriorAddon.lua": {
+      "sha256": "6cfd38204c51edbc8b2f862c6468210fbe47ba5584347abf1e2e8047ab0db769",
+      "bytes": 5012
+    },
+    "VF_WarriorAddon.toc": {
+      "sha256": "087c74edfc16fb29d5a86ca08c4a8428ff176fd25e732eb267cba2fd6266213d",
+      "bytes": 287
+    },
+    "VF_WarriorAddon.xml": {
+      "sha256": "33b7945f3c989a927125c160e964066662103d4e97db51aaecdff5209583a925",
+      "bytes": 451
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

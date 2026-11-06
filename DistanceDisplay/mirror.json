@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/uc9089/DistanceDisplay",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "uc9089",
+    "repo": "DistanceDisplay",
+    "name": "DistanceDisplay",
+    "url": "https://github.com/uc9089/DistanceDisplay",
+    "api": "https://api.github.com/repos/uc9089/DistanceDisplay"
+  },
+  "commit": "0f7fb5167387a37fc8e0150f88f42d597849eb38",
+  "sourceFiles": {
+    "DistanceDisplay.lua": {
+      "sha256": "1b46d4ed47316fb0f22c6017c4d2dfed1d7c3ca8f6f5b180747eac6eb74b4b25",
+      "bytes": 7312
+    },
+    "DistanceDisplay.toc": {
+      "sha256": "3d050954f82aeb3dda6fb90b79f06f7fbd0cba0a4da10693fc4eef0ab592512c",
+      "bytes": 211
+    },
+    "fonts/BigNoodleTitling.ttf": {
+      "sha256": "99fcb8e6f65d2d4e443091d856eb4eabec079f08245d31d02695aea860d7ddf1",
+      "bytes": 75156
+    },
+    "README.md": {
+      "sha256": "f206c84894fdb84c69e882517caf1de7ac99fbfe7384e52f295c97704b2d0619",
+      "bytes": 1538
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

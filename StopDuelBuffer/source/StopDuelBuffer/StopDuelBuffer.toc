@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: StopDuelBuffer
+## Notes: Fuck World Buff - Flask Chugger Trash
+## Author: Paparogue
+## Version: 1.0
+
+StopDuelBuffer.lua

@@ -1,0 +1,20 @@
+1.17
+  - feature: added simplified chinese locale
+
+1.16:
+  - feature: added traditional chinese locale
+
+1.15:
+  - feature: added korean locale
+
+1.14:
+  - update: updated for patch 3.3
+
+1.13:
+  - update: updated for patch 3.2
+
+1.12:
+  - update: updated for patch 3.1
+
+1.11:
+  - feature: shows last casted spell as a text in FuBar

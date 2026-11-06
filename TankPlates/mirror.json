@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/TankPlates",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "TankPlates",
+    "name": "TankPlates",
+    "url": "https://github.com/MarcelineVQ/TankPlates",
+    "api": "https://api.github.com/repos/MarcelineVQ/TankPlates"
+  },
+  "commit": "8f5c98fed26d3a90e0653db96a64fa9852fc055c",
+  "sourceFiles": {
+    "readme.md": {
+      "sha256": "739423cdddefe59f95de26ba3498c4aac6c02fdd9931d8100eb577e4e83cd14b",
+      "bytes": 527
+    },
+    "TankPlates.lua": {
+      "sha256": "e9c8c9a5c7f4ed85694e8172013f8e3040f23b7beba34adc4d7c4cc0c26942d5",
+      "bytes": 8897
+    },
+    "TankPlates.toc": {
+      "sha256": "4b8eedc9a22cee5f5f75e1ffd78678c6f2b37795ced6780e6fd8f37284217877",
+      "bytes": 277
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

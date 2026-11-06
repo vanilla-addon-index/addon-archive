@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/MOUZU/WorkAroundSelfCast",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MOUZU",
+    "repo": "WorkAroundSelfCast",
+    "name": "WorkAroundSelfCast",
+    "url": "https://github.com/MOUZU/WorkAroundSelfCast",
+    "api": "https://api.github.com/repos/MOUZU/WorkAroundSelfCast"
+  },
+  "commit": "8587d8bd37b00f5f69c969887812cf21749b2e1c",
+  "sourceFiles": {
+    "main.lua": {
+      "sha256": "79529c48052c35a1da7156db07434aa5ac56f1b68c43117059460c4c8f105726",
+      "bytes": 637
+    },
+    "README.md": {
+      "sha256": "834361017a717aa0b4fa6264b7a70e5a76bd312622710511df8871ca7b301af7",
+      "bytes": 747
+    },
+    "WorkAroundSelfCast.toc": {
+      "sha256": "ed66b90000abf3d74fa79aff73b98a28102aac178ae7a7541eed95d0d9954e98",
+      "bytes": 191
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

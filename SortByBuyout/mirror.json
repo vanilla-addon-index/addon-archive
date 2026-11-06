@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/Redbu11dev/SortByBuyout",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Redbu11dev",
+    "repo": "SortByBuyout",
+    "name": "SortByBuyout",
+    "url": "https://github.com/Redbu11dev/SortByBuyout",
+    "api": "https://api.github.com/repos/Redbu11dev/SortByBuyout"
+  },
+  "commit": "4c437a3c05777fd6b207d721bf5a7f6fc394279a",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "README.md": {
+      "sha256": "eda5b2aa5a096018d35d0c67c2ef39838d7e908986fc4968abc09726d05275b9",
+      "bytes": 190
+    },
+    "SortByBuyout.lua": {
+      "sha256": "29fc166d87fe61eed5a76ba27ed2ac5b1a1032d5e94a560d10b89155869ad624",
+      "bytes": 2448
+    },
+    "SortByBuyout.toc": {
+      "sha256": "528876c1f68e600a66e10f3ca9bab38e2bc6acf9c4d8cddd11bd734bb673b972",
+      "bytes": 177
+    },
+    "SortByBuyout.xml": {
+      "sha256": "72d5a3f335ca472cb26142412577714c7105b9ff5400728e30c72c44cedde641",
+      "bytes": 445
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

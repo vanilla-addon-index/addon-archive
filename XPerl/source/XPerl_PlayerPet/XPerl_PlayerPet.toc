@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: X-Perl Player Pet Frame by |cFFFF8080Redbu11|r
+## Notes: Replaces the default player's pet frame. https://github.com/Redbu11dev/X-Perl-UnitFrames
+## Author: Redbu11
+## RequiredDeps: XPerl, XPerl_Player
+..\XPerl\XPerl_Player_Pet.xml

@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/shirsig/Cleanup-vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "Cleanup-vanilla",
+    "name": "Cleanup-vanilla",
+    "url": "https://github.com/shirsig/Cleanup-vanilla",
+    "api": "https://api.github.com/repos/shirsig/Cleanup-vanilla"
+  },
+  "commit": "4c83ecb84f376979a0ac6b4747a0bed467cb9b90",
+  "sourceFiles": {
+    "Bags.blp": {
+      "sha256": "118ad00270a0fd1bd94414b7f7366d1f2b8559a7212518661c0504d0e6a438d4",
+      "bytes": 44900
+    },
+    "Cleanup.lua": {
+      "sha256": "bb8205ca4f18a73e15b1025c39820685ce8b701f065e02459c55a83ae82746b2",
+      "bytes": 4423
+    },
+    "Cleanup.toc": {
+      "sha256": "7e7bddd385ddcbcbe5cfc4a158005deec8a6628208ca78147cac4df4d31358af",
+      "bytes": 257
+    },
+    "README.md": {
+      "sha256": "0330268a9427f3835cf8597606b0c9c67cb956fb34eecb4671722ff55dedbb64",
+      "bytes": 1733
+    },
+    "UI_BagSorting_01.ogg": {
+      "sha256": "9d3eeeb6da52c43d27af20b8b625e2c7d7ff98dd72cc216357a41437debda658",
+      "bytes": 8362
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

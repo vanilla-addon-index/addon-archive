@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/McPewPew/TurtleSnacks",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "McPewPew",
+    "repo": "TurtleSnacks",
+    "name": "TurtleSnacks",
+    "url": "https://github.com/McPewPew/TurtleSnacks",
+    "api": "https://api.github.com/repos/McPewPew/TurtleSnacks"
+  },
+  "commit": "4c0f3b1746ee06e020d4ea94434e8fd90e94f3dc",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "87ee1d4a8412a0a27695a89df6cfe6008a5211f71daf6c47dae7d1c8a2fb2f06",
+      "bytes": 438
+    },
+    "TurtleSnacks.lua": {
+      "sha256": "d768a07f2300122ccb06d81f35ed5022b57b4f75304ff941a78de9ca554e5bc4",
+      "bytes": 600
+    },
+    "TurtleSnacks.toc": {
+      "sha256": "5d25b3e1ec162d6312843d56ed77d86639af253a61058aaf083eb378ec9c8663",
+      "bytes": 230
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

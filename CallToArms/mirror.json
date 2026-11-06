@@ -1,0 +1,82 @@
+{
+  "upstream": "https://github.com/Road-block/CallToArms",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "CallToArms",
+    "name": "CallToArms",
+    "url": "https://github.com/Road-block/CallToArms",
+    "api": "https://api.github.com/repos/Road-block/CallToArms"
+  },
+  "commit": "aef2cef25340a270b1f889f8ea4429409da78aa5",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "d068da988bf5f5fa08c98035c8f423cab3b85908e568d43d7b75622d97c29f08",
+      "bytes": 117
+    },
+    "CallToArms_Util.lua": {
+      "sha256": "710ae0da56725edd5bb19773ae43056f1e668fc43c4e7ab7c2bd5882bba5e9f8",
+      "bytes": 37601
+    },
+    "CallToArms-master.toc": {
+      "sha256": "6cc19793d01320b9831e4ee8570210803afe84c613fc85c36e852142ed79d351",
+      "bytes": 179
+    },
+    "CallToArms.lua": {
+      "sha256": "7726ac3c53bcff194e2787a2a456f00501322bd6e2aecb93171ad23c39227db6",
+      "bytes": 115705
+    },
+    "CallToArms.toc": {
+      "sha256": "6cc19793d01320b9831e4ee8570210803afe84c613fc85c36e852142ed79d351",
+      "bytes": 179
+    },
+    "CallToArms.xml": {
+      "sha256": "b91584ca3af5dd8eea3f0859387d50bdc7987b571285b7aae0c6c22d785fdecc",
+      "bytes": 128453
+    },
+    "CTA.WhoManager.lua": {
+      "sha256": "a881d3e24582f7599b4acc3a73788490f00929bdb5113c1fc19c0adf7b921f51",
+      "bytes": 11208
+    },
+    "CTALocalization.de.lua": {
+      "sha256": "0e61503b833536f3a6be439be655148cd722dbd52eb98149c8a8a3acc8ce26d8",
+      "bytes": 28219
+    },
+    "CTALocalization.fr.lua": {
+      "sha256": "7e7d5425b2842fb95449241c9fbc6c126b5c0fd87cd2a287f27ffbbf09f5a8e7",
+      "bytes": 23019
+    },
+    "CTALocalization.lua": {
+      "sha256": "b9f9d0428b0e6b543801faeab8a04e8cd538b3c0ac681584cf5e7323d42a9538",
+      "bytes": 28224
+    },
+    "README.md": {
+      "sha256": "855e6bd15724e0f7dd3eef9a4d4f45f69a477ca499b0fa8fad090c7949d32018",
+      "bytes": 306
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "11268171": {
+      "tag": "R12.5",
+      "folder": "R12.5--11268171",
+      "assets": {
+        "7366951": {
+          "sha256": "987713ef1ec98ba9c7a70164fa49a51d652db27a09fde95e55301005ca0fb7f1",
+          "bytes": 74485,
+          "id": "7366951",
+          "name": "CallToArms-R12.5-11200.zip",
+          "url": "https://github.com/Road-block/CallToArms/releases/download/R12.5/CallToArms-R12.5-11200.zip",
+          "path": "releases/R12.5--11268171/assets/CallToArms-R12.5-11200.zip"
+        }
+      },
+      "source": {
+        "sha256": "2b0b2d75c78c22022e9b27d8289ebf35fd6acb2ba06568f399dfef9274875eaf",
+        "bytes": 70578,
+        "path": "releases/R12.5--11268171/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/CallToArms/tarball/R12.5"
+      }
+    }
+  }
+}

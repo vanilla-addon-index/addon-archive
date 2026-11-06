@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/SwizzPop/ChickenJockey",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "SwizzPop",
+    "repo": "ChickenJockey",
+    "name": "ChickenJockey",
+    "url": "https://github.com/SwizzPop/ChickenJockey",
+    "api": "https://api.github.com/repos/SwizzPop/ChickenJockey"
+  },
+  "commit": "7ba0158232cc1faabdbb412bc70bec74937fb9ea",
+  "sourceFiles": {
+    "ChickenJockey.lua": {
+      "sha256": "20a07fd6df5cf9a07eb868156fa96605b94cb1ae54b8de866d5a34656be2ece2",
+      "bytes": 15855
+    },
+    "ChickenJockey.toc": {
+      "sha256": "083de3cf16304733d7ec6efb070fdcec488f9e490fe2eb3827d997d57072a632",
+      "bytes": 240
+    },
+    "ChickenJockey.xml": {
+      "sha256": "8e78a57c1729e9cc4544e05116fe453bef958f505dcbe1090153e2e48d2c112a",
+      "bytes": 20624
+    },
+    "ChickenJockeyButton.lua": {
+      "sha256": "74a0f448fed223779ccbdd4178a1efdfe28a0703c37f8a4599c6ef75968ff061",
+      "bytes": 833
+    },
+    "ChickenJockeyButton.xml": {
+      "sha256": "e34190d1ac44634564a657e425eb85f10f3a6c3545047c01f6b2d533ce644745",
+      "bytes": 2557
+    },
+    "README.md": {
+      "sha256": "a770ada16228a7d34e7ba2841e4543d3846e7727754e11141cd393a5e8a401d9",
+      "bytes": 866
+    },
+    "Skins/icon.tga": {
+      "sha256": "241eacb95e73c458ba6b34e250180e1bd3e0fcb7e6b3ce4fc1e5723eba9977c0",
+      "bytes": 4114
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

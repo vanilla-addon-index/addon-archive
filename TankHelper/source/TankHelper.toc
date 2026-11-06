@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: TankHelper
+## Notes: Shows information about targeted mob, made for turtle wow.
+## Author: balake
+## Version: 1.1
+## SavedVariables: TankHelper_announce
+## SavedVariablesPerCharacter: TankHelper_show, TankHelper_scale, TankHelper_alpha
+TankHelper.Lua

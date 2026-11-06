@@ -1,0 +1,11 @@
+﻿## Interface: 11200
+## Title: Crite|cFFFF00FFi|r
+## Notes: Crit Notifier
+## Author: andre
+## Version: 1.2.0
+## SavedVariablesPerCharacter: HIGHEST_CRIT, HIGHEST_HEAL, HIGHEST_DEF , CRITEI_CONFIG, INSTANCE_RECORDS
+
+Critei.lua
+CriteiConfig.lua
+Colors.lua
+Localizations\Localization.lua

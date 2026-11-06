@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/hixio-mh/VanillaGraphicBoost",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "hixio-mh",
+    "repo": "VanillaGraphicBoost",
+    "name": "VanillaGraphicBoost",
+    "url": "https://github.com/hixio-mh/VanillaGraphicBoost",
+    "api": "https://api.github.com/repos/hixio-mh/VanillaGraphicBoost"
+  },
+  "commit": "0b19da75d19cdb0754171a2167bc533f1337ec01",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "README.md": {
+      "sha256": "a0e8a25a3190a2df89e4da3b18ca0c593fb421dc35da4efddf9df7e8c5a02829",
+      "bytes": 783
+    },
+    "VanillaGraphicBoost.lua": {
+      "sha256": "b1b26f8510c699154ccef8cd905f2279971cdcfcded2f8008663a67965b879cf",
+      "bytes": 2276
+    },
+    "VanillaGraphicBoost.toc": {
+      "sha256": "78e73d4f24c361e9e4a5613a4a3c02b11cf3d170906f0024b592f59862589a29",
+      "bytes": 218
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

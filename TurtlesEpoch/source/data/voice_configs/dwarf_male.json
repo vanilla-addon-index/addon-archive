@@ -1,0 +1,11 @@
+{
+  "donor_voice": null,
+  "pitch_shift": 0,
+  "reverb": 0.0,
+  "reverb_decay": 0,
+  "bass_boost_db": 0,
+  "treble_boost_db": 0,
+  "status": "untested",
+  "test_quest_id": null,
+  "notes": "Sample F0 435 Hz \u2014 FAR above cloning range. Donor: human_male + pitch down + bass for gruff dwarf."
+}

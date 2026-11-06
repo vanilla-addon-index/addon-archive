@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Montspy/sQMinimapFix",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Montspy",
+    "repo": "sQMinimapFix",
+    "name": "sQMinimapFix",
+    "url": "https://github.com/Montspy/sQMinimapFix",
+    "api": "https://api.github.com/repos/Montspy/sQMinimapFix"
+  },
+  "commit": "407ccee4c0b99db89c8c2191f841d567690c56c0",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "3718f628ae7654246659d6216a8aecb46a37169853149b0f8eae1f170e76268b",
+      "bytes": 1075
+    },
+    "README.md": {
+      "sha256": "d1a76c5b4ec5b30532bfd6ff1e04919de75892dd6386307979b0658f6639b1c3",
+      "bytes": 195
+    },
+    "sQMinimapFix.lua": {
+      "sha256": "0695507ffbbce38038356f7e163516c773d530f02d167336c190e12c8db07475",
+      "bytes": 1717
+    },
+    "sQMinimapFix.toc": {
+      "sha256": "5e25195a39a03f2c3994205ceccc6d6179844b453ca03bee10e4d6f12a58c408",
+      "bytes": 233
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

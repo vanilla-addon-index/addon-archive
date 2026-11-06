@@ -1,0 +1,31 @@
+## Interface: 11200
+## Title: TurtleTranslator
+## Notes: Translates chat messages across several languages
+## Author: Gangasrotogati
+## Version: 0.11
+## SavedVariables: TurtleTranslatorDB
+
+# Dictionary files – loaded statically, return tables
+Dictionaries\dict_es_to_en.lua
+Dictionaries\dict_en_to_es.lua
+Dictionaries\dict_fr_to_en.lua
+Dictionaries\dict_en_to_fr.lua
+Dictionaries\dict_de_to_en.lua
+Dictionaries\dict_en_to_de.lua
+Dictionaries\dict_it_to_en.lua
+Dictionaries\dict_en_to_it.lua
+Dictionaries\dict_pl_to_en.lua
+Dictionaries\dict_en_to_pl.lua
+Dictionaries\dict_pt_to_en.lua
+Dictionaries\dict_en_to_pt.lua
+Dictionaries\dict_ru_to_en.lua
+Dictionaries\dict_en_to_ru.lua
+Dictionaries\dict_ro_to_en.lua
+Dictionaries\dict_en_to_ro.lua
+Dictionaries\dict_cs_to_en.lua
+Dictionaries\dict_en_to_cs.lua
+
+Constants.lua
+DictionaryLoader.lua
+Settings.lua
+Core.lua

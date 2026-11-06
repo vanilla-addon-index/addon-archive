@@ -1,0 +1,73 @@
+{
+  "upstream": "https://github.com/webdkpthroaway/WebDKP_Elysium",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "webdkpthroaway",
+    "repo": "WebDKP_Elysium",
+    "name": "WebDKP_Elysium",
+    "url": "https://github.com/webdkpthroaway/WebDKP_Elysium",
+    "api": "https://api.github.com/repos/webdkpthroaway/WebDKP_Elysium"
+  },
+  "commit": "4b84ffa13168d2b1e10955d6a8cdeea023c596e1",
+  "sourceFiles": {
+    "Announcments.lua": {
+      "sha256": "d64bf976d16bd43733006cc953e207d74fde009113f428c01bdb7e6f0cbaaa7c",
+      "bytes": 5782
+    },
+    "AutoFill.lua": {
+      "sha256": "25a73dcede2ba5d76075d8c7daaf114ce428366e9e5b19dcca5339a0212c13cd",
+      "bytes": 7565
+    },
+    "Awards.lua": {
+      "sha256": "4aa3330c688bf62107a6f954eb045740575dc42dc252fb90a5c884e099243478",
+      "bytes": 8527
+    },
+    "Bidding.lua": {
+      "sha256": "b2fe6fd75e2695e85dd0c9bcb7666a72590bd7392fe2a2b0c9809c617e26f262",
+      "bytes": 17405
+    },
+    "GroupFunctions.lua": {
+      "sha256": "30a5765235894a28ce65ebbee472633856b317d7de3c88b8331be4762753dff0",
+      "bytes": 10026
+    },
+    "Readme.txt": {
+      "sha256": "fc5135bb482ffb382e448355863a9a3660b9a9c8e39dec9d3e7d1c63a1b9d4cd",
+      "bytes": 2327
+    },
+    "Textures/MinimapButton.blp": {
+      "sha256": "18490b0784544705194e082ec0c7b3e91584e87ecf36cd3395ed4405f983309c",
+      "bytes": 2564
+    },
+    "Utility.lua": {
+      "sha256": "2d893de5c399d3da6dff75dc5a42e1bd7d75501801a844faa641cbda028ae104",
+      "bytes": 9312
+    },
+    "WebDKP_Award_Frame.xml": {
+      "sha256": "06e42809e0ba816bb665dfe53500ddf89b8d1e3b724d108727cb9647a673ac5d",
+      "bytes": 3526
+    },
+    "WebDKP_Bid_Frame.xml": {
+      "sha256": "ed549bb1c7322cc51c4f7ad4537b3843e9c6938ccde0d3fe3f35b75202f576f2",
+      "bytes": 17409
+    },
+    "WebDKP_Frame.xml": {
+      "sha256": "3e8a0ebe684c7c27c6aacf414b97314426c778605b6b0b68a576ffb912fcd308",
+      "bytes": 51630
+    },
+    "WebDKP.lua": {
+      "sha256": "9e95ff29689e8dd83624f914bc05bc55832a6b0ac0683bf596f74b6ae76b6def",
+      "bytes": 25665
+    },
+    "WebDKP.toc": {
+      "sha256": "ecf90ca0ab0d41483500a7c3c124d78e65f7172eaba07c8af8c17c3c2e60200a",
+      "bytes": 464
+    },
+    "WhisperDKP.lua": {
+      "sha256": "d9a2377a305ad5dbe9964dd9a810173e7af298ee81a00f78347f8ea17e2b8133",
+      "bytes": 8634
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

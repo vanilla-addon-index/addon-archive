@@ -1,0 +1,54 @@
+{
+  "upstream": "https://github.com/gashole/DruidManaBar",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "gashole",
+    "repo": "DruidManaBar",
+    "name": "DruidManaBar",
+    "url": "https://github.com/gashole/DruidManaBar",
+    "api": "https://api.github.com/repos/gashole/DruidManaBar"
+  },
+  "commit": "cf9514e4b22438223791073108b5610b1528e462",
+  "sourceFiles": {
+    "DruidManaBar.lua": {
+      "sha256": "59b85ae8d496b5449db87903ee2f2f1cde65f097b0d1734e3b956c361d553c31",
+      "bytes": 3140
+    },
+    "DruidManaBar.toc": {
+      "sha256": "49d663499893c392dcdb399fe30f9f6bdfd1915d24c0c0c596894c93a0d38007",
+      "bytes": 208
+    },
+    "DruidManaLib.lua": {
+      "sha256": "e5ecaf23409a427dbdbb84849b30a9e2a0eb820225da661a8e5c99b801afd2b7",
+      "bytes": 7075
+    },
+    "README.md": {
+      "sha256": "46431222dd6f5061d9a2d70cc0de5d9faca843e306bf440e15c9464076d9c8a4",
+      "bytes": 460
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "322945745": {
+      "tag": "current",
+      "folder": "current--322945745",
+      "assets": {
+        "420649741": {
+          "sha256": "38cd3a9993c114ab77ddd59f40401e816006118653180a684051d304cb875a54",
+          "bytes": 3814,
+          "id": "420649741",
+          "name": "DruidManaBar.zip",
+          "url": "https://github.com/gashole/DruidManaBar/releases/download/current/DruidManaBar.zip",
+          "path": "releases/current--322945745/assets/DruidManaBar.zip"
+        }
+      },
+      "source": {
+        "sha256": "c8028889e193002efa92b29b6d51f79f94ded572fe63b1bae7d5106d24250fd3",
+        "bytes": 3177,
+        "path": "releases/current--322945745/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/gashole/DruidManaBar/tarball/current"
+      }
+    }
+  }
+}

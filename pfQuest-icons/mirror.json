@@ -1,0 +1,321 @@
+{
+  "upstream": "https://github.com/shagu/pfQuest-icons",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "pfQuest-icons",
+    "name": "pfQuest-icons",
+    "url": "https://github.com/shagu/pfQuest-icons",
+    "api": "https://api.github.com/repos/shagu/pfQuest-icons"
+  },
+  "commit": "709ba275b7198b93713b5b06cf896dc9006ebeea",
+  "sourceFiles": {
+    "chests/Barrel.tga": {
+      "sha256": "b9020a57e51a7d88c94932ab16bbeb2ae8bef348a15b17b4dfe1822434952915",
+      "bytes": 3788
+    },
+    "chests/BloodHero.tga": {
+      "sha256": "84bb7e97e52bdc0ea5b571c9f2018e00cca3539440c667927998a0863cc47edb",
+      "bytes": 3771
+    },
+    "chests/Chest.tga": {
+      "sha256": "8f4bdb93c1b57fdd4a6e874c59f76cc00854828478c7033e0de4dc8900a13b67",
+      "bytes": 3990
+    },
+    "chests/Clam.tga": {
+      "sha256": "f8b0431e4e18731149b3b96546a61e6bbf1e7bcc9a36203afee3e236556b692e",
+      "bytes": 3972
+    },
+    "chests/Crate.tga": {
+      "sha256": "eb58019ba1c66ec09c9f99ccc38022f9f2c7733bf04e1153456e3a495e85b4b5",
+      "bytes": 4005
+    },
+    "chests/Egg.tga": {
+      "sha256": "8ab94b8e85ee283328dba0bbaa3127c60622a79e02bd7a0633b6fbdd568a7477",
+      "bytes": 4027
+    },
+    "chests/Footlocker.tga": {
+      "sha256": "748239ed87e51da64152233aec7438cf333f8d1727b1758880a65843ab6b4131",
+      "bytes": 3943
+    },
+    "chests/Glowcap.tga": {
+      "sha256": "5e36ce73bbb277a052fa962396960bbda61e3280b8a57a8eb7fa839a5606f2b2",
+      "bytes": 3815
+    },
+    "chests/NightDragon.tga": {
+      "sha256": "d7ba5e1076bc139c093c8cd6cd58d60195a18947fcf2fb5000fffedbf61ffbbb",
+      "bytes": 4014
+    },
+    "chests/ShellfishTrap.tga": {
+      "sha256": "5ba5039d8eb78e8f23f9a87f6d2b6e4d2fe765bbe70fcce4fbc4a464c9da75c3",
+      "bytes": 3761
+    },
+    "chests/Songflower.tga": {
+      "sha256": "93d123476760afd279dcd3c2dd5976099fa05932868fe3b60da8ad2d78c8f354",
+      "bytes": 3840
+    },
+    "chests/WhipperRoot.tga": {
+      "sha256": "034896d8f6af0844fcdbd26def81d3d94b2afd2fd12f9f4880b7dc01afeb8b2a",
+      "bytes": 3818
+    },
+    "chests/WindBlossom.tga": {
+      "sha256": "7b7754f4e64e7488d9e08421734d17f3b82b21d838f3f667462214dc5baf85d2",
+      "bytes": 3851
+    },
+    "herbs/AncientLichen.tga": {
+      "sha256": "d2735663b2bc78ed1fad4620ae90743e7bca94558163809789827f05bb57ec1f",
+      "bytes": 3836
+    },
+    "herbs/ArthasTears.tga": {
+      "sha256": "be7c817a302c89adcb61877f3ee0efdbd28745a758497811660e8538b3168f2a",
+      "bytes": 4056
+    },
+    "herbs/BlackLotus.tga": {
+      "sha256": "676d1806863d1ecc918983e78e597dc04e3c8df2a46ec7111adcb5a529747e12",
+      "bytes": 4067
+    },
+    "herbs/Blindweed.tga": {
+      "sha256": "154dd1db79bdb1962dc2ac5aa1a715bee81c394766c7ebd333370ba0b3851364",
+      "bytes": 4054
+    },
+    "herbs/Briarthorn.tga": {
+      "sha256": "2edcb68570f5902d3d43261729eef36805595108818d0bce0c83780b12ce3ca4",
+      "bytes": 4009
+    },
+    "herbs/Bruiseweed.tga": {
+      "sha256": "4c026b5b65e3dd2be995950a3894d3b9edd40afe72b032a1309bc9cf69489efa",
+      "bytes": 4038
+    },
+    "herbs/Dreamfoil.tga": {
+      "sha256": "93eff0b2b98fc51309b501decaaa8b2eb6643a45253797f57f5109f08abca21e",
+      "bytes": 3784
+    },
+    "herbs/DreamingGlory.tga": {
+      "sha256": "b9f75f9842d706cb01df31e35f00f90ca42708d93546779ed6a324010f60c978",
+      "bytes": 3683
+    },
+    "herbs/Earthroot.tga": {
+      "sha256": "a27aa13086d8c99601f53db5551ebfec25d97a0f4fde539e01fc562738a36816",
+      "bytes": 4056
+    },
+    "herbs/Fadeleaf.tga": {
+      "sha256": "b89589d0a4bb99dc38a857db9c8f4cf1ba1eae870d4705041c4f82d813f1e218",
+      "bytes": 4053
+    },
+    "herbs/FelBlossom.tga": {
+      "sha256": "27a86077d58e170d57ab91b0a2c0d4fc8b66b93ef68593f3a42198da196d5b88",
+      "bytes": 4026
+    },
+    "herbs/FelLotus.tga": {
+      "sha256": "4a595b011f861d5d613b9677ff5275f5ff64e646a52b18635b63a38b07705aeb",
+      "bytes": 4043
+    },
+    "herbs/Felweed.tga": {
+      "sha256": "1286f77ded931eb81e6a6f0a41a54a96f93f6ac6565817137cd2f6cad156d816",
+      "bytes": 4037
+    },
+    "herbs/Firebloom.tga": {
+      "sha256": "3b549e30a3d3380ed6e4ab472a30af72befb13f11a2679391749ef37cc382094",
+      "bytes": 4065
+    },
+    "herbs/FlameCap.tga": {
+      "sha256": "f5b54a22fd7606136066816371aa1fa809e16e94ab06a729629fcf8a145db78d",
+      "bytes": 4050
+    },
+    "herbs/GhostMushroom.tga": {
+      "sha256": "47fb1db24925164fd2dfbcde04f9dd4ef684b71e44a188281775735968376dc1",
+      "bytes": 4029
+    },
+    "herbs/GoldenSansam.tga": {
+      "sha256": "2e60daca43f5de9bd4dd81fccf2bed06d120be9d4dcd0c74b322ba0e4c6d4e64",
+      "bytes": 3980
+    },
+    "herbs/Goldthorn.tga": {
+      "sha256": "2d6c1430c7401c52b6ee6fc972d993032a0967a63c8dc75d68ded2bcb7a23d5e",
+      "bytes": 4038
+    },
+    "herbs/GraveMoss.tga": {
+      "sha256": "c7888091508cad90dfb0da68788bb69b654e815aa8eb19a692e4c48c9b8b098a",
+      "bytes": 3882
+    },
+    "herbs/Gromsblood.tga": {
+      "sha256": "996aac8796e7fc65ac357f3b613f72a951e7248476eb7ed4b735acf733222d1a",
+      "bytes": 3997
+    },
+    "herbs/Icecap.tga": {
+      "sha256": "ec3d80658ec53a675335be6c59ed57a8cc748a50a9d9956347921cef30ed0907",
+      "bytes": 3957
+    },
+    "herbs/KhadgarsWhisker.tga": {
+      "sha256": "86afc01b61f802041dcf398fdd7467876dcd09c21bcdf2c9fa80992414b16763",
+      "bytes": 4073
+    },
+    "herbs/Kingsblood.tga": {
+      "sha256": "b3e7f137d207bbdb2ce90229611731a6c31e69516df746b6fe75310ca525e311",
+      "bytes": 4063
+    },
+    "herbs/Liferoot.tga": {
+      "sha256": "8bccf62f8d822ec4d12235bff25d115daaa47ab813b57c89dbfa61d6c89d4955",
+      "bytes": 3936
+    },
+    "herbs/Mageroyal.tga": {
+      "sha256": "9e2e2c16a2f2a9a6b12eb0ec8470d0710a2037bae6a64e090299bc16f8ef9bac",
+      "bytes": 4002
+    },
+    "herbs/ManaThistle.tga": {
+      "sha256": "39e53e805d600cc83d07638508d4a8a12f44caa9bc0a6c5796a34c43cde12b2e",
+      "bytes": 3958
+    },
+    "herbs/MountainSilversage.tga": {
+      "sha256": "21bbfbf960673cd44fb579553709214c1ae3efafd71d254f3aee70cb92b880dc",
+      "bytes": 4071
+    },
+    "herbs/Netherbloom.tga": {
+      "sha256": "315ed65fa166ad38099d82757ff33509187d4c1af0c2a8ed4e07d85c796726d0",
+      "bytes": 4049
+    },
+    "herbs/Netherdust.tga": {
+      "sha256": "497e2056ee87507b167d8641d1ef3891ef93a5551e408a0cacb3aa7d14eb2beb",
+      "bytes": 3960
+    },
+    "herbs/NightmareSeed.tga": {
+      "sha256": "4808846f69334794a2bba86f53504e56ae4edb3d83fe456c953cc3a4b7242225",
+      "bytes": 4020
+    },
+    "herbs/NightmareVine.tga": {
+      "sha256": "70dfa0fd3a1c36b428780ccd20e4dfc38d7bc3376cc87bf187363c280740d130",
+      "bytes": 4035
+    },
+    "herbs/Peacebloom.tga": {
+      "sha256": "8dbd2d62233eb4f32c3ecea952b84d14e07755168b476e6ab63a228d74e200cd",
+      "bytes": 3878
+    },
+    "herbs/Plaguebloom.tga": {
+      "sha256": "83081b9c146258b9491a90af0b4727f3adf10df3667c8292dc5f11548eb3f7ae",
+      "bytes": 4006
+    },
+    "herbs/PurpleLotus.tga": {
+      "sha256": "ef651897d0008a52f2079596aed113e50444d7d3a92320288dc1098c85fdc0f5",
+      "bytes": 4031
+    },
+    "herbs/Ragveil.tga": {
+      "sha256": "e508126e0b807ee2e14b1cada9b7c5e4801cb3ca8b78ed64b77112a1ccea0f36",
+      "bytes": 4015
+    },
+    "herbs/Silverleaf.tga": {
+      "sha256": "efdc10a4e3cce6f60bc97cc5b791c8a493f6146744e8a28c012ed23e190cc404",
+      "bytes": 4020
+    },
+    "herbs/Stranglekelp.tga": {
+      "sha256": "354184d2d75b08068b5688e608dbbb3b38588e24707296bee783986fbb908afc",
+      "bytes": 3897
+    },
+    "herbs/Sungrass.tga": {
+      "sha256": "d4eb56f0e11f0f7433a3a266206804a8bb6d6b09789042479b281754ae137d10",
+      "bytes": 3993
+    },
+    "herbs/Swiftthistle.tga": {
+      "sha256": "8f5c7bfa9cbe99365ec9346ebbcc4cfd6883a1060881f26963585f8c0360d1a1",
+      "bytes": 4026
+    },
+    "herbs/Terocone.tga": {
+      "sha256": "94a448016d4a2888ad89aa0a4eaa56f5b9db3d526831a37fc4a3bce649c6d993",
+      "bytes": 3987
+    },
+    "herbs/WildSteelbloom.tga": {
+      "sha256": "620a95519be427aeea5b8166bb0d07a2c0757218d4e5e061b48f4267ea760fc1",
+      "bytes": 3958
+    },
+    "herbs/Wintersbite.tga": {
+      "sha256": "d1043e8d4e31ae6503000b8772a938c6f5a6444af09503e6494c7f6eedf12c1d",
+      "bytes": 4062
+    },
+    "LICENSE": {
+      "sha256": "a9f3f558e206d3cad02f69c45ac36d1a668c77eb96716ff9bec4b639ce38907e",
+      "bytes": 1086
+    },
+    "mines/Adamantite.tga": {
+      "sha256": "aa25cf09215942e12c34f444f97517f6687b2225160d6e2576c8937919b3f3e6",
+      "bytes": 3979
+    },
+    "mines/Copper.tga": {
+      "sha256": "5720b085e627b2d113be2590717041d1412da121e8fd6a565bfe359d1c2e4510",
+      "bytes": 4000
+    },
+    "mines/DarkIron.tga": {
+      "sha256": "0ac04345e6085466c9fa3dfc9aa50e2c3cc3ef43b178a24813b27745c2eeb291",
+      "bytes": 3975
+    },
+    "mines/FelIron.tga": {
+      "sha256": "163848a51cc74723e0ec557569b23c87a02ab127cf5afa4c7057df572d3470fc",
+      "bytes": 4002
+    },
+    "mines/Gold.tga": {
+      "sha256": "5e30ec2fbd9f930595b29eb3a73c4f24cf0f0d96d7aee8498172fd6370730f47",
+      "bytes": 4016
+    },
+    "mines/Iron.tga": {
+      "sha256": "a1e9d49382fafc8b0260d4ec903878e8d1f060c5c5f39198d5bd0d4b38f2dafe",
+      "bytes": 3923
+    },
+    "mines/Khorium.tga": {
+      "sha256": "e20d267e057687321fbadd4c323194977eefa3d9878505f85ede650e9c4578a6",
+      "bytes": 3930
+    },
+    "mines/LesserBloodstone.tga": {
+      "sha256": "dfa281edbbbf88fffaa62d16bb544f9acf9d9d31fc0c32f703287cb77ae07865",
+      "bytes": 4004
+    },
+    "mines/Mithril.tga": {
+      "sha256": "9c225077980d30d4683b0af1f0d35fadc0f9ad4322d94c42397f2bdc948c48ac",
+      "bytes": 3960
+    },
+    "mines/Nethercite.tga": {
+      "sha256": "599c8ec720771d98aabf0d28634757d84ad7dfe8d598ce0a38a1315c726c34db",
+      "bytes": 3988
+    },
+    "mines/RichThorium.tga": {
+      "sha256": "c9cefbfdd90eec10cfc5a076e0e153bd85e84068d6dad668175916efbb534f68",
+      "bytes": 3802
+    },
+    "mines/Silver.tga": {
+      "sha256": "7fc27cd687dadc051bdfb9da99f1e1a800eee58841a6592e8620a77931add481",
+      "bytes": 3994
+    },
+    "mines/Thorium.tga": {
+      "sha256": "5024ec9eb8c2339f493cccef512aa1539f49831dced201b08992a7a160fdb2c6",
+      "bytes": 3946
+    },
+    "mines/Tin.tga": {
+      "sha256": "8bc02a5bf29a3db46fc3d51d3f8f74f6912a33a561286d0519faefaa77264a5f",
+      "bytes": 4007
+    },
+    "mines/TrueSilver.tga": {
+      "sha256": "c8e53be54bb749f48bf9b9c7c008be42b08aad6a7e606a9a005e34b207faaa1b",
+      "bytes": 3871
+    },
+    "pfQuest-icons-tbc.toc": {
+      "sha256": "448e9d36d61cf74588b2d07d4234fb004f8cf20fbee91bd604921c0f1a46eda6",
+      "bytes": 209
+    },
+    "pfQuest-icons.lua": {
+      "sha256": "ebfad76283a3682888faeb053416395674a9b2570a8fdd2d68f8c2bfd6050453",
+      "bytes": 8851
+    },
+    "pfQuest-icons.toc": {
+      "sha256": "1db37bd161d5f212c5561bdb336e53c73b65ef3ad1f189aad2ceb6d993670722",
+      "bytes": 205
+    },
+    "README.md": {
+      "sha256": "4fb0fa2109ed272ce8c4fb60b91cc925ec071a2730a94b2cbdddb23a61907094",
+      "bytes": 1079
+    },
+    "screenshot.png": {
+      "sha256": "637add5429cbf3693ba8a92346f334593f4a38db9ca4fbad39401b0fa5f7f818",
+      "bytes": 1811136
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

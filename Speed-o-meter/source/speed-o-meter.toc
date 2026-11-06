@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: Speed-o-meter
+## Author: tomek7667
+## Notes: Small toggleable window that shows current player speed.
+## Version: 1.0.0
+
+speed-o-meter.lua

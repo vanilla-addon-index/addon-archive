@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Bergador/WorldBuffSoundAlert",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Bergador",
+    "repo": "WorldBuffSoundAlert",
+    "name": "WorldBuffSoundAlert",
+    "url": "https://github.com/Bergador/WorldBuffSoundAlert",
+    "api": "https://api.github.com/repos/Bergador/WorldBuffSoundAlert"
+  },
+  "commit": "4058df754baae525cd6531622dc34dd10e89c0b5",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "b6ea93b8326ec0a3413d124fa262017946426c070d39496c4f03ac0073f7a2a0",
+      "bytes": 511
+    },
+    "WorldBuffSoundAlert.lua": {
+      "sha256": "0431ca263de54301fbbd76e5e8ed0797efcc8a5c4e89658cf2b39852c18b088c",
+      "bytes": 1165
+    },
+    "WorldBuffSoundAlert.toc": {
+      "sha256": "227f891e0687de80a01aa916a6914ae17b1f54d2afaa919def0751b6bc6596cb",
+      "bytes": 161
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

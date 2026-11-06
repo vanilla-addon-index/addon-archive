@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/whtmst/T-RestedXP",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "whtmst",
+    "repo": "T-RestedXP",
+    "name": "T-RestedXP",
+    "url": "https://github.com/whtmst/T-RestedXP",
+    "api": "https://api.github.com/repos/whtmst/T-RestedXP"
+  },
+  "commit": "5eaf92fdd9f437751e0e405c34b235fc0f5b962d",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "4ed2b465081bf8e11eb03f5451a89cfd54ef780f58edf5ada09b362ed9ef8fdb",
+      "bytes": 124
+    },
+    ".luarc.json": {
+      "sha256": "de176a7d66e9a51e55f69e00a8d25cb3db4baa9ee0148aabb06d263cf6fb1f1a",
+      "bytes": 742
+    },
+    "fonts/ARIALN.ttf": {
+      "sha256": "4a76e3329e332e4842970cb5a441c1dbd9aba23afbad3506ad19896989a1f6d8",
+      "bytes": 22428
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "README.md": {
+      "sha256": "d66bf120ef62bbb713d491a6b2976445b432743b11cb55e72308c76c6f7a988e",
+      "bytes": 5908
+    },
+    "T-RestedXP.lua": {
+      "sha256": "65f0eb8dfed6fc726daf38b2d78f6deaf25794ae39ea4e16cc8de6d7d355ca1f",
+      "bytes": 12161
+    },
+    "T-RestedXP.toc": {
+      "sha256": "07d55b45871a990353d27ab8d8e9786a9b2e7169b8d4f5d38d9d8791ec203559",
+      "bytes": 295
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

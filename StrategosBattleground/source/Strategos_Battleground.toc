@@ -1,0 +1,18 @@
+## Interface: 11200
+## Title: Strategos [|c0000ff00Battleground|r]
+## Dependencies: StrategosCore, EmeraldFramework
+## Notes: custom minimap for battlegrounds.
+## SavedVariables: StrategosWSGSettings, StrategosABSettings, StrategosAVGSettings, StrategosBGSettings
+## SavedVariablesPerCharacter: StrategosBGProfile
+## Version: 0.1
+## Author: WobLight
+Battleground.lua
+WarsongGulch.lua
+ArathiBasin.lua
+AlteracValley.lua
+Board.xml
+SettingsUI.lua
+Localization.lua
+Localization_IT.lua
+Localization_FR.lua
+UIElements.lua

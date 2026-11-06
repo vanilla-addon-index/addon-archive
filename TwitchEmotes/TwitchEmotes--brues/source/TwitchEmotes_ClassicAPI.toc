@@ -1,0 +1,28 @@
+## Interface: 11200
+## Title: |TInterface\Addons\TwitchEmotes\Emotes\Pepes\EZ:0|t|cff6441a5Twitch|r |cffffffffEmotes|r|TInterface\Addons\TwitchEmotes\Emotes\Pepes\EZ:0|t
+## Notes: Adds popular Twitch & Discord emotes to your chat. Developed by Ren - 1.12.1 backport by Brues
+## Author: Ren
+## Version: @project-version@
+## SavedVariables: Emoticons_Settings, Emoticons_Eyecandy, TwitchEmoteStatistics
+## OptionalDeps: LibStub
+## LoadSavedVariablesFirst: 1
+
+# Libraries (Ace3v — the 1.12.1 fork of Ace3)
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Libs\AceCore-3.0\AceCore-3.0.xml
+Libs\AceHook-3.0\AceHook-3.0.xml
+
+Libs\libdatabroker-1-1\LibDataBroker-1.1.lua
+Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
+
+Libs\AceConsole-3.0\AceConsole-3.0.xml
+Libs\AceGUI-3.0\AceGUI-3.0.xml
+Libs\AceGUI-3.0\widgets\widgets.xml
+Libs\AceConfig-3.0\AceConfig-3.0.xml
+
+Emotes.lua
+TwitchEmotes.lua
+TwitchEmotesAutoComplete.lua
+TwitchEmotesStats.lua
+TwitchEmotesAnimator.lua

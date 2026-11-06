@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: X-Perl Target Frame by |cFFFF8080Redbu11|r
+## Notes: Replaces the default target frame. https://github.com/Redbu11dev/X-Perl-UnitFrames
+## Author: Redbu11
+## RequiredDeps: XPerl
+..\XPerl\XPerl_Target.xml

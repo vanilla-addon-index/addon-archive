@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/KrekoG/SpecialTalent",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "KrekoG",
+    "repo": "SpecialTalent",
+    "name": "SpecialTalent",
+    "url": "https://github.com/KrekoG/SpecialTalent",
+    "api": "https://api.github.com/repos/KrekoG/SpecialTalent"
+  },
+  "commit": "12266488dc31939b1fa3845808f52a8cce1782ab",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "064efe040faea6ad25a7251746c664440d55f512c1555cca6e561bb70f7bacb0",
+      "bytes": 308
+    },
+    "SpecialTalent.lua": {
+      "sha256": "8ca1a828ebe531817c7d581bbf4b0dedf2df478539547ab271f93f65bd1a5fe5",
+      "bytes": 996
+    },
+    "SpecialTalent.toc": {
+      "sha256": "3369b8d441268abde744d5d89f21885a1b9f22b12f21f93ba823b324fa9cd97f",
+      "bytes": 213
+    },
+    "SpecialTalent.txt": {
+      "sha256": "9c03745e4bcca9227ad16e1d35dc70257a03f5d509bed57604682840e49f8337",
+      "bytes": 88
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,57 @@
+{
+  "upstream": "https://github.com/Geigerkind/StopWatch",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Geigerkind",
+    "repo": "StopWatch",
+    "name": "StopWatch",
+    "url": "https://github.com/Geigerkind/StopWatch",
+    "api": "https://api.github.com/repos/Geigerkind/StopWatch"
+  },
+  "commit": "d267430f855f4e9ff616d28564a7218628eacf5d",
+  "sourceFiles": {
+    "media/PauseButton.tga": {
+      "sha256": "4b74282f3c4664051b3aede749df3c79089e347f5dcdb579e1bc8b1c8de83f92",
+      "bytes": 2440
+    },
+    "media/ResetButton.tga": {
+      "sha256": "71b63636636086ad56e1961ee9ce75e84184f88c9c6e569dfab0e6290df97990",
+      "bytes": 2277
+    },
+    "media/TimerBackground.tga": {
+      "sha256": "57e89097a29f595c423ee7f97020042834325e00bf7bca6c1aee6c15b1b702e7",
+      "bytes": 6272
+    },
+    "README.md": {
+      "sha256": "e18039bc3951612cb0ebdb5fb18197e3ad58fcb76451d2687efe074ccbf68a47",
+      "bytes": 452
+    },
+    "StopWatch.lua": {
+      "sha256": "d8eb3f60dc1e2a4fcae5ec283045a0e638948c74c6714b4fa773698cd51f506e",
+      "bytes": 2011
+    },
+    "StopWatch.toc": {
+      "sha256": "d3409ede2b586d5c83a43cc8a0f59f578a054347a2499ff5852c509791542505",
+      "bytes": 235
+    },
+    "StopWatch.xml": {
+      "sha256": "70be839593ffc32c303e5a241de9f6c572fcbee658a1d0c40d4542ea71228bda",
+      "bytes": 3007
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "4819246": {
+      "tag": "b1",
+      "folder": "b1--4819246",
+      "assets": {},
+      "source": {
+        "sha256": "cb229b0635909756a590b82b1dee14666f09c796e0c5aaa9c319f7c705a4c069",
+        "bytes": 7251,
+        "path": "releases/b1--4819246/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/tdymel/StopWatch/tarball/b1"
+      }
+    }
+  }
+}

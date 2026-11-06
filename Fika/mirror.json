@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/ItsLusse/Fika",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ItsLusse",
+    "repo": "Fika",
+    "name": "Fika",
+    "url": "https://github.com/ItsLusse/Fika",
+    "api": "https://api.github.com/repos/ItsLusse/Fika"
+  },
+  "commit": "062c34120fdc10dddb499f6fd3fef8442af9db94",
+  "sourceFiles": {
+    "Fika.lua": {
+      "sha256": "08df6b3309714e250b43874f6d342f7e78853c1fd2301877cbf21dc4bf81f697",
+      "bytes": 82511
+    },
+    "Fika.toc": {
+      "sha256": "b967ae1b2b65da91fede468eed2f00125bc126f7dcbcd737dc74f8f73fe97171",
+      "bytes": 410
+    },
+    "README.md": {
+      "sha256": "23c5f7f7e44d0044a6ac63d931ef648fecdcac1fba93ce4ff9a688308fa5fdc8",
+      "bytes": 296
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

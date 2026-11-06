@@ -1,0 +1,3 @@
+<Bindings>
+	<Binding name="CM_OPENMENU"  header="CM_HEADER">CompanionManager.toggle()</Binding>
+</Bindings>

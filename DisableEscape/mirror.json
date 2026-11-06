@@ -1,0 +1,54 @@
+{
+  "upstream": "https://github.com/EinBaum/DisableEscape",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "DisableEscape",
+    "name": "DisableEscape",
+    "url": "https://github.com/EinBaum/DisableEscape",
+    "api": "https://api.github.com/repos/EinBaum/DisableEscape"
+  },
+  "commit": "14e12e29dfc4512c4d95d623eb02c41ee6c902b1",
+  "sourceFiles": {
+    "DisableEscape.lua": {
+      "sha256": "a29e5c18d5055b8f453cb5901df84a279a456d68e858ae470bafba1bec9b3da4",
+      "bytes": 96
+    },
+    "DisableEscape.toc": {
+      "sha256": "b0242837499386eb83c1a6de26e1f2b96dfd0ce01168e76ebf9a0c2ec99dca62",
+      "bytes": 237
+    },
+    "LICENSE": {
+      "sha256": "cb90bb0e412e64b0e3283e53e9d4aa6e22386f9fbc79e6df154b1c377a467e7c",
+      "bytes": 1075
+    },
+    "README.md": {
+      "sha256": "dba571d9059ee8128e8b98a058a15ed4666255123528b52a65d359c7d92e1b76",
+      "bytes": 91
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "15253727": {
+      "tag": "1.0.0",
+      "folder": "1.0.0--15253727",
+      "assets": {
+        "10841126": {
+          "sha256": "6c5996eb3a473b5d240415b0c8b817ecbcd99888fb27ddcd1397a52d328a1803",
+          "bytes": 1804,
+          "id": "10841126",
+          "name": "DisableEscape.zip",
+          "url": "https://github.com/EinBaum/DisableEscape/releases/download/1.0.0/DisableEscape.zip",
+          "path": "releases/1.0.0--15253727/assets/DisableEscape.zip"
+        }
+      },
+      "source": {
+        "sha256": "d3232a8a705740a127043ad2b20d04b84148dfe34132d6e6690941519b55de57",
+        "bytes": 1241,
+        "path": "releases/1.0.0--15253727/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/EinBaum/DisableEscape/tarball/1.0.0"
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+## Interface: 11200
+
+## Title: FuBar - |cffffffffPopulation
+## Notes: Displays server population
+## Author: birdy, Shellyoung
+## Version: 2.3
+## X-Email: birdy@nerden.de
+## X-Category: Interface Enhancements
+
+## OptionalDeps: Ace2, FuBar, FuBarPlugin-2.0, TabletLib
+
+## SavedVariables: FuBar_PopulationDB
+
+FuBar_Population.lua

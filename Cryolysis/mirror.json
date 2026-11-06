@@ -1,0 +1,15 @@
+{
+  "upstream": "https://github.com/laytya/Vanilla-Addons/blob/master/Cryolysis.zip",
+  "source": {
+    "kind": "file",
+    "url": "https://raw.githubusercontent.com/laytya/Vanilla-Addons/master/Cryolysis.zip",
+    "filename": "Cryolysis.zip",
+    "name": "Cryolysis.zip"
+  },
+  "file": {
+    "sha256": "6921bcb0288701a2ceee132ef0c4a6e8a3e698f99605670ae176bf6345c5239e",
+    "bytes": 1679335,
+    "path": "releases/files/Cryolysis.zip",
+    "url": "https://raw.githubusercontent.com/laytya/Vanilla-Addons/master/Cryolysis.zip"
+  }
+}

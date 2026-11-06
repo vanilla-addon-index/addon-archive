@@ -1,0 +1,209 @@
+{
+  "upstream": "https://octowow.st/git/ShempError/DopingControl",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "ShempError",
+    "repo": "DopingControl",
+    "name": "DopingControl",
+    "url": "https://octowow.st/git/ShempError/DopingControl",
+    "api": "https://octowow.st/git/api/v1/repos/ShempError/DopingControl"
+  },
+  "commit": "755194d1cb03e316e2eef1703134b897d9b32754",
+  "sourceFiles": {
+    "CHANGELOG.md": {
+      "sha256": "285126af262aaff617a8f9b3f1ac235dea4bd8c9ae6bd2e47124222003394dce",
+      "bytes": 22748
+    },
+    "core/config.lua": {
+      "sha256": "1f4bae49eeb18c40c919431cbff9284720fc0f86834e90f7f57219f1ac179497",
+      "bytes": 10780
+    },
+    "core/const.lua": {
+      "sha256": "7d53e00dbec4f0ac9a37d9e3c48742c33fd93417653432cc5e5126e18056cefa",
+      "bytes": 15337
+    },
+    "core/demo.lua": {
+      "sha256": "b0c83a57aabfdbd8a536afeaff208dd5bc8376f0a45a5df4fe51f1eac591eb5a",
+      "bytes": 6850
+    },
+    "core/init.lua": {
+      "sha256": "403379100922ca0b9e17b83582c6f7d48a1727172b64e17df9f68a074d96306d",
+      "bytes": 15566
+    },
+    "core/model.lua": {
+      "sha256": "bcfab8c865f8acfdf61790ee0e9843019b9fef6867e3a32c7c5b79f06ec0f05d",
+      "bytes": 84038
+    },
+    "core/probe.lua": {
+      "sha256": "2b32391769fef26b5539d89727f3ed64029d98692f4fde42ea724baf4187c7ca",
+      "bytes": 18802
+    },
+    "core/roles.lua": {
+      "sha256": "ecffa181796cad5758bb2722705e7d77e713e13d6504f188569410efe0be6a99",
+      "bytes": 9613
+    },
+    "core/sim.lua": {
+      "sha256": "458a97e3fefb18338d9ae1db3b2e3d7f3e7bb6ba23bbbd41f68d8fd6b1554c03",
+      "bytes": 70593
+    },
+    "data/classbuffs.lua": {
+      "sha256": "90eb357ac44105c478228839ac4979a0a8af000d18d352e78d2039d56d89dae0",
+      "bytes": 6069
+    },
+    "data/consumables.lua": {
+      "sha256": "f76850e2d48b921e5add03c1695f5f61814509035c56d6a66eab4edaf00246b5",
+      "bytes": 28562
+    },
+    "data/enchants.lua": {
+      "sha256": "a7c5afe15fc78e9277b31bdc234f4c59ccb8b591a5fc3a14b8e2f2765e7fd236",
+      "bytes": 15907
+    },
+    "data/expectations.lua": {
+      "sha256": "9f6d25ee8a1caaed062a470add7510163b8325dd67004a9c54b695c333998d57",
+      "bytes": 8153
+    },
+    "data/hit.lua": {
+      "sha256": "8b5ac480547b687117455c80787636d256308551021c7c92af6e4f07829e4c38",
+      "bytes": 15795
+    },
+    "data/resist.lua": {
+      "sha256": "3f1b2f66fe63f8adc76304ee76594c48212a86272b1fd0443392595f4abf8f0e",
+      "bytes": 6893
+    },
+    "data/talenthit.lua": {
+      "sha256": "9b9e7356d9f16eac7d6f34feb88945611cc3493fdba9ff3e831a264835fb611b",
+      "bytes": 8596
+    },
+    "DopingControl.toc": {
+      "sha256": "52d821d17b21737f64b98f6a83a82920100721af4984868a15f889f48edc9387",
+      "bytes": 678
+    },
+    "features/minimap.lua": {
+      "sha256": "f21ccf6c1dd53c5a4af3ea44d3c79fc7b406225ee22eecc167635321b6760781",
+      "bytes": 4982
+    },
+    "LICENSE": {
+      "sha256": "a59df5624d5f7b8fee2165941f94928f7aff96a8a40feb059e236e26f9b1ea79",
+      "bytes": 1067
+    },
+    "README.md": {
+      "sha256": "a06ea306b6b1a01e31bf01f8edf8b42ca12b2bc9b5d5cb2dbf753ff5cf45b100",
+      "bytes": 23878
+    },
+    "scan/addons.lua": {
+      "sha256": "73a96163aa6b5d48fde026410646ab0d3f62990a7f323452e489a075cd41f3a9",
+      "bytes": 40404
+    },
+    "scan/aura.lua": {
+      "sha256": "e5f9c61e3c3037941e307369a12123ef816b1423fb0a272b2d75853a07cf936b",
+      "bytes": 21412
+    },
+    "scan/engine.lua": {
+      "sha256": "6268cc198d666ccabf1a4ee61a1ea0896517a02dcc859109d9e8b548d39b6693",
+      "bytes": 51490
+    },
+    "scan/gear.lua": {
+      "sha256": "df0d1317c52322e09002f3c345716c3ae3cbeedabad9a8175687ad2247e22e10",
+      "bytes": 8124
+    },
+    "scan/hit.lua": {
+      "sha256": "c7826e919186c7183c9536b0bcdc2ba8955ae029a9912d86c39c4ea2e4adc1c2",
+      "bytes": 45310
+    },
+    "scan/pull.lua": {
+      "sha256": "d7cdd8d7c8468f01c4ffca2e6a9df987a88d0b41ee1d7c50754809709d7d8ff0",
+      "bytes": 9718
+    },
+    "scan/reach.lua": {
+      "sha256": "e936f9e4a6afdcf394a79b2c246dc9589ec813378bdbd73da1e72ee98782d7e6",
+      "bytes": 3336
+    },
+    "scan/resist.lua": {
+      "sha256": "1b39ac3c159adcc745bad13a595568235045650985232454fa4964c92e84d9bb",
+      "bytes": 4726
+    },
+    "scan/talents.lua": {
+      "sha256": "67df5948761f945208ccc162093109113b5745356ea20e56f363648f31d98838",
+      "bytes": 15982
+    },
+    "screenshots/addons.png": {
+      "sha256": "5f7cfd4fa1fefbad18b8120cc5053e42922e06495500f09cad33e93eba33a1e6",
+      "bytes": 426852
+    },
+    "screenshots/classbuffs.png": {
+      "sha256": "632810ae202daed009920193dd894e6d24ee210d25636f3a658670fa1680e086",
+      "bytes": 504981
+    },
+    "screenshots/debuffs.png": {
+      "sha256": "7331b637fceee6a3f58381938b0ed559c5def520bd3c7568e78b1b58eed440c5",
+      "bytes": 455783
+    },
+    "screenshots/equipment.png": {
+      "sha256": "0652c01402b48c23d234a11d9150d36367cc210d8fa3b28652309c7940ba55a7",
+      "bytes": 1084135
+    },
+    "screenshots/hit-tooltip-school.png": {
+      "sha256": "96545c5172a45e5d77cb39bb192aa1b1b67fc585cb26f6cdae586df647e185c2",
+      "bytes": 26118
+    },
+    "screenshots/hit-tooltip.png": {
+      "sha256": "413328f22bd16412bbfa13c4f65dfab01c7a3c5a7821878650f49603b71c6a90",
+      "bytes": 49770
+    },
+    "screenshots/hit.png": {
+      "sha256": "eb119501aa4c0e469645ebab1b64880e0fcbc289f12f4a2e49f066ed1f23d80a",
+      "bytes": 366856
+    },
+    "screenshots/options.png": {
+      "sha256": "4ca894fb69ca847c3dd1d97f8c7c871e6f0a52ec3ab6d858efbec5e5b5bc3fb4",
+      "bytes": 434005
+    },
+    "screenshots/resistances.png": {
+      "sha256": "bf7376330a64b9506dce882fb506cc76c556abc45e3ac792be9531f160129d4a",
+      "bytes": 420359
+    },
+    "screenshots/skillbooks.png": {
+      "sha256": "28d1e0f79b06b7270297745868f50b328a7b658d55d4a120cabed834a43e0a81",
+      "bytes": 513493
+    },
+    "screenshots/testmode.png": {
+      "sha256": "834dd59dc617edad106a8792db74c29930df2be61ad3dc13d3c5d61aa7e0f227",
+      "bytes": 789516
+    },
+    "textures/cells.tga": {
+      "sha256": "fa836cecdd55e5aac9069546b4d0fe6cc5351802dc03dfa3f227bf1cc2e8cb78",
+      "bytes": 262162
+    },
+    "textures/panel_bg.tga": {
+      "sha256": "fa2c3742ff646599581f2179372f54d8f739fc5f155ad2633acc73b756aad6e8",
+      "bytes": 65554
+    },
+    "textures/panel_border.tga": {
+      "sha256": "81365bddce9a58b3f1091e849f454f79ea5296f1a4af40eca7e8dd80df8f0514",
+      "bytes": 8210
+    },
+    "ui/cellsheet.lua": {
+      "sha256": "d9a9a47ec3a00f29cef2ff56815559e2c619a3f09a2d3c8de47f07541b8b9fe3",
+      "bytes": 4952
+    },
+    "ui/matrix.lua": {
+      "sha256": "addb65b05feafa1d8c204b233196eec6d1cc21cc14d0a2df16d5d89f52c405ff",
+      "bytes": 165853
+    },
+    "ui/options.lua": {
+      "sha256": "a094276b98c781734fa139403d72fdec24de82159ddd5241e60a83e91b8fe583",
+      "bytes": 82762
+    },
+    "ui/report.lua": {
+      "sha256": "125fbb6de1182ae3a568f18ef2fff0b40393bba15c94dd24dc1acaa6a6f46ac6",
+      "bytes": 16210
+    },
+    "ui/widgets.lua": {
+      "sha256": "8ef794b292d18ead4c2a13fe52683a92ae945b20de6b1a00091fa516b00271b7",
+      "bytes": 18717
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

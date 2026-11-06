@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/akzkak/SuperTotem",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "akzkak",
+    "repo": "SuperTotem",
+    "name": "SuperTotem",
+    "url": "https://github.com/akzkak/SuperTotem",
+    "api": "https://api.github.com/repos/akzkak/SuperTotem"
+  },
+  "commit": "1cae895d69190037fe121b9fc5e88081adbf18e0",
+  "sourceFiles": {
+    "libs/DoiteGlow.lua": {
+      "sha256": "738dd879b3e48356041b0299c9d99f2583cde56e67116ce7c5e9b386201c9b88",
+      "bytes": 3354
+    },
+    "README.md": {
+      "sha256": "cea6b4b909d991cde6afe48983e69dde7e2795f5b55d259c0c1cf9120b7afddb",
+      "bytes": 11960
+    },
+    "SuperTotem.lua": {
+      "sha256": "14879c2264b643753438b451d6ce90080566ee7b1eab37cba2cd1c38bc7da9cd",
+      "bytes": 163495
+    },
+    "SuperTotem.toc": {
+      "sha256": "3d146b1583a5727e0cdcbae4c997769452810d759c69ccbded59f6ec75d9d830",
+      "bytes": 254
+    },
+    "Textures/IconAlert.tga": {
+      "sha256": "7405c34a77a983fbb79d7d835f5abe970e5e127002078d447d195c46330b0435",
+      "bytes": 24247
+    },
+    "Textures/IconAlertAnts.tga": {
+      "sha256": "dd5c9c0a4b31e99701cf300ab031e3fa1bb72142e200d22c703678a513063918",
+      "bytes": 58207
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

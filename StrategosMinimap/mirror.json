@@ -1,0 +1,81 @@
+{
+  "upstream": "https://gitlab.com/WobLight/Strategos_Minimap",
+  "source": {
+    "kind": "repository",
+    "host": "gitlab.com",
+    "owner": "WobLight",
+    "repo": "Strategos_Minimap",
+    "name": "Strategos_Minimap",
+    "url": "https://gitlab.com/WobLight/Strategos_Minimap",
+    "api": "https://gitlab.com/api/v4/projects/WobLight%2FStrategos_Minimap"
+  },
+  "commit": "13b22c4fec521dd30215d0ccf7b35aa3b27245d6",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "adbb0fd7710180c3bc824ab015807f723bf3ae6696255cc96710bf932c81d4b4",
+      "bytes": 518
+    },
+    "Strategos_Minimap.toc": {
+      "sha256": "404f82e96328ff9c0e6195bea263b809c78873f172d0ad9dbbd2dcd4a5c41c35",
+      "bytes": 346
+    },
+    "StrategosMinimap.lua": {
+      "sha256": "ebdea9826fd2ebafa282cc074b38ebee8a325bb849c9b92def2d744a94ecbb5f",
+      "bytes": 2384
+    },
+    "Textures/Dot.tga": {
+      "sha256": "b8dfe44612af1f744486fa997570588d997a53ea3f63e6ff22e9c60d1830e3ca",
+      "bytes": 2948
+    },
+    "Textures/Dot2.tga": {
+      "sha256": "738f1a0ae450faa8423ecfcd7fd4d769d164bae3a804293709563fb060755f43",
+      "bytes": 6890
+    },
+    "Textures/DotBackground.tga": {
+      "sha256": "6a33dcc8bf8079a09e88771632f78fb1d6573bc4847a7079fed897d94bc8326e",
+      "bytes": 13332
+    },
+    "Textures/DotHighlights.tga": {
+      "sha256": "51b52ea76d439321ec6022294a821025ac1943ea08f56231e7b4d1b85f3cebbd",
+      "bytes": 262162
+    },
+    "Textures/MapBorder.tga": {
+      "sha256": "13aa3e318b8422d61b6a19e5dde412471e94e378359f6f2273a12bfc40c7bcea",
+      "bytes": 12996
+    },
+    "Textures/MapBorderNarrow.tga": {
+      "sha256": "c2e85ea902587c054f9f0cc4f1925ac00de8b7253cf53e707c9b5d3274d842f2",
+      "bytes": 16740
+    },
+    "Textures/MapBorderNarrowAnimated.tga": {
+      "sha256": "cd10575397365224f407a025a4ef44cebb40b8eaedb50f081277bc1c1cd8c537",
+      "bytes": 268431
+    },
+    "Textures/Settings.tga": {
+      "sha256": "2533770024b651d573aad54a7eb13362bc4864cf522cffbd00fd0cc9dccb0ecd",
+      "bytes": 10708
+    },
+    "Textures/Star.tga": {
+      "sha256": "0bedca2b2a0b605d457cfff09fc0e61bd004721c7bccd549c8f431b9560b4be3",
+      "bytes": 9562
+    },
+    "XML/Minimap.lua": {
+      "sha256": "d5196dae9d3e5af4abd054dc3d1eb69a838c5f1160f5aebb42596384b96f9478",
+      "bytes": 22752
+    },
+    "XML/Minimap.xml": {
+      "sha256": "f33b20ac090ee82b13680e66314fcde613eb44de32c75c0a5ac42b9672d12dc0",
+      "bytes": 12303
+    },
+    "XML/POI.lua": {
+      "sha256": "9a63ce114c12bd543febe72bac5f386776623be29c46894afbc6555ca91ff252",
+      "bytes": 374
+    },
+    "XML/POI.xml": {
+      "sha256": "5ce1e7dd945580095e309bd356370c630be7b90a7fcdc54fce27ab28c0dcce31",
+      "bytes": 617
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

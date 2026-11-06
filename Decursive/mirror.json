@@ -1,0 +1,93 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/Decursive",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "Decursive",
+    "name": "Decursive",
+    "url": "https://github.com/MarcelineVQ/Decursive",
+    "api": "https://api.github.com/repos/MarcelineVQ/Decursive"
+  },
+  "commit": "44ea26bdcb2e9feded63a42809ce97c6b8cdcd2a",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "c8982014f835303745c45bbeb89b27722f17fd878aea51f7d1699e1629a0e4ff",
+      "bytes": 7
+    },
+    "BackDrop.tga": {
+      "sha256": "bd109ea738f7956f53c671463c92b6d7c4a8b03d9c11f34832d67df9db089dd5",
+      "bytes": 204
+    },
+    "Bindings.xml": {
+      "sha256": "de8d58f133150b652a71a6d0797962a749bc46feb806541067ca1a7c3f537675",
+      "bytes": 1819
+    },
+    "Decursive.lua": {
+      "sha256": "be26e208d060ea0b8c11ddeb75177c12483d7a3ee8b6c9edf8b432277a1983a7",
+      "bytes": 91173
+    },
+    "Decursive.toc": {
+      "sha256": "e873d4fb61f8d6acb41ce5f356a27c64b2db5c40423070ae1557aedd82dc5e4f",
+      "bytes": 623
+    },
+    "Decursive.xml": {
+      "sha256": "880ba1dad633fcb5d7bc552df8d687f4933c340f929453f319ae16d26bce3bca",
+      "bytes": 65160
+    },
+    "docs/DECURSIVE_Instruction_Manual.pdf": {
+      "sha256": "7b865e11bbe14bdfdf39ef0d012893cb6a439d946ced16c31eb820d17c909811",
+      "bytes": 50758
+    },
+    "docs/GPL.txt": {
+      "sha256": "e6d6a009505e345fe949e1310334fcb0747f28dae2856759de102ab66b722cb4",
+      "bytes": 18011
+    },
+    "docs/QuoiDeNeuf.txt": {
+      "sha256": "5c5a1848feb151fae9ea1d725a4d31b1ec36c7898eab0ddb3abef73ae55f4390",
+      "bytes": 17097
+    },
+    "docs/Readme.txt": {
+      "sha256": "262181042208ee9bdd082b1a0d1c07fc63046db6513df5faf68d754736190c5e",
+      "bytes": 7248
+    },
+    "docs/Todo.txt": {
+      "sha256": "024db7adecbba575a1147360ec15547539214a70eb7b81ef35628148d67e42dc",
+      "bytes": 717
+    },
+    "docs/warlock notes.txt": {
+      "sha256": "411499674e94930bb0bfc80e21d7c2ac1d0f41b2623e16964ffe0b0e2a8cec92",
+      "bytes": 3903
+    },
+    "docs/WhatsNew.txt": {
+      "sha256": "ee16d0a1f1ad1e209cb58b39b38519ac8d1bb53c304d07462d52859ba5725812",
+      "bytes": 14816
+    },
+    "localization.de.lua": {
+      "sha256": "499e6fdc6771e8fe3655f0d2a80f53e1cb763b21fbc29d7ff039b1e27660337a",
+      "bytes": 8087
+    },
+    "localization.fr.lua": {
+      "sha256": "6dca357479ccc1f2b85fb2426f6c6af5a0bebad14a5a280d9fcd15a6693159bc",
+      "bytes": 8512
+    },
+    "localization.lua": {
+      "sha256": "817f69696071e973f7e22223024f4c5bb5e49af78bcb45e62bac389c4797fe9a",
+      "bytes": 9897
+    },
+    "localization.ru.lua": {
+      "sha256": "c3f8f000782d2d1a893d0a4c61c70b165e5697e473e393b8552d6cd33152e4e3",
+      "bytes": 10751
+    },
+    "localization.tw.lua": {
+      "sha256": "f59fc480342eb4c24bbf7c86186f12e1c1b87e4256c1b99832af8997b5a76a1b",
+      "bytes": 7626
+    },
+    "README.md": {
+      "sha256": "e11645885830af49fad2139e0a50cc5eb6f9efad1802ffa31feaa09edbf77083",
+      "bytes": 299
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

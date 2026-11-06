@@ -1,0 +1,9 @@
+{
+  "id": "10024958",
+  "tag": "turtleepochv1.1.2",
+  "name": "turtleepochv1.1.2-compatibility-vanilla(turtle)",
+  "body": "this release fixes quest replay icons in quest log lingering and overwriting the number of players who share the same quest\r\n\r\nyou can use sound files from the previous release",
+  "published": "2026-06-09T21:33:57+02:00",
+  "prerelease": false,
+  "url": "https://codeberg.org/Mejiro/TurtlesEpoch/releases/tag/turtleepochv1.1.2"
+}

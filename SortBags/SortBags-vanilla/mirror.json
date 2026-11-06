@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/shirsig/SortBags-vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shirsig",
+    "repo": "SortBags-vanilla",
+    "name": "SortBags-vanilla",
+    "url": "https://github.com/shirsig/SortBags-vanilla",
+    "api": "https://api.github.com/repos/shirsig/SortBags-vanilla"
+  },
+  "commit": "1b59767ca41749e70d72f2991c27054beebcdfcd",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "b10a93cb58aca33d0afc6a7323cff842cca6050c6b80a1cc6858adf5b91c6033",
+      "bytes": 479
+    },
+    "SortBags.lua": {
+      "sha256": "786f5a3d21ab3b5d228a9afd2e0505ebb04fbf2f7f5c7dbca40a35e52ace5514",
+      "bytes": 12415
+    },
+    "SortBags.toc": {
+      "sha256": "43951aa745802a1f83b589d91ef7337cac4ad81f93499784de5e3347460a60af",
+      "bytes": 244
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

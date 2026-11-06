@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: FishSwap
+## Notes: A simple button to cache weapons and swap to a fishing pole.
+## Author: Draiscor
+## Version: 1.1
+## SavedVariablesPerCharacter: FishSwapSavedWeapons
+
+FishSwap.lua

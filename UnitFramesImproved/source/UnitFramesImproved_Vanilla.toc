@@ -1,0 +1,32 @@
+## Interface: 11200
+## Title: UnitFramesImproved_Vanilla
+## Notes: Aims to keep the beauty of the original unitframes but with QoL improvements. Based on UnitFramesImproved from Legion.
+## Version: 1.0
+## Author: Ko0zi (Richard Bertilsson) for Vanilla Backport + Vanilla QoL improvements, Originally by: Althalla (Kim Forsberg)
+## SavedVariables: MobHealth3DB, MobHealth3Config, SimpleFeignHealth_Saved, UnitFramesImprovedConfig
+## SavedVariablesPerCharacter: ufiClassPortrait, ufiDarkMode, ufiCompactMode, ufiImprovedPet
+
+libs\AceLibrary\AceLibrary.lua
+libs\AceOO-2.0\AceOO-2.0.lua
+libs\AceEvent-2.0\AceEvent-2.0.lua
+libs\AceAddon-2.0\AceAddon-2.0.lua
+libs\AceConsole-2.0\AceConsole-2.0.lua
+libs\DruidManaLib-1.0\DruidManaLib-1.0.lua
+
+skin\method.lua
+
+UnitFramesImproved_Vanilla.lua
+
+libs\MobHealth3.lua
+libs\MH3_Blizzard.lua
+
+ufi_options.lua
+
+energy.lua
+extramana.lua
+
+libs\mobhealth.lua
+
+SimpleFeignHealth.lua
+feigndeath.lua
+retarget.lua

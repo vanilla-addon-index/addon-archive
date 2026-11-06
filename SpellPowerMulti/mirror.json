@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/kevmodrome/SpellPowerMulti",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "kevmodrome",
+    "repo": "SpellPowerMulti",
+    "name": "SpellPowerMulti",
+    "url": "https://github.com/kevmodrome/SpellPowerMulti",
+    "api": "https://api.github.com/repos/kevmodrome/SpellPowerMulti"
+  },
+  "commit": "de2d75a5b80543848094e01b7bc85c4255a32b09",
+  "sourceFiles": {
+    "Fonts/arial.ttf": {
+      "sha256": "a4eefdaeccae42faeaf989b6b642f2e39386fd33a7e11c39e7c08d3bfc4eb18a",
+      "bytes": 209700
+    },
+    "README.md": {
+      "sha256": "a37fe5fad9b13f150c302154ca871f5f1561c3dcda44fbb67341f14c6751c00d",
+      "bytes": 1088
+    },
+    "SpellPowerMulti.lua": {
+      "sha256": "015d39bd8f2d39c19f4815adec5c4d2ca028e4715267753e7a5ac3ca55cd52ec",
+      "bytes": 4902
+    },
+    "SpellPowerMulti.toc": {
+      "sha256": "ec699820563103eec44b8413c74cc3005db215a8fa91acb9b15e2e4698262465",
+      "bytes": 232
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "5634577": {
+      "tag": "0.1",
+      "folder": "0.1--5634577",
+      "assets": {},
+      "source": {
+        "sha256": "ee7d81e20fd31023e97bdac851532ec176932845017de63e7aa6ecce858ef96c",
+        "bytes": 91347,
+        "path": "releases/0.1--5634577/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/kevmodrome/SpellPowerMulti/tarball/0.1"
+      }
+    }
+  }
+}

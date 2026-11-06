@@ -1,0 +1,170 @@
+{
+  "upstream": "https://github.com/OldManAlpha/TurtleRP",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "OldManAlpha",
+    "repo": "TurtleRP",
+    "name": "TurtleRP",
+    "url": "https://github.com/OldManAlpha/TurtleRP",
+    "api": "https://api.github.com/repos/OldManAlpha/TurtleRP"
+  },
+  "commit": "f82cf3ba85dc5a76a342bf1dcc2ac2feb44232d9",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "15093ccf76e1aa623e0fe9d23172fa6cdf29131a772d2eb49bae10708e1e6434",
+      "bytes": 6
+    },
+    "ChatThrottleLib/ChatThrottleLib.lua": {
+      "sha256": "78ab7b9325c49c3d8ad71cd297bac12cd6a951531d021dc1860e46976ede8f4e",
+      "bytes": 13029
+    },
+    "components/TurtleRP_Admin.xml": {
+      "sha256": "172f200886d1a5bc7a2e34b79966ff0067e29d08df800337d0ad7fd21ab9059c",
+      "bytes": 101898
+    },
+    "components/TurtleRP_ChatBox.xml": {
+      "sha256": "f6e204f5a940a1052786d5f3aa32b006d97a0e9a13d429bed901116e682b2e09",
+      "bytes": 7633
+    },
+    "components/TurtleRP_Directory.xml": {
+      "sha256": "37ab1ad5b41465260b465cbb981a717756238652372c9ab63af63a1e3e33d4d5",
+      "bytes": 32249
+    },
+    "components/TurtleRP_IconTray.xml": {
+      "sha256": "d013201e7d6a052931de34eb3b42a0e5a9cc609001934e5ee115278114dcf94a",
+      "bytes": 16567
+    },
+    "components/TurtleRP_Minimap.xml": {
+      "sha256": "bfabb015f5c47d1d6814f14e6ba545c03df9af9e4f2dfaedb1dd3f1b8950200f",
+      "bytes": 2499
+    },
+    "components/TurtleRP_Profile.xml": {
+      "sha256": "2f6da8668125dbf184eadec5027efb6ebde3e5b59c6bd74393d25a68b60d72e9",
+      "bytes": 34177
+    },
+    "components/TurtleRP_Target.xml": {
+      "sha256": "9d02ec5ee0a7563b6af026470739f72e638415549a4d85931bc1035d18ec2232",
+      "bytes": 11992
+    },
+    "components/TurtleRP_Tooltip.xml": {
+      "sha256": "202792b6d5fec6cc173e46c7ce7343e44756189da335711d1d03f0191771eeac",
+      "bytes": 792
+    },
+    "images/description/TTRP-Description-BotLeft.blp": {
+      "sha256": "862243e11f1868c4a832f6581695df7ca37656e7ff20a1bd032bbb1ec0eedfc7",
+      "bytes": 88580
+    },
+    "images/description/TTRP-Description-BotRight.blp": {
+      "sha256": "35cc20f5c41a6a4731aab59c51b9292e3b36693e5c4cabbb3f3c305db951d4e8",
+      "bytes": 44884
+    },
+    "images/description/TTRP-Description-TopLeft.blp": {
+      "sha256": "9a687bd94399bbd2f01ad2b605d90a999bb814d207cb56a05a57416a8c2bb764",
+      "bytes": 88580
+    },
+    "images/directory-icon.blp": {
+      "sha256": "9842b728237aa4773cb71f96b30adc355f7440f5f8989ba9cac79ec31da92d0a",
+      "bytes": 6660
+    },
+    "images/helm-icon.blp": {
+      "sha256": "a593add1e673b4f21cad736200d1fe7428bcabca3b6c4339351279739d7f6c04",
+      "bytes": 6660
+    },
+    "images/text_texture.blp": {
+      "sha256": "e2b7a10fc0794dadfeb574d7d68a9318451e7e7c044d81105cdabd5088706481",
+      "bytes": 44876
+    },
+    "images/TurtleRP_Icon.blp": {
+      "sha256": "bc12cc0572b327f7b47b2d649e1833346206a597c569b9cfb1e6b216128846b5",
+      "bytes": 88580
+    },
+    "images/wizard-hat.blp": {
+      "sha256": "3cca2867fe8cf485421bdf99675691600c3ef00ff73fd7596cffa181f7db0db8",
+      "bytes": 3916
+    },
+    "images/wizardturtle-round.blp": {
+      "sha256": "cb0fbdd618753bd5093618791d159b76491656e5a1e2e83238806b131e6e3ce3",
+      "bytes": 88580
+    },
+    "images/wizardturtle.blp": {
+      "sha256": "3a7022865e62560bf037c47b1b3f68303d101dc0cbd69ea9e34b5b8b21b59a7f",
+      "bytes": 88580
+    },
+    "images/WorldMapPlayerIconTRP.blp": {
+      "sha256": "db0dd39d5dc6120b9ee445ea40afc01bf68d1f8db50f95585f5b8136fd47999c",
+      "bytes": 1540
+    },
+    "README.md": {
+      "sha256": "81d0febc961e8fe3d94aee7fe41c2e41d473aa63118baf6b16ffac63872922f1",
+      "bytes": 8853
+    },
+    "scripts/TurtleRP.lua": {
+      "sha256": "0645b9a36b905d491489afcc87b537fc3af5d7cc73caba23e141b3c0bb33791e",
+      "bytes": 23726
+    },
+    "scripts/TurtleRPAdmin.lua": {
+      "sha256": "d77152839199ab4d10f8578ee6ad46506d6bb0d233d7e7366f7171bda178a548",
+      "bytes": 8659
+    },
+    "scripts/TurtleRPComms.lua": {
+      "sha256": "5f4ba94c55cd764bae5a566616b62314d3b257fcd75f8f2d842e3c542ebbe703",
+      "bytes": 15439
+    },
+    "scripts/TurtleRPConstants.lua": {
+      "sha256": "b8bf6ab83e3ffcee0997cc2dc1bd1b3b1a0116ab14fb822b9545ac8cc3a6c14f",
+      "bytes": 52981
+    },
+    "scripts/TurtleRPDirectory.lua": {
+      "sha256": "0515552adb9c26fbfa16c69fcf291e69056337c187050c22ca0d6f7792e20e1b",
+      "bytes": 9205
+    },
+    "scripts/TurtleRPEmotes.lua": {
+      "sha256": "fdd33053bfb42feba1c85eca0eda60c674fb8af249a9baeee37f13abd0fb4066",
+      "bytes": 6046
+    },
+    "scripts/TurtleRPIconTray.lua": {
+      "sha256": "78e5aa8fad23cabb5ad3c197f44989917f4ae4a9a08b512e8faa649c76325329",
+      "bytes": 2718
+    },
+    "scripts/TurtleRPProfile.lua": {
+      "sha256": "946f7660c9df2992c93cb3a1e8aee67d700fd6242c6732f6bb02e109c193fa44",
+      "bytes": 10969
+    },
+    "scripts/TurtleRPTooltip.lua": {
+      "sha256": "d81535dc7c2d1488313c06f04d1d7bc10a1eab0c68a7ea6720399efe3d044e8e",
+      "bytes": 10176
+    },
+    "scripts/vanilla-images.lua": {
+      "sha256": "09e70ba2ba14d52e0634ba5729eaa0403b9882f69b88433c94d344a6ad05d692",
+      "bytes": 7066
+    },
+    "TurtleRP.toc": {
+      "sha256": "072966a65f3ef402ce42e31e0ee39ca7d342d8f6e166f2bcb197af446f1d33df",
+      "bytes": 912
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "245716607": {
+      "tag": "latest-release",
+      "folder": "latest-release--245716607",
+      "assets": {
+        "291229976": {
+          "sha256": "48f76dc1c6a39fc31f46a74da4836e5b1c3b811d782bc058b729c47e43f01696",
+          "bytes": 221074,
+          "id": "291229976",
+          "name": "TurtleRP.zip",
+          "url": "https://github.com/OldManAlpha/TurtleRP/releases/download/latest-release/TurtleRP.zip",
+          "path": "releases/latest-release--245716607/assets/TurtleRP.zip"
+        }
+      },
+      "source": {
+        "sha256": "ba8e6ba0fa6dcb5cc1ea5bf0b78c91ac97d13fe6a8a5b1d2178f5267e4e16b7c",
+        "bytes": 221098,
+        "path": "releases/latest-release--245716607/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/OldManAlpha/TurtleRP/tarball/latest-release"
+      }
+    }
+  }
+}

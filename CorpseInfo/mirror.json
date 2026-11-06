@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/wbb1977/CorpseInfo",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "wbb1977",
+    "repo": "CorpseInfo",
+    "name": "CorpseInfo",
+    "url": "https://github.com/wbb1977/CorpseInfo",
+    "api": "https://api.github.com/repos/wbb1977/CorpseInfo"
+  },
+  "commit": "493c18b6d6822b38cc9f030778970fc10be45e61",
+  "sourceFiles": {
+    "CorpseInfo/Bindings.xml": {
+      "sha256": "0986eccf4f3a1d252d31a58cdfc511a32e856e36d3a621d6b88a62db07140b8e",
+      "bytes": 174
+    },
+    "CorpseInfo/CorpseInfo.lua": {
+      "sha256": "791aededc553448e499c5868ab708c44620afb1cdf0193d9e9dea4df56a120a2",
+      "bytes": 12303
+    },
+    "CorpseInfo/CorpseInfo.toc": {
+      "sha256": "3bb86487e4f60e427392be0964fcd880e6653ecf2258638e51af3e30c81bb5aa",
+      "bytes": 444
+    },
+    "CorpseInfo/CorpseInfo.xml": {
+      "sha256": "b8529bb5082c9d46629414f5a17128d35577c51ab04eaa57cb46a1e3d6b360c8",
+      "bytes": 672
+    },
+    "CorpseInfo/Localization.lua": {
+      "sha256": "109187d853ad3ce347dc1c5be2e7949b447911dc4d334a9011e0da4f80e9f140",
+      "bytes": 8450
+    },
+    "README.md": {
+      "sha256": "515514235aee0a492e6cfcde72ebf8105c98d717f49c97579c83f0c1f63ceafc",
+      "bytes": 1941
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "14714354": {
+      "tag": "v15",
+      "folder": "v15--14714354",
+      "assets": {},
+      "source": {
+        "sha256": "08dbfb90b0a1b1b6d75367195e9ba2ee72289904ad8de51418fdc820e27066ea",
+        "bytes": 6873,
+        "path": "releases/v15--14714354/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/wbb1977/CorpseInfo/tarball/v15"
+      }
+    }
+  }
+}

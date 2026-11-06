@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/Ageous27/TwMapReveal",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Ageous27",
+    "repo": "TwMapReveal",
+    "name": "TwMapReveal",
+    "url": "https://github.com/Ageous27/TwMapReveal",
+    "api": "https://api.github.com/repos/Ageous27/TwMapReveal"
+  },
+  "commit": "49015343ff0bb76366a9b0fcd377902e747fb5d0",
+  "sourceFiles": {
+    "CalibrationData.lua": {
+      "sha256": "27c8ce01bb028c4956fae0bee55f8dfca1520521f893e19aa9e02930325388ca",
+      "bytes": 61451
+    },
+    "CoverageReport.txt": {
+      "sha256": "a3c34d8651e7763df0652bc4fd6d3107594ff9743df26efd0fc32ddd247f0411",
+      "bytes": 135
+    },
+    "MapData.lua": {
+      "sha256": "d2efc68a27ba979e3a909af407bde3a986aa7fa923d53d2c5eef23b825625fdd",
+      "bytes": 29132
+    },
+    "README.txt": {
+      "sha256": "f7ffd8e0e294c640fbd19b71c5e15db84e2a8fab5aa387c2ee846da0eae6df7f",
+      "bytes": 2063
+    },
+    "tools/GenerateAuthoritativeMapData.ps1": {
+      "sha256": "5ccc660eddd58137465a6504583a7ee289a1a1d1ca9a63729f687b060f9c49a5",
+      "bytes": 8413
+    },
+    "TwMapReveal.lua": {
+      "sha256": "02dda30fa13f0bc8ba445e5fc9543d64162eca296ee27683515a6ed001d17a8d",
+      "bytes": 22140
+    },
+    "TwMapReveal.toc": {
+      "sha256": "084d2d6e051bf5697c25476db78b63dd5f3662d90473b58f6e0260967949b764",
+      "bytes": 212
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

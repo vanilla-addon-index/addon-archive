@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: Chicken Jockey
+## Notes: Item link generator with custom name and color
+## Version: 2.0
+## Author: ChickenJockey
+
+ChickenJockeyButton.xml
+ChickenJockeyButton.lua
+ChickenJockey.xml
+ChickenJockey.lua
+

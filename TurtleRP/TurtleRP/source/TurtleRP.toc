@@ -1,0 +1,30 @@
+## Interface: 11200
+## Title: |cffFFACD8Turtle RP 2 |r
+## Author: bratmage / luskanek / OldManAlpha / tempranova / Drixi / Vee / Zara / 
+## Version: 2.0.3
+## Notes: |cff5bcefa/|cff78c7ed/|cff95c0e4B|cffb2b9dbr|cffcfb2d2a|cffecabc9t|cfff6b5c2m|cfff8c6cca|cfffad7d6g|cfffce8e0e|cffffffff/|cffffffff/|r  RP Addon custom made for Turtle WoW
+## SavedVariables: TurtleRPCharacters, TurtleRPQueryablePlayers, TurtleRPAccountProfiles, TurtleRPCharacterProfileBindings
+## SavedVariablesPerCharacter: TurtleRPCharacterInfo, TurtleRPPlayerProfiles, TurtleRPSettings, TurtleRPPetProfiles
+
+ChatThrottleLib\ChatThrottleLib.lua
+scripts\TurtleRPConstants.lua
+scripts\TurtleRP.lua
+scripts\TurtleRPAltIdentifier.lua
+scripts\TurtleRPComms.lua
+scripts\TurtleRPEmotes.lua
+scripts\TurtleRPDirectory.lua
+scripts\TurtleRPIconTray.lua
+scripts\TurtleRPProfile.lua
+scripts\TurtleRPAdmin.lua
+scripts\TurtleRPTooltip.lua
+components\TurtleRP_Admin.xml
+components\TurtleRP_Directory.xml
+components\TurtleRP_Target.xml
+components\TurtleRP_Profile.xml
+components\TurtleRP_Tooltip.xml
+components\TurtleRP_Minimap.xml
+components\TurtleRP_ChatBox.xml
+components\TurtleRP_IconTray.xml
+
+
+

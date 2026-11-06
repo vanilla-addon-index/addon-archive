@@ -1,0 +1,20 @@
+diff --git a/modules/gryphons.lua b/modules/gryphons.lua
+--- a/modules/gryphons.lua
++++ b/modules/gryphons.lua
+@@ -17,12 +17,14 @@
+-      local anchor = _G[C.bars.gryphons["anchor_"..position]]
++      -- The No Anchor dropdown value is not a frame name.
++      local anchor = _G[C.bars.gryphons["anchor_"..position]] or UIParent
+       local texture = pfUI.gryphons.textures[C.bars.gryphons.texture]
+       local r, g, b, a = GetStringColor(C.bars.gryphons.color)
+       local size = tonumber(C.bars.gryphons.size) or 50
+       local offset_h = tonumber(C.bars.gryphons.offset_h) or 0
+       local offset_v = tonumber(C.bars.gryphons.offset_v) or 0
+       local relative = "BOTTOM"..string.upper(position)
+ 
+       frame:SetParent(anchor)
+       frame:SetWidth(size)
+       frame:SetHeight(size)
+-      frame:SetPoint(relative, anchor, relative, (position == "right" and -1 or 1) * offset_h, offset_v)
++      frame:ClearAllPoints()
++      frame:SetPoint(relative, anchor, relative, (position == "right" and -1 or 1) * offset_h, offset_v)

@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/refaim/TurtleHardcoreChatTamer",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "refaim",
+    "repo": "TurtleHardcoreChatTamer",
+    "name": "TurtleHardcoreChatTamer",
+    "url": "https://github.com/refaim/TurtleHardcoreChatTamer",
+    "api": "https://api.github.com/repos/refaim/TurtleHardcoreChatTamer"
+  },
+  "commit": "d75592277db26e57cdd73445fa1d29477b695ea0",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "c0dc3dc30fad19c10f1202195dc27f5e0f90c0cf518f84e4ac413b901c7d8fc9",
+      "bytes": 1073
+    },
+    "main.lua": {
+      "sha256": "d1c7297519f7f8f45dd95daab409e0b941d3d300cc19a3eaf9e096ba8cbbe87a",
+      "bytes": 1496
+    },
+    "README.md": {
+      "sha256": "cfe10bd4f919eeed7e6792df9509d21704565b944ff55f7d3cdf638b7757f8ca",
+      "bytes": 104
+    },
+    "TurtleHardcoreChatTamer.toc": {
+      "sha256": "d7a81a3bb760f19af09e8ccd07357d2e9f1660b61fb9fe9620f88643d4a2898e",
+      "bytes": 259
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

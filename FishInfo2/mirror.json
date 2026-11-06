@@ -1,0 +1,53 @@
+{
+  "upstream": "https://github.com/wbb1977/FishInfo2",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "wbb1977",
+    "repo": "FishInfo2",
+    "name": "FishInfo2",
+    "url": "https://github.com/wbb1977/FishInfo2",
+    "api": "https://api.github.com/repos/wbb1977/FishInfo2"
+  },
+  "commit": "acc91a08bbb7c13ce7b6c2d0b96ec05ed90c3f6f",
+  "sourceFiles": {
+    "FishInfo2/Bindings.xml": {
+      "sha256": "8bb2cc5546e7435b99dbc72224b423f86aabc28d9992e843e7984305a39935f2",
+      "bytes": 212
+    },
+    "FishInfo2/FishInfo2.lua": {
+      "sha256": "abdef445bb72da0bb4d4b5663dc8f53d07a26682cdfe359c0f9fe00b11ec3e74",
+      "bytes": 28278
+    },
+    "FishInfo2/FishInfo2.toc": {
+      "sha256": "722e8a49781d1b20623d140c5f3ae818d0b0b686764bfd149d5de3933bd870cf",
+      "bytes": 480
+    },
+    "FishInfo2/FishInfo2.xml": {
+      "sha256": "c88a951147039ba84597ef15c4d10baa41ad25b33e1510771cdff82b0e776e09",
+      "bytes": 15079
+    },
+    "FishInfo2/Localization.lua": {
+      "sha256": "cf401e70f03db3610fa8e238e4704a3a89ff7860c8d03e0e4be81943a6f825fe",
+      "bytes": 14038
+    },
+    "README.md": {
+      "sha256": "9c1c3a53c87e86223238ce77ef4cb096f1438d3a73502c56a99115133bd908b6",
+      "bytes": 1701
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "187053849": {
+      "tag": "v10_",
+      "folder": "v10_--187053849",
+      "assets": {},
+      "source": {
+        "sha256": "223977ac79a1188e805a98c0ee4dae6d969384937d04ecdeca63da694b0cc275",
+        "bytes": 13088,
+        "path": "releases/v10_--187053849/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/wbb1977/FishInfo2/tarball/v10_"
+      }
+    }
+  }
+}

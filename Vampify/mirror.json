@@ -1,0 +1,169 @@
+{
+  "upstream": "https://octowow.st/git/ShempError/Vampify",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "ShempError",
+    "repo": "Vampify",
+    "name": "Vampify",
+    "url": "https://octowow.st/git/ShempError/Vampify",
+    "api": "https://octowow.st/git/api/v1/repos/ShempError/Vampify"
+  },
+  "commit": "7584a1e8e6e9a7a773a84017603235ee05dfe713",
+  "sourceFiles": {
+    "capture/damage.lua": {
+      "sha256": "830f2668d922657a5eb771a6a9a5ec9978f0328f5440702b7dda84bdd7ca5e47",
+      "bytes": 20465
+    },
+    "capture/detect.lua": {
+      "sha256": "13be1f43435fac9d20d9c8e2b843c08ad22bf6b24e3a508d4b9d25c26ac3fa0b",
+      "bytes": 8804
+    },
+    "capture/incoming.lua": {
+      "sha256": "ecb2ad4139d23fe2d20df52e57951a85fd0a5ce720caa9cfb949cfbd68228ba4",
+      "bytes": 12873
+    },
+    "CHANGELOG.md": {
+      "sha256": "4a58e6dd5080067188d7b73972d779d2ce1ae1c761e3cda7bbad9f86115e56c5",
+      "bytes": 4378
+    },
+    "core/aggregate.lua": {
+      "sha256": "1b2cfcd9044a869b6df471d87c8267a235dfbe253cb5860a536549e607277359",
+      "bytes": 41131
+    },
+    "core/commands.lua": {
+      "sha256": "45683946e9abeef3cb5b63481b12356eba53590b4e749561b9e618a00f049919",
+      "bytes": 81641
+    },
+    "core/config.lua": {
+      "sha256": "f683bbaef946a50d71f3ca289f213398b88d8e787c533dd0d3f4e055547615f0",
+      "bytes": 14147
+    },
+    "core/const.lua": {
+      "sha256": "d15bae41db4f14bc1f30b61c87147be031e53dc34e6f16043534722344ed14cf",
+      "bytes": 34717
+    },
+    "core/histogram.lua": {
+      "sha256": "73e1fd30773482ccc61bf47c70589adfaf8ffeb97f8f0b8ea52bb7e611899843",
+      "bytes": 15108
+    },
+    "core/model.lua": {
+      "sha256": "5866ee7d279b7a205c4967a4688a142e315a2159ec70c4765eafaf9d9c2f62fb",
+      "bytes": 18213
+    },
+    "core/perhit.lua": {
+      "sha256": "7000c241e053c21181c83d3d06b04daabecc99649c34094093a0fba8290cc20b",
+      "bytes": 24422
+    },
+    "core/watch.lua": {
+      "sha256": "ec017f32918c8f0f832fa7432fa5bbf24b09f14f70ed927b7c3607715b9e08da",
+      "bytes": 12073
+    },
+    "gui/display.lua": {
+      "sha256": "132fd16621b0d275db2b9b016cd44399aa7b0bd61a80286361aba049c25a52d8",
+      "bytes": 253719
+    },
+    "gui/fct.lua": {
+      "sha256": "16f0a51a3cafbfa1b030d5ca2c7e7c3e1e2ea5ac9f9148ae92c49930051eaeeb",
+      "bytes": 2077
+    },
+    "gui/minimap.lua": {
+      "sha256": "af92d6be01c493ed3acaeb724f284fb4fc59944e9e3b1983940d48b7db724488",
+      "bytes": 7162
+    },
+    "gui/options.lua": {
+      "sha256": "88aa5712c1790133f80ebf9570be2c1b7194809fc2905d8a08740db565b21bb3",
+      "bytes": 47877
+    },
+    "gui/sct.lua": {
+      "sha256": "69fea293192a6bda44168153b666b616339af601065cc7cbd1f103989f4c55b1",
+      "bytes": 19935
+    },
+    "gui/widgets.lua": {
+      "sha256": "05519308d9399d87e18f8ba6c9b45b629328fe09c806a007a3c398ae43bd5310",
+      "bytes": 13146
+    },
+    "LICENSE": {
+      "sha256": "a59df5624d5f7b8fee2165941f94928f7aff96a8a40feb059e236e26f9b1ea79",
+      "bytes": 1067
+    },
+    "README.md": {
+      "sha256": "3a469bce0d80dd55e132e0d8f87c6fe4b20f1ca0d1f1c2aa6a8c6e203152b19a",
+      "bytes": 8002
+    },
+    "screenshots/bar.png": {
+      "sha256": "4cfab50efcbc7856686e7bce110573779c2a446a84a892acdea22a22ce0e2221",
+      "bytes": 14861
+    },
+    "screenshots/breakdown.png": {
+      "sha256": "68881fb3207ae1977475ae9d93fbd59e2da7ec5f91ef14f48098ed4eb65e70fc",
+      "bytes": 86016
+    },
+    "screenshots/options.png": {
+      "sha256": "4f861b107a504224ca4358630efb38f946b629e01adcf120e497656fac150a21",
+      "bytes": 492005
+    },
+    "screenshots/row-detail.png": {
+      "sha256": "c185210cbb09497fa28a47f5409d1e29393a58ac0322b6cb36391191fd4b13da",
+      "bytes": 339438
+    },
+    "screenshots/sct.png": {
+      "sha256": "9b3a790602557b82475bc2e9b2bf551e9f85e94e715606986c19edc9cafc9d11",
+      "bytes": 958721
+    },
+    "textures/hps_orb_fill.tga": {
+      "sha256": "08b1f4d949136a0ca3a5b3ac14b488c1f9e5784d3e16fe8e147de623a141d0e6",
+      "bytes": 16402
+    },
+    "textures/hps_orb_shade.tga": {
+      "sha256": "e1bb192c637b019384daf4f524e1f7b25b43863e5eeb45a08fd746bd26360ca6",
+      "bytes": 16402
+    },
+    "textures/hps_orb_shine.tga": {
+      "sha256": "2848ca0992458393d60bdfa7e2b012788086dd864f2d6bb7b138da16aa9a70e4",
+      "bytes": 16402
+    },
+    "textures/panel_bg.tga": {
+      "sha256": "fa2c3742ff646599581f2179372f54d8f739fc5f155ad2633acc73b756aad6e8",
+      "bytes": 65554
+    },
+    "textures/panel_border.tga": {
+      "sha256": "81365bddce9a58b3f1091e849f454f79ea5296f1a4af40eca7e8dd80df8f0514",
+      "bytes": 8210
+    },
+    "textures/panel_corner.tga": {
+      "sha256": "dc9d1a24c913be5313f8fc4f1bd7a9a8fe43d7b5e47156521d5fbe77e90b32fc",
+      "bytes": 1042
+    },
+    "textures/pill_fill_cap.tga": {
+      "sha256": "2878bb6163b6575a14f479ad0c38ebfcf47640bfba27ee92b029b0e28c604413",
+      "bytes": 8210
+    },
+    "textures/pill_fill_mid.tga": {
+      "sha256": "4641bd45abe78a36953c0cd0e3ad79fedd19c9621afd8af28b165bd0c6286515",
+      "bytes": 4114
+    },
+    "textures/pill_shade_cap.tga": {
+      "sha256": "1348ba8f4b99c96345d603f9cff6e9b0f088de24ee8c9844c946e4e16e1419af",
+      "bytes": 8210
+    },
+    "textures/pill_shade_mid.tga": {
+      "sha256": "065cd25be7e0c04cabda5a55f17a72b492e12ef882802d303a357d8a0cb6da11",
+      "bytes": 4114
+    },
+    "textures/pill_shine_cap.tga": {
+      "sha256": "e4adf79eb95e70534c89db2d8d4cf635631cd965c17ac1c5aa28a3ad5d607c82",
+      "bytes": 8210
+    },
+    "textures/pill_shine_mid.tga": {
+      "sha256": "69e3f2f27dbc954a2b42765e1438b9c84b8d765dcd58330d8765b48015832eb1",
+      "bytes": 4114
+    },
+    "Vampify.toc": {
+      "sha256": "4552142eda9c8484dd6bab0d063c84268bd9d0e8d0b76c29b0676e8a21955574",
+      "bytes": 499
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,9 @@
+{
+  "id": "11268171",
+  "tag": "R12.5",
+  "name": "R12.5-11200",
+  "body": "### Download\r\nGet the CallToArms-Rx.yy-11200.zip file from Assets and extract in AddOns.\r\n\r\n### Options\r\n- `/cta` for command-line options or use the minimap icon to show full UI\r\n- CTA will not automatically join channels, join LookingForGroup and World or Global manually.\r\n\r\nOptional FuBar plugin available at [FuBar_CTAFu](https://github.com/Road-block/FuBar_CTAFu)",
+  "published": "2018-05-31T19:40:31Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/CallToArms/releases/tag/R12.5"
+}

@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: [SuperWoW] SunderNP
+## Notes: Adds a sunder armor count to the right of your nameplates. Works with default and pfUI nameplates
+## Author: Quad Crown
+## Version: 1.0
+## OptionalDeps: pfUI
+SunderNP.lua

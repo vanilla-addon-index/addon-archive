@@ -1,0 +1,124 @@
+lazyScript.metadata:updateRevisionFromKeyword("$Revision: 527 $")
+
+-- Minion support
+
+lazyScript.minion = {}
+
+lazyScript.minion.lastUpdate = 0
+lazyScript.minion.updateInterval = 0.1
+
+
+function lazyScript.minion.OnUpdate()
+	if (not lazyScript.addOnIsActive) then
+		return
+	end
+	if (not lazyScript.perPlayerConf.minionIsVisible) then
+		return
+	end
+	local now = GetTime()
+	if (now >= (lazyScript.minion.lastUpdate + lazyScript.minion.updateInterval)) then
+		lazyScript.minion.lastUpdate = now
+		
+		if (lazyScript.perPlayerConf.minionHidesOutOfCombat) then
+			if (not lazyScript.isInCombat and LazyScriptMinionFrame:IsShown()) then
+				lazyScript.d(HIDE_THING_NOT_COMBAT)
+				LazyScriptMinionFrame:Hide()
+			end
+			if (lazyScript.isInCombat and not LazyScriptMinionFrame:IsShown()) then
+				lazyScript.d(SHOW_THING_IN_COMBAT)
+				LazyScriptMinionFrame:Show()
+			end
+		end
+		
+		if (lazyScript.isInCombat or lazyScript.perPlayerConf.showActionAlways) then
+			local noParse = true
+			local actions = lazyScript.FindParsedForm(lazyScript.perPlayerConf.defaultForm, noParse)
+			if (actions) then
+				local doNothing = true
+				local triggerAction, actions = lazyScript.TryActions(actions, doNothing)
+				if (not triggerAction) then
+					lazyScript.minion.SetText(ZZZ)
+					else
+					local text
+					for _, action in ipairs(actions) do
+						if action.minionOverride then
+							text = action.name
+							break
+						end
+						if not ((action.code == "echo" or action.code == "ping" or action.code == "active") and triggerAction.triggersGlobal) then
+							if text then
+								text = text..", "..action.name
+								else
+								text = action.name
+							end
+						end
+					end
+					lazyScript.minion.SetText(text)
+				end
+			end
+		end
+	end
+end
+
+function lazyScript.minion.OnEnter(button)
+	GameTooltip:SetOwner(button, "ANCHOR_RIGHT")
+	GameTooltip:AddLine(lazyScript.metadata.name..MINION)
+	GameTooltip:AddLine(MINION_TOOLTIP)
+	GameTooltip:Show()
+end
+
+function lazyScript.minion.OnLeave(button)
+	GameTooltip:Hide()
+end
+
+function lazyScript.minion.SetText(text)
+	if (not text) then
+		text = ""
+	end
+	LazyScriptMinionText:SetText(text)
+end
+
+--[[
+layt's separate 'active frame'
+used by action=msg command
+that flashes a (too) small frame
+for 2.5s
+with the passed message in it.]]
+local frameActive = 0
+function lazyScript.minion.OnActiveFrameUpdate()
+	frameActive = frameActive + arg1
+	if frameActive > 2.5 then
+		LazyScriptActiveFrame:Hide()
+		frameActive = 0
+	end
+end
+
+function lazyScript.minion.SetTextActive(text)
+	if (not text) then
+		text = ""
+	end
+	if LazyScriptActiveFrameArrow and LazyScriptActiveFrameArrow.Hide then
+        LazyScriptActiveFrameArrow:Hide()
+    end
+	if LazyScriptActiveFrameText then
+		local textLength = string.len(text) 	-- this is length in bytes xD
+		LazyScriptActiveFrame:SetWidth(30 + textLength * 7)
+		LazyScriptActiveFrameText:SetWidth(13 + textLength * 7)
+
+		LazyScriptActiveFrameText:SetText(text) 
+	end
+		--[[
+	custom change, making the width dynamic
+	before it was as wide as one single character
+	]]
+	
+end
+
+function lazyScript.minion.ShowActive()
+	if LazyScriptActiveFrame:IsVisible() then frameActive = 0 end
+	LazyScriptActiveFrame:Show()
+	
+end
+
+
+

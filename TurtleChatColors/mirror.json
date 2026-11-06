@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/DaMaGepyHUN/TurtleChatColors",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "DaMaGepyHUN",
+    "repo": "TurtleChatColors",
+    "name": "TurtleChatColors",
+    "url": "https://github.com/DaMaGepyHUN/TurtleChatColors",
+    "api": "https://api.github.com/repos/DaMaGepyHUN/TurtleChatColors"
+  },
+  "commit": "3360599bccf37e0d7965cddb9c91c85009d931dd",
+  "sourceFiles": {
+    "readme.txt": {
+      "sha256": "17f6ab7023d1ae0af5c777be122f6b379e712b5e9530b97cab54fcbce2eb6fa7",
+      "bytes": 4538
+    },
+    "TurtleChatColors.lua": {
+      "sha256": "cd0f00d0e45cb44dd7f5fce0602115f712d67022e7d702cd4170e05b759f0028",
+      "bytes": 50863
+    },
+    "TurtleChatColors.toc": {
+      "sha256": "444dc1bad545e26c0e8aa23a24821292ed2a380f49be7ed3cc2e6e2dfd7985f4",
+      "bytes": 283
+    },
+    "TurtleChatColors.xml": {
+      "sha256": "fb883058b8e4b5916dc76affd289fd9909fb922035b7b7a700b7407221bbdbe6",
+      "bytes": 480
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "240120981": {
+      "tag": "Main",
+      "folder": "Main--240120981",
+      "assets": {},
+      "source": {
+        "sha256": "69bc16105e3a051c75c0d94a8cbe3bc5b81127cb54728e3a7cbbda6b3f94e54d",
+        "bytes": 15644,
+        "path": "releases/Main--240120981/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/DaMaGepyHUN/TurtleChatColors/tarball/Main"
+      }
+    }
+  }
+}

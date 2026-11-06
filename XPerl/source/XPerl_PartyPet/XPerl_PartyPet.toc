@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: X-Perl Party Pet Frame by |cFFFF8080Redbu11|r
+## Notes: Replaces the default party's pet frames. https://github.com/Redbu11dev/X-Perl-UnitFrames
+## Author: Redbu11
+## RequiredDeps: XPerl, XPerl_Party
+..\XPerl\XPerl_Party_Pet.xml

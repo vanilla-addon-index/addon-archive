@@ -1,0 +1,85 @@
+{
+  "upstream": "https://github.com/refaim/TrainerSkills-vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "refaim",
+    "repo": "TrainerSkills-vanilla",
+    "name": "TrainerSkills-vanilla",
+    "url": "https://github.com/refaim/TrainerSkills-vanilla",
+    "api": "https://api.github.com/repos/refaim/TrainerSkills-vanilla"
+  },
+  "commit": "2ee09ea012ba493505772c56162bc61feed7c2dc",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "641695f31ab67297965bd54fb15027954bacecf71a36e1b351f49f43c0ca8720",
+      "bytes": 139
+    },
+    "Images/Button_Down.tga": {
+      "sha256": "880210b26323e10de40fefbdd0c040f7040125e1db71a076ad85425a4480aa5a",
+      "bytes": 4140
+    },
+    "Images/Button_Up.tga": {
+      "sha256": "7667487435a4f73494ddf1698561e926416c44cbf2faa7f3af350941c2f52775",
+      "bytes": 4140
+    },
+    "Images/INV_Misc_Book_08.tga": {
+      "sha256": "5cb87d6067079f938f230842808ec7689b6012d8e616f286e3ddfa227ba87b68",
+      "bytes": 2370
+    },
+    "Locales/_Locales.xml": {
+      "sha256": "9148d9db1252d2a5c154dfa90e3526ed85b3d706a7b6d96a097974cd57674b0b",
+      "bytes": 657
+    },
+    "Locales/Locale_deDE.lua": {
+      "sha256": "ecf9fca361a784c359e6ff5b02a0fc62f1f8ecfee929513e248e38b1c846a5e6",
+      "bytes": 9245
+    },
+    "Locales/Locale_enUS.lua": {
+      "sha256": "0556f5bba1d0e2d5bc04d3c2d716fc31ab4de51a4710db2758caf1b3de6060b3",
+      "bytes": 8860
+    },
+    "Locales/Locale_esES.lua": {
+      "sha256": "586c97ef297936e0934ef0ea5461514830c74cc4f27afda98d6ae22c7a226322",
+      "bytes": 8989
+    },
+    "Locales/Locale_frFR.lua": {
+      "sha256": "bcc27941f32c27f5d18d919a6337574e11f98d0b3adf6443e73985c7797db202",
+      "bytes": 9193
+    },
+    "Locales/Locale_ruRU.lua": {
+      "sha256": "9250a58ef36732de7387278904846e9db78d78bc33cfc846734577d503f38d2d",
+      "bytes": 11214
+    },
+    "README.md": {
+      "sha256": "95658056e2f0de89e5d53d4a87d6f605a9862f853f25b250f9c7a404a2a3980a",
+      "bytes": 12379
+    },
+    "TrainerSkills.lua": {
+      "sha256": "829dd02d2653934c200c9d067f3a74cc2de6e80e35665180fd958754b98e917a",
+      "bytes": 81242
+    },
+    "TrainerSkills.toc": {
+      "sha256": "c3be02ae51f5b37cf3971684b702029a1cc83275b49e5f82e33c43f49f778daf",
+      "bytes": 538
+    },
+    "TrainerSkills.xml": {
+      "sha256": "5972443518e09da45a93b77d0823549af949e3ef3c0e01790d0094b04f37ff03",
+      "bytes": 40368
+    },
+    "TrainerSkillsConfig.lua": {
+      "sha256": "765ff23f74084055169ba9afa9b874c78780daa0ca1efcabcab302f014a35f83",
+      "bytes": 1882
+    },
+    "TrainerSkillsConfig.xml": {
+      "sha256": "e59f2ddff52643c9ec1dbd231508e683221f3889736f02245c2b1a87e885ffef",
+      "bytes": 13521
+    },
+    "TrainerSkillsForm.xml": {
+      "sha256": "23e79c2c42706e7a28a5f96186ce985128d46d8379d82994cb1c5693cba4e4fc",
+      "bytes": 5623
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

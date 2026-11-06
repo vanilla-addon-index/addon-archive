@@ -1,0 +1,50 @@
+{
+  "upstream": "https://github.com/gashole/modui-FocusFrame",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "gashole",
+    "repo": "modui-FocusFrame",
+    "name": "modui-FocusFrame",
+    "url": "https://github.com/gashole/modui-FocusFrame",
+    "api": "https://api.github.com/repos/gashole/modui-FocusFrame"
+  },
+  "commit": "34f6c3af74117461c9f25e0c3f0f3d05cfee6582",
+  "sourceFiles": {
+    "core.lua": {
+      "sha256": "5de0061913c76d9fd93d357b288b4b41e3138dfcd9eaae1f647d7d7178083bfe",
+      "bytes": 8651
+    },
+    "modui-FocusFrame.toc": {
+      "sha256": "d0b69f6db6e926c190bfd1892cff76ca3fc863384f90269e7d0122e7e5cc2f46",
+      "bytes": 140
+    },
+    "README.md": {
+      "sha256": "2ba816f5da155f873461dbb38d9b99b79060f0224a15fc761815cfef6bb2d8e6",
+      "bytes": 998
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "5807592": {
+      "tag": "current",
+      "folder": "current--5807592",
+      "assets": {
+        "3447602": {
+          "sha256": "9bbbc42810c4bf43295de48374de5f82683ae5d3a8addf758615b68255271799",
+          "bytes": 3295,
+          "id": "3447602",
+          "name": "modui-FocusFrame.zip",
+          "url": "https://github.com/gashole/modui-FocusFrame/releases/download/current/modui-FocusFrame.zip",
+          "path": "releases/current--5807592/assets/modui-FocusFrame.zip"
+        }
+      },
+      "source": {
+        "sha256": "d4a190ed5cf89ff8b2ffb7a5229d7040b888d0cdec02664da6fc8fd41e9b6e96",
+        "bytes": 2786,
+        "path": "releases/current--5807592/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/gashole/modui-FocusFrame/tarball/current"
+      }
+    }
+  }
+}

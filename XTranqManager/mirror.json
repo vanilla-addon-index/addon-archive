@@ -1,0 +1,55 @@
+{
+  "upstream": "https://github.com/unknauwn/XTranqManager/tree/master",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "unknauwn",
+    "repo": "XTranqManager",
+    "name": "XTranqManager",
+    "ref": "master",
+    "subpath": "",
+    "url": "https://github.com/unknauwn/XTranqManager",
+    "api": "https://api.github.com/repos/unknauwn/XTranqManager"
+  },
+  "commit": "8029e6d13f10711a4f5a37c3ffedf5c7d29cdca3",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "README.md": {
+      "sha256": "1280c33406146efcf1a49ef9e6a645232f7306d546f1fa88d98664e56acc6b5e",
+      "bytes": 1571
+    },
+    "XTranqManager.lua": {
+      "sha256": "28a79f980323f2fb4705ca29a78fda79e7092ef8fb5f11ca8d0ec41b7c6ff1c0",
+      "bytes": 2127
+    },
+    "XTranqManager.toc": {
+      "sha256": "3d82de014e841eb7db9f7dca83edc05184f8abb4f8a23764abd7b0c07f0ba449",
+      "bytes": 496
+    },
+    "XTranqManagerConf.lua": {
+      "sha256": "7d2a15337197547c225e7846b21eb419444623570df40e79b6342093e077e47d",
+      "bytes": 8705
+    },
+    "XTranqManagerUI.xml": {
+      "sha256": "568b3fd7c178ef6661303b112f18205067c65303950ef073cda20012171a4a39",
+      "bytes": 41806
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "22312536": {
+      "tag": "3.0_classic",
+      "folder": "3.0_classic--22312536",
+      "assets": {},
+      "source": {
+        "sha256": "56147f90060e849197b2784131d3e0e1ad0ed174fd7937df3dc9c3840fc8f5da",
+        "bytes": 7245,
+        "path": "releases/3.0_classic--22312536/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/unknauwn/XTranqManager/tarball/3.0_classic"
+      }
+    }
+  }
+}

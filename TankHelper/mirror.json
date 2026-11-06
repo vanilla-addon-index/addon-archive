@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/balakethelock/TankHelper",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "balakethelock",
+    "repo": "TankHelper",
+    "name": "TankHelper",
+    "url": "https://github.com/balakethelock/TankHelper",
+    "api": "https://api.github.com/repos/balakethelock/TankHelper"
+  },
+  "commit": "8a35b584943445dcfa24a9ae29f4272340fb7f95",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "aff49c1b7a5d13bc5d955000b0f5e471fe003130f9572c0f17a8efa331148c61",
+      "bytes": 1940
+    },
+    "TankHelper.lua": {
+      "sha256": "af97f64bb01a81e344ce692b6313ac9f8b2c1e9a873a6eb4419913c870ff11d6",
+      "bytes": 6813
+    },
+    "TankHelper.toc": {
+      "sha256": "d69a5863fdd0c9b54f1db717a8e8f55a4bbb16c32d121695d4d94151309c480a",
+      "bytes": 289
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

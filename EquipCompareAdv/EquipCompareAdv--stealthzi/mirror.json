@@ -1,0 +1,49 @@
+{
+  "upstream": "https://octowow.st/git/stealthzi/EquipCompareAdv",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "stealthzi",
+    "repo": "EquipCompareAdv",
+    "name": "EquipCompareAdv",
+    "url": "https://octowow.st/git/stealthzi/EquipCompareAdv",
+    "api": "https://octowow.st/git/api/v1/repos/stealthzi/EquipCompareAdv"
+  },
+  "commit": "67ff4551ad298b81fc18e88df0e8887ded24a619",
+  "sourceFiles": {
+    "Arrows.lua": {
+      "sha256": "b7bba147a8b29993b8a720a80e719f322dedf025bc81b33e17122e1bb7e345d7",
+      "bytes": 14227
+    },
+    "Compare.lua": {
+      "sha256": "9aa218b04cb5188a9089eec49fa3ebc4011234ec0aabb3b81cc7a348caf353d5",
+      "bytes": 24342
+    },
+    "Core.lua": {
+      "sha256": "ca851c6bcbb800dc690d89e29bd46a6606ac146edef23f99fca13eaacfc7ea63",
+      "bytes": 13566
+    },
+    "EquipCompareAdv.toc": {
+      "sha256": "fdff66cc50b5e8c3146596b7bbdf590cfcd4c0d7f896b7a1230d4f90c167bce4",
+      "bytes": 365
+    },
+    "Options.lua": {
+      "sha256": "43897c9e7508676316fa8840a11886a92f6f720a558949efc30ee970d2873620",
+      "bytes": 18182
+    },
+    "Panel.lua": {
+      "sha256": "a7e92c651b4a02ccd14f014d9f7434cef2fa3ab83e9fa2b80a69db4ea03e0fbe",
+      "bytes": 31027
+    },
+    "Profiles.lua": {
+      "sha256": "862d47968cb8d45364fc06482dd3de921e9dd8d78998d89bcddfa76e443dd2e8",
+      "bytes": 29886
+    },
+    "Stats.lua": {
+      "sha256": "9ae42704c929889e1e68f9e5dc7a1664b27aff8c5498b77a9307d1c07b1eb50f",
+      "bytes": 19080
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

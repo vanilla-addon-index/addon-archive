@@ -1,0 +1,261 @@
+{
+  "upstream": "https://github.com/MarcelineVQ/Clique",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "MarcelineVQ",
+    "repo": "Clique",
+    "name": "Clique",
+    "url": "https://github.com/MarcelineVQ/Clique",
+    "api": "https://api.github.com/repos/MarcelineVQ/Clique"
+  },
+  "commit": "872d441ca796e08eba79747909632cf3097100a9",
+  "sourceFiles": {
+    "changelog-r14063.txt": {
+      "sha256": "12842a0276a74559491c2f8ee713be133f092da4f5f10386c0df9d051aa2f074",
+      "bytes": 55126
+    },
+    "Clique.lua": {
+      "sha256": "1a303a531b194384dab5d275e100d870ce25c8986a62189cc4ea7d6c85b8f4bb",
+      "bytes": 11474
+    },
+    "Clique.toc": {
+      "sha256": "854197049e3e3429c1b07f3fad8611ef12f1850d5a82546332fcf465a7fbd157",
+      "bytes": 704
+    },
+    "Clique.xml": {
+      "sha256": "9fffc83ab642a750c2fee5d803ebd909b09d9a216905ecdb2fe6af538a4461cb",
+      "bytes": 40778
+    },
+    "CliqueOptions.lua": {
+      "sha256": "0f7b307089adacbd353c6c134c77f4452ffaafbbdda95eacd2a210b646ebfe97",
+      "bytes": 19559
+    },
+    "CliqueUtils.lua": {
+      "sha256": "f4002321c0652deb3caf6140bce312435efe51f4cc9e740f8613f99a1bfb5f10",
+      "bytes": 12277
+    },
+    "images/CliqueIcon.tga": {
+      "sha256": "2080dcecce39f055574eee83cbb33c5e1a1db72075b457ad6377cab602a38ea5",
+      "bytes": 8347
+    },
+    "libs/AceAddon/AceAddon-2.0.lua": {
+      "sha256": "5247193efde7aeaf839e183bda1c060b037b4d13475abf9b247c08fbff259f51",
+      "bytes": 22093
+    },
+    "libs/AceConsole/AceConsole-2.0.lua": {
+      "sha256": "1a82aa964b4b50670b4f00df53f12f8a4706a1585e5c84a06678f3160b41cb52",
+      "bytes": 59315
+    },
+    "libs/AceDB/AceDB-2.0.lua": {
+      "sha256": "c589df40847a80145648a43b2da8fa6575eb55dcfc0947366d5a15d532db2c3a",
+      "bytes": 37567
+    },
+    "libs/AceDebug/AceDebug-2.0.lua": {
+      "sha256": "30b91225ff5caf7b68d480707b8a349269f9169c1d57e923cb83f07850af7f1d",
+      "bytes": 7041
+    },
+    "libs/AceEvent/AceEvent-2.0.lua": {
+      "sha256": "4fa62e3b6045ddbe378813f8628c9029cc5634a94e51bcb77eb5a02fc8ab3c67",
+      "bytes": 28529
+    },
+    "libs/AceHook/AceHook-2.0.lua": {
+      "sha256": "8413f0f92437bd49793de8d6380af774a4322716c2ac517bd97efbc11fb7a429",
+      "bytes": 17963
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "b00423a9d657e2404e2e313485d1bfd80d86d25346a62c430cc890e2e666b884",
+      "bytes": 21697
+    },
+    "libs/AceLocale/AceLocale-2.0.lua": {
+      "sha256": "22efcffa930af8ffa9486cc6e1f9d2ef8243c4ce2d563b4e7132ae67e869c068",
+      "bytes": 15401
+    },
+    "libs/AceModuleCore/AceModuleCore-2.0.lua": {
+      "sha256": "3279c50e816fa15ae3e9f6a10b45abaf8464c0daa9e84df971783005efaba26e",
+      "bytes": 11847
+    },
+    "libs/AceOO/AceOO-2.0.lua": {
+      "sha256": "1385526e460948771ca6db1ceec81e8b0daf33bfc391f55e6f1bbc449a341a82",
+      "bytes": 30305
+    },
+    "libs/Dewdrop/Dewdrop-2.0.lua": {
+      "sha256": "d38bfdae402a17ce85e43aa68598b0ad700b5d105f666f0321d4227de793efa4",
+      "bytes": 76634
+    },
+    "libs/FAIAP.lua": {
+      "sha256": "6d38dcb9f6d493d9603e9921b68c4f80562bc6fd7f880a95199514a762967ac7",
+      "bytes": 33245
+    },
+    "Localization.de.lua": {
+      "sha256": "0667d0b0e67cf91acf070a6fe642e3e36099d854f2ceafbf7ae2f59834bd4aa0",
+      "bytes": 2634
+    },
+    "Localization.en.lua": {
+      "sha256": "edc5cb1d0b643b2ff571e27c0cb62b0c00cbfa44202d4096c4c0beb58f35196d",
+      "bytes": 4373
+    },
+    "Localization.fr.lua": {
+      "sha256": "10c4e5d9ca8d2d83a31a8e089f3f78238244291681a11ee8dcbff4fe3bd9f87c",
+      "bytes": 2955
+    },
+    "Localization.kr.lua": {
+      "sha256": "60f1b18f4109e3ee0360e8c8486ca239101f91b2140e169f94dd0b4b5fd26ff0",
+      "bytes": 4497
+    },
+    "Localization.zh.lua": {
+      "sha256": "61f3b400dfaf7c8986e2705518c0263eedaf2db8ebd8d41459f648fa7b76f35a",
+      "bytes": 3441
+    },
+    "Plugins/Clique_agUnitFrames.lua": {
+      "sha256": "2241a71cca2f4914ca43e8adc6260cc4d32c1912a7d8ab2d57c1ee11876327c4",
+      "bytes": 1775
+    },
+    "Plugins/Clique_AofHeal.lua": {
+      "sha256": "e3eeb56aceb457dfd701c32e5ecc74cf274cf5c4e7e51ca3bb3f3f0a2d25d843",
+      "bytes": 1694
+    },
+    "Plugins/Clique_ArcHUD.lua": {
+      "sha256": "f419e02dd7b0d8c82d1edbf5f28a7608de92b30a78c268b02a11c7098b8f5f82",
+      "bytes": 1659
+    },
+    "Plugins/Clique_BlizzRaidFrames.lua": {
+      "sha256": "819c679bf0c4621d5ee15e0035baf33be29dc54aa4aa6d29a01fc1bdd9e300e6",
+      "bytes": 2167
+    },
+    "Plugins/Clique_BlizzUnitFrames.lua": {
+      "sha256": "3d8e687a5af66654ad9945ed42295b60cdf16e75f96ebd8f17c519c1e228c959",
+      "bytes": 1921
+    },
+    "Plugins/Clique_ClickToRes.lua": {
+      "sha256": "86c307de8175cbb1a353c6f0132aa38d3353b340a005d5ceeffae8877fd9c3fc",
+      "bytes": 1473
+    },
+    "Plugins/Clique_CTRaidAssist.lua": {
+      "sha256": "e405ad165ed2c53f217a2297497b18b93c175248a6e124fb1c9d8b334fc92d3c",
+      "bytes": 1602
+    },
+    "Plugins/Clique_DUF.lua": {
+      "sha256": "8bfdb8f8ff21522a4528e298fc94f011bde0915954644a359414e720fed5d988",
+      "bytes": 1679
+    },
+    "Plugins/Clique_EasyRaid.lua": {
+      "sha256": "556ba8443afe053978d6c2b971e17243ddf7e496ce397171b8760a79e02834a7",
+      "bytes": 1646
+    },
+    "Plugins/Clique_eeMon.lua": {
+      "sha256": "cc22db784dcea5616c04a12cd2244e3513f2a865f061fdb84c441267a1a48b87",
+      "bytes": 1941
+    },
+    "Plugins/Clique_HealersAssist.lua": {
+      "sha256": "78f253d486c5699a65cfbe57a39576ba39f4eb6daf3b244bb6f9797371ae1644",
+      "bytes": 1741
+    },
+    "Plugins/Clique_HealSelect.lua": {
+      "sha256": "716cfc2bb5bddbc21f9e61d28895af76e7129305de7d731c23c9932f096a05fb",
+      "bytes": 10143
+    },
+    "Plugins/Clique_IceHUD.lua": {
+      "sha256": "66208c2c1a68682fbf6ffb7f0539fe98315aaea8c915bc8bfdfac3e66055afb5",
+      "bytes": 2087
+    },
+    "Plugins/Clique_LUA.lua": {
+      "sha256": "e8aed21d13fef8bdaef37beb21ea49dbba32e12fa8109adb74597f10176c0b9d",
+      "bytes": 1235
+    },
+    "Plugins/Clique_MarsRaid.lua": {
+      "sha256": "3e897b05dbcbe2c644c8e2d4ec2f3883c7bbb6d0819d30ff855daa31938593f5",
+      "bytes": 1639
+    },
+    "Plugins/Clique_MG2-64PRE.lua": {
+      "sha256": "f7bbef9cfea9cc10c27cfbe57ce7134ce6abdbea63348c14adb59efc3e5d2b51",
+      "bytes": 1621
+    },
+    "Plugins/Clique_Needy.lua": {
+      "sha256": "5592600502949313eeb34d376071b489e6a96cac1918e8c73512d27afe416538",
+      "bytes": 1663
+    },
+    "Plugins/Clique_NUFBeta.lua": {
+      "sha256": "aef0d9aa0271fa924d9a9f73ff3c4c0d865c5aeb4ec9c12cdaaf3acf6e38c1f8",
+      "bytes": 1555
+    },
+    "Plugins/Clique_oRA_MTF.lua": {
+      "sha256": "eb9ab6770101d198394bc37272f22df791541b74dc83eea0943215793b6f26b2",
+      "bytes": 1689
+    },
+    "Plugins/Clique_oRA2_MTF.lua": {
+      "sha256": "498a99f400d24784b986b53aaf8621c837e499fcdd88dd8c4cca6fbfd6e7d518",
+      "bytes": 1668
+    },
+    "Plugins/Clique_oUF.lua": {
+      "sha256": "988fb6bc75f732834fc033c23f940b520ce78e065bfa6e762884b5857198f898",
+      "bytes": 1932
+    },
+    "Plugins/Clique_OutOfCombat.lua": {
+      "sha256": "e5dae4699f9a36aa0d955877f0dcdda357fcae89700525634534b77356dce966",
+      "bytes": 1362
+    },
+    "Plugins/Clique_OzRaid.lua": {
+      "sha256": "d7091b92c6f88a3f447f457cee8b00bf18703c1ad406da809f84247d6c24a3b5",
+      "bytes": 449
+    },
+    "Plugins/Clique_PCUF.lua": {
+      "sha256": "d107597c5cddcfb3d65a52780c2995c1ed05491f7e82e1da6999d287130216cb",
+      "bytes": 1764
+    },
+    "Plugins/Clique_PerfectRaid.lua": {
+      "sha256": "b28680d36ce0c69a78df2017c8bf07308a98fb64d82afc00429d5eff0b72c34f",
+      "bytes": 1450
+    },
+    "Plugins/Clique_pfUI.lua": {
+      "sha256": "63101b54803511a9e889d291d38030f56ec3405cc9ac2b215f59d485df2a5cea",
+      "bytes": 1188
+    },
+    "Plugins/Clique_PluginTemplate.lua": {
+      "sha256": "a54704bc7502ca5978521c738ee02ebff07cfdfdb1889a37cf2faa9f0e69753a",
+      "bytes": 1901
+    },
+    "Plugins/Clique_PRT.lua": {
+      "sha256": "3576e56a2666e9af0ce31800d7d0d75f7229f782f3898ab7d369ae30ba083291",
+      "bytes": 2086
+    },
+    "Plugins/Clique_Sage.lua": {
+      "sha256": "c769b46aea6f8bde434f4e01ccb0e725dd6b5fe762fb263da5ec4f1267faa992",
+      "bytes": 1457
+    },
+    "Plugins/Clique_SqueakyWheel.lua": {
+      "sha256": "9d09292cd0851a836155ea87fb184059e17b73379e3a0a3c53718b3208e1531e",
+      "bytes": 1669
+    },
+    "Plugins/Clique_Squishy.lua": {
+      "sha256": "97ab89f2e85f780fcb91eb0c77531daacbc888acbdb30d3c3fe51bf74bee8bf6",
+      "bytes": 1798
+    },
+    "Plugins/Clique_sRF.lua": {
+      "sha256": "0e1c05f7f616c422689473d8c0bc833af4b054f12965c11a96d715e74ed90760",
+      "bytes": 1641
+    },
+    "Plugins/Clique_WatchDog.lua": {
+      "sha256": "96f7fdccb3f7578387b033da25b73d832a47f9adaddc9eb73ee4eb1708c51c84",
+      "bytes": 1467
+    },
+    "Plugins/Clique_XPerl.lua": {
+      "sha256": "0a0e2f54fb8ab8fb0e5e28a9f06d383216cb0f01606a57ca42e311ba735b80bf",
+      "bytes": 1711
+    },
+    "Plugins/Clique_XRaid.lua": {
+      "sha256": "007b26970347f46d67877259e467e2aa86d71a7b3969e9cf25dfe663ccc069ca",
+      "bytes": 1829
+    },
+    "Plugins/Plugins.xml": {
+      "sha256": "18fbb4554c75c893a63e6a47f92de06c70342c6a0a1e294e2dad876f7f361293",
+      "bytes": 1459
+    },
+    "readme.md": {
+      "sha256": "bf73243489771c249cca4adfbb791560fe7f6c7a93dbfb74d12f4e0a93d00e5c",
+      "bytes": 211
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

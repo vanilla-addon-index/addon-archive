@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: Feid
+## Notes: Smoothly fades specific UI frames when in and out of combat.
+## Author: Hjelp+Junie
+## Version: 2.2
+## SavedVariables: FeidDB
+
+Feid.lua

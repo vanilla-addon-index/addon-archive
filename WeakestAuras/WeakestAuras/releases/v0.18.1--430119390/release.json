@@ -1,0 +1,9 @@
+{
+  "id": "430119390",
+  "tag": "v0.18.1",
+  "name": "v0.18.1",
+  "body": "Fewer freezes\n\nFixes\n- Fixed frequent freezes on characters with auras for another class or for items\n  not carried: those auras no longer make every aura recompile whenever spell or\n  item data arrives.\n- Trigger State Updater auras no longer lose their clones when an unrelated aura\n  names a spell or item the client cannot look up.\n\nPerformance\n- Much less garbage during play from dynamic groups, health, power and cast bars\n  in raids, spell cooldowns, progress bars and looping animations.\n\n- /wa prof report shows memory allocated per entry, WeakestAuras' share of the\n  client's memory churn, and garbage collections with how long their frame took.\n  /wa prof report kb sorts by memory.\n",
+  "published": "2026-10-31T18:45:56Z",
+  "prerelease": false,
+  "url": "https://github.com/fuffc/WeakestAuras/releases/tag/v0.18.1"
+}

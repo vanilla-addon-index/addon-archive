@@ -1,0 +1,197 @@
+{
+  "upstream": "https://octowow.st/git/brues/SuperCleveRoidMacros",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "brues",
+    "repo": "SuperCleveRoidMacros",
+    "name": "SuperCleveRoidMacros",
+    "url": "https://octowow.st/git/brues/SuperCleveRoidMacros",
+    "api": "https://octowow.st/git/api/v1/repos/brues/SuperCleveRoidMacros"
+  },
+  "commit": "37ca7cef4012cc0d76b7e559ac9517c785dbae79",
+  "sourceFiles": {
+    ".github/workflows/release.yml": {
+      "sha256": "b3cde7179186599579f9e6cb7f46feaf59c012e2e642b089a3f4d558624e6bdc",
+      "bytes": 384
+    },
+    ".luarc.json": {
+      "sha256": "f135b862e8cb7c89e9d9c1bb963acfdff64efde12347c82638885d60ddc3e5be",
+      "bytes": 293
+    },
+    ".pkgmeta": {
+      "sha256": "1595154440bb99c404d98e31104da0185849bf822f89d6ac8847a15da64ca473",
+      "bytes": 58
+    },
+    "ClassicAPI.lua": {
+      "sha256": "8784a156953c361aa23778076bba18e83366940aa043375b290d686cdf8dffb5",
+      "bytes": 17736
+    },
+    "ComboPointTracker.lua": {
+      "sha256": "83b1117a480c1037bf38402e403f8de0b1cb4e7d52139787c796fdda51e0d54a",
+      "bytes": 37609
+    },
+    "Compatibility/Bongos.lua": {
+      "sha256": "db3a0bb9503414e0b4c92d07c827c477a632300bdba079841b0eb3018ef2dac7",
+      "bytes": 2125
+    },
+    "Compatibility/pfUI.lua": {
+      "sha256": "ad3484a7e511ecc69d5466c35dc29f9e0a0d01b92c697b0ded2b5315039ed0ab",
+      "bytes": 19216
+    },
+    "Compatibility/SuperMacro.lua": {
+      "sha256": "c0e6a908c2c2f85e9dd43292b7a9cd166431364af1eb55baada99a0fa0a4a64f",
+      "bytes": 9104
+    },
+    "Compatibility/UltimaMacros.lua": {
+      "sha256": "e017f1ca7759194ea06ced5c7e82917739fc9a498bac7a4ddb0ecf9cefe4d1a3",
+      "bytes": 5925
+    },
+    "Conditionals.lua": {
+      "sha256": "ebbc24a64b9861b45f71345e1ca89ad93980f5a4f2739f31cd206c9c1a06fb54",
+      "bytes": 406073
+    },
+    "Console.lua": {
+      "sha256": "b251a0a9d4866c76a8e525fb900d06596b8065f7f5d6a094129df7b90d3095bb",
+      "bytes": 18646
+    },
+    "Core.lua": {
+      "sha256": "418b8edc79c09f824a51ae980623b8e4d00d9dd7ff11c9e8f7d29c64d88752f0",
+      "bytes": 278256
+    },
+    "docs/CC-IMMUNITY-DR.md": {
+      "sha256": "877da84f8ea8a86a785f1e82f6062869394b0afcbf4f5c17b0475b3761ac3cb4",
+      "bytes": 7392
+    },
+    "docs/CLASSICAPI-TODO.md": {
+      "sha256": "16323c7de09f79da639c7e3bb9c890a547ef148afb078f5ea58277423556be70",
+      "bytes": 13467
+    },
+    "Extensions/CursiveCustomSpells.lua": {
+      "sha256": "e6e7c57c3fa426a5fa04548eaf5eb88a961d12098638fd1d199f3cfd2658d683",
+      "bytes": 25535
+    },
+    "Extensions/MacroErrorUI.lua": {
+      "sha256": "bd4421456947272e5e7eea21efc9b7083cebd861e2ea887cb68ff7664d062224",
+      "bytes": 50708
+    },
+    "Extensions/MacroLengthWarn.lua": {
+      "sha256": "72553a5f14db1f5151f279e5a8ef4a54b42cb7e15627b2e7dc43ab1574e463ce",
+      "bytes": 7187
+    },
+    "Extensions/Mouseover/ag_UnitFrames.lua": {
+      "sha256": "94933c705d9575522a4cdeeb046f6eec63838df4d2746b27f6cb9f96d0f91994",
+      "bytes": 1226
+    },
+    "Extensions/Mouseover/Blizzard.lua": {
+      "sha256": "2da7d931f200dca5bfaa3a401adcb1af1bde0b5d78e982ca891405e20b66576e",
+      "bytes": 2309
+    },
+    "Extensions/Mouseover/CT_RaidAssist.lua": {
+      "sha256": "1f39943ccb0c84d11338aba208384894d41286775d184f15fd36b52bbf89a2a7",
+      "bytes": 1557
+    },
+    "Extensions/Mouseover/CT_UnitFrames.lua": {
+      "sha256": "b6f4c41610211032b7702fbcfc57476731b7ebb2309730fe5f07b7c2c56fe2ae",
+      "bytes": 1097
+    },
+    "Extensions/Mouseover/Cursive.lua": {
+      "sha256": "53485b2a80fb5723b957950f551dda654dc68922a91d1ca28dedaa3d1cb8434f",
+      "bytes": 2004
+    },
+    "Extensions/Mouseover/DiscordUnitFrames.lua": {
+      "sha256": "263b3818fe1c7922b43c29245063ee0669f0b92f4975872ed1392e45df0686ee",
+      "bytes": 1128
+    },
+    "Extensions/Mouseover/Dragonflight3.lua": {
+      "sha256": "c8295484130cc97b4ccd6d6a2fce7aa8ad05be2845f64cab6cd760b017bd83c5",
+      "bytes": 2088
+    },
+    "Extensions/Mouseover/DragonflightReloaded.lua": {
+      "sha256": "617f5a53199c64ac5ef1f21216684afa16e001f95bc6b5b0ba7c1a1603a078a0",
+      "bytes": 1704
+    },
+    "Extensions/Mouseover/FocusFrame.lua": {
+      "sha256": "8acecbc71b21003ca6b968bb3fd3e4c906d48c4093ed5842255dbcfe9c11f25b",
+      "bytes": 1159
+    },
+    "Extensions/Mouseover/GameTooltip.lua": {
+      "sha256": "9f9cc183615c51ada2bdb9dd0fdec673bd197e5a0f911dc2a9c076fe3e428bb6",
+      "bytes": 4995
+    },
+    "Extensions/Mouseover/Grid.lua": {
+      "sha256": "1d5480c3359ebd0b253d666da1b33336c22f394214b6c61ce49be7bc21199bed",
+      "bytes": 3488
+    },
+    "Extensions/Mouseover/LunaUnitFrames.lua": {
+      "sha256": "e0bd877536e3c84c309d01b5fe59cb211369ab9c79f71b6603f13d7d2fce04f2",
+      "bytes": 962
+    },
+    "Extensions/Mouseover/NotGrid.lua": {
+      "sha256": "2563ccf6b92a54b53039508fbbc87caf8f98551d086e2cfce396b91b04bb58dc",
+      "bytes": 1421
+    },
+    "Extensions/Mouseover/PerfectRaid.lua": {
+      "sha256": "32d86cc99516d1c506ff85da6a42b0ed05e4efbbf8af60a981fbccb77089638a",
+      "bytes": 4218
+    },
+    "Extensions/Mouseover/pfUI.lua": {
+      "sha256": "69cebfc8c7fc4737c272fe470322689ca29702ff87074470d20699b0f81fa701",
+      "bytes": 12028
+    },
+    "Extensions/Mouseover/sRaidFrames.lua": {
+      "sha256": "dd4aaeb1dc0f555a29d20032d1e64f7bcdd76a2a169f008f4a279e5136b65b66",
+      "bytes": 801
+    },
+    "Extensions/Mouseover/XPerl.lua": {
+      "sha256": "0ccb1cda9b3d9ef76c949c1bf20b562d26f72ba0cc909f3d559dae4af6ae0068",
+      "bytes": 1370
+    },
+    "Extensions/OverflowBuffFrame.lua": {
+      "sha256": "87475cc09f2e6a96ea706967efa4226029cba6b8588dd9e48c06998e76808c38",
+      "bytes": 28631
+    },
+    "Extensions/Tooltip/Generic.lua": {
+      "sha256": "86c21bb0a2f25a66f25e649359d7ba982451bc5c08d74a2040259a522d1bec4f",
+      "bytes": 31177
+    },
+    "ExtensionsManager.lua": {
+      "sha256": "350618385ece0e7400b71dd6aecdc81a557c0a594fa2dea34a138fa6ffb98940",
+      "bytes": 9556
+    },
+    "Init.lua": {
+      "sha256": "8a81764da0b5013e0c7020f1b8e21c801ecda3d315f59cabdac88a917b4371e6",
+      "bytes": 17701
+    },
+    "LICENSE": {
+      "sha256": "e91589a7f0a2397867e5e37b1a3e167a7154ec05fc74be1e233af4567934c333",
+      "bytes": 1083
+    },
+    "Localization.lua": {
+      "sha256": "b2b009e52b7e31d8070b27c4f20e37ce062be5298c6a44cf736a926bb456b9fa",
+      "bytes": 7768
+    },
+    "MacroErrorChecker.lua": {
+      "sha256": "3f2549f89398ed3cd1f9ee88c26e6d7f0da3dd70dbe30f7bb1062fe1cf78eb0b",
+      "bytes": 38761
+    },
+    "NampowerAPI.lua": {
+      "sha256": "edfad27260999949dc41658c1ddb14e0778e8ca5dda077a6600f51a35db508bb",
+      "bytes": 132044
+    },
+    "README.md": {
+      "sha256": "0fe057c57814d0ced382e1bd81a8d7bb38d7910d33fc129666ae95860504e6d7",
+      "bytes": 4969
+    },
+    "SuperCleveRoidMacros.toc": {
+      "sha256": "6297e5a28893ef45d974e840e6a6e615cb25eea71061bf4b022053e2e2b28839",
+      "bytes": 1575
+    },
+    "Utility.lua": {
+      "sha256": "6d1c41423596ecef541c3a7f3199be222d376fe8f3552b87728173140dad7fda",
+      "bytes": 381110
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

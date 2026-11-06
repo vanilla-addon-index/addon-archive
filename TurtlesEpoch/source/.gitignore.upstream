@@ -1,0 +1,13 @@
+.venv
+.turtlevenv
+.ttsvenv
+__pycache__
+scripts/__pycache__
+reference
+extracted_sounds
+samples/**/*.wav
+samples/**/*.flac
+samples/**/*.mp3
+samples/**/*.ogg
+sounds/
+releases/

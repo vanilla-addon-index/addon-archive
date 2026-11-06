@@ -1,0 +1,11 @@
+{
+  "donor_voice": null,
+  "pitch_shift": 0,
+  "reverb": 0.15,
+  "reverb_decay": 0.6,
+  "bass_boost_db": 0,
+  "treble_boost_db": 0,
+  "status": "approved",
+  "test_quest_id": null,
+  "notes": "F0 ~144 Hz. Reverb 0.15 for serpentine quality. Siren NPCs (Meridith, Rashal) correctly resolved to female."
+}

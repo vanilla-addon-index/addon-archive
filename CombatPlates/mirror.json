@@ -1,0 +1,62 @@
+{
+  "upstream": "https://github.com/phrxqt/CombatPlates",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "phrxqt",
+    "repo": "CombatPlates",
+    "name": "CombatPlates",
+    "url": "https://github.com/phrxqt/CombatPlates",
+    "api": "https://api.github.com/repos/phrxqt/CombatPlates"
+  },
+  "commit": "79343791e4871feb3222d66b592292eede7260a8",
+  "sourceFiles": {
+    "CombatPlates.lua": {
+      "sha256": "233bab394fb48ab6aa451fd70a647646a4e5070ac6629b76baccb9843da1d7f9",
+      "bytes": 12911
+    },
+    "CombatPlates.toc": {
+      "sha256": "0e558de85e4bd10b7530bb8625e9c9175c47204865a0bece40d6babed709b6ab",
+      "bytes": 212
+    },
+    "img/button.png": {
+      "sha256": "e0e371e49ea3a6296b4b82c26c4ce63257f7ac9d5d60308a44adc1a886bdcaa6",
+      "bytes": 115107
+    },
+    "img/menu.png": {
+      "sha256": "76db73811aa6ce308a457ad79d1c345a2820f3505f11094cccbd845c48686a91",
+      "bytes": 215940
+    },
+    "LICENSE": {
+      "sha256": "f944e2950a9c55b993c870637de3f589c464e49162ce54eb517ba067184abb9c",
+      "bytes": 1063
+    },
+    "README.MD": {
+      "sha256": "3b9f099d9ec934b984834256bc0be06c923d8df79d4745b7a0380ce92cff33c1",
+      "bytes": 1677
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "238728852": {
+      "tag": "v1.0",
+      "folder": "v1.0--238728852",
+      "assets": {
+        "280785913": {
+          "sha256": "c9421014cf7971445f801b87de1234b7c4a905fbd449dd63bc0b6751bd55b77f",
+          "bytes": 5291,
+          "id": "280785913",
+          "name": "CombatPlates.zip",
+          "url": "https://github.com/phrxqt/CombatPlates/releases/download/v1.0/CombatPlates.zip",
+          "path": "releases/v1.0--238728852/assets/CombatPlates.zip"
+        }
+      },
+      "source": {
+        "sha256": "391d8b42570ec7e64c0ffc223e71213451c6618df2daf9ea84e3d2dfd75bf650",
+        "bytes": 335323,
+        "path": "releases/v1.0--238728852/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/phrxqt/CombatPlates/tarball/v1.0"
+      }
+    }
+  }
+}

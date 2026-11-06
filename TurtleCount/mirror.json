@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/neimad-mp/TurtleCount",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "neimad-mp",
+    "repo": "TurtleCount",
+    "name": "TurtleCount",
+    "url": "https://github.com/neimad-mp/TurtleCount",
+    "api": "https://api.github.com/repos/neimad-mp/TurtleCount"
+  },
+  "commit": "f13d103f056431b5073f0ffe40ace550f61f4076",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "d3957c58490771778d7ff36f2ce22c715f5feab41ae35ad1de83dbee3e226d2f",
+      "bytes": 371
+    },
+    "img/turtle.tga": {
+      "sha256": "7e9082a02238db938b6b0cd96c6687495a40c936cefe216cde3c2f9ac34109f6",
+      "bytes": 65580
+    },
+    "LICENSE": {
+      "sha256": "9d0bf01c643fcc080870901decce7a9f6add51bec47b2c9dd064f65ed0106556",
+      "bytes": 1069
+    },
+    "README.md": {
+      "sha256": "364cbb7ff51144f4518d5492dee44766cdb30142c33c49f158e27377a9d640b9",
+      "bytes": 713
+    },
+    "TurtleCount.lua": {
+      "sha256": "910309a412beddc660b56eeec46f8d59b0c07cd5be086677eee3fa58a2cd6232",
+      "bytes": 5191
+    },
+    "TurtleCount.toc": {
+      "sha256": "09708c3e5bc1fa988f92998c13ae8062b74a4c69076354bce14691b24f6127bd",
+      "bytes": 151
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

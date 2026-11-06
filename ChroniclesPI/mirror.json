@@ -1,0 +1,54 @@
+{
+  "upstream": "https://github.com/EinBaum/ChroniclesPI",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "ChroniclesPI",
+    "name": "ChroniclesPI",
+    "url": "https://github.com/EinBaum/ChroniclesPI",
+    "api": "https://api.github.com/repos/EinBaum/ChroniclesPI"
+  },
+  "commit": "fca0da346c4f91f50b7a5b44f72ced84b68dd6dd",
+  "sourceFiles": {
+    "ChroniclesPI.lua": {
+      "sha256": "539996a580825a361ce61cadf5849298c246a00ecf4d660ea1dcd311a28e3c03",
+      "bytes": 2621
+    },
+    "ChroniclesPI.toc": {
+      "sha256": "9827907790a41224e46931fbfbfc6f27a75e8ec4f38d21b9ad54f9e893150ed3",
+      "bytes": 237
+    },
+    "LICENSE": {
+      "sha256": "e02cc9347f2df9d2fb8ae624e90c380c78e87d5c46d51626bfd1cef35569f475",
+      "bytes": 1075
+    },
+    "README.md": {
+      "sha256": "4297e64c7375d5690f5c0905db59f697f934e33fdfbc5ed2d8f57b592595a8db",
+      "bytes": 410
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "9664054": {
+      "tag": "1.2.0",
+      "folder": "1.2.0--9664054",
+      "assets": {
+        "6204953": {
+          "sha256": "ec4497079d2a9df8cb4ca10e1eb45cfbbe77f62452962dd0bfa8a7d079c73a39",
+          "bytes": 2924,
+          "id": "6204953",
+          "name": "ChroniclesPI.zip",
+          "url": "https://github.com/EinBaum/ChroniclesPI/releases/download/1.2.0/ChroniclesPI.zip",
+          "path": "releases/1.2.0--9664054/assets/ChroniclesPI.zip"
+        }
+      },
+      "source": {
+        "sha256": "7956c793c6f3c2bdce94cbf05a9f311b9254959228c1e3f46061ce45a60b6247",
+        "bytes": 2319,
+        "path": "releases/1.2.0--9664054/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/EinBaum/ChroniclesPI/tarball/1.2.0"
+      }
+    }
+  }
+}

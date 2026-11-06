@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/sica42/TitleRotator",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "sica42",
+    "repo": "TitleRotator",
+    "name": "TitleRotator",
+    "url": "https://github.com/sica42/TitleRotator",
+    "api": "https://api.github.com/repos/sica42/TitleRotator"
+  },
+  "commit": "37247bb3903227ad87a745c725178c14bde37f6b",
+  "sourceFiles": {
+    ".editorconfig": {
+      "sha256": "e4988f4b80cca793a1b5adcafa534255a5aeac990ab3eab1d06b773fbd78a4de",
+      "bytes": 269
+    },
+    ".luarc.json": {
+      "sha256": "c10c93b6f78bf458261eccab2989749a74842da90743e27c0025ab9f2c73aeb8",
+      "bytes": 529
+    },
+    "README.md": {
+      "sha256": "fad5dd40465b46ba815e99aced459466789a8cd417f3add2c38f05a18f53df7d",
+      "bytes": 693
+    },
+    "TitleRotator.lua": {
+      "sha256": "fc6f912c8108b119f18676e7307a42e031ab9e99ee2ac412e44d1b4f993c7f83",
+      "bytes": 13125
+    },
+    "TitleRotator.toc": {
+      "sha256": "c4f6232ad06243cd7df70b6916855cc3ad7d8a96ae9457ebecafd1940c9ff176",
+      "bytes": 205
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

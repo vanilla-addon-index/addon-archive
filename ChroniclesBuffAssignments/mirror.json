@@ -1,0 +1,54 @@
+{
+  "upstream": "https://github.com/EinBaum/ChroniclesBuffAssignments",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "ChroniclesBuffAssignments",
+    "name": "ChroniclesBuffAssignments",
+    "url": "https://github.com/EinBaum/ChroniclesBuffAssignments",
+    "api": "https://api.github.com/repos/EinBaum/ChroniclesBuffAssignments"
+  },
+  "commit": "996ef976bd97c3312bcdb7656c330ef0c95ce7c1",
+  "sourceFiles": {
+    "ChroniclesBuffAssignments.lua": {
+      "sha256": "2e9bf1f84d3823784c5b5128ad5b470ec8b0490f5f892c51303db35eb191cc98",
+      "bytes": 2175
+    },
+    "ChroniclesBuffAssignments.toc": {
+      "sha256": "d99646009123363c5d9e824c586f2bdb1e3e21e1db25c5fca321264b57daec2c",
+      "bytes": 215
+    },
+    "LICENSE": {
+      "sha256": "e02cc9347f2df9d2fb8ae624e90c380c78e87d5c46d51626bfd1cef35569f475",
+      "bytes": 1075
+    },
+    "README.md": {
+      "sha256": "351ba5a475ce1671ca30f2cc9a32a2b7c9ad960b23670563da085cb8025e7001",
+      "bytes": 388
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "9666056": {
+      "tag": "1.0.0",
+      "folder": "1.0.0--9666056",
+      "assets": {
+        "6287317": {
+          "sha256": "57cb88d5fb1e30d8cf3bf5e04d66df047c0e1aa239100e8b30d550426653aa84",
+          "bytes": 6214,
+          "id": "6287317",
+          "name": "ChroniclesBuffAssignments.zip",
+          "url": "https://github.com/EinBaum/ChroniclesBuffAssignments/releases/download/1.0.0/ChroniclesBuffAssignments.zip",
+          "path": "releases/1.0.0--9666056/assets/ChroniclesBuffAssignments.zip"
+        }
+      },
+      "source": {
+        "sha256": "40275705a52f2c913391577ff2572e9be42194e0aa8b8ce1f1a53cbf84d490bf",
+        "bytes": 2069,
+        "path": "releases/1.0.0--9666056/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/EinBaum/ChroniclesBuffAssignments/tarball/1.0.0"
+      }
+    }
+  }
+}

@@ -1,0 +1,198 @@
+local TTD = {
+    History = {},               -- Stores {time = t, health = hp} pairs
+    HadTargetLastUpdate = false,-- Did we have a valid target on last update?
+    LastTargetMaxHealth = 0,    -- Max HP of the target on last update (0 if none)
+    WINDOW_DURATION = 4,        -- Time window (seconds) for average DPS calculation
+    MIN_DATAPOINTS = 4,         -- Minimum number of data points for a stable estimate
+    UPDATE_INTERVAL = 0.25,     -- Minimum interval between stored data points
+    LastRecordTime = 0,         -- Timestamp of last stored data point
+    -- Reference to the text display object (assigned later)
+    -- Example: textFrame = nil
+}
+local frame, text
+local lastHealth = 0
+local lastUpdate = 0
+
+function TTD:Create(parent)
+    WarriorTweaks.ttdFrame = CreateFrame("Frame", "ttdframe", parent)
+    frame = WarriorTweaks.ttdFrame
+    frame:SetHeight(24)
+    frame:SetWidth(100)
+    frame:SetMovable(true)
+    frame:EnableMouse(true)
+    frame:SetPoint("CENTER",200,0)
+    frame:SetBackdrop({
+        bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+        edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+        tile = true, tileSize = 16, edgeSize = 8,
+        insets = { left = 2, right = 2, top = 2, bottom = 2 }
+    })
+    frame:SetBackdropColor(0, 0, 0, 0.8)
+    -- frame moveable
+    frame:RegisterForDrag("LeftButton")
+    frame:SetScript("OnDragStart", function() frame:StartMoving() end)
+    frame:SetScript("OnDragStop", function()
+        frame:StopMovingOrSizing()
+        local point, _, rel_point, x_offset, y_offset = frame:GetPoint()
+    
+        if x_offset < 20 and x_offset > -20 then
+            x_offset = 0
+        end
+    
+        wt_opts.ttd_rel_point = point
+        wt_opts.ttd_x_offset = floor(x_offset / 1) * 1
+        wt_opts.ttd_y_offset = floor(y_offset / 1) * 1
+    end);
+
+    text = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    text:SetPoint("CENTER", frame, "CENTER", 0, 0)
+    text:SetText("TTD: N/A")
+
+end
+
+function TTD:ApplyBackground()
+    if not frame then
+        return
+    end
+
+    if wt_opts and wt_opts.ttd_background == false then
+        frame:SetBackdrop(nil)
+        frame:SetBackdropColor(0, 0, 0, 0)
+    else
+        frame:SetBackdrop({
+            bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+            edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+            tile = true, tileSize = 16, edgeSize = 8,
+            insets = { left = 2, right = 2, top = 2, bottom = 2 }
+        })
+        frame:SetBackdropColor(0, 0, 0, 0.8)
+    end
+end
+
+function TTD:Update()
+    if not text then
+        return
+    end
+
+    local now = GetTime()
+
+    -- 1. Check if there is a valid current target
+    local currentTargetExists = UnitExists("target") and not UnitIsDead("target") and not UnitIsGhost("target")
+    local currentMaxHealth = 0
+    local currentHealth = 0
+
+    if currentTargetExists then
+        currentMaxHealth = UnitHealthMax("target")
+        currentHealth = UnitHealth("target")
+    end
+
+    -- 2. Detect target changes and reset when necessary
+    local resetNeeded = false
+    if currentTargetExists ~= self.HadTargetLastUpdate then
+        resetNeeded = true
+    elseif currentTargetExists and currentMaxHealth ~= self.LastTargetMaxHealth then
+        resetNeeded = true
+    end
+
+    self.HadTargetLastUpdate = currentTargetExists
+    self.LastTargetMaxHealth = currentMaxHealth
+
+    if resetNeeded then
+        self.History = {}
+        self.LastRecordTime = 0
+        if currentTargetExists then
+            frame:Hide()
+            table.insert(self.History, { time = now, health = currentHealth })
+            self.LastRecordTime = now
+        else
+            frame:Hide()
+        end
+        return
+    end
+
+    if not currentTargetExists then
+        frame:Hide()
+        return
+    end
+
+    -- 4. Add a new data point (interval-based + only when health changed)
+    local addData = false
+    if now - self.LastRecordTime >= self.UPDATE_INTERVAL then
+        if table.getn(self.History) == 0 then
+             addData = true
+        else
+            local lastEntry = self.History[table.getn(self.History)]
+            if lastEntry.health ~= currentHealth then
+                 addData = true
+            end
+        end
+    end
+
+    if addData then
+        table.insert(self.History, { time = now, health = currentHealth })
+        self.LastRecordTime = now
+        -- print("TTD: Added data point. Count:", table.getn(self.History)) -- Debug mit table.getn()
+    end
+
+    -- 5. Remove old data points outside of the time window
+    local oldestTimeAllowed = now - self.WINDOW_DURATION
+    while table.getn(self.History) > 0 and self.History[1].time < oldestTimeAllowed do
+        table.remove(self.History, 1)
+    end
+
+    -- 6. Check if there are enough data points for a calculation
+    if table.getn(self.History) < self.MIN_DATAPOINTS then
+        frame:Hide()
+        return
+    end
+
+    -- 7. Compute average DPS over the window
+    local oldestEntry = self.History[1]
+    local newestEntry = self.History[table.getn(self.History)]
+
+    if newestEntry.time == oldestEntry.time then
+        frame:Hide()
+        return
+    end
+
+    local healthAtStartOfWindow = oldestEntry.health
+    local healthAtEndOfWindow = newestEntry.health
+    local totalDeltaTime = newestEntry.time - oldestEntry.time
+    local totalDamage = healthAtStartOfWindow - healthAtEndOfWindow
+
+    if totalDeltaTime > 0.5 and totalDamage > 0 then
+        local averageDPS = totalDamage / totalDeltaTime
+        local timeToDie = currentHealth / averageDPS
+
+        if timeToDie < 0 or timeToDie > 3600 then -- Plausibility check (ignore extreme values)
+            frame:Hide()
+        else
+            -- Berechne Minuten und Sekunden
+            local minutes = math.floor(timeToDie / 60)
+            local seconds = math.floor(math.mod(timeToDie, 60))
+            -- Formatiere als mm:ss mit führenden Nullen
+            frame:Show()
+            text:SetText(string.format("%02d:%02d", minutes, seconds))
+            -- *************************
+        end
+    elseif totalDamage <= 0 and totalDeltaTime > 0.5 then
+        frame:Hide()
+    else
+        frame:Hide()
+    end
+end
+
+function TTD:Show()
+    if frame then frame:Show() end
+end
+
+function TTD:Hide()
+    if frame then frame:Hide() end
+end
+
+function TTD:IsVisible()
+    return frame and frame:IsVisible()
+end
+
+-- Expose TTD for external access
+WarriorTweaksTTD = TTD

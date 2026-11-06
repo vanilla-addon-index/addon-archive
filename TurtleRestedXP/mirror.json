@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/FrancisEgan/TurtleRestedXP",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "FrancisEgan",
+    "repo": "TurtleRestedXP",
+    "name": "TurtleRestedXP",
+    "url": "https://github.com/FrancisEgan/TurtleRestedXP",
+    "api": "https://api.github.com/repos/FrancisEgan/TurtleRestedXP"
+  },
+  "commit": "29e8a1ff5bc5bc2c273aaaa112d489de3c26cf5d",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "126d566e971ea0a5e3b62037fe7b9a9d4584dbba777e2e79b772a39a8f2fab56",
+      "bytes": 1069
+    },
+    "README.md": {
+      "sha256": "e5c52729c6169f2be7ebae60bef80089d5fcccdc15adc433c7ce23927b3f7333",
+      "bytes": 967
+    },
+    "TurtleRestedXP.lua": {
+      "sha256": "13f5510c44d041cbd1e413e1bfd4566ed45c83ca3fef6b64f259eafea54078b5",
+      "bytes": 14810
+    },
+    "TurtleRestedXP.toc": {
+      "sha256": "c6ae3fe3500e086e10ea00de8afa23416321e0d53107f3596d3efe84ba6e087c",
+      "bytes": 214
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

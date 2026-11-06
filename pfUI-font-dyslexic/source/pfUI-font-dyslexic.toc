@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: |cff33ffccpf|cffffffffUI|cffaaaaaa [Font: Dyslexic]
+## Author: Roadblock 
+## Notes: Font Package for pfUI
+## Version: 1.0
+## X-Credit: https://opendyslexic.org/faq
+## Dependencies: pfUI
+
+# main
+pfUI-font-dyslexic.lua

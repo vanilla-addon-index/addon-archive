@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: TradeChat posts traded stuff in your chat
+## Author: Giselbaer
+## Version: 0.0.1
+
+Libs\AceLibrary\AceLibrary.lua
+Libs\AceEvent-2.0\AceEvent-2.0.lua
+
+TradeChat.lua
+

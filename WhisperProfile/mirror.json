@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/ZenSociety/WhisperProfile",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ZenSociety",
+    "repo": "WhisperProfile",
+    "name": "WhisperProfile",
+    "url": "https://github.com/ZenSociety/WhisperProfile",
+    "api": "https://api.github.com/repos/ZenSociety/WhisperProfile"
+  },
+  "commit": "da7f2437b43fa2693dc2d4b6aacc789c7fafc372",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "WhisperProfile.lua": {
+      "sha256": "3b5e94e54e473c4da7b9f8c34cfb3d15c2b6c25ce25807718bf73e30e7ad83f5",
+      "bytes": 3753
+    },
+    "WhisperProfile.toc": {
+      "sha256": "53eacb82e419e135aa0489c7f346687aa5684e936024d50ed3d763979307f656",
+      "bytes": 235
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,9 @@
+{
+  "id": "8990011",
+  "tag": "2.33-11200",
+  "name": "2.33-11200",
+  "body": "Shows on tooltip how many of x each alt has.\r\n\r\n- Requires a compatible inventory scanner as a data source (**a compatible Possessions is included in the release package**)\r\n- `/whohas` for options",
+  "published": "2017-12-21T06:25:55Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/WhoHas/releases/tag/2.33-11200"
+}

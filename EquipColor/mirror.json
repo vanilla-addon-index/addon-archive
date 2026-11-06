@@ -1,0 +1,57 @@
+{
+  "upstream": "https://github.com/TrangOul/EquipColor",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "TrangOul",
+    "repo": "EquipColor",
+    "name": "EquipColor",
+    "url": "https://github.com/TrangOul/EquipColor",
+    "api": "https://api.github.com/repos/TrangOul/EquipColor"
+  },
+  "commit": "94894163ec7a3aa1717bd8652554273ffe632b9b",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "EquipColor.lua": {
+      "sha256": "7f09997a978c68487d00c3cccd7a23a4c20db5c746aa1fad3dd04b114127da7c",
+      "bytes": 33527
+    },
+    "EquipColor.toc": {
+      "sha256": "4f4d84d0322bda5b4c7ec4afcc31b9b433c43a9d8c5f9e8c44f634c17c5e2c47",
+      "bytes": 938
+    },
+    "EquipColor.xml": {
+      "sha256": "3c9e35bf21b6dd8b64498c684c643b286f05e588cfd6b9b120271bf24d685257",
+      "bytes": 851
+    },
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "333a2cece368efe406ff1a037dfce34464a60bdef154dcf81e68ace1ad0d2190",
+      "bytes": 32966
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "8222e7a75d0f0fba8030099939611732b50c28cb26b6ce6427f52fd5f2f409d8",
+      "bytes": 29927
+    },
+    "Libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "e5defd2a1efe661ce7970891762d76a27ce539e65dd1a7894c8391ebd941be80",
+      "bytes": 17515
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "a421bd39e4cb7bcd54bb79de85c21d6e8c4c56551406972141bba26ae7d0c16d",
+      "bytes": 23871
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "03e71bcf0ba8ce7c806c5ffe966991cb997c12c25b351198c918fe32e469bdaf",
+      "bytes": 31435
+    },
+    "README.md": {
+      "sha256": "45729f4a3c38e5088faa7931dad9aba7d08e41040fe28a58b7d929d907f4139e",
+      "bytes": 402
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

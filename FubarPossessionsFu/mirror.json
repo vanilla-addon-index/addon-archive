@@ -1,0 +1,66 @@
+{
+  "upstream": "https://github.com/Road-block/Fubar_PossessionsFu",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Road-block",
+    "repo": "Fubar_PossessionsFu",
+    "name": "Fubar_PossessionsFu",
+    "url": "https://github.com/Road-block/Fubar_PossessionsFu",
+    "api": "https://api.github.com/repos/Road-block/Fubar_PossessionsFu"
+  },
+  "commit": "3911af9ab97be76e0bd5a2fa7a22eb5b853ebb73",
+  "sourceFiles": {
+    "FuBar_PossessionsFu.toc": {
+      "sha256": "497f70c00ddf01272dad14e2a19bf20370ae9c40288d25a2c89802f806d17390",
+      "bytes": 537
+    },
+    "icons/possfu.tga": {
+      "sha256": "424373bfd257dcfef0bf4778a5403320dc4b2a1d0524897da084152e8f8a8acc",
+      "bytes": 1068
+    },
+    "lib/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "33dd5a1f926a7c577847ea04d634e66d821efad218e117bf51f1263d0f72abb5",
+      "bytes": 43459
+    },
+    "lib/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "8b8cc7f36272f33b9c3c9adef59b0bee4843ce96c29702532a3e56ab6551708b",
+      "bytes": 45051
+    },
+    "lib/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "2456e593be577cdd8340cd0edc1fce94926a1f9e7dee7f26798bf8b3128dbf06",
+      "bytes": 83748
+    },
+    "PossessionsFu.lua": {
+      "sha256": "ae3d61843894b419da75f821f0f65ffe6050d67c7a5cb14980ee936a52b4112f",
+      "bytes": 803
+    },
+    "README.txt": {
+      "sha256": "f62cd3b5720b6393d07ac233fc2ff819961a5d9431719c1f44dba31c10be38a5",
+      "bytes": 515
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "8990110": {
+      "tag": "11200.3",
+      "folder": "11200.3--8990110",
+      "assets": {
+        "5683548": {
+          "sha256": "d758b798e01076777e3e6e887a5c65058ce9cfa6c0becc4ac88024fba90f1f90",
+          "bytes": 37805,
+          "id": "5683548",
+          "name": "FuBar_PossessionsFu-11200.3.zip",
+          "url": "https://github.com/Road-block/Fubar_PossessionsFu/releases/download/11200.3/FuBar_PossessionsFu-11200.3.zip",
+          "path": "releases/11200.3--8990110/assets/FuBar_PossessionsFu-11200.3.zip"
+        }
+      },
+      "source": {
+        "sha256": "b0e8a1fe16ed8682bc05757f4eb77e78a5b3883afa46cbc2d04714ce0b4f4f7e",
+        "bytes": 36306,
+        "path": "releases/11200.3--8990110/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Road-block/Fubar_PossessionsFu/tarball/11200.3"
+      }
+    }
+  }
+}

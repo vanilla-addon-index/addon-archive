@@ -1,0 +1,45 @@
+{
+  "upstream": "https://github.com/isitLoVe/TitanCritLine",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "isitLoVe",
+    "repo": "TitanCritLine",
+    "name": "TitanCritLine",
+    "url": "https://github.com/isitLoVe/TitanCritLine",
+    "api": "https://api.github.com/repos/isitLoVe/TitanCritLine"
+  },
+  "commit": "e3dc9cf79a7a6f3188b838e0b5e2ae6c91d02c05",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "3a8c3f18ccafd0d006b65121752f53d3d631724e2e0b642909718d918d75a094",
+      "bytes": 395
+    },
+    "TitanCritLine/localizationEN.lua": {
+      "sha256": "9acd7b2e641ea23a02cf2dc2847217c5a59dc88909f1ddb679f29f4d72599d74",
+      "bytes": 3964
+    },
+    "TitanCritLine/localizationKR.lua": {
+      "sha256": "76eece4194107cf84249ba7702f9a5d7034ea65a8222dfafc4f492b2f14f6c50",
+      "bytes": 4786
+    },
+    "TitanCritLine/TitanCritLine.lua": {
+      "sha256": "dfaa3f19f6eecde32925caa9774ddd25dcb48fd549de239dc12fb1bc9981d62b",
+      "bytes": 52600
+    },
+    "TitanCritLine/TitanCritLine.tga": {
+      "sha256": "d22bdbd0e94862564d6f4cd1722173453b5fa4ac15a0b51e5603c94ff47f5cda",
+      "bytes": 16428
+    },
+    "TitanCritLine/TitanCritLine.toc": {
+      "sha256": "2f0d4dfb31b3e19a6a4b2ea7ffa2e5c4c3024df4d1d937e38cba3fc695b5247a",
+      "bytes": 566
+    },
+    "TitanCritLine/TitanCritLine.xml": {
+      "sha256": "9522e8ff2e5829c2b16d5c59e85ef9c5381441b2d545baeb698e23b62d410aeb",
+      "bytes": 20610
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

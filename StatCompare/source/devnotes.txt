@@ -1,0 +1,2 @@
+Primary frames are PaperDollFrame (for self view) or InspectFrame (other player) and StatCompareTargetFrame (self view next to inspection view)
+

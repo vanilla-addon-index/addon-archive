@@ -1,0 +1,56 @@
+RobotoMono.ttf
+--------------
+Roboto Mono, by Christian Robertson.
+Licensed under the Apache License, Version 2.0.
+https://www.apache.org/licenses/LICENSE-2.0
+
+Used as the code editor's fixed-width face. A monospace font matters here for
+more than looks: the editor lines up nothing by itself, so column alignment in
+the user's own Lua is whatever the font gives it.
+
+
+FiraMono-Medium.ttf, FiraSans-Heavy.ttf, FiraSans-Medium.ttf,
+FiraSansCondensed-Heavy.ttf, FiraSansCondensed-Medium.ttf
+---------------------------------------------------------
+Fira Mono and Fira Sans. Digitized data copyright 2012-2018 The Mozilla
+Foundation, Telefonica S.A., Carrois Corporate GbR and bBox Type GmbH.
+Licensed under the SIL Open Font License, Version 1.1 -- see "Fira License.txt".
+
+Taken from WeakAuras2's Media/Fonts, which is GPL-2.0, this addon's own licence.
+
+
+PTSansNarrow-Regular.ttf, PTSansNarrow-Bold.ttf
+-----------------------------------------------
+PT Sans Narrow. Copyright (c) 2018 Paratype Inc / Paratype Ltd, with Reserved
+Font Name "PT Sans".
+Licensed under the SIL Open Font License, Version 1.1 -- see "PT Sans License.txt".
+
+Taken from WeakAuras2's Media/Fonts, which is GPL-2.0, this addon's own licence.
+
+
+The seven bundled faces above carry the names WeakAuras2 registers them under
+with LibSharedMedia ("Fira Sans Medium", "PT Sans Narrow Bold", and so on),
+because a WeakAuras export stores that name and WA2Import.lua resolves it
+against textCore.FONTS. Renaming one there breaks every later import silently.
+
+
+Accidental Presidency.ttf, Expressway.ttf, Bazooka.ttf, FORCED SQUARE.ttf,
+Cabin.ttf
+--------------------------------------------------------------------------
+Faces that WeakAuras packs reach for through some *other* addon's
+LibSharedMedia registration rather than WeakAuras' own, which is why they are
+here: without them the five account for 149 of the 167 fonts the WA2 corpus
+asks for and cannot get.
+
+Accidental Presidency, by Fontourist. Freeware.
+Expressway, by Ray Larabie (Typodermic). Free release, as redistributed with
+  ElvUI and pfUI.
+Bazooka -- public domain, per SharedMedia's own font manifest (see
+  licenses/SharedMedia/font info.txt).
+FORCED SQUARE, by Vladimir Nikolic. Freeware.
+Cabin, by Pablo Impallari, Rodrigo Fuenzalida and Igino Marini.
+  Licensed under the SIL Open Font License, Version 1.1.
+
+Registered under the LibSharedMedia names their own registrars use, for the
+same reason the WeakAuras faces above keep theirs: that name is what an export
+stores.

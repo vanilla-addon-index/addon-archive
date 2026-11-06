@@ -1,0 +1,66 @@
+{
+  "upstream": "https://github.com/Dyaxler/BlizzMo_Vanilla",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Dyaxler",
+    "repo": "BlizzMo_Vanilla",
+    "name": "BlizzMo_Vanilla",
+    "url": "https://github.com/Dyaxler/BlizzMo_Vanilla",
+    "api": "https://api.github.com/repos/Dyaxler/BlizzMo_Vanilla"
+  },
+  "commit": "f599a4c80b80ca2eda534d12934aefb90bd52386",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "90046ea2587d5171ae8b3a32e2e14838f271bdce4b6e5467ae36d310256f42a0",
+      "bytes": 407
+    },
+    ".gitignore.upstream": {
+      "sha256": "0803fa6d3c20f5d6dec1042cf80f1e8ee56970128c371c4c73d0e690887895a9",
+      "bytes": 386
+    },
+    "BlizzMo/BlizzMo.lua": {
+      "sha256": "d8cce24450295cb4074838702e3e021b51ca1ec3fdb2d4957f4bb6cd9b9b02a9",
+      "bytes": 33685
+    },
+    "BlizzMo/BlizzMo.toc": {
+      "sha256": "e4ac2c767296c51c127fd0078b2714d0bbf332a10b125e7831f576e6209d0264",
+      "bytes": 859
+    },
+    "BlizzMo/BlizzMo.xml": {
+      "sha256": "4263da39a0976a396e68363120a61ad56e8e79ffa39b9cf18ed09218dacc67d8",
+      "bytes": 2548
+    },
+    "LICENSE": {
+      "sha256": "53927bd0b739d38c87a0a82236fd9b070c2dfff11c0c119be50372005d5047ad",
+      "bytes": 35815
+    },
+    "README.md": {
+      "sha256": "03567d11eef066097ee66ac5260ddfa870124f7640be93ef7e3071f01e37782b",
+      "bytes": 2609
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "5361215": {
+      "tag": "v0.1",
+      "folder": "v0.1--5361215",
+      "assets": {
+        "3128615": {
+          "sha256": "aa47b2febb10daeab6ff6e2519806d9c9dbe2d81c61c50279f25793badec1039",
+          "bytes": 9809,
+          "id": "3128615",
+          "name": "BlizzMo-v0.1.zip",
+          "url": "https://github.com/Dyaxler/BlizzMo_Vanilla/releases/download/v0.1/BlizzMo-v0.1.zip",
+          "path": "releases/v0.1--5361215/assets/BlizzMo-v0.1.zip"
+        }
+      },
+      "source": {
+        "sha256": "4c75eb25d63a63515d9fb4632e30f84ca25614be211d7b2dcdea9aa3b70a755c",
+        "bytes": 21945,
+        "path": "releases/v0.1--5361215/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Dyaxler/BlizzMo_Vanilla/tarball/v0.1"
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: |cffff8000Grylls|rBongos
+## Author: Grylls
+## Notes: Hiding for Bongos bars
+## Version: 1
+## Dependencies: Bongos
+## SavedVariablesPerCharacter: GryllsBongos_Settings
+
+GryllsBongos.lua

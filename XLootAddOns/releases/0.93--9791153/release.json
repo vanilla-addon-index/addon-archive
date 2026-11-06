@@ -1,0 +1,9 @@
+{
+  "id": "9791153",
+  "tag": "0.93",
+  "name": "0.93-11200",
+  "body": "- `/xloot options` for configuration.  \r\n- XLootGroup, XLootMaster and XLootMonitor are optional and can be disabled or removed if their functionality is not required.\r\n- XLoot is a requirement for any of the other plugins to function.\r\n\r\nXLoot will probably not play nice with other addons that modify the lootframe.",
+  "published": "2018-02-22T15:39:05Z",
+  "prerelease": false,
+  "url": "https://github.com/Road-block/XLoot_AddOns/releases/tag/0.93"
+}

@@ -1,0 +1,337 @@
+{
+  "upstream": "https://github.com/jrc13245/pfUI-addonskinner",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "jrc13245",
+    "repo": "pfUI-addonskinner",
+    "name": "pfUI-addonskinner",
+    "url": "https://github.com/jrc13245/pfUI-addonskinner",
+    "api": "https://api.github.com/repos/jrc13245/pfUI-addonskinner"
+  },
+  "commit": "f9873f69b656c9cb717febbb536beee51b7f910f",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d8fb0de4792538f93822b2c0d235604921299d5e54a3d6ec7a6cb34536e8bf1e",
+      "bytes": 68
+    },
+    "media/fonts/Oswald-Medium.ttf": {
+      "sha256": "8be76fb078487d3abe20d8d068d8ad8fc47bd25b504ac7b1e6642321feab149f",
+      "bytes": 94408
+    },
+    "media/fonts/Xolonium-Bold.ttf": {
+      "sha256": "ae20d97e70f62703fd0b55b07e1c0d0b3ea8ddda9fb6505088bec85a30619b1c",
+      "bytes": 229392
+    },
+    "media/img/bottom.tga": {
+      "sha256": "62ad22aca3f2d3abed7611ee09599a44b9dca3ef97e20207a21466122fc386cb",
+      "bytes": 1042
+    },
+    "media/img/end.tga": {
+      "sha256": "ed9345625544cf0ac2acced24ec8dee70c3de7f9c7d45e11fe394b2dba803007",
+      "bytes": 1042
+    },
+    "media/img/glow.tga": {
+      "sha256": "5451e758cac5df4f8a1a4609235de9c04ffa0214a55d96d05e9fcd8357e3e011",
+      "bytes": 3526
+    },
+    "media/img/refresh64.tga": {
+      "sha256": "7f0487fe41cf34dee4c77f6a21ee845bbde8ff822e4c4722574cb30648a66e85",
+      "bytes": 16402
+    },
+    "media/img/return64.tga": {
+      "sha256": "50f66361d86c05a2890ef0d5ca07bd5cbd27c1a6b65afaee1c71de75293c8e59",
+      "bytes": 16402
+    },
+    "media/img/start.tga": {
+      "sha256": "c99e6688b39f130b2acc31fe9dfcf91b1063dc688263f5e01425447cc034f1b6",
+      "bytes": 1042
+    },
+    "media/img/top.tga": {
+      "sha256": "d03d60f5734461b140192db6542d7c5c29352d1f4c5ec73a633cfa3765814cff",
+      "bytes": 1042
+    },
+    "pfUI-addonskinner-api.lua": {
+      "sha256": "e2c0e8b1559307c647c64f3c4b86d90a5692bfbdec8b770f1040134d32ea861d",
+      "bytes": 1397
+    },
+    "pfUI-addonskinner-config.lua": {
+      "sha256": "28b8f799e88957d67b1f3645b92c9354df603157990d4139ef433ae763f7a77c",
+      "bytes": 419
+    },
+    "pfUI-addonskinner-gui.lua": {
+      "sha256": "a1187a1876047f7ad043efa475d73ec71c6394628ec12cb2a32506fcecd6f02b",
+      "bytes": 3832
+    },
+    "pfUI-addonskinner.lua": {
+      "sha256": "92c28b873a3d79e757bbc18b4481d2e14d642562b015cc4ee862adc19c641cb6",
+      "bytes": 2992
+    },
+    "pfUI-addonskinner.toc": {
+      "sha256": "4781bcdb099a5f561be8ddc39e486a78e4e550e16f3a8387782d673db3c49b17",
+      "bytes": 1775
+    },
+    "README.md": {
+      "sha256": "ee5f4abdbbce631622be05c571b17b0c82965bf18f18df7cf11affceb69a16b5",
+      "bytes": 1077
+    },
+    "settings.png": {
+      "sha256": "68a3901ace66a4da207fe987d0211d88c6bb78c6d3f3b88e8995fe9f96ecc922",
+      "bytes": 140681
+    },
+    "skins/AdvancedTradeskillWindow.lua": {
+      "sha256": "d5f8ff1a509138b5c7a1af8da25ae8e6be6d0aa5db3c3e499c07790607a8bfb1",
+      "bytes": 6477
+    },
+    "skins/AdvancedTradeSkillWindow2.lua": {
+      "sha256": "d9ce6bc51ac2dd2ab2392864527824dcac581f947b5941372566dc868f6cb6c0",
+      "bytes": 33391
+    },
+    "skins/Artisan.lua": {
+      "sha256": "37e7080d11889263dabb31a4be7395e4357582312a30c0eff26f62108bc4b824",
+      "bytes": 59147
+    },
+    "skins/Atlas.lua": {
+      "sha256": "e448e442602f88d4ad64921c1820fc9243f4c4731001c3acc3af05e5dd58ab40",
+      "bytes": 5155
+    },
+    "skins/AtlasLoot.lua": {
+      "sha256": "baa5bb19fc1058919c215351707e456176282808cb5635bd3ef87c2f3bc695fd",
+      "bytes": 8535
+    },
+    "skins/AtlasQuest.lua": {
+      "sha256": "ab115a2c221f7b4091dd42a77e32ffe31abefdabed1cc3792fa8edbe440162c5",
+      "bytes": 2307
+    },
+    "skins/AutoProfit.lua": {
+      "sha256": "14a37f57384acc8bcbe7e94dddf8e0f275e80418b9fbaf4a44ddca42bd100125",
+      "bytes": 221
+    },
+    "skins/BetterCharacterStats.lua": {
+      "sha256": "8e0e5a384e80e7662edc50df42ec5a3c6368988c2497e716e68f0ed263a6c453",
+      "bytes": 2860
+    },
+    "skins/BigWigs.lua": {
+      "sha256": "e1f75c2ee4b846b4c9b35a776aa0be953776735050400c8bb5239695a2589178",
+      "bytes": 1170
+    },
+    "skins/BookStore.lua": {
+      "sha256": "9b2c9f8f0fe74ca62d872ab6d60f468cfd78dcd0e1854b24795a17d287818404",
+      "bytes": 2665
+    },
+    "skins/BugSack.lua": {
+      "sha256": "9ff5eb602e718d6f3c8e90dae1d4adfca88b02adf31615d7fd5d8d4e6b91c645",
+      "bytes": 477
+    },
+    "skins/CallToArms.lua": {
+      "sha256": "ff8fd0d565863cad41973610ade069e97998ee4073412eba058b3909349fd7df",
+      "bytes": 5635
+    },
+    "skins/Clique.lua": {
+      "sha256": "2c5a144bf8da65a4f50660446fb9672d73d09c58d2bd9cb4b07ff191eb1bf0b6",
+      "bytes": 1961
+    },
+    "skins/CloseUP.lua": {
+      "sha256": "aa226502bb5dd98ffe09bd8e5e381c4397a75ec805b4090edba53aeb33baf2de",
+      "bytes": 212
+    },
+    "skins/ColorPickerPlus.lua": {
+      "sha256": "169a75f711d5fdadacfebc4e8a2cd5638f87191c08d2a5a19fe7b6022705f38a",
+      "bytes": 1296
+    },
+    "skins/Decursive.lua": {
+      "sha256": "d89aa860037d2bef7aeb4b97523763d98cea2e18386dfc7a9ab2176c4629d9ec",
+      "bytes": 3672
+    },
+    "skins/DoiteAuras.lua": {
+      "sha256": "1613b29ab4770bca6168bf4426a44b4bf85cd11d4ff7d1053b1c29cc4dcc2ab3",
+      "bytes": 16344
+    },
+    "skins/EQL3.lua": {
+      "sha256": "65efb9ba1c3a0d159c599741913047f57114ba533dcc4bb5a74cb7867a98a771",
+      "bytes": 8097
+    },
+    "skins/ES_GuildCheckGUI.lua": {
+      "sha256": "e2c956489b037ecb766c4f7e9c6a34bc6c3bfaef2f31ee841990e2de6ebc1e72",
+      "bytes": 544
+    },
+    "skins/FlightTracker.lua": {
+      "sha256": "aacfc131104ff0bfe67a5a82ded63f8d4a3c849fb88cf5c61bc0e2aec73b95cb",
+      "bytes": 4508
+    },
+    "skins/GearMenu.lua": {
+      "sha256": "995e0dd683de23f4f36510c3c54d71863a291282fb8306f598d8b821132d1176",
+      "bytes": 1423
+    },
+    "skins/ignitestatus.lua": {
+      "sha256": "9f865c8eaf01ba6309c3387bc90528fca91d13494c12d83e2de29084c9b92155",
+      "bytes": 2139
+    },
+    "skins/ItemHints.lua": {
+      "sha256": "95bfe771ab1296557da7d7f402ad60092ed10bd0ee7dd6de674e49f15c971b9c",
+      "bytes": 459
+    },
+    "skins/ItemRack.lua": {
+      "sha256": "1fba77084897798b6e5888630f591cc00f2134168edd97384d6706915c0051a4",
+      "bytes": 2036
+    },
+    "skins/LevelRange-Turtle.lua": {
+      "sha256": "f0cb176cdfea8785a3a96ad6228343468ede4f03fdecbfd5008b09ef67df28c6",
+      "bytes": 347
+    },
+    "skins/LevelRange.lua": {
+      "sha256": "9daab69339e5ea7d7d2c56daafe9339e61617f5fdc71190fb4c7b4c2fe632d2e",
+      "bytes": 331
+    },
+    "skins/LootBlare.lua": {
+      "sha256": "cee33094884f37863012b4448dfec06076d171bcc9c3259f6bca68a8819762ee",
+      "bytes": 5313
+    },
+    "skins/LoseControl.lua": {
+      "sha256": "883f3263c0f76b06fd22b79a598d5bb1f633398cc66ce3f69c8f6f814d636aae",
+      "bytes": 335
+    },
+    "skins/ManaStones.lua": {
+      "sha256": "8dff41ce686d2f3994896a23fca309c721c8bb356ba3a0a856a1155774ec4480",
+      "bytes": 1847
+    },
+    "skins/ModifiedPowerAuras.lua": {
+      "sha256": "f84ee2e8669ebd66100c44dde0981091a7907b3035644f4d6409f91e8c1c2cb2",
+      "bytes": 825
+    },
+    "skins/MouseOverSounds.lua": {
+      "sha256": "3de1c1e99d9796458883f65a475568725f3ac6887f8189a3c4d996f713fd4f28",
+      "bytes": 380
+    },
+    "skins/MTLove.lua": {
+      "sha256": "ee61c018261b4f1ea00592faeedd3c5cbec3bfd250ccb4acb9e311368fcf8c5b",
+      "bytes": 2933
+    },
+    "skins/Outfitter.lua": {
+      "sha256": "b6b40a9baa32638c41a5122ada2522f145a0125f70894ccffb2545c4d3a8b5fc",
+      "bytes": 7625
+    },
+    "skins/pfQuest.lua": {
+      "sha256": "d358073a5d7ea5fd5c44c3354f1ce2f3fe030e7673658488dcea0f3958b1996d",
+      "bytes": 745
+    },
+    "skins/PizzaSlices.lua": {
+      "sha256": "1b83b4aeb9d5b31dcba42122ee94a8f89e169bc096943230b215aa469b4066d2",
+      "bytes": 2816
+    },
+    "skins/Possessions.lua": {
+      "sha256": "4f025dfeb6c4e51762dc8f7d6d133b1229a508b5ae06b9062fd1822b770f8032",
+      "bytes": 1304
+    },
+    "skins/Postal.lua": {
+      "sha256": "63e55e5f38786b742c9431b908500599dd08f9332ce69e2888d37ceef68910f7",
+      "bytes": 9197
+    },
+    "skins/QuickHeal.lua": {
+      "sha256": "b0373bef35c533c6eb0c67ffa2fff3acb96a1f883546939f94497ef410d9b86d",
+      "bytes": 7406
+    },
+    "skins/RABuffs.lua": {
+      "sha256": "8ecea78647a454983f2b8598f46e744eae56314afba00e7b40d343b5e78df75b",
+      "bytes": 208
+    },
+    "skins/raidTemplate.lua": {
+      "sha256": "1f048c3a613754ef96624e9d323435db856cff10575c05c1743545202014f47c",
+      "bytes": 1915
+    },
+    "skins/RingMenu.lua": {
+      "sha256": "5892f41a1e5b4c3ea1fcc4926937e3fc0bf1066382f37cda12733d66a4e66d15",
+      "bytes": 1486
+    },
+    "skins/shootyepgp.lua": {
+      "sha256": "eb05b1576a1744d46bda6b7d0f3842f52ade356138c3641d893bab1a6dd40be6",
+      "bytes": 378
+    },
+    "skins/simpleAuras.lua": {
+      "sha256": "7fd85e6d5eb4ae686c6ce57aa0c327bfb6df2a81349e224b13764d0b16d5038c",
+      "bytes": 6195
+    },
+    "skins/SP_Overpower.lua": {
+      "sha256": "89616653c691eaf1b949c2dc6786f94810c6a726ca7d0662f0984b9893f8352b",
+      "bytes": 523
+    },
+    "skins/SP_SwingTimer.lua": {
+      "sha256": "edebdf263e60b4e2a2b9f5b340de3a3090b84c51d21d326da860ffb6e7860713",
+      "bytes": 625
+    },
+    "skins/SpecialTalent.lua": {
+      "sha256": "d53296a1643e3d0112fde96d239405d16196cf9ce1521386fe55a5011f820a49",
+      "bytes": 13155
+    },
+    "skins/StatCompare.lua": {
+      "sha256": "34a8cc247976f596384b6778eb9dc3763ba7196045ae15bd9fa20d00fc7c586f",
+      "bytes": 2777
+    },
+    "skins/SuperIgnore.lua": {
+      "sha256": "3fdf3f947235801dd9616405dba7ac881f0835290b4071793b55e800c21c9bc2",
+      "bytes": 2252
+    },
+    "skins/SuperInspect_UI.lua": {
+      "sha256": "9cbd8f50792e38cd5205f5137726c237249c2160acc67cf53f7d8c2a5aa435f0",
+      "bytes": 8345
+    },
+    "skins/SuperMacro.lua": {
+      "sha256": "cb705f4d7eb93666e2229551f0cc35527a9bf8fa3e9d372c6b5c65cc2f73f661",
+      "bytes": 6218
+    },
+    "skins/Talented.lua": {
+      "sha256": "8df84196fa2c9e21867f8d48b716d42b3caac1cc138ef2c39a94598194b081ec",
+      "bytes": 11475
+    },
+    "skins/TalentSequence.lua": {
+      "sha256": "342988a9a7b7cafbf6129c51f965534444d840db3cc06d91f5d91f3b519c9bc9",
+      "bytes": 1922
+    },
+    "skins/Template.lua": {
+      "sha256": "da7bb28a3b0e23e05e86fc5b0d454993272f8112440f237220ef2f3446a10ed3",
+      "bytes": 187
+    },
+    "skins/Thaliz.lua": {
+      "sha256": "e07cb3287e1ef608adcb61ae394940196a1f2e27dd459da57a8ed92bed9728a3",
+      "bytes": 2273
+    },
+    "skins/TimeManager.lua": {
+      "sha256": "77da42526a6d2957cd93efddfc801dcd4d5d67c7b94b1639c278e95260dc9413",
+      "bytes": 6162
+    },
+    "skins/TradesBar.lua": {
+      "sha256": "72097a47b77728d3c3e11abb73e50ed81c9d19e7d3a4ff52d11260a29a3e3c71",
+      "bytes": 2382
+    },
+    "skins/TrinketMenu.lua": {
+      "sha256": "3e93d100d168a433490d15501e87f03a69c020ac02bd675cb58c9855c4f86c40",
+      "bytes": 2256
+    },
+    "skins/TurtleCount.lua": {
+      "sha256": "2c1408e3553ec3ed155ceab394a69674e55a8b80658e6fe35217ddd752b11441",
+      "bytes": 594
+    },
+    "skins/TurtleZoneCount.lua": {
+      "sha256": "ad0cb6619f1d57b843772023c4f4d609fd8528831fe6018ac53af2800534228b",
+      "bytes": 403
+    },
+    "skins/UnitXP_SP3_Addon.lua": {
+      "sha256": "aa61c882a9c6ea5a019099feb5b1364fe95f8a2d99b69502843b1902b581a32f",
+      "bytes": 1982
+    },
+    "skins/VCB.lua": {
+      "sha256": "b5eb8c4462ea16ef4a74e0c2dd16df21825008b92608e2ae9d14734396e00a08",
+      "bytes": 18779
+    },
+    "skins/YaHT.lua": {
+      "sha256": "efcef1924a4eea9dbb4ea2271442d16ba875aba25a25fdacef3f66b2b0f0cf30",
+      "bytes": 395
+    },
+    "skins/ZHunterMod.lua": {
+      "sha256": "005f73cefe8c004cdb22aa25737803ce376dc6bd7a710bb0600b7bd7c59e6b4f",
+      "bytes": 1258
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,5 @@
+<Bindings>
+    <Binding name="WTBOX_TOGGLE" header="WTBOX" runOnUp="true">
+        WTBox_Hotkey()
+    </Binding>
+</Bindings>

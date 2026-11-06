@@ -1,0 +1,1236 @@
+--[[
+    UI_Options - one flat window for everything this addon actually has
+    to configure (lock/minimap/appearance/timing), not an attempt at
+    Details' full skin/profile/automation system. Opened via the main
+    window's "Opt" button, the minimap button's right-click, or
+    /cl options.
+
+    Also owns the minimap button (LootLedger's CreateMinimapButton
+    pattern - draggable icon around the ring, position saved to
+    CombatLedgerDB.minimapAngle) since Options is what controls whether
+    it's shown.
+]]
+
+local CL = CombatLedger
+local OPT = {}
+CL.UIOptions = OPT
+
+-- The window's height follows the visible tab's content (FitHeight);
+-- the Windows tab grows by one row per meter window. WINDOW_HEIGHT is
+-- only the initial size.
+local WINDOW_WIDTH, WINDOW_HEIGHT = 300, 400
+local BOTTOM_PADDING = 12
+local MAX_WINDOW_ROWS = 4 -- most people won't run more than 2-3 extra meter windows at once
+local ROW_HEIGHT = 24
+
+local window = nil
+local minimapButton = nil
+
+--------------------------------------------------------------------------
+-- Small reusable controls
+--------------------------------------------------------------------------
+
+local function CreateSmallButton(parent, width, text)
+    local btn = CreateFrame("Button", nil, parent)
+    btn:SetWidth(width)
+    btn:SetHeight(18)
+    btn:SetBackdrop({
+        bgFile = "Interface\\BUTTONS\\WHITE8X8", tile = false, tileSize = 0,
+        edgeFile = "Interface\\BUTTONS\\WHITE8X8", edgeSize = 1,
+        insets = { left = -1, right = -1, top = -1, bottom = -1 },
+    })
+    btn:SetBackdropColor(0.15, 0.15, 0.15, 0.75)
+    btn:SetBackdropBorderColor(CL.FLAT_BORDER_R, CL.FLAT_BORDER_G, CL.FLAT_BORDER_B, 1)
+    local label = btn:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    label:SetAllPoints(btn)
+    label:SetJustifyH("CENTER")
+    label:SetText(text or "")
+    btn.label = label
+    return btn
+end
+
+-- Color swatch for a {r, g, b} setting: opens ColorPickerFrame, applies
+-- the color live while picking, and reverts on Cancel.
+local function CreateColorSwatch(parent, anchorCB, settingKey, tooltipText)
+    local swatch = CreateFrame("Button", nil, parent)
+    swatch:SetWidth(16)
+    swatch:SetHeight(16)
+    swatch:SetPoint("RIGHT", anchorCB, "LEFT", -8, 0)
+    swatch:SetBackdrop({
+        bgFile = "Interface\\Buttons\\WHITE8X8",
+        edgeFile = "Interface\\Buttons\\WHITE8X8", edgeSize = 1,
+        insets = { left = -1, right = -1, top = -1, bottom = -1 },
+    })
+    swatch:SetBackdropBorderColor(CL.FLAT_BORDER_R, CL.FLAT_BORDER_G, CL.FLAT_BORDER_B, 1)
+    swatch:SetScript("OnClick", function()
+        local color = CL.GetSetting(settingKey)
+        local origR, origG, origB = color[1], color[2], color[3]
+        ColorPickerFrame.func = function()
+            local r, g, b = ColorPickerFrame:GetColorRGB()
+            CL.SetSetting(settingKey, { r, g, b })
+            swatch:SetBackdropColor(r, g, b, 1)
+            if CL.UI and CL.UI.Refresh then CL.UI.Refresh() end
+        end
+        ColorPickerFrame.cancelFunc = function()
+            CL.SetSetting(settingKey, { origR, origG, origB })
+            swatch:SetBackdropColor(origR, origG, origB, 1)
+            if CL.UI and CL.UI.Refresh then CL.UI.Refresh() end
+        end
+        ColorPickerFrame.hasOpacity = nil
+        ColorPickerFrame:SetColorRGB(origR, origG, origB)
+        ShowUIPanel(ColorPickerFrame)
+    end)
+    swatch:SetScript("OnEnter", function()
+        GameTooltip:SetOwner(this, "ANCHOR_LEFT")
+        GameTooltip:SetText(tooltipText)
+        GameTooltip:Show()
+    end)
+    swatch:SetScript("OnLeave", function() GameTooltip:Hide() end)
+    return swatch
+end
+
+-- +/- stepper - value display flanked by two small buttons, all anchored
+-- as one unit off the row's TOPRIGHT.
+local function CreateStepper(parent, width)
+    local holder = CreateFrame("Frame", nil, parent)
+    holder:SetWidth(width)
+    holder:SetHeight(18)
+
+    local minus = CreateSmallButton(holder, 16, "-")
+    minus:SetPoint("LEFT", holder, "LEFT", 0, 0)
+
+    local plus = CreateSmallButton(holder, 16, "+")
+    plus:SetPoint("RIGHT", holder, "RIGHT", 0, 0)
+
+    local value = holder:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    value:SetPoint("LEFT", minus, "RIGHT", 2, 0)
+    value:SetPoint("RIGHT", plus, "LEFT", -2, 0)
+    value:SetJustifyH("CENTER")
+
+    holder.minus = minus
+    holder.plus = plus
+    holder.value = value
+    return holder
+end
+
+local function SetControlEnabled(ctrl, enabled)
+    ctrl:SetAlpha(enabled and 1 or 0.4)
+    if ctrl.EnableMouse then ctrl:EnableMouse(enabled) end
+    if ctrl.minus then
+        ctrl.minus:EnableMouse(enabled)
+        ctrl.plus:EnableMouse(enabled)
+    end
+end
+
+local function CycleKey(list, currentKey)
+    local i
+    for i = 1, table.getn(list) do
+        if list[i].key == currentKey then
+            local nextIndex = i + 1
+            if nextIndex > table.getn(list) then nextIndex = 1 end
+            return list[nextIndex].key
+        end
+    end
+    return list[1] and list[1].key
+end
+
+local function LabelForKey(list, key)
+    local i
+    for i = 1, table.getn(list) do
+        if list[i].key == key then return list[i].label end
+    end
+    return "?"
+end
+
+--------------------------------------------------------------------------
+-- Options window
+--------------------------------------------------------------------------
+
+local RefreshOptionsWindow -- forward-declared, assigned below
+
+local function CreateWindow()
+    local f = CreateFrame("Frame", "CombatLedgerOptionsWindow", UIParent)
+    f:SetWidth(WINDOW_WIDTH)
+    f:SetHeight(WINDOW_HEIGHT)
+    -- Anchored by its top edge, so switching tabs (which changes the
+    -- height - see FitHeight) only moves the bottom. Starts a little above
+    -- screen center so a typical tab ends up roughly centered.
+    f:SetPoint("TOP", UIParent, "CENTER", 0, 220)
+    f:SetBackdrop(CL.WINDOW_BACKDROP)
+    f:SetBackdropColor(0, 0, 0, 0.9)
+    local themeR, themeG, themeB, themeHex = CL.GetThemeColor()
+    f:SetBackdropBorderColor(CL.FLAT_BORDER_R, CL.FLAT_BORDER_G, CL.FLAT_BORDER_B, 1)
+    -- MEDIUM, same tier as the meter window itself (see UI_MainWindow.
+    -- lua's CreateWindowFrame) - HIGH still rendered above Blizzard's
+    -- own Character/Bags/Quest-dialog panels on this client, same as
+    -- DIALOG did before that.
+    f:SetFrameStrata("MEDIUM")
+    f:SetClampedToScreen(true)
+    f:SetMovable(true)
+    f:EnableMouse(true)
+    f:RegisterForDrag("LeftButton")
+    f:SetScript("OnDragStart", function() this:StartMoving() end)
+    f:SetScript("OnDragStop", function()
+        this:StopMovingOrSizing()
+        -- The client re-anchors a moved frame to whatever point it likes;
+        -- pin it back to the top-left corner so it keeps growing downward.
+        local left, top = this:GetLeft(), this:GetTop()
+        this:ClearAllPoints()
+        this:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
+    end)
+    f:Hide()
+
+    table.insert(UISpecialFrames, "CombatLedgerOptionsWindow")
+
+    local title = f:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    title:SetPoint("TOP", f, "TOP", 0, -10)
+    title:SetText("|cff" .. themeHex .. "CombatLedger Options|r")
+
+    local closeBtn = CreateFrame("Button", nil, f, "UIPanelCloseButton")
+    closeBtn:SetWidth(18)
+    closeBtn:SetHeight(18)
+    closeBtn:SetPoint("TOPRIGHT", f, "TOPRIGHT", -2, -2)
+    closeBtn:SetScript("OnClick", function() f:Hide() end)
+
+    -- Four tabs, each a content frame toggled by a plain button:
+    -- General (behavior, announce), Appearance, Data (recording and
+    -- automatic resets) and Windows (the meter window list). The window's
+    -- height follows the visible tab (f.FitHeight).
+    local function NewPage()
+        local page = CreateFrame("Frame", nil, f)
+        page:SetPoint("TOPLEFT", f, "TOPLEFT", 0, 0)
+        page:SetPoint("BOTTOMRIGHT", f, "BOTTOMRIGHT", 0, 0)
+        return page
+    end
+    local pageGeneral = NewPage()
+    local pageAppearance = NewPage()
+    local pageData = NewPage()
+    local pageWindows = NewPage()
+
+    local TAB_GAP = 4
+    local tabWidth = (WINDOW_WIDTH - 28 - 3 * TAB_GAP) / 4
+    local tabs = {
+        { key = "general", label = "General", page = pageGeneral },
+        { key = "appearance", label = "Appearance", page = pageAppearance },
+        { key = "data", label = "Data", page = pageData },
+        { key = "windows", label = "Windows", page = pageWindows },
+    }
+
+    local function ShowTab(key)
+        f.activeTab = key
+        if f.FitHeight then f.FitHeight() end
+        local i
+        for i = 1, table.getn(tabs) do
+            local tab = tabs[i]
+            if tab.key == key then
+                tab.page:Show()
+                tab.btn:SetBackdropColor(0.3, 0.25, 0.4, 0.9)
+            else
+                tab.page:Hide()
+                tab.btn:SetBackdropColor(0.15, 0.15, 0.15, 0.75)
+            end
+        end
+    end
+
+    local ti
+    for ti = 1, table.getn(tabs) do
+        local tab = tabs[ti]
+        tab.btn = CreateSmallButton(f, tabWidth, tab.label)
+        if ti == 1 then
+            tab.btn:SetPoint("TOPLEFT", f, "TOPLEFT", 14, -32)
+        else
+            tab.btn:SetPoint("LEFT", tabs[ti - 1].btn, "RIGHT", TAB_GAP, 0)
+        end
+        tab.btn:SetScript("OnClick", function() ShowTab(tab.key) end)
+        f["tab" .. string.upper(string.sub(tab.label, 1, 1)) .. string.sub(tab.label, 2) .. "Btn"] = tab.btn
+    end
+    f.tabs = tabs
+
+    local yOffset = 60
+    local function NextY()
+        local y = yOffset
+        yOffset = yOffset + ROW_HEIGHT
+        return y
+    end
+
+    -- Thin separator line between sections - a plain colored header on
+    -- its own reads weakly at this compact size, easy to skim past.
+    -- Advances yOffset by less than a full row (this isn't a control,
+    -- it doesn't need one's worth of breathing room on both sides).
+    local function AddDivider(parent)
+        local line = parent:CreateTexture(nil, "ARTWORK")
+        line:SetTexture("Interface\\Buttons\\WHITE8X8")
+        line:SetVertexColor(1, 1, 1, 0.12)
+        line:SetHeight(1)
+        line:SetPoint("TOPLEFT", parent, "TOPLEFT", 14, -yOffset)
+        line:SetPoint("TOPRIGHT", parent, "TOPRIGHT", -12, -yOffset)
+        yOffset = yOffset + 10
+    end
+
+    -- Window behavior
+    local lockLabel = pageGeneral:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    local y = NextY()
+    lockLabel:SetPoint("TOPLEFT", pageGeneral, "TOPLEFT", 14, -y)
+    lockLabel:SetText("Lock windows")
+    local lockCB = CreateFrame("CheckButton", "CombatLedgerLockCB", pageGeneral, "UICheckButtonTemplate")
+    lockCB:SetWidth(20)
+    lockCB:SetHeight(20)
+    lockCB:SetPoint("TOPRIGHT", pageGeneral, "TOPRIGHT", -12, -y + 3)
+    lockCB:SetScript("OnClick", function()
+        CL.SetSetting("lockWindow", (this:GetChecked() == 1))
+        CL.FireAppearanceChanged()
+    end)
+    f.lockCB = lockCB
+
+    local minimapLabel = pageGeneral:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    minimapLabel:SetPoint("TOPLEFT", pageGeneral, "TOPLEFT", 14, -y)
+    minimapLabel:SetText("Show minimap button")
+    local minimapCB = CreateFrame("CheckButton", "CombatLedgerMinimapCB", pageGeneral, "UICheckButtonTemplate")
+    minimapCB:SetWidth(20)
+    minimapCB:SetHeight(20)
+    minimapCB:SetPoint("TOPRIGHT", pageGeneral, "TOPRIGHT", -12, -y + 3)
+    minimapCB:SetScript("OnClick", function()
+        CL.SetSetting("showMinimapButton", (this:GetChecked() == 1))
+        OPT.RefreshMinimapVisibility()
+    end)
+    f.minimapCB = minimapCB
+
+    local barTooltipLabel = pageGeneral:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    barTooltipLabel:SetPoint("TOPLEFT", pageGeneral, "TOPLEFT", 14, -y)
+    barTooltipLabel:SetText("Show tooltip on bar hover")
+    local barTooltipCB = CreateFrame("CheckButton", "CombatLedgerBarTooltipCB", pageGeneral, "UICheckButtonTemplate")
+    barTooltipCB:SetWidth(20)
+    barTooltipCB:SetHeight(20)
+    barTooltipCB:SetPoint("TOPRIGHT", pageGeneral, "TOPRIGHT", -12, -y + 3)
+    barTooltipCB:SetScript("OnClick", function()
+        CL.SetSetting("showBarTooltips", (this:GetChecked() == 1))
+    end)
+    f.barTooltipCB = barTooltipCB
+
+    -- Announce
+    AddDivider(pageGeneral)
+    local announceHeader = pageGeneral:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    y = NextY()
+    announceHeader:SetPoint("TOPLEFT", pageGeneral, "TOPLEFT", 14, -y)
+    announceHeader:SetText("|cffffd700Announce|r")
+
+    local announceChanLabel = pageGeneral:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    announceChanLabel:SetPoint("TOPLEFT", pageGeneral, "TOPLEFT", 14, -y)
+    announceChanLabel:SetText("Channel")
+    local announceChanBtn = CreateSmallButton(pageGeneral, 130, "")
+    announceChanBtn:SetPoint("TOPRIGHT", pageGeneral, "TOPRIGHT", -12, -y + 1)
+    announceChanBtn:SetScript("OnClick", function()
+        local cur = CL.GetSetting("announceChannel") or "auto"
+        CL.SetSetting("announceChannel", CycleKey(CL.ANNOUNCE_CHANNELS, cur))
+        RefreshOptionsWindow()
+    end)
+    f.announceChanBtn = announceChanBtn
+
+    local announceCountLabel = pageGeneral:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    announceCountLabel:SetPoint("TOPLEFT", pageGeneral, "TOPLEFT", 14, -y)
+    announceCountLabel:SetText("Announce top")
+    local announceCountStepper = CreateStepper(pageGeneral, 90)
+    announceCountStepper:SetPoint("TOPRIGHT", pageGeneral, "TOPRIGHT", -12, -y + 1)
+    announceCountStepper.minus:SetScript("OnClick", function()
+        local v = (CL.GetSetting("announceCount") or 5) - 1
+        if v < 1 then v = 1 end
+        CL.SetSetting("announceCount", v)
+        RefreshOptionsWindow()
+    end)
+    announceCountStepper.plus:SetScript("OnClick", function()
+        local v = (CL.GetSetting("announceCount") or 5) + 1
+        if v > 10 then v = 10 end
+        CL.SetSetting("announceCount", v)
+        RefreshOptionsWindow()
+    end)
+    f.announceCountStepper = announceCountStepper
+
+    local announcePullsLabel = pageGeneral:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    announcePullsLabel:SetPoint("TOPLEFT", pageGeneral, "TOPLEFT", 14, -y)
+    announcePullsLabel:SetText("Announce pulls (boss only)")
+    local announcePullsCB = CreateFrame("CheckButton", "CombatLedgerAnnouncePullsCB", pageGeneral, "UICheckButtonTemplate")
+    announcePullsCB:SetWidth(20)
+    announcePullsCB:SetHeight(20)
+    announcePullsCB:SetPoint("TOPRIGHT", pageGeneral, "TOPRIGHT", -12, -y + 3)
+    announcePullsCB:SetScript("OnClick", function()
+        CL.SetSetting("announcePulls", (this:GetChecked() == 1))
+    end)
+    f.announcePullsCB = announcePullsCB
+
+
+    AddDivider(pageGeneral)
+    local testLabel = pageGeneral:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    testLabel:SetPoint("TOPLEFT", pageGeneral, "TOPLEFT", 14, -y)
+    testLabel:SetText("Test mode (fill with dummy data)")
+    local testCB = CreateFrame("CheckButton", "CombatLedgerTestModeCB", pageGeneral, "UICheckButtonTemplate")
+    testCB:SetWidth(20)
+    testCB:SetHeight(20)
+    testCB:SetPoint("TOPRIGHT", pageGeneral, "TOPRIGHT", -12, -y + 3)
+    testCB:SetScript("OnClick", function()
+        CL.testMode = (this:GetChecked() == 1)
+        CL.FireAppearanceChanged()
+    end)
+    f.testCB = testCB
+
+    f.generalHeight = yOffset + BOTTOM_PADDING
+
+    -- Appearance tab
+    yOffset = 60
+
+    local matchPfuiCB
+    if CL.HasPfui() then
+        local matchLabel = pageAppearance:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        y = NextY()
+        matchLabel:SetPoint("TOPLEFT", pageAppearance, "TOPLEFT", 14, -y)
+        matchLabel:SetText("Match pfUI (texture + font)")
+        matchPfuiCB = CreateFrame("CheckButton", "CombatLedgerMatchPfuiCB", pageAppearance, "UICheckButtonTemplate")
+        matchPfuiCB:SetWidth(20)
+        matchPfuiCB:SetHeight(20)
+        matchPfuiCB:SetPoint("TOPRIGHT", pageAppearance, "TOPRIGHT", -12, -y + 3)
+        matchPfuiCB:SetScript("OnClick", function()
+            CL.SetSetting("matchPfui", (this:GetChecked() == 1))
+            CL.FireAppearanceChanged()
+            RefreshOptionsWindow()
+        end)
+    end
+    f.matchPfuiCB = matchPfuiCB
+
+    -- No control for pfUI docking (UI_PfuiDock.lua): it isn't reliable
+    -- yet, so the pfuiDock setting stays off.
+
+    local textureLabel = pageAppearance:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    textureLabel:SetPoint("TOPLEFT", pageAppearance, "TOPLEFT", 14, -y)
+    textureLabel:SetText("Bar texture")
+    local textureBtn = CreateSmallButton(pageAppearance, 130, "")
+    textureBtn:SetPoint("TOPRIGHT", pageAppearance, "TOPRIGHT", -12, -y + 1)
+    textureBtn:SetScript("OnClick", function()
+        local list = CL.GetAvailableBarTextures()
+        local options = {}
+        local i
+        for i = 1, table.getn(list) do
+            local key = list[i].key
+            table.insert(options, { label = list[i].label, onClick = function()
+                CL.SetSetting("barTexture", key)
+                CL.FireAppearanceChanged()
+                RefreshOptionsWindow()
+            end })
+        end
+        CL.ShowDropdown(textureBtn, options)
+    end)
+    f.textureBtn = textureBtn
+
+    -- Borderless window (manual skin only - see CL.ApplyWindowSkin).
+    local hideBorderLabel = pageAppearance:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    hideBorderLabel:SetPoint("TOPLEFT", pageAppearance, "TOPLEFT", 14, -y)
+    hideBorderLabel:SetText("Hide window border")
+    local hideBorderCB = CreateFrame("CheckButton", "CombatLedgerHideBorderCB", pageAppearance, "UICheckButtonTemplate")
+    hideBorderCB:SetWidth(20)
+    hideBorderCB:SetHeight(20)
+    hideBorderCB:SetPoint("TOPRIGHT", pageAppearance, "TOPRIGHT", -12, -y + 3)
+    hideBorderCB:SetScript("OnClick", function()
+        CL.SetSetting("hideBorder", (this:GetChecked() == 1))
+        CL.FireAppearanceChanged()
+    end)
+    f.hideBorderCB = hideBorderCB
+
+    -- Class icon before the name on each bar - separate from bar fill
+    -- color (which is already class-colored), just an extra visual cue
+    -- some people want and others find redundant, hence opt-in.
+    local classIconLabel = pageAppearance:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    classIconLabel:SetPoint("TOPLEFT", pageAppearance, "TOPLEFT", 14, -y)
+    classIconLabel:SetText("Show class icon")
+    local classIconCB = CreateFrame("CheckButton", "CombatLedgerClassIconCB", pageAppearance, "UICheckButtonTemplate")
+    classIconCB:SetWidth(20)
+    classIconCB:SetHeight(20)
+    classIconCB:SetPoint("TOPRIGHT", pageAppearance, "TOPRIGHT", -12, -y + 3)
+    classIconCB:SetScript("OnClick", function()
+        CL.SetSetting("showClassIcon", (this:GetChecked() == 1))
+        if CL.UI and CL.UI.Refresh then CL.UI.Refresh() end
+    end)
+    f.classIconCB = classIconCB
+
+    -- Border around whichever bar is the player's own, in
+    -- highlightSelfColor, so it's obvious at a glance which row is you
+    -- without reading every name.
+    local highlightSelfLabel = pageAppearance:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    highlightSelfLabel:SetPoint("TOPLEFT", pageAppearance, "TOPLEFT", 14, -y)
+    highlightSelfLabel:SetText("Highlight my bar")
+    local highlightSelfCB = CreateFrame("CheckButton", "CombatLedgerHighlightSelfCB", pageAppearance, "UICheckButtonTemplate")
+    highlightSelfCB:SetWidth(20)
+    highlightSelfCB:SetHeight(20)
+    highlightSelfCB:SetPoint("TOPRIGHT", pageAppearance, "TOPRIGHT", -12, -y + 3)
+    highlightSelfCB:SetScript("OnClick", function()
+        CL.SetSetting("highlightSelf", (this:GetChecked() == 1))
+        if CL.UI and CL.UI.Refresh then CL.UI.Refresh() end
+    end)
+    f.highlightSelfCB = highlightSelfCB
+    f.highlightSelfSwatch = CreateColorSwatch(pageAppearance, highlightSelfCB, "highlightSelfColor", "Click to choose the highlight color")
+
+    -- Border around EVERY bar, independent of Highlight my bar above -
+    -- that one always wins gold on your own row regardless of this
+    -- setting/color. Color is user-pickable via Blizzard's own
+    -- ColorPickerFrame - the swatch button previews the current choice.
+    local barBorderLabel = pageAppearance:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    barBorderLabel:SetPoint("TOPLEFT", pageAppearance, "TOPLEFT", 14, -y)
+    barBorderLabel:SetText("Show bar border")
+    local barBorderCB = CreateFrame("CheckButton", "CombatLedgerBarBorderCB", pageAppearance, "UICheckButtonTemplate")
+    barBorderCB:SetWidth(20)
+    barBorderCB:SetHeight(20)
+    barBorderCB:SetPoint("TOPRIGHT", pageAppearance, "TOPRIGHT", -12, -y + 3)
+    barBorderCB:SetScript("OnClick", function()
+        CL.SetSetting("barBorderEnabled", (this:GetChecked() == 1))
+        if CL.UI and CL.UI.Refresh then CL.UI.Refresh() end
+    end)
+    f.barBorderCB = barBorderCB
+    f.barBorderSwatch = CreateColorSwatch(pageAppearance, barBorderCB, "barBorderColor", "Click to choose the border color")
+
+    -- Header/dropdown buttons take the player's class color instead of
+    -- the flat near-black default - independent of the class icon above
+    -- (this is chrome/border color, not an icon).
+    local classColorLabel = pageAppearance:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    classColorLabel:SetPoint("TOPLEFT", pageAppearance, "TOPLEFT", 14, -y)
+    classColorLabel:SetText("Class colored menus")
+    local classColorCB = CreateFrame("CheckButton", "CombatLedgerClassColorCB", pageAppearance, "UICheckButtonTemplate")
+    classColorCB:SetWidth(20)
+    classColorCB:SetHeight(20)
+    classColorCB:SetPoint("TOPRIGHT", pageAppearance, "TOPRIGHT", -12, -y + 3)
+    classColorCB:SetScript("OnClick", function()
+        CL.SetSetting("classColorMenus", (this:GetChecked() == 1))
+        CL.FireAppearanceChanged()
+    end)
+    f.classColorCB = classColorCB
+
+    local fontLabel = pageAppearance:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    fontLabel:SetPoint("TOPLEFT", pageAppearance, "TOPLEFT", 14, -y)
+    fontLabel:SetText("Font")
+    local fontBtn = CreateSmallButton(pageAppearance, 130, "")
+    fontBtn:SetPoint("TOPRIGHT", pageAppearance, "TOPRIGHT", -12, -y + 1)
+    fontBtn:SetScript("OnClick", function()
+        local options = {}
+        local i
+        for i = 1, table.getn(CL.FONTS) do
+            local key = CL.FONTS[i].key
+            table.insert(options, { label = CL.FONTS[i].label, onClick = function()
+                CL.SetSetting("fontKey", key)
+                CL.FireAppearanceChanged()
+                RefreshOptionsWindow()
+            end })
+        end
+        CL.ShowDropdown(fontBtn, options)
+    end)
+    f.fontBtn = fontBtn
+
+    local fontSizeLabel = pageAppearance:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    fontSizeLabel:SetPoint("TOPLEFT", pageAppearance, "TOPLEFT", 14, -y)
+    fontSizeLabel:SetText("Font size")
+    local fontSizeStepper = CreateStepper(pageAppearance, 90)
+    fontSizeStepper:SetPoint("TOPRIGHT", pageAppearance, "TOPRIGHT", -12, -y + 1)
+    fontSizeStepper.minus:SetScript("OnClick", function()
+        local v = (CL.GetSetting("fontSize") or 10) - 1
+        if v < 8 then v = 8 end
+        CL.SetSetting("fontSize", v)
+        CL.FireAppearanceChanged()
+        RefreshOptionsWindow()
+    end)
+    fontSizeStepper.plus:SetScript("OnClick", function()
+        local v = (CL.GetSetting("fontSize") or 10) + 1
+        if v > 18 then v = 18 end
+        CL.SetSetting("fontSize", v)
+        CL.FireAppearanceChanged()
+        RefreshOptionsWindow()
+    end)
+    f.fontSizeStepper = fontSizeStepper
+
+    local barHeightLabel = pageAppearance:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    barHeightLabel:SetPoint("TOPLEFT", pageAppearance, "TOPLEFT", 14, -y)
+    barHeightLabel:SetText("Bar size")
+    local barHeightStepper = CreateStepper(pageAppearance, 90)
+    barHeightStepper:SetPoint("TOPRIGHT", pageAppearance, "TOPRIGHT", -12, -y + 1)
+    barHeightStepper.minus:SetScript("OnClick", function()
+        local v = CL.GetSetting("barHeight") or 18
+        v = v - 1
+        if v < 10 then v = 10 end
+        CL.SetSetting("barHeight", v)
+        CL.FireAppearanceChanged()
+        RefreshOptionsWindow()
+    end)
+    barHeightStepper.plus:SetScript("OnClick", function()
+        local v = CL.GetSetting("barHeight") or 18
+        v = v + 1
+        if v > 32 then v = 32 end
+        CL.SetSetting("barHeight", v)
+        CL.FireAppearanceChanged()
+        RefreshOptionsWindow()
+    end)
+    f.barHeightStepper = barHeightStepper
+
+    local numberFmtLabel = pageAppearance:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    numberFmtLabel:SetPoint("TOPLEFT", pageAppearance, "TOPLEFT", 14, -y)
+    numberFmtLabel:SetText("Number format")
+    local numberFmtBtn = CreateSmallButton(pageAppearance, 130, "")
+    numberFmtBtn:SetPoint("TOPRIGHT", pageAppearance, "TOPRIGHT", -12, -y + 1)
+    numberFmtBtn:SetScript("OnClick", function()
+        local options = {}
+        local i
+        for i = 1, table.getn(CL.NUMBER_FORMATS) do
+            local key = CL.NUMBER_FORMATS[i].key
+            table.insert(options, { label = CL.NUMBER_FORMATS[i].label, onClick = function()
+                CL.SetSetting("numberFormat", key)
+                CL.FireAppearanceChanged()
+                RefreshOptionsWindow()
+            end })
+        end
+        CL.ShowDropdown(numberFmtBtn, options)
+    end)
+    f.numberFmtBtn = numberFmtBtn
+
+    local opacityLabel = pageAppearance:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    opacityLabel:SetPoint("TOPLEFT", pageAppearance, "TOPLEFT", 14, -y)
+    opacityLabel:SetText("Window opacity")
+    local opacityStepper = CreateStepper(pageAppearance, 90)
+    opacityStepper:SetPoint("TOPRIGHT", pageAppearance, "TOPRIGHT", -12, -y + 1)
+    opacityStepper.minus:SetScript("OnClick", function()
+        local v = (CL.GetSetting("windowOpacityPct") or 81) - 5
+        if v < 0 then v = 0 end
+        CL.SetSetting("windowOpacityPct", v)
+        CL.FireAppearanceChanged()
+        RefreshOptionsWindow()
+    end)
+    opacityStepper.plus:SetScript("OnClick", function()
+        local v = (CL.GetSetting("windowOpacityPct") or 85) + 5
+        if v > 100 then v = 100 end
+        CL.SetSetting("windowOpacityPct", v)
+        CL.FireAppearanceChanged()
+        RefreshOptionsWindow()
+    end)
+    f.opacityStepper = opacityStepper
+
+    -- Bar animation
+    AddDivider(pageAppearance)
+    local animHeader = pageAppearance:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    y = NextY()
+    animHeader:SetPoint("TOPLEFT", pageAppearance, "TOPLEFT", 14, -y)
+    animHeader:SetText("|cffffd700Bar Animation|r")
+
+    local smoothLabel = pageAppearance:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    smoothLabel:SetPoint("TOPLEFT", pageAppearance, "TOPLEFT", 14, -y)
+    smoothLabel:SetText("Smooth bars (main window)")
+    local smoothCB = CreateFrame("CheckButton", "CombatLedgerSmoothCB", pageAppearance, "UICheckButtonTemplate")
+    smoothCB:SetWidth(20)
+    smoothCB:SetHeight(20)
+    smoothCB:SetPoint("TOPRIGHT", pageAppearance, "TOPRIGHT", -12, -y + 3)
+    smoothCB:SetScript("OnClick", function()
+        CL.SetSetting("smoothBars", (this:GetChecked() == 1))
+        RefreshOptionsWindow()
+    end)
+    f.smoothCB = smoothCB
+
+    local speedLabel = pageAppearance:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    speedLabel:SetPoint("TOPLEFT", pageAppearance, "TOPLEFT", 14, -y)
+    speedLabel:SetText("Bar speed")
+    local speedStepper = CreateStepper(pageAppearance, 90)
+    speedStepper:SetPoint("TOPRIGHT", pageAppearance, "TOPRIGHT", -12, -y + 1)
+    speedStepper.minus:SetScript("OnClick", function()
+        local v = CL.GetBarSpeed() - 1
+        if v < 1 then v = 1 end
+        CL.SetSetting("barSpeed", v)
+        RefreshOptionsWindow()
+    end)
+    speedStepper.plus:SetScript("OnClick", function()
+        local v = CL.GetBarSpeed() + 1
+        if v > 10 then v = 10 end
+        CL.SetSetting("barSpeed", v)
+        RefreshOptionsWindow()
+    end)
+    f.speedStepper = speedStepper
+
+    f.appearanceHeight = yOffset + BOTTOM_PADDING
+
+    -- Data tab
+    yOffset = 60
+
+    -- Same as Skada's "Merge pets into owners". Applies to data recorded
+    -- from now on (existing fights keep whatever attribution they had).
+    local mergePetsLabel = pageData:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    mergePetsLabel:SetPoint("TOPLEFT", pageData, "TOPLEFT", 14, -y)
+    mergePetsLabel:SetText("Merge pets into owners")
+    local mergePetsCB = CreateFrame("CheckButton", "CombatLedgerMergePetsCB", pageData, "UICheckButtonTemplate")
+    mergePetsCB:SetWidth(20)
+    mergePetsCB:SetHeight(20)
+    mergePetsCB:SetPoint("TOPRIGHT", pageData, "TOPRIGHT", -12, -y + 3)
+    mergePetsCB:SetScript("OnClick", function()
+        CL.SetSetting("mergePets", (this:GetChecked() == 1))
+    end)
+    f.mergePetsCB = mergePetsCB
+
+    -- Skada's "Saved fights" / "Remember boss fights only" - both bound
+    -- how much History (saved to disk per character) can grow.
+    local savedFightsLabel = pageData:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    savedFightsLabel:SetPoint("TOPLEFT", pageData, "TOPLEFT", 14, -y)
+    savedFightsLabel:SetText("Saved fights")
+    local savedFightsStepper = CreateStepper(pageData, 90)
+    savedFightsStepper:SetPoint("TOPRIGHT", pageData, "TOPRIGHT", -12, -y + 1)
+    local function StepSavedFights(delta)
+        local v = (CL.GetSetting("maxEncounters") or CL.MAX_SAVED_FIGHTS) + delta
+        if v < CL.MIN_SAVED_FIGHTS then v = CL.MIN_SAVED_FIGHTS end
+        if v > CL.MAX_SAVED_FIGHTS then v = CL.MAX_SAVED_FIGHTS end
+        CL.SetSetting("maxEncounters", v)
+        if CL.History then CL.History.TrimHistory() end
+        if CL.UIHistory and CL.UIHistory.Refresh then CL.UIHistory.Refresh() end
+        RefreshOptionsWindow()
+    end
+    savedFightsStepper.minus:SetScript("OnClick", function() StepSavedFights(-CL.SAVED_FIGHTS_STEP) end)
+    savedFightsStepper.plus:SetScript("OnClick", function() StepSavedFights(CL.SAVED_FIGHTS_STEP) end)
+    f.savedFightsStepper = savedFightsStepper
+
+    local bossOnlyLabel = pageData:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    y = NextY()
+    bossOnlyLabel:SetPoint("TOPLEFT", pageData, "TOPLEFT", 14, -y)
+    bossOnlyLabel:SetText("Remember boss fights only")
+    local bossOnlyCB = CreateFrame("CheckButton", "CombatLedgerBossOnlyCB", pageData, "UICheckButtonTemplate")
+    bossOnlyCB:SetWidth(20)
+    bossOnlyCB:SetHeight(20)
+    bossOnlyCB:SetPoint("TOPRIGHT", pageData, "TOPRIGHT", -12, -y + 3)
+    bossOnlyCB:SetScript("OnClick", function()
+        CL.SetSetting("historyBossOnly", (this:GetChecked() == 1))
+        -- Hides or re-shows saved trash fights in the History window.
+        if CL.UIHistory and CL.UIHistory.Refresh then CL.UIHistory.Refresh() end
+    end)
+    f.bossOnlyCB = bossOnlyCB
+
+    -- Automatic resets (Events.lua): Off / Ask / Always each. Clears
+    -- Current Fight and Overall; History is never touched.
+    AddDivider(pageData)
+    local resetHeader = pageData:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    y = NextY()
+    resetHeader:SetPoint("TOPLEFT", pageData, "TOPLEFT", 14, -y)
+    resetHeader:SetText("|cffffd700Auto reset|r")
+
+    local function CreateResetRule(labelText, settingKey)
+        local label = pageData:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        y = NextY()
+        label:SetPoint("TOPLEFT", pageData, "TOPLEFT", 14, -y)
+        label:SetText(labelText)
+        local btn = CreateSmallButton(pageData, 90, "")
+        btn:SetPoint("TOPRIGHT", pageData, "TOPRIGHT", -12, -y + 1)
+        btn:SetScript("OnClick", function()
+            local options = {}
+            local i
+            for i = 1, table.getn(CL.RESET_MODES) do
+                local key = CL.RESET_MODES[i].key
+                table.insert(options, { label = CL.RESET_MODES[i].label, onClick = function()
+                    CL.SetSetting(settingKey, key)
+                    RefreshOptionsWindow()
+                end })
+            end
+            CL.ShowDropdown(btn, options)
+        end)
+        btn.settingKey = settingKey
+        return btn
+    end
+    f.resetRuleBtns = {
+        CreateResetRule("When joining a group", "clearOnJoinPartyMode"),
+        CreateResetRule("When leaving a group", "clearOnLeavePartyMode"),
+        CreateResetRule("When entering an instance", "clearOnEnterInstanceMode"),
+    }
+
+    f.dataHeight = yOffset + BOTTOM_PADDING
+
+    -- Windows tab
+    yOffset = 60
+
+    -- Windows list: one row per meter window (from CL.UI.GetWindowList),
+    -- each with its own mode, segment, size and position. A fixed pool of
+    -- MAX_WINDOW_ROWS rows, not a scroll list.
+    local newWindowBtn = CreateSmallButton(pageWindows, WINDOW_WIDTH - 28, "+ New Window")
+    y = NextY()
+    newWindowBtn:SetPoint("TOPLEFT", pageWindows, "TOPLEFT", 14, -y)
+    newWindowBtn:SetScript("OnClick", function()
+        if CL.UI and CL.UI.CreateExtraWindow then
+            CL.UI.CreateExtraWindow()
+            RefreshOptionsWindow()
+        end
+    end)
+    f.newWindowBtn = newWindowBtn
+
+    -- Each row takes three lines: name + close button; the window's
+    -- auto-show/auto-hide/grouped-only toggles; its "In combat" mode, plus
+    -- (extra windows only) "Mirror Main", a one-time copy of Main's
+    -- size/position.
+    -- The start offset is kept so RefreshOptionsWindow can place
+    -- resetPosBtn right after the rows that actually exist.
+    local windowRowsStartY = yOffset
+    local ROW_SLOT_HEIGHT = 3 * ROW_HEIGHT
+    f.windowRowsStartY = windowRowsStartY
+    f.rowSlotHeight = ROW_SLOT_HEIGHT
+
+    f.windowRows = {}
+    local wi
+    for wi = 1, MAX_WINDOW_ROWS do
+        y = NextY()
+        NextY()
+        NextY()
+        local row = CreateFrame("Frame", nil, pageWindows)
+        row:SetPoint("TOPLEFT", pageWindows, "TOPLEFT", 14, -y)
+        row:SetPoint("TOPRIGHT", pageWindows, "TOPRIGHT", -12, -y)
+        row:SetHeight(3 * ROW_HEIGHT - 4)
+
+        local rowLabel = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        rowLabel:SetPoint("TOPLEFT", row, "TOPLEFT", 0, 0)
+        rowLabel:SetPoint("TOPRIGHT", row, "TOPRIGHT", -20, 0)
+        rowLabel:SetJustifyH("LEFT")
+        row.rowLabel = rowLabel
+
+        local rowCloseBtn = CreateSmallButton(row, 16, "X")
+        rowCloseBtn:SetPoint("TOPRIGHT", row, "TOPRIGHT", 0, 0)
+        row.rowCloseBtn = rowCloseBtn
+
+        -- Compact checkbox+label pairs, left to right - "Show" (auto-
+        -- show on combat start), "Hide" (auto-hide out of combat),
+        -- "Grouped" (only show while in a party/raid). The labels alone
+        -- don't say enough at this size, so each gets a hover tooltip
+        -- spelling out exactly what it does.
+        local function CreateRowToggle(labelText, tooltip, xOffset)
+            local cb = CreateFrame("CheckButton", nil, row, "UICheckButtonTemplate")
+            cb:SetWidth(16)
+            cb:SetHeight(16)
+            cb:SetPoint("TOPLEFT", row, "TOPLEFT", xOffset, -20)
+            local label = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+            label:SetPoint("LEFT", cb, "RIGHT", 2, 0)
+            label:SetText(labelText)
+            cb:SetScript("OnEnter", function()
+                GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+                GameTooltip:SetText(tooltip, nil, nil, nil, nil, true)
+                GameTooltip:Show()
+            end)
+            cb:SetScript("OnLeave", function() GameTooltip:Hide() end)
+            return cb
+        end
+        row.showCB = CreateRowToggle("Auto-show", "Auto-show this window the moment combat starts.", 0)
+        row.hideCB = CreateRowToggle("Auto-hide", "Auto-hide this window the moment combat ends.", 92)
+        row.groupCB = CreateRowToggle("Grouped only", "Only ever auto-show this window while you're in a party or raid - hides it immediately if you leave group, even mid-combat.", 186)
+
+        -- "In combat" mode: the mode this window switches to while in
+        -- combat (UI.ApplyCombatModes), or Off.
+        local halfWidth = math.floor((WINDOW_WIDTH - 30) / 2)
+        local combatModeBtn = CreateSmallButton(row, halfWidth, "")
+        combatModeBtn:SetPoint("TOPLEFT", row, "TOPLEFT", 0, -40)
+        row.combatModeBtn = combatModeBtn
+
+        local mirrorBtn = CreateSmallButton(row, halfWidth, "Mirror Main")
+        mirrorBtn:SetPoint("LEFT", combatModeBtn, "RIGHT", 4, 0)
+        row.mirrorBtn = mirrorBtn
+
+        f.windowRows[wi] = row
+    end
+
+    y = NextY() + 6
+    local resetPosBtn = CreateSmallButton(pageWindows, WINDOW_WIDTH - 28, "Reset Window Positions")
+    resetPosBtn:SetPoint("TOPLEFT", pageWindows, "TOPLEFT", 14, -y)
+    resetPosBtn:SetScript("OnClick", function()
+        CombatLedgerDB.layout = {}
+        CL.Print("Window positions reset - reopen each window (or /reload) to see it at its default spot.")
+    end)
+    f.resetPosBtn = resetPosBtn
+
+    -- Height of the Windows tab with `n` window rows: rows start at
+    -- windowRowsStartY, resetPosBtn (18px) follows them.
+    local function WindowsHeight(n)
+        return windowRowsStartY + n * ROW_SLOT_HEIGHT + 6 + 18 + BOTTOM_PADDING
+    end
+    function f.FitHeight()
+        local tab = f.activeTab
+        if tab == "windows" then
+            local list = (CL.UI and CL.UI.GetWindowList and CL.UI.GetWindowList()) or {}
+            local n = table.getn(list)
+            if n > MAX_WINDOW_ROWS then n = MAX_WINDOW_ROWS end
+            f:SetHeight(WindowsHeight(n))
+        elseif tab == "appearance" then
+            f:SetHeight(f.appearanceHeight)
+        elseif tab == "data" then
+            f:SetHeight(f.dataHeight)
+        else
+            f:SetHeight(f.generalHeight)
+        end
+    end
+
+    ShowTab("general")
+
+    if pfUI and pfUI.api then
+        pcall(function()
+            pfUI.api.CreateBackdrop(f)
+            pfUI.api.CreateBackdropShadow(f)
+            pfUI.api.SkinCloseButton(closeBtn)
+            pfUI.api.SkinCheckbox(lockCB)
+            pfUI.api.SkinCheckbox(minimapCB)
+            pfUI.api.SkinCheckbox(barTooltipCB)
+            pfUI.api.SkinCheckbox(hideBorderCB)
+            pfUI.api.SkinCheckbox(classIconCB)
+            pfUI.api.SkinCheckbox(highlightSelfCB)
+            pfUI.api.SkinCheckbox(barBorderCB)
+            pfUI.api.SkinCheckbox(classColorCB)
+            pfUI.api.SkinCheckbox(smoothCB)
+            pfUI.api.SkinCheckbox(testCB)
+            pfUI.api.SkinCheckbox(announcePullsCB)
+            pfUI.api.SkinCheckbox(mergePetsCB)
+            pfUI.api.SkinCheckbox(bossOnlyCB)
+            if matchPfuiCB then pfUI.api.SkinCheckbox(matchPfuiCB) end
+            pfUI.api.SkinButton(textureBtn)
+            pfUI.api.SkinButton(fontBtn)
+            pfUI.api.SkinButton(numberFmtBtn)
+            pfUI.api.SkinButton(resetPosBtn)
+            pfUI.api.SkinButton(newWindowBtn)
+            local tbi
+            for tbi = 1, table.getn(tabs) do
+                pfUI.api.SkinButton(tabs[tbi].btn)
+            end
+            local wi
+            for wi = 1, table.getn(f.windowRows) do
+                pfUI.api.SkinButton(f.windowRows[wi].rowCloseBtn)
+                pfUI.api.SkinButton(f.windowRows[wi].mirrorBtn)
+                pfUI.api.SkinButton(f.windowRows[wi].combatModeBtn)
+                pfUI.api.SkinCheckbox(f.windowRows[wi].showCB)
+                pfUI.api.SkinCheckbox(f.windowRows[wi].hideCB)
+                pfUI.api.SkinCheckbox(f.windowRows[wi].groupCB)
+            end
+            pfUI.api.SkinButton(fontSizeStepper.minus)
+            pfUI.api.SkinButton(fontSizeStepper.plus)
+            pfUI.api.SkinButton(barHeightStepper.minus)
+            pfUI.api.SkinButton(barHeightStepper.plus)
+            pfUI.api.SkinButton(opacityStepper.minus)
+            pfUI.api.SkinButton(opacityStepper.plus)
+            pfUI.api.SkinButton(speedStepper.minus)
+            pfUI.api.SkinButton(speedStepper.plus)
+            pfUI.api.SkinButton(announceChanBtn)
+            pfUI.api.SkinButton(announceCountStepper.minus)
+            pfUI.api.SkinButton(announceCountStepper.plus)
+            pfUI.api.SkinButton(savedFightsStepper.minus)
+            pfUI.api.SkinButton(savedFightsStepper.plus)
+            local ri
+            for ri = 1, table.getn(f.resetRuleBtns) do
+                pfUI.api.SkinButton(f.resetRuleBtns[ri])
+            end
+        end)
+        f:SetBackdropBorderColor(themeR, themeG, themeB, 1)
+    end
+
+    CL.ApplyFontToTree(f)
+
+    window = f
+    return f
+end
+
+-- Walking the whole window is cheap and guarantees every label/title/
+-- checkbox/stepper in this window picks up a font change, without
+-- having to hand-instrument each one - see CL.ApplyFontToTree.
+CL.OnAppearanceChanged(function()
+    if window then CL.ApplyFontToTree(window) end
+end)
+
+RefreshOptionsWindow = function()
+    if not window then return end
+
+    window.lockCB:SetChecked(CL.GetSetting("lockWindow"))
+    window.minimapCB:SetChecked(CL.GetSetting("showMinimapButton") ~= false)
+    window.barTooltipCB:SetChecked(CL.GetSetting("showBarTooltips") ~= false)
+    if window.matchPfuiCB then
+        window.matchPfuiCB:SetChecked(CL.IsMatchPfui())
+    end
+
+    -- The " v" suffix marks these buttons as dropdowns.
+    window.textureBtn.label:SetText(LabelForKey(CL.GetAvailableBarTextures(), CL.GetSetting("barTexture") or "flat") .. " |cff999999v|r")
+    window.hideBorderCB:SetChecked(CL.GetSetting("hideBorder"))
+    window.classIconCB:SetChecked(CL.GetSetting("showClassIcon"))
+    window.highlightSelfCB:SetChecked(CL.GetSetting("highlightSelf"))
+    do
+        local sc = CL.GetSetting("highlightSelfColor")
+        window.highlightSelfSwatch:SetBackdropColor(sc[1], sc[2], sc[3], 1)
+    end
+    window.barBorderCB:SetChecked(CL.GetSetting("barBorderEnabled"))
+    do
+        local bc = CL.GetSetting("barBorderColor")
+        window.barBorderSwatch:SetBackdropColor(bc[1], bc[2], bc[3], 1)
+    end
+    window.classColorCB:SetChecked(CL.GetSetting("classColorMenus"))
+    window.fontBtn.label:SetText(LabelForKey(CL.FONTS, CL.GetSetting("fontKey") or "friz") .. " |cff999999v|r")
+    window.fontSizeStepper.value:SetText(tostring(CL.GetSetting("fontSize") or 10))
+    local barHeight = CL.GetSetting("barHeight")
+    window.barHeightStepper.value:SetText(barHeight and tostring(barHeight) or "Default")
+    window.numberFmtBtn.label:SetText(LabelForKey(CL.NUMBER_FORMATS, CL.GetSetting("numberFormat") or "abbreviated") .. " |cff999999v|r")
+    window.opacityStepper.value:SetText((CL.GetSetting("windowOpacityPct") or 85) .. "%")
+
+    local matchOn = CL.IsMatchPfui()
+    SetControlEnabled(window.textureBtn, not matchOn)
+    SetControlEnabled(window.fontBtn, not matchOn)
+    SetControlEnabled(window.fontSizeStepper, not matchOn)
+    SetControlEnabled(window.opacityStepper, not matchOn)
+
+    window.smoothCB:SetChecked(CL.IsSmoothBars())
+    window.speedStepper.value:SetText(tostring(CL.GetBarSpeed()))
+    SetControlEnabled(window.speedStepper, CL.IsSmoothBars())
+
+    window.announceChanBtn.label:SetText(LabelForKey(CL.ANNOUNCE_CHANNELS, CL.GetSetting("announceChannel") or "auto"))
+    window.announceCountStepper.value:SetText(tostring(CL.GetSetting("announceCount") or 5))
+    window.announcePullsCB:SetChecked(CL.GetSetting("announcePulls") ~= false)
+    window.mergePetsCB:SetChecked(CL.GetSetting("mergePets") ~= false)
+    window.savedFightsStepper.value:SetText(tostring(CL.GetSetting("maxEncounters") or CL.MAX_SAVED_FIGHTS))
+    window.bossOnlyCB:SetChecked(CL.GetSetting("historyBossOnly") == true)
+
+    window.testCB:SetChecked(CL.testMode)
+    local ri
+    for ri = 1, table.getn(window.resetRuleBtns) do
+        local btn = window.resetRuleBtns[ri]
+        btn.label:SetText(LabelForKey(CL.RESET_MODES, CL.GetSetting(btn.settingKey) or "off") .. " |cff999999v|r")
+    end
+
+    if window.windowRows then
+        local list = (CL.UI and CL.UI.GetWindowList and CL.UI.GetWindowList()) or {}
+        local wi
+        for wi = 1, table.getn(window.windowRows) do
+            local row = window.windowRows[wi]
+            local entry = list[wi]
+            if entry then
+                local id = entry.id
+                row.rowLabel:SetText(entry.label .. (entry.closable and "" or " |cff888888(Main)|r"))
+                if entry.closable then
+                    row.rowCloseBtn:Show()
+                    row.rowCloseBtn:SetScript("OnClick", function()
+                        if CL.UI and CL.UI.CloseExtraWindow then
+                            CL.UI.CloseExtraWindow(id)
+                            RefreshOptionsWindow()
+                        end
+                    end)
+                    row.mirrorBtn:Show()
+                    row.mirrorBtn:SetScript("OnClick", function()
+                        if CL.UI and CL.UI.MirrorMainLayout then
+                            CL.UI.MirrorMainLayout(id)
+                        end
+                    end)
+                else
+                    row.rowCloseBtn:Hide()
+                    row.mirrorBtn:Hide()
+                end
+
+                local combatMode = CL.GetWindowOption(id, "combatMode", "")
+                local combatLabel = "Off"
+                local choices = (CL.UI and CL.UI.GetModeChoices and CL.UI.GetModeChoices()) or {}
+                local ci
+                for ci = 1, table.getn(choices) do
+                    if choices[ci].key == combatMode then combatLabel = choices[ci].label end
+                end
+                row.combatModeBtn.label:SetText("In combat: " .. combatLabel .. " |cff999999v|r")
+                row.combatModeBtn:SetScript("OnClick", function()
+                    local options = { { label = "Off", onClick = function()
+                        CL.SetWindowOption(id, "combatMode", "")
+                        RefreshOptionsWindow()
+                    end } }
+                    local mi
+                    for mi = 1, table.getn(choices) do
+                        local key = choices[mi].key
+                        table.insert(options, { label = choices[mi].label, onClick = function()
+                            CL.SetWindowOption(id, "combatMode", key)
+                            RefreshOptionsWindow()
+                        end })
+                    end
+                    CL.ShowDropdown(row.combatModeBtn, options)
+                end)
+
+                row.showCB:SetChecked(CL.GetWindowOption(id, "autoShowInCombat", true))
+                row.showCB:SetScript("OnClick", function()
+                    CL.SetWindowOption(id, "autoShowInCombat", (this:GetChecked() == 1))
+                end)
+
+                row.hideCB:SetChecked(CL.GetWindowOption(id, "autoHideOutOfCombat", false))
+                row.hideCB:SetScript("OnClick", function()
+                    local checked = (this:GetChecked() == 1)
+                    CL.SetWindowOption(id, "autoHideOutOfCombat", checked)
+                    -- Applies immediately: checking hides the window if
+                    -- out of combat; unchecking shows it unless another
+                    -- rule still forbids it (UI.IsSuppressedNow).
+                    if CL.UI and not UnitAffectingCombat("player") then
+                        if checked and CL.UI.ApplyAutoHide then
+                            CL.UI.ApplyAutoHide()
+                        elseif not checked and CL.UI.ShowWindowById and CL.UI.IsSuppressedNow
+                            and not CL.UI.IsSuppressedNow(id) then
+                            CL.UI.ShowWindowById(id)
+                        end
+                    end
+                end)
+
+                row.groupCB:SetChecked(CL.GetWindowOption(id, "onlyShowGrouped", false))
+                row.groupCB:SetScript("OnClick", function()
+                    local checked = (this:GetChecked() == 1)
+                    CL.SetWindowOption(id, "onlyShowGrouped", checked)
+                    if CL.UI then
+                        if checked and CL.UI.ReconcileGroupVisibility then
+                            CL.UI.ReconcileGroupVisibility()
+                        elseif not checked and CL.UI.ShowWindowById and CL.UI.IsSuppressedNow
+                            and not CL.UI.IsSuppressedNow(id) then
+                            -- Applies immediately, like Auto-hide above.
+                            CL.UI.ShowWindowById(id)
+                        end
+                    end
+                end)
+
+                row:Show()
+            else
+                row:Hide()
+            end
+        end
+
+        -- Reflow resetPosBtn to sit right after however many rows are
+        -- actually populated (table.getn(list)), not the full
+        -- MAX_WINDOW_ROWS worth of reserved space.
+        if window.resetPosBtn and window.windowRowsStartY and window.rowSlotHeight then
+            local n = table.getn(list)
+            if n > MAX_WINDOW_ROWS then n = MAX_WINDOW_ROWS end
+            window.resetPosBtn:ClearAllPoints()
+            window.resetPosBtn:SetPoint("TOPLEFT", window, "TOPLEFT", 14,
+                -(window.windowRowsStartY + n * window.rowSlotHeight + 6))
+        end
+        -- Windows may have been added or closed; resize to match.
+        window.FitHeight()
+    end
+end
+
+function OPT.Toggle()
+    if not window then CreateWindow() end
+    if window:IsShown() then
+        window:Hide()
+    else
+        RefreshOptionsWindow()
+        window:Show()
+    end
+end
+
+function OPT.Show()
+    if not window then CreateWindow() end
+    RefreshOptionsWindow()
+    window:Show()
+end
+
+--------------------------------------------------------------------------
+-- Minimap button (draggable around the minimap). Left-click toggles the
+-- meter windows; right-click opens Options.
+--------------------------------------------------------------------------
+
+local function CreateMinimapButton()
+    local btn = CreateFrame("Button", "CombatLedgerMinimapButton", Minimap)
+    btn:SetWidth(31)
+    btn:SetHeight(31)
+    btn:SetFrameStrata("MEDIUM")
+    btn:SetFrameLevel(8)
+    btn:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+    btn:RegisterForDrag("LeftButton")
+    btn:SetMovable(true)
+
+    local overlay = btn:CreateTexture(nil, "OVERLAY")
+    overlay:SetWidth(53)
+    overlay:SetHeight(53)
+    overlay:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
+    overlay:SetPoint("TOPLEFT", 0, 0)
+
+    local icon = btn:CreateTexture(nil, "BACKGROUND")
+    icon:SetWidth(20)
+    icon:SetHeight(20)
+    -- Was Ability_DualWield - collided with this server's preinstalled
+    -- BG Finder addon using the exact same icon, making the two
+    -- indistinguishable on the minimap. A book fits "Ledger" anyway.
+    icon:SetTexture("Interface\\Icons\\INV_Misc_Book_09")
+    icon:SetPoint("TOPLEFT", 7, -6)
+    icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+
+    local highlight = btn:CreateTexture(nil, "HIGHLIGHT")
+    highlight:SetWidth(20)
+    highlight:SetHeight(20)
+    highlight:SetPoint("TOPLEFT", 7, -6)
+    highlight:SetTexture("Interface\\Buttons\\ButtonHilight-Square")
+    highlight:SetBlendMode("ADD")
+
+    local function UpdatePosition(angle)
+        btn:ClearAllPoints()
+        btn:SetPoint("CENTER", Minimap, "CENTER", math.cos(angle) * 80, math.sin(angle) * 80)
+    end
+    btn.UpdatePosition = UpdatePosition
+
+    -- Placed at the default angle for now: saved settings aren't loaded
+    -- yet. OPT.RefreshMinimapPosition applies the saved angle on the
+    -- first PLAYER_ENTERING_WORLD.
+    UpdatePosition(3.93) -- ~225 deg, bottom-left
+
+    btn:SetScript("OnDragStart", function()
+        this:SetScript("OnUpdate", function()
+            local mx, my = Minimap:GetCenter()
+            local px, py = GetCursorPosition()
+            local scale = Minimap:GetEffectiveScale()
+            px, py = px / scale, py / scale
+            local angle = math.atan2(py - my, px - mx)
+            CombatLedgerDB.minimapAngle = angle
+            UpdatePosition(angle)
+        end)
+    end)
+    btn:SetScript("OnDragStop", function()
+        this:SetScript("OnUpdate", nil)
+    end)
+
+    btn:SetScript("OnClick", function()
+        if arg1 == "RightButton" then
+            OPT.Toggle()
+        elseif CL.UI then
+            CL.UI.Toggle()
+        end
+    end)
+
+    btn:SetScript("OnEnter", function()
+        GameTooltip:SetOwner(this, "ANCHOR_LEFT")
+        local r, g, b, hex = CL.GetThemeColor()
+        GameTooltip:SetText("|cff" .. hex .. "CombatLedger|r")
+        GameTooltip:AddLine("Click to toggle the meter", 1, 1, 1)
+        GameTooltip:AddLine("Right-click for Options", 1, 1, 1)
+        GameTooltip:AddLine("Drag to move this button", 0.7, 0.7, 0.7)
+        GameTooltip:Show()
+    end)
+    btn:SetScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
+
+    return btn
+end
+
+function OPT.RefreshMinimapPosition()
+    if not minimapButton then return end
+    local angle = (CombatLedgerDB and CombatLedgerDB.minimapAngle) or 3.93
+    minimapButton.UpdatePosition(angle)
+end
+
+function OPT.RefreshMinimapVisibility()
+    if not minimapButton then return end
+    if CL.GetSetting("showMinimapButton") == false then
+        minimapButton:Hide()
+    else
+        minimapButton:Show()
+    end
+end
+
+minimapButton = CreateMinimapButton()

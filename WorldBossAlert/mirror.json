@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/Numielle/WorldBossAlert",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Numielle",
+    "repo": "WorldBossAlert",
+    "name": "WorldBossAlert",
+    "url": "https://github.com/Numielle/WorldBossAlert",
+    "api": "https://api.github.com/repos/Numielle/WorldBossAlert"
+  },
+  "commit": "17246aa8f3c73e0f6a357fbbad8ed989dbfffd40",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "39db8f9acf036595a2566ea3fe560bc7bd65d8749f088e0f4a4ef2f8a6cb4b34",
+      "bytes": 18026
+    },
+    "README.md": {
+      "sha256": "4f2e2ef2da8fced15b65d95908da21dbaed94ac3eb38834e62b36de8b5c3194d",
+      "bytes": 2253
+    },
+    "WorldBossAlert.lua": {
+      "sha256": "3c486b4305fb1b28012dd9fbc94f2f71c0be37f6764d3c46fef1045d4396ea3e",
+      "bytes": 5710
+    },
+    "WorldBossAlert.toc": {
+      "sha256": "c828b7127662bd7c8ff333d7fa1b6a22163e9979174584511f85c14f909c4999",
+      "bytes": 201
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

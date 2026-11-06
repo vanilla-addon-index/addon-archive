@@ -1,0 +1,58 @@
+{
+  "upstream": "https://github.com/EinBaum/VendorAutoBuy",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "EinBaum",
+    "repo": "VendorAutoBuy",
+    "name": "VendorAutoBuy",
+    "url": "https://github.com/EinBaum/VendorAutoBuy",
+    "api": "https://api.github.com/repos/EinBaum/VendorAutoBuy"
+  },
+  "commit": "0e82fb2facfb5ab7e3ddaa28c5d9f1f6f81c9532",
+  "sourceFiles": {
+    "LICENSE": {
+      "sha256": "7d9e13cdeadf82e6d82489af23877e7073bf1d771f59e8d2248bc8c228e6fe21",
+      "bytes": 1075
+    },
+    "preview.jpg": {
+      "sha256": "7b654f45a64f632f749ba33d62092b3ed975d5658593c6cee07db84f4f4e16e5",
+      "bytes": 79505
+    },
+    "README.md": {
+      "sha256": "9f9e95bdc053a9236ed56728c3b0ad29621bfe81baa15f20c9ec6771c80243fd",
+      "bytes": 272
+    },
+    "VendorAutoBuy.lua": {
+      "sha256": "2309800314e6c4d89071ca0eaf553d0c5889579c873a74388813865d475f50c1",
+      "bytes": 1716
+    },
+    "VendorAutoBuy.toc": {
+      "sha256": "23ee276d9c483a18900a7fd03218bc8f8ae77ee0668d04c2a9a2ed5c8a95ca68",
+      "bytes": 221
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "8482326": {
+      "tag": "1.0.0",
+      "folder": "1.0.0--8482326",
+      "assets": {
+        "5317303": {
+          "sha256": "e1c8b93ecab9f4b560ec702827c369437d8cbc34e380abfb8ff0b1ac8e22aecb",
+          "bytes": 2513,
+          "id": "5317303",
+          "name": "VendorAutoBuy.zip",
+          "url": "https://github.com/EinBaum/VendorAutoBuy/releases/download/1.0.0/VendorAutoBuy.zip",
+          "path": "releases/1.0.0--8482326/assets/VendorAutoBuy.zip"
+        }
+      },
+      "source": {
+        "sha256": "d034911ad0663bb221e10d7a3ecb88cddd3d77ad9c6457c831b20ceb37119384",
+        "bytes": 81669,
+        "path": "releases/1.0.0--8482326/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/EinBaum/VendorAutoBuy/tarball/1.0.0"
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "id": "198527879",
+  "tag": "1.2.0",
+  "name": "1.2.0",
+  "body": "New features:\r\n* Marks can now be removed by ctrl + left clicking a mark in the UI that is already assigned to your current target (as long as you are lead or assist) #11 \r\n* Each raid mark icon in the UI now shows the number of group members currently targeting that raid mark #6\r\n* the position of each raid icon in the UI can now be set via `/sraidmarks seticon {ICON_NAME} {X} {Y}` #10",
+  "published": "2025-02-05T09:19:08Z",
+  "prerelease": false,
+  "url": "https://github.com/sorgis-sorgis/sorgis_raid_marks/releases/tag/1.2.0"
+}

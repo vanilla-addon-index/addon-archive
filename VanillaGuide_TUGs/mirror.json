@@ -1,0 +1,389 @@
+{
+  "upstream": "https://github.com/TheUnprofessionalGamer/VanillaGuide",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "TheUnprofessionalGamer",
+    "repo": "VanillaGuide",
+    "name": "VanillaGuide",
+    "url": "https://github.com/TheUnprofessionalGamer/VanillaGuide",
+    "api": "https://api.github.com/repos/TheUnprofessionalGamer/VanillaGuide"
+  },
+  "commit": "3c839a71607ad6957a5766333ab3e844edf7db40",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "e0bc851b4cb4bb09bf28238af9a25c91ffc053e0426be0b4ae6890d2bbb718a9",
+      "bytes": 1291
+    },
+    "Core.lua": {
+      "sha256": "0bafa2108779336abef54cf4d50495fe7c78f38996321c6bae2eef239c05eaf9",
+      "bytes": 8159
+    },
+    "Display.lua": {
+      "sha256": "e99724e408712e65e104ac3d62a9b2e662769648d1d30479b3c109172284640c",
+      "bytes": 5058
+    },
+    "Frame_AboutFrame.lua": {
+      "sha256": "b3f56e75118041f5b02e2989e4be2a047e938103a271ac476fafb2d896bbfc7b",
+      "bytes": 4971
+    },
+    "Frame_MainFrame.lua": {
+      "sha256": "912ee3ece81713d9c283db5d34b48ea6928db2a2b41aaf8f62252511870b981c",
+      "bytes": 37840
+    },
+    "Frame_SettingsFrame.lua": {
+      "sha256": "d8236fa7197f67ad3dc5dd2649b66421be1b437db79428dea4cbb9a5e72d49ad",
+      "bytes": 21538
+    },
+    "GuidelimeExport.lua": {
+      "sha256": "4f0b4a1daa78a6360af610e984e07725668e38933521102408779af886c34f92",
+      "bytes": 5516
+    },
+    "GuideTable.lua": {
+      "sha256": "04a8e4b7a6028490109d85cd8d95423e2e1e8e632e42e792365aaa9517c1cf9d",
+      "bytes": 26506
+    },
+    "GuideTables/001_Introduction.lua": {
+      "sha256": "5f6629fa9a0a28769621c9e37b34425440697d4876d439d5fe86b8e927d480f4",
+      "bytes": 942
+    },
+    "GuideTables/004_Professions.lua": {
+      "sha256": "69bf7290b61874cf74bf184cda495fd4cdaf589a446c52e419a407a908265f8a",
+      "bytes": 2365
+    },
+    "GuideTables/Alliance/002_DunMorogh.lua": {
+      "sha256": "2f39ffb311f4c014f7fd6b0d3b61b98004d0c2e77e57a0af772410a89c1b8c81",
+      "bytes": 1209
+    },
+    "GuideTables/Alliance/002_ElwynnForest.lua": {
+      "sha256": "4b0d6fd2bfbb66314273052b1986745e3b327f360e40530dc4d5ddad85e7fadb",
+      "bytes": 184091
+    },
+    "GuideTables/Alliance/002_Teldrassil.lua": {
+      "sha256": "885b2ab0f730661403e2dcb7c22679b8aa86f1a2b75b565184bdbdddd82c3e83",
+      "bytes": 12981
+    },
+    "GuideTables/Alliance/003_Alliance_12to20.lua": {
+      "sha256": "7d73256cbfa723c5e1fe0da6e6e048d5ad44fb800eeae25e11a72c0e51d9f4c2",
+      "bytes": 26384
+    },
+    "GuideTables/Alliance/003_Alliance_20to30.lua": {
+      "sha256": "ce34571d1d7f5fbd2e3ca4a7a60993058321c6e950fc3c8ad9711f2e79236256",
+      "bytes": 68848
+    },
+    "GuideTables/Alliance/003_Alliance_30to40.lua": {
+      "sha256": "1a71b54f4186c8c1cc7fe06e642726a7be86d12cfdf31ff695d16de4909260b2",
+      "bytes": 67100
+    },
+    "GuideTables/Alliance/003_Alliance_40to50.lua": {
+      "sha256": "5cd75ee9f9dac286d69dd0e23505f9bad41281e312158e10d1c343f809fd6389",
+      "bytes": 73644
+    },
+    "GuideTables/Alliance/003_Alliance_50to60.lua": {
+      "sha256": "71f3b5ed7d3a302551e9d8ba9486fdc6a5d3d92180b041cb1bca5049fc425965",
+      "bytes": 4373
+    },
+    "GuideTables/Horde/002_Durotar.lua": {
+      "sha256": "2888803a5afbaeac6d8e412a7b5f61ae3aa2880e8ac10f700914781c74838eb7",
+      "bytes": 1374
+    },
+    "GuideTables/Horde/002_Mulgore.lua": {
+      "sha256": "6172a0df8ddf993fbc970a51ccb6193bf172829acd487ed7c329f0ad2bd5f1a1",
+      "bytes": 10588
+    },
+    "GuideTables/Horde/002_TirisfalGlades.lua": {
+      "sha256": "55fac73afad2e22787327277cafb7c22daeadbacfc1e60345d7defa956a9a169",
+      "bytes": 1512
+    },
+    "GuideTables/Horde/003_Horde_12to20.lua": {
+      "sha256": "53445c507114d978e938ed7d66a4b0f758411e298200872b7a56102cbd4b1434",
+      "bytes": 1781
+    },
+    "GuideTables/Horde/003_Horde_20to30.lua": {
+      "sha256": "bf2c910923d95b1e54843bff8f7ffbda1e188816846192ea82e9fc2acbec95ce",
+      "bytes": 3632
+    },
+    "GuideTables/Horde/003_Horde_30to40.lua": {
+      "sha256": "5b95bdddb108d20fab8f8460517799111eb0ec6862a1dc7fea1c93597fb84180",
+      "bytes": 3967
+    },
+    "GuideTables/Horde/003_Horde_40to50.lua": {
+      "sha256": "8e69c2f37890c6e5830272191c5a31abf4c4adc8b47a293ae239c1b77468751d",
+      "bytes": 4575
+    },
+    "GuideTables/Horde/003_Horde_50to60.lua": {
+      "sha256": "ccf99ee7b0ba5a078a121b44c9de95145cce06e915550e130522629b3d762046",
+      "bytes": 4601
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "e977ae5a93e6e0120481cd44f96e6050949d3ade56d6168577a4c829df1b1c67",
+      "bytes": 32120
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "6bcd5625a8c14866bec07d52f3b8fbbe1e00291bab5afe75548547dd69510fa3",
+      "bytes": 67903
+    },
+    "libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "d94da32d564024e176da8fe6cc4f31c2f0cf680ad756dce490d01688a9b657d3",
+      "bytes": 44956
+    },
+    "libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "201e99eae723b3e2d2f0715203dd94d7d17bd283d9922887a2bf96866813989d",
+      "bytes": 8033
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "8222e7a75d0f0fba8030099939611732b50c28cb26b6ce6427f52fd5f2f409d8",
+      "bytes": 29927
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "a421bd39e4cb7bcd54bb79de85c21d6e8c4c56551406972141bba26ae7d0c16d",
+      "bytes": 23871
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "03e71bcf0ba8ce7c806c5ffe966991cb997c12c25b351198c918fe32e469bdaf",
+      "bytes": 31435
+    },
+    "libs/Dewdrop-2.0/Dewdrop-2.0.lua": {
+      "sha256": "0e1c2e893ae0342170ffc3d8f816b765eaf8dbed689da5cf5353f6e9271b9c06",
+      "bytes": 85808
+    },
+    "libs/FuBarPlugin-2.0/FuBarPlugin-2.0.lua": {
+      "sha256": "019a3ddec75f04b5d78fc8361e0364c8be1deebddfe34c65f8e185e3ae3e9f5c",
+      "bytes": 46454
+    },
+    "libs/Tablet-2.0/Tablet-2.0.lua": {
+      "sha256": "0f320f2c8feec2d0d17d6550a550a9df22295510b06ade9a43925383c43c5416",
+      "bytes": 85746
+    },
+    "README.md": {
+      "sha256": "17d06cf99c1eda223ea5ac5b25e329041ec47ad5d3cbb933354ef61ae210c653",
+      "bytes": 721
+    },
+    "Settings.lua": {
+      "sha256": "59be97d1e1eb9e0755aea056bde9e980b78895fda56d0a49c3635c9cbdfb5d46",
+      "bytes": 8852
+    },
+    "SlashCommands.lua": {
+      "sha256": "f34945c7b076549d47e67af6dda7f5b5c2f64bbc29691052df23047e3707af14",
+      "bytes": 1576
+    },
+    "Textures/Borders/fer1.tga": {
+      "sha256": "74d521714d2a1c97380bd78c43b6b8ca2c16a0bec5b60ba49533459cd4eccf08",
+      "bytes": 2388
+    },
+    "Textures/Borders/fer6.tga": {
+      "sha256": "63df367c91e9ed375c2b9eecdef4e4c408359770c7ea1343a03cf817ecf47c3b",
+      "bytes": 1298
+    },
+    "Textures/Borders/fer7.tga": {
+      "sha256": "7e4ab24dc052af2363b599450d55f206c0fc448980bc4ec54e3ae555705d654b",
+      "bytes": 2246
+    },
+    "Textures/Borders/HalBorder.tga": {
+      "sha256": "ab0f8ab1624759147644d25d13364e971a38ed42754085fbd6476e11946e9b32",
+      "bytes": 8236
+    },
+    "Textures/Borders/Roth.tga": {
+      "sha256": "49ca0bc8e0cbdd6abed71748e3b686032f588c5e2829e6b844c9ec1f8b1a3aa9",
+      "bytes": 8236
+    },
+    "Textures/Buttons/Button-About-Highlight.tga": {
+      "sha256": "997926de7f58f0f57db117e77a1f5157742ba2ab2dae151c7420dd8e10cbfa85",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-About-Normal.tga": {
+      "sha256": "414ef96bd3a89a0740ff6c64c5d03c5d033271758088c0c6031575cbeae1ad7e",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-About-Pushed.tga": {
+      "sha256": "34213d8269b543b3af0523f9bf45ffd2c1f711cfe9a2049f75bc31660ec0e84a",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-ArrowDown-Highlight.tga": {
+      "sha256": "eb5b922d945d1059d000b9ec69d59f587fb5f9117c7342bdb80dd8e1e8105784",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-ArrowDown-Normal.tga": {
+      "sha256": "325ef3b879340598bdbf4c4283026f7a13d9e26fac2cc6f0191a4507429d8edd",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-ArrowDown-Pushed.tga": {
+      "sha256": "009542f380a152faf0b14c75f43c77bbfde501e5017ae7f25021c12c8e697519",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-ArrowUp-Highlight.tga": {
+      "sha256": "e4de3806e452ee040196b34b7005859204a9d562542c4cd77a76de2b4a6d981c",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-ArrowUp-Normal.tga": {
+      "sha256": "e64da33b19ad988a9b5cf6b421cf0563f89d49177c550a4e11772bd8d4711d4d",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-ArrowUp-Pushed.tga": {
+      "sha256": "caa95d09ad2398b5bdf93504e6dda62b130c57db955ea414651dfe3744d5a5eb",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Close-Highlight.tga": {
+      "sha256": "26c04ce6761c4e60db9b728bb5e4dca55c84499601bec25785faf77f85a7afaf",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Close-Normal.tga": {
+      "sha256": "ec32f7468b0f006756fec9cc4784d48469c44abcb045a00cc77d9e7fa6b946d5",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Close-Pushed.tga": {
+      "sha256": "1c0be94b4bc3f9d2458a1b13d9e4430fc9f136d17118845a5e15fb7305577e61",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DDMonLeft-ArrowDown-Highlight.tga": {
+      "sha256": "1d6e1bb1fb08a039001d9655188e9f38523e12cae155565b93ae4f2a7a0ba4da",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DDMonLeft-ArrowDown-Normal.tga": {
+      "sha256": "d8be1e02ce6874b6c0d4d0e468464a5301520c7e1a85de8851845afcb3ed6903",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DDMonLeft-ArrowDown-Pushed.tga": {
+      "sha256": "b56ced90421c10832f7ae34cb9ea6793821a706964240072a62df6d8601af9ed",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DDMonRight-ArrowDown-Highlight.tga": {
+      "sha256": "1d6e1bb1fb08a039001d9655188e9f38523e12cae155565b93ae4f2a7a0ba4da",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DDMonRight-ArrowDown-Normal.tga": {
+      "sha256": "6a181c3ef9b56978ef504552aecdcdf7c378e69a2601eba7514fb575fe613cea",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DDMonRight-ArrowDown-Pushed.tga": {
+      "sha256": "545fe80becf722ecf1fec7e0a7b5393abf60cf48d3611c9f9855968570e1306b",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Details-Highlight.tga": {
+      "sha256": "e7e3e82ae86118429422459a6cd1ff151455ab22b6c6a798126aafa27e326b84",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Details-Normal.tga": {
+      "sha256": "5884bdcb3488b9e0bc1780630c23ba5d779491730a892592bdff7e99476f89c0",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Details-Pushed.tga": {
+      "sha256": "08f1100d381966e39476b56db8380cf1ce48be6a168734de104547aeb2692d92",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DoubleArrowLeft-Highlight.tga": {
+      "sha256": "ea965f378fe6529379bc7c144556e494a6ef3913deea9ed167f3e98b033bcea3",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DoubleArrowLeft-Normal.tga": {
+      "sha256": "2ed9555d9d4efeeb651a42bf395ab4e67dfb0b6403fd593cbb064811461aa703",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DoubleArrowLeft-Pushed.tga": {
+      "sha256": "dd17fb6c565620d2f93622562d55ae9524778443ae1c1922f1b038a82296a4c4",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DoubleArrowRight-Highlight.tga": {
+      "sha256": "d7c1de0424a6abafbe99ccc3641d770f29047e4c116076b2ee6bd8bce872f944",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DoubleArrowRight-Normal.tga": {
+      "sha256": "02bae57d7e729976264a66817a2f69758c2ee83501dc327bc2f2b996b464597f",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DoubleArrowRight-Pushed.tga": {
+      "sha256": "1224424d30c69492d6f8b4233247569516cd600d17ed4b4524a7bc2393dc1657",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DUMonLeft-ArrowUp-Highlight.tga": {
+      "sha256": "356040dcf454b6f9f306ada6c1f65944b83a90fc779e9e50026fb2e78f40a644",
+      "bytes": 3638
+    },
+    "Textures/Buttons/Button-DUMonLeft-ArrowUp-Normal.tga": {
+      "sha256": "93c34faf0c9e6c3aacd01b4ccb8b32e1cf5ca6a78e899dbff48694db5f0f4d1b",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DUMonLeft-ArrowUp-Pushed.tga": {
+      "sha256": "cfd64c37269b43334354079ccd0527ca7c9baf9b985c86c796362e99e4a8be72",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DUMonRight-ArrowUp-Highlight.tga.fgx": {
+      "sha256": "e9afe849b50e564939b1779748638193b2f93ae3430b57b0dff88286e0d8311b",
+      "bytes": 3786
+    },
+    "Textures/Buttons/Button-DUMonRight-ArrowUp-Normal.tga": {
+      "sha256": "e533c24d80fc85e8ef0b6d408df8228bf5e45e1df696814acadf839571abe935",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-DUMonRight-ArrowUp-Pushed.tga": {
+      "sha256": "fecbc24e8dc62caef2f083747c60ec04a96d765712c4d93baea529f784f7754d",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Flash-Highlight.tga": {
+      "sha256": "07b4b176586b643d1b90248d93b3961682990b9adbd13f291cd8a71a0caab9da",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Flash-Normal.tga": {
+      "sha256": "bd6c78ceab7a1a34e3ca3dff4b5e79ace065cdecd8f72bd33a66350522601a32",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Flash-Pushed.tga": {
+      "sha256": "e35802472fe7d0fd2efa105c6a99347071c9187e60602d03c125e77ab58179c5",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Locked-Highlight.tga": {
+      "sha256": "be20e06c43ac4c0fc023dd41c3341f2c9cb44d76ea22ff70039abd8950e5c849",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Locked-Normal.tga": {
+      "sha256": "bdba7f845887b3bddb989cd4a5fcbb8356249f63d92ddb912477eed5ce4dece9",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Locked-Pushed.tga": {
+      "sha256": "22c129cc0cd383ce775d19fec4802c3ffef645f81b9733d12fe3ec8b266fa96d",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Option-Highlight.tga": {
+      "sha256": "aa8a8d952b5f44c2214e646673a87c54d27f32d92cd71ef12263a1e3bc3cf2cb",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Option-Normal.tga": {
+      "sha256": "bd25c3ed7cc175c1e7820a01e19af71b83aadb8ef41acbb9afda482245011e71",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Option-Pushed.tga": {
+      "sha256": "d0c9f59b6cab61b1c7df91131a2eb3308ed05aa6b2ed7564bfe8d4c8211cc7d8",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Unlocked-Highlight.tga": {
+      "sha256": "be20e06c43ac4c0fc023dd41c3341f2c9cb44d76ea22ff70039abd8950e5c849",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Unlocked-Normal.tga": {
+      "sha256": "7d294b623c6b408855cfaf0aa8103eb33791861f73a9c2e47095e531cb68a1ae",
+      "bytes": 4134
+    },
+    "Textures/Buttons/Button-Unlocked-Pushed.tga": {
+      "sha256": "4bd794a5ebf8cc35091d720e6e6d9a7725b55e5447232c2fbb3da95a333b969a",
+      "bytes": 4134
+    },
+    "Textures/FuBar_Icon.tga": {
+      "sha256": "5ca23c819f273f30012626024bab1f25a9fc6bf82c67ab9e9c7832890ac859ec",
+      "bytes": 4134
+    },
+    "UI.lua": {
+      "sha256": "e5ea24fd939d45db76db76580272d94fa7818b75c92e0c1b4ec4e5796ac76e9a",
+      "bytes": 5763
+    },
+    "VanillaGuide.toc": {
+      "sha256": "d4cd4971f77e663cce8a40e755e4c46d4391f3d3cab4428304cb9a9e544f60f2",
+      "bytes": 2016
+    },
+    "VGuideFu.lua": {
+      "sha256": "ada70cb38a72124ce2f03b351fd74f64c28c0306d83980a7ce913fa8da97e10a",
+      "bytes": 5774
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

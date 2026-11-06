@@ -1,0 +1,41 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <!-- Compact button fonts for the non-pfUI fallback style: 8pt versions
+         of the Small game fonts (normal gold / highlight white / disabled
+         grey), so button state changes keep the reduced size. -->
+    <Font name="WTBoxButtonFont" font="Fonts\FRIZQT__.TTF">
+        <FontHeight>
+            <AbsValue val="8"/>
+        </FontHeight>
+        <Color r="1.0" g="0.82" b="0.0"/>
+        <Shadow>
+            <Offset>
+                <AbsDimension x="1" y="-1"/>
+            </Offset>
+            <Color r="0" g="0" b="0"/>
+        </Shadow>
+    </Font>
+    <Font name="WTBoxButtonFontHighlight" font="Fonts\FRIZQT__.TTF">
+        <FontHeight>
+            <AbsValue val="8"/>
+        </FontHeight>
+        <Color r="1.0" g="1.0" b="1.0"/>
+        <Shadow>
+            <Offset>
+                <AbsDimension x="1" y="-1"/>
+            </Offset>
+            <Color r="0" g="0" b="0"/>
+        </Shadow>
+    </Font>
+    <Font name="WTBoxButtonFontDisable" font="Fonts\FRIZQT__.TTF">
+        <FontHeight>
+            <AbsValue val="8"/>
+        </FontHeight>
+        <Color r="0.5" g="0.5" b="0.5"/>
+        <Shadow>
+            <Offset>
+                <AbsDimension x="1" y="-1"/>
+            </Offset>
+            <Color r="0" g="0" b="0"/>
+        </Shadow>
+    </Font>
+</Ui>

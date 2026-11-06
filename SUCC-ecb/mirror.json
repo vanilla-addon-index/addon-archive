@@ -1,0 +1,37 @@
+{
+  "upstream": "https://github.com/checkem/SUCC-ecb",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "checkem",
+    "repo": "SUCC-ecb",
+    "name": "SUCC-ecb",
+    "url": "https://github.com/checkem/SUCC-ecb",
+    "api": "https://api.github.com/repos/checkem/SUCC-ecb"
+  },
+  "commit": "e6e753c85f90f6de34093fe4dc2e8c7053dbb864",
+  "sourceFiles": {
+    "options.lua": {
+      "sha256": "ef6a325589b062bce8b6d4862d4f70b3305038447f6a98c3c6d8f02b96e4f14a",
+      "bytes": 9745
+    },
+    "README.md": {
+      "sha256": "4e2b515ccf54449031b08aff52b4f8725ae47e4da2ba9e6f0f303e6d2110939c",
+      "bytes": 63
+    },
+    "SUCC-ecb.lua": {
+      "sha256": "eed11f1f294125f39927d4de1230dc33119fffc3918fdce8afe24a7312897fb1",
+      "bytes": 18939
+    },
+    "SUCC-ecb.toc": {
+      "sha256": "4beafc9ed2ce1c896de6ca7ba2b7d256045a574b97421200f86c97f946bd2c1a",
+      "bytes": 252
+    },
+    "table.lua": {
+      "sha256": "3618dbda621235855059983b25bf987d98c9aa27ae8b7183d3b28b25398c17d3",
+      "bytes": 23442
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

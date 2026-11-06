@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: FineZoom
+## Notes: Precise mouse wheel zoom for 1.12
+## Author: Stormhand
+## Version: 1.30
+## SavedVariables: FineZoomStep
+
+Bindings.lua
+Bindings.xml
+FineZoom.lua

@@ -1,0 +1,85 @@
+{
+  "upstream": "https://github.com/shagu/pfUI-fonts",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "shagu",
+    "repo": "pfUI-fonts",
+    "name": "pfUI-fonts",
+    "url": "https://github.com/shagu/pfUI-fonts",
+    "api": "https://api.github.com/repos/shagu/pfUI-fonts"
+  },
+  "commit": "21000056503a71c349584c34b159e1a04974de78",
+  "sourceFiles": {
+    "fonts/BalooBhaina.ttf": {
+      "sha256": "c80fae67500c90e3d57dacc8320a5ec8846b7e1120427b5e6b8b2b4c45774cbb",
+      "bytes": 376576
+    },
+    "fonts/Bungee.ttf": {
+      "sha256": "9072843fd22ee597afd6c5fa7d8e1202833315d34b7a2a40889d280a01cc53bc",
+      "bytes": 126736
+    },
+    "fonts/CaesarDressing.ttf": {
+      "sha256": "009dea24a4d4a3a7e02d683087babb1738acc0b949cce38c485fab325c9e9295",
+      "bytes": 89628
+    },
+    "fonts/CoveredByYourGrace.ttf": {
+      "sha256": "8a7e5687a4f9aad95243eb28cdc624009a335e0de5175113bc5f1348a4d67fd7",
+      "bytes": 57040
+    },
+    "fonts/JotiOne.ttf": {
+      "sha256": "6d31399c9aca62e6bf47d7f2949e1a77249500ba0157037346bd61ddb5bcbf00",
+      "bytes": 45584
+    },
+    "fonts/LondrinaSolid.ttf": {
+      "sha256": "e82b9b3ee21ccf153dcf67e5f4226a210474591a6ad31b5f17f2f14dc2524514",
+      "bytes": 92132
+    },
+    "fonts/NovaFlat.ttf": {
+      "sha256": "de302932cdca6d274f7f791b9805d6e0f84ec44ae6ed630f1b1e8c616fc04c42",
+      "bytes": 93844
+    },
+    "fonts/Roboto.ttf": {
+      "sha256": "79e851404657dac2106b3d22ad256d47824a9a5765458edb72c9102a45816d95",
+      "bytes": 171676
+    },
+    "fonts/SedgwickAveDisplay.ttf": {
+      "sha256": "3b9c295a146bafb93c8a12c1dde38a2fe47512777daf1458825e291752469a38",
+      "bytes": 140148
+    },
+    "fonts/Share.ttf": {
+      "sha256": "ef1c3522c12628f19174fbdb2939a2dbd03c83d2498e4a8c0c74c6a4caa9914b",
+      "bytes": 92012
+    },
+    "fonts/ShareBold.ttf": {
+      "sha256": "9419ff27f645fe25ae465342d77c82fcd2a3f6b97a7ff09051432e64f2df7581",
+      "bytes": 91072
+    },
+    "fonts/Sniglet.ttf": {
+      "sha256": "2856a975b9c0ac0402e8402ac4bd126cd97d6c90490435b6198d77e6384ae4f0",
+      "bytes": 75212
+    },
+    "fonts/SquadaOne.ttf": {
+      "sha256": "5b34a1633dbc48db3835d8a847bc475e6e0267121d3435854729ba4b407a05df",
+      "bytes": 19072
+    },
+    "pfUI-fonts-tbc.toc": {
+      "sha256": "b4ea1fbae44b4be576c256a6ad61850c90528ef23867f44ba237fbbadec0c313",
+      "bytes": 187
+    },
+    "pfUI-fonts.lua": {
+      "sha256": "96b7adcb16025aa3ed38a0fab8a353fad3de31d25c93d54c2d2fa705c47ae8ea",
+      "bytes": 1448
+    },
+    "pfUI-fonts.toc": {
+      "sha256": "b6352cda8e15203c225e35a3a41465e2dc6e0110b6cd1cf64b4b258edded046c",
+      "bytes": 183
+    },
+    "README.md": {
+      "sha256": "473d24716f94e95e920312922c862432fad2037c56a72f28d82fc50dfcbc62fd",
+      "bytes": 1550
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

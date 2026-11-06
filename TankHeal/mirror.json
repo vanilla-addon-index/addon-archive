@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/xorann/TankHeal",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "xorann",
+    "repo": "TankHeal",
+    "name": "TankHeal",
+    "url": "https://github.com/xorann/TankHeal",
+    "api": "https://api.github.com/repos/xorann/TankHeal"
+  },
+  "commit": "c5642faca9d7f81ddc98e927781445f3f32d1691",
+  "sourceFiles": {
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "24eccd5ddd032bfe3f449219f8a0ce4d05b6df2753be2c02073bb80ecabb04b0",
+      "bytes": 33306
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "1a2c79dd8db1f2fcf290297bdb5e731b013f94eef4cbc1e7213872ea60e90b43",
+      "bytes": 28954
+    },
+    "TankHeal.lua": {
+      "sha256": "cadafce7d1c039ecd0fc82b9c223eaffffc2c5d95de3d7f7d0b223db2a11d9dd",
+      "bytes": 2576
+    },
+    "TankHeal.toc": {
+      "sha256": "900693ce84394f7c1e0148ce3d21e124de049eda523e82c0ef3d5661bc84464c",
+      "bytes": 240
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

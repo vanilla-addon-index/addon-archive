@@ -1,0 +1,34 @@
+## Interface: 30300
+## Title: FuBar - |cffffffffPortal|r|cff00ff00Fu|r
+## Notes: Provides access to all teleporting spells and items on right click of minimap button.
+## Author: CrazyBenny of Stormrage-EU
+## X-Email: s_m AT centrum DOT cz
+## LastUpdate: 2010-09-05T14:37:40Z
+## Version: 1.17
+## X-Curse-Packaged-Version: 1.17
+## X-Curse-Project-Name: FuBar_PortalFu
+## X-Curse-Project-ID: portalfu
+## X-Curse-Repository-ID: wow/portalfu/mainline
+
+## X-Credits: Prandur, Ruldar for TransporterFu, the inspiration behind this addon
+
+## SavedVariables: PortalFuDB
+## SavedVariablesPerCharacter: PortalFuPerCharDB
+
+#@no-lib-strip@
+libs\AceLibrary\AceLibrary.lua
+libs\AceOO-2.0\AceOO-2.0.lua
+libs\AceAddon-2.0\AceAddon-2.0.lua
+libs\AceEvent-2.0\AceEvent-2.0.lua
+libs\AceConsole-2.0\AceConsole-2.0.lua
+libs\AceLocale-2.2\AceLocale-2.2.lua
+libs\AceDB-2.0\AceDB-2.0.lua
+
+libs\Dewdrop-2.0\Dewdrop-2.0.lua
+libs\Tablet-2.0\Tablet-2.0.lua
+libs\FuBarPlugin-2.0\FuBarPlugin-2.0.lua
+libs\Babble-Spell-2.3\Babble-Spell-2.3.lua
+#@end-no-lib-strip@
+
+locales.lua
+PortalFu.lua

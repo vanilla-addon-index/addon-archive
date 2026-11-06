@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/Liijin/Trailblazer",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Liijin",
+    "repo": "Trailblazer",
+    "name": "Trailblazer",
+    "url": "https://github.com/Liijin/Trailblazer",
+    "api": "https://api.github.com/repos/Liijin/Trailblazer"
+  },
+  "commit": "6e448a724eb35381ec63f10576bf013f1251387c",
+  "sourceFiles": {
+    "ReadMe.txt": {
+      "sha256": "3c3fd8aa17924970c6f1b02b43e99602f9c13a58fc8edd25e55f28abae27f577",
+      "bytes": 1703
+    },
+    "Trailblazer.lua": {
+      "sha256": "6e3dd63a142100315e343682ed4d446dce333077777ebabc24dd3f898d3b53bc",
+      "bytes": 5946
+    },
+    "Trailblazer.toc": {
+      "sha256": "504c8cd7bd54bd67acfa9bcd5d5ec515790a4a2ba4318d56575951616a2a2dea",
+      "bytes": 276
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

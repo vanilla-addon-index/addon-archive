@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: Whisper Profile
+## Notes: A simple wow vanilla addon to display the profile of the whisper. /wp
+## Author: Croc
+## Version: 0.01
+## SavedVariablesPerCharacter: WP_NAMES_FRIENDS
+
+WhisperProfile.lua

@@ -1,0 +1,157 @@
+{
+  "upstream": "https://octowow.st/git/ShempError/TotemBar",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "ShempError",
+    "repo": "TotemBar",
+    "name": "TotemBar",
+    "url": "https://octowow.st/git/ShempError/TotemBar",
+    "api": "https://octowow.st/git/api/v1/repos/ShempError/TotemBar"
+  },
+  "commit": "06f581e8b5068ce57648ac2c063f3c63fddc8b32",
+  "sourceFiles": {
+    "bind.lua": {
+      "sha256": "779ce53bf266cd0cce5276f47f306f7a5642343f23318031f4b41bde5396e7e0",
+      "bytes": 9216
+    },
+    "Bindings.xml": {
+      "sha256": "fd0f1a323ac0156a576ec422c90e4882cbc620133fdd9cc83e00e73d555f47b8",
+      "bytes": 3167
+    },
+    "CHANGELOG.md": {
+      "sha256": "3638942eadc39491197f7c4605d371478b056b5481902ac5ddaf2001b4b39572",
+      "bytes": 21831
+    },
+    "core/assign.lua": {
+      "sha256": "4c0f5dac6324dc108a3f4c258d4032dc368f65f54285e445806c1dcbf809c429",
+      "bytes": 4722
+    },
+    "core/bindlogic.lua": {
+      "sha256": "e8362288fbe1c242ab065b43563ffe7d455010b731ba117eed689b21b08f3108",
+      "bytes": 2567
+    },
+    "core/cast.lua": {
+      "sha256": "f4249bfdcb8eaeeb53e5be96587d97829148b9cc4c2e7f9c1727bea578589f0d",
+      "bytes": 102138
+    },
+    "core/config.lua": {
+      "sha256": "03848b32a4d39e3585fb8699b81f103769fb294f3e78e3572a5483c96909b821",
+      "bytes": 4006
+    },
+    "core/known.lua": {
+      "sha256": "a2be6df5e57173114fc9d26972b38539bcd8287fa0773f889cc5f8816ba8018a",
+      "bytes": 1892
+    },
+    "core/manacost.lua": {
+      "sha256": "90658198c519d51fb6a0c1b3d9d53720fae6c17786354ac55fcff9658628df06",
+      "bytes": 12834
+    },
+    "core/optionslogic.lua": {
+      "sha256": "85511721d548098e5290e2086629867df3998cfaabfe2b0b9c963eacacbc0f85",
+      "bytes": 3382
+    },
+    "core/pulse.lua": {
+      "sha256": "a84ec27d3b19dcd63325f80461c329dd5acdf44f130c89e279c24eb8c1fae06e",
+      "bytes": 7126
+    },
+    "core/pulsecal.lua": {
+      "sha256": "8f531452c8ee037d3dfd7a06e4c4a2b2c85f03409995ffbafbb04121bd3b0fd3",
+      "bytes": 17110
+    },
+    "core/pulsedata.lua": {
+      "sha256": "dcd6e95e37d305fa3dfc0a4c7013982b087242e4ec6c6924d39e4421b0f26ae3",
+      "bytes": 3665
+    },
+    "core/pulseparse.lua": {
+      "sha256": "c7de653223041e41b143a71323a5494d85de8cffd8a8a43949fbab94083044c1",
+      "bytes": 1800
+    },
+    "core/spellindex.lua": {
+      "sha256": "a9bb531899eb3d51bb296066269e2a564fb470ba33acf64036fe1b0af0dc5f9d",
+      "bytes": 7482
+    },
+    "core/totemdata.lua": {
+      "sha256": "5df9bf2278c2abfb99fcf8147529554446c74fe19d7dbe741dd57a6d889979f1",
+      "bytes": 5615
+    },
+    "LICENSE": {
+      "sha256": "a59df5624d5f7b8fee2165941f94928f7aff96a8a40feb059e236e26f9b1ea79",
+      "bytes": 1067
+    },
+    "minimap.lua": {
+      "sha256": "37b5ca962159b40206d15b2be270319b16aef64079c8e8b20e7d42ab7f155493",
+      "bytes": 4650
+    },
+    "options.lua": {
+      "sha256": "cc664a61362a6859b187c7c2f29db392e27b5d90bede8d87f0abb6cd3473996f",
+      "bytes": 19640
+    },
+    "README.md": {
+      "sha256": "222a51bace0ec3fac4f0b6a1e504b6150eea952a9dc300c9b4c6f5477b62e523",
+      "bytes": 11331
+    },
+    "screenshots/bar.png": {
+      "sha256": "e976344f7c5e8e64e01aec8ba6e8a78231214ec65cee6a491e85de93e48693d8",
+      "bytes": 119352
+    },
+    "screenshots/bind-mode.png": {
+      "sha256": "676823fd1bb3a4562e4572e1cb751f9d1b4319ef52baac742e4d5dd7de5b0dbe",
+      "bytes": 299330
+    },
+    "screenshots/flyout.png": {
+      "sha256": "5b2aeef668aa67a4611ef7458eb4a5a595a1bfab74e164c6e426e4a62450219b",
+      "bytes": 192147
+    },
+    "screenshots/keybindings.png": {
+      "sha256": "4259ed9075ae94b339278c06e3a1b64dbd4f13c72c03685f229542deca3db0a7",
+      "bytes": 428297
+    },
+    "screenshots/options.png": {
+      "sha256": "f668644e992a12b209de7425618c7caa7c30a3cb10626fdfecc949ab4dabe511",
+      "bytes": 231705
+    },
+    "screenshots/pulse-ui.png": {
+      "sha256": "96dd84046193327a1ab143c7e0ed53010e1e5c908eede735c5a14833daf7c6e7",
+      "bytes": 501324
+    },
+    "textures/icons.tga": {
+      "sha256": "14273f84b373eb0cbca8feb08151566f4a7c4c63536034044d2f85ec9ffc168f",
+      "bytes": 1048594
+    },
+    "textures/panel_bg.tga": {
+      "sha256": "fa2c3742ff646599581f2179372f54d8f739fc5f155ad2633acc73b756aad6e8",
+      "bytes": 65554
+    },
+    "textures/panel_border.tga": {
+      "sha256": "81365bddce9a58b3f1091e849f454f79ea5296f1a4af40eca7e8dd80df8f0514",
+      "bytes": 8210
+    },
+    "textures/ring_fx.tga": {
+      "sha256": "a986524d0b93f043855199a42d01443dec110c4998526230f304212e316f579c",
+      "bytes": 262162
+    },
+    "textures/ring_pulsearc.tga": {
+      "sha256": "5cc548029ea049c3f59e837d6b97c0d1de5baa38339e888f11dbae867bc6c579",
+      "bytes": 1048594
+    },
+    "textures/ring_round.tga": {
+      "sha256": "155e7a0b37cb25bf34cfeebfdcfe3c7b0ceb91dc9745ec17db01009a186b43f1",
+      "bytes": 1048594
+    },
+    "textures/ui.tga": {
+      "sha256": "76f03d31a5048248ac026f51926bcefb6ffdfdac971f7ad132a6559f74cb69f7",
+      "bytes": 262162
+    },
+    "TotemBar.toc": {
+      "sha256": "93a98b95fa99ec30f62ceb789ff0712a742b35231e159efb33aaebd5acce88ab",
+      "bytes": 497
+    },
+    "ui.lua": {
+      "sha256": "230220d3918f70dc1f7bd8c64f70dde57876436f1fa2c32487dc6a721a2a7502",
+      "bytes": 124492
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

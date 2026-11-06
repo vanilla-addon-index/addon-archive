@@ -1,0 +1,85 @@
+{
+  "upstream": "https://github.com/Otari98/SUCC-bag",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Otari98",
+    "repo": "SUCC-bag",
+    "name": "SUCC-bag",
+    "url": "https://github.com/Otari98/SUCC-bag",
+    "api": "https://api.github.com/repos/Otari98/SUCC-bag"
+  },
+  "commit": "167c34673f34c233720d9c642a2854a6d8f08080",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "f4180cf6bcc37c19e2c7815cd64767a316843df2a78bbbfb209804613c9d8305",
+      "bytes": 778
+    },
+    "SUCC-bag.lua": {
+      "sha256": "80dbbf4c7cb30c1464d9531b37b0aebeb7e84fa031367bfde8de8a9b84623e5e",
+      "bytes": 49785
+    },
+    "SUCC-bag.toc": {
+      "sha256": "84199269ab8020ad6b46a9665605d27f82b78ee3ea753d02bfcc26094471e387",
+      "bytes": 238
+    },
+    "Textures/BagFrame.blp": {
+      "sha256": "9d587b0f5b9fd566dbe92a93f07b76bceee8b10440b2a443289a47694212c373",
+      "bytes": 9364
+    },
+    "Textures/BagSlotFrame.blp": {
+      "sha256": "5c41e5c7a2cbe22c015504823aa4fb2f512fdd76f72ad36e68ff8204f5599211",
+      "bytes": 9364
+    },
+    "Textures/BankBagFrame.blp": {
+      "sha256": "b75a9a50250d7dd4632b7d53d168d7ae67fce9d9a47fe1eb3f643e353f28857a",
+      "bytes": 9364
+    },
+    "Textures/Bot.blp": {
+      "sha256": "182f1590bea3876f1f18ceb74247976f1d632a7a91ba929482bcfac4bfb56746",
+      "bytes": 3220
+    },
+    "Textures/BottomLeft.blp": {
+      "sha256": "932660b9e77ec4c655e6585ac377ca0fbe348ebb95817395b46353c4eb94e28c",
+      "bytes": 2196
+    },
+    "Textures/BottomRight.blp": {
+      "sha256": "91701a6065536f95862700f7fbe1ecc992bc8401d3a2b8adde521e8363c537f3",
+      "bytes": 2196
+    },
+    "Textures/Left.blp": {
+      "sha256": "3be36c83b745a8ce4a70b4f28c5c494a4e1b288dd0447bab06ed4b7412c093fe",
+      "bytes": 5268
+    },
+    "Textures/marble.blp": {
+      "sha256": "0f7fab63482bdf68325924a5e996b8a4d7d6bfd01dce8b78ff8d0c1ec0c7a717",
+      "bytes": 17556
+    },
+    "Textures/marble2.blp": {
+      "sha256": "4fdd12d35ffecd6821f96a82df73288f3a582cf82ab76224103e478e03723764",
+      "bytes": 17556
+    },
+    "Textures/Right.blp": {
+      "sha256": "f15513972b0ddeee2af0312932818aebf3beb4cce30f4f785eea0bfb1f3271e2",
+      "bytes": 3220
+    },
+    "Textures/Slot.tga": {
+      "sha256": "ece81051599804a4ee23c84de222fe3db5a6a9eeea992da8193f9097c8d94099",
+      "bytes": 4210
+    },
+    "Textures/Top.blp": {
+      "sha256": "04d48f7e852f8ef178892377e0644a3a44379f3e1609017ddc1785974b6bee78",
+      "bytes": 9364
+    },
+    "Textures/TopLeft.blp": {
+      "sha256": "f3d2f045e200ed2e85ef8392862e13741421727eb224f3dbf6f53be91ea3274c",
+      "bytes": 2196
+    },
+    "Textures/TopRight.blp": {
+      "sha256": "4bf92affd55e0261a5459b973edfdb4fd81c69ae80d6979a4696b4c3fdc45850",
+      "bytes": 2196
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

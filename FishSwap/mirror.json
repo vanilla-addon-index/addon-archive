@@ -1,0 +1,78 @@
+{
+  "upstream": "https://github.com/Draiscor/FishSwap",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Draiscor",
+    "repo": "FishSwap",
+    "name": "FishSwap",
+    "url": "https://github.com/Draiscor/FishSwap",
+    "api": "https://api.github.com/repos/Draiscor/FishSwap"
+  },
+  "commit": "d502d96cf1037785649476807df4a6bc79c26d15",
+  "sourceFiles": {
+    ".github/workflows/package-addon.yml": {
+      "sha256": "73ee96b582d7e926c77c5ccffe7ebad9a201ae9a4c7415e0df0f33704ee90c63",
+      "bytes": 643
+    },
+    ".gitignore.upstream": {
+      "sha256": "613077ce3ac70bcf6016aab62fb7486f6aaaa7f51dac1ea15b32b336f8bc9bff",
+      "bytes": 16
+    },
+    "FishSwap.lua": {
+      "sha256": "27f71e179a8e2456788023cbc362a7486cf35eff50dbbdb7d3289f85be272637",
+      "bytes": 11359
+    },
+    "FishSwap.toc": {
+      "sha256": "2f4c98250bb98e7b83924a290a1476149fa47c86d842a69fc0591fbb62109b29",
+      "bytes": 211
+    },
+    "images/AddonsTab.png": {
+      "sha256": "200a100a253abf44e70593b2f9c2ea14c5df0e42fd1ed63e546a60c1b3b1c367",
+      "bytes": 67347
+    },
+    "images/CachedWeapons.png": {
+      "sha256": "5d656ab772f69829321b8ffb9188d29fb6b5331f5dbfa4cdac6b49b13bdcace6",
+      "bytes": 83712
+    },
+    "images/NewAddonButton.png": {
+      "sha256": "73a11547772d0b282d899e4928c1dbb293a45682cde1ff988b27d22c8ade3c73",
+      "bytes": 10862
+    },
+    "images/NoCachedWeapons.png": {
+      "sha256": "0e507b309410c0c5cf95276cab286a5f2ca0ab7f45af3983d01f2bc5ea61fc63",
+      "bytes": 69674
+    },
+    "LICENSE": {
+      "sha256": "0cef07b6802a4d7bc78929c4f673d54860ce7c6ac2fed6721732c4ed8b264ad3",
+      "bytes": 1065
+    },
+    "README.md": {
+      "sha256": "7370cd80a30fc3ebdf77dddec49403a5aad09c2186322cdec0df39acb1b36b60",
+      "bytes": 3040
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "270085162": {
+      "tag": "v1.1",
+      "folder": "v1.1--270085162",
+      "assets": {
+        "328193134": {
+          "sha256": "a4231d0013444a0d49d1fd762974b3f481bbb4b1924c9759d22fe91092858edc",
+          "bytes": 5627,
+          "id": "328193134",
+          "name": "FishSwap.zip",
+          "url": "https://github.com/Draiscor/FishSwap/releases/download/v1.1/FishSwap.zip",
+          "path": "releases/v1.1--270085162/assets/FishSwap.zip"
+        }
+      },
+      "source": {
+        "sha256": "ac97ae2ccb24c3274e8643acebee1eb6d82f5a7cf2ccbad3001c66e400a37ecf",
+        "bytes": 238770,
+        "path": "releases/v1.1--270085162/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Draiscor/FishSwap/tarball/v1.1"
+      }
+    }
+  }
+}

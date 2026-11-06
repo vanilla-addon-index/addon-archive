@@ -1,0 +1,9 @@
+{
+  "id": "416030091",
+  "tag": "v1.6.0",
+  "name": "Equip Compare Adv 1.6.0",
+  "body": "**Install:** download EquipCompareAdv-1.6.0.zip below or update through your launcher. Close the game fully and start it again (there is a new file).\n\n- Green up arrow on items that are an upgrade for you, red down arrow on worse ones\n- Works on bags (default, Bagshui, pfUI), vendors and the auction house\n- Best in my bags: button in options or `/eca best`\n- Switches: `/eca arrows`, `/eca worse`\n- Also in this release: the Gear score line sits under ShaguScore (`/eca scorey`), shorter help",
+  "published": "2026-10-17T20:03:21Z",
+  "prerelease": false,
+  "url": "https://github.com/notforever-ship-it/EquipCompareAdv/releases/tag/v1.6.0"
+}

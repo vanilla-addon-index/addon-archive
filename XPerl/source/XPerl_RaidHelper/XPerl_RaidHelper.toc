@@ -1,0 +1,7 @@
+## Interface: 11200
+## Title: X-Perl Raid Helper by |cFFFF8080Redbu11|r
+## Notes: Replaces CTRA MT Targets window with extra functionality, and provides assists frame. https://github.com/Redbu11dev/X-Perl-UnitFrames
+## Author: Redbu11
+## SavedVariablesPerCharacter: XPerlConfigHelper, XPerl_MainTanks
+XPerl_RaidHelper.xml
+XPerl_AssistFrame.xml

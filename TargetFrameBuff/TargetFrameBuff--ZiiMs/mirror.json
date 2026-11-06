@@ -1,0 +1,33 @@
+{
+  "upstream": "https://github.com/ZiiMs/TargetFrameBuff",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "ZiiMs",
+    "repo": "TargetFrameBuff",
+    "name": "TargetFrameBuff",
+    "url": "https://github.com/ZiiMs/TargetFrameBuff",
+    "api": "https://api.github.com/repos/ZiiMs/TargetFrameBuff"
+  },
+  "commit": "9ad8acbe28661b72e60185399ee79f67835fa72d",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "4188f50850b87e81cc4f56e0ece81b7fd60c7a15cd93e7cc5887ecadd6933d10",
+      "bytes": 595
+    },
+    "TargetFrameBuff.lua": {
+      "sha256": "3fc70996ce92774a7d761072e07d1a13c94ad9c77d7cc8bb666e56cbb35ef846",
+      "bytes": 3046
+    },
+    "TargetFrameBuff.toc": {
+      "sha256": "a3fb3f0ccb8d706ae022951b125d4b91cf32dd2572dc170aac2d255a3f75e4dd",
+      "bytes": 202
+    },
+    "TargetFrameBuff.xml": {
+      "sha256": "215a76be4ec3d95dcf9fd25340b0adb6f30e1f0c821d7f99576769544c66fb00",
+      "bytes": 3602
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

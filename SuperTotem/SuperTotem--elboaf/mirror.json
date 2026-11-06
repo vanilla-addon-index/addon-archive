@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/elboaf/SuperTotem",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "elboaf",
+    "repo": "SuperTotem",
+    "name": "SuperTotem",
+    "url": "https://github.com/elboaf/SuperTotem",
+    "api": "https://api.github.com/repos/elboaf/SuperTotem"
+  },
+  "commit": "936405bfe7931e7368f39e3e14e3c9cb807127ce",
+  "sourceFiles": {
+    "libs/DoiteGlow.lua": {
+      "sha256": "738dd879b3e48356041b0299c9d99f2583cde56e67116ce7c5e9b386201c9b88",
+      "bytes": 3354
+    },
+    "README.md": {
+      "sha256": "c57a6e91392ad97ba29cb0192ddc0c03c02a470ee504529908d391a55f19d7d4",
+      "bytes": 11004
+    },
+    "SuperTotem.lua": {
+      "sha256": "c12d2ad3c6e42aed05e5ccd0136c84c79c5a9caac3205a83ab01dc5124328641",
+      "bytes": 142094
+    },
+    "SuperTotem.toc": {
+      "sha256": "4c4622a4740b841f0895d06da9d2c7d0d5d41e58a2dafdecfd0a09aa2ff060c8",
+      "bytes": 229
+    },
+    "Textures/IconAlert.tga": {
+      "sha256": "7405c34a77a983fbb79d7d835f5abe970e5e127002078d447d195c46330b0435",
+      "bytes": 24247
+    },
+    "Textures/IconAlertAnts.tga": {
+      "sha256": "dd5c9c0a4b31e99701cf300ab031e3fa1bb72142e200d22c703678a513063918",
+      "bytes": 58207
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

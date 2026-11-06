@@ -1,0 +1,101 @@
+{
+  "upstream": "https://github.com/Brqje/SpellAlert",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Brqje",
+    "repo": "SpellAlert",
+    "name": "SpellAlert",
+    "url": "https://github.com/Brqje/SpellAlert",
+    "api": "https://api.github.com/repos/Brqje/SpellAlert"
+  },
+  "commit": "aef5feec2b24a46c04a84596d9a494e4c7af4a5c",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "c418a306883df4bca99aab7cec76ca2e96254e06cf69bddfa699f50e84f9f02d",
+      "bytes": 242
+    },
+    "SpellAlert/Alertframe.lua": {
+      "sha256": "6679bcda095c6feab6f4816b4b6b059c5f9eff7ebec34c272a8eb3c980be027e",
+      "bytes": 1732
+    },
+    "SpellAlert/Event.lua": {
+      "sha256": "d156aaaafbcc2123b8934bf3b38980742246d2240a342a2b17121c3710d73867",
+      "bytes": 5702
+    },
+    "SpellAlert/Init.lua": {
+      "sha256": "d721363b564b4e8daa797c46ee73b5cc1445486a6bbe3dc2afb1de02a72b14ca",
+      "bytes": 7062
+    },
+    "SpellAlert/localization.de.lua": {
+      "sha256": "6586ef3777bb5f25b74a1a3bdb1e70fdaa9b19e8d14dfe7c69b458f51fbaea73",
+      "bytes": 984
+    },
+    "SpellAlert/localization.fr.lua": {
+      "sha256": "61e110b2eec09a7df509a9f014b9b3548a5605ce3ea89fc6dd193e288c4d7edf",
+      "bytes": 1136
+    },
+    "SpellAlert/localization.lua": {
+      "sha256": "1715a04f8b35d77150c8e67547282300dde98f2833011878c39411899de92b4f",
+      "bytes": 842
+    },
+    "SpellAlert/localization.sp.lua": {
+      "sha256": "86d95bdff35a737254e2f84f3bcadc0c3ecfb1df4d6d0aa4732942d2d7b7ce18",
+      "bytes": 48
+    },
+    "SpellAlert/MarsMessageParser.lua": {
+      "sha256": "36029fd08256c2e37a48bdf64bf9201aa8373ba5fa6640f2c3c87051fe238bbf",
+      "bytes": 5561
+    },
+    "SpellAlert/README.txt": {
+      "sha256": "0e93848ae91b624c373ed624aaa1da3f9aed3db472d5a554a4e97dd65cf0e3a9",
+      "bytes": 5040
+    },
+    "SpellAlert/Slashcmd.lua": {
+      "sha256": "f3d2a8e49b329916c214303fe43b28b1f0db208aff812e590595664d2398ac6c",
+      "bytes": 8000
+    },
+    "SpellAlert/SpellAlert.toc": {
+      "sha256": "155a0ecb883ef7742350755035c87f7de40ac148ad52a81b40fbaf1f506ba2b6",
+      "bytes": 479
+    },
+    "SpellAlert/SpellAlert.xml": {
+      "sha256": "bb39f15b59024e7c2c580e525a633351f73f407c0af8849ad400d0eaa6643c56",
+      "bytes": 10092
+    },
+    "SpellAlert/USEFUL INFORMATIONS.txt": {
+      "sha256": "06d7e0023638ff40f7f075d23ead0cf49daccbe029eedc39227749f50a0b8316",
+      "bytes": 2114
+    },
+    "SpellAlertOptions/localization.de.lua": {
+      "sha256": "9d06af7acf4bf0918212876e539113fb5cb45f4084884e89def33a1c304741e6",
+      "bytes": 1506
+    },
+    "SpellAlertOptions/localization.fr.lua": {
+      "sha256": "c87365fece0a96043153b05ded67298f533e2fa405ee1bac62a21b3321a573b8",
+      "bytes": 1559
+    },
+    "SpellAlertOptions/localization.lua": {
+      "sha256": "c3869f9e3a8a2ad3ec862186538b2c707909e734831fa66b3ddee43c081577a6",
+      "bytes": 1433
+    },
+    "SpellAlertOptions/SpellAlertOptions.lua": {
+      "sha256": "abd00dc32f6fd13c3cab05e2a0ab6f62896cc96b67ee765054e6cfebd5b9c0f7",
+      "bytes": 6616
+    },
+    "SpellAlertOptions/SpellAlertOptions.toc": {
+      "sha256": "95d22bce88ffea195f1986dc82bcdf4f9eec6ccfa61d3976f14f44ecaf8b85cb",
+      "bytes": 560
+    },
+    "SpellAlertOptions/SpellAlertOptions.xml": {
+      "sha256": "d099e5d1ee35cecd03e0508ff61936af8776097171162f4ac22b85364a6562e6",
+      "bytes": 11813
+    },
+    "SpellAlertOptions/SpellAlertOptionsTemplates.xml": {
+      "sha256": "ae9de7f0ce837c63794c26376131f5c6607dbdd53c350d2c6c82685a6f53f140",
+      "bytes": 14568
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

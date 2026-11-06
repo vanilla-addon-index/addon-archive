@@ -1,0 +1,105 @@
+{
+  "upstream": "https://github.com/0ldi/FelwoodGather",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "0ldi",
+    "repo": "FelwoodGather",
+    "name": "FelwoodGather",
+    "url": "https://github.com/0ldi/FelwoodGather",
+    "api": "https://api.github.com/repos/0ldi/FelwoodGather"
+  },
+  "commit": "e99c99109bcd300565d5917f0703893b5fcfc56d",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "8fdf21d2124e9e1497c332631b1cdae3b9431bb111c7ba87c922af455a5c3a79",
+      "bytes": 324
+    },
+    "FelwoodGather/Bindings.xml": {
+      "sha256": "2554198c19d48a5f4c4a001a963b4185f8e8ec480c862da457c26487d95f35d3",
+      "bytes": 362
+    },
+    "FelwoodGather/FelwoodGather.lua": {
+      "sha256": "db54592433bf0957ecb4295838798f53c77565c3674e10237004a8c9e03749b9",
+      "bytes": 40734
+    },
+    "FelwoodGather/FelwoodGather.toc": {
+      "sha256": "dacf3323c19c03f5431bcfcf9ba8ef4eb12e2e472519b2709cbede2a300cd1c6",
+      "bytes": 279
+    },
+    "FelwoodGather/FelwoodGather.xml": {
+      "sha256": "f9569555f19546a290c195899bc18ce3d3e610614408ded6ee7d2b6ae2231b60",
+      "bytes": 22623
+    },
+    "FelwoodGather/FelwoodGatherBG1.tga": {
+      "sha256": "46cca5dbe89c3636be72316dd5cddba6b20ca0cb76396730cadf24658df20c42",
+      "bytes": 196652
+    },
+    "FelwoodGather/FelwoodGatherBG2.tga": {
+      "sha256": "5b0c2a7a1adf9291d1f193e3c137200789b6bb93e6f15575bebbbfd41f88aa2e",
+      "bytes": 196652
+    },
+    "FelwoodGather/FelwoodGatherBG3.tga": {
+      "sha256": "58e0c80e5d3cfb7aba366b3fbcb36f10546cb30042167d4d18e58fa30bbb8a81",
+      "bytes": 30687
+    },
+    "FelwoodGather/FelwoodGatherBG4.tga": {
+      "sha256": "8eeaed870fda958133f8599e7c91dd6b543d9456bebe1230815e678db0883e15",
+      "bytes": 99565
+    },
+    "FelwoodGather/FelwoodGatherBG5.tga": {
+      "sha256": "de3cf972355899de79c4937d419403b03f25dc09d71518518f7f04caf64d0086",
+      "bytes": 104881
+    },
+    "FelwoodGather/FelwoodGatherBG6.tga": {
+      "sha256": "65cf3d3bb0e3dd028c4662216f026aadb1ba35de46ee66f132be882b077afab5",
+      "bytes": 15335
+    },
+    "FelwoodGather/FelwoodGatherMap.lua": {
+      "sha256": "71cb153592303aa39291172634e6569c262a37a70c366200953204cab18dde99",
+      "bytes": 15872
+    },
+    "FelwoodGather/FelwoodGatherMap.xml": {
+      "sha256": "936daf01a8a88b017b0b914431ec5b5b6947bbdda4828ab0827a719494aaca43",
+      "bytes": 21100
+    },
+    "FelwoodGather/Localization.lua": {
+      "sha256": "40fb3b46df19631e95e06096b3edb579a3991aa789795890d6ae7ff8d5d80865",
+      "bytes": 13635
+    },
+    "FelwoodGather/PartyIcon.tga": {
+      "sha256": "622a5c4827a0430f2427c661c7cc303420023f245f03e945bade0da9721dc72b",
+      "bytes": 665
+    },
+    "FelwoodGather/readme_j.txt": {
+      "sha256": "4191224f255c756ab0746d9f7aef4973b329a6a8f0d8b4e937a14edd6856b2c2",
+      "bytes": 2705
+    },
+    "FelwoodGather/readme.txt": {
+      "sha256": "6eaa699a7282da436f64b5b4c3ea665b69da56a582c2a8ec08ffbe0964e77e0c",
+      "bytes": 7468
+    },
+    "FuBar_FwgFu/FuBar_FwgFu.toc": {
+      "sha256": "65308cb6ae6165be2c739d1813a7adab3e0f7b7576480f3d9198c829bccacb48",
+      "bytes": 207
+    },
+    "FuBar_FwgFu/FwgFu.lua": {
+      "sha256": "823de6dc874b69019a610d1d8e5c8756937c158e2c874123cf08f6f2372a8065",
+      "bytes": 6277
+    },
+    "FuBar_FwgFu/FwgFuLocals.lua": {
+      "sha256": "7c58d0594f6c7aa49ed37ece915ede6ded1991dd5c447eecfd9142f2d600d35d",
+      "bytes": 1663
+    },
+    "FuBar_FwgFu/readme.txt": {
+      "sha256": "f3646e007f2642a68135ff5ebb9162fb1c73d046ae40d8ff40bd8057289fe09b",
+      "bytes": 412
+    },
+    "README.md": {
+      "sha256": "4d3d0d87a99090d77bab8df8fae3e17b4e10efe1683c80d417d9ee63de9681ed",
+      "bytes": 3388
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

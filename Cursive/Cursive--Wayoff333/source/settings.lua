@@ -1,0 +1,1085 @@
+if not Cursive.nampower then
+	return
+end
+
+local L = AceLibrary("AceLocale-2.2"):new("Cursive")
+Cursive:RegisterDB("CursiveDB")
+Cursive:RegisterDefaults("profile", {
+	caption = L["Cursive"],
+	anchor = "CENTER",
+	x = -240,
+	y = 120,
+
+	-- editable
+	enabled = true,
+	clickthrough = false,
+	showbackdrop = false,
+	showtitle = true,
+	showgcdbar = true,
+	gcdbarheight = 3,
+	gcdbarwidth = 200,
+	gcdbarcolor = { r = 1, g = 0.85, b = 0.1 },
+	sacrificebarcolor = { r = 0.6, g = 0.2, b = 0.85 },
+	sacrificebarwidth = 200,
+	sacrificebarheight = 14,
+	sacrificebarorientation = "HORIZONTAL",
+	uifont = "Fonts\\FRIZQT__.TTF",
+	showghostcurse = true,
+	showghostcorruption = true,
+	showghostimmolate = true,
+	showghostsiphonlife = true,
+	ghosticonalpha = 0.4,
+	ghosticongreyscale = false,
+	showallmissingghosts = true,
+	flashonexpiring = true,
+	notifyshadowvuln = true,
+	shadowvulnflashspeed = 8,
+	othercursealpha = 0.6,
+	showtargetindicator = true,
+	showraidicons = true,
+	showhealthbar = true,
+	showunitname = true,
+
+	malediction = true,
+
+	shareddebuffs = {
+		faeriefire = false,
+	},
+
+	alwaysshowcurrenttarget = true,
+
+	scale = 1,
+	healthwidth = 100,
+	height = 16,
+	bartexture = "Interface\\TargetingFrame\\UI-StatusBar",
+
+	raidiconsize = 16,
+	curseiconsize = 16,
+	maxcurses = 5,
+	spacing = 4,
+	maxrow = 10,
+	maxcol = 1,
+	textsize = 9,
+	cursetimersize = 11,
+
+	curseordering = L["Expiring soonest -> latest"],
+	curseshowdecimals = false,
+	invertbars = false,
+	expandupwards = false,
+
+	filterincombat = true,
+	filterhostile = true,
+	filterattackable = true,
+	filterrange = false,
+	filterraidmark = false,
+	filterhascurse = false,
+	filterignored = true,
+
+	ignorelist = {},
+	ignorelistuseregex = false,
+})
+
+local function splitIgnoreString(str, delimiter)
+	local result = {}
+	local from = 1
+	local delim_from, delim_to = string.find(str, delimiter, from)
+	while delim_from do
+		local token = string.sub(str, from, delim_from - 1)
+		if string.len(token) >= 3 then
+			table.insert(result, token)
+		end
+		from = delim_to + 1
+		delim_from, delim_to = string.find(str, delimiter, from)
+	end
+	local token = string.sub(str, from)
+	if string.len(token) >= 3 then
+		table.insert(result, token)
+	end
+	return result
+end
+
+local barOptions = {
+	["flashonexpiring"] = {
+		type = "toggle",
+		name = "Flash Icon On Expiring",
+		desc = "Flash a curse/DoT icon when it's about to fall off (same threshold as the expiring sound)",
+		order = 96,
+		get = function()
+			return Cursive.db.profile.flashonexpiring
+		end,
+		set = function(v)
+			Cursive.db.profile.flashonexpiring = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["othercursealpha"] = {
+		type = "range",
+		name = "Other Players' Curse Opacity",
+		desc = "How visible curses cast by OTHER warlocks appear (lower = more faded/greyed out). This client doesn't support a true continuous greyscale amount, so this dims via transparency instead, on top of the existing desaturation.",
+		order = 97,
+		min = 20,
+		max = 100,
+		step = 5,
+		get = function()
+			return math.floor(Cursive.db.profile.othercursealpha * 100 + 0.5)
+		end,
+		set = function(v)
+			Cursive.db.profile.othercursealpha = v / 100
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["invertbars"] = {
+		type = "toggle",
+		name = "Invert Bar Display",
+		desc = "Show sections in order 3-2-1 and reverse element order in sections 1 and 3",
+		order = 1,
+		get = function()
+			return Cursive.db.profile.invertbars
+		end,
+		set = function(v)
+			Cursive.db.profile.invertbars = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["expandupwards"] = {
+		type = "toggle",
+		name = "Expand Bars Upwards",
+		desc = "Make bars expand upwards instead of downwards",
+		order = 2,
+		get = function()
+			return Cursive.db.profile.expandupwards
+		end,
+		set = function(v)
+			Cursive.db.profile.expandupwards = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["spacer1"] = {
+		type = "header",
+		name = "Section Display",
+		order = 5,
+	},
+	["showtargetindicator"] = {
+		type = "toggle",
+		name = L["Show Targeting Arrow"],
+		desc = L["Show Targeting Arrow"],
+		order = 10,
+		get = function()
+			return Cursive.db.profile.showtargetindicator
+		end,
+		set = function(v)
+			Cursive.db.profile.showtargetindicator = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["showraidicons"] = {
+		type = "toggle",
+		name = L["Show Raid Icons"],
+		desc = L["Show Raid Icons"],
+		order = 15,
+		get = function()
+			return Cursive.db.profile.showraidicons
+		end,
+		set = function(v)
+			Cursive.db.profile.showraidicons = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["showhealthbar"] = {
+		type = "toggle",
+		name = L["Show Health Bar"],
+		desc = L["Show Health Bar"],
+		order = 20,
+		get = function()
+			return Cursive.db.profile.showhealthbar
+		end,
+		set = function(v)
+			Cursive.db.profile.showhealthbar = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["showunitname"] = {
+		type = "toggle",
+		name = L["Show Unit Name"],
+		desc = L["Show Unit Name"],
+		order = 25,
+		get = function()
+			return Cursive.db.profile.showunitname
+		end,
+		set = function(v)
+			Cursive.db.profile.showunitname = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["alwaysshowcurrenttarget"] = {
+		type = "toggle",
+		name = "Always Show Current Target",
+		desc = "Always show current target at the bottom of the mob list if it is not already shown",
+		order = 30,
+		get = function()
+			return Cursive.db.profile.alwaysshowcurrenttarget
+		end,
+		set = function(v)
+			Cursive.db.profile.alwaysshowcurrenttarget = v
+		end,
+	},
+	["spacer2"] = {
+		type = "header",
+		name = "Size & Appearance",
+		order = 35,
+	},
+	["barwidth"] = {
+		type = "range",
+		name = L["Health Bar/Unit Name Width"],
+		desc = L["Health Bar/Unit Name Width"],
+		order = 40,
+		min = 30,
+		max = 150,
+		step = 5,
+		get = function()
+			return Cursive.db.profile.healthwidth
+		end,
+		set = function(v)
+			if v ~= Cursive.db.profile.healthwidth then
+				Cursive.db.profile.healthwidth = v
+				Cursive.UpdateFramesFromConfig()
+			end
+		end,
+	},
+	["barheight"] = {
+		type = "range",
+		name = L["Health Bar/Unit Name Height"],
+		desc = L["Health Bar/Unit Name Height"],
+		order = 50,
+		min = 10,
+		max = 30,
+		step = 2,
+		get = function()
+			return Cursive.db.profile.height
+		end,
+		set = function(v)
+			if v ~= Cursive.db.profile.height then
+				Cursive.db.profile.height = v
+				Cursive.UpdateFramesFromConfig()
+			end
+		end,
+	},
+	["bartexture"] = {
+		type = "text",
+		name = L["Health Bar Texture"],
+		desc = L["Health Bar Texture Desc"],
+		order = 55,
+		usage = "Interface\\TargetingFrame\\UI-StatusBar",
+		get = function()
+			return Cursive.db.profile.bartexture
+		end,
+		set = function(v)
+			if v ~= Cursive.db.profile.bartexture then
+				Cursive.db.profile.bartexture = v
+				Cursive.UpdateFramesFromConfig()
+			end
+		end,
+	},
+	["raidiconsize"] = {
+		type = "range",
+		name = L["Raid Icon Size"],
+		desc = L["Raid Icon Size"],
+		order = 60,
+		min = 10,
+		max = 30,
+		step = 1,
+		get = function()
+			return Cursive.db.profile.raidiconsize
+		end,
+		set = function(v)
+			if v ~= Cursive.db.profile.raidiconsize then
+				Cursive.db.profile.raidiconsize = v
+				Cursive.UpdateFramesFromConfig()
+			end
+		end,
+	},
+	["curseiconsize"] = {
+		type = "range",
+		name = L["Curse Icon Size"],
+		desc = L["Curse Icon Size"],
+		order = 70,
+		min = 10,
+		max = 30,
+		step = 1,
+		get = function()
+			return Cursive.db.profile.curseiconsize
+		end,
+		set = function(v)
+			if v ~= Cursive.db.profile.curseiconsize then
+				Cursive.db.profile.curseiconsize = v
+				Cursive.UpdateFramesFromConfig()
+			end
+		end,
+	},
+	["curseordering"] = {
+		type = "text",
+		name = L["Curse Ordering"],
+		desc = L["Curse Ordering"],
+		order = 72,
+		get = function()
+			return Cursive.db.profile.curseordering
+		end,
+		validate = { L["Order applied"], L["Expiring soonest -> latest"], L["Expiring latest -> soonest"] },
+		set = function(v)
+			Cursive.db.profile.curseordering = v
+		end,
+	},
+	["curseshowdecimals"] = {
+		type = "toggle",
+		name = L["Decimal Duration"],
+		desc = L["Decimal Duration Desc"],
+		order = 74,
+		get = function()
+			return Cursive.db.profile.curseshowdecimals
+		end,
+		set = function(v)
+			Cursive.db.profile.curseshowdecimals = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["spacing"] = {
+		type = "range",
+		name = L["Spacing"],
+		desc = L["Spacing"],
+		order = 80,
+		min = 0,
+		max = 10,
+		step = 1,
+		get = function()
+			return Cursive.db.profile.spacing
+		end,
+		set = function(v)
+			if v ~= Cursive.db.profile.spacing then
+				Cursive.db.profile.spacing = v
+				Cursive.UpdateFramesFromConfig()
+			end
+		end,
+	},
+	["textsize"] = {
+		type = "range",
+		name = L["Name/Hp Text Size"],
+		desc = L["Name/Hp Text Size"],
+		order = 90,
+		min = 8,
+		max = 20,
+		step = 1,
+		get = function()
+			return Cursive.db.profile.textsize
+		end,
+		set = function(v)
+			if v ~= Cursive.db.profile.textsize then
+				Cursive.db.profile.textsize = v
+				Cursive.UpdateFramesFromConfig()
+			end
+		end,
+	},
+	["cursetimersize"] = {
+		type = "range",
+		name = L["Curse Timer Text Size"],
+		desc = L["Curse Timer Text Size"],
+		order = 95,
+		min = 6,
+		max = 20,
+		step = 1,
+		get = function()
+			return Cursive.db.profile.cursetimersize
+		end,
+		set = function(v)
+			if v ~= Cursive.db.profile.cursetimersize then
+				Cursive.db.profile.cursetimersize = v
+				Cursive.UpdateFramesFromConfig()
+			end
+		end,
+	},
+	["scale"] = {
+		type = "range",
+		name = L["Scale"],
+		desc = L["Scale"],
+		order = 100,
+		min = 0.5,
+		max = 2,
+		step = 0.1,
+		get = function()
+			return Cursive.db.profile.scale
+		end,
+		set = function(v)
+			if v ~= Cursive.db.profile.scale then
+				Cursive.db.profile.scale = v
+				Cursive.UpdateFramesFromConfig()
+			end
+		end,
+	},
+}
+
+local ghostOptions = {
+	["showghostcurse"] = {
+		type = "toggle",
+		name = "Show Ghost Curse Icon",
+		desc = "Show a faded icon suggesting a curse to cast when the target has none",
+		order = 1,
+		get = function()
+			return Cursive.db.profile.showghostcurse
+		end,
+		set = function(v)
+			Cursive.db.profile.showghostcurse = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["showghostcorruption"] = {
+		type = "toggle",
+		name = "Show Ghost Corruption",
+		desc = "Show a faded icon suggesting Corruption when missing from the target",
+		order = 2,
+		get = function()
+			return Cursive.db.profile.showghostcorruption
+		end,
+		set = function(v)
+			Cursive.db.profile.showghostcorruption = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["showghostimmolate"] = {
+		type = "toggle",
+		name = "Show Ghost Immolate",
+		desc = "Show a faded icon suggesting Immolate when missing from the target",
+		order = 3,
+		get = function()
+			return Cursive.db.profile.showghostimmolate
+		end,
+		set = function(v)
+			Cursive.db.profile.showghostimmolate = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["showghostsiphonlife"] = {
+		type = "toggle",
+		name = "Show Ghost Siphon Life",
+		desc = "Show a faded icon suggesting Siphon Life when missing from the target",
+		order = 4,
+		get = function()
+			return Cursive.db.profile.showghostsiphonlife
+		end,
+		set = function(v)
+			Cursive.db.profile.showghostsiphonlife = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["ghostalpha"] = {
+		type = "range",
+		name = "Ghost Icon Transparency",
+		desc = "How faded the ghost icons appear (higher = more visible)",
+		order = 5,
+		min = 10,
+		max = 100,
+		step = 5,
+		get = function()
+			return math.floor(Cursive.db.profile.ghosticonalpha * 100 + 0.5)
+		end,
+		set = function(v)
+			Cursive.db.profile.ghosticonalpha = v / 100
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["ghostgreyscale"] = {
+		type = "toggle",
+		name = "Greyscale Ghost Icons",
+		desc = "Desaturate the ghost icons",
+		order = 6,
+		get = function()
+			return Cursive.db.profile.ghosticongreyscale
+		end,
+		set = function(v)
+			Cursive.db.profile.ghosticongreyscale = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["showallmissingghosts"] = {
+		type = "toggle",
+		name = "Show All Missing (not just next)",
+		desc = "Show a ghost icon for every missing curse/DoT at once, instead of just the next one in priority order",
+		order = 7,
+		get = function()
+			return Cursive.db.profile.showallmissingghosts
+		end,
+		set = function(v)
+			Cursive.db.profile.showallmissingghosts = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["notifyshadowvuln"] = {
+		type = "toggle",
+		name = "Show Shadow Vulnerability Icon",
+		desc = "Show a dim icon in slot 1 that lights up and flashes when Shadow Vulnerability is active on the target (procs on Shadow Bolt crit with Improved Shadow Bolt)",
+		order = 8,
+		get = function()
+			return Cursive.db.profile.notifyshadowvuln
+		end,
+		set = function(v)
+			Cursive.db.profile.notifyshadowvuln = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+	["shadowvulnflashspeed"] = {
+		type = "range",
+		name = "Shadow Vulnerability Flash Speed",
+		desc = "How fast the Shadow Vulnerability icon flashes when active (shows a live preview while adjusting)",
+		order = 9,
+		min = 1,
+		max = 20,
+		step = 1,
+		get = function()
+			return Cursive.db.profile.shadowvulnflashspeed
+		end,
+		set = function(v)
+			Cursive.db.profile.shadowvulnflashspeed = v
+			Cursive.ui.PreviewShadowVulnFlash()
+		end,
+	},
+}
+
+local mobFilters = {
+	["incombat"] = {
+		type = "toggle",
+		name = L["In Combat"],
+		desc = L["In Combat"],
+		order = 1,
+		get = function()
+			return Cursive.db.profile.filterincombat
+		end,
+		set = function(v)
+			Cursive.db.profile.filterincombat = v
+		end,
+	},
+	["hostile"] = {
+		type = "toggle",
+		name = L["Hostile"],
+		desc = L["Hostile"],
+		order = 11,
+		get = function()
+			return Cursive.db.profile.filterhostile
+		end,
+		set = function(v)
+			Cursive.db.profile.filterhostile = v
+		end,
+	},
+	["attackable"] = {
+		type = "toggle",
+		name = L["Attackable"],
+		desc = L["Attackable"],
+		order = 22,
+		get = function()
+			return Cursive.db.profile.filterattackable
+		end,
+		set = function(v)
+			Cursive.db.profile.filterattackable = v
+		end,
+	},
+	["player"] = {
+		type = "toggle",
+		name = L["Player"],
+		desc = L["Player Desc"],
+		order = 33,
+		get = function()
+			return Cursive.db.profile.filterplayer
+		end,
+		set = function(v)
+			Cursive.db.profile.filterplayer = v
+		end,
+	},
+	["notplayer"] = {
+		type = "toggle",
+		name = L["Not Player"],
+		desc = L["Not Player Desc"],
+		order = 33,
+		get = function()
+			return Cursive.db.profile.filternotplayer
+		end,
+		set = function(v)
+			Cursive.db.profile.filternotplayer = v
+		end,
+	},
+	["range"] = {
+		type = "toggle",
+		name = IsSpellInRange and L["Within 45 Range"] or L["Within 28 Range"],
+		desc = IsSpellInRange and L["Within 45 Range"] or L["Within 28 Range"],
+		order = 44,
+		get = function()
+			return Cursive.db.profile.filterrange
+		end,
+		set = function(v)
+			Cursive.db.profile.filterrange = v
+		end,
+	},
+	["raidmark"] = {
+		type = "toggle",
+		name = L["Has Raid Mark"],
+		desc = L["Has Raid Mark"],
+		order = 55,
+		get = function()
+			return Cursive.db.profile.filterraidmark
+		end,
+		set = function(v)
+			Cursive.db.profile.filterraidmark = v
+		end,
+	},
+	["hascurse"] = {
+		type = "toggle",
+		name = L["Has Curse"],
+		desc = L["Only show units you have cursed"],
+		order = 66,
+		get = function()
+			return Cursive.db.profile.filterhascurse
+		end,
+		set = function(v)
+			Cursive.db.profile.filterhascurse = v
+		end,
+	},
+	["notignored"] = {
+		type = "toggle",
+		name = L["Not ignored"],
+		desc = L["Not ignored"],
+		order = 67,
+		get = function()
+			return Cursive.db.profile.filterignored
+		end,
+		set = function(v)
+			Cursive.db.profile.filterignored = v
+		end,
+	},
+	["ignorelist"] = {
+		type = "text",
+		name = L["Ignored Mobs List (Enter to save)"],
+		desc = L["Ignored Mobs Desc"],
+		usage = "whelp, black dragonkin, player3",
+		order = 68,
+		get = function()
+			if Cursive.db.profile.ignorelist and table.getn(Cursive.db.profile.ignorelist) > 0 then
+				return table.concat(Cursive.db.profile.ignorelist, ",") or ""
+			end
+			return ""
+		end,
+		set = function(v)
+			if not v or v == "" then
+				Cursive.db.profile.ignorelist = {}
+			else
+				Cursive.db.profile.ignorelist = splitIgnoreString(v, ",");
+			end
+			-- check for common lua regex patterns
+			Cursive.db.profile.ignorelistuseregex = string.find(v, "[*+%%?]") ~= nil
+		end,
+	},
+}
+
+local sharedDebuffs = {
+	["sharedFaerieFire"] = {
+		type = "toggle",
+		name = L["Shared Faerie Fire"],
+		desc = L["This will show other player's Faerie Fires and avoid trying to cast Faerie Fire on those mobs"],
+		order = 10,
+		get = function()
+			return Cursive.db.profile.shareddebuffs.faeriefire
+		end,
+		set = function(v)
+			Cursive.db.profile.shareddebuffs.faeriefire = v
+			Cursive.UpdateFramesFromConfig()
+		end,
+	},
+}
+
+Cursive.cmdtable = {
+	type = "group",
+	handler = Cursive,
+	args = {
+		["enabled"] = {
+			type = "toggle",
+			name = L["Enabled"],
+			desc = L["Enable/Disable Cursive"],
+			order = 1,
+			get = function()
+				return Cursive.db.profile.enabled
+			end,
+			set = function(v)
+				Cursive.db.profile.enabled = v
+				if v == true then
+					Cursive.core.enable()
+				else
+					Cursive.core.disable()
+				end
+			end,
+		},
+		["uifont"] = {
+			type = "select",
+			name = "Font",
+			desc = "Font used for unit row text, curse/timer numbers, and the Sacrifice bar (click to cycle through options). Preview below updates live.",
+			order = -100,
+			options = {
+				{ label = "Friz Quadrata (Default)", value = "Fonts\\FRIZQT__.TTF" },
+				{ label = "Arial Narrow", value = "Fonts\\ARIALN.TTF" },
+				{ label = "Morpheus", value = "Fonts\\MORPHEUS.TTF" },
+				{ label = "Skurri", value = "Fonts\\SKURRI.TTF" },
+				{ label = "Adobe Blank", value = "Interface\\AddOns\\pfUI\\fonts\\AdobeBlank.ttf" },
+				{ label = "Big Noodle Titling", value = "Interface\\AddOns\\pfUI\\fonts\\BigNoodleTitling.ttf" },
+				{ label = "Continuum", value = "Interface\\AddOns\\pfUI\\fonts\\Continuum.ttf" },
+				{ label = "Die Die Die", value = "Interface\\AddOns\\pfUI\\fonts\\DieDieDie.ttf" },
+				{ label = "Expressway", value = "Interface\\AddOns\\pfUI\\fonts\\Expressway.ttf" },
+				{ label = "Homespun", value = "Interface\\AddOns\\pfUI\\fonts\\Homespun.ttf" },
+				{ label = "Hooge", value = "Interface\\AddOns\\pfUI\\fonts\\Hooge.ttf" },
+				{ label = "Myriad Pro", value = "Interface\\AddOns\\pfUI\\fonts\\Myriad-Pro.ttf" },
+				{ label = "PT Sans Narrow Bold", value = "Interface\\AddOns\\pfUI\\fonts\\PT-Sans-Narrow-Bold.ttf" },
+				{ label = "PT Sans Narrow", value = "Interface\\AddOns\\pfUI\\fonts\\PT-Sans-Narrow-Regular.ttf" },
+				{ label = "Roboto Mono", value = "Interface\\AddOns\\pfUI\\fonts\\RobotoMono.ttf" },
+			},
+			get = function()
+				return Cursive.db.profile.uifont
+			end,
+			set = function(v)
+				Cursive.db.profile.uifont = v
+				Cursive.UpdateFramesFromConfig()
+				if Cursive.ui.sacrificeBar then
+					Cursive.ui.SafeSetFont(Cursive.ui.sacrificeBar.label, v, 10, "OUTLINE")
+					Cursive.ui.SafeSetFont(Cursive.ui.sacrificeBar.absorbText, v, 10, "OUTLINE")
+				end
+				if Cursive.ui.UpdateFontPreview then
+					Cursive.ui.UpdateFontPreview(v)
+				end
+			end,
+		},
+		["showtitle"] = {
+			type = "toggle",
+			name = L["Show Title"],
+			desc = L["Show the title of the frame"],
+			order = 3,
+			get = function()
+				return Cursive.db.profile.showtitle
+			end,
+			set = function(v)
+				Cursive.db.profile.showtitle = v
+				Cursive.UpdateFramesFromConfig()
+			end,
+		},
+		["showgcdbar"] = {
+			type = "toggle",
+			name = "Show GCD Bar",
+			desc = "Show a swing-timer style bar for your global cooldown",
+			order = 4,
+			get = function()
+				return Cursive.db.profile.showgcdbar
+			end,
+			set = function(v)
+				Cursive.db.profile.showgcdbar = v
+				Cursive.UpdateFramesFromConfig()
+			end,
+		},
+		["gcdbarheight"] = {
+			type = "range",
+			name = "GCD Bar Height",
+			desc = "Height of the GCD swing-timer bar",
+			order = 41,
+			min = 1,
+			max = 20,
+			step = 1,
+			get = function()
+				return Cursive.db.profile.gcdbarheight
+			end,
+			set = function(v)
+				if v ~= Cursive.db.profile.gcdbarheight then
+					Cursive.db.profile.gcdbarheight = v
+					Cursive.UpdateFramesFromConfig()
+				end
+				Cursive.ui.PreviewGcdBar()
+			end,
+		},
+		["gcdbarwidth"] = {
+			type = "range",
+			name = "GCD Bar Width",
+			desc = "Width of the GCD swing-timer bar",
+			order = 42,
+			min = 20,
+			max = 400,
+			step = 5,
+			get = function()
+				return Cursive.db.profile.gcdbarwidth
+			end,
+			set = function(v)
+				if v ~= Cursive.db.profile.gcdbarwidth then
+					Cursive.db.profile.gcdbarwidth = v
+					Cursive.UpdateFramesFromConfig()
+				end
+				Cursive.ui.PreviewGcdBar()
+			end,
+		},
+		["gcdbarcolor"] = {
+			type = "color",
+			name = "GCD Bar Color",
+			desc = "Color of the GCD swing-timer bar (shows a preview fill while you adjust it)",
+			order = 43,
+			get = function()
+				return Cursive.db.profile.gcdbarcolor.r, Cursive.db.profile.gcdbarcolor.g, Cursive.db.profile.gcdbarcolor.b
+			end,
+			set = function(r, g, b)
+				Cursive.db.profile.gcdbarcolor.r = r
+				Cursive.db.profile.gcdbarcolor.g = g
+				Cursive.db.profile.gcdbarcolor.b = b
+				Cursive.UpdateFramesFromConfig()
+				Cursive.ui.PreviewGcdBar()
+			end,
+		},
+		["sacrificebarcolor"] = {
+			type = "color",
+			name = "Sacrifice Bar Color",
+			desc = "Color of the Sacrifice shield bar (drag the bar itself anywhere on screen to reposition it)",
+			order = 44,
+			get = function()
+				return Cursive.db.profile.sacrificebarcolor.r, Cursive.db.profile.sacrificebarcolor.g, Cursive.db.profile.sacrificebarcolor.b
+			end,
+			set = function(r, g, b)
+				Cursive.db.profile.sacrificebarcolor.r = r
+				Cursive.db.profile.sacrificebarcolor.g = g
+				Cursive.db.profile.sacrificebarcolor.b = b
+				if Cursive.ui.sacrificeBar then
+					Cursive.ui.sacrificeBar:SetStatusBarColor(r, g, b, 0.9)
+				end
+				Cursive.ui.PreviewSacrificeBar()
+			end,
+		},
+		["sacrificebarwidth"] = {
+			type = "range",
+			name = "Sacrifice Bar Width",
+			desc = "Width of the Sacrifice shield bar",
+			order = 45,
+			min = 80,
+			max = 400,
+			step = 5,
+			get = function()
+				return Cursive.db.profile.sacrificebarwidth
+			end,
+			set = function(v)
+				Cursive.db.profile.sacrificebarwidth = v
+				if Cursive.ui.sacrificeBar then
+					Cursive.ui.sacrificeBar:SetWidth(v)
+				end
+				Cursive.ui.PreviewSacrificeBar()
+			end,
+		},
+		["sacrificebarheight"] = {
+			type = "range",
+			name = "Sacrifice Bar Height",
+			desc = "Height of the Sacrifice shield bar",
+			order = 46,
+			min = 6,
+			max = 40,
+			step = 1,
+			get = function()
+				return Cursive.db.profile.sacrificebarheight
+			end,
+			set = function(v)
+				Cursive.db.profile.sacrificebarheight = v
+				if Cursive.ui.sacrificeBar then
+					Cursive.ui.sacrificeBar:SetHeight(v)
+				end
+				Cursive.ui.PreviewSacrificeBar()
+			end,
+		},
+		["sacrificebarvertical"] = {
+			type = "toggle",
+			name = "Sacrifice Bar Vertical",
+			desc = "Orient the Sacrifice bar vertically (fills top-to-bottom as it counts down) instead of horizontally. Swaps width/height so the bar's shape matches.",
+			order = 47,
+			get = function()
+				return Cursive.db.profile.sacrificebarorientation == "VERTICAL"
+			end,
+			set = function(v)
+				Cursive.db.profile.sacrificebarorientation = v and "VERTICAL" or "HORIZONTAL"
+
+				-- Swap width/height so the bar's shape actually matches its
+				-- orientation -- otherwise it just changes the internal
+				-- fill direction while staying the same wide-short shape.
+				local w = Cursive.db.profile.sacrificebarwidth
+				local h = Cursive.db.profile.sacrificebarheight
+				Cursive.db.profile.sacrificebarwidth = h
+				Cursive.db.profile.sacrificebarheight = w
+
+				if Cursive.ui.sacrificeBar then
+					Cursive.ui.sacrificeBar:SetOrientation(Cursive.db.profile.sacrificebarorientation)
+					Cursive.ui.sacrificeBar:SetWidth(Cursive.db.profile.sacrificebarwidth)
+					Cursive.ui.sacrificeBar:SetHeight(Cursive.db.profile.sacrificebarheight)
+					Cursive.ui.UpdateSacrificeBarTextLayout(Cursive.ui.sacrificeBar, v)
+				end
+				Cursive.ui.PreviewSacrificeBar()
+			end,
+		},
+		["clickthrough"] = {
+			type = "toggle",
+			name = L["Allow clickthrough"],
+			desc = L["This will allow you to click through the frame to target mobs behind it, but prevents dragging the frame."],
+			order = 5,
+			get = function()
+				return Cursive.db.profile.clickthrough
+			end,
+			set = function(v)
+				Cursive.db.profile.clickthrough = v
+				Cursive.UpdateFramesFromConfig()
+			end,
+		},
+		["showbackdrop"] = {
+			type = "toggle",
+			name = L["Show Frame Background"],
+			desc = L["Toggle the frame background to help with positioning"],
+			order = 7,
+			get = function()
+				return Cursive.db.profile.showbackdrop
+			end,
+			set = function(v)
+				Cursive.db.profile.showbackdrop = v
+				Cursive.UpdateFramesFromConfig()
+			end,
+		},
+		["resetframe"] = {
+			type = "execute",
+			name = L["Reset Frame"],
+			desc = L["Move the frame back to the default position"],
+			order = 9,
+			func = function()
+				Cursive.db.profile.anchor = "CENTER"
+				Cursive.db.profile.x = -100
+				Cursive.db.profile.y = -100
+				Cursive.UpdateFramesFromConfig()
+			end,
+		},
+		["spacer"] = {
+			type = "header",
+			name = " ",
+			order = 11,
+		},
+		["bardisplay"] = {
+			type = "group",
+			name = L["Bar Display Settings"],
+			desc = L["Bar Display Settings"],
+			order = 13,
+			args = barOptions
+		},
+		["ghosticons"] = {
+			type = "group",
+			name = "Ghost Icon Settings",
+			desc = "Ghost Icon Settings",
+			order = 14,
+			args = ghostOptions
+		},
+		["filters"] = {
+			type = "group",
+			name = L["Mob filters"],
+			desc = L["Target and Raid Marks always shown"],
+			order = 19,
+			args = mobFilters
+		},
+		["shareddebuffs"] = {
+			type = "group",
+			name = L["Shared Debuffs"],
+			desc = L["Shared Debuffs"],
+			order = 20,
+			args = sharedDebuffs
+		},
+		["spacer2"] = {
+			type = "header",
+			name = " ",
+			order = 21,
+		},
+		["maxcurses"] = {
+			type = "range",
+			name = L["Max Curses"],
+			desc = L["Max Curses"],
+			order = 22,
+			min = 1,
+			max = 8,
+			step = 1,
+			get = function()
+				return Cursive.db.profile.maxcurses
+			end,
+			set = function(v)
+				if v ~= Cursive.db.profile.maxcurses then
+					Cursive.db.profile.maxcurses = v
+					Cursive.UpdateFramesFromConfig()
+				end
+			end,
+		},
+		["maxrow"] = {
+			type = "range",
+			name = L["Max Rows"],
+			desc = L["Max Rows"],
+			order = 30,
+			min = 1,
+			max = 20,
+			step = 1,
+			get = function()
+				return Cursive.db.profile.maxrow
+			end,
+			set = function(v)
+				if v ~= Cursive.db.profile.maxrow then
+					Cursive.db.profile.maxrow = v
+					Cursive.UpdateFramesFromConfig()
+				end
+			end,
+		},
+		["maxcol"] = {
+			type = "range",
+			name = L["Max Columns"],
+			desc = L["Max Columns"],
+			order = 40,
+			min = 1,
+			max = 20,
+			step = 1,
+			get = function()
+				return Cursive.db.profile.maxcol
+			end,
+			set = function(v)
+				if v ~= Cursive.db.profile.maxcol then
+					Cursive.db.profile.maxcol = v
+					Cursive.UpdateFramesFromConfig()
+				end
+			end,
+		},
+	}
+}
+
+local deuce = Cursive:NewModule("Options Menu")
+deuce.hasFuBar = IsAddOnLoaded("FuBar") and FuBar
+deuce.consoleCmd = not deuce.hasFuBar
+
+CursiveOptions = AceLibrary("AceAddon-2.0"):new("AceDB-2.0", "FuBarPlugin-2.0")
+CursiveOptions.name = "FuBar - Cursive"
+CursiveOptions:RegisterDB("CursiveDB")
+CursiveOptions.hasIcon = "Interface\\Icons\\spell_shadow_deathcoil"
+CursiveOptions.defaultMinimapPosition = 180
+CursiveOptions.independentProfile = true
+CursiveOptions.hideWithoutStandby = false
+
+-- XXX total hack
+CursiveOptions.OnMenuRequest = Cursive.cmdtable
+local args = AceLibrary("FuBarPlugin-2.0"):GetAceOptionsDataTable(CursiveOptions)
+for k, v in pairs(args) do
+	if CursiveOptions.OnMenuRequest.args[k] == nil then
+		CursiveOptions.OnMenuRequest.args[k] = v
+	end
+end
+-- XXX end hack
+
+-- Right-click opens a standalone settings window instead of the Dewdrop
+-- menu. Confirmed from FuBarPlugin-2.0's actual source: its OnMouseDown
+-- handler calls self:OpenMenu() specifically on right-click, so replacing
+-- that method redirects right-click without touching left-click at all.
+CursiveOptions.OpenMenu = function(self)
+	Cursive.ui.CreateSettingsWindow():Show()
+end
+
+-- Left-click also opens the same window. FuBarPlugin-2.0's frame calls
+-- self:OnClick(button) for any click (separate from the right-click-only
+-- OnMouseDown/OpenMenu path above), so this covers left-click without
+-- interfering with the right-click handler.
+CursiveOptions.OnClick = function(self, button)
+	Cursive.ui.CreateSettingsWindow():Show()
+end

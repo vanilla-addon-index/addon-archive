@@ -1,0 +1,8 @@
+<Bindings>
+  <Binding name="FINEZOOMIN" header="FINEZOOM" runOnUp="true">
+    CameraZoomIn(FineZoomStep or 0.5);
+  </Binding>
+  <Binding name="FINEZOOMOUT" header="FINEZOOM" runOnUp="true">
+    CameraZoomOut(FineZoomStep or 0.5);
+  </Binding>
+</Bindings>

@@ -1,0 +1,9 @@
+{
+  "id": "236438926",
+  "tag": "v1.0",
+  "name": "TargetSoundRestore 1.0",
+  "body": "First release of TargetSoundRestore.\r\n\r\n- Restores target change sounds when using custom unit frames.\r\n- Supports hostile, friendly, neutral, and lost target states.\r\n- Compatible with Turtle WoW (1.12) and pfUI.",
+  "published": "2025-07-31T01:39:35Z",
+  "prerelease": false,
+  "url": "https://github.com/phrxqt/TargetSoundRestore/releases/tag/v1.0"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "368157090",
+  "tag": "v1.4",
+  "name": "WTBox v1.4",
+  "body": "The looks release: pick the style that fits your UI.\n\n### Modern (default)\n\n![Modern](https://raw.githubusercontent.com/max-bruhn/WTBox/master/screenshot-modern.png)\n\n### Classic\n\n![Classic](https://raw.githubusercontent.com/max-bruhn/WTBox/master/screenshot-classic.png)\n\n### pfUI-matched (when you run pfUI)\n\n![pfUI](https://raw.githubusercontent.com/max-bruhn/WTBox/master/screenshot-pfui.png)\n\nNew\n- Three styles (settings -> Style, or /wtb style): Modern - built-in flat look with pixel-perfect borders; Classic - the Blizzard-style look with beveled buttons in a muted charcoal; pfUI - matches your pfUI setup, offered only while pfUI is loaded. An Apply button asks to reload the UI and disables itself while the selected style is already active. Styles apply at load time: zero ongoing FPS cost.\n- The loaded message shows which style is active\n\nImproved\n- Classic edit boxes are taller for better readability; the box itself is slightly more compact in all styles\n- Escape in the input releases the keyboard instead of hiding the box\n- The W button with no recent whisper contacts focuses the target field directly\n- Drop-ups close when clicking anywhere outside them\n\nPixel-perfect border math adapted from pfUI (MIT, by Shagu).\n\nRequires WoWTranslate (DLL + addon): https://github.com/paokkerkir/wow-translate\nInstall: extract WTBox-v1.4.zip below, put the WTBox folder into Interface\\AddOns\\, restart the game. Full guide in the README (English / 中文).",
+  "published": "2026-08-10T19:42:30Z",
+  "prerelease": false,
+  "url": "https://github.com/max-bruhn/WTBox/releases/tag/v1.4"
+}

@@ -1,0 +1,11 @@
+## X-TocFileBuildNumber: 700
+## Version: 5.0.9
+## Interface: 11200
+## Title: Zorlen
+## Author: Marcus S. Zarra / BigRedBrent / Xii
+## Notes: Functions to reduce macro sizes and avoid character limits in macros. Now includes support for Turtle WoW custom spells.
+## OptionalDeps: myAddOns
+## X-Category: MYADDONS_CATEGORY_OTHERS
+## X-OptionsFrame: ZorlenOptionsFrame
+## SavedVariables: ZorlenConfig
+Zorlen.xml

@@ -1,0 +1,29 @@
+{
+  "upstream": "https://github.com/melbaa/swapondeath",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "melbaa",
+    "repo": "swapondeath",
+    "name": "swapondeath",
+    "url": "https://github.com/melbaa/swapondeath",
+    "api": "https://api.github.com/repos/melbaa/swapondeath"
+  },
+  "commit": "7cb4dae14c14ae4a9f4887d23d9e9f255f3123f1",
+  "sourceFiles": {
+    "README.md": {
+      "sha256": "8372863a73483116fc001f381d4ff538efec165fec21b683c7cfe5e71497dac2",
+      "bytes": 158
+    },
+    "swapondeath.lua": {
+      "sha256": "bcf70cd7a900de4e8b0b853a4bcfc1f857552f73c95f97f3e4831f1813ca1e6a",
+      "bytes": 1995
+    },
+    "swapondeath.toc": {
+      "sha256": "20a34c9f919bb841a235519eafda58a5d5f5b6fed99f0c907740a9bea817bad5",
+      "bytes": 177
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

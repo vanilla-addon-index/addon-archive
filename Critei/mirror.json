@@ -1,0 +1,126 @@
+{
+  "upstream": "https://github.com/Caracioly/Critei",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Caracioly",
+    "repo": "Critei",
+    "name": "Critei",
+    "url": "https://github.com/Caracioly/Critei",
+    "api": "https://api.github.com/repos/Caracioly/Critei"
+  },
+  "commit": "eeee679dc03d47502477e10a9fa0fced04ee9895",
+  "sourceFiles": {
+    "Colors.lua": {
+      "sha256": "b59a0113a446c7921522af7230be6e942f3c42ee9ce179ee836d96a8d028054b",
+      "bytes": 3182
+    },
+    "Critei.lua": {
+      "sha256": "1e7a77926a1b2a6aff32f814559ff614e5f5ad92d16ca2f18b0b5afd3ddf626f",
+      "bytes": 14849
+    },
+    "Critei.toc": {
+      "sha256": "09aaf3693d33db73fc5ab8b49c5b73fca40415bb20553ad7c9ca94e8d99a35a6",
+      "bytes": 287
+    },
+    "CriteiConfig.lua": {
+      "sha256": "05b3752baf3b7c7d588fbb89084001216c284d3ac1abefa8fd8ff4d8cbd13360",
+      "bytes": 22266
+    },
+    "img/img.png": {
+      "sha256": "f19c1348577a70bec2d8b42ce58fe97e68cee380b7a08bd59cda252d50447f1d",
+      "bytes": 365289
+    },
+    "img/img2.png": {
+      "sha256": "02ae1ef3cdf8410450b5ab1f48c7ec1efebf9b20a4a268713587eff55cba8c72",
+      "bytes": 396983
+    },
+    "img/share.tga": {
+      "sha256": "04e7b547af29dc4bd701a2b35165ec433de74b529b8fb561cba9b0c3d0c9471a",
+      "bytes": 559
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "Localizations/Localization.lua": {
+      "sha256": "e0c279a96ba80a74360574c13229a88cd4038a2ddf5c16f39d21031bd4acbaf8",
+      "bytes": 3769
+    },
+    "README.md": {
+      "sha256": "b361c340562e6bb6987e6bc84f8ce193efe750085e4c1f73b0008ba2fb32fa0f",
+      "bytes": 608
+    },
+    "SFX/-999.ogg": {
+      "sha256": "4a19f9f4af2265d8d3f8a3357c7db6932336133fc9d8bddfc755492dd283a158",
+      "bytes": 31161
+    },
+    "SFX/auuu.ogg": {
+      "sha256": "66410efb73c066407ed5b5fc763158aa998080e1a6bb17e3be55aba8fec2e3ff",
+      "bytes": 68815
+    },
+    "SFX/bonk.ogg": {
+      "sha256": "e9c62704dbfd6134c9265ba29775d4be5ae9476e8b8770a281b1ac27198dbd6e",
+      "bytes": 6781
+    },
+    "SFX/dks.ogg": {
+      "sha256": "772d10d3de2f0563cc320a0b3438db614d2587590de9659b9ca275f6431190c9",
+      "bytes": 19778
+    },
+    "SFX/minecraft.ogg": {
+      "sha256": "d472af20d03129ef204a7f4da90788857247a38029f037c57ec91ece96c4a70a",
+      "bytes": 7841
+    },
+    "SFX/omg.ogg": {
+      "sha256": "58c72e0857e0bccb45e232a2c7100bbc396d06d422f67b57635a50a0599eb122",
+      "bytes": 22635
+    },
+    "SFX/oof.ogg": {
+      "sha256": "25f118f75f141f747c6c8b268bcc72ca79c9ac35eff55d10fac1f0acaba3e28b",
+      "bytes": 9691
+    },
+    "SFX/pipe.ogg": {
+      "sha256": "cd2afecb649385dc33e1cf9f6be5f89e40f7914870c711da8e61e41c3a67b4a6",
+      "bytes": 49014
+    },
+    "SFX/taco.ogg": {
+      "sha256": "c655fb3636585f6ed6605817ecacb27c0ffebc66be6d241de2dd25a94a63ecaa",
+      "bytes": 33359
+    },
+    "SFX/vineboom.ogg": {
+      "sha256": "4352085b45721188adbbb1201b90d92756b48c458a8e84e790aa4a0a7d1e6f77",
+      "bytes": 43941
+    },
+    "SFX/weLive.ogg": {
+      "sha256": "b706792fb4aa5ab7165cea7a847fa2b2dfd5d1dfe1e61d44e13266da8b2688b4",
+      "bytes": 106138
+    },
+    "SFX/whoa.ogg": {
+      "sha256": "c529aaa6131f33ce102ea88b212343fe9788ebf067525953574ea2be9fed749a",
+      "bytes": 56398
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "127925670": {
+      "tag": "v1.2.2",
+      "folder": "v1.2.2--127925670",
+      "assets": {
+        "134614377": {
+          "sha256": "084bd43ef8d656c15e728b72d2a1d18ba2cff499cda2d0f50b009b55a6d6a393",
+          "bytes": 438315,
+          "id": "134614377",
+          "name": "Critei.1.2.2b.zip",
+          "url": "https://github.com/Caracioly/Critei/releases/download/v1.2.2/Critei.1.2.2b.zip",
+          "path": "releases/v1.2.2--127925670/assets/Critei.1.2.2b.zip"
+        }
+      },
+      "source": {
+        "sha256": "0485a7eb3cfc190bd346650c27bb8ec209f01f3f9ba38deb7659e2072fd3067d",
+        "bytes": 1201916,
+        "path": "releases/v1.2.2--127925670/upstream-source.tar.gz",
+        "url": "https://api.github.com/repos/Caracioly/Critei/tarball/v1.2.2"
+      }
+    }
+  }
+}

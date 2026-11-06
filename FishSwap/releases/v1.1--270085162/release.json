@@ -1,0 +1,9 @@
+{
+  "id": "270085162",
+  "tag": "v1.1",
+  "name": "v1.1",
+  "body": "## What's Changed\r\n* Update README by @Draiscor in https://github.com/Draiscor/FishSwap/pull/1\r\n* Upgrade pole identification by @Draiscor in https://github.com/Draiscor/FishSwap/pull/2\r\n* Automate addon packaging when releasing, for manual installs by @Draiscor in https://github.com/Draiscor/FishSwap/pull/3\r\n\r\n**Full Changelog**: https://github.com/Draiscor/FishSwap/compare/v1.0...v1.1",
+  "published": "2025-12-13T10:27:29Z",
+  "prerelease": false,
+  "url": "https://github.com/Draiscor/FishSwap/releases/tag/v1.1"
+}

@@ -1,0 +1,17 @@
+f06042af28f9d56438baf364b1f127a89db106a61e527e5fbf7734537a4b5cf2  source/.vscode/settings.json
+53ec214ea6ab8b36346c7138f09063cfb701510f7a2079e2ccaa26e71ad92acc  source/Core.lua
+ea77aa9bae070bf2d41625478654fe83d3c72ff491a4d7cbffa3176b2ef5d01f  source/EnchantDB.lua
+5247193efde7aeaf839e183bda1c060b037b4d13475abf9b247c08fbff259f51  source/Libs/AceAddon-2.0/AceAddon-2.0.lua
+1a82aa964b4b50670b4f00df53f12f8a4706a1585e5c84a06678f3160b41cb52  source/Libs/AceConsole-2.0/AceConsole-2.0.lua
+237525f90f304fa5d4288b3301a29da2fa4c844e8e0f68c216c712efa890c499  source/Libs/AceDB-2.0/AceDB-2.0.lua
+a697b8797712ef232c99642e2c6d21515e68cd84847ba7046fac4dcc8f26ffc6  source/Libs/AceDebug-2.0/AceDebug-2.0.lua
+264d1e32c99f246315a6decc9c71f54d2bd2b1c5d9b586d9ddc139df312e484b  source/Libs/AceEvent-2.0/AceEvent-2.0.lua
+8413f0f92437bd49793de8d6380af774a4322716c2ac517bd97efbc11fb7a429  source/Libs/AceHook-2.0/AceHook-2.0.lua
+27840fe63587a95ab35acfcb8219df2cc95f984b9765d0ec46bc6856a10991cf  source/Libs/AceLibrary/AceLibrary.lua
+7c5be1bf3c1f8d64164139a6f0ac8f2922ab7eed2f8cd978081a542b4d293473  source/Libs/AceLocale-2.1/AceLocale-2.1.lua
+1385526e460948771ca6db1ceec81e8b0daf33bfc391f55e6f1bbc449a341a82  source/Libs/AceOO-2.0/AceOO-2.0.lua
+4133b9069be339d5faca66c489e1db028ee400f114b1f437567c5f19a76f21e5  source/Libs/Compost-2.0/Compost-2.0.lua
+eab2384578f4bc238a2f6388688694b60f9121c09a88917780c142ec7f03d99b  source/Libs/Dewdrop-2.0/Dewdrop-2.0.lua
+ec339b4ecbc846d95bd58f1cd78663f08121974f6a363614e811862dec7c9fc2  source/Locale-enUS.lua
+3e7f84c3ca1351be59a4976132715f3cc3753e12ea1b2f54f62c40e5c98bfce1  source/README.md
+e31a3eabbd0c21238026f4986a5b65a269bec40d4076f1ea5ef89949c128d0be  source/TurtleEnchant.toc

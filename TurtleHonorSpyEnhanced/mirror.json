@@ -1,0 +1,109 @@
+{
+  "upstream": "https://github.com/dnkrse/TurtleHonorSpyEnhanced",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "dnkrse",
+    "repo": "TurtleHonorSpyEnhanced",
+    "name": "TurtleHonorSpyEnhanced",
+    "url": "https://github.com/dnkrse/TurtleHonorSpyEnhanced",
+    "api": "https://api.github.com/repos/dnkrse/TurtleHonorSpyEnhanced"
+  },
+  "commit": "0ced057f763eb1097a9d96297f530d4c613cfa97",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "714e2a5ed0f7989b3d5ee83a5af7594359409751353df5fcca7614db917b5bb8",
+      "bytes": 141
+    },
+    "CHANGELOG.md": {
+      "sha256": "9ab9933a823936a92bbc4689cb01079f73ee92bae15807acbb77a34f33b955dd",
+      "bytes": 1415
+    },
+    "commands.lua": {
+      "sha256": "7bf38b52b6806d809f06a20b0535965e3a790cdcbb6b0eaf4fb689075e40ed46",
+      "bytes": 4594
+    },
+    "diagnostics.lua": {
+      "sha256": "ecc43260206efb8e713ab879219db47295cd5646b065c6a49069030f8ffcd970",
+      "bytes": 14862
+    },
+    "honorhistory.lua": {
+      "sha256": "9e3ac77af75d6a1dbc8cdd4be39ce1af6de5a6bec7b5ff831be946d40c7c0752",
+      "bytes": 100830
+    },
+    "honorspy.lua": {
+      "sha256": "b9b0b5ec13496df3c12a476e2ae24799e061a7afcd2d087594f22b7246c05dc6",
+      "bytes": 2210
+    },
+    "images/class_priest.jpg": {
+      "sha256": "541988ad9468de561bd175e50ca8c9c9190069ba2b8eddc35e972d48cb075eac",
+      "bytes": 1097
+    },
+    "images/honorhistory.png": {
+      "sha256": "daba01ee00d38d8f46314b178aa975fed06cd2a028acb0f93b5bda24fe53c6e2",
+      "bytes": 618510
+    },
+    "images/overlay.png": {
+      "sha256": "00f732dbb5819cbbf18bddf96a0842fc167cfcf10078c6140530f6709e149115",
+      "bytes": 42337
+    },
+    "images/race_human_female.jpg": {
+      "sha256": "4f8e2956dc5cd8d43cb6f47ebe91756d42a88e67f330ba4a6913de4480df11a5",
+      "bytes": 1195
+    },
+    "Libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "4391465ecf87d735f3438079d0fd308e6ce3337a7878eeb2f4bc66229e7c52ae",
+      "bytes": 32066
+    },
+    "Libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "93ecfe57ffe6364674811df34e50077fee23dfab5cfe486506ea94cf0edcf9eb",
+      "bytes": 66917
+    },
+    "Libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "6a1d2befd74a46047a0e1f571c30ae797ccc59555c8dd850174621174e9f41da",
+      "bytes": 44460
+    },
+    "Libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "e6b13885adc4a3fb0b28dabe675827e50af851bbc7c113fec90a831ae7d762e2",
+      "bytes": 28867
+    },
+    "Libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "30742a58c0f43e93742ef9f1d97471d775df100607f1efcfb3a24c79e3c5e3e1",
+      "bytes": 23050
+    },
+    "Libs/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "8fd64c405a68edcbfbf0a9ad05d6ceb5f5fadf80c5bd294c422c3d70b177736c",
+      "bytes": 15029
+    },
+    "Libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "3208a6c49a16af2c73e2a5ec1b80b400081a02ff4994613517d33975b99916b1",
+      "bytes": 30300
+    },
+    "Libs/embeds.xml": {
+      "sha256": "bd0650abb43732c356e2a1ee01a1ad8ae63d5ab719855fd9d55ba3cd25fd6003",
+      "bytes": 532
+    },
+    "minimap.lua": {
+      "sha256": "56a935ed9122ea7fd5c9543062c9cf3fed34942f0a2da9f1bc4ba33442b1b056",
+      "bytes": 3385
+    },
+    "overlay.lua": {
+      "sha256": "074856bbb95967f299bc498d1dab6599c5aa9e1a46565740c16411bfb53bb11e",
+      "bytes": 23504
+    },
+    "README.md": {
+      "sha256": "4123a52ff631808f438a4b61b62a8addc5234cd3914eb67831028096b26dd205",
+      "bytes": 1413
+    },
+    "TurtleHonorSpyEnhanced.toc": {
+      "sha256": "dc6be7642919ff8575d8ae25045713a81460250b6d888195970b940eae6bcdaf",
+      "bytes": 352
+    },
+    "versioncheck.lua": {
+      "sha256": "bda81d4340722eb85c0a62814c1b261425f047b7ed0d6b9df3780aa96ba73b67",
+      "bytes": 7803
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}
