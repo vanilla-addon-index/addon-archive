@@ -90,6 +90,11 @@ export async function paginate(base,github) {
  throw new Error('Release pagination limit reached');
 }
 
+async function noPublicReleases(source) {
+ try{await request(`${source.url.replace(/\/$/,'')}/releases`,{maxBytes:1});return false;}
+ catch(error){return error.message.startsWith('HTTP 404:');}
+}
+
 const gitEnv=()=>Object.fromEntries(Object.entries({...process.env,GIT_TERMINAL_PROMPT:'0',GIT_LFS_SKIP_SMUDGE:'1',GIT_CONFIG_NOSYSTEM:'1'}).filter(([k])=>!['GH_TOKEN','GITHUB_TOKEN'].includes(k)));
 async function git(args,cwd) {
  return (await exec('git',['-c','credential.helper=','-c','core.hooksPath=/dev/null','-c','protocol.file.allow=never','-c','protocol.ext.allow=never',...args],{cwd,env:gitEnv(),maxBuffer:20*1024*1024,timeout:600000})).stdout.trim();
@@ -129,7 +134,19 @@ export async function checkout(source,destination,depth=0) {
 async function archiveCheckout(source,destination,depth){
  const meta=await sourceInfo(source);
  const ref=source.ref??meta.defaultBranch;
- const revision=await request(`${source.api}/git/commits/${encodeURIComponent(ref)}`,{json:true});const commit=revision.sha;
+ let revision;
+ try{revision=await request(`${source.api}/git/commits/${encodeURIComponent(ref)}`,{json:true});}
+ catch(error){
+  if(source.host!=='octowow.st'||!ref||!error.message.startsWith('HTTP 404:'))throw error;
+  const branches=await request(`${source.api}/branches`,{json:true});
+  if(!Array.isArray(branches))throw error;
+  const names=branches.map(branch=>branch.name).filter(name=>typeof name==='string');
+  const fallback=names.includes('master')?'master':names.length===1?names[0]:null;
+  if(!fallback||fallback===ref)throw error;
+  console.log(`${source.owner}/${source.repo}: OctoWoW reports '${ref}', but that branch is absent; using '${fallback}'`);
+  revision=await request(`${source.api}/git/commits/${encodeURIComponent(fallback)}`,{json:true});
+ }
+ const commit=revision.sha;
  if(!/^[a-f0-9]{40,64}$/.test(commit??''))throw new Error('Invalid upstream commit');
  const data=await request(`${source.api}/archive/${commit}.tar.gz`);
  const tar=destination+'.tar.gz';await fs.mkdir(path.dirname(destination),{recursive:true});await fs.writeFile(tar,data);
@@ -170,7 +187,15 @@ export async function sourceInfo(source) {
 }
 export async function releases(source) {
  const github=source.host==='github.com',gitlab=source.host==='gitlab.com';
- const list=await paginate(source.api+'/releases',github||gitlab);
+ let list;
+ try{list=await paginate(source.api+'/releases',github||gitlab);}
+ catch(error){
+  const status=Number(error.message.match(/^HTTP (\d+):/)?.[1]);
+  const expectedUnavailable=(source.host==='octowow.st'&&status===403)||(source.host==='codeberg.org'&&status===404);
+  if(!expectedUnavailable||!await noPublicReleases(source))throw error;
+  console.log(`${source.owner}/${source.repo}: release API unavailable and no public releases page; keeping existing release records`);
+  return [];
+ }
  return list.filter(r=>!r.draft&&!r.upcoming_release).map(r=>({
   id:String(r.id),tag:r.tag_name,name:r.name??r.tag_name,body:r.body??r.description??'',published:r.published_at??r.released_at??r.created_at,prerelease:!!r.prerelease,url:r.html_url??r._links?.self,
   sourceUrl:github?r.tarball_url:gitlab?`${source.api}/repository/archive.tar.gz?sha=${encodeURIComponent(r.tag_name)}`:`${source.api}/archive/${encodeURIComponent(r.tag_name)}.tar.gz`,

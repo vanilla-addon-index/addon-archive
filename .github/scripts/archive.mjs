@@ -86,6 +86,15 @@ export async function copySource(from,to,config,objects){
 function addObject(objects,sha,bytes,config){if(!objects[sha]){const total=Object.values(objects).reduce((a,b)=>a+b,0);if(total+bytes>config.maxArchiveBytes)throw new Error('Archive storage allowance reached; increase maxArchiveBytes after review');objects[sha]=bytes;}}
 async function download(url,dest,config,objects,provider){const data=await provider.request(url,{maxBytes:config.maxFileBytes});const sha=hash(data);addObject(objects,sha,data.length,config);await write(dest,data);return {sha256:sha,bytes:data.length};}
 async function exists(p){try{await fs.access(p);return true;}catch(e){if(e.code==='ENOENT')return false;throw e;}}
+async function sourceSnapshotComplete(directory,files){
+ if(!files||typeof files!=='object'||Array.isArray(files))return false;
+ const base=path.resolve(directory);
+ for(const relative of Object.keys(files)){
+  const full=path.resolve(base,...relative.split('/'));
+  if(!full.startsWith(base+path.sep)||!await exists(full))return false;
+ }
+ return true;
+}
 async function relocateEntryFolders(root,previous,next){
  for(const entry of next.entries){
   const old=previous.entries?.find(item=>item.id===entry.id);if(!old||old.folder===entry.folder)continue;
@@ -116,9 +125,10 @@ export async function syncComponent(root,e,c,config,objects,provider=upstream){
    const list=selectReleases(await provider.releases(c.source),config.releaseScope);
    stage=await fs.mkdtemp(path.join(os.tmpdir(),'addon-mirror-stage-'));const work=path.join(stage,'component');
    if(await exists(dest))await fs.cp(dest,work,{recursive:true});else await fs.mkdir(work,{recursive:true});
-   if(previous.commit!==checkout.commit || !await exists(path.join(work,'source'))){
-    await fs.rm(path.join(work,'source'),{recursive:true,force:true});
-    const snap=await copySource(checkout.root,path.join(work,'source'),config,objects);
+   const sourceDir=path.join(work,'source');
+   if(previous.commit!==checkout.commit || !await exists(sourceDir) || !await sourceSnapshotComplete(sourceDir,previous.sourceFiles)){
+    await fs.rm(sourceDir,{recursive:true,force:true});
+    const snap=await copySource(checkout.root,sourceDir,config,objects);
     state={...state,commit:checkout.commit,sourceFiles:snap.files,symlinks:{...snap.symlinks,...checkout.symlinks}};
    }
    state.releases??={};
@@ -205,7 +215,14 @@ async function main(){
  const objects=await readJson(path.join(root,'.github/state/objects.json'),{});await fs.mkdir(path.join(root,'.github/state'),{recursive:true});
  if(mode==='initialize'){await write(path.join(root,'.github/state/registry.json'),json(registry));await write(path.join(root,'.github/state/objects.json'),json(objects));await render(root,registry);console.log(`Prepared ${registry.entries.length} ${registry.entryType} entries.`);return;}
  let failures=0;
- const candidates=registry.entries.flatMap(e=>e.components.map(c=>({e,c}))).filter(({c})=>mode==='update'||['new','error'].includes(c.status));
+ const candidates=[];
+ for(const e of registry.entries)for(const c of e.components){
+  if(mode==='update'||['new','error'].includes(c.status)){candidates.push({e,c});continue;}
+  if(c.status==='mirrored'&&c.source?.kind==='repository'){
+   const dir=componentDir(root,e,c),mirror=await readJson(path.join(dir,'mirror.json'),null);
+   if(!mirror||!await sourceSnapshotComplete(path.join(dir,'source'),mirror.sourceFiles))candidates.push({e,c});
+  }
+ }
  const cursorFile=path.join(root,'.github/state/cursor.json'),cursors=await readJson(cursorFile,{}),start=candidates.length?((cursors[mode]??0)%candidates.length):0;
  const batchSize=Math.max(1,Number(config.batchSize?.[mode]??50));const selected=Array.from({length:Math.min(batchSize,candidates.length)},(_,i)=>candidates[(start+i)%candidates.length]);
  for(const {e,c} of selected){
