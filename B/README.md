@@ -22,7 +22,7 @@
 | [BGAssistRU](BGAssistRU/) | PvP | 1 | mirrored |
 | [BISList](BISList/) | Bags & Inventory | 1 | mirrored |
 | [BitesCookBook](BitesCookBook/) | Professions | 1 | mirrored |
-| [BlizzNameplatesPlus](BlizzNameplatesPlus/) | Unit Frames | 1 | mirrored |
+| [BlizzNameplatesPlus](BlizzNameplatesPlus/) | Unit Frames | 2 | mirrored |
 | [Blockvalue](Blockvalue/) | Miscellaneous | 1 | mirrored |
 | [BMLoot](BMLoot/) | Raid & Party | 1 | mirrored |
 | [Bongos](Bongos/) | Action Bars | 1 | mirrored |

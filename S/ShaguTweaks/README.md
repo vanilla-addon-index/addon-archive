@@ -4,7 +4,7 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| ShaguTweaks-ClassicAPI | https://octowow.st/git/OEVG/ShaguTweaks-ClassicAPI | error — HTTP 403: https://octowow.st/git/api/v1/repos/OEVG/ShaguTweaks-ClassicAPI/releases |
+| ShaguTweaks-ClassicAPI | https://octowow.st/git/OEVG/ShaguTweaks-ClassicAPI | mirrored |
 | ShaguTweaks-ClassicAPI--Dusk | https://octowow.st/git/Dusk/ShaguTweaks-ClassicAPI | mirrored |
 | ShaguTweaks | https://github.com/shagu/ShaguTweaks | mirrored |
 

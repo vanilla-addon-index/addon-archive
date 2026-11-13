@@ -1,0 +1,74 @@
+<Bindings>
+  <Binding name="STBAR6BUTTON1" header="STBAR6" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(6, 1, keystate) end
+  </Binding>
+  <Binding name="STBAR6BUTTON2" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(6, 2, keystate) end
+  </Binding>
+  <Binding name="STBAR6BUTTON3" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(6, 3, keystate) end
+  </Binding>
+  <Binding name="STBAR6BUTTON4" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(6, 4, keystate) end
+  </Binding>
+  <Binding name="STBAR6BUTTON5" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(6, 5, keystate) end
+  </Binding>
+  <Binding name="STBAR6BUTTON6" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(6, 6, keystate) end
+  </Binding>
+  <Binding name="STBAR6BUTTON7" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(6, 7, keystate) end
+  </Binding>
+  <Binding name="STBAR6BUTTON8" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(6, 8, keystate) end
+  </Binding>
+  <Binding name="STBAR6BUTTON9" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(6, 9, keystate) end
+  </Binding>
+  <Binding name="STBAR6BUTTON10" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(6, 10, keystate) end
+  </Binding>
+  <Binding name="STBAR6BUTTON11" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(6, 11, keystate) end
+  </Binding>
+  <Binding name="STBAR6BUTTON12" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(6, 12, keystate) end
+  </Binding>
+  <Binding name="STBAR7BUTTON1" header="STBAR7" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(7, 1, keystate) end
+  </Binding>
+  <Binding name="STBAR7BUTTON2" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(7, 2, keystate) end
+  </Binding>
+  <Binding name="STBAR7BUTTON3" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(7, 3, keystate) end
+  </Binding>
+  <Binding name="STBAR7BUTTON4" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(7, 4, keystate) end
+  </Binding>
+  <Binding name="STBAR7BUTTON5" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(7, 5, keystate) end
+  </Binding>
+  <Binding name="STBAR7BUTTON6" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(7, 6, keystate) end
+  </Binding>
+  <Binding name="STBAR7BUTTON7" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(7, 7, keystate) end
+  </Binding>
+  <Binding name="STBAR7BUTTON8" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(7, 8, keystate) end
+  </Binding>
+  <Binding name="STBAR7BUTTON9" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(7, 9, keystate) end
+  </Binding>
+  <Binding name="STBAR7BUTTON10" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(7, 10, keystate) end
+  </Binding>
+  <Binding name="STBAR7BUTTON11" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(7, 11, keystate) end
+  </Binding>
+  <Binding name="STBAR7BUTTON12" runOnUp="true">
+    if ShaguTweaks and ShaguTweaks.ExtraActionButton then ShaguTweaks.ExtraActionButton(7, 12, keystate) end
+  </Binding>
+</Bindings>

@@ -24,7 +24,7 @@
 | [HideUI](HideUI/) | UI & Appearance | 1 | mirrored |
 | [honorcounter](honorcounter/) | PvP | 1 | mirrored |
 | [HotBotPanel](HotBotPanel/) | Boss Mods | 1 | mirrored |
-| [HardcoreAlarms](HardcoreAlarms/) | Hardcore | 1 | error |
+| [HardcoreAlarms](HardcoreAlarms/) | Hardcore | 1 | mirrored |
 | [HC-TradeBoard](HC-TradeBoard/) | Hardcore | 1 | mirrored |
 | [HCDeaths](HCDeaths/) | Hardcore | 1 | mirrored |
 | [HCWarn](HCWarn/) | Hardcore | 1 | mirrored |

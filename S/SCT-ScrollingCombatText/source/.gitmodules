@@ -1,0 +1,3 @@
+[submodule "libs/Ace2"]
+	path = libs/Ace2
+	url = https://codeberg.org/Thaodan/Ace2.git

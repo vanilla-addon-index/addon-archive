@@ -4,7 +4,7 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| LifeSafer_LowHealthWarning | https://octowow.st/git/Dusk/LifeSafer_LowHealthWarning | error — HTTP 403: https://octowow.st/git/api/v1/repos/Dusk/LifeSafer_LowHealthWarning/releases |
+| LifeSafer_LowHealthWarning | https://octowow.st/git/Dusk/LifeSafer_LowHealthWarning | mirrored |
 | LifeSafer_LowHealthWarning--shaga | https://octowow.st/git/shaga/LifeSafer_LowHealthWarning | mirrored |
 | LifeSafer_LowHealthWarning--RavenOfSeven | https://github.com/RavenOfSeven/LifeSafer_LowHealthWarning | mirrored |
 

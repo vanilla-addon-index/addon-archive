@@ -1233,8 +1233,8 @@
             "url": "https://octowow.st/git/bigobono/OctoAuctionator",
             "api": "https://octowow.st/git/api/v1/repos/bigobono/OctoAuctionator"
           },
-          "status": "error",
-          "error": "HTTP 403: https://octowow.st/git/api/v1/repos/bigobono/OctoAuctionator/releases",
+          "status": "mirrored",
+          "error": null,
           "active": true,
           "license": "Unspecified"
         },
@@ -1975,7 +1975,7 @@
           },
           "status": "error",
           "error": "HTTP 404: https://api.github.com/repos/OEVG2/aux-addon-ClassicAPI",
-          "active": true
+          "active": false
         },
         {
           "originalUrl": "https://octowow.st/git/Dusk/aux-addon-ClassicAPI",
@@ -2747,6 +2747,23 @@
           "error": null,
           "active": true,
           "license": "MIT"
+        },
+        {
+          "originalUrl": "https://octowow.st/git/OEVG/BlizzNameplatesPlus",
+          "folder": "BlizzNameplatesPlus",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "OEVG",
+            "repo": "BlizzNameplatesPlus",
+            "name": "BlizzNameplatesPlus",
+            "url": "https://octowow.st/git/OEVG/BlizzNameplatesPlus",
+            "api": "https://octowow.st/git/api/v1/repos/OEVG/BlizzNameplatesPlus"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -4396,7 +4413,7 @@
           },
           "status": "error",
           "error": "HTTP 404: https://api.github.com/repos/goldenpipes/DoiteAuras",
-          "active": true
+          "active": false
         },
         {
           "originalUrl": "https://github.com/Player-Doite/DoiteAuras",
@@ -6983,7 +7000,7 @@
           },
           "status": "error",
           "error": "HTTP 404: https://api.github.com/repos/OEVG2/Outfitter-1.18.1",
-          "active": true
+          "active": false
         },
         {
           "originalUrl": "https://github.com/MarcelineVQ/Outfitter",
@@ -12347,8 +12364,8 @@
             "url": "https://octowow.st/git/Dusk/LifeSafer_LowHealthWarning",
             "api": "https://octowow.st/git/api/v1/repos/Dusk/LifeSafer_LowHealthWarning"
           },
-          "status": "error",
-          "error": "HTTP 403: https://octowow.st/git/api/v1/repos/Dusk/LifeSafer_LowHealthWarning/releases",
+          "status": "mirrored",
+          "error": null,
           "active": true,
           "license": "Unspecified"
         },
@@ -13595,9 +13612,10 @@
             "url": "https://octowow.st/git/palladinpala/Prat",
             "api": "https://octowow.st/git/api/v1/repos/palladinpala/Prat"
           },
-          "status": "error",
-          "error": "HTTP 404: https://octowow.st/git/api/v1/repos/palladinpala/Prat/git/commits/main",
-          "active": true
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20038,8 +20056,8 @@
             "url": "https://codeberg.org/Thaodan/sct",
             "api": "https://codeberg.org/api/v1/repos/Thaodan/sct"
           },
-          "status": "error",
-          "error": "HTTP 404: https://codeberg.org/api/v1/repos/Thaodan/sct/releases",
+          "status": "mirrored",
+          "error": null,
           "active": true,
           "license": "Unspecified"
         }
@@ -22370,8 +22388,8 @@
             "url": "https://codeberg.org/hyperhumble/HardcoreAlarms",
             "api": "https://codeberg.org/api/v1/repos/hyperhumble/HardcoreAlarms"
           },
-          "status": "error",
-          "error": "HTTP 404: https://codeberg.org/api/v1/repos/hyperhumble/HardcoreAlarms/releases",
+          "status": "mirrored",
+          "error": null,
           "active": true,
           "license": "LGPL"
         }
@@ -24993,8 +25011,8 @@
             "url": "https://octowow.st/git/OEVG/ShaguTweaks-ClassicAPI",
             "api": "https://octowow.st/git/api/v1/repos/OEVG/ShaguTweaks-ClassicAPI"
           },
-          "status": "error",
-          "error": "HTTP 403: https://octowow.st/git/api/v1/repos/OEVG/ShaguTweaks-ClassicAPI/releases",
+          "status": "mirrored",
+          "error": null,
           "active": true,
           "license": "MIT"
         },

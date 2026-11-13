@@ -1,0 +1,249 @@
+{
+  "upstream": "https://codeberg.org/Thaodan/sct",
+  "source": {
+    "kind": "repository",
+    "host": "codeberg.org",
+    "owner": "Thaodan",
+    "repo": "sct",
+    "name": "sct",
+    "url": "https://codeberg.org/Thaodan/sct",
+    "api": "https://codeberg.org/api/v1/repos/Thaodan/sct"
+  },
+  "commit": "40ab449f853f88020d82a10552c44b6f5220c176",
+  "sourceFiles": {
+    ".gitmodules": {
+      "sha256": "da200e595aba1119f37607c9ac9c45514ddcf6092b242cd6f1cb3b67e3a2d864",
+      "bytes": 87
+    },
+    "fonts/Adventure.ttf": {
+      "sha256": "360725a152c1966d3256be129bd8dc0862679abc217a3ba1b3fd2c7580afe7b3",
+      "bytes": 48776
+    },
+    "fonts/Avqest.ttf": {
+      "sha256": "5929a5fd6c16df17069ed7cf57b6ff61bbe3c959d9ef59b30120a3845d98fee6",
+      "bytes": 51536
+    },
+    "fonts/Emblem.ttf": {
+      "sha256": "f7aba56028f0376ad6ad8f157f33f9ed26b33f512f1b5786754f45e8b6d3ff96",
+      "bytes": 33204
+    },
+    "fonts/Enigma__2.TTF": {
+      "sha256": "eba6927102e658c4e8a237e0d3cf12bc4791841c9be1188d18ea5b89a06b1925",
+      "bytes": 17992
+    },
+    "fonts/Tw_Cen_MT_Bold.TTF": {
+      "sha256": "68e622267253dddae00832e0ca12509f392ca0d47127280ff1531133e5fac848",
+      "bytes": 67140
+    },
+    "install.txt": {
+      "sha256": "68270e85a43ca9130ddfd23042343f4536374a3c93dee861a856444a76f55c00",
+      "bytes": 2146
+    },
+    "libs/Ace2/Ace2.toc": {
+      "sha256": "a8f9fff09761dbe0a2c713305b21afc36fcfa19a4d83fb91724318932975d4cf",
+      "bytes": 668
+    },
+    "libs/Ace2/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "fe492c54e8606e91651b4a5556b0d451eb88241cfdc3009c1a171cca40727b5f",
+      "bytes": 32112
+    },
+    "libs/Ace2/AceComm-2.0/AceComm-2.0.lua": {
+      "sha256": "8be8e39579006a5a885b52f4e957f87ee59116fadfeb40b0f0affe347143f492",
+      "bytes": 84775
+    },
+    "libs/Ace2/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "2816240ddd3e6d048317d05cb8454ef53ef2ca0ca6776fd89a541b0f72f3a61f",
+      "bytes": 67895
+    },
+    "libs/Ace2/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "75563f56f7109b46f4224e22a301427fa4393a054f99fdf5f30ad04d8f7d465a",
+      "bytes": 44948
+    },
+    "libs/Ace2/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "642718f5e051ba1e62933159a3fcc440dbdda497b5c25c7344f2542672d27272",
+      "bytes": 8025
+    },
+    "libs/Ace2/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "75b919d181eb7b48f91c6220a69178aa839439ed7165a39c545535bf6c9f662e",
+      "bytes": 29919
+    },
+    "libs/Ace2/AceHook-2.0/AceHook-2.0.lua": {
+      "sha256": "eff1af92860ab4572d9c2af0c210af80d9c5002cf0c6ee5906dddc10a30bc117",
+      "bytes": 18654
+    },
+    "libs/Ace2/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "65e42d89faa6e7d98ccaeb5b843606346ca5a07def5ce4b328e71bde744dc19d",
+      "bytes": 17507
+    },
+    "libs/Ace2/AceLibrary/AceLibrary.lua": {
+      "sha256": "72f45db5bb394ad9f312e84e97c80352f9c3e414ed0833be98d0869ff9711315",
+      "bytes": 23856
+    },
+    "libs/Ace2/AceLocale-2.0/AceLocale-2.0.lua": {
+      "sha256": "03995c19d63340a1399362870679a92465c32adf4cb778a423c50b3f31403052",
+      "bytes": 16060
+    },
+    "libs/Ace2/AceLocale-2.1/AceLocale-2.1.lua": {
+      "sha256": "40e64fd9dad1c0aa28fba6516a96bf78f5bf9fec79d054f9fedd60ed7176551f",
+      "bytes": 9759
+    },
+    "libs/Ace2/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "947f0e3b2eae5cfee8f45801dde9565b14d6c6324a18e7656e1ea45e2ad37fa8",
+      "bytes": 16479
+    },
+    "libs/Ace2/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "355d897f51423056ceb305f697fa0ac31a612046862d0e7ded745b485f405772",
+      "bytes": 14435
+    },
+    "libs/Ace2/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "c77ed8e17952bb444dd5655665cca804ecb4d1b61103ba4f0342549b481e9ee2",
+      "bytes": 31427
+    },
+    "libs/Ace2/AceTab-2.0/AceTab-2.0.lua": {
+      "sha256": "568124873a8dfebf60c894d8b269226b73016baf3b959cb332ad8abeef8459a6",
+      "bytes": 9429
+    },
+    "libs/Ace2/readme.txt": {
+      "sha256": "caa6176d3896092beb10f2073514d3c67f0ec55c85ff68338815d76066a7704f",
+      "bytes": 2837
+    },
+    "libs/Ace2/version history.txt": {
+      "sha256": "ef2f176141778bd1f3f3a413f71f296640589a6d25dc14a84fe15f370cd88529",
+      "bytes": 3883
+    },
+    "libs/Babble-Spell-2.2/Babble-Spell-2.2.lua": {
+      "sha256": "83310425235a7d69403396a1f999338c37306d61477b6f18ee805040438d2c63",
+      "bytes": 477939
+    },
+    "libs/Compost-2.0/Compost-2.0.lua": {
+      "sha256": "4133b9069be339d5faca66c489e1db028ee400f114b1f437567c5f19a76f21e5",
+      "bytes": 9209
+    },
+    "libs/ParserLib/optimizer-enUS.lua": {
+      "sha256": "f71761fab1cdb6b09322adda57dac39be83ceeb72aab0ea4a51a20e25556b3f8",
+      "bytes": 7467
+    },
+    "libs/ParserLib/ParserLib.lua": {
+      "sha256": "bd5f1b9d9847c8c67dce3604b97871dae8a1091bbd1957f83af816fe7f37d17f",
+      "bytes": 88490
+    },
+    "libs/ParserLib/readme.txt": {
+      "sha256": "762a52185e9eeeff3d6c5f9905b63222dc823642be922a0b03c04979867b90aa",
+      "bytes": 82
+    },
+    "libs/SharedMediaLib/SharedMedia-1.0.lua": {
+      "sha256": "b72a881e5d64df8ea59d0690dd7a2a22842d979a9f890989b79054ee85997c4b",
+      "bytes": 8163
+    },
+    "localization.de.lua": {
+      "sha256": "a52a6e2f076b814b454519bba87ae34147dfd46e42898e1ebe684ab60e99735f",
+      "bytes": 3978
+    },
+    "localization.es.lua": {
+      "sha256": "1c14e1b74c505b8a8eb16c20c774a985211d1748c0d96fe265d60f6675d0244b",
+      "bytes": 4139
+    },
+    "localization.fr.lua": {
+      "sha256": "3356b81243e245dd7f625e1158b72d16af4ab2318cb38f7835f11b127e0aafff",
+      "bytes": 4176
+    },
+    "localization.kr.lua": {
+      "sha256": "563df1d6d06ab224a0f4a00895e5c3b8bb4f6b35b8c304c3506881ea6bf49821",
+      "bytes": 4265
+    },
+    "localization.lua": {
+      "sha256": "cd3ef365b0902821b08018cd7446800b4d8febab5f5a297f49233d1971d05dd5",
+      "bytes": 4027
+    },
+    "localization.tw.lua": {
+      "sha256": "9fd7e9c5ca6e5919f0067f8e518378876ecddfde49df384b2df57f35a37b713f",
+      "bytes": 3879
+    },
+    "readme.txt": {
+      "sha256": "1ed5b2eebe6758bdaa9081c1e02e6f46bc4e44673c1723d4a21b3b694e7aabfc",
+      "bytes": 11004
+    },
+    "sct_animation.lua": {
+      "sha256": "5e6f022c5a256e0030613196bd630e96a445cc6e10b82a6bfa0d4e2c371eb3c1",
+      "bytes": 22603
+    },
+    "sct_event_cache.lua": {
+      "sha256": "2a8270544395b74683698560150142fb6306e50f08bec09b22c7286eb629ba5b",
+      "bytes": 2418
+    },
+    "sct_event_config.lua": {
+      "sha256": "cbc53b76453af0259aa41a95cea2b60be2d9e915dff1cd2e0d2778b66633f225",
+      "bytes": 12630
+    },
+    "sct_global_parser.lua": {
+      "sha256": "2ad92b19fd535f3ce379e1378585640bfdc271c6d6e215c34e233093b5768658",
+      "bytes": 2449
+    },
+    "sct_legacy.lua": {
+      "sha256": "b5ae72c0ee0a9cd123e3837fcd74317513743362abba6b7a28fca41b5fc66ccb",
+      "bytes": 929
+    },
+    "sct_options/configs.lua": {
+      "sha256": "a1a42afa8bdd30fbf1d16012caa09ed6bc7c951163ccb6a8ab7189d472082201",
+      "bytes": 3919
+    },
+    "sct_options/localization.de.lua": {
+      "sha256": "ebc4eb007099e71fd97d022e44a3bcf24c47a0d23ff838bf938f8a05b97824e8",
+      "bytes": 15601
+    },
+    "sct_options/localization.es.lua": {
+      "sha256": "4346f51388be2edb4af66a73d632199ae2133c8f9d501a8ab20b5ddcb17da5e7",
+      "bytes": 15719
+    },
+    "sct_options/localization.fr.lua": {
+      "sha256": "4c39b5e48d6eb82d82fbae7e31f92ff182e1df3f96d01b18218a488d1ec6c1cd",
+      "bytes": 16222
+    },
+    "sct_options/localization.kr.lua": {
+      "sha256": "910bd5d85b0e0a9b811cea8ba3abbb3503788e3d61eedf08437424852ae1a3a7",
+      "bytes": 16303
+    },
+    "sct_options/localization.lua": {
+      "sha256": "50ccfa4df8f882120724445beb960990ccd6d82d49ca16a05bca9de54e93d036",
+      "bytes": 14681
+    },
+    "sct_options/localization.tw.lua": {
+      "sha256": "e4d0af0f24f4c95b93f889a8ad6c724d0155a5e29dd4d05693dc7e6b324ff0e4",
+      "bytes": 13712
+    },
+    "sct_options/options_setup.lua": {
+      "sha256": "f28fc3c74747fddc957f64796f2dfa9df0611303d13ed8298b930a3dc2dc7163",
+      "bytes": 18621
+    },
+    "sct_options/options.lua": {
+      "sha256": "03fc948ea01bc4f9522e249b71af5d776e622f6f1dc8437355af0f13391381ac",
+      "bytes": 24677
+    },
+    "sct_options/options.xml": {
+      "sha256": "e789be4c56aa4c295ec587d01827353466135d3dd1e32a81453df2c3abbe69d1",
+      "bytes": 61208
+    },
+    "sct_options/sct_options.toc": {
+      "sha256": "9c60c17be4dbefe93a018d92371d74f6f7028c0c454f2bccc5316bbbe6bbebe2",
+      "bytes": 338
+    },
+    "sct_unitpos.lua": {
+      "sha256": "d02b223c2738271896b2f5f060ec74fb577598296771a1506da8fb91e21e7c5a",
+      "bytes": 3018
+    },
+    "sct.lua": {
+      "sha256": "2d59c97c40cc329f1df0f428b9f6a6d84dc6d78542131d91365cfcbb326283c7",
+      "bytes": 40515
+    },
+    "sct.toc": {
+      "sha256": "205c8e70d17148584fa1c351f140208596c7172dfd71947db702178713cabb3f",
+      "bytes": 1345
+    },
+    "sct.xml": {
+      "sha256": "d9ae6d0824e15f1f3c72252ed5ef1d26d55e99649df133f67efa296f1dd15dda",
+      "bytes": 3345
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

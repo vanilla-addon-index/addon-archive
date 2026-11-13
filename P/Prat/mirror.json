@@ -1,0 +1,181 @@
+{
+  "upstream": "https://octowow.st/git/palladinpala/Prat",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "palladinpala",
+    "repo": "Prat",
+    "name": "Prat",
+    "url": "https://octowow.st/git/palladinpala/Prat",
+    "api": "https://octowow.st/git/api/v1/repos/palladinpala/Prat"
+  },
+  "commit": "aee5abf5e3b58d0d7e7823053e525f70842bcfbd",
+  "sourceFiles": {
+    "Bindings.xml": {
+      "sha256": "136f30bf4bc3ed78a1c2fb47e1107ee757459e37568edb82c59c4c61428aea5a",
+      "bytes": 1911
+    },
+    "font/WarSansTT-Bliz-500.ttf": {
+      "sha256": "1fa4ca36819a843e6cfb475c94a7bfba701170494ff335141e824ab03f273926",
+      "bytes": 8438732
+    },
+    "frames/popup.xml": {
+      "sha256": "0a7b4a57861484b75224bd0c2143a1b39b364a974da66eec1b0203e39da84c90",
+      "bytes": 981
+    },
+    "frames/who.xml": {
+      "sha256": "b795532f357fe4180b0c0ae68fca488b6e6b4e43214d1e9ac9cdcdd3ea77851e",
+      "bytes": 12239
+    },
+    "libs/AceAddon-2.0/AceAddon-2.0.lua": {
+      "sha256": "d50be33b0ff53a82f2845115ff165b279ab4268ac38325891fec7decb4540979",
+      "bytes": 34388
+    },
+    "libs/AceConsole-2.0/AceConsole-2.0.lua": {
+      "sha256": "ab8c61a5174d468bee9c7f7264a7ef8adaead087b7db42ca48da23cfd3d6637d",
+      "bytes": 68842
+    },
+    "libs/AceDB-2.0/AceDB-2.0.lua": {
+      "sha256": "aec50568954370b65a14b9d720de2282e6b045feb4415a53578d0d1cae46cca4",
+      "bytes": 46027
+    },
+    "libs/AceDebug-2.0/AceDebug-2.0.lua": {
+      "sha256": "a1faaffb4f5b669571e274656e4d42d6ddc557d03ae20bbce042c4f55d15f630",
+      "bytes": 8185
+    },
+    "libs/AceEvent-2.0/AceEvent-2.0.lua": {
+      "sha256": "8222e7a75d0f0fba8030099939611732b50c28cb26b6ce6427f52fd5f2f409d8",
+      "bytes": 29927
+    },
+    "libs/AceHook-2.1/AceHook-2.1.lua": {
+      "sha256": "e5defd2a1efe661ce7970891762d76a27ce539e65dd1a7894c8391ebd941be80",
+      "bytes": 17515
+    },
+    "libs/AceLibrary/AceLibrary.lua": {
+      "sha256": "1237d45fdf7e6aa30442c36fdebd7a0c11c75ed6cc0183339eb22c4a7911b8c4",
+      "bytes": 24193
+    },
+    "libs/AceLocale-2.2/AceLocale-2.2.lua": {
+      "sha256": "f0b829c007fd8cd897aa9059bd6c9ee27f0b9b71b9c9468b1572c1d3db4397fe",
+      "bytes": 16495
+    },
+    "libs/AceModuleCore-2.0/AceModuleCore-2.0.lua": {
+      "sha256": "d3272f2379883ea33e122ae9309e060d92e01ccd0263a2014839bd202ad8bd6a",
+      "bytes": 14443
+    },
+    "libs/AceOO-2.0/AceOO-2.0.lua": {
+      "sha256": "03e71bcf0ba8ce7c806c5ffe966991cb997c12c25b351198c918fe32e469bdaf",
+      "bytes": 31435
+    },
+    "libs/AceTab-2.0/AceTab-2.0.lua": {
+      "sha256": "ba4c38b96dcbe99ec41abd88d889da6803a21d22411743895d977d9dabe77056",
+      "bytes": 9437
+    },
+    "libs/Babble-Class-2.2/Babble-Class-2.2.lua": {
+      "sha256": "a7948c9cbf6f8117bcc3fda8f82af7bac29c1a3c66dd15d32dc34facfa0f37f5",
+      "bytes": 4021
+    },
+    "libs/Waterfall-1.0/Waterfall-1.0.lua": {
+      "sha256": "1588f3d2c4365ea24886a1c980acdcb978b2999b89487289c371d0bdfd358b38",
+      "bytes": 140211
+    },
+    "modules/Buttons.lua": {
+      "sha256": "9e06de669b857f2a252e22181e1f875c9bb57b36a3b4d7e471b9dbab343b5a75",
+      "bytes": 11777
+    },
+    "modules/ChannelColorMemory.lua": {
+      "sha256": "a83dba6f8626a2fed36d88b845e38867429d24f00e3994b1da435283a46e1e7c",
+      "bytes": 4206
+    },
+    "modules/ChannelNames.lua": {
+      "sha256": "9b7dc41d04d9ad88f7f8ff487c0c6a7fb013aa42fa4f52d2420a625cd6f95269",
+      "bytes": 48083
+    },
+    "modules/ChannelSeparator.lua": {
+      "sha256": "7ecd5f08ca0987da19d8726b2c6c66e981a8fb3f8cbf29a3290452afafa854f9",
+      "bytes": 3870
+    },
+    "modules/ChatTabs.lua": {
+      "sha256": "f7120b1d812ccac4f4777b3a440454b5600a9c5cce4e393889650e34daae9c55",
+      "bytes": 18970
+    },
+    "modules/Editbox.lua": {
+      "sha256": "0c8fe9ce706a973919c7fb9045ce44cc39d9ab0c0ac5af1c22b70d8e5c59fa7b",
+      "bytes": 12748
+    },
+    "modules/Fading.lua": {
+      "sha256": "542bb92475b1b4e137c9eaf8b325f0f661e9400cd094c24ee5cab47d1a87ef04",
+      "bytes": 8590
+    },
+    "modules/FontSize.lua": {
+      "sha256": "cf2970ecc91af3f3730f28aab342b59810dbf235528bde7f4582b24a3f0890d4",
+      "bytes": 12026
+    },
+    "modules/Highlight.lua": {
+      "sha256": "3414f037bbab67b0b3b2234a752a3e562635617b72aff01449c141a3c127608b",
+      "bytes": 2724
+    },
+    "modules/History.lua": {
+      "sha256": "08b09fb562130b01d845dba99b3bb79bb04d2cd597426a962c4832686eb0bdb5",
+      "bytes": 7629
+    },
+    "modules/Justify.lua": {
+      "sha256": "f8d3d3cefe3b6c3502092a457fa60909aa095689c80aea1cc50524b109d5531d",
+      "bytes": 7894
+    },
+    "modules/Keybindings.lua": {
+      "sha256": "6d8f03a25d2fd0239bbe0c47cf8c8c35f19590907d473b150b0aef899f5d2ac3",
+      "bytes": 3956
+    },
+    "modules/Notification.lua": {
+      "sha256": "4ca373745ebefbb4cdaa2cac217d9befba338b48f757fe5eb9a20bdc5a415490",
+      "bytes": 2478
+    },
+    "modules/PlayerNames.lua": {
+      "sha256": "44e242b3e9350cb5b4a1f0023d638616911bd3ce4980586f193d0810e2e308ee",
+      "bytes": 25158
+    },
+    "modules/PopupMessage.lua": {
+      "sha256": "fa7a3ad1d275c020a2c496c86023d07b08da551beb86f1635733ee08be6e2ab6",
+      "bytes": 12449
+    },
+    "modules/Scroll.lua": {
+      "sha256": "648d8de34eea07ec0ef4c1872d35b9d3183b70e2d143f3d3c885fa5965e0c671",
+      "bytes": 11458
+    },
+    "modules/StickyChannels.lua": {
+      "sha256": "761785d9caa2c525574e65d98792ed66df52b735c64a26d471d73c9a0a60e188",
+      "bytes": 12588
+    },
+    "modules/TellTarget.lua": {
+      "sha256": "aa5f2bf1207c25a6722034d30b0ac0e086971acbc1f89e0188f2f1f57f8a0068",
+      "bytes": 4828
+    },
+    "modules/Timestamps.lua": {
+      "sha256": "30353147b0e099e7a9ab712579375b8c84b8de703f700f196c69f54064561038",
+      "bytes": 23638
+    },
+    "modules/UrlCopy.lua": {
+      "sha256": "539c79b6665cfa182daac7dc01dd99176f40ef88b2add1926b62ba09a9839c5a",
+      "bytes": 10116
+    },
+    "modules/Who.lua": {
+      "sha256": "bd56fea7661f629fa83b13f8b215a337a0466ee7d78f9d51c68d4169dc1b75a8",
+      "bytes": 13477
+    },
+    "Prat.lua": {
+      "sha256": "05d700b1231d56e0f7a170e600324fa16a28c9f07b23e5e2f41b6fcde5150e85",
+      "bytes": 1697
+    },
+    "Prat.toc": {
+      "sha256": "6214713fc096a5047d4b613a9c47ba11c88ba3e5491c950abbe1a04c8499f595",
+      "bytes": 1658
+    },
+    "README.md": {
+      "sha256": "8bb3f2a204ff46e6191d5c8af93f78b640a1f5b6d5add552a0ba9b28e6983d04",
+      "bytes": 7688
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

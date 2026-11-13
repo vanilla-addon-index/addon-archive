@@ -1,0 +1,131 @@
+## Interface: 11200
+## Title: |cffffcc00Shagu|cffffffffTweaks |cffcccccc[ClassicAPI]
+## Author: Shagu
+## Notes: A collection of tweaks and enhancements to the Default UI
+## Version: 3.8.8
+## Dependencies: !!!ClassicAPI
+## SavedVariables: ShaguTweaks_player_cache, ShaguTweaks_social_cache
+## SavedVariablesPerCharacter: ShaguTweaks_config, ShaguTweaks_cache
+
+# locales
+locales\locales_enUS.lua
+
+# translations
+locales\translations_enUS.lua
+
+# basic
+main.lua
+helpers.lua
+api.lua
+config.lua
+
+# libraries
+libs\libtipscan.lua
+libs\libspell.lua
+libs\libcast.lua
+libs\libunitscan.lua
+libs\libnameplate.lua
+libs\libpredict.lua
+libs\libhealth.lua
+
+# custom
+mods\custom.lua
+
+# modules
+mods\dark-ui-elements.lua
+mods\blue-shaman.lua
+mods\equip-compare.lua
+mods\minimap-clock.lua
+mods\minimap-square.lua
+mods\minimap-tweaks.lua
+mods\minimap-clean.lua
+mods\minimap-zoom.lua
+mods\minimap-tracking.lua
+mods\actionbar-range-color.lua
+mods\actionbar-proc-highlights.lua
+mods\free-slots.lua
+mods\xpbar-text.lua
+mods\sell-junk.lua
+mods\unitframes-classcolor.lua
+mods\vendor-values.lua
+mods\worldmap-coordinates.lua
+mods\worldmap-window.lua
+mods\move-unitframes.lua
+mods\target-castbar.lua
+mods\social-colors.lua
+mods\item-colors.lua
+mods\auto-stance.lua
+mods\tooltip-details.lua
+mods\hide-errors.lua
+mods\chat-tweaks.lua
+mods\chat-levels.lua
+mods\chat-spam-filter.lua
+mods\hide-gryphons.lua
+mods\worldmap-colors.lua
+mods\unitframes-bighealth.lua
+mods\health-numbers.lua
+mods\unitframes-healing-prediction.lua
+mods\unitframes-classportrait.lua
+mods\unitframes-hide-player-name.lua
+mods\unitframes-hide-player-resources.lua
+mods\unitframes-personal-resource-display.lua
+mods\unitframes-energy-tick.lua
+mods\unitframes-hide-pet.lua
+mods\cooldown-numbers.lua
+mods\turtle-wow.lua
+mods\superwow.lua
+mods\reduced-actionbar.lua
+mods\actionbar-move.lua
+mods\actionbar-extra.lua
+mods\actionbar-grid.lua
+mods\no-toggle.lua
+mods\loot-cursor.lua
+mods\loot-history.lua
+mods\loss-of-control.lua
+mods\totem-timers.lua
+mods\improved-roll-frames.lua
+mods\improved-castbar.lua
+mods\castbar-move.lua
+mods\swing-timer.lua
+mods\smaller-errors-frame.lua
+mods\skip-gossip.lua
+
+# modules merged from ShaguTweaks Extras ClassicAPI (Dusk)
+# action bar
+mods\actionbar-df-gryphon.lua
+mods\actionbar-right-center.lua
+mods\actionbar-reagents.lua
+mods\actionbar-float.lua
+mods\reduced-actionbar-bags.lua
+mods\reduced-actionbar-micromenu.lua
+mods\actionbar-mouseover-common.lua
+mods\actionbar-mouseover-bar-right.lua
+mods\actionbar-mouseover-bar-right2.lua
+mods\actionbar-hide-macro.lua
+# merchant
+mods\buy-em-all.lua
+# loot
+mods\loot-quality.lua
+# tooltip & items
+mods\metric-range.lua
+mods\cursor-tooltip.lua
+mods\hide-combat-tooltip.lua
+# unit frames
+mods\unitframes-abbrev-names.lua
+# minimap & world map
+mods\minimap-framerate-latency.lua
+mods\worldmap-reveal.lua
+# macro
+mods\macro-icons.lua
+mods\macro-tweaks.lua
+# chat & social
+mods\chat-filter-common.lua
+mods\chat-npc-spam.lua
+mods\world-chat-hider.lua
+mods\chat-input-center.lua
+mods\chat-text-shadow.lua
+mods\chat-timestamps.lua
+
+# compatibility
+compat-dragonflightui.lua
+compat-guda.lua

@@ -79,7 +79,7 @@
 | [SwapRaidSubgroupByName](SwapRaidSubgroupByName/) | Raid & Party | 1 | mirrored |
 | [SyncedUI](SyncedUI/) | UI & Appearance | 1 | mirrored |
 | [SaySappedExtended](SaySappedExtended/) | PvP | 1 | mirrored |
-| [SCT/ScrollingCombatText](SCT-ScrollingCombatText/) | Combat | 1 | error |
+| [SCT/ScrollingCombatText](SCT-ScrollingCombatText/) | Combat | 1 | mirrored |
 | [ShaguCombat](ShaguCombat/) | Combat | 1 | mirrored |
 | [SimpleCombatLog](SimpleCombatLog/) | Combat | 1 | mirrored |
 | [SkelaCustomNameplates](SkelaCustomNameplates/) | Unit Frames | 1 | mirrored |
@@ -98,7 +98,7 @@
 | [ShaguMount](ShaguMount/) | Miscellaneous | 1 | mirrored |
 | [ShaguNotify](ShaguNotify/) | Miscellaneous | 1 | mirrored |
 | [ShaguScore](ShaguScore/) | Miscellaneous | 1 | mirrored |
-| [ShaguTweaks](ShaguTweaks/) | Miscellaneous | 3 | error, mirrored |
+| [ShaguTweaks](ShaguTweaks/) | Miscellaneous | 3 | mirrored |
 | [ShaguTweaks-extras](ShaguTweaks-extras/) | Miscellaneous | 2 | mirrored |
 | [ShaguTweaksDruidManaBar](ShaguTweaksDruidManaBar/) | Class | 1 | mirrored |
 | [ShaguTweaksMods](ShaguTweaksMods/) | Miscellaneous | 1 | mirrored |

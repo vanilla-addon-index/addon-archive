@@ -51,7 +51,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [AttackBar](A/AttackBar/) | Combat | 1 | mirrored |
 | [AttackBar Turtle](A/AttackBar%20Turtle/) | Combat | 1 | mirrored |
 | [AuctionAltBuy](A/AuctionAltBuy/) | Auction & Economy | 1 | mirrored |
-| [Auctionator](A/Auctionator/) | Auction & Economy | 3 | mirrored, error |
+| [Auctionator](A/Auctionator/) | Auction & Economy | 3 | mirrored |
 | [Auctionator-ClassicAPI](A/Auctionator-ClassicAPI/) | Auction & Economy | 1 | mirrored |
 | [AuctionHelper](A/AuctionHelper/) | Auction & Economy | 1 | mirrored |
 | [AuctionLink](A/AuctionLink/) | Auction & Economy | 1 | mirrored |
@@ -100,7 +100,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [BGAssistRU](B/BGAssistRU/) | PvP | 1 | mirrored |
 | [BISList](B/BISList/) | Bags & Inventory | 1 | mirrored |
 | [BitesCookBook](B/BitesCookBook/) | Professions | 1 | mirrored |
-| [BlizzNameplatesPlus](B/BlizzNameplatesPlus/) | Unit Frames | 1 | mirrored |
+| [BlizzNameplatesPlus](B/BlizzNameplatesPlus/) | Unit Frames | 2 | mirrored |
 | [Blockvalue](B/Blockvalue/) | Miscellaneous | 1 | mirrored |
 | [BMLoot](B/BMLoot/) | Raid & Party | 1 | mirrored |
 | [Bongos](B/Bongos/) | Action Bars | 1 | mirrored |
@@ -430,7 +430,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [LevelRange-Octo](L/LevelRange-Octo/) | Map & Minimap | 1 | mirrored |
 | [LFGHelper](L/LFGHelper/) | Chat & Social | 1 | mirrored |
 | [LHCP](L/LHCP/) | Chat & Social | 1 | mirrored |
-| [LifeSafer_LowHealthWarning](L/LifeSafer_LowHealthWarning/) | Combat | 3 | error, mirrored |
+| [LifeSafer_LowHealthWarning](L/LifeSafer_LowHealthWarning/) | Combat | 3 | mirrored |
 | [LootAtMouse](L/LootAtMouse/) | Miscellaneous | 1 | mirrored |
 | [LootTracker](L/LootTracker/) | Raid & Party | 1 | mirrored |
 | [MacroTextStop](M/MacroTextStop/) | Macros | 1 | mirrored |
@@ -473,7 +473,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [PlayerStates](P/PlayerStates/) | Macros | 1 | mirrored |
 | [PoisonCharges](P/PoisonCharges/) | Class | 1 | mirrored |
 | [Possessions](P/Possessions/) | Bags & Inventory | 1 | mirrored |
-| [Prat](P/Prat/) | Chat & Social | 1 | error |
+| [Prat](P/Prat/) | Chat & Social | 1 | mirrored |
 | [PriestBinds](P/PriestBinds/) | Class | 1 | mirrored |
 | [Profesjonell](P/Profesjonell/) | Professions | 1 | mirrored |
 | [Pummeler](P/Pummeler/) | Class | 1 | mirrored |
@@ -695,7 +695,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [rais_AutoShot](R/rais_AutoShot/) | Class | 1 | mirrored |
 | [Roid-Macros](R/Roid-Macros/) | Macros | 1 | mirrored |
 | [SaySappedExtended](S/SaySappedExtended/) | PvP | 1 | mirrored |
-| [SCT/ScrollingCombatText](S/SCT-ScrollingCombatText/) | Combat | 1 | error |
+| [SCT/ScrollingCombatText](S/SCT-ScrollingCombatText/) | Combat | 1 | mirrored |
 | [ShaguCombat](S/ShaguCombat/) | Combat | 1 | mirrored |
 | [SimpleCombatLog](S/SimpleCombatLog/) | Combat | 1 | mirrored |
 | [SkelaCustomNameplates](S/SkelaCustomNameplates/) | Unit Frames | 1 | mirrored |
@@ -779,7 +779,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [Groupfinder](G/Groupfinder/) | Chat & Social | 1 | mirrored |
 | [Guildbank](G/Guildbank/) | Libraries | 1 | mirrored |
 | [GuildMap](G/GuildMap/) | Map & Minimap | 1 | mirrored |
-| [HardcoreAlarms](H/HardcoreAlarms/) | Hardcore | 1 | error |
+| [HardcoreAlarms](H/HardcoreAlarms/) | Hardcore | 1 | mirrored |
 | [HC-TradeBoard](H/HC-TradeBoard/) | Hardcore | 1 | mirrored |
 | [HCDeaths](H/HCDeaths/) | Hardcore | 1 | mirrored |
 | [HCWarn](H/HCWarn/) | Hardcore | 1 | mirrored |
@@ -873,7 +873,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [ShaguMount](S/ShaguMount/) | Miscellaneous | 1 | mirrored |
 | [ShaguNotify](S/ShaguNotify/) | Miscellaneous | 1 | mirrored |
 | [ShaguScore](S/ShaguScore/) | Miscellaneous | 1 | mirrored |
-| [ShaguTweaks](S/ShaguTweaks/) | Miscellaneous | 3 | error, mirrored |
+| [ShaguTweaks](S/ShaguTweaks/) | Miscellaneous | 3 | mirrored |
 | [ShaguTweaks-extras](S/ShaguTweaks-extras/) | Miscellaneous | 2 | mirrored |
 | [ShaguTweaksDruidManaBar](S/ShaguTweaksDruidManaBar/) | Class | 1 | mirrored |
 | [ShaguTweaksMods](S/ShaguTweaksMods/) | Miscellaneous | 1 | mirrored |

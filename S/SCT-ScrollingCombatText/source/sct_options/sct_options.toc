@@ -1,0 +1,16 @@
+## Interface: 20100
+## Title: SCT Options|cff7fff7f -Ace2-|r
+## Notes: Options menu for SCT (LoadOnDemand)
+## Author: Grayhoof
+## Dependencies: sct
+## LoadOnDemand: 1
+localization.lua
+localization.de.lua
+localization.fr.lua
+localization.es.lua
+localization.kr.lua
+localization.tw.lua
+options_setup.lua
+configs.lua
+options.lua
+options.xml

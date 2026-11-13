@@ -1,0 +1,173 @@
+{
+  "upstream": "https://octowow.st/git/Dusk/LifeSafer_LowHealthWarning",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Dusk",
+    "repo": "LifeSafer_LowHealthWarning",
+    "name": "LifeSafer_LowHealthWarning",
+    "url": "https://octowow.st/git/Dusk/LifeSafer_LowHealthWarning",
+    "api": "https://octowow.st/git/api/v1/repos/Dusk/LifeSafer_LowHealthWarning"
+  },
+  "commit": "2505bb1c6eb7e17523c1770da7cf021ed8b47d66",
+  "sourceFiles": {
+    "LifeSafer_LowHealthWarning.toc": {
+      "sha256": "d40157bd0efa1cf57bdcc0a0fb72f01f83a18e8e3c2559066a1f4e33d7fb15c7",
+      "bytes": 1140
+    },
+    "localization.lua": {
+      "sha256": "281a02092df6d4a6f347aee7af829b07b6e9254d332b8e79e854292222a7c93d",
+      "bytes": 12392
+    },
+    "LowHealth.lua": {
+      "sha256": "21f2b2be17f4370be7f3b0acf9c42d8e6c4115d6e18eb97f7e3019f8c32f735c",
+      "bytes": 9816
+    },
+    "LowHealth.xml": {
+      "sha256": "c1fa0c0ce76c3d1b40de6206eac1e99daee145b2c8714e95e2bbb250e506baa6",
+      "bytes": 1717
+    },
+    "LowHealthSettings.lua": {
+      "sha256": "825e18abebb411f9282e8e563f2a73848b96905f96ded5e2524099f2ec76de70",
+      "bytes": 5974
+    },
+    "LowHealthSettings.xml": {
+      "sha256": "d0bf29e3b8472c2c5c1da6ae33fcb55ffbb5760877668d0196aae3664eb0e11d",
+      "bytes": 13394
+    },
+    "Nightfall.lua": {
+      "sha256": "72f1ec79b3e36caaa65f3adfd0cd95a475e07360850d3ca7223b2028c89be8ff",
+      "bytes": 3401
+    },
+    "Nightfall.xml": {
+      "sha256": "64f539dcd87bfd6af2e0512995f6649f69b38f7eaa52ffe1ae72ccbab43d3329",
+      "bytes": 1475
+    },
+    "NightfallSettings.lua": {
+      "sha256": "da903b3ca5b1739189ba262c9494879c2af61ff9d03187a09ed381787e8dca71",
+      "bytes": 2520
+    },
+    "NightfallSettings.xml": {
+      "sha256": "36f70ecb2cd42a968ced3b8fb74c6835211f7ca894c36c009690605bbf519ccc",
+      "bytes": 5440
+    },
+    "README.md": {
+      "sha256": "ec7ac13f4a9b25eb8f89e3808f060a18b6f568532b970a29eeff885aae5ebdec",
+      "bytes": 721
+    },
+    "readme.txt": {
+      "sha256": "50c887191e2c546b2b2a75369a346db27ed5a5e1b0928448fbae078667801697",
+      "bytes": 5375
+    },
+    "Sounds/00 - Sounds - HeartbeatLoud.mp3": {
+      "sha256": "1bca20dd781a05b5dcc11d254ecb9483ad24bf4728921e059ede9c60d333a1a3",
+      "bytes": 25218
+    },
+    "Sounds/00 - Sounds - HeartbeatNormal.mp3": {
+      "sha256": "f1ef159cfb8b3878029d1ea8d934b14b55b4c876c0a4d8dff3e4f5358bf640ee",
+      "bytes": 16756
+    },
+    "Sounds/00 - Sounds - HeartbeatQuiet.mp3": {
+      "sha256": "4b5e7e6290ab6d08fb9fc8bc434d760f4b280c12f0514a536eb9cdb483d802b1",
+      "bytes": 16125
+    },
+    "Sounds/00 - Sounds - PanicLoud.mp3": {
+      "sha256": "aca61425e41a32b3e15971a773e5186273ea0643cdf209d6efa09564d5092a06",
+      "bytes": 14179
+    },
+    "Sounds/00 - Sounds - PanicNormal.mp3": {
+      "sha256": "6eb0f7d4ca7cbbadfc92a23009231de896efe6a444b2697eb579159f33a95923",
+      "bytes": 11018
+    },
+    "Sounds/critical.mp3": {
+      "sha256": "a3d645b174098ee9cea07c322b9502f47dcffe40eecf519d0bedf8ce379aebb2",
+      "bytes": 33437
+    },
+    "Sounds/CriticalDamage.mp3": {
+      "sha256": "a3d645b174098ee9cea07c322b9502f47dcffe40eecf519d0bedf8ce379aebb2",
+      "bytes": 33437
+    },
+    "Sounds/EnslaveDemonEnd-En.mp3": {
+      "sha256": "950f5020a61efdc612ee45dc6795b1597c5a5e8ffaf5c3a34c803e2ff916ede3",
+      "bytes": 44348
+    },
+    "Sounds/EnslaveDemonEnd-Fr.mp3": {
+      "sha256": "e67a583b254be44d61fe720d89e3393dc41d70668432793589131be9f18bc55a",
+      "bytes": 53289
+    },
+    "Sounds/Fear-En.mp3": {
+      "sha256": "1c6e57944fdf89b94b2e27c9a75d18dcb6116ad7a44bb43324d692381cd5cf8d",
+      "bytes": 38912
+    },
+    "Sounds/Fear-Fr.mp3": {
+      "sha256": "fb3e2191eefe1a2d58773c93bebeed95b78b16925d9b06216398df64ee54b357",
+      "bytes": 83382
+    },
+    "Sounds/LifeSafer_LifeAlert_Low.mp3": {
+      "sha256": "000c6738b277ebb33d3e4d132e5efc02edceb9c5d55c65ef16ce92faa834779e",
+      "bytes": 14592
+    },
+    "Sounds/LifeSafer_LifeAlert.wav": {
+      "sha256": "d8cfe8c438b16fffbf6e44b397b4b42635a51afb852c569769a5fdad205fbec4",
+      "bytes": 14446
+    },
+    "Sounds/Pig01.mp3": {
+      "sha256": "46f7b2d94ca67bea3408b1daa63ba7df5b4ce04a681b34e2b20b26afc1af6d71",
+      "bytes": 13586
+    },
+    "Sounds/Pig02.mp3": {
+      "sha256": "2c1ba1d7dd148db716a5d90fb9a427c6b18f9bf4771c94f865e504152e3c39b6",
+      "bytes": 12546
+    },
+    "Sounds/ShadowTrance-En.mp3": {
+      "sha256": "0a2fa4982367bb0be28167501ab574bc4206a914549632d15e59f4799c187c8f",
+      "bytes": 36407
+    },
+    "Sounds/ShadowTrance-Fr.mp3": {
+      "sha256": "3fa3d3894241d84900e65cba50357d10d8ac2c3bb5fc6ae05a4bb46f9f84254f",
+      "bytes": 58305
+    },
+    "Sounds/Sheep01.mp3": {
+      "sha256": "bb9c28e2b3f5afce94f8723b863caf388f4fac250b4d6301dc21f89d5fd59bcf",
+      "bytes": 12543
+    },
+    "Sounds/Sheep02.mp3": {
+      "sha256": "e3172ac6c74f0b782688f85f25c66e49f0a477a9d23ae47f36439623706a013a",
+      "bytes": 17769
+    },
+    "Sounds/SoulstoneEnd-En.mp3": {
+      "sha256": "00b90560d8a0dbd35961fb615580ea31e482c51106154793d1cc036fb1a7233a",
+      "bytes": 55589
+    },
+    "Sounds/SoulstoneEnd-Fr.mp3": {
+      "sha256": "650401bdd35b153ee61a8bf58e19f5e0126166503dd258ebb5b0449a72afb08a",
+      "bytes": 74605
+    },
+    "Sounds/Sounds_Alarm.mp3": {
+      "sha256": "d8d7a6f9053a9abc5afa51fbf272f9c4fadd1559fc81ad24318edf57348d0295",
+      "bytes": 23644
+    },
+    "Sounds/Sounds_Alert.mp3": {
+      "sha256": "b7c72414f54c791f66b9a9449d62e45f85e813bb15f7a449c279d7acb25ad270",
+      "bytes": 47675
+    },
+    "Textures/flash1.tga": {
+      "sha256": "a258f60054aeefd7a62f59ce04ceff9b0d8c12446ae44b0f6eaf2ecc32a56e49",
+      "bytes": 607914
+    },
+    "Textures/flash2.tga": {
+      "sha256": "7674135fa641f74751768ff81f1b794979dabc5393f470f846ece1bd39d54192",
+      "bytes": 220192
+    },
+    "Textures/lowhealth1.tga": {
+      "sha256": "8a1e4c4c45d0a8d4a20357e295fc1ac09c1596ff1c4621a1b1dce17e83930bbc",
+      "bytes": 556676
+    },
+    "Textures/lowhealth2.tga": {
+      "sha256": "36057cffa332f0c43b5ad04d55a5c8f4205974416f3a1c136b6a0f626357cde1",
+      "bytes": 475023
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

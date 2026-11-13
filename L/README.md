@@ -22,7 +22,7 @@
 | [LevelRange-Octo](LevelRange-Octo/) | Map & Minimap | 1 | mirrored |
 | [LFGHelper](LFGHelper/) | Chat & Social | 1 | mirrored |
 | [LHCP](LHCP/) | Chat & Social | 1 | mirrored |
-| [LifeSafer_LowHealthWarning](LifeSafer_LowHealthWarning/) | Combat | 3 | error, mirrored |
+| [LifeSafer_LowHealthWarning](LifeSafer_LowHealthWarning/) | Combat | 3 | mirrored |
 | [LootAtMouse](LootAtMouse/) | Miscellaneous | 1 | mirrored |
 | [LootTracker](LootTracker/) | Raid & Party | 1 | mirrored |
 | [LazyRes](LazyRes/) | Raid & Party | 2 | mirrored |

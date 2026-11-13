@@ -22,7 +22,7 @@
 | [PlayerStates](PlayerStates/) | Macros | 1 | mirrored |
 | [PoisonCharges](PoisonCharges/) | Class | 1 | mirrored |
 | [Possessions](Possessions/) | Bags & Inventory | 1 | mirrored |
-| [Prat](Prat/) | Chat & Social | 1 | error |
+| [Prat](Prat/) | Chat & Social | 1 | mirrored |
 | [PriestBinds](PriestBinds/) | Class | 1 | mirrored |
 | [Profesjonell](Profesjonell/) | Professions | 1 | mirrored |
 | [Pummeler](Pummeler/) | Class | 1 | mirrored |

@@ -40,7 +40,7 @@
 | [AttackBar](AttackBar/) | Combat | 1 | mirrored |
 | [AttackBar Turtle](AttackBar%20Turtle/) | Combat | 1 | mirrored |
 | [AuctionAltBuy](AuctionAltBuy/) | Auction & Economy | 1 | mirrored |
-| [Auctionator](Auctionator/) | Auction & Economy | 3 | mirrored, error |
+| [Auctionator](Auctionator/) | Auction & Economy | 3 | mirrored |
 | [Auctionator-ClassicAPI](Auctionator-ClassicAPI/) | Auction & Economy | 1 | mirrored |
 | [AuctionHelper](AuctionHelper/) | Auction & Economy | 1 | mirrored |
 | [AuctionLink](AuctionLink/) | Auction & Economy | 1 | mirrored |

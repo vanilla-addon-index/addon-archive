@@ -1,0 +1,133 @@
+{
+  "upstream": "https://octowow.st/git/bigobono/OctoAuctionator",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "bigobono",
+    "repo": "OctoAuctionator",
+    "name": "OctoAuctionator",
+    "url": "https://octowow.st/git/bigobono/OctoAuctionator",
+    "api": "https://octowow.st/git/api/v1/repos/bigobono/OctoAuctionator"
+  },
+  "commit": "0a129c6352ed0b58e34ad4a97f02a6816c31a0ef",
+  "sourceFiles": {
+    "Auctionator.lua": {
+      "sha256": "f0766a70730ba21bb30ae73e5e3c4f22554d9ee47dd4ad7c1e7d6ec13ea8abf5",
+      "bytes": 110699
+    },
+    "Auctionator.xml": {
+      "sha256": "f03ac77d8f5bdd21d99ebdc49a601f1bc0426fa3ac46e2b045a565c15c18e555",
+      "bytes": 52167
+    },
+    "AuctionatorAPI.lua": {
+      "sha256": "3f34888b1c4b7e3215817a81e98b56dba75e6bfe64a0f2047861885f1278c63c",
+      "bytes": 1714
+    },
+    "AuctionatorBuy.lua": {
+      "sha256": "f64c5b6dad705234cc38beabafffd0fee2ef63def7858765980bf7e3af587d65",
+      "bytes": 9291
+    },
+    "AuctionatorConfig.lua": {
+      "sha256": "29f57bbb6eae69ace4d9672fa0ed15bf84b74337ffae599289fefbadcf1b77e7",
+      "bytes": 21986
+    },
+    "AuctionatorConfig.xml": {
+      "sha256": "d13676083622eef2d364a0feec65a5108444d6bb28392c09b6ef522f014bd809",
+      "bytes": 24328
+    },
+    "AuctionatorConflicts.lua": {
+      "sha256": "b59adf758fab7b62292473c0c63d724dd745e4237ee1a99a3d159495f7fb770e",
+      "bytes": 2173
+    },
+    "AuctionatorHints.lua": {
+      "sha256": "9fd1c2b2a809cfc94230db457710fa905b80b6303dde171cedf6b5d3db3e5913",
+      "bytes": 23626
+    },
+    "AuctionatorLocalize.lua": {
+      "sha256": "9160a143822cce1c26d45c22d305d4e937afbfeaefd1bf40b6cab546658c123b",
+      "bytes": 6190
+    },
+    "AuctionatorOptions.lua": {
+      "sha256": "f68eb7f3b30f6fbd164dc6fd605fa688f5fac1f5bed63b975a59c20f9ec7cea2",
+      "bytes": 3561
+    },
+    "AuctionatorPane.lua": {
+      "sha256": "b6e70247a2ea3be8e45ba633551103bd618570c60cf4755557a705c43f21928a",
+      "bytes": 2815
+    },
+    "AuctionatorQuery.lua": {
+      "sha256": "c6f8d113044973a428fed2fc8859a0bd8aaf108e1d3fd9083e60c58927d0f875",
+      "bytes": 2807
+    },
+    "AuctionatorScan.lua": {
+      "sha256": "ec47ee3f1b4728d91875f6b59597f1788b8ede17345abfd00ede21245c4f5dbd",
+      "bytes": 32351
+    },
+    "AuctionatorShop.lua": {
+      "sha256": "ea6dbe7907d23de986bfdeb46137fcfdeeb5deb528cc3bc028ec173555dd1b8f",
+      "bytes": 10985
+    },
+    "AuctionatorVendor.lua": {
+      "sha256": "279e9a08b2a4ca5cdb50d3a6c19962e6de7510b7bee5740a2935761ed62acf3c",
+      "bytes": 101196
+    },
+    "Compat.lua": {
+      "sha256": "e78ba0d4cae25d46077affbf0eaf070257365ad233c6cd899e7db48b5e325a21",
+      "bytes": 18476
+    },
+    "Images/atr_bot.tga": {
+      "sha256": "c97e7a922c455badf2dc8d44b01e583ad09fb0dff366a5e787e844c61a79f533",
+      "bytes": 262188
+    },
+    "Images/atr_botleft.tga": {
+      "sha256": "d8c67e1c7c2ce59bbc71bf37321792d38e0a737e1f9e69264557bd482b5136c1",
+      "bytes": 262188
+    },
+    "Images/atr_botright.tga": {
+      "sha256": "7e31ad890ca516344259c4d522a5802bd6c44cd0d8893c001112c1c43dd22f5b",
+      "bytes": 262188
+    },
+    "Images/atr_top.tga": {
+      "sha256": "fcc3d6cde10d442dbab74b40f1e4c71a589380b10e4f910e3f3daef43a5a2945",
+      "bytes": 262188
+    },
+    "Images/atr_topleft.tga": {
+      "sha256": "7de5a3bcaf8cb986ba78056bef52565952fa4f5bdb911c3522b5e7a83ed8241a",
+      "bytes": 262188
+    },
+    "Images/atr_topright.tga": {
+      "sha256": "557c6079ae4ea2d036db13f89ddd923d58723de1ec213e08dd5604441a6157b3",
+      "bytes": 262188
+    },
+    "Images/CrossAndCheck.tga": {
+      "sha256": "ebef64da02faa3829b9dbd9e4cb5133f5aa609ff049e3a76a44467902d651e7b",
+      "bytes": 16428
+    },
+    "Locales/enUS.lua": {
+      "sha256": "df34f3b5c9d586858688fcb5d0f5e75e94c8844ab2f53f2694596e2f0bcfa054",
+      "bytes": 7819
+    },
+    "OctoAuctionator.toc": {
+      "sha256": "ef4ffe8c9ce35cbb33553a024f9f5cc1ddd049a673bb5fabef90c812d195e959",
+      "bytes": 1234
+    },
+    "README.md": {
+      "sha256": "d94c3ca38d90d89e31ec0092eba544ac8ef5147517aa4e005e049239f300216e",
+      "bytes": 2496
+    },
+    "screenshots/octoauctionator-buy.jpg": {
+      "sha256": "7e0875fc5705b62a9662558b785f534ce6f169caecb72830fe3d508b90872318",
+      "bytes": 190769
+    },
+    "screenshots/octoauctionator-sell.jpg": {
+      "sha256": "62819a8c48f64efc994578c8a3206a1fd0a9c711aa2c372e2d021bacd9978f93",
+      "bytes": 216295
+    },
+    "zcUtils.lua": {
+      "sha256": "dc88b78ccfd92ded4558f3515d0689030c0320898261ee21665d7e6fee8b7ae7",
+      "bytes": 15743
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}
