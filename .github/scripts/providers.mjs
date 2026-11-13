@@ -37,6 +37,32 @@ export function parseSource(value,override={}) {
  return {kind:'repository',host,owner,repo,name:repo,ref,subpath,url:`https://${host}/${host==='octowow.st'?'git/':''}${owner.split('/').map(encodeURIComponent).join('/')}/${encodeURIComponent(repo)}`,api:host==='github.com'?`https://api.github.com/repos/${owner}/${repo}`:host==='gitlab.com'?`https://gitlab.com/api/v4/projects/${encodedProject}`:`https://${host}/${host==='octowow.st'?'git/':''}api/v1/repos/${owner}/${repo}`};
 }
 
+async function octoWowErrorDetails(response) {
+ const contentType=response.headers.get('content-type')?.split(';',1)[0]?.trim()??'unknown';
+ const reader=response.body?.getReader();let excerpt='';
+ if(reader){
+  const chunks=[];let bytes=0,truncated=false;
+  try{
+   while(bytes<4096){
+    const {done,value}=await reader.read();if(done)break;
+    const part=value.subarray(0,4096-bytes);chunks.push(Buffer.from(part));bytes+=part.byteLength;
+    if(part.byteLength<value.byteLength){await reader.cancel();break;}
+   }
+   if(bytes>=4096){truncated=true;await reader.cancel();}
+  }catch{try{await reader.cancel();}catch{}}
+  finally{reader.releaseLock();}
+  const text=Buffer.concat(chunks).toString('utf8')
+   .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi,' ')
+   .replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi,' ')
+   .replace(/<!--[\s\S]*?-->/g,' ')
+   .replace(/<[^>]*>/g,' ')
+   .replace(/&nbsp;/gi,' ').replace(/&amp;/gi,'&').replace(/&lt;/gi,'<').replace(/&gt;/gi,'>').replace(/&quot;/gi,'"').replace(/&#39;/g,"'")
+   .replace(/[\u0000-\u001f\u007f]+/g,' ').replace(/\s+/g,' ').trim();
+  excerpt=text.slice(0,240)+(truncated||text.length>240?'…':'');
+ }
+ return `content-type=${contentType}${excerpt?`; body-excerpt=${JSON.stringify(excerpt)}`:''}`;
+}
+
 export async function request(url,{json=false,maxBytes=2**31}={}) {
  for(let redirects=0;redirects<8;redirects++) {
   const u=httpsUrl(url);const headers={'User-Agent':'vanilla-addon-index-addon-archive'};
@@ -44,7 +70,10 @@ export async function request(url,{json=false,maxBytes=2**31}={}) {
   if(u.hostname==='api.github.com' && token)headers.Authorization=`Bearer ${token}`;
   const r=await fetch(u,{headers,redirect:'manual',signal:AbortSignal.timeout(600000)});
   if([301,302,303,307,308].includes(r.status)){url=new URL(r.headers.get('location'),u).href;continue;}
-  if(!r.ok)throw new Error(`HTTP ${r.status}: ${u.origin}${u.pathname}`);
+  if(!r.ok){
+   const details=u.hostname==='octowow.st'?` (${await octoWowErrorDetails(r)})`:'';
+   throw new Error(`HTTP ${r.status}: ${u.origin}${u.pathname}${details}`);
+  }
   if(Number(r.headers.get('content-length'))>maxBytes)throw new Error('Download exceeds file limit');
   const parts=[];let bytes=0;for await(const chunk of r.body){bytes+=chunk.length;if(bytes>maxBytes)throw new Error('Download exceeds file limit');parts.push(chunk);}
   const data=Buffer.concat(parts);return json?JSON.parse(data.toString('utf8')):data;
