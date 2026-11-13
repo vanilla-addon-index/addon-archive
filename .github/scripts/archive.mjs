@@ -217,7 +217,7 @@ async function main(){
  let failures=0;
  const candidates=[];
  for(const e of registry.entries)for(const c of e.components){
-  if(mode==='update'||['new','error'].includes(c.status)){candidates.push({e,c});continue;}
+  if(c.active&&(mode==='update'||['new','error'].includes(c.status))){candidates.push({e,c});continue;}
   if(c.status==='mirrored'&&c.source?.kind==='repository'){
    const dir=componentDir(root,e,c),mirror=await readJson(path.join(dir,'mirror.json'),null);
    if(!mirror||!await sourceSnapshotComplete(path.join(dir,'source'),mirror.sourceFiles))candidates.push({e,c});
