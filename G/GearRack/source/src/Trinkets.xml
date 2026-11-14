@@ -1,0 +1,433 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<!-- Resize grip template -->
+	<Button name="GearRackTrinketsResizeTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="16" y="16"/>
+		</Size>
+		<NormalTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+			<TexCoords left=".75" right=".875" top="0" bottom=".125"/>
+		</NormalTexture>
+		<HighlightTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" alphaMode="ADD" setAllPoints="true">
+			<TexCoords left=".75" right=".875" top="0" bottom=".125"/>
+		</HighlightTexture>
+		<Scripts>
+			<OnLoad>
+if GearRack.enabled then
+
+				this:SetFrameLevel(this:GetFrameLevel()+2)
+
+end
+</OnLoad>
+			<OnMouseDown>
+if GearRack.enabled then
+
+				GearRackTrinkets.StartScaling()
+
+end
+</OnMouseDown>
+			<OnMouseUp>
+if GearRack.enabled then
+
+				GearRackTrinkets.StopScaling()
+
+end
+</OnMouseUp>
+		</Scripts>
+	</Button>
+
+	<!-- Worn trinkets template -->
+	<CheckButton name="GearRackTrinketsMainTrinketTemplate" inherits="ActionButtonTemplate" virtual="true">
+		<Scripts>
+			<OnLoad>
+if GearRack.enabled then
+
+				this:RegisterForClicks("LeftButtonUp","RightButtonUp")
+
+end
+</OnLoad>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackTrinkets.MainTrinket_OnClick()
+
+end
+</OnClick>
+			<OnEnter>
+if GearRack.enabled then
+
+				GearRackTrinkets.BuildMenu()
+				GearRackTrinkets.WornTrinketTooltip()
+
+end
+</OnEnter>
+			<OnLeave>
+if GearRack.enabled then
+
+				GearRackTrinkets.ClearTooltip()
+
+end
+</OnLeave>
+		</Scripts>
+	</CheckButton>
+
+	<!-- Menu trinkets template -->
+	<CheckButton name="GearRackTrinketsMenuTrinketTemplate" inherits="ActionButtonTemplate" virtual="true">
+		<Scripts>
+			<OnLoad>
+if GearRack.enabled then
+
+				this:RegisterForClicks("LeftButtonUp","RightButtonUp")
+
+end
+</OnLoad>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackTrinkets.MenuTrinket_OnClick()
+
+end
+</OnClick>
+			<OnEnter>
+if GearRack.enabled then
+
+				GearRackTrinkets.MenuTrinketTooltip()
+
+end
+</OnEnter>
+			<OnLeave>
+if GearRack.enabled then
+
+				GearRackTrinkets.ClearTooltip()
+
+end
+</OnLeave>
+		</Scripts>
+	</CheckButton>
+
+<!-- The cooldown sweep and its countdown numbers (countdownForCooldowns). -->
+	<Cooldown name="GearRackTrinketsCooldownTemplate" inherits="CooldownFrameTemplate" setAllPoints="true" enableMouse="false" minimumCountdownDuration="3000" virtual="true">
+		<Scripts>
+			<OnLoad>GearRack.StyleCooldownNumbers(this)</OnLoad>
+		</Scripts>
+	</Cooldown>
+
+	<!-- Combat queue inset template -->
+	<Frame name="GearRackTrinketsQueueTemplate" enableMouse="false" virtual="true">
+		<Size>
+			<AbsDimension x="18" y="18"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset>
+					<AbsDimension x="-2" y="2"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture name="$parentQueue"/>
+			</Layer>
+		</Layers>
+	</Frame>
+
+	<!-- MainFrame: Equipped Trinkets -->
+
+	<Frame name="GearRackTrinkets_MainFrame" toplevel="true" frameStrata="LOW" enableMouse="true" movable="true" parent="UIParent" hidden="true">
+		<Size>
+			<AbsDimension x="91" y="52" />
+		</Size>
+		<Anchors>
+			<Anchor point="TOPLEFT" relativeTo="UIParent" relativePoint="BOTTOMLEFT">
+				<Offset>
+					<AbsDimension x="400" y="400"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="4" right="4" top="4" bottom="4" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="16" />
+			</EdgeSize>
+		</Backdrop>
+
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture name="GearRackTrinkets_MainDock_TOPRIGHT" file="Interface\Tooltips\UI-Tooltip-Border" alphaMode="ADD" hidden="true">
+					<Size>
+						<AbsDimension x="16" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPRIGHT"/>
+					</Anchors>
+					<TexCoords left="0.625" right="0.75" top="0" bottom="1"/>
+				</Texture>
+				<Texture name="GearRackTrinkets_MainDock_TOPLEFT" file="Interface\Tooltips\UI-Tooltip-Border" alphaMode="ADD" hidden="true">
+					<Size>
+						<AbsDimension x="16" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+					<TexCoords left="0.5" right="0.625" top="0" bottom="1"/>
+				</Texture>
+				<Texture name="GearRackTrinkets_MainDock_BOTTOMLEFT" file="Interface\Tooltips\UI-Tooltip-Border" alphaMode="ADD" hidden="true">
+					<Size>
+						<AbsDimension x="16" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT"/>
+					</Anchors>
+					<TexCoords left="0.75" right="0.875" top="0" bottom="1"/>
+				</Texture>
+				<Texture name="GearRackTrinkets_MainDock_BOTTOMRIGHT" file="Interface\Tooltips\UI-Tooltip-Border" alphaMode="ADD" hidden="true">
+					<Size>
+						<AbsDimension x="16" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT"/>
+					</Anchors>
+					<TexCoords left="0.875" right="1" top="0" bottom="1"/>
+				</Texture>
+			</Layer>
+		</Layers>
+
+		<Frames>
+			<CheckButton name="GearRackTrinkets_Trinket0" inherits="GearRackTrinketsMainTrinketTemplate" id="13">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="8" y="-8"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Trinket0" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Frame parent="GearRackTrinkets_Trinket0" inherits="GearRackTrinketsQueueTemplate"/>
+
+			<CheckButton name="GearRackTrinkets_Trinket1" inherits="GearRackTrinketsMainTrinketTemplate" id="14">
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-8" y="8"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Trinket1" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Frame parent="GearRackTrinkets_Trinket1" inherits="GearRackTrinketsQueueTemplate"/>
+
+			<Button name="GearRackTrinkets_MainResizeButton" inherits="GearRackTrinketsResizeTemplate">
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="1" y="-1"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+		</Frames>
+
+		<Scripts>
+			<OnMouseDown>
+if GearRack.enabled then
+
+				GearRackTrinkets.MainFrame_OnMouseDown(arg1)
+
+end
+</OnMouseDown>
+			<OnMouseUp>
+if GearRack.enabled then
+
+				GearRackTrinkets.MainFrame_OnMouseUp(arg1)
+
+end
+</OnMouseUp>
+			<OnShow>
+if GearRack.enabled then
+
+				GearRackTrinkets.OnShow()
+
+end
+</OnShow>
+			<OnHide>
+if GearRack.enabled then
+
+				GearRackTrinkets.OnHide()
+
+end
+</OnHide>
+		</Scripts>
+	</Frame>
+
+	<!-- MenuFrame: Bagged Trinkets -->
+
+	<Frame name="GearRackTrinkets_MenuFrame" toplevel="true" frameStrata="MEDIUM" enableMouse="true" movable="true" parent="UIParent" hidden="true" clampedToScreen="true">
+		<Size>
+			<AbsDimension x="52" y="91" />
+		</Size>
+		<Anchors>
+			<Anchor point="BOTTOMLEFT" relativeTo="GearRackTrinkets_MainFrame" relativePoint="BOTTOMRIGHT"/>
+		</Anchors>
+
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="4" right="4" top="4" bottom="4" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="16" />
+			</EdgeSize>
+		</Backdrop>
+
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture name="GearRackTrinkets_MenuDock_TOPRIGHT" file="Interface\Tooltips\UI-Tooltip-Border" alphaMode="ADD" hidden="true">
+					<Size>
+						<AbsDimension x="16" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPRIGHT"/>
+					</Anchors>
+					<TexCoords left="0.625" right="0.75" top="0" bottom="1"/>
+				</Texture>
+				<Texture name="GearRackTrinkets_MenuDock_TOPLEFT" file="Interface\Tooltips\UI-Tooltip-Border" alphaMode="ADD" hidden="true">
+					<Size>
+						<AbsDimension x="16" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+					<TexCoords left="0.5" right="0.625" top="0" bottom="1"/>
+				</Texture>
+				<Texture name="GearRackTrinkets_MenuDock_BOTTOMLEFT" file="Interface\Tooltips\UI-Tooltip-Border" alphaMode="ADD" hidden="true">
+					<Size>
+						<AbsDimension x="16" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT"/>
+					</Anchors>
+					<TexCoords left="0.75" right="0.875" top="0" bottom="1"/>
+				</Texture>
+				<Texture name="GearRackTrinkets_MenuDock_BOTTOMRIGHT" file="Interface\Tooltips\UI-Tooltip-Border" alphaMode="ADD" hidden="true">
+					<Size>
+						<AbsDimension x="16" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT"/>
+					</Anchors>
+					<TexCoords left="0.875" right="1" top="0" bottom="1"/>
+				</Texture>
+			</Layer>
+		</Layers>
+
+		<Frames>
+			<Button name="GearRackTrinkets_MenuResizeButton" inherits="GearRackTrinketsResizeTemplate">
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="1" y="-1"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<CheckButton name="GearRackTrinkets_Menu1" inherits="GearRackTrinketsMenuTrinketTemplate" id="1"/>
+			<CheckButton name="GearRackTrinkets_Menu2" inherits="GearRackTrinketsMenuTrinketTemplate" id="2"/>
+			<CheckButton name="GearRackTrinkets_Menu3" inherits="GearRackTrinketsMenuTrinketTemplate" id="3"/>
+			<CheckButton name="GearRackTrinkets_Menu4" inherits="GearRackTrinketsMenuTrinketTemplate" id="4"/>
+			<CheckButton name="GearRackTrinkets_Menu5" inherits="GearRackTrinketsMenuTrinketTemplate" id="5"/>
+			<CheckButton name="GearRackTrinkets_Menu6" inherits="GearRackTrinketsMenuTrinketTemplate" id="6"/>
+			<CheckButton name="GearRackTrinkets_Menu7" inherits="GearRackTrinketsMenuTrinketTemplate" id="7"/>
+			<CheckButton name="GearRackTrinkets_Menu8" inherits="GearRackTrinketsMenuTrinketTemplate" id="8"/>
+			<CheckButton name="GearRackTrinkets_Menu9" inherits="GearRackTrinketsMenuTrinketTemplate" id="9"/>
+			<CheckButton name="GearRackTrinkets_Menu10" inherits="GearRackTrinketsMenuTrinketTemplate" id="10"/>
+			<CheckButton name="GearRackTrinkets_Menu11" inherits="GearRackTrinketsMenuTrinketTemplate" id="11"/>
+			<CheckButton name="GearRackTrinkets_Menu12" inherits="GearRackTrinketsMenuTrinketTemplate" id="12"/>
+			<CheckButton name="GearRackTrinkets_Menu13" inherits="GearRackTrinketsMenuTrinketTemplate" id="13"/>
+			<CheckButton name="GearRackTrinkets_Menu14" inherits="GearRackTrinketsMenuTrinketTemplate" id="14"/>
+			<CheckButton name="GearRackTrinkets_Menu15" inherits="GearRackTrinketsMenuTrinketTemplate" id="15"/>
+			<CheckButton name="GearRackTrinkets_Menu16" inherits="GearRackTrinketsMenuTrinketTemplate" id="16"/>
+			<CheckButton name="GearRackTrinkets_Menu17" inherits="GearRackTrinketsMenuTrinketTemplate" id="17"/>
+			<CheckButton name="GearRackTrinkets_Menu18" inherits="GearRackTrinketsMenuTrinketTemplate" id="18"/>
+			<CheckButton name="GearRackTrinkets_Menu19" inherits="GearRackTrinketsMenuTrinketTemplate" id="19"/>
+			<CheckButton name="GearRackTrinkets_Menu20" inherits="GearRackTrinketsMenuTrinketTemplate" id="20"/>
+			<CheckButton name="GearRackTrinkets_Menu21" inherits="GearRackTrinketsMenuTrinketTemplate" id="21"/>
+			<CheckButton name="GearRackTrinkets_Menu22" inherits="GearRackTrinketsMenuTrinketTemplate" id="22"/>
+			<CheckButton name="GearRackTrinkets_Menu23" inherits="GearRackTrinketsMenuTrinketTemplate" id="23"/>
+			<CheckButton name="GearRackTrinkets_Menu24" inherits="GearRackTrinketsMenuTrinketTemplate" id="24"/>
+			<CheckButton name="GearRackTrinkets_Menu25" inherits="GearRackTrinketsMenuTrinketTemplate" id="25"/>
+			<CheckButton name="GearRackTrinkets_Menu26" inherits="GearRackTrinketsMenuTrinketTemplate" id="26"/>
+			<CheckButton name="GearRackTrinkets_Menu27" inherits="GearRackTrinketsMenuTrinketTemplate" id="27"/>
+			<CheckButton name="GearRackTrinkets_Menu28" inherits="GearRackTrinketsMenuTrinketTemplate" id="28"/>
+			<CheckButton name="GearRackTrinkets_Menu29" inherits="GearRackTrinketsMenuTrinketTemplate" id="29"/>
+			<CheckButton name="GearRackTrinkets_Menu30" inherits="GearRackTrinketsMenuTrinketTemplate" id="30"/>
+
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu1" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu2" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu3" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu4" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu5" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu6" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu7" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu8" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu9" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu10" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu11" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu12" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu13" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu14" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu15" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu16" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu17" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu18" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu19" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu20" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu21" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu22" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu23" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu24" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu25" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu26" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu27" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu28" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu29" inherits="GearRackTrinketsCooldownTemplate"/>
+			<Cooldown name="$parentCD" parent="GearRackTrinkets_Menu30" inherits="GearRackTrinketsCooldownTemplate"/>
+
+		</Frames>
+
+		<Scripts>
+			<OnMouseDown>
+if GearRack.enabled then
+
+				GearRackTrinkets.MenuFrame_OnMouseDown(arg1)
+
+end
+</OnMouseDown>
+			<OnMouseUp>
+if GearRack.enabled then
+
+				GearRackTrinkets.MenuFrame_OnMouseUp(arg1)
+
+end
+</OnMouseUp>
+			<OnHide>
+if GearRack.enabled then
+
+				GearRackTrinkets.MenuFrame_OnHide()
+
+end
+</OnHide>
+		</Scripts>
+	</Frame>
+
+	<!-- OnUpdate to process all timers -->
+
+</Ui>

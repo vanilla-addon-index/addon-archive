@@ -1,0 +1,15 @@
+* text=auto
+*.lua text eol=lf
+*.xml text eol=lf
+*.toc text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.txt text eol=lf
+*.blp binary
+*.tga binary
+/tests export-ignore
+/.github export-ignore
+/.gitignore export-ignore
+/.gitattributes export-ignore
+/.gitattributes text eol=lf
+/.gitignore text eol=lf

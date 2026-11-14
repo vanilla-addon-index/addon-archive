@@ -1,0 +1,133 @@
+{
+  "upstream": "https://octowow.st/git/Ade/AdeGear",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Ade",
+    "repo": "AdeGear",
+    "name": "AdeGear",
+    "url": "https://octowow.st/git/Ade/AdeGear",
+    "api": "https://octowow.st/git/api/v1/repos/Ade/AdeGear"
+  },
+  "commit": "a08b033665d7e7d45d0748b2773381ad768bfe65",
+  "sourceFiles": {
+    "AdeGear.toc": {
+      "sha256": "b9fae086f8da8b891cf92936a659a8bd122e90e4fc5bb32c96b5d92df8bbb404",
+      "bytes": 610
+    },
+    "Arrows.lua": {
+      "sha256": "9990664cef0e01f94f7d34366fe764fcb03f9d2a7b94d0f3023c1e97eef25b8e",
+      "bytes": 11017
+    },
+    "Char.lua": {
+      "sha256": "490f3c09d3388ff13cf9718a639c9745b67f178e07c76718baeb53822f60cd07",
+      "bytes": 21705
+    },
+    "Classes/DRUID.lua": {
+      "sha256": "1c648d7fb3a769de91cd05b65ae9037c0a679b7de16a507fc88e66f7dfbb00d7",
+      "bytes": 10608
+    },
+    "Classes/HUNTER.lua": {
+      "sha256": "12ebe0111c4859201d7d5665de886eaacbf02bcdcf963f98e286bd3ca2425299",
+      "bytes": 5675
+    },
+    "Classes/MAGE.lua": {
+      "sha256": "b74f2b2b555fe6e08171b91a6625492bc4a2984926a239bacb84d747ad228c7d",
+      "bytes": 2322
+    },
+    "Classes/PALADIN.lua": {
+      "sha256": "990ac21e05b23283b55b730f81cf84885d4a56ff02909afaff4ece5e4162c233",
+      "bytes": 7896
+    },
+    "Classes/PRIEST.lua": {
+      "sha256": "91a80615c7c43975317d60d41bbb2fdd0d514061c8a6035289432eb938579fee",
+      "bytes": 3919
+    },
+    "Classes/ROGUE.lua": {
+      "sha256": "c08c84f89b791ea1b550dc8e60f4882d3ddb84ee092d14e5ed852684776816bb",
+      "bytes": 2460
+    },
+    "Classes/SHAMAN.lua": {
+      "sha256": "cfcd4eddf2e17a033a3104c92fb82e8466184ef71f878f7a5644e4834842187a",
+      "bytes": 8130
+    },
+    "Classes/WARLOCK.lua": {
+      "sha256": "7125154226af864160150ff9fd2a8b6d95bcb3b508fadd02a71de36ce21f4b24",
+      "bytes": 2485
+    },
+    "Classes/WARRIOR.lua": {
+      "sha256": "be70fba5d4f147b2749fa3c806d05132ab6bc2cfbfc9f1a50adf9c0d24ee9244",
+      "bytes": 5818
+    },
+    "Compare.lua": {
+      "sha256": "e042531a76959feea1e6e5b4c6c9c26efd5e676aa24739990b16523fdfd2c778",
+      "bytes": 22559
+    },
+    "Core.lua": {
+      "sha256": "cc52848fd476b6be72a2ba3f4a941bc23ac388b841679594bcc778b5ca29b0bd",
+      "bytes": 11200
+    },
+    "GearScore.lua": {
+      "sha256": "885df1464e26680c6a3721941165978832ebf7f68faf6a5f746313cc6f7895ee",
+      "bytes": 15660
+    },
+    "Hooks.lua": {
+      "sha256": "8e51f271a098c22a35c27863f3fb1c028a12e54b428ca2811d8a815160b20256",
+      "bytes": 2197
+    },
+    "Inspect.lua": {
+      "sha256": "c9b37c37d476f0a8907f4dac114cd5b55ac7edddf68febdf8d890761500f4aa7",
+      "bytes": 10178
+    },
+    "Items.lua": {
+      "sha256": "dd06ea1266139616fc30012112227e53ae4332185258177f2c24ec50078178f3",
+      "bytes": 25618
+    },
+    "Minimap.lua": {
+      "sha256": "cdf20b42c163d1de57723b7d0ca696b5b8846d512c6b67a3b3ceef2db0659c33",
+      "bytes": 4239
+    },
+    "Model.lua": {
+      "sha256": "3a242bbcdcc7e872fb5b5c0a176505c2d192b6a55d9f53e8fdbbaa299f9f777b",
+      "bytes": 7786
+    },
+    "Options.lua": {
+      "sha256": "306e040b9cfb61a321998f74347c743d9fd913c2c8e243e28d56ace3c1ccdd85",
+      "bytes": 17810
+    },
+    "Panel.lua": {
+      "sha256": "ddc30edfd80aa1cb26c9aca1932500a5465bd18d6b66c3cbe14530180c3e9bff",
+      "bytes": 12747
+    },
+    "Races.lua": {
+      "sha256": "ee463bcb874cb0660236f80b5dd07c854e7134fab323489cfad386596df08f1f",
+      "bytes": 1323
+    },
+    "README.md": {
+      "sha256": "2500daae2a5073adc857cc1a09ecc0dabdec1f7dda87227df2230dae0bdee65b",
+      "bytes": 5777
+    },
+    "Rules.lua": {
+      "sha256": "258a87c8057cb00ceae52ef3753ccc8f3a586346682a1c7500fc6f1881cfd5c0",
+      "bytes": 12415
+    },
+    "Skin.lua": {
+      "sha256": "23870fc7d79aaa8472abc6a2d06e1a662d6cc87653502e7c7e471e9258cb93fc",
+      "bytes": 8008
+    },
+    "Tooltip.lua": {
+      "sha256": "e5e928da5df66282fc13a496c6b9078ded6f133f1c7b2e471963a9a95bb2c3ef",
+      "bytes": 5749
+    },
+    "Weights.lua": {
+      "sha256": "29b921daa4fe5e30a971f226271d533cc2321bb69d60aa02fe8d09d53c96643d",
+      "bytes": 23943
+    },
+    "Widgets.lua": {
+      "sha256": "bb3d822cdf6d4bd2b40fc5a01ffd8c0b0a1614a423093f1ae47a08f9044d9921",
+      "bytes": 7587
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

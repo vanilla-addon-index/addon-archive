@@ -55,7 +55,7 @@
 | [PorkNotes](PorkNotes/) | Miscellaneous | 1 | mirrored |
 | [PPBuddy](PPBuddy/) | Class | 1 | mirrored |
 | [Professionquery](Professionquery/) | Professions | 1 | mirrored |
-| [PallyPower-Turtle](PallyPower-Turtle/) | Class | 3 | mirrored |
+| [PallyPower](PallyPower-Turtle/) | Class | 3 | mirrored |
 | [PostalReturned](PostalReturned/) | Auction & Economy | 1 | mirrored |
 | [PowerAuras](PowerAuras/) | Buffs & Debuffs | 1 | mirrored |
 | [pfQuest-HDB](pfQuest-HDB/) | Quests & Leveling | 3 | mirrored |
@@ -71,3 +71,4 @@
 | [PandaUI](PandaUI/) | UI & Appearance | 1 | mirrored |
 | [pfUI-ThreatPlates](pfUI-ThreatPlates/) | Unit Frames | 1 | mirrored |
 | [PizzaSauce](PizzaSauce/) | Libraries | 1 | mirrored |
+| [pfQuest-SmartArrow](pfQuest-SmartArrow/) | Map & Minimap | 1 | mirrored |

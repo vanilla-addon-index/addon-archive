@@ -1,0 +1,102 @@
+{
+  "upstream": "https://octowow.st/git/eineath/pfQuest-SmartArrow",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "eineath",
+    "repo": "pfQuest-SmartArrow",
+    "name": "pfQuest-SmartArrow",
+    "url": "https://octowow.st/git/eineath/pfQuest-SmartArrow",
+    "api": "https://octowow.st/git/api/v1/repos/eineath/pfQuest-SmartArrow"
+  },
+  "commit": "5217054a7dceeca54da890e65048b996d1cfd5a1",
+  "sourceFiles": {
+    "arrow.lua": {
+      "sha256": "ea0abb45bf9e112add6dbe2486720f850f54d0e106749458bb0d0f8356181b46",
+      "bytes": 7583
+    },
+    "compat.lua": {
+      "sha256": "83a1072e21181856a8f35fdcd34883f528da345bc4d3521b322b247d779828f1",
+      "bytes": 13426
+    },
+    "core.lua": {
+      "sha256": "c6f3b251ddfe0ec1dd8a2eff5fd7bae25e35ef7bee7b49c0548b23331257d46a",
+      "bytes": 40988
+    },
+    "data/obstacles.lua": {
+      "sha256": "2be8ae6855e0208131e701f6d3e697aeb33b4fce1844b6f644a542259068ca8b",
+      "bytes": 2626
+    },
+    "data/places.lua": {
+      "sha256": "069f0fd331f4b5c9f8b6fd362d673d3029aecb54c121d50129c09971ea18bb06",
+      "bytes": 6168
+    },
+    "data/roads.lua": {
+      "sha256": "af8d3817e7ff369049ed60ca71153e7506d88cbb1bb849883f38014ac1faf842",
+      "bytes": 273676
+    },
+    "data/travel.lua": {
+      "sha256": "c64665e87665479df7828daf4c5d3f5a28fa72fa8ddacedab9990765ce764183",
+      "bytes": 9889
+    },
+    "data/walknet.lua": {
+      "sha256": "f3eb7dcef31ea77f1ee5be718867e34ff76d2424b597ffc8331e8795f57113e5",
+      "bytes": 43558
+    },
+    "data/zones.lua": {
+      "sha256": "4e38594d7a9bcdb4a86e290aa42e624427ce017bc4bb7a269678ce12312a1cb9",
+      "bytes": 5510
+    },
+    "draw.lua": {
+      "sha256": "2bc43e30f3da8b05ec09c887b02c71f18e5c529f5e9033943cafe0c47eeb93e2",
+      "bytes": 13596
+    },
+    "graph.lua": {
+      "sha256": "bc2923d56534fbad288a91264ad7d26562b5347ea61c2726b669e05890c472f2",
+      "bytes": 23934
+    },
+    "LICENSE.md": {
+      "sha256": "cc5470feed66192387f06ae93aed0bd4fefae5a5fd7c1e54a4acf4ea64f1028b",
+      "bytes": 34893
+    },
+    "nav.lua": {
+      "sha256": "bc137d062f410e2c4bad00164476be6dc0b269ac20201386081dc950ac22e2a9",
+      "bytes": 41209
+    },
+    "pfQuest-SmartArrow.toc": {
+      "sha256": "c553ea4b28a8c6be30e31245a65c77b7668ea7b9627608c8bce1c81bed82073d",
+      "bytes": 757
+    },
+    "places.lua": {
+      "sha256": "db9afcef2b70b0fc4a99d019d1277932f216a5b450b325d1af7c6c4eb176b42e",
+      "bytes": 9412
+    },
+    "README.md": {
+      "sha256": "ce2e62c34241377a1d7889bddc6b1cda4b801464935d2a050af3de6393943227",
+      "bytes": 20716
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "765": {
+      "tag": "v0.11.0",
+      "folder": "v0.11.0--765",
+      "assets": {
+        "101": {
+          "sha256": "cddd44cd6d2631967876b86e4ded252ebe57dc151216d0c2a92762982d289332",
+          "bytes": 195971,
+          "id": "101",
+          "name": "pfQuest-SmartArrow-0.11.0.zip",
+          "url": "https://octowow.st/git/eineath/pfQuest-SmartArrow/releases/download/v0.11.0/pfQuest-SmartArrow-0.11.0.zip",
+          "path": "releases/v0.11.0--765/assets/pfQuest-SmartArrow-0.11.0.zip"
+        }
+      },
+      "source": {
+        "sha256": "7fcb17172fad17fca3b256e2a04afe010611250ca89274b727a64a2b9df15d7e",
+        "bytes": 189659,
+        "path": "releases/v0.11.0--765/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/eineath/pfQuest-SmartArrow/archive/v0.11.0.tar.gz"
+      }
+    }
+  }
+}

@@ -18,3 +18,4 @@
 | [oRA2](oRA2/) | Raid & Party | 1 | mirrored |
 | [OctoArmoryLink](OctoArmoryLink/) | Miscellaneous | 1 | mirrored |
 | [OctoGroupBuffToggle](OctoGroupBuffToggle/) | Buffs & Debuffs | 1 | mirrored |
+| [OctoAI](OctoAI/) | Miscellaneous | 1 | mirrored |

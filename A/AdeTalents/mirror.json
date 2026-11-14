@@ -1,0 +1,77 @@
+{
+  "upstream": "https://octowow.st/git/Ade/AdeTalents",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Ade",
+    "repo": "AdeTalents",
+    "name": "AdeTalents",
+    "url": "https://octowow.st/git/Ade/AdeTalents",
+    "api": "https://octowow.st/git/api/v1/repos/Ade/AdeTalents"
+  },
+  "commit": "b23c02e87f602e9c10413863cd596b57730ea973",
+  "sourceFiles": {
+    "AdeTalents.lua": {
+      "sha256": "083890fe25cb24afd45869bd2a709dcc3519b550a7070189a6fc07281e81f4af",
+      "bytes": 19547
+    },
+    "AdeTalents.toc": {
+      "sha256": "60620a4bc75f812cf7c37d4423cfd8f9e4bd5158bb5b9b84f89cf87d580c997e",
+      "bytes": 339
+    },
+    "Data/DRUID.lua": {
+      "sha256": "110db93e657e9862464218a02a6b12b385ecbf3106b3f38f3076b6c2a621d42c",
+      "bytes": 19035
+    },
+    "Data/HUNTER.lua": {
+      "sha256": "7444af7768bb3d76cd01aa7b7c24c1f2d256a970a08c2c78f1198dae4438909d",
+      "bytes": 19081
+    },
+    "Data/MAGE.lua": {
+      "sha256": "5a6780b27a1f999fc51f2ee6c6048a07155c0eda085211e14317f41b8e946be3",
+      "bytes": 18077
+    },
+    "Data/PALADIN.lua": {
+      "sha256": "052ce36088f12476ee92ee0c382ee69161209e14a3e79a3aaec5c8f10eb4542a",
+      "bytes": 16663
+    },
+    "Data/PRIEST.lua": {
+      "sha256": "af76d65044f3a9f8e99bc041343a73d2507b5aac6cf30bb354c58212568a93bd",
+      "bytes": 16556
+    },
+    "Data/ROGUE.lua": {
+      "sha256": "b11a063d3d9337af455aa33a2b479c6466190255a7f678d707f89d549e83dad2",
+      "bytes": 19536
+    },
+    "Data/SHAMAN.lua": {
+      "sha256": "05cb0069eaeb4c0d03b9db33c248d91834a6e273b52e923fc78e68b3dae6ed52",
+      "bytes": 18540
+    },
+    "Data/WARLOCK.lua": {
+      "sha256": "7e31ff4e743af5ba869d0bc3d586e23bbc927b832ef25a44ed556f382a54bcc0",
+      "bytes": 18116
+    },
+    "Data/WARRIOR.lua": {
+      "sha256": "34ead2970553d2451742290357630e44abb476ee4bf9d71cf79b6d4c387ee8bb",
+      "bytes": 18407
+    },
+    "Locale/ruRU.lua": {
+      "sha256": "080a66b68ee4bfeeaf80c6f3b6b2670db48d383f7e4896f14b0e0f0024e75d4e",
+      "bytes": 20157
+    },
+    "README.md": {
+      "sha256": "40de65aab8fa2de5479e42f3fd8a9e1fe8d0b4e5cf81ad38b37a71bf93b2aa46",
+      "bytes": 3706
+    },
+    "tools/make_data.py": {
+      "sha256": "8047dc63a8d30930a27f9b78bd1e604401740de773e5b20d9faa542fb22ba6a1",
+      "bytes": 15648
+    },
+    "tools/verified.json": {
+      "sha256": "8977949689ca5e982cf54ffae80d0e78b52e6230130c5c1154c5c8edf74b182d",
+      "bytes": 4021
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

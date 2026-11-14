@@ -1,6 +1,6 @@
-# PallyPower-Turtle
+# PallyPower
 
-[Original listing](https://vanilla-addon-index.github.io/addon/pallypower-turtle) · Class · Listed
+[Original listing](https://vanilla-addon-index.github.io/addon/pallypower) · Class · Listed
 
 | Component | Upstream | Status |
 |---|---|---|

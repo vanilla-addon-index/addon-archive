@@ -1,0 +1,43 @@
+<Bindings>
+	<Binding name="GEARRACK_USE_TOP_TRINKET_ITEM" description="Use Trinket 1 (Upper slot)" header="GEARRACK">if GearRack.enabled then GearRackUI_UseItem(13) end</Binding>
+	<Binding name="GEARRACK_USE_BOTTOM_TRINKET_ITEM" description="Use Trinket 2 (Lower slot)">if GearRack.enabled then GearRackUI_UseItem(14) end</Binding>
+	<Binding name="GEARRACK_TOGGLE_BAR" description="Toggle equipment bar">if GearRack.enabled then
+		GearRackUI_Toggle()
+	 end</Binding>
+
+	<Binding name="GEARRACK_TOGGLE_EVENTS" description="Toggle Events">if GearRack.enabled then
+		GearRackUI_ToggleEvents()
+	 end</Binding>
+
+	<Binding name="GEARRACK_USE_HEAD_ITEM" description="Use Head Item">if GearRack.enabled then GearRackUI_UseItem(1) end</Binding>
+	<Binding name="GEARRACK_USE_NECK_ITEM" description="Use Neck Item">if GearRack.enabled then GearRackUI_UseItem(2) end</Binding>
+	<Binding name="GEARRACK_USE_SHOULDER_ITEM" description="Use Shoulder Item">if GearRack.enabled then GearRackUI_UseItem(3) end</Binding>
+	<Binding name="GEARRACK_USE_CHEST_ITEM" description="Use Chest Item">if GearRack.enabled then GearRackUI_UseItem(5) end</Binding>
+	<Binding name="GEARRACK_USE_WAIST_ITEM" description="Use Waist Item">if GearRack.enabled then GearRackUI_UseItem(6) end</Binding>
+	<Binding name="GEARRACK_USE_LEGS_ITEM" description="Use Legs Item">if GearRack.enabled then GearRackUI_UseItem(7) end</Binding>
+	<Binding name="GEARRACK_USE_FEET_ITEM" description="Use Feet Item">if GearRack.enabled then GearRackUI_UseItem(8) end</Binding>
+	<Binding name="GEARRACK_USE_WRIST_ITEM" description="Use Wrist Item">if GearRack.enabled then GearRackUI_UseItem(9) end</Binding>
+	<Binding name="GEARRACK_USE_HANDS_ITEM" description="Use Hands Item">if GearRack.enabled then GearRackUI_UseItem(10) end</Binding>
+	<Binding name="GEARRACK_USE_TOP_FINGER_ITEM" description="Use Top Finger Item">if GearRack.enabled then GearRackUI_UseItem(11) end</Binding>
+	<Binding name="GEARRACK_USE_BOTTOM_FINGER_ITEM" description="Use Bottom Finger Item">if GearRack.enabled then GearRackUI_UseItem(12) end</Binding>
+	<Binding name="GEARRACK_USE_BACK_ITEM" description="Use Back Item">if GearRack.enabled then GearRackUI_UseItem(15) end</Binding>
+	<Binding name="GEARRACK_USE_MAIN_HAND_ITEM" description="Use Main-Hand Item">if GearRack.enabled then GearRackUI_UseItem(16) end</Binding>
+	<Binding name="GEARRACK_USE_OFF_HAND_ITEM" description="Use Off-Hand Item">if GearRack.enabled then GearRackUI_UseItem(17) end</Binding>
+	<Binding name="GEARRACK_USE_RANGE_ITEM" description="Use ranged item">if GearRack.enabled then GearRackUI_UseItem(18) end</Binding>
+
+	<Binding name="GEARRACK_EQUIPSET1" description="Equip Set: 1">if GearRack.enabled then GearRackUI_UseSetBinding(1) end</Binding>
+	<Binding name="GEARRACK_EQUIPSET2" description="Equip Set: 2">if GearRack.enabled then GearRackUI_UseSetBinding(2) end</Binding>
+	<Binding name="GEARRACK_EQUIPSET3" description="Equip Set: 3">if GearRack.enabled then GearRackUI_UseSetBinding(3) end</Binding>
+	<Binding name="GEARRACK_EQUIPSET4" description="Equip Set: 4">if GearRack.enabled then GearRackUI_UseSetBinding(4) end</Binding>
+	<Binding name="GEARRACK_EQUIPSET5" description="Equip Set: 5">if GearRack.enabled then GearRackUI_UseSetBinding(5) end</Binding>
+	<Binding name="GEARRACK_EQUIPSET6" description="Equip Set: 6">if GearRack.enabled then GearRackUI_UseSetBinding(6) end</Binding>
+	<Binding name="GEARRACK_EQUIPSET7" description="Equip Set: 7">if GearRack.enabled then GearRackUI_UseSetBinding(7) end</Binding>
+	<Binding name="GEARRACK_EQUIPSET8" description="Equip Set: 8">if GearRack.enabled then GearRackUI_UseSetBinding(8) end</Binding>
+	<Binding name="GEARRACK_EQUIPSET9" description="Equip Set: 9">if GearRack.enabled then GearRackUI_UseSetBinding(9) end</Binding>
+	<Binding name="GEARRACK_EQUIPSET10" description="Equip Set: 10">if GearRack.enabled then GearRackUI_UseSetBinding(10) end</Binding>
+
+    <Binding name="GEARRACK_TOGGLETRINKETS" description="Toggle Trinkets">if GearRack.enabled then
+        GearRackTrinkets.ToggleFrame(GearRackTrinkets_MainFrame)
+     end</Binding>
+    <Binding name="GEARRACK_TOGGLE_SETTINGS" description="Open Gear Sets">if GearRack.enabled then GearRack.ToggleSettings() end</Binding>
+</Bindings>

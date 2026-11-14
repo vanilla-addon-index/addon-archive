@@ -28194,7 +28194,7 @@
     },
     {
       "id": 988,
-      "name": "PallyPower-Turtle",
+      "name": "PallyPower",
       "folder": "P/PallyPower-Turtle",
       "components": [
         {
@@ -28251,7 +28251,7 @@
       ],
       "active": true,
       "kind": "Class",
-      "site": "https://vanilla-addon-index.github.io/addon/pallypower-turtle"
+      "site": "https://vanilla-addon-index.github.io/addon/pallypower"
     },
     {
       "id": 989,
@@ -30576,6 +30576,195 @@
       "active": true,
       "kind": "Professions",
       "site": "https://vanilla-addon-index.github.io/addon/woodandseedsgather"
+    },
+    {
+      "id": 1106,
+      "name": "AdeGear",
+      "folder": "A/AdeGear",
+      "components": [
+        {
+          "originalUrl": "https://octowow.st/git/Ade/AdeGear",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "Ade",
+            "repo": "AdeGear",
+            "name": "AdeGear",
+            "url": "https://octowow.st/git/Ade/AdeGear",
+            "api": "https://octowow.st/git/api/v1/repos/Ade/AdeGear"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        }
+      ],
+      "active": true,
+      "kind": "Miscellaneous",
+      "site": "https://vanilla-addon-index.github.io/addon/adegear"
+    },
+    {
+      "id": 1107,
+      "name": "AdeSPD",
+      "folder": "A/AdeSPD",
+      "components": [
+        {
+          "originalUrl": "https://octowow.st/git/Ade/AdeSPD",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "Ade",
+            "repo": "AdeSPD",
+            "name": "AdeSPD",
+            "url": "https://octowow.st/git/Ade/AdeSPD",
+            "api": "https://octowow.st/git/api/v1/repos/Ade/AdeSPD"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        }
+      ],
+      "active": true,
+      "kind": "Tooltip",
+      "site": "https://vanilla-addon-index.github.io/addon/adespd"
+    },
+    {
+      "id": 1108,
+      "name": "AdeTalentPlanner",
+      "folder": "A/AdeTalentPlanner",
+      "components": [
+        {
+          "originalUrl": "https://octowow.st/git/Ade/AdeTalentPlanner",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "Ade",
+            "repo": "AdeTalentPlanner",
+            "name": "AdeTalentPlanner",
+            "url": "https://octowow.st/git/Ade/AdeTalentPlanner",
+            "api": "https://octowow.st/git/api/v1/repos/Ade/AdeTalentPlanner"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        }
+      ],
+      "active": true,
+      "kind": "Miscellaneous",
+      "site": "https://vanilla-addon-index.github.io/addon/adetalentplanner"
+    },
+    {
+      "id": 1109,
+      "name": "AdeTalents",
+      "folder": "A/AdeTalents",
+      "components": [
+        {
+          "originalUrl": "https://octowow.st/git/Ade/AdeTalents",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "Ade",
+            "repo": "AdeTalents",
+            "name": "AdeTalents",
+            "url": "https://octowow.st/git/Ade/AdeTalents",
+            "api": "https://octowow.st/git/api/v1/repos/Ade/AdeTalents"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        }
+      ],
+      "active": true,
+      "kind": "Libraries",
+      "site": "https://vanilla-addon-index.github.io/addon/adetalents"
+    },
+    {
+      "id": 1110,
+      "name": "OctoAI",
+      "folder": "O/OctoAI",
+      "components": [
+        {
+          "originalUrl": "https://octowow.st/git/rwang0417/OctoAI",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "rwang0417",
+            "repo": "OctoAI",
+            "name": "OctoAI",
+            "url": "https://octowow.st/git/rwang0417/OctoAI",
+            "api": "https://octowow.st/git/api/v1/repos/rwang0417/OctoAI"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "MIT"
+        }
+      ],
+      "active": true,
+      "kind": "Miscellaneous",
+      "site": "https://vanilla-addon-index.github.io/addon/octoai"
+    },
+    {
+      "id": 1111,
+      "name": "pfQuest-SmartArrow",
+      "folder": "P/pfQuest-SmartArrow",
+      "components": [
+        {
+          "originalUrl": "https://octowow.st/git/eineath/pfQuest-SmartArrow",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "eineath",
+            "repo": "pfQuest-SmartArrow",
+            "name": "pfQuest-SmartArrow",
+            "url": "https://octowow.st/git/eineath/pfQuest-SmartArrow",
+            "api": "https://octowow.st/git/api/v1/repos/eineath/pfQuest-SmartArrow"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "LGPL"
+        }
+      ],
+      "active": true,
+      "kind": "Map & Minimap",
+      "site": "https://vanilla-addon-index.github.io/addon/pfquest-smartarrow"
+    },
+    {
+      "id": 1112,
+      "name": "GearRack",
+      "folder": "G/GearRack",
+      "components": [
+        {
+          "originalUrl": "https://github.com/Fostercare5988/GearRack",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "github.com",
+            "owner": "Fostercare5988",
+            "repo": "GearRack",
+            "name": "GearRack",
+            "url": "https://github.com/Fostercare5988/GearRack",
+            "api": "https://api.github.com/repos/Fostercare5988/GearRack"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        }
+      ],
+      "active": true,
+      "kind": "Bags & Inventory",
+      "site": "https://vanilla-addon-index.github.io/addon/gearrack"
     }
   ],
   "archiveTitle": "Addon archive",

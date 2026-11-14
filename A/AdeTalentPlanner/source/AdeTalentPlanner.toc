@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: AdeTalentPlanner
+## Notes: All three talent trees in one window. Plan builds per class (shared by every character and, with SuperWoW, every account). Link talents and whole builds in chat.
+## Author: Ade
+## Version: 1.0.0
+## SavedVariables: AdeTalentPlannerDB
+## OptionalDeps: SuperWoW, SuperAPI, AdeTalents
+AdeTalentPlanner.lua
+AdeTalentPlannerUI.lua

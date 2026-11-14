@@ -80,3 +80,7 @@
 | [AutoSpam](AutoSpam/) | Chat & Social | 2 | mirrored |
 | [ArmorDRCompare-Octo](ArmorDRCompare-Octo/) | Unit Frames | 1 | mirrored |
 | [AshenBuilds](AshenBuilds/) | Miscellaneous | 1 | mirrored |
+| [AdeGear](AdeGear/) | Miscellaneous | 1 | mirrored |
+| [AdeSPD](AdeSPD/) | Tooltip | 1 | mirrored |
+| [AdeTalentPlanner](AdeTalentPlanner/) | Miscellaneous | 1 | mirrored |
+| [AdeTalents](AdeTalents/) | Libraries | 1 | mirrored |

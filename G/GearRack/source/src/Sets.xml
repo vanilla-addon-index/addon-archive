@@ -1,0 +1,2453 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<!-- nil/1/0 checkboxes for cloak/helm -->
+	<CheckButton name="GearRackUITristateTemplate" inherits="UICheckButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="18" y="18"/>
+		</Size>
+		<Scripts>
+			<OnLoad>
+if GearRack.enabled then
+
+				GearRackUI_TriStateCheck_OnLoad()
+
+end
+</OnLoad>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackUI_TriStateCheck_OnClick()
+
+end
+</OnClick>
+			<OnEnter>
+if GearRack.enabled then
+
+				GearRackUI_TriStateCheck_Tooltip()
+
+end
+</OnEnter>
+			<OnLeave>
+if GearRack.enabled then
+
+				GameTooltip:Hide()
+
+end
+</OnLeave>
+		</Scripts>
+	</CheckButton>
+
+	<!-- template for scrollable options -->
+	<Button name="GearRackUIOptListTemplate" enableMouse="false" virtual="true">
+		<Size>
+			<AbsDimension x="168" y="19"/>
+		</Size>
+		<Frames>
+			<CheckButton name="$parentCheckButton" inherits="UICheckButtonTemplate">
+				<Size>
+					<AbsDimension x="24" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="2" y="-3"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnEnter>
+if GearRack.enabled then
+
+						GearRackUI_OptList_OnEnter()
+
+end
+</OnEnter>
+					<OnLeave>
+if GearRack.enabled then
+
+						GameTooltip:Hide()
+
+end
+</OnLeave>
+					<OnClick>
+if GearRack.enabled then
+
+						GearRackUI_OptList_OnClick()
+
+end
+</OnClick>
+				</Scripts>
+			</CheckButton>
+		</Frames>
+		<Scripts>
+			<OnMouseDown>
+if GearRack.enabled then
+
+				if arg1=="LeftButton" then
+					GearRackUI_SetsFrame:StartMoving()
+				end
+
+end
+</OnMouseDown>
+			<OnMouseUp>
+if GearRack.enabled then
+
+				GearRackUI_SetsFrame:StopMovingOrSizing()
+
+end
+</OnMouseUp>
+		</Scripts>
+	</Button>
+
+	<!-- template for single-line edit boxes -->
+	<EditBox name="GearRackUIEditBoxTemplate" historyLines="0" enableMouse="true" autoFocus="false" letters="256" virtual="true">
+		<Size>
+			<AbsDimension x="160" y="20"/>
+		</Size>
+		<FontString inherits="GameFontHighlightSmall"/>
+		<Scripts>
+			<OnEnter>
+if GearRack.enabled then
+
+				GearRackUI_Opt_OnEnter()
+
+end
+</OnEnter>
+			<OnLeave>
+if GearRack.enabled then
+
+				GameTooltip:Hide()
+
+end
+</OnLeave>
+			<OnEscapePressed>
+if GearRack.enabled then
+
+				this:ClearFocus()
+
+end
+</OnEscapePressed>
+			<OnEnterPressed>
+if GearRack.enabled then
+
+				this:ClearFocus()
+
+end
+</OnEnterPressed>
+		</Scripts>
+	</EditBox>
+
+	<!-- Tabs and buttons are plain buttons; Skin.lua draws their pills and text colors. -->
+	<Button name="GearRackUITabTemplate" virtual="true">
+		<ButtonText name="$parentText"/>
+		<NormalFont inherits="GameFontHighlightSmall"/>
+		<HighlightFont inherits="GameFontHighlightSmall"/>
+		<DisabledFont inherits="GameFontHighlightSmall"/>
+		<Scripts>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackUI_Tab(this:GetID())
+
+end
+</OnClick>
+		</Scripts>
+	</Button>
+
+	<Button name="GearRackUISetsButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="55" y="26"/>
+		</Size>
+		<ButtonText name="$parentText"/>
+		<NormalFont inherits="GameFontHighlightSmall"/>
+		<HighlightFont inherits="GameFontHighlightSmall"/>
+		<DisabledFont inherits="GameFontHighlightSmall"/>
+		<Scripts>
+			<OnEnter>
+if GearRack.enabled then
+
+				GearRackUI_Opt_OnEnter()
+
+end
+</OnEnter>
+			<OnLeave>
+if GearRack.enabled then
+
+				GameTooltip:Hide()
+
+end
+</OnLeave>
+		</Scripts>
+	</Button>
+
+	<Button name="GearRackUIEventListTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="140" y="26"/>
+		</Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentName" inherits="GameFontHighlightSmall" justifyH="LEFT" text="Event Name">
+					<Size>
+						<AbsDimension x="96" y="14"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="48" y="-5"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentIcon">
+				<Size>
+					<AbsDimension x="24" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="20" y="-1"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\Icons\INV_Misc_QuestionMark"/>
+				<PushedTexture file="Interface\Icons\INV_Misc_QuestionMark">
+					<Size>
+						<AbsDimension x="22" y="22"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<TexCoords left=".15" right=".85" top=".15" bottom=".85"/>
+				</PushedTexture>
+				<HighlightTexture file="Interface\Buttons\CheckButtonHilight" alphaMode="ADD"/>
+				<Scripts>
+					<OnEnter>
+if GearRack.enabled then
+
+						GearRackUI_EventsListIcon_OnEnter()
+
+end
+</OnEnter>
+					<OnLeave>
+if GearRack.enabled then
+
+						GameTooltip:Hide()
+
+end
+</OnLeave>
+					<OnClick>
+if GearRack.enabled then
+
+						GearRackUI_EventsListIcon_OnClick()
+
+end
+</OnClick>
+				</Scripts>
+			</Button>
+			<CheckButton name="$parentEnable" inherits="GearRackUICheckTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="2" y="-3"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnEnter>
+if GearRack.enabled then
+
+						GearRackUI_OnTooltip(GearRackUIText.ENABLEEVENT_TEXT,GearRackUIText.ENABLEEVENT_TOOLTIP)
+
+end
+</OnEnter>
+					<OnLeave>
+if GearRack.enabled then
+
+						GameTooltip:Hide()
+
+end
+</OnLeave>
+					<OnClick>
+if GearRack.enabled then
+
+						GearRackUI_EventsList_EnableOnClick()
+
+end
+</OnClick>
+				</Scripts>
+			</CheckButton>
+		</Frames>
+		<Scripts>
+			<OnEnter>
+if GearRack.enabled then
+
+				GearRackUI_EventsList_OnEnter()
+
+end
+</OnEnter>
+			<OnLeave>
+if GearRack.enabled then
+
+				GameTooltip:Hide()
+
+end
+</OnLeave>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackUI_EventsList_OnClick(arg1)
+
+end
+</OnClick>
+			<OnDoubleClick>
+if GearRack.enabled then
+
+				GearRackUI_EventButtons("Edit")
+
+end
+</OnDoubleClick>
+		</Scripts>
+	</Button>
+
+	<Button name="GearRackUISetsCompactTemplate" hidden="true" virtual="true">
+		<Size>
+			<AbsDimension x="140" y="21"/>
+		</Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="$parentIcon">
+					<Size>
+						<AbsDimension x="18" y="18"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="0" y="-1"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="$parentName" inherits="GameFontHighlight" justifyH="LEFT" text="Set Name">
+					<Size>
+						<AbsDimension x="64" y="14"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentIcon" relativePoint="TOPRIGHT">
+							<Offset>
+								<AbsDimension x="4" y="-1"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+                <FontString name="$parentCount" inherits="GameFontHighlightSmall" justifyH="RIGHT">
+                    <Size><AbsDimension x="44" y="14"/></Size>
+                    <Anchors>
+                        <Anchor point="TOPRIGHT">
+                            <Offset><AbsDimension x="-4" y="-2"/></Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnEnter>
+if GearRack.enabled then
+
+				GearRackUI_Sets_Saved_OnEnter()
+
+end
+</OnEnter>
+			<OnLeave>
+if GearRack.enabled then
+
+				GameTooltip:Hide()
+
+end
+</OnLeave>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackUI_Sets_Saved_OnClick(arg1)
+
+end
+</OnClick>
+		</Scripts>
+	</Button>
+
+	<Button name="GearRackUISetsSavedIconTemplate" hidden="true" virtual="true">
+		<Size>
+			<AbsDimension x="140" y="28"/>
+		</Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="$parentIcon">
+					<Size>
+						<AbsDimension x="26" y="26"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="0" y="-1"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="$parentName" inherits="GameFontHighlight" justifyH="LEFT" text="Set Name">
+					<Size>
+						<AbsDimension x="108" y="14"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentIcon" relativePoint="TOPRIGHT">
+							<Offset>
+								<AbsDimension x="4" y="-1"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentCount" inherits="GameFontHighlightSmall" justifyH="LEFT" text="0/20">
+					<Size>
+						<AbsDimension x="50" y="14"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" relativeTo="$parentIcon" relativePoint="BOTTOMRIGHT">
+							<Offset>
+								<AbsDimension x="4" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentKey" inherits="GameFontHighlightSmall" justifyH="RIGHT" text="CTRL+1">
+					<Size>
+						<AbsDimension x="50" y="14"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset>
+								<AbsDimension x="-4" y="1"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnEnter>
+if GearRack.enabled then
+
+				GearRackUI_Sets_Saved_OnEnter()
+
+end
+</OnEnter>
+			<OnLeave>
+if GearRack.enabled then
+
+				GameTooltip:Hide()
+
+end
+</OnLeave>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackUI_Sets_Saved_OnClick(arg1)
+
+end
+</OnClick>
+		</Scripts>
+	</Button>
+
+	<CheckButton name="GearRackUISetsInvTemplate" inherits="ActionButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="36" y="36"/>
+		</Size>
+		<Scripts>
+			<OnLoad>
+if GearRack.enabled then
+
+				this:RegisterForClicks("LeftButtonUp","RightButtonUp")
+
+end
+</OnLoad>
+			<OnEnter>
+if GearRack.enabled then
+
+				GearRackUI_Inv_Tooltip()
+				GearRackUI_Sets_Inv_OnEnter()
+
+end
+</OnEnter>
+			<OnLeave>
+if GearRack.enabled then
+
+				GameTooltip:Hide()
+
+end
+</OnLeave>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackUI_Sets_InvToggle()
+
+end
+</OnClick>
+		</Scripts>
+	</CheckButton>
+
+	<Button name="GearRackUISetsIconTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="28" y="28"/>
+		</Size>
+		<NormalTexture file="Interface\Icons\INV_Misc_Coin_02"/>
+		<HighlightTexture file="Interface\Buttons\CheckButtonHilight" alphaMode="ADD"/>
+		<PushedTexture file="Interface\Icons\INV_Misc_Coin_02"/>
+		<Scripts>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackUI_Sets_Icon_OnClick()
+
+end
+</OnClick>
+		</Scripts>
+	</Button>
+
+	<Frame name="GearRackUI_SetsFrame" hidden="true" movable="true" toplevel="true" enableMouse="true">
+		<Size>
+			<AbsDimension x="280" y="334"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="100"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString name="GearRackUI_Sets_Title" inherits="GameFontNormalSmall" text="GearRack">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="GearRackUI_SetsFrame" relativePoint="TOPLEFT">
+							<Offset>
+								<AbsDimension x="8" y="-9"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+
+		<Frames>
+			<Button name="GearRackUI_Sets_Close">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-6" y="-6"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\GearRack\media\Equipment-Buttons" setAllPoints="true">
+					<TexCoords left=".5" right=".75" top=".25" bottom=".5"/>
+				</NormalTexture>
+				<PushedTexture file="Interface\AddOns\GearRack\media\Equipment-Buttons" setAllPoints="true">
+					<TexCoords left=".75" right="1" top=".25" bottom=".5"/>
+				</PushedTexture>
+				<HighlightTexture file="Interface\AddOns\GearRack\media\Equipment-Buttons" alphaMode="ADD" setAllPoints="true">
+					<TexCoords left=".25" right=".5" top=".5" bottom=".75"/>
+				</HighlightTexture>
+				<Scripts>
+					<OnEnter>
+if GearRack.enabled then
+
+						GearRackUI_Opt_OnEnter()
+
+end
+</OnEnter>
+					<OnLeave>
+if GearRack.enabled then
+
+						GameTooltip:Hide()
+
+end
+</OnLeave>
+					<OnClick>
+if GearRack.enabled then
+
+						GearRack.CloseMenus()
+
+end
+</OnClick>
+				</Scripts>
+			</Button>
+
+			<Button name="GearRackUI_Sets_Lock" inherits="GearRackUIControlButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="GearRackUI_Sets_Close" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="-2" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\GearRack\media\Equipment-Buttons" setAllPoints="true">
+					<TexCoords left=".5" right=".75" top="0" bottom=".25"/>
+				</NormalTexture>
+				<PushedTexture file="Interface\AddOns\GearRack\media\Equipment-Buttons" setAllPoints="true">
+					<TexCoords left=".75" right="1" top="0" bottom=".25"/>
+				</PushedTexture>
+			</Button>
+
+			<CheckButton name="GearRackUI_Sets_Inv1" inherits="GearRackUISetsInvTemplate" id="1">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="GearRackUI_SetsFrame" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="8" y="-24"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv2" inherits="GearRackUISetsInvTemplate" id="2">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Inv1" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv3" inherits="GearRackUISetsInvTemplate" id="3">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Inv2" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv15" inherits="GearRackUISetsInvTemplate" id="15">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Inv3" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv5" inherits="GearRackUISetsInvTemplate" id="5">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Inv15" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv4" inherits="GearRackUISetsInvTemplate" id="4">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Inv5" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv19" inherits="GearRackUISetsInvTemplate" id="19">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Inv4" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv9" inherits="GearRackUISetsInvTemplate" id="9">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Inv19" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+
+			<CheckButton name="GearRackUI_Sets_Inv16" inherits="GearRackUISetsInvTemplate" id="16">
+				<Anchors>
+					<Anchor point="BOTTOM" relativeTo="GearRackUI_SetsFrame" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="-57" y="8"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv17" inherits="GearRackUISetsInvTemplate" id="17">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" relativeTo="GearRackUI_Sets_Inv16" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="2" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv18" inherits="GearRackUISetsInvTemplate" id="18">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" relativeTo="GearRackUI_Sets_Inv17" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="2" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv0" inherits="GearRackUISetsInvTemplate" id="0">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" relativeTo="GearRackUI_Sets_Inv18" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="2" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+
+			<CheckButton name="GearRackUI_Sets_Inv10" inherits="GearRackUISetsInvTemplate" id="10">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="GearRackUI_SetsFrame" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-8" y="-24"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv6" inherits="GearRackUISetsInvTemplate" id="6">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="GearRackUI_Sets_Inv10" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="0" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv7" inherits="GearRackUISetsInvTemplate" id="7">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="GearRackUI_Sets_Inv6" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="0" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv8" inherits="GearRackUISetsInvTemplate" id="8">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="GearRackUI_Sets_Inv7" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="0" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv11" inherits="GearRackUISetsInvTemplate" id="11">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="GearRackUI_Sets_Inv8" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="0" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv12" inherits="GearRackUISetsInvTemplate" id="12">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="GearRackUI_Sets_Inv11" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="0" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv13" inherits="GearRackUISetsInvTemplate" id="13">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="GearRackUI_Sets_Inv12" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="0" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+			<CheckButton name="GearRackUI_Sets_Inv14" inherits="GearRackUISetsInvTemplate" id="14">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="GearRackUI_Sets_Inv13" relativePoint="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="0" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+
+			<!-- Options tab -->
+			<Frame name="GearRackUI_Sets_SubFrame1" hidden="true">
+				<Size>
+					<AbsDimension x="186" y="270"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="GearRackUI_SetsFrame" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="0" y="-20"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+
+				<Frames>
+					<Frame name="GearRackUI_Sets_OptList">
+						<Size>
+							<AbsDimension x="172" y="228"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-8"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<Button name="GearRackUIOptList1" inherits="GearRackUIOptListTemplate" id="1">
+								<Anchors>
+									<Anchor point="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="-28" y="-4"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUIOptList2" inherits="GearRackUIOptListTemplate" id="2">
+								<Anchors>
+									<Anchor point="TOPRIGHT" relativeTo="GearRackUIOptList1" relativePoint="BOTTOMRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUIOptList3" inherits="GearRackUIOptListTemplate" id="3">
+								<Anchors>
+									<Anchor point="TOPRIGHT" relativeTo="GearRackUIOptList2" relativePoint="BOTTOMRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUIOptList4" inherits="GearRackUIOptListTemplate" id="4">
+								<Anchors>
+									<Anchor point="TOPRIGHT" relativeTo="GearRackUIOptList3" relativePoint="BOTTOMRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUIOptList5" inherits="GearRackUIOptListTemplate" id="5">
+								<Anchors>
+									<Anchor point="TOPRIGHT" relativeTo="GearRackUIOptList4" relativePoint="BOTTOMRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUIOptList6" inherits="GearRackUIOptListTemplate" id="6">
+								<Anchors>
+									<Anchor point="TOPRIGHT" relativeTo="GearRackUIOptList5" relativePoint="BOTTOMRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUIOptList7" inherits="GearRackUIOptListTemplate" id="7">
+								<Anchors>
+									<Anchor point="TOPRIGHT" relativeTo="GearRackUIOptList6" relativePoint="BOTTOMRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUIOptList8" inherits="GearRackUIOptListTemplate" id="8">
+								<Anchors>
+									<Anchor point="TOPRIGHT" relativeTo="GearRackUIOptList7" relativePoint="BOTTOMRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUIOptList9" inherits="GearRackUIOptListTemplate" id="9">
+								<Anchors>
+									<Anchor point="TOPRIGHT" relativeTo="GearRackUIOptList8" relativePoint="BOTTOMRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUIOptList10" inherits="GearRackUIOptListTemplate" id="10">
+								<Anchors>
+									<Anchor point="TOPRIGHT" relativeTo="GearRackUIOptList9" relativePoint="BOTTOMRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUIOptList11" inherits="GearRackUIOptListTemplate" id="11">
+								<Anchors>
+									<Anchor point="TOPRIGHT" relativeTo="GearRackUIOptList10" relativePoint="BOTTOMRIGHT"/>
+								</Anchors>
+							</Button>
+							<ScrollFrame name="GearRackUI_OptList_ScrollFrame" inherits="FauxScrollFrameTemplate">
+								<Size>
+									<AbsDimension x="172" y="208"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="-28" y="-10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnVerticalScroll>
+if GearRack.enabled then
+
+										FauxScrollFrame_OnVerticalScroll(19, GearRackUI_OptList_ScrollFrame_Update)
+
+end
+</OnVerticalScroll>
+									<OnShow>
+if GearRack.enabled then
+
+										GearRackUI_OptList_ScrollFrame_Update()
+
+end
+</OnShow>
+								</Scripts>
+							</ScrollFrame>
+
+						</Frames>
+					</Frame>
+					<Button name="GearRackUI_ResetButton" inherits="GearRackUISetsButtonTemplate" text="Reset Bar">
+						<Size>
+							<AbsDimension x="80" y="24"/>
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOMRIGHT">
+								<Offset>
+									<AbsDimension x="-8" y="10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+if GearRack.enabled then
+
+								GearRackUI_Reset()
+
+end
+</OnClick>
+						</Scripts>
+					</Button>
+
+					<Button name="GearRackUI_ResetEventsButton" inherits="GearRackUISetsButtonTemplate" text="Reset Events">
+						<Size>
+							<AbsDimension x="80" y="24"/>
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="8" y="10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+if GearRack.enabled then
+
+								GearRackUI_ConfirmResetEvents()
+
+end
+</OnClick>
+						</Scripts>
+					</Button>
+
+				</Frames>
+
+			</Frame>
+
+			<!-- Help tab -->
+			<Frame name="GearRackUI_Sets_SubFrame3" hidden="true">
+				<Size>
+					<AbsDimension x="186" y="270"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="GearRackUI_SetsFrame" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="0" y="-20"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<ScrollFrame name="GearRackUI_Help" inherits="UIPanelScrollFrameTemplate" enableMouseWheel="true">
+						<Size>
+							<AbsDimension x="150" y="246"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="8" y="-12"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnMouseWheel>
+if GearRack.enabled then
+
+								local scrollBar = GearRackUI_HelpScrollBar
+								if scrollBar then
+									scrollBar:SetValue(scrollBar:GetValue() - (arg1 * 20))
+								end
+
+end
+</OnMouseWheel>
+						</Scripts>
+						<ScrollChild>
+							<Frame name="GearRackUI_Help_ScrollChildFrame" enableMouse="true">
+								<Size>
+									<AbsDimension x="150" y="246"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="8" y="-12"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Frames>
+									<EditBox name="GearRackUI_Help_EditBox" letters="4000" multiLine="true" enableMouse="false" autoFocus="false">
+										<Size>
+											<AbsDimension x="150" y="246"/>
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT"/>
+										</Anchors>
+										<Scripts>
+											<OnLoad>
+if GearRack.enabled then
+
+												this:SetText("GearRack v"..GearRack.version.."\n"..GearRackUIText.HELP)
+
+end
+</OnLoad>
+											<OnShow>
+if GearRack.enabled then
+
+												this:SetText("GearRack v"..GearRack.version.."\n"..GearRackUIText.HELP)
+
+end
+</OnShow>
+											<OnEditFocusGained>
+if GearRack.enabled then
+
+												this:ClearFocus()
+
+end
+</OnEditFocusGained>
+											<OnTextChanged>
+if GearRack.enabled then
+
+												local scrollBar = _G[this:GetParent():GetParent():GetName().."ScrollBar"]
+												this:GetParent():GetParent():UpdateScrollChildRect()
+												local min
+												local max
+												min, max = scrollBar:GetMinMaxValues()
+												if ( max > 0 and (this.max ~= max) ) then
+													this.max = max
+													scrollBar:SetValue(min)
+												end
+
+end
+</OnTextChanged>
+											<OnMouseDown>
+if GearRack.enabled then
+
+												if arg1=="LeftButton" then
+													GearRackUI_SetsFrame:StartMoving()
+												end
+
+end
+</OnMouseDown>
+											<OnMouseUp>
+if GearRack.enabled then
+
+												GearRackUI_SetsFrame:StopMovingOrSizing()
+
+end
+</OnMouseUp>
+										</Scripts>
+										<FontString font="Fonts\ARIALN.TTF">
+											<FontHeight>
+												<AbsValue val="12"/>
+											</FontHeight>
+											<Shadow>
+												<Offset>
+													<AbsDimension x="1" y="-1"/>
+												</Offset>
+												<Color r="0" g="0" b="0"/>
+											</Shadow>
+										</FontString>
+										<HighlightColor r="0" g="0" b="0" a="0"/>
+									</EditBox>
+								</Frames>
+							</Frame>
+						</ScrollChild>
+					</ScrollFrame>
+				</Frames>
+
+			</Frame>
+
+			<!-- Sets tab -->
+			<Frame name="GearRackUI_Sets_SubFrame2" hidden="true">
+				<Size>
+					<AbsDimension x="186" y="270"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="GearRackUI_SetsFrame" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="0" y="-20"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+
+				<Layers>
+
+					<Layer level="ARTWORK">
+						<FontString name="GearRackUI_Sets_NameLabel" inherits="GameFontHighlightSmall">
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset>
+										<AbsDimension x="16" y="-8"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
+					<EditBox name="GearRackUI_Sets_Name" letters="256" historyLines="0" autoFocus="false">
+						<Size>
+							<AbsDimension x="160" y="20"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_NameLabel" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="2" y="-17"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<FontString inherits="GameFontHighlight"/>
+						<Scripts>
+							<OnTextChanged>
+if GearRack.enabled then
+
+								GearRackUI_Sets_Name_OnTextChanged()
+
+end
+</OnTextChanged>
+							<OnEscapePressed>
+if GearRack.enabled then
+
+								this:ClearFocus()
+
+end
+</OnEscapePressed>
+							<OnEnterPressed>
+if GearRack.enabled then
+
+								this:ClearFocus()
+
+end
+</OnEnterPressed>
+						</Scripts>
+					</EditBox>
+					<Button name="GearRackUI_Sets_DropDownButton">
+						<Size>
+							<AbsDimension x="24" y="24"/>
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT" relativeTo="GearRackUI_Sets_Name" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="1" y="1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+if GearRack.enabled then
+
+								PlaySound("igMainMenuOptionCheckBoxOn")
+								GearRackUI_Sets_DropDownButton_OnClick()
+
+end
+</OnClick>
+						</Scripts>
+						<NormalTexture file="Interface\ChatFrame\UI-ChatIcon-ScrollDown-Up">
+							<Size>
+								<AbsDimension x="24" y="24"/>
+							</Size>
+							<Anchors>
+								<Anchor point="RIGHT"/>
+							</Anchors>
+						</NormalTexture>
+						<PushedTexture file="Interface\ChatFrame\UI-ChatIcon-ScrollDown-Down">
+							<Size>
+								<AbsDimension x="24" y="24"/>
+							</Size>
+							<Anchors>
+								<Anchor point="RIGHT"/>
+							</Anchors>
+						</PushedTexture>
+						<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD">
+							<Size>
+								<AbsDimension x="24" y="24"/>
+							</Size>
+							<Anchors>
+								<Anchor point="RIGHT"/>
+							</Anchors>
+						</HighlightTexture>
+					</Button>
+
+					<!-- sub-frame of 25 icons in a scrollable 5x5 list -->
+					<Frame name="GearRackUI_Sets_Icons">
+						<Size>
+							<AbsDimension x="172" y="156"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-48"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<ScrollFrame name="GearRackUI_Sets_ScrollFrame" inherits="FauxScrollFrameTemplate">
+								<Size>
+									<AbsDimension x="171" y="140"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="-28" y="-8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnVerticalScroll>
+if GearRack.enabled then
+
+										FauxScrollFrame_OnVerticalScroll(24, GearRackUI_Sets_ScrollFrame_Update)
+
+end
+</OnVerticalScroll>
+									<OnShow>
+if GearRack.enabled then
+
+										GearRackUI_Sets_ScrollFrame_Update()
+
+end
+</OnShow>
+								</Scripts>
+							</ScrollFrame>
+							<Button name="GearRackUI_Sets_Icon1" inherits="GearRackUISetsIconTemplate" id="1">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="6" y="-8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon2" inherits="GearRackUISetsIconTemplate" id="2">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon1" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon3" inherits="GearRackUISetsIconTemplate" id="3">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon2" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon4" inherits="GearRackUISetsIconTemplate" id="4">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon3" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon5" inherits="GearRackUISetsIconTemplate" id="5">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon4" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+
+							<Button name="GearRackUI_Sets_Icon6" inherits="GearRackUISetsIconTemplate" id="6">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon1" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon7" inherits="GearRackUISetsIconTemplate" id="7">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon6" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon8" inherits="GearRackUISetsIconTemplate" id="8">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon7" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon9" inherits="GearRackUISetsIconTemplate" id="9">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon8" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon10" inherits="GearRackUISetsIconTemplate" id="10">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon9" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+
+							<Button name="GearRackUI_Sets_Icon11" inherits="GearRackUISetsIconTemplate" id="11">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon6" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon12" inherits="GearRackUISetsIconTemplate" id="12">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon11" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon13" inherits="GearRackUISetsIconTemplate" id="13">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon12" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon14" inherits="GearRackUISetsIconTemplate" id="14">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon13" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon15" inherits="GearRackUISetsIconTemplate" id="15">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon14" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+
+							<Button name="GearRackUI_Sets_Icon16" inherits="GearRackUISetsIconTemplate" id="16">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon11" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon17" inherits="GearRackUISetsIconTemplate" id="17">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon16" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon18" inherits="GearRackUISetsIconTemplate" id="18">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon17" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon19" inherits="GearRackUISetsIconTemplate" id="19">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon18" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon20" inherits="GearRackUISetsIconTemplate" id="20">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon19" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+
+							<Button name="GearRackUI_Sets_Icon21" inherits="GearRackUISetsIconTemplate" id="21">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon16" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon22" inherits="GearRackUISetsIconTemplate" id="22">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon21" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon23" inherits="GearRackUISetsIconTemplate" id="23">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon22" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon24" inherits="GearRackUISetsIconTemplate" id="24">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon23" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Icon25" inherits="GearRackUISetsIconTemplate" id="25">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Icon24" relativePoint="TOPRIGHT"/>
+								</Anchors>
+							</Button>
+
+							<Button name="GearRackUI_Sets_ChosenIcon">
+								<Size>
+									<AbsDimension x="36" y="36"/>
+								</Size>
+								<Anchors>
+									<Anchor point="BOTTOMLEFT" relativeTo="GearRackUI_Sets_SubFrame2" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="16" y="28"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<NormalTexture file="Interface\Icons\INV_Misc_Coin_02"/>
+								<HighlightTexture alphaMode="ADD" file="Interface\Buttons\ButtonHilight-Square"/>
+								<Layers>
+									<Layer level="OVERLAY">
+										<FontString name="$parentName" inherits="GameFontHighlightSmallOutline">
+											<Size>
+												<AbsDimension x="36" y="10"/>
+											</Size>
+											<Anchors>
+												<Anchor point="BOTTOM">
+													<Offset>
+														<AbsDimension x="0" y="2"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<FontString name="$parentHotKey" inherits="NumberFontNormalSmallGray" justifyH="RIGHT">
+											<Size>
+												<AbsDimension x="32" y="10"/>
+											</Size>
+											<Anchors>
+												<Anchor point="TOPLEFT">
+													<Offset>
+														<AbsDimension x="2" y="-4"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnEnter>
+if GearRack.enabled then
+
+										GearRackUI_Sets_Tooltip()
+
+end
+</OnEnter>
+									<OnLeave>
+if GearRack.enabled then
+
+										GameTooltip:Hide()
+
+end
+</OnLeave>
+									<OnClick>
+if GearRack.enabled then
+
+										GearRackUI_Sets_ChosenIcon_OnClick()
+
+end
+</OnClick>
+								</Scripts>
+							</Button>
+
+							<CheckButton name="GearRackUI_Sets_HideSet" inherits="GearRackUICheckTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_ChosenIcon" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="-4" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+
+							<Button name="GearRackUI_Sets_BindButton" inherits="GearRackUISetsButtonTemplate" text="Bind Key">
+								<Anchors>
+									<Anchor point="BOTTOMRIGHT" relativeTo="GearRackUI_Sets_SubFrame2" relativePoint="BOTTOMRIGHT">
+										<Offset>
+											<AbsDimension x="-16" y="10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+if GearRack.enabled then
+
+										PlaySound("GAMEGENERICBUTTONPRESS")
+										GearRackUI_Sets_Name:ClearFocus()
+										GearRackUI_KeyBindFrame:Show()
+
+end
+</OnClick>
+								</Scripts>
+							</Button>
+							<Button name="GearRackUI_Sets_RemoveButton" inherits="GearRackUISetsButtonTemplate" text="Remove">
+								<Anchors>
+									<Anchor point="BOTTOMRIGHT" relativeTo="GearRackUI_Sets_BindButton" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="-2" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+if GearRack.enabled then
+
+										PlaySound("GAMEGENERICBUTTONPRESS")
+										GearRackUI_Sets_Remove_OnClick()
+
+end
+</OnClick>
+								</Scripts>
+							</Button>
+							<Button name="GearRackUI_Sets_SaveButton" inherits="GearRackUISetsButtonTemplate" text="Save">
+								<Anchors>
+									<Anchor point="BOTTOMLEFT" relativeTo="GearRackUI_Sets_RemoveButton" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="0" y="2"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+if GearRack.enabled then
+
+										PlaySound("GAMEGENERICBUTTONPRESS")
+										GearRackUI_Sets_Save_OnClick()
+
+end
+</OnClick>
+								</Scripts>
+							</Button>
+							<CheckButton name="GearRackUI_ShowHelm" inherits="GearRackUITristateTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_BindButton" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="-2" y="32"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<CheckButton name="GearRackUI_ShowCloak" inherits="GearRackUITristateTemplate">
+								<Size>
+									<AbsDimension x="18" y="18"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_ShowHelm" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="4"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+
+						</Frames>
+
+					</Frame>
+
+				</Frames>
+
+			</Frame>
+
+			<Frame name="GearRackUI_Sets_SubFrame4" hidden="true">
+				<Size>
+					<AbsDimension x="186" y="270"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="GearRackUI_SetsFrame" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="0" y="-20"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<Frame name="GearRackUI_Sets_EventsView">
+						<Size>
+							<AbsDimension x="172" y="196"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-28"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<CheckButton name="GearRackUI_Opt_EnableEvents" inherits="GearRackUICheckTemplate">
+								<Anchors>
+									<Anchor point="BOTTOMLEFT" relativeTo="GearRackUI_Sets_EventsView" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="4" y="-1"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<CheckButton name="GearRackUI_Opt_ShowAllEvents" inherits="GearRackUICheckTemplate">
+								<Anchors>
+									<Anchor point="BOTTOMLEFT" relativeTo="GearRackUI_Sets_EventsView" relativePoint="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="-70" y="-1"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</CheckButton>
+							<Button name="GearRackUI_Events_DeleteButton" inherits="GearRackUISetsButtonTemplate" text="Delete">
+								<Anchors>
+									<Anchor point="BOTTOMLEFT" relativeTo="GearRackUI_Sets_SubFrame4" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="8" y="16"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+if GearRack.enabled then
+
+										GearRackUI_EventButtons("Delete")
+
+end
+</OnClick>
+								</Scripts>
+							</Button>
+							<Button name="GearRackUI_Events_EditButton" inherits="GearRackUISetsButtonTemplate" text="Edit">
+								<Anchors>
+									<Anchor point="BOTTOM" relativeTo="GearRackUI_Sets_SubFrame4" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="16"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+if GearRack.enabled then
+
+										GearRackUI_EventButtons("Edit")
+
+end
+</OnClick>
+								</Scripts>
+							</Button>
+							<Button name="GearRackUI_Events_NewButton" inherits="GearRackUISetsButtonTemplate" text="New">
+								<Anchors>
+									<Anchor point="BOTTOMRIGHT" relativeTo="GearRackUI_Sets_SubFrame4" relativePoint="BOTTOMRIGHT">
+										<Offset>
+											<AbsDimension x="-8" y="16"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+if GearRack.enabled then
+
+										GearRackUI_EventButtons("New")
+
+end
+</OnClick>
+								</Scripts>
+							</Button>
+
+							<ScrollFrame name="GearRackUI_Events_ScrollFrame" inherits="FauxScrollFrameTemplate">
+								<Size>
+									<AbsDimension x="171" y="180"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="-28" y="-8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnVerticalScroll>
+if GearRack.enabled then
+
+										FauxScrollFrame_OnVerticalScroll(26, GearRackUI_Events_ScrollFrame_Update)
+
+end
+</OnVerticalScroll>
+									<OnShow>
+if GearRack.enabled then
+
+										GearRackUI_Events_ScrollFrame_Update()
+
+end
+</OnShow>
+								</Scripts>
+							</ScrollFrame>
+
+							<Button name="GearRackUI_Event1" inherits="GearRackUIEventListTemplate" id="1">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_EventsView" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="2" y="-8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Event2" inherits="GearRackUIEventListTemplate" id="2">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Event1" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Event3" inherits="GearRackUIEventListTemplate" id="3">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Event2" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Event4" inherits="GearRackUIEventListTemplate" id="4">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Event3" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Event5" inherits="GearRackUIEventListTemplate" id="5">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Event4" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Event6" inherits="GearRackUIEventListTemplate" id="6">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Event5" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Event7" inherits="GearRackUIEventListTemplate" id="7">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Event6" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+
+						</Frames>
+					</Frame>
+
+				</Frames>
+			</Frame>
+
+			<Frame name="GearRackUI_Sets_SetSelect" hidden="true">
+				<Size>
+					<AbsDimension x="186" y="270"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="GearRackUI_SetsFrame" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="0" y="-20"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString name="GearRackUI_Sets_SetSelectLabel" inherits="GameFontHighlightSmall" text="Choose a set">
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset>
+										<AbsDimension x="16" y="-10"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
+					<CheckButton name="GearRackUI_Opt_CompactList" inherits="GearRackUICheckTemplate">
+						<Anchors>
+							<Anchor point="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="-60" y="-5"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</CheckButton>
+					<!-- sub-frame of saved sets (drop-down) in a scrollable list -->
+					<Frame name="GearRackUI_Sets_Saved" hidden="false">
+						<Size>
+							<AbsDimension x="172" y="242"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-20"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<ScrollFrame name="GearRackUI_Sets_SavedScrollFrame" inherits="FauxScrollFrameTemplate">
+								<Size>
+									<AbsDimension x="171" y="210"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="-28" y="-24"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnVerticalScroll>
+if GearRack.enabled then
+
+										FauxScrollFrame_OnVerticalScroll((GearRackDB.settings.CompactList=="OFF") and 28 or 21, GearRackUI_Sets_SavedScrollFrame_Update)
+
+end
+</OnVerticalScroll>
+									<OnShow>
+if GearRack.enabled then
+
+										GearRackUI_Sets_SavedScrollFrame_Update()
+
+end
+</OnShow>
+								</Scripts>
+							</ScrollFrame>
+
+							<Button name="GearRackUI_SavedSets_Close">
+								<Size>
+									<AbsDimension x="16" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="-6" y="-6"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<NormalTexture file="Interface\AddOns\GearRack\media\Equipment-Buttons" setAllPoints="true">
+									<TexCoords left=".5" right=".75" top=".25" bottom=".5"/>
+								</NormalTexture>
+								<PushedTexture file="Interface\AddOns\GearRack\media\Equipment-Buttons" setAllPoints="true">
+									<TexCoords left=".75" right="1" top=".25" bottom=".5"/>
+								</PushedTexture>
+								<HighlightTexture file="Interface\AddOns\GearRack\media\Equipment-Buttons" alphaMode="ADD" setAllPoints="true">
+									<TexCoords left=".25" right=".5" top=".5" bottom=".75"/>
+								</HighlightTexture>
+								<Scripts>
+									<OnEnter>
+if GearRack.enabled then
+
+										GearRackUI_Opt_OnEnter()
+
+end
+</OnEnter>
+									<OnLeave>
+if GearRack.enabled then
+
+										GameTooltip:Hide()
+
+end
+</OnLeave>
+									<OnClick>
+if GearRack.enabled then
+
+										GearRackUI_Sets_SetSelect:Hide()
+
+end
+</OnClick>
+								</Scripts>
+							</Button>
+
+							<Button name="GearRackUI_Sets_Compact1" inherits="GearRackUISetsCompactTemplate" id="1">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="6" y="-8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Compact2" inherits="GearRackUISetsCompactTemplate" id="2">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Compact1" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Compact3" inherits="GearRackUISetsCompactTemplate" id="3">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Compact2" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Compact4" inherits="GearRackUISetsCompactTemplate" id="4">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Compact3" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Compact5" inherits="GearRackUISetsCompactTemplate" id="5">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Compact4" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Compact6" inherits="GearRackUISetsCompactTemplate" id="6">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Compact5" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Compact7" inherits="GearRackUISetsCompactTemplate" id="7">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Compact6" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Compact8" inherits="GearRackUISetsCompactTemplate" id="8">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Compact7" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Compact9" inherits="GearRackUISetsCompactTemplate" id="9">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Compact8" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Compact10" inherits="GearRackUISetsCompactTemplate" id="10">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Compact9" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Compact11" inherits="GearRackUISetsCompactTemplate" id="11">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Compact10" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+
+							<Button name="GearRackUI_Sets_Saved1" inherits="GearRackUISetsSavedIconTemplate" id="1">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="6" y="-10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Saved2" inherits="GearRackUISetsSavedIconTemplate" id="2">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Saved1" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Saved3" inherits="GearRackUISetsSavedIconTemplate" id="3">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Saved2" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Saved4" inherits="GearRackUISetsSavedIconTemplate" id="4">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Saved3" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Saved5" inherits="GearRackUISetsSavedIconTemplate" id="5">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Saved4" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Saved6" inherits="GearRackUISetsSavedIconTemplate" id="6">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Saved5" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Saved7" inherits="GearRackUISetsSavedIconTemplate" id="7">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Saved6" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackUI_Sets_Saved8" inherits="GearRackUISetsSavedIconTemplate" id="8">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_Saved7" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+						</Frames>
+					</Frame>
+				</Frames>
+				<Scripts>
+					<OnShow>
+if GearRack.enabled then
+
+						GearRackUI_SetSelect_OnShow()
+
+end
+</OnShow>
+					<OnHide>
+if GearRack.enabled then
+
+						GearRackUI_SetSelect_OnHide()
+
+end
+</OnHide>
+				</Scripts>
+			</Frame>
+
+			<Frame name="GearRackUI_EditEvent" toplevel="true" enableMouse="true" hidden="true">
+				<Size>
+					<AbsDimension x="276" y="316"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="GearRackUI_SetsFrame" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="0" y="-20"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+
+					<Layer level="ARTWORK">
+						<FontString name="GearRackUI_EditEventNameLabel" inherits="GameFontHighlightSmall" text="Name">
+							<Anchors>
+								<Anchor point="TOPRIGHT" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="60" y="-16"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="GearRackUI_EditEventTriggerLabel" inherits="GameFontHighlightSmall" text="Trigger">
+							<Anchors>
+								<Anchor point="TOPRIGHT" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="60" y="-40"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="GearRackUI_EditEventDelayLabel" inherits="GameFontHighlightSmall" text="Delay">
+							<Anchors>
+								<Anchor point="TOPRIGHT" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="60" y="-64"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="GearRackUI_EditEventSecondsLabel" inherits="GameFontHighlightSmall" text="seconds">
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset>
+										<AbsDimension x="124" y="-64"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button name="GearRackUI_EditEvent_Test" inherits="GearRackUISetsButtonTemplate" text="Test">
+						<Anchors>
+							<Anchor point="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="48" y="16"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+if GearRack.enabled then
+
+								GearRackUI_EventButtons("Test")
+
+end
+</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="GearRackUI_EditEvent_Save" inherits="GearRackUISetsButtonTemplate" text="Save">
+						<Anchors>
+							<Anchor point="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="16"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+if GearRack.enabled then
+
+								GearRackUI_EventButtons("Save")
+
+end
+</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="GearRackUI_EditEvent_Cancel" inherits="GearRackUISetsButtonTemplate" text="Cancel">
+						<Anchors>
+							<Anchor point="BOTTOMRIGHT">
+								<Offset>
+									<AbsDimension x="-48" y="16"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+if GearRack.enabled then
+
+								GearRackUI_EditEvent:Hide()
+
+end
+</OnClick>
+						</Scripts>
+					</Button>
+					<EditBox name="GearRackUI_EventName" inherits="GearRackUIEditBoxTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="76" y="-12"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnTabPressed>
+if GearRack.enabled then
+
+								GearRackUI_EventTrigger:SetFocus()
+
+end
+</OnTabPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="GearRackUI_EventTrigger" inherits="GearRackUIEditBoxTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="76" y="-36"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnTabPressed>
+if GearRack.enabled then
+
+								GearRackUI_EventDelay:SetFocus()
+
+end
+</OnTabPressed>
+						</Scripts>
+					</EditBox>
+					<EditBox name="GearRackUI_EventDelay" inherits="GearRackUIEditBoxTemplate">
+						<Size>
+							<AbsDimension x="40" y="20"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="76" y="-60"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnTabPressed>
+if GearRack.enabled then
+
+								GearRackUI_EventScript:SetFocus()
+
+end
+</OnTabPressed>
+						</Scripts>
+					</EditBox>
+					<CheckButton name="GearRackUI_Opt_LargeFont" inherits="GearRackUICheckTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackUI_EventDelay" relativePoint="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="60" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</CheckButton>
+
+					<Frame name="GearRackUI_ScriptEditFrame">
+						<Size>
+							<AbsDimension x="256" y="192"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-80"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+
+						<Frames>
+							<ScrollFrame name="GearRackUIEventEditScrollFrame" inherits="UIPanelScrollFrameTemplate">
+								<Size>
+									<AbsDimension x="222" y="176"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="6" y="-8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+
+								<ScrollChild>
+									<EditBox name="GearRackUI_EventScript" multiLine="true" maxLines="9" letters="4096" nonspacewrap="true" spacing="1" autoFocus="false">
+										<Size>
+											<AbsDimension x="222" y="176"/>
+										</Size>
+										<Scripts>
+											<OnTextChanged>
+if GearRack.enabled then
+
+												local scrollBar = _G[this:GetParent():GetName().."ScrollBar"]
+												this:GetParent():UpdateScrollChildRect();
+												local min;
+												local max;
+												min, max = scrollBar:GetMinMaxValues();
+												if ( max > 0 and (this.max ~= max) ) then
+													this.max = max;
+													scrollBar:SetValue(max);
+												end
+
+end
+</OnTextChanged>
+											<OnEscapePressed>
+if GearRack.enabled then
+
+												this:ClearFocus();
+
+end
+</OnEscapePressed>
+											<OnTabPressed>
+if GearRack.enabled then
+
+												GearRackUI_EventName:SetFocus()
+
+end
+</OnTabPressed>
+										</Scripts>
+										<FontString inherits="GameFontHighlightSmall"/>
+									</EditBox>
+								</ScrollChild>
+							</ScrollFrame>
+						</Frames>
+					</Frame>
+					<Button name="GearRackUIEventScriptOverlay">
+						<Size>
+							<AbsDimension x="228" y="180"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackUI_EventScript" relativePoint="TOPLEFT"/>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+if GearRack.enabled then
+
+								GearRackUI_EventScript:SetFocus()
+
+end
+</OnClick>
+							<OnEnter>
+if GearRack.enabled then
+
+								GearRackUI_OnTooltip("Event Script","The script runs on the trigger above.\n\nGearRack.EquipSet(): equip this event's set.\nGearRack.LoadSet(): restore the gear the set replaced.\nGearRack.ToggleSet(): equip the set, or restore the gear if it is worn.\n\nPass a set name to use another set.")
+
+end
+</OnEnter>
+							<OnLeave>
+if GearRack.enabled then
+
+								GameTooltip:Hide()
+
+end
+</OnLeave>
+						</Scripts>
+					</Button>
+
+				</Frames>
+				<Scripts>
+					<OnShow>
+if GearRack.enabled then
+
+						GearRackUI_EditEvent_OnShow()
+
+end
+</OnShow>
+					<OnHide>
+if GearRack.enabled then
+
+						GearRackUI_EditEvent_OnHide()
+
+end
+</OnHide>
+					<OnMouseDown>
+if GearRack.enabled then
+
+						if arg1=="LeftButton" then
+							GearRackUI_SetsFrame:StartMoving()
+						end
+
+end
+</OnMouseDown>
+					<OnMouseUp>
+if GearRack.enabled then
+
+						GearRackUI_SetsFrame:StopMovingOrSizing()
+
+end
+</OnMouseUp>
+				</Scripts>
+			</Frame>
+
+			<Button name="GearRackUI_Sets_Tab1" inherits="GearRackUITabTemplate" id="1" text="Options">
+				<Size>
+					<AbsDimension x="50" y="18"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="GearRackUI_Sets_SubFrame2" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-4" y="-4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="GearRackUI_Sets_Tab2" inherits="GearRackUITabTemplate" id="2" text="Sets">
+				<Size>
+					<AbsDimension x="50" y="18"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="GearRackUI_Sets_Tab1" relativePoint="BOTTOMLEFT"/>
+				</Anchors>
+			</Button>
+			<Button name="GearRackUI_Sets_Tab4" inherits="GearRackUITabTemplate" id="4" text="Events">
+				<Size>
+					<AbsDimension x="50" y="18"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="GearRackUI_Sets_Tab2" relativePoint="BOTTOMLEFT"/>
+				</Anchors>
+			</Button>
+			<Button name="GearRackUI_Sets_Tab3" inherits="GearRackUITabTemplate" id="3" text="?">
+				<Size>
+					<AbsDimension x="18" y="18"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="GearRackUI_Sets_Tab4" relativePoint="BOTTOMLEFT"/>
+				</Anchors>
+			</Button>
+
+		</Frames>
+
+		<Scripts>
+			<OnMouseDown>
+if GearRack.enabled then
+
+				if arg1=="LeftButton" then
+					this:StartMoving()
+				end
+
+end
+</OnMouseDown>
+			<OnMouseUp>
+if GearRack.enabled then
+
+				this:StopMovingOrSizing()
+
+end
+</OnMouseUp>
+			<OnShow>
+if GearRack.enabled then
+
+				GearRackUI_SetsFrame_OnShow()
+
+end
+</OnShow>
+			<OnHide>
+if GearRack.enabled then
+
+				this:StopMovingOrSizing()
+				GearRackUI_SetsFrame_OnHide()
+
+end
+</OnHide>
+		</Scripts>
+	</Frame>
+
+	<!-- This frame grabs a keypress from user to bind to a key -->
+	<Frame name="GearRackUI_KeyBindFrame" parent="GearRackUI_SetsFrame" enableKeyboard="true" hidden="true">
+		<Size>
+			<AbsDimension x="55" y="26"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOPLEFT" relativeTo="GearRackUI_Sets_BindButton" relativePoint="TOPLEFT"/>
+		</Anchors>
+		<Frames>
+			<Button name="GearRackUI_Sets_CancelButton" inherits="GearRackUISetsButtonTemplate" text="Cancel">
+				<Anchors>
+					<Anchor point="TOPLEFT"/>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+if GearRack.enabled then
+
+						GearRackUI_KeyBindFrame:Hide()
+
+end
+</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="GearRackUI_KeyBindFrame_Message" hidden="true">
+				<Layers>
+					<Layer level="BACKGROUND">
+						<FontString name="GearRackUI_KeyBindFrame_MessageTitle" inherits="GameFontNormalLarge" text="Press a key to bind to this set.">
+							<Size>
+								<AbsDimension x="150" y="64"/>
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" relativeTo="GearRackUI_SetsFrame">
+									<Offset>
+										<AbsDimension x="0" y="50"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="GearRackUI_KeyBindFrame_MessageHint" inherits="GameFontNormal" text="Hit ESC to unbind.">
+							<Size>
+								<AbsDimension x="150" y="50"/>
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" relativeTo="GearRackUI_SetsFrame">
+									<Offset>
+										<AbsDimension x="0" y="-25"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnShow>
+if GearRack.enabled then
+
+						GearRackUI_Sets_Icons:Hide()
+						GearRackUI_Sets_Saved:Hide()
+
+end
+</OnShow>
+					<OnHide>
+if GearRack.enabled then
+
+						GearRackUI_Sets_Icons:Show()
+
+end
+</OnHide>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnShow>
+if GearRack.enabled then
+
+				GearRackUI_Sets_BindButton:Hide()
+				GearRackUI_KeyBindFrame_Message:Show()
+				GearRackUI.KeyBindRevision=(GearRackUI.KeyBindRevision or 0)+1
+
+end
+</OnShow>
+			<OnHide>
+if GearRack.enabled then
+
+				GearRackUI_Sets_BindButton:Show()
+				GearRackUI_KeyBindFrame_Message:Hide()
+				GearRackUI.KeyBindRevision=(GearRackUI.KeyBindRevision or 0)+1
+
+end
+</OnHide>
+			<OnKeyDown>
+if GearRack.enabled then
+
+				GearRackUI_Sets_KeyBind_OnKeyDown(arg1)
+
+end
+</OnKeyDown>
+		</Scripts>
+	</Frame>
+
+	<!-- separate frame to receive events, so we can turn events on/off without affecting the mod's events -->
+	<Frame name="GearRackUI_RegisterFrame" hidden="true">
+		<Scripts>
+			<OnEvent>
+if GearRack.enabled then
+
+				GearRackUI_RegisterFrame_OnEvent(event)
+
+end
+</OnEvent>
+		</Scripts>
+	</Frame>
+
+	<!-- custom tooltip to display quick information (set loaded, set saved, etc) -->
+	<GameTooltip name="GearRackUI_Sets_Message" inherits="GameTooltipTemplate" parent="GearRackUI_SetsFrame" hidden="true">
+		<Anchors>
+			<Anchor point="TOP" relativeTo="GearRackUI_SetsFrame" relativePoint="BOTTOM"/>
+		</Anchors>
+	</GameTooltip>
+
+</Ui>

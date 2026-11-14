@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: |cff66ccffOctoAI|r
+## Notes: Ask an AI about your own character. /octoai opens a copyable summary (gear, quests, bags, talents, spells, professions) to paste into any AI chat; /octo writes a full snapshot.
+## Author: Abao, Claude
+## Version: 1.2.0
+## SavedVariables: OctoAIItems
+## SavedVariablesPerCharacter: OctoAIDB
+OctoAI.lua

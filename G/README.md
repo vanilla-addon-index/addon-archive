@@ -45,3 +45,4 @@
 | [gromissingcrafts](gromissingcrafts/) | Professions | 1 | mirrored |
 | [GatherMap](GatherMap/) | Map & Minimap | 1 | mirrored |
 | [GryphonHeart-Items-TurtleWow](GryphonHeart-Items-TurtleWow/) | Roleplay | 1 | mirrored |
+| [GearRack](GearRack/) | Bags & Inventory | 1 | mirrored |

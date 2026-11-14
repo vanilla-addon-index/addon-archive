@@ -1,0 +1,759 @@
+<Ui>
+
+	<Button name="GearRackTrinkets_ProfilesListTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="174" y="20"/>
+		</Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentName" inherits="GameFontHighlight" text="Profile name">
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="8" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackTrinkets.ProfileList_OnClick()
+
+end
+</OnClick>
+			<OnDoubleClick>
+if GearRack.enabled then
+
+				GearRackTrinkets.ProfileList_OnDoubleClick()
+
+end
+</OnDoubleClick>
+		</Scripts>
+	</Button>
+
+	<Button name="GearRackTrinkets_ProfilesButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="54" y="24"/>
+		</Size>
+		<ButtonText name="$parentText"/>
+		<NormalFont inherits="GameFontHighlightSmall"/>
+		<HighlightFont inherits="GameFontHighlightSmall"/>
+		<DisabledFont inherits="GameFontHighlightSmall"/>
+		<Scripts>
+			<OnEnter>
+if GearRack.enabled then
+
+				GearRackTrinkets.OnTooltip()
+
+end
+</OnEnter>
+			<OnLeave>
+if GearRack.enabled then
+
+				GameTooltip:Hide()
+
+end
+</OnLeave>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackTrinkets.ProfilesButton_OnClick()
+
+end
+</OnClick>
+		</Scripts>
+	</Button>
+
+	<CheckButton name="GearRackTrinkets_TabCheckTemplate" inherits="UICheckButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="24" y="24"/>
+		</Size>
+		<Scripts>
+			<OnEnter>
+if GearRack.enabled then
+
+				GearRackTrinkets.OnTooltip()
+
+end
+</OnEnter>
+			<OnLeave>
+if GearRack.enabled then
+
+				GameTooltip:Hide()
+
+end
+</OnLeave>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackTrinkets.TabCheck_OnClick()
+
+end
+</OnClick>
+		</Scripts>
+	</CheckButton>
+
+	<Button name="GearRackTrinkets_SortTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="210" y="24"/>
+		</Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="$parentIcon">
+					<Size>
+						<AbsDimension x="22" y="22"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="4" y="-1"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="$parentName" inherits="GameFontHighlight" justifyH="LEFT">
+					<Size>
+						<AbsDimension x="170" y="22"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentIcon" relativePoint="RIGHT">
+							<Offset>
+								<AbsDimension x="4" y="0"/>
+							</Offset>
+						</Anchor>
+						<Anchor point="RIGHT"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnEnter>
+if GearRack.enabled then
+
+				GearRackTrinkets.SortTooltip()
+
+end
+</OnEnter>
+			<OnLeave>
+if GearRack.enabled then
+
+				GameTooltip:Hide()
+
+end
+</OnLeave>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackTrinkets.SortOnClick()
+
+end
+</OnClick>
+		</Scripts>
+	</Button>
+
+	<Button name="GearRackTrinkets_MoveButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="24" y="24"/>
+		</Size>
+		<HighlightTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" alphaMode="ADD" setAllPoints="true">
+			<TexCoords left=".25" right=".375" top="0" bottom=".125"/>
+		</HighlightTexture>
+		<Scripts>
+			<OnEnter>
+if GearRack.enabled then
+
+				GearRackTrinkets.OnTooltip()
+
+end
+</OnEnter>
+			<OnLeave>
+if GearRack.enabled then
+
+				GameTooltip:Hide()
+
+end
+</OnLeave>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackTrinkets.SortMove()
+
+end
+</OnClick>
+		</Scripts>
+	</Button>
+
+	<Button name="GearRackTrinkets_Tab2" inherits="GearRackTrinkets_TabTemplate" parent="GearRackTrinkets_OptFrame" text="Bottom      " id="2">
+		<Anchors>
+			<Anchor point="TOPRIGHT" relativeTo="GearRackTrinkets_Tab1" relativePoint="TOPLEFT"/>
+		</Anchors>
+	</Button>
+	<CheckButton name="GearRackTrinkets_Trinket1Check" inherits="GearRackTrinkets_TabCheckTemplate" parent="GearRackTrinkets_OptFrame" id="2">
+		<Anchors>
+			<Anchor point="RIGHT" relativeTo="GearRackTrinkets_Tab2" relativePoint="RIGHT">
+				<Offset>
+					<AbsDimension x="-4" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+	</CheckButton>
+	<Button name="GearRackTrinkets_Tab3" inherits="GearRackTrinkets_TabTemplate" parent="GearRackTrinkets_OptFrame" text="Top      " id="3">
+		<Anchors>
+			<Anchor point="TOPRIGHT" relativeTo="GearRackTrinkets_Tab2" relativePoint="TOPLEFT"/>
+		</Anchors>
+	</Button>
+	<CheckButton name="GearRackTrinkets_Trinket0Check" inherits="GearRackTrinkets_TabCheckTemplate" parent="GearRackTrinkets_OptFrame" id="3">
+		<Anchors>
+			<Anchor point="RIGHT" relativeTo="GearRackTrinkets_Tab3" relativePoint="RIGHT">
+				<Offset>
+					<AbsDimension x="-4" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+	</CheckButton>
+
+	<Frame name="GearRackTrinkets_SubQueueFrame" parent="GearRackTrinkets_OptFrame" hidden="true">
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset>
+					<AbsDimension x="8" y="-50"/>
+				</Offset>
+			</Anchor>
+			<Anchor point="BOTTOMRIGHT">
+				<Offset>
+					<AbsDimension x="-8" y="8"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Frames>
+			<Button name="GearRackTrinkets_MoveTop" inherits="GearRackTrinkets_MoveButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="8" y="-50"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".375" right=".5" top="0" bottom=".125"/>
+				</NormalTexture>
+				<PushedTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".5" right=".625" top="0" bottom=".125"/>
+				</PushedTexture>
+				<DisabledTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".625" right=".75" top="0" bottom=".125"/>
+				</DisabledTexture>
+			</Button>
+			<Button name="GearRackTrinkets_MoveUp" inherits="GearRackTrinkets_MoveButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_MoveTop" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-8"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left="0" right=".125" top=".125" bottom=".25"/>
+				</NormalTexture>
+				<PushedTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".125" right=".25" top=".125" bottom=".25"/>
+				</PushedTexture>
+				<DisabledTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".25" right=".375" top=".125" bottom=".25"/>
+				</DisabledTexture>
+			</Button>
+			<Button name="GearRackTrinkets_MoveDown" inherits="GearRackTrinkets_MoveButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_MoveUp" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-8"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".375" right=".5" top=".125" bottom=".25"/>
+				</NormalTexture>
+				<PushedTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".5" right=".625" top=".125" bottom=".25"/>
+				</PushedTexture>
+				<DisabledTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".625" right=".75" top=".125" bottom=".25"/>
+				</DisabledTexture>
+			</Button>
+			<Button name="GearRackTrinkets_MoveBottom" inherits="GearRackTrinkets_MoveButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_MoveDown" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-8"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left="0" right=".125" top=".25" bottom=".375"/>
+				</NormalTexture>
+				<PushedTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".125" right=".25" top=".25" bottom=".375"/>
+				</PushedTexture>
+				<DisabledTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".25" right=".375" top=".25" bottom=".375"/>
+				</DisabledTexture>
+			</Button>
+			<Button name="GearRackTrinkets_Profiles" inherits="GearRackTrinkets_MoveButtonTemplate">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" relativeTo="GearRackTrinkets_MoveTop" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="12"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".75" right=".875" top=".25" bottom=".375"/>
+				</NormalTexture>
+				<PushedTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".875" right="1" top=".25" bottom=".375"/>
+				</PushedTexture>
+			</Button>
+			<Button name="GearRackTrinkets_Delete" inherits="GearRackTrinkets_MoveButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_MoveBottom" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-12"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left="0" right=".125" top=".375" bottom=".5"/>
+				</NormalTexture>
+				<PushedTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".125" right=".25" top=".375" bottom=".5"/>
+				</PushedTexture>
+				<DisabledTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".25" right=".375" top=".375" bottom=".5"/>
+				</DisabledTexture>
+			</Button>
+
+			<EditBox name="GearRackTrinkets_SortDelay" numeric="true" historyLines="0" enableMouse="true" autoFocus="false" letters="3">
+				<Size>
+					<AbsDimension x="28" y="20"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="54" y="8"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<FontString name="GearRackTrinkets_SortDelayLabel" inherits="GameFontHighlightSmall" justifyH="RIGHT" text="Delay">
+							<Anchors>
+								<Anchor point="RIGHT" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="-10" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="GearRackTrinkets_SortDelayUnit" inherits="GameFontHighlightSmall" justifyH="LEFT" text="sec">
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT">
+									<Offset>
+										<AbsDimension x="12" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<FontString inherits="GameFontHighlight" justifyH="RIGHT"/>
+				<Scripts>
+					<OnEnter>
+if GearRack.enabled then
+
+						GearRackTrinkets.OnTooltip()
+
+end
+</OnEnter>
+					<OnLeave>
+if GearRack.enabled then
+
+						GameTooltip:Hide()
+
+end
+</OnLeave>
+					<OnEscapePressed>
+if GearRack.enabled then
+
+						this:ClearFocus()
+
+end
+</OnEscapePressed>
+					<OnEnterPressed>
+if GearRack.enabled then
+
+						this:ClearFocus()
+
+end
+</OnEnterPressed>
+					<OnTextChanged>
+if GearRack.enabled then
+
+						GearRackTrinkets.SortDelay_OnTextChanged()
+
+end
+</OnTextChanged>
+				</Scripts>
+			</EditBox>
+
+			<CheckButton name="GearRackTrinkets_SortPriority" inherits="GearRackTrinkets_CheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_SortDelay" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="40" y="2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+if GearRack.enabled then
+
+						GearRackTrinkets.SortPriority_OnClick()
+
+end
+</OnClick>
+				</Scripts>
+			</CheckButton>
+
+			<CheckButton name="GearRackTrinkets_SortKeepEquipped" inherits="GearRackTrinkets_CheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_SortPriority" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="40" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+if GearRack.enabled then
+
+						GearRackTrinkets.SortKeepEquipped_OnClick()
+
+end
+</OnClick>
+				</Scripts>
+			</CheckButton>
+
+			<Frame name="GearRackTrinkets_SortListFrame">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="32" y="-8"/>
+						</Offset>
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-8" y="28"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+
+				<Frames>
+					<Button name="GearRackTrinkets_Sort1" inherits="GearRackTrinkets_SortTemplate" id="1">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="6" y="-6"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="GearRackTrinkets_Sort2" inherits="GearRackTrinkets_SortTemplate" id="2">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Sort1" relativePoint="BOTTOMLEFT"/>
+						</Anchors>
+					</Button>
+					<Button name="GearRackTrinkets_Sort3" inherits="GearRackTrinkets_SortTemplate" id="3">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Sort2" relativePoint="BOTTOMLEFT"/>
+						</Anchors>
+					</Button>
+					<Button name="GearRackTrinkets_Sort4" inherits="GearRackTrinkets_SortTemplate" id="4">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Sort3" relativePoint="BOTTOMLEFT"/>
+						</Anchors>
+					</Button>
+					<Button name="GearRackTrinkets_Sort5" inherits="GearRackTrinkets_SortTemplate" id="5">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Sort4" relativePoint="BOTTOMLEFT"/>
+						</Anchors>
+					</Button>
+					<Button name="GearRackTrinkets_Sort6" inherits="GearRackTrinkets_SortTemplate" id="6">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Sort5" relativePoint="BOTTOMLEFT"/>
+						</Anchors>
+					</Button>
+					<Button name="GearRackTrinkets_Sort7" inherits="GearRackTrinkets_SortTemplate" id="7">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Sort6" relativePoint="BOTTOMLEFT"/>
+						</Anchors>
+					</Button>
+					<Button name="GearRackTrinkets_Sort8" inherits="GearRackTrinkets_SortTemplate" id="8">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Sort7" relativePoint="BOTTOMLEFT"/>
+						</Anchors>
+					</Button>
+					<Button name="GearRackTrinkets_Sort9" inherits="GearRackTrinkets_SortTemplate" id="9">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Sort8" relativePoint="BOTTOMLEFT"/>
+						</Anchors>
+					</Button>
+					<ScrollFrame name="GearRackTrinkets_SortScroll" inherits="FauxScrollFrameTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Sort1" relativePoint="TOPLEFT"/>
+							<Anchor point="BOTTOMRIGHT" relativeTo="GearRackTrinkets_Sort9" relativePoint="BOTTOMRIGHT"/>
+						</Anchors>
+						<Scripts>
+							<OnVerticalScroll>
+if GearRack.enabled then
+
+								FauxScrollFrame_OnVerticalScroll(24, GearRackTrinkets.SortScrollFrameUpdate)
+
+end
+</OnVerticalScroll>
+							<OnShow>
+if GearRack.enabled then
+
+								GearRackTrinkets.SortScrollFrameUpdate()
+
+end
+</OnShow>
+						</Scripts>
+					</ScrollFrame>
+				</Frames>
+			</Frame>
+
+			<Frame name="GearRackTrinkets_ProfilesFrame" hidden="true">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="32" y="-8"/>
+						</Offset>
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-8" y="28"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<EditBox name="GearRackTrinkets_ProfileName" historyLines="0" enableMouse="true" autoFocus="false" letters="256">
+						<Size>
+							<AbsDimension x="160" y="20"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP">
+								<Offset>
+									<AbsDimension x="20" y="-10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="BACKGROUND">
+								<FontString name="GearRackTrinkets_ProfileNameLabel" inherits="GameFontHighlightSmall" text="Profile">
+									<Anchors>
+										<Anchor point="RIGHT" relativePoint="LEFT">
+											<Offset>
+												<AbsDimension x="-10" y="0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<FontString inherits="GameFontHighlight"/>
+						<Scripts>
+							<OnEnter>
+if GearRack.enabled then
+
+								GearRackTrinkets.OnTooltip()
+
+end
+</OnEnter>
+							<OnLeave>
+if GearRack.enabled then
+
+								GameTooltip:Hide()
+
+end
+</OnLeave>
+							<OnEscapePressed>
+if GearRack.enabled then
+
+								this:ClearFocus()
+
+end
+</OnEscapePressed>
+							<OnEnterPressed>
+if GearRack.enabled then
+
+								this:ClearFocus()
+
+end
+</OnEnterPressed>
+							<OnTextChanged>
+if GearRack.enabled then
+
+								GearRackTrinkets.ProfileName_OnTextChanged()
+
+end
+</OnTextChanged>
+						</Scripts>
+					</EditBox>
+					<Button name="GearRackTrinkets_ProfilesDelete" inherits="GearRackTrinkets_ProfilesButtonTemplate" text="Delete">
+						<Anchors>
+							<Anchor point="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="8" y="12"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="GearRackTrinkets_ProfilesLoad" inherits="GearRackTrinkets_ProfilesButtonTemplate" text="Load">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="GearRackTrinkets_ProfilesDelete" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="4" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="GearRackTrinkets_ProfilesSave" inherits="GearRackTrinkets_ProfilesButtonTemplate" text="Save">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="GearRackTrinkets_ProfilesLoad" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="4" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="GearRackTrinkets_ProfilesCancel" inherits="GearRackTrinkets_ProfilesButtonTemplate" text="Cancel">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="GearRackTrinkets_ProfilesSave" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="4" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Frame name="GearRackTrinkets_ProfilesListFrame">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="16" y="-34"/>
+								</Offset>
+							</Anchor>
+							<Anchor point="BOTTOMRIGHT">
+								<Offset>
+									<AbsDimension x="-16" y="40"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<Button name="GearRackTrinkets_Profile1" inherits="GearRackTrinkets_ProfilesListTemplate" id="1">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="8" y="-8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Button>
+							<Button name="GearRackTrinkets_Profile2" inherits="GearRackTrinkets_ProfilesListTemplate" id="2">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Profile1" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackTrinkets_Profile3" inherits="GearRackTrinkets_ProfilesListTemplate" id="3">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Profile2" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackTrinkets_Profile4" inherits="GearRackTrinkets_ProfilesListTemplate" id="4">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Profile3" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackTrinkets_Profile5" inherits="GearRackTrinkets_ProfilesListTemplate" id="5">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Profile4" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackTrinkets_Profile6" inherits="GearRackTrinkets_ProfilesListTemplate" id="6">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Profile5" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<Button name="GearRackTrinkets_Profile7" inherits="GearRackTrinkets_ProfilesListTemplate" id="7">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Profile6" relativePoint="BOTTOMLEFT"/>
+								</Anchors>
+							</Button>
+							<ScrollFrame name="GearRackTrinkets_ProfileScroll" inherits="FauxScrollFrameTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_Profile1" relativePoint="TOPLEFT"/>
+									<Anchor point="BOTTOMRIGHT" relativeTo="GearRackTrinkets_Profile7" relativePoint="BOTTOMRIGHT"/>
+								</Anchors>
+								<Scripts>
+									<OnVerticalScroll>
+if GearRack.enabled then
+
+										FauxScrollFrame_OnVerticalScroll(20, GearRackTrinkets.ProfileScrollFrameUpdate)
+
+end
+</OnVerticalScroll>
+									<OnShow>
+if GearRack.enabled then
+
+										GearRackTrinkets.ProfileScrollFrameUpdate()
+
+end
+</OnShow>
+								</Scripts>
+							</ScrollFrame>
+						</Frames>
+					</Frame>
+					<CheckButton name="GearRackTrinkets_OptHideOnLoad" inherits="GearRackTrinkets_CheckButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="50" y="2"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</CheckButton>
+				</Frames>
+				<Scripts>
+					<OnHide>
+if GearRack.enabled then
+
+						GearRackTrinkets.ProfilesFrame_OnHide()
+
+end
+</OnHide>
+					<OnShow>
+if GearRack.enabled then
+
+						PlaySound("GAMEGENERICBUTTONPRESS")
+
+end
+</OnShow>
+				</Scripts>
+			</Frame>
+		</Frames>
+	</Frame>
+
+</Ui>

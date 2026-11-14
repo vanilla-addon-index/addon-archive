@@ -1,0 +1,65 @@
+{
+  "upstream": "https://octowow.st/git/Ade/AdeSPD",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Ade",
+    "repo": "AdeSPD",
+    "name": "AdeSPD",
+    "url": "https://octowow.st/git/Ade/AdeSPD",
+    "api": "https://octowow.st/git/api/v1/repos/Ade/AdeSPD"
+  },
+  "commit": "3d0da11f734df8af46bfe5e23587704c67e9fe3e",
+  "sourceFiles": {
+    "AdeSPD.toc": {
+      "sha256": "dcf37a0e138f638f0e6b600ed320b95af440674286ab4323559cee08a7468ffe",
+      "bytes": 391
+    },
+    "Commands.lua": {
+      "sha256": "d5a3de3d179d860a9796804502fc1792bd7ddb78655fcf8e4cc19c96bb60cdf9",
+      "bytes": 17739
+    },
+    "Core.lua": {
+      "sha256": "4537b3fd80c9ef8dbecdddadb96de67e4263703450c28322b8f0e6e0ff4206d5",
+      "bytes": 24168
+    },
+    "Data_Melee.lua": {
+      "sha256": "6f3d611ecfdd821302d5e11de6005e65a02eafcfeadec0247253a6175f8454fb",
+      "bytes": 2163
+    },
+    "Data_Names.lua": {
+      "sha256": "c21246c835e2c883e88d94752435459a6fc8de50d9a118a4908e7b2c4d3f1daf",
+      "bytes": 31300
+    },
+    "Data_Ru.lua": {
+      "sha256": "1fd62892131c81b2360b84d70e452315210735d048ee69c36372f023b7a2f344",
+      "bytes": 1982
+    },
+    "Data.lua": {
+      "sha256": "f61fbadceb6ee665b76114a6398a6e7ada012ec0c1685122ae1a498ddc93cc1c",
+      "bytes": 5125
+    },
+    "Dump.lua": {
+      "sha256": "9452767a75fb31491977de274139bd891acd25ba0599c022695bf24093a9d66d",
+      "bytes": 3453
+    },
+    "Learn.lua": {
+      "sha256": "513067181c0b81ae0a299ad0e3968bebff6c7505fa7aadc3694a295f4227be69",
+      "bytes": 16382
+    },
+    "README.md": {
+      "sha256": "c4b23b2a7af13baacc1b2be1e17b5d4c957ed563e0e176ff976f5447548ddc07",
+      "bytes": 12665
+    },
+    "Tooltip.lua": {
+      "sha256": "6b511665e96273319f1da4e88e1e9d00c3f404ff64fe0d2b7eddeca59aabaa3c",
+      "bytes": 33187
+    },
+    "Window.lua": {
+      "sha256": "710b54323efb8c169c233a1cd0297f122c78036d7e5856c95d7acb77a5d545d8",
+      "bytes": 2420
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

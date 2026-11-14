@@ -1,0 +1,53 @@
+{
+  "upstream": "https://octowow.st/git/rwang0417/OctoAI",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "rwang0417",
+    "repo": "OctoAI",
+    "name": "OctoAI",
+    "url": "https://octowow.st/git/rwang0417/OctoAI",
+    "api": "https://octowow.st/git/api/v1/repos/rwang0417/OctoAI"
+  },
+  "commit": "008b8b6b15af6e32f35d0e12b1ef4171652f9cfc",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "0cb80c3e7c4d86234c2890318d16a3f7c4d8e031bb20cc94ca94e18da5379e81",
+      "bytes": 212
+    },
+    "CHANGELOG.md": {
+      "sha256": "7201e5cd18b37b51526c50bd1deee24d5f5a8d8afa066395843a20448ceab513",
+      "bytes": 2184
+    },
+    "LICENSE": {
+      "sha256": "bd878c008e4cb95b8e66737a4e0b0343a136a1f56dbcad0c9ebc9288d01d4930",
+      "bytes": 1061
+    },
+    "OctoAI.lua": {
+      "sha256": "f30120223c82a3349dd7b60d6b4334edcfc030b4ffb07775d0a2e83093ae47f3",
+      "bytes": 56910
+    },
+    "OctoAI.toc": {
+      "sha256": "92571c55945d57b641d3e632a5d3cfe4eb7dcb80b71510da31fadc2947279668",
+      "bytes": 360
+    },
+    "README.md": {
+      "sha256": "837d0ca05d8a3e0a590c464ef6520003aed2665abe85833ad9ad312d3caed73a",
+      "bytes": 6073
+    },
+    "tools/octo_query.py": {
+      "sha256": "5de578d932115263ae23cf74b2fadbc60c67aa12b13cb419171b152d494489f8",
+      "bytes": 45211
+    },
+    "tools/skill/SKILL.md": {
+      "sha256": "cc5d17db5269dadf32bd3a7a5f189560df20dd6dd7df002b267b82dac7a6360f",
+      "bytes": 8526
+    },
+    "tools/update_data.py": {
+      "sha256": "6b2fde9e726a6449a3bdd8d8e193a0dab2f8e37d40395e75504df5695a8699f8",
+      "bytes": 3676
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

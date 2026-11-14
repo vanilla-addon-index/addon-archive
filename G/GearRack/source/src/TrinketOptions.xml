@@ -1,0 +1,281 @@
+<Ui>
+	<!-- Tabs are plain buttons; Skin.lua draws their pills and text colors. -->
+	<Button name="GearRackTrinkets_TabTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="96" y="28"/>
+		</Size>
+		<ButtonText name="$parentText"/>
+		<NormalFont inherits="GameFontHighlightSmall"/>
+		<HighlightFont inherits="GameFontHighlightSmall"/>
+		<DisabledFont inherits="GameFontHighlightSmall"/>
+		<Scripts>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackTrinkets.Tab_OnClick()
+
+end
+</OnClick>
+		</Scripts>
+	</Button>
+	<Button name="GearRackTrinkets_SmallButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="16" y="16"/>
+		</Size>
+		<HighlightTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" alphaMode="ADD" setAllPoints="true">
+			<TexCoords left=".25" right=".375" top="0" bottom=".125"/>
+		</HighlightTexture>
+		<Scripts>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackTrinkets.SmallButton_OnClick()
+
+end
+</OnClick>
+			<OnEnter>
+if GearRack.enabled then
+
+				GearRackTrinkets.OnTooltip()
+
+end
+</OnEnter>
+			<OnLeave>
+if GearRack.enabled then
+
+				GameTooltip:Hide()
+
+end
+</OnLeave>
+		</Scripts>
+	</Button>
+
+	<CheckButton name="GearRackTrinkets_CheckButtonTemplate" inherits="UICheckButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="24" y="24"/>
+		</Size>
+		<Scripts>
+			<OnClick>
+if GearRack.enabled then
+
+				GearRackTrinkets.CheckButton_OnClick()
+
+end
+</OnClick>
+			<OnEnter>
+if GearRack.enabled then
+
+				GearRackTrinkets.OnTooltip()
+
+end
+</OnEnter>
+			<OnLeave>
+if GearRack.enabled then
+
+				GameTooltip:Hide()
+
+end
+</OnLeave>
+		</Scripts>
+	</CheckButton>
+
+	<!-- Minimap button -->
+
+	<Frame name="GearRackTrinkets_OptFrame" parent="UIParent" enableMouse="true" movable="true" toplevel="true" clampedToScreen="true" hidden="true">
+		<Size x="300" y="326"/>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString name="GearRackTrinkets_Title" inherits="GameFontHighlightSmall">
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-8"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="GearRackTrinkets_CloseButton" inherits="GearRackTrinkets_SmallButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-6" y="-6"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".375" right=".5" top=".25" bottom=".375"/>
+				</NormalTexture>
+				<PushedTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".5" right=".625" top=".25" bottom=".375"/>
+				</PushedTexture>
+				<DisabledTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".625" right=".75" top=".25" bottom=".375"/>
+				</DisabledTexture>
+			</Button>
+			<Button name="GearRackTrinkets_LockButton" inherits="GearRackTrinkets_SmallButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="GearRackTrinkets_CloseButton" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="-2" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".75" right=".875" top=".125" bottom=".25"/>
+				</NormalTexture>
+				<PushedTexture file="Interface\AddOns\GearRack\media\Trinket-Buttons" setAllPoints="true">
+					<TexCoords left=".875" right="1" top=".125" bottom=".25"/>
+				</PushedTexture>
+			</Button>
+
+			<Button name="GearRackTrinkets_Tab1" inherits="GearRackTrinkets_TabTemplate" text="Options" id="1">
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-6" y="-22"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<Frame name="GearRackTrinkets_SubOptFrame" hidden="true">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="8" y="-50"/>
+						</Offset>
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-8" y="8"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<CheckButton name="GearRackTrinkets_OptLocked" inherits="GearRackTrinkets_CheckButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="8" y="-8"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</CheckButton>
+					<CheckButton name="GearRackTrinkets_OptShowHotKeys" inherits="GearRackTrinkets_CheckButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_OptLocked" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</CheckButton>
+					<CheckButton name="GearRackTrinkets_OptKeepDocked" inherits="GearRackTrinkets_CheckButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativePoint="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-8"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</CheckButton>
+					<CheckButton name="GearRackTrinkets_OptKeepOpen" inherits="GearRackTrinkets_CheckButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_OptKeepDocked" relativePoint="BOTTOMLEFT"/>
+						</Anchors>
+					</CheckButton>
+					<CheckButton name="GearRackTrinkets_OptSetColumns" inherits="GearRackTrinkets_CheckButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_OptKeepOpen" relativePoint="BOTTOMLEFT"/>
+						</Anchors>
+					</CheckButton>
+
+					<Slider name="GearRackTrinkets_OptColumnsSlider" orientation="HORIZONTAL" enableMouse="true" minValue="1" maxValue="30" defaultValue="4" valueStep="1">
+						<Size>
+							<AbsDimension x="96" y="17"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_OptSetColumns" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="16" y="4"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<HitRectInsets>
+							<AbsInset left="0" right="0" top="-5" bottom="-5"/>
+						</HitRectInsets>
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString name="GearRackTrinkets_OptColumnsSliderText" inherits="GameFontHighlightSmall" text="5 trinkets">
+									<Anchors>
+										<Anchor point="BOTTOM" relativePoint="TOP">
+											<Offset>
+												<AbsDimension x="0" y="-26"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnValueChanged>
+if GearRack.enabled then
+
+								GearRackTrinkets.OptColumnsSlider_OnValueChanged()
+
+end
+</OnValueChanged>
+						</Scripts>
+					</Slider>
+
+					<CheckButton name="GearRackTrinkets_OptStopOnSwap" inherits="GearRackTrinkets_CheckButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="GearRackTrinkets_OptSetColumns" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-24"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</CheckButton>
+
+				</Frames>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnMouseDown>
+if GearRack.enabled then
+
+				if arg1=="LeftButton" and GearRackDB.trinketOptions.Locked=="OFF" then
+					this:StartMoving()
+				end
+
+end
+</OnMouseDown>
+			<OnMouseUp>
+if GearRack.enabled then
+
+				this:StopMovingOrSizing()
+
+end
+</OnMouseUp>
+			<OnHide>
+if GearRack.enabled then
+				this:StopMovingOrSizing()
+end
+</OnHide>
+			<OnShow>
+if GearRack.enabled then
+
+				GearRackTrinkets.OptFrame_OnShow()
+
+end
+</OnShow>
+		</Scripts>
+	</Frame>
+</Ui>

@@ -1,0 +1,24 @@
+## Interface: 11200
+## Title: |cff33ffccpf|cffffffffQuest |cffaaaaaaSmartArrow
+## Author: pfQuest SmartArrow contributors
+## Notes: Turns pfQuest's arrow into a route-aware one: real zone passes, your flight paths, boats and zeppelins, paths around obstacles, along walked roads and away from hostile camps, drawn on the map. Requires pfQuest (brues-code or lightblade; ClassicAPI optional).
+## Version: 0.11.0
+## X-License: GPL-3.0-or-later
+## Dependencies: pfQuest
+## RequiredDeps: pfQuest
+## SavedVariables: pfQuestSmartArrow_config
+## SavedVariablesPerCharacter: pfQuestSmartArrow_char
+
+data\travel.lua
+data\places.lua
+data\obstacles.lua
+data\roads.lua
+data\walknet.lua
+data\zones.lua
+compat.lua
+graph.lua
+places.lua
+nav.lua
+draw.lua
+arrow.lua
+core.lua

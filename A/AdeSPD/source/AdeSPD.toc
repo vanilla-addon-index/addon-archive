@@ -1,0 +1,17 @@
+## Interface: 11200
+## Title: AdeSPD
+## Notes: Real spell and ability damage / healing in tooltips (spell power, attack power, talents, buffs). Needs Nampower; learns unknown coefficients in combat.
+## Author: adesta
+## Version: 0.1.0
+## SavedVariables: AdeSPDDB, AdeSPDDump
+
+Data.lua
+Data_Melee.lua
+Data_Names.lua
+Data_Ru.lua
+Core.lua
+Learn.lua
+Tooltip.lua
+Dump.lua
+Window.lua
+Commands.lua

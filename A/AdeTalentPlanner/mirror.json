@@ -1,0 +1,33 @@
+{
+  "upstream": "https://octowow.st/git/Ade/AdeTalentPlanner",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Ade",
+    "repo": "AdeTalentPlanner",
+    "name": "AdeTalentPlanner",
+    "url": "https://octowow.st/git/Ade/AdeTalentPlanner",
+    "api": "https://octowow.st/git/api/v1/repos/Ade/AdeTalentPlanner"
+  },
+  "commit": "5654277afb2cddc6857af07a71a27ac5c66bf97c",
+  "sourceFiles": {
+    "AdeTalentPlanner.lua": {
+      "sha256": "d4a7d85f5cbbd9e8ee430da6d06d91cc86ecb124cab59ec463d08d3831519926",
+      "bytes": 30006
+    },
+    "AdeTalentPlanner.toc": {
+      "sha256": "4116dc23524197e067ad6c585b4af4529facd64fb4552a3ce12ef1d0c12f5856",
+      "bytes": 382
+    },
+    "AdeTalentPlannerUI.lua": {
+      "sha256": "4db368f9b6251f5b2cf9bff35a97146aebc5f20395ecccfa9ec5c79624c10b77",
+      "bytes": 37956
+    },
+    "README.md": {
+      "sha256": "a0fd5ee3540f73b25d227843ad66fc0ac8bdcf8b5b8e5058e43f3b8396115c08",
+      "bytes": 6204
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

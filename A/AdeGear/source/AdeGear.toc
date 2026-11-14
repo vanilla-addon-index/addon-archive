@@ -1,0 +1,34 @@
+## Interface: 11200
+## Title: AdeGear
+## Notes: Talent-aware gear comparison: hover panel, upgrade arrows, /adeg best, GearScore. Works with AdeTalents and pfUI.
+## Version: 1.1.1
+## OptionalDeps: pfUI, AdeTalents
+## SavedVariables: AdeGearDB
+
+Core.lua
+Skin.lua
+Widgets.lua
+Tooltip.lua
+Panel.lua
+Options.lua
+Items.lua
+Rules.lua
+Char.lua
+Races.lua
+Model.lua
+Weights.lua
+Classes\PRIEST.lua
+Classes\HUNTER.lua
+Classes\PALADIN.lua
+Classes\MAGE.lua
+Classes\WARLOCK.lua
+Classes\WARRIOR.lua
+Classes\SHAMAN.lua
+Classes\ROGUE.lua
+Classes\DRUID.lua
+Compare.lua
+Inspect.lua
+Arrows.lua
+GearScore.lua
+Minimap.lua
+Hooks.lua

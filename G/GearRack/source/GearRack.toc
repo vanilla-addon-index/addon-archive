@@ -1,0 +1,29 @@
+## Interface: 11200
+## Title: |cffff9e38GearRack|r |cffffd6a8[Fostercare5988]|r
+## Notes: Gear sets, trinket priority queues and persistent weapon swaps.
+## Version: 1.0.0
+## SavedVariables: GearRackDB
+## SavedVariablesPerCharacter: GearRackCharDB
+src\Bootstrap.lua
+src\ForgeUI.lua
+src\Core.lua
+src\Constants.lua
+src\Events.lua
+src\Engine.lua
+src\Equipment.lua
+src\PoisonSwap.lua
+src\Equipment.xml
+src\Sets.xml
+src\Trinkets.lua
+src\Trinkets.xml
+src\TrinketOptions.lua
+src\TrinketOptions.xml
+src\TrinketQueues.lua
+src\TrinketQueues.xml
+src\Skin.lua
+src\Navigation.lua
+src\Settings.lua
+src\BarLayout.lua
+src\SetMacros.lua
+src\Minimap.lua
+src\LoadGate.lua

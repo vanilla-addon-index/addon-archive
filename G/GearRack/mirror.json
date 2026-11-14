@@ -1,0 +1,173 @@
+{
+  "upstream": "https://github.com/Fostercare5988/GearRack",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Fostercare5988",
+    "repo": "GearRack",
+    "name": "GearRack",
+    "url": "https://github.com/Fostercare5988/GearRack",
+    "api": "https://api.github.com/repos/Fostercare5988/GearRack"
+  },
+  "commit": "4c16ffcbba2e79ca89901c1c72e8772ef6c872a3",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "0977d1f6d09fb4f3376d5d05fa90dc882580045decea63b1667731b5cd17d005",
+      "bytes": 296
+    },
+    ".gitignore.upstream": {
+      "sha256": "690e2016f09253012057f175c0202904405ceb9740be8901afb22e14c69a5822",
+      "bytes": 39
+    },
+    "Bindings.xml": {
+      "sha256": "bdcf32d9c82b61b17186627dca423d53501eb87e8101e285d087d04b16b8cb02",
+      "bytes": 4254
+    },
+    "docs/EVENT_EXAMPLES.md": {
+      "sha256": "42e9bcc6446748e7ffbb96e41de67134d002ed3ff652e773ee0b3b4209a54162",
+      "bytes": 7282
+    },
+    "docs/EVENTS.md": {
+      "sha256": "c299af73591014e82e066f69e21fa1f91d038bea6a7625ae7c95d85143d23a30",
+      "bytes": 1694
+    },
+    "docs/TRINKETS.md": {
+      "sha256": "8d4f00c4e8a9f549b8be3e33e32698c00e2773d99d8965ccf3047706ad1ce687",
+      "bytes": 4324
+    },
+    "docs/USER_GUIDE.md": {
+      "sha256": "5afd124c90657f33724578b75be9926abc7d4ebc2a9bd0beae5a55d61b9adc31",
+      "bytes": 5436
+    },
+    "GearRack.toc": {
+      "sha256": "f00313d3790cae760d2144ffca8661cb32e2254be4fcfbe6d1b009e4e33acd92",
+      "bytes": 653
+    },
+    "media/Close.tga": {
+      "sha256": "f07813415b7c27422d0e4e45386fde9c903c21f399c7e6927339306e305e1146",
+      "bytes": 4114
+    },
+    "media/Disc.tga": {
+      "sha256": "746305f80c83020061e05967dc774891e0a12cc4814f20b5e1b9ca52f8b5b1e0",
+      "bytes": 16402
+    },
+    "media/Equipment-Buttons.blp": {
+      "sha256": "49f2b613fc8397a7b506feb150bd939c8a29eb240e77037405e53ca4a66478b6",
+      "bytes": 9364
+    },
+    "media/GearRack-Icon.tga": {
+      "sha256": "5e861692de8d859e9f65ba7113132e657594745420934baa75037b2165db9299",
+      "bytes": 16428
+    },
+    "media/Shadow.tga": {
+      "sha256": "7dab96ab788a0306d7cfce5b9c262c730704fed4cb3398ffb089b4016c13bb07",
+      "bytes": 16402
+    },
+    "media/Trinket-Buttons.blp": {
+      "sha256": "5088c04b4541d327fbc4923392b138e1287669dcbcb29a6f3927ccd30cd4f77c",
+      "bytes": 33940
+    },
+    "media/Trinket-Queue.blp": {
+      "sha256": "5183feee69f1f3a1aa2dbd0f877f79a968c3a91090351fc144aacd8baa34fc26",
+      "bytes": 3220
+    },
+    "README.md": {
+      "sha256": "3c882a91683e1e855d80db3be76463a1395383a9dcc45509668740fbeb5cac19",
+      "bytes": 4862
+    },
+    "src/BarLayout.lua": {
+      "sha256": "6f8b92f4f680481e406670eb203993cc37380691ab94f3dca5fc262e62690fb4",
+      "bytes": 5642
+    },
+    "src/Bootstrap.lua": {
+      "sha256": "272689de461bcb12d734a7fc19d817da70c34259f42f74df10a784694e65773d",
+      "bytes": 1002
+    },
+    "src/Constants.lua": {
+      "sha256": "439b9b926847712633788505f9e04195388bd0dce0ec2224f1314b3dba78578b",
+      "bytes": 12104
+    },
+    "src/Core.lua": {
+      "sha256": "dfd53ab51bd4bf23dc2ef7c30e78e4d6d038ed6d5f78e6f58482f836cb6eb81b",
+      "bytes": 32349
+    },
+    "src/Engine.lua": {
+      "sha256": "6e7aed15195a27434d90489398c6ec8feec577375308be6d8f29447d5e6358c5",
+      "bytes": 60745
+    },
+    "src/Equipment.lua": {
+      "sha256": "e7ddb77de97f94959c31f525dd6d590f19586323e774724979b3131b0712155c",
+      "bytes": 135795
+    },
+    "src/Equipment.xml": {
+      "sha256": "07255a6158f1a6af1eabe9b0d5b423f5106fb50ba0acaf9dffa93feeb6989891",
+      "bytes": 12776
+    },
+    "src/Events.lua": {
+      "sha256": "89de8e9b1eaea2b37a1eda2cf154dd52dcb524d1eb339f4d6b7edc1609eff286",
+      "bytes": 10997
+    },
+    "src/ForgeUI.lua": {
+      "sha256": "4c2c06a7249c50c8f3b0d482526dfd3a9ca47e769b6a7688cfa2441b5ff082f3",
+      "bytes": 18856
+    },
+    "src/LoadGate.lua": {
+      "sha256": "aa42513bf475be6d3227dd2a774ecf5f3d4ecb5cb44c5b4bdd7e1769dc58d691",
+      "bytes": 339
+    },
+    "src/Minimap.lua": {
+      "sha256": "d9d9e004c8f7ca0deb6bf64e200d5cde6d7f1d3a3da4b3058a266e178be1d770",
+      "bytes": 3869
+    },
+    "src/Navigation.lua": {
+      "sha256": "fd346f748eb1de4a577bd354e05804a17485febb9c1bedc520584681d0b410f6",
+      "bytes": 5944
+    },
+    "src/PoisonSwap.lua": {
+      "sha256": "062e93d7e676bde9ed8b460668ad23d805f12c89e741cb52cf010077ae1acdc6",
+      "bytes": 3626
+    },
+    "src/SetMacros.lua": {
+      "sha256": "6b79199824e58a6945a22dda7cc242fa21eb955f8d43d0b6fa15e25296157c58",
+      "bytes": 3483
+    },
+    "src/Sets.xml": {
+      "sha256": "c0c8915fd41dd27f0f03feb87ceea15f1acf03296f8bbba4adc38530e0a5002d",
+      "bytes": 67296
+    },
+    "src/Settings.lua": {
+      "sha256": "60932a10cb546ed0b3c1ee38e8d19bb1369dc521b828e98236d3a7afb42ec3ac",
+      "bytes": 5985
+    },
+    "src/Skin.lua": {
+      "sha256": "2a246de87a86ea6c066b729372dbd59f5cd7d57346d459d27bfcdb561fc58b0a",
+      "bytes": 7488
+    },
+    "src/TrinketOptions.lua": {
+      "sha256": "3eda21d22c073d6775e52dec31926354458011dc763f0101837974432d4f5d7d",
+      "bytes": 7071
+    },
+    "src/TrinketOptions.xml": {
+      "sha256": "02e4237a0ff02edcd18512d92578f8fe298ec25c5bb0f548950d7d15e412e767",
+      "bytes": 7689
+    },
+    "src/TrinketQueues.lua": {
+      "sha256": "6d482f15dbadb28979cfe6a4bf30aaeb7a11a4bad790be3b0d1791c8119d603a",
+      "bytes": 25148
+    },
+    "src/TrinketQueues.xml": {
+      "sha256": "2730c9696d6bba79d06cc39a9d3eef83f28fcd82ee9791372d4c88e0871f4e6e",
+      "bytes": 22149
+    },
+    "src/Trinkets.lua": {
+      "sha256": "d1a03019f35451bfbaf22f7298aaa56782e0b815644f5d727ce128bc8e533fb2",
+      "bytes": 31199
+    },
+    "src/Trinkets.xml": {
+      "sha256": "a9f406e9d444d43d4b993fb776842e06bc11350d96198958a05fa60594dfd222",
+      "bytes": 15805
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

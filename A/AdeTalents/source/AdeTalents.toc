@@ -1,0 +1,17 @@
+## Interface: 11200
+## Title: AdeTalents
+## Notes: Shared talent ranks and talent effects data for the Ade addons
+## Version: 1.2.3
+## SavedVariables: AdeTalentsDB
+
+AdeTalents.lua
+Locale\ruRU.lua
+Data\DRUID.lua
+Data\HUNTER.lua
+Data\MAGE.lua
+Data\PALADIN.lua
+Data\PRIEST.lua
+Data\ROGUE.lua
+Data\SHAMAN.lua
+Data\WARLOCK.lua
+Data\WARRIOR.lua

@@ -971,7 +971,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [MinimapButtonBag](M/MinimapButtonBag/) | Map & Minimap | 2 | mirrored |
 | [NotGrid](N/NotGrid/) | Unit Frames | 3 | mirrored |
 | [oRA2](O/oRA2/) | Raid & Party | 1 | mirrored |
-| [PallyPower-Turtle](P/PallyPower-Turtle/) | Class | 3 | mirrored |
+| [PallyPower](P/PallyPower-Turtle/) | Class | 3 | mirrored |
 | [PostalReturned](P/PostalReturned/) | Auction & Economy | 1 | mirrored |
 | [PowerAuras](P/PowerAuras/) | Buffs & Debuffs | 1 | mirrored |
 | [Quickcall](Q/Quickcall/) | PvP | 1 | mirrored |
@@ -1048,5 +1048,12 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [WorldChatFilter](W/WorldChatFilter/) | Chat & Social | 1 | mirrored |
 | [EGM](E/EGM/) | Auction & Economy | 1 | mirrored |
 | [WoodAndSeedsGather](W/WoodAndSeedsGather/) | Professions | 1 | mirrored |
+| [AdeGear](A/AdeGear/) | Miscellaneous | 1 | mirrored |
+| [AdeSPD](A/AdeSPD/) | Tooltip | 1 | mirrored |
+| [AdeTalentPlanner](A/AdeTalentPlanner/) | Miscellaneous | 1 | mirrored |
+| [AdeTalents](A/AdeTalents/) | Libraries | 1 | mirrored |
+| [OctoAI](O/OctoAI/) | Miscellaneous | 1 | mirrored |
+| [pfQuest-SmartArrow](P/pfQuest-SmartArrow/) | Map & Minimap | 1 | mirrored |
+| [GearRack](G/GearRack/) | Bags & Inventory | 1 | mirrored |
 
 This repository’s automation is MIT licensed. Mirrored source and release files retain their upstream license notices when provided.
