@@ -4,7 +4,7 @@
 |---|---|---:|---|
 | [PaladinSalvaRemover](PaladinSalvaRemover/) | Class | 1 | mirrored |
 | [pfQuest](pfQuest/) | Quests & Leveling | 2 | mirrored |
-| [pfUI](pfUI/) | UI & Appearance | 5 | mirrored |
+| [pfUI](pfUI/) | UI & Appearance | 4 | mirrored |
 | [PizzaWorldBuffs](PizzaWorldBuffs/) | Buffs & Debuffs | 2 | mirrored |
 | [PriestBiS](PriestBiS/) | Class | 1 | mirrored |
 | [ProcDoc](ProcDoc/) | Combat | 1 | mirrored |

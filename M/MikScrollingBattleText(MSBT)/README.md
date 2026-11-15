@@ -4,7 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| Vanilla_MikScrollingBattleText | https://octowow.st/git/brues/Vanilla_MikScrollingBattleText | mirrored |
 | Vanilla_MikScrollingBattleText--brues-code | https://github.com/brues-code/Vanilla_MikScrollingBattleText | mirrored |
 | Vanilla_MikScrollingBattleText--jrc13245 | https://github.com/jrc13245/Vanilla_MikScrollingBattleText | mirrored |
 | Vanilla_MikScrollingBattleText--pepopo978 | https://github.com/pepopo978/Vanilla_MikScrollingBattleText | mirrored |

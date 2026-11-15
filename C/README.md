@@ -8,7 +8,7 @@
 | [CastTimer](CastTimer/) | Combat | 1 | mirrored |
 | [CatDruidDPS](CatDruidDPS/) | Class | 1 | mirrored |
 | [Caterer](Caterer/) | Miscellaneous | 1 | mirrored |
-| [CawDPSMeter](CawDPSMeter/) | Combat | 2 | mirrored |
+| [CawDPSMeter](CawDPSMeter/) | Combat | 1 | mirrored |
 | [CCWatch](CCWatch/) | Combat | 1 | mirrored |
 | [CDFrames](CDFrames/) | Combat | 1 | mirrored |
 | [CensusPlusTurtle](CensusPlusTurtle/) | Miscellaneous | 1 | mirrored |

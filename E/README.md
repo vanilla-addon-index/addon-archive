@@ -34,7 +34,7 @@
 | [EMMonkeyBuddy](EMMonkeyBuddy/) | Miscellaneous | 1 | mirrored |
 | [EQL3](EQL3/) | UI & Appearance | 1 | mirrored |
 | [EquipColor](EquipColor/) | Bags & Inventory | 1 | mirrored |
-| [EquipCompareAdv](EquipCompareAdv/) | Tooltip | 2 | mirrored |
+| [EquipCompareAdv](EquipCompareAdv/) | Tooltip | 1 | mirrored |
 | [EVTCalendar](EVTCalendar/) | UI & Appearance | 1 | mirrored |
 | [EzDismount](EzDismount/) | Miscellaneous | 1 | mirrored |
 | [EasyRoute](EasyRoute/) | Quests & Leveling | 1 | mirrored |
