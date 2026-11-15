@@ -19,7 +19,7 @@
 | [TitleRotator](TitleRotator/) | UI & Appearance | 1 | mirrored |
 | [TNEFiveSec](TNEFiveSec/) | Combat | 1 | mirrored |
 | [TotemBar](TotemBar/) | Class | 1 | mirrored |
-| [TotemNesia](TotemNesia/) | Class | 2 | mirrored |
+| [TotemNesia](TotemNesia/) | Class | 1 | mirrored |
 | [TotemTimers(TurtleWoW)](TotemTimers(TurtleWoW)/) | Class | 1 | mirrored |
 | [TotemTimersEnhanced](TotemTimersEnhanced/) | Class | 1 | mirrored |
 | [TradeChat](TradeChat/) | Chat & Social | 1 | mirrored |
@@ -63,7 +63,7 @@
 | [Thaliz](Thaliz/) | Raid & Party | 1 | mirrored |
 | [TimeManager](TimeManager/) | Miscellaneous | 1 | mirrored |
 | [Timers](Timers/) | Miscellaneous | 1 | mirrored |
-| [TimeToDrink](TimeToDrink/) | Chat & Social | 2 | mirrored |
+| [TimeToDrink](TimeToDrink/) | Chat & Social | 1 | mirrored |
 | [TimeTracker](TimeTracker/) | Miscellaneous | 1 | mirrored |
 | [TitanWowRadio](TitanWowRadio/) | Miscellaneous | 1 | mirrored |
 | [Tmog](Tmog/) | UI & Appearance | 1 | mirrored |

@@ -3895,23 +3895,6 @@
           "error": null,
           "active": true,
           "license": "Unspecified"
-        },
-        {
-          "originalUrl": "https://octowow.st/git/lightblade/CleanRolls",
-          "folder": "CleanRolls--lightblade",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "lightblade",
-            "repo": "CleanRolls",
-            "name": "CleanRolls",
-            "url": "https://octowow.st/git/lightblade/CleanRolls",
-            "api": "https://octowow.st/git/api/v1/repos/lightblade/CleanRolls"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -7101,23 +7084,6 @@
       "folder": "P/pfQuest",
       "components": [
         {
-          "originalUrl": "https://octowow.st/git/lightblade/pfQuest",
-          "folder": "pfQuest",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "lightblade",
-            "repo": "pfQuest",
-            "name": "pfQuest",
-            "url": "https://octowow.st/git/lightblade/pfQuest",
-            "api": "https://octowow.st/git/api/v1/repos/lightblade/pfQuest"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "MIT"
-        },
-        {
           "originalUrl": "https://github.com/rivi-s/pfQuest",
           "folder": "pfQuest--rivi-s",
           "source": {
@@ -7948,23 +7914,6 @@
             "name": "RecipeRadar",
             "url": "https://github.com/MarkuruThunderhoof/RecipeRadar",
             "api": "https://api.github.com/repos/MarkuruThunderhoof/RecipeRadar"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "Unspecified"
-        },
-        {
-          "originalUrl": "https://octowow.st/git/Markuru/RecipeRadar",
-          "folder": "RecipeRadar--Markuru",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "Markuru",
-            "repo": "RecipeRadar",
-            "name": "RecipeRadar",
-            "url": "https://octowow.st/git/Markuru/RecipeRadar",
-            "api": "https://octowow.st/git/api/v1/repos/Markuru/RecipeRadar"
           },
           "status": "mirrored",
           "error": null,
@@ -16912,23 +16861,6 @@
       "folder": "T/TotemNesia",
       "components": [
         {
-          "originalUrl": "https://octowow.st/git/Fayz/TotemNesia",
-          "folder": "TotemNesia",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "Fayz",
-            "repo": "TotemNesia",
-            "name": "TotemNesia",
-            "url": "https://octowow.st/git/Fayz/TotemNesia",
-            "api": "https://octowow.st/git/api/v1/repos/Fayz/TotemNesia"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "Unspecified"
-        },
-        {
           "originalUrl": "https://github.com/TheRealFayz/TotemNesia",
           "folder": "TotemNesia--TheRealFayz",
           "source": {
@@ -19714,23 +19646,6 @@
             "name": "pfUI-CustomMedia",
             "url": "https://github.com/mr-rosh/pfUI-CustomMedia",
             "api": "https://api.github.com/repos/mr-rosh/pfUI-CustomMedia"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "MIT"
-        },
-        {
-          "originalUrl": "https://octowow.st/git/Mr_Rosh/pfUI-CustomMedia",
-          "folder": "pfUI-CustomMedia--Mr_Rosh",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "Mr_Rosh",
-            "repo": "pfUI-CustomMedia",
-            "name": "pfUI-CustomMedia",
-            "url": "https://octowow.st/git/Mr_Rosh/pfUI-CustomMedia",
-            "api": "https://octowow.st/git/api/v1/repos/Mr_Rosh/pfUI-CustomMedia"
           },
           "status": "mirrored",
           "error": null,
@@ -22743,23 +22658,6 @@
           "error": null,
           "active": true,
           "license": "Unlicense"
-        },
-        {
-          "originalUrl": "https://octowow.st/git/lightblade/InstanceJournal",
-          "folder": "InstanceJournal--lightblade",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "lightblade",
-            "repo": "InstanceJournal",
-            "name": "InstanceJournal",
-            "url": "https://octowow.st/git/lightblade/InstanceJournal",
-            "api": "https://octowow.st/git/api/v1/repos/lightblade/InstanceJournal"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "Unlicense"
         }
       ],
       "active": true,
@@ -23860,23 +23758,6 @@
           "error": null,
           "active": true,
           "license": "GPL-3.0"
-        },
-        {
-          "originalUrl": "https://octowow.st/git/lightblade/MusicExpanded",
-          "folder": "MusicExpanded--lightblade",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "lightblade",
-            "repo": "MusicExpanded",
-            "name": "MusicExpanded",
-            "url": "https://octowow.st/git/lightblade/MusicExpanded",
-            "api": "https://octowow.st/git/api/v1/repos/lightblade/MusicExpanded"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "LGPL"
         }
       ],
       "active": true,
@@ -26039,23 +25920,6 @@
       "name": "TimeToDrink",
       "folder": "T/TimeToDrink",
       "components": [
-        {
-          "originalUrl": "https://octowow.st/git/Fayz/TimeToDrink",
-          "folder": "TimeToDrink",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "Fayz",
-            "repo": "TimeToDrink",
-            "name": "TimeToDrink",
-            "url": "https://octowow.st/git/Fayz/TimeToDrink",
-            "api": "https://octowow.st/git/api/v1/repos/Fayz/TimeToDrink"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "Unspecified"
-        },
         {
           "originalUrl": "https://github.com/TheRealFayz/TimeToDrink",
           "folder": "TimeToDrink--TheRealFayz",
@@ -28790,23 +28654,6 @@
       "folder": "A/AutoSpam",
       "components": [
         {
-          "originalUrl": "https://octowow.st/git/Fayz/AutoSpam",
-          "folder": "AutoSpam",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "Fayz",
-            "repo": "AutoSpam",
-            "name": "AutoSpam",
-            "url": "https://octowow.st/git/Fayz/AutoSpam",
-            "api": "https://octowow.st/git/api/v1/repos/Fayz/AutoSpam"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "Unspecified"
-        },
-        {
           "originalUrl": "https://github.com/TheRealFayz/AutoSpam",
           "folder": "AutoSpam--TheRealFayz",
           "source": {
@@ -29082,23 +28929,6 @@
           "error": null,
           "active": true,
           "license": "MIT"
-        },
-        {
-          "originalUrl": "https://octowow.st/git/lightblade/pfQuest-HDB-Install",
-          "folder": "pfQuest-HDB-Install--lightblade",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "lightblade",
-            "repo": "pfQuest-HDB-Install",
-            "name": "pfQuest-HDB-Install",
-            "url": "https://octowow.st/git/lightblade/pfQuest-HDB-Install",
-            "api": "https://octowow.st/git/api/v1/repos/lightblade/pfQuest-HDB-Install"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -29121,23 +28951,6 @@
             "name": "pfQuest-turtle-HDB-Install",
             "url": "https://github.com/rivi-s/pfQuest-turtle-HDB-Install",
             "api": "https://api.github.com/repos/rivi-s/pfQuest-turtle-HDB-Install"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "Unspecified"
-        },
-        {
-          "originalUrl": "https://octowow.st/git/lightblade/pfQuest-turtle-HDB-Install",
-          "folder": "pfQuest-turtle-HDB-Install--lightblade",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "lightblade",
-            "repo": "pfQuest-turtle-HDB-Install",
-            "name": "pfQuest-turtle-HDB-Install",
-            "url": "https://octowow.st/git/lightblade/pfQuest-turtle-HDB-Install",
-            "api": "https://octowow.st/git/api/v1/repos/lightblade/pfQuest-turtle-HDB-Install"
           },
           "status": "mirrored",
           "error": null,
@@ -29587,23 +29400,6 @@
             "name": "pfQuest-turtle",
             "url": "https://github.com/rivi-s/pfQuest-turtle",
             "api": "https://api.github.com/repos/rivi-s/pfQuest-turtle"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "MIT"
-        },
-        {
-          "originalUrl": "https://octowow.st/git/lightblade/pfQuest-turtle",
-          "folder": "pfQuest-turtle--lightblade",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "lightblade",
-            "repo": "pfQuest-turtle",
-            "name": "pfQuest-turtle",
-            "url": "https://octowow.st/git/lightblade/pfQuest-turtle",
-            "api": "https://octowow.st/git/api/v1/repos/lightblade/pfQuest-turtle"
           },
           "status": "mirrored",
           "error": null,

@@ -19,7 +19,7 @@
 | [ClassIcons](ClassIcons/) | Unit Frames | 1 | mirrored |
 | [CleanChat](CleanChat/) | Chat & Social | 1 | mirrored |
 | [CleanPlayerFrame](CleanPlayerFrame/) | Unit Frames | 1 | mirrored |
-| [CleanRolls](CleanRolls/) | Loot Distribution | 2 | mirrored |
+| [CleanRolls](CleanRolls/) | Loot Distribution | 1 | mirrored |
 | [CleveRoidMacros](CleveRoidMacros/) | Macros | 1 | mirrored |
 | [ColorSocialFrame](ColorSocialFrame/) | Chat & Social | 1 | mirrored |
 | [Combat](Combat/) | Unit Frames | 1 | mirrored |

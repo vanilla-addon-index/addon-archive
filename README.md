@@ -140,7 +140,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [ClassIcons](C/ClassIcons/) | Unit Frames | 1 | mirrored |
 | [CleanChat](C/CleanChat/) | Chat & Social | 1 | mirrored |
 | [CleanPlayerFrame](C/CleanPlayerFrame/) | Unit Frames | 1 | mirrored |
-| [CleanRolls](C/CleanRolls/) | Loot Distribution | 2 | mirrored |
+| [CleanRolls](C/CleanRolls/) | Loot Distribution | 1 | mirrored |
 | [CleveRoidMacros](C/CleveRoidMacros/) | Macros | 1 | mirrored |
 | [ColorSocialFrame](C/ColorSocialFrame/) | Chat & Social | 1 | mirrored |
 | [Combat](C/Combat/) | Unit Frames | 1 | mirrored |
@@ -249,7 +249,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [Outfitter](O/Outfitter/) | Bags & Inventory | 4 | mirrored, error |
 | [Overhead](O/Overhead/) | Unit Frames | 1 | mirrored |
 | [PaladinSalvaRemover](P/PaladinSalvaRemover/) | Class | 1 | mirrored |
-| [pfQuest](P/pfQuest/) | Quests & Leveling | 3 | mirrored |
+| [pfQuest](P/pfQuest/) | Quests & Leveling | 2 | mirrored |
 | [pfUI](P/pfUI/) | UI & Appearance | 5 | mirrored |
 | [PizzaWorldBuffs](P/PizzaWorldBuffs/) | Buffs & Debuffs | 2 | mirrored |
 | [PriestBiS](P/PriestBiS/) | Class | 1 | mirrored |
@@ -273,7 +273,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [RaidRollBuddy](R/RaidRollBuddy/) | Loot Distribution | 1 | mirrored |
 | [RaidSummonPlus](R/RaidSummonPlus/) | Class | 1 | mirrored |
 | [RallyHelper](R/RallyHelper/) | Buffs & Debuffs | 1 | mirrored |
-| [RecipeRadar](R/RecipeRadar/) | Professions | 2 | mirrored |
+| [RecipeRadar](R/RecipeRadar/) | Professions | 1 | mirrored |
 | [RelationshipsAchievements](R/RelationshipsAchievements/) | Quests & Leveling | 1 | mirrored |
 | [RelationshipsAttune](R/RelationshipsAttune/) | Quests & Leveling | 1 | mirrored |
 | [RelationshipsAuctionPrice](R/RelationshipsAuctionPrice/) | Auction & Economy | 1 | mirrored |
@@ -588,7 +588,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [TitleRotator](T/TitleRotator/) | UI & Appearance | 1 | mirrored |
 | [TNEFiveSec](T/TNEFiveSec/) | Combat | 1 | mirrored |
 | [TotemBar](T/TotemBar/) | Class | 1 | mirrored |
-| [TotemNesia](T/TotemNesia/) | Class | 2 | mirrored |
+| [TotemNesia](T/TotemNesia/) | Class | 1 | mirrored |
 | [TotemTimers(TurtleWoW)](T/TotemTimers(TurtleWoW)/) | Class | 1 | mirrored |
 | [TotemTimersEnhanced](T/TotemTimersEnhanced/) | Class | 1 | mirrored |
 | [TradeChat](T/TradeChat/) | Chat & Social | 1 | mirrored |
@@ -683,7 +683,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [pfQuest-icons](P/pfQuest-icons/) | Map & Minimap | 1 | mirrored |
 | [pfUI-addonskinner](P/pfUI-addonskinner/) | UI & Appearance | 1 | mirrored |
 | [pfUI-chatscrollbutton](P/pfUI-chatscrollbutton/) | Chat & Social | 1 | mirrored |
-| [pfUI-CustomMedia](P/pfUI-CustomMedia/) | Unit Frames | 2 | mirrored |
+| [pfUI-CustomMedia](P/pfUI-CustomMedia/) | Unit Frames | 1 | mirrored |
 | [pfUI-eliteoverlay](P/pfUI-eliteoverlay/) | Unit Frames | 1 | mirrored |
 | [pfUI-font-dyslexic](P/pfUI-font-dyslexic/) | UI & Appearance | 1 | mirrored |
 | [pfUI-fonts](P/pfUI-fonts/) | UI & Appearance | 1 | mirrored |
@@ -792,7 +792,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [Immersion](I/Immersion/) | UI & Appearance | 1 | mirrored |
 | [InnerFireWatch](I/InnerFireWatch/) | Buffs & Debuffs | 1 | mirrored |
 | [Inspect](I/Inspect/) | Libraries | 1 | mirrored |
-| [InstanceJournal](I/InstanceJournal/) | UI & Appearance | 2 | mirrored |
+| [InstanceJournal](I/InstanceJournal/) | UI & Appearance | 1 | mirrored |
 | [InstanceTimers](I/InstanceTimers/) | Miscellaneous | 1 | mirrored |
 | [IntelliSense](I/IntelliSense/) | Chat & Social | 1 | mirrored |
 | [Interruptor](I/Interruptor/) | Chat & Social | 1 | mirrored |
@@ -831,7 +831,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [MoveAnything](M/MoveAnything/) | Miscellaneous | 1 | mirrored |
 | [MrPlow](M/MrPlow/) | Bags & Inventory | 1 | mirrored |
 | [Mule](M/Mule/) | Bags & Inventory | 1 | mirrored |
-| [MusicExpanded](M/MusicExpanded/) | Miscellaneous | 2 | mirrored |
+| [MusicExpanded](M/MusicExpanded/) | Miscellaneous | 1 | mirrored |
 | [MuteCities](M/MuteCities/) | Miscellaneous | 1 | mirrored |
 | [NameChangeScript](N/NameChangeScript/) | Miscellaneous | 1 | mirrored |
 | [Nauticus](N/Nauticus/) | Map & Minimap | 1 | mirrored |
@@ -909,7 +909,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [Thaliz](T/Thaliz/) | Raid & Party | 1 | mirrored |
 | [TimeManager](T/TimeManager/) | Miscellaneous | 1 | mirrored |
 | [Timers](T/Timers/) | Miscellaneous | 1 | mirrored |
-| [TimeToDrink](T/TimeToDrink/) | Chat & Social | 2 | mirrored |
+| [TimeToDrink](T/TimeToDrink/) | Chat & Social | 1 | mirrored |
 | [TimeTracker](T/TimeTracker/) | Miscellaneous | 1 | mirrored |
 | [TitanWowRadio](T/TitanWowRadio/) | Miscellaneous | 1 | mirrored |
 | [Tmog](T/Tmog/) | UI & Appearance | 1 | mirrored |
@@ -986,7 +986,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [VoiceOver](V/VoiceOver/) | Miscellaneous | 2 | mirrored |
 | [ScaledLifeTap](S/ScaledLifeTap/) | Class | 1 | mirrored |
 | [AnySCT](A/AnySCT/) | Combat | 1 | mirrored |
-| [AutoSpam](A/AutoSpam/) | Chat & Social | 2 | mirrored |
+| [AutoSpam](A/AutoSpam/) | Chat & Social | 1 | mirrored |
 | [BigTimer](B/BigTimer/) | Boss Mods | 1 | mirrored |
 | [BoarChallengePlus](B/BoarChallengePlus/) | Quests & Leveling | 1 | mirrored |
 | [Chronos](C/Chronos/) | Libraries | 1 | mirrored |
@@ -995,8 +995,8 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [gromissingcrafts](G/gromissingcrafts/) | Professions | 1 | mirrored |
 | [IRC](I/IRC/) | Raid & Party | 1 | mirrored |
 | [MacroMaker](M/MacroMaker/) | Macros | 1 | mirrored |
-| [pfQuest-HDB](P/pfQuest-HDB/) | Quests & Leveling | 3 | mirrored |
-| [pfQuest-turtle-HDB](P/pfQuest-turtle-HDB/) | Quests & Leveling | 3 | mirrored |
+| [pfQuest-HDB](P/pfQuest-HDB/) | Quests & Leveling | 2 | mirrored |
+| [pfQuest-turtle-HDB](P/pfQuest-turtle-HDB/) | Quests & Leveling | 2 | mirrored |
 | [PokeHuntLog](P/PokeHuntLog/) | Class | 1 | mirrored |
 | [ShagaTweaks](S/ShagaTweaks/) | Miscellaneous | 1 | mirrored |
 | [ShagaTweaks-extras](S/ShagaTweaks-extras/) | Miscellaneous | 1 | mirrored |
@@ -1012,7 +1012,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [VimWowSettings](V/VimWowSettings/) | Professions | 1 | mirrored |
 | [Misspelled](M/Misspelled/) | Chat & Social | 1 | mirrored |
 | [OctoArmoryLink](O/OctoArmoryLink/) | Miscellaneous | 1 | mirrored |
-| [pfQuest-turtle](P/pfQuest-turtle/) | Quests & Leveling | 3 | mirrored |
+| [pfQuest-turtle](P/pfQuest-turtle/) | Quests & Leveling | 2 | mirrored |
 | [unitscan-turtle-hc](U/unitscan-turtle-hc/) | Hardcore | 1 | mirrored |
 | [UnitXP_SP3_Addon](U/UnitXP_SP3_Addon/) | Miscellaneous | 1 | mirrored |
 | [Freewood-OctoWoW-Codex](F/Freewood-OctoWoW-Codex/) | Miscellaneous | 1 | mirrored |

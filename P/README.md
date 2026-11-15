@@ -3,7 +3,7 @@
 | Addon | Kind | Components | Status |
 |---|---|---:|---|
 | [PaladinSalvaRemover](PaladinSalvaRemover/) | Class | 1 | mirrored |
-| [pfQuest](pfQuest/) | Quests & Leveling | 3 | mirrored |
+| [pfQuest](pfQuest/) | Quests & Leveling | 2 | mirrored |
 | [pfUI](pfUI/) | UI & Appearance | 5 | mirrored |
 | [PizzaWorldBuffs](PizzaWorldBuffs/) | Buffs & Debuffs | 2 | mirrored |
 | [PriestBiS](PriestBiS/) | Class | 1 | mirrored |
@@ -33,7 +33,7 @@
 | [pfQuest-icons](pfQuest-icons/) | Map & Minimap | 1 | mirrored |
 | [pfUI-addonskinner](pfUI-addonskinner/) | UI & Appearance | 1 | mirrored |
 | [pfUI-chatscrollbutton](pfUI-chatscrollbutton/) | Chat & Social | 1 | mirrored |
-| [pfUI-CustomMedia](pfUI-CustomMedia/) | Unit Frames | 2 | mirrored |
+| [pfUI-CustomMedia](pfUI-CustomMedia/) | Unit Frames | 1 | mirrored |
 | [pfUI-eliteoverlay](pfUI-eliteoverlay/) | Unit Frames | 1 | mirrored |
 | [pfUI-font-dyslexic](pfUI-font-dyslexic/) | UI & Appearance | 1 | mirrored |
 | [pfUI-fonts](pfUI-fonts/) | UI & Appearance | 1 | mirrored |
@@ -58,13 +58,13 @@
 | [PallyPower](PallyPower-Turtle/) | Class | 3 | mirrored |
 | [PostalReturned](PostalReturned/) | Auction & Economy | 1 | mirrored |
 | [PowerAuras](PowerAuras/) | Buffs & Debuffs | 1 | mirrored |
-| [pfQuest-HDB](pfQuest-HDB/) | Quests & Leveling | 3 | mirrored |
-| [pfQuest-turtle-HDB](pfQuest-turtle-HDB/) | Quests & Leveling | 3 | mirrored |
+| [pfQuest-HDB](pfQuest-HDB/) | Quests & Leveling | 2 | mirrored |
+| [pfQuest-turtle-HDB](pfQuest-turtle-HDB/) | Quests & Leveling | 2 | mirrored |
 | [PokeHuntLog](PokeHuntLog/) | Class | 1 | mirrored |
 | [PizzaLoot](PizzaLoot/) | UI & Appearance | 1 | mirrored |
 | [PizzaPocket](PizzaPocket/) | Class | 1 | mirrored |
 | [PizzaTonno](PizzaTonno/) | Professions | 1 | mirrored |
-| [pfQuest-turtle](pfQuest-turtle/) | Quests & Leveling | 3 | mirrored |
+| [pfQuest-turtle](pfQuest-turtle/) | Quests & Leveling | 2 | mirrored |
 | [pfQuest-Router](pfQuest-Router/) | Map & Minimap | 1 | mirrored |
 | [PandaMap](PandaMap/) | Map & Minimap | 1 | mirrored |
 | [PandaQuest](PandaQuest/) | Quests & Leveling | 1 | mirrored |
