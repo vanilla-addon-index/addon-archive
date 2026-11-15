@@ -60,7 +60,7 @@
 | [Mule](Mule/) | Bags & Inventory | 1 | mirrored |
 | [MusicExpanded](MusicExpanded/) | Miscellaneous | 1 | mirrored |
 | [MuteCities](MuteCities/) | Miscellaneous | 1 | mirrored |
-| [MikScrollingBattleText(MSBT)](MikScrollingBattleText(MSBT)/) | Combat | 5 | mirrored |
+| [MikScrollingBattleText(MSBT)](MikScrollingBattleText(MSBT)/) | Combat | 4 | mirrored |
 | [MinimapButtonBag](MinimapButtonBag/) | Map & Minimap | 2 | mirrored |
 | [MacroMaker](MacroMaker/) | Macros | 1 | mirrored |
 | [Misspelled](Misspelled/) | Chat & Social | 1 | mirrored |

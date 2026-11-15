@@ -4,7 +4,7 @@
 |---|---|---:|---|
 | [FastBinding](FastBinding/) | Action Bars | 1 | mirrored |
 | [FastTOT](FastTOT/) | Unit Frames | 1 | mirrored |
-| [FBHealBox](FBHealBox/) | Raid & Party | 2 | mirrored |
+| [FBHealBox](FBHealBox/) | Raid & Party | 1 | mirrored |
 | [FFXIVCrossHotbar](FFXIVCrossHotbar/) | UI & Appearance | 1 | mirrored |
 | [FishingVolume](FishingVolume/) | Professions | 1 | mirrored |
 | [Fizzle](Fizzle/) | UI & Appearance | 1 | mirrored |

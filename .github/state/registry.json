@@ -3446,23 +3446,6 @@
           "error": null,
           "active": true,
           "license": "MIT"
-        },
-        {
-          "originalUrl": "https://octowow.st/git/lightblade/CawDPSMeter",
-          "folder": "CawDPSMeter--lightblade",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "lightblade",
-            "repo": "CawDPSMeter",
-            "name": "CawDPSMeter",
-            "url": "https://octowow.st/git/lightblade/CawDPSMeter",
-            "api": "https://octowow.st/git/api/v1/repos/lightblade/CawDPSMeter"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "MIT"
         }
       ],
       "active": true,
@@ -4852,23 +4835,6 @@
           "error": null,
           "active": true,
           "license": "MIT"
-        },
-        {
-          "originalUrl": "https://octowow.st/git/Mquadrat/FBHealBox",
-          "folder": "FBHealBox--Mquadrat",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "Mquadrat",
-            "repo": "FBHealBox",
-            "name": "FBHealBox",
-            "url": "https://octowow.st/git/Mquadrat/FBHealBox",
-            "api": "https://octowow.st/git/api/v1/repos/Mquadrat/FBHealBox"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "MIT"
         }
       ],
       "active": true,
@@ -5546,23 +5512,6 @@
           "error": null,
           "active": true,
           "license": "GPL-3.0"
-        },
-        {
-          "originalUrl": "https://octowow.st/git/Bluewhale/HealBotBlue",
-          "folder": "HealBotBlue--Bluewhale",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "Bluewhale",
-            "repo": "HealBotBlue",
-            "name": "HealBotBlue",
-            "url": "https://octowow.st/git/Bluewhale/HealBotBlue",
-            "api": "https://octowow.st/git/api/v1/repos/Bluewhale/HealBotBlue"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "LGPL"
         }
       ],
       "active": true,
@@ -7155,23 +7104,6 @@
             "name": "pfUI-Octo",
             "url": "https://github.com/bdot89/pfUI-Octo",
             "api": "https://api.github.com/repos/bdot89/pfUI-Octo"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "MIT"
-        },
-        {
-          "originalUrl": "https://octowow.st/git/brues/pfUI",
-          "folder": "pfUI--brues",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "brues",
-            "repo": "pfUI",
-            "name": "pfUI",
-            "url": "https://octowow.st/git/brues/pfUI",
-            "api": "https://octowow.st/git/api/v1/repos/brues/pfUI"
           },
           "status": "mirrored",
           "error": null,
@@ -18509,23 +18441,6 @@
           "error": null,
           "active": true,
           "license": "GPL-2.0"
-        },
-        {
-          "originalUrl": "https://octowow.st/git/lightblade/WeakestAuras",
-          "folder": "WeakestAuras--lightblade",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "lightblade",
-            "repo": "WeakestAuras",
-            "name": "WeakestAuras",
-            "url": "https://octowow.st/git/lightblade/WeakestAuras",
-            "api": "https://octowow.st/git/api/v1/repos/lightblade/WeakestAuras"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "LGPL"
         }
       ],
       "active": true,
@@ -21382,23 +21297,6 @@
           "error": null,
           "active": true,
           "license": "MIT"
-        },
-        {
-          "originalUrl": "https://octowow.st/git/stealthzi/EquipCompareAdv",
-          "folder": "EquipCompareAdv--stealthzi",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "stealthzi",
-            "repo": "EquipCompareAdv",
-            "name": "EquipCompareAdv",
-            "url": "https://octowow.st/git/stealthzi/EquipCompareAdv",
-            "api": "https://octowow.st/git/api/v1/repos/stealthzi/EquipCompareAdv"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -27834,23 +27732,6 @@
       "name": "MikScrollingBattleText(MSBT)",
       "folder": "M/MikScrollingBattleText(MSBT)",
       "components": [
-        {
-          "originalUrl": "https://octowow.st/git/brues/Vanilla_MikScrollingBattleText",
-          "folder": "Vanilla_MikScrollingBattleText",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "brues",
-            "repo": "Vanilla_MikScrollingBattleText",
-            "name": "Vanilla_MikScrollingBattleText",
-            "url": "https://octowow.st/git/brues/Vanilla_MikScrollingBattleText",
-            "api": "https://octowow.st/git/api/v1/repos/brues/Vanilla_MikScrollingBattleText"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "Unspecified"
-        },
         {
           "originalUrl": "https://github.com/brues-code/Vanilla_MikScrollingBattleText",
           "folder": "Vanilla_MikScrollingBattleText--brues-code",

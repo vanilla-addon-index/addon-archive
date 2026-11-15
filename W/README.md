@@ -5,7 +5,7 @@
 | [WarriorHUD](WarriorHUD/) | Class | 1 | mirrored |
 | [WarriorTank](WarriorTank/) | Class | 1 | mirrored |
 | [WarriorTweaks](WarriorTweaks/) | Class | 1 | mirrored |
-| [WeakestAuras](WeakestAuras/) | Buffs & Debuffs | 2 | mirrored |
+| [WeakestAuras](WeakestAuras/) | Buffs & Debuffs | 1 | mirrored |
 | [WebDKPElysium](WebDKPElysium/) | Loot Distribution | 1 | mirrored |
 | [WhatsTraining_Turtle](WhatsTraining_Turtle/) | UI & Appearance | 2 | mirrored |
 | [WhisperBind](WhisperBind/) | Chat & Social | 1 | mirrored |

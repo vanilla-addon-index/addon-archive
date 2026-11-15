@@ -3,7 +3,7 @@
 | Addon | Kind | Components | Status |
 |---|---|---:|---|
 | [HatTrick](HatTrick/) | UI & Appearance | 1 | mirrored |
-| [HealBotBlue](HealBotBlue/) | Raid & Party | 2 | mirrored |
+| [HealBotBlue](HealBotBlue/) | Raid & Party | 1 | mirrored |
 | [HealComm](HealComm/) | Raid & Party | 2 | mirrored |
 | [HealerProtection](HealerProtection/) | Raid & Party | 1 | mirrored |
 | [HendriShift](HendriShift/) | Class | 1 | mirrored |

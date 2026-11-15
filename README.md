@@ -124,7 +124,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [CastTimer](C/CastTimer/) | Combat | 1 | mirrored |
 | [CatDruidDPS](C/CatDruidDPS/) | Class | 1 | mirrored |
 | [Caterer](C/Caterer/) | Miscellaneous | 1 | mirrored |
-| [CawDPSMeter](C/CawDPSMeter/) | Combat | 2 | mirrored |
+| [CawDPSMeter](C/CawDPSMeter/) | Combat | 1 | mirrored |
 | [CCWatch](C/CCWatch/) | Combat | 1 | mirrored |
 | [CDFrames](C/CDFrames/) | Combat | 1 | mirrored |
 | [CensusPlusTurtle](C/CensusPlusTurtle/) | Miscellaneous | 1 | mirrored |
@@ -171,7 +171,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [EzPoison-turtle](E/EzPoison-turtle/) | Class | 1 | mirrored |
 | [FastBinding](F/FastBinding/) | Action Bars | 1 | mirrored |
 | [FastTOT](F/FastTOT/) | Unit Frames | 1 | mirrored |
-| [FBHealBox](F/FBHealBox/) | Raid & Party | 2 | mirrored |
+| [FBHealBox](F/FBHealBox/) | Raid & Party | 1 | mirrored |
 | [FFXIVCrossHotbar](F/FFXIVCrossHotbar/) | UI & Appearance | 1 | mirrored |
 | [FishingVolume](F/FishingVolume/) | Professions | 1 | mirrored |
 | [Fizzle](F/Fizzle/) | UI & Appearance | 1 | mirrored |
@@ -196,7 +196,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [GuideCreator](G/GuideCreator/) | Quests & Leveling | 1 | mirrored |
 | [GuildAlts](G/GuildAlts/) | Chat & Social | 1 | mirrored |
 | [HatTrick](H/HatTrick/) | UI & Appearance | 1 | mirrored |
-| [HealBotBlue](H/HealBotBlue/) | Raid & Party | 2 | mirrored |
+| [HealBotBlue](H/HealBotBlue/) | Raid & Party | 1 | mirrored |
 | [HealComm](H/HealComm/) | Raid & Party | 2 | mirrored |
 | [HealerProtection](H/HealerProtection/) | Raid & Party | 1 | mirrored |
 | [HendriShift](H/HendriShift/) | Class | 1 | mirrored |
@@ -250,7 +250,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [Overhead](O/Overhead/) | Unit Frames | 1 | mirrored |
 | [PaladinSalvaRemover](P/PaladinSalvaRemover/) | Class | 1 | mirrored |
 | [pfQuest](P/pfQuest/) | Quests & Leveling | 2 | mirrored |
-| [pfUI](P/pfUI/) | UI & Appearance | 5 | mirrored |
+| [pfUI](P/pfUI/) | UI & Appearance | 4 | mirrored |
 | [PizzaWorldBuffs](P/PizzaWorldBuffs/) | Buffs & Debuffs | 2 | mirrored |
 | [PriestBiS](P/PriestBiS/) | Class | 1 | mirrored |
 | [ProcDoc](P/ProcDoc/) | Combat | 1 | mirrored |
@@ -644,7 +644,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [WarriorHUD](W/WarriorHUD/) | Class | 1 | mirrored |
 | [WarriorTank](W/WarriorTank/) | Class | 1 | mirrored |
 | [WarriorTweaks](W/WarriorTweaks/) | Class | 1 | mirrored |
-| [WeakestAuras](W/WeakestAuras/) | Buffs & Debuffs | 2 | mirrored |
+| [WeakestAuras](W/WeakestAuras/) | Buffs & Debuffs | 1 | mirrored |
 | [WebDKPElysium](W/WebDKPElysium/) | Loot Distribution | 1 | mirrored |
 | [WhatsTraining_Turtle](W/WhatsTraining_Turtle/) | UI & Appearance | 2 | mirrored |
 | [WhisperBind](W/WhisperBind/) | Chat & Social | 1 | mirrored |
@@ -746,7 +746,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [EMMonkeyBuddy](E/EMMonkeyBuddy/) | Miscellaneous | 1 | mirrored |
 | [EQL3](E/EQL3/) | UI & Appearance | 1 | mirrored |
 | [EquipColor](E/EquipColor/) | Bags & Inventory | 1 | mirrored |
-| [EquipCompareAdv](E/EquipCompareAdv/) | Tooltip | 2 | mirrored |
+| [EquipCompareAdv](E/EquipCompareAdv/) | Tooltip | 1 | mirrored |
 | [EVTCalendar](E/EVTCalendar/) | UI & Appearance | 1 | mirrored |
 | [EzDismount](E/EzDismount/) | Miscellaneous | 1 | mirrored |
 | [Feid](F/Feid/) | Combat | 1 | mirrored |
@@ -967,7 +967,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [KuiNameplates](K/KuiNameplates/) | Unit Frames | 2 | mirrored |
 | [LazyPig](L/LazyPig/) | Miscellaneous | 3 | mirrored |
 | [LunaUnitFrames](L/LunaUnitFrames/) | Unit Frames | 2 | mirrored |
-| [MikScrollingBattleText(MSBT)](M/MikScrollingBattleText(MSBT)/) | Combat | 5 | mirrored |
+| [MikScrollingBattleText(MSBT)](M/MikScrollingBattleText(MSBT)/) | Combat | 4 | mirrored |
 | [MinimapButtonBag](M/MinimapButtonBag/) | Map & Minimap | 2 | mirrored |
 | [NotGrid](N/NotGrid/) | Unit Frames | 3 | mirrored |
 | [oRA2](O/oRA2/) | Raid & Party | 1 | mirrored |
