@@ -36,6 +36,20 @@ test('folder collisions and component URL shapes are explicit and traversal-safe
  const list=[...rows,{...rows[0],id:2,name:'perfboost'}];const r=reconcile({entries:[]},list,config);assert.notEqual(r.entries[0].folder.toLowerCase(),r.entries[1].folder.toLowerCase());
 });
 
+test('a reviewed mirror is skipped only while its exact source is listed on that addon', () => {
+ const source = 'https://github.com/akzkak/CombatLedger';
+ const mirror = 'https://octowow.st/git/lightblade/CombatLedger';
+ const settings = { ...config, knownMirrors: { [mirror]: source } };
+ const entry = { ...rows[0], versions: [{ url: mirror }, { url: source }] };
+ const urls = (versions, options = settings) => reconcile({ entries: [] }, [{ ...entry, versions }], options)
+  .entries[0].components.map(component => component.originalUrl);
+
+ assert.deepEqual(urls(entry.versions), [source]);
+ assert.deepEqual(urls([{ url: mirror }]), [mirror]);
+ assert.deepEqual(urls(entry.versions, { ...settings, excludedSources: { 1: [source] } }), [mirror]);
+ assert.deepEqual(urls([{ url: mirror }, { url: source + '/tree/main' }]), [mirror, source + '/tree/main']);
+});
+
 test('initial copy, no-op update, replaced binaries, tag changes and failure preservation',async t=>{
  const root=await fixture(t),r=reconcile({entries:[]},rows,config),e=r.entries[0],c=e.components[0],objects={};const {api,state}=provider();
  await syncComponent(root,e,c,config,objects,api);assert.equal(c.status,'mirrored');assert.equal(await verify(root,{entries:[{...e,components:[c]}]}),3);

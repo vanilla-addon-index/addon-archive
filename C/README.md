@@ -62,7 +62,7 @@
 | [CTUnitFrames](CTUnitFrames/) | Unit Frames | 1 | mirrored |
 | [CustomIcons](CustomIcons/) | UI & Appearance | 1 | mirrored |
 | [CombatAlert](CombatAlert/) | Combat | 1 | mirrored |
-| [CombatLedger](CombatLedger/) | Combat | 2 | mirrored |
+| [CombatLedger](CombatLedger/) | Combat | 1 | mirrored |
 | [CombatLoggingReminder](CombatLoggingReminder/) | Combat | 1 | mirrored |
 | [CombatPlates](CombatPlates/) | Unit Frames | 1 | mirrored |
 | [Cursive](Cursive/) | UI & Appearance | 3 | mirrored |
