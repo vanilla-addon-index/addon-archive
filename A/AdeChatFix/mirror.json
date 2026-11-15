@@ -1,0 +1,29 @@
+{
+  "upstream": "https://octowow.st/git/Ade/AdeChatFix",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Ade",
+    "repo": "AdeChatFix",
+    "name": "AdeChatFix",
+    "url": "https://octowow.st/git/Ade/AdeChatFix",
+    "api": "https://octowow.st/git/api/v1/repos/Ade/AdeChatFix"
+  },
+  "commit": "40261adec80ef8c73d21886986be7f48e180221c",
+  "sourceFiles": {
+    "AdeChatFix.lua": {
+      "sha256": "f452f8eef6dd2d6fbb4b21a50bacfb1dc07ced3903f8455e5f0e7b1030244e32",
+      "bytes": 999
+    },
+    "AdeChatFix.toc": {
+      "sha256": "5d28f322c631d62226a60f4d6e1dddf3a089de742dce80c72b28c42a6f397cea",
+      "bytes": 192
+    },
+    "README.md": {
+      "sha256": "38feef3d881e7cce94c9b0238c6bc5093b3d3712f7c722f32a687df91ba5ac71",
+      "bytes": 407
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

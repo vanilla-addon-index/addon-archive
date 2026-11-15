@@ -84,3 +84,4 @@
 | [AdeSPD](AdeSPD/) | Tooltip | 1 | mirrored |
 | [AdeTalentPlanner](AdeTalentPlanner/) | Miscellaneous | 1 | mirrored |
 | [AdeTalents](AdeTalents/) | Libraries | 1 | mirrored |
+| [AdeChatFix](AdeChatFix/) | Chat & Social | 1 | mirrored |

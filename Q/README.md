@@ -5,7 +5,7 @@
 | [QuestAnnouncer](QuestAnnouncer/) | Quests & Leveling | 1 | mirrored |
 | [QuestFrameFixer](QuestFrameFixer/) | Quests & Leveling | 1 | mirrored |
 | [QuestHaste](QuestHaste/) | Quests & Leveling | 1 | mirrored |
-| [Questie-Octo](Questie-Octo/) | Quests & Leveling | 2 | mirrored |
+| [Questie-Octo](Questie-Octo/) | Quests & Leveling | 3 | mirrored |
 | [QuestItem](QuestItem/) | Quests & Leveling | 1 | mirrored |
 | [Questline](Questline/) | Quests & Leveling | 1 | mirrored |
 | [QuestProgressShare](QuestProgressShare/) | Quests & Leveling | 1 | mirrored |

@@ -259,7 +259,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [QuestAnnouncer](Q/QuestAnnouncer/) | Quests & Leveling | 1 | mirrored |
 | [QuestFrameFixer](Q/QuestFrameFixer/) | Quests & Leveling | 1 | mirrored |
 | [QuestHaste](Q/QuestHaste/) | Quests & Leveling | 1 | mirrored |
-| [Questie-Octo](Q/Questie-Octo/) | Quests & Leveling | 2 | mirrored |
+| [Questie-Octo](Q/Questie-Octo/) | Quests & Leveling | 3 | mirrored |
 | [QuestItem](Q/QuestItem/) | Quests & Leveling | 1 | mirrored |
 | [Questline](Q/Questline/) | Quests & Leveling | 1 | mirrored |
 | [QuestProgressShare](Q/QuestProgressShare/) | Quests & Leveling | 1 | mirrored |
@@ -1055,5 +1055,6 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [OctoAI](O/OctoAI/) | Miscellaneous | 1 | mirrored |
 | [pfQuest-SmartArrow](P/pfQuest-SmartArrow/) | Map & Minimap | 1 | mirrored |
 | [GearRack](G/GearRack/) | Bags & Inventory | 1 | mirrored |
+| [AdeChatFix](A/AdeChatFix/) | Chat & Social | 1 | mirrored |
 
 This repository’s automation is MIT licensed. Mirrored source and release files retain their upstream license notices when provided.

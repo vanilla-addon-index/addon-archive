@@ -7541,6 +7541,23 @@
           "error": null,
           "active": true,
           "license": "MIT"
+        },
+        {
+          "originalUrl": "https://github.com/SandreaSub/Questie-Octo",
+          "folder": "Questie-Octo--SandreaSub",
+          "source": {
+            "kind": "repository",
+            "host": "github.com",
+            "owner": "SandreaSub",
+            "repo": "Questie-Octo",
+            "name": "Questie-Octo",
+            "url": "https://github.com/SandreaSub/Questie-Octo",
+            "api": "https://api.github.com/repos/SandreaSub/Questie-Octo"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "MIT"
         }
       ],
       "active": true,
@@ -30765,6 +30782,33 @@
       "active": true,
       "kind": "Bags & Inventory",
       "site": "https://vanilla-addon-index.github.io/addon/gearrack"
+    },
+    {
+      "id": 1113,
+      "name": "AdeChatFix",
+      "folder": "A/AdeChatFix",
+      "components": [
+        {
+          "originalUrl": "https://octowow.st/git/Ade/AdeChatFix",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "Ade",
+            "repo": "AdeChatFix",
+            "name": "AdeChatFix",
+            "url": "https://octowow.st/git/Ade/AdeChatFix",
+            "api": "https://octowow.st/git/api/v1/repos/Ade/AdeChatFix"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        }
+      ],
+      "active": true,
+      "kind": "Chat & Social",
+      "site": "https://vanilla-addon-index.github.io/addon/adechatfix"
     }
   ],
   "archiveTitle": "Addon archive",

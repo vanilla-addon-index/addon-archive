@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: AdeChatFix
+## Notes: Fixes "32" instead of a space in Russian chat strings (Сказать:32, говорит:32)
+## Author: Ade
+## Version: 1.0.0
+AdeChatFix.lua
