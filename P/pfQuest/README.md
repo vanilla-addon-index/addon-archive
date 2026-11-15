@@ -4,7 +4,6 @@
 
 | Component | Upstream | Status |
 |---|---|---|
-| pfQuest | https://octowow.st/git/lightblade/pfQuest | mirrored |
 | pfQuest--rivi-s | https://github.com/rivi-s/pfQuest | mirrored |
 | pfQuest--The-Kludge-Bureau | https://github.com/The-Kludge-Bureau/pfQuest | mirrored |
 

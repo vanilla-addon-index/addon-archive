@@ -12,6 +12,18 @@
   },
   "releaseScope": "latest",
   "knownMirrors": {
-    "https://octowow.st/git/lightblade/CombatLedger": "https://github.com/akzkak/CombatLedger"
+    "https://octowow.st/git/lightblade/CombatLedger": "https://github.com/akzkak/CombatLedger",
+    "https://octowow.st/git/Fayz/AutoSpam": "https://github.com/TheRealFayz/AutoSpam",
+    "https://octowow.st/git/Fayz/TimeToDrink": "https://github.com/TheRealFayz/TimeToDrink",
+    "https://octowow.st/git/Fayz/TotemNesia": "https://github.com/TheRealFayz/TotemNesia",
+    "https://octowow.st/git/Markuru/RecipeRadar": "https://github.com/MarkuruThunderhoof/RecipeRadar",
+    "https://octowow.st/git/Mr_Rosh/pfUI-CustomMedia": "https://github.com/mr-rosh/pfUI-CustomMedia",
+    "https://octowow.st/git/lightblade/CleanRolls": "https://github.com/lightbladeninja/CleanRolls",
+    "https://octowow.st/git/lightblade/InstanceJournal": "https://github.com/Arthur-Helias/InstanceJournal",
+    "https://octowow.st/git/lightblade/MusicExpanded": "https://github.com/lightbladeninja/MusicExpanded",
+    "https://octowow.st/git/lightblade/pfQuest": "https://github.com/rivi-s/pfQuest",
+    "https://octowow.st/git/lightblade/pfQuest-HDB-Install": "https://github.com/rivi-s/pfQuest-HDB-Install",
+    "https://octowow.st/git/lightblade/pfQuest-turtle": "https://github.com/rivi-s/pfQuest-turtle",
+    "https://octowow.st/git/lightblade/pfQuest-turtle-HDB-Install": "https://github.com/rivi-s/pfQuest-turtle-HDB-Install"
   }
 }

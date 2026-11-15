@@ -8,7 +8,7 @@
 | [RaidRollBuddy](RaidRollBuddy/) | Loot Distribution | 1 | mirrored |
 | [RaidSummonPlus](RaidSummonPlus/) | Class | 1 | mirrored |
 | [RallyHelper](RallyHelper/) | Buffs & Debuffs | 1 | mirrored |
-| [RecipeRadar](RecipeRadar/) | Professions | 2 | mirrored |
+| [RecipeRadar](RecipeRadar/) | Professions | 1 | mirrored |
 | [RelationshipsAchievements](RelationshipsAchievements/) | Quests & Leveling | 1 | mirrored |
 | [RelationshipsAttune](RelationshipsAttune/) | Quests & Leveling | 1 | mirrored |
 | [RelationshipsAuctionPrice](RelationshipsAuctionPrice/) | Auction & Economy | 1 | mirrored |

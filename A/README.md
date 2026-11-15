@@ -77,7 +77,7 @@
 | [AtlasLoot](AtlasLoot/) | Raid & Party | 2 | mirrored |
 | [AtlasQuest](AtlasQuest/) | Raid & Party | 1 | mirrored |
 | [AnySCT](AnySCT/) | Combat | 1 | mirrored |
-| [AutoSpam](AutoSpam/) | Chat & Social | 2 | mirrored |
+| [AutoSpam](AutoSpam/) | Chat & Social | 1 | mirrored |
 | [ArmorDRCompare-Octo](ArmorDRCompare-Octo/) | Unit Frames | 1 | mirrored |
 | [AshenBuilds](AshenBuilds/) | Miscellaneous | 1 | mirrored |
 | [AdeGear](AdeGear/) | Miscellaneous | 1 | mirrored |

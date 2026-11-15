@@ -22,7 +22,7 @@
 | [Immersion](Immersion/) | UI & Appearance | 1 | mirrored |
 | [InnerFireWatch](InnerFireWatch/) | Buffs & Debuffs | 1 | mirrored |
 | [Inspect](Inspect/) | Libraries | 1 | mirrored |
-| [InstanceJournal](InstanceJournal/) | UI & Appearance | 2 | mirrored |
+| [InstanceJournal](InstanceJournal/) | UI & Appearance | 1 | mirrored |
 | [InstanceTimers](InstanceTimers/) | Miscellaneous | 1 | mirrored |
 | [IntelliSense](IntelliSense/) | Chat & Social | 1 | mirrored |
 | [Interruptor](Interruptor/) | Chat & Social | 1 | mirrored |

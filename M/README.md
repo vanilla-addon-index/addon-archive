@@ -58,7 +58,7 @@
 | [MoveAnything](MoveAnything/) | Miscellaneous | 1 | mirrored |
 | [MrPlow](MrPlow/) | Bags & Inventory | 1 | mirrored |
 | [Mule](Mule/) | Bags & Inventory | 1 | mirrored |
-| [MusicExpanded](MusicExpanded/) | Miscellaneous | 2 | mirrored |
+| [MusicExpanded](MusicExpanded/) | Miscellaneous | 1 | mirrored |
 | [MuteCities](MuteCities/) | Miscellaneous | 1 | mirrored |
 | [MikScrollingBattleText(MSBT)](MikScrollingBattleText(MSBT)/) | Combat | 5 | mirrored |
 | [MinimapButtonBag](MinimapButtonBag/) | Map & Minimap | 2 | mirrored |
