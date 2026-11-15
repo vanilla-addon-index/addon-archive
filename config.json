@@ -10,5 +10,8 @@
     "discover": 250,
     "update": 200
   },
-  "releaseScope": "latest"
+  "releaseScope": "latest",
+  "knownMirrors": {
+    "https://octowow.st/git/lightblade/CombatLedger": "https://github.com/akzkak/CombatLedger"
+  }
 }

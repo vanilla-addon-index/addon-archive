@@ -668,7 +668,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [Zorlen](Z/Zorlen/) | Libraries | 1 | mirrored |
 | [zUI](Z/zUI/) | UI & Appearance | 1 | mirrored |
 | [CombatAlert](C/CombatAlert/) | Combat | 1 | mirrored |
-| [CombatLedger](C/CombatLedger/) | Combat | 2 | mirrored |
+| [CombatLedger](C/CombatLedger/) | Combat | 1 | mirrored |
 | [CombatLoggingReminder](C/CombatLoggingReminder/) | Combat | 1 | mirrored |
 | [CombatPlates](C/CombatPlates/) | Unit Frames | 1 | mirrored |
 | [Cursive](C/Cursive/) | UI & Appearance | 3 | mirrored |

@@ -28,7 +28,13 @@ export function reconcile(registry,rows,config){
   e.name=entry.name;e.active=true;e.kind=entry.category;e.site=`https://vanilla-addon-index.github.io/${config.listingRoute??'addon'}/${entry.slug}`;
   const excluded=new Set(config.excludedSources?.[String(entry.id)]??[]);
   e.components=e.components.filter(c=>!excluded.has(c.originalUrl));
-  const urls=[...new Set([...entry.versions.map(v=>v.url),...(config.extraSources?.[String(entry.id)]??[])])].filter(url=>!excluded.has(url));
+  const publishedUrls = new Set(entry.versions.map(version => version.url));
+  const knownMirrors = config.knownMirrors ?? {};
+  const urls = [...new Set([...publishedUrls, ...(config.extraSources?.[String(entry.id)] ?? [])])].filter(url => {
+   const source = knownMirrors[url];
+   const duplicate = source && source !== url && publishedUrls.has(source) && !excluded.has(source) && !knownMirrors[source];
+   return !excluded.has(url) && !duplicate;
+  });
   const names=new Set(['source','releases','readme.md','mirror.json','sha256sums',...e.components.map(c=>c.folder.toLowerCase())]);
   for(const url of urls){
    let c=e.components.find(c=>c.originalUrl===url);

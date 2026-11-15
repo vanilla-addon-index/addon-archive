@@ -19280,23 +19280,6 @@
           "error": null,
           "active": true,
           "license": "Unspecified"
-        },
-        {
-          "originalUrl": "https://octowow.st/git/lightblade/CombatLedger",
-          "folder": "CombatLedger--lightblade",
-          "source": {
-            "kind": "repository",
-            "host": "octowow.st",
-            "owner": "lightblade",
-            "repo": "CombatLedger",
-            "name": "CombatLedger",
-            "url": "https://octowow.st/git/lightblade/CombatLedger",
-            "api": "https://octowow.st/git/api/v1/repos/lightblade/CombatLedger"
-          },
-          "status": "mirrored",
-          "error": null,
-          "active": true,
-          "license": "Unspecified"
         }
       ],
       "active": true,
