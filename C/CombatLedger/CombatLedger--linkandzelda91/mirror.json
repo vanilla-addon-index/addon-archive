@@ -1,0 +1,141 @@
+{
+  "upstream": "https://github.com/linkandzelda91/CombatLedger",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "linkandzelda91",
+    "repo": "CombatLedger",
+    "name": "CombatLedger",
+    "url": "https://github.com/linkandzelda91/CombatLedger",
+    "api": "https://api.github.com/repos/linkandzelda91/CombatLedger"
+  },
+  "commit": "8b58e8249db0245f985db9c7975513d3ac73dc21",
+  "sourceFiles": {
+    ".gitignore.upstream": {
+      "sha256": "2bdfdb216230559f36faf46907142b8afd478401150f810e1ddaf9a4fdcc656c",
+      "bytes": 20
+    },
+    "Aggregator.lua": {
+      "sha256": "35caca0f4d6a5d0c52d1b318bbee4e91316fd4206fdced95e87f7a9d420c04d2",
+      "bytes": 44849
+    },
+    "CombatLedger.toc": {
+      "sha256": "0004fb9f3d12cbedc0836cd0b2b942d66e62824b6419fe0a212f5ecaa2a443f8",
+      "bytes": 675
+    },
+    "Core.lua": {
+      "sha256": "9253883a9094e628360955ab47f421a725743bcd05374351ee8f5bcd7d489a27",
+      "bytes": 43728
+    },
+    "docs/ClassicAPI.md": {
+      "sha256": "61b1b3e7fad114af5aef9605e44cb8ac579e9b388bb825858bc4b906cddb7b3d",
+      "bytes": 2311
+    },
+    "docs/DEVELOPMENT.md": {
+      "sha256": "59323fc4277fe302cec1fee13a46d5546f169c169a5d2661da271d18923e2208",
+      "bytes": 2360
+    },
+    "docs/Nampower.md": {
+      "sha256": "c25a510cbdbb161ac9232dbad0e7da9a43fd5ad46066a95cc59158295753ab28",
+      "bytes": 2364
+    },
+    "docs/SuperWoW.md": {
+      "sha256": "31662c511214a0e4f9f0cb2261999e76f82a9fb13846fbf2cad8f5b03a8f1c35",
+      "bytes": 2255
+    },
+    "Events.lua": {
+      "sha256": "40bbe7a352f738d100b15fe7cb73599b0f22110b2086f056d6c54844fdf5706f",
+      "bytes": 28107
+    },
+    "fonts/Expressway.ttf": {
+      "sha256": "06a2106170c2b5b736955cc749ed755f3757d103230645158f0bd5b5b91c386b",
+      "bytes": 99820
+    },
+    "GuidCache.lua": {
+      "sha256": "41e68c3d133707441c5e004acbcf322276b795c65835e87773597bb3c01d18ce",
+      "bytes": 5700
+    },
+    "History.lua": {
+      "sha256": "dad4e9e10526f5969fb58e76833a803a3369f8c6668f4c6b43dd5a409b473ea4",
+      "bytes": 4759
+    },
+    "img/bar_elvui.tga": {
+      "sha256": "c95d937cd0a1ce65c71602d412c8449532ef4e6bfcb338adb346d01fa0ac0a89",
+      "bytes": 4140
+    },
+    "img/bar_gradient.tga": {
+      "sha256": "973ee17cc23ed95908122d551f5acb303379f28421bfd5a7c45332b803421e21",
+      "bytes": 2781
+    },
+    "img/bar_smooth.tga": {
+      "sha256": "533e051209baf04339c37f342a8d272fdaa69cd8722e72cb0e727c9b94d5330b",
+      "bytes": 4140
+    },
+    "img/bar_striped.tga": {
+      "sha256": "5525ba5df8260b24ad3559cef8d85307191bfc9f72910d155ac4821f7104bad8",
+      "bytes": 4140
+    },
+    "img/bar_tukui.tga": {
+      "sha256": "c191039609ab7fd49fabf2d9f79e2ac03e068107f421d32a5d281d18094d49e0",
+      "bytes": 3506
+    },
+    "img/bar.tga": {
+      "sha256": "be38c30d46b0872762f6b8b785004a7b641170e0036100765c4643d6945bccaa",
+      "bytes": 247
+    },
+    "img/classicons.tga": {
+      "sha256": "210f3f42439c196deb9a37c9cedbb66f577873e7d4923fbafc971f2530a54093",
+      "bytes": 72005
+    },
+    "img/glow2.tga": {
+      "sha256": "3d80b172ee7ee007834edbc5329543a8982a18c67a103f54fc64317691bc78fc",
+      "bytes": 5366
+    },
+    "README.md": {
+      "sha256": "3b95abf1970e6da7da085b8e40fb506a04436db8d7a9afef1e03a70082270d2f",
+      "bytes": 6603
+    },
+    "screenshots/breakdown.png": {
+      "sha256": "442b317a06f1b3d58577e10043c2dadb472c752876f7d918b0e0bea15d28a040",
+      "bytes": 598254
+    },
+    "screenshots/main.png": {
+      "sha256": "b3184ef948170d4d08412a3d89fdc24b8e60dd486ea14d7a3e077332beb0841f",
+      "bytes": 307541
+    },
+    "Threat.lua": {
+      "sha256": "898897d39c891d2495f3cc1793ea5e40500defe62c343e81af31faa38f9009d4",
+      "bytes": 12748
+    },
+    "UI_BreakdownWindow.lua": {
+      "sha256": "bb915782631a003a3ef43b1093285c7f0cbac55f7ec8db08ba65cab940944e64",
+      "bytes": 44070
+    },
+    "UI_DeathRecap.lua": {
+      "sha256": "1915d30158b6e3d04c598374bbfd13565882ae715753d343fd5f0a7b7e6e9752",
+      "bytes": 8671
+    },
+    "UI_EncounterReport.lua": {
+      "sha256": "512c61e28e3b5e2abc39b6de0216e16e911d999c6ae364510aab8dbe86da16b8",
+      "bytes": 16624
+    },
+    "UI_HistoryWindow.lua": {
+      "sha256": "b346eb9267143e524882362ade832a4dd969bc9634af9b2376d02c8f49b74b7b",
+      "bytes": 13187
+    },
+    "UI_MainWindow.lua": {
+      "sha256": "c5692fbccedb88f9d031a0ecba61e954217974134267d80ef6db97b342ff9b03",
+      "bytes": 76821
+    },
+    "UI_Options.lua": {
+      "sha256": "67592738a66898d8347c49bc5b95c4913e389a37d083dde6e8780cd0411923a2",
+      "bytes": 47092
+    },
+    "UI_PfuiDock.lua": {
+      "sha256": "38fe251c2c7a8aa077a64350ac28b19b8388d6c2f0eb3113b0b871318842bef6",
+      "bytes": 5782
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -1,0 +1,320 @@
+"""Suite: combat - combat feed, parser routing, aggregation totals, roster."""
+
+from harness import Context
+
+
+def run(ctx: Context):
+    skada = ctx.skada
+    lua = ctx.lua
+    parser = skada.Parser
+
+    ctx.set_combat(True)
+    skada.Data.OnCombatEnter(skada.Data, 100)
+    assert skada.UI.GetPrimary(skada.UI).db.segment == "current"
+
+    parser.OnCombatMessage(parser, "CHAT_MSG_COMBAT_SELF_HITS", "You hit Boar for 100.")
+    parser.OnCombatMessage(parser, "CHAT_MSG_SPELL_SELF_DAMAGE", "Your Fireball crits Boar for 250 Fire damage.")
+    parser.OnCombatMessage(parser, "CHAT_MSG_COMBAT_PARTY_HITS", "Wolf hits Boar for 40.")
+    lua.globals().TestSetUnitHealth("player", 600, 1000)
+    parser.OnCombatMessage(parser, "CHAT_MSG_SPELL_PARTY_BUFF", "Bob's Greater Heal heals Alice for 300.")
+    lua.globals().TestSetUnitHealth("player", 900, 1000)
+    parser.OnCombatMessage(parser, "CHAT_MSG_SPELL_PARTY_BUFF", "Bob's Greater Heal critically heals Alice for 600.")
+    parser.OnCombatMessage(parser, "CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_HITS", "Boar hits Alice for 50.")
+    parser.OnCombatMessage(parser, "CHAT_MSG_COMBAT_FRIENDLY_DEATH", "Alice dies.")
+    parser.OnCombatMessage(parser, "CHAT_MSG_SPELL_SELF_DAMAGE", "You interrupt Boar's Heal.")
+
+    ctx.run('''
+      local captured = {}
+      Skada.Parser:AddPattern("None", { "TEST_EVENT" }, "%2$s <- %1$s for %3$d.", function(_, a, b, c)
+        captured[1], captured[2], captured[3] = a, b, c
+      end)
+      Skada.Parser:OnCombatMessage("TEST_EVENT", "Target <- Source for 77.")
+      assert(captured[1] == "Source" and captured[2] == "Target" and captured[3] == "77")
+      assert(not Skada.Parser.routes.TEST_EVENT[1].directCaptures,
+        "positional combat format was incorrectly marked as direct captures")
+
+      local mixed = {}
+      Skada.Parser:AddPattern("None", { "TEST_MIXED_EVENT" }, "%2$s <- %s for %3$d.", function(_, a, b, c)
+        mixed[1], mixed[2], mixed[3] = a, b, c
+      end)
+      Skada.Parser:OnCombatMessage("TEST_MIXED_EVENT", "Target <- Source for 77.")
+      assert(mixed[1] == "Source" and mixed[2] == "Target" and mixed[3] == "77",
+        "mixed explicit and automatic combat placeholders were assigned to the wrong slots")
+      assert(not Skada.Parser.routes.TEST_MIXED_EVENT[1].directCaptures,
+        "sparse mixed combat placeholders incorrectly took the direct-capture path")
+
+      local originalMatch = Skada.Parser.Match
+      local matchCount = 0
+      Skada.Parser.Match = function(self, entry, message)
+        matchCount = matchCount + 1
+        return originalMatch(self, entry, message)
+      end
+      Skada.Parser:AddPattern("None", { "TEST_CACHED_ROUTE" }, "First %s.", function() end)
+      Skada.Parser:AddPattern("None", { "TEST_CACHED_ROUTE" }, "Second %s.", function() end)
+      Skada.Parser:AddPattern("None", { "TEST_CACHED_ROUTE" }, "Third %s.", function() end)
+      assert(Skada.Parser.routes.TEST_CACHED_ROUTE[3].directCaptures,
+        "natural-order combat format missed the direct capture fast path")
+      Skada.Parser:OnCombatMessage("TEST_CACHED_ROUTE", "Third value.")
+      assert(matchCount == 3)
+      matchCount = 0
+      Skada.Parser:OnCombatMessage("TEST_CACHED_ROUTE", "Third value.")
+      assert(matchCount == 1, "repeated parser route did not use its cached format")
+      Skada.Parser.Match = originalMatch
+
+      local Tracking = Skada.Tracking
+      local originalUnitExists = UnitExists
+      UnitExists = function(unit)
+        assert(unit ~= "", "empty target was passed to UnitExists")
+        return originalUnitExists(unit)
+      end
+      Tracking:OnSpellSent("player", "", "cast-self", 1459, "Arcane Intellect")
+      assert(Tracking.sentCasts["cast-self"])
+      Tracking:OnSpellSucceeded("player", "cast-self", 1459, "Arcane Intellect")
+      UnitExists = originalUnitExists
+
+      Tracking:OnSpellSent("player", "target", "cast-dispel", 527, "Dispel Magic")
+      Tracking:OnSpellSucceeded("player", "cast-dispel", 527, "Dispel Magic")
+      Skada.Parser:OnCombatMessage("CHAT_MSG_SPELL_BREAK_AURA", "Boar's Renew is removed.")
+    ''')
+
+    current = skada.Data.current
+    alice = current.actors["Alice"]
+    bob = current.actors["Bob"]
+
+    assert current.damage == 390, current.damage
+    assert alice.damage == 390, alice.damage
+    assert alice.damageSpells["Fireball"].critical == 1
+    assert alice.damageSpells["[Wolf] Auto Attack"].amount == 40
+    assert bob.healing == 900, bob.healing
+    assert bob.effectiveHealing == 400, bob.effectiveHealing
+    assert bob.overhealing == 500, bob.overhealing
+    assert bob.healingSpells["Greater Heal"].amount == 900
+    assert bob.healingSpells["Greater Heal"].effectiveHealing == 400
+    assert bob.healingSpells["Greater Heal"].overhealing == 500
+    assert bob.healingSpells["Greater Heal"].count == 2
+    assert bob.healingSpells["Greater Heal"].critical == 1
+    assert bob.healingSpells["Greater Heal critically"] is None
+
+    misses_before = parser.GetMissCount(parser)
+    parser.OnCombatMessage(parser, "CHAT_MSG_COMBAT_SELF_HITS", "unrecognized combat text")
+    assert parser.GetMissCount(parser) == misses_before + 1
+    lua.globals().SlashCmdList.SKADA("status")
+    ctx.run('''
+      -- Skada draws its entry tooltips on its own GameTooltip frame
+      -- (Common.GetTooltip), never on the Blizzard-shared one. Other UIs
+      -- drive the shared tooltip to fetch item data and break if we own or
+      -- hide it. Capture through the private frame; if the code regressed to
+      -- the shared GameTooltip, these captures would go dark and fail.
+      local tooltip = Skada.Common.GetTooltip()
+      assert(tooltip ~= GameTooltip)
+      local savedAddDoubleLine = tooltip.AddDoubleLine
+      tooltip.captured = {}
+      tooltip.AddDoubleLine = function(self, label, value)
+        self.captured[label] = value
+      end
+      Skada.UIPresenter:ShowEntryTooltip({ entry = {
+        label = "Greater Heal",
+        spell = Skada.Data.current.actors.Bob.healingSpells["Greater Heal"],
+      } })
+      assert(tooltip.captured.Critical == "1 (50.0%)")
+      assert(tooltip.captured["Effective (estimated)"] == "400")
+      assert(tooltip.captured["Overheal (estimated)"] == "500 (55.6%)")
+      tooltip.captured = {}
+      Skada.UIPresenter:ShowEntryTooltip({ entry = {
+        label = "Bob",
+        actor = Skada.Data.current.actors.Bob,
+      } })
+      assert(tooltip.captured["Effective healing (estimated)"] == "400")
+      assert(tooltip.captured["Overhealing (estimated)"] == "500")
+      tooltip.AddDoubleLine = savedAddDoubleLine
+      local healingMode = Skada.Modes:Get("healing")
+      assert(Skada.Modes:GetActorValue(healingMode, Skada.Data.current.actors.Bob) == 400)
+      assert(Skada.Modes:GetActorText(healingMode, Skada.Data.current.actors.Bob, Skada.Data.current)
+        == "400 (400, 100.0%)")
+      assert(Skada.Modes:GetDetailText(healingMode,
+        Skada.Data.current.actors.Bob.healingSpells["Greater Heal"],
+        Skada.Data.current.actors.Bob, Skada.Data.current) == "400 (100.0%)")
+      assert(Skada.Modes:GetSetTitle(healingMode, Skada.Data.current) == "400")
+      assert(Skada.Modes:GetActorValue(Skada.Modes:Get("overhealing"), Skada.Data.current.actors.Bob) == 500)
+
+      local meter = Skada.UI:GetPrimary()
+      meter.db.mode, meter.db.segment, meter.view, meter.detailActor = "healing", "current", "mode", nil
+      meter:Refresh()
+      assert(meter.display[1].label == "Bob" and meter.display[1].value == 400)
+      -- the bar scale spans effective + overheal so the overheal continuation fits
+      assert(meter.display[1].extra == 500 and meter.paintMaximum == 900, tostring(meter.paintMaximum))
+      assert(meter.rows[1].right.textValue == "400 (400, 100.0%)")
+      assert(not rawget(meter.rows[1], "totalBar"), "standard healing created an overheal bar")
+      meter.db.mode = "damage"
+      meter:Refresh()
+    ''')
+    assert alice.damageTaken == 50, alice.damageTaken
+    assert alice.deaths == 1, alice.deaths
+    assert alice.interrupts == 1, alice.interrupts
+    assert alice.dispels == 1, alice.dispels
+    assert skada.Data.total.damage == current.damage
+    assert alice.threat is None
+
+    ctx.run('''
+      Skada.db.profile.trackAll = true
+      assert(Skada.Data:RecordDamage("Charlie", "Boar", 20, "Auto Attack", nil,
+        "Physical", false, GetTime()))
+      assert(Skada.Data.current.actors.Charlie.damage == 20)
+      assert(not Skada.Data.identitiesByName.Charlie.interesting)
+
+      Skada.db.profile.trackAll = false
+      assert(not Skada.Data:RecordDamage("Charlie", "Boar", 20, "Auto Attack", nil,
+        "Physical", false, GetTime()))
+      assert(Skada.Data.current.actors.Charlie.damage == 20)
+
+      local groupedCount = GetNumPartyMembers
+      GetNumPartyMembers = function() return 0 end
+      Skada.Data:RebuildRoster()
+      assert(not Skada.Data.identitiesByName.Bob)
+
+      TestSetTarget("Derek", "0xD")
+      Skada.Data:ObserveToken("target")
+      assert(Skada.Data.identitiesByName.Derek)
+      assert(not Skada.Data.identitiesByName.Derek.interesting)
+      assert(not Skada.Data:RecordDamage("Imp (Derek)", "Boar", 25, "Firebolt", nil,
+        "Fire", false, GetTime()))
+      assert(not Skada.Data.current.actors.Derek)
+
+      Skada.Data:AddObservedUnit("target", true)
+      assert(Skada.Data.identitiesByName["Imp (Derek)"] == nil,
+        "an owner becoming interesting did not invalidate cached source misses")
+      assert(Skada.Data:RecordDamage("Imp (Derek)", "Boar", 25, "Firebolt", nil,
+        "Fire", false, GetTime()))
+      assert(Skada.Data.current.actors.Derek.damageSpells["[Imp (Derek)] Firebolt"],
+        "owner-derived source remained unresolved after its owner became interesting")
+
+      assert(not Skada.Data:RecordDamage("Erin", "Boar", 30, "Auto Attack", nil,
+        "Physical", false, GetTime()))
+      assert(not Skada.Data.current.actors.Erin)
+      local ignoredIdentity = Skada.Data.identitiesByName.Erin
+      assert(ignoredIdentity == false,
+        "ignored combat sources should retain an allocation-free negative identity cache")
+      assert(not Skada.Data:RecordDamage("Erin", "Boar", 30, "Auto Attack", nil,
+        "Physical", false, GetTime()))
+      assert(Skada.Data.identitiesByName.Erin == false,
+        "ignored combat source identity was rebuilt on a repeated event")
+
+      assert(Skada.Common.Trim("Alice") == "Alice")
+      assert(Skada.Common.Trim(string.char(9) .. " Alice " .. string.char(13) .. string.char(10)) == "Alice")
+
+      GetNumPartyMembers = groupedCount
+      TestSetTarget("Boar", "0xC")
+      Skada.Data:RebuildRoster()
+    ''')
+
+    ctx.run('''
+      Skada.Data:RecordDamage("Wolf (Alice)", "Boar", 15, "Bite", nil, "Physical", false, GetTime())
+      local pet = Skada.Data.current.actors["Alice"]
+      assert(pet and pet.damageSpells["[Wolf (Alice)] Bite"], "pet damage not merged to owner")
+    ''')
+
+    ctx.run('''
+      -- RebuildRoster wipes groupTokens and refills it: under the client's
+      -- Lua 5.0 size cache, a refill that bypasses table.insert pins
+      -- table.getn at 0 and collapses the roster to one rewritten token.
+      Skada.Data:RebuildRoster()
+      Skada.Data:RebuildRoster()
+      assert(table.getn(Skada.Data.groupTokens) == 3,
+        "roster refill did not maintain the client's cached array length: " ..
+        tostring(table.getn(Skada.Data.groupTokens)))
+      assert(Skada.Data.groupTokens[1] == "player" and
+        Skada.Data.groupTokens[2] == "pet" and
+        Skada.Data.groupTokens[3] == "party1", "roster refill lost group tokens")
+    ''')
+    ctx.run('''
+      -- The 1.12 client prints a blank name for a caster it cannot see, so
+      -- a stranger's summon reads "'s Inferno Effect hits Boar for 255.".
+      -- That is not the player, and the empty name must not fall back to it.
+      local alice = Skada.Data.current.actors.Alice
+      local damageBefore = alice.damage
+      Skada.Parser:OnCombatMessage("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE",
+        "'s Inferno Effect hits Boar for 255.")
+      Skada.Parser:OnCombatMessage("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE",
+        "'s Inferno Effect hits Boar for 255 Fire damage.")
+      assert(alice.damage == damageBefore,
+        "a blank caster name was credited to the player")
+      assert(alice.damageSpells["Inferno Effect"] == nil,
+        "a blank caster's spell was added to the player's spell list")
+      -- The empty capture must not leak further either: no blank segment
+      -- name, and no "Killed by  (Inferno Effect)" recap for the target.
+      Skada.Parser:OnCombatMessage("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE",
+        "'s Inferno Effect was resisted by Boar.")
+      assert(Skada.Data.current.name ~= "", "a blank caster name became the segment name")
+      local lastHit = Skada.Tracking:GetLastDamageInfo("Boar")
+      assert(not lastHit or lastHit.sourceName ~= "",
+        "a blank caster name was noted as the last damage source")
+      -- A blank-caster hit on a tracked target is the one case where the
+      -- death recap could lose the spell: the witness keeps the blank source
+      -- beside it, and the recap keeps the spell instead of collapsing to a
+      -- bare "Unknown cause". The recap is written into a throwaway set so
+      -- the fight data later suites read stays untouched.
+      Skada.Tracking:NoteDamage(nil, "Alice", "Inferno Effect", GetTime())
+      local trackedHit = Skada.Tracking:GetLastDamageInfo("Alice")
+      assert(trackedHit and trackedHit.sourceName == nil and trackedHit.spellName == "Inferno Effect",
+        "a blank-caster hit on a tracked target lost its spell")
+      local recapSet = Skada.DataAggregator:NewSet("Recap Probe", GetTime(), false)
+      Skada.DataAggregator:RecordDeathSet(recapSet, "Alice", Skada.Data:GetIdentityByName("Alice"),
+        GetTime(), nil, "Inferno Effect")
+      assert(recapSet.actors.Alice.deathLog.death1.customText == "Unknown cause (Inferno Effect)",
+        "a killer the client could not name lost its spell from the death recap")
+    ''')
+    ctx.run('''
+      -- /skada reset wipes everything on the spot; it never raises the
+      -- confirmation popup the button and reset policies use.
+      -- Later suites read this fight data, so the segments are put back.
+      local data = Skada.Data
+      local savedCurrent, savedTotal, savedActive = data.current, data.total, data.active
+      local savedHistory = {}
+      local historyIndex
+      for historyIndex = 1, table.getn(data.history) do savedHistory[historyIndex] = data.history[historyIndex] end
+      assert(savedCurrent.damage > 0, "reset test needs recorded damage")
+      local popupShown = false
+      local savedShow = StaticPopup_Show
+      StaticPopup_Show = function() popupShown = true end
+      SlashCmdList.SKADA("reset")
+      StaticPopup_Show = savedShow
+      assert(not popupShown, "/skada reset asked for confirmation")
+      assert(data.current.damage == 0 and table.getn(data.history) == 0,
+        "/skada reset left fight data behind")
+      data.current, data.total, data.active = savedCurrent, savedTotal, savedActive
+      for historyIndex = 1, table.getn(savedHistory) do data.history[historyIndex] = savedHistory[historyIndex] end
+    ''')
+
+    ctx.run(r'''
+      -- Route caching: a pattern added after a route's first line is tried,
+      -- and a suppressed specific pattern keeps its lines from a live general
+      -- one after it, with the match cache warm or cold.
+      local Parser = Skada.Parser
+      local handled = {}
+      local function record(entry) table.insert(handled, entry.key) end
+      Parser:AddPattern("testSpecific", { "TEST_ROUTE_EVENT" }, "%s crits %s.", record, true, "specific")
+      Skada.frame:OnEvent("TEST_ROUTE_EVENT", "Bob crits Boar.")
+      assert(handled[1] == "specific", "the first pattern did not match")
+      Parser:AddPattern("testGeneral", { "TEST_ROUTE_EVENT" }, "%s %s.", record, false, "general")
+      Skada.frame:OnEvent("TEST_ROUTE_EVENT", "Bob dances.")
+      assert(handled[2] == "general", "a pattern added after the route's first line was never tried")
+
+      Parser:SuppressFact("testSpecific", true)
+      Skada.frame:OnEvent("TEST_ROUTE_EVENT", "Bob crits Boar.")
+      Skada.frame:OnEvent("TEST_ROUTE_EVENT", "Bob dances.")
+      Skada.frame:OnEvent("TEST_ROUTE_EVENT", "Bob crits Boar.")
+      assert(table.getn(handled) == 3 and handled[3] == "general",
+        "a suppressed pattern's line reached the general pattern after it")
+
+      -- The claim is exact, not judged from a pattern's sample line: a live
+      -- pattern the suppressed one's sample misses still loses the lines
+      -- both match.
+      Parser:AddPattern("testClaimer", { "TEST_ROUTE_EVENT_2" }, "%s hits %s.", record, false, "earlier")
+      Parser:AddPattern("testLive", { "TEST_ROUTE_EVENT_2" }, "%s hits Boar.", record, false, "boar")
+      Parser:SuppressFact("testClaimer", true)
+      local before = table.getn(handled)
+      Skada.frame:OnEvent("TEST_ROUTE_EVENT_2", "Bob hits Boar.")
+      assert(table.getn(handled) == before, "a line a suppressed pattern claims reached a later pattern")
+      Parser:SuppressFact("testClaimer", false)
+      Parser:SuppressFact("testSpecific", false)
+    ''')

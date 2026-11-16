@@ -4561,7 +4561,7 @@
           },
           "status": "mirrored",
           "error": null,
-          "active": true,
+          "active": false,
           "license": "Unspecified"
         }
       ],
@@ -6074,7 +6074,7 @@
           },
           "status": "mirrored",
           "error": null,
-          "active": true,
+          "active": false,
           "license": "MIT"
         }
       ],
@@ -9597,7 +9597,7 @@
           },
           "status": "mirrored",
           "error": null,
-          "active": true,
+          "active": false,
           "license": "MIT"
         }
       ],
@@ -11101,7 +11101,7 @@
           },
           "status": "mirrored",
           "error": null,
-          "active": true,
+          "active": false,
           "license": "MIT"
         }
       ],
@@ -13279,7 +13279,7 @@
           },
           "status": "mirrored",
           "error": null,
-          "active": true,
+          "active": false,
           "license": "MIT"
         }
       ],
@@ -17549,7 +17549,7 @@
           },
           "status": "mirrored",
           "error": null,
-          "active": true,
+          "active": false,
           "license": "Unspecified"
         }
       ],
@@ -19127,6 +19127,23 @@
           "error": null,
           "active": true,
           "license": "Unspecified"
+        },
+        {
+          "originalUrl": "https://github.com/linkandzelda91/CombatLedger",
+          "folder": "CombatLedger--linkandzelda91",
+          "source": {
+            "kind": "repository",
+            "host": "github.com",
+            "owner": "linkandzelda91",
+            "repo": "CombatLedger",
+            "name": "CombatLedger",
+            "url": "https://github.com/linkandzelda91/CombatLedger",
+            "api": "https://api.github.com/repos/linkandzelda91/CombatLedger"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -20013,7 +20030,7 @@
           },
           "status": "mirrored",
           "error": null,
-          "active": true,
+          "active": false,
           "license": "MIT"
         }
       ],
@@ -23286,7 +23303,7 @@
           },
           "status": "mirrored",
           "error": null,
-          "active": true,
+          "active": false,
           "license": "Unspecified"
         }
       ],
@@ -30469,6 +30486,33 @@
       "active": true,
       "kind": "Chat & Social",
       "site": "https://vanilla-addon-index.github.io/addon/adechatfix"
+    },
+    {
+      "id": 1114,
+      "name": "Skada",
+      "folder": "S/Skada",
+      "components": [
+        {
+          "originalUrl": "https://github.com/cyberpmp/Skada",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "github.com",
+            "owner": "cyberpmp",
+            "repo": "Skada",
+            "name": "Skada",
+            "url": "https://github.com/cyberpmp/Skada",
+            "api": "https://api.github.com/repos/cyberpmp/Skada"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "MIT"
+        }
+      ],
+      "active": true,
+      "kind": "Combat",
+      "site": "https://vanilla-addon-index.github.io/addon/skada"
     }
   ],
   "archiveTitle": "Addon archive",

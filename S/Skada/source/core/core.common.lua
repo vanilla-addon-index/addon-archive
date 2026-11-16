@@ -1,0 +1,188 @@
+local env = _G or getfenv(0)
+local Skada = env.Skada
+local CreateFrame = SkadaCompat.CreateFrame
+if not Skada then
+  Skada = {}
+  env.Skada = Skada
+end
+
+local Common = {}
+Skada.Common = Common
+
+local pairs = pairs
+local type = type
+local string_byte = string.byte
+local string_gsub = string.gsub
+local table_setn = SkadaCompat.Table.setn
+
+Common.Match = SkadaCompat.Match
+Common.GMatch = string.gmatch or string.gfind
+
+function Common.Wipe(targetTable)
+  local key
+  for key in pairs(targetTable) do targetTable[key] = nil end
+  table_setn(targetTable, 0)
+end
+
+-- A cache keyed by GUID or ID that is dropped wholesale once it holds
+-- `limit` keys, so hours of churning units cannot pile up; a drop only costs
+-- the next lookup of each key still in use. Hot paths read `map.entries`
+-- directly; every write goes through Set so the count stays true.
+local BoundedMap = {}
+BoundedMap.__index = BoundedMap
+
+function Common.NewBoundedMap(limit)
+  return setmetatable({ entries = {}, count = 0, limit = limit }, BoundedMap)
+end
+
+function BoundedMap:Set(key, value)
+  local entries = self.entries
+  if entries[key] == nil then
+    if value == nil then return end
+    if self.count >= self.limit then
+      entries = {}
+      self.entries = entries
+      self.count = 0
+    end
+    self.count = self.count + 1
+  elseif value == nil then
+    self.count = self.count - 1
+  end
+  entries[key] = value
+end
+
+function BoundedMap:Clear()
+  self.entries = {}
+  self.count = 0
+end
+
+function Common.Trim(value)
+  if type(value) ~= "string" then return value end
+
+  local first = string_byte(value, 1)
+  local last = string_byte(value, -1)
+  local firstIsSpace = first == 32 or (first and first >= 9 and first <= 13)
+  local lastIsSpace = last == 32 or (last and last >= 9 and last <= 13)
+  if not firstIsSpace and not lastIsSpace then return value end
+  return string_gsub(value, "^%s*(.-)%s*$", "%1")
+end
+
+function Common.GetClickButton(positional)
+  if positional then return positional end
+  if GetMouseButtonClicked then
+    local name = GetMouseButtonClicked()
+    if name then return name end
+  end
+  return arg1
+end
+
+function Common.GetWheelDelta(positional)
+  if positional then return positional end
+  return tonumber(arg1) or 0
+end
+
+-- Every Skada tooltip lives on this private frame instead of the Blizzard
+-- shared GameTooltip. Other UIs drive the shared tooltip under our feet: the
+-- transmogrify service, for example, feeds item hyperlinks into it to force
+-- the server to fetch item data, then redraws its slot lists from whatever
+-- landed in the client's item cache. Owning the shared tooltip (SetOwner) or
+-- hiding it is enough to swallow exactly the data they were waiting on --
+-- observed as transmog slots that stop listing their available items while
+-- a meter tooltip was on screen. A private instance cannot collide with
+-- anything outside Skada.
+local tooltipFrame
+
+function Common.GetTooltip()
+  if not tooltipFrame then
+    tooltipFrame = CreateFrame("GameTooltip", "SkadaTooltip", UIParent, "GameTooltipTemplate")
+  end
+  return tooltipFrame
+end
+
+function Common.AttachTooltip(button, title, description)
+  button:SetScript("OnEnter", function()
+    local tooltip = Common.GetTooltip()
+    tooltip:SetOwner(button, "ANCHOR_LEFT")
+    tooltip:AddLine(title, 1, 1, 1)
+    tooltip:AddLine(description, 0.8, 0.8, 0.8, true)
+    tooltip:Show()
+  end)
+  button:SetScript("OnLeave", function()
+    if tooltipFrame then tooltipFrame:Hide() end
+  end)
+end
+
+Common.FONT = "Interface\\AddOns\\Skada\\media\\Accidental Presidency.ttf"
+
+function Common.SetFont(fontString, size)
+
+  local profileFont = Skada.db and Skada.db.profile.fontName
+  fontString:SetFont(profileFont or Common.FONT, size, "OUTLINE")
+  fontString:SetTextColor(1, 1, 1, 1)
+  fontString:SetShadowColor(0, 0, 0, 1)
+  fontString:SetShadowOffset(1, -1)
+end
+
+Common.BACKDROP = {
+  bgFile = "Interface\\Buttons\\WHITE8X8",
+  edgeFile = "Interface\\Buttons\\WHITE8X8",
+  tile = false,
+  tileSize = 0,
+  edgeSize = 1,
+  insets = { left = -1, right = -1, top = -1, bottom = -1 },
+}
+
+Common.TRACK_BACKDROP = {
+  bgFile = "Interface\\Buttons\\WHITE8X8",
+  edgeFile = "Interface\\Buttons\\WHITE8X8",
+  tile = false,
+  tileSize = 0,
+  edgeSize = 1,
+  insets = { left = -1, right = -1, top = -1, bottom = -1 },
+}
+
+function Common.FormatDuration(seconds)
+  local floor = math.floor
+  seconds = floor((seconds or 0) + 0.5)
+  return string.format("%d:%02d", floor(seconds / 60), seconds % 60)
+end
+
+local classColors = {
+  DRUID = { 1.00, 0.49, 0.04 },
+  HUNTER = { 0.67, 0.83, 0.45 },
+  MAGE = { 0.41, 0.80, 0.94 },
+  PALADIN = { 0.96, 0.55, 0.73 },
+  PRIEST = { 1.00, 1.00, 1.00 },
+  ROGUE = { 1.00, 0.96, 0.41 },
+  SHAMAN = { 0.00, 0.44, 0.87 },
+  WARLOCK = { 0.58, 0.51, 0.79 },
+  WARRIOR = { 0.78, 0.61, 0.43 },
+  OTHER = { 0.65, 0.65, 0.65 },
+}
+
+function Common.FormatNumber(value, style)
+  local floor = math.floor
+  value = tonumber(value) or 0
+  if style == "full" then
+    return tostring(floor(value + 0.5))
+  end
+  if style == "compact1" then
+    if value >= 1000000 then
+      return string.format("%.1fm", value / 1000000)
+    elseif value >= 1000 then
+      return string.format("%.1fk", value / 1000)
+    end
+    return tostring(floor(value + 0.5))
+  end
+  if value >= 1000000 then
+    return string.format("%.2fm", value / 1000000)
+  elseif value >= 10000 then
+    return string.format("%.0fk", value / 1000)
+  end
+  return tostring(floor(value + 0.5))
+end
+
+function Common.GetClassColor(class)
+  local color = classColors[class or "OTHER"] or classColors.OTHER
+  return color[1], color[2], color[3]
+end

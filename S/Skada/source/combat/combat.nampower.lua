@@ -1,0 +1,728 @@
+-- Nampower combat ingest.
+--
+-- Nampower republishes the server's combat packets as Lua events carrying real
+-- GUIDs, spell IDs and unmitigated amounts. When those events are available this
+-- module becomes the authoritative source for damage, healing, power gains,
+-- avoidance, dispels and deaths, and the localized chat-text routes in
+-- combat.parser.lua are suppressed for exactly those facts so nothing is counted
+-- twice. Facts Nampower does not publish (interrupts, aura uptime, crowd
+-- control) stay on the parser regardless.
+--
+-- Resolution of a GUID to a display name relies on the client's SuperWoW-style
+-- UnitName(guid) extension. The module probes for it at login and refuses to
+-- activate without it, because every Skada aggregate is keyed by actor name.
+
+local Skada = (_G or getfenv(0)).Skada
+local CreateFrame = SkadaCompat.CreateFrame
+local table_getn = SkadaCompat.Table.getn
+local table_insert = SkadaCompat.Table.insert
+local table_remove = SkadaCompat.Table.remove
+local newBoundedMap = Skada.Common.NewBoundedMap
+
+local Nampower = {
+  available = false,
+  active = false,
+  version = nil,
+  reason = "not probed",
+  eventCount = 0,
+  unresolvedGUIDCount = 0,
+  spellGoCount = 0,
+  -- The last few damage sources the ingest could not credit, for
+  -- /skada status. Each note records what the client could say about the
+  -- source at the moment its packet arrived, so a report from a player can
+  -- show whether a summon was nameless, ownerless, or owned by a stranger.
+  droppedSources = {},
+}
+local DROPPED_SOURCE_LIMIT = 5
+-- A dropped source is described at most once per window. The description
+-- costs owner probes and a dozen concatenations, and in a raid the same
+-- mobs land here on every AoE tick against totems and every hit from
+-- units outside the group.
+local DROPPED_SOURCE_INTERVAL = 30
+local droppedNoteTimes = newBoundedMap(512)
+Skada.Nampower = Nampower
+
+local type = type
+local tonumber = tonumber
+local pairs = pairs
+local math_floor = math.floor
+-- Lua 5.0 on the client exposes math.mod; math.fmod is the name everywhere
+-- newer, including the test runtime.
+local math_mod = math.fmod or math.mod
+local string_find = string.find
+
+local EMPTY_GUID = "0x0000000000000000"
+
+-- Vanilla Lua 5.0 has no bitwise operators and the bit library is not
+-- guaranteed on this client, so flags are tested arithmetically.
+local function hasFlag(value, flag)
+  value = tonumber(value)
+  if not value or value < flag then return false end
+  return math_mod(math_floor(value / flag), 2) == 1
+end
+
+local HITINFO_LEFTSWING = 4
+local HITINFO_MISS = 16
+local HITINFO_CRITICALHIT = 128
+local HITINFO_GLANCING = 16384
+local HITINFO_CRUSHING = 32768
+
+local SPELL_HITINFO_CRITICAL = 2
+
+local VICTIMSTATE_AVOIDANCE = {
+  [2] = "Dodge",
+  [3] = "Parry",
+  [6] = "Evade",
+  [7] = "Immune",
+  [8] = "Deflect",
+}
+
+local SPELL_MISS_NAMES = {
+  [1] = "Miss",
+  [2] = "Resist",
+  [3] = "Dodge",
+  [4] = "Parry",
+  [5] = "Block",
+  [6] = "Evade",
+  [7] = "Immune",
+  [8] = "Immune",
+  [9] = "Deflect",
+  [10] = "Absorb",
+  [11] = "Reflect",
+}
+
+local SCHOOL_NAMES = {
+  [0] = "Physical",
+  [1] = "Holy",
+  [2] = "Fire",
+  [3] = "Nature",
+  [4] = "Frost",
+  [5] = "Shadow",
+  [6] = "Arcane",
+}
+
+local ENVIRONMENT_NAMES = {
+  [0] = "Fatigue",
+  [1] = "Drowning",
+  [2] = "Falling",
+  [3] = "Lava",
+  [4] = "Slime",
+  [5] = "Fire",
+  [6] = "Falling",
+}
+
+local POWER_NAMES = {
+  [0] = "Mana",
+  [1] = "Rage",
+  [2] = "Focus",
+  [3] = "Energy",
+  [4] = "Happiness",
+}
+
+-- Identity ------------------------------------------------------------------
+
+-- GUID to name, warmed by every combat event. Bounded so a long session in a
+-- crowded zone cannot grow it without limit; a wipe only costs the next lookup
+-- for each unit still in the fight.
+local NAME_CACHE_LIMIT = 2000
+local namesByGUID = newBoundedMap(NAME_CACHE_LIMIT)
+-- Appended to the name of a unit that wears a tracked unit's name without
+-- being it. Lower case, so it can never be a character name that
+-- ResolveSource's "Name (Owner)" match would find.
+local OUTSIDER_SUFFIX = " (other)"
+
+local function rememberName(guid, name)
+  namesByGUID:Set(guid, name)
+  return name
+end
+
+local function forgetName(guid)
+  namesByGUID:Set(guid, nil)
+end
+
+local function isRealGUID(guid)
+  return type(guid) == "string" and guid ~= "" and guid ~= EMPTY_GUID
+end
+
+-- The GUID that summoned or created a unit, read off the unit's own fields
+-- while the client still holds it. Each accessor is probed rather than
+-- assumed: GetUnitField raises on a field name an older Nampower does not
+-- know, and the "<guid>owner" token is the fallback for builds without it.
+local function summonerGUID(guid)
+  if type(GetUnitField) == "function" then
+    local ok, owner = pcall(GetUnitField, guid, "summonedBy")
+    if ok and isRealGUID(owner) then return owner end
+    ok, owner = pcall(GetUnitField, guid, "createdBy")
+    if ok and isRealGUID(owner) then return owner end
+  end
+  if type(GetUnitGUID) == "function" then
+    local ok, owner = pcall(GetUnitGUID, guid .. "owner")
+    if ok and isRealGUID(owner) then return owner end
+  end
+end
+
+-- A unit seen for the first time may be somebody's summon. Totems are the
+-- case that matters: a Fire Nova Totem casts once and despawns, and by the
+-- time its damage packets are read the client has dropped the object, so
+-- the owner has to be learned from the SPELL_GO that precedes them. A summon
+-- whose owner is in the group becomes an owned identity; a stranger's stays
+-- an anonymous name and is dropped like any other outsider.
+-- A "no owner" answer is not trusted at first. The first packet naming a
+-- fresh totem (its spell-go) can arrive before the client has the unit's
+-- fields, and a summoner read then comes back empty; the damage packets in
+-- the same instant would read it fine. In the field, "live yes, owner
+-- <player> (in group)" was printed for hits that had been dropped on that
+-- cached miss. So the first SUMMON_RETRIES misses are re-read on the very
+-- next packet, and only after that is a miss held for SUMMON_RECHECK
+-- seconds, which keeps ordinary mobs from being re-read on every hit. The
+-- cache is per roster: RebuildRoster wipes every identity, summons included,
+-- so a live totem must be adopted again afterwards. Bounded like the name
+-- cache.
+local SUMMON_RETRIES = 3
+local SUMMON_RECHECK = 3
+local summonChecks = newBoundedMap(NAME_CACHE_LIMIT)
+local summonCheckedGeneration
+
+local function adoptSummon(guid, name)
+  local generation = Skada.Data.rosterGeneration
+  if summonCheckedGeneration ~= generation then
+    summonChecks:Clear()
+    summonCheckedGeneration = generation
+  end
+  local now = GetTime()
+  local check = summonChecks.entries[guid]
+  if check then
+    if check.misses >= SUMMON_RETRIES and now - check.checkedAt < SUMMON_RECHECK then return end
+    check.misses = check.misses + 1
+    check.checkedAt = now
+  else
+    summonChecks:Set(guid, { misses = 1, checkedAt = now })
+  end
+
+  local ownerGUID = summonerGUID(guid)
+  if not ownerGUID or ownerGUID == guid then return end
+  -- The unit fields and UnitGUID come from two client extensions that need
+  -- not print a GUID identically, so a miss on the GUID index falls back to
+  -- naming the owner and looking that up.
+  local ownerIdentity = Skada.Data:GetIdentityByGUID(ownerGUID)
+  if not ownerIdentity then
+    local ownerName = UnitName(ownerGUID)
+    ownerIdentity = ownerName and Skada.Data:GetIdentityByName(ownerName)
+  end
+  if not ownerIdentity or not ownerIdentity.interesting or ownerIdentity.owner then return end
+  Skada.Data:AddSummon(name, ownerIdentity.name, guid)
+end
+
+function Nampower:ResolveName(guid)
+  if not isRealGUID(guid) then return nil end
+
+  -- A unit already indexed by GUID may still be an unowned summon: mobs
+  -- attack totems, so a totem lands on a token like "targettarget" and the
+  -- token observer files it as a plain, uninteresting unit before any of
+  -- its packets arrive. That entry must not stop the owner read, or the
+  -- totem's hits are dropped while its owner reads fine.
+  local identity = Skada.Data:GetIdentityByGUID(guid)
+  if identity and identity.name then
+    if not identity.interesting then adoptSummon(guid, identity.name) end
+    return rememberName(guid, identity.name)
+  end
+
+  local name = UnitName(guid)
+  if type(name) == "string" and name ~= "" and name ~= "Unknown" then
+    adoptSummon(guid, name)
+    identity = Skada.Data:GetIdentityByGUID(guid)
+    if identity and identity.name then return rememberName(guid, identity.name) end
+    -- GUID gate: a unit the roster does not know that wears a tracked
+    -- name (a stranger's pet renamed after a raid member, a mob sharing a
+    -- group pet's name) is filed under "Name (other)". That key never
+    -- resolves to the tracked identity, so its hits, heals and death stay
+    -- off the group member's rows.
+    -- Only group units are gated: they sit on a token the client can
+    -- compare. Summons keep the name-based match they always had.
+    local holder = Skada.Data:GetIdentityByName(name)
+    if holder and holder.unit and Skada.Data:IsImpostor(guid, guid, holder) then
+      name = name .. OUTSIDER_SUFFIX
+    end
+    return rememberName(guid, name)
+  end
+
+  local remembered = namesByGUID.entries[guid]
+  if not remembered then self.unresolvedGUIDCount = self.unresolvedGUIDCount + 1 end
+  return remembered
+end
+
+local resolveName
+
+-- Spell names ---------------------------------------------------------------
+
+local spellNameByID = {}
+
+function Nampower:ResolveSpellName(spellID)
+  spellID = tonumber(spellID)
+  if not spellID or spellID == 0 then return nil end
+
+  local cached = spellNameByID[spellID]
+  if cached then return cached end
+
+  local name
+  if GetSpellNameAndRankForId then name = GetSpellNameAndRankForId(spellID) end
+  if (not name or name == "") and SpellInfo then name = SpellInfo(spellID) end
+  if (not name or name == "") and GetSpellRecField then name = GetSpellRecField(spellID, "name") end
+  if not name or name == "" then name = "Spell #" .. spellID end
+
+  spellNameByID[spellID] = name
+  return name
+end
+
+local resolveSpellName
+
+-- Mitigation ----------------------------------------------------------------
+
+-- Skada's damage records carry a single mitigation observation per hit, matching
+-- what a chat line can express. Nampower reports absorb, block and resist
+-- together, so the largest non-zero component wins and the rest are dropped.
+local function pickMitigation(absorbed, blocked, resisted)
+  absorbed = tonumber(absorbed) or 0
+  blocked = tonumber(blocked) or 0
+  resisted = tonumber(resisted) or 0
+
+  local bestType, bestAmount
+  if absorbed > 0 then bestType, bestAmount = "absorbed", absorbed end
+  if blocked > (bestAmount or 0) then bestType, bestAmount = "blocked", blocked end
+  if resisted > (bestAmount or 0) then bestType, bestAmount = "resisted", resisted end
+  return bestType, bestAmount
+end
+
+-- "absorb,block,resist" as emitted by SPELL_DAMAGE_EVENT_*.
+local function parseMitigationString(text)
+  if type(text) ~= "string" or text == "" then return nil, nil end
+
+  -- Captures, not a split table: this runs on every spell hit.
+  local _, _, absorbed, blocked, resisted = string_find(text, "^([^,]*),?([^,]*),?([^,]*)")
+  return pickMitigation(absorbed, blocked, resisted)
+end
+
+-- Recording -----------------------------------------------------------------
+
+local function recordDamage(sourceGUID, targetGUID, amount, spellName, spellID, school, critical, mitigationType, mitigationAmount)
+  amount = tonumber(amount) or 0
+  local sourceName = resolveName(sourceGUID)
+  local targetName = resolveName(targetGUID)
+  if not sourceName then
+    local totemName = Nampower:OwnTotemFor(spellName, GetTime())
+    if totemName then
+      sourceName = totemName
+      Skada.Data:AddSummon(totemName, Skada.Data:GetPlayerName(), sourceGUID)
+    end
+  end
+  if not sourceName and not targetName then return end
+
+  local recorded = Skada.Data:RecordDamage(sourceName, targetName, amount, spellName, spellID,
+    school or "Physical", critical, GetTime(), mitigationType, mitigationAmount, targetGUID)
+  if not recorded and amount > 0 and isRealGUID(sourceGUID) then
+    Nampower:NoteDroppedSource(sourceGUID, sourceName, spellName or spellID)
+  end
+end
+
+local function describeGUID(guid)
+  if not isRealGUID(guid) then return "none" end
+  local name = UnitName(guid)
+  if type(name) == "string" and name ~= "" then return name end
+  return guid
+end
+
+-- How the identity registry currently sees a unit: absent, refused (seen
+-- and written off), plain (on a token but not tracked), tracked, or owned.
+local function describeIdentity(identity)
+  if identity == nil then return "absent" end
+  if identity == false then return "refused" end
+  if identity.owner then return "owned by " .. identity.owner end
+  if identity.interesting then return "tracked" end
+  return "plain"
+end
+
+function Nampower:NoteDroppedSource(guid, name, spellName)
+  local now = GetTime()
+  local notedAt = droppedNoteTimes.entries[guid]
+  if notedAt and now - notedAt < DROPPED_SOURCE_INTERVAL then return end
+  droppedNoteTimes:Set(guid, now)
+
+  local notes = self.droppedSources
+  local summoner = summonerGUID(guid)
+  local owner = summoner and describeGUID(summoner) or "none"
+  if summoner then
+    local ownerIdentity = Skada.Data:GetIdentityByGUID(summoner)
+    if not ownerIdentity then
+      local ownerName = UnitName(summoner)
+      ownerIdentity = ownerName and Skada.Data:GetIdentityByName(ownerName)
+      if ownerIdentity then owner = owner .. " (by name)" end
+    end
+    owner = owner .. " " .. describeIdentity(ownerIdentity)
+  end
+  local text = (name or "unnamed") .. " [" .. guid .. "] " .. tostring(spellName or "?") ..
+    ", live " .. (UnitName(guid) and "yes" or "no") .. ", owner " .. owner ..
+    ", byGUID " .. describeIdentity(Skada.Data:GetIdentityByGUID(guid)) ..
+    ", byName " .. describeIdentity(name and Skada.Data:GetIdentityByName(name)) ..
+    ", tries " .. (summonChecks.entries[guid] and summonChecks.entries[guid].misses or 0)
+  if notes[table_getn(notes)] == text then return end
+  table_insert(notes, text)
+  if table_getn(notes) > DROPPED_SOURCE_LIMIT then table_remove(notes, 1) end
+end
+
+local function recordAvoidance(sourceGUID, targetGUID, spellName, avoidanceType)
+  local sourceName = resolveName(sourceGUID)
+  local targetName = resolveName(targetGUID)
+  if not sourceName or not targetName then return end
+  Skada.Data:RecordMiss(sourceName, targetName, spellName, avoidanceType, GetTime())
+end
+
+-- Handlers ------------------------------------------------------------------
+
+local function onSpellDamage(targetGUID, casterGUID, spellID, amount, mitigationStr, hitInfo, spellSchool, effectAuraStr)
+  local mitigationType, mitigationAmount = parseMitigationString(mitigationStr)
+  local critical = hasFlag(hitInfo, SPELL_HITINFO_CRITICAL)
+  recordDamage(casterGUID, targetGUID, amount, resolveSpellName(spellID), tonumber(spellID),
+    SCHOOL_NAMES[tonumber(spellSchool) or -1], critical, mitigationType, mitigationAmount)
+end
+
+local function onAutoAttack(attackerGUID, targetGUID, totalDamage, hitInfo, victimState,
+                            subDamageCount, blockedAmount, totalAbsorb, totalResist)
+  local spellName = hasFlag(hitInfo, HITINFO_LEFTSWING) and "Auto Attack (Off-Hand)" or "Auto Attack"
+
+  local avoidanceType = VICTIMSTATE_AVOIDANCE[tonumber(victimState) or -1]
+  if not avoidanceType and hasFlag(hitInfo, HITINFO_MISS) then avoidanceType = "Miss" end
+  if avoidanceType then
+    recordAvoidance(attackerGUID, targetGUID, spellName, avoidanceType)
+    return
+  end
+
+  local mitigationType, mitigationAmount = pickMitigation(totalAbsorb, blockedAmount, totalResist)
+  if not mitigationType then
+    -- Chat reports glancing and crushing without a number; keep that shape so
+    -- the mitigation breakdown stays comparable across both sources.
+    if hasFlag(hitInfo, HITINFO_GLANCING) then mitigationType, mitigationAmount = "glancing", 0 end
+    if hasFlag(hitInfo, HITINFO_CRUSHING) then mitigationType, mitigationAmount = "crushing", 0 end
+  end
+
+  recordDamage(attackerGUID, targetGUID, totalDamage, spellName, nil, "Physical",
+    hasFlag(hitInfo, HITINFO_CRITICALHIT), mitigationType, mitigationAmount)
+end
+
+local function onSpellMiss(casterGUID, targetGUID, spellID, missInfo)
+  local avoidanceType = SPELL_MISS_NAMES[tonumber(missInfo) or -1]
+  if not avoidanceType then return end
+  recordAvoidance(casterGUID, targetGUID, resolveSpellName(spellID) or "Auto Attack", avoidanceType)
+end
+
+local function onSpellHeal(targetGUID, casterGUID, spellID, amount, critical, periodic)
+  local casterName = resolveName(casterGUID)
+  if not casterName then return end
+  local targetName = resolveName(targetGUID)
+
+  Skada.Data:RecordHealing(casterName, targetName, amount, resolveSpellName(spellID),
+    tonumber(spellID), critical == 1, GetTime(), targetGUID)
+end
+
+local function onSpellEnergize(targetGUID, casterGUID, spellID, powerType, amount, periodic)
+  local gainerName = resolveName(targetGUID)
+  if not gainerName then return end
+
+  local powerName = POWER_NAMES[tonumber(powerType) or -1]
+  if not powerName then return end
+
+  Skada.Data:RecordPower(gainerName, resolveName(casterGUID), amount, powerName,
+    resolveSpellName(spellID) or powerName, tonumber(spellID), GetTime())
+end
+
+local function onEnvironmentalDamage(unitGUID, damageType, damage, absorb, resist)
+  local targetName = resolveName(unitGUID)
+  if not targetName then return end
+
+  local mitigationType, mitigationAmount = pickMitigation(absorb, 0, resist)
+  local spellName = ENVIRONMENT_NAMES[tonumber(damageType) or -1] or "Environment"
+  -- The environment has no actor. Naming the victim as its own source marks the
+  -- hit as self damage, which records damage taken without inventing a damage
+  -- dealer; a nil source would record nothing at all.
+  Skada.Data:RecordDamage(targetName, targetName, damage, spellName, nil, "Physical", false,
+    GetTime(), mitigationType, mitigationAmount)
+end
+
+local function onDamageShield(unitGUID, targetGUID, damage, spellSchool)
+  local school = SCHOOL_NAMES[tonumber(spellSchool) or -1] or "Physical"
+  recordDamage(unitGUID, targetGUID, damage, "Reflect (" .. school .. ")", nil, school, false)
+end
+
+local function onDispel(casterGUID, targetGUID, spellID)
+  local casterName = resolveName(casterGUID)
+  if not casterName then return end
+  local targetName = resolveName(targetGUID)
+  local auraName = resolveSpellName(spellID)
+
+  Skada.Data:RecordDispel(casterName, targetName, auraName or "Dispel", auraName,
+    tonumber(spellID), GetTime())
+end
+
+-- Every caster is named as soon as its spell goes off. Nothing is recorded
+-- here; the point is to read a summon's name and owner while it still exists,
+-- so the damage packets that follow can be attributed after it despawns.
+local function onSpellGo(itemID, spellID, casterGUID, targetGUID, castFlags, targetsHit)
+  Nampower.spellGoCount = Nampower.spellGoCount + 1
+  resolveName(casterGUID)
+  Skada:Publish("spellGo", spellID, casterGUID, targetGUID, targetsHit, GetTime())
+end
+
+-- Totems the player has just dropped, by the spell they will cast, for the
+-- case the unit fields cannot cover: a totem the client never names, at
+-- spell-go or at damage time. "Fire Nova Totem" is expected to deal "Fire
+-- Nova"; "Magma Totem" deals "Magma Totem"; "Searing Totem" swings "Attack".
+-- An unnamed caster dealing one of those within the window is credited to the
+-- player as that totem. A named caster never comes through here, so a
+-- stranger's totem the client can see is never taken.
+local TOTEM_WINDOW = 12
+local ownTotemBySpell = {}
+
+local function rememberOwnTotem(spellName, now)
+  if type(spellName) ~= "string" or not string.find(spellName, " Totem$") then return end
+  ownTotemBySpell[spellName] = { totem = spellName, time = now }
+  local novaName = string.gsub(spellName, " Totem$", "")
+  ownTotemBySpell[novaName] = { totem = spellName, time = now }
+  ownTotemBySpell["Attack"] = { totem = spellName, time = now }
+end
+
+function Nampower:OwnTotemFor(spellName, now)
+  local expected = spellName and ownTotemBySpell[spellName]
+  if not expected or now - expected.time > TOTEM_WINDOW then return nil end
+  return expected.totem
+end
+
+local function onSpellGoSelf(itemID, spellID, casterGUID, targetGUID, castFlags, targetsHit)
+  Nampower.spellGoCount = Nampower.spellGoCount + 1
+  rememberOwnTotem(resolveSpellName(spellID), GetTime())
+  Skada:Publish("spellGo", spellID, casterGUID, targetGUID, targetsHit, GetTime())
+end
+
+local function onUnitDied(guid)
+  local targetName = resolveName(guid)
+  if not targetName then return end
+  local lastDamage = Skada.Tracking and Skada.Tracking:GetLastDamageInfo(targetName)
+  Skada.Data:RecordDeath(targetName, GetTime(), lastDamage and lastDamage.sourceName,
+    lastDamage and lastDamage.spellName, guid)
+  forgetName(guid)
+end
+
+-- Registration --------------------------------------------------------------
+
+-- Nampower 4.5.0 and later enable an event as soon as something registers it.
+-- Older builds gate these behind CVars. Skada only reads client settings, so
+-- on an older build it uses Nampower only when the CVars are already on --
+-- turned on by the player or another addon -- and stays on chat parsing
+-- otherwise. A CVar turned on later is picked up at the next pull.
+local REGISTRATION_MAJOR, REGISTRATION_MINOR = 4, 5
+local LEGACY_CVARS = {
+  "NP_EnableSpellHealEvents",
+  "NP_EnableSpellEnergizeEvents",
+  "NP_EnableAutoAttackEvents",
+  "NP_EnableSpellGoEvents",
+}
+
+local handlers = {
+  SPELL_DAMAGE_EVENT_SELF = onSpellDamage,
+  SPELL_DAMAGE_EVENT_OTHER = onSpellDamage,
+  AUTO_ATTACK_SELF = onAutoAttack,
+  AUTO_ATTACK_OTHER = onAutoAttack,
+  SPELL_MISS_SELF = onSpellMiss,
+  SPELL_MISS_OTHER = onSpellMiss,
+  SPELL_HEAL_BY_SELF = onSpellHeal,
+  SPELL_HEAL_BY_OTHER = onSpellHeal,
+  SPELL_ENERGIZE_BY_SELF = onSpellEnergize,
+  SPELL_ENERGIZE_BY_OTHER = onSpellEnergize,
+  ENVIRONMENTAL_DMG_SELF = onEnvironmentalDamage,
+  ENVIRONMENTAL_DMG_OTHER = onEnvironmentalDamage,
+  DAMAGE_SHIELD_SELF = onDamageShield,
+  DAMAGE_SHIELD_OTHER = onDamageShield,
+  SPELL_DISPEL_BY_SELF = onDispel,
+  SPELL_DISPEL_BY_OTHER = onDispel,
+  SPELL_GO_SELF = onSpellGoSelf,
+  SPELL_GO_OTHER = onSpellGo,
+  UNIT_DIED = onUnitDied,
+}
+
+-- The _GUID unit events are deliberately not registered. Nampower warns that
+-- they fire for every unit the client tracks and flood busy zones, and they buy
+-- nothing here: any unit that produces a death has already been named by the
+-- combat event that damaged it.
+
+-- Skada's shared event frame forwards seven payload arguments and gates
+-- registration on C_EventUtils.IsEventValid, which does not know about
+-- Nampower's custom event codes. AUTO_ATTACK_* carries nine. This module
+-- therefore owns its own frame and reads the payload directly.
+local eventFrame = CreateFrame("Frame", "SkadaNampowerEventFrame")
+Nampower.frame = eventFrame
+
+eventFrame:SetScript("OnEvent", function(self, eventName, one, two, three, four, five, six, seven, eight, nine)
+  if not eventName then
+    eventName = event
+    one, two, three, four, five, six, seven, eight, nine = arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9
+  end
+
+  local handler = handlers[eventName]
+  if not handler then return end
+  if not Skada.initialized or not Nampower.active then return end
+
+  Nampower.eventCount = Nampower.eventCount + 1
+  local ok, message = pcall(handler, one, two, three, four, five, six, seven, eight, nine)
+  if not ok then
+    Skada:Print("Nampower handler failed (" .. eventName .. "): " .. tostring(message))
+  end
+end)
+
+-- Facts the parser must stop producing once Nampower is authoritative. Aura
+-- uptime, crowd control and interrupts are absent from Nampower's event set and
+-- keep flowing from chat text.
+local SUPPRESSED_PARSER_FACTS = { "damage", "healing", "power", "avoidance", "dispel", "death" }
+
+function Nampower:Probe()
+  if type(GetNampowerVersion) ~= "function" then
+    self.reason = "Nampower not loaded"
+    return false
+  end
+
+  local ok, major, minor = pcall(GetNampowerVersion)
+  if not ok then
+    major, minor = nil, nil
+  elseif type(major) == "string" then
+    local _
+    _, _, major, minor = string_find(major, "(%d+)%.(%d+)")
+  end
+  major, minor = tonumber(major), tonumber(minor) or 0
+  -- A version that cannot be read (a failing call, a "dev" string) is a
+  -- build newer than this check knows, not a pre-4.5 one: older builds all
+  -- report a plain number.
+  if major then
+    self.version = major .. "." .. minor
+    self.registrationEnables = major > REGISTRATION_MAJOR
+      or (major == REGISTRATION_MAJOR and minor >= REGISTRATION_MINOR)
+  else
+    self.version = "unknown"
+    self.registrationEnables = true
+  end
+
+  -- Every aggregate is keyed by actor name, so GUID-only events are useless
+  -- without the SuperWoW-style UnitName(guid) extension this client ships.
+  local playerGUID = UnitGUID and UnitGUID("player")
+  if not isRealGUID(playerGUID) then
+    self.reason = "UnitGUID unavailable"
+    return false
+  end
+  local probedName = UnitName(playerGUID)
+  if probedName ~= UnitName("player") then
+    self.reason = "UnitName(guid) unsupported"
+    return false
+  end
+
+  self.available = true
+  self.reason = "available"
+  return true
+end
+
+function Nampower:Enable()
+  if self.active then return true end
+  if not self.available and not self:Probe() then return false end
+
+  if not self.registrationEnables then
+    -- Only a CVar that exists and reads off gates its events; one the
+    -- build never shipped gates nothing.
+    local cvarIndex, ok, value
+    for cvarIndex = 1, table_getn(LEGACY_CVARS) do
+      ok, value = pcall(GetCVar, LEGACY_CVARS[cvarIndex])
+      if ok and value ~= nil and tostring(value) ~= "1" then
+        self.reason = "Nampower " .. self.version .. " has " .. LEGACY_CVARS[cvarIndex] .. " off"
+        self.blockedByCVar = true
+        return false
+      end
+    end
+  end
+
+  local eventName
+  for eventName in pairs(handlers) do
+    pcall(eventFrame.RegisterEvent, eventFrame, eventName)
+  end
+
+  self.active = true
+  self.blockedByCVar = nil
+  self.reason = "active"
+
+  local factIndex
+  for factIndex = 1, table_getn(SUPPRESSED_PARSER_FACTS) do
+    Skada.Parser:SuppressFact(SUPPRESSED_PARSER_FACTS[factIndex], true)
+  end
+
+  return true
+end
+
+function Nampower:Disable()
+  self.blockedByCVar = nil
+  if self.available then self.reason = "disabled" end
+  if not self.active then return end
+
+  local eventName
+  for eventName in pairs(handlers) do
+    pcall(eventFrame.UnregisterEvent, eventFrame, eventName)
+  end
+
+  self.active = false
+
+  local factIndex
+  for factIndex = 1, table_getn(SUPPRESSED_PARSER_FACTS) do
+    Skada.Parser:SuppressFact(SUPPRESSED_PARSER_FACTS[factIndex], false)
+  end
+end
+
+function Nampower:ApplySetting()
+  local wanted = Skada.db and Skada.db.profile and Skada.db.profile.useNampower
+  if wanted == nil then wanted = true end
+  if wanted then self:Enable() else self:Disable() end
+end
+
+function Nampower:GetStatusText()
+  if not self.available then return "chat text (" .. self.reason .. ")" end
+  if not self.active then
+    if self.reason ~= "available" and self.reason ~= "disabled" then return "chat text (" .. self.reason .. ")" end
+    return "chat text (Nampower off)"
+  end
+  return "Nampower events (" .. self.eventCount .. " seen, " .. self.spellGoCount ..
+    " spell-go, " .. self.unresolvedGUIDCount .. " unresolved), build " .. tostring(Skada.build or "?")
+end
+
+-- Prints the dropped-source notes, most recent last, or one line saying
+-- there are none. Called by /skada status.
+function Nampower:PrintDroppedSources()
+  local notes = self.droppedSources
+  if table_getn(notes) == 0 then
+    Skada:Print("No uncredited damage sources seen.")
+    return
+  end
+  Skada:Print("Uncredited damage sources (last " .. table_getn(notes) .. "):")
+  local noteIndex
+  for noteIndex = 1, table_getn(notes) do
+    Skada:Print("  " .. notes[noteIndex])
+  end
+end
+
+resolveName = function(guid) return Nampower:ResolveName(guid) end
+resolveSpellName = function(spellID) return Nampower:ResolveSpellName(spellID) end
+
+Skada:RegisterEvent("PLAYER_LOGIN", function()
+  Nampower:Probe()
+  Nampower:ApplySetting()
+end)
+
+Skada:RegisterEvent("PLAYER_ENTERING_WORLD", function()
+  Nampower:ApplySetting()
+end)
+
+-- The client sends no event when a CVar changes, so a build held back by one
+-- checks again as each pull starts.
+Skada:RegisterEvent("PLAYER_REGEN_DISABLED", function()
+  if Nampower.blockedByCVar then Nampower:ApplySetting() end
+end)

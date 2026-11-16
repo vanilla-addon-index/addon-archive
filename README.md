@@ -668,7 +668,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [Zorlen](Z/Zorlen/) | Libraries | 1 | mirrored |
 | [zUI](Z/zUI/) | UI & Appearance | 1 | mirrored |
 | [CombatAlert](C/CombatAlert/) | Combat | 1 | mirrored |
-| [CombatLedger](C/CombatLedger/) | Combat | 1 | mirrored |
+| [CombatLedger](C/CombatLedger/) | Combat | 2 | mirrored |
 | [CombatLoggingReminder](C/CombatLoggingReminder/) | Combat | 1 | mirrored |
 | [CombatPlates](C/CombatPlates/) | Unit Frames | 1 | mirrored |
 | [Cursive](C/Cursive/) | UI & Appearance | 3 | mirrored |
@@ -1056,5 +1056,6 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [pfQuest-SmartArrow](P/pfQuest-SmartArrow/) | Map & Minimap | 1 | mirrored |
 | [GearRack](G/GearRack/) | Bags & Inventory | 1 | mirrored |
 | [AdeChatFix](A/AdeChatFix/) | Chat & Social | 1 | mirrored |
+| [Skada](S/Skada/) | Combat | 1 | mirrored |
 
 This repository’s automation is MIT licensed. Mirrored source and release files retain their upstream license notices when provided.

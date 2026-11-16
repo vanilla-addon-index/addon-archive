@@ -134,3 +134,4 @@
 | [ShamanWeaponImbueWarning](ShamanWeaponImbueWarning/) | Class | 1 | mirrored |
 | [SoulStoneTracker](SoulStoneTracker/) | Class | 1 | mirrored |
 | [SHalts](SHalts/) | Miscellaneous | 1 | mirrored |
+| [Skada](Skada/) | Combat | 1 | mirrored |

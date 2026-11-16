@@ -1,0 +1,124 @@
+"""Suite: boot - load invariants, version, primary window, ticker isolation."""
+
+from harness import Context
+
+
+def run(ctx: Context):
+    ctx.run(r'''
+      -- Skada is private: every shared library member and API global is the
+      -- one the client had before Skada loaded, and no member was added.
+      local libraryName, key, value
+      for _, libraryName in ipairs({ "table", "string", "math" }) do
+        for key, value in pairs(_G[libraryName]) do
+          local qualified = libraryName .. "." .. key
+          assert(TestSharedGlobals[qualified] == value, "Skada replaced or added " .. qualified)
+        end
+      end
+      for key, value in pairs(TestSharedGlobals) do
+        local current
+        local _, _, owner, field = string.find(key, "^(%a+)%.(.+)$")
+        if owner then current = _G[owner][field] else current = _G[key] or false end
+        assert(current == value, "Skada changed the shared global " .. key)
+      end
+
+      -- The private table library never probes through a metatable:
+      -- Bagshui's rule environment gives its item table an __index that
+      -- asserts on any miss. The native table functions are raw, so a
+      -- library that reads t[1] to find the length trips the assertion (seen
+      -- in game as blank bags and "Components/Rules.lua:765: assertion
+      -- failed!").
+      local table = SkadaCompat.Table
+      local strict = setmetatable({ name = "Hearthstone", quality = 1 }, {
+        __index = function(tbl, key) error("strict table probed for " .. tostring(key)) end,
+      })
+      assert(table.getn(strict) == 0, "hash-only strict table must read as empty")
+      table.insert(strict, "a")
+      table.insert(strict, "b")
+      assert(table.getn(strict) == 2)
+      assert(table.concat(strict, ",") == "a,b")
+      table.sort(strict, function(left, right) return left > right end)
+      assert(rawget(strict, 1) == "b" and rawget(strict, 2) == "a")
+      table.insertAt(strict, 1, "c")
+      assert(rawget(strict, 1) == "c" and table.getn(strict) == 3)
+      assert(table.remove(strict) == "a" and table.remove(strict, 1) == "c")
+      assert(table.getn(strict) == 1 and rawget(strict, 1) == "b")
+      table.setn(strict, 0)
+      assert(table.getn(strict) == 0 and rawget(strict, 1) == nil)
+      assert(rawget(strict, "name") == "Hearthstone", "hash part must survive array clearing")
+      local i
+      for i = table.getn(strict), 1, -1 do table.remove(strict, i) end
+      local k
+      for k in next, strict do rawset(strict, k, nil) end
+      assert(next(strict) == nil)
+    ''')
+    skada = ctx.skada
+    assert skada.initializerError is None, skada.initializerError
+    assert skada.version == "1.0.0"
+    primary = skada.UI.GetPrimary(skada.UI)
+    assert primary.frame is not None and primary.title is not None
+    assert len(skada.UI.windows) == 1
+    assert primary.db.snap is True and primary.db.snapDistance == 12 and primary.db.snapGap == 0 and primary.db.snapSize is True
+    assert skada.db.profile.windowBorderStyle == "solid"
+    border = skada.db.profile.windowBorderColor
+    assert border[1] == 0.10 and border[2] == 0.11 and border[3] == 0.14
+    assert skada.UI.visualActive is None
+    ctx.run(r'''
+      -- SkadaCompat.CreateFrame answers GetWidth/GetHeight with the last explicit size
+      -- while the client's rect still reads 0 (nothing rendered yet); the
+      -- stub stores sizes under "width"/"height", so zeroing those plays the
+      -- unrendered client.
+      local probe = SkadaCompat.CreateFrame("Frame", nil, UIParent)
+      probe:SetWidth(123)
+      probe:SetHeight(45)
+      rawset(probe, "width", 0)
+      rawset(probe, "height", 0)
+      assert(probe:GetWidth() == 123 and probe:GetHeight() == 45,
+        "explicit sizes must be reported before the first render pass")
+      rawset(probe, "width", 300)
+      assert(probe:GetWidth() == 300, "a rendered rect must win over the remembered explicit size")
+    ''')
+    ctx.run(r'''
+      local frame = Skada.UI:GetPrimary().frame
+      local border = Skada.db.profile.windowBorderColor
+      local edges = rawget(frame, "skadaBorderEdges")
+      assert(edges and edges[1].vertexR == border[1] and
+        edges[1].vertexG == border[2] and edges[1].vertexB == border[3],
+        "default bordered window did not load with its configured color")
+      assert(table.getn(edges) == 4 and edges[1].height == 1 and
+        edges[2].height == 1 and edges[3].width == 1 and edges[4].width == 1,
+        "primary window border is not one pixel on every side")
+      assert(not rawget(Skada.UI:GetPrimary().frame, "skadaShadow"),
+        "default bordered window created the grey outer glow")
+      local originalCount = table.getn(Skada.tickers)
+      local originalMinimum = Skada.minimumTickerInterval
+      local healthyCalls = 0
+      Skada:RegisterTicker("test-failing", 0.01, function() error("expected ticker failure") end)
+      Skada:RegisterTicker("test-healthy", 0.01, function() healthyCalls = healthyCalls + 1 end)
+      Skada.frame.OnUpdate(Skada.frame, 0.02)
+      assert(healthyCalls == 1, "a failing ticker prevented the next ticker from running")
+      Skada:RegisterTicker("test-failing", 1, function() end)
+      Skada:RegisterTicker("test-healthy", 1, function() end)
+      local raisedMinimum = Skada.minimumTickerInterval
+      assert(raisedMinimum == originalMinimum,
+        "re-registering the shortest tickers did not raise the runtime minimum")
+      Skada:UnregisterTicker("test-failing")
+      Skada:UnregisterTicker("test-healthy")
+      assert(Skada.minimumTickerInterval == originalMinimum,
+        "unregistering a ticker did not recompute the runtime minimum")
+
+      local minimum = Skada.minimumTickerInterval
+
+      Skada.UI.hasActiveAnimations = false
+      Skada.frame.OnUpdate(Skada.frame, 1)
+      local realGetTime, clockReads = GetTime, 0
+      GetTime = function()
+        clockReads = clockReads + 1
+        return realGetTime()
+      end
+      local quietFrame = math.min(minimum, 0.25) / 20
+      for i = 1, 10 do Skada.frame.OnUpdate(Skada.frame, quietFrame) end
+      local observedClockReads = clockReads
+      GetTime = realGetTime
+      assert(observedClockReads == 0,
+        "core read the clock on render frames before any ticker or display work was due")
+    ''')
