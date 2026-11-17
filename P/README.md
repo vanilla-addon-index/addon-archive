@@ -72,3 +72,4 @@
 | [pfUI-ThreatPlates](pfUI-ThreatPlates/) | Unit Frames | 1 | mirrored |
 | [PizzaSauce](PizzaSauce/) | Libraries | 1 | mirrored |
 | [pfQuest-SmartArrow](pfQuest-SmartArrow/) | Map & Minimap | 1 | mirrored |
+| [pfQuest_xpGuide](pfQuest_xpGuide/) | Quests & Leveling | 1 | mirrored |

@@ -1,0 +1,9 @@
+{
+  "id": "815",
+  "tag": "v1.1.2",
+  "name": "pfQuest xpGuide 1.1.2",
+  "body": "# pfQuest xpGuide 1.1.2 - arrow fix\r\n\r\nFixed: a \"Finish\" step for a quest that pfQuest has no objective spot for (a talk or delivery quest such as \"A Good Friend\") had no place, so pfQuest's own arrow showed the nearest objective of any quest in your log (for example The Woodland Protector). The step now points at where the quest is handed in.\r\n\r\n**Install:** extract the zip into `Interface\\AddOns` (it holds a `pfQuest_xpGuide` folder) and restart the game. Your settings carry over.",
+  "published": "2026-11-16T14:58:58Z",
+  "prerelease": false,
+  "url": "https://octowow.st/git/eineath/pfQuest_xpGuide/releases/tag/v1.1.2"
+}

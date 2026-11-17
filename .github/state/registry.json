@@ -30513,6 +30513,33 @@
       "active": true,
       "kind": "Combat",
       "site": "https://vanilla-addon-index.github.io/addon/skada"
+    },
+    {
+      "id": 1115,
+      "name": "pfQuest_xpGuide",
+      "folder": "P/pfQuest_xpGuide",
+      "components": [
+        {
+          "originalUrl": "https://octowow.st/git/eineath/pfQuest_xpGuide",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "eineath",
+            "repo": "pfQuest_xpGuide",
+            "name": "pfQuest_xpGuide",
+            "url": "https://octowow.st/git/eineath/pfQuest_xpGuide",
+            "api": "https://octowow.st/git/api/v1/repos/eineath/pfQuest_xpGuide"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "MIT"
+        }
+      ],
+      "active": true,
+      "kind": "Quests & Leveling",
+      "site": "https://vanilla-addon-index.github.io/addon/pfquest-xpguide"
     }
   ],
   "archiveTitle": "Addon archive",
