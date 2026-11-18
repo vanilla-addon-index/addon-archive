@@ -1058,5 +1058,6 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [AdeChatFix](A/AdeChatFix/) | Chat & Social | 1 | mirrored |
 | [Skada](S/Skada/) | Combat | 1 | mirrored |
 | [pfQuest_xpGuide](P/pfQuest_xpGuide/) | Quests & Leveling | 1 | mirrored |
+| [CraftRoute](C/CraftRoute/) | Professions | 1 | mirrored |
 
 This repository’s automation is MIT licensed. Mirrored source and release files retain their upstream license notices when provided.

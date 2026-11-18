@@ -86,3 +86,4 @@
 | [Chronometer](Chronometer/) | Combat | 2 | mirrored |
 | [Chronos](Chronos/) | Libraries | 1 | mirrored |
 | [ClassToolkit](ClassToolkit/) | Class | 1 | mirrored |
+| [CraftRoute](CraftRoute/) | Professions | 1 | mirrored |

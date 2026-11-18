@@ -1,0 +1,105 @@
+{
+  "upstream": "https://github.com/Kitymeowmeow-turt/CraftRoute",
+  "source": {
+    "kind": "repository",
+    "host": "github.com",
+    "owner": "Kitymeowmeow-turt",
+    "repo": "CraftRoute",
+    "name": "CraftRoute",
+    "url": "https://github.com/Kitymeowmeow-turt/CraftRoute",
+    "api": "https://api.github.com/repos/Kitymeowmeow-turt/CraftRoute"
+  },
+  "commit": "13724229bf6516adf6c54580168d3ce6f5c79b35",
+  "sourceFiles": {
+    "CHANGELOG.txt": {
+      "sha256": "8502134642b45eb3c00fda089e88272006a43e3efaf67e8e1f042609bfc3c2ef",
+      "bytes": 53746
+    },
+    "core.lua": {
+      "sha256": "9f2f780cd580809b7b87d5d3e902e3d6529502e88ae97af63ce62bd972b2d25b",
+      "bytes": 121341
+    },
+    "CraftRoute.toc": {
+      "sha256": "8a472afa795e4c59a597852f02941574bf1790d11f707d611ec4a12b542fcfda",
+      "bytes": 511
+    },
+    "data_alchemy.lua": {
+      "sha256": "783d62822249db22e53339ce96d486e57a37fd15eac8b84d1672b7a5323ae2b1",
+      "bytes": 25440
+    },
+    "data_blacksmithing.lua": {
+      "sha256": "fcdc9886f05e2a63389a5c3d8401ab1ad4bd7bc7ca0ad7bb8d623e8d2e28a740",
+      "bytes": 43822
+    },
+    "data_cooking.lua": {
+      "sha256": "24cc761bf5b95cafd380c20c58c07ab7484e892d1dbd41d0e88f9d9f9d16dbad",
+      "bytes": 19620
+    },
+    "data_enchanting.lua": {
+      "sha256": "62f23cc3f75fc3bebeb30320934d9610eec20d7cc0d38f9b16d7560325119f97",
+      "bytes": 12395
+    },
+    "data_engineering.lua": {
+      "sha256": "29f1ebbff057449be54324c5587a0cebce39f76ef9eff3944c5c770945c52ec4",
+      "bytes": 30877
+    },
+    "data_guide_wowprofessions.lua": {
+      "sha256": "ec6e84c9ed61f7bd2dc9331a673a7801d72853be5a7e6b177482a9ad14d3d936",
+      "bytes": 10434
+    },
+    "data_jewelcrafting.lua": {
+      "sha256": "3ad7ca020e479a3519b918ff8f0ac63e2afea966e6bf9bddbbfa94786ed9509d",
+      "bytes": 55278
+    },
+    "data_leatherworking.lua": {
+      "sha256": "c3ef525ce13823e489dbeb85d0992bc7fccb21daa860c2ca490c9971c6e7d3ae",
+      "bytes": 28175
+    },
+    "data_survival.lua": {
+      "sha256": "bbc9c18b97cccf0b3bb9c3a690a8be0d21db28a769eb6fb9ce4d5f66d81559cd",
+      "bytes": 23617
+    },
+    "data_tailoring.lua": {
+      "sha256": "397e214c0388b6aef9c3a43885bb5ae4eb3e30271ed4cd6a0dde332b157ebf77",
+      "bytes": 38832
+    },
+    "data_vendorprices.lua": {
+      "sha256": "cb8367d568445afc17cea2230d6cd397c02eb962abac1b5acbd885df595520d9",
+      "bytes": 10084
+    },
+    "data_vendorsellprices.lua": {
+      "sha256": "60108f2a05061023d507b98aa15ee475045b54eb5beda2f1ddb61f81195a63c6",
+      "bytes": 74355
+    },
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    "README.md": {
+      "sha256": "49952a1c22a8bfb8874163f2103d5ac0e853c9e44a9de11968bb88b20e86d285",
+      "bytes": 60221
+    },
+    "scan.lua": {
+      "sha256": "b71f9334ddeb6540eef1ac6eb9410cbb97036a702c575dd77a49c6bfd6f2d2a9",
+      "bytes": 19460
+    },
+    "slash.lua": {
+      "sha256": "15ba9eb1f2343889526eccbe0d08ecff55caac5d84a28af1e0c326948bdfa748",
+      "bytes": 26198
+    },
+    "tab.lua": {
+      "sha256": "4d27fff1a09dd6c13b68198876788fe83bf8104132e3f7de9d4ca9e2a3257746",
+      "bytes": 16699
+    },
+    "test_scan_data.lua": {
+      "sha256": "0164c46b49114cb823f5bc3186431b5e98b4fbfc166b6c13b6c534fb84542fe6",
+      "bytes": 533116
+    },
+    "ui.lua": {
+      "sha256": "b6b085d96e415536a75e576ed3f5ba2138178c93fd239107784b3f563d81ae93",
+      "bytes": 4559
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -30540,6 +30540,33 @@
       "active": true,
       "kind": "Quests & Leveling",
       "site": "https://vanilla-addon-index.github.io/addon/pfquest-xpguide"
+    },
+    {
+      "id": 1116,
+      "name": "CraftRoute",
+      "folder": "C/CraftRoute",
+      "components": [
+        {
+          "originalUrl": "https://github.com/Kitymeowmeow-turt/CraftRoute",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "github.com",
+            "owner": "Kitymeowmeow-turt",
+            "repo": "CraftRoute",
+            "name": "CraftRoute",
+            "url": "https://github.com/Kitymeowmeow-turt/CraftRoute",
+            "api": "https://api.github.com/repos/Kitymeowmeow-turt/CraftRoute"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "GPL-3.0"
+        }
+      ],
+      "active": true,
+      "kind": "Professions",
+      "site": "https://vanilla-addon-index.github.io/addon/craftroute"
     }
   ],
   "archiveTitle": "Addon archive",
