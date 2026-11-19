@@ -46,7 +46,7 @@
 | [PerfBoostSettings](PerfBoostSettings/) | Miscellaneous | 1 | mirrored |
 | [pfDebug](pfDebug/) | Miscellaneous | 1 | mirrored |
 | [pfDesktop](pfDesktop/) | UI & Appearance | 1 | mirrored |
-| [pfUI-autoinvite](pfUI-autoinvite/) | Chat & Social | 1 | mirrored |
+| [pfUI-autoinvite](pfUI-autoinvite/) | Chat & Social | 2 | mirrored |
 | [pfUI-bettertotems](pfUI-bettertotems/) | UI & Appearance | 1 | mirrored |
 | [pfUI-DQB](pfUI-DQB/) | UI & Appearance | 1 | mirrored |
 | [pfUI-El-Sequito-del-Terror-Edition](pfUI-El-Sequito-del-Terror-Edition/) | Miscellaneous | 1 | mirrored |

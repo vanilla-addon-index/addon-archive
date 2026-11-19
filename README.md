@@ -846,7 +846,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [PerfBoostSettings](P/PerfBoostSettings/) | Miscellaneous | 1 | mirrored |
 | [pfDebug](P/pfDebug/) | Miscellaneous | 1 | mirrored |
 | [pfDesktop](P/pfDesktop/) | UI & Appearance | 1 | mirrored |
-| [pfUI-autoinvite](P/pfUI-autoinvite/) | Chat & Social | 1 | mirrored |
+| [pfUI-autoinvite](P/pfUI-autoinvite/) | Chat & Social | 2 | mirrored |
 | [pfUI-bettertotems](P/pfUI-bettertotems/) | UI & Appearance | 1 | mirrored |
 | [pfUI-DQB](P/pfUI-DQB/) | UI & Appearance | 1 | mirrored |
 | [pfUI-El-Sequito-del-Terror-Edition](P/pfUI-El-Sequito-del-Terror-Edition/) | Miscellaneous | 1 | mirrored |

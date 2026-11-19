@@ -24082,6 +24082,23 @@
           "error": null,
           "active": true,
           "license": "Unspecified"
+        },
+        {
+          "originalUrl": "https://octowow.st/git/Hapto/pfUI-autoinvite",
+          "folder": "pfUI-autoinvite",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "Hapto",
+            "repo": "pfUI-autoinvite",
+            "name": "pfUI-autoinvite",
+            "url": "https://octowow.st/git/Hapto/pfUI-autoinvite",
+            "api": "https://octowow.st/git/api/v1/repos/Hapto/pfUI-autoinvite"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,

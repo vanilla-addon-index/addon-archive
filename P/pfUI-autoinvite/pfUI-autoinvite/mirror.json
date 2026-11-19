@@ -1,0 +1,45 @@
+{
+  "upstream": "https://octowow.st/git/Hapto/pfUI-autoinvite",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Hapto",
+    "repo": "pfUI-autoinvite",
+    "name": "pfUI-autoinvite",
+    "url": "https://octowow.st/git/Hapto/pfUI-autoinvite",
+    "api": "https://octowow.st/git/api/v1/repos/Hapto/pfUI-autoinvite"
+  },
+  "commit": "6bb4e3ec48ee736ea59ab4a00ddcab74ce86cf63",
+  "sourceFiles": {
+    "pfUI-autoinvite-config.lua": {
+      "sha256": "2f70bc18ed40c8c8316d27d74e09bf70a5b54ca3380c91a2d82542aaca3ef200",
+      "bytes": 1547
+    },
+    "pfUI-autoinvite-gui.lua": {
+      "sha256": "3f0715d4314ce98eacb4876a77e44ce621077e756effeeeb69dd6295acb645e8",
+      "bytes": 4802
+    },
+    "pfUI-autoinvite-panel.lua": {
+      "sha256": "29ee71343c750d2677f4940a84d9bc7f159821f2571e197beccf7d486a1d3028",
+      "bytes": 3593
+    },
+    "pfUI-autoinvite.lua": {
+      "sha256": "d758cb905fed338cfd7041f4b60ed8a26650819e88a3d4e61ed757cb921f92ff",
+      "bytes": 5580
+    },
+    "pfUI-autoinvite.toc": {
+      "sha256": "2c49e3f03276c8dd09a9783e265ca4e0d19a325fed5773addef765b3c2df9787",
+      "bytes": 388
+    },
+    "README.md": {
+      "sha256": "3dc653804c7f38591df909cd2f942b265c8bcddc282e43eb82b9c726f5330ffa",
+      "bytes": 1487
+    },
+    "settings.png": {
+      "sha256": "f9ea8b6c3e02970ef2c217fa08a25e6d43e6ebde674aabde5fc76d469f2a6ef2",
+      "bytes": 117446
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}
