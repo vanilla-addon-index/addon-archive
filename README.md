@@ -1059,5 +1059,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [Skada](S/Skada/) | Combat | 1 | mirrored |
 | [pfQuest_xpGuide](P/pfQuest_xpGuide/) | Quests & Leveling | 1 | mirrored |
 | [CraftRoute](C/CraftRoute/) | Professions | 1 | mirrored |
+| [OctoAuctionatorPlus](O/OctoAuctionatorPlus/) | Auction & Economy | 1 | mirrored |
+| [pfUI_CombatLedgerExt](P/pfUI_CombatLedgerExt/) | UI & Appearance | 1 | mirrored |
 
 This repository’s automation is MIT licensed. Mirrored source and release files retain their upstream license notices when provided.

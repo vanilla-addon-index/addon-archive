@@ -73,3 +73,4 @@
 | [PizzaSauce](PizzaSauce/) | Libraries | 1 | mirrored |
 | [pfQuest-SmartArrow](pfQuest-SmartArrow/) | Map & Minimap | 1 | mirrored |
 | [pfQuest_xpGuide](pfQuest_xpGuide/) | Quests & Leveling | 1 | mirrored |
+| [pfUI_CombatLedgerExt](pfUI_CombatLedgerExt/) | UI & Appearance | 1 | mirrored |

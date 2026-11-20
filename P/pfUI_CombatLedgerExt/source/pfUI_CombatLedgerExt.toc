@@ -1,0 +1,11 @@
+## Interface: 11200
+## Title: CombatLedger |cff33ffccpfUI Ext|r
+## Notes: Threat glow, threat %, aggro warning sound and screen-edge flash for the pfUI target frame, fed by CombatLedger. Aggro ring on hostile nameplates with off-screen edge dots (needs SuperWoW + UnitXP SP3).
+## Author: you
+## Version: 1.3.0
+## Dependencies: CombatLedger
+## OptionalDeps: pfUI, pfUI-eliteoverlay, SuperWoW, UnitXP_SP3, OctoPad
+## SavedVariables: CLpfUIThreatDB
+
+pfUI_CombatLedgerExt.lua
+pfUI_CombatLedgerExt_Ring.lua

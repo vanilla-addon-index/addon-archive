@@ -1,0 +1,58 @@
+{
+  "upstream": "https://octowow.st/git/eineath/pfUI_CombatLedgerExt",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "eineath",
+    "repo": "pfUI_CombatLedgerExt",
+    "name": "pfUI_CombatLedgerExt",
+    "url": "https://octowow.st/git/eineath/pfUI_CombatLedgerExt",
+    "api": "https://octowow.st/git/api/v1/repos/eineath/pfUI_CombatLedgerExt"
+  },
+  "commit": "19060c9c79c6d5540fcc228a3b159325365fc254",
+  "sourceFiles": {
+    "pfUI_CombatLedgerExt_Ring.lua": {
+      "sha256": "1ce7bf772f8242a68ff578bef60cec9ad10a40a5c1ce7f41064de03718a6f388",
+      "bytes": 23554
+    },
+    "pfUI_CombatLedgerExt.lua": {
+      "sha256": "a1f5fe90af1b4e69653b539b891859c41d26e3c06c285e6c6882c247329a1363",
+      "bytes": 17382
+    },
+    "pfUI_CombatLedgerExt.toc": {
+      "sha256": "60756a13dc2bb13ab2bdc8f6791dc5f75b364059fec7645cc2e2b22a3933d0b8",
+      "bytes": 502
+    },
+    "README.md": {
+      "sha256": "d5fddf6908f44d6c2e9e04747d1cb7e405502fbcbbda5217bf4177576735c0f8",
+      "bytes": 8751
+    },
+    "ringdot.tga": {
+      "sha256": "3d9d187c1ce3cade3f597c76bf63516999cca59a5c7104d4eed5da011a90a8c4",
+      "bytes": 4140
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "881": {
+      "tag": "v1.3.0",
+      "folder": "v1.3.0--881",
+      "assets": {
+        "118": {
+          "sha256": "e791ba95b044bca59f9113709aae1a70c6d26aab673c07a028d5b7aa748c37ce",
+          "bytes": 18506,
+          "id": "118",
+          "name": "pfUI_CombatLedgerExt.zip",
+          "url": "https://octowow.st/git/eineath/pfUI_CombatLedgerExt/releases/download/v1.3.0/pfUI_CombatLedgerExt.zip",
+          "path": "releases/v1.3.0--881/assets/pfUI_CombatLedgerExt.zip"
+        }
+      },
+      "source": {
+        "sha256": "7256529796c8d727ac3059672432b6addaca36f7a722dc16d8c18fa259fd6f33",
+        "bytes": 16407,
+        "path": "releases/v1.3.0--881/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/eineath/pfUI_CombatLedgerExt/archive/v1.3.0.tar.gz"
+      }
+    }
+  }
+}

@@ -30584,6 +30584,60 @@
       "active": true,
       "kind": "Professions",
       "site": "https://vanilla-addon-index.github.io/addon/craftroute"
+    },
+    {
+      "id": 1117,
+      "name": "OctoAuctionatorPlus",
+      "folder": "O/OctoAuctionatorPlus",
+      "components": [
+        {
+          "originalUrl": "https://github.com/PastaStomp/OctoAuctionatorPlus",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "github.com",
+            "owner": "PastaStomp",
+            "repo": "OctoAuctionatorPlus",
+            "name": "OctoAuctionatorPlus",
+            "url": "https://github.com/PastaStomp/OctoAuctionatorPlus",
+            "api": "https://api.github.com/repos/PastaStomp/OctoAuctionatorPlus"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        }
+      ],
+      "active": true,
+      "kind": "Auction & Economy",
+      "site": "https://vanilla-addon-index.github.io/addon/octoauctionatorplus"
+    },
+    {
+      "id": 1118,
+      "name": "pfUI_CombatLedgerExt",
+      "folder": "P/pfUI_CombatLedgerExt",
+      "components": [
+        {
+          "originalUrl": "https://octowow.st/git/eineath/pfUI_CombatLedgerExt",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "eineath",
+            "repo": "pfUI_CombatLedgerExt",
+            "name": "pfUI_CombatLedgerExt",
+            "url": "https://octowow.st/git/eineath/pfUI_CombatLedgerExt",
+            "api": "https://octowow.st/git/api/v1/repos/eineath/pfUI_CombatLedgerExt"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        }
+      ],
+      "active": true,
+      "kind": "UI & Appearance",
+      "site": "https://vanilla-addon-index.github.io/addon/pfui-combatledgerext"
     }
   ],
   "archiveTitle": "Addon archive",
