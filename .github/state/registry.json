@@ -27046,6 +27046,23 @@
           "error": null,
           "active": true,
           "license": "GPL"
+        },
+        {
+          "originalUrl": "https://octowow.st/git/OEVG/Atlas-CFM",
+          "folder": "Atlas-CFM--OEVG",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "OEVG",
+            "repo": "Atlas-CFM",
+            "name": "Atlas-CFM",
+            "url": "https://octowow.st/git/OEVG/Atlas-CFM",
+            "api": "https://octowow.st/git/api/v1/repos/OEVG/Atlas-CFM"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "GPL"
         }
       ],
       "active": true,

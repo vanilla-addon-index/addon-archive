@@ -1,0 +1,16 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+
+	<!-- Core Localization System -->
+	<Include file="LocalizationFramework.lua"/>
+
+	<!-- Core UI Strings -->
+	<Include file="enUS\Core.lua"/>
+	<!-- GameData Modules -->
+	<Include file="enUS\Zones.lua"/>
+	<Include file="enUS\Bosses.lua"/>
+	<Include file="enUS\Classes.lua"/>
+	<Include file="enUS\Factions.lua"/>
+	<Include file="enUS\Spells.lua"/>
+	<Include file="enUS\ItemSets.lua"/>
+	<Include file="enUS\MapData.lua"/>
+</Ui>

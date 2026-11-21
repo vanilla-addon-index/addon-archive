@@ -1,0 +1,17 @@
+## Interface: 11200
+## Title: Atlas-CFM
+## Notes: instance map browser; shows possible boss loot and instance quests.
+## Version: 1.89.1
+## Author: CFM, etc
+## SavedVariables: AtlasCFMOptions, AtlasCFMStubOptions
+## SavedVariablesPerCharacter: AtlasCFMCharDB, AtlasCFMStubCharDB
+## OptionalDeps: EquipCompare, EQCompare, pfQuest, pfUI
+
+CFMAtlas\AtlasConfig.lua
+CFMAtlas\AtlasServer.lua
+Locales\locales.xml
+Stub\Persistence.lua
+Stub\Loader.lua
+Stub\Minimap.lua
+Stub\MarkerNames.lua
+CFMAtlas\AtlasMapMarkers.lua

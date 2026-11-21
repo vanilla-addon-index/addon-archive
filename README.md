@@ -951,7 +951,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [ZonesLevel](Z/ZonesLevel/) | Map & Minimap | 1 | mirrored |
 | [_Nameplates](#/_Nameplates/) | Unit Frames | 1 | mirrored |
 | [AddOnOrganizer](A/AddOnOrganizer/) | Miscellaneous | 1 | mirrored |
-| [Atlas](A/Atlas/) | Raid & Party | 2 | mirrored |
+| [Atlas](A/Atlas/) | Raid & Party | 3 | mirrored |
 | [AtlasLoot](A/AtlasLoot/) | Raid & Party | 2 | mirrored |
 | [AtlasQuest](A/AtlasQuest/) | Raid & Party | 1 | mirrored |
 | [BigWigs](B/BigWigs/) | Boss Mods | 4 | mirrored |

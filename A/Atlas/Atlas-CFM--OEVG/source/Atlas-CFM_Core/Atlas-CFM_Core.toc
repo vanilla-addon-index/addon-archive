@@ -1,0 +1,26 @@
+## Interface: 11200
+## Title: Atlas-CFM |cff999999Core|r
+## Notes: Maps, loot tables and quest data for Atlas-CFM. Loaded on demand the first time Atlas-CFM is used; leave it enabled.
+## Version: 1.89.1
+## Author: CFM, etc
+## Dependencies: Atlas-CFM
+## OptionalDeps: EquipCompare, EQCompare, pfQuest, pfUI
+## LoadOnDemand: 1
+
+Replay\Begin.lua
+Locales\QuestData.xml
+CFMLoot\Core\Utils.lua
+CFMLoot\Core\Cache.lua
+CFMLoot\Core\ItemDB.lua
+CFMLoot\Data\DataInit.xml
+CFMAtlas\AtlasDropDown.lua
+CFMAtlas\AtlasUILogic.lua
+CFMAtlas\Atlas.lua
+CFMAtlas\AtlasHewdrop.lua
+CFMAtlas\AtlasUI.lua
+CFMAtlas\AtlaspfUI.lua
+CFMAtlas\AtlasOptionsUI.lua
+CFMAtlas\AtlasOptions.lua
+CFMLoot\LootInit.xml
+CFMQuest\QuestInit.xml
+Replay\End.lua

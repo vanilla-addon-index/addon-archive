@@ -73,7 +73,7 @@
 | [AutoProfit](AutoProfit/) | Auction & Economy | 1 | mirrored |
 | [AutoShot](AutoShot/) | Miscellaneous | 1 | mirrored |
 | [AddOnOrganizer](AddOnOrganizer/) | Miscellaneous | 1 | mirrored |
-| [Atlas](Atlas/) | Raid & Party | 2 | mirrored |
+| [Atlas](Atlas/) | Raid & Party | 3 | mirrored |
 | [AtlasLoot](AtlasLoot/) | Raid & Party | 2 | mirrored |
 | [AtlasQuest](AtlasQuest/) | Raid & Party | 1 | mirrored |
 | [AnySCT](AnySCT/) | Combat | 1 | mirrored |
