@@ -23,7 +23,7 @@
 | [RogueTick](RogueTick/) | Class | 1 | mirrored |
 | [RogueTicker](RogueTicker/) | Class | 1 | mirrored |
 | [RoleplayingHelper](RoleplayingHelper/) | Roleplay | 2 | mirrored |
-| [RollFor](RollFor/) | Loot Distribution | 2 | mirrored |
+| [RollFor](RollFor/) | Loot Distribution | 3 | mirrored |
 | [RoundRobinhood](RoundRobinhood/) | Loot Distribution | 1 | mirrored |
 | [RageTracker](RageTracker/) | Class | 1 | mirrored |
 | [RaidOrganizer](RaidOrganizer/) | Raid & Party | 1 | mirrored |

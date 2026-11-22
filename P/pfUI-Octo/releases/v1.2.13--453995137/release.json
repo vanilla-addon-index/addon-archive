@@ -1,0 +1,9 @@
+{
+  "id": "453995137",
+  "tag": "v1.2.13",
+  "name": "pfUI Octo 1.2.13",
+  "body": "## 📜 New in 1.2.13\n\n- 🧩 **Pick your parts when you install:** the installer has a new \"Which parts do you want?\" step. Click tiles to turn Meters, Combat Text, OctoDoTs, OctoRinse, the Auction House and 17 more on or off, or use All on / All off. Already installed? Run `/pfui install` to see it.\n- ✉️ **A tidier Send tab:** the money controls have their own panel, so nothing overlaps. A line under the amount says what will happen (\"They pay 5g for each of the 3 mails\"), and Clear and a bigger Send button sit in their own column.\n\n",
+  "published": "2026-11-21T21:25:50Z",
+  "prerelease": false,
+  "url": "https://github.com/bdot89/pfUI-Octo/releases/tag/v1.2.13"
+}

@@ -66,7 +66,7 @@
 | [AutoReputationBar](AutoReputationBar/) | Quests & Leveling | 1 | mirrored |
 | [AutoSpellRanker](AutoSpellRanker/) | Combat | 1 | mirrored |
 | [AutoTurnIn](AutoTurnIn/) | Quests & Leveling | 2 | mirrored |
-| [Aux](_Aux/) | Auction & Economy | 5 | error, mirrored |
+| [Aux](_Aux/) | Auction & Economy | 6 | error, mirrored |
 | [AuxMerchantPrices](AuxMerchantPrices/) | Auction & Economy | 1 | mirrored |
 | [Avbars](Avbars/) | PvP | 1 | mirrored |
 | [AutoMessage](AutoMessage/) | Chat & Social | 1 | mirrored |

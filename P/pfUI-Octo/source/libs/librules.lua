@@ -1,0 +1,341 @@
+-- load pfUI environment
+setfenv(1, pfUI:GetEnvironment())
+
+--[[ librules ]]--
+-- pfUI Octo (9 Nov 2026): item rules written once, used by the loot filter
+-- (modules/lootfilter.lua) and the bag categories (modules/bags-octo.lua).
+-- Bread (Discord), on Bagshui: "you can make categories using itemIDs with a
+-- combination of prompts to automate sorting ... picks up keywords like iron
+-- ore, iron bar but excludes armor/weapon/quests". Written fresh (Bagshui's
+-- licence not checked): a rule is a Lua expression over these checks,
+-- joined with and / or / not and brackets, e.g.
+--   (Name("Ore", "Bar") or Tooltip("Smelted")) and Type("Trade Goods") and not Type("Armor", "Quest")
+--
+-- Checks (text is matched anywhere, any case; several arguments = any of them):
+--   Name(...)        NameIs(...)     ID(...)
+--   Type(...)        Subtype(...)    Equip(...)  (no argument: anything you can wear)
+--   Quality(...)     "poor" "common" "uncommon" "rare" "epic" "legendary", or 0-6
+--   MinQuality(q)    MaxQuality(q)
+--   Level(min, max)  the level needed to use it
+--   Tooltip(...)     any tooltip line
+--   BoE()  BoP()  Soulbound()  Quest()  Stackable()  Count(min)
+--   Value(min, max)  vendor price in copper, when the client tells it (ClassicAPI)
+--
+--   pfUI.rules.Compile(text)       -> fn or nil, error
+--   pfUI.rules.Info(item, bag, slot) item = ID, "item:..." or a link; bag/slot for the tooltip
+--   pfUI.rules.Match(fn, info)     -> true / false (an error counts as false)
+--   pfUI.rules.Test(text, item)    -> matched, error (for the "Try it" box)
+
+if pfUI.rules then return end
+local R = {}
+pfUI.rules = R
+
+local lower, find, gsub = string.lower, string.find, string.gsub
+
+R.QUALITY = { poor = 0, grey = 0, gray = 0, common = 1, white = 1, uncommon = 2, green = 2, rare = 3, blue = 3,
+  epic = 4, purple = 4, legendary = 5, orange = 5, artifact = 6 }
+R.QUALITY_NAMES = { [0] = "Poor", "Common", "Uncommon", "Rare", "Epic", "Legendary", "Artifact" }
+
+local function Q(v)
+  if type(v) == "number" then return v end
+  if type(v) == "string" then return R.QUALITY[lower(v)] or tonumber(v) end
+end
+
+-- ---------------------------------------------------------------- the item
+-- GetItemInfo: 1.12 gives name, link, quality, min level, type, subtype,
+-- stack, equip slot, texture; ClassicAPI may give the later order (item
+-- level and min level, then type ..., texture, sell price). Told apart by
+-- the fifth answer: text in 1.12, a number in the later order.
+function R.ItemInfo(id)
+  if not id or type(_G.GetItemInfo) ~= "function" then return nil end
+  local a = { _G.GetItemInfo(id) }
+  if not a[1] then return nil end
+  local t = { name = a[1], link = a[2], quality = tonumber(a[3]) }
+  if type(a[5]) == "number" then
+    t.ilvl, t.level, t.type, t.subtype, t.stack, t.equip, t.tex, t.value = a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11]
+  else
+    t.level, t.type, t.subtype, t.stack, t.equip, t.tex = a[4], a[5], a[6], a[7], a[8], a[9]
+  end
+  t.level, t.stack, t.value = tonumber(t.level), tonumber(t.stack), tonumber(t.value)
+  return t
+end
+
+function R.IdOf(item)
+  if type(item) == "number" then return item end
+  if type(item) == "string" then
+    local _, _, id = find(item, "item:(%d+)")
+    return tonumber(id or item)
+  end
+end
+
+function R.Info(item, bag, slot, count)
+  local id = R.IdOf(item)
+  local t = R.ItemInfo(id) or {}
+  t.id, t.bag, t.slot = id, bag, slot
+  t.count = count or t.count
+  if not t.name and type(item) == "string" then
+    local _, _, n = find(item, "%[(.-)%]")
+    t.name = n
+  end
+  -- (12 Nov 2026) an item the client has not cached yet: its name from pfQuest's item database
+  if not t.name and id and type(_G.pfDB) == "table" and type(_G.pfDB.items) == "table" then
+    local loc = _G.pfDB.items.loc or _G.pfDB.items.enUS
+    local n = type(loc) == "table" and loc[id]
+    if type(n) == "table" then n = n[1] end
+    if type(n) == "string" then t.name = n end
+  end
+  return t
+end
+
+-- tooltip lines, read once per item and only when a rule asks
+local function Lines(info)
+  if info.lines then return info.lines end
+  local lines = {}
+  local lib = pfUI.api and pfUI.api.libtipscan
+  local scan = lib and lib:GetScanner("rules")
+  if scan then
+    local ok
+    if info.roll and scan.SetLootRollItem then
+      -- (16 Nov 2026, OctoLazy) an item up for a roll: its own tooltip, red where you cannot use it
+      ok = pcall(scan.SetLootRollItem, scan, info.roll)
+    elseif info.bag and info.slot then
+      ok = pcall(scan.SetBagItem, scan, info.bag, info.slot)
+    elseif info.id then
+      ok = pcall(scan.SetHyperlink, scan, "item:" .. info.id .. ":0:0:0")
+    end
+    if ok and scan.Color and _G.RED_FONT_COLOR then
+      local red = scan:Color(_G.RED_FONT_COLOR)
+      -- line 1 is the name (a red name is never the reason); a red line = you cannot use it
+      info.red = red and red > 1 and true or false
+    end
+    if ok then
+      local text = scan:Text()
+      for i = 1, table.getn(text or {}) do
+        local l, r = text[i][1], text[i][2]
+        if l then table.insert(lines, lower(l)) end
+        if r then table.insert(lines, lower(r)) end
+      end
+    end
+  end
+  info.lines = lines
+  return lines
+end
+R.Lines = Lines
+
+-- ---------------------------------------------------------------- checks
+local cur -- the item being tested
+local function Has(text, list)
+  if not text then return false end
+  text = lower(text)
+  for i = 1, table.getn(list) do
+    if find(text, lower(tostring(list[i])), 1, true) then return true end
+  end
+  return false
+end
+local function TipHas(words)
+  local lines = Lines(cur)
+  for i = 1, table.getn(lines) do
+    for j = 1, table.getn(words) do
+      if find(lines[i], lower(words[j]), 1, true) then return true end
+    end
+  end
+  return false
+end
+
+-- up to 12 words per check, as a list (no "...": the game's Lua 5.0 and the
+-- tests' LuaJIT read it differently)
+local function L(a, b, c, d, e, f, g, h, i, j, k, l)
+  local t, all = {}, { a, b, c, d, e, f, g, h, i, j, k, l }
+  for n = 1, 12 do if all[n] ~= nil then table.insert(t, all[n]) end end
+  return t
+end
+local env = {}
+function env.Name(a, b, c, d, e, f, g, h, i, j, k, l) return Has(cur.name, L(a, b, c, d, e, f, g, h, i, j, k, l)) end
+function env.NameIs(a, b, c, d, e, f, g, h, i, j, k, l)
+  local n, list = cur.name and lower(cur.name), L(a, b, c, d, e, f, g, h, i, j, k, l)
+  for x = 1, table.getn(list) do if n == lower(tostring(list[x])) then return true end end
+  return false
+end
+function env.ID(a, b, c, d, e, f, g, h, i, j, k, l)
+  local list = L(a, b, c, d, e, f, g, h, i, j, k, l)
+  for x = 1, table.getn(list) do if tonumber(list[x]) == cur.id then return true end end
+  return false
+end
+function env.Type(a, b, c, d, e, f, g, h, i, j, k, l) return Has(cur.type, L(a, b, c, d, e, f, g, h, i, j, k, l)) end
+function env.Subtype(a, b, c, d, e, f, g, h, i, j, k, l) return Has(cur.subtype, L(a, b, c, d, e, f, g, h, i, j, k, l)) end
+function env.Equip(a, b, c, d, e, f, g, h, i, j, k, l)
+  local slot, list = cur.equip, L(a, b, c, d, e, f, g, h, i, j, k, l)
+  if table.getn(list) == 0 then return slot ~= nil and slot ~= "" end
+  return Has(slot, list) or Has(slot and _G[slot], list)
+end
+function env.Quality(a, b, c, d, e, f, g, h, i, j, k, l)
+  local list = L(a, b, c, d, e, f, g, h, i, j, k, l)
+  for x = 1, table.getn(list) do if Q(list[x]) == cur.quality then return true end end
+  return false
+end
+function env.MinQuality(q) return cur.quality ~= nil and cur.quality >= (Q(q) or 0) end
+function env.MaxQuality(q) return cur.quality ~= nil and cur.quality <= (Q(q) or 6) end
+function env.Level(lo, hi)
+  local l = cur.level or 0
+  return l >= (tonumber(lo) or 0) and l <= (tonumber(hi) or 999)
+end
+function env.Tooltip(a, b, c, d, e, f, g, h, i, j, k, l) return TipHas(L(a, b, c, d, e, f, g, h, i, j, k, l)) end
+function env.BoE() return TipHas({ lower(_G.ITEM_BIND_ON_EQUIP or "Binds when equipped") }) end
+function env.BoP() return TipHas({ lower(_G.ITEM_BIND_ON_PICKUP or "Binds when picked up") }) end
+function env.Soulbound() return TipHas({ lower(_G.ITEM_SOULBOUND or "Soulbound") }) end
+-- (12 Nov 2026, Bread: Auto Loot "isn't picking up quest items") a quest drop the client has not seen
+-- yet has no type and an empty tooltip, so Quest() missed it and a later rule (greys) could leave it.
+-- The items your quest log asks for ("Gnoll Paw: 3/8") count too, by name.
+function R.QuestLogItems()
+  local now = GetTime and GetTime() or 0
+  if R.qlogAt and now - R.qlogAt < 2 and R.qlog then return R.qlog end
+  local out = {}
+  if type(_G.GetNumQuestLogEntries) == "function" and type(_G.GetQuestLogLeaderBoard) == "function" then
+    local sel = _G.GetQuestLogSelection and _G.GetQuestLogSelection()
+    local n = _G.GetNumQuestLogEntries() or 0
+    for i = 1, n do
+      local _, _, _, header, _, complete = _G.GetQuestLogTitle(i)
+      if not header and _G.SelectQuestLogEntry then
+        _G.SelectQuestLogEntry(i)
+        for j = 1, (_G.GetNumQuestLeaderBoards and _G.GetNumQuestLeaderBoards() or 0) do
+          local text, kind, done = _G.GetQuestLogLeaderBoard(j)
+          if text and kind == "item" then
+            local _, _, item = find(text, "^(.-):%s*%d+%s*/%s*%d+")
+            if item then out[lower(item)] = true end
+          end
+        end
+      end
+    end
+    if sel and _G.SelectQuestLogEntry then _G.SelectQuestLogEntry(sel) end
+  end
+  R.qlog, R.qlogAt = out, now
+  return out
+end
+
+function env.Quest()
+  if Has(cur.type, { "Quest" }) or TipHas({ lower(_G.ITEM_BIND_QUEST or "Quest Item"), "quest item" }) then return true end
+  return cur.name and R.QuestLogItems()[lower(cur.name)] and true or false
+end
+-- ---------------------------------------------------------------- (16 Nov 2026, OctoLazy's roll rules)
+-- Usable()     no red line in its tooltip: your class, skill and level can use it
+-- Known()      a recipe / book you already know ("Already known")
+-- Upgrade()    something you wear, with a higher item level (ClassicAPI) or else a higher
+--              level needed than what you wear there now; an empty slot is an upgrade
+-- Owned(n)     you carry at least n of it (bags)
+-- Zone(...)    the zone or sub zone you are in
+-- Instance(...) "raid" "dungeon" "pvp" "arena" "world" ("none" = the open world)
+-- InRaid()  InGroup()  Class(...)  your class (any case, English or the game's word)
+function env.Usable()
+  Lines(cur)
+  return not cur.red
+end
+function env.Known()
+  return TipHas({ lower(_G.ITEM_SPELL_KNOWN or "Already known") })
+end
+-- an item's equip slot -> the inventory slots it can go in
+R.SLOTS = {
+  INVTYPE_HEAD = { 1 }, INVTYPE_NECK = { 2 }, INVTYPE_SHOULDER = { 3 }, INVTYPE_BODY = { 4 }, INVTYPE_CHEST = { 5 },
+  INVTYPE_ROBE = { 5 }, INVTYPE_WAIST = { 6 }, INVTYPE_LEGS = { 7 }, INVTYPE_FEET = { 8 }, INVTYPE_WRIST = { 9 },
+  INVTYPE_HAND = { 10 }, INVTYPE_FINGER = { 11, 12 }, INVTYPE_TRINKET = { 13, 14 }, INVTYPE_CLOAK = { 15 },
+  INVTYPE_WEAPON = { 16, 17 }, INVTYPE_2HWEAPON = { 16 }, INVTYPE_WEAPONMAINHAND = { 16 }, INVTYPE_WEAPONOFFHAND = { 17 },
+  INVTYPE_SHIELD = { 17 }, INVTYPE_HOLDABLE = { 17 }, INVTYPE_RANGED = { 18 }, INVTYPE_RANGEDRIGHT = { 18 },
+  INVTYPE_THROWN = { 18 }, INVTYPE_RELIC = { 18 }, INVTYPE_TABARD = { 19 },
+}
+local function Worn(slot)
+  local link = _G.GetInventoryItemLink and _G.GetInventoryItemLink("player", slot)
+  if not link then return nil end
+  return R.ItemInfo(R.IdOf(link)) or {}
+end
+function env.Upgrade()
+  local slots = cur.equip and R.SLOTS[cur.equip]
+  if not slots then return false end
+  local mine = cur.ilvl or cur.level or 0
+  for i = 1, table.getn(slots) do
+    local w = Worn(slots[i])
+    if not w then return true end
+    local theirs = (cur.ilvl and w.ilvl) or w.level or 0
+    if mine > theirs then return true end
+  end
+  return false
+end
+function env.Owned(n)
+  if not cur.id or type(_G.GetContainerNumSlots) ~= "function" then return false end
+  local have = 0
+  for bag = 0, 4 do
+    for slot = 1, (_G.GetContainerNumSlots(bag) or 0) do
+      local link = _G.GetContainerItemLink(bag, slot)
+      if link and R.IdOf(link) == cur.id then
+        local _, c = _G.GetContainerItemInfo(bag, slot)
+        have = have + (tonumber(c) or 1)
+      end
+    end
+  end
+  return have >= (tonumber(n) or 1)
+end
+function env.Zone(a, b, c, d, e, f, g, h, i, j, k, l)
+  local list = L(a, b, c, d, e, f, g, h, i, j, k, l)
+  return Has(_G.GetRealZoneText and _G.GetRealZoneText(), list) or Has(_G.GetSubZoneText and _G.GetSubZoneText(), list)
+end
+function R.InstanceType()
+  local inside, kind = false, nil
+  if type(_G.IsInInstance) == "function" then inside, kind = _G.IsInInstance() end
+  if not inside then return "world" end
+  if kind == "party" then return "dungeon" end
+  return kind or "dungeon"
+end
+function env.Instance(a, b, c, d, e, f, g, h, i, j, k, l)
+  local here, list = R.InstanceType(), L(a, b, c, d, e, f, g, h, i, j, k, l)
+  for x = 1, table.getn(list) do
+    local w = lower(tostring(list[x]))
+    if w == here or (w == "none" and here == "world") or (w == "party" and here == "dungeon") or (w == "bg" and here == "pvp") then return true end
+  end
+  return false
+end
+function env.InRaid() return (_G.GetNumRaidMembers and _G.GetNumRaidMembers() or 0) > 0 end
+function env.InGroup() return env.InRaid() or (_G.GetNumPartyMembers and _G.GetNumPartyMembers() or 0) > 0 end
+function env.Class(a, b, c, d, e, f, g, h, i, j, k, l)
+  local name, file = _G.UnitClass and _G.UnitClass("player")
+  return Has(name, L(a, b, c, d, e, f, g, h, i, j, k, l)) or Has(file, L(a, b, c, d, e, f, g, h, i, j, k, l))
+end
+function env.Stackable() return (cur.stack or 1) > 1 end
+function env.Count(n) return (cur.count or 1) >= (tonumber(n) or 1) end
+function env.Value(lo, hi)
+  local v = cur.value
+  if not v then return false end
+  return v >= (tonumber(lo) or 0) and v <= (tonumber(hi) or 1e12)
+end
+R.env = env
+
+-- ---------------------------------------------------------------- rules
+local cache = {}
+function R.Compile(text)
+  if type(text) ~= "string" or not find(text, "%S") then return nil, "empty rule" end
+  local c = cache[text]
+  if c then return c.fn, c.err end
+  local fn, err = loadstring("return (" .. text .. "\n)", "rule")
+  if fn then
+    setfenv(fn, setmetatable({}, { __index = env }))
+  else
+    err = gsub(tostring(err), "^.-:%d+: ", "")
+  end
+  cache[text] = { fn = fn, err = err }
+  return fn, err
+end
+
+function R.Match(fn, info)
+  if not fn or not info then return false end
+  local prev = cur
+  cur = info
+  local ok, res = pcall(fn)
+  cur = prev
+  return ok and res and true or false, (not ok) and res or nil
+end
+
+function R.Test(text, item)
+  local fn, err = R.Compile(text)
+  if not fn then return false, err end
+  local info = type(item) == "table" and item or R.Info(item)
+  if not info.name then return false, "item not known to the client yet" end
+  local hit, rerr = R.Match(fn, info)
+  return hit, rerr
+end

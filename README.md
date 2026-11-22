@@ -77,7 +77,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [AutoReputationBar](A/AutoReputationBar/) | Quests & Leveling | 1 | mirrored |
 | [AutoSpellRanker](A/AutoSpellRanker/) | Combat | 1 | mirrored |
 | [AutoTurnIn](A/AutoTurnIn/) | Quests & Leveling | 2 | mirrored |
-| [Aux](A/_Aux/) | Auction & Economy | 5 | error, mirrored |
+| [Aux](A/_Aux/) | Auction & Economy | 6 | error, mirrored |
 | [AuxMerchantPrices](A/AuxMerchantPrices/) | Auction & Economy | 1 | mirrored |
 | [Avbars](A/Avbars/) | PvP | 1 | mirrored |
 | [Bagnon](B/Bagnon/) | Bags & Inventory | 2 | mirrored |
@@ -288,7 +288,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [RogueTick](R/RogueTick/) | Class | 1 | mirrored |
 | [RogueTicker](R/RogueTicker/) | Class | 1 | mirrored |
 | [RoleplayingHelper](R/RoleplayingHelper/) | Roleplay | 2 | mirrored |
-| [RollFor](R/RollFor/) | Loot Distribution | 2 | mirrored |
+| [RollFor](R/RollFor/) | Loot Distribution | 3 | mirrored |
 | [RoundRobinhood](R/RoundRobinhood/) | Loot Distribution | 1 | mirrored |
 | [SafeShift](S/SafeShift/) | Class | 2 | mirrored |
 | [Samuel](S/Samuel/) | Class | 1 | mirrored |
@@ -1061,5 +1061,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [CraftRoute](C/CraftRoute/) | Professions | 1 | mirrored |
 | [OctoAuctionatorPlus](O/OctoAuctionatorPlus/) | Auction & Economy | 1 | mirrored |
 | [pfUI_CombatLedgerExt](P/pfUI_CombatLedgerExt/) | UI & Appearance | 1 | mirrored |
+| [GimmetbarbieAddonManager](G/GimmetbarbieAddonManager/) | Miscellaneous | 1 | mirrored |
+| [pfUI-Octo](P/pfUI-Octo/) | UI & Appearance | 1 | mirrored |
 
 This repository’s automation is MIT licensed. Mirrored source and release files retain their upstream license notices when provided.

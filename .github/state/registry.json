@@ -2044,6 +2044,23 @@
           "error": null,
           "active": true,
           "license": "Unspecified"
+        },
+        {
+          "originalUrl": "https://octowow.st/git/OEVG/aux-addon-ClassicAPI",
+          "folder": "aux-addon-ClassicAPI--OEVG",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "OEVG",
+            "repo": "aux-addon-ClassicAPI",
+            "name": "aux-addon-ClassicAPI",
+            "url": "https://octowow.st/git/OEVG/aux-addon-ClassicAPI",
+            "api": "https://octowow.st/git/api/v1/repos/OEVG/aux-addon-ClassicAPI"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -7107,7 +7124,7 @@
           },
           "status": "mirrored",
           "error": null,
-          "active": true,
+          "active": false,
           "license": "MIT"
         },
         {
@@ -8287,6 +8304,23 @@
             "name": "RollFor",
             "url": "https://github.com/sica42/RollFor",
             "api": "https://api.github.com/repos/sica42/RollFor"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        },
+        {
+          "originalUrl": "https://octowow.st/git/OEVG/RollFor",
+          "folder": "RollFor--OEVG",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "OEVG",
+            "repo": "RollFor",
+            "name": "RollFor",
+            "url": "https://octowow.st/git/OEVG/RollFor",
+            "api": "https://octowow.st/git/api/v1/repos/OEVG/RollFor"
           },
           "status": "mirrored",
           "error": null,
@@ -30655,6 +30689,60 @@
       "active": true,
       "kind": "UI & Appearance",
       "site": "https://vanilla-addon-index.github.io/addon/pfui-combatledgerext"
+    },
+    {
+      "id": 1119,
+      "name": "GimmetbarbieAddonManager",
+      "folder": "G/GimmetbarbieAddonManager",
+      "components": [
+        {
+          "originalUrl": "https://octowow.st/git/OEVG/GimmetbarbieAddonManager",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "OEVG",
+            "repo": "GimmetbarbieAddonManager",
+            "name": "GimmetbarbieAddonManager",
+            "url": "https://octowow.st/git/OEVG/GimmetbarbieAddonManager",
+            "api": "https://octowow.st/git/api/v1/repos/OEVG/GimmetbarbieAddonManager"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        }
+      ],
+      "active": true,
+      "kind": "Miscellaneous",
+      "site": "https://vanilla-addon-index.github.io/addon/gimmetbarbieaddonmanager"
+    },
+    {
+      "id": 1120,
+      "name": "pfUI-Octo",
+      "folder": "P/pfUI-Octo",
+      "components": [
+        {
+          "originalUrl": "https://github.com/bdot89/pfUI-Octo",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "github.com",
+            "owner": "bdot89",
+            "repo": "pfUI-Octo",
+            "name": "pfUI-Octo",
+            "url": "https://github.com/bdot89/pfUI-Octo",
+            "api": "https://api.github.com/repos/bdot89/pfUI-Octo"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "MIT"
+        }
+      ],
+      "active": true,
+      "kind": "UI & Appearance",
+      "site": "https://vanilla-addon-index.github.io/addon/pfui-octo-bdot89"
     }
   ],
   "archiveTitle": "Addon archive",

@@ -9,5 +9,6 @@
 | aux-addon | https://github.com/Otari98/aux-addon | mirrored |
 | Aux-Revamped-opaque | https://github.com/ftkun/Aux-Revamped-opaque | mirrored |
 | Aux-addon--acid9000 | https://github.com/acid9000/Aux-addon | mirrored |
+| aux-addon-ClassicAPI--OEVG | https://octowow.st/git/OEVG/aux-addon-ClassicAPI | mirrored |
 
 Original READMEs and license files live inside each `source/` directory. `mirror.json` records commits, releases and SHA-256 digests. Downloaded programs are upstream originals; this archive does not build or execute them.

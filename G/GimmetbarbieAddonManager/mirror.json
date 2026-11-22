@@ -1,0 +1,57 @@
+{
+  "upstream": "https://octowow.st/git/OEVG/GimmetbarbieAddonManager",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "OEVG",
+    "repo": "GimmetbarbieAddonManager",
+    "name": "GimmetbarbieAddonManager",
+    "url": "https://octowow.st/git/OEVG/GimmetbarbieAddonManager",
+    "api": "https://octowow.st/git/api/v1/repos/OEVG/GimmetbarbieAddonManager"
+  },
+  "commit": "8b17f55375146867902a370907da4083d0ea8689",
+  "sourceFiles": {
+    ".gitattributes.upstream": {
+      "sha256": "d60f352d0db1404c70afb4bb8b2ca3fd1c610572aa40720e8a0b7baa7885418c",
+      "bytes": 19
+    },
+    "CHANGELOG.md": {
+      "sha256": "7e0401d4017767b5cf77d2280a2f879cfcf4967ccdc46ed0214898dd3972606f",
+      "bytes": 1030
+    },
+    "GimmetbarbieAddonManager.lua": {
+      "sha256": "c5424246e545b69bf1c5c8e60f6ec0d9b8c3a8c46871b3d43e26cea3cad7a5c0",
+      "bytes": 70178
+    },
+    "GimmetbarbieAddonManager.toc": {
+      "sha256": "75380998697586a28b72d0dff158dc44e7645dc500afee695077d6c206a10280",
+      "bytes": 386
+    },
+    "README.md": {
+      "sha256": "22f5ab60794db6ee7312faf103351d55c50fdffde8ac679a39e7794f0cf5a20b",
+      "bytes": 4206
+    },
+    "tools/test_button_and_drawer.lua": {
+      "sha256": "4fd3e15f8c764ed26d3e694379736ccb4fbda01203dc3949cae0b4e4ed4f892e",
+      "bytes": 7879
+    },
+    "tools/test_profiles.lua": {
+      "sha256": "22d7907113ac74c8775e407b6c82947617893e6c57d82025d811a326d148fd45",
+      "bytes": 8175
+    },
+    "tools/test_release_persistence.lua": {
+      "sha256": "0dfc3a5860fcdefb65fee7705a35359f5c26b1093712a0735feb094200fda1bb",
+      "bytes": 13832
+    },
+    "tools/vanilla_lint.lua": {
+      "sha256": "e9c5a3b118ff6bbfb4a069cd5b10a77edd3553cdb27f90d8bf6397a1a48fab2c",
+      "bytes": 8556
+    },
+    "tools/wow_stub.lua": {
+      "sha256": "f8e78f4bd085d2fef1f4f548dbc5deadeacdd542e6c99559e7b5703dd67180c7",
+      "bytes": 14660
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

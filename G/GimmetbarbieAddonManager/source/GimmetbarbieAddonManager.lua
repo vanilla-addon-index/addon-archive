@@ -1,0 +1,1753 @@
+--[[
+    Addon:       GimmetbarbieAddonManager (folder/internal name - GetAddOnInfo,
+                 ADDON_LOADED, and SavedVariables all key off this, matching the
+                 folder/.toc/.lua names and the GitHub repo; displays in-game as
+                 "Gimmetbarbie Addon Manager" in the window/chat, and "GB Addon
+                 Manager" in the .toc Title shown by the character-select screen
+                 and other addons' lists)
+    Description: In-game addon list for WoW 1.12 clients that have no built-in one.
+                 - Enable/disable any installed addon (takes effect after /reloadui,
+                   same as the character-select AddOns screen - the client only reads
+                   that state at login, there's no way around that).
+                 - A minimap icon that collects other addons' minimap buttons into a
+                   flyout drawer to unclutter the minimap ring.
+                 - Quick-launch commands are auto-discovered: addons register slash
+                   commands as plain globals (SLASH_X1="/x", SlashCmdList["X"]=...),
+                   and globals are visible to every addon via _G. We watch each
+                   addon's ADDON_LOADED event and diff _G for new SLASH_* entries
+                   that appeared during its load, attributing them automatically -
+                   so a newly installed addon needs no manual update here. A small
+                   hand-picked override table takes priority for a few addons where
+                   the auto-picked command isn't the best one to show.
+
+    Slash Commands:
+        /am              toggle the addon list window
+        /am reload       reloads the UI (applies pending enable/disable changes)
+        /am rescan       force a minimap-button collection pass
+        /am resetbutton  put the addon's button back beside the minimap
+        /am profile      list profile slots; /am profile 1 loads slot 1,
+                         /am profile save|name|clear 1 [name] manage it
+        /am autoclose N  close the drawer after N seconds without the cursor
+                         on it (default 5; "off" to keep it open)
+
+    Released buttons persist. Whether you release one from the settings menu or
+    by dragging it out of the drawer, the decision is remembered by frame NAME
+    in AM_ReleasedButtons and honoured on the next login - a frame reference is
+    meaningless in the next session, a name is not.
+        /am probe        dumps GetAddOnInfo(1)'s raw return values to chat, for
+                          verifying this client's exact field order (see NOTE below)
+        /am commands     lists how many slash commands were auto-discovered per addon
+--]]
+
+-- ---------------------------------------------------------------------------------------------
+-- NOTE on GetAddOnInfo: different client builds have returned slightly different field
+-- orders for this call over the years, so AM.ParseAddOnInfo() (below) detects the
+-- "loadable" boolean and "reason" string by their TYPE rather than trusting a fixed
+-- position - that holds regardless of which slot each is actually returned in. An
+-- addon is treated as unchecked when reason == "DISABLED". "/am probe" still dumps
+-- the raw values if something still looks wrong.
+-- ---------------------------------------------------------------------------------------------
+
+AM = {}
+AM.ADDON_NAME = "GimmetbarbieAddonManager"
+AM.PAGE_SIZE  = 14
+AM.ROW_HEIGHT = 20
+AM.activeTab  = "enabled"
+
+-- ===================== Error log =====================
+-- seterrorhandler() lets an addon see every Lua error thrown by ANY addon, not
+-- just its own - that's the mechanism tools like BugSack use. We wrap whatever
+-- handler is already installed (rather than replacing it) so we don't break
+-- anything else relying on the default error display/behavior.
+AM.errorLog = {}
+AM.ERROR_LOG_MAX = 200
+
+local AM_previousErrorHandler = geterrorhandler()
+seterrorhandler(function(msg)
+    table.insert(AM.errorLog, { time = date("%H:%M:%S"), msg = tostring(msg) })
+    while table.getn(AM.errorLog) > AM.ERROR_LOG_MAX do
+        table.remove(AM.errorLog, 1)
+    end
+    AM_ErrorLog = AM.errorLog
+    if AM.errorBox and AM.activeTab == "errors" then
+        AM.RefreshErrorsPanel()
+    end
+    if AM_previousErrorHandler then
+        AM_previousErrorHandler(msg)
+    end
+end)
+
+-- ===================== Command overrides =====================
+-- Hand-picked for addons where the auto-discovered command isn't the best one to
+-- show (see the auto-discovery engine further down). Takes priority over whatever
+-- gets auto-discovered for the same addon; everything not listed here is filled in
+-- automatically at login with zero maintenance required.
+-- {label, cmdText, SlashCmdList key} - the key lets us call the handler directly
+-- instead of going through the chat editbox (see AM.RunCommand). BigWigs isn't
+-- listed here because it registers through AceConsole's abstraction rather than a
+-- plain SLASH_X global, so its real key isn't safely guessable by hand - it's left
+-- to auto-discovery, which finds the real key correctly regardless of how a command
+-- was registered.
+AM.COMMAND_OVERRIDES = {
+    ["Aegis_RallyPower"]  = { {"Open", "/rpc", "AEGISRP"} },
+    ["AtlasLoot"]         = { {"Open", "/atlasloot", "ATLASLOOT"} },
+    ["aux-addon"]         = { {"Open", "/aux", "AUX"} },
+    ["Decursive"]         = { {"Open", "/decursive", "DECURSIVE"} },
+    ["DoiteAuras"]        = { {"Open", "/da", "DOITEAURAS"} },
+    ["GNS"]               = { {"Open", "/gns", "GNS"} },
+    ["ItemRack"]          = { {"Open", "/itemrack", "ItemRackCOMMAND"} },
+    ["LevelRange-Turtle"] = { {"Open", "/lr", "LEVELRANGE"} },
+    ["ModernMapMarkers"]  = { {"Open", "/mmm", "MMM"} },
+    ["ModernSpellBook"]   = { {"Open", "/msb", "MODERNSPELLBOOK"} },
+    ["perfboostsettings"] = { {"Enable", "/pbenable", "PBENABLE"} },
+    ["pfExtend"]          = { {"Open", "/pfex", "pfExtendCmd"} },
+    ["pfQuest"]           = { {"Open", "/pfquest", "PFDB"} },
+    ["Quiver"]            = { {"Open", "/quiver", "QUIVER"} },
+    ["Rested"]            = { {"Status", "/rested", "RESTED"}, {"Help", "/rested help", "RESTED"} },
+    ["ShaguDPS"]          = { {"Open", "/shagudps", "SHAGUMETER"} },
+    ["ShaguPlates"]       = { {"Open", "/shaguplates", "SHAGUPLATES"} },
+    ["ShaguTweaks"]       = { {"Open", "/stweaks", "STWEAKS"} },
+    ["T-RestedXP"]        = { {"Open", "/trestedxp", "TRESTEDXP"} },
+    ["TurtleMail"]        = { {"Open", "/turtlemail", "TURTLEMAIL"} },
+    ["TWThreat"]          = { {"Open", "/twt", "TWT"} },
+    ["UnitXP_SP3_Addon"]  = { {"Open", "/unitxp", "UNITXP"} },
+    ["_LazyPig"]          = { {"Open", "/lp", "LAZYPIG"} },
+}
+
+AM.REASON_TEXT = {
+    DISABLED           = "disabled",
+    MISSING            = "files missing",
+    INTERFACE_VERSION  = "wrong client version",
+    DEP_DISABLED       = "dependency disabled",
+    DEP_MISSING        = "dependency missing",
+    DEP_BROKEN         = "dependency broken",
+    TOO_MANY_BANKS     = "too many bank slots",
+    ASCII_NAME         = "bad addon name",
+    UNASCII_NAME       = "bad addon name",
+}
+
+-- ===================== Auto-discovered slash commands =====================
+-- Watches _G for new SLASH_* globals appearing during each addon's ADDON_LOADED
+-- event and attributes them to that addon. Only the *1 (primary) alias of each
+-- command family is kept, and only families that actually have a handler
+-- registered in SlashCmdList. Capped at 2 per addon to match the row UI.
+AM.DiscoveredCommands = {}
+AM.seenSlashKeys = {}
+
+function AM.ScanNewSlashCommands(ownerAddon)
+    local firstSeenThisPass = {}
+    for k, v in pairs(_G) do
+        if type(k) == "string" and type(v) == "string" and not AM.seenSlashKeys[k] then
+            local s, e, base, idx = string.find(k, "^SLASH_(.+)(%d+)$")
+            if base and idx == "1" and SlashCmdList[base] and not firstSeenThisPass[base] then
+                firstSeenThisPass[base] = v
+            end
+            AM.seenSlashKeys[k] = true
+        end
+    end
+
+    if not ownerAddon then return end
+    for base, cmd in pairs(firstSeenThisPass) do
+        local list = AM.DiscoveredCommands[ownerAddon]
+        if not list then
+            list = {}
+            AM.DiscoveredCommands[ownerAddon] = list
+        end
+        if table.getn(list) < 2 then
+            table.insert(list, { cmd, cmd, base })
+        end
+    end
+end
+
+function AM.DumpDiscoveredCommands()
+    AM.Say("auto-discovered commands by addon:")
+    for addonName, list in pairs(AM.DiscoveredCommands) do
+        local cmds = ""
+        for _, entry in ipairs(list) do
+            cmds = cmds .. entry[2] .. " "
+        end
+        DEFAULT_CHAT_FRAME:AddMessage("  " .. addonName .. ": " .. cmds)
+    end
+end
+
+-- One-time baseline: whichever addon's ADDON_LOADED fires first (alphabetically,
+-- that's usually us) would otherwise have EVERY pre-existing SLASH_* global -
+-- Blizzard's own built-ins (/gmotd etc.) and libraries loaded earlier (AceConsole's
+-- /print etc.) - all show up as "new" in the same pairs(_G) pass and get credited
+-- to it, since pairs() has no defined order and could easily fill both of that
+-- addon's 2 slots before its own real command is even seen. Marking everything
+-- that already exists as "seen" up front, with no owner, fixes that: only commands
+-- that appear AFTER this point (i.e. registered by an addon's own file) get
+-- attributed to anyone.
+AM.ScanNewSlashCommands(nil)
+
+-- ---------------------------------------------------------------------------------------------
+-- Helpers
+-- ---------------------------------------------------------------------------------------------
+function AM.Say(msg)
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF008fecGimmetbarbie Addon Manager|r: " .. msg)
+end
+
+-- Runs a slash command. Prefers calling its SlashCmdList handler directly (reliable -
+-- we know exactly which function that is), falling back to feeding it through the
+-- chat editbox only when we don't have a key for it.
+function AM.RunCommand(cmdText, key)
+    if key and SlashCmdList[key] then
+        local s, e, slashPart, args = string.find(cmdText, "^(/%S+)%s*(.-)$")
+        local ok = pcall(SlashCmdList[key], args or "")
+        if ok then return end
+    end
+
+    local ok2 = pcall(function()
+        ChatFrame1EditBox:SetText(cmdText)
+        ChatEdit_SendText(ChatFrame1EditBox, 1)
+    end)
+    if not ok2 then
+        AM.Say("couldn't run " .. cmdText .. " - try typing it manually.")
+    end
+end
+
+function AM.Probe()
+    local a, b, c, d, e, f = GetAddOnInfo(1)
+    AM.Say("GetAddOnInfo(1) raw values:")
+    DEFAULT_CHAT_FRAME:AddMessage("  1: " .. tostring(a))
+    DEFAULT_CHAT_FRAME:AddMessage("  2: " .. tostring(b))
+    DEFAULT_CHAT_FRAME:AddMessage("  3: " .. tostring(c))
+    DEFAULT_CHAT_FRAME:AddMessage("  4: " .. tostring(d))
+    DEFAULT_CHAT_FRAME:AddMessage("  5: " .. tostring(e))
+    DEFAULT_CHAT_FRAME:AddMessage("  6: " .. tostring(f))
+end
+
+-- ---------------------------------------------------------------------------------------------
+-- Addon list data
+-- ---------------------------------------------------------------------------------------------
+AM.addons = {}
+AM.filtered = {}
+AM.page = 0
+AM.filterText = ""
+AM.settingsPage = 0
+
+-- GetAddOnInfo's exact field order for slots 4+ isn't reliably known across client
+-- builds (that guess was wrong here, which is why the list showed everything as
+-- enabled). Instead of guessing a position, find "loadable" and "reason" by TYPE -
+-- loadable is always a boolean, reason is always a string-or-nil - which holds
+-- regardless of which slot each one is actually returned in.
+function AM.ParseAddOnInfo(index)
+    local name, title, notes, a4, a5, a6 = GetAddOnInfo(index)
+    local loadable, reason
+
+    -- checked individually (not via a loop over {a4,a5,a6}) so a nil in an earlier
+    -- slot can't short-circuit checking the later ones
+    if type(a4) == "boolean" then loadable = a4
+    elseif type(a5) == "boolean" then loadable = a5
+    elseif type(a6) == "boolean" then loadable = a6 end
+
+    if type(a4) == "string" then reason = a4
+    elseif type(a5) == "string" then reason = a5
+    elseif type(a6) == "string" then reason = a6 end
+
+    if loadable == nil then loadable = true end
+    return name, title, notes, loadable, reason
+end
+
+function AM.BuildAddonList()
+    AM.addons = {}
+    local n = GetNumAddOns()
+    for i = 1, n do
+        local name, title, notes, loadable, reason = AM.ParseAddOnInfo(i)
+        local isEnabled = (reason ~= "DISABLED")
+        table.insert(AM.addons, {
+            index          = i,
+            name           = name,
+            title          = title or name,
+            notes          = notes,
+            loadable       = loadable,
+            reason         = reason,
+            enabled        = isEnabled,
+            originalEnabled = isEnabled, -- fixed at list-build time, for the "needs reload" marker
+        })
+    end
+
+    table.sort(AM.addons, function(a, b)
+        return string.lower(a.title) < string.lower(b.title)
+    end)
+
+    AM.ApplyFilter()
+end
+
+function AM.ApplyFilter()
+    AM.filtered = {}
+    local needle = string.lower(AM.filterText or "")
+    -- Filtered by originalEnabled (state as of last list build/reload), not the
+    -- live-toggled "enabled" - otherwise clicking to disable something in the
+    -- Enabled tab would make it vanish immediately instead of staying put with a
+    -- "*reload needed*" marker until the reload actually happens.
+    local wantEnabled = (AM.activeTab == "enabled")
+    for _, row in ipairs(AM.addons) do
+        if row.originalEnabled == wantEnabled
+            and (needle == "" or string.find(string.lower(row.title), needle, 1, true)
+                or string.find(string.lower(row.name), needle, 1, true)) then
+            table.insert(AM.filtered, row)
+        end
+    end
+    local maxPage = math.floor((table.getn(AM.filtered) - 1) / AM.PAGE_SIZE)
+    if maxPage < 0 then maxPage = 0 end
+    if AM.page > maxPage then AM.page = maxPage end
+end
+
+function AM.ToggleAddonRow(row)
+    -- No character argument: passing one "defensively" turned out to make the call
+    -- silently no-op instead of being harmlessly ignored, which is why disabling
+    -- something didn't survive a reload.
+    if row.enabled then
+        DisableAddOn(row.index)
+        row.enabled = false
+    else
+        EnableAddOn(row.index)
+        row.enabled = true
+    end
+    AM.pendingReload = true
+    AM.RefreshWindow()
+end
+
+-- ---------------------------------------------------------------------------------------------
+-- Profiles: saved enable/disable sets (e.g. one for raiding)
+-- ---------------------------------------------------------------------------------------------
+-- AM_Profiles[slot] = { name = "Raid", states = { [addonFolderName] = true/false } }
+-- Keyed by folder name, not index, because indices shift when addons are added or
+-- removed. Addons installed after a profile was saved aren't in its states table,
+-- and loading the profile leaves them as they are.
+AM.PROFILE_SLOTS = 4
+
+function AM.GetProfile(slot)
+    AM_Profiles = AM_Profiles or {}
+    return AM_Profiles[slot]
+end
+
+function AM.ProfileName(slot)
+    local p = AM.GetProfile(slot)
+    if p and p.name and p.name ~= "" then return p.name end
+    return "Profile " .. slot
+end
+
+function AM.EnsureAddonList()
+    if table.getn(AM.addons) == 0 then AM.BuildAddonList() end
+end
+
+function AM.SaveProfile(slot)
+    AM.EnsureAddonList()
+    AM_Profiles = AM_Profiles or {}
+    local old = AM_Profiles[slot]
+    local states, count = {}, 0
+    for _, row in ipairs(AM.addons) do
+        states[row.name] = row.enabled and true or false
+        if row.enabled then count = count + 1 end
+    end
+    AM_Profiles[slot] = { name = old and old.name, states = states }
+    AM.Say("saved " .. AM.ProfileName(slot) .. " (" .. count .. " addons enabled).")
+    AM.RefreshWindow()
+end
+
+-- Applies a profile's enable/disable states. Like toggling by hand, this only
+-- takes effect after a reload. This addon is never disabled by a profile, so you
+-- can't lock yourself out of the manager.
+function AM.LoadProfile(slot, reloadNow)
+    local p = AM.GetProfile(slot)
+    if not p or not p.states then
+        AM.Say(AM.ProfileName(slot) .. " is empty. Shift+click its number to save the current setup into it.")
+        return
+    end
+    AM.EnsureAddonList()
+    local changed = 0
+    for _, row in ipairs(AM.addons) do
+        local want = p.states[row.name]
+        if row.name == AM.ADDON_NAME then want = true end
+        if want ~= nil and want ~= row.enabled then
+            if want then EnableAddOn(row.index) else DisableAddOn(row.index) end
+            row.enabled = want
+            changed = changed + 1
+        end
+    end
+    if changed > 0 then AM.pendingReload = true end
+    if reloadNow and (changed > 0 or AM.pendingReload) then
+        ReloadUI()
+        return
+    end
+    if changed == 0 then
+        AM.Say(AM.ProfileName(slot) .. " is already active.")
+    else
+        AM.Say("loaded " .. AM.ProfileName(slot) .. " (" .. changed .. " changes). Reload UI to apply.")
+    end
+    AM.RefreshWindow()
+end
+
+-- True when every addon the profile knows about is currently set the way the
+-- profile wants it.
+function AM.ProfileMatches(slot)
+    local p = AM.GetProfile(slot)
+    if not p or not p.states then return false end
+    for _, row in ipairs(AM.addons) do
+        local want = p.states[row.name]
+        if want ~= nil and row.name ~= AM.ADDON_NAME and want ~= row.enabled then
+            return false
+        end
+    end
+    return true
+end
+
+function AM.RenameProfile(slot, name)
+    AM_Profiles = AM_Profiles or {}
+    AM_Profiles[slot] = AM_Profiles[slot] or {}
+    if name == "" then name = nil end
+    AM_Profiles[slot].name = name
+    AM.Say("slot " .. slot .. " is now called " .. AM.ProfileName(slot) .. ".")
+    AM.RefreshWindow()
+end
+
+function AM.ClearProfile(slot)
+    AM_Profiles = AM_Profiles or {}
+    AM_Profiles[slot] = nil
+    AM.Say("cleared profile slot " .. slot .. ".")
+    AM.RefreshWindow()
+end
+
+function AM.UpdateProfileButtons()
+    local f = AM.mainFrame
+    if not f or not f.profileButtons then return end
+    for slot = 1, AM.PROFILE_SLOTS do
+        local btn = f.profileButtons[slot]
+        if not AM.GetProfile(slot) or not AM.GetProfile(slot).states then
+            btn:SetText("|cFF777777" .. slot .. "|r")   -- empty
+            btn:UnlockHighlight()
+        elseif AM.ProfileMatches(slot) then
+            btn:SetText("|cFF00FF7F" .. slot .. "|r")   -- current setup matches
+            btn:LockHighlight()
+        else
+            btn:SetText("|cFFFFFFFF" .. slot .. "|r")   -- saved, not active
+            btn:UnlockHighlight()
+        end
+    end
+end
+
+function AM.ShowProfileTooltip(btn)
+    local slot = btn.slot
+    local p = AM.GetProfile(slot)
+    GameTooltip:SetOwner(btn, "ANCHOR_BOTTOM")
+    GameTooltip:SetText(AM.ProfileName(slot))
+    if p and p.states then
+        local on, off = 0, 0
+        for _, v in pairs(p.states) do
+            if v then on = on + 1 else off = off + 1 end
+        end
+        GameTooltip:AddLine(on .. " enabled, " .. off .. " disabled", 0.8, 0.8, 0.8)
+        if AM.ProfileMatches(slot) then
+            GameTooltip:AddLine("Matches your current setup", 0, 1, 0.5)
+        end
+        GameTooltip:AddLine("Click: load", 1, 1, 1)
+        GameTooltip:AddLine("Ctrl+click: load and reload now", 1, 1, 1)
+        GameTooltip:AddLine("Shift+click: overwrite with current setup", 1, 1, 1)
+    else
+        GameTooltip:AddLine("Empty", 0.6, 0.6, 0.6)
+        GameTooltip:AddLine("Shift+click: save current setup here", 1, 1, 1)
+    end
+    GameTooltip:AddLine("/am profile name " .. slot .. " <name> to rename", 0.6, 0.6, 0.6)
+    GameTooltip:Show()
+end
+
+-- ---------------------------------------------------------------------------------------------
+-- Main window
+-- ---------------------------------------------------------------------------------------------
+function AM.CreateMainFrame()
+    local f = CreateFrame("Frame", "AM_MainFrame", UIParent)
+    f:SetWidth(460); f:SetHeight(420)
+    f:SetPoint("CENTER", UIParent, "CENTER", 0, 40)
+    f:SetBackdrop({
+        bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+        edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+        tile = true, tileSize = 16, edgeSize = 16,
+        insets = { left = 4, right = 4, top = 4, bottom = 4 }
+    })
+    f:SetMovable(true); f:EnableMouse(true)
+    f:RegisterForDrag("LeftButton")
+    f:SetScript("OnDragStart", function() f:StartMoving() end)
+    f:SetScript("OnDragStop", function()
+        f:StopMovingOrSizing()
+        local point, _, relPoint, x, y = f:GetPoint()
+        AM_FramePos = { point = point, relPoint = relPoint, x = x, y = y }
+    end)
+    f:Hide()
+
+    local title = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    title:SetPoint("TOP", f, "TOP", 0, -12)
+    title:SetText("Gimmetbarbie Addon Manager")
+
+    local close = CreateFrame("Button", "AM_CloseBtn", f, "UIPanelCloseButton")
+    close:SetPoint("TOPRIGHT", f, "TOPRIGHT", -4, -4)
+    close:SetScript("OnClick", function() f:Hide() end)
+
+    -- Tabs
+    local tabEnabled = CreateFrame("Button", "AM_TabEnabled", f, "UIPanelButtonTemplate")
+    tabEnabled:SetWidth(64); tabEnabled:SetHeight(20)
+    tabEnabled:SetPoint("TOPLEFT", f, "TOPLEFT", 14, -30)
+    tabEnabled:SetText("Enabled")
+    tabEnabled:SetScript("OnClick", function() AM.SetTab("enabled") end)
+    f.tabEnabled = tabEnabled
+
+    local tabDisabled = CreateFrame("Button", "AM_TabDisabled", f, "UIPanelButtonTemplate")
+    tabDisabled:SetWidth(64); tabDisabled:SetHeight(20)
+    tabDisabled:SetPoint("LEFT", tabEnabled, "RIGHT", 4, 0)
+    tabDisabled:SetText("Disabled")
+    tabDisabled:SetScript("OnClick", function() AM.SetTab("disabled") end)
+    f.tabDisabled = tabDisabled
+
+    local tabErrors = CreateFrame("Button", "AM_TabErrors", f, "UIPanelButtonTemplate")
+    tabErrors:SetWidth(64); tabErrors:SetHeight(20)
+    tabErrors:SetPoint("LEFT", tabDisabled, "RIGHT", 4, 0)
+    tabErrors:SetText("Errors")
+    tabErrors:SetScript("OnClick", function() AM.SetTab("errors") end)
+    f.tabErrors = tabErrors
+
+    local tabSettings = CreateFrame("Button", "AM_TabSettings", f, "UIPanelButtonTemplate")
+    tabSettings:SetWidth(70); tabSettings:SetHeight(20)
+    tabSettings:SetPoint("LEFT", tabErrors, "RIGHT", 4, 0)
+    tabSettings:SetText("Settings")
+    tabSettings:SetScript("OnClick", function() AM.SetTab("settings") end)
+    f.tabSettings = tabSettings
+
+    -- Reload banner/button
+    local reloadBtn = CreateFrame("Button", "AM_ReloadBtn", f, "UIPanelButtonTemplate")
+    reloadBtn:SetWidth(100); reloadBtn:SetHeight(22)
+    reloadBtn:SetPoint("TOPRIGHT", f, "TOPRIGHT", -14, -52)
+    reloadBtn:SetText("Reload UI")
+    reloadBtn:SetScript("OnClick", function() ReloadUI() end)
+    f.reloadBtn = reloadBtn
+
+    local banner = f:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    -- Sits at the right of the tab row; the space beside the Reload button now
+    -- holds the profile buttons.
+    banner:SetPoint("TOPRIGHT", f, "TOPRIGHT", -16, -38)
+    banner:SetTextColor(1, 0.5, 0.2)
+    banner:SetText("")
+    f.banner = banner
+
+    -- Filter box (Addons tab only)
+    local filterLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    filterLabel:SetPoint("TOPLEFT", f, "TOPLEFT", 16, -54)
+    filterLabel:SetText("Filter:")
+    f.filterLabel = filterLabel
+
+    local filterBox = CreateFrame("EditBox", "AM_FilterBox", f, "InputBoxTemplate")
+    filterBox:SetWidth(140); filterBox:SetHeight(18)
+    filterBox:SetPoint("LEFT", filterLabel, "RIGHT", 8, 0)
+    filterBox:SetAutoFocus(false)
+    filterBox:SetScript("OnTextChanged", function()
+        AM.filterText = this:GetText()
+        AM.page = 0
+        AM.ApplyFilter()
+        AM.RefreshWindow()
+    end)
+    filterBox:SetScript("OnEscapePressed", function() this:ClearFocus() end)
+    f.filterBox = filterBox
+
+    -- Profile slots, between the filter box and the Reload button
+    f.profileButtons = {}
+    for slot = AM.PROFILE_SLOTS, 1, -1 do
+        local pb = CreateFrame("Button", "AM_ProfileBtn" .. slot, f, "UIPanelButtonTemplate")
+        pb:SetWidth(26); pb:SetHeight(22)
+        if slot == AM.PROFILE_SLOTS then
+            pb:SetPoint("RIGHT", reloadBtn, "LEFT", -12, 0)
+        else
+            pb:SetPoint("RIGHT", f.profileButtons[slot + 1], "LEFT", -3, 0)
+        end
+        pb.slot = slot
+        pb:SetText(slot)
+        pb:SetScript("OnClick", function()
+            if IsShiftKeyDown() then
+                AM.SaveProfile(this.slot)
+            else
+                AM.LoadProfile(this.slot, IsControlKeyDown())
+            end
+            AM.ShowProfileTooltip(this)
+        end)
+        pb:SetScript("OnEnter", function() AM.ShowProfileTooltip(this) end)
+        pb:SetScript("OnLeave", function() GameTooltip:Hide() end)
+        f.profileButtons[slot] = pb
+    end
+
+    -- List area
+    local listTop = -78
+    f.rows = {}
+    for i = 1, AM.PAGE_SIZE do
+        local row = CreateFrame("Frame", "AM_Row" .. i, f)
+        row:SetWidth(432); row:SetHeight(AM.ROW_HEIGHT)
+        row:SetPoint("TOPLEFT", f, "TOPLEFT", 14, listTop - (i - 1) * (AM.ROW_HEIGHT + 2))
+
+        local toggle = CreateFrame("Button", "AM_Row" .. i .. "Toggle", row, "UIPanelButtonTemplate")
+        toggle:SetWidth(60); toggle:SetHeight(18)
+        toggle:SetPoint("LEFT", row, "LEFT", 0, 0)
+        toggle:SetScript("OnClick", function()
+            local r = this:GetParent()
+            if r.data then AM.ToggleAddonRow(r.data) end
+        end)
+        row.toggle = toggle
+
+        local label = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        label:SetPoint("LEFT", toggle, "RIGHT", 6, 0)
+        label:SetWidth(182); label:SetJustifyH("LEFT")
+        row.label = label
+
+        row.cmdButtons = {}
+        for c = 1, 2 do
+            local btn = CreateFrame("Button", "AM_Row" .. i .. "Cmd" .. c, row, "UIPanelButtonTemplate")
+            btn:SetWidth(58); btn:SetHeight(18)
+            btn:Hide()
+            row.cmdButtons[c] = btn
+        end
+
+        f.rows[i] = row
+    end
+
+    -- Pagination controls
+    local pageLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    pageLabel:SetPoint("BOTTOM", f, "BOTTOM", 0, 14)
+    pageLabel:SetText("")
+    f.pageLabel = pageLabel
+
+    local prevBtn = CreateFrame("Button", "AM_PrevBtn", f, "UIPanelButtonTemplate")
+    prevBtn:SetWidth(70); prevBtn:SetHeight(20)
+    prevBtn:SetPoint("RIGHT", pageLabel, "LEFT", -10, 0)
+    prevBtn:SetText("< Prev")
+    prevBtn:SetScript("OnClick", function()
+        if AM.activeTab == "settings" then
+            if AM.settingsPage > 0 then
+                AM.settingsPage = AM.settingsPage - 1
+                AM.RefreshSettingsPanel()
+            end
+        else
+            if AM.page > 0 then
+                AM.page = AM.page - 1
+                AM.RefreshWindow()
+            end
+        end
+    end)
+
+    local nextBtn = CreateFrame("Button", "AM_NextBtn", f, "UIPanelButtonTemplate")
+    nextBtn:SetWidth(70); nextBtn:SetHeight(20)
+    nextBtn:SetPoint("LEFT", pageLabel, "RIGHT", 10, 0)
+    nextBtn:SetText("Next >")
+    nextBtn:SetScript("OnClick", function()
+        if AM.activeTab == "settings" then
+            local totalItems = table.getn(AM.collectedList) + table.getn(AM.releasedList)
+            local maxPage = math.floor((totalItems - 1) / table.getn(AM.mainFrame.settingsRows))
+            if maxPage < 0 then maxPage = 0 end
+            if AM.settingsPage < maxPage then
+                AM.settingsPage = AM.settingsPage + 1
+                AM.RefreshSettingsPanel()
+            end
+        else
+            local maxPage = math.floor((table.getn(AM.filtered) - 1) / AM.PAGE_SIZE)
+            if maxPage < 0 then maxPage = 0 end
+            if AM.page < maxPage then
+                AM.page = AM.page + 1
+                AM.RefreshWindow()
+            end
+        end
+    end)
+    f.prevBtn = prevBtn
+    f.nextBtn = nextBtn
+
+    -- ---------------- Errors tab ----------------
+    local clearLogBtn = CreateFrame("Button", "AM_ClearLogBtn", f, "UIPanelButtonTemplate")
+    clearLogBtn:SetWidth(90); clearLogBtn:SetHeight(20)
+    clearLogBtn:SetPoint("TOPLEFT", f, "TOPLEFT", 16, -54)
+    clearLogBtn:SetText("Clear Log")
+    clearLogBtn:SetScript("OnClick", function()
+        AM.errorLog = {}
+        AM_ErrorLog = AM.errorLog
+        AM.RefreshErrorsPanel()
+    end)
+    clearLogBtn:Hide()
+    f.clearLogBtn = clearLogBtn
+
+    local errorCountLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    errorCountLabel:SetPoint("LEFT", clearLogBtn, "RIGHT", 10, 0)
+    errorCountLabel:SetText("")
+    errorCountLabel:Hide()
+    f.errorCountLabel = errorCountLabel
+
+    local copyHint = f:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+    copyHint:SetPoint("TOPLEFT", f, "TOPLEFT", 16, -70)
+    copyHint:SetText("Click in the box below, Ctrl+A then Ctrl+C to copy")
+    copyHint:Hide()
+    f.copyHint = copyHint
+
+    local errorScroll = CreateFrame("ScrollFrame", "AM_ErrorScroll", f, "UIPanelScrollFrameTemplate")
+    errorScroll:SetPoint("TOPLEFT", f, "TOPLEFT", 16, -84)
+    errorScroll:SetPoint("BOTTOMRIGHT", f, "BOTTOMRIGHT", -34, -16)
+    errorScroll:Hide()
+    f.errorScroll = errorScroll
+
+    local errorBox = CreateFrame("EditBox", "AM_ErrorBox", errorScroll)
+    errorBox:SetMultiLine(true)
+    errorBox:SetFontObject(ChatFontNormal)
+    errorBox:SetWidth(388)
+    errorBox:SetHeight(3000) -- generously tall so the scrollbar always has room to work
+    errorBox:SetAutoFocus(false)
+    errorBox:EnableMouse(true)
+    errorBox:SetScript("OnEscapePressed", function() this:ClearFocus() end)
+    errorScroll:SetScrollChild(errorBox)
+    AM.errorBox = errorBox
+
+    -- ---------------- Settings tab (minimap icons stored in the drawer) ----------------
+    local rescanBtn = CreateFrame("Button", "AM_RescanBtn", f, "UIPanelButtonTemplate")
+    rescanBtn:SetWidth(90); rescanBtn:SetHeight(20)
+    rescanBtn:SetPoint("TOPLEFT", f, "TOPLEFT", 16, -54)
+    rescanBtn:SetText("Rescan Now")
+    rescanBtn:SetScript("OnClick", function()
+        AM.ScanMinimapButtons()
+        AM.RefreshSettingsPanel()
+    end)
+    rescanBtn:Hide()
+    f.rescanBtn = rescanBtn
+
+    local settingsCountLabel = f:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    settingsCountLabel:SetPoint("LEFT", rescanBtn, "RIGHT", 10, 0)
+    settingsCountLabel:SetText("")
+    settingsCountLabel:Hide()
+    f.settingsCountLabel = settingsCountLabel
+
+    local settingsHint = f:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+    settingsHint:SetPoint("TOPLEFT", f, "TOPLEFT", 16, -70)
+    settingsHint:SetText("Minimap icons currently tucked into the drawer:")
+    settingsHint:Hide()
+    f.settingsHint = settingsHint
+
+    f.settingsRows = {}
+    local SETTINGS_ROW_MAX = 14 -- fits inside the 420px-tall window at 22px/row from y=-84
+    for i = 1, SETTINGS_ROW_MAX do
+        local srow = CreateFrame("Frame", "AM_SettingsRow" .. i, f)
+        srow:SetWidth(410); srow:SetHeight(20)
+        srow:SetPoint("TOPLEFT", f, "TOPLEFT", 16, -84 - (i - 1) * 22)
+        srow:Hide()
+
+        local sicon = srow:CreateTexture(nil, "ARTWORK")
+        sicon:SetWidth(16); sicon:SetHeight(16)
+        sicon:SetPoint("LEFT", srow, "LEFT", 0, 0)
+        srow.icon = sicon
+
+        local sname = srow:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        sname:SetPoint("LEFT", sicon, "RIGHT", 6, 0)
+        sname:SetWidth(300); sname:SetJustifyH("LEFT")
+        srow.nameText = sname
+
+        local releaseBtn = CreateFrame("Button", "AM_SettingsRow" .. i .. "Release", srow, "UIPanelButtonTemplate")
+        releaseBtn:SetWidth(70); releaseBtn:SetHeight(18)
+        releaseBtn:SetPoint("RIGHT", srow, "RIGHT", 0, 0)
+        releaseBtn:SetText("Release")
+        releaseBtn:SetScript("OnClick", function()
+            local r = this:GetParent()
+            if not r.frameRef then return end
+            if r.isReleased then
+                AM.RecollectMinimapButton(r.frameRef)
+            else
+                AM.ReleaseMinimapButton(r.frameRef)
+            end
+        end)
+        srow.releaseBtn = releaseBtn
+
+        f.settingsRows[i] = srow
+    end
+
+    AM.mainFrame = f
+
+    if AM_FramePos then
+        f:ClearAllPoints()
+        f:SetPoint(AM_FramePos.point or "CENTER", UIParent, AM_FramePos.relPoint or "CENTER",
+            AM_FramePos.x or 0, AM_FramePos.y or 40)
+    end
+
+    AM.SetTab("enabled")
+end
+
+-- Vanilla 1.12 has no :SetShown() - that's a later-expansion convenience method.
+-- Show()/Hide() are the real API.
+local function SetShown(frame, shown)
+    if shown then frame:Show() else frame:Hide() end
+end
+
+-- Switches which content is visible: enabled addons, disabled addons, the error
+-- log, or the minimap-icon settings.
+function AM.SetTab(tab)
+    AM.activeTab = tab
+    local f = AM.mainFrame
+    if not f then return end
+
+    local isAddons = (tab == "enabled" or tab == "disabled")
+    local isSettings = (tab == "settings")
+
+    SetShown(f.filterLabel, isAddons)
+    SetShown(f.filterBox, isAddons)
+    for slot = 1, AM.PROFILE_SLOTS do
+        SetShown(f.profileButtons[slot], isAddons)
+    end
+    SetShown(f.pageLabel, isAddons or isSettings)
+    SetShown(f.prevBtn, isAddons or isSettings)
+    SetShown(f.nextBtn, isAddons or isSettings)
+    if isAddons then
+        AM.page = 0
+        AM.ApplyFilter()
+    else
+        for i = 1, AM.PAGE_SIZE do
+            f.rows[i]:Hide()
+        end
+    end
+
+    local isErrors = (tab == "errors")
+    SetShown(f.clearLogBtn, isErrors)
+    SetShown(f.errorCountLabel, isErrors)
+    SetShown(f.copyHint, isErrors)
+    SetShown(f.errorScroll, isErrors)
+
+    SetShown(f.rescanBtn, isSettings)
+    SetShown(f.settingsCountLabel, isSettings)
+    SetShown(f.settingsHint, isSettings)
+    if isSettings then
+        AM.settingsPage = 0
+    else
+        for i = 1, table.getn(f.settingsRows) do
+            f.settingsRows[i]:Hide()
+        end
+    end
+
+    if f.tabEnabled then
+        if tab == "enabled" then f.tabEnabled:Disable() else f.tabEnabled:Enable() end
+    end
+    if f.tabDisabled then
+        if tab == "disabled" then f.tabDisabled:Disable() else f.tabDisabled:Enable() end
+    end
+    if f.tabErrors then
+        if isErrors then f.tabErrors:Disable() else f.tabErrors:Enable() end
+    end
+    if f.tabSettings then
+        if isSettings then f.tabSettings:Disable() else f.tabSettings:Enable() end
+    end
+
+    if isAddons then
+        AM.RefreshWindow()
+    elseif isErrors then
+        AM.RefreshErrorsPanel()
+    elseif isSettings then
+        AM.RefreshSettingsPanel()
+    end
+end
+
+-- Buttons store their icon in all sorts of ways (NormalTexture, a named child
+-- texture, etc.) - try the common spots and fall back to a placeholder rather
+-- than guessing wrong and erroring.
+function AM.GetButtonIconTexture(frame)
+    if frame.GetNormalTexture then
+        local ok, nt = pcall(frame.GetNormalTexture, frame)
+        if ok and nt and nt.GetTexture then
+            local tex = nt:GetTexture()
+            if tex then return tex end
+        end
+    end
+    local ok, regions = pcall(function() return { frame:GetRegions() } end)
+    if ok then
+        for _, r in ipairs(regions) do
+            if r.GetObjectType and r:GetObjectType() == "Texture" then
+                local tex = r:GetTexture()
+                if tex then return tex end
+            end
+        end
+    end
+    return "Interface\\Icons\\INV_Misc_QuestionMark"
+end
+
+function AM.RefreshSettingsPanel()
+    local f = AM.mainFrame
+    if not f then return end
+
+    local combined = {}
+    for _, btn in ipairs(AM.collectedList) do
+        table.insert(combined, { frame = btn, released = false })
+    end
+    for _, btn in ipairs(AM.releasedList) do
+        table.insert(combined, { frame = btn, released = true })
+    end
+
+    f.settingsCountLabel:SetText(table.getn(AM.collectedList) .. " stored, " .. table.getn(AM.releasedList) .. " released")
+
+    local rowMax = table.getn(f.settingsRows)
+    local total = table.getn(combined)
+    local maxPage = math.floor((total - 1) / rowMax)
+    if maxPage < 0 then maxPage = 0 end
+    if AM.settingsPage > maxPage then AM.settingsPage = maxPage end
+    f.pageLabel:SetText("Page " .. (AM.settingsPage + 1) .. " / " .. (maxPage + 1) .. "  (" .. total .. " icons)")
+
+    local startIndex = AM.settingsPage * rowMax
+
+    for i = 1, rowMax do
+        local srow = f.settingsRows[i]
+        local entry = combined[startIndex + i]
+        if entry and entry.frame:GetName() then
+            local name = entry.frame:GetName()
+            srow.frameRef = entry.frame
+            srow.isReleased = entry.released
+            if entry.released then
+                srow.nameText:SetText("|cFF888888" .. name .. " (released)|r")
+                srow.releaseBtn:SetText("Recollect")
+            else
+                srow.nameText:SetText(name)
+                srow.releaseBtn:SetText("Release")
+            end
+            srow.icon:SetTexture(AM.GetButtonIconTexture(entry.frame))
+            srow.icon:SetVertexColor(entry.released and 0.5 or 1, entry.released and 0.5 or 1, entry.released and 0.5 or 1)
+            srow:Show()
+        else
+            srow.frameRef = nil
+            srow:Hide()
+        end
+    end
+end
+
+-- Is this frame object already tracked as released this session?
+function AM.IsReleasedFrame(btn)
+    for _, v in ipairs(AM.releasedList) do
+        if v == btn then return true end
+    end
+    return false
+end
+
+-- ---------------------------------------------------------------------------------------------
+-- Dragging an icon out of the drawer to release it
+-- ---------------------------------------------------------------------------------------------
+--
+-- Movement is done by hand from cursor deltas rather than with
+-- StartMoving()/StopMovingOrSizing(). That is not a style preference: those
+-- calls make the CLIENT mark the frame "user placed", after which it writes that
+-- frame's position into layout-cache.txt and restores it on every future login -
+-- permanently, outside this addon's control, surviving even uninstalling it.
+-- These are other addons' named buttons, so we have no business leaving that
+-- mark on them.
+--
+-- For the same reason the button's own drag scripts are REPLACED while it sits
+-- in the drawer, not wrapped: most minimap buttons implement dragging with
+-- StartMoving, so calling through to them would set the flag anyway. Their
+-- "drag me around the minimap" behaviour is meaningless while they're in a
+-- drawer, and the originals are put back the moment the button is released.
+AM.dragDriver = CreateFrame("Frame")
+AM.dragDriver:Hide()
+AM.dragDriver:SetScript("OnUpdate", function()
+    local btn = AM.draggingButton
+    if not btn then this:Hide() return end
+    local scale = btn:GetEffectiveScale()
+    local cx, cy = GetCursorPosition()
+    btn:ClearAllPoints()
+    btn:SetPoint("CENTER", UIParent, "BOTTOMLEFT",
+        cx / scale + AM.dragOffsetX, cy / scale + AM.dragOffsetY)
+end)
+
+-- Is the cursor inside this frame right now? Used both for deciding where a
+-- dragged icon was dropped and for the drawer auto-close.
+function AM.CursorOverFrame(f)
+    if not f or not f:IsShown() then return false end
+    local left, right = f:GetLeft(), f:GetRight()
+    local top, bottom = f:GetTop(), f:GetBottom()
+    if not left or not right or not top or not bottom then return false end
+
+    local scale = f:GetEffectiveScale()
+    local cx, cy = GetCursorPosition()
+    cx, cy = cx / scale, cy / scale
+    return cx >= left and cx <= right and cy >= bottom and cy <= top
+end
+
+-- Dropping inside means "keep it, I was just rearranging"; dropping outside
+-- means "get this out of here", which is the whole gesture.
+function AM.CursorOverDrawer()
+    return AM.CursorOverFrame(AM.drawer)
+end
+
+function AM.BeginButtonDrag(btn)
+    local scale = btn:GetEffectiveScale()
+    local cx, cy = GetCursorPosition()
+    local bx, by = btn:GetCenter()
+    if not bx then return end
+    -- Keep the grab point under the cursor instead of snapping the icon's
+    -- centre to it.
+    AM.dragOffsetX = bx - cx / scale
+    AM.dragOffsetY = by - cy / scale
+    AM.draggingButton = btn
+    AM.dragDriver:Show()
+end
+
+function AM.EndButtonDrag(btn)
+    AM.dragDriver:Hide()
+    AM.draggingButton = nil
+
+    if AM.CursorOverDrawer() then
+        -- Dropped back inside: it belongs to the grid, so put it back in line.
+        AM.LayoutDrawer()
+    else
+        AM.ReleaseMinimapButton(btn, true)
+        local name = (btn.GetName and btn:GetName()) or "that button"
+        AM.Say(name .. " released - it will stay out of the drawer after reloads. " ..
+            "Recollect it from " .. "|cFFFFFFFF/am|r > Settings.")
+    end
+end
+
+function AM.SetupButtonDrag(btn)
+    if btn.amDragHooked then return end
+    btn.amDragHooked = true
+    btn.amOrigDragStart = btn:GetScript("OnDragStart")
+    btn.amOrigDragStop = btn:GetScript("OnDragStop")
+    pcall(btn.RegisterForDrag, btn, "LeftButton")
+    btn:SetScript("OnDragStart", function() AM.BeginButtonDrag(this) end)
+    btn:SetScript("OnDragStop", function() AM.EndButtonDrag(this) end)
+end
+
+function AM.RestoreButtonDrag(btn)
+    if not btn.amDragHooked then return end
+    btn.amDragHooked = nil
+    btn:SetScript("OnDragStart", btn.amOrigDragStart)
+    btn:SetScript("OnDragStop", btn.amOrigDragStop)
+    btn.amOrigDragStart, btn.amOrigDragStop = nil, nil
+end
+
+-- Puts a collected button back on the minimap and stops re-collecting it, now
+-- permanently: the name goes into AM.releasedNames, which is saved.
+--
+-- keepPosition is set when the release came from dragging the icon out of the
+-- drawer - it is already sitting where the player dropped it, and yanking it to
+-- the minimap centre would undo the gesture they just made. A release from the
+-- settings menu has no such position to honour, so it lands near the minimap
+-- and the owning addon usually repositions it from there anyway.
+function AM.ReleaseMinimapButton(btn, keepPosition)
+    for i, v in ipairs(AM.collectedList) do
+        if v == btn then
+            table.remove(AM.collectedList, i)
+            break
+        end
+    end
+    AM.collected[btn] = nil
+    AM.released[btn] = true
+    if not AM.IsReleasedFrame(btn) then table.insert(AM.releasedList, btn) end
+
+    local name = btn.GetName and btn:GetName()
+    if name then
+        AM.releasedNames[name] = true
+        AM.SaveReleasedButtons()
+    end
+
+    AM.RestoreButtonDrag(btn)
+    btn:SetParent(Minimap)
+    if not keepPosition then
+        btn:ClearAllPoints()
+        btn:SetPoint("CENTER", Minimap, "CENTER", 0, 0)
+    end
+    btn:Show()
+
+    AM.LayoutDrawer()
+    AM.RefreshSettingsPanel()
+end
+
+-- Undoes a release: back into the drawer, and eligible for auto-collection again.
+function AM.RecollectMinimapButton(btn)
+    for i, v in ipairs(AM.releasedList) do
+        if v == btn then
+            table.remove(AM.releasedList, i)
+            break
+        end
+    end
+    AM.released[btn] = nil
+    AM.collected[btn] = true
+    table.insert(AM.collectedList, btn)
+
+    local name = btn.GetName and btn:GetName()
+    if name then
+        AM.releasedNames[name] = nil
+        AM.SaveReleasedButtons()
+    end
+
+    btn:SetParent(AM.drawer)
+    btn:SetFrameLevel(AM.drawer:GetFrameLevel() + 1)
+    AM.SetupButtonDrag(btn)
+
+    AM.LayoutDrawer()
+    AM.RefreshSettingsPanel()
+end
+
+function AM.RefreshErrorsPanel()
+    if not AM.errorBox then return end
+    local lines = {}
+    for i = 1, table.getn(AM.errorLog) do
+        local e = AM.errorLog[i]
+        table.insert(lines, "[" .. e.time .. "] " .. e.msg)
+    end
+    if table.getn(lines) == 0 then
+        AM.errorBox:SetText("No errors logged yet.")
+    else
+        AM.errorBox:SetText(table.concat(lines, "\n"))
+    end
+    if AM.mainFrame and AM.mainFrame.errorCountLabel then
+        AM.mainFrame.errorCountLabel:SetText(table.getn(AM.errorLog) .. " error(s) logged")
+    end
+end
+
+function AM.RefreshWindow()
+    local f = AM.mainFrame
+    if not f then return end
+    if AM.activeTab ~= "enabled" and AM.activeTab ~= "disabled" then return end
+
+    if AM.pendingReload then
+        f.banner:SetText("Reload needed to apply")
+    else
+        f.banner:SetText("")
+    end
+    AM.UpdateProfileButtons()
+
+    local total = table.getn(AM.filtered)
+    local maxPage = math.floor((total - 1) / AM.PAGE_SIZE)
+    if maxPage < 0 then maxPage = 0 end
+    f.pageLabel:SetText("Page " .. (AM.page + 1) .. " / " .. (maxPage + 1) .. "  (" .. total .. " addons)")
+
+    local startIndex = AM.page * AM.PAGE_SIZE
+
+    for i = 1, AM.PAGE_SIZE do
+        local row = f.rows[i]
+        local data = AM.filtered[startIndex + i]
+        row.data = data
+
+        if not data then
+            row:Hide()
+        else
+            row:Show()
+
+            if data.enabled then
+                row.toggle:SetText("|cFFFFFF00Enabled|r")
+            else
+                row.toggle:SetText("|cFF888888Disabled|r")
+            end
+
+            local text = data.title
+            local color = "|cFF00FF7F" -- green: enabled/loadable
+            if not data.enabled then
+                color = "|cFFFF5179" -- red: disabled
+            elseif not data.loadable then
+                color = "|cFFFFA500" -- orange: some other load problem
+                local reasonText = AM.REASON_TEXT[data.reason] or data.reason
+                if reasonText then text = text .. " (" .. reasonText .. ")" end
+            end
+            if data.name == AM.ADDON_NAME then
+                text = text .. " |cFFAAAAAA(this addon)|r"
+            end
+            if data.enabled ~= data.originalEnabled then
+                text = text .. " |cFFFF6600*reload needed*|r"
+            end
+            row.label:SetText(color .. text .. "|r")
+
+            local cmds = AM.COMMAND_OVERRIDES[data.name] or AM.DiscoveredCommands[data.name]
+            for c = 1, 2 do
+                local btn = row.cmdButtons[c]
+                local entry = cmds and cmds[c]
+                if entry then
+                    btn:ClearAllPoints()
+                    if c == 1 and cmds[2] then
+                        btn:SetPoint("RIGHT", row.cmdButtons[2], "LEFT", -4, 0)
+                    else
+                        btn:SetPoint("RIGHT", row, "RIGHT", 0, 0)
+                    end
+                    btn:SetText(entry[1])
+                    local cmdText = entry[2]
+                    local cmdKey = entry[3]
+                    btn:SetScript("OnClick", function() AM.RunCommand(cmdText, cmdKey) end)
+                    btn:Show()
+                else
+                    btn:Hide()
+                end
+            end
+        end
+    end
+end
+
+function AM.ToggleMainFrame()
+    if not AM.mainFrame then AM.CreateMainFrame() end
+    if AM.mainFrame:IsShown() then
+        AM.mainFrame:Hide()
+    else
+        AM.BuildAddonList()
+        AM.RefreshWindow()
+        AM.mainFrame:Show()
+    end
+end
+
+-- ---------------------------------------------------------------------------------------------
+-- Minimap button + collected-buttons drawer
+-- ---------------------------------------------------------------------------------------------
+
+-- Blizzard's own default minimap widgets - never collect these.
+AM.MINIMAP_EXCLUDE = {
+    MinimapBackdrop = true,
+    MinimapCluster = true,
+    MinimapZoomIn = true,
+    MinimapZoomOut = true,
+    MinimapToggleButton = true,
+    MinimapNorthTag = true,
+    GameTimeFrame = true,
+    MiniMapMailFrame = true,
+    MiniMapWorldMapButton = true,
+    MiniMapTracking = true,
+    MiniMapTrackingButton = true,
+    MiniMapTrackingDropDown = true,
+    MiniMapVoiceChatFrame = true,
+    MiniMapBattlefieldFrame = true,
+    MiniMapLFGFrame = true,
+    MinimapZoneTextButton = true,
+    TimeManagerClockButton = true,
+    AM_MinimapButton = true,
+}
+
+AM.collected = {}     -- [frame] = true, so we don't re-collect the same one
+AM.collectedList = {} -- ordered list for layout
+AM.released = {}      -- [frame] = true for THIS session's frame objects
+AM.releasedList = {}  -- ordered list, for the Settings tab
+
+-- [frameName] = true. This is the part that survives a reload, and it is keyed
+-- by NAME rather than by frame because a frame reference is meaningless in the
+-- next session. Every collectible button is already required to have a name
+-- (see IsCollectibleMinimapChild), so there is always a key to use.
+--
+-- Only releases are recorded. Collecting is the default for anything eligible,
+-- so "collected" needs no entry - a button is in the drawer precisely when it
+-- has not been released.
+AM.releasedNames = {}
+
+function AM.SaveReleasedButtons()
+    AM_ReleasedButtons = AM.releasedNames
+end
+
+-- Same idea as AM.GetButtonIconTexture, but just checking presence - used to
+-- require "actually looks like an icon" before collecting something.
+function AM.HasVisibleTexture(frame)
+    if frame.GetNormalTexture then
+        local ok, nt = pcall(frame.GetNormalTexture, frame)
+        if ok and nt and nt.GetTexture and nt:GetTexture() then return true end
+    end
+    local ok, regions = pcall(function() return { frame:GetRegions() } end)
+    if ok then
+        for _, r in ipairs(regions) do
+            if r.GetObjectType and r:GetObjectType() == "Texture" and r.GetTexture and r:GetTexture() then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+-- Real minimap tracking icons are small, roughly square, visible, and have an
+-- actual icon texture on them. The original version of this check (any Button
+-- 10-60px wide) was too loose and swept up unrelated buttons that just happened
+-- to be parented to Minimap for positioning convenience, not shown as icons.
+function AM.IsCollectibleMinimapChild(child)
+    if not child or not child.GetObjectType then return false end
+    if child:GetObjectType() ~= "Button" then return false end
+    local name = child.GetName and child:GetName()
+    if not name then return false end
+    if AM.MINIMAP_EXCLUDE[name] then return false end
+    -- pfQuest names its quest-marker pins "pfMiniMapPinN" (one per active
+    -- marker, numbered) - these are map data, not launcher icons, and pfQuest
+    -- already has its own logic to dodge known collector addons (it checks for
+    -- "MBB"/"ElvUI_MinimapButtons" by name and renames itself to avoid them),
+    -- but doesn't know about us. Prefix match since N varies.
+    if string.find(name, "^pfMiniMapPin") then return false end
+    if AM.collected[child] then return false end
+    if AM.released[child] then return false end
+    if not child:IsVisible() then return false end
+
+    local w, h = child:GetWidth(), child:GetHeight()
+    if not w or not h or w < 18 or w > 40 or h < 18 or h > 40 then return false end
+    local ratio = w / h
+    if ratio < 0.7 or ratio > 1.4 then return false end
+
+    if not AM.HasVisibleTexture(child) then return false end
+
+    return true
+end
+
+-- Grid shape scales with how many icons there actually are, instead of always
+-- being a fixed 6-wide box: 3 icons get a tight single row instead of sitting in a
+-- mostly-empty 6-wide box, and 16 get a clean 8x2 block instead of a lopsided
+-- 6-wide grid with a nearly-empty last row. Picks the fewest rows needed (capped at
+-- MAX_COLS wide) then spreads the icons evenly across those rows.
+-- How big a collected button actually draws, in the drawer's coordinates.
+-- Buttons come in different sizes (28-33px is common) and some addons scale
+-- theirs, so a fixed cell size let bigger ones spill over the drawer's border.
+local function ButtonVisualSize(btn)
+    local s = (btn.GetScale and btn:GetScale()) or 1
+    if not s or s <= 0 then s = 1 end
+    local w = (btn.GetWidth and btn:GetWidth()) or 0
+    local h = (btn.GetHeight and btn:GetHeight()) or 0
+    return math.max(w, h) * s, s
+end
+
+function AM.LayoutDrawer()
+    -- EDGE keeps icons clear of the tooltip border (about 4px of silver plus the
+    -- round minimap rings, which overhang their button slightly). GAP is the
+    -- space between neighbouring icons.
+    local EDGE, GAP = 7, 4
+    local MAX_COLS = 8
+    local count = table.getn(AM.collectedList)
+
+    if count == 0 then
+        AM.drawer.emptyLabel:Show()
+        AM.drawer:SetWidth(140)
+        AM.drawer:SetHeight(30)
+        return
+    end
+    AM.drawer.emptyLabel:Hide()
+
+    local rowsNeeded = math.ceil(count / MAX_COLS)
+    if rowsNeeded < 1 then rowsNeeded = 1 end
+    local cols = math.ceil(count / rowsNeeded)
+
+    -- One cell size for the whole grid, big enough for the largest button.
+    local size = 28
+    for _, btn in ipairs(AM.collectedList) do
+        local v = ButtonVisualSize(btn)
+        if v > size then size = v end
+    end
+    size = math.ceil(size)
+
+    -- Each button is centred in its cell, so smaller ones sit evenly instead of
+    -- hugging the top-left corner. SetPoint offsets are in the button's own
+    -- scale, hence the division.
+    local i = 0
+    for _, btn in ipairs(AM.collectedList) do
+        local col = math.mod(i, cols)
+        local row = math.floor(i / cols)
+        local _, s = ButtonVisualSize(btn)
+        local cx = EDGE + col * (size + GAP) + size / 2
+        local cy = EDGE + row * (size + GAP) + size / 2
+        btn:ClearAllPoints()
+        btn:SetPoint("CENTER", AM.drawer, "TOPLEFT", cx / s, -cy / s)
+        i = i + 1
+    end
+
+    AM.drawer:SetWidth(2 * EDGE + cols * size + (cols - 1) * GAP)
+    AM.drawer:SetHeight(2 * EDGE + rowsNeeded * size + (rowsNeeded - 1) * GAP)
+end
+
+-- Tries to collect one candidate frame; returns true if it was collected.
+local function TryCollect(child)
+    if not AM.IsCollectibleMinimapChild(child) then return false end
+
+    local name = child.GetName and child:GetName()
+    if name and AM.releasedNames[name] then
+        -- Released in an earlier session. Leave it on the minimap, but register
+        -- the frame so the Settings tab can still list it and offer Recollect.
+        -- Without this the button would simply vanish from the addon after a
+        -- reload, with no way to get it back short of editing saved variables.
+        if not AM.released[child] then
+            AM.released[child] = true
+            table.insert(AM.releasedList, child)
+            AM.RefreshSettingsPanel()
+        end
+        return false
+    end
+
+    AM.collected[child] = true
+    child:SetParent(AM.drawer)
+    child:SetFrameLevel(AM.drawer:GetFrameLevel() + 1)
+    AM.SetupButtonDrag(child)
+    table.insert(AM.collectedList, child)
+    return true
+end
+
+function AM.ScanMinimapButtons()
+    local kids = { Minimap:GetChildren() }
+    local found = false
+    for _, child in ipairs(kids) do
+        if TryCollect(child) then
+            found = true
+        elseif child.GetChildren then
+            -- Some addons (AtlasLoot confirmed) wrap their real button in an
+            -- intermediate positioning Frame that's the direct child of
+            -- Minimap, with the actual clickable Button nested one level
+            -- inside that wrapper - a direct-children-only scan never finds
+            -- it. Check one level deeper for exactly that shape.
+            local ok, grandkids = pcall(function() return { child:GetChildren() } end)
+            if ok then
+                for _, grandchild in ipairs(grandkids) do
+                    if TryCollect(grandchild) then found = true end
+                end
+            end
+        end
+    end
+    if found then AM.LayoutDrawer() end
+end
+
+function AM.CreateDrawer()
+    local d = CreateFrame("Frame", "AM_Drawer", UIParent)
+    d:SetWidth(140); d:SetHeight(30)
+    d:SetBackdrop({
+        bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+        edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+        tile = true, tileSize = 16, edgeSize = 16,
+        insets = { left = 3, right = 3, top = 3, bottom = 3 }
+    })
+    d:SetBackdropColor(0, 0, 0, 0.8)
+    d:SetFrameStrata("DIALOG")
+    d:SetClampedToScreen(true)
+    d:Hide()
+
+    local empty = d:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+    empty:SetPoint("CENTER", d, "CENTER", 0, 0)
+    empty:SetText("No stray minimap buttons found yet")
+    d.emptyLabel = empty
+
+    AM.drawer = d
+end
+
+-- ---------------------------------------------------------------------------------------------
+-- Drawer auto-close
+-- ---------------------------------------------------------------------------------------------
+-- The drawer closes itself once the cursor has been away from it for a few
+-- seconds, so it stops being a panel you have to remember to dismiss.
+--
+-- "Away from it" means away from the drawer's rectangle, which already covers
+-- the icons inside it - they're laid out within those bounds, so hovering one
+-- keeps the drawer alive without needing to test each button separately. The
+-- minimap button counts too, otherwise moving the cursor from the icon to the
+-- drawer could start the countdown during the gap between them.
+AM.DRAWER_AUTOCLOSE_DEFAULT = 5
+AM.drawerIdle = 0
+
+function AM.DrawerAutoCloseSeconds()
+    local v = AM_DrawerAutoClose
+    if v == nil then return AM.DRAWER_AUTOCLOSE_DEFAULT end
+    return v
+end
+
+function AM.ResetDrawerIdle()
+    AM.drawerIdle = 0
+end
+
+function AM.UpdateDrawerAutoClose(elapsed)
+    local d = AM.drawer
+    if not d or not d:IsShown() then return end
+
+    local seconds = AM.DrawerAutoCloseSeconds()
+    if not seconds or seconds <= 0 then return end -- turned off
+
+    -- Never time out mid-drag. Pulling an icon out necessarily takes the cursor
+    -- off the drawer, and closing underneath that gesture would cancel the very
+    -- thing the player is doing.
+    if AM.draggingButton then
+        AM.drawerIdle = 0
+        return
+    end
+
+    if AM.CursorOverFrame(d) or AM.CursorOverFrame(AM.minimapButton) then
+        AM.drawerIdle = 0
+        return
+    end
+
+    AM.drawerIdle = AM.drawerIdle + elapsed
+    if AM.drawerIdle >= seconds then
+        AM.drawerIdle = 0
+        d:Hide()
+    end
+end
+
+function AM.ToggleDrawer()
+    if AM.drawer:IsShown() then
+        AM.drawer:Hide()
+    else
+        AM.drawer:ClearAllPoints()
+        -- The button can sit anywhere on screen now, so open the drawer toward
+        -- the middle of the screen rather than always down and to the left.
+        local bx, by = AM.MinimapButtonCenter()
+        local sw, sh = UIParent:GetWidth(), UIParent:GetHeight()
+        local vert, horiz, dy
+        if by and sh and by < sh / 2 then vert, dy = "BOTTOM", 4 else vert, dy = "TOP", -4 end
+        if bx and sw and bx < sw / 2 then horiz = "LEFT" else horiz = "RIGHT" end
+        local opposite = { TOP = "BOTTOM", BOTTOM = "TOP", LEFT = "RIGHT", RIGHT = "LEFT" }
+        AM.drawer:SetPoint(vert .. horiz, AM.minimapButton, opposite[vert] .. opposite[horiz], 0, dy)
+        AM.drawer:Show()
+        -- Full countdown from the moment it opens, rather than inheriting
+        -- whatever the timer happened to be at when it last closed.
+        AM.ResetDrawerIdle()
+    end
+end
+
+function AM.CreateMinimapButton()
+    -- Parented to UIParent, not Minimap, so it can be placed anywhere on screen.
+    local btn = CreateFrame("Button", "AM_MinimapButton", UIParent)
+    btn:SetWidth(31); btn:SetHeight(31)
+    btn:SetClampedToScreen(true)
+    btn:SetFrameStrata("MEDIUM")
+    btn:SetFrameLevel(8)
+    btn:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+
+    local icon = btn:CreateTexture(nil, "BACKGROUND")
+    icon:SetWidth(20); icon:SetHeight(20)
+    icon:SetPoint("TOPLEFT", btn, "TOPLEFT", 7, -6)
+    icon:SetTexture("Interface\\Icons\\Trade_Engineering")
+
+    local border = btn:CreateTexture(nil, "OVERLAY")
+    border:SetWidth(53); border:SetHeight(53)
+    border:SetPoint("TOPLEFT", btn, "TOPLEFT", 0, 0)
+    border:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
+
+    -- Ctrl+Left-drag moves the button freely around the screen. A plain
+    -- left-press doesn't start a drag, and the click that ends a Ctrl-drag is
+    -- swallowed so moving the button doesn't also open the drawer.
+    --
+    -- Moved by following the cursor rather than StartMoving(): StartMoving makes
+    -- the client store the position in its own layout cache too, which would
+    -- fight with the position this addon saves.
+    btn:SetScript("OnMouseDown", function()
+        if arg1 == "LeftButton" and IsControlKeyDown() then
+            local mx, my = AM.CursorInUIParent()
+            local cx, cy = AM.MinimapButtonCenter()
+            this.grabDX, this.grabDY = (cx or mx) - mx, (cy or my) - my
+            this.dragging = true
+            this.suppressClick = true
+        end
+    end)
+    btn:SetScript("OnMouseUp", function() this.dragging = false end)
+
+    btn:SetScript("OnUpdate", function()
+        if this.dragging then
+            local mx, my = AM.CursorInUIParent()
+            AM_ButtonPos = { x = mx + (this.grabDX or 0), y = my + (this.grabDY or 0) }
+            AM.UpdateMinimapButtonPos()
+        end
+    end)
+
+    btn:SetScript("OnClick", function()
+        if this.suppressClick then
+            this.suppressClick = false
+            return
+        end
+        if arg1 == "LeftButton" then
+            AM.ToggleDrawer()
+        elseif arg1 == "RightButton" then
+            AM.ToggleMainFrame()
+        end
+    end)
+
+    btn:SetScript("OnEnter", function()
+        GameTooltip:SetOwner(this, "ANCHOR_LEFT")
+        GameTooltip:SetText("Gimmetbarbie Addon Manager")
+        GameTooltip:AddLine("Left-click: minimap button drawer", 1, 1, 1)
+        GameTooltip:AddLine("Right-click: addon list", 1, 1, 1)
+        GameTooltip:AddLine("Ctrl+Left-drag: move this button", 1, 1, 1)
+        GameTooltip:Show()
+    end)
+    btn:SetScript("OnLeave", function() GameTooltip:Hide() end)
+
+    AM.minimapButton = btn
+    AM.UpdateMinimapButtonPos()
+end
+
+-- The button used to be a child of the minimap, so it inherited the minimap's
+-- scale (the game's minimap scale option, or addons that enlarge the minimap).
+-- Now it hangs off UIParent, so copy that scale to keep it the same size as the
+-- other minimap icons.
+function AM.MinimapButtonScale()
+    local ui = UIParent:GetEffectiveScale()
+    local mm = Minimap:GetEffectiveScale()
+    if not ui or ui <= 0 or not mm or mm <= 0 then return 1 end
+    return mm / ui
+end
+
+-- The button's centre in UIParent coordinates. GetCenter() on a scaled frame
+-- answers in that frame's own (scaled) units, hence the multiplication.
+function AM.MinimapButtonCenter()
+    local btn = AM.minimapButton
+    local x, y = btn:GetCenter()
+    if not x then return nil end
+    local s = btn:GetScale() or 1
+    return x * s, y * s
+end
+
+function AM.CursorInUIParent()
+    local mx, my = GetCursorPosition()
+    local scale = UIParent:GetEffectiveScale()
+    return mx / scale, my / scale
+end
+
+-- AM_ButtonPos is the button's centre, measured from the bottom-left of the
+-- screen. Before this was saved the button lived on the minimap ring at angle
+-- AM_MinimapPos; the first time, it starts from that same spot so it doesn't
+-- jump somewhere unexpected after updating.
+function AM.UpdateMinimapButtonPos()
+    local btn = AM.minimapButton
+    if not btn then return end
+    local mcx, mcy = Minimap:GetCenter()
+    if not AM_ButtonPos and not mcx then
+        -- Minimap not laid out (hidden by another addon, say): near the top-right.
+        AM_ButtonPos = { x = UIParent:GetWidth() - 60, y = UIParent:GetHeight() - 200 }
+    end
+    if not AM_ButtonPos then
+        local ms = Minimap:GetEffectiveScale() / UIParent:GetEffectiveScale()
+        local angle = math.rad(AM_MinimapPos or 200)
+        local radius = (Minimap:GetWidth() / 2) + 10
+        AM_ButtonPos = {
+            x = (mcx + math.cos(angle) * radius) * ms,
+            y = (mcy + math.sin(angle) * radius) * ms,
+        }
+    end
+    -- SetPoint offsets are in the button's own scale, so divide the saved
+    -- UIParent-space position by it.
+    local scale = AM.MinimapButtonScale()
+    btn:SetScale(scale)
+    btn:ClearAllPoints()
+    btn:SetPoint("CENTER", UIParent, "BOTTOMLEFT", AM_ButtonPos.x / scale, AM_ButtonPos.y / scale)
+end
+
+-- ---------------------------------------------------------------------------------------------
+-- Events
+-- ---------------------------------------------------------------------------------------------
+local ev = CreateFrame("Frame")
+ev:RegisterEvent("ADDON_LOADED")
+ev:RegisterEvent("PLAYER_ENTERING_WORLD")
+
+ev.scanDelay = 3
+ev.rescanTimer = 0
+ev.initialScanDone = false
+
+ev:SetScript("OnEvent", function()
+    if event == "ADDON_LOADED" then
+        if arg1 == AM.ADDON_NAME then
+            -- merge whatever was persisted from previous sessions (already in
+            -- chronological order) with any (unlikely) entries logged between
+            -- file-load and this event, keeping chronological order
+            local merged = AM_ErrorLog or {}
+            for i = 1, table.getn(AM.errorLog) do
+                table.insert(merged, AM.errorLog[i])
+            end
+            AM.errorLog = merged
+            while table.getn(AM.errorLog) > AM.ERROR_LOG_MAX do
+                table.remove(AM.errorLog, 1)
+            end
+            -- Which buttons the player has released, from previous sessions. Loaded
+            -- before the first minimap scan so a released button is never briefly
+            -- yanked into the drawer and then spat back out.
+            AM.releasedNames = AM_ReleasedButtons or {}
+
+            AM.CreateDrawer()
+            AM.CreateMinimapButton()
+            AM.Say("/am opens list, right-click icon too")
+        end
+        -- Attribute any newly-visible SLASH_* globals to whichever addon just
+        -- finished loading (covers commands registered at file-load time, which
+        -- is the vast majority of them).
+        AM.ScanNewSlashCommands(arg1)
+    elseif event == "PLAYER_ENTERING_WORLD" then
+        ev.scanDelay = 3
+        -- One more pass in case anything registered its commands late (deferred
+        -- to PLAYER_LOGIN/PLAYER_ENTERING_WORLD instead of file-load time). These
+        -- can't be reliably attributed to a specific addon at this point, so they
+        -- aren't - they just stop showing up as "new" in future scans.
+        AM.ScanNewSlashCommands(nil)
+    end
+end)
+
+ev:SetScript("OnUpdate", function()
+    if not AM.drawer then return end
+
+    if not ev.initialScanDone then
+        ev.scanDelay = ev.scanDelay - arg1
+        if ev.scanDelay <= 0 then
+            AM.ScanMinimapButtons()
+            ev.initialScanDone = true
+        end
+        return
+    end
+
+    AM.UpdateDrawerAutoClose(arg1)
+
+    -- keep periodically sweeping for late-created buttons (cheap, harmless if empty)
+    ev.rescanTimer = ev.rescanTimer + arg1
+    if ev.rescanTimer >= 5 then
+        ev.rescanTimer = 0
+        -- Addons that enlarge the minimap may do it after this one loaded, or the
+        -- minimap scale option may have changed: keep the button's size in step.
+        local b = AM.minimapButton
+        if b and not b.dragging and math.abs((b:GetScale() or 1) - AM.MinimapButtonScale()) > 0.001 then
+            AM.UpdateMinimapButtonPos()
+        end
+        AM.ScanMinimapButtons()
+    end
+end)
+
+-- ---------------------------------------------------------------------------------------------
+-- Slash command
+-- ---------------------------------------------------------------------------------------------
+SLASH_ADDONMANAGER1 = "/am"
+SlashCmdList["ADDONMANAGER"] = function(msg)
+    local origMsg = msg or ""
+    msg = string.lower(origMsg)
+    if msg == "reload" then
+        ReloadUI()
+    elseif msg == "resetbutton" then
+        AM_ButtonPos = nil
+        AM_MinimapPos = nil
+        AM.UpdateMinimapButtonPos()
+        AM.Say("minimap button moved back beside the minimap.")
+    elseif msg == "rescan" then
+        AM.ScanMinimapButtons()
+        AM.Say("rescanned minimap buttons.")
+    elseif string.find(msg, "^autoclose") then
+        local _, _, arg = string.find(msg, "^autoclose%s+(%S+)")
+        if arg == "off" or arg == "0" then
+            AM_DrawerAutoClose = 0
+            AM.Say("drawer auto-close off - it stays open until you close it.")
+        elseif arg and tonumber(arg) then
+            AM_DrawerAutoClose = tonumber(arg)
+            AM.Say("drawer closes after " .. tonumber(arg) .. "s without the cursor on it.")
+        else
+            local s = AM.DrawerAutoCloseSeconds()
+            if not s or s <= 0 then
+                AM.Say("drawer auto-close is off. |cFFFFFFFF/am autoclose 5|r to turn it on.")
+            else
+                AM.Say("drawer closes after " .. s .. "s without the cursor on it. " ..
+                    "|cFFFFFFFF/am autoclose off|r to disable.")
+            end
+        end
+    elseif string.find(msg, "^profile") then
+        local _, _, rest = string.find(msg, "^profile%s*(.*)$")
+        local _, _, verb, slot, extra = string.find(rest or "", "^(%a*)%s*(%d?)%s*(.*)$")
+        slot = tonumber(slot)
+        if verb == "" then verb = "load" end
+        if not slot or slot < 1 or slot > AM.PROFILE_SLOTS then
+            AM.Say("profiles: |cFFFFFFFF/am profile 1|r load, |cFFFFFFFF/am profile save 1|r, " ..
+                "|cFFFFFFFF/am profile name 1 Raid|r, |cFFFFFFFF/am profile clear 1|r (slots 1-" ..
+                AM.PROFILE_SLOTS .. ")")
+            for s = 1, AM.PROFILE_SLOTS do
+                local p = AM.GetProfile(s)
+                AM.Say("  " .. s .. ": " .. AM.ProfileName(s) .. ((p and p.states) and "" or " (empty)"))
+            end
+        elseif verb == "load" then
+            AM.LoadProfile(slot)
+        elseif verb == "save" then
+            AM.SaveProfile(slot)
+        elseif verb == "clear" then
+            AM.ClearProfile(slot)
+        elseif verb == "name" or verb == "rename" then
+            -- take the name from the original (un-lowercased) input
+            local _, _, orig = string.find(origMsg, "^%s*%a+%s+%a+%s+%d%s*(.*)$")
+            AM.RenameProfile(slot, orig or extra)
+        else
+            AM.Say("unknown profile command. Try |cFFFFFFFF/am profile|r.")
+        end
+    elseif msg == "probe" then
+        AM.Probe()
+    elseif msg == "commands" then
+        AM.DumpDiscoveredCommands()
+    else
+        AM.ToggleMainFrame()
+    end
+end

@@ -1,0 +1,359 @@
+-- pfUI Octo: gathering finder (modules/gather.lua, gather-options.lua), run by tests\run.lua.
+-- A made-up ClassicAPI object finder: which nodes are asked for, the rules,
+-- distances, swapped axes, the arrow's turn and the priority ping.
+local ok = octo_ok
+local GF = pfUI.gather
+ok(GF and GF.Scan and GF.Wanted and GF.State, "gather loaded (pfUI.gather)")
+if not GF then return end
+local S = pfUI_config.gather
+ok(S and S.enable == "0" and S.rows == "3" and S.skill == "1", "gather defaults (off, 3 rows, skill filter on)")
+local O = pfUI.octoui and pfUI.octoui.Options
+ok(O and O.BUILD and O.BUILD.gather, "options page Gathering registered")
+-- modules run in pfUI.env: a bare SLASH_X = "/x" stays there and the game never sees it
+local genv = pfUI.env and rawget(pfUI.env, "_G") or _G
+ok(rawget(genv, "SLASH_PFGATHER1") == "/gather" and rawget(genv, "SLASH_PFAUTOLOOT1") == "/autoloot",
+  "module slash commands are real globals (/gather, /autoloot)")
+
+local saved = { ClosestGameObjectPosition = rawget(_G, "ClosestGameObjectPosition"), UnitPosition = rawget(_G, "UnitPosition"),
+  GetPlayerFacing = rawget(_G, "GetPlayerFacing"), GetNumSkillLines = rawget(_G, "GetNumSkillLines"),
+  GetSkillLineInfo = rawget(_G, "GetSkillLineInfo"), PlaySoundFile = rawget(_G, "PlaySoundFile") }
+local objects = {}      -- id -> { x, y, z }
+local px, py, facing = 100, 200, 0
+local skills = { { "Herbalism", 150 } }
+local sounds = 0
+_G.ClosestGameObjectPosition = function(id) local o = objects[id] if o then return o[1], o[2], o[3] end end
+_G.UnitPosition = function() return px, py, 0 end
+_G.GetPlayerFacing = function() return facing end
+_G.GetNumSkillLines = function() return table.getn(skills) end
+_G.GetSkillLineInfo = function(i) return skills[i][1], nil, nil, skills[i][2] end
+_G.PlaySoundFile = function() sounds = sounds + 1 end
+local function fresh() GF.ResetSkills() GF.seen = {} GF.swap = nil end
+
+S.nodes, S.extra, S.herbs, S.ore, S.skill = "", "", "1", "1", "1"
+fresh()
+ok(GF.Available(), "the object finder is found")
+
+-- what is asked for
+local function asked(name)
+  local l = GF.Wanted(1000)
+  for i = 1, table.getn(l) do if l[i].name == name then return true end end
+  return false
+end
+ok(asked("Peacebloom") and asked("Liferoot"), "herbs within your skill are asked for")
+ok(not asked("Fadeleaf") and not asked("Black Lotus"), "herbs above your skill are not")
+ok(not asked("Copper Vein"), "no Mining skill: no ore")
+S.skill = "0" GF.ResetSkills()
+ok(asked("Black Lotus") and asked("Copper Vein"), "skill filter off: everything")
+S.ore = "0"
+ok(not asked("Copper Vein"), "ore switched off")
+S.ore, S.skill = "1", "1"
+
+-- the rules string
+ok(GF.State("Black Lotus") == "prio" and GF.State("Peacebloom") == "show", "default states")
+GF.SetState("Peacebloom", "off")
+ok(GF.State("Peacebloom") == "off" and S.nodes == "Peacebloom=off;", "a change is saved as Name=state;")
+GF.SetState("Silverleaf", "prio")
+ok(GF.State("Silverleaf") == "prio" and GF.State("Peacebloom") == "off", "two changes kept")
+GF.SetState("Peacebloom", "show")
+ok(S.nodes == "Silverleaf=prio;", "back to the default drops it")
+GF.ResetSkills()
+ok(not asked("Peacebloom") or GF.State("Peacebloom") == "show", "Off nodes are not asked for")
+GF.SetState("Silverleaf", "show")
+
+-- extra IDs
+S.extra = "999001=Odd Chest, 999002"
+local ex = GF.Extra()
+ok(table.getn(ex) == 2 and ex[1].id == 999001 and ex[1].name == "Odd Chest" and ex[2].name == nil, "extra IDs read with optional names")
+S.extra = ""
+
+-- distances and the sort: Peacebloom 30 yd north, Liferoot (priority) 60 yd, a node far out of view
+fresh()
+GF.SetState("Liferoot", "prio")
+objects = { [1618] = { 130, 200, 0 }, [2041] = { 100, 260, 0 }, [1619] = { 900, 900, 0 } }
+sounds = 0
+S.alert, S.sound = "1", "1"
+local f = GF.Scan(1000)
+ok(table.getn(f) == 2, "two nodes in sight, the far one left out")
+ok(f[1].name == "Liferoot" and f[2].name == "Peacebloom", "priority first, then nearest")
+ok(math.abs(f[2].dist - 30) < .01, "distance in yards")
+ok(sounds == 1 and GF.lastAlert == "Liferoot", "a priority node coming into sight pings once")
+GF.Scan(1001)
+ok(sounds == 1, "...and not again while it stays")
+objects[2041] = nil GF.Scan(1002) objects[2041] = { 100, 260, 0 } GF.Scan(1003)
+ok(sounds == 2, "gone and back: it pings again")
+GF.SetState("Liferoot", "show")
+
+-- the arrow: facing north (0), a node straight north turns 0; facing west (pi/2) it turns -pi/2
+GF.axis = 1
+fresh()
+objects = { [1618] = { 130, 200, 0 } }
+facing = 0
+f = GF.Scan(1100)
+ok(f[1] and math.abs(f[1].turn) < .01, "node ahead: no turn")
+facing = math.pi / 2
+f = GF.Scan(1101)
+ok(f[1] and math.abs(f[1].turn + math.pi / 2) < .01, "facing west, node north: turn right a quarter")
+
+-- swapped axes: the finder answers y, x
+fresh()
+_G.ClosestGameObjectPosition = function(id) local o = objects[id] if o then return o[2], o[1], o[3] end end
+objects = { [1618] = { 4130, 200, 0 } }
+px, py = 4100, 200
+f = GF.Scan(1200)
+ok(GF.swap == true and f[1] and math.abs(f[1].dist - 30) < .01, "x / y given the other way round are swapped")
+_G.ClosestGameObjectPosition = function(id) local o = objects[id] if o then return o[1], o[2], o[3] end end
+
+-- the real client (/gather probe, 9 Nov 2026): you at -4204.57, 1080.39, z 10.22;
+-- Peacebloom answered 1080.12, -4207.17, 16.17 - y, x and a DISTANCE, not a height
+fresh()
+local realUP = _G.UnitPosition
+_G.UnitPosition = function() return -4204.57, 1080.39, 10.22 end
+_G.ClosestGameObjectPosition = function(id) if id == 1618 then return 1080.12, -4207.17, 16.17 end end
+f = GF.Scan(1250)
+ok(GF.swap == true and f[1] and math.abs(f[1].dist - 2.61) < .05, "probe numbers: the Peacebloom at your feet is 3 yd, not 13+")
+_G.UnitPosition = realUP
+_G.ClosestGameObjectPosition = function(id) local o = objects[id] if o then return o[1], o[2], o[3] end end
+
+-- learning north from walking: positions laid out (y, x) -> axis 2
+GF.votes, GF.axis = { 0, 0, 0, 0 }, 1
+facing = 0
+local x, y = 0, 0
+GF.Learn(x, y, facing)
+for i = 1, 6 do y = y + 3 GF.Learn(x, y, facing) end
+ok(GF.axis == 2, "walking north along y teaches the axis order")
+GF.votes, GF.axis = { 0, 0, 0, 0 }, 1
+
+-- learning a zone's own copy of a node from the tooltip
+S.learned = ""
+ok(GF.IdFrom(3726) == 3726 and GF.IdFrom("0xF1100E8C0000A1B2") == 0x0E8C00 and GF.IdFrom("abc") == nil, "IDs read from a number or a GUID")
+ok(GF.Teach("Earthroot", 1619) == nil and S.learned == "", "a known ID is not saved again")
+ok(GF.Teach("Not A Herb", 555555) == nil, "only node names are learned")
+ok(GF.Teach("Earthroot", nil, 555555) == 555555 and S.learned == "555555=Earthroot;", "a new ID for a node is saved")
+S.skill = "0" GF.ResetSkills()
+ok(asked("Earthroot") and (function()
+  local l = GF.Wanted(1000)
+  for i = 1, table.getn(l) do if l[i].id == 555555 then return true end end
+end)(), "a learned ID is looked for")
+S.skill, S.learned = "1", ""
+
+-- following: the distance and arrow move every frame between looks
+fresh()
+S.enable = "1"
+objects = { [1618] = { 130, 200, 0 } }
+px, py, facing = 100, 200, 0
+GF.Scan(1400) GF.Draw()
+ok(GF.frame.rows[1]:IsShown() and math.abs(GF.found[1].dist - 30) < .01, "drawn at 30 yd")
+px = 120 GF.Follow()
+ok(math.abs(GF.found[1].dist - 10) < .01 and GF.frame.rows[1].dist:GetText() == "10 yd", "walking closer updates the yards at once")
+facing = math.pi / 2 GF.Follow()
+ok(math.abs(GF.found[1].turn + math.pi / 2) < .01, "turning updates the arrow at once")
+S.enable = "0"
+
+-- without ClassicAPI: nothing, no error
+_G.ClosestGameObjectPosition = nil
+ok(not GF.Available() and table.getn(GF.Scan(1300)) == 0, "no ClassicAPI: finds nothing, no error")
+
+-- the box draws a sample
+S.enable = "1"
+GF.Preview(true)
+ok(GF.frame and GF.frame:IsShown() and GF.frame.rows[1]:IsShown() and not GF.frame.rows[4]:IsShown(), "sample: three rows shown")
+GF.Preview(false)
+S.enable = "0"
+GF.Tick(5000)
+ok(not GF.frame:IsShown(), "switched off: the box hides")
+
+-- pfQuest's lists (with the Turtle / OctoWoW add-on merged in)
+_G.ClosestGameObjectPosition = function(id) local o = objects[id] if o then return o[1], o[2], o[3] end end
+local savedDB = rawget(_G, "pfDB")
+_G.pfDB = { meta = { herbs = { [-3726] = 15, [-990001] = 40 }, mines = { [-3000500] = 90 }, fish = { [-180750] = "AH" }, chests = { [-3000248] = 0 } },
+  objects = { loc = { [3726] = "Earthroot", [990001] = "Odd Herb", [180750] = "Oily School" }, ["enUS-turtle"] = { [3000500] = "Octo Vein", [3000248] = "Octo Chest" } } }
+GF.dbLoaded = nil
+local before = table.getn(GF.BYNAME["Earthroot"][4])
+GF.LoadDB()
+ok(GF.BYNAME["Odd Herb"] and GF.BYNAME["Odd Herb"][2] == GF.HERB and GF.BYNAME["Odd Herb"][3] == 40, "a pfQuest herb is added with its skill")
+ok(table.getn(GF.BYNAME["Earthroot"][4]) == before, "an ID already in the list is not added twice")
+ok(GF.BYNAME["Octo Vein"] and GF.BYNAME["Octo Vein"][2] == GF.ORE, "OctoWoW's own veins come from the Turtle add-on's names")
+ok(GF.BYNAME["Oily School"] and GF.BYNAME["Oily School"][2] == GF.FISH and GF.BYNAME["Octo Chest"][2] == GF.CHEST, "fishing pools and chests too")
+_G.pfDB = savedDB
+
+-- batches: 3 nodes, 2 calls a look
+fresh()
+S.skill, S.chests = "0", "0"
+GF.BATCH = 2
+GF.wantKey = nil
+objects = { [1618] = { 110, 200, 0 }, [1617] = { 120, 200, 0 }, [1619] = { 130, 200, 0 } }
+px, py = 100, 200
+local list = GF.WantedCached(2000)
+local calls = 0
+_G.ClosestGameObjectPosition = function(id) calls = calls + 1 local o = objects[id] if o then return o[1], o[2], o[3] end end
+GF.Scan(2000)
+ok(calls == 2, "one look asks only a batch")
+for i = 1, math.ceil(table.getn(list) / 2) do GF.Scan(2000 + i) end
+ok(table.getn(GF.found) == 3, "after a full round every node is found")
+GF.BATCH = 80
+S.skill = "1"
+
+for k, v in pairs(saved) do _G[k] = v end
+S.nodes, S.extra = "", ""
+
+-- nodes remembered for the world map (14 Nov 2026; Khijazi: no herbs shown in Moonwhisper Coast)
+do
+  local cacheWas = pfUI_cache.gathernodes
+  pfUI_cache.gathernodes = {}
+  -- a made-up zone: map x follows world y (west = smaller), map y follows world x, as the game's maps do
+  local function MapOf(wx, wy) return .5 - (wy - 1000) / 4000, .5 - (wx - 2000) / 3000 end
+  local samples = {}
+  for i = 0, 5 do
+    -- (not one straight line: a turn on the way)
+    local wx, wy = 2000 + i * 30, 1000 + (i * i) * 9
+    local mx, my = MapOf(wx, wy)
+    table.insert(samples, { wx, wy, mx, my })
+  end
+  local fit = GF.Fit(samples)
+  ok(fit and fit.xi == 2 and fit.yi == 1, "the zone's map is fitted from your own positions (map x from world y)")
+  if fit then
+    local mx, my = GF.ToMap(fit, 2100, 900)
+    local ex, ey = MapOf(2100, 900)
+    ok(math.abs(mx - ex) < .001 and math.abs(my - ey) < .001, "a node's world place lands right on the map (" .. mx .. ", " .. my .. ")")
+  end
+  ok(GF.Fit({ samples[1], samples[2] }) == nil, "too few positions: no fit yet")
+  -- remembering: the same node twice is one; another herb beside it is its own
+  ok(GF.Remember("9:9", "Dreamfoil", "Herbalism", 2100, 900) == true, "a node is remembered")
+  ok(GF.Remember("9:9", "Dreamfoil", "Herbalism", 2102, 901) == false, "the same node seen again is not doubled")
+  ok(GF.Remember("9:9", "Dreamfoil", "Herbalism", 2150, 900) == true and GF.Remember("9:9", "Mountain Silversage", "Herbalism", 2101, 900) == true,
+    "another node, or another herb beside it, is its own")
+  local nodes, zones = GF.Count()
+  ok(nodes == 3 and zones == 1, "counted: 3 nodes in 1 zone (" .. nodes .. ", " .. zones .. ")")
+  -- pins on the world map for the zone it shows
+  pfUI_cache.gathernodes["9:9"].fit = fit
+  local gc, gz = GetCurrentMapContinent, GetCurrentMapZone
+  _G.GetCurrentMapContinent = function() return 9 end
+  _G.GetCurrentMapZone = function() return 9 end
+  local wasPins = pfUI_config.gather.mappins
+  pfUI_config.gather.mappins = "1"
+  if WorldMapButton then WorldMapButton:SetWidth(1000) WorldMapButton:SetHeight(600) end
+  local shown = GF.DrawPins()
+  ok(shown == 3 and GF.pins[1]:IsShown() and GF.pins[1].name == "Dreamfoil", "the world map shows a pin per remembered node (" .. tostring(shown) .. ")")
+  if GF.pins[1] then
+    local _, _, _, x, y = GF.pins[1]:GetPoint(1)
+    local ex, ey = MapOf(2100, 900)
+    ok(math.abs(x - ex * 1000) < 1 and math.abs(y + ey * 600) < 1, "at its place on the map (" .. tostring(x) .. ", " .. tostring(y) .. ")")
+  end
+  -- the Marks list on the map: our kinds and the quest database's lists, each a saved switch
+  do
+    local dbWas, dataWas, trackWas = rawget(_G, "pfDatabase"), rawget(_G, "pfDB"), rawget(_G, "pfQuest_track")
+    local calls = {}
+    _G.pfQuest_track = { herbs = { {}, {} } }
+    _G.pfDB = { meta = { herbs = {}, mines = {}, vendor = {}, zebra = {} } }
+    _G.pfDatabase = { TrackMeta = function(self, name, state)
+      table.insert(calls, name .. "=" .. tostring(state))
+      _G.pfQuest_track[name] = state and { {}, {} } or nil
+    end }
+    local list = GF.MarkList()
+    local by = {}
+    for _, d in ipairs(list) do if d.key then by[d.key] = d end end
+    ok(list[1].action and by.pinherbs and by.pinore and by.pinfish and by["db:herbs"] and by["db:mines"] and by["db:vendor"] and by["db:zebra"] and not by["db:rares"],
+      "the Marks list: Hide everything, our three kinds, and the database's lists that exist")
+    ok(by["db:herbs"].on() == true and by["db:mines"].on() == false and by["db:zebra"].label == "Zebra", "each shows whether it is on")
+    by["db:herbs"].set(false)
+    by["db:mines"].set(true)
+    ok(calls[1] == "herbs=false" and calls[2] == "mines=true" and by["db:herbs"].on() == false and by["db:mines"].on() == true,
+      "a switch turns the database list off / on (kept by pfQuest)")
+    GF.Remember("9:9", "Tin Vein", "Mining", 2400, 800)
+    by.pinherbs.set(false)
+    ok(pfUI_config.gather.pinherbs == "0" and GF.DrawPins() == 1, "remembered herbs off: only the other kinds stay (" .. GF.DrawPins() .. ")")
+    by.pinherbs.set(true)
+    ok(GF.DrawPins() == 4, "and on again")
+    GF.Remember("9:9", "Tin Vein", "Mining", 2400, 800)
+    list[1].action()
+    ok(GF.DrawPins() == 0 and by["db:mines"].on() == false and pfUI_config.gather.pinore == "0", "Hide everything: a clean map")
+    pfUI_config.gather.pinherbs, pfUI_config.gather.pinore, pfUI_config.gather.pinfish = "1", "1", "1"
+    pfUI_cache.gathernodes["9:9"].nodes[4] = nil
+    local good, err = pcall(GF.PaintMarks)
+    ok(good and getglobal("pfMapMarksButton"), "the Marks button and its list draw " .. tostring(err or ""))
+    -- (20 Nov 2026, Lo5t1ncyb3r) with ModernMapMarkers the button sat on its "Filter markers"; with Magnify it
+    -- went away when zoomed in: it goes under the LAST map menu shown, and lives on the map frame
+    do
+      local mb = GF.marksButton
+      local function Menu(shown, bottom) return { IsShown = function() return shown end, GetBottom = function() return bottom end } end
+      local keep = {}
+      for _, n in ipairs(GF.MAPMENUS) do keep[n] = rawget(_G, n) end
+      rawset(_G, "pfQuestMapDropdown", Menu(true, 500))
+      rawset(_G, "pfQuestMapLevelDropdown", Menu(true, 470))
+      rawset(_G, "ModernMapMarkersFilter_Blizz", Menu(true, 440))
+      rawset(_G, "ModernMapMarkersFind_Blizz", Menu(true, 410))
+      mb.placed = nil
+      GF.PlaceMarks()
+      ok(mb.under == rawget(_G, "ModernMapMarkersFind_Blizz"), "with ModernMapMarkers: under its Find Marker, not on its Filter")
+      rawset(_G, "ModernMapMarkersFilter_Blizz", nil)
+      rawset(_G, "ModernMapMarkersFind_Blizz", nil)
+      GF.PlaceMarks()
+      ok(mb.under == rawget(_G, "pfQuestMapLevelDropdown"), "without it: under pfQuest's Level Range, as before")
+      for _, n in ipairs(GF.MAPMENUS) do rawset(_G, n, keep[n]) end
+      mb.placed = nil
+      GF.PlaceMarks()
+      local wmf = rawget(_G, "WorldMapFrame")
+      ok(not wmf or mb:GetParent() == wmf, "it lives on the map frame, not the zoomed map canvas")
+      -- pfQuest's own quest menu too (pfquest\quest.lua, patched by tools\Sync-pfQuest.ps1)
+      local h = io.open("pfquest/quest.lua", "rb")
+      local src = h and h:read("*a") or ""
+      if h then h:close() end
+      ok(string.find(src, 'CreateFrame("Frame", "pfQuestMapDropdown", WorldMapFrame', 1, true)
+        and string.find(src, "_G.WorldMapScrollFrame or WorldMapButton", 1, true), "pfQuest's quest menu is on the map frame too")
+    end
+    _G.pfDatabase, _G.pfDB, _G.pfQuest_track = dbWas, dataWas, trackWas
+  end
+  pfUI_config.gather.mappins = "0"
+  ok(GF.DrawPins() == 0 and not GF.pins[1]:IsShown(), "switched off: no pins")
+  pfUI_config.gather.mappins = wasPins
+  _G.GetCurrentMapContinent, _G.GetCurrentMapZone = gc, gz
+  -- sharing (15 Nov 2026): found nodes go out, others' come in checked
+  do
+    local sent = {}
+    local sam, guild, wasShare, wasRec = _G.SendAddonMessage, _G.IsInGuild, pfUI_config.gather.share, pfUI_config.gather.record
+    _G.SendAddonMessage = function(prefix, msg, chan) if chan == "GUILD" then table.insert(sent, { prefix, msg, chan }) end end
+    _G.IsInGuild = function() return 1 end
+    pfUI_config.gather.share, pfUI_config.gather.record = "1", "1"
+    local loc = GetLocale and GetLocale() or "enUS"
+    local clock = GetTime() + 100
+    local function Drain() for i = 1, 30 do clock = clock + 1 GF.ShareTick(clock) end end
+    Drain()
+    sent = {}
+    GF.Remember("9:9", "Dreamfoil", "Herbalism", 2300, 900)
+    Drain()
+    ok(sent[1] and sent[1][1] == "pfGN" and sent[1][3] == "GUILD" and sent[1][2] == "N^" .. loc .. "^9:9^Dreamfoil~Herbalism~2300~900",
+      "a node you find is told to the guild (" .. tostring(sent[1] and sent[1][2]) .. ")")
+    local before = GF.Count()
+    GF.Receive("N^" .. loc .. "^9:9^Plaguebloom~Herbalism~2500~700", "Khijazi")
+    GF.Receive("D^" .. loc .. "^9:9^Dreamfoil~Herbalism~2300~901;Icecap~Herbalism~2600~650;Bad~Hacking~1~1;Far~Mining~999999~1", "Khijazi")
+    GF.Receive("N^xxXX^9:9^Sungrass~Herbalism~2700~700", "Khijazi")
+    GF.Receive("N^" .. loc .. "^9:9^Sungrass~Herbalism~2700~700", UnitName("player"))
+    ok(GF.Count() == before + 2, "others' nodes are taken once; wrong ones, another language and your own echo are not (" .. (GF.Count() - before) .. ")")
+    local list = pfUI_cache.gathernodes["9:9"].nodes
+    ok(list[table.getn(list)][5] == "Khijazi", "a shared node keeps who found it")
+    Drain()
+    ok(table.getn(sent) == 1, "a received node is not sent on again (" .. table.getn(sent) .. ")")
+    -- a zone asked for: the one with more answers, in parts, with the fit
+    GF.Receive("Q^" .. loc .. "^9:9^1^0", "Khijazi")
+    Drain()
+    local d, f = 0, 0
+    for _, s in ipairs(sent) do
+      if string.sub(s[2], 1, 2) == "D^" then d = d + 1 end
+      if string.sub(s[2], 1, 2) == "F^" then f = f + 1 end
+    end
+    ok(d >= 1 and f == 1, "asked for a zone: its nodes and its fit are sent (" .. d .. " + " .. f .. ")")
+    pfUI_cache.gathernodes["8:8"] = nil
+    GF.Receive("F^" .. loc .. "^8:8^2^1^-0.00025^0.75^-0.00033^1.16", "Khijazi")
+    ok(pfUI_cache.gathernodes["8:8"] and pfUI_cache.gathernodes["8:8"].fit and pfUI_cache.gathernodes["8:8"].fit.xi == 2, "a zone's fit is taken when you have none")
+    pfUI_config.gather.share = "0"
+    local n = table.getn(sent)
+    GF.Remember("9:9", "Dreamfoil", "Herbalism", 2900, 900)
+    GF.Receive("N^" .. loc .. "^9:9^Icecap~Herbalism~3000~650", "Khijazi")
+    Drain()
+    ok(table.getn(sent) == n and GF.Count() == before + 3, "sharing off: nothing sent, nothing taken")
+    _G.SendAddonMessage, _G.IsInGuild, pfUI_config.gather.share, pfUI_config.gather.record = sam, guild, wasShare, wasRec
+  end
+  GF.Forget(true)
+  ok(GF.Count() == 0, "Forget all empties it")
+  pfUI_cache.gathernodes = cacheWas
+end
