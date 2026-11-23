@@ -1057,7 +1057,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [GearRack](G/GearRack/) | Bags & Inventory | 1 | mirrored |
 | [AdeChatFix](A/AdeChatFix/) | Chat & Social | 1 | mirrored |
 | [Skada](S/Skada/) | Combat | 1 | mirrored |
-| [pfQuest_xpGuide](P/pfQuest_xpGuide/) | Quests & Leveling | 1 | mirrored |
+| [pfQuest_xpGuide](P/pfQuest_xpGuide/) | Quests & Leveling | 2 | mirrored |
 | [CraftRoute](C/CraftRoute/) | Professions | 1 | mirrored |
 | [OctoAuctionatorPlus](O/OctoAuctionatorPlus/) | Auction & Economy | 1 | mirrored |
 | [pfUI_CombatLedgerExt](P/pfUI_CombatLedgerExt/) | UI & Appearance | 1 | mirrored |

@@ -1,0 +1,266 @@
+{
+  "upstream": "https://octowow.st/git/eineath/pfQuest-xpGuide",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "eineath",
+    "repo": "pfQuest-xpGuide",
+    "name": "pfQuest-xpGuide",
+    "url": "https://octowow.st/git/eineath/pfQuest-xpGuide",
+    "api": "https://octowow.st/git/api/v1/repos/eineath/pfQuest-xpGuide"
+  },
+  "commit": "a17a8978751933ecbd2a0f3f5cacdc7c0b36454c",
+  "sourceFiles": {
+    "Adapt.lua": {
+      "sha256": "36867cb7c335a66c2a565b29b433d99b17d0eeac5d6b9d32eefae78e200c6354",
+      "bytes": 44546
+    },
+    "Arrow.lua": {
+      "sha256": "1b34b0f4626967499d3f8f6c2ce529f593a2f5b89a29296c442f1d32b97b1e9c",
+      "bytes": 22813
+    },
+    "Auto.lua": {
+      "sha256": "825e9b26a4ca67dad1185962862d305374c87adc6034a85f38eca562a98773c9",
+      "bytes": 47400
+    },
+    "ChainNotice.lua": {
+      "sha256": "9b48e40706a4ca9a8172d6bfc0697fe8a041d69d229acd7f6671e78bf2b804ca",
+      "bytes": 3163
+    },
+    "CHANGES.md": {
+      "sha256": "cb6e6c69654fedea6b5810c5d137a3cccacd51f8899f23953f4479fb2a709f8a",
+      "bytes": 73365
+    },
+    "Character.lua": {
+      "sha256": "68ed1ae799e1a19a0ed66cd4570c567764ceaca7c5992134210d14cd94925b1a",
+      "bytes": 10567
+    },
+    "Core.lua": {
+      "sha256": "1dc3597b82c1bb9a95a3308bafeb4cd3781cdaac46a5ff6056d2e089c9b3ac35",
+      "bytes": 32458
+    },
+    "Data/Danger.lua": {
+      "sha256": "a80a20f98620fafbf35113b6cb82b18ee914156a1923874f05798a92a5a21820",
+      "bytes": 10169
+    },
+    "Data/FastRoute.lua": {
+      "sha256": "1e00e237009426ece889c47af622b83ec58bf11ca4ae0094852cbf1511d715bb",
+      "bytes": 2690273
+    },
+    "Data/Guides.lua": {
+      "sha256": "d88668a52179a1659ad605843e8ee22d10eac1fe54d08ea5d57025ed0c531446",
+      "bytes": 2370947
+    },
+    "Data/Prices.lua": {
+      "sha256": "6a619d6788dd5e80458edfeec487d826664d383f959224a398538286c55887fc",
+      "bytes": 20465
+    },
+    "Data/Ratings.lua": {
+      "sha256": "51c694e3777613b03c4e42b7f53f8a34382c122c9777fcdf1eb508af7b976b58",
+      "bytes": 4363
+    },
+    "Data/Survival.lua": {
+      "sha256": "1d14dd062be82def91fc8cfaccea82c902b710310473aa53a65cb114191be666",
+      "bytes": 42344
+    },
+    "Data/Zones.lua": {
+      "sha256": "079d6028e46d9901cd19ba8882b54b9e8172da4905384ad98e45f1e41f29381b",
+      "bytes": 787598
+    },
+    "Data/ZoneSizes.lua": {
+      "sha256": "e5aded3a4b6f130d52f636168b5b31314890f692b953c41e076e6a7a8654c29d",
+      "bytes": 7309
+    },
+    "Director.lua": {
+      "sha256": "4d1135320f1d4a0e06dc0d194cd2d9778c2ae681c091a6bbc850015b7f32b0da",
+      "bytes": 10087
+    },
+    "FastRoute.lua": {
+      "sha256": "7570943f787e33a03b0f9c3393b8d273e3498ea830838b90ac0f45444b65bb46",
+      "bytes": 13511
+    },
+    "FastSetup.lua": {
+      "sha256": "7a47d813798562898a7423c25359bb406b7eff5c3bea09c64cf14f68780b272d",
+      "bytes": 10673
+    },
+    "GuideWindow.lua": {
+      "sha256": "dcad93d5467e56341415bb47f3f38e66d0042189b443dd6d9be37d012a2bc93d",
+      "bytes": 59381
+    },
+    "Help.lua": {
+      "sha256": "bd39fdaca2c81d9e183e9d555538ce046ff6f1a0cfdd6cfdbade73c5529f741c",
+      "bytes": 14650
+    },
+    "LICENSE": {
+      "sha256": "3c3ceb49dc9785026720815602a8fe6e2729ad1136de33247874ed17beb3a103",
+      "bytes": 1316
+    },
+    "Media/Arrow.tga": {
+      "sha256": "e0c3cf380522706fda980a9ee7346ebf3d4b0dea603e45521edc9b7e3304d948",
+      "bytes": 1048594
+    },
+    "Media/ChainBar.tga": {
+      "sha256": "7b1504ca1dfadde783b25a816475f9831195d93c7beeb7436d29619050c9a35e",
+      "bytes": 4114
+    },
+    "Media/ChainCircle.tga": {
+      "sha256": "e4f4edacb04e6be3c2523bfcba544c4d40863753975e3413a03d89aacb27ae51",
+      "bytes": 4114
+    },
+    "Media/ChainDiamond.tga": {
+      "sha256": "b08d5702f04cb44cf2c7bd6bb751a4ac852031f3e53871f69a8b7f73aab1c878",
+      "bytes": 4114
+    },
+    "Media/ChainPlus.tga": {
+      "sha256": "3f660a1a5a4372e5cd1ff6021bc22ec9daacf2837f31527a76e487efb5af77a7",
+      "bytes": 4114
+    },
+    "Media/ChainRing.tga": {
+      "sha256": "08df52b8929433a2c88b91568d8ee6b51abe96598a677438e5b88d6f07f878f2",
+      "bytes": 4114
+    },
+    "Media/ChainSquare.tga": {
+      "sha256": "f52fe735f49b5d614abdee86b3995e467930cd38242b62b962325a9f2b162106",
+      "bytes": 4114
+    },
+    "Media/ChainTriangle.tga": {
+      "sha256": "da333636b34c8d7702f2a193fe54b6023229f839143acf95734848c2349b4a4c",
+      "bytes": 4114
+    },
+    "Media/ChainTriangleDown.tga": {
+      "sha256": "928c63f39cba0ec917b8d738f454cf36d8626b3bde3a5764009d5afd65c9d1e0",
+      "bytes": 4114
+    },
+    "Media/IconArrow.tga": {
+      "sha256": "1fe8887ac8a29a6b65b8952450bbc62bdce0b36280b489872582022ff95bbede",
+      "bytes": 4114
+    },
+    "Media/IconBag.tga": {
+      "sha256": "7c466944ff8fc96e72e5e94c81e21c5212358525c5a6ba3c6b66da5156fa207a",
+      "bytes": 4114
+    },
+    "Media/IconBagEdge.tga": {
+      "sha256": "7f6102fb49419b19155d095bf99cbfb35a03a8e1b093b69ee15cfaf2ed9047b2",
+      "bytes": 4114
+    },
+    "Media/IconBang.tga": {
+      "sha256": "5d8b860e7eda559706e7e2e0cf9c5170b35b2bbdcc46f406bc9f5b6bc58a1d5f",
+      "bytes": 4114
+    },
+    "Media/IconBangEdge.tga": {
+      "sha256": "eb88b641ab376cc0c03b703f931de17999a492e257e48614957b4aeb5a1d36a4",
+      "bytes": 4114
+    },
+    "Media/IconClose.tga": {
+      "sha256": "bc86375c511ef6d9ce7782a5f3b637175218eee16d5da18a6f846ed4fa5f176f",
+      "bytes": 4114
+    },
+    "Media/IconCog.tga": {
+      "sha256": "72fc8c35aba524775b0d24681ad309a5a565710a63d1e07a1b29ec45e755b06b",
+      "bytes": 4114
+    },
+    "Media/IconGrip.tga": {
+      "sha256": "1502f27f1ce0350871b543dab6b08a2803e77d75a23b9d638fc4ac7ec3c803f0",
+      "bytes": 4114
+    },
+    "Media/IconLocked.tga": {
+      "sha256": "4c303a637195ff3e121d40bee6627c64303df0505a29a4ec2406226fe0c52d10",
+      "bytes": 4114
+    },
+    "Media/IconQuery.tga": {
+      "sha256": "1374ffce6d2e8aac06b5fbe51f42a07eb41840dcb15a425d8818bc179a927d92",
+      "bytes": 4114
+    },
+    "Media/IconQueryEdge.tga": {
+      "sha256": "8bf99926e51cbcad20945118e94e07b862b107a2b8d1c17f238a4e4aaf687b87",
+      "bytes": 4114
+    },
+    "Media/IconSkipped.tga": {
+      "sha256": "fd9ef23a6829c4bf2fefca5d0275b13ce9587625654b5ca15c8f93e6f47712aa",
+      "bytes": 4114
+    },
+    "Media/IconSkull.tga": {
+      "sha256": "b8b103b7f6f3ced5efe84b128a5b8cf74a3fe5a6461b6ac6bc1f01782fbacfc4",
+      "bytes": 4114
+    },
+    "Media/IconSkullEdge.tga": {
+      "sha256": "cabc975d9ce61a0c154797400358950b7aa334e9e40a01811a0d7d8d8ec393e6",
+      "bytes": 4114
+    },
+    "Media/IconUnlocked.tga": {
+      "sha256": "e11c8d7604b6c2e992658b16d3feb7b3022d887b64d5825709c6abb12dab53ec",
+      "bytes": 4114
+    },
+    "Minimap.lua": {
+      "sha256": "86b901742428531d2a477c250e7f97e82ef16d455f5971db325c4c002158eeb1",
+      "bytes": 3328
+    },
+    "pfQuest-xpGuide.toc": {
+      "sha256": "2b75e5dc1105a2a993705475e312c929563b310b3c74a0890105c681ec746723",
+      "bytes": 792
+    },
+    "Plates.lua": {
+      "sha256": "e9bb9f515de23e7740e4c6d8f702ba83f881e9768867a70a4c3444b8ded5d4c8",
+      "bytes": 19070
+    },
+    "README.md": {
+      "sha256": "c01758fc0a6d0d6776048221cce7d9cb52da6a4e5ddd67b92365b666ac98d233",
+      "bytes": 15464
+    },
+    "Recorder.lua": {
+      "sha256": "35bf72c4ac091461b202517367ade07f73813a41b0a554ebdf83cebf0de6bc0b",
+      "bytes": 44997
+    },
+    "Selftest.lua": {
+      "sha256": "fa7317d21479fd3ed7d5bdd39bcd741a2c65b3632248703dfd275d190655a665",
+      "bytes": 5613
+    },
+    "Settings.lua": {
+      "sha256": "7c6a838307603908b7725ff8c4c50ebc633ff1a2a5c0974a2eb9dab6d0e64b2a",
+      "bytes": 45154
+    },
+    "Simple.lua": {
+      "sha256": "907b589a906d3f2c361455cb823ed29c596f6b81ee006cec561ff5f38b0a51e6",
+      "bytes": 11407
+    },
+    "Steps.lua": {
+      "sha256": "269d484192a5cae525514db8ad0833b94397bf8eb6cd706f094e109d465f77a9",
+      "bytes": 134417
+    },
+    "Theme.lua": {
+      "sha256": "ff770b77f91a1f7a2daa1840ab43fbcad4bc21c2212443da2969d7f36dd8ba80",
+      "bytes": 17916
+    },
+    "Tracker.lua": {
+      "sha256": "827d699aafb2a590c6d76fd269a01411bcec32f11d08bd6c1698d1c44bf6fa49",
+      "bytes": 9645
+    },
+    "Wizard.lua": {
+      "sha256": "8e101276866fc517da8b3078b8e2bc8581966495f55e1528fc107c739251aa43",
+      "bytes": 10285
+    }
+  },
+  "symlinks": {},
+  "releases": {
+    "950": {
+      "tag": "v2.1.0",
+      "folder": "v2.1.0--950",
+      "assets": {
+        "128": {
+          "sha256": "e3417c5513e88d447bdc603a7ddc0f2af6ac125b59f1e446677419c90c1c338d",
+          "bytes": 1351052,
+          "id": "128",
+          "name": "pfQuest-xpGuide-2.1.0.zip",
+          "url": "https://octowow.st/git/eineath/pfQuest-xpGuide/releases/download/v2.1.0/pfQuest-xpGuide-2.1.0.zip",
+          "path": "releases/v2.1.0--950/assets/pfQuest-xpGuide-2.1.0.zip"
+        }
+      },
+      "source": {
+        "sha256": "2b6886c55a975ced5cebedd5fa09c2333677015143b23f1f9806de8aa7c02abc",
+        "bytes": 1344948,
+        "path": "releases/v2.1.0--950/upstream-source.tar.gz",
+        "url": "https://octowow.st/git/api/v1/repos/eineath/pfQuest-xpGuide/archive/v2.1.0.tar.gz"
+      }
+    }
+  }
+}

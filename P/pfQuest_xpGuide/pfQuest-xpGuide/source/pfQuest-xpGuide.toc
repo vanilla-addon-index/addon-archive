@@ -1,0 +1,37 @@
+## Interface: 11200
+## Title: pfQuest |cff33ff99xpGuide|r
+## Notes: Leveling guide for pfQuest players: the step you are on, every step of the guide and an arrow. The xpGuide Fast route, with RestedXP's original as fallback. /xpg
+## Version: 2.1.0
+## SavedVariables: pfQuest_xpGuideDB
+## SavedVariablesPerCharacter: pfQuest_xpGuideCharDB
+## OptionalDeps: pfUI, pfQuest, pfQuest-turtle, pfQuest-SmartArrow
+
+Core.lua
+Theme.lua
+Data\Zones.lua
+Data\Guides.lua
+Data\FastRoute.lua
+Data\Danger.lua
+Data\ZoneSizes.lua
+Data\Survival.lua
+Data\Ratings.lua
+Data\Prices.lua
+Recorder.lua
+Director.lua
+Character.lua
+Steps.lua
+FastRoute.lua
+Auto.lua
+Arrow.lua
+Tracker.lua
+GuideWindow.lua
+Simple.lua
+Adapt.lua
+Plates.lua
+Settings.lua
+FastSetup.lua
+Wizard.lua
+Selftest.lua
+ChainNotice.lua
+Help.lua
+Minimap.lua

@@ -7141,7 +7141,7 @@
           },
           "status": "mirrored",
           "error": null,
-          "active": true,
+          "active": false,
           "license": "MIT"
         },
         {
@@ -30598,6 +30598,23 @@
             "name": "pfQuest_xpGuide",
             "url": "https://octowow.st/git/eineath/pfQuest_xpGuide",
             "api": "https://octowow.st/git/api/v1/repos/eineath/pfQuest_xpGuide"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "MIT"
+        },
+        {
+          "originalUrl": "https://octowow.st/git/eineath/pfQuest-xpGuide",
+          "folder": "pfQuest-xpGuide",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "eineath",
+            "repo": "pfQuest-xpGuide",
+            "name": "pfQuest-xpGuide",
+            "url": "https://octowow.st/git/eineath/pfQuest-xpGuide",
+            "api": "https://octowow.st/git/api/v1/repos/eineath/pfQuest-xpGuide"
           },
           "status": "mirrored",
           "error": null,

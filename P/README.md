@@ -72,6 +72,6 @@
 | [pfUI-ThreatPlates](pfUI-ThreatPlates/) | Unit Frames | 1 | mirrored |
 | [PizzaSauce](PizzaSauce/) | Libraries | 1 | mirrored |
 | [pfQuest-SmartArrow](pfQuest-SmartArrow/) | Map & Minimap | 1 | mirrored |
-| [pfQuest_xpGuide](pfQuest_xpGuide/) | Quests & Leveling | 1 | mirrored |
+| [pfQuest_xpGuide](pfQuest_xpGuide/) | Quests & Leveling | 2 | mirrored |
 | [pfUI_CombatLedgerExt](pfUI_CombatLedgerExt/) | UI & Appearance | 1 | mirrored |
 | [pfUI-Octo](pfUI-Octo/) | UI & Appearance | 1 | mirrored |
