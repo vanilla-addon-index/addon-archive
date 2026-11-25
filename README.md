@@ -1063,5 +1063,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [pfUI_CombatLedgerExt](P/pfUI_CombatLedgerExt/) | UI & Appearance | 1 | mirrored |
 | [GimmetbarbieAddonManager](G/GimmetbarbieAddonManager/) | Miscellaneous | 1 | mirrored |
 | [pfUI-Octo](P/pfUI-Octo/) | UI & Appearance | 1 | mirrored |
+| [CombatLog112](C/CombatLog112/) | Combat | 1 | mirrored |
+| [ShikiUI](S/ShikiUI/) | UI & Appearance | 1 | mirrored |
 
 This repository’s automation is MIT licensed. Mirrored source and release files retain their upstream license notices when provided.

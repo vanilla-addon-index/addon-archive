@@ -135,3 +135,4 @@
 | [SoulStoneTracker](SoulStoneTracker/) | Class | 1 | mirrored |
 | [SHalts](SHalts/) | Miscellaneous | 1 | mirrored |
 | [Skada](Skada/) | Combat | 1 | mirrored |
+| [ShikiUI](ShikiUI/) | UI & Appearance | 1 | mirrored |

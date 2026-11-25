@@ -1,0 +1,53 @@
+-- Locale_GroupPets : textes du module "grouppets" (cadres des familiers du groupe et du raid).
+ShikiUI = ShikiUI or {}
+local SUI = ShikiUI
+
+SUI.AddStrings("fr", {
+	["cat.grouppets"] = "Familiers du groupe",
+	["opt.modules.grouppets"] = "Familiers du groupe et du raid",
+	["tip.modules.grouppets"] = "Petits cadres pour les familiers des membres du groupe et du raid (demonistes, chasseurs) : clic = cibler.",
+	["mod.grouppets.title"] = "Familiers du groupe",
+	["opt.grouppets.party"] = "Afficher en groupe",
+	["tip.grouppets.party"] = "Montre les familiers des membres du groupe (hors raid).",
+	["opt.grouppets.raid"] = "Afficher en raid",
+	["tip.grouppets.raid"] = "Montre les familiers des membres du raid, en petits cadres.",
+	["opt.grouppets.hide"] = "Cacher si le maitre est mort ou deconnecte",
+	["tip.grouppets.hide"] = "Le cadre du familier disparait quand son maitre est mort ou hors ligne.",
+	["opt.grouppets.name"] = "Afficher le nom",
+	["tip.grouppets.name"] = "Nom du familier dans la barre de vie.",
+	["opt.grouppets.width"] = "Largeur d'un cadre",
+	["tip.grouppets.width"] = "Largeur en pixels (le mode Raid propose plus petit).",
+	["opt.grouppets.height"] = "Hauteur d'un cadre",
+	["tip.grouppets.height"] = "Hauteur en pixels.",
+	["opt.grouppets.cols"] = "Colonnes",
+	["tip.grouppets.cols"] = "Nombre de familiers par ligne (1 = en colonne).",
+	["opt.grouppets.scale"] = "Echelle du bloc",
+	["tip.grouppets.scale"] = "Taille de l'ensemble en pourcentage.",
+	["msg.grouppets.count"] = "Familiers affiches : %d",
+	["help.grouppets"] = "/sui grouppets - nombre de familiers du groupe affiches",
+})
+
+SUI.AddStrings("en", {
+	["cat.grouppets"] = "Group pets",
+	["opt.modules.grouppets"] = "Group and raid pets",
+	["tip.modules.grouppets"] = "Small frames for the pets of group and raid members (warlocks, hunters): click to target.",
+	["mod.grouppets.title"] = "Group pets",
+	["opt.grouppets.party"] = "Show in party",
+	["tip.grouppets.party"] = "Shows the pets of party members (not in a raid).",
+	["opt.grouppets.raid"] = "Show in raid",
+	["tip.grouppets.raid"] = "Shows the pets of raid members, as small frames.",
+	["opt.grouppets.hide"] = "Hide if the owner is dead or offline",
+	["tip.grouppets.hide"] = "The pet frame disappears when its owner is dead or offline.",
+	["opt.grouppets.name"] = "Show name",
+	["tip.grouppets.name"] = "Pet name inside the health bar.",
+	["opt.grouppets.width"] = "Frame width",
+	["tip.grouppets.width"] = "Width in pixels (Raid mode uses a smaller one).",
+	["opt.grouppets.height"] = "Frame height",
+	["tip.grouppets.height"] = "Height in pixels.",
+	["opt.grouppets.cols"] = "Columns",
+	["tip.grouppets.cols"] = "Pets per row (1 = a single column).",
+	["opt.grouppets.scale"] = "Block scale",
+	["tip.grouppets.scale"] = "Size of the whole block in percent.",
+	["msg.grouppets.count"] = "Pets shown: %d",
+	["help.grouppets"] = "/sui grouppets - number of group pets shown",
+})

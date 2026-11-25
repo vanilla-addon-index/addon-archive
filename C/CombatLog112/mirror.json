@@ -1,0 +1,29 @@
+{
+  "upstream": "https://octowow.st/git/Ade/CombatLog112",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Ade",
+    "repo": "CombatLog112",
+    "name": "CombatLog112",
+    "url": "https://octowow.st/git/Ade/CombatLog112",
+    "api": "https://octowow.st/git/api/v1/repos/Ade/CombatLog112"
+  },
+  "commit": "bc1a046a8e270f48c9c7ce9b1aeb956066a31967",
+  "sourceFiles": {
+    "CombatLog112.lua": {
+      "sha256": "8102f5c01077fa3f8bdecbec847753fc5bbdc1865c4244c062f36b0f456606d9",
+      "bytes": 32976
+    },
+    "CombatLog112.toc": {
+      "sha256": "1c96670df2454ad1d6c8dde6fea8b4a666775655c09f1a995a65c8d6db1482fb",
+      "bytes": 201
+    },
+    "README.md": {
+      "sha256": "15db2ab6982c48d06156d5eaf744f3fadc48dc663ba4b4f1dd26ef4ea55f71a1",
+      "bytes": 6082
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

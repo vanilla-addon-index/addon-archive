@@ -1,0 +1,9 @@
+{
+  "id": "457378529",
+  "tag": "v1.2.9",
+  "name": "ShikiUI 1.2.9",
+  "body": "## ShikiUI 1.2.9\n\nInstallation : telecharger **ShikiUI-v1.2.9.zip**, extraire les 5 dossiers dans `Interface/AddOns/`, puis `/reload`.\n\n- **Codex : recherche de monstres** (nouvel addon de donnees `ShikiCodexData_Mobs`, charge a la demande) : nom FR/EN, niveaux, clic = points sur la carte du monde et la minicarte.\n- **Fleche de direction** : tout pres de l'objectif elle devient une icone (epee = combattre, ? = rendre, ! = prendre, sac = ramasser...).\n- **Minicarte** : le ? de rendu de quete est plus grand, pulse et passe au-dessus des autres epingles.\n- **Suivi de quetes** : mini bouton fleche sur chaque quete pour que la fleche la suive.\n- Donnees Codex regenerees (pfQuest / Atlas, etat du 2026-11-24).\n",
+  "published": "2026-11-24T21:52:15Z",
+  "prerelease": false,
+  "url": "https://github.com/ShikawaLePaladin/ShikiUI/releases/tag/v1.2.9"
+}

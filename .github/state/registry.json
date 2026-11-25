@@ -30760,6 +30760,60 @@
       "active": true,
       "kind": "UI & Appearance",
       "site": "https://vanilla-addon-index.github.io/addon/pfui-octo-bdot89"
+    },
+    {
+      "id": 1121,
+      "name": "CombatLog112",
+      "folder": "C/CombatLog112",
+      "components": [
+        {
+          "originalUrl": "https://octowow.st/git/Ade/CombatLog112",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "Ade",
+            "repo": "CombatLog112",
+            "name": "CombatLog112",
+            "url": "https://octowow.st/git/Ade/CombatLog112",
+            "api": "https://octowow.st/git/api/v1/repos/Ade/CombatLog112"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        }
+      ],
+      "active": true,
+      "kind": "Combat",
+      "site": "https://vanilla-addon-index.github.io/addon/combatlog112"
+    },
+    {
+      "id": 1122,
+      "name": "ShikiUI",
+      "folder": "S/ShikiUI",
+      "components": [
+        {
+          "originalUrl": "https://github.com/ShikawaLePaladin/ShikiUI",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "github.com",
+            "owner": "ShikawaLePaladin",
+            "repo": "ShikiUI",
+            "name": "ShikiUI",
+            "url": "https://github.com/ShikawaLePaladin/ShikiUI",
+            "api": "https://api.github.com/repos/ShikawaLePaladin/ShikiUI"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        }
+      ],
+      "active": true,
+      "kind": "UI & Appearance",
+      "site": "https://vanilla-addon-index.github.io/addon/shikiui"
     }
   ],
   "archiveTitle": "Addon archive",

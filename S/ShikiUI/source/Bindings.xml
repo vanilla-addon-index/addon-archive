@@ -1,0 +1,27 @@
+<!-- ShikiUI Bindings.xml : charge automatiquement par le client (convention du dossier d'addon, aucune entree de .toc). -->
+<Bindings>
+	<Binding name="SHIKIUI_PALLYPOWER" header="SHIKIUI">
+		if ShikiUI and ShikiUI.PallyPower and ShikiUI.PallyPower.CastAll then ShikiUI.PallyPower.CastAll() end
+	</Binding>
+	<Binding name="SHIKIUI_PALLYPOWER_NEXT">
+		if ShikiUI and ShikiUI.PallyPower and ShikiUI.PallyPower.CastNext then ShikiUI.PallyPower.CastNext() end
+	</Binding>
+	<Binding name="SHIKIUI_CLICKHEAL_1" header="SHIKIUI_CLICKHEAL">
+		if ShikiUI and ShikiUI.ClickHeal and ShikiUI.ClickHeal.Key then ShikiUI.ClickHeal.Key(1) end
+	</Binding>
+	<Binding name="SHIKIUI_CLICKHEAL_2">
+		if ShikiUI and ShikiUI.ClickHeal and ShikiUI.ClickHeal.Key then ShikiUI.ClickHeal.Key(2) end
+	</Binding>
+	<Binding name="SHIKIUI_CLICKHEAL_3">
+		if ShikiUI and ShikiUI.ClickHeal and ShikiUI.ClickHeal.Key then ShikiUI.ClickHeal.Key(3) end
+	</Binding>
+	<Binding name="SHIKIUI_CLICKHEAL_4">
+		if ShikiUI and ShikiUI.ClickHeal and ShikiUI.ClickHeal.Key then ShikiUI.ClickHeal.Key(4) end
+	</Binding>
+	<Binding name="SHIKIUI_CLICKHEAL_5">
+		if ShikiUI and ShikiUI.ClickHeal and ShikiUI.ClickHeal.Key then ShikiUI.ClickHeal.Key(5) end
+	</Binding>
+	<Binding name="SHIKIUI_METERS">
+		if ShikiUI and ShikiUI.Meter and ShikiUI.Meter.ToggleAll then ShikiUI.Meter.ToggleAll() end
+	</Binding>
+</Bindings>

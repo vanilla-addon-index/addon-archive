@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: Combat Log 112
+## Notes: Separate resizable combat log (pfUI style) using Nampower combat events.
+## OptionalDeps: pfUI
+## SavedVariables: CombatLog112DB
+CombatLog112.lua

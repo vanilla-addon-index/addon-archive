@@ -1,0 +1,2 @@
+Icones de carte (*.tga) : copiees de pfQuest (c) 2017-2021 Eric Mauser (Shagu), licence MIT (texte complet : LICENSE-pfQuest.txt).
+Map icons (*.tga): copied from pfQuest (c) 2017-2021 Eric Mauser (Shagu), MIT license (full text: LICENSE-pfQuest.txt).

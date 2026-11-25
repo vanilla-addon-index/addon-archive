@@ -1,0 +1,56 @@
+-- Locale_Datatext : textes du module "datatext" (francais sans accents, anglais). Une entree par ligne :
+-- ["cle"] = "texte".
+ShikiUI = ShikiUI or {}
+local SUI = ShikiUI
+
+SUI.AddStrings("fr", {
+	["mod.datatext.title"] = "Infos ecran",
+	["cat.datatext"] = "Infos ecran",
+	["mod.datatext.desc"] = "Blocs d'information cote a cote dans une fenetre deplaceable : or, durabilite, heure, FPS, latence, experience. Coche ceux que tu veux.",
+	["opt.modules.datatext"] = "Infos ecran",
+	["tip.modules.datatext"] = "Petits blocs d'infos (or, durabilite, heure, FPS...) dans une fenetre deplaceable.",
+	["opt.datatext.money"] = "Or",
+	["tip.datatext.money"] = "Ton argent en pieces d'or.",
+	["opt.datatext.durab"] = "Durabilite",
+	["tip.datatext.durab"] = "Durabilite moyenne de ton equipement (jaune sous 30 pour cent).",
+	["opt.datatext.clock"] = "Heure",
+	["tip.datatext.clock"] = "Heure du serveur.",
+	["opt.datatext.fps"] = "FPS",
+	["tip.datatext.fps"] = "Images par seconde.",
+	["opt.datatext.latency"] = "Latence",
+	["tip.datatext.latency"] = "Ping serveur en millisecondes.",
+	["opt.datatext.meters"] = "Compteurs",
+	["tip.datatext.meters"] = "Bloc cliquable : affiche ou masque d'un coup les compteurs de degats / soins et de menace (comme /sui meters).",
+	["msg.datatext.meters"] = "Compteurs",
+	["opt.datatext.xp"] = "Experience",
+	["tip.datatext.xp"] = "Progression en pourcentage vers le niveau suivant (cache au niveau 60).",
+	["opt.datatext.scale"] = "Echelle",
+	["tip.datatext.scale"] = "Taille de la fenetre d'infos (70 a 160 pour cent).",
+	["help.datatext"] = "Active le module d'infos ecran.",
+})
+
+SUI.AddStrings("en", {
+	["mod.datatext.title"] = "Screen info",
+	["cat.datatext"] = "Screen info",
+	["mod.datatext.desc"] = "Info blocks side by side in a movable window: money, durability, clock, FPS, latency, experience. Tick the ones you want.",
+	["opt.modules.datatext"] = "Screen info",
+	["tip.modules.datatext"] = "Small info blocks (money, durability, clock, FPS...) in a movable window.",
+	["opt.datatext.money"] = "Money",
+	["tip.datatext.money"] = "Your money in gold.",
+	["opt.datatext.durab"] = "Durability",
+	["tip.datatext.durab"] = "Average gear durability (yellow below 30 percent).",
+	["opt.datatext.clock"] = "Clock",
+	["tip.datatext.clock"] = "Server time.",
+	["opt.datatext.fps"] = "FPS",
+	["tip.datatext.fps"] = "Frames per second.",
+	["opt.datatext.latency"] = "Latency",
+	["tip.datatext.latency"] = "Server ping in milliseconds.",
+	["opt.datatext.meters"] = "Meters",
+	["tip.datatext.meters"] = "Clickable block: shows or hides the damage / healing and threat meters at once (like /sui meters).",
+	["msg.datatext.meters"] = "Meters",
+	["opt.datatext.xp"] = "Experience",
+	["tip.datatext.xp"] = "Progress percent to next level (hidden at level 60).",
+	["opt.datatext.scale"] = "Scale",
+	["tip.datatext.scale"] = "Info window size (70 to 160 percent).",
+	["help.datatext"] = "Enables the screen info module.",
+})
