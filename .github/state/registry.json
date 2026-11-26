@@ -30814,6 +30814,87 @@
       "active": true,
       "kind": "UI & Appearance",
       "site": "https://vanilla-addon-index.github.io/addon/shikiui"
+    },
+    {
+      "id": 1123,
+      "name": "OctoPad",
+      "folder": "O/OctoPad",
+      "components": [
+        {
+          "originalUrl": "https://octowow.st/git/eineath/OctoPad",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "eineath",
+            "repo": "OctoPad",
+            "name": "OctoPad",
+            "url": "https://octowow.st/git/eineath/OctoPad",
+            "api": "https://octowow.st/git/api/v1/repos/eineath/OctoPad"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        }
+      ],
+      "active": true,
+      "kind": "UI & Appearance",
+      "site": "https://vanilla-addon-index.github.io/addon/octopad"
+    },
+    {
+      "id": 1125,
+      "name": "SkullEPGP_Officer",
+      "folder": "S/SkullEPGP_Officer",
+      "components": [
+        {
+          "originalUrl": "https://octowow.st/git/Hapto/SkullEPGP_Officer",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "Hapto",
+            "repo": "SkullEPGP_Officer",
+            "name": "SkullEPGP_Officer",
+            "url": "https://octowow.st/git/Hapto/SkullEPGP_Officer",
+            "api": "https://octowow.st/git/api/v1/repos/Hapto/SkullEPGP_Officer"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        }
+      ],
+      "active": true,
+      "kind": "Loot Distribution",
+      "site": "https://vanilla-addon-index.github.io/addon/skullepgp-officer"
+    },
+    {
+      "id": 1126,
+      "name": "SkullEPGP_Player",
+      "folder": "S/SkullEPGP_Player",
+      "components": [
+        {
+          "originalUrl": "https://octowow.st/git/Hapto/SkullEPGP_Player",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "Hapto",
+            "repo": "SkullEPGP_Player",
+            "name": "SkullEPGP_Player",
+            "url": "https://octowow.st/git/Hapto/SkullEPGP_Player",
+            "api": "https://octowow.st/git/api/v1/repos/Hapto/SkullEPGP_Player"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        }
+      ],
+      "active": true,
+      "kind": "Loot Distribution",
+      "site": "https://vanilla-addon-index.github.io/addon/skullepgp-player"
     }
   ],
   "archiveTitle": "Addon archive",

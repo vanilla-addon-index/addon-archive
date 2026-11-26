@@ -1,0 +1,164 @@
+<Bindings>
+	<Binding name="OCTOPAD_ACTION_1" header="OCTOPAD">
+		OctoPad_Action(1)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_2">
+		OctoPad_Action(2)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_3">
+		OctoPad_Action(3)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_4">
+		OctoPad_Action(4)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_5">
+		OctoPad_Action(5)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_6">
+		OctoPad_Action(6)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_7">
+		OctoPad_Action(7)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_8">
+		OctoPad_Action(8)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_9">
+		OctoPad_Action(9)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_10">
+		OctoPad_Action(10)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_11">
+		OctoPad_Action(11)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_12">
+		OctoPad_Action(12)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_13">
+		OctoPad_Action(13)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_14">
+		OctoPad_Action(14)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_15">
+		OctoPad_Action(15)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_16">
+		OctoPad_Action(16)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_17">
+		OctoPad_Action(17)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_18">
+		OctoPad_Action(18)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_19">
+		OctoPad_Action(19)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_20">
+		OctoPad_Action(20)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_21">
+		OctoPad_Action(21)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_22">
+		OctoPad_Action(22)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_23">
+		OctoPad_Action(23)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_24">
+		OctoPad_Action(24)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_25">
+		OctoPad_Action(25)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_26">
+		OctoPad_Action(26)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_27">
+		OctoPad_Action(27)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_28">
+		OctoPad_Action(28)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_29">
+		OctoPad_Action(29)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_30">
+		OctoPad_Action(30)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_31">
+		OctoPad_Action(31)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_32">
+		OctoPad_Action(32)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_33">
+		OctoPad_Action(33)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_34">
+		OctoPad_Action(34)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_35">
+		OctoPad_Action(35)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_36">
+		OctoPad_Action(36)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_37">
+		OctoPad_Action(37)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_38">
+		OctoPad_Action(38)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_39">
+		OctoPad_Action(39)
+	</Binding>
+	<Binding name="OCTOPAD_ACTION_40">
+		OctoPad_Action(40)
+	</Binding>
+	<Binding name="OCTOPAD_RADIAL" header="OCTOPADEXTRA">
+		OctoPad_ToggleRadial()
+	</Binding>
+	<Binding name="OCTOPAD_CAMERA" runOnUp="true">
+		OctoPad_Camera(keystate)
+	</Binding>
+	<Binding name="OCTOPAD_CHORD_1" header="OCTOPADCHORD">
+		OctoPad_Chord(1)
+	</Binding>
+	<Binding name="OCTOPAD_CHORD_2">
+		OctoPad_Chord(2)
+	</Binding>
+	<Binding name="OCTOPAD_CHORD_3">
+		OctoPad_Chord(3)
+	</Binding>
+	<Binding name="OCTOPAD_CHORD_4">
+		OctoPad_Chord(4)
+	</Binding>
+	<Binding name="OCTOPAD_CHORD_5">
+		OctoPad_Chord(5)
+	</Binding>
+	<Binding name="OCTOPAD_CHORD_6">
+		OctoPad_Chord(6)
+	</Binding>
+	<Binding name="OCTOPAD_CHORD_7">
+		OctoPad_Chord(7)
+	</Binding>
+	<Binding name="OCTOPAD_CHORD_8">
+		OctoPad_Chord(8)
+	</Binding>
+	<Binding name="OCTOPAD_STICK_UP" header="OCTOPADSTICK" runOnUp="true">
+		OctoPad_Stick("UP", keystate)
+	</Binding>
+	<Binding name="OCTOPAD_STICK_LEFT" runOnUp="true">
+		OctoPad_Stick("LEFT", keystate)
+	</Binding>
+	<Binding name="OCTOPAD_STICK_DOWN" runOnUp="true">
+		OctoPad_Stick("DOWN", keystate)
+	</Binding>
+	<Binding name="OCTOPAD_STICK_RIGHT" runOnUp="true">
+		OctoPad_Stick("RIGHT", keystate)
+	</Binding>
+</Bindings>

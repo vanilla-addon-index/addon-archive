@@ -1,0 +1,12 @@
+## Interface: 11200
+## Title: Skull EPGP Player
+## Notes: EPGP loot bidding window: shows announced items, your priority, the bids so far, and Roll MS / Roll OS / Tmog / MIN / NEED / MAX buttons. Also works with RollFor.
+## Author: Duciel (Initial work from Xck)
+## Version: 1.7.0
+## SavedVariablesPerCharacter: SkullEPGP_PlayerDB
+
+Core.lua
+RollFor.lua
+UI.lua
+Options.lua
+Loot.lua

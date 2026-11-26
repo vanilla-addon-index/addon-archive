@@ -1,0 +1,18 @@
+## Interface: 11200
+## Title: OctoPad |cff33ffccController|r
+## Notes: Gamepad layer for OctoWoW (1.12): context-aware buttons, window navigation, soft target highlights with quest counts, thumb-stick radial menu, ConsolePort-style settings, Xbox / PlayStation / Switch Pro, pfUI-aware HUD.
+## Author: you
+## Version: 1.13.0
+## OptionalDeps: ConsoleExperienceClassic, pfUI, Bagshui, SuperWoW
+## SavedVariables: OctoPadDB
+## SavedVariablesPerCharacter: OctoPadCharDB
+
+OctoPad.lua
+OctoPadHUD.lua
+OctoPadUI.lua
+OctoPadAdapters.lua
+OctoPadIcons.lua
+OctoPadSpells.lua
+OctoPadWorld.lua
+OctoPadMenu.lua
+OctoPadProbe.lua

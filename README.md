@@ -1065,5 +1065,8 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [pfUI-Octo](P/pfUI-Octo/) | UI & Appearance | 1 | mirrored |
 | [CombatLog112](C/CombatLog112/) | Combat | 1 | mirrored |
 | [ShikiUI](S/ShikiUI/) | UI & Appearance | 1 | mirrored |
+| [OctoPad](O/OctoPad/) | UI & Appearance | 1 | mirrored |
+| [SkullEPGP_Officer](S/SkullEPGP_Officer/) | Loot Distribution | 1 | mirrored |
+| [SkullEPGP_Player](S/SkullEPGP_Player/) | Loot Distribution | 1 | mirrored |
 
 This repository’s automation is MIT licensed. Mirrored source and release files retain their upstream license notices when provided.

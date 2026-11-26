@@ -20,3 +20,4 @@
 | [OctoGroupBuffToggle](OctoGroupBuffToggle/) | Buffs & Debuffs | 1 | mirrored |
 | [OctoAI](OctoAI/) | Miscellaneous | 1 | mirrored |
 | [OctoAuctionatorPlus](OctoAuctionatorPlus/) | Auction & Economy | 1 | mirrored |
+| [OctoPad](OctoPad/) | UI & Appearance | 1 | mirrored |

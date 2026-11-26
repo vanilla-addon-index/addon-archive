@@ -1,0 +1,45 @@
+{
+  "upstream": "https://octowow.st/git/Hapto/SkullEPGP_Player",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Hapto",
+    "repo": "SkullEPGP_Player",
+    "name": "SkullEPGP_Player",
+    "url": "https://octowow.st/git/Hapto/SkullEPGP_Player",
+    "api": "https://octowow.st/git/api/v1/repos/Hapto/SkullEPGP_Player"
+  },
+  "commit": "4b35408a08e07ef175519d3457b617e3b3ce790c",
+  "sourceFiles": {
+    "Core.lua": {
+      "sha256": "dd07d4dce63e1525101e45f089162d4935089bfefe6510b7f53d4ad6b4b4db87",
+      "bytes": 24164
+    },
+    "Loot.lua": {
+      "sha256": "e278da611a923220443025ee8d08f9633385e56b3dfe55e332fa772b42824334",
+      "bytes": 5216
+    },
+    "Options.lua": {
+      "sha256": "d1ec547a5bb30165e0561e57a4f4e2f5bd427be41a271b2b3383c44c5d073d5d",
+      "bytes": 13844
+    },
+    "README.md": {
+      "sha256": "0e60dca26a309df9e20ed7120036db9979979661046bd96297845665c2ba4a84",
+      "bytes": 6028
+    },
+    "RollFor.lua": {
+      "sha256": "8b5454b0176f0f95f4f9acb4558598cf37096d8ca5fc5751e7f5a997c634b030",
+      "bytes": 16258
+    },
+    "SkullEPGP_Player.toc": {
+      "sha256": "c30b5f81ee40e821fb7ee214eb51d662228a5a527759457629b5817093c0fda0",
+      "bytes": 381
+    },
+    "UI.lua": {
+      "sha256": "51f77b0145473c27dadae619335c7f74d50a1d2d246393b597f2be5023e660dc",
+      "bytes": 15139
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}

@@ -136,3 +136,5 @@
 | [SHalts](SHalts/) | Miscellaneous | 1 | mirrored |
 | [Skada](Skada/) | Combat | 1 | mirrored |
 | [ShikiUI](ShikiUI/) | UI & Appearance | 1 | mirrored |
+| [SkullEPGP_Officer](SkullEPGP_Officer/) | Loot Distribution | 1 | mirrored |
+| [SkullEPGP_Player](SkullEPGP_Player/) | Loot Distribution | 1 | mirrored |
