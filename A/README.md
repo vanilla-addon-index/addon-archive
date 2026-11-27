@@ -85,3 +85,4 @@
 | [AdeTalentPlanner](AdeTalentPlanner/) | Miscellaneous | 1 | mirrored |
 | [AdeTalents](AdeTalents/) | Libraries | 1 | mirrored |
 | [AdeChatFix](AdeChatFix/) | Chat & Social | 1 | mirrored |
+| [AdeLazyBuffs](AdeLazyBuffs/) | Buffs & Debuffs | 1 | mirrored |

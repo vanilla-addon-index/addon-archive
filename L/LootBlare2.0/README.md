@@ -1,6 +1,6 @@
 # LootBlare2.0
 
-[Original listing](https://vanilla-addon-index.github.io/addon/lootblare2-0) · Loot Distribution · Listed
+[Original listing](https://vanilla-addon-index.github.io/addon/lootblare2-0) · Loot Distribution · No longer listed; archive retained
 
 | Component | Upstream | Status |
 |---|---|---|

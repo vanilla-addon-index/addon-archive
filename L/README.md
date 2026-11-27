@@ -10,7 +10,7 @@
 | [LockAssignment](LockAssignment/) | Raid & Party | 1 | mirrored |
 | [LockpickTooltip](LockpickTooltip/) | Tooltip | 1 | mirrored |
 | [Lookup](Lookup/) | Professions | 1 | mirrored |
-| [LootBlare](LootBlare/) | Loot Distribution | 1 | mirrored |
+| [LootBlare](LootBlare/) | Loot Distribution | 2 | mirrored |
 | [LootBlare2.0](LootBlare2.0/) | Loot Distribution | 1 | mirrored |
 | [LootCrestReminder](LootCrestReminder/) | Raid & Party | 1 | mirrored |
 | [LootMonitor](LootMonitor/) | Raid & Party | 1 | mirrored |

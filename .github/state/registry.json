@@ -6255,6 +6255,23 @@
           "error": null,
           "active": true,
           "license": "Unspecified"
+        },
+        {
+          "originalUrl": "https://github.com/FSuhas/LootBlare-For-RoolFor",
+          "folder": "LootBlare-For-RoolFor",
+          "source": {
+            "kind": "repository",
+            "host": "github.com",
+            "owner": "FSuhas",
+            "repo": "LootBlare-For-RoolFor",
+            "name": "LootBlare-For-RoolFor",
+            "url": "https://github.com/FSuhas/LootBlare-For-RoolFor",
+            "api": "https://api.github.com/repos/FSuhas/LootBlare-For-RoolFor"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
         }
       ],
       "active": true,
@@ -6280,11 +6297,11 @@
           },
           "status": "mirrored",
           "error": null,
-          "active": true,
+          "active": false,
           "license": "Unspecified"
         }
       ],
-      "active": true,
+      "active": false,
       "kind": "Loot Distribution",
       "site": "https://vanilla-addon-index.github.io/addon/lootblare2-0"
     },
@@ -30895,6 +30912,33 @@
       "active": true,
       "kind": "Loot Distribution",
       "site": "https://vanilla-addon-index.github.io/addon/skullepgp-player"
+    },
+    {
+      "id": 1127,
+      "name": "AdeLazyBuffs",
+      "folder": "A/AdeLazyBuffs",
+      "components": [
+        {
+          "originalUrl": "https://octowow.st/git/Ade/AdeLazyBuffs",
+          "folder": "",
+          "source": {
+            "kind": "repository",
+            "host": "octowow.st",
+            "owner": "Ade",
+            "repo": "AdeLazyBuffs",
+            "name": "AdeLazyBuffs",
+            "url": "https://octowow.st/git/Ade/AdeLazyBuffs",
+            "api": "https://octowow.st/git/api/v1/repos/Ade/AdeLazyBuffs"
+          },
+          "status": "mirrored",
+          "error": null,
+          "active": true,
+          "license": "Unspecified"
+        }
+      ],
+      "active": true,
+      "kind": "Buffs & Debuffs",
+      "site": "https://vanilla-addon-index.github.io/addon/adelazybuffs"
     }
   ],
   "archiveTitle": "Addon archive",

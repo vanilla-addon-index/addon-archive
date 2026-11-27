@@ -1,0 +1,14 @@
+## Interface: 11200
+## Title: AdeLazyBuffs
+## Notes: Learns which buffs and Seals you cast on whom and keeps them up. No setup. Paladin, Mage, Priest, Druid, Warlock, Warrior, Shaman.
+## Notes-ruRU: Запоминает, какие баффы и печати вы на кого накладываете, и поддерживает их. Настройка не нужна. Паладин, маг, жрец, друид, чернокнижник, воин, шаман.
+## Author: adesta
+## Version: 0.2.0
+## SavedVariablesPerCharacter: AdeLazyBuffsDB
+
+Locale.lua
+Core.lua
+Window.lua
+Reminder.lua
+Minimap.lua
+Commands.lua

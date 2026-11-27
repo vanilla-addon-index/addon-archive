@@ -221,7 +221,7 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [LockAssignment](L/LockAssignment/) | Raid & Party | 1 | mirrored |
 | [LockpickTooltip](L/LockpickTooltip/) | Tooltip | 1 | mirrored |
 | [Lookup](L/Lookup/) | Professions | 1 | mirrored |
-| [LootBlare](L/LootBlare/) | Loot Distribution | 1 | mirrored |
+| [LootBlare](L/LootBlare/) | Loot Distribution | 2 | mirrored |
 | [LootBlare2.0](L/LootBlare2.0/) | Loot Distribution | 1 | mirrored |
 | [LootCrestReminder](L/LootCrestReminder/) | Raid & Party | 1 | mirrored |
 | [LootMonitor](L/LootMonitor/) | Raid & Party | 1 | mirrored |
@@ -1068,5 +1068,6 @@ See [OPERATIONS.md](OPERATIONS.md) for backup, schedules and recovery.
 | [OctoPad](O/OctoPad/) | UI & Appearance | 1 | mirrored |
 | [SkullEPGP_Officer](S/SkullEPGP_Officer/) | Loot Distribution | 1 | mirrored |
 | [SkullEPGP_Player](S/SkullEPGP_Player/) | Loot Distribution | 1 | mirrored |
+| [AdeLazyBuffs](A/AdeLazyBuffs/) | Buffs & Debuffs | 1 | mirrored |
 
 This repository’s automation is MIT licensed. Mirrored source and release files retain their upstream license notices when provided.

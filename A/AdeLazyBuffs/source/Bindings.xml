@@ -1,0 +1,5 @@
+<Bindings>
+  <Binding name="ADELAZYBUFFS_NOW" header="ADELAZYBUFFS">
+    AdeLazyBuffs_Now();
+  </Binding>
+</Bindings>

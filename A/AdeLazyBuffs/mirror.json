@@ -1,0 +1,53 @@
+{
+  "upstream": "https://octowow.st/git/Ade/AdeLazyBuffs",
+  "source": {
+    "kind": "repository",
+    "host": "octowow.st",
+    "owner": "Ade",
+    "repo": "AdeLazyBuffs",
+    "name": "AdeLazyBuffs",
+    "url": "https://octowow.st/git/Ade/AdeLazyBuffs",
+    "api": "https://octowow.st/git/api/v1/repos/Ade/AdeLazyBuffs"
+  },
+  "commit": "7410a4e034e8e8376e82235734b3506bffa82d86",
+  "sourceFiles": {
+    "AdeLazyBuffs.toc": {
+      "sha256": "dd31eb1dfdc09446f7d1c9ee2ca5460648ba8f2a472d0ece8862ecd9f6c131f0",
+      "bytes": 620
+    },
+    "Bindings.xml": {
+      "sha256": "3c09d8174d5b5208598af8cff3be87debf76cd4347a12ee429153728554e32a2",
+      "bytes": 118
+    },
+    "Commands.lua": {
+      "sha256": "5a87b696dc88c1eb4222b1c4e2cbc81c619efb06af41eb4b4b40b20e67000a74",
+      "bytes": 6012
+    },
+    "Core.lua": {
+      "sha256": "12e3e843b95defc9cfc1224145849d268c58959dcfaca34123abc0f7bed5b634",
+      "bytes": 33245
+    },
+    "Locale.lua": {
+      "sha256": "5d267b2bd7154b14e0dc658a185a702f6ff854e1981ef5c79bd096482e5bae00",
+      "bytes": 4750
+    },
+    "Minimap.lua": {
+      "sha256": "a115fe8b53f733d52af476fe4f6be35ee05418e08daf690ab03c923cd5aa6055",
+      "bytes": 2326
+    },
+    "README.md": {
+      "sha256": "5253b8ddca44ab909a1940316e77f44dc6390272c43c9d2fbef6b7f879a7540a",
+      "bytes": 4356
+    },
+    "Reminder.lua": {
+      "sha256": "ac9068fcd4a92e513da0c9970694dfb6bdf4cc87fab653343df9914b57c59ae3",
+      "bytes": 3679
+    },
+    "Window.lua": {
+      "sha256": "ee4da4c7c553005b1b609e1e96bb301b256883c87795badf073ecbc670291e3d",
+      "bytes": 14112
+    }
+  },
+  "symlinks": {},
+  "releases": {}
+}
